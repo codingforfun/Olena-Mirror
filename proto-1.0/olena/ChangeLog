@@ -1,3 +1,13 @@
+2005-04-06  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
+
+	* oln/core/properties.hh: Change properties for neighborhood hierarchy.
+	* oln/core/abstract/image.hh: Add neigbh_type property.
+	* oln/core/abstract/image_neighbness.hh: New. Add neighborhood
+	hierarchy.
+	* oln/core/abstract/entry.hh: Add image_neighbness into hierarchy.
+	* oln/core/abstract/image_with_extension.hh: New. Add image with extension hierarchy.
+	* oln/core/gen/image_with_nbh.hh: New. Concrete image and neighborhood class.
+
 2005-04-06  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* oln/core/value_box.hh: Fix.

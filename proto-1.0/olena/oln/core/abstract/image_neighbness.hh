@@ -25,63 +25,52 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_ENTRY_HH
-# define OLENA_CORE_ABSTRACT_ENTRY_HH
+#ifndef OLENA_CORE_ABSTRACT_IMAGE_NEIGHBNESS_HH
+# define OLENA_CORE_ABSTRACT_IMAGE_NEIGHBNESS_HH
 
-# include <oln/core/abstract/image_constness.hh>
-# include <oln/core/abstract/image_dimension.hh>
-# include <oln/core/abstract/image_vectorialness.hh>
-# include <oln/core/abstract/image_neighbness.hh>
+# include <mlc/bool.hh>
 
+# include <ntg/basics.hh>
 
-// FIXME: this file should move to oln/core/abstract/
+# include <oln/core/abstract/image.hh>
 
-
+/*! \namespace oln
+** \brief oln namespace.
+*/
 namespace oln {
 
-
-  // fwd decl
-  namespace abstract {
-    template <typename E> struct image_entry;
-  }
-
-  // category
-  template <typename E>
-  struct set_category < abstract::image_entry<E> >
-  {
-    typedef category::image ret;
-  };
-
-
-
+  /*! \namespace oln::abstract
+  ** \brief oln::abstract namespace.
+  */
   namespace abstract {
 
-//     namespace internal {
-
-//       template < typename isa, typename E >
-//       struct inherits
-//       {
-// 	typedef typename isa::template instantiated_with<E>::ret ret;
-//       };
-
-//     }
 
     template <typename E>
-    struct image_entry :
-      // intrusive:
-      public oln_type_of_(E, image_constness) ::template instantiated_with<E>::ret,
-      public oln_type_of_(E, image_dimension) ::template instantiated_with<E>::ret,
-      public oln_type_of_(E, image_neighbness) ::template instantiated_with<E>::ret,
-      public oln_type_of_(E, image_vectorialness) ::template instantiated_with<E>::ret
-    // ...
+    struct image_with_nbh : public virtual image<E>
     {
+    public:
+
+      typedef oln_type_of(E, neighb) neighb_type;
+
+      const neighb_type& nbh_get() const
+      {
+	return this->exact().impl_nbh_get();
+      }
+
     protected:
-      image_entry() {}
+      image_with_nbh() {}
     };
 
-  }
+    template <typename E>
+    struct image_without_nbh : public virtual image<E>
+    {
+    protected:
+      image_without_nbh() {}
+    };
+
+
+  } // end of namespace oln::abstract
 
 } // end of namespace oln
 
-
-#endif // ! OLENA_CORE_ABSTRACT_ENTRY_HH
+#endif // ! OLENA_CORE_ABSTRACT_IMAGE_NEIGHBNESS_HH

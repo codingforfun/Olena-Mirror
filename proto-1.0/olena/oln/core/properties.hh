@@ -55,9 +55,11 @@ namespace oln
   {
     struct data_type;
     struct value_type;
+    struct neighb_type;
     struct value_storage_type;
     struct storage_type;
     struct point_type;
+    struct image_type;
     struct concrete_type;
     struct dpoint_type;
     struct piter_type;
@@ -70,6 +72,7 @@ namespace oln
     struct se_type;
     struct window_type;
 
+    struct image_neighbness_type;
     struct image_constness_type;
     struct image_dimension_type;
     struct image_vectorialness_type;

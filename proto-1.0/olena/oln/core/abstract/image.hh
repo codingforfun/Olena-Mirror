@@ -45,6 +45,7 @@ namespace oln {
   namespace abstract {
     template <typename E> struct image;
     template <typename E> struct readonly_image;
+    template <typename E> struct image_without_nbh;
   }
 
   // category
@@ -70,7 +71,10 @@ namespace oln {
     mlc_decl_prop_with_default(category::image, value_storage_type, mlc::no_type);
     mlc_decl_prop_with_default(category::image, storage_type, mlc::no_type);
     mlc_decl_prop_with_default(category::image, delegated_type, mlc::no_type);
+    mlc_decl_prop_with_default(category::image, neighb_type, mlc::no_type);
 
+
+    mlc_decl_prop_with_default(category::image, image_neighbness_type, is_a<abstract::image_without_nbh>);
     mlc_decl_prop_with_default(category::image, image_constness_type, is_a<abstract::readonly_image>);
     mlc_decl_prop(category::image, image_dimension_type);
     mlc_decl_prop(category::image, image_vectorialness_type);
@@ -83,6 +87,7 @@ namespace oln {
 	   << ", " << typeid(type).name() << ") = {"
 	   << "  concrete_type = " << typeid(concrete_type).name()
 	   << "  value_type = " << typeid(value_type).name()
+	   << "  neighb_type = " << typeid(neighb_type).name()
 	   << "  point_type = " << typeid(point_type).name()
 	   << "  size_type = " << typeid(size_type).name()
 	   << "  fwd_piter_type = " << typeid(fwd_piter_type).name()
@@ -93,12 +98,14 @@ namespace oln {
 	   << "  image_constness_type = " << typeid(image_constness_type).name()
 	   << "  image_dimension_type = " << typeid(image_dimension_type).name()
 	   << "  image_vectorialness_type = " << typeid(image_vectorialness_type).name()
+	   << "  image_neighbness_type = " << typeid(image_neighbness_type).name()
 
 	   << "  }" << std::endl;
     }
 
   };
 
+  mlc_register_prop(category::image, neighb_type);
   mlc_register_prop(category::image, concrete_type);
   mlc_register_prop(category::image, value_type);
   mlc_register_prop(category::image, point_type); 
@@ -113,6 +120,7 @@ namespace oln {
   mlc_register_prop(category::image, image_constness_type);
   mlc_register_prop(category::image, image_dimension_type);
   mlc_register_prop(category::image, image_vectorialness_type);
+  mlc_register_prop(category::image, image_neighbness_type);
 
 
 
