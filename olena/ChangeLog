@@ -1,3 +1,10 @@
+2003-08-06  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/core/image.hh: Use exact_type instead of Exact for accessing
+	to traits.
+
+	* tests/core/tests/image2: New test.
+
 2003-08-05  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/core/abstract/image.hh: Inherit from any_with_diamond.

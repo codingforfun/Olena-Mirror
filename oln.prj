@@ -1,12 +1,25 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 104)
-(Parent-Version oln 2003paradigm 103)
-(Version-Log "Minor fixes.
+(Project-Version oln 2003paradigm 105)
+(Parent-Version oln 2003paradigm 104)
+(Version-Log "Index: ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+        * config/oln.m4: Remove -W for gnu compilers since they have
+        painful bugs.
+
+Index: olena/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+        * oln/core/image.hh: Use exact_type instead of Exact for accessing
+        to traits.
+
+        * tests/core/tests/image2: New test.
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 05 Aug 2003 21:45:12 +0200")
+(Checkin-Time "Wed, 06 Aug 2003 09:25:23 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -108,8 +121,8 @@
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.15 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.16 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.16 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.17 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.24 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.31 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.4 640))
@@ -220,7 +233,7 @@
   (olena/oln/core/image2d_size.hh (oln/c/44_image2d_si 1.9 640))
   (olena/oln/core/image3d.hh (oln/c/43_image3d.hh 1.25 640))
   (olena/oln/core/image3d_size.hh (oln/c/42_image3d_si 1.9 640))
-  (olena/oln/core/image.hh (oln/d/18_image.hh 1.17 640))
+  (olena/oln/core/image.hh (oln/d/18_image.hh 1.18 640))
 
   (olena/oln/core/abstract/image_size.hh (oln/c/41_image_size 1.9 640))
   (olena/oln/core/internal/fake.hh (oln/d/17_fake.hh 1.3 640))
@@ -1087,6 +1100,11 @@
 ;; to version 2003paradigm.102(w), by nes:
 
   (olena/oln/core/abstract/image_with_type_with_dim.hh (oln/v/11_image_with 1.1 600))
+
+;; Files added by populate at Wed, 06 Aug 2003 09:21:06 +0200,
+;; to version 2003paradigm.104(w), by nes:
+
+  (olena/tests/core/tests/image2 (oln/v/12_image2 1.1 600))
 )
 (Merge-Parents)
 (New-Merge-Parents)

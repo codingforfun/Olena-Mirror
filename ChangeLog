@@ -1,3 +1,8 @@
+2003-08-05  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* config/oln.m4: Remove -W for gnu compilers since they have
+	painful bugs.
+
 2003-08-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* config/oln-local.m4: Fail when swig is not detected and swilena

@@ -65,17 +65,17 @@ namespace oln {
 				     typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret>
   {
   public:
-    typedef typename image_traits<Exact>::point_type point_type;
-    typedef typename image_traits<Exact>::dpoint_type dpoint_type;
-    typedef typename image_traits<Exact>::iter_type iter_type;
-    typedef typename image_traits<Exact>::fwd_iter_type fwd_iter_type;
-    typedef typename image_traits<Exact>::bkd_iter_type bkd_iter_type;
-    typedef typename image_traits<Exact>::value_type value_type;
-    typedef typename image_traits<Exact>::size_type size_type;
-    typedef typename image_traits<Exact>::impl_type impl_type;
+    typedef typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret exact_type;
+    typedef typename image_traits<exact_type>::point_type point_type;
+    typedef typename image_traits<exact_type>::dpoint_type dpoint_type;
+    typedef typename image_traits<exact_type>::iter_type iter_type;
+    typedef typename image_traits<exact_type>::fwd_iter_type fwd_iter_type;
+    typedef typename image_traits<exact_type>::bkd_iter_type bkd_iter_type;
+    typedef typename image_traits<exact_type>::value_type value_type;
+    typedef typename image_traits<exact_type>::size_type size_type;
+    typedef typename image_traits<exact_type>::impl_type impl_type;
 
     typedef image<Dim, T, Impl, Exact> self_type;
-    typedef typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret exact_type;
     typedef typename abstract::image_with_impl<Impl,
 					       exact_type> super_type;
 
