@@ -1,3 +1,8 @@
+2004-04-13  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* configure.ac: Check for doxygen version.
+	* config/oln.m4: Add macro to check for doxygen version.
+
 2004-04-11  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* configure.ac: Check the swig version to choose between -c and

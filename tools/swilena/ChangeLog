@@ -1,3 +1,7 @@
+2004-04-13  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* tools/swilena/ruby/Makefile.am: Remove `ruby_DATA' variable.
+
 2004-04-12  Niels Van Vliet  <niels@lrde.epita.fr>
 
 	* tools/swilena/generate_morpho_instantiations.py: Remove
