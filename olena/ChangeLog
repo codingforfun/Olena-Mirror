@@ -1,3 +1,8 @@
+2004-07-06  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* oln/transforms/shapelets.hh: Change functions to functors,
+	bug fixes.
+
 2004-06-06  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* oln/transforms/shapelets.hh: Add file, it contains the shapelets

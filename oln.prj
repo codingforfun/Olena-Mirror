@@ -1,17 +1,14 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 188)
-(Parent-Version oln 10 187)
-(Version-Log "from  Damien Thivolle  <damien@lrde.epita.fr>
-        * config/oln.m4: Add detection of Doxygen 1.3.7
-        * oln/transforms/shapelets.hh: Add file, it contains the shapelets
-        transforms implementation for olena.
-        * oln/makefile.src: Add oln/transforms/shapelets.hh to the
-        distribution's files.
+(Project-Version oln 10 189)
+(Parent-Version oln 10 188)
+(Version-Log "Damien Thivolle  <damien@lrde.epita.fr>
+* oln/transforms/shapelets.hh: Change functions to functors,
+bug fixes.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sun, 06 Jun 2004 23:17:15 +0200")
+(Checkin-Time "Mon, 07 Jun 2004 19:41:27 +0200")
 (Checkin-Login thivol_d)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -118,7 +115,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.12 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.45 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.42 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.5 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.6 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.13 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.39 600))
 
@@ -1451,7 +1448,7 @@
 ;; Files added by populate at Sun, 06 Jun 2004 23:11:34 +0200,
 ;; to version 10.187(w), by thivol_d:
 
-  (olena/oln/transforms/shapelets.hh (oln/r/10_shapelets. 1.1 600))
+  (olena/oln/transforms/shapelets.hh (oln/r/10_shapelets. 1.2 600))
 )
 (Merge-Parents)
 (New-Merge-Parents)
