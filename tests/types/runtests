@@ -16,7 +16,7 @@ exec 2>&6
 
 failures=0
 
-indir=$SRCDIR/tests
+indir=${SRCDIR-.}/tests
 rundir=runs
 test -d $rundir || mkdir $rundir
 

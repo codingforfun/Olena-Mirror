@@ -1,17 +1,20 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 21)
-(Parent-Version oln 0_5 20)
-(Version-Log "2002-08-27  David Lesage  <david@lrde.epita.fr>
+(Project-Version oln 0_5 22)
+(Parent-Version oln 0_5 21)
+(Version-Log "2002-08-27  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-        * oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh, 
-        oln/core/bkd_iter3d.hh: Change template constructors to harmonize
-        with fwd_iter1d, 2d, 3d constructors.
+	* types/tests/op2, types/tests/comp3, types/tests/comp2,
+	types/tests/comp1, types/tests/float_r1, types/tests/float_r2,
+	types/tests/float1, types/tests/float_c1, types/tests/int7,
+	types/tests/op1: New files.
+	* types/runtests (SRCDIR): Default to `.'.
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 27 Aug 2002 12:58:46 +0200")
-(Checkin-Login david)
+(Checkin-Time "Tue, 27 Aug 2002 18:10:12 +0200")
+(Checkin-Login duret_g)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
 ;; diff-ignore Makefile\.in$
@@ -342,7 +345,7 @@
   (tests/array/test_array1d.cc (oln/f/26_test_array 1.2 644))
   (tests/array/test_array2d.cc (oln/f/25_test_array 1.2 644))
   (tests/array/test_array3d.cc (oln/f/24_test_array 1.2 644))
-  (tests/ChangeLog (oln/e/30_ChangeLog 1.19 600))
+  (tests/ChangeLog (oln/e/30_ChangeLog 1.20 600))
   (tests/check/check.hh (oln/e/40_check.hh 1.2 600))
   (tests/check/data.cc (oln/f/5_data.cc 1.2 600))
   (tests/check/data.hh (oln/f/6_data.hh 1.1 600))
@@ -484,9 +487,23 @@
   (tests/types/tests/int2 (oln/h/0_int2 1.1 644))
   (tests/types/tests/int1 (oln/h/1_int1 1.1 644))
   (tests/types/tests/unsafe1 (oln/h/2_unsafe1 1.1 644))
-  (tests/types/runtests (oln/h/3_runtests 1.1 755))
+  (tests/types/runtests (oln/h/3_runtests 1.2 755))
   (tests/types/Makefile.in (oln/h/4_Makefile.i 1.2 644))
   (tests/types/Makefile.am (oln/h/5_Makefile.a 1.2 644))
+
+;; Files added by populate at Tue, 27 Aug 2002 18:05:09 +0200,
+;; to version 0_5.21(w), by duret_g:
+
+  (tests/types/tests/op2 (oln/h/6_op2 1.1 644))
+  (tests/types/tests/comp3 (oln/h/7_comp3 1.1 644))
+  (tests/types/tests/comp2 (oln/h/8_comp2 1.1 644))
+  (tests/types/tests/comp1 (oln/h/9_comp1 1.1 644))
+  (tests/types/tests/float_r1 (oln/h/10_float_r1 1.1 644))
+  (tests/types/tests/float_r2 (oln/h/11_float_r2 1.1 644))
+  (tests/types/tests/float1 (oln/h/12_float1 1.1 644))
+  (tests/types/tests/float_c1 (oln/h/13_float_c1 1.1 644))
+  (tests/types/tests/int7 (oln/h/14_int7 1.1 644))
+  (tests/types/tests/op1 (oln/h/15_op1 1.1 644))
 )
 (Merge-Parents)
 (New-Merge-Parents)

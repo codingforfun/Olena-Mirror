@@ -1,0 +1,2 @@
+sfloat pi = M_PI;
+return sin(pi) == 0.0;

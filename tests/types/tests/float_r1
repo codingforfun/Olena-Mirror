@@ -1,0 +1,2 @@
+typedef range<sfloat, bounded_s<10, 30>, strict> sr;
+sr f = 23.0;

@@ -1,3 +1,11 @@
+2002-08-27  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* types/tests/op2, types/tests/comp3, types/tests/comp2,
+	types/tests/comp1, types/tests/float_r1, types/tests/float_r2,
+	types/tests/float1, types/tests/float_c1, types/tests/int7,
+	types/tests/op1: New files.
+	* types/runtests (SRCDIR): Default to `.'.
+
 2002-08-26  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* types/Makefile.am (EXTRA_DIST): New.
@@ -30,7 +38,7 @@
 
 2002-07-18  Astrid Wang  <astrid@lrde.epita.fr>
 
-	* tests/convol/sobel_gradient.cc: Fix, thanks to convert::stretch.
+	* convol/sobel_gradient.cc: Fix, thanks to convert::stretch.
 
 2002-07-18  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
@@ -39,46 +47,46 @@
 
 2002-07-18  Astrid Wang  <astrid@lrde.epita.fr>
 
-	* tests/convol/Makefile.am: New test: sobel_gradient.
-	* tests/convol/sobel_gradient.cc: New file.
-	* tests/convol/slow_sum_2d_1.cc, tests/convol/slow_sum_2d_2.cc,
-	tests/data/random.pgm, tests/convol/sum_on_random.pgm: New files.
+	* convol/Makefile.am: New test: sobel_gradient.
+	* convol/sobel_gradient.cc: New file.
+	* convol/slow_sum_2d_1.cc, convol/slow_sum_2d_2.cc,
+	tests/data/random.pgm, convol/sum_on_random.pgm: New files.
 
 2002-07-17  Astrid Wang  <astrid@lrde.epita.fr>
 
-	* tests/Makefile.am (SUBDIRS): Add convol.
-	* tests/convol/Makefile.am: New file.
+	* Makefile.am (SUBDIRS): Add convol.
+	* convol/Makefile.am: New file.
 
 2002-07-16  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-	* tests/check/Makefile.flags (AM_CPPFLAGS): Don't -Include `/src'.
-	* tests/array/gen_test.cc: Don't -Include `/src' when calling GCC.
-	* tests/array/gen_test_utils/prelude,
-	tests/array/test_array1d.cc, tests/array/test_array2d.cc,
-	tests/array/test_array3d.cc, tests/convert/convcomp.cc,
-	tests/convert/convcomp.hh, tests/io/2d.cc, tests/io/loadsave.hh,
-	tests/morpho/edoc.cc, tests/morpho/extrkiller.cc,
+	* check/Makefile.flags (AM_CPPFLAGS): Don't -Include `/src'.
+	* array/gen_test.cc: Don't -Include `/src' when calling GCC.
+	* array/gen_test_utils/prelude,
+	tests/array/test_array1d.cc, array/test_array2d.cc,
+	tests/array/test_array3d.cc, convert/convcomp.cc,
+	tests/convert/convcomp.hh, io/2d.cc, io/loadsave.hh,
+	tests/morpho/edoc.cc, morpho/extrkiller.cc,
 	tests/morpho/reconstruction.cc: Use `include <oln/mumble>' instead
 	of include "mumble".  Always include Olena's headers first.
 
 2002-07-10  Astrid Wang  <astrid@lrde.epita.fr>
 
-	* tests/check/srcdir.cc (Isrcdir): Fix by using std:: .
+	* check/srcdir.cc (Isrcdir): Fix by using std:: .
 
 2002-07-09  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-	* tests/check/srcdir.hh (Isrcdir): New function.
-	* tests/check/srcdir.cc (Isrcdir): New function.
-	* tests/check/Makefile.am (AM_CXXFLAGS): Don't use -ansi.
-	* tests/check/verbose.cc (verbose_setup): Don't inhibit stderr.
-	* tests/array/gen_test.cc (copyfile): Take a string argument.
+	* check/srcdir.hh (Isrcdir): New function.
+	* check/srcdir.cc (Isrcdir): New function.
+	* check/Makefile.am (AM_CXXFLAGS): Don't use -ansi.
+	* check/verbose.cc (verbose_setup): Don't inhibit stderr.
+	* array/gen_test.cc (copyfile): Take a string argument.
 	(write_prelude): Honor srcdir.
 	(write_postlude_and_test): Return a bool.  Honor srcdir and CXX.
 	Report outcomes on cerr.
 	(main): Rename as ...
 	(check): ... this.  Return a bool indicating failure.
-	* tests/array/gen_test_utils/Makefile.am: Delete.  Merge with ...
-	* tests/array/Makefile.am: ... this.
+	* array/gen_test_utils/Makefile.am: Delete.  Merge with ...
+	* array/Makefile.am: ... this.
 	(EXTRA_DIST, CLEANFILES): New.
 
 2002-07-09  Astrid Wang  <astrid@ljubljana.lrde.epita.fr>
@@ -91,7 +99,7 @@
 	array/gen_test_utils/errors.hh, array/gen_test_utils/errors.cc:
 	New files.
 	* Makefile.am (SUBDIRS): Add array.
-	* configure.ac: Output tests/array/Makefile and
+	* configure.ac: Output array/Makefile and
 	tests/array/gen_test_utils/Makefile.
 
 2002-07-02  Alexandre Duret-Lutz  <duret_g@epita.fr>
