@@ -1,3 +1,16 @@
+2004-04-15  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* tests/morpho/tests/attr_op_cl: Disable dist closing/opening
+	tests.
+
+	* tests/morpho/tests/md5_morpho_attribute_closing_opening_hh12:
+	Disable test.
+
+	* tests/morpho/tests/md5_morpho_attribute_closing_opening_hh13:
+	Disable test.
+
+
+
 2004-04-14  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* olena/tests/morpho/tests/md5_morpho_reconstruction_hh5: Fix to make
