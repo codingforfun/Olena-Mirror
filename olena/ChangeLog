@@ -1,6 +1,8 @@
+2004-03-19  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/utils/histogram.hh: Fix doc.
+	* olena/oln/convert/value_to_point.hh: Likewise.
+
 2004-03-18  Niels Van Vliet  <niels@lrde.epita.fr>
-	* integre/ntg/real/behavior.hh: Change the unsafe::get<T>::check().
-	* integre/ntg/utils/cast.hh: Change cast::force().
 	* olena/oln/convert/value_to_point.hh: Fix value_to_point<bin>.
 	* olena/oln/utils/histogram.hh: Fix hisogram<bin>.
 	* olena/oln/morpho/fast_morpho.hxx: Histogram to abstract histogram.

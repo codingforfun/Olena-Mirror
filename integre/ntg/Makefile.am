@@ -1,4 +1,4 @@
-## Process this file with Automake to produce Makefile.in -*- Makefile -*- 
+## Process this file with Automake to produce Makefile.in -*- Makefile -*-
 
 ntgdir = $(includedir)/ntg
 nobase_ntg_HEADERS =				\
@@ -27,6 +27,7 @@ nobase_ntg_HEADERS =				\
   core/internal/traits.hh			\
   core/interval.hh				\
   core/macros.hh				\
+  core/pred_succ.hh				\
   core/predecls.hh				\
   core/type.hh					\
   core/type_traits.hh				\

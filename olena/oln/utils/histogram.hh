@@ -178,11 +178,11 @@ namespace oln {
     ** number of occurrences an image3d (because rgb_8 has 3 components).
     **
     ** \todo FIXME:  An image is inside the histogram. This is incorrect
-    **  because it is not exactly an image (we do not need any border).
+    **  because it is not exactly an image (no border needed).
     **
     ** \param T Type of the image.
-    ** \param CPT Type use to count the occurrences (unsinged).
-    ** \param V2P Concersion class to convert a value T to a point.
+    ** \param CPT Type used to count the occurrences (unsigned).
+    ** \param V2P Conversion class to convert a value T to a point.
     ** \param Exact Exact type of the histogram.
     **
     ** \see oln::abstract::histogram
@@ -227,7 +227,7 @@ namespace oln {
 
       /*! \brief Empty histogram.
       **
-      ** \note The function Init(image) should be used after this
+      ** \note The function init(image) should be used after this
       ** constructor.
       */
       histogram(const value_to_point_type & c2p = value_to_point_type()):
@@ -292,10 +292,10 @@ namespace oln {
 
     /*! Minimum value of an histogram.
     **
-    ** It return the smaller value within the image used to build the
+    ** Return the smaller value within the image used to build the
     ** histogram.
     **
-    ** \note It can be slow when the histogram is sparse because it iterate
+    ** \note It can be slow when the histogram is sparse because it iterates
     ** over a large range of 0. Use \a histogram_min or \a histogram_minmax
     ** instead.
     ** \see histogram_min
@@ -317,11 +317,11 @@ namespace oln {
     }
     /*! Maximum value of an histogram.
     **
-    ** It return the higher value within the image used to build the
+    ** Return the higher value within the image used to build the
     ** histogram.
     **
     ** \note It can be slow when the histogram is sparse because it
-    ** iterate over a large range of 0. Use histogram_max or
+    ** iterates over a large range of 0. Use histogram_max or
     ** histogram_minmax instead.
     ** \see histogram_max
     */
@@ -357,12 +357,12 @@ namespace oln {
     /*! Build the histogram and has quick min and max functions.
     **
     ** The idea behind the min- and max-specialized histogram is to
-    ** maintain worst min and max bounds while updating histogram.  We
-    ** don't maintain _exact_ min and max bounds, because this would
+    ** maintain worst min and max bounds while updating histogram.  It
+    ** does not maintain _exact_ min and max bounds, because this would
     ** involve some costly computation when removing values from the
     ** histogram and maybe this time will be lost if the removed value is
     ** reinserted before max() or min() is called.\n
-    ** So we update the _worst_ min and max bounds whenever the histogram
+    ** So it updates the _worst_ min and max bounds whenever the histogram
     ** value are accessed, and delay the _real_ min and max computation
     ** until min() or max() is called.
     ** \see histogram
@@ -687,10 +687,10 @@ namespace oln {
       // calculate the histogram of the image
       utils::histogram<val> histo(im);
 
-      // initialize the array of pointer to the point in the result
-      // with the histogram we can know the number of each color and
-      // then calculate an array of pointer for quick access to each
-      // value of the image
+      // Initialize the array of pointer to the point in the result.
+      // With the histogram the number of each color can be deduced and
+      // then it calculates an array of pointer for quick access to each
+      // value of the image.
       const ntg_cumul_type(val) card = ntg_max_val(val)
 					- ntg_min_val(val) + 1;
       std::vector<oln_point_type(I)* > ptr(card);
@@ -741,7 +741,7 @@ namespace oln {
 	*(ptr[unsigned(im[p] - ntg_min_val(val))]++) = p;
     }
 
-    /*! Select staticly the good distrib_sort.
+    /*! Select statically the good distrib_sort.
     **
     ** \param reverse If the sort should be reverted or not.
     */

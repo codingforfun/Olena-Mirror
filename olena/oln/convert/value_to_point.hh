@@ -37,7 +37,8 @@ namespace oln {
   namespace convert {
     /*! Convert a value of pixel to a point.
     **
-    ** For example it transforms an RGB color to a 3D point (ntg::rgb_8 => oln::point3d).
+    ** For example, transform an RGB color to a 3D point
+    ** (ntg::rgb_8 => oln::point3d).
     ** This function is useful to build the histogram. \n
     ** Example:
     ** \verbatim
@@ -57,14 +58,15 @@ namespace oln {
 				Exact>::ret>
     {
     private:
-      /// By default a scalar is expected. If the type is a vector, a specialization should be written.
+      /// By default a scalar is expected. If the type is a vector, a
+      /// specialization should be written.
       typedef typename ntg_is_a(Argument_type, ntg::non_vectorial)::ensure_type ensure_type;
     public:
-      /// By default it return a point1d.
+      /// By default return a point1d.
       typedef point1d result_type;
       typedef Argument_type argument_type;
 
-      /// This class has bee made because of the lake of operator-- in ntg::bin
+      /// Convert a binary to a point.
       template <typename O, typename I>
       struct doit_binary
       {
@@ -75,7 +77,7 @@ namespace oln {
 	  return input ? O(1) : O(0);
 	}
       };
-      /// This class has bee made because of the lake of operator-- in ntg::bin
+      /// Convert a non vectorial to a point.
       template <typename O, typename I>
       struct doit_not_binary
       {
@@ -99,7 +101,7 @@ namespace oln {
 
     /*! Specialization for color of three dimension.
     **
-    ** \todo It could be generalized to n dimensions if there were a trait that
+    ** \todo Could be generalized to n dimensions if there were a trait that
     ** give a pointkd for a given dimension k.
     */
     template <unsigned Qbits, template <unsigned> class S, class Exact>
