@@ -1,5 +1,30 @@
 2003-05-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* ntg/basics.hh: Add new includes.
+
+	* ntg/real/optraits_builtins_float.hh: Add name() methods.
+	* ntg/core/internal/traits.hh: Remove default name() method.
+	* ntg/core/interval.hh: Make name() methods public.
+	
+	* ntg/real/typetraits_builtins_float.hh,
+	ntg/real/typetraits_builtins_int.hh: Remove useless typedefs.
+
+	* all.hh: Remove useless includes.
+	* ntg/real/int_s.hh, ntg/real/int_u.hh: Update includes.
+	
+	* ntg/core/contract.hh: New file.
+	* ntg/Makefile.am: Update consequently.
+	* ntg/utils/debug.hh: New utilities.
+	* ntg/core/behavior.hh: Use ntg_assert.
+	* ntg/core/internal/global_ops.hh Update includes.
+	* ntg/core/internal/global_ops_defs.hh: Add an example of use 
+	of the new utilities of debug.
+
+	* tests/utils/runtests, tests/utils/Makefile.am: New files.
+	* tests/utils/tests/debug1: New test.
+
+2003-05-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* ntg/real/int_s.hh, ntg/real/int_u.hh: Minor fix.
 
 2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>

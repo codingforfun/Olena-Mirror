@@ -35,10 +35,10 @@
 # include <ntg/core/macros.hh>
 # include <ntg/core/internal/macros.hh>
 # include <ntg/core/value.hh>
-# include <ntg/core/type_traits.hh>
 # include <ntg/real/optraits_scalar.hh>
 # include <ntg/real/real_value.hh>
 # include <ntg/core/type_traits.hh>
+# include <ntg/core/contract.hh>
 
 # include <ntg/utils/debug.hh>
 
@@ -145,8 +145,8 @@ namespace ntg
       template <class P>
       static storage_type apply (const P& p)
       {
-	precondition(ntg_cast(p) <= ntg_max_val(T));
-	precondition(ntg_cast(p) >= ntg_min_val(T));
+	ntg_assert(ntg_cast(p) <= ntg_max_val(T));
+	ntg_assert(ntg_cast(p) >= ntg_min_val(T));
 
 	return static_cast<storage_type>(p);
       }

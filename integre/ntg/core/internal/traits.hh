@@ -63,19 +63,17 @@ namespace ntg {
     // top of hierarchy
     template <class T>
     class optraits_top
-    {
-    public:
-      // default impl
-      static std::string name() { return T::name(); }
-    };
+    {};
 
     // enumerated types
     template <class T>
-    class optraits_enum : public optraits_top<T> {};
+    class optraits_enum : public optraits_top<T>
+    {};
 
     // vectorial types
     template <class T>
-    class optraits_vector : public optraits_top<T> {};
+    class optraits_vector : public optraits_top<T>
+    {};
 
     // default impl
     template <class T>

@@ -56,8 +56,6 @@ namespace ntg {
       typedef self unsigned_largest_type;
       typedef self unsigned_cumul_type;
       typedef self integer_type;
-
-      typedef self op_traits;
     };
 
     template <>
@@ -82,8 +80,6 @@ namespace ntg {
       typedef self unsigned_largest_type;
       typedef self unsigned_cumul_type;
       typedef self integer_type;
-
-      typedef self op_traits;
     };
 
   } // end of internal.

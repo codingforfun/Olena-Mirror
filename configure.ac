@@ -170,6 +170,7 @@ OLN_COLLECTION([OLN_TOP],
 
       # NTG_TESTS defined in oln-local.m4
       NTG_TESTS([types])
+      NTG_TESTS([utils])
 
       AC_SUBST([NTG_TESTS_SUBDIRS])
 

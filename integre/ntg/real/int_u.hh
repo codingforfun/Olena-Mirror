@@ -28,20 +28,11 @@
 #ifndef NTG_REAL_INT_U_HH
 # define NTG_REAL_INT_U_HH
 
-# include <ntg/config/system.hh>
+# include <ntg/basics.hh>
+# include <ntg/real/optraits_scalar.hh>
 # include <ntg/real/real_value.hh>
 
 # include <mlc/cmp.hh>
-
-// --
-
-# include <ntg/core/behavior.hh>
-# include <ntg/core/internal/builtins_properties.hh>
-# include <ntg/core/internal/global_ops.hh>
-# include <ntg/core/type_traits.hh>
-# include <ntg/core/predecls.hh>
-# include <ntg/core/type_traits.hh>
-# include <ntg/real/optraits_scalar.hh>
 
 # include <string>
 # include <sstream>

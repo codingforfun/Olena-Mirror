@@ -36,6 +36,7 @@
 # include <ntg/core/internal/global_ops_traits.hh>
 # include <ntg/core/internal/optraits_builtins.hh>
 # include <ntg/core/internal/typetraits_builtins.hh>
+# include <ntg/utils/debug.hh>
 
 // macros defs
 # include <ntg/core/internal/global_ops_defs.hh>

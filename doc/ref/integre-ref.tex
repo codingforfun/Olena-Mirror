@@ -1,24 +1,23 @@
 
-This section describes the basic types available with Olena. By
-\emph{basic types} we roughly mean any type that can be used as pixel
-value in an image, such as \code{int}, \code{float}, etc.  This also
-includes composite types like complexes, points, vectors, and colors.
+This section describes the basic types available with \integre. By
+\emph{basic types} we roughly mean any type that can be used to store
+a value, such as \code{int}, \code{float}, etc.  This also includes
+composite types like complexes, vectors, and colors.
 
-For completeness we will discuss matrices too, although these are not
-deemed basic they are relevant to the description of vectors.
+%% For completeness we will discuss matrices too, although these are not
+%% deemed basic they are relevant to the description of vectors.
 
 Other types not discussed here, but worth to mention, includes
 images and iterators.  These will be described in a separate section.
 
-
 \subsection{Hierarchy of types}
 
-Here is a list of basic types supported by Olena.  Although it is
+Here is a list of basic types supported by \integre.  Although it is
 presented hiarchically, this does not means that these types are
 implemented hierarchically in the C++ code.
 
 \begin{list}{--}{}
-\item Scalar types
+\item Real types
   \begin{list}{--}{}
   \item Integers
     \begin{list}{--}{}
@@ -31,7 +30,7 @@ implemented hierarchically in the C++ code.
         \item \code{signed short}
         \item \code{signed char}
         \end{list}
-      \item Olena types: \code{int_s<BITS, BEHAVIOR>}
+      \item \integre type: \code{int_s<BITS, BEHAVIOR>}
       \end{list}
     \item Unsigned
       \begin{list}{--}{}
@@ -42,17 +41,17 @@ implemented hierarchically in the C++ code.
         \item \code{unsigned short}
         \item \code{unsigned char}
         \end{list}
-      \item Olena types: \code{int_u<BITS, BEHAVIOR>}
+      \item \integre types: \code{int_u<BITS, BEHAVIOR>}
       \end{list}
     \end{list}
-  \item Floats
+  \item Decimal
     \begin{list}{--}{}
     \item C built-in types
       \begin{list}{--}{}
         \item \code{float}
         \item \code{double}
       \end{list}
-    \item Olena types
+    \item \integre types
       \begin{list}{--}{}
         \item \code{float_s}
         \item \code{float_d}
@@ -61,30 +60,22 @@ implemented hierarchically in the C++ code.
   \end{list}
 \item Enumerated types
   \begin{list}{--}{}
-  \item C built-in \code{bool}
-  \item \code{bin}
-  \item \code{label<TYPE>}
+  \item C built-in type: \code{bool}
+  \item \integre type: \code{bin}
   \end{list}
 \item Vectorial types
   \begin{list}{--}{}
-  \item FIXME: complex
+  \item \integre type: \code{cplx<R, T>}
     \begin{list}{--}{}
-    \item $a+ib$
-    \item $r\exp{i\theta}$
-    \end{list}
-  \item points
-    \begin{list}{--}{}
-    \item \code{point1d}
-    \item \code{point2d}
-    \item \code{point3d}
+    \item \code{cplx<rect, T>}: complex with $a+ib$ representation
+    \item \code{cplx<polar, T>}: complex with $r\exp{i\theta}$ representation
     \end{list}
   \item \code{vec<N, T>}
-  \item FIXME: colors
+  \item \code{colors}
   \end{list}
-\item FIXME: Matrices
 \end{list}
 
-\subsection{Scalar types}
+\subsection{Real types}
 
 All types listed under \emph{scalar types} in the above enumeration,
 can be used together with most common arithmetic operations ($+$, $=$,
@@ -92,7 +83,7 @@ $<$, ...).  However Olena's type do not behave exactly like the
 the built-in types.  We believe it's safer To
 use Olena's type instead of the built-in types.
 
-\subsection{\code{int_u<N, BEHAVIOR=abort>}}
+\subsection{\code{int_u<N, BEHAVIOR=strict>}}
 
 This template can be used to define unsigned integers of various size
 and behaviors.

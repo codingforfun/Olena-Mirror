@@ -1,3 +1,13 @@
+2003-05-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ref/ref-types.tex: Rename as ...
+	* ref/integre-ref.tex: ... this.
+	* ref/integre-ref.tex: Update.
+	
+	* ref/oln-ref.tex: Minor changes.	
+
+	* ref/Makefile.am: Fix html generation.
+
 2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ref/ref-types.tex: Fix typo.

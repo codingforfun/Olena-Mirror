@@ -46,7 +46,7 @@ ref-level.tex: $(level_files) $(srcdir)/processing.tpl
 tex_TEX = oln-ref.tex
 
 built_oln_ref_TEX = ref-morpho.tex ref-level.tex
-oln_ref_TEX = $(built_oln_ref_TEX) ref-types.tex
+oln_ref_TEX = $(built_oln_ref_TEX) integre-ref.tex
 
 oln-ref.dvi: $(tex_TEX) $(oln_ref_TEX)
 	$(TEXI2DVI) `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
@@ -59,8 +59,8 @@ oln-ref.pdf: $(tex_TEX) $(oln_ref_TEX)
 # not known at the time Makefile.in is generated)
 
 html.tar.gz: $(tex_TEX) $(oln_ref_TEX)
-	$(HEVEA) -o html/oln-ref.html `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
-	$(HEVEA) -o html/oln-ref.html `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
+	$(HEVEA) -o html/oln-ref.html -I $(srcdir) `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
+	$(HEVEA) -o html/oln-ref.html -I $(srcdir) `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
 	$(TAR) -czf $@ html
 
 ###

@@ -59,9 +59,6 @@
     typedef builtin::unsigned_largest_trait<Name>::ret	unsigned_largest_type;	\
     typedef builtin::unsigned_cumul_trait<Name>::ret	unsigned_cumul_type;	\
     typedef self					integer_type;		\
-										\
-    typedef self op_traits;							\
-										\
   };
 
 namespace ntg

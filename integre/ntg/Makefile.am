@@ -18,6 +18,7 @@ nobase_ntg_HEADERS =				\
   config/system.hh				\
   core/abstract_hierarchy.hh			\
   core/behavior.hh				\
+  core/contract.hh				\
   core/internal/builtins_properties.hh		\
   core/internal/global_ops.hh			\
   core/internal/global_ops_defs.hh		\

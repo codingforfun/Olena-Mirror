@@ -33,13 +33,17 @@
   should need.
 */
 
+# include <ntg/config/system.hh>
+
 # include <ntg/core/abstract_hierarchy.hh>
 # include <ntg/core/behavior.hh>
+# include <ntg/core/interval.hh>
 # include <ntg/core/internal/global_ops.hh>
 # include <ntg/core/macros.hh>
 # include <ntg/core/predecls.hh>
 # include <ntg/core/type.hh>
 # include <ntg/core/internal/typetraits_builtins.hh>
+# include <ntg/core/internal/builtins_properties.hh>
 # include <ntg/core/value.hh>
 
 # include <ntg/utils/cast.hh>

@@ -60,6 +60,7 @@ namespace ntg
   template <unsigned i_min, unsigned i_max>
   class bounded_u : public bounded<unsigned, i_min, i_max>
   {
+  public:
     static std::string name()
     {
       std::ostringstream out;
@@ -71,6 +72,7 @@ namespace ntg
   template <signed i_min, signed i_max>
   class bounded_s : public bounded<signed, i_min, i_max>
   {
+  public:
     static std::string name()
     {
       std::ostringstream out;

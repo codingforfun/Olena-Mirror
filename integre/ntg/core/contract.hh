@@ -25,56 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_DEBUG_HH
-# define NTG_DEBUG_HH
+#ifndef NTG_CORE_CONTRACT_HH
+# define NTG_CORE_CONTRACT_HH
 
-# include <ntg/config/system.hh>
-# include <ntg/basics.hh>
-
-# include <string>
-
-namespace ntg
-{
-
-  //
-  //  usage: typename_of_var(obj)
-  //
-  /////////////////////////////////
-
-  template<class T> inline
-  std::string typename_of_var(const T&) { return type_traits<T>::name(); }
-
-  //
-  //  typename_of<T>()
-  //
-  /////////////////////////////////
-
-  template<class T> inline
-  std::string typename_of() { return type_traits<T>::name(); }
-
-#ifdef NTG_DEBUG
-  extern bool debug_active;
-  extern std::string debug_context;
-#endif
-
-}
-
-# ifdef NTG_DEBUG
-#  define ntg_debug_define_vars(State)		\
-  bool ntg::debug_active = State;		\
-  std::string ntg::debug_context
-#  define ntg_debug_activate() ntg::debug_active = true
-#  define ntg_debug_desactivate() ntg::debug_active = false
-#  define ntg_is_debug_active (ntg::debug_active == true)
-#  define ntg_debug_context_set(Context) ntg::debug_context = Context
-#  define ntg_debug_context_clear(Context) ntg::debug_context.clear()
+# ifdef NDEBUG
+#  define ntg_assert(expr) ((void) 0)
 # else
-#  define ntg_debug_define_vars(State)
-#  define ntg_debug_activate()
-#  define ntg_debug_desactivate()
-#  define ntg_is_debug_active false
-#  define ntg_debug_context_set(Context)
-#  define ntg_debug_context_clear(Context)
+#  ifdef NTG_DEBUG
+#   define ntg_assert(expr)					\
+  if ((expr) == 0)						\
+  {								\
+    if (!ntg::debug_context.empty())			\
+      std::cerr << "In context: " << ntg::debug_context 	\
+                << std::endl;					\
+    assertion(expr);						\
+  }
+#  else
+    # define ntg_assert(expr) assertion(expr)
+#  endif
 # endif
 
-#endif // ndef NTG_DEBUG_HH
+#endif // !NTG_CORE_CONTRACT_HH

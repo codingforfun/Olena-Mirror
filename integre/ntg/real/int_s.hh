@@ -36,6 +36,7 @@
 
 # include <ntg/basics.hh>
 # include <ntg/real/optraits_scalar.hh>
+# include <ntg/real/real_value.hh>
 
 # include <string>
 # include <sstream>

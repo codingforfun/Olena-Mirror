@@ -28,17 +28,7 @@
 #ifndef NTG_ALL_HH
 # define NTG_ALL_HH
 
-# include <ntg/config/system.hh>
-
 # include <ntg/basics.hh>
-
-# include <ntg/core/type.hh>
-# include <ntg/core/predecls.hh>
-
-# include <ntg/core/internal/builtins_properties.hh>
-
-# include <ntg/core/behavior.hh>
-# include <ntg/core/interval.hh>
 
 # include <ntg/real/int_u.hh>
 # include <ntg/real/int_s.hh>

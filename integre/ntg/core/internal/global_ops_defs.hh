@@ -43,7 +43,7 @@
 
 # define GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, Builtin)		\
 template <class T2>						\
-inline Builtin& Op(Builtin& lhs, const value<T2>& rhs)	\
+inline Builtin& Op(Builtin& lhs, const value<T2>& rhs)		\
 { return optraits<Builtin>::Name(lhs, rhs.self()); }
 
 
@@ -55,7 +55,7 @@ inline Builtin& Op(Builtin& lhs, const value<T2>& rhs)	\
 
 # define GLOBAL_ASSIGN_OP(Op, Name)			\
 template <class T1, class T2>				\
-inline T1& Op(value<T1>& lhs, const T2& rhs)	\
+inline T1& Op(value<T1>& lhs, const T2& rhs)		\
 { return optraits<T1>::Name(lhs.self(), rhs); }		\
 							\
 GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, signed   long);	\
@@ -78,20 +78,20 @@ GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, bool);
 //
 /////////////////////////////////////////////////////
 
-# define GLOBAL_ARITH_OP_BUILTIN(Op, Name, Builtin)			\
-template <class T2>							\
-inline \
-ntg_return_type(Name, Builtin, T2) \
-Op(Builtin lhs, const value<T2>& rhs)				\
-{									\
-  typedef ntg_deduced_traits_type(Name, Builtin, T2) deduced_type;							    \
-									\
-  typedef typename deduced_type::impl impl;				\
-  typedef typename deduced_type::lhs_type lhs_type;			\
-  typedef typename deduced_type::rhs_type rhs_type;			\
-									\
-  return optraits<impl>::Name(static_cast<lhs_type>(lhs),		\
-	    	              static_cast<rhs_type>(rhs.self()));	\
+# define GLOBAL_ARITH_OP_BUILTIN(Op, Name, Builtin)					\
+template <class T2>									\
+inline											\
+ntg_return_type(Name, Builtin, T2)							\
+Op(Builtin lhs, const value<T2>& rhs)							\
+{											\
+  typedef ntg_deduced_traits_type(Name, Builtin, T2) deduced_type;			\
+											\
+  typedef typename deduced_type::impl impl;						\
+  typedef typename deduced_type::lhs_type lhs_type;					\
+  typedef typename deduced_type::rhs_type rhs_type;					\
+											\
+  return optraits<impl>::Name(static_cast<lhs_type>(lhs),				\
+	    	              static_cast<rhs_type>(rhs.self()));			\
 }
 
 // 
@@ -99,32 +99,49 @@ Op(Builtin lhs, const value<T2>& rhs)				\
 //
 ////////////////////////////////////////////////////////////////////////
 
-# define GLOBAL_ARITH_OP(Op, Name)					\
-template <class T1, class T2>						\
-inline									\
-ntg_return_type(Name, T1, T2)						\
-Op(const value<T1>& lhs, const T2& rhs)					\
-{									\
-  typedef ntg_deduced_traits_type(Name, T1, T2) deduced_type;		\
-									\
-  typedef typename deduced_type::impl impl;				\
-  typedef typename deduced_type::lhs_type lhs_type;			\
-  typedef typename deduced_type::rhs_type rhs_type;			\
-									\
-  return optraits<impl>::Name(static_cast<lhs_type>(lhs.self()),	\
-			      static_cast<rhs_type>(rhs));		\
-}									\
-									\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   long);			\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned long);			\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   int);			\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned int);			\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   short);			\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned short);			\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   char);			\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned char);			\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, float);				\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, double);				\
+
+
+# define GLOBAL_ARITH_OP(Op, Name)						\
+template <class T1, class T2>							\
+inline										\
+ntg_return_type(Name, T1, T2)							\
+Op(const value<T1>& lhs, const T2& rhs)						\
+{										\
+ /* This code is an example of debugging information, disabled until a good     \
+  * way to handle debug is found.						\
+  */										\
+ /*										\
+ if (ntg_is_debug_active)							\
+ {										\
+     std::ostringstream s;							\
+     s << typename_of<ntg_return_type(Name, T1, T2)>() << " "			\
+	       << #Op << "(" << typename_of<T1>() << " lhs, "			\
+	    << typename_of<T2>() << " rhs)"  << std::endl			\
+     << "\twith lhs = " << lhs.exact() << " and rhs = " << rhs;			\
+     ntg_debug_context_set(s.str());						\
+ }										\
+ */										\
+										\
+  typedef ntg_deduced_traits_type(Name, T1, T2) deduced_type;			\
+										\
+  typedef typename deduced_type::impl impl;					\
+  typedef typename deduced_type::lhs_type lhs_type;				\
+  typedef typename deduced_type::rhs_type rhs_type;				\
+										\
+  return optraits<impl>::Name(static_cast<lhs_type>(lhs.self()),		\
+			      static_cast<rhs_type>(rhs));			\
+}										\
+										\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   long);				\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned long);				\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   int);				\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned int);				\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   short);				\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned short);				\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   char);				\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned char);				\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, float);					\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, double);					\
 GLOBAL_ARITH_OP_BUILTIN(Op, Name, bool);
 
 
@@ -138,11 +155,11 @@ GLOBAL_ARITH_OP_BUILTIN(Op, Name, bool);
 
 # define GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, Builtin)			\
 template <class T2>							\
-inline \
-ntg_return_type(logical, Builtin, T2) \
-Op(const Builtin& lhs, const value<T2>& rhs)			\
+inline									\
+ntg_return_type(logical, Builtin, T2)					\
+Op(const Builtin& lhs, const value<T2>& rhs)				\
 {									\
-  typedef ntg_deduced_traits_type(logical, Builtin, T2) deduced_type;		\
+  typedef ntg_deduced_traits_type(logical, Builtin, T2) deduced_type;	\
 									\
   typedef typename deduced_type::impl impl;				\
   typedef typename deduced_type::lhs_type lhs_type;			\

@@ -60,6 +60,7 @@ namespace ntg {
       // Furthermore max()-min() can't be computed.
       static storage_type_ sup() { return OLN_FLOAT_INFINITY; }
       static storage_type_ inf() { return - sup (); }
+      static std::string name() { return "float"; }
     };
 
     struct all_float_traits
@@ -185,6 +186,7 @@ namespace ntg {
       // Furthermore max()-min() can't be computed.
       static storage_type_ sup() { return OLN_DOUBLE_INFINITY; }
       static storage_type_ inf() { return - sup (); }
+      static std::string name() { return "double"; }
     };
 
     struct all_double_traits
