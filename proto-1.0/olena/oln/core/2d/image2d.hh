@@ -16,7 +16,8 @@ namespace oln {
   template <typename T> class image2d;
 
   // category decl
-  template <typename T> struct category_type< image2d<T> > { typedef cat::image ret; };
+  template <typename T> 
+  struct category_type< image2d<T> > { typedef cat::image ret; };
 
 
   /*! \class props< abstract::image, image2d<T> >

@@ -1,5 +1,16 @@
 2005-01-21  Simon Odou  <simon@lrde.epita.fr>
 
+	* tests/core/tests/image3d: New.
+	* oln/fancy/print.hh: Add print for image3d.
+	* oln/fancy/iota.hh: Add iota for image3d.
+	* oln/core/2d/image2d.hh: Fix a 80 columns line.
+	* oln/core/3d/array3d.hh: Fix a missing variable.
+	* oln/core/3d/image3d.hh: New.
+	* oln/core/3d/point3d.hh: Fix a missing "rhs".
+	* oln/basics3d.hh: Add image3d include.
+
+2005-01-21  Simon Odou  <simon@lrde.epita.fr>
+
 	* tests/core/tests/image1d: New.
 	* oln/fancy/print.hh: Add print for image1d.
 	* oln/fancy/iota.hh: Add iota for image1d.

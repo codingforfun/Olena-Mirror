@@ -114,7 +114,7 @@ namespace oln {
       for (size_t slice = 0; slice < nslices_eff; ++slice)
 	{
           T** a2 = array2_ + slice * nrows_eff;
-          array[slice] = a2 + size_.border();
+          array_[slice] = a2 + size_.border();
    	  for (size_t row = 0; row < nrows_eff; ++row)
 	    {
 	      a2[row] = buf;
@@ -179,8 +179,8 @@ namespace oln {
   private:
 
     T* buffer_;
-    T** array2_;
     T*** array_;
+    T** array2_;
     size3d size_;
 
     void invariant_() const

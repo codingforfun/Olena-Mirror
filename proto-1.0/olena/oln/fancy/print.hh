@@ -10,6 +10,7 @@
 
 # include <oln/core/1d/image1d.hh>
 # include <oln/core/2d/image2d.hh>
+# include <oln/core/3d/image3d.hh>
 
 namespace oln {
 
@@ -25,6 +26,8 @@ namespace oln {
       void print(const image1d<T>& input, std::ostream& ostr);
       template <typename T>
       void print(const image2d<T>& input, std::ostream& ostr);
+      template <typename T>
+      void print(const image3d<T>& input, std::ostream& ostr);
       // FIXME: it should be abstract::image2d<I>...
 
     } // end of namespace impl
@@ -71,6 +74,17 @@ namespace oln {
       }
 
       template <typename T>
+      void print(const image1d<T>& input, std::ostream& ostr)
+      {
+	// FIXME: lacks cleaning
+	for (coord_t index = 0; index < input.size().nindices(); ++index)
+	  {
+	    ostr << internal::pp<T>(input[point1d(index)]) << ' ';
+	  }
+	ostr << std::endl;
+      } 
+ 
+      template <typename T>
       void print(const image2d<T>& input, std::ostream& ostr)
       {
 	// FIXME: lacks cleaning
@@ -83,15 +97,21 @@ namespace oln {
       }
 
       template <typename T>
-      void print(const image1d<T>& input, std::ostream& ostr)
+      void print(const image3d<T>& input, std::ostream& ostr)
       {
 	// FIXME: lacks cleaning
-	for (coord_t index = 0; index < input.size().nindices(); ++index)
+	for (coord_t slice = 0; slice < input.size().nslices(); ++slice)
+        {
+	  for (coord_t row = 0; row < input.size().nrows(); ++row)
 	  {
-	    ostr << internal::pp<T>(input[point1d(index)]) << ' ';
+	    for (coord_t col = 0; col < input.size().ncols(); ++col)
+	      ostr << internal::pp<T>(input[point3d(slice,row,col)]) << ' ';
+            ostr << ", ";
 	  }
-	ostr << std::endl;
+	  ostr << std::endl;
+	}
       } 
+ 
 
     } // end of namespace impl
 

@@ -6,5 +6,6 @@
 
 # include <oln/core/3d/size3d.hh>
 # include <oln/core/3d/point3d.hh>
+# include <oln/core/3d/image3d.hh>
 
 #endif // ! OLENA_BASICS3D_HH

@@ -25,7 +25,7 @@ namespace oln {
     }
 
     point3d(const point3d& rhs) :
-      slice_(slice_),
+      slice_(rhs.slice_),
       row_(rhs.row_),
       col_(rhs.col_)
     {
