@@ -17,24 +17,23 @@ maintainer-check:
 	fi
 
 dist_noinst_DATA = README BUILD INSTALL THANKS
+MAINTAINERCLEANFILES = README BUILD INSTALL THANKS
+
 INFOTOTEXT = $(MAKEINFO) --enable-encoding --no-headers
+devdoc = $(srcdir)/doc/dev
 
-README_SRC = $(srcdir)/doc/dev/abstract.texi $(srcdir)/doc/dev/biblio.texi
-README: $(README_SRC)
-	rm -f $@
-	for f in $(README_SRC); do \
-	  $(INFOTOTEXT) "$$f" >>$@ ; \
-	done
+README: $(devdoc)/abstract.texi $(devdoc)/biblio.texi
+	$(INFOTOTEXT) $(devdoc)/abstract.texi >$@
+	$(INFOTOTEXT) $(devdoc)/biblio.texi >>$@
 
-BUILD_SRC = $(srcdir)/doc/dev/build.texi
-BUILD: $(BUILD_SRC)
-	$(INFOTOTEXT) $(BUILD_SRC) >$@ 
+BUILD: $(devdoc)/build.texi
+	$(INFOTOTEXT) $< >$@ 
 
-INSTALL_SRC = $(srcdir)/doc/dev/install.texi
-INSTALL: $(INSTALL_SRC)
-	$(INFOTOTEXT) $(INSTALL_SRC) >$@
+INSTALL: $(devdoc)/install.texi
+	$(INFOTOTEXT) $< >$@
 
-THANKS_SRC = $(srcdir)/doc/dev/thanks.texi
-THANKS: $(THANKS_SRC)
-	$(INFOTOTEXT) $(THANKS_SRC) >$@
+THANKS: $(devdoc)/thanks.texi
+	$(INFOTOTEXT) $< >$@
 
+FAQ: $(devdoc)/faq.texi
+	$(INFOTOTEXT) $< >$@

@@ -1,5 +1,10 @@
 2003-01-24  Raphaël Poss  <raph@lrde.epita.fr>
 
+	* FAQ: Auto-generate from `oln/dev/faq.texi'.
+	* Makefile.am: Modify accordingly. Simplify rules.
+
+2003-01-24  Raphaël Poss  <raph@lrde.epita.fr>
+
 	* THANKS: Auto-generate from `oln/dev/thanks.texi'.
 	* README: Auto-generate from `oln/dev/abstract.texi' and
 	`oln/dev/biblio.texi'.

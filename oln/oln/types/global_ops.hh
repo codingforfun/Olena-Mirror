@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -111,7 +111,7 @@ namespace oln
     // neq
 
     template <class T1, class T2>
-    bool operator!=(const T1& lhs, const T2& rhs)
+    inline bool operator!=(const T1& lhs, const T2& rhs)
     { return !(lhs == rhs); }
 
 
@@ -122,21 +122,21 @@ namespace oln
 
     // cmp_gt
 
-    template <class T1, class T2>
+    template <class T1, class T2> inline 
     bool operator>(const T1& lhs, const T2& rhs)
     { return rhs < lhs; }
 
 
     // cmp_ge
 
-    template <class T1, class T2>
+    template <class T1, class T2> inline 
     bool operator>=(const T1& lhs, const T2& rhs)
     { return !(lhs < rhs); }
 
 
     // cmp_le
 
-    template <class T1, class T2>
+    template <class T1, class T2> inline 
     bool operator<=(const T1& lhs, const T2& rhs)
     { return !(rhs < lhs); }
 
@@ -201,7 +201,7 @@ namespace oln
     ///////////////////////
 
     // min
-    template <class T1, class T2>
+    template <class T1, class T2> inline
     typename internal::deduce_from_traits<internal::operator_min_traits, 
 					  T1, 
                                           T2>::ret
@@ -216,7 +216,7 @@ namespace oln
     }
     
     // max
-    template <class T1, class T2>
+    template <class T1, class T2> inline
     typename internal::deduce_from_traits<internal::operator_max_traits, 
 					  T1, 
                                           T2>::ret

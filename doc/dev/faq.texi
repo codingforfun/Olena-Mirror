@@ -1,0 +1,85 @@
+@ifnotplaintext
+@node Frequently Asked Questions
+@end ifnotplaintext
+@section Frequently Asked Questions
+
+@subsection Cleaning up the source tree
+
+Question: my source tree behaves strangely.
+
+Answer: make sure you have many development tools installed, and then run:
+
+@example
+$ @kbd{make maintainer-clean}
+$ @kbd{./bootstrap.sh}
+@end example
+(from the toplevel source directory)
+
+This will clear anything that can be regenerated back, and re-generate
+the project control files (@command{autoreconf})
+
+@subsection Missing tools
+
+Question: I do not want to involve the documentation in my build process
+(it takes too long and/or I do not have the tools to build it). How can
+I disable it ?
+
+Answer 1: run the toplevel configure with the @option{--without-doc} option.
+
+Answer 2: if you do not want to build the reference manuals but still
+compile the demonstraction programs and developer's info files, use
+@option{--without-doc-ref}.
+
+@subsection Using Olena
+
+Question: How can I use Olena in my projects ?
+
+Answer 1: add @option{-I<path_to_installed_headers>} to your compile
+flags and it @emph{should} work. In practice, of course, it does not.
+Proceed with the following answers.
+
+Answer 2: use Autoconf and the provided @file{oln.m4}. Several macros
+can be used:
+
+@table @code
+@item AC_WITH_OLN
+Checks compiler features and AC_SUBST the variables @env{OLN_CPPFLAGS}
+and @env{OLN_CXXFLAGS}.
+
+@item OLN_ENABLE_EXCEPTIONS
+Enable the raise of C++ exceptions instead of aborting on errors. This
+breaks some optimizations, so do not use unless required. Updates
+@env{OLN_CPPFLAGS}.
+
+@end table
+
+See the file @file{configure.ac} for an example invocation of these
+macros.
+
+@sp 1
+
+Answer 3: use the generated @command{oln-config-xxx.sh}, substituting
+@samp{xxx} with your favourite compiler. This script dumps to its
+standard output the flags necessary to build programs that use Olena
+successfully with the corresponding compiler. Use the @option{--help}
+flag to see what data is available.
+
+@subsection Troubleshooting
+
+Question: My program compiles successfully, but refuses to link: the linker
+complains about missing @code{_roundf}.
+
+Answer: Your standard library headers declare @code{roundf} but it is
+not actually defined. Add @option{-DOLN_NEED_ROUNDF} to your
+@env{CXXFLAGS}.
+
+@sp 1
+
+Question: My programs compiles and runs, but either the compiler (GCC)
+issues warnings at compile-time in the Olena headers, or the results
+are weird and/or inaccurate.
+
+Answer: You are using GCC 2.95 and heavy optimisation (@option{-O3}) flags.
+This is known to produce invalid code with Olena. Use @option{-O2} instead.
+
+
