@@ -1,7 +1,11 @@
 2003-01-07  Yann Régis-Gianas  <yann@lrde.epita.fr>
 
-	* oln/oln/meta/optional: new.
-	* oln/oln/level/cc.hh: 
+	* oln/core/internal/window.hh: disable precondition of 'add'.
+
+2003-01-07  Yann Régis-Gianas  <yann@lrde.epita.fr>
+
+	* oln/meta/optional.hh: new.
+	* oln/level/cc.hh: 
 		add 'update_nb_level' as an optional behaviour.
 		fix some dead code.
 

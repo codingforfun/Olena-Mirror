@@ -100,10 +100,10 @@ namespace oln {
 
       void add(const dpoint& dp)
       {
-	precondition(! has(dp));
 	if (dp.is_centered())
 	  _centered = true;
-	_dp.push_back(dp);
+	if (!(has(dp)))
+	  _dp.push_back(dp);
       }
 
       const dpoint operator[](unsigned i) const
