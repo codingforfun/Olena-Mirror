@@ -1,3 +1,14 @@
+2003-09-29  Astrid Wang  <astrid@lrde.epita.fr>
+
+	* ref/exdoc.pl,
+	* ref/exdoc.config,
+	* ref/exdoc.mk: New.
+	* ref/doxygen.config.in: New.
+
+2003-09-16  Astrid Wang  <astrid@lrde.epita.fr>
+
+	* ref/doxygen.config.in: New file.
+
 2003-08-26  Geoffroy Fouquier  <Geoffroy.Fouquier@lrde.epita.fr>
 
         * dev/oln-dev.texi: fix.
