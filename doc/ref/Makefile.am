@@ -7,14 +7,8 @@ DOXYGEN = doxygen
 EXDOC = $(srcdir)/exdoc.pl
 OUT_DIR = "out"
 IMG_CONV = $(srcdir)/img_conv.pl
-CLEANFILES = -r -- html.tar.gz \
-	oln-ref.pdf \
-	./$(OUT_DIR)/out* \
-	 ./html \
-	./latex \
-	./img \
-	./$(OUT_DIR)/makefile \
-	./$(OUT_DIR)/all.mk
+CLEANFILES = html.tar.gz \
+	oln-ref.pdf
 
 
 doc: html.tar.gz oln-ref.pdf
@@ -36,11 +30,15 @@ oln-ref.pdf: doxy
 
 dist_noinst_DATA = oln-ref.pdf html.tar.gz $(srcdir)/exdoc.pl $(srcdir)/img_conv.pl
 
-dist-local:
-	rm -rf img/*
+clean-local:
+	rm -rf img out/out* html latex out/makefile out/all.mk
+
+distclean-local:
+	rm -f out/exdoc.config
+
 
 MAINTAINERCLEANFILES = $(dist_noinst_DATA) \
-	./html/* ./img/* ./$(OUT_DIR)/*
+	./html/* ./img/*
 
 # ###
 # ### What gets installed.

@@ -436,6 +436,8 @@ AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
 
 ])dnl End of OLN_COLLECTION([OLN_TOP])
 
+AC_SUBST([DOC_CPPFLAGS])
+
 AC_OUTPUT
 
 if test "x$oln_cxxflags_clean" = xno; then

@@ -1,3 +1,10 @@
+2004-04-09  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* doc/ref/Makefile.am: Use `clean-local' and `distclean-local' to delete
+	files.
+	* doc/ref/out/exdoc.config.in: Add `DOC_CPPFLAGS' to the compilation
+	flags.
+
 2004-04-09  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* ref/out/exdoc.config.in: Add include directory.

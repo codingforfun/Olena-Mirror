@@ -350,6 +350,7 @@ AC_DEFUN([AC_CXX_CHECK_MATH],
                   CPPFLAGS=$oln_save_CPPFLAGS])
   if test "x$[]oln_cv_$1_flags" = xredef; then
      CPPFLAGS="$CPPFLAGS -DNEED_$2"
+     DOC_CPPFLAGS="$DOC_CPPFLAGS -DNEED_$2"
   elif test "x$[]oln_cv_$1_flags" = xisodef; then
      CPPFLAGS="$CPPFLAGS -D_ISOC99_SOURCE=1"
   fi
@@ -435,7 +436,7 @@ AC_DEFUN([AC_CXX_FLAGS],
                   [ac_cv_cxx_style],
                   [ac_cv_cxx_style=unknown
                    if test "x$ac_compiler_gnu" != xno; then
-		      if $CXX --version | grep " 3\.\(3\|4\)" >/dev/null ; then
+		      if $CXX --version | grep [' 3\.[234]'] >/dev/null ; then
 			ac_cv_cxx_style=GNU
                       else
                         ac_cv_cxx_style=weakGNU
