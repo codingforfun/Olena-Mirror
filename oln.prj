@@ -1,24 +1,12 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 73)
-(Parent-Version oln 0_5 72)
-(Version-Log "2002-11-04  Réda Dehak  <reda@lrde.epita.fr>
-
-	* oln/types/int_u.hh: Remove formatting options in redirection 
-	operator <<.
-
-	* oln/types/int_s.hh: Likewise.
-
-	* oln/core/internal/real_image2d.hh: Add formatting options in 
-	redirection operator << before writting elements to have a good 
-	representation of the image.
-
-	* oln/core/internal/real_image3d.hh: Likewise.
-")
+(Project-Version oln 0_5 74)
+(Parent-Version oln 0_5 73)
+(Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Mon, 04 Nov 2002 17:28:12 +0100")
-(Checkin-Login reda)
+(Checkin-Time "Wed, 06 Nov 2002 16:14:40 +0100")
+(Checkin-Login js)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
 ;; diff-ignore Makefile\.in$
@@ -123,10 +111,10 @@
                   "utilities/oln-mosaic-u16$"))
 (Project-Keywords)
 (Files
-  (aclocal.m4 (oln/e/8_aclocal.m4 1.22 600))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.74 600))
+  (aclocal.m4 (oln/e/8_aclocal.m4 1.23 600))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.75 600))
   (configure.ac (oln/3_configure. 1.23 600))
-  (configure (oln/e/7_configure 1.29 700))
+  (configure (oln/e/7_configure 1.30 700))
   (README (oln/1_README 1.4 600))
   (ISSUES (oln/d/47_ISSUES 1.3 600))
   (Makefile.am (oln/2_Makefile.a 1.10 600))
@@ -135,25 +123,25 @@
 
   (demo/image.cc (oln/d/46_image.cc 1.2 600))
   (demo/Makefile.am (oln/d/44_Makefile.a 1.5 600))
-  (demo/Makefile.in (oln/e/16_Makefile.i 1.19 640))
+  (demo/Makefile.in (oln/e/16_Makefile.i 1.19 600))
   (demo/morpholena.cc (oln/d/43_morpholena 1.5 600))
   (demo/test-reconstruction.cc (oln/e/22_test-recon 1.5 600))
   (demo/tour.cc (oln/d/45_tour.cc 1.5 600))
 
 
-  (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.9 640))
+  (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.9 600))
   (doc/ChangeLog (oln/e/1_ChangeLog 1.23 600))
   (doc/configure.ac (oln/e/2_configure. 1.5 600))
   (doc/configure (oln/e/3_configure 1.9 700))
   (doc/doc/bin () :directory)
   (doc/doc/html () :directory)
   (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.13 600))
-  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.15 640))
+  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.15 600))
   (doc/doc/oln-ref.tex (oln/f/14_oln-ref.te 1.3 600))
   (doc/img/lena256.pgm (oln/e/21_lena256.pg 1.1 600) :no-keywords)
   (doc/img/object.pbm (oln/d/49_object.pbm 1.1 600) :no-keywords)
   (doc/Makefile.am (oln/e/0_Makefile.a 1.1 600))
-  (doc/Makefile.in (oln/e/5_Makefile.i 1.10 640))
+  (doc/Makefile.in (oln/e/5_Makefile.i 1.10 600))
   (doc/tpl/processing.tpl (oln/d/48_processing 1.10 600))
 
   (img/lena128.pgm (oln/e/23_lena128.pg 1.1 600) :no-keywords)
@@ -166,7 +154,7 @@
   (oln/basics2d.hh (oln/b/7_basics2d.h 1.1 600))
   (oln/basics3d.hh (oln/28_basics3d.h 1.1 600))
   (oln/basics.hh (oln/d/42_basics.hh 1.5 600))
-  (oln/config/config.hin (oln/f/10_config.hin 1.8 640))
+  (oln/config/config.hin (oln/f/10_config.hin 1.8 600))
   (oln/config/README (oln/f/9_README 1.1 600))
   (oln/config/system.hh (oln/7_system.hh 1.7 600))
   (oln/convert/basics.hh (oln/23_basics.hh 1.3 600))
@@ -298,8 +286,8 @@
   (oln/level/invert.hh (oln/33_invert.hh 1.4 600))
   (oln/level/lut.hh (oln/29_lut.hh 1.6 600))
   (oln/level/threshold.hh (oln/f/15_threshold. 1.4 600))
-  (oln/Makefile.am (oln/27_Makefile.a 1.24 600))
-  (oln/Makefile.in (oln/e/17_Makefile.i 1.30 640))
+  (oln/Makefile.am (oln/27_Makefile.a 1.25 600))
+  (oln/Makefile.in (oln/e/17_Makefile.i 1.31 600))
   (oln/math/macros.hh (oln/b/21_macros.hh 1.4 600))
   (oln/meta/array1d.hh (oln/f/23_array1d.hh 1.2 600))
   (oln/meta/array1d.hxx (oln/f/22_array1d.hx 1.2 600))
@@ -350,18 +338,18 @@
   (oln/utils/stat.hh (oln/9_stat.hh 1.4 600))
   (oln/utils/timer.hh (oln/8_timer.hh 1.2 600))
   (tests/meta () :directory)
-  (tests/meta/gen_test.cc (oln/f/34_gen_test.c 1.4 640))
-  (tests/meta/gen_test_utils/errors.cc (oln/f/33_errors.cc 1.1 640))
-  (tests/meta/gen_test_utils/errors.hh (oln/f/32_errors.hh 1.1 640))
+  (tests/meta/gen_test.cc (oln/f/34_gen_test.c 1.4 600))
+  (tests/meta/gen_test_utils/errors.cc (oln/f/33_errors.cc 1.1 600))
+  (tests/meta/gen_test_utils/errors.hh (oln/f/32_errors.hh 1.1 600))
   ; (tests/meta/gen_test_utils/Makefile.am ())
   ; (tests/meta/gen_test_utils/Makefile.in ())
-  (tests/meta/gen_test_utils/postlude (oln/f/31_postlude 1.1 640))
-  (tests/meta/gen_test_utils/prelude (oln/f/30_prelude 1.2 640))
-  (tests/meta/Makefile.am (oln/f/27_Makefile.a 1.2 640))
+  (tests/meta/gen_test_utils/postlude (oln/f/31_postlude 1.1 600))
+  (tests/meta/gen_test_utils/prelude (oln/f/30_prelude 1.2 600))
+  (tests/meta/Makefile.am (oln/f/27_Makefile.a 1.2 600))
   (tests/meta/Makefile.in (oln/f/37_Makefile.i 1.8 600))
-  (tests/meta/test_array1d.cc (oln/f/26_test_array 1.2 640))
-  (tests/meta/test_array2d.cc (oln/f/25_test_array 1.2 640))
-  (tests/meta/test_array3d.cc (oln/f/24_test_array 1.2 640))
+  (tests/meta/test_array1d.cc (oln/f/26_test_array 1.2 600))
+  (tests/meta/test_array2d.cc (oln/f/25_test_array 1.2 600))
+  (tests/meta/test_array3d.cc (oln/f/24_test_array 1.2 600))
   (tests/ChangeLog (oln/e/30_ChangeLog 1.42 600))
   (tests/check/check.hh (oln/e/40_check.hh 1.2 600))
   (tests/check/data.cc (oln/f/5_data.cc 1.2 600))
@@ -382,11 +370,11 @@
 
 
   (tests/convol () :directory)
-  (tests/convol/Makefile.am (oln/f/38_Makefile.a 1.4 640))
-  (tests/convol/Makefile.in (oln/f/44_Makefile.i 1.7 640))
+  (tests/convol/Makefile.am (oln/f/38_Makefile.a 1.4 600))
+  (tests/convol/Makefile.in (oln/f/44_Makefile.i 1.7 600))
   ; (tests/convol/slow.cc ())
-  (tests/convol/slow_sum_2d_1.cc (oln/f/41_slow_sum_2 1.2 640))
-  (tests/convol/slow_sum_2d_2.cc (oln/f/40_slow_sum_2 1.2 640))
+  (tests/convol/slow_sum_2d_1.cc (oln/f/41_slow_sum_2 1.2 600))
+  (tests/convol/slow_sum_2d_2.cc (oln/f/40_slow_sum_2 1.2 600))
   (tests/convol/sobel_gradient.cc (oln/f/45_sobel_grad 1.3 600))
   (tests/convol/sum_on_random.pgm (oln/f/42_sum_on_ran 1.1 600))
 
@@ -419,7 +407,7 @@
 ;; Files added by populate at Thu, 18 Jul 2002 20:26:30 +0200,
 ;; to version 0_4.26(w), by adl:
 
-  (tests/sanity/includes.test (oln/f/46_includes.t 1.2 750))
+  (tests/sanity/includes.test (oln/f/46_includes.t 1.2 700))
   (tests/sanity/Makefile.in (oln/f/47_Makefile.i 1.3 600))
   (tests/sanity/Makefile.am (oln/f/48_Makefile.a 1.1 600))
 
@@ -436,41 +424,41 @@
 ;; Files added by populate at Mon, 29 Jul 2002 15:53:36 +0200,
 ;; to version 0_5.2(w), by burrus_n:
 
-  (oln/types/typetraits_builtins_int.hh (oln/g/3_typetraits 1.5 640))
-  (oln/types/typetraits_builtins_float.hh (oln/g/4_typetraits 1.7 640))
-  (oln/types/typetraits.hh (oln/g/5_typetraits 1.3 640))
-  (oln/types/type.hh (oln/g/6_type.hh 1.3 640))
-  (oln/types/to_oln.hh (oln/g/7_to_oln.hh 1.5 640))
-  (oln/types/rec_value.hh (oln/g/8_rec_value. 1.6 640))
-  (oln/types/range.hh (oln/g/9_range.hh 1.5 640))
-  (oln/types/predecls.hh (oln/g/10_predecls.h 1.9 640))
-  (oln/types/optraits_scalar_defs.hh (oln/g/11_optraits_s 1.3 640))
-  (oln/types/optraits_scalar.hh (oln/g/12_optraits_s 1.6 640))
-  (oln/types/optraits_range.hh (oln/g/13_optraits_r 1.3 640))
-  (oln/types/optraits_int_u.hh (oln/g/14_optraits_i 1.6 640))
-  (oln/types/optraits_int_s.hh (oln/g/15_optraits_i 1.5 640))
-  (oln/types/optraits_cycle.hh (oln/g/16_optraits_c 1.8 640))
-  (oln/types/optraits_builtins_int_defs.hh (oln/g/17_optraits_b 1.3 640))
-  (oln/types/optraits_builtins_int.hh (oln/g/18_optraits_b 1.3 640))
-  (oln/types/optraits_builtins_float.hh (oln/g/19_optraits_b 1.8 640))
-  (oln/types/optraits_bin.hh (oln/g/20_optraits_b 1.4 640))
-  (oln/types/optraits.hh (oln/g/21_optraits.h 1.3 640))
-  (oln/types/interval.hh (oln/g/22_interval.h 1.5 640))
-  (oln/types/int_u.hh (oln/g/23_int_u.hh 1.12 640))
-  (oln/types/int_s.hh (oln/g/24_int_s.hh 1.10 640))
-  (oln/types/global_ops_traits.hh (oln/g/25_global_ops 1.4 640))
-  (oln/types/global_ops_defs.hh (oln/g/26_global_ops 1.3 640))
-  (oln/types/global_ops.hh (oln/g/27_global_ops 1.7 640))
-  (oln/types/cycle.hh (oln/g/28_cycle.hh 1.7 640))
-  (oln/types/builtins_properties.hh (oln/g/29_builtins_p 1.3 640))
-  (oln/types/bin.hh (oln/g/30_bin.hh 1.6 640))
-  (oln/types/behaviour.hh (oln/g/31_behaviour. 1.8 640))
-  (oln/types/all.hh (oln/g/32_all.hh 1.6 640))
+  (oln/types/typetraits_builtins_int.hh (oln/g/3_typetraits 1.5 600))
+  (oln/types/typetraits_builtins_float.hh (oln/g/4_typetraits 1.7 600))
+  (oln/types/typetraits.hh (oln/g/5_typetraits 1.3 600))
+  (oln/types/type.hh (oln/g/6_type.hh 1.3 600))
+  (oln/types/to_oln.hh (oln/g/7_to_oln.hh 1.5 600))
+  (oln/types/rec_value.hh (oln/g/8_rec_value. 1.6 600))
+  (oln/types/range.hh (oln/g/9_range.hh 1.5 600))
+  (oln/types/predecls.hh (oln/g/10_predecls.h 1.9 600))
+  (oln/types/optraits_scalar_defs.hh (oln/g/11_optraits_s 1.3 600))
+  (oln/types/optraits_scalar.hh (oln/g/12_optraits_s 1.6 600))
+  (oln/types/optraits_range.hh (oln/g/13_optraits_r 1.3 600))
+  (oln/types/optraits_int_u.hh (oln/g/14_optraits_i 1.6 600))
+  (oln/types/optraits_int_s.hh (oln/g/15_optraits_i 1.5 600))
+  (oln/types/optraits_cycle.hh (oln/g/16_optraits_c 1.8 600))
+  (oln/types/optraits_builtins_int_defs.hh (oln/g/17_optraits_b 1.3 600))
+  (oln/types/optraits_builtins_int.hh (oln/g/18_optraits_b 1.3 600))
+  (oln/types/optraits_builtins_float.hh (oln/g/19_optraits_b 1.8 600))
+  (oln/types/optraits_bin.hh (oln/g/20_optraits_b 1.4 600))
+  (oln/types/optraits.hh (oln/g/21_optraits.h 1.3 600))
+  (oln/types/interval.hh (oln/g/22_interval.h 1.5 600))
+  (oln/types/int_u.hh (oln/g/23_int_u.hh 1.12 600))
+  (oln/types/int_s.hh (oln/g/24_int_s.hh 1.10 600))
+  (oln/types/global_ops_traits.hh (oln/g/25_global_ops 1.4 600))
+  (oln/types/global_ops_defs.hh (oln/g/26_global_ops 1.3 600))
+  (oln/types/global_ops.hh (oln/g/27_global_ops 1.7 600))
+  (oln/types/cycle.hh (oln/g/28_cycle.hh 1.7 600))
+  (oln/types/builtins_properties.hh (oln/g/29_builtins_p 1.3 600))
+  (oln/types/bin.hh (oln/g/30_bin.hh 1.6 600))
+  (oln/types/behaviour.hh (oln/g/31_behaviour. 1.8 600))
+  (oln/types/all.hh (oln/g/32_all.hh 1.6 600))
 
 
-  (utilities/mosaic.cc (oln/g/0_mosaic.cc 1.3 640))
-  (utilities/Makefile.in (oln/g/1_Makefile.i 1.4 640))
-  (utilities/Makefile.am (oln/g/2_Makefile.a 1.2 640))
+  (utilities/mosaic.cc (oln/g/0_mosaic.cc 1.3 600))
+  (utilities/Makefile.in (oln/g/1_Makefile.i 1.4 600))
+  (utilities/Makefile.am (oln/g/2_Makefile.a 1.2 600))
 ;; Files added by populate at Mon, 29 Jul 2002 16:23:03 +0200,
 ;; to version 0_5.4(w), by burrus_n:
 
@@ -479,91 +467,91 @@
 ;; Files added by populate at Thu, 01 Aug 2002 15:28:28 +0200,
 ;; to version 0_5.11(w), by adl:
 
-  (doc/doc/ref-types.tex (oln/g/34_ref-types. 1.5 640))
+  (doc/doc/ref-types.tex (oln/g/34_ref-types. 1.5 600))
 
 ;; Files added by populate at Mon, 26 Aug 2002 17:10:21 +0200,
 ;; to version 0_5.18(w), by duret_g:
 
-  (tests/types/tests/int_sc3 (oln/g/35_int_sc3 1.1 640))
-  (tests/types/tests/int_sc2 (oln/g/36_int_sc2 1.1 640))
-  (tests/types/tests/int_sc1 (oln/g/37_int_sc1 1.2 640))
-  (tests/types/tests/int_s2b (oln/g/38_int_s2b 1.1 640))
-  (tests/types/tests/int_s2 (oln/g/39_int_s2 1.1 640))
-  (tests/types/tests/int_s1 (oln/g/40_int_s1 1.1 640))
-  (tests/types/tests/unsafe2 (oln/g/41_unsafe2 1.1 640))
-  (tests/types/tests/conv2 (oln/g/42_conv2 1.1 640))
-  (tests/types/tests/int6d (oln/g/43_int6d 1.1 640))
-  (tests/types/tests/int6c (oln/g/44_int6c 1.1 640))
-  (tests/types/tests/int6b (oln/g/45_int6b 1.1 640))
-  (tests/types/tests/int6 (oln/g/46_int6 1.1 640))
-  (tests/types/tests/int5 (oln/g/47_int5 1.1 640))
-  (tests/types/tests/int1b (oln/g/48_int1b 1.1 640))
-  (tests/types/tests/conv1 (oln/g/49_conv1 1.2 640))
-  (tests/types/tests/int4 (oln/g/50_int4 1.1 640))
-  (tests/types/tests/int3 (oln/g/51_int3 1.1 640))
-  (tests/types/tests/int2 (oln/h/0_int2 1.1 640))
-  (tests/types/tests/int1 (oln/h/1_int1 1.1 640))
-  (tests/types/tests/unsafe1 (oln/h/2_unsafe1 1.1 640))
-  (tests/types/runtests (oln/h/3_runtests 1.4 750))
+  (tests/types/tests/int_sc3 (oln/g/35_int_sc3 1.1 600))
+  (tests/types/tests/int_sc2 (oln/g/36_int_sc2 1.1 600))
+  (tests/types/tests/int_sc1 (oln/g/37_int_sc1 1.2 600))
+  (tests/types/tests/int_s2b (oln/g/38_int_s2b 1.1 600))
+  (tests/types/tests/int_s2 (oln/g/39_int_s2 1.1 600))
+  (tests/types/tests/int_s1 (oln/g/40_int_s1 1.1 600))
+  (tests/types/tests/unsafe2 (oln/g/41_unsafe2 1.1 600))
+  (tests/types/tests/conv2 (oln/g/42_conv2 1.1 600))
+  (tests/types/tests/int6d (oln/g/43_int6d 1.1 600))
+  (tests/types/tests/int6c (oln/g/44_int6c 1.1 600))
+  (tests/types/tests/int6b (oln/g/45_int6b 1.1 600))
+  (tests/types/tests/int6 (oln/g/46_int6 1.1 600))
+  (tests/types/tests/int5 (oln/g/47_int5 1.1 600))
+  (tests/types/tests/int1b (oln/g/48_int1b 1.1 600))
+  (tests/types/tests/conv1 (oln/g/49_conv1 1.2 600))
+  (tests/types/tests/int4 (oln/g/50_int4 1.1 600))
+  (tests/types/tests/int3 (oln/g/51_int3 1.1 600))
+  (tests/types/tests/int2 (oln/h/0_int2 1.1 600))
+  (tests/types/tests/int1 (oln/h/1_int1 1.1 600))
+  (tests/types/tests/unsafe1 (oln/h/2_unsafe1 1.1 600))
+  (tests/types/runtests (oln/h/3_runtests 1.4 700))
   (tests/types/Makefile.in (oln/h/4_Makefile.i 1.3 600))
-  (tests/types/Makefile.am (oln/h/5_Makefile.a 1.2 640))
+  (tests/types/Makefile.am (oln/h/5_Makefile.a 1.2 600))
 
 ;; Files added by populate at Tue, 27 Aug 2002 18:05:09 +0200,
 ;; to version 0_5.21(w), by duret_g:
 
-  (tests/types/tests/op2 (oln/h/6_op2 1.2 640))
-  (tests/types/tests/comp3 (oln/h/7_comp3 1.1 640))
-  (tests/types/tests/comp2 (oln/h/8_comp2 1.1 640))
-  (tests/types/tests/comp1 (oln/h/9_comp1 1.1 640))
-  (tests/types/tests/float_r1 (oln/h/10_float_r1 1.2 640))
-  (tests/types/tests/float_r2 (oln/h/11_float_r2 1.1 640))
-  (tests/types/tests/float1 (oln/h/12_float1 1.1 640))
-  (tests/types/tests/float_c1 (oln/h/13_float_c1 1.1 640))
-  (tests/types/tests/int7 (oln/h/14_int7 1.1 640))
-  (tests/types/tests/op1 (oln/h/15_op1 1.2 640))
+  (tests/types/tests/op2 (oln/h/6_op2 1.2 600))
+  (tests/types/tests/comp3 (oln/h/7_comp3 1.1 600))
+  (tests/types/tests/comp2 (oln/h/8_comp2 1.1 600))
+  (tests/types/tests/comp1 (oln/h/9_comp1 1.1 600))
+  (tests/types/tests/float_r1 (oln/h/10_float_r1 1.2 600))
+  (tests/types/tests/float_r2 (oln/h/11_float_r2 1.1 600))
+  (tests/types/tests/float1 (oln/h/12_float1 1.1 600))
+  (tests/types/tests/float_c1 (oln/h/13_float_c1 1.1 600))
+  (tests/types/tests/int7 (oln/h/14_int7 1.1 600))
+  (tests/types/tests/op1 (oln/h/15_op1 1.2 600))
 
 ;; Files added by populate at Wed, 28 Aug 2002 12:32:42 +0200,
 ;; to version 0_5.23(w), by duret_g:
 
-  (tests/types/tests/int_u2d (oln/h/16_int_u2d 1.1 640))
-  (tests/types/tests/int_u2a (oln/h/17_int_u2a 1.1 640))
-  (tests/types/tests/int_u3a (oln/h/18_int_u3a 1.1 640))
-  (tests/types/tests/int_u4 (oln/h/19_int_u4 1.1 640))
-  (tests/types/tests/int_u2b (oln/h/20_int_u2b 1.1 640))
-  (tests/types/tests/int_u2c (oln/h/21_int_u2c 1.1 640))
-  (tests/types/tests/int_u1 (oln/h/22_int_u1 1.1 640))
-  (tests/types/tests/int_u3b (oln/h/23_int_u3b 1.1 640))
+  (tests/types/tests/int_u2d (oln/h/16_int_u2d 1.1 600))
+  (tests/types/tests/int_u2a (oln/h/17_int_u2a 1.1 600))
+  (tests/types/tests/int_u3a (oln/h/18_int_u3a 1.1 600))
+  (tests/types/tests/int_u4 (oln/h/19_int_u4 1.1 600))
+  (tests/types/tests/int_u2b (oln/h/20_int_u2b 1.1 600))
+  (tests/types/tests/int_u2c (oln/h/21_int_u2c 1.1 600))
+  (tests/types/tests/int_u1 (oln/h/22_int_u1 1.1 600))
+  (tests/types/tests/int_u3b (oln/h/23_int_u3b 1.1 600))
 
 ;; Files added by populate at Mon, 02 Sep 2002 12:12:32 +0200,
 ;; to version 0_5.26(w), by duret_g:
 
-  (tests/types/tests/optrait3 (oln/h/24_optrait3 1.2 640))
-  (tests/types/tests/optrait1a (oln/h/25_optrait1a 1.1 640))
-  (tests/types/tests/optrait1b (oln/h/26_optrait1b 1.1 640))
-  (tests/types/tests/optrait2b (oln/h/27_optrait2b 1.1 640))
-  (tests/types/tests/optrait2a (oln/h/28_optrait2a 1.1 640))
+  (tests/types/tests/optrait3 (oln/h/24_optrait3 1.2 600))
+  (tests/types/tests/optrait1a (oln/h/25_optrait1a 1.1 600))
+  (tests/types/tests/optrait1b (oln/h/26_optrait1b 1.1 600))
+  (tests/types/tests/optrait2b (oln/h/27_optrait2b 1.1 600))
+  (tests/types/tests/optrait2a (oln/h/28_optrait2a 1.1 600))
 
 ;; Files added by populate at Tue, 10 Sep 2002 16:31:47 +0200,
 ;; to version 0_5.33(w), by duret_g:
 
-  (tests/types/tests/range3d (oln/h/29_range3d 1.1 640))
-  (tests/types/tests/range3c (oln/h/30_range3c 1.1 640))
-  (tests/types/tests/range3 (oln/h/31_range3 1.1 640))
-  (tests/types/tests/range3b (oln/h/32_range3b 1.1 640))
-  (tests/types/tests/range2 (oln/h/33_range2 1.1 640))
-  (tests/types/tests/range1 (oln/h/34_range1 1.1 640))
-  (tests/types/tests/int4b (oln/h/35_int4b 1.1 640))
-  (tests/types/tests/range2b (oln/h/36_range2b 1.1 640))
+  (tests/types/tests/range3d (oln/h/29_range3d 1.1 600))
+  (tests/types/tests/range3c (oln/h/30_range3c 1.1 600))
+  (tests/types/tests/range3 (oln/h/31_range3 1.1 600))
+  (tests/types/tests/range3b (oln/h/32_range3b 1.1 600))
+  (tests/types/tests/range2 (oln/h/33_range2 1.1 600))
+  (tests/types/tests/range1 (oln/h/34_range1 1.1 600))
+  (tests/types/tests/int4b (oln/h/35_int4b 1.1 600))
+  (tests/types/tests/range2b (oln/h/36_range2b 1.1 600))
 
 ;; Files added by populate at Wed, 11 Sep 2002 11:02:59 +0200,
 ;; to version 0_5.40(w), by burrus_n:
 
-  (tests/types/tests/int_u6 (oln/h/37_int_u6 1.2 640))
+  (tests/types/tests/int_u6 (oln/h/37_int_u6 1.2 600))
 
 ;; Files added by populate at Sun, 15 Sep 2002 00:01:04 +0200,
 ;; to version 0_5.43(w), by burrus_n:
 
-  (tests/types/tests/int_u2e (oln/h/38_int_u2e 1.1 640))
+  (tests/types/tests/int_u2e (oln/h/38_int_u2e 1.1 600))
 
 ;; Files added by populate at Sun, 15 Sep 2002 17:58:55 +0200,
 ;; to version 0_5.44(w), by burrus_n:
@@ -573,70 +561,70 @@
 ;; Files added by populate at Mon, 16 Sep 2002 12:46:48 +0200,
 ;; to version 0_5.45(w), by burrus_n:
 
-  (tests/types/tests/float2 (oln/h/40_float2 1.1 640))
-  (tests/types/tests/int_u2f (oln/h/41_int_u2f 1.1 640))
+  (tests/types/tests/float2 (oln/h/40_float2 1.1 600))
+  (tests/types/tests/int_u2f (oln/h/41_int_u2f 1.1 600))
 
 ;; Files added by populate at Mon, 16 Sep 2002 19:47:02 +0200,
 ;; to version 0_5.46(w), by adl:
 
-  (oln/types/optraits_vec.hh (oln/h/42_optraits_v 1.7 640))
-  (oln/types/vec.hh (oln/h/43_vec.hh 1.2 640))
+  (oln/types/optraits_vec.hh (oln/h/42_optraits_v 1.7 600))
+  (oln/types/vec.hh (oln/h/43_vec.hh 1.2 600))
 
 ;; Files added by populate at Mon, 16 Sep 2002 19:47:21 +0200,
 ;; to version 0_5.46(w), by adl:
 
-  (tests/types/tests/vec6 (oln/h/44_vec6 1.1 640))
-  (tests/types/tests/vec5 (oln/h/45_vec5 1.2 640))
-  (tests/types/tests/vec4 (oln/h/46_vec4 1.1 640))
-  (tests/types/tests/vec3 (oln/h/47_vec3 1.1 640))
-  (tests/types/tests/vec2 (oln/h/48_vec2 1.1 640))
-  (tests/types/tests/vec1 (oln/h/49_vec1 1.1 640))
+  (tests/types/tests/vec6 (oln/h/44_vec6 1.1 600))
+  (tests/types/tests/vec5 (oln/h/45_vec5 1.2 600))
+  (tests/types/tests/vec4 (oln/h/46_vec4 1.1 600))
+  (tests/types/tests/vec3 (oln/h/47_vec3 1.1 600))
+  (tests/types/tests/vec2 (oln/h/48_vec2 1.1 600))
+  (tests/types/tests/vec1 (oln/h/49_vec1 1.1 600))
 
 
   (prj (oln.prj) :symlink)
-  (tests/types/tests/vec7 (oln/h/50_vec7 1.1 640))
+  (tests/types/tests/vec7 (oln/h/50_vec7 1.1 600))
 ;; Files added by populate at Thu, 19 Sep 2002 20:12:45 +0200,
 ;; to version 0_5.47(w), by ender:
 
-  (tests/types/tests/cplx4 (oln/h/51_cplx4 1.1 640))
-  (tests/types/tests/cplx3 (oln/i/0_cplx3 1.1 640))
-  (tests/types/tests/cplx2 (oln/i/1_cplx2 1.1 640))
-  (tests/types/tests/cplx1 (oln/i/2_cplx1 1.1 640))
+  (tests/types/tests/cplx4 (oln/h/51_cplx4 1.1 600))
+  (tests/types/tests/cplx3 (oln/i/0_cplx3 1.1 600))
+  (tests/types/tests/cplx2 (oln/i/1_cplx2 1.1 600))
+  (tests/types/tests/cplx1 (oln/i/2_cplx1 1.1 600))
 
 ;; Files added by populate at Thu, 19 Sep 2002 20:13:02 +0200,
 ;; to version 0_5.47(w), by ender:
 
-  (oln/types/cplx_representation.hh (oln/i/3_cplx_repre 1.1 640))
-  (oln/types/cplx.hh (oln/i/4_cplx.hh 1.4 640))
+  (oln/types/cplx_representation.hh (oln/i/3_cplx_repre 1.1 600))
+  (oln/types/cplx.hh (oln/i/4_cplx.hh 1.4 600))
 
 ;; Files added by populate at Thu, 19 Sep 2002 20:13:11 +0200,
 ;; to version 0_5.47(w), by ender:
 
-  (oln/types/optraits_cplx.hh (oln/i/5_optraits_c 1.3 640))
+  (oln/types/optraits_cplx.hh (oln/i/5_optraits_c 1.3 600))
 
 ;; Files added by populate at Fri, 20 Sep 2002 17:49:50 +0200,
 ;; to version 0_5.54(w), by ender:
 
-  (tests/types/tests/cplx6 (oln/i/6_cplx6 1.3 640))
+  (tests/types/tests/cplx6 (oln/i/6_cplx6 1.3 600))
 
 
-  (tests/types/tests/cplx5 (oln/i/7_cplx5 1.1 640))
+  (tests/types/tests/cplx5 (oln/i/7_cplx5 1.1 600))
 ;; Files added by populate at Mon, 23 Sep 2002 17:15:37 +0200,
 ;; to version 0_5.59(w), by burrus_n:
 
-  (oln/types/debug.hh (oln/i/8_debug.hh 1.1 640))
-  (oln/types/typetraits_builtins_bool.hh (oln/i/9_typetraits 1.2 640))
-  (oln/types/optraits_builtins_bool.hh (oln/i/10_optraits_b 1.1 640))
+  (oln/types/debug.hh (oln/i/8_debug.hh 1.1 600))
+  (oln/types/typetraits_builtins_bool.hh (oln/i/9_typetraits 1.2 600))
+  (oln/types/optraits_builtins_bool.hh (oln/i/10_optraits_b 1.1 600))
 
 ;; Files added by populate at Tue, 24 Sep 2002 13:53:09 +0200,
 ;; to version 0_5.60(w), by ender:
 
-  (oln/transform/fft.hh (oln/i/11_fft.hh 1.7 640))
+  (oln/transform/fft.hh (oln/i/11_fft.hh 1.7 600))
 
 ;; Files added by populate at Tue, 24 Sep 2002 13:54:11 +0200,
 ;; to version 0_5.60(w), by ender:
 
-  (tests/transform/fft.cc (oln/i/12_fft.cc 1.5 640))
+  (tests/transform/fft.cc (oln/i/12_fft.cc 1.5 600))
   (tests/transform/Makefile.in (oln/i/13_Makefile.i 1.2 600))
   (tests/transform/Makefile.am (oln/i/14_Makefile.a 1.2 600))
 
@@ -784,7 +772,7 @@
 ;; Files added by populate at Fri, 27 Sep 2002 12:19:43 +0200,
 ;; to version 0_5.66(w), by burrus_n:
 
-  (tests/types/tests/sizes (oln/i/15_sizes 1.1 640))
+  (tests/types/tests/sizes (oln/i/15_sizes 1.1 600))
 
 ;; Files added by populate at Sat, 28 Sep 2002 12:59:47 +0200,
 ;; to version 0_5.68(w), by nes:
@@ -810,6 +798,11 @@
 ;; to version 0_5.68(w), by nes:
 
   (tests/types/tests/bin1 (oln/i/28_bin1 1.1 600))
+
+;; Files added by populate at Wed, 06 Nov 2002 16:10:39 +0100,
+;; to version 0_5.73(w), by js:
+
+  (oln/utils/copy.hh (oln/i/29_copy.hh 1.1 600))
 )
 (Merge-Parents)
 (New-Merge-Parents)

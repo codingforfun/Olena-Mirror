@@ -1,21 +1,25 @@
+2002-11-06  Jean-Sébastien Mouret  <js@lrde.epita.fr>
+
+	* oln/utils/copy.hh: New file.
+
 2002-11-04  Réda Dehak  <reda@lrde.epita.fr>
 
-	* oln/types/int_u.hh: Remove formatting options in redirection 
+	* oln/types/int_u.hh: Remove formatting options in redirection
 	operator <<.
 
 	* oln/types/int_s.hh: Likewise.
 
-	* oln/core/internal/real_image2d.hh: Add formatting options in 
-	redirection operator << before writting elements to have a good 
+	* oln/core/internal/real_image2d.hh: Add formatting options in
+	redirection operator << before writting elements to have a good
 	representation of the image.
 
 	* oln/core/internal/real_image3d.hh: Likewise.
 
 2002-11-04  Réda Dehak  <reda@lrde.epita.fr>
 
-	* oln/core/neighborhood1d.hh: Fix add method, neighborhood1d is 
+	* oln/core/neighborhood1d.hh: Fix add method, neighborhood1d is
 	not centered
-	
+
 	// Neighborhoods
   	// =============
   	// These objects are like Windows, except they have
@@ -27,12 +31,12 @@
 
 	So a neighborhood was a symetric windows widthout the center.
 
-	Fix neighb_c2() and mk_neighb_segment() : now, the symetric 
+	Fix neighb_c2() and mk_neighb_segment() : now, the symetric
 	dpoint is automatically added by add method.
-	
-	* oln/core/neighborhood2d.hh: Likewise for add(), neighb_c4(), 
+
+	* oln/core/neighborhood2d.hh: Likewise for add(), neighb_c4(),
 	neighb_c8() and mk_neighb_rectangle() methods.
-	
+
 	* oln/core/neighborhood3d.hh: Likewise for add(),  neighb_c6(),
 	neighb_c18(), neighb_c26() and mk_neighb_block() methods.
 
@@ -60,11 +64,11 @@
 	* demo/test-reconstruction.cc: Fix includes and namespaces.
 	* oln/Makefile.am: Remove old value headers, add new headers.
 	* oln/core/type.hh: Add helper for static_hierarchy : select_self.
-	* oln/io/pnm_read3d.hxx, oln/io/pnm_read_common.hxx, 
-	oln/io/pnm_read.hxx, oln/io/pnm_write3d.hxx, 
+	* oln/io/pnm_read3d.hxx, oln/io/pnm_read_common.hxx,
+	oln/io/pnm_read.hxx, oln/io/pnm_write3d.hxx,
 	oln/io/pnm_write_common.hxx, oln/io/pnm_write.hxx: Enable colors.
 	* oln/transform/fft.hh: Fix includes.
-	* oln/types/all.hh: Add colors headers, optraits_builtins.hh, 
+	* oln/types/all.hh: Add colors headers, optraits_builtins.hh,
 	typetraits_builtins.hh, cast.hh.
 	* oln/types/behaviour.hh: Fix times check problem.
 	* oln/types/bin.hh: Add const to cast operator.
@@ -73,13 +77,13 @@
 	* oln/types/global_ops_defs.hh: Replace completely generic operators
 	by more adapted ones to prevent C++ namespace resolution problem.
 	* oln/types/global_ops_traits.hh: Add min and max traits.
-	* oln/types/optraits_bin.hh: Change zero,unit,min,max,inf and sup 
+	* oln/types/optraits_bin.hh: Change zero,unit,min,max,inf and sup
 	return types to allow histograms which needs (max() - min() + unit());
 	restrict operator_cmp_traits.
 	* oln/types/optraits_builtins_float.hh: Add min and max traits.
 	* oln/types/optraits_builtins_int.hh: Fix headers.
 	* oln/types/optraits_builtins_int_defs.hh: Add name().
-	* oln/types/optraits_int_u.hh: Add fwd_decl, change minus traits 
+	* oln/types/optraits_int_u.hh: Add fwd_decl, change minus traits
 	for (int_u - int_u), add min and max traits.
 	* oln/types/optraits_int_u.hh: Add fwd_decl, add min and max traits.
 	* oln/types/optraits_vec.hh: Adapt to vec's new prototype.
@@ -89,44 +93,44 @@
 	* oln/types/vec.hh: Change prototype to allow vec to be an intermediate
 	class in the static hierarchy.
 	* utilities/Makefile.am: Remove NDEBUG by default.
-	* oln/types/optraits_builtins.hh, oln/types/typetraits_builtins.hh: 
+	* oln/types/optraits_builtins.hh, oln/types/typetraits_builtins.hh:
 	New files.
-	* oln/types/color.hh, oln/types/rgb.hh, oln/types/nrgb.hh, 
-	oln/types/hsi.hh, oln/types/hsl.hh, oln/types/hsv.hh, 
+	* oln/types/color.hh, oln/types/rgb.hh, oln/types/nrgb.hh,
+	oln/types/hsi.hh, oln/types/hsl.hh, oln/types/hsv.hh,
 	oln/types/xyz.hh, oln/types/yiq.hh, oln/types/yuv.hh: New files.
 	* oln/types/cast.hh: New file.
-	* oln/arith/logic.hh, oln/arith/ops.hh, oln/convert/bound.hh, 
-	oln/convert/colorconv.hh, oln/convert/conversion.hh, 
-	oln/convert/force.hh, oln/convert/nrgbhsi.hh, oln/convert/nrgbhsl.hh, 
+	* oln/arith/logic.hh, oln/arith/ops.hh, oln/convert/bound.hh,
+	oln/convert/colorconv.hh, oln/convert/conversion.hh,
+	oln/convert/force.hh, oln/convert/nrgbhsi.hh, oln/convert/nrgbhsl.hh,
 	oln/convert/nrgbhsv.hh, oln/convert/nrgbxyz.hh, oln/convert/nrgbyiq.hh,
-	oln/convert/nrgbyuv.hh, oln/convert/rgbnrgb.hh, oln/convert/rgbxyz.hh, 
-	oln/convol/convolution.hh, oln/convol/fast_gaussian_coefficient.hh, 
-	oln/convol/fast_gaussian.hh, oln/convol/fast_gaussian.hxx, 
-	oln/core/dpoint1d.hh, oln/core/image2d.hh, oln/core/imagend_size.hh, 
-	oln/core/point1d.hh, oln/core/point3d.hh, oln/level/cc.hh, 
-	oln/level/connected.hh, oln/level/extrema_killer.hh, 
+	oln/convert/nrgbyuv.hh, oln/convert/rgbnrgb.hh, oln/convert/rgbxyz.hh,
+	oln/convol/convolution.hh, oln/convol/fast_gaussian_coefficient.hh,
+	oln/convol/fast_gaussian.hh, oln/convol/fast_gaussian.hxx,
+	oln/core/dpoint1d.hh, oln/core/image2d.hh, oln/core/imagend_size.hh,
+	oln/core/point1d.hh, oln/core/point3d.hh, oln/level/cc.hh,
+	oln/level/connected.hh, oln/level/extrema_killer.hh,
 	oln/level/invert.hh, oln/level/threshold.hh, oln/math/macros.hh,
-	oln/morpho/extrema.hh, oln/morpho/geodesic_dilation.hh, 
-	oln/morpho/reconstruction.hh, oln/morpho/stat.hh, 
-	oln/morpho/watershed.hxx, oln/utils/stat.hh, tests/io/loadsave.hh, 
-	tests/morpho/edoc.cc, tests/morpho/extrkiller.cc, 
+	oln/morpho/extrema.hh, oln/morpho/geodesic_dilation.hh,
+	oln/morpho/reconstruction.hh, oln/morpho/stat.hh,
+	oln/morpho/watershed.hxx, oln/utils/stat.hh, tests/io/loadsave.hh,
+	tests/morpho/edoc.cc, tests/morpho/extrkiller.cc,
 	oln/convert/stretch.hh: Adapt to new types.
-	* oln/value/all.hh, oln/value/bin.hh, oln/value/built_in.hh, 
-	oln/value/cast.hh, oln/value/color.hh, oln/value/cplx.hh, 
-	oln/value/debug.hh, oln/value/float_p.hh, oln/value/hsi.hh, 
-	oln/value/hsl.hh, oln/value/hsv.hh, oln/value/int_s.hh, 
-	oln/value/int_u.hh, oln/value/nrgb.hh, oln/value/op_traits.hh, 
-	oln/value/ops.hh, oln/value/predefs.hh, oln/value/rec_float.hh, 
-	oln/value/rec_int.hh, oln/value/rec_oln/value.hh, oln/value/rgb.hh, 
-	oln/value/to_oln.hh, oln/value/vec.hh, oln/value/xyz.hh, 
+	* oln/value/all.hh, oln/value/bin.hh, oln/value/built_in.hh,
+	oln/value/cast.hh, oln/value/color.hh, oln/value/cplx.hh,
+	oln/value/debug.hh, oln/value/float_p.hh, oln/value/hsi.hh,
+	oln/value/hsl.hh, oln/value/hsv.hh, oln/value/int_s.hh,
+	oln/value/int_u.hh, oln/value/nrgb.hh, oln/value/op_traits.hh,
+	oln/value/ops.hh, oln/value/predefs.hh, oln/value/rec_float.hh,
+	oln/value/rec_int.hh, oln/value/rec_oln/value.hh, oln/value/rgb.hh,
+	oln/value/to_oln.hh, oln/value/vec.hh, oln/value/xyz.hh,
 	oln/value/yiq.hh, oln/value/yuv.hh: Remove files.
-		
+
 2002-09-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* oln/core/dpointnd.hh, oln/core/image3d.hh, 
+	* oln/core/dpointnd.hh, oln/core/image3d.hh,
 	oln/core/image1d.hh: Fix include for new types.
 	* oln/types/rec_value.hh: Fix size problem with g++-2.95.
-	
+
 2002-09-27  Emmanuel Turquin  <turqui_e@epita.fr>
 
 	* oln/transform/fft.hh: Make cosmetic changes to the code formatting
@@ -163,7 +167,7 @@
 	* oln/io/pnm_write3d.hxx: Likewise.
 	* oln/io/pnm_read3d.hxx: Likewise.
 	* oln/io/pnm_write_common.hxx: Likewise.
-	
+
 2002-09-24  Emmanuel Turquin  <turqui_e@epita.fr>
 
 	* oln/transform/fft.hh: New file.
@@ -177,14 +181,14 @@
 2002-09-23  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/types/optraits.hh: Add temporary fix for debug.
-	* oln/types/typetraits_builtins_bool.hh, 
+	* oln/types/typetraits_builtins_bool.hh,
 	oln/types/optraits_bool.hh, oln/types/debug.hh: New files.
-	* oln/io/pnm_write.hxx, oln/io/pnm_write_common.hxx, 
+	* oln/io/pnm_write.hxx, oln/io/pnm_write_common.hxx,
 	oln/io/pnm_read.hxx, oln/io/pnm_read_common.hxx: Adapt to new types.
 	* oln/types/all.hh: Add includes for new files.
 	* oln/types/optraits_bin.hh: Add zero(), unit(), inf(), sup(), min()
 	and max().
-	* oln/types/bin.hh: Add default constructor, change stream operator 
+	* oln/types/bin.hh: Add default constructor, change stream operator
 	and set storage_type to bool.
 
 2002-09-20  Emmanuel Turquin  <turqui_e@epita.fr>
@@ -194,16 +198,16 @@
 
 2002-09-20  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* oln/types/global_ops_traits.hh: Allow instantiation of undefined 
+	* oln/types/global_ops_traits.hh: Allow instantiation of undefined
 	deduce_from_traits.
-	* oln/types/behaviour.hh: Fix check in minus_equal for strict 
+	* oln/types/behaviour.hh: Fix check in minus_equal for strict
 	behaviour.
-	
+
 2002-09-20  Emmanuel Turquin  <turqui_e@epita.fr>
 
 	* oln/types/optraits_vec.hh (optraits_vector): Add name() method.
 	* oln/types/optraits_cplx.hh (optraits_cplx): Add cplx-vec arith.
-	operators, comparison operator and 'name' method. 
+	operators, comparison operator and 'name' method.
 
 2002-09-19  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
@@ -237,7 +241,7 @@
 2002-09-17  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/types/int_s.hh, oln/types/interval.hh, oln/types/cycle.hh,
-	oln/types/optraits_cycle.hh, oln/types/typetraits_builtins_float.hh: 
+	oln/types/optraits_cycle.hh, oln/types/typetraits_builtins_float.hh:
 	Fix includes.
 	* oln/types/optraits_vec.hh: Fix typo, fix operators traits.
 

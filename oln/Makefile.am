@@ -184,6 +184,7 @@ nobase_oln_HEADERS =				\
   morpho/watershed.hh				\
   morpho/watershed.hxx				\
   transform/fft.hh				\
+  utils/copy.hh					\
   utils/histogram.hh				\
   utils/stat.hh					\
   utils/timer.hh				\
