@@ -127,7 +127,7 @@ namespace oln {
 
     /*! A Nagao filter generalized.
     **
-    ** Each point in the input correspond to the mean of the
+    ** Each point in the input corresponds to the mean of the
     ** window in which has the smallest variance.
     **
     ** \paran in Input image.

@@ -32,7 +32,7 @@
 namespace oln {
   namespace utils {
 
-    /// Computes the mean and the variance.
+    /// Compute the mean and the variance.
     template <typename Sum, typename Var>
     template <class I, class S>
     inline se_stat<Sum, Var> &

@@ -96,16 +96,16 @@ namespace oln {
     ** \param Sum type used to compute the sum and the average.
     ** \param Var type used to compute the variance.
     **
-    ** \note There is two parameters because for vectorial types the sum
+    ** \note There are two parameters because for vectorial types the sum
     ** is usually a vector, and the variance a non vectorial type.
     */
     template <typename Sum = ntg::float_s, typename Var = ntg::float_s>
     class se_stat
     {
     public:
-      /// type of used to sum the value (usually floating point values)
+      /// type of used to sum values (usually floating point values)
       typedef Sum sum_type;
-      /// type of used for the variance (usually floating point values)
+      /// type of the variance (usually floating point values)
       typedef Var variance_type;
 
       /*! Build a se stat.
@@ -121,7 +121,7 @@ namespace oln {
 	compute(im, p, s);
       }
 
-      /// Computes the mean and the variance.
+      /// Compute the mean and the variance.
       template <class I, class S>
       se_stat &
       compute(const oln::abstract::image<I> &im,

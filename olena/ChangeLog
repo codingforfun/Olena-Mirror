@@ -1,3 +1,13 @@
+2004-03-27  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/utils/histogram.hh: Change the return type
+	of `at' method to const value_type.
+	* olena/oln/morpho/attributes.hh: Uncomment some lines.
+
+	* olena/oln/convol/nagao.hh: Correct comments.
+	* olena/oln/convol/nagao.hxx: Likewise.
+	* olena/oln/utils/se_stat.hh: Likewise.
+	* olena/oln/utils/se_stat.hxx: Likewise.
+
 2004-03-26  Niels Van Vliet  <niels@lrde.epita.fr>
 	* olena/oln/math/macros.hh: Add dot_product.
 	* olena/oln/utils/se_stat.hh: Add file. Mean and variance using a
