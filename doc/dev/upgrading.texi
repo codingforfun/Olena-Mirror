@@ -4,8 +4,66 @@
 @chapter Upgrading from older versions
 
 @menu
+* Upgrading from 0.8 to 0.9::
 * Upgrading from 0.7 to 0.8::
 @end menu
+
+@node Upgrading from 0.8 to 0.9
+@section Upgrading from 0.8 to 0.9
+
+Abstract interfaces are available and dispatch the methods to their
+implementations. Thus, it is not necessary to downcast abstract-typed
+variables through ``Exact_ref'', ``Exact_cref'', ``Exact_ptr'' or
+``Exact_cptr'' macros anymore.
+
+Abstract classes have moved from ``oln'' to ``oln::abstract''
+namespace.
+ 
+@itemize @minus
+@item oln::image => oln::abstract::image
+@item oln::iter => oln::abstract::iter
+@item oln::neighborhood => oln::abstract::neighborhood
+@item oln::point => oln::abstract::point
+@item oln::struct_elt => oln::abstract::struct_elt
+@item oln::w_window => oln::abstract::w_window
+@item oln::window => oln::abstract::window
+@end itemize
+
+The ``data'' concept changed into the ``implementation''
+one. The ``implementation'' can be simple data storage, but
+it will also provide special proxies and function-generated
+images. The access to this ``implementation'' has changed from
+``data()'' to ``impl()'' member function.
+
+Functions modifying borders were made image member functions. 
+
+@itemize @minus
+@item border::set_width()  => abstract::image::border_set_width()
+@item border::adapt_width()  => abstract::image::border_adapt_width()
+@item border::adapt_copy()  => abstract::image::border_adapt_copy()
+@item border::adapt_mirror()  => abstract::image::border_adapt_mirror()
+@item border::adapt_assign()  => abstract::image::border_adapt_assign()
+@end itemize
+
+Olena now has its own coding style
+(http://www.lrde.epita.fr/cgi-bin/twiki/view/Projects/OlenaCodingStyle).
+
+In particular, macros have been renamed:
+
+@itemize @minus
+@item Exact(I) => mlc_exact_type(I)
+@item Point(I) => oln_point_type(I)
+@item Iter(I) => oln_iter_type(I)
+@end itemize
+
+Typedefs have been renamed too:
+
+@itemize @minus
+@item image2d<bin>::iter => image2d<bin>::iter_type
+@item image2d<bin>::point => image2d<bin>::point_type
+@end itemize
+
+More details can be found in the coding style web page.
 
 @node Upgrading from 0.7 to 0.8
 @section Upgrading from 0.7 to 0.8
