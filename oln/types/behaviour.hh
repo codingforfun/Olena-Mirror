@@ -119,9 +119,9 @@ namespace oln
       {	
 	T ret = lhs - rhs;
 	if (rhs > 0)
-	  postcondition(TO_OLN_CAST(T, ret) <= lhs);
+	  postcondition(TO_OLN_CAST(T, ret) < lhs);
 	else
-	  postcondition(TO_OLN_CAST(T, ret) > lhs);
+	  postcondition(TO_OLN_CAST(T, ret) >= lhs);
 	return ret;
       }
 

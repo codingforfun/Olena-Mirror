@@ -1,8 +1,15 @@
+2002-09-20  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/types/global_ops_traits.hh: Allow instantiation of undefined 
+	deduce_from_traits.
+	* oln/types/behaviour.hh: Fix check in minus_equal for strict 
+	behaviour.
+	
 2002-09-20  Emmanuel Turquin  <turqui_e@epita.fr>
 
-	* oln/types/optraits_vec.hh (optraits_vector): add 'name' method.
-	* oln/types/optraits_cplx.hh (optraits_cplx): add cplx-vec arith.
-	operators, comparison operator and 'name' method.
+	* oln/types/optraits_vec.hh (optraits_vector): Add 'name' method.
+	* oln/types/optraits_cplx.hh (optraits_cplx): Add cplx-vec arith.
+	operators, comparison operator and 'name' method. 
 
 2002-09-19  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 

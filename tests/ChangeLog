@@ -2,6 +2,10 @@
 
 	* types/tests/cplx6: New file.
 
+2002-09-20  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* types/tests/cplx5: New file.
+	
 2002-09-19  Emmanuel Turquin  <turqui_e@epita.fr>
 
 	* types/tests/cplx[1-4]: New files.

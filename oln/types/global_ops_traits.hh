@@ -53,7 +53,14 @@ namespace oln
     class undefined_traits {};
 
     template <class T>
-    class meta_undefined_traits {};
+    class meta_undefined_traits 
+    {
+      typedef undefined_traits ret;
+      typedef undefined_traits lhs_type;
+      typedef undefined_traits rhs_type;
+      typedef undefined_traits traits_lhs_type;
+      typedef undefined_traits traits_rhs_type;
+    };
 
     //
     //  Operators traits declaration
@@ -69,6 +76,7 @@ namespace oln
     { 
       enum { commutative = false };
       typedef undefined_traits ret; 
+      typedef undefined_traits impl; 
     };  
 
     // minus
@@ -78,6 +86,7 @@ namespace oln
     { 
       enum { commutative = false };
       typedef undefined_traits ret; 
+      typedef undefined_traits impl; 
     };  
 
     // times
@@ -87,6 +96,7 @@ namespace oln
     { 
       enum { commutative = false };
       typedef undefined_traits ret; 
+      typedef undefined_traits impl; 
     };  
 
     // div
@@ -96,6 +106,7 @@ namespace oln
     { 
       enum { commutative = false };
       typedef undefined_traits ret; 
+      typedef undefined_traits impl; 
     };  
 
     // mod
@@ -105,6 +116,7 @@ namespace oln
     { 
       enum { commutative = false };
       typedef undefined_traits ret; 
+      typedef undefined_traits impl; 
     };  
 
     // logical ops
@@ -114,6 +126,7 @@ namespace oln
     { 
       enum { commutative = false };
       typedef undefined_traits ret; 
+      typedef undefined_traits impl; 
     };  
 
     // comparison
@@ -123,6 +136,7 @@ namespace oln
     { 
       enum { commutative = false };
       typedef undefined_traits ret;
+      typedef undefined_traits impl; 
     };
     
 
