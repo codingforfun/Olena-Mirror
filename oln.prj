@@ -1,16 +1,35 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 7 52)
-(Parent-Version oln 7 51)
+(Project-Version oln 7 53)
+(Parent-Version oln 7 52)
 (Version-Log "Index: ChangeLog
+from   2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
+   * ISSUES: Remove file. Contents moved to `doc/dev/build.texi' and
+   `doc/dev/design.texi'.
+
++2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
++
+        * configure.ac: Bump Autotools requirements.
+ 
+ 2003-02-09  Raphaël Poss  <raph@lrde.epita.fr>
+Index: doc/ChangeLog
 from  +2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
 
-        * configure.ac: Bump Autotools requirements.
+   * dev/oln-dev.texi (Olena fast installation guide): Include
+   `design.texi'.
+
+   * dev/design.texi (Design considerations): New file. Contents from
+   ISSUES.
+
+   * dev/build.texi (Compiler notes): Add section.
+
+   * dev/faq.texi (Frequently Asked Questions): Add FAQ about I/O on
+   big-endian hosts.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 10 Feb 2003 09:07:48 +0100")
+(Checkin-Time "Mon, 10 Feb 2003 09:43:02 +0100")
 (Checkin-Login raph)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -88,9 +107,9 @@ from  +2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.26 664))
+  (ChangeLog (oln/o/33_ChangeLog 1.27 664))
   (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.13 664))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.16 664))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.17 664))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10 664))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.1 664))
 
@@ -113,7 +132,7 @@ from  +2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
   (doc/ref/bin () :directory)
   (doc/ref/html () :directory)
   (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27 660))
-  (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.3 660))
+  (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.4 660))
   (doc/ref/oln-ref.tex (oln/f/14_oln-ref.te 1.3 660))
   (doc/ref/ref-types.tex (oln/g/34_ref-types. 1.5 660))
   (doc/Makefile.am (oln/e/0_Makefile.a 1.14 660))
@@ -136,7 +155,7 @@ from  +2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
   (oln/img/random.pgm (oln/n/7_random.pgm 1.1 660))
   (oln/img/se9.pbm (oln/n/5_se9.pbm 1.1 660) :no-keywords)
   (oln/img/se.pbm (oln/n/6_se.pbm 1.1 660) :no-keywords)
-  (ISSUES (oln/d/47_ISSUES 1.6 660))
+  
   (oln/Makefile.am (oln/2_Makefile.a 1.30 660))
   (oln/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.5 664))
   (oln/oln/arith/logic.hh (oln/b/24_logic.hh 1.6 664))
@@ -717,7 +736,7 @@ from  +2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
 ;; Files added by populate at Fri, 24 Jan 2003 14:34:30 +0100,
 ;; to version 7.40(w), by raph:
 
-  (doc/dev/build.texi (oln/p/42_build.texi 1.3 664))
+  (doc/dev/build.texi (oln/p/42_build.texi 1.4 664))
 
 ;; Files added by populate at Fri, 24 Jan 2003 14:34:47 +0100,
 ;; to version 7.40(w), by raph:
@@ -737,7 +756,7 @@ from  +2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
 ;; Files added by populate at Fri, 24 Jan 2003 15:18:12 +0100,
 ;; to version 7.42(w), by raph:
 
-  (doc/dev/faq.texi (oln/p/44_faq.texi 1.3 664))
+  (doc/dev/faq.texi (oln/p/44_faq.texi 1.4 664))
 
 ;; Files added by populate at Sat, 25 Jan 2003 19:02:34 +0100,
 ;; to version 7.45(w), by raph:
@@ -773,8 +792,16 @@ from  +2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
 ;; to version 7.48(w), by raph:
 
   (doc/ref/gen_filelists.sh (oln/q/4_gen_fileli 1.1 664))
+
+;; Files added by populate at Mon, 10 Feb 2003 09:36:58 +0100,
+;; to version 7.52(w), by raph:
+
+  (doc/dev/design.texi (oln/q/5_design.tex 1.1 664))
+
+;; Files deleted by depopulate at Mon, 10 Feb 2003 09:37:07 +0100,
+;; from version 7.52(w), by raph:
+
+  ; (ISSUES ())
 )
-(Merge-Parents
-  (7.51 complete)
-)
+(Merge-Parents)
 (New-Merge-Parents)

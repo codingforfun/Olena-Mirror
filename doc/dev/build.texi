@@ -215,3 +215,61 @@ machine.
 
 You can now proceed after reading the @file{INSTALL} file.
 @end ifplaintext
+
+@ifnotplaintext
+@node Compiler notes
+@section Compiler notes
+@end ifnotplaintext
+@ifplaintext
+@section Compiler notes
+@end ifplaintext
+
+Olena has been tested on the following configurations : 
+
+@multitable @columnfractions .33 .66
+@item @strong{System} @tab @strong{Compiler}
+@item Linux @tab g++ 3.0 and 3.2
+@item Linux @tab icc (Intel's C++ Compiler) v7
+@item MacOS X @tab g++ 3.1
+@item NetBSD 1.6 @tab g++ 3.2
+@item Cygwin @tab g++ 3.2
+@end multitable
+	
+Olena used to be compatible with G++ 2.95 for performance
+reasons. With G++ 3.2, this constraint is becoming obsolete.
+Moreover, it has many annoying issues, here are the two more 
+important ones:
+
+@itemize @minus
+@item
+G++ 2.95 rejects valid expressions, often implying ugly workarounds;
+@item
+under various circumstances, optimizations sometimes generates invalid
+code, especially with intensive inlining. 
+@end itemize
+
+Actually Olena yet compiles with G++ 2.95, but some wrong code might
+be generated with data types.
+
+Compilation time may have important differences between compilers, the
+following benchmark gives an idea of the time needed to complete a
+@command{make check}. The tests have been run on a Bi-Xeon 2.4Ghz machine.
+
+@multitable @columnfractions .5 .5
+@item @strong{Compiler} @tab @strong{Time}
+@item  g++-2.95 @tab 16m42s
+@item  g++-3.0 @tab 23m20s
+@item  g++-3.2 @tab 20m03s
+@item  icc-7 @tab 12m52s
+@end multitable
+
+These tests include compilation and running time, the following ones
+just show the runtime benchmarks for the @file{extrkiller} test:
+
+@multitable @columnfractions .25 .5 .25
+@item @strong{Compiler} @tab @strong{Options} @tab @strong{Time}
+@item g++-2.95 @tab -O3 -finline-limit-1500 @tab 3m14s
+@item g++-3.0 @tab -O3 -finline-limit-1500 @tab 2m08s
+@item g++-3.2 @tab -O3 -finline-limit-1500 @tab 1m50s
+@item icc-7   @tab -O3 @tab 5m41s
+@end multitable

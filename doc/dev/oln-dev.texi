@@ -38,6 +38,7 @@ Copyright @copyright{} 2002,2003 @strong{L.R.D.E.}
 * The Olena configuration system::
 * Using Olena from another project::
 * Frequently Asked Questions::
+* Design considerations::
 * Credits::
 * Index and Table of contents::
 @end menu
@@ -62,6 +63,7 @@ Copyright @copyright{} 2002,2003 @strong{L.R.D.E.}
 * Speeding up the configuration process::
 * Optional Features::
 * Building::
+* Compiler notes::
 * Installing::
 @end menu
 
@@ -83,6 +85,11 @@ Copyright @copyright{} 2002,2003 @strong{L.R.D.E.}
 @c Chapter `FAQ'
 
 @include faq.texi
+
+@c ************************************************************************
+@c Chapter Design considerations
+
+@include design.texi
 
 @c ************************************************************************
 @node Credits

@@ -1,3 +1,16 @@
+2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* dev/oln-dev.texi (Olena fast installation guide): Include
+	`design.texi'.
+
+	* dev/design.texi (Design considerations): New file. Contents from
+	ISSUES.
+
+	* dev/build.texi (Compiler notes): Add section.
+
+	* dev/faq.texi (Frequently Asked Questions): Add FAQ about I/O on
+	big-endian hosts.
+
 2003-02-09  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* demo/Makefile.am (AM_CXXFLAGS): Cleanup optimization flags

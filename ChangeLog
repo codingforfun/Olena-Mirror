@@ -1,5 +1,10 @@
 2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
 
+	* ISSUES: Remove file. Contents moved to `doc/dev/build.texi' and
+	`doc/dev/design.texi'.
+
+2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
+
 	* configure.ac: Bump Autotools requirements.
 
 2003-02-09  Raphaël Poss  <raph@lrde.epita.fr>
