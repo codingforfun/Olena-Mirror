@@ -47,16 +47,16 @@
 //
 
 namespace oln {
-  
+
   template <unsigned ncomps, unsigned qbits, template <unsigned>
   class color_system>
   struct typetraits<color<ncomps, qbits, color_system> >
   {
     typedef color<ncomps, qbits, color_system>	self;
     typedef self				base_type;
-    typedef vec<ncomps, int_u<qbits> >		storage_type;      
+    typedef vec<ncomps, int_u<qbits> >		storage_type;
   };
-
+  
   namespace internal
   {
 
