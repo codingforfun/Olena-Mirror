@@ -25,14 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_GLOBAL_OPS_HH
-# define NTG_GLOBAL_OPS_HH
+#ifndef NTG_CORE_GLOBAL_OPS_HH
+# define NTG_CORE_GLOBAL_OPS_HH
 
 # include <mlc/contract.hh>
 # include <mlc/is_a.hh>
 
 # include <ntg/utils/to_oln.hh>
 # include <ntg/core/value.hh>
+# include <ntg/core/macros.hh>
 # include <ntg/core/global_ops_traits.hh>
 # include <ntg/core/optraits_builtins.hh>
 # include <ntg/core/typetraits_builtins.hh>
@@ -172,17 +173,17 @@ namespace ntg
     // minus
 
     template <class T> inline
-    const typename typetraits<T>::signed_type 
+    const ntg_signed_type(T)
     operator-(const T& val)
     {       
-      typedef typename typetraits<T>::signed_type signed_type;
-      return static_cast<signed_type>(optraits<T>::zero()) - val;
+      typedef ntg_signed_type(T) signed_type;
+      return static_cast<signed_type>(ntg_zero_val(T)) - val;
     }
 
     template<class T> inline
     const T& operator--(T& val)
     {
-      val -= optraits<T>::unit();
+      val -= ntg_unit_val(T);
       return val;
     }
     
@@ -190,7 +191,7 @@ namespace ntg
     T operator--(T& val, int)
     {
       T tmp(val);
-      val -= optraits<T>::unit();
+      val -= ntg_unit_val(T);
       return tmp;
     }
 
@@ -201,36 +202,24 @@ namespace ntg
 
     // min
     template <class T1, class T2> inline
-    typename internal::deduce_from_traits<internal::operator_min_traits, 
-					  T1, 
-                                          T2>::ret
+    ntg_return_type(operator_min_traits, T1, T2)
     min (const T1& lhs, const T2& rhs)
     {
-      typedef typename 
-	internal::deduce_from_traits<internal::operator_max_traits, 
-                                     T1, 
-                                     T2>::ret result_type;
-      
+      typedef ntg_return_type(operator_max_traits, T1, T2) result_type;     
       return (lhs < rhs) ? result_type(lhs) : result_type(rhs);
     }
     
     // max
     template <class T1, class T2> inline
-    typename internal::deduce_from_traits<internal::operator_max_traits, 
-					  T1, 
-                                          T2>::ret
+    ntg_return_type(operator_max_traits, T1, T2)
     max (const T1& lhs, const T2& rhs)
     {
-      typedef typename 
-	internal::deduce_from_traits<internal::operator_max_traits, 
-                                     T1, 
-                                     T2>::ret result_type;
-      
+      typedef ntg_return_type(operator_max_traits, T1, T2) result_type;     
       return (lhs > rhs) ? result_type(lhs) : result_type(rhs);
     }
 
-  } // internal
+  } // end of internal.
 
-} // end of ntg
+} // end of ntg.
 
-#endif // ndef NTG_GLOBAL_OPS_HH
+#endif // ndef NTG_CORE_GLOBAL_OPS_HH

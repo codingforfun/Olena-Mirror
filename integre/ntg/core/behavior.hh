@@ -32,6 +32,7 @@
 # include <mlc/bool.hh>
 # include <mlc/is_a.hh>
 
+# include <ntg/core/macros.hh>
 # include <ntg/core/value.hh>
 # include <ntg/core/optraits.hh>
 # include <ntg/real/optraits_scalar.hh>
@@ -67,7 +68,7 @@ namespace ntg
     template <class T>
     struct get
     {
-      typedef typename typetraits<T>::storage_type storage_type;
+      typedef ntg_storage_type(T) storage_type;
 
       template <class T1, class T2>
       static T check_plus_equal (T1 lhs, T2 rhs)
@@ -102,7 +103,7 @@ namespace ntg
     template <class T>
     struct get
     {
-      typedef typename typetraits<T>::storage_type storage_type;
+      typedef ntg_storage_type(T) storage_type;    
 
       template <class T1, class T2>
       static T check_plus_equal (T1 lhs, T2 rhs)
@@ -162,7 +163,7 @@ namespace ntg
     template <class T>
     struct get
     {
-      typedef typename typetraits<T>::storage_type storage_type;
+      typedef ntg_storage_type(T) storage_type;
 
       template <class T1, class T2>
       static T check_plus_equal (T1 lhs, T2 rhs)
@@ -240,7 +241,7 @@ namespace ntg
     template <class T>
     struct get
     {
-      typedef typename typetraits<T>::storage_type storage_type;
+      typedef ntg_storage_type(T) storage_type;
 
       // FIXME: calculate real values
 

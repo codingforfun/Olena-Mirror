@@ -28,13 +28,12 @@
 #ifndef NTG_CORE_VALUE_HH
 # define NTG_CORE_VALUE_HH
 
+# include <ntg/core/macros.hh>
 # include <ntg/core/type.hh>
 
-# include <ntg/core/type.hh>
-# include <ntg/core/predecls.hh>
-# include <ntg/core/global_ops_traits.hh>
+// --
+
 # include <ntg/core/typetraits.hh>
-# include <ntg/core/optraits.hh>
 
 namespace ntg {
 
@@ -94,7 +93,7 @@ namespace ntg {
   template <class E>
   class value : public any_ntg<E>
   {
-    typedef typename typetraits<E>::storage_type storage_type;
+    typedef ntg_storage_type(E) storage_type;
 
   public:
     // Hooks

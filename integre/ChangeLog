@@ -1,5 +1,12 @@
 2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* ntg/core/macros.hh: New file.
+
+	* ntg/core/behavior.hh, ntg/core/global_ops.hh, 
+	ntg/core/value.hh: Update using new macros.
+
+2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* ntg/core/builtins_properties.hh, ntg/core/predecls.hh,
 	ntg/float.hh, ntg/utils/cast.hh, ntg/vect/cplx.hh,
 	tests/types/tests/conv1, tests/types/tests/conv2,
