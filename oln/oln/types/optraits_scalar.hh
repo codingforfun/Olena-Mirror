@@ -53,7 +53,7 @@ namespace oln
   ///////////////////////////////////////////////////////////////////
 
   template <class Self>
-  class optraits_scalar : public optraits_top
+  class optraits_scalar : public optraits_top<Self>
   {
     typedef typename typetraits<Self>::storage_type storage_type;
 

@@ -32,14 +32,13 @@
 # include <oln/meta/type.hh>
 
 # include <oln/types/predecls.hh>
-
 # include <oln/types/builtins_properties.hh>
 # include <oln/types/to_oln.hh>
-
 # include <oln/types/optraits.hh>
 # include <oln/types/typetraits.hh>
 # include <oln/types/behaviour.hh>
 # include <oln/types/global_ops_traits.hh>
+# include <oln/types/vec.hh>
 
 # include <oln/meta/cmp.hh>
 
@@ -102,7 +101,7 @@ namespace oln
     typedef typename typetraits<self>::storage_type storage_type;
   public:
 
-    static storage_type zero ()
+    static self zero ()
     {
       // A vectorial type MUST return a zero initialized value.
       return self();

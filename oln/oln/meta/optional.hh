@@ -35,6 +35,16 @@ namespace oln {
   // to do.
   struct none {};
 
+  // Option encapsulates a value in a sum type : Some t | None.
+  template <class T>
+  struct Option
+  {
+    Option(none) : t_(0)  {}
+    Option(T& t) : t_(&t) {}
+    T* t_;
+    operator T&() { return *t_; }
+  };
+
   // Optional is meant to enable optional static argument with variant
   // types. The 'Decl' argument must have a free template argument to
   // permit the substitution of the class 'none' to it when no
@@ -49,7 +59,7 @@ namespace oln {
   // foo(1);         // T = none
   // foo(1, 2);      // T = int
   // foo(1, "bar");  // T = char *
-#define Optional(Decl)  ((Decl) = none())
+#define Optional(T, v)  ((Option<T> v) = none())
 
   // Depending on the presence of optional argument, we have different
   // specialization of the algorithm. Here are several helper classes

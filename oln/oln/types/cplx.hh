@@ -29,12 +29,16 @@
 # define OLENA_VALUE_CPLX_HH
 
 # include <oln/config/system.hh>
-# include <oln/types/optraits_scalar.hh>
-# include <oln/types/typetraits.hh>
-# include <oln/types/vec.hh>
+
 # include <oln/meta/cmp.hh>
 # include <oln/meta/type.hh>
+
+# include <oln/types/typetraits.hh>
+# include <oln/types/optraits.hh>
+# include <oln/types/vec.hh>
 # include <oln/types/cplx_representation.hh>
+
+// FIXME: optraits_cplx.hh is included at the end of the file.
 
 namespace oln {
 
@@ -266,5 +270,8 @@ std::ostream& operator<<(std::ostream& ostr, const oln::cplx<oln::polar, T>& rhs
   return ostr << rhs.magn() << " * exp("
 	      << rhs.angle() << "i)";
 }
+
+// FIXME: find another solution if we want self contained cplx.hh
+# include <oln/types/optraits_cplx.hh>
 
 #endif // ! OLENA_VALUE_CPLX_HH

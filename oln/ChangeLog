@@ -1,3 +1,51 @@
+2003-01-10  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/oln/arith/ops.hh: replace std::min and std::max by types min
+	and max operators.
+
+	* oln/oln/types/optraits_scalar.hh: adapt to new optraits_top.
+	* oln/oln/types/optraits.hh: extend static hierarchy to
+	optraits_top.
+
+	* oln/oln/types/bin.hh, oln/oln/types/optraits_bin.hh,
+	oln/oln/types/cplx.hh, oln/oln/types/optraits_cplx.hh,
+	oln/oln/types/cycle.hh, oln/oln/types/optraits_cycle.hh,
+	oln/oln/types/int_u.hh, oln/oln/types/optraits_int_u.hh,
+	oln/oln/types/int_s.hh, oln/oln/types/optraits_int_s.hh,
+	oln/oln/types/range.hh, oln/oln/types/optraits_range.hh,
+	oln/oln/types/vec.hh, oln/oln/types/optraits_vec.hh,
+	oln/oln/types/behaviour.hh, oln/oln/types/all.hh: temporarily fix
+	includes.
+
+	* oln/oln/types/optraits_vec.hh: fix zero() return type.
+	* oln/oln/types/optraits_cplx.hh: fix zero() and unit() return
+	types.
+	
+2003-01-10  Yann Régis-Gianas  <yann@lrde.epita.fr>
+
+	* oln/oln/topo/dmap.hh: new.
+	* oln/oln/topo/dmap.hxx: likewise.	
+	* oln/oln/Makefile.am: add dmap.h[xx,h]
+	* oln/oln/types/nrgb.hh: use a singleton for classic color.
+	* oln/oln/core/box.hxx(make_consistent): test the flag.
+
+2003-01-09  Yann Régis-Gianas  <yann@lrde.epita.fr>
+
+	* oln/oln/level/cc.hh: fix a bug.
+	* oln/oln/Makefile.am: distribute box.hh, box.hxx and set_level.hh
+	* oln/oln/types/int_u.hh: fix include bug.
+	* oln/oln/types/int_s.hh: idem.
+	* oln/oln/types/color.hh: add a 3 components constructor.
+	* oln/oln/types/nrgb.hh: add classic rgb color.
+	* oln/oln/core/box.hh: new.
+	* oln/oln/core/box.hxx: likewise.
+	* oln/oln/level/set_level.hh: new.
+
+2003-01-09  Yann Régis-Gianas  <yann@lrde.epita.fr>
+
+	* oln/oln/level/cc.hh: do not use optional.hh stuff anymore.
+	* oln/oln/meta/optional.hh: fix a bug.
+
 2003-01-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/types/optraits_bin.hh: fix logical "and" and "xor" 

@@ -114,7 +114,7 @@
 //
 //  Macros for optraits_int
 //
-///////////////////////////
+////////////////////////////
 
 
 # define ASSIGN_INT_OPERATOR(Name, Op)						\

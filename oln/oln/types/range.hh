@@ -32,7 +32,9 @@
 
 # include <oln/types/rec_value.hh>
 # include <oln/types/typetraits.hh>
-# include <oln/types/optraits_scalar.hh>
+# include <oln/types/optraits.hh>
+
+// FIXME: optraits_range.hh is included at the end of the file.
 
 namespace oln
 {
@@ -118,5 +120,8 @@ namespace oln
 
   } // type_definitions
 } // end of namespace oln
+
+// FIXME: find another solution if we want self contained range.hh.
+# include <oln/types/optraits_range.hh>
 
 #endif // ndef OLENA_VALUE_RANGE_HH

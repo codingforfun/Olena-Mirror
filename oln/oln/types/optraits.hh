@@ -34,23 +34,27 @@
 namespace oln
 {
 
-  template <class T> 
-  struct optraits
+  // top of hierarchy
+  template <class T>
+  class optraits_top
   {
+  public:
     // default impl
     static std::string name() { return T::name(); }
   };
 
-  // top of hierarchy
-  class optraits_top {};
-
   // enumerated types
   template <class T>
-  class optraits_enum : public optraits_top {};
+  class optraits_enum : public optraits_top<T> {};
 
   // vectorial types
   template <class T>
-  class optraits_vector : public optraits_top {};
+  class optraits_vector : public optraits_top<T> {};
+
+  // default impl
+  template <class T> 
+  struct optraits : public optraits_top<T>
+  {};
 
 } // end of namespace oln
 

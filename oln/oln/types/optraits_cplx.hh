@@ -38,6 +38,7 @@
 # include <oln/types/typetraits.hh>
 # include <oln/types/behaviour.hh>
 # include <oln/types/global_ops_traits.hh>
+# include <oln/types/cplx.hh>
 
 
 // Assignement operators macros
@@ -214,12 +215,12 @@ namespace oln
     
   public:
     
-    static storage_type zero ()
+    static self zero ()
     {
       return self();
     }
     
-    static storage_type unit ()
+    static self unit ()
     {
       return self(1);
     }
@@ -283,19 +284,19 @@ namespace oln
   //////////////////////////////////////
 
   template <class T>
-  class optraits<cplx<polar, T> >: public optraits_top
+  class optraits<cplx<polar, T> >: public optraits_top<cplx<polar, T> >
   {
     typedef cplx<polar, T> self;
     typedef typename typetraits<self>::storage_type storage_type;
     
   public:
     
-    static storage_type zero ()
+    static self zero ()
     {
       return self();
     }
     
-    static storage_type unit ()
+    static self unit ()
     {
       return self(1);
     }

@@ -33,8 +33,11 @@
 
 # include <oln/types/optraits_scalar.hh>
 # include <oln/types/typetraits.hh>
+# include <oln/types/predecls.hh>
 # include <oln/types/behaviour.hh>
 # include <oln/types/global_ops_traits.hh>
+# include <oln/types/int_u.hh>
+# include <oln/types/int_s.hh>
 
 # include <oln/meta/cmp.hh>
 
@@ -43,11 +46,6 @@
 
 namespace oln
 {
-
-  // fwd_decl
-  namespace type_definitions {
-    template <unsigned nbits, class behaviour> class int_u;
-  }
 
   //
   //  optraits for int_u
@@ -80,7 +78,8 @@ namespace oln
     // debug
     static std::string name() {
       std::ostringstream out;
-      out << "int_u<" << int(nbits) << ", " << behaviour::name() << ">"<< std::ends;
+      out << "int_u<" << int(nbits) << ", " << behaviour::name() << ">"
+	  << std::ends;
       return out.str();
     }
   };

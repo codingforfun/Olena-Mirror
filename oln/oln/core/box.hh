@@ -25,20 +25,54 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_TYPETRAITS_HH
-# define OLENA_VALUE_TYPETRAITS_HH
+#ifndef OLENA_CORE_BOX_HH
+# define OLENA_CORE_BOX_HH
 
-namespace oln
-{
+namespace oln {
 
-  struct undefined;
+  // FIXME: despite of it usefulness, this box classes is not good
+  // FIXME: since it is not generic.
 
-  template <class T> 
-  struct typetraits
+  template <class I>
+  class box 
   {
-    typedef undefined op_traits;
+  public:
+    typedef typename I::dpoint		dpoint;
+    typedef typename I::point		point;
+
+    enum { d = dpoint::dim };
+    
+    box();
+    unsigned    dim() const;
+    void	add(point p);
+    void	add(const box<I>& p);
+    void	make_consistent();
+    point	mass_center() const;
+    point	box_center() const;
+    point	top() const;
+    unsigned	card() const;
+    point	bottom() const;
+    unsigned	width() const;
+    unsigned	height() const;
+    unsigned	integrale() const;
+    unsigned	volume() const;
+    unsigned	area() const;
+    float	density() const;
+    float	square_ratio() const;
+    
+  private:
+    bool	not_consistent_;
+    point	top_;
+    point	bottom_;
+    point	mass_center_;
+    point	box_center_;
+    unsigned	card_;
+    dpoint	dimension_;
+    float	mass_[point::dim];
   };
 
-} // end of namespace oln
+} // end of oln.
 
-#endif // ndef OLENA_VALUE_TYPETRAITS_HH
+# include <oln/core/box.hxx>
+
+#endif // OLENA_CORE_BOX_HH

@@ -28,10 +28,15 @@
 #ifndef OLENA_VALUE_VEC_HH
 # define OLENA_VALUE_VEC_HH
 
+# include <oln/core/type.hh>
+
+# include <oln/meta/array.hh>
+
 # include <oln/types/rec_value.hh>
 # include <oln/types/typetraits.hh>
-# include <oln/core/type.hh>
-# include <oln/meta/array.hh>
+# include <oln/types/optraits.hh>
+
+// FIXME: optraits_vec.hh is included at the end of the file.
 
 namespace oln {
 
@@ -120,5 +125,7 @@ std::ostream& operator<<(std::ostream& ostr, const oln::vec<N,T>& rhs)
   return ostr;
 }
 
+// FIXME: find another solution if we want self contained vec.hh.
+# include <oln/types/optraits_vec.hh>
 
 #endif // ! OLENA_VALUE_VEC_HH

@@ -29,13 +29,17 @@
 # define OLENA_VALUE_OPTRAITS_CYCLE_HH
 
 # include <oln/config/system.hh>
+
 # include <oln/meta/type.hh>
+
 # include <oln/types/to_oln.hh>
 # include <oln/types/cycle.hh>
 # include <oln/types/optraits.hh>
 # include <oln/types/typetraits.hh>
 # include <oln/types/global_ops_traits.hh>
 # include <oln/types/behaviour.hh>
+# include <oln/types/predecls.hh>
+# include <oln/types/cycle.hh>
 
 # include <string>
 # include <sstream>

@@ -29,7 +29,9 @@
 # define OLENA_VALUE_OPTRAITS_BIN_HH
 
 # include <oln/types/global_ops.hh>
+# include <oln/types/typetraits.hh>
 # include <oln/types/optraits.hh>
+# include <oln/types/predecls.hh>
 # include <oln/types/bin.hh>
 
 # include <string>

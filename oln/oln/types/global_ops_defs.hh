@@ -223,7 +223,7 @@ inline bool Op(const rec_value<T1>& lhs, const T2& rhs)			\
   typedef typename deduced_type::lhs_type lhs_type;			\
   typedef typename deduced_type::rhs_type rhs_type;			\
 									\
-  return optraits<impl>::Name(static_cast<lhs_type>(lhs.self()),	\
+ return optraits<impl>::Name(static_cast<lhs_type>(lhs.self()),		\
 			      static_cast<rhs_type>(rhs));		\
 }									\
 									\

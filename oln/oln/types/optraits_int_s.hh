@@ -32,16 +32,17 @@
 
 # include <oln/meta/basics.hh>
 # include <oln/meta/type.hh>
+# include <oln/meta/cmp.hh>
 
 # include <oln/types/builtins_properties.hh>
 # include <oln/types/to_oln.hh>
-
+# include <oln/types/predecls.hh>
 # include <oln/types/optraits_scalar.hh>
 # include <oln/types/typetraits.hh>
 # include <oln/types/behaviour.hh>
 # include <oln/types/global_ops_traits.hh>
-
-# include <oln/meta/cmp.hh>
+# include <oln/types/int_u.hh>
+# include <oln/types/int_s.hh>
 
 # include <sstream>
 # include <string>

@@ -31,11 +31,13 @@
 # include <oln/config/system.hh>
 # include <oln/meta/cmp.hh>
 # include <oln/types/builtins_properties.hh>
-
+# include <oln/types/predecls.hh>
 # include <oln/types/rec_value.hh>
 # include <oln/types/behaviour.hh>
 # include <oln/types/optraits.hh>
 # include <oln/types/typetraits.hh>
+
+// FIXME: optraits_int_s.hh is included at the end of the file.
 
 // Macros //
 
@@ -188,5 +190,8 @@ namespace oln
 
   } // type_definitions
 } // end of namespace oln
+
+// FIXME: find another solution if we want self contained int_s.hh
+# include <oln/types/optraits_int_s.hh>
 
 #endif // ndef OLENA_VALUE_INT_S_HH

@@ -32,6 +32,8 @@
 # include <oln/types/optraits.hh>
 # include <oln/types/typetraits.hh>
 # include <oln/types/global_ops_traits.hh>
+# include <oln/types/predecls.hh>
+# include <oln/types/range.hh>
 
 # include <string>
 # include <sstream>

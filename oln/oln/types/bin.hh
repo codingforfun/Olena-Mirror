@@ -32,6 +32,8 @@
 # include <oln/types/rec_value.hh>
 # include <oln/types/typetraits.hh>
 
+// FIXME: optraits_bin.hh is included at the end of the file.
+
 namespace oln
 {
 
@@ -115,5 +117,8 @@ namespace oln
   } // type_definitions
 
 } // end of namespace oln
+
+// FIXME: find another solution to allow self contained bin.hh
+# include <oln/types/optraits_bin.hh>
 
 #endif // ndef OLENA_VALUE_BIN_HH

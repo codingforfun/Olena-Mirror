@@ -31,21 +31,13 @@
 # include <oln/config/system.hh>
 
 # include <oln/types/type.hh>
-
-# include <oln/types/to_oln.hh>
 # include <oln/types/predecls.hh>
 
 # include <oln/types/builtins_properties.hh>
-
-# include <oln/types/rec_value.hh>
+# include <oln/types/to_oln.hh>
 
 # include <oln/types/behaviour.hh>
 # include <oln/types/interval.hh>
-
-# include <oln/types/typetraits.hh>
-# include <oln/types/typetraits_builtins.hh>
-
-# include <oln/types/optraits.hh>
 
 # include <oln/types/int_u.hh>
 # include <oln/types/int_s.hh>
@@ -65,14 +57,8 @@
 # include <oln/types/yiq.hh>
 # include <oln/types/yuv.hh>
 
-# include <oln/types/optraits_int_u.hh>
-# include <oln/types/optraits_int_s.hh>
-# include <oln/types/optraits_range.hh>
-# include <oln/types/optraits_cycle.hh>
+# include <oln/types/typetraits_builtins.hh>
 # include <oln/types/optraits_builtins.hh>
-# include <oln/types/optraits_bin.hh>
-# include <oln/types/optraits_vec.hh>
-# include <oln/types/optraits_cplx.hh>
 
 # include <oln/types/global_ops_traits.hh>
 # include <oln/types/global_ops.hh>
