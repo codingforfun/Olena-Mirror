@@ -209,8 +209,8 @@ namespace mlc
 
 // Return the exact type of a given type.
 
-# define mlc_exact_type(T) typename mlc::exact<T>::ret
-# define mlc_exact_type_(T) mlc::exact<T>::ret
+# define mlc_exact_type(T) typename mlc::exact< T >::ret
+# define mlc_exact_type_(T) mlc::exact< T >::ret
 
 namespace mlc
 {
