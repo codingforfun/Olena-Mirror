@@ -1,5 +1,11 @@
 2005-04-06  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	* mlc/int.hh: Remove (redundant with mlc/arith.hh).
+	* mlc/fun.hh: Add fwd decls for std::unary_function and
+	std::binary_function.
+
+2005-04-06  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	* mlc/int.hh: New file.
 
 2005-04-06  Roland Levillain  <roland@lrde.epita.fr>

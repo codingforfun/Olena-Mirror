@@ -30,6 +30,15 @@
 
 # include <mlc/any.hh>
 
+
+// fwd decls
+namespace std {
+  template <class Arg, class Ret> struct unary_function;
+  template <class Arg1, class Arg2, class Ret> struct binary_function;
+}
+
+
+
 namespace mlc
 {
 
@@ -45,7 +54,7 @@ namespace mlc
   namespace abstract {
 
     template <typename E>
-    class unary_function : public mlc::any__best_memory<E>
+    class unary_function : public mlc::any<E>
     {
     public:
       typedef E exact_type;
@@ -71,7 +80,7 @@ namespace mlc
     // FIXME: Add meta_unary_function.
 
     template <typename E>
-    class binary_function : public mlc::any__best_memory<E>
+    class binary_function : public mlc::any<E>
     {
     public:
       typedef E exact_type;
