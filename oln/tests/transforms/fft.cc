@@ -6,7 +6,8 @@
 
 #include "check.hh"
 
-#define OK_OR_FAIL				\
+#define CHECK(Condition)			\
+    if (Condition)				\
       std::cout << "OK" << std::endl;		\
     else					\
       {						\
@@ -35,8 +36,7 @@ check()
   io::save(im3, "fft_copy.pgm");
 
   std::cout << "Test: Image == F-1(F(Image)) ... " << std::flush;
-  if (level::is_equal(im1, im3))
-    OK_OR_FAIL;
+  CHECK (level::is_equal(im1, im3));
 
   image2d<int_u8> out = fourier.transformed_image_clipped_magn(0.01);
 
@@ -45,7 +45,7 @@ check()
   out = fourier.transformed_image_log_magn<int_u8>(1, 100);
 
   io::save(out, "fft_trans_log.pgm");
-  
+
   for (int row = 40; row < im2.nrows() - 40; ++row)
     for (int col = 0; col < im2.ncols(); ++col)
       im2(row, col) = 0;
@@ -53,7 +53,7 @@ check()
   for (int row = 0; row < im2.nrows(); ++row)
     for (int col = 40; col < im2.ncols() - 40; ++col)
       im2(row, col) = 0;
- 
+
   out = fourier.transform_inv();
 
   io::save(out, "fft_low_pass.pgm");

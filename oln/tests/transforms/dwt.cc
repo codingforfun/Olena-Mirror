@@ -9,7 +9,8 @@
 
 #include "check.hh"
 
-#define OK_OR_FAIL				\
+#define CHECK(Condition)			\
+    if (Condition)				\
       std::cout << "OK" << std::endl;		\
     else					\
       {						\
@@ -24,7 +25,7 @@ Wavelet_coeffs_definition(daub4_test, dfloat, 4)
 {
   const dfloat sqrt_3 = sqrt(3);
   const dfloat denom = 4 * sqrt(2);
-  
+
   Wavelet_coeffs_begin
     (1 + sqrt_3)/denom,
     (3 + sqrt_3)/denom,
@@ -52,8 +53,7 @@ check()
   image1d<int_u16> vec3 = wave1d.transform_inv<int_u16>();
 
   std::cout << "Test: Image1D == F-1(F(Image1D)) ... " << std::flush;
-  if (level::is_equal(vec1, vec3))
-    OK_OR_FAIL;
+  CHECK (level::is_equal(vec1, vec3));
 
   // 2D tests
 
@@ -69,21 +69,20 @@ check()
   io::save(im3, "dwt_copy.pgm");
 
   std::cout << "Test: Image2D == F-1(F(Image2D)) ... " << std::flush;
-  if (level::is_equal(im1, im3))
-    OK_OR_FAIL;
+  CHECK (level::is_equal(im1, im3));
 
   image2d<int_u<8, saturate> > out(im2.size());
   image2d<dfloat>::iter it2(im2);
   for_all(it2)
     out[it2] = im2[it2];
-  
+
   io::save(out, "dwt_trans_std.pgm");
 
   im2 = wave2d.transform(dwt_non_std, true, 4);
 
   for_all(it2)
     out[it2] = im2[it2];
-  
+
   io::save(out, "dwt_trans_non_std.pgm");
 
   im2 = wave2d.transform(dwt_non_std, false, 3);
@@ -93,7 +92,7 @@ check()
 	im2[it2] = 0;
 
   out = wave2d.transform_inv<int_u<8, saturate> >();
-    
+
   io::save(out, "dwt_compressed.pgm");
 
   // 3D tests
@@ -109,8 +108,7 @@ check()
   image3d<int_u32> cube3 = wave3d.transform_inv<int_u32>();
 
   std::cout << "Test: Image3D == F-1(F(Image3D)) ... " << std::flush;
-  if (level::is_equal(cube1, cube3))
-    OK_OR_FAIL;
- 
+  CHECK (level::is_equal(cube1, cube3));
+
   return fail;
 }
