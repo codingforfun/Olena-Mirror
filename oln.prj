@@ -1,20 +1,16 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 34)
-(Parent-Version oln 10 33)
-(Version-Log "Index: olena/ChangeLog
+(Project-Version oln 10 35)
+(Parent-Version oln 10 34)
+(Version-Log "Index: metalic/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-        * oln/io/pnm_write_2d.hh: Store in the header the maximal value of
-        the encoding, not of the actual image values.
-
-        * tests/io/tests/headers: New test.
-        * tests/io/Makefile.am: Remove headers.pgm.
+        * mlc/type.hh (any_with_diamond): Use the static offset technique.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 03 Nov 2003 21:57:43 +0100")
+(Checkin-Time "Fri, 07 Nov 2003 17:19:10 +0100")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -121,7 +117,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.10 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.26 640))
-  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.35 640))
+  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.36 640))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.36 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.15 640))
@@ -271,7 +267,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/core/abstract/struct_elt.hh (oln/c/25_structelt. 1.20 640))
   (olena/oln/core/traverse.hh (oln/d/30_traverse.h 1.11 640))
   (metalic/mlc/typeadj.hh (oln/e/25_typeadj.hh 1.6 640))
-  (metalic/mlc/type.hh (oln/c/21_type.hh 1.26 640))
+  (metalic/mlc/type.hh (oln/c/21_type.hh 1.27 640))
   (olena/oln/core/window1d.hh (oln/c/15_window1d.h 1.15 640))
   (olena/oln/core/window2d.hh (oln/c/14_window2d.h 1.17 640))
   (olena/oln/core/window3d.hh (oln/c/13_window3d.h 1.16 640))
@@ -1094,5 +1090,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (olena/tests/io/tests/headers (oln/v/32_headers 1.1 600))
 )
-(Merge-Parents)
+(Merge-Parents
+  (10.34 complete)
+)
 (New-Merge-Parents)

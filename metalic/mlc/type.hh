@@ -34,6 +34,8 @@
 # include <string>
 # include <cassert>
 
+// FIXME: make a hierarchy of any with the different implementations
+
 // any and any_with_diamond types are not defined in namespace mlc to
 // avoid namespace clashes. Indeed, a type inheriting from another in
 // a namespace foo will have implicit access to the foo namespace.
@@ -53,12 +55,10 @@ namespace mlc_hierarchy
     
     E& exact()       
     { 
-      assert(offset_assigned);
       return *(E*)((char*)this - exact_offset);
     }
     const E& exact() const
     { 
-      assert(offset_assigned);
       return *(const E*)((const char*)this - exact_offset);
     }
    
@@ -67,25 +67,30 @@ namespace mlc_hierarchy
       return std::string("any_with_diamond<") + E::name() + ">"; 
     }
 
-  public:
+  private:
     // This stores the actual value of the offset between the this
-    // pointer and the this pointer of the exact type. This enables
-    // diamond hierarchies, as static_cast cannot perform it and
-    // reinterpret_cast or (Exact*)(void*) cast are unsafe and
-    // compiler dependent. These members should be initialized by
-    // every concrete classes, using the mlc_init_static_hierarchy
-    // macro.
-    static int exact_offset;
-    // This Boolean determines if the exact_offset value has already
-    // been affected.
-    static bool offset_assigned;
-  };
+    // pointer and the address of the exact type. This enables diamond
+    // shaped hierarchies (static_cast can't and reinterpret_cast or
+    // (Exact*)(void*) cast are unsafe and compiler dependent).
+    static const int exact_offset;
 
-  template <class E>
-  int any_with_diamond<E>::exact_offset = 0;
+    // Utility members used to determine the exact_offset
+    static const E exact_obj;
+    static const any_with_diamond<E>& ref_exact_obj;
+  };
   
   template <class E>
-  bool any_with_diamond<E>::offset_assigned = false;
+  const E any_with_diamond<E>::exact_obj = E();
+
+  template <class E>
+  const any_with_diamond<E>& 
+  any_with_diamond<E>::ref_exact_obj = any_with_diamond<E>::exact_obj;
+
+  template <class E>
+  const int any_with_diamond<E>::exact_offset = 
+  (const char*)(void*)(&any_with_diamond<E>::ref_exact_obj) 
+    - (const char*)(void*)(&any_with_diamond<E>::exact_obj);
+
 
   // Warning, this class does not allow diamond hierarchies, consider
   // any_with_diamond if you really need it.
@@ -284,7 +289,14 @@ namespace mlc
 | mlc_init_static_hierarchy |
 `--------------------------*/
 
-# define mlc_init_static_hierarchy(Exact) \
-mlc::assign_exact_offset<Exact, mlc::final>::doit(this)
+// # define mlc_init_static_hierarchy(Exact)
+// mlc::assign_exact_offset<Exact, mlc::final>::doit(this)
+
+// FIXME: this is for backward compatibility purposes only.  This
+// macro is called in every constructor of the classes, so we let them
+// in place for the moment until we are sure that the static offset
+// method works fine.
+
+# define mlc_init_static_hierarchy(Exact)
 
 #endif // ! METALIC_TYPE_HH

@@ -1,3 +1,7 @@
+2003-11-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* mlc/type.hh (any_with_diamond): Use the static offset technique.
+
 2003-09-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* mlc/type.hh (any_with_diamond): Use a static offset instead of
