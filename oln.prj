@@ -1,17 +1,34 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 71)
-(Parent-Version oln 0_5 70)
-(Version-Log "2002-10-25  Reda Dehak  <reda@lrde.epita.fr>
+(Project-Version oln 0_5 72)
+(Parent-Version oln 0_5 71)
+(Version-Log "2002-11-04  Réda Dehak  <reda@lrde.epita.fr>
 
-	* oln/core/neighborhood1d.hh: Fix add method.
-	* oln/core/neighborhood2d.hh: Likewise.
-	* oln/core/neighborhood3d.hh: Likewise.
+	* oln/core/neighborhood1d.hh: Fix add method, neighborhood1d is 
+	not centered
+	
+	// Neighborhoods
+  	// =============
+  	// These objects are like Windows, except they have
+  	// some additional properties (a point is not in its neighborhood,
+  	// the neighbor of a point should have the point in its neighborhood).
+  	// For this reason, they have types distinct from the windows:
+  	// neighborhood1d, neighborhood2d, neighborhood3d.
+  	// The interface is just the same as the windows.
 
-")
+	So a neighborhood was a symetric windows widthout the center.
+
+	Fix neighb_c2() and mk_neighb_segment() : now, the symetric 
+	dpoint is automatically added by add method.
+	
+	* oln/core/neighborhood2d.hh: Likewise for add(), neighb_c4(), 
+	neighb_c8() and mk_neighb_rectangle() methods.
+	
+	* oln/core/neighborhood3d.hh: Likewise for add(),  neighb_c6(),
+	neighb_c18(), neighb_c26() and mk_neighb_block() methods.")
 (New-Version-Log "")
-(Checkin-Time "Fri, 25 Oct 2002 14:38:16 +0200")
+(Checkin-Time "Mon, 04 Nov 2002 16:55:14 +0100")
 (Checkin-Login reda)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -118,7 +135,7 @@
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.22 600))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.72 600))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.73 600))
   (configure.ac (oln/3_configure. 1.23 600))
   (configure (oln/e/7_configure 1.29 700))
   (README (oln/1_README 1.4 600))
@@ -235,9 +252,9 @@
   (oln/core/internal/w_window.hh (oln/d/1_w_window.h 1.6 600))
   (oln/core/iter.hh (oln/c/40_iter.hh 1.2 600))
   (oln/core/macros.hh (oln/c/39_macros.hh 1.1 600))
-  (oln/core/neighborhood1d.hh (oln/c/37_neighborho 1.5 600))
-  (oln/core/neighborhood2d.hh (oln/c/36_neighborho 1.5 600))
-  (oln/core/neighborhood3d.hh (oln/c/35_neighborho 1.5 600))
+  (oln/core/neighborhood1d.hh (oln/c/37_neighborho 1.6 600))
+  (oln/core/neighborhood2d.hh (oln/c/36_neighborho 1.6 600))
+  (oln/core/neighborhood3d.hh (oln/c/35_neighborho 1.6 600))
   (oln/core/neighborhood.hh (oln/c/38_neighborho 1.2 600))
   (oln/core/objs.hh (oln/c/34_objs.hh 1.3 600))
   (oln/core/old/image2d_bin.hh (oln/c/50_image2d_bi 1.2 600))

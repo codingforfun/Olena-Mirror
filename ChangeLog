@@ -1,3 +1,28 @@
+2002-11-04  R-Aéda Dehak  <reda@lrde.epita.fr>-b
+
+	* oln/core/neighborhood1d.hh: Fix add method, neighborhood1d is 
+	not centered
+	
+	// Neighborhoods
+  	// =============
+  	// These objects are like Windows, except they have
+  	// some additional properties (a point is not in its neighborhood,
+  	// the neighbor of a point should have the point in its neighborhood).
+  	// For this reason, they have types distinct from the windows:
+  	// neighborhood1d, neighborhood2d, neighborhood3d.
+  	// The interface is just the same as the windows.
+
+	So a neighborhood was a symetric windows widthout the center.
+
+	Fix neighb_c2() and mk_neighb_segment() : now, the symetric 
+	dpoint is automatically added by add method.
+	
+	* oln/core/neighborhood2d.hh: Likewise for add(), neighb_c4(), 
+	neighb_c8() and mk_neighb_rectangle() methods.
+	
+	* oln/core/neighborhood3d.hh: Likewise for add(),  neighb_c6(),
+	neighb_c18(), neighb_c26() and mk_neighb_block() methods.
+
 2002-10-25  Reda Dehak  <reda@lrde.epita.fr>
 
 	* oln/core/neighborhood1d.hh: Fix add method.

@@ -49,6 +49,7 @@ namespace oln {
 
     neighborhood2d& add(const dpoint2d& dp)
     {
+      precondition( !dp.is_centered() );
       super::add(dp);
       super::add(-dp);
       _delta(abs(dp.row()));
@@ -120,16 +121,16 @@ namespace oln {
   inline const neighborhood2d&
   neighb_c4()
   {
-    static const coord crd[] = { -1,0,  0,-1, 0,1,  1,0 };
-    static const neighborhood2d neighb(4, crd);
+    static const coord crd[] = { 0,1,  1,0 };
+    static const neighborhood2d neighb(2, crd);
     return neighb;
   }
 
   inline const neighborhood2d&
   neighb_c8()
   {
-    static const coord crd[] = { -1,-1, -1,0, -1,1,  0,-1, 0,1,  1,-1,  1,0,  1,1 };
-    static const neighborhood2d neighb(8, crd);
+    static const coord crd[] = { 0,1,  1,1,  1,0,  1,-1 };
+    static const neighborhood2d neighb(4, crd);
     return neighb;
   }
 
@@ -143,8 +144,7 @@ namespace oln {
     neighborhood2d neighb(nrows * ncols);
     int half_nrows = nrows / 2, half_ncols = ncols / 2;
     for (coord row = - half_nrows; row <= half_nrows; ++row)
-      for (coord col = - half_ncols; col <= half_ncols; ++col)
-	if (row != col)
+      for (coord col = (row <= 0)? 1 : 0; col <= half_ncols; ++col)
 	  neighb.add(row, col);
     return neighb;
   }

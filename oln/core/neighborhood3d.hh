@@ -49,6 +49,7 @@ namespace oln {
 
     neighborhood3d& add(const dpoint3d& dp)
     {
+      precondition( !dp.is_centered() );
       super::add(dp);
       super::add(-dp);
       _delta(abs(dp.slice()));
@@ -121,29 +122,17 @@ namespace oln {
   inline const neighborhood3d&
   neighb_c6()
   {
-    static const coord crd[] = { -1,  0,  0,
-				 0, -1,  0,
-				 0,  0, -1,
-				 0,  0,  1,
+    static const coord crd[] = { 0,  0,  1,
 				 0,  1,  0,
 				 1,  0,  0};
-    static const neighborhood3d neighb(6, crd);
+    static const neighborhood3d neighb(3, crd);
     return neighb;
   }
 
   inline const neighborhood3d&
   neighb_c18()
   {
-    static const coord crd[] = { -1, -1,  0,
-				 -1,  0, -1,
-				 -1,  0,  0,
-				 -1,  0,  1,
-				 -1,  1,  0,
-				 0, -1, -1,
-				 0, -1,  0,
-				 0, -1,  1,
-				 0,  0, -1,
-				 0,  0,  1,
+    static const coord crd[] = { 0,  0,  1,
 				 0,  1, -1,
 				 0,  1,  0,
 				 0,  1,  1,
@@ -152,27 +141,14 @@ namespace oln {
 				 1,  0,  0,
 				 1,  0,  1,
 				 1,  1,  0 };
-    static neighborhood3d neighb(18, crd);
+    static neighborhood3d neighb(9, crd);
     return neighb;
   }
 
   inline const neighborhood3d&
   neighb_c26()
   {
-    static const coord crd[] = { -1, -1, -1
-				 -1, -1,  0,
-				 -1, -1,  1,
-				 -1,  0, -1,
-				 -1,  0,  0,
-				 -1,  0,  1,
-				 -1,  1, -1,
-				 -1,  1,  0,
-				 -1,  1,  1,
-				 0, -1, -1,
-				 0, -1,  0,
-				 0, -1,  1,
-				 0,  0, -1,
-				 0,  0,  1,
+    static const coord crd[] = { 0,  0,  1,
 				 0,  1, -1,
 				 0,  1,  0,
 				 0,  1,  1,
@@ -185,7 +161,7 @@ namespace oln {
 				 1,  1, -1,
 				 1,  1,  0,
 				 1,  1,  1 };
-    static neighborhood3d neighb(26, crd);
+    static neighborhood3d neighb(13, crd);
     return neighb;
   }
 
@@ -203,8 +179,7 @@ namespace oln {
     int half_ncols = ncols / 2;
     for (coord slice = - half_nslices; slice <= half_nslices; ++slice)
       for (coord row = - half_nrows; row <= half_nrows; ++row)
-	for (coord col = - half_ncols; col <= half_ncols; ++col)
-	  if (col != row || row != slice)
+	for (coord col = (slice > 0) ? 0 : 1 ; col <= half_ncols; ++col)
 	    neighb.add(slice, row, col);
     return neighb;
   }
