@@ -1,21 +1,15 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_4 32)
-(Parent-Version oln 0_4 31)
-(Version-Log "2002-07-22  Alexandre Duret-Lutz  <duret_g@epita.fr>
+(Project-Version oln 0_4 33)
+(Parent-Version oln 0_4 32)
+(Version-Log "2002-07-23  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-	* oln/convol/convolution.hh: Temporarily include
-	oln/core/w_window2d.hh.
-	* oln/convert/stretch.hh: Include oln/core/type.hh and
-	oln/convert/force.hh.
-	* oln/core/pred.hh: Move ...
-	* oln/core/oln/pred.hh: ... here.
-	* oln/Makefile.am (nobase_oln_HEADERS): Remove core/pred.hh.
+	* demo/tour.cc: Include oln/convert/basics.hh.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 22 Jul 2002 18:35:40 +0200")
+(Checkin-Time "Tue, 23 Jul 2002 11:22:09 +0200")
 (Checkin-Login adl)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -83,7 +77,7 @@
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.13 644))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.12 600))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.13 600))
   (configure.ac (oln/3_configure. 1.16 600))
   (configure (oln/e/7_configure 1.20 700))
   (README (oln/1_README 1.3 600))
@@ -97,7 +91,7 @@
   (demo/Makefile.in (oln/e/16_Makefile.i 1.16 644))
   (demo/morpholena.cc (oln/d/43_morpholena 1.4 600))
   (demo/test-reconstruction.cc (oln/e/22_test-recon 1.4 600))
-  (demo/tour.cc (oln/d/45_tour.cc 1.2 600))
+  (demo/tour.cc (oln/d/45_tour.cc 1.3 600))
 
 
   (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.6 600))
@@ -258,7 +252,7 @@
   (oln/level/lut.hh (oln/29_lut.hh 1.6 600))
   (oln/level/threshold.hh (oln/f/15_threshold. 1.3 600))
   (oln/Makefile.am (oln/27_Makefile.a 1.17 600))
-  (oln/Makefile.in (oln/e/17_Makefile.i 1.22 600))
+  (oln/Makefile.in (oln/e/17_Makefile.i 1.23 644))
   (oln/math/macros.hh (oln/b/21_macros.hh 1.3 600))
   (oln/meta/array1d.hh (oln/f/23_array1d.hh 1.2 644))
   (oln/meta/array1d.hxx (oln/f/22_array1d.hx 1.2 644))

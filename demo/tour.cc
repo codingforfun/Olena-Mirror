@@ -21,6 +21,9 @@
 
 #include <oln/utils/stat.hh>
 
+// Basic conversion functions.
+#include <oln/convert/basics.hh>
+
 // Always include system headers after Olena.
 #include <iostream>
 #include <cmath>
