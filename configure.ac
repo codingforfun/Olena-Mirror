@@ -27,7 +27,7 @@ if test "x$with_zlib" != xno; then
   oln_save_CFLAGS=$CFLAGS
   oln_save_LDFLAGS=$LDFLAGS
   CFLAGS="$CFLAGS $ZLIB_CFLAGS"
-  LDFLAGS="$CFLAGS $ZLIB_LDFLAGS"
+  LDFLAGS="$LDFLAGS $ZLIB_LDFLAGS"
   AC_CHECK_HEADER([zlib.h],
     [AC_CHECK_LIB([z], [gzopen],
        [ZLIB_LDFLAGS="${ZLIB_LDFLAGS} -lz"
@@ -45,13 +45,13 @@ FFTW_CFLAGS=''
 FFTW_LDFLAGS=''
 if test "x$with_fftw" != xno; then
   if test -n "$with_fftw"; then
-    FFTW_CFLAGS="-I${with_zlib}/include"
-    FFTW_LDFLAGS="-L${with_zlib}/lib"
+    FFTW_CFLAGS="-I${with_fftw}/include"
+    FFTW_LDFLAGS="-L${with_fftw}/lib"
   fi
   oln_save_CFLAGS=$CFLAGS
   oln_save_LDFLAGS=$LDFLAGS
   CFLAGS="$CFLAGS $FFTW_CFLAGS"
-  LDFLAGS="$CFLAGS $FFTW_LDFLAGS"
+  LDFLAGS="$LDFLAGS $FFTW_LDFLAGS"
   AC_CHECK_HEADER([fftw.h],
     [AC_CHECK_LIB([fftw], [fftw2d_create_plan],
        [FFTW_LDFLAGS="${FFTW_LDFLAGS} -lfftw -lrfftw"
