@@ -1,20 +1,16 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 45)
-(Parent-Version oln 0_5 44)
-(Version-Log "2002-09-15  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+(Project-Version oln 0_5 46)
+(Parent-Version oln 0_5 45)
+(Version-Log "2002-09-16  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-   * oln/types/global_ops_defs.hh: Add inline keyword.
-   * oln/types/behaviour.hh, oln/types/optraits_cycle.hh: Move modulo 
-   calculus.
-   * oln/types/int_u.hh, oln/types/int_s.hh: Disable checks when useless
-   in constructors.
-   * oln/types/int_u.hh, oln/types/int_s.hh, oln/types/cycle.hh, 
-   oln/types/range.hh, oln/types/bin.hh: Add stream operator.
+	* oln/types/behaviour.hh: Add multiplication check.
+	* oln/types/to_oln.hh: Rename OLN_TYPE macro.
+	* oln/types/optraits_scalar.hh: Add misc macros.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sun, 15 Sep 2002 18:07:46 +0200")
+(Checkin-Time "Mon, 16 Sep 2002 12:47:07 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -82,7 +78,7 @@
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.20 640))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.47 600))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.48 600))
   (configure.ac (oln/3_configure. 1.21 600))
   (configure (oln/e/7_configure 1.25 700))
   (README (oln/1_README 1.4 600))
@@ -346,7 +342,7 @@
   (tests/meta/test_array1d.cc (oln/f/26_test_array 1.2 640))
   (tests/meta/test_array2d.cc (oln/f/25_test_array 1.2 640))
   (tests/meta/test_array3d.cc (oln/f/24_test_array 1.2 640))
-  (tests/ChangeLog (oln/e/30_ChangeLog 1.31 600))
+  (tests/ChangeLog (oln/e/30_ChangeLog 1.32 600))
   (tests/check/check.hh (oln/e/40_check.hh 1.2 600))
   (tests/check/data.cc (oln/f/5_data.cc 1.2 600))
   (tests/check/data.hh (oln/f/6_data.hh 1.1 600))
@@ -424,12 +420,12 @@
   (oln/types/typetraits_builtins_float.hh (oln/g/4_typetraits 1.6 640))
   (oln/types/typetraits.hh (oln/g/5_typetraits 1.2 640))
   (oln/types/type.hh (oln/g/6_type.hh 1.3 640))
-  (oln/types/to_oln.hh (oln/g/7_to_oln.hh 1.3 640))
+  (oln/types/to_oln.hh (oln/g/7_to_oln.hh 1.4 640))
   (oln/types/rec_value.hh (oln/g/8_rec_value. 1.4 640))
   (oln/types/range.hh (oln/g/9_range.hh 1.5 640))
   (oln/types/predecls.hh (oln/g/10_predecls.h 1.6 640))
   (oln/types/optraits_scalar_defs.hh (oln/g/11_optraits_s 1.2 640))
-  (oln/types/optraits_scalar.hh (oln/g/12_optraits_s 1.5 640))
+  (oln/types/optraits_scalar.hh (oln/g/12_optraits_s 1.6 640))
   (oln/types/optraits_range.hh (oln/g/13_optraits_r 1.3 640))
   (oln/types/optraits_int_u.hh (oln/g/14_optraits_i 1.5 640))
   (oln/types/optraits_int_s.hh (oln/g/15_optraits_i 1.4 640))
@@ -448,7 +444,7 @@
   (oln/types/cycle.hh (oln/g/28_cycle.hh 1.6 640))
   (oln/types/builtins_properties.hh (oln/g/29_builtins_p 1.3 640))
   (oln/types/bin.hh (oln/g/30_bin.hh 1.4 640))
-  (oln/types/behaviour.hh (oln/g/31_behaviour. 1.4 640))
+  (oln/types/behaviour.hh (oln/g/31_behaviour. 1.5 640))
   (oln/types/all.hh (oln/g/32_all.hh 1.2 640))
 
 
@@ -553,6 +549,12 @@
 ;; to version 0_5.44(w), by burrus_n:
 
   (tests/types/tests/int_sc4 (oln/h/39_int_sc4 1.1 600))
+
+;; Files added by populate at Mon, 16 Sep 2002 12:46:48 +0200,
+;; to version 0_5.45(w), by burrus_n:
+
+  (tests/types/tests/float2 (oln/h/40_float2 1.1 640))
+  (tests/types/tests/int_u2f (oln/h/41_int_u2f 1.1 640))
 )
 (Merge-Parents)
 (New-Merge-Parents)

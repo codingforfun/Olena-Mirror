@@ -1,0 +1,4 @@
+int_u16s a = 65535;
+a *= 65538U;
+std::cout << a << std::endl;
+return a != 65535;

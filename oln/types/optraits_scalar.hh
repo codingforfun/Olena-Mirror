@@ -40,6 +40,10 @@
 // macros definitions
 # include <oln/types/optraits_scalar_defs.hh>
 
+// useful cast macros
+# define SIGNED_CAST(T, Val) \
+  (static_cast<typename typetraits<T>::signed_type>(Val))
+
 namespace oln
 {
 

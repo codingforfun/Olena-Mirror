@@ -42,8 +42,6 @@
 # include <string>
 # include <sstream>
 
-# define ABS(X) ((X) >= 0 ? (X) : (std::abs(X)))
-
 //
 //  Behaviours for data_types int_u, int_s, etc ...
 // 
@@ -110,9 +108,9 @@ namespace oln
       {	
 	T ret = lhs + rhs;
 	if (rhs > 0)
-	  postcondition(OLN_TYPE(T, ret) > lhs);
+	  postcondition(TO_OLN_CAST(T, ret) > lhs);
 	else
-	  postcondition(OLN_TYPE(T, ret) <= lhs);
+	  postcondition(TO_OLN_CAST(T, ret) <= lhs);
 	return ret;
       }
 
@@ -121,17 +119,19 @@ namespace oln
       {	
 	T ret = lhs - rhs;
 	if (rhs > 0)
-	  postcondition(OLN_TYPE(T, ret) <= lhs);
+	  postcondition(TO_OLN_CAST(T, ret) <= lhs);
 	else
-	  postcondition(OLN_TYPE(T, ret) > lhs);
+	  postcondition(TO_OLN_CAST(T, ret) > lhs);
 	return ret;
       }
 
+      // FIXME: this check is very slow ! find another solution
       template <class T1, class T2>
       static T check_times_equal (T1 lhs, T2 rhs)
       {		
-	// FIXME: add checks
-	return lhs * rhs;
+	T ret = lhs * rhs;	
+	postcondition ((ret / rhs) == lhs);
+	return ret;
       }
 
       template <class T1, class T2>
@@ -170,10 +170,10 @@ namespace oln
 	T ret = lhs + rhs;
 	if (rhs > 0)
 	  {
-	    if (OLN_TYPE(T, ret) <= lhs)
+	    if (TO_OLN_CAST(T, ret) <= lhs)
 	      ret = optraits<T>::max();
 	  }
-	else if (OLN_TYPE(T, ret) > lhs)
+	else if (TO_OLN_CAST(T, ret) > lhs)
 	  ret = optraits<T>::min();
 	return ret;
       }
@@ -184,18 +184,29 @@ namespace oln
 	T ret = lhs - rhs;
 	if (rhs > 0)
 	  {
-	    if (OLN_TYPE(T, ret) > lhs)
+	    if (TO_OLN_CAST(T, ret) > lhs)
 	      ret = optraits<T>::min();
 	  }
-	else if (OLN_TYPE(T, ret) <= lhs)
+	else if (TO_OLN_CAST(T, ret) <= lhs)
 	  ret = optraits<T>::max();
 	return ret;
       }
       
-      // FIXME: add check
+      // FIXME: this check is very slow ! find another solution ...
       template <class T1, class T2>
       static T check_times_equal (T1 lhs, T2 rhs)
-      {	return lhs * rhs; }
+      {	
+	T ret = lhs * rhs;
+	if ((ret / rhs) != lhs)
+	  {
+	    // if lhs and rhs signs are equal, we wanted to grow	    
+	    if ((lhs > 0 && rhs > 0) || (-lhs > 0 && -rhs > 0))
+	      ret = optraits<T>::max();
+	    else
+	      ret = optraits<T>::min();
+	  }
+	return ret;	
+      }
 
       template <class T1, class T2>
       static T check_div_equal (T1 lhs, T2 rhs)
@@ -273,7 +284,7 @@ namespace oln
 	  cycle_mod>::ret_t cycle_op;
 	
 	typename internal::to_oln<P>::ret
-	  tmp = cycle_op::exec(std::abs(rhs), 
+	  tmp = cycle_op::exec(std::abs(SIGNED_CAST(P, rhs)),
 			       optraits<T>::max() - optraits<T>::min());
 	
 	if (rhs < 0) tmp = -tmp;
