@@ -1,28 +1,44 @@
 #include <oln/types/all.hh>
 #include <oln/transform/fft.hh>
+#include <oln/level/compare.hh>
 
 #include "check.hh"
 
 #define OUTPUT_DIR  "output/"
 #define OUTPUT_NAME "output"
 
+#define OK_OR_FAIL				\
+      std::cout << "OK" << std::endl;		\
+    else					\
+      {						\
+	std::cout << "FAIL" << std::endl;	\
+	fail = true;				\
+      }
+
 using namespace oln;
 
-int main()
+bool
+check()
 {
-  
 #if HAVE_FFTW
 
-  image2d<int_u8> im1(data("lena128.pgm"));
+  bool fail = false;
+
+  image2d<int_u8> im1(data("lena.pgm"));
   
-  fft<int_u8> fourier(im1);
+  transform::fft<int_u8> fourier(im1);
 
   image2d<cplx<polar, dfloat> > im2 = fourier.transform();
-  im1 = fourier.transform_inv();
 
-  io::save(im1, OUTPUT_DIR OUTPUT_NAME "_copy.pgm");
+  image2d<int_u8> im3 = fourier.transform_inv();
 
-  image2d<int_u8> out = fourier.transformed_image_clipped_magn(0.1);
+  io::save(im3, OUTPUT_DIR OUTPUT_NAME "_copy.pgm");
+
+  std::cout << "Test: Image = F-1(F(Image)) ... " << std::flush;
+  if (level::is_equal(im1, im3))
+    OK_OR_FAIL;
+
+  image2d<int_u8> out = fourier.transformed_image_clipped_magn(0.01);
 
   io::save(out, OUTPUT_DIR OUTPUT_NAME "_fft_clipped.pgm");
 
@@ -44,7 +60,13 @@ int main()
 
   fourier.transform();
 
+  return fail;
+
+#else
+
+  std::cout << "You have not enabled fftw support." << std::endl;
+  return true;
+
 #endif
 
-  return 0; 
 }

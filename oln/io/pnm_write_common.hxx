@@ -30,8 +30,13 @@
 
 # include <oln/core/image.hh>
 # include <oln/core/iter.hh>
+# include <oln/types/typetraits_builtins_int.hh>
+# include <oln/types/typetraits_builtins_bool.hh>
+# include <oln/types/optraits_bin.hh>
+# include <oln/types/optraits_int_s.hh>
 # include <oln/types/global_ops.hh>
 # include <oln/types/bin.hh>
+# include <oln/types/int_s.hh>
 # include <oln/types/int_u.hh>
 # include <oln/io/base.hh>
 

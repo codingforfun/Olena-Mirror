@@ -1,3 +1,12 @@
+2002-09-27  Emmanuel Turquin  <turqui_e@epita.fr>
+
+	* oln/transform/fft.hh: Add a 'transform' namespace, add
+	few methods (notably transformed_image_magn()).
+	* oln/io/pnm_read_common.hxx: Adapt to new types.
+	* oln/io/pnm_write_common.hxx: Adapt to new types.
+	* oln/level/extrema_killer.hh: Adapt to new types.
+	* oln/utils/histogram.hh: Adapt to new types.
+
 2002-09-26  Emmanuel Turquin  <turqui_e@epita.fr>
 
 	* oln/transform/fft.hh: Slightly modified.
@@ -57,7 +66,7 @@
 	
 2002-09-20  Emmanuel Turquin  <turqui_e@epita.fr>
 
-	* oln/types/optraits_vec.hh (optraits_vector): Add 'name' method.
+	* oln/types/optraits_vec.hh (optraits_vector): Add name() method.
 	* oln/types/optraits_cplx.hh (optraits_cplx): Add cplx-vec arith.
 	operators, comparison operator and 'name' method. 
 

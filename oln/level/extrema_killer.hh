@@ -29,7 +29,7 @@
 # define OLENA_LEVEL_EXTREMA_KILLER_HH
 
 #include <oln/basics2d.hh>
-#include <oln/value/all.hh>
+#include <oln/types/all.hh>
 #include <oln/morpho/extrema.hh>
 #include <oln/arith/ops.hh>
 #include <oln/morpho/watershed.hh>
