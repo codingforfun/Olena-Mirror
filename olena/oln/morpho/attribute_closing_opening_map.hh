@@ -61,7 +61,7 @@ namespace oln
       ** \param D Attribute exact type.
       ** \param Env Type of environment.
       */
-      template <class I, class D, class Env = morpho::NullEnv>
+      template <class I, class D, class Env = morpho::env::NullEnv>
       struct f_tarjan_map
       {
       public:
@@ -213,10 +213,10 @@ template <class I, class N>						\
 oln_concrete_type(I)							\
 T##_opening(const abstract::non_vectorial_image<I>& input,		\
 	    const abstract::neighborhood<N>& ng,			\
-	    const attr_lambda_type(T##_type<>)& lambda)			\
+	    const attr_lambda_type(attr::T##_type<>)& lambda)			\
     {									\
-      return tarjan_map<T##_type<>, I, N>(false, input, ng, lambda,	\
-					  attr_env_type(T##_type<>)());	\
+      return tarjan_map<attr::T##_type<>, I, N>(false, input, ng, lambda,	\
+					  attr_env_type(attr::T##_type<>)());	\
     }
 
       // same but attribute take care of the image type
@@ -225,10 +225,10 @@ template <class I, class N>						\
 oln_concrete_type(I)							\
 T##_opening(const abstract::non_vectorial_image<I>& input,		\
 	    const abstract::neighborhood<N>& ng,			\
-	    const attr_lambda_type(T##_type<I>)& lambda)		\
+	    const attr_lambda_type(attr::T##_type<I>)& lambda)		\
     {									\
-      return tarjan_map<T##_type<I>, I, N>(false, input, ng, lambda,	\
-				  attr_env_type(T##_type<I>)());	\
+      return tarjan_map<attr::T##_type<I>, I, N>(false, input, ng, lambda,	\
+				  attr_env_type(attr::T##_type<I>)());	\
     }
 
       //return input;
@@ -239,10 +239,10 @@ template <class I, class N>						\
 oln_concrete_type(I)							\
 T##_closing(const abstract::non_vectorial_image<I>& input,		\
 	    const abstract::neighborhood<N>& ng,			\
-	    const attr_lambda_type(T##_type<>)& lambda)			\
+	    const attr_lambda_type(attr::T##_type<>)& lambda)			\
     {									\
-      return tarjan_map<T##_type<>, I, N>(true, input, ng, lambda,	\
-					  attr_env_type(T##_type<>)()); \
+      return tarjan_map<attr::T##_type<>, I, N>(true, input, ng, lambda,	\
+					  attr_env_type(attr::T##_type<>)()); \
     }
 
       // same but attribute take care of the image type
@@ -251,10 +251,10 @@ template <class I, class N>						\
 oln_concrete_type(I)							\
 T##_closing(const abstract::non_vectorial_image<I>& input,		\
 	    const abstract::neighborhood<N>& ng,			\
-	    const attr_lambda_type(T##_type<I>)& lambda)		\
+	    const attr_lambda_type(attr::T##_type<I>)& lambda)		\
     {									\
-      return tarjan_map<T##_type<I>, I, N>(true, input, ng, lambda,	\
-					   attr_env_type(T##_type<I>)());\
+      return tarjan_map<attr::T##_type<I>, I, N>(true, input, ng, lambda,	\
+					   attr_env_type(attr::T##_type<I>)());\
     }
 
       /*!

@@ -41,11 +41,11 @@ namespace oln {
     ** \brief Processing dilation.
     **
     ** Compute the morphological dilation of input using se
-    ** as structural element.
+    ** as structural element.\n
     **
     ** On grey-scale images, each point is replaced by the maximum value
     ** of its neighbors, as indicated by se.  On binary images,
-    ** a logical or is performed between neighbors.
+    ** a logical or is performed between neighbors.\n
     **
     ** The morpho::fast version of this function use a different
     ** algorithm: This algorithm is described in
@@ -53,12 +53,12 @@ namespace oln {
     ** M. Van Droogenbroeck and H. Talbot.
     ** "Fast computation of morphological operations with arbitrary
     ** structuring elements". Pattern Recognition Letters,
-    ** 17(14):1451-1460, 1996.
+    ** 17(14):1451-1460, 1996.\n
     **
     ** An histogram of the value of the neighborhood indicated by
     ** se is updated while iterating over all point of the
     ** image.  Doing so is more efficient  when the
-    ** structural element is large.
+    ** structural element is large.\n
     **
     ** \param I Exact type of the input image.
     ** \param E Exact type of the neighborhood.

@@ -1,3 +1,12 @@
+2004-03-25  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* oln/morpho/dilation.hh: Correct comments.
+	* oln/morpho/attribute_closing_opening.hh: Correct namespaces.
+	* oln/morpho/attribute_closing_opening_map.hh: Likewise.
+	* tests/morpho/tests/attribute: Likewise.
+	* oln/morpho/attributes.hh: Add attr namespace.
+	* oln/morpho/environments.hh: Add file.
+
 2004-03-23  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* olena/tests/level/tests/md5_level_hh0: Add file.

@@ -206,8 +206,3 @@ DOT_CLEANUP            = YES
 # Configuration::addtions related to the search engine
 #---------------------------------------------------------------------------
 SEARCHENGINE           = YES
-CGI_NAME               = search.cgi
-CGI_URL                =
-DOC_URL                =
-DOC_ABSPATH            =
-BIN_ABSPATH            = /usr/local/bin/

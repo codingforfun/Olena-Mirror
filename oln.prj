@@ -1,58 +1,881 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 109)
-(Parent-Version oln 10 108)
-(Version-Log "prcs: Producing diffs from 10.108 to 10.108(w).
+(Project-Version oln 10 110)
+(Parent-Version oln 10 109)
+(Version-Log "Index: doc/ChangeLog
+from  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* ref/doxygen.config.in: Remove deprecated entries.
+
 Index: olena/ChangeLog
 from  Giovanni Palma  <giovanni@lrde.epita.fr>
-        * olena/tests/level/tests/md5_level_hh0: Add file.
 
-+2004-03-23  Giovanni Palma  <giovanni@lrde.epita.fr>
-+
-        * olena/tests/level/tests/md5_level_set_level_hh0: Add file.
-        * olena/tests/level/tests/md5_level_threshold_hh0: Likewise.
+	* oln/morpho/dilation.hh: Correct comments.
+	* oln/morpho/attribute_closing_opening.hh: Correct namespaces.
+	* oln/morpho/attribute_closing_opening_map.hh: Likewise.
+	* tests/morpho/tests/attribute: Likewise.
+	* oln/morpho/attributes.hh: Add attr namespace.
+	* oln/morpho/environments.hh: Add file.
+
+Index: olena/oln/morpho/dilation.hh
+--- olena/oln/morpho/dilation.hh Thu, 18 Mar 2004 18:24:14 +0100 van-vl_n (oln/b/5_dilation.h 1.19 640)
++++ olena/oln/morpho/dilation.hh Wed, 24 Mar 2004 16:06:41 +0100 palma_g (oln/b/5_dilation.h 1.19 640)
+@@ -41,11 +41,11 @@
+     ** \\brief Processing dilation.
+     **
+     ** Compute the morphological dilation of input using se
+-    ** as structural element.
++    ** as structural element.\\n
+     **
+     ** On grey-scale images, each point is replaced by the maximum value
+     ** of its neighbors, as indicated by se.  On binary images,
+-    ** a logical or is performed between neighbors.
++    ** a logical or is performed between neighbors.\\n
+     **
+     ** The morpho::fast version of this function use a different
+     ** algorithm: This algorithm is described in
+@@ -53,12 +53,12 @@
+     ** M. Van Droogenbroeck and H. Talbot.
+     ** \"Fast computation of morphological operations with arbitrary
+     ** structuring elements\". Pattern Recognition Letters,
+-    ** 17(14):1451-1460, 1996.
++    ** 17(14):1451-1460, 1996.\\n
+     **
+     ** An histogram of the value of the neighborhood indicated by
+     ** se is updated while iterating over all point of the
+     ** image.  Doing so is more efficient  when the
+-    ** structural element is large.
++    ** structural element is large.\\n
+     **
+     ** \\param I Exact type of the input image.
+     ** \\param E Exact type of the neighborhood.
+Index: olena/oln/morpho/attribute_closing_opening.hh
+--- olena/oln/morpho/attribute_closing_opening.hh Mon, 15 Mar 2004 17:40:54 +0100 van-vl_n (oln/q/49_attribute_ 1.22 640)
++++ olena/oln/morpho/attribute_closing_opening.hh Wed, 24 Mar 2004 11:41:41 +0100 palma_g (oln/q/49_attribute_ 1.22 640)
+@@ -101,9 +101,9 @@
+       oln_concrete_type(I) \\
+ 	T##_opening(const abstract::non_vectorial_image<I>& input, \\
+ 		       const abstract::neighborhood<N>& Ng, \\
+-		       const attr_lambda_type(T##_type<unsigned>) &lambda) \\
++		       const attr_lambda_type(attr::T##_type<unsigned>) &lambda) \\
+       { \\
+-	return tarjan::internal::attr_opening_<I, N, T##_type<unsigned> >(input, Ng, lambda); \\
++	return tarjan::internal::attr_opening_<I, N, attr::T##_type<unsigned> >(input, Ng, lambda); \\
+       }
  
-Index: olena/tests/level/tests/md5_level_hh0
---- olena/tests/level/tests/md5_level_hh0 Tue, 23 Mar 2004 16:05:35 +0100 palma_g ()
-+++ olena/tests/level/tests/md5_level_hh0 Tue, 23 Mar 2004 16:03:28 +0100 palma_g (oln/m/16_md5_level_  644)
-@@ -0,0 +1,32 @@
-+//                                                                  -*- c++ -*-
-+#include \"data.hh\"
-+#include <oln/utils/md5.hh>
+ # define xxx_closing_decl(T) \\
+@@ -111,9 +111,9 @@
+       oln_concrete_type(I) \\
+ 	T##_closing(const abstract::non_vectorial_image<I>& input, \\
+ 		       const abstract::neighborhood<N>& Ng, \\
+-		       const attr_lambda_type(T##_type<unsigned>) &lambda) \\
++		       const attr_lambda_type(attr::T##_type<unsigned>) &lambda) \\
+       { \\
+-	return tarjan::internal::attr_closing_<I, N, T##_type<unsigned> >(input, Ng, lambda); \\
++	return tarjan::internal::attr_closing_<I, N, attr::T##_type<unsigned> >(input, Ng, lambda); \\
+       }
+ 
+ 
+@@ -123,9 +123,9 @@
+       oln_concrete_type(I) \\
+ 	T##_opening(const abstract::non_vectorial_image<I>& input, \\
+ 		       const abstract::neighborhood<N>& Ng, \\
+-		       const attr_lambda_type(T##_type<I>) &lambda) \\
++		       const attr_lambda_type(attr::T##_type<I>) &lambda) \\
+       { \\
+-	return tarjan::internal::attr_opening_<I, N, T##_type<I> >(input, Ng, lambda); \\
++	return tarjan::internal::attr_opening_<I, N, attr::T##_type<I> >(input, Ng, lambda); \\
+       }
+ 
+ # define xxx_closing_im_decl(T) \\
+@@ -133,9 +133,9 @@
+       oln_concrete_type(I) \\
+ 	T##_closing(const abstract::non_vectorial_image<I>& input, \\
+ 		       const abstract::neighborhood<N>& Ng, \\
+-		       const attr_lambda_type(T##_type<I>) &lambda) \\
++		       const attr_lambda_type(attr::T##_type<I>) &lambda) \\
+       { \\
+-	return tarjan::internal::attr_closing_<I, N, T##_type<I> >(input, Ng, lambda); \\
++	return tarjan::internal::attr_closing_<I, N, attr::T##_type<I> >(input, Ng, lambda); \\
+       }
+ 
+       /*!
+Index: olena/oln/morpho/attributes.hh
+--- olena/oln/morpho/attributes.hh Mon, 15 Mar 2004 17:40:54 +0100 van-vl_n (oln/j/45_attributes 1.9 644)
++++ olena/oln/morpho/attributes.hh Wed, 24 Mar 2004 19:01:19 +0100 palma_g (oln/j/45_attributes 1.9 644)
+@@ -27,17 +27,19 @@
+ 
+ #ifndef OLN_MORPHO_ATTRIBUTES_HH
+ # define OLN_MORPHO_ATTRIBUTES_HH
++# include <oln/basics.hh>
+ # include <mlc/type.hh>
+ # include <vector>
++# include <oln/morpho/environments.hh>
+ 
+ // attribute dedicated macros
+-# define attr_lambda_type(T)	typename oln::morpho::attr_traits<T>::lambda_type
+-# define attr_env_type(T)	typename oln::morpho::attr_traits<T>::env_type
+-# define attr_value_type(T)	typename oln::morpho::attr_traits<T>::value_type
+-
+-# define attr_lambda_type_(T)	 oln::morpho::attr_traits<T>::lambda_type
+-# define attr_env_type_(T)	 oln::morpho::attr_traits<T>::env_type
+-# define attr_value_type_(T)	 oln::morpho::attr_traits<T>::value_type
++# define attr_lambda_type(T)	typename oln::morpho::attr::attr_traits<T>::lambda_type
++# define attr_env_type(T)	typename oln::morpho::attr::attr_traits<T>::env_type
++# define attr_value_type(T)	typename oln::morpho::attr::attr_traits<T>::value_type
 +
-+#include \"check.hh\"
-+#include <oln/basics2d.hh>
-+#include <oln/level/cc.hh>
-+#include <ntg/all.hh>
-+#include <iostream>
++# define attr_lambda_type_(T)	 oln::morpho::attr::attr_traits<T>::lambda_type
++# define attr_env_type_(T)	 oln::morpho::attr::attr_traits<T>::env_type
++# define attr_value_type_(T)	 oln::morpho::attr::attr_traits<T>::value_type
+ 
+ 
+ # define attr_type_decl(self_type) \\
+@@ -48,6 +50,9 @@
+ 
+ namespace oln {
+   namespace morpho {
++    /*! \\brief Implementation of attributes.
++     */
++    namespace attr {
+     /*! \\brief Useful tools for morphological math.
+     */
+     namespace tools {
+@@ -63,66 +68,6 @@
+       }
+     } // !tools
+ 
+-    /*!
+-    ** \\brief Top of environment hierarchy.
+-    */
+-    template <class Exact>
+-    struct env: public mlc_hierarchy::any<Exact>
+-    {
+-    };
+-
+-    /*!
+-    ** \\brief Useless environment.
+-    **
+-    ** This environment is an empty one.
+-    */
+-    struct NullEnv: public env<NullEnv>
+-    {
+-    };
+-
+-    /*!
+-    ** \\brief Environment containing image.
+-    **
+-    ** Used for image substitution in other_image attribute.
+-    */
+-    template <class I>
+-    struct OtherImageEnv: public env<OtherImageEnv<I> >
+-    {
+-      typedef abstract::image<I>	im_type;
+-
+-      OtherImageEnv(const abstract::image<I> &im): im_(im)
+-      {};
+-
+-      const im_type	&getImage() const
+-      {
+-	return im_;
+-      }
+-
+-    protected:
+-      const im_type	&im_;
+-    };
+-
+-    /*!
+-    ** \\brief Environment containing point.
+-    **
+-    ** Used for point substitution in other_point attribute.
+-    */
+-    template <class I>
+-    struct OtherPointEnv: public env<OtherPointEnv<I> >
+-    {
+-      typedef abstract::image<I>	im_type;
+-
+-//       OtherImageEnv(const abstract::image<I> &im): im_(im)
+-//       {};
+-
+-      const oln_point_type(I)	&getPoint(const oln_point_type(I) &p) const
+-      {
+-	return p;
+-      }
+-
+-//     protected:
+-//       const im_type	&im_;
+-    };
+ 
+     // the traits fwd declaration
+     /*!
+@@ -526,60 +471,177 @@
+       };
+     };
+ 
+-    /*--------------*
+-      | other_point |
+-      *------------*/
+-//     /*!
+-//     ** \\class other_point
+-//     **
+-//     ** \\brief Metaclass used to change attribute behavior.
+-//     **
+-//     ** This class do the same job  that its Dad parameter, but force it
+-//     ** to work on other data.
+-//     */
+-//     template <class Dad, class I, class Exact = mlc::final>
+-//     class other_point:
+-//       public change_exact<Dad, typename mlc::exact_vt<other_point<Dad, I, Exact>, Exact>::ret >::ret
+-//     {
+-//     public:
+-//       typedef other_image<Dad, I,  Exact>						self_type; /*< Self type of the class.*/
+-//       typedef typename abstract::image<mlc_exact_type(I)>				im_type; /*< Type of substituted image.*/
+-//       attr_type_decl(self_type);
+-//       typedef typename change_exact<Dad,
+-// 				    typename mlc::exact_vt<other_point<Dad, I, Exact>,
+-// 							   Exact>::ret >::ret		super_type; /*< Mother class type.*/
+-
+-//       /*!
+-//       ** \\brief Constructor.
+-//       **
+-//       ** Dispatch to Dad constructor.
+-//       */
+-//       other_point(): super_type()
+-//       {
+-//       };
+-
+-//       /*!
+-//       ** \\brief lambda_type Constructor.
+-//       **
+-//       ** Dispatch to Dad constructor.
+-//       */
+-//       other_point(const lambda_type &lambda): super_type(lambda)
+-//       {
+-//       };
+-
+-//       /*!
+-//       ** \\brief Image Constructor.
+-//       **
+-//       ** Dispatch to Dad constructor but substitute image argument with
+-//       ** the image contained in the environment.
+-//       */
+-//       template <typename IM>
+-//       other_point(const abstract::image<IM> &im,
+-// 		  const oln_point_type(I) &p,
+-// 		  const env_type &e): super_type(im, e.getPoint(p), e)
+-//       {
+-//       };
+-//     };
++      /*----------------------*
++	| ball_parent_change |
++	*--------------------*/
++      /*!
++      ** \\class other_point
++      **
++      ** \\brief Metaclass used to change attribute behavior.
++      **
++      ** This class do the same job  that its Dad parameter, but force it
++      ** to work on other data.
++      */
++      template <class I, class Exact = mlc::final>
++      class ball_parent_change:
++	public attribute<mlc_2_exact_vt_type(ball_parent_change, I, Exact)>
++      {
++      public:
++	typedef ball_parent_change<I,  Exact>			self_type; /*< Self type of the class.*/
++	typedef typename abstract::image<mlc_exact_type(I)>	im_type; /*< Type of substituted image.*/
++	attr_type_decl(self_type);
++	typedef oln_value_type(I)				pts_type; ///< should be list <?>
++	typedef typename pts_type::const_iterator		cst_iter_type; ///< const iterator on Point vector.
++	typedef typename pts_type::value_type			point_type; ///< Point type associated to im_type.
++	typedef oln_dpoint_type(point_type)	dpoint_type; ///< Dpoint type associated to im_type.
 +
-+int main()
++	/*!
++	** \\brief Constructor.
++	**
++	** Dispatch to Dad constructor.
++	*/
++	ball_parent_change(): value_(ntg_zero_val(value_type)), points_()
++	{
++	};
++
++	/*!
++	** \\brief lambda_type Constructor.
++	**
++	** Dispatch to Dad constructor.
++	*/
++	ball_parent_change(const lambda_type &lambda): value_(lambda), points_()
++	{
++	};
++
++	/*!
++	** \\brief Image Constructor.
++	**
++	** Dispatch to Dad constructor but substitute image argument with
++	** the image contained in the environment.
++	*/
++	template <typename IM>
++	ball_parent_change(const abstract::image<IM> &,
++			   const oln_point_type(IM) &p,
++			   const env_type &e): points_()//: super_type(/*e.getImage(), */e.getPoint(p), e)
++	{
++	  std::copy(e.getParent()[p].begin(),
++		    e.getParent()[p].end(),
++		    std::back_inserter(points_));
++	};
++
++	/*!
++	** \\brief Accessor to value_.
++	**
++	** Virtual method.
++	** \\see getValue_impl()
++	*/
++	const value_type &getValue() const
++	  {
++	    mlc_dispatch(getValue)();
++	  };
++
++
++	/*!
++	** \\brief Accessor to pts_.
++	**
++	** Virtual method.
++	** \\see getPts_impl()
++	*/
++	const pts_type &getPts() const
++	  {
++	    mlc_dispatch(getPts)();
++	  };
++
++	// impl
++	/*!
++	** \\brief Implementation of getValue().
++	**
++	** Override this  method in  order to provide  a new  version of
++	** getValue().
++	**
++	** \\warning Do not call this method, use getValue() instead.
++	*/
++	const value_type &getValue_impl() const
++	  {
++	    return value_;
++	  };
++
++	/*!
++	** \\brief Implementation of getValue().
++	**
++	** Override this  method in  order to provide  a new  version of
++	** getPts().
++	**
++	** \\warning Do not call this method, use getPts() instead.
++	*/
++	const pts_type &getPts_impl() const
++	  {
++	    return points_;
++	  };
++
++	/*!
++	** \\brief += operator implementation.
++	**
++	** This is an implementation  of the += operator.  Override this
++	** method to provide a new implementation of this operator.
++	** \\warning This method SHOULDN'T directly be called.
++	*/
++	void pe_impl(const self_type &rhs)
++	  {
++	    precondition(points_.size() < (128 * 128 * 128 + 1));
++	    std::copy(rhs.getPts().begin(),
++		      rhs.getPts().end(),
++		      std::back_inserter(points_));
++	    compute_value();
++	    value_ = ntg::max(value_, rhs.getValue());
++	  };
++
++	/*!
++	** \\brief \"<\" operator implementation.
++	**
++	** This is an implementation  of the += operator.  Override this
++	** method to provide a new implementation of this operator.
++	** \\warning This method SHOULDN'T directly be called.
++	*/
++	bool less_impl(const lambda_type &lambda) const
++	  {
++	    return value_ < lambda;
++	  };
++
++	/*!
++	** \\brief != operator implementation.
++	**
++	** This is an implementation  of the += operator.  Override this
++	** method to provide a new implementation of this operator.
++	** \\warning This method SHOULDN'T directly be called.
++	*/
++	bool ne_impl(const lambda_type &lambda) const
++	  {
++	    return lambda != value_;
++	  };
++
++      protected:
++	void compute_value()
++	  {
++	    value_type	last = value_;
++	    value_ = ntg_zero_val(value_type);
++	    for (cst_iter_type p1 = points_.begin(); p1 != points_.end(); ++p1)
++	      for (cst_iter_type p2 = points_.begin(); p2 != points_.end(); ++p2)
++		{
++		  unsigned d = 0;
++		  dpoint_type	p = *p1 - *p2;
++		  for (int i = 0; i < point_traits<point_type>::dim; ++i)
++		    d += p.nth(i) * p.nth(i);
++		  if (d > value_)
++		    value_ = d;
++		}
++	    value_ /= 2;
++	    value_ = ntg::max(value_, last);
++	  }
++
++	value_type	value_;
++	pts_type	points_;
++      };
+ 
+       /*-----------*
+ 	|  height   |
+@@ -1151,11 +1213,11 @@
+       **
+       ** \\arg p Point to consider in the image.
+       */
+-      dist_type(const im_type&,
++	dist_type(//const im_type&,
+ 		const point_type &p,
+-		const env_type &) :
+-	value_(ntg_zero_val(value_type)),
+-	center_(p)
++		  const env_type &) //:
++	  //	  value_(ntg_zero_val(value_type)),
++	  //center_(p)
+ 	{
+ 	};
+ 
+@@ -1605,112 +1667,130 @@
+ 	\\------------------------*/
+ 
+ 
+-      // integral traits
++      /*!
++      ** \\brief Trait specialization for the integral attribute.
++      */
+       template <class T, class Exact>
+       struct attr_traits<integral_type<T, Exact> >
+       {
+-	typedef T		value_type;
+-	typedef value_type	lambda_type;
+-	typedef NullEnv		env_type;
++	typedef T		value_type; ///< Type of data.
++	typedef value_type	lambda_type; ///< Type of lambda.
++	typedef env::NullEnv	env_type; ///< Type of environment.
+       };
+ 
+-      // height traits
++      /*!
++      ** \\brief Trait specialization for the height attribute.
++      */
+       template <class T, class Exact>
+       struct attr_traits<height_type<T, Exact> >
+       {
+-	typedef T		value_type;
+-	typedef value_type	lambda_type;
+-	typedef NullEnv		env_type;
++	typedef T		value_type; ///< Type of data.
++	typedef value_type	lambda_type; ///< Type of lambda.
++	typedef env::NullEnv	env_type; ///< Type of environment.
+       };
+ 
+-      // card traits
++      /*!
++      ** \\brief Trait specialization for card attribute.
++      */
+       template <class T, class Exact>
+       struct attr_traits<card_type<T, Exact> >
+       {
+-	typedef T		value_type;
+-	typedef value_type	lambda_type;
+-	typedef NullEnv		env_type;
++	typedef T		value_type; ///< Type of data.
++	typedef value_type	lambda_type; ///< Type of lambda.
++	typedef env::NullEnv	env_type; ///< Type of environment.
+       };
+ 
+-      // maxvalue traits
++      /*!
++      ** \\brief Trait specialization for the maxvalue attribute.
++      */
+       template <class T, class Exact>
+       struct attr_traits<maxvalue_type<T, Exact> >
+       {
+-	typedef T		value_type;
+-	typedef value_type	lambda_type;
+-	typedef NullEnv		env_type;
++	typedef T		value_type; ///< Type of data.
++	typedef value_type	lambda_type; ///< Type of lambda.
++	typedef env::NullEnv	env_type; ///< Type of environment.
+       };
+ 
+-      // minvalue traits
++      /*!
++      ** \\brief Trait specialization for the minvalue attribute.
++      */
+       template <class T, class Exact>
+       struct attr_traits<minvalue_type<T, Exact> >
+       {
+-	typedef T		value_type;
+-	typedef value_type	lambda_type;
+-	typedef NullEnv		env_type;
++	typedef T		value_type; ///< Type of data.
++	typedef value_type	lambda_type; ///< Type of lambda.
++	typedef env::NullEnv	env_type; ///< Type of environment.
+       };
+ 
+-      // ball traits
++      /*!
++      ** \\brief Trait specialization for the ball attribute.
++      */
+       template <class I, class Exact>
+       struct attr_traits<ball_type<I, Exact> >
+       {
+-	typedef unsigned	value_type;
+-	typedef value_type	lambda_type;
+-	typedef NullEnv		env_type;
++	typedef unsigned			value_type; ///< Type of data.
++	typedef value_type			lambda_type; ///< Type of lambda.
++	typedef oln::morpho::env::NullEnv	env_type; ///< Type of environment.
+       };
+ 
+-      // dist traits
++      /*!
++      ** \\brief Trait specialization for the dist attribute.
++      */
+       template <class I, class Exact>
+       struct attr_traits<dist_type<I, Exact> >
+       {
+-	typedef float		value_type;
+-	typedef value_type	lambda_type;
+-	typedef NullEnv		env_type;
++	typedef float				value_type; ///< Type of data.
++	typedef value_type			lambda_type; ///< Type of lambda.
++	typedef oln::morpho::env::NullEnv	env_type; ///< Type of environment.
+       };
+ 
+-      // cube traits
++      /*!
++      ** \\brief Trait specialization for the cube attribute.
++      */
+       template <class I, class Exact>
+       struct attr_traits<cube_type<I, Exact> >
+       {
+-	typedef unsigned	value_type;
+-	typedef value_type	lambda_type;
+-	typedef NullEnv		env_type;
++	typedef unsigned			value_type; ///< Type of data.
++	typedef value_type			lambda_type; ///< Type of lambda.
++	typedef oln::morpho::env::NullEnv	env_type; ///< Type of environment.
+       };
+ 
+-      // box traits
++      /*!
++      ** \\brief Trait specialization for the box attribute.
++      */
+       template <class I, class Exact>
+       struct attr_traits<box_type<I, Exact> >
+       {
+-	typedef unsigned					value_type;
+-	typedef ntg::vec<I::dim, value_type, mlc::final>	lambda_type;
+-	typedef NullEnv						env_type;
++	typedef unsigned					value_type; ///< Type of data.
++	typedef ntg::vec<I::dim, value_type, mlc::final>	lambda_type; ///< Type of lambda.
++	typedef oln::morpho::env::NullEnv			env_type; ///< Type of environment.
+       };
+ 
+-      // other_image traits
++      /*!
++      ** \\brief Trait specialization for the other_image attribute.
++      */
+       template <class Dad, class I, class Exact>
+       struct attr_traits<other_image<Dad, I, Exact> >
+       {
+ 	//typedef typename change_exact<Dad, other_image<Dad, I, Exact> >::ret	super_type;
+ 	typedef typename change_exact<Dad,
+ 				      typename mlc::exact_vt<other_image<Dad, I, Exact>,
+-							     Exact>::ret>::ret		super_type;
+-	typedef attr_value_type(super_type)						value_type;
+-	typedef attr_lambda_type(super_type)						lambda_type;
+-	typedef OtherImageEnv<I>							env_type;
+-      };
+-
+-//       // other_point traits
+-//       template <class Dad, class I, class Exact>
+-//       struct attr_traits<other_point<Dad, I, Exact> >
+-//       {
+-// 	//typedef typename change_exact<Dad, other_image<Dad, I, Exact> >::ret	super_type;
+-// 	typedef typename change_exact<Dad,
+-// 				      typename mlc::exact_vt<other_point<Dad, I, Exact>,
+-// 							     Exact>::ret>::ret		super_type;
+-// 	typedef attr_value_type(super_type)						value_type;
+-// 	typedef attr_lambda_tye(super_type)						lambda_type;
+-// 	typedef OtherPointEnv<I>							env_type;
+-//       };
++							     Exact>::ret>::ret		super_type; ///< Parent class type.
++	typedef attr_value_type(super_type)						value_type; ///< Type of data.
++	typedef attr_lambda_type(super_type)						lambda_type; ///< Type of lambda.
++	typedef oln::morpho::env::OtherImageEnv<I>					env_type; ///< Type of environment.
++      };
++
++      /*!
++      ** \\brief Trait specialization for the ball_parent_change attribute.
++      */
++      template <class I, class Exact>
++      struct attr_traits<ball_parent_change<I, Exact> >
++      {
++	typedef unsigned		value_type; ///< Type of data.
++	typedef value_type		lambda_type; ///< Type of lambda.
++	typedef env::ParentEnv<I>	env_type; ///< Type of environment.
++      };
+ 
+     // traits for other_image derivation
+ 
+@@ -1725,17 +1805,7 @@
+       typedef integral_type<T, NewExact>	ret;
+     };
+ 
+-//     /*!
+-//     ** \\brief Change the exact type of an attribute.
+-//     **
+-//     ** Traits to change dist_type exact type.
+-//     */
+-//     template <class NewExact, class OldExact, class T>
+-//     struct change_exact<dist_type<T, OldExact>, NewExact>
+-//     {
+-//       typedef dist_type<T, NewExact>	ret;
+-//     };
+-
++    }// !attr
+   } // !morpho
+ } //!oln
+ 
+@@ -1748,3 +1818,4 @@
+ 
+ #endif // !OLN_MORPHO_ATTRIBUTES
+ 
++
+Index: olena/oln/morpho/attribute_closing_opening_map.hh
+--- olena/oln/morpho/attribute_closing_opening_map.hh Tue, 23 Mar 2004 13:37:46 +0100 van-vl_n (oln/j/49_attribute_ 1.10 600)
++++ olena/oln/morpho/attribute_closing_opening_map.hh Wed, 24 Mar 2004 12:01:08 +0100 palma_g (oln/j/49_attribute_ 1.10 600)
+@@ -61,7 +61,7 @@
+       ** \\param D Attribute exact type.
+       ** \\param Env Type of environment.
+       */
+-      template <class I, class D, class Env = morpho::NullEnv>
++      template <class I, class D, class Env = morpho::env::NullEnv>
+       struct f_tarjan_map
+       {
+       public:
+@@ -213,10 +213,10 @@
+ oln_concrete_type(I)							\\
+ T##_opening(const abstract::non_vectorial_image<I>& input,		\\
+ 	    const abstract::neighborhood<N>& ng,			\\
+-	    const attr_lambda_type(T##_type<>)& lambda)			\\
++	    const attr_lambda_type(attr::T##_type<>)& lambda)			\\
+     {									\\
+-      return tarjan_map<T##_type<>, I, N>(false, input, ng, lambda,	\\
+-					  attr_env_type(T##_type<>)());	\\
++      return tarjan_map<attr::T##_type<>, I, N>(false, input, ng, lambda,	\\
++					  attr_env_type(attr::T##_type<>)());	\\
+     }
+ 
+       // same but attribute take care of the image type
+@@ -225,10 +225,10 @@
+ oln_concrete_type(I)							\\
+ T##_opening(const abstract::non_vectorial_image<I>& input,		\\
+ 	    const abstract::neighborhood<N>& ng,			\\
+-	    const attr_lambda_type(T##_type<I>)& lambda)		\\
++	    const attr_lambda_type(attr::T##_type<I>)& lambda)		\\
+     {									\\
+-      return tarjan_map<T##_type<I>, I, N>(false, input, ng, lambda,	\\
+-				  attr_env_type(T##_type<I>)());	\\
++      return tarjan_map<attr::T##_type<I>, I, N>(false, input, ng, lambda,	\\
++				  attr_env_type(attr::T##_type<I>)());	\\
+     }
+ 
+       //return input;
+@@ -239,10 +239,10 @@
+ oln_concrete_type(I)							\\
+ T##_closing(const abstract::non_vectorial_image<I>& input,		\\
+ 	    const abstract::neighborhood<N>& ng,			\\
+-	    const attr_lambda_type(T##_type<>)& lambda)			\\
++	    const attr_lambda_type(attr::T##_type<>)& lambda)			\\
+     {									\\
+-      return tarjan_map<T##_type<>, I, N>(true, input, ng, lambda,	\\
+-					  attr_env_type(T##_type<>)()); \\
++      return tarjan_map<attr::T##_type<>, I, N>(true, input, ng, lambda,	\\
++					  attr_env_type(attr::T##_type<>)()); \\
+     }
+ 
+       // same but attribute take care of the image type
+@@ -251,10 +251,10 @@
+ oln_concrete_type(I)							\\
+ T##_closing(const abstract::non_vectorial_image<I>& input,		\\
+ 	    const abstract::neighborhood<N>& ng,			\\
+-	    const attr_lambda_type(T##_type<I>)& lambda)		\\
++	    const attr_lambda_type(attr::T##_type<I>)& lambda)		\\
+     {									\\
+-      return tarjan_map<T##_type<I>, I, N>(true, input, ng, lambda,	\\
+-					   attr_env_type(T##_type<I>)());\\
++      return tarjan_map<attr::T##_type<I>, I, N>(true, input, ng, lambda,	\\
++					   attr_env_type(attr::T##_type<I>)());\\
+     }
+ 
+       /*!
+Index: olena/tests/morpho/tests/attribute
+--- olena/tests/morpho/tests/attribute Mon, 15 Mar 2004 17:17:49 +0100 palma_g (oln/j/51_attribute 1.4 644)
++++ olena/tests/morpho/tests/attribute Wed, 24 Mar 2004 12:07:10 +0100 palma_g (oln/j/51_attribute 1.4 644)
+@@ -28,7 +28,7 @@
+   bool fail(false);
+ 
+   typedef image2d<int_u8> img_type;
+-  typedef oln::morpho::card_type<unsigned> area_type;
++  typedef oln::morpho::attr::card_type<unsigned> area_type;
+   const area_type::lambda_type area = 100;
+   const neighborhood2d nb = neighb_c8();
+   //  const oln::morpho::NullEnv env;
+Index: doc/ref/doxygen.config.in
+--- doc/ref/doxygen.config.in Mon, 15 Mar 2004 16:47:03 +0100 palma_g (oln/v/29_doxygen.co 1.3 644)
++++ doc/ref/doxygen.config.in Wed, 24 Mar 2004 12:03:43 +0100 palma_g (oln/v/29_doxygen.co 1.3 644)
+@@ -206,8 +206,3 @@
+ # Configuration::addtions related to the search engine
+ #---------------------------------------------------------------------------
+ SEARCHENGINE           = YES
+-CGI_NAME               = search.cgi
+-CGI_URL                =
+-DOC_URL                =
+-DOC_ABSPATH            =
+-BIN_ABSPATH            = /usr/local/bin/
+Index: olena/oln/morpho/environments.hh
+--- olena/oln/morpho/environments.hh Thu, 25 Mar 2004 14:59:49 +0100 palma_g ()
++++ olena/oln/morpho/environments.hh Wed, 24 Mar 2004 17:53:34 +0100 palma_g (oln/m/17_environmen  644)
+@@ -0,0 +1,110 @@
++// Copyright (C)  2004  EPITA Research and Development Laboratory
++//
++// This  file is  part of  the Olena  Library.  This  library  is free
++// software; you can redistribute it  and/or modify it under the terms
++// of the  GNU General  Public License version  2 as published  by the
++// Free Software Foundation.
++//
++// This library is distributed in the hope that it will be useful, but
++// WITHOUT  ANY  WARRANTY;  without   even  the  implied  warranty  of
++// MERCHANTABILITY or  FITNESS FOR A PARTICULAR PURPOSE.   See the GNU
++// General Public License for more details.
++//
++// You should have  received a copy of the  GNU General Public License
++// along with  this library; see the  file COPYING.  If  not, write to
++// the Free Software Foundation, 59  Temple Place - Suite 330, Boston,
++// MA 02111-1307, USA.
++//
++// As a  special exception, you  may use this  file as part of  a free
++// software library without restriction.  Specifically, if other files
++// instantiate templates  or use macros or inline  functions from this
++// file, or  you compile  this file  and link it  with other  files to
++// produce  an executable,  this file  does  not by  itself cause  the
++// resulting  executable  to be  covered  by  the  GNU General  Public
++// License.   This exception  does  not however  invalidate any  other
++// reasons why the executable file might be covered by the GNU General
++// Public License.
++
++#ifndef OLN_MORPHO_ENVIRONMENTS_HH
++# define OLN_MORPHO_ENVIRONMENTS_HH
++# include <oln/basics.hh>
++# include <mlc/type.hh>
++
++namespace oln
 +{
-+  oln::utils::key::value_type   data_key[16] = {0x50, 0x24, 0x28, 0x80, 0x6e,
-+                                               0x54, 0x9b, 0x5a, 0xff, 0x19,
-+                                               0xf, 0xcd, 0x4b, 0xe0, 0x38,
-+                                               0x3d};
-+  oln::utils::key                 key(data_key);
-+
-+  unsigned card;
-+  oln::image2d<ntg::bin> light = oln::load(rdata(\"face_se.pbm\"));
-+  if (oln::utils::md5(oln::level::frontp_connected_component<ntg::int_u8>
-+                     (light,
-+                      oln::neighb_c8(),
-+                      card)) == key)
-+    std::cout << \"OK\" << std::endl;
-+  else
++  namespace morpho
++  {
++    /*! \\brief Implementation of environments used by attributes.
++     */
++    namespace env
 +    {
-+      std::cout << \"FAIL\" << std::endl;
-+      return true;
++      /*! brief Abstract stuff for environments.
++       */
++      namespace abstract
++      {
++	/*!
++	** \\brief Top of environment hierarchy.
++	*/
++	template <class Exact>
++	struct env: public mlc_hierarchy::any<Exact>
++	{
++	};
++      } // !abstract
++
++      /*!
++      ** \\brief Useless environment.
++      **
++      ** This environment is an empty one.
++      */
++      struct NullEnv: public abstract::env<NullEnv>
++      {
++      };
++
++      /*!
++      ** \\brief Environment containing image.
++      **
++      ** Used for image substitution in other_image attribute.
++      */
++      template <class I>
++      struct OtherImageEnv: public abstract::env<OtherImageEnv<I> >
++      {
++	typedef oln::abstract::image<I>	im_type;
++
++	OtherImageEnv(const oln::abstract::image<I> &im): im_(im)
++	{};
++
++	const im_type	&getImage() const
++	{
++	  return im_;
++	}
++
++      protected:
++	const im_type	&im_;
++      };
++
++      /*!
++      ** \\brief Environment containing point.
++      **
++      ** Used for point substitution in other_point attribute.
++      */
++      template <class I>
++      struct ParentEnv: public abstract::env<ParentEnv<I> >
++      {
++	typedef oln::abstract::image<I>	im_type;
++
++	ParentEnv(const oln::abstract::image<I> &im): im_(im)
++	{};
++
++	const im_type	&getParent() const
++	{
++	  return im_;
++	}
++
++      protected:
++	const im_type	&im_;
++      };
++
 +    }
-+  std::cout << card << \" connected components\" << std::endl;
++  }
 +}
++#endif // !OLN_MORPHO_ENVIRONMENTS_HH
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 23 Mar 2004 16:05:55 +0100")
+(Checkin-Time "Thu, 25 Mar 2004 15:00:37 +0100")
 (Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -156,10 +979,10 @@ Index: olena/tests/level/tests/md5_level_hh0
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.15 640))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.8 640))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.9 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.38 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.50 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.51 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 640))
 
@@ -366,7 +1189,7 @@ Index: olena/tests/level/tests/md5_level_hh0
   (metalic/mlc/math.hh (oln/b/51_ufuncs.hh 1.10 640))
   (olena/oln/morpho/closing.hh (oln/b/6_closing.hh 1.6 640))
   (olena/oln/morpho/closing.inc (oln/44_closing.in 1.18 640))
-  (olena/oln/morpho/dilation.hh (oln/b/5_dilation.h 1.19 640))
+  (olena/oln/morpho/dilation.hh (oln/b/5_dilation.h 1.20 640))
   (olena/oln/morpho/erosion.hh (oln/b/4_erosion.hh 1.21 640))
   (olena/oln/morpho/extrema.hh (oln/38_extrema.hh 1.14 640))
   (olena/oln/morpho/extrema.hxx (oln/j/4_extrema.hx 1.17 640))
@@ -810,7 +1633,7 @@ Index: olena/tests/level/tests/md5_level_hh0
 ;; Files added by populate at Tue, 04 Mar 2003 19:30:28 +0100,
 ;; to version 8.9(w), by jerome:
 
-  (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.22 640))
+  (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.23 640))
   (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.18 640))
 
   (olena/tests/convol () :directory)
@@ -1228,7 +2051,7 @@ Index: olena/tests/level/tests/md5_level_hh0
 ;; Files added by populate at Fri, 06 Feb 2004 16:00:19 +0100,
 ;; to version 10.57(w), by palma_g:
 
-  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.9 644))
+  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.10 644))
 
 ;; Files added by populate at Tue, 10 Feb 2004 15:26:15 +0100,
 ;; to version 10.62(w), by palma_g:
@@ -1242,9 +2065,9 @@ Index: olena/tests/level/tests/md5_level_hh0
 
 
   (olena/oln/morpho/attribute_closing_opening_map.hxx (oln/j/48_attribute_ 1.2 644))
-  (olena/oln/morpho/attribute_closing_opening_map.hh (oln/j/49_attribute_ 1.10 600))
+  (olena/oln/morpho/attribute_closing_opening_map.hh (oln/j/49_attribute_ 1.11 600))
   (olena/oln/utils/special_points.hh (oln/j/50_special_po 1.3 644))
-  (olena/tests/morpho/tests/attribute (oln/j/51_attribute 1.4 644))
+  (olena/tests/morpho/tests/attribute (oln/j/51_attribute 1.5 644))
 ;; Files added by populate at Mon, 16 Feb 2004 18:59:27 +0100,
 ;; to version 10.64(w), by palma_g:
 
@@ -1252,7 +2075,7 @@ Index: olena/tests/level/tests/md5_level_hh0
 
 
   (doc/ref/exdoc.pl (oln/v/26_exdoc.pl 1.4 755))
-  (doc/ref/doxygen.config.in (oln/v/29_doxygen.co 1.3 644))
+  (doc/ref/doxygen.config.in (oln/v/29_doxygen.co 1.4 644))
   (doc/ref/exdoc.mk.in (oln/k/4_exdoc.mk.i 1.1 644))
   
   (doc/ref/img_conv.pl (oln/k/6_img_conv.p 1.3 700))
@@ -1430,8 +2253,13 @@ Index: olena/tests/level/tests/md5_level_hh0
 ;; to version 10.108(w), by palma_g:
 
   (olena/tests/level/tests/md5_level_hh0 (oln/m/16_md5_level_ 1.1 644))
+
+;; Files added by populate at Thu, 25 Mar 2004 14:59:46 +0100,
+;; to version 10.109(w), by palma_g:
+
+  (olena/oln/morpho/environments.hh (oln/m/17_environmen 1.1 644))
 )
 (Merge-Parents
-  (10.108 complete)
+  (10.109 complete)
 )
 (New-Merge-Parents)

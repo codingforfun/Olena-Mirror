@@ -101,9 +101,9 @@ namespace oln {
       oln_concrete_type(I) \
 	T##_opening(const abstract::non_vectorial_image<I>& input, \
 		       const abstract::neighborhood<N>& Ng, \
-		       const attr_lambda_type(T##_type<unsigned>) &lambda) \
+		       const attr_lambda_type(attr::T##_type<unsigned>) &lambda) \
       { \
-	return tarjan::internal::attr_opening_<I, N, T##_type<unsigned> >(input, Ng, lambda); \
+	return tarjan::internal::attr_opening_<I, N, attr::T##_type<unsigned> >(input, Ng, lambda); \
       }
 
 # define xxx_closing_decl(T) \
@@ -111,9 +111,9 @@ namespace oln {
       oln_concrete_type(I) \
 	T##_closing(const abstract::non_vectorial_image<I>& input, \
 		       const abstract::neighborhood<N>& Ng, \
-		       const attr_lambda_type(T##_type<unsigned>) &lambda) \
+		       const attr_lambda_type(attr::T##_type<unsigned>) &lambda) \
       { \
-	return tarjan::internal::attr_closing_<I, N, T##_type<unsigned> >(input, Ng, lambda); \
+	return tarjan::internal::attr_closing_<I, N, attr::T##_type<unsigned> >(input, Ng, lambda); \
       }
 
 
@@ -123,9 +123,9 @@ namespace oln {
       oln_concrete_type(I) \
 	T##_opening(const abstract::non_vectorial_image<I>& input, \
 		       const abstract::neighborhood<N>& Ng, \
-		       const attr_lambda_type(T##_type<I>) &lambda) \
+		       const attr_lambda_type(attr::T##_type<I>) &lambda) \
       { \
-	return tarjan::internal::attr_opening_<I, N, T##_type<I> >(input, Ng, lambda); \
+	return tarjan::internal::attr_opening_<I, N, attr::T##_type<I> >(input, Ng, lambda); \
       }
 
 # define xxx_closing_im_decl(T) \
@@ -133,9 +133,9 @@ namespace oln {
       oln_concrete_type(I) \
 	T##_closing(const abstract::non_vectorial_image<I>& input, \
 		       const abstract::neighborhood<N>& Ng, \
-		       const attr_lambda_type(T##_type<I>) &lambda) \
+		       const attr_lambda_type(attr::T##_type<I>) &lambda) \
       { \
-	return tarjan::internal::attr_closing_<I, N, T##_type<I> >(input, Ng, lambda); \
+	return tarjan::internal::attr_closing_<I, N, attr::T##_type<I> >(input, Ng, lambda); \
       }
 
       /*!

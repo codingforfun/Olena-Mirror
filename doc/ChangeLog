@@ -1,3 +1,7 @@
+2004-03-25  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* ref/doxygen.config.in: Remove deprecated entries.
+
 2004-03-15  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* ref/doxygen.config.in: Change some flags.
