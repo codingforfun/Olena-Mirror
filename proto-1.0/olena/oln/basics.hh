@@ -43,7 +43,6 @@
 # include <mlc/traits.hh>
 # include <mlc/any.hh>
 # include <mlc/types.hh>
-# include <mlc/box.hh>
 
 
 // ntg::
@@ -58,6 +57,7 @@
 # include <oln/core/abstract/point.hh>
 # include <oln/core/abstract/images.hh>
 # include <oln/core/abstract/entry.hh>
+# include <oln/core/box.hh>
 # include <oln/core/abstract/op.hh>
 
 # include <oln/core/abstract/piter.hh>

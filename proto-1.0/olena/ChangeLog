@@ -1,3 +1,18 @@
+2005-03-30  Thierry Geraud  <theo@lrde.epita.fr>
+
+	* oln/core/box.hh: New.
+	* oln/core/abstract/image.hh
+	(resize_border): Temporary method to pass make check.
+	* oln/core/abstract/image_with_data.hh: Update.
+	* oln/core/abstract/op.hh: Likewise.
+	* oln/utils/clone.hh: Likewise.
+	* oln/basics.hh: Likewise.
+	* oln/morpho/dilation.hh: Likewise.
+	* oln/morpho/erosion.hh: Likewise.
+	* oln/arith/min.hh: Likewise.
+	* oln/arith/max.hh: Likewise.
+	* oln/morpho/stat.hh: Add test (hold) to pass make check.
+
 2005-03-25  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
 	* oln/core/abstract/image.hh: Add concrete type.

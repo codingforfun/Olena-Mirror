@@ -28,6 +28,7 @@
 #ifndef OLENA_CORE_ABSTRACT_OP_HH
 # define OLENA_CORE_ABSTRACT_OP_HH
 
+# include <oln/core/box.hh>
 # include <oln/core/abstract/image_identity.hh>
 
 namespace oln {

@@ -62,8 +62,8 @@ namespace oln {
       template <class I>
       struct max_type : abstract::op<I, max_type<I> >
       {
-	mlc::box<const I> input1_;
-	mlc::box<const I> input2_;
+	box<const I> input1_;
+	box<const I> input2_;
 
 	max_type(const abstract::non_vectorial_image<I>& input1,
 		 const abstract::non_vectorial_image<I>& input2) :
@@ -73,14 +73,14 @@ namespace oln {
 
 	void impl_run()
 	{
-	  precondition(input1_->size() == input2_->size());
-	  I output(input1_->size());
-	  oln_type_of(I, fwd_piter) p(input1_->size());
+	  precondition(input1_.size() == input2_.size());
+	  I output(input1_.size());
+	  oln_type_of(I, fwd_piter) p(input1_.size());
 
 	  for_all(p)
-	    output[p] = ntg::max((*input1_)[p].value(), (*input2_)[p].value());
+	    output[p] = ntg::max(input1_[p].value(), input2_[p].value());
 
-	  *this->image_ = output;
+	  *this->image_ = output; // FIXME: remove * when image_ is oln::box
 	}
 
       };

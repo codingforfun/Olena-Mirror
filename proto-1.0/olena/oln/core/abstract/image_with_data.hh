@@ -179,7 +179,7 @@ namespace oln {
         return data_ != 0;
       }
 
-      void resize_border(size_t new_border, bool copy_border = false) const
+      void impl_resize_border(size_t new_border, bool copy_border) const
       {
 	(const_cast<storage_type&>(*this->data_)).resize_border(new_border, copy_border);
       }

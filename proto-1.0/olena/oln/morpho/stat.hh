@@ -71,8 +71,9 @@ namespace oln {
 	  dp.start();
 	  V val = input[p + dp];
           for_all_remaining (dp)
-            if (val < input[p + dp].value())
-              val = input[p + dp].value();
+	    if (input.hold(p + dp))
+	      if (val < input[p + dp].value())
+		val = input[p + dp].value();
 	  return val;
 	}
 
@@ -97,8 +98,9 @@ namespace oln {
 	  dp.start();
 	  V val = input[p + dp];
 	  for_all_remaining (dp)
-	    if (val > input[p + dp].value())
-	      val = input[p + dp].value();
+	    if (input.hold(p + dp))
+	      if (val > input[p + dp].value())
+		val = input[p + dp].value();
 	  return val;
 	}
 
@@ -116,8 +118,9 @@ namespace oln {
 	    oln_type_of(E, size)>::ret>::ensure();
 	  oln_type_of(E, fwd_witer) dp(se);
 	  for_all (dp)
-	    if (input[p + dp] == true)
-	      return true;
+	    if (input.hold(p + dp))
+	      if (input[p + dp] == true)
+		return true;
 	  return false;
 	}
 
@@ -128,8 +131,9 @@ namespace oln {
 	    oln_type_of(E, size)>::ret>::ensure();
 	  oln_type_of(E, fwd_witer) dp(se);
 	  for_all (dp)
-	    if (input[p + dp] == false)
-	      return false;
+	    if (input.hold(p + dp))
+	      if (input[p + dp] == false)
+		return false;
 	  return true;
 	}
 

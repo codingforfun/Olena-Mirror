@@ -113,8 +113,8 @@ namespace oln {
       template <class I, class E>
       struct dilation_type : abstract::op<I, dilation_type<I, E> >
       {
-	mlc::box<const I> input_;
-	mlc::box<const E> se_;
+	box<const I> input_;
+	const E se_;
 
 	dilation_type(const abstract::non_vectorial_image<I>& input,
 		     const abstract::struct_elt<E>& se) :
@@ -138,12 +138,15 @@ namespace oln {
 	{
 	  mlc::is_true<mlc::type::eq<oln_type_of(I, size),
 	    oln_type_of(E, size)>::ret>::ensure();
-	  I output(this->input_->size());
-	  this->input_->resize_border(this->se_->get_delta());
-	  oln_type_of(I, fwd_piter) p(this->input_->size());
+	  I output(this->input_.size());
+
+	  // FIXME: see erosion.hh
+	  this->input_.resize_border(this->se_.get_delta());
+
+	  oln_type_of(I, fwd_piter) p(this->input_.size());
 
 	  for_all (p)
-	    output[p] = morpho::max(*this->input_, p, *this->se_);
+	    output[p] = morpho::max(this->input_, p, this->se_);
 	  *this->image_ = output;
 	}
       };

@@ -62,8 +62,8 @@ namespace oln {
       template <class I>
       struct min_type : abstract::op<I, min_type<I> >
       {
-	mlc::box<const I> input1_;
-	mlc::box<const I> input2_;
+	box<const I> input1_;
+	box<const I> input2_;
 
 	min_type(const abstract::non_vectorial_image<I>& input1,
 		 const abstract::non_vectorial_image<I>& input2) :
@@ -73,12 +73,12 @@ namespace oln {
 
 	void impl_run()
 	{
-	  precondition(input1_->size() == input2_->size());
-	  I output(input1_->size());
-	  oln_type_of(I, fwd_piter) p(input1_->size());
+	  precondition(input1_.size() == input2_.size());
+	  I output(input1_.size());
+	  oln_type_of(I, fwd_piter) p(input1_.size());
 
 	  for_all(p)
-	    output[p] = ntg::min((*input1_)[p].value(), (*input2_)[p].value());
+	    output[p] = ntg::min(input1_[p].value(), input2_[p].value());
 
 	  *this->image_ = output;
 	}
@@ -87,6 +87,8 @@ namespace oln {
 
     }
 
+    // FIXME: replace non_vectorial_image by scalar_image
+    // FIXME: cause arithmetics is not defined for Booleans and labels...
     template <typename I>
     impl::min_type<I> min(const abstract::non_vectorial_image<I>& input1,
 			  const abstract::non_vectorial_image<I>& input2)

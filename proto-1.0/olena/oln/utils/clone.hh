@@ -67,20 +67,20 @@ namespace oln {
       {
 	typedef abstract::op<I, clone_type<I> > super_type;
 
-	mlc::box<I> input_;
+	box<I> input_;
 
-	clone_type(I& input) : input_(input)
-	{}
+	clone_type(I& input) :
+	  input_(input)
+	{
+	}
 
 	void impl_run()
 	{
-	  I ima(input_->size());
-	  oln_type_of(I, fwd_piter) it(input_->size());
+	  I ima(input_.size());
+	  oln_type_of(I, fwd_piter) p(input_.size());
 
-	  for_all(it)
-	    {
-	      ima[it] = (*input_)[it];
-	    }
+	  for_all(p)
+	    ima[p] = input_[p];
 
 	  *this->image_ = ima;
 	}

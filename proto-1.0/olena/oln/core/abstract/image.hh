@@ -303,6 +303,14 @@ namespace oln {
 	return this->exact().impl_get(p);
       }
 
+
+      // FIXME: patch!
+
+      void resize_border(size_t new_border, bool copy_border = false) const
+      {
+	this->exact().impl_resize_border(new_border, copy_border);
+      }
+
     protected:
 
       /*! \brief Constructor (protected, empty).
@@ -382,7 +390,14 @@ namespace oln {
 	const value_type impl_get(const point_type& p) const
 	{
 	  this->exact().impl_get_extra(p);
-	  return this->delegate().impl_get(p);
+	  return this->delegate().get(p);
+	}
+
+	// FIXME: patch
+
+	void impl_resize_border(size_t new_border, bool copy_border) const
+	{
+	  this->delegate().impl_resize_border(new_border, copy_border);
 	}
 
 	// extra code; default is "do nothing"
