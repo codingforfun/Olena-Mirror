@@ -1,9 +1,17 @@
+2002-07-29  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* configure.ac: Output utilities/Makefile.
+	* Makefile.am (SUBDIRS): Add utilities.
+	* utilities/Makefile.am: New file.
+	* utilities/mosaic.cc: New file.
+
 2002-07-26  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/value/cast.hh: Remove const preceding builtin return type.
 	* oln/core/internal/neighborhood.hh: Add comeau compatibility.
 	* oln/core/type.hh (type): Add wrap type.
-	* oln/core/generate.hh: Add wrap call for compatibility with comeau and icc.
+	* oln/core/generate.hh: Add wrap call for compatibility with
+	comeau and icc.
 	* oln/io/pnm_read3d.hxx: Fix unexistent N problem.
 	* oln/meta/ucmp.h: Rewrite less, lesseq and eq.
 
