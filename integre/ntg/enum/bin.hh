@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_BIN_HH
-# define NTG_BIN_HH
+#ifndef NTG_ENUM_BIN_HH
+# define NTG_ENUM_BIN_HH
 
 # include <mlc/contract.hh>
 
@@ -259,4 +259,4 @@ namespace ntg
 
 } // end of ntg
 
-#endif // ndef NTG_BIN_HH
+#endif // ndef NTG_ENUM_BIN_HH

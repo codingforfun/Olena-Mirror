@@ -1,3 +1,8 @@
+2003-04-15  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/bin.hh, ntg/cplx.hh, ntg/cycle.hh, ntg/float.hh, ntg/int.hh,
+	ntg/range.hh, ntg/vec.hh: Update includes.
+
 2003-04-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/enum/optraits_bin.hh: Merge into ntg/enum/bin.hh
@@ -57,6 +62,11 @@
 	
 	* Makefile.am: Update consequently.
 	
+2003-04-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/global_ops_defs.hh: Add missing builtin specializations.
+	* tests/types/tests/builtin1: New test.
+
 2003-03-14  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* Makefile.am: Adjust.

@@ -123,6 +123,7 @@ OLN_COLLECTION([OLN_TOP],
       OLN_TESTS([arith])
       OLN_TESTS([convert])
       OLN_TESTS([convol])
+      OLN_TESTS([core])
       OLN_TESTS([io])
       OLN_TESTS([morpho])
       OLN_TESTS([sanity])

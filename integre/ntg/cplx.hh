@@ -31,6 +31,5 @@
 // Proxy header for cplx type.
 
 # include <ntg/vect/cplx.hh>
-# include <ntg/vect/optraits_cplx.hh>
 
 #endif // !NTG_CPLX_HH

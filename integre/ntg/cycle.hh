@@ -31,6 +31,5 @@
 // Proxy header for cycle.
 
 # include <ntg/real/cycle.hh>
-# include <ntg/real/optraits_cycle.hh>
 
 #endif // !NTG_CYCLE_HH

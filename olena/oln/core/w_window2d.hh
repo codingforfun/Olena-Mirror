@@ -80,16 +80,18 @@ namespace oln {
     }
 
 
-    T& set(const dpoint2d& dp)
+    T& set(const dpoint2d& dp, T weight)
     {
       // if the dp exists, return a ref to the existing entry
       for (unsigned i = 0; i < card(); ++i)
 	if (_dp[i] == dp)
-	  return _w[i];
+	  {
+	    _w[i] = weight;
+	    return _w[i];
+	  }
 
       // otherwise, create new entry
-      super::add(dp);
-      _w.push_back(T());
+      add(dp, weight);
       return _w.back();
     }
 

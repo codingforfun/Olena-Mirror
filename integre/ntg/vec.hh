@@ -31,6 +31,5 @@
 // Proxy header for vec type.
 
 # include <ntg/vect/vec.hh>
-# include <ntg/vect/optraits_vec.hh>
 
 #endif // !NTG_VEC_HH

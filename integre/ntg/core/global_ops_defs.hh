@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -58,6 +58,8 @@ template <class T1, class T2>				\
 inline T1& Op(rec_value<T1>& lhs, const T2& rhs)	\
 { return optraits<T1>::Name(lhs.self(), rhs); }		\
 							\
+GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, signed   long);	\
+GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, unsigned long);	\
 GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, signed   int);	\
 GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, unsigned int);	\
 GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, signed   short);	\
@@ -119,6 +121,8 @@ Op(const rec_value<T1>& lhs, const T2& rhs)					\
 			      static_cast<rhs_type>(rhs));			\
 }										\
 										\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   long);				\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned long);				\
 GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   int);				\
 GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned int);				\
 GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   short);				\
@@ -181,6 +185,8 @@ Op(const rec_value<T1>& lhs, const T2& rhs)					\
 			      static_cast<rhs_type>(rhs));			\
 }										\
 										\
+GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, signed   long);				\
+GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, unsigned long);				\
 GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, signed   int);				\
 GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, unsigned int);				\
 GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, signed   short);				\
@@ -227,6 +233,8 @@ inline bool Op(const rec_value<T1>& lhs, const T2& rhs)			\
 			      static_cast<rhs_type>(rhs));		\
 }									\
 									\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   long);				\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned long);				\
 GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   int);				\
 GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned int);				\
 GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   short);			\

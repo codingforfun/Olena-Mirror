@@ -31,6 +31,5 @@
 // Proxy header for range.
 
 # include <ntg/real/range.hh>
-# include <ntg/real/optraits_range.hh>
 
 #endif // !NTG_RANGE_HH

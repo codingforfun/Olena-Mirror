@@ -25,59 +25,59 @@
   Name(Interface);
 %extend { 
   Interface value() const { return (*self); }
-  void value(Interface x) { *self = oln::Name(x); }
+  void value(Interface x) { *self = ntg::Name(x); }
   
   Name& operator+=(const Name& other)
     { return (*self) += other; }
   Name& operator+=(Interface other)
-    { return (*self) += oln:: Name(other); }
+    { return (*self) += ntg:: Name(other); }
   Name operator+(const Name& other) const
     { return (*self) + other; }
   Name operator+(Interface other) const
-    { return (*self) + oln:: Name(other); }
+    { return (*self) + ntg:: Name(other); }
   Name add(const Name& other) const
     { return (*self) + other; }
   Name add(Interface other) const
-    { return (*self) + oln:: Name(other); }
+    { return (*self) + ntg:: Name(other); }
        
   Name& operator-=(const Name& other)
     { return (*self) -= other; }
   Name& operator-=(Interface other)
-    { return (*self) -= oln:: Name(other); }
+    { return (*self) -= ntg:: Name(other); }
   Name operator-(const Name& other) const
     { return (*self) - other; }
   Name operator-(Interface other) const
-    { return (*self) - oln:: Name(other); }
+    { return (*self) - ntg:: Name(other); }
   Name sub(const Name& other) const
     { return (*self) - other; }
   Name sub(Interface other) const
-    { return (*self) - oln:: Name(other); }
+    { return (*self) - ntg:: Name(other); }
 
   Name& operator*=(const Name& other)
     { return (*self) *= other; }
   Name& operator*=(Interface other)
-    { return (*self) *= oln:: Name(other); }
+    { return (*self) *= ntg:: Name(other); }
   Name operator*(const Name& other) const
     { return (*self) * other; }
   Name operator*(Interface other) const
-    { return (*self) * oln:: Name(other); }
+    { return (*self) * ntg:: Name(other); }
   Name mul(const Name& other) const
     { return (*self) * other; }
   Name mul(Interface other) const
-    { return (*self) * oln:: Name(other); }
+    { return (*self) * ntg:: Name(other); }
 
   Name& operator/=(const Name& other)
     { return (*self) /= other; }
   Name& operator/=(Interface other)
-    { return (*self) /= oln:: Name(other); }
+    { return (*self) /= ntg:: Name(other); }
   Name operator/(const Name& other) const
     { return (*self) / other; }
   Name operator/(Interface other) const
-    { return (*self) / oln:: Name(other); }
+    { return (*self) / ntg:: Name(other); }
   Name div(const Name& other) const
     { return (*self) / other; }
   Name div(Interface other) const
-    { return (*self) / oln:: Name(other); }
+    { return (*self) / ntg:: Name(other); }
 
   bool operator<=(const Name& other) const
     { return (*self) <= other; }
@@ -88,24 +88,24 @@
   bool operator>(const Name& other) const
     { return (*self) > other; }
   bool operator<=(Interface other) const
-    { return (*self) <= oln:: Name(other); }
+    { return (*self) <= ntg:: Name(other); }
   bool operator>=(Interface other) const
-    { return (*self) >= oln:: Name(other); }
+    { return (*self) >= ntg:: Name(other); }
   bool operator<(Interface other) const
-    { return (*self) < oln:: Name(other); }
+    { return (*self) < ntg:: Name(other); }
   bool operator>(Interface other) const
-    { return (*self) > oln:: Name(other); }
+    { return (*self) > ntg:: Name(other); }
 
   bool operator==(Interface other) const
-    { return (*self) == oln:: Name(other); }
+    { return (*self) == ntg:: Name(other); }
   bool equals(Interface other) const
-    { return (*self) == oln:: Name(other); }
+    { return (*self) == ntg:: Name(other); }
 
 };
 %enddef
 
 %define MakeValue(Name)
-  namespace oln
+  namespace ntg
   {
     struct Name 
     {
@@ -117,7 +117,7 @@
 %enddef
 
 %define MakeFloatValue(Name)
-  namespace oln
+  namespace ntg
   {
     struct Name 
     {
@@ -129,7 +129,7 @@
 %enddef
 
 %define MakeRgbValue(Name)
-  namespace oln
+  namespace ntg
   {
     struct Name
     {
@@ -149,7 +149,7 @@
   }
 %enddef
 
-namespace oln
+namespace ntg
 {
   struct bin
   {
@@ -193,5 +193,3 @@ namespace oln
     };
   };
 }
-
-	

@@ -35,9 +35,6 @@
 // s_int as 1 is a signed int builtin type.
 
 # include <ntg/real/int_u.hh>
-# include <ntg/real/optraits_int_u.hh>
-
 # include <ntg/real/int_s.hh>
-# include <ntg/real/optraits_int_u.hh>
 
 #endif // !NTG_INT_HH

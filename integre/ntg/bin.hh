@@ -31,6 +31,5 @@
 // Proxy header for bin type.
 
 # include <ntg/enum/bin.hh>
-# include <ntg/enum/optraits_bin.hh>
 
 #endif // !NTG_BIN_HH
