@@ -58,13 +58,13 @@ namespace oln
 
     static interval_type min()
     { return interval::min(); }
-    
+
     static interval_type max()
     { return interval::max(); }
 
     static interval_type inf()
     { return interval::inf(); }
-    
+
     static interval_type sup()
     { return interval::sup(); }
 
@@ -83,18 +83,18 @@ namespace oln
       {
 	return lhs % rhs;
       }
-    };    
+    };
 
     // behaviour's check
 
     template <class P>
     static store_type check(const P& rhs)
-    { 
+    {
       typedef typename meta::if_<is_a(optraits<P>, optraits_float)::ret,
 	                         cycle_fmod,
 	                         cycle_mod<P> >::ret_t cycle_op;;
-      typename internal::to_oln<P>::ret 
-	tmp = cycle_op::exec(abs(rhs), max() - min());
+      typename internal::to_oln<P>::ret
+	tmp = cycle_op::exec(std::abs(rhs), max() - min());
       if (rhs < 0) tmp = -tmp;
 
       if (tmp < min())

@@ -1,12 +1,16 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 29)
-(Parent-Version oln 0_5 28)
-(Version-Log "typo
+(Project-Version oln 0_5 30)
+(Parent-Version oln 0_5 29)
+(Version-Log "2002-09-03  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* oln/types/optraits_cycle.hh (optraits<cycle<T,interval> >::check):
+	Use std::abs(), not abs().
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 02 Sep 2002 16:36:09 +0200")
+(Checkin-Time "Tue, 03 Sep 2002 12:00:57 +0200")
 (Checkin-Login duret_g)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -74,7 +78,7 @@
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.19 640))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.35 600))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.36 600))
   (configure.ac (oln/3_configure. 1.19 600))
   (configure (oln/e/7_configure 1.23 700))
   (README (oln/1_README 1.4 600))
@@ -425,7 +429,7 @@
   (oln/types/optraits_range.hh (oln/g/13_optraits_r 1.1 640))
   (oln/types/optraits_int_u.hh (oln/g/14_optraits_i 1.2 640))
   (oln/types/optraits_int_s.hh (oln/g/15_optraits_i 1.2 640))
-  (oln/types/optraits_cycle.hh (oln/g/16_optraits_c 1.3 640))
+  (oln/types/optraits_cycle.hh (oln/g/16_optraits_c 1.4 640))
   (oln/types/optraits_builtins_int_defs.hh (oln/g/17_optraits_b 1.1 640))
   (oln/types/optraits_builtins_int.hh (oln/g/18_optraits_b 1.1 640))
   (oln/types/optraits_builtins_float.hh (oln/g/19_optraits_b 1.4 640))
