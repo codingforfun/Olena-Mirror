@@ -1,16 +1,17 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 155)
-(Parent-Version oln 10 154)
-(Version-Log "2004-04-13  Niels Van Vliet  <niels@lrde.epita.fr>
-	* olena/oln/utils/md5.hxx: Changed abstract::image to
-	oln::abstract::image (ICC error).
-	* olena/oln/utils/md5.hh: Likewise.
+(Project-Version oln 10 156)
+(Parent-Version oln 10 155)
+(Version-Log "2004-04-13  Damien Thivolle  <damien@lrde.epita.fr>
+	* olena/oln/morpho/geodesic_dilation.hh: Fix to make compile with ICC.
+	* olena/oln/morpho/geodesic_erosion.hh: Likewise.
+	* olena/oln/morpho/reconstruction.hh: Likewise.
+	* olena/oln/topo/tarjan/flat-zone.hh: Likewise.
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 13 Apr 2004 21:22:13 +0200")
-(Checkin-Login van-vl_n)
+(Checkin-Time "Wed, 14 Apr 2004 00:08:50 +0200")
+(Checkin-Login thivol_d)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -116,7 +117,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.3 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.42 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.40 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.83 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.84 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.29 600))
 
@@ -330,8 +331,8 @@
   (olena/oln/morpho/extrema_killer.hh (oln/e/19_extrema_ki 1.7.1.4.1.15 600))
   (olena/oln/morpho/fast_morpho.hh (oln/46_fast_morph 1.9 600))
   (olena/oln/morpho/fast_morpho.hxx (oln/45_fast_morph 1.22 600))
-  (olena/oln/morpho/geodesic_dilation.hh (oln/37_geodesic_d 1.11.1.12 600))
-  (olena/oln/morpho/geodesic_erosion.hh (oln/36_geodesic_e 1.19 600))
+  (olena/oln/morpho/geodesic_dilation.hh (oln/37_geodesic_d 1.11.1.13 600))
+  (olena/oln/morpho/geodesic_erosion.hh (oln/36_geodesic_e 1.20 600))
   (olena/oln/morpho/gradient.hh (oln/b/3_gradient.h 1.6 600))
   (olena/oln/morpho/gradient.inc (oln/43_gradient.i 1.16 600))
   (olena/oln/morpho/hit_or_miss.hh (oln/b/2_hit_or_mis 1.7 600))
@@ -341,7 +342,7 @@
   (olena/oln/morpho/minmax.hh (oln/b/0_minmax.hh 1.6 600))
   (olena/oln/morpho/opening.hh (oln/51_opening.hh 1.6 600))
   (olena/oln/morpho/opening.inc (oln/40_opening.in 1.16 600))
-  (olena/oln/morpho/reconstruction.hh (oln/35_reconstruc 1.13.1.13 600))
+  (olena/oln/morpho/reconstruction.hh (oln/35_reconstruc 1.13.1.14 600))
   (olena/oln/morpho/splitse.hh (oln/34_splitse.hh 1.8 600))
   (olena/oln/morpho/stat.hh (oln/50_stat.hh 1.8.1.12 600))
   (olena/oln/morpho/thickening.hh (oln/e/29_thickening 1.7 600))
@@ -816,7 +817,7 @@
   
   (olena/oln/topo/tarjan/union.hh (oln/r/33_union.hh 1.12 600))
   (olena/oln/topo/inter-pixel/inter-pixel.hh (oln/r/34_inter-pixe 1.16 600))
-  (olena/oln/topo/tarjan/flat-zone.hh (oln/r/35_flat-zone. 1.13 600))
+  (olena/oln/topo/tarjan/flat-zone.hh (oln/r/35_flat-zone. 1.14 600))
   (olena/oln/topo/combinatorial-map/cmap.hh (oln/r/36_cmap.hh 1.14 600))
 
 ;; Files added by populate at Thu, 20 Mar 2003 18:06:35 +0100,

@@ -1,3 +1,10 @@
+2004-04-13  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* olena/oln/morpho/geodesic_dilation.hh: Fix to make compile with ICC.
+	* olena/oln/morpho/geodesic_erosion.hh: Likewise.
+	* olena/oln/morpho/reconstruction.hh: Likewise.
+	* olena/oln/topo/tarjan/flat-zone.hh: Likewise.
+
 2004-04-13  Niels Van Vliet  <niels@lrde.epita.fr>
 
 	* olena/oln/utils/md5.hxx: Changed abstract::image to

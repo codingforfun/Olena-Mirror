@@ -88,7 +88,7 @@ namespace oln {
 	typedef abstract::tarjan_with_attr<exact_type>	super_type; ///< Type of parent class.
 
 	friend class super_type;
-	friend class super_type::super_type;
+	friend class abstract::tarjan<exact_type>;
 	/*!
 	** \brief Constructor.
 	**

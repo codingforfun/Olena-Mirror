@@ -74,7 +74,7 @@ namespace oln {
       **   typedef oln::image2d<ntg::int_u8>	im_type;
       **
       **   im_type	im1(oln::load(IMG_IN "lena128.pgm"));
-      **   im_type	im2(oln::morpho::opening(im1, oln::win_c4p()));
+      **   im_type	im2 = oln::morpho::opening(im1, oln::win_c4p());
       **
       **   oln::save(oln::morpho::sure::geodesic_reconstruction_dilation(im2,
       **                                                                 im1,
@@ -146,7 +146,7 @@ namespace oln {
       **   typedef oln::image2d<ntg::int_u8>	im_type;
       **
       **   im_type	im1(oln::load(IMG_IN "lena128.pgm"));
-      **   im_type	im2(oln::morpho::opening(im1, oln::win_c4p()));
+      **   im_type	im2 = oln::morpho::opening(im1, oln::win_c4p());
       **
       **   oln::save(oln::morpho::sequential::geodesic_reconstruction_dilation(im2,
       **                                                                 im1,
@@ -262,7 +262,7 @@ namespace oln {
       **   typedef oln::image2d<ntg::int_u8>	im_type;
       **
       **   im_type	im1(oln::load(IMG_IN "lena128.pgm"));
-      **   im_type	im2(oln::morpho::opening(im1, oln::win_c4p()));
+      **   im_type	im2 = oln::morpho::opening(im1, oln::win_c4p());
       **
       **   oln::save(oln::morpho::hybrid::geodesic_reconstruction_dilation(im2,
       **                                                                 im1,
@@ -367,7 +367,7 @@ namespace oln {
       **   typedef oln::image2d<ntg::int_u8>	im_type;
       **
       **   im_type	im1(oln::load(IMG_IN "lena128.pgm"));
-      **   im_type	im2(oln::morpho::opening(im1, oln::win_c4p()));
+      **   im_type	im2 = oln::morpho::opening(im1, oln::win_c4p());
       **
       **   oln::save(oln::morpho::sure::geodesic_reconstruction_erosion(im1,
       **                                                                 im2,
@@ -440,7 +440,7 @@ namespace oln {
       **   typedef oln::image2d<ntg::int_u8>	im_type;
       **
       **   im_type	im1(oln::load(IMG_IN "lena128.pgm"));
-      **   im_type	im2(oln::morpho::opening(im1, oln::win_c4p()));
+      **   im_type	im2 = oln::morpho::opening(im1, oln::win_c4p());
       **
       **   oln::save(oln::morpho::sequential::geodesic_reconstruction_erosion(im1,
       **                                                                 im2,
@@ -552,7 +552,7 @@ namespace oln {
       **   typedef oln::image2d<ntg::int_u8>	im_type;
       **
       **   im_type	im1(oln::load(IMG_IN "lena128.pgm"));
-      **   im_type	im2(oln::morpho::opening(im1, oln::win_c4p()));
+      **   im_type	im2 = oln::morpho::opening(im1, oln::win_c4p());
       **
       **   oln::save(oln::morpho::hybrid::geodesic_reconstruction_erosion(im1,
       **                                                                 im2,
