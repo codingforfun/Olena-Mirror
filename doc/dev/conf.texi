@@ -72,7 +72,6 @@ if it works, stop the check, no workaround required.
 add @option{-ftemplate-depth-N} to @env{CXXFLAGS}, and try again;
 @item
 @cindex @env{OLN_CXXFLAGS}
-
 if it works, add @option{-ftemplate-depth-N} to @env{OLN_CXXFLAGS}, then
 stop.
 @item
@@ -165,7 +164,7 @@ if it does not, add @option{-DOLN_USE_C_LIMITS} to @env{OLN_CPPFLAGS}.
 @subsection C math functions
 
 Olena uses functions from the C89 and C99 math libraries. However, most
-C++ environment only know about C89 math functions, since the C++
+C++ environments only know about C89 math functions, since the C++
 standard predates C99. It noticeably happens, on several known
 architectures, that some C99 functions are not available directly, or
 indirectly, from C++ code.
@@ -176,7 +175,7 @@ A kludge is known, and several workarounds are available:
 @item
 When using the GNU C library and headers on a GNU system, it is
 sufficient to define the @env{_ISOC99_SOURCE} macro to make C99 math
-available in C++.
+available from C++.
 @item
 Replacements for (as of 0.7) @code{sqrtf}, @code{floorf}, @code{round}
 or @code{roundf} can be enabled by defining macros of the form

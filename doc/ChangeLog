@@ -1,5 +1,17 @@
 2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
 
+	* dev/conf.texi, dev/faq.texi, dev/design.texi: Minor fixes.
+
+	* dev/build.texi: Minor fixes. (Using CXXFLAGS to solve
+	compilation problems): Mention using -pipe in CXXFLAGS.
+
+	* dev/abstract.texi (Abstract): Add URL to Olena.
+	(Abstract): Do not mention `ISSUES' any more.
+
+	* dev/oln-dev.texi (Top): Re-order chapters.
+
+2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
+
 	* dev/build.texi (Configuration): Add note about setting CXXFLAGS.
 
 	* dev/faq.texi (Frequently Asked Questions): Add FAQ about the

@@ -24,10 +24,6 @@ have been translated from the sources of Milena, an image processing
 library which works only on 2D images (Milena stands for "mini-Olena")
 and which is not publicly available.
 
-Therefore this code is still experimental and not very polished.  The
-file @file{ISSUES}, in the toplevel directory of the distribution,
-contains a list of known issues about Olena.
-
 We haven't written a real documentation yet.  In the @file{doc/}
 directory you will find the start of a reference manual which presently
 documents only the morphological operators, together with a developer's
@@ -39,4 +35,6 @@ afraid you will have to dig the code or e-mail us.
 Please direct any question or comments to @email{olena@@lrde.epita.fr},
 or @email{olena-bugs@@lrde.epita.fr}.
 
+Olena also has a web page, located at
+@url{http://www.lrde.epita.fr/cgi-bin/twiki/view/Projects/Olena}.
 

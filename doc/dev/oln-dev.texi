@@ -33,10 +33,10 @@ Copyright @copyright{} 2002,2003 @strong{L.R.D.E.}
 
 @menu
 * Abstract::
-* The Olena source tree::
 * Olena fast installation guide::
 * The Olena configuration system::
 * Using Olena from another project::
+* The Olena source tree::
 * Frequently Asked Questions::
 * Design considerations::
 * Credits::
@@ -47,11 +47,6 @@ Copyright @copyright{} 2002,2003 @strong{L.R.D.E.}
 @c Chapter `Abstract'
 
 @include abstract.texi
-
-@c ************************************************************************
-@c Chapter The Olena source tree
-
-@include srctree.texi
 
 @c ************************************************************************
 @node Olena fast installation guide
@@ -80,6 +75,11 @@ Copyright @copyright{} 2002,2003 @strong{L.R.D.E.}
 @chapter Using Olena from another project
 
 @c FIXME
+
+@c ************************************************************************
+@c Chapter The Olena source tree
+
+@include srctree.texi
 
 @c ************************************************************************
 @c Chapter `FAQ'
