@@ -1,3 +1,9 @@
+2004-07-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	* oln/level/threshold.hh: Fix argument description in ctor
+	documentation.
+	* oln/level/cc.hh: Typos in documentation.
+
 2004-07-16  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* tests/md5_morpho_attribute_closing_opening_light_hh5: Remove file.

@@ -58,8 +58,8 @@ namespace oln {
     ** \pre the input must be a binary image.
     **
     ** \arg input Image of markers.
-    ** \arg se Neighbourhood.
-    ** \arg nb_label Returns the number of label (optional).
+    ** \arg se Neighborhood.
+    ** \arg nb_label Returns the number of labels (optional).
     **
     ** \return An image of type \a DestType.
     **

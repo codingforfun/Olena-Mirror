@@ -65,11 +65,11 @@ namespace oln {
     class threshold : public std::unary_function<const Input&, Output>
     {
     public:
-      /*! \arg Threshold any value heigher or equal to this value will
-      ** return \a min.
-      **  \arg min Value returned if the input is smaller than threshold.
-      **  \arg max Value returned if the input is greater or equal to the
-      ** threshold.
+      /*! \arg threshold Any value greater or equal to this value will
+      ** return \a max.
+      **  \arg min Value returned if the input is lower than the threshold.
+      **  \arg max Value returned if the input is greater than or equal to
+      ** the threshold.
       */
       threshold(const Input& threshold,
 		const Output& min = ntg_min_val(Output),
