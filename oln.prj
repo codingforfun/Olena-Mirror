@@ -1,54 +1,16 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 29)
-(Parent-Version oln 2003paradigm 23)
-(Version-Log "Index: integre/ChangeLog
+(Project-Version oln 2003paradigm 32)
+(Parent-Version oln 2003paradigm 29)
+(Version-Log "Index: olena/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-        * ntg/core/internal/global_ops_defs.hh, ntg/real/int_s.hh,
-        ntg/real/int_u.hh, ntg/real/typetraits_builtin_int.hh: Fix
-        problems with 'char'.
-        * tests/types/tests/int_u7: New test.
+        * tests/io/2d.cc (check): Minor fix.
 
-        * ntg/core/macros.hh: Add ntg_comp_type and ntg_nb_comp.
-        * ntg/vect/vect_value.hh: Implement operator[].
-        * ntg/vect/vec.hh, ntg/vect/cplx.hh: Adjust.
-        * ntg/color/color.hh: Inherit from vect_value.
-
-        * ntg/real/range.hh: Fix cast operator.
-
-Index: olena/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-        * oln/io/se_neighborhood.hxx: Rename as...
-        * oln/io/se_neighborhood.hh: ...this.
-
-        * oln/io/se_window.hxx: Rename as...
-        * oln/io/se_window.hh: ...this.
-
-+2003-07-26  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-+
-+       * oln/io/pnm_read.hh, oln/io/pnm_write.hh: Add missing features.
-+       * oln/io/se_neighborhood.hxx, oln/io/se_window.hxx: Rewrite.
-+       * oln/Makefile.am: Adjust.
-+
-+       * tests/io/2d.cc: Add test cases.
-+       * tests/io/se_fail.cc: Fix wrong tests.
-+       * tests/io/Makefile.am: Fix the compilation of se_fail.
-+
-+       * tests/core/runtests: Don't take directories.
-+       * tests/core/traverse: New test.
-+
-+       * oln/io/pnm_common.hh: Update.
-+
-+       * oln/io/pnm_data.hh: Split into...
-+       * oln/io/pnm_read_data.hh, oln/io/pnm_write_data.hh: ...these. New
-+       files. Implement missing features.
-+
 ")
 (New-Version-Log "")
-(Checkin-Time "Sun, 27 Jul 2003 19:14:42 +0200")
+(Checkin-Time "Sun, 27 Jul 2003 21:22:29 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -140,7 +102,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.8 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.15 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.23 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.13 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.16 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.37 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.10 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.4 640))
@@ -218,10 +180,10 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.4 640))
   (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.5 640))
   (olena/oln/core/accum.hh (oln/d/40_accum.hh 1.2 640))
-  (olena/oln/core/apply.hh (oln/d/39_apply.hh 1.9 640))
-  (olena/oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.11 640))
-  (olena/oln/core/bkd_iter2d.hh (oln/d/37_bkd_iter2d 1.11 640))
-  (olena/oln/core/bkd_iter3d.hh (oln/d/36_bkd_iter3d 1.11 640))
+  (olena/oln/core/apply.hh (oln/d/39_apply.hh 1.10 640))
+  (olena/oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.12 640))
+  (olena/oln/core/bkd_iter2d.hh (oln/d/37_bkd_iter2d 1.12 640))
+  (olena/oln/core/bkd_iter3d.hh (oln/d/36_bkd_iter3d 1.12 640))
   
   
   
@@ -239,20 +201,20 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/core/dpoint3d.hxx (oln/d/22_dpoint3d.h 1.5 640))
   (olena/oln/core/abstract/dpoint.hh (oln/d/28_dpoint.hh 1.7 640))
   
-  (olena/oln/core/fold.hh (oln/c/7_fold.hh 1.9 640))
-  (olena/oln/core/fwd_iter1d.hh (oln/d/21_fwd_iter1d 1.8 640))
-  (olena/oln/core/fwd_iter2d.hh (oln/d/20_fwd_iter2d 1.8 640))
-  (olena/oln/core/fwd_iter3d.hh (oln/d/19_fwd_iter3d 1.8 640))
-  (olena/oln/core/generate.hh (oln/f/12_generate.h 1.14 640))
+  (olena/oln/core/fold.hh (oln/c/7_fold.hh 1.10 640))
+  (olena/oln/core/fwd_iter1d.hh (oln/d/21_fwd_iter1d 1.9 640))
+  (olena/oln/core/fwd_iter2d.hh (oln/d/20_fwd_iter2d 1.9 640))
+  (olena/oln/core/fwd_iter3d.hh (oln/d/19_fwd_iter3d 1.9 640))
+  (olena/oln/core/generate.hh (oln/f/12_generate.h 1.15 640))
   (olena/oln/core/image1d.hh (oln/c/47_image1d.hh 1.16 640))
   (olena/oln/core/image1d_size.hh (oln/c/46_image1d_si 1.9 640))
-  (olena/oln/core/image2d.hh (oln/c/45_image2d.hh 1.18 640))
+  (olena/oln/core/image2d.hh (oln/c/45_image2d.hh 1.19 640))
   (olena/oln/core/image2d_size.hh (oln/c/44_image2d_si 1.9 640))
   (olena/oln/core/image3d.hh (oln/c/43_image3d.hh 1.16 640))
   (olena/oln/core/image3d_size.hh (oln/c/42_image3d_si 1.9 640))
   (olena/oln/core/image.hh (oln/d/18_image.hh 1.12 640))
   
-  (olena/oln/core/abstract/image_size.hh (oln/c/41_image_size 1.7 640))
+  (olena/oln/core/abstract/image_size.hh (oln/c/41_image_size 1.8 640))
   (olena/oln/core/internal/fake.hh (oln/d/17_fake.hh 1.3 640))
   
   
@@ -276,7 +238,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/core/neighborhood1d.hh (oln/c/37_neighborho 1.11 640))
   (olena/oln/core/neighborhood2d.hh (oln/c/36_neighborho 1.12 640))
   (olena/oln/core/neighborhood3d.hh (oln/c/35_neighborho 1.11 640))
-  (olena/oln/core/abstract/neighborhood.hh (oln/c/38_neighborho 1.9 640))
+  (olena/oln/core/abstract/neighborhood.hh (oln/c/38_neighborho 1.10 640))
   (metalic/mlc/objs.hh (oln/c/34_objs.hh 1.6 640))
   (olena/oln/core/point1d.hh (oln/c/32_point1d.hh 1.9 640))
   (olena/oln/core/point1d.hxx (oln/c/31_point1d.hx 1.3 640))
@@ -288,14 +250,14 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   
   (olena/oln/core/abstract/binary_image.hh (oln/c/24_pred_image 1.6 640))
   
-  (olena/oln/core/abstract/structelt.hh (oln/c/25_structelt. 1.6 640))
-  (olena/oln/core/traverse.hh (oln/d/30_traverse.h 1.8 640))
+  (olena/oln/core/abstract/structelt.hh (oln/c/25_structelt. 1.7 640))
+  (olena/oln/core/traverse.hh (oln/d/30_traverse.h 1.9 640))
   (metalic/mlc/typeadj.hh (oln/e/25_typeadj.hh 1.5 640))
   (metalic/mlc/type.hh (oln/c/21_type.hh 1.16 640))
   (olena/oln/core/window1d.hh (oln/c/15_window1d.h 1.9 640))
   (olena/oln/core/window2d.hh (oln/c/14_window2d.h 1.11 640))
   (olena/oln/core/window3d.hh (oln/c/13_window3d.h 1.10 640))
-  (olena/oln/core/abstract/window.hh (oln/c/16_window.hh 1.8 640))
+  (olena/oln/core/abstract/window.hh (oln/c/16_window.hh 1.9 640))
   (olena/oln/core/winiter.hh (oln/c/12_winiter.hh 1.4 640))
   (olena/oln/core/winneighb.hh (oln/c/11_winneighb. 1.6 640))
   (olena/oln/core/w_window1d.hh (oln/c/19_w_window1d 1.10 640))
@@ -462,7 +424,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/tests/convol/sobel_gradient.cc (oln/f/45_sobel_grad 1.3.1.4 640))
   (olena/tests/convol/sum_on_random.pgm (oln/f/42_sum_on_ran 1.1 640) :no-keywords)
   
-  (olena/tests/io/2d.cc (oln/e/47_2d.cc 1.7.1.3 640))
+  (olena/tests/io/2d.cc (oln/e/47_2d.cc 1.7.1.4 640))
   (olena/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.7.1.6 640))
   (olena/tests/io/Makefile.am (oln/e/49_Makefile.a 1.15 640))
   (olena/tests/io/pretty.cc (oln/i/42_pretty.cc 1.2 640))
@@ -975,7 +937,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/io/pnm_common.hh (oln/t/40_pnm_common 1.2 600))
   (olena/oln/io/image_base.hh (oln/t/41_image_base 1.2 600))
   (olena/oln/io/image_write.hh (oln/t/42_image_writ 1.2 600))
-  (olena/oln/io/stream_wrapper.hh (oln/t/43_stream_wra 1.2 600))
+  (olena/oln/io/stream_wrapper.hh (oln/t/43_stream_wra 1.3 600))
   (olena/oln/io/utils.hh (oln/t/44_utils.hh 1.2 600))
   (olena/oln/io/image_read.hh (oln/t/45_image_read 1.2 600))
 
@@ -1019,61 +981,24 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (olena/tests/core/tests/window (oln/u/1_window 1.1 640))
   (olena/tests/core/tests/neighborhood (oln/u/2_neighborho 1.1 640))
-  (olena/oln/core/abstract/window_base.hh (oln/u/3_window_bas 1.1 640))
+  (olena/oln/core/abstract/window_base.hh (oln/u/3_window_bas 1.2 640))
   (olena/oln/core/abstract/windownd.hh (oln/u/4_windownd.h 1.1 640))
   (olena/oln/core/abstract/w_windownd.hh (oln/u/5_w_windownd 1.1 640))
   (olena/oln/core/abstract/neighborhoodnd.hh (oln/u/6_neighborho 1.1 640)))
 (Merge-Parents
-  (2003paradigm.26 complete
-    (ChangeLog ChangeLog ChangeLog r) (olena/ChangeLog olena/ChangeLog olena/ChangeLog r)
-    (configure.ac configure.ac configure.ac r) (olena/oln/arith/internal/opdecls.hh olena/oln/arith/internal/opdecls.hh olena/oln/arith/internal/opdecls.hh r)
-    (olena/oln/basics2d.hh olena/oln/basics2d.hh olena/oln/basics2d.hh r) (olena/oln/level/cc.hh olena/oln/level/cc.hh olena/oln/level/cc.hh r)
-    (olena/oln/level/compare.hh olena/oln/level/compare.hh olena/oln/level/compare.hh r) (olena/oln/level/connected.hh olena/oln/level/connected.hh olena/oln/level/connected.hh r)
-    (olena/oln/level/fill.hh olena/oln/level/fill.hh olena/oln/level/fill.hh r) (olena/oln/level/invert.hh olena/oln/level/invert.hh olena/oln/level/invert.hh r)
-    (olena/oln/level/set_level.hh olena/oln/level/set_level.hh olena/oln/level/set_level.hh r) (olena/oln/level/threshold.hh olena/oln/level/threshold.hh olena/oln/level/threshold.hh r)
-    (olena/tests/topo/test-inter-pixel.cc olena/tests/topo/test-inter-pixel.cc olena/tests/topo/test-inter-pixel.cc r) (olena/tests/topo/test-cmap.cc olena/tests/topo/test-cmap.cc olena/tests/topo/test-cmap.cc r)
-    (olena/oln/topo/tarjan/union.hh olena/oln/topo/tarjan/union.hh olena/oln/topo/tarjan/union.hh r) (olena/oln/topo/inter-pixel/inter-pixel.hh olena/oln/topo/inter-pixel/inter-pixel.hh olena/oln/topo/inter-pixel/inter-pixel.hh r)
-    (olena/oln/topo/tarjan/flat-zone.hh olena/oln/topo/tarjan/flat-zone.hh olena/oln/topo/tarjan/flat-zone.hh r) (olena/oln/topo/combinatorial-map/cmap.hh olena/oln/topo/combinatorial-map/cmap.hh olena/oln/topo/combinatorial-map/cmap.hh r)
-    (() () olena/tests/level/Makefile.am a) (() () olena/tests/level/cc.cc a)
-    (() () olena/tests/level/compare.cc a) (() () olena/tests/level/connected.cc a)
-    (() () olena/tests/level/invert.cc a) (() () olena/tests/level/set_level.cc a)
-    (() () olena/tests/level/threshold.cc a) 
-  )
-  (2003paradigm.28 complete
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog m) (olena/oln/basics.hh olena/oln/basics.hh olena/oln/basics.hh r)
-    (olena/oln/core/apply.hh olena/oln/core/apply.hh olena/oln/core/apply.hh r) (olena/oln/core/bkd_iter1d.hh olena/oln/core/bkd_iter1d.hh olena/oln/core/bkd_iter1d.hh r)
+  (2003paradigm.30 complete
+    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (olena/oln/core/bkd_iter1d.hh olena/oln/core/bkd_iter1d.hh olena/oln/core/bkd_iter1d.hh r)
     (olena/oln/core/bkd_iter2d.hh olena/oln/core/bkd_iter2d.hh olena/oln/core/bkd_iter2d.hh r) (olena/oln/core/bkd_iter3d.hh olena/oln/core/bkd_iter3d.hh olena/oln/core/bkd_iter3d.hh r)
-    (olena/oln/core/dpoint1d.hh olena/oln/core/dpoint1d.hh olena/oln/core/dpoint1d.hh r) (olena/oln/core/dpoint1d.hxx olena/oln/core/dpoint1d.hxx olena/oln/core/dpoint1d.hxx r)
-    (olena/oln/core/dpoint2d.hh olena/oln/core/dpoint2d.hh olena/oln/core/dpoint2d.hh r) (olena/oln/core/dpoint2d.hxx olena/oln/core/dpoint2d.hxx olena/oln/core/dpoint2d.hxx r)
-    (olena/oln/core/dpoint3d.hh olena/oln/core/dpoint3d.hh olena/oln/core/dpoint3d.hh r) (olena/oln/core/dpoint3d.hxx olena/oln/core/dpoint3d.hxx olena/oln/core/dpoint3d.hxx r)
-    (olena/oln/core/abstract/dpoint.hh olena/oln/core/dpoint.hh olena/oln/core/abstract/dpoint.hh r) (olena/oln/core/dpointnd.hh olena/oln/core/dpointnd.hh () d)
-    (olena/oln/core/fold.hh olena/oln/core/fold.hh olena/oln/core/fold.hh r) (olena/oln/core/fwd_iter1d.hh olena/oln/core/fwd_iter1d.hh olena/oln/core/fwd_iter1d.hh r)
-    (olena/oln/core/fwd_iter2d.hh olena/oln/core/fwd_iter2d.hh olena/oln/core/fwd_iter2d.hh r) (olena/oln/core/fwd_iter3d.hh olena/oln/core/fwd_iter3d.hh olena/oln/core/fwd_iter3d.hh r)
-    (olena/oln/core/generate.hh olena/oln/core/generate.hh olena/oln/core/generate.hh r) (olena/oln/core/image1d.hh olena/oln/core/image1d.hh olena/oln/core/image1d.hh r)
-    (olena/oln/core/image1d_size.hh olena/oln/core/image1d_size.hh olena/oln/core/image1d_size.hh r) (olena/oln/core/image2d.hh olena/oln/core/image2d.hh olena/oln/core/image2d.hh r)
-    (olena/oln/core/image2d_size.hh olena/oln/core/image2d_size.hh olena/oln/core/image2d_size.hh r) (olena/oln/core/image3d.hh olena/oln/core/image3d.hh olena/oln/core/image3d.hh r)
-    (olena/oln/core/image3d_size.hh olena/oln/core/image3d_size.hh olena/oln/core/image3d_size.hh r) (olena/oln/core/image.hh olena/oln/core/image.hh olena/oln/core/image.hh r)
-    (olena/oln/core/imagend_size.hh olena/oln/core/imagend_size.hh () d) (olena/oln/core/abstract/image_size.hh olena/oln/core/image_size.hh olena/oln/core/abstract/image_size.hh r)
-    (olena/oln/core/abstract/iter1d.hh olena/oln/core/internal/iter1d.hh olena/oln/core/abstract/iter1d.hh r) (olena/oln/core/abstract/iter2d.hh olena/oln/core/internal/iter2d.hh olena/oln/core/abstract/iter2d.hh r)
-    (olena/oln/core/abstract/iter3d.hh olena/oln/core/internal/iter3d.hh olena/oln/core/abstract/iter3d.hh r) (olena/oln/core/internal/neighborhood.hh olena/oln/core/internal/neighborhood.hh () d)
-    (olena/oln/core/internal/rec_operable.hh olena/oln/core/internal/rec_operable.hh () d) (olena/oln/core/internal/window.hh olena/oln/core/internal/window.hh () d)
-    (olena/oln/core/internal/w_window.hh olena/oln/core/internal/w_window.hh () d) (olena/oln/core/abstract/iter.hh olena/oln/core/iter.hh olena/oln/core/abstract/iter.hh r)
-    (olena/oln/core/neighborhood1d.hh olena/oln/core/neighborhood1d.hh olena/oln/core/neighborhood1d.hh r) (olena/oln/core/neighborhood2d.hh olena/oln/core/neighborhood2d.hh olena/oln/core/neighborhood2d.hh r)
-    (olena/oln/core/neighborhood3d.hh olena/oln/core/neighborhood3d.hh olena/oln/core/neighborhood3d.hh r) (olena/oln/core/abstract/neighborhood.hh olena/oln/core/neighborhood.hh olena/oln/core/abstract/neighborhood.hh r)
-    (olena/oln/core/point1d.hh olena/oln/core/point1d.hh olena/oln/core/point1d.hh r) (olena/oln/core/point2d.hh olena/oln/core/point2d.hh olena/oln/core/point2d.hh r)
-    (olena/oln/core/point3d.hh olena/oln/core/point3d.hh olena/oln/core/point3d.hh r) (olena/oln/core/abstract/point.hh olena/oln/core/point.hh olena/oln/core/abstract/point.hh r)
-    (olena/oln/core/pointnd.hh olena/oln/core/pointnd.hh () d) (olena/oln/core/abstract/structelt.hh olena/oln/core/structelt.hh olena/oln/core/abstract/structelt.hh r)
-    (olena/oln/core/traverse.hh olena/oln/core/traverse.hh olena/oln/core/traverse.hh r) (olena/oln/core/window1d.hh olena/oln/core/window1d.hh olena/oln/core/window1d.hh r)
-    (olena/oln/core/window2d.hh olena/oln/core/window2d.hh olena/oln/core/window2d.hh r) (olena/oln/core/window3d.hh olena/oln/core/window3d.hh olena/oln/core/window3d.hh r)
-    (olena/oln/core/abstract/window.hh olena/oln/core/window.hh olena/oln/core/abstract/window.hh r) (olena/oln/core/winneighb.hh olena/oln/core/winneighb.hh olena/oln/core/winneighb.hh r)
-    (olena/oln/core/w_window1d.hh olena/oln/core/w_window1d.hh olena/oln/core/w_window1d.hh r) (olena/oln/core/w_window2d.hh olena/oln/core/w_window2d.hh olena/oln/core/w_window2d.hh r)
-    (olena/oln/core/w_window3d.hh olena/oln/core/w_window3d.hh olena/oln/core/w_window3d.hh r) (olena/oln/core/abstract/w_window.hh olena/oln/core/w_window.hh olena/oln/core/abstract/w_window.hh r)
-    (olena/oln/Makefile.am olena/oln/Makefile.am olena/oln/Makefile.am m) (olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh r)
-    (olena/oln/core/abstract/image_with_dim.hh olena/oln/core/abstract/image_with_dim.hh olena/oln/core/abstract/image_with_dim.hh r) (olena/oln/core/abstract/image_with_impl.hh olena/oln/core/abstract/image_with_impl.hh olena/oln/core/abstract/image_with_impl.hh r)
-    (olena/oln/core/abstract/image_with_type.hh olena/oln/core/abstract/image_with_type.hh olena/oln/core/abstract/image_with_type.hh r) (olena/tests/core/tests/image1 olena/tests/core/tests/image1 olena/tests/core/tests/image1 r)
-    (() olena/tests/io/simple2d.cc olena/tests/io/simple2d.cc n) (() olena/oln/io/pnm_data.hh olena/oln/io/pnm_data.hh n)
-    (() () olena/tests/core/tests/window a) (() () olena/tests/core/tests/neighborhood a)
-    (() () olena/oln/core/abstract/window_base.hh a) (() () olena/oln/core/abstract/windownd.hh a)
-    (() () olena/oln/core/abstract/w_windownd.hh a) (() () olena/oln/core/abstract/neighborhoodnd.hh a))
+    (olena/oln/core/fwd_iter1d.hh olena/oln/core/fwd_iter1d.hh olena/oln/core/fwd_iter1d.hh r) (olena/oln/core/fwd_iter2d.hh olena/oln/core/fwd_iter2d.hh olena/oln/core/fwd_iter2d.hh r)
+    (olena/oln/core/fwd_iter3d.hh olena/oln/core/fwd_iter3d.hh olena/oln/core/fwd_iter3d.hh r) (olena/oln/core/image2d.hh olena/oln/core/image2d.hh olena/oln/core/image2d.hh r)
+    (olena/oln/core/abstract/image_size.hh olena/oln/core/abstract/image_size.hh olena/oln/core/abstract/image_size.hh r) (olena/oln/core/abstract/neighborhood.hh olena/oln/core/abstract/neighborhood.hh olena/oln/core/abstract/neighborhood.hh r)
+    (olena/oln/core/abstract/structelt.hh olena/oln/core/abstract/structelt.hh olena/oln/core/abstract/structelt.hh r) (olena/oln/core/abstract/window.hh olena/oln/core/abstract/window.hh olena/oln/core/abstract/window.hh r)
+    (olena/oln/core/abstract/window_base.hh olena/oln/core/abstract/window_base.hh olena/oln/core/abstract/window_base.hh r) 
+  )
+  (2003paradigm.31 complete
+    (olena/ChangeLog olena/ChangeLog olena/ChangeLog m) (olena/oln/core/apply.hh olena/oln/core/apply.hh olena/oln/core/apply.hh r)
+    (olena/oln/core/fold.hh olena/oln/core/fold.hh olena/oln/core/fold.hh r) (olena/oln/core/generate.hh olena/oln/core/generate.hh olena/oln/core/generate.hh r)
+    (olena/oln/core/traverse.hh olena/oln/core/traverse.hh olena/oln/core/traverse.hh r) 
+  )
 )
 (New-Merge-Parents)

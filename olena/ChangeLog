@@ -1,5 +1,28 @@
 2003-07-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* tests/io/2d.cc (check): Minor fix.
+
+2003-07-27  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/apply.hh, oln/core/fold.hh,
+	oln/core/generate.hh, oln/core/traverse.hh: Avoid using Exact
+	macros.
+	
+2003-07-27  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
+	oln/core/bkd_iter3d.hh, oln/core/fwd_iter1d.hh,
+	oln/core/fwd_iter2d.hh, oln/core/fwd_iter3d.hh,
+	oln/core/abstract/image_size.hh,
+	oln/core/abstract/neighborhood.hh,
+	oln/core/abstract/structelt.hh,
+	oln/core/abstract/window.hh,
+	oln/core/abstract/window_base.hh: Fix bugs.
+	
+	* oln/core/image2d.hh: Remove commented code.
+
+2003-07-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
 	* oln/io/se_neighborhood.hxx: Rename as...
 	* oln/io/se_neighborhood.hh: ...this.
 

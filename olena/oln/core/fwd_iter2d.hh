@@ -52,9 +52,11 @@ namespace oln {
     typedef typename mlc::exact_vt<fwd_iter2d<Exact>, Exact>::ret exact_type;
 
     typedef abstract::iter2d<exact_type> super_type;
+    typedef abstract::iter<exact_type> super_iter_type;
 
     enum { dim = iter_traits<exact_type>::dim };
     typedef typename iter_traits<exact_type>::point_type point_type;
+    
 
     template<class Image>
     fwd_iter2d(const Image& ima) :
@@ -62,7 +64,7 @@ namespace oln {
     {
     }
 
-    template<class U> U operator=(U u) { return super_type::operator=(u); }
+    template<class U> U operator=(U u) { return super_iter_type::operator=(u); }
 
     void goto_begin_()
     {

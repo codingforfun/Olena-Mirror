@@ -84,8 +84,7 @@ namespace oln {
       template <>
       struct stream_wrappers_find_files<StreamNone>
       {
-	static void doit(std::list<std::string>& names, 
-			 const std::string& name) {}
+	static void doit(std::list<std::string>&, const std::string&) {}
       };
 
       /*-----------------------.

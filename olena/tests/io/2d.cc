@@ -12,7 +12,7 @@ check(void)
   fail |= loadsave< image2d<bool>          >(rdata("lena"), "lena");
   fail |= loadsave< image2d<int_u8>        >(rdata("lena"), "lena");
   fail |= loadsave< image2d<unsigned char> >(rdata("lena"), "lena");
-  fail |= loadsave< ima_int_u6             >(rdata("lena"), "lena");
+  fail |= ! loadsave< ima_int_u6             >(rdata("lena"), "lena");
   fail |= loadsave< ima_range_int_u8       >(rdata("lena"), "lena");
   fail |= loadsave< image2d<nrgb_8>        >(rdata("lena"), "lena");
   fail |= loadsave< image2d<xyz_8>         >(rdata("lena"), "lena");

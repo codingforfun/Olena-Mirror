@@ -87,7 +87,7 @@ namespace oln
 	return std::string("window_base<") + Exact::name() + ">";
       }
 
-      bool is_equal(const self_type& win) const
+      bool is_equal(const exact_type& win) const
       {
 	for (typename std::vector<dpoint_type>::const_iterator it = dp_.begin(); it != dp_.end(); ++it)
 	  if (std::find(win.dp_.begin(), win.dp_.end(), *it) == win.dp_.end())
