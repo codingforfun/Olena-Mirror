@@ -31,6 +31,7 @@
 # include "basics.hh"
 # include "morpho/stat.hh"
 # include "morpho/geodesic_dilation.hh"
+# include "morpho/geodesic_erosion.hh"
 # include "morpho/splitse.hh"
 # include "level/compare.hh"
 # include "value/ops.hh"

@@ -1,3 +1,10 @@
+2002-05-21  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/morpho/dilation.hh (n_dilation): Declare input.
+	* src/morpho/erosion.hh (n_erosion): Likewise.
+	* src/morpho/reconstruction.hh: Include geodesic_erosion.hh.
+	* src/level/invert.hh (f_invert::doit): Specialize for rec_float.
+
 2002-05-13  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* src/Makefile.am (config/extrconf.sh): Rename to ...

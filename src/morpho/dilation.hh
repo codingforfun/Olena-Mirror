@@ -94,11 +94,12 @@ namespace oln {
      * see: morpho::n_erosion
     =*/
     template<class _I, class _E>
-    Concrete(_I) n_dilation(const image<_I> & input,
+    Concrete(_I) n_dilation(const image<_I> & _input,
 			    const struct_elt<_E>& se,
 			    unsigned n)
     {
       precondition(n > 0);
+      Exact_cref(I, input);
       Concrete(_I) output = input.clone();
       for (unsigned i = 0; i < n; ++i)
 	{

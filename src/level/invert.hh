@@ -60,6 +60,11 @@ namespace oln {
       }
 
       template<class V> static
+      const V doit(const rec_float<V>& val) {
+	return - val.self();
+      }
+
+      template<class V> static
       const V doit(const rec_int_u<V>& val) {
 	return V::max().real_value() - val.real_value();
       }
