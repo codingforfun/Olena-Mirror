@@ -879,7 +879,7 @@ AC_DEFUN(AC_WITH_OLN,
   AC_REQUIRE([AM_PATH_OLN])
 
   AC_LANG_PUSH([C++])
-  AC_CHECK_HEADERS([limits sdl_config.h])
+  AC_CHECK_HEADERS([limits stl_config.h])
   AC_LANG_POP([C++])
 ])
 

@@ -8,6 +8,7 @@ AM_INIT_AUTOMAKE([1.7.1 no-define foreign dist-bzip2])
 AM_MAINTAINER_MODE
 
 AC_PROG_CXX
+AC_PROG_RANLIB
 
 ###### utilities check #######
 AC_ARG_ENABLE(utilities,

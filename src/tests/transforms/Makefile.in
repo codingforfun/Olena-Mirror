@@ -40,24 +40,46 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 ACLOCAL = @ACLOCAL@
+AMDEP_FALSE = @AMDEP_FALSE@
+AMDEP_TRUE = @AMDEP_TRUE@
 AMTAR = @AMTAR@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
+CC = @CC@
+CCDEPMODE = @CCDEPMODE@
+CFLAGS = @CFLAGS@
+CPP = @CPP@
+CPPFLAGS = @CPPFLAGS@
+CXX = @CXX@
+CXXCPP = @CXXCPP@
+CXXDEPMODE = @CXXDEPMODE@
+CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
 DEFS = @DEFS@
+DEPDIR = @DEPDIR@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
+EGREP = @EGREP@
+EXEEXT = @EXEEXT@
+FFTW_CFLAGS = @FFTW_CFLAGS@
+FFTW_LDFLAGS = @FFTW_LDFLAGS@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
 LTLIBOBJS = @LTLIBOBJS@
+MAINT = @MAINT@
+MAINTAINER_MODE_FALSE = @MAINTAINER_MODE_FALSE@
+MAINTAINER_MODE_TRUE = @MAINTAINER_MODE_TRUE@
 MAKEINFO = @MAKEINFO@
 MORPHO_UTILITIES = @MORPHO_UTILITIES@
+OBJEXT = @OBJEXT@
+OLN_INCLUDEDIR = @OLN_INCLUDEDIR@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
@@ -70,7 +92,17 @@ SHELL = @SHELL@
 STRIP = @STRIP@
 UTILITIES = @UTILITIES@
 VERSION = @VERSION@
+ZLIB_CFLAGS = @ZLIB_CFLAGS@
+ZLIB_LDFLAGS = @ZLIB_LDFLAGS@
+ac_ct_CC = @ac_ct_CC@
+ac_ct_CXX = @ac_ct_CXX@
 ac_ct_STRIP = @ac_ct_STRIP@
+am__fastdepCC_FALSE = @am__fastdepCC_FALSE@
+am__fastdepCC_TRUE = @am__fastdepCC_TRUE@
+am__fastdepCXX_FALSE = @am__fastdepCXX_FALSE@
+am__fastdepCXX_TRUE = @am__fastdepCXX_TRUE@
+am__include = @am__include@
+am__quote = @am__quote@
 bindir = @bindir@
 build_alias = @build_alias@
 datadir = @datadir@
@@ -94,7 +126,7 @@ target_alias = @target_alias@
 # Don't use -ansi because it prevents us from using functions
 # like `remove' or `mkstemp' with g++-2.95.x.
 AM_CXXFLAGS = -Wall -W -ftemplate-depth-50 -pedantic
-AM_CPPFLAGS = -I$(top_builddir) -I$(top_srcdir) -I$(top_srcdir)/tests/check
+AM_CPPFLAGS = -I$(OLN_INCLUDEDIR) -I$(top_srcdir)/tests/check
 
 LDADD = $(top_builddir)/tests/check/libcheck.a
 TESTS = $(check_PROGRAMS)
@@ -120,8 +152,7 @@ CLEANFILES = $(fft_OUTPUT_DIR)output_fft_trans_clipped.pgm \
 	$(dwt_OUTPUT_DIR)output_dwt_copy.pgm
 
 subdir = tests/transforms
-mkinstalldirs = $(SHELL) $(top_srcdir)/tools/mkinstalldirs
-CONFIG_HEADER = $(top_builddir)/oln/config/config.h
+mkinstalldirs = $(SHELL) $(top_srcdir)/../tools/mkinstalldirs
 CONFIG_CLEAN_FILES =
 check_PROGRAMS = fft$(EXEEXT) dwt$(EXEEXT)
 am_dwt_OBJECTS = dwt.$(OBJEXT)
@@ -135,8 +166,8 @@ fft_LDADD = $(LDADD)
 fft_DEPENDENCIES = $(top_builddir)/tests/check/libcheck.a
 fft_LDFLAGS =
 
-DEFAULT_INCLUDES =  -I. -I$(srcdir) -I$(top_builddir)/oln/config
-depcomp = $(SHELL) $(top_srcdir)/tools/depcomp
+DEFAULT_INCLUDES =  -I. -I$(srcdir)
+depcomp = $(SHELL) $(top_srcdir)/../tools/depcomp
 am__depfiles_maybe = depfiles
 @AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/dwt.Po ./$(DEPDIR)/fft.Po
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
@@ -154,10 +185,10 @@ all: all-am
 
 .SUFFIXES:
 .SUFFIXES: .cc .o .obj
-$(srcdir)/Makefile.in:  Makefile.am $(top_srcdir)/tests/check/Makefile.check $(top_srcdir)/tests/check/Makefile.flags $(top_srcdir)/configure.ac $(ACLOCAL_M4)
+$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am $(top_srcdir)/tests/check/Makefile.check $(top_srcdir)/tests/check/Makefile.flags $(top_srcdir)/configure.ac $(ACLOCAL_M4)
 	cd $(top_srcdir) && \
 	  $(AUTOMAKE) --foreign  tests/transforms/Makefile
-Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
+Makefile: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
 
 clean-checkPROGRAMS:

@@ -338,7 +338,7 @@ nobase_oln_HEADERS = \
 
 subdir = oln
 mkinstalldirs = $(SHELL) $(top_srcdir)/tools/mkinstalldirs
-CONFIG_HEADER = $(top_builddir)/oln/config/pconf.hh
+CONFIG_HEADER = $(top_builddir)/oln/config/pconf.inc
 CONFIG_CLEAN_FILES =
 DIST_SOURCES =
 HEADERS = $(nobase_oln_HEADERS)

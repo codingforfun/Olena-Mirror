@@ -1583,7 +1583,7 @@ fi
 
 
 
-          ac_config_headers="$ac_config_headers oln/config/pconf.hh:oln/config/pconf-hh.in"
+          ac_config_headers="$ac_config_headers oln/config/pconf.inc:oln/config/pconf-inc.in"
 
 
 
@@ -2106,7 +2106,7 @@ do
   # Handling of arguments.
   "Makefile" ) CONFIG_FILES="$CONFIG_FILES Makefile" ;;
   "oln/Makefile" ) CONFIG_FILES="$CONFIG_FILES oln/Makefile" ;;
-  "oln/config/pconf.hh" ) CONFIG_HEADERS="$CONFIG_HEADERS oln/config/pconf.hh:oln/config/pconf-hh.in" ;;
+  "oln/config/pconf.inc" ) CONFIG_HEADERS="$CONFIG_HEADERS oln/config/pconf.inc:oln/config/pconf-inc.in" ;;
   *) { { echo "$as_me:$LINENO: error: invalid argument: $ac_config_target" >&5
 echo "$as_me: error: invalid argument: $ac_config_target" >&2;}
    { (exit 1); exit 1; }; };;

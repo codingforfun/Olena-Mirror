@@ -1,3 +1,7 @@
+2002-12-04  Raphael Poss  <raph@sandrock>
+
+	* src/configure.ac: add AC_PROG_RANLIB for tests
+
 2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
 
 	* oln/config/README: remove obsolete file 
