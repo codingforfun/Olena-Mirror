@@ -1,5 +1,9 @@
 2005-01-21  Simon Odou  <simon@lrde.epita.fr>
 
+	* oln/makefile.src: Fix missing files.
+
+2005-01-21  Simon Odou  <simon@lrde.epita.fr>
+
 	* tests/core/tests/image3d: New.
 	* oln/fancy/print.hh: Add print for image3d.
 	* oln/fancy/iota.hh: Add iota for image3d.
