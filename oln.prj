@@ -1,19 +1,16 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 8)
-(Parent-Version oln 0_5 7)
-(Version-Log "2002-07-29  Alexandre Duret-Lutz  <duret_g@epita.fr>
+(Project-Version oln 0_5 9)
+(Parent-Version oln 0_5 8)
+(Version-Log "2002-07-30  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-	* oln/types/optraits_int_u.hh, oln/types/optraits_int_s.hh:
-	Include meta/cmp.hh.
-	* oln/types/int_u.hh: Include oln/types/builtins_properties.hh.
-	* oln/types/typetraits_builtins_float.hh,
-	oln/types/typetraits_builtins_int.hh: Include oln/types/optraits.hh.
+	* oln/types/optraits_builtins_float.hh: Include
+	oln/types/typetraits_builtins_float.hh.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 29 Jul 2002 18:06:30 +0200")
+(Checkin-Time "Tue, 30 Jul 2002 11:44:32 +0200")
 (Checkin-Login duret_g)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -81,7 +78,7 @@
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.17 640))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.22 600))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.23 600))
   (configure.ac (oln/3_configure. 1.18 600))
   (configure (oln/e/7_configure 1.22 700))
   (README (oln/1_README 1.4 600))
@@ -435,7 +432,7 @@
   (oln/types/optraits_cycle.hh (oln/g/16_optraits_c 1.1 640))
   (oln/types/optraits_builtins_int_defs.hh (oln/g/17_optraits_b 1.1 640))
   (oln/types/optraits_builtins_int.hh (oln/g/18_optraits_b 1.1 640))
-  (oln/types/optraits_builtins_float.hh (oln/g/19_optraits_b 1.1 640))
+  (oln/types/optraits_builtins_float.hh (oln/g/19_optraits_b 1.2 640))
   (oln/types/optraits_bin.hh (oln/g/20_optraits_b 1.1 640))
   (oln/types/optraits.hh (oln/g/21_optraits.h 1.1 640))
   (oln/types/interval.hh (oln/g/22_interval.h 1.1 640))

@@ -1,3 +1,8 @@
+2002-07-30  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* oln/types/optraits_builtins_float.hh: Include
+	oln/types/typetraits_builtins_float.hh.
+
 2002-07-29  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* oln/types/optraits_int_u.hh, oln/types/optraits_int_s.hh:

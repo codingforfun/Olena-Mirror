@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,16 +25,6 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-//
-// optraits_builtins_float.hh for  in 
-// 
-// Made by Nicolas Burrus
-// Login   <burrus_n@epita.fr>
-// 
-// Started on  Thu Jul 18 17:36:51 2002 Nicolas Burrus
-// Last update Mon Jul 29 12:15:49 2002 Nicolas Burrus
-//
-
 #ifndef OLENA_VALUE_OPTRAITS_BUILTINS_FLOAT_HH
 # define OLENA_VALUE_OPTRAITS_BUILTINS_FLOAT_HH
 
@@ -46,11 +36,13 @@
 
 # include <oln/types/optraits_scalar.hh>
 
+# include <oln/types/typetraits_builtins_float.hh>
+
 namespace oln
 {
 
   // FIXME: add double
-  
+
   // float
 
   template <>
@@ -65,7 +57,7 @@ namespace oln
     static store_type min() { return C_for_sfloat::min(); }
     static store_type max() { return C_for_sfloat::max(); }
   };
-  
+
   namespace internal
   {
 
@@ -134,7 +126,7 @@ namespace oln
     //
 
     template <unsigned nbits, class B>
-    struct operator_div_traits<float, int_u<nbits, B> > 
+    struct operator_div_traits<float, int_u<nbits, B> >
     {
       enum { commutative = true };
       typedef float ret;
@@ -142,7 +134,7 @@ namespace oln
     };
 
     template <unsigned nbits, class B>
-    struct operator_div_traits<float, int_s<nbits, B> > 
+    struct operator_div_traits<float, int_s<nbits, B> >
     {
       enum { commutative = true };
       typedef float ret;
