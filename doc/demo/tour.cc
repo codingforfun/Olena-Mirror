@@ -65,8 +65,8 @@ main (void)
 
   // For instance the max() and min() class methods
   // will return the maximum value of a type.
-  std::cout << "optraits<int_u8>::max() = " 
-	    << optraits<int_u8>::max() << std::endl;
+  std::cout << "ntg_max_val(int_u8) = " 
+	    << ntg_max_val(int_u8) << std::endl;
 
   // You can combine these values with the standard operators
   // as expected.

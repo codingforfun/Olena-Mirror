@@ -1,3 +1,7 @@
+2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* demo/tour.cc: Adapt to integre's changes.
+
 2003-05-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ref/ref-types.tex: Rename as ...
