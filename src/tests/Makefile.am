@@ -50,22 +50,22 @@ dist_check_DATA = $(SOURCEDATA) $(BUILTDATA)
 # Conversion rules.
 
 .png.ppm:
-	pngtopnm $< > $@
+	mkdir -p data && pngtopnm $< > $@
 
 .ppm.pgm:
-	ppmtopgm $< > $@
+	mkdir -p data && ppmtopgm $< > $@
 
 .pgm.pbm:
-	pgmtopbm $< > $@
+	mkdir -p data && pgmtopbm $< > $@
 
 .ppm.pppm:
-	pnmtoplainpnm $< > $@
+	mkdir -p data && pnmtoplainpnm $< > $@
 
 .pgm.ppgm:
-	pnmtoplainpnm $< > $@
+	mkdir -p data && pnmtoplainpnm $< > $@
 
 .pbm.ppbm:
-	pnmtoplainpnm $< > $@
+	mkdir -p data && pnmtoplainpnm $< > $@
 
 # This is a bit hackish.  There is no way to introduce a derivation
 # for `' -> `.gz', so we define the `m' -> `m.gz' rule instead.
@@ -75,4 +75,4 @@ mm.gz:
 	gzip -c -9 $< > $@
 
 data/lena128.pgm: data/lena.pgm
-	convert -scale 25% data/lena.pgm $@
+	mkdir -p data && convert -scale 25% data/lena.pgm $@

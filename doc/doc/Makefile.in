@@ -131,7 +131,11 @@ TEXI2PDF = $(TEXI2DVI) --pdf
 
 olnsrc = $(OLN_INCLUDEDIR)/oln/
 
-COMMONGETDEFSFLAGS = --agarg=-DCXX=$(CXX) --agarg=-DOLN_INCLUDEDIR=$(OLN_INCLUDEDIR) --agarg=--templ-dirs=$(top_srcdir)/tpl
+COMMONGETDEFSFLAGS = --agarg=-DCXX=$(CXX) \
+	              --agarg=-DOLN_INCLUDEDIR=$(OLN_INCLUDEDIR) \
+	              --agarg=--templ-dirs=$(top_srcdir)/tpl \
+	              --agarg=-DIMGDIR=$(top_srcdir)/img
+
 PROCESSINGGETDEFSFLAGS = \
   --subblock=tpl=type,name,doc \
   --subblock=arg=type,name,mode,doc \
@@ -189,6 +193,8 @@ Makefile: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.in  $(top_builddir)/config.s
 oln-dev.info: oln-dev.texi 
 oln-dev.dvi: oln-dev.texi 
 oln-dev.pdf: oln-dev.texi 
+.dvi.ps:
+	$(DVIPS) -o $@ $<
 
 uninstall-info-am:
 	$(PRE_UNINSTALL)
@@ -385,17 +391,14 @@ uninstall-am: uninstall-info-am
 
 
 oln-ref.dvi: $(tex_TEX) $(oln_ref_TEX)
-	$(TEXI2DVI) $(tex_TEX)
+	$(TEXI2DVI) `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
 
 oln-ref.pdf: $(tex_TEX) $(oln_ref_TEX)
-	$(TEXI2PDF) $(tex_TEX)
-
-.dvi.ps:
-	$(DVIPS) $< -o $@
+	$(TEXI2PDF) `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
 
 html/oln-ref.html: $(tex_TEX) $(oln_ref_TEX)
-	$(HEVEA) $(tex_TEX) -o html/oln-ref.html
-	$(HEVEA) $(tex_TEX) -o html/oln-ref.html
+	$(HEVEA) -o html/oln-ref.html `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
+	$(HEVEA) -o html/oln-ref.html `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
 
 ref-morpho.tex: $(morpho_files) $(srcdir)/../tpl/processing.tpl
 	$(GETDEFS) $(COMMONGETDEFSFLAGS) $(PROCESSINGGETDEFSFLAGS) \

@@ -121,7 +121,7 @@ sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 
-SUBDIRS = demo @UTILITIES@
+SUBDIRS = demo @UTILITIES@ tests
 EXTRA_DIST = oln.m4
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4

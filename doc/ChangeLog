@@ -1,5 +1,9 @@
 2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
 
+	* doc/Makefile.am: cleanup.
+
+2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
+
 	* doc/Makefile.am: cleanup search path for processing.tpl.
 
 2002-12-04  Raphael Poss  <raph@lrde.epita.fr>

@@ -15,21 +15,21 @@ oln_ref_TEX = \
 TEXI2PDF = $(TEXI2DVI) --pdf
 
 oln-ref.dvi: $(tex_TEX) $(oln_ref_TEX)
-	$(TEXI2DVI) $(tex_TEX)
+	$(TEXI2DVI) `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
 
 oln-ref.pdf: $(tex_TEX) $(oln_ref_TEX)
-	$(TEXI2PDF) $(tex_TEX)
-
-.dvi.ps:
-	$(DVIPS) $< -o $@
+	$(TEXI2PDF) `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
 
 html/oln-ref.html: $(tex_TEX) $(oln_ref_TEX)
-	$(HEVEA) $(tex_TEX) -o html/oln-ref.html
-	$(HEVEA) $(tex_TEX) -o html/oln-ref.html
+	$(HEVEA) -o html/oln-ref.html `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
+	$(HEVEA) -o html/oln-ref.html `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
 
 olnsrc = $(OLN_INCLUDEDIR)/oln/
 
-COMMONGETDEFSFLAGS =  --agarg=-DCXX=$(CXX) --agarg=-DOLN_INCLUDEDIR=$(OLN_INCLUDEDIR) --agarg=--templ-dirs=$(top_srcdir)/tpl
+COMMONGETDEFSFLAGS =  --agarg=-DCXX=$(CXX) \
+	              --agarg=-DOLN_INCLUDEDIR=$(OLN_INCLUDEDIR) \
+	              --agarg=--templ-dirs=$(top_srcdir)/tpl \
+	              --agarg=-DIMGDIR=$(top_srcdir)/img
 PROCESSINGGETDEFSFLAGS = \
   --subblock=tpl=type,name,doc \
   --subblock=arg=type,name,mode,doc \

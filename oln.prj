@@ -1,11 +1,23 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5_reconf 10)
-(Parent-Version oln 0_5_reconf 9)
-(Version-Log "")
+(Project-Version oln 0_5_reconf 11)
+(Parent-Version oln 0_5_reconf 10)
+(Version-Log "Index: doc/ChangeLog
+from  Raphael Poss  <raph@lrde.epita.fr>
+        * doc/Makefile.am: cleanup.
+
+2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
+
+Index: src/tests/ChangeLog
+from  Raphael Poss  <raph@lrde.epita.fr>
+        * Makefile.am: cleanup and fixes. 
+
+2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
+
+")
 (New-Version-Log "")
-(Checkin-Time "Wed, 04 Dec 2002 16:49:29 +0100")
+(Checkin-Time "Wed, 04 Dec 2002 17:40:30 +0100")
 (Checkin-Login raph)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -148,19 +160,19 @@
 
 
   (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.12 664))
-  (doc/ChangeLog (oln/e/1_ChangeLog 1.28 660))
+  (doc/ChangeLog (oln/e/1_ChangeLog 1.29 660))
   (doc/configure.ac (oln/e/2_configure. 1.8 660))
   (doc/configure (oln/e/3_configure 1.14 770))
   (doc/doc/bin () :directory)
   (doc/doc/html () :directory)
-  (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.19 660))
-  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.19 664))
+  (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.20 660))
+  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.20 664))
   (doc/doc/oln-ref.tex (oln/f/14_oln-ref.te 1.3 660))
   (doc/img/lena256.pgm (oln/e/21_lena256.pg 1.1 660) :no-keywords)
   (doc/img/object.pbm (oln/d/49_object.pbm 1.1 660) :no-keywords)
   (doc/Makefile.am (oln/e/0_Makefile.a 1.3 660))
   (doc/Makefile.in (oln/e/5_Makefile.i 1.13 664))
-  (doc/tpl/processing.tpl (oln/d/48_processing 1.12 660))
+  (doc/tpl/processing.tpl (oln/d/48_processing 1.13 660))
 
   (img/lena128.pgm (oln/e/23_lena128.pg 1.1 660) :no-keywords)
   (img/lena.pgm (oln/5_lena.pgm 1.1 660) :no-keywords)
@@ -368,7 +380,7 @@
   (src/tests/meta/test_array1d.cc (oln/f/26_test_array 1.2 660))
   (src/tests/meta/test_array2d.cc (oln/f/25_test_array 1.2 660))
   (src/tests/meta/test_array3d.cc (oln/f/24_test_array 1.2 660))
-  (src/tests/ChangeLog (oln/e/30_ChangeLog 1.48 660))
+  (src/tests/ChangeLog (oln/e/30_ChangeLog 1.49 660))
   (src/tests/check/check.hh (oln/e/40_check.hh 1.2 660))
   (src/tests/check/data.cc (oln/f/5_data.cc 1.2 660))
   (src/tests/check/data.hh (oln/f/6_data.hh 1.1 660))
@@ -403,8 +415,8 @@
   (src/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.5 660))
   (src/tests/io/Makefile.am (oln/e/49_Makefile.a 1.6 660))
   (src/tests/io/Makefile.in (oln/e/50_Makefile.i 1.25 664))
-  (src/tests/Makefile.am (oln/e/45_Makefile.a 1.12 660))
-  (src/tests/Makefile.in (oln/e/46_Makefile.i 1.29 664))
+  (src/tests/Makefile.am (oln/e/45_Makefile.a 1.13 660))
+  (src/tests/Makefile.in (oln/e/46_Makefile.i 1.30 664))
   (src/tests/morpho/edoc.cc (oln/f/13_edoc.cc 1.3 660))
   (src/tests/morpho/extrkiller.cc (oln/e/31_extrkiller 1.5 660))
   (src/tests/morpho/Makefile.am (oln/e/32_Makefile.a 1.4 660))
@@ -787,7 +799,7 @@
 ;; Files added by populate at Wed, 04 Dec 2002 15:49:15 +0100,
 ;; to version 0_5_reconf.1(w), by raph:
 
-  (src/Makefile.am (oln/j/14_Makefile.a 1.1 664))
+  (src/Makefile.am (oln/j/14_Makefile.a 1.2 664))
 
 ;; Files added by populate at Wed, 04 Dec 2002 15:51:21 +0100,
 ;; to version 0_5_reconf.1(w), by raph:
@@ -798,7 +810,7 @@
 ;; to version 0_5_reconf.1(w), by raph:
 
   (bootstrap.sh (oln/j/16_bootstrap. 1.1 775))
-  (src/Makefile.in (oln/j/17_Makefile.i 1.3 664))
+  (src/Makefile.in (oln/j/17_Makefile.i 1.4 664))
   (src/configure (oln/j/18_configure 1.3 775))
 
 ;; Files added by populate at Wed, 04 Dec 2002 15:53:26 +0100,

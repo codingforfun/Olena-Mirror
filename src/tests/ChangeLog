@@ -1,5 +1,9 @@
 2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
 
+	* Makefile.am: cleanup and fixes. 
+
+2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
+
 	* defs.in (CXXFLAGS): use OLN_INCLUDEDIR.
 	* check/Makefile.flags (AM_CPPFLAGS): likewise.
 
