@@ -196,7 +196,7 @@ namespace oln {
       ** \see image::operator[]()
       */
       
-      const value_type& 
+      const value_type
       at(const point_type& p) const
       {
 	return impl_->at(p);

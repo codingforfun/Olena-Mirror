@@ -344,9 +344,9 @@ mlc_exact_type_(ImgType)::value_type
 typename mute<ImgType>::ret
 
 # define oln_exact_type(ImgType)		\
-mlc_exact_type(ImgType)::exact_type
+mlc_exact_type(ImgType)
 # define oln_exact_type_(ImgType)		\
-mlc_exact_type_(ImgType)::exact_type
+mlc_exact_type_(ImgType)
 
 # define oln_iter_type(Iterable)		\
 mlc_exact_type(Iterable)::iter_type

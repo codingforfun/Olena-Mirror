@@ -1,14 +1,17 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 111)
-(Parent-Version oln 10 110)
+(Project-Version oln 10 112)
+(Parent-Version oln 10 111)
 (Version-Log "2004-03-25  Damien Thivolle  <damien@lrde.epita.fr>
-	* olena/oln/core/abstract/image.hh: Add macros.
-	* olena/oln/morpher/generic_morpher.hh: generic_morpher implementation.
+	* olena/oln/core/abstract/image.hh: Remove macros.
+	* olena/oln/core/abstract/image_with_impl.hh: Change the return type
+	of `at' method to const value_type.
+	* olena/oln/morpher/generic_morpher.hh: Correct comments.
+	Change parameter names. Fix coding style.
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 25 Mar 2004 20:12:45 +0100")
+(Checkin-Time "Fri, 26 Mar 2004 12:53:24 +0100")
 (Checkin-Login thivol_d)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -115,7 +118,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.9 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.38 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.52 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.53 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 600))
 
@@ -941,9 +944,9 @@
   (olena/tests/core/image_print.sh (oln/t/24_image_prin 1.2 600))
 
 
-  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.28 600))
+  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.29 600))
   (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.21 600))
-  (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.14.1.9 600))
+  (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.14.1.10 600))
   (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.12 600))
   (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.18 600))
   (olena/oln/core/impl/image_array.hh (oln/t/30_image_arra 1.16 600))
@@ -1395,7 +1398,7 @@
 ;; Files added by populate at Thu, 25 Mar 2004 20:10:01 +0100,
 ;; to version 10.110(w), by thivol_d:
 
-  (olena/oln/morpher/generic_morpher.hh (oln/m/18_generic_mo 1.1 600))
+  (olena/oln/morpher/generic_morpher.hh (oln/m/18_generic_mo 1.2 600))
 )
 (Merge-Parents)
 (New-Merge-Parents)

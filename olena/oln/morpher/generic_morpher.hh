@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2003, 2004  EPITA Research and Development Laboratory
+// Copyright (C) 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,188 +32,201 @@
 
 # include <string>
 
-
 # include <oln/basics1d.hh>
 # include <oln/basics2d.hh>
 # include <oln/basics3d.hh>
-# include <ntg/all.hh>
 
 namespace oln {
 
-  /*! \namespace morpher
-  **
-  ** Contain all the morpher relative declarations and functions.
-  */
-  
+  /// Contain all the morpher relative declarations and functions.
+
   namespace morpher {
 
-    /*! \namespace abstract
-    **
-    ** generic_morpher implementation.
-    */
-    
+    ///Implementation of oln::abstract::generic_morpher.
+
     namespace abstract {
 
-      /*! \class gm_inherit
+      /*! Traits for conditionnal inheritance used by the \a generic_morpher
       **
-      ** Perform a conditionnal inheritance for the \a generic_morpher
-      ** class regarding its template parameters.
+      ** It changes the exact type of the image in the input (the exact
+      ** type becomes the concrete morpher).
+      **
+      ** \see oln::morpher::generic_morpher
       */
       template <class T, class Exact>
       struct gm_inherit;
 
-      /*! \class gm_inherit<oln::image1d<T>, Exact >
-      **
-      ** Return \a image1d with an \a exact_type of \a Exact.
-      */
+      /// Return \a image1d with an \a exact_type of \a Exact.
       template <class T, class Exact>
       struct gm_inherit<oln::image1d<T>, Exact >
       {
 	typedef oln::image1d<T, Exact> ret;
       };
 
-      /*! \class gm_inherit<oln::image1d<T>, Exact >
-      **
-      ** Return \a image2d with an \a exact_type of \a Exact.
-      */
+      /// Return \a image2d with an \a exact_type of \a Exact.
       template <class T, class Exact>
       struct gm_inherit<oln::image2d<T>, Exact >
       {
 	typedef oln::image2d<T, Exact> ret;
       };
 
-      /*! \class gm_inherit<oln::image1d<T>, Exact >
-      **
-      ** Return \a image3d with an \a exact_type of \a Exact.
-      */
+      /// Return \a image3d with an \a exact_type of \a Exact.
       template <class T, class Exact>
       struct gm_inherit<oln::image3d<T>, Exact >
       {
 	typedef oln::image3d<T, Exact> ret;
       };
 
-      /*! \class generic_morpher
+      /*! The Abstract morpher class.
       **
-      ** An abstract class from whom derive all other
-      ** concrete morphers. Define a default implementation
-      ** for all the dispatched methods of the image hierarchy.
+      ** Define a default implementation for all the
+      ** dispatched methods of the image hierarchy.
+      **
+      ** \param DestType Output type of the morpher.
+      **
+      ** \param SrcType Input type decorated.
+      **
+      ** \param Exact Exact type
       */
-      
-      template <class Inherit, class Deco, class Exact>
+
+      template <class DestType, class SrcType, class Exact>
       class generic_morpher : public gm_inherit<
-	Inherit,
+	DestType,
 	Exact>::ret
       {
       protected:
-	
+
 	/*! \brief  Construct an instance of generic_morpher by assigning
 	** \a Ima to Ima_.
 	*/
-	generic_morpher(const Deco &Ima) :  super_type(), Ima_(Ima) {}
-	
-	/// Default Constructor.
-	generic_morpher(): Ima(Deco()) {}
-  
+	generic_morpher(const SrcType &Ima) :  super_type(), ima_(Ima) {}
+
+	/// Empty Constructor.
+	generic_morpher(): ima_(SrcType()) {}
+
 	/// The decorated image.
-	const Deco	&Ima_;
+	const SrcType	&ima_;
 
       public:
-	
+
 	/// Type of the decorated image.
-	typedef Deco deco_type;
-	typedef oln_point_type(Deco) point_type;
-	typedef oln_dpoint_type(Deco) dpoint_type;
-	typedef oln_iter_type(Deco) iter_type;
-	typedef oln_fwd_iter_type(Deco) fwd_iter_type;
-	typedef oln_bkd_iter_type(Deco) bkd_iter_type;
-	typedef oln_value_type(Deco) value_type;
-	typedef oln_size_type(Deco) size_type;
-	
+	typedef SrcType deco_type;
+	typedef oln_point_type(SrcType) point_type;
+	typedef oln_dpoint_type(SrcType) dpoint_type;
+	typedef oln_iter_type(SrcType) iter_type;
+	typedef oln_fwd_iter_type(SrcType) fwd_iter_type;
+	typedef oln_bkd_iter_type(SrcType) bkd_iter_type;
+	typedef oln_value_type(SrcType) value_type;
+	typedef oln_size_type(SrcType) size_type;
+
 	/// Underlying implementation of the decorated image.
-	typedef oln_impl_type(Deco) impl_type;
-	
+	typedef oln_impl_type(SrcType) impl_type;
+
 	/// Exact type of the decorated image.
-	typedef oln_exact_type(Deco) image_type;
-	
-	typedef typename gm_inherit<Inherit, Exact>::ret super_type;
+	typedef SrcType image_type;
+
+	typedef typename gm_inherit<DestType, Exact>::ret super_type;
 
 	/// Return the decorated image.
-	const Deco& 
+	const SrcType&
 	get_ima() const
 	{
-	  return this->Ima_;
+	  return ima_;
 	}
-    
-	/// Return the value stored at \a p in the decorated image.
-	const value_type 
+
+	/*! Default implementation of at.
+	**
+	** Return the value stored at \a p in the decorated image.
+	*/
+	const value_type
 	at(const point_type& p) const
 	{
-	  return this->Ima_.exact().at(p);
+	  return to_exact(ima_).at(p);
 	}
-  
-	/// Return a reference to the value stored at \a p in the decorated image.
+
+	/*! Defaults implementation of at.
+	**
+	** Return a reference to the value stored at \a p in the decorated image.
+	*/
 	value_type&
 	at(const point_type& p)
 	{
-	  return this->Ima_.exact().at(p);
+	  return to_exact(ima_).at(p);
 	}
 
-	/// Return a pointer to the value container of the decorated image.
+	/// Default implementation of impl.
 	const impl_type*
 	impl() const
 	{
-	  return this->Ima_.exact().impl();
+	  return to_exact(ima_).impl();
 	}
 
-	/// Return a pointer to the value container of the decorated image.
+	/// Default implementation of impl.
 	impl_type*
 	impl()
 	{
-	  return this->Ima_.exact().impl();
+	  return to_exact(ima_).impl();
 	}
 
-	/// Return a copy of the decorated image.
+	/*! Default implementation of clone_.
+	**
+	** Return a copy of the decorated image.
+	*/
 	image_type
 	clone_() const
 	{
-	  return this->Ima_.exact().clone_();
+	  return to_exact(ima_).clone_();
 	}
-	
-	/// Return the size of the decorated image.
-	size_t 
+
+	/*! Default implementation of npoints_.
+	**
+	** Return the size of the decorated image.
+	*/
+	size_t
 	npoints_()
 	{
-	  return this->Ima_.exact().npoints_();
+	  return to_exact(ima_).npoints_();
 	}
-	
-	/// Assign \a rhs to the decorated image.
+
+	/*! Default implementation of assign.
+	**
+	** Assign \a rhs to the decorated image.
+	*/
 	image_type&
 	assign(deco_type& rhs)
 	{
-	  return this->Ima_.exact().assign(rhs);
+	  return to_exact(ima_).assign(rhs);
 	}
 
-	/// Assign the decorated image to \a r
-	deco_type& 
+	/*! Default implementation of operator=.
+	**
+	** Assign the decorated image to \a r.
+	*/
+	deco_type&
 	operator=(const oln::io::internal::anything& r)
 	{
-	  return r.assign(this->Ima_);
+	  return r.assign(ima_);
 	}
-  
-	/*! \brief Set the border width of the decorated image to
+
+	/*! Default implementation of border_set_width.
+	**
+	** Set the border width of the decorated image to
 	** \a min_border.
 	*/
-	void 
+	void
 	border_set_width(oln::coord min_border,
 			 bool copy_border = false) const
 	{
-	  return this->Ima_.exact().border_set_width(min_border, copy_border);
+	  return to_exact(ima_).border_set_width(min_border, copy_border);
 	}
-  
-	static std::string name()
-	{ return "generic_morpher<" + super_type::name() + ">"; }
 
-  
+	static std::string
+	name()
+	{
+	  return "generic_morpher<" + super_type::name() + ">";
+	}
+
+
       };
 
     } // end of namespace abstract

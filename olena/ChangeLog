@@ -1,6 +1,16 @@
 2004-03-25  Damien Thivolle  <damien@lrde.epita.fr>
 
-	* olena/oln/core/abstract/image.hh: Add macros.
+	* olena/oln/core/abstract/image.hh: Remove macros.
+	* olena/oln/core/abstract/image_with_impl.hh: Change the return type
+	of `at' method to const value_type.
+	* olena/oln/morpher/generic_morpher.hh: Correct comments.
+	Change parameter names. Fix coding style.
+
+2004-03-25  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* olena/oln/core/abstract/image.hh: Change the return type of
+	`operator[]' method to const value_type.
+	Add macros for retrieving types associated to an image.
 	* olena/oln/morpher/generic_morpher.hh: generic_morpher implementation.
 
 2004-03-25  Giovanni Palma  <giovanni@lrde.epita.fr>
