@@ -1,3 +1,14 @@
+2003-04-06  Jean-Sébastien Mouret  <js@lrde.epita.fr>
+
+	* oln/io/pnm_read.hxx: Change image2d<int_u8> readers to
+	image2d<int_u<N>>.
+	* oln/io/pnm_read_common.hxx (readmany_plain): Read many plain
+	int_u<N> instead of int_u8.
+
+	* tests/io/2d.cc (check): Add test for image2d<int_u16>.
+	* img/Makefile.am: Generate lena16b.pgm and lena16b.ppgm.
+
+
 2003-04-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/Makefile.am: Add missing includes.

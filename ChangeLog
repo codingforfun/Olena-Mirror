@@ -1,3 +1,7 @@
+2003-04-06  Jean-Sébastien Mouret  <js@lrde.epita.fr>
+
+	* configure.ac: Check for pnmdepth.
+
 2003-03-23  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* configure.ac: Fix a bug with metalic/tests.
