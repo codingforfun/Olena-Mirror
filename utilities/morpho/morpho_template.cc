@@ -1,4 +1,3 @@
-#include <iostream>
 #include <oln/types/all.hh>
 #include <oln/basics2d.hh>
 #include <oln/basics3d.hh>
@@ -15,6 +14,7 @@
 #include <oln/morpho/thickening.hh>
 #include <oln/convol/fast_gaussian.hh>
 #include <oln/level/fill.hh>
+#include <iostream>
 
 using namespace oln;
 

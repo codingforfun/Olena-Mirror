@@ -25,7 +25,7 @@ html/oln-ref.html: $(tex_TEX) $(oln_ref_TEX)
 
 olnsrc = $(top_srcdir)/../oln/
 
-COMMONGETDEFSFLAGS = --agarg=--templ-dirs=../tpl
+COMMONGETDEFSFLAGS =  --agarg=-DCXX=@CXX@ --agarg=--templ-dirs=../tpl
 PROCESSINGGETDEFSFLAGS = \
   --subblock=tpl=type,name,doc \
   --subblock=arg=type,name,mode,doc \

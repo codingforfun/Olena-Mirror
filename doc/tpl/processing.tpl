@@ -150,7 +150,7 @@ int main()
   (if (> (system (string-append "test -f " (pdf b/exoname))) 0)
      (begin
        (psystem "test -f " b/binname " ||\n"
-		"g++ -Wall -W -I../.. -O2 -ftemplate-depth-50 example.cc -o " b/binname)
+		"$CXX -Wall -W -I../.. -O2 -ftemplate-depth-50 example.cc -o " b/binname)
        (if (exist? ".exi")
 	  (psystem "ln -sf ../../img/" exiname " " b/exiname))
        (if (exist? ".exo")

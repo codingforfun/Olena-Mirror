@@ -23,6 +23,9 @@ if test -z "$HEVEA"; then
    AC_MSG_ERROR([hevea not found -- please install HeVeA])
 fi
 
+AC_PROG_CXX
+AC_SUBST(CXX)
+
 AM_INIT_AUTOMAKE([no-define])
 AC_CONFIG_FILES([Makefile doc/Makefile])
 AC_OUTPUT

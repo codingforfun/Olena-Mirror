@@ -29,17 +29,35 @@
 # define OLENA_MISC_COPY_HH
 
 // This file contains implementations of image's copy constructors
+//
+//   / \    NEVER include this file unless you understand what
+//  / ! \    it does and why you need it.
+// `-----'
+//
+// FIXME: should be replaced soon by a correct const image handling.
+// a detailed problem description can be found on:
+// http://www.lrde.epita.fr/cgi-bin/twiki/view/Projects/OlenaConstImages
+
 
 namespace oln {
 
+# define OLENA_UTILS_IMAGE_DEEP_COPY		\
+  if (rhs._has_data())				\
+    *this = rhs.clone()  
+  
 
 # ifdef OLENA_CORE_IMAGE1D_HH
 
 template<class T, class Inferior>
 image1d<T,Inferior>::image1d(const self& rhs)
 {
-  if (rhs._has_data())
-    *this = rhs.clone();
+  OLENA_UTILS_IMAGE_DEEP_COPY;
+}
+
+template<class Inferior>
+image1d<bin,Inferior>::image1d(const self& rhs)
+{
+  OLENA_UTILS_IMAGE_DEEP_COPY;
 }
 
 # endif
@@ -50,8 +68,13 @@ image1d<T,Inferior>::image1d(const self& rhs)
 template<class T, class Inferior>
 image2d<T,Inferior>::image2d(const self& rhs)
 {
-  if (rhs._has_data())
-    *this = rhs.clone();
+  OLENA_UTILS_IMAGE_DEEP_COPY;
+}
+
+template<class Inferior>
+image2d<bin,Inferior>::image2d(const self& rhs)
+{
+  OLENA_UTILS_IMAGE_DEEP_COPY;
 }
 
 # endif
@@ -62,8 +85,13 @@ image2d<T,Inferior>::image2d(const self& rhs)
 template<class T, class Inferior>
 image3d<T,Inferior>::image3d(const self& rhs)
 {
-  if (rhs._has_data())
-    *this = rhs.clone();
+  OLENA_UTILS_IMAGE_DEEP_COPY;
+}
+
+template<class Inferior>
+image3d<bin,Inferior>::image3d(const self& rhs)
+{
+  OLENA_UTILS_IMAGE_DEEP_COPY;
 }
 
 # endif
