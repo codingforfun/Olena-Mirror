@@ -1,3 +1,7 @@
+2002-11-15  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/defs.in: Fix abs_top_srcdir.
+
 2002-11-15  Jean-Sébastien Mouret  <js@lrde.epita.fr>
 
 	* oln/io/pnm_write3d.hxx: Minor fix for image3d<rgb>.

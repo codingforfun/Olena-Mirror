@@ -5,7 +5,7 @@ test -z "$VERBOSE" && {
 
 CXX=@CXX@
 abs_top_builddir=@abs_top_builddir@
-abs_top_srcdir=@abs_top_builddir@
+abs_top_srcdir=@abs_top_srcdir@
 
 CXXFLAGS="-Wall -W -ftemplate-depth-50 -pedantic -I$abs_top_builddir -I$abs_top_srcdir"
 
