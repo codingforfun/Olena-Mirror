@@ -29,6 +29,7 @@
 # define OLENA_CORE_ABSTRACT_IMAGE_HH
 
 # include <mlc/type.hh>
+# include <oln/core/coord.hh>
 
 namespace oln {
   namespace abstract {
@@ -63,6 +64,7 @@ namespace oln {
       typedef typename image_traits<Exact>::fwd_iter_type fwd_iter_type;
       typedef typename image_traits<Exact>::bkd_iter_type bkd_iter_type;
       typedef typename image_traits<Exact>::value_type value_type;
+      typedef typename image_traits<Exact>::size_type size_type;
       typedef image<Exact> self_type;
       typedef Exact exact_type;
 
@@ -75,6 +77,33 @@ namespace oln {
       value_type& operator[](const point_type& p)
       {
 	return to_exact(this)->at(p);
+      }
+
+      exact_type clone() const
+      {
+	return to_exact(this)->clone_();
+      }
+
+      bool hold(const point_type& p) const
+      {
+	assertion(has_impl_());
+	return to_exact(this)->impl()->hold(p);
+      }
+
+      const size_type& size() const
+      {
+	assertion(has_impl_());
+	return to_exact(this)->impl()->size();
+      }
+
+      coord border() const
+      {
+	return size().border();
+      }
+
+      size_t npoints() const
+      {
+	return to_exact(this)->npoints_();
       }
 
       // beware of the "assign" member function
@@ -90,9 +119,53 @@ namespace oln {
 	  + Exact::name() + ">";
       }
 
+      // borders
 
+      void border_set_width(coord new_border, bool copy_border = false)
+      {
+	precondition(new_border >= 0);
+	precondition(has_impl_());
+	if (border() == new_border)
+	  return;			// Nothing to do.
+	
+	to_exact(this)->impl()->border_reallocate_and_copy(new_border, copy_border);
+      }
+
+      void border_adapt_width(coord min_border, bool copy_border =
+			      false)
+      {
+	precondition(min_border >= 0);
+	if (border() >= min_border)
+	  return;			// Don't shrink.
+	
+	border_set_width(min_border, copy_border);
+      }
+
+      void border_adapt_copy(coord min_border)
+      {
+	border_adapt_width(min_border);
+	to_exact(this)->impl()->border_replicate();
+      }
+
+
+      void border_adapt_mirror(coord min_border)
+      {
+	border_adapt_width(min_border);
+	to_exact(this)->impl()->border_mirror();
+      }
+
+      void border_adapt_assign(coord min_border, value_type val)
+      {
+	border_adapt_width(min_border);
+	to_exact(this)->impl()->border_assign(val);
+      }
     protected:
       image() {}
+
+      bool has_impl_() const
+      {
+	return to_exact(this)->impl() != 0;
+      }
     };
 
   } // end of namespace abstract

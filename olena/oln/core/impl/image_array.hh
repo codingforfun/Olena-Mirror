@@ -100,6 +100,16 @@ namespace oln {
 	       len() * sizeof(T));
       }
 
+      size_t len() const
+      {
+	return len(size());
+      }
+
+      size_t len(const size_type& s) const 
+      {
+	return to_exact(*this).len_(s);
+      }
+
     protected:
       ~image_array()
       {

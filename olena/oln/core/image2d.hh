@@ -109,7 +109,7 @@ namespace oln {
     //       return r.assign(*this);
     //     }
 
-    self_type clone() const // deep copy
+    self_type clone_() const // deep copy
     {
       self_type output(nrows(), ncols(), this->border());
       clone_to(output.impl());

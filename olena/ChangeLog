@@ -1,3 +1,27 @@
+2003-07-23  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/core/tests/ref: New test.
+
+2003-07-22  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/image1d.hh,
+	oln/core/image2d.hh,
+	oln/core/image3d.hh: Rename clone() as clone_().
+
+	* oln/core/abstract/image_with_dim.hh: Delete border(). Delete
+	size(). Delete hold(point). Delete has_impl_(). Rename npoints()
+	as npoints_().
+
+	* oln/core/abstract/image_with_impl.hh: Move operations on
+	borders...
+
+	* oln/core/abstract/image.hh: ...here. Add clone(), hold(point),
+	size(), border(), npoints() and has_impl_().
+
+	* oln/core/impl/image_impl.hh: Move len() member functions...
+
+	* oln/core/impl/image_array.hh: ...here.
+	
 2003-07-22  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/Makefile.am: Adjust.
