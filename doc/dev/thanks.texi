@@ -2,8 +2,11 @@
 
 @ifnotplaintext
 @node Aknowledgements
-@end ifnotplaintext
 @section Aknowledgements
+@end ifnotplaintext
+@ifplaintext
+@section Aknowledgements
+@end ifplaintext
 
 The following people contributed to Olena, maybe indirectly through
 one of the numerous prototypes Olena has uprisen from.  Olena would

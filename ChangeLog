@@ -1,5 +1,7 @@
 2003-01-24  Raphaël Poss  <raph@lrde.epita.fr>
 
+	* ISSUES: rename from `oln/ISSUES'.
+
 	* FAQ: Auto-generate from `oln/dev/faq.texi'.
 	* Makefile.am: Modify accordingly. Simplify rules.
 

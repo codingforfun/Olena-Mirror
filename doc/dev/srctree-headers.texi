@@ -1,0 +1,112 @@
+@node Olena headers
+@subsection Olena headers: @file{oln/oln/}
+
+@cindex @file{oln/}
+
+This directory contains the Olena library strictly speaking, that is,
+the C++ header files.
+
+@table @file
+@item oln/config/
+@cindex @file{system.hh}
+@cindex @file{pconf.hh}
+@cindex @file{math.hh}
+Olena global configuration definitions, reachable by including
+@file{oln/config/system.hh}. This directory also provides replacements
+for missing math functions in @file{math.hh}.
+
+@item oln/meta/
+C++ meta-programming utilities. Here is a non-exhaustive list of components:
+@itemize @minus
+@item
+@cindex @file{array*.hh}
+static arrays (@file{array*.hh});
+@item
+@cindex @file{cmp.hh}
+@cindex @file{ucmp.hh}
+static comparisons (@file{cmp.hh} and @file{ucmp.hh});
+@item
+@cindex @file{control.hh}
+static control structures (@file{control.hh});
+@item
+@cindex @file{logic.hh}
+static logical operators (@file{logic.hh});
+@item
+@cindex @file{ufuncs.hh}
+static miscellaneous intefer functions (@file{ufuncs.hh});
+@item
+@cindex @file{types.hh}
+pervasives controlling static hierarchies (@file{types.hh}).
+@end itemize
+
+@item oln/types/
+Definitions for value types.
+
+@item oln/core/
+Definitions for image types and various other Olena data types. This directory
+contains definitions for:
+@itemize @minus
+@item
+image types;
+@item
+structural element types (windows, neighborhoods);
+@item
+iterators;
+@item
+points;
+@item
+borders.
+@end itemize
+
+@item oln/transforms/
+Transformation operators  over images.  Includes Fast Fourier Transforms
+(FFT) and Discreet Wavelets Transforms (DWT).
+
+@item oln/morpho/
+Morphological operators.
+
+@item oln/level/
+Level processing operators.
+
+@item oln/convol/
+Convolution operators.
+
+@item oln/arith/
+Arithmetical operators (over images). Covers both arithmetical, conversion and
+logical operators.
+
+@item oln/convert/
+Value types conversion functions.
+
+@item oln/io/
+Input/Output operators for several Olena data types.
+
+@item oln/utils/
+Utility operators.
+
+@item oln/math/
+Utility mathematical functions.
+
+@end table
+
+In addition to these categories, four multi-purpose headers are provided in
+@file{oln/}:
+
+@table @file
+@cindex @file{basics.hh}
+@item basics.hh
+Recursively includes all @emph{base types} definitions from @file{oln/core/}.
+
+@cindex @file{basics1d.hh}
+@item basics1d.hh
+Recursively includes all definitions from @file{oln/core/} that allow handling of
+1D images.
+
+@cindex @file{basics2d.hh}
+@item basics2d.hh
+Likewise, for 2D images.
+
+@cindex @file{basics3d.hh}
+@item basics3d.hh
+Likewise, for 3D images.
+@end table

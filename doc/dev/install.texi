@@ -9,8 +9,11 @@ You can read the @file{README} file for general information about Olena.
 
 @ifnotplaintext
 @node Installing
-@end ifnotplaintext
 @section Installing
+@end ifnotplaintext
+@ifplaintext
+@section Installing
+@end ifplaintext
 
 To install the Olena headers, command-lines utilities and additional
 files on your system, run:
@@ -34,7 +37,7 @@ If not overriden with @option{--prefix}
 @item the headers in @file{/usr/local/include/oln},
 @item the utilities in @file{/usr/local/bin},
 @item sample images in @file{/usr/local/share/oln},
-@item the autoconf helper @file{oln.m4} in @file{/usr/local/share/aclocal}.
+@item the Autoconf helper @file{oln.m4} in @file{/usr/local/share/aclocal}.
 @end itemize
 
 @sp 2

@@ -1,7 +1,10 @@
 @ifnotplaintext
 @node Bibliography
+@section Bibliography
 @end ifnotplaintext
-@chapter Bibliography
+@ifplaintext
+@section Bibliography
+@end ifplaintext
 
 Further information about Olena, can be found into the following
 related papers:

@@ -1,26 +1,34 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 7 45)
-(Parent-Version oln 7 42)
+(Project-Version oln 7 46)
+(Parent-Version oln 7 45)
 (Version-Log "Index: ChangeLog
 from   2003-01-24  Raphaël Poss  <raph@lrde.epita.fr>
-   * FAQ: Auto-generate from `oln/dev/faq.texi'.
-   * Makefile.am: Modify accordingly. Simplify rules.
+   * ISSUES: rename from `oln/ISSUES'.
 
-+2003-01-24  Raphaël Poss  <raph@lrde.epita.fr>
-+
-        * THANKS: Auto-generate from `oln/dev/thanks.texi'.
-        * README: Auto-generate from `oln/dev/abstract.texi' and
-        `oln/dev/biblio.texi'.
 Index: doc/ChangeLog
-from   2003-01-24  Raphaël Poss  <raph@lrde.epita.fr>
-   * dev/faq.texi, dev/install.texi, dev/build.texi,
-   dev/abstract.texi, dev/thanks.texi, dev/biblio.texi: Add.
+from  +2003-01-25  Raphaël Poss  <raph@lrde.epita.fr>
+
+   * dev/abstract.texi (Abstract): Fix path to ISSUES.
+   * dev/install.texi: Typo.
+   * dev/oln-dev.texi: Reference the other sections. Start updating
+   for 0.7.
+
+   * dev/srctree.texi,
+   dev/srctree-oln.texi,
+   dev/srctree-headers.texi,
+   dev/srctree-testsuite.texi,
+   dev/srctree-conf.texi,
+   dev/srctree-ac.texi,
+   dev/srctree-tools.texi,
+   dev/srctree-doc.texi: Add.
+
+   * dev/Makefile.am (oln_dev_TEXINFOS): Modify accordingly.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 24 Jan 2003 15:21:16 +0100")
+(Checkin-Time "Sat, 25 Jan 2003 19:18:11 +0100")
 (Checkin-Login raph)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -71,7 +79,7 @@ from   2003-01-24  Raphaël Poss  <raph@lrde.epita.fr>
    "diffs.patch$"
    "/Makefile.in$"
    "^Makefile.in$"
-   "/\\(missing\\|install-sh\\|mkinstalldirs\\|depcomp\\)$"
+   "/\\(missing\\|install-sh\\|mkinstalldirs\\|depcomp\\|mdate-sh\\)$"
    "\\(texinfo\\.tex\\)$"
    "^\\(.*/\\)\\?aclocal.m4$"
    "/configure$"
@@ -97,9 +105,9 @@ from   2003-01-24  Raphaël Poss  <raph@lrde.epita.fr>
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.20 664))
+  (ChangeLog (oln/o/33_ChangeLog 1.21 664))
   (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.10 664))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.12 664))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.13 664))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.9 664))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.1 664))
 
@@ -122,7 +130,7 @@ from   2003-01-24  Raphaël Poss  <raph@lrde.epita.fr>
   (doc/ref/bin () :directory)
   (doc/ref/html () :directory)
   (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.26 660))
-  (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.1 660))
+  (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.2 660))
   (doc/ref/oln-ref.tex (oln/f/14_oln-ref.te 1.3 660))
   (doc/ref/ref-types.tex (oln/g/34_ref-types. 1.5 660))
   (doc/Makefile.am (oln/e/0_Makefile.a 1.14 660))
@@ -145,7 +153,7 @@ from   2003-01-24  Raphaël Poss  <raph@lrde.epita.fr>
   (oln/img/random.pgm (oln/n/7_random.pgm 1.1 660))
   (oln/img/se9.pbm (oln/n/5_se9.pbm 1.1 660) :no-keywords)
   (oln/img/se.pbm (oln/n/6_se.pbm 1.1 660) :no-keywords)
-  (oln/ISSUES (oln/d/47_ISSUES 1.5 660))
+  (ISSUES (oln/d/47_ISSUES 1.5 660))
   (oln/Makefile.am (oln/2_Makefile.a 1.28 660))
   (oln/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.5 664))
   (oln/oln/arith/logic.hh (oln/b/24_logic.hh 1.6 664))
@@ -704,7 +712,7 @@ from   2003-01-24  Raphaël Poss  <raph@lrde.epita.fr>
 ;; Files added by populate at Thu, 23 Jan 2003 15:43:23 +0100,
 ;; to version 7.39(w), by raph:
 
-  (doc/dev/Makefile.am (oln/p/38_Makefile.a 1.3 664))
+  (doc/dev/Makefile.am (oln/p/38_Makefile.a 1.4 664))
 
 ;; Files deleted by depopulate at Fri, 24 Jan 2003 10:54:23 +0100,
 ;; from version 7.40(w), by raph:
@@ -714,9 +722,9 @@ from   2003-01-24  Raphaël Poss  <raph@lrde.epita.fr>
 ;; Files added by populate at Fri, 24 Jan 2003 11:03:53 +0100,
 ;; to version 7.40(w), by raph:
 
-  (doc/dev/biblio.texi (oln/p/39_biblio.tex 1.1 664))
-  (doc/dev/thanks.texi (oln/p/40_thanks.tex 1.1 664))
-  (doc/dev/abstract.texi (oln/p/41_abstract.t 1.1 664))
+  (doc/dev/biblio.texi (oln/p/39_biblio.tex 1.2 664))
+  (doc/dev/thanks.texi (oln/p/40_thanks.tex 1.2 664))
+  (doc/dev/abstract.texi (oln/p/41_abstract.t 1.2 664))
 
 ;; Files deleted by depopulate at Fri, 24 Jan 2003 11:04:25 +0100,
 ;; from version 7.40(w), by raph:
@@ -726,12 +734,12 @@ from   2003-01-24  Raphaël Poss  <raph@lrde.epita.fr>
 ;; Files added by populate at Fri, 24 Jan 2003 14:34:30 +0100,
 ;; to version 7.40(w), by raph:
 
-  (doc/dev/build.texi (oln/p/42_build.texi 1.2 664))
+  (doc/dev/build.texi (oln/p/42_build.texi 1.3 664))
 
 ;; Files added by populate at Fri, 24 Jan 2003 14:34:47 +0100,
 ;; to version 7.40(w), by raph:
 
-  (doc/dev/install.texi (oln/p/43_install.te 1.1 664))
+  (doc/dev/install.texi (oln/p/43_install.te 1.2 664))
 
 ;; Files deleted by depopulate at Fri, 24 Jan 2003 14:34:53 +0100,
 ;; from version 7.40(w), by raph:
@@ -746,11 +754,22 @@ from   2003-01-24  Raphaël Poss  <raph@lrde.epita.fr>
 ;; Files added by populate at Fri, 24 Jan 2003 15:18:12 +0100,
 ;; to version 7.42(w), by raph:
 
-  (doc/dev/faq.texi (oln/p/44_faq.texi 1.1 664))
+  (doc/dev/faq.texi (oln/p/44_faq.texi 1.2 664))
+
+;; Files added by populate at Sat, 25 Jan 2003 19:02:34 +0100,
+;; to version 7.45(w), by raph:
+
+  (doc/dev/srctree.texi (oln/p/45_srctree.te 1.1 664))
+  (doc/dev/srctree-top.texi (oln/p/46_srctree-to 1.1 664))
+  (doc/dev/srctree-tools.texi (oln/p/47_srctree-to 1.1 664))
+  (doc/dev/srctree-testsuite.texi (oln/p/48_srctree-te 1.1 664))
+  (doc/dev/srctree-oln.texi (oln/p/49_srctree-ol 1.1 664))
+  (doc/dev/srctree-headers.texi (oln/p/50_srctree-he 1.1 664))
+  (doc/dev/srctree-doc.texi (oln/p/51_srctree-do 1.1 664))
+  (doc/dev/srctree-conf.texi (oln/q/0_srctree-co 1.1 664))
+  (doc/dev/srctree-ac.texi (oln/q/1_srctree-ac 1.1 664))
 )
 (Merge-Parents
-  (7.44 complete
-    (oln/ChangeLog oln/ChangeLog oln/ChangeLog r) (() FAQ FAQ n)
-    (oln/oln/types/global_ops.hh oln/oln/types/global_ops.hh oln/oln/types/global_ops.hh r) (oln/oln/types/optraits_scalar_defs.hh oln/oln/types/optraits_scalar_defs.hh oln/oln/types/optraits_scalar_defs.hh r))
+  (7.45 complete)
 )
 (New-Merge-Parents)

@@ -1,7 +1,10 @@
 @ifnotplaintext
 @node Abstract
+@chapter Abstract
 @end ifnotplaintext
-@section Abstract
+@ifplaintext
+@chapter Abstract
+@end ifplaintext
 
 This is the seventh public release of Olena, a generic image
 processing library in C++.
@@ -22,7 +25,7 @@ library which works only on 2D images (Milena stands for "mini-Olena")
 and which is not publicly available.
 
 Therefore this code is still experimental and not very polished.  The
-file @file{ISSUES}, in the @file{oln/} directory of the distribution,
+file @file{ISSUES}, in the toplevel directory of the distribution,
 contains a list of known issues about Olena.
 
 We haven't written a real documentation yet.  In the @file{doc/}

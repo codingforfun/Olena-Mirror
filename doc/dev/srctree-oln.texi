@@ -1,0 +1,21 @@
+@node Library files
+@section Library files: @file{oln/}
+
+@cindex @file{oln/}
+
+This directory contains the main Olena sources, the testsuite and
+some additional programs.
+
+Here are the subdirectories:
+
+@menu
+* Olena headers::
+* Testsuite files::
+* Autoconf helpers::
+* User configuration tools::
+@end menu
+
+@include srctree-headers.texi
+@include srctree-testsuite.texi
+@include srctree-ac.texi
+@include srctree-conf.texi

@@ -1,0 +1,47 @@
+
+The Olena source tree is divided into several distrinct components:
+
+@table @file
+@item top source directory
+The base directory for Olena sources. It contains Autoconf/Automake
+definitions that allow to run, recursively, the following toplevel
+operations:
+
+@itemize @minus
+@item
+creating initial configuration files and command-line utilities
+(@command{make all});
+@item
+running the testsuite and building the demonstration programs
+(@command{make check});
+@item
+installing Olena to the system (@command{make install});
+@end itemize
+
+@item oln/
+The Olena sources and testsuite.
+
+@item doc/
+The documentation and demonstration programs.
+
+@item tools/
+The user programs. This directory and its sub-directories contain
+auto-generated sources that yield a set of user programs and commands
+exhibing several Olena features.
+
+@end table
+
+You can find in the following sections a more detailed description of
+the contents of each directory.
+
+@menu
+* Library files::
+* User tools source tree::
+* Documentation source tree::
+@end menu
+
+@include srctree-oln.texi
+
+@include srctree-tools.texi
+
+@include srctree-doc.texi

@@ -1,9 +1,12 @@
 @ifnotplaintext
 @node Frequently Asked Questions
+@chapter Frequently Asked Questions
 @end ifnotplaintext
-@section Frequently Asked Questions
+@ifplaintext
+@chapter Frequently Asked Questions
+@end ifplaintext
 
-@subsection Cleaning up the source tree
+@section Cleaning up the source tree
 
 Question: my source tree behaves strangely.
 
@@ -18,7 +21,7 @@ $ @kbd{./bootstrap.sh}
 This will clear anything that can be regenerated back, and re-generate
 the project control files (@command{autoreconf})
 
-@subsection Missing tools
+@section Missing tools
 
 Question: I do not want to involve the documentation in my build process
 (it takes too long and/or I do not have the tools to build it). How can
@@ -30,7 +33,7 @@ Answer 2: if you do not want to build the reference manuals but still
 compile the demonstraction programs and developer's info files, use
 @option{--without-doc-ref}.
 
-@subsection Using Olena
+@section Using Olena
 
 Question: How can I use Olena in my projects ?
 
@@ -64,7 +67,7 @@ standard output the flags necessary to build programs that use Olena
 successfully with the corresponding compiler. Use the @option{--help}
 flag to see what data is available.
 
-@subsection Troubleshooting
+@section Troubleshooting
 
 Question: My program compiles successfully, but refuses to link: the linker
 complains about missing @code{_roundf}.

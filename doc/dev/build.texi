@@ -7,8 +7,11 @@ Please read the @file{README} file for general information about Olena.
 
 @ifnotplaintext
 @node Configuration
-@end ifnotplaintext
 @section Configuration
+@end ifnotplaintext
+@ifplaintext
+@section Configuration
+@end ifplaintext
 
 In order to prepare the build process, you need to configure the
 source tree.
@@ -74,8 +77,12 @@ in the following section.
 
 @ifnotplaintext
 @node Using CXXFLAGS to solve compilation problems
-@end ifnotplaintext
 @section Using @env{CXXFLAGS} to solve compilation problems
+@end ifnotplaintext
+@ifplaintext
+@section Using @env{CXXFLAGS} to solve compilation problems
+@end ifplaintext
+
 
 @subsection Olena needs C99
 
@@ -115,8 +122,11 @@ only a poor performance improvement.
 
 @ifnotplaintext
 @node Speeding up the configuration process
-@end ifnotplaintext
 @section Speeding up the configuration process
+@end ifnotplaintext
+@ifplaintext
+@section Speeding up the configuration process
+@end ifplaintext
 
 @command{configure} can manage a cache of autodetected features and
 values. This cache speeds up @command{configure} runs and can be
@@ -129,8 +139,11 @@ file first.
 
 @ifnotplaintext
 @node Optional Features
-@end ifnotplaintext
 @section Optional Features
+@end ifnotplaintext
+@ifplaintext
+@section Optional Features
+@end ifplaintext
 
 @subsection Using external libraries
 
@@ -169,9 +182,12 @@ $ @kbd{.../configure --help}
 @end example
 
 @ifnotplaintext
-@node Build
+@node Building
+@section Building
 @end ifnotplaintext
-@section Build
+@ifplaintext
+@section Building
+@end ifplaintext
 
 Once your build directory is @command{configure}d, you can run
 
