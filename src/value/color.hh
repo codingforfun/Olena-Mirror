@@ -40,12 +40,12 @@ namespace oln {
     template <unsigned ncomps, unsigned qbits, template <unsigned>
     class color_system>
     struct value_traits<color<ncomps, qbits, color_system> >
-    { typedef vec<ncomp, int_u<qbits> > ret_t; };
+    { typedef vec<ncomps, int_u<qbits> > ret_t; };
 
     template <unsigned ncomps, unsigned qbits, template <unsigned>
     class color_system>
     struct real_value_traits<color<ncomps, qbits, color_system> >
-      : public value_traits<vec<ncomp, int_u<qbits> > > {};
+      : public value_traits<vec<ncomps, int_u<qbits> > > {};
 
     /* FIXME: the following 4 definitions are meaningless for
        color types.  IMHO rec_value should not require them. -- adl */
