@@ -1,5 +1,7 @@
 2004-03-29  Simon Odou  <simon@lrde.epita.fr>
 
+	* oln/morpher/slicing_morpher.hh: To have a slice of an image.
+
 	* oln/morpher/iter_morpher.hh: To have a specific default iterator.
 
 	* oln/morpher/piece_morpher.hh: To use a piece of image like a real one.
