@@ -1,13 +1,14 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 3)
-(Parent-Version oln 10 2)
-(Version-Log "Merge from 0.9.
+(Project-Version oln 10 4)
+(Parent-Version oln 10 3)
+(Version-Log "
+        * dev/oln-dev.texi: add info section
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 08 Aug 2003 17:16:42 +0200")
-(Checkin-Login burrus_n)
+(Checkin-Time "Mon, 11 Aug 2003 15:34:45 +0200")
+(Checkin-Login djo)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -110,7 +111,7 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.2 640))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7 640))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.8 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.25 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.34 640))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.24 640))
@@ -135,7 +136,7 @@
   (doc/ref/bin () :directory)
   (doc/ref/html () :directory)
   (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.7 640))
-  (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.6.1.3 640))
+  (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.6.1.4 640))
   (doc/ref/oln-ref.tex (oln/f/14_oln-ref.te 1.3.1.3 640))
   (doc/ref/integre-ref.tex (oln/g/34_ref-types. 1.11 640))
   (doc/Makefile.am (oln/e/0_Makefile.a 1.14 640))
@@ -1021,9 +1022,5 @@
   (olena/oln/core/abstract/image_with_type_with_dim.hh (oln/v/11_image_with 1.3 600))
   (olena/tests/core/tests/image2 (oln/v/12_image2 1.2 600))
   (olena/tests/utils/tests/copy (oln/v/13_copy 1.1 600)))
-(Merge-Parents
-  (9.24 complete
-    (ChangeLog ChangeLog ChangeLog m) (doc/ChangeLog doc/ChangeLog doc/ChangeLog r)
-    (NEWS NEWS NEWS r) (doc/dev/upgrading.texi doc/dev/upgrading.texi doc/dev/upgrading.texi r))
-)
+(Merge-Parents)
 (New-Merge-Parents)
