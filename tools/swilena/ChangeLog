@@ -1,3 +1,8 @@
+2003-09-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* meta/swilena_image.i: Add operator[] for python and ruby.
+	* meta/swilena_describe.i: Fix __str__ return type.
+
 2003-09-22  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* doc/examples/ruby/simple.rb: New example.

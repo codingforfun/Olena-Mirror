@@ -30,6 +30,13 @@
 	 { (*self)[p] = v; return *self; }
        Val& ref(const point ## Dim ## d& p)
 	 { return (*self)[p]; }
+
+#if defined(SWIGPYTHON) || defined(SWIGRUBY)
+       Val __getitem__(const point ## Dim ## d& p)
+	 { return (*self)[p]; }
+       T& __setitem__(const point ## Dim ## d& p, Val v)
+	 { (*self)[p] = v; return *self; }
+#endif
      }
      
      EXTEND_DESCRIBE(T)
@@ -39,6 +46,12 @@
 
      Val& operator()(coord);
      %extend {
+#if defined(SWIGRUBY)
+       Val __getitem__(coord x)
+	 { return (*self)(x); }
+       T __setitem__(coord x, Val v)
+	 { (*self)(x) = v; return *self; }
+#endif
        Val at(coord x) { return (*self)(x); }
        T& set(coord x, Val v) { (*self)(x) = v; return *self; }
        Val& ref(coord x) { return (*self)(x); }
@@ -49,6 +62,12 @@
 
      Val& operator()(coord, coord);
      %extend {
+#if defined(SWIGRUBY)
+       Val __getitem__(coord x, coord y)
+	 { return (*self)(x, y); }
+       T __setitem__(coord x, coord y, Val v)
+	 { (*self)(x, y) = v; return *self; }
+#endif
        Val at(coord x, coord y)
 	 { return (*self)(x, y); }
        T& set(coord x, coord y, Val v) 
@@ -62,6 +81,12 @@
 
      Val& operator()(coord, coord, coord);
      %extend {
+#if defined(SWIGRUBY)
+       Val __getitem__(coord x, coord y, coord z)
+	 { return (*self)(x, y, z); }
+       T __setitem__(coord x, coord y, coord z, Val v)
+	 { (*self)(x, y, z) = v; return *self; }
+#endif
        Val at(coord x, coord y, coord z)
 	 { return (*self)(x, y, z); }
        T& set(coord x, coord y, coord z, Val v) 

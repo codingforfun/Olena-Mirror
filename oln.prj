@@ -1,16 +1,17 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 23)
-(Parent-Version oln 10 22)
-(Version-Log "Index: olena/ChangeLog
+(Project-Version oln 10 24)
+(Parent-Version oln 10 23)
+(Version-Log "Index: tools/swilena/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-        * oln/io/pnm_write_2d.hh: Fix int_u32 images writing.
+        * meta/swilena_image.i: Add operator[] for python and ruby.
+        * meta/swilena_describe.i: Fix __str__ return type.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Sat, 27 Sep 2003 18:30:39 +0200")
+(Checkin-Time "Sat, 27 Sep 2003 18:32:13 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -121,7 +122,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.35 640))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.29 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.11 640))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.12 640))
 
   (olena/ChangeLog.0 (oln/6_ChangeLog 1.50.1.98.1.5 640))
   (doc/ChangeLog.0 (oln/e/1_ChangeLog 1.31 640))
@@ -874,9 +875,9 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (tools/swilena/meta/swilena_ntg.i (oln/s/33_swilena_nt 1.3 640))
   (tools/swilena/meta/swilena_morpho.i (oln/s/34_swilena_mo 1.1 640))
   (tools/swilena/meta/swilena_imagesize.i (oln/s/35_swilena_im 1.2 640))
-  (tools/swilena/meta/swilena_image.i (oln/s/36_swilena_im 1.4 640))
+  (tools/swilena/meta/swilena_image.i (oln/s/36_swilena_im 1.5 640))
   (tools/swilena/meta/swilena_exception.i (oln/s/37_swilena_ex 1.2 640))
-  (tools/swilena/meta/swilena_describe.i (oln/s/38_swilena_de 1.2 640))
+  (tools/swilena/meta/swilena_describe.i (oln/s/38_swilena_de 1.3 640))
   (tools/swilena/meta/swilena_decl.i (oln/s/39_swilena_de 1.1 640))
   (tools/swilena/meta/swilena_core.i (oln/s/40_swilena_co 1.1 640))
 

@@ -14,10 +14,10 @@
     }
 
 #if defined(SWIGPYTHON)
-  const char *__str__() {
+  std::string __str__() {
     std::ostringstream os;
     os << (*self);
-    return os.str().c_str();
+    return os.str();
   }
 #endif
 
@@ -41,10 +41,10 @@
     }
 
 #if defined(SWIGPYTHON)
-  const char *__str__() {
+  std::string __str__() {
     std::ostringstream os;
     os << (*self);
-    return os.str().c_str();
+    return os.str();
   }
 #endif
 
