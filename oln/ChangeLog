@@ -1,5 +1,9 @@
 2003-01-21  Yann Régis-Gianas  <yann@lrde.epita.fr>
 
+	* oln/topo/dist.hh: New.
+
+2003-01-21  Yann Régis-Gianas  <yann@lrde.epita.fr>
+
 	* oln/core/graph.hh (add_edge): Add an optional argument.
 	* oln/core/graph.hxx (add_edge): Implement it.
 	* oln/core/internal/graph_impl.hh: 
