@@ -360,7 +360,8 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
                     [oln_cv_build_pylena],
                     [the Python interface to Olena],
                     [OLN_SWILENA],
-                    [tools/swilena/python/Makefile],
+                    [tools/swilena/python/Makefile
+		     tools/swilena/python/tests/Makefile],
       [
          AM_PATH_PYTHON([2.1])
 	 save_CPPFLAGS=$CPPFLAGS
@@ -383,7 +384,8 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
                     [oln_cv_build_rblena],
                     [the Ruby interface to Olena],
                     [OLN_SWILENA],
-                    [tools/swilena/ruby/Makefile],
+                    [tools/swilena/ruby/Makefile
+		     tools/swilena/ruby/tests/Makefile],
       [
 	 AC_ARG_VAR([RUBY_CPPFLAGS], [Path to ruby.h])
 	 AC_ARG_WITH([python-includedir], [Include path for ruby.h], 

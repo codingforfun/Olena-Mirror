@@ -113,7 +113,7 @@ header_ruby()
 cat <<EOF
 ## Process this file through Automake to produce Makefile.in -*- Makefile -*-
 ##
-## Makefile.am for swilena/python
+## Makefile.am for swilena/ruby
 ## NOTE: this file was generated automatically by expand.sh
 ##
 
@@ -197,9 +197,9 @@ dump_src() {
 ############ Output ###############
 
 
-header_src >"$SWILENA/src/Makefile.am"
-dump_src >>"$SWILENA/src/Makefile.am"
-header_python >"$SWILENA/python/Makefile.am"
-dump_python >>"$SWILENA/python/Makefile.am"
-header_ruby >"$SWILENA/ruby/Makefile.am"
-dump_ruby >>"$SWILENA/ruby/Makefile.am"
+header_src >"$SWILENA/src/makefile.swig"
+dump_src >>"$SWILENA/src/makefile.swig"
+header_python >"$SWILENA/python/makefile.swig"
+dump_python >>"$SWILENA/python/makefile.swig"
+header_ruby >"$SWILENA/ruby/makefile.swig"
+dump_ruby >>"$SWILENA/ruby/makefile.swig"

@@ -1,19 +1,27 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 19)
-(Parent-Version oln 10 18)
-(Version-Log "       * meta/swilena_ntg_int_u.i: Fix type matching problems between
-        templates and typedefs.
-        * meta/swilena_ntg_int_s.i: Likewise.
-        * meta/swilena_ntg_cplx.i: Likewise.
-        * meta/swilena_ntg.i: Likewise. Tweak for ruby.
-        * meta/swilena_exception.i: Include <exception> in the c++ code.
-        * expand.sh: Adjust consequently.
+(Project-Version oln 10 20)
+(Parent-Version oln 10 19)
+(Version-Log "Index: ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+        * configure.ac: Generate makefiles for swilena tests.
+
+Index: tools/swilena/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+        * expand.sh: Generate makefile.swig files instead of Makefile.am.
+
+        * python/Makefile: New file.
+        * python/tests/Makefile.am: New file.
+        * python/tests/simple1.py: New test.
+
+        * ruby/Makefile: New file.
+        * ruby/tests/Makefile.am: New file.
+        * ruby/tests/simple1.rb: New test.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Sun, 21 Sep 2003 21:59:21 +0200")
+(Checkin-Time "Sun, 21 Sep 2003 23:13:48 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -68,6 +76,7 @@
                   "diffs.patch$"
                   "/Makefile.in$"
                   "^Makefile.in$"
+		  "/makefile.swig"
                   "/\\(py-compile\\|missing\\|install-sh\\|mkinstalldirs\\|depcomp\\|mdate-sh\\)$"
                   "\\(texinfo\\.tex\\)$"
                   "^\\(.*/\\)\\?aclocal.m4$"
@@ -117,13 +126,13 @@
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.8 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.9 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.25 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.35 640))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.28 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.9 640))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.10 640))
 
   (olena/ChangeLog.0 (oln/6_ChangeLog 1.50.1.98.1.5 640))
   (doc/ChangeLog.0 (oln/e/1_ChangeLog 1.31 640))
@@ -133,7 +142,7 @@
 
   (cleanup.sh (oln/o/29_cleanup.sh 1.5 750))
 
-  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.11 640))
+  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.12 640))
 
   (doc/demo/image.cc (oln/d/46_image.cc 1.8 640))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.16.1.2 640))
@@ -548,7 +557,7 @@
   (tools/swilena/configure.ac (oln/o/26_configure. 1.2 640))
   (tools/swilena/doc/Makefile.am (oln/n/39_Makefile.a 1.2 640))
   (tools/swilena/doc/swilena.texi (oln/n/40_swilena.te 1.1.1.2 640))
-  (tools/swilena/java/Makefile.am (oln/n/42_Makefile.a 1.1 640))
+  
   ; (tools/swilena/java/Makefile.in ())
   (tools/swilena/Makefile.am (oln/o/25_Makefile.a 1.5 640))
 ;  (tools/swilena/python/Makefile.am (oln/n/44_Makefile.a 1.4 640))
@@ -857,7 +866,7 @@
 ;; Files added by populate at Tue, 06 May 2003 06:05:19 +0200,
 ;; to version 8.33(w), by raph:
 
-  (tools/swilena/expand.sh (oln/s/25_expand.sh 1.7 750))
+  (tools/swilena/expand.sh (oln/s/25_expand.sh 1.8 750))
 
 ;; Files added by populate at Tue, 06 May 2003 06:05:41 +0200,
 ;; to version 8.33(w), by raph:
@@ -1033,6 +1042,20 @@
 ;; to version 10.9(w), by raph:
 
   (olena/conf/README (oln/v/14_README 1.1 640))
+
+;; Files deleted by depopulate at Sun, 21 Sep 2003 22:59:12 +0200,
+;; from version 10.19(w), by nes:
+
+  ; (tools/swilena/java/Makefile.am ())
+
+;; Files added by populate at Sun, 21 Sep 2003 22:59:15 +0200,
+;; to version 10.19(w), by nes:
+
+  (tools/swilena/python/tests/Makefile.am (oln/v/15_Makefile.a 1.1 600))
+  (tools/swilena/python/tests/simple1.py (oln/v/16_simple1.py 1.1 700))
+  (tools/swilena/ruby/Makefile.am (oln/v/17_Makefile.a 1.1 600))
+  (tools/swilena/ruby/tests/Makefile.am (oln/v/18_Makefile.a 1.1 600))
+  (tools/swilena/ruby/tests/simple1.rb (oln/v/19_simple1.rb 1.1 700))
 )
 (Merge-Parents)
 (New-Merge-Parents)

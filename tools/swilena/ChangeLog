@@ -1,5 +1,17 @@
 2003-09-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* expand.sh: Generate makefile.swig files instead of Makefile.am.
+
+	* python/Makefile: New file.
+	* python/tests/Makefile.am: New file.
+	* python/tests/simple1.py: New test.
+
+	* ruby/Makefile: New file.
+	* ruby/tests/Makefile.am: New file.
+	* ruby/tests/simple1.rb: New test.
+
+2003-09-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* meta/swilena_ntg_int_u.i: Fix type matching problems between
 	templates and typedefs.
 	* meta/swilena_ntg_int_s.i: Likewise.
