@@ -3,14 +3,17 @@
 AC_PREREQ([2.54])
 
 AC_INIT([Olena], OLN_VERSION, OLN_CONTACT, [olena])
-AC_CONFIG_AUX_DIR([olena/config])
-AC_CONFIG_SRCDIR([olena/config/oln.m4])
+AC_CONFIG_AUX_DIR([config])
+AC_CONFIG_SRCDIR([config/oln.m4])
 AM_INIT_AUTOMAKE([1.7 no-define foreign dist-bzip2])
 AC_CONFIG_HEADERS([config.h:config.hin])
 
 # Use included Olena version.
+NTG_PATH_LOCAL([integre])
+MLC_PATH_LOCAL([metalic])
 OLN_PATH_LOCAL([olena])
 AC_WITH_OLN
+
 # Import local version of Metalic.
 CPPFLAGS="-I\$(top_srcdir)/metalic $CPPFLAGS"
 

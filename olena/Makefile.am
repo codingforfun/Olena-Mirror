@@ -4,19 +4,10 @@
 SUBDIRS = img oln $(OLN_SRC_SUBDIRS)
 
 ###
-### Autoconf macro repository
-###
-
-# oln.m4 is for users, install it with other aclocal data.
-m4datadir = $(datadir)/aclocal
-dist_m4data_DATA = config/oln.m4
-
-###
 ### Development files
 ###
 
-EXTRA_DIST = config/oln-local.m4 oln/config/pconf-hh.in
-
+EXTRA_DIST = oln/config/pconf-hh.in
 
 ###
 ### Stuff pertaining to compiler-specific auto-configuration

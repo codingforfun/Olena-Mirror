@@ -1,3 +1,7 @@
+2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/check/Makefile.am: Remove useless flags.
+
 2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* mlc/typeadj.hh: Update namespaces and header guards.

@@ -1,3 +1,12 @@
+2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/check/Makefile.flags, tests/sanity/Makefile.am: Remove
+          useless flags.
+
+	* Makefile.am: Adjust consequently.
+
+	* config/oln.m4, config/oln-local.m4: Move into ../config/.
+
 2003-03-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/core/internal/window.hh: Add missing std:: prefix to find.

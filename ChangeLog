@@ -1,3 +1,9 @@
+2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* config/oln.m4: Add new macros. Simplify flags.
+
+	* configure.ac, Makefile.am, bootstrap.sh: Adapt to m4 changes.
+
 2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* Merge from cleanup:

@@ -1,3 +1,7 @@
+2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* python/Makefile.am: Remove useless flags.
+
 2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* Merge from cleanup:

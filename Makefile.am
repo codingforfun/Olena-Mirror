@@ -4,8 +4,26 @@
 SUBDIRS = metalic integre olena $(OLN_TOP_SUBDIRS)
 
 # "configure.ac" in this directory uses macros in m4 files.
-ACLOCAL_AMFLAGS = -I olena/config
-CONFIGURE_DEPENDENCIES = olena/config/oln.m4
+ACLOCAL_AMFLAGS = -I config
+CONFIGURE_DEPENDENCIES = config/oln.m4
+
+###
+### Autoconf macro repository.
+###
+
+# oln.m4 is for users, install it with other aclocal data.
+m4datadir = $(datadir)/aclocal
+dist_m4data_DATA = config/oln.m4
+
+###
+### Development files.
+###
+
+EXTRA_DIST = config/oln-local.m4
+
+###
+### Basic doc files generation.
+###
 
 dist_noinst_DATA = README BUILD INSTALL THANKS FAQ
 MAINTAINERCLEANFILES = README BUILD INSTALL THANKS FAQ

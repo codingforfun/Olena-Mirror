@@ -2,4 +2,3 @@
 
 SUBDIRS = src doc $(OLN_SWILENA_SUBDIRS)
 
-
