@@ -1,5 +1,10 @@
 2003-07-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* tests/convert/Makefile.am: Remove XFAIL tag on 8-nrgb-hsl and
+	8-nrgb-hsv.
+
+2003-07-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* tests/io/2d.cc: Test more data types.
 
 2003-07-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>

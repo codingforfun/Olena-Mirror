@@ -12,8 +12,6 @@ check_PROGRAMS = \
   8-rgb-nrgb \
   8-rgb-xyz
 
-XFAIL_TESTS = 8-nrgb-hsl$(EXEEXT) 8-nrgb-hsv$(EXEEXT)
-
 ## FIXME: Ideally, each _SOURCES should be defined as $(CONVSOURCES), with
 ## CONVSOURCES = convcomp.cc convcomp.hh
 ## but this triggers a bug in Automake 1.6.
