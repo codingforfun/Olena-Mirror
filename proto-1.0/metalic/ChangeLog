@@ -1,3 +1,8 @@
+2005-02-24  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* mlc/any.hh: Add missing header inclusion.
+	* mlc/box.hh: Add empty constructor for mlc::box.
+
 2005-02-08  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* mlc/tracked_ptr.hh: Add preconditions.

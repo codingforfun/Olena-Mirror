@@ -29,7 +29,7 @@
 # define METALIC_BOX_HH
 
 
-namespace mlc 
+namespace mlc
 {
 
   template <class T>
@@ -38,6 +38,8 @@ namespace mlc
     box(T ref) :
       ref(ref)
     {}
+
+    box() {}
 
     box(const box<T>& rhs) :
       ref(rhs.ref)
@@ -79,6 +81,8 @@ namespace mlc
     box(const T& ref) :
       ref(const_cast<T&>(ref))
     {}
+
+    box() {}
 
     box(const box<T>& rhs) :
       ref(const_cast<T&>(rhs.ref))

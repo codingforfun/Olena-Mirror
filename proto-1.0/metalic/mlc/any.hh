@@ -1,3 +1,4 @@
+vcs: warn: unknown method cat!
 // Copyright (C) 2001, 2002, 2003, 2004, 2005 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -29,7 +30,7 @@
 #ifndef METALIC_ANY_HH
 # define METALIC_ANY_HH
 
-
+# include <contract.hh>
 
 
 // abbrev
@@ -70,7 +71,7 @@ namespace mlc
       precondition(exact_ptr != 0);
       return *exact_ptr;
     }
-    
+
     /// Assignment (op=).
 
     any& operator=(const any& rhs)
@@ -118,11 +119,11 @@ namespace mlc
     const E& exact() const {
       return *(const E*)((const char*)this - exact_offset);
     }
-    
+
     static const int exact_offset;
     static const E exact_obj;
     static const any_mem(E)& ref_exact_obj;
-  
+
   protected:
     any() {}
     any(E* exact_ptr_does_not_exist_in_this_version); // safety
