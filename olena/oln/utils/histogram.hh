@@ -84,6 +84,9 @@ namespace oln {
 
     namespace abstract
     {
+      // FIXME: An image is inside the histogram. This is incorrect
+      // because it is not exactly an image (we do not need any
+      // border).
       template<class T,
 	       typename CPT,
 	       class Exact = mlc::final>

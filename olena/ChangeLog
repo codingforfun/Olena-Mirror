@@ -1,5 +1,11 @@
 2004-02-10  Niels Van Vliet  <niels@lrde.epita.fr>
 
+	* oln/core/abstract/image.hh: Remove macro oln_neighb_type.
+	* oln/core/abstract/neighborhood.hh: Add macro oln_neighb_type.
+	* oln/core/utils/histogram.hh: Add a FIXME.
+
+2004-02-10  Niels Van Vliet  <niels@lrde.epita.fr>
+
 	* oln/morpho/attribute_closing_opening_map.hh: Add file.
 	Attribute closing and opening using std::map.
 	* oln/morpho/attribute_closing_opening_map.hxx: Add file.

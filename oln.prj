@@ -1,19 +1,16 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 65)
-(Parent-Version oln 10 64)
+(Project-Version oln 10 66)
+(Parent-Version oln 10 65)
 (Version-Log "2004-02-10  Niels Van Vliet  <niels@lrde.epita.fr>
 
-	* oln/morpho/attribute_closing_opening_map.hh: Add file.
-	Attribute closing and opening using std::map.
-	* oln/morpho/attribute_closing_opening_map.hxx: Add file.
-	* oln/utils/special_points.hh: Add file. Point used as a state.
-	* tests/morpho/attributes: Add file. Add tests on attribute
-	closing and opening.
+	* oln/core/abstract/image.hh: Remove macro oln_neighb_type.
+	* oln/core/abstract/neighborhood.hh: Add macro oln_neighb_type.
+	* oln/core/utils/histogram.hh: Add a FIXME.
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 10 Feb 2004 19:49:03 +0100")
+(Checkin-Time "Wed, 11 Feb 2004 11:51:35 +0100")
 (Checkin-Login van-vl_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -120,7 +117,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.2 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.35 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.8 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.9 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 640))
 
@@ -254,7 +251,7 @@
   (olena/oln/core/neighborhood1d.hh (oln/c/37_neighborho 1.15 640))
   (olena/oln/core/neighborhood2d.hh (oln/c/36_neighborho 1.16 640))
   (olena/oln/core/neighborhood3d.hh (oln/c/35_neighborho 1.15 640))
-  (olena/oln/core/abstract/neighborhood.hh (oln/c/38_neighborho 1.18 640))
+  (olena/oln/core/abstract/neighborhood.hh (oln/c/38_neighborho 1.19 640))
   (metalic/mlc/objs.hh (oln/c/34_objs.hh 1.7 640))
   (olena/oln/core/point1d.hh (oln/c/32_point1d.hh 1.14 640))
   (olena/oln/core/point1d.hxx (oln/c/31_point1d.hx 1.6 640))
@@ -406,7 +403,7 @@
   (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.7 640))
   (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.7 640))
   (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.7 640))
-  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.5 640))
+  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.6 640))
   (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.9 640))
   (olena/oln/utils/timer.hh (oln/8_timer.hh 1.8 640))
   (olena/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.5.1.1 640))
@@ -946,7 +943,7 @@
   (olena/tests/core/image_print.sh (oln/t/24_image_prin 1.2 640))
 
 
-  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.19 640))
+  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.20 640))
   (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.18 640))
   (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.14.1.8 640))
   (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.11 640))
@@ -1218,6 +1215,6 @@
   (olena/tests/morpho/tests/attribute (oln/j/51_attribute 1.1 644))
 )
 (Merge-Parents
-  (10.64 complete)
+  (10.65 complete)
 )
 (New-Merge-Parents)
