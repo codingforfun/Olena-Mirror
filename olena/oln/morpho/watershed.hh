@@ -58,7 +58,7 @@ namespace oln {
     ** \param N Exact type of the neighborhood.
     **
     ** \arg im_i Image of levels.
-    ** \arg Ng Neighborhood to consider.
+    ** \arg Ng Connectivity of the basins.
     **
     ** \pre DestValue should be large enough.
     **
@@ -136,7 +136,7 @@ namespace oln {
     ** \param N Exact type of the neighborhood.
     **
     ** \arg input Image of levels.
-    ** \arg Ng Neighborhood to consider.
+    ** \arg Ng Connectivity of the basins.
     **
     ** \pre DestValue should be large enough.
     **
@@ -215,7 +215,7 @@ namespace oln {
     **
     ** \arg D Input image.
     ** \arg M Image of labels.
-    ** \arg Ng Neighborhood to consider.
+    ** \arg Ng Connectivity of the basins.
     **
     ** \todo FIXME: Not instantiated in swilena (see
     ** tools/swilena/generate_morpho_instantiations.py)

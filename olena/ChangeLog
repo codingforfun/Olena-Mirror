@@ -1,3 +1,7 @@
+2004-07-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	* oln/morpho/watershed.hh: Fix doc.
+
 2004-07-13  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* oln/convol/fast_convolution.hh: Add macro to compile doc without
