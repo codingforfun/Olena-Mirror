@@ -1,11 +1,12 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5_reconf 6)
-(Parent-Version oln 0_5_reconf 5)
-(Version-Log "")
+(Project-Version oln 0_5_reconf 7)
+(Parent-Version oln 0_5_reconf 6)
+(Version-Log "        * oln/config/pconf.hh: fix bug. 
+")
 (New-Version-Log "")
-(Checkin-Time "Wed, 04 Dec 2002 16:40:21 +0100")
+(Checkin-Time "Wed, 04 Dec 2002 16:41:54 +0100")
 (Checkin-Login raph)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -130,7 +131,7 @@
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.26 660))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.102 660))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.103 660))
   (configure.ac (oln/3_configure. 1.31 660))
   (configure (oln/e/7_configure 1.40 770))
   (README (oln/1_README 1.4 660))
@@ -809,7 +810,7 @@
 ;; Files added by populate at Wed, 04 Dec 2002 16:24:21 +0100,
 ;; to version 0_5_reconf.2(w), by raph:
 
-  (oln/config/pconf.hh (oln/j/20_pconf.hh 1.2 664))
+  (oln/config/pconf.hh (oln/j/20_pconf.hh 1.3 664))
 
 ;; Files deleted by depopulate at Wed, 04 Dec 2002 16:34:09 +0100,
 ;; from version 0_5_reconf.3(w), by raph:

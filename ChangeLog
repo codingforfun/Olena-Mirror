@@ -1,5 +1,7 @@
 2002-12-04  Raphael Poss  <raph@sandrock>
 
+	* oln/config/pconf.hh: fix bug.
+
 	* src/configure.ac: add AC_PROG_RANLIB for tests
 
 2002-12-04  Raphael Poss  <raph@lrde.epita.fr>

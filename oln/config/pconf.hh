@@ -25,7 +25,7 @@
 #define OLNSAVE_PACKAGE_BUGREPORT PACKAGE_BUGREPORT
 #endif
 
-#include <oln/config/pconf.hh>
+#include <oln/config/pconf.inc>
 
 #define OLN_PACKAGE_NAME PACKAGE_NAME
 #undef PACKAGE_NAME
