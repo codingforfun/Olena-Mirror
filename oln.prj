@@ -1,241 +1,58 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 103)
-(Parent-Version oln 10 100)
-(Version-Log "Index: integre/ChangeLog
+(Project-Version oln 10 104)
+(Parent-Version oln 10 103)
+(Version-Log "Index: olena/ChangeLog
 from  Giovanni Palma  <giovanni@lrde.epita.fr>
+	* tests/core/tests/md5_apply: Add file.
 
-	* ntg/enum/bin.hh: Add size.
-
-Index: olena/ChangeLog
-from  Giovanni Palma  <giovanni@lrde.epita.fr>
-
-	* tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh0: Add file.
-	* tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh1: Add file.
-	* tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh2: Add file.
-	* tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh3: Add file.
-	* tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh4: Add file.
-	* tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh5: Add file.
-
-Index: integre/ntg/enum/bin.hh
---- integre/ntg/enum/bin.hh Thu, 27 Nov 2003 11:26:27 +0100 burrus_n (oln/t/21_bin.hh 1.5.1.1 640)
-+++ integre/ntg/enum/bin.hh Tue, 23 Mar 2004 11:59:25 +0100 palma_g (oln/t/21_bin.hh 1.5.1.1 640)
-@@ -1,4 +1,4 @@
--// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
-+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
- //
- // This file is part of the Olena Library.  This library is free
- // software; you can redistribute it and/or modify it under the terms
-@@ -70,6 +70,9 @@
-       typedef bin			unsigned_largest_type;
-       typedef bin			unsigned_cumul_type;
-       typedef unsigned int		integer_type;
++2004-03-23  Giovanni Palma  <giovanni@lrde.epita.fr>
 +
-+      // Particular properties
-+      enum { size = 1 };
-     };
- 
-   } // end of internal.
-Index: olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh5
---- olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh5 Tue, 23 Mar 2004 13:53:56 +0100 palma_g ()
-+++ olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh5 Tue, 23 Mar 2004 13:46:52 +0100 palma_g (oln/k/16_out_olena_  644)
-@@ -0,0 +1,31 @@
-+//                                                                  -*- c++ -*-
-+#include \"data.hh\"
-+#include <oln/utils/md5.hh>
-+
-+#include \"check.hh\"
-+#include <oln/basics2d.hh>
-+#include <oln/convol/fast_gaussian.hh>
-+#include <oln/core/behavior.hh>
-+#include <ntg/all.hh>
-+
-+int main()
-+{
-+  oln::utils::key::value_type   data_key[16] = {0x70, 0x53, 0xa8, 0x84, 0x81,
-+						0x4, 0xbc, 0x30, 0x71, 0x23,
-+						0x78, 0xba, 0xed, 0x6, 0xc6,
-+						0x9e};
-+
-+  oln::utils::key		   key(data_key);
-+
-+  typedef oln::image2d<ntg::int_u8>	im_type;
-+  im_type	im1(oln::load(rdata(\"lena256.pgm\")));
-+
-+  if (oln::utils::md5(oln::convol::fast::gaussian(im1, 2)) == key)
-+    std::cout << \"OK\" << std::endl;
-+  else
-+    {
-+      std::cout << \"FAIL\" << std::endl;
-+      return true;
-+    }
-+  return 0;
-+ }
-Index: olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh4
---- olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh4 Tue, 23 Mar 2004 13:53:56 +0100 palma_g ()
-+++ olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh4 Tue, 23 Mar 2004 12:07:13 +0100 palma_g (oln/k/17_out_olena_  644)
-@@ -0,0 +1,28 @@
+ 	* tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh0: Add file.
+ 	* tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh1: Add file.
+ 	* tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh2: Add file.
+Index: olena/tests/core/tests/md5_apply
+--- olena/tests/core/tests/md5_apply Tue, 23 Mar 2004 14:12:19 +0100 palma_g ()
++++ olena/tests/core/tests/md5_apply Tue, 23 Mar 2004 12:08:01 +0100 palma_g (oln/k/22_md5_apply  644)
+@@ -0,0 +1,33 @@
 +//                                                                  -*- c++ -*-
 +#include \"data.hh\"
 +#include <oln/utils/md5.hh>
 +
 +#include \"check.hh\" 
 +#include <oln/basics2d.hh> 
-+#include <oln/convol/fast_gaussian.hh> 
-+#include <oln/core/behavior.hh> 
++#include <oln/level/threshold.hh> 
 +#include <ntg/all.hh> 
++using namespace ntg;
++ 
 + 
 +int main() 
 +{
-+oln::utils::key::value_type   data_key[16] = {0x56, 0x10, 0x9f, 0xa9, 0xec, 0x89, 0x99, 0x14, 0x42, 0x4a, 0xcf, 0x42, 0xa9, 0xa2, 0xe3, 0xf4};
++oln::utils::key::value_type   data_key[16] = {0x98, 0xf0, 0x2f, 0x75, 0x92, 0x22, 0xbe, 0x3f, 0x36, 0x10, 0x44, 0x1e, 0x53, 0xf3, 0xb9, 0xce};
 +
 +oln::utils::key		   key(data_key);
 +
-+   typedef oln::image2d<ntg::
-+int_u8>	im_type;
-+   im_type	im1(oln::load(rdata(\"lena256.pgm\")));
-+   if (oln::utils::md5(oln::convol::fast::gaussian(im1, 2)) == key)
++   oln::image2d<
++int_u8> in = oln::load(rdata(\"lena256.pgm\"));
++   
++int_u8 th	= 127;
++   rgb_8 low	= rgb_8(100, 0, 0);
++   rgb_8 height	= rgb_8(0, 200, 255);
++   oln::image2d<rgb_8> out     = apply(oln::level::threshold<
++int_u8, rgb_8 >(th, low, height), 	    in);
++   if (oln::utils::md5(out) == key)
 +  std::cout << \"OK\" << std::endl;
 +else
 +  {
 +    std::cout << \"FAIL\" << std::endl;
 +    return true;
 +  }
-+   return 0;
-+ }
-Index: olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh3
---- olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh3 Tue, 23 Mar 2004 13:53:56 +0100 palma_g ()
-+++ olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh3 Tue, 23 Mar 2004 12:07:03 +0100 palma_g (oln/k/18_out_olena_  644)
-@@ -0,0 +1,28 @@
-+//                                                                  -*- c++ -*-
-+#include \"data.hh\"
-+#include <oln/utils/md5.hh>
-+
-+#include \"check.hh\" 
-+#include <oln/basics2d.hh> 
-+#include <oln/convol/fast_gaussian.hh> 
-+#include <oln/core/behavior.hh> 
-+#include <ntg/all.hh> 
-+ 
-+int main() 
-+{
-+oln::utils::key::value_type   data_key[16] = {0x56, 0x10, 0x9f, 0xa9, 0xec, 0x89, 0x99, 0x14, 0x42, 0x4a, 0xcf, 0x42, 0xa9, 0xa2, 0xe3, 0xf4};
-+
-+oln::utils::key		   key(data_key);
-+
-+   typedef oln::image2d<ntg::
-+int_u8>	im_type;
-+   im_type	im1(oln::load(rdata(\"lena256.pgm\")));
-+   if (oln::utils::md5(oln::convol::fast::gaussian(im1, 2)) == key)
-+  std::cout << \"OK\" << std::endl;
-+else
-+  {
-+    std::cout << \"FAIL\" << std::endl;
-+    return true;
-+  }
-+   return 0;
-+ }
-Index: olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh2
---- olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh2 Tue, 23 Mar 2004 13:53:56 +0100 palma_g ()
-+++ olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh2 Tue, 23 Mar 2004 12:06:52 +0100 palma_g (oln/k/19_out_olena_  644)
-@@ -0,0 +1,28 @@
-+//                                                                  -*- c++ -*-
-+#include \"data.hh\"
-+#include <oln/utils/md5.hh>
-+
-+#include \"check.hh\" 
-+#include <oln/basics2d.hh> 
-+#include <oln/convol/fast_gaussian.hh> 
-+#include <oln/core/behavior.hh> 
-+#include <ntg/all.hh> 
-+ 
-+int main() 
-+{
-+oln::utils::key::value_type   data_key[16] = {0xc, 0xec, 0xc0, 0x4c, 0xf4, 0xd1, 0xab, 0xef, 0x1c, 0xd3, 0x9c, 0xa7, 0x4d, 0xd7, 0x28, 0x92};
-+
-+oln::utils::key		   key(data_key);
-+
-+   typedef oln::image2d<ntg::
-+int_u8>	im_type;
-+   im_type	im1(oln::load(rdata(\"lena256.pgm\")));
-+   if (oln::utils::md5(oln::convol::fast::gaussian(im1, 2,                                         oln::value_behavior<oln_value_type_(im_type)>(0))) == key)
-+  std::cout << \"OK\" << std::endl;
-+else
-+  {
-+    std::cout << \"FAIL\" << std::endl;
-+    return true;
-+  }
-+   return 0;
-+ }
-Index: olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh1
---- olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh1 Tue, 23 Mar 2004 13:53:56 +0100 palma_g ()
-+++ olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh1 Tue, 23 Mar 2004 12:06:42 +0100 palma_g (oln/k/20_out_olena_  644)
-@@ -0,0 +1,28 @@
-+//                                                                  -*- c++ -*-
-+#include \"data.hh\"
-+#include <oln/utils/md5.hh>
-+
-+#include \"check.hh\" 
-+#include <oln/basics2d.hh> 
-+#include <oln/convol/fast_gaussian.hh> 
-+#include <oln/core/behavior.hh> 
-+#include <ntg/all.hh> 
-+ 
-+int main() 
-+{
-+oln::utils::key::value_type   data_key[16] = {0xc, 0xec, 0xc0, 0x4c, 0xf4, 0xd1, 0xab, 0xef, 0x1c, 0xd3, 0x9c, 0xa7, 0x4d, 0xd7, 0x28, 0x92};
-+
-+oln::utils::key		   key(data_key);
-+
-+   typedef oln::image2d<ntg::
-+int_u8>	im_type;
-+   im_type	im1(oln::load(rdata(\"lena256.pgm\")));
-+   if (oln::utils::md5(oln::convol::fast::gaussian(im1, 2,                                         oln::value_behavior<oln_value_type_(im_type)>(0))) == key)
-+  std::cout << \"OK\" << std::endl;
-+else
-+  {
-+    std::cout << \"FAIL\" << std::endl;
-+    return true;
-+  }
-+   return  0;
-+ }
-Index: olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh0
---- olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh0 Tue, 23 Mar 2004 13:53:56 +0100 palma_g ()
-+++ olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh0 Tue, 23 Mar 2004 12:06:31 +0100 palma_g (oln/k/21_out_olena_  644)
-@@ -0,0 +1,28 @@
-+//                                                                  -*- c++ -*-
-+#include \"data.hh\"
-+#include <oln/utils/md5.hh>
-+
-+#include \"check.hh\" 
-+#include <oln/basics2d.hh> 
-+#include <oln/convol/fast_gaussian.hh> 
-+#include <oln/core/behavior.hh> 
-+#include <ntg/all.hh> 
-+ 
-+int main() 
-+{
-+oln::utils::key::value_type   data_key[16] = {0xc, 0xec, 0xc0, 0x4c, 0xf4, 0xd1, 0xab, 0xef, 0x1c, 0xd3, 0x9c, 0xa7, 0x4d, 0xd7, 0x28, 0x92};
-+
-+oln::utils::key		   key(data_key);
-+
-+   typedef oln::image2d<ntg::
-+int_u8>	im_type;
-+   im_type	im1(oln::load(rdata(\"lena256.pgm\")));
-+   if (oln::utils::md5(oln::convol::fast::gaussian(im1, 2,                                         oln::value_behavior<oln_value_type_(im_type)>(0))) == key)
-+  std::cout << \"OK\" << std::endl;
-+else
-+  {
-+    std::cout << \"FAIL\" << std::endl;
-+    return true;
-+  }
-+   return 0;
 + }
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 23 Mar 2004 13:54:45 +0100")
+(Checkin-Time "Tue, 23 Mar 2004 14:13:04 +0100")
 (Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -342,7 +159,7 @@ Index: olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh0
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.8 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.38 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.44 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.45 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 640))
 
@@ -1480,27 +1297,13 @@ Index: olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh0
   (olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh2 (oln/k/19_out_olena_ 1.1 644))
   (olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh1 (oln/k/20_out_olena_ 1.1 644))
   (olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh0 (oln/k/21_out_olena_ 1.1 644))
+
+;; Files added by populate at Tue, 23 Mar 2004 14:11:07 +0100,
+;; to version 10.103(w), by palma_g:
+
+  (olena/tests/core/tests/md5_apply (oln/k/22_md5_apply 1.1 644))
 )
 (Merge-Parents
-  (10.100 complete)
-  (10.102 complete
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (olena/oln/core/bkd_iter1d.hh olena/oln/core/bkd_iter1d.hh olena/oln/core/bkd_iter1d.hh r)
-    (olena/oln/core/bkd_iter2d.hh olena/oln/core/bkd_iter2d.hh olena/oln/core/bkd_iter2d.hh r) (olena/oln/core/bkd_iter3d.hh olena/oln/core/bkd_iter3d.hh olena/oln/core/bkd_iter3d.hh r)
-    (olena/oln/core/fwd_iter1d.hh olena/oln/core/fwd_iter1d.hh olena/oln/core/fwd_iter1d.hh r) (olena/oln/core/fwd_iter2d.hh olena/oln/core/fwd_iter2d.hh olena/oln/core/fwd_iter2d.hh r)
-    (olena/oln/core/fwd_iter3d.hh olena/oln/core/fwd_iter3d.hh olena/oln/core/fwd_iter3d.hh r) (olena/oln/core/abstract/iter1d.hh olena/oln/core/abstract/iter1d.hh olena/oln/core/abstract/iter1d.hh r)
-    (olena/oln/core/abstract/iter2d.hh olena/oln/core/abstract/iter2d.hh olena/oln/core/abstract/iter2d.hh r) (olena/oln/core/abstract/iter3d.hh olena/oln/core/abstract/iter3d.hh olena/oln/core/abstract/iter3d.hh r)
-    (olena/oln/core/abstract/iter.hh olena/oln/core/abstract/iter.hh olena/oln/core/abstract/iter.hh r) (olena/oln/core/neighborhood1d.hh olena/oln/core/neighborhood1d.hh olena/oln/core/neighborhood1d.hh r)
-    (olena/oln/core/neighborhood2d.hh olena/oln/core/neighborhood2d.hh olena/oln/core/neighborhood2d.hh r) (olena/oln/core/neighborhood3d.hh olena/oln/core/neighborhood3d.hh olena/oln/core/neighborhood3d.hh r)
-    (olena/oln/core/abstract/neighborhood.hh olena/oln/core/abstract/neighborhood.hh olena/oln/core/abstract/neighborhood.hh r) (olena/oln/core/abstract/struct_elt.hh olena/oln/core/abstract/struct_elt.hh olena/oln/core/abstract/struct_elt.hh r)
-    (olena/oln/core/window1d.hh olena/oln/core/window1d.hh olena/oln/core/window1d.hh r) (olena/oln/core/window2d.hh olena/oln/core/window2d.hh olena/oln/core/window2d.hh r)
-    (olena/oln/core/window3d.hh olena/oln/core/window3d.hh olena/oln/core/window3d.hh r) (olena/oln/core/abstract/window.hh olena/oln/core/abstract/window.hh olena/oln/core/abstract/window.hh r)
-    (olena/oln/core/w_window1d.hh olena/oln/core/w_window1d.hh olena/oln/core/w_window1d.hh r) (olena/oln/core/w_window2d.hh olena/oln/core/w_window2d.hh olena/oln/core/w_window2d.hh r)
-    (olena/oln/core/w_window3d.hh olena/oln/core/w_window3d.hh olena/oln/core/w_window3d.hh r) (olena/oln/core/abstract/w_window.hh olena/oln/core/abstract/w_window.hh olena/oln/core/abstract/w_window.hh r)
-    (olena/oln/io/base.hh olena/oln/io/base.hh olena/oln/io/base.hh r) (olena/oln/level/cc.hh olena/oln/level/cc.hh olena/oln/level/cc.hh r)
-    (olena/oln/level/connected.hh olena/oln/level/connected.hh olena/oln/level/connected.hh r) (olena/oln/morpho/extrema_killer.hh olena/oln/morpho/extrema_killer.hh olena/oln/morpho/extrema_killer.hh r)
-    (olena/oln/core/abstract/window_base.hh olena/oln/core/abstract/window_base.hh olena/oln/core/abstract/window_base.hh r) (olena/oln/core/abstract/windownd.hh olena/oln/core/abstract/windownd.hh olena/oln/core/abstract/windownd.hh r)
-    (olena/oln/core/abstract/w_windownd.hh olena/oln/core/abstract/w_windownd.hh olena/oln/core/abstract/w_windownd.hh r) (olena/oln/core/abstract/neighborhoodnd.hh olena/oln/core/abstract/neighborhoodnd.hh olena/oln/core/abstract/neighborhoodnd.hh r)
-    (olena/oln/morpho/attribute_closing_opening_map.hh olena/oln/morpho/attribute_closing_opening_map.hh olena/oln/morpho/attribute_closing_opening_map.hh r) 
-  )
+  (10.103 complete)
 )
 (New-Merge-Parents)
