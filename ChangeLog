@@ -1,3 +1,7 @@
+2003-03-14  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: New collections.
+
 2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* configure.ac: Update components.
