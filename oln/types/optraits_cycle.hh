@@ -35,6 +35,7 @@
 # include <oln/types/optraits.hh>
 # include <oln/types/typetraits.hh>
 # include <oln/types/global_ops_traits.hh>
+# include <oln/types/behaviour.hh>
 
 # include <string>
 # include <sstream>

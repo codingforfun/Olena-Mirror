@@ -1,14 +1,16 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 49)
-(Parent-Version oln 0_5 48)
+(Project-Version oln 0_5 51)
+(Parent-Version oln 0_5 49)
 (Version-Log "2002-09-17  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* oln/types/optraits_vec.hh: Fix typo, fix operators traits.
+	* oln/types/int_s.hh, oln/types/interval.hh, oln/types/cycle.hh,
+	oln/types/optraits_cycle.hh, oln/types/typetraits_builtins_float.hh : Fix 
+	includes.
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 17 Sep 2002 14:23:38 +0200")
+(Checkin-Time "Tue, 17 Sep 2002 17:19:45 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -31,54 +33,93 @@
                   "\\.deps/"
                   "Makefile$"
                   "/stamp-h"
-		  "CVS/"
-		  ".cvsignore$"
-		  "/obsolete/"
-		  "demo/.*\\.p.m$"
-		  "demo/tour$"
-		  "demo/morpholena$"
-		  "demo/image$"
-		  "autom4te.cache"
-		  "\\.html$"
-		  "\\.png$"
-		  "\\.pdf$"
-		  "\\.eps$"
-		  "doc/doc/.*\\.pbm$"
-		  "doc/doc/oln-ref.toc$"
-		  "doc/doc/oln-ref.pg$"
-		  "doc/doc/oln-ref.ky$"
-		  "doc/doc/oln-ref.tp$"
-		  "doc/doc/oln-ref.vr$"
-		  "doc/doc/oln-ref.fn$"
-		  "doc/doc/oln-ref.cp$"
-		  "doc/doc/oln-ref.cps$"
-		  "doc/doc/oln-ref.aux$"
-		  "doc/doc/oln-ref.info$"
-		  "doc/doc/ref-morpho.texi$"
-		  "doc/doc/stamp-vti$"
-		  "doc/doc/version.texi$"
-		  "src/config/pconf.hh$"
-		  "src/config/extrconf.sh$"
-		  "src/config/config.h$"
-		  "tests/morpho/reconstruction$"
-		  "tests/morpho/extrkiller$"
-		  "tests/io/savetmp$"
-		  "tests/io/2d$"
-		  "tests/data/lena.pppm$"
-		  "tests/data/lena.ppgm$"
-		  "tests/data/lena.ppbm$"
-		  "tests/data/lena.pbm$"
-		  "tests/data/lena.pgm$"
-		  "tests/data/lena128.pgm$"
-		  "tests/convert/.*-.*-.*$"
+                  "CVS/"
+                  ".cvsignore$"
+                  "/obsolete/"
+                  "demo/.*\\.p.m$"
+                  "demo/tour$"
+                  "demo/morpholena$"
+                  "demo/image$"
+                  "autom4te.cache"
+                  "\\.html$"
+                  "\\.png$"
+                  "\\.pdf$"
+                  "\\.eps$"
+                  "doc/doc/.*\\.pbm$"
+                  "doc/doc/oln-ref.toc$"
+                  "doc/doc/oln-ref.pg$"
+                  "doc/doc/oln-ref.ky$"
+                  "doc/doc/oln-ref.tp$"
+                  "doc/doc/oln-ref.vr$"
+                  "doc/doc/oln-ref.fn$"
+                  "doc/doc/oln-ref.cp$"
+                  "doc/doc/oln-ref.cps$"
+                  "doc/doc/oln-ref.aux$"
+                  "doc/doc/oln-ref.info$"
+                  "doc/doc/ref-morpho.texi$"
+                  "doc/doc/stamp-vti$"
+                  "doc/doc/version.texi$"
+                  "src/config/pconf.hh$"
+                  "src/config/extrconf.sh$"
+                  "src/config/config.h$"
+                  "tests/morpho/reconstruction$"
+                  "tests/morpho/extrkiller$"
+                  "tests/io/savetmp$"
+                  "tests/io/2d$"
+                  "tests/data/lena128.pgm$"
+                  "tests/convert/.*-.*-.*$"
                   "\\.#"
-                  "^#"))
+                  "^#"
+                  "tests/\\(data\\|io\\)/lena\\.\\(pppm\\|ppgm\\|ppbm\\|pbm\\|pgm\\)$"
+                  "tests/types/runs/int_sc4/int_sc4.cc$"
+                  "oln/core/pred.hh$"
+                  "tests/defs$"
+                  "tests/convol/slow_sum_2d_2$"
+                  "tests/array/test_array1d.cc$"
+                  "tests/array/test_array2d$"
+                  "oln/config/extrconf.sh$"
+                  "tests/sanity/log$"
+                  "demo/test-reconstruction$"
+                  "utilities/oln-mosaic-u8$"
+                  "tests/sanity/incltest.cc$"
+                  "tests/array/gen_test_utils/postlude$"
+                  "tests/types/runs/int_sc4/run.errors$"
+                  "tests/meta/test_array3d$"
+                  "tests/io/lena$"
+                  "tests/array/Makefile.in$"
+                  "tests/types/runs/int_sc4/cxx.errors$"
+                  "oln/config/config.h$"
+                  "tests/meta/test_array1d$"
+                  "tests/array/gen_test_utils/.dirstamp$"
+                  "oln/config/pconf.hh$"
+                  "tests/array/gen_test$"
+                  "tests/array/test_array3d$"
+                  "tests/array/gen_test_utils/errors.cc$"
+                  "tests/array/test_array2d.cc$"
+                  "tests/meta/gen_test_utils/.dirstamp$"
+                  "tests/meta/test_array2d$"
+                  "tests/array/test_array3d.cc$"
+                  "tests/meta/gen_test$"
+                  "tests/convol/lena-sobel.pgm$"
+                  "tests/io/lena.ppm$"
+                  "tests/types/runs/int_sc4/try$"
+                  "tests/array/gen_test_utils/errors.hh$"
+                  "tests/convol/sobel_gradient$"
+                  "tests/array/Makefile.am$"
+                  "\\(TAGS\\|tags\\)$"
+                  "tests/morpho/edoc$"
+                  "tests/convol/slow_sum_2d_1$"
+                  "tests/array/gen_test.cc$"
+                  "tests/array/test_array1d$"
+                  "diffs.patch$"
+                  "tests/array/gen_test_utils/prelude$"
+                  "utilities/oln-mosaic-u16$"))
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.20 640))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.51 600))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.53 600))
   (configure.ac (oln/3_configure. 1.21 600))
-  (configure (oln/e/7_configure 1.25 700))
+  (configure (oln/e/7_configure 1.26 700))
   (README (oln/1_README 1.4 600))
   (ISSUES (oln/d/47_ISSUES 1.3 600))
   (Makefile.am (oln/2_Makefile.a 1.10 600))
@@ -216,7 +257,7 @@
   (oln/core/structelt.hh (oln/c/25_structelt. 1.2 600))
   (oln/core/traverse.hh (oln/d/30_traverse.h 1.3 600))
   (oln/core/typeadj.hh (oln/e/25_typeadj.hh 1.1 600))
-  (oln/core/type.hh (oln/c/21_type.hh 1.6 600))
+  (oln/core/type.hh (oln/c/21_type.hh 1.7 600))
   (oln/core/window1d.hh (oln/c/15_window1d.h 1.5 600))
   (oln/core/window2d.hh (oln/c/14_window2d.h 1.5 600))
   (oln/core/window3d.hh (oln/c/13_window3d.h 1.5 600))
@@ -415,7 +456,7 @@
 ;; to version 0_5.2(w), by burrus_n:
 
   (oln/types/typetraits_builtins_int.hh (oln/g/3_typetraits 1.5 640))
-  (oln/types/typetraits_builtins_float.hh (oln/g/4_typetraits 1.6 640))
+  (oln/types/typetraits_builtins_float.hh (oln/g/4_typetraits 1.7 640))
   (oln/types/typetraits.hh (oln/g/5_typetraits 1.2 640))
   (oln/types/type.hh (oln/g/6_type.hh 1.3 640))
   (oln/types/to_oln.hh (oln/g/7_to_oln.hh 1.4 640))
@@ -427,19 +468,19 @@
   (oln/types/optraits_range.hh (oln/g/13_optraits_r 1.3 640))
   (oln/types/optraits_int_u.hh (oln/g/14_optraits_i 1.5 640))
   (oln/types/optraits_int_s.hh (oln/g/15_optraits_i 1.4 640))
-  (oln/types/optraits_cycle.hh (oln/g/16_optraits_c 1.7 640))
+  (oln/types/optraits_cycle.hh (oln/g/16_optraits_c 1.8 640))
   (oln/types/optraits_builtins_int_defs.hh (oln/g/17_optraits_b 1.2 640))
   (oln/types/optraits_builtins_int.hh (oln/g/18_optraits_b 1.2 640))
   (oln/types/optraits_builtins_float.hh (oln/g/19_optraits_b 1.7 640))
   (oln/types/optraits_bin.hh (oln/g/20_optraits_b 1.2 640))
   (oln/types/optraits.hh (oln/g/21_optraits.h 1.2 640))
-  (oln/types/interval.hh (oln/g/22_interval.h 1.4 640))
+  (oln/types/interval.hh (oln/g/22_interval.h 1.5 640))
   (oln/types/int_u.hh (oln/g/23_int_u.hh 1.10 640))
-  (oln/types/int_s.hh (oln/g/24_int_s.hh 1.8 640))
+  (oln/types/int_s.hh (oln/g/24_int_s.hh 1.9 640))
   (oln/types/global_ops_traits.hh (oln/g/25_global_ops 1.1 640))
   (oln/types/global_ops_defs.hh (oln/g/26_global_ops 1.2 640))
   (oln/types/global_ops.hh (oln/g/27_global_ops 1.6 640))
-  (oln/types/cycle.hh (oln/g/28_cycle.hh 1.6 640))
+  (oln/types/cycle.hh (oln/g/28_cycle.hh 1.7 640))
   (oln/types/builtins_properties.hh (oln/g/29_builtins_p 1.3 640))
   (oln/types/bin.hh (oln/g/30_bin.hh 1.4 640))
   (oln/types/behaviour.hh (oln/g/31_behaviour. 1.5 640))
@@ -569,6 +610,12 @@
   (tests/types/tests/vec3 (oln/h/47_vec3 1.1 640))
   (tests/types/tests/vec2 (oln/h/48_vec2 1.1 640))
   (tests/types/tests/vec1 (oln/h/49_vec1 1.1 640))
+
+
+  (prj (oln.prj) :symlink))
+(Merge-Parents
+  (0_5.50 complete
+    (ChangeLog ChangeLog ChangeLog m) (configure configure configure r)
+    (oln/core/type.hh oln/core/type.hh oln/core/type.hh r) (() () prj a))
 )
-(Merge-Parents)
 (New-Merge-Parents)
