@@ -231,6 +231,16 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
 ### Stuff pertaining to the documentation
 ###
 
+### The reference manual uses Doxygen
+### FIXME: could be much better.
+
+AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
+## if test -z "$DOXYGEN"; then
+##   AC_MSG_WARN([`doxygen' not found -- `doxygen' must be installed to generate the documentation])
+AC_CONFIG_FILES([doc/ref/doxygen.config
+		 doc/ref/configfile.in])
+## fi
+
 ### The documentation tree is both a component...
 
   OLN_COMPONENT([doc],
@@ -366,10 +376,10 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
 	 save_CPPFLAGS=$CPPFLAGS
 
 	 AC_ARG_VAR([PYTHON_CPPFLAGS], [Path to Python.h])
-	 AC_ARG_WITH([python-includedir], [Include path for Python.h], 
+	 AC_ARG_WITH([python-includedir], [Include path for Python.h],
 	             [PYTHON_CPPFLAGS="-I $withval"],
                      [PYTHON_CPPFLAGS="-I/usr/include/python$PYTHON_VERSION"])
-	
+
 	 CPPFLAGS="$CPPFLAGS $PYTHON_CPPFLAGS"
          AC_CHECK_HEADERS([Python.h],,
 	                  AC_MSG_ERROR(

@@ -81,7 +81,7 @@ namespace oln {
     typedef typename abstract::image_with_impl<Impl,
 					       exact_type> super_type;
 
-    image() : super_type() 
+    image() : super_type()
     {
       mlc_init_static_hierarchy(Exact);
     }
@@ -91,21 +91,21 @@ namespace oln {
       mlc_init_static_hierarchy(Exact);
     }
 
-    static std::string 
+    static std::string
     name()
     {
       std::ostringstream s;
-      s << "image<" << Dim << ", " << ntg_name(T) << ", " << Impl::name() 
+      s << "image<" << Dim << ", " << ntg_name(T) << ", " << Impl::name()
 	<< ", " << Exact::name() << ">";
       return s.str();
     }
 
-    image(impl_type* i) : super_type(i) 
+    image(impl_type* i) : super_type(i)
     {
       mlc_init_static_hierarchy(Exact);
     }
 
-    image(const size_type& size) : 
+    image(const size_type& size) :
       super_type(new impl_type(size))
     {
       mlc_init_static_hierarchy(Exact);
