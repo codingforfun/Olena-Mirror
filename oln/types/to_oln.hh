@@ -40,11 +40,6 @@ namespace oln {
 
     template<class T> struct to_oln { typedef T ret; };
 
-
-    // FIXME : really useful ?
-    // template<class Self> struct to_oln<rec_value<Self> >
-    // { typedef Self ret; };
-
     // C built-in type  ->  oln type
 
     template<> struct to_oln<bool>           { typedef bin ret; };
@@ -58,11 +53,6 @@ namespace oln {
 
     template<> struct to_oln<unsigned int>   { typedef int_u32u  ret; };
     template<> struct to_oln<  signed int>   { typedef int_s32u  ret; };
-
-    // FIXME: decomment when ready
-//     template<> struct to_oln<float>          { typedef float_p1 ret; };
-//     template<> struct to_oln<double>         { typedef float_p2 ret; };
-
 
   } // end of internal
 

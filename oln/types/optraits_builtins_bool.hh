@@ -33,8 +33,6 @@
 namespace oln
 {
 
-  // FIXME: 
-
   template<>
   struct optraits<bool>
   {

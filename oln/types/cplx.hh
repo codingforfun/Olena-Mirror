@@ -48,7 +48,6 @@ namespace oln {
     typedef T storage_type[2];
     typedef typename typetraits<T>::cumul_type cumul_type[2];
 
-    // FIXME: useful?
     typedef self op_traits;
   };
 

@@ -44,7 +44,7 @@
    struct C_for_int_u
    {
      enum {
-       mbits = meta::pow2sup<nbits>::value  // FIXME: rename!!!
+       mbits = meta::pow2sup<nbits>::value
      };
      typedef typename C_for_int_u<mbits>::type type;
      static type max() {

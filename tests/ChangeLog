@@ -1,3 +1,7 @@
+2002-12-01  Emmanuel Turquin  <turqui_e@epita.fr>
+
+	* transforms/dwt.cc: Fix.
+
 2002-11-19  Jean-Sébastien Mouret  <js@lrde.epita.fr>
 
 	* types/Makefile.am (EXTRA_DIST): Add missing file (runtests).

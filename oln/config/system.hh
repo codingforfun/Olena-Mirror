@@ -44,8 +44,12 @@
 #  define OLN_DOUBLE_INFINITY (std::numeric_limits<double>::infinity())
 # else
 #  include <math.h>
-#  if defined HUGE_VAL && defined HUGE_VALF
-#   define OLN_FLOAT_INFINITY HUGE_VALF
+#  ifdef HUGE_VAL
+#   ifdef HUGE_VALF
+#    define OLN_FLOAT_INFINITY HUGE_VALF
+#   else
+#    define OLN_FLOAT_INFINITY ((float)HUGE_VAL)
+#   endif
 #   define OLN_DOUBLE_INFINITY HUGE_VAL
 #  else
 #   error Do not know how to define infinity on this host.

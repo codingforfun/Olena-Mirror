@@ -1,3 +1,26 @@
+2002-12-01  Emmanuel Turquin  <turqui_e@epita.fr>
+
+	* oln/transforms/dwt.hh: Remove the manual centering of static array.
+	* oln/transforms/wavelet_coeffs.hh: Remove all the 'x()', and add new
+	wavelet coefficients.
+	* oln/transforms/fft.hh: Remove FIXMEs and small fixes.
+	* oln/meta/array1d.hxx: Allow automatic centering on even sized arrays.
+	* oln/types/int_u.hh, oln/types/int_s.hh: Do not impose the behaviour
+	in type definitions to 'strict'.
+	* oln/types/int_s.hh: Replace trunc by round in constructor and
+	= operator methods.
+	* oln/types/to_oln.hh, oln/types/rec_value.hh,
+	oln/types/optraits_int_u.hh, oln/types/optraits_int_s.hh,
+	oln/types/optraits_bin.hh, oln/types/optraits.hh,
+	oln/types/builtins_properties.hh, oln/types/cplx.hh, oln/types/vec.hh,
+	oln/types/typetraits_builtins_bool.hh, oln/types/color.hh,
+	oln/types/optraits_builtins_bool.hh: Remove FIXMEs.
+	
+2002-11-30  Jean-Sébastien Mouret  <js@lrde.epita.fr>
+
+	* oln/config/system.hh: Use HUGE_VAL for OLN_FLOAT_INFINITY if
+	HUGE_VALF is not defined.
+
 2002-11-28  Reda Dehak  <reda@nemours.lrde.epita.fr>
 
 	* oln/core/neighborhood1d.hh: Remove the functions inter and uni,

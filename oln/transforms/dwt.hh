@@ -107,8 +107,7 @@ namespace oln {
 	meta::is_false<N % 2>::ensure();
       }
 
-      // FIXME: see with Astrid.
-      meta::array1d< meta::array1d_info<N, 0>, value_t>	h;
+      meta::array1d< meta::array1d_info<N>, value_t>	h;
       meta::internal::_array1d_start<value_t>		wc_start;
 
     private:
@@ -376,9 +375,10 @@ namespace oln {
 
 	max_level = static_cast<unsigned>(log(2 * im_size / coeffs.size()) /
 			       internal::_ln_2);
+
 	current_level = max_level;
 
-	assertion(!(im_size % (2 << max_level)));
+	assertion(!(im_size % (1 << max_level)));
 	
 	trans_im = trans_im_t(im.size());
       }
@@ -460,7 +460,11 @@ namespace oln {
 
 	Iter(trans_im_t) it(tmp_im);
 	for_all(it)
-	  new_im[it] = tmp_im[it];
+	  new_im[it] = (tmp_im[it] >= optraits<T1>::inf() ?
+			(tmp_im[it] <= optraits<T1>::sup() ?
+			 tmp_im [it] :
+			 optraits<T1>::sup()) :
+			optraits<T1>::inf());
 
 	return new_im;
       }

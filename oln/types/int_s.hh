@@ -74,12 +74,12 @@ namespace oln
     typedef self				signed_type;
     typedef int_u<nbits-1, behaviour>		unsigned_type;
     // FIXME: calculate it more precisely
-    typedef int_s<32, strict>			cumul_type;
-    typedef int_s<32, strict>			largest_type;
-    typedef int_s<32, strict>			signed_largest_type;
-    typedef int_s<32, strict>			signed_cumul_type;
-    typedef int_u<32, strict>			unsigned_largest_type;
-    typedef int_u<32, strict>			unsigned_cumul_type;
+    typedef int_s<32, behaviour>		cumul_type;
+    typedef int_s<32, behaviour>		largest_type;
+    typedef int_s<32, behaviour>		signed_largest_type;
+    typedef int_s<32, behaviour>		signed_cumul_type;
+    typedef int_u<32, behaviour>		unsigned_largest_type;
+    typedef int_u<32, behaviour>		unsigned_cumul_type;
     typedef signed int				integer_type;
 
     // internal use, useful for decorators
@@ -153,21 +153,21 @@ namespace oln
 
       int_s (const float rhs)
       {
-	_value = optraits_type::check(truncf(rhs));
+	_value = optraits_type::check(roundf(rhs));
       }
       self& operator=(const float rhs)
       {
-	_value = optraits_type::check(truncf(rhs));
+	_value = optraits_type::check(roundf(rhs));
 	return *this;
       }
 
       int_s (const double rhs)
       {
-	_value = optraits_type::check(trunc(rhs));
+	_value = optraits_type::check(round(rhs));
       }
       self& operator=(const double rhs)
       {
-	_value = optraits_type::check(trunc(rhs));
+	_value = optraits_type::check(round(rhs));
 	return *this;
       }
 

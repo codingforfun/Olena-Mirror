@@ -76,12 +76,12 @@ namespace oln
 		  behaviour>				signed_type;
     typedef self					unsigned_type;
     // FIXME: calculate it more precisely
-    typedef int_u<32, strict>				cumul_type;
-    typedef int_u<32, strict>				largest_type;
-    typedef int_s<32, strict>				signed_largest_type;
-    typedef int_s<32, strict>				signed_cumul_type;
-    typedef int_u<32, strict>				unsigned_largest_type;
-    typedef int_u<32, strict>				unsigned_cumul_type;
+    typedef int_u<32, behaviour>			cumul_type;
+    typedef int_u<32, behaviour>			largest_type;
+    typedef int_s<32, behaviour>			signed_largest_type;
+    typedef int_s<32, behaviour>			signed_cumul_type;
+    typedef int_u<32, behaviour>			unsigned_largest_type;
+    typedef int_u<32, behaviour>			unsigned_cumul_type;
     typedef unsigned int				integer_type;
 
 

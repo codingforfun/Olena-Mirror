@@ -44,7 +44,6 @@ namespace oln
 
     typedef self		base_type;
     typedef self		storage_type;
-    // FIXME: are these types exacts ?
     typedef self		cumul_type;
     typedef self		largest_type;
     typedef self		signed_largest_type;

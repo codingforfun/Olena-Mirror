@@ -179,7 +179,8 @@ namespace oln {
 	  // array is well-formed :
 	  meta::eq< Info::well_formed, true >::ensure();
 	  // centering is automatic or user-defined :
-	  meta::logical_or< meta::eq< Info::i % 2, 1 >::ret, meta::neq< Info::center, _unknown >::ret >::ensure();
+	  // (commented out to allow automatic centering on even sized arrays)
+	  // meta::logical_or< meta::eq< Info::i % 2, 1 >::ret, meta::neq< Info::center, _unknown >::ret >::ensure();
 	  return _array1d_t(arr->ptr);
 	}
 	

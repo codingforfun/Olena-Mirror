@@ -37,7 +37,6 @@ namespace oln
   template <class T> 
   struct optraits
   {
-    // FIXME: export name() into debug
     // default impl
     static std::string name() { return T::name(); }
   };

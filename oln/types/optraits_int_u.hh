@@ -126,8 +126,6 @@ namespace oln
     // int_u32 - int_u : we do not convert result to int_s because we
     // want to access (UINT_MAX - 1)
 
-    // FIXME: this behaviour is quite annoying designing generic algorithms
-
     template<class B1, unsigned mbits, class B2>
     struct operator_minus_traits<int_u<32, B1>, int_u<mbits, B2> >
     {

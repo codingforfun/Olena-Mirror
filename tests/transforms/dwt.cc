@@ -28,7 +28,7 @@ Wavelet_coeffs_definition(daub4_test, dfloat, 4)
   const dfloat denom = 4 * sqrt(2);
   
   Wavelet_coeffs_begin
-    x((1 + sqrt_3)/denom),
+    (1 + sqrt_3)/denom,
     (3 + sqrt_3)/denom,
     (3 - sqrt_3)/denom,
     (1 - sqrt_3)/denom
@@ -47,7 +47,7 @@ check()
   for_all(it1)
     vec1[it1] = std::rand() / 10000000;
 
-  dwt<image1d<int_u16>, daub12> wave1d(vec1);
+  dwt<image1d<int_u16>, daub4_test> wave1d(vec1);
 
   image1d<dfloat> vec2 = wave1d.transform(dwt_std, true);
 
@@ -61,11 +61,12 @@ check()
 
   image2d<int_u8> im1(data("lena.pgm"));
 
-  dwt<image2d<int_u8>, daub4_test> wave2d(im1);
+  dwt<image2d<int_u8>, coiflet6> wave2d(im1);
 
   image2d<dfloat> im2 = wave2d.transform(dwt_std, true, 4);
 
-  image2d<int_u8> im3 = wave2d.transform_inv<int_u8>();
+  image2d<int_u8> im3 =
+    wave2d.transform_inv<int_u8>();
 
   io::save(im3, OUTPUT_DIR OUTPUT_NAME "_dwt_copy.pgm");
 
@@ -73,7 +74,7 @@ check()
   if (level::is_equal(im1, im3))
     OK_OR_FAIL;
 
-  image2d<int_u<8, saturate> > out(im2.nrows(), im2.ncols());
+  image2d<int_u<8, saturate> > out(im2.size());
   image2d<dfloat>::iter it2(im2);
   for_all(it2)
     out[it2] = im2[it2];
@@ -87,7 +88,7 @@ check()
   
   io::save(out, OUTPUT_DIR OUTPUT_NAME "_dwt_trans_non_std.pgm");
 
-  im2 = wave2d.transform(dwt_non_std, false);
+  im2 = wave2d.transform(dwt_non_std, false, 3);
   for_all(it2)
     if (fabs(im2[it2]) < 42)
       if (im2[it2] != 0)
@@ -107,7 +108,6 @@ check()
   dwt<image3d<int_u32>, haar> wave3d(cube1);
 
   image3d<dfloat> cube2 = wave3d.transform(dwt_non_std, true, 1);
-
   image3d<int_u32> cube3 = wave3d.transform_inv<int_u32>();
 
   std::cout << "Test: Image3D == F-1(F(Image3D)) ... " << std::flush;

@@ -42,7 +42,7 @@ namespace oln
   //
   ////////////////////////////////////////////
 
-  // FIXME: does not inherit from type::any_type because of g++-2.95
+  // NOTE: does not inherit from type::any_type because of g++-2.95
   // memory allocation for empty classes
 
   template <class Self>

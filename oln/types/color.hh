@@ -41,10 +41,6 @@
 # include <sstream>
 # include <string>
 
-//
-// FIXME: really adapt to new types system
-// This is just a copy of old color system to assure compatibility
-//
 
 namespace oln {
 

@@ -48,8 +48,6 @@ namespace oln
   {
     typedef typetraits<bin>::storage_type storage_type;
 
-    // FIXME: should maybe return bin instead of return_type
-    // but it prevents things like (max() - min() + unit())
     static storage_type zero() { return 0; }
     static storage_type unit() { return 1; }
     static storage_type min()  { return 0; }

@@ -205,11 +205,10 @@ namespace oln {
 				     trans_im.ncols()).magn()) /
 		log(a + b * max) * optraits<T>::max();
 	else
-	  for (int row = 0; row < new_im.nrows(); ++row)
-	    for (int col = 0; col < new_im.ncols(); ++col)
-	      new_im(row, col) = log(a + b * trans_im(row, col).magn()) /
-		log(a + b * max) * optraits<T>::max();
-      
+	  for_all(it)
+	    new_im[it] = log(a + b * trans_im[it].magn()) /
+	    log(a + b * max) * optraits<T>::max();
+
 	return new_im;
       }
 
@@ -250,7 +249,6 @@ namespace oln {
       fftw_complex			*out;
       fftwnd_plan			p;
       fftwnd_plan			p_inv;
-      // FIXME: See with David if we cannot use his 'generic morpher' for trans_im.
       image2d<cplx<R, dfloat> >		trans_im;
 
     };
@@ -285,14 +283,12 @@ namespace oln {
 	  for (int col = 0; col < original_im.ncols(); ++col)
 	    in[row * original_im.ncols() + col] = original_im(row, col);
 
-	// FIXME: allow user to modify fftw parameters ?
 	p = rfftw2d_create_plan(original_im.nrows(), original_im.ncols(),
 				FFTW_REAL_TO_COMPLEX, FFTW_ESTIMATE);
 	p_inv = rfftw2d_create_plan(original_im.nrows(), original_im.ncols(),
 				    FFTW_COMPLEX_TO_REAL, FFTW_ESTIMATE);
 
-	trans_im = image2d<cplx<R, dfloat> >(original_im.nrows(),
-					     original_im.ncols());
+	trans_im = image2d<cplx<R, dfloat> >(original_im.size());
       }
 
       image2d<cplx<R, dfloat> > transform()
@@ -331,17 +327,16 @@ namespace oln {
 	    }
 	rfftwnd_one_complex_to_real(p_inv, out, in);
 
-	image2d<T1> new_im(trans_im.nrows(), trans_im.ncols());
+	image2d<T1> new_im(trans_im.size());
 	int i = 0;
 	for (int row = 0; row < trans_im.nrows(); ++row)
 	  for (int col = 0; col < trans_im.ncols(); ++col)
 	    {
-	      new_im(row, col) =
-		(in[i] >= optraits<T1>::min() ?
-		 (in[i] <= optraits<T1>::max() ?
-		  in [i] :
-		  optraits<T1>::max()) :
-		 optraits<T1>::min());
+	      new_im(row, col) = (in[i] >= optraits<T1>::inf() ?
+				  (in[i] <= optraits<T1>::sup() ?
+				   in [i] :
+				   optraits<T1>::sup()) :
+				  optraits<T1>::inf());
 	      ++i;
 	    }
 	return new_im;
@@ -359,7 +354,6 @@ namespace oln {
     //
     //////////////////////////////////////
 
-    // FIXME: make some tests.
     template <class T, cplx_representation R>
     class fft<T, R, internal::fft_cplx> : public internal::_fft<T, R>
     {
@@ -381,14 +375,12 @@ namespace oln {
 		original_im(row, col).imag();
 	    }
 
-	// FIXME: allow user to modify fftw parameters ?
 	p = fftw2d_create_plan(original_im.nrows(), original_im.ncols(),
 			       FFTW_FORWARD, FFTW_ESTIMATE);
 	p_inv = fftw2d_create_plan(original_im.nrows(), original_im.ncols(),
 				   FFTW_BACKWARD, FFTW_ESTIMATE);
 
-	trans_im = image2d<cplx<rect, dfloat> >(original_im.nrows(),
-						original_im.ncols());
+	trans_im = image2d<cplx<rect, dfloat> >(original_im.size());
       }
 
       image2d<cplx<R, dfloat> > transform()
@@ -419,7 +411,7 @@ namespace oln {
 	    }
 	fftwnd_one(p_inv, out, in);
 
-	image2d<cplx<R, T1> > new_im(trans_im.nrows(), trans_im.ncols());
+	image2d<cplx<R, T1> > new_im(trans_im.size());
 	int i = 0;
 	for (int row = 0; row < trans_im.nrows(); ++row)
 	  for (int col = 0; col < trans_im.ncols(); ++col)

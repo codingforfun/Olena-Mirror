@@ -342,8 +342,6 @@ namespace oln
       typedef int_s<nbits, B1> impl;
     };
 
-    // FIXME: define MIN(int_s, int_u) ?
-
     //
     // Max
     //
@@ -358,8 +356,6 @@ namespace oln
 		    typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_s<nbits, B1> impl;
     };
-
-    // FIXME: define MAX(int_s, int_u) ?
 
     //
     // Comparison operator
