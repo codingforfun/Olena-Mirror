@@ -36,38 +36,26 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 ACLOCAL = @ACLOCAL@
-AMDEP_FALSE = @AMDEP_FALSE@
-AMDEP_TRUE = @AMDEP_TRUE@
 AMTAR = @AMTAR@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
-CPPFLAGS = @CPPFLAGS@
-CXX = @CXX@
-CXXCPP = @CXXCPP@
-CXXDEPMODE = @CXXDEPMODE@
-CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
 DEFS = @DEFS@
-DEPDIR = @DEPDIR@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
-EGREP = @EGREP@
-EXEEXT = @EXEEXT@
-FFTW_CFLAGS = @FFTW_CFLAGS@
-FFTW_LDFLAGS = @FFTW_LDFLAGS@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
-LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
 LTLIBOBJS = @LTLIBOBJS@
+MAINT = @MAINT@
+MAINTAINER_MODE_FALSE = @MAINTAINER_MODE_FALSE@
+MAINTAINER_MODE_TRUE = @MAINTAINER_MODE_TRUE@
 MAKEINFO = @MAKEINFO@
-MORPHO_UTILITIES = @MORPHO_UTILITIES@
-OBJEXT = @OBJEXT@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
@@ -75,21 +63,11 @@ PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
-RANLIB = @RANLIB@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
-UTILITIES = @UTILITIES@
 VERSION = @VERSION@
-ZLIB_CFLAGS = @ZLIB_CFLAGS@
-ZLIB_LDFLAGS = @ZLIB_LDFLAGS@
-ac_ct_CXX = @ac_ct_CXX@
-ac_ct_RANLIB = @ac_ct_RANLIB@
 ac_ct_STRIP = @ac_ct_STRIP@
-am__fastdepCXX_FALSE = @am__fastdepCXX_FALSE@
-am__fastdepCXX_TRUE = @am__fastdepCXX_TRUE@
-am__include = @am__include@
-am__quote = @am__quote@
 bindir = @bindir@
 build_alias = @build_alias@
 datadir = @datadir@
@@ -107,13 +85,14 @@ prefix = @prefix@
 program_transform_name = @program_transform_name@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
+subdirs = @subdirs@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 
 olndir = $(includedir)/oln
 
-nobase_nodist_oln_HEADERS = config/pconf.hh
 
+# nobase_nodist_oln_HEADERS = config/pconf.hh
 nobase_oln_HEADERS = \
   arith/internal/opdecls.hh			\
   arith/logic.hh				\
@@ -123,6 +102,8 @@ nobase_oln_HEADERS = \
   basics2d.hh					\
   basics3d.hh					\
   config/system.hh				\
+  config/pconf.hh				\
+  config/pconf.inc				\
   convert/basics.hh				\
   convert/bound.hh				\
   convert/colorconv.hh				\
@@ -272,6 +253,7 @@ nobase_oln_HEADERS = \
   morpho/dilation.hh				\
   morpho/erosion.hh				\
   morpho/extrema.hh				\
+  morpho/extrema.hxx				\
   morpho/fast_morpho.hh				\
   morpho/fast_morpho.hxx			\
   morpho/geodesic_dilation.hh			\
@@ -354,50 +336,23 @@ nobase_oln_HEADERS = \
   types/yiq.hh					\
   types/yuv.hh
 
-
-EXTRA_DIST = config/extrconf.sh
-PERL = perl
-SCANDEFS_PL = $(top_srcdir)/tools/scandefs.pl
-PCONF_OCCURS = $(srcdir)/config/system.hh $(top_srcdir)/tests/io/2d.cc \
-	$(srcdir)/transforms/fft.hh
-
-
-DISTCLEANFILES = config/pconf.hh config/stamp-h1
 subdir = oln
 mkinstalldirs = $(SHELL) $(top_srcdir)/tools/mkinstalldirs
-CONFIG_HEADER = $(top_builddir)/oln/config/config.h
+CONFIG_HEADER = $(top_builddir)/oln/config/pconf.hh
 CONFIG_CLEAN_FILES =
 DIST_SOURCES =
-HEADERS = $(nobase_nodist_oln_HEADERS) $(nobase_oln_HEADERS)
+HEADERS = $(nobase_oln_HEADERS)
 
 DIST_COMMON = $(nobase_oln_HEADERS) Makefile.am Makefile.in
 all: all-am
 
 .SUFFIXES:
-$(srcdir)/Makefile.in:  Makefile.am  $(top_srcdir)/configure.ac $(ACLOCAL_M4)
+$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am  $(top_srcdir)/configure.ac $(ACLOCAL_M4)
 	cd $(top_srcdir) && \
 	  $(AUTOMAKE) --foreign  oln/Makefile
-Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
+Makefile: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
 uninstall-info-am:
-nobase_nodist_olnHEADERS_INSTALL = $(install_sh_DATA)
-install-nobase_nodist_olnHEADERS: $(nobase_nodist_oln_HEADERS)
-	@$(NORMAL_INSTALL)
-	$(mkinstalldirs) $(DESTDIR)$(olndir)
-	@list='$(nobase_nodist_oln_HEADERS)'; for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  f="$$p"; \
-	  echo " $(nobase_nodist_olnHEADERS_INSTALL) $$d$$p $(DESTDIR)$(olndir)/$$f"; \
-	  $(nobase_nodist_olnHEADERS_INSTALL) $$d$$p $(DESTDIR)$(olndir)/$$f; \
-	done
-
-uninstall-nobase_nodist_olnHEADERS:
-	@$(NORMAL_UNINSTALL)
-	@list='$(nobase_nodist_oln_HEADERS)'; for p in $$list; do \
-	  f="$$p"; \
-	  echo " rm -f $(DESTDIR)$(olndir)/$$f"; \
-	  rm -f $(DESTDIR)$(olndir)/$$f; \
-	done
 nobase_olnHEADERS_INSTALL = $(install_sh_DATA)
 install-nobase_olnHEADERS: $(nobase_oln_HEADERS)
 	@$(NORMAL_INSTALL)
@@ -508,7 +463,7 @@ check: check-am
 all-am: Makefile $(HEADERS)
 
 installdirs:
-	$(mkinstalldirs) $(DESTDIR)$(olndir) $(DESTDIR)$(olndir)
+	$(mkinstalldirs) $(DESTDIR)$(olndir)
 
 install: install-am
 install-exec: install-exec-am
@@ -530,7 +485,6 @@ clean-generic:
 
 distclean-generic:
 	-rm -f Makefile $(CONFIG_CLEAN_FILES)
-	-test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -551,8 +505,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-nobase_nodist_olnHEADERS \
-	install-nobase_olnHEADERS
+install-data-am: install-nobase_olnHEADERS
 
 install-exec-am:
 
@@ -578,26 +531,18 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-info-am uninstall-nobase_nodist_olnHEADERS \
-	uninstall-nobase_olnHEADERS
+uninstall-am: uninstall-info-am uninstall-nobase_olnHEADERS
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic ctags \
 	distclean distclean-generic distclean-tags distdir dvi dvi-am \
 	info info-am install install-am install-data install-data-am \
 	install-exec install-exec-am install-info install-info-am \
-	install-man install-nobase_nodist_olnHEADERS \
-	install-nobase_olnHEADERS install-strip installcheck \
-	installcheck-am installdirs maintainer-clean \
+	install-man install-nobase_olnHEADERS install-strip \
+	installcheck installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-generic pdf \
 	pdf-am ps ps-am tags uninstall uninstall-am uninstall-info-am \
-	uninstall-nobase_nodist_olnHEADERS uninstall-nobase_olnHEADERS
+	uninstall-nobase_olnHEADERS
 
-$(srcdir)/config/extrconf.sh: $(SCANDEFS_PL) $(PCONF_OCCURS)
-	$(PERL) $(SCANDEFS_PL) $(PCONF_OCCURS) >$@
-
-config/pconf.hh: $(srcdir)/config/extrconf.sh $(CONFIG_HEADER)
-	test -f $(CONFIG_HEADER)
-	$(SHELL) $(srcdir)/config/extrconf.sh $(CONFIG_HEADER) >config/pconf.hh; :
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

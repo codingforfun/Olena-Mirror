@@ -49,9 +49,10 @@
         (sprintf "%s & %s" (if in "\\textsc{in}" "") (if out "\\textsc{out}" ""))))
 
    (define (header)
-     (let* ((s1 (substring (get "srcfile") (string-length "../../doc/")))
+     (let* ((s1 (get "srcfile")) ;; (substring (get "srcfile") (string-length "../../doc/")))
 	    ;; strip extra leading slashes
-	    (s2 (regexp-substitute/global #f "^/*([^/].*)$" s1 1))
+	    ;; (s2 (regexp-substitute/global #f "^/*([^/].*)$" s1 1))
+	    (s2 (regexp-substitute/global #f "^.*/oln(/.*)$" s1 1 'post))
 	    ;; replace privare extensions (.hxx, .inc) by the public one (.hh)
 	    (s3 (regexp-substitute/global #f "\.(hxx|inc)$" s2 'pre ".hh")))
 	s3))
@@ -150,7 +151,7 @@ int main()
   (if (> (system (string-append "test -f " (pdf b/exoname))) 0)
      (begin
        (psystem "test -f " b/binname " ||\n"
-		"$CXX -Wall -W -I../.. -O2 -ftemplate-depth-50 example.cc -o " b/binname)
+		"$CXX -Wall -W -I$OLN_INCLUDEDIR -O2 example.cc -o " b/binname)
        (if (exist? ".exi")
 	  (psystem "ln -sf ../../img/" exiname " " b/exiname))
        (if (exist? ".exo")

@@ -45,15 +45,18 @@ AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
+CXXCPP = @CXXCPP@
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
+DOC_DIR = @DOC_DIR@
 DVIPS = @DVIPS@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
+EGREP = @EGREP@
 EXEEXT = @EXEEXT@
 GETDEFS = @GETDEFS@
 HEVEA = @HEVEA@
@@ -64,8 +67,12 @@ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
 LTLIBOBJS = @LTLIBOBJS@
+MAINT = @MAINT@
+MAINTAINER_MODE_FALSE = @MAINTAINER_MODE_FALSE@
+MAINTAINER_MODE_TRUE = @MAINTAINER_MODE_TRUE@
 MAKEINFO = @MAKEINFO@
 OBJEXT = @OBJEXT@
+OLN_INCLUDEDIR = @OLN_INCLUDEDIR@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
@@ -119,9 +126,9 @@ oln_ref_TEX = \
 
 TEXI2PDF = $(TEXI2DVI) --pdf
 
-olnsrc = $(top_srcdir)/../oln/
+olnsrc = $(OLN_INCLUDEDIR)/oln/
 
-COMMONGETDEFSFLAGS = --agarg=-DCXX=$(CXX) --agarg=--templ-dirs=../tpl
+COMMONGETDEFSFLAGS = --agarg=-DCXX=$(CXX) --agarg=-DOLN_INCLUDEDIR=$(OLN_INCLUDEDIR) --agarg=--templ-dirs=../tpl
 PROCESSINGGETDEFSFLAGS = \
   --subblock=tpl=type,name,doc \
   --subblock=arg=type,name,mode,doc \
@@ -156,10 +163,10 @@ all: all-am
 
 .SUFFIXES:
 .SUFFIXES: .dvi .info .pdf .ps .texi
-$(srcdir)/Makefile.in:  Makefile.am  $(top_srcdir)/configure.ac $(ACLOCAL_M4)
+$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am  $(top_srcdir)/configure.ac $(ACLOCAL_M4)
 	cd $(top_srcdir) && \
 	  $(AUTOMAKE) --foreign  doc/Makefile
-Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
+Makefile: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
 
 .texi.info:
@@ -211,9 +218,9 @@ dist-info: $(INFO_DEPS)
 	done
 
 mostlyclean-aminfo:
-	-rm -f oln-dev.aux oln-dev.cp oln-dev.fn oln-dev.ky oln-dev.log oln-dev.pg \
-	  oln-dev.tmp oln-dev.toc oln-dev.tp oln-dev.vr oln-dev.dvi \
-	  oln-dev.pdf oln-dev.ps
+	-rm -f oln-dev.aux oln-dev.cp oln-dev.cps oln-dev.fn oln-dev.ky oln-dev.log \
+	  oln-dev.pg oln-dev.tmp oln-dev.toc oln-dev.tp oln-dev.vr \
+	  oln-dev.dvi oln-dev.pdf oln-dev.ps
 
 maintainer-clean-aminfo:
 	list='$(INFO_DEPS)'; for i in $$list; do \

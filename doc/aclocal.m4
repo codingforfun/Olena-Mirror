@@ -783,3 +783,159 @@ AC_CONFIG_COMMANDS_PRE(
 Usually this means the macro was only invoked conditionally.])
 fi])])
 
+# Add --enable-maintainer-mode option to configure.
+# From Jim Meyering
+
+# Copyright 1996, 1998, 2000, 2001, 2002  Free Software Foundation, Inc.
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+# 02111-1307, USA.
+
+# serial 2
+
+AC_DEFUN([AM_MAINTAINER_MODE],
+[AC_MSG_CHECKING([whether to enable maintainer-specific portions of Makefiles])
+  dnl maintainer-mode is disabled by default
+  AC_ARG_ENABLE(maintainer-mode,
+[  --enable-maintainer-mode enable make rules and dependencies not useful
+                          (and sometimes confusing) to the casual installer],
+      USE_MAINTAINER_MODE=$enableval,
+      USE_MAINTAINER_MODE=no)
+  AC_MSG_RESULT([$USE_MAINTAINER_MODE])
+  AM_CONDITIONAL(MAINTAINER_MODE, [test $USE_MAINTAINER_MODE = yes])
+  MAINT=$MAINTAINER_MODE_TRUE
+  AC_SUBST(MAINT)dnl
+]
+)
+
+AU_DEFUN([jm_MAINTAINER_MODE], [AM_MAINTAINER_MODE])
+
+
+AC_DEFUN(AM_PATH_OLN,
+      [dnl 
+dnl Get the cflags and libraries from the oln-config script
+dnl
+AC_ARG_WITH(oln-include,[  --with-oln-include=PFX   Prefix where OLN is installed (optional)],
+            oln_include_prefix="$withval", oln_include_prefix="")
+
+  AC_REQUIRE([AC_PROG_CXX])
+  AC_LANG_PUSH([C++])
+
+  OLN_INCLUDEDIR=""
+  ac_save_CXXFLAGS="$CXXFLAGS"
+  ac_save_CPPFLAGS="$CPPFLAGS"
+
+  AC_MSG_NOTICE([checking for Olena headers])
+
+  within_olena_source_tree=ifelse([$1], [], [no], [$1])
+  if test x$within_olena_source_tree != xno; then
+     AC_MSG_NOTICE([Olena seems to lay around...])
+     within_olena_source_tree=`( cd $srcdir; cd $within_olena_source_tree; pwd )`
+     OLN_INCLUDEDIR="${within_olena_source_tree}"
+     CXXFLAGS="-I${within_olena_source_tree}"
+     CPPFLAGS="-I${within_olena_source_tree}"
+  fi
+
+  if test x$oln_include_prefix != x ; then
+     OLN_INCLUDEDIR="$oln_include_prefix"
+     CXXFLAGS="-I$oln_include_prefix $CXXFLAGS"
+     CPPFLAGS="-I$oln_include_prefix $CPPFLAGS"
+  fi
+
+  have_olena=yes
+  AC_CHECK_HEADER([oln/basics.hh], [], [have_olena=no])
+
+  if test $have_olena = yes; then
+     if test x$OLN_INCLUDEDIR != x; then
+        AC_MSG_NOTICE([Olena was found in $OLN_INCLUDEDIR, good.])
+     else
+        AC_MSG_RESULT([Olena was found, good.])
+     fi
+  else
+     AC_MSG_WARN([*** Olena source headers not found. Expect problems.])
+     CXXFLAGS="$ac_save_CXXFLAGS"
+     CPPFLAGS="$ac_save_CPPFLAGS"
+  fi   
+
+  AC_SUBST([OLN_INCLUDEDIR])
+  
+  AC_LANG_POP([C++])
+])
+
+AC_DEFUN(AC_WITH_OLN,
+[
+  AC_REQUIRE([AM_PATH_OLN])
+
+  AC_LANG_PUSH([C++])
+  AC_CHECK_HEADERS([limits sdl_config.h])
+  AC_LANG_POP([C++])
+])
+
+AC_DEFUN(AC_WITH_FFTW,
+[
+   AC_ARG_WITH(fftw,
+      [AC_HELP_STRING([--with-fft[=DIR]], [using fftw (DIR = prefix for fftw installation)])])
+   FFTW_CFLAGS=''
+   FFTW_LDFLAGS=''
+   if test "x$with_fftw" != xno; then
+      if test -n "$with_fftw"; then
+        FFTW_CFLAGS="-I${with_fftw}/include"
+        FFTW_LDFLAGS="-L${with_fftw}/lib"
+      fi
+      oln_save_CFLAGS=$CFLAGS
+      oln_save_LDFLAGS=$LDFLAGS
+      CFLAGS="$CFLAGS $FFTW_CFLAGS"
+      LDFLAGS="$LDFLAGS $FFTW_LDFLAGS"
+      AC_CHECK_HEADER([fftw.h],
+           [AC_CHECK_LIB([fftw], [fftw2d_create_plan],
+                [FFTW_LDFLAGS="${FFTW_LDFLAGS} -lfftw -lrfftw"
+                 AC_DEFINE([HAVE_FFTW], 1, [Define to 1 if we can use fftw])
+                ])
+           ])
+      CFLAGS=$oln_save_CFLAGS
+      LDFLAGS=$oln_save_LDFLAGS
+  fi
+  AC_SUBST([FFTW_CFLAGS])
+  AC_SUBST([FFTW_LDFLAGS])
+])
+
+
+AC_DEFUN(AC_WITH_ZLIB,
+[
+   AC_ARG_WITH(zlib,
+      [AC_HELP_STRING([--with-zlib[=DIR]], [using zlib (DIR = prefix for zlib installation)])])
+   ZLIB_CFLAGS=''
+   ZLIB_LDFLAGS=''
+   if test "x$with_zlib" != xno; then
+      if test -n "$with_zlib"; then
+        ZLIB_CFLAGS="-I${with_zlib}/include"
+        ZLIB_LDFLAGS="-L${with_zlib}/lib"
+      fi
+      oln_save_CFLAGS=$CFLAGS
+      oln_save_LDFLAGS=$LDFLAGS
+      CFLAGS="$CFLAGS $ZLIB_CFLAGS"
+      LDFLAGS="$LDFLAGS $ZLIB_LDFLAGS"
+      AC_CHECK_HEADER([zlib.h],
+       [AC_CHECK_LIB([z], [gzopen],
+          [ZLIB_LDFLAGS="${ZLIB_LDFLAGS} -lz"
+            AC_DEFINE([HAVE_ZLIB], 1, [Define to 1 if we can use zlib])])])
+      CFLAGS=$oln_save_CFLAGS
+      LDFLAGS=$oln_save_LDFLAGS
+   fi
+   AC_SUBST([ZLIB_CFLAGS])
+   AC_SUBST([ZLIB_LDFLAGS])
+])
+
+

@@ -1,1 +1,1 @@
-SUBDIRS = doc
+SUBDIRS = @DOC_DIR@

@@ -25,9 +25,9 @@ html/oln-ref.html: $(tex_TEX) $(oln_ref_TEX)
 	$(HEVEA) $(tex_TEX) -o html/oln-ref.html
 	$(HEVEA) $(tex_TEX) -o html/oln-ref.html
 
-olnsrc = $(top_srcdir)/../oln/
+olnsrc = $(OLN_INCLUDEDIR)/oln/
 
-COMMONGETDEFSFLAGS =  --agarg=-DCXX=$(CXX) --agarg=--templ-dirs=../tpl
+COMMONGETDEFSFLAGS =  --agarg=-DCXX=$(CXX) --agarg=-DOLN_INCLUDEDIR=$(OLN_INCLUDEDIR) --agarg=--templ-dirs=../tpl
 PROCESSINGGETDEFSFLAGS = \
   --subblock=tpl=type,name,doc \
   --subblock=arg=type,name,mode,doc \

@@ -43,6 +43,10 @@ AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
+CC = @CC@
+CCDEPMODE = @CCDEPMODE@
+CFLAGS = @CFLAGS@
+CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
 CXXCPP = @CXXCPP@
@@ -65,9 +69,13 @@ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
 LTLIBOBJS = @LTLIBOBJS@
+MAINT = @MAINT@
+MAINTAINER_MODE_FALSE = @MAINTAINER_MODE_FALSE@
+MAINTAINER_MODE_TRUE = @MAINTAINER_MODE_TRUE@
 MAKEINFO = @MAKEINFO@
 MORPHO_UTILITIES = @MORPHO_UTILITIES@
 OBJEXT = @OBJEXT@
+OLN_INCLUDEDIR = @OLN_INCLUDEDIR@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
@@ -75,7 +83,6 @@ PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
-RANLIB = @RANLIB@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -83,9 +90,11 @@ UTILITIES = @UTILITIES@
 VERSION = @VERSION@
 ZLIB_CFLAGS = @ZLIB_CFLAGS@
 ZLIB_LDFLAGS = @ZLIB_LDFLAGS@
+ac_ct_CC = @ac_ct_CC@
 ac_ct_CXX = @ac_ct_CXX@
-ac_ct_RANLIB = @ac_ct_RANLIB@
 ac_ct_STRIP = @ac_ct_STRIP@
+am__fastdepCC_FALSE = @am__fastdepCC_FALSE@
+am__fastdepCC_TRUE = @am__fastdepCC_TRUE@
 am__fastdepCXX_FALSE = @am__fastdepCXX_FALSE@
 am__fastdepCXX_TRUE = @am__fastdepCXX_TRUE@
 am__include = @am__include@
@@ -114,8 +123,8 @@ SUBDIRS = @MORPHO_UTILITIES@
 
 EXTRA_DIST = generate_morpho.sh
 
-AM_CPPFLAGS = -I$(top_builddir) -I$(top_srcdir)
-AM_CXXFLAGS = -Wall -W -ftemplate-depth-50 -ansi -pedantic
+AM_CPPFLAGS = -I$(OLN_INCLUDEDIR)
+AM_CXXFLAGS = -Wall -W -ftemplate-depth-50 
 
 bin_PROGRAMS = oln-mosaic-u8 oln-mosaic-u16
 
@@ -124,8 +133,7 @@ oln_mosaic_u8_CXXFLAGS = $(AM_CXXFLAGS) -DTYPE=int_u8
 oln_mosaic_u16_SOURCES = mosaic.cc
 oln_mosaic_u16_CXXFLAGS = $(AM_CXXFLAGS) -DTYPE=int_u16
 subdir = utilities
-mkinstalldirs = $(SHELL) $(top_srcdir)/tools/mkinstalldirs
-CONFIG_HEADER = $(top_builddir)/oln/config/config.h
+mkinstalldirs = $(SHELL) $(top_srcdir)/../tools/mkinstalldirs
 CONFIG_CLEAN_FILES =
 bin_PROGRAMS = oln-mosaic-u8$(EXEEXT) oln-mosaic-u16$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS)
@@ -141,8 +149,8 @@ oln_mosaic_u8_LDADD = $(LDADD)
 oln_mosaic_u8_DEPENDENCIES =
 oln_mosaic_u8_LDFLAGS =
 
-DEFAULT_INCLUDES =  -I. -I$(srcdir) -I$(top_builddir)/oln/config
-depcomp = $(SHELL) $(top_srcdir)/tools/depcomp
+DEFAULT_INCLUDES =  -I. -I$(srcdir)
+depcomp = $(SHELL) $(top_srcdir)/../tools/depcomp
 am__depfiles_maybe = depfiles
 @AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/oln_mosaic_u16-mosaic.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/oln_mosaic_u8-mosaic.Po
@@ -166,10 +174,10 @@ all: all-recursive
 
 .SUFFIXES:
 .SUFFIXES: .cc .o .obj
-$(srcdir)/Makefile.in:  Makefile.am  $(top_srcdir)/configure.ac $(ACLOCAL_M4)
+$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am  $(top_srcdir)/configure.ac $(ACLOCAL_M4)
 	cd $(top_srcdir) && \
 	  $(AUTOMAKE) --foreign  utilities/Makefile
-Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
+Makefile: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 install-binPROGRAMS: $(bin_PROGRAMS)

@@ -2,7 +2,7 @@
 
 olndir = $(includedir)/oln
 
-nobase_nodist_oln_HEADERS = config/pconf.hh
+# nobase_nodist_oln_HEADERS = config/pconf.hh
 
 nobase_oln_HEADERS =				\
   arith/internal/opdecls.hh			\
@@ -13,6 +13,8 @@ nobase_oln_HEADERS =				\
   basics2d.hh					\
   basics3d.hh					\
   config/system.hh				\
+  config/pconf.hh				\
+  config/pconf.inc				\
   convert/basics.hh				\
   convert/bound.hh				\
   convert/colorconv.hh				\
@@ -162,6 +164,7 @@ nobase_oln_HEADERS =				\
   morpho/dilation.hh				\
   morpho/erosion.hh				\
   morpho/extrema.hh				\
+  morpho/extrema.hxx				\
   morpho/fast_morpho.hh				\
   morpho/fast_morpho.hxx			\
   morpho/geodesic_dilation.hh			\
@@ -244,22 +247,3 @@ nobase_oln_HEADERS =				\
   types/yiq.hh					\
   types/yuv.hh
 
-
-
-EXTRA_DIST = config/extrconf.sh
-PERL = perl
-SCANDEFS_PL = $(top_srcdir)/tools/scandefs.pl
-PCONF_OCCURS = $(srcdir)/config/system.hh $(top_srcdir)/tests/io/2d.cc \
-	$(srcdir)/transforms/fft.hh
-$(srcdir)/config/extrconf.sh: $(SCANDEFS_PL) $(PCONF_OCCURS)
-	$(PERL) $(SCANDEFS_PL) $(PCONF_OCCURS) >$@
-
-config/pconf.hh: $(srcdir)/config/extrconf.sh $(CONFIG_HEADER)
-	test -f $(CONFIG_HEADER)
-## Ignore the result of config/extrconf.sh.  It might be non 0 if
-## grep matched nothing, but that's ok for us.  The sole case
-## we bother with is failure caused by an unexisting $(CONFIG_HEADER).
-## The test -f above take care of this.
-	$(SHELL) $(srcdir)/config/extrconf.sh $(CONFIG_HEADER) >config/pconf.hh; :
-
-DISTCLEANFILES = config/pconf.hh config/stamp-h1
