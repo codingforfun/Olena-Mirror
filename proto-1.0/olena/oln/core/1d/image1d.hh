@@ -120,8 +120,13 @@ namespace oln {
       this->exact_ptr = this;
     }
 
-    image1d(coord_t nindices) :
-      super_type(size1d(nindices))
+    image1d(const size1d& size) : super_type(size)
+    {
+      this->exact_ptr = this;
+    }
+
+    image1d(coord_t nindices, size_t border = 2) :
+      super_type(size1d(nindices, border))
     {
       this->exact_ptr = this;
     }

@@ -98,6 +98,12 @@ namespace oln {
       return ! this->operator==(rhs);
     }
 
+    /*! \brief operator <
+    **
+    ** Define the main comparison operator for value_box. <= >= and >
+    ** are computed using integre operators \see ntg/core/global_ops.hh:138.
+    */
+
     template <typename V>
     bool operator<(const V& rhs) const
     {
@@ -106,6 +112,15 @@ namespace oln {
 
     template <typename II>
     bool operator<(const value_box<II>& rhs) const
+    {
+      return this->value() < value.value();
+    }
+
+    /*! \brief specialized version for value_box<I>
+    **
+    ** FIXME: why do we need this class ???
+    */
+    bool operator<(const value_box<I>& rhs) const
     {
       return this->value() < value.value();
     }
@@ -133,6 +148,12 @@ namespace oln {
 
     template <typename II>
     value_box& operator=(const value_box<II>& rhs)
+    {
+      ima_->set(p_, rhs.value()); // automatic conversion from rhs to value_type
+      return *this;
+    }
+
+    value_box& operator=(const value_box<I>& rhs)
     {
       ima_->set(p_, rhs.value()); // automatic conversion from rhs to value_type
       return *this;
@@ -275,7 +296,12 @@ namespace oln {
     }
 
     template <typename II>
-    bool operator<(const value_box<II>& rhs) const
+    bool operator<(const value_box<const II>& rhs) const
+    {
+      return this->value() < rhs.value();
+    }
+
+    bool operator<(const value_box<const I>& rhs) const
     {
       return this->value() < rhs.value();
     }

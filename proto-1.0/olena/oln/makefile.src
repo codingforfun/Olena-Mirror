@@ -61,4 +61,5 @@ OLN_DEP =					\
   io/write_image.hh				\
   io/write_image_2d_pnm.hh			\
   level/compare.hh				\
-  level/fill.hh
+  level/fill.hh					\
+  utils/clone.hh

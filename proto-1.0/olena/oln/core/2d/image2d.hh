@@ -129,6 +129,11 @@ namespace oln {
       this->exact_ptr = this;
     }
 
+    image2d(const size2d& size) : super_type(size)
+    {
+      this->exact_ptr = this;
+    }
+
     image2d(coord_t nrows, coord_t ncols, size_t border = 2) :
       super_type(size2d(nrows, ncols, border))
     {

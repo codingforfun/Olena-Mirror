@@ -25,69 +25,71 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_OP_HH
-# define OLENA_CORE_ABSTRACT_OP_HH
+#ifndef OLN_UTILS_CLONE_HH
+# define OLN_UTILS_CLONE_HH
 
-# include <oln/core/abstract/image_identity.hh>
+# include <oln/core/abstract/op.hh>
+# include <oln/core/abstract/piter.hh>
 
 namespace oln {
 
   // fwd decl
-  namespace abstract {
-    template <typename O, typename E> struct op;
+  namespace utils {
+      template <typename I> struct clone_type;
   }
 
   // category
-  template <typename O, typename E>
-  struct set_category< abstract::op<O,E> > { typedef category::image ret; };
+  template <typename I>
+  struct set_category < utils::clone_type<I> >
+  {
+    typedef category::image ret;
+  };
 
   // super_type
-  template <typename O, typename E>
-  struct set_super_type< abstract::op<O,E> > { typedef abstract::image_identity<O, E> ret; };
+  template <typename I>
+  struct set_super_type < utils::clone_type<I> >
+  {
+    typedef abstract::op<I, utils::clone_type<I> > ret;
+  };
 
 
-  namespace abstract {
 
-    template <typename O, typename E>
-    struct op : public image_identity<O, E>
+  namespace utils {
+
+    template <typename I>
+    struct clone_type : abstract::op<I, clone_type<I> >
     {
-      typedef image_identity<O, E> super_type;
+      typedef abstract::op<I, clone_type<I> > super_type;
 
-      op(O& ref) : super_type(ref)
-      {
-	this->exact_ptr = (E*)(void*)(this);
-      }
+      mlc::box<I> input_;
 
-      op()
-      {
-	this->exact_ptr = (E*)(void*)(this);
-      }
-
-      void run()
-      {
-	impl_run();
-      }
-      virtual void impl_run()
-      {
-	std::cerr << "oops (nothing)" << std::endl;
-      }
-    };
-
-
-    template <typename E>
-    struct void_op : public mlc::any<E>
-    {
-      void_op()
+      clone_type(I& input) : input_(input)
       {}
 
-      void run()
+      void impl_run()
       {
-	this->exact().impl_run();
+	I ima(input_->size());
+	oln_type_of(I, fwd_piter) it(input_->size());
+
+	for_all(it)
+	  {
+	    ima[it] = (*input_)[it];
+	  }
+
+	*this->image_ = ima;
       }
     };
 
-  }
 
+    template <typename I>
+    clone_type<I> clone(abstract::image<I>& ima)
+    {
+      clone_type<I> tmp(ima.exact());
+      tmp.run();
+      return tmp;
+    }
+  }
 }
 
-#endif // ! OLENA_CORE_ABSTRACT_OP_HH
+
+#endif // ! OLN_UTILS_CLONE_HH

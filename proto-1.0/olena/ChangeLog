@@ -1,7 +1,18 @@
-2005-03-20  Simon Odou  <simon@lrde.epita.fr>
+2005-03-20  Damien Thivolle  <damien@lrde.epita.fr>
 
-	* oln/basics.hh: Add structuring element and neighborhood headers.
-	* oln/basics2d.hh: Likewise.
+	* tests/utils: New.
+	* tests/utils/tests: New.
+	* tests/utils/tests/clone: New.
+	* tests/utils/Makefile.am: New.
+	* oln/utils: New.
+	* oln/utils/clone.hh: New. Clone images.
+	* oln/makefile.src: Add new file.
+	* oln/core/value_box.hh: Add operators for value_box<I> because it
+	does not match template <typename II> value_box<II>.
+	* oln/core/abstract/op.hh: Add missing initialization.
+	* oln/core/1d/image1d.hh: Add constructor for size1d.
+	* oln/core/2d/image2d.hh: Add constructor for size2d.
+	* oln/core/3d/image3d.hh: Add constructor for size3d.
 
 2005-03-20  Simon Odou  <simon@lrde.epita.fr>
 

@@ -1,0 +1,35 @@
+#include "data.hh"
+
+#include <ntg/all.hh>
+
+#include <oln/basics2d.hh>
+#include <oln/utils/clone.hh>
+#include <oln/io/read_image.hh>
+#include <oln/level/compare.hh>
+#include <oln/level/fill.hh>
+
+
+bool check()
+{
+  oln::image2d<ntg::int_u8> ima1;
+  oln::image2d<ntg::int_u8> ima2;
+  oln::image2d<ntg::int_u8> ima_copy;
+
+  ima1 = oln::io::read(rdata("lena.pgm"));
+  ima2 = oln::io::read(rdata("lena.pgm"));
+  ima_copy = oln::utils::clone(ima1);
+
+  oln::level::fill(ima1, 0);
+  if (oln::level::is_equal(ima2, ima_copy))
+    {
+      std::cout << "OK" << std::endl;
+      return false;
+    }
+  else
+    {
+      std::cout << "FAIL" << std::endl;
+      return true;
+    }
+}
+
+

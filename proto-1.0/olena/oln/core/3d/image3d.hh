@@ -115,8 +115,13 @@ namespace oln {
       this->exact_ptr = this;
     }
 
-    image3d(coord_t nslices, coord_t nrows, coord_t ncols) :
-      super_type(size3d(nslices, nrows, ncols))
+    image3d(const size3d& size) : super_type(size)
+    {
+      this->exact_ptr = this;
+    }
+
+    image3d(coord_t nslices, coord_t nrows, coord_t ncols, size_t border = 2) :
+      super_type(size3d(nslices, nrows, ncols, border))
     {
       this->exact_ptr = this;
     }
