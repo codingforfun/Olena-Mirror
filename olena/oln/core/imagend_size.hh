@@ -28,6 +28,7 @@
 #ifndef OLENA_CORE_IMAGEND_SIZE_HH
 # define OLENA_CORE_IMAGEND_SIZE_HH
 
+# include <mlc/contract.hh>
 # include <oln/core/image_size.hh>
 # include <oln/core/coord.hh>
 # include <ntg/utils/debug.hh>
@@ -44,6 +45,13 @@ namespace oln {
 
     coord nth(unsigned n) const
     {
+      assertion(n < dim);
+      return coord_[n];
+    }
+
+   coord& nth(unsigned n)
+    {
+      assertion(n < dim);
       return coord_[n];
     }
 
@@ -78,11 +86,9 @@ namespace oln {
       return out.str();
     }
 
+ 
+
   protected:
-    coord& nth(unsigned n)
-    {
-      return coord_[n];
-    }
     coord border_;
   private:
     coord coord_[dim];

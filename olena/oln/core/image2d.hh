@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_IMAGE2D_HH
 # define OLENA_CORE_IMAGE2D_HH
 
-# include <oln/core/impl/image_array.hh>
+# include <oln/core/impl/image_array2d.hh>
 // # include <oln/io/readable.hh>
 // # include <oln/core/image.hh>
 # include <oln/core/abstract/image_with_impl.hh>
@@ -64,14 +64,13 @@ namespace oln {
     {}
 
     image2d(coord nrows, coord ncols, coord border = 2) :
-      super_type(new impl_type(image2d_size(nrows, ncols, border)), 
-		 image2d_size(nrows, ncols, border))
+      super_type(new impl_type(image2d_size(nrows, ncols, border)))
     {
       super_type::impl()->ref();
     }
 
     image2d(const image2d_size& size) :
-      super_type(new impl_type(size), size)
+      super_type(new impl_type(size))
     {
       super_type::impl()->ref();
     }

@@ -37,14 +37,16 @@
 namespace oln {
 
   template<class T>
-  void allocate_data_(size_t s, T*& buffer)
+  void allocate_data_(T*& buffer, size_t s)
   {
+    precondition(s > 0);
     buffer = new T[s];
   }
   
   template<class T>
-  void desallocate_data_(size_t s, T*& buffer)
+  void desallocate_data_(T*& buffer, size_t s)
   {
+    precondition(buffer != 0);
     delete[] buffer;
     buffer = 0; // security
   }
@@ -69,9 +71,9 @@ namespace oln {
 
       enum { dim = image_traits<ExactI>::dim };
 
-      image_array(const size_type& s): super_type(), size_(s), buffer_(0)
+      image_array(const size_type& s): super_type(s), buffer_(0)
       {
-	allocate_data_(len(s), buffer_);
+	allocate_data_(buffer_, len(s));
       }
 
       size_t len(const size_type& s) const 
@@ -81,26 +83,6 @@ namespace oln {
 
       image_array(const self_type&);     // cpy ctor  w/o impl
       void operator=(const self_type&); // assign op w/o impl
-
-
-      coord linearize(const point_type& p) const
-      {
-	return to_exact(*this).linearize_(p);
-      }
-
-      value_type& at_(const point_type& p)
-      {
-	invariant(buffer_ != 0);
-	precondition_hold_large(p);
-	return buffer_[linearize(p)];
-      }
-      
-      const value_type& at_(const point_type& p) const
-      {
-	invariant(buffer_ != 0);
-	precondition_hold_large(p);
-	return buffer_[linearize(p)];
-      }
 
       const T* buffer() const
       {
@@ -117,168 +99,17 @@ namespace oln {
     protected:
       ~image_array()
       {
-	desallocate_data_(len(size_), buffer_);
+	desallocate_data_(buffer_, len(size_));
       }
-      size_type size_;
-
-    private:
+    
       T* buffer_;
-            
+        
+    private:
       image_array<T, ExactI, E> clone_() const
       {
 	// FIXME: implement
       }
      
-    };
-
-    template<class T, class ExactI>
-    class image_array1d :
-      public image_array<T, ExactI, image_array1d<T, ExactI> >
-    {
-    public:
-      typedef typename image_traits<ExactI>::point_type point_type;
-      typedef typename image_traits<ExactI>::iter_type iter_type;
-      typedef typename image_traits<ExactI>::fwd_iter_type fwd_iter_type;
-      typedef typename image_traits<ExactI>::bkd_iter_type bkd_iter_type;
-      typedef typename image_traits<ExactI>::value_type value_type;
-      typedef typename image_traits<ExactI>::size_type size_type;
-
-      typedef image_array<T, ExactI, image_array1d<T, ExactI> > super_type;
-      typedef image_array1d<T, ExactI> self_type;
-
-      image_array1d(const size_type& s): super_type(s) {}
-
-      bool hold_(const oln::point1d& p) const
-      {
-	return
-	  p.col() >= 0 &&
-	  p.col() < size_.ncols();
-      }
-
-      bool hold_large_(const oln::point1d& p) const
-      {
-	return
-	  p.col() >= - size_.border() &&
-	  p.col() < size_.ncols() + size_.border();
-      }
-
-      coord linearize_(const oln::point1d& p) const
-      {
-	return p.col() + size_.border();
-      }
-
-      size_t len_(const oln::image1d_size& s) const
-      {
-	coord ncols_eff = s.ncols() + 2 * s.border();
-	return size_t(ncols_eff);
-      }
-    };
-
-    template<class T, class ExactI>
-    class image_array2d : 
-      public image_array<T, ExactI, image_array2d<T, ExactI> >
-    {
-    public:
-      typedef typename image_traits<ExactI>::point_type point_type;
-      typedef typename image_traits<ExactI>::iter_type iter_type;
-      typedef typename image_traits<ExactI>::fwd_iter_type fwd_iter_type;
-      typedef typename image_traits<ExactI>::bkd_iter_type bkd_iter_type;
-      typedef typename image_traits<ExactI>::value_type value_type;
-      typedef typename image_traits<ExactI>::size_type size_type;
-
-      typedef image_array<T, ExactI, image_array2d<T, ExactI> > super_type;
-      typedef image_array2d<T, ExactI> self_type;
-
-      image_array2d(const size_type& s): super_type(s) {}
-
-      bool hold_(const oln::point2d& p) const
-      {
-	return
-	  p.row() >= 0 &&
-	  p.row() < size_.nrows() &&
-	  p.col() >= 0 &&
-	  p.col() < size_.ncols();
-      }
-
-      bool hold_large_(const oln::point2d& p) const
-      {
-	return
-	  p.row() >= - size_.border() &&
-	  p.row() < size_.nrows() + size_.border() &&
-	  p.col() >= - size_.border() &&
-	  p.col() < size_.ncols() + size_.border();
-      }
-
-      coord linearize_(const oln::point2d& p) const
-      {
-	coord ncols_eff = size_.ncols() + 2 * size_.border();
-	return (p.row() + size_.border()) * ncols_eff + p.col() 
-	  + size_.border(); 
-      }
-
-      size_t len_(const oln::image2d_size& s) const 
-      {
-	coord ncols_eff = s.ncols() + 2 * s.border();
-	coord nrows_eff = s.nrows() + 2 * s.border();
-	return size_t(nrows_eff * ncols_eff);
-      }
-    };
-
-
-    template<class T, class ExactI>
-    class image_array3d :
-      public image_array<T, ExactI, image_array3d<T, ExactI> >
-    {
-    public:
-      typedef typename image_traits<ExactI>::point_type point_type;
-      typedef typename image_traits<ExactI>::iter_type iter_type;
-      typedef typename image_traits<ExactI>::fwd_iter_type fwd_iter_type;
-      typedef typename image_traits<ExactI>::bkd_iter_type bkd_iter_type;
-      typedef typename image_traits<ExactI>::value_type value_type;
-      typedef typename image_traits<ExactI>::size_type size_type;
-
-      typedef image_array<T, ExactI, image_array3d<T, ExactI> > super_type;
-      typedef image_array3d<T, ExactI> self_type;
-
-      image_array3d(const size_type& s): super_type(s) {}
-
-      bool hold_(const oln::point3d& p) const
-      {
-	return (p.slice >= 0
-		&& p.slice < size_.nslices()
-		&& p.row() >= 0
-		&& p.row() < size_.nrows()
-		&& p.col() >= 0
-		&& p.col() < size_.ncols());
-      }
-
-      bool hold_large_(const oln::point3d& p) const
-      {
-	return (p.slice() >= -size_.border()
-		&& p.slice() < size_.nslices() + size_.border()
-		&& p.row() >= - size_.border()
-		&& p.row() < size_.nrows() + size_.border()
-		&& p.col() >= - size_.border()
-		&& p.col() < size_.ncols() + size_.border());
-      }
-
-      coord linearize_(const oln::point3d& p) const
-      {
-	coord ncols_eff = size_.ncols() + 2 * size_.border();
-	coord nrows_eff = size_.nrows() + 2 * size_.border();
-	return (p.slice() + size_.border()) * nrows_eff * ncols_eff 
-	  + (p.row() + size_.border()) * ncols_eff + p.col() 
-	  + size_.border();
-
-      }
-
-      size_t len_(const oln::image3d_size& s) const
-      {
-	coord nslices_eff = s.nslices() + 2 * s.border();
-	coord ncols_eff = s.ncols() + 2 * s.border();
-	coord nrows_eff = s.nrows() + 2 * s.border();
-	return size_t(nslices_eff * nrows_eff * ncols_eff);
-      }
     };
     
   } // end of namespace impl

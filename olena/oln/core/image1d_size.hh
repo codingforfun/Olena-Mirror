@@ -48,6 +48,12 @@ namespace oln {
       return nth(0);
     }
 
+    coord& ncols()
+    {
+      invariant(nth(0) > 0);
+      return nth(0);
+    }
+
     static std::string name() { return "image1d_size"; }
   };
 

@@ -134,17 +134,18 @@ namespace oln {
 
       coord ncols() const
       {
-	return size_.ncols();
+	return size().ncols();
       }
 
       coord border() const
       {
-	return size_.border();
+	return size().border();
       }
 
-      const size_type size() const
+      const size_type& size() const
       {
-	return size_;
+	assertion(has_impl_());
+	return to_exact(this)->impl()->size();
       }
 
       // FIXME: size_t ???
@@ -185,14 +186,13 @@ namespace oln {
       }
 
     protected:
-      image_with_dim(const size_type& s): size_(s) {}
+      image_with_dim() {}
 
       bool has_impl_() const
       {
 	return to_exact(this)->impl() != 0;
       }
 
-      size_type size_; 
     }; // end of one-dimensional specialization
 
     // bi-dimensional specialization
@@ -215,22 +215,23 @@ namespace oln {
 
       coord nrows() const
       {
-	return size_.nrows();
+	return size().nrows();
       }
 
       coord ncols() const
       {
-	return size_.ncols();
+	return size().ncols();
       }
 
       coord border() const
       {
-	return size_.border();
+	return size().border();
       }
 
-      const size_type size() const
+      const size_type& size() const
       {
-	return size_;
+	assertion(has_impl_());
+	return to_exact(this)->impl()->size();
       }
 
       // FIXME: size_t ???
@@ -271,14 +272,13 @@ namespace oln {
       }
 
     protected:
-      image_with_dim(const size_type& s): size_(s) {}
+      image_with_dim() {}
 
       bool has_impl_() const
       {
 	return to_exact(this)->impl() != 0;
       }
 
-      size_type size_; 
     }; // end of bi-dimensional specialization
 
     // tri-dimensional specialization
@@ -300,27 +300,28 @@ namespace oln {
 
       coord nslices() const
       {
-	return size_.nslices();
+	return size().nslices();
       }
 
       coord nrows() const
       {
-	return size_.nrows();
+	return size().nrows();
       }
 
       coord ncols() const
       {
-	return size_.ncols();
+	return size().ncols();
       }
 
       coord border() const
       {
-	return size_.border();
+	return size().border();
       }
 
       const size_type size() const
       {
-	return size_;
+	assertion(has_impl_());
+	return to_exact(this)->impl()->size();
       }
 
       
@@ -361,14 +362,12 @@ namespace oln {
       }
 
     protected:
-      image_with_dim(const size_type& s): size_(s) {}
+      image_with_dim(){}
 
       bool has_impl_() const
       {
 	return to_exact(this)->impl() != 0;
       }
-
-      size_type size_; 
     }; // end of tri-dimensional specialization
 
 

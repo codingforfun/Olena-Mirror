@@ -137,12 +137,54 @@ namespace oln {
 	return impl_.clone();
       }
 
+      // borders
+
+      void border_set_width(coord new_border, bool copy_border = false)
+      {
+	precondition(new_border >= 0);
+	precondition(impl() != 0);
+	if (border() == new_border)
+	  return;			// Nothing to do.
+	
+	impl()->border_reallocate_and_copy(new_border, copy_border);
+      }
+
+      void border_adapt_width(coord min_border, bool copy_border =
+			      false)
+      {
+	precondition(min_border >= 0);
+	if (border() >= min_border)
+	  return;			// Don't shrink.
+	
+	impl()->border_set_width(min_border, copy_border);
+      }
+
+      void border_adapt_copy(coord min_border)
+      {
+	border_adapt_width(min_border);
+	impl()->border_replicate();
+      }
+
+
+      void border_adapt_mirror(coord min_border)
+      {
+	border_adapt_width(min_border);
+	impl()->border_mirror(input);
+      }
+
+      void adapt_border_assign(coord min_border, value_type val)
+      {
+	border_adapt_width(min_border);
+	impl()->border_assign(val);
+      }
+
+
     protected:
       image_with_impl() : impl_(0)
       {}
 
-      image_with_impl(impl_type* impl, const size_type& s) : 
-	super_image_with_dim(s), 
+      image_with_impl(impl_type* impl) : 
+	super_image_with_dim(), 
 	impl_(impl) {}
       
     private:

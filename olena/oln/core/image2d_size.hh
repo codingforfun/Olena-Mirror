@@ -50,7 +50,19 @@ namespace oln {
       return nth(0);
     }
 
+    coord& nrows() 
+    {
+      invariant(nth(0) > 0);
+      return nth(0);
+    }
+
     coord ncols() const
+    {
+      invariant(nth(1) > 0);
+      return nth(1);
+    }
+
+    coord& ncols() 
     {
       invariant(nth(1) > 0);
       return nth(1);

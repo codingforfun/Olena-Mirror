@@ -52,13 +52,31 @@ namespace oln {
       return nth(0);
     }
 
+    coord& nslices() 
+    {
+      invariant(nth(0) > 0);
+      return nth(0);
+    }
+
     coord nrows() const
     {
       invariant(nth(1) > 0);
       return nth(1);
     }
 
+    coord& nrows() 
+    {
+      invariant(nth(1) > 0);
+      return nth(1);
+    }
+
     coord ncols() const
+    {
+      invariant(nth(2) > 0);
+      return nth(2);
+    }
+
+    coord& ncols() 
     {
       invariant(nth(2) > 0);
       return nth(2);

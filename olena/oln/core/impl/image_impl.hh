@@ -56,7 +56,7 @@ namespace oln {
 
       typedef Exact exact_type;
 
-      image_impl(): refcount_(0) {}
+      image_impl(const size_type s): refcount_(0), size_(s) {}
 
       void ref() const
       {
@@ -106,9 +106,43 @@ namespace oln {
 	return to_exact(this)->clone_();
       }
 
+      const size_type& size() const
+      {
+	return size_;
+      }
+
+      size_type& size()
+      {
+	return size_;
+      }
+
+      // borders
+
+      void border_reallocate_and_copy(coord new_border, bool
+				      copy_border)
+      {
+	to_exact(this)->border_reallocate_and_copy_(new_border, copy_border);
+      }
+
+      void border_replicate(void)
+      {
+	to_exact(this)->border_replicate_();
+      }
+
+      void border_mirror(void)
+      {
+	to_exact(this)->border_mirror_();
+      }
+
+      void border_assign(value_type val)
+      {
+	to_exact(this)->border_assign_();
+      }
+
     private:
       mutable unsigned refcount_;
-
+    protected:
+      size_type size_;
     };
 
 

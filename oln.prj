@@ -1,59 +1,38 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 8)
-(Parent-Version oln 2003paradigm 7)
-(Version-Log "Index: ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+(Project-Version oln 2003paradigm 9)
+(Parent-Version oln 2003paradigm 8)
+(Version-Log "	* oln/core/border1d.hh, oln/core/border2d.hh,
+	oln/core/border3d.hh, oln/core/border.hh: Remove.
 
-	* config/oln.m4: Remove -W for gnu compilers.
+	* oln/core/abstract/image_with_impl.hh: Implement the interface
+	for operations on borders.
+	
+	* oln/core/impl/image_impl.hh: Implement the interface
+	for internal operations on borders.
 
-Index: olena/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	* oln/core/impl/image_array.hh: Split into...
+	
+	* oln/core/impl/image_array1d.hh, 
+	ln/core/impl/image_array2d.hh, 
+	oln/core/impl/image_array3d.hh: ...these files. Implement
+	operations on borders. 
+	
+	* oln/core/image1d.hh, 
+	oln/core/image2d.hh, 
+	oln/core/image3d.hh: Modify constructors and includes in
+	consequence. 
 
-	* oln/basics1d.hh, oln/basics2d.hh, oln/basics3d.hh,
-	oln/basics.hh, oln/core/apply.hh, oln/core/bkd_iter1d.hh,
-	oln/core/bkd_iter2d.hh, oln/core/bkd_iter3d.hh,
-	oln/core/traverse.hh, oln/core/fold.hh, 
-	oln/core/generate.hh: Adjust.
+	* oln/core/image1d_size.hh, oln/core/image2d_size.hh,
+	oln/core/image3d_size.hh, oln/core/imagend_size.hh: Add write
+	access to sizes.
 
-	* tests/core/tests/image1: New test.
-
-+2003-02-25  David Lesage  <david@lrde.epita.fr>
-+
-+	Major changes, redesign the image hierarchy.
-+
-+	* oln/core/image1d.hh, oln/core/image1d_size.hh,
-+	oln/core/image2d.hh, oln/core/image2d_size.hh,
-+	oln/core/image3d.hh, oln/core/image3d_size.hh,
-+	oln/core/image.hh, oln/core/imagend_size.hh: Rewrite using the
-+	new design.
-+
-+	* oln/core/pred_image.hh: Rename as...
-+	* oln/core/abstract/binary_image.hh: ...this. Rewrite 
-+	using the new design.
-+
-+	* oln/core/abstract/image.hh,
-+	oln/core/abstract/image_with_dim.hh,
-+	oln/core/abstract/image_with_impl.hh,
-+	oln/core/abstract/image_with_type.hh,
-+	oln/core/impl/image_impl.hh, 
-+	oln/core/impl/image_array.hh: New.
-+
-+	* oln/core/internal/image1d_data.hh,
-+	oln/core/internal/image1d.hh,
-+	oln/core/internal/image2d_data.hh,
-+	oln/core/internal/image2d.hh,
-+	oln/core/internal/image3d_data.hh,
-+	oln/core/internal/image3d.hh,
-+	oln/core/internal/real_image1d.hh,
-+	oln/core/internal/real_image2d.hh,
-+	oln/core/internal/real_image3d.hh, 
-+	oln/core/regular_image.hh: Remove.
+	* oln/core/abstract/image_with_dim.hh: Modify constructor..
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 17 Jul 2003 16:34:03 +0200")
-(Checkin-Login burrus_n)
+(Checkin-Time "Fri, 18 Jul 2003 12:52:26 +0200")
+(Checkin-Login david)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
 ;; diff-ignore doc/doc/ref-morpho.tex$
@@ -141,7 +120,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.6 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.1 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.2 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.36 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.10 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.4 640))
@@ -223,10 +202,10 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.9 640))
   (olena/oln/core/bkd_iter2d.hh (oln/d/37_bkd_iter2d 1.9 640))
   (olena/oln/core/bkd_iter3d.hh (oln/d/36_bkd_iter3d 1.9 640))
-  (olena/oln/core/border1d.hh (oln/d/34_border1d.h 1.4 640))
-  (olena/oln/core/border2d.hh (oln/d/33_border2d.h 1.4 640))
-  (olena/oln/core/border3d.hh (oln/d/32_border3d.h 1.4 640))
-  (olena/oln/core/border.hh (oln/d/35_border.hh 1.8 640))
+  
+  
+  
+  
   (olena/oln/core/box.hh (oln/o/51_box.hh 1.3 640))
   (olena/oln/core/box.hxx (oln/p/0_box.hxx 1.4.1.1.1.1 640))
   (olena/oln/core/compose.hh (oln/c/22_compose.hh 1.3 640))
@@ -245,14 +224,14 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/core/fwd_iter2d.hh (oln/d/20_fwd_iter2d 1.7 640))
   (olena/oln/core/fwd_iter3d.hh (oln/d/19_fwd_iter3d 1.7 640))
   (olena/oln/core/generate.hh (oln/f/12_generate.h 1.13 640))
-  (olena/oln/core/image1d.hh (oln/c/47_image1d.hh 1.9 640))
-  (olena/oln/core/image1d_size.hh (oln/c/46_image1d_si 1.7 640))
-  (olena/oln/core/image2d.hh (oln/c/45_image2d.hh 1.11 640))
-  (olena/oln/core/image2d_size.hh (oln/c/44_image2d_si 1.7 640))
-  (olena/oln/core/image3d.hh (oln/c/43_image3d.hh 1.9 640))
-  (olena/oln/core/image3d_size.hh (oln/c/42_image3d_si 1.7 640))
+  (olena/oln/core/image1d.hh (oln/c/47_image1d.hh 1.10 640))
+  (olena/oln/core/image1d_size.hh (oln/c/46_image1d_si 1.8 640))
+  (olena/oln/core/image2d.hh (oln/c/45_image2d.hh 1.12 640))
+  (olena/oln/core/image2d_size.hh (oln/c/44_image2d_si 1.8 640))
+  (olena/oln/core/image3d.hh (oln/c/43_image3d.hh 1.10 640))
+  (olena/oln/core/image3d_size.hh (oln/c/42_image3d_si 1.8 640))
   (olena/oln/core/image.hh (oln/d/18_image.hh 1.8 640))
-  (olena/oln/core/imagend_size.hh (oln/c/8_imagend_si 1.10 640))
+  (olena/oln/core/imagend_size.hh (oln/c/8_imagend_si 1.11 640))
   (olena/oln/core/image_size.hh (oln/c/41_image_size 1.6 640))
   (olena/oln/core/internal/fake.hh (oln/d/17_fake.hh 1.3 640))
   
@@ -917,11 +896,11 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 ;; to version 2003paradigm.7(w), by burrus_n:
 
   (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.1 640))
-  (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.1 640))
-  (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.1 640))
+  (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.2 640))
+  (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.2 640))
   (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.1 640))
-  (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.1 640))
-  (olena/oln/core/impl/image_array.hh (oln/t/30_image_arra 1.1 640))
+  (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.2 640))
+  (olena/oln/core/impl/image_array.hh (oln/t/30_image_arra 1.2 640))
   (olena/tests/core/tests/image1 (oln/t/31_image1 1.1 640))
 
 ;; Files deleted by populate at Wed, 16 Jul 2003 17:00:53 +0200,
@@ -937,6 +916,21 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   ; (olena/oln/core/internal/image2d_data.hh ())
   ; (olena/oln/core/internal/image1d.hh ())
   ; (olena/oln/core/internal/image1d_data.hh ())
+
+;; Files added by populate at Fri, 18 Jul 2003 12:28:56 +0200,
+;; to version 2003paradigm.8(w), by david:
+
+  (olena/oln/core/impl/image_array3d.hh (oln/t/32_image_arra 1.1 644))
+  (olena/oln/core/impl/image_array2d.hh (oln/t/33_image_arra 1.1 644))
+  (olena/oln/core/impl/image_array1d.hh (oln/t/34_image_arra 1.1 644))
+
+;; Files deleted by depopulate at Fri, 18 Jul 2003 12:39:16 +0200,
+;; from version 2003paradigm.8(w), by david:
+
+  ; (olena/oln/core/border1d.hh ())
+  ; (olena/oln/core/border2d.hh ())
+  ; (olena/oln/core/border3d.hh ())
+  ; (olena/oln/core/border.hh ())
 )
 (Merge-Parents)
 (New-Merge-Parents)
