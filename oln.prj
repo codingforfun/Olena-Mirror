@@ -1,14 +1,36 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 191)
-(Parent-Version oln 10 190)
-(Version-Log "2004-06-13  Niels Van Vliet  <niels@lrde.epita.fr>
-	* olena/tests/convol/tests/slow_gaussian: New file.
+(Project-Version oln 10 192)
+(Parent-Version oln 10 191)
+(Version-Log "Index: doc/ChangeLog
+from  Simon Odou  <simon@lrde.epita.fr>
+
+        * ref/out/exdoc.config.in: Add -DHAVE_CONFIG_H and libs (for fft).
+
+Index: olena/ChangeLog
+from  Simon Odou  <simon@lrde.epita.fr>
+
+        * oln/convol/convolution.hh: Move to ...
+        * oln/convol/slow_convolution.hh: ... Here. Convolve two images
+        (convolution between image and w_window does not make sense).
+        * oln/transforms/fft.hh: Shift the DFT.
+        * tests/convol/Makefile.am: Add lib for fft test.
+        * tests/convol/tests/slow_sum_2d_1: Fix include.
+        * tests/convol/tests/slow_sum_2d_2: Likewise.
+        * tests/convol/tests/sobel_gradient: Likewise.
+        * oln/makefile.src: Add slow_convolution.hh and fast_convolution.hh.
+        * oln/convol/slow_gaussian.hh: Adapt to new kernel (image).
+        * oln/convol/slow_gaussian.hxx: Use image to compute convolution
+        (not w_window).
+        * oln/convol/fast_convolution.hh: New. Use fft to convolute.
+        * tests/convol/tests/fast_convol: New.
+
+EOF
 ")
 (New-Version-Log "")
-(Checkin-Time "Sun, 13 Jun 2004 13:20:59 +0200")
-(Checkin-Login van-vl_n)
+(Checkin-Time "Mon, 14 Jun 2004 09:07:03 +0200")
+(Checkin-Login odou_s)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -111,10 +133,10 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.12 600))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.12 600))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.13 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.45 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.42 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.8 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.9 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.13 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.39 600))
 
@@ -185,7 +207,7 @@
   (olena/oln/convert/rgbnrgb.hh (oln/17_rgbnrgb.hh 1.13 600))
   (olena/oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.14 600))
   (olena/oln/convert/stretch.hh (oln/f/51_stretch.hh 1.18 600))
-  (olena/oln/convol/convolution.hh (oln/f/39_convolutio 1.4.1.4.1.6.1.3 600))
+  (olena/oln/convol/slow_convolution.hh (oln/f/39_convolutio 1.4.1.4.1.6.1.4 600))
   (olena/oln/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.5.1.7 600))
   (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.6.1.9 600))
   (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.8.1.11 600))
@@ -322,7 +344,7 @@
   (olena/oln/morpho/closing.hh (oln/b/6_closing.hh 1.6 600))
   (olena/oln/morpho/closing.inc (oln/44_closing.in 1.18 600))
   (olena/oln/morpho/dilation.hh (oln/b/5_dilation.h 1.20 600))
-  (olena/oln/morpho/erosion.hh (oln/b/4_erosion.hh 1.22 640))
+  (olena/oln/morpho/erosion.hh (oln/b/4_erosion.hh 1.22 600))
   (olena/oln/morpho/extrema.hh (oln/38_extrema.hh 1.14 600))
   (olena/oln/morpho/extrema.hxx (oln/j/4_extrema.hx 1.18 600))
   (olena/oln/morpho/extrema_killer.hh (oln/e/19_extrema_ki 1.7.1.4.1.15 600))
@@ -353,7 +375,7 @@
   (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.11 600))
   (olena/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.7.1.10 600))
   (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.14 600))
-  (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.10 600))
+  (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.11 600))
   (olena/oln/transforms/wavelet_coeffs.hh (oln/i/34_wavelet_co 1.8 600))
   (integre/ntg/all.hh (oln/g/32_all.hh 1.10.1.8 600))
   (integre/ntg/real/behavior.hh (oln/g/31_behaviour. 1.13.1.15.1.2 600))
@@ -400,7 +422,7 @@
   (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.7 600))
   (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.7 600))
   (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.9 600))
-  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.14 640))
+  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.14 600))
   (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.10 600))
   (olena/oln/utils/timer.hh (oln/8_timer.hh 1.9 600))
   (olena/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.5.1.1 600))
@@ -422,10 +444,10 @@
   (olena/tests/convert/convcomp.hh (oln/f/1_convcomp.h 1.10 600))
   (olena/tests/convert/Makefile.am (oln/f/0_Makefile.a 1.14 600))
 
-  (olena/tests/convol/Makefile.am (oln/f/38_Makefile.a 1.13 600))
-  (olena/tests/convol/tests/slow_sum_2d_1 (oln/f/41_slow_sum_2 1.2.1.6 600))
-  (olena/tests/convol/tests/slow_sum_2d_2 (oln/f/40_slow_sum_2 1.2.1.5 600))
-  (olena/tests/convol/tests/sobel_gradient (oln/f/45_sobel_grad 1.3.1.7 600))
+  (olena/tests/convol/Makefile.am (oln/f/38_Makefile.a 1.14 600))
+  (olena/tests/convol/tests/slow_sum_2d_1 (oln/f/41_slow_sum_2 1.2.1.7 600))
+  (olena/tests/convol/tests/slow_sum_2d_2 (oln/f/40_slow_sum_2 1.2.1.6 600))
+  (olena/tests/convol/tests/sobel_gradient (oln/f/45_sobel_grad 1.3.1.8 600))
   (olena/tests/convol/sum_on_random.pgm (oln/f/42_sum_on_ran 1.1 600) :no-keywords)
 
   (olena/tests/io/tests/2d (oln/e/47_2d.cc 1.7.1.8 600))
@@ -766,7 +788,7 @@
 ;; to version 8.9(w), by jerome:
 
   (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.23 600))
-  (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.19 640))
+  (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.19 600))
 
   (olena/tests/convol () :directory)
   (metalic/config (../config) :symlink)
@@ -1183,7 +1205,7 @@
 ;; Files added by populate at Fri, 06 Feb 2004 16:00:19 +0100,
 ;; to version 10.57(w), by palma_g:
 
-  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.13.1.3 644))
+  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.13.1.3 600))
 
 ;; Files added by populate at Tue, 10 Feb 2004 15:26:15 +0100,
 ;; to version 10.62(w), by palma_g:
@@ -1219,7 +1241,7 @@
 ;; Files added by populate at Wed, 25 Feb 2004 16:41:16 +0100,
 ;; to version 10.67(w), by palma_g:
 
-  (doc/ref/out/exdoc.config.in (oln/k/7_exdoc.conf 1.7 600))
+  (doc/ref/out/exdoc.config.in (oln/k/7_exdoc.conf 1.8 600))
 
 ;; Files deleted by depopulate at Tue, 09 Mar 2004 10:41:51 +0100,
 ;; from version 10.70(w), by palma_g:
@@ -1435,14 +1457,14 @@
   (olena/tests/morpho/tests/gradient (oln/r/1_gradient 1.2 600))
   (integre/ntg/makefile.src (oln/r/2_makefile.s 1.1 600))
   (metalic/mlc/makefile.src (oln/r/3_makefile.s 1.1 600))
-  (olena/oln/makefile.src (oln/r/4_makefile.s 1.2 600))
+  (olena/oln/makefile.src (oln/r/4_makefile.s 1.3 600))
 
-  (olena/oln/convol/slow_gaussian.hh (oln/r/7_slow_gauss 1.2 644))
-  (olena/oln/convol/slow_gaussian.hxx (oln/r/8_slow_gauss 1.2 644))
+  (olena/oln/convol/slow_gaussian.hh (oln/r/7_slow_gauss 1.3 600))
+  (olena/oln/convol/slow_gaussian.hxx (oln/r/8_slow_gauss 1.3 600))
 ;; Files added by populate at Sun, 23 May 2004 13:50:56 +0200,
 ;; to version 10.186(w), by palma_g:
 
-  (olena/oln/utils/qsort.hh (oln/r/9_qsort.hh 1.1 644))
+  (olena/oln/utils/qsort.hh (oln/r/9_qsort.hh 1.1 600))
 
 ;; Files added by populate at Sun, 06 Jun 2004 23:11:34 +0200,
 ;; to version 10.187(w), by thivol_d:
@@ -1452,9 +1474,19 @@
 ;; Files added by populate at Sun, 13 Jun 2004 13:18:59 +0200,
 ;; to version 10.190(w), by van-vl_n:
 
-  (olena/tests/convol/tests/slow_gaussian (oln/r/11_slow_gauss 1.1 644))
+  (olena/tests/convol/tests/slow_gaussian (oln/r/11_slow_gauss 1.1 600))
+
+;; Files added by populate at Mon, 14 Jun 2004 04:44:42 +0200,
+;; to version 10.191(w), by simon:
+
+  (olena/oln/convol/fast_convolution.hh (oln/r/12_fast_convo 1.1 600))
+
+;; Files added by populate at Mon, 14 Jun 2004 07:43:20 +0200,
+;; to version 10.191(w), by simon:
+
+  (olena/tests/convol/tests/fast_convol (oln/r/13_fast_convo 1.1 600))
 )
 (Merge-Parents
-  (10.190 complete)
+  (10.191 complete)
 )
 (New-Merge-Parents)

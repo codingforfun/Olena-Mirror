@@ -31,7 +31,8 @@ OLN_DEP =					\
   convert/rgbxyz.hh				\
   convert/stretch.hh				\
   convert/value_to_point.hh			\
-  convol/convolution.hh				\
+  convol/slow_convolution.hh			\
+  convol/fast_convolution.hh			\
   convol/fast_gaussian.hh			\
   convol/fast_gaussian.hxx			\
   convol/fast_gaussian_coefficient.hh		\

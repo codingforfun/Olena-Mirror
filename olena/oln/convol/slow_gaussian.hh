@@ -30,7 +30,7 @@
 # define SLOW_GAUSSIAN_HH
 # include <oln/core/image.hh>
 # include <ntg/float.hh>
-# include "convolution.hh"
+# include <oln/convol/slow_convolution.hh>
 # include <oln/core/behavior.hh>
 
 namespace oln {
@@ -87,7 +87,14 @@ namespace oln {
       {
 	const typename gaussian_kernel<I::dim>::ret k
 	  = gaussian_kernel<I::dim>::kernel(sigma, radius_factor);
-	behavior.adapt_border(in, coord(k.delta()));
+
+	// Compute Delta.
+	// \todo FIXME: should be in the image hierarchy.
+	coord delta = 0;
+	for (unsigned i = 0; i < I::dim; i++)
+	  if (in.size().nth(i) > delta)
+	    delta = in.size().nth(i);
+	behavior.adapt_border(in, delta);
 
 	typename mute<I, ntg::float_d>::ret im =
 	  oln::convol::slow::convolve<ntg::float_d> (in, k);

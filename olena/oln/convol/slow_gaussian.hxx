@@ -28,9 +28,9 @@
 
 #ifndef SLOW_GAUSSIAN_HXX
 # define SLOW_GAUSSIAN_HXX
-# include <oln/core/w_window1d.hh>
-# include <oln/core/w_window2d.hh>
-# include <oln/core/w_window3d.hh>
+# include <oln/core/image1d.hh>
+# include <oln/core/image2d.hh>
+# include <oln/core/image3d.hh>
 
 namespace oln {
   namespace convol {
@@ -44,16 +44,18 @@ namespace oln {
 	inline T
 	normalise(const T &in)
 	{
-	  T w = in;
+	  T w(in.size());
 	  ntg::float_d sum = 0.;
-	  for (unsigned i = 0; i < in.card(); ++i)
-	    sum += in.w(i);
+	  oln_iter_type(T) i(in);
+	  for_all(i)
+	    sum += in[i];
 	  sum = 1. / sum;
 	  assert(finite(sum));
-	  for (unsigned i = 0; i < in.card(); ++i)
-	    w.set(w.dp(i), in.w(i) * sum);
+	  for_all(i)
+	    w[i] = in[i] * sum;
 	  return w;
 	}
+
 
       }// End namespace internal
 
@@ -61,12 +63,12 @@ namespace oln {
       template<>
       struct gaussian_kernel<1>
       {
-	typedef oln::w_window1d<ntg::float_d> ret;
+	typedef oln::image1d<ntg::float_d> ret;
 	enum {dim = 1};
 
 	//! Return a discrete Gaussian kernel, that is equal to zero
 	// at a distance of radius_factor * sigma.
-	static w_window1d<ntg::float_d>
+	static image1d<ntg::float_d>
 	kernel(ntg::float_d sigma,
 	       ntg::float_d radius_factor)
 	{
@@ -79,20 +81,20 @@ namespace oln {
 	//
 	// Note: the integral is not equal to 1 (discrete grid and 0 outside
 	// radius_factor * sigma). You should use kernel(sigma, radius_factor).
-	static w_window1d<ntg::float_d>
+	static image1d<ntg::float_d>
 	kernel_values(ntg::float_d sigma,
 		      ntg::float_d radius_factor)
 	{
 	  precondition(sigma > 0.);
 	  precondition(radius_factor >= 0.);
 
-	  w_window1d<ntg::float_d> w;
-
 	  const int size = int(sigma * radius_factor);
+	  image1d<ntg::float_d> w(size * 2 + 1);
+
 	  const ntg::float_d inv_sigma_sqrt_2pi
 	    = 1. / (sigma * sqrt(M_PI * 2.));
-	  for (int x = -size; x <= +size; ++x)
-	    w.add(x, inv_sigma_sqrt_2pi * exp(-x * x /(2 * sigma * sigma)));
+	  for (int x = -size; x <= size; ++x)
+	    w(x + size) = inv_sigma_sqrt_2pi * exp(-x * x /(2 * sigma * sigma));
 	  return w;
 	}
       };
@@ -101,12 +103,12 @@ namespace oln {
       template<>
       struct gaussian_kernel<2>
       {
-	typedef w_window2d<ntg::float_d> ret;
+	typedef image2d<ntg::float_d> ret;
 	enum {dim = 2};
 
 	//! Return a discrete Gaussian kernel, that is equal to zero at a
 	// distance of radius_factor * sigma.
-	static w_window2d<ntg::float_d>
+	static image2d<ntg::float_d>
 	kernel(ntg::float_d sigma,
 	       ntg::float_d radius_factor)
 	{
@@ -120,26 +122,27 @@ namespace oln {
 	//
 	// Note: the integral is not equal to 1 (discrete grid and 0 outside
 	// radius_factor * sigma). You should use kernel(sigma, radius_factor).
-	static w_window2d<ntg::float_d>
+	static image2d<ntg::float_d>
 	kernel_values(ntg::float_d sigma,
 	       ntg::float_d radius_factor)
 	{
 	  precondition(sigma > 0.);
 	  precondition(radius_factor >= 0.);
-	  w_window2d<ntg::float_d> w;
-
 	  const int size = int(sigma * radius_factor);
+	  image2d<ntg::float_d> w = image2d<ntg::float_d>(size * 2 + 1,
+							  size * 2 + 1);
+
 	  const ntg::float_d inv_sigma_sigma_pi_2 = 1. / (sigma * sigma *
 							  M_PI * 2.);
-
-	  for (int x = -size; x <= +size; ++x)
-	    for (int y = -size; y <= +size; ++y)
+	  for (int x = -size ; x <= size; ++x)
+	    for (int y = -size ; y <= size; ++y)
 	      if (x * x + y * y <= size * size)
-		w.add(x, y, inv_sigma_sigma_pi_2
-		      *  exp(- (x * x +	y * y)
-			     / ( 2. * sigma * sigma)
-			     )
-		    );
+		w(x + size, y + size) = inv_sigma_sigma_pi_2
+		  *  exp(- (x * x +	y * y)
+			 / ( 2. * sigma * sigma)
+			 );
+	      else
+		w(x + size, y + size) = 0;
 	  return w;
 	}
       };
@@ -148,12 +151,12 @@ namespace oln {
       template<>
       struct gaussian_kernel<3>
       {
-	typedef w_window3d<ntg::float_d> ret;
+	typedef image3d<ntg::float_d> ret;
 	enum {dim = 3};
 
 	//! Return a discrete Gaussian kernel, that is equal to zero at a
 	// distance of radius_factor * sigma.
-	static w_window3d<ntg::float_d>
+	static image3d<ntg::float_d>
 	kernel(ntg::float_d sigma,
 		    ntg::float_d radius_factor)
 	{
@@ -168,16 +171,18 @@ namespace oln {
 	//
 	// Note: the integral is not equal to 1 (discrete grid and 0 outside
 	// radius_factor * sigma). You should use kernel(sigma, radius_factor).
-	static w_window3d<ntg::float_d>
+	static image3d<ntg::float_d>
 	kernel_values(ntg::float_d sigma,
 	       ntg::float_d radius_factor)
 	{
 	  precondition(sigma > 0.);
 	  precondition(radius_factor >= 0.);
 
-	  w_window3d<ntg::float_d> w;
-
 	  const int size = int(sigma * radius_factor);
+	  image3d<ntg::float_d> w(size * 2 + 1,
+				  size * 2 + 1,
+				  size * 2 + 1);
+
 	  const ntg::float_d k = 1. / (sigma * sigma * sigma *
 				       sqrt((M_PI * 2.) * (M_PI * 2.) *
 					    (M_PI * 2.)));
@@ -186,9 +191,11 @@ namespace oln {
 	    for (int y = -size; y <= +size; ++y)
 	      for (int z = -size; z <= +size; ++z)
 		if (x * x + y * y + z * z <= size)
-		  w.add(x, y, z,  k *
-			exp(-(x * x + y * y + z * z)
-			    ) / (2. * sigma * sigma));
+		  w(x + size, y + size, z + size) = k *
+		    exp(-(x * x + y * y + z * z)
+			) / (2. * sigma * sigma);
+		else
+		  w(x + size, y + size, z + size) = 0;
 	  return w;
 	}
       };

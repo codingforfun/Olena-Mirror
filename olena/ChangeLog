@@ -1,3 +1,20 @@
+2004-06-14  Simon Odou  <simon@lrde.epita.fr>
+
+	* oln/convol/convolution.hh: Move to ...
+	* oln/convol/slow_convolution.hh: ... Here. Convolve two images
+	(convolution between image and w_window does not make sense).
+	* oln/transforms/fft.hh: Shift the DFT.
+	* tests/convol/Makefile.am: Add lib for fft test.
+	* tests/convol/tests/slow_sum_2d_1: Fix include.
+	* tests/convol/tests/slow_sum_2d_2: Likewise.
+	* tests/convol/tests/sobel_gradient: Likewise.
+	* oln/makefile.src: Add slow_convolution.hh and fast_convolution.hh.
+	* oln/convol/slow_gaussian.hh: Adapt to new kernel (image).
+	* oln/convol/slow_gaussian.hxx: Use image to compute convolution
+	(not w_window).
+	* oln/convol/fast_convolution.hh: New. Use fft to convolute.
+	* tests/convol/tests/fast_convol: New.
+
 2004-06-13  Niels Van Vliet  <niels@lrde.epita.fr>
 	* olena/tests/convol/tests/slow_gaussian: New file.
 

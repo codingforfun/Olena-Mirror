@@ -1,0 +1,33 @@
+#include "data.hh"
+#include "check.hh"
+
+#include <oln/basics2d.hh>
+#include <oln/convol/slow_gaussian.hh>
+#include <oln/convol/fast_convolution.hh>
+#include <oln/utils/md5.hh>
+
+using namespace oln;
+using namespace ntg;
+
+int main() {
+  oln::utils::key::value_type   data_key[] =
+    {0x7a, 0x42, 0xc0, 0xa5, 0xec, 0xc7, 0x14, 0xa, 0xc7,
+     0x21, 0xd9, 0x1f, 0xdb, 0xfa, 0x54, 0xb9};
+  oln::utils::key key(data_key);
+
+  image2d<int_u8> src(rdata("lena.pgm"));
+  float_d sigma = 2.5;
+  float_d radius = 3;
+  image2d<float_d> k = convol::slow::gaussian_kernel<2>::kernel(sigma, radius);
+  image2d<float_d> f_src(src.size());
+  oln_iter_type_(image2d<float_d>) i(src);
+  for_all(i)
+    f_src[i] = float_d(src[i]);
+
+  image2d<float_d> tmp = convol::fast::convolve<float_d>(f_src, k);
+
+  for_all(i)
+    src[i] = tmp[i];
+  if (oln::utils::md5(src) != key)
+    return false;
+}

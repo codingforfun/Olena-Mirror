@@ -26,8 +26,8 @@
 // Public License.
 
 
-#ifndef OLENA_CONVOL_CONVOLUTION_HH__
-# define OLENA_CONVOL_CONVOLUTION_HH__
+#ifndef OLENA_CONVOL_SLOW_CONVOLUTION_HH__
+# define OLENA_CONVOL_SLOW_CONVOLUTION_HH__
 
 # include <oln/basics.hh>
 # include <oln/basics2d.hh>
@@ -50,11 +50,13 @@ namespace oln {
       **
       ** \param DestValue Data type of the output image you want.
       ** \param I Exact type of the input image.
-      ** \param Win Exact type of the window.
       **
       ** \arg input The image to process.
       ** \arg win The window to convolve with.
       **
+      ** \deprecated This function is obsolete, prefer :
+      **       convolve(const abstract::non_vectorial_image< I >& input,
+      **       const abstract::image< J >& k)
       ** \todo FIXME: we must always specify DestValue.
       */
       template<class DestValue, class I, class Win>
@@ -76,6 +78,58 @@ namespace oln {
 	    output[p_im] = sum;
 	  }
 
+	return output;
+      }
+
+      /*!
+      ** \brief Perform a convolution of two images.
+      **
+      ** \param DestValue Data type of the output image you want.
+      ** \param I Exact type of the input image.
+      ** \param J Exact type of the input image (convolution kernel).
+      **
+      ** \arg input The image to process.
+      ** \arg k The kernel to convolve with.
+      **
+      ** \todo FIXME: we must always specify DestValue.
+      */
+      template<class DestValue, class I, class J>
+      typename mute<I, DestValue>::ret
+      convolve(const abstract::non_vectorial_image< I >& input,
+	       const abstract::image< J >& k)
+      {
+	mlc::eq<I::dim, J::dim>::ensure();
+
+	typename mute<I, DestValue>::ret output(input.size());
+
+	// Compute Delta.
+	// \todo FIXME: should be in the image hierarchy.
+	coord delta = 0;
+	for (unsigned i = 0; i < J::dim; i++)
+	  if (k.size().nth(i) > delta)
+	    delta = k.size().nth(i);
+	input.border_adapt_copy(delta);
+
+	// Computer center of the kernel.
+	// \todo FIXME: should be in the image hierarchy.
+	oln_iter_type(I) p_im(input);
+	oln_iter_type(I) p_k(k);
+	oln_point_type(I) center;
+	unsigned i_center = 0;
+	unsigned real_center = k.npoints() % 2 ? k.npoints() / 2 + 1 :
+	  k.npoints() / 2;
+	for_all(p_k)
+	  if (++i_center == real_center)
+	    center = p_k;
+
+	for_all(p_im)
+	  {
+	    DestValue sum = ntg_zero_val(DestValue);
+	    for_all(p_k)
+	      sum += static_cast<DestValue> (k[p_k]) *
+	      static_cast<DestValue> (input[p_im - (center - p_k)]);
+	    output[p_im] = sum;
+	  }
 	return output;
       }
 
@@ -107,4 +161,4 @@ namespace oln {
 
 } // end namespace oln
 
-#endif // OLENA_CONVOL_CONVOLUTION_HH__
+#endif // OLENA_CONVOL_SLOW_CONVOLUTION_HH__
