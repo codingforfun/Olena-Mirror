@@ -1,5 +1,9 @@
 2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
 
+	* Makefile.am: do not mention ISSUES any more.
+
+2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
+
 	* configure.ac: Warn when CXXFLAGS has unpleasant values.
 
 2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
