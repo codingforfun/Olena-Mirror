@@ -33,17 +33,6 @@
 # include <oln/morpho/environments.hh>
 # include <oln/morpho/abstract/attribute.hh>
 
-// // attribute dedicated macros
-// # define attr_lambda_type(T)	typename oln::morpho::attr::attr_traits< T >::lambda_type
-// # define attr_env_type(T)	typename oln::morpho::attr::attr_traits< T >::env_type
-// # define attr_value_type(T)	typename oln::morpho::attr::attr_traits< T >::value_type
-
-// # define attr_lambda_type_(T)	 oln::morpho::attr::attr_traits< T >::lambda_type
-// # define attr_env_type_(T)	 oln::morpho::attr::attr_traits< T >::env_type
-// # define attr_value_type_(T)	 oln::morpho::attr::attr_traits< T >::value_type
-
-
-
 namespace oln {
   namespace morpho {
     /*! \brief Implementation of attributes.
@@ -64,15 +53,6 @@ namespace oln {
 	}
       } // !tools
 
-
-//       // the traits fwd declaration
-//       /*!
-//       ** Traits  for attributes information.
-//       ** \param T Exact type of the attribute.
-//       */
-//       template <class T>
-//       struct attr_traits;
-
       /*!
       ** \brief Change the exact type of an attribute.
       **
@@ -82,9 +62,6 @@ namespace oln {
       */
       template <class In, class Exact>
       struct change_exact;
-
-
-      // the attributes hierarchy
 
 
       /*-----------*
