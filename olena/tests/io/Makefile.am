@@ -2,6 +2,8 @@
 
 include ../check/Makefile.runtests
 
+EXTRA_DIST += loadsave.hh
+
 CLEANFILES =					\
   black-test.pbm white-test.pbm			\
   lena						\

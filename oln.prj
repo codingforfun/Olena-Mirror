@@ -1,127 +1,15 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 85)
-(Parent-Version oln 2003paradigm 84)
-(Version-Log "Index: ChangeLog
+(Project-Version oln 2003paradigm 86)
+(Parent-Version oln 2003paradigm 85)
+(Version-Log "Index: olena/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* contrib/runtests: New.
-	* Makefile.am (EXTRA_DIST): Adjust.
-
-Index: olena/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	Reorganize the testsuite.
-
-	* tests/check/Makefile.runtests: New.
-	* tests/check/Makefile.am: Adjust.
-	* tests/check/Makefile.flags: Likewise.
-	* tests/check/Makefile.check: Likewise.
-
-	* tests/arith/runtests: Remove.	
-	* tests/arith/Makefile.am: Adjust.
-
-	* tests/core/runtests: Remove.
-	* tests/core/Makefile.am: Likewise.
-
-	* tests/convert/Makefile.am: Adjust.
-
-	* tests/convol/Makefile.am: Use runtests.
-	* tests/convol/slow_sum_2d_1.cc: Rename as
-	tests/convol/tests/slow_sum_2d_1.
-	* tests/convol/slow_sum_2d_2.cc: Rename as
-	tests/convol/tests/slow_sum_2d_2.
-	* tests/convol/sobel_gradient.cc: Rename as
-	tests/convol/tests/sobel_gradient.
-
-	* tests/io/Makefile.am: Use runtests.
-	* tests/io/2d.cc: Rename as...
-	* tests/io/tests/2d: ...this.
-	* tests/io/se_pass.cc: Rename as...
-	* tests/io/tests/se_pass: ...this.
-	* tests/io/se_fail.cc: Rename as...
-	* tests/io/tests/se_fail: ...this.
-	* tests/io/pretty.cc: Rename as...
-	* tests/io/tests/pretty: ...this.
-
-	* tests/level/Makefile.am: Use runtests.
-	* tests/level/cc.cc: Rename as...
-	* tests/level/tests/cc: ...this.
-	* tests/level/bin.cc: Rename as...
-	* tests/level/tests/bin: ...this.
-	* tests/level/connected.cc: Rename as...
-	* tests/level/tests/connected: ...this.
-	* tests/level/invert.cc: Rename as...
-	* tests/level/tests/invert: ...this.
-	* tests/level/set_level.cc: Rename as...
-	* tests/level/tests/set_level: ...this.	
-	* tests/level/threshold.cc: Rename as...
-	* tests/level/tests/threshold: ...this.		
-
-	* tests/morpho/Makefile.am: Use runtests.
-	* tests/morpho/edoc.cc: Rename as...
-	* tests/morpho/tests/edoc: ...this.
-	* tests/morpho/extrkiller.cc: Rename as...
-	* tests/morpho/tests/extrkiller: ...this.
-	* tests/morpho/reconstruction.cc: Rename as...
-	* tests/morpho/tests/reconstruction: ...this.
-
-	* tests/topo/Makefile.am: Use runtests.
-	* tests/topo/test-cmap.cc: Rename as...
-	* tests/topo/tests/test-cmap: ...this.
-	* tests/topo/test-dmap.cc: Rename as...
-	* tests/topo/tests/test-dcmap: ...this.	
-	* tests/topo/test-inter-pixel.cc: Rename as...
-	* tests/topo/tests/test-inter-pixel: ...this.
-	* tests/topo/test-tarjan.cc: Rename as...
-	* tests/topo/tests/test-tarjan: ...this.
-
-	* tests/transforms/Makefile.am: Use runtests.
-	* tests/transforms/dwt.cc: Rename as...
-	* tests/transforms/tests/dwt: ...this.
-	* tests/transforms/fft.cc: Rename as...
-	* tests/transforms/tests/fft: ...this.
-
-	* tests/utils/Makefile.am: Use runtests.
-	* tests/utils/histogram.cc: Rename as...
-	* tests/utils/tests/histogram: ...this.
-	* tests/utils/stat.cc: Rename as...
-	* tests/utils/tests/stat: ...this.
-	* tests/utils/timer.cc: Rename as...
-	* tests/utils/tests/timer: ...this.
-
-+2003-08-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-+	
- 	* tests/check/Makefile.flags: Add new flags.
- 	* tests/arith/Makefile.am: Adjust.
- 	* tests/core/Makefile.am: Likewise.
-Index: integre/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* tests/check/Makefile.runtests: New.
-	* tests/check/Makefile.flags: New.
-	* tests/Makefile.am: Adjust.
-	* tests/utils/runtests: Remove.
-	* tests/utils/Makefile.am: Adjust.
-
-Index: metalic/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* tests/check/Makefile.runtests: New.
-	* tests/main/Makefile.am: Use runtests.
-	* tests/main/runtests: Remove.
-
-Index: doc/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* demo/test-reconstruction.cc: Move into
-	top_srcdir/olena/tests/morpho/tests/test-reconstruction.
-	* demo/Makefile.am: Adjust.
-
+        * tests/io/Makefile.am (EXTRA_DIST): Distribute loadsave.hh.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 01 Aug 2003 02:45:53 +0200")
+(Checkin-Time "Fri, 01 Aug 2003 10:59:48 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -211,7 +99,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.10 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.1 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.2 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.20 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.29 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.1 640))
@@ -536,7 +424,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (olena/tests/io/tests/2d (oln/e/47_2d.cc 1.7.1.5 640))
   (olena/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.7.1.7 640))
-  (olena/tests/io/Makefile.am (oln/e/49_Makefile.a 1.18 640))
+  (olena/tests/io/Makefile.am (oln/e/49_Makefile.a 1.19 640))
   (olena/tests/io/tests/pretty (oln/i/42_pretty.cc 1.2 640))
   (olena/tests/io/tests/se_fail (oln/i/43_se_fail.cc 1.3 640))
   (olena/tests/io/tests/se_pass (oln/i/44_se_pass.cc 1.2 640))

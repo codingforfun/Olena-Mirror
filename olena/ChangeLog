@@ -1,5 +1,7 @@
 2003-08-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* tests/io/Makefile.am (EXTRA_DIST): Distribute loadsave.hh.
+
 	Reorganize the testsuite.
 
 	* tests/check/Makefile.runtests: New.
