@@ -45,6 +45,11 @@ namespace oln {
     window() {}
   };
 
+   template<int N>
+   struct get_se
+   {};
+
+
 } // end of oln
 
 #endif // ! OLENA_CORE_WINDOW_HH

@@ -25,20 +25,53 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_MORPHO_CLOSING_HH
-# define OLENA_MORPHO_CLOSING_HH
+#ifndef OLENA_CONVERT_CONVERSION_NG_SE_HH
+# define OLENA_CONVERT_CONVERSION_NG_SE_HH
 
-# include "morpho/erosion.hh"
-# include "morpho/dilation.hh"
-# include "meta/cmp.hh"
+# include "basics.hh"
+
+// because of the internal function in this file
+# include "basics1d.hh"
+# include "basics2d.hh"
+# include "basics3d.hh"
+# include "core/neighborhood1d.hh"
+# include "core/neighborhood2d.hh"
+# include "core/neighborhood3d.hh"
 
 namespace oln {
-  namespace morpho {
-#   include "closing.inc"
-    namespace fast {
-#     include "closing.inc"
-    }
-  }
-}
+  namespace convert {
 
-#endif // OLENA_MORPHO_CLOSING_HH
+    template<class _N>
+    typename get_se< _N::dim >::ret
+    ng_to_se(const neighborhood<_N>& _Ng)
+    {
+      Exact_cref(N, Ng);
+      typename get_se< N::dim >::ret output;
+      Iter(N) p(Ng);
+      for_all(p)
+	output.add(p);
+      return output;
+     }
+
+    template<class _N>
+    typename get_se< _N::dim >::ret
+    ng_to_cse(const neighborhood<_N>& _Ng)
+    {
+      Exact_cref(N, Ng);
+      typename get_se< N::dim >::ret output;
+      Iter(N) p(Ng);
+      for_all(p)
+	output.add(p);
+      DPoint(N) zero;
+      for (unsigned size = 0; size < N::dim; ++size)
+	zero.nth(size) = 0;
+      output.add(zero);
+      return output;
+    }
+
+
+  } // convert
+} // oln
+
+
+#endif // OLENA_CONVERT_CONVERSION_NG_SE_HH

@@ -47,6 +47,8 @@ namespace oln {
 	static V
 	max(const I& input, const Point(I)& p, const E& se)
 	{
+	  meta::eq<I::dim, E::dim>::ensure();
+
 	  Iter(E) dp(se);
 	  dp = begin;
 	  V val = input[p + dp];
@@ -59,6 +61,7 @@ namespace oln {
 	static V
 	min(const I& input, const Point(I)& p, const E& se)
 	{
+	  meta::eq<I::dim, E::dim>::ensure();
 	  Iter(E) dp(se);
 	  dp = begin;
 	  V val = input[p + dp];
@@ -78,6 +81,7 @@ namespace oln {
 	static bin
 	max(const I& input, const Point(I)& p, const E& se)
 	{
+	  meta::eq<I::dim, E::dim>::ensure();
 	  Iter(E) dp(se);
 	  for_all (dp)
 	    if (input[p + dp] == true)
@@ -88,6 +92,7 @@ namespace oln {
 	static bin
 	min(const I& input, const Point(I)& p, const E& se)
 	{
+	  meta::eq<I::dim, E::dim>::ensure();
 	  Iter(E) dp(se);
 	  for_all (dp)
 	    if (input[p + dp] == false)
@@ -106,6 +111,7 @@ namespace oln {
     {
       Exact_cref(I, input);
       Exact_cref(E, se);
+      meta::eq<I::dim, E::dim>::ensure();
       return internal::_stat<I, E>::max(input, p, se);
     }
 
@@ -116,6 +122,7 @@ namespace oln {
     {
       Exact_cref(I, input);
       Exact_cref(E, se);
+      meta::eq<I::dim, E::dim>::ensure();
       return internal::_stat<I, E>::min(input, p, se);
     }
 

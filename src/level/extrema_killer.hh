@@ -47,16 +47,16 @@ namespace oln {
 
   namespace level {
 
-    template<class _I, class _E>
+    template<class _I, class _N>
     typename mute<_I, bin>::ret
     internal_kill_cc_area(const image<_I>& _input,
 			  const unsigned int area,
-			  const struct_elt<_E>& _se)
+			  const neighborhood<_N>& _Ng)
     {
       Exact_cref(I, input);
-      Exact_cref(E, se);
+      Exact_cref(N, Ng);
 
-      typename mute<_I, int_u<20> >::ret cc = level::connected_component<int_u<20> >(input, se);
+      typename mute<_I, int_u<20> >::ret cc = level::connected_component<int_u<20> >(input, Ng);
       // label 0 is background
       int_u<20> max_label = 0;
       image2d<int_u<20> >::iter p(cc);
@@ -102,13 +102,14 @@ namespace oln {
      * exo: out.pgm
      * wontcompile: fixme
      =*/
-    template<class _I, class _E>
+    template<class _I, class _N>
     Concrete(_I) sure_maxima_killer(const image<_I>& _input,
 				    const unsigned int area,
-				    const struct_elt<_E>& _se)
+				    const neighborhood<_N>& _Ng)
     {
       Exact_cref(I, input);
-      Exact_cref(E, se);
+      Exact_cref(N, Ng);
+      meta::eq<_I::dim, _N::dim>::ensure();
       typedef typename mute<_I, bin >::ret ima_bin_t;
 
       ima_bin_t* cc_level_sets = new (image2d<bin> [256]);
@@ -121,7 +122,7 @@ namespace oln {
 	      level_sets_i[p] = true;
 	    else
 	      level_sets_i[p] = false;
-	  cc_level_sets[i] = internal_kill_cc_area(level_sets_i, area, se);
+	  cc_level_sets[i] = internal_kill_cc_area(level_sets_i, area, Ng);
 	}
       image2d<int_u8> output(input.size());
       for (int i=0; i < 255 ; ++i)
@@ -158,13 +159,14 @@ namespace oln {
      * exo: out.pgm
      * wontcompile: fixme
      =*/
-    template<class _I, class _E>
+    template<class _I, class _N>
     image2d<int_u8> sure_minima_killer(const image<_I>& _input,
 				       const unsigned int area,
-				       const struct_elt<_E>& _se)
+				       const neighborhood<_N>& _Ng)
     {
       Exact_cref(I, input);
-      Exact_cref(E, se);
+      Exact_cref(N, Ng);
+      meta::eq<_I::dim, _N::dim>::ensure();
 
       typedef image2d<bin> ima_bin_t;
 
@@ -178,7 +180,7 @@ namespace oln {
 	      level_sets_i[p] = true;
 	    else
 	      level_sets_i[p] = false;
-	  cc_level_sets[i] = internal_kill_cc_area(level_sets_i, area, se);
+	  cc_level_sets[i] = internal_kill_cc_area(level_sets_i, area, Ng);
 	}
       image2d<int_u8> output(input.size());
       for (int i=255; i >= 0 ; --i)
@@ -210,6 +212,8 @@ namespace oln {
       Exact_cref(P, p);
       Exact_cref(I, input);
       Exact_cref(N, Ng);
+      meta::eq<_I::dim, _N::dim>::ensure();
+      meta::eq<_P::dim, _N::dim>::ensure();
 
       bool is_p_lower = true;
       bool is_p_at_least_one_stricly_lower = false;
@@ -235,6 +239,8 @@ namespace oln {
       Exact_cref(P, p);
       Exact_cref(I, input);
       Exact_cref(N, Ng);
+      meta::eq<_I::dim, _N::dim>::ensure();
+      meta::eq<_P::dim, _N::dim>::ensure();
 
       bool is_p_upper = true;
       bool is_p_at_least_one_stricly_upper = false;
@@ -260,7 +266,8 @@ namespace oln {
      * ret: Concrete(_I1)
      * doc: It removes the small (in area) connected components of the lower
      * level sets of @var{input} using @var{Ng} as neighboorhood. The implementation
-     * is based on stak. Guichard and Morel, Image iterative smoothing and PDE's. Book in preparation. p 265.
+     * is based on stak. Guichard and Morel, Image iterative smoothing and PDE's.
+     * Book in preparation. p 265.
      * see: level::sure_minima_killer
      * ex:
      * $ image2d<int_u8> light = load("light.pgm");
@@ -277,8 +284,10 @@ namespace oln {
     {
       Exact_cref(I, input);
       Exact_cref(N, Ng);
+      meta::eq<_I::dim, _N::dim>::ensure();
 
       std::vector<Point(I)> cur_minimum;
+      cur_minimum.reserve(15000);
       Concrete(I) working_input = input.clone();
       typename mute<_I, bin>::ret not_processed_map(input.size());
       level::fill(not_processed_map, true);
@@ -376,11 +385,12 @@ namespace oln {
     // Guichard and Morel, Image iterative smoothing and PDE's. Book in preparation. p 265.
     template<class _I, class _N>
     Concrete(_I) fast_maxima_killer(const image<_I>& _input,
-				       const unsigned int area,
-				       const neighborhood<_N>& _Ng)
+				    const unsigned int area,
+				    const neighborhood<_N>& _Ng)
     {
       Exact_cref(I, input);
       Exact_cref(N, Ng);
+      meta::eq<_I::dim, _N::dim>::ensure();
 
       std::vector<Point(I)> cur_maximum;
       Concrete(I) working_input = input.clone();

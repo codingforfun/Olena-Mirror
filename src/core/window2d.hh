@@ -199,6 +199,11 @@ namespace oln {
     return mk_win_ellipse(radius, radius);
   }
 
+  struct get_se<2>
+  {
+    typedef window2d ret;
+  };
+
 
 } // end of oln
 

@@ -44,7 +44,7 @@
  * exi: object.pbm
  * exo: out.pbm
 =*/
-template<class I, class E> inline
+template<class I, class E>
 Concrete(I) closing(const image<I>& input, const struct_elt<E>& se)
 {
   return erosion(dilation(input, se), -to_exact(se));

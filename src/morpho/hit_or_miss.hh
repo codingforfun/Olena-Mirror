@@ -34,6 +34,8 @@
 # include "level/invert.hh"
 # include "math/macros.hh"
 
+# include "meta/cmp.hh"
+
 namespace oln {
   namespace morpho {
 #   include "hit_or_miss.inc"

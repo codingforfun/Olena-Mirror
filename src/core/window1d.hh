@@ -140,6 +140,11 @@ namespace oln {
     return win;
   }
 
+  struct get_se<1>
+  {
+    typedef window1d ret;
+  };
+
 } // end of oln
 
 #endif // OLENA_CORE_WINDOW1D_HH

@@ -45,7 +45,7 @@
  * exo: out.pgm
  * exh: convert/bound.hh
 =*/
-template<class C, class I, class E> inline
+template<class C, class I, class E>
 typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 laplacian(const conversion<C>& c,
 	  const image<I>& input, const struct_elt<E>& se)
@@ -62,7 +62,7 @@ laplacian(const conversion<C>& c,
  * arg: const struct_elt<E>&, se, IN, structural element
  * ret: typename mute<I, Value(I)::slarger_t>::ret
 =*/
-template<class I, class E> inline
+template<class I, class E>
 typename mute<I, Value(I)::slarger_t>::ret
 laplacian(const image<I>& input, const struct_elt<E>& se)
 {

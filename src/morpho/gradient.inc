@@ -47,7 +47,7 @@
  * exi: lena256.pgm
  * exo: out.pgm
 =*/
-template<class C, class I, class E> inline
+template<class C, class I, class E>
 typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 beucher_gradient(const conversion<C>& c,
 		 const image<I>& input, const struct_elt<E>& se)
@@ -63,7 +63,7 @@ beucher_gradient(const conversion<C>& c,
  * arg: const struct_elt<E>&, se, IN, structural element
  * ret: Concrete(I)
 =*/
-template<class I, class E> inline
+template<class I, class E>
 Concrete(I) beucher_gradient(const image<I>& input,
 			     const struct_elt<E>& se)
 {
@@ -90,7 +90,7 @@ Concrete(I) beucher_gradient(const image<I>& input,
  * exi: lena256.pgm
  * exo: out.pgm
 =*/
-template<class C, class I, class E> inline
+template<class C, class I, class E>
 typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 internal_gradient(const conversion<C>& c,
 		  const image<I>& input, const struct_elt<E>& se)
@@ -105,7 +105,7 @@ internal_gradient(const conversion<C>& c,
  * arg: const struct_elt<E>&, se, IN, structural element
  * ret: Concrete(I)
 =*/
-template<class I, class E> inline
+template<class I, class E>
 Concrete(I) internal_gradient(const image<I>& input, const
 			      struct_elt<E>& se)
 {
@@ -132,7 +132,7 @@ Concrete(I) internal_gradient(const image<I>& input, const
  * exi: lena256.pgm
  * exo: out.pgm
 =*/
-template<class C, class I, class E> inline
+template<class C, class I, class E>
 typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 external_gradient(const conversion<C>& c,
 		  const image<I>& input, const struct_elt<E>& se)
@@ -148,7 +148,7 @@ external_gradient(const conversion<C>& c,
  * arg: const struct_elt<E>&, se, IN, structural element
  * ret: Concrete(I)
 =*/
-template<class I, class E> inline
+template<class I, class E>
 Concrete(I) external_gradient(const image<I>& input,
 			      const struct_elt<E>& se)
 {

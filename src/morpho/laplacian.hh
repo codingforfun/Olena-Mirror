@@ -32,6 +32,7 @@
 # include "morpho/dilation.hh"
 # include "arith/ops.hh"
 # include "convert/basics.hh"
+# include "meta/cmp.hh"
 
 namespace oln {
   namespace morpho {

@@ -15,7 +15,7 @@
 // the Free Software Foundation, 59 Temple Place - Suite 330, Boston,
 // MA 02111-1307, USA.
 //
-// As a special exception, you may use this file as part of a free
+// As a special exception, you may use this filek as part of a free
 // software library without restriction.  Specifically, if other files
 // instantiate templates or use macros or inline functions from this
 // file, or you compile this file and link it with other files to
@@ -31,6 +31,7 @@
 # include "basics.hh"
 # include "morpho/stat.hh"
 # include "morpho/fast_morpho.hh"
+# include "meta/cmp.hh"
 
 namespace oln {
 
@@ -64,11 +65,12 @@ namespace oln {
      * exi: object.pbm
      * exo: out.pbm
     =*/
-    template<class _I, class _E> inline
+    template<class _I, class _E>
     Concrete(_I) dilation(const image<_I> &_input, const struct_elt<_E>& _se)
     {
       Exact_cref(I, input);
       Exact_cref(E, se);
+      meta::eq<I::dim, E::dim>::ensure();
 
       Concrete(I) output(input.size());
       border::adapt_copy(input, se.delta());
@@ -91,12 +93,11 @@ namespace oln {
      * see: morpho::dilation
      * see: morpho::n_erosion
     =*/
-    template<class _I, class _E> inline
+    template<class _I, class _E>
     Concrete(_I) n_dilation(const image<_I> & input,
 			    const struct_elt<_E>& se,
 			    unsigned n)
     {
-      // FIXME: We should do this by distance thresholding
       precondition(n > 0);
       Concrete(_I) output = input.clone();
       for (unsigned i = 0; i < n; ++i)
@@ -108,10 +109,10 @@ namespace oln {
     }
 
     namespace fast {
-      template<class I, class E> inline
+      template<class I, class E>
       Concrete(I) dilation(const image<I>& input, const struct_elt<E>& se)
       {
-        return fast_morpho<I, E, utils::histogram_max>(input, se);
+	return fast_morpho<I, E, utils::histogram_max>(input, se);
       }
     }
   } // end of morpho

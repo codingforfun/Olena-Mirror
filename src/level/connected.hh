@@ -31,6 +31,7 @@
 # include "level/lut.hh"
 # include "level/fill.hh"
 # include "morpho/splitse.hh"
+# include "convert/conversion_ng_se.hh"
 
 namespace oln {
   namespace level {
@@ -56,26 +57,29 @@ namespace oln {
      =*/
 
     // Number the connected components i.e label true. background(i.e
-    // label false) has the label 0; in the output
-    template <class DestType, class _I, class _E>
+    // label false) has the label 0; This algorithm works only for 2D images
+    template <class DestType, class _I, class _N>
     typename mute<_I, DestType>::ret
-    connected_component(const image<_I>& _input, const struct_elt<_E>& _se)
+    connected_component(const image<_I>& _input,
+			const neighborhood<_N>& _Ng)
     {
       // FIXME: ensure the Value(I) is bin.
+      meta::eq<_I::dim, _N::dim>::ensure();
+      meta::eq<_I::dim, 2>::ensure();
       Exact_cref(I, input);
-      Exact_cref(E, se);
+      Exact_cref(N, Ng);
       typename mute<_I, DestType>::ret output(input.size());
       level::hlut< DestType, DestType > T;
       DestType k = 1;
 
       fill(output, 0);
-
       Iter(I) p(input);
       for_all(p)
 	{
 	  if (input[p] == true)
 	    {
-	      E se_plus = morpho::get_plus_se_only(se);
+	      typedef typename get_se<N::dim>::ret E;
+	      E se_plus = morpho::get_plus_se_only(convert::ng_to_se(Ng));
 	      Neighb(E) p_prime(se_plus, p);
 	      bool all_zero = true;
 	      for_all(p_prime)

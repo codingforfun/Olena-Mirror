@@ -31,8 +31,6 @@
 # include "basics.hh"
 # include "morpho/reconstruction.hh"
 
-// FIXME: should _se be neighborhoods?
-
 namespace oln {
   namespace morpho {
 
@@ -78,14 +76,16 @@ namespace oln {
      * exo: out.pgm
      * wontcompile: fixme
      =*/
-    template<class _I, class _I2, class _E>
+    template<class _I, class _I2, class _N>
     Concrete(_I) sure_minima_imposition(const image<_I>& _input,
 					const image<_I2>& _minima_map,
-					const struct_elt<_E>& _se)
+					const neighborhood<_N>& _Ng)
     {
       Exact_cref(I, input);
       Exact_cref(I2, minima_map);
-      Exact_cref(E, se);
+      Exact_cref(N, Ng);
+      meta::eq<I::dim, I2::dim>::ensure();
+      meta::eq<I::dim, N::dim>::ensure();
       precondition(input.size() == minima_map.size());
       Concrete(I) mm =
 	internal::_create_minima_image_from_bin<Value(I)>(minima_map);
@@ -93,14 +93,9 @@ namespace oln {
       // This is definitely not generic !! the highest value of input should
       // be fine.
       // 0 means minimum else set value to infty
-      // We suppose we have such an image in minima_map...
-      //       return hybrid_geodesic_reconstruction_erosion(minima_map,
-      //  						    input,
-      //  						    se);
-
       //FIXME: min must be authorized even if types are not the same.
       return sure_geodesic_reconstruction_erosion(mm,
-						  arith::min(input, mm), se);
+						  arith::min(input, mm), Ng);
     }
 
     /*=processing sequential_minima_imposition
@@ -125,20 +120,22 @@ namespace oln {
      * exo: out.pgm
      * wontcompile: fixme
      =*/
-    template<class _I, class _I2, class _E>
+    template<class _I, class _I2, class _N>
     Concrete(_I) sequential_minima_imposition(const image<_I>& _input,
 					      const image<_I2>& _minima_map,
-					      const struct_elt<_E>& _se)
+					      const neighborhood<_N>& _Ng)
     {
       Exact_cref(I, input);
       Exact_cref(I2, minima_map);
-      Exact_cref(E, se);
+      Exact_cref(N, Ng);
+      meta::eq<I::dim, I2::dim>::ensure();
+      meta::eq<I::dim, N::dim>::ensure();
       precondition(input.size() == minima_map.size());
       Concrete(I) mm =
 	internal::_create_minima_image_from_bin<Value(I)>(minima_map);
       return sequential_geodesic_reconstruction_erosion(mm,
 							arith::min(input, mm),
-							se);
+							Ng);
     }
 
     /*=processing hybrid_minima_imposition
@@ -164,19 +161,21 @@ namespace oln {
      * exo: out.pgm
      * wontcompile: fixme
      =*/
-    template<class _I, class _I2, class _E>
+    template<class _I, class _I2, class _N>
     Concrete(_I) hybrid_minima_imposition(const image<_I>& _input,
 					  const image<_I2>& _minima_map,
-					  const struct_elt<_E>& _se)
+					  const neighborhood<_N>& _Ng)
     {
       Exact_cref(I, input);
       Exact_cref(I2, minima_map);
-      Exact_cref(E, se);
+      Exact_cref(N, Ng);
+      meta::eq<I::dim, I2::dim>::ensure();
+      meta::eq<I::dim, N::dim>::ensure();
       precondition(input.size() == minima_map.size());
       Concrete(I) mm =
 	internal::_create_minima_image_from_bin<Value(I)>(minima_map);
       return hybrid_geodesic_reconstruction_erosion(mm, arith::min(input, mm),
-						    se);
+						    Ng);
 
     }
 
@@ -202,16 +201,18 @@ namespace oln {
      * exi: light.pgm
      * exo: out.pgm
      * wontcompile: fixme
-     =*/    template<class _I, class _E>
+     =*/
+    template<class _I, class _N>
     Concrete(_I) sure_regional_minima(const image<_I>& _input,
-				      const struct_elt<_E>& _se)
+				      const neighborhood<_N>& _Ng)
     {
       Exact_cref(I, input);
-      Exact_cref(E, se);
+      Exact_cref(N, Ng);
+      meta::eq<I::dim, N::dim>::ensure();
       return
 	arith::minus(convert::force<Value(I)>(),
 		     sure_geodesic_reconstruction_erosion
-		     (arith::plus_cst(input, Value(I) (1)), input, se),
+		     (arith::plus_cst(input, Value(I) (1)), input, Ng),
 		     input);
     }
 
@@ -235,16 +236,17 @@ namespace oln {
      * exo: out.pgm
      * wontcompile: fixme
      =*/
-    template<class _I, class _E>
+    template<class _I, class _N>
     Concrete(_I) sequential_regional_minima(const image<_I>& _input,
-					    const struct_elt<_E>& _se)
+					    const neighborhood<_N>& _Ng)
     {
       Exact_cref(I, input);
-      Exact_cref(E, se);
+      Exact_cref(N, Ng);
+      meta::eq<I::dim, N::dim>::ensure();
       return
 	arith::minus(convert::force<Value(I)>(),
 		     sequential_geodesic_reconstruction_erosion
-		     (arith::plus_cst(input, Value(I) (1)), input, se),
+		     (arith::plus_cst(input, Value(I) (1)), input, Ng),
 		     input);
     }
 
@@ -267,16 +269,17 @@ namespace oln {
      * exo: out.pgm
      * wontcompile: fixme
      =*/
-    template<class _I, class _E>
+    template<class _I, class _N>
     Concrete(_I) hybrid_regional_minima(const image<_I>& _input,
-					const struct_elt<_E>& _se)
+					const neighborhood<_N>& _Ng)
     {
       Exact_cref(I, input);
-      Exact_cref(E, se);
+      Exact_cref(N, Ng);
+      meta::eq<I::dim, N::dim>::ensure();
       return
 	arith::minus(convert::force<Value(I)>(),
 		     hybrid_geodesic_reconstruction_erosion
-		     (arith::plus_cst(input, Value(I) (1)), input, se),
+		     (arith::plus_cst(input, Value(I) (1)), input, Ng),
 		     input);
     }
 

@@ -31,6 +31,7 @@
 # include "basics.hh"
 # include "morpho/stat.hh"
 # include "morpho/fast_morpho.hh"
+# include "meta/cmp.hh"
 
 namespace oln {
 
@@ -64,16 +65,15 @@ namespace oln {
      * exi: object.pbm
      * exo: out.pbm
     =*/
-    template<class _I, class _E> inline
+    template<class _I, class _E>
     Concrete(_I) erosion(const image<_I>& _input, const struct_elt<_E>& _se)
     {
       Exact_cref(I, input);
       Exact_cref(E, se);
-
+      meta::eq<I::dim, E::dim>::ensure();
       Concrete(I) output(input.size());
       border::adapt_copy(input, se.delta());
       Iter(I) p(input);
-
       for_all (p)
 	output[p] = morpho::min(input, p, se);
       return output;
@@ -91,12 +91,13 @@ namespace oln {
      * see: morpho::erosion
      * see: morpho::n_dilation
     =*/
-    template<class _I, class _E> inline
+
+    template<class _I, class _E>
     Concrete(_I) n_erosion(const image<_I> & input,
 			   const struct_elt<_E>& se,
 			   unsigned n)
     {
-      // FIXME: We should do this by distance thresholding
+      meta::eq<_I::dim, _E::dim>::ensure();
       precondition(n > 0);
       Concrete(_I) output = input.clone();
       for (unsigned i = 0; i < n; ++i)
@@ -108,7 +109,7 @@ namespace oln {
     }
 
     namespace fast {
-      template<class I, class E> inline
+      template<class I, class E>
       Concrete(I) erosion(const image<I>& input, const struct_elt<E>& se)
       {
         return fast_morpho<I, E, utils::histogram_min>(input, se);

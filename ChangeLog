@@ -1,3 +1,31 @@
+2002-02-18  Jerome Darbon  <jerome@epita.fr>
+
+	For all files in morpho:
+	1) Add meta check on dimension whit respect to neighborhood.
+	2) Remove inline for all files but for fast_morpho and internal
+	functions.
+
+	* src/morpho/geodesic_erosion: Now geodesic erosion takes
+	a neighborhood as input instead of a structuring element.
+	* src/morpho/geodesic_dilation: likewise.
+	* src/morpho/reconstruction: likewise.
+	* src/morpho/extrema: likewise.
+
+	* src/level/connected_component.hh: likewise and fix.
+	* src/level/extrema_killer.hh: likewise and fix.
+
+	* src/convert/conversion_ng_se.hh: New file.
+
+
+	* demo/test-reconstruction.cc: fix it because of above modifications.
+
+
+	Definition of get_se<N>, i.e construct a S.E from a dimension N.
+	* core/window.hh:   Definition of get_se<N>.
+	* core/window1d.hh: Definition of get_se<1>.
+	* core/window2d.hh: Definition of get_se<2>.
+	* core/window3d.hh: Definition of get_se<3>.
+
 2002-02-11  Jerome Darbon  <jerome@epita.fr>
 
 	* img/lena128.pgm: Add it.

@@ -45,7 +45,7 @@
  * exi: lena256.pgm
  * exo: out.pgm
 =*/
-template<class C, class I, class E> inline
+template<class C, class I, class E>
 typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 white_top_hat(const conversion<C>& c,
 	      const image<I>& input, const struct_elt<E>& se)
@@ -60,7 +60,7 @@ white_top_hat(const conversion<C>& c,
  * arg: const struct_elt<E>&, se, IN, structural element
  * ret: Concrete(I)
 =*/
-template<class I, class E> inline
+template<class I, class E>
 Concrete(I) white_top_hat(const image<I>& input, const struct_elt<E>& se)
 {
   return white_top_hat(convert::force<Value(I)>(), input, se);
@@ -86,7 +86,7 @@ Concrete(I) white_top_hat(const image<I>& input, const struct_elt<E>& se)
  * exi: lena256.pgm
  * exo: out.pgm
 =*/
-template<class C, class I, class E> inline
+template<class C, class I, class E>
 typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 black_top_hat(const conversion<C>& c,
 	      const image<I>& input, const struct_elt<E>& se)
@@ -102,7 +102,7 @@ black_top_hat(const conversion<C>& c,
  * arg: const struct_elt<E>&, se, IN, structural element
  * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 =*/
-template<class I, class E> inline
+template<class I, class E>
 Concrete(I) black_top_hat(const image<I>& input, const struct_elt<E>& se)
 {
   return black_top_hat(convert::force<Value(I)>(), input, se);
@@ -133,7 +133,7 @@ Concrete(I) black_top_hat(const image<I>& input, const struct_elt<E>& se)
  * exo: out.pgm
 =*/
 
-template<class C, class I, class E> inline
+template<class C, class I, class E>
 typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 self_complementary_top_hat(const conversion<C>& c,
 			   const image<I>& input, const struct_elt<E>& se)
@@ -148,7 +148,7 @@ self_complementary_top_hat(const conversion<C>& c,
  * arg: const struct_elt<E>&, se, IN, structural element
  * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 =*/
-template<class I, class E> inline
+template<class I, class E>
 Concrete(I) self_complementary_top_hat(const image<I>& input,
 				       const struct_elt<E>& se)
 {
@@ -180,7 +180,7 @@ Concrete(I) self_complementary_top_hat(const image<I>& input,
  * exh: convert/bound.hh
 =*/
 
-template<class C, class I, class E> inline
+template<class C, class I, class E>
 typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 top_hat_contrast_op(const conversion<C>& c,
 		    const image<I>& input, const struct_elt<E>& se)
@@ -198,7 +198,7 @@ top_hat_contrast_op(const conversion<C>& c,
  * arg: const struct_elt<E>&, se, IN, structural element
  * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 =*/
-template<class I, class E> inline
+template<class I, class E>
 Concrete(I) top_hat_contrast_op(const image<I>& input,
 				const struct_elt<E>& se)
 {

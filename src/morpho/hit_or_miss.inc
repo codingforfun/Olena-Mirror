@@ -60,7 +60,7 @@
  * exi: object.pbm
  * exo: out.pgm
 =*/
-template<class C, class _I, class _E1, class _E2> inline
+template<class C, class _I, class _E1, class _E2>
 typename mute<_I, typename convoutput<C, Value(_I)>::ret>::ret
 hit_or_miss(const conversion<C>& c,
 	    const image<_I>& _input,
@@ -70,12 +70,16 @@ hit_or_miss(const conversion<C>& c,
   Exact_cref(I, input);
   Exact_cref(E1, se1);
   Exact_cref(E2, se2);
+  meta::eq<I::dim, E1::dim>::ensure();
+  meta::eq<E1::dim, E2::dim>::ensure();
 
   precondition(inter(se1, se2).card() == 0);
-  // FIXME: math::max(coord, coord) does not exist.
+  // FIXME: max(coord, coord) does not exist.
+  //  border::adapt_copy(input, min(se1.delta() , se2.delta()));
   border::adapt_copy(input,
-		     se1.delta() > se2.delta() ?
-		     se1.delta() : se2.delta());
+		     (se1.delta() > se2.delta()) ?
+ 		     se1.delta() : se2.delta());
+
   return morpho::min(c,
 		     erosion(input, se1),
 		     erosion(level::invert(input), se2));
@@ -88,7 +92,7 @@ hit_or_miss(const conversion<C>& c,
  * arg: const struct_elt<E>&, se2, IN, structural element
  * ret: Concrete(I)
 =*/
-template<class I, class E1, class E2> inline
+template<class I, class E1, class E2>
 Concrete(I) hit_or_miss(const image<I>& input,
 			const struct_elt<E1>& se1,
 			const struct_elt<E2>& se2)
@@ -133,7 +137,7 @@ Concrete(I) hit_or_miss(const image<I>& input,
  * exi: object.pbm
  * exo: out.pbm
 =*/
-template<class _I, class _E1, class _E2> inline
+template<class _I, class _E1, class _E2>
 Concrete(_I) hit_or_miss_opening(const image<_I>& _input,
 				 const struct_elt<_E1>& _se1,
 				 const struct_elt<_E2>& _se2)
@@ -178,7 +182,7 @@ Concrete(_I) hit_or_miss_opening(const image<_I>& _input,
  * exi: object.pbm
  * exo: out.pbm
 =*/
-template<class I, class E1, class E2> inline
+template<class I, class E1, class E2>
 Concrete(I) hit_or_miss_opening_bg(const image<I>& input,
 				   const struct_elt<E1>& se1,
 				   const struct_elt<E2>& se2)
@@ -225,7 +229,7 @@ Concrete(I) hit_or_miss_opening_bg(const image<I>& input,
  * exi: object.pbm
  * exo: out.pbm
 =*/
-template<class I, class _E1, class _E2> inline
+template<class I, class _E1, class _E2>
 Concrete(I) hit_or_miss_closing(const image<I>& input,
 				const struct_elt<_E1>& _se1,
 				const struct_elt<_E2>& _se2)
@@ -271,7 +275,7 @@ Concrete(I) hit_or_miss_closing(const image<I>& input,
  * exi: object.pbm
  * exo: out.pbm
 =*/
-template<class I, class E1, class E2> inline
+template<class I, class E1, class E2>
 Concrete(I) hit_or_miss_closing_bg(const image<I>& input,
 				   const struct_elt<E1>& se1,
 				   const struct_elt<E2>& se2)

@@ -44,8 +44,9 @@
  * exi: object.pbm
  * exo: out.pbm
 =*/
-template<class I, class E> inline
-Concrete(I) opening(const image<I>& input, const struct_elt<E>& se)
+template<class _I, class _E>
+Concrete(_I) opening(const image<_I>& input, const struct_elt<_E>& _se)
 {
-  return dilation(erosion(input, se), -to_exact(se));
+  //  meta::eq< _I::dim, _E::dim >::ensure();
+  return dilation(erosion(input, _se), -to_exact(_se));
 }
