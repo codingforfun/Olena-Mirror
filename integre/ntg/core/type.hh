@@ -49,11 +49,14 @@ namespace ntg
   public:
     typedef E exact_type;
     
+    // FIXME: static_cast should be enough. This is only a workaround
+    // for g++-3.3.1's bug with static_cast (PR# 11431).
+
     E& exact() { return static_cast<E&>(*this); }
-    const E& exact() const { return static_cast<const E&>(*this); }
+    const E& exact() const { return reinterpret_cast<const E&>(*this); }
 
     E& self() { return static_cast<E&>(*this); }
-    const E& self() const { return static_cast<const E&>(*this); }
+    const E& self() const { return reinterpret_cast<const E&>(*this); }
   };
 
   /*------------------.

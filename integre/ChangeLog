@@ -1,3 +1,16 @@
+2003-07-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/core/type.hh: Use reinterpret_cast instead of static_cast to
+	workaround g++-3.3.1's bug (PR# 11431).
+
+2003-06-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/types/tests/int_sc5: Fix warning.
+
+2003-06-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/utils/Makefile.am (CLEANFILES): Add test.core.
+
 2003-06-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* Merge from integre.28:
