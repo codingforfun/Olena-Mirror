@@ -38,7 +38,7 @@
 ** \code
 ** #include <oln/basics2d.hh>
 ** #include <oln/morpho/laplacian.hh>
-** #include <oln/level/compare.hh>
+** #include <oln/convert/stretch.hh>
 ** #include <ntg/all.hh>
 ** int main()
 ** {
@@ -46,11 +46,13 @@
 **
 **   im_type	im1(oln::load(IMG_IN "lena256.pgm"));
 **
-**   oln::save(oln::morpho::fast::laplacian(oln::convert::bound<ntg::int_u8>(),
-**                                          im1,
-**                                          oln::win_c8p()),
-**                                          IMG_OUT "oln_morpho_fast_laplacian.pbm");
-**   return  0;
+**   oln::image2d<ntg::int_s<10> > i10 =
+**     oln::morpho::fast::laplacian(oln::convert::bound<ntg::int_s<10> >(),
+** 				 im1,
+** 				 oln::win_c8p());
+**
+**   oln::save(apply(oln::convert::stretch<ntg::int_u8>(), i10),
+** 	    IMG_OUT "oln_morpho_fast_laplacian.pgm");
 ** }
 ** \endcode
 **
@@ -82,7 +84,7 @@ laplacian(const convert::abstract::conversion<C, B>& c,
 ** \code
 ** #include <oln/basics2d.hh>
 ** #include <oln/morpho/laplacian.hh>
-** #include <oln/level/compare.hh>
+** #include <oln/convert/stretch.hh>
 ** #include <ntg/all.hh>
 ** int main()
 ** {
@@ -90,9 +92,17 @@ laplacian(const convert::abstract::conversion<C, B>& c,
 **
 **   im_type	im1(oln::load(IMG_IN "lena256.pgm"));
 **
-**   oln::save(oln::morpho::fast::laplacian(oln::convert::bound<ntg::int_u8>(), im1, oln::win_c8p()),
-**                                          IMG_OUT "oln_morpho_fast_laplacian_overload.pbm");
-**   return  0;
+**   oln::image2d<ntg::int_s<10> > i10 =
+**     oln::morpho::fast::laplacian(oln::convert::bound<ntg::int_s<10> >(),
+** 				 im1,
+** 				 oln::win_c8p());
+**
+**   oln::image2d<ntg::int_s<10> > f10 =
+**     oln::morpho::fast::laplacian<ntg::int_s<10> >(im1,
+** 						  oln::win_c8p());
+**
+**   oln::save(apply(oln::convert::stretch<ntg::int_u8>(),(f10)),
+** 	    IMG_OUT "oln_morpho_fast_laplacian_overload.pgm");
 ** }
 ** \endcode
 **
@@ -101,13 +111,13 @@ laplacian(const convert::abstract::conversion<C, B>& c,
 ** =>
 ** \image html oln_morpho_fast_laplacian_overload.png
 ** \image latex oln_morpho_fast_laplacian_overload.png
-**
-** \todo FIXME: Call the good laplacian, and correct slarger_t type.
 */
-template<class I, class E>
-typename mute<I,oln_value_type(I)::slarger_t>::ret
+template<class DestValue, class I, class E>
+typename mute<I, DestValue>::ret
 laplacian(const abstract::non_vectorial_image<I>& input,
 	  const abstract::struct_elt<E>& se)
 {
-  return laplacian(convert::force<oln_value_type(I)::slarger_t>(), input, se);
+  return
+    laplacian(convert::force<DestValue>(),
+	      input, se);
 }

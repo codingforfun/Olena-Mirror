@@ -39,21 +39,16 @@ namespace oln {
 
   namespace io {
 
-    /*! \namespace gz
-    ** \brief gz namespace
-    */
+    /// Functions for gz files
     namespace gz {
 
 
-      /*! \class zfilebuf
-      **
-      ** Performs operation on compressed files.
-      */
+      ///Performs operation on compressed files.
       class zfilebuf : public std::streambuf
       {
       public:
 
-	
+
 	zfilebuf() : file(0),  mode(0),  own_file_descriptor(0)
 	{
 	  inbuf = new char[lenbuf];
@@ -61,7 +56,7 @@ namespace oln {
 	  setg(0, 0, 0);
 	  setp(outbuf, outbuf + lenbuf);
 	}
-	
+
 	virtual ~zfilebuf()
 	{
 	  sync();
@@ -181,32 +176,32 @@ namespace oln {
 	  return this;
 	}
 
-	
-	int 
+
+	int
 	setcompressionlevel(short comp_level)
 	{
 	  return gzsetparams(file, comp_level, -2);
 	}
 
-	int 
+	int
 	setcompressionstrategy(short comp_strategy)
 	{
 	  return gzsetparams(file, -2, comp_strategy);
 	}
 
 	/// Return true if the stream is open, false otherwise.
-	inline int 
-	is_open() const 
+	inline int
+	is_open() const
 	{ return (file != 0); }
 
-	virtual std::streampos 
+	virtual std::streampos
 	seekoff(std::streamoff off, std::ios::seekdir dir, int) // which)
 	{
 	  return std::streampos(gzseek(file, off, dir));
 	}
 
 	/// Flush the buffer associated to the stream.
-	virtual int 
+	virtual int
 	sync()
 	{
 	  if (!is_open())
@@ -219,7 +214,7 @@ namespace oln {
 	/*! \brief Return the next character in the stream.
 	** On failure, \a EOF is returned.
 	*/
-	virtual int 
+	virtual int
 	underflow()
 	{
 	  // If the file hasn't been opened for reading, error.
@@ -241,11 +236,11 @@ namespace oln {
 	  return (unsigned char) *gptr();
 	}
 
-	/*! \brief Flush the output buffer associated to the stream 
+	/*! \brief Flush the output buffer associated to the stream
 	** then write \a c. On failure, \a EOF is returned.
 	*/
-	
-	virtual int 
+
+	virtual int
 	overflow(int c = EOF)
 	{
 	  if (!is_open() || !(mode & std::ios::out))
@@ -275,7 +270,7 @@ namespace oln {
 	static const int lenbuf = 16 * 1024;
 
 	/// Flush the output buffer
-	int 
+	int
 	flushbuf()
 	{
 	  int n = pptr() - outbuf;
@@ -290,7 +285,7 @@ namespace oln {
 	  return 0;
 	}
 	/// Fill the input buffer.
-	int 
+	int
 	fillbuf()
 	{
 	  int t = gzread(file, inbuf, lenbuf);
@@ -301,11 +296,7 @@ namespace oln {
 
       };
 
-      /*! \class zfilestream_common
-      **
-      ** Define an interface for compressed file stream manipulation.
-      */
-      
+      ///Define an interface for compressed file stream manipulation.
       class zfilestream_common : virtual public std::ios
       {
 	friend class zifstream;
@@ -319,7 +310,7 @@ namespace oln {
 	/*! \brief Open the stream on the file descriptor:
 	** \a fd regarding the opening mode.
 	*/
-	void 
+	void
 	attach(int fd, int io_mode)
 	{
 	  if (!buffer.attach(fd, io_mode))
@@ -327,11 +318,11 @@ namespace oln {
 	  else
 	    clear();
 	}
-	
+
 	/*! \brief Open the stream on the file named \a name
 	** regarding the opening mode.
 	*/
-	void 
+	void
 	open(const char *name, int io_mode)
 	{
 	  if (!buffer.open(name, io_mode))
@@ -341,7 +332,7 @@ namespace oln {
 	}
 
 	/// Close the current stream.
-	void 
+	void
 	close()
 	{
 	  if (!buffer.close())
@@ -365,19 +356,16 @@ namespace oln {
       };
 
 
-      /*! \class zifstream
-      **
-      ** Read only zstream.
-      */
+      /// Read only zstream.
       class zifstream : public zfilestream_common, public std::istream
       {
       public:
-	
+
 	zifstream() : std::istream(zfilestream_common::rdbuf())
 	{
 	  clear(std::ios::badbit);
 	}
-	
+
 	/// Open a read only stream on the file named \a name.
 	zifstream(const char *name, int io_mode = std::ios::in) :
 	  std::istream(zfilestream_common::rdbuf())
@@ -424,8 +412,8 @@ namespace oln {
 
       // Forward declaration.
       template <class T>
-      class zomanip;     
-      
+      class zomanip;
+
       /// Apply a function on \a s via the operator <<.
       template <class T>
       zofstream&
@@ -433,13 +421,10 @@ namespace oln {
 	return (*m.func)(s, m.val);
       }
 
-      
-      /*! \class zomanip
-      **
-      ** Define a pair func / val to perform manipulation on zofstream.
-      */
+
+      /// Define a pair func / val to perform manipulation on zofstream.
       template<class T> class zomanip
-      {		
+      {
 	friend zofstream &operator<< <T>(zofstream &, const zomanip<T> &);
       public:
 	zomanip(zofstream &(*f)(zofstream &, T), T v) : func(f), val(v) { }
@@ -448,14 +433,14 @@ namespace oln {
 	T val;
       };
 
-      
+
       /// Set the compression level of \a s to \a l.
       inline zofstream&
       setcompressionlevel(zofstream &s, int l) {
 	(s.rdbuf())->setcompressionlevel(l);
 	return s;
       }
-      
+
       /// Set the compression strategy of \a s to \a l.
       inline zofstream&
       setcompressionstrategy(zofstream &s, int l)

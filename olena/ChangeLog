@@ -1,5 +1,24 @@
 2004-04-02  Giovanni Palma  <giovanni@lrde.epita.fr>
 
+	* tests/topo/tests/tarjan: Correct test.
+	* tests/topo/tests/md5_topo_tarjan_flat-zone_hh0: Correct test.
+	* oln/topo/tarjan/tarjan_with_attr.hh: Correct code.
+
+2004-04-02  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/io/gz_stream.hh: Fix doc.
+	* olena/oln/morpho/extrema.hxx: Likewise.
+	* olena/oln/convol/nagao.hh: Likewise.
+	* olena/oln/transforms/dwt.hh: Likewise.
+
+2004-04-02  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/morpho/laplacian.inc (laplacian): Remove slarger_t.
+	Add the parameter DestValue. Fix doc.
+	* olena/tests/morpho/tests/md5_morpho_laplacian_inc1: Change the
+	test.
+	* olena/oln/morpho/watershed.hh: Change the two examples.
+
+2004-04-02  Giovanni Palma  <giovanni@lrde.epita.fr>
+
 	* oln/topo/tarjan/tarjan.hh: Add comments.
 	* oln/topo/tarjan/tarjan_with_attr.hh: Add comments. Correct the code.
 	* oln/topo/combinatorial-map/cmap.hh: Make cmap use the good flat_zone.

@@ -2,28 +2,29 @@
 #include "data.hh"
 #include <oln/utils/md5.hh>
 
-#include "check.hh" 
-#include <oln/basics2d.hh> 
-#include <oln/morpho/laplacian.hh> 
-#include <oln/level/compare.hh> 
-#include <ntg/all.hh> 
- 
-int main() 
+#include "check.hh"
+#include <oln/basics2d.hh>
+#include <oln/morpho/laplacian.hh>
+#include <oln/level/compare.hh>
+#include <ntg/all.hh>
+
+int main()
 {
-oln::utils::key::value_type   data_key[16] = {0x1b, 0x83, 0x53, 0x90, 0xbf, 0xb6, 0x68, 0xad, 0xb3, 0xae, 0xfa, 0xfc, 0xfc, 0x6a, 0x1e, 0x27};
+  oln::utils::key::value_type data_key[16] = {0xbd, 0x5a, 0x43, 0x38, 0x1b,
+					      0xd3, 0xc1, 0x76, 0x52, 0x8b,
+					      0x43, 0xcc, 0xf4, 0x12, 0x6c,
+					      0xa3};
 
-oln::utils::key		   key(data_key);
+  oln::utils::key		   key(data_key);
 
-   typedef oln::image2d<ntg::
-int_u8>	im_type;
-   im_type	im1(oln::load(rdata("lena256.pgm")));
-   if (oln::utils::md5(oln::morpho::fast::laplacian(oln::convert::bound<ntg::
-int_u8>(), im1, oln::win_c8p())) == key)
-  std::cout << "OK" << std::endl;
-else
-  {
-    std::cout << "FAIL" << std::endl;
-    return true;
-  }
-   return  0;
- }
+  typedef oln::image2d<ntg::int_u8>	im_type;
+  im_type	im1(oln::load(rdata("lena256.pgm")));
+   if (oln::utils::md5(oln::morpho::fast::laplacian<ntg::int_s<10> >
+		       (im1, oln::win_c8p())) == key)
+     std::cout << "OK" << std::endl;
+   else
+     {
+       std::cout << "FAIL" << std::endl;
+       return true;
+     }
+}

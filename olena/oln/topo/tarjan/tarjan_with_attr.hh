@@ -179,22 +179,17 @@ namespace oln {
 
 	    // Resolving phase
 	    std::map<comp_type, comp_type>		cmps;
-	    comp_type				nc = 0;
 	    ncomps_ = 0;
-	    //	unsigned i = 0;
 	    for (int p = I.size() - 1; p >= 0; --p)
 	      {
 		point_type p_p = I[p];
-		if (cmps.find(comp_value_[find_root(to_comp_[p_p])]) == cmps.end())
+		if (cmps.find(find_root(to_comp_[p_p])) == cmps.end())
 		  {
-		    ++ncomps_;
-		    //		++i;
-		    //		std::cout << "new component\n";
-		    cmps[comp_value_[find_root(to_comp_[p_p])]] = nc;
-		    comp_value_[find_root(to_comp_[p_p])] = nc++;
+		    cmps[comp_value_[find_root(to_comp_[p_p])]] = ncomps_;
+		    comp_value_[find_root(to_comp_[p_p])] = ncomps_++;
 		  }
 	      }
-	    //	std::cout << i << " components\n";
+
 	    image_out_type output(input_.size());
 	    for (int p = I.size() - 1; p >= 0; --p)
 	      {

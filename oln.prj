@@ -1,609 +1,90 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 128)
-(Parent-Version oln 10 126)
+(Project-Version oln 10 131)
+(Parent-Version oln 10 128)
 (Version-Log "Index: olena/ChangeLog
 from  Giovanni Palma  <giovanni@lrde.epita.fr>
 
-	* oln/topo/tarjan/tarjan.hh: Add comments.
-	* oln/topo/tarjan/tarjan_with_attr.hh: Add comments. Correct the code.
-	* oln/topo/combinatorial-map/cmap.hh: Make cmap use the good flat_zone.
-	* oln/topo/tarjan/flat-zone.hh: Add new version of flat_zone.
-	* oln/topo/tarjan/union.hh: Correct comments.
-	* tests/topo/tests/cmap: Make the test use the good flat_zone.
+	* tests/topo/tests/tarjan: Correct test.
+	* tests/topo/tests/md5_topo_tarjan_flat-zone_hh0: Correct test.
+	* oln/topo/tarjan/tarjan_with_attr.hh: Correct code.
 
-Index: olena/tests/topo/tests/cmap
---- olena/tests/topo/tests/cmap Sun, 03 Aug 2003 21:08:04 +0200 burrus_n (oln/r/28_test-cmap. 1.8 640)
-+++ olena/tests/topo/tests/cmap Fri, 02 Apr 2004 16:36:54 +0200 palma_g (oln/r/28_test-cmap. 1.8 640)
-@@ -34,7 +34,7 @@
+Index: olena/tests/topo/tests/tarjan
+--- olena/tests/topo/tests/tarjan Thu, 31 Jul 2003 11:12:56 +0200 sylvain (oln/u/30_test-tarja 1.1 600)
++++ olena/tests/topo/tests/tarjan Fri, 02 Apr 2004 18:23:33 +0200 palma_g (oln/u/30_test-tarja 1.1 600)
+@@ -29,8 +29,8 @@
+   input_t src = load(rdata(\"object\"));
  
-   interpixel<input_t> ip(src);
- 
--  flat_zone<input_t> cc(src);
-+  obsolete::flat_zone<input_t> cc(src);
- 
-   cmap<input_t> cm(src, ip, cc);
- 
-Index: olena/oln/topo/tarjan/union.hh
---- olena/oln/topo/tarjan/union.hh Mon, 15 Mar 2004 17:40:54 +0100 van-vl_n (oln/r/33_union.hh 1.11 640)
-+++ olena/oln/topo/tarjan/union.hh Fri, 02 Apr 2004 16:48:26 +0200 palma_g (oln/r/33_union.hh 1.11 640)
-@@ -43,10 +43,7 @@
- 
-       /*! Tarjan set.
-       **
--      ** \\todo FIXME: a similar class is defined in
--      ** oln/morpho/attribute_union_find.hh (oln::morpho::tarjan::tarjan_set).
--      ** The one in morpho is more general. I think that this class should
--      ** be removed.
-+      ** \\todo FIXME: Obsolete since only obsolete::flat_zone use it.
-       */
-       template< class I, class aux_data_type>
-       struct tarjan_set
-Index: olena/oln/topo/tarjan/flat-zone.hh
---- olena/oln/topo/tarjan/flat-zone.hh Mon, 15 Mar 2004 15:32:27 +0100 van-vl_n (oln/r/35_flat-zone. 1.12 640)
-+++ olena/oln/topo/tarjan/flat-zone.hh Fri, 02 Apr 2004 16:47:01 +0200 palma_g (oln/r/35_flat-zone. 1.12 640)
-@@ -1,12 +1,13 @@
--// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
-+// Copyright (C) 2001, 2002, 2003, 2004 EPITA Research and Development
-+// Laboratory
- //
- // This file is part of the Olena Library.  This library is free
- // software; you can redistribute it and/or modify it under the terms
- // of the GNU General Public License version 2 as published by the
- // Free Software Foundation.
- //
--// This library is distributed in the hope that it will be useful,
--// but WITHOUT ANY WARRANTY; without even the implied warranty of
-+// This library is distributed in the hope that it will be useful, but
-+// WITHOUT  ANY  WARRANTY;  without   even  the  implied  warranty  of
- // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- // General Public License for more details.
- //
-@@ -28,9 +29,10 @@
- #ifndef OLENA_TOPO_TARJAN_FLAT_ZONE_HH
- # define OLENA_TOPO_TARJAN_FLAT_ZONE_HH
- 
--# include <oln/basics2d.hh>
-+# include <oln/basics.hh>
-+# include <oln/topo/tarjan/tarjan_with_attr.hh>
- # include <oln/topo/tarjan/union.hh>
+   flat_zone<input_t> cc(src);
 -
-+# include <oln/morpho/attributes.hh>
- # include <map>
+-  if (cc.nlabels() == 79)
++  cc.get_compute(oln::neighb_c4());
++  if (cc.ncomps() == 78)
+     OK_OR_FAIL;
  
- namespace oln {
-@@ -41,7 +43,10 @@
+   return fail;
+Index: olena/tests/topo/tests/md5_topo_tarjan_flat-zone_hh0
+--- olena/tests/topo/tests/md5_topo_tarjan_flat-zone_hh0 Tue, 23 Mar 2004 15:48:17 +0100 palma_g (oln/m/12_md5_topo_t 1.1 644)
++++ olena/tests/topo/tests/md5_topo_tarjan_flat-zone_hh0 Fri, 02 Apr 2004 18:31:24 +0200 palma_g (oln/m/12_md5_topo_t 1.1 644)
+@@ -9,16 +9,18 @@
+  
+ int main() 
+ {
+-oln::utils::key::value_type   data_key[16] = {0x23, 0x57, 0x37, 0xc5, 0xf5, 0xd1, 0x56, 0x6b, 0x6a, 0x2b, 0x6b, 0xe6, 0x59, 0x5b, 0xbb, 0x57};
++  oln::utils::key::value_type   data_key[16] = {0xd2, 0x7, 0xe9, 0x82, 0xdc,
++						0x89, 0x54, 0x89, 0x14, 0xc,
++						0xa5, 0xaa, 0x45, 0x2, 0x79,
++						0xdc};
  
-       /*! Create an image of label of the flat zones.
-       **
--      ** \\todo FIXME: many assertions are missing.
-+      ** \\param T Type of he input image.
-+      ** \\param DestType Data type of the output image (label type).
-+      ** \\param A Attribute you want to compute.
-+      ** \\param Exact Exact type of the class.
-       **
-       ** \\code
-       ** #include <oln/basics2d.hh>
-@@ -53,6 +58,153 @@
-       **   typedef oln::image2d<ntg::int_u8> img_type;
-       **   img_type in = oln::load(IMG_IN \"test-cmap.pgm\");
-       **   oln::topo::tarjan::flat_zone<img_type> z(in);
-+      **   save(oln::convert::stretch_balance<ntg::int_u8>(z.get_compute(oln::neighb_c4()), 0, 255),
-+      **        IMG_OUT \"oln_topo_flat_zone.pgm\");
-+      **  }
-+      ** \\endcode
-+      ** \\image html test-cmap_pgm.png \"input image\"
-+      ** \\image latex test-cmap_pgm.png \"input image\"
-+      ** =>
-+      ** \\image html oln_topo_flat_zone.png \"output image\"
-+      ** \\image latex oln_topo_flat_zone.png \"output image\"
-+      */
-+      template<class T,
-+	       class DestType = unsigned,
-+	       class A = oln::morpho::attr::card_type<>,
-+	       class Exact = mlc::final>
-+      struct flat_zone:
-+	public abstract::tarjan_with_attr<typename mlc::exact_vt<flat_zone<T, DestType, A, Exact>,
-+								 Exact>::ret>
-+      {
-+
-+	typedef oln_point_type(T)			point_type; ///< Type of input image.
-+	typedef oln_value_type(T)			data_type; ///< Data type of the input image.
-+	typedef oln_concrete_type(T)			image_type; ///< Concrete type of the input image.
-+
-+	typedef DestType				comp_type; ///< Type of components.
-+
-+	typedef flat_zone<T, DestType, A, Exact>	self_type; ///< Self type of the class.
-+	typedef mlc_exact_vt_type(self_type, Exact)	exact_type; ///< Exact type of the class.
-+	typedef abstract::tarjan_with_attr<exact_type>	super_type; ///< Type of parent class.
-+
-+	friend class super_type;
-+	friend class super_type::super_type;
-+	/*!
-+	** \\brief Constructor.
-+	**
-+	** \\arg ima Input image.
-+	** \\arg env Environment to use to compute the attributes.
-+	*/
-+	flat_zone(const image_type &ima,
-+	   const attr_env_type(A) &env = attr_env_type(A)()): super_type(ima, env)
-+	{
-+	}
-+
-+	std::vector<point_type>
-+	get_processing_order_impl()
-+	{
-+	  std::vector<point_type>	res;
-+	  oln_iter_type(image_type)	it(input_);
-+
-+	  res.reserve(input_.npoints());
-+	  for_all(it)
-+	    res.push_back(it);
-+	  return res;
-+	}
-+
-+      protected:
-+
-+	/*!
-+	** \\brief Implementation of mark_set().
-+	**
-+	** \\arg x Root of the new component.
-+	**
-+	** \\warning Do not call this method, use mark_set() instead.
-+	*/
-+	void
-+	mark_set_impl(const point_type &x)
-+	{
-+	  if (parent_.size() == parent_.capacity())
-+	    {
-+	      capacity = parent_.capacity() + capacity_chunk;
-+	      parent_.reserve(capacity);
-+	      comp_value_.reserve(capacity);
-+	    }
-+	  to_comp_[x] = ncomps_ + 1;
-+	  data_.push_back(A(input_, x, env_));
-+	  parent_.push_back(ncomps_ + 1);
-+	  comp_value_.push_back(ncomps_ + 1);
-+	}
-+
-+	/*!
-+	** \\brief Implementation of uni().
-+	**
-+	** \\arg n A point of the first component.
-+	** \\arg p A point of the second component.
-+	**
-+	** \\warning Do not call this method, use uni() instead.
-+	*/
-+	void
-+	uni_impl(const point_type& n, const point_type& p)
-+	{
-+	  comp_type		r = find_root(to_comp_[n]);
-+	  precondition(to_comp_[n] <= ncomps_);
-+	  precondition(to_comp_[p] <= (ncomps_ + 1));
-+	  if (r != to_comp_[p])
-+	    if (input_[n] == input_[p])
-+	      {
-+		if (to_comp_[p] == (ncomps_ + 1)) // first merge of p component
-+		  {
-+		    precondition(r < comp_value_.capacity());
-+		    data_[r] += data_[to_comp_[p]];
-+		    precondition(r <= ncomps_);
-+		    to_comp_[p] = r;
-+		  }
-+		else
-+		  {
-+		    precondition(r < parent_.capacity());
-+		    data_[parent_[to_comp_[p]]] += data_[parent_[r]];
-+		    parent_[r] = parent_[to_comp_[p]];
-+
-+		  }
-+	      }
-+	}
-+      };
-+
-+      /*!
-+      ** \\brief Traits specialization for flat_zone.
-+      **
-+      ** \\param T Type of he input image.
-+      ** \\param DestType Data type of the output image (label type).
-+      ** \\param A Attribute you want to compute.
-+      ** \\param Exact Exact type of the flat_zone class.
-+      */
-+      template <typename T, typename DestType, typename A, typename Exact>
-+      struct tarjan_traits<flat_zone<T, DestType, A, Exact> >
-+      {
-+	typedef T					input_type; ///< Type of the input image.
-+	typedef typename  mute<T, DestType>::ret	output_type; ///< Type of the output image.
-+	typedef A					attr_type; ///< Type of attribute to use.
-+      };
-+
-+      /*!
-+      ** \\brief Namespace containing obsolete implementation of flat zone.
-+      */
-+      namespace obsolete {
-+	/*! Create an image of label of the flat zones.
-+	**
-+	** \\todo FIXME: many assertions are missing.
-+	**
-+	** \\code
-+	** #include <oln/basics2d.hh>
-+	** #include <oln/topo/tarjan/flat-zone.hh>
-+	** #include <oln/convert/stretch.hh>
-+	**
-+	** int main()
-+	** {
-+	**   typedef oln::image2d<ntg::int_u8> img_type;
-+	**   img_type in = oln::load(IMG_IN \"test-cmap.pgm\");
-+	**   oln::topo::tarjan::obsolete::flat_zone<img_type> z(in);
-       **   save(oln::convert::stretch_balance<ntg::int_u8>(z.label, 0, 255),
-       **        IMG_OUT \"oln_topo_flat_zone.pgm\");
-       **  }
-@@ -230,6 +382,8 @@
+ oln::utils::key		   key(data_key);
  
-       };
- 
-+      } // end of namespace obsolete
+-   typedef oln::image2d<ntg::
+-int_u8> img_type;
++  typedef oln::image2d<ntg::int_u8> img_type;
+    img_type in = oln::load(rdata(\"test-cmap.pgm\"));
+    oln::topo::tarjan::flat_zone<img_type> z(in);
+-   if (oln::utils::md5(oln::convert::stretch_balance<ntg::
+-int_u8>(z.label, 0, 255)) == key)
 +
-     } // end of namespace tarjan
- 
-   } // end of namespace topo
-Index: olena/oln/topo/combinatorial-map/cmap.hh
---- olena/oln/topo/combinatorial-map/cmap.hh Mon, 15 Mar 2004 15:32:27 +0100 van-vl_n (oln/r/36_cmap.hh 1.13 640)
-+++ olena/oln/topo/combinatorial-map/cmap.hh Fri, 02 Apr 2004 16:46:39 +0200 palma_g (oln/r/36_cmap.hh 1.13 640)
-@@ -44,6 +44,7 @@
- ** FIXME: The documentation is not good enough.\\n
- ** FIXME: Real test are missing.
- ** FIXME: Some part of this file are inside \"#if 0\" comments.
-+** FIXME: This file force to keep an obsolete version of flat-zone.
- */
- 
- namespace oln {
-@@ -72,7 +73,7 @@
-       public:
- 	cmap(const I& input,
- 	     const inter_pixel::interpixel<I>& ip,
--	     tarjan::flat_zone<I>& cc) :
-+	     tarjan::obsolete::flat_zone<I>& cc) :
- 	  ndarts_(0),
- 	  zeta_(input.nrows() + 1, input.ncols() + 1),
- 	  cc_(cc),
-@@ -358,7 +359,7 @@
-       private:
- 	unsigned			ndarts_;
- 	zeta_type			zeta_;
--	tarjan::flat_zone<I> &		cc_;
-+	tarjan::obsolete::flat_zone<I> &cc_;
- 	internal::level<unsigned>	level_;
- 
- 	internal::beta<unsigned>	beta_;
++  if (oln::utils::md5(oln::convert::stretch_balance<ntg::int_u8>(z.get_compute(oln::neighb_c4()), 0, 255)) == key)
+   std::cout << \"OK\" << std::endl;
+ else
+   {
 Index: olena/oln/topo/tarjan/tarjan_with_attr.hh
---- olena/oln/topo/tarjan/tarjan_with_attr.hh Wed, 31 Mar 2004 19:11:41 +0200 palma_g (oln/m/46_tarjan_wit 1.1 644)
-+++ olena/oln/topo/tarjan/tarjan_with_attr.hh Fri, 02 Apr 2004 15:57:02 +0200 palma_g (oln/m/46_tarjan_wit 1.1 644)
-@@ -1,12 +1,12 @@
--// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
-+// Copyright (C) 2004  EPITA Research and Development Laboratory
- //
- // This file is part of the Olena Library.  This library is free
- // software; you can redistribute it and/or modify it under the terms
- // of the GNU General Public License version 2 as published by the
- // Free Software Foundation.
- //
--// This library is distributed in the hope that it will be useful,
--// but WITHOUT ANY WARRANTY; without even the implied warranty of
-+// This library is distributed in the hope that it will be useful, but
-+// WITHOUT  ANY  WARRANTY;  without   even  the  implied  warranty  of
- // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- // General Public License for more details.
- //
-@@ -42,22 +42,57 @@
-   namespace topo {
-     /// \\brief Implementation of tarjan set.
-     namespace tarjan {
+--- olena/oln/topo/tarjan/tarjan_with_attr.hh Fri, 02 Apr 2004 16:53:54 +0200 palma_g (oln/m/46_tarjan_wit 1.2 644)
++++ olena/oln/topo/tarjan/tarjan_with_attr.hh Fri, 02 Apr 2004 18:06:54 +0200 palma_g (oln/m/46_tarjan_wit 1.2 644)
+@@ -179,22 +179,17 @@
+ 
+ 	    // Resolving phase
+ 	    std::map<comp_type, comp_type>		cmps;
+-	    comp_type				nc = 0;
+ 	    ncomps_ = 0;
+-	    //	unsigned i = 0;
+ 	    for (int p = I.size() - 1; p >= 0; --p)
+ 	      {
+ 		point_type p_p = I[p];
+-		if (cmps.find(comp_value_[find_root(to_comp_[p_p])]) == cmps.end())
++		if (cmps.find(find_root(to_comp_[p_p])) == cmps.end())
+ 		  {
+-		    ++ncomps_;
+-		    //		++i;
+-		    //		std::cout << \"new component\\n\";
+-		    cmps[comp_value_[find_root(to_comp_[p_p])]] = nc;
+-		    comp_value_[find_root(to_comp_[p_p])] = nc++;
++		    cmps[comp_value_[find_root(to_comp_[p_p])]] = ncomps_;
++		    comp_value_[find_root(to_comp_[p_p])] = ncomps_++;
+ 		  }
+ 	      }
+-	    //	std::cout << i << \" components\\n\";
 +
-       /// Abstract classes for tarjan based algorithms.
-       namespace abstract {
- 
-+	/*!
-+	** \\brief Abstract  class to perform a tarjan  algorithm on an
-+	** image with attribute computing .
-+	**
-+	** \\param Exact Exact type of the class.
-+	*/
- 	template<class Exact>
- 	struct tarjan_with_attr: public tarjan<mlc_exact_vt_type(tarjan_with_attr<Exact>, Exact) >
- 	{
--	  typedef oln_tarjan_input_type(Exact)		input_type;
--	  typedef oln_point_type(input_type)		point_type;
--	  typedef oln_value_type(input_type)		data_type;
--
--	  typedef oln_concrete_type(input_type)		image_type;
--	  typedef oln_tarjan_output_type(Exact)		image_out_type;
--	  typedef oln_tarjan_attr_type(Exact)		attr_type;
--	  typedef attr_env_type(attr_type)		env_type;
--	  typedef oln_value_type(image_out_type)	comp_type;
-+	  typedef oln_tarjan_input_type(Exact)		input_type; ///< Type of input image.
-+	  typedef oln_point_type(input_type)		point_type; ///< Point type of image to process.
-+	  typedef oln_value_type(input_type)		data_type; ///< Data type of the input image.
-+
-+	  typedef oln_concrete_type(input_type)		image_type; ///< Concrete type of the input image.
-+	  typedef oln_tarjan_output_type(Exact)		image_out_type; ///< Type of output image.
-+	  typedef oln_tarjan_attr_type(Exact)		attr_type; ///< Type of attribute to use.
-+	  typedef attr_env_type(attr_type)		env_type; ///< Environment associated to attribute type.
-+	  typedef oln_value_type(image_out_type)	comp_type; ///< Type of components.
-+
-+	  typedef mlc_exact_vt_type(tarjan_with_attr<Exact>,
-+				    Exact)		exact_type; ///< Exact type of the class.
-+	  typedef tarjan<exact_type>			super_type; ///< Type of parent class.
-+
-+	  // Make parent class able to call implementations.
-+	  friend class super_type;
-+
-+	  /*!
-+	  ** \\brief Return the attribute value associated to a
-+	  ** component \\a i.
-+	  */
-+	  const attr_type &get_attr(const comp_type &i) const
-+	    {
-+	      return data_[find_root(i)];
-+	    }
-+
-+	protected:
- 
-+	  /*! \\brief Constructor.
-+	  **
-+	  ** Initialization of data structures.
-+	  **
-+	  ** \\arg ima Image to process.
-+	  ** \\arg env Environment to use.
-+	  **
-+	  ** \\warning  This  constructor  is protected,  because  this
-+	  ** class is abstract.
-+	  */
- 	  tarjan_with_attr(const image_type &ima,
- 			   const env_type &env):
- 	    capacity_chunk((ima.npoints() < 100) ? ima.npoints() : (ima.npoints() / 100)),
-@@ -73,30 +108,26 @@
- 	    data_.reserve(capacity);
- 	  }
- 
--	  // abstract methods
--	  std::vector<point_type> get_processing_order()
--	  {
--	    mlc_dispatch(get_processing_order)();
--	  }
--
--	  void
--	  mark_set(const point_type &x)
--	  {
--	    mlc_dispatch(mark_set)(x);
--	  }
--
--	  void
--	  uni(const point_type& n, const point_type& p)
--	  {
--	    mlc_dispatch(uni)(n, p);
--	  }
--
--	  // tells if a point has been proceded
--	  bool is_proc(const point_type &p) const
-+	  /*!
-+	  ** \\brief Implementation of is_proc().
-+	  **
-+	  ** \\arg p Point you want to check.
-+	  **
-+	  ** \\warning Do not call this method, use is_proc() instead.
-+	  */
-+	  bool is_proc_impl(const point_type &p) const
- 	  {
- 	    return to_comp_[p] != ntg_sup_val(comp_type);
- 	  };
- 
-+	  /*!
-+	  ** \\brief Implementation of find_root().
-+	  **
-+	  ** \\arg x The component you want to find the root.
-+	  **
-+	  ** \\warning  Do  not   call  this  method,  use  find_root()
-+	  ** instead.
-+	  */
- 	  comp_type
- 	  find_root(const comp_type& x) const
- 	  {
-@@ -105,11 +136,17 @@
- 	    return x;
- 	  }
- 
--	  // bool closing = true -> a closing is performed,
--	  // an opening otherwise.
-+	  /*!
-+	  ** \\brief Implementation of get_compute().
-+	  **
-+	  ** \\arg Ng Neighborhood to use.
-+	  **
-+	  ** \\warning  Do  not  call  this method,  use  get_compute()
-+	  ** instead.
-+	  */
- 	  template<class N>
- 	  image_out_type
--	  get_compute(const oln::abstract::neighborhood<N> &Ng)
-+	  get_compute_impl(const oln::abstract::neighborhood<N> &Ng)
- 	  {
- 	    std::vector<point_type>	I(get_processing_order());
- 
-@@ -167,20 +204,16 @@
- 	    return output;
- 	  }
- 
--	  // access to attributes
--	  // i index of component
--	  const attr_type &get_attr(const comp_type &i) const
--	  {
--	    return data_[find_root(i)];
--	  }
--
--	  comp_type ncomps() const
-+	  /*!
-+	  ** \\brief Implementation of ncomps_impl().
-+	  **
-+	  ** \\warning Do not call this method, use ncomps() instead.
-+	  */
-+	  comp_type ncomps_impl() const
- 	  {
- 	    return ncomps_;
- 	  }
- 
--	protected:
--
- 	  unsigned					capacity_chunk;
- 	  unsigned					capacity;
- 	  const image_type				&input_;
-@@ -193,99 +226,6 @@
- 	};
-       } // !abstract
- 
--
--
--      template<class T, class DestType, class A, class Exact = mlc::final>
--      struct cc:
--	public abstract::tarjan_with_attr<typename mlc::exact_vt<cc<T, DestType, A, Exact>,
--								 Exact>::ret>
--      {
--
--	typedef oln_point_type(T)			point_type;
--	typedef oln_value_type(T)			data_type;
--	//    typedef abstract::image<T>		image_type;
--	typedef oln_concrete_type(T) image_type;
--
--	typedef unsigned			comp_type;
--
--	typedef cc<T, DestType, A, Exact>			self_type; /*< Self type of the class.*/
--	typedef mlc_exact_vt_type(self_type, Exact)		exact_type;
--	typedef abstract::tarjan_with_attr<exact_type>		super_type;
--
--	cc(const image_type &ima,
--	   const attr_env_type(A) &env): super_type(ima, env)
--	{
--	}
--
--	std::vector<point_type> get_processing_order_impl()
--	{
--	  std::vector<point_type>	res;
--	  oln_iter_type(image_type)	it(input_);
--
--	  res.reserve(input_.npoints());
--	  for_all(it)
--	    res.push_back(it);
--	  return res;
--	}
--
--	void
--	mark_set_impl(const point_type &x)
--	{
--	  if (parent_.size() == parent_.capacity())
--	    {
--	      capacity = parent_.capacity() + capacity_chunk;
--	      parent_.reserve(capacity);
--	      comp_value_.reserve(capacity);
--	    }
--	  to_comp_[x] = ncomps_ + 1;
--	  data_.push_back(A(input_, x, env_));
--	  parent_.push_back(ncomps_ + 1);
--	  //comp_value_.push_back(input_[x]);
--	  comp_value_.push_back(ncomps_ + 1);
--	}
--
--	void
--	uni_impl(const point_type& n, const point_type& p)
--	{
--	  comp_type		r = find_root(to_comp_[n]);
--	  precondition(to_comp_[n] <= ncomps_);
--	  precondition(to_comp_[p] <= (ncomps_ + 1));
--	  if (r != to_comp_[p])
--	    if (input_[n] == input_[p])
--	      {
--		if (to_comp_[p] == (ncomps_ + 1)) // first merge of p component
--		  {
--		    precondition(r < comp_value_.capacity());
--		    //comp_value_[r] = input_[p];
--		    //		comp_value_[to_comp_[p]] = comp_value_[r];
--		    data_[r] += data_[to_comp_[p]];
--		    precondition(r <= ncomps_);
--		    to_comp_[p] = r;
--		  }
--		else
--		  {
--		    precondition(r < parent_.capacity());
--		    data_[parent_[to_comp_[p]]] += data_[parent_[r]];
--		    // 		comp_value_[parent_[to_comp_[p]]] = ntg::min(comp_value_[parent_[r]],
--		    // 							     comp_value_[parent_[to_comp_[p]]]);
--		    parent_[r] = parent_[to_comp_[p]];
--
--		  }
--	      }
--	  //      precondition(comp_value_[parent_[r]] <= 255);
--	}
--      };
--
--      // traits specialization
--      template <typename T, typename DestType, typename A, typename Exact>
--      struct tarjan_traits<cc<T, DestType, A, Exact> >
--      {
--	typedef T					input_type;
--	typedef typename  mute<T, DestType>::ret	output_type;
--	typedef A					attr_type;
--      };
--
--
-     } // end of namespace tarjan
- 
-   } // end of namespace topo
-Index: olena/oln/topo/tarjan/tarjan.hh
---- olena/oln/topo/tarjan/tarjan.hh Wed, 31 Mar 2004 19:11:41 +0200 palma_g (oln/m/47_tarjan.hh 1.1 644)
-+++ olena/oln/topo/tarjan/tarjan.hh Thu, 01 Apr 2004 13:49:48 +0200 palma_g (oln/m/47_tarjan.hh 1.1 644)
-@@ -1,12 +1,12 @@
--// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
-+// Copyright (C) 2004  EPITA Research and Development Laboratory
- //
- // This file is part of the Olena Library.  This library is free
- // software; you can redistribute it and/or modify it under the terms
- // of the GNU General Public License version 2 as published by the
- // Free Software Foundation.
- //
--// This library is distributed in the hope that it will be useful,
--// but WITHOUT ANY WARRANTY; without even the implied warranty of
-+// This library is distributed in the hope that it will be useful, but
-+// WITHOUT  ANY  WARRANTY;  without   even  the  implied  warranty  of
- // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- // General Public License for more details.
- //
-@@ -45,6 +45,7 @@
-   namespace topo {
-     /// \\brief Implementation of tarjan set.
-     namespace tarjan {
-+
-       /// Forward declaration for tarjan traits.
-       template <typename Exact>
-       struct tarjan_traits;
-@@ -61,10 +62,10 @@
- 	template <typename Exact>
- 	struct tarjan: public mlc_hierarchy::any<Exact>
- 	{
--	  typedef oln_tarjan_input_type(Exact)		input_type;
--	  typedef oln_tarjan_output_type(Exact)		image_out_type;
--	  typedef oln_value_type(image_out_type)	comp_type;
--	  typedef oln_point_type(input_type)		point_type;
-+	  typedef oln_tarjan_input_type(Exact)		input_type; ///< Type of input image.
-+	  typedef oln_tarjan_output_type(Exact)		image_out_type; ///< Type of output image.
-+	  typedef oln_value_type(image_out_type)	comp_type; ///< Type of components.
-+	  typedef oln_point_type(input_type)		point_type; ///< Point type of image to process.
- 
- 	  /*!
- 	  ** \\brief Run the algorithm.
+ 	    image_out_type output(input_.size());
+ 	    for (int p = I.size() - 1; p >= 0; --p)
+ 	      {
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 02 Apr 2004 16:53:54 +0200")
+(Checkin-Time "Fri, 02 Apr 2004 18:35:46 +0200")
 (Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -710,7 +191,7 @@ Index: olena/oln/topo/tarjan/tarjan.hh
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.9 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.40 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.68 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.71 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 640))
 
@@ -875,7 +356,7 @@ Index: olena/oln/topo/tarjan/tarjan.hh
   (olena/oln/io/basics.hh (oln/b/12_basics.hh 1.6 640))
   (olena/oln/io/file.hh (oln/b/17_file.hh 1.6 640))
   (olena/oln/io/gz.hh (oln/f/16_gz.hh 1.7 640))
-  (olena/oln/io/gz_stream.hh (oln/f/17_gz_stream. 1.10 640))
+  (olena/oln/io/gz_stream.hh (oln/f/17_gz_stream. 1.11 640))
   
   
   (olena/oln/io/pnm_read_3d.hh (oln/b/11_pnm_read3d 1.14 640))
@@ -920,7 +401,7 @@ Index: olena/oln/topo/tarjan/tarjan.hh
   (olena/oln/morpho/dilation.hh (oln/b/5_dilation.h 1.20 640))
   (olena/oln/morpho/erosion.hh (oln/b/4_erosion.hh 1.21 640))
   (olena/oln/morpho/extrema.hh (oln/38_extrema.hh 1.14 640))
-  (olena/oln/morpho/extrema.hxx (oln/j/4_extrema.hx 1.17 640))
+  (olena/oln/morpho/extrema.hxx (oln/j/4_extrema.hx 1.18 640))
   (olena/oln/morpho/extrema_killer.hh (oln/e/19_extrema_ki 1.7.1.4.1.15 640))
   (olena/oln/morpho/fast_morpho.hh (oln/46_fast_morph 1.9 640))
   (olena/oln/morpho/fast_morpho.hxx (oln/45_fast_morph 1.22 640))
@@ -931,7 +412,7 @@ Index: olena/oln/topo/tarjan/tarjan.hh
   (olena/oln/morpho/hit_or_miss.hh (oln/b/2_hit_or_mis 1.7 640))
   (olena/oln/morpho/hit_or_miss.inc (oln/42_hit_or_mis 1.23 640))
   (olena/oln/morpho/laplacian.hh (oln/b/1_laplacian. 1.6 640))
-  (olena/oln/morpho/laplacian.inc (oln/41_laplacian. 1.15 640))
+  (olena/oln/morpho/laplacian.inc (oln/41_laplacian. 1.16 640))
   (olena/oln/morpho/minmax.hh (oln/b/0_minmax.hh 1.6 640))
   (olena/oln/morpho/opening.hh (oln/51_opening.hh 1.6 640))
   (olena/oln/morpho/opening.inc (oln/40_opening.in 1.16 640))
@@ -944,11 +425,11 @@ Index: olena/oln/topo/tarjan/tarjan.hh
   (olena/oln/morpho/thinning.inc (oln/e/26_thinning.i 1.13 640))
   (olena/oln/morpho/top_hat.hh (oln/49_top_hat.hh 1.4 640))
   (olena/oln/morpho/top_hat.inc (oln/39_top_hat.in 1.17 640))
-  (olena/oln/morpho/watershed.hh (oln/48_watershed. 1.13 640))
+  (olena/oln/morpho/watershed.hh (oln/48_watershed. 1.14 640))
   (olena/oln/morpho/watershed.hxx (oln/47_watershed. 1.9.1.5.1.6 640))
   (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.11 640))
   (olena/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.7.1.9 640))
-  (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.12 640))
+  (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.13 640))
   (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.10 640))
   (olena/oln/transforms/wavelet_coeffs.hh (oln/i/34_wavelet_co 1.8 640))
   (integre/ntg/all.hh (oln/g/32_all.hh 1.10.1.8 640))
@@ -1585,7 +1066,7 @@ Index: olena/oln/topo/tarjan/tarjan.hh
   (olena/tests/utils/tests/histogram (oln/u/27_histogram. 1.2.1.3 600))
   (olena/tests/utils/tests/stat (oln/u/28_stat.cc 1.2 600))
   (olena/tests/utils/tests/timer (oln/u/29_timer.cc 1.4 600))
-  (olena/tests/topo/tests/tarjan (oln/u/30_test-tarja 1.1 600))
+  (olena/tests/topo/tests/tarjan (oln/u/30_test-tarja 1.2 600))
   (olena/oln/convert/abstract/conversion.hh (oln/u/31_conversion 1.6 640))
   (olena/tests/check/Makefile.runtests (oln/u/32_Makefile.r 1.2 600))
   (contrib/runtests (oln/u/33_runtests 1.4 700))
@@ -1896,7 +1377,7 @@ Index: olena/oln/topo/tarjan/tarjan.hh
   (olena/tests/morpho/tests/md5_morpho_reconstruction_hh1 (oln/k/45_md5_morpho 1.1 644))
   (olena/tests/morpho/tests/md5_morpho_reconstruction_hh0 (oln/k/46_md5_morpho 1.1 644))
   (olena/tests/morpho/tests/md5_morpho_opening_inc0 (oln/k/47_md5_morpho 1.1 644))
-  (olena/tests/morpho/tests/md5_morpho_laplacian_inc1 (oln/k/48_md5_morpho 1.1 644))
+  (olena/tests/morpho/tests/md5_morpho_laplacian_inc1 (oln/k/48_md5_morpho 1.2 644))
   (olena/tests/morpho/tests/md5_morpho_laplacian_inc0 (oln/k/49_md5_morpho 1.1 644))
   (olena/tests/morpho/tests/md5_morpho_hit_or_miss_inc5 (oln/k/50_md5_morpho 1.1 644))
   (olena/tests/morpho/tests/md5_morpho_hit_or_miss_inc4 (oln/k/51_md5_morpho 1.1 644))
@@ -1968,7 +1449,7 @@ Index: olena/oln/topo/tarjan/tarjan.hh
 ;; Files added by populate at Tue, 23 Mar 2004 15:45:54 +0100,
 ;; to version 10.106(w), by palma_g:
 
-  (olena/tests/topo/tests/md5_topo_tarjan_flat-zone_hh0 (oln/m/12_md5_topo_t 1.1 644))
+  (olena/tests/topo/tests/md5_topo_tarjan_flat-zone_hh0 (oln/m/12_md5_topo_t 1.2 644))
   (olena/tests/topo/tests/md5_topo_dmap_hh0 (oln/m/13_md5_topo_d 1.1 644))
 
 ;; Files added by populate at Tue, 23 Mar 2004 15:56:32 +0100,
@@ -1992,7 +1473,7 @@ Index: olena/oln/topo/tarjan/tarjan.hh
   (olena/tests/convol/tests/nagao (oln/m/19_nagao 1.1 600))
   (integre/tests/types/tests/ntg_compare_nb_comp (oln/m/20_ntg_compar 1.1 600))
   (olena/oln/convol/nagao.hxx (oln/m/21_nagao.hxx 1.1 600))
-  (olena/oln/convol/nagao.hh (oln/m/22_nagao.hh 1.2 600))
+  (olena/oln/convol/nagao.hh (oln/m/22_nagao.hh 1.3 600))
   (olena/oln/utils/se_stat.hh (oln/m/23_se_stat.hh 1.2 600))
   (olena/oln/utils/se_stat.hxx (oln/m/24_se_stat.hx 1.2 600))
   (olena/oln/morpher/subq_morpher.hh (oln/m/25_subq_morph 1.2 600))
@@ -2020,17 +1501,18 @@ Index: olena/oln/topo/tarjan/tarjan.hh
 ;; Files added by populate at Wed, 31 Mar 2004 19:07:28 +0200,
 ;; to version 10.123(w), by palma_g:
 
-  (olena/oln/topo/tarjan/tarjan_with_attr.hh (oln/m/46_tarjan_wit 1.2 644))
+  (olena/oln/topo/tarjan/tarjan_with_attr.hh (oln/m/46_tarjan_wit 1.3 644))
   (olena/oln/topo/tarjan/tarjan.hh (oln/m/47_tarjan.hh 1.2 644))
 )
 (Merge-Parents
-  (10.126 complete)
-  (10.127 complete
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (olena/oln/core/image1d.hh olena/oln/core/image1d.hh olena/oln/core/image1d.hh r)
-    (olena/oln/core/image2d.hh olena/oln/core/image2d.hh olena/oln/core/image2d.hh r) (olena/oln/core/image3d.hh olena/oln/core/image3d.hh olena/oln/core/image3d.hh r)
-    (olena/oln/core/neighborhood2d.hh olena/oln/core/neighborhood2d.hh olena/oln/core/neighborhood2d.hh r) (olena/oln/core/window2d.hh olena/oln/core/window2d.hh olena/oln/core/window2d.hh r)
-    (olena/oln/core/w_window2d.hh olena/oln/core/w_window2d.hh olena/oln/core/w_window2d.hh r) (olena/oln/level/cc.hh olena/oln/level/cc.hh olena/oln/level/cc.hh r)
-    (olena/oln/morpho/top_hat.inc olena/oln/morpho/top_hat.inc olena/oln/morpho/top_hat.inc r) 
+  (10.128 complete)
+  (10.129 complete
+    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (olena/oln/morpho/laplacian.inc olena/oln/morpho/laplacian.inc olena/oln/morpho/laplacian.inc r)
+    (olena/oln/morpho/watershed.hh olena/oln/morpho/watershed.hh olena/oln/morpho/watershed.hh r) (olena/tests/morpho/tests/md5_morpho_laplacian_inc1 olena/tests/morpho/tests/md5_morpho_laplacian_inc1 olena/tests/morpho/tests/md5_morpho_laplacian_inc1 r))
+  (10.130 complete
+    (olena/ChangeLog olena/ChangeLog olena/ChangeLog m) (olena/oln/io/gz_stream.hh olena/oln/io/gz_stream.hh olena/oln/io/gz_stream.hh r)
+    (olena/oln/morpho/extrema.hxx olena/oln/morpho/extrema.hxx olena/oln/morpho/extrema.hxx r) (olena/oln/transforms/dwt.hh olena/oln/transforms/dwt.hh olena/oln/transforms/dwt.hh r)
+    (olena/oln/convol/nagao.hh olena/oln/convol/nagao.hh olena/oln/convol/nagao.hh r) 
   )
 )
 (New-Merge-Parents)

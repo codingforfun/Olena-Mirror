@@ -29,8 +29,8 @@ check()
   input_t src = load(rdata("object"));
 
   flat_zone<input_t> cc(src);
-
-  if (cc.nlabels() == 79)
+  cc.get_compute(oln::neighb_c4());
+  if (cc.ncomps() == 78)
     OK_OR_FAIL;
 
   return fail;
