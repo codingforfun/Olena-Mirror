@@ -1,4 +1,17 @@
-2002-11-04  R-Aéda Dehak  <reda@lrde.epita.fr>-b
+2002-11-04  Réda Dehak  <reda@lrde.epita.fr>
+
+	* oln/types/int_u.hh: Remove formatting options in redirection 
+	operator <<.
+
+	* oln/types/int_s.hh: Likewise.
+
+	* oln/core/internal/real_image2d.hh: Add formatting options in 
+	redirection operator << before writting elements to have a good 
+	representation of the image.
+
+	* oln/core/internal/real_image3d.hh: Likewise.
+
+2002-11-04  Réda Dehak  <reda@lrde.epita.fr>
 
 	* oln/core/neighborhood1d.hh: Fix add method, neighborhood1d is 
 	not centered

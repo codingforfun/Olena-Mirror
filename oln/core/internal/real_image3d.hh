@@ -30,7 +30,9 @@
 
 # include <oln/core/internal/image3d.hh>
 # include <oln/core/internal/image3d_data.hh>
+# include <oln/types/all.hh>
 # include <iostream>
+# include <cmath>
 
 namespace oln {
 
@@ -158,7 +160,10 @@ operator<<(std::ostream& o, const oln::internal::_real_image3d<T,I>& ima)
     o << "### " << slice << std::endl;
     for (oln::coord row = 0; row < ima.nrows(); ++row) {
       for (oln::coord col = 0; col < ima.ncols(); ++col)
-	o << ima(slice, row, col) << ' ';
+	{
+	  o.width(unsigned(log10(double(oln::optraits<T>::max()))+2));
+	  o << ima(slice, row, col) << ' ';
+	}
       o << std::endl;
     }
   }

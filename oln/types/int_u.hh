@@ -186,7 +186,6 @@ namespace oln
     inline std::ostream&
     operator<<(std::ostream& stream, const oln::int_u<nbits, behaviour>& rhs)
     {
-      stream.width(unsigned(log(double(nbits))/log(2.f)));
       stream << unsigned(rhs.value());
       return stream;
     }

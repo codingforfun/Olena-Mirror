@@ -30,7 +30,9 @@
 
 # include <oln/core/internal/image2d.hh>
 # include <oln/core/internal/image2d_data.hh>
+# include <oln/types/all.hh>
 # include <iostream>
+# include <cmath>
 
 namespace oln {
 
@@ -156,7 +158,10 @@ operator<<(std::ostream& o, const oln::internal::_real_image2d<T,I>& ima)
   for (oln::coord row = 0; row < ima.nrows(); ++row)
     {
       for (oln::coord col = 0; col < ima.ncols(); ++col)
-	o << ima(row,col) << ' ';
+	{
+	  o.width(unsigned(log10(double(oln::optraits<T>::max()))+2));
+	  o << ima(row,col) << ' ';
+	}
       o << std::endl;
     }
   return o;
