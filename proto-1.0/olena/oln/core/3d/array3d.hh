@@ -1,37 +1,38 @@
-#ifndef OLENA_CORE_2D_ARRAY2D_HH
-# define OLENA_CORE_2D_ARRAY2D_HH
+#ifndef OLENA_CORE_3D_ARRAY3D_HH
+# define OLENA_CORE_3D_ARRAY3D_HH
 
 
 # include <oln/core/abstract/data_storage.hh>
-# include <oln/core/2d/size2d.hh>
-# include <oln/core/2d/point2d.hh>
+# include <oln/core/3d/size3d.hh>
+# include <oln/core/3d/point3d.hh>
 
 namespace oln {
 
 
-  template <typename T> struct array2d;
+  template <typename T> struct array3d;
   template <typename T> 
-  struct category_type< array2d<T> > { typedef cat::data_storage ret; };
+  struct category_type< array3d<T> > { typedef cat::data_storage ret; };
 
 
   template <typename T>
-  struct props < cat::data_storage, array2d<T> > // FIXME: add inheritance
+  struct props < cat::data_storage, array3d<T> > // FIXME: add inheritance
   {
-    typedef size2d  size_type;
-    typedef point2d point_type;
+    typedef size3d  size_type;
+    typedef point3d point_type;
     typedef T       data_type;
   };
 
 
   template <typename T>
-  class array2d : public abstract::data_storage< array2d<T> >
+  class array3d : public abstract::data_storage< array3d<T> >
   {
 
   public:
 
-    array2d() :
+    array3d() :
       buffer_(0),
       array_(0),
+      array2_(0),
       size_()
     {
       this->exact_ptr = this;
@@ -39,20 +40,21 @@ namespace oln {
     }
 
     // w/o impl
-    array2d(const array2d&);
-    void operator=(const array2d&);
+    array3d(const array3d&);
+    void operator=(const array3d&);
 
 
-    array2d(const size2d& s) :
+    array3d(const size3d& s) :
       buffer_(0),
       array_(0),
+      array2_(0),
       size_()
     {
       this->exact_ptr = this;
       this->resize(s);
     }
 
-    ~array2d()
+    ~array3d()
     {
       this->impl_clear_data();
     }
@@ -71,42 +73,53 @@ namespace oln {
 	  // buffer
 	  delete[] buffer_;
 	  buffer_ = 0;
+          // array2
+          delete[] array2_;
+          array2_ = 0;
 	  // array
 	  array_ -= size_.border();
 	  delete[] array_;
 	  array_ = 0;
 	  // size
-	  size_ = size2d();
+	  size_ = size3d();
 	}
       invariant_();
     }
 
-    const size2d& size() const
+    const size3d& size() const
     {
       return size_;
     }
-
-    void impl_resize(const size2d& s)
+ 
+    void impl_resize(const size3d& s)
     {
-      precondition(s.nrows() > 0 and
+      precondition(s.nslices() > 0 and
+                   s.nrows() > 0 and
 		   s.ncols() > 0 and
 		   s.border() >= 0);
       invariant_();
       this->clear_data();
       size_ = s;
 
+      size_t nslices_eff = size_.nslices() + 2 * size_.border();
       size_t nrows_eff = size_.nrows() + 2 * size_.border();
       size_t ncols_eff = size_.ncols() + 2 * size_.border();
-      size_t nelts_eff = nrows_eff * ncols_eff;
+      size_t nelts_eff = nslices_eff * nrows_eff * ncols_eff;
 
       buffer_ = new T[nelts_eff];
-      array_ = new T*[nrows_eff];
+      array_ = new T**[nslices_eff];
+      array2_ = new T*[nslices_eff * nrows_eff];
 
       T* buf = buffer_ + size_.border();
-      for (size_t row = 0; row < nrows_eff; ++row)
+      for (size_t slice = 0; slice < nslices_eff; ++slice)
 	{
-	  array_[row] = buf;
-	  buf += ncols_eff;
+          T** a2 = array2_ + slice * nrows_eff;
+          array[slice] = a2 + size_.border();
+   	  for (size_t row = 0; row < nrows_eff; ++row)
+	    {
+	      a2[row] = buf;
+	      buf += ncols_eff;
+	    } 
 	}
       array_ += size_.border();
       invariant_();
@@ -117,42 +130,47 @@ namespace oln {
       return size_.npoints();
     }
 
-    bool impl_hold(const point2d& p) const
+    bool impl_hold(const point3d& p) const
     {
       return
+	p.slice() >= 0 and
+	p.slice() < size_.nslices() and
 	p.row() >= 0 and
 	p.row() < size_.nrows() and
 	p.col() >= 0 and
 	p.col() < size_.ncols();
     }
 
-    bool impl_hold_large(const point2d& p) const
+    bool impl_hold_large(const point3d& p) const
     {
       return
+	p.slice() >= - size_.border() and
+	p.slice() < size_.nslices() + size_.border() and
 	p.row() >= - size_.border() and
 	p.row() < size_.nrows() + size_.border() and
 	p.col() >= - size_.border() and
 	p.col() < size_.ncols() + size_.border();
     }
 
-    const T impl_get(const point2d& p) const
+    const T impl_get(const point3d& p) const
     {
       invariant_();
-      return array_[p.row()][p.col()];
+      return array_[p.slice()][p.row()][p.col()];
     }
 
-    void impl_set(const point2d& p, const T& v)
+    void impl_set(const point3d& p, const T& v)
     {
       invariant_();
-      array_[p.row()][p.col()] = v;
+      array_[p.slice()][p.row()][p.col()] = v;
     }
 
     void impl_set_data(const T& v)
     {
       invariant_();
+      const size_t nslices_eff = size_.nslices() + 2 * size_.border();
       const size_t nrows_eff = size_.nrows() + 2 * size_.border();
       const size_t ncols_eff = size_.ncols() + 2 * size_.border();
-      const size_t len = nrows_eff * ncols_eff;
+      const size_t len = nslices_eff * nrows_eff * ncols_eff;
       T* p = buffer_;
       for (size_t i = 0; i < len; ++i)
 	*p++ = v;
@@ -161,19 +179,22 @@ namespace oln {
   private:
 
     T* buffer_;
-    T** array_;
-    size2d size_;
+    T** array2_;
+    T*** array_;
+    size3d size_;
 
     void invariant_() const
     {
       invariant((buffer_ != 0 and
 		 array_ != 0 and
+		 size_.nslices() > 0 and
 		 size_.nrows() > 0 and
 		 size_.ncols() > 0 and
 		 size_.border() >= 0)
 		or
 		(buffer_ == 0 and
 		 array_ == 0 and
+		 size_.nslices() == 0 and
 		 size_.nrows() == 0 and
 		 size_.ncols() == 0 and
 		 size_.border() == 0));
@@ -184,4 +205,4 @@ namespace oln {
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_2D_ARRAY2D_HH
+#endif // ! OLENA_CORE_3D_ARRAY3D_HH

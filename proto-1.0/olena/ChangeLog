@@ -1,5 +1,11 @@
 2005-01-21  Simon Odou  <simon@lrde.epita.fr>
 
+	* oln/core/1d/array1d.hh: New.
+	* oln/core/2d/array2d.hh: Fix a missing destructor.
+	* oln/core/3d/array3d.hh: New.
+
+2005-01-21  Simon Odou  <simon@lrde.epita.fr>
+
 	* oln/basics1d.hh: Add size1d include.
 	* oln/core/1d/size1d.hh: New.
 	* oln/core/2d/size2d.hh: Fix a missing "this".
