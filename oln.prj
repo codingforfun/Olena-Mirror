@@ -1,23 +1,12 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 10)
-(Parent-Version oln 10 9)
-(Version-Log "Index: ChangeLog
-from  Raphaël Poss  <raph@lrde.epita.fr>
-
-   * configure.ac: Comment out dysfunctional stuff.
-
-Index: olena/ChangeLog
-from  Raphaël Poss  <raph@lrde.epita.fr>
-
-   * conf/README: Add.
-   * Makefile.am: Comment out dysfunctional stuff.
-
-")
+(Project-Version oln 10 11)
+(Parent-Version oln 10 10)
+(Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Mon, 25 Aug 2003 13:50:56 +0200")
-(Checkin-Login raph)
+(Checkin-Time "Tue, 26 Aug 2003 14:20:31 +0200")
+(Checkin-Login djo)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -120,7 +109,7 @@ from  Raphaël Poss  <raph@lrde.epita.fr>
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.4 640))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.4 640))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.25 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.34 640))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.26 640))
@@ -145,7 +134,7 @@ from  Raphaël Poss  <raph@lrde.epita.fr>
   (doc/ref/bin () :directory)
   (doc/ref/html () :directory)
   (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.8 640))
-  (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.6.1.4 640))
+  (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.6.1.5 640))
   (doc/ref/oln-ref.tex (oln/f/14_oln-ref.te 1.3.1.3 640))
   (doc/ref/integre-ref.tex (oln/g/34_ref-types. 1.11 640))
   (doc/Makefile.am (oln/e/0_Makefile.a 1.14 640))
@@ -1034,7 +1023,7 @@ from  Raphaël Poss  <raph@lrde.epita.fr>
 ;; Files added by populate at Mon, 25 Aug 2003 13:48:55 +0200,
 ;; to version 10.9(w), by raph:
 
-  (olena/conf/README (oln/v/14_README 1.1 664))
+  (olena/conf/README (oln/v/14_README 1.1 644))
 )
 (Merge-Parents)
 (New-Merge-Parents)

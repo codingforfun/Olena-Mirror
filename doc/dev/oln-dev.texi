@@ -3,6 +3,10 @@
 @setfilename oln-dev.info
 @settitle Olena: a Developer's Handbook
 @dircategory Development
+@direntry
+* Olena: (olena).           A generic image processing library in C++
+@end direntry
+
 @include version.texi
 
 @documentlanguage en
