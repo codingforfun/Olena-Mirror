@@ -110,16 +110,13 @@ namespace oln {
 	return to_exact(*this).len_(s);
       }
 
-    protected:
       ~image_array()
       {
 	desallocate_data_(buffer_);
       }
-    
-      T* buffer_;
-        
-    
-     
+
+    protected:
+      T* buffer_;     
     };
     
   } // end of namespace impl

@@ -43,7 +43,7 @@ namespace oln {
 
     template<class N_>
     typename get_se< N_::dim >::ret
-    ng_to_se(const neighborhood<N_>& _Ng)
+    ng_to_se(const abstract::neighborhood<N_>& _Ng)
     {
       Exact_cref(N, Ng);
       typename get_se< N::dim >::ret output;
@@ -55,7 +55,7 @@ namespace oln {
 
     template<class N_>
     typename get_se< N_::dim >::ret
-    ng_to_cse(const neighborhood<N_>& _Ng)
+    ng_to_cse(const abstract::neighborhood<N_>& _Ng)
     {
       Exact_cref(N, Ng);
       typename get_se< N::dim >::ret output;

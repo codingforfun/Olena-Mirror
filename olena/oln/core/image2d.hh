@@ -29,8 +29,8 @@
 # define OLENA_CORE_IMAGE2D_HH
 
 # include <oln/core/impl/image_array2d.hh>
-# include <oln/io/readable.hh>
 # include <oln/core/image.hh>
+# include <oln/io/readable.hh>
 
 # include <iostream>
 # include <stdlib.h>

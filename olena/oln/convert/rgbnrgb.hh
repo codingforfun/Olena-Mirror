@@ -41,14 +41,14 @@
 `--------------------------------------------------------------*/
 
 namespace oln {
-  
-  using namespace ntg;
 
+  using namespace ntg;
+  
   namespace convert {
 
-    struct rgb_to_nrgb
+    struct f_rgb_to_nrgb
       : public color_conversion<3, rgb_traits,
-				3, nrgb_traits, rgb_to_nrgb>
+				3, nrgb_traits, f_rgb_to_nrgb>
     {
       template <unsigned qbits>
       color<3, qbits, nrgb_traits>
@@ -65,12 +65,21 @@ namespace oln {
 	return out;
       }
 
-      static std::string name() { return "rgb_to_nrgb"; }
+      static std::string name() { return "f_rgb_to_nrgb"; }
     };
 
-    struct nrgb_to_rgb
+    template <unsigned qbits>
+    color<3, qbits, nrgb_traits>
+    rgb_to_nrgb(const color<3, qbits, rgb_traits>& v)
+    {
+      f_rgb_to_nrgb f;
+
+      return f(v);
+    }
+
+    struct f_nrgb_to_rgb
       : public color_conversion<3, nrgb_traits,
-				3, rgb_traits, nrgb_to_rgb>
+				3, rgb_traits, f_nrgb_to_rgb>
     {
       template <unsigned qbits>
       color<3, qbits, rgb_traits>
@@ -87,8 +96,17 @@ namespace oln {
 	return out;
       }
 
-      static std::string name() { return "nrgb_to_rgb"; }
+      static std::string name() { return "f_nrgb_to_rgb"; }
     };
+
+    template <unsigned qbits>
+    color<3, qbits, rgb_traits>
+    nrgb_to_rgb(const color<3, qbits, nrgb_traits>& v)
+    {
+      f_nrgb_to_rgb f;
+
+      return f(v);
+    }
 
   } // convert
 } // oln

@@ -45,7 +45,7 @@
  * exo: out.pbm
 =*/
 template<class I_, class E_>
-Concrete(I_) opening(const image<I_>& input, const struct_elt<E_>& _se)
+Concrete(I_) opening(const abstract::image<I_>& input, const abstract::struct_elt<E_>& _se)
 {
   //  mlc::eq< I_::dim, E_::dim >::ensure();
   return dilation(erosion(input, _se), -to_exact(_se));

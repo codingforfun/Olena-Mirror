@@ -203,12 +203,11 @@ namespace oln {
 
 	// bool closing = true -> a closing is performed,
 	// an opening otherwise.
-	template<class N_ >
+	template<class N>
 	image_t get_comptute(const ATTRIBUTE & lambda,
-			     const neighborhood<N_>& _Ng,
+			     const neighborhood<N>& Ng,
 			     const bool closing)
 	{
-	  Exact_cref(N, Ng);
 	  typedef std::pair<point_t, data_t> pixel_t;
 	  _lambda = lambda;
 

@@ -71,7 +71,8 @@ namespace oln
       }
 
     protected:
-      windownd() : super_type() {}
+      windownd() : super_type()
+      { }
 
       windownd(unsigned size) : super_type(size) {}
     };

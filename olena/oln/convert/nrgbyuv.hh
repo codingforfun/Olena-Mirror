@@ -42,13 +42,11 @@
 
 namespace oln {
   
-  using namespace ntg;
-
   namespace convert {
 
-    struct nrgb_to_yuv
+    struct f_nrgb_to_yuv
       : public color_conversion<3, nrgb_traits,
-				3, yuv_traits, nrgb_to_yuv>
+				3, yuv_traits, f_nrgb_to_yuv>
     {
       template <unsigned qbits>
       color<3, qbits, yuv_traits>
@@ -59,18 +57,27 @@ namespace oln {
 	out[yuv_Y] =
 	  + 0.299 * in[nrgb_R] + 0.587  * in[nrgb_G] + 0.114 * in[nrgb_B];
 	out[yuv_U] =
-	  - 0.147 * in[nrgb_R] - 0.2897 * in[nrgb_G] + 0.436 * in[nrgb_B];
+	  - 0.147 * in[nrgb_R] - 0.289 * in[nrgb_G] + 0.436 * in[nrgb_B];
 	out[yuv_V] =
 	  + 0.615 * in[nrgb_R] - 0.515  * in[nrgb_G] - 0.100 * in[nrgb_B];
 	return out;
       }
 
-      static std::string name() { return "nrgb_to_yuv"; }
+      static std::string name() { return "f_nrgb_to_yuv"; }
     };
 
-    struct yuv_to_nrgb
+    template <unsigned qbits>
+    color<3, qbits, yuv_traits>
+    nrgb_to_yuv(const color<3, qbits, nrgb_traits>& v)
+    {
+      f_nrgb_to_yuv f;
+      
+      return f(v);
+    }
+
+    struct f_yuv_to_nrgb
       : public color_conversion<3, yuv_traits,
-				3, nrgb_traits, yuv_to_nrgb>
+				3, nrgb_traits, f_yuv_to_nrgb>
     {
       template <unsigned qbits>
       color<3, qbits, nrgb_traits>
@@ -79,14 +86,23 @@ namespace oln {
 	vec<3, float> in = v.to_float();
 	vec<3, float> out;
 	out[nrgb_R] = in[yuv_Y]                     + 1.140 * in[yuv_V];
-	out[nrgb_G] = in[yuv_Y] - 0.396 * in[yuv_U] - 0.581 * in[yuv_V];
-	out[nrgb_B] = in[yuv_Y] + 2.029 * in[yuv_U];
+	out[nrgb_G] = in[yuv_Y] - 0.394 * in[yuv_U] - 0.581 * in[yuv_V];
+	out[nrgb_B] = in[yuv_Y] + 2.028 * in[yuv_U];
 
 	return out;
       }
 
-      static std::string name() { return "yuv_to_nrgb"; }
+      static std::string name() { return "f_yuv_to_nrgb"; }
     };
+
+    template <unsigned qbits>
+    color<3, qbits, nrgb_traits>
+    yuv_to_nrgb(const color<3, qbits, yuv_traits>& v)
+    {
+      f_yuv_to_nrgb f;
+
+      return f(v);
+    }
 
   } // convert
 } // oln

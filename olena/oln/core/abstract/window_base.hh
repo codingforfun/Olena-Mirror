@@ -118,12 +118,12 @@ namespace oln
       }
 
     protected:
-      window_base() : super_type(), delta_(0)
+      window_base() : super_type(), dp_(), delta_(0)
       {
 	centered_ = false;
       }
 
-      window_base(unsigned size) : super_type(), delta_(0)
+      window_base(unsigned size) : super_type(), dp_(), delta_(0)
       {
 	dp_.reserve(size);
 	centered_ = false;

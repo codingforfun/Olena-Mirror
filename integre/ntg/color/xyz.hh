@@ -43,7 +43,12 @@ namespace ntg
   template<unsigned icomp> struct xyz_traits;
   template<> struct xyz_traits<xyz_X> : public interval<0,1> {};
   template<> struct xyz_traits<xyz_Y> : public interval<0,1> {};
-  template<> struct xyz_traits<xyz_Z> : public interval<0,1> {};
+
+  template<> struct xyz_traits<xyz_Z> 
+  {
+    static float lower_bound() { return 0.; }
+    static float upper_bound() { return 1.2; }
+  };
 
   typedef color<3,8,xyz_traits>  xyz_8;
   typedef color<3,16,xyz_traits> xyz_16;

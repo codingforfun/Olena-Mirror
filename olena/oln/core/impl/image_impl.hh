@@ -64,7 +64,7 @@ namespace oln {
 	invariant(refcount_ > 0);
 	--refcount_;
 	if (refcount_ == 0)
-	  delete this;
+	  delete to_exact(this);
       }
 
       const value_type& at(const point_type& p) const

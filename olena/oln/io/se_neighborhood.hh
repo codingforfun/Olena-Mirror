@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_SE_NEIGHBORHOOD_HXX_
-# define OLENA_IO_SE_NEIGHBORHOOD_HXX_
+#ifndef OLENA_IO_SE_NEIGHBORHOOD_HH_
+# define OLENA_IO_SE_NEIGHBORHOOD_HH_
 
-# include <oln/io/pnm.hh>
 # include <oln/core/neighborhood2d.hh>
 # include <oln/core/macros.hh>
+# include <oln/io/image.hh>
 
 namespace oln {
 
@@ -46,8 +46,8 @@ namespace oln {
 
 	if (!(im.ncols() % 2) || !(im.nrows() % 2))
 	  {
-	    std::clog << "[both image dimensions have to be odd for "
-		      << "a neighborhood2d]" << std::flush;
+	    // std::clog << "[both image dimensions have to be odd for "
+	    //      << "a neighborhood2d]" << std::flush;
 	    return false;
 	  }
 	image2d<ntg::bin>::fwd_iter_type it(im);
@@ -70,8 +70,8 @@ namespace oln {
 	    point2d inv_p = -p + dcenter;
 	    if (im[it] != im[inv_p])
 	      {
-		std::clog << "[a neighborhood2d must be symmetric]" 
-			  << std::flush;
+		// std::clog << "[a neighborhood2d must be symmetric]" 
+		//  << std::flush;
 		return false;
 	      }
 	  }
@@ -95,4 +95,4 @@ namespace oln {
   } // io
 } // oln
 
-#endif // OLENA_IO_SE_NEIGHBORHOOD_HXX_
+#endif // OLENA_IO_SE_NEIGHBORHOOD_HH_

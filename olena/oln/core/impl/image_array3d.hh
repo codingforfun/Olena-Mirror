@@ -136,11 +136,12 @@ namespace oln {
 	return size_t(nslices_eff * nrows_eff * ncols_eff);
       }
 
-    protected:
       ~image_array3d()
       {
 	desallocate_3d_data_(array2_, array_, size_);
       }
+
+    protected:
 
     public:
       // borders

@@ -110,9 +110,9 @@ namespace oln {
 	return to_exact(this)->at(i);
       }
 
-      self_type operator-() const
+      exact_type operator-() const
       {
-	self_type win(*this);
+	exact_type win(*to_exact(this));
 	win.sym();
 	return win;
       }
@@ -125,6 +125,7 @@ namespace oln {
       }
 
       struct_elt() {}
+      struct_elt(const struct_elt&) {}
     };
   } // end of abstract
   

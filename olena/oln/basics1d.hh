@@ -33,7 +33,6 @@
 # include <oln/core/point1d.hh>
 # include <oln/core/dpoint1d.hh>
 # include <oln/core/image1d.hh>
-//# include <oln/core/border1d.hh>
 
 # include <oln/core/window1d.hh>
 # include <oln/core/w_window1d.hh>

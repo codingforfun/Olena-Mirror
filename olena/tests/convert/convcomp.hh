@@ -20,13 +20,11 @@ struct f_l2_vec3 : public std::binary_function<Input, Input, float_s>
   }
 };
 
-template< class F, class Dist, class I1_, class I2_ >
+template< class F, class Dist, class I1, class I2 >
 F&
 compare_images(F& functor, Dist distance,
-	       const image<I1_>& _im1, const image<I2_>& _im2)
+	       const abstract::image<I1>& im1, const abstract::image<I2>& im2)
 {
-  Exact_cref(I1, im1);
-  Exact_cref(I2, im2);
   precondition(im1.size() == im2.size());
   Iter(I1) p(im1);
   for_all(p)

@@ -1,10 +1,7 @@
 #include <oln/basics2d.hh>
 #include <oln/level/compare.hh>
 #include <ntg/all.hh>
-#if HAVE_ZLIB
-# include <oln/io/gz.hh>
-#endif
-#include <oln/io/se.hh>
+
 #include "check.hh"
 #include "data.hh"
 

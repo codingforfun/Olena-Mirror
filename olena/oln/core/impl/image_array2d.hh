@@ -118,13 +118,12 @@ namespace oln {
 	return size_t(nrows_eff * ncols_eff);
       }
 
-
-    protected:
-
       ~image_array2d() 
       {
 	desallocate_2d_data_(array_, size_); 
       }
+
+    protected:
 
     public:
       // borders

@@ -64,24 +64,21 @@ namespace oln {
        * exo: out.pgm
        * wontcompile: fixme
        =*/
-      template<class I1_, class I2_, class N_>
-      Concrete(I1_)
-	geodesic_reconstruction_dilation(const image<I1_> & _marker,
-					 const image<I2_> & _mask,
-					 const neighborhood<N_>& _Ng)
+      template<class I1, class I2, class N>
+      Concrete(I1)
+	geodesic_reconstruction_dilation(const abstract::image<I1> & marker,
+					 const abstract::image<I2> & mask,
+					 const abstract::neighborhood<N>& Ng)
       {
-	Exact_cref(I1, marker);
-	Exact_cref(I2, mask);
-	Exact_cref(N, Ng);
-	mlc::eq<I1_::dim, I2_::dim>::ensure();
+	mlc::eq<I1::dim, I2::dim>::ensure();
 	mlc::eq<I1::dim, N::dim>::ensure();
 	precondition(marker.size() == mask.size());
 	precondition(level::is_greater_or_equal(mask, marker));
-	Concrete(I1_) output = marker.clone();
+	Concrete(I1) output = marker.clone();
 	bool non_stability = true;
 	while (non_stability)
 	  {
-	    Concrete(I1_) work = geodesic_dilation(output, mask, Ng);
+	    Concrete(I1) work = geodesic_dilation(output, mask, Ng);
 	    non_stability = !(level::is_equal(work, output));
 	    output = work;
 	  }
@@ -115,16 +112,13 @@ namespace oln {
        * exo: out.pgm
        * wontcompile: fixme
        =*/
-      template<class I1_, class I2_, class N_>
-      Concrete(I1_)
-	geodesic_reconstruction_dilation(const image<I1_> & _marker,
-					 const image<I2_> & _mask,
-					 const neighborhood<N_>& _Ng)
+      template<class I1, class I2, class N>
+      Concrete(I1)
+	geodesic_reconstruction_dilation(const abstract::image<I1> & marker,
+					 const abstract::image<I2> & mask,
+					 const abstract::neighborhood<N>& Ng)
       {
-	Exact_cref(I1, marker);
-	Exact_cref(I2, mask);
-	Exact_cref(N, Ng);
-	mlc::eq<I1_::dim, I2_::dim>::ensure();
+	mlc::eq<I1::dim, I2::dim>::ensure();
 	mlc::eq<I1::dim, N::dim>::ensure();
 	precondition(marker.size() == mask.size());
 	precondition(level::is_greater_or_equal(mask, marker));
@@ -136,12 +130,12 @@ namespace oln {
 
 	Concrete(I1) output = marker.clone();
 	bool non_stability = true;
-	typename I1::fwd_iter fwd_p(output);
-	typename I1::bkd_iter bkd_p(output);
+	typename I1::fwd_iter_type fwd_p(output);
+	typename I1::bkd_iter_type bkd_p(output);
 	while (non_stability)
 	  {
 	    Concrete(I1) work = output.clone();
-	    border::adapt_copy(work, Ng.delta());
+	    work.border_adapt_copy(Ng.delta());
 	    for_all (fwd_p)
 	      work[fwd_p] = min(morpho::max(work, fwd_p, se_plus), mask[fwd_p]);
 	    for_all (bkd_p)
@@ -158,18 +152,14 @@ namespace oln {
 
       namespace internal {
 
-	template<class P_, class I1_, class I2_, class E_> inline
+	template<class P, class I1, class I2, class E> inline
 	static
-	bool exist_init_dilation(const point<P_>& _p,
-				 const image<I1_>& _marker,
-				 const image<I2_>& _mask,
-				 const struct_elt<E_>& _se)
+	bool exist_init_dilation(const abstract::point<P>& p,
+				 const abstract::image<I1>& marker,
+				 const abstract::image<I2>& mask,
+				 const abstract::struct_elt<E>& se)
 	{
-	  Exact_cref(P, p);
-	  Exact_cref(I1, marker);
-	  Exact_cref(I2, mask);
-	  Exact_cref(E, se);
-	  mlc::eq<I1_::dim, I2_::dim>::ensure();
+	  mlc::eq<I1::dim, I2::dim>::ensure();
 	  mlc::eq<I1::dim, E::dim>::ensure();
 	  mlc::eq<I1::dim, P::dim>::ensure();
 
@@ -206,15 +196,12 @@ namespace oln {
        * exo: out.pgm
        * wontcompile: fixme
        =*/
-      template<class I1_, class I2_, class N_>
-      Concrete(I1_)
-	geodesic_reconstruction_dilation(const image<I1_> & _marker,
-					 const image<I2_> & _mask,
-					 const neighborhood<N_>& _Ng)
+      template<class I1, class I2, class N>
+      Concrete(I1)
+	geodesic_reconstruction_dilation(const abstract::image<I1> & marker,
+					 const abstract::image<I2> & mask,
+					 const abstract::neighborhood<N>& Ng)
       {
-	Exact_cref(I1, marker);
-	Exact_cref(I2, mask);
-	Exact_cref(N, Ng);
 	mlc::eq<I1::dim, I2::dim>::ensure();
 	mlc::eq<I1::dim, N::dim>::ensure();
 
@@ -222,13 +209,13 @@ namespace oln {
 	precondition(level::is_greater_or_equal(mask, marker));
 
 	Concrete(I1) output = marker.clone();
-	border::adapt_copy(output, Ng.delta());
+	output.border_adapt_copy(Ng.delta());
 	{
 	  typedef typename get_se<N::dim>::ret E;
 	  E Ng_plus = get_plus_se_p(convert::ng_to_cse(Ng));
 	  E Ng_minus = get_minus_se_p(convert::ng_to_cse(Ng));
-	  typename I1::fwd_iter fwd_p(output);
-	  typename I1::bkd_iter bkd_p(output);
+	  typename I1::fwd_iter_type fwd_p(output);
+	  typename I1::bkd_iter_type bkd_p(output);
 	  for_all (fwd_p)
 	    output[fwd_p] = std::min(morpho::max(output, fwd_p, Ng_plus),
 				     mask[fwd_p]);
@@ -286,24 +273,21 @@ namespace oln {
        * exo: out.pgm
        * wontcompile: fixme
        =*/
-      template<class I1_, class I2_, class N_>
-      Concrete(I1_)
-	geodesic_reconstruction_erosion(const image<I1_> & _marker,
-					const image<I2_> & _mask,
-					const neighborhood<N_>& _Ng)
+      template<class I1, class I2, class N>
+      Concrete(I1)
+	geodesic_reconstruction_erosion(const abstract::image<I1> & marker,
+					const abstract::image<I2> & mask,
+					const abstract::neighborhood<N>& Ng)
       {
-	Exact_cref(I1, marker);
-	Exact_cref(I2, mask);
-	Exact_cref(N, Ng);
 	mlc::eq<I1::dim, I2::dim>::ensure();
 	mlc::eq<I1::dim, N::dim>::ensure();
 	precondition(marker.size() == mask.size());
 	precondition(level::is_greater_or_equal(marker, mask));
-	Concrete(I1_) output = marker.clone();
+	Concrete(I1) output = marker.clone();
 	bool non_stability = true;
 	while (non_stability)
 	  {
-	    Concrete(I1_) work = geodesic_erosion(output, mask, Ng);
+	    Concrete(I1) work = geodesic_erosion(output, mask, Ng);
 	    non_stability = !(level::is_equal(work, output));
 	    output = work;
 	  }
@@ -337,15 +321,12 @@ namespace oln {
        * exo: out.pgm
        * wontcompile: fixme
        =*/
-      template<class I1_, class I2_, class N_>
-      Concrete(I1_)
-	geodesic_reconstruction_erosion(const image<I1_>& _marker,
-					const image<I2_>& _mask,
-					const neighborhood<N_>& _Ng)
+      template<class I1, class I2, class N>
+      Concrete(I1)
+	geodesic_reconstruction_erosion(const abstract::image<I1>& marker,
+					const abstract::image<I2>& mask,
+					const abstract::neighborhood<N>& Ng)
       {
-	Exact_cref(I1, marker);
-	Exact_cref(I2, mask);
-	Exact_cref(N, Ng);
 	mlc::eq<I1::dim, I2::dim>::ensure();
 	mlc::eq<I1::dim, N::dim>::ensure();
 	precondition(marker.size() == mask.size());
@@ -357,12 +338,12 @@ namespace oln {
 	Concrete(I1) output = marker.clone();
 
 	bool non_stability = true;
-	typename I1::fwd_iter fwd_p(output);
-	typename I1::bkd_iter bkd_p(output);
+	typename I1::fwd_iter_type fwd_p(output);
+	typename I1::bkd_iter_type bkd_p(output);
 	while (non_stability)
 	  {
 	    Concrete(I1) work = output.clone();
-	    border::adapt_copy(work, Ng.delta());
+	    work.border_adapt_copy(Ng.delta());
 	    for_all (fwd_p)
 	      work[fwd_p] = max(morpho::min(work, fwd_p, se_plus), mask[fwd_p]);
 	    for_all (bkd_p)
@@ -377,17 +358,13 @@ namespace oln {
 
     namespace hybrid {
       namespace internal {
-	template<class P_, class I1_, class I2_, class E_> inline
+	template<class P, class I1, class I2, class E> inline
 	static
-	bool exist_init_erosion(const point<P_>& _p,
-				const image<I1_>& _marker,
-				const image<I2_>& _mask,
-				const struct_elt<E_>& _se)
+	bool exist_init_erosion(const abstract::point<P>& p,
+				const abstract::image<I1>& marker,
+				const abstract::image<I2>& mask,
+				const abstract::struct_elt<E>& se)
 	{
-	  Exact_cref(P, p);
-	  Exact_cref(I1, marker);
-	  Exact_cref(I2, mask);
-	  Exact_cref(E, se);
 	  mlc::eq<I1::dim, I2::dim>::ensure();
 	  mlc::eq<I1::dim, E::dim>::ensure();
 	  mlc::eq<I1::dim, P::dim>::ensure();
@@ -425,15 +402,12 @@ namespace oln {
        * wontcompile: fixme
        =*/
 
-      template<class I1_, class I2_, class N_>
-      Concrete(I1_)
-	geodesic_reconstruction_erosion(const image<I1_> & _marker,
-					const image<I2_> & _mask,
-					const neighborhood<N_>& _Ng)
+      template<class I1, class I2, class N>
+      Concrete(I1)
+	geodesic_reconstruction_erosion(const abstract::image<I1> & marker,
+					const abstract::image<I2> & mask,
+					const abstract::neighborhood<N>& Ng)
       {
-	Exact_cref(I1, marker);
-	Exact_cref(I2, mask);
-	Exact_cref(N, Ng);
 	mlc::eq<I1::dim, I2::dim>::ensure();
 	mlc::eq<I1::dim, N::dim>::ensure();
 
@@ -441,13 +415,13 @@ namespace oln {
 	precondition(level::is_greater_or_equal(marker, mask));
 
 	Concrete(I1) output = marker.clone();
-	border::adapt_copy(output, Ng.delta());
+	output.border_adapt_copy(Ng.delta());
 	{
 	  typedef typename get_se<N::dim>::ret E;
 	  E Ng_plus = get_plus_se_p(convert::ng_to_cse(Ng));
 	  E Ng_minus = get_minus_se_p(convert::ng_to_cse(Ng));
-	  typename I1::fwd_iter fwd_p(output);
-	  typename I1::bkd_iter bkd_p(output);
+	  typename I1::fwd_iter_type fwd_p(output);
+	  typename I1::bkd_iter_type bkd_p(output);
 	  for_all (fwd_p)
 	    output[fwd_p] = max(morpho::min(output, fwd_p, Ng_plus),
 				mask[fwd_p]);

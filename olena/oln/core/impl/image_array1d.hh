@@ -145,6 +145,9 @@ namespace oln {
             at_(size_.ncols() - j - 1) = val;
           }
       }
+
+      ~image_array1d() {}
+
     protected:
 
     private:

@@ -33,7 +33,6 @@
 # include <oln/core/point2d.hh>
 # include <oln/core/dpoint2d.hh>
 # include <oln/core/image2d.hh>
-//# include <oln/core/border2d.hh>
 
 # include <oln/core/window2d.hh>
 # include <oln/core/w_window2d.hh>
@@ -42,8 +41,7 @@
 # include <oln/core/fwd_iter2d.hh>
 # include <oln/core/bkd_iter2d.hh>
 
-# include <oln/io/basics.hh>
-# include <oln/io/pnm.hh>
+# include <oln/io/image.hh>
 # include <oln/io/se.hh>
 
 #endif // ! OLENA_BASICS2D_HH
