@@ -254,7 +254,7 @@ for (my $i = 0; $i < @config; $i++)
   print $makefile "chmod 700 ./\$<.cmd ";
   print $makefile "&& eval ./\$@.";
   print $makefile $config[$i]{"ext"};
-  print $makefile ".cmd \$< \$@";
+  print $makefile ".cmd \$< \$@ \"\$(MY_CPPFLAGS)\"";
   print $makefile "\n\n";
 }
 

@@ -7,22 +7,15 @@ DOXYGEN = doxygen
 EXDOC = $(srcdir)/exdoc.pl
 OUT_DIR = "out"
 IMG_CONV = $(srcdir)/img_conv.pl
-CLEANFILES = -r -- html.tar.gz \
-	oln-ref.pdf \
-	./$(OUT_DIR)/out* \
-	 ./html \
-	./latex \
-	./img \
-	./$(OUT_DIR)/makefile \
-	./$(OUT_DIR)/all.mk
-
+CLEANFILES = html.tar.gz \
+	oln-ref.pdf
 
 doc: html.tar.gz oln-ref.pdf
 
 doxy:
 	$(EXDOC) --config=$(OUT_DIR)/exdoc.config  --output-dir=$(OUT_DIR) --input-dir=$(top_srcdir)
 	mkdir -p img
-	cd $(OUT_DIR) && $(MAKE) -f makefile
+	cd $(OUT_DIR) && $(MAKE) -f makefile MY_CPPFLAGS="$(CPPFLAGS)"
 	$(IMG_CONV) $(top_srcdir)/olena/img img preserve
 	$(IMG_CONV) img img nopreserve
 	$(DOXYGEN) doxygen.config
@@ -36,11 +29,11 @@ oln-ref.pdf: doxy
 
 dist_noinst_DATA = oln-ref.pdf html.tar.gz $(srcdir)/exdoc.pl $(srcdir)/img_conv.pl
 
-dist-local:
-	rm -rf img/*
+clean-local:
+	rm -rf img/* out/out* html img latex out/makefile out/all.mk out/exdoc.config
 
 MAINTAINERCLEANFILES = $(dist_noinst_DATA) \
-	./html/* ./img/* ./$(OUT_DIR)/*
+	./html/* ./img/*
 
 # ###
 # ### What gets installed.
