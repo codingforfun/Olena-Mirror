@@ -1,3 +1,8 @@
+2002-08-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/types/optraits_cycle.hh: Fix modulo with float/double.
+	* oln/types/optraits_builtins_float.hh: Add cycle float/double traits.
+
 2002-08-27  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh, 
