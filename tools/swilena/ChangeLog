@@ -1,5 +1,9 @@
 2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
 
+	* swilena/python/Makefile.am: Add new line at end of file.
+
+2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
+
 	* swilena/python/Makefile.am: Remove clean-file. Add CLEANFILES.
 
 2004-04-19  Damien Thivolle  <damien@lrde.epita.fr>

@@ -1,16 +1,20 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 176)
-(Parent-Version oln 10 175)
-(Version-Log "from  Niels Van Vliet  <niels@lrde.epita.fr>
-	* tests/*/tests/* (82 files): Add copyright.
-	* tests/*/tests/* (6 files): Add copyright.
-	* tests/*/tests/* (168 files): Add copyright.
-	* swilena/python/Makefile.am: Remove clean-file. Add CLEANFILES.
+(Project-Version oln 10 177)
+(Parent-Version oln 10 176)
+(Version-Log "2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
+	* integre/ntg/core/internal/traits.hh: Include headers so as to pass
+	sanity check.
+	* olena/oln/convert/rgbhsl.hh: Include headers so as to pass
+	sanity check.
+	* olena/oln/snakes/energies.hh: Likewise.
+	* olena/oln/utils/buffer.hh: Likewise.
+	* olena/oln/topo/tarjan/tarjan.hh: Likewise.
+	* swilena/python/Makefile.am: Add new line at end of file.
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 20 Apr 2004 15:16:21 +0200")
+(Checkin-Time "Tue, 20 Apr 2004 16:03:16 +0200")
 (Checkin-Login van-vl_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -115,11 +119,11 @@
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.11 600))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.9 600))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.43 600))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.44 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.41 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.90 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.91 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.13 600))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.36 600))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.37 600))
 
   (olena/ChangeLog.0 (oln/6_ChangeLog 1.50.1.98.1.5 600))
   (doc/ChangeLog.0 (oln/e/1_ChangeLog 1.31 600))
@@ -882,7 +886,7 @@
   (integre/ntg/int.hh (oln/s/0_int.hh 1.3 600))
   (integre/ntg/float.hh (oln/s/1_float.hh 1.3 600))
   (integre/ntg/real/real_value.hh (oln/s/15_real_value 1.2.1.1 600))
-  (integre/ntg/core/internal/traits.hh (oln/s/16_traits.hh 1.4.1.1 600))
+  (integre/ntg/core/internal/traits.hh (oln/s/16_traits.hh 1.4.1.2 600))
   (integre/ntg/core/internal/macros.hh (oln/s/17_macros.hh 1.3 600))
   (integre/ntg/core/type_traits.hh (oln/s/18_type_trait 1.3 600))
   (integre/ntg/core/macros.hh (oln/s/19_macros.hh 1.12 600))
@@ -1123,7 +1127,7 @@
 ;; Files added by populate at Mon, 10 Nov 2003 14:10:01 +0100,
 ;; to version 10.40(w), by burrus_n:
 
-  (tools/swilena/python/Makefile.am (oln/w/2_Makefile.a 1.5 600))
+  (tools/swilena/python/Makefile.am (oln/w/2_Makefile.a 1.6 600))
   (tools/swilena/python/swilena_all1d.py (oln/w/3_swilena_al 1.2 600))
   (tools/swilena/python/swilena_all2d.py (oln/w/4_swilena_al 1.2 600))
   (tools/swilena/python/swilena_all3d.py (oln/w/5_swilena_al 1.2 600))
@@ -1157,7 +1161,7 @@
 ;; to version 10.48(w), by palma_g:
 
   (olena/oln/convert/rgbhsv.hh (oln/j/35_rgbhsv.hh 1.3 600))
-  (olena/oln/convert/rgbhsl.hh (oln/j/36_rgbhsl.hh 1.4 600))
+  (olena/oln/convert/rgbhsl.hh (oln/j/36_rgbhsl.hh 1.5 600))
   (olena/oln/convert/rgbhsi.hh (oln/j/37_rgbhsi.hh 1.3 600))
   (olena/oln/convert/rgbyuv.hh (oln/j/38_rgbyuv.hh 1.3 600))
   (olena/oln/convert/rgbyiq.hh (oln/j/39_rgbyiq.hh 1.3 600))
@@ -1166,7 +1170,7 @@
   (olena/oln/snakes/snakes_base.hxx (oln/f/11_snakes_bas 1.1 600))
   (olena/oln/snakes/snakes_base.hh (oln/f/50_snakes_bas 1.4 600))
   (olena/oln/snakes/energies.hxx (oln/j/21_energies.h 1.1 600))
-  (olena/oln/snakes/energies.hh (oln/j/22_energies.h 1.2 600))
+  (olena/oln/snakes/energies.hh (oln/j/22_energies.h 1.3 600))
   (olena/oln/snakes/segment.hxx (oln/j/23_segment.hx 1.1 600))
   (olena/oln/snakes/greedy.hxx (oln/j/24_greedy.hxx 1.1 600))
   (olena/oln/snakes/greedy.hh (oln/j/25_greedy.hh 1.2 600))
@@ -1235,7 +1239,7 @@
 ;; to version 10.97(w), by palma_g:
 
   (olena/oln/utils/buffer.hxx (oln/k/9_buffer.hxx 1.2 600))
-  (olena/oln/utils/buffer.hh (oln/k/10_buffer.hh 1.1 600))
+  (olena/oln/utils/buffer.hh (oln/k/10_buffer.hh 1.2 600))
   (olena/oln/utils/key.hxx (oln/k/11_key.hxx 1.2 600))
   (olena/oln/utils/key.hh (oln/k/12_key.hh 1.2 600))
   (olena/oln/utils/md5.hxx (oln/k/13_md5.hxx 1.3 600))
@@ -1428,7 +1432,7 @@
 ;; to version 10.123(w), by palma_g:
 
   (olena/oln/topo/tarjan/tarjan_with_attr.hh (oln/m/46_tarjan_wit 1.3 600))
-  (olena/oln/topo/tarjan/tarjan.hh (oln/m/47_tarjan.hh 1.3 600))
+  (olena/oln/topo/tarjan/tarjan.hh (oln/m/47_tarjan.hh 1.4 600))
 
 ;; Files added by populate at Sun, 04 Apr 2004 16:30:53 +0200,
 ;; to version 10.134(w), by odou_s:
@@ -1457,7 +1461,5 @@
   (metalic/mlc/makefile.src (oln/r/3_makefile.s 1.1 600))
   (olena/oln/makefile.src (oln/r/4_makefile.s 1.1 600))
 )
-(Merge-Parents
-  (10.175 complete)
-)
+(Merge-Parents)
 (New-Merge-Parents)

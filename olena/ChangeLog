@@ -1,5 +1,13 @@
 2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
 
+	* olena/oln/convert/rgbhsl.hh: Include headers so as to pass
+	sanity check.
+	* olena/oln/snakes/energies.hh: Likewise.
+	* olena/oln/utils/buffer.hh: Likewise.
+	* olena/oln/topo/tarjan/tarjan.hh: Likewise.
+
+2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
+
 	* tests/*/tests/* (168 files): Add copyright.
 
 2004-04-15  Giovanni Palma  <giovanni@lrde.epita.fr>

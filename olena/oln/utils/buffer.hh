@@ -29,6 +29,8 @@
 #ifndef OLENA_OLN_UTILS_BUFFER_HH
 # define OLENA_OLN_UTILS_BUFFER_HH
 
+# include <ntg/int.hh>
+# include <vector>
 
 namespace oln {
   namespace utils {

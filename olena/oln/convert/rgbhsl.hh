@@ -33,7 +33,7 @@
 # include <oln/convert/abstract/colorconv.hh>
 
 # include <ntg/basics.hh>
-# include <ntg/color/nrgb.hh>
+# include <ntg/color/rgb.hh>
 # include <ntg/color/hsl.hh>
 
 # include <mlc/contract.hh>
