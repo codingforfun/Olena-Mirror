@@ -1,6 +1,6 @@
 2003-01-16  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* ChangeLog: clean.
+	* ChangeLog: Clean.
 
 	* oln/types/typetraits_builtins_int.hh, oln/types/range.hh,
 	oln/types/optraits_builtins_int.hh, oln/types/int_u.hh,
