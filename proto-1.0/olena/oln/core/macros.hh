@@ -28,6 +28,7 @@
 
 # define oln_size_type(T)  typename oln::props<oln_category_type(T),T>::size_type
 # define oln_point_type(T) typename oln::props<oln_category_type(T),T>::point_type
+# define oln_dpoint_type(T) typename oln::props<oln_category_type(T),T>::dpoint_type
 # define oln_value_type(T) typename oln::props<oln_category_type(T),T>::value_type
 
 # define oln_iter_type(T) typename oln::props<oln_category_type(T),T>::iter_type

@@ -1,78 +1,27 @@
 #ifndef OLENA_FANCY_IOTA_HH
 # define OLENA_FANCY_IOTA_HH
 
-# include <oln/core/1d/image1d.hh>
-# include <oln/core/2d/image2d.hh>
-# include <oln/core/3d/image3d.hh>
+# include <oln/core/macros.hh>
+# include <oln/core/abstract/image.hh>
 
 namespace oln {
 
   namespace fancy {
 
 
-    namespace impl {
-      template <typename T> 
-      void iota(abstract::image1d<T>& inout);
-      template <typename T> 
-      void iota(abstract::image2d<T>& inout);
-      template <typename T> 
-      void iota(abstract::image3d<T>& inout);
-    } // end of namespace impl
-
-
-
-    // facade
+    // facade == impl
 
     template <typename I>
     void iota(abstract::image<I>& inout)
     {
-      impl::iota(inout.exact());
+      unsigned counter = 0;
+      oln_piter_type(I) p(inout.size());
+      for_all(p)
+	inout[p] = ++counter;
     }
 
 
-
-    // impl
-
-    namespace impl {
-
-      // FIXME: must be generic, of course ! But for now, we have not yet
-      // iterators and we just want to test.
-
-      template <typename T>
-      void iota(abstract::image2d<T>& inout)
-      {
-	unsigned counter = 0;
-        // FIXME: lacks cleaning
-	for (coord_t row = 0; row < inout.size().nrows(); ++row) 
-	  for (coord_t col = 0; col < inout.size().ncols(); ++col)
-	    inout[point2d(row,col)] = ++counter;
-      }
-
-      template <typename T>
-      void iota(abstract::image1d<T>& inout)
-      {
-	unsigned counter = 0;
-        // FIXME: lacks cleaning
-	for (coord_t index = 0; index < inout.size().nindices(); ++index)
-	  inout[point1d(index)] = ++counter;
-      } 
-
-      template <typename T>
-      void iota(abstract::image3d<T>& inout)
-      {
-	unsigned counter = 0;
-        // FIXME: lacks cleaning
-	for (coord_t slice = 0; slice < inout.size().nslices(); ++slice) 
-	  for (coord_t row = 0; row < inout.size().nrows(); ++row)
-	    for (coord_t col = 0; col < inout.size().ncols(); ++col)
-	      inout[point3d(slice,row,col)] = ++counter;
-      }  
-
-    } // end of namespace impl
-
-
-  } // end of namespace fancy
-
+  } // end of namespace oln::fancy
 
 } // end of namespace oln
 

@@ -11,6 +11,10 @@
 # include <oln/core/macros.hh>
 
 
+
+# define for_all(P) for(p.start(); p.is_valid(); p.next())
+
+
 namespace oln {
 
   namespace abstract {
@@ -48,25 +52,25 @@ namespace oln {
 
       void next()
       {
-	precondition(this->is_ok());
+	precondition(this->is_valid());
 	this->exact().impl_next();
       }
 
-      bool is_ok() const
+      bool is_valid() const
       {
-	return this->exact().impl_is_ok();
+	return this->exact().impl_is_valid();
       }
 
       operator point_type() const
       {
-	precondition(this->is_ok());
+	precondition(this->is_valid());
 	return this->p_;
       }
 
       void invalidate()
       {
 	this->exact().impl_invalidate();
-	postcondition(not this->is_ok());
+	postcondition(not this->is_valid());
       }
 
     protected:
@@ -75,7 +79,6 @@ namespace oln {
 	s_(s),
 	p_()
       {
-	this->invalidate();
       }
 
       const size_type s_;

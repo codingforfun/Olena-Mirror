@@ -174,9 +174,9 @@ namespace oln {
 		or
 		(buffer_ == 0 and
 		 array_ == 0 and
-		 size_.nrows() == 0 and
-		 size_.ncols() == 0 and
-		 size_.border() == 0));
+		 size_.nrows().is_undefined() and
+		 size_.ncols().is_undefined() and
+		 size_.border().is_undefined()));
     }
 
   };

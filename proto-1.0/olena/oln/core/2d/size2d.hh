@@ -11,10 +11,7 @@ namespace oln {
 
   struct size2d : public abstract::size< size2d >
   {
-    size2d() :
-      nrows_(0),
-      ncols_(0),
-      border_(0)
+    size2d()
     {}
 
     size2d(coord_t nrows_, coord_t ncols_) :

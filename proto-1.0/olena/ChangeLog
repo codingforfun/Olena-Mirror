@@ -1,3 +1,26 @@
+2005-01-24  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* oln/core/abstract/dpoint.hh: New.
+	* oln/core/1d/dpoint1d.hh: New.
+	* oln/core/1d/fwd_piter1d.hh: New.
+	* oln/core/2d/dpoint2d.hh: New.
+	* oln/fancy/print.hh: Fix includes.
+	* oln/fancy/iota.hh: Set generic.
+	* oln/core/macros.hh: Add oln_dpoint_type(T).
+	* oln/core/abstract/piter.hh: Change is_ok into is_valid.  Move
+	  call to invalidate into subclasses.
+	* oln/core/abstract/point.hh: Document.  Add properties.
+	* oln/core/coord.hh: Turn coord_t into a class.
+	* oln/core/1d/point1d.hh: Add arithmetics and properties.  Remove 0
+	  settings.
+	* oln/core/2d/point2d.hh: Likewise.
+	* oln/core/1d/size1d.hh: Remove 0 settings.
+	* oln/core/2d/size2d.hh: Likewise.
+	* oln/core/2d/array2d.hh: Change invariant.
+	* oln/core/2d/fwd_piter2d.hh: Change is_ok into is_valid.  Add
+	  call to invalidate in ctor.  Add contract.
+
+
 2005-01-24  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* oln/makefile.src: Add new files to distribution and remove old one.

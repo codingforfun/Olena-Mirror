@@ -8,9 +8,7 @@
 
 # include <ntg/real/int_u8.hh> // FIXME: no coupling like that!
 
-# include <oln/core/1d/image1d.hh>
-# include <oln/core/2d/image2d.hh>
-# include <oln/core/3d/image3d.hh>
+# include <oln/core/abstract/image_dimension.hh>
 
 namespace oln {
 

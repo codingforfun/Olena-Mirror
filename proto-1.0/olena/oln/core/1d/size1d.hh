@@ -11,9 +11,7 @@ namespace oln {
 
   struct size1d : public abstract::size< size1d >
   {
-    size1d() :
-      nindices_(0),
-      border_(0)
+    size1d()
     {}
 
     size1d(coord_t nindices_) :
