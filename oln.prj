@@ -1,102 +1,15 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln integre 13)
-(Parent-Version oln integre 12)
-(Version-Log "Index: ChangeLog
+(Project-Version oln integre 14)
+(Parent-Version oln integre 13)
+(Version-Log "Index: metalic/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+        * mlc/is_a.hh: Rename is_a macro.
 
-	* configure.ac: Make CXXFLAGS empty by default.
-
-	* config/oln.m4: Change icc default flags.
-
-Index: integre/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* ntg/utils/to_oln.hh: Remove file.
-	* ntg/utils/cast.hh: Add to_ntg.
-
-	* ntg/core/builtins_properties.hh: Move ...
-	* ntg/core/internal/builtins_properties.hh: ... here.
-	* ntg/core/optraits_builtins.hh: Move ...
-	* ntg/core/internal/optraits_builtins.hh: ... here.
-	* ntg/core/typetraits_builtins.hh: Move ...
-	* ntg/core/internal/typetraits_builtins.hh: ... here.	
-	* ntg/core/global_ops.hh: Move ...
-	* ntg/core/internal/global_ops.hh: ... here.
-	* ntg/core/global_ops_traits.hh: Move ...
-	* ntg/core/internal/global_ops_traits.hh: ... here.
-
-	* ntg/basics.hh: New file.
-	* ntg/core/abstract_hierarchy.hh: New file.
-	* ntg/core/internal/macros.hh: New file.
-	* ntg/core/type_traits.hh: New file.
-
-	* ntg/core/macros.hh: New macros.
-
-	* ntg/core/type.hh: Minor update.
-
-	* ntg/core/optraits.hh, ntg/core/typetraits.hh: Merge into ...
-	* ntg/core/internal/traits.hh: ... this.
-	* ntg/core/traits.hh: Move optraits into namespace internal.
-
-	* ntg/real/real.hh: Rename as ...
-	* ntg/real/real_value.hh: ... this.
-	* ntg/vect/vectorial.hh: Rename as ...
-	* ntg/vect/vect_value.hh: ... this.
-	* ntg/enum/enumerated.hh: Rename as ...
-	* ntg/enum/enum_value.hh: ... this.
-
-	* ntg/Makefile.am: Adjust accordingly.
-	* ntg/all.hh: Likewise.
-
-	* ntg/core/behavior.hh, ntg/enum/bin.hh, ntg/color/color.hh,
-	ntg/vect/cplx.hh, ntg/real/cycle.hh, ntg/utils/debug.hh,
-	ntg/core/internal/global_ops.hh,
-	ntg/core/internal/global_ops_traits.hh, ntg/core/interval.hh,
-	ntg/real/int_s.hh, ntg/real/int_u.hh,
-	ntg/enum/optraits_builtins_bool.hh,
-	ntg/real/optraits_builtins_float.hh,
-	ntg/real/optraits_builtins_int.hh,
-	ntg/real/optraits_scalar_defs.hh, ntg/real/optraits_scalar.hh,
-	ntg/real/range.hh, ntg/core/value.hh,
-	ntg/enum/typetraits_builtins_bool.hh,
-	ntg/real/typetraits_builtins_float.hh,
-	ntg/real/typetraits_builtins_int.hh, ntg/vect/vec.hh: Modify
-	accordingly.
-
-	* tests/types/tests/optrait1a, tests/types/tests/optrait1b,
-	tests/types/tests/optrait2a, tests/types/tests/optrait2b,
-	tests/types/tests/optrait3: Modify accordingly.
-
-Index: metalic/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* mlc/type.hh: Rename Exact macro.
-
-Index: olena/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* oln/arith/ops.hh, oln/convert/nrgbhsi.hh,
-	oln/convert/nrgbhsl.hh, oln/convert/nrgbhsv.hh,
-	oln/convert/nrgbxyz.hh, oln/convert/nrgbyiq.hh,
-	oln/convert/nrgbyuv.hh, oln/convert/rgbnrgb.hh,
-	oln/convert/rgbxyz.hh, /oln/convert/stretch.hh, oln/core/box.hxx,
-	oln/core/image1d.hh, oln/core/image2d.hh, oln/core/image3d.hh,
-	oln/core/internal/real_image2d.hh,
-	oln/core/internal/real_image3d.hh, oln/io/pnm_write3d.hxx,
-	oln/io/pnm_write.hxx, oln/level/connected.hh, oln/level/invert.hh,
-	oln/math/macros.hh, oln/morpho/extrema.hxx,
-	oln/morpho/extrema_killer.hh, oln/morpho/watershed.hxx,
-	oln/topo/dmap.hxx, oln/transforms/dwt.hh, oln/transforms/fft.hh,
-	oln/utils/histogram.hh, oln/utils/stat.hh,
-	oln/topo/inter-pixel/inter-pixel.hh: Modify according to integre's
-	changes.
-
-	* tests/io/loadsave.hh: Minor fix.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sun, 04 May 2003 16:11:37 +0200")
+(Checkin-Time "Sun, 04 May 2003 16:31:30 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -184,7 +97,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.18 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.32 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.7 640))
-  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.16 640))
+  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.17 640))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.7 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.8 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.9 640))
@@ -387,7 +300,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (metalic/mlc/loop.hh (oln/c/2_control.hh 1.7 640))
   
   (metalic/mlc/optional.hh (oln/o/41_optional.h 1.5 640))
-  (metalic/mlc/is_a.hh (oln/g/33_type.hh 1.10 640))
+  (metalic/mlc/is_a.hh (oln/g/33_type.hh 1.11 640))
   
   (metalic/mlc/math.hh (oln/b/51_ufuncs.hh 1.9 640))
   (olena/oln/morpho/closing.hh (oln/b/6_closing.hh 1.6 640))
@@ -943,7 +856,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (integre/ntg/core/internal/traits.hh (oln/s/16_traits.hh 1.1 600))
   (integre/ntg/core/internal/macros.hh (oln/s/17_macros.hh 1.1 600))
   (integre/ntg/core/type_traits.hh (oln/s/18_type_trait 1.1 600))
-  (integre/ntg/core/macros.hh (oln/s/19_macros.hh 1.1 600))
+  (integre/ntg/core/macros.hh (oln/s/19_macros.hh 1.2 600))
   (integre/ntg/core/abstract_hierarchy.hh (oln/s/20_abstract_h 1.1 600))
   (integre/ntg/basics.hh (oln/s/21_basics.hh 1.1 600))
   (integre/ntg/vect/vect_value.hh (oln/s/22_vect_value 1.1 600))

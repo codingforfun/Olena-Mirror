@@ -42,7 +42,7 @@
 | type checking |
 `--------------*/
 
-# define ntg_is_a(T, U) is_a(typename ntg::type_traits<T>::abstract_type, U)
+# define ntg_is_a(T, U) mlc_is_a(typename ntg::type_traits<T>::abstract_type, U)
 
 /*----------------.
 | types accessors |
