@@ -1,3 +1,17 @@
+2004-04-14  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* olena/tests/morpho/tests/md5_morpho_reconstruction_hh5: Fix to make
+	compile with ICC.
+	* olena/tests/morpho/tests/md5_morpho_reconstruction_hh4: Likewise.
+	* olena/tests/morpho/tests/md5_morpho_reconstruction_hh3: Likewise.
+	* olena/tests/morpho/tests/md5_morpho_reconstruction_hh2: Likewise.
+	* olena/tests/morpho/tests/md5_morpho_reconstruction_hh1: Likewise.
+	* olena/tests/morpho/tests/md5_morpho_reconstruction_hh0: Likewise.
+	* olena/tests/morpho/tests/md5_morpho_geodesic_erosion_hh1: Likewise.
+	* olena/tests/morpho/tests/md5_morpho_geodesic_erosion_hh0: Likewise.
+	* olena/tests/morpho/tests/md5_morpho_geodesic_dilation_hh1: Likewise.
+	* olena/tests/morpho/tests/md5_morpho_geodesic_dilation_hh0: Likewise.
+
 2004-04-14  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* tests/morpho/tests/md5_morpho_watershed_hh0: Disable the test.
