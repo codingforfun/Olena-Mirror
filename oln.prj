@@ -1,12 +1,20 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 9 8)
-(Parent-Version oln 9 7)
-(Version-Log "prcs problems !
+(Project-Version oln 9 9)
+(Parent-Version oln 9 8)
+(Version-Log "Index: integre/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/types/tests/int_sc5: Fix warning.
+
++2003-06-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
++
++	* tests/utils/Makefile.am (CLEANFILES): Add test.core.
++
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 02 Jun 2003 17:25:21 +0200")
+(Checkin-Time "Wed, 04 Jun 2003 08:35:02 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -877,7 +885,7 @@
   (integre/tests/types/tests/range4 (oln/s/24_range4 1.1 600))
   (integre/tests/utils/tests/debug1 (oln/s/41_debug1 1.2 600))
   (integre/tests/utils/runtests (oln/s/42_runtests 1.1 700))
-  (integre/tests/utils/Makefile.am (oln/s/43_Makefile.a 1.1 600))
+  (integre/tests/utils/Makefile.am (oln/s/43_Makefile.a 1.2 600))
   (integre/tests/types/tests/debug1 (oln/s/44_debug1 1.1 600))
   (integre/ntg/core/contract.hh (oln/s/45_contract.h 1.2 600))
   (integre/ntg/real/builtin_int.hh (oln/s/46_builtin_in 1.1 600))
@@ -888,7 +896,7 @@
   (integre/tests/sanity/Makefile.am (oln/t/0_Makefile.a 1.1 600))
   (metalic/tests/sanity/includes.test (oln/t/1_includes.t 1.1 700))
   (metalic/tests/sanity/Makefile.am (oln/t/2_Makefile.a 1.1 600))
-  (integre/tests/types/tests/int_sc5 (oln/t/3_int_sc5 1.1 600))
+  (integre/tests/types/tests/int_sc5 (oln/t/3_int_sc5 1.2 600))
 
 ;; Files added by populate at Mon, 02 Jun 2003 17:20:22 +0200,
 ;; to version 9.5(w), by burrus_n:
