@@ -30,7 +30,7 @@
 # define OLENA_TOPO_TARJAN_FLAT_ZONE_HH
 
 # include <oln/basics2d.hh>
-# include <oln/topo/union.hh>
+# include <oln/topo/tarjan/union.hh>
 
 # include <map>
 

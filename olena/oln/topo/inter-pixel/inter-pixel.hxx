@@ -25,24 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_TOPO_BOUNDARY_INTER_PIXEL_HXX
-# define OLENA_TOPO_BOUNDARY_INTER_PIXEL_HXX
+#ifndef OLENA_TOPO_INTER_PIXEL_INTER_PIXEL_HXX
+# define OLENA_TOPO_INTER_PIXEL_INTER_PIXEL_HXX
 
-using namespace oln::topo::boundary;
-using namespace oln::topo::boundary::internal;
+using namespace oln::topo::inter_pixel;
 
-template <class T>
-const typename _node<T>::cycle_t _node<T>::east = 0;
-
-template <class T>
-const typename _node<T>::cycle_t _node<T>::north = 1;
-
-template <class T>
-const typename _node<T>::cycle_t _node<T>::west = 2;
-
-template <class T>
-const typename _node<T>::cycle_t _node<T>::south = 3;
-
+template <class _I>
+inline std::ostream & operator<<(std::ostream & ostr,
+				 const interpixel<_I> & ip)
+{
+  return ip.print(ostr);
+}
 
 template <class _I>
 const DPoint(_I) interpixel<_I>::_neighb[4] = {DPoint(_I)(0,0),
@@ -55,12 +48,4 @@ const DPoint(_I) interpixel<_I>::_inter_neighb[4] = {DPoint(_I)(0,1),
 						     DPoint(_I)(0,-1),
 						     DPoint(_I)(1,0)};
 
-template <class _I>
-inline std::ostream & operator<<(std::ostream & ostr,
-				 const interpixel<_I> & ip)
-{
-  return ip.print(ostr);
-}
-
-
-#endif // !OLENA_TOPO_BOUNDARY_INTER_PIXEL_HXX
+#endif // !OLENA_TOPO_INTER_PIXEL_INTER_PIXEL_HXX

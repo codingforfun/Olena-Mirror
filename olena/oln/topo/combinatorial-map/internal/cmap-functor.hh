@@ -25,18 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_TOPO_CMAP_INTERNAL_FUNCTOR_HH
-# define OLENA_TOPO_CMAP_INTERNAL_FUNCTOR_HH
+#ifndef OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_CMAP_FUNCTOR_HH
+# define OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_CMAP_FUNCTOR_HH
 
-#include <mlc/contract.hh>
+# include <mlc/contract.hh>
 
-#include <vector>
+# include <vector>
 
 namespace oln {
 
   namespace topo {
 
-    namespace cmap {
+    namespace combinatorial_map {
 
       namespace internal {
 
@@ -53,12 +53,11 @@ namespace oln {
 	{
 	public:
 	  anyfunc() : _f(1) {}
+	  anyfunc(unsigned size) : _f(size + 1) {}
 
 	public:
 	  void _resize(const unsigned new_size)
 	  {
-	    assertion (new_size >= _f.size());
-
 	    _f.resize(new_size + 1);
 	  }
 
@@ -77,10 +76,9 @@ namespace oln {
 	public:
 	  static void resize(const unsigned new_size)
 	  {
-	    assertion(new_size >= _labels.size());
-
-	    for (unsigned i = _labels.size(); i <= new_size; ++i)
-	      _labels.push_back(i);
+	    _labels.resize(new_size + 1);
+	    for (unsigned i = 0; i < _labels.size(); ++i)
+	      _labels[i] = i;
 	  }
 
 	  static void substitute(const U & l1, const U & l2)
@@ -100,10 +98,9 @@ namespace oln {
 	public:
 	  static void resize(const unsigned new_size)
 	  {
-	    assertion (new_size >= _darts.size());
-
-	    for (unsigned i = _darts.size(); i <= new_size; ++i)
-	      _darts.push_back(i);
+	    _darts.resize(new_size + 1);
+	    for (unsigned i = 0; i < _darts.size(); ++i)
+	      _darts[i] = i;
 	  }
 
 	  static void erase(const U & d)
@@ -195,6 +192,10 @@ namespace oln {
 	class beta : public labels<U>, public anyfunc< U, V, beta<U, V> >
 	{
 	public:
+	  typedef anyfunc< U, V, beta<U, V> > super;
+
+	  beta(unsigned size) : super(size) {}
+
 	  V & operator()(const U & l)
 	  {
 	    assertion (l < _f.size());
@@ -261,6 +262,10 @@ namespace oln {
 	class moth : public labels<U>, public anyfunc< U, V, moth<U, V> >
 	{
 	public:
+	  typedef anyfunc< U, V, moth<U, V> > super;
+
+	  moth(unsigned size) : super(size) {}
+
 	  V & operator()(const U & l)
 	  {
 	    assertion (l < _f.size());
@@ -292,6 +297,10 @@ namespace oln {
 	class daugh : public labels<U>, public anyfunc< U, V, daugh<U, V> >
 	{
 	public:
+	  typedef anyfunc< U, V, daugh<U, V> > super;
+
+	  daugh(unsigned size) : super(size) {}
+
 	  V & operator()(const U & l)
 	  {
 	    assertion (l < _f.size());
@@ -319,7 +328,7 @@ namespace oln {
 
       } // end internal
 
-    } // end cmap
+    } // end combinatorial_map
 
   } // end topo
 
@@ -328,8 +337,8 @@ namespace oln {
 template <class U, class V, class Inf>
 inline std::ostream &
 operator<<(std::ostream & ostr,
-	   const oln::topo::cmap::internal::anyfunc<U, V, Inf> & f);
+	   const oln::topo::combinatorial_map::internal::anyfunc<U,V,Inf> & f);
 
-# include <oln/topo/cmap-functor.hxx>
+# include <oln/topo/combinatorial-map/internal/cmap-functor.hxx>
 
-#endif // !OLENA_TOPO_CMAP_INTERNAL_FUNCTOR_HH
+#endif // !OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_CMAP_FUNCTOR_HH

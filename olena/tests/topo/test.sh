@@ -7,6 +7,6 @@ if cmp -s "$1".run "$SRCDIR"/"$1".ref; then
    exit 0
 else
    echo "FAIL"
-   diff -u "$SRCDIR"/"$1".out "$1".run
+   diff -u "$SRCDIR"/"$1".ref ./"$1".run
    exit 1
 fi

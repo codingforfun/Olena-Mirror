@@ -1,3 +1,4 @@
+
 // Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -25,20 +26,47 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_TOPO_CMAP_INTERNAL_CMAP_FUNCTOR_HXX
-# define OLENA_TOPO_CMAP_INTERNAL_CMAP_FUNCTOR_HXX
+#ifndef OLENA_TOPO_INTER_PIXEL_FWD_DIR_ITER_HH
+# define OLENA_TOPO_INTER_PIXEL_FWD_DIR_ITER_HH
 
-using namespace oln::topo::cmap::internal;
+# include <oln/core/iter.hh>
+# include <oln/topo/inter-pixel/internal/dir-iter.hh>
 
-template <class U> std::vector<U> labels<U>::_labels = std::vector<U>(1);
+namespace oln {
 
-template <class U> std::vector<U> darts<U>::_darts = std::vector<U>(1);
+  namespace topo {
 
-template <class U, class V, class Inferior>
-inline std::ostream &
-operator<<(std::ostream &ostr, const anyfunc<U, V, Inferior> & f)
-{
-  return f.self().print(ostr);
-}
+    namespace inter_pixel {
 
-#endif // !OLENA_TOPO_CMAP_INTERNAL_CMAP_FUNCTOR_HXX
+      template<unsigned Dim, class Exact = mlc::final>
+      class fwd_dir_iter : public internal::_dir_iter<Dim, typename mlc::exact_vt<fwd_dir_iter<Dim, Exact>, Exact>::ret>,
+			   public fwd_iter<typename mlc::exact_vt<fwd_dir_iter<Dim, Exact>, Exact>::ret>
+      {
+      private:
+	typedef internal::_dir_iter<Dim, typename mlc::exact_vt<fwd_dir_iter<Dim, Exact>, Exact>::ret> super;
+	typedef typename super::dir_t dir_t;
+
+      public:
+	fwd_dir_iter() : super(), _begin(internal::dir_traits<Dim>::first()) {}
+	fwd_dir_iter(dir_t i) : super(i), _begin(i) {}
+
+	template<class U> U operator=(U u) { return super::operator=(u); }
+
+	dir_t next() { return internal::dir_traits<Dim>::next(_cur); }
+
+	dir_t begin() { return _begin; }
+
+      private:
+	dir_t _begin;
+      };
+
+# define FwdDirIter(ImgType)		\
+fwd_dir_iter< ImgType::dim >
+
+    } // end inter_pixel
+
+  } // end topo
+
+} // end oln
+
+#endif // !OLENA_TOPO_INTER_PIXEL_FWD_DIR_ITER_HH

@@ -1,3 +1,27 @@
+2003-03-31  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
+
+	* oln/topo/inter-pixel/internal/dir.hxx,
+	oln/topo/inter-pixel/internal/dir.hh,
+	oln/topo/inter-pixel/internal/dir-iter.hh,
+	oln/topo/inter-pixel/node.hh,
+	oln/topo/inter-pixel/bkd-dir-iter.hh,
+	oln/topo/inter-pixel/fwd-dir-iter.hh,
+	oln/topo/combinatorial-map/internal/zeta.hh: New files in
+	order to provide iterators upon node's directions.
+
+	* tests/topo/test-inter-pixel.ref, tests/topo/test-cmap.ref,
+	tests/topo/test.sh, tests/topo/test-cmap.cc,
+	tests/topo/test-inter-pixel.cc, tests/topo/Makefile.am: Adjust
+	test suite.
+
+	* oln/topo/combinatorial-map/cmap.hh,
+	oln/topo/tarjan/flat-zone.hh, oln/topo/inter-pixel/inter-pixel.hh,
+	oln/topo/combinatorial-map/cmap.hxx,
+	oln/topo/inter-pixel/inter-pixel.hxx,
+	oln/topo/combinatorial-map/internal/cmap-functor.hxx,
+	oln/topo/combinatorial-map/internal/cmap-functor.hh: Fix some
+	bugs and simplify code.
+
 2003-03-23  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/topo/inter-pixel.hh: Fix includes.

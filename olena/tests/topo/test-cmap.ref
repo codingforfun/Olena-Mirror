@@ -1,4 +1,6 @@
-building cmap ... 
+building inter pixel...OK
+building connected components...OK
+building cmap... OK
 alpha(1) = 2
 alpha(2) = 1
 alpha(3) = 4
@@ -59,8 +61,8 @@ lambda(15) = 4
 lambda(16) = 6
 lambda(17) = 6
 lambda(18) = 5
-lambda(19) = 2
-lambda(20) = 3
+lambda(19) = 3
+lambda(20) = 2
 
 moth(1) = 0
 moth(2) = 1
@@ -78,10 +80,9 @@ daugh(6) =
 
 beta(1) = 1
 beta(2) = 3
-beta(3) = 20
+beta(3) = 19
 beta(4) = 11
 beta(5) = 5
 beta(6) = 17
 
 
-OK

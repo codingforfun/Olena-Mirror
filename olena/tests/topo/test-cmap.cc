@@ -1,30 +1,40 @@
 #include <oln/basics2d.hh>
 #include <ntg/all.hh>
+#include <oln/topo/combinatorial-map/cmap.hh>
 
-// Always include system headers after Olena.
 #include <iostream>
-
-#include <oln/topo/cmap.hh>
 
 #include "check.hh"
 #include "data.hh"
 
 using namespace oln;
-using namespace topo::cmap;
+using namespace topo;
+using namespace tarjan;
+using namespace inter_pixel;
+using namespace combinatorial_map;
 
 bool
 check()
 {
   bool fail = false;
 
-  image2d<ntg::int_u8> src = load(rdata("test-cmap.pgm"));
+  typedef image2d<ntg::int_u8> input_t;
 
-  std::cerr << "building cmap ... " << std::endl;
-  cmap< image2d<ntg::int_u8> > cm(src);
+  input_t src = load(rdata("test-cmap.pgm"));
+
+  std::cerr << "building inter pixel...";
+  interpixel<input_t> ip(src);
+  std::cerr << "OK" << std::endl;
+
+  std::cerr << "building connected components...";
+  flat_zone<input_t> cc(src);
+  std::cerr << "OK" << std::endl;
+
+  std::cerr << "building cmap... ";
+  cmap<input_t> cm(src, ip, cc);
+  std::cerr << "OK" << std::endl;
 
   std::cerr << cm << std::endl;
-
-  std::cerr << "OK" << std::endl;
 
   return fail;
 }

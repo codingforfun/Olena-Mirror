@@ -1,18 +1,15 @@
 #include <oln/basics2d.hh>
 #include <ntg/all.hh>
+#include <oln/topo/inter-pixel/inter-pixel.hh>
 
-// Always include system headers after Olena.
 #include <iostream>
-#include <cmath>
-
-#include <oln/topo/inter-pixel.hh>
 
 #include "check.hh"
 #include "data.hh"
 
 using namespace oln;
 using namespace ntg;
-using namespace topo::boundary;
+using namespace topo::inter_pixel;
 
 bool
 check()

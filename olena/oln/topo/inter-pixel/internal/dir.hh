@@ -25,22 +25,60 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_TOPO_CMAP_CMAP_HXX
-# define OLENA_TOPO_CMAP_CMAP_HXX
+#ifndef OLENA_TOPO_INTER_PIXEL_INTERNAL_DIR_HH
+# define OLENA_TOPO_INTER_PIXEL_INTERNAL_DIR_HH
 
-using namespace oln::topo::cmap;
+namespace oln {
 
-inline std::ostream & operator<<(std::ostream & ostr, const labels_t & l)
-{
-  copy(l.begin(), l.end(), std::ostream_iterator<unsigned>(ostr, " "));
+  namespace topo {
 
-  return ostr;
-}
+    namespace inter_pixel {
 
-template<class _I>
-inline std::ostream & operator<<(std::ostream & ostr, const cmap<_I> & cm)
-{
-  return cm.print(ostr);
-}
+      namespace internal {
 
-#endif // !OLENA_TOPO_CMAP_CMAP_HXX
+	template<unsigned Dim>
+	struct dir_traits
+	{
+	};
+
+	template<>
+	struct dir_traits<2>
+	{
+	  typedef enum dir { east, north, west, south } ret;
+
+	  static ret first() { return east; }
+	  static ret last() { return south; }
+
+	  static ret prev(ret i)
+	  {
+	    return i == first() ? last() : ret(i - 1);
+	  }
+	  static ret next(ret i)
+	  {
+	    return i == last() ? first() : ret(i + 1);
+	  }
+
+	  // FIXME: no modulus
+	  static ret opposite(ret i)
+	  {
+	    return ret((i + 2) % 4);
+	  }
+	};
+
+# define DirTraits(ImgType)			\
+dir_traits< ImgType::dim >
+
+# define Dir(ImgType)				\
+typename dir_traits< ImgType::dim >::ret
+
+      } // end internal
+
+    } // end inter_pixel
+
+  } // end topo
+
+} // end oln
+
+# include <oln/topo/inter-pixel/internal/dir.hxx>
+
+#endif // !OLENA_TOPO_INTER_PIXEL_INTERNAL_DIR_HH
