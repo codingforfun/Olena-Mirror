@@ -1,11 +1,11 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln oln_2004_paradigm 1)
-(Parent-Version oln 10 217)
+(Project-Version oln oln_2004_paradigm 2)
+(Parent-Version oln oln_2004_paradigm 1)
 (Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Mon, 13 Sep 2004 13:02:21 +0200")
+(Checkin-Time "Mon, 13 Sep 2004 13:15:44 +0200")
 (Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -1477,6 +1477,30 @@
 
   (olena/oln/morpho/abstract/attribute.hxx (oln/v/38_attribute. 1.1 644))
   (olena/oln/morpho/abstract/attribute.hh (oln/v/40_attribute. 1.1 644))
+
+;; Files added by populate at Mon, 13 Sep 2004 13:14:16 +0200,
+;; to version oln_2004_paradigm.1(w), by palma_g:
+
+  (olena/oln/core/fwd_niter2d.hh (oln/v/41_fwd_niter2 1.1 600))
+  (olena/oln/core/fwd_niter1d.hh (oln/v/42_fwd_niter1 1.1 600))
+  (olena/oln/core/fwd_diter2d.hh (oln/v/43_fwd_diter2 1.1 600))
+  (olena/oln/core/fwd_diter1d.hh (oln/v/44_fwd_diter1 1.1 600))
+  (olena/oln/core/dim3d.hh (oln/v/45_dim3d.hh 1.1 644))
+  (olena/oln/core/dim2d.hh (oln/v/46_dim2d.hh 1.1 600))
+  (olena/oln/core/dim1d.hh (oln/w/14_dim1d.hh 1.1 600))
+  (olena/oln/core/constants.hh (oln/w/15_constants. 1.1 600))
+  (olena/oln/core/ch_value.hh (oln/w/16_ch_value.h 1.1 600))
+
+;; Files added by populate at Mon, 13 Sep 2004 13:14:24 +0200,
+;; to version oln_2004_paradigm.1(w), by palma_g:
+
+  (olena/oln/core/abstract/point_like.hh (oln/w/17_point_like 1.1 600))
+  (olena/oln/core/abstract/niter.hh (oln/w/18_niter.hh 1.1 600))
+  (olena/oln/core/abstract/fun.hh (oln/w/19_fun.hh 1.1 600))
+  (olena/oln/core/abstract/dpoints.hh (oln/w/20_dpoints.hh 1.1 600))
+  (olena/oln/core/abstract/dpoint_like.hh (oln/w/21_dpoint_lik 1.1 600))
+  (olena/oln/core/abstract/diter.hh (oln/w/22_diter.hh 1.1 600))
+  (olena/oln/core/abstract/dim.hh (oln/w/23_dim.hh 1.1 600))
 )
 (Merge-Parents)
 (New-Merge-Parents)
