@@ -1,0 +1,19 @@
+#include <ntg/all.hh>
+#include <oln/basics2d.hh>
+#include <oln/level/fill.hh>
+#include <oln/fancy/iota.hh>
+#include <oln/morpho/stat.hh>
+
+#include "check.hh"
+#include "data.hh"
+
+bool check()
+{
+  oln::window2d w2 = oln::win_c8p();
+  oln::image2d<ntg::int_u8> im(10, 10);
+  oln::fancy::iota(im);
+  if (oln::morpho::max(im, oln::point2d(5, 5), w2) != 67 ||
+      oln::morpho::min(im, oln::point2d(5, 5), w2) != 45)
+    return true;
+  return false;
+}
