@@ -105,14 +105,14 @@ namespace ntg {
     bin (const real_value<T>& val)
     {
       ntg_assert(val < 2);
-      this->val_ = val;
+      this->val_ = val.val();
     }
     template <class T>
     bin&
     operator=(const real_value<T>& val)
     {
       ntg_assert(val < 2);
-      this->val_ = val;
+      this->val_ = val.val();
       return *this;
     }
 

@@ -1,3 +1,7 @@
+2003-11-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/enum/bin.hh: Fix assignment from a real_value.
+
 2003-11-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/utils/cast.hh: Fix comparison casts.

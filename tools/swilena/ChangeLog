@@ -1,5 +1,10 @@
-2003-11-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+2003-11-09  Nicolas Burrus  <burrus_n@epita.fr>
 
+	* meta/swilena_ntg_macros.i: New.
+	* meta/swilena_ntg.i: Include it.
+
+2003-11-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* generate_morpho_instantiations.py: Minor update. Add opening and
 	closing algorithms.
 
@@ -19,7 +24,7 @@
 	* ruby/tests/simple1.rb: Adjust consequently.
 	* python/tests/simple1.py: Adjust consequently.	
 	* doc/examples/ruby/simple.rb: Adjust consequently.
-	* doc/examples/python/simple.py: Adjust consequently.	
+	* doc/examples/python/simple.py: Adjust consequently.
 	
 2003-09-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 

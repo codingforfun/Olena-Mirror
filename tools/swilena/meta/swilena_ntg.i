@@ -1,7 +1,6 @@
 %module swilena_ntg
 %include swilena_exception.i
 
-
 /***** Generic class declaration for scalars ******/
 
 /* Predecls */
@@ -225,32 +224,17 @@ decl_ntg()
     everywhere. ntg_uint is just a convenient macro.
 */
 
-#define ntg_bin ntg::bin
-#define ntg_bin_value bool
+%include swilena_ntg_macros.i
 
 %template(int_u32)  ntg::int_u< 32, ntg::strict >;
-#define ntg_int_u32 ntg::int_u< 32, ntg::strict >
-#define ntg_int_u32_value unsigned long
 
 %template(int_s32)  ntg::int_s< 32, ntg::strict >;
-#define ntg_int_s32 ntg::int_s< 32, ntg::strict >
-#define ntg_int_s32_value long
 
 %template(int_u8)  ntg::int_u< 8, ntg::strict >;
-#define ntg_int_u8 ntg::int_u< 8, ntg::strict >
-#define ntg_int_u8_value unsigned long
 
 %template(int_s8)  ntg::int_s< 8, ntg::strict >;
-#define ntg_int_s8 ntg::int_s< 8, ntg::strict >
-#define ntg_int_s8_value long
-
-#define ntg_float ntg::float_d
-#define ntg_float_value ntg_float
 
 %template(cplx_rect)  ntg::cplx< ntg::rect, ntg_float >;
-#define ntg_cplx_rect ntg::cplx< ntg::rect, ntg_float >
-#define ntg_cplx_rect_value ntg_cplx_rect
 
 %template(cplx_polar)  ntg::cplx< ntg::polar, ntg_float >;
-#define ntg_cplx_polar ntg::cplx< ntg::polar, ntg_float >
-#define ntg_cplx_polar_value ntg_cplx_polar
+
