@@ -1,9 +1,9 @@
-#ifndef PROTO_OLN_CORE_2D_FWD_ITER2D_HH
-# define PROTO_OLN_CORE_2D_FWD_ITER2D_HH
+#ifndef PROTO_OLN_CORE_2D_FWD_PITER2D_HH
+# define PROTO_OLN_CORE_2D_FWD_PITER2D_HH
 
 # include <mlc/contract.hh>
 
-# include <oln/core/abstract/iter.hh>
+# include <oln/core/abstract/piter.hh>
 # include <oln/core/2d/point2d.hh>
 # include <oln/core/2d/size2d.hh>
 # include <oln/core/props.hh>
@@ -11,25 +11,28 @@
 
 namespace oln {
 
-  struct fwd_iter2d;
+  struct fwd_piter2d;
+
+  template <> struct category_type<fwd_piter2d> { typedef cat::piter ret; };
 
   template <>
-  struct props < cat::piter, fwd_iter2d >
+  struct props < cat::piter, fwd_piter2d > : public default_props<cat::piter>
   {
     typedef point2d point_type;
     typedef size2d  size_type;
   };
 
-  struct fwd_iter2d : public abstract::piter<fwd_iter2d>
+  struct fwd_piter2d : public abstract::piter< fwd_piter2d >
   {
 
-    typedef abstract::iter<fwd_iter2d> super_type;
+    typedef abstract::piter<fwd_piter2d> super_type;
 
-    friend class abstract::iter<fwd_iter2d>;
+    friend class abstract::piter<fwd_piter2d>;
 
-    fwd_iter2d(const size2d& size) :
+    fwd_piter2d(const size2d& size) :
       super_type(size)
     {
+      this->exact_ptr = this;
     }
 
     void impl_start()
@@ -43,7 +46,7 @@ namespace oln {
       return this->p_.row() < this->s_.nrows();
     }
 
-    void impl_next() const
+    void impl_next()
     {
       ++this->p_.col();
       if (this->p_.col() != this->s_.ncols())
@@ -62,4 +65,4 @@ namespace oln {
 }
 
 
-#endif // ndef PROTO_OLN_CORE_2D_FWD_ITER2D_HH
+#endif // ndef PROTO_OLN_CORE_2D_FWD_PITER2D_HH

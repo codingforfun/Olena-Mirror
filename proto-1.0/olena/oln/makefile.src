@@ -4,19 +4,13 @@
 ##
 
 OLN_DEP =					\
-  basics.hh					\
-  basics1d.hh					\
-  basics2d.hh					\
-  basics3d.hh					\
-  config/pconf.hh				\
-  config/system.hh				\
   core/1d/array1d.hh				\
   core/1d/image1d.hh				\
   core/1d/point1d.hh				\
   core/1d/size1d.hh				\
   core/2d/array2d.hh				\
   core/2d/image2d.hh				\
-  core/2d/iter2d.hh				\
+  core/2d/fwd_piter2d.hh			\
   core/2d/point2d.hh				\
   core/2d/size2d.hh				\
   core/3d/array3d.hh				\
@@ -26,11 +20,10 @@ OLN_DEP =					\
   core/abstract/data_storage.hh			\
   core/abstract/image.hh			\
   core/abstract/image_constness.hh		\
-  core/abstract/image_dimension.hh		\
   core/abstract/image_with_data.hh		\
   core/abstract/images.hh			\
   core/abstract/internal/image_impl.hh		\
-  core/abstract/iter.hh				\
+  core/abstract/piter.hh			\
   core/abstract/point.hh			\
   core/abstract/size.hh				\
   core/cats.hh					\

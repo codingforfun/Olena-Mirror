@@ -1,3 +1,11 @@
+2005-01-24  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* oln/makefile.src: Add new files to distribution and remove old one.
+	* oln/core/macros.hh: Add oln_iter_type macro.
+	* oln/core/abstract/piter.hh: Fix compilation errors.
+	* oln/core/2d/image2d.hh: Fix incorrect file inclusion.
+	* oln/core/2d/fwd_piter2d.hh: Fix compilation errors.
+
 2005-01-24  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* oln/core/props.hh: Move image defaults into abstract/image.hh.

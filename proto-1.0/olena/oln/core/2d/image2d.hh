@@ -5,6 +5,7 @@
 
 # include <oln/core/abstract/image_with_data.hh>
 # include <oln/core/2d/array2d.hh>
+# include <oln/core/2d/fwd_piter2d.hh>
 
 /*! \namespace oln
 ** \brief oln namespace.
@@ -16,7 +17,7 @@ namespace oln {
   template <typename T> class image2d;
 
   // category decl
-  template <typename T> 
+  template <typename T>
   struct category_type< image2d<T> > { typedef cat::image ret; };
 
 
