@@ -1,3 +1,7 @@
+2003-06-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/convert/Makefile.am: Tag 8-nrgb-hsl and 8-nrgb-hsv as XFAIL.
+
 2003-05-14  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/convert/nrgbhsv.hh, oln/convert/nrgbhsl.hh: Add assertions.
