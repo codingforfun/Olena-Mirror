@@ -49,6 +49,21 @@ namespace oln
     // FIXME : add missing
   };
 
+  template <>
+  struct typetraits<double>
+  {
+    typedef double self;
+    typedef optraits<self> optraits;
+
+    typedef self store;
+    typedef self base;
+    typedef self cumul;
+
+    typedef self op_traits;
+
+    // FIXME : add missing
+  };
+
 } // end of namespace oln
 
 #endif // ndef OLENA_VALUE_TYPETRAITS_BUILTINS_FLOAT_HH

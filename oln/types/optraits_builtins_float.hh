@@ -41,9 +41,10 @@
 namespace oln
 {
 
-  // FIXME: add double
-
-  // float
+  //
+  //  float
+  //
+  //////////
 
   template <>
   struct optraits<float> : public optraits_float<float>
@@ -142,6 +143,111 @@ namespace oln
     };
 
   } // end of namespace internal
+
+
+  //
+  //  double
+  //
+  ///////////
+
+  template <>
+  struct optraits<double> : public optraits_float<double>
+  {
+  private:
+    // shortcuts
+    typedef double self;
+    typedef typetraits<self>::store store_type;
+
+  public:
+    static store_type min() { return C_for_dfloat::min(); }
+    static store_type max() { return C_for_dfloat::max(); }
+  };
+
+  namespace internal
+  {
+
+    //
+    // plus
+    //
+
+    template <unsigned nbits, class B>
+    struct operator_plus_traits<double, int_u<nbits, B> >
+    {
+      enum { commutative = true };
+      typedef double ret;
+      typedef double impl;
+    };
+
+    template <unsigned nbits, class B>
+    struct operator_plus_traits<double, int_s<nbits, B> >
+    {
+      enum { commutative = true };
+      typedef double ret;
+      typedef double impl;
+    };
+
+    //
+    // minus
+    //
+
+    template <unsigned nbits, class B>
+    struct operator_minus_traits<double, int_u<nbits, B> >
+    {
+      enum { commutative = true };
+      typedef double ret;
+      typedef double impl;
+    };
+
+    template <unsigned nbits, class B>
+    struct operator_minus_traits<double, int_s<nbits, B> >
+    {
+      enum { commutative = true };
+      typedef double ret;
+      typedef double impl;
+    };
+
+    //
+    // times
+    //
+
+    template <unsigned nbits, class B>
+    struct operator_times_traits<double, int_u<nbits, B> >
+    {
+      enum { commutative = true };
+      typedef double ret;
+      typedef double impl;
+    };
+
+    template <unsigned nbits, class B>
+    struct operator_times_traits<double, int_s<nbits, B> >
+    {
+      enum { commutative = true };
+      typedef double ret;
+      typedef double impl;
+    };
+
+    //
+    // div
+    //
+
+    template <unsigned nbits, class B>
+    struct operator_div_traits<double, int_u<nbits, B> >
+    {
+      enum { commutative = true };
+      typedef double ret;
+      typedef double impl;
+    };
+
+    template <unsigned nbits, class B>
+    struct operator_div_traits<double, int_s<nbits, B> >
+    {
+      enum { commutative = true };
+      typedef double ret;
+      typedef double impl;
+    };
+
+  } // end of namespace internal
+
 } // end of namespace oln
 
 #endif // ndef OLENA_VALUE_OPTRAITS_BUILTINS_FLOAT_HH
