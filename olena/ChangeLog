@@ -1,3 +1,13 @@
+2003-03-19  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
+
+	* tests/topo/Makefile.am, tests/topo/test-inter-pixel.cc,
+	tests/topo/test-cmap.cc: New tests.
+
+	* oln/topo/cmap-functor.hh, oln/topo/cmap-functor.hxx,
+	oln/topo/inter-pixel.hxx, oln/topo/cmap.hxx, oln/topo/union.hh,
+	oln/topo/inter-pixel.hh, oln/topo/flat-zone.hh, oln/topo/cmap.hh:
+	New files.
+
 2003-03-14  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/arith/tests/min1: Remove useless namespace prefixes.
@@ -20,12 +30,12 @@
 	* oln/morpho/attribute_closing_opening.hh: Fix example.
 
 2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* oln/Makefile.am (nobase_oln_HEADERS): Adjust.
 
 	* oln/core/typeadj.hh: Move into $top_srcdir/metalic/mlc/.
-	
-	* Merge from 2003paradigm: 
+
+	* Merge from 2003paradigm:
 
 	2003-02-28  David Lesage  <david@lrde.epita.fr>
 
@@ -34,17 +44,17 @@
 	* oln/core/fwd_iter2d.hh, oln/core/fwd_iter3d.hh,
 	* oln/core/internal/iter1d.hh, oln/core/internal/iter2d.hh,
 	* oln/core/internal/iter3d.hh, oln/core/iter.hh:
-	Repare iterators hierarchy 
+	Repare iterators hierarchy
 	(classes iter, fwd_iter and bkd_iter never linked before).
 
-	* oln/core/type.hh: 
+	* oln/core/type.hh:
 	Prepare "FindExact" variadic macros arrival.
 
 	2003-02-28  David Lesage  <david@lrde.epita.fr>
 
-	* oln/core/type.hh: 
+	* oln/core/type.hh:
 	Rewrite existing tools and introduce new Exact-related tools.
-	
+
 	* oln/convert/bound.hh, oln/convert/colorconv.hh,
 	* oln/convert/conversion.hh, oln/convert/force.hh,
 	* oln/convert/nrgbhsi.hh, oln/convert/nrgbhsl.hh,
@@ -86,8 +96,8 @@
 
 2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* Merge from cleanup: 
-	
+	* Merge from cleanup:
+
 	2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/Makefile.am (nobase_oln_HEADERS): Adjust.
@@ -96,7 +106,7 @@
           namespaces.
 
 	2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* oln/arith/internal/opdecls.hh, oln/arith/logic.hh,
 	oln/convert/bound.hh, oln/convert/colorconv.hh,
 	oln/convert/conversion.hh, oln/convert/force.hh,
@@ -171,7 +181,7 @@
 
 	* Makefile.am: Move header list ...
 	* oln/Makefile.am: ... here.
-	
+
 	2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/basics.hh, oln/core/internal/iter1d.hh,
@@ -185,7 +195,7 @@
 
 	* oln/core/objs.hh, oln/core/internal/objs.hxx: Move and merge into
 	$top_srcdir/metalic/mlc/objs.hh.
-	
+
 	2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/core/type.hh, oln/core/contract.hh: Move into
@@ -216,7 +226,7 @@
 	oln/core/pred_image.hh, oln/core/structelt.hh: Likewise.
 
 	2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* oln/core/generate.hh: Do not use wrap workaround (for g++-2.95
 	compatibility) anymore. Update includes.
 
@@ -227,11 +237,11 @@
 	new oln location.
 
 	2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* tests/arith/tests/min1: Add missing include.
 
 	* oln/convert/nrgbhsi.hh: Likewise.
-	
+
 	2003-03-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/io/pnm3d.hh: Add missing include.
@@ -250,7 +260,7 @@
 
 	* tests/convol/slow_sum_2d_1.cc, tests/convol/slow_sum_2d_2.cc,
 	tests/convol/sobel_gradient.cc: Include data.hh.
-	
+
 	* tests/convert/convcomp.hh: Likewise.
 
 	* tests/io/loadsave.hh: Likewise.
@@ -259,7 +269,7 @@
 	tests/morpho/reconstruction.cc: Likewise.
 
 	* tests/transforms/fft.cc, tests/transforms/dwt.cc: Likewise.
-		
+
 	* tests/arith/Makefile.am, tests/convert/Makefile.am,
 	tests/convol/Makefile.am tests/io/Makefile.am,
 	tests/morpho/Makefile.am, tests/sanity/Makefile.am,
@@ -268,7 +278,7 @@
 
 	* tests/arith/runtests, tests/types/runtests,
 	tests/sanity/includes.test: Likewise.
-	
+
 	2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/types/all.hh, oln/types/behaviour.hh, oln/types/bin.hh,
@@ -332,7 +342,7 @@
 	* conf/configure.ac: Likewise.
 
 	2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* tests/sanity/includes.test: Fix defs path.
 
 	2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
@@ -353,7 +363,7 @@
 	tests/check/defs.in, tests/check/main.cc, tests/check/srcdir.cc,
 	tests/check/srcdir.hh, tests/check/verbose.cc,
 	tests/check/verbose.hh: Move to ../lib/check.
-	
+
 	* tests/Makefile.am, tests/transforms/Makefile.am,
 	tests/morpho/Makefile.am, tests/meta/Makefile.am,
 	tests/io/Makefile.am, tests/convol/Makefile.am,
@@ -364,7 +374,7 @@
 	* tests/arith/Makefile.am (check-local): Define useful variables
 	here instead of within the shell script.
 	* tests/types/Makefile.am (check-local): Likewise.
-	
+
 	2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* tests/check/Makefile.am (AM_CPPFLAGS): Minor fix.
@@ -375,7 +385,7 @@
 	oln/meta/cmp.hh, oln/meta/control.hh, oln/meta/logic.hh,
 	oln/meta/optional.hh, oln/meta/type.hh, oln/meta/ucmp.hh,
 	oln/meta/ufuncs.hh: Move to ../metalic/mlc.
-	
+
 	* oln/convol/convolution.hh, oln/convol/convolution.hh,
 	oln/core/generate.hh, oln/core/w_window2d.hh, oln/level/cc.hh,
 	oln/morpho/closing.hh, oln/morpho/dilation.hh,
@@ -400,12 +410,12 @@
 
 	* tests/meta/gen_test_utils/prelude, tests/meta/test_array1d.cc,
 	tests/meta/test_array2d.cc, tests/meta/test_array3d.cc: Likewise.
-	
+
 2003-03-04  Jerome Darbon  <jerome@epita.fr>
 
 	* oln/morpho/attribute_closing_opening.hh: New file.
 	* oln/morpho/attribute_union_find.hh: New file.
-	
+
 2003-02-23  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* config/oln.m4: Change default flags for icc.

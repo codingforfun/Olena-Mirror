@@ -128,6 +128,7 @@ OLN_COLLECTION([OLN_TOP],
       OLN_TESTS([io])
       OLN_TESTS([morpho])
       OLN_TESTS([sanity])
+      OLN_TESTS([topo])
       OLN_TESTS([transforms])
 
       AC_SUBST([OLN_TESTS_SUBDIRS])
