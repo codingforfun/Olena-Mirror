@@ -237,3 +237,15 @@ decl_ntg()
 
 %template(cplx_polar)  ntg::cplx< ntg::polar, ntg_float >;
 #define ntg_cplx_polar ntg::cplx< ntg::polar, ntg_float >
+
+#if defined(SWIGPYTHON)
+%typemap(in) ntg_uint {
+        $1 = ntg::int_u<32, ntg::strict>(PyLong_AsLong($input));
+}
+%typemap(in) ntg_sint {
+        $1 = ntg::int_s<32, ntg::strict>(PyLong_AsLong($input));
+}
+%typemap(in) ntg_bin {
+        $1 = ntg::bin(PyInt_AsLong($input));
+}
+#endif

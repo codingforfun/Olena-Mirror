@@ -16,8 +16,8 @@ lena.load(imgdir + "/lena.pgm")
 # FIXME: uncomment when ready
 #exit 1 unless lena.has_impl()
 
-lena.set(5, 5, Uint.new(51))
-lena.ref(6, 6).value(42)
+lena[5, 5] = Uint.new(51)
+lena[6, 6] = Uint.new(42)
 
-exit 1 unless lena.at(5, 5).value() == 51
-exit 1 unless lena.at(6, 6).value() == 42
+exit 1 unless lena[5, 5].value() == 51
+exit 1 unless lena[6, 6].value() == 42

@@ -12,7 +12,7 @@ lena.load(imgdir + "/lena.pgm")
 # FIXME: uncomment when ready
 #assert(lena.has_impl())
 
-lena.set(5, 5, uint(51))
+lena.set(5, 5, 51)
 lena.ref(6, 6).value(42)
 
 assert(lena.at(5, 5).value() == 51)

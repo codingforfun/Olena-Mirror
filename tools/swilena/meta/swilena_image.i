@@ -4,7 +4,6 @@
 | oln::image structures |
 `----------------------*/
 
-
 %define image_methods(T, Val, Dim)
 
      // default constructor
@@ -24,18 +23,18 @@
      bool hold(const point ## Dim ## d&) const;
 
      %extend {
-       Val at(const point ## Dim ## d& p) 
-	 { return (*self)[p]; }
-       T& set(const point ## Dim ## d& p, Val v) 
-	 { (*self)[p] = v; return *self; }
-       Val& ref(const point ## Dim ## d& p)
-	 { return (*self)[p]; }
-
 #if defined(SWIGPYTHON) || defined(SWIGRUBY)
        Val __getitem__(const point ## Dim ## d& p)
 	 { return (*self)[p]; }
        T& __setitem__(const point ## Dim ## d& p, Val v)
 	 { (*self)[p] = v; return *self; }
+#else
+       Val at(const point ## Dim ## d& p)
+	 { return (*self)[p]; }
+       T& set(const point ## Dim ## d& p, Val v) 
+	 { (*self)[p] = v; return *self; }
+       Val& ref(const point ## Dim ## d& p)
+	 { return (*self)[p]; }
 #endif
      }
      
@@ -51,10 +50,11 @@
 	 { return (*self)(x); }
        T __setitem__(coord x, Val v)
 	 { (*self)(x) = v; return *self; }
-#endif
+#else
        Val at(coord x) { return (*self)(x); }
        T& set(coord x, Val v) { (*self)(x) = v; return *self; }
        Val& ref(coord x) { return (*self)(x); }
+#endif
      }
 
 #elif Dim == 2
@@ -67,13 +67,14 @@
 	 { return (*self)(x, y); }
        T __setitem__(coord x, coord y, Val v)
 	 { (*self)(x, y) = v; return *self; }
-#endif
+#else
        Val at(coord x, coord y)
 	 { return (*self)(x, y); }
        T& set(coord x, coord y, Val v) 
 	 { (*self)(x, y) = v; return *self; }
        Val& ref(coord x, coord y) 
 	 { return (*self)(x, y); }
+#endif
      }
 
 #elif Dim == 3
@@ -86,13 +87,14 @@
 	 { return (*self)(x, y, z); }
        T __setitem__(coord x, coord y, coord z, Val v)
 	 { (*self)(x, y, z) = v; return *self; }
-#endif
+#else
        Val at(coord x, coord y, coord z)
 	 { return (*self)(x, y, z); }
        T& set(coord x, coord y, coord z, Val v) 
 	 { (*self)(x, y, z) = v; return *self; }
        Val& ref(coord x, coord y, coord z) 
 	 { return (*self)(x, y, z); }
+#endif
      }
 #endif
 
@@ -171,5 +173,5 @@ namespace oln
 %enddef
 
 %define make_image(name, Dim, T)
-%template(name) oln::image ## Dim ## d<T >;
+%template(name) oln::image ## Dim ## d< T >;
 %enddef

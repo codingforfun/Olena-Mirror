@@ -19,7 +19,7 @@ ima = Image2d_uint.new(5,5)
 
 for i in 0..5 do
   for j in 0..5 do
-    ima.set(i, j, Uint.new(i + j))
+    ima[i, j] = Uint.new(i + j)
   end
 end
 

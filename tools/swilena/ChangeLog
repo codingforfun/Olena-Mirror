@@ -1,3 +1,14 @@
+2003-09-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* meta/swilena_ntg.i: Define typemaps for python.
+	* meta/swilena_image.i: Don't define set, at and ref methods
+	taking point2d for python and ruby.
+
+	* python/tests/simple1.py: Adjust consequently.
+	* ruby/tests/simple1.rb: Likewise.
+	* doc/examples/python/simple.py: Likewise.
+	* doc/examples/ruby/simple.rb: Likewise.
+	
 2003-09-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* generate_morpho_instantiations.py: New file.

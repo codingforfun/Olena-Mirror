@@ -13,10 +13,10 @@ swilena_display.display_command = "xv %{image_file}"
 ima = image2d_uint(5,5)
 print ima.at(5,5).value()
 
-ima.set(2,2,uint(2))
+ima.set(2, 2, 2)
 print ima
 
-p = ima.ref(1,1)
+p = ima.ref(1, 1)
 p.value(3)
 print ima
 
