@@ -36,7 +36,7 @@ namespace oln {
 
     /*! A node is a point used in ring.
     **
-    ** \attention FIXME: Do not work due to the function energy.
+    ** \todo FIXME: Do not work due to the function energy.
     */
     template<class I>
     class node : public I::point_type
@@ -54,7 +54,7 @@ namespace oln {
     public:
       /*! Return the energy
       **
-      ** FIXME: not implemented, do not work
+      ** \todo FIXME: not implemented, do not work
       */
       inline
       ntg::float_s

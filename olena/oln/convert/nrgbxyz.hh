@@ -37,9 +37,9 @@
 
 # include <sstream>
 
-/*! \file nrgbxyz.hh
+/*! \file olena/oln/convert/nrgbxyz.hh
 **
-** \ref The formulas used here come from ``Digital Image Processing
+** REF: The formulas used here come from ``Digital Image Processing
 ** Algorithms and Applications'', I. Pitas; Wiley-Interscience.
 */
 
@@ -52,7 +52,7 @@ namespace oln {
 
     /*! Functor for conversion from N-RGB to XYZ color space.
     **
-    ** \obsolete A composition should be performed with nrgb->rgb and rgb->xyz. It has
+    ** \deprecated A composition should be performed with nrgb->rgb and rgb->xyz. It has
     ** not been replaced within the function because a double conversion 'reduces'
     ** the color space. See the following example:
     ** \code
@@ -112,7 +112,7 @@ namespace oln {
 
     /*! Conversion from N-RGB to XYZ color space.
     **
-    ** \obsolete A composition should be performed with nrgb->rgb and rgb->xyz.
+    ** \deprecated A composition should be performed with nrgb->rgb and rgb->xyz.
     **
     ** \see f_nrgb_to_xyz for more information.
     */
@@ -127,7 +127,7 @@ namespace oln {
 
     /*! Functor for conversion from XYZ to N-RGB color space.
     **
-    ** \obsolete A composition should be performed with xyz->rgb and rgb->nrgb.
+    ** \deprecated A composition should be performed with xyz->rgb and rgb->nrgb.
     **
     ** \see f_nrgb_to_xyz for more information.
     */
@@ -162,7 +162,7 @@ namespace oln {
 
     /*! Conversion from XYZ to N-RGB color space.
     **
-    ** \obsolete a composition should be performed with xyz->rgb and rgb->nrgb.
+    ** \deprecated a composition should be performed with xyz->rgb and rgb->nrgb.
     **
     ** \see f_nrgb_to_xyz for more information.
     */

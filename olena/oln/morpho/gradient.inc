@@ -201,7 +201,7 @@ external_gradient(const convert::abstract::conversion<C, B>& c,
 **        IMG_OUT "oln_morpho_external_gradient.pbm");
 **   return  0;
 ** }
-** \encode
+** \endcode
 **
 ** \image html lena256_pgm.png
 ** \image latex lena256_pgm.png

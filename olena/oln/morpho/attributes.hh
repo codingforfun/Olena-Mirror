@@ -183,9 +183,9 @@ namespace oln {
       };
 
       /*!
-      ** \brief < operator
+      ** \brief "<" operator
       **
-      ** This is a static dispatcher for the < operator.
+      ** This is a static dispatcher for the "<" operator.
       ** This method is abstract.
       */
       bool operator<(const lambda_type &lambda) const
@@ -282,9 +282,9 @@ namespace oln {
 	};
 
       /*!
-      ** \brief < operator implementation.
+      ** \brief "<" operator implementation.
       **
-      ** This is an implementation  of the < operator.  Override this
+      ** This is an implementation  of the "<" operator.  Override this
       ** method to provide a new implementation of this operator.
       ** \warning This method SHOULDN'T be called.
       */
@@ -443,7 +443,7 @@ namespace oln {
 	};
 
       /*!
-      ** \brief < operator implementation.
+      ** \brief "<" operator implementation.
       **
       ** This is an implementation  of the += operator.  Override this
       ** method to provide a new implementation of this operator.
@@ -693,7 +693,7 @@ namespace oln {
 	};
 
       /*!
-      ** \brief < operator implementation.
+      ** \brief "<" operator implementation.
       **
       ** This is an implementation  of the += operator.  Override this
       ** method to provide a new implementation of this operator.
@@ -811,7 +811,7 @@ namespace oln {
 	};
 
       /*!
-      ** \brief < operator implementation.
+      ** \brief "<" operator implementation.
       **
       ** This is an implementation  of the += operator.  Override this
       ** method to provide a new implementation of this operator.
@@ -927,7 +927,7 @@ namespace oln {
 	};
 
       /*!
-      ** \brief < operator implementation.
+      ** \brief "<" operator implementation.
       **
       ** This is an implementation  of the += operator.  Override this
       ** method to provide a new implementation of this operator.
@@ -1088,7 +1088,7 @@ namespace oln {
 	};
 
       /*!
-      ** \brief < operator implementation.
+      ** \brief "<" operator implementation.
       **
       ** This is an implementation  of the += operator.  Override this
       ** method to provide a new implementation of this operator.
@@ -1239,7 +1239,7 @@ namespace oln {
 	};
 
       /*!
-      ** \brief < operator implementation.
+      ** \brief "<" operator implementation.
       **
       ** This is an implementation  of the += operator.  Override this
       ** method to provide a new implementation of this operator.
@@ -1408,7 +1408,7 @@ namespace oln {
 	}
 
       /*!
-      ** \brief < operator implementation.
+      ** \brief "<" operator implementation.
       **
       ** This is an implementation  of the += operator.  Override this
       ** method to provide a new implementation of this operator.
@@ -1567,7 +1567,7 @@ namespace oln {
 	}
 
       /*!
-      ** \brief < operator implementation.
+      ** \brief "<" operator implementation.
       **
       ** This is an implementation  of the += operator.  Override this
       ** method to provide a new implementation of this operator.

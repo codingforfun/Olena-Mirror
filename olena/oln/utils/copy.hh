@@ -28,7 +28,7 @@
 #ifndef OLENA_UTILS_COPY_HH
 # define OLENA_UTILS_COPY_HH
 
-/* \file copy.hh
+/* \file  olena/oln/utils/copy.hh
 **
 ** \warning This file contains implementations of image's copy constructors.
 **\verbatim

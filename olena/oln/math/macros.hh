@@ -33,10 +33,9 @@
 
 namespace oln {
 
-  /*! \namespace oln:math
-  ** useful functions.
+  /*! Useful functions.
   **
-  ** \note FIXME: I'm not proud of the code below
+  ** \todo FIXME: I'm not proud of the code below
   ** think it could be better...
   **
   ** \todo FIXME: this code sounds really odd. Why does the operator()

@@ -1,1794 +1,59 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 85)
-(Parent-Version oln 10 77)
-(Version-Log "Index: doc/ChangeLog
+(Project-Version oln 10 89)
+(Parent-Version oln 10 85)
+(Version-Log "
+prcs: Producing diffs from 10.88 to 10.85(w).
+Index: doc/ChangeLog
 from  Giovanni Palma  <giovanni@lrde.epita.fr>
 
-	* ref/img_conv.pl: Make output image name constructed using
-	extension of input image.
-	* ref/exdoc.pl: Correct bug in command compile generation.
-	* ref/Makefile.am: Correct img_conv call.
-
-Index: olena/ChangeLog
-from  Giovanni Palma  <giovanni@lrde.epita.fr>
-
-	* oln/convol/convolution.hh: Add comments.
-	* oln/convol/fast_gaussian_coefficient.hh: Likewise.
-	* oln/convol/fast_gaussian.hh: Likewise.
-	* oln/convol/fast_gaussian.hxx: Likewise.
-
-	* oln/convert/stretch.hh: Correct comments.
-	* oln/convert/rgbhsl.hh: Likewise.
-	* oln/morpho/attribute_closing_opening_map.hh: Likewise.
-	* oln/morpho/watershed.hh: Likewise.
-	* oln/morpho/attribute_closing_opening.hh: Likewise.
-	* oln/morpho/thickening.inc: Likewise.
-	* oln/morpho/top_hat.inc: Likewise.
-	* oln/morpho/thinning.inc: Likewise.
-	* oln/morpho/reconstruction.hh: Likewise.
-	* oln/morpho/opening.inc: Likewise.
-	* oln/morpho/hit_or_miss.inc: Likewise.
-	* oln/morpho/gradient.inc: Likewise.
-	* oln/morpho/extrema.hxx: Likewise.
-	* oln/morpho/geodesic_dilation.hh: Likewise.
-	* oln/morpho/laplacian.inc: Likewise.
-	* oln/morpho/fast_morpho.hxx: Likewise.
-	* oln/morpho/erosion.hh: Likewise.
-	* oln/morpho/extrema_killer.hh: Likewise.
-	* oln/morpho/closing.inc: Likewise.
-	* oln/morpho/dilation.hh: Likewise.
-	* oln/level/threshold.hh: Likewise.
-	* oln/level/cc.hh: Likewise.
-	* oln/level/set_level.hh: Likewise.
-	* oln/core/abstract/iter.hh: Likewise.
+        * ref/doxygen.config.in: Change some flags.
+        * ref/Makefile.am: Correct pdf generation.
 
 Index: doc/ref/Makefile.am
---- doc/ref/Makefile.am Wed, 10 Mar 2004 16:20:23 +0100 palma_g (oln/d/51_Makefile.a 1.27.1.12 600)
-+++ doc/ref/Makefile.am Sat, 13 Mar 2004 16:50:27 +0100 palma_g (oln/d/51_Makefile.a 1.27.1.12 640)
-@@ -16,8 +16,8 @@
- 	$(EXDOC) --config=$(OUT_DIR)/exdoc.config  --output-dir=$(OUT_DIR) --input-dir=$(top_srcdir)
- 	mkdir -p img
- 	cd $(OUT_DIR) && make -f makefile
--	$(IMG_CONV) $(top_srcdir)/olena/img img
--	$(IMG_CONV) img img
-+	$(IMG_CONV) $(top_srcdir)/olena/img img preserve
-+	$(IMG_CONV) img img nopreserve
- 	$(DOXYGEN) doxygen.config
+--- doc/ref/Makefile.am Sun, 14 Mar 2004 18:21:09 +0100 palma_g (oln/d/51_Makefile.a 1.27.1.13 600)
++++ doc/ref/Makefile.am Mon, 15 Mar 2004 16:42:54 +0100 palma_g (oln/d/51_Makefile.a 1.27.1.13 640)
+@@ -24,7 +24,8 @@
+        $(TAR) -czf $@ html
  
- html.tar.gz: doxy
-Index: olena/oln/convert/stretch.hh
---- olena/oln/convert/stretch.hh Sat, 13 Mar 2004 17:45:05 +0100 van-vl_n (oln/f/51_stretch.hh 1.15 640)
-+++ olena/oln/convert/stretch.hh Sun, 14 Mar 2004 15:32:35 +0100 palma_g (oln/f/51_stretch.hh 1.15 640)
-@@ -59,8 +59,8 @@
-     ** 		IMG_OUT \"oln_convert_stretch.pgm\");
-     ** }
-     ** \\endcode
--    ** \\image html lena256.png
--    ** \\image latex lena256.png
-+    ** \\image html lena256_pgm.png
-+    ** \\image latex lena256_pgm.png
-     ** =>
-     ** \\image html oln_convert_stretch.png
-     ** \\image latex oln_convert_stretch.png
-@@ -150,8 +150,8 @@
-     ** 		IMG_OUT \"oln_convert_stretch_balance.pgm\");
-     ** }
-     ** \\endcode
--    ** \\image html face_se.png
--    ** \\image latex face_se.png
-+    ** \\image html face_se_pbm.png
-+    ** \\image latex face_se_pbm.png
-     ** => Without stretch_balance:
-     ** \\image html oln_convert_stretch_dark.png
-     ** \\image latex oln_convert_stretch_dark.png
-Index: olena/oln/convol/convolution.hh
---- olena/oln/convol/convolution.hh Thu, 07 Aug 2003 02:37:23 +0200 burrus_n (oln/f/39_convolutio 1.4.1.4.1.6.1.1 640)
-+++ olena/oln/convol/convolution.hh Sat, 13 Mar 2004 15:15:55 +0100 palma_g (oln/f/39_convolutio 1.4.1.4.1.6.1.1 640)
-@@ -1,4 +1,4 @@
--// Copyright (C) 2001, 2003  EPITA Research and Development Laboratory
-+// Copyright (C) 2001, 2003, 2004  EPITA Research and Development Laboratory
- //
- // This file is part of the Olena Library.  This library is free
- // software; you can redistribute it and/or modify it under the terms
-@@ -37,11 +37,33 @@
+ oln-ref.pdf: doxy
+-       cd latex && make && cp refman.pdf ../$@
++       make -C ./latex || echo \"Discarding problems...\" # FIXME: Find a better way to use large graph with pdflatex.
++       cp latex/refman.pdf ./$@
  
- namespace oln {
+ dist_noinst_DATA = oln-ref.pdf html.tar.gz $(srcdir)/exdoc.pl $(srcdir)/img_conv.pl
  
-+  /*!
-+  ** \\brief convolution namespace.
-+  **
-+  ** Set of algorithms related to convolution.
-+  */
-   namespace convol {
- 
-+    /*!
-+    ** \\brief oln::convol::slow namespace.
-+    **
-+    ** The algorithms you can find here are slow.  This mean there are
-+    ** only basic applications of the definitions.
-+    */
-     namespace slow {
- 
--      //FIXME : we must always specify DestValue.
-+      /*!
-+      ** \\brief Perform a convolution of an image and a window.
-+      **
-+      ** \\param DestValue Data type of the output image you want.
-+      ** \\param I Exact type of the input image.
-+      ** \\param Win Exact type of the window.
-+      **
-+      ** \\arg input The image to process.
-+      ** \\arg win The window to convolve with.
-+      **
-+      ** \\todo FIXME: we must always specify DestValue.
-+      */
-       template<class DestValue, class I, class Win>
-       typename mute<I, DestValue>::ret
-       convolve(const abstract::image < I >& input,
-@@ -54,7 +76,7 @@
- 	oln_iter_type(I) p_im(input);
- 	for_all(p_im)
- 	  {
--	    DestValue sum = 0;
-+	    DestValue sum = ntg_zero_val(DestValue);
- 	    for (unsigned i = 0; i < win.card(); ++i)
- 	      sum += static_cast<DestValue> (win.w(i)) *
- 		     static_cast<DestValue> (input[p_im - win.dp(i)]);
-@@ -64,7 +86,19 @@
- 	return output;
-       }
- 
--      //FIXME: don't use array1d, ..., arraynd.
-+      /*!
-+      ** \\brief Perform a convolution of an image and a window.
-+      **
-+      ** \\param DestValue Data type of the output image you want.
-+      ** \\param I Exact type of the input image.
-+      ** \\param Info Informations about the array.
-+      ** \\param Win Data type of the array.
-+      **
-+      ** \\arg input The image to process.
-+      ** \\arg arr The array to convolve with.
-+      **
-+      ** \\todo FIXME: don't use array1d, ..., arraynd.
-+      */
-       template<class DestValue, class I, class Info, class Win>
-       typename mute<I, DestValue>::ret
-       convolve(const abstract::image < I >& input,
-Index: olena/oln/convol/fast_gaussian_coefficient.hh
---- olena/oln/convol/fast_gaussian_coefficient.hh Thu, 07 Aug 2003 02:08:21 +0200 david (oln/24_fast_gauss 1.5.1.6 640)
-+++ olena/oln/convol/fast_gaussian_coefficient.hh Sat, 13 Mar 2004 17:57:30 +0100 palma_g (oln/24_fast_gauss 1.5.1.6 640)
-@@ -1,4 +1,4 @@
--// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
-+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
- //
- // This file is part of the Olena Library.  This library is free
- // software; you can redistribute it and/or modify it under the terms
-@@ -50,6 +50,10 @@
-     namespace fast {
-       namespace internal {
- 
-+	/*!
-+	** \\brief Data structure for coefficients used for a recursive
-+	** filter call.
-+	*/
- 	template < class FloatT >
- 	struct recursivefilter_coef_
- 	{
-@@ -57,6 +61,9 @@
- 			    DericheGaussianFirstDerivative,
- 			    DericheGaussianSecondDerivative };
- 
-+	  /*!
-+	  ** \\brief Constructor.
-+	  */
- 	  recursivefilter_coef_(FloatT a0, FloatT a1,
- 			       FloatT b0, FloatT b1,
- 			       FloatT c0, FloatT c1,
-@@ -66,8 +73,10 @@
- 	  FloatT		sumA, sumC;
- 	};
- 
--	/* Define out of the struct so the compiler don't even attempt
--	   to inline this.  */
-+	/*
-+	** Define out of the struct so the compiler don't even attempt
-+	** to inline this.
-+	*/
- 	template < class FloatT >
- 	recursivefilter_coef_<FloatT>
- 	::recursivefilter_coef_(FloatT a0, FloatT a1,
-Index: olena/oln/convol/fast_gaussian.hh
---- olena/oln/convol/fast_gaussian.hh Tue, 10 Feb 2004 15:35:04 +0100 palma_g (oln/26_fast_gauss 1.6.1.6.1.4 640)
-+++ olena/oln/convol/fast_gaussian.hh Sat, 13 Mar 2004 18:15:19 +0100 palma_g (oln/26_fast_gauss 1.6.1.6.1.4 640)
-@@ -1,4 +1,4 @@
--// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
-+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
- //
- // This file is part of the Olena Library.  This library is free
- // software; you can redistribute it and/or modify it under the terms
-@@ -40,21 +40,79 @@
- 
- namespace oln {
-   namespace convol {
-+    /*!
-+    ** \\brief oln::convol::fast namespace.
-+    **
-+    ** The algorithms you can find here are fast. This mean these ones
-+    ** are evolved versions.
-+    */
-     namespace fast {
- 
-       // FIXME: add tests!
- 
-+      /*!
-+      ** \\brief Gaussian filter.
-+      **
-+      ** Gaussian filter implementation from \"Recursively implementing
-+      ** the gaussian and its derivatives\" Deriche 93 INRIA REPORT.
-+      **
-+      ** \\param C Exact type of the conversion object.
-+      ** \\param B Base type of the conversion object.
-+      ** \\param I Exact type of the image.
-+      ** \\param BE Exact type of the behavior.
-+      **
-+      ** \\arg input_conv Converter object.
-+      ** \\arg in Input image.
-+      ** \\arg sigma Value of sigma when computing the gaussian.
-+      ** \\arg behavior Object to know how to work on borders.
-+      **
-+      */
-       template <class C, class B, class I, class BE>
-       typename mute<I, typename convoutput<C, B, oln_value_type(I)>::ret>::ret
-       gaussian(const convert::abstract::conversion<C, B>& input_conv,
- 	       const abstract::image<I>& in, ntg::float_s sigma,
- 	       const abstract::behavior<BE> &behavior);
- 
-+      /*!
-+      ** \\brief Derivative gaussian filter.
-+      **
-+      ** Gaussian filter implementation from \"Recursively implementing
-+      ** the gaussian and its derivatives\" Deriche 93 INRIA REPORT.
-+      **
-+      ** \\param C Exact type of the conversion object.
-+      ** \\param B Base type of the conversion object.
-+      ** \\param I Exact type of the image.
-+      ** \\param BE Exact type of the behavior.
-+      **
-+      ** \\arg input_conv Converter object.
-+      ** \\arg in Input image.
-+      ** \\arg sigma Value of sigma when computing the gaussian.
-+      ** \\arg behavior Object to know how to work on borders.
-+      **
-+      */
-       template <class C, class B, class I, class BE>
-       typename mute<I, typename convoutput<C, B, oln_value_type(I)>::ret>::ret
-       gaussian_derivative(const convert::abstract::conversion<C, B>& input_conv,
- 			  const abstract::image<I>& in, ntg::float_s sigma,
- 			  const abstract::behavior<BE> &behavior);
-+
-+      /*!
-+      ** \\brief Second derivative gaussian filter.
-+      **
-+      ** Gaussian filter implementation from \"Recursively implementing
-+      ** the gaussian and its derivatives\" Deriche 93 INRIA REPORT.
-+      **
-+      ** \\param C Exact type of the conversion object.
-+      ** \\param B Base type of the conversion object.
-+      ** \\param I Exact type of the image.
-+      ** \\param BE Exact type of the behavior.
-+      **
-+      ** \\arg input_conv Converter object.
-+      ** \\arg in Input image.
-+      ** \\arg sigma Value of sigma when computing the gaussian.
-+      ** \\arg behavior Object to know how to work on borders.
-+      **
-+      */
-       template <class C, class B, class I, class BE>
-       typename mute<I, typename convoutput<C, B, oln_value_type(I)>::ret>::ret
-       gaussian_second_derivative(const convert::abstract::conversion<C, B>& input_conv,
-@@ -64,6 +122,43 @@
- 
-       /* Same functions, with a default conversion.  */
- 
-+      /*
-+      ** \\brief Gaussian filter with a default conversion.
-+      **
-+      ** Gaussian filter implementation from \"Recursively implementing
-+      ** the gaussian and its derivatives\" Deriche 93 INRIA REPORT.
-+      **
-+      ** \\param I Exact type of the image.
-+      ** \\param BE Exact type of the behavior.
-+      **
-+      ** \\arg in Input image.
-+      ** \\arg sigma Value of sigma when computing the gaussian.
-+      ** \\arg behavior Object to know how to work on borders.
-+      **
-+      ** \\code
-+      ** #include <oln/basics2d.hh>
-+      ** #include <oln/convol/fast_gaussian.hh>
-+      ** #include <oln/core/behavior.hh>
-+      ** #include <ntg/all.hh>
-+      ** int main()
-+      ** {
-+      **   typedef oln::image2d<ntg::int_u8>	im_type;
-+      **
-+      **   im_type	im1(oln::load(IMG_IN \"lena256.pgm\"));
-+      **
-+      **   oln::save(oln::convol::fast::gaussian(im1, 2,
-+      **                                         oln::value_behavior<oln_value_type_(im_type)>(0)),
-+      **             IMG_OUT \"oln_convol_fast_gaussian.pbm\");
-+      **   return 0;
-+      ** }
-+      ** \\endcode
-+      **
-+      ** \\image html lena256_pgm.png
-+      ** \\image latex lena256_pgm.png
-+      ** =>
-+      ** \\image html oln_convol_fast_gaussian.png
-+      ** \\image latex oln_convol_fast_gaussian.png
-+      */
-       template <class I, class BE> inline
-       oln_concrete_type(I)
-       gaussian(const abstract::image<I>& in, ntg::float_s sigma,
-@@ -71,13 +166,90 @@
-       { return gaussian(convert::force<oln_value_type(I)>(), in, sigma,
- 			behavior); }
- 
-+      /*!
-+      ** \\brief Derivative gaussian filter with a default conversion.
-+      **
-+      ** Gaussian filter implementation from \"Recursively implementing
-+      ** the gaussian and its derivatives\" Deriche 93 INRIA REPORT.
-+      **
-+      ** \\param I Exact type of the image.
-+      ** \\param BE Exact type of the behavior.
-+      **
-+      ** \\arg in Input image.
-+      ** \\arg sigma Value of sigma when computing the gaussian.
-+      ** \\arg behavior Object to know how to work on borders.
-+      **
-+      ** \\code
-+      ** #include <oln/basics2d.hh>
-+      ** #include <oln/convol/fast_gaussian.hh>
-+      ** #include <oln/core/behavior.hh>
-+      ** #include <ntg/all.hh>
-+      ** int main()
-+      ** {
-+      **   typedef oln::image2d<ntg::int_u8>	im_type;
-+      **
-+      **   im_type	im1(oln::load(IMG_IN \"lena256.pgm\"));
-+      **
-+      **   oln::save(oln::convol::fast::gaussian(im1, 2,
-+      **                                         oln::value_behavior<oln_value_type_(im_type)>(0)),
-+      **             IMG_OUT \"oln_convol_fast_gaussian_derivative.pbm\");
-+      **   return  0;
-+      ** }
-+      ** \\endcode
-+      **
-+      ** \\image html lena256_pgm.png
-+      ** \\image latex lena256_pgm.png
-+      ** =>
-+      ** \\image html oln_convol_fast_gaussian_derivative.png
-+      ** \\image latex oln_convol_fast_gaussian_derivative.png
-+      **
-+      ** \\todo FIXME: Make the example use the good function.
-+      */
-       template <class I, class BE> inline
-       oln_concrete_type(I)
-       gaussian_derivative(const abstract::image<I>& in, ntg::float_s sigma,
- 			  const abstract::behavior<BE> &behavior)
-       { return gaussian_derivative(convert::force<oln_value_type(I)>(), in, sigma,
- 				   behavior); }
--
-+      /*!
-+      ** \\brief Second derivative gaussian filter with a default conversion.
-+      **
-+      ** Gaussian filter implementation from \"Recursively implementing
-+      ** the gaussian and its derivatives\" Deriche 93 INRIA REPORT.
-+      **
-+      ** \\param I Exact type of the image.
-+      ** \\param BE Exact type of the behavior.
-+      **
-+      ** \\arg in Input image.
-+      ** \\arg sigma Value of sigma when computing the gaussian.
-+      ** \\arg behavior Object to know how to work on borders.
-+      **
-+      ** \\code
-+      ** #include <oln/basics2d.hh>
-+      ** #include <oln/convol/fast_gaussian.hh>
-+      ** #include <oln/core/behavior.hh>
-+      ** #include <ntg/all.hh>
-+      ** int main()
-+      ** {
-+      **   typedef oln::image2d<ntg::int_u8>	im_type;
-+      **
-+      **   im_type	im1(oln::load(IMG_IN \"lena256.pgm\"));
-+      **
-+      **   oln::save(oln::convol::fast::gaussian(im1, 2,
-+      **                                         oln::value_behavior<oln_value_type_(im_type)>(0)),
-+      **             IMG_OUT \"oln_convol_fast_gaussian_second_derivative.pbm\");
-+      **   return 0;
-+      ** }
-+      ** \\endcode
-+      **
-+      ** \\image html lena256_pgm.png
-+      ** \\image latex lena256_pgm.png
-+      ** =>
-+      ** \\image html oln_convol_fast_gaussian_second_derivative.png
-+      ** \\image latex oln_convol_fast_gaussian_second_derivative.png
-+      **
-+      ** \\todo FIXME: Make the example use the good function.
-+      */
-       template <class I, class BE> inline
-       oln_concrete_type(I)
-       gaussian_second_derivative(const abstract::image<I>& in,
-@@ -87,18 +259,140 @@
- 					  in, sigma, behavior); }
- 
-       /* Same functions, with a default behavior (mirror_behavior). */
-+      /*!
-+      ** \\brief  Gaussian  filter  with  a default  conversion  and  a
-+      ** default behavior.
-+      **
-+      ** Gaussian filter implementation from \"Recursively implementing
-+      ** the gaussian and its derivatives\" Deriche 93 INRIA REPORT.\\n
-+      **
-+      ** \\warning  The content  of the  border  is the  mirror of  the
-+      ** image.
-+      **
-+      ** \\param I Exact type of the image.
-+      **
-+      ** \\arg in Input image.
-+      ** \\arg sigma Value of sigma when computing the gaussian.
-+      **
-+      ** \\code
-+      ** #include <oln/basics2d.hh>
-+      ** #include <oln/convol/fast_gaussian.hh>
-+      ** #include <oln/core/behavior.hh>
-+      ** #include <ntg/all.hh>
-+      ** int main()
-+      ** {
-+      **   typedef oln::image2d<ntg::int_u8>	im_type;
-+      **
-+      **   im_type	im1(oln::load(IMG_IN \"lena256.pgm\"));
-+      **
-+      **   oln::save(oln::convol::fast::gaussian(im1, 2),
-+      **             IMG_OUT \"oln_convol_fast_gaussian_default.pbm\");
-+      **   return 0;
-+      ** }
-+      ** \\endcode
-+      **
-+      ** \\image html lena256_pgm.png
-+      ** \\image latex lena256_pgm.png
-+      ** =>
-+      ** \\image html oln_convol_fast_gaussian_default.png
-+      ** \\image latex oln_convol_fast_gaussian_default.png
-+      */
-       template <class I> inline
-       oln_concrete_type(I)
- 	gaussian(const abstract::image<I>& in, ntg::float_s sigma)
-       { return gaussian(convert::force<oln_value_type(I)>(), in, sigma,
- 			mirror_bhv()); }
- 
-+      /*!
-+      ** \\brief Derivative  gaussian filter with  a default conversion
-+      ** and a default behavior.
-+      **
-+      ** Gaussian filter implementation from \"Recursively implementing
-+      ** the gaussian and its derivatives\" Deriche 93 INRIA REPORT.
-+      **
-+      ** \\warning  The content  of the  border  is the  mirror of  the
-+      ** image.
-+      **
-+      ** \\param I Exact type of the image.
-+      ** \\param BE Exact type of the behavior.
-+      **
-+      ** \\arg in Input image.
-+      ** \\arg sigma Value of sigma when computing the gaussian.
-+      ** \\arg behavior Object to know how to work on borders.
-+      **
-+      ** \\code
-+      ** #include <oln/basics2d.hh>
-+      ** #include <oln/convol/fast_gaussian.hh>
-+      ** #include <oln/core/behavior.hh>
-+      ** #include <ntg/all.hh>
-+      ** int main()
-+      ** {
-+      **   typedef oln::image2d<ntg::int_u8>	im_type;
-+      **
-+      **   im_type	im1(oln::load(IMG_IN \"lena256.pgm\"));
-+      **
-+      **   oln::save(oln::convol::fast::gaussian(im1, 2),
-+      **             IMG_OUT \"oln_convol_fast_gaussian_derivative_default.pbm\");
-+      **   return 0;
-+      ** }
-+      ** \\endcode
-+      **
-+      ** \\image html lena256_pgm.png
-+      ** \\image latex lena256_pgm.png
-+      ** =>
-+      ** \\image html oln_convol_fast_gaussian_derivative_default.png
-+      ** \\image latex oln_convol_fast_gaussian_derivative_default.png
-+      **
-+      ** \\todo FIXME: Make the example use the good function.
-+      */
-       template <class I> inline
-       oln_concrete_type(I)
- 	gaussian_derivative(const abstract::image<I>& in, ntg::float_s sigma)
-       { return gaussian_derivative(convert::force<oln_value_type(I)>(), in, sigma,
- 				   mirror_bhv()); }
- 
-+      /*!
-+      ** \\brief  Second  derivative  gaussian  filter with  a  default
-+      ** conversion and a default behavior.
-+      **
-+      ** Gaussian filter implementation from \"Recursively implementing
-+      ** the gaussian and its derivatives\" Deriche 93 INRIA REPORT.
-+      **
-+      ** \\warning  The content  of the  border  is the  mirror of  the
-+      ** image.
-+      **
-+      ** \\param I Exact type of the image.
-+      ** \\param BE Exact type of the behavior.
-+      **
-+      ** \\arg in Input image.
-+      ** \\arg sigma Value of sigma when computing the gaussian.
-+      ** \\arg behavior Object to know how to work on borders.
-+      **
-+      ** \\code
-+      ** #include <oln/basics2d.hh>
-+      ** #include <oln/convol/fast_gaussian.hh>
-+      ** #include <oln/core/behavior.hh>
-+      ** #include <ntg/all.hh>
-+      ** int main()
-+      ** {
-+      **   typedef oln::image2d<ntg::int_u8>	im_type;
-+      **
-+      **   im_type	im1(oln::load(IMG_IN \"lena256.pgm\"));
-+      **
-+      **   oln::save(oln::convol::fast::gaussian(im1, 2),
-+      **             IMG_OUT \"oln_convol_fast_gaussian_second_derivative_default.pbm\");
-+      **   return 0;
-+      ** }
-+      ** \\endcode
-+      **
-+      ** \\image html lena256_pgm.png
-+      ** \\image latex lena256_pgm.png
-+      ** =>
-+      ** \\image html oln_convol_fast_gaussian_second_derivative_default.png
-+      ** \\image latex oln_convol_fast_gaussian_second_derivative_default.png
-+      **
-+      ** \\todo FIXME: Make the example use the good function.
-+      */
-       template <class I> inline
-       oln_concrete_type(I)
- 	gaussian_second_derivative(const abstract::image<I>& in, ntg::float_s sigma)
-Index: olena/oln/convol/fast_gaussian.hxx
---- olena/oln/convol/fast_gaussian.hxx Tue, 10 Feb 2004 15:35:04 +0100 palma_g (oln/25_fast_gauss 1.7.1.8.1.6 640)
-+++ olena/oln/convol/fast_gaussian.hxx Sat, 13 Mar 2004 17:52:59 +0100 palma_g (oln/25_fast_gauss 1.7.1.8.1.6 640)
-@@ -38,12 +38,32 @@
- namespace oln {
-   namespace convol {
-     namespace fast {
-+      /*!
-+      ** \\brief oln::convol::fast::internal namespace.
-+      **
-+      ** You can find here function used for fast algorithms.
-+      */
-       namespace internal {
- 
--	// Recursive filter, works on a line.
--	// FIXME: Until something clever is designed, the line is
--	// defined by two points (START and FINISH) and a displacement
--	// dpoint (D).
-+	/*!
-+	** \\brief Recursive filter.
-+	**
-+	** Recursive filter, works on a line.
-+	** FIXME: Until something clever is designed, the line is
-+	** defined by two points (START and FINISH) and a displacement
-+	** dpoint (D).
-+	**
-+	** \\param Worktype Type the algorithm work on.
-+	** \\param FloatType Type of coefficients.
-+	** \\param I Type of image.
-+	**
-+	** \\arg image Image to process.
-+	** \\arg c Coefficients.
-+	** \\arg start Start of the line.
-+	** \\arg finish End point of the line.
-+	** \\arg len Length of data to process.
-+	** \\arg d Displacement dpoint.
-+	*/
- 	template <class WorkType, class FloatType, class I>
- 	void
- 	recursivefilter_(I& image,
-@@ -143,7 +163,11 @@
- 	    }
- 	}
- 
--
-+	/*!
-+	** \\brief Compute the gaussian filter.
-+	**
-+	** Look at specialization for details.
-+	*/
- 	template<unsigned dim>
- 	struct gaussian_ {};
- 
-@@ -230,6 +254,20 @@
- 	  }
- 	};
- 
-+	/*!
-+	** \\brief Common  code for filter (derivative,
-+	** second derivative, etc.).
-+	**
-+	** \\param C Exact type of the conversion object.
-+	** \\param B Base type of the conversion object.
-+	** \\param I Exact type of the image.
-+	** \\param BE Exact type of the behavior.
-+	**
-+	** \\arg input_conv Converter object.
-+	** \\arg in Input image.
-+	** \\arg sigma Value of sigma when computing the gaussian.
-+	** \\arg behavior Object to know how to work on borders.
-+	*/
- 	template <class C, class B, class I, class F, class BE>
- 	typename mute<I, typename convoutput<C,B,oln_value_type(I)>::ret>::ret
- 	gaussian_common_(const convert::abstract::conversion<C,B>& c,
-Index: olena/oln/core/abstract/iter.hh
---- olena/oln/core/abstract/iter.hh Fri, 12 Mar 2004 17:51:04 +0100 odou_s (oln/c/40_iter.hh 1.18 640)
-+++ olena/oln/core/abstract/iter.hh Sun, 14 Mar 2004 15:35:19 +0100 palma_g (oln/c/40_iter.hh 1.18 640)
-@@ -170,8 +170,8 @@
-     **   return 0;
-     ** }
-     ** \\endcode
--    ** \\image html object.png
--    ** \\image latex object.png
-+    ** \\image html object_pbm.png
-+    ** \\image latex object_pbm.png
-     ** =>
-     ** \\image html oln_abstract_iter.png
-     ** \\image latex oln_abstract_iter.png
-Index: olena/oln/level/cc.hh
---- olena/oln/level/cc.hh Thu, 11 Mar 2004 16:11:20 +0100 van-vl_n (oln/e/20_cc.hh 1.11.1.10 640)
-+++ olena/oln/level/cc.hh Sun, 14 Mar 2004 15:36:00 +0100 palma_g (oln/e/20_cc.hh 1.11.1.10 640)
-@@ -94,8 +94,8 @@
-     **   std::cout << card << \" connected components\" << std::endl;
-     ** }
-     ** \\endcode
--    ** \\image html face_se.png
--    ** \\image latex face_se.png
-+    ** \\image html face_se_pbm.png
-+    ** \\image latex face_se_pbm.png
-     ** =>
-     ** \\image html oln_level_frontp_connected_component.png
-     ** \\image latex oln_level_frontp_connected_component.png
-Index: olena/oln/level/set_level.hh
---- olena/oln/level/set_level.hh Thu, 11 Mar 2004 16:11:20 +0100 van-vl_n (oln/p/1_set_level. 1.10 640)
-+++ olena/oln/level/set_level.hh Sun, 14 Mar 2004 15:36:21 +0100 palma_g (oln/p/1_set_level. 1.10 640)
-@@ -72,8 +72,8 @@
-     **   save(in, IMG_OUT \"oln_level_set_level.pgm\");
-     ** }
-     ** \\endcode
--    ** \\image html lena256.png
--    ** \\image latex lena256.png
-+    ** \\image html lena256_pgm.png
-+    ** \\image latex lena256_pgm.png
-     ** =>
-     ** \\image html oln_level_set_level.png
-     ** \\image latex oln_level_set_level.png
-Index: olena/oln/level/threshold.hh
---- olena/oln/level/threshold.hh Thu, 11 Mar 2004 16:11:20 +0100 van-vl_n (oln/f/15_threshold. 1.13 640)
-+++ olena/oln/level/threshold.hh Sun, 14 Mar 2004 15:36:44 +0100 palma_g (oln/f/15_threshold. 1.13 640)
-@@ -55,8 +55,8 @@
-     **   save(out, IMG_OUT \"oln_level_threshold.ppm\");
-     ** }
-     ** \\endcode
--    ** \\image html lena256.png
--    ** \\image latex lena256.png
-+    ** \\image html lena256_pgm.png
-+    ** \\image latex lena256_pgm.png
-     ** =>
-     ** \\image html oln_level_threshold.png
-     ** \\image latex oln_level_threshold.png
-Index: olena/oln/morpho/closing.inc
---- olena/oln/morpho/closing.inc Fri, 12 Mar 2004 13:29:59 +0100 palma_g (oln/44_closing.in 1.16 640)
-+++ olena/oln/morpho/closing.inc Sat, 13 Mar 2004 16:57:39 +0100 palma_g (oln/44_closing.in 1.16 640)
-@@ -73,8 +73,8 @@
- **   return  0;
- ** }
- ** \\endcode
--** \\image html object.png
--** \\image latex object.png
-+** \\image html object_pbm.png
-+** \\image latex object_pbm.png
- ** =>
- ** \\image html oln_morpho_closing.png
- ** \\image latex oln_morpho_closing.png
-Index: olena/oln/morpho/dilation.hh
---- olena/oln/morpho/dilation.hh Fri, 12 Mar 2004 13:29:59 +0100 palma_g (oln/b/5_dilation.h 1.17 640)
-+++ olena/oln/morpho/dilation.hh Sat, 13 Mar 2004 17:05:17 +0100 palma_g (oln/b/5_dilation.h 1.17 640)
-@@ -81,8 +81,8 @@
-     ** }
-     ** \\endcode
-     **
--    ** \\image html object.png
--    ** \\image latex object.png
-+    ** \\image html object_pbm.png
-+    ** \\image latex object_pbm.png
-     ** =>
-     ** \\image html oln_morpho_dilation.png
-     ** \\image latex oln_morpho_dilation.png
-@@ -129,8 +129,8 @@
-     ** }
-     ** \\endcode
-     **
--    ** \\image html object.png
--    ** \\image latex object.png
-+    ** \\image html object_pbm.png
-+    ** \\image latex object_pbm.png
-     ** =>
-     ** \\image html oln_morpho_n_dilation.png
-     ** \\image latex oln_morpho_n_dilation.png
-Index: olena/oln/morpho/erosion.hh
---- olena/oln/morpho/erosion.hh Fri, 12 Mar 2004 13:29:59 +0100 palma_g (oln/b/4_erosion.hh 1.19 640)
-+++ olena/oln/morpho/erosion.hh Sat, 13 Mar 2004 17:05:41 +0100 palma_g (oln/b/4_erosion.hh 1.19 640)
-@@ -73,8 +73,8 @@
-     ** }
-     ** \\endcode
-     **
--    ** \\image html object.png
--    ** \\image latex object.png
-+    ** \\image html object_pbm.png
-+    ** \\image latex object_pbm.png
-     ** =>
-     ** \\image html oln_morpho_erosion.png
-     ** \\image latex oln_morpho_erosion.png
-@@ -122,8 +122,8 @@
-     ** }
-     ** \\endcode
-     **
--    ** \\image html object.png
--    ** \\image latex object.png
-+    ** \\image html object_pbm.png
-+    ** \\image latex object_pbm.png
-     ** =>
-     ** \\image html oln_morpho_n_erosion.png
-     ** \\image latex oln_morpho_n_erosion.png
-@@ -175,8 +175,8 @@
-       ** }
-       ** \\endcode
-       **
--      ** \\image html object.png
--      ** \\image latex object.png
-+      ** \\image html object_pbm.png
-+      ** \\image latex object_pbm.png
-       ** =>
-       ** \\image html oln_morpho_fast_erosion.png
-       ** \\image latex oln_morpho_fast_erosion.png
-Index: olena/oln/morpho/extrema.hxx
---- olena/oln/morpho/extrema.hxx Fri, 12 Mar 2004 13:29:59 +0100 palma_g (oln/j/4_extrema.hx 1.13 640)
-+++ olena/oln/morpho/extrema.hxx Sat, 13 Mar 2004 17:06:49 +0100 palma_g (oln/j/4_extrema.hx 1.13 640)
-@@ -112,11 +112,11 @@
- **   return  0;
- ** }
- ** \\endcode
--** \\image html lena.png
--** \\image latex lena.png
-+** \\image html lena_pgm.png
-+** \\image latex lena_pgm.png
- ** and
--** \\image html map.png
--** \\image latex map.png
-+** \\image html map_pbm.png
-+** \\image latex map_pbm.png
- ** =>
- ** \\image html oln_morpho_sequential_minima_imposition.png
- ** \\image latex oln_morpho_sequential_minima_imposition.png
-@@ -168,8 +168,8 @@
- **   return  0;
- ** }
- ** \\endcode
--** \\image html lena.png
--** \\image latex lena.png
-+** \\image html lena_pgm.png
-+** \\image latex lena_pgm.png
- ** =>
- ** \\image html oln_morpho_sequential_regional_minima.png
- ** \\image latex oln_morpho_sequential_regional_minima.png
-Index: olena/oln/morpho/extrema_killer.hh
---- olena/oln/morpho/extrema_killer.hh Fri, 12 Mar 2004 13:29:59 +0100 palma_g (oln/e/19_extrema_ki 1.7.1.4.1.12 640)
-+++ olena/oln/morpho/extrema_killer.hh Sat, 13 Mar 2004 17:07:43 +0100 palma_g (oln/e/19_extrema_ki 1.7.1.4.1.12 640)
-@@ -121,8 +121,8 @@
-     **   return  0;
-     ** }
-     ** \\endcode
--    ** \\image html lena128.png
--    ** \\image latex lena128.png
-+    ** \\image html lena128_pgm.png
-+    ** \\image latex lena128_pgm.png
-     ** =>
-     ** \\image html oln_morpho_sure_maxima_killer.png
-     ** \\image latex oln_morpho_sure_maxima_killer.png
-@@ -194,8 +194,8 @@
-     **   return  0;
-     ** }
-     ** \\endcode
--    ** \\image html lena128.png
--    ** \\image latex lena128.png
-+    ** \\image html lena128_pgm.png
-+    ** \\image latex lena128_pgm.png
-     ** =>
-     ** \\image html oln_morpho_sure_minima_killer.png
-     ** \\image latex oln_morpho_sure_minima_killer.png
-@@ -343,8 +343,8 @@
-     **   return  0;
-     ** }
-     ** \\endcode
--    ** \\image html lena128.png
--    ** \\image latex lena128.png
-+    ** \\image html lena128_pgm.png
-+    ** \\image latex lena128_pgm.png
-     ** =>
-     ** \\image html oln_morpho_fast_minima_killer.png
-     ** \\image latex oln_morpho_fast_minima_killer.png
-@@ -468,8 +468,8 @@
-     **   return  0;
-     ** }
-     ** \\endcode
--    ** \\image html lena128.png
--    ** \\image latex lena128.png
-+    ** \\image html lena128_pgm.png
-+    ** \\image latex lena128_pgm.png
-     ** =>
-     ** \\image html oln_morpho_fast_maxima_killer.png
-     ** \\image latex oln_morpho_fast_maxima_killer.png
-Index: olena/oln/morpho/fast_morpho.hxx
---- olena/oln/morpho/fast_morpho.hxx Fri, 12 Mar 2004 13:29:59 +0100 palma_g (oln/45_fast_morph 1.19 640)
-+++ olena/oln/morpho/fast_morpho.hxx Sat, 13 Mar 2004 17:08:14 +0100 palma_g (oln/45_fast_morph 1.19 640)
-@@ -304,8 +304,8 @@
-     ** }
-     ** \\endcode
-     **
--    ** \\image html object.png
--    ** \\image latex object.png
-+    ** \\image html object_pbm.png
-+    ** \\image latex object_pbm.png
-     ** =>
-     ** \\image html oln_morpho_fast_morpho.png
-     ** \\image latex oln_morpho_fast_morpho.png
-Index: olena/oln/morpho/geodesic_dilation.hh
---- olena/oln/morpho/geodesic_dilation.hh Fri, 12 Mar 2004 13:29:59 +0100 palma_g (oln/37_geodesic_d 1.11.1.11 640)
-+++ olena/oln/morpho/geodesic_dilation.hh Sat, 13 Mar 2004 17:08:56 +0100 palma_g (oln/37_geodesic_d 1.11.1.11 640)
-@@ -77,8 +77,8 @@
-     ** }
-     ** \\endcode
-     **
--    ** \\image html lena128.png
--    ** \\image latex lena128.png
-+    ** \\image html lena128_pgm.png
-+    ** \\image latex lena128_pgm.png
-     ** =>
-     ** \\image html oln_morpho_geodesic_dilation.png
-     ** \\image latex oln_morpho_geodesic_dilation.png
-@@ -138,8 +138,8 @@
-       ** }
-       ** \\endcode
-       **
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_sure_geodesic_dilation.png
-       ** \\image latex oln_morpho_sure_geodesic_dilation.png
-Index: olena/oln/morpho/geodesic_erosion.hh
---- olena/oln/morpho/geodesic_erosion.hh Fri, 12 Mar 2004 13:29:59 +0100 palma_g (oln/36_geodesic_e 1.18 640)
-+++ olena/oln/morpho/geodesic_erosion.hh Sat, 13 Mar 2004 17:09:29 +0100 palma_g (oln/36_geodesic_e 1.18 640)
-@@ -75,8 +75,8 @@
-     ** }
-     ** \\endcode
-     **
--    ** \\image html lena128.png
--    ** \\image latex lena128.png
-+    ** \\image html lena128_pgm.png
-+    ** \\image latex lena128_pgm.png
-     ** =>
-     ** \\image html oln_morpho_geodesic_erosion.png
-     ** \\image latex oln_morpho_geodesic_erosion.png
-@@ -136,8 +136,8 @@
-       ** }
-       ** \\endcode
-       **
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_sure_geodesic_erosion.png
-       ** \\image latex oln_morpho_sure_geodesic_erosion.png
-Index: olena/oln/morpho/gradient.inc
---- olena/oln/morpho/gradient.inc Fri, 12 Mar 2004 13:29:59 +0100 palma_g (oln/43_gradient.i 1.14 640)
-+++ olena/oln/morpho/gradient.inc Sat, 13 Mar 2004 17:10:29 +0100 palma_g (oln/43_gradient.i 1.14 640)
-@@ -73,8 +73,8 @@
- ** }
- ** \\encode
- **
--** \\image html lena128.png
--** \\image latex lena128.png
-+** \\image html lena128_pgm.png
-+** \\image latex lena128_pgm.png
- ** =>
- ** \\image html oln_morpho_beucher_gradient.png
- ** \\image latex oln_morpho_beucher_gradient.png
-@@ -140,8 +140,8 @@
- ** }
- ** \\encode
- **
--** \\image html lena256.png
--** \\image latex lena256.png
-+** \\image html lena256_pgm.png
-+** \\image latex lena256_pgm.png
- ** =>
- ** \\image html oln_morpho_internal_gradient.png
- ** \\image latex oln_morpho_internal_gradient.png
-@@ -203,8 +203,8 @@
- ** }
- ** \\encode
- **
--** \\image html lena256.png
--** \\image latex lena256.png
-+** \\image html lena256_pgm.png
-+** \\image latex lena256_pgm.png
- ** =>
- ** \\image html oln_morpho_external_gradient.png
- ** \\image latex oln_morpho_external_gradient.png
-Index: olena/oln/morpho/hit_or_miss.inc
---- olena/oln/morpho/hit_or_miss.inc Fri, 12 Mar 2004 13:29:59 +0100 palma_g (oln/42_hit_or_mis 1.21 640)
-+++ olena/oln/morpho/hit_or_miss.inc Sat, 13 Mar 2004 17:11:19 +0100 palma_g (oln/42_hit_or_mis 1.21 640)
-@@ -70,8 +70,8 @@
- ** }
- ** \\endcode
- **
--** \\image html object.png
--** \\image latex object.png
-+** \\image html object_pbm.png
-+** \\image latex object_pbm.png
- ** =>
- ** \\image html oln_morpho_fast_hit_or_miss.png
- ** \\image latex oln_morpho_fast_hit_or_miss.png
-@@ -134,8 +134,8 @@
- ** }
- ** \\endcode
- **
--** \\image html object.png
--** \\image latex object.png
-+** \\image html object_pbm.png
-+** \\image latex object_pbm.png
- ** =>
- ** \\image html oln_morpho_fast_hit_or_miss_overload.png
- ** \\image latex oln_morpho_fast_hit_or_miss_overload.png
-@@ -200,8 +200,8 @@
- ** }
- ** \\endcode
- **
--** \\image html object.png
--** \\image latex object.png
-+** \\image html object_pbm.png
-+** \\image latex object_pbm.png
- ** =>
- ** \\image html oln_morpho_fast_hit_or_miss_opening.png
- ** \\image latex oln_morpho_fast_hit_or_miss_opening.png
-@@ -262,8 +262,8 @@
- ** }
- ** \\endcode
- **
--** \\image html object.png
--** \\image latex object.png
-+** \\image html object_pbm.png
-+** \\image latex object_pbm.png
- ** =>
- ** \\image html oln_morpho_fast_hit_or_miss_opening_bg.png
- ** \\image latex oln_morpho_fast_hit_or_miss_opening_bg.png
-@@ -330,8 +330,8 @@
- ** }
- ** \\endcode
- **
--** \\image html object.png
--** \\image latex object.png
-+** \\image html object_pbm.png
-+** \\image latex object_pbm.png
- ** =>
- ** \\image html oln_morpho_fast_hit_or_miss_closing.png
- ** \\image latex oln_morpho_fast_hit_or_miss_closing.png
-@@ -395,8 +395,8 @@
- ** }
- ** \\endcode
- **
--** \\image html object.png
--** \\image latex object.png
-+** \\image html object_pbm.png
-+** \\image latex object_pbm.png
- ** =>
- ** \\image html oln_morpho_fast_hit_or_miss_closing_bg.png
- ** \\image latex oln_morpho_fast_hit_or_miss_closing_bg.png
-Index: olena/oln/morpho/laplacian.inc
---- olena/oln/morpho/laplacian.inc Fri, 12 Mar 2004 13:29:59 +0100 palma_g (oln/41_laplacian. 1.14 640)
-+++ olena/oln/morpho/laplacian.inc Sat, 13 Mar 2004 17:11:47 +0100 palma_g (oln/41_laplacian. 1.14 640)
-@@ -54,8 +54,8 @@
- ** }
- ** \\endcode
- **
--** \\image html lena256.png
--** \\image latex lena256.png
-+** \\image html lena256_pgm.png
-+** \\image latex lena256_pgm.png
- ** =>
- ** \\image html oln_morpho_fast_laplacian.png
- ** \\image latex oln_morpho_fast_laplacian.png
-@@ -96,8 +96,8 @@
- ** }
- ** \\endcode
- **
--** \\image html lena256.png
--** \\image latex lena256.png
-+** \\image html lena256_pgm.png
-+** \\image latex lena256_pgm.png
- ** =>
- ** \\image html oln_morpho_fast_laplacian_overload.png
- ** \\image latex oln_morpho_fast_laplacian_overload.png
-Index: olena/oln/morpho/opening.inc
---- olena/oln/morpho/opening.inc Fri, 12 Mar 2004 13:29:59 +0100 palma_g (oln/40_opening.in 1.14 640)
-+++ olena/oln/morpho/opening.inc Sat, 13 Mar 2004 17:12:13 +0100 palma_g (oln/40_opening.in 1.14 640)
-@@ -55,8 +55,8 @@
- ** }
- ** \\endcode
- **
--** \\image html object.png
--** \\image latex object.png
-+** \\image html object_pbm.png
-+** \\image latex object_pbm.png
- ** =>
- ** \\image html oln_morpho_fast_opening.png
- ** \\image latex oln_morpho_fast_opening.png
-Index: olena/oln/morpho/reconstruction.hh
---- olena/oln/morpho/reconstruction.hh Fri, 12 Mar 2004 13:29:59 +0100 palma_g (oln/35_reconstruc 1.13.1.12 640)
-+++ olena/oln/morpho/reconstruction.hh Sat, 13 Mar 2004 17:12:50 +0100 palma_g (oln/35_reconstruc 1.13.1.12 640)
-@@ -84,8 +84,8 @@
-       ** }
-       ** \\endcode
-       **
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_sure_geodesic_reconstruction_dilation.png
-       ** \\image latex oln_morpho_sure_geodesic_reconstruction_dilation.png
-@@ -156,8 +156,8 @@
-       ** }
-       ** \\endcode
-       **
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_sequential_geodesic_reconstruction_dilation.png
-       ** \\image latex oln_morpho_sequential_geodesic_reconstruction_dilation.png
-@@ -272,8 +272,8 @@
-       ** }
-       ** \\endcode
-       **
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_hybrid_geodesic_reconstruction_dilation.png
-       ** \\image latex oln_morpho_hybrid_geodesic_reconstruction_dilation.png
-@@ -377,8 +377,8 @@
-       ** }
-       ** \\endcode
-       **
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_sure_geodesic_reconstruction_erosion.png
-       ** \\image latex oln_morpho_sure_geodesic_reconstruction_erosion.png
-@@ -450,8 +450,8 @@
-       ** }
-       ** \\endcode
-       **
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_sequential_geodesic_reconstruction_erosion.png
-       ** \\image latex oln_morpho_sequential_geodesic_reconstruction_erosion.png
-@@ -562,8 +562,8 @@
-       ** }
-       ** \\endcode
-       **
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_hybrid_geodesic_reconstruction_erosion.png
-       ** \\image latex oln_morpho_hybrid_geodesic_reconstruction_erosion.png
-Index: olena/oln/morpho/thickening.inc
---- olena/oln/morpho/thickening.inc Fri, 12 Mar 2004 13:29:59 +0100 palma_g (oln/e/28_thickening 1.11 640)
-+++ olena/oln/morpho/thickening.inc Sat, 13 Mar 2004 17:13:33 +0100 palma_g (oln/e/28_thickening 1.11 640)
-@@ -56,8 +56,8 @@
- ** }
- ** \\endcode
- **
--** \\image html lena256.png
--** \\image latex lena256.png
-+** \\image html lena256_pgm.png
-+** \\image latex lena256_pgm.png
- ** =>
- ** \\image html oln_morpho_fast_thickening.png
- ** \\image latex oln_morpho_fast_thickening.png
-Index: olena/oln/morpho/thinning.inc
---- olena/oln/morpho/thinning.inc Fri, 12 Mar 2004 13:29:59 +0100 palma_g (oln/e/26_thinning.i 1.12 640)
-+++ olena/oln/morpho/thinning.inc Sat, 13 Mar 2004 17:13:51 +0100 palma_g (oln/e/26_thinning.i 1.12 640)
-@@ -56,8 +56,8 @@
- ** }
- ** \\endcode
- **
--** \\image html lena256.png
--** \\image latex lena256.png
-+** \\image html lena256_pgm.png
-+** \\image latex lena256_pgm.png
- ** =>
- ** \\image html oln_morpho_fast_thinning.png
- ** \\image latex oln_morpho_fast_thinning.png
-Index: olena/oln/morpho/top_hat.inc
---- olena/oln/morpho/top_hat.inc Fri, 12 Mar 2004 13:29:59 +0100 palma_g (oln/39_top_hat.in 1.14 640)
-+++ olena/oln/morpho/top_hat.inc Sat, 13 Mar 2004 17:14:37 +0100 palma_g (oln/39_top_hat.in 1.14 640)
-@@ -56,8 +56,8 @@
- ** }
- ** \\endcode
- **
--** \\image html lena256.png
--** \\image latex lena256.png
-+** \\image html lena256_pgm.png
-+** \\image latex lena256_pgm.png
- ** =>
- ** \\image html oln_morpho_fast_white_top_hat.png
- ** \\image latex oln_morpho_fast_white_top_hat.png
-@@ -98,8 +98,8 @@
- ** }
- ** \\endcode
- **
--** \\image html lena256.png
--** \\image latex lena256.png
-+** \\image html lena256_pgm.png
-+** \\image latex lena256_pgm.png
- ** =>
- ** \\image html oln_morpho_fast_white_top_hat_overload.png
- ** \\image latex oln_morpho_fast_white_top_hat_overload.png
-@@ -144,8 +144,8 @@
- ** }
- ** \\endcode
- **
--** \\image html lena256.png
--** \\image latex lena256.png
-+** \\image html lena256_pgm.png
-+** \\image latex lena256_pgm.png
- ** =>
- ** \\image html oln_morpho_fast_black_top_hat.png
- ** \\image latex oln_morpho_fast_black_top_hat.png
-@@ -187,8 +187,8 @@
- ** }
- ** \\endcode
- **
--** \\image html lena256.png
--** \\image latex lena256.png
-+** \\image html lena256_pgm.png
-+** \\image latex lena256_pgm.png
- ** =>
- ** \\image html oln_morpho_fast_black_top_hat_overload.png
- ** \\image latex oln_morpho_fast_black_top_hat_overload.png
-@@ -237,8 +237,8 @@
- ** }
- ** \\endcode
- **
--** \\image html lena256.png
--** \\image latex lena256.png
-+** \\image html lena256_pgm.png
-+** \\image latex lena256_pgm.png
- ** =>
- ** \\image html oln_morpho_fast_self_complementary_top_hat.png
- ** \\image latex oln_morpho_fast_self_complementary_top_hat.png
-@@ -278,8 +278,8 @@
- ** }
- ** \\endcode
- **
--** \\image html lena256.png
--** \\image latex lena256.png
-+** \\image html lena256_pgm.png
-+** \\image latex lena256_pgm.png
- ** =>
- ** \\image html oln_morpho_fast_self_complementary_top_hat_overload.png
- ** \\image latex oln_morpho_fast_self_complementary_top_hat_overload.png
-@@ -326,8 +326,8 @@
- ** }
- ** \\endcode
- **
--** \\image html lena256.png
--** \\image latex lena256.png
-+** \\image html lena256_pgm.png
-+** \\image latex lena256_pgm.png
- ** =>
- ** \\image html oln_morpho_fast_top_hat_contrast_op.png
- ** \\image latex oln_morpho_fast_top_hat_contrast_op.png
-@@ -374,8 +374,8 @@
- ** }
- ** \\endcode
- **
--** \\image html lena256.png
--** \\image latex lena256.png
-+** \\image html lena256_pgm.png
-+** \\image latex lena256_pgm.png
- ** =>
- ** \\image html oln_morpho_fast_top_hat_contrast_op_overload.png
- ** \\image latex oln_morpho_fast_top_hat_contrast_op_overload.png
-Index: olena/oln/morpho/watershed.hh
---- olena/oln/morpho/watershed.hh Fri, 12 Mar 2004 13:29:59 +0100 palma_g (oln/48_watershed. 1.12 640)
-+++ olena/oln/morpho/watershed.hh Sat, 13 Mar 2004 17:15:16 +0100 palma_g (oln/48_watershed. 1.12 640)
-@@ -50,8 +50,8 @@
-     **   When there are more  basins than DestValue can hold, wrapping
-     **   occurs (i.e., the same label is used for several basin).
-     **
--    ** \\ref  This is  based  on the  original  algorithm presented  by
--    ** Vincent and Soille. (FIXME: ref?)
-+    ** This is  based on the  original algorithm presented  by Vincent
-+    ** and Soille. (FIXME: ref?)
-     **
-     ** \\param DestValue Type of the data in output image.
-     ** \\param I Exact type of the image.
-@@ -80,8 +80,8 @@
-     ** }
-     ** \\endcode
-     **
--    ** \\image html lena256.png
--    ** \\image latex lena256.png
-+    ** \\image html lena256_pgm.png
-+    ** \\image latex lena256_pgm.png
-     ** =>
-     ** \\image html oln_morpho_watershed_seg.png
-     ** \\image latex oln_morpho_watershed_seg.png
-@@ -111,7 +111,7 @@
-     ** potentially harmful, because if two connected basins are labeled
-     ** with the same value they will appear as one basin.\\n
-     **
--    ** \\ref This is based on the original algorithm
-+    **  This is based on the original algorithm
-     ** presented by Vincent and Soille, but modified to not output
-     ** watersheds.
-     **
-@@ -142,8 +142,8 @@
-     ** }
-     ** \\endcode
-     **
--    ** \\image html lena256.png
--    ** \\image latex lena256.png
-+    ** \\image html lena256_pgm.png
-+    ** \\image latex lena256_pgm.png
-     ** =>
-     ** \\image html oln_morpho_watershed_con.png
-     ** \\image latex oln_morpho_watershed_con.png
-@@ -166,7 +166,8 @@
-     ** input, fill markers with oln_value_type(I2)::min() (this is the
-     ** unknown label) and mark the starting points or regions (usually
-     ** these   are   minima  in   levels)   using   a  value   between
--    ** oln_value_type(I2)::min()+1 and oln_value_type(I2)::max()-1.\\n
-+    ** oln_value_type(I2)::min()  + 1 and  oln_value_type(I2)::max() -
-+    ** 1.\\n
-     **
-     ** watershed_seg_or  will  flood  levels  from  these  non-unknown
-     ** starting points,  labeling basins using the  value you assigned
-@@ -174,7 +175,7 @@
-     ** oln_value_type(I2)::max().   markers  should  not contains  any
-     ** oln_value_type(I2)::min() value on output.
-     **
--    ** \\ref  This is  based  on the  original  algorithm presented  by
-+    **   This is  based  on the  original  algorithm presented  by
-     ** D'Ornellas et al. (FIXME: ref?)
-     **
-     ** \\param I1 Exact type of the D image.
-Index: olena/oln/morpho/attribute_closing_opening.hh
---- olena/oln/morpho/attribute_closing_opening.hh Fri, 12 Mar 2004 13:29:59 +0100 palma_g (oln/q/49_attribute_ 1.19 640)
-+++ olena/oln/morpho/attribute_closing_opening.hh Sat, 13 Mar 2004 17:02:39 +0100 palma_g (oln/q/49_attribute_ 1.19 640)
-@@ -166,8 +166,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_card_closing.png
-       ** \\image latex oln_morpho_fast_card_closing.png
-@@ -193,8 +193,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_card_opening.png
-       ** \\image latex oln_morpho_fast_card_opening.png
-@@ -220,8 +220,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_integral_closing.png
-       ** \\image latex oln_morpho_fast_integral_closing.png
-@@ -247,8 +247,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_integral_opening.png
-       ** \\image latex oln_morpho_fast_integral_opening.png
-@@ -274,8 +274,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_height_opening.png
-       ** \\image latex oln_morpho_fast_height_opening.png
-@@ -302,8 +302,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_height_closing.png
-       ** \\image latex oln_morpho_fast_height_closing.png
-@@ -331,8 +331,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_maxvalue_closing.png
-       ** \\image latex oln_morpho_fast_maxvalue_closing.png
-@@ -359,8 +359,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_maxvalue_opening.png
-       ** \\image latex oln_morpho_fast_maxvalue_opening.png
-@@ -387,8 +387,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_minvalue_opening.png
-       ** \\image latex oln_morpho_fast_minvalue_opening.png
-@@ -415,8 +415,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_minvalue_closing.png
-       ** \\image latex oln_morpho_fast_minvalue_closing.png
-@@ -443,8 +443,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_ball_opening.png
-       ** \\image latex oln_morpho_fast_ball_opening.png
-@@ -471,8 +471,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_ball_closing.png
-       ** \\image latex oln_morpho_fast_ball_closing.png
-@@ -499,8 +499,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_dist_opening.png
-       ** \\image latex oln_morpho_fast_dist_opening.png
-@@ -527,8 +527,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_dist_closing.png
-       ** \\image latex oln_morpho_fast_dist_closing.png
-@@ -555,8 +555,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_cube_closing.png
-       ** \\image latex oln_morpho_fast_cube_closing.png
-@@ -583,8 +583,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_cube_opening.png
-       ** \\image latex oln_morpho_fast_cube_opening.png
-@@ -612,8 +612,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_box_closing.png
-       ** \\image latex oln_morpho_fast_box_closing.png
-@@ -641,8 +641,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_box_opening.png
-       ** \\image latex oln_morpho_fast_box_opening.png
-Index: olena/oln/convert/rgbhsl.hh
---- olena/oln/convert/rgbhsl.hh Sat, 13 Mar 2004 17:45:05 +0100 van-vl_n (oln/j/36_rgbhsl.hh 1.2 644)
-+++ olena/oln/convert/rgbhsl.hh Sun, 14 Mar 2004 15:33:36 +0100 palma_g (oln/j/36_rgbhsl.hh 1.2 644)
-@@ -73,8 +73,8 @@
-     ** 		IMG_OUT \"oln_convert_f_rgb_to_hsl.pgm\");
-     ** }
-     ** \\endcode
--    ** \\image html lena.png
--    ** \\image latex lena.png
-+    ** \\image html lena_ppm.png
-+    ** \\image latex lena_ppm.png
-     ** =>
-     ** \\image html oln_convert_f_rgb_to_hsl.png
-     ** \\image latex oln_convert_f_rgb_to_hsl.png
-Index: olena/oln/morpho/attribute_closing_opening_map.hh
---- olena/oln/morpho/attribute_closing_opening_map.hh Fri, 12 Mar 2004 13:29:59 +0100 palma_g (oln/j/49_attribute_ 1.6 600)
-+++ olena/oln/morpho/attribute_closing_opening_map.hh Sat, 13 Mar 2004 16:56:59 +0100 palma_g (oln/j/49_attribute_ 1.6 600)
-@@ -262,8 +262,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_card_closing.png
-       ** \\image latex oln_morpho_fast_card_closing.png
-@@ -289,8 +289,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_card_opening.png
-       ** \\image latex oln_morpho_fast_card_opening.png
-@@ -316,8 +316,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_integral_closing.png
-       ** \\image latex oln_morpho_fast_integral_closing.png
-@@ -343,8 +343,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_integral_opening.png
-       ** \\image latex oln_morpho_fast_integral_opening.png
-@@ -370,8 +370,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_height_opening.png
-       ** \\image latex oln_morpho_fast_height_opening.png
-@@ -398,8 +398,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_height_closing.png
-       ** \\image latex oln_morpho_fast_height_closing.png
-@@ -427,8 +427,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_maxvalue_closing.png
-       ** \\image latex oln_morpho_fast_maxvalue_closing.png
-@@ -455,8 +455,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_maxvalue_opening.png
-       ** \\image latex oln_morpho_fast_maxvalue_opening.png
-@@ -483,8 +483,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_minvalue_opening.png
-       ** \\image latex oln_morpho_fast_minvalue_opening.png
-@@ -511,8 +511,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_minvalue_closing.png
-       ** \\image latex oln_morpho_fast_minvalue_closing.png
-@@ -539,8 +539,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_ball_opening.png
-       ** \\image latex oln_morpho_fast_ball_opening.png
-@@ -567,8 +567,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_ball_closing.png
-       ** \\image latex oln_morpho_fast_ball_closing.png
-@@ -595,8 +595,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_dist_opening.png
-       ** \\image latex oln_morpho_fast_dist_opening.png
-@@ -623,8 +623,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_dist_closing.png
-       ** \\image latex oln_morpho_fast_dist_closing.png
-@@ -651,8 +651,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_cube_closing.png
-       ** \\image latex oln_morpho_fast_cube_closing.png
-@@ -679,8 +679,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_cube_opening.png
-       ** \\image latex oln_morpho_fast_cube_opening.png
-@@ -708,8 +708,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_box_closing.png
-       ** \\image latex oln_morpho_fast_box_closing.png
-@@ -737,8 +737,8 @@
-       **   return  0;
-       ** }
-       ** \\endcode
--      ** \\image html lena128.png
--      ** \\image latex lena128.png
-+      ** \\image html lena128_pgm.png
-+      ** \\image latex lena128_pgm.png
-       ** =>
-       ** \\image html oln_morpho_fast_box_opening.png
-       ** \\image latex oln_morpho_fast_box_opening.png
-Index: doc/ref/exdoc.pl
---- doc/ref/exdoc.pl Tue, 24 Feb 2004 16:33:38 +0100 palma_g (oln/v/26_exdoc.pl 1.3 700)
-+++ doc/ref/exdoc.pl Sat, 13 Mar 2004 16:26:55 +0100 palma_g (oln/v/26_exdoc.pl 1.3 755)
-@@ -111,7 +111,10 @@
-   my ($i, $prog) = @_;
-   my $cmd = get_alias $i, $config[$i]{\"captions\"};
-   $cmd = \"$cmd \".$config[$i]{\"options\"};
--  return $cmd.\" && ./$prog > $prog.\".$config[$i]{\"std_out\"}.\" 2> $prog.\".$config[$i]{\"err_out\"}.\"\\nexit \\$?\\n\";
-+  $cmd = $cmd.\" && ./$prog > $prog.\".$config[$i]{\"std_out\"}.\" 2> $prog.\";
-+  $cmd = $cmd.$config[$i]{\"err_out\"}.\"\\nret=\\$?\\n\";
-+  $cmd = $cmd. \"if [ \\$ret -ne 0 ]\\n then\\n rm \\$2\\nfi\\nexit \\$ret\\n\";
-+  return $cmd;
- }
- 
- # Dependencies of KEY as a simple string.
-Index: doc/ref/img_conv.pl
---- doc/ref/img_conv.pl Wed, 10 Mar 2004 16:20:23 +0100 palma_g (oln/k/6_img_conv.p 1.2 700)
-+++ doc/ref/img_conv.pl Sat, 13 Mar 2004 18:04:14 +0100 palma_g (oln/k/6_img_conv.p 1.2 700)
-@@ -23,25 +23,39 @@
- use Pod::Usage qw(pod2usage);
- 
- 
--sub conv($ $)
-+sub conv($ $ $)
- {
-     my $file;
-     my $d = $_[0];
-     my $o = $_[1];
-+    my $preserve_name = 0;
-+    if ($_[2] =~ /^preserve$/)
-+    {
-+	$preserve_name = 1;
-+    }
-+
-     opendir DIR, \"$d\" or die \"Unable to open $d.\\n\";
-     foreach $file(readdir DIR)
-     {
- 	if ($file =~ /(.*)\\.(pgm|ppm|ppgm|pppgm|pbm)$/)
- 	{
-+	    if ($preserve_name == 1)
-+	    {
-+		print \"convert $d/$file to $o/$1_$2.png\\n\";
-+		system \"convert $d/$file $o/$1_$2.png\";
-+	    }
-+	    else
-+	    {
- 	    print \"convert $d/$file to $o/$1.png\\n\";
- 	    system \"convert $d/$file $o/$1.png\";
- 	}
-     }
-+    }
-     closedir DIR or die \"unable to close $d.\";
- }
- my $argc=@ARGV;
--if ($argc != 2)
-+if ($argc != 3)
- {
--   die \"usage: img_conv.pl input-dir output-dir\\n\";
-+   die \"usage: img_conv.pl input-dir output-dir preserve|nopreserve\\n\";
- }
--conv $ARGV[0], $ARGV[1];
-+conv $ARGV[0], $ARGV[1], $ARGV[2];
+Index: doc/ref/doxygen.config.in
+--- doc/ref/doxygen.config.in Tue, 24 Feb 2004 16:33:38 +0100 palma_g (oln/v/29_doxygen.co 1.2 600)
++++ doc/ref/doxygen.config.in Mon, 15 Mar 2004 16:33:16 +0100 palma_g (oln/v/29_doxygen.co 1.2 644)
+@@ -122,7 +122,7 @@
+ LATEX_HEADER           =
+ PDF_HYPERLINKS         = YES
+ USE_PDFLATEX           = YES
+-LATEX_BATCHMODE        = NO
++LATEX_BATCHMODE        = YES
+ LATEX_HIDE_INDICES     = NO
+ #---------------------------------------------------------------------------
+ # configuration options related to the RTF output
+@@ -184,7 +184,7 @@
+ # Configuration options related to the dot tool
+ #---------------------------------------------------------------------------
+ CLASS_DIAGRAMS         = YES
+-HIDE_UNDOC_RELATIONS   = YES
++HIDE_UNDOC_RELATIONS   = NO
+ HAVE_DOT               = YES
+ CLASS_GRAPH            = YES
+ COLLABORATION_GRAPH    = YES
+@@ -211,4 +211,3 @@
+ DOC_URL                =
+ DOC_ABSPATH            =
+ BIN_ABSPATH            = /usr/local/bin/
+-EXT_DOC_PATHS          =
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Sun, 14 Mar 2004 18:21:09 +0100")
+(Checkin-Time "Mon, 15 Mar 2004 16:47:03 +0100")
 (Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -1892,10 +157,10 @@ Index: doc/ref/img_conv.pl
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.15 640))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.7 640))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.8 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.35 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.27 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.30 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 640))
 
@@ -1916,7 +181,7 @@ Index: doc/ref/img_conv.pl
   (doc/demo/tour.cc (oln/d/45_tour.cc 1.13 640))
   (doc/ref/bin () :directory)
   
-  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.13 640))
+  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.14 640))
   (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.6.1.5 640))
   (doc/ref/oln-ref.tex (oln/f/14_oln-ref.te 1.3.1.3 640))
   (doc/ref/integre-ref.tex (oln/g/34_ref-types. 1.12 640))
@@ -1941,7 +206,7 @@ Index: doc/ref/img_conv.pl
   (olena/img/se.pbm (oln/n/6_se.pbm 1.1 640) :no-keywords)
 
   (olena/Makefile.am (oln/2_Makefile.a 1.30.1.1.1.2.1.10 640))
-  (olena/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.16 640))
+  (olena/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.17 640))
   (olena/oln/arith/logic.hh (oln/b/24_logic.hh 1.6.1.4 640))
   (olena/oln/arith/ops.hh (oln/b/23_ops.hh 1.5.1.2.1.9 640))
   (olena/oln/basics1d.hh (oln/d/41_basics1d.h 1.5 640))
@@ -1952,7 +217,7 @@ Index: doc/ref/img_conv.pl
 
   (olena/oln/config/system.hh (oln/7_system.hh 1.17 640))
   (olena/oln/convert/basics.hh (oln/23_basics.hh 1.7 640))
-  (olena/oln/convert/bound.hh (oln/22_bound.hh 1.11 640))
+  (olena/oln/convert/bound.hh (oln/22_bound.hh 1.12 640))
   (olena/oln/convert/abstract/colorconv.hh (oln/18_colorconv. 1.11 640))
   (olena/oln/convert/conversion.hh (oln/21_conversion 1.17 640))
   (olena/oln/convert/conversion_ng_se.hh (oln/e/24_conversion 1.12 640))
@@ -1960,16 +225,16 @@ Index: doc/ref/img_conv.pl
   
   
   
-  (olena/oln/convert/nrgbxyz.hh (oln/16_nrgbxyz.hh 1.13 640))
+  (olena/oln/convert/nrgbxyz.hh (oln/16_nrgbxyz.hh 1.15 640))
   
   
-  (olena/oln/convert/rgbnrgb.hh (oln/17_rgbnrgb.hh 1.12 640))
-  (olena/oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.13 640))
-  (olena/oln/convert/stretch.hh (oln/f/51_stretch.hh 1.16 640))
+  (olena/oln/convert/rgbnrgb.hh (oln/17_rgbnrgb.hh 1.13 640))
+  (olena/oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.14 640))
+  (olena/oln/convert/stretch.hh (oln/f/51_stretch.hh 1.17 640))
   (olena/oln/convol/convolution.hh (oln/f/39_convolutio 1.4.1.4.1.6.1.2 640))
   (olena/oln/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.5.1.7 640))
   (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.6.1.5 640))
-  (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.8.1.7 640))
+  (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.8.1.8 640))
   (olena/oln/core/accum.hh (oln/d/40_accum.hh 1.5 640))
   (olena/oln/core/apply.hh (oln/d/39_apply.hh 1.15 640))
   (olena/oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.17 640))
@@ -2073,17 +338,17 @@ Index: doc/ref/img_conv.pl
   (olena/oln/io/se.hh (oln/i/45_se.hh 1.4 640))
   (olena/oln/io/se_neighborhood.hh (oln/i/47_se_neighbo 1.13 640))
   (olena/oln/io/se_window.hh (oln/i/46_se_window. 1.14 640))
-  (olena/oln/level/cc.hh (oln/e/20_cc.hh 1.11.1.11 640))
+  (olena/oln/level/cc.hh (oln/e/20_cc.hh 1.11.1.13 640))
   (olena/oln/level/compare.hh (oln/31_compare.hh 1.9 640))
-  (olena/oln/level/connected.hh (oln/30_connected. 1.9.1.12 640))
+  (olena/oln/level/connected.hh (oln/30_connected. 1.9.1.13 640))
   (olena/oln/level/fill.hh (oln/32_fill.hh 1.10 640))
-  (olena/oln/level/invert.hh (oln/33_invert.hh 1.5.2.2.1.11 640))
+  (olena/oln/level/invert.hh (oln/33_invert.hh 1.5.2.2.1.12 640))
   (olena/oln/level/lut.hh (oln/29_lut.hh 1.10 640))
   (olena/oln/level/set_level.hh (oln/p/1_set_level. 1.11 640))
   (olena/oln/level/threshold.hh (oln/f/15_threshold. 1.14 640))
   (config/oln.m4 (oln/j/15_oln.m4 1.36 640))
 
-  (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.12 640))
+  (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.13 640))
   (metalic/mlc/array/1d.hh (oln/f/23_array1d.hh 1.11 640))
   (metalic/mlc/array/1d.hxx (oln/f/22_array1d.hx 1.10 640))
   (metalic/mlc/array/2d.hh (oln/f/21_array2d.hh 1.11 640))
@@ -2105,14 +370,14 @@ Index: doc/ref/img_conv.pl
   (olena/oln/morpho/dilation.hh (oln/b/5_dilation.h 1.18 640))
   (olena/oln/morpho/erosion.hh (oln/b/4_erosion.hh 1.20 640))
   (olena/oln/morpho/extrema.hh (oln/38_extrema.hh 1.13 640))
-  (olena/oln/morpho/extrema.hxx (oln/j/4_extrema.hx 1.14 640))
+  (olena/oln/morpho/extrema.hxx (oln/j/4_extrema.hx 1.15 640))
   (olena/oln/morpho/extrema_killer.hh (oln/e/19_extrema_ki 1.7.1.4.1.13 640))
   (olena/oln/morpho/fast_morpho.hh (oln/46_fast_morph 1.9 640))
   (olena/oln/morpho/fast_morpho.hxx (oln/45_fast_morph 1.20 640))
   (olena/oln/morpho/geodesic_dilation.hh (oln/37_geodesic_d 1.11.1.12 640))
   (olena/oln/morpho/geodesic_erosion.hh (oln/36_geodesic_e 1.19 640))
   (olena/oln/morpho/gradient.hh (oln/b/3_gradient.h 1.6 640))
-  (olena/oln/morpho/gradient.inc (oln/43_gradient.i 1.15 640))
+  (olena/oln/morpho/gradient.inc (oln/43_gradient.i 1.16 640))
   (olena/oln/morpho/hit_or_miss.hh (oln/b/2_hit_or_mis 1.7 640))
   (olena/oln/morpho/hit_or_miss.inc (oln/42_hit_or_mis 1.22 640))
   (olena/oln/morpho/laplacian.hh (oln/b/1_laplacian. 1.6 640))
@@ -2131,7 +396,7 @@ Index: doc/ref/img_conv.pl
   (olena/oln/morpho/top_hat.inc (oln/39_top_hat.in 1.15 640))
   (olena/oln/morpho/watershed.hh (oln/48_watershed. 1.13 640))
   (olena/oln/morpho/watershed.hxx (oln/47_watershed. 1.9.1.5.1.6 640))
-  (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.8 640))
+  (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.10 640))
   (olena/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.7.1.9 640))
   (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.10 640))
   (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.8 640))
@@ -2180,8 +445,8 @@ Index: doc/ref/img_conv.pl
   (integre/ntg/color/xyz.hh (oln/i/24_xyz.hh 1.3.1.7 640))
   (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.7 640))
   (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.7 640))
-  (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.8 640))
-  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.7 640))
+  (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.9 640))
+  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.8 640))
   (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.10 640))
   (olena/oln/utils/timer.hh (oln/8_timer.hh 1.9 640))
   (olena/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.5.1.1 640))
@@ -2546,8 +811,8 @@ Index: doc/ref/img_conv.pl
 ;; Files added by populate at Tue, 04 Mar 2003 19:30:28 +0100,
 ;; to version 8.9(w), by jerome:
 
-  (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.20 640))
-  (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.16 640))
+  (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.21 640))
+  (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.18 640))
 
   (olena/tests/convol () :directory)
   (metalic/config (../config) :symlink)
@@ -2593,10 +858,10 @@ Index: doc/ref/img_conv.pl
   
   
   
-  (olena/oln/topo/tarjan/union.hh (oln/r/33_union.hh 1.9 640))
-  (olena/oln/topo/inter-pixel/inter-pixel.hh (oln/r/34_inter-pixe 1.13 640))
-  (olena/oln/topo/tarjan/flat-zone.hh (oln/r/35_flat-zone. 1.10 640))
-  (olena/oln/topo/combinatorial-map/cmap.hh (oln/r/36_cmap.hh 1.12 640))
+  (olena/oln/topo/tarjan/union.hh (oln/r/33_union.hh 1.10 640))
+  (olena/oln/topo/inter-pixel/inter-pixel.hh (oln/r/34_inter-pixe 1.15 640))
+  (olena/oln/topo/tarjan/flat-zone.hh (oln/r/35_flat-zone. 1.12 640))
+  (olena/oln/topo/combinatorial-map/cmap.hh (oln/r/36_cmap.hh 1.13 640))
 
 ;; Files added by populate at Thu, 20 Mar 2003 18:06:35 +0100,
 ;; to version 8.22(w), by sylvain:
@@ -2610,11 +875,11 @@ Index: doc/ref/img_conv.pl
 ;; to version 8.26(w), by sylvain:
 
   (olena/oln/topo/combinatorial-map/internal/zeta.hh (oln/r/43_zeta.hh 1.4 640))
-  (olena/oln/topo/inter-pixel/fwd-dir-iter.hh (oln/r/44_fwd-dir-it 1.5 640))
-  (olena/oln/topo/inter-pixel/bkd-dir-iter.hh (oln/r/45_bkd-dir-it 1.5 640))
-  (olena/oln/topo/inter-pixel/node.hh (oln/r/46_node.hh 1.5 640))
+  (olena/oln/topo/inter-pixel/fwd-dir-iter.hh (oln/r/44_fwd-dir-it 1.6 640))
+  (olena/oln/topo/inter-pixel/bkd-dir-iter.hh (oln/r/45_bkd-dir-it 1.6 640))
+  (olena/oln/topo/inter-pixel/node.hh (oln/r/46_node.hh 1.6 640))
   (olena/oln/topo/inter-pixel/internal/dir-iter.hh (oln/r/47_dir-iter.h 1.6 640))
-  (olena/oln/topo/inter-pixel/internal/dir.hh (oln/r/48_dir.hh 1.3 640))
+  (olena/oln/topo/inter-pixel/internal/dir.hh (oln/r/48_dir.hh 1.4 640))
   
 
 ;; Files added by populate at Wed, 09 Apr 2003 22:18:27 +0200,
@@ -2722,10 +987,10 @@ Index: doc/ref/img_conv.pl
 
 
   (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.25 640))
-  (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.20 600))
+  (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.21 600))
   (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.14.1.9 640))
   (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.12 640))
-  (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.17 640))
+  (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.18 640))
   (olena/oln/core/impl/image_array.hh (oln/t/30_image_arra 1.15 640))
   (olena/tests/core/tests/image1 (oln/t/31_image1 1.4 640))
   (olena/oln/core/impl/image_array3d.hh (oln/t/32_image_arra 1.11 640))
@@ -2795,7 +1060,7 @@ Index: doc/ref/img_conv.pl
   (olena/tests/core/tests/label_images (oln/v/0_label_imag 1.1 600))
   (olena/oln/topo/combinatorial-map/internal/allfunc.hh (oln/v/1_allfunc.hh 1.2 600))
   (olena/oln/topo/combinatorial-map/internal/alpha.hh (oln/v/2_alpha.hh 1.3 600))
-  (olena/oln/topo/combinatorial-map/internal/anyfunc.hh (oln/v/3_anyfunc.hh 1.3 600))
+  (olena/oln/topo/combinatorial-map/internal/anyfunc.hh (oln/v/3_anyfunc.hh 1.4 600))
   (olena/oln/topo/combinatorial-map/internal/beta.hh (oln/v/5_beta.hh 1.3 600))
   (olena/oln/topo/combinatorial-map/internal/lambda.hh (oln/v/6_lambda.hh 1.3 600))
   (olena/oln/topo/combinatorial-map/internal/level.hh (oln/v/7_level.hh 1.3 600))
@@ -2934,23 +1199,23 @@ Index: doc/ref/img_conv.pl
 ;; Files added by populate at Thu, 22 Jan 2004 21:09:49 +0100,
 ;; to version 10.48(w), by palma_g:
 
-  (olena/oln/convert/rgbhsv.hh (oln/j/35_rgbhsv.hh 1.2 644))
-  (olena/oln/convert/rgbhsl.hh (oln/j/36_rgbhsl.hh 1.3 644))
-  (olena/oln/convert/rgbhsi.hh (oln/j/37_rgbhsi.hh 1.2 644))
-  (olena/oln/convert/rgbyuv.hh (oln/j/38_rgbyuv.hh 1.2 644))
-  (olena/oln/convert/rgbyiq.hh (oln/j/39_rgbyiq.hh 1.2 644))
+  (olena/oln/convert/rgbhsv.hh (oln/j/35_rgbhsv.hh 1.3 644))
+  (olena/oln/convert/rgbhsl.hh (oln/j/36_rgbhsl.hh 1.4 644))
+  (olena/oln/convert/rgbhsi.hh (oln/j/37_rgbhsi.hh 1.3 644))
+  (olena/oln/convert/rgbyuv.hh (oln/j/38_rgbyuv.hh 1.3 644))
+  (olena/oln/convert/rgbyiq.hh (oln/j/39_rgbyiq.hh 1.3 644))
 
 
   (olena/oln/snakes/snakes_base.hxx (oln/f/11_snakes_bas 1.1 644))
-  (olena/oln/snakes/snakes_base.hh (oln/f/50_snakes_bas 1.2 644))
+  (olena/oln/snakes/snakes_base.hh (oln/f/50_snakes_bas 1.3 644))
   (olena/oln/snakes/energies.hxx (oln/j/21_energies.h 1.1 644))
   (olena/oln/snakes/energies.hh (oln/j/22_energies.h 1.2 644))
   (olena/oln/snakes/segment.hxx (oln/j/23_segment.hx 1.1 644))
   (olena/oln/snakes/greedy.hxx (oln/j/24_greedy.hxx 1.1 644))
   (olena/oln/snakes/greedy.hh (oln/j/25_greedy.hh 1.2 644))
-  (olena/oln/snakes/node.hh (oln/j/32_node.hh 1.2 644))
+  (olena/oln/snakes/node.hh (oln/j/32_node.hh 1.3 644))
   (olena/oln/snakes/node.hxx (oln/j/33_node.hxx 1.1 644))
-  (olena/oln/snakes/segment.hh (oln/j/34_segment.hh 1.2 644))
+  (olena/oln/snakes/segment.hh (oln/j/34_segment.hh 1.3 644))
 ;; Files added by populate at Fri, 30 Jan 2004 10:19:55 +0100,
 ;; to version 10.56(w), by palma_g:
 
@@ -2964,7 +1229,7 @@ Index: doc/ref/img_conv.pl
 ;; Files added by populate at Fri, 06 Feb 2004 16:00:19 +0100,
 ;; to version 10.57(w), by palma_g:
 
-  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.7 644))
+  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.8 644))
 
 ;; Files added by populate at Tue, 10 Feb 2004 15:26:15 +0100,
 ;; to version 10.62(w), by palma_g:
@@ -2979,7 +1244,7 @@ Index: doc/ref/img_conv.pl
 
   (olena/oln/morpho/attribute_closing_opening_map.hxx (oln/j/48_attribute_ 1.2 644))
   (olena/oln/morpho/attribute_closing_opening_map.hh (oln/j/49_attribute_ 1.7 600))
-  (olena/oln/utils/special_points.hh (oln/j/50_special_po 1.2 644))
+  (olena/oln/utils/special_points.hh (oln/j/50_special_po 1.3 644))
   (olena/tests/morpho/tests/attribute (oln/j/51_attribute 1.3 644))
 ;; Files added by populate at Mon, 16 Feb 2004 18:59:27 +0100,
 ;; to version 10.64(w), by palma_g:
@@ -2988,7 +1253,7 @@ Index: doc/ref/img_conv.pl
 
 
   (doc/ref/exdoc.pl (oln/v/26_exdoc.pl 1.4 755))
-  (doc/ref/doxygen.config.in (oln/v/29_doxygen.co 1.2 644))
+  (doc/ref/doxygen.config.in (oln/v/29_doxygen.co 1.3 644))
   (doc/ref/exdoc.mk.in (oln/k/4_exdoc.mk.i 1.1 644))
   
   (doc/ref/img_conv.pl (oln/k/6_img_conv.p 1.3 700))
@@ -3008,60 +1273,33 @@ Index: doc/ref/img_conv.pl
   ; (doc/ref/html () :directory)
 )
 (Merge-Parents
-  (10.77 complete)
-  (10.83 complete
+  (10.85 complete)
+  (10.87 complete
+    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (olena/oln/convert/nrgbxyz.hh olena/oln/convert/nrgbxyz.hh olena/oln/convert/nrgbxyz.hh r)
+    (olena/oln/convert/stretch.hh olena/oln/convert/stretch.hh olena/oln/convert/stretch.hh r) (olena/oln/level/cc.hh olena/oln/level/cc.hh olena/oln/level/cc.hh r)
+    (olena/oln/morpho/gradient.inc olena/oln/morpho/gradient.inc olena/oln/morpho/gradient.inc r) (olena/oln/topo/dmap.hh olena/oln/topo/dmap.hh olena/oln/topo/dmap.hh r)
+    (olena/oln/morpho/attribute_closing_opening.hh olena/oln/morpho/attribute_closing_opening.hh olena/oln/morpho/attribute_closing_opening.hh r) (olena/oln/morpho/attribute_union_find.hh olena/oln/morpho/attribute_union_find.hh olena/oln/morpho/attribute_union_find.hh r)
+    (olena/oln/topo/inter-pixel/inter-pixel.hh olena/oln/topo/inter-pixel/inter-pixel.hh olena/oln/topo/inter-pixel/inter-pixel.hh r) (olena/oln/topo/tarjan/flat-zone.hh olena/oln/topo/tarjan/flat-zone.hh olena/oln/topo/tarjan/flat-zone.hh r)
+    (olena/oln/topo/inter-pixel/node.hh olena/oln/topo/inter-pixel/node.hh olena/oln/topo/inter-pixel/node.hh r) (olena/oln/core/abstract/image_with_dim.hh olena/oln/core/abstract/image_with_dim.hh olena/oln/core/abstract/image_with_dim.hh r)
+    (olena/oln/core/impl/image_impl.hh olena/oln/core/impl/image_impl.hh olena/oln/core/impl/image_impl.hh r) (olena/oln/morpho/attributes.hh olena/oln/morpho/attributes.hh olena/oln/morpho/attributes.hh r)
+    (olena/oln/utils/special_points.hh olena/oln/utils/special_points.hh olena/oln/utils/special_points.hh r) 
+  )
+  (10.88 complete
     (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (olena/oln/arith/internal/opdecls.hh olena/oln/arith/internal/opdecls.hh olena/oln/arith/internal/opdecls.hh r)
-    (olena/oln/arith/logic.hh olena/oln/arith/logic.hh olena/oln/arith/logic.hh r) (olena/oln/arith/ops.hh olena/oln/arith/ops.hh olena/oln/arith/ops.hh r)
-    (olena/oln/convert/basics.hh olena/oln/convert/basics.hh olena/oln/convert/basics.hh r) (olena/oln/convert/bound.hh olena/oln/convert/bound.hh olena/oln/convert/bound.hh r)
-    (olena/oln/convert/abstract/colorconv.hh olena/oln/convert/abstract/colorconv.hh olena/oln/convert/abstract/colorconv.hh r) (olena/oln/convert/conversion.hh olena/oln/convert/conversion.hh olena/oln/convert/conversion.hh r)
-    (olena/oln/convert/conversion_ng_se.hh olena/oln/convert/conversion_ng_se.hh olena/oln/convert/conversion_ng_se.hh r) (olena/oln/convert/force.hh olena/oln/convert/force.hh olena/oln/convert/force.hh r)
-    (olena/oln/convert/nrgbxyz.hh olena/oln/convert/nrgbxyz.hh olena/oln/convert/nrgbxyz.hh r) (olena/oln/convert/rgbnrgb.hh olena/oln/convert/rgbnrgb.hh olena/oln/convert/rgbnrgb.hh r)
-    (olena/oln/convert/rgbxyz.hh olena/oln/convert/rgbxyz.hh olena/oln/convert/rgbxyz.hh r) (olena/oln/convert/stretch.hh olena/oln/convert/stretch.hh olena/oln/convert/stretch.hh r)
-    (olena/oln/core/accum.hh olena/oln/core/accum.hh olena/oln/core/accum.hh r) (olena/oln/core/apply.hh olena/oln/core/apply.hh olena/oln/core/apply.hh r)
-    (olena/oln/core/bkd_iter1d.hh olena/oln/core/bkd_iter1d.hh olena/oln/core/bkd_iter1d.hh r) (olena/oln/core/bkd_iter2d.hh olena/oln/core/bkd_iter2d.hh olena/oln/core/bkd_iter2d.hh r)
-    (olena/oln/core/bkd_iter3d.hh olena/oln/core/bkd_iter3d.hh olena/oln/core/bkd_iter3d.hh r) (olena/oln/core/compose.hh olena/oln/core/compose.hh olena/oln/core/compose.hh r)
-    (olena/oln/core/coord.hh olena/oln/core/coord.hh olena/oln/core/coord.hh r) (olena/oln/core/dpoint1d.hh olena/oln/core/dpoint1d.hh olena/oln/core/dpoint1d.hh r)
-    (olena/oln/core/dpoint2d.hh olena/oln/core/dpoint2d.hh olena/oln/core/dpoint2d.hh r) (olena/oln/core/dpoint3d.hh olena/oln/core/dpoint3d.hh olena/oln/core/dpoint3d.hh r)
-    (olena/oln/core/fold.hh olena/oln/core/fold.hh olena/oln/core/fold.hh r) (olena/oln/core/fwd_iter1d.hh olena/oln/core/fwd_iter1d.hh olena/oln/core/fwd_iter1d.hh r)
-    (olena/oln/core/fwd_iter2d.hh olena/oln/core/fwd_iter2d.hh olena/oln/core/fwd_iter2d.hh r) (olena/oln/core/fwd_iter3d.hh olena/oln/core/fwd_iter3d.hh olena/oln/core/fwd_iter3d.hh r)
-    (olena/oln/core/image1d.hh olena/oln/core/image1d.hh olena/oln/core/image1d.hh r) (olena/oln/core/image1d_size.hh olena/oln/core/image1d_size.hh olena/oln/core/image1d_size.hh r)
-    (olena/oln/core/image2d.hh olena/oln/core/image2d.hh olena/oln/core/image2d.hh r) (olena/oln/core/image2d_size.hh olena/oln/core/image2d_size.hh olena/oln/core/image2d_size.hh r)
-    (olena/oln/core/image3d.hh olena/oln/core/image3d.hh olena/oln/core/image3d.hh r) (olena/oln/core/image3d_size.hh olena/oln/core/image3d_size.hh olena/oln/core/image3d_size.hh r)
-    (olena/oln/core/image.hh olena/oln/core/image.hh olena/oln/core/image.hh r) (olena/oln/core/abstract/iter1d.hh olena/oln/core/abstract/iter1d.hh olena/oln/core/abstract/iter1d.hh r)
-    (olena/oln/core/abstract/iter2d.hh olena/oln/core/abstract/iter2d.hh olena/oln/core/abstract/iter2d.hh r) (olena/oln/core/abstract/iter3d.hh olena/oln/core/abstract/iter3d.hh olena/oln/core/abstract/iter3d.hh r)
-    (olena/oln/core/abstract/iter.hh olena/oln/core/abstract/iter.hh olena/oln/core/abstract/iter.hh r) (olena/oln/core/neighborhood1d.hh olena/oln/core/neighborhood1d.hh olena/oln/core/neighborhood1d.hh r)
-    (olena/oln/core/neighborhood2d.hh olena/oln/core/neighborhood2d.hh olena/oln/core/neighborhood2d.hh r) (olena/oln/core/neighborhood3d.hh olena/oln/core/neighborhood3d.hh olena/oln/core/neighborhood3d.hh r)
-    (olena/oln/core/abstract/neighborhood.hh olena/oln/core/abstract/neighborhood.hh olena/oln/core/abstract/neighborhood.hh r) (olena/oln/core/point1d.hh olena/oln/core/point1d.hh olena/oln/core/point1d.hh r)
-    (olena/oln/core/point2d.hh olena/oln/core/point2d.hh olena/oln/core/point2d.hh r) (olena/oln/core/point3d.hh olena/oln/core/point3d.hh olena/oln/core/point3d.hh r)
-    (olena/oln/core/abstract/struct_elt.hh olena/oln/core/abstract/struct_elt.hh olena/oln/core/abstract/struct_elt.hh r) (olena/oln/core/traverse.hh olena/oln/core/traverse.hh olena/oln/core/traverse.hh r)
-    (olena/oln/core/window1d.hh olena/oln/core/window1d.hh olena/oln/core/window1d.hh r) (olena/oln/core/window2d.hh olena/oln/core/window2d.hh olena/oln/core/window2d.hh r)
-    (olena/oln/core/window3d.hh olena/oln/core/window3d.hh olena/oln/core/window3d.hh r) (olena/oln/core/abstract/window.hh olena/oln/core/abstract/window.hh olena/oln/core/abstract/window.hh r)
-    (olena/oln/core/w_window1d.hh olena/oln/core/w_window1d.hh olena/oln/core/w_window1d.hh r) (olena/oln/core/w_window2d.hh olena/oln/core/w_window2d.hh olena/oln/core/w_window2d.hh r)
-    (olena/oln/core/w_window3d.hh olena/oln/core/w_window3d.hh olena/oln/core/w_window3d.hh r) (olena/oln/core/abstract/w_window.hh olena/oln/core/abstract/w_window.hh olena/oln/core/abstract/w_window.hh r)
-    (olena/oln/math/macros.hh olena/oln/math/macros.hh olena/oln/math/macros.hh r) (olena/oln/utils/copy.hh olena/oln/utils/copy.hh olena/oln/utils/copy.hh r)
-    (olena/oln/utils/histogram.hh olena/oln/utils/histogram.hh olena/oln/utils/histogram.hh r) (olena/oln/utils/stat.hh olena/oln/utils/stat.hh olena/oln/utils/stat.hh r)
-    (olena/oln/utils/timer.hh olena/oln/utils/timer.hh olena/oln/utils/timer.hh r) (olena/oln/config/pconf-hh.in olena/oln/config/pconf-hh.in olena/oln/config/pconf-hh.in r)
-    (olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh r) (olena/oln/core/impl/image_impl.hh olena/oln/core/impl/image_impl.hh olena/oln/core/impl/image_impl.hh r)
-    (olena/oln/core/impl/image_array.hh olena/oln/core/impl/image_array.hh olena/oln/core/impl/image_array.hh r) (olena/oln/core/impl/image_array3d.hh olena/oln/core/impl/image_array3d.hh olena/oln/core/impl/image_array3d.hh r)
-    (olena/oln/core/impl/image_array2d.hh olena/oln/core/impl/image_array2d.hh olena/oln/core/impl/image_array2d.hh r) (olena/oln/core/impl/image_array1d.hh olena/oln/core/impl/image_array1d.hh olena/oln/core/impl/image_array1d.hh r)
-    (olena/oln/core/abstract/window_base.hh olena/oln/core/abstract/window_base.hh olena/oln/core/abstract/window_base.hh r) (olena/oln/core/abstract/windownd.hh olena/oln/core/abstract/windownd.hh olena/oln/core/abstract/windownd.hh r)
-    (olena/oln/core/abstract/w_windownd.hh olena/oln/core/abstract/w_windownd.hh olena/oln/core/abstract/w_windownd.hh r) (olena/oln/core/abstract/neighborhoodnd.hh olena/oln/core/abstract/neighborhoodnd.hh olena/oln/core/abstract/neighborhoodnd.hh r)
-    (olena/oln/convert/abstract/conversion.hh olena/oln/convert/abstract/conversion.hh olena/oln/convert/abstract/conversion.hh r) (olena/oln/convert/cast.hh olena/oln/convert/cast.hh olena/oln/convert/cast.hh r)
-    (olena/oln/convert/rgbhsv.hh olena/oln/convert/rgbhsv.hh olena/oln/convert/rgbhsv.hh r) (olena/oln/convert/rgbhsl.hh olena/oln/convert/rgbhsl.hh olena/oln/convert/rgbhsl.hh r)
-    (olena/oln/convert/rgbhsi.hh olena/oln/convert/rgbhsi.hh olena/oln/convert/rgbhsi.hh r) (olena/oln/convert/rgbyuv.hh olena/oln/convert/rgbyuv.hh olena/oln/convert/rgbyuv.hh r)
-    (olena/oln/convert/rgbyiq.hh olena/oln/convert/rgbyiq.hh olena/oln/convert/rgbyiq.hh r) (olena/oln/convert/value_to_point.hh olena/oln/convert/value_to_point.hh olena/oln/convert/value_to_point.hh r)
-    (olena/oln/core/behavior.hh olena/oln/core/behavior.hh olena/oln/core/behavior.hh r) (olena/oln/utils/special_points.hh olena/oln/utils/special_points.hh olena/oln/utils/special_points.hh r))
-  (10.84 complete
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog m) (olena/oln/core/abstract/iter1d.hh olena/oln/core/abstract/iter1d.hh olena/oln/core/abstract/iter1d.hh r)
-    (olena/oln/core/abstract/iter2d.hh olena/oln/core/abstract/iter2d.hh olena/oln/core/abstract/iter2d.hh r) (olena/oln/core/abstract/iter3d.hh olena/oln/core/abstract/iter3d.hh olena/oln/core/abstract/iter3d.hh r)
-    (olena/oln/topo/dmap.hh olena/oln/topo/dmap.hh olena/oln/topo/dmap.hh r) (olena/oln/morpho/attribute_union_find.hh olena/oln/morpho/attribute_union_find.hh olena/oln/morpho/attribute_union_find.hh r)
+    (olena/oln/convert/bound.hh olena/oln/convert/bound.hh olena/oln/convert/bound.hh r) (olena/oln/convert/nrgbxyz.hh olena/oln/convert/nrgbxyz.hh olena/oln/convert/nrgbxyz.hh r)
+    (olena/oln/convert/rgbnrgb.hh olena/oln/convert/rgbnrgb.hh olena/oln/convert/rgbnrgb.hh r) (olena/oln/convert/rgbxyz.hh olena/oln/convert/rgbxyz.hh olena/oln/convert/rgbxyz.hh r)
+    (olena/oln/convol/fast_gaussian.hxx olena/oln/convol/fast_gaussian.hxx olena/oln/convol/fast_gaussian.hxx r) (olena/oln/level/cc.hh olena/oln/level/cc.hh olena/oln/level/cc.hh r)
+    (olena/oln/level/connected.hh olena/oln/level/connected.hh olena/oln/level/connected.hh r) (olena/oln/level/invert.hh olena/oln/level/invert.hh olena/oln/level/invert.hh r)
+    (olena/oln/math/macros.hh olena/oln/math/macros.hh olena/oln/math/macros.hh r) (olena/oln/morpho/extrema.hxx olena/oln/morpho/extrema.hxx olena/oln/morpho/extrema.hxx r)
+    (olena/oln/topo/dmap.hh olena/oln/topo/dmap.hh olena/oln/topo/dmap.hh r) (olena/oln/utils/copy.hh olena/oln/utils/copy.hh olena/oln/utils/copy.hh r)
+    (olena/oln/utils/histogram.hh olena/oln/utils/histogram.hh olena/oln/utils/histogram.hh r) (olena/oln/morpho/attribute_union_find.hh olena/oln/morpho/attribute_union_find.hh olena/oln/morpho/attribute_union_find.hh r)
     (olena/oln/topo/tarjan/union.hh olena/oln/topo/tarjan/union.hh olena/oln/topo/tarjan/union.hh r) (olena/oln/topo/inter-pixel/inter-pixel.hh olena/oln/topo/inter-pixel/inter-pixel.hh olena/oln/topo/inter-pixel/inter-pixel.hh r)
     (olena/oln/topo/tarjan/flat-zone.hh olena/oln/topo/tarjan/flat-zone.hh olena/oln/topo/tarjan/flat-zone.hh r) (olena/oln/topo/combinatorial-map/cmap.hh olena/oln/topo/combinatorial-map/cmap.hh olena/oln/topo/combinatorial-map/cmap.hh r)
-    (olena/oln/topo/combinatorial-map/internal/zeta.hh olena/oln/topo/combinatorial-map/internal/zeta.hh olena/oln/topo/combinatorial-map/internal/zeta.hh r) (olena/oln/topo/inter-pixel/fwd-dir-iter.hh olena/oln/topo/inter-pixel/fwd-dir-iter.hh olena/oln/topo/inter-pixel/fwd-dir-iter.hh r)
-    (olena/oln/topo/inter-pixel/bkd-dir-iter.hh olena/oln/topo/inter-pixel/bkd-dir-iter.hh olena/oln/topo/inter-pixel/bkd-dir-iter.hh r) (olena/oln/topo/inter-pixel/node.hh olena/oln/topo/inter-pixel/node.hh olena/oln/topo/inter-pixel/node.hh r)
-    (olena/oln/topo/inter-pixel/internal/dir-iter.hh olena/oln/topo/inter-pixel/internal/dir-iter.hh olena/oln/topo/inter-pixel/internal/dir-iter.hh r) (olena/oln/topo/inter-pixel/internal/dir.hh olena/oln/topo/inter-pixel/internal/dir.hh olena/oln/topo/inter-pixel/internal/dir.hh r)
-    (olena/oln/topo/combinatorial-map/internal/alpha.hh olena/oln/topo/combinatorial-map/internal/alpha.hh olena/oln/topo/combinatorial-map/internal/alpha.hh r) (olena/oln/topo/combinatorial-map/internal/anyfunc.hh olena/oln/topo/combinatorial-map/internal/anyfunc.hh olena/oln/topo/combinatorial-map/internal/anyfunc.hh r)
-    (olena/oln/topo/combinatorial-map/internal/beta.hh olena/oln/topo/combinatorial-map/internal/beta.hh olena/oln/topo/combinatorial-map/internal/beta.hh r) (olena/oln/topo/combinatorial-map/internal/lambda.hh olena/oln/topo/combinatorial-map/internal/lambda.hh olena/oln/topo/combinatorial-map/internal/lambda.hh r)
-    (olena/oln/topo/combinatorial-map/internal/level.hh olena/oln/topo/combinatorial-map/internal/level.hh olena/oln/topo/combinatorial-map/internal/level.hh r) (olena/oln/topo/combinatorial-map/internal/sigma.hh olena/oln/topo/combinatorial-map/internal/sigma.hh olena/oln/topo/combinatorial-map/internal/sigma.hh r))
+    (olena/oln/topo/inter-pixel/fwd-dir-iter.hh olena/oln/topo/inter-pixel/fwd-dir-iter.hh olena/oln/topo/inter-pixel/fwd-dir-iter.hh r) (olena/oln/topo/inter-pixel/bkd-dir-iter.hh olena/oln/topo/inter-pixel/bkd-dir-iter.hh olena/oln/topo/inter-pixel/bkd-dir-iter.hh r)
+    (olena/oln/topo/inter-pixel/internal/dir.hh olena/oln/topo/inter-pixel/internal/dir.hh olena/oln/topo/inter-pixel/internal/dir.hh r) (olena/oln/topo/combinatorial-map/internal/anyfunc.hh olena/oln/topo/combinatorial-map/internal/anyfunc.hh olena/oln/topo/combinatorial-map/internal/anyfunc.hh r)
+    (olena/oln/convert/rgbhsv.hh olena/oln/convert/rgbhsv.hh olena/oln/convert/rgbhsv.hh r) (olena/oln/convert/rgbhsl.hh olena/oln/convert/rgbhsl.hh olena/oln/convert/rgbhsl.hh r)
+    (olena/oln/convert/rgbhsi.hh olena/oln/convert/rgbhsi.hh olena/oln/convert/rgbhsi.hh r) (olena/oln/convert/rgbyuv.hh olena/oln/convert/rgbyuv.hh olena/oln/convert/rgbyuv.hh r)
+    (olena/oln/convert/rgbyiq.hh olena/oln/convert/rgbyiq.hh olena/oln/convert/rgbyiq.hh r) (olena/oln/snakes/snakes_base.hh olena/oln/snakes/snakes_base.hh olena/oln/snakes/snakes_base.hh r)
+    (olena/oln/snakes/node.hh olena/oln/snakes/node.hh olena/oln/snakes/node.hh r) (olena/oln/snakes/segment.hh olena/oln/snakes/segment.hh olena/oln/snakes/segment.hh r))
 )
 (New-Merge-Parents)

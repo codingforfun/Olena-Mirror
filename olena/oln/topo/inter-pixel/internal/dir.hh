@@ -79,7 +79,7 @@ namespace oln {
 
 	  /*! Opposit direction.
 	  **
-	  ** \note FIXME: no modulus.
+	  ** \todo FIXME: no modulus.
 	  */
 	  static ret
 	  opposite(ret i)

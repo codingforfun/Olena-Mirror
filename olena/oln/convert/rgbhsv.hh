@@ -40,8 +40,8 @@
 
 # include <sstream>
 
-/*! \file rgbhsv.hh
-** \ref The formulas used here come from ``Color Conversion Algorithms''
+/*! \file  olena/oln/convert/rgbhsv.hh
+** REF: The formulas used here come from ``Color Conversion Algorithms''
 */
 
 namespace oln {

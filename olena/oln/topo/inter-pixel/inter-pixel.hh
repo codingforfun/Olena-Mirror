@@ -68,6 +68,7 @@ typename oln::mute< ImgType, oln_node_type(ImgType) >::ret
       **   //  (10,11): north west south
       **   //  (11,14): north west south
       ** }
+      ** \endcode
       ** \todo FIXME: Test the output values in the tests.
       */
       template <class I>
@@ -104,14 +105,14 @@ typename oln::mute< ImgType, oln_node_type(ImgType) >::ret
 	    }
 	}
 
-	/// FIXME: add doc.
+	/// \todo FIXME: add doc.
 	const node_type&
 	operator[](const point_type & p) const
 	{
 	  return data_[p];
 	}
 
-	/*! FIXME: add doc.
+	/*! \todo FIXME: add doc.
 	**
 	** \pre precondition(data_[in.first].get(in.second) == true)
 	*/

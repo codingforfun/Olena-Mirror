@@ -67,7 +67,7 @@ namespace oln {
 	  data_[i] = true;
 	}
 
-	/// Return true if the direction \i joins the node.
+	/// Return true if the direction \a i joins the node.
 	bool
 	get(dir_type i) const
 	{

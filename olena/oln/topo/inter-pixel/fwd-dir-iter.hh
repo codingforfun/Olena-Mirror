@@ -69,7 +69,7 @@ namespace oln {
 
 	/*! Assignment.
 	**
-	** \bug FIXME: I am not sure that this respect the new paradigm.
+	** \todo FIXME: I am not sure that this respect the new paradigm.
 	*/
 	template<class U>
 	U

@@ -32,13 +32,13 @@
 # include <oln/basics2d.hh>
 # include <oln/core/w_window2d.hh>
 
-// FIXME: math.h should be included by ntg/config/system.hh
+// \todo FIXME: math.h should be included by ntg/config/system.hh
 // # include <math.h>
 # include <utility>
 
-/*! \file dmap.hh
+/*! \file olena/oln/topo/dmap.hh
 **
-** \ref B.J.H. Verwer, Local distances for distance transformations
+** REF: B.J.H. Verwer, Local distances for distance transformations
 ** in two and three dimensions, Pattern Recognition Letters 12 (1991) 671-682
 */
 
@@ -68,7 +68,7 @@ namespace oln {
 
     /*! Produce a chamfer mask 3x3
     **
-    ** \bug FIXME: This highly not thread safe !
+    ** \todo FIXME: This highly not thread safe !
     **
     ** \verbatim
     ** Example of oln::topo::mk_chamfer_3x3<1,2>(3) w;
@@ -90,7 +90,7 @@ namespace oln {
 
     /*! Produce a chamfer mask 3x3
     **
-    ** \bug FIXME: This highly not thread safe !
+    ** \todo FIXME: This highly not thread safe !
     **
     ** \verbatim
     ** Example of oln::topo::mk_chamfer_3x3(1.5, 2.5) w;
@@ -650,8 +650,8 @@ namespace oln {
     **        IMG_OUT "oln_topo_dmap.pgm");
     ** }
     ** \endcode
-    ** \image html face_se.png
-    ** \image latex face_se.png
+    ** \image html face_se_pbm.png
+    ** \image latex face_se_pbm.png
     ** =>
     ** \image html oln_topo_dmap.png
     ** \image latex oln_topo_dmap.png

@@ -42,7 +42,7 @@ namespace oln {
     /*! \brief Fctor to invert a value
     **
     ** \see invert.
-    ** \note FIXME: the specialisation is done within the class.
+    ** \todo FIXME: the specialisation is done within the class.
     */
     template<class T>
     struct f_invert : public std::unary_function<const ntg::value<T>&, T>

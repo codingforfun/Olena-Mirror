@@ -24,7 +24,8 @@ html.tar.gz: doxy
 	$(TAR) -czf $@ html
 
 oln-ref.pdf: doxy
-	cd latex && make && cp refman.pdf ../$@
+	make -C ./latex || echo "Discarding problems..." # FIXME: Find a better way to use large graph with pdflatex.
+	cp latex/refman.pdf ./$@
 
 dist_noinst_DATA = oln-ref.pdf html.tar.gz $(srcdir)/exdoc.pl $(srcdir)/img_conv.pl
 

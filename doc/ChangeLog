@@ -1,3 +1,8 @@
+2004-03-15  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* ref/doxygen.config.in: Change some flags.
+	* ref/Makefile.am: Correct pdf generation.
+
 2004-03-14  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* ref/img_conv.pl: Make output image name constructed using

@@ -137,7 +137,7 @@ namespace oln {
     ** number of occurrences in an image1d; an image<rgb_8> will store the
     ** number of occurrences an image3d (because rgb_8 has 3 components).
     **
-    ** \note FIXME:  An image is inside the histogram. This is incorrect
+    ** \todo FIXME:  An image is inside the histogram. This is incorrect
     **  because it is not exactly an image (we do not need any border).
     **
     ** \param T Type of the image.

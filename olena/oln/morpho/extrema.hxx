@@ -93,7 +93,6 @@ namespace internal {
 ** \arg minima_map Minima map image.
 ** \arg Ng Neighborhood to use.
 **
-** \ref foototo
 ** \code
 ** #include <oln/basics2d.hh>
 ** #include <oln/morpho/extrema.hh>
