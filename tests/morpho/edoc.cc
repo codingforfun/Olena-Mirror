@@ -1,14 +1,14 @@
 // EDOC == Erosion Dilation Opening Closing.
 // Compare the morpho::fast:: and morpho:: versions.
 
-#include "basics2d.hh"
+#include <oln/basics2d.hh>
 
-#include "morpho/erosion.hh"
-#include "morpho/dilation.hh"
-#include "morpho/opening.hh"
-#include "morpho/closing.hh"
+#include <oln/morpho/erosion.hh>
+#include <oln/morpho/dilation.hh>
+#include <oln/morpho/opening.hh>
+#include <oln/morpho/closing.hh>
 
-#include "level/compare.hh"
+#include <oln/level/compare.hh>
 
 #include "check.hh"
 

@@ -1,17 +1,17 @@
 /* FIXME: This is not really a demo.  */
 
-#include "basics2d.hh"
+#include <oln/basics2d.hh>
 
-#include "morpho/erosion.hh"
-#include "morpho/dilation.hh"
-#include "morpho/opening.hh"
-#include "morpho/geodesic_dilation.hh"
-#include "morpho/geodesic_erosion.hh"
-#include "morpho/reconstruction.hh"
+#include <oln/morpho/erosion.hh>
+#include <oln/morpho/dilation.hh>
+#include <oln/morpho/opening.hh>
+#include <oln/morpho/geodesic_dilation.hh>
+#include <oln/morpho/geodesic_erosion.hh>
+#include <oln/morpho/reconstruction.hh>
 
-#include "level/extrema_killer.hh"
+#include <oln/level/extrema_killer.hh>
 
-#include "utils/timer.hh"
+#include <oln/utils/timer.hh>
 
 using namespace oln;
 using namespace oln::level;

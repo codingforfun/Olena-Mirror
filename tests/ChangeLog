@@ -1,3 +1,15 @@
+2002-07-16  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* tests/check/Makefile.flags (AM_CPPFLAGS): Don't -Include `/src'.
+	* tests/array/gen_test.cc: Don't -Include `/src' when calling GCC.
+	* tests/array/gen_test_utils/prelude,
+	tests/array/test_array1d.cc, tests/array/test_array2d.cc,
+	tests/array/test_array3d.cc, tests/convert/convcomp.cc,
+	tests/convert/convcomp.hh, tests/io/2d.cc, tests/io/loadsave.hh,
+	tests/morpho/edoc.cc, tests/morpho/extrkiller.cc,
+	tests/morpho/reconstruction.cc: Use `include <oln/mumble>' instead
+	of include "mumble".  Always include Olena's headers first.
+
 2002-07-10  Astrid Wang  <astrid@lrde.epita.fr>
 
 	* tests/check/srcdir.cc (Isrcdir): Fix by using std:: .

@@ -1,8 +1,4 @@
 #include "loadsave.hh"
-#include "check.hh"
-#if HAVE_ZLIB
-# include "io/gz.hh"
-#endif
 
 bool
 check(void)

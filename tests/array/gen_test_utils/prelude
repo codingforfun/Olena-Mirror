@@ -1,7 +1,6 @@
+#include <oln/meta/array.hh>
 #include <iostream>
 #include "check.hh"
-
-#include "meta/array.hh"
 
 using namespace oln;
 using namespace meta;

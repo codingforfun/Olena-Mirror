@@ -1,5 +1,5 @@
-#include "basics2d.hh"
-#include "level/extrema_killer.hh"
+#include <oln/basics2d.hh>
+#include <oln/level/extrema_killer.hh>
 
 #include "check.hh"
 

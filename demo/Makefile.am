@@ -1,6 +1,6 @@
 ## Process this file with Automake to produce Makefile.in -*-Makefile-*-
 
-INCLUDES = -I$(top_srcdir)/src
+AM_CPPFLAGS = -I$(top_builddir) -I$(top_srcdir)
 AM_CXXFLAGS = -Wall -W -DNDEBUG -ftemplate-depth-50 -ansi -pedantic
 
 # We used to declare these programs as `noinst_PROGRAMS', however

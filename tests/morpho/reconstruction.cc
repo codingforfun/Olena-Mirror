@@ -1,11 +1,11 @@
-#include "basics2d.hh"
+#include <oln/basics2d.hh>
 
-#include "morpho/opening.hh"
-#include "morpho/geodesic_dilation.hh"
-#include "morpho/geodesic_erosion.hh"
-#include "morpho/reconstruction.hh"
-#include "morpho/extrema.hh"
-#include "level/fill.hh"
+#include <oln/morpho/opening.hh>
+#include <oln/morpho/geodesic_dilation.hh>
+#include <oln/morpho/geodesic_erosion.hh>
+#include <oln/morpho/reconstruction.hh>
+#include <oln/morpho/extrema.hh>
+#include <oln/level/fill.hh>
 
 #include "check.hh"
 

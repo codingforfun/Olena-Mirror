@@ -1,5 +1,5 @@
-#include "basics2d.hh"
-#include "utils/stat.hh"
+#include <oln/basics2d.hh>
+#include <oln/utils/stat.hh>
 #include "check.hh"
 #include <iostream>
 

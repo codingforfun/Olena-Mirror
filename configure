@@ -1582,7 +1582,7 @@ INSTALL_STRIP_PROGRAM="\${SHELL} \$(install_sh) -c -s"
 
 # Add the stamp file to the list of files AC keeps track of,
 # along with our hook.
-ac_config_headers="$ac_config_headers src/config/config.h:src/config/config.hin"
+ac_config_headers="$ac_config_headers oln/config/config.h:oln/config/config.hin"
 
 
 
@@ -3035,7 +3035,7 @@ cat >>confdefs.h <<_ACEOF
 _ACEOF
 
 
-ac_config_files="$ac_config_files Makefile src/Makefile demo/Makefile tests/Makefile tests/array/Makefile tests/check/Makefile tests/convert/Makefile tests/io/Makefile tests/morpho/Makefile"
+ac_config_files="$ac_config_files Makefile oln/Makefile demo/Makefile tests/Makefile tests/array/Makefile tests/check/Makefile tests/convert/Makefile tests/io/Makefile tests/morpho/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -3526,7 +3526,7 @@ do
   case "$ac_config_target" in
   # Handling of arguments.
   "Makefile" ) CONFIG_FILES="$CONFIG_FILES Makefile" ;;
-  "src/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
+  "oln/Makefile" ) CONFIG_FILES="$CONFIG_FILES oln/Makefile" ;;
   "demo/Makefile" ) CONFIG_FILES="$CONFIG_FILES demo/Makefile" ;;
   "tests/Makefile" ) CONFIG_FILES="$CONFIG_FILES tests/Makefile" ;;
   "tests/array/Makefile" ) CONFIG_FILES="$CONFIG_FILES tests/array/Makefile" ;;
@@ -3535,7 +3535,7 @@ do
   "tests/io/Makefile" ) CONFIG_FILES="$CONFIG_FILES tests/io/Makefile" ;;
   "tests/morpho/Makefile" ) CONFIG_FILES="$CONFIG_FILES tests/morpho/Makefile" ;;
   "depfiles" ) CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
-  "src/config/config.h" ) CONFIG_HEADERS="$CONFIG_HEADERS src/config/config.h:src/config/config.hin" ;;
+  "oln/config/config.h" ) CONFIG_HEADERS="$CONFIG_HEADERS oln/config/config.h:oln/config/config.hin" ;;
   *) { { echo "$as_me:$LINENO: error: invalid argument: $ac_config_target" >&5
 echo "$as_me: error: invalid argument: $ac_config_target" >&2;}
    { (exit 1); exit 1; }; };;
@@ -4071,8 +4071,8 @@ done; }
   fi
   # Run the commands associated with the file.
   case $ac_file in
-    src/config/config.h ) # update the timestamp
-echo 'timestamp for src/config/config.h:src/config/config.hin' >"src/config/stamp-h1"
+    oln/config/config.h ) # update the timestamp
+echo 'timestamp for oln/config/config.h:oln/config/config.hin' >"oln/config/stamp-h1"
  ;;
   esac
 done

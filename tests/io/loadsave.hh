@@ -1,6 +1,10 @@
-#include "basics2d.hh"
-#include "level/compare.hh"
-#include "value/nrgb.hh"
+#include <oln/basics2d.hh>
+#include <oln/level/compare.hh>
+#include <oln/value/nrgb.hh>
+#if HAVE_ZLIB
+# include <oln/io/gz.hh>
+#endif
+#include "check.hh"
 
 using namespace oln;
 using namespace std;

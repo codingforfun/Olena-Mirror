@@ -1,18 +1,18 @@
-#include "basics2d.hh"
-#include "morpho/erosion.hh"
-#include "morpho/dilation.hh"
-#include "morpho/opening.hh"
-#include "morpho/closing.hh"
-#include "morpho/laplacian.hh"
-#include "morpho/gradient.hh"
-#include "morpho/top_hat.hh"
-#include "morpho/hit_or_miss.hh"
-#include "morpho/watershed.hh"
-#include "morpho/thinning.hh"
-#include "morpho/thickening.hh"
-#include "convol/fast_gaussian.hh"
-#include "value/all.hh"
-#include "level/fill.hh"
+#include <oln/basics2d.hh>
+#include <oln/morpho/erosion.hh>
+#include <oln/morpho/dilation.hh>
+#include <oln/morpho/opening.hh>
+#include <oln/morpho/closing.hh>
+#include <oln/morpho/laplacian.hh>
+#include <oln/morpho/gradient.hh>
+#include <oln/morpho/top_hat.hh>
+#include <oln/morpho/hit_or_miss.hh>
+#include <oln/morpho/watershed.hh>
+#include <oln/morpho/thinning.hh>
+#include <oln/morpho/thickening.hh>
+#include <oln/convol/fast_gaussian.hh>
+#include <oln/value/all.hh>
+#include <oln/level/fill.hh>
 
 using namespace oln;
 

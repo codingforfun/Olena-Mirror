@@ -6,7 +6,7 @@ AC_CONFIG_SRCDIR([ChangeLog])
 AC_CONFIG_AUX_DIR([tools])
 AM_INIT_AUTOMAKE([no-define])
 
-AM_CONFIG_HEADER(src/config/config.h:src/config/config.hin)
+AM_CONFIG_HEADER(oln/config/config.h:oln/config/config.hin)
 
 AC_PROG_CXX
 AC_PROG_RANLIB
@@ -42,7 +42,7 @@ AC_DEFINE_UNQUOTED([CXX], ["$CXX"], [The C++ compiler])
 
 AC_CONFIG_FILES([
   Makefile
-  src/Makefile
+  oln/Makefile
   demo/Makefile
   tests/Makefile
   tests/array/Makefile

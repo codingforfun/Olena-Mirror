@@ -5,21 +5,21 @@
 
 // We will run some example with 1D, and 2D, so we include these two
 // files.
-#include "basics1d.hh"
-#include "basics2d.hh"
-//#include "basics3d.hh"
+#include <oln/basics1d.hh>
+#include <oln/basics2d.hh>
+//#include <oln/basics3d.hh>
 
 // Let's include all value types, for simplicity.
-#include "value/all.hh"
+#include <oln/value/all.hh>
 
 // Some algorithms...
-#include "morpho/erosion.hh"
-#include "morpho/dilation.hh"
-#include "morpho/opening.hh"
-#include "morpho/closing.hh"
-#include "morpho/watershed.hh"
+#include <oln/morpho/erosion.hh>
+#include <oln/morpho/dilation.hh>
+#include <oln/morpho/opening.hh>
+#include <oln/morpho/closing.hh>
+#include <oln/morpho/watershed.hh>
 
-#include "utils/stat.hh"
+#include <oln/utils/stat.hh>
 
 // Always include system headers after Olena.
 #include <iostream>
