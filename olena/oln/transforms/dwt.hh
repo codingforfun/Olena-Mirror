@@ -95,15 +95,15 @@ namespace oln {
     public:
 
       // accessors
-      /// \brief Accessor to ith element of g.
+      /// Accessor to ith element of g.
       const value_t getG(unsigned i) const { return g[i]; }
-      /// \brief Accessor to ith element of ig.
+      /// Accessor to ith element of ig.
       const value_t getInvG(unsigned i) const { return ig[i]; }
-      /// \brief Accessor to ith element of h.
+      /// Accessor to ith element of h.
       const value_t getH(unsigned i) const { return h[i]; }
-      /// \brief Accessor to ith element of ih.
+      /// Accessor to ith element of ih.
       const value_t getInvH(unsigned i) const { return ih[i]; }
-      /// \brief Give the size of the arrays.
+      /// Give the size of the arrays.
       const unsigned size() const { return size_; }
 
     protected:
@@ -139,14 +139,14 @@ namespace oln {
 	mlc::is_false<N % 2>::ensure();
       }
 
-      mlc::array1d< mlc::array1d_info<N>, value_t>	h; /// \brief array of value_t.
-      mlc::internal::array1d_start_<value_t>		wc_start; /// \brief First coefficient.
+      mlc::array1d< mlc::array1d_info<N>, value_t>	h; ///< array of value_t.
+      mlc::internal::array1d_start_<value_t>		wc_start; ///< First coefficient.
 
     private:
 
-      value_t	g[N]; /// \brief array of value_t.
-      value_t	ih[N]; /// \brief array of value_t.
-      value_t	ig[N]; /// \brief array of value_t.
+      value_t	g[N]; ///< Array of value_t.
+      value_t	ih[N]; ///< Array of value_t.
+      value_t	ig[N]; /// Array of value_t.
       enum {
 	size_ = N
       };
@@ -474,10 +474,10 @@ namespace oln {
     {
     public:
 
-      typedef I						original_im_t; ///< \brief Exact of the image.
-      typedef oln_value_type(I)				original_im_value_t; ///< \brief Original data type of the image.
-      typedef typename mute<I, ntg::float_d>::ret	trans_im_t; ///< \brief Type of the transformed image.
-      typedef typename K::self_t			coeffs_t; ///< \brief Data type of coefficients.
+      typedef I						original_im_t; ///< Exact of the image.
+      typedef oln_value_type(I)				original_im_value_t; ///< Original data type of the image.
+      typedef typename mute<I, ntg::float_d>::ret	trans_im_t; ///< Type of the transformed image.
+      typedef typename K::self_t			coeffs_t; ///< Data type of coefficients.
 
       /*!
       ** \brief Constructor from an image.

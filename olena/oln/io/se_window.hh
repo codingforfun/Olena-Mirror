@@ -46,7 +46,7 @@ namespace oln {
 
     namespace internal {
 
-      ///< \todo FIXME: this code should be factorized.
+      /// \todo FIXME: this code should be factorized.
 
       /*!
       ** \brief Read a window (1 dimension) from a file.

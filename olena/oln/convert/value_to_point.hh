@@ -37,7 +37,8 @@ namespace oln {
   namespace convert {
     /*! Convert a value of pixel to a point.
     **
-    ** For example it transforms an RGB color to a 3D point (ntg::rgb_8 => oln::point3d).
+    ** For example, transform an RGB color to a 3D point
+    ** (ntg::rgb_8 => oln::point3d).
     ** This function is useful to build the histogram. \n
     ** Example:
     ** \verbatim
@@ -57,25 +58,50 @@ namespace oln {
 				Exact>::ret>
     {
     private:
-      /// By default a scalar is expected. If the type is a vector, a specialization should be written.
+      /// By default a scalar is expected. If the type is a vector, a
+      /// specialization should be written.
       typedef typename ntg_is_a(Argument_type, ntg::non_vectorial)::ensure_type ensure_type;
     public:
-      /// By default it return a point1d.
+      /// By default return a point1d.
       typedef point1d result_type;
       typedef Argument_type argument_type;
 
-      template <class input_type>
-      result_type
-      doit(const input_type &input) const
+      /// Convert a binary to a point.
+      template <typename O, typename I>
+      struct doit_binary
       {
-	result_type r(input - ntg_min_val(input_type));
-	return r;
+	static
+	O
+	doit(const I &input)
+	{
+	  return input ? O(1) : O(0);
+	}
+      };
+      /// Convert a non vectorial to a point.
+      template <typename O, typename I>
+      struct doit_not_binary
+      {
+	static
+	O
+	doit(const I &input)
+	{
+	  return O(input - ntg_min_val(I));
+	}
+      };
+
+      result_type
+      doit(const argument_type &input) const
+      {
+	typedef typename mlc::if_<ntg_is_a(argument_type, ntg::binary)::ret,
+	                          doit_binary<result_type, argument_type>,
+	  doit_not_binary<result_type, argument_type> >::ret doit_type;
+	  return doit_type::doit(input);
       }
     };
 
     /*! Specialization for color of three dimension.
     **
-    ** \todo It could be generalized to n dimensions if there were a trait that
+    ** \todo Could be generalized to n dimensions if there were a trait that
     ** give a pointkd for a given dimension k.
     */
     template <unsigned Qbits, template <unsigned> class S, class Exact>
@@ -92,11 +118,11 @@ namespace oln {
       typedef typename ntg::color<3, Qbits, S> argument_type;
 
       result_type
-      operator()(const argument_type &input) const
+      doit(const argument_type &input) const
       {
 	result_type r;
 	for (unsigned i = 0; i < 3; ++i)
-	  r.nth(i) = input[i];
+	  r.nth(i) = oln::coord(input[i]);
 	return r;
       }
     };

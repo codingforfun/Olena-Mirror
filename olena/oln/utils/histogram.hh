@@ -30,13 +30,21 @@
 
 
 # include <oln/core/image1d.hh>
+
 # include <oln/core/image3d.hh>
 
 # include <oln/convert/value_to_point.hh>
 
 # include <oln/core/abstract/image.hh>
 
+# include <ntg/core/pred_succ.hh>
+
 # include <vector>
+
+/// Return the underlying counter type of \a H.
+# define oln_cpt_type(H) mlc_exact_type(H)::cpt_type
+/// Return the underlying counter type of \a H.
+# define oln_cpt_type_(H) mlc_exact_type_(H)::cpt_type
 
 namespace oln {
   /// \brief Utilities, such as statistics.
@@ -49,7 +57,8 @@ namespace oln {
       struct img_max_size
       {
       private:
-	typedef typename ntg_is_a(T, ntg::non_vectorial)::ensure_type ensure_type;
+	typedef typename ntg_is_a(T, ntg::non_vectorial)::ensure_type
+	                                                        ensure_type;
       public:
 	typedef image1d_size size_type;
 	typedef T comp_type;
@@ -83,22 +92,29 @@ namespace oln {
       };
     } // end of namespace internal
 
+    /// Traits for oln::utils::abstract::histogram hierarchy.
+    template <class Exact>
+    struct hist_traits
+    {
+    };
+
+
     /// \brief Abstract utilities.
     namespace abstract
     {
-      /*! Abstract base class for historgram.
+      /*! Abstract base class for histogram.
       **
       ** \see oln::histogram
       */
-      template<class T,
-	       typename CPT,
-	       class Exact = mlc::final>
+      template<class Exact = mlc::final>
       class histogram: public mlc_hierarchy::any<Exact>
       {
       public:
-	typedef histogram<T, CPT, Exact> self_type;
-	typedef Exact exact_type;
-	typedef CPT cpt_type;
+	typedef typename mlc::exact_vt<histogram<Exact>,
+				       Exact>::ret exact_type;
+	typedef typename hist_traits<exact_type>::cpt_type cpt_type;
+	typedef typename hist_traits<exact_type>::value_type value_type;
+
 	/// Put the number of occurrence of every value to zero.
 	void
 	clear()
@@ -106,14 +122,14 @@ namespace oln {
 	  this->exact().clear_impl();
 	}
 	/// Read the number of occurrence of \a v.
-	const CPT&
-	operator[](const T &v)const
+	const cpt_type&
+	operator[](const value_type &v)const
 	{
 	  return this->exact().at(v);
 	}
 	/// Read or write the number of occurrence of \a v.
-	CPT&
-	operator[](const T &v)
+	cpt_type&
+	operator[](const value_type &v)
 	{
 	  return this->exact().at(v);
 	}
@@ -130,6 +146,30 @@ namespace oln {
       };
     } // end of namespace abstract
 
+    template<typename T,
+	     typename CPT = unsigned,
+	     class V2P = oln::convert::value_to_point<T>,
+	     class Exact = mlc::final>
+    class histogram;
+
+    /// Traits for oln::utils::abstract::histogram hierarchy.
+    template <typename T,
+	      typename CPT,
+	      class V2P,
+	      class Exact>
+    struct hist_traits<histogram<T, CPT, V2P, Exact> >
+    {
+      typedef CPT cpt_type;		///< Counter type
+      typedef T value_type;		///< Value of the input image
+      typedef V2P value_to_point_type;	///< Class that convert a value to
+					/// a point
+      typedef typename value_to_point_type::result_type point_type;
+					///< Point type of the internal image.
+      enum {dim = point_type::dim};	///< Dimension of the histogram.
+      typedef typename dim_traits<dim, CPT>::img_type img_type;
+					 ///< Type of the internal image.
+    };
+
     /*! Histogram.
     **
     ** This histogram uses an image of unsigned to store the value.
@@ -138,11 +178,11 @@ namespace oln {
     ** number of occurrences an image3d (because rgb_8 has 3 components).
     **
     ** \todo FIXME:  An image is inside the histogram. This is incorrect
-    **  because it is not exactly an image (we do not need any border).
+    **  because it is not exactly an image (no border needed).
     **
     ** \param T Type of the image.
-    ** \param CPT Type use to count the occurrences (unsinged).
-    ** \param V2P Concersion class to convert a value T to a point.
+    ** \param CPT Type used to count the occurrences (unsigned).
+    ** \param V2P Conversion class to convert a value T to a point.
     ** \param Exact Exact type of the histogram.
     **
     ** \see oln::abstract::histogram
@@ -168,26 +208,30 @@ namespace oln {
     ** \endcode
     */
     template<typename T,
-	     typename CPT = unsigned,
-	     class V2P = oln::convert::value_to_point<T>,
-	     class Exact = mlc::final>
+	     typename CPT,
+	     class V2P,
+	     class Exact>
     class histogram: public abstract::histogram
-      <T, CPT, typename mlc::exact_vt<histogram<T, CPT, V2P, Exact>, Exact>::ret>
+      <typename mlc::exact_vt<histogram<T, CPT, V2P, Exact>, Exact>::ret>
     {
     public:
-      typedef histogram<T, CPT, V2P, Exact> self_type;
-      typedef Exact exact_type;
-      typedef T input_type;
-      typedef V2P value_to_point_type;
-      typedef CPT cpt_type;
-      typedef typename value_to_point_type::result_type point_type;
-      enum {dim = value_to_point_type::result_type::dim};
-      typedef abstract::histogram<T, CPT, self_type> upper_type;
-      typedef typename dim_traits<dim, CPT>::img_type img_type;
+      typedef typename mlc::exact_vt<histogram<T, CPT, V2P, Exact>,
+				     Exact>::ret exact_type;
+      typedef typename hist_traits<exact_type>::value_type value_type;
+      typedef typename hist_traits<exact_type>::cpt_type cpt_type;
+      typedef typename hist_traits<exact_type>::value_to_point_type
+						value_to_point_type;
+      typedef typename hist_traits<exact_type>::point_type point_type;
+      enum {dim = hist_traits<exact_type>::dim};
+      typedef typename hist_traits<exact_type>::img_type img_type;
 
-      /// Empty histogram. The function Init(image) should be used after this constructor.
+      /*! \brief Empty histogram.
+      **
+      ** \note The function init(image) should be used after this
+      ** constructor.
+      */
       histogram(const value_to_point_type & c2p = value_to_point_type()):
-	v2p_(c2p), img_(internal::img_max_size<input_type>()())
+	v2p_(c2p), img_(internal::img_max_size<value_type>()())
       {
 	clear();
       }
@@ -196,7 +240,7 @@ namespace oln {
       template <class I>
       histogram(const oln::abstract::image<I> & input,
 		const value_to_point_type & v2p = value_to_point_type()):
-	v2p_(v2p), img_(internal::img_max_size<input_type>()())
+	v2p_(v2p), img_(internal::img_max_size<value_type>()())
       {
 	clear();
 	init(input);
@@ -208,18 +252,18 @@ namespace oln {
       {
 	typename img_type::iter_type it(img_ );
 	for_all(it)
-	img_[it] = ntg_zero_val(CPT);
+	img_[it] = ntg_zero_val(cpt_type);
       }
 
       /// operator[] should be called.
-      const CPT&
+      const cpt_type&
       at(const T &v)const
       {
 	return img_[v2p_(v)];
       }
       /// operator[] should be called.
-      CPT&
-      at(const T &v)
+      cpt_type&
+      at(const value_type &v)
       {
 	return img_[v2p_(v)];
       }
@@ -248,58 +292,77 @@ namespace oln {
 
     /*! Minimum value of an histogram.
     **
-    ** It return the smaller value within the image used to build the histogram.
+    ** Return the smaller value within the image used to build the
+    ** histogram.
     **
-    ** \warning If there is no min an assertion will fail at the end of the loop.
-    **
-    ** \note It can be slow when the histogram is sparse because it iterate over a
-    **  large range of 0. Use histogram_min or histogram_minmax instead.
+    ** \note It can be slow when the histogram is sparse because it iterates
+    ** over a large range of 0. Use \a histogram_min or \a histogram_minmax
+    ** instead.
     ** \see histogram_min
     */
-    template< typename T, typename CPT, class Exact>
-    inline T
-    min(const abstract::histogram<T, CPT, Exact>& hist)
+    template<class T>
+    inline oln_value_type(T)
+    min(const abstract::histogram<T>& hist)
     {
-      typedef typename ntg_is_a(T, ntg::non_vectorial)::ensure_type ensure_type;
+      typedef typename ntg_is_a(oln_value_type(T),
+				ntg::non_vectorial)::ensure_type ensure_type;
 
-      T i;
-      for (i = ntg_min_val(T); i <= ntg_max_val(T); ++i)
-	if (hist[i] > ntg_zero_val(CPT))
+      oln_value_type(T) i;
+      for (i = ntg_min_val(oln_value_type(T));
+	   i != ntg_max_val(oln_value_type(T));
+	   i = ntg::succ(i))
+	if (hist[i] > ntg_zero_val(oln_cpt_type(T)))
 	  break;
       return i;
     }
     /*! Maximum value of an histogram.
     **
-    ** It return the higher value within the image used to build the histogram.
+    ** Return the higher value within the image used to build the
+    ** histogram.
     **
-    ** \warning If there is no min an assertion will fail at the end of the loop.
-    **
-    ** \note It can be slow when the histogram is sparse because it iterate over a
-    **  large range of 0. Use histogram_max or histogram_minmax instead.
+    ** \note It can be slow when the histogram is sparse because it
+    ** iterates over a large range of 0. Use histogram_max or
+    ** histogram_minmax instead.
     ** \see histogram_max
     */
-    template< typename T, typename CPT, class Exact>
-    inline T
-    max(const abstract::histogram<T, CPT, Exact>& hist)
+    template<class T>
+    inline oln_value_type(T)
+    max(const abstract::histogram<T>& hist)
     {
-      typedef typename ntg_is_a(T, ntg::non_vectorial)::ensure_type ensure_type;
+      typedef typename ntg_is_a(oln_value_type(T),
+				ntg::non_vectorial)::ensure_type ensure_type;
 
-      T i;
-      for (i = ntg_max_val(T); i >= ntg_min_val(T); --i)
-	if (hist[i] > ntg_zero_val(CPT))
+      oln_value_type(T) i;
+      for (i = ntg_max_val(oln_value_type(T));
+	   i != ntg_min_val(oln_value_type(T));
+	   i = ntg::pred(i))
+	if (hist[i] > ntg_zero_val(oln_cpt_type(T)))
 	  break;
       return i;
     }
 
+    template< typename T,
+	      typename CPT = unsigned,
+	      class V2P = convert::value_to_point<T>,
+	      class Exact = mlc::final>
+    class histogram_minmax;
+
+    template <typename T,
+	      typename CPT,
+	      class V2P,
+	      class Exact>
+    struct hist_traits<histogram_minmax<T, CPT, V2P, Exact> >
+      : public hist_traits<histogram<T, CPT, V2P, Exact> >
+    {};
     /*! Build the histogram and has quick min and max functions.
     **
     ** The idea behind the min- and max-specialized histogram is to
-    ** maintain worst min and max bounds while updating histogram.  We
-    ** don't maintain _exact_ min and max bounds, because this would
+    ** maintain worst min and max bounds while updating histogram.  It
+    ** does not maintain _exact_ min and max bounds, because this would
     ** involve some costly computation when removing values from the
     ** histogram and maybe this time will be lost if the removed value is
     ** reinserted before max() or min() is called.\n
-    ** So we update the _worst_ min and max bounds whenever the histogram
+    ** So it updates the _worst_ min and max bounds whenever the histogram
     ** value are accessed, and delay the _real_ min and max computation
     ** until min() or max() is called.
     ** \see histogram
@@ -307,217 +370,269 @@ namespace oln {
     ** \see histogram_max
     */
     template< typename T,
-	      typename CPT = unsigned,
-	      class V2P = convert::value_to_point<T>,
-	      class Exact = mlc::final>
+	      typename CPT,
+	      class V2P,
+	      class Exact>
     class histogram_minmax : public histogram
       <T, CPT, V2P,
-       typename mlc::exact_vt<histogram_minmax<T, CPT, V2P, Exact>, Exact>::ret>
+       typename mlc::exact_vt<histogram_minmax<T, CPT, V2P, Exact>,
+			      Exact>::ret>
     {
     private:
-      typedef typename ntg_is_a(T, ntg::non_vectorial)::ensure_type ensure_type;
+      typedef typename ntg_is_a(T, ntg::non_vectorial)::ensure_type
+							ensure_type;
+    public:
+      typedef typename mlc::exact_vt<histogram_minmax<T, CPT, V2P, Exact>,
+				     Exact>::ret exact_type;
+      typedef typename hist_traits<exact_type>::value_type value_type;
+      typedef typename hist_traits<exact_type>::cpt_type cpt_type;
+      typedef typename hist_traits<exact_type>::value_to_point_type
+						 value_to_point_type;
+      typedef typename hist_traits<exact_type>::point_type point_type;
+      enum {dim = hist_traits<exact_type>::dim};
+      typedef typename hist_traits<exact_type>::img_type img_type;
+      typedef histogram<T, CPT, V2P, exact_type> upper_type;
+
+      histogram_minmax(const value_to_point_type & v2p = value_to_point_type()) :
+	upper_type(v2p),
+	min_(ntg_min_val(value_type)), max_(ntg_max_val(value_type)) {}
+
+      template <class I>
+      histogram_minmax(const oln::abstract::image<I> & input,
+		       const value_to_point_type & v2p = value_to_point_type()) :
+	upper_type(input, v2p),
+	min_(ntg_min_val(value_type)), max_(ntg_max_val(value_type)) {}
+
+      /// operator[] should be called.
+      const cpt_type&
+      at(const value_type& i) const
+      {
+	adjust(i);
+	return img_[v2p_(i)];
+      }
+
+      /// operator[] should be called.
+      cpt_type&
+      at(const value_type& i)
+      {
+	adjust(i);
+	return img_[v2p_(i)];
+      }
+
+      /// Quick function min.
+      value_type
+      min()
+      {
+	for (; min_ != ntg_max_val(value_type); min_ = ntg::succ(min_))
+  	  if (img_[v2p_(min_)] > ntg_zero_val(cpt_type))
+     	    break;
+	return min_;
+      }
+      /// Quick function max.
+      value_type
+      max()
+      {
+	for (; max_ != ntg_min_val(value_type); max_ = ntg::pred(max_))
+  	  if (img_[v2p_(max_)] > ntg_zero_val(cpt_type))
+   	    break;
+	return max_;
+      }
+
     protected:
       /// Maintain the worst min and max.
       void
-      adjust(const T &idx)
+      adjust(const value_type &idx)
       {
 	if (idx > max_)
 	  max_ = idx;
 	if (idx < min_)
 	  min_ = idx;
       }
-    public:
-      typedef histogram_minmax<T, CPT, V2P, Exact> self_type;
-      typedef Exact exact_type;
-      typedef histogram<T, CPT, V2P, histogram_minmax<T, CPT, V2P, Exact> > upper_type;
-      typedef V2P value_to_point_type;
-
-      histogram_minmax(const value_to_point_type & v2p = value_to_point_type()) :
-	upper_type(v2p),
-	min_(ntg_min_val(T)), max_(ntg_max_val(T)) {}
-
-      template <class I>
-      histogram_minmax(const oln::abstract::image<I> & input,
-		       const value_to_point_type & v2p = value_to_point_type()) :
-	upper_type(input, v2p),
-	min_(ntg_min_val(T)), max_(ntg_max_val(T)) {}
-
-      /// operator[] should be called.
-      const CPT&
-      at(const T& i) const
-      {
-	adjust(i);
-	return img_[v2p_(i)];
-      }
-
-      /// operator[] should be called.
-      CPT&
-      at(const T& i)
-      {
-	adjust(i);
-	return img_[v2p_(i)];
-      }
-
-      /// Quick function min.
-      T
-      min()
-      {
-	for (; min_ <= ntg_max_val(T); ++min_)
-  	  if (img_[v2p_(min_)] > ntg_zero_val(CPT))
-     	    break;
-	return min_;
-      }
-      /// Quick function max.
-      T
-      max()
-      {
-	for (; max_ > 0; --max_)
-  	  if (img_[v2p_(max_)] > ntg_zero_val(CPT))
-   	    break;
-	return max_;
-      }
-
-    protected:
-      T min_, max_;	///< Indices of min and max elements.
+      value_type min_, max_;	///< Indices of min and max elements.
     };
+
+
+    template< typename T,
+	      typename CPT = unsigned,
+	      class V2P = convert::value_to_point<T>,
+	      class Exact = mlc::final>
+    class histogram_min;
+
+    template <typename T,
+	      typename CPT,
+	      class V2P,
+	      class Exact>
+    struct hist_traits<histogram_min<T, CPT, V2P, Exact> >
+      : public hist_traits<histogram<T, CPT, V2P, Exact> >
+    {};
+
     /*! Build the histogram and has quick min function.
     **
     ** \see histogram_minmax
     */
     template< typename T,
-	      typename CPT = unsigned,
-	      class V2P = convert::value_to_point<T>,
-	      class Exact = mlc::final>
+	      typename CPT,
+	      class V2P,
+	      class Exact>
     class histogram_min : public histogram<T, CPT, V2P,
 	  typename mlc::exact_vt<histogram_min<T, CPT, V2P, Exact>,
 				 Exact>::ret>
     {
     private:
-      typedef typename ntg_is_a(T, ntg::non_vectorial)::ensure_type ensure_type;
-    protected:
-       /// Maintain the worst min.
-      void
-      adjust(const T& idx)
-      {
-	if (idx < min_)
-	  min_ = idx;
-      }
-    public:
-      typedef histogram_min<T, CPT, V2P, Exact> self_type;
-      typedef Exact exact_type;
-      typedef V2P value_to_point_type;
-      typedef histogram<T, CPT, V2P, histogram_min<T, CPT, V2P, Exact> > upper_type;
+      typedef typename ntg_is_a(T, ntg::non_vectorial)::ensure_type
+							 ensure_type;
 
+    public:
+      typedef typename mlc::exact_vt<histogram_min<T, CPT, V2P, Exact>,
+				     Exact>::ret exact_type;
+      typedef typename hist_traits<exact_type>::value_type value_type;
+      typedef typename hist_traits<exact_type>::cpt_type cpt_type;
+      typedef typename hist_traits<exact_type>::value_to_point_type
+						value_to_point_type;
+      typedef typename hist_traits<exact_type>::point_type point_type;
+      enum {dim = hist_traits<exact_type>::dim};
+      typedef typename hist_traits<exact_type>::img_type img_type;
+      typedef histogram<T, CPT, V2P, exact_type> upper_type;
 
       histogram_min(const value_to_point_type & v2p = value_to_point_type()) :
-	upper_type(v2p), min_(ntg_min_val(T)) {}
+	upper_type(v2p), min_(ntg_min_val(value_type)) {}
 
       template <class I>
       histogram_min(const oln::abstract::image<I> & input,
 		    const value_to_point_type & v2p = value_to_point_type()) :
-	upper_type(input, v2p), min_(ntg_min_val(T)) {}
+	upper_type(input, v2p), min_(ntg_min_val(value_type)) {}
 
       /// operator[] should be called.
-      const CPT&
-      at(const T& i) const
+      const cpt_type&
+      at(const value_type& i) const
       {
 	return img_[v2p_(i)];
       }
 
       /// operator[] should be called.
-      CPT&
-      at(const T& i)
+      cpt_type&
+      at(const value_type& i)
       {
 	adjust(i);
 	return img_[v2p_(i)];
       }
       /// Quick function min.
-      T
+      value_type
       min()
       {
-	for (; min_ <= ntg_max_val(T); ++min_)
-  	  if (img_[v2p_(min_)] > ntg_zero_val(CPT))
+	for (; min_ != ntg_max_val(value_type); min_ = succ(min_))
+  	  if (img_[v2p_(min_)] > ntg_zero_val(cpt_type))
    	    break;
 	return min_;
       }
       /// Return the min.
-      T
+      value_type
       res()
       {
 	return min();
       }
 
     protected:
-      T min_;	///< Index of the worst min element.
+      /// Maintain the worst min.
+      void
+      adjust(const value_type& idx)
+      {
+	if (idx < min_)
+	  min_ = idx;
+      }
+      value_type min_;	///< Index of the worst min element.
     };
+
+    template< typename T,
+	      typename CPT = unsigned,
+	      class V2P = convert::value_to_point<T>,
+	      class Exact = mlc::final>
+    class histogram_max;
+
+    template <typename T,
+	      typename CPT,
+	      class V2P,
+	      class Exact>
+    struct hist_traits<histogram_max<T, CPT, V2P, Exact> >
+      : public hist_traits<histogram<T, CPT, V2P, Exact> >
+    {};
 
     /*! Build the histogram and has quick max function.
     **
     ** \see histogram_minmax
     */
     template< typename T,
-	      typename CPT = unsigned,
-	      class V2P = convert::value_to_point<T> ,
-	      class Exact = mlc::final>
+	      typename CPT,
+	      class V2P,
+	      class Exact>
     class histogram_max : public histogram<T, CPT, V2P,
 	  typename mlc::exact_vt<histogram_max<T, CPT, V2P, Exact>,
 				 Exact>::ret>
     {
-    protected:
-      /// Maintain the worst max.
-      void
-      adjust(const T& idx)
-      {
-	if (idx > max_)
-	  max_ = idx;
-      }
+    private:
+      typedef typename ntg_is_a(T, ntg::non_vectorial)::ensure_type
+							ensure_type;
 
     public:
-      typedef histogram_max<T, CPT, V2P, Exact> self_type;
-      typedef Exact exact_type;
-      typedef V2P value_to_point_type;
-      typedef histogram<T, CPT, V2P, histogram_max<T, CPT, V2P, Exact> > upper_type;
+      typedef typename mlc::exact_vt<histogram_max<T, CPT, V2P, Exact>,
+				     Exact>::ret exact_type;
+      typedef typename hist_traits<exact_type>::value_type value_type;
+      typedef typename hist_traits<exact_type>::cpt_type cpt_type;
+      typedef typename hist_traits<exact_type>::value_to_point_type
+						value_to_point_type;
+      typedef typename hist_traits<exact_type>::point_type point_type;
+      enum {dim = hist_traits<exact_type>::dim};
+      typedef typename hist_traits<exact_type>::img_type img_type;
+      typedef histogram<T, CPT, V2P, exact_type> upper_type;
 
       histogram_max(const value_to_point_type & v2p = value_to_point_type()) :
-	upper_type(v2p),max_(ntg_max_val(T)) {}
+	upper_type(v2p),max_(ntg_max_val(value_type)) {}
 
       template <class I>
       histogram_max(const oln::abstract::image<I> & input,
 		    const value_to_point_type & v2p = value_to_point_type()) :
-	upper_type(input, v2p),max_(ntg_max_val(T)) {}
+	upper_type(input, v2p),max_(ntg_max_val(value_type)) {}
 
       /// operator[] should be called.
-      const CPT&
-      at(const T& i) const
+      const cpt_type&
+      at(const value_type& i) const
       {
 	return img_[v2p_(i)];
       }
 
       /// operator[] should be called.
-      CPT&
-      at(const T& i)
+      cpt_type&
+      at(const value_type& i)
       {
 	adjust(i);
 	return img_[v2p_(i)];
       }
       /// Quick function max.
-      T
+      value_type
       max()
       {
-	for (; max_ > 0; --max_)
-	  if (img_[v2p_(max_)] > ntg_zero_val(CPT))
+	for (; max_ != ntg_min_val(value_type); max_ = ntg::pred(max_))
+	  if (img_[v2p_(max_)] > ntg_zero_val(cpt_type))
   	    break;
 	return max_;
       }
       /// Return the max.
-      T
+      value_type
       res()
       {
 	return max();
       }
 
     protected:
-      T max_;	///< Index of the worst max element.
+
+      /// Maintain the worst max.
+      void
+      adjust(const value_type& idx)
+      {
+	if (idx > max_)
+	  max_ = idx;
+      }
+      value_type max_;	///< Index of the worst max element.
     };
 
     /// Minimum non-zero value of an histogram.
@@ -563,7 +678,8 @@ namespace oln {
     {
       typedef oln_value_type(I) val;
 
-      typedef typename ntg_is_a(val, ntg::non_vectorial)::ensure_type ensure_type;
+      typedef typename ntg_is_a(val, ntg::non_vectorial)::ensure_type
+							 ensure_type;
 
       // check the size
       precondition(v.size() == im.npoints());
@@ -571,11 +687,12 @@ namespace oln {
       // calculate the histogram of the image
       utils::histogram<val> histo(im);
 
-      // initialize the array of pointer to the point in the result
-      // with the histogram we can know the number of each color and
-      // then calculate an array of pointer for quick access to each
-      // value of the image
-      const ntg_cumul_type(val) card = ntg_max_val(val) - ntg_min_val(val) + 1;
+      // Initialize the array of pointer to the point in the result.
+      // With the histogram the number of each color can be deduced and
+      // then it calculates an array of pointer for quick access to each
+      // value of the image.
+      const ntg_cumul_type(val) card = ntg_max_val(val)
+					- ntg_min_val(val) + 1;
       std::vector<oln_point_type(I)* > ptr(card);
       ptr[0] = &(v[0]);
       for (ntg_cumul_type(val) i = 1; i < card; ++i)
@@ -588,7 +705,8 @@ namespace oln {
 	*(ptr[unsigned(im[p] - ntg_min_val(val))]++) = p;
     }
 
-    /*! Inverted sort of the values of an image, and store the result in a vector
+    /*! Inverted sort of the values of an image, and store the result
+    ** in a vector
     **
     ** This sort is efficient.
     ** \arg im Image non_vectorial.
@@ -603,13 +721,15 @@ namespace oln {
     {
       typedef oln_value_type(I) val;
 
-      typedef typename ntg_is_a(val, ntg::non_vectorial)::ensure_type ensure_type;
+      typedef typename ntg_is_a(val, ntg::non_vectorial)::ensure_type
+							ensure_type;
 
       precondition(v.size() == im.npoints());
 
       utils::histogram<val> histo(im);
 
-      const ntg_cumul_type(val) card = ntg_max_val(val) - ntg_min_val(val) + 1;
+      const ntg_cumul_type(val) card = ntg_max_val(val)
+					- ntg_min_val(val) + 1;
       std::vector<oln_point_type(I)* > ptr(card);
       ptr[card - 1] = &(v[0]);
 
@@ -621,7 +741,7 @@ namespace oln {
 	*(ptr[unsigned(im[p] - ntg_min_val(val))]++) = p;
     }
 
-    /*! Select staticly the good distrib_sort.
+    /*! Select statically the good distrib_sort.
     **
     ** \param reverse If the sort should be reverted or not.
     */

@@ -1,5 +1,4 @@
-// -*- c++ -*-
-// Copyright (C) 2001, 2003, 2004  EPITA Research and Development Laboratory
+// Copyright (C) 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,46 +25,51 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*!
-** \brief Perform a morphological opening.
-**
-**   Compute  the   morphological  opening   of  input  using   se  as
-**   structuring element.
-**
-** \param I Exact type of the input image.
-** \param E Exact type of the structuring element.
-**
-** \arg input Image to process.
-** \arg se Structuring element.
-**
-** \code
-** #include <oln/basics2d.hh>
-** #include <oln/morpho/opening.hh>
-** #include <oln/level/compare.hh>
-** #include <ntg/all.hh>
-** int main()
-** {
-**   typedef oln::image2d<ntg::bin>	im_type;
-**
-**   im_type	im(oln::load(IMG_IN "object.pbm"));
-**
-**   oln::save(oln::morpho::fast::opening(im, oln::win_c8p()),
-**             IMG_OUT "oln_morpho_fast_opening.pbm");
-** }
-** \endcode
-**
-** \image html object_pbm.png
-** \image latex object_pbm.png
-** =>
-** \image html oln_morpho_fast_opening.png
-** \image latex oln_morpho_fast_opening.png
-**
-*/
-template<class I, class E>
-oln_concrete_type(I)
-opening(const abstract::non_vectorial_image<I>& input,
-	  const abstract::struct_elt<E>& se)
-{
-  //  mlc::eq< I::dim, E::dim >::ensure();
-  return dilation(erosion(input, se), -(se.exact()));
+#ifndef NTG_CORE_PRED_SUCC_HH
+# define NTG_CORE_PRED_SUCC_HH
+
+#include <ntg/all.hh>
+#include <mlc/is_a.hh>
+
+namespace ntg {
+
+  namespace internal {
+    //! Return a type which supports inc and dec.
+    template <typename T>
+    struct with_arith
+    {
+      typedef typename ntg_is_a(T, non_vectorial)::ensure_type non_v;
+
+      typedef int_u<1> bool_with_arith;
+      typedef T non_vectorial_with_arith;
+
+      typedef typename mlc::if_<ntg_is_a(T, ntg::binary)::ret,
+				id_<bool_with_arith>,
+				id_<non_vectorial_with_arith> >::ret::ret ret;
+    };
+  }
+
+  /*! Return the successor of \a t.
+  **
+  ** \note The goal is to iterate on types such as ntg::bin.
+  */
+  template <typename T>
+  T
+  succ(const T &t)
+  {
+    return T(internal::with_arith<T>::ret(t) + 1);
+  }
+
+  /*! Return the predecessor of \a t.
+  **
+  ** \note The goal is to iterate on types such as ntg::bin.
+  */
+  template <typename T>
+  T
+  pred(const T&t)
+  {
+    return T(internal::with_arith<T>::ret(t) - 1);
+  }
 }
+
+#endif

@@ -32,11 +32,12 @@
 # include <oln/convert/basics.hh>
 # include <ntg/float.hh>
 # include <oln/core/behavior.hh>
-//
-// Gaussian filter implementation from
-// "Recursively implementing the gaussian and its derivatives"
-// Deriche 93 INRIA REPORT
-//
+/*!
+** \file olena/oln/convol/fast_gaussian.hh
+** Gaussian filter implementation from
+** "Recursively implementing the gaussian and its derivatives"
+** Deriche 93 INRIA REPORT.
+*/
 
 namespace oln {
   namespace convol {
@@ -122,7 +123,7 @@ namespace oln {
 
       /* Same functions, with a default conversion.  */
 
-      /*
+      /*!
       ** \brief Gaussian filter with a default conversion.
       **
       ** Gaussian filter implementation from "Recursively implementing

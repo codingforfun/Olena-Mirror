@@ -10,6 +10,8 @@
 #include <oln/morpho/dilation.hh>
 #include <oln/morpho/opening.hh>
 #include <oln/morpho/closing.hh>
+#include <oln/morpho/hit_or_miss.hh>
+#include <oln/morpho/top_hat.hh>
 
 #include <oln/level/compare.hh>
 
@@ -27,12 +29,11 @@ using namespace ntg;
 	fail = true;				\
       }
 
+template <class I>
 bool
-check()
+check_bin_or_int_u8(const oln::image2d<I> &lena)
 {
   bool fail = false;
-
-  image2d<int_u8> lena(rdata("lena128.pgm"));
 
   std::cout << "erosion ... " << std::flush;
   if (level::is_equal(morpho::erosion(lena, win_c4p()),
@@ -50,6 +51,54 @@ check()
   std::cout << "closing ... " << std::flush;
   if (level::is_equal(morpho::closing(lena, win_c4p()),
 		      morpho::fast::closing(lena, win_c4p())))
+    OK_OR_FAIL;
+
+  std::cout << "closing ... " << std::flush;
+  if (level::is_equal(morpho::closing(lena, win_c4p()),
+		      morpho::fast::closing(lena, win_c4p())))
+    OK_OR_FAIL;
+
+  //FIXME: value are only tested indirectly (this function is tested by
+  // fast::erosion and fast::dilatation).
+  oln::morpho::fast_morpho<oln::image2d<I>, oln::window2d, oln::utils::histogram_min<I> >
+    (lena, oln::win_c4p());
+
+  oln::window2d mywin;
+  mywin
+    .add(-3,-2).add(-3,-1).add(-3,0).add(-3,1).add(-3,2)
+    .add(-2,-1).add(-2,0).add(-2,1)
+    .add(-1,0);
+  oln::window2d mywin2 = - mywin;
+
+  std::cout << "hit_or_miss ... " << std::flush;
+  if (level::is_equal(morpho::hit_or_miss(oln::convert::bound<ntg::int_u8>(),
+					  lena, mywin, mywin2),
+		      morpho::fast::hit_or_miss(oln::convert::bound<ntg::int_u8>(),
+						lena, mywin, mywin2)))
+    OK_OR_FAIL;
+
+  return fail;
+}
+
+bool
+check()
+{
+  bool fail = false;
+
+  image2d<int_u8> lena(rdata("lena128.pgm"));
+  std::cout << "int_u8..." << std::flush;
+
+  if (!check_bin_or_int_u8(lena))
+      OK_OR_FAIL;
+
+  std::cout << "top hat contrast ... " << std::flush;
+  if (level::is_equal(morpho::top_hat_contrast_op(lena, win_c4p()),
+		      morpho::fast::top_hat_contrast_op(lena, win_c4p())))
+    OK_OR_FAIL;
+
+  image2d<bin> obj(rdata("object.pbm"));
+  std::cout << "bin..." << std::flush;
+  if (!check_bin_or_int_u8(obj))
     OK_OR_FAIL;
 
   return fail;

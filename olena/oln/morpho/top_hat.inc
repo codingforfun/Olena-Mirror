@@ -48,11 +48,11 @@
 **
 **   im_type	im1(oln::load(IMG_IN "lena256.pgm"));
 **
-**   oln::save(oln::morpho::fast::white_top_hat(oln::convert::bound<ntg::int_u8>(),
-**                                             im1,
-**                                             oln::win_c8p()),
+**   oln::save(oln::morpho::fast::white_top_hat
+**                          (oln::convert::bound<ntg::int_u8>(),
+**                           im1,
+**                           oln::win_c8p()),
 **             IMG_OUT "oln_morpho_fast_white_top_hat.pbm");
-**   return  0;
 ** }
 ** \endcode
 **
@@ -94,7 +94,6 @@ white_top_hat(const convert::abstract::conversion<C, B>& c,
 **   oln::save(oln::morpho::fast::white_top_hat(im1,
 **                                              oln::win_c8p()),
 **             IMG_OUT "oln_morpho_fast_white_top_hat_overload.pbm");
-**   return  0;
 ** }
 ** \endcode
 **
@@ -136,11 +135,11 @@ oln_concrete_type(I)
 **
 **   im_type	im1(oln::load(IMG_IN "lena256.pgm"));
 **
-**   oln::save(oln::morpho::fast::black_top_hat(oln::convert::bound<ntg::int_u8>(),
-**                                             im1,
-**                                             oln::win_c8p()),
+**   oln::save(oln::morpho::fast::black_top_hat
+**			(oln::convert::bound<ntg::int_u8>(),
+**                       im1,
+**                       oln::win_c8p()),
 **             IMG_OUT "oln_morpho_fast_black_top_hat.pbm");
-**   return  0;
 ** }
 ** \endcode
 **
@@ -183,7 +182,6 @@ black_top_hat(const convert::abstract::conversion<C, B>& c,
 **   oln::save(oln::morpho::fast::black_top_hat(im1,
 **                                              oln::win_c8p()),
 **             IMG_OUT "oln_morpho_fast_black_top_hat_overload.pbm");
-**   return  0;
 ** }
 ** \endcode
 **
@@ -229,11 +227,11 @@ oln_concrete_type(I)
 **
 **   im_type	im1(oln::load(IMG_IN "lena256.pgm"));
 **
-**   oln::save(oln::morpho::fast::self_complementary_top_hat(oln::convert::bound<ntg::int_u8>(),
-**                                                           im1,
-**                                                           oln::win_c8p()),
+**   oln::save(oln::morpho::fast::self_complementary_top_hat
+**                 (oln::convert::bound<ntg::int_u8>(),
+**                  im1,
+**                  oln::win_c8p()),
 **             IMG_OUT "oln_morpho_fast_self_complementary_top_hat.pbm");
-**   return  0;
 ** }
 ** \endcode
 **
@@ -272,9 +270,8 @@ self_complementary_top_hat(const convert::abstract::conversion<C, B>& c,
 **   im_type	im1(oln::load(IMG_IN "lena256.pgm"));
 **
 **   oln::save(oln::morpho::fast::self_complementary_top_hat(im1,
-**                                                           oln::win_c8p()),
-**             IMG_OUT "oln_morpho_fast_self_complementary_top_hat_overload.pbm");
-**   return  0;
+**                                                          oln::win_c8p()),
+**      IMG_OUT "oln_morpho_fast_self_complementary_top_hat_overload.pbm");
 ** }
 ** \endcode
 **
@@ -318,11 +315,11 @@ self_complementary_top_hat(const abstract::non_vectorial_image<I>& input,
 **
 **   im_type	im1(oln::load(IMG_IN "lena256.pgm"));
 **
-**   oln::save(oln::morpho::fast::top_hat_contrast_op(oln::convert::bound<ntg::int_u8>(),
-**                                                           im1,
-**                                                           oln::win_c8p()),
+**   oln::save(oln::morpho::fast::top_hat_contrast_op
+**				(oln::convert::bound<ntg::int_u8>(),
+**                               im1,
+**                               oln::win_c8p()),
 **             IMG_OUT "oln_morpho_fast_top_hat_contrast_op.pbm");
-**   return  0;
 ** }
 ** \endcode
 **
@@ -366,11 +363,9 @@ top_hat_contrast_op(const convert::abstract::conversion<C, B>& c,
 **
 **   im_type	im1(oln::load(IMG_IN "lena256.pgm"));
 **
-**   //oln::save(oln::morpho::fast::top_hat_contrast_op(im1,
-**   //                                                 oln::win_c8p()),
-**   //          IMG_OUT "oln_morpho_fast_top_hat_contrast_op_overload.pbm");
-**   oln::save(im1, IMG_OUT "oln_morpho_fast_top_hat_contrast_op_overload.pbm");
-**   return  0;
+**   oln::save(oln::morpho::fast::top_hat_contrast_op(im1,
+**                                                    oln::win_c8p()),
+**             IMG_OUT "oln_morpho_fast_top_hat_contrast_op_overload.pbm");
 ** }
 ** \endcode
 **

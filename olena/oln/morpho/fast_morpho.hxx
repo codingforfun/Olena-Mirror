@@ -117,7 +117,7 @@ namespace oln {
       template<class I, class E1, class E2, class H>
       // inline
       void
-      hist_update(H& hist,
+      hist_update(utils::abstract::histogram<H>& hist,
 		  const abstract::non_vectorial_image<I>& input,
 		  const oln_point_type(I)& p,
 		  const abstract::struct_elt<E1>& se_rem,
@@ -284,6 +284,8 @@ namespace oln {
     /*!
     ** \brief Fast morpho algorithm.
     **
+    ** \todo FIXME: This algorithm should be moved to the
+    ** namespace oln::morpho::fast.
     **
     ** \code
     ** #include <oln/basics2d.hh>
@@ -295,21 +297,21 @@ namespace oln {
     **   typedef oln::image2d<ntg::bin>	im_type;
     **
     **   im_type im1(oln::load(IMG_IN "object.pbm"));
-    **   //save(oln::morpho::fast_morpho<im_type, oln::win_c8p(), utils::histogram_min>
-    **   //            (im1, oln::win_c8p()), IMG_OUT "oln_morpho_fast_morpho.pbm");
-    **   save(im1, IMG_OUT "oln_morpho_fast_morpho.pbm");
-    **   return  0;
+    **   save(oln::morpho::fast_morpho<im_type, oln::window2d,
+    **				       oln::utils::histogram_min<ntg::bin> >
+    **               (im1, oln::win_c8p()),
+    **	      IMG_OUT "oln_morpho_fast_morpho.pbm");
     ** }
     ** \endcode
-    **
     ** \image html object_pbm.png
     ** \image latex object_pbm.png
     ** =>
     ** \image html oln_morpho_fast_morpho.png
     ** \image latex oln_morpho_fast_morpho.png
-    ** \todo FIXME: Correct this function and make the example use it.
+    **
+    ** \todo FIXME: add tests.
     */
-    template<class I, class E, template<typename, typename> class H>
+    template<class I, class E, class H>
     oln_concrete_type(I)
       fast_morpho(const abstract::non_vectorial_image<I>& input,
 		  const abstract::struct_elt<E>& se)
@@ -350,7 +352,7 @@ namespace oln {
       const typename I::size_type size = input.size();
 
       // Initialize the histogram with the values around the first point.
-      H<oln_value_type(I),unsigned> hist;
+      H hist;
       oln_point_type(I) p;
 
       //     oln_iter_type(E) dp(se);
@@ -364,7 +366,7 @@ namespace oln {
       output[p] = hist.res();	// First point.
 
       internal::fast_morpho_inner<1, E::dim, const I,
-	const typename I::size_type, H<oln_value_type(I),unsigned>,
+	const typename I::size_type, H,
 	const E,oln_point_type(I),oln_concrete_type(I)>::doit(input.exact(), size, hist,
 							      se_add, se_rem,
 							      se_add_back, se_rem_back,

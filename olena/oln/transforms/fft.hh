@@ -46,7 +46,7 @@ namespace oln {
 
   namespace internal {
 
-    /// \brief dispatch traits for fftw
+    /// Dispatch traits for fftw
     enum fft_dispatch { fft_cplx, fft_real };
 
     /*!

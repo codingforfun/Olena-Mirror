@@ -1,3 +1,32 @@
+2004-03-19  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* oln/convol/fast_gaussian.hh: Correct comments.
+	* oln/io/se_window.hh: Likewise.
+	* oln/transforms/dwt.hh: Likewise.
+	* oln/transforms/fft.hh: Likewise.
+
+2004-03-19  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/utils/histogram.hh: Fix doc.
+	* olena/oln/convert/value_to_point.hh: Likewise.
+
+2004-03-18  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/convert/value_to_point.hh: Fix value_to_point<bin>.
+	* olena/oln/utils/histogram.hh: Fix hisogram<bin>.
+	* olena/oln/morpho/fast_morpho.hxx: Histogram to abstract histogram.
+
+	* olena/oln/morpho/hit_or_miss.inc: Enable code in the doc.
+	* olena/oln/morpho/top_hat.inc: Likewise.
+	* olena/oln/morpho/opening.inc: Likewise.
+	* olena/oln/morpho/dilation.hh: Likewise.
+	* olena/oln/morpho/erosion.hh: Likewise.
+	* olena/oln/morpho/dilation.hh: Likewise.
+
+	* olena/tests/morpho/tests/edoc: Add tests.
+
+	* olena/oln/morpho/attribute_closing_opening_map.hh: Rename images.
+	* olena/oln/morpho/extrema.hxx: Add doc.
+	* olena/oln/morpho/closing.inc: Remove fixme.
+
 2004-03-16  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* oln/transforms/fft.hh: Add comments.

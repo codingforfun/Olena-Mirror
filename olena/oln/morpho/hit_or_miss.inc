@@ -64,9 +64,9 @@
 **    .add(-1,0);
 **   oln::window2d mywin2 = - mywin;
 **
-**   oln::save(oln::morpho::hit_or_miss(oln::convert::bound<ntg::int_u8>(), im1, mywin, mywin2),
-**                                       IMG_OUT "oln_morpho_fast_hit_or_miss.pbm");
-**   return  0;
+**   oln::save(oln::morpho::fast::hit_or_miss
+**		(oln::convert::bound<ntg::int_u8>(), im1, mywin, mywin2),
+**             IMG_OUT "oln_morpho_fast_hit_or_miss.pbm");
 ** }
 ** \endcode
 **
@@ -76,7 +76,6 @@
 ** \image html oln_morpho_fast_hit_or_miss.png
 ** \image latex oln_morpho_fast_hit_or_miss.png
 **
-** \todo FIXME: Histogram problems (fast version do not work).
 */
 template<class C, class B, class I, class E1, class E2>
 typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
@@ -128,9 +127,8 @@ hit_or_miss(const convert::abstract::conversion<C, B>& c,
 **    .add(-1,0);
 **   oln::window2d mywin2 = - mywin;
 **
-**   oln::save(oln::morpho::hit_or_miss(im1, mywin, mywin2),
-**                                      IMG_OUT "oln_morpho_fast_hit_or_miss_overload.pbm");
-**   return  0;
+**   oln::save(oln::morpho::fast::hit_or_miss(im1, mywin, mywin2),
+**             IMG_OUT "oln_morpho_fast_hit_or_miss_overload.pbm");
 ** }
 ** \endcode
 **
@@ -140,7 +138,6 @@ hit_or_miss(const convert::abstract::conversion<C, B>& c,
 ** \image html oln_morpho_fast_hit_or_miss_overload.png
 ** \image latex oln_morpho_fast_hit_or_miss_overload.png
 **
-** \todo FIXME: Histogram problems (fast version do not work).
 */
 template<class I, class E1, class E2>
 oln_concrete_type(I)
@@ -194,9 +191,8 @@ oln_concrete_type(I)
 **    .add(-1,0);
 **   oln::window2d mywin2 = - mywin;
 **
-**    oln::save(oln::morpho::hit_or_miss_opening(im1, mywin, mywin2),
-**                                       IMG_OUT "oln_morpho_fast_hit_or_miss_opening.pbm");
-**   return  0;
+**    oln::save(oln::morpho::fast::hit_or_miss_opening(im1, mywin, mywin2),
+**              IMG_OUT "oln_morpho_fast_hit_or_miss_opening.pbm");
 ** }
 ** \endcode
 **
@@ -206,7 +202,6 @@ oln_concrete_type(I)
 ** \image html oln_morpho_fast_hit_or_miss_opening.png
 ** \image latex oln_morpho_fast_hit_or_miss_opening.png
 **
-** \todo FIXME: Histogram problems (fast version do not work).
 */
 template<class I, class E1, class E2>
 oln_concrete_type(I)
@@ -256,9 +251,8 @@ oln_concrete_type(I)
 **    .add(-1,0);
 **   oln::window2d mywin2 = - mywin;
 **
-**   oln::save(oln::morpho::hit_or_miss_opening_bg(im1, mywin, mywin2),
-**                                       IMG_OUT "oln_morpho_fast_hit_or_miss_opening_bg.pbm");
-**   return  0;
+**   oln::save(oln::morpho::fast::hit_or_miss_opening_bg(im1, mywin, mywin2),
+**             IMG_OUT "oln_morpho_fast_hit_or_miss_opening_bg.pbm");
 ** }
 ** \endcode
 **
@@ -268,7 +262,6 @@ oln_concrete_type(I)
 ** \image html oln_morpho_fast_hit_or_miss_opening_bg.png
 ** \image latex oln_morpho_fast_hit_or_miss_opening_bg.png
 **
-** \todo FIXME: Histogram problems (fast version do not work).
 */
 template<class I, class E1, class E2>
 oln_concrete_type(I)
@@ -324,9 +317,8 @@ oln_concrete_type(I)
 **    .add(-1,0);
 **   oln::window2d mywin2 = - mywin;
 **
-**   oln::save(oln::morpho::hit_or_miss_closing(im1, mywin, mywin2),
-**                                       IMG_OUT "oln_morpho_fast_hit_or_miss_closing.pbm");
-**   return  0;
+**   oln::save(oln::morpho::fast::hit_or_miss_closing(im1, mywin, mywin2),
+**             IMG_OUT "oln_morpho_fast_hit_or_miss_closing.pbm");
 ** }
 ** \endcode
 **
@@ -336,7 +328,6 @@ oln_concrete_type(I)
 ** \image html oln_morpho_fast_hit_or_miss_closing.png
 ** \image latex oln_morpho_fast_hit_or_miss_closing.png
 **
-** \todo FIXME: Histogram problems (fast version do not work).
 */
 template<class I, class E1, class E2>
 oln_concrete_type(I)
@@ -389,9 +380,8 @@ oln_concrete_type(I)
 **    .add(-1,0);
 **   oln::window2d mywin2 = - mywin;
 **
-**   oln::save(oln::morpho::hit_or_miss_closing_bg(im1, mywin, mywin2),
-**                                       IMG_OUT "oln_morpho_fast_hit_or_miss_closing_bg.pbm");
-**   return  0;
+**   oln::save(oln::morpho::fast::hit_or_miss_closing_bg(im1, mywin, mywin2),
+**             IMG_OUT "oln_morpho_fast_hit_or_miss_closing_bg.pbm");
 ** }
 ** \endcode
 **
@@ -401,7 +391,6 @@ oln_concrete_type(I)
 ** \image html oln_morpho_fast_hit_or_miss_closing_bg.png
 ** \image latex oln_morpho_fast_hit_or_miss_closing_bg.png
 **
-** \todo FIXME: Histogram problems (fast version do not work).
 */
 template<class I, class E1, class E2>
 oln_concrete_type(I)
