@@ -30,7 +30,7 @@
 
 # include <mlc/any.hh>
 # include <mlc/types.hh>
-
+# include <oln/core/coord.hh>
 # include <oln/core/properties.hh>
 
 # include <string>

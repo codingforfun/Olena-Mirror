@@ -1,3 +1,31 @@
+2005-04-04  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* oln/core/pw/abstract/binary_function.hh: Likewise.
+	* oln/arith/ops.hh: Likewise.
+	* oln/core/pw/times.hh: Handle better point_type and size_type.
+	* oln/core/pw/div.hh: Likewise.
+	* oln/core/pw/plus.hh: Likewise.
+	* oln/core/pw/minus.hh: Likewise.
+	* oln/core/pw/image.hh: Cosmetic change.
+	* oln/core/pw/abstract/function.hh: Move macros to...
+	* oln/core/pw/macros.hh: ... this new file.
+	* oln/core/pw/literal.hh: Likewise.
+	* oln/core/any/dpoint.hh: Add fwd decls.
+	* oln/core/abstract/point.hh
+	(oln_point_type_from_2): New macro.
+	(nth): New method.
+	* oln/core/abstract/witer.hh: Add include to pass sanity check.
+	* oln/core/abstract/dpoint.hh: Likewise.
+	* oln/core/abstract/size.hh
+	(oln_size_type_from_2): New macro.
+	* oln/core/1d/dpoint1d.hh: Add inheritance.
+	(impl_nth): New method.
+	* oln/core/2d/dpoint2d.hh: Likewise.
+	* oln/core/3d/dpoint3d.hh: Likewise.
+	* oln/core/1d/point1d.hh (impl_nth): New method.
+	* oln/core/2d/point2d.hh: Likewise.
+	* oln/core/3d/point3d.hh: Likewise.
+
 2005-04-04  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* oln/convert/ng_to_se.hh: Convert a neighborhood to a structuring

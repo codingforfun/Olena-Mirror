@@ -29,19 +29,15 @@
 # define OLENA_CORE_3D_DPOINT3D_HH
 
 # include <iostream>
-
 # include <oln/core/coord.hh>
+# include <oln/core/abstract/dpoint.hh>
 
-// FIXME: there's an assumption here: we do not need inheritance for
-// dpoints.  so abstract::dpoint does not exist...
-
-// FIXME: doc!
 
 namespace oln {
 
   struct point3d;
 
-  struct dpoint3d
+  struct dpoint3d : public abstract::dpoint < dpoint3d >
   {
     dpoint3d()
     {
@@ -102,6 +98,23 @@ namespace oln {
     coord_t& row() { return row_; }
     coord_t& col() { return col_; }
     coord_t& slice() { return slice_; }
+
+    coord_t impl_nth(unsigned i) const
+    {
+      // FIXME: remove when add in abstract::point
+      precondition(i < 3);
+      // FIXME: replace by meta-prog when a meta-vec is attribute
+      switch (i) {
+      case 0:
+	return slice_;
+      case 1:
+	return row_;
+      case 2:
+	return col_;
+      }
+      postcondition(0);
+      return 0;
+    }
 
   protected:
     coord_t slice_, row_, col_;

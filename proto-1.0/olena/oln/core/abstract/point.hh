@@ -29,9 +29,21 @@
 # define OLENA_CORE_ABSTRACT_POINT_HH
 
 # include <mlc/any.hh>
-# include <mlc/bool.hh>
-
+# include <oln/core/coord.hh>
 # include <oln/core/properties.hh>
+# include <mlc/properties.hh> // FIXME: for better 'meta if' and 'meta eq'
+
+
+// fwd decl
+namespace oln {
+  struct any_point;
+}
+
+
+
+# define oln_point_type_from_2(P1, P2) \
+mlc_internal_if( mlc_internal_eq( P2, oln::any_point ),	P1, P2 )
+
 
 
 /*! \namespace oln
@@ -40,10 +52,7 @@
 namespace oln {
 
 
-  // fwd decls
-
-  struct any_point;
-
+  // fwd decl
   namespace abstract {
     template <typename E> struct point;
   }
@@ -93,9 +102,7 @@ namespace oln {
       typedef E exact_type;
 
 
-
       /// Conversion to any_point (implemented in oln/core/any/point.hh).
-
       operator any_point() const;
 
 
@@ -137,6 +144,12 @@ namespace oln {
       const dpoint_type operator-(const exact_type& rhs) const
       {
 	return this->exact().impl_minus(rhs);
+      }
+
+      coord_t nth(unsigned i) const
+      {
+	// FIXME: add precondition
+	return this->exact().impl_nth(i);
       }
 
     protected:

@@ -30,11 +30,7 @@
 
 # include <mlc/any.hh>
 # include <oln/core/properties.hh>
-
-
-# define oln_pw_point_type(T) typename oln::pw::traits<T>::point_type
-# define oln_pw_value_type(T) typename oln::pw::traits<T>::value_type
-# define oln_pw_size_type(T)  typename oln::pw::traits<T>::size_type
+# include <oln/core/pw/macros.hh>
 
 
 namespace oln {
@@ -91,7 +87,7 @@ namespace oln {
 	  return this->exact().impl_hold_large(p);
 	}
 
-// 	minus< literal<value_type>, E> operator-() const;
+	minus< literal<value_type>, E> operator-() const;
 
       protected:
 	function() {}
@@ -118,9 +114,10 @@ namespace oln {
 	    meth adr = &E::impl_hold_large;
 	    adr = 0;
 	  }
-
 	}
+
       };
+
 
     } // end of namespace oln::pw::abstract
 

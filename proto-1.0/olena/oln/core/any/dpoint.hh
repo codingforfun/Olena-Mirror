@@ -28,11 +28,19 @@
 #ifndef OLENA_CORE_ANY_DPOINT_HH
 # define OLENA_CORE_ANY_DPOINT_HH
 
+# include <iostream>
 # include <oln/core/abstract/dpoint.hh>
 # include <oln/core/any/point.hh>
 
 
 namespace oln {
+
+
+  // fwd decls
+  struct any_point;
+  namespace abstract {
+    template <typename P> struct point;
+  }
 
 
   struct any_dpoint : public abstract::dpoint < any_dpoint >

@@ -99,22 +99,6 @@ namespace oln {
 } // end of namespace oln
 
 
-# define oln_pw_operator(NAME, SYMBOL, TYPE)			\
-template <typename L>						\
-oln::pw::NAME<L, oln::pw::literal<TYPE> >			\
-operator SYMBOL (const oln::pw::abstract::function<L>& lhs,	\
-		 TYPE value)					\
-{								\
-  return lhs SYMBOL oln::pw::literal<TYPE>(value);		\
-}								\
-template <typename R>						\
-oln::pw::NAME<oln::pw::literal<TYPE>, R>			\
-operator SYMBOL (TYPE value,					\
-		 const oln::pw::abstract::function<R>& rhs)	\
-{								\
-  return oln::pw::literal<TYPE>(value) SYMBOL rhs;		\
-}
-
 
 
 #endif // ! OLENA_CORE_PW_LITERAL_HH

@@ -103,6 +103,23 @@ namespace oln {
     coord_t& row() { return row_; }
     coord_t& col() { return col_; }
 
+    coord_t impl_nth(unsigned i) const
+    {
+      // FIXME: remove when add in abstract::point
+      precondition(i < 3);
+      // FIXME: replace by meta-prog when a meta-vec is attribute
+      switch (i) {
+      case 0:
+	return slice_;
+      case 1:
+	return row_;
+      case 2:
+	return col_;
+      }
+      postcondition(0);
+      return 0;
+    }
+
   protected:
     coord_t slice_, row_, col_;
   };

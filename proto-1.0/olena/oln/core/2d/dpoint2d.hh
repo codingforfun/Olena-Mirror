@@ -29,19 +29,15 @@
 # define OLENA_CORE_2D_DPOINT2D_HH
 
 # include <iostream>
-
 # include <oln/core/coord.hh>
+# include <oln/core/abstract/dpoint.hh>
 
-// FIXME: there's an assumption here: we do not need inheritance for
-// dpoints.  so abstract::dpoint does not exist...
-
-// FIXME: doc!
 
 namespace oln {
 
   struct point2d;
 
-  struct dpoint2d
+  struct dpoint2d : public abstract::dpoint < dpoint2d >
   {
     dpoint2d()
     {
@@ -108,8 +104,8 @@ namespace oln {
 
     coord_t& row() { return row_; }
     coord_t& col() { return col_; }
-    //FIXME : name it impl_nth when dpoint2d derives from abstract::dpoint
-    coord_t& nth(unsigned i)
+
+    coord_t& impl_nth(unsigned i)
     {
       assert(i < 2);
 

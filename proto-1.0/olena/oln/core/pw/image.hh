@@ -128,7 +128,7 @@ namespace oln {
 
     typedef mlc::no_type delegated_type;
 
-    // FIXME: we do not know if it is 2d...
+    // FIXME: AWFUL we do not know if it is 2d...
     typedef is_a<abstract::image2d> image_dimension_type;
     typedef vectorialness_from_valuetype(value_type) image_vectorialness_type;
 

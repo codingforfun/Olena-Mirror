@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_PW_TIMES_HH
 # define OLENA_CORE_PW_TIMES_HH
 
-# include <oln/core/pw/abstract/function.hh>
+# include <oln/core/pw/abstract/binary_function.hh>
 # include <oln/core/pw/literal.hh>
 # include <ntg/all.hh>
 
@@ -44,13 +44,16 @@ namespace oln {
     template <typename L, typename R>
     struct traits < times<L, R> >
     {
-      typedef oln_pw_point_type(L) point_type;
-      typedef ntg_return_type(times, oln_pw_value_type(L), oln_pw_value_type(R)) value_type;
-      typedef oln_pw_size_type(L)  size_type;
+      typedef abstract::binary_function<L, R, times<L, R> > super_type;
+      typedef typename traits<super_type>::point_type point_type;
+      typedef typename traits<super_type>::size_type  size_type;
+      typedef ntg_return_type(times,
+			      oln_pw_value_type(L),
+			      oln_pw_value_type(R)) value_type;
     };
 
     template <typename L, typename R>
-    struct times : public abstract::function < times<L, R> >
+    struct times : public abstract::binary_function < L, R, times<L, R> >
     {
       typedef times<L, R> self_type;
 
@@ -58,19 +61,12 @@ namespace oln {
       typedef oln_pw_value_type(self_type) value_type;
       typedef oln_pw_size_type(self_type)  size_type;
 
-      L left;
-      R right;
+      typedef abstract::binary_function<L, R, self_type> super_type;
 
       times(const abstract::function<L>& left,
 	   const abstract::function<R>& right) :
-	left(left.exact()),
-	right(right.exact())
+	super_type(left, right)
       {
-      }
-
-      const size_type& impl_size() const
-      {
-	return this->left.size();
       }
 
       const value_type impl_get(const point_type& p) const
@@ -78,20 +74,13 @@ namespace oln {
 	return this->left(p) * this->right(p);
       }
 
-      bool impl_hold(const point_type& p) const
-      {
-	return this->left.hold(p);
-      }
-
-      bool impl_hold_large(const point_type& p) const
-      {
-	return this->left.hold_large(p);
-      }
     };
+
 
   } // end of namespace oln::pw
 
 } // end of namespace oln
+
 
 
 /// Operator * on pwf

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005 EPITA Research and Development Laboratory
+// Copyright (C) 2005 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,62 +25,33 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_SIZE_HH
-# define OLENA_CORE_ABSTRACT_SIZE_HH
-
-# include <mlc/any.hh>
-# include <mlc/properties.hh> // FIXME: for better 'meta if' and 'meta eq'
+#ifndef OLENA_CORE_PW_MACROS_HH
+# define OLENA_CORE_PW_MACROS_HH
 
 
-// fwd decl
-namespace oln {
-  struct any_size;
+
+# define oln_pw_point_type(F) typename oln::pw::traits<F>::point_type
+# define oln_pw_value_type(F) typename oln::pw::traits<F>::value_type
+# define oln_pw_size_type(F)  typename oln::pw::traits<F>::size_type
+
+
+// FIXME: rename
+# define oln_pw_operator(NAME, SYMBOL, TYPE)			\
+template <typename L>						\
+oln::pw::NAME<L, oln::pw::literal<TYPE> >			\
+operator SYMBOL (const oln::pw::abstract::function<L>& lhs,	\
+		 TYPE value)					\
+{								\
+  return lhs SYMBOL oln::pw::literal<TYPE>(value);		\
+}								\
+template <typename R>						\
+oln::pw::NAME<oln::pw::literal<TYPE>, R>			\
+operator SYMBOL (TYPE value,					\
+		 const oln::pw::abstract::function<R>& rhs)	\
+{								\
+  return oln::pw::literal<TYPE>(value) SYMBOL rhs;		\
 }
 
 
-# define oln_size_type_from_2(S1, S2) \
-mlc_internal_if( mlc_internal_eq( S2, oln::any_size ), S1, S2 )
 
-
-
-namespace oln {
-
-  namespace abstract {
-
-
-    /// Abstract class for size classes.
-
-    template <typename E>
-    struct size : public mlc::any__best_memory<E>
-    {
-
-      // FIXME: remove?
-      unsigned long npoints() const
-      {
-	return this->exact().impl_npoints();
-      }
-
-      template <typename S>
-      bool operator==(const size<S>& rhs) const
-      {
-	return this->exact().impl_eq(rhs.exact());
-      }
-
-      template <typename S>
-      bool operator!=(const size<S>& rhs) const
-      {
-	return ! this->operator==(rhs);
-      }
-
-    protected:
-      size() {}
-    };
-
-
-  } // end of namespace abstract
-
-} // end of namespace oln
-
-
-
-#endif // ! OLENA_CORE_ABSTRACT_SIZE_HH
+#endif // ! OLENA_CORE_PW_MACROS_HH

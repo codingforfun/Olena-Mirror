@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_PW_MINUS_HH
 # define OLENA_CORE_PW_MINUS_HH
 
-# include <oln/core/pw/abstract/function.hh>
+# include <oln/core/pw/abstract/binary_function.hh>
 # include <oln/core/pw/literal.hh>
 # include <ntg/all.hh>
 
@@ -44,13 +44,16 @@ namespace oln {
     template <typename L, typename R>
     struct traits < minus<L, R> >
     {
-      typedef oln_pw_point_type(L) point_type;
-      typedef ntg_return_type(minus, oln_pw_value_type(L), oln_pw_value_type(R)) value_type;
-      typedef oln_pw_size_type(L)  size_type;
+      typedef abstract::binary_function<L, R, minus<L, R> > super_type;
+      typedef typename traits<super_type>::point_type point_type;
+      typedef typename traits<super_type>::size_type  size_type;
+      typedef ntg_return_type(minus,
+			      oln_pw_value_type(L),
+			      oln_pw_value_type(R)) value_type;
     };
 
     template <typename L, typename R>
-    struct minus : public abstract::function < minus<L, R> >
+    struct minus : public abstract::binary_function < L, R, minus<L, R> >
     {
       typedef minus<L, R> self_type;
 
@@ -58,19 +61,12 @@ namespace oln {
       typedef oln_pw_value_type(self_type) value_type;
       typedef oln_pw_size_type(self_type)  size_type;
 
-      L left;
-      R right;
+      typedef abstract::binary_function<L, R, self_type > super_type;
 
       minus(const abstract::function<L>& left,
-	   const abstract::function<R>& right) :
-	left(left.exact()),
-	right(right.exact())
+	    const abstract::function<R>& right) :
+	super_type(left, right)
       {
-      }
-
-      const size_type& impl_size() const
-      {
-	return this->left.size();
       }
 
       const value_type impl_get(const point_type& p) const
@@ -78,32 +74,24 @@ namespace oln {
 	return this->left(p) - this->right(p);
       }
 
-      bool impl_hold(const point_type& p) const
-      {
-	return this->left.hold(p);
-      }
-
-      bool impl_hold_large(const point_type& p) const
-      {
-	return this->left.hold_large(p);
-      }
-
     };
 
 
     // FIXME: uncomment?
 
-//     namespace abstract {
+    namespace abstract {
 
-//       template <typename E>
-//       minus< literal<oln_pw_value_type(E)>, E>
-//       function<E>::operator-() const
-//       {
-// 	literal<oln_pw_value_type(E)> lhs(0);
-// 	return lhs - *this;
-//       }
+      template <typename E>
+      minus< literal<oln_pw_value_type(E)>, E>
+      function<E>::operator-() const
+      {
+	typedef literal<oln_pw_value_type(E)> lit_type;
+	static const lit_type lhs = 0;
+	minus< lit_type, E> tmp(lhs, this->exact());
+	return tmp;
+      }
 
-//     }
+    }
 
 
   } // end of namespace oln::pw
@@ -122,6 +110,9 @@ oln::pw::minus<L, R> operator - (const oln::pw::abstract::function<L>& lhs,
   return tmp;
 }
 
+oln_pw_operator(minus, -, int)
+oln_pw_operator(minus, -, float)
+oln_pw_operator(minus, -, double)
 
 
 #endif // ! OLENA_CORE_PW_MINUS_HH

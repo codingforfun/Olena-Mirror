@@ -7,6 +7,7 @@ OLN_DEP =					\
   all.hh					\
   arith/max.hh					\
   arith/min.hh					\
+  arith/ops.hh					\
   basics.hh					\
   basics1d.hh					\
   basics2d.hh					\
@@ -63,17 +64,20 @@ OLN_DEP =					\
   core/any/point.hh				\
   core/any/size.hh				\
   core/apply.hh					\
+  core/box.hh					\
   core/ch_value_type.hh				\
   core/compose.hh				\
   core/coord.hh					\
   core/gen/identity.hh				\
   core/properties.hh				\
+  core/pw/abstract/binary_function.hh		\
   core/pw/abstract/function.hh			\
   core/pw/all.hh				\
   core/pw/cmp.hh				\
   core/pw/div.hh				\
   core/pw/image.hh				\
   core/pw/literal.hh				\
+  core/pw/macros.hh				\
   core/pw/minus.hh				\
   core/pw/plus.hh				\
   core/pw/times.hh				\
@@ -88,9 +92,13 @@ OLN_DEP =					\
   io/write_image_2d_pnm.hh			\
   level/compare.hh				\
   level/fill.hh					\
+  morpho/cc_tarjan.hh				\
   morpho/dilation.hh				\
   morpho/erosion.hh				\
   morpho/reconstruction.hh			\
   morpho/splitse.hh				\
   morpho/stat.hh				\
-  utils/clone.hh
+  utils/buffer.hh				\
+  utils/clone.hh				\
+  utils/key.hh					\
+  utils/md5.hh

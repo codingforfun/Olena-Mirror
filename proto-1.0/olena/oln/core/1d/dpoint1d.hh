@@ -29,22 +29,15 @@
 # define OLENA_CORE_1D_DPOINT1D_HH
 
 # include <ostream>
-
 # include <oln/core/coord.hh>
-
-// FIXME: there's an assumption here: we do not need inheritance for
-// dpoints.  so abstract::dpoint does not exist...
-
-// FIXME: doc!
-
-// FIXME: test that coords are defined
+# include <oln/core/abstract/dpoint.hh>
 
 
 namespace oln {
 
   struct point1d;
 
-  struct dpoint1d
+  struct dpoint1d : public abstract::dpoint < dpoint1d >
   {
     dpoint1d()
     {
@@ -94,6 +87,13 @@ namespace oln {
 
     const coord_t index() const { return index_; }
     coord_t& index() { return index_; }
+
+    coord_t impl_nth(unsigned i) const
+    {
+      // FIXME: remove when add in abstract::point
+      precondition(i == 0);
+      return index_;
+    }
 
   protected:
     coord_t index_;

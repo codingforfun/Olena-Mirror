@@ -28,7 +28,9 @@
 #ifndef OLENA_CORE_ABSTRACT_DPOINT_HH
 # define OLENA_CORE_ABSTRACT_DPOINT_HH
 
+# include <oln/core/coord.hh>
 # include <mlc/any.hh>
+
 
 /*! \namespace oln
 ** \brief oln namespace.
@@ -67,6 +69,7 @@ namespace oln {
 
       coord_t nth(unsigned i) const
       {
+	// FIXME: add precondition
 	return this->exact().impl_nth(i);
       }
 

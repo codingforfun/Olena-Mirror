@@ -103,6 +103,13 @@ namespace oln {
       return this->index_ == rhs.index_;
     }
 
+    coord_t impl_nth(unsigned i) const
+    {
+      // FIXME: remove when add in abstract::point
+      precondition(i == 0);
+      return index_;
+    }
+
   protected:
 
     coord_t index_;
