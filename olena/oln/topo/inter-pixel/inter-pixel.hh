@@ -33,7 +33,7 @@
 # include <oln/topo/inter-pixel/fwd-dir-iter.hh>
 # include <oln/topo/inter-pixel/bkd-dir-iter.hh>
 
-# include <ntg/optraits.hh>
+# include <ntg/basics.hh>
 
 namespace oln {
 

@@ -1,21 +1,15 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln integre 23)
-(Parent-Version oln integre 22)
-(Version-Log "Index: doc/ChangeLog
+(Project-Version oln integre 24)
+(Parent-Version oln integre 23)
+(Version-Log "Index: olena/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-        * demo/tour.cc: Adapt to integre's changes.
-
-Index: tools/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-        * utilities/mosaic.cc: Adapt to integre's changes.
+        * oln/topo/inter-pixel/inter-pixel.hh: Fix includes.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 13 May 2003 22:55:53 +0200")
+(Checkin-Time "Wed, 14 May 2003 21:53:58 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -104,7 +98,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (doc/ChangeLog (oln/o/31_ChangeLog 1.35 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.5 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.19 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.5 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.6 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.9 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.3 640))
 
@@ -804,7 +798,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/topo/inter-pixel/inter-pixel.hxx (oln/r/31_inter-pixe 1.3 600))
   (olena/oln/topo/combinatorial-map/cmap.hxx (oln/r/32_cmap.hxx 1.3 600))
   (olena/oln/topo/tarjan/union.hh (oln/r/33_union.hh 1.2 600))
-  (olena/oln/topo/inter-pixel/inter-pixel.hh (oln/r/34_inter-pixe 1.6 600))
+  (olena/oln/topo/inter-pixel/inter-pixel.hh (oln/r/34_inter-pixe 1.7 600))
   (olena/oln/topo/tarjan/flat-zone.hh (oln/r/35_flat-zone. 1.3 600))
   (olena/oln/topo/combinatorial-map/cmap.hh (oln/r/36_cmap.hh 1.3 600))
   (olena/tests/topo/test.sh (oln/r/37_test.sh 1.2 700))
