@@ -1,7 +1,7 @@
 ## Process this file with Automake to produce Makefile.in -*-Makefile-*-
 
 AM_CPPFLAGS = $(OLN_CPPFLAGS) -DIMGDIR=\"$(OLN_IMG_DIR)\" -DIMGDIR2=\"$(OLN_IMG_AUX_DIR)\"
-AM_CXXFLAGS = -Wall -W -ansi -pedantic $(OLN_CXXFLAGS)
+AM_CXXFLAGS = $(OLN_CXXFLAGS)
 
 # We used to declare these programs as `noinst_PROGRAMS', however
 # building them on each run of `make' turned to

@@ -16,10 +16,20 @@ fi
 OLN_PATH_LOCAL([$oln_dir])
 AC_WITH_OLN
 
-OLN_TOOLS_SUBDIRS=""
+AC_WITH_CXX_ZLIB
+AC_WITH_CXX_FFTW
 
-AC_CONFIG_FILES([Makefile])
+AC_WITH_CXX_WARNINGS
 
-AC_SUBST([OLN_TOOLS_SUBDIRS])
+AC_CONFIG_HEADERS([config.h:config.hin])
+
+OLN_COLLECTION([OLN_TOOLS], [dnl
+OLN_COMPONENT([utilities], [utilities], [oln_cv_build_utilities], [the command-line utilities],
+              [OLN_TOOLS], [utilities/Makefile], 
+	      [OLN_COLLECTION([OLN_UTILITIES], [dnl
+               OLN_COMPONENT([utilities/morpho], [morpho-utilities], [oln_cv_build_morpho_utils], [the morpho utilities],
+                             [OLN_UTILITIES], [utilities/morpho/Makefile], [], [morpho])
+               ])])
+], [Makefile])
 
 AC_OUTPUT

@@ -1,3 +1,21 @@
+2003-01-05  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* oln.m4 (AC_WITH_CXX_WARNINGS): new macro.
+
+	* Makefile.am (ACLOCAL_AMFLAGS): update to find component.m4.
+	* configure.ac: use OLN_COMPONENT and OLN_COLLECTION.
+
+2003-01-04  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* oln.m4 (AC_WITH_CXX_FFTW): fix description of --with-fftw.
+
+	* tests/meta/gen_test.cc (write_postlude_and_test): fix
+	compilation flags.  Adjust use of the `srcdir' global
+	variable. FIXME: there is a bug somewhere triggered by missing
+	prelude/postlude files (if this case occurs an empty and
+	infinite-size gentest_array.c is created, making the testsuite
+	crash)
+
 2002-12-30  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* Makefile.am (CONFIGURE_DEPENDENCIES): fix.

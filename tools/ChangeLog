@@ -1,3 +1,26 @@
+2003-01-05  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* utilities/Makefile.am (AM_CXXFLAGS), 
+	* utilities/morpho/Makefile.am (AM_CXXFLAGS): remove -W -Wall, ...
+	* configure.ac: .. and use AC_WITH_CXX_WARNINGS.
+
+2003-01-04  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* configure.ac: use OLN_COLLECTION and OLN_COMPONENT.
+	* Makefile.am (ACLOCAL_AMFLAGS): update to find component.m4.
+
+	* configure.ac: enable the utilities/ directory again.
+
+	* utilities/morpho/morpho_template.cc,
+	* utilities/morpho/morpho_template_extrema.cc,
+	* utilities/morpho/morpho_template_gaussian.cc,
+	* utilities/morpho/morpho_template_watershed.cc,
+	* utilities/morpho/morpho_template_with_functor.cc,
+	* utilities/morpho/morpho_template_with_neighb.cc,
+	* utilities/morpho/morpho_template_with_twowin.cc,
+	* utilities/morpho/Makefile.am: freeze.
+	* utilities/morpho/generate_morpho.sh: fix.
+
 2002-12-30  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* Makefile.am (CONFIGURE_DEPENDENCIES): add.

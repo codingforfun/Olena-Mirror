@@ -1,6 +1,9 @@
 This files describe some know issues with Olena.  Please note that
 Olena is a work in progress.  Later versions can be found at
-http://www.lrde.epita.fr/olena/.
+    http://www.lrde.epita.fr/cgi-bin/twiki/view/Projects/Olena
+
+BUILD AND COMPILER NOTES
+========================
 
 We are developing under Linux i386 using GCC version 2.95.3, 3.0.4,
 3.1 and 3.2.  Olena should compile fine with these versions of the
@@ -28,26 +31,26 @@ different compilations flags.
    3.0.3     -O2 -finline-limit-7000        7m49s	     73s
 
 Here are another series of figures, showing the time of `make check'
-with different versions of GCC.  (`make check' run the test suite,
-i.e. it compiles *and* runs a set of test programs.)  The machine
-is a 1GHz bi-PentiumIII.
+for Olena 0.5 with different versions of GCC.  (`make check' run the
+test suite, i.e. it compiles *and* runs a set of test programs.)  The
+machine is a 1GHz bi-PentiumIII.
 
    GCC     make check
    2.95.3    18m33s
    3.0.3     37m24s
    3.1       30m30s
 
+LANGUAGE ENVIRONMENT
+====================
 
 Speaking about compilers, the following points are likely to cause
 trouble when trying to port Olena to another build environment.
 
-- The cast::round function use C99's round() and roundf() function.
-  The GNU libc doesn't declare these functions by default, one
-  has to explicitly define _ISOC99_SOURCE before including a
-  system header.  This definition is actually done in src/config/system.hh,
-  which is included by all the src/basic*.hh headers.
-  That means that the programmer should include Olena's headers before
-  other systems header.
+- Olena uses C99 float functions, usually not available under C++
+  (since C++ was standardized in 1998). This is `fixed' with the GNU
+  libc headers by the use of the _ISOC99_SOURCE preprocessor macro,
+  which forces the declaration of C99 functions. When using Olena with
+  another libc, please adjust your CXXFLAGS accordingly.
 
 - The copy constructors of the image classes rely on a GCC optimization.
   There is a thorough explanation of this issue here:
@@ -57,14 +60,17 @@ Some code in the I/O assumes little-endian machines.  Output of 16bits
 and 32 bits RAW PNM images on big-endian hosts will be wrong.
 PLAIN PNM (i.e. text) should be ok.
 
-The full value/ hierarchy is to be rewritten.  This directory contains
-classes used to represent the value types.  These classes are
-presently programmed using an old paradigm (based on the Barton and
-Nackman trick) and will be rewritten using the scheme used for images,
-iterators, windows, etc.  The name and overall behavior will be remain
-the same, but you should expect some incompatibility if you use some
-internal stuff.  Especially, any code using type attributes (like
-`T::max()') will be invalidated.
+DESIGN CONSIDERATIONS
+=====================
+
+(obsolete note from 0.5:) The full value/ hierarchy is to be
+rewritten.  This directory contains classes used to represent the
+value types.  These classes are presently programmed using an old
+paradigm (based on the Barton and Nackman trick) and will be rewritten
+using the scheme used for images, iterators, windows, etc.  The name
+and overall behavior will be remain the same, but you should expect
+some incompatibility if you use some internal stuff.  Especially, any
+code using type attributes (like `T::max()') will be invalidated.
 
 The aforementioned image/iterator/window/point/... hierarchies will
 themselves be adjusted using Thierry's evil secret plan.  The result
@@ -73,7 +79,7 @@ will allow this classes to be decorated (much rejoicing coming with
 this).  This change shouldn't break the user interface, it will just
 make it easier.
 
-Presently it's difficult to specialize a processing for a given value
+Presently it is difficult to specialize a processing for a given value
 type when the processing takes the aggregate type as parameter.  See
 the definitions of min() and max() in src/morpho/stat.hh for an
 example.  This should eventually be fixed by adding new "concept"

@@ -13,23 +13,13 @@ real_includedir=`eval echo $includedir`
 AC_DEFINE_UNQUOTED([OLN_INCLUDE_DIR], ["$real_includedir"], [the directory where Olena headers are installed])
 AC_CONFIG_HEADERS(oln/config/pconf.inc:oln/config/pconf-inc.in)
 
+
 AC_CONFIG_FILES([Makefile oln/Makefile img/Makefile])
 
-OLN_SRC_SUBDIRS=""
-AC_CACHE_CHECK([whether to enable the testsuite],
-               [oln_cv_build_tests], 
-               [if test -d $srcdir/tests; then
-                  AC_ARG_WITH([testsuite],
-                              [AC_HELP_STRING([--disable-testsuite],
-                                              [disable the testsuite])],
-                              [oln_cv_build_tests=$withval], 
-                              [oln_cv_build_tests=yes])
-                fi])
-if test x$oln_cv_build_tests != xno; then
-  OLN_SRC_SUBDIRS="$OLN_SRC_SUBDIRS tests"
-  AC_CONFIG_SUBDIRS([tests])
-fi
-
-AC_SUBST([OLN_SRC_SUBDIRS])
+OLN_COLLECTION([OLN_SRC], [dnl
+OLN_COMPONENT([tests], [testsuite], [oln_cv_build_tests], [the testsuite],
+              [OLN_SRC], [],
+              [AC_CONFIG_SUBDIRS([tests])])
+])
 
 AC_OUTPUT

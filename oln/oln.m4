@@ -379,7 +379,7 @@ AC_DEFUN(AC_WITH_CXX_FFTW,
    AC_LANG_PUSH([C++])
 
    AC_ARG_WITH([fftw],
-      [AC_HELP_STRING([--with-fft@<:@=DIR@:>@], [using fftw (DIR = prefix for fftw installation)])])
+      [AC_HELP_STRING([--with-fftw@<:@=DIR@:>@], [using fftw (DIR = prefix for fftw installation)])])
    FFTW_CXXFLAGS=''
    FFTW_LDFLAGS=''
    if test "x$with_fftw" != xno; then
@@ -441,5 +441,18 @@ AC_DEFUN(AC_WITH_CXX_ZLIB,
    AC_SUBST([ZLIB_LDFLAGS])
 
    AC_LANG_POP([C++])
+])
+
+AC_DEFUN([AC_WITH_CXX_WARNINGS], [dnl
+   # FIXME: This is pretty poor at the moment...
+   # FIXME: this is highly autoconf-internals dependent (undocumented variable used)
+   AC_REQUIRE([AC_PROG_CXX])
+   AC_MSG_CHECKING([whether we can enable g++-specific warning options to the compiler])
+   if test "x$ac_cv_cxx_compiler_gnu" != xno; then
+      AC_MSG_RESULT([yes])
+      CXXFLAGS="$CXXFLAGS -W -Wall -pedantic"
+   else
+      AC_MSG_RESULT([no])
+   fi
 ])
 

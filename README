@@ -1,5 +1,8 @@
-This is the fifth public release of Olena, a generic image processing
+This is the seventh public release of Olena, a generic image processing
 library in C++.
+
+Please see the files BUILD and INSTALL for information about building
+and installing Olena.
 
 Olena is a project developed by the EPITA Research and Development
 Laboratory (www.lrde.epita.fr) since 1997.  We did numerous prototypes
@@ -12,78 +15,19 @@ library which works only on 2D images (Milena stands for "mini-Olena")
 and which is not publicly available.
 
 Therefore this code is still experimental and not very polished.
-The file named ISSUE, in the root directory of the distribution,
+The file named ISSUES, in the oln/ directory of the distribution,
 contains a list of known issues about Olena.
 
 We haven't written a real documentation yet.  In the doc/ directory
 you will find the start of a reference manual which presently
-documents only the morphological operators.  In the demo/ directory
-lie a few sample programs.  The file demo/tour.cc attempts to
-introduce you to the basics of Olena.  For the rest, we're afraid you
-will have to dig the code or e-mail us.
+documents only the morphological operators, together vith a
+developer's guide to the use of Olena from user projects.  In the
+doc/demo/ directory lie a few sample programs.  The file
+doc/demo/tour.cc attempts to introduce you to the basics of Olena.
+For the rest, we're afraid you will have to dig the code or e-mail us.
 
 Please direct any question or comments to <olena@lrde.epita.fr>,
 or <olena-bugs@lrde.epita.fr>.
-
-----------------------------------------------------------------------
-
-This code has been tested with GCC 2.95.3, GCC 3.0.4, GCC 3.1 and GCC
-3.2.
-
-
-BUILDING
-========
-
-To compile the libray, first create a build directory with e.g.:
-
-  mkdir build
-
-Then:
-
-  cd build
-  .../configure
-  make
-
-INSTALLING
-==========
-
-If you want to install the headers files and several command line
-utilities on your system, do
-
-  make install
-
-this will install the files in /usr/local/include/oln.
-You can tune the '/usr/local/include' part of the path
-by passing an --includedir option to configure. For
-instance
-
-  .../configure --includedir=/foo/bar
-  make install
-
-will install the files in /foo/bar/oln.
-
-There are a few programs in the src/demo/ directory.  You can built
-these programs using `make demo' in this directory.
-
-  cd src/demo
-  make demo
-
-It is also easy to build the src/demo/ files manually, just include
-the Olena source directory in the include search path of the compiler.
-
-  cd src/demo
-  g++ -I../../.. -Wall -O2 tour.cc
-
-With GCC 2.95.x, it's likely you will need to allow the compiler
-to instantiate templates to a greater depth than the default (17),
-using an option like -ftemplate-depth-50.
-
-Finally, the src/tests/ directory contains a few programs that ensure
-some features of the library behave as expected.  You can run them
-using `make check' from the top directory (be prepared to wait).  If
-you have to work in this area, please read tests/README.
-
-----------------------------------------------------------------------
 
 Further information about Olena, can be found into the following
 related papers:
@@ -128,4 +72,5 @@ related papers:
 
 
 You can download these papers and related materials from
-http://www.lrde.epita.fr/publications/.
+http://www.lrde.epita.fr/cgi-bin/twiki/view/Publications
+

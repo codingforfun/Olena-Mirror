@@ -1,4 +1,6 @@
-SUBDIRS = oln @OLN_SUBDIRS@
+SUBDIRS = oln @OLN_TOP_SUBDIRS@
+
+ACLOCAL_AMFLAGS = -I .
 
 EXTRA_DIST = oln-version.m4
 CONFIGURE_DEPENDENCIES = oln-version.m4

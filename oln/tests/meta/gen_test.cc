@@ -147,7 +147,7 @@ static void             write_prelude(ofstream&         ofs,
       << "// It's part of Olena, the static generic image processing library."
       << endl << endl;
 
-  copyfile(srcdir + "gen_test_utils/prelude", ofs);
+  copyfile(srcdir + "/gen_test_utils/prelude", ofs);
 }
 
 // #include <fstream>
@@ -161,7 +161,7 @@ static bool             write_postlude_and_test(ofstream&               ofs,
                                                 ofstream&               fail_log,
                                                 const stringstream&     decl)
 {
-  copyfile(srcdir + "gen_test_utils/postlude", ofs);
+  copyfile(srcdir + "/gen_test_utils/postlude", ofs);
   ofs.close();
 
   pid_t pid;
@@ -175,13 +175,15 @@ static bool             write_postlude_and_test(ofstream&               ofs,
         dup2(fd[1],2);
         close(fd[0]);
         close(fd[1]);
-	std::string oi = OLN_INCLUDEDIR;
-	if (oi != "")
-	  oi = "-I" + oi;
 	std::string cmdline = 
-	  std::string(CXX) + " " + CXXFLAGS + " " + oi + " " +
-	  Isrcdir("../..") + " " + Isrcdir("../check") + " " +
-	  "-L../check -lcheck " + filename;
+	  std::string(CXX) + ' ' 
+	  + CXXFLAGS + ' ' 
+	  + CPPFLAGS + ' '
+	  + OLN_CXXFLAGS + ' ' 
+	  + OLN_CPPFLAGS + ' '
+	  + Isrcdir("../..") + ' '
+	  + Isrcdir("../check") + ' ' 
+	  + "-L../check -lcheck " + filename;
 	int ret = system(cmdline.c_str());
 	exit(WEXITSTATUS(ret));
       }

@@ -1,13 +1,84 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_7_reconf 5)
-(Parent-Version oln 0_7_reconf 4)
-(Version-Log "Add missing files.
+(Project-Version oln 0_7_reconf 6)
+(Parent-Version oln 0_7_reconf 5)
+(Version-Log "from  l Poss  <raph@lrde.epita.fr>
+
+        * oln.m4 (AC_WITH_CXX_WARNINGS): new macro.
+
+        * Makefile.am (ACLOCAL_AMFLAGS): update to find component.m4.
+        * configure.ac: use OLN_COMPONENT and OLN_COLLECTION.
+
+2003-01-04  Raphaël Poss  <raph@lrde.epita.fr>
+
+        * oln.m4 (AC_WITH_CXX_FFTW): fix description of --with-fftw.
+
+        * tests/meta/gen_test.cc (write_postlude_and_test): fix
+        compilation flags.  Adjust use of the `srcdir' global
+        variable. FIXME: there is a bug somewhere triggered by missing
+        prelude/postlude files (if this case occurs an empty and
+        infinite-size gentest_array.c is created, making the testsuite
+        crash)
+
+Index: doc/ChangeLog
+from  l Poss  <raph@lrde.epita.fr>
+
+        * demo/Makefile.am (AM_CXXFLAGS): remove -W -Wall -pedantic -ansi, ...
+        * configure.ac: ... and use AC_WITH_CXX_WARNINGS.
+
+        * configure.ac: use OLN_COLLECTION and OLN_COMPONENT.
+        * Makefile.am (ACLOCAL_AMFLAGS): update to find component.m4.
+
+Index: tools/ChangeLog
+from  l Poss  <raph@lrde.epita.fr>
+
+        * utilities/Makefile.am (AM_CXXFLAGS), 
+        * utilities/morpho/Makefile.am (AM_CXXFLAGS): remove -W -Wall, ...
+        * configure.ac: .. and use AC_WITH_CXX_WARNINGS.
+
+2003-01-04  Raphaël Poss  <raph@lrde.epita.fr>
+
+        * configure.ac: use OLN_COLLECTION and OLN_COMPONENT.
+        * Makefile.am (ACLOCAL_AMFLAGS): update to find component.m4.
+
+        * configure.ac: enable the utilities/ directory again.
+
+        * utilities/morpho/morpho_template.cc,
+        * utilities/morpho/morpho_template_extrema.cc,
+        * utilities/morpho/morpho_template_gaussian.cc,
+        * utilities/morpho/morpho_template_watershed.cc,
+        * utilities/morpho/morpho_template_with_functor.cc,
+        * utilities/morpho/morpho_template_with_neighb.cc,
+        * utilities/morpho/morpho_template_with_twowin.cc,
+        * utilities/morpho/Makefile.am: freeze.
+        * utilities/morpho/generate_morpho.sh: fix.
+
+Index: ChangeLog
+from  l Poss  <raph@lrde.epita.fr>
+
+        * Makefile.am (ACLOCAL_AMFLAGS): add to find component.m4.
+        * configure.ac: use OLN_COMPONENT and OLN_COLLECTION.
+
+2003-01-04  Raphaël Poss  <raph@lrde.epita.fr>
+
+        * component.m4 (OLN_COMPONENT, OLN_COLLETION): add. 
+
+        * NEWS: update.
+        * README: update.
+        * BUILD: add.
+        * INSTALL: add.
+
+        * configure.ac: fix description of --with-fftw.
+
+        * cleanup.sh: add .libs and .deps to removable directories.
+        * oln.prj: add Populate-Ignore patterns for auto-generated
+        files. Remove more auto-generated files from the repository.
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 03 Jan 2003 10:08:18 +0100")
-(Checkin-Login elrond)
+(Checkin-Time "Sun, 05 Jan 2003 02:31:13 +0100")
+(Checkin-Login raph)
 ;; diff-ignore configure$
 ;; diff-ignore aclocal\.m4$
 ;; diff-ignore Makefile\.in$
@@ -32,7 +103,8 @@
                   "\\.cache$"
                   "\\.status$"
                   "\\.deps/"
-                  "Makefile$"
+                  "/Makefile$"
+                  "^Makefile$"
                   "stamp-h$"
                   "CVS/"
                   ".cvsignore$"
@@ -80,35 +152,51 @@
                   "src/tests/defs$"
                   "\\(TAGS\\|tags\\)$"
                   "diffs.patch$"
-                  "src/config/pconf.hh$"))
+                  "src/config/pconf.hh$"
+                  "oln/tests/config.hin$"
+                  "attic/.*"
+                  "tools/config.hin$"
+                  "doc/config.hin$"
+                  "doc/doc/texinfo.tex$"
+                  "/Makefile.in$"
+	          "^Makefile.in$"
+                  "/missing$"
+                  "/install-sh$"
+                  "/mkinstalldirs$"
+                  "/depcomp$"
+                  "/aclocal.m4$"
+		  "/configure$"
+		  "^configure$"
+		  "utilities/morpho/morpho-rules.make$"
+))
 (Project-Keywords)
 (Files
   
   (attic/oln-ChangeLog (oln/6_ChangeLog 1.50.1.98.1.4 660))
-  (configure.ac (oln/3_configure. 1.35 664))
+  (configure.ac (oln/3_configure. 1.36 664))
   
-  (attic/README (oln/1_README 1.5 660))
-  (oln/ISSUES (oln/d/47_ISSUES 1.4 660))
-  (oln/Makefile.am (oln/2_Makefile.a 1.20 660))
+  (README (oln/1_README 1.6 664))
+  (oln/ISSUES (oln/d/47_ISSUES 1.5 660))
+  (oln/Makefile.am (oln/2_Makefile.a 1.21 660))
   
-  (NEWS (oln/0_NEWS 1.8 660))
+  (NEWS (oln/0_NEWS 1.9 660))
 
   (doc/demo/image.cc (oln/d/46_image.cc 1.2 660))
-  (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.7 660))
+  (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.8 660))
   
   (doc/demo/morpholena.cc (oln/d/43_morpholena 1.9 660))
   (doc/demo/test-reconstruction.cc (oln/e/22_test-recon 1.7.1.1 660))
   (doc/demo/tour.cc (oln/d/45_tour.cc 1.6 660))
 
   (attic/doc-ChangeLog (oln/e/1_ChangeLog 1.31 660))
-  (doc/configure.ac (oln/e/2_configure. 1.12 660))
-  (doc/configure (oln/e/3_configure 1.18 775))
+  (doc/configure.ac (oln/e/2_configure. 1.13 660))
+  
   (doc/doc/bin () :directory)
   (doc/doc/html () :directory)
   (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.22 660))
   
   (doc/doc/oln-ref.tex (oln/f/14_oln-ref.te 1.3 660))
-  (doc/Makefile.am (oln/e/0_Makefile.a 1.7 660))
+  (doc/Makefile.am (oln/e/0_Makefile.a 1.8 660))
   
   (doc/tpl/processing.tpl (oln/d/48_processing 1.14 660))
 
@@ -301,7 +389,7 @@
   (oln/oln/utils/stat.hh (oln/9_stat.hh 1.4 660))
   (oln/oln/utils/timer.hh (oln/8_timer.hh 1.2 660))
   (oln/tests/meta () :directory)
-  (oln/tests/meta/gen_test.cc (oln/f/34_gen_test.c 1.5 660))
+  (oln/tests/meta/gen_test.cc (oln/f/34_gen_test.c 1.6 660))
   (oln/tests/meta/gen_test_utils/errors.cc (oln/f/33_errors.cc 1.1 660))
   (oln/tests/meta/gen_test_utils/errors.hh (oln/f/32_errors.hh 1.1 660))
   (oln/tests/meta/gen_test_utils/postlude (oln/f/31_postlude 1.1 660))
@@ -409,7 +497,7 @@
 
   (tools/utilities/mosaic.cc (oln/g/0_mosaic.cc 1.3 660))
   
-  (tools/utilities/Makefile.am (oln/g/2_Makefile.a 1.7 660))
+  (tools/utilities/Makefile.am (oln/g/2_Makefile.a 1.8 660))
 ;; Files added by populate at Mon, 29 Jul 2002 16:23:03 +0200,
 ;; to version 0_5.4(w), by burrus_n:
 
@@ -605,9 +693,9 @@
 ;; Files added by populate at Fri, 08 Nov 2002 18:04:09 +0100,
 ;; to version 0_5.74(w), by chojin:
 
-  (tools/utilities/generate_morpho.sh (oln/i/30_generate_m 1.3.1.2 770))
+  (tools/utilities/morpho/generate_morpho.sh (oln/i/30_generate_m 1.3.1.3 775))
   
-  (tools/utilities/morpho/Makefile.am (oln/i/32_Makefile.a 1.4 660))
+  (tools/utilities/morpho/Makefile.am (oln/i/32_Makefile.a 1.5 660))
   (tools/utilities/morpho/morpho_template.cc (oln/i/33_morpho_tem 1.5 660))
 
 ;; Files added by populate at Wed, 13 Nov 2002 10:21:22 +0100,
@@ -657,7 +745,7 @@
 ;; Files added by populate at Wed, 04 Dec 2002 15:51:21 +0100,
 ;; to version 0_5_reconf.1(w), by raph:
 
-  (oln/oln.m4 (oln/j/15_oln.m4 1.4 664))
+  (oln/oln.m4 (oln/j/15_oln.m4 1.5 664))
 
 ;; Files added by populate at Wed, 04 Dec 2002 15:51:40 +0100,
 ;; to version 0_5_reconf.1(w), by raph:
@@ -679,14 +767,14 @@
 ;; to version 0_5.104(w), by raph:
 
   (oln-version.m4 (oln/m/48_oln-versio 1.3 664))
-  (oln/depcomp (oln/m/49_depcomp 1.1 755))
-  (oln/Makefile.in (oln/m/50_Makefile.i 1.3 664))
-  (oln/missing (oln/m/51_missing 1.1 755))
-  (oln/mkinstalldirs (oln/n/0_mkinstalld 1.2 755))
-  (oln/install-sh (oln/n/1_install-sh 1.2 755))
-  (oln/configure (oln/n/2_configure 1.3 775))
-  (oln/aclocal.m4 (oln/n/3_aclocal.m4 1.3 664))
-  (oln/configure.ac (oln/n/4_configure. 1.3 660))
+  
+  
+  
+  
+  
+  
+  (oln/aclocal.m4 (oln/n/3_aclocal.m4 1.4 664))
+  (oln/configure.ac (oln/n/4_configure. 1.4 660))
   (oln/img/se9.pbm (oln/n/5_se9.pbm 1.1 660) :no-keywords)
   (oln/img/se.pbm (oln/n/6_se.pbm 1.1 660) :no-keywords)
   (oln/img/random.pgm (oln/n/7_random.pgm 1.1 660))
@@ -700,23 +788,23 @@
   
   
   (oln/img/face_se.pbm (oln/n/17_face_se.pb 1.1 660) :no-keywords)
-  (oln/tests/Makefile.in (oln/n/18_Makefile.i 1.3 664))
-  (oln/tests/transforms/Makefile.in (oln/n/19_Makefile.i 1.3 664))
-  (oln/tests/types/Makefile.in (oln/n/20_Makefile.i 1.3 664))
-  (oln/tests/sanity/Makefile.in (oln/n/21_Makefile.i 1.3 664))
-  (oln/tests/morpho/Makefile.in (oln/n/22_Makefile.i 1.3 664))
-  (oln/tests/io/Makefile.in (oln/n/23_Makefile.i 1.3 664))
-  (oln/tests/convol/Makefile.in (oln/n/24_Makefile.i 1.3 664))
-  (oln/tests/convert/Makefile.in (oln/n/25_Makefile.i 1.3 664))
-  (oln/tests/check/Makefile.in (oln/n/26_Makefile.i 1.3 664))
-  (oln/tests/meta/Makefile.in (oln/n/27_Makefile.i 1.3 664))
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   (oln/oln/config/pconf-inc.in (oln/n/28_pconf-inc. 1.2 664))
   
   
-  (Makefile.in (oln/n/31_Makefile.i 1.3 664))
-  (Makefile.am (oln/n/32_Makefile.a 1.3 664))
   
-  (configure (oln/n/34_configure 1.3 775))
+  (Makefile.am (oln/n/32_Makefile.a 1.4 664))
+  
+  
   (tools/swilena/README (oln/n/35_README 1.1 664))
   (tools/swilena/TODO (oln/n/36_TODO 1.1 664))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.1 664))
@@ -762,21 +850,21 @@
   (tools/swilena/Makefile.am (oln/o/25_Makefile.a 1.1 664))
   (tools/swilena/configure.ac (oln/o/26_configure. 1.1 664))
   (tools/utilities/configure.ac (oln/o/27_configure. 1.1 664))
-  (aclocal.m4 (oln/o/28_aclocal.m4 1.3 664))
+  (aclocal.m4 (oln/o/28_aclocal.m4 1.4 664))
 
 
 ;; Files added by populate at Wed, 11 Dec 2002 19:17:58 +0100,
 ;; to version 0_7_reconf.1(w), by raph:
 
-  (cleanup.sh (oln/o/29_cleanup.sh 1.1 775))
+  (cleanup.sh (oln/o/29_cleanup.sh 1.2 775))
 
 ;; Files added by populate at Wed, 11 Dec 2002 19:29:49 +0100,
 ;; to version 0_7_reconf.2(w), by raph:
 
-  (oln/ChangeLog (oln/o/30_ChangeLog 1.2 664))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.2 664))
-  (tools/ChangeLog (oln/o/32_ChangeLog 1.2 664))
-  (ChangeLog (oln/o/33_ChangeLog 1.2 664))
+  (oln/ChangeLog (oln/o/30_ChangeLog 1.3 664))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.3 664))
+  (tools/ChangeLog (oln/o/32_ChangeLog 1.3 664))
+  (ChangeLog (oln/o/33_ChangeLog 1.3 664))
 
 ;; Files deleted by depopulate at Thu, 12 Dec 2002 00:11:27 +0100,
 ;; from version 0_7_reconf.2(w), by raph:
@@ -806,17 +894,63 @@
 ;; Files added by populate at Fri, 03 Jan 2003 10:06:30 +0100,
 ;; to version 0_7_reconf.4(w), by elrond:
 
-  (oln/tests/configure.ac (oln/o/35_configure. 1.1 664))
+  (oln/tests/configure.ac (oln/o/35_configure. 1.2 664))
 
 ;; Files added by populate at Fri, 03 Jan 2003 10:06:51 +0100,
 ;; to version 0_7_reconf.4(w), by elrond:
 
-  (tools/configure.ac (oln/o/36_configure. 1.1 664))
+  (tools/configure.ac (oln/o/36_configure. 1.2 664))
 
 ;; Files added by populate at Fri, 03 Jan 2003 10:06:56 +0100,
 ;; to version 0_7_reconf.4(w), by elrond:
 
-  (tools/Makefile.am (oln/o/37_Makefile.a 1.1 664))
+  (tools/Makefile.am (oln/o/37_Makefile.a 1.2 664))
+
+;; Files deleted by depopulate at Sat, 04 Jan 2003 16:25:50 +0100,
+;; from version 0_7_reconf.5(w), by raph:
+
+  ; (oln/Makefile.in ())
+  ; (oln/tests/Makefile.in ())
+  ; (oln/tests/transforms/Makefile.in ())
+  ; (oln/tests/types/Makefile.in ())
+  ; (oln/tests/sanity/Makefile.in ())
+  ; (oln/tests/morpho/Makefile.in ())
+  ; (oln/tests/io/Makefile.in ())
+  ; (oln/tests/convol/Makefile.in ())
+  ; (oln/tests/convert/Makefile.in ())
+  ; (oln/tests/check/Makefile.in ())
+  ; (oln/tests/meta/Makefile.in ())
+  ; (Makefile.in ())
+
+;; Files deleted by depopulate at Sat, 04 Jan 2003 16:26:28 +0100,
+;; from version 0_7_reconf.5(w), by raph:
+
+  ; (oln/depcomp ())
+  ; (oln/missing ())
+  ; (oln/mkinstalldirs ())
+  ; (oln/install-sh ())
+
+;; Files deleted by depopulate at Sat, 04 Jan 2003 16:33:13 +0100,
+;; from version 0_7_reconf.5(w), by raph:
+
+  ; (doc/configure ())
+  ; (oln/configure ())
+  ; (configure ())
+
+;; Files added by populate at Sat, 04 Jan 2003 18:34:25 +0100,
+;; to version 0_7_reconf.5(w), by raph:
+
+  (BUILD (oln/o/38_BUILD 1.1 664))
+
+;; Files added by populate at Sat, 04 Jan 2003 19:41:18 +0100,
+;; to version 0_7_reconf.5(w), by raph:
+
+  (INSTALL (oln/o/39_INSTALL 1.1 664))
+
+;; Files added by populate at Sun, 05 Jan 2003 02:28:41 +0100,
+;; to version 0_7_reconf.5(w), by raph:
+
+  (component.m4 (oln/o/40_component. 1.1 664))
 )
 (Merge-Parents)
 (New-Merge-Parents)

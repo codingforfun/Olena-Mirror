@@ -1,6 +1,10 @@
 Olena 0.7	December 11, 2002
 
-	* New source tree layout.
+	* New, saner, source tree layout.
+	* Each `part' of the source tree can be excluded from the
+	  build process with configuration flags.
+	* New `oln.m4' file for use by autoconf'ed user projects.
+	* Major documentation updates.
 
 Olena 0.5	July 25, 2002
 

@@ -12,39 +12,19 @@ AM_MAINTAINER_MODE
 
 AC_CONFIG_SUBDIRS([oln])
 
-OLN_SUBDIRS=""
-AC_CACHE_CHECK([whether to build the documentation],
-               [oln_cv_build_doc],
-               [oln_cv_build_doc=no
-                if test -d $srcdir/doc; then
-                   AC_ARG_WITH([doc], 
-                               [AC_HELP_STRING([--without-doc],
-		                               [disable building the documentation])],
-                               [oln_cv_build_doc=$enableval],
-		               [oln_cv_build_doc=yes])
-                fi])
-if test x$oln_cv_build_doc != xno; then 
-   OLN_SUBDIRS="$OLN_SUBDIRS doc"
-   AC_CONFIG_SUBDIRS([doc])
-fi
+OLN_COLLECTION([OLN_TOP], [dnl
 
-AC_CACHE_CHECK([whether to build the runtime tools],
-               [oln_cv_build_tools],
-               [oln_cv_build_tools=no
-                if test -d $srcdir/tools; then
-                   AC_ARG_WITH([tools], 
-                               [AC_HELP_STRING([--without-tools],
-		                               [disable building the runtime tools])],
-                                               [oln_cv_build_tools=$withval], 
-                                               [oln_cv_build_tools=yes])
-                fi])
-if test x$ac_cv_oln_tools != xno; then
-   OLN_SUBDIRS="$OLN_SUBDIRS tools"
-   AC_CONFIG_SUBDIRS([tools])
-fi
+OLN_COMPONENT([doc], [doc], [oln_cv_build_doc], [the documentation],
+              [OLN_TOP], [],
+              [AC_CONFIG_SUBDIRS([doc])])
+
+OLN_COMPONENT([tools], [tools], [oln_cv_build_tools], [the run-time tools],
+	      [OLN_TOP], [],
+              [AC_CONFIG_SUBDIRS([tools])])
+])
 
 #### Complementary configure arguments, report from subdirectories ####
-AC_ARG_WITH([fftw], [AC_HELP_STRING([--with-fft@<:@=DIR@:>@], [using fftw (DIR = prefix for fftw installation)])])
+AC_ARG_WITH([fftw], [AC_HELP_STRING([--with-fftw@<:@=DIR@:>@], [using fftw (DIR = prefix for fftw installation)])])
 AC_ARG_WITH([zlib], [AC_HELP_STRING([--with-zlib@<:@=DIR@:>@], [using zlib (DIR = prefix for zlib installation)])])
 AC_ARG_WITH([testsuite], [AC_HELP_STRING([--without-testsuite], [disable the testsuite])])
 AC_ARG_WITH([tests], [AC_HELP_STRING([--with-tests=<list>], 
@@ -54,6 +34,5 @@ AC_ARG_WITH([demo], [AC_HELP_STRING([--without-demo], [do not build the demonstr
 AC_ARG_WITH([utilities], AC_HELP_STRING([--without-utilities], [disable building the command-line utilities]))
 AC_ARG_WITH([swilena], AC_HELP_STRING([--without-swilena], [disable generation of Olena SWIG modules]))
 
-AC_SUBST([OLN_SUBDIRS])
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

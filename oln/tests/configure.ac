@@ -40,126 +40,30 @@ AC_CACHE_CHECK([for selection of tests],
                             [oln_cv_tests_selection=$withval],
                             [oln_cv_tests_selection=all])])
 
-AC_CACHE_CHECK([whether to enable tests in `convert'],
-               [oln_cv_tests_convert],
-               [oln_cv_tests_convert=no
-                if test -d $srcdir/convert; then
-                   case "$oln_cv_tests_selection" in
-                     *all* | *convert* )
-                         oln_cv_tests_convert=yes
-                         ;;
-                   esac
+AC_DEFUN([OLN_TESTS], [dnl
+AC_CACHE_CHECK([whether to enable tests in `$1'],
+               [oln_cv_tests_$1],
+               [oln_cv_tests_$1=no
+                if test -d $srcdir/$1; then
+                  case "$oln_cv_tests_selection" in
+                    *all* | *$1* )
+                      oln_cv_tests_$1=yes
+                      ;;
+                  esac
                 fi])
-if test x$oln_cv_tests_convert != xno; then
-   OLN_TESTS_SUBDIRS="$OLN_TESTS_SUBDIRS convert"
-   AC_CONFIG_FILES([convert/Makefile])
-fi                       
+if test x$oln_cv_tests_$1 != xno; then
+   OLN_TESTS_SUBDIRS="$OLN_TESTS_SUBDIRS $1"
+   AC_CONFIG_FILES([$1/Makefile])
+fi])
 
-AC_CACHE_CHECK([whether to enable tests in `convol'],
-               [oln_cv_tests_convol],
-               [oln_cv_tests_convol=no
-                if test -d $srcdir/convol; then
-                   case "$oln_cv_tests_selection" in
-                     *all* | *convol* )
-                         oln_cv_tests_convol=yes
-                         ;;
-                   esac
-                fi])
-if test x$oln_cv_tests_convol != xno; then
-   OLN_TESTS_SUBDIRS="$OLN_TESTS_SUBDIRS convol"
-   AC_CONFIG_FILES([convol/Makefile])
-fi                       
-
-AC_CACHE_CHECK([whether to enable tests in `io'],
-               [oln_cv_tests_io],
-               [oln_cv_tests_io=no
-                if test -d $srcdir/io; then
-                   case "$oln_cv_tests_selection" in
-                     *all* | *io* )
-                         oln_cv_tests_io=yes
-                         ;;
-                   esac
-                fi])
-if test x$oln_cv_tests_io != xno; then
-   OLN_TESTS_SUBDIRS="$OLN_TESTS_SUBDIRS io"
-   AC_CONFIG_FILES([io/Makefile])
-fi                       
-
-AC_CACHE_CHECK([whether to enable tests in `meta'],
-               [oln_cv_tests_meta],
-               [oln_cv_tests_meta=no
-                if test -d $srcdir/meta; then
-                   case "$oln_cv_tests_selection" in
-                     *all* | *meta* )
-                         oln_cv_tests_meta=yes
-                         ;;
-                   esac
-                fi])
-if test x$oln_cv_tests_meta != xno; then
-   OLN_TESTS_SUBDIRS="$OLN_TESTS_SUBDIRS meta"
-   AC_CONFIG_FILES([meta/Makefile])
-fi                       
-
-AC_CACHE_CHECK([whether to enable tests in `morpho'],
-               [oln_cv_tests_morpho],
-               [oln_cv_tests_morpho=no
-                if test -d $srcdir/morpho; then
-                   case "$oln_cv_tests_selection" in
-                     *all* | *morpho* )
-                         oln_cv_tests_morpho=yes
-                         ;;
-                   esac
-                fi])
-if test x$oln_cv_tests_morpho != xno; then
-   OLN_TESTS_SUBDIRS="$OLN_TESTS_SUBDIRS morpho"
-   AC_CONFIG_FILES([morpho/Makefile])
-fi                       
-
-AC_CACHE_CHECK([whether to enable tests in `sanity'],
-               [oln_cv_tests_sanity],
-               [oln_cv_tests_sanity=no
-                if test -d $srcdir/sanity; then
-                   case "$oln_cv_tests_selection" in
-                     *all* | *sanity* )
-                         oln_cv_tests_sanity=yes
-                         ;;
-                   esac
-                fi])
-if test x$oln_cv_tests_sanity != xno; then
-   OLN_TESTS_SUBDIRS="$OLN_TESTS_SUBDIRS sanity"
-   AC_CONFIG_FILES([sanity/Makefile])
-fi                       
-
-AC_CACHE_CHECK([whether to enable tests in `transforms'],
-               [oln_cv_tests_transforms],
-               [oln_cv_tests_transforms=no
-                if test -d $srcdir/transforms; then
-                   case "$oln_cv_tests_selection" in
-                     *all* | *transforms* )
-                         oln_cv_tests_transforms=yes
-                         ;;
-                   esac
-                fi])
-if test x$oln_cv_tests_transforms != xno; then
-   OLN_TESTS_SUBDIRS="$OLN_TESTS_SUBDIRS transforms"
-   AC_CONFIG_FILES([transforms/Makefile])
-fi                       
-
-AC_CACHE_CHECK([whether to enable tests in `types'],
-               [oln_cv_tests_types],
-               [oln_cv_tests_types=no
-                if test -d $srcdir/types; then
-                   case "$oln_cv_tests_selection" in
-                     *all* | *types* )
-                         oln_cv_tests_types=yes
-                         ;;
-                   esac
-                fi])
-if test x$oln_cv_tests_types != xno; then
-   OLN_TESTS_SUBDIRS="$OLN_TESTS_SUBDIRS types"
-   AC_CONFIG_FILES([types/Makefile])
-fi                       
-
+OLN_TESTS([convert])
+OLN_TESTS([convol])
+OLN_TESTS([io])
+OLN_TESTS([meta])
+OLN_TESTS([morpho])
+OLN_TESTS([sanity])
+OLN_TESTS([transforms])
+OLN_TESTS([types])
 
 AC_SUBST([OLN_TESTS_SUBDIRS])
 

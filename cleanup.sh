@@ -21,5 +21,7 @@
 
 {
   find . -name autom4te.cache
-
+  find . -name .libs
+  find . -name .deps
 } | xargs rm -rf
+
