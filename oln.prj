@@ -1,12 +1,17 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 89)
-(Parent-Version oln 0_5 88)
-(Version-Log "* previous checkin tail
+(Project-Version oln 0_5 90)
+(Parent-Version oln 0_5 89)
+(Version-Log "2002-11-19  Jean-Sébastien Mouret  <js@lrde.epita.fr>
+
+	* Makefile.am (EXTRA_DIST): Remove documentation dependency.
+	* oln/io/se_window.hxx, oln/io/se_neighborhood.hxx: Additional
+	includes to pass sanity checks.
+	* oln/Makefile.am (nobase_oln_HEADERS): List new files.	
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 19 Nov 2002 02:21:19 +0100")
+(Checkin-Time "Tue, 19 Nov 2002 23:51:19 +0100")
 (Checkin-Login js)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -115,13 +120,13 @@
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.25 600))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.87 600))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.88 600))
   (configure.ac (oln/3_configure. 1.27 600))
   (configure (oln/e/7_configure 1.35 700))
   (README (oln/1_README 1.4 600))
   (ISSUES (oln/d/47_ISSUES 1.3 600))
-  (Makefile.am (oln/2_Makefile.a 1.12 600))
-  (Makefile.in (oln/e/9_Makefile.i 1.34 600))
+  (Makefile.am (oln/2_Makefile.a 1.13 600))
+  (Makefile.in (oln/e/9_Makefile.i 1.35 600))
   (NEWS (oln/0_NEWS 1.7 600))
 
   (demo/image.cc (oln/d/46_image.cc 1.2 600))
@@ -289,8 +294,8 @@
   (oln/level/invert.hh (oln/33_invert.hh 1.4 600))
   (oln/level/lut.hh (oln/29_lut.hh 1.6 600))
   (oln/level/threshold.hh (oln/f/15_threshold. 1.4 600))
-  (oln/Makefile.am (oln/27_Makefile.a 1.28 600))
-  (oln/Makefile.in (oln/e/17_Makefile.i 1.35 600))
+  (oln/Makefile.am (oln/27_Makefile.a 1.29 600))
+  (oln/Makefile.in (oln/e/17_Makefile.i 1.36 600))
   (oln/math/macros.hh (oln/b/21_macros.hh 1.4 600))
   (oln/meta/array1d.hh (oln/f/23_array1d.hh 1.2 600))
   (oln/meta/array1d.hxx (oln/f/22_array1d.hx 1.2 600))
@@ -353,7 +358,7 @@
   (tests/meta/test_array1d.cc (oln/f/26_test_array 1.2 600))
   (tests/meta/test_array2d.cc (oln/f/25_test_array 1.2 600))
   (tests/meta/test_array3d.cc (oln/f/24_test_array 1.2 600))
-  (tests/ChangeLog (oln/e/30_ChangeLog 1.45 600))
+  (tests/ChangeLog (oln/e/30_ChangeLog 1.46 600))
   (tests/check/check.hh (oln/e/40_check.hh 1.2 600))
   (tests/check/data.cc (oln/f/5_data.cc 1.2 600))
   (tests/check/data.hh (oln/f/6_data.hh 1.1 600))
@@ -386,14 +391,14 @@
   (tests/data/random.pgm (oln/f/43_random.pgm 1.1 600) :no-keywords)
   (tests/io/2d.cc (oln/e/47_2d.cc 1.4 600))
   (tests/io/loadsave.hh (oln/e/48_loadsave.h 1.5 600))
-  (tests/io/Makefile.am (oln/e/49_Makefile.a 1.5 600))
-  (tests/io/Makefile.in (oln/e/50_Makefile.i 1.19 600))
+  (tests/io/Makefile.am (oln/e/49_Makefile.a 1.6 600))
+  (tests/io/Makefile.in (oln/e/50_Makefile.i 1.20 600))
   (tests/Makefile.am (oln/e/45_Makefile.a 1.12 600))
   (tests/Makefile.in (oln/e/46_Makefile.i 1.24 600))
   (tests/morpho/edoc.cc (oln/f/13_edoc.cc 1.3 600))
   (tests/morpho/extrkiller.cc (oln/e/31_extrkiller 1.5 600))
-  (tests/morpho/Makefile.am (oln/e/32_Makefile.a 1.3 600))
-  (tests/morpho/Makefile.in (oln/e/33_Makefile.i 1.20 600))
+  (tests/morpho/Makefile.am (oln/e/32_Makefile.a 1.4 600))
+  (tests/morpho/Makefile.in (oln/e/33_Makefile.i 1.21 600))
   (tests/morpho/reconstruction.cc (oln/e/34_reconstruc 1.5 600))
   (tests/README (oln/f/4_README 1.2 600))
   (THANKS (oln/4_THANKS 1.3 600))
@@ -496,8 +501,8 @@
   (tests/types/tests/int1 (oln/h/1_int1 1.1 600))
   (tests/types/tests/unsafe1 (oln/h/2_unsafe1 1.1 600))
   (tests/types/runtests (oln/h/3_runtests 1.4 700))
-  (tests/types/Makefile.in (oln/h/4_Makefile.i 1.6 600))
-  (tests/types/Makefile.am (oln/h/5_Makefile.a 1.2 600))
+  (tests/types/Makefile.in (oln/h/4_Makefile.i 1.7 600))
+  (tests/types/Makefile.am (oln/h/5_Makefile.a 1.3 600))
 
 ;; Files added by populate at Tue, 27 Aug 2002 18:05:09 +0200,
 ;; to version 0_5.21(w), by duret_g:
@@ -708,8 +713,8 @@
   (tests/io/se_fail.cc (oln/i/43_se_fail.cc 1.1 600))
   (tests/io/se_pass.cc (oln/i/44_se_pass.cc 1.1 600))
   (oln/io/se.hh (oln/i/45_se.hh 1.1 600))
-  (oln/io/se_window.hxx (oln/i/46_se_window. 1.1 600))
-  (oln/io/se_neighborhood.hxx (oln/i/47_se_neighbo 1.1 600))
+  (oln/io/se_window.hxx (oln/i/46_se_window. 1.2 600))
+  (oln/io/se_neighborhood.hxx (oln/i/47_se_neighbo 1.2 600))
   (tests/data/neighbor.pbm (oln/i/48_neighbor.p 1.1 600))
   (tests/data/neighbor9.pbm (oln/i/49_neighbor9. 1.1 600) :no-keywords)
   (tests/data/se9.pbm (oln/i/50_se9.pbm 1.1 600) :no-keywords)

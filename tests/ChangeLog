@@ -1,5 +1,12 @@
 2002-11-19  Jean-Sébastien Mouret  <js@lrde.epita.fr>
 
+	* types/Makefile.am (EXTRA_DIST): Add missing file (runtests).
+	* io/Makefile.am (AM_LDFLAGS): Use LDADD instead of AM_LDFLAGS
+	to link with zlib.
+	* morpho/Makefile.am (CXXFLAGS): Optimize a bit more.
+
+2002-11-19  Jean-Sébastien Mouret  <js@lrde.epita.fr>
+
 	* io/loadsave.hh (compare): New functions.
 	(loadsave): Use compare functions instead of level::is_equal
 	to handle window2d and neighborhood2d equality checks.

@@ -238,6 +238,9 @@ nobase_oln_HEADERS = \
   io/pnm_write3d.hxx				\
   io/pnm_write_common.hxx			\
   io/readable.hh				\
+  io/se.hh					\
+  io/se_neighborhood.hxx			\
+  io/se_window.hxx				\
   level/cc.hh					\
   level/compare.hh				\
   level/connected.hh				\

@@ -3,5 +3,4 @@
 SUBDIRS = oln utilities demo tests
 EXTRA_DIST =						\
   img/lena.pgm img/lena128.pgm img/face_se.pbm		\
-  ISSUES tools/scandefs.pl				\
-  doc/doc/oln-ref.pdf doc/doc/oln-ref.ps doc/doc/html
+  ISSUES tools/scandefs.pl

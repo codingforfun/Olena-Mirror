@@ -117,10 +117,8 @@ target_alias = @target_alias@
 AM_CXXFLAGS = -Wall -W -ftemplate-depth-50 -pedantic
 AM_CPPFLAGS = -I$(top_builddir) -I$(top_srcdir) -I$(top_srcdir)/tests/check
 
-LDADD = $(top_builddir)/tests/check/libcheck.a
+LDADD = $(top_builddir)/tests/check/libcheck.a $(ZLIB_LDFLAGS)
 TESTS = $(check_PROGRAMS)
-
-AM_LDFLAGS = $(ZLIB_LDFLAGS)
 AM_CFLAGS = $(ZLIB_CFLAGS)
 
 check_PROGRAMS = 2d se_pass se_fail pretty

@@ -1,6 +1,6 @@
 include $(top_srcdir)/tests/check/Makefile.check
 
-AM_LDFLAGS = $(ZLIB_LDFLAGS)
+LDADD += $(ZLIB_LDFLAGS)
 AM_CFLAGS = $(ZLIB_CFLAGS)
 
 check_PROGRAMS = 2d se_pass se_fail pretty

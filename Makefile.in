@@ -111,8 +111,7 @@ target_alias = @target_alias@
 SUBDIRS = oln utilities demo tests
 EXTRA_DIST = \
   img/lena.pgm img/lena128.pgm img/face_se.pbm		\
-  ISSUES tools/scandefs.pl				\
-  doc/doc/oln-ref.pdf doc/doc/oln-ref.ps doc/doc/html
+  ISSUES tools/scandefs.pl
 
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -303,7 +302,7 @@ distcleancheck_listfiles = find . -type f -print
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkinstalldirs) $(distdir)/./oln/config $(distdir)/doc/doc $(distdir)/img $(distdir)/tests $(distdir)/tools
+	$(mkinstalldirs) $(distdir)/./oln/config $(distdir)/img $(distdir)/tests $(distdir)/tools
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \

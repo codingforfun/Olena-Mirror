@@ -1,5 +1,7 @@
 include $(top_srcdir)/tests/check/Makefile.check
 
+CXXFLAGS = -g -O3
+
 check_PROGRAMS = \
   edoc \
   extrkiller \

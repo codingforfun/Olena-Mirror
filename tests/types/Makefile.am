@@ -1,4 +1,4 @@
-EXTRA_DIST = tests
+EXTRA_DIST = tests runtests
 
 check-local:
 	SRCDIR=$(srcdir) $(srcdir)/runtests

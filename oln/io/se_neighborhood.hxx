@@ -29,6 +29,8 @@
 # define OLENA_IO_SE_NEIGHBORHOOD_HXX_
 
 # include <oln/io/pnm.hh>
+# include <oln/core/neighborhood2d.hh>
+# include <oln/core/macros.hh>
 
 namespace oln {
   namespace io {
