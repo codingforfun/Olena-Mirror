@@ -57,8 +57,10 @@
 # include <oln/core/abstract/size.hh>
 # include <oln/core/abstract/point.hh>
 # include <oln/core/abstract/images.hh>
+# include <oln/core/abstract/entry.hh>
 
 # include <oln/core/abstract/piter.hh>
+# include <oln/core/abstract/witer.hh>
 // # include <oln/core/abstract/niter.hh>
 
 # include <oln/core/abstract/struct_elt.hh>

@@ -1,5 +1,16 @@
 2005-03-20  Simon Odou  <simon@lrde.epita.fr>
 
+	* oln/morpho: New.
+	* oln/morpho/stat.hh: New. Add morphological min and max.
+	* oln/core/abstract/piter.hh: Add `for_all_remaining' macro.
+	* oln/core/abstract/point.hh: Fix a return type (was abstract).
+	* tests/morpho: New. Add test suite for morpho.
+	* tests/morpho/tests: New. Likewise.
+	* tests/morpho/Makefile.am: New. Likewise.
+	* oln/basics.hh: Add headers.
+
+2005-03-20  Simon Odou  <simon@lrde.epita.fr>
+
 	* oln/core/2d/fwd_witer2d.hh: New. Forward window iterator in 2d.
 
 2005-03-20  Simon Odou  <simon@lrde.epita.fr>

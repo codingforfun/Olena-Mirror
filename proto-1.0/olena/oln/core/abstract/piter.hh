@@ -37,7 +37,11 @@
 
 
 
-# define for_all(p) for(p.start(); p.is_valid(); p.next())
+# define for_all(p) \
+  for(p.start(); p.is_valid(); p.next())
+
+# define for_all_remaining(p) \
+  for(; p.is_valid(); p.next())
 
 
 namespace oln {

@@ -87,6 +87,8 @@ namespace oln {
     struct point : public mlc::any__best_memory<E>
     {
 
+      typedef E exact_type;
+
       /*! \brief Test equality of two points.  Nota bene: this method
       ** is abstract-like.
       **
@@ -111,7 +113,7 @@ namespace oln {
 
       typedef oln_type_of(E, dpoint) dpoint_type;
 
-      const point operator+(const dpoint_type& dp) const
+      const exact_type operator+(const dpoint_type& dp) const
       {
 	return this->exact().impl_plus(dp);
       }
