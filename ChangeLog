@@ -1,3 +1,6 @@
+2003-01-07  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* bootstrap.sh: call generate_morpho.sh during boostrap.
 
 2003-01-05  Raphaël Poss  <raph@lrde.epita.fr>
 
@@ -16,8 +19,6 @@
 	* configure.ac: fix description of --with-fftw.
 
 	* cleanup.sh: add .libs and .deps to removable directories.
-	* oln.prj: add Populate-Ignore patterns for auto-generated
-	files. Remove more auto-generated files from the repository.
 
 2002-12-30  Raphaël Poss  <raph@lrde.epita.fr>
 
