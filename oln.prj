@@ -1,16 +1,13 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 49)
-(Parent-Version oln 2003paradigm 48)
-(Version-Log "2003-07-28  David Lesage  <daivd@lrde.epita.fr>
-
-	* oln/core/abstract/struct_elt.hh: Remove copy constructor for -W
-	compliance..
+(Project-Version oln 2003paradigm 50)
+(Parent-Version oln 2003paradigm 49)
+(Version-Log "       * oln/morpho/fast_morpho.hxx: Minor update.
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 28 Jul 2003 22:18:29 +0200")
-(Checkin-Login david)
+(Checkin-Time "Mon, 28 Jul 2003 22:53:25 +0200")
+(Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
 ;; diff-ignore doc/doc/ref-morpho.tex$
@@ -99,7 +96,7 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.8 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.33 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.34 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.10 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.4 640))
@@ -246,7 +243,7 @@
   
   (olena/oln/core/abstract/binary_image.hh (oln/c/24_pred_image 1.6 640))
   
-  (olena/oln/core/abstract/struct_elt.hh (oln/c/25_structelt. 1.13 640))
+  (olena/oln/core/abstract/struct_elt.hh (oln/c/25_structelt. 1.14 640))
   (olena/oln/core/traverse.hh (oln/d/30_traverse.h 1.9 640))
   (metalic/mlc/typeadj.hh (oln/e/25_typeadj.hh 1.5 640))
   (metalic/mlc/type.hh (oln/c/21_type.hh 1.16 640))
@@ -270,14 +267,14 @@
   
   (olena/oln/io/pnm_read3d.hxx (oln/b/11_pnm_read3d 1.8 640))
   
-  (olena/oln/io/pnm_read.hh (oln/b/16_pnm_read.h 1.9.1.7 640))
+  (olena/oln/io/pnm_read.hh (oln/b/16_pnm_read.h 1.9.1.7 600))
   (olena/oln/io/pnm_write3d.hxx (oln/b/9_pnm_write3 1.1.1.9 640))
   
-  (olena/oln/io/pnm_write.hh (oln/b/15_pnm_write. 1.8.1.9 640))
-  (olena/oln/io/readable.hh (oln/b/13_readable.h 1.9 640))
+  (olena/oln/io/pnm_write.hh (oln/b/15_pnm_write. 1.8.1.9 600))
+  (olena/oln/io/readable.hh (oln/b/13_readable.h 1.9 600))
   (olena/oln/io/se.hh (oln/i/45_se.hh 1.3 640))
   (olena/oln/io/se_neighborhood.hh (oln/i/47_se_neighbo 1.8 640))
-  (olena/oln/io/se_window.hh (oln/i/46_se_window. 1.8 640))
+  (olena/oln/io/se_window.hh (oln/i/46_se_window. 1.8 600))
   (olena/oln/level/cc.hh (oln/e/20_cc.hh 1.11.1.4 640))
   (olena/oln/level/compare.hh (oln/31_compare.hh 1.5 640))
   (olena/oln/level/connected.hh (oln/30_connected. 1.9.1.6 640))
@@ -313,7 +310,7 @@
   (olena/oln/morpho/extrema.hxx (oln/j/4_extrema.hx 1.6 640))
   (olena/oln/morpho/extrema_killer.hh (oln/e/19_extrema_ki 1.7.1.4.1.4 640))
   (olena/oln/morpho/fast_morpho.hh (oln/46_fast_morph 1.5 640))
-  (olena/oln/morpho/fast_morpho.hxx (oln/45_fast_morph 1.10 640))
+  (olena/oln/morpho/fast_morpho.hxx (oln/45_fast_morph 1.11 640))
   (olena/oln/morpho/geodesic_dilation.hh (oln/37_geodesic_d 1.11.1.5 640))
   (olena/oln/morpho/geodesic_erosion.hh (oln/36_geodesic_e 1.12 640))
   (olena/oln/morpho/gradient.hh (oln/b/3_gradient.h 1.6 640))
@@ -898,9 +895,9 @@
 ;; Files added by populate at Fri, 18 Jul 2003 12:28:56 +0200,
 ;; to version 2003paradigm.8(w), by david:
 
-  (olena/oln/core/impl/image_array3d.hh (oln/t/32_image_arra 1.4 644))
-  (olena/oln/core/impl/image_array2d.hh (oln/t/33_image_arra 1.5 644))
-  (olena/oln/core/impl/image_array1d.hh (oln/t/34_image_arra 1.4 644))
+  (olena/oln/core/impl/image_array3d.hh (oln/t/32_image_arra 1.4 640))
+  (olena/oln/core/impl/image_array2d.hh (oln/t/33_image_arra 1.5 640))
+  (olena/oln/core/impl/image_array1d.hh (oln/t/34_image_arra 1.4 640))
 
 ;; Files deleted by depopulate at Fri, 18 Jul 2003 12:39:16 +0200,
 ;; from version 2003paradigm.8(w), by david:
@@ -913,12 +910,12 @@
 ;; Files added by populate at Tue, 22 Jul 2003 10:09:18 +0200,
 ;; to version 2003paradigm.10(w), by david:
 
-  (olena/tests/core/tests/borders (oln/t/35_borders 1.2 644))
+  (olena/tests/core/tests/borders (oln/t/35_borders 1.2 640))
 
 ;; Files added by populate at Tue, 22 Jul 2003 11:36:19 +0200,
 ;; to version 2003paradigm.11(w), by david:
 
-  (olena/tests/core/tests/clone (oln/t/36_clone 1.1 644))
+  (olena/tests/core/tests/clone (oln/t/36_clone 1.1 640))
 
 
   (olena/tests/core/tests/ref (oln/t/37_ref 1.3 640))
@@ -936,32 +933,32 @@
 ;; Files added by populate at Sat, 26 Jul 2003 15:39:29 +0200,
 ;; to version 2003paradigm.20(w), by david:
 
-  (olena/tests/core/tests/window (oln/u/1_window 1.1 644))
+  (olena/tests/core/tests/window (oln/u/1_window 1.1 640))
 
 ;; Files added by populate at Sat, 26 Jul 2003 15:39:35 +0200,
 ;; to version 2003paradigm.20(w), by david:
 
-  (olena/tests/core/tests/neighborhood (oln/u/2_neighborho 1.1 644))
+  (olena/tests/core/tests/neighborhood (oln/u/2_neighborho 1.1 640))
 
 ;; Files added by populate at Sat, 26 Jul 2003 15:39:46 +0200,
 ;; to version 2003paradigm.20(w), by david:
 
-  (olena/oln/core/abstract/window_base.hh (oln/u/3_window_bas 1.3 644))
+  (olena/oln/core/abstract/window_base.hh (oln/u/3_window_bas 1.3 640))
 
 ;; Files added by populate at Sat, 26 Jul 2003 15:39:52 +0200,
 ;; to version 2003paradigm.20(w), by david:
 
-  (olena/oln/core/abstract/windownd.hh (oln/u/4_windownd.h 1.2 644))
+  (olena/oln/core/abstract/windownd.hh (oln/u/4_windownd.h 1.2 640))
 
 ;; Files added by populate at Sat, 26 Jul 2003 15:39:56 +0200,
 ;; to version 2003paradigm.20(w), by david:
 
-  (olena/oln/core/abstract/w_windownd.hh (oln/u/5_w_windownd 1.1 644))
+  (olena/oln/core/abstract/w_windownd.hh (oln/u/5_w_windownd 1.1 640))
 
 ;; Files added by populate at Sat, 26 Jul 2003 15:40:00 +0200,
 ;; to version 2003paradigm.20(w), by david:
 
-  (olena/oln/core/abstract/neighborhoodnd.hh (oln/u/6_neighborho 1.1 644))
+  (olena/oln/core/abstract/neighborhoodnd.hh (oln/u/6_neighborho 1.1 640))
 
 ;; Files deleted by depopulate at Sat, 26 Jul 2003 15:40:05 +0200,
 ;; from version 2003paradigm.20(w), by david:
@@ -985,12 +982,12 @@
 
 
   (olena/tests/level/Makefile.am (oln/t/46_Makefile.a 1.1 600))
-  (olena/tests/level/cc.cc (oln/t/47_cc.cc 1.1 604))
-  (olena/tests/level/compare.cc (oln/t/48_compare.cc 1.1 604))
-  (olena/tests/level/connected.cc (oln/t/49_connected. 1.1 604))
-  (olena/tests/level/invert.cc (oln/t/50_invert.cc 1.1 604))
-  (olena/tests/level/set_level.cc (oln/t/51_set_level. 1.1 604))
-  (olena/tests/level/threshold.cc (oln/u/0_threshold. 1.1 604))
+  (olena/tests/level/cc.cc (oln/t/47_cc.cc 1.1 600))
+  (olena/tests/level/compare.cc (oln/t/48_compare.cc 1.1 600))
+  (olena/tests/level/connected.cc (oln/t/49_connected. 1.1 600))
+  (olena/tests/level/invert.cc (oln/t/50_invert.cc 1.1 600))
+  (olena/tests/level/set_level.cc (oln/t/51_set_level. 1.1 600))
+  (olena/tests/level/threshold.cc (oln/u/0_threshold. 1.1 600))
 ;; Files deleted by depopulate at Sat, 26 Jul 2003 16:48:37 +0200,
 ;; from version 2003paradigm.20(w), by david:
 

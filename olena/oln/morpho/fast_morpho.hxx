@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,6 +34,7 @@
 // structuring elements". Pattern Recognition Letters,
 // 17(14):1451-1460, 1996.
 
+# include <mlc/is_a.hh>
 # include <oln/utils/histogram.hh>
 
 namespace oln {
@@ -44,12 +45,14 @@ namespace oln {
       // Find structuring elements to be added/removed from the histogram
       // when we move forward along each direction.
       // FIXME: talking about struct elts, but using add(dp) that can't work on w_windows
-      template<class E1>
+      template<class E1, class E2, class E3>
       void
-      find_struct_elts(const typename abstract::struct_elt<E1>::exact_type& se,
-		       E1 se_add[mlc::exact<E1>::ret::dim],
-		       E1 se_rem[mlc::exact<E1>::ret::dim])
+      find_struct_elts(const abstract::struct_elt<E1>& se,
+		       E2 se_add[mlc::exact<E2>::ret::dim],
+		       E3 se_rem[mlc::exact<E3>::ret::dim])
       {
+	mlc_is_a(E2, abstract::struct_elt)::ensure();
+	mlc_is_a(E3, abstract::struct_elt)::ensure();
 	const unsigned dim = E1::dim;
 
 	// back[n] allows to move backward on coordinate `n'.
@@ -263,7 +266,7 @@ namespace oln {
       // compute delta structuring elements for forward movements
       E se_add[dim];
       E se_rem[dim];
-      internal::find_struct_elts(to_exact(se), se_add, se_rem);
+      internal::find_struct_elts(se, se_add, se_rem);
 
       // compute delta structuring elements for backward movements
       E se_add_back[dim];

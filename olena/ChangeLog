@@ -1,4 +1,8 @@
-2003-07-28  David Lesage  <daivd@lrde.epita.fr>
+2003-07-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/morpho/fast_morpho.hxx: Minor update.
+
+2003-07-28  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/abstract/struct_elt.hh: Remove copy constructor for -W
 	compliance.
