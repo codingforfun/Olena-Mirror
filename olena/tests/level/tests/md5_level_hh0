@@ -1,0 +1,32 @@
+//                                                                  -*- c++ -*-
+#include "data.hh"
+#include <oln/utils/md5.hh>
+
+#include "check.hh"
+#include <oln/basics2d.hh>
+#include <oln/level/cc.hh>
+#include <ntg/all.hh>
+#include <iostream>
+
+int main()
+{
+  oln::utils::key::value_type   data_key[16] = {0x50, 0x24, 0x28, 0x80, 0x6e,
+						0x54, 0x9b, 0x5a, 0xff, 0x19,
+						0xf, 0xcd, 0x4b, 0xe0, 0x38,
+						0x3d};
+  oln::utils::key		   key(data_key);
+
+  unsigned card;
+  oln::image2d<ntg::bin> light = oln::load(rdata("face_se.pbm"));
+  if (oln::utils::md5(oln::level::frontp_connected_component<ntg::int_u8>
+		      (light,
+		       oln::neighb_c8(),
+		       card)) == key)
+    std::cout << "OK" << std::endl;
+  else
+    {
+      std::cout << "FAIL" << std::endl;
+      return true;
+    }
+  std::cout << card << " connected components" << std::endl;
+}
