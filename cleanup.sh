@@ -1,27 +1,18 @@
 #! /bin/sh
 
 {
-  find . -name Makefile.in
-  find . -name \*~
-  find . -name \*\#
-  find . -name .\#\*
-  find . -name configure
-  find . -name aclocal.m4 
-  find . -name mkinstalldirs
-  find . -name depcomp
-  find . -name install-sh
-  find . -name missing
-  find . -name diffs.patch
+  find . -name \*~ \
+     -or -name  \*\# \
+     -or -name  .\#\* \
+     -or -name \*.log 
   echo "oln/oln/config/pconf-inc.in"
-  echo "oln/oln-version"
-  echo "doc/oln-version"
-  echo "tools/oln-version"
-  find . -name \*.log
+  echo "oln/oln/config/pconf.inc"
+  echo "oln/oln/config/pconf.hh"
 } | xargs rm -rf
 
-{
-  find . -name autom4te.cache
-  find . -name .libs
-  find . -name .deps
-} | xargs rm -rf
+find . -name autom4te.cache \
+   -or -name .libs \
+   -or -name .deps \
+ | xargs rm -rf
+
 

@@ -181,6 +181,7 @@ write_postlude_and_test (ofstream & ofs,
 	  + CPPFLAGS + ' '
 	  + OLN_CXXFLAGS + ' '
 	  + OLN_CPPFLAGS + ' '
+	  + CXXFLAGS_STRICT_ERRORS + ' '
 	  + Isrcdir ("../..") + ' '
 	  + Isrcdir ("../check") + ' ' + "-L../check -lcheck " + filename;
 	int ret = system (cmdline.c_str ());

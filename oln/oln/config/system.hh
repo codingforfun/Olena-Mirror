@@ -32,12 +32,27 @@
 #  include <config.h>
 # endif 
 
-# if HAVE_LIMITS
-#  include <limits>
+# ifndef IGNORE_PCONF_HH
+#  include <oln/config/pconf.hh>
 # endif
-
-# include <oln/config/pconf.hh>
 # include <cmath>
+
+# ifndef OLN_USE_C_LIMITS
+#  include <limits>
+#  define OLN_DOUBLE_INFINITY (std::numeric_limits<double>::infinity())
+#  define OLN_FLOAT_INFINITY (std::numeric_limits<float>::infinity())
+# else
+#  ifdef HUGE_VAL
+#   define OLN_DOUBLE_INFINITY HUGE_VAL
+#   ifdef HUGE_VALF
+#    define OLN_FLOAT_INFINITY HUGE_VALF
+#   else
+#    define OLN_FLOAT_INFINITY ((float)HUGE_VAL)
+#   endif
+#  else
+#   error Cannot define Infinity in this configuration.
+#  endif
+# endif
 
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846264338327
@@ -78,7 +93,8 @@
    `std::rel_ops' but since g++ < 3 doesn't honor `std' it makes sense
    to use only `rel_ops'.)
 */
-# if (defined __GNUC__) && (__GNUC__ < 3) && HAVE_STL_CONFIG_H
+
+# if defined(__GNUC__) && (__GNUC__ < 3) 
 #  include <stl_config.h>
 #  undef __STL_BEGIN_RELOPS_NAMESPACE
 #  define __STL_BEGIN_RELOPS_NAMESPACE namespace rel_ops {

@@ -1,5 +1,8 @@
-include $(top_srcdir)/check/Makefile.check
+## Process this file through Automake to create Makefile.in -*- Makefile -*-
 
+include $(top_srcdir)/tests/check/Makefile.check
+
+# Tests in this directory make use of Zlib if present.
 LDADD += $(ZLIB_LDFLAGS)
 AM_CXXFLAGS += $(ZLIB_CXXFLAGS)
 
@@ -18,3 +21,4 @@ CLEANFILES =					\
   neighbor9.pbm neighbor9.ppbm			\
   se.pbm se.ppbm se9.pbm se9.ppbm		\
   se9.pbm.gz neighbor9.pbm.gz
+

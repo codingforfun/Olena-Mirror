@@ -10,7 +10,6 @@ nobase_pkginclude_HEADERS =			\
   basics3d.hh					\
   config/system.hh				\
   config/pconf.hh				\
-  config/pconf.inc				\
   convert/basics.hh				\
   convert/bound.hh				\
   convert/colorconv.hh				\
@@ -249,3 +248,7 @@ nobase_pkginclude_HEADERS =			\
   types/yiq.hh					\
   types/yuv.hh
 
+# As of Automake 1.7, despite the mention
+# in AC_CONFIG_FILES in configure.ac, this file
+# is not distributed.
+EXTRA_DIST = config/pconf-hh.in

@@ -18,6 +18,7 @@ install:
 
    * the headers in `/usr/local/include/oln',
    * utilities in `/usr/local/bin',
+   * sample images in '/usr/local/share/oln',
    * the autoconf helper oln.m4 in `/usr/local/share/aclocal'.
 
 

@@ -1,33 +1,53 @@
+###
+### Stuff for header files
+###
+
+# OLN_PATH_LOCAL([RELATIVE-PATH-TO-OLENA-SOURCES])
+
+# Tries to detect Olena sources "near" the current source directory.
+# This macro is noticeably used in the Olena distribution itself
+# to instruct "configure" to use the bundled Olena sources.
+
+# User projects can use this macro to point their "configure" to a 
+# nonstandard Olena sources location, by invoking it _before_ using
+# AC_WITH_OLN. See oln/configure.ac or doc/configure.ac in the Olena
+# distribution for an example.
+
 AC_DEFUN(OLN_PATH_LOCAL, 
 [dnl
   advertised_oln_dir=ifelse([$1], [], [no], [$1])
-  AC_CACHE_CHECK([whether Olena resides around us],
+  AC_CACHE_CHECK([for Olena in [$advertised_oln_dir]],
                  [oln_cv_local_src],
 		 [oln_cv_local_src=no
                   if test "x$advertised_oln_dir" != xno; then
                      oln_dir=`pwd`
-                     advertised_oln_hdir=`cd "$srcdir" && cd "$advertised_oln_dir" && pwd`
+                     advertised_oln_hdir=`cd "$srcdir" && \
+					  cd "$advertised_oln_dir" && pwd`
                      cd "$oln_dir"
-                     if test -r "$advertised_oln_hdir/oln/config/pconf.hh"; then
+                     if test -r "$advertised_oln_hdir/oln/config/system.hh"
+		     then
                         oln_cv_local_src="$advertised_oln_hdir"
                      fi
                   fi])
   if test "x$oln_cv_local_src" != xno; then
-     AC_CACHE_CHECK([for auto-generated pconf.inc],
+     # If Olena is around us, find the build directory.
+     AC_CACHE_CHECK([for build-time Olena directory],
                     [oln_cv_build_src],
                     [oln_cv_build_src=no
-                     if test -r "$oln_cv_local_src/oln/config/pconf.inc"; then
+                     if test -r "$oln_cv_local_src/oln/config/pconf.hh"; then
                         oln_cv_build_src="$oln_cv_local_src"
                      else
                         oln_dir=`pwd`
-                        advertised_oln_idir=`cd "$advertised_oln_dir" && pwd`
+                        oln_cv_build_src=`cd "$advertised_oln_dir" && pwd`
                         cd "$oln_dir"
-                        if test -r "$advertised_oln_idir/oln/config/pconf.inc"; then
-                           oln_cv_build_src="$advertised_oln_idir"
-                        fi
                      fi])
   fi
 ])
+
+# OLN_PATH_USER
+
+# Checks for the location of Olena sources specified with the
+# user with the flag --with-oln.
 
 AC_DEFUN(OLN_PATH_USER, 
 [dnl
@@ -35,149 +55,202 @@ AC_DEFUN(OLN_PATH_USER,
 		 [oln_cv_user_hint], 
                  [oln_cv_user_hint=no
                   AC_ARG_WITH([oln],
-                              [AC_HELP_STRING([--with-oln=DIR], 
-                                              [Include directory where Olena is installed (optional)])],
-                              [if test -r "$withval/oln/config/pconf.hh"; then
-				  oln_cv_user_hint="$withval"
-			       fi])])
+                     [AC_HELP_STRING([--with-oln=DIR], 
+                     [Include directory where Olena is installed (optional)])],
+                     [if test -r "$withval/oln/config/system.hh"; then
+		        oln_cv_user_hint="$withval"
+		      fi])])
 ])
 
-AC_DEFUN(_OLN_CHECK, 
+# _OLN_CHECK_HEADERS
+
+# Internal macro used by OLN_PATH_HEADERS.
+# This macro checks the actual availability of Olena headers after
+# the other heuristics have tried setting OLN_INCLUDE_DIR and CPPFLAGS.
+
+AC_DEFUN(_OLN_CHECK_HEADERS, 
 [dnl
-  AC_REQUIRE([AC_PROG_CXX])
-  AC_LANG_PUSH([C++])
+ AC_REQUIRE([AC_PROG_CXX])
+ AC_LANG_PUSH([C++])
 
-  have_olena=yes
-  oln_save_CPPFLAGS="$CPPFLAGS"
-  CPPFLAGS="$OLN_CPPFLAGS $CPPFLAGS"
-  AC_CHECK_HEADER([oln/config/pconf.hh], [], [have_olena=no])
-  CPPFLAGS="$oln_save_CPPFLAGS"
+ have_olena=yes
+ oln_save_CPPFLAGS="$CPPFLAGS"
+ CPPFLAGS="$OLN_CPPFLAGS $CPPFLAGS"
+ # At this point, we can be in a situation where pconf.hh does not
+ # exist _yet_. In that particular case, we need a workaround.
+ AC_CHECK_HEADER([oln/config/pconf.hh], [], 
+          [CPPFLAGS="$CPPFLAGS -DIGNORE_PCONF_HH"])
+ AC_CHECK_HEADER([oln/config/system.hh], [], [have_olena=no])
 
+ CPPFLAGS="$oln_save_CPPFLAGS"
   if test $have_olena = yes; then
-     if test x$OLN_INCLUDE_DIR != x; then
-        AC_MSG_NOTICE([using include path $OLN_INCLUDE_DIR to find Olena.])
-     else
-
-	# Here Olena was found in the standard search path.
-	# FIXME: to forcibly compute OLN_INCLUDE_DIR, we rely on it being defined
-	# in the installed headers. This leads to a bug if the headers are moved
-        # after being installed or installed with a DESTDIR different
-        # than what was computed during a run of `configure'.
-
-        AC_MSG_CHECKING([for location of Olena headers])
-
-        OLN_INCLUDE_DIR=no
-        AC_TRY_RUN([@%:@include <oln/config/pconf.hh>
-		    @%:@include <fstream>
-		    int main(void) { std::ofstream f("conftest.oln"); f << OLN_INCLUDE_DIR; return 0; }], 
-		   [OLN_INCLUDE_DIR=`cat conftest.oln`], 
-		   [], [])
-
-        if test x$OLN_INCLUDE_DIR != xno; then
-             if test -r $OLN_INCLUDE_DIR/oln/config/pconf.hh; then
-                AC_MSG_RESULT([$OLN_INCLUDE_DIR])
-             else
-	        AC_MSG_RESULT([duh ?])
-	        AC_MSG_WARN([Olena advertises $OLN_INCLUDE_DIR but $OLN_INCLUDE_DIR/oln/config/pconf.hh not found])
-	     fi
-        else 
-            OLN_INCLUDE_DIR=''
-            AC_MSG_RESULT([unknown. Expect problems.])
-        fi
-     fi
+  if test "x$OLN_INCLUDE_DIR" != x; then
+   AC_MSG_NOTICE([using include path $OLN_INCLUDE_DIR to find Olena.])
   else
-     AC_MSG_WARN([Olena source headers not found. Expect problems.])
-  fi   
-
-  AC_SUBST([OLN_INCLUDE_DIR])
-
-  AC_LANG_POP([C++])
+   # Here Olena was found in the standard search path. We do not have
+   # any portable way to retrieve the name of this directory.
+   AC_MSG_WARN([Olena found in the subether. Cannot set OLN_INCLUDE_DIR.])
+  fi
+ else
+    AC_MSG_WARN([Olena source headers not found. Expect problems.])
+ fi   
+ AC_LANG_POP([C++])
 ])
+
+# OLN_PATH_HEADERS
+
+# Find an Olena location from various informations: availability of
+# Olena sources around the current source directory, user flags, environment
+# variable.
+
+# This macro sets, if needed, OLN_CPPFLAGS before proceeding with
+# _OLN_CHECK_HEADERS.
 
 AC_DEFUN(OLN_PATH_HEADERS,
 [dnl 
   AC_REQUIRE([OLN_PATH_LOCAL])
   AC_REQUIRE([OLN_PATH_USER])
 
-  if test "x$oln_cv_local_src" != xno; then
-     OLN_INCLUDE_DIR="$oln_cv_local_src"
-     if test "x$oln_cv_build_src" != xno -a "x$oln_cv_local_src" != "x$oln_cv_build_src"; then
-        OLN_EXTRA_CPPFLAGS="-I$oln_cv_build_src"
-     fi
-  fi
-
-  # User-specified directory overrides any previous definition
+  # User-specified directory overrides any other definition
   if test "x$oln_cv_user_hint" != xno; then
      if test "x$OLN_INCLUDE_DIR" != x ; then
        AC_MSG_WARN([using $oln_cv_user_hint instead of $OLN_INCLUDE_DIR])
      fi
      OLN_INCLUDE_DIR="$oln_cv_user_hint"
+  else
+    if test "x$oln_cv_local_src" != xno; then
+       OLN_INCLUDE_DIR="$oln_cv_local_src"
+       if test "x$oln_cv_build_src" != xno \
+            -a "x$oln_cv_local_src" != "x$oln_cv_build_src"; then
+          OLN_EXTRA_CPPFLAGS="-I$oln_cv_build_src"
+       fi
+    fi
   fi
 
-  AC_ARG_VAR([OLN_INCLUDE_DIR], [location of Olena (<include dir>, should be autodetected)])
+  AC_ARG_VAR([OLN_INCLUDE_DIR], 
+	     [location of Olena (<include dir>, should be autodetected)])
   if test "x$OLN_INCLUDE_DIR" != x ; then
      OLN_CPPFLAGS="-I$OLN_INCLUDE_DIR $OLN_EXTRA_CPPFLAGS $OLN_CPPFLAGS"
   fi
+  AC_SUBST([OLN_INCLUDE_DIR])
   AC_SUBST([OLN_CPPFLAGS])
 
-  _OLN_CHECK
+  _OLN_CHECK_HEADERS
 ])
+
+###
+### Stuff for images
+###
+
+# OLN_PATH_LOCAL_IMGS([RELATIVE-PATH-TO-OLENA-IMAGES])
+
+# Tries to detect Olena sample images "near" the current source directory.
+# This macro is noticeably used in the Olena distribution itself
+# to instruct "configure" to use the bundled Olena images.
+
+# User projects can use this macro to point their "configure" to a 
+# nonstandard Olena images location, by invoking it _before_ using
+# AC_WITH_OLN_IMGS. See oln/configure.ac or doc/configure.ac in the Olena
+# distribution for an example.
+
+AC_DEFUN(OLN_PATH_LOCAL_IMGS,
+[dnl
+  advertised_oln_img_dir=ifelse([$1], [], [no], [$1])
+  AC_CACHE_CHECK([for Olena images in [$advertised_oln_img_dir]],
+                 [oln_cv_local_imgs],
+		 [oln_cv_local_imgs=no
+                  if test "x$advertised_oln_img_dir" != xno; then
+                    oln_dir=`pwd`
+                    advertised_oln_img_idir=`cd "$srcdir" && \
+			         cd "$advertised_oln_img_dir" && \
+				 pwd`
+                    cd "$oln_dir"
+                    if test -r "$advertised_oln_img_idir/lena.ppm"; then
+                       oln_cv_local_imgs="$advertised_oln_img_idir"
+                    fi
+                  fi])
+  if test "x$oln_cv_local_imgs" != xno; then
+     # If Olena is around us, find the build directory.
+     AC_CACHE_CHECK([for build-time Olena images directory],
+                    [oln_cv_build_imgs],
+                    [oln_cv_build_imgs=no
+                     if test -r "$oln_cv_local_imgs/lena.pgm"; then
+			oln_cv_build_imgs="$oln_cv_local_imgs"
+                     else
+                       oln_dir=`pwd`
+                       oln_cv_build_imgs=`mkdir -p "$advertised_oln_img_dir" && \
+			  	          cd "$advertised_oln_img_dir" && pwd`
+                       cd "$oln_dir"
+                     fi])
+  fi
+])
+
+# OLN_PATH_USER
+
+# Checks for the location of Olena images specified with the
+# user with the flag --with-oln-imgs.
+
+AC_DEFUN(OLN_PATH_USER_IMGS, 
+[dnl
+  AC_CACHE_CHECK([for Olena images in user-specified directory],
+		 [oln_cv_user_img_hint], 
+                 [oln_cv_user_img_hint=no
+                  AC_ARG_WITH([oln-imgs],
+                    [AC_HELP_STRING([--with-oln-imgs=DIR], 
+                    [Directory where Olena images are installed (optional)])],
+                    [if test -r "$withval/lena.ppm"; then
+		       oln_cv_user_img_hint="$withval"
+                     fi])])
+])
+
+# OLN_PATH_IMGS
+
+# Find an Olena images location from various informations: availability of
+# Olena images around the current source directory, user flags, environment
+# variable.
 
 AC_DEFUN(OLN_PATH_IMGS,
 [dnl
-  AC_REQUIRE([OLN_PATH_LOCAL])
+  AC_REQUIRE([OLN_PATH_LOCAL_IMGS])
+  AC_REQUIRE([OLN_PATH_USER_IMGS])
 
-  olndatadir=`eval echo $datadir/oln`
-  AC_ARG_VAR([OLN_IMG_DIR], [location of Olena sample images (should be autodetected)])
-
-  AC_CACHE_CHECK([for Olena sample images],
-                 [oln_cv_img_dir],
-                 [oln_cv_img_dir=no
-                  AC_ARG_WITH([oln-imgs],
-	                      [AC_HELP_STRING([--with-oln-imgs=DIR],
-			                      [location of Olena sample images (defaults to $olndatadir)])],
-                              [oln_img_dir="$withval"],
-                              [oln_img_dir=""])
-                  for d in "$OLN_IMG_DIR" "$oln_cv_local_src/img" "$oln_img_dir" "$olndatadir"; do
-                    if test -d "$d"; then
-                       if test -r "$d/lena.ppm"; then
-                          oln_cv_img_dir="$d"
-                          break
-                       fi
-                    fi
-                  done])
-  if test "x$oln_cv_img_dir" != xno ; then
-    OLN_IMG_DIR="$oln_cv_img_dir"
-
-    ### Check for location of autogenerated images.
-    # FIXME: this check is incomplete since the images are not available at the
-    # time configure is run.
-
-    AC_CACHE_CHECK([for Olena autogenerated sample images],
-                   [oln_cv_img_aux_dir],
-                   [oln_cv_img_aux_dir=no
-                    AC_ARG_WITH([oln-aux-imgs],
-                                [AC_HELP_STRING([--with-oln-aux-imgs=DIR],
-                                                [location of derivate Olena images (defaults to $olndatadir)])],
-                                [oln_img_aux_dir="$withval"],
-                                [oln_img_aux_dir=""])
-                    for d in "$oln_cv_build_src/img" "$oln_img_aux_dir" "$oln_cv_img_dir" "$olndatadir"; do
-                        if test -d "$d"; then
-                           oln_cv_img_aux_dir="$d"
-                           break 
-                        fi
-                    done])
-     if test "x$oln_cv_img_aux_dir" != xno; then
-        OLN_IMG_AUX_DIR="$oln_cv_img_aux_dir"
-     else
-        AC_MSG_WARN([Olena derivate images not found. Expect problems.])
+  # User-specified directory overrides any other definition
+  OLN_IMG_AUX_DIR="."
+  if test "x$oln_cv_user_img_hint" != xno; then
+     if test "x$OLN_IMG_DIR" != x ; then
+       AC_MSG_WARN([using $oln_cv_user_img_hint instead of $OLN_IMG_DIR])
      fi
+     OLN_IMG_DIR="$oln_cv_user_img_hint"
   else
-    AC_MSG_WARN([Olena images not found. Expect problems.])
+    if test "x$oln_cv_local_imgs" != xno; then
+       OLN_IMG_DIR="$oln_cv_local_imgs"
+       if test "x$oln_cv_build_imgs" != xno; then
+          OLN_IMG_AUX_DIR="$oln_cv_build_imgs"
+       fi
+    fi
   fi
-  AC_SUBST([OLN_IMG_DIR])  
-  AC_SUBST([OLN_IMG_AUX_DIR])  
+
+  AC_ARG_VAR([OLN_IMG_DIR], 
+             [location of Olena images (<dir>, should be autodetected)])
+  AC_SUBST([OLN_IMG_DIR])
+  AC_SUBST([OLN_IMG_AUX_DIR])
+  AC_SUBST([OLN_CPPFLAGS])
 ])
+
+
+###
+### General-use macro repository
+###
+
+
+# OLN_TEMPLATE_DEPTH([MINIMUM-DEPTH])
+
+# Check for deep template recursion upto MINIMUM-DEPTH.
+
+# Automatically adds the flag `-ftemplate-depth' to OLN_CXXFLAGS when :
+# - deep template recursion is not available when it is not present
+# - the compiler supports it 
+# - it provides the right effect when present
 
 AC_DEFUN(OLN_TEMPLATE_DEPTH,
 [dnl
@@ -185,23 +258,33 @@ AC_DEFUN(OLN_TEMPLATE_DEPTH,
   AC_LANG_PUSH([C++])
 
   cxx_tdepth=ifelse([$1], , 50, [$1])
-  AC_CACHE_CHECK([for automatic C++ template depth adjustment by the compiler, upto $cxx_tdepth],
+  AC_CACHE_CHECK([for C++ template recursion upto $cxx_tdepth levels],
                  [oln_cv_template_flags],
                  [oln_cv_template_flags=direct
                   oln_save_CPPFLAGS="$CPPFLAGS"
                   oln_save_CXXFLAGS="$CXXFLAGS"
                   CPPFLAGS="$CPPFLAGS $OLN_CPPFLAGS -DTDEPTH=$cxx_tdepth"
                   CXXFLAGS="$CXXFLAGS $OLN_CXXFLAGS"
-                  AC_LINK_IFELSE([template<unsigned n> struct rec { typedef typename rec<n-1>::ret ret; };
-                                  template<> struct rec<0> { typedef int ret; };
-                                  int main(void) { rec<TDEPTH>::ret i = 0; return i; }], 
-                                 [], 
-                                 [CXXFLAGS="$CXXFLAGS -ftemplate-depth-$cxx_tdepth"
-                                  AC_LINK_IFELSE([template<unsigned n> struct rec { typedef typename rec<n-1>::ret ret; };
-                                                  template<> struct rec<0> { typedef int ret; };
-                                                  int main(void) { rec<TDEPTH>::ret i = 0; return i; }],
-                                                 [oln_cv_template_flags="-ftemplate-depth-$cxx_tdepth"], 
-                                                 [oln_cv_template_flags=unsupported])])
+                  AC_LINK_IFELSE([template<unsigned n> 
+				  struct rec { 
+			             typedef typename rec<n-1>::ret ret; 
+                                  };
+                                  template<> struct rec<0> 
+                                  { typedef int ret; };
+                                  int main(void) 
+                                  { rec<TDEPTH>::ret i = 0; return i; }], 
+                      [], 
+                      [CXXFLAGS="$CXXFLAGS -ftemplate-depth-$cxx_tdepth"
+                       AC_LINK_IFELSE([template<unsigned n> 
+                                       struct rec { 
+                                           typedef typename rec<n-1>::ret ret;
+                                       };
+                                      template<> struct rec<0> 
+                                      { typedef int ret; };
+                                      int main(void) 
+                                      { rec<TDEPTH>::ret i = 0; return i; }],
+                       [oln_cv_template_flags="-ftemplate-depth-$cxx_tdepth"], 
+                       [oln_cv_template_flags=unsupported])])
                   CPPFLAGS="$oln_save_CPPFLAGS"
                   CXXFLAGS="$oln_save_CXXFLAGS"])
 
@@ -218,8 +301,42 @@ AC_DEFUN(OLN_TEMPLATE_DEPTH,
   AC_SUBST([OLN_CXXFLAGS])
 ])
 
+## The following macro (AC_CXX_EXCEPTIONS) is courtesy
+## Luc Maisonobe, extracted from the Autoconf Macro Repository
+
+# AC_CXX_EXCEPTIONS
+
+# Checks whether the current C++ compiler configuration supports
+# exceptions. It can be used to e.g. abort configure if exceptions
+# are disabled (-fdisable-exceptions in CXXFLAGS or the like),
+# instead of waiting for compilation errors.
+
+AC_DEFUN([AC_CXX_EXCEPTIONS],
+[dnl
+  AC_CACHE_CHECK([whether the compiler supports exceptions],
+                 [ac_cv_cxx_exceptions],
+                 [AC_REQUIRE([AC_PROG_CXX])
+                  AC_LANG_PUSH([C++])
+                  AC_COMPILE_IFELSE([try { throw 1; } 
+                                     catch (int i) { return i; }],
+			            [ac_cv_cxx_exceptions=yes],
+				    [ac_cv_cxx_exceptions=no])
+		  AC_LANG_POP([C++])])
+  if test "$ac_cv_cxx_exceptions" = yes; then
+     AC_DEFINE([HAVE_EXCEPTIONS], 1, 
+               [define if the compiler supports exceptions])
+  fi
+])
+
+# OLN_ENABLE_EXCEPTIONS([yes|no])
+# OLN_DISABLE_EXCEPTIONS
+
+# Add -DOLN_EXCEPTIONS to OLN_CXXFLAGS when the flag --enable-oln-exceptions 
+# is given to configure and exceptions are available.
+
 AC_DEFUN(OLN_ENABLE_EXCEPTIONS,
 [dnl
+  AC_REQUIRE([AC_CXX_EXCEPTIONS])
   oln_exn_default=m4_ifselse([$1], , [yes], [$1])
 
   AC_CACHE_CHECK([whether to use exceptions instead of assertions],
@@ -231,12 +348,25 @@ AC_DEFUN(OLN_ENABLE_EXCEPTIONS,
                            [oln_cv_use_exceptions=$oln_exn_default])])
 
   if test x$oln_cv_use_exceptions != xno; then
-     OLN_CPPFLAGS="$OLN_CPPFLAGS -DOLN_EXCEPTIONS"
+     if test x$ac_cv_cxx_exceptions != xno; then
+        OLN_CPPFLAGS="$OLN_CPPFLAGS -DOLN_EXCEPTIONS"
+     else
+        AC_MSG_WARN([exceptions disabled in C++, cannot use Olena exceptions])
+     fi
   fi
 
   AC_SUBST([OLN_CPPFLAGS])
 ])
 AC_DEFUN(OLN_DISABLE_EXCEPTIONS, [OLN_ENABLE_EXCEPTIONS([no])])
+
+# OLN_NUMERIC_LIMITS
+
+# Checks for the availability of std::numeric_limits::infinity()
+# from C++.
+
+# This tests adds -DOLN_USE_C_LIMITS to OLN_CPPFLAGS if the numeric
+# limits are unavailable, in which case HUGE_VAL and HUGE_VALF are
+# used instead by Olena.
 
 AC_DEFUN(OLN_NUMERIC_LIMITS,
 [dnl
@@ -258,8 +388,10 @@ AC_DEFUN(OLN_NUMERIC_LIMITS,
                  [ac_cv_have_limits_infinity], 
 	         [if test x$ac_cv_header_limits != xno; then
                      AC_TRY_LINK([@%:@include <limits>],
-	        		 [float f1 = std::numeric_limits<float>::infinity();
-		                  double f2 = std::numeric_limits<double>::infinity();],
+	        		 [float f1 = 
+				     std::numeric_limits<float>::infinity();
+		                  double f2 = 
+				     std::numeric_limits<double>::infinity();],
                 		 [ac_cv_have_limits_infinity=yes],
                 		 [ac_cv_have_limits_infinity=no])
                   else
@@ -267,58 +399,31 @@ AC_DEFUN(OLN_NUMERIC_LIMITS,
                   fi])
 
 
-  if test x$ac_cv_have_limits_infinity != xno; then
-  
-  # Usable std::numeric_limits were found in <limits>.
-  # Use them to define constants OLN_*_INFINITY.
-
-     AC_DEFINE(OLN_FLOAT_INFINITY, [(std::numeric_limits<float>::infinity())],
-	       [the infinity value for floats])
-     AC_DEFINE(OLN_DOUBLE_INFINITY, [(std::numeric_limits<double>::infinity())],
-               [the infinity value for doubles])
-  else
-
-  # Usable std::numeric_limits were not found in <limits>.
-  # Try to find a replacement using HUGE_VAL and (if it exists) HUGE_VALF.
-
-     AC_CACHE_CHECK([for HUGE_VAL],
-                    [ac_cv_have_huge_val], 
-		    [AC_TRY_LINK([@%:@include <cmath>],
-                     		 [double f1 = HUGE_VAL;], 
-                     		 [ac_cv_have_huge_val=yes], 
-                                 [ac_cv_have_huge_val=no])])
-
-     if test x$ac_cv_have_huge_val != xno; then
-         AC_DEFINE(OLN_DOUBLE_INFINITY, [HUGE_VAL], [the infinity value for doubles])
-         AC_CACHE_CHECK([for HUGE_VALF],
-                        [ac_cv_have_huge_valf], 
-			[AC_TRY_LINK([@%:@include <cmath>],
-                        	     [double f1 = HUGE_VALF;], 
-                        	     [ac_cv_have_huge_valf=yes], 
-                                     [ac_cv_have_huge_valf=no])])
-
-          if test x$ac_cv_have_huge_valf != xno; then
-              AC_DEFINE(OLN_FLOAT_INFINITY, [HUGE_VALF], [the infinity value for floats])
-          else
-              AC_DEFINE(OLN_FLOAT_INFINITY, [((float)HUGE_VAL)], [the infinity value for floats])
-          fi
-     else
-        AC_MSG_WARN([don't know how to define infinity on this host. Expect problems.])
-     fi
+  if test x$ac_cv_have_limits_infinity = xno; then
+     # Usable std::numeric_limits were *not* found in <limits>.
+     OLN_CPPFLAGS="-DOLN_USE_C_LIMITS $OLN_CPPFLAGS"
+     AC_SUBST([OLN_CPPFLAGS])
   fi
 
   AC_LANG_POP([C++])
-
 ])
+
+# OLN_C99_MATH
+
+# Checks for the availability of ISO C99 math functions from
+# C++.
+
+# This test attempts to use roundf and nearbyintf without flags
+# at first, then with -D_ISOC99_SOURCE which is known to
+# activate C99 declarations in the GNU libc headers.
+# If the latter works, the flag is added to OLN_CPPFLAGS.
 
 AC_DEFUN(OLN_C99_MATH,
 [dnl
   AC_REQUIRE([AC_PROG_CXX])
   AC_LANG_PUSH([C++])
-
-  ### Check for various ISO C99 float functions.
-  ### Olena noticeably uses roundf(3).
-
+# Check for various ISO C99 float functions.
+# Olena noticeably uses roundf(3).
   AC_CACHE_CHECK([for flag to activate C99 float functions from C++],
                  [oln_cv_c99_flags],
                  [oln_save_CPPFLAGS="$CPPFLAGS"
@@ -326,26 +431,25 @@ AC_DEFUN(OLN_C99_MATH,
 		  CPPFLAGS="$OLN_CPPFLAGS $CPPFLAGS"
 		  CXXFLAGS="$OLN_CXXFLAGS $CXXFLAGS"
 
-                  ### The checks are done using AC_TRY_COMPILE instead of AC_TRY_FUNC,
-                  ### because the latter uses invalid C++ syntax.
+# The checks are done using AC_TRY_COMPILE instead of AC_TRY_FUNC,
+# because the latter uses invalid C++ syntax.
                   AC_TRY_COMPILE([@%:@include <cmath>],
-                                 [float f1 = roundf(0f); float f2 = nearbyintf(0f);],  
+                                 [float f1 = roundf(0f); 
+				  float f2 = nearbyintf(0f);],  
                                  [oln_cv_c99_flags=unneeded],
-                                 [# When using a ISO-compliant C++98 compiler with a C99 standard library,
-		  		  # usually the C99 functions are not declared in C++ scope. 
-		  		  # 
-                  		  # However, with GNU systems, the _ISOC99_SOURCE macro conditional
-		  		  # forces C99 declarations when set to 1. 
-		  		  #
+                                 [
+# When using a ISO-compliant C++98 compiler with a C99 standard library,
+# usually the C99 functions are not declared in C++ scope. 
+# However, with GNU systems, the _ISOC99_SOURCE macro conditional
+# forces C99 declarations when set to 1. 
                                   CPPFLAGS="$CPPFLAGS -D_ISOC99_SOURCE=1"
                                   AC_TRY_COMPILE([@%:@include <cmath>],
-                                                 [float f1 = roundf(0.); float f2 = nearbyintf(0.);],  
-                                                 [oln_cv_c99_flags="-D_ISOC99_SOURCE=1"],
-                                                 [oln_cv_c99_flags=unavailable])])
+                                                 [float f1 = roundf(0.); 
+						  float f2 = nearbyintf(0.);],
+                                       [oln_cv_c99_flags="-D_ISOC99_SOURCE=1"],
+                                       [oln_cv_c99_flags=unavailable])])
                   CPPFLAGS="$oln_save_CPPFLAGS"
                   CXXFLAGS="$oln_save_CXXFLAGS"])
-
-
   AC_LANG_POP([C++])
 
   case "$oln_cv_c99_flags" in 
@@ -355,9 +459,13 @@ AC_DEFUN(OLN_C99_MATH,
         OLN_CPPFLAGS="$OLN_CPPFLAGS $oln_cv_c99_flags"
         ;;
   esac
-
   AC_SUBST([OLN_CPPFLAGS])
 ])
+
+# AC_WITH_OLN
+
+# Invoke configuration code to test for Olena and set a collection
+# of appropriate flags.
 
 AC_DEFUN(AC_WITH_OLN,
 [dnl
@@ -366,93 +474,162 @@ AC_DEFUN(AC_WITH_OLN,
   AC_REQUIRE([OLN_TEMPLATE_DEPTH])
   AC_REQUIRE([OLN_NUMERIC_LIMITS])
   AC_REQUIRE([OLN_C99_MATH])
-
-  AC_LANG_PUSH([C++])
-  AC_CHECK_HEADERS([stl_config.h])
-  AC_LANG_POP([C++])
 ])
 
+# AC_CXX_FLAGS
+
+# Attempts to recognize specific compilers to set, if availables, extra
+# flags for debugging, optimization and strict conformance to language
+# specifications.
+
+# This macro checks for the following compilers :
+#   - GNU C++ (g++)
+#   - Sun WorkShop C++ (Sun/CC)
+#   - Intel C++ (icc)
+#   - Comeau C++ (como)
+# and sets the following autoconf variables:
+#   CXXFLAGS_DEBUG
+#   CXXFLAGS_STRICT
+#   CXXFLAGS_OPTIMIZE
+
+AC_DEFUN([AC_CXX_FLAGS],
+[dnl
+   AC_REQUIRE([AC_PROG_CXX])
+   AC_LANG_PUSH([C++])
+   AC_CACHE_CHECK([for C++ compiler-specific extra flags],
+                  [oln_cv_cxx_style],
+                  [oln_cv_cxx_style=unknown
+                   if test "x$ac_compiler_gnu" != xno; then
+                      oln_cv_cxx_style=GNU
+                   elif $CXX -V 2>&1 | grep -i "WorkShop">/dev/null 2>&1; then 
+		      oln_cv_cxx_style=Sun
+                   elif $CXX -V 2>&1 | grep -i "Intel(R) C++">/dev/null 2>&1;
+                   then
+                      oln_cv_cxx_style=Intel
+                   else
+                      echo "int main() {}" >conftest.cc
+                      if $CXX --version conftest.cc 2>&1 \
+		         | grep -i "Comeau C/C++" >/dev/null 2>&1; then       
+                         oln_cv_cxx_style=Comeau
+		      fi
+                      rm -f conftest.*
+                   fi])
+   AC_LANG_POP([C++])
+
+   case "$oln_cv_cxx_style" in
+     GNU)
+      CXXFLAGS_DEBUG="-g"
+      CXXFLAGS_OPTIMIZE="-O3 -finline-limit-1000"
+      CXXFLAGS_STRICT="-W -Wall -pedantic"
+      CXXFLAGS_STRICT_ERRORS="-W -Wall -pedantic -Werror"
+      ;;
+     Sun)
+      CXXFLAGS_DEBUG="-g"
+      CXXFLAGS_OPTIMIZE="-fast"
+      CXXFLAGS_STRICT="-v"
+      CXXFLAGS_STRICT_ERRORS="-v -xwe"
+      ;;
+     Comeau)
+      CXXFLAGS_DEBUG="-g"
+      CXXFLAGS_STRICT="-r -a"
+      CXXFLAGS_STRICT_ERRORS="-r -A"
+      ;;
+     Intel)
+      CXXFLAGS_OPTIMIZE="-O3"
+      CXXFLAGS_DEBUG="-g"
+      CXXFLAGS_STRICT="-w2 -Wall"
+      CXXFLAGS_STRICT_ERRORS="-w2 -Wall -Werror"
+      ;;
+   esac
+   AC_SUBST([CXXFLAGS_DEBUG])
+   AC_SUBST([CXXFLAGS_OPTIMIZE])
+   AC_SUBST([CXXFLAGS_STRICT])
+   AC_SUBST([CXXFLAGS_STRICT_ERRORS])
+])
+
+# AC_WITH_CXX_FFTW
+
+# Checks for availability of fftw from C++ programs.
+
+# This macro sets FFTW_CXXFLAGS and FFTW_LDFLAGS if the library is
+# found and its functions available from C++.
 
 AC_DEFUN(AC_WITH_CXX_FFTW,
 [dnl
-   AC_REQUIRE([AC_PROG_CXX])
-   AC_LANG_PUSH([C++])
+ AC_REQUIRE([AC_PROG_CXX])
+ AC_LANG_PUSH([C++])
 
-   AC_ARG_WITH([fftw],
-      [AC_HELP_STRING([--with-fftw@<:@=DIR@:>@], [using fftw (DIR = prefix for fftw installation)])])
-   FFTW_CXXFLAGS=''
-   FFTW_LDFLAGS=''
-   if test "x$with_fftw" != xno; then
-      if test -n "$with_fftw"; then
-        FFTW_CXXFLAGS="-I${with_fftw}/include"
-        FFTW_LDFLAGS="-L${with_fftw}/lib"
-      fi
-      oln_save_CXXFLAGS="$CXXFLAGS"
-      oln_save_LDFLAGS="$LDFLAGS"
-      CXXFLAGS="$CXXFLAGS $FFTW_CXXFLAGS"
-      LDFLAGS="$LDFLAGS $FFTW_LDFLAGS"
-      oln_have_fftw=no
-      AC_CHECK_HEADER([fftw.h],
-                      [AC_CHECK_LIB([fftw], 
-                                    [fftw2d_create_plan],
-                                    [oln_have_fftw=yes
-                                     FFTW_LDFLAGS="$FFTW_LDFLAGS -lfftw -lrfftw"
-                                     AC_DEFINE([HAVE_FFTW], 1, [Define to 1 if we can use fftw])])])
-      CXXFLAGS="$oln_save_CXXFLAGS"
-      LDFLAGS="$oln_save_LDFLAGS"
-  fi
+ AC_ARG_WITH([fftw],
+      [AC_HELP_STRING([--with-fftw@<:@=DIR@:>@], 
+                      [using fftw (DIR = prefix for fftw installation)])])
+ FFTW_CXXFLAGS=''
+ FFTW_LDFLAGS=''
+ if test "x$with_fftw" != xno; then
+   if test -n "$with_fftw"; then
+     FFTW_CXXFLAGS="-I${with_fftw}/include"
+     FFTW_LDFLAGS="-L${with_fftw}/lib"
+   fi
+   oln_save_CXXFLAGS="$CXXFLAGS"
+   oln_save_LDFLAGS="$LDFLAGS"
+   CXXFLAGS="$CXXFLAGS $FFTW_CXXFLAGS"
+   LDFLAGS="$LDFLAGS $FFTW_LDFLAGS"
+   oln_have_fftw=no
+   AC_CHECK_HEADER([fftw.h],
+                 [AC_CHECK_LIB([fftw], 
+                               [fftw2d_create_plan],
+                               [oln_have_fftw=yes
+                                FFTW_LDFLAGS="$FFTW_LDFLAGS -lfftw -lrfftw"
+                                AC_DEFINE([HAVE_FFTW], 1, 
+                                          [Define to 1 if we can use fftw])])])
+   CXXFLAGS="$oln_save_CXXFLAGS"
+   LDFLAGS="$oln_save_LDFLAGS"
+ fi
+ AC_SUBST([FFTW_CXXFLAGS])
+ AC_SUBST([FFTW_LDFLAGS])
 
-  AC_SUBST([FFTW_CXXFLAGS])
-  AC_SUBST([FFTW_LDFLAGS])
-
-  AC_LANG_POP([C++])
+ AC_LANG_POP([C++])
 ])
 
+# AC_WITH_CXX_ZLIB
+
+# Checks for availability of Zlib from C++ programs.
+
+# This macro sets ZLIB_CXXFLAGS and ZLIB_LDFLAGS if the library is
+# found and its functions available from C++.
 
 AC_DEFUN(AC_WITH_CXX_ZLIB,
 [dnl
-   AC_REQUIRE([AC_PROG_CXX])
-   AC_LANG_PUSH([C++])
+ AC_REQUIRE([AC_PROG_CXX])
+ AC_LANG_PUSH([C++])
 
-   AC_ARG_WITH([zlib],
-      [AC_HELP_STRING([--with-zlib@<:@=DIR@:>@], [using zlib (DIR = prefix for zlib installation)])])
-   ZLIB_CXXFLAGS=''
-   ZLIB_LDFLAGS=''
-   if test "x$with_zlib" != xno; then
-      if test -n "$with_zlib"; then
-        ZLIB_CXXFLAGS="-I${with_zlib}/include"
-        ZLIB_LDFLAGS="-L${with_zlib}/lib"
-      fi
-      oln_save_CXXFLAGS="$CXXFLAGS"
-      oln_save_LDFLAGS="$LDFLAGS"
-      CXXFLAGS="$CXXFLAGS $ZLIB_CXXFLAGS"
-      LDFLAGS="$LDFLAGS $ZLIB_LDFLAGS"
-      oln_have_zlib=no
-      AC_CHECK_HEADER([zlib.h],
-                      [AC_CHECK_LIB([z], 
-                                    [gzopen],
-                                    [oln_have_zlib=yes
-                                     ZLIB_LDFLAGS="$ZLIB_LDFLAGS -lz"
-                                     AC_DEFINE([HAVE_ZLIB], 1, [Define to 1 if we can use zlib])])])
-      CXXFLAGS="$oln_save_CXXFLAGS"
-      LDFLAGS="$oln_save_LDFLAGS"
+ AC_ARG_WITH([zlib],
+             [AC_HELP_STRING([--with-zlib@<:@=DIR@:>@], 
+                    [using zlib (DIR = prefix for zlib installation)])])
+ ZLIB_CXXFLAGS=''
+ ZLIB_LDFLAGS=''
+ if test "x$with_zlib" != xno; then
+   if test -n "$with_zlib"; then
+     ZLIB_CXXFLAGS="-I${with_zlib}/include"
+     ZLIB_LDFLAGS="-L${with_zlib}/lib"
    fi
-   AC_SUBST([ZLIB_CXXFLAGS])
-   AC_SUBST([ZLIB_LDFLAGS])
+   oln_save_CXXFLAGS="$CXXFLAGS"
+   oln_save_LDFLAGS="$LDFLAGS"
+   CXXFLAGS="$CXXFLAGS $ZLIB_CXXFLAGS"
+   LDFLAGS="$LDFLAGS $ZLIB_LDFLAGS"
+   oln_have_zlib=no
+   AC_CHECK_HEADER([zlib.h],
+                   [AC_CHECK_LIB([z], 
+                               [gzopen],
+                               [oln_have_zlib=yes
+                                ZLIB_LDFLAGS="$ZLIB_LDFLAGS -lz"
+                                AC_DEFINE([HAVE_ZLIB], 1, 
+                                          [Define to 1 if we can use zlib])])])
+   CXXFLAGS="$oln_save_CXXFLAGS"
+   LDFLAGS="$oln_save_LDFLAGS"
+ fi
+ AC_SUBST([ZLIB_CXXFLAGS])
+ AC_SUBST([ZLIB_LDFLAGS])
 
-   AC_LANG_POP([C++])
-])
-
-AC_DEFUN([AC_WITH_CXX_WARNINGS], [dnl
-   # FIXME: This is pretty poor at the moment...
-   # FIXME: this is highly autoconf-internals dependent (undocumented variable used)
-   AC_REQUIRE([AC_PROG_CXX])
-   AC_MSG_CHECKING([whether we can enable g++-specific warning options to the compiler])
-   if test "x$ac_cv_cxx_compiler_gnu" != xno; then
-      AC_MSG_RESULT([yes])
-      CXXFLAGS="$CXXFLAGS -W -Wall -pedantic"
-   else
-      AC_MSG_RESULT([no])
-   fi
+ AC_LANG_POP([C++])
 ])
 

@@ -1,3 +1,5 @@
+## Process this file through Automake to create Makefile.in -*- Makefile -*-
+
 include Makefile.flags
 
 check_LIBRARIES = libcheck.a

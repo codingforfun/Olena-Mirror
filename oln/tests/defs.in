@@ -6,23 +6,20 @@ test -z "$VERBOSE" && {
 }
 
 CXX=@CXX@
-GXX=@GXX@
 abs_top_builddir="@abs_top_builddir@"
 abs_top_srcdir="@abs_top_srcdir@"
 OLN_INCLUDE_DIR="@OLN_INCLUDE_DIR@"
+OLN_IMG_DIR="@OLN_IMG_DIR@"
+OLN_IMG_AUX_DIR="@OLN_IMG_AUX_DIR@"
 
-CXXFLAGS="@CXXFLAGS@ @OLN_CXXFLAGS@ @DEFS@"
-CPPFLAGS="@CPPFLAGS@ @OLN_CPPFLAGS@ -I@abs_top_builddir@"
+CXXFLAGS="@CXXFLAGS@ @OLN_CXXFLAGS@ @CXXFLAGS_STRICT_ERRORS@"
+CPPFLAGS="@CPPFLAGS@ @OLN_CPPFLAGS@ @DEFS@ -I$abs_top_builddir"
 LDFLAGS="@LDFLAGS@"
-
-if test "$GXX" = yes; then
-  CXXFLAGS="$CXXFLAGS -Wall -W -pedantic"
-fi
 
 # Turn on shell traces when VERBOSE=x.
 if test "x$VERBOSE" = xx; then
   set -x
+else
+  :
 fi
 
-# End with $? = 0.
-:

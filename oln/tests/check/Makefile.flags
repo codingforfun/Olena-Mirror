@@ -1,12 +1,5 @@
 # -*- Makefile -*-
 
-# Don't use -ansi because it prevents us from using functions
-# like `remove' or `mkstemp' with g++-2.95.x.
+AM_CXXFLAGS = $(OLN_CXXFLAGS) $(CXXFLAGS_STRICT_ERRORS)
+AM_CPPFLAGS = $(OLN_CPPFLAGS) -I$(top_srcdir)/tests/check
 
-# FIXME: generate this variable at configure time.
-# This is a temporary workaround to allow flags overwriting, needed
-# to compile with non-g++ like compilers.
-OLN_STRICT_CXXFLAGS = -Wall -W -Werror -pedantic
-
-AM_CXXFLAGS = $(OLN_CXXFLAGS) $(OLN_STRICT_CXXFLAGS)
-AM_CPPFLAGS = $(OLN_CPPFLAGS) -DRDATADIR=\"$(OLN_IMG_DIR)\" -DWDATADIR=\"$(top_builddir)/../img\" -I$(top_srcdir)/check

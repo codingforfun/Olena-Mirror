@@ -1,3 +1,32 @@
+2003-01-19  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* doc/Makefile.am (olnsrc): Do not use OLN_INCLUDE_DIR any more.
+
+	* demo/Makefile.am (AM_CXXFLAGS): Use $(CXXFLAGS_STRICT), and
+	append $(CXXFLAGS_OPTIMIZE) to CXXFLAGS.
+
+	* demo/morpholena.cc: Explode into ...
+	* demo/morpholena-base.cc,
+	demo/morpholena-opening-closing.cc,
+	demo/morpholena-fast-hats.cc,
+	demo/morpholena-hats.cc,
+	demo/morpholena-grad.cc,
+	demo/morpholena-gaussian.cc,
+	demo/morpholena-minima-imp.cc,
+	demo/morpholena-minima.cc,
+	demo/morpholena-hit-miss.cc,
+	demo/morpholena-ops.cc,
+	demo/morpholena-wshed.cc,
+	demo/morpholena-wshed-beucher.cc: New files, and ...
+	* demo/Makefile.am (morpholena_SOURCES): Modify accordingly.
+
+	* configure.ac: Adjust Olena source path. Use AC_CXX_FLAGS instead
+	of AC_WITH_CXX_WARNINGS. Use AC_CONFIG_FILES again.
+
+2003-01-09  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* Makefile.am: Comment. Correct @OLN_DOC_SUBDIRS@ to $(OLN_DOC_SUBDIRS).
+
 2003-01-15  Akim Demaille  <akim@epita.fr>
 
 	* configure.ac: Require Autoconf 2.57, Automake 1.7.2.

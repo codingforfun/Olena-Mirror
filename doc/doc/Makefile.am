@@ -12,8 +12,7 @@ oln_ref_TEX = \
   $(built_oln_ref_TEX) \
   ref-types.tex
 
-EXTRA_DIST = $(tex_TEX) $(oln_ref_TEX) 
-# html/*.png bin/*.eps bin/*.pgm bin/*.pdf
+EXTRA_DIST = $(tex_TEX) $(oln_ref_TEX) html/*.png bin/*.eps bin/*.pgm bin/*.pdf
 
 TEXI2PDF = $(TEXI2DVI) --pdf
 
@@ -27,7 +26,7 @@ html/oln-ref.html: $(tex_TEX) $(oln_ref_TEX)
 	$(HEVEA) -o html/oln-ref.html `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
 	$(HEVEA) -o html/oln-ref.html `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
 
-olnsrc = $(OLN_INCLUDE_DIR)/oln
+olnsrc = $(top_srcdir)/../oln/oln
 
 # Bogus C++ entry to provoke the definition of CXXCOMPILE
 COMMONGETDEFSFLAGS =  --agarg=-DCXXCOMPILE="$(CXX) -I$(top_srcdir) -DHAVE_CONFIG_H $(CPPFLAGS) $(OLN_CPPFLAGS) $(CXXFLAGS) $(OLN_CXXFLAGS)" \
@@ -54,5 +53,5 @@ ref-level.tex: $(level_files) $(top_srcdir)/tpl/processing.tpl
 	$(GETDEFS) $(COMMONGETDEFSFLAGS) $(PROCESSINGGETDEFSFLAGS) \
 	  $(GETDEFSFLAGS) --base-name=ref-level $(level_files)
 
-MAINTAINERCLEANFILES = $(built_oln_ref_TEX) $(dist_noinst_DATA) html/* bin/*a.out
+MAINTAINERCLEANFILES = $(built_oln_ref_TEX) $(dist_noinst_DATA) html/* bin/*
 CLEANFILES = = *.tmp *.aux *.bbl *blg *.dvi *.lot *.log *.out *.toc  

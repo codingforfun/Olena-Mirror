@@ -1,7 +1,8 @@
 ## Process this file with Automake to produce Makefile.in -*-Makefile-*-
 
 AM_CPPFLAGS = $(OLN_CPPFLAGS) -DIMGDIR=\"$(OLN_IMG_DIR)\" -DIMGDIR2=\"$(OLN_IMG_AUX_DIR)\"
-AM_CXXFLAGS = $(OLN_CXXFLAGS)
+AM_CXXFLAGS = $(OLN_CXXFLAGS) $(CXXFLAGS_STRICT) 
+CXXFLAGS += $(CXXFLAGS_OPTIMIZE)
 
 # We used to declare these programs as `noinst_PROGRAMS', however
 # building them on each run of `make' turned to
@@ -16,5 +17,18 @@ check_PROGRAMS = tour morpholena test-reconstruction
 demo: $(check_PROGRAMS)
 
 tour_SOURCES = tour.cc
-morpholena_SOURCES = morpholena.cc
+morpholena_SOURCES = morpholena.cc \
+  morpholena-base.cc \
+  morpholena-opening-closing.cc \
+  morpholena-fast-hats.cc \
+  morpholena-hats.cc \
+  morpholena-grad.cc \
+  morpholena-gaussian.cc \
+  morpholena-minima-imp.cc \
+  morpholena-minima.cc \
+  morpholena-hit-miss.cc \
+  morpholena-ops.cc \
+  morpholena-wshed.cc \
+  morpholena-wshed-beucher.cc
+
 test_reconstruction_SOURCES = test-reconstruction.cc

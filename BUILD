@@ -7,11 +7,11 @@ CONFIGURATION
 In order to prepare the build process, you need to configure the
 source tree.
 
-Assuming your Olena distribution is uncompressed in directory oln-0.7,
-follow these steps:
+Assuming your Olena distribution is uncompressed in directory
+oln-meta-0.7, follow these steps:
 
   mkdir ../build
-  cd ../build && ../oln-0.7/configure
+  cd ../build && ../oln-meta-0.7/configure
 
 The build process can be altered by a number of options you can pass
 to the `configure' script. The following sections describe them.
@@ -115,28 +115,6 @@ to the `configure' script. The following sections describe them.
      stored in the cache. If you decide to re-run `configure' with
      other flags, delete the "config.cache" file first.
 
-     Using `configure' while developing on Olena
-     -------------------------------------------
-
-     By default, successive runs of the build process do not track
-     changes to Olena headers, and thus does not rebuild files for
-     which dependencies are modified.
-     To enable dependency tracking, give the
-
-              --enable-dependency-tracking 
-
-     flag to `configure'.
-
-     By default, the build process control files (Makefile's) are not
-     automatically updated when the project control files
-     (configure.ac, Makefile.am's) are modified.
-     To enable automatic runs of "autoconf", "automake" and
-     "autoheader" when control files need updating, use the
-
-	      --enable-maintainer-mode
-
-     flag with `configure'.
-
 OPTIONAL FEATURES
 =================
 
@@ -159,6 +137,10 @@ OPTIONAL FEATURES
 
      Selecting Olena components
      --------------------------
+
+     (this section is not important to the casual installer -- if not
+     interested into Olena maintenance and distribution, you can skip
+     to the next section)
 
      The distribution is divided into several directories, each
      pertaining to a `component'. They are all included by default,

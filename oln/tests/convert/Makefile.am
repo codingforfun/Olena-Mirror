@@ -1,4 +1,6 @@
-include $(top_srcdir)/check/Makefile.check
+## Process this file through Automake to create Makefile.in -*- Makefile -*-
+
+include $(top_srcdir)/tests/check/Makefile.check
 
 check_PROGRAMS = \
   8-nrgb-hsi \

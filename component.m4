@@ -18,14 +18,12 @@ AC_CACHE_CHECK([whether to build $4],
 if test x$[]$3 != xno; then
    $5_SUBDIRS="$[]$5_SUBDIRS ifelse([$8], [], [$1], [$8])"
    ifelse([$6], [], [], [AC_CONFIG_FILES([$6])])
-
    $7
-fi])
+fi
+])
 
 AC_DEFUN([OLN_COLLECTION], [dnl
 $1_SUBDIRS=""
-
+AC_SUBST([$1_SUBDIRS])
 $2
-
-ifelse([$3], [], [], [AC_CONFIG_FILES([$3])])
-AC_SUBST([$1_SUBDIRS])])
+])

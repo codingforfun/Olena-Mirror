@@ -1,3 +1,12 @@
+2003-01-19  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* utilities/Makefile.am (AM_CXXFLAGS): Use $(CXXFLAGS_STRICT) and
+	$(CXXFLAGS_OPTIMIZE).
+	* utilities/morpho/Makefile.am (AM_CXXFLAGS): Likewise.
+
+	* configure.ac: Fix Olena source directory specification. Indent
+	to fit within 80 columns. Use AC_CONFIG_FILES again.
+
 2003-01-18  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* utilities/morpho/morpho_template.cc,

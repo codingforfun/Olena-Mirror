@@ -3,6 +3,10 @@
 
 # include <string>
 
+# ifdef HAVE_CONFIG_H
+#  include <config.h>
+# endif
+
 extern std::string srcdir;
 
 void srcdir_setup ();

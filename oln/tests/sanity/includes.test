@@ -6,10 +6,6 @@
 
 . ../defs || exit 1
 
-if test "$GXX" = yes; then
-  CXXFLAGS="$CXXFLAGS -Werror"
-fi
-
 set -e
 
 rm -f failures

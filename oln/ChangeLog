@@ -1,3 +1,74 @@
+2003-01-19  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* tests/morpho/Makefile.am (CXXFLAGS): append $(CXXFLAGS_OPTIMIZE)
+	to CXXFLAGS.
+
+	* tests/meta/gen_test.cc (write_postlude_and_test): Use
+	CXXFLAGS_STRICT_ERRORS.
+
+	* tests/defs.in (CXXFLAGS): Use @CXXFLAGS_STRICT_ERRORS@, instead
+	of testing for $GXX.
+
+	* tests/check/srcdir.hh: Include `config.h' if available, so that
+	various directory names are defined.
+
+	* tests/check/Makefile.flags (AM_CXXFLAGS): Use
+	$(CXXFLAGS_STRICT_ERRORS).
+
+	* configure.ac: Rearrange tests. Add more AC_DEFINE's.
+	* oln/Makefile.am: Comment.
+
+	* oln/oln.m4: Comment exhaustively. Fix directory detection
+	tests. Complete AC_CXX_FLAGS (renamed from AC_CXX_WARNINGS).
+	* tests/check/data.cc: use OLN_IMG_DIR and OLN_IMG_AUX_DIR instead
+	of RDATADIR and WDATADIR.
+	
+2003-01-15  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* oln/Makefile.am (EXTRA_DIST): Mention
+	`config/pconf-hh.in'. FIXME: this should not be necessary since
+	configure.ac mentions in it AC_CONFIG_FILES. To investigate.
+
+	* oln/config/system.hh: Remove test for HAVE_STL_CONFIG_H.
+
+	* oln.m4 (OLN_PATH_LOCAL): Remove bogus build directory detection.
+	(_OLN_CHECK): Cleanup+simplify Olena location detection system.
+	(AC_CXX_EXCEPTIONS):  Add,  as  a sanity  check   for users  using
+	OLN_ENABLE_EXCEPTIONS.
+
+2003-01-12  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* tests/convol/Makefile.am: Adjust src directory.
+	* tests/morpho/Makefile.am: Likewise.
+	* tests/meta/Makefile.am: Likewise.
+	* tests/convert/Makefile.am: Likewise.
+	* tests/io/Makefile.am: Likewise.
+
+2003-01-11  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* oln/config/system.hh: Add explicit tests for numeric limits.
+	* oln/config/pconf-inc.in: Remove.
+	* oln/config/pconf.hh: Remove.
+	* oln/config/pconf-hh.in: Add.
+
+	* tests/Makefile.am: Remove ACLOCAL_AMFLAGS and
+	CONFIGURE_DEPENDENCIES.
+	* tests/check/Makefile.flags (AM_CPPFLAGS): Adjust directories.
+	* tests/check/Makefile.check: Adjust directories.
+	* tests/configure.ac: Remove.
+	
+	* configure.ac: Merge tests/configure.ac. Use AC_CONFIG_FILES
+	instead of AC_CONFIG_HEADERS for pconf.inc.
+	* tests/defs.in (CXXFLAGS): Remove warning options (added by "configure")
+
+2003-01-09  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* tests/Makefile.am (SUBDIRS): Correct @OLN_TESTS_SUBDIRS@ to
+	$(OLN_TESTS_SUBDIRS). Add comments.
+
+	* Makefile.am (SUBDIRS): Correct @OLN_SRC_SUBDIRS@ to
+	$(OLN_SRC_SUBDIRS).  Add comments.
+
 2003-01-18  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/io/gz_stream.hh: Replace NULL by 0. Add missing forward
