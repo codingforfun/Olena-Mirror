@@ -1,10 +1,19 @@
+2002-03-28  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* tests/: New directory.  See tests/ChangeLog.
+	* Makefile.am (SUBDIRS): Add tests.
+	* configure.ac: Run AC_PROG_RANLIB.
+	Output tests/Makefile, tests/check/Makefile, tests/io/Makefile,
+	tests/morpho/Makefile.
+	* demo/test-reconstruction.cc: Remove most of the testing code,
+	which is now in tests/morpho/.
+
 2002-03-28  Jerome Darbon  <jerome@epita.fr>
 
 	* src/morpho/thinninh.hh: New file.
 	* src/morpho/thinninh.inc: Likewise.
 	* src/morpho/thickening.hh: Likewise.
 	* src/morpho/thickening.inc: Likewise.
-
 
 2002-03-28  Alexandre Duret-Lutz  <duret_g@epita.fr>
 

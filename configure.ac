@@ -7,6 +7,15 @@ AC_CONFIG_AUX_DIR([tools])
 AM_INIT_AUTOMAKE([olena], [0.3], [:])
 
 AC_PROG_CXX
+AC_PROG_RANLIB
 
-AC_CONFIG_FILES([Makefile src/Makefile demo/Makefile])
+AC_CONFIG_FILES([
+  Makefile
+  src/Makefile
+  demo/Makefile
+  tests/Makefile
+  tests/check/Makefile
+  tests/io/Makefile
+  tests/morpho/Makefile
+])
 AC_OUTPUT

@@ -13,6 +13,8 @@
 # PARTICULAR PURPOSE.
 
 @SET_MAKE@
+
+# -*- Makefile -*-
 SHELL = @SHELL@
 
 srcdir = @srcdir@
@@ -36,7 +38,7 @@ oldincludedir = /usr/include
 pkgdatadir = $(datadir)/@PACKAGE@
 pkglibdir = $(libdir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
-top_builddir = ..
+top_builddir = ../..
 
 ACLOCAL = @ACLOCAL@
 AUTOCONF = @AUTOCONF@
@@ -75,34 +77,27 @@ am__include = @am__include@
 am__quote = @am__quote@
 install_sh = @install_sh@
 
-INCLUDES = -I$(top_srcdir)/src
-AM_CXXFLAGS = -Wall -W -DNDEBUG -ftemplate-depth-50 -ansi -pedantic
-noinst_PROGRAMS = tour morpholena test-reconstruction
-tour_SOURCES = tour.cc
-morpholena_SOURCES = morpholena.cc
-test_reconstruction_SOURCES = test-reconstruction.cc
-subdir = demo
+AM_CXXFLAGS = -Wall -W -ftemplate-depth-50 -ansi -pedantic
+AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/tests/check
+
+check_LIBRARIES = libcheck.a
+
+libcheck_a_SOURCES = \
+  check.hh					\
+  main.cc					\
+  srcdir.cc					\
+  srcdir.hh					\
+  verbose.cc					\
+  verbose.hh
+
+subdir = tests/check
 mkinstalldirs = $(SHELL) $(top_srcdir)/tools/mkinstalldirs
 CONFIG_CLEAN_FILES =
-noinst_PROGRAMS = tour$(EXEEXT) morpholena$(EXEEXT) \
-	test-reconstruction$(EXEEXT)
-PROGRAMS = $(noinst_PROGRAMS)
-
-am_morpholena_OBJECTS = morpholena.$(OBJEXT)
-morpholena_OBJECTS = $(am_morpholena_OBJECTS)
-morpholena_LDADD = $(LDADD)
-morpholena_DEPENDENCIES =
-morpholena_LDFLAGS =
-am_test_reconstruction_OBJECTS = test-reconstruction.$(OBJEXT)
-test_reconstruction_OBJECTS = $(am_test_reconstruction_OBJECTS)
-test_reconstruction_LDADD = $(LDADD)
-test_reconstruction_DEPENDENCIES =
-test_reconstruction_LDFLAGS =
-am_tour_OBJECTS = tour.$(OBJEXT)
-tour_OBJECTS = $(am_tour_OBJECTS)
-tour_LDADD = $(LDADD)
-tour_DEPENDENCIES =
-tour_LDFLAGS =
+libcheck_a_AR = $(AR) cru
+libcheck_a_LIBADD =
+am_libcheck_a_OBJECTS = main.$(OBJEXT) srcdir.$(OBJEXT) \
+	verbose.$(OBJEXT)
+libcheck_a_OBJECTS = $(am_libcheck_a_OBJECTS)
 
 DEFS = @DEFS@
 DEFAULT_INCLUDES =  -I. -I$(srcdir)
@@ -111,41 +106,41 @@ LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
 depcomp = $(SHELL) $(top_srcdir)/tools/depcomp
 am__depfiles_maybe = depfiles
-@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/morpholena.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/test-reconstruction.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/tour.Po
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/main.Po ./$(DEPDIR)/srcdir.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/verbose.Po
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 	-o $@
 CXXFLAGS = @CXXFLAGS@
-DIST_SOURCES = $(morpholena_SOURCES) $(test_reconstruction_SOURCES) \
-	$(tour_SOURCES)
+CFLAGS = @CFLAGS@
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+CCLD = $(CC)
+LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+DIST_SOURCES = $(libcheck_a_SOURCES)
 DIST_COMMON = Makefile.am Makefile.in
-SOURCES = $(morpholena_SOURCES) $(test_reconstruction_SOURCES) $(tour_SOURCES)
+SOURCES = $(libcheck_a_SOURCES)
 
 all: all-am
 
 .SUFFIXES:
 .SUFFIXES: .cc .o .obj
-$(srcdir)/Makefile.in:  Makefile.am  $(top_srcdir)/configure.ac $(ACLOCAL_M4)
+$(srcdir)/Makefile.in:  Makefile.am $(srcdir)/Makefile.flags $(top_srcdir)/configure.ac $(ACLOCAL_M4)
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  demo/Makefile
+	  $(AUTOMAKE) --gnu  tests/check/Makefile
 Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
 
-clean-noinstPROGRAMS:
-	-test -z "$(noinst_PROGRAMS)" || rm -f $(noinst_PROGRAMS)
-morpholena$(EXEEXT): $(morpholena_OBJECTS) $(morpholena_DEPENDENCIES) 
-	@rm -f morpholena$(EXEEXT)
-	$(CXXLINK) $(morpholena_LDFLAGS) $(morpholena_OBJECTS) $(morpholena_LDADD) $(LIBS)
-test-reconstruction$(EXEEXT): $(test_reconstruction_OBJECTS) $(test_reconstruction_DEPENDENCIES) 
-	@rm -f test-reconstruction$(EXEEXT)
-	$(CXXLINK) $(test_reconstruction_LDFLAGS) $(test_reconstruction_OBJECTS) $(test_reconstruction_LDADD) $(LIBS)
-tour$(EXEEXT): $(tour_OBJECTS) $(tour_DEPENDENCIES) 
-	@rm -f tour$(EXEEXT)
-	$(CXXLINK) $(tour_LDFLAGS) $(tour_OBJECTS) $(tour_LDADD) $(LIBS)
+AR = ar
+
+clean-checkLIBRARIES:
+	-test -z "$(check_LIBRARIES)" || rm -f $(check_LIBRARIES)
+libcheck.a: $(libcheck_a_OBJECTS) $(libcheck_a_DEPENDENCIES) 
+	-rm -f libcheck.a
+	$(libcheck_a_AR) libcheck.a $(libcheck_a_OBJECTS) $(libcheck_a_LIBADD)
+	$(RANLIB) libcheck.a
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT) core *.core
@@ -153,9 +148,9 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/morpholena.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-reconstruction.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tour.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/srcdir.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/verbose.Po@am__quote@
 
 distclean-depend:
 	-rm -rf ./$(DEPDIR)
@@ -211,7 +206,7 @@ distclean-tags:
 	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 
-top_distdir = ..
+top_distdir = ../..
 distdir = $(top_distdir)/$(PACKAGE)-$(VERSION)
 
 distdir: $(DISTFILES)
@@ -234,8 +229,9 @@ distdir: $(DISTFILES)
 	  fi; \
 	done
 check-am: all-am
+	$(MAKE) $(AM_MAKEFLAGS) $(check_LIBRARIES)
 check: check-am
-all-am: Makefile $(PROGRAMS)
+all-am: Makefile
 
 installdirs:
 
@@ -265,7 +261,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-generic clean-noinstPROGRAMS mostlyclean-am
+clean-am: clean-checkLIBRARIES clean-generic mostlyclean-am
 
 distclean: distclean-am
 
@@ -300,16 +296,15 @@ mostlyclean-am: mostlyclean-compile mostlyclean-generic
 
 uninstall-am: uninstall-info-am
 
-.PHONY: GTAGS all all-am check check-am clean clean-generic \
-	clean-noinstPROGRAMS distclean distclean-compile \
-	distclean-depend distclean-generic distclean-tags distdir dvi \
-	dvi-am info info-am install install-am install-data \
-	install-data-am install-exec install-exec-am install-info \
-	install-info-am install-man install-strip installcheck \
-	installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic tags uninstall uninstall-am \
-	uninstall-info-am
+.PHONY: GTAGS all all-am check check-am clean clean-checkLIBRARIES \
+	clean-generic distclean distclean-compile distclean-depend \
+	distclean-generic distclean-tags distdir dvi dvi-am info \
+	info-am install install-am install-data install-data-am \
+	install-exec install-exec-am install-info install-info-am \
+	install-man install-strip installcheck installcheck-am \
+	installdirs maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-compile mostlyclean-generic tags \
+	uninstall uninstall-am uninstall-info-am
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

@@ -1,0 +1,11 @@
+2002-03-28  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* tests/ChangeLog, tests/morpho/Makefile.am,
+	tests/morpho/Makefile.in, tests/morpho/reconstruction.cc,
+	tests/check/srcdir.hh, tests/check/Makefile.flags,
+	tests/check/Makefile.check, tests/check/srcdir.cc,
+	tests/check/Makefile.in, tests/check/check.hh,
+	tests/check/verbose.cc, tests/check/verbose.hh,
+	tests/check/main.cc, tests/check/Makefile.am, tests/Makefile.am,
+	tests/Makefile.in, tests/io/loadsave.hh, tests/io/Makefile.am,
+	tests/io/Makefile.in, tests/data/lena.ppm: New files.

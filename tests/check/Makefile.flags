@@ -1,0 +1,4 @@
+# -*- Makefile -*-
+
+AM_CXXFLAGS = -Wall -W -ftemplate-depth-50 -ansi -pedantic
+AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/tests/check
