@@ -83,16 +83,20 @@ namespace ntg {
       return value_;
     }
 
-    template <typename V>
-    bool impl_eq(const V& rhs) const
+//     template <typename V>
+//     bool impl_eq(const V& rhs) const
+//     {
+//       return this->value_ == rhs;
+//     }
+
+    bool impl_eq(int rhs) const
     {
       return this->value_ == rhs;
     }
 
-    template <typename V>
-    bool impl_not_eq(const V& rhs) const
+    bool impl_eq(const int_u8& rhs) const
     {
-      return this->value_ != rhs;
+      return this->value_ == (unsigned char)rhs;
     }
 
     template <typename V>

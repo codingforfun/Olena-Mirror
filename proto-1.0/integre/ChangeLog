@@ -1,3 +1,14 @@
+2005-03-14  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* ntg/real/int_u8.hh: Fix operator==.
+	* ntg/real/integer.hh: Likewise.
+	* ntg/enum/enum.hh: Likewise.
+	* ntg/enum/bin.hh: Likewise.
+	* ntg/all.hh: New.
+	* ntg/core/macros.hh: Fix operator==.
+	* ntg/color/rgb_8.hh: Likewise.
+	* ntg/color/color.hh: Likewise.
+
 2005-03-02  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* ntg/real/int_u8.hh: Add i/o support.

@@ -45,7 +45,7 @@ namespace ntg {
   struct props<cat::color, rgb_8> : default_props<cat::color>
   {
     enum { max_val = 255 };
-    enum { nb_comp = 3 };
+    enum { depth = 3 };
 
     typedef char io_type;
     typedef unsigned char comp_type;
@@ -84,31 +84,24 @@ namespace ntg {
 
     rgb_8(const rgb_8& rhs)
     {
-      this->value_[rgb_red] = rhs.red();
-      this->value_[rgb_green] = rhs.green();
-      this->value_[rgb_blue] = rhs.blue();
+      this->value_[rgb_red] = rhs[rgb_red];
+      this->value_[rgb_green] = rhs[rgb_green];
+      this->value_[rgb_blue] = rhs[rgb_blue];
     }
 
     rgb_8& impl_assign(const rgb_8& rhs)
     {
-      this->value_[rgb_red] = rhs.red();
-      this->value_[rgb_green] = rhs.green();
-      this->value_[rgb_blue] = rhs.blue();
+      this->value_[rgb_red] = rhs[rgb_red];
+      this->value_[rgb_green] = rhs[rgb_green];
+      this->value_[rgb_blue] = rhs[rgb_blue];
       return *this;
     }
 
     bool impl_eq(const rgb_8& rhs) const
     {
-      return this->value_[rgb_red] == rhs.red() &&
-	this->value_[rgb_green] == rhs.green() &&
-	this->value_[rgb_blue] == rhs.blue();
-    }
-
-    bool impl_not_eq(const rgb_8& rhs) const
-    {
-      return this->value_[rgb_red] != rhs.red() ||
-	this->value_[rgb_green] != rhs.green() ||
-	this->value_[rgb_blue] != rhs.blue();
+      return this->value_[rgb_red] == rhs[rgb_red] &&
+	this->value_[rgb_green] == rhs[rgb_green] &&
+	this->value_[rgb_blue] == rhs[rgb_blue];
     }
 
     unsigned char& impl_op_sqbr(unsigned int i)
@@ -121,37 +114,6 @@ namespace ntg {
     {
       assert(i < 3);
       return value_[i];
-    }
-
-
-    unsigned char& red()
-    {
-      return value_[rgb_red];
-    }
-
-    const unsigned char red() const
-    {
-      return value_[rgb_red];
-    }
-
-    unsigned char& green()
-    {
-      return value_[rgb_green];
-    }
-
-    const unsigned char green() const
-    {
-      return value_[rgb_green];
-    }
-
-    unsigned char& blue()
-    {
-      return value_[rgb_blue];
-    }
-
-    const unsigned char blue() const
-    {
-      return value_[rgb_blue];
     }
 
   private:

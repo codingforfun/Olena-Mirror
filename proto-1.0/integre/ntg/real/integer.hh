@@ -62,16 +62,21 @@ namespace ntg {
       return this->exact().impl_assign(rhs);
     }
 
-    template <typename V>
-    bool operator==(const V& rhs) const
+    bool operator==(int rhs) const
     {
       return this->exact().impl_eq(rhs);
+    }
+
+    template <typename I>
+    bool operator==(const integer<I>& rhs) const
+    {
+      return this->exact().impl_eq(rhs.exact());
     }
 
     template <typename V>
     bool operator!=(const V& rhs) const
     {
-      return this->exact().impl_not_eq(rhs);
+      return ! this->operator==(rhs);
     }
 
     template <typename V>

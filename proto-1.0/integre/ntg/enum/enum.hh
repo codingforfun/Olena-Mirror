@@ -44,6 +44,7 @@ namespace ntg {
   struct default_props < cat::enum_value >
   {
     enum { max_val = 0 };
+    enum { depth = 1 };
     typedef mlc::no_type io_type;
 
   protected:
@@ -55,22 +56,27 @@ namespace ntg {
   {
     typedef E exact_type;
 
-    template <typename V>
-    exact_type& operator=(const V& rhs)
-    {
-      return this->exact().impl_assign(rhs);
-    }
-
-    template <typename V>
-    bool operator==(const V& rhs) const
+    bool operator==(int rhs) const
     {
       return this->exact().impl_eq(rhs);
+    }
+
+    template <typename I>
+    bool operator==(const enum_value<I>& rhs) const
+    {
+      return this->exact().impl_eq(rhs.exact());
     }
 
     template <typename V>
     bool operator!=(const V& rhs) const
     {
-      return this->exact().impl_not_eq(rhs);
+      return ! this->operator==(rhs);
+    }
+
+    template <typename V>
+    exact_type& operator=(const V& rhs)
+    {
+      return this->exact().impl_assign(rhs);
     }
 
     template <typename V>

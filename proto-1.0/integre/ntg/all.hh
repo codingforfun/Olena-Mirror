@@ -1,4 +1,4 @@
-// Copyright (C) 2005 EPITA Research and Development Laboratory
+// Copyright (C) 2005  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,15 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef INTEGRE_CORE_MACROS_HH
-# define INTEGRE_CORE_MACROS_HH
+#ifndef NTG_ALL_HH
+# define NTG_ALL_HH
 
-# define ntg_max_val(T) ntg::props<ntg_category_type(T),T>::max_val
+# include <ntg/core/macros.hh>
+# include <ntg/color/rgb_8.hh>
+# include <ntg/real/int_u8.hh>
+# include <ntg/enum/bin.hh>
 
-# define ntg_depth(T) ntg::props<ntg_category_type(T),T>::depth
-
-# define ntg_comp_type(T) typename ntg::props<ntg_category_type(T),T>::comp_type
-
-# define ntg_io_type(T) typename ntg::props<ntg_category_type(T),T>::io_type
-
-#endif // ! INTEGRE_CORE_MACROS_HH
+#endif // ! NTG_ALL_HH

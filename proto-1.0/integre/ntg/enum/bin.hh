@@ -69,7 +69,7 @@ namespace ntg {
     template <typename V>
     bin& impl_assign(const V& rhs)
     {
-      this->value_ = rhs % 2;
+      this->value_ = (int)rhs % 2;
       return *this;
     }
 
@@ -78,17 +78,17 @@ namespace ntg {
       return value_;
     }
 
-    template <typename V>
-    bool impl_eq(const V& rhs) const
+    bool impl_eq(const unsigned char& rhs) const
     {
       return this->value_ == rhs;
     }
 
     template <typename V>
-    bool impl_not_eq(const V& rhs) const
+    bool impl_eq(const V& rhs) const
     {
-      return this->value_ != rhs;
+      return this->value_ == (unsigned char)rhs;
     }
+
 
     template <typename V>
     bin impl_add(const V& rhs) const

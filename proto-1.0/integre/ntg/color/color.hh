@@ -47,7 +47,7 @@ namespace ntg {
   struct default_props < cat::color >
   {
     enum { max_val = 0 };
-    enum { nb_comp = 0 };
+    enum { depth = 0 };
     typedef mlc::undefined_type comp_type;
     typedef mlc::undefined_type io_type;
 
@@ -67,14 +67,16 @@ namespace ntg {
       return this->exact.impl_assign(rhs);
     }
 
-    bool operator==(const exact_type& rhs) const
+    template <typename I>
+    bool operator==(const color<I>& rhs) const
     {
-      return this->exact().impl_eq(rhs);
+      return this->exact().impl_eq(rhs.exact());
     }
 
-    bool operator!=(const exact_type& rhs) const
+    template <typename V>
+    bool operator!=(const V& rhs) const
     {
-      return this->exact().impl_not_eq(rhs);
+      return ! this->operator==(rhs);
     }
 
     comp_type& operator [](const unsigned int &i)
