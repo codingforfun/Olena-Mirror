@@ -1,5 +1,19 @@
 2005-03-19  Damien Thivolle  <damien@lrde.epita.fr>
 
+	* mlc/makefile.src: Add new files.
+	* mlc/array: New.
+	* mlc/array/nd.hh: New.
+	* mlc/array/1d.hh: New.
+	* mlc/array/2d.hh: New.
+	* mlc/array/3d.hh: New.
+	* mlc/array/all.hh: New.
+	* mlc/array/1d.hxx: New.
+	* mlc/array/2d.hxx: New.
+	* mlc/array/objs.hh: New.
+	* mlc/array/3d.hxx: New.
+
+2005-03-19  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* mlc/cmp.hh: Add comparison traits (greatereq, greater, neq, ...).
 
 2005-03-16  Damien Thivolle  <damien@lrde.epita.fr>
