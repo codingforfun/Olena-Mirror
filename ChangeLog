@@ -1,3 +1,7 @@
+2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Add olena/tests/core directory.
+
 2003-04-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* Makefile.am: Generate UPGRADING.

@@ -67,6 +67,26 @@ namespace oln {
       return *this;
     }
 
+    T& set(const dpoint1d& dp, T weight)
+    {
+      // if the dp exists, return a ref to the existing entry
+      for (unsigned i = 0; i < card(); ++i)
+	if (_dp[i] == dp)
+	  {
+	    _w[i] = weight;
+	    return _w[i];
+	  }
+
+      // otherwise, create new entry
+      add(dp, weight);
+      return _w.back();
+    }
+
+    T& set(coord col)
+    {
+      return set(dpoint1d(col));
+    }
+
     coord delta() const
     {
       return _delta;
