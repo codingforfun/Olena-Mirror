@@ -38,10 +38,10 @@ namespace oln {
       /*=processing area_closing
        * ns: morpho
        * what: Area closing
-       * arg: const image<I_>&, _input, IN, input image
-       * arg: const neighborhood<N_>&, se, IN, neighborhood to consider
+       * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
+       * arg: const abstract::neighborhood<N>&, se, IN, neighborhood to consider
        * arg: unsigned int, area, IN, area
-       * ret: Concrete(I_)
+       * ret:oln_concrete_type(I)
        * doc:
        * Compute an area closing using union/find algorithm.
        * See A. Meijster and M. Wilkinson. A Comparison of Algorithms For Connected
@@ -53,28 +53,27 @@ namespace oln {
        * exi: lena256.pgm
        * exo: out.pgm
        =*/
-      template<class I_, class N_>
-      Concrete(I_) area_closing(const image<I_>& _input,
-				const neighborhood<N_>& _Ng,
-				const unsigned int area)
+      template<class I, class N>
+      oln_concrete_type(I) 
+	area_closing(const abstract::non_vectorial_image<I>& input,
+		     const abstract::neighborhood<N>& Ng,
+		     const unsigned int area)
       {
-	Exact_cref(I, input);
-        Exact_cref(N, Ng);
-	typedef T_attribute<unsigned int> area_t;
+	typedef T_attribute<unsigned int> area_type;
 
-	typedef tarjan::tarjan_set<Concrete(I_), area_t > tarjan_set_t;
-	tarjan_set_t area_closing(input);
-	return area_closing.get_comptute(area_t(area) , Ng, true);
+	typedef tarjan::tarjan_set<oln_concrete_type(I), area_type > tarjan_set_type;
+	tarjan_set_type area_closing(input.exact());
+	return area_closing.get_comptute(area_type(area) , Ng, true);
       }
 
 
       /*=processing area_opening
        * ns: morpho
        * what: Area opening
-       * arg: const image<I_>&, _input, IN, input image
-       * arg: const neighborhood<N_>&, se, IN, neighborhood to consider
+       * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
+       * arg: const abstract::neighborhood<N>&, se, IN, neighborhood to consider
        * arg: unsigned int, area, IN, area
-       * ret: Concrete(I_)
+       * ret:oln_concrete_type(I)
        * doc:
        * Compute an area opening using union/find algorithm.
        * See A. Meijster and M. Wilkinson. A Comparison of Algorithms For Connected
@@ -86,20 +85,18 @@ namespace oln {
        * exi: lena256.pgm
        * exo: out.pgm
        =*/
-      template<class I_, class N_>
-      Concrete(I_) area_opening(const image<I_>& _input,
-				const neighborhood<N_>& _Ng,
-				const unsigned int area)
+      template<class I, class N>
+      oln_concrete_type(I) 
+	area_opening(const abstract::non_vectorial_image<I>& input,
+		     const abstract::neighborhood<N>& Ng,
+		     const unsigned int area)
       {
-	Exact_cref(I, input);
-        Exact_cref(N, Ng);
-	typedef T_attribute<unsigned int> area_t;
+	typedef T_attribute<unsigned int> area_type;
 
-	typedef tarjan::tarjan_set<Concrete(I_), T_attribute<unsigned int> > tarjan_set_t;
-	tarjan_set_t area_closing(input);
-	return area_closing.get_comptute(area_t(area) , Ng, false);
+	typedef tarjan::tarjan_set<oln_concrete_type(I), T_attribute<unsigned int> > tarjan_set_type;
+	tarjan_set_type area_closing(input.exact());
+	return area_closing.get_comptute(area_type(area) , Ng, false);
       }
-
 
     }
   }

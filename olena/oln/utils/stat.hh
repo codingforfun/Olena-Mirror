@@ -29,7 +29,6 @@
 # define OLENA_UTILS_STAT_HH
 
 # include <oln/basics.hh>
-
 # include <ntg/basics.hh>
 
 namespace oln {
@@ -44,85 +43,98 @@ namespace oln {
         reset();
       }
 
-      void operator()(const T& val)
+      void
+      operator()(const T& val)
       {
         if (! valued())
-	  _min = _max = val;
-	else if (val < _min) // FIXME: use a ftor instead of > and <
-          _min = val;
-        else if (val > _max)
-	  _max = val;
-	++_count;
+	  min_ = max_ = val;
+	else if (val < min_) // FIXME: use a ftor instead of > and <
+          min_ = val;
+        else if (val > max_)
+	  max_ = val;
+	++count_;
       }
 
-      void reset()
+      void
+      reset()
       {
-        _count = 0;
+        count_ = 0;
       }
 
-      bool valued() const
+      bool 
+      valued() const
       {
-        return _count;
+        return count_;
       }
 
-      size_t count() const
+      size_t
+      count() const
       {
-        return _count;
+        return count_;
       }
 
-      const T min() const
-      {
-        assertion(valued());
-        return _min;
-      }
-
-      const T max() const
+      const T
+      min() const
       {
         assertion(valued());
-        return _max;
+        return min_;
+      }
+
+      const T
+      max() const
+      {
+        assertion(valued());
+        return max_;
       }
 
     protected:
-      size_t _count;
-      T _min;
-      T _max;
+      size_t count_;
+      T min_;
+      T max_;
     };
 
     template< class T, class C = ntg::float_s >
-    struct f_moments : f_minmax< T >
+    struct f_moments : f_minmax<T>
     {
-      typedef f_minmax< T > super;
+      typedef f_minmax<T> super;
 
-      void operator()(const T& val)
+      void 
+      operator()(const T& val)
       {
-	if (! valued()) {
-	  _sum1 = ntg_zero_val(C);
-	  _sum2 = ntg_zero_val(C);
-	} else {
-	  _sum1 += val;
-	  _sum2 += C(val) * val;
-	}
+	if (! this->valued()) 
+	  {
+	    sum1_ = ntg_zero_val(C);
+	    sum2_ = ntg_zero_val(C);
+	  } 
+	else
+	  {
+	    sum1_ += val;
+	    sum2_ += C(val) * val;
+	  }
 	super::operator()(val);
       }
 
-      const C mean() const
+      const C 
+      mean() const
       {
-        assertion(valued());
-        return _sum1 / C(count());
+        assertion(this->valued());
+        return sum1_ / C(this->count());
       }
 
-      const C variance() const
+      const C
+      variance() const
       {
-        assertion(valued());
-        return _sum2 / C(count()) - mean() * mean();
+        assertion(this->valued());
+        return sum2_ / C(this->count()) - mean() * mean();
       }
 
-      protected:
-	C _sum1;
-	C _sum2;
+    protected:
+      C sum1_;
+      C sum2_;
     };
+    
+  } // end of namespace utils
 
-  } // utils
-} // oln
+} // end of namespace oln
 
-#endif // OLENA_STAT_HISTOGRAM_HH
+#endif // ! OLENA_STAT_HISTOGRAM_HH

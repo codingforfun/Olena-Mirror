@@ -29,28 +29,49 @@
 # define OLENA_CORE_IMAGE1D_SIZE_HH
 
 # include <mlc/contract.hh>
-# include <oln/core/imagend_size.hh>
+# include <oln/core/abstract/image_size.hh>
 # include <oln/core/coord.hh>
 
 namespace oln {
 
-  struct image1d_size : public imagend_size< 1, image1d_size >
+  struct image1d_size;
+
+  template<>
+  struct image_size_traits<image1d_size>
   {
-    image1d_size(coord ncols)
+    enum { dim = 1 };
+  };
+
+  struct image1d_size : public abstract::image_size<image1d_size >
+  {
+
+    image1d_size(coord ncols, coord border)
     {
       nth(0) = ncols;
+      border_ = border;
     }
 
-    coord ncols() const
+    coord 
+    ncols() const
     {
       invariant(nth(0) > 0);
       return nth(0);
     }
 
-    static std::string name() { return "image1d_size"; }
-  };
+    coord& 
+    ncols()
+    {
+      invariant(nth(0) > 0);
+      return nth(0);
+    }
 
-  _ImageSizeForDim(1, image1d_size);
+    static std::string 
+    name() 
+    { 
+      return "image1d_size"; 
+    }
+
+  };
 
 } // end of oln
 

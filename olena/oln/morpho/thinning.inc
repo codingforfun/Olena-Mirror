@@ -27,21 +27,19 @@
 // Public License.
 
 
-template<class I_, class E1_, class E2_>
-Concrete(I_) thinning(const image<I_>& _input,
-		      const struct_elt<E1_>& _se1,
-		      const struct_elt<E2_>& _se2)
+template<class I, class E1, class E2>
+oln_concrete_type(I) 
+  thinning(const abstract::non_vectorial_image<I>& input,
+	   const abstract::struct_elt<E1>& se1,
+	   const abstract::struct_elt<E2>& se2)
 {
-  Exact_cref(I, input);
-  Exact_cref(E1, se1);
-  Exact_cref(E2, se2);
   mlc::eq<I::dim, E1::dim>::ensure();
   mlc::eq<I::dim, E2::dim>::ensure();
 
-  Concrete(I) dilated = dilation(input, se2);
-  Concrete(I) eroded = erosion(input, se1);
-  Concrete(I) output(input.size());
-  Iter(I) p(input);
+  oln_concrete_type(I) dilated = dilation(input, se2);
+  oln_concrete_type(I) eroded = erosion(input, se1);
+  oln_concrete_type(I) output(input.size());
+  oln_iter_type(I) p(input);
   for_all(p)
     {
       if ((dilated[p] < input[p]) && (input[p] == eroded[p]))

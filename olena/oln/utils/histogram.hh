@@ -28,8 +28,8 @@
 #ifndef OLENA_UTILS_HISTOGRAM_HH
 # define OLENA_UTILS_HISTOGRAM_HH
 
-# include <oln/basics.hh>
 # include <ntg/basics.hh>
+# include <oln/basics.hh>
 
 # include <vector>
 
@@ -41,80 +41,85 @@ namespace oln {
     class histogram;
 
     template< typename T, typename U >
-    T min(const histogram<T, U>& hist);
+    T
+    min(const histogram<T, U>& hist);
 
     template< typename T, typename U >
-    T max(const histogram<T, U>& hist);
-
+    T
+    max(const histogram<T, U>& hist);
 
     template< typename T, typename U = unsigned>
     class histogram
     {
+    private:
+      typedef typename ntg_is_a(T, ntg::non_vectorial)::ensure_type ensure_type;
+
     public:
 
-      histogram() : _values(0)
+      histogram() : values_(0)
       {
 	unsigned size = unsigned(ntg_max_val(T)
 				 - ntg_min_val(T)
 				 + ntg_unit_val(T));
-	_values = new U[size];
+	values_ = new U[size];
 	for (unsigned i = 0; i < size; ++i)
-	  _values[i] = 0;
+	  values_[i] = 0;
       }
 
       ~histogram()
       {
-	if (_values)
+	if (values_)
 	  {
-	    delete[] _values;
-	    _values = 0;
+	    delete[] values_;
+	    values_ = 0;
 	  }
       }
 
-      U& operator[](const T& i)
+      U&
+      operator[](const T& i)
       {
-	return _values[unsigned(i.val() - ntg_min_val(T))];
+	return values_[unsigned(i.val() - ntg_min_val(T))];
       }
 
       friend T min<T, U>(const histogram<T, U>& hist);
       friend T max<T, U>(const histogram<T, U>& hist);
 
-      template <class I_>
-      void init(const image<I_> &_img)
+      template <class I>
+      void
+      init(const abstract::image<I> &img)
       {
-	Exact_cref(I, img);
-	Iter(I) p(img);
+	oln_iter_type(I) p(img);
 
 	for_all (p)
-	  _values[unsigned(img[p].val())]++;
+	  values_[unsigned(img[p].val())]++;
       }
+
     protected:
-      U *_values;
+      U *values_;
     };
 
     template< typename T, typename U >
-    inline
-    T min(const histogram<T, U>& hist)
+    inline T
+    min(const histogram<T, U>& hist)
     {
       unsigned i;
       for (i = 0; i < unsigned(ntg_max_val(T) - ntg_min_val(T)); ++i)
-	if (hist._values[i] > 0)
+	if (hist.values_[i] > 0)
 	  break;
       return T(ntg_min_val(T) + i);
     }
 
 
     template< typename T, typename U >
-    inline
-    T max(const histogram<T, U>& hist)
+    inline T 
+    max(const histogram<T, U>& hist)
     {
       unsigned i;
       for (i = unsigned(ntg_max_val(T) - ntg_min_val(T)); i > 0; --i)
-	if (hist._values[i] > 0)
+	if (hist.values_[i] > 0)
 	  break;
       return T(ntg_min_val(T) + i);
     }
-
 
 /* The two functions above can be slow when the histogram is sparse
    because they iterate over a large range of 0.
@@ -140,190 +145,200 @@ namespace oln {
     class histogram_minmax : public histogram<T, U>
     {
     protected:
-      void adjust(unsigned idx)
+      void
+      adjust(unsigned idx)
       {
-	if (idx > _max)
-	  _max = idx;
-	if (idx < _min)
-	  _min = idx;
+	if (idx > max_)
+	  max_ = idx;
+	if (idx < min_)
+	  min_ = idx;
       }
 
     public:
-
       histogram_minmax() :
 	histogram<T,U>(),
-	_min(0), _max(unsigned(ntg_max_val(T) - ntg_min_val(T))) {}
+	min_(0), max_(unsigned(ntg_max_val(T) - ntg_min_val(T))) {}
 
-      U& operator[](const T& i)
+      U&
+      operator[](const T& i)
       {
 	unsigned idx = unsigned(i.val() - ntg_min_val(T));
 	adjust(idx);
-	return _values[idx];
+	return this->values_[idx];
       }
 
-      U min()
+      U
+      min()
       {
 	unsigned i;
-	for (i = _min; i < unsigned(ntg_max_val(T) - ntg_min_val(T)); ++i)
-	  if (_values[i] > 0)
+	for (i = min_; i < unsigned(ntg_max_val(T) - ntg_min_val(T)); ++i)
+	  if (this->values_[i] > 0)
 	    break;
-	_min = i;
+	min_ = i;
 	return T(ntg_min_val(T) + i);
       }
 
-      T max()
+      T
+      max()
       {
 	unsigned i;
-	for (i = _max; i > 0; --i)
-	  if (_values[i] > 0)
+	for (i = max_; i > 0; --i)
+	  if (this->values_[i] > 0)
 	    break;
-	_max = i;
+	max_ = i;
 	return T(ntg_min_val(T) + i);
       }
 
     protected:
-      unsigned _min, _max;	// indices of min and max elements
+      unsigned min_, max_;	// indices of min and max elements
     };
 
     template< typename T, typename U = unsigned>
     class histogram_min : public histogram<T, U>
     {
     protected:
-      void adjust(unsigned idx)
+      void
+      adjust(unsigned idx)
       {
-	if (idx < _min)
-	  _min = idx;
+	if (idx < min_)
+	  min_ = idx;
       }
 
     public:
+      histogram_min() : histogram<T,U>(), min_(0) {}
 
-      histogram_min() : histogram<T,U>(), _min(0) {}
-
-      U& operator[](const T& i)
+      U&
+      operator[](const T& i)
       {
 	unsigned idx = unsigned(i.val() - ntg_min_val(T));
 	adjust(idx);
-	return _values[idx];
+	return this->values_[idx];
       }
 
-      U min()
+      U
+      min()
       {
 	unsigned i;
-	for (i = _min; i < unsigned(ntg_max_val(T) - ntg_min_val(T)); ++i)
-	  if (_values[i] > 0)
+	for (i = min_; i < unsigned(ntg_max_val(T) - ntg_min_val(T)); ++i)
+	  if (this->values_[i] > 0)
 	    break;
-	_min = i;
+	min_ = i;
 	return T(ntg_min_val(T) + i);
       }
 
-      T res()
+      T
+      res()
       {
 	return min();
       }
 
     protected:
-      unsigned _min;	// index of min element
+      unsigned min_;	// index of min element
     };
 
     template< typename T, typename U = unsigned>
     class histogram_max : public histogram<T, U>
     {
     protected:
-      void adjust(unsigned idx)
+      void
+      adjust(unsigned idx)
       {
-	if (idx > _max)
-	  _max = idx;
+	if (idx > max_)
+	  max_ = idx;
       }
 
     public:
-
       histogram_max() :
-	histogram<T,U>(),_max(unsigned(ntg_max_val(T) - ntg_min_val(T))) {}
+	histogram<T,U>(),max_(unsigned(ntg_max_val(T) - ntg_min_val(T))) {}
 
-      U& operator[](const T& i)
+      U&
+      operator[](const T& i)
       {
 	unsigned idx = unsigned(unsigned(i) - unsigned(ntg_min_val(T)));
 	adjust(idx);
-	return _values[idx];
+	return this->values_[idx];
       }
 
-      T max()
+      T
+      max()
       {
 	unsigned i;
-	for (i = _max; i > 0; --i)
-	  if (_values[i] > 0)
+	for (i = max_; i > 0; --i)
+	  if (this->values_[i] > 0)
 	    break;
-	_max = i;
+	max_ = i;
 	return T(ntg_min_val(T) + i);
       }
 
-      T res()
+      T
+      res()
       {
 	return max();
       }
 
     protected:
-      unsigned _max;	// index of max element
+      unsigned max_;	// index of max element
     };
 
 
     template< typename T, typename U >
-    inline
-    T min(histogram_minmax<T, U>& hist)
+    inline T 
+    min(histogram_minmax<T, U>& hist)
     {
       return hist.min();
     }
     template< typename T, typename U >
-    inline
-    T min(histogram_min<T, U>& hist)
+    inline T 
+    min(histogram_min<T, U>& hist)
     {
       return hist.min();
     }
     template< typename T, typename U >
-    inline
-    T max(histogram_minmax<T, U>& hist)
+    inline T 
+    max(histogram_minmax<T, U>& hist)
     {
       return hist.max();
     }
     template< typename T, typename U >
-    inline
-    T max(histogram_max<T, U>& hist)
+    inline T 
+    max(histogram_max<T, U>& hist)
     {
       return hist.max();
     }
 
-
-    template<class I_>
-    void distrib_sort(const image<I_>& _im, std::vector<Point(I_)> &v)
+    template<class I>
+    void
+    distrib_sort(const abstract::image<I>& im, 
+		 std::vector<oln_point_type(I)> &v)
     {
-      Exact_cref(I, im);
-      typedef Value(I) val;
+      typedef oln_value_type(I) val;
 
       // check the size
-      precondition(v.size() == unsigned(im.nrows() * im.ncols()));
+      precondition(v.size() == unsigned(im.npoints())); 
+      // unsigned(im.nrows() * im.ncols()));
 
       // calculate the histogram of the image
-      utils::histogram< Value(I) > histo;
+      utils::histogram<oln_value_type(I) > histo;
       histo.init(im);
 
       // initialize the array of pointer to the point in the result
       // with the histogram we can know the number of each color and
       // then calculate an array of pointer for quick access to each
       // value of the image
-      std::vector< Point(I)* > ptr(ntg_max_val(val) + 1);
+      std::vector<oln_point_type(I)* > ptr(ntg_max_val(val) + 1);
       ptr[0] = &(v[0]);
-      for (int i = ntg_max_val(val) + 1; i <= ntg_max_val(val); i++)
+      for (int i = ntg_min_val(val) + 1; i <= ntg_max_val(val); i++)
 	ptr[unsigned(i)] = ptr[unsigned(i - 1)] + histo[i - 1];
 
       // Now iterate on the image to sort point in the order of their
       // level
-      Iter(I) p(im);
+     oln_iter_type(I) p(im);
       for_all(p)
 	*(ptr[unsigned(im[p].val())]++) = p;
     }
 
-  } // utils
+  } // end of namespace utils
 
-} // oln
+} // end of namespace oln
 
-#endif // OLENA_UTILS_HISTOGRAM_HH
+#endif // ! OLENA_UTILS_HISTOGRAM_HH

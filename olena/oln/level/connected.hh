@@ -41,9 +41,9 @@ namespace oln {
     /*=processing connected_component
      * ns: level
      * what: Connected Component.
-     * arg: const image<I1>&, marker, IN, marker image
-     * arg: const struct_elt<E>&, se, IN, structural element
-     * ret: typename mute<I_, DestType>::ret
+     * arg: const abstract::image<I1>&, marker, IN, marker image
+     * arg: const abstract::neighborhood<E>&, se, IN, structural element
+     * ret: typename mute<I, DestType>::ret
      * doc: It removes the small (in area) connected components of the upper
      * level sets of \var{input} using \var{se} as structural element. The
      * implementation comes from \emph{Cocquerez et Philipp, Analyse d'images,
@@ -59,29 +59,27 @@ namespace oln {
 
     // Number the connected components i.e label true. background(i.e
     // label false) has the label 0; This algorithm works only for 2D images
-    template <class DestType, class I_, class N_>
-    typename mute<I_, DestType>::ret
-    connected_component(const image<I_>& _input,
-			const neighborhood<N_>& _Ng)
+    template <class DestType, class I, class N>
+    typename mute<I, DestType>::ret
+    connected_component(const abstract::image<I>& input,
+			const abstract::neighborhood<N>& Ng)
     {
-      // FIXME: ensure the Value(I) is bin.
-      mlc::eq<I_::dim, N_::dim>::ensure();
-      mlc::eq<I_::dim, 2>::ensure();
-      Exact_cref(I, input);
-      Exact_cref(N, Ng);
-      typename mute<I_, DestType>::ret output(input.size());
+      // FIXME: ensure the oln_value_type(I) is bin.
+      mlc::eq<I::dim, N::dim>::ensure();
+      mlc::eq<I::dim, 2>::ensure();
+      typename mute<I, DestType>::ret output(input.size());
       level::hlut< DestType, DestType > T;
       DestType k = 1;
 
       fill(output, 0);
-      Iter(I) p(input);
+      oln_iter_type(I) p(input);
       for_all(p)
 	{
 	  if (input[p] == true)
 	    {
-	      typedef typename get_se<N::dim>::ret E;
+	      typedef typename abstract::neighborhood<N>::win_type E;
 	      E se_plus = morpho::get_plus_se_only(convert::ng_to_se(Ng));
-	      Neighb(E) p_prime(se_plus, p);
+	      oln_neighb_type(E) p_prime(se_plus, p);
 	      bool all_zero = true;
 	      for_all(p_prime)
 		if (input.hold(p_prime) && input[p_prime])
@@ -152,9 +150,9 @@ namespace oln {
 	output[p] = T(output[p]);
       return output;
     }
+    
+  } // end of namespace level
+  
+} // end of namespace oln
 
-  } // level
-} // oln
-
-
-#endif // OLENA_LEVEL_CONNECTED_HH
+#endif // ! OLENA_LEVEL_CONNECTED_HH

@@ -29,11 +29,13 @@
 #ifndef OLENA_CONVERT_NRGBYUV_HH
 # define OLENA_CONVERT_NRGBYUV_HH
 
-# include <oln/convert/colorconv.hh>
+# include <oln/convert/abstract/colorconv.hh>
 
 # include <ntg/color/nrgb.hh>
 # include <ntg/color/yuv.hh>
 # include <ntg/basics.hh>
+
+# include <sstream>
 
 /*---------------------------------------------------------------.
 | The formulas used here come from ``Colour Space Conversions'', |
@@ -46,47 +48,77 @@ namespace oln {
 
   namespace convert {
 
-    struct nrgb_to_yuv
-      : public color_conversion<3, nrgb_traits,
-				3, yuv_traits, nrgb_to_yuv>
+    template <unsigned inbits, unsigned outbits>
+    struct f_nrgb_to_yuv
+      : public abstract::color_conversion<3, inbits, nrgb_traits,
+					  3, outbits, yuv_traits, f_nrgb_to_yuv<inbits, outbits> >
     {
-      template <unsigned qbits>
-      color<3, qbits, yuv_traits>
-      operator() (const color<3, qbits, nrgb_traits>& v) const
+      color<3, outbits, yuv_traits>
+      doit(const color<3, inbits, nrgb_traits>& v) const
       {
 	vec<3, float> in = v.to_float();
 	vec<3, float> out;
 	out[yuv_Y] =
 	  + 0.299 * in[nrgb_R] + 0.587  * in[nrgb_G] + 0.114 * in[nrgb_B];
 	out[yuv_U] =
-	  - 0.147 * in[nrgb_R] - 0.2897 * in[nrgb_G] + 0.436 * in[nrgb_B];
+	  - 0.147 * in[nrgb_R] - 0.289 * in[nrgb_G] + 0.436 * in[nrgb_B];
 	out[yuv_V] =
 	  + 0.615 * in[nrgb_R] - 0.515  * in[nrgb_G] - 0.100 * in[nrgb_B];
 	return out;
       }
 
-      static std::string name() { return "nrgb_to_yuv"; }
+      static std::string 
+      name() 
+      { 
+	std::ostringstream s;
+	s << "f_nrgb_to_yuv<" << inbits << ", " << outbits << '>'; 
+	s.str();
+      }
     };
 
-    struct yuv_to_nrgb
-      : public color_conversion<3, yuv_traits,
-				3, nrgb_traits, yuv_to_nrgb>
+    template <unsigned inbits, unsigned outbits>
+    color<3, outbits, yuv_traits>
+    nrgb_to_yuv(const color<3, inbits, nrgb_traits>& v)
     {
-      template <unsigned qbits>
-      color<3, qbits, nrgb_traits>
-      operator() (const color<3, qbits, yuv_traits>& v) const
+      f_nrgb_to_yuv<inbits, outbits> f;
+      
+      return f(v);
+    }
+
+    template<unsigned inbits, unsigned outbits>
+    struct f_yuv_to_nrgb
+      : public abstract::color_conversion<3, inbits, yuv_traits,
+					  3, outbits, nrgb_traits, f_yuv_to_nrgb<inbits, outbits> >
+    {
+      color<3, outbits, nrgb_traits>
+      doit(const color<3, inbits, yuv_traits>& v) const
       {
 	vec<3, float> in = v.to_float();
 	vec<3, float> out;
 	out[nrgb_R] = in[yuv_Y]                     + 1.140 * in[yuv_V];
-	out[nrgb_G] = in[yuv_Y] - 0.396 * in[yuv_U] - 0.581 * in[yuv_V];
-	out[nrgb_B] = in[yuv_Y] + 2.029 * in[yuv_U];
+	out[nrgb_G] = in[yuv_Y] - 0.394 * in[yuv_U] - 0.581 * in[yuv_V];
+	out[nrgb_B] = in[yuv_Y] + 2.028 * in[yuv_U];
 
 	return out;
       }
 
-      static std::string name() { return "yuv_to_nrgb"; }
+      static std::string 
+      name() 
+      { 
+	std::ostringstream s;
+	s << "f_yuv_to_nrgb<" << inbits << ", " << outbits << '>'; 
+	s.str();
+      }
     };
+
+    template <unsigned inbits, unsigned outbits>
+    color<3, outbits, nrgb_traits>
+    yuv_to_nrgb(const color<3, inbits, yuv_traits>& v)
+    {
+      f_yuv_to_nrgb<inbits, outbits> f;
+
+      return f(v);
+    }
 
   } // convert
 } // oln

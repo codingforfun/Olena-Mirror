@@ -53,10 +53,14 @@ namespace ntg {
     template <unsigned ncomps, 
 	      unsigned qbits, 
 	      template <unsigned> class color_system>
-    struct typetraits<color<ncomps, qbits, color_system> >
+    struct typetraits<color<ncomps, qbits, color_system> > 
     {
-      typedef data_type					abstract_type;
+      enum { nb_comp = ncomps };
+
       typedef color<ncomps, qbits, color_system>	self;
+      typedef self					ntg_type;
+      typedef vectorial					abstract_type;
+      typedef int_u<qbits>				comp_type;
       typedef self					base_type;
       typedef vec<ncomps, int_u<qbits> >		storage_type;
     };
@@ -83,11 +87,11 @@ namespace ntg {
       doit (const in_type& in, out_type& out)
       {
 	float in_range = float(ntg_max_val(T)) - float(ntg_min_val(T));
-	float out_range = float(color_system<n>::upper_bound)
-	  - float(color_system<n>::lower_bound);
+	float out_range = float(color_system<n>::upper_bound())
+	  - float(color_system<n>::lower_bound());
 	out[n] = ((float(in[n]) - float(ntg_min_val(T)))
 		  * out_range / in_range
-		  + float(color_system<n>::lower_bound));
+		  + float(color_system<n>::lower_bound()));
 
 	// process next componant recursively:
 	_to_float<n + 1, ncomps, qbits, color_system>::doit(in, out);
@@ -127,13 +131,13 @@ namespace ntg {
       {
 	float out_range = float(optraits<T>::max()) 
 	  - float(optraits<T>::min());
-	float in_range = float(color_system<n>::upper_bound)
-	  - float(color_system<n>::lower_bound);
+	float in_range = float(color_system<n>::upper_bound())
+	  - float(color_system<n>::lower_bound());
 
 	out[n] = cast::rbound<int_u<qbits> >
-	  ((in[n] - float(color_system<n>::lower_bound))
+	  ((in[n] - float(color_system<n>::lower_bound()))
 	   * out_range / in_range
-	   + float(color_system<n>::lower_bound));
+	   + float(color_system<n>::lower_bound()));
 	
 	// process next componant recursively:
 	_from_float<n + 1, ncomps, qbits, color_system>::doit(in, out);
@@ -174,13 +178,8 @@ namespace ntg {
   template <unsigned ncomps, 
 	    unsigned qbits, 
 	    template <unsigned> class color_system>
-  struct color : public value<color<ncomps, qbits, color_system> >
+  struct color : public vect_value<color<ncomps, qbits, color_system> >
   {
-    template<unsigned icomp>
-    struct lower_bound { enum { ret = color_system<icomp>::lower_bound }; };
-    template<unsigned icomp>
-    struct upper_bound { enum { ret = color_system<icomp>::upper_bound }; };
-
     typedef int_u<qbits>		comp_type;
     typedef vec<ncomps, comp_type>	vec_type;
     typedef vec<ncomps, float>		float_vec_type;
@@ -199,9 +198,6 @@ namespace ntg {
       this->val_[1] = c2;
       this->val_[2] = c3;
     }
-
-    comp_type&		operator[](unsigned i)	     { return this->val_[i]; }
-    const comp_type	operator[](unsigned i) const { return this->val_[i]; }
 
     vec_type&		as_vec()       { return this->val_; }
     const vec_type&	as_vec() const { return this->val_; }
@@ -225,10 +221,8 @@ namespace ntg {
   template<int lval, int uval>
   struct interval
   {
-    enum {
-      lower_bound = lval,
-      upper_bound = uval
-    };
+    static int lower_bound() { return lval; }
+    static int upper_bound() { return uval; }
   };
 
   template <unsigned ncomps, 

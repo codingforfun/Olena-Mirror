@@ -17,7 +17,7 @@ not be what it is today without their work.
 
 @item Alexandre Duret-Lutz
 @itemize @minus
-@item for maintaining the source tree for several years,
+@item for having maintained the source tree for several years,
 @item for his work on the type system,
 @item for his work on the test system,
 @item for his numerous hours spent on Olena to make it better.
@@ -83,7 +83,11 @@ for his study of fuzzy types
 @end itemize
 
 @item Nicolas Burrus
-for his work on data types and the new (0.6) data type system
+@itemize @minus
+@item for his work on integre,
+@item for his work on the images I/O,
+@item for his work on the source tree.
+@end itemize
 
 @item Pierre-Yves Strub
 @itemize @minus
@@ -101,6 +105,12 @@ for his work on the watershed algorithm
 @item for his work on the documentation.
 @end itemize
 
+@item Reda Dehak
+@itemize @minus
+@item for managing the project
+@item for his work on the color conversions
+@end itemize
+
 @item R@'emi Coupet
 @itemize @minus
 @item for his work on Olena morpho,
@@ -108,9 +118,6 @@ for his work on the watershed algorithm
 @item for his work on the Olena core,
 @item for his bibliographic research.
 @end itemize
-
-@item Reda Dehak
-for managing the project
 
 @item Renaud Fran@,cois
 for his bibliographic research

@@ -30,6 +30,7 @@
 
 # include <mlc/objs.hh>
 # include <oln/core/image.hh>
+
 # include <string>
 
 namespace oln
@@ -37,52 +38,54 @@ namespace oln
 
   template< class Win >
   struct winneighb {
-    typedef Point(Win) point;
-    typedef DPoint(Win) dpoint;
+
+    typedef oln_point_type(Win) point;
+    typedef oln_dpoint_type(Win) dpoint;
 
     template< class T >
-    winneighb(const Win& win, const T& anchor) :
-      _win(win), _pos(0), _anchor(anchor.point_ref()) {}
+    winneighb(const typename Win::abstract_type& win, const T& anchor) :
+      win_(win.exact()), pos_(0), anchor_(anchor.point_ref()) 
+    {}
 
     const point& point_ref() const
     {
-      return _cur;
+      return cur_;
     }
 
-    mlc::_begin
-    operator=(mlc::_begin)
+    mlc::begin_type
+    operator=(mlc::begin_type)
     {
-      _pos = 0;
-      _cur = _anchor + _win.dp(_pos);
+      pos_ = 0;
+      cur_ = anchor_ + win_.dp(pos_);
       return begin;
     }
 
-    mlc::_end
-    operator=(mlc::_end)
+    mlc::end_type
+    operator=(mlc::end_type)
     {
-      _pos = _win.card();
+      pos_ = win_.card();
       return end;
     }
 
     bool
-    operator==(mlc::_end) const
+    operator==(mlc::end_type) const
     {
-      return _pos == _win.card();
+      return pos_ == win_.card();
     }
 
     bool
-    operator!=(mlc::_end) const
+    operator!=(mlc::end_type) const
     {
-      return _pos != _win.card();
+      return pos_ != win_.card();
     }
 
     winneighb&
     operator++()
     {
       precondition(*this != end);
-      ++_pos;
+      ++pos_;
       if (*this != end)
-	_cur = _anchor + _win.dp(_pos);
+	cur_ = anchor_ + win_.dp(pos_);
       return *this;
     }
 
@@ -98,31 +101,31 @@ namespace oln
     operator point() const
     {
       precondition(*this != end);
-      return _cur;
+      return cur_;
     }
 
     // it's convenient to type `it.cur()' instead of `(point)it' when
     // necessary.
-    point cur() const
+    point 
+    cur() const
     {
       return *this;
     }
 
-    static std::string name()
+    static std::string 
+    name()
     {
       return std::string("winneighb<") + Win::name() + ">";
     }
 
   private:
-    const Win &_win;
-    unsigned _pos;
-    const point &_anchor;
-    point _cur;
+
+    const Win &win_;
+    unsigned pos_;
+    const point& anchor_;
+    point cur_;
+
   };
-
-# define Neighb(Neighbable)			\
-typename Neighbable::neighb
-
 
 } // end of oln
 

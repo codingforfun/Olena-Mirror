@@ -76,7 +76,7 @@ namespace ntg
 # ifdef NTG_DEBUG
 #  define ntg_debug_define_vars(State)		\
   bool ntg::debug_active = State;		\
-  std::string ntg::debug_context
+  std::string ntg::debug_context;
 #  define ntg_debug_activate() ntg::debug_active = true
 #  define ntg_debug_desactivate() ntg::debug_active = false
 #  define ntg_is_debug_active (ntg::debug_active == true)

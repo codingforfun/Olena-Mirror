@@ -42,8 +42,17 @@ namespace ntg
 
   template<unsigned icomp> struct hsi_traits;
   template<> struct hsi_traits<hsi_H> : public interval<0,360> {};
-  template<> struct hsi_traits<hsi_S> : public interval<0,1> {};
-  template<> struct hsi_traits<hsi_I> : public interval<0,1> {};
+  template<> struct hsi_traits<hsi_S> 
+  {
+    static float lower_bound() { return 0.; }
+    static float upper_bound() { return 1.0801234; } //sqrt(7. / 6)
+  };
+
+  template<> struct hsi_traits<hsi_I>
+  {
+    static float lower_bound() { return 0.; }
+    static float upper_bound() { return 1.7320508; } //sqrt(3)
+  };
 
   typedef color<3,8,hsi_traits>  hsi_8;
   typedef color<3,16,hsi_traits> hsi_16;

@@ -42,7 +42,8 @@ namespace oln {
     template<>
     struct default_less<coord>
     {
-      bool operator()(const coord& lhs, const coord& rhs) const
+      bool 
+      operator()(const coord& lhs, const coord& rhs) const
       {
 	return lhs < rhs;
       }

@@ -29,7 +29,6 @@
 # define OLENA_TOPO_TARJAN_UNION_HH
 
 #include <oln/basics2d.hh>
-#include <ntg/all.hh>
 
 #include <oln/level/fill.hh>
 
@@ -39,38 +38,40 @@ namespace oln {
 
     namespace tarjan {
 
-      struct EMPTY_CLASS
+      struct empty_class
       {};
 
-      template< class I, class aux_data_t>
+      template< class I, class aux_data_type>
       struct tarjan_set
       {
-	typedef Point(I) point_t;
-	typedef Value(I) data_t;
-	typedef Concrete(I) image_t;
+	typedef oln_point_type(I) point_type;
+	typedef oln_value_type(I) data_type;
+	typedef oln_concrete_type(I) image_type;
 
-	typedef typename mute<I, point_t>::ret ima_parent_t;
-	typedef typename mute<I, aux_data_t>::ret ima_aux_data_t;
+	typedef typename mute<I, point_type>::ret ima_parent_type;
+	typedef typename mute<I, aux_data_type>::ret ima_aux_data_type;
 
       public:
-	tarjan_set(const image_t & ima) : input(ima)
+	tarjan_set(const image_type & ima) : input(ima)
 	{
-	  parent = typename mute<I, point_t>::ret(ima.size());
-	  level::fill(parent, INACTIVE());
+	  parent = typename mute<I, point_type>::ret(ima.size());
+	  level::fill(parent, inactive());
 
-	  border::adapt_assign(parent, 1, INACTIVE());
+	  parent.border_adapt_assign(1, inactive());
 	}
 
+	// FIXME: these macros do not respect the coding style!
 
-	// ACTIVE and INACTIVE are defined with a hook to be static
-	// and initialized ionly once.
-	static const point_t & ACTIVE()
+	// active and inactive are defined with a hook to be static
+	// and initialized only once.
+	static const point_type&
+	active()
 	{
 	  static struct foo_def{
-	    point_t elt;
+	    point_type elt;
 	    foo_def()
 	    {
-	      const unsigned dim = point_t::dim;
+	      const unsigned dim = point_type::dim;
 	      for (unsigned i = 0; i < dim; ++i )
 		elt.nth(i) = -1;
 	    }
@@ -79,12 +80,13 @@ namespace oln {
 	  return tmp.elt;
 	}
 
-	static const point_t &INACTIVE()
+	static const point_type&
+	inactive()
 	{
-	  static struct foo_def{
-	    point_t elt;
+	  static struct foo_def {
+	    point_type elt;
 	    foo_def() {
-	      const unsigned dim = point_t::dim;
+	      const unsigned dim = point_type::dim;
 	      for (unsigned i = 0; i < dim; ++i )
 		elt.nth(i) = -2;
 	    }
@@ -93,42 +95,47 @@ namespace oln {
 	  return tmp.elt;
 	}
 
-
-	void make_set(const point_t& x)
+	void
+	make_set(const point_type& x)
 	{
-	  precondition(parent[x] == INACTIVE());
-	  parent[x] = ACTIVE();
+	  precondition(parent[x] == inactive());
+	  parent[x] = active();
 	}
 
-	void link(const point_t& x, const point_t& y)
+	void
+	link(const point_type& x, const point_type& y)
 	{
 	  parent[x] = y;
 	}
 
-	unsigned int attribute(const point_t& x)
+	unsigned int
+	attribute(const point_type& x)
 	{
-	  precondition(parent[x] == ACTIVE());
+	  precondition(parent[x] == active());
 	  precondition(aux_data[x] != 0);
 	  return aux_data[x];
 	}
 
-	bool equiv(const point_t& x, const point_t& y)
+	bool
+	equiv(const point_type& x, const point_type& y)
 	{
 	  return ( (input[x] == input[y]));
 	}
 
 
-	void uni(const point_t& n, const point_t& p)
+	void
+	uni(const point_type& n, const point_type& p)
 	{
-	  point_t r = find_root(n);
+	  point_type r = find_root(n);
 	  if (r != p && equiv(r,p))
 	    link(r,p);
 	}
 
-	const point_t & find_root(const point_t& x)
+	const point_type&
+	find_root(const point_type& x)
 	{
 	  //FIXME do it iteratively
-	  if ((parent[x] != ACTIVE()) && (parent[x] != INACTIVE()))
+	  if ((parent[x] != active()) && (parent[x] != inactive()))
 	    {
 	      parent[x] = find_root(parent[x]);
 	      return parent[x];
@@ -137,31 +144,32 @@ namespace oln {
 	    return x;
 	}
 
-
-	const point_t & sure_find_root(const point_t& x)
+	const point_type&
+	sure_find_root(const point_type& x)
 	{
-	  if ((parent[x] != ACTIVE()) && (parent[x] != INACTIVE()))
+	  if ((parent[x] != active()) && (parent[x] != inactive()))
 	    return parent[x];
 	  else
 	    return x;
 	}
 
-	const bool is_root(const point_t& x)
+	const bool
+	is_root(const point_type& x)
 	{
-	  if ((parent[x] != ACTIVE()) && (parent[x] != INACTIVE()))
+	  if ((parent[x] != active()) && (parent[x] != inactive()))
 	    return false;
 	  return true;
 	}
 
-	const image_t &input;
-	ima_parent_t parent;
-	ima_aux_data_t aux_data;
+	const image_type &input;
+	ima_parent_type parent;
+	ima_aux_data_type aux_data;
       };
 
-    } // end tarjan
+    } // end of namespace tarjan
 
-  } // end topo
+  } // end of namespace topo
 
-} // end oln
+} // end of namespace oln
 
 #endif // ! OLENA_TOPO_TARJAN_UNION_HH

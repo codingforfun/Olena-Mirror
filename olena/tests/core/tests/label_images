@@ -1,0 +1,46 @@
+//								    -*- c++ -*-
+
+#include <mlc/is_a.hh>
+
+#include <oln/basics1d.hh>
+#include <oln/basics2d.hh>
+#include <oln/basics3d.hh>
+
+#include <ntg/all.hh>
+
+#include <iostream>
+#include <cassert>
+
+using namespace oln;
+using namespace ntg;
+
+template <class E>
+std::string foo(const abstract::image<E>&)
+{ return "image"; }
+
+template <class E>
+std::string foo(const abstract::non_vectorial_image<E>&)
+{ return "non_vectorial_image"; }
+
+template <class E>
+std::string foo(const abstract::non_vectorial_image_with_dim<2, E>&)
+{ return "non_vectorial_image_with_dim<2>"; }
+
+template <class E>
+std::string foo(const abstract::binary_image_with_dim<2, E>&)
+{ return "binary_image_with_dim<2>"; }
+
+template <class E>
+std::string foo(const abstract::binary_image<E>&)
+{ return "binary_image"; }
+
+int main()
+{
+  assert( foo(image1d<bin>()) == "binary_image" );
+  assert( foo(image2d<bool>()) == "binary_image_with_dim<2>" );
+  
+  assert( foo(image1d<int_u8>()) == "non_vectorial_image" );
+  assert( foo(image2d<int_u8>()) == "non_vectorial_image_with_dim<2>" );
+
+  assert( foo(image2d<nrgb_8>()) == "image" );
+}

@@ -28,7 +28,8 @@
 #ifndef OLENA_CORE_W_WINDOW3D_HH
 # define OLENA_CORE_W_WINDOW3D_HH
 
-# include <oln/core/internal/w_window.hh>
+# include <ntg/basics.hh>
+# include <oln/core/abstract/w_windownd.hh>
 # include <oln/core/accum.hh>
 # include <oln/core/winiter.hh>
 # include <oln/core/winneighb.hh>
@@ -38,79 +39,91 @@
 
 namespace oln {
 
-  template<class T, class Exact = mlc::final>
-  class w_window3d : public internal::_w_window< 3, T, typename mlc::exact_vt<w_window3d<T, Exact>, Exact>::ret >
+  template<class T>
+  class w_window3d; // fwd_decl
+
+  template<class T>
+  struct struct_elt_traits<w_window3d<T> >: public
+  struct_elt_traits<abstract::w_windownd<w_window3d<T> > >
   {
-    typedef internal::_w_window< 3, T, typename mlc::exact_vt<w_window3d<T, Exact>, Exact>::ret > super;
-  public:
-
-    typedef w_window3d self;
-
-    typedef winiter< self >   iter;
-    typedef winneighb< self > neighb;
-
-    w_window3d<T>& add(coord slice, coord row, coord col, T weight)
-    {
-      return add(dpoint3d(slice, row, col), weight);
-    }
-
-    w_window3d(): super(), _delta(0) {}
-    w_window3d(unsigned size) : super(size), _delta(0) {}
-
-    w_window3d<T>& add(const dpoint3d& dp, T weight)
-    {
-      if (weight == 0)		// Don't add 0 weighted entries
-	return *this;
-
-      super::add(dp, weight);
-      _delta(abs(dp.slice()));
-      _delta(abs(dp.row()));
-      _delta(abs(dp.col()));
-      return *this;
-    }
-
-    T& set(const dpoint3d& dp, T weight)
-    {
-      // if the dp exists, return a ref to the existing entry
-      for (unsigned i = 0; i < card(); ++i)
-	if (_dp[i] == dp)
-	  {
-	    _w[i] = weight;
-	    return _w[i];
-	  }
-
-      // otherwise, create new entry
-      add(dp, weight);
-      return _w.back();
-    }
-
-    T& set(coord slice, coord row, coord col)
-    {
-      return set(dpoint3d(slice, row, col));
-    }
-
-    coord delta() const
-    {
-      return _delta;
-    }
-
-    self operator-() const
-    {
-      self win(*this);
-      win.sym();
-      return win;
-    }
-
-    static std::string name() { return std::string("w_window3d")
-				       + T::name() + ","
-				       + Exact::name() + ">"; }
-  private:
-    max_accumulator<coord> _delta;
+    enum { dim = 3 };
+    typedef T weight_type;
+    typedef point3d point_type;
+    typedef dpoint3d dpoint_type;
+    typedef winiter< w_window3d<T> > iter_type;
+    typedef winneighb< w_window3d<T> > neighb_type;
   };
 
 
   template<class T>
-  w_window3d<T> mk_w_win_from_win(T weight, const window3d& win)
+  class w_window3d : public abstract::w_windownd<w_window3d<T> >
+  {
+
+    typedef abstract::w_windownd< w_window3d<T> > super_type;
+
+  public:
+
+    typedef w_window3d<T> self_type;
+    typedef typename struct_elt_traits< self_type >::iter_type   iter_type;
+    typedef typename struct_elt_traits< self_type >::neighb_type neighb_type;
+    typedef typename struct_elt_traits< self_type >::dpoint_type dpoint_type;
+    typedef typename struct_elt_traits< self_type >::weight_type weight_type;
+
+    friend class abstract::window_base<abstract::w_window<w_window3d>, w_window3d>;
+
+    w_window3d(): super_type() 
+    {}
+
+    w_window3d(unsigned size) : super_type(size) 
+    {}
+
+    w_window3d<T>& 
+    add(const dpoint_type& dp, const weight_type& w)
+    {
+      return this->exact().add_(dp, w);
+    }
+
+    w_window3d<T>& 
+    add(coord slice, coord row, coord col, const weight_type& weight)
+    {
+      return add(dpoint_type(slice, row, col), weight);
+    }
+
+    const weight_type& 
+    set(const dpoint_type& dp, const weight_type& weight)
+    {
+      return this->exact().set_(dp, weight);
+    }
+
+    const weight_type& 
+    set(coord slice, coord row, coord col, const weight_type& weight)
+    {
+      return set(dpoint_type(slice, row, col), weight);
+    }
+
+    static std::string 
+    name() 
+    { 
+      return std::string("w_window3d") + ntg_name(T) + ">"; 
+    }
+
+  protected:
+
+    coord 
+    delta_update_(const dpoint_type& dp)
+    {
+      delta_(abs(dp.slice()));
+      delta_(abs(dp.row()));
+      delta_(abs(dp.col()));
+      return this->delta_;
+    }
+
+  };
+
+
+  template<class T>
+  w_window3d<T> 
+  mk_w_win_from_win(T weight, const window3d& win)
   {
     w_window3d<T> w_win(win.card());
     for (unsigned i = 0; i < win.card(); ++i)

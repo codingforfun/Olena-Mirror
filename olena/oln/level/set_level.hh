@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,14 +35,13 @@ namespace oln {
 
   namespace level {
 
-    template <class I_>
-    void set_level(image<I_>&        _inout, 
-		   const Point(I_)&  p1,
-		   const Point(I_)&  p2, 
-		   Value(I_)         level)
+    template <class I>
+    void 
+    set_level(abstract::image_with_dim<2,I>& inout,
+	      const oln_point_type(I)& p1,
+	      const oln_point_type(I)& p2,
+	      oln_value_type(I) level)
     {
-      Exact_ref(I, inout);
-
       int iRow1 = p1.row();
       int iCol1 = p1.col();
       int iRow2 = p2.row();
@@ -56,13 +55,13 @@ namespace oln {
       int i, e;
       int iRow = iRow1;
       int iCol = iCol1;
-      
+
       if ( dCol > dRow )
 	{
 	  e = ddRow - dCol;
 	  for ( i = 0; i < dCol; ++i )
 	    {
-	      inout(iRow,iCol) = level;
+	      inout(iRow, iCol) = level;
 	      while ( e >= 0 )
 		{
 		  iRow += sRow;
@@ -91,14 +90,14 @@ namespace oln {
     }
 
 
-    template <class I_, class BoxType>
-    void set_level(image<I_>&          _inout, 
- 		   BoxType&              box,
- 		   const Value(I_)&      level)
+    template <class I, class BoxType>
+    void 
+    set_level(abstract::image_with_dim<2,I>& inout,
+	      BoxType& box,
+	      const oln_value_type(I)& level)
     {
       if (box.card() != 0)
 	{
-	  Exact_ref(I, inout);
 	  dpoint2d drows(box.top().row() - box.bottom().row(), 0);
 	  dpoint2d dcols(0, box.top().col() - box.bottom().col());
 	  set_level(inout, box.top(), box.top() - drows, level);
@@ -108,8 +107,8 @@ namespace oln {
 	}
     }
 
-  } // end of level.
+  } // end of namespace level
 
-} // end of oln.
+} // end of namespace oln
 
-#endif // OLENA_LEVEL_SET_LEVEL_HH
+#endif // ! OLENA_LEVEL_SET_LEVEL_HH

@@ -31,34 +31,37 @@
 # include <mlc/is_a.hh>
 
 # include <mlc/contract.hh>
-# include <oln/core/image.hh>
-# include <oln/core/image_size.hh>
-# include <oln/core/iter.hh>
+# include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/image_size.hh>
+# include <oln/core/abstract/iter.hh>
 # include <oln/core/macros.hh>
 
 namespace oln {
 
+  // FIXME: uncomment when ready
+#if 0
+
   // generate (generator)
 
-  template<class AdaptableGen, class I> inline
-  typename image_for_dim<mlc::exact<I>::ret::dim>::with_type<typename AdaptableGen::result_type>::ret
+  template<class AdaptableGen, class I> 
+  inline typename image_for_dim<mlc::exact<I>::ret::dim>::with_type<typename AdaptableGen::result_type>::ret
   generate(AdaptableGen f, const image_size<I>& size)
   {
-    typename image_for_dim<mlc::exact<I>::ret::dim>::with_type<typename AdaptableGen::result_type>::ret output(to_exact(size));
-    Iter(typename image_for_dim<mlc::exact<I>::ret::dim>::with_type<typename AdaptableGen::result_type>::ret) p(output);
+    typename image_for_dim<mlc::exact<I>::ret::dim>::with_type<typename AdaptableGen::result_type>::ret output(size.exact());
+    oln_iter_type(typename image_for_dim<mlc::exact<I>::ret::dim>::with_type<typename AdaptableGen::result_type>::ret) p(output);
     for_all(p) output[p] = f();
     return output;
   }
 
-  template<class AdaptableGen, class I_> inline
-  image<I_>
-  generate(AdaptableGen f, image<I_>& _input)
+  template<class AdaptableGen, class I> 
+  inline abstract::image<I>
+  generate(AdaptableGen f, abstract::image<I>& input)
   {
-    Exact_ref (I, input);
-    Iter(I) p(input);
+    oln_iter_type(I) p(input);
     for_all(p) input[p] = f();
     return input;
   }
+#endif
 
 } // end of oln
 

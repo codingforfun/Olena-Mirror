@@ -1,0 +1,19 @@
+//								    -*- c++ -*-
+
+#include <iostream>
+
+#include <oln/basics1d.hh>
+#include <oln/basics2d.hh>
+#include <oln/basics3d.hh>
+
+#include <ntg/all.hh>
+
+using namespace oln;
+using namespace ntg;
+
+int main()
+{
+  typedef impl::image_array2d<int_u8> impl_type;
+
+  image<2, int_u8, impl_type> ima1(new impl_type(image2d_size(5, 5, 2)));
+}

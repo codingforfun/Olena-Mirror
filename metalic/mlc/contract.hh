@@ -43,19 +43,53 @@
 #  include <cstdlib>
 #  include <sstream>
 #  include <stdexcept>
+#  include <cassert>
 
 namespace mlc 
 {
 
-#  ifndef OLN_EXCEPTIONS
+#  ifdef OLN_EXCEPTIONS
 
-inline void __FailedCondition( const char* condType,
-                               const char* condText,
-                               const char* fileName
+  // FIXME: this fails if several sources files are compiled.
+  // The code on this function should go in a .so file.
+
+  // FIXME: this fails if several sources files are compiled.
+
+  inline void FailedCondition__( const char* condType,
+				 const char* condText,
+				 const char* fileName 
 #   ifndef RUNNING_TESTS
-                               ,int fileLine
+				 ,int fileLine
 #   endif
-			       )
+				 )
+  {
+    // put a breakpoint _here_ at debug-time
+    std::ostringstream err;
+
+    err << fileName << ':'
+#   ifndef RUNNING_TESTS
+	<< fileLine
+#   endif
+	<< ": "
+            << condType << " `"
+	<< condText << "' failed.";
+#   ifndef RUNNING_TESTS
+    throw std::runtime_error(err.str());
+#   else
+    std::cerr << err.str();
+    exit(1);
+#   endif
+  }
+
+#  else // no OLN_EXCEPTIONS
+
+  inline void FailedCondition__( const char* condType,
+				 const char* condText,
+				 const char* fileName
+#   ifndef RUNNING_TESTS
+				 ,int fileLine
+#   endif
+				 )
 {
   // put a breakpoint _here_ at debug-time
   std::cerr << fileName << ':'
@@ -72,53 +106,36 @@ inline void __FailedCondition( const char* condType,
 #   endif
 }
 
-#  else // OLN_EXCEPTIONS
-
- inline void __FailedCondition( const char* condType,
-                               const char* condText,
-                               const char* fileName 
-#   ifndef RUNNING_TESTS
-                               ,int fileLine
-#   endif
-)
-{
-  // put a breakpoint _here_ at debug-time
-  std::ostringstream err;
-
-  err << fileName << ':'
-#   ifndef RUNNING_TESTS
-            << fileLine
-#   endif
-	    << ": "
-            << condType << " `"
-            << condText << "' failed.";
-#   ifndef RUNNING_TESTS
-  throw std::runtime_error(err.str());
-#   else
-  std::cerr << err.str();
-  exit(1);
-#   endif
-}
-
 #  endif // OLN_EXCEPTIONS
 
 } // end of mlc
 
-#  define assertion(expr)         __TestCondition(Assertion,expr)
-#  define invariant(expr)         __TestCondition(Invariant,expr)
-#  define precondition(expr)      __TestCondition(Precondition,expr)
-#  define postcondition(expr)     __TestCondition(Postcondition,expr)
-
 #  ifndef RUNNING_TESTS
-#   define __TestCondition(condType,expr) \
-  ((void) ((expr) ? 0 : (::mlc::__FailedCondition( #condType, #expr, \
+#   define TestCondition__(condType,expr) \
+  ((void) ((expr) ? 0 : (::mlc::FailedCondition__( #condType, #expr, \
                                                    __FILE__, __LINE__ ), 0)))
 #  else
-#   define __TestCondition(condType,expr) \
-  ((void) ((expr) ? 0 : (::mlc::__FailedCondition( #condType, #expr, \
+#   define TestCondition__(condType,expr) \
+  ((void) ((expr) ? 0 : (::mlc::FailedCondition__( #condType, #expr, \
                                                    __FILE__ ), 0)))
-#  endif // NDEBUG
+#  endif
 
-# endif
+// FIXME: assertions should use extern functions defined in a
+// separated object file. This saves a LOT of compilation
+// time. assert() is used temporarily to fix this problem.
+
+#  ifdef OLN_EXCEPTIONS
+#   define assertion(expr)         TestCondition__(Assertion,expr)
+#   define invariant(expr)         TestCondition__(Invariant,expr)
+#   define precondition(expr)      TestCondition__(Precondition,expr)
+#   define postcondition(expr)     TestCondition__(Postcondition,expr)
+#  else
+#   define assertion(expr)         assert(expr)
+#   define invariant(expr)         assert(expr)
+#   define precondition(expr)      assert(expr)
+#   define postcondition(expr)     assert(expr)
+#  endif
+
+# endif // NDEBUG
 
 #endif // ! METALIC_CONTRACT_HH

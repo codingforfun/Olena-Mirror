@@ -3,7 +3,7 @@
 #include <oln/basics3d.hh>
 #include <mlc/type.hh>
 #include <mlc/cmp.hh>
-#include <oln/core/pred_image.hh>
+#include <oln/core/abstract/image_with_type.hh>
 #include <oln/arith/ops.hh>
 #include <oln/arith/logic.hh>
 #include <oln/io/basics.hh>
@@ -11,6 +11,9 @@
 
 using namespace oln;
 using namespace ntg;
+
+using std::cout;
+using std::endl;
 
 struct a_2dpred {
   template<class T>
@@ -20,36 +23,30 @@ struct a_2dpred {
 };
 
 
-template<class _I>
-typename mute<_I>::ret
-foo(const image<_I>& _input)
+template<class I>
+typename mute<I>::ret
+foo(const abstract::image<I>& input)
 {
-  Exact_cref(I, input);
   std::cout << I::name() << std::endl;
   typename mute<I>::ret output(input.size());
-  typename I::iter p(input);
+  typename I::iter_type p(input);
   for_all(p) output[p] = input[p] + 51;
   return output;
 }
 
 
-template<class _I, class _P>
-void bar(image<_I>& _input, const point<_P>& _p)
+template<class I, class P>
+void bar(abstract::image<I>& input, const abstract::point<P>& p)
 {
-  Exact_ref(I, input);
-  Exact_cref(P, p);
-  meta::eq<I::dim, P::dim>::ensure();
+  mlc::eq<I::dim, P::dim>::ensure();
   input[p] = 69;
 }
 
-
-template<class _I, class _P>
-void base(image<_I>& _input, const pred_image<_P>& _pred)
+template<class I, class P>
+void base(abstract::image<I>& input, const abstract::binary_image<P>& pred)
 {
-  Exact_ref(I, input);
-  Exact_cref(P, pred);
-  meta::eq<I::dim, P::dim>::ensure();
-  typename I::iter p(input);
+  mlc::eq<I::dim, P::dim>::ensure();
+  typename I::iter_type p(input);
   for_all (p) {
     if (pred[p])
       input[p] = 0;
@@ -57,7 +54,7 @@ void base(image<_I>& _input, const pred_image<_P>& _pred)
 }
 
 template <class T>
-type::any<T>& id(type::any<T>& v)
+mlc_hierarchy::any<T>& id(mlc_hierarchy::any<T>& v)
 {
   return v;
 }
@@ -74,11 +71,11 @@ int main()
   cout << bi2 << endl;
   cout << arith::logic_or(bi1, bi2) << endl;
 
-  border::set_width(bi1, 2);
+  bi1.border_set_width(2);
   cout << bi1 << endl;
-  border::adapt_copy(bi1, 3);
+  bi1.border_adapt_copy(3);
   cout << bi1 << endl;
-  border::set_width(bi1, 1);
+  bi1.border_set_width(1);
   cout << bi1 << endl;
   cout << bi1.border() << endl;
 
@@ -91,10 +88,10 @@ int main()
   bar(ima, point2d());
   cout << ima << endl;
 
-  //  cout << conv::force<int_u8>::output<int>::ret::name () << endl;
-  //  cout << convoutput<conv::force<int_u8>,int>::ret::name () << endl;
+  cout << ntg::type_traits<convert::force<int_u8>::output<int>::ret>::name () << endl;
+  //cout << ntg::type_traits<convoutput<convert::force<int_u8>,abstractint>::ret>::name () << endl;
 
-  image2d<int_u8> i2 = arith::plus(conv::force<int_u8>(), ima, ima);
+  image2d<int_u8> i2 = arith::plus(convert::force<int_u8>(), ima, ima);
 
   cout << i2 << endl;
   cout << arith::min_cst(ima, int_u8(52)) << endl;
@@ -102,7 +99,7 @@ int main()
   window2d win = mk_win_square (11);
   cout << win << endl;
 
-  window2d::iter it(win);
+  window2d::iter_type it(win);
   for_all(it) cout << it << ":";
   cout << endl;
 
@@ -111,10 +108,10 @@ int main()
 
   cout << mk_w_win_from_win (1.2f, win2) << endl;
 
-  w_window2d<int> win3 = (meta::ints =
-			  1, 2, 3, lbrk,
-			  4, 5, x(),
-			  7, 8, 9, end);
+  w_window2d<int> win3 = (mlc::ints_2d =
+			  1, 2, 3, mlc::lbrk,
+			  4, 5, mlc::x(),
+			  7, 8, 9, mlc::end);
   cout << win3 << endl;
 
   /* Try the watershed on 1D images. */

@@ -28,6 +28,7 @@
 #ifndef NTG_UTILS_CAST_HH
 # define NTG_UTILS_CAST_HH
 
+# include <ntg/config/system.hh>
 # include <ntg/core/macros.hh>
 # include <ntg/core/predecls.hh>
 # include <ntg/core/type_traits.hh>
@@ -59,7 +60,7 @@ namespace ntg {
     return static_cast<ntg_type(T)>(val);
   }
   
-  TO_NTG_CAST(signed);
+  TO_NTG_CAST(signed)
 
   namespace cast {
 
@@ -118,9 +119,9 @@ namespace ntg {
 	  // KLUDGE: Cast the rounded value to Tdest::value_t before
 	  // returning it as Tdest. Otherwise g++-3.0 complains there
 	  // is no Tdest constructor taking a float argument.
-	  return (ntg_storage_type(Tdest)) round(val.self());
+	  return (ntg_storage_type(Tdest)) round(val.exact());
 #endif
-	  return round(val.self());
+	  return round(val.exact());
 	}
       };
 
@@ -164,7 +165,7 @@ namespace ntg {
 	static const Tdest
 	doit(const float_value<Tsrc>& val)
 	{
-	  return val.self();
+	  return val.exact();
 	}
       };
 
@@ -174,7 +175,7 @@ namespace ntg {
 	static float_s
 	doit(const float_value<Tsrc>& val)
 	{
-	  return val.self();
+	  return val.exact();
 	}
       };
 
@@ -184,7 +185,7 @@ namespace ntg {
 	static float_d
 	doit(const float_value<Tsrc>& val)
 	{
-	  return val.self();
+	  return val.exact();
 	}
       };
 

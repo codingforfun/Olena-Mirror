@@ -1,0 +1,44 @@
+//								    -*- c++ -*-
+
+#include <ntg/int.hh>
+#include <oln/basics2d.hh>
+#include <oln/topo/combinatorial-map/cmap.hh>
+
+#include <iostream>
+
+#include "check.hh"
+#include "data.hh"
+
+using namespace oln;
+using namespace ntg;
+using namespace topo::tarjan;
+using namespace topo::inter_pixel;
+using namespace topo::combinatorial_map;
+
+#define OK_OR_FAIL				\
+      std::cout << "OK" << std::endl;		\
+    else					\
+      {						\
+	std::cout << "FAIL" << std::endl;	\
+	fail = true;				\
+      }
+
+bool
+check()
+{
+  bool fail = false;
+
+  typedef image2d<int_u8> input_t;
+
+  input_t src = load(rdata("test-cmap"));
+
+  interpixel<input_t> ip(src);
+
+  flat_zone<input_t> cc(src);
+
+  cmap<input_t> cm(src, ip, cc);
+
+  std::cout << "OK" << std::endl;
+
+  return fail;
+}

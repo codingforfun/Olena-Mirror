@@ -1,0 +1,30 @@
+//								    -*- c++ -*-
+
+#include <ntg/int.hh>
+#include <oln/basics2d.hh>
+#include <oln/utils/copy.hh>
+
+#include <iostream>
+
+#include "check.hh"
+#include "data.hh"
+
+using namespace oln;
+using namespace ntg;
+
+bool
+check()
+{
+  bool fail = false;
+
+  const image2d<int_u8>& ima1 = load(rdata("lena256.pgm"));
+  image2d<int_u8> ima2 = load(rdata("lena256.pgm"));
+
+  image2d<int_u8> ima3(ima1);
+  image2d<int_u8> ima4(ima2);
+
+  fail |= (ima1.impl() == ima3.impl());
+  fail |= (ima2.impl() != ima4.impl());
+
+  return fail;
+}

@@ -63,45 +63,45 @@ namespace ntg
   namespace nrgb_8_color 
   {
 
-    DEFINE_COLOR(nrgb_8, white, 255, 255, 255);
-    DEFINE_COLOR(nrgb_8, gray,  128, 128, 128);
-    DEFINE_COLOR(nrgb_8, black, 0,   0,   0);
-    DEFINE_COLOR(nrgb_8, red,   255, 0,   0);
-    DEFINE_COLOR(nrgb_8, green, 0,   255, 0);
-    DEFINE_COLOR(nrgb_8, blue,  0,   0,   255);
-    DEFINE_COLOR(nrgb_8, yellow,255, 255, 0);
-    DEFINE_COLOR(nrgb_8, cyan,  0,   255, 255);
-    DEFINE_COLOR(nrgb_8, pink,  255, 0,   255);
+    DEFINE_COLOR(nrgb_8, white, 255, 255, 255)
+    DEFINE_COLOR(nrgb_8, gray,  128, 128, 128)
+    DEFINE_COLOR(nrgb_8, black, 0,   0,   0)
+    DEFINE_COLOR(nrgb_8, red,   255, 0,   0)
+    DEFINE_COLOR(nrgb_8, green, 0,   255, 0)
+    DEFINE_COLOR(nrgb_8, blue,  0,   0,   255)
+    DEFINE_COLOR(nrgb_8, yellow,255, 255, 0)
+    DEFINE_COLOR(nrgb_8, cyan,  0,   255, 255)
+    DEFINE_COLOR(nrgb_8, pink,  255, 0,   255)
 
   } // end of nrgb_8_color
 
   namespace nrgb_16_color 
   {
 
-    DEFINE_COLOR(nrgb_16, white, 255, 255, 255);
-    DEFINE_COLOR(nrgb_16, gray,  128, 128, 128);
-    DEFINE_COLOR(nrgb_16, black, 0,   0,   0);
-    DEFINE_COLOR(nrgb_16, red,   255, 0,   0);
-    DEFINE_COLOR(nrgb_16, green, 0,   255, 0);
-    DEFINE_COLOR(nrgb_16, blue,  0,   0,   255);
-    DEFINE_COLOR(nrgb_16, yellow,255, 255, 0);
-    DEFINE_COLOR(nrgb_16, cyan,  0,   255, 255);
-    DEFINE_COLOR(nrgb_16, pink,  255, 0,   255);
+    DEFINE_COLOR(nrgb_16, white, 255, 255, 255)
+    DEFINE_COLOR(nrgb_16, gray,  128, 128, 128)
+    DEFINE_COLOR(nrgb_16, black, 0,   0,   0)
+    DEFINE_COLOR(nrgb_16, red,   255, 0,   0)
+    DEFINE_COLOR(nrgb_16, green, 0,   255, 0)
+    DEFINE_COLOR(nrgb_16, blue,  0,   0,   255)
+    DEFINE_COLOR(nrgb_16, yellow,255, 255, 0)
+    DEFINE_COLOR(nrgb_16, cyan,  0,   255, 255)
+    DEFINE_COLOR(nrgb_16, pink,  255, 0,   255)
 
   } // end of nrgb_16_color
 
   namespace nrgb_32_color 
   {
   
-    DEFINE_COLOR(nrgb_32, white, 255, 255, 255);
-    DEFINE_COLOR(nrgb_32, gray,  128, 128, 128);
-    DEFINE_COLOR(nrgb_32, black, 0,   0,   0);
-    DEFINE_COLOR(nrgb_32, red,   255, 0,   0);
-    DEFINE_COLOR(nrgb_32, green, 0,   255, 0);
-    DEFINE_COLOR(nrgb_32, blue,  0,   0,   255);
-    DEFINE_COLOR(nrgb_32, yellow,255, 255, 0);
-    DEFINE_COLOR(nrgb_32, cyan,  0,   255, 255);
-    DEFINE_COLOR(nrgb_32, pink,  255, 0,   255);
+    DEFINE_COLOR(nrgb_32, white, 255, 255, 255)
+    DEFINE_COLOR(nrgb_32, gray,  128, 128, 128)
+    DEFINE_COLOR(nrgb_32, black, 0,   0,   0)
+    DEFINE_COLOR(nrgb_32, red,   255, 0,   0)
+    DEFINE_COLOR(nrgb_32, green, 0,   255, 0)
+    DEFINE_COLOR(nrgb_32, blue,  0,   0,   255)
+    DEFINE_COLOR(nrgb_32, yellow,255, 255, 0)
+    DEFINE_COLOR(nrgb_32, cyan,  0,   255, 255)
+    DEFINE_COLOR(nrgb_32, pink,  255, 0,   255)
     
   } // end of nrgb_32_color.
     

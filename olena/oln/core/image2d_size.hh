@@ -29,36 +29,64 @@
 # define OLENA_CORE_IMAGE2D_SIZE_HH
 
 # include <mlc/contract.hh>
-# include <oln/core/imagend_size.hh>
+# include <oln/core/abstract/image_size.hh>
 # include <oln/core/coord.hh>
 
 namespace oln {
 
+  struct image2d_size;
 
-  struct image2d_size : public imagend_size< 2, image2d_size >
+  template<>
+  struct image_size_traits<image2d_size>
   {
-    image2d_size(coord nrows, coord ncols)
+    enum { dim = 2 };
+  };
+
+
+  struct image2d_size : public abstract::image_size<image2d_size >
+  {
+    image2d_size(coord nrows, coord ncols, coord border)
     {
       nth(0) = nrows;
       nth(1) = ncols;
+      border_ = border;
     }
 
-    coord nrows() const
+    coord 
+    nrows() const
     {
       invariant(nth(0) > 0);
       return nth(0);
     }
 
-    coord ncols() const
+    coord& 
+    nrows() 
+    {
+      invariant(nth(0) > 0);
+      return nth(0);
+    }
+
+    coord 
+    ncols() const
     {
       invariant(nth(1) > 0);
       return nth(1);
     }
 
-    static std::string name() { return "image2d_size"; }
-  };
+    coord& 
+    ncols() 
+    {
+      invariant(nth(1) > 0);
+      return nth(1);
+    }
 
-  _ImageSizeForDim(2, image2d_size);
+    static std::string 
+    name() 
+    { 
+      return "image2d_size"; 
+    }
+
+  };
 
 } // end of oln
 

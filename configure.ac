@@ -42,14 +42,14 @@ AC_CONFIG_FILES([Makefile
 
 ### Olena components.
 
-OLN_COLLECTION([OLN_TOP], 
+OLN_COLLECTION([OLN_TOP],
 [dnl
 
 ###
 ### Stuff pertaining to the main source tree
 ###
 
-  OLN_COLLECTION([OLN_SRC], 
+  OLN_COLLECTION([OLN_SRC],
   [dnl
 
 ### Checks pertaining to the generation of auxiliary images
@@ -81,7 +81,7 @@ OLN_COLLECTION([OLN_TOP],
                                                    [force disable regeneration of manual pages])],
                                    [oln_cv_regen_manpages=$enableval])
                     ])
-                     
+
 
      AM_CONDITIONAL([REGEN_MANPAGES], [test "x$oln_cv_regen_manpages" != xno])
 
@@ -94,19 +94,19 @@ OLN_COLLECTION([OLN_TOP],
                           [disable generation of oln-config-xxx.sh])],
                           [oln_cv_enable_config_sh=$withval])])
     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno])
-       
+
 
 ### The testsuite is a component.
 
     ##
     ## olena testsuite
     ##
-   
-    OLN_COMPONENT([olena/tests], 
-		  [oln-testsuite], 
-		  [oln_cv_build_tests], 
-		  [the olena's testsuite], 
-		  [OLN_SRC], 
+
+    OLN_COMPONENT([olena/tests],
+		  [oln-testsuite],
+		  [oln_cv_build_tests],
+		  [the olena's testsuite],
+		  [OLN_SRC],
 	          [olena/tests/Makefile
 		   olena/tests/check/Makefile
 		   olena/tests/check/defs],
@@ -122,7 +122,7 @@ OLN_COLLECTION([OLN_TOP],
                                   [oln_cv_tests_selection=$withval],
                                   [oln_cv_tests_selection=all])dnl
                      ])dnl
-      
+
 
       # OLN_TESTS defined in oln-local.m4
       OLN_TESTS([arith])
@@ -130,10 +130,13 @@ OLN_COLLECTION([OLN_TOP],
       OLN_TESTS([convol])
       OLN_TESTS([core])
       OLN_TESTS([io])
+      OLN_TESTS([math])
       OLN_TESTS([morpho])
+      OLN_TESTS([level])
       OLN_TESTS([sanity])
       OLN_TESTS([topo])
       OLN_TESTS([transforms])
+      OLN_TESTS([utils])
 
       AC_SUBST([OLN_TESTS_SUBDIRS])
 
@@ -141,18 +144,18 @@ OLN_COLLECTION([OLN_TOP],
 
   ])dnl End of OLN_COLLECTION([OLN_SRC])
 
-  OLN_COLLECTION([NTG_SRC], 
+  OLN_COLLECTION([NTG_SRC],
   [dnl
 
     ##
     ## integre testsuite
     ##
-   
-    OLN_COMPONENT([integre/tests], 
-		  [ntg-testsuite], 
-		  [ntg_cv_build_tests], 
-		  [the integre's testsuite], 
-		  [NTG_SRC], 
+
+    OLN_COMPONENT([integre/tests],
+		  [ntg-testsuite],
+		  [ntg_cv_build_tests],
+		  [the integre's testsuite],
+		  [NTG_SRC],
 	          [integre/tests/Makefile
 		   integre/tests/check/defs],
     [dnl Configuration for the testsuite
@@ -167,7 +170,7 @@ OLN_COLLECTION([OLN_TOP],
                                   [ntg_cv_tests_selection=$withval],
                                   [ntg_cv_tests_selection=all])dnl
                      ])dnl
-      
+
 
       # NTG_TESTS defined in oln-local.m4
       NTG_TESTS([sanity])
@@ -180,18 +183,18 @@ OLN_COLLECTION([OLN_TOP],
 
   ])dnl End of OLN_COLLECTION([NTG_SRC])
 
-  OLN_COLLECTION([MLC_SRC], 
+  OLN_COLLECTION([MLC_SRC],
   [dnl
 
     ##
     ## metalic testsuite
     ##
-   
-    OLN_COMPONENT([metalic/tests], 
-		  [mlc-testsuite], 
-		  [mlc_cv_build_tests], 
-		  [the metalic's testsuite], 
-		  [MLC_SRC], 
+
+    OLN_COMPONENT([metalic/tests],
+		  [mlc-testsuite],
+		  [mlc_cv_build_tests],
+		  [the metalic's testsuite],
+		  [MLC_SRC],
 	          [metalic/tests/Makefile
                    metalic/tests/check/Makefile
 		   metalic/tests/check/defs],
@@ -207,7 +210,7 @@ OLN_COLLECTION([OLN_TOP],
                                   [mlc_cv_tests_selection=$withval],
                                   [mlc_cv_tests_selection=all])dnl
                      ])dnl
-      
+
 
       # MLC_TESTS defined in oln-local.m4
       MLC_TESTS([array])
@@ -222,14 +225,14 @@ OLN_COLLECTION([OLN_TOP],
 
 ###
 ### Stuff pertaining to the documentation
-###  
+###
 
 ### The documentation tree is both a component...
 
-  OLN_COMPONENT([doc], 
-	        [doc], 
-	        [oln_cv_build_doc], 
-	        [the documentation], 
+  OLN_COMPONENT([doc],
+	        [doc],
+	        [oln_cv_build_doc],
+	        [the documentation],
 	        [OLN_TOP],
 	        [doc/Makefile],
   [OLN_COLLECTION([OLN_DOC], dnl ... and a collection.
@@ -237,11 +240,11 @@ OLN_COLLECTION([OLN_TOP],
 
 ### The reference manuals directory is a component.
 
-    OLN_COMPONENT([doc/ref], 
-	          [doc-ref], 
-	          [oln_cv_build_ref], 
-	          [the Olena reference manuals], 
-	          [OLN_DOC], 
+    OLN_COMPONENT([doc/ref],
+	          [doc-ref],
+	          [oln_cv_build_ref],
+	          [the Olena reference manuals],
+	          [OLN_DOC],
 		  [doc/ref/Makefile],
     [dnl Configuration for the manuals directory.
 
@@ -264,11 +267,11 @@ OLN_COLLECTION([OLN_TOP],
 
 ### The development manuals directory is a component.
 
-    OLN_COMPONENT([doc/dev], 
-	          [doc-dev], 
-	          [oln_cv_build_devdoc], 
-	          [the Olena development manual], 
-	          [OLN_DOC], 
+    OLN_COMPONENT([doc/dev],
+	          [doc-dev],
+	          [oln_cv_build_devdoc],
+	          [the Olena development manual],
+	          [OLN_DOC],
 		  [doc/dev/Makefile],
     [dnl Configuration for the dev directory.
 
@@ -281,11 +284,11 @@ OLN_COLLECTION([OLN_TOP],
 
 ### The demonstration programs are a component.
 
-    OLN_COMPONENT([doc/demo], 
-	          [demo], 
-	          [oln_cv_build_demo], 
-	          [the demonstration programs], 
-	          [OLN_DOC], 
+    OLN_COMPONENT([doc/demo],
+	          [demo],
+	          [oln_cv_build_demo],
+	          [the demonstration programs],
+	          [OLN_DOC],
 	          [doc/demo/Makefile],
                   [], [demo])
 
@@ -297,32 +300,32 @@ OLN_COLLECTION([OLN_TOP],
 ###
 
 ### The tools tree is both a component...
-  OLN_COMPONENT([tools], 
-	        [tools], 
-	        [oln_cv_build_tools], 
-	        [the run-time tools], 
-	        [OLN_TOP], 
+  OLN_COMPONENT([tools],
+	        [tools],
+	        [oln_cv_build_tools],
+	        [the run-time tools],
+	        [OLN_TOP],
                 [tools/Makefile tools/lib/Makefile],
   [OLN_COLLECTION([OLN_TOOLS],dnl ... and a collection.
-  [dnl 
+  [dnl
 
 ### The utilities tree is both a component...
-    OLN_COMPONENT([tools/utilities], 
-	          [utilities], 
-	          [oln_cv_build_utilities], 
-	          [the command-line utilities], 
-	          [OLN_TOOLS], 
+    OLN_COMPONENT([tools/utilities],
+	          [utilities],
+	          [oln_cv_build_utilities],
+	          [the command-line utilities],
+	          [OLN_TOOLS],
                   [tools/utilities/Makefile],
     [OLN_COLLECTION([OLN_UTILITIES], dnl ... and a collection.
     [dnl
 
 ### The morpho utilities are a component.
-      OLN_COMPONENT([tools/utilities/morpho], 
-	            [morpho-utilities], 
-	            [oln_cv_build_morpho_utils], 
-	            [the morpho utilities], 
-	            [OLN_UTILITIES], 
-	            [tools/utilities/morpho/Makefile], 
+      OLN_COMPONENT([tools/utilities/morpho],
+	            [morpho-utilities],
+	            [oln_cv_build_morpho_utils],
+	            [the morpho utilities],
+	            [OLN_UTILITIES],
+	            [tools/utilities/morpho/Makefile],
                     [], [morpho])
 
     ])dnl End of OLN_COLLECTION([OLN_UTILITIES])
@@ -334,15 +337,15 @@ OLN_COLLECTION([OLN_TOP],
                   [oln_cv_build_swilena],
 	          [the SWIG interface to Olena],
                   [OLN_TOOLS],
-                  [tools/swilena/Makefile 
+                  [tools/swilena/Makefile
 	           tools/swilena/meta/Makefile
-	           tools/swilena/src/Makefile	
+	           tools/swilena/src/Makefile
 	           tools/swilena/doc/Makefile],
     [OLN_COLLECTION([OLN_SWILENA], dnl ... and a collection.
     [dnl
-       
+
       AC_CHECK_SWIG13 dnl definition in oln-local.m4
- 
+
       AC_ARG_VAR([DVIPS], [program to make Postscript from TeX DVI files])
       AC_CHECK_PROGS([DVIPS], [dvips], [$am_aux_dir/missing dvips])
       AC_ARG_VAR([TEXI2DVI], [program to create DVI from Texinfo files])
@@ -356,8 +359,15 @@ OLN_COLLECTION([OLN_TOP],
                     [tools/swilena/python/Makefile],
       [
          AM_PATH_PYTHON([2.1])
+	 save_CPPFLAGS=$CPPFLAGS
+	 # FIXME: find python path automatically!
+	 CPPFLAGS="$CPPFLAGS -I/usr/include/python2.2"
+         AC_CHECK_HEADERS([Python.h],, 
+	                  AC_MSG_ERROR(
+			  [You need Python development files to compile the Python interface. Specify --without-swilena to configure to disable it.]))
+	 CPPFLAGS=$save_CPPFLAGS
       ], [python])dnl End of OLN_COMPONENT([tools/swilena/python])
-        
+
 
     ])dnl End of OLN_COLLECTION([OLN_SWILENA])
     ], [swilena])dnl End of OLN_COMPONENT([tools/swilena])

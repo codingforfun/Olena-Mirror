@@ -28,51 +28,83 @@
 #ifndef OLENA_CORE_BKD_ITER1D_HH
 # define OLENA_CORE_BKD_ITER1D_HH
 
-# include <oln/core/internal/iter1d.hh>
+# include <oln/core/abstract/iter1d.hh>
 
 namespace oln {
 
   template<class Exact = mlc::final>
-  class bkd_iter1d : public internal::_iter1d<typename mlc::exact_vt<bkd_iter1d<Exact>, Exact>::ret>, 
-                     public bkd_iter<typename mlc::exact_vt<bkd_iter1d<Exact>, Exact>::ret>
+  class bkd_iter1d; // fwd_decl
+
+  template<class Exact>
+  struct iter_traits<bkd_iter1d<Exact> >: public
+  iter_traits<abstract::iter1d<typename
+  mlc::exact_vt<bkd_iter1d<Exact>, Exact>::ret> >
+  {
+    typedef point1d point_type;
+    typedef dpoint1d dpoint_type;
+  };
+
+
+  template<class Exact>
+  class bkd_iter1d : public abstract::iter1d<typename mlc::exact_vt<bkd_iter1d<Exact>, Exact>::ret>
   {
   public:
 
-    typedef internal::_iter1d<typename mlc::exact_vt<bkd_iter1d<Exact>, Exact>::ret> super;
-    typedef bkd_iter<typename mlc::exact_vt<bkd_iter1d<Exact>, Exact>::ret> super2;
+    typedef typename mlc::exact_vt<bkd_iter1d<Exact>, Exact>::ret exact_type;
 
-    enum { dim = 1 };
-    typedef point1d point;
+    typedef abstract::iter1d<exact_type> super_type;
+    typedef abstract::iter<exact_type> super_iter_type;
+
+
+    enum { dim = iter_traits<exact_type>::dim };
+    typedef typename iter_traits<exact_type>::point_type point_type;
+
+    friend class abstract::iter<exact_type>;
+    friend class abstract::iter1d<exact_type>;
 
     template<class Image>
     bkd_iter1d(const Image& ima) :
-      super(ima.size()), super2()
-    {
+      super_type(ima.size())
+    {}
+
+    template<class U> 
+    U 
+    operator=(U u) 
+    { 
+      return super_iter_type::operator=(u); 
     }
 
-    template<class U> U operator=(U u) { return super::operator=(u); }
-
-    void _goto_begin()
-    {
-      _p.col() = _ncols - 1;
+    static std::string 
+    name() 
+    { 
+      return std::string("bkd_iter1d<") + Exact::name() + ">"; 
     }
 
-    void _goto_end()
+  protected:
+
+    void 
+    goto_begin_()
     {
-      _p.col() = -1;
+      this->p_.col() = this->ncols_ - 1;
     }
 
-    bool _is_at_end() const
+    void 
+    goto_end_()
     {
-      return _p.col() == -1;
+      this->p_.col() = -1;
     }
 
-    void _goto_next()
+    bool 
+    is_at_end_() const
     {
-      --_p.col();
+      return this->p_.col() == -1;
     }
 
-    static std::string name() { return std::string("bkd_iter1d<") + Exact::name() + ">"; }
+    void 
+    goto_next_()
+    {
+      --this->p_.col();
+    }
 
   };
 

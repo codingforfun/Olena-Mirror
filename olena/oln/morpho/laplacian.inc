@@ -29,10 +29,10 @@
 /*=processing laplacian
  * ns: morpho, morpho::fast
  * what: Laplacian.
- * arg: const conversion<C>&, c, IN, conversion object
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se, IN, structural element
- * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
+ * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se, IN, structural element
+ * ret: typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
  * doc:
  *   Compute the laplacian of \var{input} using \var{se}
  *   as structural element.
@@ -45,10 +45,11 @@
  * exo: out.pgm
  * exh: convert/bound.hh
 =*/
-template<class C, class I, class E>
-typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
-laplacian(const conversion<C>& c,
-	  const image<I>& input, const struct_elt<E>& se)
+template<class C, class B, class I, class E>
+typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
+laplacian(const convert::abstract::conversion<C, B>& c,
+	  const abstract::non_vectorial_image<I>& input,
+	  const abstract::struct_elt<E>& se)
 {
   return arith::minus(c,
 		      arith::minus(dilation(input, se), input),
@@ -58,13 +59,14 @@ laplacian(const conversion<C>& c,
 /*=processingoverload laplacian
  * ns: morpho, morpho::fast
  * what: Laplacian.
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se, IN, structural element
- * ret: typename mute<I, Value(I)::slarger_t>::ret
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se, IN, structural element
+ * ret: typename mute<I,oln_value_type(I)::slarger_t>::ret
 =*/
 template<class I, class E>
-typename mute<I, Value(I)::slarger_t>::ret
-laplacian(const image<I>& input, const struct_elt<E>& se)
+typename mute<I,oln_value_type(I)::slarger_t>::ret
+laplacian(const abstract::non_vectorial_image<I>& input, 
+	  const abstract::struct_elt<E>& se)
 {
-  return laplacian(convert::force<Value(I)::slarger_t>(), input, se);
+  return laplacian(convert::force<oln_value_type(I)::slarger_t>(), input, se);
 }

@@ -1,5 +1,5 @@
 // -*- c++ -*-
-// Copyright (C) 2001  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,9 +29,9 @@
 /*=processing closing
  * ns: morpho, morpho::fast
  * what: Morphological closing.
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se, IN, structural element
- * ret: Concrete(I)
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se, IN, structural element
+ * ret:oln_concrete_type(I)
  * doc:
  *   Compute the morphological closing of \var{input} using \var{se}
  *   as structural element.
@@ -45,7 +45,9 @@
  * exo: out.pbm
  =*/
 template<class I, class E>
-Concrete(I) closing(const image<I>& input, const struct_elt<E>& se)
+oln_concrete_type(I) 
+  closing(const abstract::non_vectorial_image<I>& input,
+	  const abstract::struct_elt<E>& se)
 {
-  return erosion(dilation(input, se), -to_exact(se));
+  return erosion(dilation(input, se), -(se.exact()));
 }

@@ -20,8 +20,11 @@ $(srcdir)/Makefile.in: $(srcdir)/filelists.make
 ### Auto-generation of TeX files.
 ###
 
+AM_LDFLAGS = $(LDFLAGS) $(ZLIB_LDFLAGS)
+AM_CXXFLAGS = $(CXXFLAGS) $(ZLIB_CXXFLAGS)
+
 INCLUDES = -I$(top_srcdir)/olena -I$(top_builddir)/olena
-COMMONGETDEFSFLAGS =  --agarg=-DCXXCOMPILE="$(CXX) -I$(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(CPPFLAGS) $(CXXFLAGS)" \
+COMMONGETDEFSFLAGS =  --agarg=-DCXXCOMPILE="$(CXX) -I$(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(CPPFLAGS) $(AM_CXXFLAGS) $(AM_LDFLAGS)" \
 		      --agarg=-DEPSTOPDF="$(EPSTOPDF)" \
 		      --agarg=-DCONVERT="$(IMAGEMAGICK_CONVERT)" \
 	              --agarg=--templ-dirs=$(srcdir) \

@@ -1,5 +1,5 @@
 // -*- c++ -*-
-// Copyright (C) 2001  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,9 +29,9 @@
 /*=processing opening
  * ns: morpho, morpho::fast
  * what: Morphological opening.
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se, IN, structural element
- * ret: Concrete(I)
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se, IN, structural element
+ * ret:oln_concrete_type(I)
  * doc:
  *   Compute the morphological opening of \var{input} using \var{se}
  *   as structural element.
@@ -44,9 +44,11 @@
  * exi: object.pbm
  * exo: out.pbm
 =*/
-template<class I_, class E_>
-Concrete(I_) opening(const image<I_>& input, const struct_elt<E_>& _se)
+template<class I, class E>
+oln_concrete_type(I) 
+opening(const abstract::non_vectorial_image<I>& input, 
+	  const abstract::struct_elt<E>& se)
 {
-  //  mlc::eq< I_::dim, E_::dim >::ensure();
-  return dilation(erosion(input, _se), -to_exact(_se));
+  //  mlc::eq< I::dim, E::dim >::ensure();
+  return dilation(erosion(input, se), -(se.exact()));
 }

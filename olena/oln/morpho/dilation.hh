@@ -40,9 +40,9 @@ namespace oln {
     /*=processing dilation
      * ns: morpho, morpho::fast
      * what: Morphological dilation.
-     * arg: const image<I>&, input, IN, input image
-     * arg: const struct_elt<E>&, se, IN, structural element
-     * ret: Concrete(I)
+     * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
+     * arg: const abstract::struct_elt<E>&, se, IN, structural element
+     * ret:oln_concrete_type(I)
      * doc:
      *   Compute the morphological dilation of \var{input} using \var{se}
      *   as structural element.
@@ -73,16 +73,16 @@ namespace oln {
      * exi: object.pbm
      * exo: out.pbm
     =*/
-    template<class I_, class E_>
-    Concrete(I_) dilation(const image<I_> &_input, const struct_elt<E_>& _se)
+    template<class I, class E>
+    oln_concrete_type(I) 
+      dilation(const abstract::non_vectorial_image<I> &input, 
+	       const abstract::struct_elt<E>& se)
     {
-      Exact_cref(I, input);
-      Exact_cref(E, se);
       mlc::eq<I::dim, E::dim>::ensure();
 
-      Concrete(I) output(input.size());
-      border::adapt_copy(input, se.delta());
-      Iter(I) p(input);
+      oln_concrete_type(I) output(input.size());
+      input.border_adapt_copy(se.delta());
+      oln_iter_type(I) p(input);
 
       for_all (p)
 	output[p] = morpho::max(input, p, se);
@@ -92,26 +92,26 @@ namespace oln {
     /*=processing n_dilation
      * ns: morpho
      * what: Morphological dilation itered n times.
-     * arg: const image<I>&, input, IN, input image
-     * arg: const struct_elt<E>&, se, IN, structural element
+     * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
+     * arg: const abstract::struct_elt<E>&, se, IN, structural element
      * arg: unsigned, n, IN, number of iterations
-     * ret: Concrete(I)
+     * ret:oln_concrete_type(I)
      * doc:
      *   Apply \code{morpho::dilation} \var{n} times.
      * see: morpho::dilation
      * see: morpho::n_erosion
     =*/
-    template<class I_, class E_>
-    Concrete(I_) n_dilation(const image<I_> & _input,
-			    const struct_elt<E_>& se,
-			    unsigned n)
+    template<class I, class E>
+    oln_concrete_type(I) 
+      n_dilation(const abstract::non_vectorial_image<I> & input,
+		 const abstract::struct_elt<E>& se,
+		 unsigned n)
     {
       precondition(n > 0);
-      Exact_cref(I, input);
-      Concrete(I_) output = input.clone();
+      oln_concrete_type(I) output = input.clone();
       for (unsigned i = 0; i < n; ++i)
 	{
-	  Concrete(I_) work = dilation(output, se);
+	 oln_concrete_type(I) work = dilation(output, se);
 	  output = work;
  	}
       return output;
@@ -119,7 +119,9 @@ namespace oln {
 
     namespace fast {
       template<class I, class E>
-      Concrete(I) dilation(const image<I>& input, const struct_elt<E>& se)
+      oln_concrete_type(I) 
+	dilation(const abstract::non_vectorial_image<I>& input, 
+		 const abstract::struct_elt<E>& se)
       {
 	return fast_morpho<I, E, utils::histogram_max>(input, se);
       }

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,8 +29,8 @@
 # define OLENA_CORE_TRAVERSE_HH
 
 # include <mlc/contract.hh>
-# include <oln/core/image.hh>
-# include <oln/core/iter.hh>
+# include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/iter.hh>
 # include <oln/core/macros.hh>
 
 namespace oln {
@@ -38,45 +38,46 @@ namespace oln {
   // traverse (unary)
 
 
-  template<class I_, class F>
-  const F& traverse(F& f, const image<I_>& _input)
+  template<class I, class F>
+  const F& 
+  traverse(F& f, const abstract::image<I>& input)
   {
-    Exact_cref(I, input);
-    Iter(I) p(input);
+    oln_iter_type(I) p(input);
     for_all(p) f(input[p]);
     return f;
   }
 
-  template<class F,
-	   class I> inline
-  const F traverse(const image<I>& input)
+  template<class F, class I> 
+  inline const F 
+  traverse(const abstract::image<I>& input)
   {
     F f;
     return traverse(f, input);
   }
 
-  template<template<class> class F,
-	   class I> inline
-  const F<Value(I)> traverse(const image<I>& input)
+  template<template<class> class F, class I> 
+  inline const F<oln_value_type(I)> 
+  traverse(const abstract::image<I>& input)
   {
-    F<Value(I)> f;
+    F<oln_value_type(I)> f;
     return traverse(f, input);
   }
 
-  template<template<class,class> class F,
-	   class I2, class I> inline
-  const F<Value(I),I2> traverse(const image<I>& input)
+  template<template<class, class> class F, class I2, class I> 
+  inline const F<oln_value_type(I), I2> 
+  traverse(const abstract::image<I>& input)
   {
-    F<Value(I),I2> f;
+    F<oln_value_type(I), I2> f;
     return traverse(f, input);
   }
 
   template<template<class,class> class F,
            template<class> class F2,
-           class I> inline
-  const F< Value(I), F2<Value(I)> > traverse(const image<I>& input)
+           class I> 
+  inline const F<oln_value_type(I), F2<oln_value_type(I)> > 
+  traverse(const abstract::image<I>& input)
   {
-    F< Value(I), F2<Value(I)> > f;
+    F<oln_value_type(I), F2<oln_value_type(I)> > f;
     traverse(f, input);
     return f;
   }
@@ -85,31 +86,32 @@ namespace oln {
   // traverse2 (binary)
 
 
-  template<class I1_, class I2_, class F>
-  const F& traverse2(F& f,
-		    const image<I1_>& _input1, const image<I2_>& _input2)
+  template<class I1, class I2, class F>
+  const F& 
+  traverse2(F& f,
+	    const abstract::image<I1>& input1, 
+	    const abstract::image<I2>& input2)
   {
-    Exact_cref(I1, input1);
-    Exact_cref(I2, input2);
     precondition(input1.size() == input2.size());
-    Iter(I1) p(input1);
+    oln_iter_type(I1) p(input1);
     for_all(p) f(input1[p], input2[p]);
     return f;
   }
 
-  template<template<class> class F,
-           class I> inline
-  const F<Value(I)> traverse2(const image<I>& input1, const image<I>& input2)
+  template<template<class> class F, class I> 
+  inline const F<oln_value_type(I)> 
+  traverse2(const abstract::image<I>& input1, const abstract::image<I>& input2)
   {
-    F<Value(I)> f;
+    F<oln_value_type(I)> f;
     return traverse2(f, input1, input2);
   }
 
-  template<template<class,class> class F,
-           class I1, class I2> inline
-  const F<Value(I1),Value(I2)> traverse2(const image<I1>& input1, const image<I2>& input2)
+  template<template<class,class> class F, class I1, class I2> 
+  inline const F<oln_value_type(I1), oln_value_type(I2)> 
+  traverse2(const abstract::image<I1>& input1, 
+	    const abstract::image<I2>& input2)
   {
-    F<Value(I1),Value(I2)> f;
+    F<oln_value_type(I1), oln_value_type(I2)> f;
     return traverse2(f, input1, input2);
   }
 

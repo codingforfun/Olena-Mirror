@@ -1,24 +1,26 @@
 ## Process this file through Automake to create Makefile.in -*- Makefile -*-
 
-include ../check/Makefile.check
+include ../check/Makefile.runtests
 
-# Tests in this directory make use of Zlib if present.
-LDADD += $(ZLIB_LDFLAGS)
-AM_CXXFLAGS += $(ZLIB_CXXFLAGS)
+noinst_HEADERS = loadsave.hh
 
-check_PROGRAMS = 2d se_pass se_fail pretty
-2d_SOURCES = 2d.cc loadsave.hh
-se_pass_SOURCES = se_pass.cc loadsave.hh
-se_fail_SOURCES = se_pass.cc loadsave.hh
-pretty_SOURCES = pretty.cc loadsave.hh
-
-CLEANFILES =					\
+CLEANFILES +=					\
+  black-test.pbm white-test.pbm			\
   lena						\
   lena.ppm lena.pgm lena.pbm			\
   lena.pppm lena.ppgm lena.ppbm			\
   lena.ppm.gz lena.pgm.gz lena.pbm.gz		\
   lena16b.pgm lena16b.ppgm			\
+  lena1d					\
+  lena1d.ppm lena1d.pgm lena1d.pbm		\
+  lena1d.pppm lena1d.ppgm lena1d.ppbm		\
+  lena1d.ppm.gz lena1d.pgm.gz lena1d.pbm.gz	\
+  lena1d16b.pgm lena1d16b.ppgm			\
+  lena3d wrong_3d				\
+  lena3d.ppm lena3d.pgm lena3d.pbm		\
+  lena3d.ppm.gz lena3d.pgm.gz lena3d.pbm.gz	\
   neighbor.pbm neighbor.ppbm			\
   neighbor9.pbm neighbor9.ppbm			\
   se.pbm se.ppbm se9.pbm se9.ppbm		\
+  se_1d se9_1d se_3d				\
   se9.pbm.gz neighbor9.pbm.gz

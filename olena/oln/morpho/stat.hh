@@ -40,15 +40,15 @@ namespace oln {
       /* We need to use this inner definition in order to specialize
 	 max and min on binary images.  */
 
-      template <class I, class E, class V = Value(I)>
-      struct _stat {
-
+      template <class I, class E, class V =oln_value_type(I)>
+      struct stat_ 
+      {
 	static V
-	max(const I& input, const Point(I)& p, const E& se)
+	max(const I& input, const oln_point_type(I)& p, const E& se)
 	{
 	  mlc::eq<I::dim, E::dim>::ensure();
 
-	  Iter(E) dp(se);
+	 oln_iter_type(E) dp(se);
 	  dp = begin;
 	  V val = input[p + dp];
 	  for_all_remaining (dp)
@@ -58,10 +58,10 @@ namespace oln {
 	}
 
 	static V
-	min(const I& input, const Point(I)& p, const E& se)
+	min(const I& input, const oln_point_type(I)& p, const E& se)
 	{
 	  mlc::eq<I::dim, E::dim>::ensure();
-	  Iter(E) dp(se);
+	 oln_iter_type(E) dp(se);
 	  dp = begin;
 	  V val = input[p + dp];
 	  for_all_remaining (dp)
@@ -75,13 +75,13 @@ namespace oln {
       /* Binary specialization.  */
 
       template <class I, class E>
-      struct _stat<I, E, ntg::bin> {
-
+      struct stat_<I, E, ntg::bin> 
+      {
 	static ntg::bin
-	max(const I& input, const Point(I)& p, const E& se)
+	max(const I& input, const oln_point_type(I)& p, const E& se)
 	{
 	  mlc::eq<I::dim, E::dim>::ensure();
-	  Iter(E) dp(se);
+	  oln_iter_type(E) dp(se);
 	  for_all (dp)
 	    if (input[p + dp] == true)
 	      return true;
@@ -89,10 +89,10 @@ namespace oln {
 	}
 
 	static ntg::bin
-	min(const I& input, const Point(I)& p, const E& se)
+	min(const I& input, const oln_point_type(I)& p, const E& se)
 	{
 	  mlc::eq<I::dim, E::dim>::ensure();
-	  Iter(E) dp(se);
+	  oln_iter_type(E) dp(se);
 	  for_all (dp)
 	    if (input[p + dp] == false)
 	      return false;
@@ -103,31 +103,30 @@ namespace oln {
 
     } // internal
 
-    template<class I_, class E_>
-    Value(I_) max(const image<I_>& _input,
-		  const Exact(I_)::point& p,
-		  const struct_elt<E_>& _se)
+    template<class I, class E>
+    oln_value_type(I) 
+    max(const abstract::non_vectorial_image<I>& input,
+	const mlc_exact_type(I)::point_type& p,
+	const abstract::struct_elt<E>& se)
     {
-      Exact_cref(I, input);
-      Exact_cref(E, se);
       mlc::eq<I::dim, E::dim>::ensure();
-      return internal::_stat<I, E>::max(input, p, se);
+      return internal::stat_<I, E>::max(input.exact(), p, se.exact());
+    }
+    
+    template<class I, class E>
+    oln_value_type(I) 
+    min(const abstract::non_vectorial_image<I>& input,
+	const mlc_exact_type(I)::point_type& p,
+	//		 const mlc_exact_type(I)::iter_type& p,
+	const abstract::struct_elt<E>& se)
+    {
+      mlc::eq<I::dim, E::dim>::ensure();
+      return internal::stat_<I, E>::min(input.exact(), p, se.exact());
     }
 
-    template<class I_, class E_>
-    Value(I_) min(const image<I_>& _input,
-		  const Exact(I_)::point& p,
-		  const struct_elt<E_>& _se)
-    {
-      Exact_cref(I, input);
-      Exact_cref(E, se);
-      mlc::eq<I::dim, E::dim>::ensure();
-      return internal::_stat<I, E>::min(input, p, se);
-    }
+  } // end of namespace morpho
 
-  } // morpho
-
-} // oln
+} // end of namespace oln
 
 
-#endif // OLENA_MORPHO_STAT_HH
+#endif // ! OLENA_MORPHO_STAT_HH

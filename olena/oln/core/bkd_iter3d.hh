@@ -28,60 +28,91 @@
 #ifndef OLENA_CORE_BKD_ITER3D_HH
 # define OLENA_CORE_BKD_ITER3D_HH
 
-# include <oln/core/internal/iter3d.hh>
+# include <oln/core/abstract/iter3d.hh>
 
 
 namespace oln {
 
   template<class Exact = mlc::final>
-  class bkd_iter3d : public internal::_iter3d<typename mlc::exact_vt<bkd_iter3d<Exact>, Exact>::ret>, 
-                     public bkd_iter<typename mlc::exact_vt<bkd_iter3d<Exact>, Exact>::ret>
+  class bkd_iter3d; // fwd_decl
+
+  template<class Exact>
+  struct iter_traits<bkd_iter3d<Exact> >: public
+  iter_traits<abstract::iter3d<typename
+  mlc::exact_vt<bkd_iter3d<Exact>, Exact>::ret> >
+  {
+    typedef point3d point_type;
+    typedef dpoint3d dpoint_type;
+  };
+
+  template<class Exact>
+  class bkd_iter3d : public abstract::iter3d<typename mlc::exact_vt<bkd_iter3d<Exact>, Exact>::ret>
   {
   public:
-    typedef internal::_iter3d<typename mlc::exact_vt<bkd_iter3d<Exact>, Exact>::ret> super;
-    typedef bkd_iter<typename mlc::exact_vt<bkd_iter3d<Exact>, Exact>::ret> super2;
 
-    enum { dim = 3 };
-    typedef point3d point;
+    typedef typename mlc::exact_vt<bkd_iter3d<Exact>, Exact>::ret exact_type;
+
+    typedef abstract::iter3d<exact_type> super_type;
+    typedef abstract::iter<exact_type> super_iter_type;
+
+
+    enum { dim = iter_traits<exact_type>::dim };
+    typedef typename iter_traits<exact_type>::point_type point_type;
+
+    friend class abstract::iter<exact_type>;
+    friend class abstract::iter3d<exact_type>;
 
     template<class Image>
     bkd_iter3d(const Image& ima) :
-      super(ima.size()), super2()
-    {
+      super_type(ima.size())
+    {}
+
+    template<class U> 
+    U 
+    operator=(U u) 
+    { 
+      return super_iter_type::operator=(u); 
     }
 
-    template<class U> U operator=(U u) { return super::operator=(u); }
-
-    void _goto_begin()
-    {
-      _p.slice() = _nslices - 1;
-      _p.row() = _nrows - 1;
-      _p.col() = _ncols - 1;
+    static std::string name() 
+    { 
+      return std::string("bkd_iter3d<") + Exact::name() + ">"; 
     }
 
-    void _goto_end()
+  protected:
+
+    void 
+    goto_begin_()
     {
-      _p.slice() = -1;
+      this->p_.slice() = this->nslices_ - 1;
+      this->p_.row() = this->nrows_ - 1;
+      this->p_.col() = this->ncols_ - 1;
     }
 
-    bool _is_at_end() const
+    void 
+    goto_end_()
     {
-      return _p.slice() == -1;
+      this->p_.slice() = -1;
     }
 
-    void _goto_next()
+    bool 
+    is_at_end_() const
     {
-      --_p.col();
-      if (_p.col() >= 0)
+      return this->p_.slice() == -1;
+    }
+
+    void 
+    goto_next_()
+    {
+      --this->p_.col();
+      if (this->p_.col() >= 0)
 	return;
-      _p.col() = _ncols - 1;
-      --_p.row();
-      if (_p.row() >= 0)
-	_p.row() = _nrows - 1;
-      --_p.slice();
+      this->p_.col() = this->ncols_ - 1;
+      --this->p_.row();
+      if (this->p_.row() >= 0)
+	this->p_.row() = this->nrows_ - 1;
+      --this->p_.slice();
     }
-
-    static std::string name() { return std::string("bkd_iter3d<") + Exact::name() + ">"; }
 
   };
 

@@ -121,6 +121,7 @@ namespace ntg {
 
     INT_U_CTOR_FROM_BUILTIN_INT(unsigned char);
     INT_U_CTOR_FROM_BUILTIN_INT(signed   char);
+    INT_U_CTOR_FROM_BUILTIN_INT(char);
 
     int_u (const float_s rhs)
     {

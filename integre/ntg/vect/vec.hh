@@ -91,6 +91,8 @@ namespace ntg {
     template <unsigned N, class T, class Self>
     struct typetraits<vec<N, T, Self> >
     {
+      enum { nb_comp = N };
+
       typedef vec<N, T, Self>	self;
       typedef vectorial		abstract_type;
       typedef self		ntg_type;
@@ -98,7 +100,9 @@ namespace ntg {
 
       ntg_build_value_type(vect_value<E>);
 
-      typedef typename typetraits<T>::base_type  base_type[N];
+      // FIXME: document comp_type
+      typedef T					 comp_type;
+      typedef self				 base_type;
       typedef T					 storage_type[N];
       typedef typename typetraits<T>::cumul_type cumul_type[N];
     };
@@ -111,7 +115,7 @@ namespace ntg {
 
   template <unsigned N, class T, class E>
   class vec : 
-    public vect_value<typename mlc::select_self<vec<N, T, mlc::final>, E>::ret>
+    public vect_value<typename mlc::exact_vt<vec<N, T, mlc::final>, E>::ret>
   {
   public :
 
@@ -143,12 +147,6 @@ namespace ntg {
 	this->val_[i] = v[i];
       return *this;
     }
-
-    // accessor
-    T &     operator[](unsigned i) 	 { return this->val_[i]; }
-    const T operator[](unsigned i) const { return this->val_[i]; }
-
-    unsigned size() const { return N; }
 
     static const vec<N,T> zero() { return vec(); }
     // There is no unit() for vec<>.
@@ -215,14 +213,14 @@ namespace ntg {
       // No unit() for vector.
       // static storage_type_ unit ();
 
-      ASSIGN_VECTOR_VECTOR_OPERATOR(plus_equal,  +=);
-      ASSIGN_VECTOR_VECTOR_OPERATOR(minus_equal, -=);
-      ASSIGN_VECTOR_SCALAR_OPERATOR(times_equal, *=);
-      ASSIGN_VECTOR_SCALAR_OPERATOR(div_equal,   /=);
-      ASSIGN_VECTOR_SCALAR_OPERATOR(mod_equal,   %=);
+      ASSIGN_VECTOR_VECTOR_OPERATOR(plus_equal,  +=)
+      ASSIGN_VECTOR_VECTOR_OPERATOR(minus_equal, -=)
+      ASSIGN_VECTOR_SCALAR_OPERATOR(times_equal, *=)
+      ASSIGN_VECTOR_SCALAR_OPERATOR(div_equal,   /=)
+      ASSIGN_VECTOR_SCALAR_OPERATOR(mod_equal,   %=)
 
-      ARITH_VECTOR_VECTOR_OPERATOR(plus, +=);
-      ARITH_VECTOR_VECTOR_OPERATOR(minus, -=);
+      ARITH_VECTOR_VECTOR_OPERATOR(plus, +=)
+      ARITH_VECTOR_VECTOR_OPERATOR(minus, -=)
 
       // division
 
@@ -290,7 +288,7 @@ namespace ntg {
 	ntg_is_a(T1, ntg::vectorial)::ensure();
 	ntg_is_a(T2, ntg::real)::ensure();
 	typedef ntg_return_type(times, T1, T2) return_type;
-	return_type result(lhs.self());
+	return_type result(lhs.exact());
 	result *= rhs;
 	return result;
       }

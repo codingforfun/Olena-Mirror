@@ -38,38 +38,44 @@ namespace oln {
 
 	struct zeta
 	{
-	  zeta() : _empty(true)
+	  zeta() : empty_(true)
 	  {
 	    for (unsigned i = 0; i < 4; ++i)
-	      _darts[i] = 0;
+	      darts_[i] = 0;
 	  }
 
-	  bool empty() const { return _empty; }
-
-	  unsigned operator[](unsigned i) const
+	  bool
+	  empty() const
 	  {
-	    return _darts[i];
+	    return empty_;
 	  }
-	  unsigned & operator[](unsigned i)
+
+	  unsigned
+	  operator[](unsigned i) const
 	  {
-	    _empty = false;
-	    return _darts[i];
+	    return darts_[i];
+	  }
+	  unsigned&
+	  operator[](unsigned i)
+	  {
+	    empty_ = false;
+	    return darts_[i];
 	  }
 
 	private:
-	  unsigned _darts[4];
-	  bool _empty;
+	  unsigned darts_[4];
+	  bool empty_;
 	};
 
-# define Zeta(ImgType)			\
-typename mute< ImgType, zeta >::ret
+# define oln_zeta_type(ImgType)		\
+typename oln::mute< ImgType, oln::topo::combinatorial_map::internal::zeta>::ret
 
-      } // end internal
+      } // end of namespace internal
 
-    } // end combinatorial_map
+    } // end of namespace combinatorial_map
 
-  } // end topo
+  } // end of namespace topo
 
-} // end oln
+} // end of namespace oln
 
-#endif // !OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_ZETA_HH
+#endif // ! OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_ZETA_HH

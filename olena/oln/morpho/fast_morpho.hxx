@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,6 +34,7 @@
 // structuring elements". Pattern Recognition Letters,
 // 17(14):1451-1460, 1996.
 
+# include <mlc/is_a.hh>
 # include <oln/utils/histogram.hh>
 
 namespace oln {
@@ -43,24 +44,25 @@ namespace oln {
 
       // Find structuring elements to be added/removed from the histogram
       // when we move forward along each direction.
-      template<class E1_, class E2_, class E3_>
+      // FIXME: add(dp) on w_windows associates a default weight set
+      // to 1 
+      template<class E1, class E2, class E3>
       void
-      find_struct_elts(const struct_elt<E1_>& _se,
-		       struct_elt<E2_> _se_add[mlc::exact<E1_>::ret::dim],
-		       struct_elt<E3_> _se_rem[mlc::exact<E1_>::ret::dim])
+      find_struct_elts(const abstract::struct_elt<E1>& se,
+		       E2 se_add[mlc::exact<E1>::ret::dim],
+		       E3 se_rem[mlc::exact<E1>::ret::dim])
       {
-	Exact_cref(E1, se);
-	Exact_ptr(E2, se_add);
-	Exact_ptr(E3, se_rem);
+	mlc_is_a(E2, abstract::struct_elt)::ensure();
+	mlc_is_a(E3, abstract::struct_elt)::ensure();
 	const unsigned dim = E1::dim;
-
+	
 	// back[n] allows to move backward on coordinate `n'.
-	DPoint(E1) back[dim];
+	oln_dpoint_type(E1) back[dim];
 	for (unsigned n = 0; n < dim; ++n)
 	  back[n].nth(n) = -1;
-
-	Iter(E1) dp(se);
-	Iter(E1) dp_prime(se);
+	
+	oln_iter_type(E1) dp(se);
+	oln_iter_type(E1) dp_prime(se);
 
 	for_all(dp)
 	  {
@@ -85,9 +87,13 @@ namespace oln {
 	    for (unsigned n = 0; n < dim; ++n)
 	      {
 		if (add[n])
-		  se_add[n].add(dp);
+		  {
+		    se_add[n].add(dp);
+		  }
 		if (rem[n])
-		  se_rem[n].add(dp.cur() + back[n]);
+		  {
+		    se_rem[n].add(dp.cur() + back[n]);
+		  }
 	      }
 	  }
 
@@ -98,24 +104,22 @@ namespace oln {
 
       // Update HIST by adding elements from _SE_ADD, and removing
       // those from _SE_REM.
-      template<class I_, class E1_, class E2_, class H>
-      inline void
+      template<class I, class E1, class E2, class H>
+      // inline
+      void
       hist_update(H& hist,
-		  const image<I_>& _input,
-		  const Point(I_)& p,
-		  const struct_elt<E1_>& _se_rem,
-		  const struct_elt<E2_>& _se_add)
+		  const abstract::non_vectorial_image<I>& input,
+		  const oln_point_type(I)& p,
+		  const abstract::struct_elt<E1>& se_rem,
+		  const abstract::struct_elt<E2>& se_add)
       {
-	Exact_cref(I, input);
 	{
-	  Exact_cref(E1, se_rem);
-	  Iter(E1) dp(se_rem);
+	  oln_iter_type(E1) dp(se_rem);
 	  for_all(dp)
 	    --hist[input[p + dp]];
 	}
 	{
-	  Exact_cref(E2, se_add);
-	  Iter(E2) dp(se_add);
+	  oln_iter_type(E2) dp(se_add);
 	  for_all(dp)
 	    ++hist[input[p + dp]];
 	}
@@ -200,8 +204,8 @@ namespace oln {
 	  if (p.nth(N) == 0) { // Go forward
 	    // Don't call hist_update because this would create new `dpr' and
 	    // `dpa' iterators for each points.
-	    Iter(B) dpr(se_rem[N]);
-	    Iter(B) dpa(se_add[N]);
+	   oln_iter_type(B) dpr(se_rem[N]);
+	   oln_iter_type(B) dpa(se_add[N]);
 	    for(++p.nth(N);
 		p.nth(N) < size.nth(N);
 		++p.nth(N)) {
@@ -215,8 +219,8 @@ namespace oln {
 	  } else {		// Go backward
 	    // Don't call hist_update because this would create new `dpr' and
 	    // `dpa' iterators for each points.
-	    Iter(B) dpr(se_rem_back[N]);
-	    Iter(B) dpa(se_add_back[N]);
+	   oln_iter_type(B) dpr(se_rem_back[N]);
+	   oln_iter_type(B) dpa(se_add_back[N]);
 	    for(--p.nth(N);
 		p.nth(N) >= 0;
 		--p.nth(N)) {
@@ -234,35 +238,32 @@ namespace oln {
     } // internal
 
 
-    template<class E_>
+    template<class E>
     struct sort_dimensions
     {
-      sort_dimensions(struct_elt<E_> se[mlc::exact<E_>::ret::dim])
-	: _se(se) {}
+      sort_dimensions(abstract::struct_elt<E> se[mlc::exact<E>::ret::dim])
+	: se_(se) {}
 
       bool operator()(unsigned a, unsigned b)
       {
-	Exact_ptr(E, se);
-	return se[a].card() > se[b].card(); 
+	return se_[a].card() > se_[b].card();
       }
 
     protected:
-      struct_elt<E_>* _se;
+      abstract::struct_elt<E>* se_;
     };
-
-
-    template<class I_, class E_, template<typename, typename> class H>
-    Concrete(I_)
-    fast_morpho(const image<I_>& _input,
-		const struct_elt<E_>& _se)
+    
+    
+    template<class I, class E, template<typename, typename> class H>
+    oln_concrete_type(I)
+      fast_morpho(const abstract::non_vectorial_image<I>& input,
+		  const abstract::struct_elt<E>& se)
     {
-      Exact_cref(I, input);
-      Exact_cref(E, se);
       enum { dim = E::dim };
 
       // prepare output
-      Concrete(I) output(input.size());
-      border::adapt_copy(input, se.delta());
+      oln_concrete_type(I) output(input.size());
+      input.border_adapt_copy(se.delta());
 
       // compute delta structuring elements for forward movements
       E se_add[dim];
@@ -275,7 +276,7 @@ namespace oln {
       for (unsigned n = 0; n < dim; ++n)
 	for (unsigned i = 0; i < se_add[n].card(); ++i)
 	{
-	  DPoint(I) dp = se_add[n].dp(i);
+	  oln_dpoint_type(I) dp = se_add[n].dp(i);
 	  dp.nth(n) += 1;
 	  se_rem_back[n].add(dp);
 
@@ -288,16 +289,17 @@ namespace oln {
       unsigned dims[dim];
       for (unsigned n = 0; n < dim; ++n)
 	dims[n] = n;
-      sort_dimensions<E_> s(se_add);
+      sort_dimensions<E> s(se_add);
       std::sort(dims, dims + dim, s);
 
-      const typename I::image_size size = input.size();
+      const typename I::size_type size = input.size();
 
       // Initialize the histogram with the values around the first point.
-      H<Value(I),unsigned> hist;
-      Point(I) p;
-
-      Iter(E) dp(se);
+      H<oln_value_type(I),unsigned> hist;
+      oln_point_type(I) p;
+     
+      //     oln_iter_type(E) dp(se);
+      typename E::iter_type	dp(se);
       for_all(dp)
 	++hist[input[p + dp]];
 
@@ -307,11 +309,11 @@ namespace oln {
       output[p] = hist.res();	// First point.
 
       internal::fast_morpho_inner<1, E::dim, const I,
-	const typename I::image_size, H<Value(I),unsigned>,
-	const E, Point(I), Concrete(I_)>::doit(input, size, hist,					       
-					       se_add, se_rem,
-					       se_add_back, se_rem_back,
-					       p, output, dims);
+	const typename I::size_type, H<oln_value_type(I),unsigned>,
+	const E,oln_point_type(I),oln_concrete_type(I)>::doit(input.exact(), size, hist,
+							      se_add, se_rem,
+							      se_add_back, se_rem_back,
+							      p, output, dims);
       return output;
     }
 

@@ -40,12 +40,12 @@
 namespace mlc
 {
 
-  template<class _Info, class T_>
+  template<class Info_, class T_>
   struct array1d
   {
     typedef array1d self;
     typedef T_ T;
-    typedef _Info Info;
+    typedef Info_ Info;
 
 
     //
@@ -58,23 +58,23 @@ namespace mlc
 
     array1d(T* ptr)
     {
-      less< 0, _Info::card >::ensure();
-      less< _Info::card, internal::_max_card >::ensure();
-      for (unsigned i = 0; i < _Info::card; ++i)
-	_buffer[i] = *ptr++;
+      less<0, Info_::card>::ensure();
+      less< Info_::card, internal::max_card_ >::ensure();
+      for (unsigned i = 0; i < Info_::card; ++i)
+	buffer_[i] = *ptr++;
     }
 
     // Copy
 
     array1d(const self& rhs)
     {
-      for (unsigned i = 0; i < _Info::card; ++i)
-	_buffer[i] = rhs[i];
+      for (unsigned i = 0; i < Info_::card; ++i)
+	buffer_[i] = rhs[i];
     }
     self& operator=(const self& rhs)
     {
-      for (unsigned i = 0; i < _Info::card; ++i)
-	_buffer[i] = rhs[i];
+      for (unsigned i = 0; i < Info_::card; ++i)
+	buffer_[i] = rhs[i];
       return *this;
     }
 
@@ -84,7 +84,7 @@ namespace mlc
     // Operations on array
     //
 
-    typedef array1d<_Info,float> to_float; // FIXME : argh
+    typedef array1d<Info_,float> to_float; // FIXME : argh
 
     // Normalize (absolute values -> relative values)
 
@@ -94,13 +94,13 @@ namespace mlc
       float sum = 0.f; // FIXME: float only?
       const float epsilon = 0.01f; // FIXME : epsilon should be global
       unsigned i;
-      for (i = 0; i < _Info::card; ++i)
-	sum += this->_buffer[i];
-      for (i = 0; i < _Info::card; ++i)
-	tmp[i] = this->_buffer[i] / sum;
+      for (i = 0; i < Info_::card; ++i)
+	sum += this->buffer_[i];
+      for (i = 0; i < Info_::card; ++i)
+	tmp[i] = this->buffer_[i] / sum;
       // security
       sum = 0.f;
-      for (i = 0; i < _Info::card; ++i)
+      for (i = 0; i < Info_::card; ++i)
 	sum += tmp[i];
       postcondition(std::abs(sum - 1) <= epsilon);
       return tmp;
@@ -108,16 +108,16 @@ namespace mlc
 
     // Central symmetry
 
-    array1d<array1d_info<_Info::card,
-			 _Info::card - _Info::center - 1,
-			 _Info::i>, T>
+    array1d<array1d_info<Info_::card,
+			 Info_::card - Info_::center - 1,
+			 Info_::i>, T>
     operator-() const
     {
-      enum { new_center =  _Info::card - _Info::center - 1 };
-      array1d<array1d_info< _Info::card, new_center, _Info::i>,T> tmp;
+      enum { new_center =  Info_::card - Info_::center - 1 };
+      array1d<array1d_info< Info_::card, new_center, Info_::i>,T> tmp;
 
-      for (unsigned i = 0; i < _Info::card; ++i)
-	tmp[_Info::card - i - 1] = this->operator[](i);
+      for (unsigned i = 0; i < Info_::card; ++i)
+	tmp[Info_::card - i - 1] = this->operator[](i);
       return tmp;
     }
 
@@ -129,60 +129,60 @@ namespace mlc
 
     unsigned size() const
     {
-      return _Info::card;
+      return Info_::card;
     }
 
     const T* buffer() const
     {
-      return _buffer;
+      return buffer_;
     }
 
     // dynamic accessors:
 
     T operator[](unsigned i) const	// Absolute position
     {
-      precondition(i < _Info::card);
-      return *(_buffer + i);
+      precondition(i < Info_::card);
+      return *(buffer_ + i);
     }
     T& operator[](unsigned i)
     {
-      precondition(i < _Info::card);
-      return *(_buffer + i);
+      precondition(i < Info_::card);
+      return *(buffer_ + i);
     }
 
     T operator()(int i) const		// Relative position
     {
-      precondition(-_Info::center <= i);
-      precondition(i <= _Info::card - _Info::center - 1);
-      return *(_buffer + _Info::center + i);
+      precondition(-Info_::center <= i);
+      precondition(i <= Info_::card - Info_::center - 1);
+      return *(buffer_ + Info_::center + i);
     }
     T& operator()(int i)
     {
-      precondition(-_Info::center <= i);
-      precondition(i <= _Info::card - _Info::center - 1);
-      return *(_buffer + _Info::center + i);
+      precondition(-Info_::center <= i);
+      precondition(i <= Info_::card - Info_::center - 1);
+      return *(buffer_ + Info_::center + i);
     }
 
 
     // do not use these methods...
 
     template<unsigned i>
-    T _get_at() const {
-      lesseq<i, _Info::card>::ensure();
-      return *(_buffer + i);
+    T get_at_() const {
+      lesseq<i, Info_::card>::ensure();
+      return *(buffer_ + i);
     }
 
     template<int i>
-    T _get() const {
-      lesseq<-_Info::center, i>::ensure();
-      lesseq<i, _Info::card - _Info::center - 1>::ensure();
-      return *(_buffer + _Info::center + i);
+    T get_() const {
+      lesseq<-Info_::center, i>::ensure();
+      lesseq<i, Info_::card - Info_::center - 1>::ensure();
+      return *(buffer_ + Info_::center + i);
     }
 
 
   protected:
 
-    T _buffer[_Info::card];
+    T buffer_[Info_::card];
   };
 
 
@@ -191,19 +191,19 @@ namespace mlc
   template<unsigned i, class Info, class T> inline
   T get_at(const array1d<Info, T>& arr)
   {
-    return arr.template _get_at<i>();
+    return arr.template get_at_<i>();
   }
 
   template<int i, class Info, class T> inline
   T get(const array1d<Info, T>& arr)
   {
-    return arr.template _get<i>();
+    return arr.template get_<i>();
   }
 
   // starter objects
 
-  static internal::_array1d_start<int>   ints_1d   = internal::_array1d_start<int>();
-  static internal::_array1d_start<float> floats_1d = internal::_array1d_start<float>();
+  static internal::array1d_start_<int>   ints_1d   = internal::array1d_start_<int>();
+  static internal::array1d_start_<float> floats_1d = internal::array1d_start_<float>();
 
   template<class Info, class T>
   std::ostream& operator<<(std::ostream& ostr, const array1d<Info, T>& rhs)

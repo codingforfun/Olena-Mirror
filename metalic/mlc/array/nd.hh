@@ -40,8 +40,8 @@ namespace mlc
     //
     ////////////////////////////////////////
       
-    static const unsigned _max_card = 4096;  // 64 x 64
-    static const unsigned _unknown = _max_card + 1;
+    static const unsigned max_card_ = 4096;  // 64 x 64
+    static const unsigned unknown_ = max_card_ + 1;
       
   } // end of internal
    

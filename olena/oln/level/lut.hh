@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,10 +29,11 @@
 # define OLENA_LEVEL_LUT_HH
 
 # include <oln/basics.hh>
+
 # include <map>
 
-
 namespace oln {
+
   namespace level {
 
     // few values -> new values
@@ -42,24 +43,30 @@ namespace oln {
     class hlut
     {
       typedef std::map<T,T2> hmap_t;
+
     public:
       typedef T2 output_t;
+
       hlut()
+      {}
+
+      hlut& 
+      set(const T& val, const T2& newval)
       {
-      }
-      hlut& set(const T& val, const T2& newval)
-      {
-	_hmap[val] = newval;
+	hmap_[val] = newval;
 	return *this;
       }
-      const T2 operator()(const T& val) const
+
+      const T2 
+      operator()(const T& val) const
       {
 	static typename hmap_t::const_iterator i;
-	i = _hmap.find(val);
-	return i != _hmap.end() ? i->second : val;
+	i = hmap_.find(val);
+	return i != hmap_.end() ? i->second : val;
       }
+
     private:
-      hmap_t _hmap;
+      hmap_t hmap_;
     };
 
 
@@ -70,36 +77,44 @@ namespace oln {
     class hlut_def
     {
       typedef std::map<T,T2> hmap_t;
+
     public:
       typedef T2 output_t;
+
       hlut_def()
       {
-	_defaultval = T2();
+	defaultval_ = T2();
       }
-      hlut_def& set(const T& val, const T2& newval)
+
+      hlut_def&
+      set(const T& val, const T2& newval)
       {
-	_hmap[val] = newval;
+	hmap_[val] = newval;
 	return *this;
       }
-      hlut_def& set_default(const T2& defaultval)
+
+      hlut_def& 
+      set_default(const T2& defaultval)
       {
-	_defaultval = defaultval;
+	defaultval_ = defaultval;
 	return *this;
       }
-      const T2 operator()(const T& val) const
+
+      const T2 
+      operator()(const T& val) const
       {
 	static typename hmap_t::const_iterator i;
-	i = _hmap.find(val);
-	return i != _hmap.end() ? i->second : _defaultval;
+	i = hmap_.find(val);
+	return i != hmap_.end() ? i->second : defaultval_;
       }
+
     private:
-      hmap_t _hmap;
-      T2 _defaultval;
+      hmap_t hmap_;
+      T2 defaultval_;
     };
 
+  } // end of namespace level
 
+} // end of namespace oln
 
-  } // level
-} // oln
-
-#endif // OLENA_LEVEL_LUT_HH
+#endif // ! OLENA_LEVEL_LUT_HH

@@ -75,6 +75,7 @@ namespace ntg {
     template <> struct abstract_trait<signed int>   { typedef signed_integer ret; };
     template <> struct abstract_trait<signed short> { typedef signed_integer ret; };
     template <> struct abstract_trait<signed char>  { typedef signed_integer ret; };
+    template <> struct abstract_trait<       char>  { typedef signed_integer ret; };
 
     template <class T>
     struct signed_trait { typedef T ret; };
@@ -89,6 +90,7 @@ namespace ntg {
     template <> struct unsigned_trait<signed int>   { typedef unsigned int   ret; };
     template <> struct unsigned_trait<signed short> { typedef unsigned short ret; };
     template <> struct unsigned_trait<signed char>  { typedef unsigned char  ret; };
+    template <> struct unsigned_trait<       char>  { typedef unsigned char  ret; };
 
     template <class T>
     struct cumul_trait { typedef T ret; };
@@ -96,6 +98,7 @@ namespace ntg {
     template <> struct cumul_trait<  signed short> { typedef signed int     ret; };
     template <> struct cumul_trait<unsigned char>  { typedef unsigned short ret; };
     template <> struct cumul_trait<  signed char>  { typedef signed short   ret; };
+    template <> struct cumul_trait<         char>  { typedef signed short   ret; };
 
     template <class T>
     struct largest_trait { typedef T ret; };
@@ -103,6 +106,7 @@ namespace ntg {
     template <> struct largest_trait<  signed short> { typedef signed int     ret; };
     template <> struct largest_trait<unsigned char>  { typedef unsigned int   ret; };
     template <> struct largest_trait<  signed char>  { typedef signed int     ret; };
+    template <> struct largest_trait<         char>  { typedef signed int     ret; };
 
     template <class T>
     struct signed_largest_trait { typedef signed int ret; };
@@ -113,6 +117,7 @@ namespace ntg {
     template <> struct signed_cumul_trait<unsigned long>  { typedef signed long ret; };
     template <> struct signed_cumul_trait<unsigned char>  { typedef signed short ret; };
     template <> struct signed_cumul_trait<  signed char>  { typedef signed short ret; };
+    template <> struct signed_cumul_trait<         char>  { typedef signed short ret; };
 
     template <class T>
     struct unsigned_largest_trait { typedef unsigned int ret; };
@@ -123,10 +128,12 @@ namespace ntg {
     template <> struct unsigned_cumul_trait<signed long>    { typedef unsigned long ret; };
     template <> struct unsigned_cumul_trait<unsigned char>  { typedef unsigned short ret; };
     template <> struct unsigned_cumul_trait<  signed char>  { typedef unsigned short ret; };
+    template <> struct unsigned_cumul_trait<         char>  { typedef unsigned short ret; };
 
     template<class T> struct to_ntg { typedef T ret; };
     template<> struct to_ntg<unsigned char>  { typedef int_u8u  ret; };
     template<> struct to_ntg<  signed char>  { typedef int_s8u  ret; };
+    template<> struct to_ntg<         char>  { typedef int_s8u  ret; };
     template<> struct to_ntg<unsigned short> { typedef int_u16u ret; };
     template<> struct to_ntg<  signed short> { typedef int_s16u ret; };
     template<> struct to_ntg<unsigned int>   { typedef int_u32u ret; };
@@ -139,23 +146,24 @@ namespace ntg {
     template <class E> struct value_type<signed   int, E> { typedef sint_value<E> ret; };
     template <class E> struct value_type<signed short, E> { typedef sint_value<E> ret; };
     template <class E> struct value_type<signed  char, E> { typedef sint_value<E> ret; };
+    template <class E> struct value_type<        char, E> { typedef sint_value<E> ret; };
 
   } // end of builtin.
 
   namespace internal {
 
-    TYPETRAITS_BUILTIN_INT(unsigned long);
-    TYPETRAITS_BUILTIN_INT(  signed long);
+    TYPETRAITS_BUILTIN_INT(unsigned long)
+    TYPETRAITS_BUILTIN_INT(  signed long)
     
-    TYPETRAITS_BUILTIN_INT(unsigned int);
-    TYPETRAITS_BUILTIN_INT(  signed int);
+    TYPETRAITS_BUILTIN_INT(unsigned int)
+    TYPETRAITS_BUILTIN_INT(  signed int)
     
-    TYPETRAITS_BUILTIN_INT(unsigned short);
-    TYPETRAITS_BUILTIN_INT(  signed short);
+    TYPETRAITS_BUILTIN_INT(unsigned short)
+    TYPETRAITS_BUILTIN_INT(  signed short)
 
-    TYPETRAITS_BUILTIN_INT(unsigned char);
-    TYPETRAITS_BUILTIN_INT(  signed char);
-    TYPETRAITS_BUILTIN_INT(         char);
+    TYPETRAITS_BUILTIN_INT(unsigned char)
+    TYPETRAITS_BUILTIN_INT(  signed char)
+    TYPETRAITS_BUILTIN_INT(         char)
 
   } // end of internal.
 

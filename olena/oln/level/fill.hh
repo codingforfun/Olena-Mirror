@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,19 +31,21 @@
 # include <oln/basics.hh>
 
 namespace oln {
+  
   namespace level {
-
-    template <class I_>
-    Concrete(I_) fill(image<I_>& _im, const Value(I_)& val)
+    
+    template <class I>
+    oln_concrete_type(I)
+    fill(abstract::image<I>& im, const oln_value_type(I)& val)
     {
-      Exact_ref(I, im);
-      Iter(I) p(im);
+      oln_iter_type(I) p(im);
       for_all(p)
 	im[p] = val;
-      return im;
+      return im.exact();
     }
 
-  } // level
-} // oln
+  } // end of namespace level
 
-#endif // OLENA_LEVEL_FILL_HH
+} // end of namespace oln
+
+#endif // ! OLENA_LEVEL_FILL_HH

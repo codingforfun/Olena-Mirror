@@ -42,8 +42,17 @@ namespace ntg
 
   template<unsigned icomp> struct yuv_traits;
   template<> struct yuv_traits<yuv_Y> : public interval<0,1> {};
-  template<> struct yuv_traits<yuv_U> : public interval<-1,1> {};
-  template<> struct yuv_traits<yuv_V> : public interval<-1,1> {};
+  template<> struct yuv_traits<yuv_U> 
+  {
+    static float lower_bound() { return -0.45; }
+    static float upper_bound() { return 0.45; }
+  };
+
+  template<> struct yuv_traits<yuv_V> 
+  {
+    static float lower_bound() { return -0.62; }
+    static float upper_bound() { return 0.62; }
+  };
 
   typedef color<3,8,yuv_traits>  yuv_8;
   typedef color<3,16,yuv_traits> yuv_16;

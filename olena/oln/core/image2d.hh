@@ -28,68 +28,109 @@
 #ifndef OLENA_CORE_IMAGE2D_HH
 # define OLENA_CORE_IMAGE2D_HH
 
-# include <oln/core/internal/real_image2d.hh>
-# include <oln/core/pred_image.hh>
-# include <ntg/bin.hh>
+# include <oln/core/point2d.hh>
+# include <oln/core/dpoint2d.hh>
+# include <oln/core/fwd_iter2d.hh>
+# include <oln/core/bkd_iter2d.hh>
+# include <oln/core/impl/image_array2d.hh>
+# include <oln/core/image.hh>
 # include <oln/io/readable.hh>
+
 # include <iostream>
 # include <stdlib.h>
 
 namespace oln {
 
-  using ntg::bin;
+  template<class T, class Exact = mlc::final>
+  class image2d; // fwd_decl
+
+  template<class T, class Exact>
+  struct image_id<image2d<T, Exact> >
+  {
+    enum{dim = 2};
+    typedef T value_type;
+    typedef typename mlc::exact_vt<image2d<T, Exact>, Exact>::ret exact_type;
+    typedef impl::image_array2d<T> impl_type;
+  };
+
+  template<class T, class Exact>
+  struct image_traits<image2d<T, Exact> >: 
+    public image_traits<image<image_id<image2d<T, Exact> >::dim, 
+			      typename image_id<image2d<T, Exact> >::value_type,
+			      typename image_id<image2d<T, Exact> >::impl_type, 
+			      typename image_id<image2d<T, Exact> >::exact_type> >
+  {};
 
   // client can use image2d; instances are real images, that is,
   // images with data ---conversely to proxy images
 
-  template<class T, class Exact = mlc::final>
-  class image2d : public internal::_real_image2d< T, typename mlc::exact_vt<image2d<T, Exact>, Exact>::ret>
+  template<class T, class Exact>
+  class image2d: 
+    public image<image_id<image2d<T, Exact> >::dim, 
+		 typename image_id<image2d<T, Exact> >::value_type, 
+		 typename image_id<image2d<T, Exact> >::impl_type, 
+		 typename image_id<image2d<T, Exact> >::exact_type>
   {
+    
   public:
 
-    typedef image2d<T, Exact> self;
-    typedef internal::_real_image2d< T, typename mlc::exact_vt<image2d<T, Exact>, Exact>::ret> super;
+    typedef image2d<T, Exact> self_type;
+    typedef typename image_id<image2d<T, Exact> >::value_type value_type;
+    typedef typename image_id<image2d<T, Exact> >::exact_type exact_type;
+    typedef typename image_id<image2d<T, Exact> >::impl_type impl_type;
+    typedef oln::image<image_id<image2d<T, Exact> >::dim, 
+		       value_type, 
+		       impl_type, 
+		       exact_type> super_type;  
 
-    image2d() :
-      super()
-    {}
+    friend class abstract::image<exact_type>;
 
-    image2d(coord nrows, coord ncols, coord border = 2) :
-      super(nrows, ncols, border)
-    {}
-
-    image2d(const image2d_size& size, coord border = 2) :
-      super(size, border)
-    {}
-
-    image2d(self& rhs) : // shallow copy
-      super(rhs)
-    {}
-
-    self& operator=(self rhs) // shallow assignment
+    image2d() : 
+      super_type()
     {
-      this->super::operator=(rhs);
-      return *this;
+      mlc_init_static_hierarchy(Exact);
+    }
+
+    image2d(coord nrows, coord ncols, coord border = 2) : 
+      super_type(new impl_type(image2d_size(nrows, ncols, border)))
+    {
+      mlc_init_static_hierarchy(Exact);
+    }
+
+    image2d(const image2d_size& size) : 
+      super_type(new impl_type(size))
+    {
+      mlc_init_static_hierarchy(Exact);
+    }
+
+    image2d(self_type& rhs) : // shallow copy
+      super_type(rhs)
+    {
+      mlc_init_static_hierarchy(Exact);
     }
 
     // io
-    image2d(const io::internal::anything& r) : super()
+    image2d(const io::internal::anything& r) 
+      : super_type()
     {
+      mlc_init_static_hierarchy(Exact);
       r.assign(*this);
     }
-    image2d& operator=(const io::internal::anything& r)
+
+    image2d& 
+    operator=(const io::internal::anything& r)
     {
       return r.assign(*this);
     }
-
-    self clone() const // deep copy
+    
+    exact_type& 
+    operator=(self_type rhs)
     {
-      self output(nrows(), ncols(), this->border());
-      _clone_to(output.data());
-      return output;
+      return this->exact().assign(rhs.exact());
     }
 
-    static std::string name()
+    static std::string 
+    name()
     {
       return
 	std::string("image2d<")
@@ -103,82 +144,20 @@ namespace oln {
       typedef image2d<U> ret;
     };
 
-    image2d(const self& rhs); // w/o impl
-  };
+    image2d(const self_type& rhs); // w/o impl
 
+  protected:
 
-  _ImageForDim(2, image2d)
-
-  // specialization for bin data
-
-  // image2d<bin> is also a pred_image, that is, an image type that
-  // can be used as a predicate having the structure of an image
-
-
-  template<class Exact>
-  class image2d<bin, Exact> : public internal::_real_image2d< bin, typename mlc::exact_vt<image2d<bin, Exact>, Exact>::ret >,
-			      public pred_image<typename mlc::exact_vt<image2d<bin, Exact>, Exact>::ret >
-  {
-  public:
-
-    typedef image2d<bin, Exact> self;
-    typedef internal::_real_image2d< bin, typename mlc::exact_vt<image2d<bin, Exact>, Exact>::ret > super;
-    typedef pred_image<typename mlc::exact_vt<image2d<bin, Exact>, Exact>::ret > super_pred;
-
-    image2d() :
-      super()
-    {}
-
-    image2d(coord nrows, coord ncols, coord border = 2) :
-      super(nrows, ncols, border)
-    {}
-
-    image2d(const image2d_size& size, coord border = 2) :
-      super(size, border)
-    {}
-
-    image2d(self& rhs) : // shallow copy
-      super(rhs), super_pred()
-    {}
-
-    self& operator=(self rhs) // shallow assignment
+    self_type 
+    clone_() const // deep copy
     {
-      super::operator=(rhs);
-      return *this;
-    }
-
-    // io
-    image2d(const io::internal::anything& r) : super()
-    {
-      r.assign(*this);
-    }
-    image2d& operator=(const io::internal::anything& r)
-    {
-      return r.assign(*this);
-    }
-
-    self clone() const // deep copy
-    {
-      self output(nrows(), ncols(), this->border());
-      _clone_to(output.data());
+      // FIXME: it may be really dangerous to instantiate a self_type
+      // and not an exact_type is Exact != mlc::final.
+      self_type output(this->nrows(), this->ncols(), this->border());
+      clone_to(output.impl());
       return output;
     }
 
-    static std::string name()
-    {
-      return
-	std::string("image2d<")
-	+ ntg_name(bin) + ","
-	+ Exact::name() + ">";
-    }
-
-    template<class U>
-    struct mute
-    {
-      typedef image2d<U> ret;
-    };
-
-    image2d(const self& rhs); // w/o impl
   };
 
 } // end of oln

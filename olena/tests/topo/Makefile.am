@@ -1,10 +1,1 @@
-include ../check/Makefile.check
-
-check_PROGRAMS = \
-	test-inter-pixel \
-	test-cmap \
-	test-dmap
-
-test_inter_pixel_SOURCES = test-inter-pixel.cc
-
-test_cmap_SOURCES = test-cmap.cc
+include ../check/Makefile.runtests

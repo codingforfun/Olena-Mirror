@@ -29,11 +29,13 @@
 #ifndef OLENA_CONVERT_NRGBXYZ_HH
 # define OLENA_CONVERT_NRGBXYZ_HH
 
-# include <oln/convert/colorconv.hh>
+# include <oln/convert/abstract/colorconv.hh>
 
 # include <ntg/color/nrgb.hh>
 # include <ntg/color/xyz.hh>
 # include <ntg/basics.hh>
+
+# include <sstream>
 
 /*--------------------------------------------------------------.
 | The formulas used here come from ``Digital Image Processing   |
@@ -46,49 +48,82 @@ namespace oln {
 
   namespace convert {
 
-    struct nrgb_to_xyz
-      : public color_conversion<3, nrgb_traits,
-				3, xyz_traits, nrgb_to_xyz>
+    template <unsigned inbits, unsigned outbits>
+    struct f_nrgb_to_xyz
+      : public abstract::color_conversion<3, inbits, nrgb_traits,
+					  3, outbits, xyz_traits, f_nrgb_to_xyz<inbits, outbits> >
     {
-      template <unsigned qbits>
-      color<3, qbits, xyz_traits>
-      operator() (const color<3, qbits, nrgb_traits>& v) const
+      color<3, outbits, xyz_traits>
+      doit(const color<3, inbits, nrgb_traits>& v) const
       {
 	vec<3, float> in = v.to_float();
 	vec<3, float> out;
 	out[xyz_X] =
-	  0.607 * in[nrgb_R] + 0.174 * in[nrgb_G] + 0.201 * in[nrgb_B];
+	  0.606734 * in[nrgb_R] + 0.173564 * in[nrgb_G] + 0.200112 * in[nrgb_B];
+	
 	out[xyz_Y] =
-	  0.299 * in[nrgb_R] + 0.587 * in[nrgb_G] + 0.114 * in[nrgb_B];
+	  0.298839 * in[nrgb_R] + 0.586811 * in[nrgb_G] + 0.114350 * in[nrgb_B];
+
 	out[xyz_Z] =
-	                       0.066 * in[nrgb_G] + 1.117 * in[nrgb_B];
+	                          0.0661196 * in[nrgb_G] + 1.11491 * in[nrgb_B];
+
 	return out;
       }
 
-      static std::string name() { return "nrgb_to_xyz"; }
+      static std::string 
+      name()
+      { 
+	std::ostringstream s;
+	s << "f_nrgb_to_xyz<" << inbits << ", " << outbits << '>'; 
+	s.str();
+      }
     };
 
-    struct xyz_to_nrgb
-      : public color_conversion<3, xyz_traits,
-				3, nrgb_traits, xyz_to_nrgb>
+    template <unsigned inbits, unsigned outbits>
+    color<3, outbits, xyz_traits>
+    nrgb_to_xyz(const color<3, inbits, nrgb_traits>& v)
     {
-      template <unsigned qbits>
-      color<3, qbits, nrgb_traits>
-      operator() (const color<3, qbits, xyz_traits>& v) const
+      f_nrgb_to_xyz<inbits, outbits> f;
+
+      return f(v);
+    }
+
+    template<unsigned inbits, unsigned outbits>
+    struct f_xyz_to_nrgb
+      : public abstract::color_conversion<3, inbits, xyz_traits,
+					  3, outbits, nrgb_traits, f_xyz_to_nrgb<inbits, outbits> >
+    {
+      color<3, outbits, nrgb_traits>
+      doit(const color<3, inbits, xyz_traits>& v) const
       {
 	vec<3, float> in = v.to_float();
 	vec<3, float> out;
 	out[nrgb_R] =
-	    1.910 * in[xyz_X] - 0.534 * in[xyz_Y] - 0.289 * in[xyz_Z];
+	    1.91049 * in[xyz_X] - 0.532592 * in[xyz_Y] - 0.288284 * in[xyz_Z];
 	out[nrgb_G] =
-	  - 0.984 * in[xyz_X] + 1.998 * in[xyz_Y] - 0.027 * in[xyz_Z];
+	  - 0.984310 * in[xyz_X] + 1.99845 * in[xyz_Y] - 0.0282980 * in[xyz_Z];
 	out[nrgb_B] =
-	    0.058 * in[xyz_X] - 0.118 * in[xyz_Y] + 0.897 * in[xyz_Z];
+	    0.0583744 * in[xyz_X] - 0.118518 * in[xyz_Y] + 0.898611 * in[xyz_Z];
 	return out;
       }
 
-      static std::string name() { return "xyz_to_nrgb"; }
+      static std::string 
+      name()
+      { 
+	std::ostringstream s;
+	s << "f_xyz_to_nrgb<" << inbits << ", " << outbits << '>'; 
+	s.str();
+      }
     };
+
+    template <unsigned inbits, unsigned outbits>
+    color<3, outbits, nrgb_traits>
+    xyz_to_nrgb(const color<3, inbits, xyz_traits>& v)
+    {
+      f_xyz_to_nrgb<inbits, outbits> f;
+
+      return f(v);
+    }
 
   } // convert
 } // oln

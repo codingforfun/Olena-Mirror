@@ -31,6 +31,7 @@
 # include <oln/basics.hh>
 
 # include <ntg/bin.hh>
+# include <ntg/float.hh>
 
 # include <functional>
 
@@ -46,57 +47,67 @@ namespace oln {
       typedef f_invert self;
 
       const typename self::result_type
-      operator()(typename self::argument_type val) const {
-	return doit(val.self());
+      operator()(typename self::argument_type val) const 
+      {
+	return doit(val.exact());
       }
 
       // FIXME: It sounds unnatural to specialize here.
       // Inversion ought to be an operation defined on value types and
       // specialized there. -- adl
 
-      template<unsigned N, class B> static
-      const ntg::int_s<N, B> doit(const ntg::int_s<N, B>& val) {
-	return - val.self();
+      template<unsigned N, class B> 
+      static const ntg::int_s<N, B>
+      doit(const ntg::int_s<N, B>& val) 
+      {
+	return - val;
       }
 
-      static
-      const ntg::float_d doit(const ntg::float_d& val) {
-	return - val.self();
+      static const ntg::float_d
+      doit(const ntg::float_d& val) 
+      {
+	return - val;
       }
 
-      static
-      const ntg::float_s doit(const ntg::float_s& val) {
-	return - val.self();
+      static const ntg::float_s 
+      doit(const ntg::float_s& val) 
+      {
+	return - val;
       }
 
-      template<unsigned N, class B> static
-      const ntg::int_u<N, B> doit(const ntg::int_u<N, B>& val) {
+      template<unsigned N, class B> 
+      static const ntg::int_u<N, B> 
+      doit(const ntg::int_u<N, B>& val)
+      {
 	typedef ntg::int_u<N, B> tmp;
 	return ntg_max_val(tmp) - val;
       }
 
-      static
-      const ntg::bin doit(ntg::bin val) {
+      static const ntg::bin
+      doit(ntg::bin val)
+      {
 	return val == true ? false : true;
       }
     };
 
     // procs
 
-    template<class I> inline
-    Concrete(I) invert(const image<I>& input)
+    template<class I>
+    inline oln_concrete_type(I) 
+    invert(const abstract::image<I>& input)
     {
-      return apply(f_invert<Value(I)>(), input);
+      return apply(f_invert<oln_value_type(I)>(), input);
     }
 
-    template<class I> inline
-    void invert_self(image<I>& input)
+    template<class I> 
+    inline void 
+    invert_self(abstract::image<I>& input)
     {
-      return apply_self(f_invert<Value(I)>(), input);
+      apply_self(f_invert<oln_value_type(I)>(), input);
     }
 
-  } // end of level
+  } // end of namespace level
 
-} // end of oln
+} // end of namespace oln
 
-#endif // OLENA_LEVEL_INVERT_HH
+#endif // ! OLENA_LEVEL_INVERT_HH

@@ -1,0 +1,33 @@
+//								    -*- c++ -*-
+#include <ntg/int.hh>
+#include <oln/math/macros.hh>
+
+#include <iostream>
+
+#include "check.hh"
+#include "data.hh"
+
+using namespace ntg;
+using namespace oln::math;
+
+#define OK_OR_FAIL				\
+      std::cout << "OK" << std::endl;		\
+    else					\
+      {						\
+	std::cout << "FAIL" << std::endl;	\
+	fail = true;				\
+      }
+
+bool
+check()
+{
+  bool fail = false;
+
+  if (sqr<int_u8>(4) == 16)
+    OK_OR_FAIL;
+
+  if (abs<int_s8>(-4) == 4)
+    OK_OR_FAIL;
+
+  return fail;
+}

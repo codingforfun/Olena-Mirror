@@ -1,0 +1,37 @@
+//								    -*- c++ -*-
+
+#include "loadsave.hh"
+
+bool
+check(void)
+{
+  bool fail = false;
+
+  typedef image3d<range<int_u8, bounded_u<0, 255>, strict > > ima_range_int_u8;
+  typedef image3d<int_u<6, strict> > ima_int_u6;
+
+  fail |= loadsave< image3d<bin>           >(rdata("lena3d"), "lena3d");
+  fail |= loadsave< image3d<bool>          >(rdata("lena3d"), "lena3d");
+  fail |= loadsave< image3d<int_u8>        >(rdata("lena3d"), "lena3d");
+  fail |= loadsave< image3d<unsigned char> >(rdata("lena3d"), "lena3d");
+  fail |= ! loadsave< ima_int_u6           >(rdata("lena3d"), "lena3d");
+  fail |= loadsave< ima_range_int_u8       >(rdata("lena3d"), "lena3d");
+  fail |= loadsave< image3d<nrgb_8>        >(rdata("lena3d"), "lena3d");
+  fail |= loadsave< image3d<xyz_8>         >(rdata("lena3d"), "lena3d");
+  fail |= loadsave< image3d<vec<3, int_u8> > >(rdata("lena3d"), "lena3d");
+
+  fail |= loadsave< image3d<bin>           >(rdata("lena3d.pbm"), "lena3d.pbm");
+  fail |= loadsave< image3d<int_u8>        >(rdata("lena3d.pgm"), "lena3d.pgm");
+  fail |= loadsave< image3d<unsigned char> >(rdata("lena3d.pgm"), "lena3d.pgm");
+  fail |= loadsave< image3d<nrgb_8>        >(rdata("lena3d.ppm"), "lena3d.ppm");
+
+  fail |= ! loadsave< image3d<bin>           >(rdata("wrong_3d"), "wrong_3d");
+
+#if HAVE_ZLIB
+  fail |= loadsave< image3d<bin>    >(rdata("lena3d.pbm.gz"), "lena3d.pbm.gz");
+  fail |= loadsave< image3d<int_u8> >(rdata("lena3d.pgm.gz"), "lena3d.pgm.gz");
+  fail |= loadsave< image3d<nrgb_8> >(rdata("lena3d.ppm.gz"), "lena3d.ppm.gz");
+#endif
+
+  return fail;
+}

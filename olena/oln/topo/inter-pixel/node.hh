@@ -42,42 +42,51 @@ namespace oln {
       public:
 	enum { dim = I::dim };
 
-	typedef Dir(I) dir_t;
+	typedef oln_dir_type(I) dir_type;
 
       public:
-	node() : _rank(0)
+	node() : rank_(0)
 	{
 	  for (unsigned i = 0; i < 2 * dim; ++i)
-	    _data[i] = false;
+	    data_[i] = false;
 	}
 
-	void set(dir_t i)
+	void
+	set(dir_type i)
 	{
-	  if (_data[i] == false)
-	    ++_rank;
+	  if (data_[i] == false)
+	    ++rank_;
 
-	  _data[i] = true;
+	  data_[i] = true;
 	}
 
-	bool get(dir_t i) const { return _data[i]; }
+	bool
+	get(dir_type i) const 
+	{ 
+	  return data_[i];
+	}
 
-	unsigned rank() const { return _rank; }
+	unsigned
+	rank() const
+	{
+	  return rank_;
+	}
 
       private:
-	unsigned _rank;
-	bool _data[dim * 2];
+	unsigned rank_;
+	bool data_[dim * 2];
       };
 
-# define Node(ImgType)					\
-node< ImgType >
+# define oln_node_type(ImgType)			\
+oln::topo::inter_pixel::node< ImgType >
 
-# define Head(ImgType)					\
-typename std::pair< Point(ImgType), Dir(ImgType) >
+# define oln_head_type(ImgType)						\
+typename std::pair<oln_point_type(ImgType), oln_dir_type(ImgType) >
 
-    } // end inter_pixel
+    } // end of namespace inter_pixel
 
-  } // end topo
+  } // end of namespace topo
 
-} // end oln
+} // end of namespace oln
 
-#endif // !OLENA_TOPO_INTER_PIXEL_NODE_HH
+#endif // ! OLENA_TOPO_INTER_PIXEL_NODE_HH

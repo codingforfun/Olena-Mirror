@@ -38,8 +38,8 @@ namespace oln {
      * what: Segmented Watershed.
      * ns: morpho
      * tpl: class, DestValue, type of output labels
-     * arg: const image<I>&, im, IN, image of levels
-     * arg: const neighborhood<N>&, ng, IN, neighborhood to consider
+     * arg: const abstract::non_vectorial_image<I>&, im, IN, image of levels
+     * arg: const abstract::neighborhood<N>&, ng, IN, neighborhood to consider
      * ret: typename mute<I, DestValue>::ret
      * doc:
      *   Compute the segmented watershed for image \var{im} using
@@ -61,14 +61,14 @@ namespace oln {
     =*/
     template<class DestValue, class I, class N>
     typename mute<I, DestValue>::ret
-    watershed_seg(const image<I>& im_i, const neighborhood<N>& Ng);
-
+    watershed_seg(const abstract::non_vectorial_image<I>& im_i, const abstract::neighborhood<N>& Ng);
+    
     /*=processing watershed_con
      * what: Connected Watershed.
      * ns: morpho
      * tpl: class, DestValue, type of output labels
-     * arg: const image<I>&, im, IN, image of levels
-     * arg: const neighborhood<N>&, ng, IN, neighborhood to consider
+     * arg: const abstract::non_vectorial_image<I>&, im, IN, image of levels
+     * arg: const abstract::neighborhood<N>&, ng, IN, neighborhood to consider
      * ret: typename mute<I, DestValue>::ret
      * doc:
      *   Compute the connected watershed for image \var{im} using
@@ -91,15 +91,15 @@ namespace oln {
     =*/
     template<class DestValue, class I, class N>
     typename mute<I, DestValue>::ret
-    watershed_con(const image<I>& im_i, const neighborhood<N>& Ng);
+    watershed_con(const abstract::non_vectorial_image<I>& im_i, const abstract::neighborhood<N>& Ng);
 
     /*=processing watershed_seg_or
      * what: Segmented Watershed with user-supplied starting points.
      * ns: morpho
-     * arg: const image<I1>&, levels, IN, image of levels
-     * arg: image<I2>&, markers, INOUT, image of markers
-     * arg: const neighborhood<N>&, ng, IN, neighborhood to consider
-     * ret: Concrete(I2)&
+     * arg: const abstract::non_vectorial_image<I1>&, levels, IN, image of levels
+     * arg: abstract::non_vectorial_image<I2>&, markers, INOUT, image of markers
+     * arg: const abstract::neighborhood<N>&, ng, IN, neighborhood to consider
+     * ret:oln_concrete_type(I2)&
      * doc:
      *   Compute a segmented watershed for image \var{levels} using
      *   neighborhood \var{ng}, and \var{markers} as starting point for
@@ -108,25 +108,25 @@ namespace oln {
      *   \var{markers} is an image of the same size as \var{levels}
      *   and containing discrete values indicating label associated to
      *   each basin.  On input, fill \var{markers} with
-     *   \code{Value(I2)::min()} (this is the \emph{unknown} label)
+     *   \code{oln_value_type(I2)::min()} (this is the \emph{unknown} label)
      *   and mark the starting points or regions
      *   (usually these are minima in \var{levels}) using a value
-     *   between \code{Value(I2)::min()+1} and \code{Value(I2)::max()-1}.
+     *   between \code{oln_value_type(I2)::min()+1} and \code{oln_value_type(I2)::max()-1}.
      *
      *   \code{watershed_seg_or} will flood \var{levels} from these
      *   non-\emph{unknown} starting points, labeling basins using
      *   the value you assigned to them, and markining watershed lines
-     *   with \code{Value(I2)::max()}.  \var{markers} should not contains
-     *   any \code{Value(I2)::min()} value on output.
+     *   with \code{oln_value_type(I2)::max()}.  \var{markers} should not contains
+     *   any \code{oln_value_type(I2)::min()} value on output.
      * ref:
      *   This is based on the original algorithm
      *   presented by D'Ornellas et al. (FIXME: ref?)
     =*/
     template<class I1, class I2, class N>
-    Concrete(I2)&
-    watershed_seg_or(const image<I1>& D,
-		     image<I2>& M,
-		     const neighborhood<N>& Ng);
+    oln_concrete_type(I2)&
+    watershed_seg_or(const abstract::non_vectorial_image<I1>& D,
+		     abstract::non_vectorial_image<I2>& M,
+		     const abstract::neighborhood<N>& Ng);
 
   } // end of morpho
 

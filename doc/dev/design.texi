@@ -1,6 +1,8 @@
 @node Design considerations
 @chapter Design considerations
 
+@c FIXME: this is obsolete, it is commented in src-tree.texi.
+
 @unnumberedsec About the data types
 
 The old @file{value/} hierarchy has been rewritten into @file{types/}. This
@@ -27,4 +29,3 @@ fixed by adding new "concept" classes on top of the image hierarchy
 @code{image_color<*>}, @code{image_not_color<*>}, etc...) and specialize
 the processing using these types.  This still won't solve the problem
 @emph{generally}, but at least it addresses the common needs.
-

@@ -31,10 +31,10 @@
 /*=processing white_top_hat
  * ns: morpho, morpho::fast
  * what: White top hat.
- * arg: const conversion<C>&, c, IN, conversion object
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se, IN, structural element
- * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
+ * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se, IN, structural element
+ * ret: typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
  * doc:
  *   Compute white top hat of \var{input} using \var{se}
  *   as structural element. Soille p.105.
@@ -45,10 +45,11 @@
  * exi: lena256.pgm
  * exo: out.pgm
 =*/
-template<class C, class I, class E>
-typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
-white_top_hat(const conversion<C>& c,
-	      const image<I>& input, const struct_elt<E>& se)
+template<class C, class B, class I, class E>
+typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
+white_top_hat(const convert::abstract::conversion<C, B>& c,
+	      const abstract::non_vectorial_image<I>& input,
+	      const abstract::struct_elt<E>& se)
 {
   return arith::minus(c, input, opening(input, se));
 }
@@ -56,14 +57,16 @@ white_top_hat(const conversion<C>& c,
 /*=processingoverload white_top_hat
  * ns: morpho, morpho::fast
  * what: White top hat.
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se, IN, structural element
- * ret: Concrete(I)
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se, IN, structural element
+ * ret:oln_concrete_type(I)
 =*/
 template<class I, class E>
-Concrete(I) white_top_hat(const image<I>& input, const struct_elt<E>& se)
+oln_concrete_type(I) 
+  white_top_hat(const abstract::non_vectorial_image<I>& input,
+		const abstract::struct_elt<E>& se)
 {
-  return white_top_hat(convert::force<Value(I)>(), input, se);
+  return white_top_hat(convert::force<oln_value_type(I)>(), input, se);
 }
 
 
@@ -72,10 +75,10 @@ Concrete(I) white_top_hat(const image<I>& input, const struct_elt<E>& se)
 /*=processing black_top_hat
  * ns: morpho, morpho::fast
  * what: Black top hat.
- * arg: const conversion<C>&, c, IN, conversion object
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se, IN, structural element
- * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
+ * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se, IN, structural element
+ * ret: typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
  * doc:
  *   Compute black top hat of \var{input} using \var{se}
  *   as structural element. Soille p.105.
@@ -86,10 +89,11 @@ Concrete(I) white_top_hat(const image<I>& input, const struct_elt<E>& se)
  * exi: lena256.pgm
  * exo: out.pgm
 =*/
-template<class C, class I, class E>
-typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
-black_top_hat(const conversion<C>& c,
-	      const image<I>& input, const struct_elt<E>& se)
+template<class C, class B, class I, class E>
+typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
+black_top_hat(const convert::abstract::conversion<C, B>& c,
+	      const abstract::non_vectorial_image<I>& input,
+	      const abstract::struct_elt<E>& se)
 {
   return arith::minus(c, closing(input, se), input);
 }
@@ -98,14 +102,16 @@ black_top_hat(const conversion<C>& c,
 /*=processingoverload balck_top_hat
  * ns: morpho, morpho::fast
  * what: Black top hat.
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se, IN, structural element
- * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se, IN, structural element
+ * ret: typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
 =*/
 template<class I, class E>
-Concrete(I) black_top_hat(const image<I>& input, const struct_elt<E>& se)
+oln_concrete_type(I) 
+  black_top_hat(const abstract::non_vectorial_image<I>& input,
+		const abstract::struct_elt<E>& se)
 {
-  return black_top_hat(convert::force<Value(I)>(), input, se);
+  return black_top_hat(convert::force<oln_value_type(I)>(), input, se);
 }
 
 
@@ -117,10 +123,10 @@ Concrete(I) black_top_hat(const image<I>& input, const struct_elt<E>& se)
 /*=processing self_complementary_top_hat
  * ns: morpho, morpho::fast
  * what: Self complementary top hat.
- * arg: const conversion<C>&, c, IN, conversion object
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se, IN, structural element
- * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
+ * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se, IN, structural element
+ * ret: typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
  * doc:
  *   Compute self complementary top hat of \var{input} using \var{se}
  *   as structural element. Soille p.106.
@@ -133,10 +139,11 @@ Concrete(I) black_top_hat(const image<I>& input, const struct_elt<E>& se)
  * exo: out.pgm
 =*/
 
-template<class C, class I, class E>
-typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
-self_complementary_top_hat(const conversion<C>& c,
-			   const image<I>& input, const struct_elt<E>& se)
+template<class C, class B, class I, class E>
+typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
+self_complementary_top_hat(const convert::abstract::conversion<C, B>& c,
+			   const abstract::non_vectorial_image<I>& input,
+			   const abstract::struct_elt<E>& se)
 {
   return arith::minus(c, closing(input, se), opening(input, se));
 }
@@ -144,15 +151,16 @@ self_complementary_top_hat(const conversion<C>& c,
 /*=processingoverload self_complementary_top_hat
  * ns: morpho, morpho::fast
  * what: Self complementary top hat.
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se, IN, structural element
- * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se, IN, structural element
+ * ret: typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
 =*/
 template<class I, class E>
-Concrete(I) self_complementary_top_hat(const image<I>& input,
-				       const struct_elt<E>& se)
+oln_concrete_type(I) 
+self_complementary_top_hat(const abstract::non_vectorial_image<I>& input,
+			   const abstract::struct_elt<E>& se)
 {
-  return self_complementary_top_hat(convert::force<Value(I)>(), input, se);
+  return self_complementary_top_hat(convert::force<oln_value_type(I)>(), input, se);
 }
 
 
@@ -161,10 +169,10 @@ Concrete(I) self_complementary_top_hat(const image<I>& input,
 /*=processing top_hat_contrast_op
  * ns: morpho, morpho::fast
  * what: Top hat contrastor operator.
- * arg: const conversion<C>&, c, IN, conversion object
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se, IN, structural element
- * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
+ * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se, IN, structural element
+ * ret: typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
  * doc:
  *   Enhance contrast \var{input} by adding the white top hat, then
  * substracting the black top hat to \var{input}. Top hats are computed using
@@ -180,10 +188,11 @@ Concrete(I) self_complementary_top_hat(const image<I>& input,
  * exh: convert/bound.hh
 =*/
 
-template<class C, class I, class E>
-typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
-top_hat_contrast_op(const conversion<C>& c,
-		    const image<I>& input, const struct_elt<E>& se)
+template<class C, class B, class I, class E>
+typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
+top_hat_contrast_op(const convert::abstract::conversion<C, B>& c,
+		    const abstract::non_vectorial_image<I>& input,
+		    const abstract::struct_elt<E>& se)
 {
   return arith::plus(c,
 		     input,
@@ -194,13 +203,14 @@ top_hat_contrast_op(const conversion<C>& c,
 /*=processingoverload top_hat_contrast_op
  * ns: morpho, morpho::fast
  * what: Top hat contrastor operator.
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se, IN, structural element
- * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se, IN, structural element
+ * ret: typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
 =*/
 template<class I, class E>
-Concrete(I) top_hat_contrast_op(const image<I>& input,
-				const struct_elt<E>& se)
+oln_concrete_type(I) 
+top_hat_contrast_op(const abstract::non_vectorial_image<I>& input,
+		    const abstract::struct_elt<E>& se)
 {
-  return top_hat_contrast_op(convert::force<Value(I)>(), input, se);
+  return top_hat_contrast_op(convert::force<oln_value_type(I)>(), input, se);
 }

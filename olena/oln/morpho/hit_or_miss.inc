@@ -1,5 +1,5 @@
 // -*- c++ -*-
-// Copyright (C) 2001  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,11 +33,11 @@
 /*=processing hit_or_miss
  * ns: morpho, morpho::fast
  * what: Hit_or_Miss Transform.
- * arg: const conversion<C>&, c, IN, conversion object
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se1, IN, structural element
- * arg: const struct_elt<E>&, se2, IN, structural element
- * ret: typename mute<I_, typename convoutput<C, Value(I_)>::ret>::ret
+ * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se1, IN, structural element
+ * arg: const abstract::struct_elt<E>&, se2, IN, structural element
+ * ret: typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
  * doc:
  * Compute the hit_or_miss transform of \var{input} by the composite structural
  * element (\var{se1}, \var{se2}). Soille p.131.
@@ -60,25 +60,21 @@
  * exi: object.pbm
  * exo: out.pgm
 =*/
-template<class C, class I_, class E1_, class E2_>
-typename mute<I_, typename convoutput<C, Value(I_)>::ret>::ret
-hit_or_miss(const conversion<C>& c,
-	    const image<I_>& _input,
-	    const struct_elt<E1_>& _se1,
-	    const struct_elt<E2_>& _se2)
+template<class C, class B, class I, class E1, class E2>
+typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
+hit_or_miss(const convert::abstract::conversion<C, B>& c,
+	    const abstract::non_vectorial_image<I>& input,
+	    const abstract::struct_elt<E1>& se1,
+	    const abstract::struct_elt<E2>& se2)
 {
-  Exact_cref(I, input);
-  Exact_cref(E1, se1);
-  Exact_cref(E2, se2);
   mlc::eq<I::dim, E1::dim>::ensure();
   mlc::eq<E1::dim, E2::dim>::ensure();
 
-  precondition(inter(se1, se2).card() == 0);
+  // FIXME: call inter on w_windows destroys weights
+  precondition(inter(se1.exact(), se2.exact()).card() == 0);
   // FIXME: max(coord, coord) does not exist.
-  //  border::adapt_copy(input, min(se1.delta() , se2.delta()));
-  border::adapt_copy(input,
-		     (se1.delta() > se2.delta()) ?
- 		     se1.delta() : se2.delta());
+  input.border_adapt_copy((se1.delta() > se2.delta()) ?
+			  se1.delta() : se2.delta());
 
   return arith::min(c,
 		    erosion(input, se1),
@@ -87,17 +83,18 @@ hit_or_miss(const conversion<C>& c,
 
 /*=processingoverload hit_or_miss
  * ns: morpho, morpho::fast
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se1, IN, structural element
- * arg: const struct_elt<E>&, se2, IN, structural element
- * ret: Concrete(I)
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se1, IN, structural element
+ * arg: const abstract::struct_elt<E>&, se2, IN, structural element
+ * ret:oln_concrete_type(I)
 =*/
 template<class I, class E1, class E2>
-Concrete(I) hit_or_miss(const image<I>& input,
-			const struct_elt<E1>& se1,
-			const struct_elt<E2>& se2)
+oln_concrete_type(I) 
+  hit_or_miss(const abstract::non_vectorial_image<I>& input,
+	      const abstract::struct_elt<E1>& se1,
+	      const abstract::struct_elt<E2>& se2)
 {
-  return hit_or_miss(convert::force<Value(I)>(), input, se1, se2);
+  return hit_or_miss(convert::force<oln_value_type(I)>(), input, se1, se2);
 }
 
 
@@ -109,10 +106,10 @@ Concrete(I) hit_or_miss(const image<I>& input,
 /*=processing hit_or_miss_opening
  * ns: morpho, morpho::fast
  * what: Hit_or_Miss opening.
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se1, IN, structural element
- * arg: const struct_elt<E>&, se2, IN, structural element
- * ret: Concrete(I)
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se1, IN, structural element
+ * arg: const abstract::struct_elt<E>&, se2, IN, structural element
+ * ret:oln_concrete_type(I)
  * doc:
  *   Compute the hit_or_miss opening of \var{input} by the composite structural
  * element (\var{se1}, \var{se2}). Soille p.134.
@@ -137,26 +134,24 @@ Concrete(I) hit_or_miss(const image<I>& input,
  * exi: object.pbm
  * exo: out.pbm
 =*/
-template<class I_, class E1_, class E2_>
-Concrete(I_) hit_or_miss_opening(const image<I_>& _input,
-				 const struct_elt<E1_>& _se1,
-				 const struct_elt<E2_>& _se2)
+template<class I, class E1, class E2>
+oln_concrete_type(I) 
+  hit_or_miss_opening(const abstract::non_vectorial_image<I>& input,
+		      const abstract::struct_elt<E1>& se1,
+		      const abstract::struct_elt<E2>& se2)
 {
-  Exact_cref(I, input);
-  Exact_cref(E1, se1);
-  Exact_cref(E2, se2);
-
-  precondition(inter(se1, se2).card() == 0);
+  // FIXME: call inter on w_windows destroys weights
+  precondition(inter(se1.exact(), se2.exact()).card() == 0);
   return dilation(hit_or_miss(input, se1, se2), -se1);
 }
 
 /*=processing hit_or_miss_opening_bg
  * ns: morpho, morpho::fast
  * what: Hit_or_Miss opening of background.
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se1, IN, structural element
- * arg: const struct_elt<E>&, se2, IN, structural element
- * ret: Concrete(I)
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se1, IN, structural element
+ * arg: const abstract::struct_elt<E>&, se2, IN, structural element
+ * ret:oln_concrete_type(I)
  * doc:
  *  Compute the hit_or_miss opening of the background of
  * \var{input} by the composite structural
@@ -183,9 +178,10 @@ Concrete(I_) hit_or_miss_opening(const image<I_>& _input,
  * exo: out.pbm
 =*/
 template<class I, class E1, class E2>
-Concrete(I) hit_or_miss_opening_bg(const image<I>& input,
-				   const struct_elt<E1>& se1,
-				   const struct_elt<E2>& se2)
+oln_concrete_type(I) 
+  hit_or_miss_opening_bg(const abstract::non_vectorial_image<I>& input,
+			 const abstract::struct_elt<E1>& se1,
+			 const abstract::struct_elt<E2>& se2)
 {
   return hit_or_miss_opening(input, se2, se1);
 }
@@ -199,10 +195,10 @@ Concrete(I) hit_or_miss_opening_bg(const image<I>& input,
 /*=processing hit_or_miss_closing
  * ns: morpho, morpho::fast
  * what: Hit_or_Miss closing.
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se1, IN, structural element
- * arg: const struct_elt<E>&, se2, IN, structural element
- * ret: Concrete(I)
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se1, IN, structural element
+ * arg: const abstract::struct_elt<E>&, se2, IN, structural element
+ * ret:oln_concrete_type(I)
  * doc:
  *   Compute the hit_or_miss closing of \var{input} by the composite structural
  * element (\var{se1}, \var{se2}). This is the dual transformation of hit-or-miss opening
@@ -229,15 +225,14 @@ Concrete(I) hit_or_miss_opening_bg(const image<I>& input,
  * exi: object.pbm
  * exo: out.pbm
 =*/
-template<class I, class E1_, class E2_>
-Concrete(I) hit_or_miss_closing(const image<I>& input,
-				const struct_elt<E1_>& _se1,
-				const struct_elt<E2_>& _se2)
+template<class I, class E1, class E2>
+oln_concrete_type(I) 
+  hit_or_miss_closing(const abstract::non_vectorial_image<I>& input,
+		      const abstract::struct_elt<E1>& se1,
+		      const abstract::struct_elt<E2>& se2)
 {
-  Exact_cref(E1, se1);
-  Exact_cref(E2, se2);
-
-  precondition(inter(se1, se2).card() == 0);
+  // FIXME: call inter on struct elts, even if w_windows do not provide it
+  precondition(inter(se1.exact(), se2.exact()).card() == 0);
   return level::invert(hit_or_miss_opening(level::invert(input),
 					   se1, se2));
 }
@@ -245,10 +240,10 @@ Concrete(I) hit_or_miss_closing(const image<I>& input,
 /*=processing hit_or_miss_closing_bg
  * ns: morpho, morpho::fast
  * what: Hit_or_Miss closing of background.
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se1, IN, structural element
- * arg: const struct_elt<E>&, se2, IN, structural element
- * ret: Concrete(I)
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se1, IN, structural element
+ * arg: const abstract::struct_elt<E>&, se2, IN, structural element
+ * ret:oln_concrete_type(I)
  * doc:
  * Compute the hit_or_miss closing of the background of \var{input} by the composite structural
  * element (\var{se1}, \var{se2}). This is the dual transformation of hit-or-miss opening
@@ -276,9 +271,10 @@ Concrete(I) hit_or_miss_closing(const image<I>& input,
  * exo: out.pbm
 =*/
 template<class I, class E1, class E2>
-Concrete(I) hit_or_miss_closing_bg(const image<I>& input,
-				   const struct_elt<E1>& se1,
-				   const struct_elt<E2>& se2)
+oln_concrete_type(I) 
+hit_or_miss_closing_bg(const abstract::non_vectorial_image<I>& input,
+		       const abstract::struct_elt<E1>& se1,
+		       const abstract::struct_elt<E2>& se2)
 {
   return hit_or_miss_closing(input, se2, se1);
 }

@@ -1,0 +1,13 @@
+//								    -*- c++ -*-
+
+#include "loadsave.hh"
+
+bool
+check(void)
+{
+  bool fail = false;
+
+  fail |= loadsave< image3d<bin> >(rdata("se_3d"), "se_3d");
+
+  return fail;
+}

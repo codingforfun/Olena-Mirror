@@ -28,30 +28,30 @@
 #ifndef OLENA_TOPO_DMAP_HXX
 # define OLENA_TOPO_DMAP_HXX
 
-# include <oln/arith/ops.hh>
-# include <ntg/float.hh>
 # include <mlc/array/2d.hh>
+# include <ntg/float.hh>
+# include <oln/arith/ops.hh>
 
 namespace oln {
 
   namespace topo {
 
-    using mlc::lbrk;
-    using mlc::end;
-    using mlc::x;
+//     using mlc::lbrk;
+//     using mlc::end;
+//     using mlc::x;
 
     template <class T>
     chamfer<T>::chamfer(const w_window2d<T>& fwd,
 			const w_window2d<T>& bkd,
-			float coef) :
+			float		   coef) :
       fwd(fwd),
       bkd(bkd),
       coef(coef)
-    {
-    }
+    {}
 
     template <class T>
-    coord chamfer<T>::delta() const
+    coord 
+    chamfer<T>::delta() const
     {
       coord d = fwd.delta();
       invariant(bkd.delta() == d);
@@ -61,27 +61,29 @@ namespace oln {
     // mk_chamfer...
     // FIXME: this is highly not thread safe !
     template<int d10, int d11> inline
-    const chamfer<int>& mk_chamfer_3x3(float coef)
+    const chamfer<int>&
+    mk_chamfer_3x3(float coef)
     {
       static const w_window2d<int> w_win_fwd = ( mlc::ints_2d =
-					       d11, d10, d11, lbrk,
-					       d10, x(),   0, end );
+					       d11,      d10, d11, mlc::lbrk,
+					       d10, mlc::x(),   0, end );
       static const w_window2d<int> w_win_bkd = ( mlc::ints_2d =
-					       0, x(),  d10, lbrk,
-					       d11, d10,  d11, end );
+					         0, mlc::x(),  d10, mlc::lbrk,
+					       d11,      d10,  d11, end );
       static const chamfer<int> ch_ = chamfer<int>(w_win_fwd, w_win_bkd, coef);
       return ch_;
     }
 
     inline // FIXME: how to define float by parameters?
-    const chamfer<float>& mk_chamfer_3x3(float d10, float d11)
+    const chamfer<float>&
+    mk_chamfer_3x3(float d10, float d11)
       // FIXME: add (?)  , float coef = 1.f
     {
       static const w_window2d<float> w_win_fwd = ( mlc::floats_2d =
-						 d11, d10, d11, lbrk,
-						 d10, x(), 0.f, end );
+						 d11, d10, d11, mlc::lbrk,
+						 d10, mlc::x(), 0.f, end );
       static const w_window2d<float> w_win_bkd = ( mlc::floats_2d =
-						 0.f, x(),  d10, lbrk,
+						 0.f, mlc::x(),  d10, mlc::lbrk,
 						 d11, d10,  d11, end );
       static const chamfer<float> ch_ =
 	chamfer<float>(w_win_fwd, w_win_bkd, 1.f);
@@ -89,32 +91,34 @@ namespace oln {
     }
 
     template<int d10, int d11, int d21> inline
-    const chamfer<int>& mk_chamfer_5x5(float coef)
+    const chamfer<int>&
+    mk_chamfer_5x5(float coef)
     {
       static const w_window2d<int> w_win_fwd = ( mlc::ints_2d =
-					       0, d21,   0, d21,   0, lbrk,
-					       d21, d11, d10, d11, d21,
-					       0, d10, x(),   0,   0, end );
+					         0, d21,        0, d21,   0, mlc::lbrk,
+					       d21, d11,      d10, d11, d21,
+					         0, d10, mlc::x(),   0,   0, end );
       static const w_window2d<int> w_win_bkd = ( mlc::ints_2d =
-					       0,   0, x(), d10,   0, lbrk,
-					       d21, d11, d10, d11, d21,
-					       0, d21,   0, d21,   0, end );
+					         0,   0, mlc::x(), d10,   0, mlc::lbrk,
+					       d21, d11,      d10, d11, d21,
+					         0, d21,        0, d21,   0, end );
       static const chamfer<int> ch_ = chamfer<int>(w_win_fwd, w_win_bkd, coef);
       return ch_;
     }
 
     inline
-    const chamfer<float>& mk_chamfer_5x5(float d10, float d11, float d21)
+    const chamfer<float>&
+    mk_chamfer_5x5(float d10, float d11, float d21)
     {
       const float O = 0.f;
       static const w_window2d<float> w_win_fwd = ( mlc::floats_2d =
-						 O, d21,   O, d21,   O, lbrk,
-						 d21, d11, d10, d11, d21,
-						 O, d10, x(),   O,   O, end );
+						 O,   d21,        O, d21,   O, mlc::lbrk,
+						 d21, d11,      d10, d11, d21,
+						 O,   d10, mlc::x(),   O,   O, end );
       static const w_window2d<float> w_win_bkd = ( mlc::floats_2d =
-						 O,   O, x(), d10,   O, lbrk,
-						 d21, d11, d10, d11, d21,
-						 O, d21,   O, d21,   O, end );
+						 O,     O, mlc::x(), d10,   O, mlc::lbrk,
+						 d21, d11,      d10, d11, d21,
+						 O,   d21,        O, d21,   O, end );
       static const chamfer<float> ch_ =
 	chamfer<float>(w_win_fwd, w_win_bkd, 1.f);
       return ch_;
@@ -124,7 +128,7 @@ namespace oln {
     // in two and three dimensions, Pattern Recognition Letters 12 (1991) 671-682
 
     // unbiased minimal mean square error for integer local distances (Table 5)
-# define CHAMFER2(Name, I, J, D, E) \
+# define oln_topo_chamfer2_(Name, I, J, D, E) \
     inline const chamfer<int>& Name##_##I##_##J()		\
      { 								\
        static const chamfer<int> tmp =                          \
@@ -132,7 +136,7 @@ namespace oln {
        return tmp;						\
      }
 
-# define CHAMFER3(Name, I, J, K, D, E)				\
+# define oln_topo_chamfer3_(Name, I, J, K, D, E)				\
     inline const chamfer<int>& Name##_##I##_##J##_##K()	\
     {								\
       static const chamfer<int> tmp =				\
@@ -140,47 +144,48 @@ namespace oln {
       return tmp;						\
     }
 
-    CHAMFER2(chamfer, 1,   1,  3, 0.9003);
-    CHAMFER2(chamfer, 1,   2,  3, 1.2732);
-    CHAMFER2(chamfer,  2,   3,  3, 2.1736);
-    CHAMFER2(chamfer,  5,   7,  3, 5.2474);
-    CHAMFER2(chamfer, 12,  17,  3, 12.6684);
+    oln_topo_chamfer2_(chamfer, 1,   1,  3, 0.9003);
+    oln_topo_chamfer2_(chamfer, 1,   2,  3, 1.2732);
+    oln_topo_chamfer2_(chamfer,  2,   3,  3, 2.1736);
+    oln_topo_chamfer2_(chamfer,  5,   7,  3, 5.2474);
+    oln_topo_chamfer2_(chamfer, 12,  17,  3, 12.6684);
 
-    inline const chamfer<int>& chessboard()
+    inline const chamfer<int>&
+    chessboard()
     {
       return chamfer_1_1();
     }
 
-    inline const chamfer<int>& cityblock()
+    inline const chamfer<int>&
+    cityblock()
     {
       return chamfer_1_2();
     }
 
-    CHAMFER3(chamfer, 4,  6, 9, 5, 4.1203);
-    CHAMFER3(chamfer, 5,  7, 11, 5, 5.0206);
-    CHAMFER3(chamfer, 9,  13, 20, 5, 9.1409);
-    CHAMFER3(chamfer, 16, 23, 36, 5, 16.3351);
+    oln_topo_chamfer3_(chamfer, 4,  6, 9, 5, 4.1203);
+    oln_topo_chamfer3_(chamfer, 5,  7, 11, 5, 5.0206);
+    oln_topo_chamfer3_(chamfer, 9,  13, 20, 5, 9.1409);
+    oln_topo_chamfer3_(chamfer, 16, 23, 36, 5, 16.3351);
 
     inline const chamfer<float>& best_set_3x3()
     { return mk_chamfer_3x3(0.9481, 1.3408); }
     inline const chamfer<float>& best_set_5x5()
     { return mk_chamfer_5x5(0.9801, 1.4060, 2.2044); }
 
-
     // maximum absolute error for integer local distances (Table 2)
-    CHAMFER2(mchamfer, 1, 1, 3, 0.8536);
-    CHAMFER2(mchamfer, 1, 2, 3, 1.2071);
-    CHAMFER2(mchamfer, 2, 3, 3, 2.1180);
-    CHAMFER2(mchamfer, 5, 7, 3, 5.1675);
-    CHAMFER2(mchamfer, 12, 17, 3, 12.5000);
+    oln_topo_chamfer2_(mchamfer, 1, 1, 3, 0.8536);
+    oln_topo_chamfer2_(mchamfer, 1, 2, 3, 1.2071);
+    oln_topo_chamfer2_(mchamfer, 2, 3, 3, 2.1180);
+    oln_topo_chamfer2_(mchamfer, 5, 7, 3, 5.1675);
+    oln_topo_chamfer2_(mchamfer, 12, 17, 3, 12.5000);
 
     inline const chamfer<int>& mchessboard()    { return mchamfer_1_1(); }
     inline const chamfer<int>& mcityblock()     { return mchamfer_1_2(); }
 
-    CHAMFER3(mchamfer, 4,  6,  9, 5, 4.1213);
-    CHAMFER3(mchamfer, 5,  7, 11, 5, 5.0092);
-    CHAMFER3(mchamfer, 9, 13, 20, 5, 9.0819);
-    CHAMFER3(mchamfer, 17, 24, 38, 5, 17.2174);
+    oln_topo_chamfer3_(mchamfer, 4,  6,  9, 5, 4.1213);
+    oln_topo_chamfer3_(mchamfer, 5,  7, 11, 5, 5.0092);
+    oln_topo_chamfer3_(mchamfer, 9, 13, 20, 5, 9.0819);
+    oln_topo_chamfer3_(mchamfer, 17, 24, 38, 5, 17.2174);
 
     inline const chamfer<float>& mbest_set_3x3() {
       const float coef = 1.0412;
@@ -191,9 +196,8 @@ namespace oln {
       return mk_chamfer_5x5(1/coef, sqrt(2.f)/coef, sqrt(5.f)/coef);
     }
 
-# undef CHAMFER2
-# undef CHAMFER3
-
+# undef oln_topo_chamfer2_
+# undef oln_topo_chamfer3_
 
     template <class T, class T2>
     dmap<T, T2>::dmap(const image2d_size&  size,
@@ -206,8 +210,9 @@ namespace oln {
 
     template <class T, class T2>
     template <class V>
-    void dmap<T, T2>::compute(const image2d<V>&   input,
-			      float		  infty)
+    void 
+    dmap<T, T2>::compute(const image2d<V>&	input,
+			 float			infty)
     {
       image2d<point_type> dummy(input.size());
       compute(input, dummy, infty);
@@ -219,7 +224,6 @@ namespace oln {
 			      image2d<point_type>&  nearest_point_map,
 			      float		    infty)
     {
-      imap_(0,0) = T(0);
       precondition(input.size() == imap_.size());
       if (infty == 0.f)
 	{
@@ -231,11 +235,12 @@ namespace oln {
 	  inFty_ = infty;
 	  infTy_ = T(infty); // FIXME: use ceil if T is integer!
 	}
+
       // init
       {
 	typename image2d<V>::iter_type p(input);
 	for (p = begin; p != end; ++p)
-	  if (input[p] != ntg_zero_val(V))
+	  if (input[p] != ntg_zero_val(T))
 	    {
 	      imap_[p] = T(0);
 	      nearest_point_map[p] = p;
@@ -244,6 +249,7 @@ namespace oln {
 	    imap_[p] = infTy_;
 	imap_.border_adapt_copy(ch_.delta()); // FIXME: this is geodesic only!
       }
+
       // fwd
       {
 	typename image2d<V>::fwd_iter_type p(input);
@@ -266,6 +272,7 @@ namespace oln {
 	    imap_[p] = min;
 	  }
       }
+
       // bkd
       {
 	typename image2d<V>::bkd_iter_type p(input);
@@ -291,13 +298,15 @@ namespace oln {
     }
 
     template <class T, class T2>
-    const image2d<T>& dmap<T, T2>::imap() const
+    const image2d<T>&
+    dmap<T, T2>::imap() const
     {
       return imap_;
     }
 
     template <class T, class T2>
-    image2d<float> dmap<T, T2>::to_image() const
+    image2d<float>
+    dmap<T, T2>::to_image() const
     {
       // FIXME: if T is float, call invariant(ch_.coef == 1.f);
       // and then return imap();
@@ -312,26 +321,32 @@ namespace oln {
     }
 
     template <class T, class T2>
-    const T& dmap<T, T2>::operator[](const point_type& p) const
+    const T&
+    dmap<T, T2>::operator[](const point_type& p) const
     {
       return imap_[p] / ch_.coef;
     }
 
     template <class T, class T2>
-    const T& dmap<T, T2>::operator()(coord row, coord col) const
+    const T&
+    dmap<T, T2>::operator()(coord row, coord col) const
     {
       return imap_(row, col) / ch_.coef;
     }
 
-    inline float euclidian_dist2(const point2d& p1, const point2d& p2)
+    inline float
+    euclidian_dist2(const point2d& p1, const point2d& p2)
     {
       float dr = p1.row() - p2.row();
       float dc = p1.col() - p2.col();
       return dr * dr + dc * dc;
     }
 
-    template <class I_>
-    image2d<float> exact_dmap(const abstract::image<I_>& _input)
+    // FIXME: why abstract::image!
+
+    template <class I>
+    image2d<float>
+    exact_dmap(const abstract::image<I>& input)
     {
       image2d<float> output(input.size());
       image2d<float>::fwd_iter_type p(input);
@@ -362,9 +377,8 @@ namespace oln {
       return output;
     }
 
-  } // end of topo
+  } // end of namespace topo
 
-} // end of oln
+} // end of namespace oln
 
-
-#endif // OLENA_TOPO_DMAP_HXX
+#endif // ! OLENA_TOPO_DMAP_HXX

@@ -29,11 +29,13 @@
 #ifndef OLENA_CONVERT_RGBNRGB_HH
 # define OLENA_CONVERT_RGBNRGB_HH
 
-# include <oln/convert/colorconv.hh>
+# include <oln/convert/abstract/colorconv.hh>
 
 # include <ntg/color/rgb.hh>
 # include <ntg/color/nrgb.hh>
 # include <ntg/basics.hh>
+
+# include <sstream>
 
 /*--------------------------------------------------------------.
 | The formulas used here come from ``Digital Image Processing   |
@@ -41,18 +43,18 @@
 `--------------------------------------------------------------*/
 
 namespace oln {
-  
-  using namespace ntg;
 
+  using namespace ntg;
+  
   namespace convert {
 
-    struct rgb_to_nrgb
-      : public color_conversion<3, rgb_traits,
-				3, nrgb_traits, rgb_to_nrgb>
+    template<unsigned inbits, unsigned outbits>
+    struct f_rgb_to_nrgb
+      : public abstract::color_conversion<3, inbits, rgb_traits,
+					  3, outbits, nrgb_traits, f_rgb_to_nrgb<inbits, outbits> >
     {
-      template <unsigned qbits>
-      color<3, qbits, nrgb_traits>
-      operator() (const color<3, qbits, rgb_traits>& v) const
+      color<3, outbits, nrgb_traits>
+      doit(const color<3, inbits, rgb_traits>& v) const
       {
 	vec<3, float> in = v.to_float();
 	vec<3, float> out;
@@ -65,16 +67,31 @@ namespace oln {
 	return out;
       }
 
-      static std::string name() { return "rgb_to_nrgb"; }
+      static std::string 
+      name() 
+      { 
+	std::ostringstream s;
+	s << "f_rgb_to_nrgb<" << inbits << ", " << outbits << '>'; 
+	s.str();
+      }    
     };
 
-    struct nrgb_to_rgb
-      : public color_conversion<3, nrgb_traits,
-				3, rgb_traits, nrgb_to_rgb>
+    template <unsigned inbits, unsigned outbits>
+    color<3, outbits, nrgb_traits>
+    rgb_to_nrgb(const color<3, inbits, rgb_traits>& v)
     {
-      template <unsigned qbits>
-      color<3, qbits, rgb_traits>
-      operator() (const color<3, qbits, nrgb_traits>& v) const
+      f_rgb_to_nrgb<inbits, outbits> f;
+
+      return f(v);
+    }
+
+    template <unsigned inbits, unsigned outbits>
+    struct f_nrgb_to_rgb
+      : public abstract::color_conversion<3, inbits, nrgb_traits,
+					  3, outbits, rgb_traits, f_nrgb_to_rgb<inbits, outbits> >
+    {
+      color<3, outbits, rgb_traits>
+      doit(const color<3, inbits, nrgb_traits>& v) const
       {
 	vec<3, float> in = v.to_float();
 	vec<3, float> out;
@@ -87,8 +104,23 @@ namespace oln {
 	return out;
       }
 
-      static std::string name() { return "nrgb_to_rgb"; }
+      static std::string 
+      name() 
+      { 
+	std::ostringstream s;
+	s << "f_nrgb_to_rgb<" << inbits << ", " << outbits << '>'; 
+	s.str();
+      }
     };
+
+    template <unsigned inbits, unsigned outbits>
+    color<3, outbits, rgb_traits>
+    nrgb_to_rgb(const color<3, inbits, nrgb_traits>& v)
+    {
+      f_nrgb_to_rgb<inbits, outbits> f;
+
+      return f(v);
+    }
 
   } // convert
 } // oln

@@ -1,0 +1,167 @@
+//								    -*- c++ -*-
+
+#include <oln/basics1d.hh>
+#include <oln/basics2d.hh>
+#include <oln/basics3d.hh>
+
+#include <ntg/all.hh>
+
+#include <iostream>
+
+int main()
+{
+
+  oln::image1d<ntg::int_u8> ima1(4);
+  ima1(1) = 7;
+  std::cout << "Initial image" << std::endl;
+  std::cout << ima1 << std::endl;
+  ima1.border_set_width(3);
+  std::cout << "set_width" << std::endl;
+  std::cout << ima1 << std::endl;
+  std::cout << "new border: " << ima1.border() << std::endl;	
+  ima1.border_adapt_width(8);
+  std::cout << "adapt_width" << std::endl;
+  std::cout << ima1 << std::endl;
+  std::cout << "new border: " << ima1.border() << std::endl;
+  ima1.border_adapt_copy(9);
+  std::cout << "adapt_copy" << std::endl;
+  std::cout << ima1 << std::endl;
+  std::cout << "new border: " << ima1.border() << std::endl;
+  ima1.border_adapt_mirror(10);
+  std::cout << "adapt_mirror" << std::endl;
+  std::cout << ima1 << std::endl;
+  std::cout << "new border: " << ima1.border() << std::endl;
+  ima1.border_adapt_assign(11, 8);
+  std::cout << "adapt_assign" << std::endl;
+  std::cout << ima1 << std::endl;
+  std::cout << "new border: " << ima1.border() << std::endl;
+
+  oln::image2d<ntg::int_u8> ima2(2, 4);
+  for (int i = 0; i < 2; i++)
+    for (int j = 0; j < 4; j++)
+      ima2(i, j) = i*4 + j;
+
+  std::cout << "Initial image" << std::endl;
+  std::cout << ima2 << std::endl;
+  ima2.border_set_width(4);
+  std::cout << "set_width" << std::endl;
+  std::cout << ima2 << std::endl;
+  std::cout << "new border: " << ima2.border() << std::endl;	
+  ima2.border_adapt_width(5);
+  std::cout << "adapt_width" << std::endl;
+  std::cout << ima2 << std::endl;
+  std::cout << "new border: " << ima2.border() << std::endl;
+  ima2.border_adapt_copy(6);
+  std::cout << "adapt_copy" << std::endl;
+  std::cout << ima2 << std::endl;
+  std::cout << "new border: " << ima2.border() << std::endl;
+  ima2.border_adapt_mirror(7);
+  std::cout << "adapt_mirror" << std::endl;
+  std::cout << ima2 << std::endl;
+  std::cout << "new border: " << ima2.border() << std::endl;
+  ima2.border_adapt_assign(8, 12);
+  std::cout << "adapt_assign" << std::endl;
+  std::cout << ima2 << std::endl;
+  std::cout << "new border: " << ima2.border() << std::endl;
+
+  oln::image3d<ntg::int_u8> ima3(2, 2, 4);
+  ima3(1, 0, 1) = 7;
+  std::cout << "Initial image" << std::endl;
+  std::cout << ima3 << std::endl;
+  ima3.border_set_width(5);
+  std::cout << "set_width" << std::endl;
+  std::cout << ima3 << std::endl;
+  std::cout << "new border: " << ima3.border() << std::endl;
+  ima3.border_adapt_width(8);
+  std::cout << "adapt_width" << std::endl;
+  std::cout << ima3 << std::endl;
+  std::cout << "new border: " << ima3.border() << std::endl;
+  ima3.border_adapt_copy(9);
+  std::cout << "adapt_copy" << std::endl;
+  std::cout << ima3 << std::endl;
+  std::cout << "new border: " << ima3.border() << std::endl;
+  ima3.border_adapt_mirror(10);
+  std::cout << "adapt_mirror" << std::endl;
+  std::cout << ima3 << std::endl;
+  std::cout << "new border: " << ima3.border() << std::endl;
+  ima3.border_adapt_assign(11, 8);
+  std::cout << "adapt_assign" << std::endl;
+  std::cout << ima3 << std::endl;
+  std::cout << "new border: " << ima3.border() << std::endl;
+
+
+  const oln::image1d<ntg::int_u8> ima12(4);
+  std::cout << "Initial image" << std::endl;
+  std::cout << ima12 << std::endl;
+  ima12.border_set_width(3);
+  std::cout << "set_width" << std::endl;
+  std::cout << ima12 << std::endl;
+  std::cout << "new border: " << ima12.border() << std::endl;	
+  ima12.border_adapt_width(8);
+  std::cout << "adapt_width" << std::endl;
+  std::cout << ima12 << std::endl;
+  std::cout << "new border: " << ima12.border() << std::endl;
+  ima12.border_adapt_copy(9);
+  std::cout << "adapt_copy" << std::endl;
+  std::cout << ima12 << std::endl;
+  std::cout << "new border: " << ima12.border() << std::endl;
+  ima12.border_adapt_mirror(10);
+  std::cout << "adapt_mirror" << std::endl;
+  std::cout << ima12 << std::endl;
+  std::cout << "new border: " << ima12.border() << std::endl;
+  ima12.border_adapt_assign(11, 8);
+  std::cout << "adapt_assign" << std::endl;
+  std::cout << ima12 << std::endl;
+  std::cout << "new border: " << ima12.border() << std::endl;
+
+  const oln::image2d<ntg::int_u8> ima22(2, 4);
+ 
+  std::cout << "Initial image" << std::endl;
+  std::cout << ima22 << std::endl;
+  ima22.border_set_width(4);
+  std::cout << "set_width" << std::endl;
+  std::cout << ima22 << std::endl;
+  std::cout << "new border: " << ima22.border() << std::endl;	
+  ima22.border_adapt_width(5);
+  std::cout << "adapt_width" << std::endl;
+  std::cout << ima22 << std::endl;
+  std::cout << "new border: " << ima22.border() << std::endl;
+  ima22.border_adapt_copy(6);
+  std::cout << "adapt_copy" << std::endl;
+  std::cout << ima22 << std::endl;
+  std::cout << "new border: " << ima22.border() << std::endl;
+  ima22.border_adapt_mirror(7);
+  std::cout << "adapt_mirror" << std::endl;
+  std::cout << ima22 << std::endl;
+  std::cout << "new border: " << ima22.border() << std::endl;
+  ima22.border_adapt_assign(8, 12);
+  std::cout << "adapt_assign" << std::endl;
+  std::cout << ima22 << std::endl;
+  std::cout << "new border: " << ima22.border() << std::endl;
+
+  const oln::image3d<ntg::int_u8> ima32(2, 2, 4);
+  std::cout << "Initial image" << std::endl;
+  std::cout << ima32 << std::endl;
+  ima32.border_set_width(5);
+  std::cout << "set_width" << std::endl;
+  std::cout << ima32 << std::endl;
+  std::cout << "new border: " << ima32.border() << std::endl;
+  ima32.border_adapt_width(8);
+  std::cout << "adapt_width" << std::endl;
+  std::cout << ima32 << std::endl;
+  std::cout << "new border: " << ima32.border() << std::endl;
+  ima32.border_adapt_copy(9);
+  std::cout << "adapt_copy" << std::endl;
+  std::cout << ima32 << std::endl;
+  std::cout << "new border: " << ima32.border() << std::endl;
+  ima32.border_adapt_mirror(10);
+  std::cout << "adapt_mirror" << std::endl;
+  std::cout << ima32 << std::endl;
+  std::cout << "new border: " << ima32.border() << std::endl;
+  ima32.border_adapt_assign(11, 8);
+  std::cout << "adapt_assign" << std::endl;
+  std::cout << ima32 << std::endl;
+  std::cout << "new border: " << ima32.border() << std::endl;
+
+
+}

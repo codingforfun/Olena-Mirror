@@ -39,57 +39,57 @@ namespace mlc
     ////////////////////////////////////////
     
 
-    // _nrows	-> total number of rows (1-indexed)
-    // _ncols	-> total number of columns (1-indexed)
+    // nrows_	-> total number of rows (1-indexed)
+    // ncols_	-> total number of columns (1-indexed)
 
-    // _center	-> position of the central element (0-indexed)
+    // center_	-> position of the central element (0-indexed)
     //		   domain : [ 0, card [
 
-    // _i	-> number of elements that have been eaten yet (0-indexed)
+    // i_	-> number of elements that have been eaten yet (0-indexed)
     //		   domain : [ 0, card ] -> watch out !!
 
 
 
     // Center is user-defined
 
-    template < unsigned _nrows, 
-	       unsigned _ncols,
-	       unsigned _center = _ncols * (_nrows / 2) + (_ncols / 2),
-	       unsigned _i = _nrows * _ncols>
+    template < unsigned nrows_, 
+	       unsigned ncols_,
+	       unsigned center_ = ncols_ * (nrows_ / 2) + (ncols_ / 2),
+	       unsigned i_ = nrows_ * ncols_>
     struct array2d_info
     {
       enum {
-	nrows = _nrows,
-	ncols = _ncols,
-	center = _center,
-	center_row = _center / _ncols,
-	center_col = _center % _ncols,
-	card = _nrows * _ncols,
-	i = _i,
-	well_formed = ((_i % _ncols) == 0),
-	get_real_center = _center
+	nrows = nrows_,
+	ncols = ncols_,
+	center = center_,
+	center_row = center_ / ncols_,
+	center_col = center_ % ncols_,
+	card = nrows_ * ncols_,
+	i = i_,
+	well_formed = ((i_ % ncols_) == 0),
+	get_real_center = center_
       };
 
-      typedef array2d_info< _nrows, _ncols, _center, i + 1 > next_elt;
+      typedef array2d_info< nrows_, ncols_, center_, i + 1 > next_elt;
 
     };
     
     // Center is defined automatically, if nrows and ncols are both odd
 
-    template < unsigned _nrows, unsigned _ncols, unsigned _i >
-    struct array2d_info <_nrows, _ncols, internal::_unknown, _i >
+    template < unsigned nrows_, unsigned ncols_, unsigned i_ >
+    struct array2d_info <nrows_, ncols_, internal::unknown_, i_ >
     {
       enum {
-	nrows = _nrows,
-	ncols = _ncols,
-	center = internal::_unknown,
-	i = _i,
-	card = _nrows * _ncols,
-	well_formed = ((_i % _ncols) == 0),
-	get_real_center = _i / 2
+	nrows = nrows_,
+	ncols = ncols_,
+	center = internal::unknown_,
+	i = i_,
+	card = nrows_ * ncols_,
+	well_formed = ((i_ % ncols_) == 0),
+	get_real_center = i_ / 2
       };
 
-      typedef array2d_info< _nrows, _ncols, internal::_unknown, i + 1 > next_elt;
+      typedef array2d_info< nrows_, ncols_, internal::unknown_, i + 1 > next_elt;
 
     };
 
@@ -103,7 +103,7 @@ namespace mlc
       // fwd decl
 
       template<class T, class Info>
-      struct _array2d_elt;
+      struct array2d_elt_;
 
       // for error messages
 
@@ -112,51 +112,51 @@ namespace mlc
 
 
       //
-      //  mlc::internal::_array2d_start decl
+      //  mlc::internal::array2d_start_ decl
       //
       ////////////////////////////////////////
 
       template<class T>
-      struct _array2d_start {
+      struct array2d_start_ {
 
-	_array2d_elt< T, array2d_info< _unknown, _unknown, _unknown, 1 > > 
+	array2d_elt_< T, array2d_info< unknown_, unknown_, unknown_, 1 > > 
 	operator=(T val);
 	
-	_array2d_elt< T, array2d_info< _unknown, _unknown, 0, 1 > > 
-	operator=(_x<T> val);
+	array2d_elt_< T, array2d_info< unknown_, unknown_, 0, 1 > > 
+	operator=(x_<T> val);
 	
-	_array2d_elt< T, array2d_info< _unknown, _unknown, 0, 1 > > 
-	operator=(_x<void> val);
+	array2d_elt_< T, array2d_info< unknown_, unknown_, 0, 1 > > 
+	operator=(x_<void> val);
 
-	T ptr[_max_card]; // could be static
+	T ptr[max_card_]; // could be static
       };
 
 
       //
-      //  mlc::internal::_array2d_elt
+      //  mlc::internal::array2d_elt_
       //
       ////////////////////////////////////////
 
       template<class T, class Info>
-      struct _array2d_elt
+      struct array2d_elt_
       {
-	typedef _array2d_elt< T, typename Info::next_elt >
-	_next_elt_t;
+	typedef array2d_elt_< T, typename Info::next_elt >
+	next_elt_t_;
 
-	typedef _array2d_elt< T, array2d_info< Info::nrows, Info::ncols, Info::i, Info::i + 1> >
-	_eat_center_t;
+	typedef array2d_elt_< T, array2d_info< Info::nrows, Info::ncols, Info::i, Info::i + 1> >
+	eat_center_t_;
 
-	typedef _array2d_elt< T, array2d_info< Info::nrows, Info::i, Info::center, Info::i > >
-	_eat_lbrk_t;
+	typedef array2d_elt_< T, array2d_info< Info::nrows, Info::i, Info::center, Info::i > >
+	eat_lbrk_t_;
 
 	typedef array2d< array2d_info< Info::i / Info::ncols, Info::ncols, Info::get_real_center, Info::i > , T>
-	_array2d_t;
+	array2d_t_;
 
       public:
 	
 	// Constructor
 
-	_array2d_elt(T* ptr, _array2d_start<T>* arr) : ptr(ptr), arr(arr)
+	array2d_elt_(T* ptr, array2d_start_<T>* arr) : ptr(ptr), arr(arr)
 	{
 	}
 
@@ -168,47 +168,47 @@ namespace mlc
 
 	// elt, elt
 
-	_next_elt_t operator,(T val)
+	next_elt_t_ operator,(T val)
 	{
-	  is_true<Info::nrows == _unknown>::ensure();
+	  is_true<Info::nrows == unknown_>::ensure();
 	  *ptr = val;
-	  return _next_elt_t(ptr + 1, arr);
+	  return next_elt_t_(ptr + 1, arr);
 	}
 
 
 	// elt, x(elt)		-> center
 
-	_eat_center_t operator,(_x<T> val)
+	eat_center_t_ operator,(x_<T> val)
 	{
-	  is_true<Info::center == _unknown>::ensure();
+	  is_true<Info::center == unknown_>::ensure();
 	  *ptr = val.ue; // FIXME : give a *name* to this variable !!
-	  return _eat_center_t(ptr + 1, arr);
+	  return eat_center_t_(ptr + 1, arr);
 	}
 
 
 	// elt, x()		-> center
 
-	_eat_center_t operator,(_x<void>)
+	eat_center_t_ operator,(x_<void>)
 	{
-	  is_true<Info::center == _unknown>::ensure();
+	  is_true<Info::center == unknown_>::ensure();
 	  *ptr = T(0);
-	  return _eat_center_t(ptr + 1, arr);
+	  return eat_center_t_(ptr + 1, arr);
 	}
 
 
 	// elt, lbrk
 
-	_eat_lbrk_t operator,(_lbrk)
+	eat_lbrk_t_ operator,(lbrk_)
 	{
-	  is_true<Info::ncols == _unknown>::ensure();
+	  is_true<Info::ncols == unknown_>::ensure();
 	  is_true<Info::ncols != 0>::ensure();
-	  return _eat_lbrk_t(ptr, arr);
+	  return eat_lbrk_t_(ptr, arr);
 	}
 
 
 	// elt, end
 	
-	_array2d_t operator,(_end)
+	array2d_t_ operator,(end_type)
 	{
 	  enum { nrows = Info::i / Info::ncols };
 	  
@@ -216,7 +216,7 @@ namespace mlc
 	  is_true<Info::well_formed == true>::ensure();
 	  // centering is automatic or user-defined :
 	  
-	  is_true<Info::ncols != _unknown>::ensure();
+	  is_true<Info::ncols != unknown_>::ensure();
 
 
 	  // both nrows and ncols must be odd 
@@ -224,10 +224,10 @@ namespace mlc
 
 	  is_true<	 
 	    ((Info::ncols % 2 == 1) && (nrows % 2 == 1)) 
-	    || (Info::center != _unknown)
+	    || (Info::center != unknown_)
 	  >::ensure();
 	  
-	  return _array2d_t(arr->ptr);
+	  return array2d_t_(arr->ptr);
 	}
 	
 
@@ -240,40 +240,40 @@ namespace mlc
 	here_a_value_is_not_of_type_<T> operator,(U u) const;
 
 	T* ptr;
-	_array2d_start<T>* arr;
+	array2d_start_<T>* arr;
       };
 
 
 
       //
-      //  mlc::internal::_array2d_start  impl
+      //  mlc::internal::array2d_start_  impl
       //
       ////////////////////////////////////////
 
       template<class T> inline 
-      _array2d_elt< T, array2d_info< _unknown, _unknown, _unknown, 1 > >
-      _array2d_start<T>::operator=(T val)
+      array2d_elt_< T, array2d_info< unknown_, unknown_, unknown_, 1 > >
+      array2d_start_<T>::operator=(T val)
       {
 	ptr[0] = val;
-	return _array2d_elt< T, array2d_info< _unknown, _unknown, _unknown, 1 > >(ptr+1,this);
+	return array2d_elt_< T, array2d_info< unknown_, unknown_, unknown_, 1 > >(ptr+1,this);
       }
 
       template<class T> inline 
-      _array2d_elt< T, array2d_info< _unknown, _unknown, 0, 1 > >
-      _array2d_start<T>::operator=(_x<T> val)
+      array2d_elt_< T, array2d_info< unknown_, unknown_, 0, 1 > >
+      array2d_start_<T>::operator=(x_<T> val)
       {
 	ptr[0] = val.ue;
 	// center <- 0
-	return _array2d_elt< T, array2d_info< _unknown, _unknown, 0, 1 > >(ptr+1,this);
+	return array2d_elt_< T, array2d_info< unknown_, unknown_, 0, 1 > >(ptr+1,this);
       }
 
       template<class T> inline 
-      _array2d_elt< T, array2d_info< _unknown, _unknown, 0, 1 > >
-      _array2d_start<T>::operator=(_x<void> val)
+      array2d_elt_< T, array2d_info< unknown_, unknown_, 0, 1 > >
+      array2d_start_<T>::operator=(x_<void> val)
       {
 	ptr[0] = T(0);
 	// center <- 0
-	return _array2d_elt< T, array2d_info< _unknown, _unknown, 0, 1 > >(ptr+1,this);
+	return array2d_elt_< T, array2d_info< unknown_, unknown_, 0, 1 > >(ptr+1,this);
       }
 
     } // end of internal

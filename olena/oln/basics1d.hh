@@ -1,4 +1,4 @@
-// Copyright (C) 2001  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,18 +28,20 @@
 #ifndef OLENA_BASICS1D_HH
 # define OLENA_BASICS1D_HH
 
-# include "basics.hh"
+# include <oln/basics.hh>
 
-# include "core/point1d.hh"
-# include "core/dpoint1d.hh"
-# include "core/image1d.hh"
-# include "core/border1d.hh"
+# include <oln/core/point1d.hh>
+# include <oln/core/dpoint1d.hh>
+# include <oln/core/image1d.hh>
 
-# include "core/window1d.hh"
-# include "core/w_window1d.hh"
-# include "core/neighborhood1d.hh"
+# include <oln/core/window1d.hh>
+# include <oln/core/w_window1d.hh>
+# include <oln/core/neighborhood1d.hh>
 
-# include "core/fwd_iter1d.hh"
-# include "core/bkd_iter1d.hh"
+# include <oln/core/fwd_iter1d.hh>
+# include <oln/core/bkd_iter1d.hh>
+
+# include <oln/io/image.hh>
+# include <oln/io/se.hh>
 
 #endif // ! OLENA_BASICS1D_HH

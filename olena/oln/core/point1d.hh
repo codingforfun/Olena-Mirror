@@ -31,7 +31,7 @@
 # include <oln/config/system.hh>
 # include <ntg/core/predecls.hh>
 # include <oln/core/coord.hh>
-# include <oln/core/pointnd.hh>
+# include <oln/core/abstract/point.hh>
 # include <iostream>
 
 namespace oln {
@@ -39,39 +39,66 @@ namespace oln {
 
   // fwd decl
   class dpoint1d;
+  class point1d;
 
-  class point1d : public pointnd< 1, point1d>
+  template<>
+  struct point_traits<point1d> : public point_traits<abstract::point<point1d> >
+  {
+    enum { dim = 1 };
+    typedef dpoint1d dpoint_type;
+  };
+
+  class point1d : public abstract::point<point1d>
   {
   public:
 
-    typedef pointnd< 1, point1d>	super;
-    typedef dpoint1d			dpoint;
+    typedef abstract::point<point1d>	super_type;
+    typedef point_traits<point1d>::dpoint_type dpoint_type;
+
+    friend class super_type;
 
     point1d();
+
     point1d(coord col);
+    
+    coord 
+    col() const;
+    
+    coord& 
+    col();
+ 
+    static std::string 
+    name() 
+    { 
+      return "point1d"; 
+    }
 
-    const point1d& point_ref() const;
+  protected:
 
-    coord col() const;
-    coord& col();
+    point1d 
+    plus_dp(const dpoint1d& dp) const;
+  
+    point1d 
+    minus_dp(const dpoint1d& dp) const;
 
-    point1d operator+(const dpoint1d& dp) const;
-    point1d operator-(const dpoint1d& dp) const;
-    point1d& operator+=(const dpoint1d& dp);
-    point1d& operator-=(const dpoint1d& dp);
+    point1d& 
+    plus_assign_dp(const dpoint1d& dp);
 
-    dpoint1d operator-(const point1d& p) const;
-    point1d operator-() const;
+    point1d& 
+    minus_assign_dp(const dpoint1d& dp);
 
-    static std::string name() { return "point1d"; }
+    dpoint1d 
+    minus_p(const point1d& p) const;
+
+    point1d 
+    minus() const;
+
   };
-
-  _PointForDim(1, point1d);
 
   namespace internal
   {
     template<>
-    struct default_less<point1d> : public default_less<point1d::super>
+    struct default_less<point1d> : public default_less<point1d::super_type>
     {
     };
   } // internal
@@ -79,12 +106,9 @@ namespace oln {
 
 } // oln
 
-
 inline std::ostream&
 operator<<(std::ostream& o, const oln::point1d& p);
 
-
 # include <oln/core/point1d.hxx>
-
 
 #endif // ! OLENA_CORE_POINT1D_HH

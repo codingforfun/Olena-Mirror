@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -58,33 +58,33 @@ namespace oln {
   }
 
   inline
-  dpoint1d::dpoint1d(const point1d& p) : super(p)
+  dpoint1d::dpoint1d(const point1d& p) : super_type(p)
   {
   }
 
   inline dpoint1d
-  dpoint1d::operator-() const
+  dpoint1d::minus() const
   {
     dpoint1d dp(-col());
     return dp;
   }
 
   inline dpoint1d&
-  dpoint1d::operator+=(const dpoint1d& dp)
+  dpoint1d::plus_assign_dp(const dpoint1d& dp)
   {
     col() += dp.col();
     return *this;
   }
 
   inline dpoint1d&
-  dpoint1d::operator-=(const dpoint1d& dp)
+  dpoint1d::minus_assign_dp(const dpoint1d& dp)
   {
     col() -= dp.col();
     return *this;
   }
 
   inline dpoint1d
-  dpoint1d::operator+(const dpoint1d& dp) const
+  dpoint1d::plus_dp(const dpoint1d& dp) const
   {
     dpoint1d tmp = *this;
     tmp += dp;
@@ -92,7 +92,7 @@ namespace oln {
   }
 
   inline dpoint1d
-  dpoint1d::operator-(const dpoint1d& dp) const
+  dpoint1d::minus_dp(const dpoint1d& dp) const
   {
     dpoint1d tmp = *this;
     tmp -= dp;

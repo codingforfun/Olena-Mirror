@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -40,9 +40,9 @@ namespace oln {
     /*=processing erosion
      * ns: morpho, morpho::fast
      * what: Morphological erosion.
-     * arg: const image<I>&, input, IN, input image
-     * arg: const struct_elt<E>&, se, IN, structural element
-     * ret: Concrete(I)
+     * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
+     * arg: const abstract::struct_elt<E>&, se, IN, structural element
+     * ret:oln_concrete_type(I)
      * doc:
      *   Compute the morphological erosion of \var{input} using \var{se}
      *   as structural element.
@@ -65,15 +65,16 @@ namespace oln {
      * exi: object.pbm
      * exo: out.pbm
     =*/
-    template<class I_, class E_>
-    Concrete(I_) erosion(const image<I_>& _input, const struct_elt<E_>& _se)
+    template<class I, class E>
+    oln_concrete_type(I) 
+      erosion(const abstract::non_vectorial_image<I>& input, 
+	      const abstract::struct_elt<E>& se)
     {
-      Exact_cref(I, input);
-      Exact_cref(E, se);
       mlc::eq<I::dim, E::dim>::ensure();
-      Concrete(I) output(input.size());
-      border::adapt_copy(input, se.delta());
-      Iter(I) p(input);
+      oln_concrete_type(I) output(input.size());
+      se.delta();
+      input.border_adapt_copy(se.delta());
+      oln_iter_type(I) p(input);
       for_all (p)
 	output[p] = morpho::min(input, p, se);
       return output;
@@ -82,28 +83,28 @@ namespace oln {
     /*=processing n_erosion
      * ns: morpho
      * what: Morphological erosion itered n times.
-     * arg: const image<I>&, input, IN, input image
-     * arg: const struct_elt<E>&, se, IN, structural element
+     * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
+     * arg: const abstract::struct_elt<E>&, se, IN, structural element
      * arg: unsigned, n, IN, number of iterations
-     * ret: Concrete(I)
+     * ret:oln_concrete_type(I)
      * doc:
      *   Apply \code{morpho::erosion} \var{n} times.
      * see: morpho::erosion
      * see: morpho::n_dilation
     =*/
 
-    template<class I_, class E_>
-    Concrete(I_) n_erosion(const image<I_> & _input,
-			   const struct_elt<E_>& se,
-			   unsigned n)
+    template<class I, class E>
+    oln_concrete_type(I) 
+      n_erosion(const abstract::non_vectorial_image<I> & input,
+		const abstract::struct_elt<E>& se,
+		unsigned n)
     {
-      //mlc::eq<I_::dim, E_::dim>::ensure();
+      //mlc::eq<I::dim, E::dim>::ensure();
       precondition(n > 0);
-      Exact_cref(I, input);
-      Concrete(I_) output = input.clone();
+      oln_concrete_type(I) output = input.clone();
       for (unsigned i = 0; i < n; ++i)
 	{
-	  Concrete(I_) work = erosion(output, se);
+	  oln_concrete_type(I) work = erosion(output, se);
 	  output = work;
  	}
       return output;
@@ -111,7 +112,9 @@ namespace oln {
 
     namespace fast {
       template<class I, class E>
-      Concrete(I) erosion(const image<I>& input, const struct_elt<E>& se)
+      oln_concrete_type(I) 
+	erosion(const abstract::non_vectorial_image<I>& input, 
+		const abstract::struct_elt<E>& se)
       {
         return fast_morpho<I, E, utils::histogram_min>(input, se);
       }

@@ -25,8 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_LEVEL_CC_HH	// connected components
+#ifndef OLENA_LEVEL_CC_HH
 # define OLENA_LEVEL_CC_HH
+
+/*
+  Connected components.
+*/
 
 # include <oln/basics.hh>
 // FIXME: really need all ?
@@ -41,6 +45,7 @@
 # include <vector>
 
 namespace oln {
+
   namespace level {
 
     // optional behavior for this algorithm.
@@ -49,18 +54,18 @@ namespace oln {
     /*=processing frontp_connected_component
      * ns: level
      * what: Connected Component.
-     * arg: const image<I1>&, marker, IN, marker image
-     * arg: const neighborhood<E>&, se, IN, neighbourhood
+     * arg: const abstract::image<I>&, marker, IN, marker image
+     * arg: const abstract::neighborhood<E>&, se, IN, neighbourhood
      * arg: numeric_value&, nb, IN, nb_label (optional)
      * ret: typename mute<I, DestType>::ret
      * doc: It removes the small (in area) connected components of the upper
-     * level sets of \var{input} using \var{se} as structural element. 
+     * level sets of \var{input} using \var{se} as structural element.
      * The implementation
      * uses front propagation.
      * see: level::connected_component
      * ex:
      * $ image2d<int_u8> light = load("light.pgm");
-     * $ save(level::frontp_connected_component<int_u16>(light, win_c8p()), 
+     * $ save(level::frontp_connected_component<int_u16>(light, win_c8p()),
      * $ "out.pgm");
      * exi: light.pgm
      * exo: out.pgm
@@ -71,25 +76,24 @@ namespace oln {
     // Number the connected components i.e label true. background(i.e
     // label false) has the label 0; in the output
     // FIXME: Should probably be turned into a class.
-    template <class DestType, class I_, class E_>
-    typename mute<I_, DestType>::ret
-    frontp_connected_component(const image<I_>& _input,
-			       const neighborhood<E_>& _se, 
+    template <class DestType, class I, class E>
+    typename mute<I, DestType>::ret
+    frontp_connected_component(const abstract::image<I>& input,
+			       const abstract::neighborhood<E>& se,
 			       unsigned& nb_label)
     {
-      // FIXME: ensure the Value(I) is ntg::bin.
-      Exact_cref(I, input);
-      Exact_cref(E, se);
-      typename mute<I_, DestType>::ret output(input.size());
+      // FIXME: ensure the oln_value_type(I) is ntg::bin.
+      typename mute<I, DestType>::ret output(input.size());
       level::fill(output, 0);
 
-      typedef std::set<Point(I), oln::internal::default_less< Point(I) > > 
-	points_set;
+      typedef std::set<oln_point_type(I), 
+	               oln::internal::default_less<oln_point_type(I) > >
+	      points_set;
 
       I is_processed(input.size());
       level::fill(is_processed, false);
       DestType cur_label = 1;
-      Iter(I) p(input);
+      oln_iter_type(I) p(input);
       for_all(p) if ((input[p] == true)&& (is_processed[p] == false))
 	{
 	  //propagation front
@@ -101,13 +105,13 @@ namespace oln {
 	    {
 	      //set label and net neighbors
 	      points_set next;
-	      for (typename points_set::const_iterator i = 
+	      for (typename points_set::const_iterator i =
 		     points_to_process.begin();
 		   i != points_to_process.end();
 		   ++i)
 		{
 		  component.insert(*i);
-		  Neighb(E) p_prime(se, *i);
+		  oln_neighb_type(E) p_prime(se, *i);
 		  for_all (p_prime) if(input.hold(p_prime) &&
 				       (input[p_prime] == true))
 		    next.insert(p_prime.cur());
@@ -117,7 +121,7 @@ namespace oln {
 			     component.begin(), component.end(),
 			     inserter(points_to_process,
 				      points_to_process.begin()),
-			     oln::internal::default_less< Point(I_) >());
+			     oln::internal::default_less<oln_point_type(I) >());
 	    }
 	  for (typename points_set::const_iterator i = component.begin();
 	       i != component.end();
@@ -132,40 +136,38 @@ namespace oln {
       return output;
     }
 
-    template <class DestType, class I_, class E_>
-    typename mute<I_, DestType>::ret
-    frontp_connected_component(const image<I_>& _input,
-			       const neighborhood<E_>& _se)
+    template <class DestType, class I, class E>
+    typename mute<I, DestType>::ret
+    frontp_connected_component(const abstract::image<I>& input,
+			       const abstract::neighborhood<E>& se)
     {
       unsigned dummy;
-      return frontp_connected_component(_input, _se, dummy);
+      return frontp_connected_component(input, se, dummy);
     }
 
-    template <class I_>
-    typename mute<I_, ntg::bin>::ret
-    extract_i_cc(const image<I_>& _input,
-		 Value(I_) i)
+    template <class I>
+    typename mute<I, ntg::bin>::ret
+    extract_i_cc(const abstract::image<I>& input,
+		 oln_value_type(I) i)
     {
-      Exact_cref(I, input);
-
-      typename mute<I_, ntg::bin>::ret output(input.size());
+      
+      typename mute<I, ntg::bin>::ret output(input.size());
       level::fill(output, false);
-      Iter(I) p(input);
+      oln_iter_type(I) p(input);
       for_all(p)
 	if (input[p] == i)
 	  output[p] = true;
       return output;
     }
 
-    template <class I_>
-    Value(I_) get_n_cc(const image<I_>& _input)
+    template <class I>
+    oln_value_type(I) get_n_cc(const abstract::image<I>& input)
     {
-      Exact_cref(I, input);
-      return  fold(arith::f_max<Value(I)>(), input);
+      return  fold(arith::f_max<oln_value_type(I)>(), input);
     }
+    
+  } // end of namespace level
+  
+} // end of namespace oln
 
-  } // end of level.
-
-} // end of oln.
-
-#endif
+#endif // ! OLENA_LEVEL_CC_HH

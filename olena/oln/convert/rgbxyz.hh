@@ -29,11 +29,13 @@
 #ifndef OLENA_CONVERT_RGBXYZ_HH
 # define OLENA_CONVERT_RGBXYZ_HH
 
-# include <oln/convert/colorconv.hh>
+# include <oln/convert/abstract/colorconv.hh>
 
 # include <ntg/color/rgb.hh>
 # include <ntg/color/xyz.hh>
 # include <ntg/basics.hh>
+
+# include <sstream>
 
 /*--------------------------------------------------------------.
 | The formulas used here come from ``Digital Image Processing   |
@@ -41,18 +43,18 @@
 `--------------------------------------------------------------*/
 
 namespace oln {
-  
-  using namespace ntg;
 
+  using namespace ntg;
+  
   namespace convert {
 
-    struct rgb_to_xyz
-      : public color_conversion<3, rgb_traits,
-				3, xyz_traits, rgb_to_xyz>
+    template <unsigned inbits, unsigned outbits>
+    struct f_rgb_to_xyz
+      : public abstract::color_conversion<3, inbits, rgb_traits,
+					  3, outbits, xyz_traits, f_rgb_to_xyz <inbits, outbits> >
     {
-      template <unsigned qbits>
-      color<3, qbits, xyz_traits>
-      operator() (const color<3, qbits, rgb_traits>& v) const
+      color<3, outbits, xyz_traits>
+      doit(const color<3, inbits, rgb_traits>& v) const
       {
 	vec<3, float> in = v.to_float();
 	vec<3, float> out;
@@ -62,16 +64,31 @@ namespace oln {
 	return out;
       }
 
-      static std::string name() { return "rgb_to_xyz"; }
+      static std::string 
+      name() 
+      { 
+	std::ostringstream s;
+	s << "f_rgb_to_xyz<" << inbits << ", " << outbits << '>'; 
+	s.str();
+      }
     };
 
-    struct xyz_to_rgb
-      : public color_conversion<3, xyz_traits,
-				3, rgb_traits, xyz_to_rgb>
+    template <unsigned inbits, unsigned outbits>
+    color<3, outbits, xyz_traits>
+    rgb_to_xyz(const color<3, inbits, rgb_traits>& v)
     {
-      template <unsigned qbits>
-      color<3, qbits, rgb_traits>
-      operator() (const color<3, qbits, xyz_traits>& v) const
+      f_rgb_to_xyz<inbits, outbits> f;
+
+      return f(v);
+    }
+
+    template <unsigned inbits, unsigned outbits>
+    struct f_xyz_to_rgb
+      : public abstract::color_conversion<3, inbits, xyz_traits,
+					  3, outbits, rgb_traits, f_xyz_to_rgb <inbits, outbits> >
+    {
+      color<3, outbits, rgb_traits>
+      doit(const color<3, inbits, xyz_traits>& v) const
       {
 	vec<3, float> in = v.to_float();
 	vec<3, float> out;
@@ -84,8 +101,23 @@ namespace oln {
 	return out;
       }
 
-      static std::string name() { return "xyz_to_rgb"; }
+      static std::string 
+      name() 
+      { 
+	std::ostringstream s;
+	s << "f_xyz_to_rgb<" << inbits << ", " << outbits << '>'; 
+	s.str();
+      }
     };
+
+    template <unsigned inbits, unsigned outbits>
+    color<3, outbits, rgb_traits>
+    xyz_to_rgb(const color<3, outbits, xyz_traits>& v)
+    {
+      f_xyz_to_rgb<inbits, outbits> f;
+
+      return f(v);
+    }
 
   } // convert
 } // oln

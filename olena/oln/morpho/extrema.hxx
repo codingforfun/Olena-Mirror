@@ -27,13 +27,12 @@
 
 
 namespace internal {
-  template <class DestType, class I_>
-  typename mute<I_, DestType>::ret
-  _create_minima_image_from_bin(const image<I_>& _input)
+  template <class DestType, class I>
+  typename mute<I, DestType>::ret
+  create_minima_image_from_bin_(const abstract::non_vectorial_image<I>& input)
   {
-    Exact_cref(I, input);
-    Iter(I) p(input);
-    typename mute<I_, DestType>::ret output(input.size());
+    oln_iter_type(I) p(input);
+    typename mute<I, DestType>::ret output(input.size());
     for_all (p)
       // FIXME: min() and max() should be inf() and sup()
       // once these functions exist.  Otherwise it doesn't
@@ -45,13 +44,12 @@ namespace internal {
   }
 
 
-  template <class I_>
-  typename mute<I_, ntg::bin>::ret
-  _ima_to_bin(const image<I_>& _input)
+  template <class I>
+  typename mute<I, ntg::bin>::ret
+  ima_to_bin_(const abstract::non_vectorial_image<I>& input)
   {
-    Exact_cref(I, input);
-    Iter(I) p(input);
-    typename mute<I_, ntg::bin>::ret output(input.size());
+    oln_iter_type(I) p(input);
+    typename mute<I, ntg::bin>::ret output(input.size());
     for_all (p)
       output[p] = (input[p] ? true : false);
     return output;
@@ -68,13 +66,13 @@ namespace internal {
 /*=processing sure_minima_imposition
  * ns: morpho
  * what: Minima Imposition.
- * arg: const image<I1_>&, _input, IN, input image
- * arg: const image<I2_>&, _minima_map, IN, bin image
- * arg: const neighborhood<N_>& _Ng, IN, neighborhood
- * ret: Concrete(I_)
+ * arg: const abstract::non_vectorial_image<I1>&, input, IN, input image
+ * arg: const abstract::non_vectorial_image<I2>&, minima_map, IN, bin image
+ * arg: const abstract::neighborhood<N>& Ng, IN, neighborhood
+ * ret:oln_concrete_type(I)
  * doc:
- * Impose minima defined by \var{_minima_map} on \var{input}
- * using \var{_Ng} as neighborhood. \var{_minima_map} must
+ * Impose minima defined by \var{minima_map} on \var{input}
+ * using \var{Ng} as neighborhood. \var{minima_map} must
  * be a bin image (true for a minimum, false for a non minimum).
  * Soille p.172.
  * see: morpho::sure_geodesic_reconstruction_erosion
@@ -85,22 +83,20 @@ namespace internal {
  * exi: lena.pgm map.pbm
  * exo: out.pgm
  =*/
-template<class I_, class I2_, class N_>
-Concrete(I_) minima_imposition(const image<I_>& _input,
-			       const image<I2_>& _minima_map,
-			       const neighborhood<N_>& _Ng)
+template<class I, class I2, class N>
+oln_concrete_type(I) 
+  minima_imposition(const abstract::non_vectorial_image<I>& input,
+		    const abstract::non_vectorial_image<I2>& minima_map,
+		    const abstract::neighborhood<N>& Ng)
 {
-  Exact_cref(I, input);
-  Exact_cref(I2, minima_map);
-  Exact_cref(N, Ng);
   mlc::eq<I::dim, I2::dim>::ensure();
   mlc::eq<I::dim, N::dim>::ensure();
   precondition(input.size() == minima_map.size());
-  Concrete(I) mm =
-    internal::_create_minima_image_from_bin<Value(I)>(minima_map);
+  oln_concrete_type(I) mm =
+    internal::create_minima_image_from_bin_<oln_value_type(I)>(minima_map);
   return geodesic_reconstruction_erosion(mm,
-					 arith::min(arith::plus_cst(input, Value(I_)(1)),
-						    (arith::plus_cst(mm, Value(I_)(0)))), Ng);
+					 arith::min(arith::plus_cst(input,oln_value_type(I)(1)),
+						    (arith::plus_cst(mm,oln_value_type(I)(0)))), Ng);
 }
 
 
@@ -112,9 +108,9 @@ Concrete(I_) minima_imposition(const image<I_>& _input,
 /*=processing sure_regional_minima
  * ns: morpho
  * what: Regional minima.
- * arg: const image<I1>&, input, IN, input image
- * arg: const struct_elt<E>&, se, IN, structural element
- * ret: typename mute<I_, ntg::bin>::ret
+ * arg: const abstract::non_vectorial_image<I1>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se, IN, structural element
+ * ret: typename mute<I, ntg::bin>::ret
  * doc:
  * Extract regional minima of \var{input}
  * using \var{Ng}
@@ -127,16 +123,15 @@ Concrete(I_) minima_imposition(const image<I_>& _input,
  * exi: lena.pgm
  * exo: out.pgm
  =*/
-template<class I_, class N_>
-typename mute<I_, ntg::bin>::ret regional_minima(const image<I_>& _input,
-					    const neighborhood<N_>& _Ng)
+template<class I, class N>
+typename mute<I, ntg::bin>::ret 
+regional_minima(const abstract::non_vectorial_image<I>& input,
+		const abstract::neighborhood<N>& Ng)
 {
-  Exact_cref(I, input);
-  Exact_cref(N, Ng);
   mlc::eq<I::dim, N::dim>::ensure();
   return
-    internal::_ima_to_bin(arith::minus(convert::force<Value(I)>(),
+    internal::ima_to_bin_(arith::minus(convert::force<oln_value_type(I)>(),
 				       geodesic_reconstruction_erosion
-				       (arith::plus_cst(input, Value(I) (1)), input, Ng),
+				       (arith::plus_cst(input,oln_value_type(I) (1)), input, Ng),
 				       input));
 }

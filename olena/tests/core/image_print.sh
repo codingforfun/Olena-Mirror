@@ -45,7 +45,7 @@ rgb_8
 yiq_8
 vec<5, int_u8>
 vec<5, float>
-cplx<rect, int_s8
+cplx<rect, int_s8>
 cplx<polar, int_u32>
 cycle<float, bounded_s<-50, 50> >
 EOF

@@ -41,28 +41,26 @@
 namespace oln {
   namespace convert {
 
-    template<class N_>
-    typename get_se< N_::dim >::ret
-    ng_to_se(const neighborhood<N_>& _Ng)
+    template<class N>
+    typename oln::abstract::neighborhood<N>::win_type
+    ng_to_se(const oln::abstract::neighborhood<N>& Ng)
     {
-      Exact_cref(N, Ng);
-      typename get_se< N::dim >::ret output;
-      Iter(N) p(Ng);
+      typename oln::abstract::neighborhood<N>::win_type output;
+      oln_iter_type(N) p(Ng);
       for_all(p)
 	output.add(p);
       return output;
-     }
+    }
 
-    template<class N_>
-    typename get_se< N_::dim >::ret
-    ng_to_cse(const neighborhood<N_>& _Ng)
+    template<class N>
+    typename oln::abstract::neighborhood<N>::win_type
+    ng_to_cse(const oln::abstract::neighborhood<N>& Ng)
     {
-      Exact_cref(N, Ng);
-      typename get_se< N::dim >::ret output;
-      Iter(N) p(Ng);
+      typename oln::abstract::neighborhood<N>::win_type output;
+      oln_iter_type(N) p(Ng);
       for_all(p)
 	output.add(p);
-      DPoint(N) zero;
+      oln_dpoint_type(N) zero;
       for (unsigned size = 0; size < N::dim; ++size)
 	zero.nth(size) = 0;
       output.add(zero);

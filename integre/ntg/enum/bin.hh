@@ -51,7 +51,7 @@ namespace ntg {
     template <>
     struct typetraits<bin>
     {
-      typedef enumerated		abstract_type;
+      typedef binary			abstract_type;
       typedef bin			self;
       typedef self			ntg_type;
 

@@ -30,52 +30,94 @@
 
 namespace oln {
 
-  // FIXME: despite of it usefulness, this box classes is not good
+  // FIXME: despite its usefulness, this box class is not good
   // FIXME: since it is not generic.
 
   template <class PointType>
   class box 
   {
   public:
-    typedef typename PointType::dpoint  dpoint;
-    typedef PointType			point;
+    typedef typename PointType::dpoint_type  dpoint_type;
+    typedef PointType			point_type;
 
-    enum { d = point::dim };
+    enum { d = point_type::dim };
     
     box();
-    unsigned    dim() const;
-    void	add(point p);
-    void	add(const box<PointType>& p);
-    bool	overlay(unsigned dim, const box<PointType>& p) const;
-    void	make_consistent();
-    point	mass_center();
-    point	box_center();
-    point	mass_center() const;
-    point	box_center() const;
-    point	top() const;
-    unsigned	card() const;
-    unsigned	inner_boxes_card() const;
-    point	bottom() const;
-    unsigned	width() const;
-    unsigned	height() const;
-    unsigned	integrale() const;
-    float	inner_boxes_mean_dim(unsigned i) const;
-    unsigned	volume() const;
-    unsigned	area() const;
-    float	density() const;
-    float	square_ratio() const;
+
+    unsigned    
+    dim() const;
+    
+    void	
+    add(point_type p);
+    
+    void	
+    add(const box<PointType>& p);
+    
+    bool	
+    overlay(unsigned dim, const box<PointType>& p) const;
+    
+    void	
+    make_consistent();
+    
+    point_type	
+    mass_center();
+    
+    point_type	
+    box_center();
+    
+    point_type	
+    mass_center() const;
+    
+    point_type	
+    box_center() const;
+    
+    point_type	
+    top() const;
+    
+    unsigned	
+    card() const;
+    
+    unsigned	
+    inner_boxes_card() const;
+    
+    point_type	
+    bottom() const;
+    
+    unsigned	
+    width() const;
+    
+    unsigned	
+    height() const;
+    
+    unsigned	
+    integrale() const;
+    
+    float	
+    inner_boxes_mean_dim(unsigned i) const;
+    
+    unsigned	
+    volume() const;
+    
+    unsigned	
+    area() const;
+    
+    float	
+    density() const;
+    
+    float	
+    square_ratio() const;
     
   private:
     bool	not_consistent_;
-    point	top_;
-    point	bottom_;
-    point	mass_center_;
-    point	box_center_;
-    float	inner_boxes_mean_dim_[point::dim];
+    point_type	top_;
+    point_type	bottom_;
+    point_type	mass_center_;
+    point_type	box_center_;
+    float	inner_boxes_mean_dim_[point_type::dim];
     unsigned	card_;
     unsigned	box_card_;
-    dpoint	dimension_;
-    float	mass_[point::dim];
+    dpoint_type	dimension_;
+    float	mass_[point_type::dim];
   };
 
 } // end of oln.

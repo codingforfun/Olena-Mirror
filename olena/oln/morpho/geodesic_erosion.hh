@@ -42,10 +42,10 @@ namespace oln {
     /*=processing geodesic_erosion
      * ns: morpho
      * what: Geodesic erosion.
-     * arg: const image<I1>&, marker, IN, marker image
-     * arg: const image<I2>&, mask, IN, mask image
-     * arg: const struct_elt<E>&, se, IN, structural element
-     * ret: Concrete(I1)
+     * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
+     * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
+     * arg: const abstract::struct_elt<E>&, se, IN, structural element
+     * ret:oln_concrete_type(I1)
      * doc:
      *  Compute the geodesic erosion of \var{marker} with respect
      * to the mask \var{mask} image using \var{se}
@@ -60,14 +60,12 @@ namespace oln {
      * exo: out.pgm
      * wontcompile: fixme
      =*/
-    template<class I1_, class I2_, class N_>
-    Concrete(I1_) geodesic_erosion(const image<I1_> & _marker,
-				   const image<I2_> & _mask,
-				   const neighborhood<N_>& _Ng)
+    template<class I1, class I2, class N>
+    oln_concrete_type(I1) 
+      geodesic_erosion(const abstract::non_vectorial_image<I1> & marker,
+		       const abstract::non_vectorial_image<I2> & mask,
+		       const abstract::neighborhood<N>& Ng)
     {
-      Exact_cref(I1, marker);
-      Exact_cref(I2, mask);
-      Exact_cref(N, Ng);
       mlc::eq<I1::dim, I2::dim>::ensure();
       mlc::eq<I1::dim, N::dim>::ensure();
       precondition(marker.size() == mask.size());
@@ -80,10 +78,10 @@ namespace oln {
       /*=processing simple_geodesic_erosion
        * ns: morpho
        * what: Geodesic erosion.
-       * arg: const image<I1>&, marker, IN, marker image
-       * arg: const image<I2>&, mask, IN, mask image
-       * arg: const struct_elt<E>&, se, IN, structural element
-       * ret: Concrete(I1)
+       * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
+       * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
+       * arg: const abstract::struct_elt<E>&, se, IN, structural element
+       * ret:oln_concrete_type(I1)
        * doc:
        *  Compute the geodesic erosion of \var{marker} with respect
        * to the mask \var{mask} image using \var{se}
@@ -99,22 +97,20 @@ namespace oln {
        * exo: out.pgm
        * wontcompile: fixme
        =*/
-      template<class I1_, class I2_, class N_>
-      Concrete(I1_) geodesic_erosion(const image<I1_> & _marker,
-				     const image<I2_> & _mask,
-				     const neighborhood<N_>& _Ng)
+      template<class I1, class I2, class N>
+      oln_concrete_type(I1) 
+	geodesic_erosion(const abstract::non_vectorial_image<I1> & marker,
+			 const abstract::non_vectorial_image<I2> & mask,
+			 const abstract::neighborhood<N>& Ng)
       {
-	Exact_cref(I1, marker);
-	Exact_cref(I2, mask);
-	Exact_cref(N, Ng);
 	mlc::eq<I1::dim, I2::dim>::ensure();
 	mlc::eq<I1::dim, N::dim>::ensure();
 	precondition(marker.size() == mask.size());
 	precondition(level::is_greater_or_equal(marker, mask));
 
-	Concrete(I1) output(marker.size());
-	border::adapt_copy(marker, Ng.delta());
-	Iter(I1) p(marker);
+	oln_concrete_type(I1) output(marker.size());
+	marker.border_adapt_copy(Ng.delta());
+	oln_iter_type(I1) p(marker);
 	for_all (p)
 	  output[p] = max(morpho::min(marker, p, convert::ng_to_cse(Ng)), mask[p]);
 	return output;

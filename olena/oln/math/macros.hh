@@ -28,109 +28,64 @@
 #ifndef OLENA_MATH_MACROS_HH
 # define OLENA_MATH_MACROS_HH
 
-# include <oln/basics.hh>
-
 # include <ntg/basics.hh>
+# include <oln/basics.hh>
 
 namespace oln {
 
   namespace math {
 
-
     // FIXME: I'm not proud of the code below
     // I think it could be better...
 
+    // FIXME: this code sounds really odd. Why does the operator()
+    // take value<Self> instead of Self directly ?
 
-    // abs
+    // FIXME: Self should be renamed into Exact.
 
-    template<class Self>
+    // sqr
+
+    template<class T>
     struct f_sqr
     {
-      typedef Self output_t;
-      const Self operator()(const ntg::value<Self>& val) const
+      typedef T output_t;
+      const T operator()(const T& val) const
       {
 	return val * val;
       }
     };
 
-    template<class Self>
-    const Self sqr(const ntg::value<Self>& val)
+    template<class T>
+    const T sqr(const T& val)
     {
-      f_sqr<Self> f;
+      f_sqr<T> f;
       return f(val);
     }
 
     // abs
 
-    template<class Self>
+    template<class T>
     struct f_abs
     {
-      typedef Self output_t;
-      const Self operator()(const ntg::value<Self>& val) const
+      typedef T output_t;
+
+      const T
+      operator()(const T& val) const
       {
 	return ::abs(val);
       }
     };
 
-    template<class Self>
-    const Self abs(const ntg::value<Self>& val)
+    template<class T>
+    const T
+    abs(const T& val)
     {
-      f_abs<Self> f;
+      f_abs<T> f;
       return f(val);
     }
-
-    // plus_abs
-# if 0
-    // FIXME: Move this to arith/ops.hh
-    // Express f_plus_abs in term of plus_abs, and leave plus_abs here.
-
-    template<class Self>
-    struct f_plus_abs
-    {
-      typedef typename 
-      internal::operator_plus_traits<Self,Self>::ret_t output_t;
-      
-      const output_t operator()(const ntg::value<Self>& val1,
-				const ntg::value<Self>& val2) const
-      {
-	return math::abs(val1.self()) + math::abs(val2.self());
-      }
-    };
-
-    template<class Self>
-    const typename f_plus_abs<Self>::output_t
-    plus_abs(const ntg::value<Self>& val1,
-	     const ntg::value<Self>& val2)
-    {
-      f_plus_abs<Self> f;
-      return f(val);
-    }
-
-    template<class Self, class T_out>
-    struct f_plus_abs_to
-    {
-      typedef T_out output_t;
-      const output_t operator()(const ntg::value<Self>& val1,
-				const ntg::value<Self>& val2) const
-      {
-	return ntg::cast::force<T_out>(math::abs(val1.self()) 
-				  + math::abs(val2.self()));
-      }
-    };
-
-    template<class T_out, class Self>
-    const T_out plus_abs(const ntg::value<Self>& val1,
-			 const ntg::value<Self>& val2)
-    {
-      f_plus_abs_to<Self,T_out> f;
-      return f(val);
-    }
-
-# endif
 
   } // end of math
 
 } // end of oln
-
 
 #endif // ! OLENA_MATH_MACROS_HH

@@ -331,7 +331,7 @@ namespace ntg
       {
 	typedef typename mlc::if_<ntg_is_a(P, decimal)::ret,
 	  cycle_fmod,
-	  cycle_mod>::ret_t cycle_op;
+	  cycle_mod>::ret cycle_op;
 
 	ntg_type(P) tmp = cycle_op::exec(std::abs(ntg_signed_cast(rhs)),
 					 ntg_max_val(T) - ntg_min_val(T));

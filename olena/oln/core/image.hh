@@ -29,58 +29,98 @@
 # define OLENA_CORE_IMAGE_HH
 
 # include <mlc/type.hh>
+# include <ntg/basics.hh>
+# include <oln/core/abstract/image_with_impl.hh>
+# include <oln/core/abstract/iter.hh>
 
+# include <sstream>
 
 namespace oln {
 
+  template<unsigned Dim, class T, class Impl, class Exact = mlc::final>
+  class image; //fwd_decl
+
+  template<unsigned Dim, class T, class Impl, class Exact>
+  struct image_id<image<Dim, T, Impl, Exact> >
+  {
+    enum{dim = Dim};
+    typedef T value_type;
+    typedef Impl impl_type;
+    typedef typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret exact_type;
+  };
+
+  template<class T, unsigned Dim, class Impl, class Exact>
+  struct image_traits<image<Dim, T, Impl, Exact> >:
+    public image_traits<abstract::image_with_impl<typename image_id<image<Dim, T, Impl, Exact> >::impl_type,
+						  typename image_id<image<Dim, T, Impl, Exact> >::exact_type> >
+  {
+
+  };
 
   // image
 
-  template<class Exact>
-  struct image : public mlc::any< Exact >
+  template<unsigned Dim, class T, class Impl, class Exact>
+  class image:
+    public abstract::image_with_impl<typename image_id<image<Dim, T, Impl, Exact> >::impl_type,
+				     typename image_id<image<Dim, T, Impl, Exact> >::exact_type>
   {
-    static std::string name() { return std::string("image<") + Exact::name() + ">"; }
-  protected:
-    image() {}
-  };
 
+  public:
+
+    typedef typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret exact_type;
+    typedef typename image_traits<exact_type>::point_type point_type;
+    typedef typename image_traits<exact_type>::dpoint_type dpoint_type;
+    typedef typename image_traits<exact_type>::iter_type iter_type;
+    typedef typename image_traits<exact_type>::fwd_iter_type fwd_iter_type;
+    typedef typename image_traits<exact_type>::bkd_iter_type bkd_iter_type;
+    typedef typename image_traits<exact_type>::value_type value_type;
+    typedef typename image_traits<exact_type>::size_type size_type;
+    typedef typename image_traits<exact_type>::impl_type impl_type;
+
+    typedef image<Dim, T, Impl, Exact> self_type;
+    typedef typename abstract::image_with_impl<Impl,
+					       exact_type> super_type;
+
+    image() : super_type() 
+    {
+      mlc_init_static_hierarchy(Exact);
+    }
+
+    image(self_type& rhs): super_type(rhs)
+    {
+      mlc_init_static_hierarchy(Exact);
+    }
+
+    static std::string 
+    name()
+    {
+      std::ostringstream s;
+      s << "image<" << Dim << ", " << ntg_name(T) << ", " << Impl::name() 
+	<< ", " << Exact::name() << ">";
+      return s.str();
+    }
+
+    image(impl_type* i) : super_type(i) 
+    {
+      mlc_init_static_hierarchy(Exact);
+    }
+
+    image(const size_type& size) : 
+      super_type(new impl_type(size))
+    {
+      mlc_init_static_hierarchy(Exact);
+    }
+
+  };
 
   // mute
 
-  template<class I, class T = typename mlc::exact<I>::ret::value>
+  template<class I, class T = typename mlc::exact<I>::ret::value_type>
   struct mute
   {
-    typedef typename mlc::exact<I>::ret::mute<T>::ret ret;
-  };
-
-
-# define Value(ImgType)				\
-Exact(ImgType)::value
-
-# define Concrete(ImgType)			\
-typename mute<ImgType>::ret
-
-# define Iter(Iterable)				\
-Exact(Iterable)::iter
-
-# define Point(Pointable)			\
-Exact(Pointable)::point
-
-# define DPoint(DPointable)			\
-Exact(DPointable)::dpoint
-
-  template<unsigned DIM>  struct image_for_dim {};
-
-# define _ImageForDim(DIM, TYPE)                 \
-  template<>                                    \
-  struct image_for_dim<DIM> {                   \
-    template<class T>                           \
-    struct with_type {                          \
-      typedef TYPE<T> ret;                      \
-    };                                          \
+    typedef typename mlc::exact<I>::ret::template mute<T>::ret ret;
   };
 
 } // end of oln
-
 
 #endif // ! OLENA_CORE_IMAGE_HH

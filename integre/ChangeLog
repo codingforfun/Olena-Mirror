@@ -1,23 +1,93 @@
-2003-07-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+2003-08-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* ntg/core/internal/global_ops_defs.hh: Split builtin macros by
-	classes of types.
+       * ntg/core/behavior.hh: Fix coding style.
+       * ntg/core/internal/global_ops_traits.hh: Likewise.
+       * ntg/vect/vec.hh: Likewise.
 
-	* ntg/core/internal/global_ops.hh: Define operators for compatible
-	builtins only.
+2003-08-05  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* ntg/real/int_s.hh, ntg/real/int_u.hh, ntg/real/range.hh,
-	ntg/real/cycle.hh, ntg/vect/vec.hh, ntg/vect/cplx.hh,
-	ntg/color/color.hh, ntg/enum/bin.hh: Fix compilation with g++-3.4.
+	* ntg/core/type.hh: Remove deprecated self() method.
+	* ntg/utils/cast.hh: Adjust consequently.
+	* ntg/core/internal/global_ops_defs.hh: Likewise.
+	* ntg/real/optraits_scalar_defs.hh: Likewise.
+	* ntg/vect/vec.hh: Likewise.
 
-	* ntg/core/behavior.hh, ntg/real/builtin_float.hh: Fix includes.
+	* tests/check/Makefile.runtests: Add default CLEANFILES.
 	
-2003-07-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+2003-08-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* tests/types/tests/char1: New test.
-	* ntg/real/typetraits_builtin_int.hh,
-	ntg/real/optraits_builtin_int.hh: Support char builtin
-	type. "signed char" is not equivalent to "char".
+	* ntg/core/internal/traits.hh: Define default versions of optraits
+	and typetraits.
+
+2003-08-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* ntg/core/abstract_hierarchy.hh: Add non_vectorial.
+
+2003-08-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/types/runtests: Handle the TESTS variable.
+
+2003-08-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* tests/check/Makefile.runtests: New.
+	* tests/check/Makefile.flags: New.
+	* tests/Makefile.am: Adjust.
+	* tests/utils/runtests: Remove.
+	* tests/utils/Makefile.am: Adjust.
+	
+2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+        * ntg/utils/cast.hh: Fix compilation with g++ 3.4.
+        * ntg/utils/debug.hh: Likewise.
+        * ntg/core/internal/global_ops_defs.hh: Likewise.
+        * ntg/core/internal/global_ops.hh: Likewise.
+        * ntg/color/nrgb.hh: Likewise.
+        * ntg/real/optraits_builtin_int.hh: Likewise.
+        * ntg/real/optraits_scalar.hh: Likewise.
+        * ntg/real/typetraits_builtin_int.hh: Likewise.
+        * tests/utils/tests/debug1: Likewise.
+        * ntg/core/contract.hh: Likewise.
+        * ntg/vect/vec.hh: Likewise.
+        * ntg/vect/cplx.hh: Likewise.
+
+2003-07-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/color/hsi.hh, ntg/color/xyz.hh, ntg/color/yiq.hh,
+	ntg/color/yuv.hh, ntg/color/color.hh: Make lower_bound and
+	upper_bound functions to be able to return float values.
+
+2003-07-28  Reda Dehak  <reda@lrde.epita.fr>
+
+	* ntg/color/hsi.hh, ntg/color/xyz.hh, ntg/color/yiq.hh, 
+	ntg/color/yuv.hh: Fix upper and lower bound of color channel. 
+
+2003-07-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/types/runtests, tests/utils/runtests: Don't test temporary
+	files.
+
+2003-07-26  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/core/internal/global_ops_defs.hh, ntg/real/int_s.hh,
+	ntg/real/int_u.hh, ntg/real/typetraits_builtin_int.hh: Fix
+	problems with 'char'.
+	* tests/types/tests/int_u7: New test.
+
+	* ntg/core/macros.hh: Add ntg_comp_type and ntg_nb_comp.
+	* ntg/vect/vect_value.hh: Implement operator[].
+	* ntg/vect/vec.hh, ntg/vect/cplx.hh: Adjust.
+	* ntg/color/color.hh: Inherit from vect_value.
+	
+	* ntg/real/range.hh: Fix cast operator.
+
+2003-07-24  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/enum/bin.hh, ntg/enum/builtin_bool.hh: Set abstract_type to
+	binary.
+
+2003-07-22  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/core/abstract_hierarchy.hh: Add binary abstraction.
 
 2003-07-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 

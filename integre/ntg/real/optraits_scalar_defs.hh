@@ -47,24 +47,24 @@
   static T1& Name##_impl(ntg::real_value<T1>& lhs, const ntg::real_value<T2>& rhs)	\
   {											\
     typedef typename typetraits<T1>::behavior_type behavior_type;			\
-    lhs.self() = behavior_type::check_##Name(lhs.self().val(), rhs.self().val());	\
-    return lhs.self();									\
+    lhs.exact() = behavior_type::check_##Name(lhs.exact().val(), rhs.exact().val());	\
+    return lhs.exact();									\
   }											\
 											\
   template <class T1, class T2> inline							\
   static T1& Name##_impl(ntg::real_value<T1>& lhs, const ntg::any_const_class<T2> rhs)	\
   {											\
     typedef typename typetraits<T1>::behavior_type behavior_type;			\
-    lhs.self() = behavior_type::check_##Name(lhs.self().val(), rhs.self());		\
-    return lhs.self();									\
+    lhs.exact() = behavior_type::check_##Name(lhs.exact().val(), rhs.exact());		\
+    return lhs.exact();									\
   }											\
 											\
   template <class T1, class T2> inline							\
   static T1& Name##_impl(ntg::any_class<T1> lhs, const ntg::real_value<T2>& rhs)	\
   {											\
     typedef typename typetraits<T1>::behavior_type behavior_type;			\
-    lhs.self() = behavior_type::check_##Name(lhs.self(), rhs.self().val());		\
-    return lhs.self();									\
+    lhs.exact() = behavior_type::check_##Name(lhs.exact(), rhs.exact().val());		\
+    return lhs.exact();									\
   }
 
 # define ARITH_SCALAR_OPERATOR(Name, Op)		\
@@ -98,13 +98,13 @@
   template <class T> inline					\
   static bool Name##_impl(const ntg::real_value<T>& lhs,	\
 			  const ntg::real_value<T>& rhs)	\
-  { return lhs.self().val() Op rhs.self().val(); }		\
+  { return lhs.exact().val() Op rhs.exact().val(); }		\
 								\
   template <class T> inline					\
   static bool							\
   Name##_impl(const ntg::any_const_class<T> lhs,		\
 	      const ntg::any_const_class<T> rhs)		\
-  { return lhs.self() Op rhs.self(); }
+  { return lhs.exact() Op rhs.exact(); }
 
 
 //
@@ -126,22 +126,22 @@
   template <class T1, class T2> inline						\
   static T1& Name##_impl(int_value<T1>& lhs, const int_value<T2>& rhs)		\
   {										\
-    lhs.self() = lhs.self().val() Op rhs.self().val();				\
-    return lhs.self();								\
+    lhs.exact() = lhs.exact().val() Op rhs.exact().val();				\
+    return lhs.exact();								\
   }										\
 										\
   template <class T1, class T2> inline						\
   static T1& Name##_impl(int_value<T1>& lhs, const ntg::any_const_class<T2>& rhs) \
   {										\
-    lhs.self() = lhs.self().val() Op rhs.self();				\
-    return lhs.self();								\
+    lhs.exact() = lhs.exact().val() Op rhs.exact();				\
+    return lhs.exact();								\
   }										\
 										\
   template <class T1, class T2> inline						\
   static T1& Name##_impl(ntg::any_class<T1>& lhs, const int_value<T2>& rhs)	\
   {										\
-    lhs.self() = lhs.self() Op rhs.self().val();				\
-    return lhs.self();								\
+    lhs.exact() = lhs.exact() Op rhs.exact().val();				\
+    return lhs.exact();								\
   }    
 
 # define ARITH_INT_OPERATOR(Name, Op)			\

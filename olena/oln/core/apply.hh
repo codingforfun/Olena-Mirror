@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,8 +29,9 @@
 # define OLENA_CORE_APPLY_HH
 
 # include <mlc/contract.hh>
+# include <oln/core/abstract/image.hh>
 # include <oln/core/image.hh>
-# include <oln/core/iter.hh>
+# include <oln/core/abstract/iter.hh>
 # include <oln/core/macros.hh>
 
 namespace oln {
@@ -40,15 +41,14 @@ namespace oln {
   `------*/
 
   /* Standard unary 'apply' procedure.  Apply function f to each
-     element of _input.  */
-  template<class AdaptableUnaryFun, class I_> inline
-  typename mute<I_, typename AdaptableUnaryFun::result_type>::ret
-  apply(AdaptableUnaryFun f, const image<I_>& _input)
+     element of input.  */
+  template<class AdaptableUnaryFun, class I> inline
+  typename mute<I, typename AdaptableUnaryFun::result_type>::ret
+  apply(AdaptableUnaryFun f, const abstract::image<I>& input)
   {
-    Exact_cref (I, input);
     typename mute<I, typename AdaptableUnaryFun::result_type>::ret
       output(input.size());
-    Iter(I) p(input);
+    oln_iter_type(I) p(input);
     for_all(p) output[p] = f(input[p]);
     return output;
   }
@@ -58,21 +58,21 @@ namespace oln {
      and we build it ourself.  */
   template<class AdaptableUnaryFun, class I> inline
   typename mute<I, typename AdaptableUnaryFun::result_type>::ret
-  apply(const image<I>& input)
+  apply(const abstract::image<I>& input)
   {
     return apply(AdaptableUnaryFun(), input);
   }
 
 
   /* Same as above, but for template functions passed as template-id.
-     We need to instantiate the function for the type of the image.  */
+     We need to instantiate the function for the type of the abstract::image.  */
   template<template<class> class AdaptableUnaryFun,
 	   class I> inline
-  typename mute<I, typename AdaptableUnaryFun<Value(I)>::result_type>::ret
-  apply(const image<I>& input)
+  typename mute<I, typename AdaptableUnaryFun<oln_value_type(I)>::result_type>::ret
+  apply(const abstract::image<I>& input)
   {
     // Workaround for g++-2.95 bug.
-    AdaptableUnaryFun<Value(I)> tmp;
+    AdaptableUnaryFun<oln_value_type(I)> tmp;
     return apply(tmp, input);
   }
 
@@ -84,18 +84,16 @@ namespace oln {
   /* FIXME: Don't we want to name these functions 'apply()' too? */
 
   /* Standard binary 'apply' procedure.  Apply function f to each
-     element of _input1 and _inpu2.  */
-  template<class AdaptableBinaryFun, class I1_, class I2_> inline
-  typename mute<I1_, typename AdaptableBinaryFun::result_type>::ret
+     element of input1 and input2.  */
+  template<class AdaptableBinaryFun, class I1, class I2> inline
+  typename mute<I1, typename AdaptableBinaryFun::result_type>::ret
   apply2(AdaptableBinaryFun f,
-	 const image<I1_>& _input1, const image<I2_>& _input2)
+	 const abstract::image<I1>& input1, const abstract::image<I2>& input2)
   {
-    Exact_cref (I1, input1);
-    Exact_cref (I2, input2);
     precondition(input1.size() == input2.size());
     typename mute<I1, typename AdaptableBinaryFun::result_type>::ret
       output(input1.size());
-    Iter(I1) p(input1);
+    oln_iter_type(I1) p(input1);
     for_all(p) output[p] = f(input1[p], input2[p]);
     return output;
   }
@@ -105,21 +103,21 @@ namespace oln {
      and we build it ourself.  */
   template<class AdaptableBinaryFun, class I1, class I2> inline
   typename mute<I1, typename AdaptableBinaryFun::result_type>::ret
-  apply2(const image<I1>& input1, const image<I2>& input2)
+  apply2(const abstract::image<I1>& input1, const abstract::image<I2>& input2)
   {
     return apply2(AdaptableBinaryFun(), input1, input2);
   }
 
   /* Same as above, but for template functions passed as template-id.
-     We need to instantiate the function for the type of the images.  */
+     We need to instantiate the function for the type of the abstract::images.  */
   template<template <class, class> class AdaptableBinaryFun,
            class I1, class I2> inline
   typename mute<I1,
-    typename AdaptableBinaryFun<Value(I1), Value(I2)>::result_type>::ret
-  apply2(const image<I1>& input1, const image<I2>& input2)
+    typename AdaptableBinaryFun<oln_value_type(I1),oln_value_type(I2)>::result_type>::ret
+  apply2(const abstract::image<I1>& input1, const abstract::image<I2>& input2)
   {
     // Workaround for g++-2.95 bug.
-    AdaptableBinaryFun<Value(I1), Value(I2)> tmp;
+    AdaptableBinaryFun<oln_value_type(I1),oln_value_type(I2)> tmp;
     return apply2(tmp, input1, input2);
   }
 
@@ -128,11 +126,11 @@ namespace oln {
   template<template <class> class AdaptableBinaryFun,
            class I> inline
   typename mute<I,
-    typename AdaptableBinaryFun<Value(I)>::result_type>::ret
-  apply2(const image<I>& input1, const image<I>& input2)
+    typename AdaptableBinaryFun<oln_value_type(I)>::result_type>::ret
+  apply2(const abstract::image<I>& input1, const abstract::image<I>& input2)
   {
     // Workaround for g++-2.95 bug.
-    AdaptableBinaryFun<Value(I)> tmp;
+    AdaptableBinaryFun<oln_value_type(I)> tmp;
     return apply2(tmp, input1, input2);
   }
 
@@ -142,13 +140,12 @@ namespace oln {
   `-----------*/
 
   /* Main apply_self() function.  Note we require a UnaryFun only,
-     not a AdaptableUnaryFunc, because as we overwrite an image
+     not a AdaptableUnaryFunc, because as we overwrite an abstract::image
      we already know the output type.  */
-  template<class UnaryFun, class I_> inline
-  image<I_>& apply_self(UnaryFun f, image<I_>& _input)
+  template<class UnaryFun, class I> inline
+  abstract::image<I>& apply_self(UnaryFun f, abstract::image<I>& input)
   {
-    Exact_ref(I, input);
-    Iter(I) p(input);
+    oln_iter_type(I) p(input);
     for_all(p) input[p] = f(input[p]);
     return input;
   }
@@ -156,7 +153,7 @@ namespace oln {
 
   /* Same as above, but we instantiate the function ourself.  */
   template<class UnaryFun, class I> inline
-  image<I>& apply_self(image<I>& input)
+  abstract::image<I>& apply_self(abstract::image<I>& input)
   {
     return apply_self(UnaryFun(), input);
   }
@@ -165,10 +162,10 @@ namespace oln {
   /* If the function is passed as a template-id.  Instantiate it
      for the type of the input elements.  */
   template<template<class> class UnaryFun, class I> inline
-  image<I>& apply_self(image<I>& input)
+  abstract::image<I>& apply_self(abstract::image<I>& input)
   {
     // Workaround for g++-2.95 bug.
-    UnaryFun<Value(I)> tmp;
+    UnaryFun<oln_value_type(I)> tmp;
     return apply_self(tmp, input);
   }
 
@@ -177,15 +174,13 @@ namespace oln {
   | self binary |
   `------------*/
 
-  /* Main apply2_self() function.  See also the comment for apply_self().  */
-  template<class UnaryFun, class I1_, class I2_>
-  image<I1_>& apply2_self(UnaryFun f,
-			  image<I1_>& _input1, const image<I2_>& _input2)
+  /* Main apply2_exact() function.  See also the comment for apply_self().  */
+  template<class UnaryFun, class I1, class I2>
+  abstract::image<I1>& apply2_self(UnaryFun f,
+			  abstract::image<I1>& input1, const abstract::image<I2>& input2)
   {
-    Exact_ref(I1, input1);
-    Exact_ref(I2, input2);
     precondition(input1.size() == input2.size());
-    Iter(I1) p(input1);
+    oln_iter_type(I1) p(input1);
     for_all(p) input1[p] = f(input1[p], input2[p]);
     return input1;
   }
@@ -193,7 +188,7 @@ namespace oln {
 
   /* Same as above, but we instantiate the function ourself.  */
   template<class UnaryFun, class I1, class I2> inline
-  image<I1>& apply2_self(image<I1>& input1, const image<I1>& input2)
+  abstract::image<I1>& apply2_self(abstract::image<I1>& input1, const abstract::image<I1>& input2)
   {
     return apply_self(UnaryFun(), input1, input2);
   }
@@ -202,20 +197,20 @@ namespace oln {
   /* If the function is passed as a template-id.  Instantiate it
      for the type of the input elements.  */
   template<template<class, class> class UnaryFun, class I1, class I2> inline
-  image<I1>& apply2_self(image<I1>& input1, const image<I2>& input2)
+  abstract::image<I1>& apply2_self(abstract::image<I1>& input1, const abstract::image<I2>& input2)
   {
     // Workaround for g++-2.95 bug.
-    UnaryFun<Value(I1), Value(I2)> tmp;
+    UnaryFun<oln_value_type(I1),oln_value_type(I2)> tmp;
     return apply2_self(tmp, input1, input2);
   }
 
 
   /* Same as above, but I1==I2 and the UnaryFun has only one parameter.  */
   template<template<class> class UnaryFun, class I> inline
-  image<I>& apply2_self(image<I>& input1, const image<I>& input2)
+  abstract::image<I>& apply2_self(abstract::image<I>& input1, const abstract::image<I>& input2)
   {
     // Workaround for g++-2.95 bug.
-    UnaryFun<Value(I)> tmp;
+    UnaryFun<oln_value_type(I)> tmp;
     return apply2_self(tmp, input1, input2);
   }
 

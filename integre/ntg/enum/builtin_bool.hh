@@ -45,7 +45,7 @@ namespace ntg {
     struct typetraits<bool>
     {
       typedef bool		self;
-      typedef enumerated	abstract_type;	
+      typedef binary		abstract_type;	
       typedef bin		ntg_type;
       typedef optraits<self>	optraits_type;
       typedef unsafe::get<self>	behavior_type;
@@ -76,6 +76,8 @@ namespace ntg {
       static bool sup()  { return max(); }
 
       static unsigned max_print_width () { return 1U; }
+
+      static std::string name() { return "bool"; }
     };
     
   } // end of internal.

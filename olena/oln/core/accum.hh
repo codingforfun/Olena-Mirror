@@ -31,21 +31,25 @@
 template <class T>
 struct max_accumulator
 {
-  max_accumulator (T t) : _acc(t) {}
+  max_accumulator (T t) : acc_(t) 
+  {}
 
-  void operator()(T t)
+  void 
+  operator()(T t)
   {
-    if (t > _acc)
-      _acc = t;
+    if (t > acc_)
+      acc_ = t;
   }
 
   operator T() const
   {
-    return _acc;
+    return acc_;
   }
 
 private:
-  T _acc;
+  
+  T acc_;
+
 };
 
 #endif // OLENA_CORE_ACCUM_HH

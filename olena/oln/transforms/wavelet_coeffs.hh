@@ -28,6 +28,11 @@
 #ifndef OLENA_TRANSFORMS_WAVELET_COEFFS_HH
 # define OLENA_TRANSFORMS_WAVELET_COEFFS_HH
 
+// FIXME: this file has not been adjusted to the coding style since it
+// will be completely rewritten in next release.
+
+# include <ntg/basics.hh>
+# include <ntg/float.hh>
 # include <oln/transforms/dwt.hh>
 
 namespace oln {
@@ -39,9 +44,9 @@ namespace oln {
     //
     //////////////////////////////////////
 
-    Wavelet_coeffs_definition(haar, float_d, 2)
+    Wavelet_coeffs_definition(haar, ntg::float_d, 2)
     {
-      const float_d sqrt_2 = sqrt(2);
+      const ntg::float_d sqrt_2 = sqrt(2);
 
       Wavelet_coeffs_begin
         sqrt_2 * 1.0 / 2.0,
@@ -55,10 +60,10 @@ namespace oln {
     //
     //////////////////////////////////////
 
-    Wavelet_coeffs_definition(daub4, float_d, 4)
+    Wavelet_coeffs_definition(daub4, ntg::float_d, 4)
     {
-      const float_d sqrt_3 = sqrt(3);
-      const float_d denom = 4 * sqrt(2);
+      const ntg::float_d sqrt_3 = sqrt(3);
+      const ntg::float_d denom = 4 * sqrt(2);
 
       Wavelet_coeffs_begin
         (1.0 + sqrt_3)/denom,
@@ -68,7 +73,7 @@ namespace oln {
       Wavelet_coeffs_end
     };
 
-    Wavelet_coeffs_definition(daub6, float_d, 6)
+    Wavelet_coeffs_definition(daub6, ntg::float_d, 6)
     {
       Wavelet_coeffs_begin
 	0.332670552950,
@@ -80,7 +85,7 @@ namespace oln {
       Wavelet_coeffs_end
     };
 
-    Wavelet_coeffs_definition(daub8, float_d, 8)
+    Wavelet_coeffs_definition(daub8, ntg::float_d, 8)
     {
       Wavelet_coeffs_begin
 	0.230377813309,
@@ -94,7 +99,7 @@ namespace oln {
       Wavelet_coeffs_end
     };
 
-    Wavelet_coeffs_definition(daub10, float_d, 10)
+    Wavelet_coeffs_definition(daub10, ntg::float_d, 10)
     {
       Wavelet_coeffs_begin
 	0.160102397974,
@@ -110,7 +115,7 @@ namespace oln {
       Wavelet_coeffs_end
     };
 
-    Wavelet_coeffs_definition(daub12, float_d, 12)
+    Wavelet_coeffs_definition(daub12, ntg::float_d, 12)
     {
       Wavelet_coeffs_begin
 	0.111540743350,
@@ -128,7 +133,7 @@ namespace oln {
       Wavelet_coeffs_end
     };
 
-    Wavelet_coeffs_definition(daub20, float_d, 20)
+    Wavelet_coeffs_definition(daub20, ntg::float_d, 20)
     {
       Wavelet_coeffs_begin
 	0.026670057901,
@@ -160,10 +165,10 @@ namespace oln {
     //
     //////////////////////////////////////
 
-    Wavelet_coeffs_definition(coiflet2, float_d, 6)
+    Wavelet_coeffs_definition(coiflet2, ntg::float_d, 6)
     {
-      const float_d sqrt_2 = sqrt(2);
-      const float_d sqrt_15 = sqrt(15);
+      const ntg::float_d sqrt_2 = sqrt(2);
+      const ntg::float_d sqrt_15 = sqrt(15);
 
       Wavelet_coeffs_begin
 	sqrt_2 * (sqrt_15 - 3) / 32.0,
@@ -175,7 +180,7 @@ namespace oln {
       Wavelet_coeffs_end
     };
 
-    Wavelet_coeffs_definition(coiflet4, float_d, 12)
+    Wavelet_coeffs_definition(coiflet4, ntg::float_d, 12)
     {
       Wavelet_coeffs_begin
 	0.0011945726958388,
@@ -193,7 +198,7 @@ namespace oln {
       Wavelet_coeffs_end
     };
 
-    Wavelet_coeffs_definition(coiflet6, float_d, 18)
+    Wavelet_coeffs_definition(coiflet6, ntg::float_d, 18)
     {
       Wavelet_coeffs_begin
 	-0.0016918510194918,

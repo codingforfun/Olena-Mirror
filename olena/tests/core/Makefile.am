@@ -1,18 +1,20 @@
-EXTRA_DIST = tests runtests image_print.sh
+include ../check/Makefile.runtests
+include ../check/Makefile.check
 
-check-local:
+EXTRA_DIST += image_print.sh
+
+check_PROGRAMS = multiple_sources
+
+multiple_sources_SOURCES = multiple_sources_1.cc multiple_sources_2.cc
+multiple_sources_LDFLAGS = $(AM_LDFLAGS) $(FFTW_LDFLAGS)
+multiple_sources_CXXFLAGS = $(AM_CXXFLAGS) $(FFTW_CFLAGS)
+
+check-image-print:
 	TOP_SRCDIR=$(top_srcdir) SRCDIR=$(srcdir) \
 	TOP_BUILDDIR=$(top_builddir) \
-	LDFLAGS="$(LDFLAGS)" \
-	CPPFLAGS="$(CPPFLAGS) $(DEFS) -I$(top_builddir)" \
-	CXXFLAGS="$(CXXFLAGS) $(CXXFLAGS_OPTIMIZE) $(CXXFLAGS_STRICT_ERRORS)" \
+	LDFLAGS="$(LDFLAGS_RUNTESTS)" \
+	CPPFLAGS="$(CPPFLAGS_RUNTESTS)" \
+	CXXFLAGS="$(CXXFLAGS_RUNTESTS)" \
 	  $(SHELL) $(srcdir)/image_print.sh
-	TOP_SRCDIR=$(top_srcdir) SRCDIR=$(srcdir) \
-	TOP_BUILDDIR=$(top_builddir) \
-	LDFLAGS="$(LDFLAGS)" \
-	CPPFLAGS="$(CPPFLAGS) $(DEFS) -I$(top_builddir)" \
-	CXXFLAGS="$(CXXFLAGS) $(CXXFLAGS_OPTIMIZE) $(CXXFLAGS_STRICT_ERRORS)" \
-	  $(SHELL) $(srcdir)/runtests
 
-distclean-local:
-	rm -rf runs
+check-local: check-runtests check-image-print

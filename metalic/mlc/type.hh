@@ -29,25 +29,86 @@
 # define METALIC_TYPE_HH
 
 # include <mlc/config/system.hh>
+# include <mlc/bool.hh>
 
 # include <string>
+# include <cassert>
 
-//  FIXME: Move static hiearchy tools into a dedicated header ?
+// any and any_with_diamond types are not defined in namespace mlc to
+// avoid namespace clashes. Indeed, a type inheriting from another in
+// a namespace foo will have implicit access to the foo namespace.
+
+namespace mlc_hierarchy
+{
+
+  /*-----------------.
+  | any_with_diamond |
+  `-----------------*/
+
+  template<class E>
+  class any_with_diamond
+  {
+  public:
+    typedef E exact_type;
+    
+    E& exact()       { assert(exact_this != 0); return *exact_this; }
+    const E& exact() const { assert(exact_this != 0); return *exact_this; }
+   
+    static std::string name() 
+    { 
+      return std::string("any_with_diamond<") + E::name() + ">"; 
+    }
+
+  protected:
+    any_with_diamond() 
+    {
+      exact_this = 0;
+    }
+
+  protected:
+    // This stores the actual value of the exact type pointer. This
+    // enables diamond hierarchies, as static_cast cannot perform it
+    // and reinterpret_cast or (Exact*)(void*) cast are unsafe and
+    // compiler dependent.  This member should be initialized by every
+    // concrete classes, using the mlc_init_static_hierarchy macro.
+    E* exact_this;
+  };
+
+  // Warning, this class does not allow diamond hierarchies, consider
+  // any_with_diamond if you really need it.
+
+  /*----.
+  | any |
+  `----*/
+
+  template<class E>
+  class any
+  {
+  public:
+    typedef E exact_type;
+    
+    E& exact()             { return static_cast<E&>(*this); }
+    const E& exact() const { return static_cast<const E&>(*this); }
+   
+    static std::string name() 
+    { 
+      return std::string("any<") + E::name() + ">";
+    }
+
+  protected:
+    any() {}
+  };
+
+} // end of namespace mlc_hierarchy
 
 namespace mlc
 {
 
-  //
-  //  Useful types
-  //
-  /////////////////
+  /*-------------.
+  | Useful types |
+  `-------------*/
 
   struct undefined {};
-
-  //
-  //  final and any
-  //
-  /////////////////////////
 
   class final
   {
@@ -57,82 +118,42 @@ namespace mlc
     final() {} 
   };
 
-  class top {
+  class top 
+  {
   public:
     static std::string name() { return ""; }
   protected:
     top() {}
   };
 
-  class bottom 
+  /*------------------.
+  | assign_exact_this |
+  `------------------*/
+ 
+  // Helper struct for any_with_diamond hierarchies. See
+  // mlc_init_static_hierarchy.
+
+  template <class Exact, class Final>
+  struct assign_exact_this
   {
-  public:
-    static std::string name() { return "bot"; }
-  private:
-    bottom();
+    template <class V>
+    static void doit(V*, Exact**)
+    {}
   };
 
-  template<class E>
-  class any 
+  template <>
+  struct assign_exact_this<mlc::final, mlc::final>
   {
-  public:
-    typedef E exact_type;
-
-    // these reinterpret_casts allow for diamond hierarchies
-    // whereas *static_cast<const E*>(this) is forbiden
-    // in such cases; if a bug occurs because of one of these
-    // casts, please submit a bug report!
-
-          E& exact()       { return reinterpret_cast<E&>(*this); }
-    const E& exact() const { return reinterpret_cast<const E&>(*this); }
-
-    // self() is only for bwd compatibility purpose
-    // please now use exact() instead of self()
-    inline       E& self();
-    inline const E& self() const;
-
-    static std::string name() { return std::string("any<") + E::name() + ">"; }
-  protected:
-    any() {}
+    template <class U>
+    static void doit(U* src, U** dest)
+    {
+      *dest = src;
+    }
   };
 
-  //
-  //  Helper for static hierarchies: 
-  //  FIXME : should not be necessary 
-  //
-  ////////////////////////////////////
-
-  // if Self is mlc::bottom return T else return Self
-
-  template <class T, class Self>
-  struct select_self
-  { typedef Self ret; };
-  
-  // FIXME: kept for compatibility.
-  template <class T>
-  struct select_self<T, bottom>
-  { typedef T ret; };
-  
-  template <class T>
-  struct select_self<T, final>
-  { typedef T ret; };
-  
-  //
-  //  inferior traits
-  //  FIXME : erase ?
-  //
-  ///////////////////////////////
-
-  // template<class C>
-  // struct inferior
-  // {
-  // typedef typename C::inferior ret;
-  // };
-
-  //
-  //  exact traits
-  //
-  ///////////////////////////////
+  /*-------------.
+  | exact traits |
+  `-------------*/
 
   template<class T>
   struct exact
@@ -146,7 +167,6 @@ namespace mlc
     typedef const typename exact<T>::ret ret;
   };
   
-  
   template<class T>
   struct exact<T*>
   {
@@ -158,143 +178,93 @@ namespace mlc
   {
     typedef typename exact<T>::ret& ret;
   };
+
+  /*---------.
+  | exact_vt |
+  `---------*/
   
   //
   //  exact virtual type traits
   //  (inheritance determination)
   //
-  ////////////////////////////////
+  //  If Exact is mlc::final return T else return Exact
 
-  template<class T, class E>
+  template<class T, class Exact>
   struct exact_vt
   {
-    typedef E ret;
+    typedef Exact ret;
   };
   
-  template<class T>
-  struct exact_vt<T,final>
+  template<class Exact>
+  struct exact_vt<Exact,final>
   {
-    typedef T ret;
+    typedef Exact ret;
   };
 
-  //
-  //  name_of and exact_name_of
-  //
-  ///////////////////////////////
+} // end of namespace mlc
 
-  template<class T>
-  std::string name_of()
+/*-------------.
+| exact macros |
+`-------------*/
+
+// Return the exact type of a given type.
+
+# define mlc_exact_type(T) typename mlc::exact< T >::ret
+# define mlc_exact_type_(T) mlc::exact< T >::ret
+
+namespace mlc
+{
+  
+  /*-------------------.
+  | to_exact functions |
+  `-------------------*/
+  
+  template<class T> inline
+  mlc_exact_type(T)&
+  to_exact(T& ref)
   {
-    return T::name();
+    return ref.exact();
+  }
+  
+  template<class T> inline
+  const mlc_exact_type(T)&
+  to_exact(const T& ref)
+  {
+    return ref.exact();
   }
 
-  template<class T>
-  std::string name_of(const T&)
+  template<class T> inline
+  mlc_exact_type(T)*
+  to_exact(T* ptr)
   {
-    return T::name();
+    return &ptr->exact();
   }
 
-  // FIXME: many other builtin-types should be specialized this way.
-  template<> inline
-  std::string name_of<int>()
+  template<class T> inline
+  const mlc_exact_type(T)*
+  to_exact(const T* ptr)
   {
-    return std::string("int");
+    return &ptr->exact();
   }
+  
+} // end of namespace mlc
 
-  template<class T>
-  std::string exact_name_of()
-  {
-    typedef typename exact<T>::ret e;
-    return e::name();
-  }
+/*---------------.
+| mlc_find_exact |
+`---------------*/
 
-  template<class T>
-  std::string exact_name_of(const T&)
-  {
-    typedef typename exact<T>::ret e;
-    return e::name();
-  }
+// FIXME: uncomment when variadic macros become standardized
 
-} // end of mlc
-
-//
-//  Exact macros
-//
-///////////////////////////////
-
-# define mlc_exact_type(T) typename mlc::exact<T>::ret
-# define mlc_exact_type_(T) mlc::exact<T>::ret
-
-//
-//  find exact : FIXME: variadic macros !!!
-//
-////////////////////////////////////////////
-
-// #define FindExact(...) 
+// #define mlc_find_exact(...) 
 // typename mlc::exact_vt<__VA_ARGS__>::ret
-// #define FindExact_(...) 
+// #define mlc_find_exact_(...) 
 // mlc::exact_vt<__VA_ARGS__>::ret
 
-//
-//  to_exact procs
-//
-///////////////////////////////
+/*--------------------------.
+| mlc_init_static_hierarchy |
+`--------------------------*/
 
-template<class T> inline
-mlc_exact_type(T)&
-to_exact(T& ref)
-{
-  return ref.exact();
-}
-
-template<class T> inline
-const mlc_exact_type(T)&
-to_exact(const T& ref)
-{
-  return ref.exact();
-}
-
-template<class T> inline
-mlc_exact_type(T)*
-to_exact(T* ptr)
-{
-  return &ptr->exact();
-}
-
-template<class T> inline
-const mlc_exact_type(T)*
-to_exact(const T* ptr)
-{
-  return &ptr->exact();
-}
-
-//
-//  code below is only for bwd compatibility purpose
-//
-//////////////////////////////////////////////////////
-
-template<class E> inline E& mlc::any<E>::self(){ return reinterpret_cast<E&>(*this); }
-
-template<class E> inline const E& mlc::any<E>::self() const { return reinterpret_cast<E&>(*this); }
-
-# define Exact(Type) \
-typename mlc::exact<Type>::ret
-#define Exact_(Type) mlc::exact<Type>::ret
-
-# define Exact_ptr(Type, Var)			\
-typedef Exact(Type##_) Type;			\
-Type * Var = to_exact(_##Var);
-
-# define Exact_cptr(Type, Var)			\
-typedef Exact(Type##_) Type;			\
-const Type * Var = to_exact(_##Var);
-							\
-# define Exact_ref(Type, Var)			\
-typedef Exact(Type##_) Type;			\
-Type & Var = to_exact(_##Var);
-
-# define Exact_cref(Type, Var)			\
-typedef Exact(Type##_) Type;			\
-const Type & Var = to_exact(_##Var);
+# define mlc_init_static_hierarchy(Exact) \
+mlc::assign_exact_this<Exact, mlc::final>::doit(this, &(this->exact_this))
 
 #endif // ! METALIC_TYPE_HH

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,13 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_BASE_HH_
-# define OLENA_IO_BASE_HH_
+#ifndef OLENA_IO_BASE_HH
+# define OLENA_IO_BASE_HH
 
-# include <oln/io/readable.hh>
+# include <oln/io/image_read.hh>
+# include <oln/io/image_write.hh>
 
-# include <list>
-# include <iostream>
+# include <oln/io/se_window.hh>
+# include <oln/io/se_neighborhood.hh>
 
 namespace oln {
 
@@ -40,106 +41,50 @@ namespace oln {
     namespace internal {
 
       template<typename T>
-      bool read_any(T& output, const std::string& name);
+      bool 
+      read_any(T& output, const std::string& name)
+      {
+	return read(output, name);
+      }
 
       template<typename T>
-      bool write_any(const T& input, const std::string& name);
+      bool 
+      write_any(const T& input, const std::string& name)
+      {
+	return write(input, name);
+      }
 
     } // end of internal
-
 
     // aliases
-
+    
     inline
-    internal::anything load(const std::string& name)
-    {	return internal::anything(name); }
+    internal::anything 
+    load(const std::string& name)
+    { 
+      return internal::anything(name); 
+    }
 
-
-    template<typename T>
-    bool load(T& output, std::string name)
-    {	return internal::read_any(output, name); }
-
+    template<class T>
+    bool 
+    load(T& output, std::string name)
+    { 
+      return internal::read_any(output, name); 
+    }
 
     template< typename T >
-    bool save(const T& input, const std::string& name)
-    {	return internal::write_any(input, name); }
+    bool 
+    save(const T& input, const std::string& name)
+    { 
+      return internal::write_any(input, name);
+    }
 
-    namespace internal {
-
-      // stream wrappers
-
-      enum wrapper_id { WrapNone = 0,
-			WrapFile = 1,
-			WrapGz   = 2,
-			WrapAny  = 2 };
-
-      template< wrapper_id W >
-      struct wrapper
-      {
-	static const std::string& name()
-	{ static const std::string _name("-"); return _name; }
-
-	static bool knows_ext(const std::string&) { return false; }
-
-	static std::istream* wrap_in(std::string&) { return 0; }
-	static std::ostream* wrap_out(std::string&) { return 0; }
-
-  	static void find(std::list<std::string>&, const std::string&) {}
-      };
-
-
-      // stream readers
-
-      enum reader_id { ReadNone     = 0,
-		       ReadPnmPlain = 1,
-		       ReadPnmRaw   = 2,
-		       ReadAny      = 2 };
-
-      template< reader_id F, typename T >
-      struct reader
-      {
-	static const std::string& name()
-	{ static const std::string _name("-"); return _name; }
-
-	static bool knows_ext(const std::string&)
-	{ return false; }
-
-	static bool read(std::istream&, T&)
-	{ return false; }
-      };
-
-
-      // stream writers
-
-      enum writer_id { WriteNone     = 0,
-		       WritePnmPlain = 1,
-		       WritePnmRaw   = 2,
-		       WriteAny      = 2 };
-
-      template< writer_id F, typename T >
-      struct writer
-      {
-	static const std::string& name()
-	{ static const std::string _name("-"); return _name; }
-
-	static bool knows_ext(const std::string&)
-	{ return false; }
-
-  	static bool write(std::ostream&, const T&)
-  	{ return false; }
-      };
-
-
-    } // end of internal
-
-  } // end of io
+  } // end of namespace io
 
   // Export load & save into namespace oln:: for convenience.
   using io::load;
   using io::save;
 
-} // end of oln
+} // end of namespace oln
 
-# include <oln/io/base.hxx>
-
-#endif // OLENA_IO_BASE_HH_
+#endif // OLENA_IO_BASE_HH

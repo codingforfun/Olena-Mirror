@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,79 +25,84 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_MISC_TIMER_HH
-# define OLENA_MISC_TIMER_HH
+#ifndef OLENA_UTILS_TIMER_HH
+# define OLENA_UTILS_TIMER_HH
 
 # include <mlc/contract.hh>
 # include <time.h>
 
 namespace oln {
-  namespace misc {
+
+  namespace utils {
 
     class timer
     {
     public:
-
       timer()
       {
-	_status = e_unknown;
-	_total_time = 0;
-	_start_time = clock();
+	status_ = e_unknown;
+	total_time_ = 0;
+	start_time_ = clock();
       }
 
-      void start()
+      void
+      start()
       {
-	assertion(_status != e_running);
-	_total_time = 0;
-	_status = e_running;
-	_start_time = clock();
+	assertion(status_ != e_running);
+	total_time_ = 0;
+	status_ = e_running;
+	start_time_ = clock();
       }
 
-      float restart()
+      float
+      restart()
       {
-	assertion(_status != e_unknown);
+	assertion(status_ != e_unknown);
 	float val = value();
 	start();
 	return val;
       }
 
-      void resume()
+      void
+      resume()
       {
-	assertion(_status == e_stopped);
-	_status = e_running;
-	_start_time = clock();
+	assertion(status_ == e_stopped);
+	status_ = e_running;
+	start_time_ = clock();
       }
 
-      float stop()
+      float
+      stop()
       {
-	assertion(_status == e_running);
-	_total_time += (clock() - _start_time);
-	_status = e_stopped;
+	assertion(status_ == e_running);
+	total_time_ += (clock() - start_time_);
+	status_ = e_stopped;
 	return value();
       }
 
-      float value()
+      float
+      value()
       {
-	assertion(_status != e_unknown);
+	assertion(status_ != e_unknown);
 	return
-	  _status == e_stopped ?
-	  float(_total_time) / CLOCKS_PER_SEC :
-	  float(_total_time + (clock() - _start_time)) / CLOCKS_PER_SEC;
+	  status_ == e_stopped ?
+	  float(total_time_) / CLOCKS_PER_SEC :
+	  float(total_time_ + (clock() - start_time_)) / CLOCKS_PER_SEC;
       }
 
     private:
-
-      bool _stopped;
+      bool stopped_;
       enum {
 	e_unknown,
 	e_stopped,
 	e_running
-      } _status;
-      clock_t _total_time;
-      clock_t _start_time;
+      } status_;
+      clock_t total_time_;
+      clock_t start_time_;
     };
 
-  } // misc
-} // oln
+  } // end of namespace utils
 
-#endif // OLENA_MISC_TIMER_HH
+} // end of namespace oln
+
+#endif // ! OLENA_UTILS_TIMER_HH

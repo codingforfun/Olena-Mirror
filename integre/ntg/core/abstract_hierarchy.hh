@@ -46,11 +46,14 @@ namespace ntg
   //! Top of the hierarchy.
   class data_type {};
 
+  // Single valued data types
+  class non_vectorial {};
+
   /*------.
   | reals |
   `------*/
 
-  class real : public data_type {};
+  class real : public non_vectorial {};
 
   // int, unsigned, int_u, int_s, etc.
   class integer : public real {};
@@ -64,8 +67,10 @@ namespace ntg
   | enumerated |
   `-----------*/
 
+  class enumerated : public non_vectorial {};
+
   // bin, bool, etc.
-  class enumerated : public data_type {};
+  class binary : public enumerated {};
 
   /*----------.
   | vectorial |

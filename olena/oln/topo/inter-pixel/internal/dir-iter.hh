@@ -29,10 +29,50 @@
 # define OLENA_TOPO_INTER_PIXEL_INTERNAL_DIR_ITER_HH
 
 # include <mlc/objs.hh>
-# include <oln/core/iter.hh>
+# include <oln/core/abstract/iter1d.hh>
+# include <oln/core/abstract/iter2d.hh>
+# include <oln/core/abstract/iter3d.hh>
 # include <oln/topo/inter-pixel/internal/dir.hh>
 
 namespace oln {
+
+  namespace topo {
+    namespace inter_pixel {
+      namespace internal {
+
+	template<unsigned Dim, class Exact>
+	class dir_iter_; // fwd_decl
+
+      }
+    }
+  }
+
+  template<class Exact>
+  struct iter_traits<topo::inter_pixel::internal::dir_iter_<1, Exact> >
+    : public iter_traits<abstract::iter1d<Exact> >
+  {
+    typedef abstract::iter1d<Exact> super_type;
+    typedef point1d point_type;
+    typedef dpoint1d dpoint_type;
+  };
+
+  template<class Exact>
+  struct iter_traits<topo::inter_pixel::internal::dir_iter_<2, Exact> >
+    : public iter_traits<abstract::iter2d<Exact> >
+  {
+    typedef abstract::iter2d<Exact> super_type;
+    typedef point2d point_type;
+    typedef dpoint2d dpoint_type;
+  };
+
+  template<class Exact>
+  struct iter_traits<topo::inter_pixel::internal::dir_iter_<3, Exact> >
+    : public iter_traits<abstract::iter3d<Exact> >
+  {
+    typedef abstract::iter3d<Exact> super_type;
+    typedef point3d point_type;
+    typedef dpoint3d dpoint_type;
+  };
 
   namespace topo {
 
@@ -41,62 +81,82 @@ namespace oln {
       namespace internal {
 
 	template<unsigned Dim, class Exact>
-	class _dir_iter : public virtual iter<Exact>
+	class dir_iter_ : public iter_traits<dir_iter_<Dim, Exact> >::super_type
 	{
 	protected:
-	  typedef typename dir_traits<Dim>::ret dir_t;
+	  typedef typename dir_traits<Dim>::ret dir_type;
+	  typedef typename iter_traits<dir_iter_<Dim, Exact> >::super_type super_type;
 
-	  _dir_iter() : _cur(to_exact(this)->begin()), _cnt(0) {}
-	  _dir_iter(dir_t i) : _cur(i), _cnt(0) {}
+	  dir_iter_() : super_type(), cur_(this->exact().begin()), cnt_(0) {}
+	  dir_iter_(dir_type i) : super_type(), cur_(i), cnt_(0) {}
 
 	public:
-	  operator dir_t()
+	  operator dir_type()
 	  {
-	    return _cur;
+	    return cur_;
 	  }
 
-	  void operator++()
+	  dir_type
+	  to_dir() const
 	  {
-	    precondition(_cnt != Dim * 2);
-	    _cur = to_exact(this)->next();
-	    ++_cnt;
+	    return cur_;
 	  }
 
-	  bool operator==(mlc::_end) const
+	  void
+	  operator++()
 	  {
-	    return _cnt == Dim * 2;
-	  }
-	  bool operator!=(mlc::_end) const
-	  {
-	    return _cnt != Dim * 2;
+	    precondition(cnt_ != Dim * 2);
+	    cur_ = this->exact().next();
+	    ++cnt_;
 	  }
 
-	  mlc::_begin operator=(mlc::_begin b)
+	  bool
+	  operator==(mlc::end_type) const
 	  {
-	    _cur = to_exact(this)->begin();
-	    _cnt = 0;
+	    return cnt_ == Dim * 2;
+	  }
+	  bool
+	  operator!=(mlc::end_type) const
+	  {
+	    return cnt_ != Dim * 2;
+	  }
+
+	  mlc::begin_type
+	  operator=(mlc::begin_type b)
+	  {
+	    cur_ = this->exact().begin();
+	    cnt_ = 0;
 	    return b;
 	  }
-	  mlc::_end operator=(mlc::_end e)
+	  mlc::end_type
+	  operator=(mlc::end_type e)
 	  {
-	    _cur = to_exact(this)->begin();
-	    _cnt = Dim * 2;
+	    cur_ = this->exact().begin();
+	    cnt_ = Dim * 2;
 	    return e;
 	  }
 
 	protected:
-	  dir_t _cur;
+	  dir_type cur_;
 
 	private:
-	  unsigned _cnt;
+	  unsigned cnt_;
 	};
 
-      } // end internal
+      } // end of namespace internal
 
-    } // end inter_pixel
+    } // end of namespace inter_pixel
 
-  } // end topo
+  } // end of namespace topo
 
-} // end oln
+} // end of namespace oln
 
-#endif // !OLENA_TOPO_INTER_PIXEL_INTERNAL_DIR_ITER_HH
+template<unsigned Dim, class Exact>
+inline 
+std::ostream&
+operator<<(std::ostream& o, const oln::topo::inter_pixel::internal::dir_iter_<Dim, Exact>& it)
+{
+  return o << it.to_dir();
+}
+
+#endif // ! OLENA_TOPO_INTER_PIXEL_INTERNAL_DIR_ITER_HH

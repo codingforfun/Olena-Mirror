@@ -1,4 +1,5 @@
 #include "convcomp.hh"
+#include <oln/convert/conversion.hh>
 
 /* The extra indirection to the _STR and _CONC macros is required so that
    if the arguments to STR() (or CONC()) are themselves macros, they will
@@ -20,8 +21,8 @@ bool check()
   image2d< CONC(SRC, _8) > orig(rdata("lena.ppm")), res;
   image2d< CONC(DEST, _8) > tmp;
 
-  tmp  = convert::apply(convert::CONC(CONC(SRC,_to_),DEST)(), orig);
-  res  = convert::apply(convert::CONC(CONC(DEST,_to_),SRC)(), tmp);
+  tmp  = convert::apply(convert::CONC(CONC(CONC(f_,SRC),_to_),DEST)<8, 8>(), orig);
+  res  = convert::apply(convert::CONC(CONC(CONC(f_,DEST),_to_),SRC)<8, 8>(), tmp);
 
   utils::f_moments<float_s> fm;
   compare_images(fm, f_l2_vec3<CONC(SRC,_8)>(), orig, res);

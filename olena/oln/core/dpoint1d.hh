@@ -31,7 +31,7 @@
 # include <oln/config/system.hh>
 # include <ntg/core/predecls.hh>
 # include <oln/core/coord.hh>
-# include <oln/core/dpointnd.hh>
+# include <oln/core/abstract/dpoint.hh>
 # include <iostream>
 
 namespace oln {
@@ -39,35 +39,68 @@ namespace oln {
   // fwd decl
   class point1d;
 
-  class dpoint1d : public dpointnd< 1, dpoint1d>
+  class dpoint1d; //fwd_decl
+
+  template <>
+  struct dpoint_traits<dpoint1d>: public
+  dpoint_traits<abstract::dpoint<dpoint1d> >
   {
-  public:
-    typedef dpointnd< 1, dpoint1d> super;
-
-    dpoint1d();
-    dpoint1d(coord col);
-    explicit dpoint1d(const point1d& p);
-
-    coord col() const;
-    coord& col();
-
-    dpoint1d operator+(const dpoint1d& dp) const;
-    dpoint1d operator-() const;
-    dpoint1d operator-(const dpoint1d& dp) const;
-    dpoint1d& operator+=(const dpoint1d& dp);
-    dpoint1d& operator-=(const dpoint1d& dp);
-
-    static std::string name() { return "dpoint1d"; }
+    enum { dim = 1 };
+    typedef point1d point_type;
   };
 
-  _DPointForDim(1, dpoint1d);
+  class dpoint1d : public abstract::dpoint<dpoint1d>
+  {
+
+  public:
+
+    typedef abstract::dpoint<dpoint1d> super_type;
+
+    friend class super_type;
+
+    dpoint1d();
+
+    dpoint1d(coord c);
+
+    explicit dpoint1d(const point1d& p);
+
+    coord 
+    col() const;
+
+    coord& 
+    col();
+
+    static std::string 
+    name() 
+    { 
+      return "dpoint1d"; 
+    }
+
+  protected:
+
+    dpoint1d 
+    plus_dp(const dpoint1d& dp) const;
+
+    dpoint1d 
+    minus() const;
+
+    dpoint1d 
+    minus_dp(const dpoint1d& dp) const;
+
+    dpoint1d& 
+    plus_assign_dp(const dpoint1d& dp);
+
+    dpoint1d& 
+    minus_assign_dp(const dpoint1d& dp);
+
+  };
 
   namespace internal
   {
 
     template<>
     struct default_less<dpoint1d> :
-      public default_less<dpoint1d::super>
+      public default_less<dpoint1d::super_type>
     {
     };
 
@@ -75,7 +108,7 @@ namespace oln {
 } // end of oln
 
 inline std::ostream&
-operator<<(std::ostream& o, const oln::dpoint1d& p);
+operator<<(std::ostream& o, const oln::dpoint1d& dp);
 
 # include <oln/core/dpoint1d.hxx>
 

@@ -30,88 +30,80 @@
 
 # include <oln/core/point1d.hh>
 # include <oln/core/dpoint1d.hh>
-# include <oln/core/internal/window.hh>
+# include <oln/core/abstract/windownd.hh>
 # include <oln/core/winiter.hh>
 # include <oln/core/accum.hh>
 # include <algorithm>
 
 namespace oln {
 
-  class window1d : public internal::_window< 1, window1d >
+  class window1d; // fwd_decl
+
+  template<>
+  struct struct_elt_traits<window1d>: public
+  struct_elt_traits<abstract::windownd<window1d> >
   {
-  public:
-    typedef internal::_window< 1, window1d > super;
-    typedef window1d self;
-
-    typedef winiter< self >   iter;
-    typedef winneighb< self > neighb;
-
-    window1d& add(const dpoint1d& dp)
-    {
-      super::add(dp);
-      _delta(abs(dp.col()));
-      return *this;
-    }
-
-    window1d& add(coord col)
-    {
-      return this->add(dpoint1d(col));
-    }
-
-    window1d() : super(), _delta(0) {}
-    window1d(unsigned size) : super(size), _delta(0) {}
-    window1d(unsigned n, const coord crd[]) : super(), _delta(0)
-    {
-      _dp.reserve(n);
-      _centered = false;
-      for (unsigned i = 0; i < n; ++i)
-	add(dpoint1d(crd[i]));
-    }
-
-    coord delta() const
-    {
-      return _delta;
-    }
-
-    static std::string name() { return std::string("window1d"); }
-
-    self operator-() const
-    {
-      self win(*this);
-      win.sym();
-      return win;
-    }
-
-  private:
-    max_accumulator<coord> _delta;
+    enum { dim = 1 };
+    typedef point1d point_type;
+    typedef dpoint1d dpoint_type;
+    typedef winiter< window1d > iter_type;
+    typedef winneighb< window1d > neighb_type;
   };
 
-
-  inline
-  window1d inter(const window1d& lhs, const window1d& rhs)
+  class window1d : public abstract::windownd< window1d >
   {
-    window1d win;
-    for (unsigned i = 0; i < lhs.card(); ++i)
-      if (rhs.has(lhs.dp(i)))
-	win.add(lhs.dp(i));
-    for (unsigned j = 0; j < rhs.card(); ++j)
-      if (! win.has(rhs.dp(j)) && lhs.has(rhs.dp(j)))
-	win.add(rhs.dp(j));
-    return win;
-  }
 
-  inline
-  window1d uni(const window1d& lhs, const window1d& rhs)
-  {
-    window1d win;
-    for (unsigned i = 0; i < lhs.card(); ++i)
-      win.add(lhs.dp(i));
-    for (unsigned j = 0; j < rhs.card(); ++j)
-      if (! win.has(rhs.dp(j)))
-	win.add(rhs.dp(j));
-    return win;
-  }
+  public:
 
+    typedef abstract::windownd< window1d > super_type;
+    typedef window1d self_type;
+
+    typedef struct_elt_traits< self_type >::iter_type   iter_type;
+    typedef struct_elt_traits< self_type >::neighb_type neighb_type;
+    typedef struct_elt_traits< self_type >::dpoint_type dpoint_type;
+
+    friend class abstract::window_base<abstract::window<window1d>, window1d>;
+
+    window1d& 
+    add(const dpoint_type& dp)
+    {
+      return this->exact().add_(dp);
+    }
+
+    window1d& 
+    add(coord col)
+    {
+      return this->add(dpoint_type(col));
+    }
+
+    window1d() : super_type() 
+    {}
+
+    window1d(unsigned size) : super_type(size) 
+    {}
+
+    window1d(unsigned n, const coord crd[]) : super_type(n)
+    {
+      for (unsigned i = 0; i < n; ++i)
+	add(dpoint_type(crd[i]));
+    }
+
+    static std::string 
+    name() 
+    { 
+      return std::string("window1d"); 
+    }
+
+  protected:
+
+    coord 
+    delta_update_(const dpoint_type& dp)
+    {
+      delta_(abs(dp.col()));
+      return delta_;
+    }
+
+  };
 
   // std win
 
@@ -141,11 +133,6 @@ namespace oln {
       win.add(col);
     return win;
   }
-
-  struct get_se<1>
-  {
-    typedef window1d ret;
-  };
 
 } // end of oln
 

@@ -1,10 +1,9 @@
+#include <oln/basics1d.hh>
 #include <oln/basics2d.hh>
+#include <oln/basics3d.hh>
 #include <oln/level/compare.hh>
 #include <ntg/all.hh>
-#if HAVE_ZLIB
-# include <oln/io/gz.hh>
-#endif
-#include <oln/io/se.hh>
+
 #include "check.hh"
 #include "data.hh"
 
@@ -16,20 +15,23 @@ using std::endl;
 using std::flush;
 using std::string;
 
-template<typename T>
-bool compare(const T& a, const T& b)
+template<typename E>
+bool compare(const abstract::image<E>& a, 
+	     const abstract::image<E>& b)
 {
   return level::is_equal(a, b);
 }
 
-template<>
-bool compare(const window2d& a, const window2d& b)
+template<class E>
+bool compare(const abstract::struct_elt<E>& a, 
+	     const abstract::struct_elt<E>& b)
 {
   return a == b;
 }
 
-template<>
-bool compare(const neighborhood2d& a, const neighborhood2d& b)
+template<class E>
+bool compare(const abstract::neighborhood<E>& a, 
+	     const abstract::neighborhood<E>& b)
 {
   return a == b;
 }

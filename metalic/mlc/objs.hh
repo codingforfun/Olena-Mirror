@@ -35,12 +35,12 @@
 namespace mlc
 {
 
-  class _begin {};
-  class _end   {};
+  class begin_type {};
+  class end_type   {};
 
-  static const _begin begin = _begin();
-  static const _end   end   = _end();
+  static const begin_type begin = begin_type();
+  static const end_type   end   = end_type();
 
-} // end of mlc
+} // end of namespace mlc
 
 #endif // ! METALIC_OBJS_HH

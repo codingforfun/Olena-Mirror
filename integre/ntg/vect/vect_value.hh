@@ -39,7 +39,17 @@ namespace ntg
 
   template <class E>
   class vect_value : public value<E>
-  {};
+  {
+    typedef typename internal::typetraits<E>::comp_type comp_type;
+    enum { nb_comp = internal::typetraits<E>::nb_comp };
+
+  public:
+    // accessor
+    comp_type& operator[](unsigned i)	    { return this->val_[i]; }
+    comp_type  operator[](unsigned i) const { return this->val_[i]; }
+
+    static unsigned size() { return nb_comp; }
+  };
 
 }
 

@@ -30,7 +30,7 @@
 
 # include <ntg/core/predecls.hh>
 # include <oln/core/coord.hh>
-# include <oln/core/pointnd.hh>
+# include <oln/core/abstract/point.hh>
 # include <iostream>
 
 namespace oln {
@@ -38,45 +38,78 @@ namespace oln {
 
   // fwd decl
   class dpoint3d;
+  class point3d;
 
-  class point3d : public pointnd< 3, point3d >
+  template<>
+  struct point_traits<point3d>: public point_traits<abstract::point<point3d> >
+  {
+    enum { dim = 3 };
+    typedef dpoint3d dpoint_type;
+  };
+
+  class point3d : public abstract::point< point3d >
   {
   public:
 
-    typedef pointnd< 3, point3d >	super;
-    typedef dpoint3d			dpoint;
+    typedef abstract::point< point3d >	super_type;
+    typedef point_traits<point3d>::dpoint_type dpoint_type;
 
-    enum { dim = 3 };
+    friend class super_type;
 
     point3d();
+
     point3d(coord slice, coord row, coord col);
 
-    const point3d& point_ref() const;
+    coord 
+    slice() const;
 
-    coord slice() const;
-    coord& slice();
-    coord row() const;
-    coord& row();
-    coord col() const;
-    coord& col();
+    coord& 
+    slice();
 
-    point3d operator+(const dpoint3d& dp) const;
-    point3d operator-(const dpoint3d& dp) const;
-    point3d& operator+=(const dpoint3d& dp);
-    point3d& operator-=(const dpoint3d& dp);
+    coord 
+    row() const;
 
-    dpoint3d operator-(const point3d& p) const;
-    point3d operator-() const;
+    coord& 
+    row();
 
-    static std::string name() { return "point3d"; }
+    coord 
+    col() const;
+
+    coord& 
+    col();
+
+    static std::string 
+    name() 
+    { 
+      return "point3d"; 
+    }
+
+  protected:
+
+    point3d 
+    plus_dp(const dpoint3d& dp) const;
+
+    point3d 
+    minus_dp(const dpoint3d& dp) const;
+
+    point3d& 
+    plus_assign_dp(const dpoint3d& dp);
+
+    point3d& 
+    minus_assign_dp(const dpoint3d& dp);
+
+    dpoint3d 
+    minus_p(const point3d& p) const;
+
+    point3d 
+    minus() const;
+
   };
-
-  _PointForDim(3, point3d);
 
   namespace internal
   {
     template<>
-    struct default_less<point3d> : public default_less<point3d::super>
+    struct default_less<point3d> : public default_less<point3d::super_type>
     {
     };
 
@@ -87,8 +120,6 @@ namespace oln {
 inline std::ostream&
 operator<<(std::ostream& o, const oln::point3d& p);
 
-
 # include <oln/core/point3d.hxx>
-
 
 #endif // ! OLENA_CORE_POINT3D_HH
