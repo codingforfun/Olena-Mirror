@@ -1,0 +1,33 @@
+//                                                                  -*- c++ -*-
+#include "data.hh"
+#include <oln/utils/md5.hh>
+
+#include "check.hh" 
+#include <oln/basics2d.hh> 
+#include <oln/level/threshold.hh> 
+#include <ntg/all.hh> 
+using namespace ntg;
+ 
+ 
+int main() 
+{
+oln::utils::key::value_type   data_key[16] = {0x98, 0xf0, 0x2f, 0x75, 0x92, 0x22, 0xbe, 0x3f, 0x36, 0x10, 0x44, 0x1e, 0x53, 0xf3, 0xb9, 0xce};
+
+oln::utils::key		   key(data_key);
+
+   oln::image2d<
+int_u8> in = oln::load(rdata("lena256.pgm"));
+   
+int_u8 th	= 127;
+   rgb_8 low	= rgb_8(100, 0, 0);
+   rgb_8 height	= rgb_8(0, 200, 255);
+   oln::image2d<rgb_8> out     = apply(oln::level::threshold<
+int_u8, rgb_8 >(th, low, height), 	    in);
+   if (oln::utils::md5(out) == key)
+  std::cout << "OK" << std::endl;
+else
+  {
+    std::cout << "FAIL" << std::endl;
+    return true;
+  }
+ }

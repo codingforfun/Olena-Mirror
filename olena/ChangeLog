@@ -1,5 +1,10 @@
 2004-03-23  Giovanni Palma  <giovanni@lrde.epita.fr>
 
+	* olena/tests/level/tests/md5_level_set_level_hh0: Add file.
+	* olena/tests/level/tests/md5_level_threshold_hh0: Likewise.
+
+2004-03-23  Giovanni Palma  <giovanni@lrde.epita.fr>
+
 	* tests/topo/tests/md5_topo_dmap_hh0: Add file.
 	* tests/topo/tests/md5_topo_tarjan_flat-zone_hh0: Likewise.
 
