@@ -1,3 +1,8 @@
+2003-03-04  Jerome Darbon  <jerome@epita.fr>
+
+	* oln/morpho/attribute_closing_opening.hh: New file.
+	* oln/morpho/attribute_union_find.hh: New file.
+
 2003-02-23  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* config/oln.m4: Change default flags for icc.
@@ -16,9 +21,9 @@
 2003-02-11  Raphaël Poss  <raph@lrde.epita.fr>
 
 	(Changes from 0.7)
-	
+
 	* oln/Makefile.am: Remove file.
-	
+
 	* config/oln.m4 (OLN_VERSION, OLN_MAJOR_VERSION): Put under
 	version control.
 
@@ -32,7 +37,7 @@
 
 	* conf/compilers.def: Do not test for GCC 2 any more.
 
-	* tests/check/defs.in (AC_SHELL): Add variable.  
+	* tests/check/defs.in (AC_SHELL): Add variable.
 	* tests/types/runtests, tests/arith/runtests: Use $AC_SHELL.
 
 2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
@@ -44,11 +49,11 @@
 	* tests/morpho/Makefile.am (CXXFLAGS): Remove optimization
 	adjustement, since all tests are compiled with optimization by
 	default.
-		
+
 	* tests/arith/runtests (rundir): Move more stuff to runtime
 	subdirectories.
 	* tests/types/runtests (rundir): Likewise.
-	
+
 	* config/oln.m4: Simplify. Use -felide-constructors -funroll-loops
 	for GCC 2.95 optimizations.
 
@@ -165,7 +170,7 @@
 2003-01-22  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* oln.m4: Quote macro names. Merge oln-version.m4 and
-	component.m4.  
+	component.m4.
 	* Makefile.am (ACLOCAL_AMFLAGS, CONFIGURE_DEPENDENCIES): Simplify
 	accordingly.
 
@@ -268,7 +273,7 @@
 	tests. Complete AC_CXX_FLAGS (renamed from AC_CXX_WARNINGS).
 	* tests/check/data.cc: use OLN_IMG_DIR and OLN_IMG_AUX_DIR instead
 	of RDATADIR and WDATADIR.
-	
+
 	* oln/Makefile.am (EXTRA_DIST): Mention
 	`config/pconf-hh.in'. FIXME: this should not be necessary since
 	configure.ac mentions in it AC_CONFIG_FILES. To investigate.
@@ -296,7 +301,7 @@
 	* tests/check/Makefile.flags (AM_CPPFLAGS): Adjust directories.
 	* tests/check/Makefile.check: Adjust directories.
 	* tests/configure.ac: Remove.
-	
+
 	* configure.ac: Merge tests/configure.ac. Use AC_CONFIG_FILES
 	instead of AC_CONFIG_HEADERS for pconf.inc.
 	* tests/defs.in (CXXFLAGS): Remove warning options (added by "configure")
@@ -317,7 +322,7 @@
 	problems.
 	* tests/io/loadsave.hh: Remove static keyword before function
 	definitions.
-	
+
 	* tests/arith/runtest, tests/types/runtests, tests/defs.in: Add
 	LDFLAGS support.
 	* tests/check/Makefile.flags, tests/morpho/Makefile.am: Allow
@@ -603,10 +608,10 @@
 	* Makefile.am (m4datadir, dist_m4data_DATA): Add for
 	oln.m4. (EXAMPLE_IMGS, dist_pkgdata_DATA): Add for images.
 
-	* oln/Makefile.am (pkginclude_HEADERS): Use instead of 
+	* oln/Makefile.am (pkginclude_HEADERS): Use instead of
 	nobase_inst_HEADERS.
 
-	* configure.ac: The testsuite is now optional. Depend again on 
+	* configure.ac: The testsuite is now optional. Depend again on
 	Automake 1.7.1.
 
 	* ChangeLog: Create. Old version moves to ../attic.
