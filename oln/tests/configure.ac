@@ -56,6 +56,7 @@ if test x$oln_cv_tests_$1 != xno; then
    AC_CONFIG_FILES([$1/Makefile])
 fi])
 
+OLN_TESTS([arith])
 OLN_TESTS([convert])
 OLN_TESTS([convol])
 OLN_TESTS([io])
@@ -72,4 +73,3 @@ AC_CONFIG_FILES([defs
 	check/Makefile])
 
 AC_OUTPUT
-

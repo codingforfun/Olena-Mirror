@@ -30,7 +30,7 @@
 
 # include <oln/morpho/erosion.hh>
 # include <oln/morpho/dilation.hh>
-# include <oln/morpho/minmax.hh>
+# include <oln/arith/ops.hh>
 
 # include <oln/meta/cmp.hh>
 

@@ -1,7 +1,36 @@
+2003-01-07  Nicolas Burrus  <nes@lrde.epita.fr>
+
+	* oln/morpho/geodesic_dilation.hh: use arith::min instead of
+	morpho::min.
+	* oln/morpho/hit_or_miss.inc: likewise.
+	* oln/morpho/geodesic_erosin.hh: use arith::max instead of
+	morpho::min.
+
+	* oln/tests/configure.ac: adapt to new arith directory.
+	* oln/tests/arith, oln/tests/arith/tests: new directories.
+	* oln/tests/arith/runtests, oln/tests/arith/Makefile.am: new files.
+
+	* oln/tests/arith/tests/min1: new test.
+	* oln/tests/types/tests/bin2: new test.
+
+	* oln/oln/core/apply.hh: add workaround for g++-2.95 ICE with
+	direct meta class template parameter instanciation as function
+	parameter.
+
+	* oln/oln/types/optraits_bin.hh: add traits for min and max.
+
+	* oln/morpho/minmax.hh: remove useless min and max operators.
+	Compatibility is preserved with older versions, but morpho::min
+	and morpho::max for arithmetic operations are obsolete.
+
 2003-01-07  Yann Régis-Gianas  <yann@lrde.epita.fr>
 
-	* oln/oln/meta/optional: new.
-	* oln/oln/level/cc.hh: 
+	* oln/core/internal/window.hh: disable precondition of 'add'.
+
+2003-01-07  Yann Régis-Gianas  <yann@lrde.epita.fr>
+
+	* oln/meta/optional.hh: new.
+	* oln/level/cc.hh: 
 		add 'update_nb_level' as an optional behaviour.
 		fix some dead code.
 
@@ -123,6 +152,3 @@
 
 	* ChangeLog: Create. Old version moves to ../attic.
 	* tests/ChangeLog: Remove. Old version moves to ../attic.
-
-	
-

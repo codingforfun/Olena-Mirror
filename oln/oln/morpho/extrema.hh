@@ -29,6 +29,7 @@
 # define OLENA_MORPHO_EXTREMA_HH
 
 # include <oln/basics.hh>
+# include <oln/arith/ops.hh>
 # include <oln/morpho/reconstruction.hh>
 
 

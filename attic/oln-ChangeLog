@@ -1,7 +1,8 @@
 2002-12-09  Raphael Poss  <raph@lrde.epita.fr>
 
 	* Makefile.am (EXTRA_DIST): Add FAQ.
-	* Makefile.in, configure, aclocal.m4, texinfo.tex: Remove in all subdirectories.
+	* Makefile.in, configure, aclocal.m4, texinfo.tex: Remove in all 
+	subdirectories.
 	* pconf-inc.in, pconf.inc: Remove.
 	
 2002-12-05  Raphael Poss  <raph@lrde.epita.fr>
@@ -93,7 +94,8 @@
 	--disable-morpho-utilities options.
 	* Makefile.am: Modify SUBDIRS variable accordingly.
 	* utilities/Makefile.am: Likewise.
-	* utilities/morpho/morpho_template.cc: Change default defines to #error.
+	* utilities/morpho/morpho_template.cc: Change default defines to 
+	#error.
 	* utilities/generate_morpho.sh: Modifiy accordingly.
 
 2002-12-02  Jerome Darbon  <jerome@epita.fr>

@@ -29,5 +29,3 @@ $2
 
 ifelse([$3], [], [], [AC_CONFIG_FILES([$3])])
 AC_SUBST([$1_SUBDIRS])])
-
-   

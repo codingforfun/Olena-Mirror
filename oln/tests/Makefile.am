@@ -5,9 +5,3 @@ SUBDIRS = check @OLN_TESTS_SUBDIRS@
 
 ACLOCAL_AMFLAGS = -I ..
 CONFIGURE_DEPENDENCIES = $(srcdir)/../oln.m4 $(srcdir)/../../oln-version.m4
-
-
-
-
-
-

@@ -1,0 +1,9 @@
+bin b1 = 1;
+bin b2 = 0;
+
+return 	(min(b1, b2) != bin(0))
+	&& (min(b1, b1) != bin(1))
+	&& (min(b2, b2) != bin(0))
+	&& (max(b1, b2) != bin(1))
+	&& (max(b1, b1) != bin(1))
+	&& (max(b2, b2) != bin(0));

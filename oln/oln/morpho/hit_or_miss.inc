@@ -80,9 +80,9 @@ hit_or_miss(const conversion<C>& c,
 		     (se1.delta() > se2.delta()) ?
  		     se1.delta() : se2.delta());
 
-  return morpho::min(c,
-		     erosion(input, se1),
-		     erosion(level::invert(input), se2));
+  return arith::min(c,
+		    erosion(input, se1),
+		    erosion(level::invert(input), se2));
 }
 
 /*=processingoverload hit_or_miss

@@ -35,31 +35,23 @@ namespace oln {
   namespace morpho {
 
     /*
-      arith::min and arith::max should not work on type bin because
-      there is no order on this type.
+      Before olena v0.6, bin type was represented by "true" and
+      "false", so it did not make sense to implement a min and max for
+      it. However, morphological operatators defined on binary image
+      usually needs min and max operators, this is why it was previouly
+      implemented here.
 
-      However, morphological operatators definied on binary image
-      are usually generalized to other types by using 'min'
-      instead of 'and', and 'max' instead of 'or'.
-
-      To ease the writing of generic algorithm we define
-      morpho::min, and morpho::max. The sole difference with
-      the arith:: version of these operators is that these work
-      with bin.
+      But since v0.6 and higher, bin type is represented by '0' and
+      '1', so it has min and max operators. Thus arith::min and
+      arith::max should be used instead of obsolete these morpho::min
+      and morpho::max.
+      
+      These operators are kept here for compatibility with older
+      versions.
     */
 
-    template<class T>
-    class f_min : public arith::f_min<T, T> {};
-    template<>
-    class f_min<bin> : public arith::f_logic_and {};
-
-    template<class T>
-    class f_max : public arith::f_max<T, T> {};
-    template<>
-    class f_max<bin> : public arith::f_logic_or {};
-
-    _OLN_ARITH_DECLARE_SEMIGENERIC_BINOP_PROCS(min);
-    _OLN_ARITH_DECLARE_SEMIGENERIC_BINOP_PROCS(max);
+    using arith::min;
+    using arith::max;
 
   } // morpho
 } // oln
