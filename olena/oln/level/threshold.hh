@@ -42,12 +42,12 @@ namespace oln {
     public:
       threshold(const Input& threshold,
 		const Output& min = ntg_min_val(Output),
-		const Output& max = ntg_min_val(Output)) :
+		const Output& max = ntg_max_val(Output)) :
         m_threshold(threshold), m_min(min), m_max(max)
       {}
 
       Output
-      operator() (const Input& v) const 
+      operator() (const Input& v) const
       {
         if (v >= m_threshold)
           return m_max;
@@ -55,7 +55,7 @@ namespace oln {
       }
 
       static std::string
-      name() 
+      name()
       {
 	return std::string("threshold<")
 	  + ntg_name(Output) + ", "

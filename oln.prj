@@ -1,24 +1,15 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 13)
-(Parent-Version oln 10 12)
-(Version-Log "Index: metalic/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+(Project-Version oln 10 14)
+(Parent-Version oln 10 13)
+(Version-Log "2003-09-09  Giovanni Palma  <giovanni@lrde.epita.fr>
 
-	* mlc/type.hh (any_with_diamond): Use a static offset instead of
-	an pointer member to find the exact type instance.	
-	(mlc_init_static_hierarchy): Adjust consequently.
-
-Index: olena/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* oln/core/abstract/image.hh: Uncomment copy constructor.
-
+	* threshold.hh: correct the threshold construtor..
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 01 Sep 2003 20:12:38 +0200")
-(Checkin-Login burrus_n)
+(Checkin-Time "Tue, 09 Sep 2003 13:53:41 +0200")
+(Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -120,7 +111,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.4 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.5 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.25 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.35 640))
@@ -309,7 +300,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/level/invert.hh (oln/33_invert.hh 1.5.2.2.1.10 640))
   (olena/oln/level/lut.hh (oln/29_lut.hh 1.9 640))
   (olena/oln/level/set_level.hh (oln/p/1_set_level. 1.9 640))
-  (olena/oln/level/threshold.hh (oln/f/15_threshold. 1.11 640))
+  (olena/oln/level/threshold.hh (oln/f/15_threshold. 1.12 640))
   (config/oln.m4 (oln/j/15_oln.m4 1.36 640))
 
   (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.11 640))
