@@ -348,11 +348,14 @@ AC_DEFUN([AC_CHECK_DOXYGEN_VERSION],
 [dnl
   AC_CACHE_CHECK([for doxygen >= 1.3.4],
                   [ac_cv_doxygen_version],
-                  [if $DOXYGEN --version 2>&1 | grep ['1.3.[4567]'] > /dev/null 2>&1; then
-			ac_cv_doxygen_version=recent
-                      else
-                        ac_cv_doxygen_version=old
-                   fi])
+                  [[case `$DOXYGEN --version` in
+                  *1.3.[4-9]* | \
+   		  *1.[4-9]*   | \
+                  *[2-9].*  )
+      		       ac_cv_doxygen_version=recent;;
+                  *)
+                       ac_cv_doxygen_version=old;;
+                  esac]])
   if [ [ "$ac_cv_doxygen_version" = "old" ] ] ; then
 	AC_MSG_ERROR([Doxygen 1.3.4 or newer is required, run ./configure with --without-doc to disable the doc build])
   fi
@@ -477,11 +480,13 @@ AC_DEFUN([AC_CXX_FLAGS],
                   [ac_cv_cxx_style],
                   [ac_cv_cxx_style=unknown
                    if test "x$ac_compiler_gnu" != xno; then
-		      if $CXX --version | grep [' 3\.[234]'] >/dev/null ; then
-			ac_cv_cxx_style=GNU
-                      else
-                        ac_cv_cxx_style=weakGNU
-                      fi
+		      [case `$CXX --version` in
+                      *3.[2-9]* | \
+                      *[4-9].*  )
+                          ac_cv_cxx_style=GNU;;
+                      *)
+                          ac_cv_cxx_style=weakGNU;;
+                       esac]
                    elif $CXX -V 2>&1 | grep -i "WorkShop">/dev/null 2>&1; then
 		      ac_cv_cxx_style=Sun
                    elif $CXX -V 2>&1 | grep -i "Intel(R) C++">/dev/null 2>&1;

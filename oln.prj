@@ -1,409 +1,351 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 214)
-(Parent-Version oln 10 213)
+(Project-Version oln 10 217)
+(Parent-Version oln 10 214)
 (Version-Log "Index: olena/ChangeLog
 from  Giovanni Palma  <giovanni@lrde.epita.fr>
 
-	* oln/morpho/abstract/attribute.hh: Add file.
-	* oln/morpho/abstract/attribute.hxx: Likewse.
-	* oln/morpho/attributes.hh: Clean the file.
+	* oln/makefile.src: Add morpho/abstract/attribute references.
+	* oln/morpho/attributes.hh: Remove comments.
+	* oln/morpho/abstract/attribute.hh: Real add the file.
+	* oln/morpho/abstract/attribute.hxx: Likewise.
 
 Index: olena/oln/morpho/attributes.hh
---- olena/oln/morpho/attributes.hh Fri, 09 Jul 2004 17:34:56 +0200 palma_g (oln/j/45_attributes 1.13.1.5 644)
-+++ olena/oln/morpho/attributes.hh Tue, 07 Sep 2004 19:05:40 +0200 palma_g (oln/j/45_attributes 1.13.1.5 644)
-@@ -31,22 +31,18 @@
- # include <mlc/type.hh>
- # include <vector>
+--- olena/oln/morpho/attributes.hh Wed, 08 Sep 2004 10:15:22 +0200 palma_g (oln/j/45_attributes 1.13.1.6 600)
++++ olena/oln/morpho/attributes.hh Thu, 09 Sep 2004 11:14:29 +0200 palma_g (oln/j/45_attributes 1.13.1.6 644)
+@@ -33,17 +33,6 @@
  # include <oln/morpho/environments.hh>
-+# include <oln/morpho/abstract/attribute.hh>
+ # include <oln/morpho/abstract/attribute.hh>
  
--// attribute dedicated macros
--# define attr_lambda_type(T)	typename oln::morpho::attr::attr_traits< T >::lambda_type
--# define attr_env_type(T)	typename oln::morpho::attr::attr_traits< T >::env_type
--# define attr_value_type(T)	typename oln::morpho::attr::attr_traits< T >::value_type
+-// // attribute dedicated macros
+-// # define attr_lambda_type(T)	typename oln::morpho::attr::attr_traits< T >::lambda_type
+-// # define attr_env_type(T)	typename oln::morpho::attr::attr_traits< T >::env_type
+-// # define attr_value_type(T)	typename oln::morpho::attr::attr_traits< T >::value_type
 -
--# define attr_lambda_type_(T)	 oln::morpho::attr::attr_traits< T >::lambda_type
--# define attr_env_type_(T)	 oln::morpho::attr::attr_traits< T >::env_type
--# define attr_value_type_(T)	 oln::morpho::attr::attr_traits< T >::value_type
-+// // attribute dedicated macros
-+// # define attr_lambda_type(T)	typename oln::morpho::attr::attr_traits< T >::lambda_type
-+// # define attr_env_type(T)	typename oln::morpho::attr::attr_traits< T >::env_type
-+// # define attr_value_type(T)	typename oln::morpho::attr::attr_traits< T >::value_type
-+
-+// # define attr_lambda_type_(T)	 oln::morpho::attr::attr_traits< T >::lambda_type
-+// # define attr_env_type_(T)	 oln::morpho::attr::attr_traits< T >::env_type
-+// # define attr_value_type_(T)	 oln::morpho::attr::attr_traits< T >::value_type
- 
- 
--# define attr_type_decl(self_type) \\
--      typedef mlc_exact_vt_type(self_type, Exact)	exact_type; \\
--      typedef attr_value_type(exact_type)		value_type; \\
--      typedef attr_env_type(exact_type)			env_type; \\
--      typedef attr_lambda_type(exact_type)		lambda_type
- 
+-// # define attr_lambda_type_(T)	 oln::morpho::attr::attr_traits< T >::lambda_type
+-// # define attr_env_type_(T)	 oln::morpho::attr::attr_traits< T >::env_type
+-// # define attr_value_type_(T)	 oln::morpho::attr::attr_traits< T >::value_type
+-
+-
+-
  namespace oln {
    namespace morpho {
-@@ -69,13 +65,13 @@
+     /*! \\brief Implementation of attributes.
+@@ -64,15 +53,6 @@
+ 	}
        } // !tools
  
- 
--      // the traits fwd declaration
--      /*!
--      ** Traits  for attributes information.
--      ** \\param T Exact type of the attribute.
--      */
--      template <class T>
--      struct attr_traits;
-+//       // the traits fwd declaration
-+//       /*!
-+//       ** Traits  for attributes information.
-+//       ** \\param T Exact type of the attribute.
-+//       */
-+//       template <class T>
-+//       struct attr_traits;
- 
+-
+-//       // the traits fwd declaration
+-//       /*!
+-//       ** Traits  for attributes information.
+-//       ** \\param T Exact type of the attribute.
+-//       */
+-//       template <class T>
+-//       struct attr_traits;
+-
        /*!
        ** \\brief Change the exact type of an attribute.
-@@ -90,115 +86,6 @@
+       **
+@@ -84,9 +64,6 @@
+       struct change_exact;
  
-       // the attributes hierarchy
  
--      /*------------*
--	| attribute |
--	*-----------*/
--      /*!
--      ** \\brief Attribute abstract class
--      **
--      ** Top of the attribute hierarchy.
--      */
--      template <class Exact>
--      class attribute: public mlc_hierarchy::any<Exact>
--      {
--      public:
--	typedef attribute<Exact>	self_type; /*< Self type of the class.*/
--	attr_type_decl(self_type);
--
--	/*!
--	** \\brief += operator
--	**
--	** This is a static dispatcher for the += operator.
--	** This method is abstract.
--	*/
--	void operator+=(const exact_type &rhs)
--	{
--	  mlc_dispatch(pe)(rhs);
--	};
--
--	/*!
--	** \\brief >= operator
--	**
--	** This is a static dispatcher for the >= operator.
--	*/
--	bool operator>=(const lambda_type &lambda) const
--	{
--	  mlc_dispatch(ge)(lambda);
--	};
--
--	/*!
--	** \\brief \"<\" operator
--	**
--	** This is a static dispatcher for the \"<\" operator.
--	** This method is abstract.
--	*/
--	bool operator<(const lambda_type &lambda) const
--	{
--	  mlc_dispatch(less)(lambda);
--	};
--
--	/*!
--	** \\brief \"<\" operator
--	**
--	** This is a static dispatcher for the \"<\" operator.
--	** This method is abstract.
--	*/
--	bool operator<(const exact_type &x) const
--	{
--	  mlc_dispatch(less2)(x);
--	};
--
--	/*!
--	** \\brief != operator
--	**
--	** This is a static dispatcher for the != operator.
--	** This method is abstract.
--	*/
--	bool operator!=(const lambda_type &lambda) const
--	{
--	  mlc_dispatch(ne)(lambda);
--	};
--
--	/*!
--	** \\brief conversion to lambda type.
--	**
--	** \\warning Virtual method.
--	*/
--	const lambda_type &toLambda() const
--	{
--	  mlc_dispatch(toLambda)();
--	};
--
--	/*!
--	** \\brief >= operator implementation.
--	**
--	** This is an implementation  of the >= operator.  Override this
--	** method to provide a new implementation of this operator.
--	** \\warning This method SHOULDN'T be called.
--	*/
--	bool ge_impl(const lambda_type &lambda) const
--	{
--	  return !(*this < lambda);
--	};
--
--	/*!
--	** \\brief \"<\" operator implementation.
--	**
--	** This is an implementation  of the < operator.  Override this
--	** method to provide a new implementation of this operator.
--	** \\warning This method SHOULDN'T be called.
--	*/
--	bool less2_impl(const exact_type &x) const
--	{
--	  return *this < x.toLambda();
--	};
+-      // the attributes hierarchy
 -
 -
--
--      protected:
--	attribute() {};
--
--      };
- 
        /*-----------*
  	|   card    |
-@@ -211,7 +98,7 @@
-       */
-       template <class T = unsigned, class Exact = mlc::final>
-       class card_type:
--	public attribute<mlc_2_exact_vt_type(card_type, T, Exact)>
-+	public abstract::attribute<mlc_2_exact_vt_type(card_type, T, Exact)>
-       {
-       public:
- 	typedef card_type<T, Exact>			self_type; /*!< Self type of the class. */
-@@ -240,7 +127,7 @@
- 	** Every parameters are useless.
- 	*/
- 	template <class I>
--	  card_type(const abstract::image<I>&,
-+	  card_type(const oln::abstract::image<I>&,
- 		    const oln_point_type(I)&,
- 		    const env_type&):
- 	  value_(ntg_unit_val(value_type))
-@@ -338,7 +225,7 @@
- 	** Every parameters are useless.
- 	*/
- 	template <class I2>
--	  card_full_type(const abstract::image<I2> &im,
-+	  card_full_type(const oln::abstract::image<I2> &im,
- 		    const oln_point_type(I2) &p,
- 		    const env_type &env): super_type(im, p, env)
- 	  {
-@@ -356,7 +243,7 @@
-       */
-       template <class I, class Exact = mlc::final>
-       class volume_type:
--	public attribute<mlc_2_exact_vt_type(volume_type, I, Exact)>
-+	public abstract::attribute<mlc_2_exact_vt_type(volume_type, I, Exact)>
-       {
-       public:
- 	typedef volume_type<I, Exact>			self_type; /*!< Self type of the class. */
-@@ -383,7 +270,7 @@
- 	** \\brief Ctor from a point and an image.
- 	*/
- 	template <class J>
--	  volume_type(const abstract::image<J> &,
-+	  volume_type(const oln::abstract::image<J> &,
- 		      const oln_point_type(J) &p,
- 		      const env_type &e) :
- 	  //	  reflevel_(e.getImage()[p]),
-@@ -521,7 +408,7 @@
-       */
-       template <class T = unsigned, class Exact = mlc::final>
-       class integral_type:
--	public attribute<mlc_2_exact_vt_type(integral_type, T, Exact)>
-+	public abstract::attribute<mlc_2_exact_vt_type(integral_type, T, Exact)>
-       {
-       public:
- 	typedef integral_type<T, Exact>			self_type; /*!< Self type of the class. */
-@@ -548,7 +435,7 @@
- 	** \\brief Ctor from a point and an image.
- 	*/
- 	template <class I>
--	  integral_type(const abstract::image<I> &input,
-+	  integral_type(const oln::abstract::image<I> &input,
- 			const oln_point_type(I) &p,
- 			const env_type &) :
- 	  value_(input[p])
-@@ -639,7 +526,7 @@
-       {
-       public:
- 	typedef other_image<Dad, I,  Exact>						self_type; /*< Self type of the class.*/
--	typedef typename abstract::image<mlc_exact_type(I)>				im_type; /*< Type of substituted image.*/
-+	typedef typename oln::abstract::image<mlc_exact_type(I)>				im_type; /*< Type of substituted image.*/
- 	attr_type_decl(self_type);
- 	typedef typename change_exact<Dad,
- 				      typename mlc::exact_vt<other_image<Dad, I, Exact>,
-@@ -670,7 +557,7 @@
- 	** the image contained in the environment.
- 	*/
- 	template <typename IM>
--	other_image(const abstract::image<IM> &,
-+	other_image(const oln::abstract::image<IM> &,
- 		    const oln_point_type(I) &p,
- 		    const env_type & e): super_type(e.getImage(), p, e)
- 	{
-@@ -690,11 +577,11 @@
-       */
-       template <class I, class Exact = mlc::final>
-       class ball_parent_change:
--	public attribute<mlc_2_exact_vt_type(ball_parent_change, I, Exact)>
-+	public abstract::attribute<mlc_2_exact_vt_type(ball_parent_change, I, Exact)>
-       {
-       public:
- 	typedef ball_parent_change<I,  Exact>			self_type; /*< Self type of the class.*/
--	typedef typename abstract::image<mlc_exact_type(I)>	im_type; /*< Type of substituted image.*/
-+	typedef typename oln::abstract::image<mlc_exact_type(I)>	im_type; /*< Type of substituted image.*/
- 	attr_type_decl(self_type);
- 	typedef oln_value_type(I)				pts_type; ///< should be list <?>
- 	typedef typename pts_type::const_iterator		cst_iter_type; ///< const iterator on Point vector.
-@@ -726,7 +613,7 @@
- 	** the image contained in the environment.
- 	*/
- 	template <typename IM>
--	ball_parent_change(const abstract::image<IM> &,
-+	ball_parent_change(const oln::abstract::image<IM> &,
- 			   const oln_point_type(IM) &p,
- 			   const env_type &e): points_()//: super_type(/*e.getImage(), */e.getPoint(p), e)
- 	{
-@@ -857,7 +744,7 @@
-       */
-       template <class T = unsigned, class Exact = mlc::final>
-       class height_type:
--	public attribute<mlc_2_exact_vt_type(height_type, T, Exact)>
-+	public abstract::attribute<mlc_2_exact_vt_type(height_type, T, Exact)>
-       {
-       public:
- 	typedef height_type<T, Exact>			self_type;
-@@ -887,7 +774,7 @@
- 	** \\brief Ctor from a point and an image.
- 	*/
- 	template <class I>
--	  height_type(const abstract::image<I> &input,
-+	  height_type(const oln::abstract::image<I> &input,
- 		      const oln_point_type(I) &p,
- 		      const env_type&):
- 	  value_(ntg_zero_val(value_type)),
-@@ -1000,7 +887,7 @@
-       */
-       template <class T = unsigned, class Exact = mlc::final>
-       class maxvalue_type:
--	public attribute<mlc_2_exact_vt_type(maxvalue_type, T, Exact)>
-+	public abstract::attribute<mlc_2_exact_vt_type(maxvalue_type, T, Exact)>
-       {
-       public:
- 	typedef maxvalue_type<T, Exact>			self_type; ///< Self type of the class.
-@@ -1034,7 +921,7 @@
- 	** \\arg p Point to consider in the image.
- 	*/
- 	template <class I>
--	  maxvalue_type(const abstract::image<I> &input,
-+	  maxvalue_type(const oln::abstract::image<I> &input,
- 			const oln_point_type(I) &p,
- 			const env_type &):
- 	  value_(input[p])
-@@ -1116,7 +1003,7 @@
-       */
-       template <class T = unsigned, class Exact = mlc::final>
-       class minvalue_type:
--	public attribute<mlc_2_exact_vt_type(minvalue_type, T, Exact)>
-+	public abstract::attribute<mlc_2_exact_vt_type(minvalue_type, T, Exact)>
-       {
-       public:
- 	typedef minvalue_type<T, Exact>			self_type;
-@@ -1150,7 +1037,7 @@
- 	** \\arg p Point to consider in the image.
- 	*/
- 	template <class I>
--	  minvalue_type(const abstract::image<I> &input,
-+	  minvalue_type(const oln::abstract::image<I> &input,
- 			const oln_point_type(I) &p,
- 			const env_type &) :
- 	  value_(input[p])
-@@ -1232,12 +1119,12 @@
-       */
-       template <class I, class Exact = mlc::final>
-       class ball_type:
--	public attribute<mlc_2_exact_vt_type(ball_type, I, Exact)>
-+	public abstract::attribute<mlc_2_exact_vt_type(ball_type, I, Exact)>
-       {
-       public:
- 	typedef ball_type<I, Exact>			self_type; ///< Self type of the class.
- 	attr_type_decl(self_type);
--	typedef abstract::image<mlc_exact_type(I)>	im_type; ///< Image type.
-+	typedef oln::abstract::image<mlc_exact_type(I)>	im_type; ///< Image type.
- 	typedef oln_point_type(im_type)			point_type; ///< Point type associated to im_type.
- 	typedef oln_dpoint_type(im_type)			dpoint_type; ///< Dpoint type associated to im_type.
- 	typedef std::vector<point_type>			pts_type; ///< Point vector type.
-@@ -1395,12 +1282,12 @@
-       */
-       template <class I, class Exact = mlc::final>
-       class dist_type:
--	public attribute<mlc_2_exact_vt_type(dist_type, I, Exact)>
-+	public abstract::attribute<mlc_2_exact_vt_type(dist_type, I, Exact)>
-       {
-       public:
- 	typedef dist_type<I, Exact>			self_type; ///< Self type of the class.
- 	attr_type_decl(self_type);
--	typedef abstract::image<mlc_exact_type(I)>	im_type; ///< Image type.
-+	typedef oln::abstract::image<mlc_exact_type(I)>	im_type; ///< Image type.
- 	typedef oln_point_type(im_type)			point_type; ///< Point type associated to im_type.
- 	typedef oln_dpoint_type(im_type)			dpoint_type; ///< Dpoint type associated to im_type.
- 
-@@ -1547,12 +1434,12 @@
-       */
-       template <class I, class Exact = mlc::final>
-       class cube_type:
--	public attribute<mlc_2_exact_vt_type(cube_type, I, Exact)>
-+	public abstract::attribute<mlc_2_exact_vt_type(cube_type, I, Exact)>
-       {
-       public:
- 	typedef cube_type<I, Exact>			self_type; ///< Self type of the class.
- 	attr_type_decl(self_type);
--	typedef abstract::image<mlc_exact_type(I)>	im_type; ///< Image type.
-+	typedef oln::abstract::image<mlc_exact_type(I)>	im_type; ///< Image type.
- 	typedef oln_point_type(im_type)			point_type; ///< Point type associated to im_type.
- 	typedef oln_dpoint_type(im_type)			dpoint_type; ///< Dpoint type associated to im_type.
- 
-@@ -1716,12 +1603,12 @@
-       */
-       template <class I, class Exact = mlc::final>
-       class box_type:
--	public attribute<mlc_2_exact_vt_type(box_type, I, Exact)>
-+	public abstract::attribute<mlc_2_exact_vt_type(box_type, I, Exact)>
-       {
-       public:
- 	typedef box_type<I, Exact>			self_type; ///< Self type of the class.
- 	attr_type_decl(self_type);
--	typedef abstract::image<mlc_exact_type(I)>	im_type; ///< Image type.
-+	typedef oln::abstract::image<mlc_exact_type(I)>	im_type; ///< Image type.
- 	typedef oln_point_type(im_type)			point_type; ///< Point type associated to im_type.
- 	typedef oln_dpoint_type(im_type)			dpoint_type; ///< Dpoint type associated to im_type.
- 	enum {dim = point_traits<point_type>::dim };
+ 	*-----------*/
+Index: olena/oln/makefile.src
+--- olena/oln/makefile.src Tue, 13 Jul 2004 11:48:20 +0200 palma_g (oln/r/4_makefile.s 1.6 600)
++++ olena/oln/makefile.src Thu, 09 Sep 2004 11:16:39 +0200 palma_g (oln/r/4_makefile.s 1.6 644)
+@@ -158,6 +158,8 @@
+   morpher/piece_morpher.hh			\\
+   morpher/slicing_morpher.hh			\\
+   morpher/subq_morpher.hh			\\
++  morpho/abstract/attribute.hh			\\
++  morpho/abstract/attribute.hxx			\\
+   morpho/attribute_closing_opening.hh		\\
+   morpho/attribute_closing_opening_map.hxx	\\
+   morpho/attribute_closing_opening_map.hh	\\
+Index: olena/oln/morpho/abstract/attribute.hxx
+--- olena/oln/morpho/abstract/attribute.hxx Thu, 09 Sep 2004 11:21:58 +0200 palma_g ()
++++ olena/oln/morpho/abstract/attribute.hxx Thu, 09 Sep 2004 11:21:53 +0200 palma_g (oln/v/33_attribute.  644)
+@@ -0,0 +1,109 @@
++// Copyright (C) 2004 EPITA Research and Development Laboratory
++//
++// This  file is  part of  the Olena  Library.  This  library  is free
++// software; you can redistribute it  and/or modify it under the terms
++// of the  GNU General  Public License version  2 as published  by the
++// Free Software Foundation.
++//
++// This library is distributed in the hope that it will be useful, but
++// WITHOUT  ANY  WARRANTY;  without   even  the  implied  warranty  of
++// MERCHANTABILITY or  FITNESS FOR A PARTICULAR PURPOSE.   See the GNU
++// General Public License for more details.
++//
++// You should have  received a copy of the  GNU General Public License
++// along with  this library; see the  file COPYING.  If  not, write to
++// the Free Software Foundation, 59  Temple Place - Suite 330, Boston,
++// MA 02111-1307, USA.
++//
++// As a  special exception, you  may use this  file as part of  a free
++// software library without restriction.  Specifically, if other files
++// instantiate templates  or use macros or inline  functions from this
++// file, or  you compile  this file  and link it  with other  files to
++// produce  an executable,  this file  does  not by  itself cause  the
++// resulting  executable  to be  covered  by  the  GNU General  Public
++// License.   This exception  does  not however  invalidate any  other
++// reasons why the executable file might be covered by the GNU General
++// Public License.
++
++#ifndef OLN_MORPHO_ABSTRACT_ATTRIBUTE_HXX
++# define OLN_MORPHO_ABSTRACT_ATTRIBUTE_HXX
++
++namespace oln
++{
++  namespace morpho
++  {
++    namespace attr
++    {
++      namespace abstract
++      {
++	template <class Exact>
++	inline void
++	attribute<Exact>::operator+=(const exact_type &rhs)
++	{
++	  mlc_dispatch(pe)(rhs);
++	}
++
++	template <class Exact>
++	inline bool
++	attribute<Exact>::operator>=(const lambda_type &lambda) const
++	{
++	  mlc_dispatch(ge)(lambda);
++	}
++
++	template <class Exact>
++	inline
++	bool
++	attribute<Exact>::operator<(const lambda_type &lambda) const
++	{
++	  mlc_dispatch(less)(lambda);
++	}
++
++	template <class Exact>
++	inline
++	bool
++	attribute<Exact>::operator<(const exact_type &x) const
++	{
++	  mlc_dispatch(less2)(x);
++	}
++
++	template <class Exact>
++	inline
++	bool
++	attribute<Exact>::operator!=(const lambda_type &lambda) const
++	{
++	  mlc_dispatch(ne)(lambda);
++	}
++
++	template <class Exact>
++	inline const typename attribute<Exact>::lambda_type &
++	attribute<Exact>::toLambda() const
++	{
++	  mlc_dispatch(toLambda)();
++	}
++
++	template <class Exact>
++	inline
++	bool
++	attribute<Exact>::ge_impl(const lambda_type &lambda) const
++	{
++	  return !(*this < lambda);
++	}
++
++	template <class Exact>
++	inline
++	bool
++	attribute<Exact>::less2_impl(const exact_type &x) const
++	{
++	  return *this < x.toLambda();
++	}
++
++	template <class Exact>
++	inline
++	attribute<Exact>::attribute()
++	{}
++      } // !abstract
++    } // !attr
++  } // !morpho
++} // !oln
++
++#endif // !OLN_MORPHO_ABSTRACT_ATTRIBUTE_HXX
+Index: olena/oln/morpho/abstract/attribute.hh
+--- olena/oln/morpho/abstract/attribute.hh Thu, 09 Sep 2004 11:21:58 +0200 palma_g ()
++++ olena/oln/morpho/abstract/attribute.hh Thu, 09 Sep 2004 11:21:23 +0200 palma_g (oln/v/34_attribute.  644)
+@@ -0,0 +1,155 @@
++// Copyright (C) 2004 EPITA Research and Development Laboratory
++//
++// This  file is  part of  the Olena  Library.  This  library  is free
++// software; you can redistribute it  and/or modify it under the terms
++// of the  GNU General  Public License version  2 as published  by the
++// Free Software Foundation.
++//
++// This library is distributed in the hope that it will be useful, but
++// WITHOUT  ANY  WARRANTY;  without   even  the  implied  warranty  of
++// MERCHANTABILITY or  FITNESS FOR A PARTICULAR PURPOSE.   See the GNU
++// General Public License for more details.
++//
++// You should have  received a copy of the  GNU General Public License
++// along with  this library; see the  file COPYING.  If  not, write to
++// the Free Software Foundation, 59  Temple Place - Suite 330, Boston,
++// MA 02111-1307, USA.
++//
++// As a  special exception, you  may use this  file as part of  a free
++// software library without restriction.  Specifically, if other files
++// instantiate templates  or use macros or inline  functions from this
++// file, or  you compile  this file  and link it  with other  files to
++// produce  an executable,  this file  does  not by  itself cause  the
++// resulting  executable  to be  covered  by  the  GNU General  Public
++// License.   This exception  does  not however  invalidate any  other
++// reasons why the executable file might be covered by the GNU General
++// Public License.
++
++
++#ifndef OLN_MORPHO_ABSTRACT_ATTRIBUTE_HH
++# define OLN_MORPHO_ABSTRACT_ATTRIBUTE_HH
++# include <oln/morpho/environments.hh>
++
++// attribute dedicated macros
++# define attr_lambda_type(T)	typename oln::morpho::attr::attr_traits< T >::lambda_type
++# define attr_env_type(T)	typename oln::morpho::attr::attr_traits< T >::env_type
++# define attr_value_type(T)	typename oln::morpho::attr::attr_traits< T >::value_type
++
++# define attr_lambda_type_(T)	 oln::morpho::attr::attr_traits< T >::lambda_type
++# define attr_env_type_(T)	 oln::morpho::attr::attr_traits< T >::env_type
++# define attr_value_type_(T)	 oln::morpho::attr::attr_traits< T >::value_type
++
++
++# define attr_type_decl(self_type) \\
++      typedef mlc_exact_vt_type(self_type, Exact)	exact_type; \\
++      typedef attr_value_type(exact_type)		value_type; \\
++      typedef attr_env_type(exact_type)			env_type; \\
++      typedef attr_lambda_type(exact_type)		lambda_type
++
++namespace oln
++{
++  namespace morpho
++  {
++    namespace attr
++    {
++      // the traits fwd declaration
++      /*!
++      ** Traits  for attributes information.
++      ** \\param T Exact type of the attribute.
++      */
++      template <class T>
++      struct attr_traits;
++      //    }
++
++      namespace abstract
++      {
++	//       namespace attr
++	//       {
++
++	/*!
++	** \\brief Attribute abstract class
++	**
++	** Top of the attribute hierarchy.
++	*/
++	template <class Exact>
++	class attribute: public mlc_hierarchy::any<Exact>
++	{
++	public:
++	  typedef attribute<Exact>	self_type; /*< Self type of the class.*/
++	  attr_type_decl(self_type);
++
++	  /*!
++	  ** \\brief += operator
++	  **
++	  ** This is a static dispatcher for the += operator.
++	  ** This method is abstract.
++	  */
++	  void operator+=(const exact_type &rhs);
++
++	  /*!
++	  ** \\brief >= operator
++	  **
++	  ** This is a static dispatcher for the >= operator.
++	  */
++	  bool operator>=(const lambda_type &lambda) const;
++
++	  /*!
++	  ** \\brief \"<\" operator
++	  **
++	  ** This is a static dispatcher for the \"<\" operator.
++	  ** This method is abstract.
++	  */
++	  bool operator<(const lambda_type &lambda) const;
++
++	  /*!
++	  ** \\brief \"<\" operator
++	  **
++	  ** This is a static dispatcher for the \"<\" operator.
++	  ** This method is abstract.
++	  */
++	  bool operator<(const exact_type &x) const;
++
++	  /*!
++	  ** \\brief != operator
++	  **
++	  ** This is a static dispatcher for the != operator.
++	  ** This method is abstract.
++	  */
++	  bool operator!=(const lambda_type &lambda) const;
++
++	  /*!
++	  ** \\brief conversion to lambda type.
++	  **
++	  ** \\warning Virtual method.
++	  */
++	  const lambda_type &toLambda() const;
++
++	  /*!
++	  ** \\brief >= operator implementation.
++	  **
++	  ** This is an implementation  of the >= operator.  Override this
++	  ** method to provide a new implementation of this operator.
++	  ** \\warning This method SHOULDN'T be called.
++	  */
++	  bool ge_impl(const lambda_type &lambda) const;
++
++	  /*!
++	  ** \\brief \"<\" operator implementation.
++	  **
++	  ** This is an implementation  of the < operator.  Override this
++	  ** method to provide a new implementation of this operator.
++	  ** \\warning This method SHOULDN'T be called.
++	  */
++	  bool less2_impl(const exact_type &x) const;
++
++	protected:
++	  attribute();
++	};
++      } // !abstract
++    } // !attr
++  } // !morpho
++} // !oln
++
++# include <oln/morpho/abstract/attribute.hxx>
++
++#endif // !OLN_MORPHO_ABSTRACT_ATTRIBUTE_HH
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 08 Sep 2004 10:15:22 +0200")
+(Checkin-Time "Thu, 09 Sep 2004 11:24:20 +0200")
 (Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -506,11 +448,11 @@ Index: olena/oln/morpho/attributes.hh
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.16 600))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.18 600))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.16 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.47 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.43 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.25 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.26 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.17 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.39 640))
 
@@ -696,7 +638,7 @@ Index: olena/oln/morpho/attributes.hh
   (olena/oln/level/lut.hh (oln/29_lut.hh 1.10 640))
   (olena/oln/level/set_level.hh (oln/p/1_set_level. 1.11 640))
   (olena/oln/level/threshold.hh (oln/f/15_threshold. 1.15 640))
-  (config/oln.m4 (oln/j/15_oln.m4 1.38.1.8 640))
+  (config/oln.m4 (oln/j/15_oln.m4 1.38.1.10 640))
 
   (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.15 640))
   (metalic/mlc/array/1d.hh (oln/f/23_array1d.hh 1.12 640))
@@ -1579,7 +1521,7 @@ Index: olena/oln/morpho/attributes.hh
 ;; Files added by populate at Fri, 06 Feb 2004 16:00:19 +0100,
 ;; to version 10.57(w), by palma_g:
 
-  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.13.1.6 644))
+  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.13.1.7 600))
 
 ;; Files added by populate at Tue, 10 Feb 2004 15:26:15 +0100,
 ;; to version 10.62(w), by palma_g:
@@ -1831,7 +1773,7 @@ Index: olena/oln/morpho/attributes.hh
   (olena/tests/morpho/tests/gradient (oln/r/1_gradient 1.2 600))
   (integre/ntg/makefile.src (oln/r/2_makefile.s 1.1 644))
   (metalic/mlc/makefile.src (oln/r/3_makefile.s 1.1 644))
-  (olena/oln/makefile.src (oln/r/4_makefile.s 1.6 644))
+  (olena/oln/makefile.src (oln/r/4_makefile.s 1.7 644))
 
   (olena/oln/convol/slow_gaussian.hh (oln/r/7_slow_gauss 1.4 644))
   (olena/oln/convol/slow_gaussian.hxx (oln/r/8_slow_gauss 1.4 644))
@@ -1869,8 +1811,16 @@ Index: olena/oln/morpho/attributes.hh
   ; (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_light_hh2 ())
   ; (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_light_hh1 ())
   ; (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_light_hh0 ())
+
+;; Files added by populate at Thu, 09 Sep 2004 11:18:36 +0200,
+;; to version 10.214(w), by palma_g:
+
+  (olena/oln/morpho/abstract/attribute.hxx (oln/v/38_attribute. 1.1 644))
+  (olena/oln/morpho/abstract/attribute.hh (oln/v/40_attribute. 1.1 644))
 )
 (Merge-Parents
-  (10.213 complete)
+  (10.214 complete)
+  (10.216 complete
+    (ChangeLog ChangeLog ChangeLog r) (config/oln.m4 config/oln.m4 config/oln.m4 r))
 )
 (New-Merge-Parents)

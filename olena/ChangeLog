@@ -1,3 +1,10 @@
+2004-09-09  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* oln/makefile.src: Add morpho/abstract/attribute references.
+	* oln/morpho/attributes.hh: Remove comments.
+	* oln/morpho/abstract/attribute.hh: Real add the file.
+	* oln/morpho/abstract/attribute.hxx: Likewise.
+
 2004-09-08  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* oln/morpho/abstract/attribute.hh: Add file.

@@ -158,6 +158,8 @@ OLN_DEP =					\
   morpher/piece_morpher.hh			\
   morpher/slicing_morpher.hh			\
   morpher/subq_morpher.hh			\
+  morpho/abstract/attribute.hh			\
+  morpho/abstract/attribute.hxx			\
   morpho/attribute_closing_opening.hh		\
   morpho/attribute_closing_opening_map.hxx	\
   morpho/attribute_closing_opening_map.hh	\
