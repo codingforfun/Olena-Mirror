@@ -1,5 +1,13 @@
 2003-07-28  David Lesage  <david@lrde.epita.fr>
 
+	* oln/core/winiter.hh: Fix bugs.
+
+	* oln/core/abstract/struct_elt.hh: Add add(dp) member function. 
+
+	* oln/core/abstract/window.hh: Rename add(dp) member function.
+
+2003-07-28  David Lesage  <david@lrde.epita.fr>
+
 	* oln/core/abstract/point.hh: Implement point_ref.
 	* oln/core/point1d.hh, oln/core/point1d.hxx,
 	oln/core/point2d.hh, oln/core/point2d.hxx,

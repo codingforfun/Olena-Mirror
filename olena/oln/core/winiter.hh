@@ -81,7 +81,7 @@ namespace oln {
       return i;
     }
 
-    operator typename Win::dpoint() const
+    operator typename Win::dpoint_type() const
     {
       precondition(*this != end);
       return win_.dp(pos_);
@@ -89,7 +89,7 @@ namespace oln {
 
     // it's convenient to type `it.cur()' instead of `(dpoint)it' when
     // necessary.
-    typename Win::dpoint cur() const
+    typename Win::dpoint_type cur() const
     {
       return *this;
     }

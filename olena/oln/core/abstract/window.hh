@@ -63,7 +63,7 @@ namespace oln
 	return std::string("window<") + Exact::name() + ">";
       }
 
-      exact_type& add(const abstract::dpoint<dpoint_type>& dp)
+      exact_type& add_dp(const abstract::dpoint<dpoint_type>& dp)
       {
 	return to_exact(this)->add_(to_exact(dp));
       }
