@@ -1,5 +1,10 @@
 2005-03-19  Simon Odou  <simon@lrde.epita.fr>
 
+	* oln/makefile.src: Add compose.hh.
+	* oln/core/compose.hh: New.
+
+2005-03-19  Simon Odou  <simon@lrde.epita.fr>
+
 	* oln/makefile.src: Add neighborhood and structuring element files
         to makefile.src.
 

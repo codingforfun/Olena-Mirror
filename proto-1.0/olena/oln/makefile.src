@@ -45,8 +45,9 @@ OLN_DEP =					\
   core/abstract/point.hh			\
   core/abstract/size.hh				\
   core/abstract/neighborhood.hh			\
-  core/abstract/window.hh			\
+  core/abstract/struct_elt.hh			\
   core/coord.hh					\
+  core/compose.hh				\
   core/properties.hh				\
   core/value_box.hh				\
   fancy/iota.hh					\
