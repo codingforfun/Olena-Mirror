@@ -30,6 +30,7 @@
 
 # include <oln/config/system.hh>
 # include <string>
+# include <cstdio>
 
 namespace oln {
 
@@ -50,7 +51,8 @@ namespace oln {
 	template< typename T >
 	T& assign(T& output) const
 	{
-	  read_any(output, _str);
+	  if (!read_any(output, _str))
+            std::exit(EXIT_FAILURE);
 	  return output;
 	}
 

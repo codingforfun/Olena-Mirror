@@ -37,18 +37,18 @@ namespace oln {
     namespace internal {
 
       struct utils
-      {	
+      {
 	static std::string extension(const std::string& name)
-	{ 
+	{
 	  std::string ext;
 	  int pos = name.rfind('.');
 	  if (pos > 0)
 	    {
 	      ext.assign(name, pos + 1, name.size() - pos);
-	      for (std::string::iterator i = ext.begin(); i != ext.end(); ++i) 
+	      for (std::string::iterator i = ext.begin(); i != ext.end(); ++i)
 		*i = tolower(*i);
 	    }
-	  return ext;	
+	  return ext;
 	}
       };
 
@@ -58,7 +58,7 @@ namespace oln {
       struct try_in_
       {
 	static bool _soft(T& output, std::istream& in, const std::string& ext)
-	{	
+	{
 	  if (reader<R,T>::knows_ext(ext))
 	    if (reader<R,T>::read(in, output))
 	      return true;
@@ -88,7 +88,7 @@ namespace oln {
       struct try_out_
       {
 	static bool _soft(const T& input, std::ostream& out, const std::string& ext)
-	{	
+	{
 	  if (writer<W,T>::knows_ext(ext))
 	    if (writer<W,T>::write(out, input))
 	      return true;
@@ -96,10 +96,10 @@ namespace oln {
 	}
 
 	static bool _hard(const T& input, std::ostream& out, const std::string& ext)
-	{	
+	{
 	  if (writer<W,T>::write(out, input))
-	    {		
-	      std::clog << "[ambiguous extension '" << ext 
+	    {
+	      std::clog << "[ambiguous extension '" << ext
 			<< "' wrote as " << writer<W,T>::name() << "] " << std::flush;
 	      return true;
 	    }
@@ -115,7 +115,7 @@ namespace oln {
       };
 
 
-      // try wrappers      
+      // try wrappers
 
       template< wrapper_id W, typename T >
       struct wrap_
@@ -127,7 +127,7 @@ namespace oln {
 	      std::string wrapped_name = name;
 	      if (std::istream* in = wrapper<W>::wrap_in(wrapped_name))
 		{
-		  std::string wrapped_ext = utils::extension(wrapped_name);     
+		  std::string wrapped_ext = utils::extension(wrapped_name);
 		  bool result = try_in_<ReadAny,T>::_soft(output, *in, wrapped_ext);
 		  if (!result)
 		    result = try_in_<ReadAny,T>::_hard(output, *in);
@@ -144,7 +144,7 @@ namespace oln {
 	  std::string wrapped_name = name;
 	  if (std::istream* in = wrapper<W>::wrap_in(wrapped_name))
 	    {
-	      std::string wrapped_ext = utils::extension(wrapped_name);     
+	      std::string wrapped_ext = utils::extension(wrapped_name);
 	      bool result = try_in_<ReadAny,T>::_soft(output, *in, wrapped_ext);
 	      if (!result)
 		result = try_in_<ReadAny,T>::_hard(output, *in);
@@ -168,7 +168,7 @@ namespace oln {
 	      std::string wrapped_name = name;
 	      if (std::ostream* out = wrapper<W>::wrap_out(wrapped_name))
 		{
-		  std::string wrapped_ext = utils::extension(wrapped_name);     
+		  std::string wrapped_ext = utils::extension(wrapped_name);
 		  bool result = try_out_<WriteAny,T>::_soft(input, *out, wrapped_ext);
 		  delete out;
 		  if (result)
@@ -185,7 +185,7 @@ namespace oln {
 	      std::string wrapped_name = name;
 	      if (std::ostream* out = wrapper<W>::wrap_out(wrapped_name))
 		{
-		  std::string wrapped_ext = utils::extension(wrapped_name);     
+		  std::string wrapped_ext = utils::extension(wrapped_name);
 		  bool result = try_out_<WriteAny,T>::_hard(input, *out, wrapped_ext);
 		  delete out;
 		  if (result)
@@ -201,7 +201,7 @@ namespace oln {
       {
 	static bool _in_soft(T&, const std::string&, const std::string&) { return false; }
 	static bool _in_hard(T&, const std::string&) { return false; }
-	static void _find(std::list<std::string>&, const std::string&) { }	  
+	static void _find(std::list<std::string>&, const std::string&) { }
 	static bool _out_soft(const T&, const std::string&, const std::string&) { return false; }
 	static bool _out_hard(const T&, const std::string&, const std::string&) { return false; }
       };
@@ -210,7 +210,7 @@ namespace oln {
 
       template<typename T>
       bool read_any(T& output, const std::string& name)
-      {	
+      {
 	std::string ext = utils::extension(name);
 
 	if (wrap_<WrapAny,T>::_in_soft(output, name, ext))
@@ -234,10 +234,10 @@ namespace oln {
 	      std::clog << "['" << name << "' found as '" << *it << "'] " << std::flush;
 	      return true;
 	    }
-	std::clog << "[unable to read '" << name << "'] " << std::flush;
+	std::clog << "[unable to read '" << name << "'] " << std::endl;
 	return false;
       }
-      
+
       // write anything
 
       template< typename T >
@@ -249,7 +249,7 @@ namespace oln {
 	  return true;
 	if (wrap_<WrapAny,T>::_out_hard(input, name, ext))
 	  return true;
-	std::clog << "[unable to write '" << name << "'] " << std::flush;
+	std::clog << "[unable to write '" << name << "'] " << std::endl;
 	return false;
       }
 
@@ -262,8 +262,3 @@ namespace oln {
 
 
 #endif // OLENA_IO_BASE_HXX_
-
-
-
-
-
