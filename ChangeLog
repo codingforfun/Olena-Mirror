@@ -1,3 +1,16 @@
+2002-09-23  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/types/optraits.hh: Add temporary fix for debug.
+	* oln/types/typetraits_builtins_bool.hh, 
+	oln/types/optraits_bool.hh, oln/types/debug.hh: New files.
+	* oln/io/pnm_write.hxx, oln/io/pnm_write_common.hxx, 
+	oln/io/pnm_read.hxx, oln/io/pnm_read_common.hxx: Adapt to new types.
+	* oln/types/all.hh: Add includes for new files.
+	* oln/types/optraits_bin.hh: Add zero(), unit(), inf(), sup(), min()
+	and max().
+	* oln/types/bin.hh: Add default constructor, change stream operator 
+	and set storage_type to bool.
+
 2002-09-20  Emmanuel Turquin  <turqui_e@epita.fr>
 
 	* oln/types/optraits_cplx.hh: Modify macros in order to allow

@@ -46,6 +46,13 @@ namespace oln
   template <>
   struct optraits<bin> : public optraits_enum<bin>
   {
+    static bin zero() { return 0; }
+    static bin unit() { return 1; }
+    static bin min()  { return 0; }
+    static bin max()  { return 1; }
+    static bin inf()  { return min(); }
+    static bin sup()  { return max(); }
+
     // logical assignement operators
 
     static bin& logical_or_equal(bin& lhs, const bin& rhs)
@@ -128,6 +135,7 @@ namespace oln
     struct operator_cmp_traits<bin, T>
     {
       enum { commutative = true };
+      typedef bin ret;
       typedef bin impl;
     };
 

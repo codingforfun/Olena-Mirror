@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,34 +25,23 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_OPTRAITS_HH
-# define OLENA_VALUE_OPTRAITS_HH
+#ifndef OLENA_VALUE_OPTRAITS_BUILTINS_BIN_HH
+# define OLENA_VALUE_OPTRAITS_BUILTINS_BIN_HH
 
-# include <oln/config/system.hh>
-# include <string>
+# include <oln/types/optraits.hh>
 
 namespace oln
 {
 
-  template <class T> 
-  struct optraits
+  // FIXME: 
+
+  template<>
+  struct optraits<bool>
   {
-    // FIXME: export name() into debug
-    // default impl
-    static std::string name() { return T::name(); }
+    static bool min() { return 0; }
+    static bool max() { return 1; }
   };
-
-  // top of hierarchy
-  class optraits_top {};
-
-  // enumerated types
-  template <class T>
-  class optraits_enum : public optraits_top {};
-
-  // vectorial types
-  template <class T>
-  class optraits_vector : public optraits_top {};
 
 } // end of namespace oln
 
-#endif // ndef OLENA_VALUE_OPTRAITS_HH
+#endif // ndef OLENA_VALUE_OPTRAITS_BUILTINS_BIN_HH

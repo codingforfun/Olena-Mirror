@@ -30,7 +30,7 @@
 
 # include <oln/core/image2d.hh>
 # include <oln/core/fwd_iter2d.hh>
-# include <oln/value/bin.hh>
+# include <oln/types/bin.hh>
 # include <oln/io/pnm_read_common.hxx>
 
 namespace oln {
@@ -114,6 +114,8 @@ namespace oln {
 	}
       };
 
+#if 0 // disabled until color imported in types
+
       template<template <unsigned> class color_system>
       struct reader<ReadPnmPlain, image2d< color<3, 8, color_system> > >
       {
@@ -136,6 +138,8 @@ namespace oln {
 	  return true;
 	}
       };
+
+#endif // 0
 
       template<>
       struct reader<ReadPnmRaw, image2d<bin> >
@@ -191,6 +195,8 @@ namespace oln {
 	}
       };
 
+#if 0 // disabled until color imported in types
+
       template<template <unsigned> class color_system>
       struct reader<ReadPnmRaw, image2d< color<3, 8, color_system> > >
       {
@@ -213,6 +219,8 @@ namespace oln {
 	  return true;
 	}
       };
+
+#endif // 0
 
     } // internal
   } // io

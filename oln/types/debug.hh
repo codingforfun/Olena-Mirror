@@ -25,51 +25,31 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_ALL_HH
-# define OLENA_VALUE_ALL_HH
+#ifndef OLENA_VALUE_DEBUG_HH
+# define OLENA_VALUE_DEBUG_HH
 
 # include <oln/config/system.hh>
-
-# include <oln/types/type.hh>
-
-# include <oln/types/to_oln.hh>
-# include <oln/types/predecls.hh>
-
-# include <oln/types/builtins_properties.hh>
-
-# include <oln/types/rec_value.hh>
-
-# include <oln/types/behaviour.hh>
-# include <oln/types/interval.hh>
-
-# include <oln/types/typetraits.hh>
-# include <oln/types/typetraits_builtins_int.hh>
-# include <oln/types/typetraits_builtins_float.hh>
-# include <oln/types/typetraits_builtins_bool.hh>
-
 # include <oln/types/optraits.hh>
+# include <string>
 
-# include <oln/types/int_u.hh>
-# include <oln/types/int_s.hh>
-# include <oln/types/range.hh>
-# include <oln/types/cycle.hh>
-# include <oln/types/bin.hh>
-# include <oln/types/vec.hh>
-# include <oln/types/cplx.hh>
+namespace oln {
 
+  //
+  //  usage: typename_of_var(obj)
+  //
+  /////////////////////////////////
 
-# include <oln/types/optraits_int_u.hh>
-# include <oln/types/optraits_int_s.hh>
-# include <oln/types/optraits_range.hh>
-# include <oln/types/optraits_cycle.hh>
-# include <oln/types/optraits_builtins_int.hh>
-# include <oln/types/optraits_builtins_float.hh>
-# include <oln/types/optraits_builtins_bool.hh>
-# include <oln/types/optraits_bin.hh>
-# include <oln/types/optraits_vec.hh>
-# include <oln/types/optraits_cplx.hh>
+  template<class T> inline
+  std::string typename_of_var(const T&) { return optraits<T>::name(); }
 
-# include <oln/types/global_ops_traits.hh>
-# include <oln/types/global_ops.hh>
+  //
+  //  typename_of<T>()
+  //
+  /////////////////////////////////
 
-#endif // ndef OLENA_VALUE_ALL_HH
+  template<class T> inline
+  std::string typename_of() { return optraits<T>::name(); }
+
+}
+
+#endif // ndef OLENA_VALUE_DEBUG_HH

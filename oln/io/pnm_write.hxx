@@ -28,6 +28,7 @@
 #ifndef OLENA_IO_PNM_WRITE_HXX_
 # define OLENA_IO_PNM_WRITE_HXX_
 
+# include <oln/types/optraits.hh>
 # include <oln/io/pnm_write_common.hxx>
 
 namespace oln {
@@ -43,7 +44,7 @@ namespace oln {
 	s << "# Creator: OLENA / Epita-LRDE" << std::endl
 	  << im.ncols() << ' ' << im.nrows() << std::endl;
 	if (type != '1' && type != '4')
-	  s << U::max() << std::endl;
+	  s << optraits<U>::max() << std::endl;
 	return true;
       }
 
@@ -92,6 +93,7 @@ namespace oln {
 	}
       };
 
+#if 0 // disabled until color imported in types
 
       template<template <unsigned> class color_system>
       struct writer<WritePnmPlain, image2d< color<3, 8, color_system> > >
@@ -115,6 +117,8 @@ namespace oln {
 	  return true;
 	}
       };
+
+#endif
 
       template<>
       struct writer<WritePnmRaw, image2d<bin> >
@@ -177,6 +181,8 @@ namespace oln {
 	}
       };
 
+#if 0 // disabled until color imported in types
+
       template<template <unsigned> class color_system>
       struct writer<WritePnmRaw, image2d< color<3, 8, color_system> > >
       {
@@ -199,6 +205,8 @@ namespace oln {
 	  return true;
 	}
       };
+
+#endif
 
     } // internal
   } // io

@@ -43,11 +43,11 @@ namespace oln
   template <>
   struct typetraits<bin>
   {
-    typedef bin self;
-    typedef optraits<self> optraits;
+    typedef bin				self;
+    typedef optraits<self>		optraits;
 
     typedef self			base_type;
-    typedef unsigned char		storage_type;
+    typedef bool			storage_type;
     typedef bin				signed_type;
     typedef bin				unsigned_type;
     typedef bin				cumul_type;
@@ -73,6 +73,8 @@ namespace oln
     class bin : public rec_enum<bin>
     {
     public:
+      bin () { _value = 0; }
+
       bin (unsigned char val)
       {
 	precondition (val < 2);
@@ -106,7 +108,7 @@ namespace oln
     inline std::ostream&
     operator<<(std::ostream& stream, const oln::bin& rhs)
     {
-      stream << (rhs.value() ? "true" : "false");
+      stream << (unsigned int) rhs.value();
       return stream;
     }
 

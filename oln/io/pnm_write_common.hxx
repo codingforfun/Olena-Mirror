@@ -30,9 +30,8 @@
 
 # include <oln/core/image.hh>
 # include <oln/core/iter.hh>
-# include <oln/value/bin.hh>
-# include <oln/value/int_u.hh>
-# include <oln/value/rgb.hh>
+# include <oln/types/bin.hh>
+# include <oln/types/int_u.hh>
 # include <oln/io/base.hh>
 
 namespace oln {
@@ -73,6 +72,8 @@ namespace oln {
 	out.write((char*)elt, n * sizeof(*elt));
       }
 
+#if 0 // disabled until color imported in types
+
       template<template<unsigned> class color_system>
       inline void
       writemany_plain(std::ostream& out,
@@ -94,6 +95,8 @@ namespace oln {
       {
 	out.write((char*)elt, n * sizeof(*elt));
       }
+
+#endif // 0
 
     } // internal
   } // io

@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,34 +25,36 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_OPTRAITS_HH
-# define OLENA_VALUE_OPTRAITS_HH
+#ifndef OLENA_VALUE_TYPETRAITS_BUILTINS_BOOL_HH
+# define OLENA_VALUE_TYPETRAITS_BUILTINS_BOOL_HH
 
-# include <oln/config/system.hh>
-# include <string>
+# include <oln/types/typetraits.hh>
 
 namespace oln
 {
 
-  template <class T> 
-  struct optraits
+  template <>
+  struct typetraits<bool>
   {
-    // FIXME: export name() into debug
-    // default impl
-    static std::string name() { return T::name(); }
+    typedef bool				self;
+    typedef optraits<self>			optraits;
+    typedef unsafe::get<self>	behaviour_type;
+
+    typedef self		base_type;
+    typedef self		storage_type;
+    // FIXME: are these types exacts ?
+    typedef self		cumul_type;
+    typedef self		largest_type;
+    typedef self		signed_largest_type;
+    typedef self		signed_cumul_type;
+    typedef self		unsigned_largest_type;
+    typedef self		unsigned_cumul_type;
+    typedef unsigned int	integer_type;
+
+    // internal use, useful for decorators
+    typedef self op_traits;
   };
-
-  // top of hierarchy
-  class optraits_top {};
-
-  // enumerated types
-  template <class T>
-  class optraits_enum : public optraits_top {};
-
-  // vectorial types
-  template <class T>
-  class optraits_vector : public optraits_top {};
 
 } // end of namespace oln
 
-#endif // ndef OLENA_VALUE_OPTRAITS_HH
+#endif // ndef OLENA_VALUE_TYPETRAITS_BUILTINS_BOOL_HH
