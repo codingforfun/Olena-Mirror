@@ -1,3 +1,9 @@
+2004-06-23  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* tools/utilities/convert/color_space.cc: New file. Convert
+	from a color space to another.
+	* tools/utilities/convert/Makefile.am: New file.
+
 2004-04-15  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* utilities/morpho/Makefile.am: Change flags order.

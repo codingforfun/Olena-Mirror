@@ -353,6 +353,15 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
 	            [tools/utilities/morpho/Makefile],
                     [], [morpho])
 
+### The convert utilities are a component.
+      OLN_COMPONENT([tools/utilities/convert],
+	            [convert-utilities],
+	            [oln_cv_build_convert_utils],
+	            [the convert utilities],
+	            [OLN_UTILITIES],
+	            [tools/utilities/convert/Makefile],
+                    [], [convert])
+
     ])dnl End of OLN_COLLECTION([OLN_UTILITIES])
     ], [utilities])dnl End of OLN_COMPONENT([tools/utilities])
 
