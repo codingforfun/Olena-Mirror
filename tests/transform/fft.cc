@@ -42,7 +42,7 @@ check()
 
   io::save(out, OUTPUT_DIR OUTPUT_NAME "_fft_clipped.pgm");
 
-  image2d<int_u8> outlog = fourier.transformed_image_log_magn<int_u8>(1, 80);
+  image2d<int_u8> outlog = fourier.transformed_image_log_magn<int_u8>(1, 100);
 
   io::save(outlog, OUTPUT_DIR OUTPUT_NAME "_fft_log.pgm");
   

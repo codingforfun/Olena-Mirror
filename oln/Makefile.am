@@ -12,6 +12,7 @@ nobase_oln_HEADERS =				\
   basics1d.hh					\
   basics2d.hh					\
   basics3d.hh					\
+  config/system.hh				\
   convert/basics.hh				\
   convert/bound.hh				\
   convert/colorconv.hh				\
@@ -182,6 +183,7 @@ nobase_oln_HEADERS =				\
   morpho/top_hat.inc				\
   morpho/watershed.hh				\
   morpho/watershed.hxx				\
+  transform/fft.hh				\
   utils/histogram.hh				\
   utils/stat.hh					\
   utils/timer.hh				\
