@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -47,7 +47,7 @@ namespace oln {
        * See A. Meijster and M. Wilkinson. A Comparison of Algorithms For Connected
        * Set Openings and Closings. PAMI 24(2), p484--494
        * see: morpho::simple_geodesic_dilation
-       * ex: area_opening
+       * ex:
        * $ image2d<int_u8> im = load("lena256.pgm");
        * $ save(morpho::tarjan::area_closing(im, neighb_c4(),500), "out.pgm");
        * exi: lena256.pgm
