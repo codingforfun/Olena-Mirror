@@ -108,20 +108,36 @@ namespace mlc
 
   // "best memory" version of 'any'
 
+  // FIXME:
+  // We should test with autotools if the compiler allows us to write a 
+  // static_cast or not (diamond inheritance problem). gcc-2.95 gives a
+  // different adress but not gcc-3.
+  // On Mac OS X, the compilation fails with a strange link error if you
+  // try to use the offset computation.
   template <typename E>
   struct any <E,
 	      dispatch_policy::best_memory>
   {
     E& exact() {
+# if defined __GNUC__ && __GNUC__ >= 3    
+      return static_cast<E&>(*this);
+# else
       return *(E*)((char*)this - exact_offset);
+# endif
     }
     const E& exact() const {
+# if defined __GNUC__ && __GNUC__ >= 3    
+      return static_cast<const E&>(*this);
+# else
       return *(const E*)((const char*)this - exact_offset);
+# endif
     }
 
+# if not defined  __GNUC__ || __GNUC__ < 3
     static const int exact_offset;
     static const E exact_obj;
     static const any_mem(E)& ref_exact_obj;
+# endif
 
   protected:
     any() {}
@@ -137,11 +153,13 @@ namespace mlc
     any__best_memory() : super() {}
   };
 
+# if not defined  __GNUC__ || __GNUC__ < 3
   template <typename E> const E any_mem(E)::exact_obj = E();
   template <typename E> const any_mem(E)& any_mem(E)::ref_exact_obj = any_mem(E)::exact_obj;
   template <typename E> const int any_mem(E)::exact_offset =
                                      (const char*)(void*)(&any_mem(E)::ref_exact_obj)
                                        - (const char*)(void*)(&any_mem(E)::exact_obj);
+# endif
 
 
   // "simple" version of 'any'

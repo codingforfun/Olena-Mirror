@@ -1,3 +1,7 @@
+2005-03-22  Simon Odou  <simon@lrde.epita.fr>
+
+	* mlc/any.hh: Make the `any__best_memory' fast when using gcc-3.
+
 2005-03-19  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* tests/main/tests/pow2sup1: New.
