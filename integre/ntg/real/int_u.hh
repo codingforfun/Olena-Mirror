@@ -130,7 +130,7 @@ namespace ntg {
     INT_U_CTOR_FROM_BUILTIN_INT(unsigned char);
     INT_U_CTOR_FROM_BUILTIN_INT(signed   char);
 
-    int_u (const float rhs)
+    int_u (const float_s rhs)
     {
       val_ = optraits_type::check(roundf(rhs));
     }
@@ -140,7 +140,7 @@ namespace ntg {
       return *this;
     }
 
-    int_u (const double rhs)
+    int_u (const float_d rhs)
     {
       val_ = optraits_type::check(round(rhs));
     }

@@ -157,21 +157,21 @@ namespace ntg {
       return *this;
     }
 
-    int_s (const float rhs)
+    int_s (const float_s rhs)
     {
       val_ = optraits_type::check(roundf(rhs));
     }
-    self& operator=(const float rhs)
+    self& operator=(const float_s rhs)
     {
       val_ = optraits_type::check(roundf(rhs));
       return *this;
     }
 
-    int_s (const double rhs)
+    int_s (const float_d rhs)
     {
       val_ = optraits_type::check(round(rhs));
     }
-    self& operator=(const double rhs)
+    self& operator=(const float_d rhs)
     {
       val_ = optraits_type::check(round(rhs));
       return *this;
