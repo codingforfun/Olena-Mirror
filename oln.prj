@@ -1,14 +1,17 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 32)
-(Parent-Version oln 0_5 31)
-(Version-Log "2002-09-03  Alexandre Duret-Lutz  <duret_g@epita.fr>
+(Project-Version oln 0_5 33)
+(Parent-Version oln 0_5 32)
+(Version-Log "2002-09-10  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-	* oln/config/system.hh: Typos.
+	* doc/ref-types.tex (range, cycle): Adjust to reflect present (and
+	future).  Document bounded_u, bounded_s, range_u, range_s,
+	cycle_u, and cycle_s.
+	(typetraits<T>::integer_type): Adjust too.
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 03 Sep 2002 17:21:50 +0200")
+(Checkin-Time "Tue, 10 Sep 2002 15:23:22 +0200")
 (Checkin-Login duret_g)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -94,7 +97,7 @@
 
 
   (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.9 644))
-  (doc/ChangeLog (oln/e/1_ChangeLog 1.20 600))
+  (doc/ChangeLog (oln/e/1_ChangeLog 1.21 600))
   (doc/configure.ac (oln/e/2_configure. 1.5 600))
   (doc/configure (oln/e/3_configure 1.9 700))
   (doc/doc/bin () :directory)
@@ -457,7 +460,7 @@
 ;; Files added by populate at Thu, 01 Aug 2002 15:28:28 +0200,
 ;; to version 0_5.11(w), by adl:
 
-  (doc/doc/ref-types.tex (oln/g/34_ref-types. 1.2 644))
+  (doc/doc/ref-types.tex (oln/g/34_ref-types. 1.3 644))
 
 ;; Files added by populate at Mon, 26 Aug 2002 17:10:21 +0200,
 ;; to version 0_5.18(w), by duret_g:

@@ -1,3 +1,10 @@
+2002-09-10  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* doc/ref-types.tex (range, cycle): Adjust to reflect present (and
+	future).  Document bounded_u, bounded_s, range_u, range_s,
+	cycle_u, and cycle_s.
+	(typetraits<T>::integer_type): Adjust too.
+
 2002-09-02  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* doc/Makefile.am (oln_ref_TEX): Split into ...

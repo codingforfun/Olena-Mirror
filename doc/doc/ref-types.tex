@@ -317,46 +317,55 @@ the code generated for \code{i<j} should be close to
 You can decorate a type to add some constraint or change it's
 behavior.
 
-\subsubsection{\code{range<T, MIN, MAX, BEHAVIOR=strict>}}
+\subsubsection{\code{range<T, INTERVAL, BEHAVIOR=strict>}}
 
 This class, like Ada's \code{range} keyword, adds a constrains on type
 \code{T}.  The constraint is that values should be bounded by
-\code{MIN} and \code{MAX}.  \code{BEHAVIOR} specify how overflow
+the interval \code{INTERVAL}.  \code{BEHAVIOR} specifies how overflow
 checking should behave.
+
+Interval should be expressed using the \code{bounded_s<MIN, MAX>} and
+\code{bounded_u<MIN, MAX>} templates, where \code{MIN} and \code{MAX} are
+signed integer in \code{bounded_s} and unsigned integer in
+\code{bounded_u<MIN, MAX>}.\footnote{%%%
+  \code{MIN} and \code{MAX} are always integers (the C++ language does
+not allow floats as template arguments), so to define a \code{sfloat}
+between $0$ and $1$, use \code{range<sfloat,bounded_u<0,1> >}, not
+\code{range<sfloat,bounded_u<0.0,1.0> >}. }%%%
 
 %% This changes the \code{min}inimum and \code{max}imum value of a type.
 %% These values are used during overflow checking.
 
-\code{range<int_u<8>, 10, 25>} is an unsigned integer,
-stored on 8 bits, but restricted to the $[10...25]$ interval.  Any
-attempt to escape this interval will abort the program.  (Because
-\code{strict} is the default behavior.)
+\code{range<int_u<8>, bounded_u<10, 25> >} is thus an unsigned integer,
+stored on 8 bits, but restricted to the $[10...25]$ interval.  Because
+\code{strict} is the default behavior, any attempt to escape this
+interval will abort the program.
 
-% \code{range} changes only the bounds of a type, not
-% the behavior.  So \code{range<int_u16c, 0, 359>}, a integer cycling
-% over the range $[0...359]$, can be useful to represent an angle in
-% degrees.
+For brevity, the \code{range_u} and \code{range_s} shorthands are
+supported.  The above example could be rewritten as
+\code{range_u<int_u<8>, 10, 25 >}
 
-\code{MIN} and \code{MAX} are always integers (the C++ language does not
-allow floats as template arguments), so to define a \code{sfloat}
-between $0$ and $1$, use \code{range<sfloat,0,1>}.
 
-%FIXME: How would we define a float \emph{cycling} over $[0...360[$?
-
-\subsubsection{\code{cycle<T, MIN, MAX>}}
+\subsubsection{\code{cycle<T, INTERVAL>}}
 
 This class defines a type, the values of which can be built from
-\code{T}, and that cycle between \code{MIN} (included) and
-\code{MAX} (excluded).
+\code{T}, and that cycle over \code{INTERVAL}, where \code{INTERVAL} is
+defined using \code{bounded_u<MIN, MAX>} or \code{bounded_s<MIN,MAX>}
+as in \code{range}.  Similarly, the \code{cycle_u} and \code{cycle_s}
+shorthands are supported.
 
-For instance \code{cycle<sfloat, 0, 360>} defines a type which is
-useful to represent angles in degrees.
+For instance \code{typedef cycle_u<sfloat, 0, 360> deg} defines a type
+which is useful to represent angles in degrees.  \code{deg d = 400.0}
+will set \code{d} to \code{40.0}.
+
+For the purpose of cycling, the upper bound of the range, \code{MAX},
+is excluded.  \code{deg d = 360.0} will set \code{d} to \code{0.0}.
 
 Any value implicitely convertible to \code{T} can be involved in an
-arithmetic operation with \code{cycle<T, MIN, MAX>}.
+arithmetic operation with \code{cycle<T, INTERVAL>}.
 
-Any conversion from \code{cycle<T, A, B>} to
-\code{cycle<T, C, D>} must be explicit and should
+Any conversion from \code{cycle<T, bounded_x<A, B> >} to
+\code{cycle<T, bounded_y<C, D> >} must be explicit and should
 respect $B - A = D - C$ (i.e., the
 two cycles have equal length).
 
@@ -478,9 +487,15 @@ For instance \code{typetraits< int_u8 >::interger_type} is \code{unsigned
 int}; \code{typetraits< sfloat >::interger_type} is \code{signed
 int}.
 
-This type is used by the \code{range<T, MIN, MAX, B>} template
-to define the type of it's arguments: \code{MIN} and \code{MAX} both
-have type \code{typetraits< T >::interger_type}.
+% FIXME: Is this type needed anymore?
+
+% This type was initially used by the \code{range<T, MIN, MAX, B>} template
+% to define the type of it's arguments: \code{MIN} and \code{MAX} both
+% have type \code{typetraits< T >::interger_type}.  But it isn't allowed
+% to have template types which depend on a previous argument,
+% like in
+%    template < typename T, typetraits< T >::interger_type V > ...
+% (that's why we use the bounded_s and bounded_u classes instead).
 
 \end{description}
 
