@@ -1,99 +1,14 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 165)
-(Parent-Version oln 10 163)
-(Version-Log "Index: olena/ChangeLog
-from  Giovanni Palma  <giovanni@lrde.epita.fr>
-
-	* tests/morpho/tests/attr_op_cl: Disable dist closing/opening
-	tests.
-
-	* tests/morpho/tests/md5_morpho_attribute_closing_opening_hh12:
-	Disable test.
-
-	* tests/morpho/tests/md5_morpho_attribute_closing_opening_hh13:
-	Disable test.
-
-
-
-Index: olena/tests/morpho/tests/attr_op_cl
---- olena/tests/morpho/tests/attr_op_cl Wed, 10 Mar 2004 16:20:23 +0100 palma_g (oln/k/0_attr_op_cl 1.3 600)
-+++ olena/tests/morpho/tests/attr_op_cl Thu, 15 Apr 2004 13:42:45 +0200 palma_g (oln/k/0_attr_op_cl 1.3 600)
-@@ -68,7 +68,7 @@
-   test_op_cl(int_u8, height, lena, 4);
-   test_op_cl(int_u8, maxvalue, lena, 100);
-   test_op_cl(int_u8, minvalue, lena, 100);
--  test_op_cl(int_u8, dist, lena, 100);
-+  //  test_op_cl(int_u8, dist, lena, 100); FIXME: doesn't work.
-   test_op_cl(int_u8, ball, lena, 100);
-   test_op_cl(int_u8, cube, lena, 50);
- 
-Index: 
-olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh13
---- olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh13 Tue, 23 Mar 2004 14:36:33 +0100 palma_g (oln/m/6_md5_morpho 1.1 600)
-+++ olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh13 Thu, 15 Apr 2004 13:45:15 +0200 palma_g (oln/m/6_md5_morpho 1.1 600)
-@@ -11,16 +11,21 @@
-  
- int main() 
- {
--oln::utils::key::value_type   data_key[16] = {0xf5, 0x8f, 0xe8, 0x56, 0x5d, 0xd6, 0xf1, 0x1b, 0xa0, 0x91, 0x6b, 0x22, 0x7a, 0x3a, 0x25, 0x90};
-+  oln::utils::key::value_type   data_key[16] = {0xf5, 0x8f, 0xe8, 0x56, 0x5d,
-+						0xd6, 0xf1, 0x1b, 0xa0, 0x91,
-+						0x6b, 0x22, 0x7a, 0x3a, 0x25,
-+						0x90};
- 
- oln::utils::key		   key(data_key);
- 
--   typedef oln::image2d<ntg::
--int_u8>	im_type;
-+  typedef oln::image2d<ntg::int_u8>	im_type;
-    im_type im1(oln::load(rdata(\"lena128.pgm\")));
-    im1 = oln::morpho::fast::dist_closing(im1, oln::neighb_c4(), 5);
-    if (oln::utils::md5(im1) == key)
-+    {
-   std::cout << \"OK\" << std::endl;
-+      return true; // XFAIL FIXME: DO NOT GIVE THE SAME RESULT ON x86 and mac.
-+    }
- else
-   {
-     std::cout << \"FAIL\" << std::endl;
-Index: 
-olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh12
---- olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh12 Tue, 23 Mar 2004 14:36:33 +0100 palma_g (oln/m/7_md5_morpho 1.1 600)
-+++ olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh12 Thu, 15 Apr 2004 13:44:25 +0200 palma_g (oln/m/7_md5_morpho 1.1 600)
-@@ -11,16 +11,23 @@
-  
- int main() 
- {
--oln::utils::key::value_type   data_key[16] = {0x8b, 0xd5, 0xbc, 0xc, 0x93, 0x3e, 0x16, 0xc3, 0xce, 0x63, 0xc1, 0x41, 0xf, 0x8f, 0xc2, 0x1a};
-+  oln::utils::key::value_type   data_key[16] = {0x8b, 0xd5, 0xbc, 0xc, 0x93,
-+						0x3e, 0x16, 0xc3, 0xce, 0x63,
-+						0xc1, 0x41, 0xf, 0x8f, 0xc2,
-+						0x1a};
- 
- oln::utils::key		   key(data_key);
- 
--   typedef oln::image2d<ntg::
--int_u8>	im_type;
-+  typedef oln::image2d<ntg::int_u8>	im_type;
-    im_type im1(oln::load(rdata(\"lena128.pgm\")));
-+
-    im1 = oln::morpho::fast::dist_opening(im1, oln::neighb_c4(), 5);
-    if (oln::utils::md5(im1) == key)
-+    {
-   std::cout << \"OK\" << std::endl;
-+
-+      return true; // XFAIL FIXME: DO NOT GIVE THE SAME RESULT ON x86 and mac.
-+    }
- else
-   {
-     std::cout << \"FAIL\" << std::endl;
-
+(Project-Version oln 10 166)
+(Parent-Version oln 10 165)
+(Version-Log "2004-04-13  Niels Van Vliet  <niels@lrde.epita.fr>
+	* doc/ref/Makefile.am: Changed 'make' to '$(MAKE)'
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 15 Apr 2004 13:56:35 +0200")
-(Checkin-Login palma_g)
+(Checkin-Time "Thu, 15 Apr 2004 15:27:06 +0200")
+(Checkin-Login van-vl_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -196,7 +111,7 @@ olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh12
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.7 600))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.3 600))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.4 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.42 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.40 600))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.88 600))
@@ -220,7 +135,7 @@ olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh12
   (doc/demo/tour.cc (oln/d/45_tour.cc 1.13 600))
   (doc/ref/bin () :directory)
   
-  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.17.1.3 600))
+  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.17.1.4 600))
   (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.6.1.5 600))
   (doc/ref/oln-ref.tex (oln/f/14_oln-ref.te 1.3.1.3 600))
   (doc/ref/integre-ref.tex (oln/g/34_ref-types. 1.12 600))
@@ -1539,10 +1454,5 @@ olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh12
   (metalic/mlc/makefile.src (oln/r/3_makefile.s 1.1 600))
   (olena/oln/makefile.src (oln/r/4_makefile.s 1.1 600))
 )
-(Merge-Parents
-  (10.164 complete
-    (tools/swilena/ChangeLog tools/swilena/ChangeLog tools/swilena/ChangeLog r) (tools/swilena/python/tests/Makefile.am tools/swilena/python/tests/Makefile.am tools/swilena/python/tests/Makefile.am r)
-    (tools/swilena/ruby/tests/Makefile.am tools/swilena/ruby/tests/Makefile.am tools/swilena/ruby/tests/Makefile.am r) 
-  )
-)
+(Merge-Parents)
 (New-Merge-Parents)

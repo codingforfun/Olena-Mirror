@@ -1,3 +1,7 @@
+2004-04-13  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* doc/ref/Makefile.am: Changed 'make' to '$(MAKE)'
+
 2004-04-13  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* ref/Makefile.am: Make the makefile use the doxygen defined by

@@ -33,7 +33,7 @@ html.tar.gz: $(HDRS_DEP)
 	$(TAR) -czf $@ html
 
 oln-ref.pdf: html.tar.gz
-	make -C ./latex || echo "Discarding problems..." # FIXME: Find a better way to use large graph with pdflatex.
+	$(MAKE) -C ./latex || echo "Discarding problems..." # FIXME: Find a better way to use large graph with pdflatex.
 	cp latex/refman.pdf ./$@
 
 dist_noinst_DATA = oln-ref.pdf html.tar.gz $(srcdir)/exdoc.pl $(srcdir)/img_conv.pl
