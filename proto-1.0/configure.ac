@@ -189,19 +189,6 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
 ### Stuff pertaining to the documentation
 ###
 
-### The reference manual uses Doxygen
-### FIXME: could be much better.
-
-  AC_ARG_WITH([doc],
- 	      [Doxygen is needed to build the doc],
-	      [AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
-	       AC_CHECK_DOXYGEN_VERSION],
-              [])
-
-## if test -z "$DOXYGEN"; then
-##   AC_MSG_WARN([`doxygen' not found -- `doxygen' must be installed to generate the documentation])
-
-## fi
 
 ### The documentation tree is both a component...
 
@@ -224,6 +211,17 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
                       [doc/ref/Makefile],
     [dnl Configuration for the manuals directory.
 
+     ### The reference manual uses Doxygen
+     ### FIXME: could be much better.
+
+     AC_ARG_WITH([doc-ref],
+                 [Doxygen is needed to build the doc],
+                 [AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
+                 AC_CHECK_DOXYGEN_VERSION],
+                 [])
+
+     AC_ARG_VAR([PERL], [Practical Extraction and Report Language])
+     AC_CHECK_PROGS([PERL], [perl], [$am_aux_dir/missing perl])
      AC_ARG_VAR([TAR], [the tape archiver program])
      AC_CHECK_PROGS([TAR], [tar], [$am_aux_dir/missing tar])
      AC_ARG_VAR([DVIPS], [program to make Postscript from TeX DVI files])
