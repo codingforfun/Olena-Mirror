@@ -1,3 +1,10 @@
+2005-04-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Introduce Metalic abstractions for unary and binary functions.
+
+	* mlc/fun.hh: New file.
+	* mlc/makefile.src (MLC_DEP): Add fun.hh.
+
 2005-04-06  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* mlc/bool.hh: Make clear that ::ret is not ::val.

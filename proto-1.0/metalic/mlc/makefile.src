@@ -1,4 +1,4 @@
-##
+##							-*- Makefile -*-
 ## List of headers in metalic
 ## Include this file to have access to their name.
 ##
@@ -20,6 +20,7 @@ MLC_DEP =					\
   cmp.hh					\
   config/system.hh				\
   contract.hh					\
+  fun.hh					\
   if.hh						\
   is_a.hh					\
   math.hh					\
