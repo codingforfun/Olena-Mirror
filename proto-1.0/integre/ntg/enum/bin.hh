@@ -45,7 +45,8 @@ namespace ntg {
   template <>
   struct props<cat::enum_value, bin> : public default_props<cat::enum_value>
   {
-    enum { max_val = 255 };
+    enum { max_val = 1 };
+    typedef unsigned char io_type;
   };
 
   struct bin : public enum_value<bin>

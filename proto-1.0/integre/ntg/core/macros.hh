@@ -28,8 +28,12 @@
 #ifndef INTEGRE_CORE_MACROS_HH
 # define INTEGRE_CORE_MACROS_HH
 
-# define ntg_max_val(T) ntg::props<ntg_category_type(T),T>::ntg_max_val
+# define ntg_max_val(T) ntg::props<ntg_category_type(T),T>::max_val
 
 # define ntg_nb_comp(T) ntg::props<ntg_category_type(T),T>::nb_comp
+
+# define ntg_comp_type(T) typename ntg::props<ntg_category_type(T),T>::comp_type
+
+# define ntg_io_type(T) typename ntg::props<ntg_category_type(T),T>::io_type
 
 #endif // ! INTEGRE_CORE_MACROS_HH

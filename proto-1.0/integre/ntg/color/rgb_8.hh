@@ -47,6 +47,7 @@ namespace ntg {
     enum { max_val = 255 };
     enum { nb_comp = 3 };
 
+    typedef char io_type;
     typedef unsigned char comp_type;
   };
 
@@ -64,6 +65,12 @@ namespace ntg {
       this->value_[rgb_red] = 0;
       this->value_[rgb_green] = 0;
       this->value_[rgb_blue] = 0;
+    }
+
+    rgb_8(const unsigned char init[3])
+    {
+      for (unsigned i = 0; i < 3; i++)
+	value_[i] = init[i];
     }
 
     rgb_8(unsigned char red,
@@ -104,6 +111,17 @@ namespace ntg {
 	this->value_[rgb_blue] != rhs.blue();
     }
 
+    unsigned char& impl_op_sqbr(unsigned int i)
+    {
+      assert(i < 3);
+      return value_[i];
+    }
+
+    const unsigned char impl_op_sqbr(unsigned int i) const
+    {
+      assert(i < 3);
+      return value_[i];
+    }
 
 
     unsigned char& red()
@@ -145,13 +163,25 @@ namespace ntg {
 } // end of namespace ntg
 
 
+# include <ostream>
+
+std::ostream& operator<<(std::ostream& ostr, const ntg::rgb_8& to_print)
+{
+  ostr << "(" << unsigned(to_print[0])
+       << "," << unsigned(to_print[1])
+       << "," << unsigned(to_print[2])
+       << ")";
+  return ostr;
+}
+
+
 
 namespace mlc {
 
   template <>
   struct traits < ntg::rgb_8 >
   {
-    typedef unsigned char* encoding_type;
+    typedef ntg::rgb_8 encoding_type;
   };
 
 } // end of namespace mlc

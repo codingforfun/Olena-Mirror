@@ -44,6 +44,7 @@ namespace ntg {
   struct default_props < cat::enum_value >
   {
     enum { max_val = 0 };
+    typedef mlc::no_type io_type;
 
   protected:
     default_props() {}
@@ -57,7 +58,7 @@ namespace ntg {
     template <typename V>
     exact_type& operator=(const V& rhs)
     {
-      return this->exact.impl_assign(rhs);
+      return this->exact().impl_assign(rhs);
     }
 
     template <typename V>

@@ -49,6 +49,7 @@ namespace ntg {
     enum { max_val = 0 };
     enum { nb_comp = 0 };
     typedef mlc::undefined_type comp_type;
+    typedef mlc::undefined_type io_type;
 
 
   protected:
@@ -59,6 +60,7 @@ namespace ntg {
   struct color : public mlc::any__best_memory<E>
   {
     typedef E exact_type;
+    typedef typename props<cat::color, E>::comp_type comp_type;
 
     E& operator=(const exact_type& rhs)
     {
@@ -73,6 +75,16 @@ namespace ntg {
     bool operator!=(const exact_type& rhs) const
     {
       return this->exact().impl_not_eq(rhs);
+    }
+
+    comp_type& operator [](const unsigned int &i)
+    {
+      return this->exact().impl_op_sqbr(i);
+    }
+
+    const comp_type operator [](const unsigned int &i) const
+    {
+      return this->exact().impl_op_sqbr(i);
     }
 
   protected:

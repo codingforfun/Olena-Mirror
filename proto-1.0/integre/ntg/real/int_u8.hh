@@ -44,7 +44,8 @@ namespace ntg {
   template <>
   struct props<cat::integer, int_u8> : public default_props<cat::integer>
   {
-    enum { ntg_max_val = 255 };
+    enum { max_val = 255 };
+    typedef char io_type;
   };
 
 
@@ -66,6 +67,12 @@ namespace ntg {
     }
 
     int_u8& impl_assign(const int_u8& rhs)
+    {
+      this->value_ = rhs;
+      return *this;
+    }
+
+    int_u8& impl_assign(const unsigned char& rhs)
     {
       this->value_ = rhs;
       return *this;
@@ -110,7 +117,7 @@ namespace mlc {
   template <>
   struct traits < ntg::int_u8 >
   {
-    typedef char encoding_type;
+    typedef unsigned char encoding_type;
   };
 
 } // end of namespace mlc

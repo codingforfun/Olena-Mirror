@@ -1,3 +1,13 @@
+2005-03-02  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* ntg/real/int_u8.hh: Add i/o support.
+	* ntg/real/integer.hh: Likewise.
+	* ntg/enum/enum.hh: Likewise.
+	* ntg/enum/bin.hh: Likewise.
+	* ntg/core/macros.hh: Likewise.
+	* ntg/color/rgb_8.hh: Likewise.
+	* ntg/color/color.hh: Likewise.
+
 2005-02-18  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* ntg/real/int_u8.hh: Comply with new properties and categories.
