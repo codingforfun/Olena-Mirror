@@ -150,6 +150,7 @@ static void             write_prelude(ofstream&         ofs,
   copyfile(srcdir + "gen_test_utils/prelude", ofs);
 }
 
+// #include <fstream>
 
 static bool             write_postlude_and_test(ofstream&               ofs,
                                                 char*                   filename,
@@ -174,10 +175,15 @@ static bool             write_postlude_and_test(ofstream&               ofs,
         dup2(fd[1],2);
         close(fd[0]);
         close(fd[1]);
-	execlp(CXX, CXX, "-I../..",
-	       Isrcdir("../..").c_str(), Isrcdir("../check").c_str(),
-	       "-L../check", "-lcheck",
-	       filename, NULL);
+	std::string oi = OLN_INCLUDEDIR;
+	if (oi != "")
+	  oi = "-I" + oi;
+	std::string cmdline = 
+	  std::string(CXX) + " " + CXXFLAGS + " " + oi + " " +
+	  Isrcdir("../..") + " " + Isrcdir("../check") + " " +
+	  "-L../check -lcheck " + filename;
+	int ret = system(cmdline.c_str());
+	exit(WEXITSTATUS(ret));
       }
     else
       {
@@ -201,7 +207,7 @@ static bool             write_postlude_and_test(ofstream&               ofs,
 	if ((WEXITSTATUS(status) || ok) && !(WEXITSTATUS(status) && ok))
 	  {
 	    success_log << header.str() << decl.str()
-			<< endl << compile_mesg.str() << endl <<
+			<< endl << compile_mesg.str() << "Exit status = " << WEXITSTATUS(status) << endl <<
 	      "==========================================================================="
 			<< endl;
 	    cerr << (ok ? "PASS" : "XFAIL");
@@ -209,7 +215,7 @@ static bool             write_postlude_and_test(ofstream&               ofs,
 	else
 	  {
 	    fail_log << header.str() << decl.str() << endl << compile_mesg.str()
-		     << endl <<
+		     << "Exit status = " << WEXITSTATUS(status) << endl <<
 	      "==========================================================================="
 		     << endl;
 	    cerr << (ok ? "FAIL" : "XPASS");

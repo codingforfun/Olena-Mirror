@@ -5,7 +5,7 @@ SUBDIRS = @MORPHO_UTILITIES@
 EXTRA_DIST = generate_morpho.sh
 
 AM_CPPFLAGS = -I$(OLN_INCLUDEDIR)
-AM_CXXFLAGS = -Wall -W -ftemplate-depth-50 
+AM_CXXFLAGS = -Wall -W 
 
 bin_PROGRAMS = oln-mosaic-u8 oln-mosaic-u16
 

@@ -151,7 +151,7 @@ int main()
   (if (> (system (string-append "test -f " (pdf b/exoname))) 0)
      (begin
        (psystem "test -f " b/binname " ||\n"
-		"{ mkdir -p bin ; $CXX -Wall -W -I$OLN_INCLUDEDIR -O2 example.cc -o " b/binname " ; }")
+		"{ mkdir -p bin ; $CXXCOMPILE example.cc -o " b/binname " ; }")
        (if (exist? ".exi")
 	  (psystem "cp -f $IMGDIR/" exiname " " b/exiname))
        (if (exist? ".exo")

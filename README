@@ -27,15 +27,28 @@ or <olena-bugs@lrde.epita.fr>.
 
 ----------------------------------------------------------------------
 
-This code has been tested with GCC 2.95.3, GCC 3.0.4, and GCC 3.1.
+This code has been tested with GCC 2.95.3, GCC 3.0.4, GCC 3.1 and GCC
+3.2.
 
-To compile the libray, run
 
-  ./configure
+BUILDING
+========
+
+To compile the libray, first create a build directory with e.g.:
+
+  mkdir build
+
+Then:
+
+  cd build
+  .../configure
   make
 
-If you want to install the headers files (the library IS the set
-of headers, there is no binary) on your system, do
+INSTALLING
+==========
+
+If you want to install the headers files and several command line
+utilities on your system, do
 
   make install
 
@@ -44,31 +57,31 @@ You can tune the '/usr/local/include' part of the path
 by passing an --includedir option to configure. For
 instance
 
-  ./configure --includedir=/foo/bar
+  .../configure --includedir=/foo/bar
   make install
 
 will install the files in /foo/bar/oln.
 
-There are a few programs in the demo/ directory.  You can
-built these programs using `make demo' in this directory.
+There are a few programs in the src/demo/ directory.  You can built
+these programs using `make demo' in this directory.
 
-  cd demo
+  cd src/demo
   make demo
 
-It is also easy to build the demo/ files manually, just include
-the src/ directory in the include search path of the compiler.
+It is also easy to build the src/demo/ files manually, just include
+the Olena source directory in the include search path of the compiler.
 
-  cd demo
-  g++ -I../src -Wall -O2 tour.cc
+  cd src/demo
+  g++ -I../../.. -Wall -O2 tour.cc
 
 With GCC 2.95.x, it's likely you will need to allow the compiler
 to instantiate templates to a greater depth than the default (17),
 using an option like -ftemplate-depth-50.
 
-Finally, the tests/ directory contains a few programs that ensure some
-features of the library behave as expected.  You can run them using
-`make check' from the top directory (be prepared to wait).  If you
-have to work in this area, please read tests/README.
+Finally, the src/tests/ directory contains a few programs that ensure
+some features of the library behave as expected.  You can run them
+using `make check' from the top directory (be prepared to wait).  If
+you have to work in this area, please read tests/README.
 
 ----------------------------------------------------------------------
 

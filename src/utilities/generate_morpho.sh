@@ -1,7 +1,7 @@
 #!/bin/sh
 # generate_toolbox.sh
 #
-# $Id: generate_morpho.sh 1.4 Wed, 04 Dec 2002 14:18:42 +0100 raph $
+# $Id: generate_morpho.sh 1.5 Thu, 05 Dec 2002 17:25:05 +0100 raph $
 
 # Global variables
 DESTDIR=morpho
@@ -701,7 +701,7 @@ FILE=$DESTDIR/Makefile.am
 cat > $FILE <<EOF
 
 AM_CPPFLAGS = -I\$(OLN_INCLUDEDIR)
-AM_CXXFLAGS = -Wall -W -ftemplate-depth-50
+AM_CXXFLAGS = -Wall -W 
 
 bin_PROGRAMS = \\
 EOF

@@ -307,7 +307,7 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA CYGPATH_W PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO AMTAR install_sh STRIP ac_ct_STRIP INSTALL_STRIP_PROGRAM AWK SET_MAKE MAINTAINER_MODE_TRUE MAINTAINER_MODE_FALSE MAINT CXX CXXFLAGS LDFLAGS CPPFLAGS ac_ct_CXX EXEEXT OBJEXT DEPDIR am__include am__quote AMDEP_TRUE AMDEP_FALSE AMDEPBACKSLASH CXXDEPMODE am__fastdepCXX_TRUE am__fastdepCXX_FALSE CXXCPP EGREP OLN_INCLUDEDIR DVIPS TEXI2DVI GETDEFS HEVEA DOC_DIR LIBOBJS LTLIBOBJS'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA CYGPATH_W PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO AMTAR install_sh STRIP ac_ct_STRIP INSTALL_STRIP_PROGRAM AWK SET_MAKE MAINTAINER_MODE_TRUE MAINTAINER_MODE_FALSE MAINT CXX CXXFLAGS LDFLAGS CPPFLAGS ac_ct_CXX EXEEXT OBJEXT DEPDIR am__include am__quote AMDEP_TRUE AMDEP_FALSE AMDEPBACKSLASH CXXDEPMODE am__fastdepCXX_TRUE am__fastdepCXX_FALSE CXXCPP EGREP OLN_SOURCE_DIR OLN_INCLUDEDIR DVIPS TEXI2DVI GETDEFS HEVEA DOC_DIR LIBOBJS LTLIBOBJS'
 ac_subst_files=''
 
 # Initialize some variables set by options.
@@ -1253,8 +1253,9 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
+am__api_version="1.7"
 ac_aux_dir=
-for ac_dir in ../tools $srcdir/../tools; do
+for ac_dir in $srcdir $srcdir/.. $srcdir/../..; do
   if test -f $ac_dir/install-sh; then
     ac_aux_dir=$ac_dir
     ac_install_sh="$ac_aux_dir/install-sh -c"
@@ -1270,15 +1271,14 @@ for ac_dir in ../tools $srcdir/../tools; do
   fi
 done
 if test -z "$ac_aux_dir"; then
-  { { echo "$as_me:$LINENO: error: cannot find install-sh or install.sh in ../tools $srcdir/../tools" >&5
-echo "$as_me: error: cannot find install-sh or install.sh in ../tools $srcdir/../tools" >&2;}
+  { { echo "$as_me:$LINENO: error: cannot find install-sh or install.sh in $srcdir $srcdir/.. $srcdir/../.." >&5
+echo "$as_me: error: cannot find install-sh or install.sh in $srcdir $srcdir/.. $srcdir/../.." >&2;}
    { (exit 1); exit 1; }; }
 fi
 ac_config_guess="$SHELL $ac_aux_dir/config.guess"
 ac_config_sub="$SHELL $ac_aux_dir/config.sub"
 ac_configure="$SHELL $ac_aux_dir/configure" # This should be Cygnus configure.
 
-am__api_version="1.7"
 # Find a good install program.  We prefer a C program (faster),
 # so one script is as good as another.  But avoid the broken or
 # incompatible versions:
@@ -1659,6 +1659,10 @@ fi
 
 
 
+oln_dir=no
+if test -r $srcdir/../oln/config/pconf.hh; then
+  oln_dir=..
+fi
 rm -f .deps 2>/dev/null
 mkdir .deps 2>/dev/null
 if test -d .deps; then
@@ -2717,46 +2721,68 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
 
   OLN_INCLUDEDIR=""
-  ac_save_CXXFLAGS="$CXXFLAGS"
-  ac_save_CPPFLAGS="$CPPFLAGS"
+  oln_save_CXXFLAGS="$CXXFLAGS"
+  oln_save_CPPFLAGS="$CPPFLAGS"
 
   { echo "$as_me:$LINENO: checking for Olena headers" >&5
 echo "$as_me: checking for Olena headers" >&6;}
 
-  within_olena_source_tree=..
+  within_olena_source_tree=$oln_dir
   if test x$within_olena_source_tree != xno; then
-     { echo "$as_me:$LINENO: Olena seems to lay around..." >&5
-echo "$as_me: Olena seems to lay around..." >&6;}
+     echo "$as_me:$LINENO: checking for Olena around us ($within_olena_source_tree)" >&5
+echo $ECHO_N "checking for Olena around us ($within_olena_source_tree)... $ECHO_C" >&6
      within_olena_source_tree=`( cd $srcdir; cd $within_olena_source_tree; pwd )`
-     OLN_INCLUDEDIR="${within_olena_source_tree}"
-     CXXFLAGS="-I${within_olena_source_tree}"
-     CPPFLAGS="-I${within_olena_source_tree}"
+     if test -r $within_olena_source_tree/oln/config/pconf.hh; then
+        echo "$as_me:$LINENO: result: yes, present" >&5
+echo "${ECHO_T}yes, present" >&6
+        OLN_SOURCE_DIR="${within_olena_source_tree}/oln"
+        OLN_INCLUDEDIR="${within_olena_source_tree}"
+        CXXFLAGS="-I${within_olena_source_tree} $CXXFLAGS"
+        CPPFLAGS="-I${within_olena_source_tree} $CPPFLAGS"
+     else
+        echo "$as_me:$LINENO: result: no, searching again" >&5
+echo "${ECHO_T}no, searching again" >&6
+     fi
   fi
 
   if test x$oln_include_prefix != x ; then
-     OLN_INCLUDEDIR="$oln_include_prefix"
-     CXXFLAGS="-I$oln_include_prefix $CXXFLAGS"
-     CPPFLAGS="-I$oln_include_prefix $CPPFLAGS"
+     echo "$as_me:$LINENO: checking for Olena in $oln_include_prefix" >&5
+echo $ECHO_N "checking for Olena in $oln_include_prefix... $ECHO_C" >&6
+     if test -r $oln_include_prefix/oln/config/pconf.hh; then
+        echo "$as_me:$LINENO: result: yes, present" >&5
+echo "${ECHO_T}yes, present" >&6
+        if test x$OLN_INCLUDEDIR != x ; then
+           { echo "$as_me:$LINENO: WARNING: Olena present in $OLN_INCLUDEDIR, but using version in $oln_include_prefix" >&5
+echo "$as_me: WARNING: Olena present in $OLN_INCLUDEDIR, but using version in $oln_include_prefix" >&2;}
+        fi
+        OLN_SOURCE_DIR="$oln_include_prefix/oln"
+        OLN_INCLUDEDIR="$oln_include_prefix"
+        CXXFLAGS="-I$oln_include_prefix $CXXFLAGS"
+        CPPFLAGS="-I$oln_include_prefix $CPPFLAGS"
+     else
+        echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6
+     fi
   fi
 
   have_olena=yes
-  if test "${ac_cv_header_oln_basics_hh+set}" = set; then
-  echo "$as_me:$LINENO: checking for oln/basics.hh" >&5
-echo $ECHO_N "checking for oln/basics.hh... $ECHO_C" >&6
-if test "${ac_cv_header_oln_basics_hh+set}" = set; then
+  if test "${ac_cv_header_oln_config_pconf_hh+set}" = set; then
+  echo "$as_me:$LINENO: checking for oln/config/pconf.hh" >&5
+echo $ECHO_N "checking for oln/config/pconf.hh... $ECHO_C" >&6
+if test "${ac_cv_header_oln_config_pconf_hh+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 fi
-echo "$as_me:$LINENO: result: $ac_cv_header_oln_basics_hh" >&5
-echo "${ECHO_T}$ac_cv_header_oln_basics_hh" >&6
+echo "$as_me:$LINENO: result: $ac_cv_header_oln_config_pconf_hh" >&5
+echo "${ECHO_T}$ac_cv_header_oln_config_pconf_hh" >&6
 else
   # Is the header compilable?
-echo "$as_me:$LINENO: checking oln/basics.hh usability" >&5
-echo $ECHO_N "checking oln/basics.hh usability... $ECHO_C" >&6
+echo "$as_me:$LINENO: checking oln/config/pconf.hh usability" >&5
+echo $ECHO_N "checking oln/config/pconf.hh usability... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
 #line $LINENO "configure"
 #include "confdefs.h"
 $ac_includes_default
-#include <oln/basics.hh>
+#include <oln/config/pconf.hh>
 _ACEOF
 rm -f conftest.$ac_objext
 if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
@@ -2781,12 +2807,12 @@ echo "$as_me:$LINENO: result: $ac_header_compiler" >&5
 echo "${ECHO_T}$ac_header_compiler" >&6
 
 # Is the header present?
-echo "$as_me:$LINENO: checking oln/basics.hh presence" >&5
-echo $ECHO_N "checking oln/basics.hh presence... $ECHO_C" >&6
+echo "$as_me:$LINENO: checking oln/config/pconf.hh presence" >&5
+echo $ECHO_N "checking oln/config/pconf.hh presence... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
 #line $LINENO "configure"
 #include "confdefs.h"
-#include <oln/basics.hh>
+#include <oln/config/pconf.hh>
 _ACEOF
 if { (eval echo "$as_me:$LINENO: \"$ac_cpp conftest.$ac_ext\"") >&5
   (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
@@ -2818,30 +2844,30 @@ echo "${ECHO_T}$ac_header_preproc" >&6
 # So?  What about this header?
 case $ac_header_compiler:$ac_header_preproc in
   yes:no )
-    { echo "$as_me:$LINENO: WARNING: oln/basics.hh: accepted by the compiler, rejected by the preprocessor!" >&5
-echo "$as_me: WARNING: oln/basics.hh: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:$LINENO: WARNING: oln/basics.hh: proceeding with the preprocessor's result" >&5
-echo "$as_me: WARNING: oln/basics.hh: proceeding with the preprocessor's result" >&2;};;
+    { echo "$as_me:$LINENO: WARNING: oln/config/pconf.hh: accepted by the compiler, rejected by the preprocessor!" >&5
+echo "$as_me: WARNING: oln/config/pconf.hh: accepted by the compiler, rejected by the preprocessor!" >&2;}
+    { echo "$as_me:$LINENO: WARNING: oln/config/pconf.hh: proceeding with the preprocessor's result" >&5
+echo "$as_me: WARNING: oln/config/pconf.hh: proceeding with the preprocessor's result" >&2;};;
   no:yes )
-    { echo "$as_me:$LINENO: WARNING: oln/basics.hh: present but cannot be compiled" >&5
-echo "$as_me: WARNING: oln/basics.hh: present but cannot be compiled" >&2;}
-    { echo "$as_me:$LINENO: WARNING: oln/basics.hh: check for missing prerequisite headers?" >&5
-echo "$as_me: WARNING: oln/basics.hh: check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:$LINENO: WARNING: oln/basics.hh: proceeding with the preprocessor's result" >&5
-echo "$as_me: WARNING: oln/basics.hh: proceeding with the preprocessor's result" >&2;};;
+    { echo "$as_me:$LINENO: WARNING: oln/config/pconf.hh: present but cannot be compiled" >&5
+echo "$as_me: WARNING: oln/config/pconf.hh: present but cannot be compiled" >&2;}
+    { echo "$as_me:$LINENO: WARNING: oln/config/pconf.hh: check for missing prerequisite headers?" >&5
+echo "$as_me: WARNING: oln/config/pconf.hh: check for missing prerequisite headers?" >&2;}
+    { echo "$as_me:$LINENO: WARNING: oln/config/pconf.hh: proceeding with the preprocessor's result" >&5
+echo "$as_me: WARNING: oln/config/pconf.hh: proceeding with the preprocessor's result" >&2;};;
 esac
-echo "$as_me:$LINENO: checking for oln/basics.hh" >&5
-echo $ECHO_N "checking for oln/basics.hh... $ECHO_C" >&6
-if test "${ac_cv_header_oln_basics_hh+set}" = set; then
+echo "$as_me:$LINENO: checking for oln/config/pconf.hh" >&5
+echo $ECHO_N "checking for oln/config/pconf.hh... $ECHO_C" >&6
+if test "${ac_cv_header_oln_config_pconf_hh+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  ac_cv_header_oln_basics_hh=$ac_header_preproc
+  ac_cv_header_oln_config_pconf_hh=$ac_header_preproc
 fi
-echo "$as_me:$LINENO: result: $ac_cv_header_oln_basics_hh" >&5
-echo "${ECHO_T}$ac_cv_header_oln_basics_hh" >&6
+echo "$as_me:$LINENO: result: $ac_cv_header_oln_config_pconf_hh" >&5
+echo "${ECHO_T}$ac_cv_header_oln_config_pconf_hh" >&6
 
 fi
-if test $ac_cv_header_oln_basics_hh = yes; then
+if test $ac_cv_header_oln_config_pconf_hh = yes; then
   :
 else
   have_olena=no
@@ -2851,18 +2877,69 @@ fi
 
   if test $have_olena = yes; then
      if test x$OLN_INCLUDEDIR != x; then
-        { echo "$as_me:$LINENO: Olena was found in $OLN_INCLUDEDIR, good." >&5
-echo "$as_me: Olena was found in $OLN_INCLUDEDIR, good." >&6;}
-     else
-        echo "$as_me:$LINENO: result: Olena was found, good." >&5
-echo "${ECHO_T}Olena was found, good." >&6
+        { echo "$as_me:$LINENO: using include path $OLN_INCLUDEDIR to find Olena." >&5
+echo "$as_me: using include path $OLN_INCLUDEDIR to find Olena." >&6;}
+     fi
+     if test -z "$OLN_SOURCE_DIR"; then
+        echo "$as_me:$LINENO: checking for location of Olena headers" >&5
+echo $ECHO_N "checking for location of Olena headers... $ECHO_C" >&6
+        OLN_SOURCE_DIR=no
+        if test "$cross_compiling" = yes; then
+  { { echo "$as_me:$LINENO: error: cannot run test program while cross compiling" >&5
+echo "$as_me: error: cannot run test program while cross compiling" >&2;}
+   { (exit 1); exit 1; }; }
+else
+  cat >conftest.$ac_ext <<_ACEOF
+#line $LINENO "configure"
+#include "confdefs.h"
+
+#include <oln/config/pconf.hh>
+#include <fstream>
+int main(void) { std::ofstream f("conftest.oln"); f << OLN_SOURCE_DIR; return 0; }
+
+_ACEOF
+rm -f conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  OLN_SOURCE_DIR=`cat conftest.oln`
+else
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+cat conftest.$ac_ext >&5
+fi
+rm -f core core.* *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+fi
+        if test x$OLN_SOURCE_DIR != xno; then
+             if test -r $OLN_SOURCE_DIR/config/pconf.hh; then
+                echo "$as_me:$LINENO: result: $OLN_SOURCE_DIR" >&5
+echo "${ECHO_T}$OLN_SOURCE_DIR" >&6
+             else
+	        echo "$as_me:$LINENO: result: duh ?" >&5
+echo "${ECHO_T}duh ?" >&6
+	        { echo "$as_me:$LINENO: WARNING: Olena advertises $OLN_SOURCE_DIR but $OLN_SOURCE_DIR/config/pconf.hh not found" >&5
+echo "$as_me: WARNING: Olena advertises $OLN_SOURCE_DIR but $OLN_SOURCE_DIR/config/pconf.hh not found" >&2;}
+	     fi
+        else
+            OLN_SOURCE_DIR=''
+            echo "$as_me:$LINENO: result: unknown" >&5
+echo "${ECHO_T}unknown" >&6
+        fi
      fi
   else
      { echo "$as_me:$LINENO: WARNING: *** Olena source headers not found. Expect problems." >&5
 echo "$as_me: WARNING: *** Olena source headers not found. Expect problems." >&2;}
-     CXXFLAGS="$ac_save_CXXFLAGS"
-     CPPFLAGS="$ac_save_CPPFLAGS"
   fi
+  CXXFLAGS="$oln_save_CXXFLAGS"
+  CPPFLAGS="$oln_save_CPPFLAGS"
+
 
 
 
@@ -2871,6 +2948,113 @@ ac_cpp='$CPP $CPPFLAGS'
 ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
+
+
+
+  ac_ext=cc
+ac_cpp='$CXXCPP $CPPFLAGS'
+ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
+
+
+  cxx_tdepth=50
+
+  echo "$as_me:$LINENO: checking for automatic C++ template depth adjustment by the compiler, upto $cxx_tdepth" >&5
+echo $ECHO_N "checking for automatic C++ template depth adjustment by the compiler, upto $cxx_tdepth... $ECHO_C" >&6
+
+  oln_save_CPPFLAGS="$CPPFLAGS"
+  CPPFLAGS="$CPPFLAGS -DTDEPTH=$cxx_tdepth"
+  if test "$cross_compiling" = yes; then
+  { { echo "$as_me:$LINENO: error: cannot run test program while cross compiling" >&5
+echo "$as_me: error: cannot run test program while cross compiling" >&2;}
+   { (exit 1); exit 1; }; }
+else
+  cat >conftest.$ac_ext <<_ACEOF
+#line $LINENO "configure"
+#include "confdefs.h"
+
+   template<unsigned n> struct rec { typedef typename rec<n-1>::ret ret; };
+   template<> struct rec<0> { typedef int ret; };
+   int main(void) { rec<TDEPTH>::ret i = 0; return i; }
+
+_ACEOF
+rm -f conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  echo "$as_me:$LINENO: result: yes" >&5
+echo "${ECHO_T}yes" >&6
+else
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+cat conftest.$ac_ext >&5
+( exit $ac_status )
+
+     oln_save_CXXFLAGS="$CXXFLAGS"
+     CXXFLAGS="$CXXFLAGS -ftemplate-depth-$cxx_tdepth"
+     if test "$cross_compiling" = yes; then
+  { { echo "$as_me:$LINENO: error: cannot run test program while cross compiling" >&5
+echo "$as_me: error: cannot run test program while cross compiling" >&2;}
+   { (exit 1); exit 1; }; }
+else
+  cat >conftest.$ac_ext <<_ACEOF
+#line $LINENO "configure"
+#include "confdefs.h"
+
+        template<unsigned n> struct rec { typedef typename rec<n-1>::ret ret; };
+        template<> struct rec<0> { typedef int ret; };
+        int main(void) { rec<TDEPTH>::ret i = 0; return i; }
+
+_ACEOF
+rm -f conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  echo "$as_me:$LINENO: result: yes, with -ftemplate-depth-$cxx_tdepth" >&5
+echo "${ECHO_T}yes, with -ftemplate-depth-$cxx_tdepth" >&6
+else
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+cat conftest.$ac_ext >&5
+( exit $ac_status )
+
+          echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6
+	  { echo "$as_me:$LINENO: WARNING: deep template recursions ($cxx_tdepth) not supported. Sorry." >&5
+echo "$as_me: WARNING: deep template recursions ($cxx_tdepth) not supported. Sorry." >&2;}
+          CXXFLAGS="$oln_save_CXXFLAGS"
+
+fi
+rm -f core core.* *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+fi
+
+fi
+rm -f core core.* *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+fi
+  CPPFLAGS="$oln_save_CPPFLAGS"
+
+  ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
 
 
 
@@ -3888,6 +4072,7 @@ s,@am__fastdepCXX_TRUE@,$am__fastdepCXX_TRUE,;t t
 s,@am__fastdepCXX_FALSE@,$am__fastdepCXX_FALSE,;t t
 s,@CXXCPP@,$CXXCPP,;t t
 s,@EGREP@,$EGREP,;t t
+s,@OLN_SOURCE_DIR@,$OLN_SOURCE_DIR,;t t
 s,@OLN_INCLUDEDIR@,$OLN_INCLUDEDIR,;t t
 s,@DVIPS@,$DVIPS,;t t
 s,@TEXI2DVI@,$TEXI2DVI,;t t

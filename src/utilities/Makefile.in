@@ -76,6 +76,7 @@ MAKEINFO = @MAKEINFO@
 MORPHO_UTILITIES = @MORPHO_UTILITIES@
 OBJEXT = @OBJEXT@
 OLN_INCLUDEDIR = @OLN_INCLUDEDIR@
+OLN_SOURCE_DIR = @OLN_SOURCE_DIR@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
@@ -126,7 +127,7 @@ SUBDIRS = @MORPHO_UTILITIES@
 EXTRA_DIST = generate_morpho.sh
 
 AM_CPPFLAGS = -I$(OLN_INCLUDEDIR)
-AM_CXXFLAGS = -Wall -W -ftemplate-depth-50 
+AM_CXXFLAGS = -Wall -W 
 
 bin_PROGRAMS = oln-mosaic-u8 oln-mosaic-u16
 
@@ -136,6 +137,7 @@ oln_mosaic_u16_SOURCES = mosaic.cc
 oln_mosaic_u16_CXXFLAGS = $(AM_CXXFLAGS) -DTYPE=int_u16
 subdir = utilities
 mkinstalldirs = $(SHELL) $(top_srcdir)/../tools/mkinstalldirs
+CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 bin_PROGRAMS = oln-mosaic-u8$(EXEEXT) oln-mosaic-u16$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS)
@@ -151,7 +153,7 @@ oln_mosaic_u8_LDADD = $(LDADD)
 oln_mosaic_u8_DEPENDENCIES =
 oln_mosaic_u8_LDFLAGS =
 
-DEFAULT_INCLUDES =  -I. -I$(srcdir)
+DEFAULT_INCLUDES =  -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/../tools/depcomp
 am__depfiles_maybe = depfiles
 @AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/oln_mosaic_u16-mosaic.Po \

@@ -307,7 +307,7 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA CYGPATH_W PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO AMTAR install_sh STRIP ac_ct_STRIP INSTALL_STRIP_PROGRAM AWK SET_MAKE MAINTAINER_MODE_TRUE MAINTAINER_MODE_FALSE MAINT CXX CXXFLAGS LDFLAGS CPPFLAGS ac_ct_CXX EXEEXT OBJEXT DEPDIR am__include am__quote AMDEP_TRUE AMDEP_FALSE AMDEPBACKSLASH CXXDEPMODE am__fastdepCXX_TRUE am__fastdepCXX_FALSE RANLIB ac_ct_RANLIB UTILITIES MORPHO_UTILITIES CXXCPP EGREP OLN_INCLUDEDIR CC CFLAGS ac_ct_CC CCDEPMODE am__fastdepCC_TRUE am__fastdepCC_FALSE CPP ZLIB_CFLAGS ZLIB_LDFLAGS FFTW_CFLAGS FFTW_LDFLAGS LIBOBJS LTLIBOBJS'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA CYGPATH_W PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO AMTAR install_sh STRIP ac_ct_STRIP INSTALL_STRIP_PROGRAM AWK SET_MAKE MAINTAINER_MODE_TRUE MAINTAINER_MODE_FALSE MAINT CXX CXXFLAGS LDFLAGS CPPFLAGS ac_ct_CXX EXEEXT OBJEXT DEPDIR am__include am__quote AMDEP_TRUE AMDEP_FALSE AMDEPBACKSLASH CXXDEPMODE am__fastdepCXX_TRUE am__fastdepCXX_FALSE RANLIB ac_ct_RANLIB UTILITIES MORPHO_UTILITIES CXXCPP EGREP OLN_SOURCE_DIR OLN_INCLUDEDIR CC CFLAGS ac_ct_CC CCDEPMODE am__fastdepCC_TRUE am__fastdepCC_FALSE CPP ZLIB_CFLAGS ZLIB_LDFLAGS FFTW_CFLAGS FFTW_LDFLAGS LIBOBJS LTLIBOBJS'
 ac_subst_files=''
 
 # Initialize some variables set by options.
@@ -2848,46 +2848,68 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
 
   OLN_INCLUDEDIR=""
-  ac_save_CXXFLAGS="$CXXFLAGS"
-  ac_save_CPPFLAGS="$CPPFLAGS"
+  oln_save_CXXFLAGS="$CXXFLAGS"
+  oln_save_CPPFLAGS="$CPPFLAGS"
 
   { echo "$as_me:$LINENO: checking for Olena headers" >&5
 echo "$as_me: checking for Olena headers" >&6;}
 
   within_olena_source_tree=..
   if test x$within_olena_source_tree != xno; then
-     { echo "$as_me:$LINENO: Olena seems to lay around..." >&5
-echo "$as_me: Olena seems to lay around..." >&6;}
+     echo "$as_me:$LINENO: checking for Olena around us ($within_olena_source_tree)" >&5
+echo $ECHO_N "checking for Olena around us ($within_olena_source_tree)... $ECHO_C" >&6
      within_olena_source_tree=`( cd $srcdir; cd $within_olena_source_tree; pwd )`
-     OLN_INCLUDEDIR="${within_olena_source_tree}"
-     CXXFLAGS="-I${within_olena_source_tree}"
-     CPPFLAGS="-I${within_olena_source_tree}"
+     if test -r $within_olena_source_tree/oln/config/pconf.hh; then
+        echo "$as_me:$LINENO: result: yes, present" >&5
+echo "${ECHO_T}yes, present" >&6
+        OLN_SOURCE_DIR="${within_olena_source_tree}/oln"
+        OLN_INCLUDEDIR="${within_olena_source_tree}"
+        CXXFLAGS="-I${within_olena_source_tree} $CXXFLAGS"
+        CPPFLAGS="-I${within_olena_source_tree} $CPPFLAGS"
+     else
+        echo "$as_me:$LINENO: result: no, searching again" >&5
+echo "${ECHO_T}no, searching again" >&6
+     fi
   fi
 
   if test x$oln_include_prefix != x ; then
-     OLN_INCLUDEDIR="$oln_include_prefix"
-     CXXFLAGS="-I$oln_include_prefix $CXXFLAGS"
-     CPPFLAGS="-I$oln_include_prefix $CPPFLAGS"
+     echo "$as_me:$LINENO: checking for Olena in $oln_include_prefix" >&5
+echo $ECHO_N "checking for Olena in $oln_include_prefix... $ECHO_C" >&6
+     if test -r $oln_include_prefix/oln/config/pconf.hh; then
+        echo "$as_me:$LINENO: result: yes, present" >&5
+echo "${ECHO_T}yes, present" >&6
+        if test x$OLN_INCLUDEDIR != x ; then
+           { echo "$as_me:$LINENO: WARNING: Olena present in $OLN_INCLUDEDIR, but using version in $oln_include_prefix" >&5
+echo "$as_me: WARNING: Olena present in $OLN_INCLUDEDIR, but using version in $oln_include_prefix" >&2;}
+        fi
+        OLN_SOURCE_DIR="$oln_include_prefix/oln"
+        OLN_INCLUDEDIR="$oln_include_prefix"
+        CXXFLAGS="-I$oln_include_prefix $CXXFLAGS"
+        CPPFLAGS="-I$oln_include_prefix $CPPFLAGS"
+     else
+        echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6
+     fi
   fi
 
   have_olena=yes
-  if test "${ac_cv_header_oln_basics_hh+set}" = set; then
-  echo "$as_me:$LINENO: checking for oln/basics.hh" >&5
-echo $ECHO_N "checking for oln/basics.hh... $ECHO_C" >&6
-if test "${ac_cv_header_oln_basics_hh+set}" = set; then
+  if test "${ac_cv_header_oln_config_pconf_hh+set}" = set; then
+  echo "$as_me:$LINENO: checking for oln/config/pconf.hh" >&5
+echo $ECHO_N "checking for oln/config/pconf.hh... $ECHO_C" >&6
+if test "${ac_cv_header_oln_config_pconf_hh+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 fi
-echo "$as_me:$LINENO: result: $ac_cv_header_oln_basics_hh" >&5
-echo "${ECHO_T}$ac_cv_header_oln_basics_hh" >&6
+echo "$as_me:$LINENO: result: $ac_cv_header_oln_config_pconf_hh" >&5
+echo "${ECHO_T}$ac_cv_header_oln_config_pconf_hh" >&6
 else
   # Is the header compilable?
-echo "$as_me:$LINENO: checking oln/basics.hh usability" >&5
-echo $ECHO_N "checking oln/basics.hh usability... $ECHO_C" >&6
+echo "$as_me:$LINENO: checking oln/config/pconf.hh usability" >&5
+echo $ECHO_N "checking oln/config/pconf.hh usability... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
 #line $LINENO "configure"
 #include "confdefs.h"
 $ac_includes_default
-#include <oln/basics.hh>
+#include <oln/config/pconf.hh>
 _ACEOF
 rm -f conftest.$ac_objext
 if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
@@ -2912,12 +2934,12 @@ echo "$as_me:$LINENO: result: $ac_header_compiler" >&5
 echo "${ECHO_T}$ac_header_compiler" >&6
 
 # Is the header present?
-echo "$as_me:$LINENO: checking oln/basics.hh presence" >&5
-echo $ECHO_N "checking oln/basics.hh presence... $ECHO_C" >&6
+echo "$as_me:$LINENO: checking oln/config/pconf.hh presence" >&5
+echo $ECHO_N "checking oln/config/pconf.hh presence... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
 #line $LINENO "configure"
 #include "confdefs.h"
-#include <oln/basics.hh>
+#include <oln/config/pconf.hh>
 _ACEOF
 if { (eval echo "$as_me:$LINENO: \"$ac_cpp conftest.$ac_ext\"") >&5
   (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
@@ -2949,30 +2971,30 @@ echo "${ECHO_T}$ac_header_preproc" >&6
 # So?  What about this header?
 case $ac_header_compiler:$ac_header_preproc in
   yes:no )
-    { echo "$as_me:$LINENO: WARNING: oln/basics.hh: accepted by the compiler, rejected by the preprocessor!" >&5
-echo "$as_me: WARNING: oln/basics.hh: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:$LINENO: WARNING: oln/basics.hh: proceeding with the preprocessor's result" >&5
-echo "$as_me: WARNING: oln/basics.hh: proceeding with the preprocessor's result" >&2;};;
+    { echo "$as_me:$LINENO: WARNING: oln/config/pconf.hh: accepted by the compiler, rejected by the preprocessor!" >&5
+echo "$as_me: WARNING: oln/config/pconf.hh: accepted by the compiler, rejected by the preprocessor!" >&2;}
+    { echo "$as_me:$LINENO: WARNING: oln/config/pconf.hh: proceeding with the preprocessor's result" >&5
+echo "$as_me: WARNING: oln/config/pconf.hh: proceeding with the preprocessor's result" >&2;};;
   no:yes )
-    { echo "$as_me:$LINENO: WARNING: oln/basics.hh: present but cannot be compiled" >&5
-echo "$as_me: WARNING: oln/basics.hh: present but cannot be compiled" >&2;}
-    { echo "$as_me:$LINENO: WARNING: oln/basics.hh: check for missing prerequisite headers?" >&5
-echo "$as_me: WARNING: oln/basics.hh: check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:$LINENO: WARNING: oln/basics.hh: proceeding with the preprocessor's result" >&5
-echo "$as_me: WARNING: oln/basics.hh: proceeding with the preprocessor's result" >&2;};;
+    { echo "$as_me:$LINENO: WARNING: oln/config/pconf.hh: present but cannot be compiled" >&5
+echo "$as_me: WARNING: oln/config/pconf.hh: present but cannot be compiled" >&2;}
+    { echo "$as_me:$LINENO: WARNING: oln/config/pconf.hh: check for missing prerequisite headers?" >&5
+echo "$as_me: WARNING: oln/config/pconf.hh: check for missing prerequisite headers?" >&2;}
+    { echo "$as_me:$LINENO: WARNING: oln/config/pconf.hh: proceeding with the preprocessor's result" >&5
+echo "$as_me: WARNING: oln/config/pconf.hh: proceeding with the preprocessor's result" >&2;};;
 esac
-echo "$as_me:$LINENO: checking for oln/basics.hh" >&5
-echo $ECHO_N "checking for oln/basics.hh... $ECHO_C" >&6
-if test "${ac_cv_header_oln_basics_hh+set}" = set; then
+echo "$as_me:$LINENO: checking for oln/config/pconf.hh" >&5
+echo $ECHO_N "checking for oln/config/pconf.hh... $ECHO_C" >&6
+if test "${ac_cv_header_oln_config_pconf_hh+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  ac_cv_header_oln_basics_hh=$ac_header_preproc
+  ac_cv_header_oln_config_pconf_hh=$ac_header_preproc
 fi
-echo "$as_me:$LINENO: result: $ac_cv_header_oln_basics_hh" >&5
-echo "${ECHO_T}$ac_cv_header_oln_basics_hh" >&6
+echo "$as_me:$LINENO: result: $ac_cv_header_oln_config_pconf_hh" >&5
+echo "${ECHO_T}$ac_cv_header_oln_config_pconf_hh" >&6
 
 fi
-if test $ac_cv_header_oln_basics_hh = yes; then
+if test $ac_cv_header_oln_config_pconf_hh = yes; then
   :
 else
   have_olena=no
@@ -2982,18 +3004,69 @@ fi
 
   if test $have_olena = yes; then
      if test x$OLN_INCLUDEDIR != x; then
-        { echo "$as_me:$LINENO: Olena was found in $OLN_INCLUDEDIR, good." >&5
-echo "$as_me: Olena was found in $OLN_INCLUDEDIR, good." >&6;}
-     else
-        echo "$as_me:$LINENO: result: Olena was found, good." >&5
-echo "${ECHO_T}Olena was found, good." >&6
+        { echo "$as_me:$LINENO: using include path $OLN_INCLUDEDIR to find Olena." >&5
+echo "$as_me: using include path $OLN_INCLUDEDIR to find Olena." >&6;}
+     fi
+     if test -z "$OLN_SOURCE_DIR"; then
+        echo "$as_me:$LINENO: checking for location of Olena headers" >&5
+echo $ECHO_N "checking for location of Olena headers... $ECHO_C" >&6
+        OLN_SOURCE_DIR=no
+        if test "$cross_compiling" = yes; then
+  { { echo "$as_me:$LINENO: error: cannot run test program while cross compiling" >&5
+echo "$as_me: error: cannot run test program while cross compiling" >&2;}
+   { (exit 1); exit 1; }; }
+else
+  cat >conftest.$ac_ext <<_ACEOF
+#line $LINENO "configure"
+#include "confdefs.h"
+
+#include <oln/config/pconf.hh>
+#include <fstream>
+int main(void) { std::ofstream f("conftest.oln"); f << OLN_SOURCE_DIR; return 0; }
+
+_ACEOF
+rm -f conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  OLN_SOURCE_DIR=`cat conftest.oln`
+else
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+cat conftest.$ac_ext >&5
+fi
+rm -f core core.* *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+fi
+        if test x$OLN_SOURCE_DIR != xno; then
+             if test -r $OLN_SOURCE_DIR/config/pconf.hh; then
+                echo "$as_me:$LINENO: result: $OLN_SOURCE_DIR" >&5
+echo "${ECHO_T}$OLN_SOURCE_DIR" >&6
+             else
+	        echo "$as_me:$LINENO: result: duh ?" >&5
+echo "${ECHO_T}duh ?" >&6
+	        { echo "$as_me:$LINENO: WARNING: Olena advertises $OLN_SOURCE_DIR but $OLN_SOURCE_DIR/config/pconf.hh not found" >&5
+echo "$as_me: WARNING: Olena advertises $OLN_SOURCE_DIR but $OLN_SOURCE_DIR/config/pconf.hh not found" >&2;}
+	     fi
+        else
+            OLN_SOURCE_DIR=''
+            echo "$as_me:$LINENO: result: unknown" >&5
+echo "${ECHO_T}unknown" >&6
+        fi
      fi
   else
      { echo "$as_me:$LINENO: WARNING: *** Olena source headers not found. Expect problems." >&5
 echo "$as_me: WARNING: *** Olena source headers not found. Expect problems." >&2;}
-     CXXFLAGS="$ac_save_CXXFLAGS"
-     CPPFLAGS="$ac_save_CPPFLAGS"
   fi
+  CXXFLAGS="$oln_save_CXXFLAGS"
+  CPPFLAGS="$oln_save_CPPFLAGS"
+
 
 
 
@@ -3002,6 +3075,113 @@ ac_cpp='$CPP $CPPFLAGS'
 ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
+
+
+
+  ac_ext=cc
+ac_cpp='$CXXCPP $CPPFLAGS'
+ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
+
+
+  cxx_tdepth=50
+
+  echo "$as_me:$LINENO: checking for automatic C++ template depth adjustment by the compiler, upto $cxx_tdepth" >&5
+echo $ECHO_N "checking for automatic C++ template depth adjustment by the compiler, upto $cxx_tdepth... $ECHO_C" >&6
+
+  oln_save_CPPFLAGS="$CPPFLAGS"
+  CPPFLAGS="$CPPFLAGS -DTDEPTH=$cxx_tdepth"
+  if test "$cross_compiling" = yes; then
+  { { echo "$as_me:$LINENO: error: cannot run test program while cross compiling" >&5
+echo "$as_me: error: cannot run test program while cross compiling" >&2;}
+   { (exit 1); exit 1; }; }
+else
+  cat >conftest.$ac_ext <<_ACEOF
+#line $LINENO "configure"
+#include "confdefs.h"
+
+   template<unsigned n> struct rec { typedef typename rec<n-1>::ret ret; };
+   template<> struct rec<0> { typedef int ret; };
+   int main(void) { rec<TDEPTH>::ret i = 0; return i; }
+
+_ACEOF
+rm -f conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  echo "$as_me:$LINENO: result: yes" >&5
+echo "${ECHO_T}yes" >&6
+else
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+cat conftest.$ac_ext >&5
+( exit $ac_status )
+
+     oln_save_CXXFLAGS="$CXXFLAGS"
+     CXXFLAGS="$CXXFLAGS -ftemplate-depth-$cxx_tdepth"
+     if test "$cross_compiling" = yes; then
+  { { echo "$as_me:$LINENO: error: cannot run test program while cross compiling" >&5
+echo "$as_me: error: cannot run test program while cross compiling" >&2;}
+   { (exit 1); exit 1; }; }
+else
+  cat >conftest.$ac_ext <<_ACEOF
+#line $LINENO "configure"
+#include "confdefs.h"
+
+        template<unsigned n> struct rec { typedef typename rec<n-1>::ret ret; };
+        template<> struct rec<0> { typedef int ret; };
+        int main(void) { rec<TDEPTH>::ret i = 0; return i; }
+
+_ACEOF
+rm -f conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  echo "$as_me:$LINENO: result: yes, with -ftemplate-depth-$cxx_tdepth" >&5
+echo "${ECHO_T}yes, with -ftemplate-depth-$cxx_tdepth" >&6
+else
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+cat conftest.$ac_ext >&5
+( exit $ac_status )
+
+          echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6
+	  { echo "$as_me:$LINENO: WARNING: deep template recursions ($cxx_tdepth) not supported. Sorry." >&5
+echo "$as_me: WARNING: deep template recursions ($cxx_tdepth) not supported. Sorry." >&2;}
+          CXXFLAGS="$oln_save_CXXFLAGS"
+
+fi
+rm -f core core.* *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+fi
+
+fi
+rm -f core core.* *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+fi
+  CPPFLAGS="$oln_save_CPPFLAGS"
+
+  ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
 
 
 
@@ -4071,8 +4251,8 @@ fi;
         ZLIB_CFLAGS="-I${with_zlib}/include"
         ZLIB_LDFLAGS="-L${with_zlib}/lib"
       fi
-      oln_save_CFLAGS=$CFLAGS
-      oln_save_LDFLAGS=$LDFLAGS
+      oln_save_CFLAGS="$CFLAGS"
+      oln_save_LDFLAGS="$LDFLAGS"
       CFLAGS="$CFLAGS $ZLIB_CFLAGS"
       LDFLAGS="$LDFLAGS $ZLIB_LDFLAGS"
       if test "${ac_cv_header_zlib_h+set}" = set; then
@@ -4238,8 +4418,8 @@ fi
 fi
 
 
-      CFLAGS=$oln_save_CFLAGS
-      LDFLAGS=$oln_save_LDFLAGS
+      CFLAGS="$oln_save_CFLAGS"
+      LDFLAGS="$oln_save_LDFLAGS"
    fi
 
 
@@ -4258,8 +4438,8 @@ fi;
         FFTW_CFLAGS="-I${with_fftw}/include"
         FFTW_LDFLAGS="-L${with_fftw}/lib"
       fi
-      oln_save_CFLAGS=$CFLAGS
-      oln_save_LDFLAGS=$LDFLAGS
+      oln_save_CFLAGS="$CFLAGS"
+      oln_save_LDFLAGS="$LDFLAGS"
       CFLAGS="$CFLAGS $FFTW_CFLAGS"
       LDFLAGS="$LDFLAGS $FFTW_LDFLAGS"
       if test "${ac_cv_header_fftw_h+set}" = set; then
@@ -4427,13 +4607,30 @@ fi
 fi
 
 
-      CFLAGS=$oln_save_CFLAGS
-      LDFLAGS=$oln_save_LDFLAGS
+      CFLAGS="$oln_save_CFLAGS"
+      LDFLAGS="$oln_save_LDFLAGS"
   fi
 
 
 
 
+# Tests auto-generate stuff using CXX and OLN_INCLUDEDIR:
+
+cat >>confdefs.h <<_ACEOF
+#define CXX "$CXX"
+_ACEOF
+
+
+cat >>confdefs.h <<_ACEOF
+#define CXXFLAGS "$CXXFLAGS"
+_ACEOF
+
+
+cat >>confdefs.h <<_ACEOF
+#define OLN_INCLUDEDIR "$OLN_INCLUDEDIR"
+_ACEOF
+
+          ac_config_headers="$ac_config_headers config.h:config.hin"
 
                                                                                                                                                       ac_config_files="$ac_config_files Makefile tests/defs tests/Makefile tests/check/Makefile tests/convert/Makefile tests/convol/Makefile tests/io/Makefile tests/meta/Makefile tests/morpho/Makefile tests/sanity/Makefile tests/transforms/Makefile tests/types/Makefile demo/Makefile utilities/Makefile utilities/morpho/Makefile"
 
@@ -4512,38 +4709,7 @@ s/^[^=]*=[ 	]*$//;
 }'
 fi
 
-# Transform confdefs.h into DEFS.
-# Protect against shell expansion while executing Makefile rules.
-# Protect against Makefile macro expansion.
-#
-# If the first sed substitution is executed (which looks for macros that
-# take arguments), then we branch to the quote section.  Otherwise,
-# look for a macro that doesn't take arguments.
-cat >confdef2opt.sed <<\_ACEOF
-t clear
-: clear
-s,^[ 	]*#[ 	]*define[ 	][ 	]*\([^ 	(][^ 	(]*([^)]*)\)[ 	]*\(.*\),-D\1=\2,g
-t quote
-s,^[ 	]*#[ 	]*define[ 	][ 	]*\([^ 	][^ 	]*\)[ 	]*\(.*\),-D\1=\2,g
-t quote
-d
-: quote
-s,[ 	`~#$^&*(){}\\|;'"<>?],\\&,g
-s,\[,\\&,g
-s,\],\\&,g
-s,\$,$$,g
-p
-_ACEOF
-# We use echo to avoid assuming a particular line-breaking character.
-# The extra dot is to prevent the shell from consuming trailing
-# line-breaks from the sub-command output.  A line-break within
-# single-quotes doesn't work because, if this script is created in a
-# platform that uses two characters for line-breaks (e.g., DOS), tr
-# would break.
-ac_LF_and_DOT=`echo; echo .`
-DEFS=`sed -n -f confdef2opt.sed confdefs.h | tr "$ac_LF_and_DOT" ' .'`
-rm -f confdef2opt.sed
-
+DEFS=-DHAVE_CONFIG_H
 
 ac_libobjs=
 ac_ltlibobjs=
@@ -4897,9 +5063,14 @@ Usage: $0 [OPTIONS] [FILE]...
       --recheck    update $as_me by reconfiguring in the same conditions
   --file=FILE[:TEMPLATE]
                    instantiate the configuration file FILE
+  --header=FILE[:TEMPLATE]
+                   instantiate the configuration header FILE
 
 Configuration files:
 $config_files
+
+Configuration headers:
+$config_headers
 
 Configuration commands:
 $config_commands
@@ -5022,6 +5193,7 @@ do
   "utilities/Makefile" ) CONFIG_FILES="$CONFIG_FILES utilities/Makefile" ;;
   "utilities/morpho/Makefile" ) CONFIG_FILES="$CONFIG_FILES utilities/morpho/Makefile" ;;
   "depfiles" ) CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
+  "config.h" ) CONFIG_HEADERS="$CONFIG_HEADERS config.h:config.hin" ;;
   *) { { echo "$as_me:$LINENO: error: invalid argument: $ac_config_target" >&5
 echo "$as_me: error: invalid argument: $ac_config_target" >&2;}
    { (exit 1); exit 1; }; };;
@@ -5034,6 +5206,7 @@ done
 # bizarre bug on SunOS 4.1.3.
 if $ac_need_defaults; then
   test "${CONFIG_FILES+set}" = set || CONFIG_FILES=$config_files
+  test "${CONFIG_HEADERS+set}" = set || CONFIG_HEADERS=$config_headers
   test "${CONFIG_COMMANDS+set}" = set || CONFIG_COMMANDS=$config_commands
 fi
 
@@ -5146,6 +5319,7 @@ s,@UTILITIES@,$UTILITIES,;t t
 s,@MORPHO_UTILITIES@,$MORPHO_UTILITIES,;t t
 s,@CXXCPP@,$CXXCPP,;t t
 s,@EGREP@,$EGREP,;t t
+s,@OLN_SOURCE_DIR@,$OLN_SOURCE_DIR,;t t
 s,@OLN_INCLUDEDIR@,$OLN_INCLUDEDIR,;t t
 s,@CC@,$CC,;t t
 s,@CFLAGS@,$CFLAGS,;t t
@@ -5363,6 +5537,241 @@ s,@INSTALL@,$ac_INSTALL,;t t
     rm -f $tmp/out
   fi
 
+done
+_ACEOF
+cat >>$CONFIG_STATUS <<\_ACEOF
+
+#
+# CONFIG_HEADER section.
+#
+
+# These sed commands are passed to sed as "A NAME B NAME C VALUE D", where
+# NAME is the cpp macro being defined and VALUE is the value it is being given.
+#
+# ac_d sets the value in "#define NAME VALUE" lines.
+ac_dA='s,^\([ 	]*\)#\([ 	]*define[ 	][ 	]*\)'
+ac_dB='[ 	].*$,\1#\2'
+ac_dC=' '
+ac_dD=',;t'
+# ac_u turns "#undef NAME" without trailing blanks into "#define NAME VALUE".
+ac_uA='s,^\([ 	]*\)#\([ 	]*\)undef\([ 	][ 	]*\)'
+ac_uB='$,\1#\2define\3'
+ac_uC=' '
+ac_uD=',;t'
+
+for ac_file in : $CONFIG_HEADERS; do test "x$ac_file" = x: && continue
+  # Support "outfile[:infile[:infile...]]", defaulting infile="outfile.in".
+  case $ac_file in
+  - | *:- | *:-:* ) # input from stdin
+        cat >$tmp/stdin
+        ac_file_in=`echo "$ac_file" | sed 's,[^:]*:,,'`
+        ac_file=`echo "$ac_file" | sed 's,:.*,,'` ;;
+  *:* ) ac_file_in=`echo "$ac_file" | sed 's,[^:]*:,,'`
+        ac_file=`echo "$ac_file" | sed 's,:.*,,'` ;;
+  * )   ac_file_in=$ac_file.in ;;
+  esac
+
+  test x"$ac_file" != x- && { echo "$as_me:$LINENO: creating $ac_file" >&5
+echo "$as_me: creating $ac_file" >&6;}
+
+  # First look for the input files in the build tree, otherwise in the
+  # src tree.
+  ac_file_inputs=`IFS=:
+    for f in $ac_file_in; do
+      case $f in
+      -) echo $tmp/stdin ;;
+      [\\/$]*)
+         # Absolute (can't be DOS-style, as IFS=:)
+         test -f "$f" || { { echo "$as_me:$LINENO: error: cannot find input file: $f" >&5
+echo "$as_me: error: cannot find input file: $f" >&2;}
+   { (exit 1); exit 1; }; }
+         echo $f;;
+      *) # Relative
+         if test -f "$f"; then
+           # Build tree
+           echo $f
+         elif test -f "$srcdir/$f"; then
+           # Source tree
+           echo $srcdir/$f
+         else
+           # /dev/null tree
+           { { echo "$as_me:$LINENO: error: cannot find input file: $f" >&5
+echo "$as_me: error: cannot find input file: $f" >&2;}
+   { (exit 1); exit 1; }; }
+         fi;;
+      esac
+    done` || { (exit 1); exit 1; }
+  # Remove the trailing spaces.
+  sed 's/[ 	]*$//' $ac_file_inputs >$tmp/in
+
+_ACEOF
+
+# Transform confdefs.h into two sed scripts, `conftest.defines' and
+# `conftest.undefs', that substitutes the proper values into
+# config.h.in to produce config.h.  The first handles `#define'
+# templates, and the second `#undef' templates.
+# And first: Protect against being on the right side of a sed subst in
+# config.status.  Protect against being in an unquoted here document
+# in config.status.
+rm -f conftest.defines conftest.undefs
+# Using a here document instead of a string reduces the quoting nightmare.
+# Putting comments in sed scripts is not portable.
+#
+# `end' is used to avoid that the second main sed command (meant for
+# 0-ary CPP macros) applies to n-ary macro definitions.
+# See the Autoconf documentation for `clear'.
+cat >confdef2sed.sed <<\_ACEOF
+s/[\\&,]/\\&/g
+s,[\\$`],\\&,g
+t clear
+: clear
+s,^[ 	]*#[ 	]*define[ 	][ 	]*\([^ 	(][^ 	(]*\)\(([^)]*)\)[ 	]*\(.*\)$,${ac_dA}\1${ac_dB}\1\2${ac_dC}\3${ac_dD},gp
+t end
+s,^[ 	]*#[ 	]*define[ 	][ 	]*\([^ 	][^ 	]*\)[ 	]*\(.*\)$,${ac_dA}\1${ac_dB}\1${ac_dC}\2${ac_dD},gp
+: end
+_ACEOF
+# If some macros were called several times there might be several times
+# the same #defines, which is useless.  Nevertheless, we may not want to
+# sort them, since we want the *last* AC-DEFINE to be honored.
+uniq confdefs.h | sed -n -f confdef2sed.sed >conftest.defines
+sed 's/ac_d/ac_u/g' conftest.defines >conftest.undefs
+rm -f confdef2sed.sed
+
+# This sed command replaces #undef with comments.  This is necessary, for
+# example, in the case of _POSIX_SOURCE, which is predefined and required
+# on some systems where configure will not decide to define it.
+cat >>conftest.undefs <<\_ACEOF
+s,^[ 	]*#[ 	]*undef[ 	][ 	]*[a-zA-Z_][a-zA-Z_0-9]*,/* & */,
+_ACEOF
+
+# Break up conftest.defines because some shells have a limit on the size
+# of here documents, and old seds have small limits too (100 cmds).
+echo '  # Handle all the #define templates only if necessary.' >>$CONFIG_STATUS
+echo '  if grep "^[ 	]*#[ 	]*define" $tmp/in >/dev/null; then' >>$CONFIG_STATUS
+echo '  # If there are no defines, we may have an empty if/fi' >>$CONFIG_STATUS
+echo '  :' >>$CONFIG_STATUS
+rm -f conftest.tail
+while grep . conftest.defines >/dev/null
+do
+  # Write a limited-size here document to $tmp/defines.sed.
+  echo '  cat >$tmp/defines.sed <<CEOF' >>$CONFIG_STATUS
+  # Speed up: don't consider the non `#define' lines.
+  echo '/^[ 	]*#[ 	]*define/!b' >>$CONFIG_STATUS
+  # Work around the forget-to-reset-the-flag bug.
+  echo 't clr' >>$CONFIG_STATUS
+  echo ': clr' >>$CONFIG_STATUS
+  sed ${ac_max_here_lines}q conftest.defines >>$CONFIG_STATUS
+  echo 'CEOF
+  sed -f $tmp/defines.sed $tmp/in >$tmp/out
+  rm -f $tmp/in
+  mv $tmp/out $tmp/in
+' >>$CONFIG_STATUS
+  sed 1,${ac_max_here_lines}d conftest.defines >conftest.tail
+  rm -f conftest.defines
+  mv conftest.tail conftest.defines
+done
+rm -f conftest.defines
+echo '  fi # grep' >>$CONFIG_STATUS
+echo >>$CONFIG_STATUS
+
+# Break up conftest.undefs because some shells have a limit on the size
+# of here documents, and old seds have small limits too (100 cmds).
+echo '  # Handle all the #undef templates' >>$CONFIG_STATUS
+rm -f conftest.tail
+while grep . conftest.undefs >/dev/null
+do
+  # Write a limited-size here document to $tmp/undefs.sed.
+  echo '  cat >$tmp/undefs.sed <<CEOF' >>$CONFIG_STATUS
+  # Speed up: don't consider the non `#undef'
+  echo '/^[ 	]*#[ 	]*undef/!b' >>$CONFIG_STATUS
+  # Work around the forget-to-reset-the-flag bug.
+  echo 't clr' >>$CONFIG_STATUS
+  echo ': clr' >>$CONFIG_STATUS
+  sed ${ac_max_here_lines}q conftest.undefs >>$CONFIG_STATUS
+  echo 'CEOF
+  sed -f $tmp/undefs.sed $tmp/in >$tmp/out
+  rm -f $tmp/in
+  mv $tmp/out $tmp/in
+' >>$CONFIG_STATUS
+  sed 1,${ac_max_here_lines}d conftest.undefs >conftest.tail
+  rm -f conftest.undefs
+  mv conftest.tail conftest.undefs
+done
+rm -f conftest.undefs
+
+cat >>$CONFIG_STATUS <<\_ACEOF
+  # Let's still pretend it is `configure' which instantiates (i.e., don't
+  # use $as_me), people would be surprised to read:
+  #    /* config.h.  Generated by config.status.  */
+  if test x"$ac_file" = x-; then
+    echo "/* Generated by configure.  */" >$tmp/config.h
+  else
+    echo "/* $ac_file.  Generated by configure.  */" >$tmp/config.h
+  fi
+  cat $tmp/in >>$tmp/config.h
+  rm -f $tmp/in
+  if test x"$ac_file" != x-; then
+    if cmp -s $ac_file $tmp/config.h 2>/dev/null; then
+      { echo "$as_me:$LINENO: $ac_file is unchanged" >&5
+echo "$as_me: $ac_file is unchanged" >&6;}
+    else
+      ac_dir=`(dirname "$ac_file") 2>/dev/null ||
+$as_expr X"$ac_file" : 'X\(.*[^/]\)//*[^/][^/]*/*$' \| \
+         X"$ac_file" : 'X\(//\)[^/]' \| \
+         X"$ac_file" : 'X\(//\)$' \| \
+         X"$ac_file" : 'X\(/\)' \| \
+         .     : '\(.\)' 2>/dev/null ||
+echo X"$ac_file" |
+    sed '/^X\(.*[^/]\)\/\/*[^/][^/]*\/*$/{ s//\1/; q; }
+  	  /^X\(\/\/\)[^/].*/{ s//\1/; q; }
+  	  /^X\(\/\/\)$/{ s//\1/; q; }
+  	  /^X\(\/\).*/{ s//\1/; q; }
+  	  s/.*/./; q'`
+      { if $as_mkdir_p; then
+    mkdir -p "$ac_dir"
+  else
+    as_dir="$ac_dir"
+    as_dirs=
+    while test ! -d "$as_dir"; do
+      as_dirs="$as_dir $as_dirs"
+      as_dir=`(dirname "$as_dir") 2>/dev/null ||
+$as_expr X"$as_dir" : 'X\(.*[^/]\)//*[^/][^/]*/*$' \| \
+         X"$as_dir" : 'X\(//\)[^/]' \| \
+         X"$as_dir" : 'X\(//\)$' \| \
+         X"$as_dir" : 'X\(/\)' \| \
+         .     : '\(.\)' 2>/dev/null ||
+echo X"$as_dir" |
+    sed '/^X\(.*[^/]\)\/\/*[^/][^/]*\/*$/{ s//\1/; q; }
+  	  /^X\(\/\/\)[^/].*/{ s//\1/; q; }
+  	  /^X\(\/\/\)$/{ s//\1/; q; }
+  	  /^X\(\/\).*/{ s//\1/; q; }
+  	  s/.*/./; q'`
+    done
+    test ! -n "$as_dirs" || mkdir $as_dirs
+  fi || { { echo "$as_me:$LINENO: error: cannot create directory \"$ac_dir\"" >&5
+echo "$as_me: error: cannot create directory \"$ac_dir\"" >&2;}
+   { (exit 1); exit 1; }; }; }
+
+      rm -f $ac_file
+      mv $tmp/config.h $ac_file
+    fi
+  else
+    cat $tmp/config.h
+    rm -f $tmp/config.h
+  fi
+_am_stamp_count=`expr ${_am_stamp_count-0} + 1`
+echo "timestamp for $ac_file" >`(dirname $ac_file) 2>/dev/null ||
+$as_expr X$ac_file : 'X\(.*[^/]\)//*[^/][^/]*/*$' \| \
+         X$ac_file : 'X\(//\)[^/]' \| \
+         X$ac_file : 'X\(//\)$' \| \
+         X$ac_file : 'X\(/\)' \| \
+         .     : '\(.\)' 2>/dev/null ||
+echo X$ac_file |
+    sed '/^X\(.*[^/]\)\/\/*[^/][^/]*\/*$/{ s//\1/; q; }
+  	  /^X\(\/\/\)[^/].*/{ s//\1/; q; }
+  	  /^X\(\/\/\)$/{ s//\1/; q; }
+  	  /^X\(\/\).*/{ s//\1/; q; }
+  	  s/.*/./; q'`/stamp-h$_am_stamp_count
 done
 _ACEOF
 cat >>$CONFIG_STATUS <<\_ACEOF

@@ -1,3 +1,28 @@
+2002-12-05  Raphael Poss  <raph@lrde.epita.fr>
+
+	* Makefile.am: tweak.
+	* configure.ac (OLN_SOURCE_DIR): new AC_DEFINE. tweak.
+
+	* src/oln.m4 (OLN_ENABLE_EXCEPTIONS, OLN_DISABLE_EXCEPTIONS): new
+	macros.
+
+	* src/Makefile.am (ACLOCAL_FLAGS): add.
+	(CONFIGURE_DEPENDENCIES): depend on oln.m4.
+
+	* src/oln.m4 (CPPFLAGS, CXXFLAGS): now user-defined CXXFLAGS and
+	CPPFLAGS are never totally overriden. (AC_TEMPLATE_DEPTH) Add
+	checks for deep template recursion.
+	
+	* src/configure.ac (CXX, CXXFLAGS, OLN_INCLUDEDIR): AC_DEFINE more
+	variables.
+
+	* src/utilities/generate_morpho.sh (AM_CPPFLAGS, AM_CXXFLAGS): be
+	nice to the new configuration system.
+	* src/utilities/Makefile.am (AM_CXXFLAGS): likewise.
+
+	* oln/config/system.hh: include config.h if HAVE_CONFIG_H is defined.
+	
+	
 2002-12-04  Raphael Poss  <raph@sandrock>
 
 	* oln/config/pconf.hh: fix bug.

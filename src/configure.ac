@@ -41,7 +41,11 @@ AC_WITH_OLN
 AC_WITH_ZLIB
 AC_WITH_FFTW
 
-
+# Tests auto-generate stuff using CXX and OLN_INCLUDEDIR:
+AC_DEFINE_UNQUOTED([CXX], ["$CXX"], [The C++ compiler])
+AC_DEFINE_UNQUOTED([CXXFLAGS], ["$CXXFLAGS"], [The C++ compiler flags])
+AC_DEFINE_UNQUOTED([OLN_INCLUDEDIR], ["$OLN_INCLUDEDIR"], [The Olena include directory])
+AC_CONFIG_HEADERS([config.h:config.hin])
 AC_CONFIG_FILES([
 	Makefile
         tests/defs

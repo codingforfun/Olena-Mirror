@@ -14,58 +14,60 @@ SUBDIRS = . check \
 # SOURCEDATA should never be erased, they are needed to generate
 # BUILTDATA.  SOURCEDATA are the only data files worth to keep under
 # version control.
-SOURCEDATA =					\
-  data/lena.ppm data/random.pgm			\
-  data/se.pbm data/se9.pbm			\
-  data/neighbor.pbm data/neighbor9.pbm
+SOURCEIMGS = lena.ppm random.pgm se.pbm se9.pbm neighbor.pbm neighbor9.pbm
+
+SOURCEDATA = $(SOURCEIMGS:%=data/%)
 
 # BUILTDATA are generated from SOURCEDATA and can be erased
 # by maintainer-clean.
-BUILTDATA =					\
-  data/lena.pbm					\
-  data/lena.pbm.gz				\
-  data/lena.pgm					\
-  data/lena.pgm.gz				\
-  data/lena.ppbm				\
-  data/lena.ppgm				\
-  data/lena.ppm.gz				\
-  data/lena.pppm				\
-  data/lena128.pgm				\
-  data/se.ppbm					\
-  data/se9.ppbm					\
-  data/se9.pbm.gz				\
-  data/neighbor.ppbm				\
-  data/neighbor9.ppbm				\
-  data/neighbor9.pbm.gz
+BUILTIMGS =				\
+  lena.pbm				\
+  lena.pbm.gz				\
+  lena.pgm				\
+  lena.pgm.gz				\
+  lena.ppbm				\
+  lena.ppgm				\
+  lena.ppm.gz				\
+  lena.pppm				\
+  lena128.pgm				\
+  se.ppbm				\
+  se9.ppbm				\
+  se9.pbm.gz				\
+  neighbor.ppbm				\
+  neighbor9.ppbm			\
+  neighbor9.pbm.gz
 
-MAINTAINERCLEANFILES = $(BUILTDATA)
+BUILTDATA = $(BUILTIMGS:%=data-src/%)
+
+MAINTAINERCLEANFILES = $(BUILTDATA) 
 
 # Currently we ship all data files, even generated, in case the user
 # doesn't have all the tools required to generated them.  If it turns
 # out it makes a too big archive in the future, we might decide to do
 # otherwise.
-dist_check_DATA = $(SOURCEDATA) $(BUILTDATA)
-
+check_DATA = $(SOURCEIMGS:%=./data/%) $(BUILTIMGS:%=./data/%)
+dist_check_DATA = $(BUILTDATA) 
+EXTRA_DIST = $(SOURCEIMGS:%=data-src/%)
 
 # Conversion rules.
 
 .png.ppm:
-	mkdir -p data && pngtopnm $< > $@
+	mkdir -p data-src && pngtopnm $< > $@
 
 .ppm.pgm:
-	mkdir -p data && ppmtopgm $< > $@
+	mkdir -p data-src && ppmtopgm $< > $@
 
 .pgm.pbm:
-	mkdir -p data && pgmtopbm $< > $@
+	mkdir -p data-src && pgmtopbm $< > $@
 
 .ppm.pppm:
-	mkdir -p data && pnmtoplainpnm $< > $@
+	mkdir -p data-src && pnmtoplainpnm $< > $@
 
 .pgm.ppgm:
-	mkdir -p data && pnmtoplainpnm $< > $@
+	mkdir -p data-src && pnmtoplainpnm $< > $@
 
 .pbm.ppbm:
-	mkdir -p data && pnmtoplainpnm $< > $@
+	mkdir -p data-src && pnmtoplainpnm $< > $@
 
 # This is a bit hackish.  There is no way to introduce a derivation
 # for `' -> `.gz', so we define the `m' -> `m.gz' rule instead.
@@ -74,5 +76,10 @@ SUFFIXES = m m.gz
 mm.gz:
 	gzip -c -9 $< > $@
 
-data/lena128.pgm: data/lena.pgm
-	mkdir -p data && convert -scale 25% data/lena.pgm $@
+data-src/lena128.pgm: data-src/lena.pgm
+	mkdir -p data-src && convert -scale 25% data-src/lena.pgm $@
+
+data/%: $(srcdir)/data-src/%
+	mkdir -p data && cp $< $@
+
+CLEANFILES = data/*

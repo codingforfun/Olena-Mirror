@@ -1,5 +1,5 @@
-noinst_DATA = oln-ref.ps oln-ref.pdf html/oln-ref.html \
-	      oln-dev.ps oln-dev.pdf
+dist_noinst_DATA = oln-ref.ps oln-ref.pdf oln-ref.dvi html/oln-ref.html \
+              oln-dev.ps oln-dev.pdf oln-dev.dvi
 
 info_TEXINFOS = oln-dev.texi
 
@@ -11,6 +11,9 @@ built_oln_ref_TEX = \
 oln_ref_TEX = \
   $(built_oln_ref_TEX) \
   ref-types.tex
+
+EXTRA_DIST = $(tex_TEX) $(oln_ref_TEX) 
+# html/*.png bin/*.eps bin/*.pgm bin/*.pdf
 
 TEXI2PDF = $(TEXI2DVI) --pdf
 
@@ -24,10 +27,9 @@ html/oln-ref.html: $(tex_TEX) $(oln_ref_TEX)
 	$(HEVEA) -o html/oln-ref.html `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
 	$(HEVEA) -o html/oln-ref.html `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
 
-olnsrc = $(OLN_INCLUDEDIR)/oln/
+olnsrc = $(OLN_SOURCE_DIR)
 
-COMMONGETDEFSFLAGS =  --agarg=-DCXX=$(CXX) \
-	              --agarg=-DOLN_INCLUDEDIR=$(OLN_INCLUDEDIR) \
+COMMONGETDEFSFLAGS =  --agarg=-DCXXCOMPILE="$(CXX) -I$(OLN_INCLUDEDIR) $(CXXFLAGS)" \
 	              --agarg=--templ-dirs=$(top_srcdir)/tpl \
 	              --agarg=-DIMGDIR=$(top_srcdir)/img
 PROCESSINGGETDEFSFLAGS = \
@@ -51,5 +53,5 @@ ref-level.tex: $(level_files) $(top_srcdir)/tpl/processing.tpl
 	$(GETDEFS) $(COMMONGETDEFSFLAGS) $(PROCESSINGGETDEFSFLAGS) \
 	  $(GETDEFSFLAGS) --base-name=ref-level $(level_files)
 
-CLEANFILES = $(built_oln_ref_TEX) $(noinst_DATA) *.pdf *.eps *.ps
-CLEANFILES += *.tmp *.aux *.bbl *blg *.dvi *.lot *.log *.out *.toc html/* bin/*
+MAINTAINERCLEANFILES = $(built_oln_ref_TEX) $(dist_noinst_DATA) html/* bin/*a.out
+CLEANFILES = = *.tmp *.aux *.bbl *blg *.dvi *.lot *.log *.out *.toc  

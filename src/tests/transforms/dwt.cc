@@ -5,6 +5,7 @@
 #include <oln/level/compare.hh>
 #include <oln/transforms/dwt.hh>
 #include <oln/transforms/wavelet_coeffs.hh>
+#include <cstdlib>
 
 #include "check.hh"
 
@@ -67,6 +68,8 @@ check()
 
   image2d<int_u8> im3 =
     wave2d.transform_inv<int_u8>();
+
+  system("mkdir -p " OUTPUT_DIR);
 
   io::save(im3, OUTPUT_DIR OUTPUT_NAME "_dwt_copy.pgm");
 

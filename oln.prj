@@ -1,23 +1,74 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5_reconf 11)
-(Parent-Version oln 0_5_reconf 10)
-(Version-Log "Index: doc/ChangeLog
+(Project-Version oln 0_5_reconf 12)
+(Parent-Version oln 0_5_reconf 11)
+(Version-Log "Index: ChangeLog
 from  Raphael Poss  <raph@lrde.epita.fr>
-        * doc/Makefile.am: cleanup.
 
-2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
+        * Makefile.am: tweak.
+        * configure.ac (OLN_SOURCE_DIR): new AC_DEFINE. tweak.
+
+        * src/oln.m4 (OLN_ENABLE_EXCEPTIONS, OLN_DISABLE_EXCEPTIONS): new
+        macros.
+
+        * src/Makefile.am (ACLOCAL_FLAGS): add.
+        (CONFIGURE_DEPENDENCIES): depend on oln.m4.
+
+        * src/oln.m4 (CPPFLAGS, CXXFLAGS): now user-defined CXXFLAGS and
+        CPPFLAGS are never totally overriden. (AC_TEMPLATE_DEPTH) Add
+        checks for deep template recursion.
+
+        * src/configure.ac (CXX, CXXFLAGS, OLN_INCLUDEDIR): AC_DEFINE more
+        variables.
+
+        * src/utilities/generate_morpho.sh (AM_CPPFLAGS, AM_CXXFLAGS): be
+        nice to the new configuration system.
+        * src/utilities/Makefile.am (AM_CXXFLAGS): likewise.
+
+        * oln/config/system.hh: include config.h if HAVE_CONFIG_H is defined.
+
 
 Index: src/tests/ChangeLog
 from  Raphael Poss  <raph@lrde.epita.fr>
-        * Makefile.am: cleanup and fixes. 
 
-2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
+   * transforms/fft.cc, transforms/dwt.cc (check): create OUTPUT_DIR
+   before using it.
 
+   * types/tests/conv2: mark XFAIL for seemingly obvious reasons.
+
+   * morpho/Makefile.am (CXXFLAGS): do not override CXXFLAGS
+   completely.
+
+   * meta/gen_test.cc (write_postlude_and_test): be nice to the new
+   configuration system. Report exit status of commands.
+   * check/Makefile.flags: likewise.
+
+   * Makefile.am: make things work when Olena is 'configure'd from
+   another directory than its sources.  (BUILTDATA, SOURCEDATA,
+   SOURCEIMGS, BUILTIMGS) macro name changes.
+
+   * data-src: renamed from data.
+
+   * check/data.cc: remove a small glitch.
+
+2002-12-05  Raphael Poss  <raph@lrde.epita.fr> 
+ 
+        * configure.ac: fix so that now olena-doc can be an independant 
+        package. 
+         
+        * doc/Makefile.am (EXTRA_DIST): include some generated files in 
+        the distribution. Pass CXXCOMPILE to processing.tpl. 
+        * tpl/processing.tpl: use CXXCOMPILE instead of a custom 
+        compilation command. Now processing.tpl is properly autoconf'ed. 
+ 
+        * Makefile.am (ACLOCAL_FLAGS): add. 
+        (CONFIGURE_DEPENDENCIES): depend on ../src/oln.m4. 
+        (EXTRA_DIST): add. 
+ 
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 04 Dec 2002 17:40:30 +0100")
+(Checkin-Time "Thu, 05 Dec 2002 17:25:05 +0100")
 (Checkin-Login raph)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -92,11 +143,10 @@ from  Raphael Poss  <raph@lrde.epita.fr>
                   "src/tests/morpho/extrkiller$"
                   "src/tests/io/savetmp$"
                   "src/tests/io/2d$"
-                  "src/tests/data/lena128.pgm$"
+                  "src/tests/data/.*$"
                   "src/tests/convert/.*-.*-.*$"
                   "\\.#"
                   "^#"
-                  "src/tests/\\(data\\|io\\)/lena\\.\\(pppm\\|ppgm\\|ppbm\\|pbm\\|pgm\\)$"
                   "src/tests/types/runs/int_sc4/int_sc4.cc$"
                   "oln/core/pred.hh$"
                   "src/tests/defs$"
@@ -142,37 +192,37 @@ from  Raphael Poss  <raph@lrde.epita.fr>
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.26 660))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.103 660))
-  (configure.ac (oln/3_configure. 1.31 660))
-  (configure (oln/e/7_configure 1.40 770))
-  (README (oln/1_README 1.4 660))
-  (ISSUES (oln/d/47_ISSUES 1.3 660))
-  (Makefile.am (oln/2_Makefile.a 1.15 660))
-  (Makefile.in (oln/e/9_Makefile.i 1.41 664))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.104 660))
+  (configure.ac (oln/3_configure. 1.32 660))
+  (configure (oln/e/7_configure 1.41 770))
+  (README (oln/1_README 1.5 660))
+  (ISSUES (oln/d/47_ISSUES 1.4 660))
+  (Makefile.am (oln/2_Makefile.a 1.16 660))
+  (Makefile.in (oln/e/9_Makefile.i 1.42 664))
   (NEWS (oln/0_NEWS 1.7 660))
 
   (src/demo/image.cc (oln/d/46_image.cc 1.2 660))
   (src/demo/Makefile.am (oln/d/44_Makefile.a 1.6 660))
-  (src/demo/Makefile.in (oln/e/16_Makefile.i 1.26 664))
+  (src/demo/Makefile.in (oln/e/16_Makefile.i 1.27 664))
   (src/demo/morpholena.cc (oln/d/43_morpholena 1.8 660))
   (src/demo/test-reconstruction.cc (oln/e/22_test-recon 1.7 660))
   (src/demo/tour.cc (oln/d/45_tour.cc 1.5 660))
 
 
-  (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.12 664))
-  (doc/ChangeLog (oln/e/1_ChangeLog 1.29 660))
-  (doc/configure.ac (oln/e/2_configure. 1.8 660))
-  (doc/configure (oln/e/3_configure 1.14 770))
+  (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.13 664))
+  (doc/ChangeLog (oln/e/1_ChangeLog 1.30 660))
+  (doc/configure.ac (oln/e/2_configure. 1.9 660))
+  (doc/configure (oln/e/3_configure 1.15 770))
   (doc/doc/bin () :directory)
   (doc/doc/html () :directory)
-  (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.20 660))
-  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.20 664))
+  (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.21 660))
+  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.21 664))
   (doc/doc/oln-ref.tex (oln/f/14_oln-ref.te 1.3 660))
   (doc/img/lena256.pgm (oln/e/21_lena256.pg 1.1 660) :no-keywords)
   (doc/img/object.pbm (oln/d/49_object.pbm 1.1 660) :no-keywords)
-  (doc/Makefile.am (oln/e/0_Makefile.a 1.3 660))
-  (doc/Makefile.in (oln/e/5_Makefile.i 1.13 664))
-  (doc/tpl/processing.tpl (oln/d/48_processing 1.13 660))
+  (doc/Makefile.am (oln/e/0_Makefile.a 1.4 660))
+  (doc/Makefile.in (oln/e/5_Makefile.i 1.14 664))
+  (doc/tpl/processing.tpl (oln/d/48_processing 1.14 660))
 
   (img/lena128.pgm (oln/e/23_lena128.pg 1.1 660) :no-keywords)
   (img/lena.pgm (oln/5_lena.pgm 1.1 660) :no-keywords)
@@ -186,7 +236,7 @@ from  Raphael Poss  <raph@lrde.epita.fr>
   (oln/basics.hh (oln/d/42_basics.hh 1.5 660))
   
   
-  (oln/config/system.hh (oln/7_system.hh 1.9 660))
+  (oln/config/system.hh (oln/7_system.hh 1.10 660))
   (oln/convert/basics.hh (oln/23_basics.hh 1.3 660))
   (oln/convert/bound.hh (oln/22_bound.hh 1.3 660))
   (oln/convert/colorconv.hh (oln/18_colorconv. 1.3 660))
@@ -368,7 +418,7 @@ from  Raphael Poss  <raph@lrde.epita.fr>
   (oln/utils/stat.hh (oln/9_stat.hh 1.4 660))
   (oln/utils/timer.hh (oln/8_timer.hh 1.2 660))
   (src/tests/meta () :directory)
-  (src/tests/meta/gen_test.cc (oln/f/34_gen_test.c 1.4 660))
+  (src/tests/meta/gen_test.cc (oln/f/34_gen_test.c 1.5 660))
   (src/tests/meta/gen_test_utils/errors.cc (oln/f/33_errors.cc 1.1 660))
   (src/tests/meta/gen_test_utils/errors.hh (oln/f/32_errors.hh 1.1 660))
   ; (src/tests/meta/gen_test_utils/Makefile.am ())
@@ -376,32 +426,32 @@ from  Raphael Poss  <raph@lrde.epita.fr>
   (src/tests/meta/gen_test_utils/postlude (oln/f/31_postlude 1.1 660))
   (src/tests/meta/gen_test_utils/prelude (oln/f/30_prelude 1.2 660))
   (src/tests/meta/Makefile.am (oln/f/27_Makefile.a 1.2 660))
-  (src/tests/meta/Makefile.in (oln/f/37_Makefile.i 1.16 664))
+  (src/tests/meta/Makefile.in (oln/f/37_Makefile.i 1.17 664))
   (src/tests/meta/test_array1d.cc (oln/f/26_test_array 1.2 660))
   (src/tests/meta/test_array2d.cc (oln/f/25_test_array 1.2 660))
   (src/tests/meta/test_array3d.cc (oln/f/24_test_array 1.2 660))
-  (src/tests/ChangeLog (oln/e/30_ChangeLog 1.49 660))
+  (src/tests/ChangeLog (oln/e/30_ChangeLog 1.50 660))
   (src/tests/check/check.hh (oln/e/40_check.hh 1.2 660))
-  (src/tests/check/data.cc (oln/f/5_data.cc 1.2 660))
+  (src/tests/check/data.cc (oln/f/5_data.cc 1.3 660))
   (src/tests/check/data.hh (oln/f/6_data.hh 1.1 660))
   (src/tests/check/main.cc (oln/e/43_main.cc 1.1 660))
   (src/tests/check/Makefile.am (oln/e/44_Makefile.a 1.3 660))
   (src/tests/check/Makefile.check (oln/e/37_Makefile.c 1.3 660))
-  (src/tests/check/Makefile.flags (oln/e/36_Makefile.f 1.4 660))
-  (src/tests/check/Makefile.in (oln/e/39_Makefile.i 1.24 664))
-  (src/tests/check/srcdir.cc (oln/e/38_srcdir.cc 1.4 660))
+  (src/tests/check/Makefile.flags (oln/e/36_Makefile.f 1.5 660))
+  (src/tests/check/Makefile.in (oln/e/39_Makefile.i 1.25 664))
+  (src/tests/check/srcdir.cc (oln/e/38_srcdir.cc 1.5 660))
   (src/tests/check/srcdir.hh (oln/e/35_srcdir.hh 1.3 660))
   (src/tests/check/verbose.cc (oln/e/41_verbose.cc 1.2 660))
   (src/tests/check/verbose.hh (oln/e/42_verbose.hh 1.2 660))
   (src/tests/convert/convcomp.cc (oln/f/3_convcomp.c 1.4 660))
   (src/tests/convert/convcomp.hh (oln/f/1_convcomp.h 1.3 660))
   (src/tests/convert/Makefile.am (oln/f/0_Makefile.a 1.2 660))
-  (src/tests/convert/Makefile.in (oln/f/2_Makefile.i 1.23 664))
+  (src/tests/convert/Makefile.in (oln/f/2_Makefile.i 1.24 664))
 
 
   (src/tests/convol () :directory)
   (src/tests/convol/Makefile.am (oln/f/38_Makefile.a 1.4 660))
-  (src/tests/convol/Makefile.in (oln/f/44_Makefile.i 1.15 664))
+  (src/tests/convol/Makefile.in (oln/f/44_Makefile.i 1.16 664))
   ; (src/tests/convol/slow.cc ())
   (src/tests/convol/slow_sum_2d_1.cc (oln/f/41_slow_sum_2 1.2 660))
   (src/tests/convol/slow_sum_2d_2.cc (oln/f/40_slow_sum_2 1.2 660))
@@ -409,22 +459,22 @@ from  Raphael Poss  <raph@lrde.epita.fr>
   (src/tests/convol/sum_on_random.pgm (oln/f/42_sum_on_ran 1.1 660))
 
 
-  (src/tests/data/lena.ppm (oln/e/51_lena.ppm 1.1 660) :no-keywords)
-  (src/tests/data/random.pgm (oln/f/43_random.pgm 1.1 660) :no-keywords)
+  (src/tests/data-src/lena.ppm (oln/e/51_lena.ppm 1.1 660) :no-keywords)
+  (src/tests/data-src/random.pgm (oln/f/43_random.pgm 1.1 660) :no-keywords)
   (src/tests/io/2d.cc (oln/e/47_2d.cc 1.4 660))
   (src/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.5 660))
   (src/tests/io/Makefile.am (oln/e/49_Makefile.a 1.6 660))
-  (src/tests/io/Makefile.in (oln/e/50_Makefile.i 1.25 664))
-  (src/tests/Makefile.am (oln/e/45_Makefile.a 1.13 660))
-  (src/tests/Makefile.in (oln/e/46_Makefile.i 1.30 664))
+  (src/tests/io/Makefile.in (oln/e/50_Makefile.i 1.26 664))
+  (src/tests/Makefile.am (oln/e/45_Makefile.a 1.14 660))
+  (src/tests/Makefile.in (oln/e/46_Makefile.i 1.31 664))
   (src/tests/morpho/edoc.cc (oln/f/13_edoc.cc 1.3 660))
   (src/tests/morpho/extrkiller.cc (oln/e/31_extrkiller 1.5 660))
-  (src/tests/morpho/Makefile.am (oln/e/32_Makefile.a 1.4 660))
-  (src/tests/morpho/Makefile.in (oln/e/33_Makefile.i 1.26 664))
+  (src/tests/morpho/Makefile.am (oln/e/32_Makefile.a 1.5 660))
+  (src/tests/morpho/Makefile.in (oln/e/33_Makefile.i 1.27 664))
   (src/tests/morpho/reconstruction.cc (oln/e/34_reconstruc 1.6 660))
-  (src/tests/README (oln/f/4_README 1.2 660))
+  (src/tests/README (oln/f/4_README 1.3 660))
   (THANKS (oln/4_THANKS 1.3 660))
-  (tools/ChangeLog (oln/e/18_ChangeLog 1.2 660))
+  
   (tools/depcomp (oln/e/12_depcomp 1.6 755))
   (tools () :directory)
   (tools/install-sh (oln/e/15_install-sh 1.5 755))
@@ -432,13 +482,13 @@ from  Raphael Poss  <raph@lrde.epita.fr>
   (tools/missing (oln/e/13_missing 1.5 755))
   (tools/mkinstalldirs (oln/e/14_mkinstalld 1.4 755) :no-keywords)
   
-  (tools/texinfo.tex (oln/e/10_texinfo.te 1.3 644))
+  
 
 ;; Files added by populate at Thu, 18 Jul 2002 20:26:30 +0200,
 ;; to version 0_4.26(w), by adl:
 
   (src/tests/sanity/includes.test (oln/f/46_includes.t 1.2 770))
-  (src/tests/sanity/Makefile.in (oln/f/47_Makefile.i 1.11 664))
+  (src/tests/sanity/Makefile.in (oln/f/47_Makefile.i 1.12 664))
   (src/tests/sanity/Makefile.am (oln/f/48_Makefile.a 1.1 660))
 
 ;; Files added by populate at Thu, 18 Jul 2002 20:30:39 +0200,
@@ -487,8 +537,8 @@ from  Raphael Poss  <raph@lrde.epita.fr>
 
 
   (src/utilities/mosaic.cc (oln/g/0_mosaic.cc 1.3 660))
-  (src/utilities/Makefile.in (oln/g/1_Makefile.i 1.11 664))
-  (src/utilities/Makefile.am (oln/g/2_Makefile.a 1.5 660))
+  (src/utilities/Makefile.in (oln/g/1_Makefile.i 1.12 664))
+  (src/utilities/Makefile.am (oln/g/2_Makefile.a 1.6 660))
 ;; Files added by populate at Mon, 29 Jul 2002 16:23:03 +0200,
 ;; to version 0_5.4(w), by burrus_n:
 
@@ -509,7 +559,7 @@ from  Raphael Poss  <raph@lrde.epita.fr>
   (src/tests/types/tests/int_s2 (oln/g/39_int_s2 1.1 660))
   (src/tests/types/tests/int_s1 (oln/g/40_int_s1 1.1 660))
   (src/tests/types/tests/unsafe2 (oln/g/41_unsafe2 1.1 660))
-  (src/tests/types/tests/conv2 (oln/g/42_conv2 1.1 660))
+  (src/tests/types/tests/conv2 (oln/g/42_conv2 1.2 660))
   (src/tests/types/tests/int6d (oln/g/43_int6d 1.1 660))
   (src/tests/types/tests/int6c (oln/g/44_int6c 1.1 660))
   (src/tests/types/tests/int6b (oln/g/45_int6b 1.1 660))
@@ -523,7 +573,7 @@ from  Raphael Poss  <raph@lrde.epita.fr>
   (src/tests/types/tests/int1 (oln/h/1_int1 1.1 660))
   (src/tests/types/tests/unsafe1 (oln/h/2_unsafe1 1.1 660))
   (src/tests/types/runtests (oln/h/3_runtests 1.4 770))
-  (src/tests/types/Makefile.in (oln/h/4_Makefile.i 1.12 664))
+  (src/tests/types/Makefile.in (oln/h/4_Makefile.i 1.13 664))
   (src/tests/types/Makefile.am (oln/h/5_Makefile.a 1.3 660))
 
 ;; Files added by populate at Tue, 27 Aug 2002 18:05:09 +0200,
@@ -684,9 +734,9 @@ from  Raphael Poss  <raph@lrde.epita.fr>
 ;; Files added by populate at Fri, 08 Nov 2002 18:04:09 +0100,
 ;; to version 0_5.74(w), by chojin:
 
-  (src/utilities/generate_morpho.sh (oln/i/30_generate_m 1.4 770))
-  (src/utilities/morpho/Makefile.in (oln/i/31_Makefile.i 1.8 664))
-  (src/utilities/morpho/Makefile.am (oln/i/32_Makefile.a 1.3 660))
+  (src/utilities/generate_morpho.sh (oln/i/30_generate_m 1.5 770))
+  (src/utilities/morpho/Makefile.in (oln/i/31_Makefile.i 1.9 664))
+  (src/utilities/morpho/Makefile.am (oln/i/32_Makefile.a 1.4 660))
   (src/utilities/morpho/morpho_template.cc (oln/i/33_morpho_tem 1.4 660))
 
 ;; Files deleted by depopulate at Wed, 13 Nov 2002 10:20:17 +0100,
@@ -713,10 +763,10 @@ from  Raphael Poss  <raph@lrde.epita.fr>
 ;; to version 0_5.77(w), by ender:
 
   (src/tests/transforms/output () :directory)
-  (src/tests/transforms/fft.cc (oln/i/37_fft.cc 1.1 660))
-  (src/tests/transforms/dwt.cc (oln/i/38_dwt.cc 1.2 660))
-  (src/tests/transforms/Makefile.in (oln/i/39_Makefile.i 1.8 664))
-  (src/tests/transforms/Makefile.am (oln/i/40_Makefile.a 1.1 660))
+  (src/tests/transforms/fft.cc (oln/i/37_fft.cc 1.2 660))
+  (src/tests/transforms/dwt.cc (oln/i/38_dwt.cc 1.3 660))
+  (src/tests/transforms/Makefile.in (oln/i/39_Makefile.i 1.9 664))
+  (src/tests/transforms/Makefile.am (oln/i/40_Makefile.a 1.2 660))
 
 ;; Files added by populate at Fri, 15 Nov 2002 21:42:09 +0100,
 ;; to version 0_5.82(w), by burrus_n:
@@ -737,10 +787,10 @@ from  Raphael Poss  <raph@lrde.epita.fr>
   (oln/io/se.hh (oln/i/45_se.hh 1.1 660))
   (oln/io/se_window.hxx (oln/i/46_se_window. 1.2 660))
   (oln/io/se_neighborhood.hxx (oln/i/47_se_neighbo 1.2 660))
-  (src/tests/data/neighbor.pbm (oln/i/48_neighbor.p 1.1 660))
-  (src/tests/data/neighbor9.pbm (oln/i/49_neighbor9. 1.1 660) :no-keywords)
-  (src/tests/data/se9.pbm (oln/i/50_se9.pbm 1.1 660) :no-keywords)
-  (src/tests/data/se.pbm (oln/i/51_se.pbm 1.1 660) :no-keywords)
+  (src/tests/data-src/neighbor.pbm (oln/i/48_neighbor.p 1.1 660))
+  (src/tests/data-src/neighbor9.pbm (oln/i/49_neighbor9. 1.1 660) :no-keywords)
+  (src/tests/data-src/se9.pbm (oln/i/50_se9.pbm 1.1 660) :no-keywords)
+  (src/tests/data-src/se.pbm (oln/i/51_se.pbm 1.1 660) :no-keywords)
   (img/face_se.pbm (oln/j/0_face_se.pb 1.1 660) :no-keywords)
 
 ;; Files added by populate at Wed, 27 Nov 2002 23:09:56 +0100,
@@ -789,34 +839,34 @@ from  Raphael Poss  <raph@lrde.epita.fr>
 ;; Files added by populate at Wed, 04 Dec 2002 15:49:00 +0100,
 ;; to version 0_5_reconf.1(w), by raph:
 
-  (oln/config/pconf-inc.in (oln/j/12_pconf-hh.i 1.2 664))
+  (oln/config/pconf-inc.in (oln/j/12_pconf-hh.i 1.3 664))
 
 ;; Files added by populate at Wed, 04 Dec 2002 15:49:10 +0100,
 ;; to version 0_5_reconf.1(w), by raph:
 
-  (src/configure.ac (oln/j/13_configure. 1.2 664))
+  (src/configure.ac (oln/j/13_configure. 1.3 664))
 
 ;; Files added by populate at Wed, 04 Dec 2002 15:49:15 +0100,
 ;; to version 0_5_reconf.1(w), by raph:
 
-  (src/Makefile.am (oln/j/14_Makefile.a 1.2 664))
+  (src/Makefile.am (oln/j/14_Makefile.a 1.3 664))
 
 ;; Files added by populate at Wed, 04 Dec 2002 15:51:21 +0100,
 ;; to version 0_5_reconf.1(w), by raph:
 
-  (src/oln.m4 (oln/j/15_oln.m4 1.1 664))
+  (src/oln.m4 (oln/j/15_oln.m4 1.2 664))
 
 ;; Files added by populate at Wed, 04 Dec 2002 15:51:40 +0100,
 ;; to version 0_5_reconf.1(w), by raph:
 
   (bootstrap.sh (oln/j/16_bootstrap. 1.1 775))
-  (src/Makefile.in (oln/j/17_Makefile.i 1.4 664))
-  (src/configure (oln/j/18_configure 1.3 775))
+  (src/Makefile.in (oln/j/17_Makefile.i 1.5 664))
+  (src/configure (oln/j/18_configure 1.4 775))
 
 ;; Files added by populate at Wed, 04 Dec 2002 15:53:26 +0100,
 ;; to version 0_5_reconf.1(w), by raph:
 
-  (src/aclocal.m4 (oln/j/19_aclocal.m4 1.2 664))
+  (src/aclocal.m4 (oln/j/19_aclocal.m4 1.3 664))
 
 ;; Files added by populate at Wed, 04 Dec 2002 16:24:21 +0100,
 ;; to version 0_5_reconf.2(w), by raph:
@@ -827,6 +877,25 @@ from  Raphael Poss  <raph@lrde.epita.fr>
 ;; from version 0_5_reconf.3(w), by raph:
 
   ; (oln/config/README ())
+
+;; Files added by populate at Thu, 05 Dec 2002 17:19:36 +0100,
+;; to version 0_5_reconf.11(w), by raph:
+
+  (doc/doc/texinfo.tex (oln/j/26_texinfo.te 1.1 644))
+  (doc/install-sh (oln/j/27_install-sh 1.1 755))
+  (doc/mkinstalldirs (oln/j/28_mkinstalld 1.1 755))
+  (doc/missing (oln/j/29_missing 1.1 755))
+  (src/config.hin (oln/j/30_config.hin 1.1 664))
+
+;; Files deleted by depopulate at Thu, 05 Dec 2002 17:19:44 +0100,
+;; from version 0_5_reconf.11(w), by raph:
+
+  ; (tools/texinfo.tex ())
+
+;; Files deleted by depopulate at Thu, 05 Dec 2002 17:19:55 +0100,
+;; from version 0_5_reconf.11(w), by raph:
+
+  ; (tools/ChangeLog ())
 )
 (Merge-Parents)
 (New-Merge-Parents)

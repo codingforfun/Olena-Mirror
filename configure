@@ -270,7 +270,7 @@ PACKAGE_STRING='olena 0.5'
 PACKAGE_BUGREPORT='olena-bugs@lrde.epita.fr'
 
 ac_unique_file="ChangeLog"
-ac_subdirs_all="$ac_subdirs_all src doc"
+ac_subdirs_all="$ac_subdirs_all doc src"
 ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA CYGPATH_W PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO AMTAR install_sh STRIP ac_ct_STRIP INSTALL_STRIP_PROGRAM AWK SET_MAKE MAINTAINER_MODE_TRUE MAINTAINER_MODE_FALSE MAINT subdirs LIBOBJS LTLIBOBJS'
 ac_subst_files=''
 
@@ -1583,12 +1583,18 @@ fi
 
 
 
+real_includedir=`eval echo $includedir`
+
+cat >>confdefs.h <<_ACEOF
+#define OLN_SOURCE_DIR "$real_includedir/oln"
+_ACEOF
+
           ac_config_headers="$ac_config_headers oln/config/pconf.inc:oln/config/pconf-inc.in"
 
 
 
 
-subdirs="$subdirs src doc"
+subdirs="$subdirs doc src"
 
 
                     ac_config_files="$ac_config_files Makefile oln/Makefile"

@@ -73,6 +73,7 @@ MAINTAINER_MODE_TRUE = @MAINTAINER_MODE_TRUE@
 MAKEINFO = @MAKEINFO@
 OBJEXT = @OBJEXT@
 OLN_INCLUDEDIR = @OLN_INCLUDEDIR@
+OLN_SOURCE_DIR = @OLN_SOURCE_DIR@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
@@ -110,8 +111,8 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-noinst_DATA = oln-ref.ps oln-ref.pdf html/oln-ref.html \
-	      oln-dev.ps oln-dev.pdf
+dist_noinst_DATA = oln-ref.ps oln-ref.pdf oln-ref.dvi html/oln-ref.html \
+              oln-dev.ps oln-dev.pdf oln-dev.dvi
 
 
 info_TEXINFOS = oln-dev.texi
@@ -127,12 +128,14 @@ oln_ref_TEX = \
   ref-types.tex
 
 
+EXTRA_DIST = $(tex_TEX) $(oln_ref_TEX) 
+
+# html/*.png bin/*.eps bin/*.pgm bin/*.pdf
 TEXI2PDF = $(TEXI2DVI) --pdf
 
-olnsrc = $(OLN_INCLUDEDIR)/oln/
+olnsrc = $(OLN_SOURCE_DIR)
 
-COMMONGETDEFSFLAGS = --agarg=-DCXX=$(CXX) \
-	              --agarg=-DOLN_INCLUDEDIR=$(OLN_INCLUDEDIR) \
+COMMONGETDEFSFLAGS = --agarg=-DCXXCOMPILE="$(CXX) -I$(OLN_INCLUDEDIR) $(CXXFLAGS)" \
 	              --agarg=--templ-dirs=$(top_srcdir)/tpl \
 	              --agarg=-DIMGDIR=$(top_srcdir)/img
 
@@ -151,21 +154,21 @@ morpho_files = $(shell fgrep -l '/*=' \
 
 level_files = $(shell fgrep -l '/*=' $(olnsrc)/level/*.hh)
 
-CLEANFILES = $(built_oln_ref_TEX) $(noinst_DATA) *.pdf *.eps *.ps *.tmp *.aux *.bbl *blg *.dvi *.lot *.log *.out *.toc html/* bin/*
+MAINTAINERCLEANFILES = $(built_oln_ref_TEX) $(dist_noinst_DATA) html/* bin/*a.out
+CLEANFILES = = *.tmp *.aux *.bbl *blg *.dvi *.lot *.log *.out *.toc  
 subdir = doc
-mkinstalldirs = $(SHELL) $(top_srcdir)/../tools/mkinstalldirs
+mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES =
 DIST_SOURCES =
-TEXINFO_TEX = $(top_srcdir)/../tools/texinfo.tex
-am__TEXINFO_TEX_DIR = $(top_srcdir)/../tools
+am__TEXINFO_TEX_DIR = $(srcdir)
 INFO_DEPS = oln-dev.info
 DVIS = oln-dev.dvi
 PDFS = oln-dev.pdf
 PSS = oln-dev.ps
 TEXINFOS = oln-dev.texi
-DATA = $(noinst_DATA)
+DATA = $(dist_noinst_DATA)
 
-DIST_COMMON = Makefile.am Makefile.in
+DIST_COMMON = $(dist_noinst_DATA) Makefile.am Makefile.in texinfo.tex
 all: all-am
 
 .SUFFIXES:
@@ -250,6 +253,7 @@ top_distdir = ..
 distdir = $(top_distdir)/$(PACKAGE)-$(VERSION)
 
 distdir: $(DISTFILES)
+	$(mkinstalldirs) $(distdir)/html
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \
@@ -311,6 +315,7 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
+	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
 clean: clean-am
 
 clean-am: clean-generic mostlyclean-am

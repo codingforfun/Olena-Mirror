@@ -2,6 +2,7 @@
 #include <oln/basics2d.hh>
 #include <oln/level/compare.hh>
 #include <oln/transforms/fft.hh>
+#include <cstdlib>
 
 #include "check.hh"
 
@@ -34,6 +35,7 @@ check()
 
   image2d<int_u8> im3 = fourier.transform_inv();
 
+  system("mkdir -p " OUTPUT_DIR);
   io::save(im3, OUTPUT_DIR OUTPUT_NAME "_fft_copy.pgm");
 
   std::cout << "Test: Image == F-1(F(Image)) ... " << std::flush;

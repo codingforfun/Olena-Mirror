@@ -1,3 +1,18 @@
+2002-12-05  Raphael Poss  <raph@lrde.epita.fr>
+
+	* configure.ac: fix so that now olena-doc can be an independant
+	package.
+	
+	* doc/Makefile.am (EXTRA_DIST): include some generated files in
+	the distribution. Pass CXXCOMPILE to processing.tpl.
+	* tpl/processing.tpl: use CXXCOMPILE instead of a custom
+	compilation command. Now processing.tpl is properly autoconf'ed.
+
+	* Makefile.am (ACLOCAL_FLAGS): add.
+	(CONFIGURE_DEPENDENCIES): depend on ../src/oln.m4.
+	(EXTRA_DIST): add.
+
+	
 2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
 
 	* doc/Makefile.am: cleanup.

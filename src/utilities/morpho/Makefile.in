@@ -76,6 +76,7 @@ MAKEINFO = @MAKEINFO@
 MORPHO_UTILITIES = @MORPHO_UTILITIES@
 OBJEXT = @OBJEXT@
 OLN_INCLUDEDIR = @OLN_INCLUDEDIR@
+OLN_SOURCE_DIR = @OLN_SOURCE_DIR@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
@@ -122,7 +123,7 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 
 AM_CPPFLAGS = -I$(OLN_INCLUDEDIR)
-AM_CXXFLAGS = -Wall -W -ftemplate-depth-50 
+AM_CXXFLAGS = -Wall -W 
 
 bin_PROGRAMS = \
   erosion_2d_int_u8  dilation_2d_int_u8  opening_2d_int_u8  closing_2d_int_u8  fast_erosion_2d_int_u8  fast_dilation_2d_int_u8  fast_opening_2d_int_u8  fast_closing_2d_int_u8  fast_beucher_gradient_2d_int_u8  fast_internal_gradient_2d_int_u8  fast_external_gradient_2d_int_u8  white_top_hat_2d_int_u8  black_top_hat_2d_int_u8  self_complementary_top_hat_2d_int_u8  fast_white_top_hat_2d_int_u8  fast_black_top_hat_2d_int_u8  fast_self_complementary_top_hat_2d_int_u8  laplacian_2d_int_u8  fast_laplacian_2d_int_u8  top_hat_contrast_op_2d_int_u8  fast_top_hat_contrast_op_2d_int_u8  hit_or_miss_2d_int_u8  fast_hit_or_miss_2d_int_u8  thinning_2d_int_u8  fast_thinning_2d_int_u8  thickening_2d_int_u8  fast_thickening_2d_int_u8  watershed_seg_2d_int_u8  watershed_con_2d_int_u8  fast_gaussian_2d_int_u8  fast_gaussian_derivative_2d_int_u8  fast_gaussian_second_derivative_2d_int_u8  sure_regional_minima_2d_int_u8  sequential_regional_minima_2d_int_u8  hybrid_regional_minima_2d_int_u8  sure_minima_imposition_2d_int_u8  sequential_minima_imposition_2d_int_u8  hybrid_minima_imposition_2d_int_u8
@@ -243,6 +244,7 @@ hybrid_minima_imposition_2d_int_u8_SOURCES = morpho_template_extrema.cc
 hybrid_minima_imposition_2d_int_u8_CXXFLAGS = $(AM_CXXFLAGS) -DDATA_TYPE=int_u8 -DIMAGE_TYPE=image2d -DNEIGHBORHOOD_TYPE=neighborhood2d -DFUNC='hybrid::minima_imposition'
 subdir = utilities/morpho
 mkinstalldirs = $(SHELL) $(top_srcdir)/../tools/mkinstalldirs
+CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 bin_PROGRAMS = erosion_2d_int_u8$(EXEEXT) dilation_2d_int_u8$(EXEEXT) \
 	opening_2d_int_u8$(EXEEXT) closing_2d_int_u8$(EXEEXT) \
@@ -527,7 +529,7 @@ white_top_hat_2d_int_u8_LDADD = $(LDADD)
 white_top_hat_2d_int_u8_DEPENDENCIES =
 white_top_hat_2d_int_u8_LDFLAGS =
 
-DEFAULT_INCLUDES =  -I. -I$(srcdir)
+DEFAULT_INCLUDES =  -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/../tools/depcomp
 am__depfiles_maybe = depfiles
 @AMDEP_TRUE@DEP_FILES = \

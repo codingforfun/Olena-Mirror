@@ -8,8 +8,8 @@ directory in the test tree (tests/), focusing on this part of Olena.
 
 There are two additional directories:
 
- data/   contains data needed by the test from the other directories
- check/  contains code common to all tests (libcheck.a, described below)
+ data-src/   contains data needed by the test from the other directories
+ check/      contains code common to all tests (libcheck.a, described below)
 
 
 ** Prerequisites

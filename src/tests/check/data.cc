@@ -12,5 +12,9 @@ data(const std::string file)
   if (access(s.c_str(), R_OK) != -1)
     return s;
 
-  return srcdir + s;
+  std::string s2 = srcdir + s;
+  if (access(s2.c_str(), R_OK) != -1)
+    return s2;
+
+  return s;
 }

@@ -73,6 +73,7 @@ MAINTAINER_MODE_TRUE = @MAINTAINER_MODE_TRUE@
 MAKEINFO = @MAKEINFO@
 OBJEXT = @OBJEXT@
 OLN_INCLUDEDIR = @OLN_INCLUDEDIR@
+OLN_SOURCE_DIR = @OLN_SOURCE_DIR@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
@@ -111,9 +112,17 @@ sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 SUBDIRS = @DOC_DIR@
+
+EXTRA_DIST = tpl/processing.tpl \
+   img/lena256.pgm  \
+   img/object.pbm
+
+
+ACLOCAL_FLAGS = -I ../src
+CONFIGURE_DEPENDENCIES = $(top_srcdir)/../src/oln.m4
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-mkinstalldirs = $(SHELL) $(top_srcdir)/../tools/mkinstalldirs
+mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES =
 DIST_SOURCES =
 
@@ -122,10 +131,8 @@ RECURSIVE_TARGETS = info-recursive dvi-recursive pdf-recursive \
 	all-recursive install-data-recursive install-exec-recursive \
 	installdirs-recursive install-recursive uninstall-recursive \
 	check-recursive installcheck-recursive
-DIST_COMMON = ../tools/ChangeLog ../tools/depcomp ../tools/install-sh \
-	../tools/missing ../tools/mkinstalldirs ../tools/texinfo.tex \
-	ChangeLog Makefile.am Makefile.in aclocal.m4 configure \
-	configure.ac
+DIST_COMMON = ChangeLog Makefile.am Makefile.in aclocal.m4 configure \
+	configure.ac install-sh missing mkinstalldirs
 DIST_SUBDIRS = $(SUBDIRS)
 all: all-recursive
 
@@ -282,7 +289,7 @@ distcleancheck_listfiles = find . -type f -print
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkinstalldirs) $(distdir)/../tools
+	$(mkinstalldirs) $(distdir)/img $(distdir)/tpl
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \

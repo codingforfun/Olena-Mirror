@@ -56,7 +56,7 @@ CXX = @CXX@
 CXXCPP = @CXXCPP@
 CXXDEPMODE = @CXXDEPMODE@
 
-CXXFLAGS = -g -O3
+CXXFLAGS = @CXXFLAGS@ -O3
 CYGPATH_W = @CYGPATH_W@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
@@ -81,6 +81,7 @@ MAKEINFO = @MAKEINFO@
 MORPHO_UTILITIES = @MORPHO_UTILITIES@
 OBJEXT = @OBJEXT@
 OLN_INCLUDEDIR = @OLN_INCLUDEDIR@
+OLN_SOURCE_DIR = @OLN_SOURCE_DIR@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
@@ -128,7 +129,7 @@ target_alias = @target_alias@
 
 # Don't use -ansi because it prevents us from using functions
 # like `remove' or `mkstemp' with g++-2.95.x.
-AM_CXXFLAGS = -Wall -W -ftemplate-depth-50 -pedantic
+AM_CXXFLAGS = -Wall -W -pedantic
 AM_CPPFLAGS = -I$(OLN_INCLUDEDIR) -I$(top_srcdir)/tests/check
 
 LDADD = $(top_builddir)/tests/check/libcheck.a
@@ -145,6 +146,7 @@ extrkiller_SOURCES = extrkiller.cc
 reconstruction_SOURCES = reconstruction.cc
 subdir = tests/morpho
 mkinstalldirs = $(SHELL) $(top_srcdir)/../tools/mkinstalldirs
+CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 check_PROGRAMS = edoc$(EXEEXT) extrkiller$(EXEEXT) \
 	reconstruction$(EXEEXT)
@@ -164,7 +166,7 @@ reconstruction_LDADD = $(LDADD)
 reconstruction_DEPENDENCIES = $(top_builddir)/tests/check/libcheck.a
 reconstruction_LDFLAGS =
 
-DEFAULT_INCLUDES =  -I. -I$(srcdir)
+DEFAULT_INCLUDES =  -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/../tools/depcomp
 am__depfiles_maybe = depfiles
 @AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/edoc.Po ./$(DEPDIR)/extrkiller.Po \

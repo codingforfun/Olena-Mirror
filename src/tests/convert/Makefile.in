@@ -80,6 +80,7 @@ MAKEINFO = @MAKEINFO@
 MORPHO_UTILITIES = @MORPHO_UTILITIES@
 OBJEXT = @OBJEXT@
 OLN_INCLUDEDIR = @OLN_INCLUDEDIR@
+OLN_SOURCE_DIR = @OLN_SOURCE_DIR@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
@@ -127,7 +128,7 @@ target_alias = @target_alias@
 
 # Don't use -ansi because it prevents us from using functions
 # like `remove' or `mkstemp' with g++-2.95.x.
-AM_CXXFLAGS = -Wall -W -ftemplate-depth-50 -pedantic
+AM_CXXFLAGS = -Wall -W -pedantic
 AM_CPPFLAGS = -I$(OLN_INCLUDEDIR) -I$(top_srcdir)/tests/check
 
 LDADD = $(top_builddir)/tests/check/libcheck.a
@@ -169,6 +170,7 @@ check_PROGRAMS = \
 8_rgb_xyz_CXXFLAGS = -DSRC=rgb -DDEST=xyz -DEM=0.770938 -DEV=0.34167
 subdir = tests/convert
 mkinstalldirs = $(SHELL) $(top_srcdir)/../tools/mkinstalldirs
+CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 check_PROGRAMS = 8-nrgb-hsi$(EXEEXT) 8-nrgb-hsl$(EXEEXT) \
 	8-nrgb-hsv$(EXEEXT) 8-nrgb-xyz$(EXEEXT) 8-nrgb-yiq$(EXEEXT) \
@@ -214,7 +216,7 @@ am_8_rgb_xyz_OBJECTS = 8_rgb_xyz-convcomp.$(OBJEXT)
 8_rgb_xyz_DEPENDENCIES = $(top_builddir)/tests/check/libcheck.a
 8_rgb_xyz_LDFLAGS =
 
-DEFAULT_INCLUDES =  -I. -I$(srcdir)
+DEFAULT_INCLUDES =  -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/../tools/depcomp
 am__depfiles_maybe = depfiles
 @AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/8_nrgb_hsi-convcomp.Po \

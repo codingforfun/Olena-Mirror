@@ -2,13 +2,14 @@ This files describe some know issues with Olena.  Please note that
 Olena is a work in progress.  Later versions can be found at
 http://www.lrde.epita.fr/olena/.
 
-We are developing under Linux i386 using GCC version 2.95.3, 3.0.4, and 3.1.
-Olena should compile fine with these versions of the compiler.  Keeping
-the compatibility with 2.95.3 implies some restrictions over the
-template constructions used in Olena, because GCC 2.95.3 still bombs
-out on various valid expressions.  Therefore some part of the code
-have been arranged to "please" 2.95.3.  There are also a few issues
-that need workaround even with latter version of the compiler.
+We are developing under Linux i386 using GCC version 2.95.3, 3.0.4,
+3.1 and 3.2.  Olena should compile fine with these versions of the
+compiler.  Keeping the compatibility with 2.95.3 implies some
+restrictions over the template constructions used in Olena, because
+GCC 2.95.3 still bombs out on various valid expressions.  Therefore
+some part of the code have been arranged to "please" 2.95.3.  There
+are also a few issues that need workaround even with latter version of
+the compiler.
 
 There is a good reason to maintain 2.95.3 compatibility: performance.
 The inlining heuristic have changed between these versions.

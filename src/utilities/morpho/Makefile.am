@@ -1,6 +1,6 @@
 
 AM_CPPFLAGS = -I$(OLN_INCLUDEDIR)
-AM_CXXFLAGS = -Wall -W -ftemplate-depth-50 
+AM_CXXFLAGS = -Wall -W 
 
 bin_PROGRAMS = \
   erosion_2d_int_u8  dilation_2d_int_u8  opening_2d_int_u8  closing_2d_int_u8  fast_erosion_2d_int_u8  fast_dilation_2d_int_u8  fast_opening_2d_int_u8  fast_closing_2d_int_u8  fast_beucher_gradient_2d_int_u8  fast_internal_gradient_2d_int_u8  fast_external_gradient_2d_int_u8  white_top_hat_2d_int_u8  black_top_hat_2d_int_u8  self_complementary_top_hat_2d_int_u8  fast_white_top_hat_2d_int_u8  fast_black_top_hat_2d_int_u8  fast_self_complementary_top_hat_2d_int_u8  laplacian_2d_int_u8  fast_laplacian_2d_int_u8  top_hat_contrast_op_2d_int_u8  fast_top_hat_contrast_op_2d_int_u8  hit_or_miss_2d_int_u8  fast_hit_or_miss_2d_int_u8  thinning_2d_int_u8  fast_thinning_2d_int_u8  thickening_2d_int_u8  fast_thickening_2d_int_u8  watershed_seg_2d_int_u8  watershed_con_2d_int_u8  fast_gaussian_2d_int_u8  fast_gaussian_derivative_2d_int_u8  fast_gaussian_second_derivative_2d_int_u8  sure_regional_minima_2d_int_u8  sequential_regional_minima_2d_int_u8  hybrid_regional_minima_2d_int_u8  sure_minima_imposition_2d_int_u8  sequential_minima_imposition_2d_int_u8  hybrid_minima_imposition_2d_int_u8

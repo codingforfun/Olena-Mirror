@@ -6,10 +6,10 @@ AM_CFLAGS = $(FFTW_CFLAGS)
 check_PROGRAMS = fft dwt
 
 fft_SOURCES = fft.cc
-fft_OUTPUT_DIR=output/
+fft_OUTPUT_DIR = output/
 
 dwt_SOURCES = dwt.cc
-dwt_OUTPUT_DIR=output/
+dwt_OUTPUT_DIR = output/
 
 CLEANFILES = $(fft_OUTPUT_DIR)output_fft_trans_clipped.pgm \
 	$(fft_OUTPUT_DIR)output_fft_trans_log.pgm \
