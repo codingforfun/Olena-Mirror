@@ -1,3 +1,30 @@
+2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* utilities/Makefile.am: Remove useless flags.
+
+2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Merge from cleanup:
+
+	2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* utilities/mosaic.cc: Update namespaces.
+
+	2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* utilities/configure.ac: Adapt to new oln location.
+
+	2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* utilities/morpho/morpho_template.cc,
+	utilities/morpho/morpho_template_extrema.cc,
+	utilities/morpho/morpho_template_gaussian.cc,
+	utilities/morpho/morpho_template_watershed.cc,
+	utilities/morpho/morpho_template_with_functor.cc,
+	utilities/morpho/morpho_template_with_neighb.cc,
+	utilities/morpho/morpho_template_with_twowin.cc,
+	utilities/mosaic.cc: Replace <oln/types by <ntg/.
+
 2003-02-18  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* utilities/Makefile.am: Cleanup manpages generation.

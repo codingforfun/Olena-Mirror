@@ -4,6 +4,7 @@
 #include <oln/morpho/laplacian.hh>
 
 using namespace oln;
+using namespace ntg;
 
 void morpholena_base()
 {

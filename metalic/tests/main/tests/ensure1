@@ -1,0 +1,8 @@
+#include <mlc/bool.hh>
+
+using namespace mlc;
+
+int main()
+{
+  is_true<2 == 3>::ensure(); // COMPFAIL
+}

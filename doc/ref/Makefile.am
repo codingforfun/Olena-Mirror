@@ -4,7 +4,7 @@
 
 TEXI2PDF = $(TEXI2DVI) --pdf
 
-olnsrc = $(top_srcdir)/oln/oln
+olnsrc = $(top_srcdir)/olena/oln
 
 include $(srcdir)/filelists.make
 
@@ -17,12 +17,12 @@ $(srcdir)/Makefile.in: $(srcdir)/filelists.make
 ### Auto-generation of TeX files.
 ###
 
-INCLUDES = -I$(top_srcdir)/oln -I$(top_builddir)/oln
-COMMONGETDEFSFLAGS =  --agarg=-DCXXCOMPILE="$(CXX) -I$(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(CPPFLAGS) $(OLN_CPPFLAGS) $(CXXFLAGS) $(OLN_CXXFLAGS)" \
+INCLUDES = -I$(top_srcdir)/olena -I$(top_builddir)/olena
+COMMONGETDEFSFLAGS =  --agarg=-DCXXCOMPILE="$(CXX) -I$(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(CPPFLAGS) $(CXXFLAGS)" \
 		      --agarg=-DEPSTOPDF="$(EPSTOPDF)" \
 		      --agarg=-DCONVERT="$(IMAGEMAGICK_CONVERT)" \
 	              --agarg=--templ-dirs=$(srcdir) \
-	              --agarg=-DIMGDIR=$(top_srcdir)/oln/img
+	              --agarg=-DIMGDIR=$(top_srcdir)/olena/img
 PROCESSINGGETDEFSFLAGS = \
   --subblock=tpl=type,name,doc \
   --subblock=arg=type,name,mode,doc \

@@ -16,6 +16,7 @@
 
 using namespace oln;
 using namespace oln::level;
+using namespace ntg;
 using std::cout;
 using std::endl;
 

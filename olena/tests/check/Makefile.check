@@ -1,0 +1,7 @@
+# -*- Makefile -*-
+
+# This Makefile is designed to be included by olena/tests/* directories.
+
+include ../check/Makefile.flags
+LDADD = $(top_builddir)/metalic/tests/check/libcheck.a ../check/libolncheck.a
+TESTS = $(check_PROGRAMS)

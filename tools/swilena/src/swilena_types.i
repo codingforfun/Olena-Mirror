@@ -1,6 +1,6 @@
 // -*- C++ -*-
 %{
-#include <oln/types/all.hh>
+#include <ntg/all.hh>
 #include <sstream>
 %}
 %include std_string.i

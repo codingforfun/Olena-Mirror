@@ -126,6 +126,7 @@
 [~ ENDFOR exh ~]
 
 using namespace oln;
+using namespace ntg;
 int main()
 {
 [~ `sed 's/^\\$//' .example` ~]

@@ -1,8 +1,8 @@
 #include <oln/basics1d.hh>
 #include <oln/basics2d.hh>
 #include <oln/basics3d.hh>
-#include <oln/core/type.hh>
-#include <oln/meta/cmp.hh>
+#include <mlc/type.hh>
+#include <mlc/cmp.hh>
 #include <oln/core/pred_image.hh>
 #include <oln/arith/ops.hh>
 #include <oln/arith/logic.hh>
@@ -10,6 +10,7 @@
 #include <oln/morpho/watershed.hh>
 
 using namespace oln;
+using namespace ntg;
 
 struct a_2dpred {
   template<class T>

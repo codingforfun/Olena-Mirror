@@ -1,0 +1,9 @@
+#include <mlc/math.hh>
+
+using namespace mlc;
+
+int main()
+{
+  const unsigned i = pow2sup<27>::value;
+  return i != 32;
+}

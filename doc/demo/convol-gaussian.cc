@@ -2,6 +2,7 @@
 #include <oln/convol/fast_gaussian.hh>
 
 using namespace oln;
+using namespace ntg;
 
 int main(void)
 {

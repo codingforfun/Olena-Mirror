@@ -2,16 +2,18 @@
 
 AC_PREREQ([2.54])
 
-AC_INIT([Olena], OLN_VERSION, OLN_CONTACT, [oln])
-AC_CONFIG_AUX_DIR([oln/config])
-AC_CONFIG_SRCDIR([oln/config/oln.m4])
+AC_INIT([Olena], OLN_VERSION, OLN_CONTACT, [olena])
+AC_CONFIG_AUX_DIR([config])
+AC_CONFIG_SRCDIR([config/oln.m4])
 AM_INIT_AUTOMAKE([1.7 no-define foreign dist-bzip2])
 AC_CONFIG_HEADERS([config.h:config.hin])
 
 # Use included Olena version.
-OLN_PATH_LOCAL([oln])
+NTG_PATH_LOCAL([integre])
+MLC_PATH_LOCAL([metalic])
+OLN_PATH_LOCAL([olena])
 AC_WITH_OLN
-	
+
 # Some library archives are used. Some C code used.
 AC_PROG_RANLIB
 AC_PROG_CC
@@ -24,9 +26,17 @@ AC_WITH_CXX_FFTW
 AC_CXX_FLAGS
 
 AC_CONFIG_FILES([Makefile
-                 oln/Makefile 
-		 oln/img/Makefile 
-		 oln/oln/config/pconf.hh:oln/oln/config/pconf-hh.in])
+		 integre/Makefile
+		 integre/ntg/Makefile
+                 metalic/Makefile
+                 metalic/mlc/Makefile
+                 metalic/tests/Makefile
+                 metalic/tests/check/Makefile
+		 metalic/tests/check/defs
+		 olena/Makefile
+		 olena/img/Makefile
+		 olena/oln/Makefile
+		 olena/oln/config/pconf.hh:olena/oln/config/pconf-hh.in])
 
 ### Olena components.
 
@@ -84,23 +94,28 @@ OLN_COLLECTION([OLN_TOP],
 
 ### The testsuite is a component.
 
-    OLN_COMPONENT([oln/tests], 
-		  [testsuite], 
+    ##
+    ## olena testsuite
+    ##
+   
+    OLN_COMPONENT([olena/tests], 
+		  [oln-testsuite], 
 		  [oln_cv_build_tests], 
-		  [the testsuite], 
+		  [the olena's testsuite], 
 		  [OLN_SRC], 
-	          [oln/tests/Makefile
-                   oln/tests/check/defs
-	           oln/tests/check/Makefile],
+	          [
+		   olena/tests/Makefile
+		   olena/tests/check/Makefile
+		   olena/tests/check/defs],
     [dnl Configuration for the testsuite
 
       OLN_TESTS_SUBDIRS=""
 
       AC_CACHE_CHECK([for selection of tests],
                      [oln_cv_tests_selection],
-                     [AC_ARG_WITH([tests],
-    	                          [AC_HELP_STRING([--with-tests=<list>],
-                                                  [none,all,convert,convol,io,meta,morpho,sanity,transforms,types])],
+                     [AC_ARG_WITH([oln-tests],
+    	                          [AC_HELP_STRING([--with-oln-tests=<list>],
+                                                  [none,all,convert,convol,io,morpho,sanity,transforms])],
                                   [oln_cv_tests_selection=$withval],
                                   [oln_cv_tests_selection=all])dnl
                      ])dnl
@@ -111,17 +126,81 @@ OLN_COLLECTION([OLN_TOP],
       OLN_TESTS([convert])
       OLN_TESTS([convol])
       OLN_TESTS([io])
-      OLN_TESTS([meta])
       OLN_TESTS([morpho])
       OLN_TESTS([sanity])
       OLN_TESTS([transforms])
-      OLN_TESTS([types])
 
       AC_SUBST([OLN_TESTS_SUBDIRS])
 
-    ], [tests])dnl End of OLN_COMPONENT([oln/tests])
+    ], [tests])dnl End of OLN_COMPONENT([olena/tests])
+
+    ##
+    ## integre testsuite
+    ##
+   
+    OLN_COMPONENT([integre/tests], 
+		  [ntg-testsuite], 
+		  [ntg_cv_build_tests], 
+		  [the integre's testsuite], 
+		  [OLN_SRC], 
+	          [
+		   integre/tests/Makefile
+		   integre/tests/check/defs],
+    [dnl Configuration for the testsuite
+
+      NTG_TESTS_SUBDIRS=""
+
+      AC_CACHE_CHECK([for selection of tests],
+                     [ntg_cv_tests_selection],
+                     [AC_ARG_WITH([ntg-tests],
+    	                          [AC_HELP_STRING([--with-ntg-tests=<list>],
+                                                  [none,types])],
+                                  [ntg_cv_tests_selection=$withval],
+                                  [ntg_cv_tests_selection=all])dnl
+                     ])dnl
+      
+
+      # NTG_TESTS defined in oln-local.m4
+      NTG_TESTS([types])
+
+      AC_SUBST([NTG_TESTS_SUBDIRS])
+
+    ], [tests])dnl End of OLN_COMPONENT([integre/tests])
+
+    ##
+    ## metalic testsuite
+    ##
+   
+    OLN_COMPONENT([metalic/tests], 
+		  [mlc-testsuite], 
+		  [mlc_cv_build_tests], 
+		  [the metalic's testsuite], 
+		  [OLN_SRC], 
+	          [],
+    [dnl Configuration for the testsuite
+
+      MLC_TESTS_SUBDIRS=""
+
+      AC_CACHE_CHECK([for selection of tests],
+                     [mlc_cv_tests_selection],
+                     [AC_ARG_WITH([mlc-tests],
+    	                          [AC_HELP_STRING([--with-mlc-tests=<list>],
+                                                  [none,array,main])],
+                                  [mlc_cv_tests_selection=$withval],
+                                  [mlc_cv_tests_selection=all])dnl
+                     ])dnl
+      
+
+      # MLC_TESTS defined in oln-local.m4
+      MLC_TESTS([array])
+      MLC_TESTS([main])
+
+      AC_SUBST([MLC_TESTS_SUBDIRS])
+
+    ], [tests])dnl End of OLN_COMPONENT([metalic/tests])
 
   ])dnl End of OLN_COLLECTION([OLN_SRC])
+
 
 ###
 ### Stuff pertaining to the documentation

@@ -1,9 +1,8 @@
 ## Process this file with Automake to produce Makefile.in -*- Makefile -*-
 
-AM_CPPFLAGS = $(OLN_CPPFLAGS) 
-AM_CXXFLAGS = $(OLN_CXXFLAGS) $(CXXFLAGS_STRICT) $(CXXFLAGS_OPTIMIZE) $(ZLIB_CXXFLAGS)
+AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_OPTIMIZE) $(ZLIB_CXXFLAGS)
 
-INCLUDES = -I$(srcdir)/../../lib -I$(OLN_LOCAL_SRC) -I$(OLN_LOCAL_BUILD)
+INCLUDES = -I$(srcdir)/../../lib
 LDADD = ../../lib/libolntools.a
 
 $(srcdir)/morpho-rules.make: $(srcdir)/generate_morpho.sh
