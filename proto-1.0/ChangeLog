@@ -1,5 +1,9 @@
 2005-01-26  Simon Odou  <simon@lrde.epita.fr>
 
+	* configure.ac: Set the documentation as a component.
+
+2005-01-26  Simon Odou  <simon@lrde.epita.fr>
+
 	* configure.ac: Add documentation generation support (from Olena).
 
 2005-01-21  Damien Thivolle  <damien@lrde.epita.fr>

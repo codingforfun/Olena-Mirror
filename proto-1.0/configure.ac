@@ -216,12 +216,12 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
 
 ### The reference manuals directory is a component.
 
-    OLN_COMPONENT([doc/ref],
-	          [doc-ref],
-	          [oln_cv_build_ref],
-	          [the Olena reference manuals],
-	          [OLN_DOC],
-                  [doc/ref/Makefile],
+    OLN_NON_COMPONENT([doc/ref],
+                      [doc-ref],
+                      [oln_cv_build_ref],
+                      [the Olena reference manuals],
+                      [OLN_DOC],
+                      [doc/ref/Makefile],
     [dnl Configuration for the manuals directory.
 
      AC_ARG_VAR([TAR], [the tape archiver program])
