@@ -1,22 +1,20 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 7 15)
-(Parent-Version oln 7 14)
-(Version-Log "Index: ChangeLog
-from  Akim Demaille  <akim@epita.fr>
-
-	Make sure all the file display the \"(C)\" after \"Copyright\".
-	Emacs' copyright-update is now usable.
-
+(Project-Version oln 7 16)
+(Parent-Version oln 7 15)
+(Version-Log "
 Index: oln/ChangeLog
+from   2003-01-16  Akim Demaille  <akim@epita.fr>
+        * tests/sanity/includes.test: Don't jump over `old/' which no
+        longer exists.
 
-	* tests/sanity/includes.test: Support arguments on command line.
-	* oln/types/behaviour.hh (strict::get::apply): Use TO_OLN_CAST.
-	* oln/oln/types/optraits_int_u.hh: Include oln/types/global_ops.hh,
-	not oln/types/global_ops_traits.hh.")
+	* oln/oln/core/old/image2d_bin.hh, oln/oln/core/old/image2d_bin.hxx
+	* oln/oln/core/old/image2d.hxx, oln/oln/core/old/pred.hh
+	* oln/oln/core/old/rec_window.hh: Remove.
+")
 (New-Version-Log "")
-(Checkin-Time "Thu, 16 Jan 2003 18:13:46 +0100")
+(Checkin-Time "Thu, 16 Jan 2003 18:52:15 +0100")
 (Checkin-Login akim)
 ;; diff-ignore configure$
 ;; diff-ignore aclocal\.m4$
@@ -112,7 +110,7 @@ Index: oln/ChangeLog
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.9 640))
-  (oln/ChangeLog (oln/o/30_ChangeLog 1.17 600))
+  (oln/ChangeLog (oln/o/30_ChangeLog 1.18 600))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.4 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.4 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.1 640))
@@ -258,11 +256,6 @@ Index: oln/ChangeLog
   (oln/oln/core/neighborhood3d.hh (oln/c/35_neighborho 1.8 640))
   (oln/oln/core/neighborhood.hh (oln/c/38_neighborho 1.4 640))
   (oln/oln/core/objs.hh (oln/c/34_objs.hh 1.4 640))
-  (oln/oln/core/old/image2d_bin.hh (oln/c/50_image2d_bi 1.4 640))
-  (oln/oln/core/old/image2d_bin.hxx (oln/c/49_image2d_bi 1.4 640))
-  (oln/oln/core/old/image2d.hxx (oln/c/51_image2d.hx 1.4 640))
-  (oln/oln/core/old/pred.hh (oln/c/26_pred.hh 1.6 640))
-  (oln/oln/core/old/rec_window.hh (oln/c/48_rec_window 1.3 640))
   (oln/oln/core/point1d.hh (oln/c/32_point1d.hh 1.5 600))
   (oln/oln/core/point1d.hxx (oln/c/31_point1d.hx 1.3 640))
   (oln/oln/core/point2d.hh (oln/c/30_point2d.hh 1.4 600))
@@ -393,7 +386,7 @@ Index: oln/ChangeLog
   (oln/oln/types/optraits_builtins_float.hh (oln/g/19_optraits_b 1.9 640))
   (oln/oln/types/optraits_builtins.hh (oln/i/16_optraits_b 1.2 640))
   (oln/oln/types/optraits_builtins_int_defs.hh (oln/g/17_optraits_b 1.4 640))
-  (oln/oln/types/optraits_builtins_int.hh (oln/g/18_optraits_b 1.4 640))
+  (oln/oln/types/optraits_builtins_int.hh (oln/g/18_optraits_b 1.5 640))
   (oln/oln/types/optraits_cplx.hh (oln/i/5_optraits_c 1.5 600))
   (oln/oln/types/optraits_cycle.hh (oln/g/16_optraits_c 1.10 600))
   (oln/oln/types/optraits.hh (oln/g/21_optraits.h 1.6 600))
@@ -401,7 +394,7 @@ Index: oln/ChangeLog
   (oln/oln/types/optraits_int_u.hh (oln/g/14_optraits_i 1.9 600))
   (oln/oln/types/optraits_range.hh (oln/g/13_optraits_r 1.5 600))
   (oln/oln/types/optraits_scalar_defs.hh (oln/g/11_optraits_s 1.5 600))
-  (oln/oln/types/optraits_scalar.hh (oln/g/12_optraits_s 1.9 600))
+  (oln/oln/types/optraits_scalar.hh (oln/g/12_optraits_s 1.10 600))
   (oln/oln/types/optraits_vec.hh (oln/h/42_optraits_v 1.9 600))
   (oln/oln/types/predecls.hh (oln/g/10_predecls.h 1.10 640))
   (oln/oln/types/range.hh (oln/g/9_range.hh 1.7 600))
@@ -413,7 +406,7 @@ Index: oln/ChangeLog
   (oln/oln/types/typetraits_builtins_float.hh (oln/g/4_typetraits 1.8 640))
   (oln/oln/types/typetraits_builtins.hh (oln/i/27_typetraits 1.2 640))
   (oln/oln/types/typetraits_builtins_int.hh (oln/g/3_typetraits 1.6 640))
-  (oln/oln/types/typetraits.hh (oln/g/5_typetraits 1.5 600))
+  (oln/oln/types/typetraits.hh (oln/g/5_typetraits 1.6 600))
   (oln/oln/types/vec.hh (oln/h/43_vec.hh 1.5 600))
   (oln/oln/types/xyz.hh (oln/i/24_xyz.hh 1.3 640))
   (oln/oln/types/yiq.hh (oln/i/23_yiq.hh 1.3 640))
@@ -476,7 +469,7 @@ Index: oln/ChangeLog
   ; (oln/tests/morpho/Makefile.in ())
   (oln/tests/morpho/reconstruction.cc (oln/e/34_reconstruc 1.6 640))
   (oln/tests/README (oln/f/4_README 1.4 640))
-  (oln/tests/sanity/includes.test (oln/f/46_includes.t 1.5 750))
+  (oln/tests/sanity/includes.test (oln/f/46_includes.t 1.6 750))
   (oln/tests/sanity/Makefile.am (oln/f/48_Makefile.a 1.2 640))
   ; (oln/tests/sanity/Makefile.in ())
   (oln/tests/transforms/dwt.cc (oln/i/38_dwt.cc 1.4 640))

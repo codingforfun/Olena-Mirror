@@ -16,7 +16,6 @@ rm -f failures
 
 if test $# = 0; then
   find "$OLN_INCLUDE_DIR/oln" -name "${1-*}.hh" \
-                      -a ! -path '*/old/*' \
                       -a ! -path '*/obsolete/*' -type f -print |
     sed "s,$OLN_INCLUDE_DIR/,,g"
 else
