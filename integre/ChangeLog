@@ -3,6 +3,8 @@
 	* ntg/real/int_u.hh, ntg/real_int_s.hh: Add a constructor 
 	from bin type.
 
+2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* ntg/all.hh, ntg/basics.hh, ntg/bin.hh, ntg/color.hh,
 	ntg/color/color.hh, ntg/color/hsi.hh, ntg/color/hsl.hh,
 	ntg/color/hsv.hh, ntg/color/nrgb.hh, ntg/color/rgb.hh,
