@@ -1,3 +1,12 @@
+2002-07-24  David Lesage  <david@lrde.epita.fr>
+	
+	* oln/core/bkd_iter1d.hh, oln/core/fwd_iter1d.hh,
+	oln/core/bkd_iter2d.hh, oln/core/fwd_iter2d.hh,
+	oln/core/bkd_iter3d.hh, oln/core/fwd_iter3d.hh: Add Inferior
+	parameter to iterators.
+	* oln/core/internal/image1d.hh, oln/core/internal/image2d.hh,
+	oln/core/internal/image3d.hh: Adjust typedefs.
+
 2002-07-24  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* ISSUES: Mention runtimes of `make check' and the `const image'

@@ -33,12 +33,12 @@
 
 namespace oln {
 
-
-  class bkd_iter3d : public internal::_iter3d<bkd_iter3d>
+  template<class Inferior = type::bottom>
+  class bkd_iter3d : public internal::_iter3d<bkd_iter3d<Inferior> >
   {
   public:
-    typedef type::bottom inferior;
-    typedef internal::_iter3d<bkd_iter3d> super;
+    typedef Inferior inferior;
+    typedef internal::_iter3d<bkd_iter3d<Inferior> > super;
 
     enum { dim = 3 };
     typedef point3d point;

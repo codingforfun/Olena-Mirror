@@ -1,17 +1,20 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_4 34)
-(Parent-Version oln 0_4 33)
-(Version-Log "2002-07-24  Alexandre Duret-Lutz  <duret_g@epita.fr>
-
-	* ISSUES: Mention runtimes of `make check' and the `const image'
-	issue.
-	* NEWS, THANKS, README: Update for next release.
+(Project-Version oln 0_4 35)
+(Parent-Version oln 0_4 34)
+(Version-Log "2002-07-24  David Lesage  <david@lrde.epita.fr>
+	
+	* oln/core/bkd_iter1d.hh, oln/core/fwd_iter1d.hh,
+	oln/core/bkd_iter2d.hh, oln/core/fwd_iter2d.hh,
+	oln/core/bkd_iter3d.hh, oln/core/fwd_iter3d.hh: Add Inferior
+	parameter to iterators.
+	* oln/core/internal/image1d.hh, oln/core/internal/image2d.hh,
+	oln/core/internal/image3d.hh: Adjust typedefs..
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 24 Jul 2002 18:01:16 +0200")
-(Checkin-Login adl)
+(Checkin-Time "Thu, 25 Jul 2002 11:42:50 +0200")
+(Checkin-Login david)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
 ;; diff-ignore Makefile\.in$
@@ -78,7 +81,7 @@
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.13 644))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.14 600))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.15 600))
   (configure.ac (oln/3_configure. 1.16 600))
   (configure (oln/e/7_configure 1.20 700))
   (README (oln/1_README 1.4 600))
@@ -143,9 +146,9 @@
   (oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.3 600))
   (oln/core/accum.hh (oln/d/40_accum.hh 1.1 600))
   (oln/core/apply.hh (oln/d/39_apply.hh 1.3 600))
-  (oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.2 600))
-  (oln/core/bkd_iter2d.hh (oln/d/37_bkd_iter2d 1.2 600))
-  (oln/core/bkd_iter3d.hh (oln/d/36_bkd_iter3d 1.2 600))
+  (oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.3 600))
+  (oln/core/bkd_iter2d.hh (oln/d/37_bkd_iter2d 1.3 600))
+  (oln/core/bkd_iter3d.hh (oln/d/36_bkd_iter3d 1.3 600))
   (oln/core/border1d.hh (oln/d/34_border1d.h 1.3 600))
   (oln/core/border2d.hh (oln/d/33_border2d.h 1.3 600))
   (oln/core/border3d.hh (oln/d/32_border3d.h 1.3 600))
@@ -162,9 +165,9 @@
   (oln/core/dpoint.hh (oln/d/28_dpoint.hh 1.2 600))
   (oln/core/dpointnd.hh (oln/c/9_dpointnd.h 1.3 600))
   (oln/core/fold.hh (oln/c/7_fold.hh 1.4 600))
-  (oln/core/fwd_iter1d.hh (oln/d/21_fwd_iter1d 1.2 600))
-  (oln/core/fwd_iter2d.hh (oln/d/20_fwd_iter2d 1.2 600))
-  (oln/core/fwd_iter3d.hh (oln/d/19_fwd_iter3d 1.2 600))
+  (oln/core/fwd_iter1d.hh (oln/d/21_fwd_iter1d 1.3 600))
+  (oln/core/fwd_iter2d.hh (oln/d/20_fwd_iter2d 1.3 600))
+  (oln/core/fwd_iter3d.hh (oln/d/19_fwd_iter3d 1.3 600))
   (oln/core/generate.hh (oln/f/12_generate.h 1.4 600))
   (oln/core/image1d.hh (oln/c/47_image1d.hh 1.3 600))
   (oln/core/image1d_size.hh (oln/c/46_image1d_si 1.3 600))
@@ -177,11 +180,11 @@
   (oln/core/image_size.hh (oln/c/41_image_size 1.2 600))
   (oln/core/internal/fake.hh (oln/d/17_fake.hh 1.1 600))
   (oln/core/internal/image1d_data.hh (oln/d/15_image1d_da 1.4 600))
-  (oln/core/internal/image1d.hh (oln/d/16_image1d.hh 1.4 600))
+  (oln/core/internal/image1d.hh (oln/d/16_image1d.hh 1.5 600))
   (oln/core/internal/image2d_data.hh (oln/d/13_image2d_da 1.4 600))
-  (oln/core/internal/image2d.hh (oln/d/14_image2d.hh 1.4 600))
+  (oln/core/internal/image2d.hh (oln/d/14_image2d.hh 1.5 600))
   (oln/core/internal/image3d_data.hh (oln/d/11_image3d_da 1.4 600))
-  (oln/core/internal/image3d.hh (oln/d/12_image3d.hh 1.6 600))
+  (oln/core/internal/image3d.hh (oln/d/12_image3d.hh 1.7 600))
   (oln/core/internal/iter1d.hh (oln/d/10_iter1d.hh 1.2 600))
   (oln/core/internal/iter2d.hh (oln/d/9_iter2d.hh 1.2 600))
   (oln/core/internal/iter3d.hh (oln/d/8_iter3d.hh 1.2 600))

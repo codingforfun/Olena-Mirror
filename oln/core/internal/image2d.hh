@@ -41,7 +41,9 @@ namespace oln {
 
 
   // fwd decl
+  template<class Inferior>
   struct fwd_iter2d;
+  template<class Inferior>
   struct bkd_iter2d;
 
 
@@ -58,9 +60,9 @@ namespace oln {
       typedef Inferior inferior;
 
       typedef T value;
-      typedef fwd_iter2d iter;
-      typedef fwd_iter2d fwd_iter;
-      typedef bkd_iter2d bkd_iter;
+      typedef fwd_iter2d<type::bottom> iter;
+      typedef fwd_iter2d<type::bottom> fwd_iter;
+      typedef bkd_iter2d<type::bottom> bkd_iter;
 
       // the following methods are deduced from the method data() that
       // has to be provided by sub-classes

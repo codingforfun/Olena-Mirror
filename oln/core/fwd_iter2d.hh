@@ -33,12 +33,12 @@
 
 namespace oln {
 
-
-  class fwd_iter2d : public internal::_iter2d< fwd_iter2d >
+  template<class Inferior = type::bottom>
+  class fwd_iter2d : public internal::_iter2d< fwd_iter2d<Inferior> >
   {
   public:
-    typedef type::bottom inferior;
-    typedef internal::_iter2d<fwd_iter2d> super;
+    typedef Inferior inferior;
+    typedef internal::_iter2d<fwd_iter2d<Inferior> > super;
 
     enum { dim = 2 };
     typedef point2d point;
