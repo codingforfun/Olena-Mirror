@@ -1,7 +1,7 @@
 #!/bin/sh
 # generate_toolbox.sh
 #
-# $Id: generate_morpho.sh 1.3.1.1 Wed, 04 Dec 2002 21:23:33 +0100 chojin $
+# $Id: generate_morpho.sh 1.3.1.1.1.1 Tue, 07 Jan 2003 23:26:59 +0100 chojin $
 
 # Global variables
 DESTDIR=morpho
@@ -24,19 +24,19 @@ cat > $FILE <<EOF
 using namespace oln;
 
 #ifndef IMAGE_TYPE
-# error
+# error "IMAGE_TYPE not defined"
 #endif
 
 #ifndef WINDOW_TYPE
-# error
+# error "WINDOW_TYPE not defined"
 #endif
 
 #ifndef DATA_TYPE
-# error
+# error "DATA_TYPE not defined"
 #endif
 
 #ifndef FUNC
-# error
+# error "FUNC not defined"
 #endif
 
 static struct option long_options[] =
@@ -116,23 +116,23 @@ cat > $FILE <<EOF
 using namespace oln;
 
 #ifndef IMAGE_TYPE
-# error
+# error "IMAGE_TYPE not defined"
 #endif
 
 #ifndef WINDOW_TYPE
-# error
+# error "WINDOW_TYPE not defined"
 #endif
 
 #ifndef DATA_TYPE
-# error
+# error "DATA_TYPE not defined"
 #endif
 
 #ifndef FUNC
-# error
+# error "FUNC not defined"
 #endif
 
 #ifndef FUNCTOR
-# error
+# error "FUNCTOR not defined"
 #endif
 
 static struct option long_options[] =
@@ -213,19 +213,19 @@ cat > $FILE <<EOF
 using namespace oln;
 
 #ifndef IMAGE_TYPE
-# error
+# error "IMAGE_TYPE not defined"
 #endif
 
 #ifndef WINDOW_TYPE
-# error
+# error "WINDOW_TYPE not defined"
 #endif
 
 #ifndef DATA_TYPE
-# error
+# error "DATA_TYPE not defined"
 #endif
 
 #ifndef FUNC
-# error
+# error "FUNC not defined"
 #endif
 
 static struct option long_options[] =
@@ -312,19 +312,19 @@ cat > $FILE <<EOF
 using namespace oln;
 
 #ifndef IMAGE_TYPE
-# error
+# error "IMAGE_TYPE not defined"
 #endif
 
 #ifndef NEIGHBORHOOD_TYPE
-# error
+# error "NEIGHBORHOOD_TYPE not defined"
 #endif
 
 #ifndef DATA_TYPE
-# error
+# error "DATA_TYPE not defined"
 #endif
 
 #ifndef FUNC
-# error
+# error "FUNC not defined"
 #endif
 
 static struct option long_options[] =
@@ -406,15 +406,15 @@ cat > $FILE <<EOF
 using namespace oln;
 
 #ifndef IMAGE_TYPE
-# error
+# error "IMAGE_TYPE not defined"
 #endif
 
 #ifndef DATA_TYPE
-# error
+# error "DATA_TYPE not defined"
 #endif
 
 #ifndef FUNC
-# error
+# error "FUNC not defined"
 #endif
 
 static struct option long_options[] =
@@ -495,19 +495,19 @@ cat > $FILE <<EOF
 using namespace oln;
 
 #ifndef IMAGE_TYPE
-# error
+# error "IMAGE_TYPE not defined"
 #endif
 
 #ifndef NEIGHBORHOOD_TYPE
-# error
+# error "NEIGHBORHOOD_TYPE not defined"
 #endif
 
 #ifndef DATA_TYPE
-# error
+# error "DATA_TYPE not defined"
 #endif
 
 #ifndef FUNC
-# error
+# error "FUNC not defined"
 #endif
 
 static struct option long_options[] =
@@ -588,19 +588,19 @@ cat > $FILE <<EOF
 using namespace oln;
 
 #ifndef IMAGE_TYPE
-# error
+# error "IMAGE_TYPE not defined"
 #endif
 
 #ifndef NEIGHBORHOOD_TYPE
-# error
+# error "NEIGHBORHOOD_TYPE not defined"
 #endif
 
 #ifndef DATA_TYPE
-# error
+# error "DATA_TYPE not defined"
 #endif
 
 #ifndef FUNC
-# error
+# error "FUNC not defined"
 #endif
 
 static struct option long_options[] =

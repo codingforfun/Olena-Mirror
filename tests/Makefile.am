@@ -1,14 +1,15 @@
 # Process current dir first to built the data.
 # Process the check directory next, because it contains functions
 # needed by other directories.
-SUBDIRS = . check \
-  convert \
-  convol \
-  io \
-  meta \
-  morpho \
-  sanity \
-  transforms \
+SUBDIRS = . check				\
+  arith						\
+  convert					\
+  convol					\
+  io						\
+  meta						\
+  morpho					\
+  sanity					\
+  transforms					\
   types
 
 # SOURCEDATA should never be erased, they are needed to generate

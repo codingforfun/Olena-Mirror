@@ -95,6 +95,7 @@ AC_CONFIG_FILES([
   demo/Makefile
   tests/defs
   tests/Makefile
+  tests/arith/Makefile
   tests/check/Makefile
   tests/convert/Makefile
   tests/convol/Makefile

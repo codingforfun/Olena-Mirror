@@ -87,14 +87,14 @@ namespace oln
     static bin logical_and(const bin& lhs, const bin& rhs)
     {
       bin tmp(lhs);
-      tmp |= rhs;
+      tmp &= rhs;
       return tmp;
     }
 
     static bin logical_xor(const bin& lhs, const bin& rhs)
     {
       bin tmp(lhs);
-      tmp |= rhs;
+      tmp ^= rhs;
       return tmp;
     }
 
@@ -116,7 +116,7 @@ namespace oln
   };
 
 
-  namespace internal 
+  namespace internal
   {
 
     //
@@ -124,6 +124,10 @@ namespace oln
     //  Operators traits
     //
     /////////////////////
+
+    //
+    //  Logical operators
+    //
 
     template <class T>
     struct operator_logical_traits<bin, T>
@@ -133,8 +137,36 @@ namespace oln
       typedef bin impl;
     };
 
+    //
+    //  Comparison operators
+    //
+
     template <>
     struct operator_cmp_traits<bin, bin>
+    {
+      enum { commutative = true };
+      typedef bin ret;
+      typedef bin impl;
+    };
+    
+    //
+    //  Max
+    //
+
+    template <>
+    struct operator_max_traits<bin, bin>
+    {
+      enum { commutative = true };
+      typedef bin ret;
+      typedef bin impl;
+    };
+
+    //
+    //  Min
+    //
+
+    template <>
+    struct operator_min_traits<bin, bin>
     {
       enum { commutative = true };
       typedef bin ret;

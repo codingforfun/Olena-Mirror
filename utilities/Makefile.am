@@ -1,6 +1,7 @@
 ## Process this file with Automake to produce Makefile.in -*-Makefile-*-
 
-SUBDIRS = @MORPHO_UTILITIES@
+SUBDIRS = $(MORPHO_UTILITIES)
+DIST_SUBDIRS = morpho
 
 EXTRA_DIST = generate_morpho.sh
 

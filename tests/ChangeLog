@@ -1,3 +1,10 @@
+2003-01-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* types/tests/bin2, types/tests/bin3: new tests.
+	* arith, arith/tests: new directories.
+	* arith/Makefile.am, arith/runtests: new files.
+	* arith/tests/min1: new test.
+
 2003-01-02  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* types/tests/conv2: adjust.

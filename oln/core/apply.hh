@@ -71,7 +71,9 @@ namespace oln {
   typename mute<I, typename AdaptableUnaryFun<Value(I)>::result_type>::ret
   apply(const image<I>& input)
   {
-    return apply(AdaptableUnaryFun<Value(I)>(), input);
+    // Workaround for g++-2.95 bug.
+    AdaptableUnaryFun<Value(I)> tmp;
+    return apply(tmp, input);
   }
 
 
@@ -81,7 +83,7 @@ namespace oln {
 
   /* FIXME: Don't we want to name these functions 'apply()' too? */
 
-  /* Standard binary 'apply' procedure.  Aplly function f to each
+  /* Standard binary 'apply' procedure.  Apply function f to each
      element of _input1 and _inpu2.  */
   template<class AdaptableBinaryFun, class _I1, class _I2> inline
   typename mute<_I1, typename AdaptableBinaryFun::result_type>::ret
@@ -116,7 +118,9 @@ namespace oln {
     typename AdaptableBinaryFun<Value(I1), Value(I2)>::result_type>::ret
   apply2(const image<I1>& input1, const image<I2>& input2)
   {
-    return apply2(AdaptableBinaryFun<Value(I1), Value(I2)>(), input1, input2);
+    // Workaround for g++-2.95 bug.
+    AdaptableBinaryFun<Value(I1), Value(I2)> tmp;
+    return apply2(tmp, input1, input2);
   }
 
   /* Same as above, when I1 == I2 and the AdaptableBinaryFun template
@@ -127,7 +131,9 @@ namespace oln {
     typename AdaptableBinaryFun<Value(I)>::result_type>::ret
   apply2(const image<I>& input1, const image<I>& input2)
   {
-    return apply2(AdaptableBinaryFun<Value(I)>(), input1, input2);
+    // Workaround for g++-2.95 bug.
+    AdaptableBinaryFun<Value(I)> tmp;
+    return apply2(tmp, input1, input2);
   }
 
 
@@ -161,7 +167,9 @@ namespace oln {
   template<template<class> class UnaryFun, class I> inline
   image<I>& apply_self(image<I>& input)
   {
-    return apply_self(UnaryFun<Value(I)>(), input);
+    // Workaround for g++-2.95 bug.
+    UnaryFun<Value(I)> tmp;
+    return apply_self(tmp, input);
   }
 
 
@@ -196,7 +204,9 @@ namespace oln {
   template<template<class, class> class UnaryFun, class I1, class I2> inline
   image<I1>& apply2_self(image<I1>& input1, const image<I2>& input2)
   {
-    return apply2_self(UnaryFun<Value(I1), Value(I2)>(), input1, input2);
+    // Workaround for g++-2.95 bug.
+    UnaryFun<Value(I1), Value(I2)> tmp;
+    return apply2_self(tmp, input1, input2);
   }
 
 
@@ -204,7 +214,9 @@ namespace oln {
   template<template<class> class UnaryFun, class I> inline
   image<I>& apply2_self(image<I>& input1, const image<I>& input2)
   {
-    return apply2_self(UnaryFun<Value(I)>(), input1, input2);
+    // Workaround for g++-2.95 bug.
+    UnaryFun<Value(I)> tmp;
+    return apply2_self(tmp, input1, input2);
   }
 
 } // end of oln
