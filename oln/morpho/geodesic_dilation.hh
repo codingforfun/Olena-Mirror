@@ -77,51 +77,52 @@ namespace oln {
       return arith::min(dilation(marker, convert::ng_to_cse(Ng)), mask);
     }
 
-    /*=processing simple_geodesic_dilation
-     * ns: morpho
-     * what: Geodesic dilation.
-     * arg: const image<I1>&, marker, IN, marker image
-     * arg: const image<I2>&, mask, IN, mask image
-     * arg: const struct_elt<E>&, se, IN, structural element
-     * ret: Concrete(I1)
-     * doc:
-     *  Compute the geodesic dilation of \var{marker} with respect
-     * to the mask \var{mask} image using \var{se}
-     *   as structural element. Soille p.156. Computation is
-     * performed by hand (i.e without calling dilation).
-     * Note mask must be greater or equal than marker.
-     * see: morpho::simple_geodesic_dilation
-     * ex:
-     * $ image2d<int_u8> light = load("light.pgm");
-     * $ image2d<int_u8> dark = load("dark.pgm");
-     * $ save(morpho::simple_geodesic_dilation(dark, light,
-     * $                                       win_c8p()), "out.pgm");
-     * exi: light.pgm dark.pgm
-     * exo: out.pgm
-     * wontcompile: fixme
-     =*/
-    template<class _I1, class _I2, class _N>
-    Concrete(_I1) simple_geodesic_dilation(const image<_I1> & _marker,
-					   const image<_I2> & _mask,
-					   const neighborhood<_N>& _Ng)
-    {
-      Exact_cref(I1, marker);
-      Exact_cref(I2, mask);
-      Exact_cref(N, Ng);
-      meta::eq<_I1::dim, _I2::dim>::ensure();
-      meta::eq<I1::dim, N::dim>::ensure();
-      precondition(marker.size() == mask.size());
-      precondition(level::is_greater_or_equal(mask, marker));
+    namespace sure {
+      /*=processing simple_geodesic_dilation
+       * ns: morpho
+       * what: Geodesic dilation.
+       * arg: const image<I1>&, marker, IN, marker image
+       * arg: const image<I2>&, mask, IN, mask image
+       * arg: const struct_elt<E>&, se, IN, structural element
+       * ret: Concrete(I1)
+       * doc:
+       *  Compute the geodesic dilation of \var{marker} with respect
+       * to the mask \var{mask} image using \var{se}
+       *   as structural element. Soille p.156. Computation is
+       * performed by hand (i.e without calling dilation).
+       * Note mask must be greater or equal than marker.
+       * see: morpho::sure_geodesic_dilation
+       * ex:
+       * $ image2d<int_u8> light = load("light.pgm");
+       * $ image2d<int_u8> dark = load("dark.pgm");
+       * $ save(morpho::simple_geodesic_dilation(dark, light,
+       * $                                       win_c8p()), "out.pgm");
+       * exi: light.pgm dark.pgm
+       * exo: out.pgm
+       * wontcompile: fixme
+       =*/
+      template<class _I1, class _I2, class _N>
+      Concrete(_I1) geodesic_dilation(const image<_I1> & _marker,
+				      const image<_I2> & _mask,
+				      const neighborhood<_N>& _Ng)
+      {
+	Exact_cref(I1, marker);
+	Exact_cref(I2, mask);
+	Exact_cref(N, Ng);
+	meta::eq<_I1::dim, _I2::dim>::ensure();
+	meta::eq<I1::dim, N::dim>::ensure();
+	precondition(marker.size() == mask.size());
+	precondition(level::is_greater_or_equal(mask, marker));
 
-      Concrete(I1) output(marker.size());
-      border::adapt_copy(marker, Ng.delta());
-      Iter(I1) p(marker);
-      for_all (p)
-	output[p] = min(morpho::max(marker, p, convert::ng_to_cse(Ng)), mask[p]);
-      return output;
-    }
+	Concrete(I1) output(marker.size());
+	border::adapt_copy(marker, Ng.delta());
+	Iter(I1) p(marker);
+	for_all (p)
+	  output[p] = min(morpho::max(marker, p, convert::ng_to_cse(Ng)), mask[p]);
+	return output;
+      }
 
-
+    } // sure
   } // morpho
 } // oln
 

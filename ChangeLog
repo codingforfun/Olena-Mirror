@@ -1,6 +1,16 @@
 2002-12-02  Jerome Darbon  <jerome@epita.fr>
 
-	* dema/morpholena.cc : add new demos.
+	* oln/morpho/geodesic_erosion.cc : add new namespace.
+	* oln/morpho/geodesic_dilation.cc : likewise.
+	* oln/morpho/reconstruction.cc : likewise.
+	* oln/morpho/extrema.hxx.cc : new file.
+	* demo/test-reconstruction.cc : adjust.
+	* test/morpho/reconstruction.cc : likewise.
+	* tests/data/lena.pgm : new file.
+
+2002-12-02  Jerome Darbon  <jerome@epita.fr>
+
+	* demo/morpholena.cc : add new demos.
 	* oln/morpho/* : add documentation.
 	* oln/extrema.hh : bug fixes.
 	* ima/map.pbm : new file.

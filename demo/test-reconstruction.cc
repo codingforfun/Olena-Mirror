@@ -27,29 +27,29 @@ int main()
   misc::timer t;
 
   t.start();
-  morpho::sure_geodesic_reconstruction_erosion(lena, lena_open, neighb_c4());
+  morpho::sure::geodesic_reconstruction_erosion(lena, lena_open, neighb_c4());
   cout << "rec ero sure " << t.stop() << endl;
 
   t.start();
-  morpho::sequential_geodesic_reconstruction_erosion(lena, lena_open,
+  morpho::sequential::geodesic_reconstruction_erosion(lena, lena_open,
 						     neighb_c4());
   cout << "rec ero sequential " << t.stop() << endl;
 
   t.start();
-  morpho::hybrid_geodesic_reconstruction_erosion(lena, lena_open, neighb_c4());
+  morpho::hybrid::geodesic_reconstruction_erosion(lena, lena_open, neighb_c4());
   cout << "rec ero hybrid " << t.stop() << endl;
 
   t.start();
-  morpho::sure_geodesic_reconstruction_dilation(lena_open, lena, neighb_c4());
+  morpho::sure::geodesic_reconstruction_dilation(lena_open, lena, neighb_c4());
   cout << "rec dil sure " << t.stop() << endl;
 
   t.start();
-  morpho::sequential_geodesic_reconstruction_dilation(lena_open, lena,
+  morpho::sequential::geodesic_reconstruction_dilation(lena_open, lena,
 						      neighb_c4());
   cout << "rec dil sequential " << t.stop() << endl;
 
   t.start();
-  morpho::hybrid_geodesic_reconstruction_dilation(lena_open, lena,
+  morpho::hybrid::geodesic_reconstruction_dilation(lena_open, lena,
 						  neighb_c4());
   cout << "rec dil hybrid " << t.stop() << endl;
 

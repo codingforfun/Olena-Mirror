@@ -108,12 +108,18 @@ int main()
   {
     // extrema
     image2d<bin> minima_map = load("../img/map.pbm");
-    save(morpho::sure_minima_imposition(lena, minima_map, neighb_c4()), "minima_imposition_sure.pgm");
-    save(morpho::sequential_minima_imposition(lena, minima_map, neighb_c4()), "minima_imposition_sequential.pgm");
-    save(morpho::hybrid_minima_imposition(lena, minima_map, neighb_c4()), "minima_imposition_hybrid.pgm");
+    save(morpho::sure::minima_imposition(lena, minima_map, neighb_c4()),
+	 "minima_imposition_sure.pgm");
+    save(morpho::sequential::minima_imposition(lena, minima_map, neighb_c4()),
+	 "minima_imposition_sequential.pgm");
+    save(morpho::hybrid::minima_imposition(lena, minima_map, neighb_c4()),
+	 "minima_imposition_hybrid.pgm");
 
-    save(morpho::sure_regional_minima(lena, neighb_c4()), "regional_min_sure.pbm");
-    save(morpho::sequential_regional_minima(lena, neighb_c4()), "regional_min_sequential.pbm");
-    save(morpho::hybrid_regional_minima(lena, neighb_c4()), "regional_min_hybrid.pbm");
+    save(morpho::sure::regional_minima(lena, neighb_c4()),
+	 "regional_min_sure.pbm");
+    save(morpho::sequential::regional_minima(lena, neighb_c4()),
+	 "regional_min_sequential.pbm");
+    save(morpho::hybrid::regional_minima(lena, neighb_c4()),
+	 "regional_min_hybrid.pbm");
   }
 }
