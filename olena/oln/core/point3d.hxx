@@ -51,12 +51,6 @@ namespace oln {
     nth(2) = col;
   }
 
-  inline const point3d&
-  point3d::point_ref() const
-  {
-    return *this;
-  }
-
   inline coord
   point3d::slice() const
   {

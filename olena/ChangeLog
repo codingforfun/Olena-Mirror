@@ -1,5 +1,13 @@
 2003-07-28  David Lesage  <david@lrde.epita.fr>
 
+	* oln/core/abstract/point.hh: Implement point_ref.
+	* oln/core/point1d.hh, oln/core/point1d.hxx,
+	oln/core/point2d.hh, oln/core/point2d.hxx,
+	oln/core/point3d.hh, oln/core/point3d.hxx: Remove point_ref member
+	function.
+	
+2003-07-28  David Lesage  <david@lrde.epita.fr>
+
 	* oln/core/abstract/dpoint.hh, oln/core/abstract/iter.hh,
 	oln/core/abstract/neighborhood.hh, oln/core/abstract/point.hh,
 	oln/core/abstract/struct_elt.hh, oln/core/abstract/window.hh,

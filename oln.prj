@@ -1,18 +1,18 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 38)
-(Parent-Version oln 2003paradigm 37)
+(Project-Version oln 2003paradigm 39)
+(Parent-Version oln 2003paradigm 38)
 (Version-Log "2003-07-28  David Lesage  <david@lrde.epita.fr>
 
-	* oln/core/abstract/dpoint.hh, oln/core/abstract/iter.hh,
-	oln/core/abstract/neighborhood.hh, oln/core/abstract/point.hh,
-	oln/core/abstract/struct_elt.hh, oln/core/abstract/window.hh,
-	oln/core/abstract/w_window.hh, oln/core/abstract/image.hh: Adapt
-	interfaces..
+	* oln/core/abstract/point.hh: Implement point_ref.
+	* oln/core/point1d.hh, oln/core/point1d.hxx,
+	oln/core/point2d.hh, oln/core/point2d.hxx,
+	oln/core/point3d.hh, oln/core/point3d.hxx: Remove point_ref member
+	function..
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 28 Jul 2003 14:03:24 +0200")
+(Checkin-Time "Mon, 28 Jul 2003 14:14:03 +0200")
 (Checkin-Login david)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -102,7 +102,7 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.8 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.22 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.23 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.37 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.10 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.4 640))
@@ -239,13 +239,13 @@
   (olena/oln/core/neighborhood3d.hh (oln/c/35_neighborho 1.11 640))
   (olena/oln/core/abstract/neighborhood.hh (oln/c/38_neighborho 1.12 640))
   (metalic/mlc/objs.hh (oln/c/34_objs.hh 1.6 640))
-  (olena/oln/core/point1d.hh (oln/c/32_point1d.hh 1.10 640))
-  (olena/oln/core/point1d.hxx (oln/c/31_point1d.hx 1.4 640))
-  (olena/oln/core/point2d.hh (oln/c/30_point2d.hh 1.8 640))
-  (olena/oln/core/point2d.hxx (oln/c/29_point2d.hx 1.4 640))
-  (olena/oln/core/point3d.hh (oln/c/28_point3d.hh 1.10 640))
-  (olena/oln/core/point3d.hxx (oln/c/27_point3d.hx 1.4 640))
-  (olena/oln/core/abstract/point.hh (oln/c/33_point.hh 1.10 640))
+  (olena/oln/core/point1d.hh (oln/c/32_point1d.hh 1.11 640))
+  (olena/oln/core/point1d.hxx (oln/c/31_point1d.hx 1.5 640))
+  (olena/oln/core/point2d.hh (oln/c/30_point2d.hh 1.9 640))
+  (olena/oln/core/point2d.hxx (oln/c/29_point2d.hx 1.5 640))
+  (olena/oln/core/point3d.hh (oln/c/28_point3d.hh 1.11 640))
+  (olena/oln/core/point3d.hxx (oln/c/27_point3d.hx 1.5 640))
+  (olena/oln/core/abstract/point.hh (oln/c/33_point.hh 1.11 640))
   
   (olena/oln/core/abstract/binary_image.hh (oln/c/24_pred_image 1.6 640))
   

@@ -66,6 +66,11 @@ namespace oln
       typedef typename point_traits<Exact>::dpoint_type dpoint_type;
       enum { dim = point_traits<Exact>::dim };
       
+      const exact_type& point_ref() const
+      {
+	return to_exact(*this);
+      }
+
       coord nth(const unsigned dim) const
       {
 	return coord_[dim];
