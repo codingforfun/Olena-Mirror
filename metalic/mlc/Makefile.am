@@ -19,7 +19,6 @@ nobase_mlc_HEADERS =				\
   loop.hh					\
   objs.hh					\
   optional.hh					\
-  system.hh					\
   type.hh					\
   ucmp.hh					\
   ufuncs.hh
