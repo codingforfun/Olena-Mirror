@@ -51,7 +51,7 @@ namespace oln {
 
 	typename mute<I, DestValue>::ret output(input.size());
 	input.border_adapt_copy(win.delta());
-	Iter(I) p_im(input);
+	oln_iter_type(I) p_im(input);
 	for_all(p_im)
 	  {
 	    DestValue sum = 0;

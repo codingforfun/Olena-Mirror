@@ -66,24 +66,30 @@ namespace oln {
       typedef iter<Exact> super_type;
       friend class super_type;
 
-      coord row() const
+      coord 
+      row() const
       {
 	return this->p_.row();
       }
 
-      coord col() const
+      coord 
+      col() const
       {
 	return this->p_.col();
       }
 
-      static std::string name() { return std::string("_iter2d<") + Exact::name() + ">"; }
+      static std::string name() 
+      { 
+	return std::string("_iter2d<") + Exact::name() + ">"; 
+      }
 
     protected:
 
       const coord nrows_;
       const coord ncols_;
 
-      point2d to_point() const
+      point2d 
+      to_point() const
       {
 	precondition(*this != end);
 	invariant(this->p_.row() >= 0 &&
@@ -93,7 +99,8 @@ namespace oln {
 	return this->p_;
       }
 
-      iter2d() : super_type(), nrows_(0), ncols_(0) {}
+      iter2d() : super_type(), nrows_(0), ncols_(0) 
+      {}
 
       iter2d(const image2d_size& size) :
 	super_type(), 

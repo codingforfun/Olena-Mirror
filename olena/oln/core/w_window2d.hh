@@ -59,7 +59,9 @@ namespace oln {
   template<class T>
   class w_window2d : public abstract::w_windownd<w_window2d<T> >
   {
+
     typedef abstract::w_windownd< w_window2d<T> > super_type;
+
   public:
   
     typedef w_window2d<T> self_type;
@@ -71,8 +73,11 @@ namespace oln {
 
     friend class abstract::window_base<abstract::w_window<w_window2d>, w_window2d>;
 
-    w_window2d(): super_type() {}
-    w_window2d(unsigned size) : super_type(size) {}
+    w_window2d(): super_type() 
+    {}
+    
+    w_window2d(unsigned size) : super_type(size) 
+    {}
 
     template<class I, class T2>
     w_window2d(const mlc::array2d<I, T2 >& arr) :
@@ -84,43 +89,52 @@ namespace oln {
           add(row, col, arr[i++]);
     }
 
-    w_window2d<T>& add(coord row, coord col, const weight_type& weight)
+    w_window2d<T>& 
+    add(coord row, coord col, const weight_type& weight)
     {
       return add(dpoint_type(row, col), weight);
     }
 
-    w_window2d<T>& add(const dpoint_type& dp, const weight_type& w)
+    w_window2d<T>& 
+    add(const dpoint_type& dp, const weight_type& w)
     {
       return this->exact().add_(dp, w);
     }
 
-    const weight_type& set(const dpoint_type& dp, const weight_type& weight)
+    const weight_type& 
+    set(const dpoint_type& dp, const weight_type& weight)
     {
       return this->exact().set_(dp, weight);
     }
 
-    const weight_type& set(coord row, coord col, const weight_type& weight)
+    const weight_type& 
+    set(coord row, coord col, const weight_type& weight)
     {
       return set(dpoint_type(row, col), weight);
     }
 
-    static std::string name() { return std::string("w_window2d<")
-				       + ntg_name(T) +  ">"; }
-
+    static std::string 
+    name() 
+    { 
+      return std::string("w_window2d<") + ntg_name(T) +  ">"; 
+    }
 
   protected:
 
-    coord delta_update_(const dpoint_type& dp)
+    coord 
+    delta_update_(const dpoint_type& dp)
     {
       delta_(abs(dp.row()));
       delta_(abs(dp.col()));
       return this->delta_;
     }
+
   };
 
 
   template<class T>
-  w_window2d<T> mk_w_win_from_win(T weight, const window2d& win)
+  w_window2d<T> 
+  mk_w_win_from_win(T weight, const window2d& win)
   {
     w_window2d<T> w_win(win.card());
     for (unsigned i = 0; i < win.card(); ++i)

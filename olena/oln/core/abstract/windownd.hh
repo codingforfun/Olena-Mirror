@@ -57,14 +57,16 @@ namespace oln
 
       friend class window<exact_type>;
 
-      static std::string name()
+      static std::string 
+      name()
       {
 	return std::string("windownd<") + Exact::name() + ">" ;
       }
 
     protected:
 
-      exact_type& add_(const dpoint_type& dp)
+      exact_type& 
+      add_(const dpoint_type& dp)
       {
 	if (dp.is_centered())
 	  this->centered_ = true;
@@ -77,7 +79,9 @@ namespace oln
       windownd() : super_type()
       { }
 
-      windownd(unsigned size) : super_type(size) {}
+      windownd(unsigned size) : super_type(size) 
+      {}
+
     };
   } // end of abstract
 } // end of oln

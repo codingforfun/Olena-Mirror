@@ -126,7 +126,7 @@ namespace oln {
 
     template <class I, class K>
     void dwt_transform_step_(abstract::image<I>& im,
-			     const Point(I)& p_,
+			     const oln_point_type(I)& p_,
 			     const unsigned d,
 			     const unsigned n,
 			     const K& coeffs)
@@ -136,7 +136,7 @@ namespace oln {
       const unsigned half = n >> 1;
       unsigned lim = n + 1 - coeffs.size();
       ntg::float_d* tmp = new ntg::float_d[n];
-      Point(I) p(p_);
+     oln_point_type(I) p(p_);
       unsigned i, j, k;
 
       for (i = 0, j = 0; j < lim; j += 2, i++) {
@@ -170,7 +170,7 @@ namespace oln {
 
     template <class I, class K>
     void dwt_transform_inv_step_(abstract::image<I>& im,
-				 const Point(I)& p_,
+				 const oln_point_type(I)& p_,
 				 const unsigned d,
 				 const unsigned n,
 				 const K& coeffs)
@@ -180,7 +180,7 @@ namespace oln {
       const unsigned half = n >> 1;
       unsigned lim = coeffs.size() - 2;
       ntg::float_d* tmp = new ntg::float_d[n];
-      Point(I) p(p_), q(p_);
+     oln_point_type(I) p(p_), q(p_);
       unsigned i, j, k, l;
 
       for (i = half - lim / 2, j = 0; j < lim; i++, j += 2) {
@@ -226,7 +226,7 @@ namespace oln {
     {
       template <class I, class K>
       static void doit(abstract::image<I>& im,
-		       Point(I)& p,
+		      oln_point_type(I)& p,
 		       const unsigned l1,
 		       const unsigned l2,
 		       const K& coeffs,
@@ -251,7 +251,7 @@ namespace oln {
     {
       template <class I, class K>
       static void doit(abstract::image<I>& im,
-		       Point(I)& p,
+		      oln_point_type(I)& p,
 		       const unsigned l1,
 		       const unsigned l2,
 		       const K& coeffs,
@@ -277,7 +277,7 @@ namespace oln {
     {
       template <class I, class K>
       static void doit(abstract::image<I>& im,
-		       Point(I)& p,
+		      oln_point_type(I)& p,
 		       const unsigned l1,
 		       const unsigned l2,
 		       const K& coeffs,
@@ -293,7 +293,7 @@ namespace oln {
     {
       template <class I, class K>
       static void doit(abstract::image<I>& ,
-		       Point(I)& ,
+		      oln_point_type(I)& ,
 		       const unsigned ,
 		       const unsigned ,
 		       const K& ,
@@ -310,7 +310,7 @@ namespace oln {
 			const K& coeffs,
 			transforms::dwt_transform_type t)
     {
-      Point(I) p;
+     oln_point_type(I) p;
 
       switch (t) {
       case transforms::dwt_std:
@@ -330,7 +330,7 @@ namespace oln {
 			    const K& coeffs,
 			    transforms::dwt_transform_type t)
     {
-      Point(I) p;
+     oln_point_type(I) p;
       
       switch (t) {
       case transforms::dwt_std:
@@ -358,7 +358,7 @@ namespace oln {
     public:
 
       typedef I					original_im_t;
-      typedef Value(I)				original_im_value_t;
+      typedef oln_value_type(I)				original_im_value_t;
       typedef typename mute<I, ntg::float_d>::ret	trans_im_t;
       typedef typename K::self_t		coeffs_t;
 
@@ -403,7 +403,7 @@ namespace oln {
 	  current_level = l;
 	}
 
-	Iter(trans_im_t) it(trans_im);
+oln_iter_type(trans_im_t) it(trans_im);
 	if (normalized) {
 	  norm = pow(sqrt(2), original_im_t::dim * l);
 	  for_all(it)
@@ -431,7 +431,7 @@ namespace oln {
 	  l = current_level;
 
 	trans_im_t new_im(trans_im.size());
-	Iter(trans_im_t) it(trans_im);
+oln_iter_type(trans_im_t) it(trans_im);
 	if (norm != 1) {
 	  for_all(it)
 	    new_im[it] = trans_im[it] * norm;
@@ -456,7 +456,7 @@ namespace oln {
 	trans_im_t tmp_im = transform_inv(l);
 	typename mute<I, T1>::ret new_im(tmp_im.size());
 
-	Iter(trans_im_t) it(tmp_im);
+oln_iter_type(trans_im_t) it(tmp_im);
 	for_all(it)
 	  new_im[it] = (tmp_im[it] >= ntg_inf_val(T1) ?
 			(tmp_im[it] <= ntg_sup_val(T1) ?

@@ -56,19 +56,20 @@ namespace oln {
 	public std::unary_function <typename UF::argument_type,
 	  typename C::template output<typename UF::argument_type>::ret>
       {
-	typedef compconv1_ self;
-
-	typename self::result_type
-	operator()(typename self::argument_type arg) const {
-	  return _conv(_func(arg));
+	typedef compconv1_ self_type;
+	
+	typename self_type::result_type
+	operator()(typename self_type::argument_type arg) const 
+	{
+	  return conv_(func_(arg));
 	}
 
 	compconv1_(const C& conv, const UF& func)
-	  : _conv(conv), _func(func)
+	  : conv_(conv), func_(func)
 	{}
       private:
-	const C _conv;
-	const UF _func;
+	const C conv_;
+	const UF func_;
       };
       
       /* Compose a conversion C and an adaptable binary function BF,
@@ -79,20 +80,21 @@ namespace oln {
           typename BF::second_argument_type,
           typename C::template output<typename BF::result_type>::ret>
       {
-	typedef compconv2_ self;
+	typedef compconv2_ self_type;
 
-	typename self::result_type
-	operator()(typename self::first_argument_type arg1,
-		   typename self::second_argument_type arg2) const {
-	  return _conv(_func(arg1, arg2));
+	typename self_type::result_type
+	operator()(typename self_type::first_argument_type arg1,
+		   typename self_type::second_argument_type arg2) const 
+	{
+	  return conv_(func_(arg1, arg2));
 	}
 
 	compconv2_(const C &conv, const BF &func)
-	  : _conv(conv), _func(func)
+	  : conv_(conv), func_(func)
 	{}
       private:
-	const C _conv;
-	const BF _func;
+	const C conv_;
+	const BF func_;
       };
 
     } // end of internal
@@ -101,14 +103,16 @@ namespace oln {
        type deduction.  */
     template <class C, class B, class UF>
     internal::compconv1_<C, UF>
-    compconv1(const abstract::conversion<C, B>& conv, const UF &func) {
+    compconv1(const abstract::conversion<C, B>& conv, const UF &func) 
+    {
       return internal::compconv1_<C, UF>(conv.exact(), func);
     }
 
     /* Likewise for compconv2_.  */
     template <class C, class B, class BF>
     internal::compconv2_<C, BF>
-    compconv2(const abstract::conversion<C, B>& conv, const BF &func) {
+    compconv2(const abstract::conversion<C, B>& conv, const BF &func) 
+    {
       return internal::compconv2_<C, BF>(conv.exact(), func);
     }
 
@@ -117,14 +121,14 @@ namespace oln {
        because they do not all define result_type.  So we define another
        apply function here, to apply conversions.  */
     template<class C, class B, class I> inline
-    typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
+    typename mute<I, typename convoutput<C, B, oln_value_type(I)>::ret>::ret
     apply(const abstract::conversion<C, B>& conv, const oln::abstract::image<I>& input)
     {
       /* CONV can now be wrapped as an Adaptable Unary Function
 	 because we know the input type.  Composing CONV with the
 	 identity for the input type will cause such wrapping to
 	 happen.  */
-      return apply(compconv1(conv, f_identity<Value(I)>()), input);
+      return apply(compconv1(conv, f_identity<oln_value_type(I)>()), input);
     }
 
   } // convert

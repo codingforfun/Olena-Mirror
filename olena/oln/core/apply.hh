@@ -48,7 +48,7 @@ namespace oln {
   {
     typename mute<I, typename AdaptableUnaryFun::result_type>::ret
       output(input.size());
-    Iter(I) p(input);
+    oln_iter_type(I) p(input);
     for_all(p) output[p] = f(input[p]);
     return output;
   }
@@ -68,11 +68,11 @@ namespace oln {
      We need to instantiate the function for the type of the abstract::image.  */
   template<template<class> class AdaptableUnaryFun,
 	   class I> inline
-  typename mute<I, typename AdaptableUnaryFun<Value(I)>::result_type>::ret
+  typename mute<I, typename AdaptableUnaryFun<oln_value_type(I)>::result_type>::ret
   apply(const abstract::image<I>& input)
   {
     // Workaround for g++-2.95 bug.
-    AdaptableUnaryFun<Value(I)> tmp;
+    AdaptableUnaryFun<oln_value_type(I)> tmp;
     return apply(tmp, input);
   }
 
@@ -93,7 +93,7 @@ namespace oln {
     precondition(input1.size() == input2.size());
     typename mute<I1, typename AdaptableBinaryFun::result_type>::ret
       output(input1.size());
-    Iter(I1) p(input1);
+    oln_iter_type(I1) p(input1);
     for_all(p) output[p] = f(input1[p], input2[p]);
     return output;
   }
@@ -113,11 +113,11 @@ namespace oln {
   template<template <class, class> class AdaptableBinaryFun,
            class I1, class I2> inline
   typename mute<I1,
-    typename AdaptableBinaryFun<Value(I1), Value(I2)>::result_type>::ret
+    typename AdaptableBinaryFun<oln_value_type(I1),oln_value_type(I2)>::result_type>::ret
   apply2(const abstract::image<I1>& input1, const abstract::image<I2>& input2)
   {
     // Workaround for g++-2.95 bug.
-    AdaptableBinaryFun<Value(I1), Value(I2)> tmp;
+    AdaptableBinaryFun<oln_value_type(I1),oln_value_type(I2)> tmp;
     return apply2(tmp, input1, input2);
   }
 
@@ -126,11 +126,11 @@ namespace oln {
   template<template <class> class AdaptableBinaryFun,
            class I> inline
   typename mute<I,
-    typename AdaptableBinaryFun<Value(I)>::result_type>::ret
+    typename AdaptableBinaryFun<oln_value_type(I)>::result_type>::ret
   apply2(const abstract::image<I>& input1, const abstract::image<I>& input2)
   {
     // Workaround for g++-2.95 bug.
-    AdaptableBinaryFun<Value(I)> tmp;
+    AdaptableBinaryFun<oln_value_type(I)> tmp;
     return apply2(tmp, input1, input2);
   }
 
@@ -145,7 +145,7 @@ namespace oln {
   template<class UnaryFun, class I> inline
   abstract::image<I>& apply_self(UnaryFun f, abstract::image<I>& input)
   {
-    Iter(I) p(input);
+    oln_iter_type(I) p(input);
     for_all(p) input[p] = f(input[p]);
     return input;
   }
@@ -165,7 +165,7 @@ namespace oln {
   abstract::image<I>& apply_self(abstract::image<I>& input)
   {
     // Workaround for g++-2.95 bug.
-    UnaryFun<Value(I)> tmp;
+    UnaryFun<oln_value_type(I)> tmp;
     return apply_self(tmp, input);
   }
 
@@ -180,7 +180,7 @@ namespace oln {
 			  abstract::image<I1>& input1, const abstract::image<I2>& input2)
   {
     precondition(input1.size() == input2.size());
-    Iter(I1) p(input1);
+    oln_iter_type(I1) p(input1);
     for_all(p) input1[p] = f(input1[p], input2[p]);
     return input1;
   }
@@ -200,7 +200,7 @@ namespace oln {
   abstract::image<I1>& apply2_self(abstract::image<I1>& input1, const abstract::image<I2>& input2)
   {
     // Workaround for g++-2.95 bug.
-    UnaryFun<Value(I1), Value(I2)> tmp;
+    UnaryFun<oln_value_type(I1),oln_value_type(I2)> tmp;
     return apply2_self(tmp, input1, input2);
   }
 
@@ -210,7 +210,7 @@ namespace oln {
   abstract::image<I>& apply2_self(abstract::image<I>& input1, const abstract::image<I>& input2)
   {
     // Workaround for g++-2.95 bug.
-    UnaryFun<Value(I)> tmp;
+    UnaryFun<oln_value_type(I)> tmp;
     return apply2_self(tmp, input1, input2);
   }
 

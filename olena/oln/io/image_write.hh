@@ -147,8 +147,8 @@ namespace oln {
       write(const abstract::image_with_dim<1, E>& input, 
 	    const std::string& name)
       {
-	image2d<Value(E)> tmp(1, input.ncols());
-	Iter(image1d<Value(E) > ) it(input);
+	image2d<oln_value_type(E)> tmp(1, input.ncols());
+oln_iter_type(image1d<oln_value_type(E) > ) it(input);
 	for_all(it)
 	  tmp(0, it.col()) = input[it];
 	if (!write(tmp, name))

@@ -74,49 +74,58 @@ namespace oln {
 
       enum { dim = image_traits<Exact>::dim };
 
-      const value_type& operator[](const abstract::point<point_type>& p) const
+      const value_type& 
+      operator[](const abstract::point<point_type>& p) const
       {
   	return this->exact().at(p.exact());
       }
 
-      value_type& operator[](const abstract::point<point_type>& p)
+      value_type& 
+      operator[](const abstract::point<point_type>& p)
       {
 	return this->exact().at(p.exact());
       }
 
-      exact_type clone() const
+      exact_type 
+      clone() const
       {
 	return this->exact().clone_();
       }
 
-      bool hold(const abstract::point<point_type>& p) const
+      bool 
+      hold(const abstract::point<point_type>& p) const
       {
 	assertion(has_impl_());
 	return this->exact().impl()->hold(p.exact());
       }
 
-      const size_type& size() const
+      const size_type& 
+      size() const
       {
 	assertion(has_impl_());
 	return this->exact().impl()->size();
       }
 
-      coord border() const
+      coord 
+      border() const
       {
 	return size().border();
       }
 
-      size_t npoints() const
+      size_t 
+      npoints() const
       {
 	return this->exact().npoints_();
       }
 
-      exact_type& operator=(self_type rhs)
+      exact_type& 
+      operator=(self_type rhs)
       {
 	return this->exact().assign(rhs.exact());
       }
 
-      static std::string name()
+      static std::string 
+      name()
       {
 	return
 	  std::string("abstract::image<")
@@ -125,7 +134,8 @@ namespace oln {
 
       // borders
 
-      void border_set_width(coord new_border, bool copy_border = false) const
+      void 
+      border_set_width(coord new_border, bool copy_border = false) const
       {
 	precondition(new_border >= 0);
 	precondition(has_impl_());
@@ -135,8 +145,9 @@ namespace oln {
 	const_cast<impl_type *>(this->exact().impl())->border_reallocate_and_copy(new_border, copy_border);
       }
 
-      void border_adapt_width(coord min_border, bool copy_border =
-			      false) const
+      void 
+      border_adapt_width(coord min_border, bool copy_border =
+			 false) const
       {
 	precondition(min_border >= 0);
 	if (border() >= min_border)
@@ -145,29 +156,36 @@ namespace oln {
 	this->exact().border_set_width(min_border, copy_border);
       }
 
-      void border_adapt_copy(coord min_border) const
+      void 
+      border_adapt_copy(coord min_border) const
       {
 	border_adapt_width(min_border);
 	const_cast<impl_type *>(this->exact().impl())->border_replicate();
       }
 
 
-      void border_adapt_mirror(coord min_border) const
+      void 
+      border_adapt_mirror(coord min_border) const
       {
 	border_adapt_width(min_border);
 	const_cast<impl_type *>(this->exact().impl())->border_mirror();
       }
 
-      void border_adapt_assign(coord min_border, value_type val) const
+      void 
+      border_adapt_assign(coord min_border, value_type val) const
       {
 	border_adapt_width(min_border);
 	const_cast<impl_type *>(this->exact().impl())->border_assign(val);
       }
+
     protected:
-      image() {}
+
+      image() 
+      {}
       //image(self_type& rhs) {}
 
-      bool has_impl_() const
+      bool 
+      has_impl_() const
       {
 	return this->exact().impl() != 0;
       }
@@ -175,20 +193,23 @@ namespace oln {
 
   } // end of namespace abstract
 
-# define Value(ImgType)				\
-Exact(ImgType)::value_type
+# define oln_value_type(ImgType)		\
+mlc_exact_type(ImgType)::value_type
 
-# define Concrete(ImgType)			\
+# define oln_concrete_type(ImgType)		\
 typename mute<ImgType>::ret
 
-# define Iter(Iterable)				\
-Exact(Iterable)::iter_type
+# define oln_iter_type(Iterable)		\
+mlc_exact_type(Iterable)::iter_type
 
-# define Point(Pointable)			\
-Exact(Pointable)::point_type
+# define oln_point_type(Pointable)		\
+mlc_exact_type(Pointable)::point_type
 
-# define DPoint(DPointable)			\
-Exact(DPointable)::dpoint_type
+# define oln_dpoint_type(DPointable)		\
+mlc_exact_type(DPointable)::dpoint_type
+
+# define oln_neighb_type(Neighbable)		\
+typename Neighbable::neighb_type
 
 } // end of namespace oln
 

@@ -34,9 +34,9 @@ namespace oln {
   namespace level {
 
     template <class I>
-    Concrete(I) fill(abstract::image<I>& im, const Value(I)& val)
+   oln_concrete_type(I) fill(abstract::image<I>& im, const oln_value_type(I)& val)
     {
-      Iter(I) p(im);
+     oln_iter_type(I) p(im);
       for_all(p)
 	im[p] = val;
       return im.exact();

@@ -35,7 +35,8 @@
 namespace oln {
 
   template<class T>
-  void pretreat_2d_data_(T*& buffer, T**& array, const image2d_size& s)
+  void 
+  pretreat_2d_data_(T*& buffer, T**& array, const image2d_size& s)
   { 
     precondition(s.nrows() > 0 &&
 		 s.ncols() > 0 &&
@@ -53,7 +54,8 @@ namespace oln {
   }
 
   template<class T>
-  void desallocate_2d_data_(T**& array, const image2d_size& s)
+  void 
+  desallocate_2d_data_(T**& array, const image2d_size& s)
   {
     array -= s.border();
     delete[] array;
@@ -82,7 +84,9 @@ namespace oln {
     class image_array2d : 
       public image_array<T, image_array2d<T> >
     {
+
     public:
+
       typedef image_array2d<T> self_type;
       typedef image_array2d<T> exact_type;
 
@@ -108,7 +112,8 @@ namespace oln {
 
     protected:
 
-      bool hold_(const point_type& p) const
+      bool 
+      hold_(const point_type& p) const
       {
 	return
 	  p.row() >= 0 &&
@@ -117,7 +122,8 @@ namespace oln {
 	  p.col() < this->size_.ncols();
       }
 
-      bool hold_large_(const point_type& p) const
+      bool 
+      hold_large_(const point_type& p) const
       {
 	return
 	  p.row() >= - this->size_.border() &&
@@ -126,19 +132,22 @@ namespace oln {
 	  p.col() < this->size_.ncols() + this->size_.border();
       }
 
-      value_type& at_(const point_type& p)
+      value_type& 
+      at_(const point_type& p)
       {
 	return at_(p.row(), p.col());
       }
 
-      value_type& at_(coord row, coord col)
+      value_type& 
+      at_(coord row, coord col)
       {
 	invariant(this->buffer_ != 0);
 	precondition_hold_large(point_type(row, col));
 	return array_[row][col];
       }
 
-      size_t len_(const size_type& s) const 
+      size_t 
+      len_(const size_type& s) const 
       {
 	coord ncols_eff = s.ncols() + 2 * s.border();
 	coord nrows_eff = s.nrows() + 2 * s.border();
@@ -147,8 +156,9 @@ namespace oln {
 
       // borders
 
-      void border_reallocate_and_copy_(coord new_border, bool
-				      copy_border) 
+      void 
+      border_reallocate_and_copy_(coord new_border, bool
+				  copy_border) 
       {
 	T* buffer = 0;
 	T** array = 0;
@@ -178,7 +188,8 @@ namespace oln {
 	array_ = array;
       }
             
-      void border_replicate_(void)
+      void 
+      border_replicate_(void)
       {
 	const coord imax = this->size_.nrows() - 1;
 	const coord jmax = this->size_.ncols() - 1;
@@ -198,7 +209,8 @@ namespace oln {
 	    }
       }
 
-      void border_mirror_(void) 
+      void 
+      border_mirror_(void) 
       {
 	// top & bottom
 	const coord imax = this->size_.nrows() - 1;
@@ -219,7 +231,8 @@ namespace oln {
 	    }
       }
 
-      void border_assign_(value_type val) 
+      void 
+      border_assign_(value_type val) 
       {
 	// top & bottom
         const coord imax = this->size_.nrows() - 1;
@@ -241,7 +254,9 @@ namespace oln {
       }
 
     private:
+
       T** array_;
+
     };
 
   } // end of namespace impl

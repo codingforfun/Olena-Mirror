@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,9 +37,9 @@ namespace oln {
 
     template <class I>
     void set_level(abstract::image_with_dim<2,I>& inout,
-		   const Point(I)&  p1,
-		   const Point(I)&  p2,
-		   Value(I)         level)
+		   const oln_point_type(I)&  p1,
+		   const oln_point_type(I)&  p2,
+		   oln_value_type(I)         level)
     {
       int iRow1 = p1.row();
       int iCol1 = p1.col();
@@ -92,7 +92,7 @@ namespace oln {
     template <class I, class BoxType>
     void set_level(abstract::image_with_dim<2,I>&   inout,
  		   BoxType&              box,
- 		   const Value(I)&       level)
+ 		   const oln_value_type(I)&       level)
     {
       if (box.card() != 0)
 	{

@@ -41,9 +41,10 @@ namespace oln {
     template<class Output, class Exact = mlc::final>
     struct force : public abstract::conversion_to_type< Output, typename mlc::exact_vt<force<Output, Exact>, Exact>::ret >
     {
-
       template< class Input >
-      Output doit(const Input& v) const {
+      Output 
+      doit(const Input& v) const 
+      {
 	return ntg::cast::force<Output>(v);
       }
 

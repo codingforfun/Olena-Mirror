@@ -77,17 +77,17 @@ namespace oln {
 	  output[p] = false;
       return output;
     }
-
-
+    
+    
     // SURE VERSIONS
-
+    
     /*=processing sure_maxima_killer
      * ns: morpho
      * what: Maxima killer.
      * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
      * arg: const unsigned int area, area, IN, area
      * arg: const abstract::struct_elt<E>&, se, IN, structural element
-     * ret: Concrete(I1)
+     * ret:oln_concrete_type(I1)
      * doc: It removes the small (in area) connected components of the upper
      * level sets of \var{input} using \var{se} as structual element. The implementation
      * uses the threshold superposition principle; so it is very slow ! it works only for
@@ -101,20 +101,21 @@ namespace oln {
      * wontcompile: fixme
      =*/
     template<class I, class N>
-    Concrete(I) sure_maxima_killer(const abstract::non_vectorial_image<I>& input,
-				   const unsigned int area,
-				   const abstract::neighborhood<N>& Ng)
+    oln_concrete_type(I) 
+      sure_maxima_killer(const abstract::non_vectorial_image<I>& input,
+			 const unsigned int area,
+			 const abstract::neighborhood<N>& Ng)
     {
       mlc::eq<I::dim, N::dim>::ensure();
-      typedef typename mute<I, ntg::bin >::ret ima_bin_t;
+      typedef typename mute<I, ntg::bin >::ret ima_bin_type;
 
-      ima_bin_t* cc_level_sets = new (image2d<ntg::bin> [256]);
+      ima_bin_type* cc_level_sets = new (image2d<ntg::bin> [256]);
       for (unsigned int i=0; i <= 255; ++i)
 	{
 	  image2d<ntg::bin> level_sets_i(input.size());
 	  image2d<ntg::int_u8>::iter_type p(input);
 	  for_all(p)
-	    if (input[p] >= Value(I) (i))
+	    if (input[p] >=oln_value_type(I) (i))
 	      level_sets_i[p] = true;
 	    else
 	      level_sets_i[p] = false;
@@ -131,7 +132,7 @@ namespace oln {
 	    }
 	}
       delete[] cc_level_sets;
-
+      
       return output;
     }
 
@@ -142,7 +143,7 @@ namespace oln {
      * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
      * arg: const unsigned int area, area, IN, area
      * arg: const abstract::struct_elt<E>&, se, IN, structural element
-     * ret: Concrete(I1)
+     * ret:oln_concrete_type(I1)
      * doc: It removes the small (in area) connected components of the lower
      * level sets of \var{input} using \var{se} as structual element. The implementation
      * uses the threshold superposition principle; so it is very slow ! it works only for
@@ -156,21 +157,22 @@ namespace oln {
      * wontcompile: fixme
      =*/
     template<class I, class N>
-    image2d<ntg::int_u8> sure_minima_killer(const abstract::non_vectorial_image<I>& input,
-				       const unsigned int area,
-				       const abstract::neighborhood<N>& Ng)
+    image2d<ntg::int_u8> 
+    sure_minima_killer(const abstract::non_vectorial_image<I>& input,
+		       const unsigned int area,
+		       const abstract::neighborhood<N>& Ng)
     {
       mlc::eq<I::dim, N::dim>::ensure();
+      
+      typedef image2d<ntg::bin> ima_bin_type;
 
-      typedef image2d<ntg::bin> ima_bin_t;
-
-      ima_bin_t* cc_level_sets = new (image2d<ntg::bin> [256]);
+      ima_bin_type* cc_level_sets = new (image2d<ntg::bin> [256]);
       for (unsigned int i=0; i <= 255; ++i)
 	{
 	  image2d<ntg::bin> level_sets_i(input.size());
 	  image2d<ntg::int_u8>::iter_type p(input);
 	  for_all(p)
-	    if (input[p] <= Value(I) (i))
+	    if (input[p] <=oln_value_type(I) (i))
 	      level_sets_i[p] = true;
 	    else
 	      level_sets_i[p] = false;
@@ -198,17 +200,17 @@ namespace oln {
 
     template<class P, class I, class N>
     //    inline
-    static
-    bool is_a_strict_minimum(const abstract::point<P>& p,
-			     const abstract::non_vectorial_image<I>& input,
-			     const abstract::neighborhood<N>& Ng)
+    static bool 
+    is_a_strict_minimum(const abstract::point<P>& p,
+			const abstract::non_vectorial_image<I>& input,
+			const abstract::neighborhood<N>& Ng)
     {
       mlc::eq<I::dim, N::dim>::ensure();
       mlc::eq<P::dim, N::dim>::ensure();
 
       bool is_p_lower = true;
       bool is_p_at_least_one_stricly_lower = false;
-      Neighb(N) p_prime(Ng, p);
+      oln_neighb_type(N) p_prime(Ng, p);
       for_all(p_prime) if (input.hold(p_prime))
 	{
 	  if (input[p] < input[p_prime])
@@ -222,17 +224,17 @@ namespace oln {
 
     template<class P, class I, class N>
     // inline
-    static
-    bool is_a_strict_maximum(const abstract::point<P>& p,
-			     const abstract::non_vectorial_image<I>& input,
-			     const abstract::neighborhood<N>& Ng)
+    static bool 
+    is_a_strict_maximum(const abstract::point<P>& p,
+			const abstract::non_vectorial_image<I>& input,
+			const abstract::neighborhood<N>& Ng)
     {
       mlc::eq<I::dim, N::dim>::ensure();
       mlc::eq<P::dim, N::dim>::ensure();
 
       bool is_p_upper = true;
       bool is_p_at_least_one_stricly_upper = false;
-      Neighb(N) p_prime(Ng, p);
+      oln_neighb_type(N) p_prime(Ng, p);
       for_all(p_prime) if (input.hold(p_prime))
 	{
 	  if (input[p] > input[p_prime])
@@ -251,7 +253,7 @@ namespace oln {
      * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
      * arg: const unsigned int area, area, IN, area
      * arg: const abstract::neighborhood<N>&, Ng, IN, neighboorhood
-     * ret: Concrete(I1)
+     * ret:oln_concrete_type(I1)
      * doc: It removes the small (in area) connected components of the lower
      * level sets of \var{input} using \var{Ng} as neighboorhood. The implementation
      * is based on stak. Guichard and Morel, Image iterative smoothing and PDE's.
@@ -266,27 +268,28 @@ namespace oln {
      =*/
     // Guichard and Morel, Image iterative smoothing and PDE's. Book in preparation. p 265.
     template<class I, class N>
-    Concrete(I) fast_minima_killer(const abstract::non_vectorial_image<I>& input,
-				   const unsigned int area,
-				   const abstract::neighborhood<N>& Ng)
+    oln_concrete_type(I) 
+      fast_minima_killer(const abstract::non_vectorial_image<I>& input,
+			 const unsigned int area,
+			 const abstract::neighborhood<N>& Ng)
     {
       mlc::eq<I::dim, N::dim>::ensure();
 
-      std::vector<Point(I)> cur_minimum;
+      std::vector<oln_point_type(I)> cur_minimum;
       cur_minimum.reserve(15000);
-      Concrete(I) working_input = input.clone();
+      oln_concrete_type(I) working_input = input.clone();
       typename mute<I, ntg::bin>::ret not_processed_map(input.size());
       level::fill(not_processed_map, true);
 
       // STEP 2: search for a local miminum
-      Iter(I) p(working_input);
+      oln_iter_type(I) p(working_input);
       for_all(p)
 	{
 	  if (is_a_strict_minimum(p.cur(), working_input, Ng)
 	      && not_processed_map[p])
 	    {
 	      cur_minimum.push_back(p);
-	      Value(I) lambda = working_input[p];
+	      oln_value_type(I) lambda = working_input[p];
 
 	      // FIXME: This should better be moved out of the loop.
 	      typename mute<I, ntg::bin>::ret is_visited(input.size());
@@ -296,12 +299,12 @@ namespace oln {
 	      bool go_on = true; // FIXME: Use break instead of go_on = false.
 	      while (go_on)
 		{
-		  typedef Value(I) I_type;
-		  Point(I) arg_min = p;
-		  Value(I) min =  ntg_max_val(I_type);
+		  typedef oln_value_type(I) I_type;
+		  oln_point_type(I) arg_min = p;
+		  oln_value_type(I) min =  ntg_max_val(I_type);
 		  for (unsigned i = 0; i < cur_minimum.size(); ++i)
 		    {
-		      Neighb(N) p_prime(Ng, cur_minimum[i]);
+		      oln_neighb_type(N) p_prime(Ng, cur_minimum[i]);
 		      for_all(p_prime) if (working_input.hold(p_prime) &&
 					   (is_visited[p_prime] == false))
 			{
@@ -356,7 +359,7 @@ namespace oln {
      * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
      * arg: const unsigned int area, area, IN, area
      * arg: const abstract::neighborhood<N>&, Ng, IN, neighboorhood
-     * ret: Concrete(I1)
+     * ret:oln_concrete_type(I1)
      * doc: It removes the small (in area) connected components of the upper
      * level sets of \var{input} using \var{Ng} as neighboorhood. The implementation
      * is based on stak. Guichard and Morel, Image iterative smoothing and PDE's. Book in preparation. p 265.
@@ -370,26 +373,27 @@ namespace oln {
      =*/
     // Guichard and Morel, Image iterative smoothing and PDE's. Book in preparation. p 265.
     template<class I, class N>
-    Concrete(I) fast_maxima_killer(const abstract::non_vectorial_image<I>& input,
-				   const unsigned int area,
-				   const abstract::neighborhood<N>& Ng)
+    oln_concrete_type(I) 
+      fast_maxima_killer(const abstract::non_vectorial_image<I>& input,
+			 const unsigned int area,
+			 const abstract::neighborhood<N>& Ng)
     {
       mlc::eq<I::dim, N::dim>::ensure();
-
-      std::vector<Point(I)> cur_maximum;
-      Concrete(I) working_input = input.clone();
+      
+      std::vector<oln_point_type(I)> cur_maximum;
+      oln_concrete_type(I) working_input = input.clone();
       typename mute<I, ntg::bin>::ret not_processed_map(input.size());
       level::fill(not_processed_map, true);
 
       // STEP 2: search for a local miminum
-      Iter(I) p(working_input);
+      oln_iter_type(I) p(working_input);
       for_all(p)
 	{
 	  if (is_a_strict_maximum(p.cur(), working_input, Ng)
 	      && not_processed_map[p])
 	    {
 	      cur_maximum.push_back(p);
-	      Value(I) lambda = working_input[p];
+	      oln_value_type(I) lambda = working_input[p];
 
 	      typename mute<I, ntg::bin>::ret is_visited(input.size());
 	      level::fill(is_visited, false);
@@ -398,12 +402,12 @@ namespace oln {
 	      bool go_on = true; // FIXME: ditto
 	      while (go_on)
 		{
-		  typedef Value(I) I_type;
-		  Point(I) arg_max = p;
-		  Value(I) max =  ntg_min_val(I_type);
+		  typedef oln_value_type(I) I_type;
+		  oln_point_type(I) arg_max = p;
+		  oln_value_type(I) max =  ntg_min_val(I_type);
 		  for (unsigned i = 0; i < cur_maximum.size(); ++i)
 		    {
-		      Neighb(N) p_prime(Ng, cur_maximum[i]);
+		      oln_neighb_type(N) p_prime(Ng, cur_maximum[i]);
 		      for_all(p_prime) if (working_input.hold(p_prime) &&
 					   (is_visited[p_prime] == false))
 			{

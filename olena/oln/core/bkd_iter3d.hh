@@ -65,33 +65,44 @@ namespace oln {
     template<class Image>
     bkd_iter3d(const Image& ima) :
       super_type(ima.size())
-    {
+    {}
+
+    template<class U> 
+    U 
+    operator=(U u) 
+    { 
+      return super_iter_type::operator=(u); 
     }
 
-    template<class U> U operator=(U u) { return super_iter_type::operator=(u); }
-
-    static std::string name() { return std::string("bkd_iter3d<") + Exact::name() + ">"; }
+    static std::string name() 
+    { 
+      return std::string("bkd_iter3d<") + Exact::name() + ">"; 
+    }
 
   protected:
 
-    void goto_begin_()
+    void 
+    goto_begin_()
     {
       this->p_.slice() = this->nslices_ - 1;
       this->p_.row() = this->nrows_ - 1;
       this->p_.col() = this->ncols_ - 1;
     }
 
-    void goto_end_()
+    void 
+    goto_end_()
     {
       this->p_.slice() = -1;
     }
 
-    bool is_at_end_() const
+    bool 
+    is_at_end_() const
     {
       return this->p_.slice() == -1;
     }
 
-    void goto_next_()
+    void 
+    goto_next_()
     {
       --this->p_.col();
       if (this->p_.col() >= 0)

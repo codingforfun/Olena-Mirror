@@ -59,6 +59,7 @@ namespace oln
     template<class Exact>
     struct point : public mlc_hierarchy::any<Exact>
     {
+
     public:
       
       typedef point<Exact> self_type;
@@ -66,53 +67,63 @@ namespace oln
       typedef typename point_traits<Exact>::dpoint_type dpoint_type;
       enum { dim = point_traits<Exact>::dim };
       
-      const exact_type& point_ref() const
+      const exact_type& 
+      point_ref() const
       {
 	return this->exact();
       }
 
-      coord nth(const unsigned dim) const
+      coord 
+      nth(const unsigned dim) const
       {
 	return coord_[dim];
       }
       
-      coord& nth(const unsigned dim)
+      coord& 
+      nth(const unsigned dim)
       {
 	return coord_[dim];
       }
       
-      exact_type& operator+=(const abstract::dpoint<dpoint_type>& dp)
+      exact_type& 
+      operator+=(const abstract::dpoint<dpoint_type>& dp)
       {
 	return this->exact().plus_assign_dp(dp.exact());
       }
 
-      exact_type& operator-=(const abstract::dpoint<dpoint_type>& dp)
+      exact_type& 
+      operator-=(const abstract::dpoint<dpoint_type>& dp)
       {
 	return this->exact().minus_assign_dp(dp.exact());
       }
 
-      dpoint_type operator-(const self_type& p) const
+      dpoint_type 
+      operator-(const self_type& p) const
       {
 	return this->exact().minus_p(p.exact());
       }
 
-      exact_type operator+(const abstract::dpoint<dpoint_type>& dp) const
+      exact_type 
+      operator+(const abstract::dpoint<dpoint_type>& dp) const
       {
 	return this->exact().plus_dp(dp.exact());
       }
 
-      exact_type operator-(const abstract::dpoint<dpoint_type>& dp) const
+      exact_type 
+      operator-(const abstract::dpoint<dpoint_type>& dp) const
       {
 	return this->exact().minus_dp(dp.exact());
       }
 
-      exact_type operator-() const
+      exact_type 
+      operator-() const
       {
 	return this->exact().minus();
       }
 
 
-      bool operator==(const self_type& p) const
+      bool 
+      operator==(const self_type& p) const
       {
 	for (unsigned i = 0; i < dim; ++i)
 	  if (p.nth(i) != nth(i))
@@ -120,7 +131,8 @@ namespace oln
 	return true;
       }
       
-      bool operator!=(const self_type& p) const
+      bool 
+      operator!=(const self_type& p) const
       {
 	for (unsigned i = 0; i < dim; ++i)
 	  if (p.nth(i) != nth(i))
@@ -133,11 +145,16 @@ namespace oln
       { 
 	return std::string("point<") + Exact::name() + ">"; 
       }
+
     protected:
+
       point() 
       {}
+
     private:
+
       coord coord_[dim];
+
     };
     
   } // end of abstract

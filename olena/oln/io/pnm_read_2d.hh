@@ -144,7 +144,7 @@ namespace oln {
 	  im = I(info.rows, info.cols);
 
 	  // Check that value type is large enough
-	  if (ntg::to_ntg(info.max_val) > ntg_max_val(Value(I)))
+	  if (ntg::to_ntg(info.max_val) > ntg_max_val(oln_value_type(I)))
 	    return false;
 
 	  pnm_read_data<PnmInteger, R>::read(in, im, info);
@@ -179,11 +179,11 @@ namespace oln {
 	  pnm2d_info info;
 
 	  // Components have to be integers
-	  if (!ntg_is_a(ntg_comp_type(Value(I)), ntg::unsigned_integer)::ret)
+	  if (!ntg_is_a(ntg_comp_type(oln_value_type(I)), ntg::unsigned_integer)::ret)
 	    return false;
 
 	  // Must have only 3 components
-	  if (ntg_nb_comp(Value(I)) != 3)
+	  if (ntg_nb_comp(oln_value_type(I)) != 3)
 	    return false;
 	  
 	  if (!pnm_read_header2d(in, pnm_id, info))
@@ -192,7 +192,7 @@ namespace oln {
 	  im = I(info.rows, info.cols);
 
 	  // Check that value type is large enough
-	  if (ntg::to_ntg(info.max_val) > ntg_max_val(ntg_comp_type(Value(I))))
+	  if (ntg::to_ntg(info.max_val) > ntg_max_val(ntg_comp_type(oln_value_type(I))))
 	    return false;
 
 	  pnm_read_data<PnmVectorial, R>::read(in, im, info);

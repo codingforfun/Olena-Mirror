@@ -44,25 +44,33 @@ namespace oln {
 
   struct image1d_size : public abstract::image_size<image1d_size >
   {
+
     image1d_size(coord ncols, coord border)
     {
       nth(0) = ncols;
       border_ = border;
     }
 
-    coord ncols() const
+    coord 
+    ncols() const
     {
       invariant(nth(0) > 0);
       return nth(0);
     }
 
-    coord& ncols()
+    coord& 
+    ncols()
     {
       invariant(nth(0) > 0);
       return nth(0);
     }
 
-    static std::string name() { return "image1d_size"; }
+    static std::string 
+    name() 
+    { 
+      return "image1d_size"; 
+    }
+
   };
 
 } // end of oln

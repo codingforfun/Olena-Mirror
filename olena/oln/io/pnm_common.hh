@@ -69,13 +69,13 @@ namespace oln {
       struct get_pnm_type
       {
 	typedef typename mlc::bool_switch_<
-	  mlc::bool_case_<ntg_is_a(Value(I), ntg::unsigned_integer)::ret,
+	  mlc::bool_case_<ntg_is_a(oln_value_type(I), ntg::unsigned_integer)::ret,
 			  get_it<PnmInteger>,
 
-	  mlc::bool_case_<ntg_is_a(Value(I), ntg::binary)::ret, 
+	  mlc::bool_case_<ntg_is_a(oln_value_type(I), ntg::binary)::ret, 
 			  get_it<PnmBinary>,
 
-	  mlc::bool_case_<ntg_is_a(Value(I), ntg::vectorial)::ret,
+	  mlc::bool_case_<ntg_is_a(oln_value_type(I), ntg::vectorial)::ret,
 			  get_it<PnmVectorial>,
 
 	  mlc::bool_case_<true,

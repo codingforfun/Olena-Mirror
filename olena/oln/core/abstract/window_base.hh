@@ -95,29 +95,34 @@ namespace oln
       friend class neighborhood<Exact>;
       // friend class window_base_friend_traits<Sup>::ret;
     
-      static std::string name()
+      static std::string 
+      name()
       {
 	return std::string("window_base<") + Exact::name() + ">";
       }
 
     protected:
 
-      bool has_(const dpoint_type& dp) const
+      bool 
+      has_(const dpoint_type& dp) const
       {
 	return std::find(dp_.begin(), dp_.end(), dp) != dp_.end();
       }
 
-      unsigned card_() const
+      unsigned 
+      card_() const
       {
 	return dp_.size();
       }
 
-      bool is_centered_() const
+      bool 
+      is_centered_() const
       {
 	return centered_;
       }
 
-      bool is_equal(const exact_type& win) const
+      bool 
+      is_equal(const exact_type& win) const
       {
 	for (typename std::vector<dpoint_type>::const_iterator it = dp_.begin(); it != dp_.end(); ++it)
 	  if (std::find(win.dp_.begin(), win.dp_.end(), *it) == win.dp_.end())
@@ -125,23 +130,27 @@ namespace oln
 	return true;
       }
 
-      coord get_delta() const
+      coord 
+      get_delta() const
       {
 	return delta_;
       }
 
-      coord delta_update(const dpoint_type& dp)
+      coord 
+      delta_update(const dpoint_type& dp)
       {
 	return this->exact().delta_update_(dp);
       }
 
-      void sym_()
+      void 
+      sym_()
       {
 	for (unsigned i = 0; i < this->card(); ++i)
 	  dp_[i] = - dp_[i];
       }
 
-      const dpoint_type at(unsigned i) const
+      const dpoint_type 
+      at(unsigned i) const
       {
 	precondition(i < this->card());
 	return dp_[i];
@@ -161,6 +170,7 @@ namespace oln
       std::vector<dpoint_type> dp_;
       max_accumulator<coord> delta_;
       bool centered_;
+
     }; 
     
     
@@ -171,7 +181,8 @@ namespace oln
 
 
 template<class Sup, class Exact>
-std::ostream& operator<<(std::ostream& o, const oln::abstract::window_base<Sup, Exact>& w)
+std::ostream& 
+operator<<(std::ostream& o, const oln::abstract::window_base<Sup, Exact>& w)
 {
   unsigned c = w.card();
   o << "[";

@@ -40,24 +40,24 @@ namespace oln {
 
     // binary operators
 
-    _OLN_ARITH_DECLARE_BINFIXEDTYPE_FUNCTORS(logic_and, ntg::bin,
+    oln_arith_declare_binfixedtype_functors_(logic_and, ntg::bin,
 					     val1 && val2,
-					     val && _cst);
-    _OLN_ARITH_DECLARE_BINFIXEDTYPE_FUNCTORS(logic_or, ntg::bin,
+					     val && cst_);
+    oln_arith_declare_binfixedtype_functors_(logic_or, ntg::bin,
 					     val1 || val2,
-					     val || _cst);
-    _OLN_ARITH_DECLARE_BINFIXEDTYPE_FUNCTORS(logic_and_not, ntg::bin,
+					     val || cst_);
+    oln_arith_declare_binfixedtype_functors_(logic_and_not, ntg::bin,
 					     val1 && ! val2,
-					     val && ! _cst);
+					     val && ! cst_);
 
-    _OLN_ARITH_DECLARE_ALL_NONGENERICBINOP_PROCS(logic_and);
-    _OLN_ARITH_DECLARE_ALL_NONGENERICBINOP_PROCS(logic_or);
-    _OLN_ARITH_DECLARE_ALL_NONGENERICBINOP_PROCS(logic_and_not);
+    oln_arith_declare_all_nongenericbinop_procs_(logic_and);
+    oln_arith_declare_all_nongenericbinop_procs_(logic_or);
+    oln_arith_declare_all_nongenericbinop_procs_(logic_and_not);
 
     // unary operators
 
-    _OLN_ARITH_DECLARE_UNFIXEDTYPE_FUNCTOR(logic_not, ntg::bin, ! val);
-    _OLN_ARITH_DECLARE_NONGENERICUNOP_PROCS(logic_not);
+    oln_arith_declare_unfixedtype_functor_(logic_not, ntg::bin, ! val);
+    oln_arith_declare_nongenericunop_procs_(logic_not);
 
   } // end of arith
 

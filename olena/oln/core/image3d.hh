@@ -71,6 +71,7 @@ namespace oln {
 		 typename image_id<image3d<T, Exact> >::impl_type, 
 		 typename image_id<image3d<T, Exact> >::exact_type>
   {
+
   public:
 
     typedef image3d<T, Exact> self_type;
@@ -115,17 +116,20 @@ namespace oln {
       mlc_init_static_hierarchy(Exact);
       r.assign(*this);
     }
-    image3d& operator=(const io::internal::anything& r)
+    image3d& 
+    operator=(const io::internal::anything& r)
     {
       return r.assign(*this);
     }
 
-    exact_type& operator=(self_type rhs)
+    exact_type& 
+    operator=(self_type rhs)
     {
       return this->exact().assign(rhs.exact());
     }
 
-    static std::string name()
+    static std::string 
+    name()
     {
       return
 	std::string("image3d<")
@@ -143,7 +147,8 @@ namespace oln {
 
   protected:
 
-    self_type clone_() const // deep copy
+    self_type 
+    clone_() const // deep copy
     {
       // FIXME: it may be really dangerous to instantiate a self_type
       // and not an exact_type is Exact != mlc::final.
@@ -151,6 +156,7 @@ namespace oln {
       clone_to(output.impl());
       return output;
     }
+
   };
 
 } // end of oln

@@ -45,7 +45,7 @@ namespace oln {
      * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
      * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
      * arg: const abstract::struct_elt<E>&, se, IN, structural element
-     * ret: Concrete(I1)
+     * ret:oln_concrete_type(I1)
      * doc:
      *  Compute the geodesic erosion of \var{marker} with respect
      * to the mask \var{mask} image using \var{se}
@@ -61,9 +61,10 @@ namespace oln {
      * wontcompile: fixme
      =*/
     template<class I1, class I2, class N>
-    Concrete(I1) geodesic_erosion(const abstract::non_vectorial_image<I1> & marker,
-				  const abstract::non_vectorial_image<I2> & mask,
-				  const abstract::neighborhood<N>& Ng)
+    oln_concrete_type(I1) 
+      geodesic_erosion(const abstract::non_vectorial_image<I1> & marker,
+		       const abstract::non_vectorial_image<I2> & mask,
+		       const abstract::neighborhood<N>& Ng)
     {
       mlc::eq<I1::dim, I2::dim>::ensure();
       mlc::eq<I1::dim, N::dim>::ensure();
@@ -80,7 +81,7 @@ namespace oln {
        * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
        * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
        * arg: const abstract::struct_elt<E>&, se, IN, structural element
-       * ret: Concrete(I1)
+       * ret:oln_concrete_type(I1)
        * doc:
        *  Compute the geodesic erosion of \var{marker} with respect
        * to the mask \var{mask} image using \var{se}
@@ -97,18 +98,19 @@ namespace oln {
        * wontcompile: fixme
        =*/
       template<class I1, class I2, class N>
-      Concrete(I1) geodesic_erosion(const abstract::non_vectorial_image<I1> & marker,
-				    const abstract::non_vectorial_image<I2> & mask,
-				    const abstract::neighborhood<N>& Ng)
+      oln_concrete_type(I1) 
+	geodesic_erosion(const abstract::non_vectorial_image<I1> & marker,
+			 const abstract::non_vectorial_image<I2> & mask,
+			 const abstract::neighborhood<N>& Ng)
       {
 	mlc::eq<I1::dim, I2::dim>::ensure();
 	mlc::eq<I1::dim, N::dim>::ensure();
 	precondition(marker.size() == mask.size());
 	precondition(level::is_greater_or_equal(marker, mask));
 
-	Concrete(I1) output(marker.size());
+	oln_concrete_type(I1) output(marker.size());
 	marker.border_adapt_copy(Ng.delta());
-	Iter(I1) p(marker);
+	oln_iter_type(I1) p(marker);
 	for_all (p)
 	  output[p] = max(morpho::min(marker, p, convert::ng_to_cse(Ng)), mask[p]);
 	return output;

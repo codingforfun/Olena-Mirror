@@ -61,25 +61,37 @@ namespace oln {
 
     point1d(coord col);
     
-    coord col() const;
+    coord 
+    col() const;
     
-    coord& col();
+    coord& 
+    col();
  
-    static std::string name() { return "point1d"; }
+    static std::string 
+    name() 
+    { 
+      return "point1d"; 
+    }
 
   protected:
 
-    point1d plus_dp(const dpoint1d& dp) const;
+    point1d 
+    plus_dp(const dpoint1d& dp) const;
   
-    point1d minus_dp(const dpoint1d& dp) const;
+    point1d 
+    minus_dp(const dpoint1d& dp) const;
 
-    point1d& plus_assign_dp(const dpoint1d& dp);
+    point1d& 
+    plus_assign_dp(const dpoint1d& dp);
 
-    point1d& minus_assign_dp(const dpoint1d& dp);
+    point1d& 
+    minus_assign_dp(const dpoint1d& dp);
 
-    dpoint1d minus_p(const point1d& p) const;
+    dpoint1d 
+    minus_p(const point1d& p) const;
 
-    point1d minus() const;
+    point1d 
+    minus() const;
 
   };
 

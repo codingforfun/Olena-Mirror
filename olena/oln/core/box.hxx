@@ -52,13 +52,15 @@ namespace oln {
   }
 
   template <class PointType>
-  unsigned box<PointType>::dim() const
+  unsigned 
+  box<PointType>::dim() const
   {
     return d;
   }
 
   template <class PointType>
-  void box<PointType>::add(point_type p)
+  void 
+  box<PointType>::add(point_type p)
   {
     for (unsigned i = 0; i < dim(); ++i)
       {
@@ -71,7 +73,8 @@ namespace oln {
   }
 
   template <class PointType>
-  void box<PointType>::add(const box<PointType>& b)
+  void 
+  box<PointType>::add(const box<PointType>& b)
   {
     if (b.card() != 0)
       {
@@ -89,13 +92,15 @@ namespace oln {
   }
 
   template <class PointType>
-  float box<PointType>::inner_boxes_mean_dim(unsigned d) const
+  float 
+  box<PointType>::inner_boxes_mean_dim(unsigned d) const
   {
     return inner_boxes_mean_dim_[d] / box_card_;
   }
 
   template <class PointType>
-  bool box<PointType>::overlay(unsigned dim, const box<PointType>& b) const
+  bool 
+  box<PointType>::overlay(unsigned dim, const box<PointType>& b) const
   {
     return 
       ((top().nth(dim) > b.bottom().nth(dim))
@@ -103,7 +108,8 @@ namespace oln {
   }
 
   template <class PointType>
-  void box<PointType>::make_consistent()
+  void 
+  box<PointType>::make_consistent()
   {
     if (not_consistent_)
       for (unsigned i = 0; i < dim(); ++i)
@@ -117,31 +123,36 @@ namespace oln {
   }
 
   template <class PointType>
-  unsigned box<PointType>::card() const
+  unsigned 
+  box<PointType>::card() const
   {
     return card_;
   }
 
   template <class PointType>
-  unsigned box<PointType>::inner_boxes_card() const
+  unsigned 
+  box<PointType>::inner_boxes_card() const
   {
     return box_card_;
   }
 
   template <class PointType>
-  typename box<PointType>::point_type box<PointType>::top() const
+  typename box<PointType>::point_type 
+  box<PointType>::top() const
   {
     return top_;
   }
 
   template <class PointType>
-  typename box<PointType>::point_type box<PointType>::bottom() const
+  typename box<PointType>::point_type 
+  box<PointType>::bottom() const
   {
     return bottom_;
   }
 
   template <class PointType>
-  typename box<PointType>::point_type box<PointType>::mass_center() 
+  typename box<PointType>::point_type 
+  box<PointType>::mass_center() 
   {
     if (not_consistent_)
       make_consistent();
@@ -149,13 +160,15 @@ namespace oln {
   }
 
   template <class PointType>
-  typename box<PointType>::point_type box<PointType>::mass_center() const
+  typename box<PointType>::point_type 
+  box<PointType>::mass_center() const
   {
     return mass_center_;
   }
 
   template <class PointType>
-  typename box<PointType>::point_type box<PointType>::box_center() 
+  typename box<PointType>::point_type 
+  box<PointType>::box_center() 
   {
     if (not_consistent_)
       make_consistent();
@@ -163,25 +176,29 @@ namespace oln {
   }
 
   template <class PointType>
-  typename box<PointType>::point_type box<PointType>::box_center() const
+  typename box<PointType>::point_type 
+  box<PointType>::box_center() const
   {
     return box_center_;
   }
 
   template <class PointType>
-  unsigned box<PointType>::width() const
+  unsigned 
+  box<PointType>::width() const
   {
     return dimension_.nth(1);
   }
 
   template <class PointType>
-  unsigned box<PointType>::height() const
+  unsigned 
+  box<PointType>::height() const
   {
     return dimension_.nth(0);
   }
 
   template <class PointType>
-  unsigned box<PointType>::integrale() const
+  unsigned 
+  box<PointType>::integrale() const
   {
     unsigned acu = 1;
     for (unsigned i = 0; i < dim(); ++i)
@@ -190,27 +207,31 @@ namespace oln {
   }
 
   template <class PointType>  
-  unsigned box<PointType>::volume() const
+  unsigned 
+  box<PointType>::volume() const
   {
     precondition(dim() == 3);
     return integrale();
   }
 
   template <class PointType>
-  unsigned box<PointType>::area() const
+  unsigned 
+  box<PointType>::area() const
   {
     precondition(dim() == 2);
     return integrale();
   }
 
   template <class PointType>
-  float box<PointType>::density() const
+  float 
+  box<PointType>::density() const
   {
     return ((float)card_ / (float)integrale());
   }
 
   template <class PointType>
-  float box<PointType>::square_ratio() const
+  float 
+  box<PointType>::square_ratio() const
   {
     precondition(dim() == 2);
     return width() > height() ?

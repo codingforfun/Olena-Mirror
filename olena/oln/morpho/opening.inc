@@ -31,7 +31,7 @@
  * what: Morphological opening.
  * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
- * ret: Concrete(I)
+ * ret:oln_concrete_type(I)
  * doc:
  *   Compute the morphological opening of \var{input} using \var{se}
  *   as structural element.
@@ -45,9 +45,10 @@
  * exo: out.pbm
 =*/
 template<class I, class E>
-Concrete(I) opening(const abstract::non_vectorial_image<I>& input, 
-		    const abstract::struct_elt<E>& se)
+oln_concrete_type(I) 
+  opening(const abstract::non_vectorial_image<I>& input, 
+	  const abstract::struct_elt<E>& se)
 {
   //  mlc::eq< I::dim, E::dim >::ensure();
-  return dilation(erosion(input, se), -to_exact(se));
+  return dilation(erosion(input, se), -(se.exact()));
 }

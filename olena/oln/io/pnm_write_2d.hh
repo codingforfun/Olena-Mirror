@@ -121,13 +121,13 @@ namespace oln {
 
 	static bool write(std::ostream& out, const I& im)
 	{
-	  if (ntg_max_val(Value(I)) > ntg::to_ntg(65535U))
+	  if (ntg_max_val(oln_value_type(I)) > ntg::to_ntg(65535U))
 	    return false;
 
 	  pnm2d_info info;
 	  info.cols = im.ncols();
 	  info.rows = im.nrows();
-	  oln::utils::f_minmax<Value(I)> f;
+	  oln::utils::f_minmax<oln_value_type(I)> f;
 	  traverse(f, im);
 	  info.max_val = f.max();
 
@@ -164,12 +164,12 @@ namespace oln {
 
 	static bool write(std::ostream& out, const I& im)
 	{
-	  typedef ntg_comp_type(Value(I)) comp_type;
+	  typedef ntg_comp_type(oln_value_type(I)) comp_type;
 	  
 	  if (!ntg_is_a(comp_type, ntg::unsigned_integer)::ret)
 	    return false;
 	  
-	  if (ntg_nb_comp(Value(I)) != 3)
+	  if (ntg_nb_comp(oln_value_type(I)) != 3)
 	    return false;
 	  
 	  if (ntg_max_val(comp_type) > ntg::to_ntg(65535U))

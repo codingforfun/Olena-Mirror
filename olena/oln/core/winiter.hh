@@ -38,7 +38,9 @@ namespace oln {
   template< class Win >
   struct winiter {
 
-    winiter(const typename Win::abstract_type& win) : win_(win.exact()), pos_(0) {}
+    winiter(const typename Win::abstract_type& win) :
+      win_(win.exact()), pos_(0) 
+    {}
 
     mlc::_begin
     operator=(mlc::_begin)
@@ -91,18 +93,21 @@ namespace oln {
 
     // it's convenient to type `it.cur()' instead of `(dpoint)it' when
     // necessary.
-    typename Win::dpoint_type cur() const
+    typename Win::dpoint_type 
+    cur() const
     {
       return *this;
     }
 
-    static std::string name()
+    static std::string 
+    name()
     {
       return std::string("winiter<") + Win::name() + ">";
     }
 
   private:
-    const Win &win_;
+
+    const Win& win_;
     unsigned pos_;
   };
 

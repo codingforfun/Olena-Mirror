@@ -59,7 +59,9 @@ namespace oln {
     template<class Exact>
     class image_impl : public mlc_hierarchy::any<Exact>
     {
+
     public:
+
       typedef typename impl_traits<Exact>::point_type point_type;
       typedef typename impl_traits<Exact>::value_type value_type;
       typedef typename impl_traits<Exact>::size_type size_type;
@@ -68,12 +70,14 @@ namespace oln {
 
       image_impl(const size_type s): refcount_(0), size_(s) {}
 
-      void ref() const
+      void 
+      ref() const
       {
 	++refcount_;
       }
 
-      void unref() const
+      void 
+      unref() const
       {
 	invariant(refcount_ > 0);
 	--refcount_;
@@ -81,27 +85,32 @@ namespace oln {
 	  delete to_exact(this);
       }
 
-      const value_type& at(const point_type& p) const
+      const value_type& 
+      at(const point_type& p) const
       {
 	return this->exact().at_(p);
       }
 
-      value_type& at(const point_type& p) 
+      value_type& 
+      at(const point_type& p) 
       {
 	return this->exact().at_(p);
       }
 
-      bool hold(const point_type& p) const
+      bool 
+      hold(const point_type& p) const
       {
 	return this->exact().hold_(p);
       }
 
-      bool hold_large(const point_type& p) const
+      bool 
+      hold_large(const point_type& p) const
       {
 	return this->exact().hold_large_(p);
       }
 
-      void precondition_hold_large(const point_type& p) const
+      void 
+      precondition_hold_large(const point_type& p) const
       {
 # ifndef NDEBUG
 	if (! hold_large(p))
@@ -111,50 +120,60 @@ namespace oln {
 # endif
       }
 
-      void clone_to(exact_type* output_data) const
+      void 
+      clone_to(exact_type* output_data) const
       {
 	return this->exact().clone_to_(output_data);
       }
 
-      const size_type& size() const
+      const 
+      size_type& size() const
       {
 	return size_;
       }
 
-      size_type& size()
+      size_type& 
+      size()
       {
 	return size_;
       }
 
       // borders
 
-      void border_reallocate_and_copy(coord new_border, bool
-				      copy_border) 
+      void 
+      border_reallocate_and_copy(coord new_border, bool
+				 copy_border) 
       {
 	this->exact().border_reallocate_and_copy_(new_border, copy_border);
       }
 
-      void border_replicate(void) 
+      void 
+      border_replicate(void) 
       {
 	this->exact().border_replicate_();
       }
 
-      void border_mirror(void) 
+      void 
+      border_mirror(void) 
       {
 	this->exact().border_mirror_();
       }
 
-      void border_assign(value_type val) 
+      void 
+      border_assign(value_type val) 
       {
 	this->exact().border_assign_(val);
       }
 
     private:
-      mutable unsigned refcount_;
-    protected:
-      size_type size_;
-    };
 
+      mutable unsigned refcount_;
+
+    protected:
+
+      size_type size_;
+
+    };
 
   } // end of namespace impl
 

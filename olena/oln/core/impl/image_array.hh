@@ -38,14 +38,16 @@
 namespace oln {
 
   template<class T>
-  void allocate_data_(T*& buffer, size_t s)
+  void 
+  allocate_data_(T*& buffer, size_t s)
   {
     precondition(s > 0);
     buffer = new T[s];
   }
 
   template<class T>
-  void desallocate_data_(T*& buffer)
+  void 
+  desallocate_data_(T*& buffer)
   {
     precondition(buffer != 0);
     delete[] buffer;
@@ -68,7 +70,9 @@ namespace oln {
     template<class T, class Exact>
     class image_array: public image_impl<Exact>
     {
+
     public:
+
       typedef typename impl_traits<Exact>::point_type point_type;
       typedef typename impl_traits<Exact>::value_type value_type;
       typedef typename impl_traits<Exact>::size_type size_type;
@@ -88,26 +92,32 @@ namespace oln {
       }
 
       image_array(const self_type&);     // cpy ctor  w/o impl
-      void operator=(const self_type&); // assign op w/o impl
 
-      const T* buffer() const
+      void 
+      operator=(const self_type&); // assign op w/o impl
+
+      const T* 
+      buffer() const
       {
 	invariant(buffer_ != 0);
 	return buffer_;
       }
 
-      T* buffer()
+      T* 
+      buffer()
       {
 	invariant(buffer_ != 0);
 	return buffer_;
       }
 
-      size_t len() const
+      size_t 
+      len() const
       {
 	return len(this->size());
       }
 
-      size_t len(const size_type& s) const
+      size_t 
+      len(const size_type& s) const
       {
 	return this->exact().len_(s);
       }
@@ -119,7 +129,8 @@ namespace oln {
 	desallocate_data_(buffer_);
       }
 
-      void clone_to_(exact_type* output_data) const
+      void 
+      clone_to_(exact_type* output_data) const
       {
 	precondition(output_data != 0);
 	precondition(output_data->len() == len());
@@ -129,6 +140,7 @@ namespace oln {
       }
 
       T* buffer_;
+
     };
 
   } // end of namespace impl

@@ -38,14 +38,14 @@ inline std::ostream & operator<<(std::ostream & ostr,
 }
 
 template <class I>
-const DPoint(I) interpixel<I>::_neighb[4] = {DPoint(I)(0,0),
-					     DPoint(I)(-1,0),
-					     DPoint(I)(-1,-1),
-					     DPoint(I)(0,-1)};
+const oln_dpoint_type(I) interpixel<I>::_neighb[4] = {oln_dpoint_type(I)(0,0),
+						      oln_dpoint_type(I)(-1,0),
+						      oln_dpoint_type(I)(-1,-1),
+					    oln_dpoint_type(I)(0,-1)};
 template <class I>
-const DPoint(I) interpixel<I>::_inter_neighb[4] = {DPoint(I)(0,1),
-						   DPoint(I)(-1,0),
-						   DPoint(I)(0,-1),
-						   DPoint(I)(1,0)};
+const oln_dpoint_type(I) interpixel<I>::_inter_neighb[4] = {oln_dpoint_type(I)(0,1),
+							    oln_dpoint_type(I)(-1,0),
+							    oln_dpoint_type(I)(0,-1),
+							    oln_dpoint_type(I)(1,0)};
 
 #endif // !OLENA_TOPO_INTER_PIXEL_INTER_PIXEL_HXX

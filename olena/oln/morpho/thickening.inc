@@ -28,17 +28,18 @@
 
 
 template<class I, class E1, class E2>
-Concrete(I) thickening(const abstract::non_vectorial_image<I>& input,
-		       const abstract::struct_elt<E1>& se1,
-		       const abstract::struct_elt<E2>& se2)
+oln_concrete_type(I) 
+  thickening(const abstract::non_vectorial_image<I>& input,
+	     const abstract::struct_elt<E1>& se1,
+	     const abstract::struct_elt<E2>& se2)
 {
   mlc::eq<I::dim, E1::dim>::ensure();
   mlc::eq<I::dim, E2::dim>::ensure();
-
-  Concrete(I) dilated = dilation(input, se1);
-  Concrete(I) eroded =  erosion(input, se2);
-  Concrete(I) output(input.size());
-  Iter(I) p(input);
+  
+  oln_concrete_type(I) dilated = dilation(input, se1);
+  oln_concrete_type(I) eroded =  erosion(input, se2);
+  oln_concrete_type(I) output(input.size());
+  oln_iter_type(I) p(input);
   for_all(p)
     {
       if ((dilated[p] == input[p]) && (input[p] < eroded[p]))

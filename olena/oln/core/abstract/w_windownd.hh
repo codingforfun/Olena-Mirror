@@ -58,20 +58,23 @@ namespace oln
 
       friend class w_window<exact_type>;
 
-      static std::string name()
+      static std::string 
+      name()
       {
 	return std::string("w_windownd<") + Exact::name() + ">" ;
       }
 
     protected:
 
-      weight_type get_weight(unsigned i) const
+      weight_type 
+      get_weight(unsigned i) const
       {
 	precondition(i < this->card());
 	return w_[i];
       }
 
-      exact_type& add_(const dpoint_type& dp, const weight_type& w)
+      exact_type& 
+      add_(const dpoint_type& dp, const weight_type& w)
       {
 	precondition(! has_(dp));
 	if (w == 0)		// Don't add 0 weighted entries
@@ -84,7 +87,8 @@ namespace oln
 	return this->exact();
       }
 
-      const weight_type& set_(const dpoint_type& dp, const weight_type& w)
+      const weight_type& 
+      set_(const dpoint_type& dp, const weight_type& w)
       {
 	// if the dp exists, return a ref to the existing entry
 	for (unsigned i = 0; i < this->card_(); ++i)
@@ -99,7 +103,8 @@ namespace oln
 	return w_.back();
       }
 
-      w_windownd() : super_type() {}
+      w_windownd() : super_type() 
+      {}
       
       w_windownd(unsigned size) : super_type(size)
       {
@@ -107,6 +112,7 @@ namespace oln
       }
       
       std::vector< weight_type > w_;
+    
     };
   } // end of abstract
 } // end of oln

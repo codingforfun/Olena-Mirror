@@ -61,7 +61,8 @@ namespace oln
       typedef typename struct_elt_traits<Exact>::weight_type weight_type;
       friend class struct_elt<exact_type>;
 
-      static std::string name()
+      static std::string 
+      name()
       {
 	return std::string("w_window<") + Exact::name() + ">";
       }
@@ -69,18 +70,21 @@ namespace oln
       // FIXME: 
       // add dpoint with default weight 
       // (multiplication neutral element)
-      exact_type& add(const abstract::dpoint<dpoint_type>& dp, const weight_type& w = 1)
+      exact_type& 
+      add(const abstract::dpoint<dpoint_type>& dp, const weight_type& w = 1)
       {
 	return this->exact().add_(dp.exact(), w);
       }
 
-      weight_type w(unsigned i) const
+      weight_type 
+      w(unsigned i) const
       {
 	return this->exact().get_weight(i);
       }
 
-      const weight_type& set(const abstract::dpoint<dpoint_type>& dp, 
-			     const weight_type& weight)
+      const weight_type& 
+      set(const abstract::dpoint<dpoint_type>& dp, 
+	  const weight_type& weight)
       {
 	return this->exact().set_(dp.exact(), weight);
       }
@@ -90,20 +94,24 @@ namespace oln
       // FIXME: 
       // add dpoint with default weight 
       // (multiplication neutral element)
-      exact_type& add_dp(const abstract::dpoint<dpoint_type>& dp)
+      exact_type& 
+      add_dp(const abstract::dpoint<dpoint_type>& dp)
       {
 	return this->add(dp.exact(), 1);
       }
 
     protected:
-      w_window() : super_type() {}
+
+      w_window() : super_type() 
+      {}
+
     };
     
   } // end of abstract
 
   template<class E>
-  inline
-  E inter(const abstract::w_window<E>& lhs, const abstract::w_window<E>& rhs)
+  inline E 
+  inter(const abstract::w_window<E>& lhs, const abstract::w_window<E>& rhs)
   {
     E win;
     for (unsigned i = 0; i < lhs.card(); ++i)
@@ -116,8 +124,8 @@ namespace oln
   }
 
   template<class E>
-  inline
-  E uni(const abstract::w_window<E>& lhs, const abstract::w_window<E>& rhs)
+  inline E 
+  uni(const abstract::w_window<E>& lhs, const abstract::w_window<E>& rhs)
   {
     E win;
     for (unsigned i = 0; i < lhs.card(); ++i)

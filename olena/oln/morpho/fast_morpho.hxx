@@ -55,14 +55,14 @@ namespace oln {
 	mlc_is_a(E2, abstract::struct_elt)::ensure();
 	mlc_is_a(E3, abstract::struct_elt)::ensure();
 	const unsigned dim = E1::dim;
-
+	
 	// back[n] allows to move backward on coordinate `n'.
-	DPoint(E1) back[dim];
+	oln_dpoint_type(E1) back[dim];
 	for (unsigned n = 0; n < dim; ++n)
 	  back[n].nth(n) = -1;
-
-	Iter(E1) dp(se);
-	Iter(E1) dp_prime(se);
+	
+	oln_iter_type(E1) dp(se);
+	oln_iter_type(E1) dp_prime(se);
 
 	for_all(dp)
 	  {
@@ -109,17 +109,17 @@ namespace oln {
       void
       hist_update(H& hist,
 		  const abstract::non_vectorial_image<I>& input,
-		  const Point(I)& p,
+		  const oln_point_type(I)& p,
 		  const abstract::struct_elt<E1>& se_rem,
 		  const abstract::struct_elt<E2>& se_add)
       {
 	{
-	  Iter(E1) dp(se_rem);
+	  oln_iter_type(E1) dp(se_rem);
 	  for_all(dp)
 	    --hist[input[p + dp]];
 	}
 	{
-	  Iter(E2) dp(se_add);
+	  oln_iter_type(E2) dp(se_add);
 	  for_all(dp)
 	    ++hist[input[p + dp]];
 	}
@@ -204,8 +204,8 @@ namespace oln {
 	  if (p.nth(N) == 0) { // Go forward
 	    // Don't call hist_update because this would create new `dpr' and
 	    // `dpa' iterators for each points.
-	    Iter(B) dpr(se_rem[N]);
-	    Iter(B) dpa(se_add[N]);
+	   oln_iter_type(B) dpr(se_rem[N]);
+	   oln_iter_type(B) dpa(se_add[N]);
 	    for(++p.nth(N);
 		p.nth(N) < size.nth(N);
 		++p.nth(N)) {
@@ -219,8 +219,8 @@ namespace oln {
 	  } else {		// Go backward
 	    // Don't call hist_update because this would create new `dpr' and
 	    // `dpa' iterators for each points.
-	    Iter(B) dpr(se_rem_back[N]);
-	    Iter(B) dpa(se_add_back[N]);
+	   oln_iter_type(B) dpr(se_rem_back[N]);
+	   oln_iter_type(B) dpa(se_add_back[N]);
 	    for(--p.nth(N);
 		p.nth(N) >= 0;
 		--p.nth(N)) {
@@ -252,17 +252,17 @@ namespace oln {
     protected:
       abstract::struct_elt<E>* se_;
     };
-
-
+    
+    
     template<class I, class E, template<typename, typename> class H>
-    Concrete(I)
-    fast_morpho(const abstract::non_vectorial_image<I>& input,
-		const abstract::struct_elt<E>& se)
+    oln_concrete_type(I)
+      fast_morpho(const abstract::non_vectorial_image<I>& input,
+		  const abstract::struct_elt<E>& se)
     {
       enum { dim = E::dim };
 
       // prepare output
-      Concrete(I) output(input.size());
+      oln_concrete_type(I) output(input.size());
       input.border_adapt_copy(se.delta());
 
       // compute delta structuring elements for forward movements
@@ -276,7 +276,7 @@ namespace oln {
       for (unsigned n = 0; n < dim; ++n)
 	for (unsigned i = 0; i < se_add[n].card(); ++i)
 	{
-	  DPoint(I) dp = se_add[n].dp(i);
+	  oln_dpoint_type(I) dp = se_add[n].dp(i);
 	  dp.nth(n) += 1;
 	  se_rem_back[n].add(dp);
 
@@ -295,10 +295,10 @@ namespace oln {
       const typename I::size_type size = input.size();
 
       // Initialize the histogram with the values around the first point.
-      H<Value(I),unsigned> hist;
-      Point(I) p;
-
-      //      Iter(E) dp(se);
+      H<oln_value_type(I),unsigned> hist;
+      oln_point_type(I) p;
+     
+      //     oln_iter_type(E) dp(se);
       typename E::iter_type	dp(se);
       for_all(dp)
 	++hist[input[p + dp]];
@@ -309,11 +309,11 @@ namespace oln {
       output[p] = hist.res();	// First point.
 
       internal::fast_morpho_inner<1, E::dim, const I,
-	const typename I::size_type, H<Value(I),unsigned>,
-	const E, Point(I), Concrete(I)>::doit(input.exact(), size, hist,
-					      se_add, se_rem,
-					      se_add_back, se_rem_back,
-					      p, output, dims);
+	const typename I::size_type, H<oln_value_type(I),unsigned>,
+	const E,oln_point_type(I),oln_concrete_type(I)>::doit(input.exact(), size, hist,
+							      se_add, se_rem,
+							      se_add_back, se_rem_back,
+							      p, output, dims);
       return output;
     }
 

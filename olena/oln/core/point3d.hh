@@ -60,33 +60,49 @@ namespace oln {
 
     point3d(coord slice, coord row, coord col);
 
-    coord slice() const;
+    coord 
+    slice() const;
 
-    coord& slice();
+    coord& 
+    slice();
 
-    coord row() const;
+    coord 
+    row() const;
 
-    coord& row();
+    coord& 
+    row();
 
-    coord col() const;
+    coord 
+    col() const;
 
-    coord& col();
+    coord& 
+    col();
 
-    static std::string name() { return "point3d"; }
+    static std::string 
+    name() 
+    { 
+      return "point3d"; 
+    }
 
   protected:
 
-    point3d plus_dp(const dpoint3d& dp) const;
+    point3d 
+    plus_dp(const dpoint3d& dp) const;
 
-    point3d minus_dp(const dpoint3d& dp) const;
+    point3d 
+    minus_dp(const dpoint3d& dp) const;
 
-    point3d& plus_assign_dp(const dpoint3d& dp);
+    point3d& 
+    plus_assign_dp(const dpoint3d& dp);
 
-    point3d& minus_assign_dp(const dpoint3d& dp);
+    point3d& 
+    minus_assign_dp(const dpoint3d& dp);
 
-    dpoint3d minus_p(const point3d& p) const;
+    dpoint3d 
+    minus_p(const point3d& p) const;
 
-    point3d minus() const;
+    point3d 
+    minus() const;
 
   };
 

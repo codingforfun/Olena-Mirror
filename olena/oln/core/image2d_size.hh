@@ -52,31 +52,40 @@ namespace oln {
       border_ = border;
     }
 
-    coord nrows() const
+    coord 
+    nrows() const
     {
       invariant(nth(0) > 0);
       return nth(0);
     }
 
-    coord& nrows() 
+    coord& 
+    nrows() 
     {
       invariant(nth(0) > 0);
       return nth(0);
     }
 
-    coord ncols() const
+    coord 
+    ncols() const
     {
       invariant(nth(1) > 0);
       return nth(1);
     }
 
-    coord& ncols() 
+    coord& 
+    ncols() 
     {
       invariant(nth(1) > 0);
       return nth(1);
     }
 
-    static std::string name() { return "image2d_size"; }
+    static std::string 
+    name() 
+    { 
+      return "image2d_size"; 
+    }
+
   };
 
 } // end of oln

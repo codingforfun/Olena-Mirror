@@ -66,22 +66,28 @@ namespace oln {
       typedef iter<Exact> super_type;
       friend class super_type;
 
-      coord slice() const
+      coord 
+      slice() const
       {
 	return this->p_.slice();
       }
 
-      coord row() const
+      coord 
+      row() const
       {
 	return this->p_.row();
       }
 
-      coord col() const
+      coord 
+      col() const
       {
 	return this->p_.col();
       }
 
-      static std::string name() { return std::string("_iter3d<") + Exact::name() + ">"; }
+      static std::string name() 
+      { 
+	return std::string("_iter3d<") + Exact::name() + ">"; 
+      }
 
     protected:
 
@@ -89,7 +95,8 @@ namespace oln {
       const coord nrows_;
       const coord ncols_;
 
-      point3d to_point() const
+      point3d 
+      to_point() const
       {
 	precondition(*this != end);
 	invariant(this->p_.slice() >=0
@@ -101,7 +108,8 @@ namespace oln {
 	return this->p_;
       }
 
-      iter3d() : super_type(), nslices_(0), nrows_(0), ncols_(0) {}
+      iter3d() : super_type(), nslices_(0), nrows_(0), ncols_(0) 
+      {}
 
       iter3d(const image3d_size& size) :
 	super_type(),

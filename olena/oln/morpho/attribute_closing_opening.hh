@@ -41,7 +41,7 @@ namespace oln {
        * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
        * arg: const abstract::neighborhood<N>&, se, IN, neighborhood to consider
        * arg: unsigned int, area, IN, area
-       * ret: Concrete(I)
+       * ret:oln_concrete_type(I)
        * doc:
        * Compute an area closing using union/find algorithm.
        * See A. Meijster and M. Wilkinson. A Comparison of Algorithms For Connected
@@ -54,15 +54,16 @@ namespace oln {
        * exo: out.pgm
        =*/
       template<class I, class N>
-      Concrete(I) area_closing(const abstract::non_vectorial_image<I>& input,
-			       const abstract::neighborhood<N>& Ng,
-			       const unsigned int area)
+      oln_concrete_type(I) 
+	area_closing(const abstract::non_vectorial_image<I>& input,
+		     const abstract::neighborhood<N>& Ng,
+		     const unsigned int area)
       {
-	typedef T_attribute<unsigned int> area_t;
+	typedef T_attribute<unsigned int> area_type;
 
-	typedef tarjan::tarjan_set<Concrete(I), area_t > tarjan_set_t;
-	tarjan_set_t area_closing(input.exact());
-	return area_closing.get_comptute(area_t(area) , Ng, true);
+	typedef tarjan::tarjan_set<oln_concrete_type(I), area_type > tarjan_set_type;
+	tarjan_set_type area_closing(input.exact());
+	return area_closing.get_comptute(area_type(area) , Ng, true);
       }
 
 
@@ -72,7 +73,7 @@ namespace oln {
        * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
        * arg: const abstract::neighborhood<N>&, se, IN, neighborhood to consider
        * arg: unsigned int, area, IN, area
-       * ret: Concrete(I)
+       * ret:oln_concrete_type(I)
        * doc:
        * Compute an area opening using union/find algorithm.
        * See A. Meijster and M. Wilkinson. A Comparison of Algorithms For Connected
@@ -85,17 +86,17 @@ namespace oln {
        * exo: out.pgm
        =*/
       template<class I, class N>
-      Concrete(I) area_opening(const abstract::non_vectorial_image<I>& input,
-			       const abstract::neighborhood<N>& Ng,
-			       const unsigned int area)
+      oln_concrete_type(I) 
+	area_opening(const abstract::non_vectorial_image<I>& input,
+		     const abstract::neighborhood<N>& Ng,
+		     const unsigned int area)
       {
-	typedef T_attribute<unsigned int> area_t;
+	typedef T_attribute<unsigned int> area_type;
 
-	typedef tarjan::tarjan_set<Concrete(I), T_attribute<unsigned int> > tarjan_set_t;
-	tarjan_set_t area_closing(input.exact());
-	return area_closing.get_comptute(area_t(area) , Ng, false);
+	typedef tarjan::tarjan_set<oln_concrete_type(I), T_attribute<unsigned int> > tarjan_set_type;
+	tarjan_set_type area_closing(input.exact());
+	return area_closing.get_comptute(area_type(area) , Ng, false);
       }
-
 
     }
   }
