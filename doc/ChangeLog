@@ -1,5 +1,9 @@
 2002-01-14  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
+	* doc/Makefile.am (.texi.pdf): Depend upon $(oln_ref_TEXINFOS).
+
+2002-01-14  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
 	* doc/Makefile.am (PROCESSINGGETDEFSFLAGS): Add flags for exh and
 	ns .
 	* img/lena256.pgm: New file.

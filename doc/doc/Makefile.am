@@ -86,7 +86,7 @@ SUFFIXES = .pdf
 
 pdf: oln-ref.pdf
 
-.texi.pdf: version.texi
+oln-ref.pdf: oln-ref.texi $(srcdir)/version.texi $(oln_ref_TEXINFOS)
 	TEXINPUTS="$(top_srcdir)/../tools$(PATH_SEPARATOR)$$TEXINPUTS" \
 	  MAKEINFO='$(MAKEINFO) -I $(srcdir)' $(TEXI2PDF) $<
 

@@ -45,7 +45,7 @@
  * By definition @var{se1} and @var{se2} must have the same origin, and need to
  * be disjoint. This algorithm has been extended to every data types
  * (althought it is not increasing).  Beware the result depends upon the
- * image data type if it is not bin.
+ * image data type if it is not @code{bin}.
  * ex:
  * $ image2d<bin> im = load("object.pbm");
  * $ window2d mywin;
@@ -116,7 +116,7 @@ Concrete(I) hit_or_miss(const image<I>& input,
  * By definition @var{se1} and @var{se2} must have the same origin, and need to
  * be disjoint. This algorithm has been extended to every data types
  * (althought it is not increasing).  Beware the result depends upon the
- * image data type if it is not bin.
+ * image data type if it is not @code{bin}.
  * see: morpho::hit_or_miss
  * see: morpho::hit_or_miss_closing
  * see: morpho::hit_or_miss_closing_bg
@@ -161,7 +161,7 @@ Concrete(_I) hit_or_miss_opening(const image<_I>& _input,
  * By definition @var{se1} and @var{se2} must have the same origin, and need to
  * be disjoint. This algorithm has been extended to every data types
  * (althought it is not increasing).  Beware the result depends upon the
- * image data type if it is not bin.
+ * image data type if it is not @code{bin}.
  * see: morpho::hit_or_miss
  * see: morpho::hit_or_miss_closing
  * see: morpho::hit_or_miss_closing_bg
@@ -208,7 +208,7 @@ Concrete(I) hit_or_miss_opening_bg(const image<I>& input,
  * By definition @var{se1} and @var{se2} must have the same origin, and need to
  * be disjoint. This algorithm has been extended to every data types
  * (althought it is not increasing).  Beware the result depends upon the
- * image data type if it is not bin.
+ * image data type if it is not @code{bin}.
  * see: morpho::hit_or_miss
  * see: morpho::hit_or_miss_closing_bg
  * see: morpho::hit_or_miss_opening
@@ -254,7 +254,7 @@ Concrete(I) hit_or_miss_closing(const image<I>& input,
  * By definition @var{se1} and @var{se2} must have the same origin, and need to
  * be disjoint. This algorithm has been extended to every data types
  * (althought it is not increasing).  Beware the result depends upon the
- * image data type if it is not bin.
+ * image data type if it is not @code{bin}.
  * see: morpho::hit_or_miss
  * see: morpho::hit_or_miss_closing
  * see: morpho::hit_or_miss_opening

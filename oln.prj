@@ -1,28 +1,15 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_2 12)
-(Parent-Version oln 0_2 11)
+(Project-Version oln 0_2 13)
+(Parent-Version oln 0_2 12)
 (Version-Log "2002-01-14  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-	* doc/Makefile.am (PROCESSINGGETDEFSFLAGS): Add flags for exh and
-	ns .
-	* img/lena256.pgm: New file.
-	* tpl/processing.tpl: Rework to allow multiple namespace
-	specifications, handle processingoverload and exh.
-
-2002-01-14  Alexandre Duret-Lutz  <duret_g@epita.fr>
-
-	* src/morpho/opening.inc, src/morpho/closing.inc,
-	src/morpho/dilation.hh, src/morpho/erosion.hh: Update
-	documentation.
-	* src/morpho/hit_or_miss.inc, src/morpho/gradient.inc: Merge in
-	Jerome's doc.
-	* Makefile.am (EXTRA_DIST): Add oln-ref.info.
+	* doc/Makefile.am (.texi.pdf): Depend upon $(oln_ref_TEXINFOS).
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 14 Jan 2002 09:15:13 +0100")
+(Checkin-Time "Mon, 14 Jan 2002 09:29:40 +0100")
 (Checkin-Login adl)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
@@ -115,7 +102,7 @@
   (src/morpho/top_hat.inc (oln/39_top_hat.in 1.1 644))
   (src/morpho/opening.inc (oln/40_opening.in 1.2 644))
   (src/morpho/laplacian.inc (oln/41_laplacian. 1.1 644))
-  (src/morpho/hit_or_miss.inc (oln/42_hit_or_mis 1.2 644))
+  (src/morpho/hit_or_miss.inc (oln/42_hit_or_mis 1.3 644))
   (src/morpho/gradient.inc (oln/43_gradient.i 1.2 644))
   (src/morpho/closing.inc (oln/44_closing.in 1.2 644))
   (src/morpho/fast_morpho.hxx (oln/45_fast_morph 1.1 644))
@@ -289,9 +276,9 @@
   (doc/tpl/processing.tpl (oln/d/48_processing 1.4 644))
   (doc/img/object.pbm (oln/d/49_object.pbm 1.1 644))
   (doc/doc/oln-ref.texi (oln/d/50_oln-ref.te 1.2 644))
-  (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.4 644))
+  (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.5 644))
   (doc/Makefile.am (oln/e/0_Makefile.a 1.1 644))
-  (doc/ChangeLog (oln/e/1_ChangeLog 1.5 644))
+  (doc/ChangeLog (oln/e/1_ChangeLog 1.6 644))
 
 ;; Files added by populate at Sat, 12 Jan 2002 17:28:39 +0100,
 ;; to version 0_2.5(w), by adl:
@@ -304,7 +291,7 @@
   (doc/configure (oln/e/3_configure 1.1 755))
   (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.1 644))
   (doc/Makefile.in (oln/e/5_Makefile.i 1.3 644))
-  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.4 644))
+  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.5 644))
   (configure (oln/e/7_configure 1.1 755))
   (aclocal.m4 (oln/e/8_aclocal.m4 1.1 644))
   (Makefile.in (oln/e/9_Makefile.i 1.4 644))
