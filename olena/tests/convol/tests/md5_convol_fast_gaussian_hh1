@@ -24,7 +24,7 @@ int main()
 							     0.5,
 							     oln::value_behavior<oln_value_type_(im_type)>(0)))
       == key)
-    std::cout << "OK" << std::endl;
+    std::cout << "OK" << std::endl; // XFAIL
   else
     {
       std::cout << "FAIL" << std::endl;

@@ -1,16 +1,13 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 156)
-(Parent-Version oln 10 155)
-(Version-Log "2004-04-13  Damien Thivolle  <damien@lrde.epita.fr>
-	* olena/oln/morpho/geodesic_dilation.hh: Fix to make compile with ICC.
-	* olena/oln/morpho/geodesic_erosion.hh: Likewise.
-	* olena/oln/morpho/reconstruction.hh: Likewise.
-	* olena/oln/topo/tarjan/flat-zone.hh: Likewise.
+(Project-Version oln 10 157)
+(Parent-Version oln 10 156)
+(Version-Log "        * olena/tests/convol/tests/md5_convol_fast_gaussian_hh4: Make this test xfail.
+       * olena/tests/convol/tests/md5_convol_fast_gaussian_hh1: Likewise.
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 14 Apr 2004 00:08:50 +0200")
+(Checkin-Time "Wed, 14 Apr 2004 00:29:46 +0200")
 (Checkin-Login thivol_d)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -117,7 +114,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.3 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.42 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.40 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.84 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.85 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.29 600))
 
@@ -1275,10 +1272,10 @@
 ;; to version 10.104(w), by palma_g:
 
   (olena/tests/convol/tests/md5_convol_fast_gaussian_hh5 (oln/k/23_md5_convol 1.2 600))
-  (olena/tests/convol/tests/md5_convol_fast_gaussian_hh4 (oln/k/24_md5_convol 1.2 600))
+  (olena/tests/convol/tests/md5_convol_fast_gaussian_hh4 (oln/k/24_md5_convol 1.3 600))
   (olena/tests/convol/tests/md5_convol_fast_gaussian_hh3 (oln/k/25_md5_convol 1.3 600))
   (olena/tests/convol/tests/md5_convol_fast_gaussian_hh2 (oln/k/26_md5_convol 1.2 600))
-  (olena/tests/convol/tests/md5_convol_fast_gaussian_hh1 (oln/k/27_md5_convol 1.2 600))
+  (olena/tests/convol/tests/md5_convol_fast_gaussian_hh1 (oln/k/27_md5_convol 1.3 600))
   (olena/tests/convol/tests/md5_convol_fast_gaussian_hh0 (oln/k/28_md5_convol 1.3 600))
 
 ;; Files added by populate at Tue, 23 Mar 2004 14:29:08 +0100,

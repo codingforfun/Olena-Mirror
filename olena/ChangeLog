@@ -1,5 +1,10 @@
 2004-04-13  Damien Thivolle  <damien@lrde.epita.fr>
 
+	* olena/tests/convol/tests/md5_convol_fast_gaussian_hh4: Make this test xfail.
+	* olena/tests/convol/tests/md5_convol_fast_gaussian_hh1: Likewise.
+
+2004-04-13  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* olena/oln/morpho/geodesic_dilation.hh: Fix to make compile with ICC.
 	* olena/oln/morpho/geodesic_erosion.hh: Likewise.
 	* olena/oln/morpho/reconstruction.hh: Likewise.

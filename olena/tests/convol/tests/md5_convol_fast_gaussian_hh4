@@ -21,7 +21,7 @@ int main()
   im_type	im1(oln::load(rdata("lena256.pgm")));
 
   if (oln::utils::md5(oln::convol::fast::gaussian_derivative(im1, 0.5)) == key)
-    std::cout << "OK" << std::endl;
+    std::cout << "OK" << std::endl; // XFAIL
   else
     {
       std::cout << "FAIL" << std::endl;
