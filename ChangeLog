@@ -1,3 +1,7 @@
+2002-07-18  jean-sebastien mouret  <js@lrde.epita.fr>
+
+	* oln/core/type.hh (name_of<int>): Add inline.
+
 2002-07-18  Astrid Wang  <astrid@lrde.epita.fr>
 
 	* oln/convert/stretch.hh: New file.

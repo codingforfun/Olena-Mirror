@@ -152,7 +152,7 @@ namespace type
   }
 
   // FIXME: many other builtin-types should be specialized this way.
-  template<>
+  template<> inline
   std::string name_of<int>()
   {
     return std::string("int");
