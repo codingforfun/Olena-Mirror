@@ -1,0 +1,37 @@
+//                                                                  -*- c++ -*-
+#include <oln/convol/nagao.hh>
+#include <oln/basics2d.hh>
+#include <ntg/all.hh>
+
+#include <oln/utils/md5.hh>
+#include "data.hh"
+#include "check.hh"
+int main()
+{
+  bool fail (false);
+  oln::utils::key::value_type data_key_c[16]
+    = {0x69, 0xa7, 0xce, 0xf0, 0x4b, 0x88, 0x9e, 0xd4, 0x77, 0x63, 0x40,
+       0xd6, 0x79, 0x42, 0x6a, 0x48};
+  oln::image2d<ntg::rgb_8> imc = oln::load(rdata("lena.ppm"));
+  oln::image2d<ntg::rgb_8> nc = oln::convol::nagao(imc);
+
+  std::cout << oln::utils::md5(nc) << std::endl;
+  fail = fail | (oln::utils::md5(nc) != oln::utils::key(data_key_c));
+
+  oln::utils::key::value_type data_key_g[16]
+    = {0x27, 0xbc, 0xab, 0x48, 0x45, 0x2f, 0xe9, 0xc5, 0x6e, 0x2e, 0x57,
+       0x27, 0xf, 0x80, 0xfe, 0xaa};
+
+   oln::image2d<ntg::int_u8> im = oln::load(rdata("lena256.pgm"));
+   oln::image2d<ntg::int_u8> ng = oln::convol::nagao(im);
+
+   fail = fail | (oln::utils::md5(ng) != oln::utils::key(data_key_g));
+   if (!fail)
+     std::cout << "OK" << std::endl;
+   else
+    {
+      std::cout << "FAIL" << std::endl;
+      return true;
+    }
+}
+

@@ -1,3 +1,12 @@
+2004-03-26  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/math/macros.hh: Add dot_product.
+	* olena/oln/utils/se_stat.hh: Add file. Mean and variance using a
+	structuring element.
+	* olena/oln/utils/se_stat.hxx: Add file.
+	* olena/oln/convol/nagao.hh: Add file. Nagao filter.
+	* olena/oln/convol/nagao.hxx: Add file.
+	* olena/tests/convol/tests/nagao : Add file.
+
 2004-03-25  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* olena/oln/core/abstract/image.hh: Remove macros.
