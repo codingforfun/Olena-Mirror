@@ -1,5 +1,47 @@
 2003-08-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* oln/core/abstract/image_with_dim.hh: Inherit from abstract::image.
+	* oln/core/abstract/image_with_impl.h:: Inherit from image_with_type.
+	* oln/core/abstract/image_with_type.hh: Inherit from
+	image_with_dim. Add label images (binary_image, etc.).
+	* tests/core/tests/label_images: New test.
+	
+	* oln/core/image.hh: Invert Dim and Exact template parameters.
+	* oln/core/image1d.hh: Adjust consequently.
+	* oln/core/image2d.hh: Likewise.
+	* oln/core/image3d.hh: Likewise.
+
+	* oln/utils/histogram.hh: Check if the given data type is valid.
+	* oln/morpho/closing.inc: Take non_vectorial_image instead of image.
+        * oln/morpho/dilation.hh: Likewise.
+        * oln/morpho/erosion.hh: Likewise.
+        * oln/morpho/extrema.hxx: Likewise.
+        * oln/morpho/extrema_killer.hh: Likewise.
+        * oln/morpho/fast_morpho.hh: Likewise.
+        * oln/morpho/fast_morpho.hxx: Likewise.
+        * oln/morpho/geodesic_dilation.hh: Likewise.
+        * oln/morpho/geodesic_erosion.hh: Likewise.
+        * oln/morpho/gradient.inc: Likewise.
+        * oln/morpho/hit_or_miss.inc: Likewise.
+        * oln/morpho/laplacian.inc: Likewise.
+        * oln/morpho/opening.inc: Likewise.
+        * oln/morpho/reconstruction.hh: Likewise.
+        * oln/morpho/stat.hh: Likewise.
+        * oln/morpho/thickening.inc: Likewise.
+        * oln/morpho/thinning.inc: Likewise.
+        * oln/morpho/top_hat.inc: Likewise.
+        * oln/morpho/watershed.hh: Likewise.
+        * oln/morpho/watershed.hxx: Likewise.
+        * oln/morpho/attribute_closing_opening.hh: Likewise.
+	
+2003-08-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/core/w_window1d.hh: Fix name() call.
+	* oln/core/w_window2d.hh: Likewise.
+	* oln/core/w_window3d.hh: Likewise.
+	
+2003-08-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* tests/io/loadsave.hh (compare): Handle neighborhoods.
 	* tests/io/Makefile.am: Update.
 

@@ -29,7 +29,7 @@
 namespace internal {
   template <class DestType, class I>
   typename mute<I, DestType>::ret
-  create_minima_image_from_bin_(const abstract::image<I>& input)
+  create_minima_image_from_bin_(const abstract::non_vectorial_image<I>& input)
   {
     Iter(I) p(input);
     typename mute<I, DestType>::ret output(input.size());
@@ -46,7 +46,7 @@ namespace internal {
 
   template <class I>
   typename mute<I, ntg::bin>::ret
-  ima_to_bin_(const abstract::image<I>& input)
+  ima_to_bin_(const abstract::non_vectorial_image<I>& input)
   {
     Iter(I) p(input);
     typename mute<I, ntg::bin>::ret output(input.size());
@@ -66,8 +66,8 @@ namespace internal {
 /*=processing sure_minima_imposition
  * ns: morpho
  * what: Minima Imposition.
- * arg: const abstract::image<I1>&, input, IN, input image
- * arg: const abstract::image<I2>&, minima_map, IN, bin image
+ * arg: const abstract::non_vectorial_image<I1>&, input, IN, input image
+ * arg: const abstract::non_vectorial_image<I2>&, minima_map, IN, bin image
  * arg: const abstract::neighborhood<N>& Ng, IN, neighborhood
  * ret: Concrete(I)
  * doc:
@@ -84,8 +84,8 @@ namespace internal {
  * exo: out.pgm
  =*/
 template<class I, class I2, class N>
-Concrete(I) minima_imposition(const abstract::image<I>& input,
-			      const abstract::image<I2>& minima_map,
+Concrete(I) minima_imposition(const abstract::non_vectorial_image<I>& input,
+			      const abstract::non_vectorial_image<I2>& minima_map,
 			      const abstract::neighborhood<N>& Ng)
 {
   mlc::eq<I::dim, I2::dim>::ensure();
@@ -107,7 +107,7 @@ Concrete(I) minima_imposition(const abstract::image<I>& input,
 /*=processing sure_regional_minima
  * ns: morpho
  * what: Regional minima.
- * arg: const abstract::image<I1>&, input, IN, input image
+ * arg: const abstract::non_vectorial_image<I1>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: typename mute<I, ntg::bin>::ret
  * doc:
@@ -123,7 +123,7 @@ Concrete(I) minima_imposition(const abstract::image<I>& input,
  * exo: out.pgm
  =*/
 template<class I, class N>
-typename mute<I, ntg::bin>::ret regional_minima(const abstract::image<I>& input,
+typename mute<I, ntg::bin>::ret regional_minima(const abstract::non_vectorial_image<I>& input,
 						const abstract::neighborhood<N>& Ng)
 {
   mlc::eq<I::dim, N::dim>::ensure();

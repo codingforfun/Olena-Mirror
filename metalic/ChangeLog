@@ -1,3 +1,7 @@
+2003-08-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* mlc/bool.hh(returns_bool_<true>): Add ensure_type.
+
 2003-08-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/check/Makefile.runtests: New.

@@ -42,8 +42,8 @@ namespace oln {
     /*=processing geodesic_erosion
      * ns: morpho
      * what: Geodesic erosion.
-     * arg: const abstract::image<I1>&, marker, IN, marker image
-     * arg: const abstract::image<I2>&, mask, IN, mask image
+     * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
+     * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
      * arg: const abstract::struct_elt<E>&, se, IN, structural element
      * ret: Concrete(I1)
      * doc:
@@ -61,8 +61,8 @@ namespace oln {
      * wontcompile: fixme
      =*/
     template<class I1, class I2, class N>
-    Concrete(I1) geodesic_erosion(const abstract::image<I1> & marker,
-				  const abstract::image<I2> & mask,
+    Concrete(I1) geodesic_erosion(const abstract::non_vectorial_image<I1> & marker,
+				  const abstract::non_vectorial_image<I2> & mask,
 				  const abstract::neighborhood<N>& Ng)
     {
       mlc::eq<I1::dim, I2::dim>::ensure();
@@ -77,8 +77,8 @@ namespace oln {
       /*=processing simple_geodesic_erosion
        * ns: morpho
        * what: Geodesic erosion.
-       * arg: const abstract::image<I1>&, marker, IN, marker image
-       * arg: const abstract::image<I2>&, mask, IN, mask image
+       * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
+       * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
        * arg: const abstract::struct_elt<E>&, se, IN, structural element
        * ret: Concrete(I1)
        * doc:
@@ -97,8 +97,8 @@ namespace oln {
        * wontcompile: fixme
        =*/
       template<class I1, class I2, class N>
-      Concrete(I1) geodesic_erosion(const abstract::image<I1> & marker,
-				    const abstract::image<I2> & mask,
+      Concrete(I1) geodesic_erosion(const abstract::non_vectorial_image<I1> & marker,
+				    const abstract::non_vectorial_image<I2> & mask,
 				    const abstract::neighborhood<N>& Ng)
       {
 	mlc::eq<I1::dim, I2::dim>::ensure();

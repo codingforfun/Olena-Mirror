@@ -40,7 +40,7 @@ namespace oln {
     /*=processing erosion
      * ns: morpho, morpho::fast
      * what: Morphological erosion.
-     * arg: const abstract::image<I>&, input, IN, input image
+     * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
      * arg: const abstract::struct_elt<E>&, se, IN, structural element
      * ret: Concrete(I)
      * doc:
@@ -66,7 +66,7 @@ namespace oln {
      * exo: out.pbm
     =*/
     template<class I, class E>
-    Concrete(I) erosion(const abstract::image<I>& input, 
+    Concrete(I) erosion(const abstract::non_vectorial_image<I>& input, 
 			const abstract::struct_elt<E>& se)
     {
       mlc::eq<I::dim, E::dim>::ensure();
@@ -82,7 +82,7 @@ namespace oln {
     /*=processing n_erosion
      * ns: morpho
      * what: Morphological erosion itered n times.
-     * arg: const abstract::image<I>&, input, IN, input image
+     * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
      * arg: const abstract::struct_elt<E>&, se, IN, structural element
      * arg: unsigned, n, IN, number of iterations
      * ret: Concrete(I)
@@ -93,7 +93,7 @@ namespace oln {
     =*/
 
     template<class I, class E>
-    Concrete(I) n_erosion(const abstract::image<I> & input,
+    Concrete(I) n_erosion(const abstract::non_vectorial_image<I> & input,
 			  const abstract::struct_elt<E>& se,
 			  unsigned n)
     {
@@ -110,7 +110,7 @@ namespace oln {
 
     namespace fast {
       template<class I, class E>
-      Concrete(I) erosion(const abstract::image<I>& input, 
+      Concrete(I) erosion(const abstract::non_vectorial_image<I>& input, 
 			  const abstract::struct_elt<E>& se)
       {
         return fast_morpho<I, E, utils::histogram_min>(input, se);

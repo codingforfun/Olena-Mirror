@@ -1,3 +1,7 @@
+2003-08-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/core/abstract_hierarchy.hh: Add non_vectorial.
+
 2003-08-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/types/runtests: Handle the TESTS variable.

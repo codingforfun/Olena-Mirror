@@ -55,21 +55,19 @@ namespace oln {
 
   template<class T, class Exact>
   struct image_traits<image3d<T, Exact> >: 
-    public image_traits<image<typename image_id<image3d<T, Exact> >::value_type, 
-			      image_id<image3d<T, Exact> >::dim, 
+    public image_traits<image<image_id<image3d<T, Exact> >::dim, 
+			      typename image_id<image3d<T, Exact> >::value_type,
 			      typename image_id<image3d<T, Exact> >::impl_type, 
 			      typename image_id<image3d<T, Exact> >::exact_type> >
   {};
-
-
 
   // client can use image3d; instances are real images, that is,
   // images with data ---conversely to proxy images
 
   template<class T, class Exact>
   class image3d: 
-    public image<typename image_id<image3d<T, Exact> >::value_type, 
-		 image_id<image3d<T, Exact> >::dim, 
+    public image<image_id<image3d<T, Exact> >::dim, 
+		 typename image_id<image3d<T, Exact> >::value_type,
 		 typename image_id<image3d<T, Exact> >::impl_type, 
 		 typename image_id<image3d<T, Exact> >::exact_type>
   {
@@ -79,8 +77,8 @@ namespace oln {
     typedef typename image_id<image3d<T, Exact> >::value_type value_type;
     typedef typename image_id<image3d<T, Exact> >::exact_type exact_type;
     typedef typename image_id<image3d<T, Exact> >::impl_type impl_type;
-    typedef image<value_type, 
-		  image_id<image3d<T, Exact> >::dim, 
+    typedef image<image_id<image3d<T, Exact> >::dim, 
+		  value_type, 
 		  impl_type, 
 		  exact_type> super_type;
 

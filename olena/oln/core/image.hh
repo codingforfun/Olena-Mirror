@@ -29,6 +29,7 @@
 # define OLENA_CORE_IMAGE_HH
 
 # include <mlc/type.hh>
+# include <ntg/basics.hh>
 # include <oln/core/abstract/image_with_impl.hh>
 # include <oln/core/abstract/iter.hh>
 
@@ -36,32 +37,32 @@
 
 namespace oln {
 
-  template<class T, unsigned Dim, class Impl, class Exact = mlc::final>
+  template<unsigned Dim, class T, class Impl, class Exact = mlc::final>
   class image; //fwd_decl
 
-  template<class T, unsigned Dim, class Impl, class Exact>
-  struct image_id<image<T, Dim, Impl, Exact> >
+  template<unsigned Dim, class T, class Impl, class Exact>
+  struct image_id<image<Dim, T, Impl, Exact> >
   {
     enum{dim = Dim};
     typedef T value_type;
     typedef Impl impl_type;
-    typedef typename mlc::exact_vt<image<T, Dim, Impl, Exact>, Exact>::ret exact_type;
+    typedef typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret exact_type;
   };
 
   template<class T, unsigned Dim, class Impl, class Exact>
-  struct image_traits<image<T, Dim, Impl, Exact> >:
+  struct image_traits<image<Dim, T, Impl, Exact> >:
     public image_traits<abstract::image_with_impl<Impl,
-						  typename mlc::exact_vt<image<T, Dim, Impl, Exact>, Exact>::ret> >
+						  typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret> >
   {
 
   };
 
   // image
 
-  template<class T, unsigned Dim, class Impl, class Exact>
+  template<unsigned Dim, class T, class Impl, class Exact>
   class image:
     public abstract::image_with_impl<Impl,
-				     typename mlc::exact_vt<image<T, Dim, Impl, Exact>, Exact>::ret>
+				     typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret>
   {
   public:
     typedef typename image_traits<Exact>::point_type point_type;
@@ -73,8 +74,8 @@ namespace oln {
     typedef typename image_traits<Exact>::size_type size_type;
     typedef typename image_traits<Exact>::impl_type impl_type;
 
-    typedef image<T, Dim, Impl, Exact> self_type;
-    typedef typename mlc::exact_vt<image<T, Dim, Impl, Exact>, Exact>::ret exact_type;
+    typedef image<Dim, T, Impl, Exact> self_type;
+    typedef typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret exact_type;
     typedef typename abstract::image_with_impl<Impl,
 					       exact_type> super_type;
 
@@ -86,7 +87,7 @@ namespace oln {
     static std::string name()
     {
       std::ostringstream s;
-      s << "image<" << Dim << ", " << T::name() << ", " << Impl::name() 
+      s << "image<" << Dim << ", " << ntg_name(T) << ", " << Impl::name() 
 	<< ", " << Exact::name() << ">";
       return s.str();
     }

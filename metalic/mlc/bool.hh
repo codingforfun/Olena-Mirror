@@ -142,6 +142,7 @@ namespace mlc
   template<>
   struct returns_bool_<true> : public true_t
   {
+    typedef void ensure_type;
     static const bool ret = true;
     static void ensure() {}
   };

@@ -29,7 +29,7 @@
 /*=processing closing
  * ns: morpho, morpho::fast
  * what: Morphological closing.
- * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: Concrete(I)
  * doc:
@@ -45,7 +45,7 @@
  * exo: out.pbm
  =*/
 template<class I, class E>
-Concrete(I) closing(const abstract::image<I>& input,
+Concrete(I) closing(const abstract::non_vectorial_image<I>& input,
 		    const abstract::struct_elt<E>& se)
 {
   return erosion(dilation(input, se), -to_exact(se));

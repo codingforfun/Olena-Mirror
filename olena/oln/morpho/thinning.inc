@@ -28,7 +28,7 @@
 
 
 template<class I, class E1, class E2>
-Concrete(I) thinning(const abstract::image<I>& input,
+Concrete(I) thinning(const abstract::non_vectorial_image<I>& input,
 		     const abstract::struct_elt<E1>& se1,
 		     const abstract::struct_elt<E2>& se2)
 {

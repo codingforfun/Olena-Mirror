@@ -28,8 +28,9 @@
 #ifndef OLENA_CORE_W_WINDOW2D_HH
 # define OLENA_CORE_W_WINDOW2D_HH
 
-# include <oln/core/abstract/w_windownd.hh>
 # include <mlc/array/all.hh>
+# include <ntg/basics.hh>
+# include <oln/core/abstract/w_windownd.hh>
 # include <oln/core/accum.hh>
 # include <oln/core/winiter.hh>
 # include <oln/core/winneighb.hh>
@@ -104,7 +105,7 @@ namespace oln {
     }
 
     static std::string name() { return std::string("w_window2d<")
-				       + T::name() +  ">"; }
+				       + ntg_name(T) +  ">"; }
 
 
   protected:

@@ -107,7 +107,7 @@ namespace oln {
       // inline
       void
       hist_update(H& hist,
-		  const abstract::image<I>& input,
+		  const abstract::non_vectorial_image<I>& input,
 		  const Point(I)& p,
 		  const abstract::struct_elt<E1>& se_rem,
 		  const abstract::struct_elt<E2>& se_add)
@@ -255,7 +255,7 @@ namespace oln {
 
     template<class I, class E, template<typename, typename> class H>
     Concrete(I)
-    fast_morpho(const abstract::image<I>& input,
+    fast_morpho(const abstract::non_vectorial_image<I>& input,
 		const abstract::struct_elt<E>& se)
     {
       enum { dim = E::dim };

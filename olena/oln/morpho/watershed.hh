@@ -38,7 +38,7 @@ namespace oln {
      * what: Segmented Watershed.
      * ns: morpho
      * tpl: class, DestValue, type of output labels
-     * arg: const abstract::image<I>&, im, IN, image of levels
+     * arg: const abstract::non_vectorial_image<I>&, im, IN, image of levels
      * arg: const abstract::neighborhood<N>&, ng, IN, neighborhood to consider
      * ret: typename mute<I, DestValue>::ret
      * doc:
@@ -61,13 +61,13 @@ namespace oln {
     =*/
     template<class DestValue, class I, class N>
     typename mute<I, DestValue>::ret
-    watershed_seg(const abstract::image<I>& im_i, const abstract::neighborhood<N>& Ng);
+    watershed_seg(const abstract::non_vectorial_image<I>& im_i, const abstract::neighborhood<N>& Ng);
 
     /*=processing watershed_con
      * what: Connected Watershed.
      * ns: morpho
      * tpl: class, DestValue, type of output labels
-     * arg: const abstract::image<I>&, im, IN, image of levels
+     * arg: const abstract::non_vectorial_image<I>&, im, IN, image of levels
      * arg: const abstract::neighborhood<N>&, ng, IN, neighborhood to consider
      * ret: typename mute<I, DestValue>::ret
      * doc:
@@ -91,13 +91,13 @@ namespace oln {
     =*/
     template<class DestValue, class I, class N>
     typename mute<I, DestValue>::ret
-    watershed_con(const abstract::image<I>& im_i, const abstract::neighborhood<N>& Ng);
+    watershed_con(const abstract::non_vectorial_image<I>& im_i, const abstract::neighborhood<N>& Ng);
 
     /*=processing watershed_seg_or
      * what: Segmented Watershed with user-supplied starting points.
      * ns: morpho
-     * arg: const abstract::image<I1>&, levels, IN, image of levels
-     * arg: abstract::image<I2>&, markers, INOUT, image of markers
+     * arg: const abstract::non_vectorial_image<I1>&, levels, IN, image of levels
+     * arg: abstract::non_vectorial_image<I2>&, markers, INOUT, image of markers
      * arg: const abstract::neighborhood<N>&, ng, IN, neighborhood to consider
      * ret: Concrete(I2)&
      * doc:
@@ -124,8 +124,8 @@ namespace oln {
     =*/
     template<class I1, class I2, class N>
     Concrete(I2)&
-    watershed_seg_or(const abstract::image<I1>& D,
-		     abstract::image<I2>& M,
+    watershed_seg_or(const abstract::non_vectorial_image<I1>& D,
+		     abstract::non_vectorial_image<I2>& M,
 		     const abstract::neighborhood<N>& Ng);
 
   } // end of morpho

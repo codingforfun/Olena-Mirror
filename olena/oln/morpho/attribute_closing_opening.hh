@@ -38,7 +38,7 @@ namespace oln {
       /*=processing area_closing
        * ns: morpho
        * what: Area closing
-       * arg: const abstract::image<I>&, input, IN, input image
+       * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
        * arg: const abstract::neighborhood<N>&, se, IN, neighborhood to consider
        * arg: unsigned int, area, IN, area
        * ret: Concrete(I)
@@ -54,7 +54,7 @@ namespace oln {
        * exo: out.pgm
        =*/
       template<class I, class N>
-      Concrete(I) area_closing(const abstract::image<I>& input,
+      Concrete(I) area_closing(const abstract::non_vectorial_image<I>& input,
 			       const abstract::neighborhood<N>& Ng,
 			       const unsigned int area)
       {
@@ -69,7 +69,7 @@ namespace oln {
       /*=processing area_opening
        * ns: morpho
        * what: Area opening
-       * arg: const abstract::image<I>&, input, IN, input image
+       * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
        * arg: const abstract::neighborhood<N>&, se, IN, neighborhood to consider
        * arg: unsigned int, area, IN, area
        * ret: Concrete(I)
@@ -85,7 +85,7 @@ namespace oln {
        * exo: out.pgm
        =*/
       template<class I, class N>
-      Concrete(I) area_opening(const abstract::image<I>& input,
+      Concrete(I) area_opening(const abstract::non_vectorial_image<I>& input,
 			       const abstract::neighborhood<N>& Ng,
 			       const unsigned int area)
       {

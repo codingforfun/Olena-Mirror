@@ -46,8 +46,8 @@ namespace oln {
       /*=processing sure_geodesic_reconstruction_dilation
        * ns: morpho
        * what: Geodesic reconstruction by dilation.
-       * arg: const abstract::image<I1>&, marker, IN, marker image
-       * arg: const abstract::image<I2>&, mask, IN, mask image
+       * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
+       * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
        * arg: const abstract::struct_elt<E>&, se, IN, structural element
        * ret: Concrete(I1)
        * doc:
@@ -66,8 +66,8 @@ namespace oln {
        =*/
       template<class I1, class I2, class N>
       Concrete(I1)
-	geodesic_reconstruction_dilation(const abstract::image<I1> & marker,
-					 const abstract::image<I2> & mask,
+	geodesic_reconstruction_dilation(const abstract::non_vectorial_image<I1> & marker,
+					 const abstract::non_vectorial_image<I2> & mask,
 					 const abstract::neighborhood<N>& Ng)
       {
 	mlc::eq<I1::dim, I2::dim>::ensure();
@@ -91,8 +91,8 @@ namespace oln {
       /*=processing sequential_geodesic_reconstruction_dilation
        * ns: morpho
        * what: Geodesic reconstruction by dilation.
-       * arg: const abstract::image<I1>&, marker, IN, marker image
-       * arg: const abstract::image<I2>&, mask, IN, mask image
+       * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
+       * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
        * arg: const abstract::struct_elt<E>&, se, IN, structural element
        * ret: Concrete(I1)
        * doc:
@@ -114,8 +114,8 @@ namespace oln {
        =*/
       template<class I1, class I2, class N>
       Concrete(I1)
-	geodesic_reconstruction_dilation(const abstract::image<I1> & marker,
-					 const abstract::image<I2> & mask,
+	geodesic_reconstruction_dilation(const abstract::non_vectorial_image<I1> & marker,
+					 const abstract::non_vectorial_image<I2> & mask,
 					 const abstract::neighborhood<N>& Ng)
       {
 	mlc::eq<I1::dim, I2::dim>::ensure();
@@ -155,8 +155,8 @@ namespace oln {
 	template<class P, class I1, class I2, class E> inline
 	static
 	bool exist_init_dilation(const abstract::point<P>& p,
-				 const abstract::image<I1>& marker,
-				 const abstract::image<I2>& mask,
+				 const abstract::non_vectorial_image<I1>& marker,
+				 const abstract::non_vectorial_image<I2>& mask,
 				 const abstract::struct_elt<E>& se)
 	{
 	  mlc::eq<I1::dim, I2::dim>::ensure();
@@ -175,8 +175,8 @@ namespace oln {
       /*=processing hybrid_geodesic_reconstruction_dilation
        * ns: morpho
        * what: Geodesic reconstruction by dilation.
-       * arg: const abstract::image<I1>&, marker, IN, marker image
-       * arg: const abstract::image<I2>&, mask, IN, mask image
+       * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
+       * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
        * arg: const abstract::struct_elt<E>&, se, IN, structural element
        * ret: Concrete(I1)
        * doc:
@@ -198,8 +198,8 @@ namespace oln {
        =*/
       template<class I1, class I2, class N>
       Concrete(I1)
-	geodesic_reconstruction_dilation(const abstract::image<I1> & marker,
-					 const abstract::image<I2> & mask,
+	geodesic_reconstruction_dilation(const abstract::non_vectorial_image<I1> & marker,
+					 const abstract::non_vectorial_image<I2> & mask,
 					 const abstract::neighborhood<N>& Ng)
       {
 	mlc::eq<I1::dim, I2::dim>::ensure();
@@ -255,8 +255,8 @@ namespace oln {
       /*=processing sure_geodesic_reconstruction_erosion
        * ns: morpho
        * what: Geodesic reconstruction by erosion.
-       * arg: const abstract::image<I1>&, marker, IN, marker image
-       * arg: const abstract::image<I2>&, mask, IN, mask image
+       * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
+       * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
        * arg: const abstract::struct_elt<E>&, se, IN, structural element
        * ret: Concrete(I1)
        * doc:
@@ -275,8 +275,8 @@ namespace oln {
        =*/
       template<class I1, class I2, class N>
       Concrete(I1)
-	geodesic_reconstruction_erosion(const abstract::image<I1> & marker,
-					const abstract::image<I2> & mask,
+	geodesic_reconstruction_erosion(const abstract::non_vectorial_image<I1> & marker,
+					const abstract::non_vectorial_image<I2> & mask,
 					const abstract::neighborhood<N>& Ng)
       {
 	mlc::eq<I1::dim, I2::dim>::ensure();
@@ -300,8 +300,8 @@ namespace oln {
       /*=processing sequential_geodesic_reconstruction_erosion
        * ns: morpho
        * what: Geodesic reconstruction by erosion.
-       * arg: const abstract::image<I1>&, marker, IN, marker image
-       * arg: const abstract::image<I2>&, mask, IN, mask image
+       * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
+       * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
        * arg: const abstract::struct_elt<E>&, se, IN, structural element
        * ret: Concrete(I1)
        * doc:
@@ -323,8 +323,8 @@ namespace oln {
        =*/
       template<class I1, class I2, class N>
       Concrete(I1)
-	geodesic_reconstruction_erosion(const abstract::image<I1>& marker,
-					const abstract::image<I2>& mask,
+	geodesic_reconstruction_erosion(const abstract::non_vectorial_image<I1>& marker,
+					const abstract::non_vectorial_image<I2>& mask,
 					const abstract::neighborhood<N>& Ng)
       {
 	mlc::eq<I1::dim, I2::dim>::ensure();
@@ -361,8 +361,8 @@ namespace oln {
 	template<class P, class I1, class I2, class E> inline
 	static
 	bool exist_init_erosion(const abstract::point<P>& p,
-				const abstract::image<I1>& marker,
-				const abstract::image<I2>& mask,
+				const abstract::non_vectorial_image<I1>& marker,
+				const abstract::non_vectorial_image<I2>& mask,
 				const abstract::struct_elt<E>& se)
 	{
 	  mlc::eq<I1::dim, I2::dim>::ensure();
@@ -380,8 +380,8 @@ namespace oln {
       /*=processing hybrid_geodesic_reconstruction_erosion
        * ns: morpho
        * what: Geodesic reconstruction by erosion.
-       * arg: const abstract::image<I1>&, marker, IN, marker image
-       * arg: const abstract::image<I2>&, mask, IN, mask image
+       * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
+       * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
        * arg: const abstract::struct_elt<E>&, se, IN, structural element
        * ret: Concrete(I1)
        * doc:
@@ -404,8 +404,8 @@ namespace oln {
 
       template<class I1, class I2, class N>
       Concrete(I1)
-	geodesic_reconstruction_erosion(const abstract::image<I1> & marker,
-					const abstract::image<I2> & mask,
+	geodesic_reconstruction_erosion(const abstract::non_vectorial_image<I1> & marker,
+					const abstract::non_vectorial_image<I2> & mask,
 					const abstract::neighborhood<N>& Ng)
       {
 	mlc::eq<I1::dim, I2::dim>::ensure();
