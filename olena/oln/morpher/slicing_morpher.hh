@@ -85,12 +85,16 @@ namespace oln {
     /// Return a size of N-1 dimension.
     oln::image1d_size* image_size_dec(const oln::image2d_size& image_size)
     {
+      // We can't use typedef here because image2d_size and image3d_size don't have
+      // the same number of arguments.
       return new oln::image1d_size(image_size.ncols(), image_size.border());
     }
 
     /// Return a size of N-1 dimension.
     oln::image2d_size* image_size_dec(const oln::image3d_size& image_size)
     {
+      // We can't use typedef here because image2d_size and image3d_size don't have
+      // the same number of arguments.
       return new oln::image2d_size(image_size.nrows(), image_size.ncols(), image_size.border());
     }
 
@@ -158,6 +162,7 @@ namespace oln {
       ~super_slicing_morpher()
       {
 	delete size_;
+	delete impl_;
       }
 
       /*!

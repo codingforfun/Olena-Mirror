@@ -1,5 +1,7 @@
 2004-03-29  Simon Odou  <simon@lrde.epita.fr>
 
+	* oln/morpher/slicing_morpher.hh: Minor fix.
+
 	* olena/oln/core/bkd_iter1d.hh: Fix comments.
 	* olena/oln/core/bkd_iter2d.hh: Likewise.
 	* olena/oln/core/bkd_iter3d.hh: Likewise.
