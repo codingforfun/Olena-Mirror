@@ -77,6 +77,7 @@ ZLIB_LDFLAGS = @ZLIB_LDFLAGS@
 am__include = @am__include@
 am__quote = @am__quote@
 install_sh = @install_sh@
+EXTRA_DIST = tests
 subdir = tests/types
 mkinstalldirs = $(SHELL) $(top_srcdir)/tools/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/oln/config/config.h
@@ -196,6 +197,7 @@ uninstall-am: uninstall-info-am
 	installdirs maintainer-clean maintainer-clean-generic \
 	mostlyclean mostlyclean-generic uninstall uninstall-am \
 	uninstall-info-am
+
 
 check-local:
 	SRCDIR=$(srcdir) $(srcdir)/runtests

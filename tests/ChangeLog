@@ -1,5 +1,8 @@
 2002-08-26  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
+	* types/Makefile.am (EXTRA_DIST): New.
+	* types/tests/int_sc1: Typo.
+
 	* types/Makefile.am, types/runtests, types/tests/conv1,
 	types/tests/conv2, types/tests/int1, types/tests/int1b,
 	types/tests/int2, types/tests/int3, types/tests/int4,

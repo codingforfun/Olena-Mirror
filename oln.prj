@@ -1,29 +1,16 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 19)
-(Parent-Version oln 0_5 18)
-(Version-Log "Index: ChangeLog
-from  Alexandre Duret-Lutz  <duret_g@epita.fr>
+(Project-Version oln 0_5 20)
+(Parent-Version oln 0_5 19)
+(Version-Log "2002-08-26  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-	* configure.ac: Output tests/types/Makefile.
-
-Index: tests/ChangeLog
-from  Alexandre Duret-Lutz  <duret_g@epita.fr>
-
-	* types/Makefile.am, types/runtests, types/tests/conv1,
-	types/tests/conv2, types/tests/int1, types/tests/int1b,
-	types/tests/int2, types/tests/int3, types/tests/int4,
-	types/tests/int5, types/tests/int6, types/tests/int6b,
-	types/tests/int6c, types/tests/int6d, types/tests/int_s1,
-	types/tests/int_s2, types/tests/int_s2b, types/tests/int_sc1,
-	types/tests/int_sc2, types/tests/int_sc3, types/tests/unsafe1,
-	types/tests/unsafe2: New files.
-	* Makefile.am (SUBDIRS): Add types.
+	* types/Makefile.am (EXTRA_DIST): New.
+	* types/tests/int_sc1: Typo.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 26 Aug 2002 17:20:52 +0200")
+(Checkin-Time "Mon, 26 Aug 2002 17:27:37 +0200")
 (Checkin-Login duret_g)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -355,7 +342,7 @@ from  Alexandre Duret-Lutz  <duret_g@epita.fr>
   (tests/array/test_array1d.cc (oln/f/26_test_array 1.2 644))
   (tests/array/test_array2d.cc (oln/f/25_test_array 1.2 644))
   (tests/array/test_array3d.cc (oln/f/24_test_array 1.2 644))
-  (tests/ChangeLog (oln/e/30_ChangeLog 1.18 600))
+  (tests/ChangeLog (oln/e/30_ChangeLog 1.19 600))
   (tests/check/check.hh (oln/e/40_check.hh 1.2 600))
   (tests/check/data.cc (oln/f/5_data.cc 1.2 600))
   (tests/check/data.hh (oln/f/6_data.hh 1.1 600))
@@ -479,7 +466,7 @@ from  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
   (tests/types/tests/int_sc3 (oln/g/35_int_sc3 1.1 644))
   (tests/types/tests/int_sc2 (oln/g/36_int_sc2 1.1 644))
-  (tests/types/tests/int_sc1 (oln/g/37_int_sc1 1.1 644))
+  (tests/types/tests/int_sc1 (oln/g/37_int_sc1 1.2 644))
   (tests/types/tests/int_s2b (oln/g/38_int_s2b 1.1 644))
   (tests/types/tests/int_s2 (oln/g/39_int_s2 1.1 644))
   (tests/types/tests/int_s1 (oln/g/40_int_s1 1.1 644))
@@ -498,8 +485,8 @@ from  Alexandre Duret-Lutz  <duret_g@epita.fr>
   (tests/types/tests/int1 (oln/h/1_int1 1.1 644))
   (tests/types/tests/unsafe1 (oln/h/2_unsafe1 1.1 644))
   (tests/types/runtests (oln/h/3_runtests 1.1 755))
-  (tests/types/Makefile.in (oln/h/4_Makefile.i 1.1 644))
-  (tests/types/Makefile.am (oln/h/5_Makefile.a 1.1 644))
+  (tests/types/Makefile.in (oln/h/4_Makefile.i 1.2 644))
+  (tests/types/Makefile.am (oln/h/5_Makefile.a 1.2 644))
 )
 (Merge-Parents)
 (New-Merge-Parents)
