@@ -30,7 +30,8 @@
 
 # include <mlc/type.hh>
 # include <oln/core/coord.hh>
-# include <ntg/real/builtin_float.hh>
+# include <ntg/float.hh>
+# include <cmath>
 
 namespace oln {
 
@@ -144,6 +145,16 @@ namespace oln {
 	for (unsigned i = 0; i < dim; ++i)
 	  norm += nth(i) * nth(i);
 	return sqrt(norm);
+      }
+
+      ntg::float_d
+      sqr_norm2(void) const
+      {
+	double norm = 0;
+
+	for (unsigned i = 0; i < dim; ++i)
+	  norm += nth(i) * nth(i);
+	return norm;
       }
 
       static std::string

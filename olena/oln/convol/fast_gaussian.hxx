@@ -45,7 +45,7 @@ namespace oln {
 	// defined by two points (START and FINISH) and a displacement
 	// dpoint (D).
 	template <class WorkType, class FloatType, class I>
-	void 
+	void
 	recursivefilter_(I& image,
 			 const recursivefilter_coef_<FloatType>& c,
 			 const oln_point_type(I)& start,
@@ -159,9 +159,9 @@ namespace oln {
 
 	    // Apply on columns.
 	    recursivefilter_<float>(img, coef,
-				    oln_point_type(I)(0),
-				    oln_point_type(I)(img.ncols() - 1),
-				    img.ncols(),
+				    oln_point_type(I)(-img.border()),
+				    oln_point_type(I)(img.ncols() - 1 + img.border()),
+				    img.ncols() + 2 * img.border(),
 				    oln_dpoint_type(I)(1));
 	  }
 	};
@@ -175,21 +175,20 @@ namespace oln {
 	  void
 	  doit(abstract::image_with_dim<2, I>& img, const F& coef)
 	  {
-
 	    // Apply on rows.
 	    for (coord j = 0; j < img.ncols(); ++j)
 	      recursivefilter_<float>(img, coef,
-				      oln_point_type(I)(0, j),
-				      oln_point_type(I)(img.nrows() - 1, j),
-				      img.nrows(),
+				      oln_point_type(I)(-img.border(), j),
+				      oln_point_type(I)(img.nrows() - 1 + img.border(), j),
+				      img.nrows() + 2 * img.border(),
 				      oln_dpoint_type(I)(1, 0));
 
 	    // Apply on columns.
 	    for (coord i = 0; i < img.nrows(); ++i)
 	      recursivefilter_<float>(img, coef,
-				      oln_point_type(I)(i, 0),
-				      oln_point_type(I)(i, img.ncols() - 1),
-				      img.ncols(),
+				      oln_point_type(I)(i, -img.border()),
+				      oln_point_type(I)(i, img.ncols() - 1 + img.border()),
+				      img.ncols() + 2 * img.border(),
 				      oln_dpoint_type(I)(0, 1));
 	  }
 	};
@@ -206,27 +205,27 @@ namespace oln {
 	    for (coord j = 0; j < img.nrows(); ++j)
 	      for (coord k = 0; k < img.ncols(); ++k)
 		recursivefilter_<float>(img, coef,
-					oln_point_type(I)(0, j, k),
-					oln_point_type(I)(img.nslices() - 1, j, k),
-					img.ncols(),
+					oln_point_type(I)(-img.border(), j, k),
+					oln_point_type(I)(img.nslices() - 1 + img.border(), j, k),
+					img.ncols() + 2 * img.border(),
 					oln_dpoint_type(I)(1, 0, 0));
 
 	    // Apply on rows.
 	    for (coord i = 0; i < img.nslices(); ++i)
 	      for (coord k = 0; k < img.ncols(); ++k)
 		recursivefilter_<float>(img, coef,
-					oln_point_type(I)(i, 0, k),
-					oln_point_type(I)(i, img.nrows() - 1, k),
-					img.nrows(),
+					oln_point_type(I)(i, -img.border(), k),
+					oln_point_type(I)(i, img.nrows() - 1 + img.border(), k),
+					img.nrows() + 2 * img.border(),
 					oln_dpoint_type(I)(0, 1, 0));
 
 	    // Apply on columns.
 	    for (coord i = 0; i < img.nslices(); ++i)
 	      for (coord j = 0; j < img.nrows(); ++j)
 		recursivefilter_<float>(img, coef,
-					oln_point_type(I)(i, j, 0),
-					oln_point_type(I)(i, j, img.ncols() - 1),
-					img.ncols(),
+					oln_point_type(I)(i, j, -img.border()),
+					oln_point_type(I)(i, j, img.ncols() - 1 + img.border()),
+					img.ncols() + 2 * img.border(),
 					oln_dpoint_type(I)(0, 0, 1));
 	  }
 	};
@@ -235,13 +234,20 @@ namespace oln {
 	typename mute<I, typename convoutput<C,B,oln_value_type(I)>::ret>::ret
 	gaussian_common_(const convert::abstract::conversion<C,B>& c,
 			 const abstract::image<I>& in,
-			 const F& coef)
+			 const F& coef,
+			 ntg::float_s sigma)
 	{
 	  typename mute<I, ntg::float_s>::ret work_img(in.size());
 
 	  oln_iter_type(I) it(in);
 	  for_all(it)
 	    work_img[it] = ntg::cast::force<ntg::float_s>(in[it]);
+
+	  /* FIXME: relation between sigma and the border shouldn't
+	     be linear, so when sigma is big enougth, the signal may
+	     be parasitized by the non signal values.
+	   */
+	  work_img.border_adapt_mirror(ntg::cast::round<coord>(5 * sigma));
 
 	  gaussian_<I::dim>::doit(work_img, coef);
 
@@ -250,6 +256,7 @@ namespace oln {
 	     user expects a ntg::float_s image.  */
 	  typename mute<I, typename convoutput<C,B,oln_value_type(I)>::ret>::ret
 	    out_img(in.size());
+
 	  for_all(it)
 	    out_img[it] = c(work_img[it]);
 
@@ -271,7 +278,7 @@ namespace oln {
 	       sigma,
 	       internal::recursivefilter_coef_<float>::DericheGaussian);
 
-	return internal::gaussian_common_(c, in, coef);
+	return internal::gaussian_common_(c, in, coef, sigma);
       }
 
       template <class C, class B, class I>
@@ -288,7 +295,7 @@ namespace oln {
 	       internal::recursivefilter_coef_<float>
 	       ::DericheGaussianFirstDerivative);
 
-	return internal::gaussian_common_(c, in, coef);
+	return internal::gaussian_common_(c, in, coef, sigma);
       }
 
       template <class C, class B, class I>
@@ -305,7 +312,7 @@ namespace oln {
 	       internal::recursivefilter_coef_<float>
 	       ::DericheGaussianSecondDerivative);
 
-	return internal::gaussian_common_(c, in, coef);
+	return internal::gaussian_common_(c, in, coef, sigma);
       }
 
     } // fast

@@ -1,3 +1,17 @@
+2004-01-28  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* oln/convol/fast_gaussian.hxx: Make the gaussian take care of the
+	borders.
+
+2004-01-23  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* oln/topo/dmap.hxx: Fix type of a zero value.
+
+2004-01-23  Astrid Wang  <astrid@lrde.epita.fr>
+
+	* oln/core/abstract/dpoint.hh: Fix headers. Add member function
+	sqr_norm2().
+
 2004-01-22  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* oln/convert/nrgbhsi.hh: Remove file.

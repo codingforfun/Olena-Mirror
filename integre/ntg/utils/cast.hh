@@ -59,7 +59,7 @@ namespace ntg {
   {
     return static_cast<ntg_type(T)>(val);
   }
-  
+
   TO_NTG_CAST(signed)
 
   namespace cast {
@@ -70,12 +70,14 @@ namespace ntg {
     | force |
     `------*/
 
+    // a cast is performed instead of a constructor (unsafe one) call
+    // because this last one may not be available with the good
+    // signature.
     template<class Tdest, class Tsrc> inline
     const Tdest
     force(const Tsrc& val)
     {
-      ntg_unsafe_type(Tdest) tmp (val);
-      return tmp;
+      return (Tdest)val;
     }
 
     /*------.
@@ -115,13 +117,13 @@ namespace ntg {
 	{
 	  // FIXME: this code seems out of date.
 
-#if 0
+#if 1
 	  // KLUDGE: Cast the rounded value to Tdest::value_t before
-	  // returning it as Tdest. Otherwise g++-3.0 complains there
+	  // returning it as Tdest. Otherwise g++-3.* complains there
 	  // is no Tdest constructor taking a float argument.
 	  return (ntg_storage_type(Tdest)) round(val.exact());
 #endif
-	  return round(val.exact());
+	  //	  return round(val.exact());
 	}
       };
 
@@ -132,13 +134,13 @@ namespace ntg {
 	doit(const float_s& val)
 	{
 	  // FIXME: this code seems out of date.
-#if 0
+#if 1
 	  // KLUDGE: Cast the rounded value to Tdest::value_t before
-	  // returning it as Tdest. Otherwise g++-3.0 complains there
+	  // returning it as Tdest. Otherwise g++-3.* complains there
 	  // is no Tdest constructor taking a float argument.
-	  //	  return (ntg_storage_type(Tdest)) roundf(val);
+	  return (ntg_storage_type(Tdest)) roundf(val);
 #endif
-	  return roundf(val);
+	  //	  return roundf(val);
 	}
       };
 

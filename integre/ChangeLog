@@ -1,3 +1,8 @@
+2004-01-28  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* ntg/utils/cast.hh: Make force use a single cast instead of
+	delegate its work to an unsafe type.
+
 2004-01-22  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* ntg/color/yuv.hh: Change the working interval.
