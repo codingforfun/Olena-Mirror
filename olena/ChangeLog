@@ -1,4 +1,10 @@
 2004-04-02  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/io/gz_stream.hh: Fix doc.
+	* olena/oln/morpho/extrema.hxx: Likewise.
+	* olena/oln/convol/nagao.hh: Likewise.
+	* olena/oln/transforms/dwt.hh: Likewise.
+
+2004-04-02  Niels Van Vliet  <niels@lrde.epita.fr>
 	* olena/oln/morpho/laplacian.inc (laplacian): Remove slarger_t.
 	Add the parameter DestValue. Fix doc.
 	* olena/tests/morpho/tests/md5_morpho_laplacian_inc1: Change the

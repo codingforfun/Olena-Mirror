@@ -130,7 +130,7 @@ namespace oln {
     ** Each point in the input corresponds to the mean of the
     ** window in which has the smallest variance.
     **
-    ** \paran in Input image.
+    ** \param in Input image.
     ** \param sa array of structuring elements.
     **
     ** \see oln::convol::nagao

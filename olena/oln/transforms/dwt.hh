@@ -71,9 +71,6 @@ namespace oln {
 
   } // end of namespace transforms
 
-  /*!
-  ** \brief internal stuff.
-  */
   namespace internal
   {
     /// \brief Value of ln(2).
@@ -89,8 +86,8 @@ namespace oln {
     template <class T, unsigned N, class Self>
     struct wavelet_coeffs_
     {
-      typedef T		value_t; ///< \brType of data used.
-      typedef Self	self_t; ///< \brief Self type.
+      typedef T		value_t; ///< Type of data used.
+      typedef Self	self_t; ///< Self type.
 
     public:
 

@@ -1,17 +1,16 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 129)
-(Parent-Version oln 10 128)
+(Project-Version oln 10 130)
+(Parent-Version oln 10 129)
 (Version-Log "2004-04-02  Niels Van Vliet  <niels@lrde.epita.fr>
-	* olena/oln/morpho/laplacian.inc (laplacian): Remove slarger_t.
-	Add the parameter DestValue. Fix doc.
-	* olena/tests/morpho/tests/md5_morpho_laplacian_inc1: Change the
-	test.
-	* olena/oln/morpho/watershed.hh: Change the two examples.
+	* olena/oln/io/gz_stream.hh: Fix doc.
+	* olena/oln/morpho/extrema.hxx: Likewise.
+	* olena/oln/convol/nagao.hh: Likewise.
+	* olena/oln/transforms/dwt.hh: Likewise.
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 02 Apr 2004 17:50:27 +0200")
+(Checkin-Time "Fri, 02 Apr 2004 18:35:36 +0200")
 (Checkin-Login van-vl_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -118,7 +117,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.9 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.40 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.69 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.70 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 640))
 
@@ -283,7 +282,7 @@
   (olena/oln/io/basics.hh (oln/b/12_basics.hh 1.6 640))
   (olena/oln/io/file.hh (oln/b/17_file.hh 1.6 640))
   (olena/oln/io/gz.hh (oln/f/16_gz.hh 1.7 640))
-  (olena/oln/io/gz_stream.hh (oln/f/17_gz_stream. 1.10 640))
+  (olena/oln/io/gz_stream.hh (oln/f/17_gz_stream. 1.11 640))
   
   
   (olena/oln/io/pnm_read_3d.hh (oln/b/11_pnm_read3d 1.14 640))
@@ -328,7 +327,7 @@
   (olena/oln/morpho/dilation.hh (oln/b/5_dilation.h 1.20 640))
   (olena/oln/morpho/erosion.hh (oln/b/4_erosion.hh 1.21 640))
   (olena/oln/morpho/extrema.hh (oln/38_extrema.hh 1.14 640))
-  (olena/oln/morpho/extrema.hxx (oln/j/4_extrema.hx 1.17 640))
+  (olena/oln/morpho/extrema.hxx (oln/j/4_extrema.hx 1.18 640))
   (olena/oln/morpho/extrema_killer.hh (oln/e/19_extrema_ki 1.7.1.4.1.15 640))
   (olena/oln/morpho/fast_morpho.hh (oln/46_fast_morph 1.9 640))
   (olena/oln/morpho/fast_morpho.hxx (oln/45_fast_morph 1.22 640))
@@ -356,7 +355,7 @@
   (olena/oln/morpho/watershed.hxx (oln/47_watershed. 1.9.1.5.1.6 640))
   (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.11 640))
   (olena/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.7.1.9 640))
-  (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.12 640))
+  (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.13 640))
   (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.10 640))
   (olena/oln/transforms/wavelet_coeffs.hh (oln/i/34_wavelet_co 1.8 640))
   (integre/ntg/all.hh (oln/g/32_all.hh 1.10.1.8 640))
@@ -1400,7 +1399,7 @@
   (olena/tests/convol/tests/nagao (oln/m/19_nagao 1.1 644))
   (integre/tests/types/tests/ntg_compare_nb_comp (oln/m/20_ntg_compar 1.1 644))
   (olena/oln/convol/nagao.hxx (oln/m/21_nagao.hxx 1.1 644))
-  (olena/oln/convol/nagao.hh (oln/m/22_nagao.hh 1.2 600))
+  (olena/oln/convol/nagao.hh (oln/m/22_nagao.hh 1.3 600))
   (olena/oln/utils/se_stat.hh (oln/m/23_se_stat.hh 1.2 644))
   (olena/oln/utils/se_stat.hxx (oln/m/24_se_stat.hx 1.2 644))
   (olena/oln/morpher/subq_morpher.hh (oln/m/25_subq_morph 1.2 600))
