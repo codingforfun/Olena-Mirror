@@ -69,23 +69,30 @@ namespace oln
     typedef int_u<nbits, behaviour> self;
     typedef optraits<self> optraits;
 
-    typedef self base;
-    // FIXME: calculate it from nbits
-    typedef typename C_for_int_u<nbits>::type store;
+    typedef self					base_type;
+    typedef typename C_for_int_u<nbits>::type		storage_type;
+    typedef int_s<meta::saturateN<nbits+1, 32>::ret, 
+		  behaviour>				signed_type;
+    typedef self					unsigned_type;
+    // FIXME: calculate it more precisely
+    typedef int_u<32, strict>				cumul_type;
+    typedef int_u<32, strict>				largest_type;
+    typedef int_s<32, strict>				signed_largest_type;
+    typedef int_s<32, strict>				signed_cumul_type;
+    typedef int_u<32, strict>				unsigned_largest_type;
+    typedef int_u<32, strict>				unsigned_cumul_type;
+    typedef unsigned int				integer_type;
 
-    typedef int_u<32, strict> cumul;
 
     // internal use, useful for decorators
     typedef self op_traits;
-
-    typedef int_s<meta::saturateN<nbits+1, 32>::ret, behaviour> signed_type;
-    // FIXME: add missing
   };
 
 
   namespace type_definitions
   {
 
+    //
     //  Class int_u<Nbits, Behaviour>
     //
     //////////////////////////////////
@@ -94,7 +101,7 @@ namespace oln
     class int_u : public rec_int_u<int_u<nbits, behaviour> >
     {
       typedef int_u<nbits, behaviour> self;
-      typedef typename typetraits<self>::store store_type;
+      typedef typename typetraits<self>::storage_type storage_type;
       // dev note : should be directly optraits<self_t>, but with g++ this
       // breaks inheritance in optraits herarchy ...
       typedef typename typetraits<self>::optraits optraits_type;
@@ -161,7 +168,7 @@ namespace oln
       }
 
       // Cast
-      operator store_type () const { return _value; }
+      operator storage_type () const { return _value; }
 
     private:
       // We want to prevent this

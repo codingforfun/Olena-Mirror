@@ -43,15 +43,15 @@ namespace oln
     typedef range<T, interval, behaviour> self;
 
   private:
-    typedef typename typetraits<self>::store store_type;
+    typedef typename typetraits<self>::storage_type storage_type;
     typedef typename behaviour::get<self> behaviour_type;
-    typedef typename interval::store_type interval_type;
+    typedef typename interval::storage_type interval_type;
 
   public:
     // behaviour's check
 
     template <class P>
-    static store_type check(const P& rhs)
+    static storage_type check(const P& rhs)
     { return behaviour_type::apply(rhs); }
 
     //

@@ -40,13 +40,19 @@ namespace oln
     typedef float self;
     typedef optraits<self> optraits;
 
-    typedef self store;
-    typedef self base;
-    typedef self cumul;
+    typedef self base_type;
+    typedef self storage_type;
+    typedef self signed_type;
+    typedef self unsigned_type;
+    typedef self cumul_type;
+    typedef self largest_type;
+    typedef self signed_largest_type;
+    typedef self signed_cumul_type;
+    typedef self unsigned_largest_type;
+    typedef self unsigned_cumul_type;
+    typedef self integer_type;
 
     typedef self op_traits;
-    typedef self signed_type;
-    // FIXME : add missing
   };
 
   template <>
@@ -55,13 +61,19 @@ namespace oln
     typedef double self;
     typedef optraits<self> optraits;
 
-    typedef self store;
-    typedef self base;
-    typedef self cumul;
+    typedef self base_type;
+    typedef self storage_type;
+    typedef self signed_type;
+    typedef self unsigned_type;
+    typedef self cumul_type;
+    typedef self largest_type;
+    typedef self signed_largest_type;
+    typedef self signed_cumul_type;
+    typedef self unsigned_largest_type;
+    typedef self unsigned_cumul_type;
+    typedef self integer_type;
 
     typedef self op_traits;
-    typedef self signed_type;
-    // FIXME : add missing
   };
 
 } // end of namespace oln

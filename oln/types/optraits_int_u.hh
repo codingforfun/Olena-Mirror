@@ -54,20 +54,20 @@ namespace oln
   private:
     // shortcuts
     typedef int_u<nbits, behaviour> self;
-    typedef typename typetraits<self>::store store_type;
+    typedef typename typetraits<self>::storage_type storage_type;
     typedef typename behaviour::get<self> behaviour_type;
 
   public:
     // behaviour's check
     template <class P>
-    static store_type check(const P& rhs)
+    static storage_type check(const P& rhs)
     { return behaviour_type::apply(rhs); }
 
     //
     // Properties
     //
 
-    static store_type max()
+    static storage_type max()
     { return C_for_int_u<nbits>::max(); }
   };
 

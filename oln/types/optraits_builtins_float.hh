@@ -49,14 +49,14 @@ namespace oln
   private:
     // shortcuts
     typedef float self;
-    typedef typetraits<self>::store store_type;
+    typedef typetraits<self>::storage_type storage_type;
 
   public:
     // Don't define min() and max() for float and double.
     // This is error-prone because max()-1 == max().
     // Furthermore max()-min() can't be computed.
-    static store_type sup() { return OLN_FLOAT_INFINITY; }
-    static store_type inf() { return - sup (); }
+    static storage_type sup() { return OLN_FLOAT_INFINITY; }
+    static storage_type inf() { return - sup (); }
   };
 
   namespace internal
@@ -153,14 +153,14 @@ namespace oln
   private:
     // shortcuts
     typedef double self;
-    typedef typetraits<self>::store store_type;
+    typedef typetraits<self>::storage_type storage_type;
 
   public:
     // Don't define min() and max() for float and double.
     // This is error-prone because max()-1 == max().
     // Furthermore max()-min() can't be computed.
-    static store_type sup() { return OLN_DOUBLE_INFINITY; }
-    static store_type inf() { return - sup (); }
+    static storage_type sup() { return OLN_DOUBLE_INFINITY; }
+    static storage_type inf() { return - sup (); }
   };
 
   namespace internal

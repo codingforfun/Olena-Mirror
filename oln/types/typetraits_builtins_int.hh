@@ -30,19 +30,29 @@
 
 # include <oln/types/typetraits.hh>
 # include <oln/types/optraits.hh>
+# include <oln/types/int_u.hh>
 
-# define TYPETRAITS_BUILTIN_INT(Name)				\
-  template<>							\
-  struct typetraits<Name>					\
-  {								\
-    typedef Name self;						\
-    typedef optraits<self> optraits;				\
-								\
-    typedef self store;						\
-    typedef self base;						\
-    typedef self cumul;						\
-    typedef self op_traits;					\
-    typedef builtin::signed_trait<Name>::ret signed_type;	\
+# define TYPETRAITS_BUILTIN_INT(Name)						\
+  template<>									\
+  struct typetraits<Name>							\
+  {										\
+    typedef Name self;								\
+    typedef optraits<self> optraits;						\
+										\
+    typedef self					base_type;		\
+    typedef self					storage_type;		\
+    typedef builtin::signed_trait<Name>::ret		signed_type;		\
+    typedef builtin::unsigned_trait<Name>::ret		unsigned_type;		\
+    typedef builtin::cumul_trait<Name>::ret		cumul_type;		\
+    typedef builtin::largest_trait<Name>::ret		largest_type;		\
+    typedef builtin::signed_largest_trait<Name>::ret	signed_largest_type;	\
+    typedef builtin::signed_cumul_trait<Name>::ret	signed_cumul_type;	\
+    typedef builtin::unsigned_largest_trait<Name>::ret	unsigned_largest_type;	\
+    typedef builtin::unsigned_cumul_trait<Name>::ret	unsigned_cumul_type;	\
+    typedef self					integer_type;		\
+										\
+    typedef self op_traits;							\
+										\
   };
 
 namespace oln
@@ -52,9 +62,67 @@ namespace oln
 
     template <class T>
     struct signed_trait { typedef T ret; };
-    template <> struct signed_trait<unsigned long> { typedef signed long  ret; };
-    template <> struct signed_trait<unsigned int>  { typedef signed int   ret; };
-    template <> struct signed_trait<unsigned char> { typedef signed short ret; };
+    template <> struct signed_trait<unsigned long>  { typedef signed long  ret; };
+    template <> struct signed_trait<unsigned int>   { typedef signed int   ret; };
+    template <> struct signed_trait<unsigned short> { typedef signed int   ret; };
+    template <> struct signed_trait<unsigned char>  { typedef signed short ret; };
+
+    template <class T>
+    struct unsigned_trait { typedef T ret; };
+    template <> struct unsigned_trait<signed long>  { typedef unsigned long  ret; };
+    template <> struct unsigned_trait<signed int>   { typedef unsigned int   ret; };
+    template <> struct unsigned_trait<signed short> { typedef unsigned short ret; };
+    template <> struct unsigned_trait<signed char>  { typedef unsigned char  ret; };
+
+    template <class T>
+    struct cumul_trait { typedef T ret; };
+    template <> struct cumul_trait<unsigned short> { typedef unsigned int   ret; };
+    template <> struct cumul_trait<  signed short> { typedef signed int     ret; };
+    template <> struct cumul_trait<unsigned char>  { typedef unsigned short ret; };
+    template <> struct cumul_trait<  signed char>  { typedef signed short   ret; };
+
+    template <class T>
+    struct largest_trait { typedef T ret; };
+    template <> struct largest_trait<unsigned short> { typedef unsigned int   ret; };
+    template <> struct largest_trait<  signed short> { typedef signed int     ret; };
+    template <> struct largest_trait<unsigned char>  { typedef unsigned int   ret; };
+    template <> struct largest_trait<  signed char>  { typedef signed int     ret; };
+
+    template <class T>
+    struct signed_largest_trait { typedef T ret; };
+    template <> struct signed_largest_trait<unsigned long>  { typedef signed long ret; };
+    template <> struct signed_largest_trait<unsigned int>   { typedef signed int ret; };
+    template <> struct signed_largest_trait<unsigned short> { typedef signed int ret; };
+    template <> struct signed_largest_trait<  signed short> { typedef signed int ret; };
+    template <> struct signed_largest_trait<unsigned char>  { typedef signed int ret; };
+    template <> struct signed_largest_trait<  signed char>  { typedef signed int ret; };
+    
+    template <class T>
+    struct signed_cumul_trait { typedef T ret; };
+    template <> struct signed_cumul_trait<unsigned long>  { typedef signed long ret; };
+    template <> struct signed_cumul_trait<unsigned int>   { typedef signed int ret; };
+    template <> struct signed_cumul_trait<unsigned short> { typedef signed int ret; };
+    template <> struct signed_cumul_trait<  signed short> { typedef signed int ret; };
+    template <> struct signed_cumul_trait<unsigned char>  { typedef signed short ret; };
+    template <> struct signed_cumul_trait<  signed char>  { typedef signed short ret; };
+
+    template <class T>
+    struct unsigned_largest_trait { typedef T ret; };
+    template <> struct unsigned_largest_trait<  signed long>  { typedef unsigned long ret; };
+    template <> struct unsigned_largest_trait<  signed int>   { typedef unsigned int ret; };
+    template <> struct unsigned_largest_trait<unsigned short> { typedef unsigned int ret; };
+    template <> struct unsigned_largest_trait<  signed short> { typedef unsigned int ret; };
+    template <> struct unsigned_largest_trait<unsigned char>  { typedef unsigned int ret; };
+    template <> struct unsigned_largest_trait<  signed char>  { typedef unsigned int ret; };
+        
+    template <class T>
+    struct unsigned_cumul_trait { typedef T ret; };
+    template <> struct unsigned_cumul_trait<signed long>    { typedef unsigned long ret; };
+    template <> struct unsigned_cumul_trait<signed int>     { typedef unsigned int ret; };
+    template <> struct unsigned_cumul_trait<unsigned short> { typedef unsigned int ret; };
+    template <> struct unsigned_cumul_trait<  signed short> { typedef unsigned int ret; };
+    template <> struct unsigned_cumul_trait<unsigned char>  { typedef unsigned short ret; };
+    template <> struct unsigned_cumul_trait<  signed char>  { typedef unsigned short ret; };
 
   }
 

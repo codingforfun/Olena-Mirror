@@ -33,8 +33,6 @@ namespace oln
 
   template <class T> struct typetraits;
 
-  // FIXME: need a hierarchy ?
-
 } // end of namespace oln
 
 #endif // ndef OLENA_VALUE_TYPETRAITS_HH

@@ -36,7 +36,7 @@ namespace oln
     class bounded
     {
     public:
-      typedef T store_type;
+      typedef T storage_type;
 
       static T min() { return i_min; }
       static T max() { return i_max; }

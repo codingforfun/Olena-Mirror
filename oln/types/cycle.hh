@@ -49,14 +49,21 @@ namespace oln
     typedef cycle<T, interval> self;
     typedef optraits<self> optraits;
 
-    typedef typename typetraits<T>::base base;
-    typedef T store;
-    typedef self cumul;
+    typedef typename typetraits<T>::base_type		base_type;
+    typedef T						storage_type;
+    typedef typename typetraits<T>::signed_type		signed_type;
+    typedef typename typetraits<T>::unsigned_type	unsigned_type;
+    typedef self					cumul_type;
+    typedef self					largest_type;
+    typedef self					signed_largest_type;
+    typedef self					signed_cumul_type;
+    typedef self					unsigned_largest_type;
+    typedef self					unsigned_cumul_type;
+    typedef typename typetraits<T>::integer_type	integer_type;
+
 
     // internal type used for binary operations traits
-    typedef typename typetraits<T>::base op_traits;
-
-    // FIXME : add missing
+    typedef typename typetraits<T>::base_type op_traits;
   };
 
 
@@ -86,14 +93,11 @@ namespace oln
     private:
       // shortcuts
       typedef typename typetraits<self>::optraits optraits_type;
-      typedef typename typetraits<self>::base base_type;
-      typedef typename typetraits<base_type>::store base_store_type;
+      typedef typename typetraits<self>::base_type base_type;
+      typedef typename typetraits<base_type>::storage_type base_storage_type;
 
     public:
-      cycle ()
-      {
-	_value = 0;
-      }
+      cycle () { _value = 0; }
 
       template <class U>
       cycle (const U& u)
@@ -109,7 +113,7 @@ namespace oln
       }
 
       // cast
-      operator base_store_type() const { return _value; }
+      operator base_storage_type() const { return _value; }
     };
 
   } // type_definitions

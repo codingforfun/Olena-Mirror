@@ -51,12 +51,12 @@ namespace oln
   template <class Self>
   class optraits_scalar : public optraits_top
   {
-    typedef typename typetraits<Self>::store store_type;
+    typedef typename typetraits<Self>::storage_type storage_type;
 
   public:
-    static store_type zero () { return 0; }
-    static store_type unit () { return 1; }
-    static store_type default_value() { return zero(); }
+    static storage_type zero () { return 0; }
+    static storage_type unit () { return 1; }
+    static storage_type default_value() { return zero(); }
 
     //
     // dev note : the goal in those default operators is to check the kind
@@ -96,11 +96,11 @@ namespace oln
   template <class Self>
   class optraits_int : public optraits_scalar<Self>
   {
-    typedef typename typetraits<Self>::store store_type;
+    typedef typename typetraits<Self>::storage_type storage_type;
 
   public:
-    static store_type inf () { return optraits<Self>::min(); }
-    static store_type sup () { return optraits<Self>::max(); }
+    static storage_type inf () { return optraits<Self>::min(); }
+    static storage_type sup () { return optraits<Self>::max(); }
 
     ASSIGN_INT_OPERATOR(mod_equal,  %);
     ARITH_INT_OPERATOR(mod,  %=);
@@ -116,10 +116,10 @@ namespace oln
   class optraits_int_u : public optraits_int<Self>
   {
   private:
-    typedef typename typetraits<Self>::store store_type;
+    typedef typename typetraits<Self>::storage_type storage_type;
 
   public:
-    static store_type min () { return 0; }
+    static storage_type min () { return 0; }
   };
 
 

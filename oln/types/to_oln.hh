@@ -39,9 +39,8 @@ namespace oln {
 
 
     // FIXME : really useful ?
-    //     template<class Self> struct to_oln<rec_value<Self> >   { typedef Self ret; };
-
-
+    // template<class Self> struct to_oln<rec_value<Self> >
+    // { typedef Self ret; };
 
     // C built-in type  ->  oln type
 

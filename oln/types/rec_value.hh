@@ -45,19 +45,19 @@ namespace oln
   template <class Self>
   class rec_value : type::any_type<Self>
   {
-    typedef typename typetraits<Self>::store store_type;
+    typedef typename typetraits<Self>::storage_type storage_type;
 
   public:
 
     // Hooks
-    store_type& value() { return _value; }
-    const store_type& value() const { return _value; }
+    storage_type& value() { return _value; }
+    const storage_type& value() const { return _value; }
 
     Self& self() { return static_cast<Self&>(*this); }
     const Self& self() const { return static_cast<const Self&>(*this); }
 
   protected:
-    store_type _value;
+    storage_type _value;
   };
 
 

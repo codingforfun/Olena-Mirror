@@ -59,11 +59,11 @@ namespace oln
     template <class T>
     struct get
     {
-      typedef typename typetraits<T>::store store_type;
+      typedef typename typetraits<T>::storage_type storage_type;
 
       template <class P>
-      static store_type apply (const P& p)
-      { return static_cast<store_type>(p); }
+      static storage_type apply (const P& p)
+      { return static_cast<storage_type>(p); }
     };
   };
 
@@ -75,17 +75,17 @@ namespace oln
     template <class T>
     struct get
     {
-      typedef typename typetraits<T>::store store_type;
+      typedef typename typetraits<T>::storage_type storage_type;
 
       template <class P>
-      static store_type apply (const P& p)
+      static storage_type apply (const P& p)
       {
 	typedef typename internal::to_oln<P>::ret p_oln_type;
 
 	precondition(static_cast<p_oln_type>(p) <= optraits<T>::max());
 	precondition(static_cast<p_oln_type>(p) >= optraits<T>::min());
 
-	return static_cast<store_type>(p);
+	return static_cast<storage_type>(p);
       }
     };
   };
@@ -98,9 +98,9 @@ namespace oln
     template <class T>
     struct get
     {
-      typedef typename typetraits<T>::store store_type;
+      typedef typename typetraits<T>::storage_type storage_type;
       template <class P>
-      static store_type apply (const P& p)
+      static storage_type apply (const P& p)
       {
 	typedef typename internal::to_oln<P>::ret p_oln_type;
 
@@ -110,7 +110,7 @@ namespace oln
 	if (static_cast<p_oln_type>(p) < optraits<T>::min())
 	  return optraits<T>::min();
 	
-	return static_cast<store_type>(p);
+	return static_cast<storage_type>(p);
       }
     };
   };

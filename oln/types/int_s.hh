@@ -65,16 +65,21 @@ namespace oln
     typedef int_s<nbits, behaviour> self;
     typedef optraits<self> optraits;
 
-    typedef self base;
+    typedef self				base_type;
+    typedef typename C_for_int_s<nbits>::type	storage_type;
+    typedef self				signed_type;
+    typedef int_u<nbits-1, behaviour>		unsigned_type;
+    // FIXME: calculate it more precisely
+    typedef int_s<32, strict>			cumul_type;
+    typedef int_s<32, strict>			largest_type;
+    typedef int_s<32, strict>			signed_largest_type;
+    typedef int_s<32, strict>			signed_cumul_type;
+    typedef int_u<32, strict>			unsigned_largest_type;
+    typedef int_u<32, strict>			unsigned_cumul_type;
+    typedef signed int				integer_type;
 
-    typedef typename C_for_int_s<nbits>::type store;
-    typedef int_s<32, strict> cumul;
-    
     // internal use, useful for decorators
     typedef self op_traits;
-
-    typedef self signed_type;
-    // FIXME : add missing
   };
 
 
@@ -91,7 +96,7 @@ namespace oln
     class int_s : public rec_int_s<int_s<nbits, behaviour> >
     {
       typedef int_s<nbits, behaviour> self;
-      typedef typename typetraits<self>::store store_type;
+      typedef typename typetraits<self>::storage_type storage_type;
       typedef typename typetraits<self>::optraits optraits_type;
 
     public:
@@ -156,7 +161,7 @@ namespace oln
 	return *this;
       }
 
-      operator store_type () const { return _value; }
+      operator storage_type () const { return _value; }
 
     private:
       // We want to prevent this

@@ -48,14 +48,21 @@ namespace oln
     typedef range<T, interval, behaviour> self;
     typedef optraits<self> optraits;
 
-    typedef typename typetraits<T>::base base;
-    typedef T store;
-    typedef typename typetraits<T>::cumul cumul;
+    typedef typename typetraits<T>::base_type		base_type;
+    typedef T						storage_type;
+    typedef typename typetraits<T>::signed_type		signed_type;
+    typedef typename typetraits<T>::unsigned_type	unsigned_type;
+    typedef typename typetraits<T>::cumul_type		cumul_type;
+    typedef typename typetraits<T>::largest_type   	largest_type;
+    typedef typename typetraits<T>::signed_largest_type signed_largest_type;
+    typedef typename typetraits<T>::signed_cumul_type	signed_cumul_type;
+    typedef 
+    typename typetraits<T>::unsigned_largest_type	unsigned_largest_type;
+    typedef typename typetraits<T>::unsigned_cumul_type	unsigned_cumul_type;
+    typedef typename typetraits<T>::integer_type	integer_type;
 
     // internal type used for binary operations traits
-    typedef typename typetraits<T>::base op_traits;
-
-    // FIXME : add missing
+    typedef typename typetraits<T>::base_type op_traits;
   };
 
   namespace type_definitions
@@ -75,14 +82,11 @@ namespace oln
     private:
       // shortcuts
       typedef typename typetraits<self>::optraits optraits_type;
-      typedef typename typetraits<self>::base base_type;
-      typedef typename typetraits<base_type>::store base_store_type;
+      typedef typename typetraits<self>::base_type base_type;
+      typedef typename typetraits<base_type>::storage_type base_storage_type;
 
     public:
-      range ()
-      {
-	_value = 0;
-      }
+      range () { _value = 0; }
 
       template <class U>
       range (const U& u)
@@ -98,7 +102,7 @@ namespace oln
       }
 
       // cast
-      operator base_store_type() const { return _value; }
+      operator base_storage_type() const { return _value; }
     };
 
   } // type_definitions

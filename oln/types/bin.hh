@@ -46,8 +46,17 @@ namespace oln
     typedef bin self;
     typedef optraits<self> optraits;
 
-    typedef self base;
-    typedef unsigned char store;
+    typedef self			base_type;
+    typedef unsigned char		storage_type;
+    typedef bin				signed_type;
+    typedef bin				unsigned_type;
+    typedef bin				cumul_type;
+    typedef bin				largest_type;
+    typedef bin				signed_largest_type;
+    typedef bin				signed_cumul_type;
+    typedef bin				unsigned_largest_type;
+    typedef bin				unsigned_cumul_type;
+    typedef unsigned int		integer_type;
 
     typedef self op_traits;
   };

@@ -47,8 +47,8 @@ namespace oln
     typedef cycle<T, interval> self;
 
   private:
-    typedef typename typetraits<self>::store store_type;
-    typedef typename interval::store_type interval_type;
+    typedef typename typetraits<self>::storage_type storage_type;
+    typedef typename interval::storage_type interval_type;
 
   public:
     //
@@ -88,7 +88,7 @@ namespace oln
     // behaviour's check
 
     template <class P>
-    static store_type check(const P& rhs)
+    static storage_type check(const P& rhs)
     {
       typedef typename meta::if_<is_a(optraits<P>, optraits_float)::ret,
 	                         cycle_fmod,
