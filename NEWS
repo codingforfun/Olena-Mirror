@@ -1,0 +1,149 @@
+Olena 0.2b	December 13, 2001
+
+	* Value:
+	  - Support for HSL and HSV color systems.
+	  - Define internal::default_less<vec<N,T>>.
+
+	* Core:
+	  - New window generator: mk_win_ellipse, mk_win_disc,
+	    mk_win_ellipsoid, and mk_win_ball.
+
+	* Various #include fixes.
+
+Olena 0.2	November 28, 2001
+
+	* Color:
+	  - nrgb_8, nrgb_16, nrgb_32: new types for NTSC RGB.  The
+            conversion from and to YIQ and HSI which assumed NTSC RGB
+	    has been adjusted to actually use nrgb_* (instead of rgb_*)
+	    and renamed accordingly.
+	  - yuv_8, yuv_16, yuv_32: New types.
+
+	  The currently available conversions are
+
+                    hsi   yuv
+                      \  /
+	       rgb -- nrgb
+                \     /  \
+                  xyz     yiq
+
+	* Various cleanups and bug fixes.  Especially:
+	  - border handling (mirroring, copying) simplified and fixed.
+	  - ++k, --k: return a value with the same type as k.
+
+	* I/O:
+	  - pnm/P1, pnm/P3, and pnm/P6 support for image_3d.
+
+Olena 0.1f	November 22, 2001
+
+	* Core:
+	  - Several bug fixes in memory handling.
+
+	* Types:
+	  - New color types: HSI, YIQ; with conversions to and from RGB.
+	  - `min()' and `max()' are now defined with the types (i.e.
+	    not in math/macros.hh), along with the other operators.
+	    Also, these procedures will two arguments of different
+	    types.
+
+	* Casts:
+	  - `cast::round': similar to C's round()
+	  - `cast::rbound': ditto, but constrained to fit the
+            output type's range.
+
+	* I/O:
+	  - Support for `image_3d<int_u<N> >' (as PNM P2 & P5).
+
+	* Processings
+	  - `level::is_greater_or_equal', `level::is_greater',
+	    `level::is_lower_or_equal', `level::is_lower',
+	    `level::is_equal': Comparisons between images.
+	  - `level::connected_component': Number connected components.
+	  - `morpho::geodesic_dilation', `morpho::simple_geodesic_dilation'.
+	  - `morpho::geodesic_erosion', `morpho::simple_geodesic_erosion'.
+          - `morpho::get_plus_se_only', `morpho::get_plus_se_p',
+	    `morpho::get_minus_se_only', `morpho::get_minus_se_p': Split
+	    a structural element in a `plus' (lexicaly before than the center)
+	    and `minus' (after).
+
+	* Misc:
+	  - `utils::timer': for benchmarking
+	  - `level::lut', `level::hlut': Lookup tables.
+
+Olena 0.1d	November 15, 2001
+
+	* Core:
+	  - `point's, `dpoint's, and `image_size's feature a `nth()' method,
+	    that returns the value of the nth coordinate.
+	  - `fold': new high order operator.
+
+	* Types:
+	  - `vec<N,T>' uses an array to store its elements
+            and accepts builtin types.
+	  - `rgb<T>' has been replaced by `rgb_8', `rgb_16', `rgb_32'
+	  - `xyz_8', `xyz_16', `xyz_32' are new types.
+	  - the latter six types are instances of the `color' type.
+
+	* Processings:
+	  - All basic morpholohical processings (`opening',
+	    `hit_or_miss', `beucher_gradient', etc.) from namespace
+	    `morpho::' have their fast equivalent in namespace
+	    `morpho::fast::'.
+	  - `convert::apply' is similar to `apply' but will work
+	    for all types of conversions while `apply' can only work
+	    on `conversion_to_type' conversions.
+
+	* Tools:
+	  - `utils::fill': fill an image
+	  - `utils::f_moments', `utils::f_minmax': statistical functors.
+
+	* Casts:
+	  - `cast::bound': similar to `convert::bound'.
+
+	* I/O:
+	  - It's possible to load and save as PPM any kind of image2d
+	    whose color has 3 components on 8 bits.
+
+Olena 0.1b	November 8, 2001
+
+	* New type: rgb<T>
+
+	* New processings:
+	  - morpho::watershed_con
+	  - convol::fast::gaussian
+	  - convol::fast::gaussian_derivative
+	  - convol::fast::gaussian_second_derivative
+
+	* Conversion are organized in the following hierarchy
+
+	    conversion<Inferior>
+                  ^
+		  |
+	    conversion_to_type<To,Inferior>
+                  ^
+		  |
+	    conversion_from_type_to_type<From,To,Inferior>
+
+	  All children of conversion_from_type_to_type are models of
+	  Adaptable Unary Function.  See conversion.hh for more comments.
+
+	* The only two functions that perform file i/o are `load' and
+ 	  `save'.  The other functions (`read', `write', `read_pnm',
+	  `write_pnm') have been removed.
+
+	* image2d<rgb<int_u8> > can be loaded and saved as ppm.
+
+	* All iterators support a new method, cur(), that returns
+	  the current point (or dpoint).  It is meant to be used
+	  at places where the compiler is unable to implicitly convert
+	  an iterator into a point (or dpoint).
+
+	* Bug fixes:
+	  - Olena now compiles successfully with -pedantic.
+	  - `image2d<int_u8> lena = load("lena.pgm");' works.
+	  - Multiplications and subtractions on 'vec' no longer
+	    perform additions.
+
+Olena 0.1	November 1, 2001
+
+        * Initial public release.

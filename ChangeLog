@@ -1,0 +1,1163 @@
+2001-12-28  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/value/cast.hh (_round): Cast the rounded value to
+	Tdest::value_t before returning it as Tdest. Otherwise g++-3.0
+	complains there is no Tdest constructor taking a float argument.
+
+2001-12-26  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	Speed up the fast_morpho() function in two ways:
+	1) reorganize the code using a recursive template (this lowers
+	the run-time of a simple example from 13.1sec to 10.8sec)
+	2) specialize the histogram class as histogram_min and
+	histogram_max.  These new classes can compute min() and max()
+	in a more efficient way.  This second change results in a speed
+	up of more than 10x in our color segmentation algorithm.
+
+	* src/morpho/dilation.hh (fast::dilation): Adjust call to fast_morpho.
+	* src/morpho/erosion.hh (fast::erosion): Likewise.
+	* src/morpho/fast_morpho.hxx (hist_update, find_struct_elts): Move...
+	(internal::hist_update, internal::find_struct_elts): ... here.
+	(internal::fast_morpho_inner): New.
+	(fast_morpho): Adjust to call fast_morpho_inner.  Take the
+	histogram type as a parameter.
+	* src/utils/histogram.hh (histogram): Store values in an array
+	instead of a vector.
+	(histogram_minmax, histogram_min,
+	histogram_max): New classes.
+	(min, max): Define for these new classes too.
+
+2001-12-13  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/value/vec.hh (internal::default_less<vec<N,T>>): Typo.
+	* src/core/pointnd.hh
+	(internal::default_less<pointnd<Dim,Inferior>>): Likewise.
+
+2001-12-13  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* configure.ac: Bump version to 0.2c.
+
+2001-12-13  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* configure.ac: Bump version to 0.2b.
+	* NEWS: Update.
+
+	* demo/tour.cc: Include system headers after Olena headers.
+
+2001-12-11  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/io/pnm_write3d.hxx: Include io/pnm_write_common.hxx.
+	* src/core/w_window3d.hh: Include internal/w_window.hh.
+	* src/core/image3d.hh: Include io/readable.hh.
+
+	* src/core/window3d.hh (mk_win_ellipsoid, mk_win_ball): New functions.
+	* src/core/window2d.hh (mk_win_ellipse, mk_win_disc): New functions.
+
+2001-12-10  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/io/pnm_read3d.hxx
+	(reader<ReadPnmPlain, image3d<int_u<N> > >): Rename as ...
+	(reader<ReadPnmPlain, image3d<int_u<8> > >): ... this.
+
+2001-12-06  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/value/vec.hh (internal::default_less<vec<N,T>>): New.
+
+2001-12-06  Heru Xue  <xue@lrde.epita.fr>
+
+	* src/convert/nrgbhsl.hh, src/convert/nrgbhsv.hh,
+	src/value/hsl.hh, src/value/hsv.hh: New files.
+	* src/Makefile.am (nobase_oln_HEADERS): Add them.
+
+2001-12-06  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/morpho/closing.inc, src/morpho/dilation.hh,
+	src/morpho/erosion.hh, src/morpho/opening.inc,
+	src/morpho/watershed.hh: Add getdefs blocks for documentation.
+	* src/morpho/dilation.hh: Include morpho/stat.hh.
+
+2001-11-28  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* configure.ac: Bump version to 0.2a.
+
+2001-11-28  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* configure.ac: Bump version to 0.2.
+	* src/Makefile.am (nobase_oln_HEADERS): Typo.
+
+2001-11-28  Heru Xue  <xue@lrde.epita.fr>
+
+	* src/convert/nrgbxyz.hh, src/convert/nrgbyuv.hh: New files.
+	* src/value/yuv.hh: New file.
+	* src/Makefile.am (nobase_oln_HEADERS): Add them.
+
+2001-11-28  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/convert/rgbnrgb.hh: New file.
+	* src/Makefile.am (nobase_oln_HEADERS): Add it.
+
+2001-11-28  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/value/nrgb.hh: New file (that's NTSC RGB; the other, rgb.hh,
+	is CIE RGB).
+	* src/convert/rgbyiq.hh, src/convert/rgbhsi.hh: Rename to ...
+	* src/convert/nrgbyiq.hh, src/convert/nrgbhsi.hh: ... these, and
+	use nrgb.hh.
+	* src/Makefile.am (nobase_oln_HEADERS): Adjust.
+
+2001-11-27  Jerome Darbon  <darbon_j@epita.fr>
+
+	* src/level/connected.hh: Typo.
+
+2001-11-27  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/convol/fast_gaussian_coefficient.hh
+	(case DericheGaussianFirstDerivative): Remove unused variable.
+	* src/convol/fast_gaussian.hxx: Instanciate _recursivefilter and
+	internal::_RecursiveFilterCoef for float instead of sfloat; this
+	shorten the compile time a lot.
+
+2001-11-27  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/internal/image1d_data.hh,
+	src/core/internal/image2d_data.hh,
+	src/core/internal/image3d_data.hh: Remove FIXMEs and comments
+	about _fake.
+	* src/core/internal/fake.hh: Document it here.
+
+	* src/convert/colorconv.hh: More comments.
+
+2001-11-27  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* NEWS, README: Prepare for 0.2.
+
+2001-11-26  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/io/pnm_write3d.hxx, src/io/pnm_read3d.hxx: Add untested
+	support for pnm/P1, pnm/P3, pnm/P6.
+
+2001-11-26  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/value/cplx.hh (transp): Rename as ...
+	(conj): ... this.
+	(operator<, min, max): Remove (meaningless)
+	* src/value/int_s.hh (operator==): Uncomment.
+	* src/value/int_u.hh: Remove dead code and FIXMEs.
+
+2001-11-26  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/value/ops.hh (operator++, operator+, operator--, operator-):
+	Returns same type as input.
+
+2001-11-26  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/convert/rgbhsi.hh (inv_sqrt2): New. Use instead of M_SQRT1_2.
+	* src/io/pnm_write_common.hxx (writemany_raw): Remove debugging code.
+
+	* src/Makefile.am (nobase_oln_HEADERS): Add config/system.h.
+	* src/config/system.h: New file.
+	* src/basics.hh: Include it.
+
+2001-11-26  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/border3d.hh (_replicate_borders, _mirror_borders): Simplify.
+	* src/core/border2d.hh (_replicate_borders, _mirror_borders): Simplify.
+
+	* src/convert/colorconv.hh, src/convert/rgbhsi.hh,
+	src/convert/rgbxyz.hh, src/convert/rgbyiq.hh: Typos.
+
+2001-11-22  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* configure.ac: Bump version to 0.1g.
+
+2001-11-22  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* configure.ac: Bump version to 0.1f.
+	* NEWS: Update for 0.1f.
+
+	* src/core/dpoint1d.hxx: Add back constructors (mistakenly deleted).
+
+2001-11-22  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/border3d.hh (_mirror_borders, _replicate_borders):
+	Typos in indices.
+
+2001-11-22  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/morpho/fast_morpho.hxx (hist_update): Inline.
+	(fast_morpho): Exit both loops with a goto.
+
+	* src/level/connected.hh: Typo.
+
+	* src/convol/fast_gaussian_coefficient.hh
+	(_RecursiveFilterCoef::_RecursiveFilterCoef): Declare out of the
+	struct to prevent any inline attempt.
+	* src/core/dpoint1d.hh, src/core/dpoint2d.hh,
+	src/core/dpoint3d.hh, src/core/point1d.hh, src/core/point2d.hh,
+	src/core/point3d.hh, src/core/window1d.hh, src/core/window2d.hh,
+	src/core/window3d.hh, src/core/w_window1d.hh,
+	src/core/w_window2d.hh, src/core/w_window3d.hh,
+	src/core/neighborhood1d.hh, src/core/neighborhood2d.hh,
+	src/core/neighborhood3d.hh: Reorganize to help the compiler
+	inlining methods (i.e. define used-functions before
+	user-functions.)
+	* src/utils/histogram.hh (min, max): Declare inline.
+
+	* src/core/internal/image3d_data.hh (precondition_hold_large): New
+	member.
+	(at) Use it.
+	* src/core/internal/image2d_data.hh,
+	src/core/internal/image1d_data.hh: Likewise.
+
+	* src/io/pnm_read3d.hxx: Add support for P2 images.
+	* src/io/pnm_write3d.hxx: Add support P2 images.
+
+2001-11-22  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/Makefile.am (nobase_oln_HEADERS): Add convert/rgbhsi.hh,
+	convert/rgbyiq.hh, value/hsi.hh, value/yiq.hh.
+
+2001-11-21  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	Now it's possible to I/O image3d<int_u<N> > as "mosaic" PNM
+	images.
+
+	* src/io/pnm_read3d.hxx, src/io/pnm_read_common.hxx,
+	src/io/pnm_write3d.hxx, src/io/pnm_write_common.hxx,
+	src/io/pnm3d.hh: New files.
+	* src/Makefile.am (nobase_oln_HEADERS): Add them.
+	* src/basics2d.hh: Inlude io/pnm.hh
+	* src/basics3d.hh: Inlude io/pnm3d.hh
+	* src/io/basics.hh: Don't include io/pnm.hh.
+	* src/core/image2d.hh (image2d<bin>): Define io ctor and op=.
+	* src/core/image3d.hh (image3d<T>, image3d<bin>): Likewise.
+	* src/io/pnm_read.hxx: Revamp to use the function from
+	pm_read_common.hxx
+	* src/io/pnm_write.hxx: Revamp to use the function from
+	pm_write_common.hxx
+
+2001-11-21  Jerome Darbon  <darbon_j@epita.fr>
+
+	* src/morpho/extrema.hh, src/morpho/geodesic_erosion.hh,
+	src/morpho/reconstruction.hh: Adjust to always pass exact
+	references (e.g. `marker' instead of `_marker') to
+	subroutines.  This suppress `unused variable' warnings.
+
+2001-11-20  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/value/color.hh (internal::_from_float): Use cast::rbound.
+	* src/value/cast.hh (round, rbound): New casts.
+	* src/basics.hh: Define __USE_ISOC99.
+	* src/value/rec_int.hh (cast::any_int): Lookup any_int in
+	oln::internal, not internal.
+
+2001-11-20  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/value/rgb.hh (Red, Green, Blue): Rename as ...
+	(rgb_R, rgb_G, rgb_B): ... these.
+	* src/value/xyz.hh (X, Y, Z): Rename as ...
+	(xyz_X, xyz_Y, xyz_Z): ... these.
+	* src/convert/rgbhsi.hh, src/convert/rgbyiq.hh: New files.
+	* src/value/hsi.hh, src/value/yiq.hh: New files.
+
+2001-11-20  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/morpho/extrema.hh: Adjust to use the new min.
+	* src/value/ops.h (min, max): Cast result values to result_type in ?:.
+
+2001-11-20  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/math/macros.hh (min, max): Remove.
+	* src/arith/ops.hh (min, max): s/math::min/min/; s/math::max/max/;
+	* src/morpho/geodesic_dilation.hh,
+	src/morpho/geodesic_erosion.hh,
+	src/morpho/reconstruction.hh: Likeiwse.
+	* src/value/float_p.hh, src/value/int_u.hh, src/value/int_s.hh:
+	Define operator_min_traits and operator_max_traits.
+	* src/value/op_tailts (operator_min_traits, operator_max_traits)
+	Remove.
+	(properties_of_operator): Specialise for min and max.
+	* src/value/ops.hh (plus_helper, minus_helper, times_helper,
+	div_helper): Remove these unused traits.
+	(DEC_OPERATOR_SIMPLE): New.
+	(min, max): Define using DEC_OPERATOR_SIMPLE.
+
+2001-11-20  Jerome Darbon  <darbon_j@epita.fr>
+
+	* src/level/lut.hh, src/level/compare.hh, src/utils/timer.hh,
+	src/morpho/splitse.hh, src/morpho/geodesic_dilation.hh,
+	src/morpho/geodesic_erosion.hh,src/morpho/reconstruction.hh,
+	src/extrema.hh, src/level/connected.hh: New files.
+	* src/Makefile.am (nobase_oln_HEADERS): Add them.
+
+2001-11-20  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/morpho/fast_morpho.hxx (fast_morpho): Iterate in
+	slice/row/col order instead of col/row/slice.
+
+2001-11-20  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/internal/image3d_data.hh (_allocate_3d_data): Thinko in
+	array initialization.
+
+2001-11-19  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/window3d.hh (win_c26_only, win_c26p): Add missing coma
+	in array definition.
+	* src/core/internal/image1d_data.hh (_buffer): Shift by border()
+	before return.
+	* src/morpho/dilation.hh: Include morpho/fast_morpho.hh.
+	* src/core/neighborhood3d.hh: Remove wrong assertion.
+	* src/core/window3d.hh: Likewise.
+
+2001-11-15  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* configure.ac: Bump version to 0.1e.
+
+2001-11-15  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* configure.ac: Bump version to 0.1d.
+	* NEWS: Update.
+
+2001-11-15  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/value/color.hh: New file.
+	* src/value/predef.hh: Predeclare color.
+	* src/value/rgb.hh, src/value/xyz.hh: Rewrite using color.hh.
+	* src/io/pnm_read.hxx: Adjust to read any kind of color<3,8,*>.
+	* src/io/pnm_write.hxx: Likewise for write.
+
+	* src/value/rec_value.hh (real_value_traits): Specialize for
+	builtin types.
+	(zero_value_traits): New.
+	* src/value/vec.hh: Arrange to support builtin types.
+
+	* src/convert/colorconv.hh: New file.
+	* src/convert/rgbxyz.hh: Simplify using colorconv and color.
+
+	* src/Makefile.am (nobase_oln_HEADERS): value/color.hh and
+	convert/colorconv.hh.
+
+	* src/core/compose.hh, src/utils/stat.hh: Use std:: where appropriate.
+
+2001-11-14  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/compose.hh: Typos.
+
+2001-11-14  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/compose.hh (f_identity): New functor.
+
+	* src/convert/conversion.hh (convert::apply): New function.
+
+	* src/value/cast.hh (bound): Cast max() and min() in comparisons.
+
+	* src/value/rgb.hh (rgb<T>::value): New typedef.
+
+	* src/value/predefs.hh: Predeclare xyz<T>.
+	* src/convert/rgbxyz.hh: New file.
+	* src/value/xyz.hh: New file.
+	* src/value/all.hh: Include it.
+	* src/Makefile.am (nobase_oln_HEADERS): Adjust.
+
+	* src/io/pnm_read.hxx: Allow loading ppm files as xyz<int_u8> images.
+	* src/io/pnm_write.hxx: Allow saveing xyz<int_u8> images in ppm files.
+
+2001-11-14  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/value/cast.hh (bound): New function.
+	* src/convert/bound.hh: Use it.
+
+2001-11-14  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/compose.hh: New file.
+	* src/basics.hh: Include it.
+	* src/Makefile.am (nobase_oln_HEADERS): Add it.
+
+	* src/convert/conversion.hh (internal::_compconv1,
+	internal::_compconv2): Copy _conv and _func, don't reference them.
+
+2001-11-14  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/value/int_u.hh (operator<<): Cast to unsigned before
+	printing values.
+
+	* demo/tour.cc (main): Document high level operators.
+	Show a use of utils::f_moment, traverse, convert::bound, and apply.
+
+	* src/core/traverse.hh (traverse, traverse2): Take the functor
+	argument before any image, for similarity with apply and apply2.
+
+	* src/utils/stat.hh: New file.
+	* src/Makefile.am (nobase_oln_HEADERS): Add it.
+
+2001-11-14  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/conversion.hh: Delete and replace by ...
+	* src/convert/basics.hh, src/convert/bound.hh,
+	src/convert/conversion.hh, src/convert/force.hh: Those files.
+	* src/Makefile.am (nobase_oln_HEADERS): Adjust.
+	* src/morpho/top_hat.hh, ../src/morpho/gradient.hh,
+	../src/morpho/gradient.hh: Adjust includes.
+
+2001-11-14  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/value/vec.hh: Use a bare array (static) instead of an
+	std::vector to store the values.
+
+2001-11-13  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/convol/fast_gaussian.hxx (_gaussian<3>): Typos.
+
+2001-11-13  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/fold.hh: New file.
+	* src/basics.hh: Include it.
+	* src/Makefile.am (nobase_oln_HEADERS): Add it.
+
+	* src/core/macros.hh (for_all_remaining): Rewrite to not use
+	the result of ++p.
+
+2001-11-13  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/border3d.hh: Typos.
+	* src/core/dpoint3d.hh: Typo.
+	* src/core/point3d.hh: Typo.
+
+2001-11-13  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/fill.hh: New file. (Called assign.hh in Milena.)
+	* src/Makefile.am (nobase_oln_HEADERS): Add it.
+	* demo/morpholena.cc: Use fill().
+	* src/morpho/watershed.hxx (_soille_watershed): Use fill().
+
+2001-11-13  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/morpho/fast_morpho.hxx (fast_morpho): Don't use Exact(E)
+	when E is known to be exact.
+
+2001-11-13  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/morpho/closing.inc, src/morpho/gradient.inc,
+	src/morpho/hit_or_miss.inc, src/morpho/laplacian.inc,
+	src/morpho/opening.inc, src/morpho/top_hat.inc: New files.
+	* src/Makefile.am (nobase_oln_HEADERS): Add them.
+	* src/morpho/closing.hh, src/morpho/gradient.hh,
+	src/morpho/hit_or_miss.hh, src/morpho/laplacian.hh,
+	src/morpho/opening.hh, src/morpho/top_hat.hh: Move all code the
+	above `*.inc' files, then include them twice in `morpho::'
+	and `morpho::fast::'.
+	* demo/morpholena.cc: Use the new morpho::fast:: functions.
+
+2001-11-13  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/morpho/fast_morpho.hxx: More comments.
+
+2001-11-12  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/utils/histogram.hh, src/morpho/fast_morpho.hh,
+	src/morpho/fast_morpho.hxx: New files, from Milena, adjusted to work
+	on n-dimensional images.
+	* src/Makefile.am (nobase_oln_HEADERS): Add them.
+	* src/morpho/dilation.hh (morpho::fast::dilation): New.
+	* src/morpho/erosion.hh (morpho::fast::erosion): New.
+	* demo/morpholena.cc: Call morpho::fast::dilation() and
+	morpho::fast::erosion().
+
+	* src/core/image.hh (Value, Iter, Point, DPoint): Use Exact.
+
+2001-11-12  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/Makefile.am (nobase_oln_HEADERS): Add core/imagend_size.hh.
+	* src/core/imagend_size.hh: New file.
+	* src/core/image1d_size.hh, src/core/image2d_size.hh,
+	src/core/image3d_size.hh: Inherit from imagend_size<> and simplify.
+
+2001-11-12  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/window1d.hh (win_c2p): Typo.
+	* src/core/pointnd.hh (operator==): Thinko.
+
+2001-11-12  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/Makefile.am (nobase_oln_HEADERS): Add core/dpointnd.hh.
+	* src/core/dpointnd.hh: New file.
+	* src/core/dpoint1d.hh, src/core/dpoint2d.hh, src/core/dpoint3d.hh:
+	Inherit from dpointnd<> and simplify.
+
+2001-11-08  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* configure.ac: Bump version to 0.1c.
+
+2001-11-08  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* configure.ac: Bump version to 0.1b.
+	* NEWS: Update.
+
+2001-11-08  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	Sometime, the conversion of an iterator to a point (or dpoint),
+	cannot be applied implicitely by the compiler.  For instance this
+	happens when an iterator is used as a argument for a template
+	function that expect a point<T> value, one need to cast the
+	iterator into a point to help the compiler.  Because this cast is
+	somewhat ugly, we add a cur() method, which just return the
+	current point or dpoitn.
+
+	* src/core/winiter.hh, src/core/winneighb.hh,
+	src/core/internal/iter1d.hh, src/core/internal/iter2d.hh,
+	src/core/internal/iter3d.hh: Add the cur() method.
+
+2001-11-08  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/convol/fast_gaussian.hxx (_gaussian, _gaussian_common):
+	Don't take a sigma parameter.
+	(_gaussian_common, gaussian) Don't pass it.
+
+2001-11-08  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	The i/o interface functions are oln::load() and oln::save(),
+	remove all other aliases.
+
+	* src/io/base.hh (read, write): Remove.
+	* src/io/pnm.hh (read_pnm, save_pnm): Remove.
+	* demo/morpholena.cc: Adjust.
+	* demo/tour.cc: Adjust.
+
+2001-11-08  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/image2d.hh: Define constructor and assignment operator
+	for i/o.
+	* src/io/all.hh: Rename as ...
+	* src/io/basics.hh. ... this.
+	* src/Makefile.am (nobase_oln_HEADERS): Adjust.
+	* src/basics2d.hh: Adjust.
+
+2001-11-08  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/io/pnm_write.hxx (pnm_write_header): Take a U parameter for
+	U::max().  Adjust callers.
+
+2001-11-08  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/io/pnm_read.hxx
+	(reader<ReadPnmPlain, image2d<int_u<24> > >,
+	reader<ReadPnmRaw, image2d<int_u<24> > >): Rename as ...
+	(reader<ReadPnmPlain, image2d<rgb<int_u8> > >,
+	reader<ReadPnmRaw, image2d<rgb<int_u8> > >): ... these and
+	adjust for color.
+	* src/io/pnm_write
+	(writer<ReadPnmPlain, image2d<int_u<24> > >,
+	write<ReadPnmRaw, image2d<int_u<24> > >): Rename as ...
+	(writer<ReadPnmPlain, image2d<rgb<int_u8> > >,
+	writer<ReadPnmRaw, image2d<rgb<int_u8> > >): ... these and
+	adjust for color.
+
+2001-11-08  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/value/vec.hh: Right the definitions of -= and *=.
+	* src/value/predefs.hh: Declare rgb<T>.
+	* src/value/rgb.hh: New file.
+	* src/value/all.hh: Include it.
+	* src/Makefile.in (nobase_oln_HEADERS): Add it.
+
+2001-11-07  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	Fix all -pedantic errors.
+
+	* demo/Makefile.am (AM_CXXFLAGS): Add -ansi -pedantic.
+	* src/io/pnm_write.hxx (writer): Use Iter.
+	* src/arith/internal/opdecls.hh
+	(_OLN_ARITH_DECLARE_BINRECVAL_FUNCTOR,
+	_OLN_ARITH_DECLARE_BINRECVALCST_FUNCTOR): Define self and prepend
+	`typename self::' to inherited types.
+	* src/core/conversion.hh (_compconv1, _compconv2): Likewise.
+	* src/level/invert.hh (f_invert): Likewise.
+
+2001-11-07  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/conversion.hh (conversion_to_type,
+	conversion_from_type_to_type): New classes.
+	(force, bound): Inherit from conversion_to_type and simplify.
+
+2001-11-07  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* convol/fast_gaussian.hh, convol/fast_gaussian.hxx,
+	convol/fast_gaussian_coefficient.hh: New files, (im)ported from
+	Milena.
+	* src/Makefile.am (nobase_oln_HEADERS): Add them.
+
+2001-11-06  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/type.hh (to_exact): Declare inline.
+	* src/morpho/watershed.hh (watershed_seg, watershed_seg_or): Don't
+	inline.
+	(watershed_con): New function.
+	* src/value/cast.hh (force): Declare inline.
+	* src/morpho/watershed.hxx (watershed_seg_sort): Move ...
+	(internal::_watershed_seg_sort): ... here.
+	(watershed_seg): Split into ...
+	(internal::_watershed_seg_point_handler,
+	internal::_soille_watershed,
+	_OLN_MORPHO_DECLARE_SOILLE_WATERSHED_CONSTS): These functions.
+	(watershed_con, internal::_watershed_con_point_handler): New functions.
+
+2001-11-02  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* demo/tour.cc (main): Typo.
+
+2001-11-02  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/Makefile.am (nobase_oln_HEADERS): Add core/pointnd.hh.
+	* src/core/pointnd.hh: New file.
+	* src/core/point1d.hh, src/core/point2d.hh, src/core/point3d.hh:
+	Inherit from pointnd<> and simplify.
+
+2001-11-02  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* configure.ac: Bump version to 0.1a.
+
+2001-11-02  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* THANKS: Oops... add Yann.
+
+2001-11-01  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	Version 0.1.
+
+2001-11-01  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* README: Add a note about compiling the demo/ files manually.
+	* NEWS: New file.
+
+2001-11-01  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* configure.ac: Use olena-bugs@lrde.epita.fr
+	* README, COPYING: New files.
+
+2001-11-01  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* demo/erodelena.cc: Rename as ...
+	* demo/morpholena.cc: ... this.
+	* demo/Makefile.am: Adjust.
+
+2001-11-01  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* demo/tour.cc (main): Save watershaded lena as output.pgm.
+
+2001-11-01  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/image.hh (Point, DPoint): Define.
+	* src/core/winneighb.hh, src/morpho/stat.hh,
+	src/morpho/watershed.hxx: Use Point and DPoint.
+
+2001-11-01  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/basics2d.hh: Include io/pnm.hh.
+	* demo/tour.cc, demo/erodelena.cc: Adjust.
+
+2001-11-01  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/conversion.hh (bound): New conversion.
+	(compconv1): Typo.
+
+2001-11-01  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/conversion.hh (conv): Rename this namespace as ...
+	(convert): ... this.
+	* src/arith/internal/opdecls.hh, src/core/conversion.hh,
+	src/morpho/gradient.hh, src/morpho/hit_or_miss.hh,
+	src/morpho/laplacian.hh, src/morpho/top_hat.hh: Adjust.
+
+2001-11-01  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/image.hh (Iter): New macro.
+	* src/core/winneighb.hh (Neighb): New macro.
+	* src/core/apply.hh, src/core/traverse.hh, src/morpho/dilation.hh,
+	src/morpho/erosion.hh, src/morpho/stat.hh,
+	src/morpho/watershed.hxx: Use Iter and Neighb.
+
+2001-11-01  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/macros.hh (for_all_remaining): New.
+	* src/morpho/stat.hh: Mordenize, use for_all_remaining and for_all.
+
+2001-11-01  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/border1d.hh (internal::_replicate_borders): New.
+	(internal::_mirror_borders): New.
+	* src/core/border2d.hh (internal::_replicate_borders): New.
+	(internal::_mirror_borders): New.
+	* src/core/border3d.hh (internal::_replicate_borders): New.
+	(internal::_mirror_borders): New.
+	* src/core/border.hh (adapt_copy): Use internal::_replicate_borders.
+	(adapt_mirror): Use internal::_mirror_borders.
+
+2001-11-01  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* THANKS: New file.
+	* src/basics.hh, src/basics1d.hh, src/basics2d.hh,
+	src/basics3d.hh, src/arith/logic.hh, src/arith/ops.hh,
+	src/arith/internal/opdecls.hh, src/core/accum.hh,
+	src/core/apply.hh, src/core/bkd_iter1d.hh, src/core/bkd_iter2d.hh,
+	src/core/bkd_iter3d.hh, src/core/border.hh, src/core/border1d.hh,
+	src/core/border2d.hh, src/core/border3d.hh, src/core/contract.hh,
+	src/core/conversion.hh, src/core/coord.hh, src/core/dpoint.hh,
+	src/core/dpoint1d.hh, src/core/dpoint1d.hxx, src/core/dpoint2d.hh,
+	src/core/dpoint2d.hxx, src/core/dpoint3d.hh,
+	src/core/dpoint3d.hxx, src/core/fwd_iter1d.hh,
+	src/core/fwd_iter2d.hh, src/core/fwd_iter3d.hh, src/core/image.hh,
+	src/core/image1d.hh, src/core/image1d_size.hh,
+	src/core/image2d.hh, src/core/image2d_size.hh,
+	src/core/image3d.hh, src/core/image3d_size.hh,
+	src/core/image_size.hh, src/core/iter.hh, src/core/macros.hh,
+	src/core/neighborhood.hh, src/core/neighborhood1d.hh,
+	src/core/neighborhood2d.hh, src/core/neighborhood3d.hh,
+	src/core/objs.hh, src/core/point.hh, src/core/point1d.hh,
+	src/core/point1d.hxx, src/core/point2d.hh, src/core/point2d.hxx,
+	src/core/point3d.hh, src/core/point3d.hxx, src/core/pred.hh,
+	src/core/pred_image.hh, src/core/regular_image.hh,
+	src/core/structelt.hh, src/core/traverse.hh, src/core/type.hh,
+	src/core/w_window.hh, src/core/w_window1d.hh,
+	src/core/w_window2d.hh, src/core/w_window3d.hh,
+	src/core/window.hh, src/core/window1d.hh, src/core/window2d.hh,
+	src/core/window3d.hh, src/core/winiter.hh, src/core/winneighb.hh,
+	src/core/internal/fake.hh, src/core/internal/image1d.hh,
+	src/core/internal/image1d_data.hh, src/core/internal/image2d.hh,
+	src/core/internal/image2d_data.hh, src/core/internal/image3d.hh,
+	src/core/internal/image3d_data.hh, src/core/internal/iter1d.hh,
+	src/core/internal/iter2d.hh, src/core/internal/iter3d.hh,
+	src/core/internal/neighborhood.hh, src/core/internal/objs.hxx,
+	src/core/internal/real_image1d.hh,
+	src/core/internal/real_image2d.hh,
+	src/core/internal/real_image3d.hh,
+	src/core/internal/rec_operable.hh, src/core/internal/w_window.hh,
+	src/core/internal/window.hh, src/io/all.hh, src/io/base.hh,
+	src/io/base.hxx, src/io/file.hh, src/io/pnm.hh,
+	src/io/pnm_read.hxx, src/io/pnm_write.hxx, src/io/readable.hh,
+	src/level/invert.hh, src/math/macros.hh, src/meta/array.hh,
+	src/meta/array.hxx, src/meta/basics.hh, src/meta/cmp.hh,
+	src/meta/control.hh, src/meta/logic.hh, src/meta/ucmp.hh,
+	src/meta/ufuncs.hh, src/morpho/closing.hh, src/morpho/dilation.hh,
+	src/morpho/erosion.hh, src/morpho/gradient.hh,
+	src/morpho/hit_or_miss.hh, src/morpho/laplacian.hh,
+	src/morpho/minmax.hh, src/morpho/opening.hh, src/morpho/stat.hh,
+	src/morpho/top_hat.hh, src/morpho/watershed.hh,
+	src/morpho/watershed.hxx, src/value/all.hh, src/value/bin.hh,
+	src/value/built_in.hh, src/value/cast.hh, src/value/cplx.hh,
+	src/value/debug.hh, src/value/float_p.hh, src/value/int_s.hh,
+	src/value/int_u.hh, src/value/op_traits.hh, src/value/ops.hh,
+	src/value/predefs.hh, src/value/rec_float.hh,
+	src/value/rec_int.hh, src/value/rec_value.hh, src/value/to_oln.hh,
+	src/value/vec.hh:  Add license and copyright.
+
+2001-10-31  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* Makefile.am, demo/Makefile.am, src/Makefile.am, configure.ac:
+	New files.
+
+2001-10-31  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/arith/internal/opdecls.hh (_OLN_ARITH_DECLARE_BINOP_PROCS):
+	Tweak to work around an ICE from gcc-2.95.x.
+	* src/core/apply.hh: Remove dead code.
+
+2001-10-31  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/point3d.hxx (point_ref): Typo in class name.
+	* src/core/point1d.hxx (point_ref): Likewise.
+
+2001-10-31  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/morpho/dilation.hh, src/morpho/erosion.hh,
+	src/morpho/hit_or_miss.hh: Mordernize, use for_all and Concrete
+	where appropriate.
+
+2001-10-31  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/neighborhood1d.hh, src/core/neighborhood2d.hh,
+	src/core/neighborhood3d.hh: Adjust _neighborhood inheritence.
+	Define neighb.
+	* src/core/point1d.hh, src/core/point1d.hxx,
+	src/core/point2d.hh, src/core/point2d.hxx,
+	src/core/point3d.hh, src/core/point3d.hxx: Define point_ref().
+	* src/core/w_window1d.hh, src/core/w_window2d.hh,
+	src/core/w_window3d.hh: Adjust _w_window inheritence.
+	Define neighb.
+	* src/core/window1d.hh, src/core/window2d.hh,
+	src/core/window3d.hh: Adjust w_window inheritence.
+	Define neighb.
+	* src/core/winiter.hh (name): New.
+	* src/core/winneighb.hh: New file.
+	* src/core/internal/iter1d.hh, src/core/internal/iter2d.hh,
+	src/core/internal/iter3d.hh: Define point_ref().
+	* src/core/internal/neighborhood.hh: Take dimension as template
+	parameter; adjust _window inheritence.
+	* src/core/internal/w_window.hh, src/core/internal/window.hh:
+	Take the dimension as template parameter; use it to declare dim,
+	point and dpoint.
+	* src/morpho/watershed.hxx (watershed_seg_or): Adjust to use
+	neighb-style iterators.
+
+2001-10-31  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* demo/tour.cc: New file.
+
+	* src/core/border1d.hh: Typos.
+	* src/core/neighborhood1d.hh (neighb_c2_only): Rename as ...
+	(neighb_c2) ... this.
+	(neighb_c2p): Delete.
+	(mk_neighb_segment): Don't add 0.
+	* src/core/neighborhood2d.hh (neighb_c4_only, neighb_c8_only):
+	Rename as ...
+	(neighb_c4, neighb_c8): ... these.
+	(neighb_c4p, neighb_c8p): Delete.
+	(mk_neighb_rectangle): Don't add (0,0).
+	* src/core/neighborhood3d.hh (neighb_c6_only, neighb_c18_only,
+	neighb_c26_only): Rename as ..
+	(neighb_c6, neighb_c18, neighb_c26): ... these.
+	(neighb_c6p, neighb_c18p, neighb_c26p): Delete.
+	(mk_neighb_block): Don't add (0,0,0).
+	* src/morpho/watershed.hxx (watershed_seg): cast::force the
+	initial constants.
+
+	* src/value/debug.hh (internal::typename_of_var,
+	internal::typename_of): Move ...
+	(typename_of_var, typename_of): ... here.
+	* src/value/cplx.hh: Adjust.
+	* src/value/vec.hh: Adjust.
+
+2001-10-31  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/point.hh (_PointForDim): Typedef ret, not point.
+	* src/core/dpoint.hh (_DPointForDim): Typedef ret, not dpoint.
+	* src/core/image_size.hh (_ImageSizeForDim): Typedef ret, not
+	image_size.
+	* src/core/regular_image.hh: Adjust.
+
+2001-10-31  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/image_size.hh (image_size_for_dim, _ImageSizeForDim): New.
+	* src/core/regular_image.hh: Use it.
+	* src/core/image1d_size.hh, src/core/image2d_size.hh,
+	src/core/image3d_size.hh: Call _ImageSizeForDim.
+	* src/core/internal/image1d.hh, src/core/internal/image2d.hh,
+	src/core/internal/image3d.hh: Don't define image_size (inherited).
+
+2001-10-31  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/dpoint.hh (dpoint_for_dim, _DPointForDim): New.
+	* src/core/point.hh (point_for_dim, _PointForDim): New.
+	* src/core/point1d.hh, src/core/point2d.hh, src/core/point3d.hh:
+	Call _PointForDim.
+	* src/core/dpoint1d.hh, src/core/dpoint2d.hh, src/core/dpoint3d.hh:
+	Call _DPointForDim.
+	* src/core/regular_image.hh: New file.
+	* src/core/internal/image1d.hh, src/core/internal/image2d.hh,
+	src/core/internal/image3d.hh: Inherit from regular_image.  Don't
+	define dim, point, and dpoint (inherited).
+
+2001-10-31  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/internal/real_image1d.hh,
+	src/core/internal/real_image2d.hh,
+	src/core/internal/real_image3d.hh: Initialize base class in the
+	copy constructor.
+
+	* src/core/image1d.hh, src/core/image2d.hh, src/core/image3d.hh:
+	Initialize the pred_image base class from the copy constructor of
+	binary images.
+
+2001-10-30  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/image.hh (Concrete): New macro.
+	* src/arith/internal/opdecls.hh, src/level/invert.hh,
+	src/morpho/closing.hh, src/morpho/dilation.hh,
+	src/morpho/erosion.hh, src/morpho/gradient.hh,
+	src/morpho/hit_or_miss.hh, src/morpho/laplacian.hh,
+	src/morpho/opening.hh, src/morpho/stat.hh, src/morpho/top_hat.hh,
+	src/morpho/watershed.hh, src/morpho/watershed.hxx: Use Concrete
+	instead of Exact where appropriate.  Use I instead of T for image
+	template parameters.
+
+2001-10-30  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/morpho/watershed.hh, src/morpho/watershed.hxx
+	(watershed_seg_or): New function.
+
+2001-10-30  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/apply.hh, src/core/macros.hh, src/core/traverse.hh,
+	src/morpho/watershed.hxx: s/foreach/for_all/g.
+
+2001-10-29  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/morpho/watershed.hh, src/morpho/watershed.hxx: New files,
+	from Milena.  Adjusted to take type of output image as argument,
+	work on unsigned images, wrap labels if needed.
+
+2001-10-29  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/internal/window.hh (_window): Have the base class
+	selectable through a Window parameter.
+	* src/core/neighborhood.hh: Delete.
+	* src/core/neighborhood.hh, src/core/neighborhood1d.hh,
+	src/core/neighborhood2d.hh, src/core/neighborhood3d.hh,
+	src/core/internal/neighborhood.hh: New files.
+	* src/basics.hh, src/basics1d.hh, src/basics2d.hh,
+	src/basics3d.hh: Include them.
+
+	* src/core/border.hh (adapt_width): Pass copy_border to set_width.
+
+2001-10-29  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/bkd_iter3d.hh, src/core/border3d.hh,
+	src/core/dpoint3d.hh, src/core/dpoint3d.hxx,
+	src/core/fwd_iter3d.hh, src/core/image3d.hh,
+	src/core/image3d_size.hh, src/core/point3d.hh,
+	src/core/point3d.hxx, src/core/w_window3d.hh,
+	src/core/window3d.hh, src/core/internal/image3d.hh,
+	src/core/internal/image3d_data.hh, src/core/internal/iter3d.hh,
+	src/core/internal/real_image3d.hh: s/ZZZ/slice/g.
+
+2001-10-26  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/basics1d.hh, src/core/bkd_iter1d.hh, src/core/border1d.hh,
+	src/core/dpoint1d.hh, src/core/dpoint1d.hxx,
+	src/core/fwd_iter1d.hh, src/core/image1d.hh,
+	src/core/image1d_size.hh, src/core/point1d.hh,
+	src/core/point1d.hxx, src/core/w_window1d.hh,
+	src/core/window1d.hh, src/core/internal/image1d.hh,
+	src/core/internal/image1d_data.hh, src/core/internal/iter1d.hh,
+	src/core/internal/real_image1d.hh: New files.
+
+2001-10-26  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/level/invert.hh, src/morpho/hit_and_miss.hh: New files,
+	adapted from Milena, as usual.
+	* src/morpho/minmax.hh: New file, to ease the writting of
+	hit_and_miss.
+
+	* src/arith/internal/opdecls.hh (_OLN_ARITH_DECLARE_UNOP_PROCS,
+	_OLN_ARITH_DECLARE_SEMIGENERIC_BINOP_PROCS): New macros.
+	(_OLN_ARITH_DECLARE_NONGENERICUNNOP_PROCS): Rename as...
+	(_OLN_ARITH_DECLARE_NONGENERICUNOP_PROCS): ... this.
+	* src/arith/logic.hh: Adjust.
+
+2001-10-25  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/morpho/gradient.hh, src/morpho/top_hat.hh: New files,
+	adapted from Milena, as usual.
+
+2001-10-25  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/conversion.hh: More doc.
+
+2001-10-25  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/morpho/laplacian.hh: New file, adapted from Milena, as usual.
+
+2001-10-25  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/morpho/dilation.hh, src/morpho/closing.hh,
+	src/morpho/opening.hh: New files, from Milena
+	"mln-R-v1.42-fixed2", adapted to Olena, and without the "fast
+	morpho" stuff.
+	* src/core/w_window2d.hh, src/core/w_window3d.hh,
+	src/core/window2d.hh, src/core/window3d.hh: Add operator-().
+	* src/core/internal/w_window.hh: Add sym().
+	* src/morpho/stat.hh (min): Really call min, not max.
+
+2001-10-24  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/accum.hh: New file.
+	* src/core/w_window2d.hh, src/core/w_window3d.hh,
+	src/core/window2d.hh, src/core/window3d.hh: Compute delta using
+	max_accumulator from accum.hh.
+
+	* src/morpho/erosion.hh, src/morpho/stat.hh: New files, from
+	Milena "mln-R-v1.42-fixed2", adapted to Olena, and without
+	the "fast morpho" stuff.
+
+2001-10-24  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/io/all.hh, src/io/base.hh, src/io/base.hxx, src/io/file.hh,
+	src/io/pnm.hh, src/io/pnm_read.hxx, src/io/pnm_write.hxx,
+	src/io/readable.hh: New files, from Milena "mln-R-v1.42-fixed2",
+	with GZip handling removed, and slight changes to interface with
+	low-level value types.
+
+2001-10-24  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/image2d.hh: Fix ambiguous calls to border().
+
+	* src/core/border2d.hh: Delete.
+	* src/core/border.hh, src/core/border2d.hh, src/core/border3d.hh:
+	New files.
+	* src/basics.hh, src/basics2d.hh, src/basics3d.hh: Include them.
+
+2001-10-23  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/w_window2d.hh: Build from meta::array2d too.
+
+2001-10-23  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/internal/rec_window.hh: Move ...
+	* src/core/old/rec_window.hh: ... here.
+
+2001-10-23  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/w_window.hh: Delete.
+	* src/core/w_window.hh, src/core/w_window2d.hh,
+	src/core/w_window3d.hh, src/core/internal/w_window.hh: New files.
+	* src/basics.hh, src/basics2d.hh, src/basics3d.hh: Include them.
+
+2001-10-23  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/basics3d.hh: Include core/window3d.hh.
+	* src/core/window3d.hh: New file.
+	* src/core/internal/window.hh: Typos.
+
+2001-10-23  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/basics.hh: Include core/window.hh.
+	* src/basics2d.hh: Include core/window2d.hh.
+	* src/core/dpoint2d.hh, src/core/dpoint2d.hxx,
+	src/core/dpoint3d.hh, src/core/dpoint3d.hxx
+	(is_centered): New method.
+	* src/core/window.hh: Delete.
+	* src/core/structelt.hh, src/core/window.hh, src/core/window2d.hh,
+	src/core/winiter.hh, src/core/internal/window.hh: New files.
+
+2001-10-22  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* core/bkd_iter3d.hh, core/fwd_iter3d.hh,
+	src/core/internal/iter3d.hh: New files.
+	* src/basics3d.hh: Include them.
+	* src/core/internal/image3d_data.hh: Typos.
+
+2001-10-22  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/dpoint3d.hh, src/basics3d.hh, src/core/dpoint3d.hxx,
+	src/core/image3d.hh, src/core/image3d_size.hh,
+	src/core/point3d.hh, src/core/point3d.hxx,
+	src/core/internal/image3d.hh, src/core/internal/image3d_data.hh,
+	src/core/internal/real_image3d.hh: New files.
+
+2001-10-22  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/arith/internal/opdecls.hh: Use std:: where appropriate.
+	Don't use ## before < or >.
+	* src/core/conversion.hh: Use std:: where appropriate.
+
+2001-10-22  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/arith/internal/opdecls.hh: New file.
+	* src/arith/logic.hh: Rewrite using the macros from opdecls.
+	(This also rename f_or to f_logic_or, etc. to be consistant with
+	the procedure names.)
+	* src/arith/ops.hh (_OLN_ARITH_DECLARE_BINOP_FUNCTORS,
+	_OLN_ARITH_DECLARE_BINOP_PROCS): Move to internal/opdecls.hh.
+
+2001-10-22  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/basics.hh: Include core/macros.hh.
+	* src/core/macros.hh: New file.
+	* src/code/apply.hh (apply, apply2, apply_self, apply2_self): Use
+	foreach.
+	* src/core/traverse.hh (traverse, traverse2): Likewise.
+
+2001-10-19  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/conversion.hh: New file.
+	* src/arith/ops.hh: Rewrite entirely, using the new conversion
+	functions and defining functors as STL binary functions.
+	* src/core/apply.hh: Rewrite entirely, using the new conversion
+	functions.  Comment out some old unrewritten functions, probably
+	useless.
+	* src/core/type.hh (Exact): New macro.
+	(Exact_ptr, Exact_cptr, Exact_ref, Exact_cref): Use Exact.
+	(Value): Move to ..
+	* src/core/image.hh (Value): ... here.
+	* src/math/macros.hh: Comment out the plus_abs function family
+	for now.  This need to go elsewhere.
+	* src/value/int_s.hh: Remove the 'FIXED' useless comments.
+	* src/math/macros.hh (DEFINE_OPERATOR_DEFAULT_PROPERTIES): Change
+	to allow the definition of ...
+	(operator_min_traits, operator_max_traits): these new traits.
+
+2001-10-19  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/type.hh (exact<T*>): The exact type of a pointer is a
+	pointer.
+
+2001-10-19  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/arith/ops.hh: Document issues with overload resolution of plus<>.
+
+2001-10-18  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/arith/logic.hh, src/math/macros.hh: New files, imported from
+	Milena "mln-R-v1.42-fixed2" as-is, with naming adjustements only.
+	* src/arith/ops.hh: New file, from Milena "mln-R-v1.42-fixed2",
+	with extensive changes in declarations (use mute<> and Value()).
+	* src/core/apply.hh, src/core/traverse.hh: Use mute<> and
+	Value() where appropriate.
+	* src/core/type.hh (Value): New macro.
+
+2001-10-18  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/apply.hh (apply, apply2, apply_self, apply2_self):
+	Adjust to work on exact type, and deduce iterators from images.
+	* src/core/traverse.hh (traverse, traverse2): Likewise.
+
+	* src/basics.hh: Include core/apply.hh and core/traverse.hh.
+
+2001-10-18  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/traverse.hh (apply, apply2, apply_self, apply2_self):
+	Move to ...
+	* src/core/apply.hh: ... this new file.
+
+2001-10-18  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/value/bin.hh, src/value/cplx.hh, src/value/float_p.hh,
+	src/value/int_s.hh, src/value/int_u.hh, src/value/vec.hh:
+	Define the 'name' function as a static member of each class.
+	* src/value/debug.hh: Suppress specialization of debug_type
+	for each of the above type.  Have the default debug_type<T>::name()
+	call T::name() instead.
+
+	* src/value/op_traits.hh: Include meta/basics.hh.
+
+2001-10-18  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/meta/array.hh, src/meta/cmp.hh: Merge with
+	Milena "mln-R-v1.42-fixed2".
+
+2001-10-18  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/contract.hh, src/core/neighborhood.hh,
+	src/core/traverse.hh, src/core/w_window.hh, src/core/window.hh,
+	src/core/internal/rec_operable.hh,
+	src/core/internal/rec_window.hh: Adjust naming for Olena.
+
+2001-10-18  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/border2d.hh, src/core/coord.hh, src/core/dpoint2d.hh,
+	src/core/dpoint2d.hxx, src/core/image2d.hh,
+	src/core/image2d_size.hh, src/core/neighborhood.hh,
+	src/core/point2d.hh, src/core/point2d.hxx, src/core/w_window.hh,
+	src/core/window.hh, src/core/internal/image2d.hh,
+	src/core/internal/image2d_data.hh, src/core/internal/iter2d.hh,
+	src/core/internal/real_image2d.hh,
+	src/core/internal/rec_window.hh, src/core/old/image2d.hxx,
+	src/core/old/image2d_bin.hh, src/core/old/image2d_bin.hxx,
+	src/value/vec.hh: Rename coord2d as coord.
+
+2001-10-18  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/value/built_in.hh, src/value/cplx.hh, src/value/debug.hh,
+	src/value/float_p.hh, src/value/int_s.hh, src/value/int_u.hh,
+	src/value/op_traits.hh, src/value/ops.hh, src/value/predefs.hh,
+	src/value/rec_value.hh: Merge with Milena "mln-R-v1.42-fixed2".

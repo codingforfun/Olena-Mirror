@@ -1,0 +1,105 @@
+This is the second public release of Olena, a generic image processing
+library in C++.
+
+This release accompanies the following article
+
+  Generic Implementation of Morphological Image Operators,
+  Jérôme Darbon, Thierry Géraud, and Alexandre Duret-Lutz,
+  submitted to International Symposium On Mathematical Morphology VI
+  (ISMM 2002), April 3-5, 2002, Sydney, Australia.
+
+
+Olena is a project developed by the EPITA Research and Development
+Laboratory (www.lrde.epita.fr) since 1997.  We did numerous prototypes
+and throw-away experiments before settling into the kind of
+programming paradigm which is finally here.
+
+This version of Olena has been built in a few weeks (i.e., in a
+hurry).  Most of the operators have been translated from the sources
+of Milena, an image processing library which works only on 2D images
+(Milena stands for "mini-Olena") and which is not publicly available.
+
+Therefore this code is still experimental and not very polished.
+Especially there is no documentation, sorry.  The file demo/tour.cc
+attempts to introduce you to the basics of Olena.  For the rest, we're
+afraid you will have to dig the code.
+
+Please direct any question or comments to <olena@lrde.epita.fr>,
+or <olena-bugs@lrde.epita.fr>.
+
+----------------------------------------------------------------------
+
+This code has been tested with GCC 2.95.3 and GCC 3.0.2.
+
+To compile the two programs in the demo/ directory, run
+
+  ./configure
+  make
+
+If you want to install the headers files (the library IS the set
+of headers, there is no binary) on your system, do
+
+  make install
+
+this will install the files in /usr/local/include/oln.
+You can tune the '/usr/local/include' part of the path
+by passing an --includedir option to configure. For
+instance
+
+  ./configure --includedir=/foo/bar
+  make install
+
+will install the files in /foo/bar/oln.
+
+
+It is also easy to build the demo/ files manually, just include
+the src/ directory in the include search path of the compiler.
+
+  cd demo
+  g++ -I../src -Wall -O2 tour.cc
+
+With GCC 2.95.x, it's likely you will need to allow the compiler
+to instantiate templates to a greater depth than the default (17),
+using an option like -ftemplate-depth-50.
+
+----------------------------------------------------------------------
+
+Further information about Olena, can be found into the following
+related papers:
+
+* Thierry Géraud, Yoann Fabre, Dimitri Papadopoulos-Orfanos, and
+  Jean-François Mangin.  Vers une réutilisabilité totale des
+  algorithmes de traitement d'images.  In the Proceedings of the 17th
+  Symposium GRETSI on Signal and Image Processing, vol. 2, pages
+  331-334, Vannes, France, September 1999.  In French (available in
+  english as Technical Report 9902: Towards a Total Reusability of
+  Image Processing Algorithms).
+
+* Thierry Géraud, Yoann Fabre, Alexandre Duret-Lutz, Dimitri
+  Papadopoulos-Orfanos, and Jean-François Mangin.  Obtaining
+  Genericity for Image Processing and Pattern Recognition Algorithms.
+  In the Proceedings of the 15th International Conference on Pattern
+  Recognition (ICPR'2000), IEEE Computer Society, vol. 4, pages
+  816-819, Barcelona, Spain, September 2000.
+
+* Alexandre Duret-Lutz. Olena: a Component-Based Platform for Image
+  Processing, mixing Generic, Generative and OO Programming. In the
+  Proceedings of the 2nd International Symposium on Generative and
+  Component-Based Software Engineering (GCSE 2000), Young Researchers
+  Workshop (published in "Net.ObjectDays2000"; ISBN 3-89683-932-2),
+  pages 653-659, Erfurt, Germany, October 2000.
+
+* Alexandre Duret-Lutz, Thierry Géraud, and Akim Demaille. Generic
+  Design Patterns in C++. In the Proceedings of the 6th USENIX
+  Conference on Object-Oriented Technologies and Systems (COOTS'2001),
+  pages 189-202, San Antonio, Texas, USA, January-February 2001.
+
+* Thierry Géraud, Yoann Fabre, and Alexandre Duret-Lutz. Applying
+  Generic Programming to Image Processing. In the Proceedings of the
+  IASTED International Conference on Applied Informatics (AI'2001) --
+  Symposium Advances in Computer Applications, ACTA Press, pages
+  577-581, Innsbruck, Austria, February 2001.
+
+
+You can download these papers and related materials from
+http://www.lrde.epita.fr/publications/.
