@@ -1,7 +1,15 @@
+2002-11-15  Akim Demaille  <akim@epita.fr>
+
+	* Makefile.am (AUTOMAKE_OPTIONS): Move to...
+	* configure.ac (AM_INIT_AUTOMAKE): here.
+	Require 1.7.1.
+	Require Autoconf 2.54.
+	USe AC_CONFIG_HEADERS, not AM_CONFIG_HEADER.
+
 2002-11-14  Jean-Sébastien Mouret  <js@lrde.epita.fr>
 
 	* utilities/morpho/morpho_template.cc: Move system includes
-	after olena's includes (for g++-2.95 compliance).	
+	after olena's includes (for g++-2.95 compliance).
 	* oln/utils/copy.hh: Add warnings and support for bin images.
 
 2002-11-13  Emmanuel Turquin  <turqui_e@epita.fr>

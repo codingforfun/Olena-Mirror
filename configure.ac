@@ -1,12 +1,12 @@
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.52])
+AC_PREREQ([2.54])
 AC_INIT([olena], [0.5], [olena-bugs@lrde.epita.fr])
 AC_CONFIG_SRCDIR([ChangeLog])
 AC_CONFIG_AUX_DIR([tools])
-AM_INIT_AUTOMAKE([no-define 1.6.2])
+AM_INIT_AUTOMAKE([1.7.1 no-define foreign dist-bzip2])
 
-AM_CONFIG_HEADER(oln/config/config.h:oln/config/config.hin)
+AC_CONFIG_HEADERS(oln/config/config.h:oln/config/config.hin)
 
 AC_PROG_CXX
 AC_PROG_RANLIB
