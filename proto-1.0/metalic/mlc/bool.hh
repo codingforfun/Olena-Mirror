@@ -34,15 +34,29 @@
 namespace mlc
 {
 
-
-  /// Specialization of mlc::value for T = bool and v = true; it provides ::ensure().
-  template <>
-  struct value <bool, true>
+  struct Boolean_value
   {
+  };
+
+  /// Specializations of mlc::value for T = bool; when v = true, ensure() is provided.
+
+  template <>
+  struct value <bool, true> : public Boolean_value
+  {
+    static const bool b   = true;
+    static const bool val = true;
     static void ensure() {}
-    static const bool ret = true;
-  private:
-    value();
+  protected:
+    value() {}
+  };
+
+  template <>
+  struct value <bool, false> : public Boolean_value
+  {
+    static const bool b   = false;
+    static const bool val = false;
+  protected:
+    value() {}
   };
 
 
@@ -51,12 +65,30 @@ namespace mlc
   typedef value<bool, false> false_type;
 
 
-  /// Class is_true<b> (provided for bkd compability).
-  template <bool b>
-  struct is_true : public value<bool, b>
+  /// Classes is_true<b> and is_false<b> (provided for bkd compability).
+
+  template <bool b> struct is_true {};
+  template <> struct is_true <true> { static void ensure() {} };
+
+  template <bool b> struct is_false {};
+  template <> struct is_false <false> { static void ensure() {} };
+
+
+
+  /// Logical unary not of a Boolean type
+
+  template <typename T>
+  struct not_ : public value<bool, !T::b>
   {
+    // FIXME: static assert here and below s.a. ~not_() { mlc_is_a(not_<T>, Boolean_value); }
   };
 
+  /// Logical binary operators between a couple of Boolean types
+
+  template <typename L, typename R> struct and_  : public value <bool, (L::b && R::b)> {};
+  template <typename L, typename R> struct or_   : public value <bool, (L::b || R::b)> {};
+  template <typename L, typename R> struct nand_ : public value <bool, (L::b && !R::b)> {}; 
+  template <typename L, typename R> struct xor_  : public value <bool, ((L::b && !R::b) || (!L::b && R::b))> {};
 
 } // end of namespace mlc
 

@@ -13,21 +13,21 @@ template <class T> class T_B : public T_A<T> {};
 template <class T>
 void foo()
 {
-  is_false<mlc_is_a(int, bool)::ret>::ensure();
-  is_true<mlc_is_a(B, A)::ret>::ensure();
-  is_true<mlc_is_a(C, A)::ret>::ensure();
-  is_false<mlc_is_a(A, B)::ret>::ensure();
+  is_false<mlc_is_a(int, bool)::val>::ensure();
+  is_true<mlc_is_a(B, A)::val>::ensure();
+  is_true<mlc_is_a(C, A)::val>::ensure();
+  is_false<mlc_is_a(A, B)::val>::ensure();
 }
 
 int main()
 {
-  is_false<mlc_is_a_(int, bool)::ret>::ensure();
-  is_true<mlc_is_a_(B, A)::ret>::ensure();
-  is_true<mlc_is_a_(C, A)::ret>::ensure();
-  is_false<mlc_is_a_(A, B)::ret>::ensure();
+  is_false<mlc_is_a_(int, bool)::val>::ensure();
+  is_true<mlc_is_a_(B, A)::val>::ensure();
+  is_true<mlc_is_a_(C, A)::val>::ensure();
+  is_false<mlc_is_a_(A, B)::val>::ensure();
 
-  is_true<mlc_is_a_(T_B<int>, T_A)::ret>::ensure();
-  is_false<mlc_is_a_(T_A<int>, T_B)::ret>::ensure();
+  is_true<mlc_is_a_(T_B<int>, T_A)::val>::ensure();
+  is_false<mlc_is_a_(T_A<int>, T_B)::val>::ensure();
 
   foo<int>();
 }

@@ -38,19 +38,30 @@
 namespace mlc
 {
 
+  namespace internal
+  {
+
+    template <bool b, typename then_type, typename else_type>
+    struct if_;
+
+    template <typename then_type, typename else_type>
+    struct if_ <true, then_type, else_type>
+    {
+      typedef then_type ret;
+    };
+    
+    template <typename then_type, typename else_type>
+    struct if_ <false, then_type, else_type>
+    {
+      typedef else_type ret;
+    };
+    
+  } // end of namespace mlc::internal
+
+
   template <typename cond_type, typename then_type, typename else_type>
-  struct if_;
-
-  template <typename then_type, typename else_type>
-  struct if_ <true_type,  then_type, else_type>
+  struct if_ : public internal::if_ < cond_type::b, then_type, else_type >
   {
-    typedef then_type ret;
-  };
-
-  template <typename then_type, typename else_type>
-  struct if_ <false_type, then_type, else_type>
-  {
-    typedef else_type ret;
   };
 
 

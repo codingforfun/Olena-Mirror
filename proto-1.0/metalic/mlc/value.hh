@@ -39,9 +39,9 @@ namespace mlc {
   template <typename T, T v>
   struct value
   {
-    static const T ret = v;
-  private:
-    value();
+    static const T val = v;
+    value() {}
+    operator T() const { return v; }
   };
 
 

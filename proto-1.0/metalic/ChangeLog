@@ -1,5 +1,13 @@
 2005-04-06  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	* mlc/bool.hh: Make clear that ::ret is not ::val.
+	* mlc/properties.hh: Likewise.
+	* mlc/if.hh: Likewise.
+	* mlc/value.hh: Likewise.
+	* tests/main/tests/is_a1: Likewise.
+
+2005-04-06  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	* mlc/properties.hh: Replace macro use by real code.
 	* mlc/cmp.hh (ensure): New method.
 
