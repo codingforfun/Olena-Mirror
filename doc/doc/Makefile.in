@@ -83,7 +83,7 @@ am__include = @am__include@
 am__quote = @am__quote@
 install_sh = @install_sh@
 info_TEXINFOS = oln-ref.texi
-oln_ref_TEXINFOS = ref-morpho.texi
+oln_ref_TEXINFOS = ref-morpho.texi ref-level.texi
 
 olnsrc = $(top_srcdir)/../src/
 
@@ -101,6 +101,7 @@ PROCESSINGGETDEFSFLAGS = \
 morpho_files = $(shell fgrep -l '/*=' \
 	         $(olnsrc)/morpho/*.hh $(olnsrc)/morpho/*.inc)
 
+level_files = $(shell fgrep -l '/*=' $(olnsrc)/level/*.hh)
 
 docdir = $(prefix)/doc/@PACKAGE@
 dvidir = $(docdir)
@@ -355,9 +356,14 @@ uninstall-am: uninstall-info-am uninstall-local
 	mostlyclean-generic mostlyclean-vti uninstall uninstall-am \
 	uninstall-info-am uninstall-local
 
+
 ref-morpho.texi: $(morpho_files) $(srcdir)/../tpl/processing.tpl
 	$(GETDEFS) $(COMMONGETDEFSFLAGS) $(PROCESSINGGETDEFSFLAGS) \
 	  $(GETDEFSFLAGS) --base-name=ref-morpho $(morpho_files)
+
+ref-level.texi: $(level_files) $(srcdir)/../tpl/processing.tpl
+	$(GETDEFS) $(COMMONGETDEFSFLAGS) $(PROCESSINGGETDEFSFLAGS) \
+	  $(GETDEFSFLAGS) --base-name=ref-level $(level_files)
 
 all-local: html ps pdf
 install-data-local: install-html install-ps install-pdf

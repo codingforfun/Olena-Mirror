@@ -123,13 +123,21 @@ worth looking at before digging the source or sending us an email
 @c ======================================================================
 @menu
 * Morphological processings::
+* Level processings::
 @end menu
 
-@node    Morphological processings,  , Processings, Processings
+@node    Morphological processings,  Level processings, Processings, Processings
 @comment node-name,     next,           previous, up
 @section Morphological processings
 
 @include ref-morpho.texi
+
+
+@node    Level processings,  , Morphological processings, Processings
+@comment node-name,     next,           previous, up
+@section Level processings
+
+@include ref-level.texi
 
 @c ======================================================================
 @node Index,  , Processings, Top

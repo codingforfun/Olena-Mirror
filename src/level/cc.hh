@@ -49,6 +49,27 @@ namespace oln {
     };
 
 
+
+
+    /*=processing frontp_connected_component
+     * ns: level
+     * what: Connected Component.
+     * arg: const image<I1>&, marker, IN, marker image
+     * arg: const neighborhood<E>&, se, IN, neighbourhood
+     * ret: typename mute<I, DestType>::ret
+     * doc: It removes the small (in area) connected components of the upper
+     * level sets of @var{input} using @var{se} as structural element. The implementation
+     * uses front propagation.
+     * see: level::connected_component
+     * ex:
+     * $ image2d<int_u8> light = load("light.pgm");
+     * $ save(level::frontp_connected_component<int_u16>(light, win_c8p()), "out.pgm");
+     * exi: light.pgm
+     * exo: out.pgm
+     * wontcompile: fixme
+     =*/
+
+
     // Number the connected components i.e label true. background(i.e
     // label false) has the label 0; in the output
     // FIXME: Should probably be turned into a class.

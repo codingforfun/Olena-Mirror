@@ -56,15 +56,13 @@ namespace oln {
       Exact_cref(I, input);
       Exact_cref(E, se);
 
-      // FIXME: not generic.
-      image2d<int_u<20> > cc = level::connected_component<int_u<20> >(input, se);
+      typename mute<_I, int_u<20> >::ret cc = level::connected_component<int_u<20> >(input, se);
       // label 0 is background
       int_u<20> max_label = 0;
-      // FIXME: not generic.
       image2d<int_u<20> >::iter p(cc);
       for_all(p)
 	if (cc[p] > max_label)
-	max_label = cc[p];
+	  max_label = cc[p];
       level::hlut_def<int_u<20> > region_area;
       for_all(p)
 	region_area.set(cc[p], cast::force<int_u<20> >(region_area(cc[p]) + 1));
@@ -74,8 +72,8 @@ namespace oln {
 	  {
 	    if (region_area(cc[p]) >= int_u<20> (area))
 	      output[p] = true;
-	  else
-	    output[p] = false;
+	    else
+	      output[p] = false;
 	  }
 	else
 	  output[p] = false;
@@ -85,6 +83,25 @@ namespace oln {
 
     // SURE VERSIONS
 
+    /*=processing sure_maxima_killer
+     * ns: level
+     * what: Maxima killer.
+     * arg: const image<I1>&, marker, IN, marker image
+     * arg: const unsigned int area, area, IN, area
+     * arg: const struct_elt<E>&, se, IN, structural element
+     * ret: Concrete(I1)
+     * doc: It removes the small (in area) connected components of the upper
+     * level sets of @var{input} using @var{se} as structual element. The implementation
+     * uses the threshold superposition principle; so it is very slow ! it works only for
+     * int_u8 images.
+     * see: level::fast_maxima_killer
+     * ex:
+     * $ image2d<int_u8> light = load("light.pgm");
+     * $ save(level::sure_maxima_killer(light, 20, win_c8p()), "out.pgm");
+     * exi: light.pgm
+     * exo: out.pgm
+     * wontcompile: fixme
+     =*/
     template<class _I, class _E>
     Concrete(_I) sure_maxima_killer(const image<_I>& _input,
 				    const unsigned int area,
@@ -92,8 +109,7 @@ namespace oln {
     {
       Exact_cref(I, input);
       Exact_cref(E, se);
-      // FIXME: not generic.
-      typedef image2d<bin> ima_bin_t;
+      typedef typename mute<_I, bin >::ret ima_bin_t;
 
       ima_bin_t* cc_level_sets = new (image2d<bin> [256]);
       for (unsigned int i=0; i <= 255; ++i)
@@ -123,6 +139,25 @@ namespace oln {
     }
 
 
+    /*=processing sure_minima_killer
+     * ns: level
+     * what: Minima killer.
+     * arg: const image<I1>&, marker, IN, marker image
+     * arg: const unsigned int area, area, IN, area
+     * arg: const struct_elt<E>&, se, IN, structural element
+     * ret: Concrete(I1)
+     * doc: It removes the small (in area) connected components of the lower
+     * level sets of @var{input} using @var{se} as structual element. The implementation
+     * uses the threshold superposition principle; so it is very slow ! it works only for
+     * int_u8 images.
+     * see: level::fast_maxima_killer
+     * ex:
+     * $ image2d<int_u8> light = load("light.pgm");
+     * $ save(level::sure_minima_killer(light, 20, win_c8p()), "out.pgm");
+     * exi: light.pgm
+     * exo: out.pgm
+     * wontcompile: fixme
+     =*/
     template<class _I, class _E>
     image2d<int_u8> sure_minima_killer(const image<_I>& _input,
 				       const unsigned int area,
@@ -216,7 +251,25 @@ namespace oln {
 
 
 
-
+    /*=processing fast_minima_killer
+     * ns: level
+     * what: Minima killer.
+     * arg: const image<I1>&, marker, IN, marker image
+     * arg: const unsigned int area, area, IN, area
+     * arg: const neighborhood<_N>&, Ng, IN, neighboorhood
+     * ret: Concrete(_I1)
+     * doc: It removes the small (in area) connected components of the lower
+     * level sets of @var{input} using @var{Ng} as neighboorhood. The implementation
+     * is based on stak. Guichard and Morel, Image iterative smoothing and PDE's. Book in preparation. p 265.
+     * see: level::sure_minima_killer
+     * ex:
+     * $ image2d<int_u8> light = load("light.pgm");
+     * $ save(level::fast_minima_killer(light, 20, win_c8p()), "out.pgm");
+     * exi: light.pgm
+     * exo: out.pgm
+     * wontcompile: fixme
+     =*/
+    // Guichard and Morel, Image iterative smoothing and PDE's. Book in preparation. p 265.
     template<class _I, class _N>
     Concrete(_I) fast_minima_killer(const image<_I>& _input,
 				    const unsigned int area,
@@ -248,7 +301,6 @@ namespace oln {
 	      bool go_on = true; // FIXME: Use break instead of go_on = false.
 	      while (go_on)
 		{
-		  // FIXME a Changer !!! comme pour watershed ! meme queue
 		  typedef Value(I) I_type;
 		  Point(I) arg_min = p;
 		  Value(I) min =  I_type::max();
@@ -303,6 +355,25 @@ namespace oln {
       return working_input;
     }
 
+    /*=processing fast_maxima_killer
+     * ns: level
+     * what: Maxima killer.
+     * arg: const image<I1>&, marker, IN, marker image
+     * arg: const unsigned int area, area, IN, area
+     * arg: const neighborhood<_N>&, Ng, IN, neighboorhood
+     * ret: Concrete(_I1)
+     * doc: It removes the small (in area) connected components of the upper
+     * level sets of @var{input} using @var{Ng} as neighboorhood. The implementation
+     * is based on stak. Guichard and Morel, Image iterative smoothing and PDE's. Book in preparation. p 265.
+     * see: level::sure_maxima_killer
+     * ex:
+     * $ image2d<int_u8> light = load("light.pgm");
+     * $ save(level::fast_maxima_killer(light, 20, win_c8p()), "out.pgm");
+     * exi: light.pgm
+     * exo: out.pgm
+     * wontcompile: fixme
+     =*/
+    // Guichard and Morel, Image iterative smoothing and PDE's. Book in preparation. p 265.
     template<class _I, class _N>
     Concrete(_I) fast_maxima_killer(const image<_I>& _input,
 				       const unsigned int area,

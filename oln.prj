@@ -1,22 +1,21 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_2 14)
-(Parent-Version oln 0_2 13)
+(Project-Version oln 0_2 15)
+(Parent-Version oln 0_2 14)
 (Version-Log "2002-01-14  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-	* tpl/processing.tpl: Support wontcompile:.
+	* doc/oln-ref.texi (Processings): Create a level processing section.
+	* doc/Makefile.am: Adjust.
 
 2002-01-14  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-	* src/morpho/top_hat.inc, src/morpho/reconstruction.hh,
-	src/morpho/geodesic_erosion.hh, src/morpho/geodesic_dilation.hh,
-	src/morpho/extrema.hh, src/morpho/top_hat.inc,
-	src/morpho/laplacian.inc: Update doc.
+	* src/level/connected.hh, src/level/cc.hh,
+	src/level/extrema_killer.hh: Update doc.  From Jerome
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 14 Jan 2002 10:16:32 +0100")
+(Checkin-Time "Mon, 14 Jan 2002 10:30:09 +0100")
 (Checkin-Login adl)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
@@ -73,7 +72,7 @@
   (configure.ac (oln/3_configure. 1.1 644))
   (THANKS (oln/4_THANKS 1.1 644))
   (img/lena.pgm (oln/5_lena.pgm 1.1 640) :no-keywords)
-  (ChangeLog (oln/6_ChangeLog 1.8 644))
+  (ChangeLog (oln/6_ChangeLog 1.9 644))
   (src/config/system.hh (oln/7_system.hh 1.1 644))
   (src/utils/timer.hh (oln/8_timer.hh 1.1 644))
   (src/utils/stat.hh (oln/9_stat.hh 1.2 644))
@@ -97,7 +96,7 @@
   (src/Makefile.am (oln/27_Makefile.a 1.2 644))
   (src/basics3d.hh (oln/28_basics3d.h 1.1 644))
   (src/level/lut.hh (oln/29_lut.hh 1.1 644))
-  (src/level/connected.hh (oln/30_connected. 1.1 644))
+  (src/level/connected.hh (oln/30_connected. 1.2 644))
   (src/level/compare.hh (oln/31_compare.hh 1.1 644))
   (src/level/fill.hh (oln/32_fill.hh 1.1 644))
   (src/level/invert.hh (oln/33_invert.hh 1.1 644))
@@ -282,10 +281,10 @@
 
   (doc/tpl/processing.tpl (oln/d/48_processing 1.5 644))
   (doc/img/object.pbm (oln/d/49_object.pbm 1.1 644))
-  (doc/doc/oln-ref.texi (oln/d/50_oln-ref.te 1.2 644))
-  (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.5 644))
+  (doc/doc/oln-ref.texi (oln/d/50_oln-ref.te 1.3 644))
+  (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.6 644))
   (doc/Makefile.am (oln/e/0_Makefile.a 1.1 644))
-  (doc/ChangeLog (oln/e/1_ChangeLog 1.7 644))
+  (doc/ChangeLog (oln/e/1_ChangeLog 1.8 644))
 
 ;; Files added by populate at Sat, 12 Jan 2002 17:28:39 +0100,
 ;; to version 0_2.5(w), by adl:
@@ -298,7 +297,7 @@
   (doc/configure (oln/e/3_configure 1.2 755))
   (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.2 644))
   (doc/Makefile.in (oln/e/5_Makefile.i 1.3 644))
-  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.5 644))
+  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.6 644))
   (configure (oln/e/7_configure 1.1 755))
   (aclocal.m4 (oln/e/8_aclocal.m4 1.1 644))
   (Makefile.in (oln/e/9_Makefile.i 1.4 644))
@@ -324,8 +323,8 @@
 ;; Files added by populate at Sun, 13 Jan 2002 18:55:14 +0100,
 ;; to version 0_2.10(w), by adl:
 
-  (src/level/extrema_killer.hh (oln/e/19_extrema_ki 1.1 644))
-  (src/level/cc.hh (oln/e/20_cc.hh 1.1 644))
+  (src/level/extrema_killer.hh (oln/e/19_extrema_ki 1.2 644))
+  (src/level/cc.hh (oln/e/20_cc.hh 1.2 644))
 
 ;; Files added by populate at Sun, 13 Jan 2002 19:40:36 +0100,
 ;; to version 0_2.11(w), by adl:

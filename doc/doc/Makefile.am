@@ -1,5 +1,5 @@
 info_TEXINFOS = oln-ref.texi
-oln_ref_TEXINFOS = ref-morpho.texi
+oln_ref_TEXINFOS = ref-morpho.texi ref-level.texi
 
 olnsrc = $(top_srcdir)/../src/
 
@@ -15,9 +15,15 @@ PROCESSINGGETDEFSFLAGS = \
 
 morpho_files = $(shell fgrep -l '/*=' \
 	         $(olnsrc)/morpho/*.hh $(olnsrc)/morpho/*.inc)
+level_files = $(shell fgrep -l '/*=' $(olnsrc)/level/*.hh)
+
 ref-morpho.texi: $(morpho_files) $(srcdir)/../tpl/processing.tpl
 	$(GETDEFS) $(COMMONGETDEFSFLAGS) $(PROCESSINGGETDEFSFLAGS) \
 	  $(GETDEFSFLAGS) --base-name=ref-morpho $(morpho_files)
+
+ref-level.texi: $(level_files) $(srcdir)/../tpl/processing.tpl
+	$(GETDEFS) $(COMMONGETDEFSFLAGS) $(PROCESSINGGETDEFSFLAGS) \
+	  $(GETDEFSFLAGS) --base-name=ref-level $(level_files)
 
 ## The rest of this file is adapted from gettext-0.1.40/doc/Makefile.am
 

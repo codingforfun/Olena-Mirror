@@ -35,6 +35,25 @@
 namespace oln {
   namespace level {
 
+
+    /*=processing connected_component
+     * ns: level
+     * what: Connected Component.
+     * arg: const image<I1>&, marker, IN, marker image
+     * arg: const struct_elt<E>&, se, IN, structural element
+     * ret: typename mute<_I, DestType>::ret
+     * doc: It removes the small (in area) connected components of the upper
+     * level sets of @var{input} using @var{se} as structural element. FIXME: The implementation
+     * is in REF Maitre.
+     * see: level::frontp_connected_component
+     * ex:
+     * $ image2d<int_u8> light = load("light.pgm");
+     * $ save(level::connected_component<int_u8>(light, win_c8p()), "out.pgm");
+     * exi: light.pgm
+     * exo: out.pgm
+     * wontcompile: fixme
+     =*/
+
     // Number the connected components i.e label true. background(i.e
     // label false) has the label 0; in the output
     template <class DestType, class _I, class _E>
