@@ -1,175 +1,98 @@
-// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
-//
-// This file is part of the Olena Library.  This library is free
-// software; you can redistribute it and/or modify it under the terms
-// of the GNU General Public License version 2 as published by the
-// Free Software Foundation.
-//
-// This library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-// General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this library; see the file COPYING.  If not, write to
-// the Free Software Foundation, 59 Temple Place - Suite 330, Boston,
-// MA 02111-1307, USA.
-//
-// As a special exception, you may use this file as part of a free
-// software library without restriction.  Specifically, if other files
-// instantiate templates or use macros or inline functions from this
-// file, or you compile this file and link it with other files to
-// produce an executable, this file does not by itself cause the
-// resulting executable to be covered by the GNU General Public
-// License.  This exception does not however invalidate any other
-// reasons why the executable file might be covered by the GNU General
-// Public License.
+#ifndef PROTO_OLN_CORE_DPOINT2D_HH
+# define PROTO_OLN_CORE_DPOINT2D_HH
 
-#ifndef OLENA_CORE_DPOINT2D_HH
-# define OLENA_CORE_DPOINT2D_HH
-
-# include <oln/core/coord.hh>
-# include <oln/core/abstract/dpoint.hh>
-# include <iostream>
 
 namespace oln {
 
-  // fwd decl
-  class point2d;
-  class dpoint2d;
+  struct dpoint2d;
 
-
-  
-  /*! \class dpoint_traits<dpoint2d>
-  **
-  ** The specialized version for dpoint2d.
-  */
-  
-  template<>
-  struct dpoint_traits<dpoint2d>: public
-  dpoint_traits<abstract::dpoint<dpoint2d> >
+  template <>
+  struct props <dpoint2d>
   {
-    enum { dim = 2 };
-    typedef point2d point_type;
+    typedef dim2d dim_type;
   };
 
-  /*! \class dpoint2d
-  **
-  ** Subclass of abstract::dpoint, declaration of dpoint
-  ** for image2d. To instantiate a dpoint2d on an
-  ** oln::image2d<ntg::rgb_8> for example, use the
-  ** macro oln_dpoint_type(I).\n
-  ** oln_dpoint_type(oln::image2d<ntg::rgb_8>) dp();\n
-  ** or\n
-  ** oln_dpoint_type(oln::image2d<ntg::rgb_8>) dp(1, 2);
-  */
- 
-  
-  class dpoint2d : public abstract::dpoint< dpoint2d >
+  struct dpoint2d : public abstract::dpoint< dpoint2d >
   {
-
-  public:
-
-    typedef abstract::dpoint< dpoint2d > super_type;
-
-    friend class abstract::dpoint< dpoint2d >;
-
-    dpoint2d();
-
-    /// The coordinates of the dpoint2d are set to \a row and \a col.
-
-    dpoint2d(coord row, coord col);
-
-    /// The coordinates of the dpoint2d are set to the \a p coordinates.
-    explicit dpoint2d(const point2d& p);
-
-    /// Return the value of the dpoint2d row coordinate.
-
-    coord 
-    row() const;
-    
-    /// Return a reference to the dpoint2d row coordinate.
-    
-    coord& 
-    row();
-    
-    /// Return the value of the dpoint2d column coordinate.
-    
-    coord 
-    col() const;
-
-    /// Return a reference to the dpoint2d column coordinate.
-
-    coord& 
-    col();
-
-    static std::string 
-    name() 
-    { 
-      return "dpoint2d"; 
+    dpoint2d() :
+      row_(0),
+      col_(0)
+    {
+      this->exact_ptr = this;
     }
 
+    dpoint2d(coord row_, coord col_) :
+      row_(row_),
+      col_(col_)
+    {
+      this->exact_ptr = this;
+    }
+
+    dpoint2d(const dpoint2d& rhs) :
+      row_(rhs.row_),
+      col_(rhs.col_)
+    {
+      this->exact_ptr = this;
+    }
+
+    dpoint2d& operator=(const dpoint2d& rhs)
+    {
+      if (&rhs == this)
+	return *this;
+      this->row_ = rhs.row_;
+      this->col_ = rhs.col_;
+      return *this;
+    }
+
+    coord delta_impl() const
+    {
+      return std::max(std::abs(row_), std::abs(col_));
+    }
+
+    bool op_eq_impl(const dpoint2d& rhs) const
+    {
+      return this->row_ == rhs.row_ && this->col_ == rhs.col_;
+    }
+
+    bool op_less_impl(const dpoint2d& rhs) const
+    {
+      return
+	this->row() < rhs.row() ||
+	(this->row() == rhs.row() && this->col() < rhs.col());
+    }
+
+    const dpoint2d op_minus_impl() const
+    {
+      dpoint2d tmp(-row_, -col_);
+      return tmp;
+    }
+
+    const coord row() const { return row_; }
+    const coord col() const { return col_; }
+
+    coord& row() { return row_; }
+    coord& col() { return col_; }
+
   protected:
-
-    
-    /*! \brief Return a dpoint2d whose coordinates are equal to 
-    ** \a dp coordinates plus the current dpoint2d coordinates.
-    */
-    
-    dpoint2d 
-    plus_dp(const dpoint2d& dp) const;
-
-    /*! \brief Return a dpoint2d whose coordinates are equal to 
-    ** the opposite of the current dpoint2d coordinates.
-    */
-    
-    dpoint2d 
-    minus() const;
-
-    
-    /*! \brief Return a dpoint2d whose coordinates are equal to
-    ** the current dpoint2d coordinates minus \a dp coordinates.
-    */
-    
-    dpoint2d 
-    minus_dp(const dpoint2d& dp) const;
-
-    /*! \brief Return a reference to the current dpoint2d 
-    ** plus \a dp.
-    */
-    
-    dpoint2d& 
-    plus_assign_dp(const dpoint2d& dp);
-
-    /*! \brief Return a reference to the current dpoint2d
-    ** minus \a dp.
-    */
-    
-    dpoint2d& 
-    minus_assign_dp(const dpoint2d& dp);
-
+    coord row_, col_;
   };
-  
-  namespace internal
+
+
+  inline
+  const point2d op_plus_impl(const point2d& p, const dpoint2d& dp)
   {
-    /*! \class default_less<dpoint2d>
-    ** 
-    ** The specialized version for dpoint2d.
-    */
-    
-    template<>
-    struct default_less<dpoint2d> :
-      public default_less<dpoint2d::super_type>
-    {};
-  } // end of internal
+    point2d tmp(p.row() + dp.row(), p.col() + dp.col());
+    return tmp;
+  }
 
-} // end of oln
 
-/// Write on an output stream \a o the coordinates of the dpoint2d \a dp.
+} // end of namespace oln
 
-inline std::ostream&
-operator<<(std::ostream& o, const oln::dpoint2d& dp);
 
-# include <oln/core/dpoint2d.hxx>
+std::ostream& operator<<(std::ostream& ostr, const oln::dpoint2d& p)
+{
+  return ostr << '(' << p.row() << ',' << p.col() << ')';
+}
 
-#endif // OLENA_CORE_DPOINT2D_HH
+
+#endif // ndef PROTO_OLN_CORE_DPOINT2D_HH

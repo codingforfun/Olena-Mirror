@@ -36,7 +36,7 @@
 
 namespace oln {
 
-  
+
   /*! \brief Compute f(...f(f(val,i_0),i_1)...,i_n), where i_0...i_n
   ** are the value associated to each abstract::image point.
   ** f could return a reference or a const.  Make sure VAL is assignable.
@@ -69,7 +69,7 @@ namespace oln {
   fold(AdaptableBinaryFun f, const abstract::image<I>& input)
   {
     oln_iter_type(I) p(input);
-    p = begin;
+    //    p = begin;
     typename mlc::typeadj<
       typename AdaptableBinaryFun::result_type>::mutable_val val
         = input[p];

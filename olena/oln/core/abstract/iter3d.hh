@@ -28,151 +28,151 @@
 #ifndef OLENA_CORE_ABSTRACT_ITER3D_HH
 # define OLENA_CORE_ABSTRACT_ITER3D_HH
 
-# include <oln/core/coord.hh>
-# include <oln/core/point3d.hh>
-# include <oln/core/dpoint3d.hh>
-# include <oln/core/image3d_size.hh>
-# include <oln/core/abstract/iter.hh>
+// # include <oln/core/coord.hh>
+// # include <oln/core/point3d.hh>
+// # include <oln/core/dpoint3d.hh>
+// # include <oln/core/image3d_size.hh>
+// # include <oln/core/abstract/iter.hh>
 
-# include <mlc/contract.hh>
-# include <mlc/type.hh>
-# include <mlc/objs.hh>
+// # include <mlc/contract.hh>
+// # include <mlc/type.hh>
+// # include <mlc/objs.hh>
 
-namespace oln {
+// namespace oln {
 
-  namespace abstract {
-    template<class Exact>
-    class iter3d; // forward declaration
-  } // end of abstract
+//   namespace abstract {
+//     template<class Exact>
+//     class iter3d; // forward declaration
+//   } // end of abstract
 
-  /*!
-  ** \brief Traits for abstract::iter3d
-  */
-  template<class Exact>
-  struct iter_traits<abstract::iter3d<Exact> >: public
-  iter_traits<abstract::iter<Exact> >
-  {
-    enum { dim = 3 }; ///< The dimension of the image traversed.
-    typedef point3d point_type; ///< The type of point of the image.
-    typedef dpoint3d dpoint_type; ///< The type of dpoint of the image.
-  };
+//   /*!
+//   ** \brief Traits for abstract::iter3d
+//   */
+//   template<class Exact>
+//   struct iter_traits<abstract::iter3d<Exact> >: public
+//   iter_traits<abstract::iter<Exact> >
+//   {
+//     enum { dim = 3 }; ///< The dimension of the image traversed.
+//     typedef point3d point_type; ///< The type of point of the image.
+//     typedef dpoint3d dpoint_type; ///< The type of dpoint of the image.
+//   };
 
-  namespace abstract {
+//   namespace abstract {
 
-    /*!
-    ** Iterator on image of 3 dimensions.
-    **
-    ** Allow iterable object (like image, window, ...) of 3 dimensions
-    ** traversing.
-    ** \see iter
-    */
-    template<class Exact>
-    class iter3d : public iter< Exact >
-    {
-    public:
+//     /*!
+//     ** Iterator on image of 3 dimensions.
+//     **
+//     ** Allow iterable object (like image, window, ...) of 3 dimensions
+//     ** traversing.
+//     ** \see iter
+//     */
+//     template<class Exact>
+//     class iter3d : public iter< Exact >
+//     {
+//     public:
 
-      typedef iter<Exact> super_type; ///< The exact type of the object.
+//       typedef iter<Exact> super_type; ///< The exact type of the object.
 
-      friend class iter<Exact>;
+//       friend class iter<Exact>;
 
-      /*!
-      ** \brief Get the coordinates (slice) of iterator's current point.
-      ** \return The slice number.
-      **
-      ** On this kind of image (i.e. 3 dimensions), you are able to get
-      ** the column number, the row number and the slice number.
-      */
-      coord
-      slice() const
-      {
-	return this->p_.slice();
-      }
+//       /*!
+//       ** \brief Get the coordinates (slice) of iterator's current point.
+//       ** \return The slice number.
+//       **
+//       ** On this kind of image (i.e. 3 dimensions), you are able to get
+//       ** the column number, the row number and the slice number.
+//       */
+//       coord
+//       slice() const
+//       {
+// 	return this->p_.slice();
+//       }
 
-      /*!
-      ** \brief Get the coordinates (row) of iterator's current point.
-      ** \return The row number.
-      **
-      ** On this kind of image (i.e. 3 dimensions), you are able to get
-      ** the column number, the row number and the slice number.
-      */
-      coord
-      row() const
-      {
-	return this->p_.row();
-      }
+//       /*!
+//       ** \brief Get the coordinates (row) of iterator's current point.
+//       ** \return The row number.
+//       **
+//       ** On this kind of image (i.e. 3 dimensions), you are able to get
+//       ** the column number, the row number and the slice number.
+//       */
+//       coord
+//       row() const
+//       {
+// 	return this->p_.row();
+//       }
 
-      /*!
-      ** \brief Get the coordinates (col) of iterator's current point.
-      ** \return The col number.
-      **
-      ** On this kind of image (i.e. 3 dimensions), you are able to get
-      ** the column number, the row number and the slice number.
-      */
-      coord
-      col() const
-      {
-	return this->p_.col();
-      }
+//       /*!
+//       ** \brief Get the coordinates (col) of iterator's current point.
+//       ** \return The col number.
+//       **
+//       ** On this kind of image (i.e. 3 dimensions), you are able to get
+//       ** the column number, the row number and the slice number.
+//       */
+//       coord
+//       col() const
+//       {
+// 	return this->p_.col();
+//       }
 
-      /// Return the name of the type.
-      static std::string name()
-      {
-	return std::string("_iter3d<") + Exact::name() + ">";
-      }
+//       /// Return the name of the type.
+//       static std::string name()
+//       {
+// 	return std::string("_iter3d<") + Exact::name() + ">";
+//       }
 
-    protected:
+//     protected:
 
-      const coord nslices_; ///< The number of slices of the image you are iterating.
-      const coord nrows_; ///< The number of rows of the image you are iterating.
-      const coord ncols_; ///< The number of columns of the image you are iterating.
+//       const coord nslices_; ///< The number of slices of the image you are iterating.
+//       const coord nrows_; ///< The number of rows of the image you are iterating.
+//       const coord ncols_; ///< The number of columns of the image you are iterating.
 
-      /*!
-      ** \brief Get the current point viewed by the iterator.
-      ** \return The point (3 dimensions) viewed by the iterator.
-      ** \pre Instance != end.
-      */
-      point3d
-      to_point() const
-      {
-	precondition(*this != end);
-	invariant(this->p_.slice() >=0
-		  && this->p_.slice() < nslices_
-		  && this->p_.row() >= 0
-		  && this->p_.row() < nrows_
-		  && this->p_.col() >= 0
-		  && this->p_.col() < ncols_);
-	return this->p_;
-      }
+//       /*!
+//       ** \brief Get the current point viewed by the iterator.
+//       ** \return The point (3 dimensions) viewed by the iterator.
+//       ** \pre Instance != end.
+//       */
+//       point3d
+//       to_point() const
+//       {
+// 	precondition(*this != end);
+// 	invariant(this->p_.slice() >=0
+// 		  && this->p_.slice() < nslices_
+// 		  && this->p_.row() >= 0
+// 		  && this->p_.row() < nrows_
+// 		  && this->p_.col() >= 0
+// 		  && this->p_.col() < ncols_);
+// 	return this->p_;
+//       }
 
-      /*!
-      ** \brief Constructor
-      */
-      iter3d() : super_type(), nslices_(0), nrows_(0), ncols_(0)
-      {}
+//       /*!
+//       ** \brief Constructor
+//       */
+//       iter3d() : super_type(), nslices_(0), nrows_(0), ncols_(0)
+//       {}
 
-      /*!
-      ** \brief Construct an iterator (3d) on an image (3d).
-      ** \arg size The size of the image to iterate.
-      ** \pre size.ncols() > 0.
-      ** \pre size.nrows() > 0.
-      ** \pre size.nslices() > 0.
-      */
-      iter3d(const image3d_size& size) :
-	super_type(),
-	nslices_(size.nslices()),
-	nrows_(size.nrows()),
-	ncols_(size.ncols())
-      {
-	precondition(size.nslices() > 0
-		     && size.nrows() > 0
-		     && size.ncols() > 0);
-	this->exact().goto_begin_();
-      }
-    };
+//       /*!
+//       ** \brief Construct an iterator (3d) on an image (3d).
+//       ** \arg size The size of the image to iterate.
+//       ** \pre size.ncols() > 0.
+//       ** \pre size.nrows() > 0.
+//       ** \pre size.nslices() > 0.
+//       */
+//       iter3d(const image3d_size& size) :
+// 	super_type(),
+// 	nslices_(size.nslices()),
+// 	nrows_(size.nrows()),
+// 	ncols_(size.ncols())
+//       {
+// 	precondition(size.nslices() > 0
+// 		     && size.nrows() > 0
+// 		     && size.ncols() > 0);
+// 	this->exact().goto_begin_();
+//       }
+//     };
 
-  } // end of abstract
+//   } // end of abstract
 
-} // end of oln
+// } // end of oln
 
 
 #endif // ! OLENA_CORE_ABSTRACT_ITER3D_HH

@@ -28,134 +28,134 @@
 #ifndef OLENA_CORE_BKD_ITER3D_HH
 # define OLENA_CORE_BKD_ITER3D_HH
 
-# include <oln/core/abstract/iter3d.hh>
+// # include <oln/core/abstract/iter3d.hh>
 
-namespace oln {
+// namespace oln {
 
-  template<class Exact = mlc::final>
-  class bkd_iter3d; // forward declaration
+//   template<class Exact = mlc::final>
+//   class bkd_iter3d; // forward declaration
 
-  template<class Exact>
-  struct iter_traits<bkd_iter3d<Exact> >: public
-  iter_traits<abstract::iter3d<typename
-  mlc::exact_vt<bkd_iter3d<Exact>, Exact>::ret> >
-  {
-    typedef point3d point_type;
-    typedef dpoint3d dpoint_type;
-  };
+//   template<class Exact>
+//   struct iter_traits<bkd_iter3d<Exact> >: public
+//   iter_traits<abstract::iter3d<typename
+//   mlc::exact_vt<bkd_iter3d<Exact>, Exact>::ret> >
+//   {
+//     typedef point3d point_type;
+//     typedef dpoint3d dpoint_type;
+//   };
 
-  /*!
-  ** Backward Iterator on image 3 dimension.
-  **
-  ** Allow iterable object (like image, window, ...) 3 dimensions backward
-  ** traversing.
-  ** \see iter
-  */
-  template<class Exact>
-  class bkd_iter3d : public abstract::iter3d<typename mlc::exact_vt<bkd_iter3d<Exact>, Exact>::ret>
-  {
-  public:
+//   /*!
+//   ** Backward Iterator on image 3 dimension.
+//   **
+//   ** Allow iterable object (like image, window, ...) 3 dimensions backward
+//   ** traversing.
+//   ** \see iter
+//   */
+//   template<class Exact>
+//   class bkd_iter3d : public abstract::iter3d<typename mlc::exact_vt<bkd_iter3d<Exact>, Exact>::ret>
+//   {
+//   public:
 
-    typedef typename mlc::exact_vt<bkd_iter3d<Exact>, Exact>::ret exact_type;
-    ///< The exact type.
+//     typedef typename mlc::exact_vt<bkd_iter3d<Exact>, Exact>::ret exact_type;
+//     ///< The exact type.
 
-    typedef abstract::iter3d<exact_type> super_type; ///< The super type.
-    typedef abstract::iter<exact_type> super_iter_type;
-    ///< The super iterator type.
+//     typedef abstract::iter3d<exact_type> super_type; ///< The super type.
+//     typedef abstract::iter<exact_type> super_iter_type;
+//     ///< The super iterator type.
 
-    enum { dim = iter_traits<exact_type>::dim }; ///< Dimension.
+//     enum { dim = iter_traits<exact_type>::dim }; ///< Dimension.
 
-    /*!
-    ** \brief The associate image's type of point.
-    ** \warning Prefer the macros oln_point_type(Pointable) and
-    ** oln_point_type_(Pointable) (the same without the 'typename' keyword)
-    */
-    typedef typename iter_traits<exact_type>::point_type point_type;
+//     /*!
+//     ** \brief The associate image's type of point.
+//     ** \warning Prefer the macros oln_point_type(Pointable) and
+//     ** oln_point_type_(Pointable) (the same without the 'typename' keyword)
+//     */
+//     typedef typename iter_traits<exact_type>::point_type point_type;
 
-    friend class abstract::iter<exact_type>;
-    friend class abstract::iter3d<exact_type>;
+//     friend class abstract::iter<exact_type>;
+//     friend class abstract::iter3d<exact_type>;
 
-    /*!
-    ** \brief Construct a backward iterator (3 dimension).
-    ** \arg ima The image to iterate.
-    */
-    template<class Image>
-    bkd_iter3d(const Image& ima) :
-      super_type(ima.size())
-    {}
+//     /*!
+//     ** \brief Construct a backward iterator (3 dimension).
+//     ** \arg ima The image to iterate.
+//     */
+//     template<class Image>
+//     bkd_iter3d(const Image& ima) :
+//       super_type(ima.size())
+//     {}
 
-    /*!
-    ** \brief Set current iterator's point.
-    ** \arg u New current point.
-    */
-    template<class U>
-    U
-    operator=(U u)
-    {
-      return super_iter_type::operator=(u);
-    }
+//     /*!
+//     ** \brief Set current iterator's point.
+//     ** \arg u New current point.
+//     */
+//     template<class U>
+//     U
+//     operator=(U u)
+//     {
+//       return super_iter_type::operator=(u);
+//     }
 
-    /// Return the name of the type.
-    static std::string name()
-    {
-      return std::string("bkd_iter3d<") + Exact::name() + ">";
-    }
+//     /// Return the name of the type.
+//     static std::string name()
+//     {
+//       return std::string("bkd_iter3d<") + Exact::name() + ">";
+//     }
 
-  protected:
+//   protected:
 
-    /*!
-    ** \brief Set current point to the first iterator's point.
-    **
-    ** Set current point of iterator to the first iterator's point.
-    */
-    void
-    goto_begin_()
-    {
-      this->p_.slice() = this->nslices_ - 1;
-      this->p_.row() = this->nrows_ - 1;
-      this->p_.col() = this->ncols_ - 1;
-    }
+//     /*!
+//     ** \brief Set current point to the first iterator's point.
+//     **
+//     ** Set current point of iterator to the first iterator's point.
+//     */
+//     void
+//     goto_begin_()
+//     {
+//       this->p_.slice() = this->nslices_ - 1;
+//       this->p_.row() = this->nrows_ - 1;
+//       this->p_.col() = this->ncols_ - 1;
+//     }
 
-    /*!
-    ** \brief Set current point to the last iterator's point.
-    **
-    ** Set current point of iterator to the last iterator's point.
-    */
-    void
-    goto_end_()
-    {
-      this->p_.slice() = -1;
-    }
+//     /*!
+//     ** \brief Set current point to the last iterator's point.
+//     **
+//     ** Set current point of iterator to the last iterator's point.
+//     */
+//     void
+//     goto_end_()
+//     {
+//       this->p_.slice() = -1;
+//     }
 
-    /*!
-    ** \brief Test if iterator's current point is the last one
-    ** \return True if current point is the last one.
-    */
-    bool
-    is_at_end_() const
-    {
-      return this->p_.slice() == -1;
-    }
+//     /*!
+//     ** \brief Test if iterator's current point is the last one
+//     ** \return True if current point is the last one.
+//     */
+//     bool
+//     is_at_end_() const
+//     {
+//       return this->p_.slice() == -1;
+//     }
 
-    /*!
-    ** \brief Go to the next iterator's point.
-    */
-    void
-    goto_next_()
-    {
-      --this->p_.col();
-      if (this->p_.col() >= 0)
-	return;
-      this->p_.col() = this->ncols_ - 1;
-      --this->p_.row();
-      if (this->p_.row() >= 0)
-	this->p_.row() = this->nrows_ - 1;
-      --this->p_.slice();
-    }
+//     /*!
+//     ** \brief Go to the next iterator's point.
+//     */
+//     void
+//     goto_next_()
+//     {
+//       --this->p_.col();
+//       if (this->p_.col() >= 0)
+// 	return;
+//       this->p_.col() = this->ncols_ - 1;
+//       --this->p_.row();
+//       if (this->p_.row() >= 0)
+// 	this->p_.row() = this->nrows_ - 1;
+//       --this->p_.slice();
+//     }
 
-  };
+//   };
 
-} // end of oln
+// } // end of oln
 
 
 #endif // ! OLENA_CORE_BKD_ITER3D_HH

@@ -99,33 +99,34 @@ namespace oln {
       }
     };
 
-    /*! Specialization for color of three dimension.
-    **
-    ** \todo Could be generalized to n dimensions if there were a trait that
-    ** give a pointkd for a given dimension k.
-    */
-    template <unsigned Qbits, template <unsigned> class S, class Exact>
-    struct value_to_point<ntg::color<3, Qbits, S>, Exact>:
-      public abstract::conversion_from_type_to_type
-        <typename ntg::color<3, Qbits, S>,
-	 point3d,
-	 typename mlc::exact_vt<value_to_point<typename ntg::color<3, Qbits, S>,
-					       Exact>,
-				Exact>::ret>
-    {
-    public:
-      typedef point3d result_type;
-      typedef typename ntg::color<3, Qbits, S> argument_type;
+    //    FIXME: 3d no more implemented....
+//     /*! Specialization for color of three dimension.
+//     **
+//     ** \todo Could be generalized to n dimensions if there were a trait that
+//     ** give a pointkd for a given dimension k.
+//     */
+//     template <unsigned Qbits, template <unsigned> class S, class Exact>
+//     struct value_to_point<ntg::color<3, Qbits, S>, Exact>:
+//       public abstract::conversion_from_type_to_type
+//         <typename ntg::color<3, Qbits, S>,
+// 	 point3d,
+// 	 typename mlc::exact_vt<value_to_point<typename ntg::color<3, Qbits, S>,
+// 					       Exact>,
+// 				Exact>::ret>
+//     {
+//     public:
+//       typedef point3d result_type;
+//       typedef typename ntg::color<3, Qbits, S> argument_type;
 
-      result_type
-      doit(const argument_type &input) const
-      {
-	result_type r;
-	for (unsigned i = 0; i < 3; ++i)
-	  r.nth(i) = oln::coord(input[i]);
-	return r;
-      }
-    };
+//       result_type
+//       doit(const argument_type &input) const
+//       {
+// 	result_type r;
+// 	for (unsigned i = 0; i < 3; ++i)
+// 	  r.nth(i) = oln::coord(input[i]);
+// 	return r;
+//       }
+//     };
   }
 }
 #endif

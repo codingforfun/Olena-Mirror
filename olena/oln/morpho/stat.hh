@@ -66,7 +66,7 @@ namespace oln {
 	  mlc::eq<I::dim, E::dim>::ensure();
 
 	 oln_iter_type(E) dp(se);
-	  dp = begin;
+	 dp.begin();
 	  V val = input[p + dp];
 	  for_all_remaining (dp)
 	    if (val < input[p + dp])
@@ -89,7 +89,7 @@ namespace oln {
 	{
 	  mlc::eq<I::dim, E::dim>::ensure();
 	 oln_iter_type(E) dp(se);
-	  dp = begin;
+	  dp.begin();
 	  V val = input[p + dp];
 	  for_all_remaining (dp)
 	    if (val > input[p + dp])
@@ -145,8 +145,8 @@ namespace oln {
     */
     template<class I, class E>
     oln_value_type(I)
-    max(const abstract::non_vectorial_image<I>& input,
-	const mlc_exact_type(I)::point_type& p,
+    max(const abstract::scalar_image<I>& input,
+	const oln_point_type(I)& p,
 	const abstract::struct_elt<E>& se)
     {
       mlc::eq<I::dim, E::dim>::ensure();
@@ -167,8 +167,8 @@ namespace oln {
     */
     template<class I, class E>
     oln_value_type(I)
-    min(const abstract::non_vectorial_image<I>& input,
-	const mlc_exact_type(I)::point_type& p,
+    min(const abstract::scalar_image<I>& input,
+	const oln_point_type(I)& p,
 	//		 const mlc_exact_type(I)::iter_type& p,
 	const abstract::struct_elt<E>& se)
     {

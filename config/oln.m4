@@ -647,7 +647,7 @@ AC_DEFUN([AC_WITH_CXX_ZLIB],
 ### Internal stuff for Olena
 ###
 # $Format: "m4_define([OLN_VERSION], [0.$ProjectMajorVersion$])"$
-m4_define([OLN_VERSION], [0.10])
+m4_define([OLN_VERSION], [0.oln_2004_paradigm])
 m4_define([OLN_VERSION], [0.10])
 m4_define([OLN_CONTACT], [olena-bugs@lrde.epita.fr])
 

@@ -44,7 +44,7 @@ namespace oln {
     ** on borders.
     */
     template <class Exact>
-    class behavior: public mlc_hierarchy::any<Exact>
+    class behavior: public mlc::any<Exact>
     {
     public:
       typedef behavior<Exact>				self_type;

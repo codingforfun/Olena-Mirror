@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,21 +28,65 @@
 #ifndef OLENA_BASICS3D_HH
 # define OLENA_BASICS3D_HH
 
+// # include <oln/basics.hh>
+
+// # include <oln/core/point3d.hh>
+// # include <oln/core/dpoint3d.hh>
+// # include <oln/core/image3d.hh>
+// //# include <oln/core/border3d.hh>
+
+// # include <oln/core/window3d.hh>
+// # include <oln/core/w_window3d.hh>
+// # include <oln/core/neighborhood3d.hh>
+
+// # include <oln/core/fwd_iter3d.hh>
+// # include <oln/core/bkd_iter3d.hh>
+
+// # include <oln/io/image.hh>
+// # include <oln/io/se.hh>
+
+
+// basics
+
 # include <oln/basics.hh>
+
+
+// core
+
+# include <oln/core/dim3d.hh>
+# include <oln/core/image3d_size.hh>
 
 # include <oln/core/point3d.hh>
 # include <oln/core/dpoint3d.hh>
+
 # include <oln/core/image3d.hh>
-//# include <oln/core/border3d.hh>
 
-# include <oln/core/window3d.hh>
-# include <oln/core/w_window3d.hh>
-# include <oln/core/neighborhood3d.hh>
+// # include <oln/core/fwd_iter3d.hh>
+// # include <oln/core/bkd_iter3d.hh>
 
-# include <oln/core/fwd_iter3d.hh>
-# include <oln/core/bkd_iter3d.hh>
+// # include <oln/core/ch_value.hh>
+// # include <oln/border/set_width.hh>
+// # include <oln/border/assign.hh>
 
-# include <oln/io/image.hh>
-# include <oln/io/se.hh>
+// # include <oln/core/neighborhood3d.hh>
+// # include <oln/core/window3d.hh>
+// // # include <oln/core/w_window3d.hh>
+
+// # include <oln/core/fwd_niter3d.hh>
+// // # include <oln/core/bkd_niter3d.hh>
+// # include <oln/core/fwd_diter3d.hh>
+
+
+// // io
+
+// // # include <oln/io/all.hh> doesn't exist base instead ?
+
+
+
+// // FIXME: for backward compatibility purpose
+
+// # include <oln/backward_compatibility.hh>
+
+
 
 #endif // ! OLENA_BASICS3D_HH
