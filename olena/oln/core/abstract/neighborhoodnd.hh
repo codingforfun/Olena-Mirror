@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,14 +30,16 @@
 
 # include <oln/core/abstract/window_base.hh>
 
-namespace oln 
-{
-  namespace abstract 
-  {
+namespace oln {
+
+  namespace abstract {
     template<class Exact>
-    struct neighborhoodnd; //fwd_decl
+    struct neighborhoodnd; // forward declaration
   } // end of abstract
 
+  /*!
+  ** \brief Traits for abstract::neighborhoodnd.
+  */
   template<class Exact>
   struct struct_elt_traits<abstract::neighborhoodnd<Exact> >: public
   struct_elt_traits<abstract::window_base<abstract::neighborhood<Exact>, Exact> >
@@ -45,19 +47,40 @@ namespace oln
 
   };
 
-  namespace abstract 
-  {
+  namespace abstract {
+
+    /*!
+    ** \brief Neighborhoodnd.
+    **
+    ** It looks like structuring elements but here, when
+    ** you add an element, you add his opposite.
+    ** Points have N dimensions.
+    **
+    */
     template<class Exact>
-    struct neighborhoodnd: public window_base<neighborhood<Exact>, Exact> 
+    struct neighborhoodnd: public window_base<neighborhood<Exact>, Exact>
     {
       typedef window_base<neighborhood<Exact>, Exact> super_type;
-      typedef neighborhoodnd<Exact> self_type;
-      typedef Exact exact_type;
+      ///< Super type.
+      typedef neighborhoodnd<Exact> self_type; ///< Self type.
+      typedef Exact exact_type;  ///< Exact type.
+
+      /*!
+      ** \brief The associate image's type of dpoint (move point).
+      ** \warning Prefer the macros oln_dpoint_type(Pointable) and
+      ** oln_dpoint_type_(Pointable) (the same without the 'typename' keyword)
+      */
       typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
 
       friend class neighborhood<exact_type>;
 
-      static std::string 
+      /*!
+      ** \brief Return his type in a string.
+      ** \return The type in a string.
+      **
+      ** Very useful to debug.
+      */
+      static std::string
       name()
       {
 	return std::string("neighborhoodnd<") + Exact::name() + ">" ;
@@ -65,10 +88,17 @@ namespace oln
 
     protected:
 
-      exact_type& 
+      /*!
+      ** \brief Add a point to the neighborhood.
+      ** \arg dp The new point.
+      ** \pre !dp.is_centered().
+      **
+      ** Add a new member to the neighborhood.
+      */
+      exact_type&
       add_(const dpoint_type& dp)
       {
-	precondition( !dp.is_centered() );	
+	precondition( !dp.is_centered() );
 	this->centered_ = true;
 	if (!(has_(dp)))
 	  this->dp_.push_back(dp);
@@ -76,12 +106,19 @@ namespace oln
 	return this->exact();
       }
 
-      neighborhoodnd() : super_type() 
+      /*!
+      ** \brief Construct a neighborhoodnd.
+      */
+      neighborhoodnd() : super_type()
       {}
-      
+
+      /*!
+      ** \brief Construct a neighborhood of 'size' elements.
+      ** \arg size The number of element to reserve for the neighborhood.
+      */
       neighborhoodnd(unsigned size) : super_type(size)
       {}
-      
+
     };
   } // end of abstract
 } // end of oln

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -36,69 +36,132 @@
 
 namespace oln {
 
-  class neighborhood1d; // fwd_decl
+  class neighborhood1d; // forward declaration
 
+  /*!
+  ** \brief Traits for neighborhood1d.
+  */
   template<>
   struct struct_elt_traits<neighborhood1d>: public
   struct_elt_traits<abstract::neighborhoodnd<neighborhood1d> >
   {
-    enum { dim = 1 };
-    typedef point1d point_type;
-    typedef dpoint1d dpoint_type;
-    typedef winiter< neighborhood1d > iter_type;
-    typedef winneighb< neighborhood1d > neighb_type;
-    typedef window1d win_type;
+    enum { dim = 1 }; ///< Dimension.
+    typedef point1d point_type; ///< Type of point.
+    typedef dpoint1d dpoint_type; ///< Type of dpoint (move).
+    typedef winiter< neighborhood1d > iter_type; ///< Type of iterator.
+    typedef winneighb< neighborhood1d > neighb_type; ///< Type of neighbor.
+    typedef window1d win_type; ///< Type of window.
   };
 
+  /*!
+  ** \brief Neighborhood 1 dimension.
+  **
+  ** It looks like structuring elements but here, when
+  ** you add an element, you add his opposite.
+  ** Points have 1 dimensions.
+  **
+  */
   class neighborhood1d :
     public abstract::neighborhoodnd< neighborhood1d >
   {
   public:
 
     typedef abstract::neighborhoodnd< neighborhood1d > super_type;
-    typedef neighborhood1d self_type;
+    ///< Super type.
+    typedef neighborhood1d self_type; ///< Self type.
 
+    /*!
+    ** \brief The associate image's type of iterator (move point).
+    ** \warning Prefer the macros oln_iter_type(Pointable) and
+    ** oln_iter_type_(Pointable) (the same without the 'typename' keyword)
+    */
     typedef struct_elt_traits< self_type >::iter_type   iter_type;
-    typedef struct_elt_traits< self_type >::neighb_type
-    neighb_type;
+    typedef struct_elt_traits< self_type >::neighb_type	neighb_type;
+
+    /*!
+    ** \brief The associate image's type of dpoint (move point).
+    ** \warning Prefer the macros oln_dpoint_type(Pointable) and
+    ** oln_dpoint_type_(Pointable) (the same without the 'typename' keyword)
+    */
     typedef struct_elt_traits< self_type >::dpoint_type dpoint_type;
-    
+
     friend class abstract::window_base<abstract::neighborhood<neighborhood1d>, neighborhood1d>;
 
-    neighborhood1d& 
+    /*!
+    ** \brief Add a dpoint (move point) to the neighborhood.
+    ** \arg dp The new point.
+    **
+    ** Add a new member to the neighborhood. This point must be of 1
+    ** dimension.
+    */
+    neighborhood1d&
     add(const dpoint_type& dp)
     {
       this->exact().add_(dp);
       return this->exact().add_(-dp);
     }
 
-    neighborhood1d& 
+    /*!
+    ** \brief Add a point by coordinates to the neighborhood.
+    ** \arg col The coordinate of the new point (1 dimension).
+    **
+    ** Add a new member by its coordinates to the neighborhood.
+    ** The coordinates are only the column number because the neighborhood has
+    ** 1 dimension.
+    */
+    neighborhood1d&
     add(coord col)
     {
       return this->add(dpoint_type(col));
     }
 
-    neighborhood1d() : super_type() 
+    /*!
+    ** \brief Construct a neighborhood of 1 dimension.
+    */
+    neighborhood1d() : super_type()
     {}
-    
-    neighborhood1d(unsigned size) : super_type(size) 
+
+    /*!
+    ** \brief Construct a neighborhood of 1 dimension.
+    ** \arg size Reserve 'size' elements for the neighborhood.
+    */
+    neighborhood1d(unsigned size) : super_type(size)
     {}
-    
+
+    /*!
+    ** \brief Construct a neighborhood of 1 dimension.
+    ** \arg n Add 'n' elements to the neighborhood.
+    ** \arg crd Coordinates of the 'n' elements.
+    */
     neighborhood1d(unsigned n, const coord crd[]) : super_type()
     {
       for (unsigned i = 0; i < n; ++i)
 	add(dpoint_type(crd[i]));
     }
 
-    static std::string 
-    name() 
-    { 
-      return std::string("neighborhood1d"); 
+    /*!
+    ** \brief Return his type in a string.
+    ** \return The type in a string.
+    **
+    ** Very useful to debug.
+    */
+    static std::string
+    name()
+    {
+      return std::string("neighborhood1d");
     }
 
   protected:
 
-    coord 
+    /*!
+    ** \brief Update delta.
+    ** \arg dp a move point.
+    ** \return Delta.
+    **
+    ** If the point is the biggest element of the neighborhood,
+    ** then this point is assigned to delta.
+    */
+    coord
     delta_update_(const dpoint_type& dp)
     {
       delta_(abs(dp.col()));
@@ -108,9 +171,13 @@ namespace oln {
   };
 
 
-  // std neighb
+  // standard neighborhood
 
-  inline const neighborhood1d& 
+  /*!
+  ** \brief Create a neighborhood (1 dimension) with 1 element : 1.
+  ** \return The new neighborhood.
+  */
+  inline const neighborhood1d&
   neighb_c2()
   {
     static const coord crd[] = {  1 };
@@ -118,7 +185,16 @@ namespace oln {
     return neighb;
   }
 
-  inline neighborhood1d 
+  /*!
+  ** \brief Create a neighborhood (1 dimension).
+  ** \arg width The width.
+  ** \return The new neighborhood.
+  ** \pre width >= 3.
+  ** \pre width % 2 == 1.
+  **
+  ** Add elements of coordinates 1, ..., width / 2.
+  */
+  inline neighborhood1d
   mk_neighb_segment(unsigned width)
   {
     precondition(width>= 3 && (width % 2) == 1);
@@ -129,7 +205,12 @@ namespace oln {
     return neighb;
   }
 
-  inline window1d 
+  /*!
+  ** \brief Convert a window (1 dimension) to a neighborhood (1 dimension).
+  ** \arg n The neighborhood to convert.
+  ** \return The new window.
+  */
+  inline window1d
   mk_win_from_neighb(const neighborhood1d& n)
   {
     window1d win(n.card());

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,14 +30,13 @@
 
 # include <oln/core/abstract/iter3d.hh>
 
-
 namespace oln {
 
   template<class Exact = mlc::final>
-  class fwd_iter3d; // fwd_decl
+  class fwd_iter3d; // forward declaration
 
   template<class Exact>
-  struct iter_traits<fwd_iter3d<Exact> >: public
+  struct iter_traits< fwd_iter3d<Exact> >: public
   iter_traits<abstract::iter3d<typename
   mlc::exact_vt<fwd_iter3d<Exact>, Exact>::ret> >
   {
@@ -45,6 +44,13 @@ namespace oln {
     typedef dpoint3d dpoint_type;
   };
 
+  /*!
+  ** \brief Backward Iterator on image 3 dimension
+  **
+  ** Allow  iterable object (like image, window, ...) of 3 dimensions forward
+  ** traversing.
+  ** \see iter
+  */
   template<class Exact>
   class fwd_iter3d : public abstract::iter3d<typename mlc::exact_vt<fwd_iter3d<Exact>, Exact>::ret>
   {
@@ -52,55 +58,94 @@ namespace oln {
   public:
 
     typedef typename mlc::exact_vt<fwd_iter3d<Exact>, Exact>::ret exact_type;
+    ///< The exact type.
 
-    typedef abstract::iter3d<exact_type> super_type;
+    typedef abstract::iter3d<exact_type> super_type; ///< The super type.
     typedef abstract::iter<exact_type> super_iter_type;
-    
-    enum { dim = iter_traits<exact_type>::dim };
+    ///< The super iterator type.
+
+    enum { dim = iter_traits<exact_type>::dim }; ///< Dimension.
+
+    /*!
+    ** \brief The associate image's type of point.
+    ** \warning Prefer the macros oln_point_type(Pointable) and
+    ** oln_point_type_(Pointable) (the same without the 'typename' keyword)
+    */
     typedef typename iter_traits<exact_type>::point_type point_type;
- 
+
     friend class abstract::iter<exact_type>;
     friend class abstract::iter3d<exact_type>;
 
+    /*!
+    ** \brief Construct a forward iterator (3 dimension).
+    ** \arg ima The image to iterate.
+    */
     template<class Image>
     fwd_iter3d(const Image& ima) :
       super_type(ima.size())
     {}
 
-    template<class U> 
-    U 
-    operator=(U u) 
-    { 
-      return super_iter_type::operator=(u); 
+    /*!
+    ** \brief Set current iterator's point.
+    ** \arg u New current point.
+    */
+    template<class U>
+    U
+    operator=(U u)
+    {
+      return super_iter_type::operator=(u);
     }
 
-    static std::string 
-    name() 
-    { 
-      return "fwd_iter3d<" + Exact::name() + ">"; 
+    /*!
+    ** \brief Return his type in a string.
+    ** \return The type in a string.
+    **
+    ** Very useful to debug.
+    */
+    static std::string
+    name()
+    {
+      return "fwd_iter3d<" + Exact::name() + ">";
     }
 
   protected:
 
-    void 
+    /*!
+    ** \brief Set current point to the first iterator's point.
+    **
+    ** Set current point of iterator to the first iterator's point.
+    */
+    void
     goto_begin_()
     {
       this->p_.slice() = this->p_.row() = this->p_.col() = 0;
     }
 
-    void 
+    /*!
+    ** \brief Set current point to the last iterator's point.
+    **
+    ** Set current point of iterator to the last iterator's point.
+    */
+    void
     goto_end_()
     {
       this->p_.slice() = this->nslices_;
     }
 
-    bool 
+    /*!
+    ** \brief Test if iterator's current point is the last one
+    ** \return True if current point is the last one.
+    */
+    bool
     is_at_end_() const
     {
       return this->p_.slice() == this->nslices_;
     }
 
-    void 
+    /*!
+    ** \brief Go to the next iterator's point.
+    */
+    void
     goto_next_()
     {
       ++this->p_.col();

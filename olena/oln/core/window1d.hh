@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,66 +37,131 @@
 
 namespace oln {
 
-  class window1d; // fwd_decl
+  class window1d; // forward declaration
 
+  /*!
+  ** \brief Traits for window1d.
+  */
   template<>
   struct struct_elt_traits<window1d>: public
   struct_elt_traits<abstract::windownd<window1d> >
   {
-    enum { dim = 1 };
-    typedef point1d point_type;
-    typedef dpoint1d dpoint_type;
-    typedef winiter< window1d > iter_type;
-    typedef winneighb< window1d > neighb_type;
+    enum { dim = 1 }; ///< Dimension.
+    typedef point1d point_type; ///< Type of point.
+    typedef dpoint1d dpoint_type; ///< Type of dpoint.
+    typedef winiter< window1d > iter_type; ///< Type of iterator.
+    typedef winneighb< window1d > neighb_type; ///< Type of neighbor.
   };
 
+
+  /*!
+  ** \brief Window 1 dimension.
+  **
+  ** A window is a set of points. This class
+  ** defines how to deal with. These points have 1 dimension.
+  */
   class window1d : public abstract::windownd< window1d >
   {
 
   public:
 
     typedef abstract::windownd< window1d > super_type;
-    typedef window1d self_type;
+    ///< The super type.
+    typedef window1d self_type; ///< The self type.
 
+    /*!
+    ** \brief The associate image's type of iterator.
+    ** \warning Prefer the macros oln_iter_type(Iterable) and
+    ** oln_iter_type_(Iterable) (the same without the 'typename' keyword)
+    */
     typedef struct_elt_traits< self_type >::iter_type   iter_type;
+
     typedef struct_elt_traits< self_type >::neighb_type neighb_type;
+    ///< Type of neighbor.
+
+    /*!
+    ** \brief The associate image's type of dpoint (move point).
+    ** \warning Prefer the macros oln_dpoint_type(Pointable) and
+    ** oln_dpoint_type_(Pointable) (the same without the 'typename' keyword)
+    */
     typedef struct_elt_traits< self_type >::dpoint_type dpoint_type;
 
     friend class abstract::window_base<abstract::window<window1d>, window1d>;
 
-    window1d& 
+    /*!
+    ** \brief Add a dpoint (move point) to the window.
+    ** \arg dp The new point.
+    **
+    ** Add a new member to the neighborhood. This point must be of 1
+    ** dimension.
+    */
+    window1d&
     add(const dpoint_type& dp)
     {
       return this->exact().add_(dp);
     }
 
-    window1d& 
+    /*!
+    ** \brief Add a point by coordinates to the window.
+    ** \arg col The coordinate of the new point (1 dimension).
+    **
+    ** Add a new member by its coordinates to the window.
+    ** The coordinates are only the column number because the window is
+    ** of 1 dimension.
+    */
+    window1d&
     add(coord col)
     {
       return this->add(dpoint_type(col));
     }
 
-    window1d() : super_type() 
+    /*!
+    ** \brief Construct a window of 1 dimension.
+    */
+    window1d() : super_type()
     {}
 
-    window1d(unsigned size) : super_type(size) 
+    /*!
+    ** \brief Construct a window of 1 dimension.
+    ** \arg size The number of element.
+    */
+    window1d(unsigned size) : super_type(size)
     {}
 
+    /*!
+    ** \brief Construct a window of 1 dimension from several points.
+    ** \arg n The number of element.
+    ** \arg crd The coordinates of the elements
+    */
     window1d(unsigned n, const coord crd[]) : super_type(n)
     {
       for (unsigned i = 0; i < n; ++i)
 	add(dpoint_type(crd[i]));
     }
 
-    static std::string 
-    name() 
-    { 
-      return std::string("window1d"); 
+    /*!
+    ** \brief Return his type in a string.
+    ** \return The type in a string.
+    **
+    ** Very useful to debug.
+    */
+    static std::string
+    name()
+    {
+      return std::string("window1d");
     }
 
   protected:
 
-    coord 
+    /*!
+    ** \brief Update delta.
+    ** \arg dp a move point.
+    ** \return Delta.
+    **
+    ** If the point is the biggest element of the window.
+    ** then this point is assigned to delta.
+    */
+    coord
     delta_update_(const dpoint_type& dp)
     {
       delta_(abs(dp.col()));
@@ -107,6 +172,10 @@ namespace oln {
 
   // std win
 
+  /*!
+  ** \brief Create a window (1 dimension) of 2 elements (-1, 1).
+  ** \return The new neighborhood.
+  */
   inline const window1d&
   win_c2_only()
   {
@@ -115,6 +184,10 @@ namespace oln {
     return win;
   }
 
+  /*!
+  ** \brief Create a window (1 dimension) of 3 elements (-1, 0, 1).
+  ** \return The new neighborhood.
+  */
   inline const window1d&
   win_c2p()
   {
@@ -123,6 +196,14 @@ namespace oln {
     return win;
   }
 
+  /*!
+  ** \brief Create a window (1 dimension) with width elements :
+  ** -width / 2, ..., 1, 2, ...,  width / 2
+  ** \arg width The width.
+  ** \return The new neighborhood.
+  ** \pre width >= 3.
+  ** \pre width % 2 == 1.
+  */
   inline window1d
   mk_win_segment(unsigned width)
   {

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -36,70 +36,133 @@
 
 namespace oln {
 
-  class neighborhood3d; // fwd_decl
+  class neighborhood3d; // forward declaration
 
+  /*!
+  ** \brief Traits for neighborhood3d.
+  */
   template<>
   struct struct_elt_traits<neighborhood3d>: public
   struct_elt_traits<abstract::neighborhoodnd<neighborhood3d> >
   {
-    enum { dim = 3 };
-    typedef point3d point_type;
-    typedef dpoint3d dpoint_type;
-    typedef winiter< neighborhood3d > iter_type;
-    typedef winneighb< neighborhood3d > neighb_type;
-    typedef window3d win_type;
+    enum { dim = 3 }; ///< Dimension.
+    typedef point3d point_type; ///< Type of point.
+    typedef dpoint3d dpoint_type; ///< Type of dpoint (move).
+    typedef winiter< neighborhood3d > iter_type; ///< Type of iterator.
+    typedef winneighb< neighborhood3d > neighb_type; ///< Type of neighbor.
+    typedef window3d win_type; ///< Type of window.
   };
 
-
+  /*!
+  ** \brief Neighborhood 3 dimensions.
+  **
+  ** It looks like structuring elements but here, when
+  ** you add an element, you add his opposite.
+  ** Points have 3 dimensions.
+  **
+  */
   class neighborhood3d :
     public abstract::neighborhoodnd< neighborhood3d >
   {
   public:
 
     typedef abstract::neighborhoodnd< neighborhood3d > super_type;
-    typedef neighborhood3d self_type;
+    ///< Super type.
+    typedef neighborhood3d self_type; ///< Self type.
 
+    /*!
+    ** \brief The associate image's type of iterator.
+    ** \warning Prefer the macros oln_iter_type(Iterable) and
+    ** oln_iter_type_(Iterable) (the same without the 'typename' keyword)
+    */
     typedef struct_elt_traits< self_type >::iter_type   iter_type;
-    typedef struct_elt_traits< self_type >::neighb_type
-    neighb_type;
+    typedef struct_elt_traits< self_type >::neighb_type	neighb_type;
+
+    /*!
+    ** \brief The associate image's type of dpoint (move point).
+    ** \warning Prefer the macros oln_dpoint_type(Pointable) and
+    ** oln_dpoint_type_(Pointable) (the same without the 'typename' keyword)
+    */
     typedef struct_elt_traits< self_type >::dpoint_type dpoint_type;
 
     friend class abstract::window_base<abstract::neighborhood<neighborhood3d>, neighborhood3d>;
 
-    neighborhood3d& 
+    /*!
+    ** \brief Add a dpoint (move point) to the neighborhood.
+    ** \arg dp The new point.
+    **
+    ** Add a new member to the neighborhood. This point must be of 3
+    ** dimensions.
+    */
+    neighborhood3d&
     add(const dpoint_type& dp)
     {
       this->exact().add_(dp);
       return this->exact().add_(-dp);
     }
 
-    neighborhood3d& 
+    /*!
+    ** \brief Add a point by coordinates to the neighborhood.
+    ** \arg slice The coordinates of the new point.
+    ** \arg row The coordinates of the new point.
+    ** \arg col The coordinates of the new point.
+    **
+    ** Add a new member by its coordinates to the neighborhood.
+    ** The coordinates have 3 dimensions.
+    */
+    neighborhood3d&
     add(coord slice, coord row, coord col)
     {
       return this->add(dpoint3d(slice, row, col));
     }
 
-    neighborhood3d() : super_type() 
+    /*!
+    ** \brief Construct a neighborhood of 3 dimensions.
+    */
+    neighborhood3d() : super_type()
     {}
 
-    neighborhood3d(unsigned size) : super_type(size) 
+    /*!
+    ** \brief Construct a neighborhood of 3 dimensions.
+    ** \arg size Reserve 'size' elements for the neighborhood.
+    */
+    neighborhood3d(unsigned size) : super_type(size)
     {}
 
-    neighborhood3d(unsigned n, const coord crd[]) : super_type()    
+    /*!
+    ** \brief Construct a neighborhood of 3 dimension.
+    ** \arg n Add 'n' elements to the neighborhood.
+    ** \arg crd Coordinates of the 'n' elements.
+    */
+    neighborhood3d(unsigned n, const coord crd[]) : super_type()
     {
       for (unsigned i = 0; i < 3 * n; i += 3)
 	add(dpoint_type(crd[i], crd[i+1], crd[i+2]));
     }
 
-    static std::string 
-    name() 
-    { 
-      return std::string("neighborhood3d"); 
+    /*!
+    ** \brief Return his type in a string.
+    ** \return The type in a string.
+    **
+    ** Very useful to debug.
+    */
+    static std::string
+    name()
+    {
+      return std::string("neighborhood3d");
     }
 
   protected:
 
-    coord 
+    /*!
+    ** \brief Update delta.
+    ** \arg dp a deplacement point.
+    ** \return Delta.
+    **
+    ** If the point is the biggest element of the neighborhood,
+    ** then this point is assigned to delta.
+    */
+    coord
     delta_update_(const dpoint_type& dp)
     {
       delta_(abs(dp.slice()));
@@ -110,8 +173,12 @@ namespace oln {
 
   };
 
- // std neighb
+  // std neighb
 
+  /*!
+  ** \brief Create a neighborhood (3 dimension) with 3 coordinates.
+  ** \return The new neighborhood.
+  */
   inline const neighborhood3d&
   neighb_c6()
   {
@@ -122,6 +189,10 @@ namespace oln {
     return neighb;
   }
 
+  /*!
+  ** \brief Create a neighborhood (3 dimension) with 9 coordinates.
+  ** \return The new neighborhood.
+  */
   inline const neighborhood3d&
   neighb_c18()
   {
@@ -138,6 +209,10 @@ namespace oln {
     return neighb;
   }
 
+  /*!
+  ** \brief Create a neighborhood (3 dimension) with 13 coordinates.
+  ** \return The new neighborhood.
+  */
   inline const neighborhood3d&
   neighb_c26()
   {
@@ -160,6 +235,19 @@ namespace oln {
 
   // mk_neighb's
 
+  /*!
+  ** \brief Create a block neighborhood (3 dimension).
+  ** \arg nslices Number of slice.
+  ** \arg nrows Number of row.
+  ** \arg ncols Number of column.
+  ** \return The new neighborhood (3d).
+  ** \pre nslices >= 3.
+  ** \pre nslices % 2 == 1.
+  ** \pre nrows >= 3.
+  ** \pre nrows % 2 == 1.
+  ** \pre ncols >= 3.
+  ** \pre ncols % 2 == 1.
+  */
   inline neighborhood3d
   mk_neighb_block(unsigned nslices, unsigned nrows, unsigned ncols)
   {
@@ -177,13 +265,23 @@ namespace oln {
     return neighb;
   }
 
+  /*!
+  ** \brief Create a cube neighborhood (3 dimension).
+  ** \arg width Number of slice, colunm and row.
+  ** \return The new neighborhood (3d).
+  */
   inline neighborhood3d
   mk_neighb_cube(unsigned width)
   {
     return mk_neighb_block(width, width, width);
   }
 
-  inline window3d 
+  /*!
+  ** \brief Convert a window (3 dimensions) to a neighborhood (3 dimensions).
+  ** \arg n The neighborhood to convert.
+  ** \return The new window.
+  */
+  inline window3d
   mk_win_from_neighb(const neighborhood3d& n)
   {
     window3d win(n.card());
