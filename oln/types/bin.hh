@@ -103,6 +103,13 @@ namespace oln
       operator unsigned char() { return _value; }
     };
 
+    inline std::ostream&
+    operator<<(std::ostream& stream, const oln::bin& rhs)
+    {
+      stream << (rhs.value() ? "true" : "false");
+      return stream;
+    }
+
   } // type_definitions
 
 } // end of namespace oln

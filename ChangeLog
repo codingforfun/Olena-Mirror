@@ -1,3 +1,13 @@
+2002-09-15  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/types/global_ops_defs.hh: Add inline keyword.
+	* oln/types/behaviour.hh, oln/types/optraits_cycle.hh: Move modulo 
+	calculus.
+	* oln/types/int_u.hh, oln/types/int_s.hh: Disable checks when useless
+	in constructors.
+	* oln/types/int_u.hh, oln/types/int_s.hh, oln/types/cycle.hh, 
+	oln/types/range.hh, oln/types/bin.hh: Add stream operator.
+
 2002-09-14  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/types/int_u.hh, oln/types/int_s.hh, oln/types/range.hh, 

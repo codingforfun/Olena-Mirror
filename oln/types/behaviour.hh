@@ -29,10 +29,13 @@
 # define OLENA_VALUE_BEHAVIOUR_HH
 
 # include <oln/core/contract.hh>
+# include <oln/meta/basics.hh>
+# include <oln/meta/type.hh>
 
 # include <oln/types/to_oln.hh>
 # include <oln/types/rec_value.hh>
 # include <oln/types/optraits.hh>
+# include <oln/types/optraits_scalar.hh>
 # include <oln/types/typetraits.hh>
 # include <oln/types/to_oln.hh>
 
@@ -51,7 +54,7 @@
 //
 /////////////////////////////////////////////////////////////////////////
 
-// FIXME : there is maybe simpler a way to write that, but i want it to 
+// FIXME : there is maybe simpler a way to write that, but we want it to 
 // be compatible with icc, so the behaviours must stay class, not 
 // template <class>
 
@@ -107,9 +110,9 @@ namespace oln
       {	
 	T ret = lhs + rhs;
 	if (rhs > 0)
-	  precondition(OLN_TYPE(T, ret) > lhs);
+	  postcondition(OLN_TYPE(T, ret) > lhs);
 	else
-	  precondition(OLN_TYPE(T, ret) <= lhs);
+	  postcondition(OLN_TYPE(T, ret) <= lhs);
 	return ret;
       }
 
@@ -118,9 +121,9 @@ namespace oln
       {	
 	T ret = lhs - rhs;
 	if (rhs > 0)
-	  precondition(OLN_TYPE(T, ret) <= lhs);
+	  postcondition(OLN_TYPE(T, ret) <= lhs);
 	else
-	  precondition(OLN_TYPE(T, ret) > lhs);
+	  postcondition(OLN_TYPE(T, ret) > lhs);
 	return ret;
       }
 
@@ -161,16 +164,35 @@ namespace oln
     {
       typedef typename typetraits<T>::storage_type storage_type;
 
-      // FIXME: Calculate real values
-
       template <class T1, class T2>
       static T check_plus_equal (T1 lhs, T2 rhs)
-      {	return lhs + rhs; }
+      {	
+	T ret = lhs + rhs;
+	if (rhs > 0)
+	  {
+	    if (OLN_TYPE(T, ret) <= lhs)
+	      ret = optraits<T>::max();
+	  }
+	else if (OLN_TYPE(T, ret) > lhs)
+	  ret = optraits<T>::min();
+	return ret;
+      }
 
       template <class T1, class T2>
       static T check_minus_equal (T1 lhs, T2 rhs)
-      {	return lhs - rhs; }
-
+      {	
+	T ret = lhs - rhs;
+	if (rhs > 0)
+	  {
+	    if (OLN_TYPE(T, ret) > lhs)
+	      ret = optraits<T>::min();
+	  }
+	else if (OLN_TYPE(T, ret) <= lhs)
+	  ret = optraits<T>::max();
+	return ret;
+      }
+      
+      // FIXME: add check
       template <class T1, class T2>
       static T check_times_equal (T1 lhs, T2 rhs)
       {	return lhs * rhs; }
@@ -226,8 +248,43 @@ namespace oln
       template <class T1, class T2>
       static T check_div_equal (T1 lhs, T2 rhs)
       {	return lhs / rhs; }
+      
+      // Assignation check
 
-      // FIXME: insert apply
+      struct cycle_fmod
+      {
+	static double exec (double lhs, double rhs)
+	{ return fmod(lhs, rhs); }
+      };
+      
+      struct cycle_mod
+      {
+	template <class T1, class T2>
+	static T1 exec (const T1& lhs, const T2& rhs)
+	{ return lhs % rhs; }
+      };
+      
+      // FIXME: optimize ?
+      template <class P>
+      static storage_type apply (const P& rhs)
+      {
+	typedef typename meta::if_<is_a(optraits<P>, optraits_float)::ret,
+	  cycle_fmod,
+	  cycle_mod>::ret_t cycle_op;
+	
+	typename internal::to_oln<P>::ret
+	  tmp = cycle_op::exec(std::abs(rhs), 
+			       optraits<T>::max() - optraits<T>::min());
+	
+	if (rhs < 0) tmp = -tmp;
+	
+	if (tmp < optraits<T>::min())
+	  return optraits<T>::max() - optraits<T>::min() + tmp;
+	else if (tmp >= optraits<T>::max())
+	  return optraits<T>::min() - optraits<T>::max() + tmp;
+	
+	return tmp;
+      }
     };
 
     // debug

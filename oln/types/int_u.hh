@@ -144,15 +144,21 @@ namespace oln
 	return *this;
       }
 
-
-      // FIXME: add int_u<mbits> here, and check only if mbits > nbits
-      int_u (const self& rhs)
+      template <unsigned mbits, class B2>
+      int_u (const int_u<mbits, B2>& rhs)
       {
-	_value = rhs.value();
+	if (mbits <= nbits)
+	  _value = rhs.value();
+	else
+	  _value = optraits_type::check(rhs.value());
       }
-      self& operator=(const self& rhs)
+      template <unsigned mbits, class B2>
+      self& operator=(const int_u<mbits, B2>& rhs)
       {
-	_value = rhs.value();
+	if (mbits <= nbits)
+	  _value = rhs.value();
+	else
+	  _value = optraits_type::check(rhs.value());
 	return *this;
       }
 
@@ -175,6 +181,15 @@ namespace oln
       // We want to prevent this
       int_u(bool);
     };
+
+    template<unsigned nbits, class behaviour>
+    inline std::ostream&
+    operator<<(std::ostream& stream, const oln::int_u<nbits, behaviour>& rhs)
+    {
+      stream.width(unsigned(log(double(nbits))/log(2.f)));
+      stream << unsigned(rhs.value());
+      return stream;
+    }
 
   } // type_definitions
 } // end of namespace oln

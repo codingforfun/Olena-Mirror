@@ -117,6 +117,15 @@ namespace oln
       operator base_storage_type() const { return _value; }
     };
 
+    template<class T, class interval>
+    inline std::ostream&
+    operator<<(std::ostream& stream, const oln::cycle<T, interval>& rhs)
+    {
+      // Cast useful for cycle<unsigned char, ...>
+      stream << (typename typetraits<T>::largest_type)(rhs.value());
+      return stream;
+    }
+
   } // type_definitions
 
 } // end of namespace oln

@@ -38,12 +38,12 @@
 
 # define GLOBAL_ASSIGN_OP(Op, Name)		\
 template <class T1, class T2>			\
-T1& Op(T1& lhs, const T2& rhs)			\
+inline T1& Op(T1& lhs, const T2& rhs)		\
 { return optraits<T1>::Name(lhs, rhs); }
 
 # define GLOBAL_ARITH_OP(Op, Name)						\
 template <class T1, class T2>							\
-typename									\
+inline typename									\
 internal::deduce_from_traits<internal::operator_##Name##_traits, T1, T2>::ret	\
 Op(const T1& lhs, const T2& rhs)						\
 {										\
@@ -79,7 +79,7 @@ Op(const T1& lhs, const T2& rhs)						\
 
 # define GLOBAL_CMP_OP(Op, Name)					\
 template <class T1, class T2>						\
-bool Op(const T1& lhs, const T2& rhs)					\
+inline bool Op(const T1& lhs, const T2& rhs)				\
 {									\
   typedef								\
     internal::deduce_from_traits<internal::operator_cmp_traits,		\

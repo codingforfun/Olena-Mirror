@@ -52,6 +52,7 @@ namespace oln
   private:
     typedef typename typetraits<self>::storage_type storage_type;
     typedef typename interval::storage_type interval_type;
+    typedef typename typetraits<self>::behaviour_type behaviour_type;
 
   public:
     //
@@ -71,45 +72,18 @@ namespace oln
     static interval_type sup()
     { return interval::sup(); }
 
-    struct cycle_fmod
-    {
-      static double exec (double lhs, double rhs)
-      {	return fmod(lhs, rhs); }
-    };
-
-    struct cycle_mod
-    {
-      template <class T1, class T2>
-      static T1 exec (const T1& lhs, const T2& rhs)
-      {	return lhs % rhs; }
-    };
 
     // behaviour's check
 
     template <class P>
     static storage_type check(const P& rhs)
-    {
-      typedef typename meta::if_<is_a(optraits<P>, optraits_float)::ret,
-	                         cycle_fmod,
-	                         cycle_mod>::ret_t cycle_op;
-
-      typename internal::to_oln<P>::ret
-	tmp = cycle_op::exec(std::abs(rhs), max() - min());
-
-      if (rhs < 0) tmp = -tmp;
-
-      if (tmp < min())
-	return max() - min() + tmp;
-      else if (tmp >= max())
-	return min() - max() + tmp;
-
-      return tmp;
-    }
+    { return behaviour_type::apply(rhs); }
 
     // debug
     static std::string name() {
       std::ostringstream out;
-      out << "cycle<" << optraits<T>::name() << ", " << interval::name() << ">"<< std::ends;
+      out << "cycle<" << optraits<T>::name() << ", " 
+	  << interval::name() << ">"<< std::ends;
       return out.str();
     }
   };

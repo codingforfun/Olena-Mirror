@@ -1,23 +1,20 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 44)
-(Parent-Version oln 0_5 43)
-(Version-Log "2002-09-14  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+(Project-Version oln 0_5 45)
+(Parent-Version oln 0_5 44)
+(Version-Log "2002-09-15  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* oln/types/int_u.hh, oln/types/int_s.hh, oln/types/range.hh, 
-	oln/types/cycle.hh, oln/types/typetraits_builtin_int.hh, 
-	oln/types/typetraits_builtin_float.hh: Add behaviour_type typedef.
-	* oln/types/optraits_scalar_defs.hh, oln/types/behaviour.hh: Add 
-	arithmetic checks.
-	* oln/types/behaviour.hh, oln/types/optraits_int_u.hh, 
-	oln/types/optraits_int_s.hh, oln/types/optraits_cycle.hh, 
-	oln/types/optraits_range.hh, oln/types/interval.hh, 
-	oln/types/optraits_bin.hh: Add debug code.
-	* oln/types/to_oln.hh: Add OLN_TYPE macro.
+   * oln/types/global_ops_defs.hh: Add inline keyword.
+   * oln/types/behaviour.hh, oln/types/optraits_cycle.hh: Move modulo 
+   calculus.
+   * oln/types/int_u.hh, oln/types/int_s.hh: Disable checks when useless
+   in constructors.
+   * oln/types/int_u.hh, oln/types/int_s.hh, oln/types/cycle.hh, 
+   oln/types/range.hh, oln/types/bin.hh: Add stream operator.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sun, 15 Sep 2002 00:03:35 +0200")
+(Checkin-Time "Sun, 15 Sep 2002 18:07:46 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -84,14 +81,14 @@
                   "^#"))
 (Project-Keywords)
 (Files
-  (aclocal.m4 (oln/e/8_aclocal.m4 1.19 640))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.46 600))
+  (aclocal.m4 (oln/e/8_aclocal.m4 1.20 640))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.47 600))
   (configure.ac (oln/3_configure. 1.21 600))
   (configure (oln/e/7_configure 1.25 700))
   (README (oln/1_README 1.4 600))
   (ISSUES (oln/d/47_ISSUES 1.3 600))
   (Makefile.am (oln/2_Makefile.a 1.10 600))
-  (Makefile.in (oln/e/9_Makefile.i 1.27 640))
+  (Makefile.in (oln/e/9_Makefile.i 1.28 640))
   (NEWS (oln/0_NEWS 1.7 600))
 
   (demo/image.cc (oln/d/46_image.cc 1.2 600))
@@ -349,7 +346,7 @@
   (tests/meta/test_array1d.cc (oln/f/26_test_array 1.2 640))
   (tests/meta/test_array2d.cc (oln/f/25_test_array 1.2 640))
   (tests/meta/test_array3d.cc (oln/f/24_test_array 1.2 640))
-  (tests/ChangeLog (oln/e/30_ChangeLog 1.30 600))
+  (tests/ChangeLog (oln/e/30_ChangeLog 1.31 600))
   (tests/check/check.hh (oln/e/40_check.hh 1.2 600))
   (tests/check/data.cc (oln/f/5_data.cc 1.2 600))
   (tests/check/data.hh (oln/f/6_data.hh 1.1 600))
@@ -429,29 +426,29 @@
   (oln/types/type.hh (oln/g/6_type.hh 1.3 640))
   (oln/types/to_oln.hh (oln/g/7_to_oln.hh 1.3 640))
   (oln/types/rec_value.hh (oln/g/8_rec_value. 1.4 640))
-  (oln/types/range.hh (oln/g/9_range.hh 1.4 640))
+  (oln/types/range.hh (oln/g/9_range.hh 1.5 640))
   (oln/types/predecls.hh (oln/g/10_predecls.h 1.6 640))
   (oln/types/optraits_scalar_defs.hh (oln/g/11_optraits_s 1.2 640))
   (oln/types/optraits_scalar.hh (oln/g/12_optraits_s 1.5 640))
   (oln/types/optraits_range.hh (oln/g/13_optraits_r 1.3 640))
   (oln/types/optraits_int_u.hh (oln/g/14_optraits_i 1.5 640))
   (oln/types/optraits_int_s.hh (oln/g/15_optraits_i 1.4 640))
-  (oln/types/optraits_cycle.hh (oln/g/16_optraits_c 1.6 640))
+  (oln/types/optraits_cycle.hh (oln/g/16_optraits_c 1.7 640))
   (oln/types/optraits_builtins_int_defs.hh (oln/g/17_optraits_b 1.2 640))
   (oln/types/optraits_builtins_int.hh (oln/g/18_optraits_b 1.2 640))
   (oln/types/optraits_builtins_float.hh (oln/g/19_optraits_b 1.7 640))
   (oln/types/optraits_bin.hh (oln/g/20_optraits_b 1.2 640))
   (oln/types/optraits.hh (oln/g/21_optraits.h 1.1 640))
   (oln/types/interval.hh (oln/g/22_interval.h 1.4 640))
-  (oln/types/int_u.hh (oln/g/23_int_u.hh 1.9 640))
-  (oln/types/int_s.hh (oln/g/24_int_s.hh 1.7 640))
+  (oln/types/int_u.hh (oln/g/23_int_u.hh 1.10 640))
+  (oln/types/int_s.hh (oln/g/24_int_s.hh 1.8 640))
   (oln/types/global_ops_traits.hh (oln/g/25_global_ops 1.1 640))
-  (oln/types/global_ops_defs.hh (oln/g/26_global_ops 1.1 640))
+  (oln/types/global_ops_defs.hh (oln/g/26_global_ops 1.2 640))
   (oln/types/global_ops.hh (oln/g/27_global_ops 1.6 640))
-  (oln/types/cycle.hh (oln/g/28_cycle.hh 1.5 640))
+  (oln/types/cycle.hh (oln/g/28_cycle.hh 1.6 640))
   (oln/types/builtins_properties.hh (oln/g/29_builtins_p 1.3 640))
-  (oln/types/bin.hh (oln/g/30_bin.hh 1.3 640))
-  (oln/types/behaviour.hh (oln/g/31_behaviour. 1.3 640))
+  (oln/types/bin.hh (oln/g/30_bin.hh 1.4 640))
+  (oln/types/behaviour.hh (oln/g/31_behaviour. 1.4 640))
   (oln/types/all.hh (oln/g/32_all.hh 1.2 640))
 
 
@@ -551,8 +548,11 @@
 ;; to version 0_5.43(w), by burrus_n:
 
   (tests/types/tests/int_u2e (oln/h/38_int_u2e 1.1 640))
+
+;; Files added by populate at Sun, 15 Sep 2002 17:58:55 +0200,
+;; to version 0_5.44(w), by burrus_n:
+
+  (tests/types/tests/int_sc4 (oln/h/39_int_sc4 1.1 600))
 )
-(Merge-Parents
-  (0_5.43 complete)
-)
+(Merge-Parents)
 (New-Merge-Parents)

@@ -1,6 +1,6 @@
 2002-09-15  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* types/tests/int_u2e: New file.
+	* tests/types/tests/int_u2e, tests/types/tests/int_sc4: New files.
 
 2002-09-11  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 

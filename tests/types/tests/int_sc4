@@ -1,0 +1,4 @@
+typedef cycle<int_u32, bounded_u<0, 65536U * 65536U - 10> > int_u32c;
+int_u32c a = 65536;     // a == 65536
+a *= 65537;		// a == 65446
+return a != 65546;

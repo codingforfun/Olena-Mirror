@@ -38,6 +38,8 @@
 
 // Macros //
 
+// FIXME: add bits number comparison to avoid useless checks.
+
 # define INT_S_CTOR_FROM_BUILTIN(Builtin)       \
 int_s (const Builtin rhs)			\
 {						\
@@ -118,15 +120,21 @@ namespace oln
       INT_S_CTOR_FROM_BUILTIN(unsigned char);
       INT_S_CTOR_FROM_BUILTIN(signed   char);
 
-      // FIXME: add int_s<mbits> here, and check only if mbits > nbits
-
-      int_s (const self& rhs)
+      template <unsigned mbits, class B2>
+      int_s (const int_s<mbits, B2>& rhs)
       {
-	_value = rhs.value();
+	if (mbits <= nbits)
+	  _value = rhs.value();
+	else
+	  _value = optraits_type::check(rhs.value());
       }
-      self& operator=(const self& rhs)
+      template <unsigned mbits, class B2>
+      self& operator=(const int_s<mbits, B2>& rhs)
       {
-	_value = rhs.value();
+	if (mbits <= nbits)
+	  _value = rhs.value();
+	else
+	  _value = optraits_type::check(rhs.value());
 	return *this;
       }
 
@@ -168,6 +176,15 @@ namespace oln
       // We want to prevent this
       int_s(bool);
     };
+
+    template<unsigned nbits, class behaviour>
+    inline std::ostream&
+    operator<<(std::ostream& stream, const oln::int_s<nbits, behaviour>& rhs)
+    {
+      stream.width(unsigned(log(double(nbits))/log(2.f)));
+      stream << signed(rhs.value());
+      return stream;
+    }
 
   } // type_definitions
 } // end of namespace oln
