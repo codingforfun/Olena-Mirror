@@ -1,3 +1,53 @@
+2004-03-23  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh0: Add file.
+	* tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh1: Add file.
+	* tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh2: Add file.
+	* tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh3: Add file.
+	* tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh4: Add file.
+	* tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh5: Add file.
+
+2004-03-23  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/level/cc.hh (frontp_connected_component): Change image to
+	binary_image.
+	* olena/oln/level/connected.hh (connected_component): Change image to
+	binary_image_with_dim.
+	* olena/oln/morpho/extrema_killer.hh (internal_kill_cc_area): Change
+	non_vectorial_image to binary_image_with_dim
+	* olena/oln/morpho/attribute_closing_opening_map.hh (f_tarjan_map):
+	Change image to non_vectorial_image.
+
+2004-03-19  Simon Odou  <simon@lrde.epita.fr>
+
+	* olena/oln/core/bkd_iter1d.hh: Correct comments.
+	* olena/oln/core/bkd_iter2d.hh: Likewise.
+	* olena/oln/core/bkd_iter3d.hh: Likewise.
+	* olena/oln/core/fwd_iter1d.hh: Likewise.
+	* olena/oln/core/fwd_iter2d.hh: Likewise.
+	* olena/oln/core/fwd_iter3d.hh: Likewise.
+	* olena/oln/core/abstract/iter1d.hh: Likewise.
+	* olena/oln/core/abstract/iter2d.hh: Likewise.
+	* olena/oln/core/abstract/iter3d.hh: Likewise.
+	* olena/oln/core/abstract/iter.hh: Likewise.
+	* olena/oln/core/neighborhood1d.hh: Likewise.
+	* olena/oln/core/neighborhood2d.hh: Likewise.
+	* olena/oln/core/neighborhood3d.hh: Likewise.
+	* olena/oln/core/abstract/neighborhood.hh: Likewise.
+	* olena/oln/core/abstract/struct_elt.hh: Likewise.
+	* olena/oln/core/window1d.hh: Likewise.
+	* olena/oln/core/window2d.hh: Likewise.
+	* olena/oln/core/window3d.hh: Likewise.
+	* olena/oln/core/abstract/window.hh: Likewise.
+	* olena/oln/core/w_window1d.hh: Likewise.
+	* olena/oln/core/w_window2d.hh: Likewise.
+	* olena/oln/core/w_window3d.hh: Likewise.
+	* olena/oln/core/abstract/w_window.hh: Likewise.
+	* olena/oln/io/base.hh: Likewise.
+	* olena/oln/core/abstract/window_base.hh: Likewise.
+	* olena/oln/core/abstract/windownd.hh: Likewise.
+	* olena/oln/core/abstract/w_windownd.hh: Likewise.
+	* olena/oln/core/abstract/neighborhoodnd.hh: Likewise.
+
 2004-03-19  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* tests/utils/tests/md5: Add file

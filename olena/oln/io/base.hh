@@ -47,9 +47,9 @@ namespace oln {
     namespace internal {
 
       /*!
-      ** \brief Read anything from a file.
+      ** \brief Read from a file.
       **
-      ** The "good" read function is called by template specialization.
+      ** The specialized read function is called by template specialization.
       */
       template<typename T>
       bool
@@ -61,7 +61,7 @@ namespace oln {
       /*!
       ** \brief Write anything to a file.
       **
-      ** The "good" write function is called by template specialization.
+      ** The specialized write function is called by template specialization.
       */
       template<typename T>
       bool
@@ -79,10 +79,13 @@ namespace oln {
     ** a window or a neighborhood.
     ** \arg name The name of the file.
     ** \return The new object.
+    ** \sa oln::abstract::iter
     **
-    ** Here is the external interface.
-    ** If you would like some examples to know how to use that, go to
-    ** oln::abstract::iter
+    ** Call abstract::image::has_impl to test that your image has been
+    ** successfully loaded.
+    ** See oln::io::internal::reader_id to know which file are supported.
+    ** \sa abstract::image::has_impl
+    ** \sa
     */
     inline
     internal::anything
@@ -92,13 +95,12 @@ namespace oln {
     }
 
     /*
-    ** \brief Load object from a file. This could be an image but also
-    ** a window or a neighborhood.
+    ** \brief Load an image or a structuring element from a file.
     ** \arg output The object to write to a file.
     ** \arg name The name of the file.
     ** \return True if successful.
     **
-    ** Here is the external interface. Depending of T, work is dispatched.
+    ** Depending of T, work is dispatched.
     */
     template<class T>
     bool
@@ -108,15 +110,14 @@ namespace oln {
     }
 
     /*
-    ** \brief Writing object to a file. This could be an image but also
+    ** \brief Write an image or a structuring element to a file.
     ** a window or a neighborhood.
     ** \arg input The object to read.
     ** \arg name The name of the file.
     ** \return True if successful.
     **
-    ** Here is the external interface. Depending of T, work is dispatched.
-    ** If you would like some examples to know how to use that, go to
-    ** oln::abstract::iter
+    ** Depending of T, work is dispatched.
+    ** \sa oln::abstract::iter
     */
     template< typename T >
     bool

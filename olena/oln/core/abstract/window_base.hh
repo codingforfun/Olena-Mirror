@@ -134,12 +134,7 @@ namespace oln {
       friend class neighborhood<Exact>;
       // friend class window_base_friend_traits<Sup>::ret;
 
-      /*!
-      ** \brief Return its type in a string.
-      ** \return The type in a string.
-      **
-      ** Very useful to debug.
-      */
+      ///< Return the name of the type.
       static std::string
       name()
       {

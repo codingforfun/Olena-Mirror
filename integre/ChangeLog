@@ -1,3 +1,7 @@
+2004-03-23  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* ntg/enum/bin.hh: Add size.
+
 2004-03-19  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* ntg/core/macros.hh: Add ntg_nbits macro.

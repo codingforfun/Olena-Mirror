@@ -60,7 +60,7 @@ namespace oln {
     */
     template<class I, class N>
     typename mute<I, ntg::bin>::ret
-    internal_kill_cc_area(const abstract::non_vectorial_image<I>& input,
+    internal_kill_cc_area(const abstract::binary_image_with_dim<2, I>& input,
 			  const unsigned int area,
 			  const abstract::neighborhood<N>& Ng)
     {

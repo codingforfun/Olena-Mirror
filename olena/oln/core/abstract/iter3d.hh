@@ -114,12 +114,7 @@ namespace oln {
 	return this->p_.col();
       }
 
-      /*!
-      ** \brief Return its type in a string.
-      ** \return The type in a string.
-      **
-      ** Very useful to debug.
-      */
+      ///< Return the name of the type.
       static std::string name()
       {
 	return std::string("_iter3d<") + Exact::name() + ">";

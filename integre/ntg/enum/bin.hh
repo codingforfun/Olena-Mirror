@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -70,6 +70,9 @@ namespace ntg {
       typedef bin			unsigned_largest_type;
       typedef bin			unsigned_cumul_type;
       typedef unsigned int		integer_type;
+
+      // Particular properties
+      enum { size = 1 };
     };
 
   } // end of internal.
@@ -86,7 +89,7 @@ namespace ntg {
 
     // FIXME: create a template constructor and check into it if T
     // is a real or whatever ?
-    
+
     bin (unsigned char val)
     {
       ntg_assert(val < 2);
@@ -127,11 +130,11 @@ namespace ntg {
   }
 
   namespace internal {
-  
+
     /*--------------.
     | optraits<bin> |
     `--------------*/
-  
+
     template <>
     struct optraits<bin> : public optraits<enum_value<bin> >
     {
@@ -236,9 +239,9 @@ namespace ntg {
       typedef bin ret;
       typedef bin impl;
     };
-    
+
     //  Max
-    
+
     template <>
     struct operator_traits<operator_max, bin, bin>
     {
@@ -248,7 +251,7 @@ namespace ntg {
     };
 
     //  Min
-    
+
     template <>
     struct operator_traits<operator_min, bin, bin>
     {
