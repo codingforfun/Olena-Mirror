@@ -1,3 +1,7 @@
+2003-08-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Temporary fix to ensure that Python.h is present.
+
 2003-08-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* contrib/runtests: Handle new flag (COMPILE_ONLY).

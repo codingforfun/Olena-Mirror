@@ -17,7 +17,11 @@ extern "C" {
   extern char *optarg;
   extern int optind;
   extern int opterr;
-  int getopt_long (int, char * const *, const char *, const struct option *, int *);
-}  
+  int getopt_long (int, 
+		   char * const *,  
+		   const char *, 
+		   const struct option *, 
+		   int *);
+}
 
 #endif

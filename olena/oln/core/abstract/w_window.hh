@@ -59,16 +59,24 @@ namespace oln
       typedef struct_elt<Exact> super_type;     
       typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
       typedef typename struct_elt_traits<Exact>::weight_type weight_type;
-       
+      friend class struct_elt<exact_type>;
 
       static std::string name()
       {
 	return std::string("w_window<") + Exact::name() + ">";
       }
 
-      exact_type& add(const abstract::dpoint<dpoint_type>& dp, const weight_type& w)
+      // FIXME: 
+      // add dpoint with default weight 
+      // (multiplication neutral element)
+      exact_type& add(const abstract::dpoint<dpoint_type>& dp, const weight_type& w = 1)
       {
 	return this->exact().add_(dp.exact(), w);
+      }
+
+      weight_type w(unsigned i) const
+      {
+	return this->exact().get_weight(i);
       }
 
       const weight_type& set(const abstract::dpoint<dpoint_type>& dp, 
@@ -77,19 +85,49 @@ namespace oln
 	return this->exact().set_(dp.exact(), weight);
       }
 
-      weight_type w(unsigned i) const
+    protected:
+
+      // FIXME: 
+      // add dpoint with default weight 
+      // (multiplication neutral element)
+      exact_type& add_dp(const abstract::dpoint<dpoint_type>& dp)
       {
-	return this->exact().get_weight(i);
+	return this->add(dp.exact(), 1);
       }
 
     protected:
       w_window() : super_type() {}
     };
     
-# define Weight(WinType)                               \
-Exact(WinType)::weight_type
-
   } // end of abstract
+
+  template<class E>
+  inline
+  E inter(const abstract::w_window<E>& lhs, const abstract::w_window<E>& rhs)
+  {
+    E win;
+    for (unsigned i = 0; i < lhs.card(); ++i)
+      if (rhs.has(lhs.dp(i)))
+	win.add(lhs.dp(i));
+    for (unsigned j = 0; j < rhs.card(); ++j)
+      if (! win.has(rhs.dp(j)) && lhs.has(rhs.dp(j)))
+	win.add(rhs.dp(j));
+    return win;
+  }
+
+  template<class E>
+  inline
+  E uni(const abstract::w_window<E>& lhs, const abstract::w_window<E>& rhs)
+  {
+    E win;
+    for (unsigned i = 0; i < lhs.card(); ++i)
+      win.add(lhs.dp(i));
+    for (unsigned j = 0; j < rhs.card(); ++j)
+      if (! win.has(rhs.dp(j)))
+	win.add(rhs.dp(j));
+    return win;
+  }
+
 
 } // end of oln
 

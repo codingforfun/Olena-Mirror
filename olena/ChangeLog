@@ -1,5 +1,26 @@
+2003-08-04  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/window1d.hh, oln/core/window2d.hh,
+	oln/core/window3d.hh, oln/core/abstract/window.hh: Remove get_se.
+
+	* oln/convert/conversion_ng_se.hh, 
+	oln/level/connected.hh,
+	oln/morpho/reconstruction.hh: Adapt in consequence.
+
+	* oln/core/abstract/w_window.hh: Add add(dp) with default weight
+	to 1. Fix interface. Remove Weight(WinType) macro. Add inter() and
+	uni() functions.
+
+	* oln/core/abstract/struct_elt.hh,
+	oln/morpho/fast_morpho.hxx, 
+	oln/morpho/hit_or_miss.inc: Minor change.
+	
 2003-08-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* oln/core/abstract/image_with_impl.hh: Fix friend classes.
+
+2003-08-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* oln/topo/dmap.hxx: Fix compilation with g++-3.4.
 	* oln/transforms/dwt.hh: Likewise.
 	* oln/transforms/wavelet_coeffs.hh: Likewise.

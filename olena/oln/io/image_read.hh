@@ -117,9 +117,9 @@ namespace oln {
       {
 	mlc::is_true<N == 2 || N == 3>::ensure();
 
-	// FIXME: E or abstract::image<E> ?
+	// FIXME: E or abstract::image_with_dim<N,E> ?
 	// E is convenient.
-	typedef try_stream_wrappers_in<StreamAny, E, readers_trier> 
+	typedef try_stream_wrappers_in<StreamAny, E, readers_trier>
 	  stream_trier;
 
 	std::string ext = internal::utils::extension(name);
@@ -170,7 +170,6 @@ namespace oln {
 	if (tmp.nrows() != 1)
 	  return false;
 	typename image2d<Value(E)>::iter_type it(tmp);
-	// FIXME: use resize
 	output.exact() = E(tmp.ncols());
 	for_all(it)
 	  output(it.col()) = tmp[it];

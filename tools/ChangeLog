@@ -1,3 +1,12 @@
+2003-08-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* lib/getopt.c: Update from gcc/libiberty.
+	* lib/getopt1.c: Likewise.
+	* lib/getopt.h: Likewise.
+
+	* lib/getopt.h: Rename as...
+	* lib/oln_getopt.h: ...this.
+
 2003-07-29  David Lesage  <david@lrde.epita.fr>
 
 	* utilities/morpho/Makefile.am,

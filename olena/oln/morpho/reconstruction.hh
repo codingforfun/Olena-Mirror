@@ -124,7 +124,7 @@ namespace oln {
 	precondition(level::is_greater_or_equal(mask, marker));
 
 	// Conversion of neighborhood into a SE.
-	typedef typename get_se<N::dim>::ret E;
+	typedef typename abstract::neighborhood<N>::win_type E;
 	E se_plus = get_plus_se_p(convert::ng_to_cse(Ng));
 	E se_minus = get_minus_se_p(convert::ng_to_cse(Ng));
 
@@ -211,7 +211,7 @@ namespace oln {
 	Concrete(I1) output = marker.clone();
 	output.border_adapt_copy(Ng.delta());
 	{
-	  typedef typename get_se<N::dim>::ret E;
+	  typedef typename abstract::neighborhood<N>::win_type E;
 	  E Ng_plus = get_plus_se_p(convert::ng_to_cse(Ng));
 	  E Ng_minus = get_minus_se_p(convert::ng_to_cse(Ng));
 	  typename I1::fwd_iter_type fwd_p(output);
@@ -332,7 +332,7 @@ namespace oln {
 	precondition(marker.size() == mask.size());
 	precondition(level::is_greater_or_equal(marker, mask));
 
-	typedef typename get_se<N::dim>::ret E;
+	typedef typename abstract::neighborhood<N>::win_type E;
 	E se_plus = get_plus_se_p(convert::ng_to_cse(Ng));
 	E se_minus = get_minus_se_p(convert::ng_to_cse(Ng));
 	Concrete(I1) output = marker.clone();
@@ -417,7 +417,7 @@ namespace oln {
 	Concrete(I1) output = marker.clone();
 	output.border_adapt_copy(Ng.delta());
 	{
-	  typedef typename get_se<N::dim>::ret E;
+	  typedef typename abstract::neighborhood<N>::win_type E;
 	  E Ng_plus = get_plus_se_p(convert::ng_to_cse(Ng));
 	  E Ng_minus = get_minus_se_p(convert::ng_to_cse(Ng));
 	  typename I1::fwd_iter_type fwd_p(output);

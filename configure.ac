@@ -359,6 +359,13 @@ OLN_COLLECTION([OLN_TOP],
                     [tools/swilena/python/Makefile],
       [
          AM_PATH_PYTHON([2.1])
+	 save_CPPFLAGS=$CPPFLAGS
+	 # FIXME: find python path automatically!
+	 CPPFLAGS="$CPPFLAGS -I/usr/include/python2.2"
+         AC_CHECK_HEADERS([Python.h],, 
+	                  AC_MSG_ERROR(
+			  [You need Python development files to compile the Python interface. Specify --without-swilena to configure to disable it.]))
+	 CPPFLAGS=$save_CPPFLAGS
       ], [python])dnl End of OLN_COMPONENT([tools/swilena/python])
 
 

@@ -70,10 +70,9 @@ hit_or_miss(const convert::abstract::conversion<C, B>& c,
   mlc::eq<I::dim, E1::dim>::ensure();
   mlc::eq<E1::dim, E2::dim>::ensure();
 
-  // FIXME: call inter on struct elts, even if w_windows do not provide it
+  // FIXME: call inter on w_windows destroys weights
   precondition(inter(to_exact(se1), to_exact(se2)).card() == 0);
   // FIXME: max(coord, coord) does not exist.
-  //  border::adapt_copy(input, min(se1.delta() , se2.delta()));
   input.border_adapt_copy((se1.delta() > se2.delta()) ?
 			  se1.delta() : se2.delta());
 
@@ -139,7 +138,7 @@ Concrete(I) hit_or_miss_opening(const abstract::non_vectorial_image<I>& input,
 				const abstract::struct_elt<E1>& se1,
 				const abstract::struct_elt<E2>& se2)
 {
-  // FIXME: call inter on struct elts, even if w_windows do not provide it
+  // FIXME: call inter on w_windows destroys weights
   precondition(inter(to_exact(se1), to_exact(se2)).card() == 0);
   return dilation(hit_or_miss(input, se1, se2), -se1);
 }

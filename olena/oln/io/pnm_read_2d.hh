@@ -105,8 +105,6 @@ namespace oln {
 	  if (!pnm_read_header2d(in, pnm_id, info))
 	    return false;
 
-	  // FIXME: uncomment when ready
-	  //	  im.resize(info.rows, info.cols);
 	  im = I(info.rows, info.cols);
 
 	  pnm_read_data<PnmBinary, R>::read(in, im, info);
@@ -143,8 +141,6 @@ namespace oln {
 	  if (!pnm_read_header2d(in, pnm_id, info))
 	    return false;
 
-	  // FIXME: uncomment when ready
-	  // im.resize(info.rows, info.cols);
 	  im = I(info.rows, info.cols);
 
 	  // Check that value type is large enough
@@ -193,8 +189,6 @@ namespace oln {
 	  if (!pnm_read_header2d(in, pnm_id, info))
 	    return false;
 
-	  // FIXME: uncomment when ready
-	  // im.resize(info.rows, info.cols);
 	  im = I(info.rows, info.cols);
 
 	  // Check that value type is large enough

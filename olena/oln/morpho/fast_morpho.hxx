@@ -44,7 +44,8 @@ namespace oln {
 
       // Find structuring elements to be added/removed from the histogram
       // when we move forward along each direction.
-      // FIXME: talking about struct elts, but using add(dp) that can't work on w_windows
+      // FIXME: add(dp) on w_windows associates a default weight set
+      // to 1 
       template<class E1, class E2, class E3>
       void
       find_struct_elts(const abstract::struct_elt<E1>& se,

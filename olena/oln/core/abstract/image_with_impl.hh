@@ -68,6 +68,7 @@ namespace oln {
       typedef image_with_type<typename image_id<Exact>::value_type, Exact> super_type;
 
       friend class image<exact_type>;
+      friend class image_with_dim<image_id<Exact>::dim, exact_type>;
       friend class super_type;
 
       // shallow copy
