@@ -1,102 +1,130 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 7 20)
-(Parent-Version oln 7 19)
+(Project-Version oln 7 21)
+(Parent-Version oln 7 20)
 (Version-Log "2003-01-17  Akim Demaille  <akim@epita.fr>
 
-	* aclocal.m4, oln/aclocal.m4: Remove.
-")
+	* oln.prj (Populate-Ignore): Complete")
 (New-Version-Log "")
-(Checkin-Time "Fri, 17 Jan 2003 10:44:36 +0100")
+(Checkin-Time "Fri, 17 Jan 2003 12:19:15 +0100")
 (Checkin-Login akim)
-;; diff-ignore (depcomp|missing|install-sh|mkinstalldirs)$
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
 ;; diff-ignore doc/doc/ref-morpho.tex$
 ;; diff-ignore doc/doc/ref-level.tex$
 ;; diff-ignore oln/oln/config/pconf-inc.in$
-(Populate-Ignore ("~$"
-                  "\\.\\(bak\\|old\\|rej\\|orig\\)$"
-                  "\\.o$"
-                  "\\.cmi$"
-                  "\\.cmx$"
-                  "\\.a$"
-                  "\\.s$"
-                  "\\.so$"
-                  "\\.gz$"
-                  "\\.out$"
-                  "\\.err$"
-                  "\\.log$"
-                  "\\.cache$"
-                  "\\.status$"
-                  "\\.deps/"
-                  "/Makefile$"
-                  "^Makefile$"
-                  "stamp-h$"
-                  "CVS/"
-                  ".cvsignore$"
-                  "obsolete/"
-                  "/obsolete/"
-                  "demo/.*\\.p.m$"
-                  "demo/tour$"
-                  "demo/morpholena$"
-                  "demo/image$"
-                  "autom4te.cache"
-                  "\\.html$"
-                  "\\.png$"
-                  "\\.pdf$"
-                  "\\.eps$"
-                  "tools/swilena/.*_wrap.cxx$"
-                  "doc/doc/.*\\.pbm$"
-                  "doc/doc/bin/.*$"
-                  "doc/doc/html/.*$"
-                  "doc/doc/oln-ref.toc$"
-                  "doc/doc/oln-ref.tmp$"
-                  "doc/doc/oln-ref.pg$"
-                  "doc/doc/oln-ref.ky$"
-                  "doc/doc/oln-ref.tp$"
-                  "doc/doc/oln-ref.vr$"
-                  "doc/doc/oln-ref.fn$"
-                  "doc/doc/oln-ref.cp$"
-                  "doc/doc/oln-ref.cps$"
-                  "doc/doc/oln-ref.aux$"
-                  "doc/doc/oln-ref.info$"
-                  "doc/doc/oln-dev.tmp$"
-                  "doc/doc/oln-dev.toc$"
-                  "doc/doc/oln-dev.pg$"
-                  "doc/doc/oln-dev.ky$"
-                  "doc/doc/oln-dev.tp$"
-                  "doc/doc/oln-dev.vr$"
-                  "doc/doc/oln-dev.fn$"
-                  "doc/doc/oln-dev.cp$"
-                  "doc/doc/oln-dev.cps$"
-                  "doc/doc/oln-dev.aux$"
-                  "doc/doc/oln-dev.info$"
-                  "doc/doc/version.texi$"
-                  "src/tests/convert/.*-.*-.*$"
-                  "\\.#"
-                  "^#"
-                  "src/tests/defs$"
-                  "\\(TAGS\\|tags\\)$"
-                  "diffs.patch$"
-                  "src/config/pconf.hh$"
-                  "oln/tests/config.hin$"
-                  "attic/.*"
-                  "tools/config.hin$"
-                  "doc/config.hin$"
-                  "doc/doc/texinfo.tex$"
-                  "/Makefile.in$"
-	          "^Makefile.in$"
-                  "/missing$"
-                  "/install-sh$"
-                  "/mkinstalldirs$"
-                  "/depcomp$"
-                  "/aclocal.m4$"
-		  "/configure$"
-		  "^configure$"
-		  "utilities/morpho/morpho-rules.make$"
-))
+(Populate-Ignore
+  ("~$"
+   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
+   "\\.o$"
+   "\\.cmi$"
+   "\\.cmx$"
+   "\\.a$"
+   "\\.s$"
+   "\\.so$"
+   "\\.gz$"
+   "\\.out$"
+   "\\.err$"
+   "\\.log$"
+   "\\.cache$"
+   "\\.status$"
+   "\\.deps/"
+   "/Makefile$"
+   "^Makefile$"
+   "stamp-h\\([0-9]\\)\\?$"
+   "CVS/"
+   ".cvsignore$"
+   "obsolete/"
+   "/obsolete/"
+   "demo/.*\\.p.m$"
+   "demo/tour$"
+   "demo/morpholena$"
+   "demo/image$"
+   "autom4te.cache"
+   "\\.html$"
+   "\\.png$"
+   "\\.pdf$"
+   "\\.eps$"
+   "tools/swilena/.*_wrap.cxx$"
+   "doc/doc/.*\\.pbm$"
+   "doc/doc/bin/.*$"
+   "doc/doc/html/.*$"
+   "doc/doc/oln-\\(dev\\|ref\\).\\(dvi\\|tmp\\|toc\\|pg\\|ps\\|ky\\|tp\\|vr\\|fn\\|cps\\?\\|aux\\|info\\)$"
+   "doc/doc/version.texi$"
+   "src/tests/convert/.*-.*-.*$"
+   "\\.#"
+   "^#"
+   "src/tests/defs$"
+   "\\(TAGS\\|tags\\)$"
+   "diffs.patch$"
+   "oln/tests/arith/runs"
+   "oln/oln/config/pconf\\.inc$"
+   "tests/defs$"
+   "attic/"
+   "/Makefile.in$"
+   "^Makefile.in$"
+   "/\\(missing\\|install-sh\\|mkinstalldirs\\|depcomp\\)$"
+   "\\(texinfo\\.tex\\)$"
+   "^\\(.*/\\)\\?aclocal.m4$"
+   "/configure$"
+   "^configure$"
+   "utilities/morpho/morpho-rules.make$"
+   "config.h\\(in\\)\\?"
+   "doc/doc/ref-level.tex"
+   "doc/doc/ref-morpho.tex"
+   "oln/img/lena128.pgm"
+   "oln/img/lena.pbm"
+   "oln/img/lena.pgm"
+   "oln/img/lena.ppbm"
+   "oln/img/lena.ppgm"
+   "oln/img/lena.pppm"
+   "oln/img/neighbor9.ppbm"
+   "oln/img/neighbor.ppbm"
+   "oln/img/se9.ppbm"
+   "oln/img/se.ppbm"
+   "tools/utilities/morpho/black_top_hat_2d_int_u8"
+   "tools/utilities/morpho/closing_2d_int_u8"
+   "tools/utilities/morpho/dilation_2d_int_u8"
+   "tools/utilities/morpho/erosion_2d_int_u8"
+   "tools/utilities/morpho/fast_beucher_gradient_2d_int_u8"
+   "tools/utilities/morpho/fast_black_top_hat_2d_int_u8"
+   "tools/utilities/morpho/fast_closing_2d_int_u8"
+   "tools/utilities/morpho/fast_dilation_2d_int_u8"
+   "tools/utilities/morpho/fast_erosion_2d_int_u8"
+   "tools/utilities/morpho/fast_external_gradient_2d_int_u8"
+   "tools/utilities/morpho/fast_gaussian_2d_int_u8"
+   "tools/utilities/morpho/fast_gaussian_derivative_2d_int_u8"
+   "tools/utilities/morpho/fast_gaussian_second_derivative_2d_int_u8"
+   "tools/utilities/morpho/fast_hit_or_miss_2d_int_u8"
+   "tools/utilities/morpho/fast_internal_gradient_2d_int_u8"
+   "tools/utilities/morpho/fast_laplacian_2d_int_u8"
+   "tools/utilities/morpho/fast_opening_2d_int_u8"
+   "tools/utilities/morpho/fast_self_complementary_top_hat_2d_int_u8"
+   "tools/utilities/morpho/fast_thickening_2d_int_u8"
+   "tools/utilities/morpho/fast_thinning_2d_int_u8"
+   "tools/utilities/morpho/fast_top_hat_contrast_op_2d_int_u8"
+   "tools/utilities/morpho/fast_white_top_hat_2d_int_u8"
+   "tools/utilities/morpho/hit_or_miss_2d_int_u8"
+   "tools/utilities/morpho/hybrid_minima_imposition_2d_int_u8"
+   "tools/utilities/morpho/hybrid_regional_minima_2d_int_u8"
+   "tools/utilities/morpho/laplacian_2d_int_u8"
+   "tools/utilities/morpho/opening_2d_int_u8"
+   "tools/utilities/morpho/self_complementary_top_hat_2d_int_u8"
+   "tools/utilities/morpho/sequential_minima_imposition_2d_int_u8"
+   "tools/utilities/morpho/sequential_regional_minima_2d_int_u8"
+   "tools/utilities/morpho/sure_minima_imposition_2d_int_u8"
+   "tools/utilities/morpho/sure_regional_minima_2d_int_u8"
+   "tools/utilities/morpho/thickening_2d_int_u8"
+   "tools/utilities/morpho/thinning_2d_int_u8"
+   "tools/utilities/morpho/top_hat_contrast_op_2d_int_u8"
+   "tools/utilities/morpho/watershed_con_2d_int_u8"
+   "tools/utilities/morpho/watershed_seg_2d_int_u8"
+   "tools/utilities/morpho/white_top_hat_2d_int_u8"
+   "tools/utilities/oln-mosaic-u16"
+   "tools/utilities/oln-mosaic-u8"
+   )
+)
 (Project-Keywords)
 (Files
 
@@ -132,17 +160,12 @@
   (doc/tpl/processing.tpl (oln/d/48_processing 1.14 640))
   (FAQ (oln/j/31_FAQ 1.2 640))
   (INSTALL (oln/o/39_INSTALL 1.1 640))
-  ; (install-sh ())
   (Makefile.am (oln/n/32_Makefile.a 1.5 640))
-  ; (missing ())
-  ; (mkinstalldirs ())
   (NEWS (oln/0_NEWS 1.9 640))
   (oln/configure.ac (oln/n/4_configure. 1.5 640))
   (oln/img/face_se.pbm (oln/n/17_face_se.pb 1.1 640) :no-keywords)
-  ; (oln/img/lena128.pgm ())
   (oln/img/lena256.pgm (oln/n/14_lena256.pg 1.1 640))
   (oln/img/lena_dark.pgm (oln/n/13_lena_dark. 1.1 640))
-  ; (oln/img/lena.pgm ())
   (oln/img/lena.ppm (oln/n/10_lena.ppm 1.1 640))
   (oln/img/Makefile.am (oln/o/34_Makefile.a 1.1 640))
   ; (oln/img/Makefile.in ())
