@@ -1,4 +1,5 @@
 include ../check/Makefile.runtests
+include ../check/Makefile.check
 
-CLEANFILES += cc 2nd_cc connected_out lena_inverted set_level \
-	set_level2 threshold_128
+
+check-local: check-runtests

@@ -116,6 +116,7 @@ namespace oln {
 
 	  if (bin_offset == -1)
 	    {
+	      bin_v = ~bin_v;
 	      ostr_.write(&bin_v, 1);
 	      bin_offset = 7;
 	      bin_v = 0;

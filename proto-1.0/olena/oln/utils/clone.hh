@@ -35,56 +35,63 @@ namespace oln {
 
   // fwd decl
   namespace utils {
+
+    namespace impl {
       template <typename I> struct clone_type;
+    }
+
   }
 
   // category
   template <typename I>
-  struct set_category < utils::clone_type<I> >
+  struct set_category < utils::impl::clone_type<I> >
   {
     typedef category::image ret;
   };
 
   // super_type
   template <typename I>
-  struct set_super_type < utils::clone_type<I> >
+  struct set_super_type < utils::impl::clone_type<I> >
   {
-    typedef abstract::op<I, utils::clone_type<I> > ret;
+    typedef abstract::op<I, utils::impl::clone_type<I> > ret;
   };
 
 
 
   namespace utils {
 
-    template <typename I>
-    struct clone_type : abstract::op<I, clone_type<I> >
-    {
-      typedef abstract::op<I, clone_type<I> > super_type;
+    namespace impl {
 
-      mlc::box<I> input_;
-
-      clone_type(I& input) : input_(input)
-      {}
-
-      void impl_run()
+      template <typename I>
+      struct clone_type : abstract::op<I, clone_type<I> >
       {
-	I ima(input_->size());
-	oln_type_of(I, fwd_piter) it(input_->size());
+	typedef abstract::op<I, clone_type<I> > super_type;
 
-	for_all(it)
-	  {
-	    ima[it] = (*input_)[it];
-	  }
+	mlc::box<I> input_;
 
-	*this->image_ = ima;
-      }
-    };
+	clone_type(I& input) : input_(input)
+	{}
 
+	void impl_run()
+	{
+	  I ima(input_->size());
+	  oln_type_of(I, fwd_piter) it(input_->size());
+
+	  for_all(it)
+	    {
+	      ima[it] = (*input_)[it];
+	    }
+
+	  *this->image_ = ima;
+	}
+      };
+
+    }
 
     template <typename I>
-    clone_type<I> clone(abstract::image<I>& ima)
+    impl::clone_type<I> clone(abstract::image<I>& ima)
     {
-      clone_type<I> tmp(ima.exact());
+      impl::clone_type<I> tmp(ima.exact());
       tmp.run();
       return tmp;
     }

@@ -1,3 +1,23 @@
+2005-03-20  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* tests/morpho/tests/dilation: New.
+	* tests/morpho/tests/erosion: New.
+	* tests/level/Makefile.am: Add missing inclusions.
+	* oln/core/abstract/image_with_data.hh: Use resize_border for const
+	images.
+	* oln/utils/key.hh: Add md5 key implementation.
+	* oln/utils/key.hxx: Likewise.
+	* oln/utils/buffer.hh: Add md5 buffer implementation.
+	* oln/utils/buffer.hxx: Likewise.
+	* oln/utils/md5.hh: Add md5 algorithm implementation.
+	* oln/utils/md5.hxx: Likewise.
+	* oln/utils/clone.hh: Make it respect algorithm coding style.
+	* oln/morpho/dilation.hh: New. Classical dilation implementation
+	* oln/morpho/stat.hh: Replace obsolete use of ::dim by size properties.
+	* oln/morpho/erosion.hh: New. Classical erosion implementation
+	* oln/io/write_image_2d_pnm.hh: Fix binary file handling.
+	* oln/io/read_image_2d_pnm.hh: Likewise.
+
 2005-03-20  Simon Odou  <simon@lrde.epita.fr>
 
 	* tests/morpho/tests/stat: New. Test morpho min and max.

@@ -63,7 +63,9 @@ namespace oln {
 	static V
 	max(const I& input, const oln_type_of(I, point)& p, const E& se)
 	{
-          // FIXME: test dim I == dim E
+          // FIXME: test dim I == dim
+	  mlc::is_true<mlc::type::eq<oln_type_of(I, size),
+	    oln_type_of(E, size)>::ret>::ensure();
 
           oln_type_of(E, fwd_witer) dp(se);
 	  dp.start();
@@ -88,6 +90,8 @@ namespace oln {
 	min(const I& input, const oln_type_of(I, point)& p, const E& se)
 	{
           // FIXME: test dim I == dim E
+	  mlc::is_true<mlc::type::eq<oln_type_of(I, size),
+	    oln_type_of(E, size)>::ret>::ensure();
 
 	  oln_type_of(E, fwd_witer) dp(se);
 	  dp.start();
@@ -108,7 +112,8 @@ namespace oln {
 	static ntg::bin
 	max(const I& input, const oln_type_of(I, point)& p, const E& se)
 	{
-	  mlc::eq<I::dim, E::dim>::ensure();
+	  mlc::is_true<mlc::type::eq<oln_type_of(I, size),
+	    oln_type_of(E, size)>::ret>::ensure();
 	  oln_type_of(E, fwd_witer) dp(se);
 	  for_all (dp)
 	    if (input[p + dp] == true)
@@ -119,7 +124,8 @@ namespace oln {
 	static ntg::bin
 	min(const I& input, const oln_type_of(I, point)& p, const E& se)
 	{
-	  mlc::eq<I::dim, E::dim>::ensure();
+	  mlc::is_true<mlc::type::eq<oln_type_of(I, size),
+	    oln_type_of(E, size)>::ret>::ensure();
 	  oln_type_of(E, fwd_witer) dp(se);
 	  for_all (dp)
 	    if (input[p + dp] == false)
