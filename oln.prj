@@ -1,13 +1,13 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 72)
-(Parent-Version oln 2003paradigm 71)
-(Version-Log "        * olena/tests/level/connected.cc: Fix return value.
+(Project-Version oln 2003paradigm 73)
+(Parent-Version oln 2003paradigm 72)
+(Version-Log "        * olena/tests/level/invert.cc: Fix IO bug.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 31 Jul 2003 11:31:36 +0200")
+(Checkin-Time "Thu, 31 Jul 2003 11:50:30 +0200")
 (Checkin-Login sylvain)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -97,7 +97,7 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.9 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.53 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.54 600))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.19 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.27 600))
@@ -984,7 +984,7 @@
   (olena/tests/level/cc.cc (oln/t/47_cc.cc 1.1 604))
   (olena/tests/level/compare.cc (oln/t/48_compare.cc 1.1 604))
   (olena/tests/level/connected.cc (oln/t/49_connected. 1.2 604))
-  (olena/tests/level/invert.cc (oln/t/50_invert.cc 1.1 604))
+  (olena/tests/level/invert.cc (oln/t/50_invert.cc 1.2 604))
   (olena/tests/level/set_level.cc (oln/t/51_set_level. 1.1 604))
   (olena/tests/level/threshold.cc (oln/u/0_threshold. 1.1 604))
 ;; Files deleted by depopulate at Sat, 26 Jul 2003 16:48:37 +0200,

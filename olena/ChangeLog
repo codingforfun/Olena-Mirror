@@ -1,5 +1,9 @@
 2003-07-31  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
+	* olena/tests/level/invert.cc: Fix IO bug.
+
+2003-07-31  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
+
 	* olena/tests/level/connected.cc: Fix return value.
 
 2003-07-31  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
