@@ -45,11 +45,17 @@ namespace oln {
 
 	zfilebuf() : file(NULL),  mode(0),  own_file_descriptor(0)
 	{
+	  inbuf = new char[lenbuf];
+	  outbuf = new char[lenbuf];
+	  setg(0, 0, 0);
+	  setp(outbuf, outbuf + lenbuf);
 	}
 
 	virtual ~zfilebuf()
 	{
 	  sync();
+	  delete[] inbuf;
+	  delete[] outbuf;
 	  if ( own_file_descriptor )
 	    close();
 	}
@@ -169,16 +175,14 @@ namespace oln {
 				       std::ios::seekdir dir,
 				       int)// which)
 	{
-	  return streampos(gzseek(file, off, dir));
+	  return std::streampos(gzseek(file, off, dir));
 	}
 
 	virtual int sync()
 	{
 	  if ( !is_open() )
 	    return EOF;
-	  if ( out_waiting() )
-	    return flushbuf();
-	  return 0;
+	  return flushbuf();
 	}
 
       protected:
@@ -186,35 +190,20 @@ namespace oln {
 	virtual int underflow()
 	{
 	  // If the file hasn't been opened for reading, error.
-	  if ( !is_open() || !(mode & std::ios::in) )
+	  if (!is_open() || !(mode & std::ios::in))
 	    return EOF;
 
-	  // if a buffer doesn't exists, allocate one.
-	  if ( !base() )
-	    {
-	      if ( (allocate()) == EOF )
-		return EOF;
-	      setp(0,0);
-	    }
-	  else
-	    {
-	      if ( in_avail() )
-		return (unsigned char) *gptr();
+	  if (in_avail())
+	    return (unsigned char) *gptr();
 
-	      if ( out_waiting() ) {
-		if ( flushbuf() == EOF )
-		  return EOF;
-	      }
-	    }
+	  if (flushbuf() == EOF)
+	    return EOF;
 
 	  // Attempt to fill the buffer.
-	  int result = fillbuf();
-	  if ( result == EOF )
-	    {
-	      // disable get area
-	      setg(0,0,0);
-	      return EOF;
-	    }
+	  if (fillbuf() == EOF)
+	    return EOF;
+
+	  assert (eback());
 
 	  return (unsigned char) *gptr();
 	}
@@ -224,25 +213,12 @@ namespace oln {
 	  if ( !is_open() || !(mode & std::ios::out) )
 	    return EOF;
 
-	  if ( !base() )
-	    {
-	      if ( allocate() == EOF )
-		return EOF;
-	      setg(0,0,0);
-	    }
-	  else
-	    {
-	      if (in_avail())
-		return EOF;
-	      if (out_waiting())
-		if (flushbuf() == EOF)
-		  return EOF;
-	    }
+	  assert (pbase());
 
-	  int bl = blen();
-	  setp( base(), base() + bl);
+	  if (flushbuf() == EOF)
+	    return EOF;
 
-	  if ( c != EOF )
+	  if (c != EOF)
 	    {
 	      *pptr() = c;
 	      pbump(1);
@@ -256,32 +232,29 @@ namespace oln {
 	short mode;
 	short own_file_descriptor;
 	std::string _name;
+	char *inbuf;
+	char *outbuf;
+	static const int lenbuf = 16 * 1024;
 
 	int flushbuf()
 	{
-	  int n;
-	  char *q;
+	  int n = pptr() - outbuf;
 
-	  q = pbase();
-	  n = pptr() - q;
+	  if (n == 0)
+	    return 0;
 
-	  if ( gzwrite( file, q, n) < n )
+	  if (gzwrite(file, outbuf, n) < n)
 	    return EOF;
 
-	  setp(0,0);
+	  setp(outbuf, outbuf + lenbuf);
 	  return 0;
 	}
 
 	int fillbuf()
 	{
-	  int required;
-	  char *p;
-
-	  p = base();
-	  required = blen();
-	  int t = gzread( file, p, required );
-	  if ( t <= 0) return EOF;
-	  setg( base(), base(), base()+t);
+	  int t = gzread(file, inbuf, lenbuf);
+	  if (t <= 0) return EOF;
+	  setg(inbuf, inbuf, inbuf + t);
 	  return t;
 	}
 

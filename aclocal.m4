@@ -1,4 +1,4 @@
-# aclocal.m4 generated automatically by aclocal 1.6a -*- Autoconf -*-
+# aclocal.m4t generated automatically by aclocal 1.6.2 -*- Autoconf -*-
 
 # Copyright 1996, 1997, 1998, 1999, 2000, 2001, 2002
 # Free Software Foundation, Inc.
@@ -100,16 +100,15 @@ AC_REQUIRE([AC_PROG_AWK])dnl
 AC_REQUIRE([AC_PROG_MAKE_SET])dnl
 
 _AM_IF_OPTION([no-dependencies],,
-[AC_PROVIDE_IFELSE([AC_PROG_CC],
+[AC_PROVIDE_IFELSE([AC_PROG_][CC],
                   [_AM_DEPENDENCIES(CC)],
-                  [define([AC_PROG_CC],
-                          defn([AC_PROG_CC])[_AM_DEPENDENCIES(CC)])])dnl
-AC_PROVIDE_IFELSE([AC_PROG_CXX],
+                  [define([AC_PROG_][CC],
+                          defn([AC_PROG_][CC])[_AM_DEPENDENCIES(CC)])])dnl
+AC_PROVIDE_IFELSE([AC_PROG_][CXX],
                   [_AM_DEPENDENCIES(CXX)],
-                  [define([AC_PROG_CXX],
-                          defn([AC_PROG_CXX])[_AM_DEPENDENCIES(CXX)])])dnl
+                  [define([AC_PROG_][CXX],
+                          defn([AC_PROG_][CXX])[_AM_DEPENDENCIES(CXX)])])dnl
 ])
-_AM_CONFIG_HEADER_INSINUATE
 ])
 
 # Copyright 2002  Free Software Foundation, Inc.
@@ -132,14 +131,14 @@ _AM_CONFIG_HEADER_INSINUATE
 # ----------------------------
 # Automake X.Y traces this macro to ensure aclocal.m4 has been
 # generated from the m4 files accompanying Automake X.Y.
-AC_DEFUN([AM_AUTOMAKE_VERSION],[am__api_version="1.6a"])
+AC_DEFUN([AM_AUTOMAKE_VERSION],[am__api_version="1.6"])
 
 # AM_SET_CURRENT_AUTOMAKE_VERSION
 # -------------------------------
 # Call AM_AUTOMAKE_VERSION so it can be traced.
 # This function is AC_REQUIREd by AC_INIT_AUTOMAKE.
 AC_DEFUN([AM_SET_CURRENT_AUTOMAKE_VERSION],
-	 [AM_AUTOMAKE_VERSION([1.6a])])
+	 [AM_AUTOMAKE_VERSION([1.6.2])])
 
 # Helper functions for option handling.                    -*- Autoconf -*-
 
@@ -534,9 +533,6 @@ else
 fi
 ])
 AC_SUBST([$1DEPMODE], [depmode=$am_cv_$1_dependencies_compiler_type])
-AM_CONDITIONAL([am__fastdep$1], [
-  test "x$enable_dependency_tracking" != xno \
-  && test "$am_cv_$1_dependencies_compiler_type" = gcc3])
 ])
 
 
@@ -656,9 +652,7 @@ AC_DEFUN([AM_OUTPUT_DEPENDENCY_COMMANDS],
      [AMDEP_TRUE="$AMDEP_TRUE" ac_aux_dir="$ac_aux_dir"])
 ])
 
-# Check to see how 'make' treats includes.	-*- Autoconf -*-
-
-# Copyright (C) 2001, 2002 Free Software Foundation, Inc.
+# Copyright 2001 Free Software Foundation, Inc.             -*- Autoconf -*-
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -698,7 +692,7 @@ echo "include confinc" > confmf
 # In particular we don't look at `^make:' because GNU make might
 # be invoked under some other name (usually "gmake"), in which
 # case it prints its new name instead of `make'.
-if test "`$am_make -s -f confmf 2> /dev/null | grep -v 'ing directory'`" = "done"; then
+if test "`$am_make -s -f confmf 2> /dev/null | fgrep -v 'ing directory'`" = "done"; then
    am__include=include
    am__quote=
    _am_result=GNU
@@ -826,7 +820,7 @@ AS_ESCAPE(_AM_DIRNAME(patsubst([$1],
 AC_DEFUN([_AM_CONFIG_HEADER],
 [# Add the stamp file to the list of files AC keeps track of,
 # along with our hook.
-_AM_AC_CONFIG_HEADERS([$1],
+AC_CONFIG_HEADERS([$1],
                   [# update the timestamp
 echo 'timestamp for $1' >"_AM_STAMP([$1])"
 $2],
@@ -834,35 +828,9 @@ $2],
 ])# _AM_CONFIG_HEADER
 
 
-# _AM_CONFIG_HEADERS(HEADER[:SOURCES]..., COMMANDS, INIT-COMMANDS)
-# ----------------------------------------------------------------
-AC_DEFUN([_AM_CONFIG_HEADERS],
-[AC_FOREACH([_AM_File], [$1], [_AM_CONFIG_HEADER(_AM_File, [$2], [$3])])
-])# _AM_CONFIG_HEADERS
-
-# This is a false definition of AM_CONFIG_HEADER that will be
-# overridden by the real definition when _AM_CONFIG_HEADER_INSINUATE
-# is called (i.e. during AM_INIT_AUTOMAKE).
+# AM_CONFIG_HEADER(HEADER[:SOURCES]..., COMMANDS, INIT-COMMANDS)
+# --------------------------------------------------------------
 AC_DEFUN([AM_CONFIG_HEADER],
-[m4_fatal([AM_CONFIG_HEADER called before AM_INIT_AUTOMAKE])])
-
-# _AM_CONFIG_HEADER_INSINUATE
-# ---------------------------
-# Replace AC_CONFIG_HEADERS with our AM_CONFIG_HEADER.
-# We don't care about AC_CONFIG_HEADER (without S): it's an obsolete
-# Autoconf macro which will simply call AC_CONFIG_HEADERS (with S).
-AC_DEFUN([_AM_CONFIG_HEADER_INSINUATE], [
-dnl Since the substitution is only effective after AM_INIT_AUTOMAKE,
-dnl make sure AC_CONFIG_HEADERS is not called before.
-AC_BEFORE([AM_INIT_AUTOMAKE], [AC_CONFIG_HEADERS])dnl
-dnl Save the previous AC_CONFIG_HEADERS definition
-dnl (Beware: this must be m4_copy, not m4_rename, because we will
-dnl lose the --trace bit of AC_CONFIG_HEADERS if we undefine it.)
-m4_copy([AC_CONFIG_HEADERS], [_AM_AC_CONFIG_HEADERS])dnl
-dnl Override AC_CONFIG_HEADERS with ours.
-AC_DEFUN([AC_CONFIG_HEADERS], [_AM_CONFIG_HEADERS($][@)])dnl
-dnl Define AM_CONFIG_HEADERS (obsolete) in terms of AC_CONFIG_HEADERS.
-dnl This way autoheader will `see' the calls to AM_CONFIG_HEADER.
-AC_DEFUN([AM_CONFIG_HEADER], [AC_CONFIG_HEADERS($][@)])dnl
-])
+[AC_FOREACH([_AM_File], [$1], [_AM_CONFIG_HEADER(_AM_File, [$2], [$3])])
+])# AM_CONFIG_HEADER
 

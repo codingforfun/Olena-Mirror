@@ -1,3 +1,12 @@
+2002-07-18  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* oln/io/gz_stream.hh (zfilebuf::inbuf, zfilebuf::outbuf,
+	zfilebuf::lenbuf): New member.
+	(zfilebuf::zfilebuf): Allocate inbuf and outbug.
+	(zfilebuf::is_open): Add missing std::.
+	(zfilebuf::underflow, zfilebuf::overflow, zfilebug::fillbuf):
+	Rewrite using inbuf, outbuf, and lenbuf.
+
 2002-07-18  Akim Demaille  <akim@epita.fr>
 
 	* oln.prj: Equip with diff-ignore.

@@ -1,19 +1,21 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_4 24)
-(Parent-Version oln 0_4 23)
-(Version-Log "Index: ChangeLog
-from  Akim Demaille  <akim@epita.fr>
+(Project-Version oln 0_4 25)
+(Parent-Version oln 0_4 24)
+(Version-Log "2002-07-18  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-        * oln.prj: Equip with diff-ignore.
-        * configure.ac: Require Automake 1.6.2: previous versions have a
-        problem with ZLIB_LDFLAGS.
-        * tests/convol/Makefile.am (noinst_PROGRAMS): Depends on `make check'
-        results, so make it `check_PROGRAMS'.")
+	* oln/io/gz_stream.hh (zfilebuf::inbuf, zfilebuf::outbuf,
+	zfilebuf::lenbuf): New member.
+	(zfilebuf::zfilebuf): Allocate inbuf and outbug.
+	(zfilebuf::is_open): Add missing std::.
+	(zfilebuf::underflow, zfilebuf::overflow, zfilebug::fillbuf):
+	Rewrite using inbuf, outbuf, and lenbuf.
+
+")
 (New-Version-Log "")
-(Checkin-Time "Thu, 18 Jul 2002 10:40:23 +0200")
-(Checkin-Login akim)
+(Checkin-Time "Thu, 18 Jul 2002 14:03:50 +0200")
+(Checkin-Login duret_g)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
 ;; diff-ignore Makefile\.in$
@@ -78,37 +80,37 @@ from  Akim Demaille  <akim@epita.fr>
                   "^#"))
 (Project-Keywords)
 (Files
-  (aclocal.m4 (oln/e/8_aclocal.m4 1.12 644))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.7 600))
+  (aclocal.m4 (oln/e/8_aclocal.m4 1.13 644))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.8 600))
   (configure.ac (oln/3_configure. 1.15 600))
-  (configure (oln/e/7_configure 1.18 700))
+  (configure (oln/e/7_configure 1.19 700))
   (README (oln/1_README 1.3 600))
   (ISSUES (oln/d/47_ISSUES 1.2 600))
   (Makefile.am (oln/2_Makefile.a 1.9 600))
-  (Makefile.in (oln/e/9_Makefile.i 1.18 644))
+  (Makefile.in (oln/e/9_Makefile.i 1.19 644))
   (NEWS (oln/0_NEWS 1.5 600))
 
   (demo/image.cc (oln/d/46_image.cc 1.2 600))
   (demo/Makefile.am (oln/d/44_Makefile.a 1.4 600))
-  (demo/Makefile.in (oln/e/16_Makefile.i 1.15 644))
+  (demo/Makefile.in (oln/e/16_Makefile.i 1.16 644))
   (demo/morpholena.cc (oln/d/43_morpholena 1.4 600))
   (demo/test-reconstruction.cc (oln/e/22_test-recon 1.4 600))
   (demo/tour.cc (oln/d/45_tour.cc 1.2 600))
 
 
-  (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.6 644))
+  (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.6 600))
   (doc/ChangeLog (oln/e/1_ChangeLog 1.15 600))
   (doc/configure.ac (oln/e/2_configure. 1.4 600))
   (doc/configure (oln/e/3_configure 1.8 700))
   (doc/doc/bin () :directory)
   (doc/doc/html () :directory)
   (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.10 600))
-  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.12 644))
+  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.12 600))
   (doc/doc/oln-ref.tex (oln/f/14_oln-ref.te 1.1 600))
   (doc/img/lena256.pgm (oln/e/21_lena256.pg 1.1 600))
   (doc/img/object.pbm (oln/d/49_object.pbm 1.1 600))
   (doc/Makefile.am (oln/e/0_Makefile.a 1.1 600))
-  (doc/Makefile.in (oln/e/5_Makefile.i 1.8 644))
+  (doc/Makefile.in (oln/e/5_Makefile.i 1.8 600))
   (doc/tpl/processing.tpl (oln/d/48_processing 1.8 600))
 
   (img/lena128.pgm (oln/e/23_lena128.pg 1.1 600))
@@ -235,7 +237,7 @@ from  Akim Demaille  <akim@epita.fr>
   (oln/io/basics.hh (oln/b/12_basics.hh 1.2 600))
   (oln/io/file.hh (oln/b/17_file.hh 1.2 600))
   (oln/io/gz.hh (oln/f/16_gz.hh 1.2 600))
-  (oln/io/gz_stream.hh (oln/f/17_gz_stream. 1.2 600))
+  (oln/io/gz_stream.hh (oln/f/17_gz_stream. 1.3 600))
   (oln/io/pnm3d.hh (oln/b/14_pnm3d.hh 1.2 600))
   (oln/io/pnm.hh (oln/b/19_pnm.hh 1.2 600))
   (oln/io/pnm_read3d.hxx (oln/b/11_pnm_read3d 1.2 600))
@@ -254,7 +256,7 @@ from  Akim Demaille  <akim@epita.fr>
   (oln/level/lut.hh (oln/29_lut.hh 1.6 600))
   (oln/level/threshold.hh (oln/f/15_threshold. 1.2 600))
   (oln/Makefile.am (oln/27_Makefile.a 1.15 600))
-  (oln/Makefile.in (oln/e/17_Makefile.i 1.20 644))
+  (oln/Makefile.in (oln/e/17_Makefile.i 1.21 644))
   (oln/math/macros.hh (oln/b/21_macros.hh 1.2 600))
   (oln/meta/array1d.hh (oln/f/23_array1d.hh 1.2 644))
   (oln/meta/array1d.hxx (oln/f/22_array1d.hx 1.2 644))
@@ -339,7 +341,7 @@ from  Akim Demaille  <akim@epita.fr>
   (tests/array/gen_test_utils/postlude (oln/f/31_postlude 1.1 644))
   (tests/array/gen_test_utils/prelude (oln/f/30_prelude 1.2 644))
   (tests/array/Makefile.am (oln/f/27_Makefile.a 1.2 644))
-  (tests/array/Makefile.in (oln/f/37_Makefile.i 1.4 644))
+  (tests/array/Makefile.in (oln/f/37_Makefile.i 1.5 644))
   (tests/array/test_array1d.cc (oln/f/26_test_array 1.2 644))
   (tests/array/test_array2d.cc (oln/f/25_test_array 1.2 644))
   (tests/array/test_array3d.cc (oln/f/24_test_array 1.2 644))
@@ -351,7 +353,7 @@ from  Akim Demaille  <akim@epita.fr>
   (tests/check/Makefile.am (oln/e/44_Makefile.a 1.3 600))
   (tests/check/Makefile.check (oln/e/37_Makefile.c 1.3 600))
   (tests/check/Makefile.flags (oln/e/36_Makefile.f 1.3 600))
-  (tests/check/Makefile.in (oln/e/39_Makefile.i 1.13 644))
+  (tests/check/Makefile.in (oln/e/39_Makefile.i 1.14 644))
   (tests/check/srcdir.cc (oln/e/38_srcdir.cc 1.4 600))
   (tests/check/srcdir.hh (oln/e/35_srcdir.hh 1.3 600))
   (tests/check/verbose.cc (oln/e/41_verbose.cc 1.2 600))
@@ -359,12 +361,12 @@ from  Akim Demaille  <akim@epita.fr>
   (tests/convert/convcomp.cc (oln/f/3_convcomp.c 1.4 600))
   (tests/convert/convcomp.hh (oln/f/1_convcomp.h 1.2 600))
   (tests/convert/Makefile.am (oln/f/0_Makefile.a 1.2 600))
-  (tests/convert/Makefile.in (oln/f/2_Makefile.i 1.12 644))
+  (tests/convert/Makefile.in (oln/f/2_Makefile.i 1.13 644))
 
 
   (tests/convol () :directory)
   (tests/convol/Makefile.am (oln/f/38_Makefile.a 1.2 644))
-  (tests/convol/Makefile.in (oln/f/44_Makefile.i 1.2 644))
+  (tests/convol/Makefile.in (oln/f/44_Makefile.i 1.3 644))
   ; (tests/convol/slow.cc ())
   (tests/convol/slow_sum_2d_1.cc (oln/f/41_slow_sum_2 1.1 644))
   (tests/convol/slow_sum_2d_2.cc (oln/f/40_slow_sum_2 1.1 644))
@@ -377,20 +379,20 @@ from  Akim Demaille  <akim@epita.fr>
   (tests/io/2d.cc (oln/e/47_2d.cc 1.4 600))
   (tests/io/loadsave.hh (oln/e/48_loadsave.h 1.3 600))
   (tests/io/Makefile.am (oln/e/49_Makefile.a 1.4 600))
-  (tests/io/Makefile.in (oln/e/50_Makefile.i 1.13 644))
+  (tests/io/Makefile.in (oln/e/50_Makefile.i 1.14 644))
   (tests/Makefile.am (oln/e/45_Makefile.a 1.5 600))
-  (tests/Makefile.in (oln/e/46_Makefile.i 1.12 644))
+  (tests/Makefile.in (oln/e/46_Makefile.i 1.13 644))
   (tests/morpho/edoc.cc (oln/f/13_edoc.cc 1.2 600))
   (tests/morpho/extrkiller.cc (oln/e/31_extrkiller 1.4 600))
   (tests/morpho/Makefile.am (oln/e/32_Makefile.a 1.3 600))
-  (tests/morpho/Makefile.in (oln/e/33_Makefile.i 1.14 644))
+  (tests/morpho/Makefile.in (oln/e/33_Makefile.i 1.15 644))
   (tests/morpho/reconstruction.cc (oln/e/34_reconstruc 1.5 600))
   (tests/README (oln/f/4_README 1.2 600))
   (THANKS (oln/4_THANKS 1.1 600))
   (tools/ChangeLog (oln/e/18_ChangeLog 1.1 600))
   (tools/depcomp (oln/e/12_depcomp 1.6 755))
   (tools () :directory)
-  (tools/install-sh (oln/e/15_install-sh 1.3 755))
+  (tools/install-sh (oln/e/15_install-sh 1.4 755))
   (tools/mdate-sh (oln/e/11_mdate-sh 1.1 700))
   (tools/missing (oln/e/13_missing 1.5 755))
   (tools/mkinstalldirs (oln/e/14_mkinstalld 1.1 755))
