@@ -1,3 +1,22 @@
+2004-03-29  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* olena/oln/morpher/generic_morpher.hh: Correct code and comments.
+	* olena/oln/morpher/subq_morpher.hh: Add file. Sub quantify morpher implementation.
+	* olena/oln/morpher/color_morpher.hh: Add file. Color morpher implementation.
+	* olena/tests/morpher/Makefile.am: Add file. Morphers test suite.
+	* olena/tests/morpher/tests/sq_morph_8: Add file.
+	* olena/tests/morpher/tests/sq_morph_7: Likewise.
+	* olena/tests/morpher/tests/sq_morph_6: Likewise.
+	* olena/tests/morpher/tests/sq_morph_5: Likewise.
+	* olena/tests/morpher/tests/sq_morph_4: Likewise.
+	* olena/tests/morpher/tests/sq_morph_3: Likewise.
+	* olena/tests/morpher/tests/sq_morph_2: Likewise.
+	* olena/tests/morpher/tests/sq_morph_1: Likewise.
+	* olena/tests/morpher/tests/rmorph: Likewise.
+	* olena/tests/morpher/tests/gmorph: Likewise.
+	* olena/tests/morpher/tests/color_sq_morph: Likewise.
+	* olena/tests/morpher/tests/bmorph: Likewise.
+
 2004-03-27  Niels Van Vliet  <niels@lrde.epita.fr>
 	* olena/oln/utils/histogram.hh: Change the return type
 	of `at' method to const value_type.
@@ -19,7 +38,7 @@
 
 2004-03-25  Damien Thivolle  <damien@lrde.epita.fr>
 
-	* olena/oln/core/abstract/image.hh: Remove macros.
+	* olena/oln/core/abstract/image.hh: Correct macros.
 	* olena/oln/core/abstract/image_with_impl.hh: Change the return type
 	of `at' method to const value_type.
 	* olena/oln/morpher/generic_morpher.hh: Correct comments.

@@ -141,6 +141,7 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
       OLN_TESTS([topo])
       OLN_TESTS([transforms])
       OLN_TESTS([utils])
+      OLN_TESTS([morpher])
 
       AC_SUBST([OLN_TESTS_SUBDIRS])
 

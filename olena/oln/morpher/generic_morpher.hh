@@ -38,11 +38,17 @@
 
 namespace oln {
 
-  /// Contain all the morpher relative declarations and functions.
+  /*! \namespace oln::morpher
+  **
+  ** Contain all the morpher relative declarations and functions.
+  */
 
   namespace morpher {
 
-    ///Implementation of oln::abstract::generic_morpher.
+    /*! \namespace oln::morpher::abstract
+    **
+    ** Implementation of oln::abstract::generic_morpher.
+    */
 
     namespace abstract {
 
@@ -109,21 +115,32 @@ namespace oln {
 
       public:
 
-	/// Type of the decorated image.
-	typedef SrcType deco_type;
-	typedef oln_point_type(SrcType) point_type;
-	typedef oln_dpoint_type(SrcType) dpoint_type;
-	typedef oln_iter_type(SrcType) iter_type;
-	typedef oln_fwd_iter_type(SrcType) fwd_iter_type;
-	typedef oln_bkd_iter_type(SrcType) bkd_iter_type;
-	typedef oln_value_type(SrcType) value_type;
-	typedef oln_size_type(SrcType) size_type;
+	typedef generic_morpher<DestType, SrcType, Exact> self_type;
+	typedef Exact exact_type;
+	typedef oln_point_type(DestType) point_type;
+	typedef oln_dpoint_type(DestType) dpoint_type;
+	typedef oln_iter_type(DestType) iter_type;
+	typedef oln_fwd_iter_type(DestType) fwd_iter_type;
+	typedef oln_bkd_iter_type(DestType) bkd_iter_type;
+	typedef oln_value_type(DestType) value_type;
+	typedef oln_size_type(DestType) size_type;
+	typedef oln_impl_type(DestType) impl_type;
 
+
+	/// Type of the decorated image.
+	typedef SrcType src_self_type;
+	typedef oln_point_type(SrcType) src_point_type;
+	typedef oln_dpoint_type(SrcType) src_dpoint_type;
+	typedef oln_iter_type(SrcType) src_iter_type;
+	typedef oln_fwd_iter_type(SrcType) src_fwd_iter_type;
+	typedef oln_bkd_iter_type(SrcType) src_bkd_iter_type;
+	typedef oln_value_type(SrcType) src_value_type;
+	typedef oln_size_type(SrcType) src_size_type;
 	/// Underlying implementation of the decorated image.
-	typedef oln_impl_type(SrcType) impl_type;
+	typedef oln_impl_type(SrcType) src_impl_type;
 
 	/// Exact type of the decorated image.
-	typedef SrcType image_type;
+	typedef oln_exact_type(SrcType) src_exact_type;
 
 	typedef typename gm_inherit<DestType, Exact>::ret super_type;
 
@@ -138,31 +155,31 @@ namespace oln {
 	**
 	** Return the value stored at \a p in the decorated image.
 	*/
-	const value_type
-	at(const point_type& p) const
+	const src_value_type
+	at(const src_point_type& p) const
 	{
 	  return to_exact(ima_).at(p);
 	}
 
-	/*! Defaults implementation of at.
+	/*! Default implementation of at.
 	**
 	** Return a reference to the value stored at \a p in the decorated image.
 	*/
-	value_type&
-	at(const point_type& p)
+	src_value_type&
+	at(const src_point_type& p)
 	{
 	  return to_exact(ima_).at(p);
 	}
 
 	/// Default implementation of impl.
-	const impl_type*
+	const src_impl_type*
 	impl() const
 	{
 	  return to_exact(ima_).impl();
 	}
 
 	/// Default implementation of impl.
-	impl_type*
+	src_impl_type*
 	impl()
 	{
 	  return to_exact(ima_).impl();
@@ -172,7 +189,7 @@ namespace oln {
 	**
 	** Return a copy of the decorated image.
 	*/
-	image_type
+	src_self_type
 	clone_() const
 	{
 	  return to_exact(ima_).clone_();
@@ -192,20 +209,10 @@ namespace oln {
 	**
 	** Assign \a rhs to the decorated image.
 	*/
-	image_type&
-	assign(deco_type& rhs)
+	src_self_type&
+	assign(src_self_type& rhs)
 	{
 	  return to_exact(ima_).assign(rhs);
-	}
-
-	/*! Default implementation of operator=.
-	**
-	** Assign the decorated image to \a r.
-	*/
-	deco_type&
-	operator=(const oln::io::internal::anything& r)
-	{
-	  return r.assign(ima_);
 	}
 
 	/*! Default implementation of border_set_width.
@@ -220,12 +227,16 @@ namespace oln {
 	  return to_exact(ima_).border_set_width(min_border, copy_border);
 	}
 
+	self_type& operator=(self_type& rhs)
+	{
+	  return to_exact(*this).assign(rhs.exact());
+	}
+
 	static std::string
 	name()
 	{
 	  return "generic_morpher<" + super_type::name() + ">";
 	}
-
 
       };
 
