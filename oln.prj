@@ -1,24 +1,14 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 86)
-(Parent-Version oln 10 85)
+(Project-Version oln 10 87)
+(Parent-Version oln 10 86)
 (Version-Log "2004-03-14  Niels Van Vliet  <niels@lrde.epita.fr>
-	* olena/oln/convert/nrgbxyz.hh: Correct comments.
-	* olena/oln/convert/stretch.hh: Likewise.
-	* olena/oln/level/cc.hh: Likewise.
-	* olena/oln/morpho/gradient.inc: Likewise.
-	* olena/oln/morpho/attribute_closing_opening.hh: Likewise.
-	* olena/oln/morpho/attribute_union_find.hh: Likewise.
-	* olena/oln/topo/inter-pixel/inter-pixel.hh: Likewise.
-	* olena/oln/topo/inter-pixel/node.hh: Likewise.
-	* olena/oln/core/abstract/image_with_dim.hh: Likewise.
-	* olena/oln/core/impl/image_impl.hh: Likewise.
-	* olena/oln/morpho/attributes.hh: Likewise.
-	* olena/oln/utils/special_points.hh: Likewise.
+        * olena/oln/topo/dmap.hh: Correct comments.
+        * olena/oln/topo/tarjan/flat-zone.hh: Likewise.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sun, 14 Mar 2004 19:03:34 +0100")
+(Checkin-Time "Sun, 14 Mar 2004 22:48:21 +0100")
 (Checkin-Login van-vl_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -125,7 +115,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.7 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.35 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.28 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.29 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 640))
 
@@ -361,7 +351,7 @@
   (olena/oln/morpho/top_hat.inc (oln/39_top_hat.in 1.15 640))
   (olena/oln/morpho/watershed.hh (oln/48_watershed. 1.13 640))
   (olena/oln/morpho/watershed.hxx (oln/47_watershed. 1.9.1.5.1.6 640))
-  (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.8 640))
+  (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.9 640))
   (olena/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.7.1.9 640))
   (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.10 640))
   (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.8 640))
@@ -825,7 +815,7 @@
   
   (olena/oln/topo/tarjan/union.hh (oln/r/33_union.hh 1.9 640))
   (olena/oln/topo/inter-pixel/inter-pixel.hh (oln/r/34_inter-pixe 1.14 640))
-  (olena/oln/topo/tarjan/flat-zone.hh (oln/r/35_flat-zone. 1.10 640))
+  (olena/oln/topo/tarjan/flat-zone.hh (oln/r/35_flat-zone. 1.11 640))
   (olena/oln/topo/combinatorial-map/cmap.hh (oln/r/36_cmap.hh 1.12 640))
 
 ;; Files added by populate at Thu, 20 Mar 2003 18:06:35 +0100,

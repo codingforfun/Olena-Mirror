@@ -650,8 +650,8 @@ namespace oln {
     **        IMG_OUT "oln_topo_dmap.pgm");
     ** }
     ** \endcode
-    ** \image html face_se.png
-    ** \image latex face_se.png
+    ** \image html face_se_pbm.png
+    ** \image latex face_se_pbm.png
     ** =>
     ** \image html oln_topo_dmap.png
     ** \image latex oln_topo_dmap.png
