@@ -1,14 +1,14 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 48)
-(Parent-Version oln 0_5 47)
+(Project-Version oln 0_5 49)
+(Parent-Version oln 0_5 48)
 (Version-Log "2002-09-17  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* oln/types/optraits_vec.hh: Fix typo.
+	* oln/types/optraits_vec.hh: Fix typo, fix operators traits.
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 17 Sep 2002 14:16:42 +0200")
+(Checkin-Time "Tue, 17 Sep 2002 14:23:38 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -76,7 +76,7 @@
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.20 640))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.50 600))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.51 600))
   (configure.ac (oln/3_configure. 1.21 600))
   (configure (oln/e/7_configure 1.25 700))
   (README (oln/1_README 1.4 600))
@@ -557,14 +557,14 @@
 ;; Files added by populate at Mon, 16 Sep 2002 19:47:02 +0200,
 ;; to version 0_5.46(w), by adl:
 
-  (oln/types/optraits_vec.hh (oln/h/42_optraits_v 1.2 640))
+  (oln/types/optraits_vec.hh (oln/h/42_optraits_v 1.3 640))
   (oln/types/vec.hh (oln/h/43_vec.hh 1.1 640))
 
 ;; Files added by populate at Mon, 16 Sep 2002 19:47:21 +0200,
 ;; to version 0_5.46(w), by adl:
 
   (tests/types/tests/vec6 (oln/h/44_vec6 1.1 640))
-  (tests/types/tests/vec5 (oln/h/45_vec5 1.1 640))
+  (tests/types/tests/vec5 (oln/h/45_vec5 1.2 640))
   (tests/types/tests/vec4 (oln/h/46_vec4 1.1 640))
   (tests/types/tests/vec3 (oln/h/47_vec3 1.1 640))
   (tests/types/tests/vec2 (oln/h/48_vec2 1.1 640))

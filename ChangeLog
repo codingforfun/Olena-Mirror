@@ -1,6 +1,6 @@
 2002-09-17  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* oln/types/optraits_vec.hh: Fix typo.
+	* oln/types/optraits_vec.hh: Fix typo, fix operators traits.
 
 2002-09-16  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
