@@ -1,3 +1,9 @@
+2003-08-22  Astrid Wang  <astrid@lrde.epita.fr>
+
+	* dev/upgrading.texi: Update.
+	* dev/abstract.texi (Abstract): Typo.
+	* dev/biblio.texi (Bibliography): Typo.
+
 2003-08-11  Geoffroy Fouquier  <Geoffroy.Fouquier@lrde.epita.fr>
 
 	* dev/oln-dev.texi: add info section

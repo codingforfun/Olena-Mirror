@@ -1,14 +1,16 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 5)
-(Parent-Version oln 10 4)
+(Project-Version oln 10 6)
+(Parent-Version oln 10 5)
 (Version-Log "2003-08-22  Astrid Wang  <astrid@lrde.epita.fr>
 
-	* Makefile.am: Fix a bug when compiling without doc-dev.
+	* dev/upgrading.texi: Update.
+	* dev/abstract.texi (Abstract): Typo.
+	* dev/biblio.texi (Bibliography): Typo.
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 22 Aug 2003 10:44:47 +0200")
+(Checkin-Time "Fri, 22 Aug 2003 12:36:42 +0200")
 (Checkin-Login astrid)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -112,7 +114,7 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.3 640))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.8 640))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.9 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.25 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.34 640))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.24 640))
@@ -725,9 +727,9 @@
 ;; Files added by populate at Fri, 24 Jan 2003 11:03:53 +0100,
 ;; to version 7.40(w), by raph:
 
-  (doc/dev/biblio.texi (oln/p/39_biblio.tex 1.3 640))
+  (doc/dev/biblio.texi (oln/p/39_biblio.tex 1.3.1.1 640))
   (doc/dev/thanks.texi (oln/p/40_thanks.tex 1.6 640))
-  (doc/dev/abstract.texi (oln/p/41_abstract.t 1.8 640))
+  (doc/dev/abstract.texi (oln/p/41_abstract.t 1.9 640))
 
 ;; Files deleted by depopulate at Fri, 24 Jan 2003 11:04:25 +0100,
 ;; from version 7.40(w), by raph:
@@ -840,7 +842,7 @@
 ;; Files added by populate at Wed, 09 Apr 2003 22:18:27 +0200,
 ;; to version 8.31(w), by nes:
 
-  (doc/dev/upgrading.texi (oln/r/50_upgrading. 1.2 640))
+  (doc/dev/upgrading.texi (oln/r/50_upgrading. 1.3 640))
 
 
   (integre/tests/types/tests/builtin1 (oln/s/7_builtin1 1.1 640))
