@@ -30,8 +30,8 @@
 
 # include <oln/config/system.hh>
 
-# include <oln/meta/cmp.hh>
-# include <oln/meta/type.hh>
+# include <mlc/cmp.hh>
+# include <mlc/type.hh>
 
 # include <oln/types/cplx_representation.hh>
 # include <oln/types/global_ops.hh>

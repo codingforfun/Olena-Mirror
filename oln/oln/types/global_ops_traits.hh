@@ -28,7 +28,7 @@
 #ifndef OLENA_VALUE_GLOBAL_OPS_TRAITS_HH
 # define OLENA_VALUE_GLOBAL_OPS_TRAITS_HH
 
-# include <oln/meta/basics.hh>
+# include <mlc/basics.hh>
 
 # include <oln/types/to_oln.hh>
 # include <oln/types/typetraits.hh>

@@ -25,54 +25,90 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_META_LOGIC_HH
-# define OLENA_META_LOGIC_HH
+#ifndef OLENA_META_CMP_HH
+# define OLENA_META_CMP_HH
 
-# include <oln/meta/basics.hh>
+# include <mlc/basics.hh>
+
 
 namespace oln {
 
   namespace meta {
 
-    // FIXME: I hardly see the purpose of these structs.
-    // What's the point of writing
-    //   l_not<l_and<A, B>::ret>::ensure()
-    // when one can simply do
-    //   is_true<!(A && B)>::ensure()
-    // ? -- adl.
 
-    template<bool b>
-    struct l_not
+    template<int i, int j>
+    struct less
     {
-      enum { ret = ! b };
+      enum { ret = (i < j) };
       static void ensure() { is_true<ret>::ensure(); };
     };
 
-    template<bool b1, bool b2>
-    struct l_and
+    template<int i, int j>
+    struct lesseq
     {
-      enum { ret = (b1 & b2) };
+      enum { ret = (i <= j) };
       static void ensure() { is_true<ret>::ensure(); };
     };
 
-    template<bool b1, bool b2>
-    struct l_or
+    template<int i, int j>
+    struct eq
     {
-      enum { ret = (b1 | b2) };
+      enum { ret = (i == j) };
       static void ensure() { is_true<ret>::ensure(); };
     };
 
-    template<bool b1, bool b2>
-    struct l_xor
+    template<int i, int j>
+    struct neq
     {
-      enum { ret = (b1 ^ b2) };
+      enum { ret = (i != j) };
       static void ensure() { is_true<ret>::ensure(); };
     };
 
-    // FIXME: define l_and_not, etc.?
+    template<int i, int j>
+    struct greater
+    {
+      enum { ret = (i > j) };
+      static void ensure() { is_true<ret>::ensure(); };
+    };
 
-  } // meta
+    template<int i, int j>
+    struct geq
+    {
+      enum { ret = (i >= j) };
+      static void ensure() { is_true<ret>::ensure(); };
+    };
 
-} // oln
 
-#endif // OLENA_META_LOGIC_HH
+
+    template<int i, int j>
+    struct min
+    {
+      enum { ret = (i < j ? i : j) };
+    };
+
+    template<int i, int j>
+    struct max
+    {
+      enum { ret = (i > j ? i : j) };
+    };
+
+    template<int i, int j, int N>
+    struct maxN
+    {
+      enum { ret = (i > j ? 
+		    (i > N ? N : i) : 
+		    (j > N ? N : j)) };
+    };
+
+    template<int i, int N>
+    struct saturateN
+    {
+      enum { ret = (i > N ? N : i) };
+    };
+
+  } // end of meta
+
+} // end of oln
+
+
+#endif // ! OLENA_META_CMP_HH

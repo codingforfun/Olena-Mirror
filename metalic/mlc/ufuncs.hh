@@ -28,8 +28,8 @@
 #ifndef OLENA_META_UFUNCS_HH
 # define OLENA_META_UFUNCS_HH
 
-# include <oln/meta/basics.hh>
-# include <oln/meta/ucmp.hh>
+# include <mlc/basics.hh>
+# include <mlc/ucmp.hh>
 
 
 namespace oln {

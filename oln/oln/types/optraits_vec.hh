@@ -28,8 +28,8 @@
 #ifndef OLENA_VALUE_OPTRAITS_VEC_HH
 # define OLENA_VALUE_OPTRAITS_VEC_HH
 
-# include <oln/meta/basics.hh>
-# include <oln/meta/type.hh>
+# include <mlc/basics.hh>
+# include <mlc/type.hh>
 
 # include <oln/types/predecls.hh>
 # include <oln/types/builtins_properties.hh>
@@ -40,7 +40,7 @@
 # include <oln/types/global_ops_traits.hh>
 # include <oln/types/vec.hh>
 
-# include <oln/meta/cmp.hh>
+# include <mlc/cmp.hh>
 
 
 # define ASSIGN_VECTOR_VECTOR_OPERATOR(Name, Op)	\

@@ -32,7 +32,7 @@
 # include <oln/morpho/erosion.hh>
 # include <oln/arith/ops.hh>
 # include <oln/convert/basics.hh>
-# include <oln/meta/cmp.hh>
+# include <mlc/cmp.hh>
 
 namespace oln {
   namespace morpho {

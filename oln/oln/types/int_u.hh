@@ -29,7 +29,7 @@
 # define OLENA_VALUE_INT_U_HH
 
 # include <oln/config/system.hh>
-# include <oln/meta/cmp.hh>
+# include <mlc/cmp.hh>
 
 # include <oln/types/behaviour.hh>
 # include <oln/types/builtins_properties.hh>

@@ -25,20 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_MORPHO_CLOSING_HH
-# define OLENA_MORPHO_CLOSING_HH
+#ifndef OLENA_META_ARRAY_HH
+# define OLENA_META_ARRAY_HH
 
-# include <oln/morpho/erosion.hh>
-# include <oln/morpho/dilation.hh>
-# include <mlc/cmp.hh>
+# include <mlc/array1d.hh>
+# include <mlc/array2d.hh>
+# include <mlc/array3d.hh>
 
-namespace oln {
-  namespace morpho {
-# include <oln/morpho/closing.inc>
-    namespace fast {
-# include <oln/morpho/closing.inc>
-    }
-  }
-}
-
-#endif // OLENA_MORPHO_CLOSING_HH
+#endif // ! OLENA_META_ARRAY_HH

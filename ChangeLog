@@ -1,5 +1,9 @@
 2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 
+	* configure.ac: Tweak for finding Metalic headers.
+
+2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+
 	* doc/demo/Makefile.am, doc/ref/Makefile.am, oln/config/oln.m4,
 	oln/tests/check/Makefile.am, oln/tests/check/Makefile.flags,
 	oln/tests/check/defs.in, tools/swilena/python/Makefile.am,

@@ -29,8 +29,8 @@
 # define OLENA_VALUE_BEHAVIOUR_HH
 
 # include <oln/core/contract.hh>
-# include <oln/meta/basics.hh>
-# include <oln/meta/type.hh>
+# include <mlc/basics.hh>
+# include <mlc/type.hh>
 
 # include <oln/types/rec_value.hh>
 # include <oln/types/optraits.hh>

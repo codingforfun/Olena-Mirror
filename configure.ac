@@ -11,7 +11,9 @@ AC_CONFIG_HEADERS([config.h:config.hin])
 # Use included Olena version.
 OLN_PATH_LOCAL([oln])
 AC_WITH_OLN
-	
+# Import local version of Metalic.
+CPPFLAGS="-I\$(top_srcdir)/metalic $CPPFLAGS"
+
 # Some library archives are used. Some C code used.
 AC_PROG_RANLIB
 AC_PROG_CC

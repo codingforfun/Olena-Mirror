@@ -29,7 +29,7 @@
 # define OLENA_MORPHO_STAT_HH
 
 # include <oln/basics.hh>
-# include <oln/meta/ucmp.hh>
+# include <mlc/ucmp.hh>
 # include <oln/types/bin.hh>
 
 namespace oln {

@@ -31,7 +31,7 @@
 # include <oln/basics.hh>
 # include <oln/morpho/stat.hh>
 # include <oln/morpho/fast_morpho.hh>
-# include <oln/meta/cmp.hh>
+# include <mlc/cmp.hh>
 
 namespace oln {
 

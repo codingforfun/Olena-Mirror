@@ -30,7 +30,7 @@
 
 # include <oln/config/system.hh>
 
-# include <oln/meta/type.hh>
+# include <mlc/type.hh>
 
 # include <oln/types/to_oln.hh>
 # include <oln/types/cycle.hh>

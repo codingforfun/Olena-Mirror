@@ -29,7 +29,7 @@
 # define OLENA_VALUE_OPTRAITS_BUILTINS_FLOAT_HH
 
 # include <oln/config/system.hh> // for OLN_FLOAT_INFINITY
-# include <oln/meta/cmp.hh>
+# include <mlc/cmp.hh>
 # include <oln/types/builtins_properties.hh>
 # include <oln/types/global_ops_traits.hh>
 # include <oln/types/optraits_scalar.hh>

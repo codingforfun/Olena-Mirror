@@ -30,8 +30,8 @@
 
 # include <oln/core/objs.hh>
 # include <oln/core/contract.hh>
-# include <oln/meta/cmp.hh>
-# include <oln/meta/array1d.hxx>
+# include <mlc/cmp.hh>
+# include <mlc/array1d.hxx>
 
 # include <iostream>
 

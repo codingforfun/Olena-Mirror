@@ -33,8 +33,8 @@
 # include <oln/basics2d.hh>
 # include <oln/core/point.hh>
 # include <oln/types/all.hh>
-# include <oln/meta/cmp.hh>
-# include <oln/meta/array.hh>
+# include <mlc/cmp.hh>
+# include <mlc/array.hh>
 
 # include <oln/core/w_window.hh>
 

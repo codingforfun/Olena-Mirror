@@ -32,7 +32,7 @@
 # include <oln/types/optraits.hh>
 # include <oln/types/cast.hh>
 # include <oln/basics.hh>
-# include <oln/meta/array1d.hh>
+# include <mlc/array1d.hh>
 
 namespace oln {
 

@@ -30,7 +30,7 @@
 
 # include <oln/arith/ops.hh>
 # include <oln/types/optraits_builtins_float.hh>
-# include <oln/meta/array2d.hh>
+# include <mlc/array2d.hh>
 
 namespace oln {
 

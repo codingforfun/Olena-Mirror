@@ -2,7 +2,7 @@
 #include <oln/basics2d.hh>
 #include <oln/basics3d.hh>
 #include <oln/core/type.hh>
-#include <oln/meta/cmp.hh>
+#include <mlc/cmp.hh>
 #include <oln/core/pred_image.hh>
 #include <oln/arith/ops.hh>
 #include <oln/arith/logic.hh>

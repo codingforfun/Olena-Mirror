@@ -28,7 +28,7 @@
 #ifndef OLENA_VALUE_RANGE_HH
 # define OLENA_VALUE_RANGE_HH
 
-# include <oln/meta/type.hh>
+# include <mlc/type.hh>
 
 # include <oln/types/behaviour.hh>
 # include <oln/types/global_ops.hh>

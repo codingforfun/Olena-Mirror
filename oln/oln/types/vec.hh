@@ -30,7 +30,7 @@
 
 # include <oln/core/type.hh>
 
-# include <oln/meta/array.hh>
+# include <mlc/array.hh>
 
 # include <oln/types/global_ops.hh>
 # include <oln/types/optraits.hh>

@@ -34,7 +34,7 @@
 # include <oln/level/invert.hh>
 # include <oln/math/macros.hh>
 
-# include <oln/meta/cmp.hh>
+# include <mlc/cmp.hh>
 
 namespace oln {
   namespace morpho {

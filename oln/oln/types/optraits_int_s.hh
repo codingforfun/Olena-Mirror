@@ -30,9 +30,9 @@
 
 # include <oln/config/system.hh>
 
-# include <oln/meta/basics.hh>
-# include <oln/meta/type.hh>
-# include <oln/meta/cmp.hh>
+# include <mlc/basics.hh>
+# include <mlc/type.hh>
+# include <mlc/cmp.hh>
 
 # include <oln/types/builtins_properties.hh>
 # include <oln/types/to_oln.hh>

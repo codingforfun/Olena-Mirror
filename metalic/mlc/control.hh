@@ -28,7 +28,7 @@
 #ifndef OLENA_META_CONTROL_HH
 # define OLENA_META_CONTROL_HH
 
-# include <oln/meta/cmp.hh>
+# include <mlc/cmp.hh>
 
 namespace oln {
 

@@ -28,7 +28,7 @@
 #ifndef OLENA_META_ARRAY2D_HXX
 # define OLENA_META_ARRAY2D_HXX
 
-# include <oln/meta/arraynd.hh>
+# include <mlc/arraynd.hh>
 
 namespace oln {
 

@@ -30,7 +30,7 @@
 
 # include <limits.h>
 # include <float.h>
-# include <oln/meta/ufuncs.hh>
+# include <mlc/ufuncs.hh>
 
  namespace oln
  {

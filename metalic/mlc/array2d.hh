@@ -25,13 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_META_ARRAY3D_HH
-# define OLENA_META_ARRAY3D_HH
+#ifndef OLENA_META_ARRAY2D_HH
+# define OLENA_META_ARRAY2D_HH
 
 # include <oln/core/objs.hh>
 # include <oln/core/contract.hh>
-# include <oln/meta/cmp.hh>
-# include <oln/meta/array3d.hxx>
+# include <mlc/cmp.hh>
+# include <mlc/array2d.hxx>
 
 # include <iostream>
 
@@ -39,27 +39,26 @@ namespace oln {
 
   namespace meta {
 
-    class not_implemented_yet{}; // FIXME
 
     template<class _Info, class T_>
-    struct array3d
+    struct array2d
     {
-      typedef array3d self;
+      typedef array2d self;
       typedef T_ T;
       typedef _Info Info;
+
 
 
       //
       // Constructors
       //
 
-      array3d()
+      array2d()
       {
       }
 
-      array3d(T* ptr)
+      array2d(T* ptr)
       {
-	meta::less< 0, _Info::nplanes >::ensure();
 	meta::less< 0, _Info::nrows >::ensure();
 	meta::less< 0, _Info::ncols >::ensure();
 	meta::less< _Info::card, internal::_max_card >::ensure();
@@ -69,7 +68,7 @@ namespace oln {
 
       // Copy
 
-      array3d(const self& rhs)
+      array2d(const self& rhs)
       {
 	for (unsigned i = 0; i < _Info::card; ++i)
 	  _buffer[i] = rhs[i];
@@ -87,7 +86,7 @@ namespace oln {
       // Operations on array
       //
 
-      typedef array3d<_Info, float> to_float; // FIXME : argh
+      typedef array2d<_Info, float> to_float; // FIXME : argh
 
       // Normalize (absolute values -> relative values)
 
@@ -111,15 +110,14 @@ namespace oln {
 
       // Central symmetry
 
-      array3d<array3d_info<_Info::nplanes,
-			   _Info::nrows,
+      array2d<array2d_info<_Info::nrows,
 			   _Info::ncols,
 			   _Info::card - _Info::center - 1,
 			   _Info::i>, T>
       operator-() const
       {
 	enum { new_center =  _Info::card - _Info::center - 1 };
-	array3d<array3d_info< Info::nplanes, _Info::nrows, _Info::ncols, new_center, _Info::i>,T> tmp;
+	array2d<array2d_info< _Info::nrows, _Info::ncols, new_center, _Info::i>,T> tmp;
 
 	for (unsigned i = 0; i < _Info::card; ++i)
 	  tmp[_Info::card - i - 1] = this->operator[](i);
@@ -129,15 +127,20 @@ namespace oln {
 
       // Transpose
 
+      typedef array2d<array2d_info<
+	_Info::ncols,
+	_Info::nrows,
+	(_Info::center * _Info::nrows + _Info::center / _Info::ncols) % _Info::card,
+	_Info::i
+	>, T> transposed_array_t;
 
-      array3d<Info, T> transpose() const // FIXME
+      transposed_array_t transpose() const
       {
-	std::cerr << "[31m===> 3D transposition not implemented yet. <===[0m" << endl;
-	throw not_implemented_yet();
+	transposed_array_t tmp;
+	for (int i = 0; i < Info::card; ++i)
+	  tmp[i] = this->operator[]((i * _Info::ncols + i / _Info::nrows) % _Info::card);
+	return tmp;
       }
-
-
-      //      template<class U> int operator,(U); // FIXME: why this?
 
 
 
@@ -169,28 +172,23 @@ namespace oln {
       }
 
 
-      T operator()(int plane, int row, int col) const		// Relative position
+      T operator()(int row, int col) const		// Relative position
       {
-	precondition(-_Info::center_plane <= plane);
-	precondition(plane <= Info::nplanes - _Info::center_plane - 1);
 	precondition(-_Info::center_row <= row);
 	precondition(row <= _Info::nrows - _Info::center_row - 1);
 	precondition(-_Info::center_col <= col);
 	precondition(col <= _Info::ncols - _Info::center_col - 1);
 
-	return *(_buffer + _Info::center + (plane * Info::nrows * Info::ncols) + (row * Info::ncols) + col);
+	return *(_buffer + _Info::center + (row * _Info::ncols) + col);
       }
-
-      T& operator()(int plane, int row, int col)
+      T& operator()(int row, int col)
       {
-	precondition(-_Info::center_plane <= plane);
-	precondition(plane <= Info::nplanes - _Info::center_plane - 1);
 	precondition(-_Info::center_row <= row);
 	precondition(row <= _Info::nrows - _Info::center_row - 1);
 	precondition(-_Info::center_col <= col);
 	precondition(col <= _Info::ncols - _Info::center_col - 1);
 
-	return *(_buffer + _Info::center + (plane * Info::nrows * Info::ncols) + (row * Info::ncols) + col);
+	return *(_buffer + _Info::center + (row * _Info::ncols) + col);
       }
 
 
@@ -202,16 +200,14 @@ namespace oln {
 	return *(_buffer + i);
       }
 
-      template<int nplane, int nrow, int ncol>
+      template<int nrow, int ncol>
       T _get() const {
-	meta::lesseq< -_Info::center_plane, nplane >::ensure();
-	meta::lesseq< nplane, Info::nplanes - _Info::center_plane - 1 >::ensure();
 	meta::lesseq< -_Info::center_row, nrow >::ensure();
 	meta::lesseq< nrow, _Info::nrows - _Info::center_row - 1 >::ensure();
 	meta::lesseq< -_Info::center_col, ncol >::ensure();
 	meta::lesseq< ncol, _Info::ncols - _Info::center_col - 1 >::ensure();
 
-	return *(_buffer + _Info::center + (nplane * Info::nrows * Info::ncols) + (row * Info::ncols) + col);
+	return *(_buffer + _Info::center + (row * _Info::ncols) + col);
       }
 
 
@@ -224,21 +220,21 @@ namespace oln {
     // ...but these static accessors:
 
     template<unsigned i, class Info, class T> inline
-    T get_at(const meta::array3d<Info, T>& arr)
+    T get_at(const meta::array2d<Info, T>& arr)
     {
       return arr.template _get_at<i>();
     }
 
-    template<int plane, int row, int col, class Info, class T> inline
-    T get(const meta::array3d<Info, T>& arr)
+    template<int row, int col, class Info, class T> inline
+    T get(const meta::array2d<Info, T>& arr)
     {
-      return arr.template _get<plane, row, col>();
+      return arr.template _get<row, col>();
     }
 
     // starter objects
 
-    static internal::_array3d_start<int>   ints_3d   = internal::_array3d_start<int>();
-    static internal::_array3d_start<float> floats_3d = internal::_array3d_start<float>();
+    static internal::_array2d_start<int>   ints_2d   = internal::_array2d_start<int>();
+    static internal::_array2d_start<float> floats_2d = internal::_array2d_start<float>();
 
 
   } // end of meta
@@ -247,22 +243,20 @@ namespace oln {
 
 template<class Info, class T>
 std::ostream& operator<<(std::ostream&				ostr,
-			 const oln::meta::array3d<Info, T>&	rhs)
+			 const oln::meta::array2d<Info, T>&	rhs)
 {
   for (int i = 0; i < Info::card; ++i)
-    {
-      if (i == Info::center)
-	ostr << "<" << rhs[i] << "> ";
-      else
-	ostr << rhs[i] << " ";
+  {
+    if (i == Info::center)
+      ostr << "<" << rhs[i] << ">";
+    else
+      ostr << rhs[i];
 
-      ostr << ((i + 1) % Info::ncols == 0 ? "\n" : "\t");
-      ostr << ((i + 1) % (Info::ncols * Info::nrows) == 0 ? "\n" : "");
-    }
+    ostr << ((i + 1) %  Info::ncols == 0 ? "\n" : "\t");
+  }
   ostr << std::flush;
-
   return ostr;
 }
 
 
-#endif // ! OLENA_META_ARRAY3D_HH
+#endif // ! OLENA_META_ARRAY2D_HH

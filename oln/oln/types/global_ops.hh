@@ -29,7 +29,7 @@
 # define OLENA_VALUE_GLOBAL_OPS_HH
 
 # include <oln/core/contract.hh>
-# include <oln/meta/type.hh>
+# include <mlc/type.hh>
 
 # include <oln/types/to_oln.hh>
 # include <oln/types/rec_value.hh>

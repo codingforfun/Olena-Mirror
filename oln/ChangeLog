@@ -1,3 +1,39 @@
+2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* tests/check/Makefile.am (AM_CPPFLAGS): Minor fix.
+
+	* oln/meta/array.hh, oln/meta/array1d.hh, oln/meta/array1d.hxx,
+	oln/meta/array2d.hh, oln/meta/array2d.hxx, oln/meta/array3d.hh,
+	oln/meta/array3d.hxx, oln/meta/arraynd.hh, oln/meta/basics.hh,
+	oln/meta/cmp.hh, oln/meta/control.hh, oln/meta/logic.hh,
+	oln/meta/optional.hh, oln/meta/type.hh, oln/meta/ucmp.hh,
+	oln/meta/ufuncs.hh: Move to ../metalic/mlc.
+	
+	* oln/convol/convolution.hh, oln/convol/convolution.hh,
+	oln/core/generate.hh, oln/core/w_window2d.hh, oln/level/cc.hh,
+	oln/morpho/closing.hh, oln/morpho/dilation.hh,
+	oln/morpho/erosion.hh, oln/morpho/geodesic_dilation.hh,
+	oln/morpho/geodesic_erosion.hh, oln/morpho/gradient.hh,
+	oln/morpho/hit_or_miss.hh, oln/morpho/laplacian.hh,
+	oln/morpho/opening.hh, oln/morpho/stat.hh,
+	oln/morpho/thickening.hh, oln/morpho/thinning.hh,
+	oln/topo/dmap.hxx, oln/transforms/dwt.hh, oln/types/behaviour.hh,
+	oln/types/behaviour.hh, oln/types/builtins_properties.hh,
+	oln/types/color.hh, oln/types/cplx.hh, oln/types/cplx.hh,
+	oln/types/cycle.hh, oln/types/global_ops.hh,
+	oln/types/global_ops_traits.hh, oln/types/int_s.hh,
+	oln/types/int_u.hh, oln/types/optraits_builtins_float.hh,
+	oln/types/optraits_cplx.hh, oln/types/optraits_cplx.hh,
+	oln/types/optraits_cycle.hh, oln/types/optraits_int_s.hh,
+	oln/types/optraits_int_s.hh, oln/types/optraits_int_s.hh,
+	oln/types/optraits_int_u.hh, oln/types/optraits_scalar.hh,
+	oln/types/optraits_vec.hh, oln/types/optraits_vec.hh,
+	oln/types/optraits_vec.hh, oln/types/range.hh, oln/types/vec.hh:
+	Update "<oln/meta/" to "<mlc/".
+
+	* tests/meta/gen_test_utils/prelude, tests/meta/test_array1d.cc,
+	tests/meta/test_array2d.cc, tests/meta/test_array3d.cc: Likewise.
+
 2003-02-23  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* config/oln.m4: Change default flags for icc.

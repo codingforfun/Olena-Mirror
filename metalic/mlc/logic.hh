@@ -25,11 +25,54 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_META_ARRAY_HH
-# define OLENA_META_ARRAY_HH
+#ifndef OLENA_META_LOGIC_HH
+# define OLENA_META_LOGIC_HH
 
-# include <oln/meta/array1d.hh>
-# include <oln/meta/array2d.hh>
-# include <oln/meta/array3d.hh>
+# include <mlc/basics.hh>
 
-#endif // ! OLENA_META_ARRAY_HH
+namespace oln {
+
+  namespace meta {
+
+    // FIXME: I hardly see the purpose of these structs.
+    // What's the point of writing
+    //   l_not<l_and<A, B>::ret>::ensure()
+    // when one can simply do
+    //   is_true<!(A && B)>::ensure()
+    // ? -- adl.
+
+    template<bool b>
+    struct l_not
+    {
+      enum { ret = ! b };
+      static void ensure() { is_true<ret>::ensure(); };
+    };
+
+    template<bool b1, bool b2>
+    struct l_and
+    {
+      enum { ret = (b1 & b2) };
+      static void ensure() { is_true<ret>::ensure(); };
+    };
+
+    template<bool b1, bool b2>
+    struct l_or
+    {
+      enum { ret = (b1 | b2) };
+      static void ensure() { is_true<ret>::ensure(); };
+    };
+
+    template<bool b1, bool b2>
+    struct l_xor
+    {
+      enum { ret = (b1 ^ b2) };
+      static void ensure() { is_true<ret>::ensure(); };
+    };
+
+    // FIXME: define l_and_not, etc.?
+
+  } // meta
+
+} // oln
+
+#endif // OLENA_META_LOGIC_HH

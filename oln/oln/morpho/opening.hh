@@ -30,7 +30,7 @@
 
 # include <oln/morpho/dilation.hh>
 # include <oln/morpho/erosion.hh>
-# include <oln/meta/cmp.hh>
+# include <mlc/cmp.hh>
 
 namespace oln {
   namespace morpho {

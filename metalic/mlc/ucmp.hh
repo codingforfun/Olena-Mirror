@@ -28,7 +28,7 @@
 #ifndef OLENA_META_UCMP_HH
 # define OLENA_META_UCMP_HH
 
-# include <oln/meta/basics.hh>
+# include <mlc/basics.hh>
 
 // Comparison functions.
 
