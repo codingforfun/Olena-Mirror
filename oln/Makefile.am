@@ -183,7 +183,9 @@ nobase_oln_HEADERS =				\
   morpho/top_hat.inc				\
   morpho/watershed.hh				\
   morpho/watershed.hxx				\
-  transform/fft.hh				\
+  transforms/fft.hh				\
+  transforms/dwt.hh				\
+  transforms/wavelet_coeffs.hh			\
   utils/copy.hh					\
   utils/histogram.hh				\
   utils/stat.hh					\
@@ -245,7 +247,7 @@ EXTRA_DIST = config/extrconf.sh
 PERL = perl
 SCANDEFS_PL = $(top_srcdir)/tools/scandefs.pl
 PCONF_OCCURS = $(srcdir)/config/system.hh $(top_srcdir)/tests/io/2d.cc \
-	$(srcdir)/transform/fft.hh
+	$(srcdir)/transforms/fft.hh
 $(srcdir)/config/extrconf.sh: $(SCANDEFS_PL) $(PCONF_OCCURS)
 	$(PERL) $(SCANDEFS_PL) $(PCONF_OCCURS) >$@
 

@@ -291,7 +291,9 @@ nobase_oln_HEADERS = \
   morpho/top_hat.inc				\
   morpho/watershed.hh				\
   morpho/watershed.hxx				\
-  transform/fft.hh				\
+  transforms/fft.hh				\
+  transforms/dwt.hh				\
+  transforms/wavelet_coeffs.hh			\
   utils/copy.hh					\
   utils/histogram.hh				\
   utils/stat.hh					\
@@ -352,7 +354,7 @@ EXTRA_DIST = config/extrconf.sh
 PERL = perl
 SCANDEFS_PL = $(top_srcdir)/tools/scandefs.pl
 PCONF_OCCURS = $(srcdir)/config/system.hh $(top_srcdir)/tests/io/2d.cc \
-	$(srcdir)/transform/fft.hh
+	$(srcdir)/transforms/fft.hh
 
 
 DISTCLEANFILES = config/pconf.hh config/stamp-h1
@@ -469,7 +471,7 @@ top_distdir = ..
 distdir = $(top_distdir)/$(PACKAGE)-$(VERSION)
 
 distdir: $(DISTFILES)
-	$(mkinstalldirs) $(distdir)/arith $(distdir)/arith/internal $(distdir)/config $(distdir)/convert $(distdir)/convol $(distdir)/core $(distdir)/core/internal $(distdir)/io $(distdir)/level $(distdir)/math $(distdir)/meta $(distdir)/morpho $(distdir)/transform $(distdir)/types $(distdir)/utils
+	$(mkinstalldirs) $(distdir)/arith $(distdir)/arith/internal $(distdir)/config $(distdir)/convert $(distdir)/convol $(distdir)/core $(distdir)/core/internal $(distdir)/io $(distdir)/level $(distdir)/math $(distdir)/meta $(distdir)/morpho $(distdir)/transforms $(distdir)/types $(distdir)/utils
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \

@@ -1,3 +1,13 @@
+2002-11-13  Emmanuel Turquin  <turqui_e@epita.fr>
+
+	* oln/transform/: Rename as ...
+	* oln/transforms/: ... this.
+	* oln/transforms/dwt.hh: New file.
+	* oln/transforms/wavelet_coeffs.hh: New file.
+	* oln/Makefile.am: Adjust.
+	* configure.ac: Adjust.
+	* THANKS: Update.
+
 2002-11-09  Jean-Sébastien Mouret  <js@lrde.epita.fr>
 
 	* oln/io/readable.hh: Behaviour fix (now exits on io failure).

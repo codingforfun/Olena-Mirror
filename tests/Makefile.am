@@ -8,7 +8,7 @@ SUBDIRS = . check \
   meta \
   morpho \
   sanity \
-  transform \
+  transforms \
   types
 
 # SOURCEDATA should never be erased, they are needed to generate

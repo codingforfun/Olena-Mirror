@@ -1,6 +1,7 @@
 #include <oln/types/all.hh>
-#include <oln/transform/fft.hh>
+#include <oln/basics2d.hh>
 #include <oln/level/compare.hh>
+#include <oln/transforms/fft.hh>
 
 #include "check.hh"
 
@@ -16,6 +17,7 @@
       }
 
 using namespace oln;
+using namespace transforms;
 
 bool
 check()
@@ -26,25 +28,25 @@ check()
 
   image2d<int_u8> im1(data("lena.pgm"));
 
-  oln::transform::fft<int_u8> fourier(im1);
+  fft<int_u8> fourier(im1);
 
   image2d<cplx<polar, dfloat> > im2 = fourier.transform();
 
   image2d<int_u8> im3 = fourier.transform_inv();
 
-  io::save(im3, OUTPUT_DIR OUTPUT_NAME "_copy.pgm");
+  io::save(im3, OUTPUT_DIR OUTPUT_NAME "_fft_copy.pgm");
 
-  std::cout << "Test: Image = F-1(F(Image)) ... " << std::flush;
+  std::cout << "Test: Image == F-1(F(Image)) ... " << std::flush;
   if (level::is_equal(im1, im3))
     OK_OR_FAIL;
 
   image2d<int_u8> out = fourier.transformed_image_clipped_magn(0.01);
 
-  io::save(out, OUTPUT_DIR OUTPUT_NAME "_fft_clipped.pgm");
+  io::save(out, OUTPUT_DIR OUTPUT_NAME "_fft_trans_clipped.pgm");
 
-  image2d<int_u8> outlog = fourier.transformed_image_log_magn<int_u8>(1, 100);
+  out = fourier.transformed_image_log_magn<int_u8>(1, 100);
 
-  io::save(outlog, OUTPUT_DIR OUTPUT_NAME "_fft_log.pgm");
+  io::save(out, OUTPUT_DIR OUTPUT_NAME "_fft_trans_log.pgm");
   
   for (int row = 40; row < im2.nrows() - 40; ++row)
     for (int col = 0; col < im2.ncols(); ++col)
@@ -54,11 +56,9 @@ check()
     for (int col = 40; col < im2.ncols() - 40; ++col)
       im2(row, col) = 0;
  
-  im1 = fourier.transform_inv();
+  out = fourier.transform_inv();
 
-  io::save(im1, OUTPUT_DIR OUTPUT_NAME "_low_pass.pgm");
-
-  fourier.transform();
+  io::save(out, OUTPUT_DIR OUTPUT_NAME "_fft_low_pass.pgm");
 
   return fail;
 

@@ -3259,7 +3259,7 @@ cat >>confdefs.h <<_ACEOF
 _ACEOF
 
 
-                                                                                                                                                                ac_config_files="$ac_config_files Makefile oln/Makefile demo/Makefile tests/defs tests/Makefile tests/check/Makefile tests/convert/Makefile tests/convol/Makefile tests/io/Makefile tests/meta/Makefile tests/morpho/Makefile tests/sanity/Makefile tests/transform/Makefile tests/types/Makefile utilities/Makefile utilities/morpho/Makefile"
+                                                                                                                                                                ac_config_files="$ac_config_files Makefile oln/Makefile demo/Makefile tests/defs tests/Makefile tests/check/Makefile tests/convert/Makefile tests/convol/Makefile tests/io/Makefile tests/meta/Makefile tests/morpho/Makefile tests/sanity/Makefile tests/transforms/Makefile tests/types/Makefile utilities/Makefile utilities/morpho/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -3801,7 +3801,7 @@ do
   "tests/meta/Makefile" ) CONFIG_FILES="$CONFIG_FILES tests/meta/Makefile" ;;
   "tests/morpho/Makefile" ) CONFIG_FILES="$CONFIG_FILES tests/morpho/Makefile" ;;
   "tests/sanity/Makefile" ) CONFIG_FILES="$CONFIG_FILES tests/sanity/Makefile" ;;
-  "tests/transform/Makefile" ) CONFIG_FILES="$CONFIG_FILES tests/transform/Makefile" ;;
+  "tests/transforms/Makefile" ) CONFIG_FILES="$CONFIG_FILES tests/transforms/Makefile" ;;
   "tests/types/Makefile" ) CONFIG_FILES="$CONFIG_FILES tests/types/Makefile" ;;
   "utilities/Makefile" ) CONFIG_FILES="$CONFIG_FILES utilities/Makefile" ;;
   "utilities/morpho/Makefile" ) CONFIG_FILES="$CONFIG_FILES utilities/morpho/Makefile" ;;

@@ -1,3 +1,10 @@
+2002-11-13  Emmanuel Turquin  <turqui_e@epita.fr>
+
+	* transform/: Rename as ...
+	* transforms/: ... this.
+	* transforms/dwt.cc: New file.
+	* Makefile.am (SUBDIRS): Adjust.
+
 2002-09-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* convol/Makefile.am: Adapt to sobel_gradient failure.

@@ -77,7 +77,7 @@ AC_CONFIG_FILES([
   tests/meta/Makefile
   tests/morpho/Makefile
   tests/sanity/Makefile
-  tests/transform/Makefile
+  tests/transforms/Makefile
   tests/types/Makefile
   utilities/Makefile
   utilities/morpho/Makefile

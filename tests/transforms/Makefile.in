@@ -123,21 +123,33 @@ TESTS = $(check_PROGRAMS)
 AM_LDFLAGS = $(FFTW_LDFLAGS)
 AM_CFLAGS = $(FFTW_CFLAGS)
 
-check_PROGRAMS = fft
-fft_SOURCES = fft.cc
+check_PROGRAMS = fft dwt
 
+fft_SOURCES = fft.cc
 fft_OUTPUT_DIR = output/
 
-CLEANFILES = $(fft_OUTPUT_DIR)output_fft_clipped.pgm \
-	$(fft_OUTPUT_DIR)output_fft_log.pgm \
-	$(fft_OUTPUT_DIR)output_low_pass.pgm \
-	$(fft_OUTPUT_DIR)output_copy.pgm
+dwt_SOURCES = dwt.cc
+dwt_OUTPUT_DIR = output/
 
-subdir = tests/transform
+CLEANFILES = $(fft_OUTPUT_DIR)output_fft_trans_clipped.pgm \
+	$(fft_OUTPUT_DIR)output_fft_trans_log.pgm \
+	$(fft_OUTPUT_DIR)output_fft_low_pass.pgm \
+	$(fft_OUTPUT_DIR)output_fft_copy.pgm \
+	$(dwt_OUTPUT_DIR)output_dwt_trans_non_std.pgm \
+	$(dwt_OUTPUT_DIR)output_dwt_trans_std.pgm \
+	$(dwt_OUTPUT_DIR)output_dwt_compressed.pgm \
+	$(dwt_OUTPUT_DIR)output_dwt_copy.pgm
+
+subdir = tests/transforms
 mkinstalldirs = $(SHELL) $(top_srcdir)/tools/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/oln/config/config.h
 CONFIG_CLEAN_FILES =
-check_PROGRAMS = fft$(EXEEXT)
+check_PROGRAMS = fft$(EXEEXT) dwt$(EXEEXT)
+am_dwt_OBJECTS = dwt.$(OBJEXT)
+dwt_OBJECTS = $(am_dwt_OBJECTS)
+dwt_LDADD = $(LDADD)
+dwt_DEPENDENCIES = $(top_builddir)/tests/check/libcheck.a
+dwt_LDFLAGS =
 am_fft_OBJECTS = fft.$(OBJEXT)
 fft_OBJECTS = $(am_fft_OBJECTS)
 fft_LDADD = $(LDADD)
@@ -147,17 +159,17 @@ fft_LDFLAGS =
 DEFAULT_INCLUDES =  -I. -I$(srcdir) -I$(top_builddir)/oln/config
 depcomp = $(SHELL) $(top_srcdir)/tools/depcomp
 am__depfiles_maybe = depfiles
-@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/fft.Po
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/dwt.Po ./$(DEPDIR)/fft.Po
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 	-o $@
-DIST_SOURCES = $(fft_SOURCES)
+DIST_SOURCES = $(dwt_SOURCES) $(fft_SOURCES)
 DIST_COMMON = $(top_srcdir)/tests/check/Makefile.check \
 	$(top_srcdir)/tests/check/Makefile.flags Makefile.am \
 	Makefile.in
-SOURCES = $(fft_SOURCES)
+SOURCES = $(dwt_SOURCES) $(fft_SOURCES)
 
 all: all-am
 
@@ -165,12 +177,15 @@ all: all-am
 .SUFFIXES: .cc .o .obj
 $(srcdir)/Makefile.in:  Makefile.am $(top_srcdir)/tests/check/Makefile.check $(top_srcdir)/tests/check/Makefile.flags $(top_srcdir)/configure.ac $(ACLOCAL_M4)
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  tests/transform/Makefile
+	  $(AUTOMAKE) --gnu  tests/transforms/Makefile
 Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
 
 clean-checkPROGRAMS:
 	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
+dwt$(EXEEXT): $(dwt_OBJECTS) $(dwt_DEPENDENCIES) 
+	@rm -f dwt$(EXEEXT)
+	$(CXXLINK) $(dwt_LDFLAGS) $(dwt_OBJECTS) $(dwt_LDADD) $(LIBS)
 fft$(EXEEXT): $(fft_OBJECTS) $(fft_DEPENDENCIES) 
 	@rm -f fft$(EXEEXT)
 	$(CXXLINK) $(fft_LDFLAGS) $(fft_OBJECTS) $(fft_LDADD) $(LIBS)
@@ -181,6 +196,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dwt.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fft.Po@am__quote@
 
 distclean-depend:

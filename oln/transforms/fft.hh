@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_TRANSFORM_FFT_HH
-# define OLENA_TRANSFORM_FFT_HH
+#ifndef OLENA_TRANSFORMS_FFT_HH
+# define OLENA_TRANSFORMS_FFT_HH
 
 # include <oln/config/system.hh>
 
@@ -91,7 +91,7 @@ namespace oln {
       {
 	is_a(optraits<T1>, optraits_scalar)::ensure();
 
-	image2d<T1> new_im(trans_im.nrows(), trans_im.ncols());
+	image2d<T1> new_im(trans_im.size());
 
 	if (ordered)
 	  for (int row = 0; row < new_im.nrows(); ++row)
@@ -100,10 +100,13 @@ namespace oln {
 		trans_im((row + trans_im.nrows() / 2) % trans_im.nrows(),
 			 (col + trans_im.ncols() / 2) % trans_im.ncols()).magn();
 	else
-	  for (int row = 0; row < new_im.nrows(); ++row)
-	    for (int col = 0; col < new_im.ncols(); ++col)
-	      new_im(row, col) = trans_im(row, col).magn();
-      
+	  {
+	    typename image2d<cplx<R, dfloat> >::iter it(trans_im);
+
+	    for_all(it)
+	      new_im[it] = trans_im[it].magn();
+	  }
+
 	return new_im;
       }
 
@@ -113,46 +116,50 @@ namespace oln {
       }
 
       template <class T1>
-      image2d<T1> transformed_image_clipped_magn(const dfloat clip, bool ordered = true) const
+      image2d<T1> transformed_image_clipped_magn(const dfloat clip,
+						 bool ordered = true) const
       {
 	is_a(optraits<T1>, optraits_scalar)::ensure();
 
-	image2d<T1> new_im(trans_im.nrows(), trans_im.ncols());
+	image2d<T1> new_im(trans_im.size());
 	range<dfloat, bounded_u<0, 1>, saturate> c(clip);
 	dfloat max = 0;
+	typename image2d<cplx<R, dfloat> >::iter it(trans_im);
 
-	for (int row = 0; row < trans_im.nrows(); ++row)
-	  for (int col = 0; col <= trans_im.ncols(); ++col)
-	    if (max < trans_im(row, col).magn())
-	      max = trans_im(row, col).magn();
+	for_all(it)
+	  if (max < trans_im[it].magn())
+	    max = trans_im[it].magn();
 
 	if (ordered)
 	  for (int row = 0; row < new_im.nrows(); ++row)
 	    for (int col = 0; col < new_im.ncols(); ++col)
 	      {
 		if (trans_im((row + trans_im.nrows() / 2) % trans_im.nrows(),
-			     (col + trans_im.ncols() / 2) % trans_im.ncols()).magn() >= max * c)
+			     (col + trans_im.ncols() / 2) %
+			     trans_im.ncols()).magn() >= max * c)
 		  new_im(row, col) = optraits<T>::max();
 		else
 		  new_im(row, col) =
 		    optraits<T>::max() *
 		    trans_im((row + trans_im.nrows() / 2) % trans_im.nrows(),
-			     (col + trans_im.ncols() / 2) % trans_im.ncols()).magn() / (max * c);
+			     (col + trans_im.ncols() / 2) %
+			     trans_im.ncols()).magn() / (max * c);
 	      }
 	else
-	  for (int row = 0; row < new_im.nrows(); ++row)
-	    for (int col = 0; col < new_im.ncols(); ++col)
+	  for_all(it)
 	      {
-		if (trans_im(row, col).magn() >= max * c)
-		  new_im(row, col) = optraits<T>::max();
+		if (trans_im[it].magn() >= max * c)
+		  new_im[it] = optraits<T>::max();
 		else 
-		  new_im(row, col) = optraits<T>::max() * trans_im(row, col).magn() / (max * c);
+		  new_im[it] = optraits<T>::max() *
+		    trans_im[it].magn() / (max * c);
 	      }
       
 	return new_im;
       }
 
-      image2d<T> transformed_image_clipped_magn(const dfloat clip, bool ordered = true) const
+      image2d<T> transformed_image_clipped_magn(const dfloat clip,
+						bool ordered = true) const
       {
 	return transformed_image_clipped_magn<T>(clip, ordered);
       }
@@ -170,39 +177,49 @@ namespace oln {
 
       // FIXME: Find a more elegant way to fix range interval on a and b.
       template <class T1>
-      image2d<T1> transformed_image_log_magn(const range<dfloat, bounded_u<0, 1000>, saturate> a,
-					     const range<dfloat, bounded_u<0, 1000>, saturate> b,
+      image2d<T1> transformed_image_log_magn(const range<dfloat,
+					     bounded_u<0, 1000>,
+					     saturate> a,
+					     const range<dfloat,
+					     bounded_u<0, 1000>,
+					     saturate> b,
 					     bool ordered = true) const
       {
 	is_a(optraits<T1>, optraits_scalar)::ensure();
 
-	image2d<T1> new_im(trans_im.nrows(), trans_im.ncols());
+	image2d<T1> new_im(trans_im.size());
 	dfloat max = 0;
+	typename image2d<cplx<R, dfloat> >::iter it(trans_im);
 
-	for (int row = 0; row < trans_im.nrows(); ++row)
-	  for (int col = 0; col <= trans_im.ncols(); ++col)
-	    if (max < trans_im(row, col).magn())
-	      max = trans_im(row, col).magn();
+	for_all(it)
+	  if (max < trans_im[it].magn())
+	    max = trans_im[it].magn();
 
 	if (ordered)
 	  for (int row = 0; row < new_im.nrows(); ++row)
 	    for (int col = 0; col < new_im.ncols(); ++col)
 	      new_im(row, col) =
-		log(a + b * trans_im((row + trans_im.nrows() / 2) % trans_im.nrows(),
-				     (col + trans_im.ncols() / 2) % trans_im.ncols()).magn()) /
+		log(a + b * trans_im((row + trans_im.nrows() / 2) %
+				     trans_im.nrows(),
+				     (col + trans_im.ncols() / 2) %
+				     trans_im.ncols()).magn()) /
 		log(a + b * max) * optraits<T>::max();
 	else
 	  for (int row = 0; row < new_im.nrows(); ++row)
 	    for (int col = 0; col < new_im.ncols(); ++col)
-	      new_im(row, col) = log(a + b * trans_im(row, col).magn()) / log(a + b * max) *
-		optraits<T>::max();
+	      new_im(row, col) = log(a + b * trans_im(row, col).magn()) /
+		log(a + b * max) * optraits<T>::max();
       
 	return new_im;
       }
 
       // FIXME: Find a more elegant way to fix boundaries of a and b.
-      image2d<T> transformed_image_log_magn(const range<dfloat, bounded_u<0, 1000>, saturate> a,
-					    const range<dfloat, bounded_u<0, 1000>, saturate> b,
+      image2d<T> transformed_image_log_magn(const range<dfloat,
+					    bounded_u<0, 1000>,
+					    saturate> a,
+					    const range<dfloat,
+					    bounded_u<0, 1000>,
+					    saturate> b,
 					    bool ordered = true) const
       {
 	return transformed_image_log_magn<T>(a, b, ordered);
@@ -231,8 +248,8 @@ namespace oln {
 
       typename fft_trait<T>::fftw_input	*in;
       fftw_complex			*out;
-      fftwnd_plan				p;
-      fftwnd_plan				p_inv;
+      fftwnd_plan			p;
+      fftwnd_plan			p_inv;
       // FIXME: See with David if we cannot use his 'generic morpher' for trans_im.
       image2d<cplx<R, dfloat> >		trans_im;
 
@@ -240,7 +257,7 @@ namespace oln {
 
   } // end of namespace internal
 
-  namespace transform {
+  namespace transforms {
 
     template <class T,
 	      cplx_representation R = polar,
@@ -261,7 +278,8 @@ namespace oln {
       fft(const image2d<T>& original_im)
       {
 	in  = new fftw_real[original_im.nrows() * original_im.ncols()];
-	out = new fftw_complex[original_im.nrows() * (original_im.ncols() / 2 + 1)];
+	out = new fftw_complex[original_im.nrows() *
+			       (original_im.ncols() / 2 + 1)];
 
 	for (int row = 0; row < original_im.nrows(); ++row)
 	  for (int col = 0; col < original_im.ncols(); ++col)
@@ -273,7 +291,8 @@ namespace oln {
 	p_inv = rfftw2d_create_plan(original_im.nrows(), original_im.ncols(),
 				    FFTW_COMPLEX_TO_REAL, FFTW_ESTIMATE);
 
-	trans_im = image2d<cplx<R, dfloat> >(original_im.nrows(), original_im.ncols());
+	trans_im = image2d<cplx<R, dfloat> >(original_im.nrows(),
+					     original_im.ncols());
       }
 
       image2d<cplx<R, dfloat> > transform()
@@ -305,8 +324,10 @@ namespace oln {
 	for (int row = 0; row < trans_im.nrows(); ++row)
 	  for (int col = 0; col <= trans_im.ncols() / 2; ++col)
 	    {
-	      out[row * (trans_im.ncols() / 2 + 1) + col].re = trans_im(row, col).real();
-	      out[row * (trans_im.ncols() / 2 + 1) + col].im = trans_im(row, col).imag();
+	      out[row * (trans_im.ncols() / 2 + 1) + col].re =
+		trans_im(row, col).real();
+	      out[row * (trans_im.ncols() / 2 + 1) + col].im =
+		trans_im(row, col).imag();
 	    }
 	rfftwnd_one_complex_to_real(p_inv, out, in);
 
@@ -354,8 +375,10 @@ namespace oln {
 	for (int row = 0; row < original_im.nrows(); ++row)
 	  for (int col = 0; col < original_im.ncols(); ++col)
 	    {
-	      in[row * original_im.ncols() + col].re = original_im(row, col).real();
-	      in[row * original_im.ncols() + col].im = original_im(row, col).imag();
+	      in[row * original_im.ncols() + col].re =
+		original_im(row, col).real();
+	      in[row * original_im.ncols() + col].im =
+		original_im(row, col).imag();
 	    }
 
 	// FIXME: allow user to modify fftw parameters ?
@@ -364,7 +387,8 @@ namespace oln {
 	p_inv = fftw2d_create_plan(original_im.nrows(), original_im.ncols(),
 				   FFTW_BACKWARD, FFTW_ESTIMATE);
 
-	trans_im = image2d<cplx<rect, dfloat> >(original_im.nrows(), original_im.ncols());
+	trans_im = image2d<cplx<rect, dfloat> >(original_im.nrows(),
+						original_im.ncols());
       }
 
       image2d<cplx<R, dfloat> > transform()
@@ -413,7 +437,7 @@ namespace oln {
 
     };
 
-  } // end of namespace transform
+  } // end of namespace transforms
   
 } // end of namespace oln
 
