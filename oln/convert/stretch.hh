@@ -28,35 +28,37 @@
 #ifndef OLENA_CONVERT_STRETCH_HH
 # define OLENA_CONVERT_STRETCH_HH
 
-# include <oln/convert/conversion.hh>
 # include <oln/value/cast.hh>
+# include <oln/core/type.hh>
+# include <oln/convert/conversion.hh>
+# include <oln/convert/force.hh>
 
 namespace oln {
 
   namespace convert {
-  
+
     template<class Output, class Inferior = type::bottom>
     struct stretch : public conversion_to_type<Output,force<Output, Inferior> >
     {
       typedef Inferior inferior;
-      
+
       template< class Input >
       Output operator() (const Input& v) const {
-	
+
 	return Output(cast::rbound<Output, float>(
-						  double(v - Input::min()) 
+						  double(v - Input::min())
 						  / double(Input::max() - Input::min())
 						  * (Output::max() - Output::min())
 						  + Output::min()));
       }
-      
+
       static std::string name() {
         return std::string("stretch<") + typename_of<Output>() + ", "
           + typename_of<Inferior>() + ">";
       }
     };
-    
-    
+
+
   } // end of namespace convert
 
 } // end of namespace oln

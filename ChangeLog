@@ -1,3 +1,13 @@
+2002-07-22  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* oln/convol/convolution.hh: Temporarily include
+	oln/core/w_window2d.hh.
+	* oln/convert/stretch.hh: Include oln/core/type.hh and
+	oln/convert/force.hh.
+	* oln/core/pred.hh: Move ...
+	* oln/core/oln/pred.hh: ... here.
+	* oln/Makefile.am (nobase_oln_HEADERS): Remove core/pred.hh.
+
 2002-07-18  jean-sebastien mouret  <js@lrde.epita.fr>
 
 	* oln/core/type.hh (name_of<int>): Add inline.
@@ -10,7 +20,7 @@
 
 	* oln/convol/convolution.hh: Typo (rewrite the FIXME as required).
 	* oln/core/type.hh (type): Typo (rewrite the FIXME as required).
-	
+
 2002-07-18  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* configure.ac: Output tests/defs and tests/sanity/Makefile.

@@ -25,7 +25,7 @@ while read file; do
 done
 
 if test -f failures; then
-   echo "Failled files:"
+   echo "Failed files:"
    cat failures
    rm failures
    exit 1;

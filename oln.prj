@@ -1,14 +1,22 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_4 31)
-(Parent-Version oln 0_4 30)
-(Version-Log "
-Disable keywords subsitutions for doc/img/lena256.img, doc/img/object.pbm,
-img/lena128.pgm, tests/data/random.pgm, and tools/mkinstalldirs.")
+(Project-Version oln 0_4 32)
+(Parent-Version oln 0_4 31)
+(Version-Log "2002-07-22  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* oln/convol/convolution.hh: Temporarily include
+	oln/core/w_window2d.hh.
+	* oln/convert/stretch.hh: Include oln/core/type.hh and
+	oln/convert/force.hh.
+	* oln/core/pred.hh: Move ...
+	* oln/core/oln/pred.hh: ... here.
+	* oln/Makefile.am (nobase_oln_HEADERS): Remove core/pred.hh.
+
+")
 (New-Version-Log "")
-(Checkin-Time "Mon, 22 Jul 2002 12:08:06 +0200")
-(Checkin-Login duret_g)
+(Checkin-Time "Mon, 22 Jul 2002 18:35:40 +0200")
+(Checkin-Login adl)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
 ;; diff-ignore Makefile\.in$
@@ -75,7 +83,7 @@ img/lena128.pgm, tests/data/random.pgm, and tools/mkinstalldirs.")
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.13 644))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.11 600))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.12 600))
   (configure.ac (oln/3_configure. 1.16 600))
   (configure (oln/e/7_configure 1.20 700))
   (README (oln/1_README 1.3 600))
@@ -134,7 +142,7 @@ img/lena128.pgm, tests/data/random.pgm, and tools/mkinstalldirs.")
   (oln/convert/nrgbyuv.hh (oln/13_nrgbyuv.hh 1.2 600))
   (oln/convert/rgbnrgb.hh (oln/17_rgbnrgb.hh 1.2 600))
   (oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.2 600))
-  (oln/convol/convolution.hh (oln/f/39_convolutio 1.2 600))
+  (oln/convol/convolution.hh (oln/f/39_convolutio 1.3 600))
   (oln/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.3 600))
   (oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.3 600))
   (oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.3 600))
@@ -209,7 +217,7 @@ img/lena128.pgm, tests/data/random.pgm, and tools/mkinstalldirs.")
   (oln/core/point3d.hxx (oln/c/27_point3d.hx 1.2 600))
   (oln/core/point.hh (oln/c/33_point.hh 1.2 600))
   (oln/core/pointnd.hh (oln/c/10_pointnd.hh 1.3 600))
-  (oln/core/pred.hh (oln/c/26_pred.hh 1.5 600))
+  (oln/core/old/pred.hh (oln/c/26_pred.hh 1.5 600))
   (oln/core/pred_image.hh (oln/c/24_pred_image 1.2 600))
   (oln/core/regular_image.hh (oln/c/23_regular_im 1.3 600))
   (oln/core/structelt.hh (oln/c/25_structelt. 1.2 600))
@@ -249,7 +257,7 @@ img/lena128.pgm, tests/data/random.pgm, and tools/mkinstalldirs.")
   (oln/level/invert.hh (oln/33_invert.hh 1.3 600))
   (oln/level/lut.hh (oln/29_lut.hh 1.6 600))
   (oln/level/threshold.hh (oln/f/15_threshold. 1.3 600))
-  (oln/Makefile.am (oln/27_Makefile.a 1.16 600))
+  (oln/Makefile.am (oln/27_Makefile.a 1.17 600))
   (oln/Makefile.in (oln/e/17_Makefile.i 1.22 600))
   (oln/math/macros.hh (oln/b/21_macros.hh 1.3 600))
   (oln/meta/array1d.hh (oln/f/23_array1d.hh 1.2 644))
@@ -339,7 +347,7 @@ img/lena128.pgm, tests/data/random.pgm, and tools/mkinstalldirs.")
   (tests/array/test_array1d.cc (oln/f/26_test_array 1.2 644))
   (tests/array/test_array2d.cc (oln/f/25_test_array 1.2 644))
   (tests/array/test_array3d.cc (oln/f/24_test_array 1.2 644))
-  (tests/ChangeLog (oln/e/30_ChangeLog 1.15 600))
+  (tests/ChangeLog (oln/e/30_ChangeLog 1.16 600))
   (tests/check/check.hh (oln/e/40_check.hh 1.2 600))
   (tests/check/data.cc (oln/f/5_data.cc 1.2 600))
   (tests/check/data.hh (oln/f/6_data.hh 1.1 600))
@@ -396,7 +404,7 @@ img/lena128.pgm, tests/data/random.pgm, and tools/mkinstalldirs.")
 ;; Files added by populate at Thu, 18 Jul 2002 20:26:30 +0200,
 ;; to version 0_4.26(w), by adl:
 
-  (tests/sanity/includes.test (oln/f/46_includes.t 1.1 755))
+  (tests/sanity/includes.test (oln/f/46_includes.t 1.2 755))
   (tests/sanity/Makefile.in (oln/f/47_Makefile.i 1.1 644))
   (tests/sanity/Makefile.am (oln/f/48_Makefile.a 1.1 644))
 
@@ -408,7 +416,7 @@ img/lena128.pgm, tests/data/random.pgm, and tools/mkinstalldirs.")
 ;; Files added by populate at Thu, 18 Jul 2002 21:13:31 +0200,
 ;; to version 0_4.28(w), by astrid:
 
-  (oln/convert/stretch.hh (oln/f/51_stretch.hh 1.1 600))
+  (oln/convert/stretch.hh (oln/f/51_stretch.hh 1.2 600))
 )
 (Merge-Parents)
 (New-Merge-Parents)

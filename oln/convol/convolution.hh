@@ -34,51 +34,54 @@
 # include <oln/value/all.hh>
 # include <oln/meta/array.hh>
 
+# include <oln/core/w_window2d.hh> // FIXME: change to w_window once
+                                   // the fixmes below are fixed.
+
 namespace oln {
 
   namespace convol {
 
     namespace output {
-      
+
       // FIXME: Shouldn't be there.
 
       template<class T_in, class T_win>
       struct output_traits;
-      
-      template<unsigned nbits> 
-      struct output_traits<int_u<nbits>,  int> { 
+
+      template<unsigned nbits>
+      struct output_traits<int_u<nbits>,  int> {
 	typedef int_s<nbits+2> ret;
       };
-      
+
       template<unsigned nbits>
       struct output_traits<int_u<nbits>,  float> {
 	typedef float_p1 ret;
       };
-      
+
       template<unsigned nbits>
       struct output_traits<int_s<nbits>,  int> {
 	typedef int_s<nbits+2> ret;
       };
-      
+
       template<unsigned nbits>
       struct output_traits<int_s<nbits>,  float> {
 	typedef float_p1 ret;
       };
-      
+
       template<unsigned prec>
       struct output_traits<float_p<prec>, int> {
 	typedef float_p<prec> ret;
       };
-      
+
       template<unsigned prec>
       struct output_traits<float_p<prec>, float> {
 	typedef float_p<prec> ret;
-      }; 
-    
+      };
+
     } // end namespace output
-    
+
     namespace slow {
-      
+
       template<class _T_in, class _T_win>
       typename mute <_T_in, typename output::output_traits< Value(_T_in), Weight(_T_win) >::ret >::ret
       convolve(const image < _T_in >& _input, const w_window< _T_win >& _win)
@@ -87,7 +90,7 @@ namespace oln {
 	Exact_cref(T_win,win);
 	typedef typename output::output_traits<typename T_in::value, typename T_win::weight>::ret output_value;
 	typedef typename mute < T_in, output_value>::ret T_out;
-	
+
 	T_out output(input.size());
 	border::adapt_copy(input, win.delta());
 	typename T_in::iter p(input);
@@ -106,13 +109,14 @@ namespace oln {
       typename mute <_T_in, typename output::output_traits< Value(_T_in), _T_arr>::ret >::ret
       convolve(const image < _T_in >& _input, const meta::array2d< Info, _T_arr >& _arr)
       {
-	return convolve(_input, static_cast< w_window2d<_T_arr> >(_arr)); // FIXME: Should be w_window<_T_arr>
+	return convolve(_input, static_cast< w_window2d<_T_arr> >(_arr));
+	// FIXME: Should be w_window<_T_arr>.  Adjust #include once done.
       }
-      
+
     } // end namespace slow
-    
+
   } // end namespace convol
-  
+
 } // end namespace oln
 
 #endif // OLENA_CONVOL_CONVOLUTION_HH__

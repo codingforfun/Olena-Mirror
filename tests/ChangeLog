@@ -1,7 +1,11 @@
+2002-07-22  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* sanity/includes.test: Typo.
+
 2002-07-18  Astrid Wang  <astrid@lrde.epita.fr>
-	
+
 	* tests/convol/sobel_gradient.cc: Fix, thanks to convert::stretch.
-	
+
 2002-07-18  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* Makefile.am (SUBDIRS): Add sanity.

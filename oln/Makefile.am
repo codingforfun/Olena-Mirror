@@ -99,7 +99,6 @@ nobase_oln_HEADERS =				\
   core/point3d.hh				\
   core/point3d.hxx				\
   core/pointnd.hh				\
-  core/pred.hh					\
   core/pred_image.hh				\
   core/regular_image.hh				\
   core/structelt.hh				\
