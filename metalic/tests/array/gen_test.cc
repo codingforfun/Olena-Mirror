@@ -176,10 +176,15 @@ write_postlude_and_test (ofstream & ofs,
 	dup2 (fd[1], 2);
 	close (fd[0]);
 	close (fd[1]);
+	// FIXME: clean path generation
 	std::string cmdline = compile_cmd(filename, "",
 					  Isrcdir ("../..") + ' '
 					  + Isrcdir ("../../../lib/check") + ' ' 
-					  + "-I../../../oln -I../../.. " +
+					  // FIXME: the 2 next entries will become useless
+					  // compile.cc should not include hard coded CPPFLAGS
+					  + Isrcdir ("../../../oln") + ' '
+					  + Isrcdir ("../../../mlc") + ' '
+					  + "-I../../../oln -I../../.. "
 					  + "-L../../../lib/check -lcheck " +
 					  cxxflags_strict_errors());
 	int ret = system (cmdline.c_str ());

@@ -73,7 +73,7 @@
 (oln/tests/io/pretty.cc 217 1044294362 i/42_pretty.cc 1.2)
 (oln/tests/types/tests/int_s2b 76 1030375252 g/38_int_s2b 1.1)
 (oln/oln/io/pnm_write_common.hxx 3218 1042737226 b/8_pnm_write_ 1.8)
-(metalic/tests/array/gen_test.cc 10892 1046425642 f/34_gen_test.c 1.10)
+(metalic/tests/array/gen_test.cc 11119 1046450558 f/34_gen_test.c 1.11)
 (metalic/mlc/Makefile.am 400 1046375497 q/33_Makefile.a 1.1)
 (doc/dev/oln-dev.texi 2600 1045040094 j/1_oln-dev.te 1.6.1.1)
 (oln/oln/types/cycle.hh 4242 1046369269 g/28_cycle.hh 1.11)
