@@ -1,3 +1,9 @@
+2004-01-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ref/integre-ref.tex: Update.
+
+	* demo/tour.cc (main): Check i/o errors.
+
 2003-12-08  David Lesage  <david@lrde.epita.fr>
 
 	Add Dia UML hierarchies.

@@ -330,6 +330,11 @@ main (void)
   // the type of the image you load/save.  The extension
   // is also used to guess the format to use.
   image2d<int_u8> lena = load(IMGDIR "/lena.pgm");
+  if (!lena.has_impl())
+    {
+      std::cerr << "Could not load " << IMGDIR "/lena.pgm" << std::endl;
+      exit(1);
+    }
   std::cout << "watershedling lena..." << std::endl;
   save(morpho::watershed_seg<int_u8>(lena, neighb_c4()), "output.pgm");
 

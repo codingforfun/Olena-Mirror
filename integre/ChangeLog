@@ -1,3 +1,7 @@
+2004-01-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/core/macros.hh (ntg_abstract_type): New macro.
+
 2003-11-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/types/tests/int_u8: New test.

@@ -15,14 +15,14 @@ This document is intended to describe the Simplified Wrappers for
 Interfacing Olena (Swilena) both in terms of usage and provided
 functionality.
 
-Copyright @copyright{} 2002, 2003 @strong{L.R.D.E.}
+Copyright © 2002, 2003, 2004 @strong{L.R.D.E.}
 
 @end copying
 
 @titlepage
 @title Swilena
 @subtitle Edition @today
-@author Rapha@"el Poss
+@author Rapha@"el Poss and Nicolas Burrus
 @end titlepage
 
 @iftex
@@ -34,9 +34,6 @@ Copyright @copyright{} 2002, 2003 @strong{L.R.D.E.}
 @end ifnottex
 This documents is intended to describe Swilena, a simplified set of
 wrappers around the image processing library Olena.
-
-@c FIXME
-@strong{WARNING: The documentation is currently off-sync with the sources and pertains to olena 0.7.}
 
 @menu
 * Introduction::
@@ -70,20 +67,25 @@ When compiled for a target interpreted language, the following
 @table @strong
 @item swilena
 Contains definitions for pixel types.
-@item swilena1d, swilena2d, swilena3d
-Contain definitions for structural element, neighborhood and image types.
-@item swilena1d_convert, swilena2d_convert, swilena3d_convert
+@item swilena_image1d, swilena_image2d, swilena_image3d
+Contain definitions for image and point types.
+@item swilena_structelt1d, swilena_structelt2d, swilena_structelt3d
+Contain definitions for structural elements.
+@item swilena_conversion1d, swilena_conversion2d, swilena_conversion3d
 Contain conversion functions between image types.
-@item swilena1d_morpho, swilena2d_morpho, swilena3d_morpho
+@item swilena_morpho1d, swilena_morpho2d, swilena_morpho3d
 Contain morphological operators over images.
-@item ...
+@item swilena_arith1d, swilena_arith2d, swilena_arith3d
+Contain arithmetical operators over images.
 @end table
 
 The primary target language for Swilena is Python, because Python is
-the best supported back-end for SWIG. However, the SWIG definition files
-of Swilena are not bound to a particular interpreted language: any
-SWIG target language @emph{providing enough expressivity} can be used.
-Indeed, here are the required features from the interpreted language:
+the best supported back-end for SWIG. However, the SWIG definition
+files of Swilena are not bound to a particular interpreted language:
+any SWIG target language @emph{providing enough expressivity} can be
+used.  Ruby modules are defined too, they are not documented here but
+they work almost the same way than Python modules.  Here are the
+required features from the interpreted language:
 
 @itemize @bullet
 @item
@@ -96,10 +98,11 @@ It must support dynamically loaded modules with dependencies between
 them.
 @end itemize
 
-Typically ``ideal'' target languages are Python, Perl5, Tcl, Scheme.
+Typically ``ideal'' target languages are Python, Ruby, Perl5, Tcl,
+Scheme.
 
-Currently, the source tree only knows about Python, but this should
-be fixed soon.
+Currently, the source tree only knows about Python and Ruby, but this
+may evolute in the future.
 
 @unnumberedsubsec Using Swilena for Olena development
 
@@ -649,8 +652,7 @@ of the class, as in C++. Method calls are also very intuitive:
 First, start Python and load the Swilena modules for 2D:
 
 @example
->>> @kbd{from swilena import *}
->>> @kbd{from swilena2d import *}
+>>> @kbd{from swilena_image2d import *}
 @end example
 
 If everything succeeds, you can start creating images
@@ -663,13 +665,13 @@ Olena:
 >>> @kbd{i=image2d_u8(10, 10)}
 >>> @kbd{for x in range(0, i.ncols(), 1):}
 ...  @kbd{for y in range(0, i.nrows(), 1):}
-...   @kbd{i.at(x, y).value(r.randint(0,255))}
+...   @kbd{i.at(x, y) = r.randint(0,255)}
 ...
 >>>
 @end example
 
-The previous code creates an empty 2D image using 8-bit
-unsigned integers to store pixel values, with a size of 10x10 pixels. It then
+The previous code creates an empty 2D image using 8-bit unsigned
+integers to store pixel values, with a size of 10x10 pixels. It then
 initalizes all pixels in the image using loops.
 
 It is then possible to store this image in a file:
@@ -687,7 +689,7 @@ method:
 @example
 >>> @kbd{i.load("lena.pgm")}
 1
->>> @kbd{i.at(3,3).val()}
+>>> @kbd{i.at(3,3)}
 162
 >>>
 @end example
@@ -695,9 +697,8 @@ method:
 Both @samp{load} and @samp{save} return a boolean set to 1 if the operation
 succeeded, 0 else.
 
-
-As demonstrated in the previous example, Swilena images have methods. However,
-there are not many:
+As demonstrated in the previous example, Swilena images have
+methods. However, there are not many:
 
 @table @samp
 @item load
@@ -706,6 +707,8 @@ load an image from a file.
 save the image to a file.
 @item at
 return a reference to the indicated pixel.
+@item set
+set the value of the indicated pixel.
 @item ncols
 return the number of columns in the image. This method is valid for 1D, 2D and 3D images.
 @item nrows
@@ -718,7 +721,7 @@ Also it hasn't been demonstrated yet, the @samp{at} method is polymorphic,
 and accepts a @samp{point} instead of coordinates as a pixel location:
 
 @example
->>> @kbd{i.at(point2d(3, 3)).val()}
+>>> @kbd{i.at(point2d(3, 3))}
 162
 >>>
 @end example
@@ -727,23 +730,15 @@ Algorithms are grouped in corresponding modules. For example,
 morphological operators are grouped in the @samp{*morpho} modules:
 
 @example
->>> @kbd{import swilena2d_morpho}
->>> @kbd{i2=swilena2d_morpho.erosion(i, win_c4p())}
->>> @kbd{i3=swilena2d_morpho.dilation(i, win_c4p())}
+>>> @kbd{import swilena_structelt2d}
+>>> @kbd{import swilena_morpho2d}
+>>> @kbd{i2=swilena_morpho2d.erosion(i, win_c4p())}
+>>> @kbd{i3=swilena_morpho2d.dilation(i, win_c4p())}
 @end example
 
-Here is a convolution:
-
-@example
->>> @kbd{import swilena2d_convol}
->>> @kbd{ww=w_win2d_int()}
->>> @kbd{ww.add(-1,0,2).add(0,1,-2)}
->>> @kbd{i4=swilena2d_convol.convolve(i, ww)}
-@end example
-
-These function are polymorphic and should work for nearly all
-image types. Refer to the following chapter (@pxref{API Reference})
-for a description of what are valid calls.
+These function are polymorphic and should work for nearly all image
+types. Refer to the following chapter (@pxref{API Reference}) for a
+description of what are valid calls.
 
 @node API Reference
 @chapter API Reference
@@ -764,24 +759,16 @@ for a description of what are valid calls.
 @multitable @columnfractions .25 .25 .5
 @item @strong{Swilena Type} @tab @strong{C++ Type} @tab @strong{Description}
 @item @tab @tab
-@item int_u8 @tab oln::int_u8 @tab 8-bit unsigned integer
-@item int_u16 @tab oln::int_u16 @tab 16-bit unsigned integer
-@item int_u32 @tab oln::int_u32 @tab 32-bit unsigned integer
-@item int_s8 @tab oln::int_s8 @tab 8-bit signed integer
-@item int_s16 @tab oln::int_s16 @tab 16-bit signed integer
-@item int_s32 @tab oln::int_s32 @tab 32-bit signed integer
-@item int_u8s @tab oln::int_u8s @tab 8-bit saturated unsigned integer
-@item int_u16s @tab oln::int_u16s @tab 16-bit saturated unsigned integer
-@item int_u32s @tab oln::int_u32s @tab 32-bit saturated unsigned integer
-@item int_s8s @tab oln::int_s8s @tab 8-bit saturated signed integer
-@item int_s16s @tab oln::int_s16s @tab 16-bit saturated signed integer
-@item int_s32s @tab oln::int_s32s @tab 32-bit saturated signed integer
-@item bin @tab oln::bin @tab 1-bit value
-@item float_s @tab oln::float_s @tab single precision float
-@item float_d @tab oln::float_d @tab double precision float
-@item rgb_8 @tab oln::rgb_8 @tab 3-uple of 8-bit values
-@item rgb_16 @tab oln::rgb_16 @tab 3-uple of 16-bit values
-@item rgb_32 @tab oln::rgb_16 @tab 3-uple of 32-bit values
+@item int_u8 @tab ntg::int_u8 @tab 8-bit unsigned integer
+@item int_u32 @tab ntg::int_u32 @tab 32-bit unsigned integer
+@item int_s8 @tab ntg::int_s8 @tab 8-bit signed integer
+@item int_s32 @tab ntg::int_s32 @tab 32-bit signed integer
+@item bin @tab ntg::bin @tab 1-bit value
+@item float_d @tab ntg::float_d @tab double precision float
+@item cplx_rect @tab ntg::cplx<rect, float_d> @tab complex number in 
+      rectangular representation.
+@item cplx_polar @tab ntg::cplx<polar, float_d> @tab complex number in 
+      polar representation.
 @end multitable
 
 All pixel types are represented by classes in Swilena.
@@ -805,27 +792,6 @@ the following interface:
 Get the scalar value of the pixel.
 @item value(integer or float)
 Set the value of the pixel.
-@end table
-
-Color (RGB) pixel types share the following interface:
-
-@table @code
-@item r()
-return the red component of the pixel value as an integer.
-@item g()
-same, for green.
-@item b()
-same, for blue.
-@item r(integer value)
-set the red component of the pixel value from an integer.
-@item g(integer value)
-same, for green.
-@item b(integer value)
-same, for blue
-@item color(component)
-return the value of the specified color component (0,1,2) as an integer.
-@item color(component, integer vale)
-set the value of the specified color component (0,1,2) from an integer.
 @end table
 
 The module name for these types is @strong{swilena}.
@@ -874,60 +840,24 @@ Here are the image types corresponding to pixel data types:
 @item @tab @tab
 @item image1d_bin @tab oln::image1d<oln::bin> @tab ready
 @item image1d_u8 @tab oln::image1d<oln::int_u8> @tab ready
-@item image1d_u16 @tab oln::image1d<oln::int_u16> @tab ready
 @item image1d_u32 @tab oln::image1d<oln::int_u32> @tab ready
 @item image1d_s8 @tab oln::image1d<oln::int_s8> @tab ready
-@item image1d_s16 @tab oln::image1d<oln::int_s16> @tab ready
 @item image1d_s32 @tab oln::image1d<oln::int_s32> @tab ready
-@item image1d_u8s @tab oln::image1d<oln::int_u8s> @tab ready
-@item image1d_u16s @tab oln::image1d<oln::int_u16s> @tab ready
-@item image1d_u32s @tab oln::image1d<oln::int_u32s> @tab ready
-@item image1d_s8s @tab oln::image1d<oln::int_s8s> @tab ready
-@item image1d_s16s @tab oln::image1d<oln::int_s16s> @tab ready
-@item image1d_s32s @tab oln::image1d<oln::int_s32s> @tab ready
-@item image1d_float_s @tab oln::image1d<oln::float_s> @tab ready
 @item image1d_float_d @tab oln::image1d<oln::float_d> @tab ready
-@item image1d_rgb_8 @tab oln::image1d<oln::rgb_8> @tab ready
-@item image1d_rgb_16 @tab oln::image1d<oln::rgb_16> @tab ready
-@item image1d_rgb_32 @tab oln::image1d<oln::rgb_32> @tab ready
 @item @tab @tab
 @item image2d_bin @tab oln::image2d<oln::bin> @tab ready
 @item image2d_u8 @tab oln::image2d<oln::int_u8> @tab ready
-@item image2d_u16 @tab oln::image2d<oln::int_u16> @tab ready
 @item image2d_u32 @tab oln::image2d<oln::int_u32> @tab ready
 @item image2d_s8 @tab oln::image2d<oln::int_s8> @tab ready
-@item image2d_s16 @tab oln::image2d<oln::int_s16> @tab ready
 @item image2d_s32 @tab oln::image2d<oln::int_s32> @tab ready
-@item image2d_u8s @tab oln::image2d<oln::int_u8s> @tab ready
-@item image2d_u16s @tab oln::image2d<oln::int_u16s> @tab ready
-@item image2d_u32s @tab oln::image2d<oln::int_u32s> @tab ready
-@item image2d_s8s @tab oln::image2d<oln::int_s8s> @tab ready
-@item image2d_s16s @tab oln::image2d<oln::int_s16s> @tab ready
-@item image2d_s32s @tab oln::image2d<oln::int_s32s> @tab ready
-@item image2d_float_s @tab oln::image2d<oln::float_s> @tab ready
 @item image2d_float_d @tab oln::image2d<oln::float_d> @tab ready
-@item image2d_rgb_8 @tab oln::image2d<oln::rgb_8> @tab ready
-@item image2d_rgb_16 @tab oln::image2d<oln::rgb_16> @tab ready
-@item image2d_rgb_32 @tab oln::image2d<oln::rgb_32> @tab ready
 @item @tab @tab
 @item image3d_bin @tab oln::image3d<oln::bin> @tab ready
 @item image3d_u8 @tab oln::image3d<oln::int_u8> @tab ready
-@item image3d_u16 @tab oln::image3d<oln::int_u16> @tab ready
 @item image3d_u32 @tab oln::image3d<oln::int_u32> @tab ready
 @item image3d_s8 @tab oln::image3d<oln::int_s8> @tab ready
-@item image3d_s16 @tab oln::image3d<oln::int_s16> @tab ready
 @item image3d_s32 @tab oln::image3d<oln::int_s32> @tab ready
-@item image3d_u8s @tab oln::image3d<oln::int_u8s> @tab ready
-@item image3d_u16s @tab oln::image3d<oln::int_u16s> @tab ready
-@item image3d_u32s @tab oln::image3d<oln::int_u32s> @tab ready
-@item image3d_s8s @tab oln::image3d<oln::int_s8s> @tab ready
-@item image3d_s16s @tab oln::image3d<oln::int_s16s> @tab ready
-@item image3d_s32s @tab oln::image3d<oln::int_s32s> @tab ready
-@item image3d_float_s @tab oln::image3d<oln::float_s> @tab ready
 @item image3d_float_d @tab oln::image3d<oln::float_d> @tab ready
-@item image3d_rgb_8 @tab oln::image3d<oln::rgb_8> @tab not ready
-@item image3d_rgb_16 @tab oln::image3d<oln::rgb_16> @tab not ready
-@item image3d_rgb_32 @tab oln::image3d<oln::rgb_32> @tab not ready
 @end multitable
 
 All image types are classes in Swilena.
@@ -948,15 +878,19 @@ Create a blank image, using a default border width of 2.
 Access the pixel at @samp{point}, which can be of type @samp{point1d}, @samp{point2d} or 
 @samp{point3d}.
 @item at(dimensions)
-Access the pixel at point specified by one, two, or three coordinantes.
+Access the pixel at point specified by one, two, or three coordinates.
+@item set(point, value)
+Set the value of the pixel at @samp{point}.
+@item set(dimensions, value)
+Set the value of the pixel at the given coordinates.
 @item ncols(), nrows(), nslices()
 Retrieve the dimensions of the image.
 @item load(filename), save(filename)
 Input/output to files.
 @end table
 
-The module names for these types are @strong{swilena1d}, 
-@strong{swilena2d} and @strong{swilena3d}.
+The module names for these types are @strong{swilena_image1d}, 
+@strong{swilena_image2d} and @strong{swilena_image3d}.
 
 @node Structural Element Types
 @section Structural Element types
@@ -968,12 +902,6 @@ Here are the structural elements:
 @item window1d @tab oln::window1d
 @item window2d @tab oln::window2d
 @item window3d @tab oln::window3d
-@item w_win1d_int @tab oln::w_window1d<int>
-@item w_win2d_int @tab oln::w_window2d<int>
-@item w_win3d_int @tab oln::w_window3d<int>
-@item w_win1d_float @tab oln::w_window1d<float>
-@item w_win2d_float @tab oln::w_window2d<float>
-@item w_win3d_float @tab oln::w_window3d<float>
 @end multitable
 
 All these types family share the following interface:
@@ -1007,18 +935,6 @@ Add the specified relative point to the window.
 Return the intersection of this window and another.
 @item uni(other window)
 Return the union of this window and another.
-@end table
-
-Also, members of the ``w_win'' (weighted windows) family
-share the following interface:
-
-@table @code
-@item add(dpoint, value), add(coordinates, value)
-Add the specified relative point to the window with weight.
-@item of_win(value, window)
-Create a weighted window from a non-weighted window.
-@item w(i)
-Return the weight of the i'nth ``dpoint'' in the window.
 @end table
 
 Here are the corresponding instantiation functions, which
@@ -1101,16 +1017,44 @@ The module names for these types and functions are @strong{swilena1d},
 @node Conversion Functions
 @section Conversion Functions
 
-All image conversions share the same function name @code{convert}.
-This function takes the destination image as first argument,
-and the source image as second argument.
+An image can be converted into another kind of image if it their types
+are compatible.  Several conversions are possible: with truncation,
+with stretching or direct.
 
-All conversions between images of scalar values are available.
+The naming scheme is simple, append the name of the destination type
+to the kind of conversion.  For example, to perform a conversion from
+an image of @code{int_u32} toward an image of @code{int_u8} with
+stretching, use @code{stretch_to_int_u8(your_image_in_int_u32)}.
 
-RGB images cannot be converted to and from (yet).
+@unnumberedsubsec Reducing conversions
 
-The module names for these functions are @strong{swilena1d_convert}, 
-@strong{swilena2d_convert} and @strong{swilena3d_convert}.
+Stretching (@code{stretch_to}) and truncation (@code{bound_to}) are
+available.
+
+Here are the possible reduction conversions:
+
+@multitable @columnfractions .5 .5
+@item @strong{Source type} @tab @strong{Destination type}
+@item @tab
+@item int_u32 @tab int_u8
+@item int_s32 @tab int_s8
+@end multitable
+
+@unnumberedsubsec Direct conversions
+
+Direct conversions (@code{cast_to}) are possible between all scalar
+types.  Some additional conversions are possible:
+
+@multitable @columnfractions .5 .5
+@item @strong{Source type} @tab @strong{Destination type}
+@item @tab
+@item bin @tab any scalar type
+@item any integer type @tab bin
+@end multitable
+
+The module names for these functions are
+@strong{swilena_conversions1d}, @strong{swilena_conversions2d} and
+@strong{swilena_conversions3d}.
 
 @node Morpho Functions
 @section Morpho Functions
@@ -1170,8 +1114,13 @@ in the C++ namespace @code{oln::morpho}:
 
 FIXME: laplacian and hit_or_miss are missing.
 
-The module names for these functions are @strong{swilena1d_morpho}, 
-@strong{swilena2d_morpho} and @strong{swilena3d_morpho}.
+Some of them do not actually work with every image type.  The exact
+list of supported algorithms for each kind of image should be added to
+the documentation.  This list may evolve soon between Olena releases
+though.
+
+The module names for these functions are @strong{swilena_morpho1d},
+@strong{swilena_morpho2d} and @strong{swilena_morpho3d}.
 
 @node Index and Table of contents
 @unnumbered Index and Table of contents
@@ -1179,7 +1128,5 @@ The module names for these functions are @strong{swilena1d_morpho},
 @printindex cp
 
 @contents
-
-
 
 @bye
