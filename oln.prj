@@ -1,128 +1,12 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_7_reconf 4)
-(Parent-Version oln 0_7_reconf 3)
-(Version-Log "Index: oln/ChangeLog
-from  l Poss  <raph@lrde.epita.fr>
-
-	* Makefile.am (CONFIGURE_DEPENDENCIES): fix.
-	* tests/Makefile.am (CONFIGURE_DEPENDENCIES): fix.
-
-	* oln/transforms/dwt.hh: remove argument names from default
-	_dim_iterate_rec::doit to shut up the compiler.
-
-	* tests/defs.in: add OLN_INCLUDE_DIR. Set CPPFLAGS. Clean CXXFLAGS.
-	* tests/sanity/includes.test: use CPPFLAGS together with CXXFLAGS.
-	* tests/types/runtests: cleanup.
-
-	* tests/transforms/dwt.cc (check): output images to current
-	directory.
-	* tests/transforms/fft.cc (check): likewise.
-	* tests/transforms/output: remove directory.
-
-
-2002-12-29  Raphaël Poss  <raph@lrde.epita.fr>
-
-	* tests/convert/Makefile.am: add `FIXME'. Add missing dependencies.
-
-	* tests/check/srcdir.cc (srcdir_setup): do not add '/' to srcdir.
-	* tests/check/data.cc (data): use RDATADIR and WDATADIR to create
-	paths instead of ugly heuristics.
-	* tests/check/Makefile.flags (AM_CPPFLAGS): add RDATADIR and
-	WDATADIR for use by data().
-
-	* tests/check/verbose.cc (verbose_setup): new way to shut up.
-
-	* tests/convol/slow_sum_2d_1.cc (check): change path of image.
-	* tests/convol/slow_sum_2d_2.cc (check): likewise.
-
-	* tests/configure.ac: all testsuites are now selectable and
-	optional.
-
-	* oln.m4 (OLN_PATH_LOCAL, OLN_PATH_USER, _OLN_CHECK,
-	OLN_PATH_HEADERS, OLN_PATH_IMGS): create. (OLN_TEMPLATE_DEPTH,
-	OLN_C99_MATH, OLN_NUMERIC_LIMITS, AC_WITH_CXX_FFTW,
-	AC_WITH_CXX_ZLIB): new names. Sanitize macros. Use the value cache
-	for most variables. Add comments. Use the C++ compiler to test for
-	fftw and zlib -> do not depend on the C compiler any more.
-
-	* tests/configure.ac (AC_WITH_ZLIB, AC_WITH_FFTW): rename to
-	AC_WITH_CXX_ZLIB and AC_WITH_CXX_FFTW.
-
-(Changes from 0.6)
-
-2002-12-26  Reda Dehak  <reda@nemours.epita.fr>
-
-	* oln/convol/convolution.hh: Fix include files.
-	* tests/convol/slow_sum_2d_1.cc: change accordingly.
-	* tests/convol/slow_sum_2d_2.cc: change accordingly.
-	* tests/convol/sobel_gradient.cc: change accordingly.
-
-2002-12-11  Quoc Peyrot  <chojin@lrde.epita.fr>
-
-	* oln/Makefile.am (nobase_oln_HEADERS): add morpho/extrema.hxx.
-	move level/extrema_killer.hh to morpho/extrema_killer.hh.
-
-	* oln/morpho/extrema_killer.hh: change namespace.
-	* demo/test-reconstruction.cc: change accordingly.
-
-2002-12-11  Reda Dehak  <reda@lrde.epita.fr>
-
-	* oln/convol/convolution.hh: Fix convolve function.
-	* test/convol/slow_sum_2d_1.hh: modify accordingly.
-	* test/convol/slow_sum_2d_2.hh: modify accordingly.
-	* test/convol/sobel_gradient.hh: modify accordingly.
-
-2002-12-11  Quoc Peyrot <chojin@lrde.epita.fr>
-
-	* Branch for olena 0.6 stable
-
-(End of changes from 0.6)
-
-	* oln.m4 (AC_NUMERIC_LIMITS, AC_CXX_C99_MATH): Add new macros...
-	* oln/config/system.hh: ... and use them instead of ugly detection
-	systems.
-
-Index: doc/ChangeLog
-from  l Poss  <raph@lrde.epita.fr>
-
-	* Makefile.am (CONFIGURE_DEPENDENCIES): fix.
-
-	* doc/Makefile.am (COMMONGETDEFSFLAGS): new way to get autoconf'ed
-	values.
-	* configure.ac: cleanup.
-
-2002-12-12  Raphaël Poss  <raph@lrde.epita.fr>
-
-	* demo/Makefile.am (check_PROGRAMS): Now use OLN_CPPFLAGS and OLN_CXXFLAGS.
-	* doc/Makefile.am (COMMONGETDEFSFLAGS): Likewise. Use OLN_IMG_DIR
-	and DEFS, too.
-
-Index: tools/ChangeLog
-from  l Poss  <raph@lrde.epita.fr>
-
-	* Makefile.am (CONFIGURE_DEPENDENCIES): add.
-
-Index: ChangeLog
-from  l Poss  <raph@lrde.epita.fr>
-
-	* FAQ: update.
-	* bootstrap.sh: update.
-
-	* oln-version.m4: bump version to 0.7.
-	* THANKS: update.
-
-	* Makefile.am (CONFIGURE_DEPENDENCIES): add.
-
-2002-12-29  Raphaël Poss  <raph@lrde.epita.fr>
-
-	* cleanup.sh: Remove occurences of `Makefile' also.
-
-
+(Project-Version oln 0_7_reconf 5)
+(Parent-Version oln 0_7_reconf 4)
+(Version-Log "Add missing files.
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 03 Jan 2003 10:04:52 +0100")
+(Checkin-Time "Fri, 03 Jan 2003 10:08:18 +0100")
 (Checkin-Login elrond)
 ;; diff-ignore configure$
 ;; diff-ignore aclocal\.m4$
@@ -907,8 +791,32 @@ from  l Poss  <raph@lrde.epita.fr>
 
   ; (oln/img/lena128.pgm ())
   ; (oln/img/lena.pgm ())
+
+;; Files added by populate at Fri, 03 Jan 2003 10:05:57 +0100,
+;; to version 0_7_reconf.4(w), by elrond:
+
+  (oln/img/Makefile.am (oln/o/34_Makefile.a 1.1 644))
+  
+
+;; Files deleted by depopulate at Fri, 03 Jan 2003 10:06:10 +0100,
+;; from version 0_7_reconf.4(w), by elrond:
+
+  ; (oln/img/Makefile.in ())
+
+;; Files added by populate at Fri, 03 Jan 2003 10:06:30 +0100,
+;; to version 0_7_reconf.4(w), by elrond:
+
+  (oln/tests/configure.ac (oln/o/35_configure. 1.1 664))
+
+;; Files added by populate at Fri, 03 Jan 2003 10:06:51 +0100,
+;; to version 0_7_reconf.4(w), by elrond:
+
+  (tools/configure.ac (oln/o/36_configure. 1.1 664))
+
+;; Files added by populate at Fri, 03 Jan 2003 10:06:56 +0100,
+;; to version 0_7_reconf.4(w), by elrond:
+
+  (tools/Makefile.am (oln/o/37_Makefile.a 1.1 664))
 )
-(Merge-Parents
-  (0_7_reconf.3 complete)
-)
+(Merge-Parents)
 (New-Merge-Parents)
