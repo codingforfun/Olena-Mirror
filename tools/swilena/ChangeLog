@@ -1,3 +1,9 @@
+2004-04-14  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* swilena/ruby/Makefile.am: Remove test for python, they will be back
+	when swilena will be entirely repaired.
+	* swilena/python/Makefile.am: Likewise.
+
 2004-04-13  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* swilena/expand.sh: Add `DOC_CPPFLAGS' to the compilation flags.

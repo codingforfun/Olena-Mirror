@@ -3,7 +3,7 @@
 ## Makefile.am for swilena/python
 ##
 
-SUBDIRS = . tests
+SUBDIRS = .
 
 rubydir = $(libdir)/ruby
 
