@@ -1,3 +1,9 @@
+2005-03-19  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* configure.ac: Prevent .in files from the doc from being needed when
+	the doc is not going to be built.
+	* config/oln.m4: Change OLN_VERSION to 1.0.
+
 2005-03-14  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* configure.ac: Add i/o test suite.

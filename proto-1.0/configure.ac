@@ -19,7 +19,6 @@ MLC_PATH_LOCAL([metalic])
 OLN_PATH_LOCAL([olena])
 AC_WITH_OLN
 
-echo $CPPFLAGS
 
 # Some library archives are used. Some C code used.
 AC_PROG_RANLIB
@@ -39,10 +38,8 @@ AC_CONFIG_FILES([Makefile
                  metalic/mlc/Makefile
 		 olena/Makefile
 		 olena/oln/Makefile
-		 olena/oln/config/pconf.hh:olena/oln/config/pconf-hh.in
-                 doc/ref/out/exdoc.config:doc/ref/out/exdoc.config.in
-                 doc/ref/exdoc.mk:doc/ref/exdoc.mk.in
-                 doc/ref/doxygen.config:doc/ref/doxygen.config.in])
+                 olena/img/Makefile
+		 olena/oln/config/pconf.hh:olena/oln/config/pconf-hh.in])
 
 
 ### Olena components.
@@ -104,6 +101,7 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
       OLN_TESTS([core])
       OLN_TESTS([sanity])
       OLN_TESTS([io])
+      OLN_TESTS([level])
 
       AC_SUBST([OLN_TESTS_SUBDIRS])
 
@@ -141,6 +139,8 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
 
       # NTG_TESTS defined in oln-local.m4
       NTG_TESTS([sanity])
+      NTG_TESTS([types])
+      NTG_TESTS([utils])
 
       AC_SUBST([NTG_TESTS_SUBDIRS])
 
@@ -215,6 +215,12 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
 
      ### The reference manual uses Doxygen
      ### FIXME: could be much better.
+
+     AC_CONFIG_FILES([
+                 doc/ref/out/exdoc.config:doc/ref/out/exdoc.config.in
+                 doc/ref/exdoc.mk:doc/ref/exdoc.mk.in
+                 doc/ref/doxygen.config:doc/ref/doxygen.config.in])
+
 
      AC_ARG_WITH([doc-ref],
                  [Doxygen is needed to build the doc],
