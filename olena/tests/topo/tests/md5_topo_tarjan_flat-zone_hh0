@@ -1,0 +1,28 @@
+//                                                                  -*- c++ -*-
+#include "data.hh"
+#include <oln/utils/md5.hh>
+
+#include "check.hh" 
+#include <oln/basics2d.hh> 
+#include <oln/topo/tarjan/flat-zone.hh> 
+#include <oln/convert/stretch.hh> 
+ 
+int main() 
+{
+oln::utils::key::value_type   data_key[16] = {0x23, 0x57, 0x37, 0xc5, 0xf5, 0xd1, 0x56, 0x6b, 0x6a, 0x2b, 0x6b, 0xe6, 0x59, 0x5b, 0xbb, 0x57};
+
+oln::utils::key		   key(data_key);
+
+   typedef oln::image2d<ntg::
+int_u8> img_type;
+   img_type in = oln::load(rdata("test-cmap.pgm"));
+   oln::topo::tarjan::flat_zone<img_type> z(in);
+   if (oln::utils::md5(oln::convert::stretch_balance<ntg::
+int_u8>(z.label, 0, 255)) == key)
+  std::cout << "OK" << std::endl;
+else
+  {
+    std::cout << "FAIL" << std::endl;
+    return true;
+  }
+  }
