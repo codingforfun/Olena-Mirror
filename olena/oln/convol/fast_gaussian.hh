@@ -55,7 +55,8 @@ namespace oln {
       ** \brief Gaussian filter.
       **
       ** Gaussian filter implementation from "Recursively implementing
-      ** the gaussian and its derivatives" Deriche 93 INRIA REPORT.
+      ** the  gaussian and  its derivatives"  Deriche 93  INRIA REPORT
+      ** (num RR-1893).
       **
       ** \param C Exact type of the conversion object.
       ** \param B Base type of the conversion object.
@@ -80,7 +81,8 @@ namespace oln {
       ** \brief Derivative gaussian filter.
       **
       ** Gaussian filter implementation from "Recursively implementing
-      ** the gaussian and its derivatives" Deriche 93 INRIA REPORT.
+      ** the  gaussian and  its derivatives"  Deriche 93  INRIA REPORT
+      ** (num RR-1893).
       **
       ** \param C Exact type of the conversion object.
       ** \param B Base type of the conversion object.
@@ -106,7 +108,8 @@ namespace oln {
       ** \brief Second derivative gaussian filter.
       **
       ** Gaussian filter implementation from "Recursively implementing
-      ** the gaussian and its derivatives" Deriche 93 INRIA REPORT.
+      ** the  gaussian and  its derivatives"  Deriche 93  INRIA REPORT
+      ** (num RR-1893).
       **
       ** \param C Exact type of the conversion object.
       ** \param B Base type of the conversion object.
@@ -135,7 +138,8 @@ namespace oln {
       ** \brief Gaussian filter with a default conversion.
       **
       ** Gaussian filter implementation from "Recursively implementing
-      ** the gaussian and its derivatives" Deriche 93 INRIA REPORT.
+      ** the  gaussian and  its derivatives"  Deriche 93  INRIA REPORT
+      ** (num RR-1893).
       **
       ** \param I Exact type of the image.
       ** \param BE Exact type of the behavior.
@@ -182,7 +186,8 @@ namespace oln {
       ** \brief Derivative gaussian filter with a default conversion.
       **
       ** Gaussian filter implementation from "Recursively implementing
-      ** the gaussian and its derivatives" Deriche 93 INRIA REPORT.
+      ** the  gaussian and  its derivatives"  Deriche 93  INRIA REPORT
+      ** (num RR-1893).
       **
       ** \param I Exact type of the image.
       ** \param BE Exact type of the behavior.
@@ -228,7 +233,8 @@ namespace oln {
       ** \brief Second derivative gaussian filter with a default conversion.
       **
       ** Gaussian filter implementation from "Recursively implementing
-      ** the gaussian and its derivatives" Deriche 93 INRIA REPORT.
+      ** the  gaussian and  its derivatives"  Deriche 93  INRIA REPORT
+      ** (num RR-1893).
       **
       ** \param I Exact type of the image.
       ** \param BE Exact type of the behavior.
@@ -278,7 +284,8 @@ namespace oln {
       ** default behavior.
       **
       ** Gaussian filter implementation from "Recursively implementing
-      ** the gaussian and its derivatives" Deriche 93 INRIA REPORT.\n
+      ** the  gaussian and  its derivatives"  Deriche 93  INRIA REPORT
+      ** (num RR-1893).\n
       **
       ** \warning  The content  of the  border  is the  mirror of  the
       ** image.
@@ -325,7 +332,8 @@ namespace oln {
       ** and a default behavior.
       **
       ** Gaussian filter implementation from "Recursively implementing
-      ** the gaussian and its derivatives" Deriche 93 INRIA REPORT.
+      ** the  gaussian and  its derivatives"  Deriche 93  INRIA REPORT
+      ** (num RR-1893).
       **
       ** \warning  The content  of the  border  is the  mirror of  the
       ** image.
@@ -374,7 +382,8 @@ namespace oln {
       ** conversion and a default behavior.
       **
       ** Gaussian filter implementation from "Recursively implementing
-      ** the gaussian and its derivatives" Deriche 93 INRIA REPORT.
+      ** the  gaussian and  its derivatives"  Deriche 93  INRIA REPORT
+      ** (num RR-1893).
       **
       ** \warning  The content  of the  border  is the  mirror of  the
       ** image.

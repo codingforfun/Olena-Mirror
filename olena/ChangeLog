@@ -1,5 +1,10 @@
 2004-03-29  Giovanni Palma  <giovanni@lrde.epita.fr>
 
+	* oln/convol/fast_gaussian.hh: Add reference.
+	* oln/convol/fast_gaussian.hxx: Correct algorithm for tiny sigma.
+
+2004-03-29  Giovanni Palma  <giovanni@lrde.epita.fr>
+
 	* tests/convol/tests/md5_convol_fast_gaussian_hh5: Correct test.
 	* tests/convol/tests/md5_convol_fast_gaussian_hh4: Likewise.
 	* tests/convol/tests/md5_convol_fast_gaussian_hh3: Likewise.

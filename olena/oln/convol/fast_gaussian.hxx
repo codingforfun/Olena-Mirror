@@ -306,14 +306,18 @@ namespace oln {
 	  for_all(it)
 	    work_img[it] = ntg::cast::force<ntg::float_s>(in[it]);
 
-	  /* FIXME: relation between sigma and the border shouldn't
-	     be linear, so when sigma is big enougth, the signal may
-	     be parasitized by the non signal values.
-	   */
-	  behavior.adapt_border(work_img, ntg::cast::round<coord>(5 * sigma));
+	  // On tiny sigma, Derich algorithm doesn't work.
+	  // It is the same thing that to convolve with a Dirac.
+	  if (sigma > 0.006)
+	    {
+	      /* FIXME: relation between sigma and the border shouldn't
+		 be linear, so when sigma is big enougth, the signal may
+		 be parasitized by the non signal values.
+	      */
+	      behavior.adapt_border(work_img, ntg::cast::round<coord>(5 * sigma));
 
-	  gaussian_<I::dim>::doit(work_img, coef);
-
+	      gaussian_<I::dim>::doit(work_img, coef);
+	    }
 	  /* Convert the result image to the user-requested datatype.
 	     FIXME: We are making an unnecessary copy in case the
 	     user expects a ntg::float_s image.  */
