@@ -260,10 +260,11 @@ Olena has been tested on the following configurations :
 
 @multitable @columnfractions .33 .66
 @item @strong{System} @tab @strong{Compiler}
-@item Linux @tab g++ 3.0 and 3.2
+@item Linux @tab g++ 3.0, 3.1, 3.2 and 3.3
 @item Linux @tab icc (Intel's C++ Compiler) v7
 @item MacOS X @tab g++ 3.1
-@item NetBSD 1.6 @tab g++ 3.2
+@item NetBSD 1.6 @tab g++ 3.2 and 3.3
+@item FreeBSD 5.0 @tab g++ 3.2 and 3.3
 @item Cygwin @tab g++ 3.2
 @end multitable
 
@@ -280,8 +281,7 @@ under various circumstances, optimizations sometimes generates invalid
 code, especially with intensive inlining.
 @end itemize
 
-Actually Olena yet compiles with g++ 2.95, but some wrong code might
-be generated with data types.
+Actually Olena does not compile with g++ 2.95 anymore.
 
 Compilation time may have important differences between compilers, the
 following benchmark gives an idea of the time needed to complete a
@@ -289,7 +289,6 @@ following benchmark gives an idea of the time needed to complete a
 
 @multitable @columnfractions .5 .5
 @item @strong{Compiler} @tab @strong{Time}
-@item  g++-2.95 @tab 16m42s
 @item  g++-3.0 @tab 23m20s
 @item  g++-3.2 @tab 20m03s
 @item  icc-7 @tab 12m52s
@@ -300,7 +299,6 @@ just show the runtime benchmarks for the @file{extrkiller} test:
 
 @multitable @columnfractions .25 .5 .25
 @item @strong{Compiler} @tab @strong{Options} @tab @strong{Time}
-@item g++-2.95 @tab @option{-O3 -finline-limit-1500} @tab 3m14s
 @item g++-3.0 @tab @option{-O3 -finline-limit-1500} @tab 2m08s
 @item g++-3.2 @tab @option{-O3 -finline-limit-1500} @tab 1m50s
 @item icc-7   @tab @option{-O3} @tab 5m41s

@@ -1,5 +1,11 @@
 2004-04-15  Giovanni Palma  <giovanni@lrde.epita.fr>
 
+	* dev/build.texi: Update the file.
+	* dev/srctree.texi: Likewise.
+	* dev/upgrading.texi: Likewise.
+
+2004-04-15  Giovanni Palma  <giovanni@lrde.epita.fr>
+
 	* dev/thanks.texi: Update thanks.
 
 2004-04-15  Niels Van Vliet  <niels@lrde.epita.fr>
