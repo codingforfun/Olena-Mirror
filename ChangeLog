@@ -1,5 +1,5 @@
 2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
+	
 	* configure.ac: Add a test entry for integre/tests/sanity.
 	* configure.ac: Add a test entry for metalic/tests/sanity.
 	* config/oln.m4: Add local macros for integre and metalic.
@@ -7,7 +7,7 @@
 2003-05-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* configure.ac: Add a test entry for integre/tests/utils.
-
+	
 2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* configure.ac: Make CXXFLAGS empty by default.

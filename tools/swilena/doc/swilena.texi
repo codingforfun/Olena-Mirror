@@ -35,6 +35,9 @@ Copyright @copyright{} 2002, 2003 @strong{L.R.D.E.}
 This documents is intended to describe Swilena, a simplified set of
 wrappers around the image processing library Olena.
 
+@c FIXME
+@strong{WARNING: The documentation is currently off-sync with the sources and pertains to olena 0.7.}
+
 @menu
 * Introduction::
 * Of SWIG and Swilena principles::

@@ -175,6 +175,18 @@ namespace ntg {
       return *this;
     }
 
+    // bin is allowed since it has defined values 0 or 1.
+    int_u (bin b)
+    {
+      val_ = b.val();
+    }
+    self&
+    operator=(bin b)
+    {
+      val_ = b.val();
+      return *this;
+    }
+
     operator storage_type () const { return val_; }
 
   private:

@@ -28,9 +28,12 @@
 #ifndef OLENA_TOPO_INTER_PIXEL_INTER_PIXEL_HH
 # define OLENA_TOPO_INTER_PIXEL_INTER_PIXEL_HH
 
+# include <oln/basics.hh>
 # include <oln/topo/inter-pixel/node.hh>
 # include <oln/topo/inter-pixel/fwd-dir-iter.hh>
 # include <oln/topo/inter-pixel/bkd-dir-iter.hh>
+
+# include <ntg/optraits.hh>
 
 namespace oln {
 

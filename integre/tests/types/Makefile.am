@@ -2,6 +2,8 @@
 
 EXTRA_DIST = tests runtests
 
+CLEANFILES = test.core
+
 check-local:
 	TOP_SRCDIR=$(top_srcdir) SRCDIR=$(srcdir) \
 	TOP_BUILDDIR=$(top_builddir) \
