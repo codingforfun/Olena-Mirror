@@ -1,11 +1,7 @@
 #include <oln/types/all.hh>
 #include <oln/basics2d.hh>
 #include <oln/basics3d.hh>
-#include <oln/morpho/erosion.hh>
-#include <oln/morpho/dilation.hh>
-#include <oln/morpho/opening.hh>
-#include <oln/morpho/closing.hh>
-#include <oln/morpho/gradient.hh>
+#include <oln/morpho/laplacian.hh>
 #include <oln/morpho/top_hat.hh>
 #include <iostream>
 #include <getopt.h>
@@ -25,6 +21,10 @@ using namespace oln;
 #endif
 
 #ifndef FUNC
+# error
+#endif
+
+#ifndef FUNCTOR
 # error
 #endif
 
@@ -50,7 +50,7 @@ void usage(const char * progname)
   std::cerr << "filename_out                  : destination file" << std::endl;
   std::cerr << std::endl;
   std::cerr << "example: " << progname
-            << " -&w my_win.pbm"
+            << " -w my_win.pbm"
             << " lena.pgm lena_out.pgm"
             << std::endl;
   exit(1);
@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
   if ((optind + 2) > argc)
     usage(argv[0]);
   IMAGE_TYPE<DATA_TYPE> img_in = load(argv[optind]);
-  save(morpho::FUNC(img_in, win), argv[optind + 1]);
+  save(morpho::FUNC(FUNCTOR, img_in, win), argv[optind + 1]);
   return 0;
 }
 

@@ -1,12 +1,9 @@
 #include <oln/types/all.hh>
 #include <oln/basics2d.hh>
 #include <oln/basics3d.hh>
-#include <oln/morpho/erosion.hh>
-#include <oln/morpho/dilation.hh>
-#include <oln/morpho/opening.hh>
-#include <oln/morpho/closing.hh>
-#include <oln/morpho/gradient.hh>
-#include <oln/morpho/top_hat.hh>
+#include <oln/morpho/hit_or_miss.hh>
+#include <oln/morpho/thinning.hh>
+#include <oln/morpho/thickening.hh>
 #include <iostream>
 #include <getopt.h>
 
@@ -31,7 +28,8 @@ using namespace oln;
 static struct option long_options[] =
   {
     { "help", no_argument, NULL, 'h' },
-    { "win", 1, NULL, 'w' },
+    { "win1", 1, NULL, 'w' },
+    { "win2", 1, NULL, 'W' },
     { NULL, 0, NULL, 0 }
   };
 
@@ -40,17 +38,20 @@ void usage(const char * progname)
 {
   std::cerr << "usage:" << std::endl;
   std::cerr << progname
-            << " [-w filename]"
+            << " [-w filename] [-W filename]"
             << " filename_in filename_out"
             << std::endl << std::endl;
-  std::cerr << "-w filename, --win filename   : load a window from file"
+  std::cerr << "-w filename, --win1 filename   : load a window from file"
             << ", if not specified use" << std::endl
             << "                                win_c8p by default" << std::endl;
-  std::cerr << "filename_in                   : source file" << std::endl;
-  std::cerr << "filename_out                  : destination file" << std::endl;
+  std::cerr << "-W filename, --win2 filename   : load a window from file"
+            << ", if not specified use" << std::endl
+            << "                                win_c8p by default" << std::endl;
+  std::cerr << "filename_in                    : source file" << std::endl;
+  std::cerr << "filename_out                   : destination file" << std::endl;
   std::cerr << std::endl;
   std::cerr << "example: " << progname
-            << " -&w my_win.pbm"
+            << " -w my_win1.pbm -W my_win2.pbm"
             << " lena.pgm lena_out.pgm"
             << std::endl;
   exit(1);
@@ -58,11 +59,12 @@ void usage(const char * progname)
 
 int main(int argc, char *argv[])
 {
-  WINDOW_TYPE win = win_c8p();
+  WINDOW_TYPE win1 = win_c8p();
+  WINDOW_TYPE win2 = win_c8p();
 
   int c;
   int opt_index = 0;
-  while ((c = getopt_long (argc, argv, "hw:", long_options, &opt_index)) != -1)
+  while ((c = getopt_long (argc, argv, "hw:W:", long_options, &opt_index)) != -1)
     switch (c)
       {
       case ':':
@@ -75,7 +77,10 @@ int main(int argc, char *argv[])
         usage(argv[0]);
 
       case 'w':
-        win = load(optarg);
+        win1 = load(optarg);
+
+      case 'W':
+        win2 = load(optarg);
 
       default:
         opt_index = 0;
@@ -85,7 +90,7 @@ int main(int argc, char *argv[])
   if ((optind + 2) > argc)
     usage(argv[0]);
   IMAGE_TYPE<DATA_TYPE> img_in = load(argv[optind]);
-  save(morpho::FUNC(img_in, win), argv[optind + 1]);
+  save(morpho::FUNC(img_in, win1, win2), argv[optind + 1]);
   return 0;
 }
 
