@@ -1,4 +1,4 @@
-EXTRA_DIST = tests runtests image_print
+EXTRA_DIST = tests runtests image_print.sh
 
 check-local:
 	TOP_SRCDIR=$(top_srcdir) SRCDIR=$(srcdir) \
