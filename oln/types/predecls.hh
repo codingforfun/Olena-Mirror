@@ -32,25 +32,30 @@ namespace oln {
 
   struct non_sense;
 
-  // rec types
-
-  template<class Self> class rec_value;
-  template<class Self> class rec_scalar;
-  template<class Self> class rec_int;
-  template<class Self> class rec_int_u;
-  template<class Self> class rec_int_s;
-  template<class Self> class rec_float;
-
-
   // behaviours
   class unsafe;
   class strict;
   class saturate;
 
-  // scalar types
+  // intervals
+  template <class T, T i_min, T i_max> class		bounded;
+  template <unsigned i_min, unsigned i_max> class	bounded_u;
+  template <signed i_min, signed i_max> class		bounded_s;
 
-  template<unsigned nbits, class behaviour> class int_u;
-  typedef int_u<0, strict>	int_uoo; // FIXME: does not exist yet!
+  // scalar types
+  template<unsigned nbits, class behaviour> class		int_u;
+  template<unsigned nbits, class behaviour> class		int_s;
+  template<class T, class interval, class behaviour> class	range;
+  template<class T, class interval> class			cycle;
+  // floats
+  typedef float							sfloat;
+  typedef double						dfloat;
+
+  // enumerated types
+  class bin; 
+
+
+  // int_u
 
   typedef int_u<8, strict>	int_u8;
   typedef int_u<8, unsafe>	int_u8u;
@@ -64,13 +69,9 @@ namespace oln {
   typedef int_u<32, unsafe>	int_u32u;
   typedef int_u<32, saturate>	int_u32s;
 
-  // FIXME : decomment when ready
-  //   template<> struct int_u<1> {}; // see line below
-  //   class bin;
-  //   typedef bin       int_u1;
 
-  template<unsigned nbits, class behaviour> class int_s;
-  typedef int_s<0, strict>	int_soo; // FIXME: does not exist yet!
+  // int_s
+
   typedef non_sense		int_s1;
 
   typedef int_s<8, strict>	int_s8;
@@ -85,28 +86,63 @@ namespace oln {
   typedef int_s<32, unsafe>	int_s32u;
   typedef int_s<32, saturate>	int_s32s;
 
-  template<class T, class interval, class behaviour> class range;
-
-  // FIXME : activate when ready
-
-//   template<unsigned prec> struct float_p;
-//   typedef float_p<0> float_poo; // FIXME: does not exist yet!
-//   typedef float_p<1> float_p1;
-//   typedef float_p<2> float_p2;
-//   // for backward compatibility:
-//   typedef float_p<1> sfloat;
-//   typedef float_p<2> dfloat;
-
-
-  // other types
-
-//   template<class T> struct cplx;
-
-//   template<unsigned N,class T> struct vec;
-
-//   template <unsigned ncomps, unsigned qbits, template <unsigned>
-//   class color_system>
-//   struct color;
 } // end of namespace oln_predelcs
+
+
+//
+//  namespace types
+//  
+//  If you want to access types without oln:: prefix, please declare ;
+//  "using namespace types;" and not "using namespace oln;" to avoid
+//  global operators conflicts.
+//
+///////////////////////////////////////////////////////////////////////
+
+namespace types {
+
+  using oln::int_u;
+
+  using oln::int_u8;
+  using oln::int_u8u;
+  using oln::int_u8s;
+
+  using oln::int_u16;
+  using oln::int_u16u;
+  using oln::int_u16s;
+
+  using oln::int_u32;
+  using oln::int_u32u;
+  using oln::int_u32s;
+
+
+  using oln::int_s;
+
+  using oln::int_s8;
+  using oln::int_s8u;
+  using oln::int_s8s;
+
+  using oln::int_s16;
+  using oln::int_s16u;
+  using oln::int_s16s;
+
+  using oln::int_s32;
+  using oln::int_s32u;
+  using oln::int_s32s;
+
+  using oln::range;
+  using oln::cycle;
+  using oln::bin;
+  using oln::dfloat;
+  using oln::sfloat;
+
+  using oln::unsafe;
+  using oln::strict;
+  using oln::saturate;
+
+  using oln::bounded;
+  using oln::bounded_u;
+  using oln::bounded_s;
+
+} // end of namespace types
 
 #endif
