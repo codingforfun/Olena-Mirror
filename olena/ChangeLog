@@ -1,3 +1,8 @@
+2004-10-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	* oln/level/cc.hh (frontp_connected_component): Be more precise
+	in the description of the `nb_label' argument.
+
 2004-09-11  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* oln/transforms/shapelets.hh: Optimize Hermite polynomials

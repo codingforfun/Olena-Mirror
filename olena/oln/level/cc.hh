@@ -59,7 +59,9 @@ namespace oln {
     **
     ** \arg input Image of markers.
     ** \arg se Neighborhood.
-    ** \arg nb_label Returns the number of labels (optional).
+    ** \arg nb_label Optional.  Returns the number of labels
+    **      (including the background); i.e. connected components are
+    **      labelled from 1 to \f$nb\_label - 1\f$ (included).
     **
     ** \return An image of type \a DestType.
     **
