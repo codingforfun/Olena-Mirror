@@ -74,6 +74,7 @@ namespace oln {
     {
       typedef Inferior inferior;
 
+    public:
       template <class T>
       struct output {
 	typedef typename internal::_color_conversion<T,
