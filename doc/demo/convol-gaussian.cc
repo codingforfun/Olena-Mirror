@@ -3,7 +3,7 @@
 
 using namespace oln;
 
-void morpholena_fast_gaussian()
+int main(void)
 {
   image2d<int_u8> lena = load(IMGDIR2 "/lena.pgm");
 

@@ -1,8 +1,6 @@
 #include <oln/basics2d.hh>
 #include <oln/morpho/erosion.hh>
 #include <oln/morpho/dilation.hh>
-#include <oln/morpho/opening.hh>
-#include <oln/morpho/closing.hh>
 #include <oln/morpho/laplacian.hh>
 
 using namespace oln;
@@ -13,14 +11,10 @@ void morpholena_base()
 
   save(morpho::erosion(lena,  win_c8p()), "lena-ero.pgm");
   save(morpho::dilation(lena, win_c8p()), "lena-dil.pgm");
-  save(morpho::opening(lena,  win_c8p()), "lena-ope.pgm");
-  save(morpho::closing(lena,  win_c8p()), "lena-clo.pgm");
   save(morpho::laplacian(convert::force<int_u8>(), lena, win_c8p()),
        "lena-lap.pgm");
   save(morpho::fast::erosion(lena,  win_c8p()), "lena-ero-f.pgm");
   save(morpho::fast::dilation(lena, win_c8p()), "lena-dil-f.pgm");
-  save(morpho::fast::opening(lena,  win_c8p()), "lena-ope-f.pgm");
-  save(morpho::fast::closing(lena,  win_c8p()), "lena-clo-f.pgm");
   save(morpho::fast::laplacian(convert::force<int_u8>(), lena, win_c8p()),
        "lena-lap-f.pgm");
 }

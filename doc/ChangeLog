@@ -1,3 +1,20 @@
+2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* demo/morpholena.cc,
+	demo/morpholena-base.cc,
+	demo/morpholena-minima.cc,
+	demo/morpholena-hats.cc: Rearrange code.
+
+	* demo/convol-gaussian.cc: Rename from ...
+	* demo/morpholena-gaussian.cc: ... this file.
+	
+	* demo/morpholena-opening-closing.cc,
+	demo/morpholena-fast-hats.cc,
+	demo/morpholena-minima-imp.cc: Remove.
+
+	* demo/Makefile.am (morpholena_SOURCES, convol_gaussian_SOURCES):
+	Modify accordingly.
+
 2003-01-22  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* doc/Makefile.am (COMMONGETDEFSFLAGS): Fix path to autogen
@@ -10,8 +27,9 @@
 	(MAINTAINERCLEANFILES): Minor fix.
 	(EXTRA_DIST, dist-local): Fix distribution list.
 
-	* Makefile.am: Remove ACLOCAL_AMFLAGS and CONFIGURE_DEPENDENCIES. Users that modify
-	oln.m4 should run boostrap.sh explicitely.
+	* Makefile.am: Remove ACLOCAL_AMFLAGS and
+	CONFIGURE_DEPENDENCIES. Users that modify oln.m4 should run
+	boostrap.sh explicitely.
 
 	* configure.ac: Remove. All configuration moved to top-level
 	configure.ac.

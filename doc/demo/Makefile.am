@@ -12,7 +12,7 @@ CXXFLAGS += $(CXXFLAGS_OPTIMIZE)
 #      ship the directory unbuilt, but still has to run make for
 #      the other directories).
 # So for now we'll just build these programs on `make check' and `make demo'.
-check_PROGRAMS = tour morpholena test-reconstruction
+check_PROGRAMS = tour morpholena test-reconstruction convol-gaussian
 
 .PHONY: demo
 demo: $(check_PROGRAMS)
@@ -20,12 +20,8 @@ demo: $(check_PROGRAMS)
 tour_SOURCES = tour.cc
 morpholena_SOURCES = morpholena.cc \
   morpholena-base.cc \
-  morpholena-opening-closing.cc \
-  morpholena-fast-hats.cc \
   morpholena-hats.cc \
   morpholena-grad.cc \
-  morpholena-gaussian.cc \
-  morpholena-minima-imp.cc \
   morpholena-minima.cc \
   morpholena-hit-miss.cc \
   morpholena-ops.cc \
@@ -33,3 +29,4 @@ morpholena_SOURCES = morpholena.cc \
   morpholena-wshed-beucher.cc
 
 test_reconstruction_SOURCES = test-reconstruction.cc
+convol_gaussian_SOURCES = convol-gaussian.cc
