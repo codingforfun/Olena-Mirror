@@ -1,0 +1,29 @@
+
+#include <iostream>
+
+#include <ntg/all.hh>
+#include <oln/basics1d.hh>
+
+#include "check.hh"
+#include "data.hh"
+
+
+
+
+bool check()
+{
+  oln::image1d<int> ima(10);
+  int cpt = 0;
+  
+  oln::fwd_piter1d it(ima.size());
+  for_all (it)
+  {
+    ima[it] = 0;
+    cpt++;
+  }
+
+  if (cpt != 10)
+    return true;
+
+  return false;
+}

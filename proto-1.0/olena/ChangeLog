@@ -1,5 +1,11 @@
 2005-03-19  Damien Thivolle  <damien@lrde.epita.fr>
 
+	* tests/core/tests/piter1d: Add test for 1D forward point iterators.
+	* tests/core/tests/piter2d: Add test for 2D forward point iterators.
+	* tests/core/tests/piter3d: Add test for 3D forward point iterators.
+
+2005-03-19  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* oln/core/abstract/piter.hh: Correct for_all.
 
 2005-03-19  Damien Thivolle  <damien@lrde.epita.fr>
