@@ -207,8 +207,8 @@ EXTRA_DIST = config/extrconf.sh
 PERL = perl
 SCANDEFS_PL = $(top_srcdir)/tools/scandefs.pl
 PCONF_OCCURS = config/system.hh config/hash_map.hh
-config/extrconf.sh: $(SCANDEFS_PL) $(PCONF_OCCURS)
-	$(PERL) $(SCANDEFS_PL) $(PCONF_OCCURS) >config/extrconf.sh
+$(top_srcdir)/src/config/extrconf.sh: $(SCANDEFS_PL) $(PCONF_OCCURS)
+	$(PERL) $(SCANDEFS_PL) $(PCONF_OCCURS) >$@
 
 config/pconf.hh: $(top_srcdir)/src/config/extrconf.sh $(CONFIG_HEADER)
 	test -f $(CONFIG_HEADER)

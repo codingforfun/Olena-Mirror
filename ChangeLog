@@ -1,3 +1,8 @@
+2002-05-13  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/Makefile.am (config/extrconf.sh): Rename to ...
+	($(top_srcdir)/src/config/extrconf.sh): ... this.
+
 2002-04-25  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* configure.ac, NEWS: Bump version to 0.4.1.

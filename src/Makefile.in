@@ -482,8 +482,8 @@ uninstall-am: uninstall-info-am uninstall-nobase_nodist_olnHEADERS \
 	uninstall uninstall-am uninstall-info-am \
 	uninstall-nobase_nodist_olnHEADERS uninstall-nobase_olnHEADERS
 
-config/extrconf.sh: $(SCANDEFS_PL) $(PCONF_OCCURS)
-	$(PERL) $(SCANDEFS_PL) $(PCONF_OCCURS) >config/extrconf.sh
+$(top_srcdir)/src/config/extrconf.sh: $(SCANDEFS_PL) $(PCONF_OCCURS)
+	$(PERL) $(SCANDEFS_PL) $(PCONF_OCCURS) >$@
 
 config/pconf.hh: $(top_srcdir)/src/config/extrconf.sh $(CONFIG_HEADER)
 	test -f $(CONFIG_HEADER)
