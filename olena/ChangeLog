@@ -1,3 +1,30 @@
+2004-03-30  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* olena/oln/Makefile.am: Add files from oln/morpher/
+	* olena/oln/morpher/generic_morpher.hh: Correct comments and code.
+	* olena/oln/morpher/subq_morpher.hh: Likewise.
+	* olena/oln/morpher/color_morpher.hh: Likewise.
+	* olena/tests/morpher/tests/compose_morph: New file, contains
+	morpher composition tests.
+	* olena/tests/morpher/tests/sq_morph: New file, contains sub quantifying
+	morpher tests.
+	* olena/tests/morpher/tests/color_morph: New file, contains color morpher
+	tests.
+	* olena/tests/morpher/tests/sq_morph_8: Remove file.
+	* olena/tests/morpher/tests/sq_morph_7: Likewise.
+	* olena/tests/morpher/tests/sq_morph_6: Likewise.
+	* olena/tests/morpher/tests/sq_morph_5: Likewise.
+	* olena/tests/morpher/tests/sq_morph_4: Likewise.
+	* olena/tests/morpher/tests/sq_morph_3: Likewise.
+	* olena/tests/morpher/tests/sq_morph_2: Likewise.
+	* olena/tests/morpher/tests/sq_morph_1: Likewise.
+	* olena/tests/morpher/tests/rmorph: Likewise.
+	* olena/tests/morpher/tests/gmorph: Likewise.
+	* olena/tests/morpher/tests/color_sq_morph: Likewise.
+	* olena/tests/morpher/tests/bmorph: Likewise.
+
+
+
 2004-03-29  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* oln/convol/fast_gaussian.hh: Add reference.

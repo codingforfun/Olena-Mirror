@@ -146,6 +146,9 @@ nobase_oln_HEADERS =				\
   level/set_level.hh				\
   level/threshold.hh				\
   math/macros.hh				\
+  morpher/color_morpher.hh			\
+  morpher/generic_morpher.hh			\
+  morpher/subq_morpher.hh			\
   morpho/attribute_closing_opening.hh		\
   morpho/attribute_closing_opening_map.hxx	\
   morpho/attribute_closing_opening_map.hh	\

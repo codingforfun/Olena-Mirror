@@ -27,8 +27,8 @@
 
 
 
-#ifndef GENERIC_MORPHER_HH
-# define GENERIC_MORPHER_HH
+#ifndef OLENA_MORPHER_GENERIC_MORPHER_HH
+# define OLENA_MORPHER_GENERIC_MORPHER_HH
 
 # include <string>
 
@@ -38,17 +38,11 @@
 
 namespace oln {
 
-  /*! \namespace oln::morpher
-  **
-  ** Contain all the morpher relative declarations and functions.
-  */
+  /// Contain all the morpher relative declarations and functions.
 
   namespace morpher {
 
-    /*! \namespace oln::morpher::abstract
-    **
-    ** Implementation of oln::abstract::generic_morpher.
-    */
+    /// Implementation of oln::abstract::generic_morpher.
 
     namespace abstract {
 
@@ -115,33 +109,52 @@ namespace oln {
 
       public:
 
+	/// The self type.
 	typedef generic_morpher<DestType, SrcType, Exact> self_type;
+
+	/// The exact type of the morpher.
 	typedef Exact exact_type;
+	/// The morpher point type.
 	typedef oln_point_type(DestType) point_type;
+	/// The morpher dpoint type.
 	typedef oln_dpoint_type(DestType) dpoint_type;
+	/// The morpher iterator type.
 	typedef oln_iter_type(DestType) iter_type;
+	/// The morpher forward iterator type.
 	typedef oln_fwd_iter_type(DestType) fwd_iter_type;
+	/// The morpher backward iterator type.
 	typedef oln_bkd_iter_type(DestType) bkd_iter_type;
+	/// The morpher value type.
 	typedef oln_value_type(DestType) value_type;
+	/// The morpher size type.
 	typedef oln_size_type(DestType) size_type;
+	/// The morpher underlying implementation.
 	typedef oln_impl_type(DestType) impl_type;
 
 
 	/// Type of the decorated image.
 	typedef SrcType src_self_type;
+	/// The decorated image point type.
 	typedef oln_point_type(SrcType) src_point_type;
+	/// The decorated image dpoint type.
 	typedef oln_dpoint_type(SrcType) src_dpoint_type;
+	/// The decorated image iterator type.
 	typedef oln_iter_type(SrcType) src_iter_type;
+	/// The decorated image forward iterator type.
 	typedef oln_fwd_iter_type(SrcType) src_fwd_iter_type;
+	/// The decorated image backward iterator type.
 	typedef oln_bkd_iter_type(SrcType) src_bkd_iter_type;
+	/// The decorated image value type.
 	typedef oln_value_type(SrcType) src_value_type;
+	/// The decorated image size type.
 	typedef oln_size_type(SrcType) src_size_type;
-	/// Underlying implementation of the decorated image.
+	/// The decorated image underlying implementation.
 	typedef oln_impl_type(SrcType) src_impl_type;
 
 	/// Exact type of the decorated image.
 	typedef oln_exact_type(SrcType) src_exact_type;
 
+	/// The upper class.
 	typedef typename gm_inherit<DestType, Exact>::ret super_type;
 
 	/// Return the decorated image.
@@ -151,9 +164,24 @@ namespace oln {
 	  return ima_;
 	}
 
+	/// Instantiate and return the image that the morpher simulates.
+	DestType*
+	unmorph() const
+	{
+	  DestType*			im = new DestType(to_exact(*this).size());
+	  oln_iter_type(DestType)	it(*im);
+
+	  for_all(it)
+	    (*im)[it] = to_exact(*this).operator[](it);
+	  return im;
+	}
+
 	/*! Default implementation of at.
 	**
 	** Return the value stored at \a p in the decorated image.
+	**
+	** \warning This method should not be called directly.
+	** Prefer operator[].
 	*/
 	const src_value_type
 	at(const src_point_type& p) const
@@ -164,6 +192,9 @@ namespace oln {
 	/*! Default implementation of at.
 	**
 	** Return a reference to the value stored at \a p in the decorated image.
+	**
+	** \warning This method should not be called directly.
+	** Prefer operator[].
 	*/
 	src_value_type&
 	at(const src_point_type& p)
@@ -209,8 +240,8 @@ namespace oln {
 	**
 	** Assign \a rhs to the decorated image.
 	*/
-	src_self_type&
-	assign(src_self_type& rhs)
+	src_exact_type&
+	assign(src_exact_type& rhs)
 	{
 	  return to_exact(ima_).assign(rhs);
 	}
@@ -227,7 +258,12 @@ namespace oln {
 	  return to_exact(ima_).border_set_width(min_border, copy_border);
 	}
 
-	self_type& operator=(self_type& rhs)
+	/*! Default implementation of the = operator.
+	**
+	** Assign the decorated image to 'a r.
+	*/
+	self_type&
+	operator=(self_type& rhs)
 	{
 	  return to_exact(*this).assign(rhs.exact());
 	}
@@ -247,4 +283,4 @@ namespace oln {
 } // end of namespace oln
 
 
-#endif // !GENERIC_MORPHER_HH
+#endif // !OLENA_MORPHER_GENERIC_MORPHER_HH
