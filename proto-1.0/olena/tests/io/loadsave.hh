@@ -8,6 +8,7 @@
 #include "check.hh"
 #include "data.hh"
 
+
 template<typename E>
 bool compare(const oln::abstract::image<E>& a,
 	     const oln::abstract::image<E>& b)
@@ -19,9 +20,11 @@ bool compare(const oln::abstract::image<E>& a,
       a.size().ncols() != b.size().ncols())
     return false;
 
-  for (it.start(); !it.is_valid(); it.next())
-    if (a[it] != b[it])
-      return false;
+  for_all(it)
+    {
+      if (a[it] != b[it])
+	return false;
+    }
 
   return true;
 }
@@ -33,12 +36,16 @@ loadsave(const std::string& name, const std::string& savename)
   bool fail = false;
 
   T im1, im2;
+
   im1 = oln::io::read(name);
+
+
   oln::io::write(im1, savename);
+
 
   im2 = oln::io::read(savename);
 
-  if (compare(im1, im2))
+  if (compare(im1, im2) == true)
     std::cout << "OK" << std::endl;
   else
     {

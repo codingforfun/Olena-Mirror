@@ -32,12 +32,9 @@
 # include <string>
 
 # include <mlc/box.hh>
+# include <mlc/math.hh>
 
-# include <ntg/core/macros.hh>
-# include <ntg/real/int_u8.hh>
-# include <ntg/real/integer.hh>
-# include <ntg/enum/enum.hh>
-# include <ntg/color/color.hh>
+# include <ntg/all.hh>
 
 # include <oln/core/2d/image2d.hh>
 # include <oln/core/abstract/op.hh>
@@ -83,7 +80,6 @@ namespace oln {
 
 	typedef oln::abstract::op<I, read_image_2d_raw<I> > super_type;
 	typedef oln_type_of(I, value) value_type;
-	typedef ntg_io_type(value_type) io_type;
 
 	mlc::box<I> image_;
 	std::istream& istr_;
@@ -105,18 +101,33 @@ namespace oln {
 	  return *this;
 	}
 
+	template <typename E>
+	void precond(ntg::real_value<E>& c)
+	{
+	  precondition(ntg_max_val(value_type) <= info_.max_val);
+	  precondition(info_.type == "P5");
+	}
+
+	template <typename E>
+	void precond(ntg::vect_value<E>& c)
+	{
+	  precondition(ntg_max_val(ntg_comp_type(value_type)) <= info_.max_val);
+	  precondition(info_.type == "P6");
+	  precondition(ntg_nb_comp(value_type) == 3);
+	}
+
+	void precond(ntg::bin& c)
+	{
+	  precondition(info_.type == "P4");
+	}
+
 	void impl_run()
 	{
 	  value_type c;
 	  point2d p;
 	  oln::image2d<value_type>  tmp(info_.rows, info_.cols);
 
-	  if (info_.max_val > ntg_max_val(value_type))
-	    {
-	      std::cerr << "Can't load image, data type is not large enough"
-			<< std::endl;
-	      return;
-	    }
+	  precond(c);
 
 	  for (p.row() = 0; p.row() < info_.rows && !istr_.eof(); ++p.row())
 	    for (p.col() = 0; p.col() < info_.cols && !istr_.eof(); ++p.col())
@@ -127,32 +138,37 @@ namespace oln {
 	  *image_ = tmp;
 	}
 
-	void read_value_type(ntg::integer<value_type> &c)
+	//FIXME: Should work with builtin types.
+
+	template <typename E>
+	void read_value_type(ntg::real_value<E> &c)
 	{
-	  io_type v;
-	  istr_.read(&v, sizeof (io_type));
-	  c = v;
+	  typedef oln_io_type(ntg_nbits(E)) v_type;
+	  v_type v;
+	  istr_.read((char*)&v, sizeof (v_type));
+	  c = ntg::cast::force<E, v_type>(v);
 	}
 
-	void read_value_type(ntg::color<value_type> &c)
+	template <typename E>
+	void read_value_type(ntg::vect_value<E> &c)
 	{
-	  io_type v;
-
-	  for (unsigned i = 0; i < ntg_depth(value_type); i++)
+	  for (unsigned i = 0; i < ntg_nb_comp(E); i++)
 	    {
-	      istr_.read(&v, sizeof (v));
-	      c[i] = v;
+	      typedef oln_io_type(ntg_nbits(ntg_comp_type(E))) v_type;
+	      v_type v;
+	      istr_.read((char*)&v, sizeof (v_type));
+	      c[i] = ntg::cast::force<ntg_comp_type(E), v_type>(v);
 	    }
 	}
 
-	void read_value_type(ntg::enum_value<value_type> &c)
+	void read_value_type(ntg::bin &c)
 	{
-	  static io_type v;
+	  static char v;
 	  static int offset = -1;
 
 	  if (offset == -1)
 	    {
-	      istr_.read((char *)(&v), sizeof (v));
+	      istr_.read(&v, 1);
 	      offset = 7;
 	    }
 	  if ((int)(v & (1<<offset--)) == 0)

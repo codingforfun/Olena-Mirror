@@ -81,23 +81,34 @@ namespace oln {
 
     /// op==
 
-    bool operator==(const value_box<I>& value) const
+    bool operator==(const value_box<const I>& rhs) const
     {
-      return this->value() == value.value();
+      return this->value() == rhs.value();
     }
 
     template <typename V>
-    bool operator==(const V& value) const
+    bool operator==(const V& rhs) const
     {
-      return this->value() == value;
+      return this->value() == rhs;
     }
 
     template <typename V>
-    bool operator!=(const V& value) const
+    bool operator!=(const V& rhs) const
     {
-      return ! this->operator==(value);
+      return ! this->operator==(rhs);
     }
 
+    template <typename V>
+    bool operator<(const V& rhs) const
+    {
+      return this->value() < rhs;
+    }
+
+    template <typename II>
+    bool operator<(const value_box<II>& rhs) const
+    {
+      return this->value() < value.value();
+    }
 
     /*! \brief op=
     ** FIXME:...
@@ -123,7 +134,7 @@ namespace oln {
     template <typename II>
     value_box& operator=(const value_box<II>& rhs)
     {
-      ima_->set(p_, rhs); // automatic conversion from rhs to value_type
+      ima_->set(p_, rhs.value()); // automatic conversion from rhs to value_type
       return *this;
     }
 
@@ -240,23 +251,34 @@ namespace oln {
 
 
     /// op==
-    bool operator==(const value_box<const I>& value) const
+    bool operator==(const value_box<const I>& rhs) const
     {
-      return this->value() == value.value();
+      return this->value() == rhs.value();
     }
 
     template <typename V>
-    bool operator==(const V& value) const
+    bool operator==(const V& rhs) const
     {
-      return this->value() == value;
+      return this->value() == rhs;
     }
 
     template <typename V>
-    bool operator!=(const V& value) const
+    bool operator!=(const V& rhs) const
     {
-      return ! this->operator==(value);
+      return ! this->operator==(rhs);
     }
 
+    template <typename V>
+    bool operator<(const V& rhs) const
+    {
+      return this->value() < rhs;
+    }
+
+    template <typename II>
+    bool operator<(const value_box<II>& rhs) const
+    {
+      return this->value() < rhs.value();
+    }
 
     /*! \brief Assignment (op=) is declared but undefined.
     */

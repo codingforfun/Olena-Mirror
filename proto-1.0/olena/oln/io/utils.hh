@@ -40,6 +40,7 @@ namespace oln {
 
     namespace internal {
 
+
       /*!
       ** \brief Utils for io (get extension of a file).
       */
@@ -148,11 +149,30 @@ namespace oln {
 	return true;
       }
 
+      template <bool b>
+      struct pnm_io_helper
+      {
+	enum { size = 1};
+	typedef unsigned char type;
+      };
+
+      template <>
+      struct pnm_io_helper<false>
+      {
+	enum { size = 2};
+	typedef unsigned short type;
+      };
+
+
 
     } // end of namespace internal
 
   } // end of namespace io
 
 } // end of namespace oln
+
+# define oln_io_type(N) typename oln::io::internal::pnm_io_helper<N <= 8>::type
+# define oln_io_type_(N) oln::io::internal::pnm_io_helper<N <= 8>::type
+
 
 #endif // ! OLENA_IO_UTILS_HH

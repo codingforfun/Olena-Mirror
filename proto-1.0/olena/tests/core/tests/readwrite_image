@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include <ntg/real/int_u8.hh>
+#include <ntg/all.hh>
 #include <oln/basics2d.hh>
 
 #include "check.hh"
@@ -19,7 +19,7 @@ namespace oln {
   };
 
   template <>
-  struct set_props <category::image, dummy_image> : 
+  struct set_props <category::image, dummy_image> :
          	public props_of < category::image >
   {
     typedef is_a<abstract::readwrite_image> image_constness;
@@ -53,8 +53,8 @@ namespace oln {
 
 } // end of namespace test
 
- 
- 
+
+
 bool check()
 {
   oln::dummy_image ima(3, 3);

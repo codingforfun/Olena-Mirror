@@ -34,11 +34,7 @@
 
 # include <mlc/box.hh>
 
-# include <ntg/core/macros.hh>
-# include <ntg/real/int_u8.hh>
-# include <ntg/real/integer.hh>
-# include <ntg/enum/enum.hh>
-# include <ntg/color/color.hh>
+# include <ntg/all.hh>
 
 # include <oln/core/2d/image2d.hh>
 # include <oln/core/abstract/op.hh>
@@ -56,15 +52,20 @@ namespace oln {
 	: public oln::abstract::void_op<write_image_2d_raw<I> >
       {
 	typedef oln_type_of(I, value) value_type;
-	typedef ntg_io_type(value_type) io_type;
 
 	const I& to_write_;
 	std::ostream& ostr_;
+	int bin_offset;
+	char bin_v;
+
 
 	write_image_2d_raw(const I& to_write, std::ostream& ostr):
 	  to_write_(to_write),
 	  ostr_(ostr)
-	{}
+	{
+	  bin_offset = 7;
+	  bin_v = 0;
+	}
 
 	void impl_run()
 	{
@@ -74,51 +75,55 @@ namespace oln {
 
 	  for (p.row() = 0; p.row() < to_write_.size().nrows(); ++p.row())
 	    for (p.col() = 0; p.col() < to_write_.size().ncols(); ++p.col())
-	      {
-		c = to_write_[p];
-		b = write_value_type(c);
-	      }
+		// FIXME: SHOULD NOT BE .value() !!!
+		b = write_value_type(to_write_[p].value());
 	  while (b == false)
 	    b = write_value_type(c);
+	  bin_offset = 7;
+	  bin_v = 0;
 	}
 
-	bool write_value_type(const ntg::integer<value_type> &c)
+	//FIXME: Should work with builtin types.
+
+	template <typename E>
+	bool write_value_type(const ntg::real_value<E> &c)
 	{
-	  io_type v = c.exact();
-	  ostr_.write((char *)&v, sizeof(io_type));
+	  typedef oln_io_type(ntg_nbits(E)) v_type;
+
+	  v_type v;
+	  v = ntg::cast::bound<E, v_type>(c.exact());
+	  ostr_.write((char*)&v, sizeof (v_type));
 	  return true;
 	}
 
-	bool write_value_type(const ntg::color<value_type> &c)
+	template <typename E>
+	bool write_value_type(const ntg::vect_value<E> &c)
 	{
-	  assert ((ntg_depth(value_type) == 3));
-	  io_type v;
-
 	  for (unsigned i = 0; i < 3; i++)
 	    {
+	      typedef  oln_io_type(ntg_nbits(ntg_comp_type(value_type))) v_type;
+
+	      v_type v;
 	      v = c[i];
-	      ostr_.write((char *)(&v), sizeof(io_type));
+	      ostr_.write((char*)&v, sizeof (v_type));
 	    }
 	  return true;
 	}
 
-	bool write_value_type(const ntg::enum_value<value_type> &c)
+	bool write_value_type(const ntg::bin &c)
 	{
-	  assert ((ntg_max_val(value_type) == 1));
-	  static int offset = 7;
-	  static unsigned char v = 0;
 	  bool ret = false;
 
-	  if (offset == -1)
+	  if (bin_offset == -1)
 	    {
-	      ostr_.write((char *)&v, 1);
-	      offset = 7;
-	      v = 0;
+	      ostr_.write(&bin_v, 1);
+	      bin_offset = 7;
+	      bin_v = 0;
 	      ret = true;
 	    }
-	  if (c == 1)
-	    v |= 1 << offset;
-	  offset--;
+	  if (c == value_type(1))
+	    bin_v |= 1 << bin_offset;
+	  bin_offset--;
 	  return ret;
 	}
       };
@@ -126,7 +131,7 @@ namespace oln {
 
       template <typename I, typename T>
       void write(const abstract::image2d<I>& to_write,
-		 const ntg::integer<T>&,
+		 const ntg::real_value<T>&,
 		 std::ostream&	ostr,
 		 const std::string& ext)
       {
@@ -134,6 +139,7 @@ namespace oln {
 	point2d p;
 	size2d s = to_write.size();
 
+	precondition(ntg_nbits(T) <= 16);
 	if (ext == "pgm")
 	  if (internal::write_pnm_header(ostr, "P5",
 					 s.ncols(), s.nrows(),
@@ -151,7 +157,7 @@ namespace oln {
 
       template <typename I, typename T>
       void write(const abstract::image2d<I>& to_write,
-		 const ntg::color<T>&,
+		 const ntg::color_value<T>&,
 		 std::ostream& ostr,
 		 const std::string& ext)
       {
@@ -159,10 +165,12 @@ namespace oln {
 	point2d p;
 	size2d s = to_write.size();
 
+	precondition(ntg_nbits(ntg_comp_type(T)) <= 16);
+	precondition(ntg_nb_comp(T) == 3);
 	if (ext == "ppm")
 	  if (internal::write_pnm_header(ostr, "P6",
 					 s.ncols(), s.nrows(),
-					 ntg_max_val(T)))
+					 ntg_max_val(ntg_comp_type(T))))
 	    {
 	      write_image_2d_raw<I> tmp(to_write.exact(), ostr);
 	      tmp.run();
@@ -174,9 +182,9 @@ namespace oln {
 		    << " file extension (`" << ext << "')" << std::endl;
       }
 
-      template <typename I, typename T>
+      template <typename I>
       void write(const abstract::image2d<I>& to_write,
-		 const ntg::enum_value<T>&,
+		 const ntg::bin&,
 		 std::ostream& ostr,
 		 const std::string& ext)
       {
@@ -186,7 +194,7 @@ namespace oln {
 	if (ext == "pbm")
 	  if (internal::write_pnm_header(ostr, "P4",
 					 s.ncols(), s.nrows(),
-					 ntg_max_val(T)))
+					 1))
 	    {
 	      write_image_2d_raw<I> tmp(to_write.exact(), ostr);
 	      tmp.run();

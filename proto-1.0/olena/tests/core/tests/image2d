@@ -1,7 +1,7 @@
 
 #include <iostream>
 
-#include <ntg/real/int_u8.hh>
+#include <ntg/all.hh>
 #include <oln/basics2d.hh>
 
 #include <oln/fancy/iota.hh>

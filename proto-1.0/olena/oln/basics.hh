@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-                 
+
 
 #ifndef OLENA_BASICS_HH
 # define OLENA_BASICS_HH
@@ -48,9 +48,6 @@
 
 // ntg::
 
-# include <ntg/real/int_u8.hh>
-
-
 // oln::
 
 # include <oln/core/coord.hh>
@@ -61,7 +58,7 @@
 # include <oln/core/abstract/point.hh>
 # include <oln/core/abstract/images.hh>
 
-// # include <oln/core/abstract/piter.hh>
+# include <oln/core/abstract/piter.hh>
 // # include <oln/core/abstract/niter.hh>
 
 

@@ -33,7 +33,7 @@
 # include <string>
 
 
-# include <ntg/real/int_u8.hh> // FIXME: no coupling like that!
+# include <ntg/real/int_u.hh> // FIXME: no coupling like that!
 
 # include <oln/core/abstract/image_dimension.hh>
 # include <oln/core/1d/point1d.hh>

@@ -1,3 +1,20 @@
+2005-03-19  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* tests/io/loadsave.hh: Adapt to integre.
+	* tests/core/tests/readonly_image: Likewise.
+	* tests/core/tests/image1d: Likewise.
+	* tests/core/tests/image2d: Likewise.
+	* tests/core/tests/readwrite_image: Likewise.
+	* tests/core/tests/image3d: Likewise.
+	* tests/core/tests/image_identity: Likewise.
+	* oln/fancy/print.hh: Likewise.
+	* oln/basics.hh: Likewise.
+	* oln/basics1d.hh: Likewise.
+	* oln/io/write_image_2d_pnm.hh: Likewise.
+	* oln/io/read_image_2d_pnm.hh: Likewise.
+	* oln/io/utils.hh: Likewise.
+	* oln/core/value_box.hh: Likewise.
+
 2005-03-14  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* oln/makefile.src: Add new file.

@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include <ntg/real/int_u8.hh>
+#include <ntg/all.hh>
 #include <oln/basics2d.hh>
 
 #include "check.hh"
@@ -14,7 +14,7 @@ namespace oln {
   struct category_type< dummy_image > { typedef cat::image ret; };
 
   template <>
-  struct props <cat::image, dummy_image> : 
+  struct props <cat::image, dummy_image> :
          public default_props < cat::image >
   {
     typedef size2d size_type;
@@ -49,8 +49,8 @@ namespace oln {
 
 } // end of namespace test
 
- 
- 
+
+
 bool check()
 {
   oln::dummy_image ima(3, 3);
