@@ -1,5 +1,9 @@
 2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 
+	* tests/meta: Rename to ../metalic/tests/array.
+
+2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+
 	* tests/check/Makefile.am, tests/check/Makefile.check,
 	tests/check/Makefile.flags, tests/check/Makefile.in,
 	tests/check/check.hh, tests/check/compile.cc,
