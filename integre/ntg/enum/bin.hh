@@ -50,6 +50,8 @@ namespace ntg {
       typedef enumerated		abstract_type;
       typedef bin			self;
       typedef self			ntg_type;
+      ntg_build_value_type(enum_value<E>);
+
       typedef optraits<self>		optraits;
 
       typedef self			base_type;

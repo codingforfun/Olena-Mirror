@@ -171,6 +171,7 @@ namespace ntg
 
       typedef typename operator_traits<Op, traits_lhs_type, traits_rhs_type>::ret ret;
       typedef typename operator_traits<Op, traits_lhs_type, traits_rhs_type>::impl impl;
+      typedef operator_traits<Op, traits_lhs_type, traits_rhs_type> deduced_traits;
     };
 
   } // end of internal.

@@ -46,24 +46,24 @@
   template <class T1, class T2> inline							\
   static T1& Name##_impl(ntg::real_value<T1>& lhs, const ntg::real_value<T2>& rhs)	\
   {											\
-    typedef typename typetraits<T1>::behaviour_type behaviour_type;			\
-    lhs.self() = behaviour_type::check_##Name(lhs.self().val(), rhs.self().val());	\
+    typedef typename typetraits<T1>::behavior_type behavior_type;			\
+    lhs.self() = behavior_type::check_##Name(lhs.self().val(), rhs.self().val());	\
     return lhs.self();									\
   }											\
 											\
   template <class T1, class T2> inline							\
   static T1& Name##_impl(ntg::real_value<T1>& lhs, const ntg::any_const_class<T2> rhs)	\
   {											\
-    typedef typename typetraits<T1>::behaviour_type behaviour_type;			\
-    lhs.self() = behaviour_type::check_##Name(lhs.self().val(), rhs.self());		\
+    typedef typename typetraits<T1>::behavior_type behavior_type;			\
+    lhs.self() = behavior_type::check_##Name(lhs.self().val(), rhs.self());		\
     return lhs.self();									\
   }											\
 											\
   template <class T1, class T2> inline							\
   static T1& Name##_impl(ntg::any_class<T1> lhs, const ntg::real_value<T2>& rhs)	\
   {											\
-    typedef typename typetraits<T1>::behaviour_type behaviour_type;			\
-    lhs.self() = behaviour_type::check_##Name(lhs.self(), rhs.self().val());		\
+    typedef typename typetraits<T1>::behavior_type behavior_type;			\
+    lhs.self() = behavior_type::check_##Name(lhs.self(), rhs.self().val());		\
     return lhs.self();									\
   }
 

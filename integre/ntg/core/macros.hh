@@ -43,6 +43,7 @@
 `--------------*/
 
 # define ntg_is_a(T, U) mlc_is_a(typename ntg::type_traits<T>::abstract_type, U)
+# define ntg_is_a_(T, U) mlc_is_a_(ntg::type_traits<T>::abstract_type, U)
 
 /*----------------.
 | types accessors |
@@ -126,5 +127,16 @@
 `----------*/
 
 # define ntg_name(T) ntg::type_traits<T>::name()
+
+// FIXME: reimplement when variadic macros will be allowed.
+# define ntg_build_value_type(Type)		\
+  template <class E>				\
+  struct build_value_type			\
+    {						\
+      typedef Type ret;				\
+    }
+
+// FIXME: reimplement when variadic macros will be allowed.
+# define ntg_get_value_type(T, E) ntg::type_traits<T>::build_value_type<E>
 
 #endif // ndef NTG_CORE_MACROS_HH

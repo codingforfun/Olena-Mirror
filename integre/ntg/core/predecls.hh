@@ -36,7 +36,7 @@ namespace ntg
 
   struct non_sense;
 
-  // behaviours
+  // behaviors
   class unsafe;
   class strict;
   class saturate;
@@ -47,14 +47,14 @@ namespace ntg
   template <signed i_min, signed i_max> class		bounded_s;
 
   // scalar types
-  template <unsigned nbits, class behaviour = strict>	class int_u;
-  template <unsigned nbits, class behaviour = strict>	class int_s;
-  template <class T, class interval, class behaviour = strict> class range;
-  template <class T, class interval> class		cycle;
+  template <unsigned nbits, class behavior = strict>		class int_u;
+  template <unsigned nbits, class behavior = strict>		class int_s;
+  template <class T, class interval, class behavior = strict>	class range;
+  template <class T, class interval>				class cycle;
 
   // floats
-  typedef float						float_s;
-  typedef double					float_d;
+  typedef float		float_s;
+  typedef double	float_d;
 
   // enumerated types
   class bin;
@@ -64,7 +64,7 @@ namespace ntg
   //
 
   // vec
-  template <unsigned N, class T, class Self = mlc::bottom> class vec;
+  template <unsigned N, class T, class Self = mlc::final> class vec;
 
   // cplx
   template <cplx_representation R, class T> class cplx;

@@ -1,3 +1,8 @@
+2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ref/ref-types.tex: Fix typo.
+	* doc/dev/faq.texi: Likewise.
+
 2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* demo/convol-gaussian.cc, demo/tour.cc,

@@ -88,7 +88,7 @@ Add @option{-DNEED_ROUNDF} to your
 @env{CXXFLAGS}.
 @end table
 
-@unnumberedsubsec Incorrect behaviour of generated code
+@unnumberedsubsec Incorrect behavior of generated code
 
 @table @strong
 @item Problem

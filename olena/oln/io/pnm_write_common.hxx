@@ -61,9 +61,9 @@ namespace oln {
 	out << std::endl;
       }
 
-      template <unsigned N, class behaviour>
+      template <unsigned N, class behavior>
       inline void
-      writemany_plain(std::ostream& out, const int_u<N, behaviour>* elt, coord n)
+      writemany_plain(std::ostream& out, const int_u<N, behavior>* elt, coord n)
       {
 	for (; n; --n)
 	  {
@@ -72,9 +72,9 @@ namespace oln {
 	  }
       }
 
-      template <unsigned N, class behaviour>
+      template <unsigned N, class behavior>
       inline void
-      writemany_raw(std::ostream& out, const int_u<N, behaviour>* elt, coord n)
+      writemany_raw(std::ostream& out, const int_u<N, behavior>* elt, coord n)
       {
 	out.write((char*)elt, n * sizeof(*elt));
       }

@@ -40,8 +40,10 @@ namespace ntg {
       typedef float self;
       typedef decimal abstract_type;
       typedef self ntg_type;
+      ntg_build_value_type(float_value<E>);
+      
       typedef optraits<self> optraits;
-      typedef unsafe::get<self> behaviour_type;
+      typedef unsafe::get<self> behavior_type;     
 
       typedef self base_type;
       typedef self storage_type;
@@ -64,8 +66,10 @@ namespace ntg {
       typedef double self;
       typedef decimal abstract_type;
       typedef self ntg_type;
+      ntg_build_value_type(float_value<E>);
+
       typedef optraits<self> optraits;
-      typedef unsafe::get<self> behaviour_type;
+      typedef unsafe::get<self> behavior_type;
 
       typedef self base_type;
       typedef self storage_type;

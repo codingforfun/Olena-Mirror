@@ -1,5 +1,9 @@
 2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* mlc/type.hh: Minor update.
+
+2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* mlc/is_a.hh: Rename is_a macro.
 	* mlc/type.hh: Rename Exact macro.
 

@@ -68,7 +68,7 @@ namespace mlc
  
   // Do nothing in the general case.
   template <class Behaviour, class OptionalArgument>
-  struct optional_behaviour
+  struct optional_behavior
   {
     static inline void do_it()
     {}
@@ -88,7 +88,7 @@ namespace mlc
 
 # define DoNothingWhenNone(Behaviour) \
   template <>					\
-  struct optional_behaviour<Behaviour, none>  	\
+  struct optional_behavior<Behaviour, none>  	\
   {						\
     static inline void do_it()			\
     {}						\

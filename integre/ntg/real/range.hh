@@ -50,14 +50,14 @@ namespace ntg {
     //
     //////////////
 
-    template <class T, class interval, class behaviour>
-    struct typetraits<range<T, interval, behaviour> >
+    template <class T, class interval, class behavior>
+    struct typetraits<range<T, interval, behavior> >
     {
-      typedef range<T, interval, behaviour> self;
+      typedef range<T, interval, behavior> self;
       typedef typename typetraits<T>::abstract_type abstract_type;
       typedef self ntg_type;
       typedef optraits<self> optraits;
-      typedef typename behaviour::get<self> behaviour_type;
+      typedef typename behavior::get<self> behavior_type;
 
       typedef typename typetraits<T>::base_type base_type;
       typedef T	storage_type;
@@ -76,15 +76,16 @@ namespace ntg {
   } // end of internal.
 
   //
-  //  Class range<DecoratedType, Min, Max, Behaviour>
+  //  Class range<DecoratedType, Interval, Behavior>
   //
-  ////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////
 
-  template <class T, class interval, class behaviour>
-  class range : public real_value<range<T, interval, behaviour> >
+  template <class T, class interval, class behavior>
+  class range : 
+    public type_traits<T>::build_value_type<range<T, interval, behavior> >::ret
   {
   public:
-    typedef range<T, interval, behaviour> self;
+    typedef range<T, interval, behavior> self;
 
   private:
     // shortcuts
@@ -112,9 +113,9 @@ namespace ntg {
     operator base_storage_type() const { return val_; }
   };
 
-  template<class T, class interval, class behaviour>
+  template<class T, class interval, class behavior>
   inline std::ostream&
-  operator<<(std::ostream& stream, const range<T, interval, behaviour>& rhs)
+  operator<<(std::ostream& stream, const range<T, interval, behavior>& rhs)
   {
     // Cast useful for range<unsigned char, ...>
     stream << (ntg_largest_type(T))(rhs.val());
@@ -123,23 +124,23 @@ namespace ntg {
 
   namespace internal {
 
-    template<class T, class interval, class behaviour>
-    struct optraits<range<T, interval, behaviour> > : public optraits<T>
+    template<class T, class interval, class behavior>
+    struct optraits<range<T, interval, behavior> > : public optraits<T>
     {
     public:
-      typedef range<T, interval, behaviour> self;
+      typedef range<T, interval, behavior> self;
 
     private:
       typedef typename typetraits<self>::storage_type storage_type_;
-      typedef typename behaviour::get<self> behaviour_type_;
+      typedef typename behavior::get<self> behavior_type_;
       typedef typename interval::storage_type interval_type_;
 
     public:
-      // behaviour's check
+      // behavior's check
 
       template <class P>
       static storage_type_ check(const P& rhs)
-      { return behaviour_type_::apply(rhs); }
+      { return behavior_type_::apply(rhs); }
 
       //
       //  Properties
@@ -163,7 +164,7 @@ namespace ntg {
       {
 	std::ostringstream out;
 	out << "range<" << optraits<T>::name() << ", " << interval::name() 
-	    << ", " << behaviour::name() << ">"<< std::ends;
+	    << ", " << behavior::name() << ">"<< std::ends;
 	return out.str();
       }
     };
@@ -171,13 +172,13 @@ namespace ntg {
     // Inherit operator traits from the base type.
     template <class Op, class T, class I, class B, class U>
     struct operator_traits<Op, range<T, I, B>, U> 
-      : public operator_traits<Op, T, U>
+      : public deduce_from_traits<Op, T, U>::deduced_traits
     {}; 
 
     // Inherit operator traits from the base type.
     template <class Op, class T, class I, class B, class U>
     struct operator_traits<Op, U, range<T, I, B> >
-      : public operator_traits<Op, U, T>
+      : public deduce_from_traits<Op, U, T>::deduced_traits
     {};
 
     // Inherit operator traits from the base type.
@@ -185,7 +186,7 @@ namespace ntg {
 	      class T1, class I1, class B1, 
 	      class T2, class I2, class B2>
     struct operator_traits<Op, range<T1, I1, B1>, range<T2, I2, B2> >
-      : public operator_traits<Op, T1, T2>
+      : public deduce_from_traits<Op, T1, T2>::deduced_traits
     {};
  
   } // end of internal.

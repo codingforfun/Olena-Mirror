@@ -39,8 +39,14 @@
     typedef Name self;								\
     typedef builtin::to_ntg<Name>::ret ntg_type;				\
     typedef builtin::abstract_trait<Name>::ret abstract_type;			\
+    template <class E>								\
+    struct build_value_type							\
+    {										\
+      typedef typename builtin::value_type<Name, E>::ret ret;			\
+    };										\
+										\
     typedef optraits<self> optraits;						\
-    typedef unsafe::get<self> behaviour_type;					\
+    typedef unsafe::get<self> behavior_type;					\
 										\
     typedef self					base_type;		\
     typedef self					storage_type;		\
@@ -128,6 +134,12 @@ namespace ntg
     template<> struct to_ntg<  signed int>   { typedef int_s32u ret; };
     template<> struct to_ntg<unsigned long>  { typedef int_u32u ret; };
     template<> struct to_ntg<  signed long>  { typedef int_s32u ret; };
+
+    template <class T, class E> struct value_type { typedef uint_value<E> ret; };
+    template <class E> struct value_type<signed  long, E> { typedef sint_value<E> ret; };
+    template <class E> struct value_type<signed   int, E> { typedef sint_value<E> ret; };
+    template <class E> struct value_type<signed short, E> { typedef sint_value<E> ret; };
+    template <class E> struct value_type<signed  char, E> { typedef sint_value<E> ret; };
 
   } // end of builtin.
 

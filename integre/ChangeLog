@@ -1,5 +1,23 @@
 2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* ntg/core/internal/global_ops_traits.hh: Minor update.
+	* ntg/vect/vec.hh: Minor update.
+	* ntg/real/optraits_scalar_defs.hh, ntg/core/predecls.hh: Fix
+	typos.
+
+	* ntg/real/real_value.hh: New classes.
+	* ntg/core/macros.hh: New macros.
+	
+	* ntg/enum/bin.hh, ntg/real/int_s.hh, ntg/real/int_u.hh,
+	ntg/real/typetraits_builtins_int.hh,
+	ntg/real/typetraits_builtins_float.hh, ntg/vect/vec.hh,
+	ntg/vect/cplx.hh: Make decorators's integration more precise.
+	* ntg/real/cycle.hh, ntg/real/range.hh: Modify accordingly.
+
+	* tests/types/tests/range1: More checks.
+	
+2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* ntg/core/internal/global_ops_traits.hh: Rewrite the traits
 	deduction system.
 	

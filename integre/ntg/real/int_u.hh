@@ -70,27 +70,30 @@ namespace ntg {
     //
     ///////////////
 
-    template <unsigned nbits, class behaviour>
-    struct typetraits<int_u<nbits, behaviour> >
+    template <unsigned nbits, class behavior>
+    struct typetraits<int_u<nbits, behavior> >
     {
-      typedef int_u<nbits, behaviour>		self;
-      typedef signed_integer			abstract_type;
+      typedef int_u<nbits, behavior>		self;
+      typedef unsigned_integer			abstract_type;
       typedef self				ntg_type;
+      ntg_build_value_type(uint_value<E>);
+
       typedef optraits<self>			optraits;
-      typedef typename behaviour::get<self>	behaviour_type;
-      
+      typedef typename behavior::get<self>	behavior_type;
+
+
       typedef self					base_type;
       typedef typename C_for_int_u<nbits>::type		storage_type;
       typedef int_s<mlc::saturateN<nbits+1, 32>::ret, 
-		    behaviour>				signed_type;
+		    behavior>				signed_type;
       typedef self					unsigned_type;
       // FIXME: calculate it more precisely
-      typedef int_u<32, behaviour>			cumul_type;
-      typedef int_u<32, behaviour>			largest_type;
-      typedef int_s<32, behaviour>			signed_largest_type;
-      typedef int_s<32, behaviour>			signed_cumul_type;
-      typedef int_u<32, behaviour>			unsigned_largest_type;
-      typedef int_u<32, behaviour>			unsigned_cumul_type;
+      typedef int_u<32, behavior>			cumul_type;
+      typedef int_u<32, behavior>			largest_type;
+      typedef int_s<32, behavior>			signed_largest_type;
+      typedef int_s<32, behavior>			signed_cumul_type;
+      typedef int_u<32, behavior>			unsigned_largest_type;
+      typedef int_u<32, behavior>			unsigned_cumul_type;
       typedef unsigned int				integer_type;
     };
 
@@ -101,10 +104,10 @@ namespace ntg {
   //
   //////////////////////////////////
 
-  template <unsigned nbits, class behaviour>
-  class int_u : public int_value<int_u<nbits, behaviour> >
+  template <unsigned nbits, class behavior>
+  class int_u : public uint_value<int_u<nbits, behavior> >
   {
-    typedef int_u<nbits, behaviour> self;
+    typedef int_u<nbits, behavior> self;
     typedef ntgi_storage_type(self) storage_type;
     // dev note : should be directly optraits<self_t>, but with g++ this
     // breaks inheritance in optraits herarchy ...
@@ -185,9 +188,9 @@ namespace ntg {
     int_u(bool);
   };
 
-  template<unsigned nbits, class behaviour>
+  template<unsigned nbits, class behavior>
   inline std::ostream&
-  operator<<(std::ostream& stream, const int_u<nbits, behaviour>& rhs)
+  operator<<(std::ostream& stream, const int_u<nbits, behavior>& rhs)
   {
     stream << unsigned(rhs.val());
     return stream;
@@ -201,21 +204,21 @@ namespace ntg {
     //
     /////////////////////////////////////////////////////
 
-    template <unsigned nbits, class behaviour>
-    struct optraits<int_u<nbits, behaviour> > :
-      public optraits_int_u<int_u<nbits, behaviour> >
+    template <unsigned nbits, class behavior>
+    struct optraits<int_u<nbits, behavior> > :
+      public optraits_int_u<int_u<nbits, behavior> >
     {
     private:
       // shortcuts
-      typedef int_u<nbits, behaviour> self;
+      typedef int_u<nbits, behavior> self;
       typedef typename typetraits<self>::storage_type storage_type_;
-      typedef typename behaviour::get<self> behaviour_type_;
+      typedef typename behavior::get<self> behavior_type_;
 
     public:
-      // behaviour's check
+      // behavior's check
       template <class P>
       static storage_type_ check(const P& rhs)
-      { return behaviour_type_::apply(rhs); }
+      { return behavior_type_::apply(rhs); }
 
       //
       // Properties
@@ -227,7 +230,7 @@ namespace ntg {
       // debug
       static std::string name() {
 	std::ostringstream out;
-	out << "int_u<" << int(nbits) << ", " << behaviour::name() << ">"
+	out << "int_u<" << int(nbits) << ", " << behavior::name() << ">"
 	    << std::ends;
 	return out.str();
       }
@@ -249,7 +252,7 @@ namespace ntg {
     {
       enum { commutative = true };
       typedef int_u<(unsigned) mlc::maxN<nbits + 1, mbits + 1, 32>::ret,
-		    typename deduce_op_behaviour<B1, B2>::ret> ret;
+		    typename deduce_op_behavior<B1, B2>::ret> ret;
       typedef int_u<nbits, B1> impl;
     };
 
@@ -264,7 +267,7 @@ namespace ntg {
     {
       enum { commutative = true };
       typedef int_s<(unsigned) mlc::maxN<nbits+1, mbits+1, 32>::ret,
-		    typename deduce_op_behaviour<B1, B2>::ret> ret;
+		    typename deduce_op_behavior<B1, B2>::ret> ret;
       typedef int_u<nbits, B1> impl;
     };
 
@@ -275,7 +278,7 @@ namespace ntg {
     struct operator_traits<operator_minus, int_u<32, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_u<32, typename deduce_op_behaviour<B1, B2>::ret> ret;
+      typedef int_u<32, typename deduce_op_behavior<B1, B2>::ret> ret;
       typedef int_u<32, B1> impl;
     };
 
@@ -290,7 +293,7 @@ namespace ntg {
     {
       enum { commutative = true };
       typedef int_u<(unsigned) mlc::saturateN<nbits + mbits, 32>::ret,
-	typename deduce_op_behaviour<B1, B2>::ret> ret;
+	typename deduce_op_behavior<B1, B2>::ret> ret;
       typedef int_u<nbits, B1> impl;
     };
 
@@ -304,7 +307,7 @@ namespace ntg {
     struct operator_traits<operator_div, int_u<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_u<nbits, typename deduce_op_behaviour<B1, B2>::ret> ret;
+      typedef int_u<nbits, typename deduce_op_behavior<B1, B2>::ret> ret;
       typedef int_u<nbits, B1> impl;
     };
 
@@ -318,7 +321,7 @@ namespace ntg {
     struct operator_traits<operator_mod, int_u<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = false };
-      typedef int_u<mbits, typename deduce_op_behaviour<B1, B2>::ret> ret;
+      typedef int_u<mbits, typename deduce_op_behavior<B1, B2>::ret> ret;
       typedef int_u<nbits, B1> impl;
     };
 
@@ -334,7 +337,7 @@ namespace ntg {
     {
       enum { commutative = true };
       typedef int_u<(unsigned) mlc::min<nbits, mbits>::ret,
-		    typename deduce_op_behaviour<B1, B2>::ret> ret;
+		    typename deduce_op_behavior<B1, B2>::ret> ret;
       typedef int_u<nbits, B1> impl;
     };
 
@@ -350,7 +353,7 @@ namespace ntg {
     {
       enum { commutative = true };
       typedef int_u<(unsigned) mlc::max<nbits, mbits>::ret,
-		    typename deduce_op_behaviour<B1, B2>::ret> ret;
+		    typename deduce_op_behavior<B1, B2>::ret> ret;
       typedef int_u<nbits, B1> impl;
     };
 

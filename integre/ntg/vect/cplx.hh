@@ -196,6 +196,8 @@ namespace ntg {
       typedef cplx<R, T> self;
       typedef vectorial abstract_type;
       typedef self ntg_type;
+      ntg_build_value_type(vect_value<E>);
+
       typedef optraits<self> optraits;
 
       typedef typename typetraits<T>::base_type  base_type[2];

@@ -49,6 +49,14 @@ namespace ntg
   class int_value : public real_value<E>
   {};
 
+  template <class E>
+  class uint_value : public int_value<E>
+  {};
+
+  template <class E>
+  class sint_value : public int_value<E>
+  {};
+
   /*------------.
   | float_value |
   `------------*/

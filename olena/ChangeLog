@@ -1,5 +1,11 @@
 2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* oln/io/pnm_read_common.hxx, oln/io/pnm_read.hxx,
+	oln/io/pnm_write_common.hxx, oln/io/pnm_write.hxx,
+	oln/level/cc.hh: Fix typos.
+
+2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* oln/arith/internal/opdecls.hh, oln/math/macros.hh,
 	oln/morpho/geodesic_dilation.hh, oln/morpho/reconstruction.hh,
 	oln/utils/stat.hh: Modify according to integre's changes.

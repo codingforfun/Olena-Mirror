@@ -108,10 +108,15 @@ namespace mlc
   struct select_self
   { typedef Self ret; };
   
+  // FIXME: kept for compatibility.
   template <class T>
   struct select_self<T, bottom>
   { typedef T ret; };
-
+  
+  template <class T>
+  struct select_self<T, final>
+  { typedef T ret; };
+  
   //
   //  inferior traits
   //  FIXME : erase ?

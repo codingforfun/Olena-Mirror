@@ -99,32 +99,32 @@ Op(Builtin lhs, const value<T2>& rhs)				\
 //
 ////////////////////////////////////////////////////////////////////////
 
-# define GLOBAL_ARITH_OP(Op, Name)						\
-template <class T1, class T2>							\
-inline \
-ntg_return_type(Name, T1, T2)	\
+# define GLOBAL_ARITH_OP(Op, Name)					\
+template <class T1, class T2>						\
+inline									\
+ntg_return_type(Name, T1, T2)						\
 Op(const value<T1>& lhs, const T2& rhs)					\
-{										\
-  typedef ntg_deduced_traits_type(Name, T1, T2) deduced_type;				\
-										\
-  typedef typename deduced_type::impl impl;					\
-  typedef typename deduced_type::lhs_type lhs_type;				\
-  typedef typename deduced_type::rhs_type rhs_type;				\
-										\
-  return optraits<impl>::Name(static_cast<lhs_type>(lhs.self()),		\
-			      static_cast<rhs_type>(rhs));			\
-}										\
-										\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   long);				\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned long);				\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   int);				\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned int);				\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   short);				\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned short);				\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   char);				\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned char);				\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, float);					\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, double);					\
+{									\
+  typedef ntg_deduced_traits_type(Name, T1, T2) deduced_type;		\
+									\
+  typedef typename deduced_type::impl impl;				\
+  typedef typename deduced_type::lhs_type lhs_type;			\
+  typedef typename deduced_type::rhs_type rhs_type;			\
+									\
+  return optraits<impl>::Name(static_cast<lhs_type>(lhs.self()),	\
+			      static_cast<rhs_type>(rhs));		\
+}									\
+									\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   long);			\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned long);			\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   int);			\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned int);			\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   short);			\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned short);			\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   char);			\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned char);			\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, float);				\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, double);				\
 GLOBAL_ARITH_OP_BUILTIN(Op, Name, bool);
 
 

@@ -49,14 +49,14 @@
 //  Behaviors for data_types int_u, int_s, etc ...
 //
 //  <WARNING>
-//  Don't forget behaviour are checked on assignements and contruction of
+//  Don't forget behavior are checked on assignements and contruction of
 //  types, and use comparison, so create only vars with unsafe bahaviour
 //  in comparison operators
 //
 /////////////////////////////////////////////////////////////////////////
 
 // FIXME : there is maybe simpler a way to write that, but we want it to
-// be compatible with icc, so the behaviours must stay class, not
+// be compatible with icc, so the behaviors must stay class, not
 // template <class>
 
 namespace ntg
@@ -232,10 +232,10 @@ namespace ntg
   };
 
   //
-  // This behaviour is not really useful, but implement cycle<> internal
+  // This behavior is not really useful, but implement cycle<> internal
   // calculus.
   //
-  struct cycle_behaviour
+  struct cycle_behavior
   {
     template <class T>
     struct get
@@ -298,17 +298,17 @@ namespace ntg
     };
 
     // debug
-    static std::string name() { return "cycle_behaviour"; }
+    static std::string name() { return "cycle_behavior"; }
   };
 
   namespace internal {
 
     template <class B1, class B2>
-    struct deduce_op_behaviour
+    struct deduce_op_behavior
     { typedef strict ret; };
 
     template <class B>
-    struct deduce_op_behaviour<B, B>
+    struct deduce_op_behavior<B, B>
     { typedef B ret; };
 
   } // end of internal.

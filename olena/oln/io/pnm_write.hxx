@@ -74,8 +74,8 @@ namespace oln {
 	}
       };
 
-      template <unsigned N, class behaviour>
-      struct writer<WritePnmPlain, image2d< int_u<N, behaviour> > >
+      template <unsigned N, class behavior>
+      struct writer<WritePnmPlain, image2d< int_u<N, behavior> > >
       {
 	static const std::string& name()
 	{ static const std::string _name("pnm/P2"); return _name;	}
@@ -84,9 +84,9 @@ namespace oln {
 	{ return ext == "ppgm"; }
 
 	static bool write(std::ostream& out, const image2d< int_u<N,
-			  behaviour> >& im)
+			  behavior> >& im)
 	{
-	  if (!pnm_write_header<int_u<N, behaviour> >(out, im, '2'))
+	  if (!pnm_write_header<int_u<N, behavior> >(out, im, '2'))
 	    return false;
 	  if (im.border())
 	    for (coord j = 0; j < im.nrows(); ++j)
@@ -159,8 +159,8 @@ namespace oln {
 	}
       };
 
-      template <unsigned N, class behaviour>
-      struct writer<WritePnmRaw, image2d< int_u<N, behaviour> > >
+      template <unsigned N, class behavior>
+      struct writer<WritePnmRaw, image2d< int_u<N, behavior> > >
       {
 	static const std::string& name()
 	{ static const std::string _name("pnm/P5"); return _name;	}
@@ -169,9 +169,9 @@ namespace oln {
 	{ return ext == "pgm"; }
 
 	static bool write(std::ostream& out, const image2d< int_u<N,
-			  behaviour> >& im)
+			  behavior> >& im)
 	{
-	  if (!pnm_write_header<int_u<N, behaviour> >(out, im, '5'))
+	  if (!pnm_write_header<int_u<N, behavior> >(out, im, '5'))
 	    return false;
 	  if (im.border())
 	    for (coord j = 0; j < im.nrows(); ++j)

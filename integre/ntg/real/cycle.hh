@@ -54,7 +54,7 @@ namespace ntg {
       typedef typename typetraits<T>::abstract_type abstract_type;
       typedef self ntg_type;
       typedef optraits<self> optraits;
-      typedef cycle_behaviour::get<self> behaviour_type;
+      typedef cycle_behavior::get<self> behavior_type;
 
       typedef typename typetraits<T>::base_type		base_type;
       typedef T						storage_type;
@@ -80,7 +80,8 @@ namespace ntg {
 
   template <class T,
 	    class interval>
-  class cycle : public real_value<cycle<T, interval> >
+  class cycle : 
+    public type_traits<T>::build_value_type<cycle<T, interval> >::ret
   {
   public:
     typedef cycle<T, interval> self;
@@ -133,7 +134,7 @@ namespace ntg {
     private:
       typedef typename typetraits<self>::storage_type storage_type_;
       typedef typename interval::storage_type interval_type_;
-      typedef typename typetraits<self>::behaviour_type behaviour_type_;
+      typedef typename typetraits<self>::behavior_type behavior_type_;
 
     public:
       //
@@ -154,11 +155,11 @@ namespace ntg {
       { return interval::sup(); }
 
 
-      // behaviour's check
+      // behavior's check
 
       template <class P>
       static storage_type_ check(const P& rhs)
-      { return behaviour_type_::apply(rhs); }
+      { return behavior_type_::apply(rhs); }
 
       // debug
       static std::string name() {
@@ -172,19 +173,19 @@ namespace ntg {
     // Inherit operator traits from the base type.
     template <class Op, class T, class I, class U>
     struct operator_traits<Op, cycle<T, I>, U> 
-      : public operator_traits<Op, T, U>
+      : public deduce_from_traits<Op, T, U>::deduced_traits
     {}; 
 
     // Inherit operator traits from the base type.
     template <class Op, class T, class I, class U>
     struct operator_traits<Op, U, cycle<T, I> >
-      : public operator_traits<Op, U, T>
+      : public deduce_from_traits<Op, U, T>::deduced_traits
     {};
 
     // Inherit operator traits from the base type.
     template <class Op, class T1, class I1, class T2, class I2>
     struct operator_traits<Op, cycle<T1, I1>, cycle<T2, I2> >
-      : public operator_traits<Op, T1, T2>
+      : public deduce_from_traits<Op, T1, T2>::deduced_traits
     {};
 
   } // end of internal.

@@ -42,7 +42,7 @@ namespace ntg
       typedef enumerated	abstract_type;	
       typedef bin		ntg_type;
       typedef optraits<self>	optraits;
-      typedef unsafe::get<self>	behaviour_type;
+      typedef unsafe::get<self>	behavior_type;
 
       typedef self		base_type;
       typedef self		storage_type;

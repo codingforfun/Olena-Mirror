@@ -91,6 +91,8 @@ namespace ntg {
       typedef vec<N, T, Self> self;
       typedef vectorial abstract_type;
       typedef self ntg_type;
+      ntg_build_value_type(vect_value<E>);
+
       typedef optraits<self> optraits;
 
       typedef typename typetraits<T>::base_type  base_type[N];
@@ -104,7 +106,7 @@ namespace ntg {
 
   template <unsigned N, class T, class Self>
   class vec : 
-    public vect_value<typename mlc::select_self<vec<N, T, mlc::bottom>, Self>::ret>
+    public vect_value<typename mlc::select_self<vec<N, T, mlc::final>, Self>::ret>
   {
   public :
 
