@@ -30,6 +30,7 @@
 
 # include <oln/core/image.hh>
 # include <oln/core/iter.hh>
+# include <oln/types/global_ops.hh>
 # include <oln/types/bin.hh>
 # include <oln/types/int_u.hh>
 # include <oln/io/base.hh>
@@ -44,7 +45,7 @@ namespace oln {
 	unsigned stride = 0;
 	for (; n; --n)
 	  {
-	    out.put(*elt++ == true ? '0' : '1');
+	    out.put((*elt++ == 0) ? '0' : '1');
 	    if (++stride >= 70)
 	      {
 		out << std::endl;

@@ -47,8 +47,7 @@ namespace oln {
 
     // C built-in type  ->  oln type
 
-    // FIXME: decomment then ready
-    //    template<> struct to_oln<bool>           { typedef bin ret; };
+    template<> struct to_oln<bool>           { typedef bin ret; };
 
     template<> struct to_oln<unsigned char>  { typedef int_u8u  ret; };
     template<> struct to_oln<  signed char>  { typedef int_s8u  ret; };

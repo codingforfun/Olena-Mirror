@@ -70,7 +70,7 @@ namespace oln {
 	  << ' ' << mcols << ' ' << mrows << std:: endl
 	  << im.ncols() * mcols << ' ' << im.nrows() * mrows << std::endl;
 	if (type != '1' && type != '4')
-	  s << U::max() << std::endl;
+	  s << optraits<U>::max() << std::endl;
 	return true;
       }
 
@@ -138,6 +138,8 @@ namespace oln {
 	}
       };
 
+#if 0 // disabled until colors imported
+
       template<template <unsigned> class color_system>
       struct writer<WritePnmPlain, image3d< color<3, 8, color_system> > >
       {
@@ -173,6 +175,8 @@ namespace oln {
 	}
       };
 
+#endif
+
       template<unsigned N>
       struct writer<WritePnmRaw, image3d< int_u<N> > >
       {
@@ -204,6 +208,8 @@ namespace oln {
 	  return true;
 	}
       };
+
+#if 0 // disabled until colors imported
 
       template<template <unsigned> class color_system>
       struct writer<WritePnmRaw, image3d< color<3, 8, color_system> > >
@@ -239,6 +245,8 @@ namespace oln {
 	  return true;
 	}
       };
+
+#endif
 
     } // internal
   } // io

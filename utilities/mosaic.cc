@@ -1,6 +1,7 @@
 #include <oln/basics2d.hh>
 #include <oln/basics3d.hh>
 #include <oln/level/fill.hh>
+#include <oln/types/all.hh>
 
 #include <getopt.h>
 
@@ -193,9 +194,9 @@ main(int argc, char *argv[])
       for_all(p)
 	{
 	  if (((p.row() / 8) ^ (p.col() / 8)) & 1)
-	    output[p] = TYPE::min();
+	    output[p] = optraits<TYPE>::min();
 	  else
-	    output[p] = TYPE::max();
+	    output[p] = optraits<TYPE>::max();
 	}
     }
 

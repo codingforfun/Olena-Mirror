@@ -1,3 +1,11 @@
+2002-09-24  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/types/to_oln.hh: Add bool to bin conversion.
+	* utilities/mosaic.cc: Adapt to new types.
+	* oln/io/pnm_write3d.hxx: Likewise.
+	* oln/io/pnm_read3d.hxx: Likewise.
+	* oln/io/pnm_write_common.hxx: Likewise.
+	
 2002-09-24  Emmanuel Turquin  <turqui_e@epita.fr>
 
 	* oln/transform/fft.hh: New file.
