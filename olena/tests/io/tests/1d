@@ -1,0 +1,46 @@
+//								    -*- c++ -*-
+
+#include "loadsave.hh"
+
+bool
+check(void)
+{
+  bool fail = false;
+
+  // tests constructor
+  image1d<bin> ima = io::load(rdata("lena1d"));
+
+  typedef image1d<range<int_u8, bounded_u<0, 255>, strict > > ima_range_int_u8;
+  typedef image1d<int_u<6, strict> > ima_int_u6;
+
+  fail |= loadsave< image1d<bin>           >(rdata("lena1d"), "lena1d");
+  fail |= loadsave< image1d<bool>          >(rdata("lena1d"), "lena1d");
+  fail |= loadsave< image1d<int_u8>        >(rdata("lena1d"), "lena1d");
+  fail |= loadsave< image1d<unsigned char> >(rdata("lena1d"), "lena1d");
+  fail |= ! loadsave< ima_int_u6           >(rdata("lena1d"), "lena1d");
+  fail |= loadsave< ima_range_int_u8       >(rdata("lena1d"), "lena1d");
+  fail |= loadsave< image1d<nrgb_8>        >(rdata("lena1d"), "lena1d");
+  fail |= loadsave< image1d<xyz_8>         >(rdata("lena1d"), "lena1d");
+  fail |= loadsave< image1d<vec<3, int_u8> > >(rdata("lena1d"), "lena1d");
+
+  fail |= loadsave< image1d<bin>           >(rdata("lena1d.pbm"), "lena1d.pbm");
+  fail |= loadsave< image1d<int_u8>        >(rdata("lena1d.pgm"), "lena1d.pgm");
+  fail |= loadsave< image1d<unsigned char> >(rdata("lena1d.pgm"), "lena1d.pgm");
+  fail |= loadsave< image1d<nrgb_8>        >(rdata("lena1d.ppm"), "lena1d.ppm");
+
+  fail |= loadsave< image1d<bin>     >(rdata("lena1d.ppbm"), "lena1d.ppbm");
+  fail |= loadsave< image1d<int_u8>  >(rdata("lena1d.ppgm"), "lena1d.ppgm");
+  fail |= loadsave< image1d<nrgb_8>  >(rdata("lena1d.pppm"), "lena1d.pppm");
+
+  fail |= loadsave< image1d<unsigned short int> >(rdata("lena1d16b.pgm"), "lena1d.pgm");
+  fail |= loadsave< image1d<int_u16> >(rdata("lena1d16b.pgm"), "lena1d16b.pgm");
+  fail |= loadsave< image1d<int_u16> >(rdata("lena1d16b.ppgm"), "lena1d16b.ppgm");
+
+#if HAVE_ZLIB
+  fail |= loadsave< image1d<bin>    >(rdata("lena1d.pbm.gz"), "lena1d.pbm.gz");
+  fail |= loadsave< image1d<int_u8> >(rdata("lena1d.pgm.gz"), "lena1d.pgm.gz");
+  fail |= loadsave< image1d<nrgb_8> >(rdata("lena1d.ppm.gz"), "lena1d.ppm.gz");
+#endif
+
+  return fail;
+}

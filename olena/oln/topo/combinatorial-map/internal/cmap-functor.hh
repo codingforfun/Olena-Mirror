@@ -127,22 +127,22 @@ namespace oln {
 	public:
 	  V & operator()(const U & d)
 	  {
-	    assertion (d < _f.size());
+	    assertion (d < this->_f.size());
 
-	    return _f[d];
+	    return this->_f[d];
 	  }
 	  const V & operator()(const U & d) const
 	  {
-	    assertion (d < _f.size());
+	    assertion (d < this->_f.size());
 
-	    return _f[d];
+	    return this->_f[d];
 	  }
 
 	public:
 	  std::ostream & print(std::ostream & ostr) const
 	  {
-	    for (unsigned i = 1; i < _darts.size(); ++i)
-	      if (_darts[i])
+	    for (unsigned i = 1; i < this->_darts.size(); ++i)
+	      if (this->_darts[i])
 		ostr << "alpha(" << i << ") = " << (*this)(i) << std::endl;
 	    return ostr;
 	  }
@@ -156,22 +156,22 @@ namespace oln {
 	public:
 	  V & operator()(const U & d)
 	  {
-	    assertion (d < _f.size());
+	    assertion (d < this->_f.size());
 
-	    return _f[d];
+	    return this->_f[d];
 	  }
 	  const V operator()(const U & d) const
 	  {
-	    assertion(d < _f.size());
+	    assertion(d < this->_f.size());
 
-	    if (!_darts[d])
+	    if (!this->_darts[d])
 	      return 0;
 
 	    U tmp = d;
 
 	    do
-	      tmp = _f[tmp];
-	    while (!_darts[tmp]);
+	      tmp = this->_f[tmp];
+	    while (!this->_darts[tmp]);
 
 	    return tmp;
 	  }
@@ -179,8 +179,8 @@ namespace oln {
 	public:
 	  std::ostream & print(std::ostream & ostr) const
 	  {
-	    for (unsigned i = 1; i < _darts.size(); ++i)
-	      if (_darts[i])
+	    for (unsigned i = 1; i < this->_darts.size(); ++i)
+	      if (this->_darts[i])
 		ostr << "sigma(" << i << ") = " << (*this)(i) << std::endl;
 	    return ostr;
 	  }
@@ -198,24 +198,24 @@ namespace oln {
 
 	  V & operator()(const U & l)
 	  {
-	    assertion (l < _f.size());
+	    assertion (l < this->_f.size());
 
-	    return _f[l];
+	    return this->_f[l];
 	  }
 	  const V operator()(const U & l) const
 	  {
-	    assertion(l < _f.size());
+	    assertion(l < this->_f.size());
 
-	    const U & tmp = _labels[l];
+	    const U & tmp = this->_labels[l];
 
-	    return l == tmp ? _f[l] : (*this)(tmp);
+	    return l == tmp ? this->_f[l] : (*this)(tmp);
 	  }
 
 	public:
 	  std::ostream & print(std::ostream & ostr) const
 	  {
-	    for (unsigned i = 1; i < _labels.size(); ++i)
-	      if (_labels[i])
+	    for (unsigned i = 1; i < this->_labels.size(); ++i)
+	      if (this->_labels[i])
 		ostr << "beta(" << i << ") = " << (*this)(i) << std::endl;
 	    return ostr;
 	  }
@@ -232,22 +232,22 @@ namespace oln {
 
 	  V & operator()(const U & d)
 	  {
-	    assertion (d < _f.size());
+	    assertion (d < this->_f.size());
 
-	    return _f[d];
+	    return this->_f[d];
 	  }
 	  const V operator()(const U & d) const
 	  {
-	    assertion(d < _f.size());
+	    assertion(d < this->_f.size());
 
-	    return _f[_beta(_f[d])];
+	    return this->_f[_beta(this->_f[d])];
 	  }
 
 	public:
 	  std::ostream & print(std::ostream & ostr) const
 	  {
-	    for (unsigned i = 1; i < _darts.size(); ++i)
-	      if (_darts[i])
+	    for (unsigned i = 1; i < this->_darts.size(); ++i)
+	      if (this->_darts[i])
 		ostr << "lambda(" << i << ") = " << (*this)(i) << std::endl;
 	    return ostr;
 	  }
@@ -268,24 +268,24 @@ namespace oln {
 
 	  V & operator()(const U & l)
 	  {
-	    assertion (l < _f.size());
+	    assertion (l < this->_f.size());
 
-	    return _f[l];
+	    return this->_f[l];
 	  }
 	  const V operator()(const U & l) const
 	  {
-	    assertion(l < _f.size());
+	    assertion(l < this->_f.size());
 
-	    const V & tmp = _f[l];
+	    const V & tmp = this->_f[l];
 
-	    return _labels[tmp] == tmp ? tmp : (*this)(_labels[tmp]);
+	    return this->_labels[tmp] == tmp ? tmp : (*this)(this->_labels[tmp]);
 	  }
 
 	public:
 	  std::ostream & print(std::ostream & ostr) const
 	  {
-	    for (unsigned i = 1; i < _labels.size(); ++i)
-	      if (_labels[i])
+	    for (unsigned i = 1; i < this->_labels.size(); ++i)
+	      if (this->_labels[i])
 		ostr << "moth(" << i << ") = " << (*this)(i) << std::endl;
 	    return ostr;
 	  }
@@ -303,24 +303,24 @@ namespace oln {
 
 	  V & operator()(const U & l)
 	  {
-	    assertion (l < _f.size());
+	    assertion (l < this->_f.size());
 
-	    return _f[l];
+	    return this->_f[l];
 	  }
 	  const V operator()(const U & l) const
 	  {
-	    assertion(l < _f.size());
+	    assertion(l < this->_f.size());
 
-	    const U & tmp = _labels[l];
+	    const U & tmp = this->_labels[l];
 
-	    return l == tmp ? _f[l] : (*this)(tmp);
+	    return l == tmp ? this->_f[l] : (*this)(tmp);
 	  }
 
 	public:
 	  std::ostream & print(std::ostream & ostr) const
 	  {
-	    for (unsigned i = 1; i < _labels.size(); ++i)
-	      if (_labels[i])
+	    for (unsigned i = 1; i < this->_labels.size(); ++i)
+	      if (this->_labels[i])
 		ostr << "daugh(" << i << ") = " << (*this)(i) << std::endl;
 	    return ostr;
 	  }

@@ -309,12 +309,6 @@ namespace oln {
     return mk_win_ellipsoid(radius, radius, radius);
   }
 
-  template <>
-  struct get_se<3>
-  {
-    typedef window3d ret;
-  };
-
 } // end of oln
 
 #endif // OLENA_CORE_WINDOW3D_HH

@@ -32,7 +32,7 @@
  * ns: morpho, morpho::fast
  * what: Morphological Beucher Gradient.
  * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
- * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
  * doc:
@@ -51,7 +51,7 @@
 template<class C, class B, class I, class E>
 typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
 beucher_gradient(const convert::abstract::conversion<C, B>& c,
-		 const abstract::image<I>& input,
+		 const abstract::non_vectorial_image<I>& input,
 		 const abstract::struct_elt<E>& se)
 {
   return arith::minus(c, dilation(input, se), erosion(input, se));
@@ -61,12 +61,12 @@ beucher_gradient(const convert::abstract::conversion<C, B>& c,
 /*=processingoverload beucher_gradient
  * ns: morpho, morpho::fast
  * what: Morphological Beucher Gradient.
- * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: Concrete(I)
 =*/
 template<class I, class E>
-Concrete(I) beucher_gradient(const abstract::image<I>& input,
+Concrete(I) beucher_gradient(const abstract::non_vectorial_image<I>& input,
 			     const abstract::struct_elt<E>& se)
 {
   return beucher_gradient(convert::force<Value(I)>(), input, se);
@@ -77,7 +77,7 @@ Concrete(I) beucher_gradient(const abstract::image<I>& input,
  * ns: morpho, morpho::fast
  * what: Morphological Internal Gradient.
  * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
- * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
  * doc:
@@ -95,7 +95,7 @@ Concrete(I) beucher_gradient(const abstract::image<I>& input,
 template<class C, class B, class I, class E>
 typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
 internal_gradient(const convert::abstract::conversion<C, B>& c,
-		  const abstract::image<I>& input,
+		  const abstract::non_vectorial_image<I>& input,
 		  const abstract::struct_elt<E>& se)
 {
   return arith::minus(c, input, erosion(input, se));
@@ -104,12 +104,12 @@ internal_gradient(const convert::abstract::conversion<C, B>& c,
 /*=processingoverload internal_gradient
  * ns: morpho, morpho::fast
  * what: Morphological Internal Gradient.
- * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: Concrete(I)
 =*/
 template<class I, class E>
-Concrete(I) internal_gradient(const abstract::image<I>& input, const
+Concrete(I) internal_gradient(const abstract::non_vectorial_image<I>& input, const
 			      abstract::struct_elt<E>& se)
 {
   return internal_gradient(convert::force<Value(I)>(), input, se);
@@ -119,7 +119,7 @@ Concrete(I) internal_gradient(const abstract::image<I>& input, const
  * ns: morpho, morpho::fast
  * what: Morphological External Gradient.
  * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
- * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
  * doc:
@@ -138,7 +138,7 @@ Concrete(I) internal_gradient(const abstract::image<I>& input, const
 template<class C, class B, class I, class E>
 typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
 external_gradient(const convert::abstract::conversion<C, B>& c,
-		  const abstract::image<I>& input,
+		  const abstract::non_vectorial_image<I>& input,
 		  const abstract::struct_elt<E>& se)
 {
   return arith::minus(c, dilation(input, se), input);
@@ -148,12 +148,12 @@ external_gradient(const convert::abstract::conversion<C, B>& c,
 /*=processingoverload external_gradient
  * ns: morpho, morpho::fast
  * what: Morphological External Gradient.
- * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: Concrete(I)
 =*/
 template<class I, class E>
-Concrete(I) external_gradient(const abstract::image<I>& input,
+Concrete(I) external_gradient(const abstract::non_vectorial_image<I>& input,
 			      const abstract::struct_elt<E>& se)
 {
   return external_gradient(convert::force<Value(I)>(), input, se);

@@ -30,7 +30,7 @@
  * ns: morpho, morpho::fast
  * what: Laplacian.
  * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
- * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
  * doc:
@@ -48,7 +48,7 @@
 template<class C, class B, class I, class E>
 typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
 laplacian(const convert::abstract::conversion<C, B>& c,
-	  const abstract::image<I>& input,
+	  const abstract::non_vectorial_image<I>& input,
 	  const abstract::struct_elt<E>& se)
 {
   return arith::minus(c,
@@ -59,13 +59,13 @@ laplacian(const convert::abstract::conversion<C, B>& c,
 /*=processingoverload laplacian
  * ns: morpho, morpho::fast
  * what: Laplacian.
- * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: typename mute<I, Value(I)::slarger_t>::ret
 =*/
 template<class I, class E>
 typename mute<I, Value(I)::slarger_t>::ret
-laplacian(const abstract::image<I>& input, const abstract::struct_elt<E>& se)
+laplacian(const abstract::non_vectorial_image<I>& input, const abstract::struct_elt<E>& se)
 {
   return laplacian(convert::force<Value(I)::slarger_t>(), input, se);
 }

@@ -62,19 +62,19 @@ namespace oln
   template< class Exact>
   struct window_base_friend_traits<abstract::neighborhood<Exact> >
   {
-    typedef abstract::neighborhood<Exact> ret_t;
+    typedef abstract::neighborhood<Exact> ret;
   };
 
   template< class Exact>
   struct window_base_friend_traits<abstract::window<Exact> >
   {
-    typedef abstract::struct_elt<Exact> ret_t;
+    typedef abstract::struct_elt<Exact> ret;
   };
 
   template< class Exact>
   struct window_base_friend_traits<abstract::w_window<Exact> >
   {
-    typedef abstract::struct_elt<Exact> ret_t;
+    typedef abstract::struct_elt<Exact> ret;
   };
 
   namespace abstract
@@ -89,7 +89,11 @@ namespace oln
       typedef Exact exact_type;
       typedef Sup super_type;
  
-      friend class window_base_friend_traits<Sup>::ret_t;
+      // FIXME: this has been commented out to satisfy icc and
+      // comeau. I don't know who is right between them and gcc.
+      friend class struct_elt<Exact>;
+      friend class neighborhood<Exact>;
+      // friend class window_base_friend_traits<Sup>::ret;
     
       static std::string name()
       {

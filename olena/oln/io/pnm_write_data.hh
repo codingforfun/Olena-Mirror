@@ -124,7 +124,7 @@ namespace oln {
       {
 	template <class I>
 	static bool
-	write(std::ostream& out, const I& input, const pnm2d_info& info)
+	write(std::ostream& out, const I& input, const pnm2d_info&)
 	{
 	  // FIXME: implement an iterator over data
 	  Iter(I) it(input);
@@ -134,7 +134,7 @@ namespace oln {
 	    {
 	      int i = input[it];
 	      out << i;
-	      if (++stride >= info.cols)
+	      if (++stride >= 70)
 		{
 		  out << std::endl;
 		  stride = 0;
@@ -182,7 +182,7 @@ namespace oln {
       {
 	template <class I>
 	static bool
-	write(std::ostream& out, const I& input, const pnm2d_info& info)
+	write(std::ostream& out, const I& input, const pnm2d_info&)
 	{
 	  // FIXME: implement an iterator over data
 	  Iter(I) it(input);
@@ -195,7 +195,7 @@ namespace oln {
 	      tmp = input[it][1]; out << tmp << ' ';
 	      tmp = input[it][2]; out << tmp << ' ';
 	      
-	      if (++stride >= info.cols)
+	      if (++stride >= 70)
 		{
 		  out << std::endl;
 		  stride = 0;

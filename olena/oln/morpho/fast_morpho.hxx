@@ -44,7 +44,8 @@ namespace oln {
 
       // Find structuring elements to be added/removed from the histogram
       // when we move forward along each direction.
-      // FIXME: talking about struct elts, but using add(dp) that can't work on w_windows
+      // FIXME: add(dp) on w_windows associates a default weight set
+      // to 1 
       template<class E1, class E2, class E3>
       void
       find_struct_elts(const abstract::struct_elt<E1>& se,
@@ -107,7 +108,7 @@ namespace oln {
       // inline
       void
       hist_update(H& hist,
-		  const abstract::image<I>& input,
+		  const abstract::non_vectorial_image<I>& input,
 		  const Point(I)& p,
 		  const abstract::struct_elt<E1>& se_rem,
 		  const abstract::struct_elt<E2>& se_add)
@@ -255,7 +256,7 @@ namespace oln {
 
     template<class I, class E, template<typename, typename> class H>
     Concrete(I)
-    fast_morpho(const abstract::image<I>& input,
+    fast_morpho(const abstract::non_vectorial_image<I>& input,
 		const abstract::struct_elt<E>& se)
     {
       enum { dim = E::dim };

@@ -55,8 +55,8 @@ namespace oln {
 
   template<class T, class Exact>
   struct image_traits<image2d<T, Exact> >: 
-    public image_traits<image<typename image_id<image2d<T, Exact> >::value_type, 
-			      image_id<image2d<T, Exact> >::dim, 
+    public image_traits<image<image_id<image2d<T, Exact> >::dim, 
+			      typename image_id<image2d<T, Exact> >::value_type,
 			      typename image_id<image2d<T, Exact> >::impl_type, 
 			      typename image_id<image2d<T, Exact> >::exact_type> >
   {};
@@ -66,8 +66,8 @@ namespace oln {
 
   template<class T, class Exact>
   class image2d: 
-    public image<typename image_id<image2d<T, Exact> >::value_type, 
-		 image_id<image2d<T, Exact> >::dim, 
+    public image<image_id<image2d<T, Exact> >::dim, 
+		 typename image_id<image2d<T, Exact> >::value_type, 
 		 typename image_id<image2d<T, Exact> >::impl_type, 
 		 typename image_id<image2d<T, Exact> >::exact_type>
   {
@@ -77,8 +77,8 @@ namespace oln {
     typedef typename image_id<image2d<T, Exact> >::value_type value_type;
     typedef typename image_id<image2d<T, Exact> >::exact_type exact_type;
     typedef typename image_id<image2d<T, Exact> >::impl_type impl_type;
-    typedef oln::image<value_type, 
-		       image_id<image2d<T, Exact> >::dim, 
+    typedef oln::image<image_id<image2d<T, Exact> >::dim, 
+		       value_type, 
 		       impl_type, 
 		       exact_type> super_type;  
 

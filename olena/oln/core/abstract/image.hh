@@ -32,6 +32,7 @@
 # include <mlc/contract.hh>
 # include <oln/core/coord.hh>
 # include <oln/core/abstract/point.hh>
+# include <oln/core/abstract/iter.hh>
 
 namespace oln {
   namespace abstract {

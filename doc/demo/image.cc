@@ -3,7 +3,7 @@
 #include <oln/basics3d.hh>
 #include <mlc/type.hh>
 #include <mlc/cmp.hh>
-#include <oln/core/abstract/binary_image.hh>
+#include <oln/core/abstract/image_with_type.hh>
 #include <oln/arith/ops.hh>
 #include <oln/arith/logic.hh>
 #include <oln/io/basics.hh>
@@ -38,18 +38,16 @@ foo(const abstract::image<I>& input)
 template<class I, class P>
 void bar(abstract::image<I>& input, const abstract::point<P>& p)
 {
-  // FIXME:
-  // meta::eq<I::dim, P::dim>::ensure();
+  mlc::eq<I::dim, P::dim>::ensure();
   input[p] = 69;
 }
 
 
 // FIXME: pred_image
 template<class I, class P>
-void base(abstract::image<I>& input, const abstract::image<P>& pred)
+void base(abstract::image<I>& input, const abstract::binary_image<P>& pred)
 {
-  // FIXME:
-  // meta::eq<I::dim, P::dim>::ensure();
+  mlc::eq<I::dim, P::dim>::ensure();
   typename I::iter_type p(input);
   for_all (p) {
     if (pred[p])
@@ -92,8 +90,8 @@ int main()
   bar(ima, point2d());
   cout << ima << endl;
 
-  //  cout << conv::force<int_u8>::output<int>::ret::name () << endl;
-  //  cout << convoutput<conv::force<int_u8>,int>::ret::name () << endl;
+  cout << ntg::type_traits<convert::force<int_u8>::output<int>::ret>::name () << endl;
+  //cout << ntg::type_traits<convoutput<convert::force<int_u8>,abstractint>::ret>::name () << endl;
 
   image2d<int_u8> i2 = arith::plus(convert::force<int_u8>(), ima, ima);
 

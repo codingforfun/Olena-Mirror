@@ -41,4 +41,7 @@
 # include <oln/core/fwd_iter1d.hh>
 # include <oln/core/bkd_iter1d.hh>
 
+# include <oln/io/image.hh>
+# include <oln/io/se.hh>
+
 #endif // ! OLENA_BASICS1D_HH

@@ -46,10 +46,12 @@ namespace oln {
     template< typename T, typename U >
     T max(const histogram<T, U>& hist);
 
-
     template< typename T, typename U = unsigned>
     class histogram
     {
+    private:
+      typedef typename ntg_is_a(T, ntg::non_vectorial)::ensure_type ensure_type;
+
     public:
 
       histogram() : values_(0)

@@ -46,8 +46,8 @@ namespace oln {
       /*=processing sure_geodesic_reconstruction_dilation
        * ns: morpho
        * what: Geodesic reconstruction by dilation.
-       * arg: const abstract::image<I1>&, marker, IN, marker image
-       * arg: const abstract::image<I2>&, mask, IN, mask image
+       * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
+       * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
        * arg: const abstract::struct_elt<E>&, se, IN, structural element
        * ret: Concrete(I1)
        * doc:
@@ -66,8 +66,8 @@ namespace oln {
        =*/
       template<class I1, class I2, class N>
       Concrete(I1)
-	geodesic_reconstruction_dilation(const abstract::image<I1> & marker,
-					 const abstract::image<I2> & mask,
+	geodesic_reconstruction_dilation(const abstract::non_vectorial_image<I1> & marker,
+					 const abstract::non_vectorial_image<I2> & mask,
 					 const abstract::neighborhood<N>& Ng)
       {
 	mlc::eq<I1::dim, I2::dim>::ensure();
@@ -91,8 +91,8 @@ namespace oln {
       /*=processing sequential_geodesic_reconstruction_dilation
        * ns: morpho
        * what: Geodesic reconstruction by dilation.
-       * arg: const abstract::image<I1>&, marker, IN, marker image
-       * arg: const abstract::image<I2>&, mask, IN, mask image
+       * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
+       * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
        * arg: const abstract::struct_elt<E>&, se, IN, structural element
        * ret: Concrete(I1)
        * doc:
@@ -114,8 +114,8 @@ namespace oln {
        =*/
       template<class I1, class I2, class N>
       Concrete(I1)
-	geodesic_reconstruction_dilation(const abstract::image<I1> & marker,
-					 const abstract::image<I2> & mask,
+	geodesic_reconstruction_dilation(const abstract::non_vectorial_image<I1> & marker,
+					 const abstract::non_vectorial_image<I2> & mask,
 					 const abstract::neighborhood<N>& Ng)
       {
 	mlc::eq<I1::dim, I2::dim>::ensure();
@@ -124,7 +124,7 @@ namespace oln {
 	precondition(level::is_greater_or_equal(mask, marker));
 
 	// Conversion of neighborhood into a SE.
-	typedef typename get_se<N::dim>::ret E;
+	typedef typename abstract::neighborhood<N>::win_type E;
 	E se_plus = get_plus_se_p(convert::ng_to_cse(Ng));
 	E se_minus = get_minus_se_p(convert::ng_to_cse(Ng));
 
@@ -155,8 +155,8 @@ namespace oln {
 	template<class P, class I1, class I2, class E> inline
 	static
 	bool exist_init_dilation(const abstract::point<P>& p,
-				 const abstract::image<I1>& marker,
-				 const abstract::image<I2>& mask,
+				 const abstract::non_vectorial_image<I1>& marker,
+				 const abstract::non_vectorial_image<I2>& mask,
 				 const abstract::struct_elt<E>& se)
 	{
 	  mlc::eq<I1::dim, I2::dim>::ensure();
@@ -175,8 +175,8 @@ namespace oln {
       /*=processing hybrid_geodesic_reconstruction_dilation
        * ns: morpho
        * what: Geodesic reconstruction by dilation.
-       * arg: const abstract::image<I1>&, marker, IN, marker image
-       * arg: const abstract::image<I2>&, mask, IN, mask image
+       * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
+       * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
        * arg: const abstract::struct_elt<E>&, se, IN, structural element
        * ret: Concrete(I1)
        * doc:
@@ -198,8 +198,8 @@ namespace oln {
        =*/
       template<class I1, class I2, class N>
       Concrete(I1)
-	geodesic_reconstruction_dilation(const abstract::image<I1> & marker,
-					 const abstract::image<I2> & mask,
+	geodesic_reconstruction_dilation(const abstract::non_vectorial_image<I1> & marker,
+					 const abstract::non_vectorial_image<I2> & mask,
 					 const abstract::neighborhood<N>& Ng)
       {
 	mlc::eq<I1::dim, I2::dim>::ensure();
@@ -211,7 +211,7 @@ namespace oln {
 	Concrete(I1) output = marker.clone();
 	output.border_adapt_copy(Ng.delta());
 	{
-	  typedef typename get_se<N::dim>::ret E;
+	  typedef typename abstract::neighborhood<N>::win_type E;
 	  E Ng_plus = get_plus_se_p(convert::ng_to_cse(Ng));
 	  E Ng_minus = get_minus_se_p(convert::ng_to_cse(Ng));
 	  typename I1::fwd_iter_type fwd_p(output);
@@ -255,8 +255,8 @@ namespace oln {
       /*=processing sure_geodesic_reconstruction_erosion
        * ns: morpho
        * what: Geodesic reconstruction by erosion.
-       * arg: const abstract::image<I1>&, marker, IN, marker image
-       * arg: const abstract::image<I2>&, mask, IN, mask image
+       * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
+       * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
        * arg: const abstract::struct_elt<E>&, se, IN, structural element
        * ret: Concrete(I1)
        * doc:
@@ -275,8 +275,8 @@ namespace oln {
        =*/
       template<class I1, class I2, class N>
       Concrete(I1)
-	geodesic_reconstruction_erosion(const abstract::image<I1> & marker,
-					const abstract::image<I2> & mask,
+	geodesic_reconstruction_erosion(const abstract::non_vectorial_image<I1> & marker,
+					const abstract::non_vectorial_image<I2> & mask,
 					const abstract::neighborhood<N>& Ng)
       {
 	mlc::eq<I1::dim, I2::dim>::ensure();
@@ -300,8 +300,8 @@ namespace oln {
       /*=processing sequential_geodesic_reconstruction_erosion
        * ns: morpho
        * what: Geodesic reconstruction by erosion.
-       * arg: const abstract::image<I1>&, marker, IN, marker image
-       * arg: const abstract::image<I2>&, mask, IN, mask image
+       * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
+       * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
        * arg: const abstract::struct_elt<E>&, se, IN, structural element
        * ret: Concrete(I1)
        * doc:
@@ -323,8 +323,8 @@ namespace oln {
        =*/
       template<class I1, class I2, class N>
       Concrete(I1)
-	geodesic_reconstruction_erosion(const abstract::image<I1>& marker,
-					const abstract::image<I2>& mask,
+	geodesic_reconstruction_erosion(const abstract::non_vectorial_image<I1>& marker,
+					const abstract::non_vectorial_image<I2>& mask,
 					const abstract::neighborhood<N>& Ng)
       {
 	mlc::eq<I1::dim, I2::dim>::ensure();
@@ -332,7 +332,7 @@ namespace oln {
 	precondition(marker.size() == mask.size());
 	precondition(level::is_greater_or_equal(marker, mask));
 
-	typedef typename get_se<N::dim>::ret E;
+	typedef typename abstract::neighborhood<N>::win_type E;
 	E se_plus = get_plus_se_p(convert::ng_to_cse(Ng));
 	E se_minus = get_minus_se_p(convert::ng_to_cse(Ng));
 	Concrete(I1) output = marker.clone();
@@ -361,8 +361,8 @@ namespace oln {
 	template<class P, class I1, class I2, class E> inline
 	static
 	bool exist_init_erosion(const abstract::point<P>& p,
-				const abstract::image<I1>& marker,
-				const abstract::image<I2>& mask,
+				const abstract::non_vectorial_image<I1>& marker,
+				const abstract::non_vectorial_image<I2>& mask,
 				const abstract::struct_elt<E>& se)
 	{
 	  mlc::eq<I1::dim, I2::dim>::ensure();
@@ -380,8 +380,8 @@ namespace oln {
       /*=processing hybrid_geodesic_reconstruction_erosion
        * ns: morpho
        * what: Geodesic reconstruction by erosion.
-       * arg: const abstract::image<I1>&, marker, IN, marker image
-       * arg: const abstract::image<I2>&, mask, IN, mask image
+       * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
+       * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
        * arg: const abstract::struct_elt<E>&, se, IN, structural element
        * ret: Concrete(I1)
        * doc:
@@ -404,8 +404,8 @@ namespace oln {
 
       template<class I1, class I2, class N>
       Concrete(I1)
-	geodesic_reconstruction_erosion(const abstract::image<I1> & marker,
-					const abstract::image<I2> & mask,
+	geodesic_reconstruction_erosion(const abstract::non_vectorial_image<I1> & marker,
+					const abstract::non_vectorial_image<I2> & mask,
 					const abstract::neighborhood<N>& Ng)
       {
 	mlc::eq<I1::dim, I2::dim>::ensure();
@@ -417,7 +417,7 @@ namespace oln {
 	Concrete(I1) output = marker.clone();
 	output.border_adapt_copy(Ng.delta());
 	{
-	  typedef typename get_se<N::dim>::ret E;
+	  typedef typename abstract::neighborhood<N>::win_type E;
 	  E Ng_plus = get_plus_se_p(convert::ng_to_cse(Ng));
 	  E Ng_minus = get_minus_se_p(convert::ng_to_cse(Ng));
 	  typename I1::fwd_iter_type fwd_p(output);

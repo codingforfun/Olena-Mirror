@@ -32,6 +32,7 @@
 # include <oln/core/abstract/dpoint.hh>
 # include <mlc/type.hh>
 # include <mlc/objs.hh>
+# include <oln/core/macros.hh>
 
 namespace oln
 {

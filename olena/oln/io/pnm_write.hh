@@ -28,12 +28,8 @@
 #ifndef OLENA_IO_PNM_WRITE_HH_
 # define OLENA_IO_PNM_WRITE_HH_
 
-# include <ntg/basics.hh>
-
-# include <oln/core/traverse.hh>
-# include <oln/utils/stat.hh>
+# include <oln/io/image_base.hh>
 # include <oln/io/pnm_common.hh>
-# include <oln/io/pnm_write_data.hh>
 
 namespace oln {
   
@@ -45,165 +41,17 @@ namespace oln {
       | default pnm_writer |
       `-------------------*/
 
-      template <writer_id R, unsigned Dim, pnm_type V, class I>
+      template <writer_id W, unsigned Dim, pnm_type V, class I>
       struct pnm_writer
       {
 	static std::string name()
 	{ return "-"; }
 	
-	static bool knows_ext(const std::string& ext)
+	static bool knows_ext(const std::string&)
 	{ return false; }
 	
-	static bool write(std::ostream& in, const I& output)
+	static bool write(std::ostream&, const I&)
 	{ return false; }
-      };
-
-      /*------------------.
-      | pnm_write_header2d |
-      `------------------*/
-
-      // FIXME: should be in a .cc file ?
-      static bool pnm_write_header2d(std::ostream& s, 
-				     char type, 
-				     const pnm2d_info& info)
-      {
-	s.put('P'); s.put(type); s.put('\n');
-	s << "# Creator: OLENA / Epita-LRDE" << std::endl
-	  << info.cols << ' ' << info.rows << std::endl;
-
-	if (info.max_val >= 0)
-	  s << info.max_val << std::endl;
-	return true;
-      }
-
-      /*--------------------.
-      | pnm_writer (Binary) |
-      `--------------------*/
-
-      template <writer_id W, class I>
-      struct pnm_writer<W, 2, PnmBinary, I>
-      {
-	static const char pnm_id = (W == WritePnmPlain) ? '1' : '4';
-
-	static std::string name()
-	{ 
-	  static const std::string _name("pnm/P");
-	  return _name + pnm_id;
-	}
-	
-	static bool knows_ext(const std::string& ext)
-	{ 
-	  if (W == WritePnmPlain)
-	    return (ext == "ppbm") || (ext == "pbm");
-	  return ext == "pbm";
-	}
-
-	static bool write(std::ostream& out, const I& im)
-	{
-	  pnm2d_info info;
-	  info.cols = im.ncols();
-	  info.rows = im.nrows();
-	  info.max_val = -1;
-
-	  if (!pnm_write_header2d(out, pnm_id, info))
-	    return false;
-
-	  if (!pnm_write_data<PnmBinary, W>::write(out, im, info))
-	    ; // std::clog << "Unable to write data!" << std::endl;
-	  return true;
-	}
-      };
-
-      /*---------------------.
-      | pnm_writer (Integer) |
-      `---------------------*/
-
-      template <writer_id W, class I>
-      struct pnm_writer<W, 2, PnmInteger, I>
-      {
-	static const char pnm_id = (W == WritePnmPlain) ? '2' : '5';
-
-	static std::string name()
-	{ 
-	  static const std::string _name("pnm/P");	  
-	  return _name + pnm_id;
-	}
-
-	static bool knows_ext(const std::string& ext)
-	{ 
-	  if (W == WritePnmPlain)
-	    return (ext == "ppgm") || (ext == "pgm");
-	  return ext == "pgm";
-	}
-
-	static bool write(std::ostream& out, const I& im)
-	{
-	  if (ntg_max_val(Value(I)) > ntg::to_ntg(65535U))
-	    return false;
-
-	  pnm2d_info info;
-	  info.cols = im.ncols();
-	  info.rows = im.nrows();
-	  oln::utils::f_minmax<Value(I)> f;
-	  traverse(f, im);
-	  info.max_val = f.max();
-
-	  if (!pnm_write_header2d(out, pnm_id, info))
-	    return false;
-
-	  if (!pnm_write_data<PnmInteger, W>::write(out, im, info))
-	    ; // std::clog << "Unable to write data!" << std::endl;
-	  return true;
-	}
-      };
-
-      /*-----------------------.
-      | pnm_writer (Vectorial) |
-      `-----------------------*/
-
-      template <writer_id W, class I>
-      struct pnm_writer<W, 2, PnmVectorial, I>
-      {
-	static const char pnm_id = (W == WritePnmPlain) ? '3' : '6';
-
-	static std::string name()
-	{ 
-	  static const std::string _name("pnm/P");
-	  return _name + pnm_id;
-	}
-
-	static bool knows_ext(const std::string& ext)
-	{ 
-	  if (W == WritePnmPlain)
-	    return (ext == "pppm") || (ext == "ppm");
-	  return ext == "ppm";
-	}
-
-	static bool write(std::ostream& out, const I& im)
-	{
-	  typedef ntg_comp_type(Value(I)) comp_type;
-	  
-	  if (!ntg_is_a(comp_type, ntg::unsigned_integer)::ret)
-	    return false;
-	  
-	  if (ntg_nb_comp(Value(I)) != 3)
-	    return false;
-	  
-	  if (ntg_max_val(comp_type) > ntg::to_ntg(65535U))
-	    return false;
-
-	  pnm2d_info info;
-	  info.cols = im.ncols();
-	  info.rows = im.nrows();
-	  info.max_val = ntg_max_val(comp_type);
-	  
-	  if (!pnm_write_header2d(out, pnm_id, info))
-	    return false;
-	  
-	  if (!pnm_write_data<PnmVectorial, W>::write(out, im, info))
-	    ; // std::clog << "Unable to write data!" << std::endl;
-	  return true;
-	}
       };
 
       /*-----------------.
@@ -211,18 +59,19 @@ namespace oln {
       `-----------------*/
 
       template <class I>
-      struct writer<WritePnmPlain, I> 
+      struct image_writer<WritePnmPlain, I> 
 	: public pnm_writer<WritePnmPlain, I::dim, get_pnm_type<I>::ret, I>
       {};
 
       template <class I>
-      struct writer<WritePnmRaw, I> 
+      struct image_writer<WritePnmRaw, I> 
 	: public pnm_writer<WritePnmRaw, I::dim, get_pnm_type<I>::ret, I>
       {};
       
-
     } // internal
+
   } // io
+
 } // oln
 
 

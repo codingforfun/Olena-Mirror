@@ -52,7 +52,7 @@ namespace oln {
       // Default reader
       
       template<reader_id F, class I>
-      struct reader
+      struct image_reader
       {
 	static const std::string& name()
 	{ static const std::string _name("-"); return _name; }
@@ -77,7 +77,7 @@ namespace oln {
       // Default writer
       
       template<writer_id F, class I>
-      struct writer
+      struct image_writer
       {
 	static const std::string& name()
 	{ static const std::string _name("-"); return _name; }

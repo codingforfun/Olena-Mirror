@@ -27,7 +27,7 @@
 // Public License.
 
 #ifndef OLENA_TOPO_INTER_PIXEL_BKD_DIR_ITERHH
-# define OLENA_TOPO_INTER_PIXEL_INTERNAL_BKD_DIR_ITER_HH
+# define OLENA_TOPO_INTER_PIXEL_BKD_DIR_ITER_HH
 
 # include <oln/core/abstract/iter.hh>
 # include <oln/topo/inter-pixel/internal/dir-iter.hh>
@@ -68,7 +68,7 @@ namespace oln {
 
 	template<class U> U operator=(U u) { return super::operator=(u); }
 
-	dir_t next() { return internal::dir_traits<Dim>::prev(_cur); }
+	dir_t next() { return internal::dir_traits<Dim>::prev(this->_cur); }
 
 	dir_t begin() { return _begin; }
 

@@ -191,7 +191,9 @@ namespace oln {
 
 	  internal::labels<unsigned>::substitute(l2, l1);
 
-	  cc.merge(l1, l2);
+	  // FIXME: don't know how to fix this -- burrus_n
+	  // cc.merge(l1, l2);
+	  assert(0);
 	}
 
 	//

@@ -285,8 +285,8 @@ template<class E> inline const E& mlc_hierarchy::any<E>::self() const
 { return static_cast<E&>(*this); }
 
 # define Exact(Type) \
-typename mlc::exact<Type>::ret
-#define Exact_(Type) mlc::exact<Type>::ret
+typename mlc::exact< Type >::ret
+#define Exact_(Type) mlc::exact< Type >::ret
 
 # define Exact_ptr(Type, Var)			\
 typedef Exact(Type##_) Type;			\
@@ -295,7 +295,7 @@ Type * Var = to_exact(_##Var);
 # define Exact_cptr(Type, Var)			\
 typedef Exact(Type##_) Type;			\
 const Type * Var = to_exact(_##Var);
-							\
+
 # define Exact_ref(Type, Var)			\
 typedef Exact(Type##_) Type;			\
 Type & Var = to_exact(_##Var);

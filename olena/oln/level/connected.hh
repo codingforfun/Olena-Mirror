@@ -77,7 +77,7 @@ namespace oln {
 	{
 	  if (input[p] == true)
 	    {
-	      typedef typename get_se<N::dim>::ret E;
+	      typedef typename abstract::neighborhood<N>::win_type E;
 	      E se_plus = morpho::get_plus_se_only(convert::ng_to_se(Ng));
 	      Neighb(E) p_prime(se_plus, p);
 	      bool all_zero = true;

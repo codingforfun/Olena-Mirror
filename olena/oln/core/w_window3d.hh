@@ -28,6 +28,7 @@
 #ifndef OLENA_CORE_W_WINDOW3D_HH
 # define OLENA_CORE_W_WINDOW3D_HH
 
+# include <ntg/basics.hh>
 # include <oln/core/abstract/w_windownd.hh>
 # include <oln/core/accum.hh>
 # include <oln/core/winiter.hh>
@@ -92,7 +93,7 @@ namespace oln {
     }
 
     static std::string name() { return std::string("w_window3d")
-				       + T::name() + ">"; }
+				       + ntg_name(T) + ">"; }
 
   protected:
 

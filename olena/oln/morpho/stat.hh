@@ -104,7 +104,7 @@ namespace oln {
     } // internal
 
     template<class I, class E>
-    Value(I) max(const abstract::image<I>& input,
+    Value(I) max(const abstract::non_vectorial_image<I>& input,
 		 const Exact(I)::point_type& p,
 		 const abstract::struct_elt<E>& se)
     {
@@ -113,7 +113,7 @@ namespace oln {
     }
 
     template<class I, class E>
-    Value(I) min(const abstract::image<I>& input,
+    Value(I) min(const abstract::non_vectorial_image<I>& input,
 		 const Exact(I)::point_type& p,
 		 //		 const Exact(I)::iter_type& p,
 		 const abstract::struct_elt<E>& se)

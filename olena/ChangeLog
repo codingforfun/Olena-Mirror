@@ -1,3 +1,151 @@
+2003-08-04  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/window1d.hh, oln/core/window2d.hh,
+	oln/core/window3d.hh, oln/core/abstract/window.hh: Remove get_se.
+
+	* oln/convert/conversion_ng_se.hh, 
+	oln/level/connected.hh,
+	oln/morpho/reconstruction.hh: Adapt in consequence.
+
+	* oln/core/abstract/w_window.hh: Add add(dp) with default weight
+	to 1. Fix interface. Remove Weight(WinType) macro. Add inter() and
+	uni() functions.
+
+	* oln/core/abstract/struct_elt.hh,
+	oln/morpho/fast_morpho.hxx, 
+	oln/morpho/hit_or_miss.inc: Minor change.
+	
+2003-08-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/topo/dmap.hxx: Fix compilation with g++-3.4.
+	* oln/transforms/dwt.hh: Likewise.
+	* oln/transforms/wavelet_coeffs.hh: Likewise.
+	* oln/transforms/fft.hh: Likewise.
+	* oln/topo/combinatorial-map/internal/cmap-functor.hh: Likewise.
+	* oln/topo/combinatorial-map/cmap.hh: Likewise.
+	* oln/topo/inter-pixel/fwd-dir-iter.hh: Likewise.
+	* oln/topo/inter-pixel/bkd-dir-iter.hh: Likewise.
+	* oln/core/abstract/image_with_type.hh: Likewise.
+	* oln/convert/abstract/conversion.hh: Likewise.
+	* oln/core/winiter.hh: Likewise.
+	
+	* oln/core/abstract/window_base.hh: Fix compilation with icc.
+	
+2003-08-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* oln/core/abstract/image_with_dim.hh: Inherit from abstract::image.
+	* oln/core/abstract/image_with_impl.h:: Inherit from image_with_type.
+	* oln/core/abstract/image_with_type.hh: Inherit from
+	image_with_dim. Add label images (binary_image, etc.).
+	* tests/core/tests/label_images: New test.
+	
+	* oln/core/image.hh: Invert Dim and Exact template parameters.
+	* oln/core/image1d.hh: Adjust consequently.
+	* oln/core/image2d.hh: Likewise.
+	* oln/core/image3d.hh: Likewise.
+
+	* oln/utils/histogram.hh: Check if the given data type is valid.
+	* oln/morpho/closing.inc: Take non_vectorial_image instead of image.
+        * oln/morpho/dilation.hh: Likewise.
+        * oln/morpho/erosion.hh: Likewise.
+        * oln/morpho/extrema.hxx: Likewise.
+        * oln/morpho/extrema_killer.hh: Likewise.
+        * oln/morpho/fast_morpho.hh: Likewise.
+        * oln/morpho/fast_morpho.hxx: Likewise.
+        * oln/morpho/geodesic_dilation.hh: Likewise.
+        * oln/morpho/geodesic_erosion.hh: Likewise.
+        * oln/morpho/gradient.inc: Likewise.
+        * oln/morpho/hit_or_miss.inc: Likewise.
+        * oln/morpho/laplacian.inc: Likewise.
+        * oln/morpho/opening.inc: Likewise.
+        * oln/morpho/reconstruction.hh: Likewise.
+        * oln/morpho/stat.hh: Likewise.
+        * oln/morpho/thickening.inc: Likewise.
+        * oln/morpho/thinning.inc: Likewise.
+        * oln/morpho/top_hat.inc: Likewise.
+        * oln/morpho/watershed.hh: Likewise.
+        * oln/morpho/watershed.hxx: Likewise.
+        * oln/morpho/attribute_closing_opening.hh: Likewise.
+	
+2003-08-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/core/w_window1d.hh: Fix name() call.
+	* oln/core/w_window2d.hh: Likewise.
+	* oln/core/w_window3d.hh: Likewise.
+	
+2003-08-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* tests/io/loadsave.hh (compare): Handle neighborhoods.
+	* tests/io/Makefile.am: Update.
+
+2003-08-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/io/se_window.hh: Handle 1d and 3d windows.
+	* oln/io/pnm_read_3d.hh: Fix wrong images detection.
+	* tests/io/loadsave.hh: Fix compare.
+
+	* tests/io/tests/se_1d: New test.
+	* tests/io/tests/se_3d: Likewise.
+	* img/wrong_3d.pbm: New image.
+	* img/se_3d.pbm: Likewise.
+	* img/se_1d.pbm: Likewise.
+	* img/se9_1d.pbm: Likewise.
+
+2003-08-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* tests/convol/tests/sobel_gradient: Add an abort tag.
+	* tests/core/tests/image_list: New test.
+
+	Add i/o support for 3d images.
+	
+	* oln/io/pnm_read3d.hxx: Rename as...
+	* oln/io/pnm_read_3d.hh: ...this. Rewrite.
+	* oln/io/pnm_write3d.hxx: Rename as...
+	* oln/io/pnm_write_3d.hh: ...this. Rewrite.
+	* oln/io/pnm_read.hh: Move 2d handling...
+	* oln/io/pnm_read_2d.hh: ...here. New.
+	* oln/io/pnm_write.hh: Move 2d handling...
+	* oln/io/pnm_write_2d.hh: ...here. New.
+	* oln/io/pnm3d.hh: Remove.
+	
+	* oln/io/readable.hh: Don't exit on failure.
+	* oln/io/pnm_write_data.hh: Minor fix.
+
+	* oln/io/image_base.hh: Minor fix.
+	* oln/io/image_read.hh: Fix includes.
+	* oln/io/image_write.hh: Fix includes.
+	* oln/basics3d.hh: Ajust.
+	* oln/core/image1d.hh: Enable i/o constructor.
+	* oln/core/image3d.hh: Likewise.
+	* tests/io/Makefile.am: Adjust.
+	
+	* tests/io/tests/3d: New test.
+	* img/lena3d.ppm: New image.
+	* img/Makefile.am: Adjust.
+
+2003-08-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/basics1d.hh: Fix includes.
+
+	* oln/core/image1d.hh(name): Fix.
+	* oln/core/image_with_impl.hh: Fix method visibility.
+
+	* oln/io/image_read.hh: Handle mono-dimensional images.
+	* oln/io/image_write.hh: Likewise.
+
+	* img/lena1d.ppm: New image.
+	* img/Makefile.am: Adjust.
+	* tests/io/tests/1d: New test.
+	
+2003-08-01  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
+
+	* tests/math/tests/macros: New test.
+	* tests/math/Makefile.am: Adjust.
+
+	* oln/math/macros.hh: Fix bugs.
+
+	* tests/utils/tests/timer: Fix extra include files.
+
 2003-08-01  David Lesage  <david@lrde.epita.fr>
 
 	* oln/utils/histogram.hh: Fix. Remove last Exact_cref.
@@ -9,15 +157,15 @@
 	* tests/io/Makefile.am (EXTRA_DIST): Distribute loadsave.hh.
 
 2003-08-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	Reorganize the testsuite.
 
 	* tests/check/Makefile.runtests: New.
 	* tests/check/Makefile.am: Adjust.
 	* tests/check/Makefile.flags: Likewise.
 	* tests/check/Makefile.check: Likewise.
-	
-	* tests/arith/runtests: Remove.	
+
+	* tests/arith/runtests: Remove.
 	* tests/arith/Makefile.am: Adjust.
 
 	* tests/core/runtests: Remove.
@@ -32,7 +180,7 @@
 	tests/convol/tests/slow_sum_2d_2.
 	* tests/convol/sobel_gradient.cc: Rename as
 	tests/convol/tests/sobel_gradient.
-		
+
 	* tests/io/Makefile.am: Use runtests.
 	* tests/io/2d.cc: Rename as...
 	* tests/io/tests/2d: ...this.
@@ -53,10 +201,10 @@
 	* tests/level/invert.cc: Rename as...
 	* tests/level/tests/invert: ...this.
 	* tests/level/set_level.cc: Rename as...
-	* tests/level/tests/set_level: ...this.	
+	* tests/level/tests/set_level: ...this.
 	* tests/level/threshold.cc: Rename as...
-	* tests/level/tests/threshold: ...this.		
-	
+	* tests/level/tests/threshold: ...this.
+
 	* tests/morpho/Makefile.am: Use runtests.
 	* tests/morpho/edoc.cc: Rename as...
 	* tests/morpho/tests/edoc: ...this.
@@ -69,7 +217,7 @@
 	* tests/topo/test-cmap.cc: Rename as...
 	* tests/topo/tests/test-cmap: ...this.
 	* tests/topo/test-dmap.cc: Rename as...
-	* tests/topo/tests/test-dcmap: ...this.	
+	* tests/topo/tests/test-dcmap: ...this.
 	* tests/topo/test-inter-pixel.cc: Rename as...
 	* tests/topo/tests/test-inter-pixel: ...this.
 	* tests/topo/test-tarjan.cc: Rename as...
@@ -80,7 +228,7 @@
 	* tests/transforms/tests/dwt: ...this.
 	* tests/transforms/fft.cc: Rename as...
 	* tests/transforms/tests/fft: ...this.
-	
+
 	* tests/utils/Makefile.am: Use runtests.
 	* tests/utils/histogram.cc: Rename as...
 	* tests/utils/tests/histogram: ...this.
@@ -88,9 +236,9 @@
 	* tests/utils/tests/stat: ...this.
 	* tests/utils/timer.cc: Rename as...
 	* tests/utils/tests/timer: ...this.
-	
+
 2003-08-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* tests/check/Makefile.flags: Add new flags.
 	* tests/arith/Makefile.am: Adjust.
 	* tests/core/Makefile.am: Likewise.
@@ -107,9 +255,9 @@
 	public.
 
 	* oln/Makefile.am: Add missing files.
-	
+
 	* tests/check/Makefile.flags: Minor fix.
-	
+
 2003-07-31  Giovanni Palma  <palma_g@lrde.epita.fr>
 
 	* oln/morpho/gradient.inc,
@@ -282,7 +430,7 @@
 
 	* oln/utils/timer.hh: Change namespace.
 	* oln/utils/histogram.hh: Remove exact_cref.
-	
+
 	* tests/utils/timer.cc: New test.
 	* tests/utils/stat.cc: Likewise.
 	* tests/utils/histogram.cc: Likewise.

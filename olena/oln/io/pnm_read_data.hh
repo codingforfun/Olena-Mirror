@@ -180,7 +180,7 @@ namespace oln {
 	      in >> tmp; output[it][0] = tmp;
 	      in >> tmp; output[it][1] = tmp;
 	      in >> tmp; output[it][2] = tmp;
-	    }
+	    }	  
 	  return true;
 	}
       };

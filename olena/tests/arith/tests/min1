@@ -1,3 +1,5 @@
+//								    -*- c++ -*-
+
 #include <oln/basics2d.hh>
 #include <oln/arith/ops.hh>
 #include <ntg/all.hh>

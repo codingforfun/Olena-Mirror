@@ -29,6 +29,8 @@
 # define OLENA_CORE_WINITER_HH
 
 # include <mlc/objs.hh>
+# include <oln/core/abstract/iter.hh>
+
 # include <string>
 
 namespace oln {

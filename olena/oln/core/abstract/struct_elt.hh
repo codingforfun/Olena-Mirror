@@ -84,8 +84,8 @@ namespace oln {
 	return this->exact().is_centered_();
       }
 
-      // FIXME: only here for convenience (see morpho algorithms),
-      // should not work with w_windows
+      // FIXME: here for convenience (see morpho algorithms),
+      // work with w_windows (associate a default weight set to 1)
       exact_type& add(const abstract::dpoint<dpoint_type>& dp)
       {
 	return this->exact().add_dp(dp);

@@ -1,0 +1,15 @@
+//								    -*- c++ -*-
+
+#include <oln/basics2d.hh>
+
+#include <list>
+
+using namespace oln;
+using namespace ntg;
+
+int main()
+{
+  std::list<image2d<bin> > l;
+  image2d<bin> ima;
+  l.push_back(ima); // XFAIL
+}

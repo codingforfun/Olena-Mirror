@@ -1,5 +1,4 @@
 #include <ntg/int.hh>
-#include <oln/basics2d.hh>
 #include <oln/utils/timer.hh>
 
 #include <iostream>
@@ -7,9 +6,8 @@
 #include "check.hh"
 #include "data.hh"
 
-using namespace oln;
 using namespace ntg;
-using namespace utils;
+using namespace oln::utils;
 
 #define OK_OR_FAIL				\
       std::cout << "OK" << std::endl;		\

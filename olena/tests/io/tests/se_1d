@@ -1,0 +1,14 @@
+//								    -*- c++ -*-
+
+#include "loadsave.hh"
+
+bool
+check(void)
+{
+  bool fail = false;
+
+  fail |= loadsave< window1d >(rdata("se_1d"), "se_1d");
+  fail |= loadsave< window1d >(rdata("se9_1d"), "se9_1d");
+
+  return fail;
+}

@@ -42,10 +42,7 @@
 # include <oln/core/fwd_iter3d.hh>
 # include <oln/core/bkd_iter3d.hh>
 
-// FIXME: uncomment when ready
-#if 0
-# include <oln/io/basics.hh>
-# include <oln/io/pnm3d.hh>
-#endif
+# include <oln/io/image.hh>
+# include <oln/io/se.hh>
 
 #endif // ! OLENA_BASICS3D_HH

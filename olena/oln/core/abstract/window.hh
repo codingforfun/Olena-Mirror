@@ -57,26 +57,24 @@ namespace oln
       typedef struct_elt<Exact> super_type;
       typedef Exact exact_type;      
       typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
+      friend class struct_elt<exact_type>;
 
       static std::string name()
       {
 	return std::string("window<") + Exact::name() + ">";
       }
 
+    protected:
+
       exact_type& add_dp(const abstract::dpoint<dpoint_type>& dp)
       {
 	return this->exact().add_(dp.exact());
       }
 
-    protected:
       window() : super_type() {}
     };
 
   } // end of abstract
-
-  template<int N>
-  struct get_se
-  {};
 
   template<class E>
   inline

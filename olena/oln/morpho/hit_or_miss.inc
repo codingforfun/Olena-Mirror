@@ -34,7 +34,7 @@
  * ns: morpho, morpho::fast
  * what: Hit_or_Miss Transform.
  * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
- * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se1, IN, structural element
  * arg: const abstract::struct_elt<E>&, se2, IN, structural element
  * ret: typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
@@ -63,17 +63,16 @@
 template<class C, class B, class I, class E1, class E2>
 typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
 hit_or_miss(const convert::abstract::conversion<C, B>& c,
-	    const abstract::image<I>& input,
+	    const abstract::non_vectorial_image<I>& input,
 	    const abstract::struct_elt<E1>& se1,
 	    const abstract::struct_elt<E2>& se2)
 {
   mlc::eq<I::dim, E1::dim>::ensure();
   mlc::eq<E1::dim, E2::dim>::ensure();
 
-  // FIXME: call inter on struct elts, even if w_windows do not provide it
+  // FIXME: call inter on w_windows destroys weights
   precondition(inter(to_exact(se1), to_exact(se2)).card() == 0);
   // FIXME: max(coord, coord) does not exist.
-  //  border::adapt_copy(input, min(se1.delta() , se2.delta()));
   input.border_adapt_copy((se1.delta() > se2.delta()) ?
 			  se1.delta() : se2.delta());
 
@@ -84,13 +83,13 @@ hit_or_miss(const convert::abstract::conversion<C, B>& c,
 
 /*=processingoverload hit_or_miss
  * ns: morpho, morpho::fast
- * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se1, IN, structural element
  * arg: const abstract::struct_elt<E>&, se2, IN, structural element
  * ret: Concrete(I)
 =*/
 template<class I, class E1, class E2>
-Concrete(I) hit_or_miss(const abstract::image<I>& input,
+Concrete(I) hit_or_miss(const abstract::non_vectorial_image<I>& input,
 			const abstract::struct_elt<E1>& se1,
 			const abstract::struct_elt<E2>& se2)
 {
@@ -106,7 +105,7 @@ Concrete(I) hit_or_miss(const abstract::image<I>& input,
 /*=processing hit_or_miss_opening
  * ns: morpho, morpho::fast
  * what: Hit_or_Miss opening.
- * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se1, IN, structural element
  * arg: const abstract::struct_elt<E>&, se2, IN, structural element
  * ret: Concrete(I)
@@ -135,11 +134,11 @@ Concrete(I) hit_or_miss(const abstract::image<I>& input,
  * exo: out.pbm
 =*/
 template<class I, class E1, class E2>
-Concrete(I) hit_or_miss_opening(const abstract::image<I>& input,
+Concrete(I) hit_or_miss_opening(const abstract::non_vectorial_image<I>& input,
 				const abstract::struct_elt<E1>& se1,
 				const abstract::struct_elt<E2>& se2)
 {
-  // FIXME: call inter on struct elts, even if w_windows do not provide it
+  // FIXME: call inter on w_windows destroys weights
   precondition(inter(to_exact(se1), to_exact(se2)).card() == 0);
   return dilation(hit_or_miss(input, se1, se2), -se1);
 }
@@ -147,7 +146,7 @@ Concrete(I) hit_or_miss_opening(const abstract::image<I>& input,
 /*=processing hit_or_miss_opening_bg
  * ns: morpho, morpho::fast
  * what: Hit_or_Miss opening of background.
- * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se1, IN, structural element
  * arg: const abstract::struct_elt<E>&, se2, IN, structural element
  * ret: Concrete(I)
@@ -177,7 +176,7 @@ Concrete(I) hit_or_miss_opening(const abstract::image<I>& input,
  * exo: out.pbm
 =*/
 template<class I, class E1, class E2>
-Concrete(I) hit_or_miss_opening_bg(const abstract::image<I>& input,
+Concrete(I) hit_or_miss_opening_bg(const abstract::non_vectorial_image<I>& input,
 				   const abstract::struct_elt<E1>& se1,
 				   const abstract::struct_elt<E2>& se2)
 {
@@ -193,7 +192,7 @@ Concrete(I) hit_or_miss_opening_bg(const abstract::image<I>& input,
 /*=processing hit_or_miss_closing
  * ns: morpho, morpho::fast
  * what: Hit_or_Miss closing.
- * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se1, IN, structural element
  * arg: const abstract::struct_elt<E>&, se2, IN, structural element
  * ret: Concrete(I)
@@ -224,7 +223,7 @@ Concrete(I) hit_or_miss_opening_bg(const abstract::image<I>& input,
  * exo: out.pbm
 =*/
 template<class I, class E1, class E2>
-Concrete(I) hit_or_miss_closing(const abstract::image<I>& input,
+Concrete(I) hit_or_miss_closing(const abstract::non_vectorial_image<I>& input,
 				const abstract::struct_elt<E1>& se1,
 				const abstract::struct_elt<E2>& se2)
 {
@@ -237,7 +236,7 @@ Concrete(I) hit_or_miss_closing(const abstract::image<I>& input,
 /*=processing hit_or_miss_closing_bg
  * ns: morpho, morpho::fast
  * what: Hit_or_Miss closing of background.
- * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se1, IN, structural element
  * arg: const abstract::struct_elt<E>&, se2, IN, structural element
  * ret: Concrete(I)
@@ -268,7 +267,7 @@ Concrete(I) hit_or_miss_closing(const abstract::image<I>& input,
  * exo: out.pbm
 =*/
 template<class I, class E1, class E2>
-Concrete(I) hit_or_miss_closing_bg(const abstract::image<I>& input,
+Concrete(I) hit_or_miss_closing_bg(const abstract::non_vectorial_image<I>& input,
 				   const abstract::struct_elt<E1>& se1,
 				   const abstract::struct_elt<E2>& se2)
 {

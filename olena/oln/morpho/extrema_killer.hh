@@ -50,7 +50,7 @@ namespace oln {
 
     template<class I, class N>
     typename mute<I, ntg::bin>::ret
-    internal_kill_cc_area(const abstract::image<I>& input,
+    internal_kill_cc_area(const abstract::non_vectorial_image<I>& input,
 			  const unsigned int area,
 			  const abstract::neighborhood<N>& Ng)
     {
@@ -84,7 +84,7 @@ namespace oln {
     /*=processing sure_maxima_killer
      * ns: morpho
      * what: Maxima killer.
-     * arg: const abstract::image<I1>&, marker, IN, marker image
+     * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
      * arg: const unsigned int area, area, IN, area
      * arg: const abstract::struct_elt<E>&, se, IN, structural element
      * ret: Concrete(I1)
@@ -101,7 +101,7 @@ namespace oln {
      * wontcompile: fixme
      =*/
     template<class I, class N>
-    Concrete(I) sure_maxima_killer(const abstract::image<I>& input,
+    Concrete(I) sure_maxima_killer(const abstract::non_vectorial_image<I>& input,
 				   const unsigned int area,
 				   const abstract::neighborhood<N>& Ng)
     {
@@ -139,7 +139,7 @@ namespace oln {
     /*=processing sure_minima_killer
      * ns: morpho
      * what: Minima killer.
-     * arg: const abstract::image<I1>&, marker, IN, marker image
+     * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
      * arg: const unsigned int area, area, IN, area
      * arg: const abstract::struct_elt<E>&, se, IN, structural element
      * ret: Concrete(I1)
@@ -156,7 +156,7 @@ namespace oln {
      * wontcompile: fixme
      =*/
     template<class I, class N>
-    image2d<ntg::int_u8> sure_minima_killer(const abstract::image<I>& input,
+    image2d<ntg::int_u8> sure_minima_killer(const abstract::non_vectorial_image<I>& input,
 				       const unsigned int area,
 				       const abstract::neighborhood<N>& Ng)
     {
@@ -200,7 +200,7 @@ namespace oln {
     //    inline
     static
     bool is_a_strict_minimum(const abstract::point<P>& p,
-			     const abstract::image<I>& input,
+			     const abstract::non_vectorial_image<I>& input,
 			     const abstract::neighborhood<N>& Ng)
     {
       mlc::eq<I::dim, N::dim>::ensure();
@@ -224,7 +224,7 @@ namespace oln {
     // inline
     static
     bool is_a_strict_maximum(const abstract::point<P>& p,
-			     const abstract::image<I>& input,
+			     const abstract::non_vectorial_image<I>& input,
 			     const abstract::neighborhood<N>& Ng)
     {
       mlc::eq<I::dim, N::dim>::ensure();
@@ -248,7 +248,7 @@ namespace oln {
     /*=processing fast_minima_killer
      * ns: morpho
      * what: Minima killer.
-     * arg: const abstract::image<I1>&, marker, IN, marker image
+     * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
      * arg: const unsigned int area, area, IN, area
      * arg: const abstract::neighborhood<N>&, Ng, IN, neighboorhood
      * ret: Concrete(I1)
@@ -266,7 +266,7 @@ namespace oln {
      =*/
     // Guichard and Morel, Image iterative smoothing and PDE's. Book in preparation. p 265.
     template<class I, class N>
-    Concrete(I) fast_minima_killer(const abstract::image<I>& input,
+    Concrete(I) fast_minima_killer(const abstract::non_vectorial_image<I>& input,
 				   const unsigned int area,
 				   const abstract::neighborhood<N>& Ng)
     {
@@ -353,7 +353,7 @@ namespace oln {
     /*=processing fast_maxima_killer
      * ns: morpho
      * what: Maxima killer.
-     * arg: const abstract::image<I1>&, marker, IN, marker image
+     * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
      * arg: const unsigned int area, area, IN, area
      * arg: const abstract::neighborhood<N>&, Ng, IN, neighboorhood
      * ret: Concrete(I1)
@@ -370,7 +370,7 @@ namespace oln {
      =*/
     // Guichard and Morel, Image iterative smoothing and PDE's. Book in preparation. p 265.
     template<class I, class N>
-    Concrete(I) fast_maxima_killer(const abstract::image<I>& input,
+    Concrete(I) fast_maxima_killer(const abstract::non_vectorial_image<I>& input,
 				   const unsigned int area,
 				   const abstract::neighborhood<N>& Ng)
     {

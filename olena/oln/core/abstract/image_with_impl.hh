@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_ABSTRACT_IMAGE_WITH_IMPL_HH
 # define OLENA_CORE_ABSTRACT_IMAGE_WITH_IMPL_HH
 
-# include <oln/core/abstract/image_with_dim.hh>
+# include <oln/core/abstract/image_with_type.hh>
 # include <oln/core/impl/image_impl.hh>
 
 namespace oln {
@@ -41,8 +41,8 @@ namespace oln {
   } // end of namespace abstract
 
     template<class Impl, class Exact>
-    struct image_traits<abstract::image_with_impl<Impl, Exact> >: 
-    public image_traits<abstract::image_with_dim<image_id<Exact>::dim, Exact> >
+    struct image_traits<abstract::image_with_impl<Impl, Exact> > 
+      : public image_traits<abstract::image_with_type<typename image_id<Exact>::value_type, Exact> >
     {
       typedef Impl impl_type;
     };
@@ -52,7 +52,7 @@ namespace oln {
 
     template<class Impl, class Exact>
     class image_with_impl: 
-      public image_with_dim<image_id<Exact>::dim, Exact>
+      public image_with_type<typename image_id<Exact>::value_type, Exact>
     {
     public:
       typedef typename image_traits<Exact>::point_type point_type;
@@ -65,9 +65,10 @@ namespace oln {
       
       typedef image_with_impl<Impl, Exact> self_type;
       typedef Exact exact_type;
-      typedef image_with_dim<image_id<Exact>::dim, Exact> super_type;
+      typedef image_with_type<typename image_id<Exact>::value_type, Exact> super_type;
 
       friend class image<exact_type>;
+      friend class super_type;
 
       // shallow copy
       image_with_impl(self_type& rhs) 
@@ -157,6 +158,7 @@ namespace oln {
     };
 
   } // end of namespace abstract
+
 } // end of namespace oln
 
 #endif // ! OLENA_CORE_ABSTRACT_IMAGE_WITH_IMPL_HH

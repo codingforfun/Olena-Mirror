@@ -32,7 +32,7 @@
  * ns: morpho, morpho::fast
  * what: White top hat.
  * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
- * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
  * doc:
@@ -48,7 +48,7 @@
 template<class C, class B, class I, class E>
 typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
 white_top_hat(const convert::abstract::conversion<C, B>& c,
-	      const abstract::image<I>& input,
+	      const abstract::non_vectorial_image<I>& input,
 	      const abstract::struct_elt<E>& se)
 {
   return arith::minus(c, input, opening(input, se));
@@ -57,12 +57,12 @@ white_top_hat(const convert::abstract::conversion<C, B>& c,
 /*=processingoverload white_top_hat
  * ns: morpho, morpho::fast
  * what: White top hat.
- * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: Concrete(I)
 =*/
 template<class I, class E>
-Concrete(I) white_top_hat(const abstract::image<I>& input,
+Concrete(I) white_top_hat(const abstract::non_vectorial_image<I>& input,
 			  const abstract::struct_elt<E>& se)
 {
   return white_top_hat(convert::force<Value(I)>(), input, se);
@@ -75,7 +75,7 @@ Concrete(I) white_top_hat(const abstract::image<I>& input,
  * ns: morpho, morpho::fast
  * what: Black top hat.
  * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
- * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
  * doc:
@@ -91,7 +91,7 @@ Concrete(I) white_top_hat(const abstract::image<I>& input,
 template<class C, class B, class I, class E>
 typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
 black_top_hat(const convert::abstract::conversion<C, B>& c,
-	      const abstract::image<I>& input,
+	      const abstract::non_vectorial_image<I>& input,
 	      const abstract::struct_elt<E>& se)
 {
   return arith::minus(c, closing(input, se), input);
@@ -101,12 +101,12 @@ black_top_hat(const convert::abstract::conversion<C, B>& c,
 /*=processingoverload balck_top_hat
  * ns: morpho, morpho::fast
  * what: Black top hat.
- * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
 =*/
 template<class I, class E>
-Concrete(I) black_top_hat(const abstract::image<I>& input,
+Concrete(I) black_top_hat(const abstract::non_vectorial_image<I>& input,
 			  const abstract::struct_elt<E>& se)
 {
   return black_top_hat(convert::force<Value(I)>(), input, se);
@@ -122,7 +122,7 @@ Concrete(I) black_top_hat(const abstract::image<I>& input,
  * ns: morpho, morpho::fast
  * what: Self complementary top hat.
  * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
- * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
  * doc:
@@ -140,7 +140,7 @@ Concrete(I) black_top_hat(const abstract::image<I>& input,
 template<class C, class B, class I, class E>
 typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
 self_complementary_top_hat(const convert::abstract::conversion<C, B>& c,
-			   const abstract::image<I>& input,
+			   const abstract::non_vectorial_image<I>& input,
 			   const abstract::struct_elt<E>& se)
 {
   return arith::minus(c, closing(input, se), opening(input, se));
@@ -149,12 +149,12 @@ self_complementary_top_hat(const convert::abstract::conversion<C, B>& c,
 /*=processingoverload self_complementary_top_hat
  * ns: morpho, morpho::fast
  * what: Self complementary top hat.
- * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
 =*/
 template<class I, class E>
-Concrete(I) self_complementary_top_hat(const abstract::image<I>& input,
+Concrete(I) self_complementary_top_hat(const abstract::non_vectorial_image<I>& input,
 				       const abstract::struct_elt<E>& se)
 {
   return self_complementary_top_hat(convert::force<Value(I)>(), input, se);
@@ -167,7 +167,7 @@ Concrete(I) self_complementary_top_hat(const abstract::image<I>& input,
  * ns: morpho, morpho::fast
  * what: Top hat contrastor operator.
  * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
- * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
  * doc:
@@ -188,7 +188,7 @@ Concrete(I) self_complementary_top_hat(const abstract::image<I>& input,
 template<class C, class B, class I, class E>
 typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
 top_hat_contrast_op(const convert::abstract::conversion<C, B>& c,
-		    const abstract::image<I>& input,
+		    const abstract::non_vectorial_image<I>& input,
 		    const abstract::struct_elt<E>& se)
 {
   return arith::plus(c,
@@ -200,12 +200,12 @@ top_hat_contrast_op(const convert::abstract::conversion<C, B>& c,
 /*=processingoverload top_hat_contrast_op
  * ns: morpho, morpho::fast
  * what: Top hat contrastor operator.
- * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
 =*/
 template<class I, class E>
-Concrete(I) top_hat_contrast_op(const abstract::image<I>& input,
+Concrete(I) top_hat_contrast_op(const abstract::non_vectorial_image<I>& input,
 				const abstract::struct_elt<E>& se)
 {
   return top_hat_contrast_op(convert::force<Value(I)>(), input, se);

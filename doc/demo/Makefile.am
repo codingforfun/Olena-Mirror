@@ -12,11 +12,12 @@ AM_LDFLAGS = $(ZLIB_LDFLAGS)
 #      the other directories).
 # So for now we'll just build these programs on `make check' and `make demo'.
 
-check_PROGRAMS = tour morpholena convol-gaussian
+check_PROGRAMS = image tour morpholena convol-gaussian
 
 .PHONY: demo
 demo: $(check_PROGRAMS)
 
+image_SOURCES = image.cc
 tour_SOURCES = tour.cc
 morpholena_SOURCES = morpholena.cc \
   morpholena-base.cc \

@@ -52,191 +52,24 @@ namespace oln {
 	static std::string name()
 	{ return "-"; }
 	
-	static bool knows_ext(const std::string& ext)
+	static bool knows_ext(const std::string&)
 	{ return false; }
 	
-	static bool read(std::istream& in, I& output)
+	static bool read(std::istream&, I&)
 	{ return false; }
       };
 
-      /*------------------.
-      | pnm_read_header2d |
-      `------------------*/
-
-      // FIXME: should be in a .cc file ?
-      static bool pnm_read_header2d(std::istream& s, 
-				    char type, 
-				    pnm2d_info& info)
-      {
-	// check magic
-	if (s.get() != 'P' ) return false;
-	if (s.get() != type) return false;
-	if (s.get() != '\n') return false;
-
-	// skip comments
-	while (s.peek() == '#')
-	  {
-	    std::string line;
-	    std::getline(s,line);
-	  }
-
-	// read size
-	s >> info.cols >> info.rows;
-	if (info.cols <= 0 || info.rows <= 0) return false;
-
-	// FIXME: it can be either '\n', 'whitespace', ..., not only '\n'!
-
-	// extract or skip maxvalue
-	if (s.get() != '\n') return false;
-	if (type != '1' && type != '4')
-	  {
-	    s >> info.max_val;
-	    if (info.max_val > 65535 || s.get() != '\n')
-	      return false;
-	  }
-	return true;
-      }
-
-      /*--------------------.
-      | pnm_reader (Binary) |
-      `--------------------*/
-
-      template <reader_id R, class I>
-      struct pnm_reader<R, 2, PnmBinary, I>
-      {
-	static const char pnm_id = (R == ReadPnmPlain) ? '1' : '4';
-
-	static std::string name()
-	{ 
-	  static const std::string _name("pnm/P");
-	  return _name + pnm_id;
-	}
-
-	static bool knows_ext(const std::string& ext)
-	{ 
-	  if (R == ReadPnmPlain)
-	    return (ext == "ppbm") || (ext == "pbm");
-	  return ext == "pbm";
-	}
-
-	static bool read(std::istream& in, I& im)
-	{
-	  pnm2d_info info;
-	  if (!pnm_read_header2d(in, pnm_id, info))
-	    return false;
-
-	  // FIXME: uncomment when ready
-	  //	  im.resize(info.rows, info.cols);
-	  im = I(info.rows, info.cols);
-
-	  pnm_read_data<PnmBinary, R>::read(in, im, info);
-	  return true;
-	}
-      };
-
-      /*---------------------.
-      | pnm_reader (Integer) |
-      `---------------------*/
-
-      template <reader_id R, class I>
-      struct pnm_reader<R, 2, PnmInteger, I>
-      {
-	static const char pnm_id = (R == ReadPnmPlain) ? '2' : '5';
-
-	static std::string name()
-	{ 
-	  static const std::string _name("pnm/P");
-	  return _name + pnm_id;
-	}
-
-	static bool knows_ext(const std::string& ext)
-	{ 
-	  if (R == ReadPnmPlain)
-	    return (ext == "ppgm") || (ext == "pgm");
-	  return ext == "pgm";
-	}
-
-	static bool read(std::istream& in, I& im)
-	{
-	  pnm2d_info info;
-	  
-	  if (!pnm_read_header2d(in, pnm_id, info))
-	    return false;
-
-	  // FIXME: uncomment when ready
-	  // im.resize(info.rows, info.cols);
-	  im = I(info.rows, info.cols);
-
-	  // Check that value type is large enough
-	  if (ntg::to_ntg(info.max_val) > ntg_max_val(Value(I)))
-	    return false;
-
-	  pnm_read_data<PnmInteger, R>::read(in, im, info);
-	  return true;
-	}
-      };
-
-      /*-----------------------.
-      | pnm_reader (Vectorial) |
-      `-----------------------*/
-
-      template <reader_id R, class I>
-      struct pnm_reader<R, 2, PnmVectorial, I>
-      {
-	static const char pnm_id = (R == ReadPnmPlain) ? '3' : '6';
-
-	static std::string name()
-	{ 
-	  static const std::string _name("pnm/P");
-	  return _name + pnm_id;
-	}
-
-	static bool knows_ext(const std::string& ext)
-	{ 
-	  if (R == ReadPnmPlain)
-	    return (ext == "pppm") || (ext == "ppm");
-	  return ext == "ppm";
-	}
-
-	static bool read(std::istream& in, I& im)
-	{
-	  pnm2d_info info;
-
-	  // Components have to be integers
-	  if (!ntg_is_a(ntg_comp_type(Value(I)), ntg::unsigned_integer)::ret)
-	    return false;
-
-	  // Must have only 3 components
-	  if (ntg_nb_comp(Value(I)) != 3)
-	    return false;
-	  
-	  if (!pnm_read_header2d(in, pnm_id, info))
-	    return false;
-
-	  // FIXME: uncomment when ready
-	  // im.resize(info.rows, info.cols);
-	  im = I(info.rows, info.cols);
-
-	  // Check that value type is large enough
-	  if (ntg::to_ntg(info.max_val) > ntg_max_val(ntg_comp_type(Value(I))))
-	    return false;
-
-	  pnm_read_data<PnmVectorial, R>::read(in, im, info);
-	  return true;
-	}
-      };
-
-      /*-------.
-      | reader |
-      `-------*/
+      /*---------------.
+      | reader for pnm |
+      `---------------*/
 
       template <class I>
-      struct reader<ReadPnmPlain, I>
+      struct image_reader<ReadPnmPlain, I>
 	: public pnm_reader<ReadPnmPlain, I::dim, get_pnm_type<I>::ret, I>
       {};
 
       template <class I>
-      struct reader<ReadPnmRaw, I>
+      struct image_reader<ReadPnmRaw, I>
 	: public pnm_reader<ReadPnmRaw, I::dim, get_pnm_type<I>::ret, I>
       {};
 

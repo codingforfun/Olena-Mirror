@@ -68,7 +68,7 @@ namespace oln {
 
 	template<class U> U operator=(U u) { return super::operator=(u); }
 
-	dir_t next() { return internal::dir_traits<Dim>::next(_cur); }
+	dir_t next() { return internal::dir_traits<Dim>::next(this->_cur); }
 
 	dir_t begin() { return _begin; }
 

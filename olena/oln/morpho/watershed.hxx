@@ -151,7 +151,8 @@ namespace oln {
       // Algorithm by Vincent and Soille
       template<class PointHandler, class DestValue, class I, class N>
       typename mute<I, DestValue>::ret
-      soille_watershed_(const abstract::image<I>& im_i, const abstract::neighborhood<N>& Ng)
+      soille_watershed_(const abstract::non_vectorial_image<I>& im_i, 
+			const abstract::neighborhood<N>& Ng)
       {
 	OLN_MORPHO_DECLARE_SOILLE_WATERSHED_CONSTS_(DestValue);
 
@@ -265,7 +266,7 @@ namespace oln {
     // Algorithm by Vincent and Soille
     template<class DestValue, class I, class N>
     typename mute<I, DestValue>::ret
-    watershed_seg(const abstract::image<I>& im_i, const abstract::neighborhood<N>& Ng)
+    watershed_seg(const abstract::non_vectorial_image<I>& im_i, const abstract::neighborhood<N>& Ng)
     {
       return internal::soille_watershed_<
 	internal::watershed_seg_point_handler_, DestValue> (im_i, Ng);
@@ -273,7 +274,7 @@ namespace oln {
 
     template<class DestValue, class I, class N>
     typename mute<I, DestValue>::ret
-    watershed_con(const abstract::image<I>& im_i, const abstract::neighborhood<N>& Ng)
+    watershed_con(const abstract::non_vectorial_image<I>& im_i, const abstract::neighborhood<N>& Ng)
     {
       return internal::soille_watershed_<
 	internal::watershed_con_point_handler_, DestValue> (im_i, Ng);
@@ -297,8 +298,8 @@ namespace oln {
     // version by D'Ornellas et al.
     template<class I1, class I2, class N> inline
     Concrete (I2)&
-    watershed_seg_or(const abstract::image<I1>& In,
-		     abstract::image<I2>& Labels,
+    watershed_seg_or(const abstract::non_vectorial_image<I1>& In,
+		     abstract::non_vectorial_image<I2>& Labels,
 		     const abstract::neighborhood<N>& Ng)
     {
 

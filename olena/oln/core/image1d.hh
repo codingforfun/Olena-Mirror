@@ -34,6 +34,7 @@
 # include <oln/core/bkd_iter1d.hh>
 # include <oln/core/impl/image_array1d.hh>
 # include <oln/core/image.hh>
+# include <oln/io/readable.hh>
 
 # include <iostream>
 # include <stdlib.h>
@@ -54,8 +55,8 @@ namespace oln {
 
   template<class T, class Exact>
   struct image_traits<image1d<T, Exact> >: 
-    public image_traits<image<typename image_id<image1d<T, Exact> >::value_type, 
-			      image_id<image1d<T, Exact> >::dim, 
+    public image_traits<image<image_id<image1d<T, Exact> >::dim, 
+			      typename image_id<image1d<T, Exact> >::value_type,
 			      typename image_id<image1d<T, Exact> >::impl_type, 
 			      typename image_id<image1d<T, Exact> >::exact_type> >
   {
@@ -67,8 +68,8 @@ namespace oln {
 
   template<class T, class Exact>
   class image1d: 
-    public image<typename image_id<image1d<T, Exact> >::value_type, 
-		 image_id<image1d<T, Exact> >::dim,
+    public image<image_id<image1d<T, Exact> >::dim,
+		 typename image_id<image1d<T, Exact> >::value_type, 
 		 typename image_id<image1d<T, Exact> >::impl_type, 
 		 typename image_id<image1d<T, Exact> >::exact_type>
   {
@@ -78,8 +79,8 @@ namespace oln {
     typedef typename image_id<image1d<T, Exact> >::value_type value_type;
     typedef typename image_id<image1d<T, Exact> >::exact_type exact_type; 
     typedef typename image_id<image1d<T, Exact> >::impl_type impl_type;
-    typedef image<value_type, 
-		  image_id<image1d<T, Exact> >::dim, 
+    typedef image<image_id<image1d<T, Exact> >::dim, 
+		  value_type,
 		  impl_type, 
 		  exact_type> super_type;
 
@@ -110,11 +111,23 @@ namespace oln {
       return this->exact().assign(rhs.exact());
     }
 
+    // io
+    image1d(const io::internal::anything& r) 
+      : super_type((impl_type*) 0)
+    {
+      r.assign(*this);
+    }
+
+    image1d& operator=(const io::internal::anything& r)
+    {
+      return r.assign(*this);
+    }
+
     static std::string name()
     {
       return
 	std::string("image1d<")
-	+ T::name() + ","
+	+ ntg_name(T) + ","
 	+ Exact::name() + ">";
     }
 

@@ -41,8 +41,6 @@
 
 namespace oln {
 
-  using namespace ntg;
-
   namespace internal {
 
     // dispatch traits for fftw
@@ -58,29 +56,29 @@ namespace oln {
       typedef fftw_real			fftw_input;
     };
 
-    template <cplx_representation R, class T>
-    struct fft_trait<cplx<R, T> >
+    template <ntg::cplx_representation R, class T>
+    struct fft_trait<ntg::cplx<R, T> >
     {
       static const fft_dispatch		which = fft_cplx;
       typedef fftw_complex		fftw_input;
     };
 
     //
-    // _fft<cplx_representation, T>
+    // _fft<ntg::cplx_representation, T>
     //
     //////////////////////////////////////
 
-    template <class T, cplx_representation R>
+    template <class T, ntg::cplx_representation R>
     class _fft
     {
     public:
 
-      const image2d<cplx<R, float_d> > transformed_image() const
+      const image2d<ntg::cplx<R, ntg::float_d> > transformed_image() const
       {
 	return trans_im;
       }
 
-      image2d<cplx<R, float_d> >& transformed_image()
+      image2d<ntg::cplx<R, ntg::float_d> >& transformed_image()
       {
 	return trans_im;
       }
@@ -100,7 +98,7 @@ namespace oln {
 			 (col + trans_im.ncols() / 2) % trans_im.ncols()).magn();
 	else
 	  {
-	    typename image2d<cplx<R, float_d> >::iter it(trans_im);
+	    typename image2d<ntg::cplx<R, ntg::float_d> >::iter it(trans_im);
 
 	    for_all(it)
 	      new_im[it] = trans_im[it].magn();
@@ -115,15 +113,15 @@ namespace oln {
       }
 
       template <class T1>
-      image2d<T1> transformed_image_clipped_magn(const float_d clip,
+      image2d<T1> transformed_image_clipped_magn(const ntg::float_d clip,
 						 bool ordered = true) const
       {
 	ntg_is_a(T1, ntg::real)::ensure();
 
 	image2d<T1> new_im(trans_im.size());
-	range<float_d, bounded_u<0, 1>, saturate> c(clip);
-	float_d max = 0;
-	typename image2d<cplx<R, float_d> >::iter_type it(trans_im);
+	ntg::range<ntg::float_d, ntg::bounded_u<0, 1>, ntg::saturate> c(clip);
+	ntg::float_d max = 0;
+	typename image2d<ntg::cplx<R, ntg::float_d> >::iter_type it(trans_im);
 
 	for_all(it)
 	  if (max < trans_im[it].magn())
@@ -157,7 +155,7 @@ namespace oln {
 	return new_im;
       }
 
-      image2d<T> transformed_image_clipped_magn(const float_d clip,
+      image2d<T> transformed_image_clipped_magn(const ntg::float_d clip,
 						bool ordered = true) const
       {
 	return transformed_image_clipped_magn<T>(clip, ordered);
@@ -176,19 +174,19 @@ namespace oln {
 
       // FIXME: Find a more elegant way to fix range interval on a and b.
       template <class T1>
-      image2d<T1> transformed_image_log_magn(const range<float_d,
-					     bounded_u<0, 1000>,
-					     saturate> a,
-					     const range<float_d,
-					     bounded_u<0, 1000>,
-					     saturate> b,
+      image2d<T1> transformed_image_log_magn(const ntg::range<ntg::float_d,
+					     ntg::bounded_u<0, 1000>,
+					     ntg::saturate> a,
+					     const ntg::range<ntg::float_d,
+					     ntg::bounded_u<0, 1000>,
+					     ntg::saturate> b,
 					     bool ordered = true) const
       {
 	ntg_is_a(T1, ntg::real)::ensure();
 
 	image2d<T1> new_im(trans_im.size());
-	float_d max = 0;
-	typename image2d<cplx<R, float_d> >::iter_type it(trans_im);
+	ntg::float_d max = 0;
+	typename image2d<ntg::cplx<R, ntg::float_d> >::iter_type it(trans_im);
 
 	for_all(it)
 	  if (max < trans_im[it].magn())
@@ -212,12 +210,12 @@ namespace oln {
       }
 
       // FIXME: Find a more elegant way to fix boundaries of a and b.
-      image2d<T> transformed_image_log_magn(const range<float_d,
-					    bounded_u<0, 1000>,
-					    saturate> a,
-					    const range<float_d,
-					    bounded_u<0, 1000>,
-					    saturate> b,
+      image2d<T> transformed_image_log_magn(const ntg::range<ntg::float_d,
+					    ntg::bounded_u<0, 1000>,
+					    ntg::saturate> a,
+					    const ntg::range<ntg::float_d,
+					    ntg::bounded_u<0, 1000>,
+					    ntg::saturate> b,
 					    bool ordered = true) const
       {
 	return transformed_image_log_magn<T>(a, b, ordered);
@@ -248,7 +246,7 @@ namespace oln {
       fftw_complex			*out;
       fftwnd_plan			p;
       fftwnd_plan			p_inv;
-      image2d<cplx<R, float_d> >		trans_im;
+      image2d<ntg::cplx<R, ntg::float_d> >		trans_im;
 
     };
 
@@ -257,16 +255,16 @@ namespace oln {
   namespace transforms {
 
     template <class T,
-	      cplx_representation R = polar,
+	      ntg::cplx_representation R = ntg::polar,
 	      internal::fft_dispatch which = internal::fft_trait<T>::which >
     class fft;
 
     //
-    // fft<T, cplx_representation, fft_real>
+    // fft<T, ntg::cplx_representation, fft_real>
     //
     //////////////////////////////////////
 
-    template <class T, cplx_representation R>
+    template <class T, ntg::cplx_representation R>
     class fft<T, R, internal::fft_real> : public internal::_fft<T, R>
     {
 
@@ -274,41 +272,42 @@ namespace oln {
 
       fft(const image2d<T>& original_im)
       {
-	in  = new fftw_real[original_im.nrows() * original_im.ncols()];
-	out = new fftw_complex[original_im.nrows() *
-			       (original_im.ncols() / 2 + 1)];
+	this->in  = new fftw_real[original_im.nrows() * original_im.ncols()];
+	this->out = new fftw_complex[original_im.nrows() *
+				     (original_im.ncols() / 2 + 1)];
 
 	for (int row = 0; row < original_im.nrows(); ++row)
 	  for (int col = 0; col < original_im.ncols(); ++col)
-	    in[row * original_im.ncols() + col] = original_im(row, col);
+	    this->in[row * original_im.ncols() + col] = original_im(row, col);
 
-	p = rfftw2d_create_plan(original_im.nrows(), original_im.ncols(),
+	this->p = rfftw2d_create_plan(original_im.nrows(), original_im.ncols(),
 				FFTW_REAL_TO_COMPLEX, FFTW_ESTIMATE);
-	p_inv = rfftw2d_create_plan(original_im.nrows(), original_im.ncols(),
+	this->p_inv = rfftw2d_create_plan(original_im.nrows(), original_im.ncols(),
 				    FFTW_COMPLEX_TO_REAL, FFTW_ESTIMATE);
 
-	trans_im = image2d<cplx<R, float_d> >(original_im.size());
+	this->trans_im = image2d<ntg::cplx<R, ntg::float_d> >(original_im.size());
       }
 
-      image2d<cplx<R, float_d> > transform()
+      image2d<ntg::cplx<R, ntg::float_d> > transform()
       {
-	rfftwnd_one_real_to_complex(p, in, out);
+	rfftwnd_one_real_to_complex(this->p, this->in, this->out);
 
-	unsigned denom = trans_im.nrows() * trans_im.ncols();
+	unsigned denom = this->trans_im.nrows() * this->trans_im.ncols();
 	int i = 0;
-	for (int row = 0; row < trans_im.nrows(); ++row)
-	  for (int col = 0; col <= trans_im.ncols() / 2; ++col)
+	for (int row = 0; row < this->trans_im.nrows(); ++row)
+	  for (int col = 0; col <= this->trans_im.ncols() / 2; ++col)
 	    {
-	      out[i].re /= denom;
-	      out[i].im /= denom;
-	      trans_im(row, col) = cplx<rect, float_d>(out[i].re, out[i].im);
+	      this->out[i].re /= denom;
+	      this->out[i].im /= denom;
+	      this->trans_im(row, col) = ntg::cplx<ntg::rect, ntg::float_d>(this->out[i].re, 
+							     this->out[i].im);
 	      ++i;
 	    }
-	for (int row = 0; row < trans_im.nrows(); ++row)
-	  for (int col = trans_im.ncols() - 1; col > trans_im.ncols() / 2; --col)
-	    trans_im(row, col) = trans_im(trans_im.nrows() - row - 1,
-					  trans_im.ncols() - col - 1);
-	return trans_im;
+	for (int row = 0; row < this->trans_im.nrows(); ++row)
+	  for (int col = this->trans_im.ncols() - 1; col > this->trans_im.ncols() / 2; --col)
+	    this->trans_im(row, col) = this->trans_im(this->trans_im.nrows() - row - 1,
+					  this->trans_im.ncols() - col - 1);
+	return this->trans_im;
       }
 
       template <class T1>
@@ -316,24 +315,24 @@ namespace oln {
       {
 	ntg_is_a(T1, ntg::real)::ensure();
 
-	for (int row = 0; row < trans_im.nrows(); ++row)
-	  for (int col = 0; col <= trans_im.ncols() / 2; ++col)
+	for (int row = 0; row < this->trans_im.nrows(); ++row)
+	  for (int col = 0; col <= this->trans_im.ncols() / 2; ++col)
 	    {
-	      out[row * (trans_im.ncols() / 2 + 1) + col].re =
-		trans_im(row, col).real();
-	      out[row * (trans_im.ncols() / 2 + 1) + col].im =
-		trans_im(row, col).imag();
+	      this->out[row * (this->trans_im.ncols() / 2 + 1) + col].re =
+		this->trans_im(row, col).real();
+	      this->out[row * (this->trans_im.ncols() / 2 + 1) + col].im =
+		this->trans_im(row, col).imag();
 	    }
-	rfftwnd_one_complex_to_real(p_inv, out, in);
+	rfftwnd_one_complex_to_real(this->p_inv, this->out, this->in);
 
-	image2d<T1> new_im(trans_im.size());
+	image2d<T1> new_im(this->trans_im.size());
 	int i = 0;
-	for (int row = 0; row < trans_im.nrows(); ++row)
-	  for (int col = 0; col < trans_im.ncols(); ++col)
+	for (int row = 0; row < this->trans_im.nrows(); ++row)
+	  for (int col = 0; col < this->trans_im.ncols(); ++col)
 	    {
-	      new_im(row, col) = (in[i] >= ntg_inf_val(T1) ?
-				  (in[i] <= ntg_sup_val(T1) ?
-				   in [i] :
+	      new_im(row, col) = (this->in[i] >= ntg_inf_val(T1) ?
+				  (this->in[i] <= ntg_sup_val(T1) ?
+				   this->in [i] :
 				   ntg_sup_val(T1)) :
 				  ntg_inf_val(T1));
 	      ++i;
@@ -349,79 +348,80 @@ namespace oln {
     };
 
     //
-    // fft<T, cplx_representation, fft_cplx>
+    // fft<T, ntg::cplx_representation, fft_cplx>
     //
     //////////////////////////////////////
 
-    template <class T, cplx_representation R>
+    template <class T, ntg::cplx_representation R>
     class fft<T, R, internal::fft_cplx> : public internal::_fft<T, R>
     {
 
     public:
 
-      template <cplx_representation R1>
-      fft(const image2d<cplx<R1, T> >& original_im)
+      template <ntg::cplx_representation R1>
+      fft(const image2d<ntg::cplx<R1, T> >& original_im)
       {
-	in  = new fftw_complex[original_im.nrows() * original_im.ncols()];
-	out = new fftw_complex[original_im.nrows() * original_im.ncols()];
+	this->in = new fftw_complex[original_im.nrows() * original_im.ncols()];
+	this->out = new fftw_complex[original_im.nrows() * original_im.ncols()];
 
 	for (int row = 0; row < original_im.nrows(); ++row)
 	  for (int col = 0; col < original_im.ncols(); ++col)
 	    {
-	      in[row * original_im.ncols() + col].re =
+	      this->in[row * original_im.ncols() + col].re =
 		original_im(row, col).real();
-	      in[row * original_im.ncols() + col].im =
+	      this->in[row * original_im.ncols() + col].im =
 		original_im(row, col).imag();
 	    }
 
-	p = fftw2d_create_plan(original_im.nrows(), original_im.ncols(),
-			       FFTW_FORWARD, FFTW_ESTIMATE);
-	p_inv = fftw2d_create_plan(original_im.nrows(), original_im.ncols(),
-				   FFTW_BACKWARD, FFTW_ESTIMATE);
+	this->p = fftw2d_create_plan(original_im.nrows(), original_im.ncols(),
+				     FFTW_FORWARD, FFTW_ESTIMATE);
+	this->p_inv = fftw2d_create_plan(original_im.nrows(), original_im.ncols(),
+					 FFTW_BACKWARD, FFTW_ESTIMATE);
 
-	trans_im = image2d<cplx<rect, float_d> >(original_im.size());
+	this->trans_im = image2d<ntg::cplx<ntg::rect, ntg::float_d> >(original_im.size());
       }
 
-      image2d<cplx<R, float_d> > transform()
+      image2d<ntg::cplx<R, ntg::float_d> > transform()
       {
-	fftwnd_one(p, in, out);
+	fftwnd_one(this->p, this->in, this->out);
 
-	unsigned denom = trans_im.nrows() * trans_im.ncols();
+	unsigned denom = this->trans_im.nrows() * this->trans_im.ncols();
 	int i = 0;
-	for (int row = 0; row < trans_im.nrows(); ++row)
-	  for (int col = 0; col < trans_im.ncols(); ++col)
+	for (int row = 0; row < this->trans_im.nrows(); ++row)
+	  for (int col = 0; col < this->trans_im.ncols(); ++col)
 	    {
-	      out[i].re /= denom;
-	      out[i].im /= denom;
-	      trans_im(row, col) = cplx<rect, float_d>(out[i].re, out[i].im);
+	      this->out[i].re /= denom;
+	      this->out[i].im /= denom;
+	      this->trans_im(row, col) = ntg::cplx<ntg::rect, ntg::float_d>(this->out[i].re, 
+						       this->out[i].im);
 	      ++i;
 	    }
-	return trans_im;
+	return this->trans_im;
       }
 
       template <class T1>
-      image2d<cplx<R, T1> > transform_inv()
+      image2d<ntg::cplx<R, T1> > transform_inv()
       {
-	for (int row = 0; row < trans_im.nrows(); ++row)
-	  for (int col = 0; col < trans_im.ncols(); ++col)
+	for (int row = 0; row < this->trans_im.nrows(); ++row)
+	  for (int col = 0; col < this->trans_im.ncols(); ++col)
 	    {
-	      out[row * trans_im.ncols() + col].re = trans_im(row, col).real();
-	      out[row * trans_im.ncols() + col].im = trans_im(row, col).imag();
+	      this->out[row * this->trans_im.ncols() + col].re = this->trans_im(row, col).real();
+	      this->out[row * this->trans_im.ncols() + col].im = this->trans_im(row, col).imag();
 	    }
-	fftwnd_one(p_inv, out, in);
+	fftwnd_one(this->p_inv, this->out, this->in);
 
-	image2d<cplx<R, T1> > new_im(trans_im.size());
+	image2d<ntg::cplx<R, T1> > new_im(this->trans_im.size());
 	int i = 0;
-	for (int row = 0; row < trans_im.nrows(); ++row)
-	  for (int col = 0; col < trans_im.ncols(); ++col)
+	for (int row = 0; row < this->trans_im.nrows(); ++row)
+	  for (int col = 0; col < this->trans_im.ncols(); ++col)
 	    {
-	      new_im(row, col) = in[i];
+	      new_im(row, col) = this->in[i];
 	      ++i;
 	    }
 	return new_im;
       }
 
-      image2d<cplx<R, T> > transform_inv()
+      image2d<ntg::cplx<R, T> > transform_inv()
       {
 	return transform_inv<T>();
       }
