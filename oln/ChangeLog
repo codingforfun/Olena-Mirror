@@ -1,3 +1,11 @@
+2003-01-20  Yann Régis-Gianas  <yann@lrde.epita.fr>
+
+	* oln/basics_graph.hh: New.
+	* oln/core/graph.hxx: Likewise.
+	* oln/core/graph.hh: Likewise.
+	* oln/core/internal/graph_impl.hxx: Likewise.
+	* oln/core/internal/graph_impl.hh: Likewise.
+
 2003-01-20  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* oln/convert/conversion.hh,
