@@ -37,6 +37,9 @@ namespace oln {
     typedef point2d point_type;
     typedef T       value_type;
 
+    typedef fwd_piter2d piter_type;
+    typedef fwd_piter2d fwd_piter_type;
+
     // please note that value_storage_type means data_type
     // since image2d is an image_with_data
     typedef mlc_encoding_type(T) value_storage_type;

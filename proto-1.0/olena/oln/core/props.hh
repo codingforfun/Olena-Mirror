@@ -29,32 +29,6 @@ namespace oln {
   struct default_props;
 
 
-  // FIXME: doc
-  template <>
-  struct default_props < cat::image >
-  {
-    typedef mlc::undefined_type delegated_type;
-
-    typedef mlc::undefined_type size_type;
-    typedef mlc::undefined_type point_type;
-    typedef mlc::undefined_type value_type;
-
-    typedef mlc::undefined_type value_storage_type;
-    typedef mlc::undefined_type value_container_type;
-
-    // FIXME: etc.
-
-    template <typename T>
-    struct ch_value_type
-    {
-      typedef mlc::undefined_type ret;
-    };
-
-  protected:
-    default_props() {}
-  };
-
-
   /*! \class props<E>
   **
   ** Declaration of the trait class for properties.

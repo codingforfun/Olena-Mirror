@@ -2,13 +2,46 @@
 # define OLENA_CORE_ABSTRACT_IMAGE_HH
 
 # include <oln/core/abstract/internal/image_impl.hh>
+# include <oln/core/cats.hh>
+# include <oln/core/props.hh>
 # include <oln/core/macros.hh>
 # include <oln/core/value_box.hh>
+
 
 /*! \namespace oln
 ** \brief oln namespace.
 */
 namespace oln {
+
+
+
+  // FIXME: doc
+  template <>
+  struct default_props < cat::image >
+  {
+    typedef mlc::undefined_type delegated_type;
+
+    typedef mlc::undefined_type size_type;
+    typedef mlc::undefined_type point_type;
+    typedef mlc::undefined_type value_type;
+
+    typedef mlc::undefined_type piter_type;
+    typedef mlc::undefined_type fwd_piter_type;
+
+    typedef mlc::undefined_type value_storage_type;
+    typedef mlc::undefined_type value_container_type;
+
+    // FIXME: etc.
+
+    template <typename T>
+    struct ch_value_type
+    {
+      typedef mlc::undefined_type ret;
+    };
+
+  protected:
+    default_props() {}
+  };
 
 
 

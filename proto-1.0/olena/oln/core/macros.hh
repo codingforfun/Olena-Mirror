@@ -33,6 +33,9 @@
 # define oln_value_storage_type(T)  typename oln::props<oln_category_type(T),T>::value_storage_type
 # define oln_value_container_type(T)  typename oln::props<oln_category_type(T),T>::value_container_type
 
+# define oln_piter_type(T) typename oln::props<oln_category_type(T),T>::piter_type
+# define oln_fwd_piter_type(T) typename oln::props<oln_category_type(T),T>::fwd_piter_type
+
 // binary macros
 
 # define oln_ch_value_type(I,V) typename oln::props<oln_category_type(I),I>::ch_value_type<V>::ret

@@ -35,9 +35,10 @@ namespace oln {
   namespace cat {
 
     struct image;
+    struct data_storage;
+    struct piter;
     struct point;
     struct size;
-    struct data_storage;
     // FIXME:...
 
   } // end of namespace oln::cat

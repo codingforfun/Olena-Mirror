@@ -1,3 +1,15 @@
+2005-01-24  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* oln/core/props.hh: Move image defaults into abstract/image.hh.
+	* oln/core/macros.hh: Add piter related macros.
+	* oln/core/abstract/image.hh: Add image defaults and piter typedefs.
+	* oln/core/abstract/iter.hh: Move to piter.hh.
+	* oln/core/abstract/piter.hh: Change interface.
+	* oln/core/2d/image2d.hh: Add piter typedefs in props.
+	* oln/core/2d/iter2d.hh: Move to fwd_piter2d.hh.
+	* oln/core/2d/fwd_piter2d.hh: Conform to new interface.
+	* oln/core/cats.hh: Add cat::piter.
+
 2005-01-21  Simon Odou  <simon@lrde.epita.fr>
 
 	* tests/core/tests/readonly_image: New.
