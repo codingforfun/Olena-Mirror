@@ -25,96 +25,66 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef INTEGRE_REAL_INT_U8_HH
-# define INTEGRE_REAL_INT_U8_HH
+#ifndef INTEGRE_ENUM_ENUM_HH
+# define INTEGRE_ENUM_ENUM_HH
 
-# include <mlc/traits.hh>
+# include <mlc/any.hh>
 
 # include <ntg/core/cats.hh>
 # include <ntg/core/props.hh>
-# include <ntg/real/integer.hh>
 
 namespace ntg {
 
-  struct int_u8;
+  template <typename E> struct enum_value;
+
+  template <typename E>
+  struct category_type< enum_value<E> > { typedef cat::enum_value ret; };
 
   template <>
-  struct category_type< int_u8 > { typedef cat::integer ret; };
-
-  template <>
-  struct props<cat::integer, int_u8> : public default_props<cat::integer>
+  struct default_props < cat::enum_value >
   {
-    enum { ntg_max_val = 255 };
+    enum { max_val = 0 };
+
+  protected:
+    default_props() {}
   };
 
-
-  struct int_u8: public integer<int_u8>
+  template <typename E>
+  struct enum_value : public mlc::any__best_memory<E>
   {
-    int_u8() :
-      value_(0)
-    {
-    }
+    typedef E exact_type;
 
-    int_u8(unsigned char value) :
-      value_(value)
+    template <typename V>
+    exact_type& operator=(const V& rhs)
     {
-    }
-
-    int_u8(const int_u8& rhs) :
-      value_(rhs)
-    {
-    }
-
-    int_u8& impl_assign(const int_u8& rhs)
-    {
-      this->value_ = rhs;
-      return *this;
-    }
-
-    operator unsigned char() const
-    {
-      return value_;
+      return this->exact.impl_assign(rhs);
     }
 
     template <typename V>
-    bool impl_eq(const V& rhs) const
+    bool operator==(const V& rhs) const
     {
-      return this->value_ == rhs;
+      return this->exact().impl_eq(rhs);
     }
 
     template <typename V>
-    bool impl_not_eq(const V& rhs) const
+    bool operator!=(const V& rhs) const
     {
-      return this->value_ != rhs;
+      return this->exact().impl_not_eq(rhs);
     }
 
     template <typename V>
-    int_u8 impl_add(const V& rhs) const
+    exact_type& operator+(const V& rhs) const
     {
-      int_u8 tmp(this->value_ + rhs);
-      return tmp;
+      return this->exact().impl_add(rhs);
     }
 
-  private:
-
-    unsigned char value_;
+  protected:
+    enum_value() {}
   };
-
 
 } // end of namespace ntg
 
 
 
-namespace mlc {
 
-  template <>
-  struct traits < ntg::int_u8 >
-  {
-    typedef char encoding_type;
-  };
-
-} // end of namespace mlc
-
-
-
-#endif // ! INTEGRE_REAL_INT_U8_HH
+#endif // ! INTEGRE_ENUM_ENUM_HH

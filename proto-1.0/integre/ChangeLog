@@ -1,3 +1,19 @@
+2005-02-18  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* ntg/real/int_u8.hh: Comply with new properties and categories.
+	* ntg/real/bin.hh: Move to...
+	* ntg/real/integer.hh: New. Integer types abstraction.
+	* ntg/makefile.src: Notify new files.
+	* ntg/enum: New.
+	* ntg/enum/enum.hh: New. Enumeration types abstraction.
+	* ntg/enum/bin.hh: ...here. Comply with new properties and categories.
+	* ntg/core: New.
+	* ntg/core/props.hh: New. Integre properties.
+	* ntg/core/macros.hh: New. Integre macros.
+	* ntg/core/cats.hh: New. Integre categories.
+	* ntg/color/rgb_8.hh: Comply with new properties and categories.
+	* ntg/color/color.hh: New. Color types abstraction.
+
 2005-01-26  Simon Odou  <simon@lrde.epita.fr>
 
 	* ntg/real/int_u8.hh: Add copyright.

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005 EPITA Research and Development Laboratory
+// Copyright (C) 2005 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +28,27 @@
 #ifndef INTEGRE_COLOR_RGB_8_HH
 # define INTEGRE_COLOR_RGB_8_HH
 
-
 # include <mlc/traits.hh>
 
+# include <ntg/core/props.hh>
+# include <ntg/color/color.hh>
 
 namespace ntg {
 
+  struct rgb_8;
+
+  template <>
+  struct category_type< rgb_8 > { typedef cat::color ret; };
+
+
+  template <>
+  struct props<cat::color, rgb_8> : default_props<cat::color>
+  {
+    enum { max_val = 255 };
+    enum { nb_comp = 3 };
+
+    typedef unsigned char comp_type;
+  };
 
   enum {
     rgb_red = 0,
@@ -41,7 +56,8 @@ namespace ntg {
     rgb_blue = 2
   };
 
-  struct rgb_8
+
+  struct rgb_8: public color <rgb_8>
   {
     rgb_8()
     {
@@ -66,7 +82,7 @@ namespace ntg {
       this->value_[rgb_blue] = rhs.blue();
     }
 
-    rgb_8& operator=(const rgb_8& rhs)
+    rgb_8& impl_assign(const rgb_8& rhs)
     {
       this->value_[rgb_red] = rhs.red();
       this->value_[rgb_green] = rhs.green();
@@ -74,20 +90,21 @@ namespace ntg {
       return *this;
     }
 
-    bool operator==(const rgb_8& rhs) const
+    bool impl_eq(const rgb_8& rhs) const
     {
       return this->value_[rgb_red] == rhs.red() &&
 	this->value_[rgb_green] == rhs.green() &&
 	this->value_[rgb_blue] == rhs.blue();
     }
 
-    template <typename V>
-    bool operator!=(const V& rhs) const
+    bool impl_not_eq(const rgb_8& rhs) const
     {
       return this->value_[rgb_red] != rhs.red() ||
 	this->value_[rgb_green] != rhs.green() ||
 	this->value_[rgb_blue] != rhs.blue();
     }
+
+
 
     unsigned char& red()
     {
@@ -141,4 +158,4 @@ namespace mlc {
 
 
 
-#endif // ! INTEGRE_COLOR_RGB_8_HH
+#endif // ! NTG_COLOR_RGB_8_HH

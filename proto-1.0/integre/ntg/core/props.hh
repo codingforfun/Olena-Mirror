@@ -25,96 +25,53 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef INTEGRE_REAL_INT_U8_HH
-# define INTEGRE_REAL_INT_U8_HH
+#ifndef INTEGRE_CORE_PROPS_HH
+# define INTEGRE_CORE_PROPS_HH
 
-# include <mlc/traits.hh>
+# include <mlc/types.hh>
 
 # include <ntg/core/cats.hh>
-# include <ntg/core/props.hh>
-# include <ntg/real/integer.hh>
 
+/*! \namespace ntg
+** \brief ntg namespace.
+*/
 namespace ntg {
 
-  struct int_u8;
 
-  template <>
-  struct category_type< int_u8 > { typedef cat::integer ret; };
+  /*! \class default_props
+  **
+  ** \brief Class that defines properties by default, so properties are
+  ** undefined.  // FIXME: this doc should be modified...
+  **
+  ** Practically all typedefs of default_props are thus set to
+  ** mlc::undefined_type.
+  **
+  ** When props<E> is specialized, the programmer should derive that
+  ** specialization from another props<E'> or from default_props.
+  ** That ensures that an undefined property is set to mlc::undefined_type.
+  **
+  ** \see props<E>
+  */
+  template < typename category >
+  struct default_props;
 
-  template <>
-  struct props<cat::integer, int_u8> : public default_props<cat::integer>
-  {
-    enum { ntg_max_val = 255 };
-  };
 
+  /*! \class props<E>
+  **
+  ** Declaration of the trait class for properties.
+  ** Parameter E is the targeted type.  FIXME: rewrite doc.
+  */
+  template <typename category, typename type>
+  struct props : public default_props <category>
+  {};
 
-  struct int_u8: public integer<int_u8>
-  {
-    int_u8() :
-      value_(0)
-    {
-    }
+  template <typename category, typename type>
+  struct props <category, const type> : public props <category, type>
+  {};
 
-    int_u8(unsigned char value) :
-      value_(value)
-    {
-    }
-
-    int_u8(const int_u8& rhs) :
-      value_(rhs)
-    {
-    }
-
-    int_u8& impl_assign(const int_u8& rhs)
-    {
-      this->value_ = rhs;
-      return *this;
-    }
-
-    operator unsigned char() const
-    {
-      return value_;
-    }
-
-    template <typename V>
-    bool impl_eq(const V& rhs) const
-    {
-      return this->value_ == rhs;
-    }
-
-    template <typename V>
-    bool impl_not_eq(const V& rhs) const
-    {
-      return this->value_ != rhs;
-    }
-
-    template <typename V>
-    int_u8 impl_add(const V& rhs) const
-    {
-      int_u8 tmp(this->value_ + rhs);
-      return tmp;
-    }
-
-  private:
-
-    unsigned char value_;
-  };
 
 
 } // end of namespace ntg
 
 
-
-namespace mlc {
-
-  template <>
-  struct traits < ntg::int_u8 >
-  {
-    typedef char encoding_type;
-  };
-
-} // end of namespace mlc
-
-
-
-#endif // ! INTEGRE_REAL_INT_U8_HH
+#endif // ndef INTEGRE_CORE_PROPS_HH

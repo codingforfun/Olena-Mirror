@@ -25,49 +25,50 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef INTEGRE_REAL_INT_U8_HH
-# define INTEGRE_REAL_INT_U8_HH
+#ifndef INTEGRE_ENUM_BIN_HH
+# define INTEGRE_ENUM_BIN_HH
 
 # include <mlc/traits.hh>
 
-# include <ntg/core/cats.hh>
 # include <ntg/core/props.hh>
-# include <ntg/real/integer.hh>
+# include <ntg/core/cats.hh>
+# include <ntg/enum/enum.hh>
 
 namespace ntg {
 
-  struct int_u8;
+  struct bin;
 
   template <>
-  struct category_type< int_u8 > { typedef cat::integer ret; };
+  struct category_type< bin > { typedef cat::enum_value ret; };
+
 
   template <>
-  struct props<cat::integer, int_u8> : public default_props<cat::integer>
+  struct props<cat::enum_value, bin> : public default_props<cat::enum_value>
   {
-    enum { ntg_max_val = 255 };
+    enum { max_val = 255 };
   };
 
-
-  struct int_u8: public integer<int_u8>
+  struct bin : public enum_value<bin>
   {
-    int_u8() :
+    bin() :
       value_(0)
     {
     }
 
-    int_u8(unsigned char value) :
+    bin(unsigned char value) :
       value_(value)
     {
     }
 
-    int_u8(const int_u8& rhs) :
+    bin(const bin& rhs) :
       value_(rhs)
     {
     }
 
-    int_u8& impl_assign(const int_u8& rhs)
+    template <typename V>
+    bin& impl_assign(const V& rhs)
     {
-      this->value_ = rhs;
+      this->value_ = rhs % 2;
       return *this;
     }
 
@@ -89,9 +90,9 @@ namespace ntg {
     }
 
     template <typename V>
-    int_u8 impl_add(const V& rhs) const
+    bin impl_add(const V& rhs) const
     {
-      int_u8 tmp(this->value_ + rhs);
+      bin tmp((this->value_ + rhs) % 2);
       return tmp;
     }
 
@@ -108,13 +109,13 @@ namespace ntg {
 namespace mlc {
 
   template <>
-  struct traits < ntg::int_u8 >
+  struct traits < ntg::bin >
   {
-    typedef char encoding_type;
+    typedef unsigned char encoding_type;
   };
 
 } // end of namespace mlc
 
 
 
-#endif // ! INTEGRE_REAL_INT_U8_HH
+#endif // ! INTEGRE_ENUM_BIN_HH

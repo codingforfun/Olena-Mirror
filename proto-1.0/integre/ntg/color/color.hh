@@ -25,83 +25,61 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef INTEGRE_REAL_BIN_HH
-# define INTEGRE_REAL_BIN_HH
+#ifndef INTEGRE_COLOR_COLOR_HH
+# define INTEGRE_COLOR_COLOR_HH
 
+# include <mlc/any.hh>
+# include <mlc/types.hh>
 
-# include <mlc/traits.hh>
-
+# include <ntg/core/cats.hh>
+# include <ntg/core/props.hh>
 
 namespace ntg {
 
+  template <typename E>
+  struct color;
 
-  struct bin
+  template <typename E>
+  struct category_type< color<E> > { typedef cat::color ret; };
+
+
+  template <>
+  struct default_props < cat::color >
   {
-    bin() :
-      value_(0)
-    {
-    }
+    enum { max_val = 0 };
+    enum { nb_comp = 0 };
+    typedef mlc::undefined_type comp_type;
 
-    bin(unsigned char value) :
-      value_(value)
-    {
-    }
 
-    bin(const bin& rhs) :
-      value_(rhs)
-    {
-    }
-
-    bin& operator=(const bin& rhs)
-    {
-      this->value_ = rhs;
-      return *this;
-    }
-
-    operator unsigned char() const
-    {
-      return value_;
-    }
-
-    template <typename V>
-    bool operator==(const V& rhs) const
-    {
-      return this->value_ == rhs;
-    }
-
-    template <typename V>
-    bool operator!=(const V& rhs) const
-    {
-      return this->value_ != rhs;
-    }
-
-    template <typename V>
-    bin operator+(const V& rhs) const
-    {
-      bin tmp((this->value_ + rhs) % 2);
-      return tmp;
-    }
-
-  private:
-
-    unsigned char value_;
+  protected:
+    default_props() {}
   };
 
+  template <typename E>
+  struct color : public mlc::any__best_memory<E>
+  {
+    typedef E exact_type;
+
+    E& operator=(const exact_type& rhs)
+    {
+      return this->exact.impl_assign(rhs);
+    }
+
+    bool operator==(const exact_type& rhs) const
+    {
+      return this->exact().impl_eq(rhs);
+    }
+
+    bool operator!=(const exact_type& rhs) const
+    {
+      return this->exact().impl_not_eq(rhs);
+    }
+
+  protected:
+    color() {}
+  };
 
 } // end of namespace ntg
 
 
-
-namespace mlc {
-
-  template <>
-  struct traits < ntg::bin >
-  {
-    typedef unsigned char encoding_type;
-  };
-
-} // end of namespace mlc
-
-
-
-#endif // ! INTEGRE_REAL_BIN_HH
+#endif // ! INTEGRE_COLOR_COLOR_HH

@@ -5,7 +5,13 @@
 
 NTG_DEP =					\
   color/rgb_8.hh				\
+  color/color.hh				\
   config/system.hh				\
   config/math.hh				\
-  real/bin.hh					\
-  real/int_u8.hh
+  core/cats.hh					\
+  core/macros.hh				\
+  core/props.hh					\
+  enum/bin.hh					\
+  enum/enum.hh					\
+  real/int_u8.hh				\
+  real/integer.hh
