@@ -200,6 +200,7 @@
 (src/core/fwd_iter3d.hh 2388 1009823825 d/19_fwd_iter3d 1.1)
 (src/convert/rgbnrgb.hh 3207 1009823825 17_rgbnrgb.hh 1.1)
 (src/morpho/closing.inc 2042 1010996113 44_closing.in 1.2)
+(demo/test-reconstruction.cc 5936 1012378587 e/22_test-recon 1.1)
 (src/core/border3d.hh 5008 1009823825 d/32_border3d.h 1.1)
 (src/core/coord.hh 1742 1009823825 d/29_coord.hh 1.1)
 (src/core/dpoint1d.hxx 2540 1009823825 d/26_dpoint1d.h 1.1)

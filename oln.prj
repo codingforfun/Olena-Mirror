@@ -1,15 +1,12 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_3 1)
-(Parent-Version oln 0_2 18)
-(Version-Log "2002-01-16  Alexandre Duret-Lutz  <duret_g@epita.fr>
-
-	* src/convol/fast_gaussian.hxx (_gaussian<1>::doit): Typo.
-
+(Project-Version oln 0_3 2)
+(Parent-Version oln 0_3 1)
+(Version-Log "Add missing demo/test-reconstruction.cc.
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 16 Jan 2002 15:55:44 +0100")
+(Checkin-Time "Wed, 30 Jan 2002 09:16:27 +0100")
 (Checkin-Login adl)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
@@ -324,6 +321,11 @@
 ;; to version 0_2.11(w), by adl:
 
   (doc/img/lena256.pgm (oln/e/21_lena256.pg 1.1 644))
+
+;; Files added by populate at Wed, 30 Jan 2002 09:15:07 +0100,
+;; to version 0_3.1(w), by adl:
+
+  (demo/test-reconstruction.cc (oln/e/22_test-recon 1.1 644))
 )
 (Merge-Parents)
 (New-Merge-Parents)
