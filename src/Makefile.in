@@ -76,6 +76,9 @@ am__quote = @am__quote@
 install_sh = @install_sh@
 
 olndir = $(includedir)/oln
+
+nobase_nodist_oln_HEADERS = config/pconf.hh
+
 nobase_oln_HEADERS = \
   arith/internal/opdecls.hh			\
   arith/logic.hh				\
@@ -85,6 +88,7 @@ nobase_oln_HEADERS = \
   basics2d.hh					\
   basics3d.hh					\
   config/system.hh				\
+  config/hash_map.hh				\
   convert/basics.hh				\
   convert/bound.hh				\
   convert/colorconv.hh				\
@@ -273,11 +277,17 @@ nobase_oln_HEADERS = \
   value/yiq.hh					\
   value/yuv.hh
 
+
+EXTRA_SCRIPTS = config/extrconf.sh
+PERL = perl
+SCANDEFS_PL = $(top_srcdir)/tools/scandefs.pl
+PCONF_OCCURS = config/system.hh config/hash_map.hh
 subdir = src
 mkinstalldirs = $(SHELL) $(top_srcdir)/tools/mkinstalldirs
+CONFIG_HEADER = $(top_builddir)/src/config/config.h
 CONFIG_CLEAN_FILES =
 DIST_SOURCES =
-HEADERS = $(nobase_oln_HEADERS)
+HEADERS = $(nobase_nodist_oln_HEADERS) $(nobase_oln_HEADERS)
 
 DIST_COMMON = $(nobase_oln_HEADERS) Makefile.am Makefile.in
 all: all-am
@@ -289,6 +299,24 @@ $(srcdir)/Makefile.in:  Makefile.am  $(top_srcdir)/configure.ac $(ACLOCAL_M4)
 Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
 uninstall-info-am:
+nobase_nodist_olnHEADERS_INSTALL = $(install_sh_DATA)
+install-nobase_nodist_olnHEADERS: $(nobase_nodist_oln_HEADERS)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(olndir)
+	@list='$(nobase_nodist_oln_HEADERS)'; for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  f="$$p"; \
+	  echo " $(nobase_nodist_olnHEADERS_INSTALL) $$d$$p $(DESTDIR)$(olndir)/$$f"; \
+	  $(nobase_nodist_olnHEADERS_INSTALL) $$d$$p $(DESTDIR)$(olndir)/$$f; \
+	done
+
+uninstall-nobase_nodist_olnHEADERS:
+	@$(NORMAL_UNINSTALL)
+	@list='$(nobase_nodist_oln_HEADERS)'; for p in $$list; do \
+	  f="$$p"; \
+	  echo " rm -f $(DESTDIR)$(olndir)/$$f"; \
+	  rm -f $(DESTDIR)$(olndir)/$$f; \
+	done
 nobase_olnHEADERS_INSTALL = $(install_sh_DATA)
 install-nobase_olnHEADERS: $(nobase_oln_HEADERS)
 	@$(NORMAL_INSTALL)
@@ -373,7 +401,7 @@ check: check-am
 all-am: Makefile $(HEADERS)
 
 installdirs:
-	$(mkinstalldirs) $(DESTDIR)$(olndir)
+	$(mkinstalldirs) $(DESTDIR)$(olndir) $(DESTDIR)$(olndir)
 
 install: install-am
 install-exec: install-exec-am
@@ -415,7 +443,8 @@ info: info-am
 
 info-am:
 
-install-data-am: install-nobase_olnHEADERS
+install-data-am: install-nobase_nodist_olnHEADERS \
+	install-nobase_olnHEADERS
 
 install-exec-am:
 
@@ -433,18 +462,26 @@ mostlyclean: mostlyclean-am
 
 mostlyclean-am: mostlyclean-generic
 
-uninstall-am: uninstall-info-am uninstall-nobase_olnHEADERS
+uninstall-am: uninstall-info-am uninstall-nobase_nodist_olnHEADERS \
+	uninstall-nobase_olnHEADERS
 
 .PHONY: GTAGS all all-am check check-am clean clean-generic distclean \
 	distclean-generic distclean-tags distdir dvi dvi-am info \
 	info-am install install-am install-data install-data-am \
 	install-exec install-exec-am install-info install-info-am \
-	install-man install-nobase_olnHEADERS install-strip \
-	installcheck installcheck-am installdirs maintainer-clean \
+	install-man install-nobase_nodist_olnHEADERS \
+	install-nobase_olnHEADERS install-strip installcheck \
+	installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-generic tags \
 	uninstall uninstall-am uninstall-info-am \
-	uninstall-nobase_olnHEADERS
+	uninstall-nobase_nodist_olnHEADERS uninstall-nobase_olnHEADERS
 
+config/extrconf.sh: $(SCANDEFS_PL) $(PCONF_OCCURS)
+	$(PERL) $(SCANDEFS_PL) $(PCONF_OCCURS) >config/extrconf.sh
+
+config/pconf.hh: config/extrconf.sh $(CONFIG_HEADER)
+	test -f $(CONFIG_HEADER)
+	$(SHELL) config/extrconf.sh $(CONFIG_HEADER) >config/pconf.hh; :
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

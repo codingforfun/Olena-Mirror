@@ -121,6 +121,7 @@ check_PROGRAMS = \
 8_rgb_xyz_CXXFLAGS = -DSRC=rgb -DDEST=xyz -DEM=0.770938 -DEV=0.34167
 subdir = tests/convert
 mkinstalldirs = $(SHELL) $(top_srcdir)/tools/mkinstalldirs
+CONFIG_HEADER = $(top_builddir)/src/config/config.h
 CONFIG_CLEAN_FILES =
 check_PROGRAMS = 8-nrgb-hsi$(EXEEXT) 8-nrgb-hsl$(EXEEXT) \
 	8-nrgb-hsv$(EXEEXT) 8-nrgb-xyz$(EXEEXT) 8-nrgb-yiq$(EXEEXT) \
@@ -167,7 +168,7 @@ am_8_rgb_xyz_OBJECTS = 8_rgb_xyz-convcomp.$(OBJEXT)
 8_rgb_xyz_LDFLAGS =
 
 DEFS = @DEFS@
-DEFAULT_INCLUDES =  -I. -I$(srcdir)
+DEFAULT_INCLUDES =  -I. -I$(srcdir) -I$(top_builddir)/src/config
 CPPFLAGS = @CPPFLAGS@
 LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@

@@ -2,5 +2,5 @@
 
 AUTOMAKE_OPTIONS = foreign dist-bzip2 1.5b
 SUBDIRS = src demo tests
-EXTRA_DIST = img/lena.pgm img/lena128.pgm ISSUES \
+EXTRA_DIST = img/lena.pgm img/lena128.pgm ISSUES tools/scandefs.pl \
   doc/doc/oln-ref.info doc/doc/oln-ref.pdf doc/doc/oln-ref.ps doc/doc/html

@@ -28,8 +28,8 @@
 #ifndef OLENA_LEVEL_LUT_HH
 # define OLENA_LEVEL_LUT_HH
 
-# include <hash_map>
 # include "basics.hh"
+# include "hash_map.hh"
 
 namespace oln {
   namespace level {

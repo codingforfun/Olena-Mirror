@@ -6,8 +6,13 @@ AC_CONFIG_SRCDIR([ChangeLog])
 AC_CONFIG_AUX_DIR([tools])
 AM_INIT_AUTOMAKE([olena], [0.3], [:])
 
+AM_CONFIG_HEADER(src/config/config.h:src/config/config.hin)
+
 AC_PROG_CXX
 AC_PROG_RANLIB
+
+AC_LANG(C++)
+AC_CHECK_HEADERS([hash_map ext/hash_map])
 
 AC_CONFIG_FILES([
   Makefile

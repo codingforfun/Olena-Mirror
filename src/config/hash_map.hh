@@ -1,4 +1,4 @@
-// Copyright 2001  EPITA Research and Development Laboratory
+// Copyright 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,16 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CONFIG_SYSTEM_HH
-# define OLENA_CONFIG_SYSTEM_HH
+#ifndef OLENA_CONFIG_HASH_MAP_HH
+# define OLENA_CONFIG_HASH_MAP_HH
 
-/* The GNU libc will not declare round, roundf, etc. unless this is set...  */
-# define _ISOC99_SOURCE 1
-
-# ifndef M_PI
-#  define M_PI 3.14159265358979323846264338327
+# if HAVE_EXT_HASH_MAP
+#  include <ext/hash_map>
+# else
+#  if HAVE_HASH_MAP
+#    include <hash_map>
+#  else
+No hash_map on this system.
+#  endif
 # endif
 
-# include "pconf.hh"
-
-#endif // OLENA_CONFIG_SYSTEM_HH
+#endif // OLENA_CONFIG_HASH_MAP_HH

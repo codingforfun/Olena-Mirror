@@ -89,6 +89,7 @@ check_PROGRAMS = 2d
 2d_SOURCES = 2d.cc loadsave.hh
 subdir = tests/io
 mkinstalldirs = $(SHELL) $(top_srcdir)/tools/mkinstalldirs
+CONFIG_HEADER = $(top_builddir)/src/config/config.h
 CONFIG_CLEAN_FILES =
 check_PROGRAMS = 2d$(EXEEXT)
 am_2d_OBJECTS = 2d.$(OBJEXT)
@@ -98,7 +99,7 @@ am_2d_OBJECTS = 2d.$(OBJEXT)
 2d_LDFLAGS =
 
 DEFS = @DEFS@
-DEFAULT_INCLUDES =  -I. -I$(srcdir)
+DEFAULT_INCLUDES =  -I. -I$(srcdir) -I$(top_builddir)/src/config
 CPPFLAGS = @CPPFLAGS@
 LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@

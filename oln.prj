@@ -1,24 +1,23 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_3 21)
-(Parent-Version oln 0_3 20)
+(Project-Version oln 0_3 22)
+(Parent-Version oln 0_3 21)
 (Version-Log "2002-04-03  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-	* README: New files.
-	* check/data.cc, check/data.hh: New files.
-	* check/Makefile.am (libcheck_a_SOURCES): Add them.
-	* check/srcdir.cc: Include trailing slash.
-	* check/check.hh: Include check.hh.
-	* morpho/extrkiller.cc, morpho/reconstruction.cc, io/2d.cc,
-	convert/convcomp.cc: Use data().
-	* morpho/Makefile.am, io/Makefile.am, convert/Makefile.am: Factorize
-	the TESTS definition ...
-	* check/Makefile.check: ... here.
+	* src/level/lut.hh: Include \"hash_map.hh\" not <hash_map>.
+	* src/config/hash_map.hh, src/config/README: New file.
+	* src/config/system.hh: Include pconf.hh.
+	* src/Makefile.am (nobase_nodist_oln_HEADERS): New variable.
+	(nobase_oln_HEADERS): Add config/hash_map.hh.
+	(EXTRA_SCRIPTS, PERL, SCANDEFS_PL, PCONF_OCCURS): New variables.
+	(config/extrconf.sh, config/pconf.hh): New targets.
+	* tools/scandefs.pl: New file.
+	* Makefile.am (EXTRA_DIST): Add tools/scandefs.pl.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 03 Apr 2002 12:13:24 +0200")
+(Checkin-Time "Wed, 03 Apr 2002 16:09:41 +0200")
 (Checkin-Login adl)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
@@ -62,6 +61,10 @@
 		  "doc/doc/ref-morpho.texi$"
 		  "doc/doc/stamp-vti$"
 		  "doc/doc/version.texi$"
+		  "src/config/pconf.hh$"
+		  "src/config/extrconf.sh$"
+		  "src/config/config.h$"
+		  "src/config/config.hin$"
 		  "tests/morpho/reconstruction$"
 		  "tests/morpho/extrkiller$"
 		  "tests/io/savetmp$"
@@ -82,12 +85,12 @@
 
   (NEWS (oln/0_NEWS 1.2 644))
   (README (oln/1_README 1.2 644))
-  (Makefile.am (oln/2_Makefile.a 1.6 644))
-  (configure.ac (oln/3_configure. 1.4 644))
+  (Makefile.am (oln/2_Makefile.a 1.7 644))
+  (configure.ac (oln/3_configure. 1.5 644))
   (THANKS (oln/4_THANKS 1.1 644))
   (img/lena.pgm (oln/5_lena.pgm 1.1 640) :no-keywords)
-  (ChangeLog (oln/6_ChangeLog 1.28 644))
-  (src/config/system.hh (oln/7_system.hh 1.1 644))
+  (ChangeLog (oln/6_ChangeLog 1.29 644))
+  (src/config/system.hh (oln/7_system.hh 1.2 644))
   (src/utils/timer.hh (oln/8_timer.hh 1.1 644))
   (src/utils/stat.hh (oln/9_stat.hh 1.2 644))
   (src/utils/histogram.hh (oln/10_histogram. 1.1 644))
@@ -107,9 +110,9 @@
   (src/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.1 644))
   (src/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.2 644))
   (src/convol/fast_gaussian.hh (oln/26_fast_gauss 1.1 644))
-  (src/Makefile.am (oln/27_Makefile.a 1.5 644))
+  (src/Makefile.am (oln/27_Makefile.a 1.6 644))
   (src/basics3d.hh (oln/28_basics3d.h 1.1 644))
-  (src/level/lut.hh (oln/29_lut.hh 1.1 644))
+  (src/level/lut.hh (oln/29_lut.hh 1.2 644))
   (src/level/connected.hh (oln/30_connected. 1.4 644))
   (src/level/compare.hh (oln/31_compare.hh 1.1 644))
   (src/level/fill.hh (oln/32_fill.hh 1.1 644))
@@ -312,17 +315,17 @@
   (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.2 644))
   (doc/Makefile.in (oln/e/5_Makefile.i 1.3 644))
   (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.6 644))
-  (configure (oln/e/7_configure 1.5 755))
-  (aclocal.m4 (oln/e/8_aclocal.m4 1.4 644))
-  (Makefile.in (oln/e/9_Makefile.i 1.7 644))
+  (configure (oln/e/7_configure 1.6 755))
+  (aclocal.m4 (oln/e/8_aclocal.m4 1.5 644))
+  (Makefile.in (oln/e/9_Makefile.i 1.8 644))
   (tools/texinfo.tex (oln/e/10_texinfo.te 1.2 644))
   (tools/mdate-sh (oln/e/11_mdate-sh 1.1 755))
   (tools/depcomp (oln/e/12_depcomp 1.2 755))
   (tools/missing (oln/e/13_missing 1.2 755))
   (tools/mkinstalldirs (oln/e/14_mkinstalld 1.1 700))
   (tools/install-sh (oln/e/15_install-sh 1.2 755))
-  (demo/Makefile.in (oln/e/16_Makefile.i 1.5 644))
-  (src/Makefile.in (oln/e/17_Makefile.i 1.8 644))
+  (demo/Makefile.in (oln/e/16_Makefile.i 1.6 644))
+  (src/Makefile.in (oln/e/17_Makefile.i 1.9 644))
 
 ;; Files added by populate at Sun, 13 Jan 2002 12:33:06 +0100,
 ;; to version 0_2.7(w), by adl:
@@ -379,24 +382,24 @@
   (tests/ChangeLog (oln/e/30_ChangeLog 1.3 644))
   (tests/morpho/extrkiller.cc (oln/e/31_extrkiller 1.2 644))
   (tests/morpho/Makefile.am (oln/e/32_Makefile.a 1.2 644))
-  (tests/morpho/Makefile.in (oln/e/33_Makefile.i 1.3 644))
+  (tests/morpho/Makefile.in (oln/e/33_Makefile.i 1.4 644))
   (tests/morpho/reconstruction.cc (oln/e/34_reconstruc 1.2 644))
   (tests/check/srcdir.hh (oln/e/35_srcdir.hh 1.2 644))
   (tests/check/Makefile.flags (oln/e/36_Makefile.f 1.1 644))
   (tests/check/Makefile.check (oln/e/37_Makefile.c 1.3 644))
   (tests/check/srcdir.cc (oln/e/38_srcdir.cc 1.2 644))
-  (tests/check/Makefile.in (oln/e/39_Makefile.i 1.2 644))
+  (tests/check/Makefile.in (oln/e/39_Makefile.i 1.3 644))
   (tests/check/check.hh (oln/e/40_check.hh 1.2 644))
   (tests/check/verbose.cc (oln/e/41_verbose.cc 1.1 644))
   (tests/check/verbose.hh (oln/e/42_verbose.hh 1.2 644))
   (tests/check/main.cc (oln/e/43_main.cc 1.1 644))
   (tests/check/Makefile.am (oln/e/44_Makefile.a 1.2 644))
   (tests/Makefile.am (oln/e/45_Makefile.a 1.2 644))
-  (tests/Makefile.in (oln/e/46_Makefile.i 1.2 644))
+  (tests/Makefile.in (oln/e/46_Makefile.i 1.3 644))
   (tests/io/2d.cc (oln/e/47_2d.cc 1.2 644))
   (tests/io/loadsave.hh (oln/e/48_loadsave.h 1.1 644))
   (tests/io/Makefile.am (oln/e/49_Makefile.a 1.2 644))
-  (tests/io/Makefile.in (oln/e/50_Makefile.i 1.3 644))
+  (tests/io/Makefile.in (oln/e/50_Makefile.i 1.4 644))
   (tests/data/lena.ppm (oln/e/51_lena.ppm 1.1 600) :no-keywords)
 
 ;; Files added by populate at Tue, 02 Apr 2002 16:54:37 +0200,
@@ -404,7 +407,7 @@
 
   (tests/convert/Makefile.am (oln/f/0_Makefile.a 1.2 644))
   (tests/convert/convcomp.hh (oln/f/1_convcomp.h 1.1 644))
-  (tests/convert/Makefile.in (oln/f/2_Makefile.i 1.2 644))
+  (tests/convert/Makefile.in (oln/f/2_Makefile.i 1.3 644))
   (tests/convert/convcomp.cc (oln/f/3_convcomp.c 1.2 644))
 
 ;; Files added by populate at Wed, 03 Apr 2002 11:58:24 +0200,
@@ -413,6 +416,21 @@
   (tests/README (oln/f/4_README 1.1 644))
   (tests/check/data.cc (oln/f/5_data.cc 1.1 644))
   (tests/check/data.hh (oln/f/6_data.hh 1.1 644))
+
+;; Files added by populate at Wed, 03 Apr 2002 15:55:47 +0200,
+;; to version 0_3.21(w), by adl:
+
+  (tools/scandefs.pl (oln/f/7_scandefs.p 1.1 755))
+
+;; Files added by populate at Wed, 03 Apr 2002 15:55:51 +0200,
+;; to version 0_3.21(w), by adl:
+
+  (src/config/hash_map.hh (oln/f/8_hash_map.h 1.1 644))
+
+;; Files added by populate at Wed, 03 Apr 2002 15:56:00 +0200,
+;; to version 0_3.21(w), by adl:
+
+  (src/config/README (oln/f/9_README 1.1 644))
 )
 (Merge-Parents)
 (New-Merge-Parents)

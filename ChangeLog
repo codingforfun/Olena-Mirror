@@ -1,3 +1,15 @@
+2002-04-03  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/level/lut.hh: Include "hash_map.hh" not <hash_map>.
+	* src/config/hash_map.hh, src/config/README: New file.
+	* src/config/system.hh: Include pconf.hh.
+	* src/Makefile.am (nobase_nodist_oln_HEADERS): New variable.
+	(nobase_oln_HEADERS): Add config/hash_map.hh.
+	(EXTRA_SCRIPTS, PERL, SCANDEFS_PL, PCONF_OCCURS): New variables.
+	(config/extrconf.sh, config/pconf.hh): New targets.
+	* tools/scandefs.pl: New file.
+	* Makefile.am (EXTRA_DIST): Add tools/scandefs.pl.
+
 2002-04-02  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* configure.ac: Output tests/convert/Makefile.

@@ -1,6 +1,9 @@
 ## Process this file with Automake to produce Makefile.in -*-Makefile-*-
 
 olndir = $(includedir)/oln
+
+nobase_nodist_oln_HEADERS = config/pconf.hh
+
 nobase_oln_HEADERS =				\
   arith/internal/opdecls.hh			\
   arith/logic.hh				\
@@ -10,6 +13,7 @@ nobase_oln_HEADERS =				\
   basics2d.hh					\
   basics3d.hh					\
   config/system.hh				\
+  config/hash_map.hh				\
   convert/basics.hh				\
   convert/bound.hh				\
   convert/colorconv.hh				\
@@ -197,3 +201,18 @@ nobase_oln_HEADERS =				\
   value/xyz.hh					\
   value/yiq.hh					\
   value/yuv.hh
+
+EXTRA_SCRIPTS = config/extrconf.sh
+PERL = perl
+SCANDEFS_PL = $(top_srcdir)/tools/scandefs.pl
+PCONF_OCCURS = config/system.hh config/hash_map.hh
+config/extrconf.sh: $(SCANDEFS_PL) $(PCONF_OCCURS)
+	$(PERL) $(SCANDEFS_PL) $(PCONF_OCCURS) >config/extrconf.sh
+
+config/pconf.hh: config/extrconf.sh $(CONFIG_HEADER)
+	test -f $(CONFIG_HEADER)
+## Ignore the result of config/extrconf.sh.  It might be non 0 if
+## grep matched nothing, but that's ok for us.  The sole case
+## we bother with is failure caused by an unexisting $(CONFIG_HEADER).
+## The test -f above take care of this.
+	$(SHELL) config/extrconf.sh $(CONFIG_HEADER) >config/pconf.hh; :

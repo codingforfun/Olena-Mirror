@@ -83,6 +83,7 @@ morpholena_SOURCES = morpholena.cc
 test_reconstruction_SOURCES = test-reconstruction.cc
 subdir = demo
 mkinstalldirs = $(SHELL) $(top_srcdir)/tools/mkinstalldirs
+CONFIG_HEADER = $(top_builddir)/src/config/config.h
 CONFIG_CLEAN_FILES =
 noinst_PROGRAMS = tour$(EXEEXT) morpholena$(EXEEXT) \
 	test-reconstruction$(EXEEXT)
@@ -105,7 +106,7 @@ tour_DEPENDENCIES =
 tour_LDFLAGS =
 
 DEFS = @DEFS@
-DEFAULT_INCLUDES =  -I. -I$(srcdir)
+DEFAULT_INCLUDES =  -I. -I$(srcdir) -I$(top_builddir)/src/config
 CPPFLAGS = @CPPFLAGS@
 LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@

@@ -94,6 +94,7 @@ extrkiller_SOURCES = extrkiller.cc
 reconstruction_SOURCES = reconstruction.cc
 subdir = tests/morpho
 mkinstalldirs = $(SHELL) $(top_srcdir)/tools/mkinstalldirs
+CONFIG_HEADER = $(top_builddir)/src/config/config.h
 CONFIG_CLEAN_FILES =
 check_PROGRAMS = extrkiller$(EXEEXT) reconstruction$(EXEEXT)
 am_extrkiller_OBJECTS = extrkiller.$(OBJEXT)
@@ -108,7 +109,7 @@ reconstruction_DEPENDENCIES = $(top_builddir)/tests/check/libcheck.a
 reconstruction_LDFLAGS =
 
 DEFS = @DEFS@
-DEFAULT_INCLUDES =  -I. -I$(srcdir)
+DEFAULT_INCLUDES =  -I. -I$(srcdir) -I$(top_builddir)/src/config
 CPPFLAGS = @CPPFLAGS@
 LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
