@@ -1,3 +1,7 @@
+2002-02-11  Jerome Darbon  <jerome@epita.fr>
+
+	* img/lena128.pgm: Add it.
+
 2002-02-01  Jerome Darbon  <jerome@epita.fr>
 
 	* src/core/border.hh: Fix bug.
