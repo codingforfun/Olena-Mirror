@@ -1,3 +1,7 @@
+2005-03-20  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* configure.ac: Add utils directory for olena tests suite.
+
 2005-03-19  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* configure.ac: Add array directory to mlc tests suite.

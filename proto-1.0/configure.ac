@@ -98,11 +98,12 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
 
 
       # OLN_TESTS defined in oln-local.m4
-      OLN_TESTS([core])
       OLN_TESTS([sanity])
+      OLN_TESTS([core])
       OLN_TESTS([io])
       OLN_TESTS([level])
-
+      OLN_TESTS([utils]) 
+      
       AC_SUBST([OLN_TESTS_SUBDIRS])
 
     ], [tests])dnl End of OLN_COMPONENT([olena/tests])
@@ -165,7 +166,7 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
 		   metalic/tests/check/defs],
     [dnl Configuration for the testsuite
 
-      MLC_TESTS_SUBDIRS="main"
+      MLC_TESTS_SUBDIRS=""
 
       AC_CACHE_CHECK([for selection of tests],
                      [mlc_cv_tests_selection],
@@ -178,9 +179,9 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
 
 
       # MLC_TESTS defined in oln-local.m4
+      MLC_TESTS([sanity])
       MLC_TESTS([array])
       MLC_TESTS([main])
-      MLC_TESTS([sanity])
 
       AC_SUBST([MLC_TESTS_SUBDIRS])
 
