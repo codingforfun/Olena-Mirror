@@ -19,18 +19,18 @@ int main()
 
   for_all (it2)
     im2[it2] = 1;
-  
+
   image2d<bin> imin = arith::min (im1, im2);
   image2d<bin>::iter_type itmin(imin);
 
   for_all (itmin)
     assert (imin[itmin] == bin(0));
-  
+
   image2d<bin> imax = arith::max (im1, im2);
   image2d<bin>::iter_type itmax(imax);
 
   for_all (itmax)
     assert (imax[itmax] == bin(1));
- 
+
   return 0;
 }

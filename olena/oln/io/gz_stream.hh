@@ -28,7 +28,7 @@
 #ifndef OLENA_IO_GZ_STREAM_HH
 # define OLENA_IO_GZ_STREAM_HH
 
-# include <oln/basics.hh>
+# include <oln/config/system.hh>
 # include <cassert>
 # include <fstream>
 # include <string>

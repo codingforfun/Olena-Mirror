@@ -1,22 +1,17 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 41)
-(Parent-Version oln 2003paradigm 39)
-(Version-Log "Index: olena/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+(Project-Version oln 2003paradigm 43)
+(Parent-Version oln 2003paradigm 41)
+(Version-Log "        * oln/io/basics.hh: Include oln/io/gz.hh if HAVE_ZLIB is defined.
+        * oln/io/image.hh: New.
+        * oln/io/pnm.hh: Remove.
+        * oln/io/se_window.hh, oln/io/se_neighborhood.hh: Fix includes.
+        * oln/basics2d.hh: Fix includes.
 
-        * tests/arith/runtests, tests/core/runtests: Don't check temporary
-        files.
-
-Index: integre/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-        * tests/types/runtests, tests/utils/runtests: Don't test temporary
-        files.
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 28 Jul 2003 14:53:11 +0200")
+(Checkin-Time "Mon, 28 Jul 2003 16:39:01 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -106,7 +101,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.8 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.25 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.27 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.16 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.23 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.37 640))
@@ -159,8 +154,8 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.9 640))
   (olena/oln/arith/logic.hh (oln/b/24_logic.hh 1.6.1.2 640))
   (olena/oln/arith/ops.hh (oln/b/23_ops.hh 1.5.1.2.1.3 640))
-  (olena/oln/basics1d.hh (oln/d/41_basics1d.h 1.3 640))
-  (olena/oln/basics2d.hh (oln/b/7_basics2d.h 1.5 640))
+  (olena/oln/basics1d.hh (oln/d/41_basics1d.h 1.4 640))
+  (olena/oln/basics2d.hh (oln/b/7_basics2d.h 1.6 640))
   (olena/oln/basics3d.hh (oln/28_basics3d.h 1.3 640))
   (olena/oln/basics.hh (oln/d/42_basics.hh 1.11 640))
 
@@ -169,8 +164,8 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/convert/basics.hh (oln/23_basics.hh 1.4 640))
   (olena/oln/convert/bound.hh (oln/22_bound.hh 1.8 640))
   (olena/oln/convert/colorconv.hh (oln/18_colorconv. 1.8 640))
-  (olena/oln/convert/conversion.hh (oln/21_conversion 1.10 640))
-  (olena/oln/convert/conversion_ng_se.hh (oln/e/24_conversion 1.5 640))
+  (olena/oln/convert/conversion.hh (oln/21_conversion 1.11 640))
+  (olena/oln/convert/conversion_ng_se.hh (oln/e/24_conversion 1.6 640))
   (olena/oln/convert/force.hh (oln/20_force.hh 1.8 640))
   (olena/oln/convert/nrgbhsi.hh (oln/15_nrgbhsi.hh 1.9 640))
   (olena/oln/convert/nrgbhsl.hh (oln/12_nrgbhsl.hh 1.13 640))
@@ -214,7 +209,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/core/generate.hh (oln/f/12_generate.h 1.15 640))
   (olena/oln/core/image1d.hh (oln/c/47_image1d.hh 1.16 640))
   (olena/oln/core/image1d_size.hh (oln/c/46_image1d_si 1.9 640))
-  (olena/oln/core/image2d.hh (oln/c/45_image2d.hh 1.19 640))
+  (olena/oln/core/image2d.hh (oln/c/45_image2d.hh 1.20 640))
   (olena/oln/core/image2d_size.hh (oln/c/44_image2d_si 1.9 640))
   (olena/oln/core/image3d.hh (oln/c/43_image3d.hh 1.16 640))
   (olena/oln/core/image3d_size.hh (oln/c/42_image3d_si 1.9 640))
@@ -271,12 +266,12 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/core/abstract/w_window.hh (oln/c/20_w_window.h 1.9 640))	
   (olena/oln/io/base.hh (oln/b/20_base.hh 1.7 640))
   
-  (olena/oln/io/basics.hh (oln/b/12_basics.hh 1.3 640))
+  (olena/oln/io/basics.hh (oln/b/12_basics.hh 1.4 640))
   (olena/oln/io/file.hh (oln/b/17_file.hh 1.4 640))
-  (olena/oln/io/gz.hh (oln/f/16_gz.hh 1.4 640))
-  (olena/oln/io/gz_stream.hh (oln/f/17_gz_stream. 1.7 640))
+  (olena/oln/io/gz.hh (oln/f/16_gz.hh 1.5 640))
+  (olena/oln/io/gz_stream.hh (oln/f/17_gz_stream. 1.8 640))
   (olena/oln/io/pnm3d.hh (oln/b/14_pnm3d.hh 1.4 640))
-  (olena/oln/io/pnm.hh (oln/b/19_pnm.hh 1.4 640))
+  
   (olena/oln/io/pnm_read3d.hxx (oln/b/11_pnm_read3d 1.8 640))
   
   (olena/oln/io/pnm_read.hh (oln/b/16_pnm_read.h 1.9.1.7 600))
@@ -285,12 +280,12 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/io/pnm_write.hh (oln/b/15_pnm_write. 1.8.1.8 600))
   (olena/oln/io/readable.hh (oln/b/13_readable.h 1.9 600))
   (olena/oln/io/se.hh (oln/i/45_se.hh 1.3 640))
-  (olena/oln/io/se_neighborhood.hh (oln/i/47_se_neighbo 1.6 640))
-  (olena/oln/io/se_window.hh (oln/i/46_se_window. 1.6 600))
+  (olena/oln/io/se_neighborhood.hh (oln/i/47_se_neighbo 1.7 640))
+  (olena/oln/io/se_window.hh (oln/i/46_se_window. 1.7 600))
   (olena/oln/level/cc.hh (oln/e/20_cc.hh 1.11.1.4 640))
   (olena/oln/level/compare.hh (oln/31_compare.hh 1.5 640))
-  (olena/oln/level/connected.hh (oln/30_connected. 1.9.1.5 640))
-  (olena/oln/level/fill.hh (oln/32_fill.hh 1.5 640))
+  (olena/oln/level/connected.hh (oln/30_connected. 1.9.1.6 640))
+  (olena/oln/level/fill.hh (oln/32_fill.hh 1.6 640))
   (olena/oln/level/invert.hh (oln/33_invert.hh 1.5.2.2.1.7 640))
   (olena/oln/level/lut.hh (oln/29_lut.hh 1.7 640))
   (olena/oln/level/set_level.hh (oln/p/1_set_level. 1.6 640))
@@ -315,36 +310,36 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   
   (metalic/mlc/math.hh (oln/b/51_ufuncs.hh 1.9 640))
   (olena/oln/morpho/closing.hh (oln/b/6_closing.hh 1.6 640))
-  (olena/oln/morpho/closing.inc (oln/44_closing.in 1.7 640))
-  (olena/oln/morpho/dilation.hh (oln/b/5_dilation.h 1.11 640))
-  (olena/oln/morpho/erosion.hh (oln/b/4_erosion.hh 1.10 640))
+  (olena/oln/morpho/closing.inc (oln/44_closing.in 1.8 640))
+  (olena/oln/morpho/dilation.hh (oln/b/5_dilation.h 1.12 640))
+  (olena/oln/morpho/erosion.hh (oln/b/4_erosion.hh 1.11 640))
   (olena/oln/morpho/extrema.hh (oln/38_extrema.hh 1.11 640))
-  (olena/oln/morpho/extrema.hxx (oln/j/4_extrema.hx 1.5 640))
-  (olena/oln/morpho/extrema_killer.hh (oln/e/19_extrema_ki 1.7.1.4.1.3 640))
-  (olena/oln/morpho/fast_morpho.hh (oln/46_fast_morph 1.4 640))
-  (olena/oln/morpho/fast_morpho.hxx (oln/45_fast_morph 1.8 640))
-  (olena/oln/morpho/geodesic_dilation.hh (oln/37_geodesic_d 1.11.1.4 640))
-  (olena/oln/morpho/geodesic_erosion.hh (oln/36_geodesic_e 1.11 640))
+  (olena/oln/morpho/extrema.hxx (oln/j/4_extrema.hx 1.6 640))
+  (olena/oln/morpho/extrema_killer.hh (oln/e/19_extrema_ki 1.7.1.4.1.4 640))
+  (olena/oln/morpho/fast_morpho.hh (oln/46_fast_morph 1.5 640))
+  (olena/oln/morpho/fast_morpho.hxx (oln/45_fast_morph 1.9 640))
+  (olena/oln/morpho/geodesic_dilation.hh (oln/37_geodesic_d 1.11.1.5 640))
+  (olena/oln/morpho/geodesic_erosion.hh (oln/36_geodesic_e 1.12 640))
   (olena/oln/morpho/gradient.hh (oln/b/3_gradient.h 1.6 640))
   (olena/oln/morpho/gradient.inc (oln/43_gradient.i 1.5 640))
   (olena/oln/morpho/hit_or_miss.hh (oln/b/2_hit_or_mis 1.7 640))
-  (olena/oln/morpho/hit_or_miss.inc (oln/42_hit_or_mis 1.9 640))
+  (olena/oln/morpho/hit_or_miss.inc (oln/42_hit_or_mis 1.10 640))
   (olena/oln/morpho/laplacian.hh (oln/b/1_laplacian. 1.6 640))
   (olena/oln/morpho/laplacian.inc (oln/41_laplacian. 1.5 640))
   (olena/oln/morpho/minmax.hh (oln/b/0_minmax.hh 1.4 640))
   (olena/oln/morpho/opening.hh (oln/51_opening.hh 1.6 640))
-  (olena/oln/morpho/opening.inc (oln/40_opening.in 1.7 640))
-  (olena/oln/morpho/reconstruction.hh (oln/35_reconstruc 1.13.1.4 640))
-  (olena/oln/morpho/splitse.hh (oln/34_splitse.hh 1.4 640))
-  (olena/oln/morpho/stat.hh (oln/50_stat.hh 1.8.1.3 640))
+  (olena/oln/morpho/opening.inc (oln/40_opening.in 1.8 640))
+  (olena/oln/morpho/reconstruction.hh (oln/35_reconstruc 1.13.1.5 640))
+  (olena/oln/morpho/splitse.hh (oln/34_splitse.hh 1.5 640))
+  (olena/oln/morpho/stat.hh (oln/50_stat.hh 1.8.1.4 640))
   (olena/oln/morpho/thickening.hh (oln/e/29_thickening 1.7 640))
-  (olena/oln/morpho/thickening.inc (oln/e/28_thickening 1.5 640))
+  (olena/oln/morpho/thickening.inc (oln/e/28_thickening 1.6 640))
   (olena/oln/morpho/thinning.hh (oln/e/27_thinning.h 1.7 640))
-  (olena/oln/morpho/thinning.inc (oln/e/26_thinning.i 1.6 640))
+  (olena/oln/morpho/thinning.inc (oln/e/26_thinning.i 1.7 640))
   (olena/oln/morpho/top_hat.hh (oln/49_top_hat.hh 1.4 640))
   (olena/oln/morpho/top_hat.inc (oln/39_top_hat.in 1.5 640))
-  (olena/oln/morpho/watershed.hh (oln/48_watershed. 1.5 640))
-  (olena/oln/morpho/watershed.hxx (oln/47_watershed. 1.9.1.3 640))
+  (olena/oln/morpho/watershed.hh (oln/48_watershed. 1.6 640))
+  (olena/oln/morpho/watershed.hxx (oln/47_watershed. 1.9.1.4 640))
   (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.5 640))
   (olena/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.7.1.4 640))
   (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.6 640))
@@ -401,12 +396,12 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.4 640))
   (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.4 640))
   (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.5 640))
-  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.5 640))
+  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.6 640))
   (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.6 640))
   (olena/oln/utils/timer.hh (oln/8_timer.hh 1.5 640))
   (olena/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.4 640))
   (olena/tests/arith/runtests (oln/o/45_runtests 1.8.1.1 750))
-  (olena/tests/arith/tests/min1 (oln/o/44_min1 1.1.1.6 640))
+  (olena/tests/arith/tests/min1 (oln/o/44_min1 1.1.1.7 640))
   (metalic/tests/check/check.hh (oln/e/40_check.hh 1.4 640))
   (olena/tests/check/data.cc (oln/f/5_data.cc 1.8 640))
   (olena/tests/check/data.hh (oln/f/6_data.hh 1.4 640))
@@ -429,8 +424,8 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/tests/convol/sobel_gradient.cc (oln/f/45_sobel_grad 1.3.1.4 640))
   (olena/tests/convol/sum_on_random.pgm (oln/f/42_sum_on_ran 1.1 640) :no-keywords)
   
-  (olena/tests/io/2d.cc (oln/e/47_2d.cc 1.7.1.4 640))
-  (olena/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.7.1.6 640))
+  (olena/tests/io/2d.cc (oln/e/47_2d.cc 1.7.1.5 640))
+  (olena/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.7.1.7 640))
   (olena/tests/io/Makefile.am (oln/e/49_Makefile.a 1.15 640))
   (olena/tests/io/pretty.cc (oln/i/42_pretty.cc 1.2 640))
   (olena/tests/io/se_fail.cc (oln/i/43_se_fail.cc 1.3 640))
@@ -447,9 +442,9 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (metalic/tests/array/test_array2d.cc (oln/f/25_test_array 1.5 640))
   (metalic/tests/array/test_array3d.cc (oln/f/24_test_array 1.5 640))
   (olena/tests/morpho/edoc.cc (oln/f/13_edoc.cc 1.4.1.3 640))
-  (olena/tests/morpho/extrkiller.cc (oln/e/31_extrkiller 1.5.1.4 640))
+  (olena/tests/morpho/extrkiller.cc (oln/e/31_extrkiller 1.5.1.5 640))
   (olena/tests/morpho/Makefile.am (oln/e/32_Makefile.a 1.12 640))
-  (olena/tests/morpho/reconstruction.cc (oln/e/34_reconstruc 1.9 640))
+  (olena/tests/morpho/reconstruction.cc (oln/e/34_reconstruc 1.10 640))
   (olena/tests/README (oln/f/4_README 1.4 640))
   (olena/tests/sanity/includes.test (oln/f/46_includes.t 1.8 750))
   (olena/tests/sanity/Makefile.am (oln/f/48_Makefile.a 1.4.1.2 640))
@@ -760,8 +755,8 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (doc/dev/design.texi (oln/q/5_design.tex 1.2 640))
 
 
-  (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.3 640))
-  (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.2 640))
+  (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.4 640))
+  (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.3 640))
   (olena/tests/convol () :directory)
   (metalic/config (../config) :symlink)
   (metalic/m4 () :directory)
@@ -936,7 +931,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/io/pnm_common.hh (oln/t/40_pnm_common 1.2 600))
   (olena/oln/io/image_base.hh (oln/t/41_image_base 1.2 600))
   (olena/oln/io/image_write.hh (oln/t/42_image_writ 1.2 600))
-  (olena/oln/io/stream_wrapper.hh (oln/t/43_stream_wra 1.3 600))
+  (olena/oln/io/stream_wrapper.hh (oln/t/43_stream_wra 1.4 600))
   (olena/oln/io/utils.hh (oln/t/44_utils.hh 1.2 600))
   (olena/oln/io/image_read.hh (oln/t/45_image_read 1.2 600))
 ;; Files added by populate at Sat, 26 Jul 2003 15:39:29 +0200,
@@ -1031,10 +1026,33 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/tests/core/tests/traverse (oln/u/7_traverse 1.1 640))
   (integre/tests/types/tests/int_u7 (oln/u/8_int_u7 1.1 640))
   (olena/oln/io/pnm_read_data.hh (oln/u/9_pnm_read_d 1.1 640))
-  (olena/oln/io/pnm_write_data.hh (oln/u/10_pnm_write_ 1.1 640)))
+  (olena/oln/io/pnm_write_data.hh (oln/u/10_pnm_write_ 1.1 640))
+;; Files added by populate at Mon, 28 Jul 2003 16:33:11 +0200,
+;; to version 2003paradigm.41(w), by nes:
+
+  (olena/oln/io/image.hh (oln/u/11_image.hh 1.1 600))
+
+;; Files deleted by populate at Mon, 28 Jul 2003 16:33:11 +0200,
+;; from version 2003paradigm.41(w), by nes:
+
+  ; (olena/oln/io/pnm.hh ())
+)
 (Merge-Parents
-  (2003paradigm.40 complete
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog m) (olena/oln/core/abstract/struct_elt.hh olena/oln/core/abstract/struct_elt.hh olena/oln/core/abstract/struct_elt.hh r)
-    (olena/oln/core/abstract/window.hh olena/oln/core/abstract/window.hh olena/oln/core/abstract/window.hh r) (olena/oln/core/winiter.hh olena/oln/core/winiter.hh olena/oln/core/winiter.hh r))
+  (2003paradigm.42 complete
+    (olena/ChangeLog olena/ChangeLog olena/ChangeLog m) (olena/oln/convert/conversion.hh olena/oln/convert/conversion.hh olena/oln/convert/conversion.hh r)
+    (olena/oln/convert/conversion_ng_se.hh olena/oln/convert/conversion_ng_se.hh olena/oln/convert/conversion_ng_se.hh r) (() olena/oln/io/pnm.hh olena/oln/io/pnm.hh n)
+    (olena/oln/level/connected.hh olena/oln/level/connected.hh olena/oln/level/connected.hh r) (olena/oln/level/fill.hh olena/oln/level/fill.hh olena/oln/level/fill.hh r)
+    (olena/oln/morpho/closing.inc olena/oln/morpho/closing.inc olena/oln/morpho/closing.inc r) (olena/oln/morpho/dilation.hh olena/oln/morpho/dilation.hh olena/oln/morpho/dilation.hh r)
+    (olena/oln/morpho/erosion.hh olena/oln/morpho/erosion.hh olena/oln/morpho/erosion.hh r) (olena/oln/morpho/extrema.hxx olena/oln/morpho/extrema.hxx olena/oln/morpho/extrema.hxx r)
+    (olena/oln/morpho/extrema_killer.hh olena/oln/morpho/extrema_killer.hh olena/oln/morpho/extrema_killer.hh r) (olena/oln/morpho/fast_morpho.hh olena/oln/morpho/fast_morpho.hh olena/oln/morpho/fast_morpho.hh r)
+    (olena/oln/morpho/fast_morpho.hxx olena/oln/morpho/fast_morpho.hxx olena/oln/morpho/fast_morpho.hxx r) (olena/oln/morpho/geodesic_dilation.hh olena/oln/morpho/geodesic_dilation.hh olena/oln/morpho/geodesic_dilation.hh r)
+    (olena/oln/morpho/geodesic_erosion.hh olena/oln/morpho/geodesic_erosion.hh olena/oln/morpho/geodesic_erosion.hh r) (olena/oln/morpho/hit_or_miss.inc olena/oln/morpho/hit_or_miss.inc olena/oln/morpho/hit_or_miss.inc r)
+    (olena/oln/morpho/opening.inc olena/oln/morpho/opening.inc olena/oln/morpho/opening.inc r) (olena/oln/morpho/reconstruction.hh olena/oln/morpho/reconstruction.hh olena/oln/morpho/reconstruction.hh r)
+    (olena/oln/morpho/splitse.hh olena/oln/morpho/splitse.hh olena/oln/morpho/splitse.hh r) (olena/oln/morpho/stat.hh olena/oln/morpho/stat.hh olena/oln/morpho/stat.hh r)
+    (olena/oln/morpho/thickening.inc olena/oln/morpho/thickening.inc olena/oln/morpho/thickening.inc r) (olena/oln/morpho/thinning.inc olena/oln/morpho/thinning.inc olena/oln/morpho/thinning.inc r)
+    (olena/oln/morpho/watershed.hh olena/oln/morpho/watershed.hh olena/oln/morpho/watershed.hh r) (olena/oln/morpho/watershed.hxx olena/oln/morpho/watershed.hxx olena/oln/morpho/watershed.hxx r)
+    (olena/oln/utils/histogram.hh olena/oln/utils/histogram.hh olena/oln/utils/histogram.hh r) (olena/tests/arith/tests/min1 olena/tests/arith/tests/min1 olena/tests/arith/tests/min1 r)
+    (olena/tests/morpho/extrkiller.cc olena/tests/morpho/extrkiller.cc olena/tests/morpho/extrkiller.cc r) (olena/tests/morpho/reconstruction.cc olena/tests/morpho/reconstruction.cc olena/tests/morpho/reconstruction.cc r)
+    (olena/oln/morpho/attribute_closing_opening.hh olena/oln/morpho/attribute_closing_opening.hh olena/oln/morpho/attribute_closing_opening.hh r) (olena/oln/morpho/attribute_union_find.hh olena/oln/morpho/attribute_union_find.hh olena/oln/morpho/attribute_union_find.hh r))
 )
 (New-Merge-Parents)

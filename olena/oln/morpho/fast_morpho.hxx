@@ -43,15 +43,13 @@ namespace oln {
 
       // Find structuring elements to be added/removed from the histogram
       // when we move forward along each direction.
-      template<class E1_, class E2_, class E3_>
+      // FIXME: talking about struct elts, but using add(dp) that can't work on w_windows
+      template<class E1, class E2, class E3>
       void
-      find_struct_elts(const struct_elt<E1_>& _se,
-		       struct_elt<E2_> _se_add[mlc::exact<E1_>::ret::dim],
-		       struct_elt<E3_> _se_rem[mlc::exact<E1_>::ret::dim])
+      find_struct_elts(const abstract::struct_elt<E1>& se,
+		       abstract::struct_elt<E2> se_add[mlc::exact<E1>::ret::dim],
+		       abstract::struct_elt<E3> se_rem[mlc::exact<E1>::ret::dim])
       {
-	Exact_cref(E1, se);
-	Exact_ptr(E2, se_add);
-	Exact_ptr(E3, se_rem);
 	const unsigned dim = E1::dim;
 
 	// back[n] allows to move backward on coordinate `n'.
@@ -98,23 +96,20 @@ namespace oln {
 
       // Update HIST by adding elements from _SE_ADD, and removing
       // those from _SE_REM.
-      template<class I_, class E1_, class E2_, class H>
+      template<class I, class E1, class E2, class H>
       inline void
       hist_update(H& hist,
-		  const image<I_>& _input,
-		  const Point(I_)& p,
-		  const struct_elt<E1_>& _se_rem,
-		  const struct_elt<E2_>& _se_add)
+		  const abstract::image<I>& input,
+		  const Point(I)& p,
+		  const abstract::struct_elt<E1>& se_rem,
+		  const abstract::struct_elt<E2>& se_add)
       {
-	Exact_cref(I, input);
 	{
-	  Exact_cref(E1, se_rem);
 	  Iter(E1) dp(se_rem);
 	  for_all(dp)
 	    --hist[input[p + dp]];
 	}
 	{
-	  Exact_cref(E2, se_add);
 	  Iter(E2) dp(se_add);
 	  for_all(dp)
 	    ++hist[input[p + dp]];
@@ -234,35 +229,32 @@ namespace oln {
     } // internal
 
 
-    template<class E_>
+    template<class E>
     struct sort_dimensions
     {
-      sort_dimensions(struct_elt<E_> se[mlc::exact<E_>::ret::dim])
+      sort_dimensions(abstract::struct_elt<E> se[mlc::exact<E>::ret::dim])
 	: _se(se) {}
 
       bool operator()(unsigned a, unsigned b)
       {
-	Exact_ptr(E, se);
-	return se[a].card() > se[b].card(); 
+	return _se[a].card() > _se[b].card();
       }
 
     protected:
-      struct_elt<E_>* _se;
+      abstract::struct_elt<E>* _se;
     };
 
 
-    template<class I_, class E_, template<typename, typename> class H>
-    Concrete(I_)
-    fast_morpho(const image<I_>& _input,
-		const struct_elt<E_>& _se)
+    template<class I, class E, template<typename, typename> class H>
+    Concrete(I)
+    fast_morpho(const abstract::image<I>& input,
+		const abstract::struct_elt<E>& se)
     {
-      Exact_cref(I, input);
-      Exact_cref(E, se);
       enum { dim = E::dim };
 
       // prepare output
       Concrete(I) output(input.size());
-      border::adapt_copy(input, se.delta());
+      input.border_adapt_copy(se.delta());
 
       // compute delta structuring elements for forward movements
       E se_add[dim];
@@ -288,16 +280,17 @@ namespace oln {
       unsigned dims[dim];
       for (unsigned n = 0; n < dim; ++n)
 	dims[n] = n;
-      sort_dimensions<E_> s(se_add);
+      sort_dimensions<E> s(se_add);
       std::sort(dims, dims + dim, s);
 
-      const typename I::image_size size = input.size();
+      const typename I::size_type size = input.size();
 
       // Initialize the histogram with the values around the first point.
       H<Value(I),unsigned> hist;
       Point(I) p;
 
-      Iter(E) dp(se);
+      //      Iter(E) dp(se);
+      typename E::iter_type	dp(se);
       for_all(dp)
 	++hist[input[p + dp]];
 
@@ -307,11 +300,11 @@ namespace oln {
       output[p] = hist.res();	// First point.
 
       internal::fast_morpho_inner<1, E::dim, const I,
-	const typename I::image_size, H<Value(I),unsigned>,
-	const E, Point(I), Concrete(I_)>::doit(input, size, hist,					       
-					       se_add, se_rem,
-					       se_add_back, se_rem_back,
-					       p, output, dims);
+	const typename I::size_type, H<Value(I),unsigned>,
+	const E, Point(I), Concrete(I)>::doit(to_exact(input), size, hist,
+					      se_add, se_rem,
+					      se_add_back, se_rem_back,
+					      p, output, dims);
       return output;
     }
 

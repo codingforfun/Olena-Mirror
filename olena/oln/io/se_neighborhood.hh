@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_SE_NEIGHBORHOOD_HXX_
-# define OLENA_IO_SE_NEIGHBORHOOD_HXX_
+#ifndef OLENA_IO_SE_NEIGHBORHOOD_HH_
+# define OLENA_IO_SE_NEIGHBORHOOD_HH_
 
-# include <oln/io/pnm.hh>
 # include <oln/core/neighborhood2d.hh>
 # include <oln/core/macros.hh>
+# include <oln/io/image.hh>
 
 namespace oln {
 
@@ -95,4 +95,4 @@ namespace oln {
   } // io
 } // oln
 
-#endif // OLENA_IO_SE_NEIGHBORHOOD_HXX_
+#endif // OLENA_IO_SE_NEIGHBORHOOD_HH_

@@ -32,7 +32,7 @@ check()
 			  fast_minima_killer(lena, size, neighb_c4())))
 	OK_OR_FAIL;
     }
-  }
+
   {
     for (unsigned int size=1; size < 20; ++size) {
       std::cout << "maxima killer (size " << size << ") ... " << std::flush;

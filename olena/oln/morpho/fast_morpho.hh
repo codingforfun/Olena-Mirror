@@ -35,8 +35,8 @@ namespace oln {
   namespace morpho {
     template<class I, class E> inline
     Concrete(I)
-    fast_morpho(const image<I>& input,
-		const struct_elt<E>& se,
+    fast_morpho(const abstract::image<I>& input,
+		const abstract::struct_elt<E>& se,
 		Value(I)(*func) (const utils::histogram<Value(I)>&));
   } // end of morpho
 } // end of oln

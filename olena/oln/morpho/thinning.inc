@@ -27,14 +27,11 @@
 // Public License.
 
 
-template<class I_, class E1_, class E2_>
-Concrete(I_) thinning(const image<I_>& _input,
-		      const struct_elt<E1_>& _se1,
-		      const struct_elt<E2_>& _se2)
+template<class I, class E1, class E2>
+Concrete(I) thinning(const image<I>& input,
+		     const struct_elt<E1>& se1,
+		     const struct_elt<E2>& se2)
 {
-  Exact_cref(I, input);
-  Exact_cref(E1, se1);
-  Exact_cref(E2, se2);
   mlc::eq<I::dim, E1::dim>::ensure();
   mlc::eq<I::dim, E2::dim>::ensure();
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,7 +28,15 @@
 #ifndef OLENA_IO_BASICS_HH_
 # define OLENA_IO_BASICS_HH_
 
+# include <oln/config/system.hh>
 # include <oln/io/base.hh>
 # include <oln/io/file.hh>
+# if HAVE_ZLIB
+#  include <oln/io/gz.hh>
+# endif
+
+# include <oln/io/image_read.hh>
+# include <oln/io/image_write.hh>
+# include <oln/io/se.hh>
 
 #endif // OLENA_IO_BASICS_HH_
