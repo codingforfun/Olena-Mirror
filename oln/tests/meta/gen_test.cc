@@ -123,107 +123,106 @@ static const struct howto
 
 
 
-static void     copyfile(const string&  src,
-                         ofstream&      dest)
+static void
+copyfile (const string & src, ofstream & dest)
 {
-  ifstream      ifs(src.c_str(), ios::in);
-  string        buffer;
+  ifstream ifs (src.c_str (), ios::in);
+  string buffer;
 
-  while (!ifs.eof())
+  while (!ifs.eof ())
     {
-      getline(ifs, buffer);
+      getline (ifs, buffer);
       dest << buffer << endl;
     }
- }
+}
 
 
-static void             write_prelude(ofstream&         ofs,
-                                      const char*       filename)
+static void
+write_prelude (ofstream & ofs, const char *filename)
 {
-  ofs.open(filename, ios::out);
+  ofs.open (filename, ios::out);
   ofs << "// -*-C++-*-" << endl
       << "// This temporary file was generated for testing purpose only."
       << endl
       << "// It's part of Olena, the static generic image processing library."
       << endl << endl;
 
-  copyfile(srcdir + "/gen_test_utils/prelude", ofs);
+  copyfile (srcdir + "/gen_test_utils/prelude", ofs);
 }
 
 // #include <fstream>
 
-static bool             write_postlude_and_test(ofstream&               ofs,
-                                                char*                   filename,
-                                                int                     dimension,
-                                                howto                   h,
-						int			ok,
-                                                ofstream&               success_log,
-                                                ofstream&               fail_log,
-                                                const stringstream&     decl)
+static bool
+write_postlude_and_test (ofstream & ofs,
+			 char *filename,
+			 int dimension,
+			 howto h,
+			 int ok,
+			 ofstream & success_log,
+			 ofstream & fail_log, const stringstream & decl)
 {
-  copyfile(srcdir + "/gen_test_utils/postlude", ofs);
-  ofs.close();
+  copyfile (srcdir + "/gen_test_utils/postlude", ofs);
+  ofs.close ();
 
   pid_t pid;
-  int   fd[2];
-  pipe(fd);
+  int fd[2];
+  pipe (fd);
   bool fail = false;
 
-  if ((pid = fork()) != -1)
+  if ((pid = fork ()) != -1)
     if (!pid)
       {
-        dup2(fd[1],2);
-        close(fd[0]);
-        close(fd[1]);
-	std::string cmdline = 
-	  std::string(CXX) + ' ' 
-	  + CXXFLAGS + ' ' 
+	dup2 (fd[1], 2);
+	close (fd[0]);
+	close (fd[1]);
+	std::string cmdline =
+	  std::string (CXX) + ' '
+	  + CXXFLAGS + ' '
 	  + CPPFLAGS + ' '
-	  + OLN_CXXFLAGS + ' ' 
+	  + OLN_CXXFLAGS + ' '
 	  + OLN_CPPFLAGS + ' '
-	  + Isrcdir("../..") + ' '
-	  + Isrcdir("../check") + ' ' 
-	  + "-L../check -lcheck " + filename;
-	int ret = system(cmdline.c_str());
-	exit(WEXITSTATUS(ret));
+	  + Isrcdir ("../..") + ' '
+	  + Isrcdir ("../check") + ' ' + "-L../check -lcheck " + filename;
+	int ret = system (cmdline.c_str ());
+	exit (WEXITSTATUS (ret));
       }
     else
       {
-        close(fd[1]);
-        stringstream header;
-        header << endl << "=== Compiling : [" << dimension << "D]\t"
-               << h.verbose << endl
-	       << "=== Expected  :  " << (ok ? "PASS" : "FAIL") << endl
-	       << endl ;
+	close (fd[1]);
+	stringstream header;
+	header << endl << "=== Compiling : [" << dimension << "D]\t"
+	       << h.verbose << endl
+	       << "=== Expected  :  " << (ok ? "PASS" : "FAIL") << endl << endl;
 
-	stringstream	compile_mesg;
-	char		buffer[32];
+	stringstream compile_mesg;
+	char buffer[32];
 	{
 	  int r;
-	  while ((r = read(fd[0], buffer, 32)) != 0)
-	    compile_mesg.write(buffer, r);
+	  while ((r = read (fd[0], buffer, 32)) != 0)
+	    compile_mesg.write (buffer, r);
 	}
 	int status;
- 	if (waitpid(pid, &status, 0) == -1)
- 	  abort();
-	if ((WEXITSTATUS(status) || ok) && !(WEXITSTATUS(status) && ok))
+	if (waitpid (pid, &status, 0) == -1)
+	  abort ();
+	if ((WEXITSTATUS (status) || ok) && !(WEXITSTATUS (status) && ok))
 	  {
-	    success_log << header.str() << decl.str()
-			<< endl << compile_mesg.str() << "Exit status = " << WEXITSTATUS(status) << endl <<
+	    success_log << header.str () << decl.str ()
+			<< endl << compile_mesg.
+	      str () << "Exit status = " << WEXITSTATUS (status) << endl <<
 	      "==========================================================================="
 			<< endl;
 	    cerr << (ok ? "PASS" : "XFAIL");
 	  }
 	else
 	  {
-	    fail_log << header.str() << decl.str() << endl << compile_mesg.str()
-		     << "Exit status = " << WEXITSTATUS(status) << endl <<
+	    fail_log << header.str () << decl.str () << endl << compile_mesg.
+	      str () << "Exit status = " << WEXITSTATUS (status) << endl <<
 	      "==========================================================================="
 		     << endl;
 	    cerr << (ok ? "FAIL" : "XPASS");
 	    fail = true;
 	  }
-	close(fd[0]);
+	close (fd[0]);
 	cerr << ": [" << dimension << "D]\t" << h.verbose << endl;
       }
   return fail;
@@ -231,59 +230,56 @@ static bool             write_postlude_and_test(ofstream&               ofs,
 
 
 
-static int		fill_array(ostream&	ofs,
-				   int		dimension,
-				   int*		geometry,
-				   howto	h)
+static int
+fill_array (ostream & ofs, int dimension, int *geometry, howto h)
 {
-  int*		cur_dim = (int*)malloc(dimension * sizeof(int));
+  int *cur_dim = (int *) malloc (dimension * sizeof (int));
   for (int i = dimension - 1; 0 <= i; --i)
     cur_dim[i] = geometry[i];
   ++cur_dim[dimension - 1];
 
-  bool		finished = false;
-  int		position = 0;
-  int		ok = h.ok;
+  bool finished = false;
+  int position = 0;
+  int ok = h.ok;
   while (!finished)
     {
       for (int d = dimension - 1; 0 <= d; --d)
 	if (0 <= --cur_dim[d])
 	  break;
-      else
-	{
-	  cur_dim[d] = geometry[d];
-	  ofs << endl << "\t\t";
-	}
+	else
+	  {
+	    cur_dim[d] = geometry[d];
+	    ofs << endl << "\t\t";
+	  }
 
-      ok &= h.element(ofs, dimension, geometry, position);
-      ok &= h.lbreak(ofs, dimension, geometry, position);
-      ok &= h.pbreak(ofs, dimension, geometry, position);
+      ok &= h.element (ofs, dimension, geometry, position);
+      ok &= h.lbreak (ofs, dimension, geometry, position);
+      ok &= h.pbreak (ofs, dimension, geometry, position);
       ++position;
       finished = true;
       for (int i = dimension - 1; 0 <= i; --i)
 	finished &= (cur_dim[i] == 0);
     }
-  ok &= h.terminate(ofs, dimension, geometry, position);
+  ok &= h.terminate (ofs, dimension, geometry, position);
   return ok;
 }
 
 
-static bool		write_file(string	filename,
-				   int		dimension,
-				   int*		geometry,
-				   howto	h,
-				   ofstream&	success_log,
-				   ofstream&	fail_log)
+static bool
+write_file (string filename,
+	    int dimension,
+	    int *geometry,
+	    howto h, ofstream & success_log, ofstream & fail_log)
 {
-  ofstream	ofs;
-  write_prelude(ofs, filename.c_str());
+  ofstream ofs;
+  write_prelude (ofs, filename.c_str ());
 
-  int		middle = geometry[0] + 1;
+  int middle = geometry[0] + 1;
   for (int i = dimension - 1; 0 < i; --i)
     middle *= (geometry[i] + 1);
   middle = middle >> 1;
 
-  stringstream	decl;
+  stringstream decl;
   decl << "  array" << dimension << "d< array" << dimension << "d_info< ";
   for (int i = 0; i < dimension; ++i)
     decl << (geometry[i] + 1) << (i == dimension - 1 ? "" : ", ");
@@ -295,32 +291,34 @@ static bool		write_file(string	filename,
       }
   decl << " >, int > foo = (ints_" << dimension << "d = " << endl << "\t\t";
   int ok;
-  ok = fill_array(decl, dimension, geometry, h);
+  ok = fill_array (decl, dimension, geometry, h);
 
-  ofs << decl.str();
-  return write_postlude_and_test(ofs, const_cast<char *>(filename.c_str()),
-				 dimension, h, ok, success_log, fail_log,
-				 decl);
+  ofs << decl.str ();
+  return write_postlude_and_test (ofs,
+				  const_cast < char *>(filename.c_str ()),
+				  dimension, h, ok, success_log, fail_log,
+				  decl);
 }
 
 
-bool		check()
+bool
+check ()
 {
-  string        filename = "gentest_array.cc";
+  string filename = "gentest_array.cc";
 
-  ofstream	success_log("success.log", ios::out);
-  ofstream	fail_log("fail.log", ios::out);
+  ofstream success_log ("success.log", ios::out);
+  ofstream fail_log ("fail.log", ios::out);
 
   bool fail = false;;
 
   for (int dimension = MIN_DIMENSION; dimension <= MAX_DIMENSION; ++dimension)
     {
-      int*	current_geometry = (int *)malloc(dimension * sizeof(int));
+      int *current_geometry = (int *) malloc (dimension * sizeof (int));
       for (int i = dimension - 1; i >= 0; --i)
 	current_geometry[i] = 2;
       current_geometry[dimension - 1] = 3;
 
-      bool	finished = false;
+      bool finished = false;
       while (!finished)
 	{
 	  for (int i = dimension - 1; i >= 0; --i)
@@ -334,15 +332,15 @@ bool		check()
 	      finished = false;
 
 	  for (int i = 0; methods[dimension - 1][i].element != 0; ++i)
-	    fail |= write_file(filename, dimension, current_geometry,
-			       methods[dimension - 1][i],
-			       success_log, fail_log);
+	    fail |= write_file (filename, dimension, current_geometry,
+				methods[dimension - 1][i],
+				success_log, fail_log);
 	}
-      free(current_geometry);
+      free (current_geometry);
     }
-  success_log.close();
-  fail_log.close();
-  remove(filename.c_str());
-  remove("./a.out");
+  success_log.close ();
+  fail_log.close ();
+  remove (filename.c_str ());
+  remove ("./a.out");
   return fail;
 }

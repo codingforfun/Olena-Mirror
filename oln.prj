@@ -1,48 +1,13 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 7 11)
-(Parent-Version oln 7 10)
+(Project-Version oln 7 12)
+(Parent-Version oln 7 11)
 (Version-Log "2003-01-16  Akim Demaille  <akim@epita.fr>
 
-	* oln/oln/arith/internal/opdecls.hh, oln/oln/config/system.hh,
-	* oln/oln/convol/fast_gaussian.hh, oln/oln/convol/fast_gaussian.hxx,
-	* oln/oln/core/compose.hh, oln/oln/core/contract.hh,
-	* oln/oln/core/dpoint1d.hh, oln/oln/core/dpoint1d.hxx,
-	* oln/oln/core/dpoint2d.hh, oln/oln/core/dpoint2d.hxx,
-	* oln/oln/core/dpoint3d.hh, oln/oln/core/dpoint3d.hxx,
-	* oln/oln/core/dpoint.hh, oln/oln/core/image.hh,
-	* oln/oln/core/image_size.hh, oln/oln/core/internal/fake.hh,
-	* oln/oln/core/internal/image1d_data.hh,
-	* oln/oln/core/internal/image2d_data.hh,
-	* oln/oln/core/internal/image3d_data.hh,
-	* oln/oln/core/internal/objs.hxx, oln/oln/core/macros.hh,
-	* oln/oln/core/old/image2d_bin.hh, oln/oln/core/old/image2d_bin.hxx,
-	* oln/oln/core/old/image2d.hxx, oln/oln/core/point.hh,
-	* oln/oln/core/typeadj.hh, oln/oln/io/gz_stream.hh,
-	* oln/oln/morpho/extrema_killer.hh, oln/oln/math/macros.hh,
-	* oln/oln/meta/array1d.hxx, oln/oln/meta/array2d.hxx,
-	* oln/oln/meta/array3d.hxx, oln/oln/meta/array.hh,
-	* oln/oln/morpho/closing.hh, oln/oln/morpho/extrema.hh,
-	* oln/oln/morpho/fast_morpho.hh, oln/oln/morpho/fast_morpho.hxx,
-	* oln/oln/morpho/gradient.hh, oln/oln/morpho/hit_or_miss.hh,
-	* oln/oln/morpho/laplacian.hh, oln/oln/morpho/opening.hh,
-	* oln/oln/morpho/thickening.hh, oln/oln/morpho/thinning.hh,
-	* oln/oln/morpho/top_hat.hh, oln/oln/morpho/watershed.hh,
-	* oln/oln/morpho/watershed.hxx, oln/oln/utils/timer.hh,
-	* oln/tests/check/check.hh, oln/tests/check/data.hh,
-	* oln/tests/check/srcdir.hh, oln/tests/check/verbose.hh,
-	* oln/tests/convert/convcomp.cc, oln/tests/io/loadsave.hh,
-	* oln/oln/types/optraits_scalar.hh, oln/oln/types/global_ops_defs.hh,
-	* tools/utilities/mosaic.cc, oln/oln/meta/type.hh,
-	* oln/oln/types/rgb.hh, oln/oln/types/nrgb.hh, oln/oln/types/hsi.hh,
-	* oln/oln/types/hsl.hh, oln/oln/types/hsv.hh, oln/oln/types/yiq.hh,
-	* oln/oln/types/xyz.hh, oln/oln/types/yuv.hh, oln/oln/types/cast.hh,
-	* oln/oln/config/pconf.hh, tools/swilena/python/typedefs.hh,
-	* oln/oln/meta/optional.hh, oln/oln/topo/dmap.hxx: Formatting
-	changes: Indent properly the CPP directives.")
+	* oln/tests/meta/gen_test.cc: Indenting changes.")
 (New-Version-Log "")
-(Checkin-Time "Thu, 16 Jan 2003 10:36:53 +0100")
+(Checkin-Time "Thu, 16 Jan 2003 11:18:54 +0100")
 (Checkin-Login akim)
 ;; diff-ignore configure$
 ;; diff-ignore aclocal\.m4$
@@ -138,7 +103,7 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.7 640))
-  (oln/ChangeLog (oln/o/30_ChangeLog 1.14 600))
+  (oln/ChangeLog (oln/o/30_ChangeLog 1.15 600))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.4 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.4 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.1 640))
@@ -360,7 +325,7 @@
   (oln/oln/utils/stat.hh (oln/9_stat.hh 1.4 640))
   (oln/oln/utils/timer.hh (oln/8_timer.hh 1.3 640))
   (oln/tests/meta () :directory)
-  (oln/tests/meta/gen_test.cc (oln/f/34_gen_test.c 1.6 640))
+  (oln/tests/meta/gen_test.cc (oln/f/34_gen_test.c 1.7 640))
   (oln/tests/meta/gen_test_utils/errors.cc (oln/f/33_errors.cc 1.1 640))
   (oln/tests/meta/gen_test_utils/errors.hh (oln/f/32_errors.hh 1.1 640))
   (oln/tests/meta/gen_test_utils/postlude (oln/f/31_postlude 1.1 640))
