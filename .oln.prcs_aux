@@ -291,6 +291,7 @@
 (oln/oln/types/optraits_cplx.hh 14369 1042757277 i/5_optraits_c 1.6)
 (oln/tests/README 4977 1039648472 f/4_README 1.4)
 (oln/tests/types/tests/float_c1 120 1030464612 h/13_float_c1 1.1)
+(oln/config/oln-local.m4 1265 1043328410 p/37_oln-local. 1.1)
 (tools/swilena/src/swilena2d_convert.i 143 1039630292 n/47_swilena2d_ 1.1)
 (oln/oln/meta/array3d.hxx 7998 1042737226 f/18_array3d.hx 1.5)
 (oln/oln/arith/ops.hh 2749 1042737226 b/23_ops.hh 1.5.1.2)

@@ -1,26 +1,12 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 7 36)
-(Parent-Version oln 7 35)
-(Version-Log "Index: ChangeLog
-from  +2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
-
-   * configure.ac: Move auxiliary macro definitions to ...
-   * oln/config/oln-local.m4: ... this new file ...
-   * oln/Makefile.am: ... and distribute it.
-
-   * bootstrap.sh: Fix aclocal invocation to find oln.m4 again.
-
-Index: oln/ChangeLog
-from   2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
-   * config/oln.m4: Remove many unnecessary double quotes.
-   * tests/arith/runtests (indir): Likewise.
-   * tests/types/runtests (indir): Likewise.
-
+(Project-Version oln 7 37)
+(Parent-Version oln 7 36)
+(Version-Log "Add missing oln/config/oln-local.m4
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 23 Jan 2003 14:13:02 +0100")
+(Checkin-Time "Thu, 23 Jan 2003 14:26:50 +0100")
 (Checkin-Login raph)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -683,8 +669,11 @@ from   2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
 ;; from version 7.33(w), by raph:
 
   ; (oln/configure.ac ())
+
+;; Files added by populate at Thu, 23 Jan 2003 14:26:31 +0100,
+;; to version 7.36(w), by raph:
+
+  (oln/config/oln-local.m4 (oln/p/37_oln-local. 1.1 664))
 )
-(Merge-Parents
-  (7.35 complete)
-)
+(Merge-Parents)
 (New-Merge-Parents)
