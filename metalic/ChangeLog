@@ -1,3 +1,33 @@
+2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* mlc/objs.hh: Move array related code ...
+	* mlc/array/objs.hh: ... here.
+
+	* mlc/array1d.hh: Rename as ...
+	* mlc/array/1d.hh: ... this.
+
+	* mlc/array2d.hh: Rename as ...
+	* mlc/array/2d.hh: ... this.
+
+	* mlc/array3d.hh: Rename as ...
+	* mlc/array/3d.hh: ... this.
+
+	* mlc/arraynd.hh: Rename as ...
+	* mlc/array/nd.hh: ... this.
+
+	* mlc/array.hh: Rename as ...
+	* mlc/array/all.hh: ... this.
+
+	* mlc/array/1d.hh, mlc/array/1d.hh, mlc/array/2d.hh,
+	mlc/array/3d.hh, mlc/array/all.hh: Update includes.
+
+	* mlc/config/system.hh: New file.  
+
+	* mlc/Makefile.am: Adjust consequently.
+	
+	* mlc/contract.hh, mlc/type.hh: Use mlc/config/system.hh instead of
+	oln/config/system.hh.
+
 2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* mlc/array1d.hh, mlc/array2d.hh, mlc/array3d.hh: Update

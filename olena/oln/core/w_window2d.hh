@@ -29,7 +29,7 @@
 # define OLENA_CORE_W_WINDOW2D_HH
 
 # include <oln/core/internal/w_window.hh>
-# include <mlc/array.hh>
+# include <mlc/array/all.hh>
 # include <oln/core/accum.hh>
 # include <oln/core/winiter.hh>
 # include <oln/core/winneighb.hh>

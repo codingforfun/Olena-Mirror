@@ -30,7 +30,7 @@
 
 # include <mlc/type.hh>
 
-# include <mlc/array.hh>
+# include <mlc/array/all.hh>
 
 # include <ntg/global_ops.hh>
 # include <ntg/optraits.hh>

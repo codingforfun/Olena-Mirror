@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_WINNEIGHB_HH
 # define OLENA_CORE_WINNEIGHB_HH
 
-# include <oln/core/objs.hh>
+# include <mlc/objs.hh>
 # include <oln/core/image.hh>
 # include <string>
 

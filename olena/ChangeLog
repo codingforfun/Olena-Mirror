@@ -1,3 +1,17 @@
+2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/basics.hh, oln/core/internal/iter1d.hh,
+	oln/core/internal/iter2d.hh, oln/core/internal/iter3d.hh,
+	oln/core/winiter.hh, oln/core/winneighb.hh: Update includes.
+
+	* Makefile.am: Adjust consequently.
+
+	* oln/convol/convolution.hh, oln/core/w_window2d.hh,
+	oln/transforms/dwt.hh: Update includes.
+
+	* oln/core/objs.hh, oln/core/internal/objs.hxx: Move and merge into
+	$top_srcdir/metalic/mlc/objs.hh.
+	
 2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/core/type.hh, oln/core/contract.hh: Move into

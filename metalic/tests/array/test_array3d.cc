@@ -1,4 +1,4 @@
-#include <mlc/array.hh>
+#include <mlc/array/all.hh>
 #include <iostream>
 using std::cout;
 using std::endl;

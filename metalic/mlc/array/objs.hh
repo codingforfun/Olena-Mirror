@@ -1,4 +1,4 @@
-// Copyright (C) 2001  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,20 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_INTERNAL_OBJS_HXX
-# define OLENA_CORE_INTERNAL_OBJS_HXX
+#ifndef METALIC_ARRAY_OBJS_HH
+# define METALIC_ARRAY_OBJS_HH
 
+// FIXME: rename, objs is not precise enough.
+
+//
+//  Defines common objects useful for array declarations.
+//
+
+# include <mlc/objs.hh>
 
 namespace oln {
 
-
   namespace internal {
 
-    class _begin {};
-    class _end   {};
     class _lbrk  {};
     class _pbrk  {};
-
+    
     template<class T>
     struct _x {
       _x(T val) : ue(val) {}
@@ -47,11 +51,22 @@ namespace oln {
     template<> struct _x<void> {};
     template<> struct _x<oln::internal::_lbrk>;
     template<> struct _x<oln::internal::_end>;
-
+    
   } // end of internal
 
+  // cross means origin
+
+  template<class T> inline
+  internal::_x<T>
+  x(T val) { return internal::_x<T>(val); }
+
+  inline
+  internal::_x<void>
+  x() { return internal::_x<void>(); }
+
+  static const internal::_lbrk  lbrk  = internal::_lbrk();
+  static const internal::_pbrk  pbrk  = internal::_pbrk();
 
 } // end of oln
 
-
-#endif // ! OLENA_CORE_INTERNAL_OBJS_HXX
+#endif // METALIC_ARRAY_OBJS_HH

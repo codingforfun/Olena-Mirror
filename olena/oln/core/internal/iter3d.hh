@@ -34,7 +34,7 @@
 # include <oln/core/point3d.hh>
 # include <oln/core/dpoint3d.hh>
 # include <oln/core/image3d.hh>
-# include <oln/core/objs.hh>
+# include <mlc/objs.hh>
 
 
 namespace oln {

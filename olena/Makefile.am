@@ -83,7 +83,6 @@ nobase_include_HEADERS =			\
   oln/core/internal/iter2d.hh			\
   oln/core/internal/iter3d.hh			\
   oln/core/internal/neighborhood.hh		\
-  oln/core/internal/objs.hxx			\
   oln/core/internal/real_image1d.hh		\
   oln/core/internal/real_image2d.hh		\
   oln/core/internal/real_image3d.hh		\
@@ -96,7 +95,6 @@ nobase_include_HEADERS =			\
   oln/core/neighborhood1d.hh			\
   oln/core/neighborhood2d.hh			\
   oln/core/neighborhood3d.hh			\
-  oln/core/objs.hh				\
   oln/core/point.hh				\
   oln/core/point1d.hh				\
   oln/core/point1d.hxx				\

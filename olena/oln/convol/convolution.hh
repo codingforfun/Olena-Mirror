@@ -34,7 +34,7 @@
 # include <oln/core/point.hh>
 # include <ntg/all.hh>
 # include <mlc/cmp.hh>
-# include <mlc/array.hh>
+# include <mlc/array/all.hh>
 
 # include <oln/core/w_window.hh>
 

@@ -25,32 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_OBJS_HH
-# define OLENA_CORE_OBJS_HH
+#ifndef OLENA_META_ARRAY_HH
+# define OLENA_META_ARRAY_HH
 
-# include <oln/core/internal/objs.hxx>
+# include <mlc/array/1d.hh>
+# include <mlc/array/2d.hh>
+# include <mlc/array/3d.hh>
 
-
-namespace oln {
-
-
-  static const internal::_begin begin = internal::_begin();
-  static const internal::_end   end   = internal::_end();
-  static const internal::_lbrk  lbrk  = internal::_lbrk();
-  static const internal::_pbrk  pbrk  = internal::_pbrk();
-
-  // cross means origin
-
-  template<class T> inline
-  internal::_x<T>
-  x(T val) { return internal::_x<T>(val); }
-
-  inline
-  internal::_x<void>
-  x() { return internal::_x<void>(); }
-
-
-} // end of oln
-
-
-#endif // ! OLENA_CORE_OBJS_HH
+#endif // ! OLENA_META_ARRAY_HH

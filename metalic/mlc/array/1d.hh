@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,13 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_META_ARRAY2D_HH
-# define OLENA_META_ARRAY2D_HH
+#ifndef OLENA_META_ARRAY1D_HH
+# define OLENA_META_ARRAY1D_HH
 
-# include <oln/core/objs.hh>
+# include <mlc/array/objs.hh>
 # include <mlc/contract.hh>
 # include <mlc/cmp.hh>
-# include <mlc/array2d.hxx>
+# include <mlc/array/1d.hxx>
 
 # include <iostream>
 
@@ -41,26 +41,24 @@ namespace oln {
 
 
     template<class _Info, class T_>
-    struct array2d
+    struct array1d
     {
-      typedef array2d self;
+      typedef array1d self;
       typedef T_ T;
       typedef _Info Info;
-
 
 
       //
       // Constructors
       //
 
-      array2d()
+      array1d()
       {
       }
 
-      array2d(T* ptr)
+      array1d(T* ptr)
       {
-	meta::less< 0, _Info::nrows >::ensure();
-	meta::less< 0, _Info::ncols >::ensure();
+	meta::less< 0, _Info::card >::ensure();
 	meta::less< _Info::card, internal::_max_card >::ensure();
 	for (unsigned i = 0; i < _Info::card; ++i)
 	  _buffer[i] = *ptr++;
@@ -68,7 +66,7 @@ namespace oln {
 
       // Copy
 
-      array2d(const self& rhs)
+      array1d(const self& rhs)
       {
 	for (unsigned i = 0; i < _Info::card; ++i)
 	  _buffer[i] = rhs[i];
@@ -86,7 +84,7 @@ namespace oln {
       // Operations on array
       //
 
-      typedef array2d<_Info, float> to_float; // FIXME : argh
+      typedef array1d<_Info,float> to_float; // FIXME : argh
 
       // Normalize (absolute values -> relative values)
 
@@ -110,35 +108,16 @@ namespace oln {
 
       // Central symmetry
 
-      array2d<array2d_info<_Info::nrows,
-			   _Info::ncols,
+      array1d<array1d_info<_Info::card,
 			   _Info::card - _Info::center - 1,
 			   _Info::i>, T>
       operator-() const
       {
 	enum { new_center =  _Info::card - _Info::center - 1 };
-	array2d<array2d_info< _Info::nrows, _Info::ncols, new_center, _Info::i>,T> tmp;
+	array1d<array1d_info< _Info::card, new_center, _Info::i>,T> tmp;
 
 	for (unsigned i = 0; i < _Info::card; ++i)
 	  tmp[_Info::card - i - 1] = this->operator[](i);
-	return tmp;
-      }
-
-
-      // Transpose
-
-      typedef array2d<array2d_info<
-	_Info::ncols,
-	_Info::nrows,
-	(_Info::center * _Info::nrows + _Info::center / _Info::ncols) % _Info::card,
-	_Info::i
-	>, T> transposed_array_t;
-
-      transposed_array_t transpose() const
-      {
-	transposed_array_t tmp;
-	for (int i = 0; i < Info::card; ++i)
-	  tmp[i] = this->operator[]((i * _Info::ncols + i / _Info::nrows) % _Info::card);
 	return tmp;
       }
 
@@ -171,24 +150,17 @@ namespace oln {
 	return *(_buffer + i);
       }
 
-
-      T operator()(int row, int col) const		// Relative position
+      T operator()(int i) const		// Relative position
       {
-	precondition(-_Info::center_row <= row);
-	precondition(row <= _Info::nrows - _Info::center_row - 1);
-	precondition(-_Info::center_col <= col);
-	precondition(col <= _Info::ncols - _Info::center_col - 1);
-
-	return *(_buffer + _Info::center + (row * _Info::ncols) + col);
+	precondition(-_Info::center <= i);
+	precondition(i <= _Info::card - _Info::center - 1);
+	return *(_buffer + _Info::center + i);
       }
-      T& operator()(int row, int col)
+      T& operator()(int i)
       {
-	precondition(-_Info::center_row <= row);
-	precondition(row <= _Info::nrows - _Info::center_row - 1);
-	precondition(-_Info::center_col <= col);
-	precondition(col <= _Info::ncols - _Info::center_col - 1);
-
-	return *(_buffer + _Info::center + (row * _Info::ncols) + col);
+	precondition(-_Info::center <= i);
+	precondition(i <= _Info::card - _Info::center - 1);
+	return *(_buffer + _Info::center + i);
       }
 
 
@@ -200,41 +172,38 @@ namespace oln {
 	return *(_buffer + i);
       }
 
-      template<int nrow, int ncol>
+      template<int i>
       T _get() const {
-	meta::lesseq< -_Info::center_row, nrow >::ensure();
-	meta::lesseq< nrow, _Info::nrows - _Info::center_row - 1 >::ensure();
-	meta::lesseq< -_Info::center_col, ncol >::ensure();
-	meta::lesseq< ncol, _Info::ncols - _Info::center_col - 1 >::ensure();
-
-	return *(_buffer + _Info::center + (row * _Info::ncols) + col);
+	meta::lesseq<-_Info::center, i>::ensure();
+	meta::lesseq<i, _Info::card - _Info::center - 1>::ensure();
+	return *(_buffer + _Info::center + i);
       }
 
 
     protected:
 
-      T _buffer[internal::_max_card];
+      T _buffer[_Info::card];
     };
 
 
     // ...but these static accessors:
 
     template<unsigned i, class Info, class T> inline
-    T get_at(const meta::array2d<Info, T>& arr)
+    T get_at(const meta::array1d<Info, T>& arr)
     {
       return arr.template _get_at<i>();
     }
 
-    template<int row, int col, class Info, class T> inline
-    T get(const meta::array2d<Info, T>& arr)
+    template<int i, class Info, class T> inline
+    T get(const meta::array1d<Info, T>& arr)
     {
-      return arr.template _get<row, col>();
+      return arr.template _get<i>();
     }
 
     // starter objects
 
-    static internal::_array2d_start<int>   ints_2d   = internal::_array2d_start<int>();
-    static internal::_array2d_start<float> floats_2d = internal::_array2d_start<float>();
+    static internal::_array1d_start<int>   ints_1d   = internal::_array1d_start<int>();
+    static internal::_array1d_start<float> floats_1d = internal::_array1d_start<float>();
 
 
   } // end of meta
@@ -243,20 +212,17 @@ namespace oln {
 
 template<class Info, class T>
 std::ostream& operator<<(std::ostream&				ostr,
-			 const oln::meta::array2d<Info, T>&	rhs)
+			 const oln::meta::array1d<Info, T>&	rhs)
 {
   for (int i = 0; i < Info::card; ++i)
-  {
     if (i == Info::center)
-      ostr << "<" << rhs[i] << ">";
+      ostr << "<" << rhs[i] << "> ";
     else
-      ostr << rhs[i];
+      ostr << rhs[i] << " ";
+  ostr << std::endl;
 
-    ostr << ((i + 1) %  Info::ncols == 0 ? "\n" : "\t");
-  }
-  ostr << std::flush;
   return ostr;
 }
 
 
-#endif // ! OLENA_META_ARRAY2D_HH
+#endif // ! OLENA_META_ARRAY1D_HH

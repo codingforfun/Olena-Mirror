@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,10 @@
 #ifndef OLENA_META_ARRAY3D_HH
 # define OLENA_META_ARRAY3D_HH
 
-# include <oln/core/objs.hh>
+# include <mlc/array/objs.hh>
 # include <mlc/contract.hh>
 # include <mlc/cmp.hh>
-# include <mlc/array3d.hxx>
+# include <mlc/array/3d.hxx>
 
 # include <iostream>
 

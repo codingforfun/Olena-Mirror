@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,11 +25,25 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_META_ARRAY_HH
-# define OLENA_META_ARRAY_HH
+#ifndef OLENA_CORE_OBJS_HH
+# define OLENA_CORE_OBJS_HH
 
-# include <mlc/array1d.hh>
-# include <mlc/array2d.hh>
-# include <mlc/array3d.hh>
+//
+// Useful objects to design iterators, arrays, etc ..
+//
 
-#endif // ! OLENA_META_ARRAY_HH
+namespace oln {
+
+  namespace internal {
+
+    class _begin {};
+    class _end   {};
+
+  } // end of internal
+
+  static const internal::_begin begin = internal::_begin();
+  static const internal::_end   end   = internal::_end();
+
+} // end of oln
+
+#endif // ! OLENA_CORE_OBJS_HH

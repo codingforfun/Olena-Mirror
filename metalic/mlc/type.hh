@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_TYPE_HH
 # define OLENA_CORE_TYPE_HH
 
-# include <oln/config/system.hh>
+# include <mlc/config/system.hh>
 # include <string>
 
 //
