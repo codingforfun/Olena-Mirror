@@ -1,15 +1,17 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_2 3)
-(Parent-Version oln 0_2 2)
-(Version-Log "2002-01-12  Jerome Darbon  <darbon_j@epita.fr>
+(Project-Version oln 0_2 4)
+(Parent-Version oln 0_2 3)
+(Version-Log "2002-01-12  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-	* src/utils/stat.hh (f_moments::variance): Fix furmula.
+	* src/core/neighborhood3d.hh (mk_win_from_neighb): New function.
+	* src/core/neighborhood2d.hh (mk_win_from_neighb): New function.
+	* src/core/neighborhood1d.hh (mk_win_from_neighb): New function.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Sat, 12 Jan 2002 16:44:15 +0100")
+(Checkin-Time "Sat, 12 Jan 2002 17:03:08 +0100")
 (Checkin-Login adl)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
@@ -54,7 +56,7 @@
   (configure.ac (oln/3_configure. 1.1 644))
   (THANKS (oln/4_THANKS 1.1 644))
   (img/lena.pgm (oln/5_lena.pgm 1.1 640) :no-keywords)
-  (ChangeLog (oln/6_ChangeLog 1.3 644))
+  (ChangeLog (oln/6_ChangeLog 1.4 644))
   (src/config/system.hh (oln/7_system.hh 1.1 644))
   (src/utils/timer.hh (oln/8_timer.hh 1.1 644))
   (src/utils/stat.hh (oln/9_stat.hh 1.2 644))
@@ -187,9 +189,9 @@
   (src/core/point1d.hh (oln/c/32_point1d.hh 1.1 644))
   (src/core/point.hh (oln/c/33_point.hh 1.1 644))
   (src/core/objs.hh (oln/c/34_objs.hh 1.1 644))
-  (src/core/neighborhood3d.hh (oln/c/35_neighborho 1.1 644))
-  (src/core/neighborhood2d.hh (oln/c/36_neighborho 1.1 644))
-  (src/core/neighborhood1d.hh (oln/c/37_neighborho 1.1 644))
+  (src/core/neighborhood3d.hh (oln/c/35_neighborho 1.2 644))
+  (src/core/neighborhood2d.hh (oln/c/36_neighborho 1.2 644))
+  (src/core/neighborhood1d.hh (oln/c/37_neighborho 1.2 644))
   (src/core/neighborhood.hh (oln/c/38_neighborho 1.1 644))
   (src/core/macros.hh (oln/c/39_macros.hh 1.1 644))
   (src/core/iter.hh (oln/c/40_iter.hh 1.1 644))

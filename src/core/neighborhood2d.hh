@@ -32,6 +32,7 @@
 # include "core/internal/neighborhood.hh"
 # include "core/winiter.hh"
 # include "core/accum.hh"
+# include "core/window2d.hh"
 
 namespace oln {
 
@@ -149,6 +150,14 @@ namespace oln {
   mk_neighb_square(unsigned width)
   {
     return mk_neighb_rectangle(width, width);
+  }
+
+  window2d mk_win_from_neighb(const neighborhood2d& n)
+  {
+    window2d win(n.card());
+    for (unsigned i = 0; i < n.card(); ++i)
+      win.add(n.dp(i));
+    return win;
   }
 
 } // end of oln
