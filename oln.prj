@@ -1,79 +1,12 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln integre 4)
-(Parent-Version oln integre 3)
-(Version-Log "Index: integre/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* ntg/all.hh: Update includes.
-
-	* ntg/bin.hh, ntg/cplx.hh, ntg/cycle.hh, ntg/float.hh, ntg/int.hh,
-	ntg/range.hh, ntg/vec.hh: New files.
-
-	* ntg/cycle.hh, ntg/int_s.hh, ntg/int_u.hh,
-	ntg/optraits_builtins_float.hh, ntg/optraits_builtins_int.hh,
-	ntg/optraits_builtins_int_defs.hh, ntg/optraits_cycle.hh,
-	ntg/optraits_int_s.hh, ntg/optraits_int_u.hh,
-	ntg/optraits_range.hh, ntg/optraits_scalar.hh,
-	ntg/optraits_scalar_defs.hh, ntg/range.hh,
-	ntg/typetraits_builtins_float.hh, 
-	ntg/typetraits_builtins_int.hh:	Move ...
-	* ntg/real/: ... here.
-
-	* ntg/color.hh, ntg/hsi.hh, ntg/hsl.hh, ntg/hsv.hh,
-	ntg/nrgb.hh, ntg/rgb.hh, ntg/xyz.hh, ntg/yiq.hh, ntg/yuv.hh: Move ...
-	* ntg/color/: ... here.
-
-	* ntg/behaviour.hh, ntg/builtins_properties.hh,
-	ntg/global_ops.hh, ntg/global_ops_defs.hh,
-	ntg/global_ops_traits.hh, ntg/interval.hh, ntg/optraits.hh,
-	ntg/optraits_builtins.hh, ntg/predecls.hh, ntg/rec_value.hh,
-	ntg/type.hh, ntg/typetraits.hh, 
-	ntg/typetraits_builtins.hh: Move ...
-	* ntg/core/: ... here.
-
-	* ntg/bin.hh,ntg/optraits_bin.hh, ntg/optraits_builtins_bool.hh,
-	ntg/typetraits_builtins_bool.hh: Move ...
-	* ntg/enum/: ... here.
-
-	* ntg/cast.hh, ntg/debug.hh, ntg/to_oln.hh: Move ...
-	* ntg/utils/: ... here.
-
-	* ntg/cplx.hh, ntg/cplx_representation.hh,
-	ntg/optraits_cplx.hh, ntg/optraits_vec.hh, 
-	ntg/vec.hh: Move ...
-	* ntg/vect: ... here.
-
-	* Makefile.am: Update consequently.
-
-Index: olena/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* oln/arith/ops.hh, oln/convert/bound.hh,
-	oln/convert/colorconv.hh, oln/convert/conversion.hh,
-	oln/convert/force.hh, oln/convert/nrgbhsi.hh,
-	oln/convert/nrgbhsl.hh, oln/convert/nrgbhsv.hh,
-	oln/convert/nrgbxyz.hh, oln/convert/nrgbyiq.hh,
-	oln/convert/nrgbyuv.hh, oln/convert/rgbnrgb.hh,
-	oln/convert/rgbxyz.hh, oln/convert/stretch.hh,
-	oln/convol/fast_gaussian_coefficient.hh,
-	oln/convol/fast_gaussian.hh, oln/convol/fast_gaussian.hxx,
-	oln/core/dpoint1d.hh, oln/core/dpointnd.hh,
-	oln/core/imagend_size.hh, oln/core/point1d.hh,
-	oln/core/point3d.hh, oln/core/pointnd.hh,
-	oln/io/pnm_read_common.hxx, oln/io/pnm_write_common.hxx,
-	oln/io/pnm_write.hxx, oln/level/connected.hh,
-	oln/level/invert.hh, oln/level/threshold.hh,
-	oln/math/macros.hh, oln/morpho/geodesic_dilation.hh,
-	oln/morpho/reconstruction.hh, oln/topo/dmap.hxx,
-	oln/transforms/dwt.hh, oln/transforms/fft.hh,
-	oln/utils/histogram.hh, oln/utils/stat.hh: Update includes.
-
-	* tests/io/loadsave.hh: Likewise.
+(Project-Version oln integre 5)
+(Parent-Version oln integre 4)
+(Version-Log "Add missing files.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sat, 12 Apr 2003 19:28:28 +0200")
+(Checkin-Time "Sun, 13 Apr 2003 20:32:41 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -878,17 +811,17 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 ;; Files added by populate at Sat, 12 Apr 2003 18:53:23 +0200,
 ;; to version integre.3(w), by nes:
 
-;;  (integre/ntg/vec.hh ())
-;;  (integre/ntg/int.hh ())
-;;  (integre/ntg/float.hh ())
-;;  (integre/ntg/cplx.hh ())
-;;  (integre/ntg/bin.hh ())
+  (integre/ntg/vec.hh (oln/r/51_vec.hh 1.1 600))
+  (integre/ntg/int.hh (oln/s/0_int.hh 1.1 600))
+  (integre/ntg/float.hh (oln/s/1_float.hh 1.1 600))
+  (integre/ntg/cplx.hh (oln/s/2_cplx.hh 1.1 600))
+  (integre/ntg/bin.hh (oln/s/3_bin.hh 1.1 600))
 
 ;; Files added by populate at Sat, 12 Apr 2003 18:59:50 +0200,
 ;; to version integre.3(w), by nes:
 
-;;  (integre/ntg/cycle.hh ())
-;;  (integre/ntg/range.hh ())
+  (integre/ntg/cycle.hh (oln/s/4_cycle.hh 1.1 600))
+  (integre/ntg/range.hh (oln/s/5_range.hh 1.1 600))
 )
 (Merge-Parents)
 (New-Merge-Parents)
