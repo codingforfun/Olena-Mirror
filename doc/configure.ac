@@ -6,9 +6,22 @@ AC_CONFIG_SRCDIR([ChangeLog])
 AC_CONFIG_AUX_DIR([../tools])
 
 dnl Check for tools needed for formatting the documentation.
-AC_PATH_PROG(DVIPS, dvips, $am_aux_dir/missing dvips)
-AC_PATH_PROG(TEXI2PDF, texi2pdf, $am_aux_dir/missing texi2pdf)
-AC_PATH_PROG(TEXI2HTML, texi2html, $am_aux_dir/missing texi2html)
+AC_CHECK_PROGS([DVIPS], [dvips], [$am_aux_dir/missing dvips])
+
+AC_CHECK_PROGS([TEXI2DVI], [texi2dvi])
+if test -z "$TEXI2DVI"; then
+   AC_MSG_ERROR([texi2dvi not found -- please install Texinfo])
+fi
+
+AC_CHECK_PROGS([GETDEFS], [getdefs])
+if test -z "$GETDEFS"; then
+   AC_MSG_ERROR([getdefs not found -- please install AutoGen])
+fi
+
+AC_CHECK_PROGS([HEVEA], [hevea])
+if test -z "$HEVEA"; then
+   AC_MSG_ERROR([hevea not found -- please install HeVeA])
+fi
 
 AM_INIT_AUTOMAKE([no-define])
 AC_CONFIG_FILES([Makefile doc/Makefile])

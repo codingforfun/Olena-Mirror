@@ -3,7 +3,6 @@ noinst_DATA = oln-ref.dvi html/oln-ref.html
 tex_TEX = oln-ref.tex
 oln_ref_TEX = ref-morpho.tex ref-level.tex
 
-TEXI2DVI = texi2dvi
 TEXI2PDF = $(TEXI2DVI) --pdf
 
 oln-ref.dvi: $(tex_TEX) $(oln_ref_TEX)
@@ -13,15 +12,14 @@ oln-ref.pdf: $(tex_TEX) $(oln_ref_TEX)
 	$(TEXI2PDF) $(tex_TEX)
 
 .dvi.ps:
-	dvips $< -o $@
+	$(DVIPS) $< -o $@
 
 html/oln-ref.html: $(tex_TEX) $(oln_ref_TEX)
-	hevea $(tex_TEX) -o html/oln-ref.html
-	hevea $(tex_TEX) -o html/oln-ref.html
+	$(HEVEA) $(tex_TEX) -o html/oln-ref.html
+	$(HEVEA) $(tex_TEX) -o html/oln-ref.html
 
 olnsrc = $(top_srcdir)/../src/
 
-GETDEFS = getdefs
 COMMONGETDEFSFLAGS = --agarg=--templ-dirs=../tpl
 PROCESSINGGETDEFSFLAGS = \
   --subblock=tpl=type,name,doc \

@@ -66,11 +66,12 @@ AMTAR = @AMTAR@
 AWK = @AWK@
 DEPDIR = @DEPDIR@
 DVIPS = @DVIPS@
+GETDEFS = @GETDEFS@
+HEVEA = @HEVEA@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 PACKAGE = @PACKAGE@
 STRIP = @STRIP@
-TEXI2HTML = @TEXI2HTML@
-TEXI2PDF = $(TEXI2DVI) --pdf
+TEXI2DVI = @TEXI2DVI@
 VERSION = @VERSION@
 am__include = @am__include@
 am__quote = @am__quote@
@@ -80,11 +81,10 @@ noinst_DATA = oln-ref.dvi html/oln-ref.html
 tex_TEX = oln-ref.tex
 oln_ref_TEX = ref-morpho.tex ref-level.tex
 
-TEXI2DVI = texi2dvi
+TEXI2PDF = $(TEXI2DVI) --pdf
 
 olnsrc = $(top_srcdir)/../src/
 
-GETDEFS = getdefs
 COMMONGETDEFSFLAGS = --agarg=--templ-dirs=../tpl
 PROCESSINGGETDEFSFLAGS = \
   --subblock=tpl=type,name,doc \
@@ -231,11 +231,11 @@ oln-ref.pdf: $(tex_TEX) $(oln_ref_TEX)
 	$(TEXI2PDF) $(tex_TEX)
 
 .dvi.ps:
-	dvips $< -o $@
+	$(DVIPS) $< -o $@
 
 html/oln-ref.html: $(tex_TEX) $(oln_ref_TEX)
-	hevea $(tex_TEX) -o html/oln-ref.html
-	hevea $(tex_TEX) -o html/oln-ref.html
+	$(HEVEA) $(tex_TEX) -o html/oln-ref.html
+	$(HEVEA) $(tex_TEX) -o html/oln-ref.html
 
 ref-morpho.tex: $(morpho_files) $(srcdir)/../tpl/processing.tpl
 	$(GETDEFS) $(COMMONGETDEFSFLAGS) $(PROCESSINGGETDEFSFLAGS) \
