@@ -30,6 +30,7 @@
 
 # include <mlc/type.hh>
 # include <oln/core/abstract/dpoint.hh>
+# include <oln/core/abstract/struct_elt.hh>
 
 namespace oln 
 {

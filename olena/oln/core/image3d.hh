@@ -28,6 +28,10 @@
 #ifndef OLENA_CORE_IMAGE3D_HH
 # define OLENA_CORE_IMAGE3D_HH
 
+# include <oln/core/point3d.hh>
+# include <oln/core/dpoint3d.hh>
+# include <oln/core/fwd_iter3d.hh>
+# include <oln/core/bkd_iter3d.hh>
 # include <oln/core/impl/image_array3d.hh>
 // # include <oln/io/readable.hh>
 # include <oln/core/image.hh>
@@ -79,24 +83,18 @@ namespace oln {
 		  value_type, 
 		  impl_type, 
 		  exact_type> super_type;
-    typedef abstract::image<exact_type> super_image; 
-
 
     image3d() :
-      super_image(),
       super_type((impl_type*) 0)
     {}
 
-    image3d(coord nslices, coord nrows, coord ncols, coord border = 2)
-      :
-      super_image(),
+    image3d(coord nslices, coord nrows, coord ncols, coord border = 2) :
       super_type(new impl_type(image3d_size(nslices, nrows, ncols, border)))
     {
       super_type::impl()->ref();
     }
 
     image3d(const image3d_size& size) :
-      super_image(),
       super_type(new impl_type(size))
     {
       super_type::impl()->ref(); 
@@ -104,7 +102,6 @@ namespace oln {
 
     // shallow copy
     image3d(self_type& rhs) :
-      super_image(),
       super_type(rhs)
     {}
 

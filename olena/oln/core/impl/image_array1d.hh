@@ -28,9 +28,9 @@
 #ifndef OLENA_CORE_IMPL_IMAGE_ARRAY1D_HH
 # define OLENA_CORE_IMPL_IMAGE_ARRAY1D_HH
 
+# include <oln/core/impl/image_array.hh>
 # include <oln/core/image1d_size.hh>
 # include <oln/core/point1d.hh>
-# include <oln/core/impl/image_array.hh>
 
 namespace oln {
 

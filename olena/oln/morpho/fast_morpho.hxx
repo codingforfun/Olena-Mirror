@@ -48,8 +48,8 @@ namespace oln {
       template<class E1, class E2, class E3>
       void
       find_struct_elts(const abstract::struct_elt<E1>& se,
-		       E2 se_add[mlc::exact<E2>::ret::dim],
-		       E3 se_rem[mlc::exact<E3>::ret::dim])
+		       E2 se_add[mlc::exact<E1>::ret::dim],
+		       E3 se_rem[mlc::exact<E1>::ret::dim])
       {
 	mlc_is_a(E2, abstract::struct_elt)::ensure();
 	mlc_is_a(E3, abstract::struct_elt)::ensure();

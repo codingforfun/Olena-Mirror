@@ -29,6 +29,7 @@
 # define OLENA_CORE_ABSTRACT_IMAGE_HH
 
 # include <mlc/type.hh>
+# include <mlc/contract.hh>
 # include <oln/core/coord.hh>
 # include <oln/core/abstract/point.hh>
 
@@ -173,9 +174,20 @@ namespace oln {
 
   } // end of namespace abstract
 
+# define Value(ImgType)				\
+Exact(ImgType)::value_type
 
-  
+# define Concrete(ImgType)			\
+typename mute<ImgType>::ret
 
+# define Iter(Iterable)				\
+Exact(Iterable)::iter_type
+
+# define Point(Pointable)			\
+Exact(Pointable)::point_type
+
+# define DPoint(DPointable)			\
+Exact(DPointable)::dpoint_type
 
 } // end of namespace oln
 

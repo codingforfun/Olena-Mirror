@@ -30,6 +30,7 @@
 
 # include <oln/core/abstract/image.hh>
 # include <oln/core/abstract/iter.hh>
+# include <oln/core/macros.hh>
 # include <mlc/typeadj.hh>
 # include <oln/core/macros.hh>
 

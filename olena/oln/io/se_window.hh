@@ -28,6 +28,8 @@
 #ifndef OLENA_IO_SE_WINDOW_HH_
 # define OLENA_IO_SE_WINDOW_HH_
 
+# include <mlc/type.hh>
+
 # include <oln/core/image2d.hh>
 # include <oln/core/window2d.hh>
 # include <oln/core/macros.hh>
