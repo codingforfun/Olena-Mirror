@@ -1,3 +1,7 @@
+2003-05-12  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* expand.sh: Make checks less strict.
+
 2003-05-06  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* doc/swilena.texi (Top): Add off-sync notice.

@@ -1,13 +1,16 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 8 41)
-(Parent-Version oln 8 40)
-(Version-Log "Add missing directory.
+(Project-Version oln 8 45)
+(Parent-Version oln 8 41)
+(Version-Log "Index: tools/swilena/ChangeLog
+from  Raphaël Poss  <raph@lrde.epita.fr>
+
+        * expand.sh: Make checks less strict.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 09 May 2003 17:00:17 +0200")
+(Checkin-Time "Mon, 12 May 2003 19:17:24 +0200")
 (Checkin-Login raph)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -96,11 +99,11 @@
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.1 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.31 640))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.1 640))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.3 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.15 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.2 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.4 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.7 640))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.1 640))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.2 640))
 
   (attic/oln-ChangeLog (oln/6_ChangeLog 1.50.1.98.1.5 640))
   (attic/doc-ChangeLog (oln/e/1_ChangeLog 1.31 640))
@@ -143,7 +146,7 @@
   (olena/img/se9.pbm (oln/n/5_se9.pbm 1.1 640) :no-keywords)
   (olena/img/se.pbm (oln/n/6_se.pbm 1.1 640) :no-keywords)
 
-  (olena/Makefile.am (oln/2_Makefile.a 1.30.1.1.1.2.1.5 640))
+  (olena/Makefile.am (oln/2_Makefile.a 1.30.1.1.1.2.1.8 640))
   (olena/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.6 640))
   (olena/oln/arith/logic.hh (oln/b/24_logic.hh 1.6.1.2 640))
   (olena/oln/arith/ops.hh (oln/b/23_ops.hh 1.5.1.2.1.1 640))
@@ -446,7 +449,7 @@
   (olena/tests/transforms/fft.cc (oln/i/37_fft.cc 1.6.1.3 640))
   (olena/tests/transforms/Makefile.am (oln/i/40_Makefile.a 1.8 640))
 ;;  (oln/tests/transforms/output () :directory)
-  (integre/tests/types/Makefile.am (oln/h/5_Makefile.a 1.8 640))
+  (integre/tests/types/Makefile.am (oln/h/5_Makefile.a 1.10 640))
   (integre/tests/types/runtests (oln/h/3_runtests 1.14.1.3 750))
   (integre/tests/types/tests/bin1 (oln/i/28_bin1 1.1 640))
   (integre/tests/types/tests/bin2 (oln/o/42_bin2 1.2 640))
@@ -840,7 +843,7 @@
 ;; Files added by populate at Tue, 06 May 2003 06:05:19 +0200,
 ;; to version 8.33(w), by raph:
 
-  (tools/swilena/expand.sh (oln/s/25_expand.sh 1.1 775))
+  (tools/swilena/expand.sh (oln/s/25_expand.sh 1.2 775))
 
 ;; Files added by populate at Tue, 06 May 2003 06:05:41 +0200,
 ;; to version 8.33(w), by raph:
@@ -865,5 +868,9 @@
   (tools/swilena/meta/swilena_decl.i (oln/s/39_swilena_de 1.1 664))
   (tools/swilena/meta/swilena_core.i (oln/s/40_swilena_co 1.1 664))
 )
-(Merge-Parents)
+(Merge-Parents
+  (8.44 complete
+    (integre/ChangeLog integre/ChangeLog integre/ChangeLog r) (olena/ChangeLog olena/ChangeLog olena/ChangeLog r)
+    (olena/Makefile.am olena/Makefile.am olena/Makefile.am r) (integre/tests/types/Makefile.am integre/tests/types/Makefile.am integre/tests/types/Makefile.am r))
+)
 (New-Merge-Parents)
