@@ -1,5 +1,10 @@
 2005-04-03  Simon Odou  <simon@lrde.epita.fr>
 
+	* oln/morpho/cc_tarjan.hh: New. Add the connected component
+	labelling algorithm using the Tarjan Union-Find.
+
+2005-04-03  Simon Odou  <simon@lrde.epita.fr>
+
 	* oln/core/properties.hh: Add missing property declaration for
 	backward point iterator and point iterator.
 	* oln/core/abstract/image.hh: Likewise.
