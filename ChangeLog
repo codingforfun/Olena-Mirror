@@ -1,3 +1,8 @@
+2002-03-28  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/io/pnm_read.hxx (reader): Typo preventing ppgm files from
+	being read.
+
 2002-03-27  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* src/core/typeadj.hh: New file.

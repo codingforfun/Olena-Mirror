@@ -100,7 +100,7 @@ namespace oln {
 
 	static bool read(std::istream& in, image2d<int_u8>& im)
 	{
-	  if (!pnm_read_header(in, im, '3'))
+	  if (!pnm_read_header(in, im, '2'))
 	    return false;
 	  if (im.border())
 	    for (coord j = 0; j < im.nrows(); ++j)
