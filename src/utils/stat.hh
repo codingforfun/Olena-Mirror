@@ -113,7 +113,7 @@ namespace oln {
       const C variance() const
       {
         assertion(valued());
-        return _sum2 / C(count()) - mean();
+        return _sum2 / C(count()) - mean() * mean();
       }
 
       protected:

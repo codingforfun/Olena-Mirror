@@ -1,3 +1,7 @@
+2002-01-12  Jerome Darbon  <darbon_j@epita.fr>
+
+	* src/utils/stat.hh (f_moments::variance): Fix furmula.
+
 2002-01-12  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* README: Update in prevision for 0.3.
