@@ -30,6 +30,7 @@
 
 # include <oln/core/macros.hh>
 # include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/piter.hh>
 
 namespace oln {
 

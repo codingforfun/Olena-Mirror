@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef PROTO_OLN_CORE_PROPS_HH
-# define PROTO_OLN_CORE_PROPS_HH
+#ifndef OLENA_CORE_PROPS_HH
+# define OLENA_CORE_PROPS_HH
 
 # include <mlc/types.hh>
 
@@ -74,4 +74,4 @@ namespace oln {
 } // end of namespace oln
 
 
-#endif // ndef PROTO_OLN_CORE_PROPS_HH
+#endif // ! OLENA_CORE_PROPS_HH

@@ -31,7 +31,6 @@
 # include <ostream>
 
 # include <oln/core/coord.hh>
-# include <oln/core/1d/point1d.hh>
 
 // FIXME: there's an assumption here: we do not need inheritance for
 // dpoints.  so abstract::dpoint does not exist...
@@ -42,6 +41,8 @@
 
 
 namespace oln {
+
+  struct point1d;
 
   struct dpoint1d
   {
@@ -83,11 +84,7 @@ namespace oln {
       return tmp;
     }
 
-    const point1d operator+(const point1d& rhs) const
-    {
-      point1d tmp(this->index() + rhs.index());
-      return tmp;
-    }
+    const point1d operator+(const point1d& rhs) const;
 
     const dpoint1d operator-() const
     {
@@ -108,6 +105,18 @@ namespace oln {
 std::ostream& operator<<(std::ostream& ostr, const oln::dpoint1d& dp)
 {
   return ostr << '(' << dp.index() << ')';
+}
+
+# include <oln/core/1d/point1d.hh>
+
+namespace oln {
+
+  const point1d dpoint1d::operator+(const point1d& rhs) const
+  {
+    point1d tmp(this->index() + rhs.index());
+    return tmp;
+  }
+
 }
 
 

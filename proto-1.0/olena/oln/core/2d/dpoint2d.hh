@@ -31,7 +31,6 @@
 # include <iostream>
 
 # include <oln/core/coord.hh>
-# include <oln/core/2d/point2d.hh>
 
 // FIXME: there's an assumption here: we do not need inheritance for
 // dpoints.  so abstract::dpoint does not exist...
@@ -39,6 +38,8 @@
 // FIXME: doc!
 
 namespace oln {
+
+  struct point2d;
 
   struct dpoint2d
   {
@@ -83,11 +84,7 @@ namespace oln {
       return tmp;
     }
 
-    const point2d operator+(const point2d& rhs) const
-    {
-      point2d tmp(this->row() + rhs.row(), this->col() + rhs.col());
-      return tmp;
-    }
+    const point2d operator+(const point2d& rhs) const;
 
     const dpoint2d operator-() const
     {
@@ -111,6 +108,18 @@ namespace oln {
 std::ostream& operator<<(std::ostream& ostr, const oln::dpoint2d& dp)
 {
   return ostr << '(' << dp.row() << ',' << dp.col() << ')';
+}
+
+# include <oln/core/2d/point2d.hh>
+
+namespace oln {
+
+  const point2d dpoint2d::operator+(const point2d& rhs) const
+  {
+    point2d tmp(this->row() + rhs.row(), this->col() + rhs.col());
+    return tmp;
+  }
+
 }
 
 

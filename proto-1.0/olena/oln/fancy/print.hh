@@ -36,6 +36,9 @@
 # include <ntg/real/int_u8.hh> // FIXME: no coupling like that!
 
 # include <oln/core/abstract/image_dimension.hh>
+# include <oln/core/1d/point1d.hh>
+# include <oln/core/2d/point2d.hh>
+# include <oln/core/coord.hh>
 
 namespace oln {
 
@@ -106,8 +109,8 @@ namespace oln {
 	    ostr << internal::pp<oln_value_type(E)>(input[point1d(index)]) << ' ';
 	  }
 	ostr << std::endl;
-      } 
- 
+      }
+
       template <typename E>
       void print(const abstract::image2d<E>& input, std::ostream& ostr)
       {
@@ -120,23 +123,25 @@ namespace oln {
 	  }
       }
 
-      template <typename E>
-      void print(const abstract::image3d<E>& input, std::ostream& ostr)
-      {
-	// FIXME: lacks cleaning
-	for (coord_t slice = 0; slice < input.size().nslices(); ++slice)
-        {
-	  for (coord_t row = 0; row < input.size().nrows(); ++row)
-	  {
-	    for (coord_t col = 0; col < input.size().ncols(); ++col)
-	      ostr << internal::pp<oln_value_type(E)>(input[point3d(slice,row,col)]) 
-                   << ' ';
-            ostr << ", ";
-	  }
-	  ostr << std::endl;
-	}
-      } 
- 
+      // FIXME: remove comments when dpoint3d are available.
+
+//       template <typename E>
+//       void print(const abstract::image3d<E>& input, std::ostream& ostr)
+//       {
+// 	// FIXME: lacks cleaning
+// 	for (coord_t slice = 0; slice < input.size().nslices(); ++slice)
+//         {
+// 	  for (coord_t row = 0; row < input.size().nrows(); ++row)
+// 	  {
+// 	    for (coord_t col = 0; col < input.size().ncols(); ++col)
+// 	      ostr << internal::pp<oln_value_type(E)>(input[point3d(slice,row,col)])
+//                    << ' ';
+//             ostr << ", ";
+// 	  }
+// 	  ostr << std::endl;
+// 	}
+//       }
+
 
     } // end of namespace impl
 

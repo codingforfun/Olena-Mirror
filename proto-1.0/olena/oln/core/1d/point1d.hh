@@ -48,7 +48,7 @@ namespace oln {
   struct category_type< point1d > { typedef cat::point ret; };
 
   template <>
-  struct props < cat::point, point1d >
+  struct props < cat::point, point1d > : default_props< cat::point >
   {
     typedef dpoint1d dpoint_type;
   };
@@ -95,7 +95,7 @@ namespace oln {
     }
 
   protected:
-    
+
     coord_t index_;
   };
 

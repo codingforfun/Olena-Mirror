@@ -1,3 +1,40 @@
+2005-02-18  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* ChangeLog: Previous changes not commited due to a vcs error.
+	* oln/fancy/print.hh: Previous changes not commited due to a vcs error.
+	* oln/fancy/iota.hh: Previous changes not commited due to a vcs error.
+	* oln/makefile.src: Notify new files.
+	* oln/core/props.hh: Sanity fixes.
+	* oln/core/macros.hh: Likewise.
+	* oln/core/abstract/piter.hh: Likewise.
+	* oln/core/abstract/point.hh: Likewise.
+	* oln/core/abstract/size.hh: Likewise.
+	* oln/core/abstract/morpher.hh: New. abstract::morpher implementation.
+	* oln/core/abstract/dpoint.hh: Sanity fixes.
+	* oln/core/1d/dpoint1d.hh: Likewise.
+	* oln/core/1d/fwd_piter1d.hh: Likewise.
+	* oln/core/1d/point1d.hh: Likewise.
+	* oln/core/2d/dpoint2d.hh: Likewise.
+	* oln/core/2d/image2d.hh: Likewise.
+	* oln/core/2d/point2d.hh: Likewise.
+	* oln/core/3d/point3d.hh: Likewise.
+	* oln/core/id_morpher.hh: New. Identity morpher implementation.
+	* oln/core/cats.hh: Sanity fixes.
+
+2005-02-18  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* oln/fancy/print.hh: Sanity fixes.
+	* oln/fancy/iota.hh: Likewise.
+	* oln/makefile.src: Likewise.
+	* oln/core/macros.hh: Likewise.
+	* oln/core/abstract/image_with_data.hh: Likewise.
+	* oln/core/1d/dpoint1d.hh: Likewise.
+	* oln/core/1d/point1d.hh: Likewise.
+	* oln/core/2d/dpoint2d.hh: Likewise.
+	* oln/core/2d/image2d.hh: Likewise.
+	* oln/core/2d/point2d.hh: Likewise.
+	* oln/core/3d/point3d.hh: Likewise.
+
 2005-02-08  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* oln/core/value_box.hh (value_box): Set cpy ctors public.

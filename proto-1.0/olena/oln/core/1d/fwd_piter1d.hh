@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef PROTO_OLN_CORE_1D_FWD_PITER1D_HH
-# define PROTO_OLN_CORE_1D_FWD_PITER1D_HH
+#ifndef OLENA_CORE_1D_FWD_PITER1D_HH
+# define OLENA_CORE_1D_FWD_PITER1D_HH
 
 # include <mlc/contract.hh>
 
@@ -98,4 +98,4 @@ namespace oln {
 }
 
 
-#endif // ndef PROTO_OLN_CORE_1D_FWD_PITER1D_HH
+#endif // ! OLENA_CORE_1D_FWD_PITER1D_HH

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef PROTO_OLN_CORE_ABSTRACT_PITER_HH
-# define PROTO_OLN_CORE_ABSTRACT_PITER_HH
+#ifndef OLENA_CORE_ABSTRACT_PITER_HH
+# define OLENA_CORE_ABSTRACT_PITER_HH
 
 # include <mlc/any.hh>
 # include <mlc/types.hh>
@@ -116,4 +116,4 @@ namespace oln {
 }
 
 
-#endif // ndef PROTO_OLN_CORE_ABSTRACT_PITER_HH
+#endif // ! OLENA_CORE_ABSTRACT_PITER_HH

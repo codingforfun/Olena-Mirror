@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef PROTO_OLN_CORE_ABSTRACT_DPOINT_HH
-# define PROTO_OLN_CORE_ABSTRACT_DPOINT_HH
+#ifndef OLENA_CORE_ABSTRACT_DPOINT_HH
+# define OLENA_CORE_ABSTRACT_DPOINT_HH
 
 # include <mlc/any.hh>
 
@@ -76,4 +76,4 @@ namespace oln {
 
 
 
-#endif // ! PROTO_OLN_CORE_ABSTRACT_DPOINT_HH
+#endif // ! OLENA_CORE_ABSTRACT_DPOINT_HH

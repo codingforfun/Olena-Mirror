@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005 EPITA Research and Development Laboratory
+// Copyright (C) 2005 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,43 +25,47 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_SIZE_HH
-# define OLENA_CORE_ABSTRACT_SIZE_HH
+#ifndef OLENA_CORE_ABSTRACT_MORPHER_HH
+# define OLENA_CORE_ABSTRACT_MORPHER_HH
 
-# include <mlc/any.hh>
+# include <mlc/box.hh>
+
+# include <oln/core/tags.hh>
 
 namespace oln {
 
   namespace abstract {
 
-    template <typename E>
-    struct size : public mlc::any__best_memory<E>
+    template <typename I, typename E>
+    struct morpher: public abstract::image_entry<E>
     {
-
-      unsigned long npoints() const
+      mlc::box<I> ref;
+      morpher(abstract::image<I>& ref) : ref(ref.exact()) {}
+      morpher(const morpher& rhs) : ref(rhs.ref)
       {
-	return this->exact().impl_npoints();
+	this->exact_ptr = (E*)(void*)(this);
       }
-
-      template <typename Ep>
-      bool operator==(const size<Ep>& rhs) const
-      {
-	return this->exact().impl_eq(rhs.exact());
-      }
-
-      template <typename Ep>
-      bool operator!=(const size<Ep>& rhs) const
-      {
-	return ! this->operator==(rhs);
-      }
-
-    protected:
-      size() {}
+      I& impl_delegate() { return *ref; }
+      const I& impl_delegate() const { return *ref; }
     };
 
-  } // end of namespace abstract
 
-} // end of namespace oln
+    template <typename I, typename E>
+    struct morpher<const I, E>: public abstract::image_entry<E>
+    {
+      mlc::box<const I> ref;
+      morpher(const abstract::image<I>& ref) : ref(ref.exact()) {}
+      morpher(const morpher& rhs) : ref(rhs.ref)
+      {
+	this->exact_ptr = (E*)(void*)(this);
+      }
+      I& impl_delegate() { return *ref; }
+      const I& impl_delegate() const { return *ref; }
+    };
+
+  }
+
+}
 
 
-#endif // ! OLENA_CORE_ABSTRACT_SIZE_HH
+#endif // ! OLENA_CORE_ABSTRACT_MORPHER_HH

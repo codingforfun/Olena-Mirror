@@ -4,6 +4,12 @@
 ##
 
 OLN_DEP =					\
+  basics.hh					\
+  basics1d.hh					\
+  basics2d.hh					\
+  basics3d.hh					\
+  config/pconf.hh				\
+  config/system.hh				\
   core/1d/array1d.hh				\
   core/1d/image1d.hh				\
   core/1d/point1d.hh				\
@@ -23,12 +29,18 @@ OLN_DEP =					\
   core/abstract/image_with_data.hh		\
   core/abstract/images.hh			\
   core/abstract/internal/image_impl.hh		\
+  core/abstract/morpher.hh			\
   core/abstract/piter.hh			\
   core/abstract/point.hh			\
   core/abstract/size.hh				\
   core/cats.hh					\
   core/coord.hh					\
   core/macros.hh				\
+  core/id_morpher.hh				\
   core/props.hh					\
   core/tags.hh					\
-  core/value_box.hh
+  core/value_box.hh				\
+  fancy/iota.hh					\
+  fancy/print.hh
+
+

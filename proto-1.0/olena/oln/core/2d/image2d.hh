@@ -33,6 +33,7 @@
 # include <oln/core/abstract/image_with_data.hh>
 # include <oln/core/2d/array2d.hh>
 # include <oln/core/2d/fwd_piter2d.hh>
+# include <oln/io/read_image.hh>
 
 /*! \namespace oln
 ** \brief oln namespace.
@@ -125,13 +126,14 @@ namespace oln {
       this->exact_ptr = this;
     }
 
-//     image2d& operator=(image2d& rhs)
-//     {
-//       if (&rhs == this)
-// 	return *this;
-//       super_type::operator=(rhs);
-//       return *this;
-//     };
+    image2d& operator=(image2d& rhs)
+    {
+      if (&rhs == this)
+	return *this;
+      std::cout << "shallow copy" << std::endl;
+      super_type::operator=(rhs);
+      return *this;
+    };
 
 //     template <typename I>
 //     image2d& operator=(const I& rhs)

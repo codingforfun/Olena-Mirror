@@ -35,6 +35,7 @@
 # include <oln/core/cats.hh>
 # include <oln/core/props.hh>
 
+
 // FIXME: doc!
 
 namespace oln {
@@ -46,7 +47,7 @@ namespace oln {
   struct category_type< point2d > { typedef cat::point ret; };
 
   template <>
-  struct props < cat::point, point2d >
+  struct props < cat::point, point2d > : default_props< cat::point >
   {
     typedef dpoint2d dpoint_type;
   };

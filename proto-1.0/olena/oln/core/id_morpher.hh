@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005 EPITA Research and Development Laboratory
+// Copyright (C) 2005 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,43 +25,43 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_SIZE_HH
-# define OLENA_CORE_ABSTRACT_SIZE_HH
+#ifndef OLENA_CORE_ID_MORPHER_HH
+# define OLENA_CORE_ID_MORPHER_HH
 
-# include <mlc/any.hh>
+# include <oln/core/abstract/morpher.hh>
+# include <oln/core/cats.hh>
 
 namespace oln {
 
-  namespace abstract {
+  template <typename I> struct id_morpher;
 
-    template <typename E>
-    struct size : public mlc::any__best_memory<E>
-    {
-
-      unsigned long npoints() const
-      {
-	return this->exact().impl_npoints();
-      }
-
-      template <typename Ep>
-      bool operator==(const size<Ep>& rhs) const
-      {
-	return this->exact().impl_eq(rhs.exact());
-      }
-
-      template <typename Ep>
-      bool operator!=(const size<Ep>& rhs) const
-      {
-	return ! this->operator==(rhs);
-      }
-
-    protected:
-      size() {}
-    };
-
-  } // end of namespace abstract
-
-} // end of namespace oln
+  template <typename I>
+  struct category_type< id_morpher<I> > { typedef cat::image ret; };
 
 
-#endif // ! OLENA_CORE_ABSTRACT_SIZE_HH
+  template <typename I>
+  struct props <cat::image, id_morpher<I> >
+    : public props<cat::image, I>
+  {
+    typedef I delegated_type;
+  };
+
+  template <typename I>
+  struct id_morpher: public abstract::morpher<I, id_morpher<I> >
+  {
+    typedef abstract::morpher<I, id_morpher<I> > super_type;
+    id_morpher(I& ref) : super_type(ref) { this->exact_ptr = this; }
+  };
+
+  template <typename I>
+  struct id_morpher<const I>: public abstract::morpher<const I, id_morpher<I> >
+  {
+    typedef abstract::morpher<const I, id_morpher<I> > super_type;
+    id_morpher(const I& ref) : super_type(ref) { this->exact_ptr = this; }
+  };
+
+}
+
+
+
+#endif // ! OLENA_CORE_ID_MORPHER_HH

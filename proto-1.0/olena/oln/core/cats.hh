@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef PROTO_OLN_CORE_CATS_HH
-# define PROTO_OLN_CORE_CATS_HH
+#ifndef OLENA_CORE_CATS_HH
+# define OLENA_CORE_CATS_HH
 
 # include <mlc/types.hh>
 
@@ -76,4 +76,4 @@ namespace oln {
 
 
 
-#endif // ! PROTO_OLN_CORE_CATS_HH
+#endif // ! OLENA_CORE_CATS_HH
