@@ -682,7 +682,7 @@ namespace oln {
 							 ensure_type;
 
       // check the size
-      precondition(v.size() == im/*.npoints()*/);
+      precondition(v.size() == im.npoints());
 
       // calculate the histogram of the image
       utils::histogram<val> histo(im);

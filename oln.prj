@@ -1,260 +1,203 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 186)
-(Parent-Version oln 10 149)
+(Project-Version oln 10 187)
+(Parent-Version oln 10 186)
 (Version-Log "Index: olena/ChangeLog
 from  Giovanni Palma  <giovanni@lrde.epita.fr>
-
-	* oln/morpho/attribute_union_find.hh: Change sort algorithm.
-	* oln/morpho/attributes.hh: Add volume attribute.
 	* oln/utils/qsort.hh: Add file.
+	* oln/utils/histogram.hh: Undo wrong fix.
 
-Index: olena/oln/morpho/erosion.hh
---- olena/oln/morpho/erosion.hh Thu, 18 Mar 2004 18:24:14 +0100 van-vl_n (oln/b/4_erosion.hh 1.21 600)
-+++ olena/oln/morpho/erosion.hh Wed, 12 May 2004 14:55:31 +0200 palma_g (oln/b/4_erosion.hh 1.21 640)
-@@ -88,7 +88,6 @@
-     {
-       mlc::eq<I::dim, E::dim>::ensure();
-       oln_concrete_type(I) output(input.size());
--      se.delta();
-       input.border_adapt_copy(se.delta());
-       oln_iter_type(I) p(input);
-       for_all (p)
++2004-05-23  Giovanni Palma  <giovanni@lrde.epita.fr>
++
++	* oln/morpho/morpho/erosion.hh: Remove useless line.
+ 	* oln/morpho/attribute_union_find.hh: Change sort algorithm.
+ 	* oln/morpho/attributes.hh: Add volume attribute.
+-	* oln/utils/qsort.hh: Add file.
+ 
+ 2004-05-15  Niels Van Vliet  <niels@lrde.epita.fr>
+ 
 Index: olena/oln/utils/histogram.hh
---- olena/oln/utils/histogram.hh Sat, 27 Mar 2004 15:56:32 +0100 van-vl_n (oln/10_histogram. 1.6.1.14.1.12 600)
-+++ olena/oln/utils/histogram.hh Sun, 23 May 2004 07:52:57 +0200 palma_g (oln/10_histogram. 1.6.1.14.1.12 640)
+--- olena/oln/utils/histogram.hh Sun, 23 May 2004 12:21:34 +0200 palma_g (oln/10_histogram. 1.6.1.14.1.13 640)
++++ olena/oln/utils/histogram.hh Sun, 23 May 2004 13:51:52 +0200 palma_g (oln/10_histogram. 1.6.1.14.1.13 640)
 @@ -682,7 +682,7 @@
  							 ensure_type;
  
        // check the size
--      precondition(v.size() == im.npoints());
-+      precondition(v.size() == im/*.npoints()*/);
+-      precondition(v.size() == im/*.npoints()*/);
++      precondition(v.size() == im.npoints());
  
        // calculate the histogram of the image
        utils::histogram<val> histo(im);
-Index: olena/oln/morpho/attribute_union_find.hh
---- olena/oln/morpho/attribute_union_find.hh Mon, 15 Mar 2004 15:32:27 +0100 van-vl_n (oln/q/50_attribute_ 1.18 600)
-+++ olena/oln/morpho/attribute_union_find.hh Sun, 23 May 2004 08:31:37 +0200 palma_g (oln/q/50_attribute_ 1.18 640)
-@@ -34,6 +34,7 @@
- 
- #include <vector>
- #include <oln/utils/histogram.hh>
-+#include <oln/utils/qsort.hh>
- #include <oln/morpho/attributes.hh>
- 
- namespace oln {
-@@ -89,10 +90,13 @@
- 	  {
- 	    lambda_ = &lambda;
- 
--	    std::vector<point_type>	I(input_.npoints());
--
--	    oln::utils::select_distrib_sort<closing>()(input_, I);
-+	    std::vector<point_type>	I;//(/*input_.npoints()*/);
- 
-+	    //	    oln::utils::select_distrib_sort<closing>()(input_, I);
-+	    if (closing)
-+	      oln::utils::qsort_inv(input_, I);
-+	    else
-+	      oln::utils::qsort(input_, I);
- 	    level::fill(aux_data_, ntg_sup_val(lambda_type));
- 	    aux_data_.border_adapt_assign(Ng.delta(), ntg_sup_val(lambda_type));
- 
-Index: olena/oln/morpho/attributes.hh
---- olena/oln/morpho/attributes.hh Sat, 15 May 2004 19:16:56 +0200 van-vl_n (oln/j/45_attributes 1.13.1.2 600)
-+++ olena/oln/morpho/attributes.hh Sun, 23 May 2004 12:14:50 +0200 palma_g (oln/j/45_attributes 1.13.1.2 600)
-@@ -345,6 +345,169 @@
- 	  };
-       };
- 
-+      /*-----------*
-+	|  volume   |
-+	*-----------*/
+Index: olena/oln/utils/qsort.hh
+--- olena/oln/utils/qsort.hh Sun, 23 May 2004 13:54:21 +0200 palma_g ()
++++ olena/oln/utils/qsort.hh Sun, 23 May 2004 12:09:58 +0200 palma_g (oln/r/9_qsort.hh  644)
+@@ -0,0 +1,161 @@
++// Copyright (C) 2004  EPITA Research and Development Laboratory
++//
++// This file is part of the Olena Library.  This library is free
++// software; you can redistribute it and/or modify it under the terms
++// of the GNU General Public License version 2 as published by the
++// Free Software Foundation.
++//
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++// General Public License for more details.
++//
++// You should have received a copy of the GNU General Public License
++// along with this library; see the file COPYING.  If not, write to
++// the Free Software Foundation, 59 Temple Place - Suite 330, Boston,
++// MA 02111-1307, USA.
++//
++// As a special exception, you may use this file as part of a free
++// software library without restriction.  Specifically, if other files
++// instantiate templates or use macros or inline functions from this
++// file, or you compile this file and link it with other files to
++// produce an executable, this file does not by itself cause the
++// resulting executable to be covered by the GNU General Public
++// License.  This exception does not however invalidate any other
++// reasons why the executable file might be covered by the GNU General
++// Public License.
++#ifndef OLN_UTILS_QSORT_HH
++# define OLN_UTILS_QSORT_HH
++# include <vector>
++# include <oln/core/abstract/image.hh>
++
++# include <algorithm>
++# include <iostream>
++
++namespace oln
++{
++  namespace utils
++  {
++    namespace internal
++    {
 +      /*!
-+      ** \\brief Integral attribute.
++      ** \\brief Functor to sort compare 2 points using an image.
 +      **
-+      ** It is equivalent to volume in 2D, and weight in 3D.
-+      ** \\todo FIXME: Change the name and explain the diferences with integral.
++      ** \\param I Exact type of the image.
 +      */
-+      template <class I, class Exact = mlc::final>
-+      class volume_type:
-+	public attribute<mlc_2_exact_vt_type(volume_type, I, Exact)>
++      template <typename I>
++      struct cmp_pt_value
 +      {
-+      public:
-+	typedef volume_type<I, Exact>			self_type; /*!< Self type of the class. */
-+	attr_type_decl(self_type);
++	typedef oln::abstract::non_vectorial_image<I>	im_type; ///< Type of the image.
++	typedef oln_point_type(I)			point_type; ///< Type of the considered points.
 +
 +	/*!
-+	** \\brief Basic Ctor.
++	** \\brief Constructor.
 +	**
-+	** \\warning  After this  call, the  object is  only instantiated
-+	** (not initialized).
++	** \\arg im Image to use for comparison.
 +	*/
-+	volume_type()
-+	  {
-+	  };
++	cmp_pt_value(const im_type &im): im_(im)
++	{
++	}
 +
 +	/*!
-+	** \\brief Ctor from a lambda_type value.
++	** \\brief Main method.
++	**
++	** \\arg i The first point.
++	** \\arg j The second point.
++	** \\return im[i] < im[j]
 +	*/
-+	volume_type(const lambda_type &lambda): value_(lambda)
-+	  {
-+	  };
-+
-+	/*!
-+	** \\brief Ctor from a point and an image.
-+	*/
-+	template <class J>
-+	  volume_type(const abstract::image<J> &,
-+		      const oln_point_type(J) &p,
-+		      const env_type &e) :
-+	  reflevel_(e.getImage()[p]),
-+	  area_(1),
-+	  value_(1)
-+	  {
-+	  };
-+
-+	// interface part
-+	/*!
-+	** \\brief Accessor to value_.
-+	**
-+	** Virtual method.
-+	** \\see getValue_impl()
-+	*/
-+	const value_type &getValue() const
-+	  {
-+	    mlc_dispatch(getValue)();
-+	  };
-+
-+	/*!
-+	** \\brief Accessor to the reference level.
-+	**
-+	** \\see getReflevel_impl()
-+	*/
-+	const value_type &getReflevel() const
-+	  {
-+	    mlc_dispatch(getReflevel)();
-+	  };
-+
-+	/*!
-+	** \\brief Accessor to the current area.
-+	**
-+	** \\see getArea_impl()
-+	*/
-+	const value_type &getArea() const
-+	  {
-+	    mlc_dispatch(getArea)();
-+	  };
-+
-+	// impl part
-+	/*!
-+	** \\brief Implementation of getValue().
-+	**
-+	** Override this  method in  order to provide  a new  version of
-+	** getValue().
-+	**
-+	** \\warning Do not call this method, use getValue() instead.
-+	*/
-+	const value_type &getValue_impl() const
-+	  {
-+	    return value_;
-+	  };
-+
-+	/*!
-+	** \\brief Implementation of getReflevel().
-+	**
-+	** Override this  method in  order to provide  a new  version of
-+	** getReflevel().
-+	**
-+	** \\warning Do not call this method, use getReflevel() instead.
-+	*/
-+	const value_type &getReflevel_impl() const
-+	  {
-+	    return reflevel_;
-+	  };
-+
-+	/*!
-+	** \\brief Implementation of getArea().
-+	**
-+	** Override this  method in  order to provide  a new  version of
-+	** getArea().
-+	**
-+	** \\warning Do not call this method, use getArea() instead.
-+	*/
-+	const value_type &getArea_impl() const
-+	  {
-+	    return area_;
-+	  };
-+
-+	/*!
-+	** \\brief += operator implementation.
-+	**
-+	** This is an implementation  of the += operator.  Override this
-+	** method to provide a new implementation of this operator.
-+	** \\warning This method SHOULDN'T directly be called.
-+	*/
-+	void pe_impl(const volume_type &rhs)
-+	  {
-+	    value_ += rhs.getValue() + area_ * tools::diffabs(reflevel_, rhs.getReflevel());
-+	    area_ += rhs.getArea();
-+	  };
-+
-+	/*!
-+	** \\brief \"<\" operator implementation.
-+	**
-+	** This is an implementation  of the += operator.  Override this
-+	** method to provide a new implementation of this operator.
-+	** \\warning This method SHOULDN'T directly be called.
-+	*/
-+	bool less_impl(const lambda_type &lambda) const
-+	  {
-+	    return value_ < lambda;
-+	  };
-+
-+	/*!
-+	** \\brief != operator implementation.
-+	**
-+	** This is an implementation  of the += operator.  Override this
-+	** method to provide a new implementation of this operator.
-+	** \\warning This method SHOULDN'T directly be called.
-+	*/
-+	bool ne_impl(const lambda_type &lambda) const
-+	  {
-+	    return lambda != value_;
-+	  };
++	bool operator()(const point_type &i, const point_type &j)
++	{
++	  return im_[j] < im_[i];
++	}
 +
 +      protected:
-+	value_type reflevel_; ///< Reference level.
-+	value_type area_; ///< Current area.
-+	value_type value_; ///< Current value (deduced from area and level).
++	const im_type	&im_; ///< Image to use for comparison.
 +      };
 +
-+
-       /*--------------*
- 	|  integral   |
- 	*------------*/
-@@ -1858,6 +2021,16 @@
- 	typedef integral_type<T, NewExact>	ret;
-       };
- 
 +      /*!
-+      ** \\brief Trait specialization for the volume attribute.
++      ** \\brief Functor to sort compare 2 points using an image
++      **
++      ** \\param I Exact type of the image.
 +      */
-+      template <class I, class Exact>
-+      struct attr_traits<volume_type<I, Exact> >
++      template <typename I>
++      struct cmp_pt_value_inv
 +      {
-+	typedef unsigned	value_type;
-+	typedef value_type	lambda_type;
-+	typedef env::OtherImageEnv<I>		env_type;
++	typedef oln::abstract::non_vectorial_image<I>	im_type; ///< Type of the image.
++	typedef oln_point_type(I)			point_type; ///< Type of the considered points.
++
++	/*!
++	** \\brief Constructor.
++	**
++	** \\arg im Image to use for comparison.
++	*/
++	cmp_pt_value_inv(const im_type &im): im_(im)
++	{
++	}
++
++	/*!
++	** \\brief Main method.
++	**
++	** \\arg i The first point.
++	** \\arg j The second point.
++	** \\return im[i] > im[j]
++	*/
++	bool operator()(const point_type &i, const point_type &j)
++	{
++	  return im_[i] < im_[j];
++	}
++
++      protected:
++	const im_type	&im_; ///< Image to use for comparison.
 +      };
-     }// !attr
-   } // !morpho
- } //!oln
++    } // !internal
++
++    /*!
++    ** \\brief Sort points of an image in increasing order.
++    **
++    ** \\param I Exact type of the image.
++    **
++    ** \\arg im The input image.
++    ** \\arg v The result.
++    */
++    template<class I>
++    void
++    qsort(const oln::abstract::non_vectorial_image<I>& im,
++	  std::vector<oln_point_type(I)> &v)
++    {
++      oln_iter_type(I)	it(im);
++
++      for_all(it)
++	v.push_back(oln_point_type(I)(it));
++      internal::cmp_pt_value<I> c(im);
++
++      std::sort(v.begin(), v.end(), c);
++    }
++
++    /*!
++    ** \\brief Sort points of an image in decreasing order.
++    **
++    ** \\param I Exact type of the image.
++    **
++    ** \\arg im The input image.
++    ** \\arg v The result.
++    */
++    template<class I>
++    void
++    qsort_inv(const oln::abstract::non_vectorial_image<I>& im,
++	      std::vector<oln_point_type(I)> &v)
++    {
++      oln_iter_type(I)	it(im);
++
++      for_all(it)
++	v.push_back(oln_point_type(I)(it));
++
++      internal::cmp_pt_value_inv<I> c(im);
++
++      std::sort(v.begin(), v.end(), c);
++    }
++  } // !utils
++} // !oln
++
++#endif // !QSORT
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Sun, 23 May 2004 12:21:34 +0200")
+(Checkin-Time "Sun, 23 May 2004 13:55:35 +0200")
 (Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -361,7 +304,7 @@ Index: olena/oln/morpho/attributes.hh
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.12 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.45 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.42 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.3 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.4 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.13 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.39 640))
 
@@ -647,7 +590,7 @@ Index: olena/oln/morpho/attributes.hh
   (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.7 640))
   (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.7 640))
   (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.9 640))
-  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.13 640))
+  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.14 640))
   (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.10 640))
   (olena/oln/utils/timer.hh (oln/8_timer.hh 1.9 640))
   (olena/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.5.1.1 640))
@@ -1685,180 +1628,13 @@ Index: olena/oln/morpho/attributes.hh
   (olena/oln/makefile.src (oln/r/4_makefile.s 1.1 644))
 
   (olena/oln/convol/slow_gaussian.hh (oln/r/7_slow_gauss 1.1 644))
-  (olena/oln/convol/slow_gaussian.hxx (oln/r/8_slow_gauss 1.1 644)))
+  (olena/oln/convol/slow_gaussian.hxx (oln/r/8_slow_gauss 1.1 644))
+;; Files added by populate at Sun, 23 May 2004 13:50:56 +0200,
+;; to version 10.186(w), by palma_g:
+
+  (olena/oln/utils/qsort.hh (oln/r/9_qsort.hh 1.1 644))
+)
 (Merge-Parents
-  (10.149 complete)
-  (10.181 complete
-    (ChangeLog ChangeLog ChangeLog r) (doc/ChangeLog doc/ChangeLog doc/ChangeLog r)
-    (integre/ChangeLog integre/ChangeLog integre/ChangeLog r) (metalic/ChangeLog metalic/ChangeLog metalic/ChangeLog r)
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (tools/ChangeLog tools/ChangeLog tools/ChangeLog r)
-    (tools/swilena/ChangeLog tools/swilena/ChangeLog tools/swilena/ChangeLog r) (configure.ac configure.ac configure.ac r)
-    (olena/tests/morpho/tests/test-reconstruction olena/tests/morpho/tests/test-reconstruction olena/tests/morpho/tests/test-reconstruction r) (doc/ref/Makefile.am doc/ref/Makefile.am doc/ref/Makefile.am r)
-    (NEWS NEWS NEWS r) (olena/oln/arith/internal/opdecls.hh olena/oln/arith/internal/opdecls.hh olena/oln/arith/internal/opdecls.hh r)
-    (metalic/mlc/type.hh metalic/mlc/type.hh metalic/mlc/type.hh r) (config/oln.m4 config/oln.m4 config/oln.m4 r)
-    (metalic/mlc/array/1d.hh metalic/mlc/array/1d.hh metalic/mlc/array/1d.hh r) (metalic/mlc/array/2d.hh metalic/mlc/array/2d.hh metalic/mlc/array/2d.hh r)
-    (metalic/mlc/array/3d.hh metalic/mlc/array/3d.hh metalic/mlc/array/3d.hh r) (metalic/mlc/optional.hh metalic/mlc/optional.hh metalic/mlc/optional.hh r)
-    (metalic/mlc/is_a.hh metalic/mlc/is_a.hh metalic/mlc/is_a.hh r) (olena/oln/morpho/geodesic_dilation.hh olena/oln/morpho/geodesic_dilation.hh olena/oln/morpho/geodesic_dilation.hh r)
-    (olena/oln/morpho/geodesic_erosion.hh olena/oln/morpho/geodesic_erosion.hh olena/oln/morpho/geodesic_erosion.hh r) (olena/oln/morpho/reconstruction.hh olena/oln/morpho/reconstruction.hh olena/oln/morpho/reconstruction.hh r)
-    (olena/oln/morpho/watershed.hxx olena/oln/morpho/watershed.hxx olena/oln/morpho/watershed.hxx r) (olena/oln/topo/dmap.hxx olena/oln/topo/dmap.hxx olena/oln/topo/dmap.hxx r)
-    (olena/oln/transforms/dwt.hh olena/oln/transforms/dwt.hh olena/oln/transforms/dwt.hh r) (integre/ntg/real/optraits_builtin_int.hh integre/ntg/real/optraits_builtin_int.hh integre/ntg/real/optraits_builtin_int.hh r)
-    (integre/ntg/real/typetraits_builtin_int.hh integre/ntg/real/typetraits_builtin_int.hh integre/ntg/real/typetraits_builtin_int.hh r) (olena/tests/arith/tests/min1 olena/tests/arith/tests/min1 olena/tests/arith/tests/min1 r)
-    (olena/tests/convol/tests/slow_sum_2d_1 olena/tests/convol/tests/slow_sum_2d_1 olena/tests/convol/tests/slow_sum_2d_1 r) (olena/tests/convol/tests/slow_sum_2d_2 olena/tests/convol/tests/slow_sum_2d_2 olena/tests/convol/tests/slow_sum_2d_2 r)
-    (olena/tests/convol/tests/sobel_gradient olena/tests/convol/tests/sobel_gradient olena/tests/convol/tests/sobel_gradient r) (olena/tests/io/tests/2d olena/tests/io/tests/2d olena/tests/io/tests/2d r)
-    (olena/tests/io/tests/pretty olena/tests/io/tests/pretty olena/tests/io/tests/pretty r) (olena/tests/io/tests/se_fail olena/tests/io/tests/se_fail olena/tests/io/tests/se_fail r)
-    (olena/tests/io/tests/se_pass olena/tests/io/tests/se_pass olena/tests/io/tests/se_pass r) (olena/tests/morpho/tests/edoc olena/tests/morpho/tests/edoc olena/tests/morpho/tests/edoc r)
-    (olena/tests/morpho/tests/extrkiller olena/tests/morpho/tests/extrkiller olena/tests/morpho/tests/extrkiller r) (olena/tests/morpho/tests/reconstruction olena/tests/morpho/tests/reconstruction olena/tests/morpho/tests/reconstruction r)
-    (olena/tests/sanity/Makefile.am olena/tests/sanity/Makefile.am olena/tests/sanity/Makefile.am r) (olena/tests/transforms/tests/dwt olena/tests/transforms/tests/dwt olena/tests/transforms/tests/dwt r)
-    (olena/tests/transforms/tests/fft olena/tests/transforms/tests/fft olena/tests/transforms/tests/fft r) (integre/tests/types/tests/bin1 integre/tests/types/tests/bin1 integre/tests/types/tests/bin1 r)
-    (integre/tests/types/tests/bin2 integre/tests/types/tests/bin2 integre/tests/types/tests/bin2 r) (integre/tests/types/tests/bin3 integre/tests/types/tests/bin3 integre/tests/types/tests/bin3 r)
-    (integre/tests/types/tests/comp1 integre/tests/types/tests/comp1 integre/tests/types/tests/comp1 r) (integre/tests/types/tests/comp2 integre/tests/types/tests/comp2 integre/tests/types/tests/comp2 r)
-    (integre/tests/types/tests/comp3 integre/tests/types/tests/comp3 integre/tests/types/tests/comp3 r) (integre/tests/types/tests/conv1 integre/tests/types/tests/conv1 integre/tests/types/tests/conv1 r)
-    (integre/tests/types/tests/conv2 integre/tests/types/tests/conv2 integre/tests/types/tests/conv2 r) (integre/tests/types/tests/cplx1 integre/tests/types/tests/cplx1 integre/tests/types/tests/cplx1 r)
-    (integre/tests/types/tests/cplx2 integre/tests/types/tests/cplx2 integre/tests/types/tests/cplx2 r) (integre/tests/types/tests/cplx3 integre/tests/types/tests/cplx3 integre/tests/types/tests/cplx3 r)
-    (integre/tests/types/tests/cplx4 integre/tests/types/tests/cplx4 integre/tests/types/tests/cplx4 r) (integre/tests/types/tests/cplx5 integre/tests/types/tests/cplx5 integre/tests/types/tests/cplx5 r)
-    (integre/tests/types/tests/cplx6 integre/tests/types/tests/cplx6 integre/tests/types/tests/cplx6 r) (integre/tests/types/tests/float1 integre/tests/types/tests/float1 integre/tests/types/tests/float1 r)
-    (integre/tests/types/tests/float2 integre/tests/types/tests/float2 integre/tests/types/tests/float2 r) (integre/tests/types/tests/float_c1 integre/tests/types/tests/float_c1 integre/tests/types/tests/float_c1 r)
-    (integre/tests/types/tests/float_r1 integre/tests/types/tests/float_r1 integre/tests/types/tests/float_r1 r) (integre/tests/types/tests/float_r2 integre/tests/types/tests/float_r2 integre/tests/types/tests/float_r2 r)
-    (integre/tests/types/tests/int1b integre/tests/types/tests/int1b integre/tests/types/tests/int1b r) (integre/tests/types/tests/int1 integre/tests/types/tests/int1 integre/tests/types/tests/int1 r)
-    (integre/tests/types/tests/int2 integre/tests/types/tests/int2 integre/tests/types/tests/int2 r) (integre/tests/types/tests/int3 integre/tests/types/tests/int3 integre/tests/types/tests/int3 r)
-    (integre/tests/types/tests/int4b integre/tests/types/tests/int4b integre/tests/types/tests/int4b r) (integre/tests/types/tests/int4 integre/tests/types/tests/int4 integre/tests/types/tests/int4 r)
-    (integre/tests/types/tests/int5 integre/tests/types/tests/int5 integre/tests/types/tests/int5 r) (integre/tests/types/tests/int6b integre/tests/types/tests/int6b integre/tests/types/tests/int6b r)
-    (integre/tests/types/tests/int6c integre/tests/types/tests/int6c integre/tests/types/tests/int6c r) (integre/tests/types/tests/int6d integre/tests/types/tests/int6d integre/tests/types/tests/int6d r)
-    (integre/tests/types/tests/int6 integre/tests/types/tests/int6 integre/tests/types/tests/int6 r) (integre/tests/types/tests/int7 integre/tests/types/tests/int7 integre/tests/types/tests/int7 r)
-    (integre/tests/types/tests/int_s1 integre/tests/types/tests/int_s1 integre/tests/types/tests/int_s1 r) (integre/tests/types/tests/int_s2b integre/tests/types/tests/int_s2b integre/tests/types/tests/int_s2b r)
-    (integre/tests/types/tests/int_s2 integre/tests/types/tests/int_s2 integre/tests/types/tests/int_s2 r) (integre/tests/types/tests/int_sc1 integre/tests/types/tests/int_sc1 integre/tests/types/tests/int_sc1 r)
-    (integre/tests/types/tests/int_sc2 integre/tests/types/tests/int_sc2 integre/tests/types/tests/int_sc2 r) (integre/tests/types/tests/int_sc3 integre/tests/types/tests/int_sc3 integre/tests/types/tests/int_sc3 r)
-    (integre/tests/types/tests/int_sc4 integre/tests/types/tests/int_sc4 integre/tests/types/tests/int_sc4 r) (integre/tests/types/tests/int_u1 integre/tests/types/tests/int_u1 integre/tests/types/tests/int_u1 r)
-    (integre/tests/types/tests/int_u2a integre/tests/types/tests/int_u2a integre/tests/types/tests/int_u2a r) (integre/tests/types/tests/int_u2b integre/tests/types/tests/int_u2b integre/tests/types/tests/int_u2b r)
-    (integre/tests/types/tests/int_u2c integre/tests/types/tests/int_u2c integre/tests/types/tests/int_u2c r) (integre/tests/types/tests/int_u2d integre/tests/types/tests/int_u2d integre/tests/types/tests/int_u2d r)
-    (integre/tests/types/tests/int_u2e integre/tests/types/tests/int_u2e integre/tests/types/tests/int_u2e r) (integre/tests/types/tests/int_u2f integre/tests/types/tests/int_u2f integre/tests/types/tests/int_u2f r)
-    (integre/tests/types/tests/int_u3a integre/tests/types/tests/int_u3a integre/tests/types/tests/int_u3a r) (integre/tests/types/tests/int_u3b integre/tests/types/tests/int_u3b integre/tests/types/tests/int_u3b r)
-    (integre/tests/types/tests/int_u4 integre/tests/types/tests/int_u4 integre/tests/types/tests/int_u4 r) (integre/tests/types/tests/int_u6 integre/tests/types/tests/int_u6 integre/tests/types/tests/int_u6 r)
-    (integre/tests/types/tests/op1 integre/tests/types/tests/op1 integre/tests/types/tests/op1 r) (integre/tests/types/tests/op2 integre/tests/types/tests/op2 integre/tests/types/tests/op2 r)
-    (integre/tests/types/tests/optrait1a integre/tests/types/tests/optrait1a integre/tests/types/tests/optrait1a r) (integre/tests/types/tests/optrait1b integre/tests/types/tests/optrait1b integre/tests/types/tests/optrait1b r)
-    (integre/tests/types/tests/optrait2a integre/tests/types/tests/optrait2a integre/tests/types/tests/optrait2a r) (integre/tests/types/tests/optrait2b integre/tests/types/tests/optrait2b integre/tests/types/tests/optrait2b r)
-    (integre/tests/types/tests/optrait3 integre/tests/types/tests/optrait3 integre/tests/types/tests/optrait3 r) (integre/tests/types/tests/range1 integre/tests/types/tests/range1 integre/tests/types/tests/range1 r)
-    (integre/tests/types/tests/range2b integre/tests/types/tests/range2b integre/tests/types/tests/range2b r) (integre/tests/types/tests/range2 integre/tests/types/tests/range2 integre/tests/types/tests/range2 r)
-    (integre/tests/types/tests/range3b integre/tests/types/tests/range3b integre/tests/types/tests/range3b r) (integre/tests/types/tests/range3c integre/tests/types/tests/range3c integre/tests/types/tests/range3c r)
-    (integre/tests/types/tests/range3d integre/tests/types/tests/range3d integre/tests/types/tests/range3d r) (integre/tests/types/tests/range3 integre/tests/types/tests/range3 integre/tests/types/tests/range3 r)
-    (integre/tests/types/tests/sizes integre/tests/types/tests/sizes integre/tests/types/tests/sizes r) (integre/tests/types/tests/unsafe1 integre/tests/types/tests/unsafe1 integre/tests/types/tests/unsafe1 r)
-    (integre/tests/types/tests/unsafe2 integre/tests/types/tests/unsafe2 integre/tests/types/tests/unsafe2 r) (integre/tests/types/tests/vec1 integre/tests/types/tests/vec1 integre/tests/types/tests/vec1 r)
-    (integre/tests/types/tests/vec2 integre/tests/types/tests/vec2 integre/tests/types/tests/vec2 r) (integre/tests/types/tests/vec3 integre/tests/types/tests/vec3 integre/tests/types/tests/vec3 r)
-    (integre/tests/types/tests/vec4 integre/tests/types/tests/vec4 integre/tests/types/tests/vec4 r) (integre/tests/types/tests/vec5 integre/tests/types/tests/vec5 integre/tests/types/tests/vec5 r)
-    (integre/tests/types/tests/vec6 integre/tests/types/tests/vec6 integre/tests/types/tests/vec6 r) (integre/tests/types/tests/vec7 integre/tests/types/tests/vec7 integre/tests/types/tests/vec7 r)
-    (tools/utilities/morpho/Makefile.am tools/utilities/morpho/Makefile.am tools/utilities/morpho/Makefile.am r) (doc/dev/biblio.texi doc/dev/biblio.texi doc/dev/biblio.texi r)
-    (doc/dev/thanks.texi doc/dev/thanks.texi doc/dev/thanks.texi r) (doc/dev/abstract.texi doc/dev/abstract.texi doc/dev/abstract.texi r)
-    (doc/dev/build.texi doc/dev/build.texi doc/dev/build.texi r) (doc/dev/faq.texi doc/dev/faq.texi doc/dev/faq.texi r)
-    (doc/dev/srctree.texi doc/dev/srctree.texi doc/dev/srctree.texi r) (olena/tests/check/Makefile.flags olena/tests/check/Makefile.flags olena/tests/check/Makefile.flags r)
-    (olena/tests/check/Makefile.check olena/tests/check/Makefile.check olena/tests/check/Makefile.check r) (metalic/tests/main/tests/is_a1 metalic/tests/main/tests/is_a1 metalic/tests/main/tests/is_a1 r)
-    (metalic/tests/main/tests/ensure3 metalic/tests/main/tests/ensure3 metalic/tests/main/tests/ensure3 r) (metalic/tests/main/tests/ensure2 metalic/tests/main/tests/ensure2 metalic/tests/main/tests/ensure2 r)
-    (metalic/tests/main/tests/pow2sup2 metalic/tests/main/tests/pow2sup2 metalic/tests/main/tests/pow2sup2 r) (metalic/tests/main/tests/ensure1 metalic/tests/main/tests/ensure1 metalic/tests/main/tests/ensure1 r)
-    (metalic/tests/main/tests/pow2sup1 metalic/tests/main/tests/pow2sup1 metalic/tests/main/tests/pow2sup1 r) (olena/tests/topo/tests/inter-pixel olena/tests/topo/tests/inter-pixel olena/tests/topo/tests/inter-pixel r)
-    (olena/tests/topo/tests/cmap olena/tests/topo/tests/cmap olena/tests/topo/tests/cmap r) (olena/oln/topo/tarjan/flat-zone.hh olena/oln/topo/tarjan/flat-zone.hh olena/oln/topo/tarjan/flat-zone.hh r)
-    (doc/dev/upgrading.texi doc/dev/upgrading.texi doc/dev/upgrading.texi r) (integre/tests/types/tests/builtin1 integre/tests/types/tests/builtin1 integre/tests/types/tests/builtin1 r)
-    (olena/tests/core/tests/w_window olena/tests/core/tests/w_window olena/tests/core/tests/w_window r) (integre/tests/types/tests/int_u5c integre/tests/types/tests/int_u5c integre/tests/types/tests/int_u5c r)
-    (tools/swilena/expand.sh tools/swilena/expand.sh tools/swilena/expand.sh r) (tools/swilena/meta/Makefile.am tools/swilena/meta/Makefile.am tools/swilena/meta/Makefile.am r)
-    (integre/ntg/core/internal/traits.hh integre/ntg/core/internal/traits.hh integre/ntg/core/internal/traits.hh r) (integre/ntg/core/internal/macros.hh integre/ntg/core/internal/macros.hh integre/ntg/core/internal/macros.hh r)
-    (integre/ntg/core/macros.hh integre/ntg/core/macros.hh integre/ntg/core/macros.hh r) (integre/tests/types/tests/range4 integre/tests/types/tests/range4 integre/tests/types/tests/range4 r)
-    (integre/tests/utils/tests/debug1 integre/tests/utils/tests/debug1 integre/tests/utils/tests/debug1 r) (integre/tests/sanity/Makefile.am integre/tests/sanity/Makefile.am integre/tests/sanity/Makefile.am r)
-    (metalic/tests/sanity/Makefile.am metalic/tests/sanity/Makefile.am metalic/tests/sanity/Makefile.am r) (integre/tests/types/tests/int_sc5 integre/tests/types/tests/int_sc5 integre/tests/types/tests/int_sc5 r)
-    (olena/tests/core/tests/print_image olena/tests/core/tests/print_image olena/tests/core/tests/print_image r) (integre/tests/types/tests/char1 integre/tests/types/tests/char1 integre/tests/types/tests/char1 r)
-    (olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh r) (olena/tests/core/tests/image1 olena/tests/core/tests/image1 olena/tests/core/tests/image1 r)
-    (olena/tests/core/tests/borders olena/tests/core/tests/borders olena/tests/core/tests/borders r) (olena/tests/core/tests/clone olena/tests/core/tests/clone olena/tests/core/tests/clone r)
-    (olena/tests/core/tests/ref olena/tests/core/tests/ref olena/tests/core/tests/ref r) (olena/tests/level/tests/cc olena/tests/level/tests/cc olena/tests/level/tests/cc r)
-    (olena/tests/level/tests/compare olena/tests/level/tests/compare olena/tests/level/tests/compare r) (olena/tests/level/tests/connected olena/tests/level/tests/connected olena/tests/level/tests/connected r)
-    (olena/tests/level/tests/invert olena/tests/level/tests/invert olena/tests/level/tests/invert r) (olena/tests/level/tests/set_level olena/tests/level/tests/set_level olena/tests/level/tests/set_level r)
-    (olena/tests/level/tests/threshold olena/tests/level/tests/threshold olena/tests/level/tests/threshold r) (olena/tests/core/tests/window olena/tests/core/tests/window olena/tests/core/tests/window r)
-    (olena/tests/core/tests/neighborhood olena/tests/core/tests/neighborhood olena/tests/core/tests/neighborhood r) (olena/tests/core/tests/traverse olena/tests/core/tests/traverse olena/tests/core/tests/traverse r)
-    (integre/tests/types/tests/int_u7 integre/tests/types/tests/int_u7 integre/tests/types/tests/int_u7 r) (olena/tests/io/tests/bin olena/tests/io/tests/bin olena/tests/io/tests/bin r)
-    (olena/tests/topo/tests/dmap olena/tests/topo/tests/dmap olena/tests/topo/tests/dmap r) (olena/tests/utils/tests/histogram olena/tests/utils/tests/histogram olena/tests/utils/tests/histogram r)
-    (olena/tests/utils/tests/stat olena/tests/utils/tests/stat olena/tests/utils/tests/stat r) (olena/tests/utils/tests/timer olena/tests/utils/tests/timer olena/tests/utils/tests/timer r)
-    (olena/tests/topo/tests/tarjan olena/tests/topo/tests/tarjan olena/tests/topo/tests/tarjan r) (olena/tests/check/Makefile.runtests olena/tests/check/Makefile.runtests olena/tests/check/Makefile.runtests r)
-    (olena/tests/math/tests/macros olena/tests/math/tests/macros olena/tests/math/tests/macros r) (olena/tests/io/tests/1d olena/tests/io/tests/1d olena/tests/io/tests/1d r)
-    (olena/tests/core/tests/image_list olena/tests/core/tests/image_list olena/tests/core/tests/image_list r) (olena/tests/io/tests/3d olena/tests/io/tests/3d olena/tests/io/tests/3d r)
-    (olena/tests/io/tests/se_3d olena/tests/io/tests/se_3d olena/tests/io/tests/se_3d r) (olena/tests/io/tests/se_1d olena/tests/io/tests/se_1d olena/tests/io/tests/se_1d r)
-    (olena/tests/core/tests/image2 olena/tests/core/tests/image2 olena/tests/core/tests/image2 r) (olena/tests/utils/tests/copy olena/tests/utils/tests/copy olena/tests/utils/tests/copy r)
-    (tools/swilena/python/tests/Makefile.am tools/swilena/python/tests/Makefile.am tools/swilena/python/tests/Makefile.am r) (tools/swilena/ruby/Makefile.am tools/swilena/ruby/Makefile.am tools/swilena/ruby/Makefile.am r)
-    (tools/swilena/ruby/tests/Makefile.am tools/swilena/ruby/tests/Makefile.am tools/swilena/ruby/tests/Makefile.am r) (tools/swilena/src/Makefile.am tools/swilena/src/Makefile.am tools/swilena/src/Makefile.am r)
-    (olena/tests/morpho/tests/builtin_types olena/tests/morpho/tests/builtin_types olena/tests/morpho/tests/builtin_types r) (olena/tests/core/tests/without_ntg olena/tests/core/tests/without_ntg olena/tests/core/tests/without_ntg r)
-    (olena/tests/io/tests/headers olena/tests/io/tests/headers olena/tests/io/tests/headers r) (olena/tests/morpho/tests/overall_benchs olena/tests/morpho/tests/overall_benchs olena/tests/morpho/tests/overall_benchs r)
-    (olena/tests/core/tests/benchs olena/tests/core/tests/benchs olena/tests/core/tests/benchs r) (tools/swilena/python/tests/morpho.py tools/swilena/python/tests/morpho.py tools/swilena/python/tests/morpho.py r)
-    (tools/swilena/python/Makefile.am tools/swilena/python/Makefile.am tools/swilena/python/Makefile.am r) (tools/swilena/python/swilena_all1d.py tools/swilena/python/swilena_all1d.py tools/swilena/python/swilena_all1d.py r)
-    (tools/swilena/python/swilena_all2d.py tools/swilena/python/swilena_all2d.py tools/swilena/python/swilena_all2d.py r) (tools/swilena/python/swilena_all3d.py tools/swilena/python/swilena_all3d.py tools/swilena/python/swilena_all3d.py r)
-    (integre/tests/types/tests/int_u8 integre/tests/types/tests/int_u8 integre/tests/types/tests/int_u8 r) (olena/oln/convert/rgbhsl.hh olena/oln/convert/rgbhsl.hh olena/oln/convert/rgbhsl.hh r)
-    (olena/oln/snakes/energies.hh olena/oln/snakes/energies.hh olena/oln/snakes/energies.hh r) (olena/tests/convol/tests/uniform2_gauss olena/tests/convol/tests/uniform2_gauss olena/tests/convol/tests/uniform2_gauss r)
-    (olena/tests/convol/tests/uniform_gauss olena/tests/convol/tests/uniform_gauss olena/tests/convol/tests/uniform_gauss r) (olena/tests/morpho/tests/area olena/tests/morpho/tests/area olena/tests/morpho/tests/area r)
-    (olena/oln/morpho/attributes.hh olena/oln/morpho/attributes.hh olena/oln/morpho/attributes.hh r) (olena/tests/morpho/tests/attribute olena/tests/morpho/tests/attribute olena/tests/morpho/tests/attribute r)
-    (olena/tests/morpho/tests/attr_op_cl olena/tests/morpho/tests/attr_op_cl olena/tests/morpho/tests/attr_op_cl r) (olena/oln/utils/buffer.hh olena/oln/utils/buffer.hh olena/oln/utils/buffer.hh r)
-    (olena/oln/utils/md5.hxx olena/oln/utils/md5.hxx olena/oln/utils/md5.hxx r) (olena/oln/utils/md5.hh olena/oln/utils/md5.hh olena/oln/utils/md5.hh r)
-    (olena/tests/utils/tests/md5 olena/tests/utils/tests/md5 olena/tests/utils/tests/md5 r) (olena/tests/core/tests/md5_apply olena/tests/core/tests/md5_apply olena/tests/core/tests/md5_apply r)
-    (olena/tests/convol/tests/md5_convol_fast_gaussian_hh5 olena/tests/convol/tests/md5_convol_fast_gaussian_hh5 olena/tests/convol/tests/md5_convol_fast_gaussian_hh5 r) (olena/tests/convol/tests/md5_convol_fast_gaussian_hh4 olena/tests/convol/tests/md5_convol_fast_gaussian_hh4 olena/tests/convol/tests/md5_convol_fast_gaussian_hh4 r)
-    (olena/tests/convol/tests/md5_convol_fast_gaussian_hh3 olena/tests/convol/tests/md5_convol_fast_gaussian_hh3 olena/tests/convol/tests/md5_convol_fast_gaussian_hh3 r) (olena/tests/convol/tests/md5_convol_fast_gaussian_hh2 olena/tests/convol/tests/md5_convol_fast_gaussian_hh2 olena/tests/convol/tests/md5_convol_fast_gaussian_hh2 r)
-    (olena/tests/convol/tests/md5_convol_fast_gaussian_hh1 olena/tests/convol/tests/md5_convol_fast_gaussian_hh1 olena/tests/convol/tests/md5_convol_fast_gaussian_hh1 r) (olena/tests/convol/tests/md5_convol_fast_gaussian_hh0 olena/tests/convol/tests/md5_convol_fast_gaussian_hh0 olena/tests/convol/tests/md5_convol_fast_gaussian_hh0 r)
-    (olena/tests/morpho/tests/md5_morpho_watershed_hh1 olena/tests/morpho/tests/md5_morpho_watershed_hh1 olena/tests/morpho/tests/md5_morpho_watershed_hh1 r) (olena/tests/morpho/tests/md5_morpho_watershed_hh0 olena/tests/morpho/tests/md5_morpho_watershed_hh0 olena/tests/morpho/tests/md5_morpho_watershed_hh0 r)
-    (olena/tests/morpho/tests/md5_morpho_top_hat_inc7 olena/tests/morpho/tests/md5_morpho_top_hat_inc7 olena/tests/morpho/tests/md5_morpho_top_hat_inc7 r) (olena/tests/morpho/tests/md5_morpho_top_hat_inc6 olena/tests/morpho/tests/md5_morpho_top_hat_inc6 olena/tests/morpho/tests/md5_morpho_top_hat_inc6 r)
-    (olena/tests/morpho/tests/md5_morpho_top_hat_inc5 olena/tests/morpho/tests/md5_morpho_top_hat_inc5 olena/tests/morpho/tests/md5_morpho_top_hat_inc5 r) (olena/tests/morpho/tests/md5_morpho_top_hat_inc4 olena/tests/morpho/tests/md5_morpho_top_hat_inc4 olena/tests/morpho/tests/md5_morpho_top_hat_inc4 r)
-    (olena/tests/morpho/tests/md5_morpho_top_hat_inc3 olena/tests/morpho/tests/md5_morpho_top_hat_inc3 olena/tests/morpho/tests/md5_morpho_top_hat_inc3 r) (olena/tests/morpho/tests/md5_morpho_top_hat_inc2 olena/tests/morpho/tests/md5_morpho_top_hat_inc2 olena/tests/morpho/tests/md5_morpho_top_hat_inc2 r)
-    (olena/tests/morpho/tests/md5_morpho_top_hat_inc1 olena/tests/morpho/tests/md5_morpho_top_hat_inc1 olena/tests/morpho/tests/md5_morpho_top_hat_inc1 r) (olena/tests/morpho/tests/md5_morpho_top_hat_inc0 olena/tests/morpho/tests/md5_morpho_top_hat_inc0 olena/tests/morpho/tests/md5_morpho_top_hat_inc0 r)
-    (olena/tests/morpho/tests/md5_morpho_thinning_inc0 olena/tests/morpho/tests/md5_morpho_thinning_inc0 olena/tests/morpho/tests/md5_morpho_thinning_inc0 r) (olena/tests/morpho/tests/md5_morpho_thickening_inc0 olena/tests/morpho/tests/md5_morpho_thickening_inc0 olena/tests/morpho/tests/md5_morpho_thickening_inc0 r)
-    (olena/tests/morpho/tests/md5_morpho_reconstruction_hh5 olena/tests/morpho/tests/md5_morpho_reconstruction_hh5 olena/tests/morpho/tests/md5_morpho_reconstruction_hh5 r) (olena/tests/morpho/tests/md5_morpho_reconstruction_hh4 olena/tests/morpho/tests/md5_morpho_reconstruction_hh4 olena/tests/morpho/tests/md5_morpho_reconstruction_hh4 r)
-    (olena/tests/morpho/tests/md5_morpho_reconstruction_hh3 olena/tests/morpho/tests/md5_morpho_reconstruction_hh3 olena/tests/morpho/tests/md5_morpho_reconstruction_hh3 r) (olena/tests/morpho/tests/md5_morpho_reconstruction_hh2 olena/tests/morpho/tests/md5_morpho_reconstruction_hh2 olena/tests/morpho/tests/md5_morpho_reconstruction_hh2 r)
-    (olena/tests/morpho/tests/md5_morpho_reconstruction_hh1 olena/tests/morpho/tests/md5_morpho_reconstruction_hh1 olena/tests/morpho/tests/md5_morpho_reconstruction_hh1 r) (olena/tests/morpho/tests/md5_morpho_reconstruction_hh0 olena/tests/morpho/tests/md5_morpho_reconstruction_hh0 olena/tests/morpho/tests/md5_morpho_reconstruction_hh0 r)
-    (olena/tests/morpho/tests/md5_morpho_opening_inc0 olena/tests/morpho/tests/md5_morpho_opening_inc0 olena/tests/morpho/tests/md5_morpho_opening_inc0 r) (olena/tests/morpho/tests/md5_morpho_laplacian_inc1 olena/tests/morpho/tests/md5_morpho_laplacian_inc1 olena/tests/morpho/tests/md5_morpho_laplacian_inc1 r)
-    (olena/tests/morpho/tests/md5_morpho_laplacian_inc0 olena/tests/morpho/tests/md5_morpho_laplacian_inc0 olena/tests/morpho/tests/md5_morpho_laplacian_inc0 r) (olena/tests/morpho/tests/md5_morpho_hit_or_miss_inc5 olena/tests/morpho/tests/md5_morpho_hit_or_miss_inc5 olena/tests/morpho/tests/md5_morpho_hit_or_miss_inc5 r)
-    (olena/tests/morpho/tests/md5_morpho_hit_or_miss_inc4 olena/tests/morpho/tests/md5_morpho_hit_or_miss_inc4 olena/tests/morpho/tests/md5_morpho_hit_or_miss_inc4 r) (olena/tests/morpho/tests/md5_morpho_hit_or_miss_inc3 olena/tests/morpho/tests/md5_morpho_hit_or_miss_inc3 olena/tests/morpho/tests/md5_morpho_hit_or_miss_inc3 r)
-    (olena/tests/morpho/tests/md5_morpho_hit_or_miss_inc2 olena/tests/morpho/tests/md5_morpho_hit_or_miss_inc2 olena/tests/morpho/tests/md5_morpho_hit_or_miss_inc2 r) (olena/tests/morpho/tests/md5_morpho_hit_or_miss_inc1 olena/tests/morpho/tests/md5_morpho_hit_or_miss_inc1 olena/tests/morpho/tests/md5_morpho_hit_or_miss_inc1 r)
-    (olena/tests/morpho/tests/md5_morpho_hit_or_miss_inc0 olena/tests/morpho/tests/md5_morpho_hit_or_miss_inc0 olena/tests/morpho/tests/md5_morpho_hit_or_miss_inc0 r) (olena/tests/morpho/tests/md5_morpho_gradient_inc0 olena/tests/morpho/tests/md5_morpho_gradient_inc0 olena/tests/morpho/tests/md5_morpho_gradient_inc0 r)
-    (olena/tests/morpho/tests/md5_morpho_geodesic_erosion_hh1 olena/tests/morpho/tests/md5_morpho_geodesic_erosion_hh1 olena/tests/morpho/tests/md5_morpho_geodesic_erosion_hh1 r) (olena/tests/morpho/tests/md5_morpho_geodesic_erosion_hh0 olena/tests/morpho/tests/md5_morpho_geodesic_erosion_hh0 olena/tests/morpho/tests/md5_morpho_geodesic_erosion_hh0 r)
-    (olena/tests/morpho/tests/md5_morpho_geodesic_dilation_hh1 olena/tests/morpho/tests/md5_morpho_geodesic_dilation_hh1 olena/tests/morpho/tests/md5_morpho_geodesic_dilation_hh1 r) (olena/tests/morpho/tests/md5_morpho_geodesic_dilation_hh0 olena/tests/morpho/tests/md5_morpho_geodesic_dilation_hh0 olena/tests/morpho/tests/md5_morpho_geodesic_dilation_hh0 r)
-    (olena/tests/morpho/tests/md5_morpho_fast_morpho_hxx0 olena/tests/morpho/tests/md5_morpho_fast_morpho_hxx0 olena/tests/morpho/tests/md5_morpho_fast_morpho_hxx0 r) (olena/tests/morpho/tests/md5_morpho_extrema_killer_hh3 olena/tests/morpho/tests/md5_morpho_extrema_killer_hh3 olena/tests/morpho/tests/md5_morpho_extrema_killer_hh3 r)
-    (olena/tests/morpho/tests/md5_morpho_extrema_killer_hh2 olena/tests/morpho/tests/md5_morpho_extrema_killer_hh2 olena/tests/morpho/tests/md5_morpho_extrema_killer_hh2 r) (olena/tests/morpho/tests/md5_morpho_extrema_killer_hh1 olena/tests/morpho/tests/md5_morpho_extrema_killer_hh1 olena/tests/morpho/tests/md5_morpho_extrema_killer_hh1 r)
-    (olena/tests/morpho/tests/md5_morpho_extrema_killer_hh0 olena/tests/morpho/tests/md5_morpho_extrema_killer_hh0 olena/tests/morpho/tests/md5_morpho_extrema_killer_hh0 r) (olena/tests/morpho/tests/md5_morpho_extrema_hxx1 olena/tests/morpho/tests/md5_morpho_extrema_hxx1 olena/tests/morpho/tests/md5_morpho_extrema_hxx1 r)
-    (olena/tests/morpho/tests/md5_morpho_extrema_hxx0 olena/tests/morpho/tests/md5_morpho_extrema_hxx0 olena/tests/morpho/tests/md5_morpho_extrema_hxx0 r) (olena/tests/morpho/tests/md5_morpho_erosion_hh2 olena/tests/morpho/tests/md5_morpho_erosion_hh2 olena/tests/morpho/tests/md5_morpho_erosion_hh2 r)
-    (olena/tests/morpho/tests/md5_morpho_erosion_hh1 olena/tests/morpho/tests/md5_morpho_erosion_hh1 olena/tests/morpho/tests/md5_morpho_erosion_hh1 r) (olena/tests/morpho/tests/md5_morpho_erosion_hh0 olena/tests/morpho/tests/md5_morpho_erosion_hh0 olena/tests/morpho/tests/md5_morpho_erosion_hh0 r)
-    (olena/tests/morpho/tests/md5_morpho_dilation_hh1 olena/tests/morpho/tests/md5_morpho_dilation_hh1 olena/tests/morpho/tests/md5_morpho_dilation_hh1 r) (olena/tests/morpho/tests/md5_morpho_dilation_hh0 olena/tests/morpho/tests/md5_morpho_dilation_hh0 olena/tests/morpho/tests/md5_morpho_dilation_hh0 r)
-    (olena/tests/morpho/tests/md5_morpho_closing_inc0 olena/tests/morpho/tests/md5_morpho_closing_inc0 olena/tests/morpho/tests/md5_morpho_closing_inc0 r) (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh9 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh9 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh9 r)
-    (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh8 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh8 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh8 r) (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh7 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh7 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh7 r)
-    (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh6 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh6 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh6 r) (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh5 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh5 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh5 r)
-    (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh4 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh4 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh4 r) (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh3 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh3 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh3 r)
-    (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh2 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh2 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh2 r) (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh17 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh17 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh17 r)
-    (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh16 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh16 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh16 r) (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh15 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh15 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh15 r)
-    (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh14 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh14 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh14 r) (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh13 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh13 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh13 r)
-    (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh12 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh12 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh12 r) (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh11 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh11 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh11 r)
-    (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh10 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh10 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh10 r) (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh1 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh1 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh1 r)
-    (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh0 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh0 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh0 r) (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_light_hh5 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_light_hh5 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_light_hh5 r)
-    (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_light_hh4 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_light_hh4 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_light_hh4 r) (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_light_hh3 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_light_hh3 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_light_hh3 r)
-    (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_light_hh2 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_light_hh2 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_light_hh2 r) (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_light_hh1 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_light_hh1 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_light_hh1 r)
-    (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_light_hh0 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_light_hh0 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_light_hh0 r) (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh9 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh9 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh9 r)
-    (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh8 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh8 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh8 r) (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh7 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh7 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh7 r)
-    (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh6 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh6 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh6 r) (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh5 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh5 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh5 r)
-    (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh4 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh4 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh4 r) (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh3 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh3 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh3 r)
-    (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh2 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh2 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh2 r) (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh17 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh17 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh17 r)
-    (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh16 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh16 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh16 r) (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh15 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh15 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh15 r)
-    (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh14 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh14 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh14 r) (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh13 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh13 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh13 r)
-    (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh12 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh12 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh12 r) (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh11 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh11 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh11 r)
-    (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh10 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh10 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh10 r) (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh1 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh1 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh1 r)
-    (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh0 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh0 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh0 r) (olena/tests/topo/tests/md5_topo_tarjan_flat-zone_hh0 olena/tests/topo/tests/md5_topo_tarjan_flat-zone_hh0 olena/tests/topo/tests/md5_topo_tarjan_flat-zone_hh0 r)
-    (olena/tests/topo/tests/md5_topo_dmap_hh0 olena/tests/topo/tests/md5_topo_dmap_hh0 olena/tests/topo/tests/md5_topo_dmap_hh0 r) (olena/tests/level/tests/md5_level_threshold_hh0 olena/tests/level/tests/md5_level_threshold_hh0 olena/tests/level/tests/md5_level_threshold_hh0 r)
-    (olena/tests/level/tests/md5_level_set_level_hh0 olena/tests/level/tests/md5_level_set_level_hh0 olena/tests/level/tests/md5_level_set_level_hh0 r) (olena/tests/level/tests/md5_level_hh0 olena/tests/level/tests/md5_level_hh0 olena/tests/level/tests/md5_level_hh0 r)
-    (olena/tests/convol/tests/nagao olena/tests/convol/tests/nagao olena/tests/convol/tests/nagao r) (integre/tests/types/tests/ntg_compare_nb_comp integre/tests/types/tests/ntg_compare_nb_comp integre/tests/types/tests/ntg_compare_nb_comp r)
-    (olena/tests/morpher/tests/compose_morph olena/tests/morpher/tests/compose_morph olena/tests/morpher/tests/compose_morph r) (olena/tests/morpher/tests/sq_morph olena/tests/morpher/tests/sq_morph olena/tests/morpher/tests/sq_morph r)
-    (olena/tests/morpher/tests/color_morph olena/tests/morpher/tests/color_morph olena/tests/morpher/tests/color_morph r) (olena/oln/topo/tarjan/tarjan.hh olena/oln/topo/tarjan/tarjan.hh olena/oln/topo/tarjan/tarjan.hh r)
-    (olena/tests/morpher/tests/iter olena/tests/morpher/tests/iter olena/tests/morpher/tests/iter r) (olena/tests/morpher/tests/piece olena/tests/morpher/tests/piece olena/tests/morpher/tests/piece r)
-    (olena/tests/morpher/tests/slicing olena/tests/morpher/tests/slicing olena/tests/morpher/tests/slicing r) (olena/tests/morpho/tests/gradient olena/tests/morpho/tests/gradient olena/tests/morpho/tests/gradient r))
-  (10.182 complete
-    (doc/ChangeLog doc/ChangeLog doc/ChangeLog r) (doc/dev/oln-dev.texi doc/dev/oln-dev.texi doc/dev/oln-dev.texi r)
-    (doc/dev/thanks.texi doc/dev/thanks.texi doc/dev/thanks.texi r) (doc/dev/abstract.texi doc/dev/abstract.texi doc/dev/abstract.texi r)
-    (doc/dev/build.texi doc/dev/build.texi doc/dev/build.texi r) (doc/dev/install.texi doc/dev/install.texi doc/dev/install.texi r)
-    (doc/dev/faq.texi doc/dev/faq.texi doc/dev/faq.texi r) (doc/dev/srctree.texi doc/dev/srctree.texi doc/dev/srctree.texi r)
-    (doc/dev/conf.texi doc/dev/conf.texi doc/dev/conf.texi r) 
-  )
-  (10.183 complete
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (olena/oln/core/neighborhood3d.hh olena/oln/core/neighborhood3d.hh olena/oln/core/neighborhood3d.hh r)
-    (() () olena/oln/convol/slow_gaussian.hh a) (() () olena/oln/convol/slow_gaussian.hxx a))
-  (10.184 complete
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (olena/oln/morpho/attributes.hh olena/oln/morpho/attributes.hh olena/oln/morpho/attributes.hh r))
-  (10.185 complete
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog m) (olena/oln/morpho/attributes.hh olena/oln/morpho/attributes.hh olena/oln/morpho/attributes.hh m))
+  (10.186 complete)
 )
 (New-Merge-Parents)

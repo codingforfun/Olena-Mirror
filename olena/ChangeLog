@@ -1,8 +1,13 @@
 2004-05-23  Giovanni Palma  <giovanni@lrde.epita.fr>
 
+	* oln/utils/qsort.hh: Add file.
+	* oln/utils/histogram.hh: Undo wrong fix.
+
+2004-05-23  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* oln/morpho/morpho/erosion.hh: Remove useless line.
 	* oln/morpho/attribute_union_find.hh: Change sort algorithm.
 	* oln/morpho/attributes.hh: Add volume attribute.
-	* oln/utils/qsort.hh: Add file.
 
 2004-05-15  Niels Van Vliet  <niels@lrde.epita.fr>
 
