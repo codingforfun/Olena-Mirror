@@ -1,14 +1,12 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 83)
-(Parent-Version oln 0_5 82)
-(Version-Log "2002-11-15  Nicolas Burrus  <nes@lrde.epita.fr>
-
-   * oln/types/optraits_color.hh: New file.
+(Project-Version oln 0_5 84)
+(Parent-Version oln 0_5 83)
+(Version-Log "* Undo previous checkin, waiting for precisions.
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 15 Nov 2002 21:44:11 +0100")
+(Checkin-Time "Fri, 15 Nov 2002 22:01:15 +0100")
 (Checkin-Login burrus_n)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -115,7 +113,7 @@
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.24 640))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.83 600))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.84 600))
   (configure.ac (oln/3_configure. 1.27 600))
   (configure (oln/e/7_configure 1.34 700))
   (README (oln/1_README 1.4 640))
@@ -289,7 +287,7 @@
   (oln/level/invert.hh (oln/33_invert.hh 1.4 640))
   (oln/level/lut.hh (oln/29_lut.hh 1.6 640))
   (oln/level/threshold.hh (oln/f/15_threshold. 1.4 640))
-  (oln/Makefile.am (oln/27_Makefile.a 1.27 600))
+  (oln/Makefile.am (oln/27_Makefile.a 1.28 600))
   (oln/Makefile.in (oln/e/17_Makefile.i 1.34 640))
   (oln/math/macros.hh (oln/b/21_macros.hh 1.4 640))
   (oln/meta/array1d.hh (oln/f/23_array1d.hh 1.2 640))
@@ -456,7 +454,7 @@
   (oln/types/builtins_properties.hh (oln/g/29_builtins_p 1.3 640))
   (oln/types/bin.hh (oln/g/30_bin.hh 1.6 640))
   (oln/types/behaviour.hh (oln/g/31_behaviour. 1.8 640))
-  (oln/types/all.hh (oln/g/32_all.hh 1.7 640))
+  (oln/types/all.hh (oln/g/32_all.hh 1.8 640))
 
 
   (utilities/mosaic.cc (oln/g/0_mosaic.cc 1.3 600))
@@ -694,7 +692,12 @@
 ;; Files added by populate at Fri, 15 Nov 2002 21:42:09 +0100,
 ;; to version 0_5.82(w), by burrus_n:
 
-  (oln/types/optraits_color.hh (oln/i/41_optraits_c 1.1 600))
+  
+
+;; Files deleted by depopulate at Fri, 15 Nov 2002 21:57:27 +0100,
+;; from version 0_5.83(w), by burrus_n:
+
+  ; (oln/types/optraits_color.hh ())
 )
 (Merge-Parents)
 (New-Merge-Parents)

@@ -217,7 +217,6 @@ nobase_oln_HEADERS =				\
   types/optraits_builtins_float.hh		\
   types/optraits_builtins_int.hh		\
   types/optraits_builtins_int_defs.hh		\
-  types/optraits_color.hh			\
   types/optraits_cplx.hh			\
   types/optraits_cycle.hh			\
   types/optraits_int_s.hh			\

@@ -73,7 +73,6 @@
 # include <oln/types/optraits_bin.hh>
 # include <oln/types/optraits_vec.hh>
 # include <oln/types/optraits_cplx.hh>
-# include <oln/types/optraits_color.hh>
 
 # include <oln/types/global_ops_traits.hh>
 # include <oln/types/global_ops.hh>
