@@ -125,7 +125,3 @@ namespace oln
 }
 
 %enddef
-
-
-
-

@@ -58,11 +58,11 @@ cat <<EOF
 ## NOTE: this file was generated automatically by expand.sh
 ##
 
-INCLUDES = -I/usr/include/python2.2 -I\$(srcdir)/../src 
+INCLUDES = \$(PYTHON_PATH) -I\$(srcdir)/../src
 AM_CPPFLAGS = -DOLN_EXCEPTIONS 
-# AM_CXXFLAGS = \$(CXXFLAGS_OPTIMIZE) 
-AM_LDFLAGS = -shared -lswigpy 
- 
+AM_CXXFLAGS = \$(CXXFLAGS_OPTIMIZE)
+AM_LDFLAGS = -shared -lswigpy \$(ZLIB_LDFLAGS)
+
 EOF
 }
 

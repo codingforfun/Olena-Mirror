@@ -364,14 +364,19 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
       [
          AM_PATH_PYTHON([2.1])
 	 save_CPPFLAGS=$CPPFLAGS
-	 # FIXME: find python path automatically!
-	 CPPFLAGS="$CPPFLAGS -I/usr/include/python2.2"
-         AC_CHECK_HEADERS([Python.h],, 
+
+	 AC_ARG_VAR([PYTHON_CPPFLAGS], [Path to Python.h])
+	 AC_ARG_WITH([python-includedir], [Include path for Python.h], 
+	             [PYTHON_CPPFLAGS="-I $withval"],
+                     [PYTHON_CPPFLAGS="-I/usr/include/python$PYTHON_VERSION"])
+	
+	 CPPFLAGS="$CPPFLAGS $PYTHON_CPPFLAGS"
+         AC_CHECK_HEADERS([Python.h],,
 	                  AC_MSG_ERROR(
-			  [You need Python development files to compile the Python interface. Specify --without-swilena to configure to disable it.]))
+			  [You need Python development files to compile the Python interface. Specify --with-python-includedir to set it manually or --without-swilena to disable it.]))
+
 	 CPPFLAGS=$save_CPPFLAGS
       ], [python])dnl End of OLN_COMPONENT([tools/swilena/python])
-
 
     ])dnl End of OLN_COLLECTION([OLN_SWILENA])
     ], [swilena])dnl End of OLN_COMPONENT([tools/swilena])
@@ -382,7 +387,6 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
    AM_CONDITIONAL([HAVE_DOC_DEV], [test "x$oln_cv_build_doc" != xno -a "x$oln_cv_build_devdoc" != xno])
 
 ])dnl End of OLN_COLLECTION([OLN_TOP])
-
 
 AC_OUTPUT
 

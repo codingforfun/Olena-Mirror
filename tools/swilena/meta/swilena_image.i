@@ -10,7 +10,7 @@
      // default constructor
      T();
      T(const image ## Dim ## d_size&);
-     T(const T& other);
+     T(T& other);
 
      // operators
      T clone() const;
@@ -149,4 +149,3 @@ namespace oln
 %define make_image(name, Dim, T)
 %template(name) oln::image ## Dim ## d<T >;
 %enddef
-

@@ -1,3 +1,12 @@
+2003-09-15  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* meta/swilena_image.i: Copy constructor parameter is not const.
+
+2003-09-15  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* expand.sh (AM_LDFLAGS): Add ZLIB_LDFLAGS.
+	(INCLUDES): Use PYTHON_CPPFLAGS.
+
 2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* expand.sh: Fix data types prefix.

@@ -1,29 +1,26 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 15)
-(Parent-Version oln 10 14)
+(Project-Version oln 10 16)
+(Parent-Version oln 10 15)
 (Version-Log "Index: ChangeLog
-from  Giovanni Palma  <giovanni@lrde.epita.fr>
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-        * threshold.hh: correct the threshold construtor.
+	* configure.ac: Improve python headers lookup.
 
-Index: olena/oln/level/threshold.hh
---- olena/oln/level/threshold.hh Thu, 07 Aug 2003 02:37:23 +0200 burrus_n (oln/f/15_threshold. 1.11 640)
-+++ olena/oln/level/threshold.hh Tue, 09 Sep 2003 13:45:59 +0200 palma_g (oln/f/15_threshold. 1.11 640)
-@@ -42,7 +42,7 @@
-     public:
-       threshold(const Input& threshold,
-                const Output& min = ntg_min_val(Output),
--               const Output& max = ntg_min_val(Output)) :
-+               const Output& max = ntg_max_val(Output)) :
-         m_threshold(threshold), m_min(min), m_max(max)
-       {}
- 
+Index: tools/swilena/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* meta/swilena_image.i: Copy constructor parameter is not const.
+
++2003-09-15  Nicolas Burrus  <burrus_n@lrde.epita.fr>
++	
++	* expand.sh (AM_LDFLAGS): Add ZLIB_LDFLAGS.
++	(INCLUDES): Use PYTHON_CPPFLAGS.
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 09 Sep 2003 17:10:52 +0200")
-(Checkin-Login palma_g)
+(Checkin-Time "Mon, 15 Sep 2003 17:23:46 +0200")
+(Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -125,13 +122,13 @@ Index: olena/oln/level/threshold.hh
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.6 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.7 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.25 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.35 640))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.28 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.6 640))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.7 640))
 
   (olena/ChangeLog.0 (oln/6_ChangeLog 1.50.1.98.1.5 640))
   (doc/ChangeLog.0 (oln/e/1_ChangeLog 1.31 640))
@@ -141,7 +138,7 @@ Index: olena/oln/level/threshold.hh
 
   (cleanup.sh (oln/o/29_cleanup.sh 1.5 750))
 
-  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.9 640))
+  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.10 640))
 
   (doc/demo/image.cc (oln/d/46_image.cc 1.8 640))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.16.1.2 640))
@@ -558,7 +555,7 @@ Index: olena/oln/level/threshold.hh
   (tools/swilena/doc/swilena.texi (oln/n/40_swilena.te 1.1.1.2 640))
   (tools/swilena/java/Makefile.am (oln/n/42_Makefile.a 1.1 640))
   ; (tools/swilena/java/Makefile.in ())
-  (tools/swilena/Makefile.am (oln/o/25_Makefile.a 1.4 640))
+  (tools/swilena/Makefile.am (oln/o/25_Makefile.a 1.5 640))
 ;  (tools/swilena/python/Makefile.am (oln/n/44_Makefile.a 1.4 640))
 ;  (tools/swilena/python/typedefs.hh (oln/n/43_typedefs.h 1.3 640))
   (tools/swilena/README (oln/n/35_README 1.1 640))
@@ -865,7 +862,7 @@ Index: olena/oln/level/threshold.hh
 ;; Files added by populate at Tue, 06 May 2003 06:05:19 +0200,
 ;; to version 8.33(w), by raph:
 
-  (tools/swilena/expand.sh (oln/s/25_expand.sh 1.4 750))
+  (tools/swilena/expand.sh (oln/s/25_expand.sh 1.5 750))
 
 ;; Files added by populate at Tue, 06 May 2003 06:05:41 +0200,
 ;; to version 8.33(w), by raph:
@@ -877,14 +874,14 @@ Index: olena/oln/level/threshold.hh
 
   (tools/swilena/meta/swilena_w_win.i (oln/s/27_swilena_w_ 1.2 640))
   (tools/swilena/meta/swilena_structelt.i (oln/s/28_swilena_st 1.2 640))
-  (tools/swilena/meta/swilena_point.i (oln/s/29_swilena_po 1.2 640))
+  (tools/swilena/meta/swilena_point.i (oln/s/29_swilena_po 1.3 640))
   (tools/swilena/meta/swilena_ntg_int_u.i (oln/s/30_swilena_nt 1.1 640))
   (tools/swilena/meta/swilena_ntg_int_s.i (oln/s/31_swilena_nt 1.1 640))
   (tools/swilena/meta/swilena_ntg_cplx.i (oln/s/32_swilena_nt 1.2 640))
   (tools/swilena/meta/swilena_ntg.i (oln/s/33_swilena_nt 1.2 640))
   (tools/swilena/meta/swilena_morpho.i (oln/s/34_swilena_mo 1.1 640))
   (tools/swilena/meta/swilena_imagesize.i (oln/s/35_swilena_im 1.2 640))
-  (tools/swilena/meta/swilena_image.i (oln/s/36_swilena_im 1.2 640))
+  (tools/swilena/meta/swilena_image.i (oln/s/36_swilena_im 1.3 640))
   (tools/swilena/meta/swilena_exception.i (oln/s/37_swilena_ex 1.1 640))
   (tools/swilena/meta/swilena_describe.i (oln/s/38_swilena_de 1.1 640))
   (tools/swilena/meta/swilena_decl.i (oln/s/39_swilena_de 1.1 640))
