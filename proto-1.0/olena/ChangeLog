@@ -1,6 +1,15 @@
 2005-02-24  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* oln/makefile.src: Add new files.
+	* oln/io/write_image_2d_pnm.hh: New. pgm output method for 2D images.
+	* oln/io/read_image_2d_pnm.hh: Handle mlc::box correctly.
+	* oln/io/write_image.hh: New. Dispatch for output methods.
+	* oln/io/read_image.hh: Handle mlc::box correctly..
+	* oln/io/utils.hh: Add pnm_write_header function.
+
+2005-02-24  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* oln/makefile.src: Add new files.
 	* oln/io: New.
 	* oln/io/read_image_2d_pnm.hh: New. 2D image pnm i/o (only raw pgm
 	at the moment).

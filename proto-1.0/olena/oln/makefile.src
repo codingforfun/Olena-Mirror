@@ -30,6 +30,7 @@ OLN_DEP =					\
   core/abstract/image_with_data.hh		\
   core/abstract/images.hh			\
   core/abstract/internal/image_impl.hh		\
+  core/abstract/op.hh				\
   core/abstract/piter.hh			\
   core/abstract/point.hh			\
   core/abstract/size.hh				\
@@ -43,4 +44,6 @@ OLN_DEP =					\
   fancy/print.hh				\
   io/read_image.hh				\
   io/read_image_2d_pnm.hh			\
-  io/utils.hh
+  io/utils.hh					\
+  io/write_image.hh				\
+  io/write_image_2d_pnm.hh

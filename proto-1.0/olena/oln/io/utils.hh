@@ -137,6 +137,38 @@ namespace oln {
 	return true;
       }
 
+      bool write_pnm_header(std::ofstream& ostr,
+			    const std::string& name,
+			    const std::string& type,
+			    int ncols,
+			    int nrows,
+			    int max_val)
+      {
+	if (max_val > 65535)
+	  {
+	    std::cerr << "error: can't save " << name
+		      << ", data type too large"
+		      << std::endl;
+	    return false;
+	  }
+
+	ostr.open(name.c_str(), std::ofstream::out);
+
+	if (ostr.is_open() == false)
+	  {
+	    std::cerr << "error: couldn't open " << name << std::endl;
+	    return false;
+	  }
+
+
+	ostr << "P5" << std::endl
+	     << "# Olena 1.0" << std::endl
+	     << ncols << " " << nrows << std::endl
+	     << max_val << std::endl;
+	return true;
+      }
+
+
     } // end of namespace internal
 
   } // end of namespace io

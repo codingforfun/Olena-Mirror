@@ -48,6 +48,12 @@ namespace oln {
 	typedef oln_value_type(I) value_type;
 	typedef typename mlc::traits<value_type>::encoding_type encoding_type;
 
+	read_image_2d_pgm_raw<I>& output(I& output)
+	{
+	  output = *image_;
+	  return *this;
+	}
+
 	void impl_run()
 	{
 	  encoding_type c;
@@ -58,7 +64,6 @@ namespace oln {
 			<< std::endl;
 	      return;
 	    }
-	  c =c ;
 	  point2d p;
 	  oln::image2d<value_type>  tmp(info_.rows, info_.cols);
 
@@ -74,7 +79,7 @@ namespace oln {
 	      }
 	  istr_.close();
 	  *image_ = tmp;
-
+	  std::cout << "debug : size = " << image_->size() << std::endl;
 	}
       };
 
@@ -94,20 +99,23 @@ namespace oln {
 	      {
 		read_image_2d_pgm_raw<I> tmp(ima.exact(), istr, info);
 		tmp.run();
+		tmp.output(ima.exact());
 	      }
 	    else
 	      if (info.type == "P2")
-		std::cerr << "read_image_2d_pgm_ascii not implemented"
+		std::cerr << "error: read_image_2d_pgm_ascii not implemented"
 			  << std::endl;
 	      else
-		std::cerr << "file header (`" << info.type
+		std::cerr << "error: file header (`" << info.type
 			  << "') does not match file extension (`"
 			  << ext << "')" << std::endl;
 	  else
-	    std::cerr << "image data type (`integer') does not match"
+	    std::cerr << "error: image data type (`integer') does not match"
 		      << " file extension (`" << ext << "')" << std::endl;
 	else
-	  std::cerr << "bad header" << std::endl;
+	  std::cerr << "error: unable to get a valid header" << std::endl;
+	std::cout << "debug : size = " << ima.size() << std::endl;
+
 
       }
 
