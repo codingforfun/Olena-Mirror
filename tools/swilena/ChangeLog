@@ -1,3 +1,8 @@
+2004-04-12  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* tools/swilena/generate_morpho_instantiations.py: Fix and add
+	some algorithms.
+
 2004-04-11  Niels Van Vliet  <niels@lrde.epita.fr>
 
 	* tools/swilena/meta/swilena_ntg.i: Remove "(do_nothing)".

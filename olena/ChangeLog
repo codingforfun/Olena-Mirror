@@ -1,3 +1,8 @@
+2004-04-12  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* olena/oln/morpho/laplacian.inc: Add a FIXME.
+	* olena/oln/morpho/watershed.hh: Add a FIXME.
+
 2004-04-11  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* olena/oln/core/point2d.hh: Add header include.

@@ -96,10 +96,10 @@ def write_algorithms():
                 instantiate(idx, "hybrid_geodesic_reconstruction_erosion", img_type, img_type, img_type, neighb_type)
 
 		instantiate(idx, "hit_or_miss", img_type, img_type, win_type, win_type)
-		instantiate(idx, "fast_hit_or_miss", img_type, img_type, win_type, win_type)
+                instantiate(idx, "fast_hit_or_miss", img_type, img_type, win_type, win_type)
 
 		instantiate(idx, "hit_or_miss_opening", img_type, img_type, win_type, win_type)
-		instantiate(idx, "fast_hit_or_miss_opening", img_type, img_type, win_type, win_type)
+                instantiate(idx, "fast_hit_or_miss_opening", img_type, img_type, win_type, win_type)
 
 		instantiate(idx, "hit_or_miss_opening_bg", img_type, img_type, win_type, win_type)
 		instantiate(idx, "fast_hit_or_miss_opening_bg", img_type, img_type, win_type, win_type)
@@ -110,7 +110,7 @@ def write_algorithms():
 		instantiate(idx, "hit_or_miss_closing_bg", img_type, img_type, win_type, win_type)
 		instantiate(idx, "fast_hit_or_miss_closing_bg", img_type, img_type, win_type, win_type)
 
-                # FIXME: these algorithms do not work with float neither binary types
+                # FIXME: This should work with other types.
                 if type != "ntg_bin":
                     instantiate(idx, "beucher_gradient", img_type, img_type, win_type)
                     instantiate(idx, "fast_beucher_gradient", img_type, img_type, win_type)
@@ -132,36 +132,31 @@ def write_algorithms():
 
                     instantiate(idx, "top_hat_contrast_op", img_type, img_type, win_type)
                     instantiate(idx, "fast_top_hat_contrast_op", img_type, img_type, win_type)
+                    # Watershed
+                    img_ret_type = "::oln::image%(dim)sd< ntg_int_u32 >" % vars()
+                    instantiate(idx, "watershed_seg", img_ret_type, img_type, neighb_type)
+                    instantiate(idx, "watershed_con", img_ret_type, img_type, neighb_type)
+                    bin_img_type = "::oln::image%(dim)sd< ntg_bin >" % vars()
+                    instantiate(idx, "sure_minima_imposition", img_type, img_type, bin_img_type, neighb_type)
+                    instantiate(idx, "sequential_minima_imposition", img_type, img_type, bin_img_type, neighb_type)
+                    instantiate(idx, "hybrid_minima_imposition", img_type, img_type, bin_img_type, neighb_type)
 
-	    # FIXME: fix this when available
-	    #if type == "ntg_int_u8":
-		# Watershed
-		#img_ret_type = "::oln::image%(dim)sd< ntg_int_u32 >" % vars()
-		#instantiate(dim, "watershed_seg", img_ret_type, img_type, neighb_type)
-		#instantiate(dim, "watershed_con", img_ret_type, img_type, neighb_type)
-		#instantiate(dim, "watershed_seg_or", img_type, img_type, img_ret_type, neighb_type)
+                    instantiate(idx, "sure_regional_minima", bin_img_type, img_type, neighb_type)
+                    instantiate(idx, "sequential_regional_minima", bin_img_type, img_type, neighb_type)
+                    instantiate(idx, "hybrid_regional_minima", bin_img_type, img_type, neighb_type)
 
-	    # FIXME: this is broken
-	    # instantiate(dim, "laplacian", img_type, img_type, win_type)
-	    # instantiate(dim, "fast_laplacian", img_type, img_type, win_type)
+                    # Extrema killers
+                    instantiate(idx, "fast_maxima_killer", img_type, neighb_type)
+                    instantiate(idx, "fast_minima_killer", img_type, neighb_type)
+                    # FIXME: This should work with other types.
+                    if type == "ntg_int_u8":
+                        instantiate(idx, "sure_maxima_killer", img_type, neighb_type)
+                        instantiate(idx, "sure_minima_killer", img_type, neighb_type)
 
-	    # FIXME: this is broken
-	    # bin_img_type = "::oln::image%(dim)sd< ntg_bin >" % vars()
-	    # instantiate(dim, "sure_minima_imposition", img_type, img_type, bin_img_type, neighb_type)
-	    # instantiate(dim, "sequential_minima_imposition", img_type, img_type, bin_img_type, neighb_type)
-	    # instantiate(dim, "hybrid_minima_imposition", img_type, img_type, bin_img_type, neighb_type)
-
-	    # FIXME: this is broken
-	    # instantiate(dim, "sure_regional_minima", bin_img_type, img_type, neighb_type)
-	    # instantiate(dim, "sequential_regional_minima", bin_img_type, img_type, neighb_type)
-	    # instantiate(dim, "hybrid_regional_minima", bin_img_type, img_type, neighb_type)
-
-	    # Extrema killers
-	    # FIXME: extrema killers work only with ntg::int_u8 data type
-	    # instantiate(dim, "sure_maxima_killer", img_type, neighb_type)
-	    # instantiate(dim, "fast_maxima_killer", img_type, neighb_type)
-	    # instantiate(dim, "sure_minima_killer", img_type, neighb_type)
-	    # instantiate(dim, "fast_minima_killer", img_type, neighb_type)
+                #FIXME: Does not work due to the return type:
+                #instantiate(idx, "watershed_seg_or", img_type, img_type, img_ret_type, neighb_type)
+                #instantiate(idx, "laplacian", img_type, img_type, win_type)
+	        #instantiate(idx, "fast_laplacian", img_type, img_type, win_type)
 
 def main():
     if len(sys.argv) != 2:

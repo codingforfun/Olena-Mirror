@@ -110,7 +110,10 @@ laplacian(const convert::abstract::conversion<C, B>& c,
 ** \image latex lena256_pgm.png
 ** =>
 ** \image html oln_morpho_fast_laplacian_overload.png
-** \image latex oln_morpho_fast_laplacian_overload.png
+** \image latex oln_morpho_fast_laplacian_overload.pn
+**
+** \todo FIXME: Not instantiated in swilena (see
+** tools/swilena/generate_morpho_instantiations.py)
 */
 template<class DestValue, class I, class E>
 typename mute<I, DestValue>::ret
