@@ -1,3 +1,43 @@
+2003-07-27  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
+	oln/core/bkd_iter3d.hh, oln/core/fwd_iter1d.hh,
+	oln/core/fwd_iter2d.hh, oln/core/fwd_iter3d.hh,
+	oln/core/abstract/image_size.hh,
+	oln/core/abstract/neighborhood.hh,
+	oln/core/abstract/structelt.hh,
+	oln/core/abstract/window.hh,
+	oln/core/abstract/window_base.hh: Fix bugs.
+	
+	* oln/core/image2d.hh: Remove commented code.
+
+2003-07-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/io/se_neighborhood.hxx: Rename as...
+	* oln/io/se_neighborhood.hh: ...this.
+
+	* oln/io/se_window.hxx: Rename as...
+	* oln/io/se_window.hh: ...this.
+
+2003-07-26  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/io/pnm_read.hh, oln/io/pnm_write.hh: Add missing features.
+	* oln/io/se_neighborhood.hxx, oln/io/se_window.hxx: Rewrite.
+	* oln/Makefile.am: Adjust.
+
+	* tests/io/2d.cc: Add test cases.
+	* tests/io/se_fail.cc: Fix wrong tests.
+	* tests/io/Makefile.am: Fix the compilation of se_fail.
+
+	* tests/core/runtests: Don't take directories.
+	* tests/core/traverse: New test.
+
+	* oln/io/pnm_common.hh: Update.
+
+	* oln/io/pnm_data.hh: Split into...
+	* oln/io/pnm_read_data.hh, oln/io/pnm_write_data.hh: ...these. New
+	files. Implement missing features.
+	
 2003-07-26  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/dpoint2d.hh: Fix include mistake.

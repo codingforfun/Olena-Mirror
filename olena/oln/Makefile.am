@@ -87,7 +87,6 @@ nobase_oln_HEADERS =					\
   core/impl/image_array2d.hh				\
   core/impl/image_array3d.hh				\
   core/internal/fake.hh					\
-  core/iter.hh						\
   core/macros.hh					\
   core/neighborhood1d.hh				\
   core/neighborhood2d.hh				\
@@ -108,23 +107,22 @@ nobase_oln_HEADERS =					\
   core/winiter.hh					\
   core/winneighb.hh					\
   io/base.hh						\
-  io/base.hxx						\
   io/basics.hh						\
   io/file.hh						\
   io/gz.hh						\
   io/gz_stream.hh					\
   io/pnm.hh						\
   io/pnm3d.hh						\
-  io/pnm_read.hxx					\
+  io/pnm_read.hh					\
   io/pnm_read3d.hxx					\
-  io/pnm_read_common.hxx				\
-  io/pnm_write.hxx					\
+  io/pnm_read_data.hh					\
+  io/pnm_write.hh					\
   io/pnm_write3d.hxx					\
-  io/pnm_write_common.hxx				\
+  io/pnm_write_data.hh					\
   io/readable.hh					\
   io/se.hh						\
-  io/se_neighborhood.hxx				\
-  io/se_window.hxx					\
+  io/se_neighborhood.hh					\
+  io/se_window.hh					\
   level/cc.hh						\
   level/compare.hh					\
   level/connected.hh					\

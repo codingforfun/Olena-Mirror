@@ -87,7 +87,7 @@ namespace oln
 
       bool operator==(const self_type& win) const
       {
-	return to_exact(this)->is_equal(win);
+	return to_exact(this)->is_equal(to_exact(win));
       }
 
       coord delta() const

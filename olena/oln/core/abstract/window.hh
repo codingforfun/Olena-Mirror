@@ -54,7 +54,7 @@ namespace oln
     struct window : public struct_elt<Exact>
     {
       typedef struct_elt<Exact> super_type;
-      typedef window<Exact> exact_type;      
+      typedef Exact exact_type;      
       typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
 
       static std::string name()

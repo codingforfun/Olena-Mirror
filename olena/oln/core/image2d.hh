@@ -147,9 +147,6 @@ namespace oln {
     image2d(const self_type& rhs); // w/o impl
   };
 
-
-  //   _ImageForDim(2, image2d)
-
 } // end of oln
 
 #endif // ! OLENA_CORE_IMAGE2D_HH

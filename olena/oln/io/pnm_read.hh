@@ -32,7 +32,7 @@
 
 # include <oln/core/abstract/image_with_dim.hh>
 # include <oln/io/pnm_common.hh>
-# include <oln/io/pnm_data.hh>
+# include <oln/io/pnm_read_data.hh>
 
 # include <ntg/bin.hh>
 
@@ -49,7 +49,7 @@ namespace oln {
       template <reader_id R, unsigned Dim, pnm_type V, class I>
       struct pnm_reader
       {
-	static const std::string& name()
+	static std::string name()
 	{ return "-"; }
 	
 	static bool knows_ext(const std::string& ext)
@@ -87,7 +87,7 @@ namespace oln {
 
 	// extract or skip maxvalue
 	if (s.get() != '\n') return false;
-	if (type != '1' && type != '4') //FIXME: if (T==bin)
+	if (type != '1' && type != '4')
 	  {
 	    s >> info.max_val;
 	    if (info.max_val > 65535 || s.get() != '\n')
@@ -96,51 +96,70 @@ namespace oln {
 	return true;
       }
 
-      /*---------------------------.
-      | pnm_reader (Plain, Binary) |
-      `---------------------------*/
+      /*--------------------.
+      | pnm_reader (Binary) |
+      `--------------------*/
 
-      template <class I>
-      struct pnm_reader<ReadPnmPlain, 2, PnmBinary, I>
+      template <reader_id R, class I>
+      struct pnm_reader<R, 2, PnmBinary, I>
       {
-	static const std::string& name()
-	{ static const std::string _name("pnm/P1"); return _name; }
+	static const char pnm_id = (R == ReadPnmPlain) ? '1' : '4';
+
+	static std::string name()
+	{ 
+	  static const std::string _name("pnm/P");
+	  return _name + pnm_id;
+	}
 
 	static bool knows_ext(const std::string& ext)
-	{ return ext == "ppbm"; }
+	{ 
+	  if (R == ReadPnmPlain)
+	    return (ext == "ppbm") || (ext == "pbm");
+	  return ext == "pbm";
+	}
 
 	static bool read(std::istream& in, I& im)
 	{
 	  pnm2d_info info;
-	  if (!pnm_read_header2d(in, '1', info))
+	  if (!pnm_read_header2d(in, pnm_id, info))
 	    return false;
 
 	  // FIXME: uncomment when ready
 	  //	  im.resize(info.rows, info.cols);
 	  im = I(info.rows, info.cols);
-	  pnm_read_data_plain_binary(in, im);
+
+	  pnm_read_data<PnmBinary, R>::read(in, im, info);
 	  return true;
 	}
       };
-      
-      /*----------------------------.
-      | pnm_reader (Plain, Integer) |
-      `----------------------------*/
 
-      template <class I>
-      struct pnm_reader<ReadPnmPlain, 2, PnmInteger, I>
+      /*---------------------.
+      | pnm_reader (Integer) |
+      `---------------------*/
+
+      template <reader_id R, class I>
+      struct pnm_reader<R, 2, PnmInteger, I>
       {
-	static const std::string& name()
-	{ static const std::string _name("pnm/P2"); return _name; }
+	static const char pnm_id = (R == ReadPnmPlain) ? '2' : '5';
+
+	static std::string name()
+	{ 
+	  static const std::string _name("pnm/P");
+	  return _name + pnm_id;
+	}
 
 	static bool knows_ext(const std::string& ext)
-	{ return ext == "ppgm"; }
+	{ 
+	  if (R == ReadPnmPlain)
+	    return (ext == "ppgm") || (ext == "pgm");
+	  return ext == "pgm";
+	}
 
 	static bool read(std::istream& in, I& im)
 	{
 	  pnm2d_info info;
 	  
-	  if (!pnm_read_header2d(in, '2', info))
+	  if (!pnm_read_header2d(in, pnm_id, info))
 	    return false;
 
 	  // FIXME: uncomment when ready
@@ -151,7 +170,57 @@ namespace oln {
 	  if (ntg::to_ntg(info.max_val) > ntg_max_val(Value(I)))
 	    return false;
 
-	  pnm_read_data_plain_integer(in, im);
+	  pnm_read_data<PnmInteger, R>::read(in, im, info);
+	  return true;
+	}
+      };
+
+      /*-----------------------.
+      | pnm_reader (Vectorial) |
+      `-----------------------*/
+
+      template <reader_id R, class I>
+      struct pnm_reader<R, 2, PnmVectorial, I>
+      {
+	static const char pnm_id = (R == ReadPnmPlain) ? '3' : '6';
+
+	static std::string name()
+	{ 
+	  static const std::string _name("pnm/P");
+	  return _name + pnm_id;
+	}
+
+	static bool knows_ext(const std::string& ext)
+	{ 
+	  if (R == ReadPnmPlain)
+	    return (ext == "pppm") || (ext == "ppm");
+	  return ext == "ppm";
+	}
+
+	static bool read(std::istream& in, I& im)
+	{
+	  pnm2d_info info;
+
+	  // Components have to be integers
+	  if (!ntg_is_a(ntg_comp_type(Value(I)), ntg::unsigned_integer)::ret)
+	    return false;
+
+	  // Must have only 3 components
+	  if (ntg_nb_comp(Value(I)) != 3)
+	    return false;
+	  
+	  if (!pnm_read_header2d(in, pnm_id, info))
+	    return false;
+
+	  // FIXME: uncomment when ready
+	  // im.resize(info.rows, info.cols);
+	  im = I(info.rows, info.cols);
+
+	  // Check that value type is large enough
+	  if (ntg::to_ntg(info.max_val) > ntg_max_val(ntg_comp_type(Value(I))))
+	    return false;
+
+	  pnm_read_data<PnmVectorial, R>::read(in, im, info);
 	  return true;
 	}
       };
@@ -161,8 +230,13 @@ namespace oln {
       `-------*/
 
       template <class I>
-      struct reader<ReadPnmPlain, I> 
+      struct reader<ReadPnmPlain, I>
 	: public pnm_reader<ReadPnmPlain, I::dim, get_pnm_type<I>::ret, I>
+      {};
+
+      template <class I>
+      struct reader<ReadPnmRaw, I>
+	: public pnm_reader<ReadPnmRaw, I::dim, get_pnm_type<I>::ret, I>
       {};
 
     } // end of internal

@@ -122,6 +122,7 @@ namespace ntg {
 
     INT_S_CTOR_FROM_BUILTIN(unsigned char);
     INT_S_CTOR_FROM_BUILTIN(signed   char);
+    INT_S_CTOR_FROM_BUILTIN(char);
 
     template <unsigned mbits, class B2>
     int_s (const int_s<mbits, B2>& rhs)

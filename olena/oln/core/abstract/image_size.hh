@@ -86,7 +86,7 @@ namespace oln {
       template< class S >
       bool operator==(const image_size<S>& size) const
       {
-	for (unsigned i = 0; i < Dim; ++i)
+	for (unsigned i = 0; i < dim; ++i)
 	  if (coord_[i] != size.coord_[i])
 	    return false;
 	return true;
@@ -95,7 +95,7 @@ namespace oln {
       template< class S >
       bool operator!=(const image_size<S>& size) const
       {
-	for (unsigned i = 0; i < Dim; ++i)
+	for (unsigned i = 0; i < dim; ++i)
 	  if (coord_[i] != size.coord_[i])
 	    return true;
 	return false;

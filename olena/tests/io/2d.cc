@@ -8,18 +8,20 @@ check(void)
   typedef image2d<range<int_u8, bounded_u<0, 255>, strict > > ima_range_int_u8;
   typedef image2d<int_u<6, strict> > ima_int_u6;
 
-  fail |= loadsave< image2d<bin>     >(rdata("lena.pbm"), "lena.pbm");
-  fail |= loadsave< image2d<bin>       >(rdata("lena"), "lena");
-  fail |= loadsave< image2d<int_u8>    >(rdata("lena"), "lena");
-  fail |= loadsave< image2d<char>      >(rdata("lena"), "lena");
-  fail |= loadsave< ima_int_u6         >(rdata("lena"), "lena");
-  fail |= loadsave< ima_range_int_u8   >(rdata("lena"), "lena");
-  fail |= loadsave< image2d<nrgb_8>    >(rdata("lena"), "lena");
+  fail |= loadsave< image2d<bin>           >(rdata("lena"), "lena");
+  fail |= loadsave< image2d<bool>          >(rdata("lena"), "lena");
+  fail |= loadsave< image2d<int_u8>        >(rdata("lena"), "lena");
+  fail |= loadsave< image2d<unsigned char> >(rdata("lena"), "lena");
+  fail |= loadsave< ima_int_u6             >(rdata("lena"), "lena");
+  fail |= loadsave< ima_range_int_u8       >(rdata("lena"), "lena");
+  fail |= loadsave< image2d<nrgb_8>        >(rdata("lena"), "lena");
+  fail |= loadsave< image2d<xyz_8>         >(rdata("lena"), "lena");
+  fail |= loadsave< image2d<vec<3, int_u8> > >(rdata("lena"), "lena-vec");
 
-  fail |= loadsave< image2d<bin>     >(rdata("lena.pbm"), "lena.pbm");
-  fail |= loadsave< image2d<int_u8>  >(rdata("lena.pgm"), "lena.pgm");
-  fail |= loadsave< image2d<char>    >(rdata("lena.pgm"), "lena.pgm");
-  fail |= loadsave< image2d<nrgb_8>  >(rdata("lena.ppm"), "lena.ppm");
+  fail |= loadsave< image2d<bin>           >(rdata("lena.pbm"), "lena.pbm");
+  fail |= loadsave< image2d<int_u8>        >(rdata("lena.pgm"), "lena.pgm");
+  fail |= loadsave< image2d<unsigned char> >(rdata("lena.pgm"), "lena.pgm");
+  fail |= loadsave< image2d<nrgb_8>        >(rdata("lena.ppm"), "lena.ppm");
 
   fail |= loadsave< image2d<bin>     >(rdata("lena.ppbm"), "lena.ppbm");
   fail |= loadsave< image2d<int_u8>  >(rdata("lena.ppgm"), "lena.ppgm");

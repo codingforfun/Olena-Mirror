@@ -14,7 +14,7 @@ check(void)
   fail |= ! loadsave< neighborhood2d >(rdata("se.pbm"), "se.pbm");
 
 #if HAVE_ZLIB
-  fail |= ! loadsave< neighborhood2d >(rdata("neighbor9.pbm.gz"), "neighbor9.pbm.gz");
+  fail |= ! loadsave< neighborhood2d >(rdata("se9.pbm.gz"), "se9.pbm.gz");
 #endif
 
   return fail;

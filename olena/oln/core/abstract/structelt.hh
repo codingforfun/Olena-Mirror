@@ -65,7 +65,7 @@ namespace oln {
       
       typedef typename struct_elt_traits<Exact>::point_type point_type;
       typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
-      typedef struct_elt<Exact> exact_type;
+      typedef Exact exact_type;
       
       bool has(const dpoint_type& dp) const
       {
@@ -84,12 +84,12 @@ namespace oln {
       
       dpoint_type dp(unsigned i) const
       {
-	return to_exact(this)->dp_(i);
+	return to_exact(this)->at(i);
       }
 
       bool operator==(const self_type& win) const
       {
-	return to_exact(this)->is_equal(win);
+	return to_exact(this)->is_equal(to_exact(win));
       }
 
       coord delta() const

@@ -25,115 +25,60 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_SE_NEIGHBORHOOD_HXX_
-# define OLENA_IO_SE_NEIGHBORHOOD_HXX_
+#ifndef OLENA_IO_SE_WINDOW_HXX_
+# define OLENA_IO_SE_WINDOW_HXX_
+
+# include <oln/core/image2d.hh>
+# include <oln/core/window2d.hh>
+# include <oln/core/macros.hh>
 
 # include <oln/io/pnm.hh>
-# include <oln/core/neighborhood2d.hh>
-# include <oln/core/macros.hh>
+# include <oln/io/image_read.hh>
+# include <oln/io/image_write.hh>
 
 namespace oln {
 
-  using namespace ntg;
-
   namespace io {
+    
     namespace internal {
-
-      bool read(neighborhood2d& output, const std::string& name)
+      
+      bool read(window2d& output, const std::string& name)
       {
-	// FIXME: implement
-	return false;
+	image2d<ntg::bin> im;
+	if (!read(im, name))
+	  return false;
+	if (!(im.ncols() % 2) || !(im.nrows() % 2))
+	  {
+	    std::clog << "[both image dimensions have to be odd for a"
+		      << "window2d]"
+		      << std::flush;
+	    return false;
+	  }
+	image2d<ntg::bin>::fwd_iter_type it(im);
+	window2d w;
+	for_all (it)
+	  if (im[it])
+	    w.add(dpoint2d(it) - dpoint2d(im.nrows()/2, im.ncols()/2));
+	output = w;
+	return true;
+      }
+
+      bool write(const window2d& input, const std::string& name)
+      {
+	image2d<ntg::bin> im(input.delta()*2+1, input.delta()*2+1);
+	image2d<ntg::bin>::fwd_iter_type it(im);
+	for_all (it) im[it] = false;
+	for (unsigned i = 0; i < input.card(); ++i)
+	  im[point2d(input.delta(), input.delta()) + input.dp(i)] = true;
+	if (!write(im, name))
+	  return false;
+	return true;
       }
 
 #if 0
-      template<>
-      struct reader<ReadPnmPlain, neighborhood2d >
-      {
-	static const std::string& name()
-	{ static const std::string _name("win2d/P1"); return _name;	}
-
-	static bool knows_ext(const std::string& ext)
-	{ return ext == "ppbm"; }
-
-	static bool read(std::istream& in, neighborhood2d& win)
-	{
-	  image2d<bin> im;
-	  if (!reader<ReadPnmPlain, image2d<bin> >::read(in, im))
-	    return false;
-	  if (!(im.ncols() % 2) || !(im.nrows() % 2))
-	    {
-	      std::clog << "[both image dimensions have to be odd for a neighborhood2d]" << std::flush;
-	      return false;
-	    }
-	  image2d<bin>::iter it(im);
-	  neighborhood2d w;
-	  for_all (it)
-	    {
-	      if (it.row() == im.nrows()/2 && it.col() == im.ncols()/2+1)
-		break;
-	      if (im[it])
-		w.add(dpoint2d(it) - dpoint2d(im.nrows()/2, im.ncols()/2));
-	    }
-	  for_all_remaining (it)
-	    {
-	      point2d p = it - dpoint2d(im.nrows()/2, im.ncols()/2);
-	      point2d inv_p = -p + dpoint2d(im.nrows()/2, im.ncols()/2);
-	      if (im[it] != im[inv_p])	      
-		{
-		  std::clog << "[a neighborhood2d must be symmetric]" << std::flush;
-		  return false;
-		}
-	    }
-	  win = w;
-	  return true;
-	}
-      };
 
       template<>
-      struct reader<ReadPnmRaw, neighborhood2d >
-      {
-	static const std::string& name()
-	{ static const std::string _name("win2d/P4"); return _name;	}
-
-	static bool knows_ext(const std::string& ext)
-	{ return ext == "pbm"; }
-
-	static bool read(std::istream& in, neighborhood2d& win)
-	{
-	  image2d<bin> im;
-	  if (!reader<ReadPnmRaw, image2d<bin> >::read(in, im))
-	    return false;
-	  if (!(im.ncols() % 2) || !(im.nrows() % 2))
-	    {
-	      std::clog << "[both image dimensions have to be odd for a neighborhood2d]" << std::flush;
-	      return false;
-	    }
-	  image2d<bin>::iter it(im);
-	  neighborhood2d w;
-	  for_all (it)
-	    {
-	      if (it.row() == im.nrows()/2 && it.col() == im.ncols()/2+1)
-		break;
-	      if (im[it])
-		w.add(dpoint2d(it) - dpoint2d(im.nrows()/2, im.ncols()/2));
-	    }
-	  for_all_remaining (it)
-	    {
-	      point2d p = it - dpoint2d(im.nrows()/2, im.ncols()/2);
-	      point2d inv_p = -p + dpoint2d(im.nrows()/2, im.ncols()/2);
-	      if (im[it] != im[inv_p])
-		{
-		  std::clog << "[a neighborhood2d must be symmetric]" << std::flush;
-		  return false;
-		}
-	    }
-	  win = w;
-	  return true;
-	}
-      };
-
-      template<>
-      struct writer<WritePnmPlain, neighborhood2d >
+      struct reader<ReadPnmPlain, window2d >
       {
 	static const std::string& name()
 	{ static const std::string _name("win2d/P1"); return _name; }
@@ -141,7 +86,66 @@ namespace oln {
 	static bool knows_ext(const std::string& ext)
 	{ return ext == "ppbm"; }
 
-	static bool write(std::ostream& out, const neighborhood2d& win)
+	static bool read(std::istream& in, window2d& win)
+	{
+	  image2d<bin> im;
+	  if (!reader<ReadPnmPlain, image2d<bin> >::read(in, im))
+	    return false;
+	  if (!(im.ncols() % 2) || !(im.nrows() % 2))
+	    {
+	      std::clog << "[both image dimensions have to be odd for a window2d]" << std::flush;
+	      return false;
+	    }
+	  image2d<bin>::iter it(im);
+	  window2d w;
+	  for_all (it)
+	    if (im[it])
+	      w.add(dpoint2d(it) - dpoint2d(im.nrows()/2, im.ncols()/2));
+	  win = w;
+	  return true;
+	}
+      };
+
+      template<>
+      struct reader<ReadPnmRaw, window2d >
+      {
+	static const std::string& name()
+	{ static const std::string _name("win2d/P4"); return _name;	}
+
+	static bool knows_ext(const std::string& ext)
+	{ return ext == "pbm"; }
+
+	static bool read(std::istream& in, window2d& win)
+	{
+	  image2d<bin> im;
+	  if (!reader<ReadPnmRaw, image2d<bin> >::read(in, im))
+	    return false;
+	  if (!(im.ncols() % 2) || !(im.nrows() % 2))
+	    {
+	      std::clog << "[both image dimensions have to be odd for a "
+			<< "window2d]" << std::flush;
+	      return false;
+	    }
+	  image2d<bin>::iter it(im);
+	  window2d w;
+	  for_all (it)
+	    if (im[it])
+	      w.add(dpoint2d(it) - dpoint2d(im.nrows()/2, im.ncols()/2));
+	  win = w;
+	  return true;
+	}
+      };
+
+      template<>
+      struct writer<WritePnmPlain, window2d >
+      {
+	static const std::string& name()
+	{ static const std::string _name("win2d/P1"); return _name; }
+
+	static bool knows_ext(const std::string& ext)
+	{ return ext == "ppbm"; }
+
+	static bool write(std::ostream& out, const window2d& win)
 	{
 	  image2d<bin> im(win.delta()*2+1,win.delta()*2+1);
 	  image2d<bin>::iter it(im);
@@ -155,7 +159,7 @@ namespace oln {
       };
 
       template<>
-      struct writer<WritePnmRaw, neighborhood2d >
+      struct writer<WritePnmRaw, window2d >
       {
 	static const std::string& name()
 	{ static const std::string _name("win2d/P4"); return _name; }
@@ -163,7 +167,7 @@ namespace oln {
 	static bool knows_ext(const std::string& ext)
 	{ return ext == "pbm"; }
 
-	static bool write(std::ostream& out, const neighborhood2d& win)
+	static bool write(std::ostream& out, const window2d& win)
 	{
 	  image2d<bin> im(win.delta()*2+1,win.delta()*2+1);
 	  image2d<bin>::iter it(im);
@@ -182,4 +186,4 @@ namespace oln {
   } // io
 } // oln
 
-#endif // OLENA_IO_SE_NEIGHBORHOOD_HXX_
+#endif // OLENA_IO_SE_WINDOW_HXX_

@@ -48,13 +48,14 @@ namespace oln
 
   };
 
+  // shortcuts
+  using mlc::_begin;
+  using mlc::begin;
+  using mlc::_end;
+  using mlc::end;
+  
   namespace abstract 
   {
-    using mlc::_begin;
-    using mlc::begin;
-    using mlc::_end;
-    using mlc::end;
-    
     // iter
     
     template<class Exact>

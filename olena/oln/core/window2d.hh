@@ -63,7 +63,6 @@ namespace oln {
     typedef struct_elt_traits< self_type >::dpoint_type
     dpoint_type;
 
-
     coord delta_update_(const dpoint_type& dp)
     {
       delta_(abs(dp.row()));

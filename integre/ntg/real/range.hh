@@ -108,7 +108,8 @@ namespace ntg {
       return *this;
     }
 
-    operator base_storage_type() const { return this->val_; }
+    template <class U>
+    operator U() const { return this->val_; }
   };
 
   template<class T, class interval, class behavior>
