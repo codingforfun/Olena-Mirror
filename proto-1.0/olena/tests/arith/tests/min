@@ -1,0 +1,27 @@
+#include <oln/basics2d.hh>
+#include <oln/arith/min.hh>
+#include <oln/level/fill.hh>
+#include <oln/level/compare.hh>
+#include <ntg/int.hh>
+
+
+
+bool check()
+{
+   oln::image2d<ntg::int_u8> ima1(10, 10);
+   oln::image2d<ntg::int_u8> ima2(10, 10);
+
+   oln::level::fill(ima1, 10);
+   oln::level::fill(ima2, 20);
+
+   oln::image2d<ntg::int_u8> ima;
+
+   ima = oln::arith::min(ima1, ima2);
+
+   if (oln::level::is_equal(ima, ima1))
+     return false;
+   return true;
+}
+
+
+

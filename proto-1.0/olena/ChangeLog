@@ -1,3 +1,15 @@
+2005-03-20  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* tests/arith: New.
+	* tests/arith/tests: New.
+	* tests/arith/tests/min: New.
+	* tests/arith/tests/max: New.
+	* tests/arith/Makefile.am: New.
+	* oln/basics.hh: Include oln/core/abstract/op.hh.
+	* oln/arith: New.
+	* oln/arith/min.hh: Compute the pointwise minimum between two images.
+	* oln/arith/max.hh: Compute the pointwise maximum between two images.
+
 2005-03-20  Simon Odou  <simon@lrde.epita.fr>
 
 	* oln/core/abstract/struct_elt.hh: Add delta to stucturing element..
