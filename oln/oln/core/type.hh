@@ -36,37 +36,53 @@ namespace type
 {
 
   //
-  //  top, bottom, and any
+  //  final and any
   //
   ///////////////////////////////
 
-  class top {
-  public:
-    static std::string name() { return ""; }
-  protected:
-    top() {}
-  };
+ //  class top {
+//   public:
+//     static std::string name() { return ""; }
+//   protected:
+//     top() {}
+//   };
 
-  class bottom {
-  public:
-    static std::string name() { return "bot"; }
-  private:
-    bottom();
-  };
+//   class bottom {
+//   public:
+//     static std::string name() { return "bot"; }
+//   private:
+//     bottom();
+//   };
 
-  template<class Inferior = bottom>
-  class any : public top {
+  template<class E>
+  class any 
   public:
-    typedef Inferior inferior;
-    static std::string name() { return std::string("any<") + Inferior::name() + ">"; }
+    typedef E exact_type;
+
+    // these reinterpret_casts allow for diamond hierarchies
+    // whereas *static_cast<const E*>(this) is forbiden
+    // in such cases; if a bug occurs because one of these
+    // casts, please submit a bug report!
+
+          E& exact()       { return reinterpret_cast<E&>(*this); }
+    const E& exact() const { return reinterpret_cast<const E&>(*this); }
+
+    // self() is only for bwd compatibility purpose
+    // please now use exact() instead of self()
+    inline       E& self();
+    inline const E& self() const;
+
+
+    static std::string name() { return std::string("any<") + E::name() + ">"; }
   protected:
     any() {}
   };
 
   //
-  //  Helper for static hierarchies
+  //  Helper for static hierarchies: 
+  //  FIXME : should not be necessary 
   //
-  //////////////////////////////////
+  ////////////////////////////////////
 
   // if Self is type::bottom return T else return Self
 
@@ -80,14 +96,15 @@ namespace type
 
   //
   //  inferior traits
+  //  FIXME : erase ?
   //
   ///////////////////////////////
 
-  template<class C>
-  struct inferior
-  {
-    typedef typename C::inferior ret;
-  };
+  // template<class C>
+  // struct inferior
+  // {
+  // typedef typename C::inferior ret;
+  // };
 
 
 
@@ -98,34 +115,39 @@ namespace type
 
   namespace internal {
 
+    // FIXME : erase !!!
+
     // fwd decl
 
-    template<class T> struct _find_exact;
+    // template<class T> struct _find_exact;
 
     // helper
 
-    template<class T, class I>
-    struct _find_exact_helper
-    {
-      typedef typename _find_exact<I>::ret ret;
-    };
-
-    template<class T>
-    struct _find_exact_helper<T, bottom>
-    {
-      typedef T ret;
-    };
-
+    // template<class T, class I>
+    //     struct _find_exact_helper
+    //     {
+    //       typedef typename _find_exact<I>::ret ret;
+    //     };
+    
+    //     template<class T>
+    //     struct _find_exact_helper<T, bottom>
+    //     {
+    //       typedef T ret;
+    //     };
+    
     // find exact
 
-    template<class T>
-    struct _find_exact
-    {
-      typedef typename inferior<T>::ret I;
-      typedef typename _find_exact_helper<T,I>::ret ret;
-    };
+    // template<class T>
+    //     struct _find_exact
+    //     {
+    //       typedef typename inferior<T>::ret I;
+    //       typedef typename _find_exact_helper<T,I>::ret ret;
+    //     };
 
   } // end of namespace internal
+
+
+
 
 
 
@@ -136,15 +158,38 @@ namespace type
 
   template<class T>
   struct exact {
-    typedef typename internal::_find_exact<T>::ret ret;
+    // typedef typename internal::_find_exact<T>::ret ret;
+    typedef typename T::exact_type ret;
+    static       ret& convert(      T& ref) { return ref.exact(); }
+    static const ret& convert(const T& ref) { return ref.exact(); }
   };
 
   template<class T>
   struct exact<T*> {
-    typedef typename exact<T>::ret* ret;
+    // typedef typename exact<T>::ret* ret;
+
+    typedef typename T::exact_type* ret;
+    static       ret* convert(      T* ptr) { return & ptr->exact(); }
+    static const ret* convert(const T* ptr) { return & ptr->exact(); }
   };
 
+  //
+  //  exact virtual type traits
+  //  (inheritance determination)
+  //
+  ////////////////////////////////
 
+  template<class T, class E>
+  struct exact_vt
+  {
+    typedef E ret;
+  };
+  
+  template<class T>
+  struct exact_vt<T,final>
+  {
+    typedef T ret;
+  };
 
   //
   //  name_of and exact_name_of
@@ -188,6 +233,15 @@ namespace type
 } // end of namespace type
 
 
+//
+//  Exact macros
+//
+///////////////////////////////
+
+# define Exact(Type) \
+typename type::exact<Type>::ret
+#define Exact_(T) type::exact< T >::ret
+
 
 //
 //  to_exact procs
@@ -196,35 +250,41 @@ namespace type
 
 
 template<class T> inline
-typename type::exact<T>::ret*
-to_exact(type::any<T>* ptr)
+Exact(T)*
+to_exact(T* ptr)
 {
-  return static_cast<typename type::exact<T>::ret*>(ptr);
+  return type::exact<T*>::convert(ptr);
 }
 
 template<class T> inline
-const typename type::exact<T>::ret*
-to_exact(const type::any<T>* ptr)
+const Exact(T)*
+to_exact(const T* ptr)
 {
-  return static_cast<const typename type::exact<T>::ret*>(ptr);
+  return type::exact<T*>::convert(ptr);
 }
 
 template<class T> inline
-typename type::exact<T>::ret&
-to_exact(type::any<T>& ref)
+Exact(T)&
+to_exact(T& ref)
 {
-  return static_cast<typename type::exact<T>::ret&>(ref);
+  return type::exact<T>::convert(ref);
 }
 
 template<class T> inline
-const typename type::exact<T>::ret&
-to_exact(const type::any<T>& ref)
+const Exact(T)&
+to_exact(const T& ref)
 {
-  return static_cast<const typename type::exact<T>::ret&>(ref);
+  return type::exact<T>::convert(ref);
 }
 
-# define Exact(Type) \
-typename type::exact<Type>::ret
+//
+//  code below is only for bwd compatibility purpose
+//
+//////////////////////////////////////////////////////
+
+template<class E> inline E& any<E>::self(){ return reinterpret_cast<E&>(*this); }
+
+template<class E> inline const E& any<E>::self() const { return reinterpret_cast<E&>(*this); }
 
 # define Exact_ptr(Type, Var)			\
 typedef Exact(Type##_) Type;			\

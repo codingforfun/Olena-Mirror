@@ -1,12 +1,15 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 1)
-(Parent-Version oln 8 9)
-(Version-Log "Olena 2003 paradigm transition branch. May be sometimes completely unusable.
+(Project-Version oln 2003paradigm 2)
+(Parent-Version oln 2003paradigm 1)
+(Version-Log "2003-02-25  david lesage  <david@lrde.epita.fr>
+
+        * oln/core/type.hh: Change to Exact hierarchy tools.
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 25 Feb 2003 13:22:17 +0100")
+(Checkin-Time "Tue, 25 Feb 2003 17:49:20 +0100")
 (Checkin-Login david)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -90,7 +93,7 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.34 640))
-  (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.20 640))
+  (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.21 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.24 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.2 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.2 640))
@@ -241,7 +244,7 @@
   (oln/oln/core/structelt.hh (oln/c/25_structelt. 1.3 640))
   (oln/oln/core/traverse.hh (oln/d/30_traverse.h 1.5 640))
   (oln/oln/core/typeadj.hh (oln/e/25_typeadj.hh 1.3 640))
-  (oln/oln/core/type.hh (oln/c/21_type.hh 1.9 640))
+  (oln/oln/core/type.hh (oln/c/21_type.hh 1.10 640))
   (oln/oln/core/window1d.hh (oln/c/15_window1d.h 1.6 640))
   (oln/oln/core/window2d.hh (oln/c/14_window2d.h 1.7 640))
   (oln/oln/core/window3d.hh (oln/c/13_window3d.h 1.6 640))

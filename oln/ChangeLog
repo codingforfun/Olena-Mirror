@@ -1,3 +1,7 @@
+2003-02-25  david lesage  <david@lrde.epita.fr>
+
+	* oln/core/type.hh: Change to Exact hierarchy tools.
+
 2003-02-23  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* config/oln.m4: Change default flags for icc.
