@@ -1,5 +1,21 @@
 2005-03-19  Damien Thivolle  <damien@lrde.epita.fr>
 
+	* tests/main/tests/pow2sup1: New.
+	* tests/main/tests/pow2sup2: New.
+	* tests/array: New.
+	* tests/array/test_array1d.cc: New.
+	* tests/array/test_array2d.cc: New.
+	* tests/array/gen_test_utils: New.
+	* tests/array/gen_test_utils/postlude: New.
+	* tests/array/gen_test_utils/errors.cc: New.
+	* tests/array/gen_test_utils/prelude: New.
+	* tests/array/gen_test_utils/errors.hh: New.
+	* tests/array/test_array3d.cc: New.
+	* tests/array/Makefile.am: New.
+	* tests/array/gen_test.cc: New.
+
+2005-03-19  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* mlc/math.hh: Add power of 2 traits.
 	* mlc/makefile.src: Add new file.
 

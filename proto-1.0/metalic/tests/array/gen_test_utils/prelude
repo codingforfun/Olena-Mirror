@@ -1,0 +1,20 @@
+#include <mlc/array/all.hh>
+
+#include <iostream>
+
+#include "check.hh"
+
+using namespace mlc;
+
+#define OK_OR_FAIL                              \
+      std::cout << "OK" << std::endl;           \
+    else                                        \
+      {                                         \
+        std::cout << "FAIL" << std::endl;       \
+        fail = true;                            \
+      }
+
+bool
+check()
+{
+  bool fail = false;

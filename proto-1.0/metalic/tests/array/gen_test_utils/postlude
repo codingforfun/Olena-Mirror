@@ -1,0 +1,8 @@
+
+  (void) foo;
+
+  if (1)
+     OK_OR_FAIL;
+
+  return fail;
+}
