@@ -126,15 +126,15 @@ namespace oln {
 	static bool
 	write(std::ostream& out, const I& im)
 	{
-	  if (ntg_max_val(oln_value_type(I)) > ntg::to_ntg(65535U))
-	    return false;
-
 	  pnm2d_info info;
 	  info.cols = im.ncols();
 	  info.rows = im.nrows();
 	  oln::utils::f_minmax<oln_value_type(I)> f;
 	  traverse(f, im);
 	  info.max_val = f.max();
+
+	  if (info.max_val > ntg::to_ntg(65535U))
+	    return false;
 
 	  if (!pnm_write_header2d(out, pnm_id, info))
 	    return false;

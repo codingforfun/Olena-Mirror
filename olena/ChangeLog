@@ -1,3 +1,7 @@
+2003-09-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/io/pnm_write_2d.hh: Fix int_u32 images writing.
+
 2003-09-09  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* oln/level/threshold.hh: Correct the threshold construtor.
