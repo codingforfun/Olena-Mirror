@@ -72,6 +72,8 @@ PACKAGE = @PACKAGE@
 RANLIB = @RANLIB@
 STRIP = @STRIP@
 VERSION = @VERSION@
+ZLIB_CFLAGS = @ZLIB_CFLAGS@
+ZLIB_LDFLAGS = @ZLIB_LDFLAGS@
 am__include = @am__include@
 am__quote = @am__quote@
 install_sh = @install_sh@
@@ -194,6 +196,8 @@ nobase_oln_HEADERS = \
   io/base.hxx					\
   io/basics.hh					\
   io/file.hh					\
+  io/gz.hh					\
+  io/gz_stream.hh				\
   io/pnm.hh					\
   io/pnm3d.hh					\
   io/pnm_read.hxx				\
@@ -283,7 +287,7 @@ nobase_oln_HEADERS = \
 EXTRA_DIST = config/extrconf.sh
 PERL = perl
 SCANDEFS_PL = $(top_srcdir)/tools/scandefs.pl
-PCONF_OCCURS = config/system.hh
+PCONF_OCCURS = $(top_srcdir)/src/config/system.hh $(top_srcdir)/tests/io/2d.cc
 
 DISTCLEANFILES = config/pconf.hh config/stamp-h1
 subdir = src

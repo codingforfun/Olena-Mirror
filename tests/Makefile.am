@@ -15,9 +15,12 @@ SOURCEDATA = data/lena.ppm
 # by maintainer-clean.
 BUILTDATA =					\
   data/lena.pbm					\
+  data/lena.pbm.gz				\
   data/lena.pgm					\
+  data/lena.pgm.gz				\
   data/lena.ppbm				\
   data/lena.ppgm				\
+  data/lena.ppm.gz				\
   data/lena.pppm				\
   data/lena128.pgm
 
@@ -49,6 +52,13 @@ dist_check_DATA = $(SOURCEDATA) $(BUILTDATA)
 
 .pbm.ppbm:
 	pnmtoplainpnm $< > $@
+
+# This is a bit hackish.  There is no way to introduce a derivation
+# for `' -> `.gz', so we define the `m' -> `m.gz' rule instead.
+# (all our suffixes ends in `m': ppm, pgm, pbm.)
+SUFFIXES = m m.gz
+mm.gz:
+	gzip -c -9 $< > $@
 
 data/lena128.pgm: data/lena.pgm
 	convert -scale 25% data/lena.pgm $@

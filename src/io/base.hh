@@ -70,7 +70,8 @@ namespace oln {
 
       enum wrapper_id { WrapNone = 0,
 			WrapFile = 1,
-			WrapAny  = 1 };
+			WrapGz   = 2,
+			WrapAny  = 2 };
 
       template< wrapper_id W >
       struct wrapper

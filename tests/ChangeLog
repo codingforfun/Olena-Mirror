@@ -1,3 +1,15 @@
+2002-07-02  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* Makefile.am (BUILTDATA): Add data/lena.pbm.gz,
+	data/lena.pgm.gz, and data/lena.ppm.gz.
+	(SUFFIXES): New variable.
+	(mm.gz): New derivation.
+	* io/loadsave.hh (loadsave): Take savename as second argument.
+	* io/2d.cc: Test the gzip I/O if HAVE_ZLIB.
+	(check): Adjust calls to loadsave.
+	* io/Makefile.am (AM_LDFLAGS, AM_CFLAGS): New variables.
+	(CLEANFILES): Clean the new files created by 2d.cc
+
 2002-04-25  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* check/Makefile.am (EXTRA_DIST): New.

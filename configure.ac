@@ -14,6 +14,31 @@ AC_PROG_RANLIB
 AC_LANG(C++)
 AC_CHECK_HEADERS([stl_config.h])
 
+# Check for zlib.
+AC_ARG_WITH(zlib,
+  [AC_HELP_STRING([--with-zlib=DIR], [prefix for zlib installation])])
+ZLIB_CFLAGS=''
+ZLIB_LDFLAGS=''
+if test "x$with_zlib" != xno; then
+  if test -n "$with_zlib"; then
+    ZLIB_CFLAGS="-I${with_zlib}/include"
+    ZLIB_LDFLAGS="-L${with_zlib}/lib"
+  fi
+  oln_save_CFLAGS=$CFLAGS
+  oln_save_LDFLAGS=$LDFLAGS
+  CFLAGS="$CFLAGS $ZLIB_CFLAGS"
+  LDFLAGS="$CFLAGS $ZLIB_LDFLAGS"
+  AC_CHECK_HEADER([zlib.h],
+    [AC_CHECK_LIB([z], [gzopen],
+       [ZLIB_LDFLAGS="${ZLIB_LDFLAGS} -lz"
+        AC_DEFINE([HAVE_ZLIB], 1, [Define to 1 if we can use zlib])])])
+  CFLAGS=$oln_save_CFLAGS
+  LDFLAGS=$oln_save_LDFLAGS
+fi
+AC_SUBST([ZLIB_CFLAGS])
+AC_SUBST([ZLIB_LDFLAGS])
+
+
 AC_CONFIG_FILES([
   Makefile
   src/Makefile

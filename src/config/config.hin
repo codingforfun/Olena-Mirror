@@ -1,11 +1,5 @@
 /* src/config/config.hin.  Generated from configure.ac by autoheader.  */
 
-/* Define to 1 if you have the <ext/hash_map> header file. */
-#undef HAVE_EXT_HASH_MAP
-
-/* Define to 1 if you have the <hash_map> header file. */
-#undef HAVE_HASH_MAP
-
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
@@ -17,6 +11,9 @@
 
 /* Define to 1 if you have the <stdlib.h> header file. */
 #undef HAVE_STDLIB_H
+
+/* Define to 1 if you have the <stl_config.h> header file. */
+#undef HAVE_STL_CONFIG_H
 
 /* Define to 1 if you have the <strings.h> header file. */
 #undef HAVE_STRINGS_H
@@ -32,6 +29,9 @@
 
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
+
+/* Define if we can use zlib */
+#undef HAVE_ZLIB
 
 /* Define to the address where bug reports for this package should be sent. */
 #undef PACKAGE_BUGREPORT

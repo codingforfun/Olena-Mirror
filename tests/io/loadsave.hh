@@ -7,7 +7,7 @@ using namespace std;
 
 template< typename T >
 static bool
-loadsave(const string& name)
+loadsave(const string& name, const string& savename)
 {
   bool fail = false;
 
@@ -22,7 +22,7 @@ loadsave(const string& name)
     }
   else
     {
-      cout << "OK" << endl << "  reload  " << flush;
+      cout << "OK" << endl << "  reload " << flush;
       if (! io::load(im2, name))
 	{
 	  cout << "FAILED";
@@ -38,8 +38,8 @@ loadsave(const string& name)
 	      cout << "FAILED";
 	      fail = true;
 	    }
-	  cout << endl <<"  save(" << name << ")" << flush;
-	  if (! io::save(im, "savetmp"))
+	  cout << endl <<"  save(" << savename << ") " << flush;
+	  if (! io::save(im, savename))
 	    {
 	      cout << "FAILED";
 	      fail = true;
@@ -47,7 +47,7 @@ loadsave(const string& name)
 	  else
 	    {
 	      cout << "OK" << endl << "  reload " << flush;
-	      if (! io::load(im2, "savetmp"))
+	      if (! io::load(im2, savename))
 		{
 		  cout << "FAILED";
 		  fail = true;

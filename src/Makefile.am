@@ -118,6 +118,8 @@ nobase_oln_HEADERS =				\
   io/base.hxx					\
   io/basics.hh					\
   io/file.hh					\
+  io/gz.hh					\
+  io/gz_stream.hh				\
   io/pnm.hh					\
   io/pnm3d.hh					\
   io/pnm_read.hxx				\
@@ -206,7 +208,7 @@ nobase_oln_HEADERS =				\
 EXTRA_DIST = config/extrconf.sh
 PERL = perl
 SCANDEFS_PL = $(top_srcdir)/tools/scandefs.pl
-PCONF_OCCURS = config/system.hh
+PCONF_OCCURS = $(top_srcdir)/src/config/system.hh $(top_srcdir)/tests/io/2d.cc
 $(top_srcdir)/src/config/extrconf.sh: $(SCANDEFS_PL) $(PCONF_OCCURS)
 	$(PERL) $(SCANDEFS_PL) $(PCONF_OCCURS) >$@
 

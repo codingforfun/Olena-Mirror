@@ -1,3 +1,13 @@
+2002-07-02  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* configure.ac: Check from zlib.  Define HAVE_ZLIB, substitute
+	ZLIB_CFLAGS, and ZLIB_LDFLAGS.
+	* src/io/base.hh (wrapper_id): Add WrapGz.
+	* src/io/gz.hh, src/io/gz_stream.hh: New files, from Milena.
+	* src/Makefile.am (nobase_oln_HEADERS): Add io/gz.hh, and
+	io/gz_stream.hh.
+	(PCONF_OCCURS): Add $(top_srcdir)/tests/io/2d.cc.
+
 2002-06-27  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* ISSUES: Don't mention hash_map.

@@ -72,6 +72,8 @@ PACKAGE = @PACKAGE@
 RANLIB = @RANLIB@
 STRIP = @STRIP@
 VERSION = @VERSION@
+ZLIB_CFLAGS = @ZLIB_CFLAGS@
+ZLIB_LDFLAGS = @ZLIB_LDFLAGS@
 am__include = @am__include@
 am__quote = @am__quote@
 install_sh = @install_sh@
@@ -94,9 +96,12 @@ SOURCEDATA = data/lena.ppm
 # by maintainer-clean.
 BUILTDATA = \
   data/lena.pbm					\
+  data/lena.pbm.gz				\
   data/lena.pgm					\
+  data/lena.pgm.gz				\
   data/lena.ppbm				\
   data/lena.ppgm				\
+  data/lena.ppm.gz				\
   data/lena.pppm				\
   data/lena128.pgm
 
@@ -108,6 +113,11 @@ MAINTAINERCLEANFILES = $(BUILTDATA)
 # out it makes a too big archive in the future, we might decide to do
 # otherwise.
 dist_check_DATA = $(SOURCEDATA) $(BUILTDATA)
+
+# This is a bit hackish.  There is no way to introduce a derivation
+# for `' -> `.gz', so we define the `m' -> `m.gz' rule instead.
+# (all our suffixes ends in `m': ppm, pgm, pbm.)
+SUFFIXES = m m.gz
 subdir = tests
 mkinstalldirs = $(SHELL) $(top_srcdir)/tools/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/src/config/config.h
@@ -129,7 +139,7 @@ DIST_SUBDIRS = $(SUBDIRS)
 all: all-recursive
 
 .SUFFIXES:
-.SUFFIXES: .pbm .pgm .png .ppbm .ppgm .ppm .pppm
+.SUFFIXES: m m.gz .pbm .pgm .png .ppbm .ppgm .ppm .pppm
 $(srcdir)/Makefile.in:  Makefile.am  $(top_srcdir)/configure.ac $(ACLOCAL_M4)
 	cd $(top_srcdir) && \
 	  $(AUTOMAKE) --gnu  tests/Makefile
@@ -377,6 +387,8 @@ uninstall-info: uninstall-info-recursive
 
 .pbm.ppbm:
 	pnmtoplainpnm $< > $@
+mm.gz:
+	gzip -c -9 $< > $@
 
 data/lena128.pgm: data/lena.pgm
 	convert -scale 25% data/lena.pgm $@
