@@ -2,7 +2,18 @@
 
 INCLUDES = -I$(top_srcdir)/src
 AM_CXXFLAGS = -Wall -W -DNDEBUG -ftemplate-depth-50 -ansi -pedantic
-noinst_PROGRAMS = tour morpholena test-reconstruction
+
+# We used to declare these programs as `noinst_PROGRAMS', however
+# building them on each run of `make' turned to
+#   1. slowdown development;
+#   2. annoy Geoffroy when building the .deb package (he wants to
+#      ship the directory unbuilt, but still has to run make for
+#      the other directories).
+# So for now we'll just build these programs on `make check' and `make demo'.
+check_PROGRAMS = tour morpholena test-reconstruction
+.PHONY: demo
+demo: $(check_PROGRAMS)
+
 tour_SOURCES = tour.cc
 morpholena_SOURCES = morpholena.cc
 test_reconstruction_SOURCES = test-reconstruction.cc

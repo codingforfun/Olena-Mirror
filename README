@@ -37,7 +37,7 @@ or <olena-bugs@lrde.epita.fr>.
 
 This code has been tested with GCC 2.95.3 and GCC 3.0.2.
 
-To compile the two programs in the demo/ directory, run
+To compile the libray, run
 
   ./configure
   make
@@ -57,6 +57,11 @@ instance
 
 will install the files in /foo/bar/oln.
 
+There are a few programs in the demo/ directory.  You can
+built these programs using `make demo' in this directory.
+
+  cd demo
+  make demo
 
 It is also easy to build the demo/ files manually, just include
 the src/ directory in the include search path of the compiler.
@@ -67,6 +72,11 @@ the src/ directory in the include search path of the compiler.
 With GCC 2.95.x, it's likely you will need to allow the compiler
 to instantiate templates to a greater depth than the default (17),
 using an option like -ftemplate-depth-50.
+
+Finally, the tests/ directory contains a few programs that ensure some
+features of the library behave as expected.  You can run them using
+`make check' at the top directory.  If you have to work in this area,
+please read tests/README.
 
 ----------------------------------------------------------------------
 

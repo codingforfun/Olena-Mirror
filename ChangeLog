@@ -1,3 +1,11 @@
+2002-04-22  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* demo/Makefile.am (noinst_PROGRAMS): Rename as ...
+	(check_PROGRAMS): ... this.
+	(demo): New phony rule.
+	* README: Adjust instruction to build the demo programs.
+	Mention the testsuite.
+
 2002-04-17  Jerome Darbon  <jerome@epita.fr>
 
 	* src/level/lut.hh: Include config/hash_map.hh.
