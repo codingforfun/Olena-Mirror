@@ -6,14 +6,18 @@ include $(top_srcdir)/metalic/mlc/makefile.src
 include $(top_srcdir)/integre/ntg/makefile.src
 
 olnsrc = $(top_srcdir)/olena/oln
-OUT_DIR = "out"
+EXDOC = $(srcdir)/exdoc.pl
+OUT_DIR = out
+EXTRA_DIST = $(OUT_DIR)/exdoc.config.in
+IMG_CONV = $(srcdir)/img_conv.pl
 CLEANFILES = 	html.tar.gz \
 		oln-ref.pdf \
-		out/out* out/makefile out/all.mk
+		$(OUT_DIR)/out* $(OUT_DIR)/makefile $(OUT_DIR)/all.mk
 
 clean-local:
 	rm -rf img html latex
 
+DISTCLEANFILES = $(OUT_DIR)/exdoc.config
 
 MAINTAINERCLEANFILES = $(dist_noinst_DATA) \
 	./html/* ./img/*
@@ -25,7 +29,16 @@ VPATH += $(top_srcdir)/olena/oln:$(top_srcdir)/integre/ntg:$(top_srcdir)/metalic
 
 doc: html.tar.gz oln-ref.pdf
 
-html.tar.gz: $(HDRS_DEP)
+html.tar.gz: $(HDRS_DEP) $(EXDOC) $(OUT_DIR)/exdoc.config $(IMG_CONV) doxygen.config
+	mkdir -p img
+	$(EXDOC) --config=$(OUT_DIR)/exdoc.config  --output-dir=$(OUT_DIR) --input-dir=$(top_srcdir)/olena
+	cd $(OUT_DIR) && $(MAKE) -f makefile
+	$(EXDOC) --config=$(OUT_DIR)/exdoc.config  --output-dir=$(OUT_DIR) --input-dir=$(top_srcdir)/integre
+	cd $(OUT_DIR) && $(MAKE) -f makefile
+	$(EXDOC) --config=$(OUT_DIR)/exdoc.config  --output-dir=$(OUT_DIR) --input-dir=$(top_srcdir)/metalic
+	cd $(OUT_DIR) && $(MAKE) -f makefile
+	$(IMG_CONV) $(top_srcdir)/olena/img img preserve
+	$(IMG_CONV) img img nopreserve
 	$(DOXYGEN) doxygen.config
 	$(TAR) -czf $@ html
 

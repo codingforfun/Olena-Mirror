@@ -1,0 +1,14 @@
+2005-01-26  Simon Odou  <simon@lrde.epita.fr>
+
+	* ref/doxygen.config.in: New. Doxygen configuration file (from
+          Olena).
+	* ref/out: New.
+	* ref/out/exdoc.config.in: New. Exdoc configuration (from Olena).
+	* ref/Makefile.am: Use exdoc to generate documentation.
+	* ref/img_conv.pl: New. Image conversion script (from Olena).
+	* ref/exdoc.pl: New. Exdoc to write examples in documentation (from
+          Olena).
+	* ref/exdoc.mk.in: New. Makefile for exdoc (from Olena).
+	* vcs: New. Add vcs support for this ChangeLog.
+	* vcs/oln.rb: New. Likewise.
+
