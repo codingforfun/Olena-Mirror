@@ -1,3 +1,8 @@
+2003-02-09  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* demo/Makefile.am (AM_CXXFLAGS): Cleanup optimization flags
+	specification.
+
 2003-02-08  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* dev/Makefile.am (docdir, install-data-hook, uninstall-hook):
