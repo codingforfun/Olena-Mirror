@@ -48,9 +48,11 @@ namespace oln {
 
     template <typename E>
     struct image_entry : 
-            public props < cat::image, E >::image_constness::inherits<E>::ret,
-            public props < cat::image, E >::image_dimension::inherits<E>::ret
-            // ...
+      public props < cat::image, E >::image_constness
+        ::template inherits<E>::ret,
+      public props < cat::image, E >::image_dimension
+        ::template inherits<E>::ret
+      // ...
     {
     protected:
       image_entry() {}

@@ -1,5 +1,9 @@
 2005-03-02  simon odou  <simon@lrde.epita.fr>
 
+	* oln/core/entry.hh: g++-3.4 compliance.
+
+2005-03-02  simon odou  <simon@lrde.epita.fr>
+
 	* oln/core/entry.hh: New.
         Just a basic and temporary property inheritance system.
 	* oln/core/abstract/images.hh: Likewise.
