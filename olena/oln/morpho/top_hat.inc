@@ -31,7 +31,7 @@
 /*=processing white_top_hat
  * ns: morpho, morpho::fast
  * what: White top hat.
- * arg: const conversion<C>&, c, IN, conversion object
+ * arg: const convert::abstract::conversion<C>&, c, IN, conversion object
  * arg: const abstract::image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
@@ -74,7 +74,7 @@ Concrete(I) white_top_hat(const abstract::image<I>& input,
 /*=processing black_top_hat
  * ns: morpho, morpho::fast
  * what: Black top hat.
- * arg: const conversion<C>&, c, IN, conversion object
+ * arg: const convert::abstract::conversion<C>&, c, IN, conversion object
  * arg: const abstract::image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
@@ -121,7 +121,7 @@ Concrete(I) black_top_hat(const abstract::image<I>& input,
 /*=processing self_complementary_top_hat
  * ns: morpho, morpho::fast
  * what: Self complementary top hat.
- * arg: const conversion<C>&, c, IN, conversion object
+ * arg: const convert::abstract::conversion<C>&, c, IN, conversion object
  * arg: const abstract::image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
@@ -166,7 +166,7 @@ Concrete(I) self_complementary_top_hat(const abstract::image<I>& input,
 /*=processing top_hat_contrast_op
  * ns: morpho, morpho::fast
  * what: Top hat contrastor operator.
- * arg: const conversion<C>&, c, IN, conversion object
+ * arg: const convert::abstract::conversion<C>&, c, IN, conversion object
  * arg: const abstract::image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret

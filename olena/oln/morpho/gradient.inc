@@ -31,7 +31,7 @@
 /*=processing beucher_gradient
  * ns: morpho, morpho::fast
  * what: Morphological Beucher Gradient.
- * arg: const conversion<C>&, c, IN, conversion object
+ * arg: const convert::abstract::conversion<C>&, c, IN, conversion object
  * arg: const abstract::image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: mute<I, typename convoutput<C, Value(I)>::ret>::ret
@@ -76,7 +76,7 @@ Concrete(I) beucher_gradient(const abstract::image<I>& input,
 /*=processing internal_gradient
  * ns: morpho, morpho::fast
  * what: Morphological Internal Gradient.
- * arg: const conversion<C>&, c, IN, conversion object
+ * arg: const convert::abstract::conversion<C>&, c, IN, conversion object
  * arg: const abstract::image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: mute<I, typename convoutput<C, Value(I)>::ret>::ret
@@ -118,7 +118,7 @@ Concrete(I) internal_gradient(const abstract::image<I>& input, const
 /*=processing external_gradient
  * ns: morpho, morpho::fast
  * what: Morphological External Gradient.
- * arg: const conversion<C>&, c, IN, conversion object
+ * arg: const convert::abstract::conversion<C>&, c, IN, conversion object
  * arg: const abstract::image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: mute<I, typename convoutput<C, Value(I)>::ret>::ret

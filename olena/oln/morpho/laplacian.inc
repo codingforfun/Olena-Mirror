@@ -29,7 +29,7 @@
 /*=processing laplacian
  * ns: morpho, morpho::fast
  * what: Laplacian.
- * arg: const conversion<C>&, c, IN, conversion object
+ * arg: const convert::abstract::conversion<C>&, c, IN, conversion object
  * arg: const abstract::image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret

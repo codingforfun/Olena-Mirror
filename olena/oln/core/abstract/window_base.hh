@@ -49,11 +49,33 @@ namespace oln
   } // end of abstract
 
   
-    template<class Sup, class Exact>
-    struct struct_elt_traits<abstract::window_base<Sup, Exact> >: public struct_elt_traits<Sup>
-    {
+  template<class Sup, class Exact>
+  struct struct_elt_traits<abstract::window_base<Sup, Exact> >: public struct_elt_traits<Sup>
+  {
+    
+  };
 
-    };
+
+  template<class Sup>
+  struct window_base_friend_traits;
+
+  template< class Exact>
+  struct window_base_friend_traits<abstract::neighborhood<Exact> >
+  {
+    typedef abstract::neighborhood<Exact> ret_t;
+  };
+
+  template< class Exact>
+  struct window_base_friend_traits<abstract::window<Exact> >
+  {
+    typedef abstract::struct_elt<Exact> ret_t;
+  };
+
+  template< class Exact>
+  struct window_base_friend_traits<abstract::w_window<Exact> >
+  {
+    typedef abstract::struct_elt<Exact> ret_t;
+  };
 
   namespace abstract
   {
@@ -66,6 +88,15 @@ namespace oln
       typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
       typedef Exact exact_type;
       typedef Sup super_type;
+ 
+      friend class window_base_friend_traits<Sup>::ret_t;
+    
+      static std::string name()
+      {
+	return std::string("window_base<") + Exact::name() + ">";
+      }
+
+    protected:
 
       bool has_(const dpoint_type& dp) const
       {
@@ -80,11 +111,6 @@ namespace oln
       bool is_centered_() const
       {
 	return centered_;
-      }
-
-      static std::string name()
-      {
-	return std::string("window_base<") + Exact::name() + ">";
       }
 
       bool is_equal(const exact_type& win) const
@@ -117,7 +143,6 @@ namespace oln
 	return dp_[i];
       }
 
-    protected:
       window_base() : super_type(), dp_(), delta_(0)
       {
 	centered_ = false;

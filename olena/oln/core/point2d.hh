@@ -53,6 +53,8 @@ namespace oln {
     typedef abstract::point< point2d >	super_type;
     typedef point_traits<point2d>::dpoint_type dpoint_type;
 
+    friend class super_type;
+
     point2d();
 
     point2d(coord row, coord col);
@@ -64,6 +66,10 @@ namespace oln {
     coord col() const;
 
     coord& col();
+
+    static std::string name() { return "point2d"; }
+
+  protected:
 
     point2d plus_dp(const dpoint2d& dp) const;
 
@@ -77,7 +83,6 @@ namespace oln {
 
     point2d minus() const;
 
-    static std::string name() { return "point2d"; }
   };
 
   namespace internal

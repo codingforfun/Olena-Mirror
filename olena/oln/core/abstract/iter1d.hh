@@ -62,14 +62,7 @@ namespace oln {
     public:
 
       typedef iter<Exact> super_type;
-
-      point1d to_point() const
-      {
-	precondition(*this != end);
-	invariant(this->p_.col() >= 0 &&
-		  this->p_.col() < ncols_);
-	return this->p_;
-      }
+      friend class super_type;
 
       coord col() const
       {
@@ -79,7 +72,16 @@ namespace oln {
       static std::string name() { return std::string("_iter1d<") + Exact::name() + ">"; }
 
     protected:
+
       const coord ncols_;
+
+      point1d to_point() const
+      {
+	precondition(*this != end);
+	invariant(this->p_.col() >= 0 &&
+		  this->p_.col() < ncols_);
+	return this->p_;
+      }
 
       iter1d() : super_type(), ncols_(0) {}
 

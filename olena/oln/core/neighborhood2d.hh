@@ -65,12 +65,7 @@ namespace oln {
     neighb_type;
     typedef struct_elt_traits< self_type >::dpoint_type dpoint_type;
 
-    coord delta_update_(const dpoint_type& dp)
-    {
-      delta_(abs(dp.row()));
-      delta_(abs(dp.col()));
-      return delta_;
-    }
+    friend class abstract::window_base<abstract::neighborhood<neighborhood2d>, neighborhood2d>;
 
     neighborhood2d& add(const dpoint_type& dp)
     {
@@ -102,6 +97,15 @@ namespace oln {
     }
 
     static std::string name() { return std::string("neighborhood2d"); }
+
+  protected:
+
+    coord delta_update_(const dpoint_type& dp)
+    {
+      delta_(abs(dp.row()));
+      delta_(abs(dp.col()));
+      return delta_;
+    }
 
   };
 

@@ -58,10 +58,17 @@ namespace oln {
       typedef image_array<T, ExactI, image_array1d<T, ExactI> > super_type;
       typedef image_array1d<T, ExactI> self_type;
 
+      friend class image_impl<ExactI, image_array1d<T, ExactI> >;
+      friend class super_type;
+
       image_array1d(const size_type& s): super_type(s) 
       {
 	pretreat_1d_data_(this->buffer_, buffer__, s);
       }
+
+      ~image_array1d() {}
+
+    protected:
 
       bool hold_(const oln::point1d& p) const
       {
@@ -76,7 +83,6 @@ namespace oln {
 	  p.col() >= - this->size_.border() &&
 	  p.col() < this->size_.ncols() + this->size_.border();
       }
-
 
       value_type& at_(const point_type& p)
       {
@@ -146,10 +152,6 @@ namespace oln {
             at_(this->size_.ncols() - j - 1) = val;
           }
       }
-
-      ~image_array1d() {}
-
-    protected:
 
     private:
       T* buffer__;

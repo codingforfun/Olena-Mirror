@@ -55,10 +55,14 @@ namespace oln
       typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
       typedef Exact exact_type;
 
+      friend class window<exact_type>;
+
       static std::string name()
       {
 	return std::string("windownd<") + Exact::name() + ">" ;
       }
+
+    protected:
 
       exact_type& add_(const dpoint_type& dp)
       {
@@ -70,7 +74,6 @@ namespace oln
 	return this->exact();
       }
 
-    protected:
       windownd() : super_type()
       { }
 

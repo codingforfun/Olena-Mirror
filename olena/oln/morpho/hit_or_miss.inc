@@ -33,7 +33,7 @@
 /*=processing hit_or_miss
  * ns: morpho, morpho::fast
  * what: Hit_or_Miss Transform.
- * arg: const conversion<C>&, c, IN, conversion object
+ * arg: const convert::abstract::conversion<C>&, c, IN, conversion object
  * arg: const abstract::image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se1, IN, structural element
  * arg: const abstract::struct_elt<E>&, se2, IN, structural element

@@ -1,3 +1,34 @@
+2003-07-31  Giovanni Palma  <palma_g@headache>
+
+	* oln/morpho/gradient.inc,
+	oln/morpho/hit_or_miss.inc,
+	oln/morpho/laplacian.inc,
+	oln/morpho/top_hat.inc: Fix comments.
+
+2003-07-31  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
+	oln/core/bkd_iter3d.hh, oln/core/dpoint1d.hh,
+	oln/core/dpoint2d.hh, oln/core/dpoint3d.hh,
+	oln/core/fwd_iter1d.hh, oln/core/fwd_iter2d.hh,
+	oln/core/fwd_iter3d.hh, oln/core/image1d.hh,
+	oln/core/image2d.hh, oln/core/image3d.hh,
+	oln/core/image.hh, oln/core/abstract/iter1d.hh,
+	oln/core/abstract/iter2d.hh, oln/core/abstract/iter3d.hh,
+	oln/core/neighborhood1d.hh, oln/core/neighborhood2d.hh,
+	oln/core/neighborhood3d.hh, oln/core/point1d.hh,
+	oln/core/point2d.hh, oln/core/point3d.hh,
+	oln/core/window1d.hh, oln/core/window2d.hh,
+	oln/core/window3d.hh, oln/core/w_window1d.hh,
+	oln/core/w_window2d.hh, oln/core/w_window3d.hh,
+	oln/core/abstract/image_with_dim.hh,
+	oln/core/abstract/image_with_impl.hh,
+	oln/core/impl/image_impl.hh, oln/core/impl/image_array.hh,
+	oln/core/impl/image_array3d.hh, oln/core/impl/image_array2d.hh,
+	oln/core/impl/image_array1d.hh, oln/core/abstract/window_base.hh,
+	oln/core/abstract/windownd.hh, oln/core/abstract/w_windownd.hh,
+	oln/core/abstract/neighborhoodnd.hh: Fix method visibility.
+
 2003-07-31  Giovanni Palma  <palma_g@lrde.epita.fr>
 
 	* oln/convert/abstract/colorconv.hh,

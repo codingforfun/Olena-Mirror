@@ -56,10 +56,14 @@ namespace oln
       typedef typename struct_elt_traits<Exact>::weight_type weight_type;
       typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
 
+      friend class w_window<exact_type>;
+
       static std::string name()
       {
 	return std::string("w_windownd<") + Exact::name() + ">" ;
       }
+
+    protected:
 
       weight_type get_weight(unsigned i) const
       {
@@ -95,7 +99,6 @@ namespace oln
 	return w_.back();
       }
 
-    protected:
       w_windownd() : super_type() {}
       
       w_windownd(unsigned size) : super_type(size)
