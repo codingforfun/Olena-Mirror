@@ -1,3 +1,7 @@
+2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+ 	* tests/types/tests/int_u5c: New test.
+
 2003-04-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/global_ops_defs.hh: Add missing builtin specializations.

@@ -6,8 +6,6 @@
 	* tests/core/Makefile.am, tests/core/runtests: New files.
 	* tests/core/tests/w_window: New test.
 
-	* tests/types/tests/int_u5c: New test.
-
 2003-04-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/core/w_window1d.hh, oln/core/w_window2d.hh,

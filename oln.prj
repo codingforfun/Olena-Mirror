@@ -1,27 +1,12 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 8 37)
-(Parent-Version oln 8 36)
-(Version-Log "Index: ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-        * configure.ac: Add olena/tests/core directory.
-
-Index: olena/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-        * oln/core/w_window1d.hh, oln/core/w_window2d.hh,
-        oln/core/w_window3d.hh: Restore a corrected version of set
-        methods.
-        * tests/core/Makefile.am, tests/core/runtests: New files.
-        * tests/core/tests/w_window: New test.
-
-        * tests/types/tests/int_u5c: New test.
-
+(Project-Version oln 8 38)
+(Parent-Version oln 8 37)
+(Version-Log "Fix ChangeLogs.
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 02 May 2003 18:44:04 +0200")
+(Checkin-Time "Fri, 02 May 2003 18:50:27 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -108,9 +93,9 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.31 640))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.1 640))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.15 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.2 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.7 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7 640))
 
@@ -857,7 +842,5 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (integre/tests/types/tests/int_u5c (oln/s/11_int_u5c 1.1 640))
 )
-(Merge-Parents
-  (8.36 complete)
-)
+(Merge-Parents)
 (New-Merge-Parents)
