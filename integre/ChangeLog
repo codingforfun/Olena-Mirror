@@ -1,3 +1,23 @@
+2003-11-26  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/real/optraits_scalar_defs.hh: Rename as...
+	* ntg/real/optraits_real_defs.hh: ... this.
+	* ntg/real/optraits_scalar.hh: Rename as...
+	* ntg/real/optraits_real.hh: ... this.
+
+	* ntg/core/behavior.hh: Rename as...
+	* ntg/real/behavior.hh: ... this.
+
+	* ntg/real/int_s.hh,
+	* ntg/real/int_u.hh,
+	* ntg/real/optraits_builtin_int.hh,
+	* ntg/real/typetraits_builtin_int.hh,
+	* ntg/Makefile.am,
+	* ntg/basics.hh,
+	* ntg/real/builtin_float.hh,
+	* ntg/enum/builtin_bool.hh,
+	* ntg/real/range.hh: Adjust consequently.
+
 2003-11-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/enum/bin.hh: Fix assignment from a real_value.

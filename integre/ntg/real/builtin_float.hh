@@ -29,11 +29,11 @@
 # define NTG_REAL_BUILTIN_FLOAT_HH
 
 # include <ntg/config/system.hh>
-# include <ntg/core/behavior.hh>
+# include <ntg/real/behavior.hh>
 # include <ntg/core/internal/global_ops_traits.hh>
 # include <ntg/core/internal/traits.hh>
 # include <ntg/real/builtin_properties.hh>
-# include <ntg/real/optraits_scalar.hh>
+# include <ntg/real/optraits_real.hh>
 # include <ntg/core/predecls.hh>
 
 # include <mlc/cmp.hh>

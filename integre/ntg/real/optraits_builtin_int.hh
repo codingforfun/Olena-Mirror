@@ -33,7 +33,7 @@
 */
 
 # include <ntg/config/system.hh>
-# include <ntg/real/optraits_scalar.hh>
+# include <ntg/real/optraits_real.hh>
 # include <ntg/real/typetraits_builtin_int.hh>
 
 // FIXME: this should be included by system.hh.

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_OPTRAITS_SCALAR_DEFS_HH
-# define NTG_OPTRAITS_SCALAR_DEFS_HH
+#ifndef NTG_OPTRAITS_REAL_DEFS_HH
+# define NTG_OPTRAITS_REAL_DEFS_HH
 
 //
 // macros used in optraits_scalar definition
@@ -169,4 +169,4 @@
     return result;					\
   }
 
-#endif // ndef NTG_OPTRAITS_SCALAR_DEFS_HH
+#endif // ndef NTG_OPTRAITS_REAL_DEFS_HH

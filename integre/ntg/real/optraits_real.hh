@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_OPTRAITS_SCALAR_HH_
-# define NTG_OPTRAITS_SCALAR_HH_
+#ifndef NTG_OPTRAITS_REAL_HH_
+# define NTG_OPTRAITS_REAL_HH_
 
 # include <cmath>
 
@@ -43,7 +43,7 @@
 # include <ntg/core/macros.hh>
 
 // macros definitions
-# include <ntg/real/optraits_scalar_defs.hh>
+# include <ntg/real/optraits_real_defs.hh>
 
 namespace ntg {
 
@@ -146,4 +146,4 @@ namespace ntg {
 
 } // end of ntg
 
-#endif // ndef NTG_OPTRAITS_SCALAR_HH_
+#endif // ndef NTG_OPTRAITS_REAL_HH_

@@ -28,7 +28,7 @@
 #ifndef NTG_REAL_TYPETRAITS_BUILTIN_INT_HH
 # define NTG_REAL_TYPETRAITS_BUILTIN_INT_HH
 
-# include <ntg/core/behavior.hh>
+# include <ntg/real/behavior.hh>
 # include <ntg/core/predecls.hh>
 # include <ntg/core/type_traits.hh>
 

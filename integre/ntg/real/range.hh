@@ -32,7 +32,7 @@
 
 # include <ntg/basics.hh>
 # include <ntg/core/internal/macros.hh>
-# include <ntg/real/optraits_scalar.hh>
+# include <ntg/real/optraits_real.hh>
 
 # include <string>
 # include <sstream>

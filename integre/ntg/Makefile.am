@@ -18,7 +18,7 @@ nobase_ntg_HEADERS =				\
   config/math.hh				\
   config/system.hh				\
   core/abstract_hierarchy.hh			\
-  core/behavior.hh				\
+  real/behavior.hh				\
   core/contract.hh				\
   core/internal/global_ops.hh			\
   core/internal/global_ops_defs.hh		\
@@ -46,8 +46,8 @@ nobase_ntg_HEADERS =				\
   real/int_s.hh					\
   real/int_u.hh					\
   real/optraits_builtin_int.hh			\
-  real/optraits_scalar.hh			\
-  real/optraits_scalar_defs.hh			\
+  real/optraits_real.hh			\
+  real/optraits_real_defs.hh			\
   real/range.hh					\
   real/real_value.hh				\
   real/typetraits_builtin_int.hh		\

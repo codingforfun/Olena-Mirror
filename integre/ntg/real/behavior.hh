@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_CORE_BEHAVIOUR_HH
-# define NTG_CORE_BEHAVIOUR_HH
+#ifndef NTG_REAL_BEHAVIOUR_HH
+# define NTG_REAL_BEHAVIOUR_HH
 
 /*
   Behaviors for data_types int_u, int_s, etc ...
@@ -45,7 +45,7 @@
 # include <ntg/core/type_traits.hh>
 # include <ntg/core/value.hh>
 # include <ntg/core/internal/macros.hh>
-# include <ntg/real/optraits_scalar.hh>
+# include <ntg/real/optraits_real.hh>
 # include <ntg/real/real_value.hh>
 # include <ntg/utils/debug.hh>
 # include <ntg/utils/cast.hh>
@@ -376,4 +376,4 @@ namespace ntg
 
 } // end of ntg.
 
-#endif // !NTG_CORE_BEHAVIOUR_HH
+#endif // !NTG_REAL_BEHAVIOUR_HH

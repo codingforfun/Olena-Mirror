@@ -29,7 +29,7 @@
 # define NTG_CORE_INT_S_HH
 
 # include <ntg/basics.hh>
-# include <ntg/real/optraits_scalar.hh>
+# include <ntg/real/optraits_real.hh>
 # include <ntg/real/real_value.hh>
 # include <ntg/bin.hh>
 
