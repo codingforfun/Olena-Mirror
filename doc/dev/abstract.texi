@@ -26,4 +26,4 @@ Please direct any question or comments to @email{olena@@lrde.epita.fr},
 or @email{olena-bugs@@lrde.epita.fr}.
 
 Olena also has a web page, located at
-@url{http://www.lrde.epita.fr/cgi-bin/twiki/view/Projects/Olena}.
+@url{http://olena.lrde.epita.fr}.

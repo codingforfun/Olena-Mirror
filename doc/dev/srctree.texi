@@ -1,7 +1,7 @@
 @node The Olena source tree
 @chapter The Olena source tree
 
-The Olena source tree is divided into several distrinct components:
+The Olena source tree is divided into several distinct components:
 
 @table @file
 @item top source directory

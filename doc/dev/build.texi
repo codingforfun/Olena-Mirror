@@ -100,7 +100,7 @@ it encounters on your system. If @env{CXX} is not set, it will look, in order, f
 @item @command{RCC}, @command{xlC_r} or @command{xlC}.
 @end itemize
 
-You can override the detection system by passing your favourite compiler
+You can override the detection system by passing your favorite compiler
 name to @command{configure}, as follows:
 
 @example
@@ -146,7 +146,7 @@ needed (but @command{configure} should add it anyway).
 
 The C++ design patterns used in Olena use deep template nesting and
 recursion. However, the C++ standard specifies that C++ compiler need
-only handle template recursion upto 19 levels, which is insufficient for
+only handle template recursion up to 19 levels, which is insufficient for
 Olena. This is a problem for GCC 2.95 and probably other compilers.
 
 Hopefully, @command{configure} tries to fix this automatically by adding
@@ -236,7 +236,7 @@ to recursively build all selected components.
 
 @sp 1
 
-Additionnally, you can build and run the testsuite and demonstration
+Additionally, you can build and run the testsuite and demonstration
 programs with:
 
 @example

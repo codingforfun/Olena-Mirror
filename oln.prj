@@ -1,12 +1,17 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 181)
-(Parent-Version oln 10 180)
-(Version-Log "")
+(Project-Version oln 10 182)
+(Parent-Version oln 10 181)
+(Version-Log "* doc/dev/thanks.texi: Rewording.
+        * doc/dev/abstract.texi: Change olena web page adresse.
+        * doc/dev/oln-dev.texi, doc/dev/build.texi,
+        doc/dev/install.texi, doc/dev/faq.texi,
+        doc/dev/srctree.texi, doc/dev/conf.texi: Spell checking..
+")
 (New-Version-Log "")
-(Checkin-Time "Wed, 28 Apr 2004 14:20:16 +0200")
-(Checkin-Login van-vl_n)
+(Checkin-Time "Wed, 12 May 2004 11:18:13 +0200")
+(Checkin-Login reda)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -109,7 +114,7 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.11 600))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.11 600))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.12 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.45 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.42 600))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.92 600))
@@ -134,7 +139,7 @@
   (doc/ref/bin () :directory)
   
   (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.17.1.5 600))
-  (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.6.1.5 600))
+  (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.6.1.6 600))
   (doc/ref/oln-ref.tex (oln/f/14_oln-ref.te 1.3.1.3 600))
   (doc/ref/integre-ref.tex (oln/g/34_ref-types. 1.12 600))
   (doc/Makefile.am (oln/e/0_Makefile.a 1.14 600))
@@ -723,8 +728,8 @@
 ;; to version 7.40(w), by raph:
 
   (doc/dev/biblio.texi (oln/p/39_biblio.tex 1.5 600))
-  (doc/dev/thanks.texi (oln/p/40_thanks.tex 1.7 600))
-  (doc/dev/abstract.texi (oln/p/41_abstract.t 1.7.1.3 600))
+  (doc/dev/thanks.texi (oln/p/40_thanks.tex 1.8 600))
+  (doc/dev/abstract.texi (oln/p/41_abstract.t 1.7.1.4 600))
 
 ;; Files deleted by depopulate at Fri, 24 Jan 2003 11:04:25 +0100,
 ;; from version 7.40(w), by raph:
@@ -734,20 +739,20 @@
 ;; Files added by populate at Fri, 24 Jan 2003 14:34:30 +0100,
 ;; to version 7.40(w), by raph:
 
-  (doc/dev/build.texi (oln/p/42_build.texi 1.13 600))
+  (doc/dev/build.texi (oln/p/42_build.texi 1.14 600))
 
 ;; Files added by populate at Fri, 24 Jan 2003 14:34:47 +0100,
 ;; to version 7.40(w), by raph:
 
-  (doc/dev/install.texi (oln/p/43_install.te 1.3 600))
+  (doc/dev/install.texi (oln/p/43_install.te 1.4 600))
 
-  (doc/dev/faq.texi (oln/p/44_faq.texi 1.11 600))
+  (doc/dev/faq.texi (oln/p/44_faq.texi 1.12 600))
 
 ;; Files added by populate at Sat, 25 Jan 2003 19:02:34 +0100,
 ;; to version 7.45(w), by raph:
 
-  (doc/dev/srctree.texi (oln/p/45_srctree.te 1.7 600))
-  (doc/dev/conf.texi (oln/q/2_conf.texi 1.4 600))
+  (doc/dev/srctree.texi (oln/p/45_srctree.te 1.8 600))
+  (doc/dev/conf.texi (oln/q/2_conf.texi 1.5 600))
 
 ;; Files added by populate at Sat, 08 Feb 2003 13:38:09 +0100,
 ;; to version 7.48(w), by raph:
