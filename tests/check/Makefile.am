@@ -11,3 +11,5 @@ libcheck_a_SOURCES =				\
   srcdir.hh					\
   verbose.cc					\
   verbose.hh
+
+EXTRA_DIST = Makefile.flags Makefile.check

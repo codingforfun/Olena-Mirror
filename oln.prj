@@ -1,29 +1,20 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_4 1)
-(Parent-Version oln 0_3 32)
-(Version-Log "2002-04-24  Alexandre Duret-Lutz  <duret_g@epita.fr>
+(Project-Version oln 0_4 2)
+(Parent-Version oln 0_4 1)
+(Version-Log "2002-04-25  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-	* configure.ac: Bump version to 0.4.
-	* src/Makefile.am (DISTCLEANFILES): New.
-	(EXTRA_SCRIPTS): Rename as ...
-	(EXTRA_DIST): ... this.
-	(config/pconf.hh): Use $(top_srcdir)/src/config/extrconf.sh.
+	* check/Makefile.am (EXTRA_DIST): New.
 
-2002-04-24  Alexandre Duret-Lutz  <duret_g@epita.fr>
+2002-04-25  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-	* io/Makefile.am (CLEANFILES): New.
-	* check/data.cc (data): Thinko.
-
-2002-04-24  Alexandre Duret-Lutz  <duret_g@epita.fr>
-
-	* configure.ac: Bump version to 0.4.
+	* configure.ac, NEWS: Bump version to 0.4.1.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 24 Apr 2002 11:21:40 +0200")
-(Checkin-Login adl)
+(Checkin-Time "Thu, 25 Apr 2002 14:15:08 +0200")
+(Checkin-Login duret_g)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
                   "\\.o$"
@@ -87,13 +78,13 @@
 ;; Files added by populate at Mon, 31 Dec 2001 19:32:30 +0100,
 ;; to version 0_2.0(w), by adl:
 
-  (NEWS (oln/0_NEWS 1.4 644))
+  (NEWS (oln/0_NEWS 1.5 644))
   (README (oln/1_README 1.3 644))
   (Makefile.am (oln/2_Makefile.a 1.7 644))
-  (configure.ac (oln/3_configure. 1.6 644))
+  (configure.ac (oln/3_configure. 1.7 644))
   (THANKS (oln/4_THANKS 1.1 644))
   (img/lena.pgm (oln/5_lena.pgm 1.1 640) :no-keywords)
-  (ChangeLog (oln/6_ChangeLog 1.36 644))
+  (ChangeLog (oln/6_ChangeLog 1.37 644))
   (src/config/system.hh (oln/7_system.hh 1.2 644))
   (src/utils/timer.hh (oln/8_timer.hh 1.1 644))
   (src/utils/stat.hh (oln/9_stat.hh 1.2 644))
@@ -305,7 +296,7 @@
   (doc/doc/oln-ref.texi (oln/d/50_oln-ref.te 1.5 644))
   (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.6 644))
   (doc/Makefile.am (oln/e/0_Makefile.a 1.1 644))
-  (doc/ChangeLog (oln/e/1_ChangeLog 1.10 644))
+  (doc/ChangeLog (oln/e/1_ChangeLog 1.11 644))
 
 ;; Files added by populate at Sat, 12 Jan 2002 17:28:39 +0100,
 ;; to version 0_2.5(w), by adl:
@@ -319,7 +310,7 @@
   (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.4 644))
   (doc/Makefile.in (oln/e/5_Makefile.i 1.5 644))
   (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.8 644))
-  (configure (oln/e/7_configure 1.8 755))
+  (configure (oln/e/7_configure 1.9 755))
   (aclocal.m4 (oln/e/8_aclocal.m4 1.7 644))
   (Makefile.in (oln/e/9_Makefile.i 1.10 644))
   (tools/texinfo.tex (oln/e/10_texinfo.te 1.2 644))
@@ -383,7 +374,7 @@
 ;; Files added by populate at Thu, 28 Mar 2002 19:27:57 +0100,
 ;; to version 0_3.17(w), by adl:
 
-  (tests/ChangeLog (oln/e/30_ChangeLog 1.6 644))
+  (tests/ChangeLog (oln/e/30_ChangeLog 1.7 644))
   (tests/morpho/extrkiller.cc (oln/e/31_extrkiller 1.3 644))
   (tests/morpho/Makefile.am (oln/e/32_Makefile.a 1.3 644))
   (tests/morpho/Makefile.in (oln/e/33_Makefile.i 1.7 644))
@@ -392,12 +383,12 @@
   (tests/check/Makefile.flags (oln/e/36_Makefile.f 1.1 644))
   (tests/check/Makefile.check (oln/e/37_Makefile.c 1.3 644))
   (tests/check/srcdir.cc (oln/e/38_srcdir.cc 1.2 644))
-  (tests/check/Makefile.in (oln/e/39_Makefile.i 1.5 644))
+  (tests/check/Makefile.in (oln/e/39_Makefile.i 1.6 644))
   (tests/check/check.hh (oln/e/40_check.hh 1.2 644))
   (tests/check/verbose.cc (oln/e/41_verbose.cc 1.1 644))
   (tests/check/verbose.hh (oln/e/42_verbose.hh 1.2 644))
   (tests/check/main.cc (oln/e/43_main.cc 1.1 644))
-  (tests/check/Makefile.am (oln/e/44_Makefile.a 1.2 644))
+  (tests/check/Makefile.am (oln/e/44_Makefile.a 1.3 644))
   (tests/Makefile.am (oln/e/45_Makefile.a 1.2 644))
   (tests/Makefile.in (oln/e/46_Makefile.i 1.5 644))
   (tests/io/2d.cc (oln/e/47_2d.cc 1.2 644))

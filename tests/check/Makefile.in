@@ -92,6 +92,8 @@ libcheck_a_SOURCES = \
   verbose.cc					\
   verbose.hh
 
+
+EXTRA_DIST = Makefile.flags Makefile.check
 subdir = tests/check
 mkinstalldirs = $(SHELL) $(top_srcdir)/tools/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/src/config/config.h
