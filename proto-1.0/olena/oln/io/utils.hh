@@ -160,11 +160,11 @@ namespace oln {
 	    return false;
 	  }
 
-
-	ostr << "P5" << std::endl
+	ostr << type << std::endl
 	     << "# Olena 1.0" << std::endl
-	     << ncols << " " << nrows << std::endl
-	     << max_val << std::endl;
+	     << ncols << " " << nrows << std::endl;
+	if (type != "P1" && type != "P4")
+	  ostr << max_val << std::endl;
 	return true;
       }
 

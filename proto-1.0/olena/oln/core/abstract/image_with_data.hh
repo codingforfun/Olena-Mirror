@@ -121,7 +121,7 @@ namespace oln {
       template <typename V>
       void impl_set(const oln_point_type(E)& p, const V& v)
       {
-	return this->data_->set(p, v);
+	this->data_->set(p, v);
       }
 
       /*! \brief True if the image contains data.
@@ -130,7 +130,7 @@ namespace oln {
       {
         return data_ != 0;
       }
- 
+
 
     protected:
 

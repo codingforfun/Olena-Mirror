@@ -34,13 +34,19 @@
 # include <oln/core/abstract/image_with_data.hh>
 # include <oln/core/2d/array2d.hh>
 # include <oln/core/2d/fwd_piter2d.hh>
-# include <oln/io/read_image.hh>
 
 /*! \namespace oln
 ** \brief oln namespace.
 */
 namespace oln {
 
+  namespace io {
+
+    struct filename;
+
+    template <typename I>
+    void do_read(abstract::image<I>&, const filename&);
+  }
 
   // fwd decl
   template <typename T> class image2d;

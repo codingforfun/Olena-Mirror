@@ -1,3 +1,11 @@
+2005-03-02  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* oln/io/write_image_2d_pnm.hh: Add ppm and pbm output methods.
+	* oln/io/read_image_2d_pnm.hh: Add ppm and pbm input methods.
+	* oln/io/utils.hh: Fix an error occuring when writing pbm headers.
+	* oln/core/abstract/image_with_data.hh: Remove an unexpected `return'.
+	* oln/core/2d/image2d.hh: Fix circular inclusion problem.
+
 2005-03-02  simon odou  <simon@lrde.epita.fr>
 
 	* oln/core/entry.hh: g++-3.4 compliance.

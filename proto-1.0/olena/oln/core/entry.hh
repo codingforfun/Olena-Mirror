@@ -47,7 +47,7 @@ namespace oln {
   namespace abstract {
 
     template <typename E>
-    struct image_entry : 
+    struct image_entry :
       public props < cat::image, E >::image_constness
         ::template inherits<E>::ret,
       public props < cat::image, E >::image_dimension
