@@ -25,26 +25,37 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_ALL_HH
-# define NTG_ALL_HH
+#ifndef NTG_BASICS_HH
+# define NTG_BASICS_HH
 
 /*
-  Include all Integre's features.
+  Basic header that regroup basic common headers every file
+  will certainely need.
 */
 
-# include <ntg/basics.hh>
+# include <ntg/config/system.hh>
 
-# include <ntg/bin.hh>
+# include <ntg/core/predecls.hh>
 
-# include <ntg/int.hh>
-# include <ntg/cycle.hh>
-# include <ntg/range.hh>
+# include <ntg/core/abstract_hierarchy.hh>
+# include <ntg/real/behavior.hh>
+# include <ntg/core/contract.hh>
+# include <ntg/core/interval.hh>
+# include <ntg/real/builtin_properties.hh>
+# include <ntg/core/type.hh>
+# include <ntg/core/value.hh>
 
-# include <ntg/vec.hh>
-# include <ntg/cplx.hh>
+/*
+  These headers are included as builtins may be used anywhere, without
+  having previously included the corresponding integre headers.
+*/
+# include <ntg/enum/builtin_bool.hh>
+# include <ntg/real/builtin_int.hh>
+# include <ntg/real/builtin_float.hh>
 
-# include <ntg/color.hh>
+# include <ntg/core/internal/global_ops.hh>
+# include <ntg/core/macros.hh>
 
 # include <ntg/utils/cast.hh>
 
-#endif // !NTG_ALL_HH
+#endif // !NTG_BASICS_HH

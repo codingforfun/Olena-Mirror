@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2005  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,26 +25,34 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_ALL_HH
-# define NTG_ALL_HH
+#ifndef NTG_REAL_REAL_VALUE_HH
+# define NTG_REAL_REAL_VALUE_HH
 
-/*
-  Include all Integre's features.
-*/
+# include <ntg/core/type_traits.hh>
+# include <ntg/core/value.hh>
 
-# include <ntg/basics.hh>
+# define declare_real_value_type__(Type, Parent)			\
+  template <class E> 							\
+  class Type : public Parent<E>						\
+  {};									\
+									\
+  namespace internal {							\
+									\
+    template <class E>							\
+    struct typetraits<Type<E> > : public typetraits<Parent<E> > 	\
+    {};									\
+									\
+  }
 
-# include <ntg/bin.hh>
+namespace ntg
+{
 
-# include <ntg/int.hh>
-# include <ntg/cycle.hh>
-# include <ntg/range.hh>
+  declare_real_value_type__(real_value, value)
+  declare_real_value_type__(float_value, real_value)
+  declare_real_value_type__(int_value, real_value)
+  declare_real_value_type__(uint_value, int_value)
+  declare_real_value_type__(sint_value, int_value)
 
-# include <ntg/vec.hh>
-# include <ntg/cplx.hh>
+} // end of ntg.
 
-# include <ntg/color.hh>
-
-# include <ntg/utils/cast.hh>
-
-#endif // !NTG_ALL_HH
+#endif // !NTG_REAL_REAL_VALUE_HH

@@ -25,26 +25,60 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_ALL_HH
-# define NTG_ALL_HH
+#ifndef NTG_CORE_ABSTRACT_HIERARCHY_HH
+# define NTG_CORE_ABSTRACT_HIERARCHY_HH
 
-/*
-  Include all Integre's features.
-*/
+namespace ntg
+{
 
-# include <ntg/basics.hh>
+  /*
+    Abstract hierarchy is useful to easily check the properties of
+    each types. type_traits<T>::abstract_type gives the abstract type
+    associated to T. The macro ntg_is_a(T, abstract_type) is a simple
+    way to ensure a given type has good properties.
 
-# include <ntg/bin.hh>
+    Examples:
+    
+    ntg_is_a(int, integer)::ensure();
+    mlc_is_a(type_traits<int_u8>::abstract_type, unsigned_integer)::ensure();
+  */
+  
+  //! Top of the hierarchy.
+  class data_type {};
 
-# include <ntg/int.hh>
-# include <ntg/cycle.hh>
-# include <ntg/range.hh>
+  // Single valued data types
+  class non_vectorial {};
 
-# include <ntg/vec.hh>
-# include <ntg/cplx.hh>
+  /*------.
+  | reals |
+  `------*/
 
-# include <ntg/color.hh>
+  class real : public non_vectorial {};
 
-# include <ntg/utils/cast.hh>
+  // int, unsigned, int_u, int_s, etc.
+  class integer : public real {};
+  class unsigned_integer : public integer {};
+  class signed_integer : public integer {};
 
-#endif // !NTG_ALL_HH
+  // float_s, float_d, etc.
+  class decimal : public real {};
+
+  /*-----------.
+  | enumerated |
+  `-----------*/
+
+  class enumerated : public non_vectorial {};
+
+  // bin, bool, etc.
+  class binary : public enumerated {};
+
+  /*----------.
+  | vectorial |
+  `----------*/
+
+  // vec, cplx, etc.
+  class vectorial : public data_type {};
+
+} // end of ntg.
+
+#endif // !NTG_CORE_ABSTRACT_HIERARCHY_HH

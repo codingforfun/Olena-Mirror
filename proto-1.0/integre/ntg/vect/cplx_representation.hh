@@ -25,26 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_ALL_HH
-# define NTG_ALL_HH
+#ifndef NTG_VECT_CPLX_REPRESENTATION_HH
+# define NTG_VECT_CPLX_REPRESENTATION_HH
 
-/*
-  Include all Integre's features.
-*/
+namespace ntg
+{
 
-# include <ntg/basics.hh>
+  // Different representations of cplx :
+  typedef enum 
+    {
+      rect,
+      polar
+    } cplx_representation;
+  
+} // end of ntg.
 
-# include <ntg/bin.hh>
-
-# include <ntg/int.hh>
-# include <ntg/cycle.hh>
-# include <ntg/range.hh>
-
-# include <ntg/vec.hh>
-# include <ntg/cplx.hh>
-
-# include <ntg/color.hh>
-
-# include <ntg/utils/cast.hh>
-
-#endif // !NTG_ALL_HH
+#endif // !NTG_VECT_CPLX_REPRESENTATION_HH

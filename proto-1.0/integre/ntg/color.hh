@@ -25,26 +25,20 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_ALL_HH
-# define NTG_ALL_HH
+#ifndef NTG_COLOR_HH
+# define NTG_COLOR_HH
 
 /*
-  Include all Integre's features.
+  Proxy header for color types.
 */
 
-# include <ntg/basics.hh>
+# include <ntg/color/rgb.hh>
+# include <ntg/color/nrgb.hh>
+# include <ntg/color/hsi.hh>
+# include <ntg/color/hsl.hh>
+# include <ntg/color/hsv.hh>
+# include <ntg/color/xyz.hh>
+# include <ntg/color/yiq.hh>
+# include <ntg/color/yuv.hh>
 
-# include <ntg/bin.hh>
-
-# include <ntg/int.hh>
-# include <ntg/cycle.hh>
-# include <ntg/range.hh>
-
-# include <ntg/vec.hh>
-# include <ntg/cplx.hh>
-
-# include <ntg/color.hh>
-
-# include <ntg/utils/cast.hh>
-
-#endif // !NTG_ALL_HH
+#endif // !NTG_COLOR_HH

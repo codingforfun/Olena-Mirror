@@ -25,26 +25,35 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_ALL_HH
-# define NTG_ALL_HH
+#ifndef NTG_ENUM_ENUM_VALUE_HH
+# define NTG_ENUM_ENUM_VALUE_HH
 
-/*
-  Include all Integre's features.
-*/
+# include <ntg/core/value.hh>
+# include <ntg/core/type_traits.hh>
 
-# include <ntg/basics.hh>
+namespace ntg
+{
 
-# include <ntg/bin.hh>
+  /*-----------.
+  | enum_value |
+  `-----------*/
 
-# include <ntg/int.hh>
-# include <ntg/cycle.hh>
-# include <ntg/range.hh>
+  template <class E>
+  class enum_value : public value<E>
+  {};
 
-# include <ntg/vec.hh>
-# include <ntg/cplx.hh>
+  namespace internal {
 
-# include <ntg/color.hh>
+    template <class E>
+    class typetraits<enum_value<E> > : public typetraits<value<E> >
+    {};
 
-# include <ntg/utils/cast.hh>
+    template <class E>
+    class optraits<enum_value<E> > : public optraits<value<E> >
+    {};
 
-#endif // !NTG_ALL_HH
+  }
+
+}
+
+#endif // !NTG_ENUM_ENUM_VALUE_HH

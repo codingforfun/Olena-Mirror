@@ -1,4 +1,5 @@
-// Copyright (C) 2005 EPITA Research and Development Laboratory
+//                                                                  -*- c++ -*-
+// Copyright (C) 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,53 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef INTEGRE_CORE_CATS_HH
-# define INTEGRE_CORE_CATS_HH
-
-# include <mlc/types.hh>
-
-
-/*! \macro FIXME:doc
-*/
-
-# define ntg_category_type(T) typename ntg::category_type<T>::ret
-
-
-
-/*! \namespace ntg
-** \brief ntg namespace.
-*/
-namespace ntg {
-
-
-  /*! \class category_type<T>
-  **
-  ** FIXME: doc
-  **
-  */
-  template <typename T>
-  struct category_type
-  {
-    typedef mlc::undefined_type ret;
-  };
-
-
-  /*! \namespace ntg::cat
-  ** \brief ntg::cat namespace.
-  */
-  namespace cat {
-
-    struct color;
-    struct enum_value;
-    struct integer;
-    // FIXME:...
-
-  } // end of namespace ntg::cat
-
-
-} // end of namespace ntg
-
-
-
-
-#endif // ! INTEGRE_CORE_CATS_HH
+vec<3, int> v1;
+v1[0] = 5;
+v1[1] = 7;
+v1[2] = 13;
+vec<3, int> v2 = v1;
+return v2 != v1;

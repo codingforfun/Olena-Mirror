@@ -1,4 +1,5 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+//                                                                  -*- c++ -*-
+// Copyright (C) 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,26 +26,40 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_ALL_HH
-# define NTG_ALL_HH
+typedef range<int_u8, bounded_u<10, 13>, strict> t1;
+typedef range<int, bounded_u<5, 72>, strict> t2;
+typedef range<float_s, bounded_s<-15, 28>, strict> t3;
 
-/*
-  Include all Integre's features.
-*/
+t1 u = 10;
+t2 v = 32U;
+t3 w = -5.8;
 
-# include <ntg/basics.hh>
+u = 11;
+u = 12;
+u = 13;
 
-# include <ntg/bin.hh>
+ntg_is_a_(t1, unsigned_integer)::ensure();
+mlc_is_a_(t1, uint_value)::ensure();
 
-# include <ntg/int.hh>
-# include <ntg/cycle.hh>
-# include <ntg/range.hh>
+ntg_is_a_(t2, signed_integer)::ensure();
+mlc_is_a_(t2, sint_value)::ensure();
 
-# include <ntg/vec.hh>
-# include <ntg/cplx.hh>
+ntg_is_a_(t3, decimal)::ensure();
+mlc_is_a_(t3, float_value)::ensure();
 
-# include <ntg/color.hh>
+u + u;
+u + 5;
+5 + u;
+u + int_u16(5);
+int_u16(5) + u;
 
-# include <ntg/utils/cast.hh>
+u * v;
+v * 5U;
+u / v;
 
-#endif // !NTG_ALL_HH
+u + w + v;
+u + w * v;
+
+w + 5;
+
+return (u + v * w) != -172.6f;

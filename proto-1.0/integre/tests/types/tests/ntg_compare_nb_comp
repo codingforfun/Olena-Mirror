@@ -1,4 +1,5 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+//                                                                  -*- c++ -*-
+// Copyright (C) 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,26 +26,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_ALL_HH
-# define NTG_ALL_HH
+bool should_just_compile;
+should_just_compile = ntg_if_vectorial_nb_comp_(int);
 
-/*
-  Include all Integre's features.
-*/
-
-# include <ntg/basics.hh>
-
-# include <ntg/bin.hh>
-
-# include <ntg/int.hh>
-# include <ntg/cycle.hh>
-# include <ntg/range.hh>
-
-# include <ntg/vec.hh>
-# include <ntg/cplx.hh>
-
-# include <ntg/color.hh>
-
-# include <ntg/utils/cast.hh>
-
-#endif // !NTG_ALL_HH
+bool fail = false;
+fail = fail || ntg_if_vectorial_nb_comp_(ntg::rgb_8) != 3;
+typedef ntg::vec<3, bool> vec3;
+typedef ntg::vec<4, bool> vec4;
+fail = fail || ntg_if_vectorial_nb_comp_(vec3) != 3;
+fail = fail || ntg_if_vectorial_nb_comp_(vec4) != 4;
+fail = fail || ntg_compare_nb_comp_(int, ntg::rgb_8)::ret != 0;
+fail = fail || ntg_compare_nb_comp_(int, float)::ret != 1;
+fail = fail || ntg_compare_nb_comp_(vec3, ntg::rgb_8)::ret != 1;
+fail = fail || ntg_compare_nb_comp_(vec4, ntg::rgb_8)::ret != 0;
+return fail;

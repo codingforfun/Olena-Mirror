@@ -1,4 +1,4 @@
-// Copyright (C) 2005 EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,70 +25,58 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef INTEGRE_REAL_INTEGER_HH
-# define INTEGRE_REAL_INTEGER_HH
+#ifndef NTG_CORE_INTERNAL_TRAITS_HH
+# define NTG_CORE_INTERNAL_TRAITS_HH
 
-# include <mlc/any.hh>
-# include <mlc/types.hh>
+/*
+  Traits used internally, encapsulated in type_traits for external
+  use.
+*/
 
-# include <ntg/core/cats.hh>
-# include <ntg/core/props.hh>
-
+# include <ntg/core/abstract_hierarchy.hh>
+# include <string>
 namespace ntg {
 
-  template <typename E> struct integer;
+  namespace internal {
 
-  template <typename E>
-  struct category_type< integer<E> > { typedef cat::integer ret; };
+    /*-----------.
+    | typetraits |
+    `-----------*/
 
-  template <>
-  struct default_props < cat::integer >
-  {
-    enum { max_val = 0 };
-    typedef mlc::no_type io_type;
+    //! Associates types to types.
+    /*!
+      Specialize it for every types.
 
-  protected:
-    default_props() {}
-  };
-
-  template <typename E>
-  struct integer : public mlc::any__best_memory<E>
-  {
-    typedef E exact_type;
-
-    template <typename V>
-    exact_type& operator=(const V& rhs)
+      Please note that typetraits only associates types, and not
+      methods. This is necessary to handle mutual instantiation
+      problems, as optraits usually needs typetraits to be
+      instantiated.
+    */
+    template <class T>
+    struct typetraits
     {
-      return this->exact().impl_assign(rhs);
-    }
+      typedef data_type abstract_type;
+    };
 
-    bool operator==(int rhs) const
+    /*---------.
+    | optraits |
+    `---------*/
+
+    //! Associates functions to types.
+    /*
+      It should be specialized for every types.
+    */
+    template <class T>
+    struct optraits
     {
-      return this->exact().impl_eq(rhs);
-    }
+      static std::string name()
+      {
+	return "unknown_data_type";
+      }
+    };
 
-    template <typename I>
-    bool operator==(const integer<I>& rhs) const
-    {
-      return this->exact().impl_eq(rhs.exact());
-    }
+  } // end of internal.
 
-    template <typename V>
-    bool operator!=(const V& rhs) const
-    {
-      return ! this->operator==(rhs);
-    }
+} // end of ntg.
 
-    template <typename V>
-    exact_type& operator+(const V& rhs) const
-    {
-      return this->exact().impl_add(rhs);
-    }
-
-  protected :
-    integer() {}
-  };
-
-}
-
-#endif // ! INTEGRE_REAL_INTEGER_HH
+#endif // !NTG_CORE_INTERNAL_TRAITS_HH

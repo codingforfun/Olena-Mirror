@@ -25,26 +25,33 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_ALL_HH
-# define NTG_ALL_HH
+#ifndef NTG_CORE_CONTRACT_HH
+# define NTG_CORE_CONTRACT_HH
+
+# include <mlc/contract.hh>
 
 /*
-  Include all Integre's features.
+  Custom version of assert, which can print a context string if
+  NTG_DEBUG is defined. The context string should be filled by
+  operators.
 */
 
-# include <ntg/basics.hh>
+# ifdef NDEBUG
+#  define ntg_assert(expr) (static_cast<void>(0))
+# else
+// FIXME: repair NTG_DEBUG
+#  if 0 // ifdef NTG_DEBUG
+#   define ntg_assert(expr)					\
+  if (!(expr))							\
+  {								\
+    if (!ntg::debug_context.empty())				\
+      std::cerr << "In context: " << ntg::debug_context 	\
+                << std::endl;					\
+    assertion(expr);						\
+  }
+#  else
+    # define ntg_assert(expr) assertion(expr)
+#  endif
+# endif
 
-# include <ntg/bin.hh>
-
-# include <ntg/int.hh>
-# include <ntg/cycle.hh>
-# include <ntg/range.hh>
-
-# include <ntg/vec.hh>
-# include <ntg/cplx.hh>
-
-# include <ntg/color.hh>
-
-# include <ntg/utils/cast.hh>
-
-#endif // !NTG_ALL_HH
+#endif // !NTG_CORE_CONTRACT_HH

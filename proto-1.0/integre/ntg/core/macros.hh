@@ -1,4 +1,4 @@
-// Copyright (C) 2005 EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,15 +25,188 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef INTEGRE_CORE_MACROS_HH
-# define INTEGRE_CORE_MACROS_HH
+#ifndef NTG_CORE_MACROS_HH
+# define NTG_CORE_MACROS_HH
 
-# define ntg_max_val(T) ntg::props<ntg_category_type(T),T>::max_val
+/*------.
+| casts |
+`------*/
 
-# define ntg_depth(T) ntg::props<ntg_category_type(T),T>::depth
+# define ntg_type(T) typename ntg::type_traits< T >::ntg_type
+# define ntg_type_(T) typename ntg::type_traits< T >::ntg_type
 
-# define ntg_comp_type(T) typename ntg::props<ntg_category_type(T),T>::comp_type
+# define ntg_cast(Val) ntg::to_ntg(Val)
+# define ntg_signed_cast(Val) ntg::to_signed_ntg(Val)
 
-# define ntg_io_type(T) typename ntg::props<ntg_category_type(T),T>::io_type
+/*--------------.
+| type checking |
+`--------------*/
 
-#endif // ! INTEGRE_CORE_MACROS_HH
+# define ntg_is_a(T, U) mlc_is_a(typename ntg::type_traits< T >::abstract_type, U)
+# define ntg_is_a_(T, U) mlc_is_a_(ntg::type_traits< T >::abstract_type, U)
+
+/*----------------.
+| types accessors |
+`----------------*/
+
+# define ntg_abstract_type(T) typename ntg::type_traits< T >::abstract_type
+# define ntg_abstract_type_(T) ntg::type_traits< T >::abstract_type
+
+# define ntg_storage_type(T) typename ntg::type_traits< T >::storage_type
+# define ntg_storage_type_(T) ntg::type_traits< T >::storage_type
+
+# define ntg_base_type(T) typename ntg::type_traits< T >::base_type
+# define ntg_base_type_(T) ntg::type_traits< T >::base_type
+
+# define ntg_signed_type(T) typename ntg::type_traits< T >::signed_type
+# define ntg_signed_type_(T) ntg::type_traits< T >::signed_type
+
+# define ntg_unsigned_type(T) typename ntg::type_traits< T >::unsigned_type
+# define ntg_unsigned_type_(T) ntg::type_traits< T >::unsigned_type
+
+# define ntg_integer_type(T) typename ntg::type_traits< T >::integer_type
+# define ntg_integer_type_(T) ntg::type_traits< T >::integer_type
+
+# define ntg_cumul_type(T) typename ntg::type_traits< T >::cumul_type
+# define ntg_cumul_type_(T) ntg::type_traits< T >::cumul_type
+
+# define ntg_signed_cumul_type(T) \
+  typename ntg::type_traits< T >::signed_cumul_type
+# define ntg_signed_cumul_type_(T) ntg::type_traits< T >::signed_cumul_type
+
+# define ntg_unsigned_cumul_type(T) \
+  typename ntg::type_traits< T >::unsigned_cumul_type
+# define ntg_unsigned_cumul_type_(T) ntg::type_traits< T >::unsigned_cumul_type
+
+# define ntg_largest_type(T) typename ntg::type_traits< T >::largest_type
+# define ntg_largest_type_(T) ntg::type_traits< T >::largest_type
+
+# define ntg_signed_largest_type(T) \
+  typename ntg::type_traits< T >::signed_largest_type
+# define ntg_signed_largest_type_(T) ntg::type_traits< T >::signed_largest_type
+
+# define ntg_unsigned_largest_type(T) \
+  typename ntg::type_traits< T >::unsigned_largest_type
+# define ntg_unsigned_largest_type_(T) \
+  ntg::type_traits< T >::unsigned_largest_type
+
+# define ntg_comp_type(T) \
+  typename ntg::type_traits< T >::comp_type
+# define ntg_comp_type_(T) \
+  ntg::type_traits< T >::comp_type
+
+# define ntg_unsafe_type(T) typename ntg::type_traits< T >::unsafe_type
+# define ntg_unsafe_type_(T) ntg::type_traits< T >::unsafe_type
+
+/*-----------------.
+| values accessors |
+`-----------------*/
+
+# define ntg_zero_val(T) ntg::type_traits< T >::zero()
+
+# define ntg_unit_val(T) ntg::type_traits< T >::unit()
+
+# define ntg_max_val(T) ntg::type_traits< T >::max()
+
+# define ntg_min_val(T) ntg::type_traits< T >::min()
+
+# define ntg_sup_val(T) ntg::type_traits< T >::sup()
+
+# define ntg_inf_val(T) ntg::type_traits< T >::inf()
+
+# define ntg_inf_val(T) ntg::type_traits< T >::inf()
+
+# define ntg_sup_val(T) ntg::type_traits< T >::sup()
+
+# define ntg_max_print_width(T) ntg::type_traits< T >::max_print_width()
+
+# define ntg_nb_comp(T) ntg::type_traits< T >::nb_comp
+
+/*--------------------------.
+| operator traits accessors |
+`--------------------------*/
+
+# define ntg_return_type(Op, T1, T2) \
+  typename ntg::internal::deduce_from_traits<ntg::internal::operator_##Op , T1, T2 >::ret
+# define ntg_return_type_(Op, T1, T2) \
+  ntg::internal::deduce_from_traits<ntg::internal::operator_##Op, T1, T2 >::ret
+
+# define ntg_deduced_traits_type(Op, T1, T2) \
+  typename ntg::internal::deduce_from_traits<ntg::internal::operator_##Op, T1, T2 >
+# define ntg_deduced_traits_type_(Op, T1, T2) \
+  ntg::internal::deduce_from_traits<ntg::internal::operator_##Op, T1, T2 >
+
+# define ntg_impl_type(Op, T1, T2) \
+  typename ntg::internal::deduce_from_traits<ntg::internal::operator_##Op, T1, T2 >::impl
+# define ntg_impl_type_(Op, T1, T2) \
+  ntg::internal::deduce_from_traits<ntg::internal::operator_##Op, T1, T2 >::impl
+
+/*----------.
+| utilities |
+`----------*/
+
+# define ntg_name(T) ntg::type_traits< T >::name()
+
+// FIXME: reimplement when variadic macros will be allowed.
+# define ntg_build_value_type(Type)		\
+  template <class E>				\
+  struct build_value_type			\
+    {						\
+      typedef Type ret;				\
+    }
+
+// FIXME: reimplement when variadic macros will be allowed.
+# define ntg_get_value_type(T, E) ntg::type_traits< T >::build_value_type<E >
+
+
+/* ----.
+| Misc |
+`-----*/
+#define ntg_nbits(T)		ntg::internal::typetraits< T >::size
+
+
+/*! Return the number of components of T if T is vectorial.
+**
+** If T is non vectorial, the value returned should not be considered.
+*/
+#define ntg_if_vectorial_nb_comp(T)					\
+   ntg::type_traits<typename mlc::if_<ntg_is_a(T, ntg::vectorial)::ret,	\
+		            	      T,				\
+				      ntg::vec<42, bool> >::ret>::nb_comp
+
+/*! Same as \a ntg_if_vectorial_nb_comp but without 'typename'
+**
+** \see ntg_if_vectorial_nb_comp
+*/
+#define ntg_if_vectorial_nb_comp_(T)					\
+   ntg::type_traits<mlc::if_<ntg_is_a_(T, ntg::vectorial)::ret,		\
+		            	      T,				\
+				      ntg::vec<42, bool> >::ret>::nb_comp
+
+/*! Compare the number of components.
+**
+**   - If \a A and \a B are non_vectorial, then
+**     \a {ntg_compare_nb_comp(A, B)::ret = true}
+**   - If \a A and \a B are vectorial, then
+**     \a {ntg_compare_nb_comp(A, B)::ret = (ntg_nb_comp(A) = ntg_nb_comp(B))}
+**   - Otherwise, it returns false
+*/
+#define ntg_compare_nb_comp(A, B)					\
+	mlc::if_<							\
+	  ntg_is_a(A, ntg::non_vectorial)::ret,				\
+	  ntg_is_a(B, ntg::non_vectorial),				\
+	  mlc::eq<ntg_if_vectorial_nb_comp(A),				\
+	  ntg_if_vectorial_nb_comp(B) > >::ret
+
+/*! Same as \a ntg_compare_nb_comp but without 'typename'
+**
+** \see ntg_compare_nb_comp
+*/
+#define ntg_compare_nb_comp_(A, B)					\
+	mlc::if_<							\
+	  ntg_is_a_(A, ntg::non_vectorial)::ret,			\
+	  ntg_is_a_(B, ntg::non_vectorial),				\
+	  mlc::eq<ntg_if_vectorial_nb_comp_(A),				\
+	  ntg_if_vectorial_nb_comp_(B) > >::ret
+
+#endif // !NTG_CORE_MACROS_HH

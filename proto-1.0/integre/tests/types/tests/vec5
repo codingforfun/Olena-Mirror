@@ -1,4 +1,5 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+//                                                                  -*- c++ -*-
+// Copyright (C) 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,26 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_ALL_HH
-# define NTG_ALL_HH
-
-/*
-  Include all Integre's features.
-*/
-
-# include <ntg/basics.hh>
-
-# include <ntg/bin.hh>
-
-# include <ntg/int.hh>
-# include <ntg/cycle.hh>
-# include <ntg/range.hh>
-
-# include <ntg/vec.hh>
-# include <ntg/cplx.hh>
-
-# include <ntg/color.hh>
-
-# include <ntg/utils/cast.hh>
-
-#endif // !NTG_ALL_HH
+vec<1, int_u16> v1;
+v1[0] = 20;
+vec<1, int_u32> v2 = v1;
+v2 = v2;
+v1 = 2 * v1 / 2;
+return v2 != v1;

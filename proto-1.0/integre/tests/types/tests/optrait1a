@@ -1,4 +1,5 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+//                                                                  -*- c++ -*-
+// Copyright (C) 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,26 +26,27 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_ALL_HH
-# define NTG_ALL_HH
-
-/*
-  Include all Integre's features.
-*/
-
-# include <ntg/basics.hh>
-
-# include <ntg/bin.hh>
-
-# include <ntg/int.hh>
-# include <ntg/cycle.hh>
-# include <ntg/range.hh>
-
-# include <ntg/vec.hh>
-# include <ntg/cplx.hh>
-
-# include <ntg/color.hh>
-
-# include <ntg/utils/cast.hh>
-
-#endif // !NTG_ALL_HH
+int_u32 u1 = ntg_max_val(int_u32);
+int_u16 u2 = ntg_max_val(int_u16);
+int_u8  u3 = ntg_max_val(int_u8);
+int_s32 s1 = ntg_max_val(int_s32);
+int_s16 s2 = ntg_max_val(int_s16);
+int_s8  s3 = ntg_max_val(int_s8);
+int_u32 u4 = ntg_min_val(int_u32);
+int_u16 u5 = ntg_min_val(int_u16);
+int_u8  u6 = ntg_min_val(int_u8);
+int_s32 s4 = ntg_min_val(int_s32);
+int_s16 s5 = ntg_min_val(int_s16);
+int_s8  s6 = ntg_min_val(int_s8);
+return u1 != 4294967295U
+    || u2 != 65535U
+    || u3 != 255
+    || s1 != 2147483647
+    || s2 != 32767
+    || s3 != 127
+    || u4 != 0
+    || u5 != 0
+    || u6 != 0
+    || s4 != -2147483647-1
+    || s5 != -32768
+    || s6 != -128;

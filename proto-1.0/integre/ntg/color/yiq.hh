@@ -25,26 +25,40 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_ALL_HH
-# define NTG_ALL_HH
+#ifndef NTG_COLOR_YIQ_HH
+# define NTG_COLOR_YIQ_HH
 
-/*
-  Include all Integre's features.
-*/
+# include <ntg/color/color.hh>
 
-# include <ntg/basics.hh>
+namespace ntg
+{
 
-# include <ntg/bin.hh>
+  enum yiq_comp
+    {
+      yiq_Y = 0,
+      yiq_I = 1,
+      yiq_Q = 2
+    };
 
-# include <ntg/int.hh>
-# include <ntg/cycle.hh>
-# include <ntg/range.hh>
+  template<unsigned icomp> struct yiq_traits;
+  template<> struct yiq_traits<yiq_Y> : public interval<0,1> {};
 
-# include <ntg/vec.hh>
-# include <ntg/cplx.hh>
+  template<> struct yiq_traits<yiq_I>
+  {
+    static float lower_bound() { return -.4192; }
+    static float upper_bound() { return .5346; }
+  };
 
-# include <ntg/color.hh>
+  template<> struct yiq_traits<yiq_Q>
+  {
+    static float lower_bound() { return -.6783; }
+    static float upper_bound() { return .6527; }
+  };
 
-# include <ntg/utils/cast.hh>
+  typedef color<3,8,yiq_traits>  yiq_8;
+  typedef color<3,16,yiq_traits> yiq_16;
+  typedef color<3,32,yiq_traits> yiq_32;
 
-#endif // !NTG_ALL_HH
+} // end of ntg.
+
+#endif // !NTG_COLOR_YIQ_HH

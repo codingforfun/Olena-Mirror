@@ -25,26 +25,39 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_ALL_HH
-# define NTG_ALL_HH
+#ifndef NTG_COLOR_HSI_HH
+# define NTG_COLOR_HSI_HH
 
-/*
-  Include all Integre's features.
-*/
+# include <ntg/color/color.hh>
 
-# include <ntg/basics.hh>
+namespace ntg
+{
 
-# include <ntg/bin.hh>
+  enum hsi_comp
+    {
+      hsi_H = 0,
+      hsi_S = 1,
+      hsi_I = 2
+    };
 
-# include <ntg/int.hh>
-# include <ntg/cycle.hh>
-# include <ntg/range.hh>
+  template<unsigned icomp> struct hsi_traits;
+  template<> struct hsi_traits<hsi_H> : public interval<0,360> {};
+  template<> struct hsi_traits<hsi_S>
+  {
+    static float lower_bound() { return 0.; }
+    static float upper_bound() { return 0.816497; } //2 / sqrt(6)
+  };
 
-# include <ntg/vec.hh>
-# include <ntg/cplx.hh>
+  template<> struct hsi_traits<hsi_I>
+  {
+    static float lower_bound() { return 0.; }
+    static float upper_bound() { return 1.7320508; } //sqrt(3)
+  };
 
-# include <ntg/color.hh>
+  typedef color<3,8,hsi_traits>  hsi_8;
+  typedef color<3,16,hsi_traits> hsi_16;
+  typedef color<3,32,hsi_traits> hsi_32;
 
-# include <ntg/utils/cast.hh>
+} // end of ntg.
 
-#endif // !NTG_ALL_HH
+#endif // !NTG_COLOR_HSI_HH

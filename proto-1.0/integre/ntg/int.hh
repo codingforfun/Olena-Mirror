@@ -25,26 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_ALL_HH
-# define NTG_ALL_HH
+#ifndef NTG_INT_HH
+# define NTG_INT_HH
 
-/*
-  Include all Integre's features.
+/* 
+   Proxy header for integer types (int_u and int_s).
 */
 
-# include <ntg/basics.hh>
+// Note: these two types are included together as it is quite
+// impossible to use only int_u. For example, doing int_u + 1 needs
+// int_s as 1 is a signed int builtin type.
 
-# include <ntg/bin.hh>
+# include <ntg/real/int_u.hh>
+# include <ntg/real/int_s.hh>
 
-# include <ntg/int.hh>
-# include <ntg/cycle.hh>
-# include <ntg/range.hh>
-
-# include <ntg/vec.hh>
-# include <ntg/cplx.hh>
-
-# include <ntg/color.hh>
-
-# include <ntg/utils/cast.hh>
-
-#endif // !NTG_ALL_HH
+#endif // !NTG_INT_HH

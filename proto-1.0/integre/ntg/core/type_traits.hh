@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2005  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,26 +25,42 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_ALL_HH
-# define NTG_ALL_HH
+#ifndef NTG_CORE_TYPE_TRAITS_HH
+# define NTG_CORE_TYPE_TRAITS_HH
 
-/*
-  Include all Integre's features.
-*/
+# include <ntg/core/internal/traits.hh>
 
-# include <ntg/basics.hh>
+namespace ntg
+{
 
-# include <ntg/bin.hh>
+  /*------------.
+  | type_traits |
+  `------------*/
 
-# include <ntg/int.hh>
-# include <ntg/cycle.hh>
-# include <ntg/range.hh>
+  //! Associates properties and methods to types.
+  /*!
+    type_traits gives a variable set of properties, depending on
+    the type considered. For example, type_traits<int_u8> can give
+    larger_type, max(), ...
 
-# include <ntg/vec.hh>
-# include <ntg/cplx.hh>
+    It refers to the exact type, this means type_traits<any<int_u8> >
+    will give the same results than type_traits<int_u8>.
 
-# include <ntg/color.hh>
+    Traits can be defined for builtin values, so that type_traits<int>
+    works, this is the main advantage on T::xxx approach to define
+    properties.
+  */
 
-# include <ntg/utils/cast.hh>
+  // FIXME: should inherit from *traits<mlc_exact_type(T)> instead of
+  // optraits<T> directly. This makes things like
+  // type_traits<int_value<int_u<..> > >::max() possible.
 
-#endif // !NTG_ALL_HH
+  template <class T>
+  class type_traits :
+    public internal::optraits<T>,
+    public internal::typetraits<T>
+  {};
+
+} // end of ntg.
+
+#endif // ndef NTG_CORE_TYPE_TRAITS_HH

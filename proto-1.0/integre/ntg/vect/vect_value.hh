@@ -25,26 +25,44 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_ALL_HH
-# define NTG_ALL_HH
+#ifndef NTG_VECT_VECT_VALUE_HH
+# define NTG_VECT_VECT_VALUE_HH
 
-/*
-  Include all Integre's features.
-*/
+# include <ntg/core/value.hh>
 
-# include <ntg/basics.hh>
+namespace ntg
+{
 
-# include <ntg/bin.hh>
+  /*-----------.
+  | vect_value |
+  `-----------*/
 
-# include <ntg/int.hh>
-# include <ntg/cycle.hh>
-# include <ntg/range.hh>
+  template <class E>
+  class vect_value : public value<E>
+  {
+    typedef typename internal::typetraits<E>::comp_type comp_type;
+    enum { nb_comp = internal::typetraits<E>::nb_comp };
 
-# include <ntg/vec.hh>
-# include <ntg/cplx.hh>
+  public:
+    // accessor
+    comp_type& operator[](unsigned i)	    { return this->val_[i]; }
+    comp_type  operator[](unsigned i) const { return this->val_[i]; }
 
-# include <ntg/color.hh>
+    static unsigned size() { return nb_comp; }
+  };
 
-# include <ntg/utils/cast.hh>
+  namespace internal {
 
-#endif // !NTG_ALL_HH
+    template <class E>
+    class typetraits<vect_value<E> > : public typetraits<value<E> >
+    {};
+
+    template <class E>
+    class optraits<vect_value<E> > : public optraits<value<E> >
+    {};
+
+  }
+
+}
+
+#endif // !NTG_VECT_VECT_VALUE_HH

@@ -1,4 +1,5 @@
-// Copyright (C) 2005 EPITA Research and Development Laboratory
+//                                                                  -*- c++ -*-
+// Copyright (C) 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,53 +26,6 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef INTEGRE_CORE_PROPS_HH
-# define INTEGRE_CORE_PROPS_HH
-
-# include <mlc/types.hh>
-
-# include <ntg/core/cats.hh>
-
-/*! \namespace ntg
-** \brief ntg namespace.
-*/
-namespace ntg {
-
-
-  /*! \class default_props
-  **
-  ** \brief Class that defines properties by default, so properties are
-  ** undefined.  // FIXME: this doc should be modified...
-  **
-  ** Practically all typedefs of default_props are thus set to
-  ** mlc::undefined_type.
-  **
-  ** When props<E> is specialized, the programmer should derive that
-  ** specialization from another props<E'> or from default_props.
-  ** That ensures that an undefined property is set to mlc::undefined_type.
-  **
-  ** \see props<E>
-  */
-  template < typename category >
-  struct default_props;
-
-
-  /*! \class props<E>
-  **
-  ** Declaration of the trait class for properties.
-  ** Parameter E is the targeted type.  FIXME: rewrite doc.
-  */
-  template <typename category, typename type>
-  struct props : public default_props <category>
-  {};
-
-  template <typename category, typename type>
-  struct props <category, const type> : public props <category, type>
-  {};
-
-
-
-} // end of namespace ntg
-
-
-#endif // ndef INTEGRE_CORE_PROPS_HH
+int_s16 s = -32768;
+int_u32 u = 4294967295U;
+return s >= u || !(s < u);

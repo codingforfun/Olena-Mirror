@@ -1,4 +1,4 @@
-// Copyright (C) 2005 EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,98 +25,243 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef INTEGRE_ENUM_BIN_HH
-# define INTEGRE_ENUM_BIN_HH
+#ifndef NTG_ENUM_BIN_HH
+# define NTG_ENUM_BIN_HH
 
-# include <mlc/traits.hh>
+/*
+  Binary type. Possible values are 0 and 1 (not true and false).
+*/
 
-# include <ntg/core/props.hh>
-# include <ntg/core/cats.hh>
-# include <ntg/enum/enum.hh>
+# include <ntg/basics.hh>
+# include <ntg/enum/enum_value.hh>
+# include <ntg/core/internal/global_ops.hh>
+
+# include <mlc/contract.hh>
+
+# include <string>
 
 namespace ntg {
 
-  struct bin;
+  namespace internal {
 
-  template <>
-  struct category_type< bin > { typedef cat::enum_value ret; };
+    /*----------------.
+    | typetraits<bin> |
+    `----------------*/
 
+    template <>
+    struct typetraits<bin> : typetraits<enum_value<bin> >
+    {
+      typedef binary			abstract_type;
+      typedef bin			self;
+      typedef self			ntg_type;
 
-  template <>
-  struct props<cat::enum_value, bin> : public default_props<cat::enum_value>
+      ntg_build_value_type(enum_value<E>);
+
+      typedef optraits<self>		optraits_type;
+
+      typedef self			base_type;
+      typedef bool			storage_type;
+      typedef bin			signed_type;
+      typedef bin			unsigned_type;
+      typedef bin			cumul_type;
+      typedef bin			largest_type;
+      typedef bin			signed_largest_type;
+      typedef bin			signed_cumul_type;
+      typedef bin			unsigned_largest_type;
+      typedef bin			unsigned_cumul_type;
+      typedef unsigned int		integer_type;
+
+      // Particular properties
+      enum { size = 1 };
+    };
+
+  } // end of internal.
+
+  /*----.
+  | bin |
+  `----*/
+
+  class bin : public enum_value<bin>
   {
-    enum { max_val = 1 };
-    typedef unsigned char io_type;
-  };
+  public:
+    bin ()
+    { this->val_ = 0; }
 
-  struct bin : public enum_value<bin>
-  {
-    bin() :
-      value_(0)
+    // FIXME: create a template constructor and check into it if T
+    // is a real or whatever ?
+
+    bin (unsigned char val)
     {
+      ntg_assert(val < 2);
+      this->val_ = val;
     }
 
-    bin(unsigned char value) :
-      value_(value)
+    bin&
+    operator=(unsigned char val)
     {
-    }
-
-    bin(const bin& rhs) :
-      value_(rhs)
-    {
-    }
-
-    template <typename V>
-    bin& impl_assign(const V& rhs)
-    {
-      this->value_ = (int)rhs % 2;
+      ntg_assert(val < 2);
+      this->val_ = val;
       return *this;
     }
 
-    operator unsigned char() const
+    template <class T>
+    bin (const real_value<T>& val)
     {
-      return value_;
+      ntg_assert(val < 2);
+      this->val_ = val.val();
+    }
+    template <class T>
+    bin&
+    operator=(const real_value<T>& val)
+    {
+      ntg_assert(val < 2);
+      this->val_ = val.val();
+      return *this;
     }
 
-    bool impl_eq(const unsigned char& rhs) const
-    {
-      return this->value_ == rhs;
-    }
-
-    template <typename V>
-    bool impl_eq(const V& rhs) const
-    {
-      return this->value_ == (unsigned char)rhs;
-    }
-
-
-    template <typename V>
-    bin impl_add(const V& rhs) const
-    {
-      bin tmp((this->value_ + rhs) % 2);
-      return tmp;
-    }
-
-  private:
-
-    unsigned char value_;
+    operator unsigned char() const { return this->val_; }
   };
 
-
-} // end of namespace ntg
-
-
-
-namespace mlc {
-
-  template <>
-  struct traits < ntg::bin >
+  inline std::ostream&
+  operator<<(std::ostream& stream, const bin& rhs)
   {
-    typedef unsigned char encoding_type;
-  };
+    stream << (unsigned int) rhs.val();
+    return stream;
+  }
 
-} // end of namespace mlc
+  namespace internal {
 
+    /*--------------.
+    | optraits<bin> |
+    `--------------*/
 
+    template <>
+    struct optraits<bin> : public optraits<enum_value<bin> >
+    {
+    private:
+      typedef typetraits<bin>::storage_type storage_type_;
 
-#endif // ! INTEGRE_ENUM_BIN_HH
+    public:
+      static storage_type_ zero() { return 0; }
+      static storage_type_ unit() { return 1; }
+      static storage_type_ min()  { return 0; }
+      static storage_type_ max()  { return 1; }
+      static storage_type_ inf()  { return min(); }
+      static storage_type_ sup()  { return max(); }
+      static unsigned max_print_width () { return 1U; }
+
+      // logical assignement operators
+
+      static bin&
+      logical_or_equal(bin& lhs, const bin& rhs)
+      {
+	lhs = lhs.val() | rhs.val();
+	return lhs;
+      }
+
+      static bin&
+      logical_and_equal(bin& lhs, const bin& rhs)
+      {
+	lhs = lhs.val() & rhs.val();
+	return lhs;
+      }
+
+      static bin&
+      logical_xor_equal(bin& lhs, const bin& rhs)
+      {
+	lhs = lhs.val() ^ rhs.val();
+	return lhs;
+      }
+
+      // logical binary ops
+
+      static bin
+      logical_or(const bin& lhs, const bin& rhs)
+      {
+	bin tmp(lhs);
+	tmp |= rhs;
+	return tmp;
+      }
+
+      static bin
+      logical_and(const bin& lhs, const bin& rhs)
+      {
+	bin tmp(lhs);
+	tmp &= rhs;
+	return tmp;
+      }
+
+      static bin
+      logical_xor(const bin& lhs, const bin& rhs)
+      {
+	bin tmp(lhs);
+	tmp ^= rhs;
+	return tmp;
+      }
+
+      // comparisons
+
+      static bool
+      cmp_lt(const bin& lhs, const bin& rhs)
+      {
+	return lhs.val() < rhs.val();
+      }
+
+      static bool
+      cmp_eq(const bin& lhs, const bin& rhs)
+      {
+	return lhs.val() == rhs.val();
+      }
+
+      static std::string name() { return "bin"; }
+    };
+
+    /*-----------------.
+    | operators traits |
+    `-----------------*/
+
+    //  Logical operators
+
+    template <class T>
+    struct operator_traits<operator_logical, bin, T>
+    {
+      enum { commutative = true };
+      typedef bin ret;
+      typedef bin impl;
+    };
+
+    //  Comparison operators
+
+    template <>
+    struct operator_traits<operator_cmp, bin, bin>
+    {
+      enum { commutative = true };
+      typedef bin ret;
+      typedef bin impl;
+    };
+
+    //  Max
+
+    template <>
+    struct operator_traits<operator_max, bin, bin>
+    {
+      enum { commutative = true };
+      typedef bin ret;
+      typedef bin impl;
+    };
+
+    //  Min
+
+    template <>
+    struct operator_traits<operator_min, bin, bin>
+    {
+      enum { commutative = true };
+      typedef bin ret;
+      typedef bin impl;
+    };
+
+  } // end of internal.
+
+} // end of ntg.
+
+#endif // !NTG_ENUM_BIN_HH

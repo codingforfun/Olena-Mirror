@@ -25,26 +25,30 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_ALL_HH
-# define NTG_ALL_HH
+#ifndef NTG_COLOR_HSL_HH
+# define NTG_COLOR_HSL_HH
 
-/*
-  Include all Integre's features.
-*/
+# include <ntg/color/color.hh>
 
-# include <ntg/basics.hh>
+namespace ntg
+{
 
-# include <ntg/bin.hh>
+  enum hsl_comp
+    {
+      hsl_H = 0,
+      hsl_S = 1,
+      hsl_L = 2
+    };
 
-# include <ntg/int.hh>
-# include <ntg/cycle.hh>
-# include <ntg/range.hh>
+  template<unsigned icomp> struct hsl_traits;
+  template<> struct hsl_traits<hsl_H> : public interval<0,360> {};
+  template<> struct hsl_traits<hsl_S> : public interval<0,1> {};
+  template<> struct hsl_traits<hsl_L> : public interval<0,1> {};
 
-# include <ntg/vec.hh>
-# include <ntg/cplx.hh>
+  typedef color<3,8,hsl_traits>  hsl_8;
+  typedef color<3,16,hsl_traits> hsl_16;
+  typedef color<3,32,hsl_traits> hsl_32;
 
-# include <ntg/color.hh>
+} // end of ntg
 
-# include <ntg/utils/cast.hh>
-
-#endif // !NTG_ALL_HH
+#endif // !NTG_COLOR_HSL_HH
