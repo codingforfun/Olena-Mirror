@@ -36,6 +36,7 @@ namespace oln {
 
       using oln::internal::image3d_data;
 
+      inline
       void mosaic(coord nslices, coord& mrows, coord& mcols)
       {
 	// multiply by 3/4 so that the resulting image fits
