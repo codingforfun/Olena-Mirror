@@ -1,3 +1,46 @@
+2003-04-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/all.hh: Update includes.
+	
+	* ntg/bin.hh, ntg/cplx.hh, ntg/cycle.hh, ntg/float.hh, ntg/int.hh,
+	ntg/range.hh, ntg/vec.hh: New files.
+	
+	* ntg/cycle.hh, ntg/int_s.hh, ntg/int_u.hh,
+	ntg/optraits_builtins_float.hh, ntg/optraits_builtins_int.hh,
+	ntg/optraits_builtins_int_defs.hh, ntg/optraits_cycle.hh,
+	ntg/optraits_int_s.hh, ntg/optraits_int_u.hh,
+	ntg/optraits_range.hh, ntg/optraits_scalar.hh,
+	ntg/optraits_scalar_defs.hh, ntg/range.hh,
+	ntg/typetraits_builtins_float.hh, 
+	ntg/typetraits_builtins_int.hh:	Move ...
+	* ntg/real/: ... here.
+
+	* ntg/color.hh, ntg/hsi.hh, ntg/hsl.hh, ntg/hsv.hh,
+	ntg/nrgb.hh, ntg/rgb.hh, ntg/xyz.hh, ntg/yiq.hh, ntg/yuv.hh: Move ...
+	* ntg/color/: ... here.
+
+	* ntg/behaviour.hh, ntg/builtins_properties.hh,
+	ntg/global_ops.hh, ntg/global_ops_defs.hh,
+	ntg/global_ops_traits.hh, ntg/interval.hh, ntg/optraits.hh,
+	ntg/optraits_builtins.hh, ntg/predecls.hh, ntg/rec_value.hh,
+	ntg/type.hh, ntg/typetraits.hh, 
+	ntg/typetraits_builtins.hh: Move ...
+	* ntg/core/: ... here.
+	
+	* ntg/bin.hh,ntg/optraits_bin.hh, ntg/optraits_builtins_bool.hh,
+	ntg/typetraits_builtins_bool.hh: Move ...
+	* ntg/enum/: ... here.
+
+	* ntg/cast.hh, ntg/debug.hh, ntg/to_oln.hh: Move ...
+	* ntg/utils/: ... here.
+
+	* ntg/cplx.hh, ntg/cplx_representation.hh,
+	ntg/optraits_cplx.hh, ntg/optraits_vec.hh, 
+	ntg/vec.hh: Move ...
+	* ntg/vect: ... here.
+	
+	* Makefile.am: Update consequently.
+	
 2003-03-14  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* Makefile.am: Adjust.

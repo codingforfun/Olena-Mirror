@@ -35,7 +35,7 @@
 #  include <fftw.h>
 #  include <rfftw.h>
 
-#  include <ntg/optraits.hh>
+#  include <ntg/core/optraits.hh>
 #  include <ntg/all.hh>
 #  include <oln/basics2d.hh>
 

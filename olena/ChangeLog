@@ -1,3 +1,27 @@
+2003-04-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/arith/ops.hh, oln/convert/bound.hh,
+	oln/convert/colorconv.hh, oln/convert/conversion.hh,
+	oln/convert/force.hh, oln/convert/nrgbhsi.hh,
+	oln/convert/nrgbhsl.hh, oln/convert/nrgbhsv.hh,
+	oln/convert/nrgbxyz.hh, oln/convert/nrgbyiq.hh,
+	oln/convert/nrgbyuv.hh, oln/convert/rgbnrgb.hh,
+	oln/convert/rgbxyz.hh, oln/convert/stretch.hh,
+	oln/convol/fast_gaussian_coefficient.hh,
+	oln/convol/fast_gaussian.hh, oln/convol/fast_gaussian.hxx,
+	oln/core/dpoint1d.hh, oln/core/dpointnd.hh,
+	oln/core/imagend_size.hh, oln/core/point1d.hh,
+	oln/core/point3d.hh, oln/core/pointnd.hh,
+	oln/io/pnm_read_common.hxx, oln/io/pnm_write_common.hxx,
+	oln/io/pnm_write.hxx, oln/level/connected.hh,
+	oln/level/invert.hh, oln/level/threshold.hh,
+	oln/math/macros.hh, oln/morpho/geodesic_dilation.hh,
+	oln/morpho/reconstruction.hh, oln/topo/dmap.hxx,
+	oln/transforms/dwt.hh, oln/transforms/fft.hh,
+	oln/utils/histogram.hh, oln/utils/stat.hh: Update includes.
+
+	* tests/io/loadsave.hh: Likewise.
+
 2003-04-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/io/Makefile.am: Add lena16b.pgm and lena16b.ppgm to

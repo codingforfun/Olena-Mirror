@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,8 +31,8 @@
 # include <oln/basics.hh>
 # include <oln/math/macros.hh>
 # include <oln/arith/internal/opdecls.hh>
-# include <ntg/global_ops_traits.hh>
-# include <ntg/typetraits_builtins.hh>
+# include <ntg/core/global_ops_traits.hh>
+# include <ntg/core/typetraits_builtins.hh>
 # include <oln/convert/basics.hh>
 # include <functional>
 

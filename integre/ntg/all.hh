@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,39 +30,39 @@
 
 # include <ntg/config/system.hh>
 
-# include <ntg/type.hh>
-# include <ntg/predecls.hh>
+# include <ntg/core/type.hh>
+# include <ntg/core/predecls.hh>
 
-# include <ntg/builtins_properties.hh>
-# include <ntg/to_oln.hh>
+# include <ntg/core/builtins_properties.hh>
+# include <ntg/utils/to_oln.hh>
 
-# include <ntg/behaviour.hh>
-# include <ntg/interval.hh>
+# include <ntg/core/behaviour.hh>
+# include <ntg/core/interval.hh>
 
-# include <ntg/int_u.hh>
-# include <ntg/int_s.hh>
-# include <ntg/range.hh>
-# include <ntg/cycle.hh>
-# include <ntg/bin.hh>
-# include <ntg/vec.hh>
-# include <ntg/cplx.hh>
+# include <ntg/real/int_u.hh>
+# include <ntg/real/int_s.hh>
+# include <ntg/real/range.hh>
+# include <ntg/real/cycle.hh>
+# include <ntg/enum/bin.hh>
+# include <ntg/vect/vec.hh>
+# include <ntg/vect/cplx.hh>
 
-# include <ntg/color.hh>
-# include <ntg/rgb.hh>
-# include <ntg/nrgb.hh>
-# include <ntg/hsi.hh>
-# include <ntg/hsl.hh>
-# include <ntg/hsv.hh>
-# include <ntg/xyz.hh>
-# include <ntg/yiq.hh>
-# include <ntg/yuv.hh>
+# include <ntg/color/color.hh>
+# include <ntg/color/rgb.hh>
+# include <ntg/color/nrgb.hh>
+# include <ntg/color/hsi.hh>
+# include <ntg/color/hsl.hh>
+# include <ntg/color/hsv.hh>
+# include <ntg/color/xyz.hh>
+# include <ntg/color/yiq.hh>
+# include <ntg/color/yuv.hh>
 
-# include <ntg/typetraits_builtins.hh>
-# include <ntg/optraits_builtins.hh>
+# include <ntg/core/typetraits_builtins.hh>
+# include <ntg/core/optraits_builtins.hh>
 
-# include <ntg/global_ops_traits.hh>
-# include <ntg/global_ops.hh>
+# include <ntg/core/global_ops_traits.hh>
+# include <ntg/core/global_ops.hh>
 
-# include <ntg/cast.hh>
+# include <ntg/utils/cast.hh>
 
 #endif // ndef NTG_ALL_HH

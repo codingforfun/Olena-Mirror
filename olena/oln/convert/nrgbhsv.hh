@@ -31,9 +31,9 @@
 
 # include <oln/convert/colorconv.hh>
 
-# include <ntg/nrgb.hh>
-# include <ntg/hsv.hh>
-# include <ntg/typetraits_builtins.hh>
+# include <ntg/color/nrgb.hh>
+# include <ntg/color/hsv.hh>
+# include <ntg/core/typetraits_builtins.hh>
 
 /*-----------------------------------------------------------------.
 | The formulas used here come from ``Color Conversion Algorithms'' |

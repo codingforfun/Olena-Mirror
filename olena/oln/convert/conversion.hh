@@ -31,7 +31,7 @@
 # include <mlc/type.hh>
 # include <oln/core/image.hh>
 # include <oln/core/compose.hh>
-# include <ntg/debug.hh>
+# include <ntg/utils/debug.hh>
 # include <functional>
 
 namespace oln {

@@ -31,9 +31,9 @@
 
 # include <oln/convert/colorconv.hh>
 
-# include <ntg/nrgb.hh>
-# include <ntg/hsi.hh>
-# include <ntg/typetraits_builtins.hh>
+# include <ntg/color/nrgb.hh>
+# include <ntg/color/hsi.hh>
+# include <ntg/core/typetraits_builtins.hh>
 
 # include <cassert>
 

@@ -31,10 +31,7 @@
 # include <oln/core/image.hh>
 # include <oln/core/iter.hh>
 # include <ntg/bin.hh>
-# include <ntg/optraits_int_u.hh>
-# include <ntg/int_u.hh>
-# include <ntg/optraits_int_s.hh>
-# include <ntg/int_s.hh>
+# include <ntg/int.hh>
 
 # include <oln/io/base.hh>
 

@@ -31,8 +31,8 @@
 # include <oln/config/system.hh>
 # include <oln/basics.hh>
 
-# include <ntg/optraits.hh>
-# include <ntg/cast.hh>
+# include <ntg/core/optraits.hh>
+# include <ntg/utils/cast.hh>
 # include <mlc/array/1d.hh>
 
 namespace oln {

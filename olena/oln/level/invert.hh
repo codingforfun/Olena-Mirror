@@ -29,7 +29,7 @@
 # define OLENA_LEVEL_INVERT_HH
 
 # include <oln/basics.hh>
-# include <ntg/rec_value.hh>
+# include <ntg/core/rec_value.hh>
 # include <ntg/bin.hh>
 # include <functional>
 

@@ -29,8 +29,8 @@
 # define OLENA_UTILS_STAT_HH
 
 # include <oln/basics.hh>
-# include <ntg/predecls.hh>
-# include <ntg/optraits.hh>
+# include <ntg/core/predecls.hh>
+# include <ntg/core/optraits.hh>
 
 namespace oln {
 

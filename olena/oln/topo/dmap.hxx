@@ -28,9 +28,9 @@
 #ifndef OLENA_TOPO_DMAP_HXX
 # define OLENA_TOPO_DMAP_HXX
 
-# include <oln/arith/ops.hh>
-# include <ntg/optraits_builtins_float.hh>
 # include <mlc/array/2d.hh>
+# include <ntg/float.hh>
+# include <oln/arith/ops.hh>
 
 namespace oln {
 

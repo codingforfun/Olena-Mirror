@@ -32,14 +32,13 @@
 # include <oln/core/iter.hh>
 # include <oln/io/base.hh>
 
-# include <ntg/typetraits_builtins_int.hh>
-# include <ntg/typetraits_builtins_bool.hh>
-# include <ntg/optraits_bin.hh>
-# include <ntg/optraits_int_s.hh>
-# include <ntg/global_ops.hh>
+# include <ntg/real/typetraits_builtins_int.hh>
+# include <ntg/enum/typetraits_builtins_bool.hh>
+# include <ntg/enum/optraits_bin.hh>
+# include <ntg/real/optraits_int_s.hh>
+# include <ntg/core/global_ops.hh>
 # include <ntg/bin.hh>
-# include <ntg/int_s.hh>
-# include <ntg/int_u.hh>
+# include <ntg/int.hh>
 
 namespace oln {
 

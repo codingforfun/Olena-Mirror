@@ -30,7 +30,7 @@
 
 # include <oln/core/image_size.hh>
 # include <oln/core/coord.hh>
-# include <ntg/debug.hh>
+# include <ntg/utils/debug.hh>
 # include <sstream>
 
 namespace oln {

@@ -1,12 +1,79 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln integre 3)
-(Parent-Version oln integre 2)
-(Version-Log "Merge with 8.32.
+(Project-Version oln integre 4)
+(Parent-Version oln integre 3)
+(Version-Log "Index: integre/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/all.hh: Update includes.
+
+	* ntg/bin.hh, ntg/cplx.hh, ntg/cycle.hh, ntg/float.hh, ntg/int.hh,
+	ntg/range.hh, ntg/vec.hh: New files.
+
+	* ntg/cycle.hh, ntg/int_s.hh, ntg/int_u.hh,
+	ntg/optraits_builtins_float.hh, ntg/optraits_builtins_int.hh,
+	ntg/optraits_builtins_int_defs.hh, ntg/optraits_cycle.hh,
+	ntg/optraits_int_s.hh, ntg/optraits_int_u.hh,
+	ntg/optraits_range.hh, ntg/optraits_scalar.hh,
+	ntg/optraits_scalar_defs.hh, ntg/range.hh,
+	ntg/typetraits_builtins_float.hh, 
+	ntg/typetraits_builtins_int.hh:	Move ...
+	* ntg/real/: ... here.
+
+	* ntg/color.hh, ntg/hsi.hh, ntg/hsl.hh, ntg/hsv.hh,
+	ntg/nrgb.hh, ntg/rgb.hh, ntg/xyz.hh, ntg/yiq.hh, ntg/yuv.hh: Move ...
+	* ntg/color/: ... here.
+
+	* ntg/behaviour.hh, ntg/builtins_properties.hh,
+	ntg/global_ops.hh, ntg/global_ops_defs.hh,
+	ntg/global_ops_traits.hh, ntg/interval.hh, ntg/optraits.hh,
+	ntg/optraits_builtins.hh, ntg/predecls.hh, ntg/rec_value.hh,
+	ntg/type.hh, ntg/typetraits.hh, 
+	ntg/typetraits_builtins.hh: Move ...
+	* ntg/core/: ... here.
+
+	* ntg/bin.hh,ntg/optraits_bin.hh, ntg/optraits_builtins_bool.hh,
+	ntg/typetraits_builtins_bool.hh: Move ...
+	* ntg/enum/: ... here.
+
+	* ntg/cast.hh, ntg/debug.hh, ntg/to_oln.hh: Move ...
+	* ntg/utils/: ... here.
+
+	* ntg/cplx.hh, ntg/cplx_representation.hh,
+	ntg/optraits_cplx.hh, ntg/optraits_vec.hh, 
+	ntg/vec.hh: Move ...
+	* ntg/vect: ... here.
+
+	* Makefile.am: Update consequently.
+
+Index: olena/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/arith/ops.hh, oln/convert/bound.hh,
+	oln/convert/colorconv.hh, oln/convert/conversion.hh,
+	oln/convert/force.hh, oln/convert/nrgbhsi.hh,
+	oln/convert/nrgbhsl.hh, oln/convert/nrgbhsv.hh,
+	oln/convert/nrgbxyz.hh, oln/convert/nrgbyiq.hh,
+	oln/convert/nrgbyuv.hh, oln/convert/rgbnrgb.hh,
+	oln/convert/rgbxyz.hh, oln/convert/stretch.hh,
+	oln/convol/fast_gaussian_coefficient.hh,
+	oln/convol/fast_gaussian.hh, oln/convol/fast_gaussian.hxx,
+	oln/core/dpoint1d.hh, oln/core/dpointnd.hh,
+	oln/core/imagend_size.hh, oln/core/point1d.hh,
+	oln/core/point3d.hh, oln/core/pointnd.hh,
+	oln/io/pnm_read_common.hxx, oln/io/pnm_write_common.hxx,
+	oln/io/pnm_write.hxx, oln/level/connected.hh,
+	oln/level/invert.hh, oln/level/threshold.hh,
+	oln/math/macros.hh, oln/morpho/geodesic_dilation.hh,
+	oln/morpho/reconstruction.hh, oln/topo/dmap.hxx,
+	oln/transforms/dwt.hh, oln/transforms/fft.hh,
+	oln/utils/histogram.hh, oln/utils/stat.hh: Update includes.
+
+	* tests/io/loadsave.hh: Likewise.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sat, 12 Apr 2003 16:55:38 +0200")
+(Checkin-Time "Sat, 12 Apr 2003 19:28:28 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -90,9 +157,9 @@
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.15 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.31 640))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12 640))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.13 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.15 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.37 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.7 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.6 640))
 
@@ -140,7 +207,7 @@
   (olena/Makefile.am (oln/2_Makefile.a 1.30.1.1.1.2.1.5 640))
   (olena/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.6 640))
   (olena/oln/arith/logic.hh (oln/b/24_logic.hh 1.6.1.2 640))
-  (olena/oln/arith/ops.hh (oln/b/23_ops.hh 1.5.1.2.1.1 640))
+  (olena/oln/arith/ops.hh (oln/b/23_ops.hh 1.5.1.2.1.2 640))
   (olena/oln/basics1d.hh (oln/d/41_basics1d.h 1.2 640))
   (olena/oln/basics2d.hh (oln/b/7_basics2d.h 1.3 640))
   (olena/oln/basics3d.hh (oln/28_basics3d.h 1.2 640))
@@ -149,24 +216,24 @@
 
   (olena/oln/config/system.hh (oln/7_system.hh 1.17 640))
   (olena/oln/convert/basics.hh (oln/23_basics.hh 1.4 640))
-  (olena/oln/convert/bound.hh (oln/22_bound.hh 1.6 640))
-  (olena/oln/convert/colorconv.hh (oln/18_colorconv. 1.7 640))
-  (olena/oln/convert/conversion.hh (oln/21_conversion 1.8 640))
+  (olena/oln/convert/bound.hh (oln/22_bound.hh 1.7 640))
+  (olena/oln/convert/colorconv.hh (oln/18_colorconv. 1.8 640))
+  (olena/oln/convert/conversion.hh (oln/21_conversion 1.9 640))
   (olena/oln/convert/conversion_ng_se.hh (oln/e/24_conversion 1.5 640))
-  (olena/oln/convert/force.hh (oln/20_force.hh 1.6 640))
-  (olena/oln/convert/nrgbhsi.hh (oln/15_nrgbhsi.hh 1.6 640))
-  (olena/oln/convert/nrgbhsl.hh (oln/12_nrgbhsl.hh 1.9 640))
-  (olena/oln/convert/nrgbhsv.hh (oln/11_nrgbhsv.hh 1.7 640))
-  (olena/oln/convert/nrgbxyz.hh (oln/16_nrgbxyz.hh 1.6 640))
-  (olena/oln/convert/nrgbyiq.hh (oln/14_nrgbyiq.hh 1.6 640))
-  (olena/oln/convert/nrgbyuv.hh (oln/13_nrgbyuv.hh 1.6 640))
-  (olena/oln/convert/rgbnrgb.hh (oln/17_rgbnrgb.hh 1.6 640))
-  (olena/oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.6 640))
-  (olena/oln/convert/stretch.hh (oln/f/51_stretch.hh 1.6 640))
+  (olena/oln/convert/force.hh (oln/20_force.hh 1.7 640))
+  (olena/oln/convert/nrgbhsi.hh (oln/15_nrgbhsi.hh 1.7 640))
+  (olena/oln/convert/nrgbhsl.hh (oln/12_nrgbhsl.hh 1.10 640))
+  (olena/oln/convert/nrgbhsv.hh (oln/11_nrgbhsv.hh 1.8 640))
+  (olena/oln/convert/nrgbxyz.hh (oln/16_nrgbxyz.hh 1.7 640))
+  (olena/oln/convert/nrgbyiq.hh (oln/14_nrgbyiq.hh 1.7 640))
+  (olena/oln/convert/nrgbyuv.hh (oln/13_nrgbyuv.hh 1.7 640))
+  (olena/oln/convert/rgbnrgb.hh (oln/17_rgbnrgb.hh 1.7 640))
+  (olena/oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.7 640))
+  (olena/oln/convert/stretch.hh (oln/f/51_stretch.hh 1.7 640))
   (olena/oln/convol/convolution.hh (oln/f/39_convolutio 1.4.1.4.1.3 640))
-  (olena/oln/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.5.1.2 640))
-  (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.1 640))
-  (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.2 640))
+  (olena/oln/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.5.1.3 640))
+  (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.2 640))
+  (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.3 640))
   (olena/oln/core/accum.hh (oln/d/40_accum.hh 1.2 640))
   (olena/oln/core/apply.hh (oln/d/39_apply.hh 1.7 640))
   (olena/oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.8 640))
@@ -181,14 +248,14 @@
   (olena/oln/core/compose.hh (oln/c/22_compose.hh 1.3 640))
   (metalic/mlc/contract.hh (oln/d/31_contract.h 1.8 640))
   (olena/oln/core/coord.hh (oln/d/29_coord.hh 1.2 640))
-  (olena/oln/core/dpoint1d.hh (oln/d/27_dpoint1d.h 1.7 640))
+  (olena/oln/core/dpoint1d.hh (oln/d/27_dpoint1d.h 1.8 640))
   (olena/oln/core/dpoint1d.hxx (oln/d/26_dpoint1d.h 1.4 640))
   (olena/oln/core/dpoint2d.hh (oln/d/25_dpoint2d.h 1.6 640))
   (olena/oln/core/dpoint2d.hxx (oln/d/24_dpoint2d.h 1.4 640))
   (olena/oln/core/dpoint3d.hh (oln/d/23_dpoint3d.h 1.6 640))
   (olena/oln/core/dpoint3d.hxx (oln/d/22_dpoint3d.h 1.4 640))
   (olena/oln/core/dpoint.hh (oln/d/28_dpoint.hh 1.6 640))
-  (olena/oln/core/dpointnd.hh (oln/c/9_dpointnd.h 1.7 640))
+  (olena/oln/core/dpointnd.hh (oln/c/9_dpointnd.h 1.8 640))
   (olena/oln/core/fold.hh (oln/c/7_fold.hh 1.7 640))
   (olena/oln/core/fwd_iter1d.hh (oln/d/21_fwd_iter1d 1.7 640))
   (olena/oln/core/fwd_iter2d.hh (oln/d/20_fwd_iter2d 1.7 640))
@@ -201,7 +268,7 @@
   (olena/oln/core/image3d.hh (oln/c/43_image3d.hh 1.7 640))
   (olena/oln/core/image3d_size.hh (oln/c/42_image3d_si 1.6 640))
   (olena/oln/core/image.hh (oln/d/18_image.hh 1.7 640))
-  (olena/oln/core/imagend_size.hh (oln/c/8_imagend_si 1.7 640))
+  (olena/oln/core/imagend_size.hh (oln/c/8_imagend_si 1.8 640))
   (olena/oln/core/image_size.hh (oln/c/41_image_size 1.6 640))
   (olena/oln/core/internal/fake.hh (oln/d/17_fake.hh 1.3 640))
   (olena/oln/core/internal/image1d_data.hh (oln/d/15_image1d_da 1.7 640))
@@ -228,14 +295,14 @@
   (olena/oln/core/neighborhood3d.hh (oln/c/35_neighborho 1.10 640))
   (olena/oln/core/neighborhood.hh (oln/c/38_neighborho 1.7 640))
   (metalic/mlc/objs.hh (oln/c/34_objs.hh 1.6 640))
-  (olena/oln/core/point1d.hh (oln/c/32_point1d.hh 1.7 640))
+  (olena/oln/core/point1d.hh (oln/c/32_point1d.hh 1.8 640))
   (olena/oln/core/point1d.hxx (oln/c/31_point1d.hx 1.3 640))
   (olena/oln/core/point2d.hh (oln/c/30_point2d.hh 1.6 640))
   (olena/oln/core/point2d.hxx (oln/c/29_point2d.hx 1.3 640))
-  (olena/oln/core/point3d.hh (oln/c/28_point3d.hh 1.7 640))
+  (olena/oln/core/point3d.hh (oln/c/28_point3d.hh 1.8 640))
   (olena/oln/core/point3d.hxx (oln/c/27_point3d.hx 1.3 640))
   (olena/oln/core/point.hh (oln/c/33_point.hh 1.7 640))
-  (olena/oln/core/pointnd.hh (oln/c/10_pointnd.hh 1.8 640))
+  (olena/oln/core/pointnd.hh (oln/c/10_pointnd.hh 1.9 640))
   (olena/oln/core/pred_image.hh (oln/c/24_pred_image 1.5 640))
   (olena/oln/core/regular_image.hh (oln/c/23_regular_im 1.6 640))
   (olena/oln/core/structelt.hh (oln/c/25_structelt. 1.5 640))
@@ -261,26 +328,26 @@
   (olena/oln/io/pnm3d.hh (oln/b/14_pnm3d.hh 1.4 640))
   (olena/oln/io/pnm.hh (oln/b/19_pnm.hh 1.3 640))
   (olena/oln/io/pnm_read3d.hxx (oln/b/11_pnm_read3d 1.8 640))
-  (olena/oln/io/pnm_read_common.hxx (oln/b/10_pnm_read_c 1.7.1.3 640))
+  (olena/oln/io/pnm_read_common.hxx (oln/b/10_pnm_read_c 1.7.1.4 640))
   (olena/oln/io/pnm_read.hxx (oln/b/16_pnm_read.h 1.9.1.3 640))
   (olena/oln/io/pnm_write3d.hxx (oln/b/9_pnm_write3 1.1.1.8 640))
-  (olena/oln/io/pnm_write_common.hxx (oln/b/8_pnm_write_ 1.8.1.2 640))
-  (olena/oln/io/pnm_write.hxx (oln/b/15_pnm_write. 1.8.1.2 640))
+  (olena/oln/io/pnm_write_common.hxx (oln/b/8_pnm_write_ 1.8.1.3 640))
+  (olena/oln/io/pnm_write.hxx (oln/b/15_pnm_write. 1.8.1.3 640))
   (olena/oln/io/readable.hh (oln/b/13_readable.h 1.8 640))
   (olena/oln/io/se.hh (oln/i/45_se.hh 1.2 640))
   (olena/oln/io/se_neighborhood.hxx (oln/i/47_se_neighbo 1.4 640))
   (olena/oln/io/se_window.hxx (oln/i/46_se_window. 1.4 640))
   (olena/oln/level/cc.hh (oln/e/20_cc.hh 1.11.1.2 640))
   (olena/oln/level/compare.hh (oln/31_compare.hh 1.4 640))
-  (olena/oln/level/connected.hh (oln/30_connected. 1.9.1.2 640))
+  (olena/oln/level/connected.hh (oln/30_connected. 1.9.1.3 640))
   (olena/oln/level/fill.hh (oln/32_fill.hh 1.4 640))
-  (olena/oln/level/invert.hh (oln/33_invert.hh 1.5.2.2 640))
+  (olena/oln/level/invert.hh (oln/33_invert.hh 1.5.2.2.1.1 640))
   (olena/oln/level/lut.hh (oln/29_lut.hh 1.7 640))
   (olena/oln/level/set_level.hh (oln/p/1_set_level. 1.5 640))
-  (olena/oln/level/threshold.hh (oln/f/15_threshold. 1.7 640))
+  (olena/oln/level/threshold.hh (oln/f/15_threshold. 1.8 640))
   (config/oln.m4 (oln/j/15_oln.m4 1.27 640))
 
-  (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.2 640))
+  (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.3 640))
   (metalic/mlc/array/1d.hh (oln/f/23_array1d.hh 1.8 640))
   (metalic/mlc/array/1d.hxx (oln/f/22_array1d.hx 1.9 640))
   (metalic/mlc/array/2d.hh (oln/f/21_array2d.hh 1.8 640))
@@ -306,7 +373,7 @@
   (olena/oln/morpho/extrema_killer.hh (oln/e/19_extrema_ki 1.7.1.4.1.2 640))
   (olena/oln/morpho/fast_morpho.hh (oln/46_fast_morph 1.4 640))
   (olena/oln/morpho/fast_morpho.hxx (oln/45_fast_morph 1.8 640))
-  (olena/oln/morpho/geodesic_dilation.hh (oln/37_geodesic_d 1.11.1.2 640))
+  (olena/oln/morpho/geodesic_dilation.hh (oln/37_geodesic_d 1.11.1.3 640))
   (olena/oln/morpho/geodesic_erosion.hh (oln/36_geodesic_e 1.11 640))
   (olena/oln/morpho/gradient.hh (oln/b/3_gradient.h 1.6 640))
   (olena/oln/morpho/gradient.inc (oln/43_gradient.i 1.5 640))
@@ -317,7 +384,7 @@
   (olena/oln/morpho/minmax.hh (oln/b/0_minmax.hh 1.4 640))
   (olena/oln/morpho/opening.hh (oln/51_opening.hh 1.6 640))
   (olena/oln/morpho/opening.inc (oln/40_opening.in 1.7 640))
-  (olena/oln/morpho/reconstruction.hh (oln/35_reconstruc 1.13.1.2 640))
+  (olena/oln/morpho/reconstruction.hh (oln/35_reconstruc 1.13.1.3 640))
   (olena/oln/morpho/splitse.hh (oln/34_splitse.hh 1.4 640))
   (olena/oln/morpho/stat.hh (oln/50_stat.hh 1.8.1.3 640))
   (olena/oln/morpho/thickening.hh (oln/e/29_thickening 1.7 640))
@@ -329,63 +396,63 @@
   (olena/oln/morpho/watershed.hh (oln/48_watershed. 1.5 640))
   (olena/oln/morpho/watershed.hxx (oln/47_watershed. 1.9.1.2 640))
   (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.5 640))
-  (olena/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.7.1.2 640))
-  (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.3 640))
-  (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.2 640))
+  (olena/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.7.1.3 640))
+  (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.4 640))
+  (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.3 640))
   (olena/oln/transforms/wavelet_coeffs.hh (oln/i/34_wavelet_co 1.4 640))
-  (integre/ntg/all.hh (oln/g/32_all.hh 1.10.1.3 640))
-  (integre/ntg/behaviour.hh (oln/g/31_behaviour. 1.13.1.4 640))
-  (integre/ntg/bin.hh (oln/g/30_bin.hh 1.9.1.3 640))
-  (integre/ntg/builtins_properties.hh (oln/g/29_builtins_p 1.9 640))
-  (integre/ntg/cast.hh (oln/i/26_cast.hh 1.3.1.2 640))
-  (integre/ntg/color.hh (oln/i/17_color.hh 1.7.1.3 640))
-  (integre/ntg/cplx.hh (oln/i/4_cplx.hh 1.9.1.4 640))
-  (integre/ntg/cplx_representation.hh (oln/i/3_cplx_repre 1.3 640))
-  (integre/ntg/cycle.hh (oln/g/28_cycle.hh 1.11.1.3 640))
-  (integre/ntg/debug.hh (oln/i/8_debug.hh 1.2.1.3 640))
-  (integre/ntg/global_ops_defs.hh (oln/g/26_global_ops 1.7 640))
-  (integre/ntg/global_ops.hh (oln/g/27_global_ops 1.11.1.4 640))
-  (integre/ntg/global_ops_traits.hh (oln/g/25_global_ops 1.7.1.3 640))
-  (integre/ntg/hsi.hh (oln/i/20_hsi.hh 1.3.1.2 640))
-  (integre/ntg/hsl.hh (oln/i/21_hsl.hh 1.3.1.2 640))
-  (integre/ntg/hsv.hh (oln/i/22_hsv.hh 1.3.1.2 640))
-  (integre/ntg/interval.hh (oln/g/22_interval.h 1.6.1.3 640))
-  (integre/ntg/int_s.hh (oln/g/24_int_s.hh 1.16.1.3 640))
-  (integre/ntg/int_u.hh (oln/g/23_int_u.hh 1.19.1.3 640))
-  (integre/ntg/nrgb.hh (oln/i/19_nrgb.hh 1.5.1.2 640))
-  (integre/ntg/optraits_bin.hh (oln/g/20_optraits_b 1.9.1.2 640))
-  (integre/ntg/optraits_builtins_bool.hh (oln/i/10_optraits_b 1.3.1.2 640))
-  (integre/ntg/optraits_builtins_float.hh (oln/g/19_optraits_b 1.10.1.3 640))
-  (integre/ntg/optraits_builtins.hh (oln/i/16_optraits_b 1.2.1.2 640))
-  (integre/ntg/optraits_builtins_int_defs.hh (oln/g/17_optraits_b 1.4 640))
-  (integre/ntg/optraits_builtins_int.hh (oln/g/18_optraits_b 1.6.1.3 640))
-  (integre/ntg/optraits_cplx.hh (oln/i/5_optraits_c 1.7.1.3 640))
-  (integre/ntg/optraits_cycle.hh (oln/g/16_optraits_c 1.11.1.4 640))
-  (integre/ntg/optraits.hh (oln/g/21_optraits.h 1.8 640))
-  (integre/ntg/optraits_int_s.hh (oln/g/15_optraits_i 1.9.1.4 640))
-  (integre/ntg/optraits_int_u.hh (oln/g/14_optraits_i 1.10.1.3 640))
-  (integre/ntg/optraits_range.hh (oln/g/13_optraits_r 1.5.1.2 640))
-  (integre/ntg/optraits_scalar_defs.hh (oln/g/11_optraits_s 1.8 640))
-  (integre/ntg/optraits_scalar.hh (oln/g/12_optraits_s 1.11.1.3 640))
-  (integre/ntg/optraits_vec.hh (oln/h/42_optraits_v 1.10.1.3 640))
-  (integre/ntg/predecls.hh (oln/g/10_predecls.h 1.10.1.3 640))
-  (integre/ntg/range.hh (oln/g/9_range.hh 1.9.1.3 640))
-  (integre/ntg/rec_value.hh (oln/g/8_rec_value. 1.8.1.2 640))
-  (integre/ntg/rgb.hh (oln/i/18_rgb.hh 1.3.1.2 640))
-  (integre/ntg/to_oln.hh (oln/g/7_to_oln.hh 1.7.1.2 640))
-  (integre/ntg/type.hh (oln/g/6_type.hh 1.5 640))
-  (integre/ntg/typetraits_builtins_bool.hh (oln/i/9_typetraits 1.4.1.2 640))
-  (integre/ntg/typetraits_builtins_float.hh (oln/g/4_typetraits 1.8.1.2 640))
-  (integre/ntg/typetraits_builtins.hh (oln/i/27_typetraits 1.2.1.2 640))
-  (integre/ntg/typetraits_builtins_int.hh (oln/g/3_typetraits 1.7.1.2 640))
-  (integre/ntg/typetraits.hh (oln/g/5_typetraits 1.7 640))
-  (integre/ntg/vec.hh (oln/h/43_vec.hh 1.7.1.4 640))
-  (integre/ntg/xyz.hh (oln/i/24_xyz.hh 1.3.1.2 640))
-  (integre/ntg/yiq.hh (oln/i/23_yiq.hh 1.3.1.2 640))
-  (integre/ntg/yuv.hh (oln/i/25_yuv.hh 1.3.1.2 640))
+  (integre/ntg/all.hh (oln/g/32_all.hh 1.10.1.4 640))
+  (integre/ntg/core/behaviour.hh (oln/g/31_behaviour. 1.13.1.5 640))
+  (integre/ntg/enum/bin.hh (oln/g/30_bin.hh 1.9.1.4 640))
+  (integre/ntg/core/builtins_properties.hh (oln/g/29_builtins_p 1.9 640))
+  (integre/ntg/utils/cast.hh (oln/i/26_cast.hh 1.3.1.3 640))
+  (integre/ntg/color/color.hh (oln/i/17_color.hh 1.7.1.4 640))
+  (integre/ntg/color/hsi.hh (oln/i/20_hsi.hh 1.3.1.3 640))
+  (integre/ntg/color/hsl.hh (oln/i/21_hsl.hh 1.3.1.3 640))
+  (integre/ntg/color/hsv.hh (oln/i/22_hsv.hh 1.3.1.3 640))
+  (integre/ntg/color/nrgb.hh (oln/i/19_nrgb.hh 1.5.1.3 640))
+  (integre/ntg/color/rgb.hh (oln/i/18_rgb.hh 1.3.1.3 640))
+  (integre/ntg/color/xyz.hh (oln/i/24_xyz.hh 1.3.1.3 640))
+  (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.3 640))
+  (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.3 640))
+  (integre/ntg/vect/cplx.hh (oln/i/4_cplx.hh 1.9.1.5 640))
+  (integre/ntg/vect/cplx_representation.hh (oln/i/3_cplx_repre 1.3 640))
+  (integre/ntg/real/cycle.hh (oln/g/28_cycle.hh 1.11.1.4 640))
+  (integre/ntg/utils/debug.hh (oln/i/8_debug.hh 1.2.1.4 640))
+  (integre/ntg/core/global_ops_defs.hh (oln/g/26_global_ops 1.7 640))
+  (integre/ntg/core/global_ops.hh (oln/g/27_global_ops 1.11.1.5 640))
+  (integre/ntg/core/global_ops_traits.hh (oln/g/25_global_ops 1.7.1.4 640))
+  (integre/ntg/core/interval.hh (oln/g/22_interval.h 1.6.1.4 640))
+  (integre/ntg/real/int_s.hh (oln/g/24_int_s.hh 1.16.1.4 640))
+  (integre/ntg/real/int_u.hh (oln/g/23_int_u.hh 1.19.1.4 640))
+  (integre/ntg/enum/optraits_bin.hh (oln/g/20_optraits_b 1.9.1.3 640))
+  (integre/ntg/enum/optraits_builtins_bool.hh (oln/i/10_optraits_b 1.3.1.3 640))
+  (integre/ntg/real/optraits_builtins_float.hh (oln/g/19_optraits_b 1.10.1.4 640))
+  (integre/ntg/core/optraits_builtins.hh (oln/i/16_optraits_b 1.2.1.3 640))
+  (integre/ntg/real/optraits_builtins_int_defs.hh (oln/g/17_optraits_b 1.4 640))
+  (integre/ntg/real/optraits_builtins_int.hh (oln/g/18_optraits_b 1.6.1.4 640))
+  (integre/ntg/vect/optraits_cplx.hh (oln/i/5_optraits_c 1.7.1.4 640))
+  (integre/ntg/real/optraits_cycle.hh (oln/g/16_optraits_c 1.11.1.5 640))
+  (integre/ntg/core/optraits.hh (oln/g/21_optraits.h 1.8 640))
+  (integre/ntg/real/optraits_int_s.hh (oln/g/15_optraits_i 1.9.1.5 640))
+  (integre/ntg/real/optraits_int_u.hh (oln/g/14_optraits_i 1.10.1.4 640))
+  (integre/ntg/real/optraits_range.hh (oln/g/13_optraits_r 1.5.1.3 640))
+  (integre/ntg/real/optraits_scalar_defs.hh (oln/g/11_optraits_s 1.8 640))
+  (integre/ntg/real/optraits_scalar.hh (oln/g/12_optraits_s 1.11.1.4 640))
+  (integre/ntg/vect/optraits_vec.hh (oln/h/42_optraits_v 1.10.1.4 640))
+  (integre/ntg/core/predecls.hh (oln/g/10_predecls.h 1.10.1.4 640))
+  (integre/ntg/real/range.hh (oln/g/9_range.hh 1.9.1.4 640))
+  (integre/ntg/core/rec_value.hh (oln/g/8_rec_value. 1.8.1.3 640))
+  (integre/ntg/utils/to_oln.hh (oln/g/7_to_oln.hh 1.7.1.3 640))
+  (integre/ntg/core/type.hh (oln/g/6_type.hh 1.5 640))
+  (integre/ntg/enum/typetraits_builtins_bool.hh (oln/i/9_typetraits 1.4.1.3 640))
+  (integre/ntg/real/typetraits_builtins_float.hh (oln/g/4_typetraits 1.8.1.3 640))
+  (integre/ntg/core/typetraits_builtins.hh (oln/i/27_typetraits 1.2.1.3 640))
+  (integre/ntg/real/typetraits_builtins_int.hh (oln/g/3_typetraits 1.7.1.3 640))
+  (integre/ntg/core/typetraits.hh (oln/g/5_typetraits 1.7 640))
+  (integre/ntg/vect/vec.hh (oln/h/43_vec.hh 1.7.1.5 640))
   (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.5 640))
-  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.2 640))
-  (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.2 640))
+  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.3 640))
+  (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.3 640))
   (olena/oln/utils/timer.hh (oln/8_timer.hh 1.5 640))
   (olena/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.4 640))
   (olena/tests/arith/runtests (oln/o/45_runtests 1.8 750))
@@ -413,7 +480,7 @@
   (olena/tests/convol/sum_on_random.pgm (oln/f/42_sum_on_ran 1.1 640) :no-keywords)
   
   (olena/tests/io/2d.cc (oln/e/47_2d.cc 1.7 640))
-  (olena/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.7.1.3 640))
+  (olena/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.7.1.4 640))
   (olena/tests/io/Makefile.am (oln/e/49_Makefile.a 1.13 640))
   (olena/tests/io/pretty.cc (oln/i/42_pretty.cc 1.2 640))
   (olena/tests/io/se_fail.cc (oln/i/43_se_fail.cc 1.2 640))
@@ -763,7 +830,7 @@
   (integre () :directory)
   (integre/ntg () :directory)
   (integre/Makefile.am (oln/q/34_Makefile.a 1.3 640))
-  (integre/ntg/Makefile.am (oln/q/36_Makefile.a 1.2 640))
+  (integre/ntg/Makefile.am (oln/q/36_Makefile.a 1.3 640))
   (olena/tests/check/defs.in (oln/q/37_defs.in 1.1 600))
   (olena/tests/check/Makefile.am (oln/q/38_Makefile.a 1.3 600))
   (olena/tests/check/Makefile.flags (oln/q/39_Makefile.f 1.3 600))
@@ -806,35 +873,22 @@
   (olena/oln/topo/inter-pixel/internal/dir-iter.hh (oln/r/47_dir-iter.h 1.1 600))
   (olena/oln/topo/inter-pixel/internal/dir.hh (oln/r/48_dir.hh 1.1 600))
   (olena/oln/topo/inter-pixel/internal/dir.hxx (oln/r/49_dir.hxx 1.1 600))
-  (doc/dev/upgrading.texi (oln/r/50_upgrading. 1.1 600)))
-(Merge-Parents
-  (integre.2 complete)
-  (8.32 incomplete
-    (ChangeLog ChangeLog ChangeLog r) (doc/ChangeLog doc/ChangeLog doc/ChangeLog r)
-    (metalic/ChangeLog metalic/ChangeLog metalic/ChangeLog r) (olena/ChangeLog olena/ChangeLog olena/ChangeLog r)
-    (configure.ac configure.ac configure.ac r) (doc/dev/oln-dev.texi doc/dev/oln-dev.texi doc/dev/oln-dev.texi r)
-    (doc/ref/ref-types.tex doc/ref/ref-types.tex doc/ref/ref-types.tex r) (Makefile.am Makefile.am Makefile.am r)
-    (NEWS NEWS NEWS r) (olena/img/Makefile.am olena/img/Makefile.am olena/img/Makefile.am r)
-    (olena/oln/io/pnm_read_common.hxx olena/oln/io/pnm_read_common.hxx olena/oln/io/pnm_read_common.hxx r) (olena/oln/io/pnm_read.hxx olena/oln/io/pnm_read.hxx olena/oln/io/pnm_read.hxx r)
-    (olena/oln/morpho/thinning.inc olena/oln/morpho/thinning.inc olena/oln/morpho/thinning.inc r) (olena/tests/io/2d.cc olena/tests/io/2d.cc olena/tests/io/2d.cc r)
-    (olena/tests/io/Makefile.am olena/tests/io/Makefile.am olena/tests/io/Makefile.am r) (doc/dev/Makefile.am doc/dev/Makefile.am doc/dev/Makefile.am r)
-    (doc/dev/thanks.texi doc/dev/thanks.texi doc/dev/thanks.texi r) (doc/dev/abstract.texi doc/dev/abstract.texi doc/dev/abstract.texi r)
-    (doc/dev/srctree.texi doc/dev/srctree.texi doc/dev/srctree.texi r) (doc/dev/conf.texi doc/dev/conf.texi doc/dev/conf.texi r)
-    (metalic/Makefile.am metalic/Makefile.am metalic/Makefile.am r) (olena/tests/check/Makefile.am olena/tests/check/Makefile.am olena/tests/check/Makefile.am r)
-    (olena/tests/check/Makefile.check olena/tests/check/Makefile.check olena/tests/check/Makefile.check r) (olena/oln/Makefile.am olena/oln/Makefile.am olena/oln/Makefile.am r)
-    (() () olena/tests/topo/Makefile.am a) (() () olena/tests/topo/test-inter-pixel.cc a)
-    (() () olena/tests/topo/test-cmap.cc a) (() () olena/oln/topo/combinatorial-map/internal/cmap-functor.hh a)
-    (() () olena/oln/topo/combinatorial-map/internal/cmap-functor.hxx a) (() () olena/oln/topo/inter-pixel/inter-pixel.hxx a)
-    (() () olena/oln/topo/combinatorial-map/cmap.hxx a) (() () olena/oln/topo/tarjan/union.hh a)
-    (() () olena/oln/topo/inter-pixel/inter-pixel.hh a) (() () olena/oln/topo/tarjan/flat-zone.hh a)
-    (() () olena/oln/topo/combinatorial-map/cmap.hh a) (() () olena/tests/topo/test.sh a)
-    (() () olena/tests/topo/test-cmap.ref a) (() () olena/tests/topo/test-inter-pixel.ref a)
-    (() () olena/img/test-cmap.pgm a) (() () olena/oln/topo/combinatorial-map/internal/zeta.hh a)
-    (() () olena/oln/topo/inter-pixel/fwd-dir-iter.hh a) (() () olena/oln/topo/inter-pixel/bkd-dir-iter.hh a)
-    (() () olena/oln/topo/inter-pixel/node.hh a) (() () olena/oln/topo/inter-pixel/internal/dir-iter.hh a)
-    (() () olena/oln/topo/inter-pixel/internal/dir.hh a) (() () olena/oln/topo/inter-pixel/internal/dir.hxx a)
-    (() () doc/dev/upgrading.texi a) 
-  )
-  (8.32 complete)
+  (doc/dev/upgrading.texi (oln/r/50_upgrading. 1.1 600))
+
+;; Files added by populate at Sat, 12 Apr 2003 18:53:23 +0200,
+;; to version integre.3(w), by nes:
+
+;;  (integre/ntg/vec.hh ())
+;;  (integre/ntg/int.hh ())
+;;  (integre/ntg/float.hh ())
+;;  (integre/ntg/cplx.hh ())
+;;  (integre/ntg/bin.hh ())
+
+;; Files added by populate at Sat, 12 Apr 2003 18:59:50 +0200,
+;; to version integre.3(w), by nes:
+
+;;  (integre/ntg/cycle.hh ())
+;;  (integre/ntg/range.hh ())
 )
+(Merge-Parents)
 (New-Merge-Parents)

@@ -30,7 +30,7 @@
 # define OLENA_CONVERT_FORCE_HH
 
 # include <oln/convert/conversion.hh>
-# include <ntg/cast.hh>
+# include <ntg/utils/cast.hh>
 
 namespace oln {
   namespace convert {
