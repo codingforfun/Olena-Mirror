@@ -33,10 +33,10 @@ namespace internal {
   /*!
   ** \brief Create extremum image from another one.
   **
-  ** \param DestType: type of data in the wanted image.
-  ** \param I: Exact type of the input image.
+  ** \param DestType Type of data in the wanted image.
+  ** \param I Exact type of the input image.
   **
-  ** \arg input: input image.
+  ** \arg input Input image.
   */
   template <class DestType, class I>
   typename mute<I, DestType>::ret
@@ -57,9 +57,9 @@ namespace internal {
   /*!
   ** \brief Create binary image from another one.
   **
-  ** \param I: exact type of the image.
+  ** \param I Exact type of the image.
   **
-  ** \arg input: input image.
+  ** \arg input Input image.
   */
   template <class I>
   typename mute<I, ntg::bin>::ret
@@ -85,13 +85,13 @@ namespace internal {
 ** neighborhood. minima_map must  be a bin image (true  for a minimum,
 ** false for a non minimum).  Soille p.172.
 **
-** \param I: exact type of the first image.
-** \param I2: exact type of the second image.
-** \param N: exact type of the neighborhood.
+** \param I Exact type of the first image.
+** \param I2 Exact type of the second image.
+** \param N Exact type of the neighborhood.
 **
-** \arg input: input image.
-** \arg minima_map: minima map image.
-** \arg Ng: neighborhood to use.
+** \arg input Input image.
+** \arg minima_map Minima map image.
+** \arg Ng Neighborhood to use.
 **
 ** \ref foototo
 ** \code
@@ -146,11 +146,11 @@ oln_concrete_type(I)
 /*!
 ** \brief Extract regional minima.
 **
-** \param I: Exact type of input image.
+** \param I Exact type of input image.
 ** \param Exact type of neighborhood.
 **
-** \arg input: input image.
-** \arg Ng: neighborhood to use.
+** \arg input Input image.
+** \arg Ng Neighborhood to use.
 **
 ** \code
 ** #include <oln/basics2d.hh>

@@ -43,11 +43,11 @@ namespace oln {
 
 	/*!
 	** \brief  Struct  that  contains  everything  to  compute  an
-	** attribute opening or closing
+	** attribute opening or closing.
 	**
-	** \param T: exact type of images to process.
-	** \param ATTRIBUTE: exact type of attribute to use.
-	** \param Env: type of environment to use.
+	** \param T Exact type of images to process.
+	** \param ATTRIBUTE Exact type of attribute to use.
+	** \param Env Type of environment to use.
 	*/
 	template<class T, class ATTRIBUTE, class Env = attr_env_type(ATTRIBUTE)>
 	struct tarjan_set
@@ -60,8 +60,8 @@ namespace oln {
 
 	  /*!
 	  ** \brief tarjan_set constructor.
-	  ** \param ima: image to open/close.
-	  ** \param env: environment to use to compute attributes.
+	  ** \param ima Image to open/close.
+	  ** \param env Environment to use to compute attributes.
 	  */
 	  tarjan_set(const image_type& ima, const env_type &env) : input_(ima),
 								   parent_(ima.size()),
@@ -73,11 +73,11 @@ namespace oln {
 
 	  /*!
 	  ** \brief Main method to perform an attribute opening/closing.
-	  ** \param closing: true -> a closing is performed, an opening otherwise.
+	  ** \param closing True -> a closing is performed, an opening otherwise.
 	  **
-	  ** \param lambda: threshold to use for attribute growing.
-	  ** \param Ng: neighborhood to use in the algorithm.
-	  ** \return the resulting image.
+	  ** \param lambda Threshold to use for attribute growing.
+	  ** \param Ng Neighborhood to use in the algorithm.
+	  ** \return The resulting image.
 	  */
 	  template<bool closing, class N>
 	  image_type
@@ -162,7 +162,7 @@ namespace oln {
 
 	  /*!
 	  ** \brief Make a new component from a point.
-	  ** \arg x: root of the component.
+	  ** \arg x Root of the component.
 	  */
 	  void
 	  make_set(const point_type& x)
@@ -174,7 +174,7 @@ namespace oln {
 
 	  /*!
 	  ** \brief find the root of a component.
-	  ** \arg x: a point of the component.
+	  ** \arg x A point of the component.
 	  */
 	  point_type
 	  find_root(const point_type& x)
@@ -190,8 +190,8 @@ namespace oln {
 
 	  /*!
 	  ** \brief Check if two components should be merged.
-	  ** \arg x: a point of the first component.
-	  ** \arg y: a point of the second component.
+	  ** \arg x A point of the first component.
+	  ** \arg y A point of the second component.
 	  */
 	  bool
 	  criterion(const point_type& x, const point_type& y)
@@ -203,8 +203,8 @@ namespace oln {
 
 	  /*!
 	  ** \brief Do union of two components.
-	  ** \arg n: a point of the first component.
-	  ** \arg p: a point of the second component.
+	  ** \arg n A point of the first component.
+	  ** \arg p A point of the second component.
 	  */
 	  void
 	  uni(const point_type& n, const point_type& p)

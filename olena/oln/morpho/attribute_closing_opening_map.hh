@@ -60,9 +60,9 @@ namespace oln
       ** See "Fast morphological attribute operations using Tarjan's union-find
       ** algorithm" by Michael H. F. Wilkinson and Jos B. T. M. Roerdink
       **
-      ** \param I: image exact type.
-      ** \param D: attribute exact type.
-      ** \param Env: type of environment.
+      ** \param I Image exact type.
+      ** \param D Attribute exact type.
+      ** \param Env Type of environment.
       */
       template <class I, class D, class Env = morpho::NullEnv>
       struct f_tarjan_map
@@ -90,13 +90,13 @@ namespace oln
 	/*!
 	** \brief Perform an attribute opening/closing.
 	**
-	** \param N: exact type of neighborhood
+	** \param N Exact type of neighborhood
 	**
-	** \arg is_closing: choose between closing and opening.
-	** \arg input: input image.
-	** \arg ng: neighborhood to use.
-	** \arg lambda: threshold.
-	** \arg env: environment.
+	** \arg is_closing Choose between closing and opening.
+	** \arg input Input image.
+	** \arg ng Neighborhood to use.
+	** \arg lambda Threshold.
+	** \arg env Environment.
 	*/
 	template <class N>
 	f_tarjan_map(bool is_closing,
@@ -105,7 +105,7 @@ namespace oln
 		     const lambda_type& lambda,
 		     const Env & env = Env());
 	/*!
-	** \brief return the result of the opening/closing.
+	** \brief Return the result of the opening/closing.
 	*/
 	oln_concrete_type(I)
 	  res()
@@ -128,22 +128,22 @@ namespace oln
 
 	/*!
 	** \brief Make a new component from a point.
-	** \arg x: root of the component.
+	** \arg x Root of the component.
 	*/
 	void
 	make_set(const point_type& x);
 
 	/*!
 	** \brief link two components
-	** \arg x: a point of the first component.
-	** \arg y: a point of the second component.
+	** \arg x A point of the first component.
+	** \arg y A point of the second component.
 	*/
 	void
 	link(const point_type& x, const point_type& y);
 
 	/*!
 	** \brief find the root of a component.
-	** \arg x: a point of the component.
+	** \arg x A point of the component.
 	*/
 	point_type
 	find_root(const point_type& x);
@@ -157,8 +157,8 @@ namespace oln
 
 	/*!
 	** \brief link two components if they have to be linked
-	** \arg n: a point of the first component.
-	** \arg p: a point of the second component.
+	** \arg n A point of the first component.
+	** \arg p A point of the second component.
 	*/
 	void
 	do_union(const point_type& n, const point_type& p);
@@ -423,7 +423,7 @@ T##_closing(const abstract::image<I>& input,					\
       **
       **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::slow::maxvalue_closing(im1, oln::neighb_c4(), 5);
-      **   oln::save(im1, IMG_OUT "oln_morpho_fast_maxvalue_closing.png.ppm");
+      **   oln::save(im1, IMG_OUT "oln_morpho_fast_maxvalue_closing.ppm");
       **   return  0;
       ** }
       ** \endcode

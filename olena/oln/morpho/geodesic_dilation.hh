@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -42,30 +42,50 @@
 namespace oln {
   namespace morpho {
 
-    /*=processing geodesic_dilation
-     * ns: morpho
-     * what: Geodesic dilation.
-     * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
-     * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
-     * arg: const abstract::struct_elt<E>&, se, IN, structural element
-     * ret:oln_concrete_type(I1)
-     * doc:
-     *  Compute the geodesic dilation of \var{marker} with respect
-     * to the mask \var{mask} image using \var{se}
-     *   as structural element. Soille p.156.
-     * Note mask must be greater or equal than marker.
-     * see: morpho::simple_geodesic_dilation
-     * ex:
-     * $ image2d<int_u8> light = load("light.pgm");
-     * $ image2d<int_u8> dark = load("dark.pgm");
-     * $ save(morpho::geodesic_dilation(dark, light, win_c8p()), "out.pgm");
-     * exi: light.pgm dark.pgm
-     * exo: out.pgm
-     * wontcompile: fixme
-     =*/
-
+    /*!
+    ** \brief Processing a geodesic dilation.
+    **
+    ** \param I1 Exact type of image marker.
+    ** \param I2 Exact type of image mask.
+    ** \param N Exact type of neighborhood.
+    **
+    ** \arg marker Image to work on.
+    ** \arg mask Image used for geodesic dilation.
+    ** \arg Ng Neighborhood to use.
+    **
+    ** Compute  the geodesic dilation  of marker  with respect  to the
+    ** mask  image  using  se  as  structuring  element.  Soille
+    ** p.156.
+    ** \pre Mask must be greater or equal than marker.
+    **
+    ** \code
+    ** #include <oln/basics2d.hh>
+    ** #include <oln/morpho/opening.hh>
+    ** #include <oln/morpho/geodesic_dilation.hh>
+    ** #include <oln/level/compare.hh>
+    ** #include <ntg/all.hh>
+    ** int main()
+    ** {
+    **   typedef oln::image2d<ntg::int_u8>	im_type;
+    **
+    **   im_type	im1(oln::load(IMG_IN "lena128.pgm"));
+    **   im_type	im2(oln::morpho::opening(im1, oln::win_c4p()));
+    **
+    **   save(oln::morpho::geodesic_dilation(im2, im1, oln::neighb_c4()),
+    **                                       IMG_OUT "oln_morpho_geodesic_dilation.pbm");
+    **   return  0;
+    ** }
+    ** \endcode
+    **
+    ** \image html lena128.png
+    ** \image latex lena128.png
+    ** =>
+    ** \image html oln_morpho_geodesic_dilation.png
+    ** \image latex oln_morpho_geodesic_dilation.png
+    **
+    */
     template<class I1, class I2, class N>
-    oln_concrete_type(I1) 
+    oln_concrete_type(I1)
       geodesic_dilation(const abstract::non_vectorial_image<I1> & marker,
 			const abstract::non_vectorial_image<I2> & mask,
 			const abstract::neighborhood<N>& Ng)
@@ -74,37 +94,59 @@ namespace oln {
       mlc::eq<I1::dim, N::dim>::ensure();
       precondition(marker.size() == mask.size());
       precondition(level::is_greater_or_equal(mask, marker));
-      return arith::min<oln_concrete_type(I1)>(dilation(marker, 
+      return arith::min<oln_concrete_type(I1)>(dilation(marker,
 							convert::ng_to_cse(Ng)),
 					       mask);
     }
 
     namespace sure {
-      /*=processing simple_geodesic_dilation
-       * ns: morpho
-       * what: Geodesic dilation.
-       * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
-       * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
-       * arg: const abstract::struct_elt<E>&, se, IN, structural element
-       * ret:oln_concrete_type(I1)
-       * doc:
-       *  Compute the geodesic dilation of \var{marker} with respect
-       * to the mask \var{mask} image using \var{se}
-       *   as structural element. Soille p.156. Computation is
-       * performed by hand (i.e without calling dilation).
-       * Note mask must be greater or equal than marker.
-       * see: morpho::sure_geodesic_dilation
-       * ex:
-       * $ image2d<int_u8> light = load("light.pgm");
-       * $ image2d<int_u8> dark = load("dark.pgm");
-       * $ save(morpho::simple_geodesic_dilation(dark, light,
-       * $                                       win_c8p()), "out.pgm");
-       * exi: light.pgm dark.pgm
-       * exo: out.pgm
-       * wontcompile: fixme
-       =*/
+      /*!
+      ** \brief Processing a geodesic dilation.
+      **
+      ** \param I1 Exact type of image marker.
+      ** \param I2 Exact type of image mask.
+      ** \param N Exact type of neighborhood.
+      **
+      ** \arg marker Image to work on.
+      ** \arg mask Image used for geodesic dilation.
+      ** \arg Ng Neighborhood to use.
+      **
+      ** Compute  the geodesic dilation  of marker  with respect  to the
+      ** mask  image  using  se  as  structuring  element.  Soille
+      ** p.156.
+      ** \pre Mask must be greater or equal than marker.
+      **
+      ** \warning This version shouldn't  be use, since it exists only
+      ** to have a reference algorithm.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/opening.hh>
+      ** #include <oln/morpho/geodesic_dilation.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type	im1(oln::load(IMG_IN "lena128.pgm"));
+      **   im_type	im2(oln::morpho::opening(im1, oln::win_c4p()));
+      **
+      **   save(oln::morpho::sure::geodesic_dilation(im2, im1, oln::neighb_c4()),
+      **                                       IMG_OUT "oln_morpho_sure_geodesic_dilation.pbm");
+      **   return  0;
+      ** }
+      ** \endcode
+      **
+      ** \image html lena128.png
+      ** \image latex lena128.png
+      ** =>
+      ** \image html oln_morpho_sure_geodesic_dilation.png
+      ** \image latex oln_morpho_sure_geodesic_dilation.png
+      **
+      */
       template<class I1, class I2, class N>
-      oln_concrete_type(I1) 
+      oln_concrete_type(I1)
 	geodesic_dilation(const abstract::non_vectorial_image<I1> & marker,
 			  const abstract::non_vectorial_image<I2> & mask,
 			  const abstract::neighborhood<N>& Ng)

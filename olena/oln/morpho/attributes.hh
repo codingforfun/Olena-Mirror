@@ -128,7 +128,7 @@ namespace oln {
     // the traits fwd declaration
     /*!
     ** Traits  for attributes information.
-    ** \param T: exact type of the attribute.
+    ** \param T Exact type of the attribute.
     */
     template <class T>
     struct attr_traits;
@@ -728,8 +728,8 @@ namespace oln {
       *-----------*/
     /*!
     ** \brief Max value attribute.
-    ** \param T: data type.
-    ** \param Exact: the exact type.
+    ** \param T Data type.
+    ** \param Exact The exact type.
     */
     template <class T = unsigned, class Exact = mlc::final>
     class maxvalue_type:
@@ -752,7 +752,7 @@ namespace oln {
       /*!
       ** \brief Ctor from a lambda_type value.
       **
-      ** \arg lambda: value of the attribute.
+      ** \arg lambda Value of the attribute.
       */
       maxvalue_type(const lambda_type &lambda): value_(lambda)
 	{
@@ -761,10 +761,10 @@ namespace oln {
       /*!
       ** \brief Ctor from a point and an image.
       **
-      ** \param I: image exact type.
+      ** \param I Image exact type.
       **
-      ** \arg input: input image.
-      ** \arg p: point to consider in the image.
+      ** \arg input Input image.
+      ** \arg p Point to consider in the image.
       */
       template <class I>
 	maxvalue_type(const abstract::image<I> &input,
@@ -844,8 +844,8 @@ namespace oln {
       *-----------*/
     /*!
     ** \brief Min value attribute.
-    ** \param T: data type.
-    ** \param Exact: the exact type.
+    ** \param T Data type.
+    ** \param Exact The exact type.
     */
     template <class T = unsigned, class Exact = mlc::final>
     class minvalue_type:
@@ -868,7 +868,7 @@ namespace oln {
       /*!
       ** \brief Ctor from a lambda_type value.
       **
-      ** \arg lambda: value of the attribute.
+      ** \arg lambda Value of the attribute.
       */
       minvalue_type(const lambda_type &lambda): value_(lambda)
 	{
@@ -877,10 +877,10 @@ namespace oln {
       /*!
       ** \brief Ctor from a point and an image.
       **
-      ** \param I: image exact type.
+      ** \param I Image exact type.
       **
-      ** \arg input: input image.
-      ** \arg p: point to consider in the image.
+      ** \arg input Input image.
+      ** \arg p Point to consider in the image.
       */
       template <class I>
 	minvalue_type(const abstract::image<I> &input,
@@ -960,8 +960,8 @@ namespace oln {
 	*-----------*/
     /*!
     ** \brief Ball attribute.
-    ** \param I: exact type of images to process.
-    ** \param Exact: the exact type.
+    ** \param I Exact type of images to process.
+    ** \param Exact The exact type.
     */
     template <class I, class Exact = mlc::final>
     class ball_type:
@@ -989,7 +989,7 @@ namespace oln {
       /*!
       ** \brief Ctor from a lambda_type value.
       **
-      ** \arg lambda: value of the attribute.
+      ** \arg lambda Value of the attribute.
       */
       ball_type(const lambda_type &lambda): value_(lambda), pts_()
 	{
@@ -999,7 +999,7 @@ namespace oln {
       /*!
       ** \brief Ctor from a point and an image.
       **
-      ** \arg p: point to consider in the image.
+      ** \arg p Point to consider in the image.
       */
       ball_type(const im_type&, const point_type &p, const env_type &) :
 	value_(ntg_zero_val(value_type)), pts_()
@@ -1123,8 +1123,8 @@ namespace oln {
 	*-----------*/
     /*!
     ** \brief Dist attribute.
-    ** \param I: exact type of images to process.
-    ** \param Exact: the exact type.
+    ** \param I Exact type of images to process.
+    ** \param Exact The exact type.
     */
     template <class I, class Exact = mlc::final>
     class dist_type:
@@ -1150,7 +1150,7 @@ namespace oln {
       /*!
       ** \brief Ctor from a point and an image.
       **
-      ** \arg p: point to consider in the image.
+      ** \arg p Point to consider in the image.
       */
       dist_type(const im_type&,
 		const point_type &p,
@@ -1174,7 +1174,7 @@ namespace oln {
       /*!
       ** \brief Ctor from a lambda_type value.
       **
-      ** \arg lambda: value of the attribute.
+      ** \arg lambda Value of the attribute.
       */
       dist_type(const lambda_type lambda): value_(lambda)
 	{
@@ -1275,8 +1275,8 @@ namespace oln {
 	*-----------*/
     /*!
     ** \brief Cube attribute.
-    ** \param I: exact type of images to process.
-    ** \param Exact: the exact type.
+    ** \param I Exact type of images to process.
+    ** \param Exact The exact type.
     */
     template <class I, class Exact = mlc::final>
     class cube_type:
@@ -1304,7 +1304,7 @@ namespace oln {
       /*!
       ** \brief Ctor from a lambda_type value.
       **
-      ** \arg lambda: value of the attribute.
+      ** \arg lambda Value of the attribute.
       */
       cube_type(const lambda_type &lambda):
 	mins_(dim),
@@ -1321,7 +1321,7 @@ namespace oln {
       /*!
       ** \brief Ctor from a point and an image.
       **
-      ** \arg p: point to consider in the image.
+      ** \arg p Point to consider in the image.
       */
       cube_type(const im_type&,
 		const point_type &p,
@@ -1336,7 +1336,7 @@ namespace oln {
       ** \brief Accessor to minimums.
       **
       ** Virtual method.
-      ** \arg i: index of the minimum wanted.
+      ** \arg i Index of the minimum wanted.
       ** \return the i th minimum.
       ** \see getMin_impl()
       */
@@ -1349,7 +1349,7 @@ namespace oln {
       ** \brief Accessor to maximums.
       **
       ** Virtual method.
-      ** \arg i: index of the minimum wanted.
+      ** \arg i Index of the minimum wanted.
       ** \return the i th maximum.
       ** \see getMax_impl()
       */
@@ -1444,8 +1444,8 @@ namespace oln {
 	*-----*/
     /*!
     ** \brief Box attribute.
-    ** \param I: exact type of images to process.
-    ** \param Exact: the exact type.
+    ** \param I Exact type of images to process.
+    ** \param Exact The exact type.
     */
     template <class I, class Exact = mlc::final>
     class box_type:
@@ -1462,7 +1462,7 @@ namespace oln {
       /*!
       ** \brief Ctor from a lambda_type value.
       **
-      ** \arg lambda: value of the attribute.
+      ** \arg lambda Value of the attribute.
       */
       box_type(const lambda_type &lambda): maxs_(dim), mins_(dim)
 	{
@@ -1486,7 +1486,7 @@ namespace oln {
       /*!
       ** \brief Ctor from a point and an image.
       **
-      ** \arg p: point to consider in the image.
+      ** \arg p Point to consider in the image.
       */
       box_type(const im_type&, const point_type &p, const env_type &): maxs_(dim), mins_(dim)
 	{
@@ -1498,7 +1498,7 @@ namespace oln {
       ** \brief Accessor to minimums.
       **
       ** Virtual method.
-      ** \arg i: index of the minimum wanted.
+      ** \arg i Index of the minimum wanted.
       ** \return the i th minimum.
       ** \see getMin_impl()
       */
@@ -1512,7 +1512,7 @@ namespace oln {
       ** \brief Accessor to maximums.
       **
       ** Virtual method.
-      ** \arg i: index of the minimum wanted.
+      ** \arg i Index of the minimum wanted.
       ** \return the i th maximum.
       ** \see getMax_impl()
       */
@@ -1526,7 +1526,7 @@ namespace oln {
       ** \brief Accessor to minimums.
       **
       ** Virtual method.
-      ** \arg i: index of the minimum wanted.
+      ** \arg i Index of the minimum wanted.
       ** \return the i th minimum.
       ** \see getMin_impl()
       */
@@ -1540,7 +1540,7 @@ namespace oln {
       ** \brief Accessor to maximums.
       **
       ** Virtual method.
-      ** \arg i: index of the minimum wanted.
+      ** \arg i Index of the minimum wanted.
       ** \return the i th maximum.
       ** \see getMax_impl()
       */

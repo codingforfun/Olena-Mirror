@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,27 +39,49 @@
 namespace oln {
   namespace morpho {
 
-    /*=processing geodesic_erosion
-     * ns: morpho
-     * what: Geodesic erosion.
-     * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
-     * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
-     * arg: const abstract::struct_elt<E>&, se, IN, structural element
-     * ret:oln_concrete_type(I1)
-     * doc:
-     *  Compute the geodesic erosion of \var{marker} with respect
-     * to the mask \var{mask} image using \var{se}
-     *   as structural element. Soille p.158.
-     * Note marker must be greater or equal than mask.
-     * see: morpho::simple_geodesic_dilation
-     * ex:
-     * $ image2d<int_u8> light = load("light.pgm");
-     * $ image2d<int_u8> dark = load("dark.pgm");
-     * $ save(morpho::geodesic_erosion(light, dark, win_c8p()), "out.pgm");
-     * exi: light.pgm dark.pgm
-     * exo: out.pgm
-     * wontcompile: fixme
-     =*/
+    /*!
+    ** \brief Processing a geodesic erosion.
+    **
+    ** \param I1 Exact type of image marker.
+    ** \param I2 Exact type of image mask.
+    ** \param N Exact type of neighborhood.
+    **
+    ** \arg marker Image to work on.
+    ** \arg mask Image used for geodesic dilation.
+    ** \arg Ng Neighborhood to use.
+    **
+    ** Compute  the geodesic erosion  of marker  with respect  to the
+    ** mask mask image using se as structural element. Soille p.158.
+    **
+    ** \pre Marker must be greater or equal than mask.
+    **
+    **
+    ** \code
+    ** #include <oln/basics2d.hh>
+    ** #include <oln/morpho/opening.hh>
+    ** #include <oln/morpho/geodesic_erosion.hh>
+    ** #include <oln/level/compare.hh>
+    ** #include <ntg/all.hh>
+    ** int main()
+    ** {
+    **   typedef oln::image2d<ntg::int_u8>	im_type;
+    **
+    **   im_type	im1(oln::load(IMG_IN "lena128.pgm"));
+    **   im_type	im2(oln::morpho::opening(im1, oln::win_c4p()));
+    **
+    **   save(oln::morpho::geodesic_erosion(im1, im2, oln::neighb_c4()),
+    **                                       IMG_OUT "oln_morpho_geodesic_erosion.pbm");
+    **   return  0;
+    ** }
+    ** \endcode
+    **
+    ** \image html lena128.png
+    ** \image latex lena128.png
+    ** =>
+    ** \image html oln_morpho_geodesic_erosion.png
+    ** \image latex oln_morpho_geodesic_erosion.png
+    **
+    */
     template<class I1, class I2, class N>
     oln_concrete_type(I1)
       geodesic_erosion(const abstract::non_vectorial_image<I1> & marker,
@@ -74,30 +96,55 @@ namespace oln {
     }
 
     namespace sure {
-      /*=processing simple_geodesic_erosion
-       * ns: morpho
-       * what: Geodesic erosion.
-       * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
-       * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
-       * arg: const abstract::struct_elt<E>&, se, IN, structural element
-       * ret:oln_concrete_type(I1)
-       * doc:
-       *  Compute the geodesic erosion of \var{marker} with respect
-       * to the mask \var{mask} image using \var{se}
-       *   as structural element. Soille p.156. Computation is
-       * performed by hand (i.e without calling dilation).
-       * Note marker must be greater or equal than mask.
-       * see: morpho::sure_geodesic_dilation
-       * ex:
-       * $ image2d<int_u8> light = load("light.pgm");
-       * $ image2d<int_u8> dark = load("dark.pgm");
-       * $ save(morpho::geodesic_erosion(light, dark, win_c8p()), "out.pgm");
-       * exi: light.pgm dark.pgm
-       * exo: out.pgm
-       * wontcompile: fixme
-       =*/
+      /*!
+      ** \brief Processing a geodesic erosion.
+      **
+      ** \param I1 Exact type of image marker.
+      ** \param I2 Exact type of image mask.
+      ** \param N Exact type of neighborhood.
+      **
+      ** \arg marker Image to work on.
+      ** \arg mask Image used for geodesic dilation.
+      ** \arg Ng Neighborhood to use.
+      **
+      **  Compute the  geodesic erosion of marker with  respect to the
+      ** mask  mask  image  using  se as  structural  element.  Soille
+      ** p.156. Computation is performed  by hand (i.e without calling
+      ** dilation).
+      **
+      ** \pre Marker must be greater or equal than mask.
+      **
+      ** \warning This version shouldn't  be use, since it exists only
+      ** to have a reference algorithm.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/opening.hh>
+      ** #include <oln/morpho/geodesic_erosion.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type	im1(oln::load(IMG_IN "lena128.pgm"));
+      **   im_type	im2(oln::morpho::opening(im1, oln::win_c4p()));
+      **
+      **   save(oln::morpho::sure::geodesic_erosion(im1, im2, oln::neighb_c4()),
+      **                                       IMG_OUT "oln_morpho_sure_geodesic_erosion.pbm");
+      **   return  0;
+      ** }
+      ** \endcode
+      **
+      ** \image html lena128.png
+      ** \image latex lena128.png
+      ** =>
+      ** \image html oln_morpho_sure_geodesic_erosion.png
+      ** \image latex oln_morpho_sure_geodesic_erosion.png
+      **
+      */
       template<class I1, class I2, class N>
-      oln_concrete_type(I1) 
+      oln_concrete_type(I1)
 	geodesic_erosion(const abstract::non_vectorial_image<I1> & marker,
 			 const abstract::non_vectorial_image<I2> & mask,
 			 const abstract::neighborhood<N>& Ng)

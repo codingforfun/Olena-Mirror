@@ -34,6 +34,10 @@ namespace oln {
 
   namespace snakes {
 
+    /*! A node is a point used in ring.
+    **
+    ** \attention FIXME: Do not work due to the function energy.
+    */
     template<class I>
     class node : public I::point_type
     {
@@ -48,6 +52,10 @@ namespace oln {
       }
 
     public:
+      /*! Return the energy
+      **
+      ** FIXME: not implemented, do not work
+      */
       inline
       ntg::float_s
       energy(const I& gradient, point_type prev, point_type next) const;
@@ -61,7 +69,7 @@ namespace oln {
 
 } // end oln
 
-
+//! Print the position of a node \a n
 template <class I>
 std::ostream& operator<<(std::ostream& os, const oln::snakes::node<I>& n)
 {

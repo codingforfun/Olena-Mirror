@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,8 +33,20 @@
 namespace oln {
   namespace morpho {
 
+    /*!
+    ** \brief Get a sub part of a structuring element.
+    **
+    ** \param E Exact type of the structuring element.
+    **
+    ** \arg se The structuring element.
+    **
+    ** A point p take part of the new structuring element if it exists
+    ** a i  that belongs to [[0..dim-1]] like  p(i) < 0 and  for all j
+    ** that belongs to [[0..i-1]] p(j) = 0.
+    **
+    */
     template<class E>
-    mlc_exact_type(E) 
+    mlc_exact_type(E)
       get_plus_se_only(const abstract::struct_elt<E>& se)
     {
       oln_iter_type(E) dp(se);
@@ -54,13 +66,26 @@ namespace oln {
       return out;
     }
 
+    /*!
+    ** \brief Get a sub part of a structuring element.
+    **
+    ** \param E Exact type of the structuring element.
+    **
+    ** \arg se The structuring element.
+    **
+    ** A point p take part of the new structuring element if it exists
+    ** a i  that belongs to [[0..dim-1]] like  p(i) < 0 and  for all j
+    ** that  belongs to  [[0..i-1]] p(j)  =  0 or  if for  all i  that
+    ** belongs to [[0..dim-1]] p(i) = 0.
+    **
+    */
     template<class E>
-    mlc_exact_type(E) 
+    mlc_exact_type(E)
       get_plus_se_p(const abstract::struct_elt<E>& se)
     {
       oln_iter_type(E) dp(se);
       E out;
-      
+
       for_all (dp)
 	{
 	  unsigned n;
@@ -78,8 +103,20 @@ namespace oln {
       return out;
     }
 
+    /*!
+    ** \brief Get a sub part of a structuring element.
+    **
+    ** \param E Exact type of the structuring element.
+    **
+    ** \arg se The structuring element.
+    **
+    ** A point p take part of the new structuring element if it exists
+    ** a i  that belongs to [[0..dim-1]] like  p(i) > 0 and  for all j
+    ** that  belongs to  [[0..i-1]] p(j)  =  0.
+    **
+    */
     template<class E>
-    mlc_exact_type(E) 
+    mlc_exact_type(E)
       get_minus_se_only(const abstract::struct_elt<E>& se)
     {
       oln_iter_type(E) dp(se);
@@ -99,8 +136,21 @@ namespace oln {
       return out;
     }
 
+    /*!
+    ** \brief Get a sub part of a structuring element.
+    **
+    ** \param E Exact type of the structuring element.
+    **
+    ** \arg se The structuring element.
+    **
+    ** A point p take part of the new structuring element if it exists
+    ** a i  that belongs to [[0..dim-1]] like  p(i) > 0 and  for all j
+    ** that  belongs to  [[0..i-1]] p(j)  =  0 or  if for  all i  that
+    ** belongs to [[0..dim-1]] p(i) = 0.
+    **
+    */
     template<class E>
-    mlc_exact_type(E) 
+    mlc_exact_type(E)
       get_minus_se_p(const abstract::struct_elt<E>& se)
     {
       oln_iter_type(E) dp(se);

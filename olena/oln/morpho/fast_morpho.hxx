@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -40,12 +40,21 @@
 namespace oln {
   namespace morpho {
 
+    /*!
+    ** \brief oln::morpho::internal namespace
+    ** Internal stuff.
+    */
     namespace internal {
 
-      // Find structuring elements to be added/removed from the histogram
-      // when we move forward along each direction.
-      // FIXME: add(dp) on w_windows associates a default weight set
-      // to 1 
+      /*!
+      ** \brief Find structuring elements.
+      **
+      ** Find structuring elements to be added/removed from the histogram
+      ** when we move forward along each direction.
+      **
+      ** \todo FIXME: add(dp) on w_windows associates a default weight set
+      ** to 1
+      */
       template<class E1, class E2, class E3>
       void
       find_struct_elts(const abstract::struct_elt<E1>& se,
@@ -55,12 +64,12 @@ namespace oln {
 	mlc_is_a(E2, abstract::struct_elt)::ensure();
 	mlc_is_a(E3, abstract::struct_elt)::ensure();
 	const unsigned dim = E1::dim;
-	
+
 	// back[n] allows to move backward on coordinate `n'.
 	oln_dpoint_type(E1) back[dim];
 	for (unsigned n = 0; n < dim; ++n)
 	  back[n].nth(n) = -1;
-	
+
 	oln_iter_type(E1) dp(se);
 	oln_iter_type(E1) dp_prime(se);
 
@@ -101,9 +110,12 @@ namespace oln {
 	  postcondition(se_add[n].card() == se_rem[n].card());
       }
 
-
-      // Update HIST by adding elements from _SE_ADD, and removing
-      // those from _SE_REM.
+      /*!
+      ** \brief Update an histogram.
+      **
+      ** Update HIST by adding elements from _SE_ADD, and removing
+      ** those from _SE_REM.
+      */
       template<class I, class E1, class E2, class H>
       // inline
       void
@@ -126,16 +138,20 @@ namespace oln {
       }
 
 
-      // We will zigzag over the image so that only one coordinate
-      // changes at each step.  The path looks as follow on
-      // 2D images:
-      //   -----------------.
-      //   ,----------------'
-      //   `----------------.
-      //   ,----------------'
-      //   `-----------------
-      // (The algorithm below handles the n-dimensional case.)
-
+      /*!
+      ** We will zigzag over the image so that only one coordinate
+      ** changes at each step.  The path looks as follow on
+      ** 2D images:\n
+      ** --------------\
+      **               |
+      ** /-------------/
+      ** |
+      ** \-------------\
+      **               |
+      ** -------------/
+      ** \n
+      ** (The algorithm below handles the n-dimensional case.)
+      */
       template<unsigned NP1,
 	       unsigned Dim,
 	       typename I,
@@ -145,6 +161,10 @@ namespace oln {
 	       typename P,
 	       typename O>
       struct fast_morpho_inner {
+
+	/*!
+	** Perform the action.
+	*/
 	static void
 	doit(I& input, S& size, H& hist,
 	     B* se_add, B* se_rem, B* se_add_back, B* se_rem_back,
@@ -237,23 +257,60 @@ namespace oln {
       };
     } // internal
 
-
+    /*!
+    ** \brief functor to sort dimensions.
+    */
     template<class E>
     struct sort_dimensions
     {
+      /*!
+      ** \brief Constructor.
+      */
       sort_dimensions(abstract::struct_elt<E> se[mlc::exact<E>::ret::dim])
 	: se_(se) {}
 
+      /*!
+      ** \brief Parenthesis operator.
+      **
+      ** Call it to use the functor.
+      */
       bool operator()(unsigned a, unsigned b)
       {
 	return se_[a].card() > se_[b].card();
       }
 
     protected:
-      abstract::struct_elt<E>* se_;
+      abstract::struct_elt<E>* se_; ///< Structural element.
     };
-    
-    
+
+    /*!
+    ** \brief Fast morpho algorithm.
+    **
+    **
+    ** \code
+    ** #include <oln/basics2d.hh>
+    ** #include <oln/morpho/erosion.hh>
+    ** #include <oln/level/compare.hh>
+    ** #include <ntg/all.hh>
+    ** int main()
+    ** {
+    **   typedef oln::image2d<ntg::bin>	im_type;
+    **
+    **   im_type im1(oln::load(IMG_IN "object.pbm"));
+    **   //save(oln::morpho::fast_morpho<im_type, oln::win_c8p(), utils::histogram_min>
+    **   //            (im1, oln::win_c8p()), IMG_OUT "oln_morpho_fast_morpho.pbm");
+    **   save(im1, IMG_OUT "oln_morpho_fast_morpho.pbm");
+    **   return  0;
+    ** }
+    ** \endcode
+    **
+    ** \image html object.png
+    ** \image latex object.png
+    ** =>
+    ** \image html oln_morpho_fast_morpho.png
+    ** \image latex oln_morpho_fast_morpho.png
+    ** \todo FIXME: Correct this function and make the example use it.
+    */
     template<class I, class E, template<typename, typename> class H>
     oln_concrete_type(I)
       fast_morpho(const abstract::non_vectorial_image<I>& input,
@@ -297,7 +354,7 @@ namespace oln {
       // Initialize the histogram with the values around the first point.
       H<oln_value_type(I),unsigned> hist;
       oln_point_type(I) p;
-     
+
       //     oln_iter_type(E) dp(se);
       typename E::iter_type	dp(se);
       for_all(dp)

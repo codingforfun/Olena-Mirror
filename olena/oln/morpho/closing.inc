@@ -30,11 +30,11 @@
  * ns: morpho, morpho::fast
  * what: Morphological closing.
  * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
- * arg: const abstract::struct_elt<E>&, se, IN, structural element
+ * arg: const abstract::struct_elt<E>&, se, IN, structuring element
  * ret:oln_concrete_type(I)
  * doc:
  *   Compute the morphological closing of \var{input} using \var{se}
- *   as structural element.
+ *   as structuring element.
  * see: morpho::erosion
  * see: morpho::dilation
  * see: morpho::closing
@@ -47,14 +47,14 @@
 /*!
 ** \brief Processing closing.
 **
-** Compute the  morphological closing of input using  se as structural
+** Compute the  morphological closing of input using  se as structuring
 ** element.
 **
-** \param I: exact type of the input image.
-** \param E: exact type of the structural element.
+** \param I Exact type of the input image.
+** \param E Exact type of the structuring element.
 **
-** \arg input: input image to close.
-** \arg se: structural element to use.
+** \arg input Input image to close.
+** \arg se Structuring element to use.
 **
 ** \warning  This  code  is  the  same  for  morpho  and  morpho::fast
 ** namespaces.

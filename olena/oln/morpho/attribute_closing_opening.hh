@@ -58,14 +58,14 @@ namespace oln {
 	  /*!
 	  ** \brief Perform an attribute closing.
 	  **
-	  ** \param I: image exact type.
-	  ** \param N: neighborhood exact type.
-	  ** \param A: Attribute exact type.
+	  ** \param I Image exact type.
+	  ** \param N Neighborhood exact type.
+	  ** \param A Attribute exact type.
 	  **
-	  ** \arg input: input image.
-	  ** \arg Ng: neighborhood to use.
-	  ** \arg lambda: threshold to use.
-	  ** \arg env: environment.
+	  ** \arg input Input image.
+	  ** \arg Ng Neighborhood to use.
+	  ** \arg lambda Threshold to use.
+	  ** \arg env Environment.
 	  */
 	  template<class I, class N, class A>
 	  oln_concrete_type(I)
@@ -82,14 +82,14 @@ namespace oln {
 	  /*!
 	  ** \brief Perform an attribute opening.
 	  **
-	  ** \param I: image exact type.
-	  ** \param N: neighborhood exact type.
-	  ** \param A: Attribute exact type.
+	  ** \param I Image exact type.
+	  ** \param N Neighborhood exact type.
+	  ** \param A Attribute exact type.
 	  **
-	  ** \arg input: input image.
-	  ** \arg Ng: neighborhood to use.
-	  ** \arg lambda: threshold to use.
-	  ** \arg env: environment.
+	  ** \arg input Input image.
+	  ** \arg Ng Neighborhood to use.
+	  ** \arg lambda Threshold to use.
+	  ** \arg env Environment.
 	  */
 	  template<class I, class N, class A>
 	  oln_concrete_type(I)
@@ -327,7 +327,7 @@ namespace oln {
       **
       **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::fast::maxvalue_closing(im1, oln::neighb_c4(), 5);
-      **   oln::save(im1, IMG_OUT "oln_morpho_fast_maxvalue_closing.png.ppm");
+      **   oln::save(im1, IMG_OUT "oln_morpho_fast_maxvalue_closing.ppm");
       **   return  0;
       ** }
       ** \endcode

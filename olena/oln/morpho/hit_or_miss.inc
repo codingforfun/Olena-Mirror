@@ -1,5 +1,5 @@
 // -*- c++ -*-
-// Copyright (C) 2001, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,36 +30,54 @@
 // note that results depend on the type of image data when it is not bin.
 // you MUST be aware of it.
 
-/*=processing hit_or_miss
- * ns: morpho, morpho::fast
- * what: Hit_or_Miss Transform.
- * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
- * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
- * arg: const abstract::struct_elt<E>&, se1, IN, structural element
- * arg: const abstract::struct_elt<E>&, se2, IN, structural element
- * ret: typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
- * doc:
- * Compute the hit_or_miss transform of \var{input} by the composite structural
- * element (\var{se1}, \var{se2}). Soille p.131.
- *
- * By definition \var{se1} and \var{se2} must have the same origin, and need to
- * be disjoint. This algorithm has been extended to every data types
- * (althought it is not increasing).  Beware the result depends upon the
- * image data type if it is not \code{bin}.
- * ex:
- * $ image2d<ntg::bin> im = load("object.pbm");
- * $ window2d mywin;
- * $ mywin
- * $  .add(-3,-2).add(-3,-1).add(-3,0).add(-3,1).add(-3,2)
- * $  .add(-2,-1).add(-2,0).add(-2,1)
- * $  .add(-1,0);
- * $ window2d mywin2 = - mywin;
- * $ save(morpho::fast::hit_or_miss(convert::bound<int_u8>(),
- * $                                im, mywin, mywin2), "out.pgm");
- * exh: convert/bound.hh
- * exi: object.pbm
- * exo: out.pgm
-=*/
+/*!
+** \brief Preform a 'hit or miss' transform.
+**
+** \arg c Conversion object.
+** \arg input Image to process.
+** \arg se1 First structuring element.
+** \arg se2 Second structuring element.
+**
+** Compute the hit_or_miss transform of input by the composite structuring
+** element (se1, se2). Soille p.131.\n
+**
+** By definition se1 and se2 must have the same origin, and need to
+** be disjoint. This algorithm has been extended to every data types
+** (although it is not increasing).  Beware the result depends upon the
+** image data type if it is not bin.
+**
+** \code
+** #include <oln/basics2d.hh>
+** #include <oln/morpho/hit_or_miss.hh>
+** #include <oln/level/compare.hh>
+** #include <ntg/all.hh>
+** int main()
+** {
+**   typedef oln::image2d<ntg::bin>	im_type;
+**
+**   im_type	im1(oln::load(IMG_IN "object.pbm"));
+**
+**   oln::window2d mywin;
+**   mywin
+**    .add(-3,-2).add(-3,-1).add(-3,0).add(-3,1).add(-3,2)
+**    .add(-2,-1).add(-2,0).add(-2,1)
+**    .add(-1,0);
+**   oln::window2d mywin2 = - mywin;
+**
+**   oln::save(oln::morpho::hit_or_miss(oln::convert::bound<ntg::int_u8>(), im1, mywin, mywin2),
+**                                       IMG_OUT "oln_morpho_fast_hit_or_miss.pbm");
+**   return  0;
+** }
+** \endcode
+**
+** \image html object.png
+** \image latex object.png
+** =>
+** \image html oln_morpho_fast_hit_or_miss.png
+** \image latex oln_morpho_fast_hit_or_miss.png
+**
+** \todo FIXME: Histogram problems (fast version do not work).
+*/
 template<class C, class B, class I, class E1, class E2>
 typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
 hit_or_miss(const convert::abstract::conversion<C, B>& c,
@@ -81,15 +99,51 @@ hit_or_miss(const convert::abstract::conversion<C, B>& c,
 		    erosion(level::invert(input), se2));
 }
 
-/*=processingoverload hit_or_miss
- * ns: morpho, morpho::fast
- * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
- * arg: const abstract::struct_elt<E>&, se1, IN, structural element
- * arg: const abstract::struct_elt<E>&, se2, IN, structural element
- * ret:oln_concrete_type(I)
-=*/
+/*!
+** \brief Preform a 'hit or miss' transform.
+**
+** \param I Exact type of the input image.
+** \param E1 Exact type of the first structuring element.
+** \param E2 Exact type of the second structuring element.
+**
+** \arg input Image to process.
+** \arg se1 First structuring element.
+** \arg se2 Second structuring element.
+**
+** \code
+** #include <oln/basics2d.hh>
+** #include <oln/morpho/hit_or_miss.hh>
+** #include <oln/level/compare.hh>
+** #include <ntg/all.hh>
+** int main()
+** {
+**   typedef oln::image2d<ntg::bin>	im_type;
+**
+**   im_type	im1(oln::load(IMG_IN "object.pbm"));
+**
+**   oln::window2d mywin;
+**   mywin
+**    .add(-3,-2).add(-3,-1).add(-3,0).add(-3,1).add(-3,2)
+**    .add(-2,-1).add(-2,0).add(-2,1)
+**    .add(-1,0);
+**   oln::window2d mywin2 = - mywin;
+**
+**   oln::save(oln::morpho::hit_or_miss(im1, mywin, mywin2),
+**                                      IMG_OUT "oln_morpho_fast_hit_or_miss_overload.pbm");
+**   return  0;
+** }
+** \endcode
+**
+** \image html object.png
+** \image latex object.png
+** =>
+** \image html oln_morpho_fast_hit_or_miss_overload.png
+** \image latex oln_morpho_fast_hit_or_miss_overload.png
+**
+** \todo FIXME: Histogram problems (fast version do not work).
+*/
 template<class I, class E1, class E2>
-oln_concrete_type(I) 
+oln_concrete_type(I)
   hit_or_miss(const abstract::non_vectorial_image<I>& input,
 	      const abstract::struct_elt<E1>& se1,
 	      const abstract::struct_elt<E2>& se2)
@@ -103,39 +157,59 @@ oln_concrete_type(I)
 //
 ///////////////////////////////////
 
-/*=processing hit_or_miss_opening
- * ns: morpho, morpho::fast
- * what: Hit_or_Miss opening.
- * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
- * arg: const abstract::struct_elt<E>&, se1, IN, structural element
- * arg: const abstract::struct_elt<E>&, se2, IN, structural element
- * ret:oln_concrete_type(I)
- * doc:
- *   Compute the hit_or_miss opening of \var{input} by the composite structural
- * element (\var{se1}, \var{se2}). Soille p.134.
- *
- * By definition \var{se1} and \var{se2} must have the same origin, and need to
- * be disjoint. This algorithm has been extended to every data types
- * (althought it is not increasing).  Beware the result depends upon the
- * image data type if it is not \code{bin}.
- * see: morpho::hit_or_miss
- * see: morpho::hit_or_miss_closing
- * see: morpho::hit_or_miss_closing_bg
- * see: morpho::hit_or_miss_opening_bg
- * ex:
- * $ image2d<ntg::bin> im = load("object.pbm");
- *  window2d mywin;
- *  mywin
- *   .add(-3,-2).add(-3,-1).add(-3,0).add(-3,1).add(-3,2)
- *   .add(-2,-1).add(-2,0).add(-2,1)
- *   .add(-1,0);
- * window2d mywin2 = - mywin;
- * $ save(morpho::hit_or_miss_opening(im, mywin, mywin2), "out.pbm");
- * exi: object.pbm
- * exo: out.pbm
-=*/
+/*!
+** \brief Perform an hit or miss opening.
+**
+** Compute the hit_or_miss opening of input by the composite structuring
+** element (se1, se2). Soille p.134.\n
+**
+** By definition se1 and se2 must have the same origin, and need to
+** be disjoint. This algorithm has been extended to every data types
+** (althought it is not increasing).  Beware the result depends upon the
+** image data type if it is not bin.
+**
+** \param I Exact type of the input image.
+** \param E1 Exact type of the first structuring element.
+** \param E2 Exact type of the second structuring element.
+**
+** \arg input Image to process.
+** \arg se1 First structuring element.
+** \arg se2 Second structuring element.
+**
+** \code
+** #include <oln/basics2d.hh>
+** #include <oln/morpho/hit_or_miss.hh>
+** #include <oln/level/compare.hh>
+** #include <ntg/all.hh>
+** int main()
+** {
+**   typedef oln::image2d<ntg::bin>	im_type;
+**
+**   im_type	im1(oln::load(IMG_IN "object.pbm"));
+**
+**   oln::window2d mywin;
+**   mywin
+**    .add(-3,-2).add(-3,-1).add(-3,0).add(-3,1).add(-3,2)
+**    .add(-2,-1).add(-2,0).add(-2,1)
+**    .add(-1,0);
+**   oln::window2d mywin2 = - mywin;
+**
+**    oln::save(oln::morpho::hit_or_miss_opening(im1, mywin, mywin2),
+**                                       IMG_OUT "oln_morpho_fast_hit_or_miss_opening.pbm");
+**   return  0;
+** }
+** \endcode
+**
+** \image html object.png
+** \image latex object.png
+** =>
+** \image html oln_morpho_fast_hit_or_miss_opening.png
+** \image latex oln_morpho_fast_hit_or_miss_opening.png
+**
+** \todo FIXME: Histogram problems (fast version do not work).
+*/
 template<class I, class E1, class E2>
-oln_concrete_type(I) 
+oln_concrete_type(I)
   hit_or_miss_opening(const abstract::non_vectorial_image<I>& input,
 		      const abstract::struct_elt<E1>& se1,
 		      const abstract::struct_elt<E2>& se2)
@@ -145,40 +219,59 @@ oln_concrete_type(I)
   return dilation(hit_or_miss(input, se1, se2), -se1);
 }
 
-/*=processing hit_or_miss_opening_bg
- * ns: morpho, morpho::fast
- * what: Hit_or_Miss opening of background.
- * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
- * arg: const abstract::struct_elt<E>&, se1, IN, structural element
- * arg: const abstract::struct_elt<E>&, se2, IN, structural element
- * ret:oln_concrete_type(I)
- * doc:
- *  Compute the hit_or_miss opening of the background of
- * \var{input} by the composite structural
- * element (\var{se1}, \var{se2}). Soille p.135.
- *
- * By definition \var{se1} and \var{se2} must have the same origin, and need to
- * be disjoint. This algorithm has been extended to every data types
- * (althought it is not increasing).  Beware the result depends upon the
- * image data type if it is not \code{bin}.
- * see: morpho::hit_or_miss
- * see: morpho::hit_or_miss_closing
- * see: morpho::hit_or_miss_closing_bg
- * see: morpho::hit_or_miss_opening
- * ex:
- * $ image2d<ntg::bin> im = load("object.pbm");
- *  window2d mywin;
- *  mywin
- *   .add(-3,-2).add(-3,-1).add(-3,0).add(-3,1).add(-3,2)
- *   .add(-2,-1).add(-2,0).add(-2,1)
- *   .add(-1,0);
- * window2d mywin2 = - mywin;
- * $ save(morpho::hit_or_miss_opening_bg(im, mywin, mywin2), "out.pbm");
- * exi: object.pbm
- * exo: out.pbm
-=*/
+/*!
+** \brief Perform an hit or miss opening of background.
+**
+**  Compute the hit_or_miss opening of  the background of input by the
+** composite structuring element (se1, se2). Soille p.135.\n
+**
+** By definition se1 and se2 must have the same origin, and need to be
+** disjoint.  This algorithm  has been  extended to  every  data types
+** (although it  is not increasing).   Beware the result  depends upon
+** the image data type if it is not bin.
+**
+** \param I Exact type of the input image.
+** \param E1 Exact type of the first structuring element.
+** \param E2 Exact type of the second structuring element.
+**
+** \arg input Image to process.
+** \arg se1 First structuring element.
+** \arg se2 Second structuring element.
+**
+** \code
+** #include <oln/basics2d.hh>
+** #include <oln/morpho/hit_or_miss.hh>
+** #include <oln/level/compare.hh>
+** #include <ntg/all.hh>
+** int main()
+** {
+**   typedef oln::image2d<ntg::bin>	im_type;
+**
+**   im_type	im1(oln::load(IMG_IN "object.pbm"));
+**
+**   oln::window2d mywin;
+**   mywin
+**    .add(-3,-2).add(-3,-1).add(-3,0).add(-3,1).add(-3,2)
+**    .add(-2,-1).add(-2,0).add(-2,1)
+**    .add(-1,0);
+**   oln::window2d mywin2 = - mywin;
+**
+**   oln::save(oln::morpho::hit_or_miss_opening_bg(im1, mywin, mywin2),
+**                                       IMG_OUT "oln_morpho_fast_hit_or_miss_opening_bg.pbm");
+**   return  0;
+** }
+** \endcode
+**
+** \image html object.png
+** \image latex object.png
+** =>
+** \image html oln_morpho_fast_hit_or_miss_opening_bg.png
+** \image latex oln_morpho_fast_hit_or_miss_opening_bg.png
+**
+** \todo FIXME: Histogram problems (fast version do not work).
+*/
 template<class I, class E1, class E2>
-oln_concrete_type(I) 
+oln_concrete_type(I)
   hit_or_miss_opening_bg(const abstract::non_vectorial_image<I>& input,
 			 const abstract::struct_elt<E1>& se1,
 			 const abstract::struct_elt<E2>& se2)
@@ -192,41 +285,61 @@ oln_concrete_type(I)
 //
 ///////////////////////////////////
 
-/*=processing hit_or_miss_closing
- * ns: morpho, morpho::fast
- * what: Hit_or_Miss closing.
- * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
- * arg: const abstract::struct_elt<E>&, se1, IN, structural element
- * arg: const abstract::struct_elt<E>&, se2, IN, structural element
- * ret:oln_concrete_type(I)
- * doc:
- *   Compute the hit_or_miss closing of \var{input} by the composite structural
- * element (\var{se1}, \var{se2}). This is the dual transformation of hit-or-miss opening
- *  with respect to
- * set complementation. Soille p.135.
- *
- * By definition \var{se1} and \var{se2} must have the same origin, and need to
- * be disjoint. This algorithm has been extended to every data types
- * (althought it is not increasing).  Beware the result depends upon the
- * image data type if it is not \code{bin}.
- * see: morpho::hit_or_miss
- * see: morpho::hit_or_miss_closing_bg
- * see: morpho::hit_or_miss_opening
- * see: morpho::hit_or_miss_opening_bg
- * ex:
- * $ image2d<ntg::bin> im = load("object.pbm");
- *  window2d mywin;
- *  mywin
- *   .add(-3,-2).add(-3,-1).add(-3,0).add(-3,1).add(-3,2)
- *   .add(-2,-1).add(-2,0).add(-2,1)
- *   .add(-1,0);
- * window2d mywin2 = - mywin;
- * $ save(morpho::hit_or_miss_closing(im, mywin, mywin2), "out.pbm");
- * exi: object.pbm
- * exo: out.pbm
-=*/
+/*!
+** \brief Perform an hit or miss closing.
+**
+**   Compute the hit_or_miss closing of input by the composite structuring
+** element (se1, se2). This is the dual transformation of hit-or-miss opening
+**  with respect to
+** set complementation. Soille p.135.\n
+**
+** By definition se1 and se2 must have the same origin, and need to
+** be disjoint. This algorithm has been extended to every data types
+** (althought it is not increasing).  Beware the result depends upon the
+** image data type if it is not bin.
+**
+** \param I Exact type of the input image.
+** \param E1 Exact type of the first structuring element.
+** \param E2 Exact type of the second structuring element.
+**
+** \arg input Image to process.
+** \arg se1 First structuring element.
+** \arg se2 Second structuring element.
+**
+** \code
+** #include <oln/basics2d.hh>
+** #include <oln/morpho/hit_or_miss.hh>
+** #include <oln/level/compare.hh>
+** #include <ntg/all.hh>
+** int main()
+** {
+**   typedef oln::image2d<ntg::bin>	im_type;
+**
+**   im_type	im1(oln::load(IMG_IN "object.pbm"));
+**
+**   oln::window2d mywin;
+**   mywin
+**    .add(-3,-2).add(-3,-1).add(-3,0).add(-3,1).add(-3,2)
+**    .add(-2,-1).add(-2,0).add(-2,1)
+**    .add(-1,0);
+**   oln::window2d mywin2 = - mywin;
+**
+**   oln::save(oln::morpho::hit_or_miss_closing(im1, mywin, mywin2),
+**                                       IMG_OUT "oln_morpho_fast_hit_or_miss_closing.pbm");
+**   return  0;
+** }
+** \endcode
+**
+** \image html object.png
+** \image latex object.png
+** =>
+** \image html oln_morpho_fast_hit_or_miss_closing.png
+** \image latex oln_morpho_fast_hit_or_miss_closing.png
+**
+** \todo FIXME: Histogram problems (fast version do not work).
+*/
 template<class I, class E1, class E2>
-oln_concrete_type(I) 
+oln_concrete_type(I)
   hit_or_miss_closing(const abstract::non_vectorial_image<I>& input,
 		      const abstract::struct_elt<E1>& se1,
 		      const abstract::struct_elt<E2>& se2)
@@ -237,41 +350,61 @@ oln_concrete_type(I)
 					   se1, se2));
 }
 
-/*=processing hit_or_miss_closing_bg
- * ns: morpho, morpho::fast
- * what: Hit_or_Miss closing of background.
- * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
- * arg: const abstract::struct_elt<E>&, se1, IN, structural element
- * arg: const abstract::struct_elt<E>&, se2, IN, structural element
- * ret:oln_concrete_type(I)
- * doc:
- * Compute the hit_or_miss closing of the background of \var{input} by the composite structural
- * element (\var{se1}, \var{se2}). This is the dual transformation of hit-or-miss opening
- *  with respect to
- * set complementation. Soille p.135.
- *
- * By definition \var{se1} and \var{se2} must have the same origin, and need to
- * be disjoint. This algorithm has been extended to every data types
- * (althought it is not increasing).  Beware the result depends upon the
- * image data type if it is not \code{bin}.
- * see: morpho::hit_or_miss
- * see: morpho::hit_or_miss_closing
- * see: morpho::hit_or_miss_opening
- * see: morpho::hit_or_miss_opening_bg
- * ex:
- * $ image2d<ntg::bin> im = load("object.pbm");
- *  window2d mywin;
- *  mywin
- *   .add(-3,-2).add(-3,-1).add(-3,0).add(-3,1).add(-3,2)
- *   .add(-2,-1).add(-2,0).add(-2,1)
- *   .add(-1,0);
- * window2d mywin2 = - mywin;
- * $ save(morpho::hit_or_miss_closing_bg(im, mywin, mywin2), "out.pbm");
- * exi: object.pbm
- * exo: out.pbm
-=*/
+/*!
+** \brief Perform an hit or miss closing of background.
+**
+** Compute the hit_or_miss  closing of the background of  input by the
+** composite  structuring  element  (se1,   se2).  This  is  the  dual
+** transformation   of  hit-or-miss  opening   with  respect   to  set
+** complementation. Soille p.135.\n
+**
+** By definition se1 and se2 must have the same origin, and need to
+** be disjoint. This algorithm has been extended to every data types
+** (althought it is not increasing).  Beware the result depends upon the
+** image data type if it is not bin.
+**
+** \param I Exact type of the input image.
+** \param E1 Exact type of the first structuring element.
+** \param E2 Exact type of the second structuring element.
+**
+** \arg input Image to process.
+** \arg se1 First structuring element.
+** \arg se2 Second structuring element.
+**
+** \code
+** #include <oln/basics2d.hh>
+** #include <oln/morpho/hit_or_miss.hh>
+** #include <oln/level/compare.hh>
+** #include <ntg/all.hh>
+** int main()
+** {
+**   typedef oln::image2d<ntg::bin>	im_type;
+**
+**   im_type	im1(oln::load(IMG_IN "object.pbm"));
+**
+**   oln::window2d mywin;
+**   mywin
+**    .add(-3,-2).add(-3,-1).add(-3,0).add(-3,1).add(-3,2)
+**    .add(-2,-1).add(-2,0).add(-2,1)
+**    .add(-1,0);
+**   oln::window2d mywin2 = - mywin;
+**
+**   oln::save(oln::morpho::hit_or_miss_closing_bg(im1, mywin, mywin2),
+**                                       IMG_OUT "oln_morpho_fast_hit_or_miss_closing_bg.pbm");
+**   return  0;
+** }
+** \endcode
+**
+** \image html object.png
+** \image latex object.png
+** =>
+** \image html oln_morpho_fast_hit_or_miss_closing_bg.png
+** \image latex oln_morpho_fast_hit_or_miss_closing_bg.png
+**
+** \todo FIXME: Histogram problems (fast version do not work).
+*/
 template<class I, class E1, class E2>
-oln_concrete_type(I) 
+oln_concrete_type(I)
 hit_or_miss_closing_bg(const abstract::non_vectorial_image<I>& input,
 		       const abstract::struct_elt<E1>& se1,
 		       const abstract::struct_elt<E2>& se2)

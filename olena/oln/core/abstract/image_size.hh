@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,10 +34,14 @@
 # include <ntg/utils/debug.hh>
 # include <sstream>
 
-namespace oln {
-  
-  namespace abstract {
 
+
+namespace oln {
+
+  namespace abstract {
+    
+    
+    
     template<class Exact>
     struct image_size; // fwd_decl
 
@@ -46,13 +50,28 @@ namespace oln {
   template<class Exact>
   struct image_size_traits;
 
+  /*! \class image_size_traits<abstract::image_size<Exact> >
+  **
+  ** A class specialized for each image type
+  ** which gives the dimension of the template
+  ** parameter.
+  */
+  
   template<class Exact>
   struct image_size_traits<abstract::image_size<Exact> >
   {
   };
 
+  
   namespace abstract {
 
+    
+    /*! \class image_size
+    **
+    ** The class that defines the image size
+    ** according to its dimension.
+    */
+    
     template<class Exact>
     struct image_size : public mlc_hierarchy::any< Exact >
     {
@@ -61,6 +80,10 @@ namespace oln {
       
       enum { dim = image_size_traits<Exact>::dim };
       
+      /*! \brief Return the number of coordinates
+      ** in the nth section of the image.
+      */
+      
       coord 
       nth(unsigned n) const
       {
@@ -68,6 +91,11 @@ namespace oln {
 	return coord_[n];
       }
       
+      /*! \brief Return a reference to the number of coordinates
+      ** in the nth section of the image.
+      */
+      
+
       coord& 
       nth(unsigned n)
       {
@@ -75,17 +103,26 @@ namespace oln {
 	return coord_[n];
       }
       
+      /// Return the value border width of the current image.
       coord 
       border() const
       {
 	return border_;
       }
       
+      /// Return a reference to  the border width of the current image.
+      
       coord& 
       border()
       {
 	return border_;
       }
+
+      /*! \brief Test if two images 
+      ** have compatible size.
+      ** 
+      ** \return True if the two images have compatible size, false otherwise.
+      */
 
       template< class S >
       bool 
@@ -97,6 +134,11 @@ namespace oln {
 	return true;
       }
       
+      /*! \brief Test if two images do not have compatible size
+      **
+      ** \return False if the two images have compatible size, true otherwise.
+      */
+      
       template< class S >
       bool 
       operator!=(const image_size<S>& size) const
@@ -107,7 +149,8 @@ namespace oln {
 	return false;
       }
       
-
+      
+      
       static std::string 
       name() 
       { 
@@ -117,13 +160,25 @@ namespace oln {
 
     protected:
       
+      
       image_size() 
       {}
-
+      
+      /*! border_ represents the width of the image border
+      ** such a mecanism allow algorithm to perform operation
+      ** on the points at the edge of the image as if they were 
+      ** normally surrounded by points
+      */
+      
       coord border_;
 
     private:
 
+
+      /*! \brief An array that contains the number
+      ** of coordinates for each dimension.
+      */
+      
       coord coord_[dim];
 
     };

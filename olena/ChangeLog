@@ -1,3 +1,74 @@
+2004-03-12  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* oln/morpho/closing.inc: Correct comments.
+	* oln/morpho/extrema_killer.hh: Likewise.
+	* oln/morpho/attribute_closing_opening_map.hh: Likewise.
+	* oln/morpho/extrema.hxx: Likewise.
+	* oln/morpho/erosion.hh: Likewise.
+	* oln/morpho/extrema.hh: Likewise.
+	* oln/morpho/attribute_closing_opening.hh: Likewise.
+	* oln/morpho/attribute_union_find.hh: Likewise.
+	* oln/morpho/attributes.hh: Likewise.
+
+	* oln/morpho/dilation.hh: Add comments.
+	* oln/morpho/fast_morpho.hh: Likewise.
+	* oln/morpho/fast_morpho.hxx: Likewise.
+	* oln/morpho/geodesic_dilation.hh: Likewise.
+	* oln/morpho/geodesic_erosion.hh: Likewise.
+	* oln/morpho/gradient.inc: Likewise.
+	* oln/morpho/hit_or_miss.inc: Likezise.
+	* oln/morpho/laplacian.inc: Likewise.
+	* oln/morpho/minmax.hh: Likewise.
+	* oln/morpho/opening.inc: Likewise.
+	* oln/morpho/reconstruction.hh: Likewise.
+	* oln/morpho/splitse.hh: Likewise.
+	* oln/morpho/stat.hh: Likewise.
+	* oln/morpho/thickening.inc: Likewise.
+	* oln/morpho/thinning.inc: Likewise.
+	* oln/morpho/top_hat.inc: Likewise.
+	* oln/morpho/watershed.hh: Likewise.
+	* oln/morpho/watershed.hxx: Likewise.
+
+2004-03-11  Damien Thivolle  <damien@lrde.epita.fr>
+	* olena/oln/core/abstract/image.hh: Add comments.
+	* olena/oln/core/abstract/image_with_dim.hh: Correct comments.
+
+2004-03-11  Simon Odou  <simon@lrde.epita.fr>
+
+	* olena/oln/core/abstract/image.hh: Add same macros without the
+	'template' keyword.
+
+2004-03-11  Damien Thivolle  <damien@lrde.epita.fr>
+	* olena/oln/core/abstract/dpoint.hh: Add comments.
+	* olena/oln/core/abstract/image_size.hh: Add comments.
+	* olena/oln/core/abstract/point.hh: Add comments.
+	* olena/oln/core/abstract/image.hh: Add comments.
+	* olena/oln/core/abstract/image_with_dim.hh: Add comments.
+	* olena/oln/core/abstract/image_with_impl.hh: Add comments.
+	* olena/oln/core/abstract/image_with_type.hh: Add comments.
+	* olena/oln/core/abstract/image_with_type_with_dim.hh: Add comments.
+	* olena/oln/core/abstract/behavior.hh: Add comments.
+
+2004-03-10  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/level/compare.hh: Add comments.
+	* olena/oln/level/connected.hh: Add comments.
+	* olena/oln/level/fill.hh: Add comments.
+	* olena/oln/level/invert.hh: Add comments.
+	* olena/oln/level/lut.hh: Add comments.
+	* olena/oln/level/set_level.hh: Add comments.
+	* olena/oln/level/threshold.hh: Add comments.
+
+2004-03-10  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* olena/oln/snakes/snakes_base.hh: Add comments.
+	* olena/oln/snakes/energies.hh: Add comments.
+	* olena/oln/snakes/greedy.hh: Add comments.
+	* olena/oln/snakes/node.hh: Add comments.
+	* olena/oln/snakes/segment.hh: Add comments.
+	* olena/oln/snakes/snakes_base.hh: Add comments.
+	* olena/oln/morpho/attribute_closing_opening.hh: Fix bug in doc.
+	* olena/oln/morpho/attribute_closing_opening_map.hh: Fix bug in doc.
+
 2004-03-10  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* tests/morpho/tests/attr_op_cl: Initialize uninitialized variable.

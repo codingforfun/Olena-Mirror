@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,27 +43,54 @@
 namespace oln {
   namespace morpho {
     namespace sure {
-      /*=processing sure_geodesic_reconstruction_dilation
-       * ns: morpho
-       * what: Geodesic reconstruction by dilation.
-       * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
-       * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
-       * arg: const abstract::struct_elt<E>&, se, IN, structural element
-       * ret:oln_concrete_type(I1)
-       * doc:
-       *  Compute the reconstruction by dilation of \var{marker} with respect
-       * to the mask \var{mask} image using \var{se}
-       *   as structural element. Soille p.160. This is the simplest algorithm:
-       * iteration is performed until stability.
-       * see: morpho::simple_geodesic_dilation
-       * ex:
-       * $ image2d<int_u8> light = load("light.pgm");
-       * $ image2d<int_u8> dark = load("dark.pgm");
-       * $ save(morpho::sure_geodesic_reconstruction_dilation(light, dark, win_c8p()), "out.pgm");
-       * exi: light.pgm dark.pgm
-       * exo: out.pgm
-       * wontcompile: fixme
-       =*/
+      /*!
+      ** \brief Perform a geodesic reconstruction dilation.
+      **
+      ** Compute the reconstruction by dilation of marker with respect
+      ** to   the   mask   mask   image  using   se   as   structuring
+      ** element.  Soille  p.160.  This  is  the  simplest  algorithm:
+      ** iteration is performed until stability.
+      **
+      ** \warning This version is slow, since it is a sure one.
+      **
+      ** \pre Mask must be greater or equal than marker.
+      **
+      ** \param I1 Exact type of image marker.
+      ** \param I2 Exact type of image mask.
+      ** \param N Exact type of neighborhood.
+      **
+      ** \arg marker Image to work on.
+      ** \arg mask Image used for geodesic dilation.
+      ** \arg Ng Neighborhood to use.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/opening.hh>
+      ** #include <oln/morpho/reconstruction.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type	im1(oln::load(IMG_IN "lena128.pgm"));
+      **   im_type	im2(oln::morpho::opening(im1, oln::win_c4p()));
+      **
+      **   oln::save(oln::morpho::sure::geodesic_reconstruction_dilation(im2,
+      **                                                                 im1,
+      **                                                                 oln::neighb_c4()),
+      **             IMG_OUT "oln_morpho_sure_geodesic_reconstruction_dilation.pbm");
+      **   return  0;
+      ** }
+      ** \endcode
+      **
+      ** \image html lena128.png
+      ** \image latex lena128.png
+      ** =>
+      ** \image html oln_morpho_sure_geodesic_reconstruction_dilation.png
+      ** \image latex oln_morpho_sure_geodesic_reconstruction_dilation.png
+      **
+      */
       template<class I1, class I2, class N>
       oln_concrete_type(I1)
 	geodesic_reconstruction_dilation(const abstract::non_vectorial_image<I1> & marker,
@@ -88,30 +115,54 @@ namespace oln {
 
 
     namespace sequential {
-      /*=processing sequential_geodesic_reconstruction_dilation
-       * ns: morpho
-       * what: Geodesic reconstruction by dilation.
-       * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
-       * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
-       * arg: const abstract::struct_elt<E>&, se, IN, structural element
-       * ret:oln_concrete_type(I1)
-       * doc:
-       *  Compute the reconstruction by dilation of \var{marker} with respect
-       * to the mask \var{mask} image using \var{se}
-       *   as structural element. Soille p.160. The algorithm used is the
-       * one defined as sequential
-       * in Vincent(1993), Morphological grayscale reconstruction in
-       *  image analysis: applications and efficient algorithms, itip, 2(2),
-       * 176--201.
-       * see: morpho::simple_geodesic_dilation
-       * ex:
-       * $ image2d<int_u8> light = load("light.pgm");
-       * $ image2d<int_u8> dark = load("dark.pgm");
-       * $ save(morpho::sequential_geodesic_reconstruction_dilation(light, dark, win_c8p()), "out.pgm");
-       * exi: light.pgm dark.pgm
-       * exo: out.pgm
-       * wontcompile: fixme
-       =*/
+      /*!
+      ** \brief Perform a geodesic reconstruction dilation.
+      **
+      ** Compute the reconstruction by dilation of marker with respect
+      ** to  the mask  image using  se as  structuring  element. Soille
+      ** p.160. The algorithm used is the one defined as sequential in
+      ** Vincent(1993),  Morphological   grayscale  reconstruction  in
+      ** image analysis: applications  and efficient algorithms, itip,
+      ** 2(2), 176--201.
+      **
+      ** \pre Mask must be greater or equal than marker.
+      **
+      ** \param I1 Exact type of image marker.
+      ** \param I2 Exact type of image mask.
+      ** \param N Exact type of neighborhood.
+      **
+      ** \arg marker Image to work on.
+      ** \arg mask Image used for geodesic dilation.
+      ** \arg Ng Neighborhood to use.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/opening.hh>
+      ** #include <oln/morpho/reconstruction.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type	im1(oln::load(IMG_IN "lena128.pgm"));
+      **   im_type	im2(oln::morpho::opening(im1, oln::win_c4p()));
+      **
+      **   oln::save(oln::morpho::sequential::geodesic_reconstruction_dilation(im2,
+      **                                                                 im1,
+      **                                                                 oln::neighb_c4()),
+      **             IMG_OUT "oln_morpho_sequential_geodesic_reconstruction_dilation.pbm");
+      **   return  0;
+      ** }
+      ** \endcode
+      **
+      ** \image html lena128.png
+      ** \image latex lena128.png
+      ** =>
+      ** \image html oln_morpho_sequential_geodesic_reconstruction_dilation.png
+      ** \image latex oln_morpho_sequential_geodesic_reconstruction_dilation.png
+      **
+      */
       template<class I1, class I2, class N>
       oln_concrete_type(I1)
 	geodesic_reconstruction_dilation(const abstract::non_vectorial_image<I1> & marker,
@@ -122,12 +173,12 @@ namespace oln {
 	mlc::eq<I1::dim, N::dim>::ensure();
 	precondition(marker.size() == mask.size());
 	precondition(level::is_greater_or_equal(mask, marker));
-	
+
 	// Conversion of neighborhood into a SE.
 	typedef typename abstract::neighborhood<N>::win_type E;
 	E se_plus = get_plus_se_p(convert::ng_to_cse(Ng));
 	E se_minus = get_minus_se_p(convert::ng_to_cse(Ng));
-	
+
 	oln_concrete_type(I1) output = marker.clone();
 	bool non_stability = true;
 	typename I1::fwd_iter_type fwd_p(output);
@@ -146,14 +197,22 @@ namespace oln {
 	return output;
       }
     }// sequential
-    
+
 
     namespace hybrid {
 
       namespace internal {
 
+	/*!
+	** \brief Check if it exists initialization for dilation.
+	**
+	** \arg p Point to consider.
+	** \arg marker Image to work on.
+	** \arg mask Image used as mask.
+	** \arg Ng Neighborhood to use.
+	*/
 	template<class P, class I1, class I2, class E> inline
-	static bool 
+	static bool
 	exist_init_dilation(const abstract::point<P>& p,
 			    const abstract::non_vectorial_image<I1>& marker,
 			    const abstract::non_vectorial_image<I2>& mask,
@@ -162,7 +221,7 @@ namespace oln {
 	  mlc::eq<I1::dim, I2::dim>::ensure();
 	  mlc::eq<I1::dim, E::dim>::ensure();
 	  mlc::eq<I1::dim, P::dim>::ensure();
-	  
+
 	  oln_neighb_type(E) q(se, p);
 	  for_all (q)
 	    if (marker.hold(q) && (marker[q] < marker[p]) && (marker[q] < mask[q]))
@@ -172,30 +231,54 @@ namespace oln {
 
       } //internal
 
-      /*=processing hybrid_geodesic_reconstruction_dilation
-       * ns: morpho
-       * what: Geodesic reconstruction by dilation.
-       * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
-       * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
-       * arg: const abstract::struct_elt<E>&, se, IN, structural element
-       * ret:oln_concrete_type(I1)
-       * doc:
-       *  Compute the reconstruction by dilation of \var{marker} with respect
-       * to the mask \var{mask} image using \var{se}
-       *   as structural element. Soille p.160. The algorithm used is the
-       * one defined as hybrid
-       * in Vincent(1993), Morphological grayscale reconstruction in
-       *  image analysis: applications and efficient algorithms, itip, 2(2),
-       * 176--201.
-       * see: morpho::simple_geodesic_dilation
-       * ex:
-       * $ image2d<int_u8> light = load("light.pgm");
-       * $ image2d<int_u8> dark = load("dark.pgm");
-       * $ save(morpho::hybrid_geodesic_reconstruction_dilation(light, dark, win_c8p()), "out.pgm");
-       * exi: light.pgm dark.pgm
-       * exo: out.pgm
-       * wontcompile: fixme
-       =*/
+      /*!
+      ** \brief Perform a geodesic reconstruction dilation.
+      **
+      **  Compute  the  reconstruction  by  dilation  of  marker  with
+      ** respect   to  the   mask  image   using  se   as  structuring
+      ** element. Soille p.160. The  algorithm used is the one defined
+      ** as   hybrid   in   Vincent(1993),   Morphological   grayscale
+      ** reconstruction in image  analysis: applications and efficient
+      ** algorithms, itip, 2(2), 176--201.
+      **
+      ** \pre Mask must be greater or equal than marker.
+      **
+      ** \param I1 Exact type of image marker.
+      ** \param I2 Exact type of image mask.
+      ** \param N Exact type of neighborhood.
+      **
+      ** \arg marker Image to work on.
+      ** \arg mask Image used for geodesic dilation.
+      ** \arg Ng Neighborhood to use.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/opening.hh>
+      ** #include <oln/morpho/reconstruction.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type	im1(oln::load(IMG_IN "lena128.pgm"));
+      **   im_type	im2(oln::morpho::opening(im1, oln::win_c4p()));
+      **
+      **   oln::save(oln::morpho::hybrid::geodesic_reconstruction_dilation(im2,
+      **                                                                 im1,
+      **                                                                 oln::neighb_c4()),
+      **             IMG_OUT "oln_morpho_hybrid_geodesic_reconstruction_dilation.pbm");
+      **   return  0;
+      ** }
+      ** \endcode
+      **
+      ** \image html lena128.png
+      ** \image latex lena128.png
+      ** =>
+      ** \image html oln_morpho_hybrid_geodesic_reconstruction_dilation.png
+      ** \image latex oln_morpho_hybrid_geodesic_reconstruction_dilation.png
+      **
+      */
       template<class I1, class I2, class N>
       oln_concrete_type(I1)
 	geodesic_reconstruction_dilation(const abstract::non_vectorial_image<I1> & marker,
@@ -252,27 +335,55 @@ namespace oln {
     //GEODESIC RECONSTRUCTION EROSION
 
     namespace sure {
-      /*=processing sure_geodesic_reconstruction_erosion
-       * ns: morpho
-       * what: Geodesic reconstruction by erosion.
-       * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
-       * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
-       * arg: const abstract::struct_elt<E>&, se, IN, structural element
-       * ret:oln_concrete_type(I1)
-       * doc:
-       *  Compute the reconstruction by erosion of \var{marker} with respect
-       * to the mask \var{mask} image using \var{se}
-       *   as structural element. Soille p.160. This is the simplest algorithm :
-       * iteration is performed until stability.
-       * see: morpho::simple_geodesic_erosion
-       * ex:
-       * $ image2d<int_u8> light = load("light.pgm");
-       * $ image2d<int_u8> dark = load("dark.pgm");
-       * $ save(morpho::sure_geodesic_reconstruction_erosion(light, dark, win_c8p()), "out.pgm");
-       * exi: light.pgm dark.pgm
-       * exo: out.pgm
-       * wontcompile: fixme
-       =*/
+
+      /*!
+      ** \brief Perform a geodesic reconstruction erosion.
+      **
+      **  Compute the reconstruction by erosion of marker with respect
+      ** to  the mask image  using se  as structuring  element. Soille
+      ** p.160. This is the simplest algorithm: iteration is performed
+      ** until stability.
+      **
+      ** \warning This version is slow, since it is a sure one.
+      **
+      ** \pre Marker must be greater or equal than mask.
+      **
+      ** \param I1 Exact type of image marker.
+      ** \param I2 Exact type of image mask.
+      ** \param N Exact type of neighborhood.
+      **
+      ** \arg marker Image to work on.
+      ** \arg mask Image used for geodesic erosion.
+      ** \arg Ng Neighborhood to use.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/opening.hh>
+      ** #include <oln/morpho/reconstruction.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type	im1(oln::load(IMG_IN "lena128.pgm"));
+      **   im_type	im2(oln::morpho::opening(im1, oln::win_c4p()));
+      **
+      **   oln::save(oln::morpho::sure::geodesic_reconstruction_erosion(im1,
+      **                                                                 im2,
+      **                                                                 oln::neighb_c4()),
+      **             IMG_OUT "oln_morpho_sure_geodesic_reconstruction_erosion.pbm");
+      **   return  0;
+      ** }
+      ** \endcode
+      **
+      ** \image html lena128.png
+      ** \image latex lena128.png
+      ** =>
+      ** \image html oln_morpho_sure_geodesic_reconstruction_erosion.png
+      ** \image latex oln_morpho_sure_geodesic_reconstruction_erosion.png
+      **
+      */
       template<class I1, class I2, class N>
       oln_concrete_type(I1)
 	geodesic_reconstruction_erosion(const abstract::non_vectorial_image<I1> & marker,
@@ -297,30 +408,55 @@ namespace oln {
 
 
     namespace sequential {
-      /*=processing sequential_geodesic_reconstruction_erosion
-       * ns: morpho
-       * what: Geodesic reconstruction by erosion.
-       * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
-       * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
-       * arg: const abstract::struct_elt<E>&, se, IN, structural element
-       * ret:oln_concrete_type(I1)
-       * doc:
-       *  Compute the reconstruction by erosion of \var{marker} with respect
-       * to the mask \var{mask} image using \var{se}
-       *   as structural element. Soille p.160.  The algorithm used is the
-       * one defined as sequential
-       * in Vincent(1993), Morphological grayscale reconstruction in
-       *  image analysis: applications and efficient algorithms, itip, 2(2),
-       * 176--201.
-       * see: morpho::simple_geodesic_erosion
-       * ex:
-       * $ image2d<int_u8> light = load("light.pgm");
-       * $ image2d<int_u8> dark = load("dark.pgm");
-       * $ save(morpho::sequential_geodesic_reconstruction_erosion(light, dark, win_c8p()), "out.pgm");
-       * exi: light.pgm dark.pgm
-       * exo: out.pgm
-       * wontcompile: fixme
-       =*/
+
+      /*!
+      ** \brief Perform a geodesic reconstruction erosion.
+      **
+      **  Compute the reconstruction by erosion of marker with respect
+      ** to  the mask image  using se  as structuring  element. Soille
+      ** p.160.  The  algorithm used is the one  defined as sequential
+      ** in  Vincent(1993), Morphological grayscale  reconstruction in
+      ** image analysis: applications  and efficient algorithms, itip,
+      ** 2(2), 176--201.
+      **
+      ** \pre Marker must be greater or equal than mask.
+      **
+      ** \param I1 Exact type of image marker.
+      ** \param I2 Exact type of image mask.
+      ** \param N Exact type of neighborhood.
+      **
+      ** \arg marker Image to work on.
+      ** \arg mask Image used for geodesic erosion.
+      ** \arg Ng Neighborhood to use.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/opening.hh>
+      ** #include <oln/morpho/reconstruction.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type	im1(oln::load(IMG_IN "lena128.pgm"));
+      **   im_type	im2(oln::morpho::opening(im1, oln::win_c4p()));
+      **
+      **   oln::save(oln::morpho::sequential::geodesic_reconstruction_erosion(im1,
+      **                                                                 im2,
+      **                                                                 oln::neighb_c4()),
+      **             IMG_OUT "oln_morpho_sequential_geodesic_reconstruction_erosion.pbm");
+      **   return  0;
+      ** }
+      ** \endcode
+      **
+      ** \image html lena128.png
+      ** \image latex lena128.png
+      ** =>
+      ** \image html oln_morpho_sequential_geodesic_reconstruction_erosion.png
+      ** \image latex oln_morpho_sequential_geodesic_reconstruction_erosion.png
+      **
+      */
       template<class I1, class I2, class N>
       oln_concrete_type(I1)
 	geodesic_reconstruction_erosion(const abstract::non_vectorial_image<I1>& marker,
@@ -358,8 +494,16 @@ namespace oln {
 
     namespace hybrid {
       namespace internal {
+	/*!
+	** \brief Check if it exists initialization for erosion.
+	**
+	** \arg p Point to consider.
+	** \arg marker Image to work on.
+	** \arg mask Image used as mask.
+	** \arg Ng Neighborhood to use.
+	*/
 	template<class P, class I1, class I2, class E> inline
-	static bool 
+	static bool
 	exist_init_erosion(const abstract::point<P>& p,
 			   const abstract::non_vectorial_image<I1>& marker,
 			   const abstract::non_vectorial_image<I2>& mask,
@@ -377,31 +521,54 @@ namespace oln {
 	}
       } // internal
 
-      /*=processing hybrid_geodesic_reconstruction_erosion
-       * ns: morpho
-       * what: Geodesic reconstruction by erosion.
-       * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
-       * arg: const abstract::non_vectorial_image<I2>&, mask, IN, mask image
-       * arg: const abstract::struct_elt<E>&, se, IN, structural element
-       * ret:oln_concrete_type(I1)
-       * doc:
-       *  Compute the reconstruction by erosion of \var{marker} with respect
-       * to the mask \var{mask} image using \var{se}
-       *   as structural element. Soille p.160.  The algorithm used is the
-       * one defined as hybrid
-       * in Vincent(1993), Morphological grayscale reconstruction in
-       *  image analysis: applications and efficient algorithms, itip, 2(2),
-       * 176--201.
-       * see: morpho::simple_geodesic_erosion
-       * ex:
-       * $ image2d<int_u8> light = load("light.pgm");
-       * $ image2d<int_u8> dark = load("dark.pgm");
-       * $ save(morpho::sequential_geodesic_reconstruction_erosion(light, dark, win_c8p()), "out.pgm");
-       * exi: light.pgm dark.pgm
-       * exo: out.pgm
-       * wontcompile: fixme
-       =*/
-
+      /*!
+      ** \brief Perform a geodesic reconstruction erosion.
+      **
+      **  Compute the reconstruction by erosion of marker with respect
+      ** to   the   mask   mask   image  using   se   as   structuring
+      ** element. Soille p.160.  The algorithm used is the one defined
+      ** as   hybrid   in   Vincent(1993),   Morphological   grayscale
+      ** reconstruction in image  analysis: applications and efficient
+      ** algorithms, itip, 2(2), 176--201.
+      **
+      ** \pre Marker must be greater or equal than mask.
+      **
+      ** \param I1 Exact type of image marker.
+      ** \param I2 Exact type of image mask.
+      ** \param N Exact type of neighborhood.
+      **
+      ** \arg marker Image to work on.
+      ** \arg mask Image used for geodesic erosion.
+      ** \arg Ng Neighborhood to use.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/opening.hh>
+      ** #include <oln/morpho/reconstruction.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type	im1(oln::load(IMG_IN "lena128.pgm"));
+      **   im_type	im2(oln::morpho::opening(im1, oln::win_c4p()));
+      **
+      **   oln::save(oln::morpho::hybrid::geodesic_reconstruction_erosion(im1,
+      **                                                                 im2,
+      **                                                                 oln::neighb_c4()),
+      **             IMG_OUT "oln_morpho_hybrid_geodesic_reconstruction_erosion.pbm");
+      **   return  0;
+      ** }
+      ** \endcode
+      **
+      ** \image html lena128.png
+      ** \image latex lena128.png
+      ** =>
+      ** \image html oln_morpho_hybrid_geodesic_reconstruction_erosion.png
+      ** \image latex oln_morpho_hybrid_geodesic_reconstruction_erosion.png
+      **
+      */
       template<class I1, class I2, class N>
       oln_concrete_type(I1)
 	geodesic_reconstruction_erosion(const abstract::non_vectorial_image<I1> & marker,

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,12 +37,29 @@ namespace oln {
 
     namespace internal {
 
-      /* We need to use this inner definition in order to specialize
-	 max and min on binary images.  */
-
+      /*!
+      ** \brief Min and Max on a structuring element.
+      **
+      ** We need to use this inner definition in order to specialize
+      ** max and min on binary images.
+      **
+      ** \param I Image exact type.
+      ** \param E Structuring element type.
+      ** \param V Associated value type.
+      */
       template <class I, class E, class V =oln_value_type(I)>
-      struct stat_ 
+      struct stat_
       {
+	/*!
+	** \brief Maximum of a structuring element.
+	**
+	** Look for  the maximum in the structuring  element se disposed
+	** on the image input, at the point p.
+	**
+	** \arg input Input image.
+	** \arg p Point of the image to move the structuring element on.
+	** \arg se The structuring element to use.
+	*/
 	static V
 	max(const I& input, const oln_point_type(I)& p, const E& se)
 	{
@@ -57,6 +74,16 @@ namespace oln {
 	  return val;
 	}
 
+	/*!
+	** \brief Minimum of a structuring element.
+	**
+	** Look for  the minimum in the structuring  element se disposed
+	** on the image input, at the point p.
+	**
+	** \arg input Input image.
+	** \arg p Point of the image to move the structuring element on.
+	** \arg se The structuring element to use.
+	*/
 	static V
 	min(const I& input, const oln_point_type(I)& p, const E& se)
 	{
@@ -75,7 +102,7 @@ namespace oln {
       /* Binary specialization.  */
 
       template <class I, class E>
-      struct stat_<I, E, ntg::bin> 
+      struct stat_<I, E, ntg::bin>
       {
 	static ntg::bin
 	max(const I& input, const oln_point_type(I)& p, const E& se)
@@ -103,8 +130,21 @@ namespace oln {
 
     } // internal
 
+    /*!
+    ** \brief Maximum of a structuring element.
+    **
+    ** Look for  the maximum in the structuring  element se disposed
+    ** on the image input, at the point p.
+    **
+    ** \param I Image exact type.
+    ** \param E Structuring element type.
+    **
+    ** \arg input Input image.
+    ** \arg p Point of the image to move the structuring element on.
+    ** \arg se The structuring element to use.
+    */
     template<class I, class E>
-    oln_value_type(I) 
+    oln_value_type(I)
     max(const abstract::non_vectorial_image<I>& input,
 	const mlc_exact_type(I)::point_type& p,
 	const abstract::struct_elt<E>& se)
@@ -112,9 +152,21 @@ namespace oln {
       mlc::eq<I::dim, E::dim>::ensure();
       return internal::stat_<I, E>::max(input.exact(), p, se.exact());
     }
-    
+
+    /*! ** \brief Minimum of a structuring element.
+    **
+    ** Look for  the minimum in the structuring  element se disposed
+    ** on the image input, at the point p.
+    **
+    ** \param I Image exact type.
+    ** \param E Structuring element type.
+    **
+    ** \arg input Input image.
+    ** \arg p Point of the image to move the structuring element on.
+    ** \arg se The structuring element to use.
+    */
     template<class I, class E>
-    oln_value_type(I) 
+    oln_value_type(I)
     min(const abstract::non_vectorial_image<I>& input,
 	const mlc_exact_type(I)::point_type& p,
 	//		 const mlc_exact_type(I)::iter_type& p,

@@ -51,12 +51,12 @@ namespace oln {
     /*!
     ** \brief Kill connex components smaller than a given area.
     **
-    ** \param I: exact type of the input image.
-    ** \param N: exact type of the neighborhood.
+    ** \param I E xact type of the input image.
+    ** \param N Exact type of the neighborhood.
     **
-    ** \arg input: the input image.
-    ** \arg area: the threshold to use.
-    ** \arg Ng: the neighborhood to use.
+    ** \arg input The input image.
+    ** \arg area The threshold to use.
+    ** \arg Ng The neighborhood to use.
     */
     template<class I, class N>
     typename mute<I, ntg::bin>::ret
@@ -95,16 +95,16 @@ namespace oln {
     ** \brief Maxima killer.
     **
     ** It removes the small (in area) connected components of the upper
-    ** level sets of input using se as structual element. The implementation
+    ** level sets of input using se as structuring element. The implementation
     ** uses the threshold superposition principle; so it is very slow ! it works only for
     ** int_u8 images.
     **
-    ** \param I: image exact type.
-    ** \param N: neighborhood exact type.
+    ** \param I Image exact type.
+    ** \param N Neighborhood exact type.
     **
-    ** \arg input: the input image.
-    ** \arg area: threshold to use.
-    ** \arg Ng: the neighborhood to use.
+    ** \arg input The input image.
+    ** \arg area Threshold to use.
+    ** \arg Ng The neighborhood to use.
     **
     ** \code
     ** #include <oln/basics2d.hh>
@@ -167,17 +167,17 @@ namespace oln {
     /*!
     ** \brief Minima killer.
     **
-    ** It removes the small (in area) connected components of the lower
-    ** level sets of input using se as structual element. The implementation
-    ** uses the threshold superposition principle; so it is very slow ! it works only for
-    ** int_u8 images.
+    ** It  removes the  small (in  area) connected  components  of the
+    ** lower level sets of input  using se as structuring element. The
+    ** implementation uses  the threshold superposition  principle; so
+    ** it is very slow ! it works only for int_u8 images.
     **
-    ** \param I: image exact type.
-    ** \param N: neighborhood exact type.
+    ** \param I Image exact type.
+    ** \param N Neighborhood exact type.
     **
-    ** \arg input: the input image.
-    ** \arg area: threshold to use.
-    ** \arg Ng: the neighborhood to use.
+    ** \arg input The input image.
+    ** \arg area Threshold to use.
+    ** \arg Ng The neighborhood to use.
     **
     ** \code
     ** #include <oln/basics2d.hh>
@@ -245,14 +245,14 @@ namespace oln {
     /*!
     ** \brief Check if a point is a strict minimum.
     **
-    ** \param P: exact type of the point.
-    ** \param I: exact type of the image.
-    ** \param N: exact type of the neighborhood.
+    ** \param P Exact type of the point.
+    ** \param I Exact type of the image.
+    ** \param N Exact type of the neighborhood.
     **
-    ** \arg p: the point to consider.
-    ** \arg input: the image where to  get the value of the point to
+    ** \arg p The point to consider.
+    ** \arg input The image where to  get the value of the point to
     ** consider.
-    ** \arg Ng: type of neighborhood to use.
+    ** \arg Ng Type of neighborhood to use.
     */
     template<class P, class I, class N>
     //    inline
@@ -280,14 +280,14 @@ namespace oln {
     /*!
     ** \brief Check if a point is a strict maximum.
     **
-    ** \param P: exact type of the point.
-    ** \param I: exact type of the image.
-    ** \param N: exact type of the neighborhood.
+    ** \param P Exact type of the point.
+    ** \param I Exact type of the image.
+    ** \param N Exact type of the neighborhood.
     **
-    ** \arg p: the point to consider.
-    ** \arg input: the image where to  get the value of the point to
+    ** \arg p The point to consider.
+    ** \arg input The image where to  get the value of the point to
     ** consider.
-    ** \arg Ng: type of neighborhood to use.
+    ** \arg Ng Type of neighborhood to use.
     */
     template<class P, class I, class N>
     // inline
@@ -321,12 +321,12 @@ namespace oln {
     ** implementation  is based  on  stak. Guichard  and Morel,  Image
     ** iterative smoothing and PDE's.  Book in preparation. p 265.
     **
-    ** \param I: image exact type.
-    ** \param N: neighborhood exact type.
+    ** \param I Image exact type.
+    ** \param N Neighborhood exact type.
     **
-    ** \arg input: the input image.
-    ** \arg area: threshold to use.
-    ** \arg Ng: the neighborhood to use.
+    ** \arg input The input image.
+    ** \arg area Threshold to use.
+    ** \arg Ng The neighborhood to use.
     **
     ** \code
     ** #include <oln/basics2d.hh>
@@ -446,12 +446,12 @@ namespace oln {
     ** implementation  is based  on  stak. Guichard  and Morel,  Image
     ** iterative smoothing and PDE's.  Book in preparation. p 265.
     **
-    ** \param I: image exact type.
-    ** \param N: neighborhood exact type.
+    ** \param I Image exact type.
+    ** \param N Neighborhood exact type.
     **
-    ** \arg input: the input image.
-    ** \arg area: threshold to use.
-    ** \arg Ng: the neighborhood to use.
+    ** \arg input The input image.
+    ** \arg area Threshold to use.
+    ** \arg Ng The neighborhood to use.
     **
     ** \code
     ** #include <oln/basics2d.hh>

@@ -1,4 +1,4 @@
-// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -40,53 +40,79 @@
 # include <oln/level/fill.hh>
 # include <oln/level/invert.hh>
 # include <oln/level/compare.hh>
+
 # include <set>
 # include <list>
 # include <vector>
+# include <ntg/core/macros.hh>
 
+# include <mlc/is_a.hh>
 namespace oln {
 
+  /*! \namespace oln::level
+  ** \brief level namespace.
+  */
   namespace level {
 
     // optional behavior for this algorithm.
     struct update_label;
 
-    /*=processing frontp_connected_component
-     * ns: level
-     * what: Connected Component.
-     * arg: const abstract::image<I>&, marker, IN, marker image
-     * arg: const abstract::neighborhood<E>&, se, IN, neighbourhood
-     * arg: numeric_value&, nb, IN, nb_label (optional)
-     * ret: typename mute<I, DestType>::ret
-     * doc: It removes the small (in area) connected components of the upper
-     * level sets of \var{input} using \var{se} as structural element.
-     * The implementation
-     * uses front propagation.
-     * see: level::connected_component
-     * ex:
-     * $ image2d<int_u8> light = load("light.pgm");
-     * $ save(level::frontp_connected_component<int_u16>(light, win_c8p()),
-     * $ "out.pgm");
-     * exi: light.pgm
-     * exo: out.pgm
-     * wontcompile: fixme
-     =*/
+    /*! \brief Processing frontp_connected_component extract
+    ** the connected components.
+    **
+    ** It removes the small (in area) connected components of the upper
+    ** level sets of \var{input} using \var{se} as structural element.
+    **
+    ** \ref The implementation uses front propagation.
+    **
+    ** \pre the input must be a binary image.
+    **
+    ** \arg input Image of markers.
+    ** \arg se Neighbourhood.
+    ** \arg nb_label Returns the number of label (optional).
+    **
+    ** \return An image of type \a DestType.
+    **
+    **
+    ** \see level::connected_component
+    ** \todo FIXME: Should probably be turned into a class.
+    **
+    ** \code
+    ** #include <oln/basics2d.hh>
+    ** #include <oln/level/cc.hh>
+    ** #include <ntg/all.hh>
+    ** #include <iostream>
+    **
+    ** int main()
+    ** {
+    **   unsigned card;
+    **   oln::image2d<ntg::bin> light = oln::load(IMG_IN "face_se.pbm");
+    **   save(oln::level::frontp_connected_component<ntg::int_u8>(light,
+    ** 							   oln::neighb_c8(),
+    ** 							   card),
+    **        IMG_OUT "oln_level_frontp_connected_component.pgm");
+    **   std::cout << card << " connected components" << std::endl;
+    ** }
+    ** \endcode
+    ** \image html face_se.png
+    ** \image latex face_se.png
+    ** =>
+    ** \image html oln_level_frontp_connected_component.png
+    ** \image latex oln_level_frontp_connected_component.png
+    */
 
-
-    // Number the connected components i.e label true. background(i.e
-    // label false) has the label 0; in the output
-    // FIXME: Should probably be turned into a class.
     template <class DestType, class I, class E>
     typename mute<I, DestType>::ret
     frontp_connected_component(const abstract::image<I>& input,
 			       const abstract::neighborhood<E>& se,
 			       unsigned& nb_label)
     {
-      // FIXME: ensure the oln_value_type(I) is ntg::bin.
+      ntg_is_a(oln_value_type(I), ntg::binary)::ensure();
+
       typename mute<I, DestType>::ret output(input.size());
       level::fill(output, 0);
 
-      typedef std::set<oln_point_type(I), 
+      typedef std::set<oln_point_type(I),
 	               oln::internal::default_less<oln_point_type(I) > >
 	      points_set;
 
@@ -150,7 +176,7 @@ namespace oln {
     extract_i_cc(const abstract::image<I>& input,
 		 oln_value_type(I) i)
     {
-      
+
       typename mute<I, ntg::bin>::ret output(input.size());
       level::fill(output, false);
       oln_iter_type(I) p(input);
@@ -165,9 +191,9 @@ namespace oln {
     {
       return fold(arith::default_f_max<oln_value_type(I)>(), input);
     }
-    
+
   } // end of namespace level
-  
+
 } // end of namespace oln
 
 #endif // ! OLENA_LEVEL_CC_HH

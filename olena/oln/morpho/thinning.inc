@@ -1,5 +1,5 @@
 // -*- c++ -*-
-// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,9 +26,45 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-
+/*!
+** \brief Thin an image.
+**
+** \param I Exact type of the image.
+** \param E1 Exact type of the first structuring element.
+** \param E2 Exact type of the second structuring element.
+**
+** \arg input Image to process.
+** \arg se1 First structuring element.
+** \arg se2 Second structuring element.
+**
+** \code
+** #include <oln/basics2d.hh>
+** #include <oln/morpho/thinning.hh>
+** #include <oln/level/compare.hh>
+** #include <ntg/all.hh>
+** int main()
+** {
+**   typedef oln::image2d<ntg::int_u8>	im_type;
+**
+**   im_type	im1(oln::load(IMG_IN "lena256.pgm"));
+**
+**   oln::save(oln::morpho::fast::thinning(im1,
+**                                          oln::win_c8p(),
+**                                          oln::win_c8p()),
+**                                          IMG_OUT "oln_morpho_fast_thinning.pbm");
+**   return  0;
+** }
+** \endcode
+**
+** \image html lena256.png
+** \image latex lena256.png
+** =>
+** \image html oln_morpho_fast_thinning.png
+** \image latex oln_morpho_fast_thinning.png
+**
+*/
 template<class I, class E1, class E2>
-oln_concrete_type(I) 
+oln_concrete_type(I)
   thinning(const abstract::non_vectorial_image<I>& input,
 	   const abstract::struct_elt<E1>& se1,
 	   const abstract::struct_elt<E2>& se2)

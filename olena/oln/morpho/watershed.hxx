@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -106,7 +106,7 @@ namespace oln {
 	  typedef oln_value_type(IO) destvalue_type;
 	  oln_morpho_declare_soille_watershed_consts_(destvalue_type);
 	  (void) init; (void) wshed; /* unused */
-	  
+
 	  oln_point_type(II) p = fifo.front();
 	  fifo.pop();
 
@@ -119,7 +119,7 @@ namespace oln {
 		if (im_o.hold(p_prime) && im_o[p_prime] <= maxlevel)
 		  {
 		    oln_point_type(II) l = p_prime;
-		    
+
 		    for_all_remaining(p_prime)
 		      if (im_o.hold(p_prime)
 			  && im_o[p_prime] <= maxlevel
@@ -140,19 +140,25 @@ namespace oln {
 	      }
 	}
       };
-      
+
+      /*!
+      ** \brief Check  if the second element  of p1 is  lower than the
+      ** second one of p2.
+      */
       template<class Point, class T> inline
-      bool 
+      bool
       watershed_seg_sort_(const std::pair<Point, T>& p1,
 			  const std::pair<Point, T>& p2)
       {
 	return p1.second < p2.second;
       }
 
-      // Algorithm by Vincent and Soille
+      /*!
+      ** \brief Algorithm by Vincent and Soille.
+      */
       template<class PointHandler, class DestValue, class I, class N>
       typename mute<I, DestValue>::ret
-      soille_watershed_(const abstract::non_vectorial_image<I>& im_i, 
+      soille_watershed_(const abstract::non_vectorial_image<I>& im_i,
 			const abstract::neighborhood<N>& Ng)
       {
 	oln_morpho_declare_soille_watershed_consts_(DestValue);
@@ -185,9 +191,9 @@ namespace oln {
 	  // geodesic SKIZ of level h-1 inside level h
 	  {
 	    unsigned int level_start = i;	// First index for current level.
-	    
+
 	    oln_value_type(I) h = histo[i].second;
-	    
+
 	    oln_point_type(I) p;
 	    while (i < histo.size())
 	      {
@@ -210,26 +216,26 @@ namespace oln {
 		    im_o[p] = inqueue;
 		    fifo.push(p);
 		  }
-		
+
 		++i;
 	      }
-	    
+
 	    // ================================================================
-	    
+
 	    while (!fifo.empty())
 	      PointHandler::process (fifo, im_i, im_o, Ng);
-	    
+
 	    // ================================================================
-	    
+
 	    /* Check for new minima.  */
-	    
+
 	    unsigned int j = level_start;
 	    while (j < histo.size())
 	      {
 		p = histo[j].first;
 		if (im_i[p] != h)
 		  break;
-		
+
 		if (im_o[p] == mask)
 		  {
 		    current_label += 1;
@@ -238,7 +244,7 @@ namespace oln {
 		       the caller that such 'wrapping' occured.  */
 		    if (current_label > maxlevel)
 		      current_label = ntg_min_val(DestValue);
-		    
+
 		    fifo.push(p);
 		    im_o[p] = current_label;
 		    while (!fifo.empty())
@@ -273,10 +279,10 @@ namespace oln {
       return internal::soille_watershed_<
 	internal::watershed_seg_point_handler_, DestValue> (im_i, Ng);
     }
-    
+
     template<class DestValue, class I, class N>
     typename mute<I, DestValue>::ret
-    watershed_con(const abstract::non_vectorial_image<I>& im_i, 
+    watershed_con(const abstract::non_vectorial_image<I>& im_i,
 		  const abstract::neighborhood<N>& Ng)
     {
       return internal::soille_watershed_<
@@ -284,14 +290,16 @@ namespace oln {
     }
 
 
-    // cmp_queue_elt is a comparison function for the elements from
-    // the priority queue used in watershed_seg_or.  Note that we
-    // return true when l is greater than r, because we when the queue
-    // sorted in increasing order.
+    /*!
+    ** cmp_queue_elt is a comparison function for the elements from
+    ** the priority queue used in watershed_seg_or.  Note that we
+    ** return true when l is greater than r, because we when the queue
+    ** sorted in increasing order.
+    */
     template <class T>
     struct cmp_queue_elt
     {
-      bool 
+      bool
       operator()(const std::pair<oln_point_type(T), oln_value_type(T)>& l,
 		 const std::pair<oln_point_type(T), oln_value_type(T)>& r) const
       {

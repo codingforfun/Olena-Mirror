@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -36,9 +36,20 @@ namespace oln {
 
   namespace level {
 
-    // few values -> new values
-    // otherwise  -> id
-
+    /*! \brief Look up table "id" version.
+    **
+    ** If the value has not been set, return id (see the example).
+    **
+    ** \see hlut_def
+    ** \verbatim
+    ** hlut<int> l;
+    **
+    ** l.set(16, 64);
+    **
+    ** cout << l(16) << ","   // print 64,
+    **      << l(51) << endl; // print 51
+    ** \endverbatim
+    */
     template<class T, class T2 = T>
     class hlut
     {
@@ -50,14 +61,23 @@ namespace oln {
       hlut()
       {}
 
-      hlut& 
+      /*! Register a value.
+      **
+      ** \arg val Key.
+      ** \arg newval Value corresponding to the key.
+      */
+      hlut&
       set(const T& val, const T2& newval)
       {
 	hmap_[val] = newval;
 	return *this;
       }
 
-      const T2 
+      /*! Get the value corresponding to the key.
+      **
+      ** Return the key if the key has not been set.
+      **/
+      const T2
       operator()(const T& val) const
       {
 	static typename hmap_t::const_iterator i;
@@ -70,9 +90,23 @@ namespace oln {
     };
 
 
-    // few values -> new values
-    // otherwise  -> default value
-
+    /*! \brief Look up table "default" version.
+    **
+    ** If the value has not been set, return the default value.
+    ** \note The default value can be redefined.
+    **
+    ** \see hlut_def
+    ** \verbatim
+    ** hlut_def<int> l;
+    **
+    ** l.set(16, 64);
+    **
+    ** cout << l(16) << ","   // print "64,"
+    **      << l(51) << endl; // print "0"
+    ** l.set_default(42);
+    ** cout << l(51) << endl; // print "42"
+    ** \endverbatim
+    */
     template<class T, class T2 = T>
     class hlut_def
     {
@@ -86,6 +120,11 @@ namespace oln {
 	defaultval_ = T2();
       }
 
+      /*! Register a value.
+      **
+      ** \arg val Key.
+      ** \arg newval Value corresponding to the key.
+      */
       hlut_def&
       set(const T& val, const T2& newval)
       {
@@ -93,14 +132,19 @@ namespace oln {
 	return *this;
       }
 
-      hlut_def& 
+      //! Set a default value.
+      hlut_def&
       set_default(const T2& defaultval)
       {
 	defaultval_ = defaultval;
 	return *this;
       }
 
-      const T2 
+      /*! Get the value corresponding to the key.
+      **
+      ** Return defaultval_ if the key has not been set.
+      */
+      const T2
       operator()(const T& val) const
       {
 	static typename hmap_t::const_iterator i;

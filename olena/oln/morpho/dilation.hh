@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,45 +37,59 @@ namespace oln {
 
   namespace morpho {
 
-    /*=processing dilation
-     * ns: morpho, morpho::fast
-     * what: Morphological dilation.
-     * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
-     * arg: const abstract::struct_elt<E>&, se, IN, structural element
-     * ret:oln_concrete_type(I)
-     * doc:
-     *   Compute the morphological dilation of \var{input} using \var{se}
-     *   as structural element.
-     *
-     *   On grey-scale images, each point is replaced by the maximum value
-     *   of its neighbors, as indicated by \var{se}.  On binary images,
-     *   a logical \code{or} is performed between neighbors.
-     *
-     *   The \code{morpho::fast} version of this function use a different
-     *   algorithm: This algorith; is described in
-     * Implementation of morphological operations from:
-     * M. Van Droogenbroeck and H. Talbot.
-     * "Fast computation of morphological operations with arbitrary
-     * structuring elements". Pattern Recognition Letters,
-     * 17(14):1451-1460, 1996.
-     *
-     *   An
-     *   histogram of the value of the neighborhood indicated by
-     *   \var{se} is updated while iterating over all point of the
-     *   image.  Doing so is more efficient  when the
-     *   structural element is large.
-     *
-     * see: morpho::n_dilation
-     * see: morpho::erosion
-     * ex:
-     * $ image2d<ntg::bin> im = load("object.pbm");
-     * $ save(morpho::dilation(im, win_c8p()), "out.pbm");
-     * exi: object.pbm
-     * exo: out.pbm
-    =*/
+    /*!
+    ** \brief Processing dilation.
+    **
+    ** Compute the morphological dilation of input using se
+    ** as structural element.
+    **
+    ** On grey-scale images, each point is replaced by the maximum value
+    ** of its neighbors, as indicated by se.  On binary images,
+    ** a logical or is performed between neighbors.
+    **
+    ** The morpho::fast version of this function use a different
+    ** algorithm: This algorithm is described in
+    ** Implementation of morphological operations from:
+    ** M. Van Droogenbroeck and H. Talbot.
+    ** "Fast computation of morphological operations with arbitrary
+    ** structuring elements". Pattern Recognition Letters,
+    ** 17(14):1451-1460, 1996.
+    **
+    ** An histogram of the value of the neighborhood indicated by
+    ** se is updated while iterating over all point of the
+    ** image.  Doing so is more efficient  when the
+    ** structural element is large.
+    **
+    ** \param I Exact type of the input image.
+    ** \param E Exact type of the neighborhood.
+    **
+    ** \arg input The input image.
+    ** \arg se Structuring element to use.
+    **
+    ** \code
+    ** #include <oln/basics2d.hh>
+    ** #include <oln/morpho/dilation.hh>
+    ** #include <oln/level/compare.hh>
+    ** #include <ntg/all.hh>
+    ** int main()
+    ** {
+    **   typedef oln::image2d<ntg::bin>	im_type;
+    **
+    **   im_type im1(oln::load(IMG_IN "object.pbm"));
+    **   save(oln::morpho::dilation(im1, oln::win_c8p()), IMG_OUT "oln_morpho_dilation.pbm");
+    **   return  0;
+    ** }
+    ** \endcode
+    **
+    ** \image html object.png
+    ** \image latex object.png
+    ** =>
+    ** \image html oln_morpho_dilation.png
+    ** \image latex oln_morpho_dilation.png
+    */
     template<class I, class E>
-    oln_concrete_type(I) 
-      dilation(const abstract::non_vectorial_image<I> &input, 
+    oln_concrete_type(I)
+      dilation(const abstract::non_vectorial_image<I> &input,
 	       const abstract::struct_elt<E>& se)
     {
       mlc::eq<I::dim, E::dim>::ensure();
@@ -89,20 +103,41 @@ namespace oln {
       return output;
     }
 
-    /*=processing n_dilation
-     * ns: morpho
-     * what: Morphological dilation itered n times.
-     * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
-     * arg: const abstract::struct_elt<E>&, se, IN, structural element
-     * arg: unsigned, n, IN, number of iterations
-     * ret:oln_concrete_type(I)
-     * doc:
-     *   Apply \code{morpho::dilation} \var{n} times.
-     * see: morpho::dilation
-     * see: morpho::n_erosion
-    =*/
-    template<class I, class E>
-    oln_concrete_type(I) 
+    /*!
+    ** \brief Perform morphological dilation iterated n times.
+    **
+    **
+    ** \param I Exact type of the input image.
+    ** \param E Exact type of the structuring element.
+    **
+    ** \arg input Input image.
+    ** \arg se Structuring element to use.
+    ** \arg n Number of iterations.
+    **
+    ** \code
+    ** #include <oln/basics2d.hh>
+    ** #include <oln/morpho/dilation.hh>
+    ** #include <oln/level/compare.hh>
+    ** #include <ntg/all.hh>
+    ** int main()
+    ** {
+    **   typedef oln::image2d<ntg::bin>	im_type;
+    **
+    **   im_type im1(oln::load(IMG_IN "object.pbm"));
+    **   save(oln::morpho::n_dilation(im1, oln::win_c8p(), 5), IMG_OUT "oln_morpho_n_dilation.pbm");
+    **   return  0;
+    ** }
+    ** \endcode
+    **
+    ** \image html object.png
+    ** \image latex object.png
+    ** =>
+    ** \image html oln_morpho_n_dilation.png
+    ** \image latex oln_morpho_n_dilation.png
+    **
+    */
+    template <class I, class E>
+    oln_concrete_type(I)
       n_dilation(const abstract::non_vectorial_image<I> & input,
 		 const abstract::struct_elt<E>& se,
 		 unsigned n)
@@ -119,8 +154,8 @@ namespace oln {
 
     namespace fast {
       template<class I, class E>
-      oln_concrete_type(I) 
-	dilation(const abstract::non_vectorial_image<I>& input, 
+      oln_concrete_type(I)
+	dilation(const abstract::non_vectorial_image<I>& input,
 		 const abstract::struct_elt<E>& se)
       {
 	return fast_morpho<I, E, utils::histogram_max>(input, se);

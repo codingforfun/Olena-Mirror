@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,20 +34,20 @@
 namespace oln {
   namespace morpho {
 
-    /*
-      Before olena v0.6, bin type was represented by "true" and
-      "false", so it did not make sense to implement a min and max for
-      it. However, morphological operatators defined on binary image
-      usually needs min and max operators, this is why it was previouly
-      implemented here.
-
-      But since v0.6 and higher, bin type is represented by '0' and
-      '1', so it has min and max operators. Thus arith::min and
-      arith::max should be used instead of obsolete these morpho::min
-      and morpho::max.
-      
-      These operators are kept here for compatibility with older
-      versions.
+    /*!
+    **  Before olena v0.6, bin type was represented by "true" and
+    **  "false", so it did not make sense to implement a min and max for
+    **  it. However, morphological operatators defined on binary image
+    **  usually needs min and max operators, this is why it was previouly
+    **  implemented here.\n
+    **
+    **  But since v0.6 and higher, bin type is represented by '0' and
+    **  '1', so it has min and max operators. Thus arith::min and
+    **  arith::max should be used instead of obsolete these morpho::min
+    **  and morpho::max.\n
+    **
+    **  These operators are kept here for compatibility with older
+    **  versions.
     */
 
     using arith::min;

@@ -36,7 +36,13 @@ namespace oln {
 
   namespace snakes {
 
-    /// N is the size of the neighborhood.
+    /*! This class can be use as the algorithm of snake.
+    **
+    ** \param N is the size of the neighborhood.
+    ** \pre N must be odd.
+    ** \see snake
+    */
+
     template <int N, class I, template<typename> class external_energy = dummy_energy>
     class greedy
     {

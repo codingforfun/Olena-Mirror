@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -38,9 +38,18 @@ namespace oln {
   namespace abstract {
     
     template<class T, class Exact>
-    class image_with_type;
+    class image_with_type; //fwd declaration
     
   } // end of namespace abstract
+  
+  
+  /*! \class image_traits<abstract::image_with_type<T, Exact> >
+  **
+  ** The specialized version for image_with_type
+  ** 
+  ** \warning This class may change, prefer the macro oln_value_type(I)
+  ** to retrieve the value_type of an image.
+  */
   
   template <class T, class Exact>
   struct image_traits<abstract::image_with_type<T, Exact> >
@@ -48,18 +57,32 @@ namespace oln {
   {
     typedef T value_type;
   };
+
   
   namespace abstract {
 
+    
+    /*! \class image_with_type
+    **
+    ** The template parameter T gives the value_type of the image.
+    */
+    
     template<class T, class Exact>
     class image_with_type: virtual public image<Exact>
     {
     public:
-
-      typedef image<Exact> super_type;
+      
+      typedef image<Exact> super_type; /*!< The base class whom derives image_with_type. */
       typedef image_with_type<T, Exact> self_type;
       typedef Exact exact_type;
 
+      /*! \brief Shallow copy from \a rhs to the current image,
+      ** the points will not be duplicated but shared between
+      ** the two images.
+      **
+      ** \see image::clone()
+      */
+      
       exact_type& 
       operator=(self_type rhs)
       {

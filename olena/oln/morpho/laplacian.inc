@@ -1,5 +1,5 @@
 // -*- c++ -*-
-// Copyright (C) 2001  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,25 +26,40 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*=processing laplacian
- * ns: morpho, morpho::fast
- * what: Laplacian.
- * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
- * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
- * arg: const abstract::struct_elt<E>&, se, IN, structural element
- * ret: typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
- * doc:
- *   Compute the laplacian of \var{input} using \var{se}
- *   as structural element.
- * see: morpho::dilation
- * see: morpho::erosion
- * ex:
- * $ image2d<int_u8> im = load("lena256.pgm");
- * $ save(morpho::laplacian(convert::bound<int_u8>(), im, win_c8p()), "out.pgm");
- * exi: lena256.pgm
- * exo: out.pgm
- * exh: convert/bound.hh
-=*/
+/*!
+** \brief Compute the laplacian of an image.
+**
+** Compute the laplacian of input using se as structural element.
+**
+** \arg c Conversion object.
+** \arg input Image to process.
+** \arg se Structuring element.
+**
+** \code
+** #include <oln/basics2d.hh>
+** #include <oln/morpho/laplacian.hh>
+** #include <oln/level/compare.hh>
+** #include <ntg/all.hh>
+** int main()
+** {
+**   typedef oln::image2d<ntg::int_u8>	im_type;
+**
+**   im_type	im1(oln::load(IMG_IN "lena256.pgm"));
+**
+**   oln::save(oln::morpho::fast::laplacian(oln::convert::bound<ntg::int_u8>(),
+**                                          im1,
+**                                          oln::win_c8p()),
+**                                          IMG_OUT "oln_morpho_fast_laplacian.pbm");
+**   return  0;
+** }
+** \endcode
+**
+** \image html lena256.png
+** \image latex lena256.png
+** =>
+** \image html oln_morpho_fast_laplacian.png
+** \image latex oln_morpho_fast_laplacian.png
+*/
 template<class C, class B, class I, class E>
 typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
 laplacian(const convert::abstract::conversion<C, B>& c,
@@ -56,16 +71,42 @@ laplacian(const convert::abstract::conversion<C, B>& c,
 		      arith::minus(input, erosion(input, se)));
 }
 
-/*=processingoverload laplacian
- * ns: morpho, morpho::fast
- * what: Laplacian.
- * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
- * arg: const abstract::struct_elt<E>&, se, IN, structural element
- * ret: typename mute<I,oln_value_type(I)::slarger_t>::ret
-=*/
+/*!
+** \brief Compute the laplacian of an image.
+**
+** Compute the laplacian of input using se as structural element.
+**
+** \arg input Image to process.
+** \arg se Structuring element.
+**
+** \code
+** #include <oln/basics2d.hh>
+** #include <oln/morpho/laplacian.hh>
+** #include <oln/level/compare.hh>
+** #include <ntg/all.hh>
+** int main()
+** {
+**   typedef oln::image2d<ntg::int_u8>	im_type;
+**
+**   im_type	im1(oln::load(IMG_IN "lena256.pgm"));
+**
+**   oln::save(oln::morpho::fast::laplacian(oln::convert::bound<ntg::int_u8>(), im1, oln::win_c8p()),
+**                                          IMG_OUT "oln_morpho_fast_laplacian_overload.pbm");
+**   return  0;
+** }
+** \endcode
+**
+** \image html lena256.png
+** \image latex lena256.png
+** =>
+** \image html oln_morpho_fast_laplacian_overload.png
+** \image latex oln_morpho_fast_laplacian_overload.png
+**
+** \todo FIXME: Call the good laplacian, and correct slarger_t type.
+*/
 template<class I, class E>
 typename mute<I,oln_value_type(I)::slarger_t>::ret
-laplacian(const abstract::non_vectorial_image<I>& input, 
+laplacian(const abstract::non_vectorial_image<I>& input,
 	  const abstract::struct_elt<E>& se)
 {
   return laplacian(convert::force<oln_value_type(I)::slarger_t>(), input, se);

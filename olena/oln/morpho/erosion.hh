@@ -40,7 +40,7 @@ namespace oln {
     ** \brief Perform a morphological erosion.
     **
     **   Compute the morphological erosion of input using se
-    **   as structural element.
+    **   as structuring element.
     **
     **   On grey-scale  images, each point is replaced  by the minimum
     **   value  of  its neighbors,  as  indicated  by  se.  On  binary
@@ -48,15 +48,15 @@ namespace oln {
     **   morpho::fast  version  of   this  function  use  a  different
     **   algorithm:  an histogram  of  the value  of the  neighborhood
     **   indicated by se is updated  while iterating over all point of
-    **   the image.   Doing so is  more efficient when  the structural
+    **   the image.   Doing so is  more efficient when  the structuring
     **   element is large.
     **
-    ** \param I: exact type of the input image.
-    ** \param E: exact type of the structural element.
+    ** \param I Exact type of the input image.
+    ** \param E Exact type of the structuring element.
     **
     **
-    ** \arg input: input image.
-    ** \arg se: structural element to use.
+    ** \arg input Input image.
+    ** \arg se Structuring element to use.
     **
     ** \code
     ** #include <oln/basics2d.hh>
@@ -97,15 +97,15 @@ namespace oln {
     }
 
     /*!
-    ** \brief Perform morphological erosion itered n times.
+    ** \brief Perform morphological erosion iterated n times.
     **
     **
-    ** \param I: exact type of the input image.
-    ** \param E: exact type of the structural element.
+    ** \param I Exact type of the input image.
+    ** \param E Exact type of the structuring element.
     **
-    ** \arg input: input image.
-    ** \arg se: structural element to use.
-    ** \arg n: number of iterations.
+    ** \arg input Input image.
+    ** \arg se Structuring element to use.
+    ** \arg n Number of iterations.
     **
     ** \code
     ** #include <oln/basics2d.hh>
@@ -151,14 +151,14 @@ namespace oln {
       ** \brief Perform a morphological erosion.
       **
       **   Compute the morphological erosion of input using se
-      **   as structural element.
+      **   as structuring element.
       **
-      ** \param I: exact type of the input image.
-      ** \param E: exact type of the structural element.
+      ** \param I Exact type of the input image.
+      ** \param E Exact type of the structuring element.
       **
       **
-      ** \arg input: input image.
-      ** \arg se: structural element to use.
+      ** \arg input Input image.
+      ** \arg se Structuring element to use.
       **
       ** \code
       ** #include <oln/basics2d.hh>

@@ -31,30 +31,29 @@
 # include <oln/core/abstract/image.hh>
 # include <oln/core/coord.hh>
 
-/*! \namespace oln
-** \brief oln namespace
-*/
+
 namespace oln {
-  /*! \namespace abstract
-  ** \brief abstract namespace
-  */
+
+
   namespace abstract {
 
     /*! \class behavior
-    ** behavior hierarchy
+    ** Behavior hierarchy.
     **
-    ** the aim of this one is to describe how an algorithm should work
-    ** on borders
+    ** The aim of this one is to describe how an algorithm should work
+    ** on borders.
     */
     template <class Exact>
     class behavior: public mlc_hierarchy::any<Exact>
     {
     public:
-      typedef behavior<Exact>				self_type; /*!< the self type*/
-      typedef mlc_exact_vt_type(self_type, Exact)	exact_type; /*!< the exact type*/
+      typedef behavior<Exact>				self_type; 
+      /*!< The self type.*/
+      typedef mlc_exact_vt_type(self_type, Exact)	exact_type; 
+      /*!< The exact type.*/
 
       /*!
-      ** \brief Adapt the border of an image
+      ** \brief Adapt the border of an image.
       **
       ** Adapt the border of an image regarding the kind of behavior wanted.
       */
@@ -67,7 +66,7 @@ namespace oln {
       /*!
       ** \brief CTor
       **
-      ** Do nothing, used only by sub-classes
+      ** Do nothing, used only by sub-classes.
       */
       behavior() {};
     };

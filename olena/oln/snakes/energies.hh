@@ -32,6 +32,8 @@ namespace oln {
 
   namespace snakes {
 
+    /*! Base class for energy.
+    */
     template <class I>
     class energy
     {
@@ -40,6 +42,11 @@ namespace oln {
       energy(void *) {}
 
     public:
+      /*! Return the energy.
+      **
+      ** The first arg is the gradient of the image;
+      ** the 3 nodes are the previous, the current and the next node.
+      */
       ntg::float_s
       compute(const I&, const node<I>&, const node<I>&, const node<I>&)
       {
@@ -52,6 +59,7 @@ namespace oln {
       }
 
     public:
+      //! FIXME: What is that?
       static void* cookie() { return 0; };
 
     private:
@@ -59,6 +67,14 @@ namespace oln {
     };
 
 
+    /*! Energy of continuity.
+    **
+    ** The goal of this energy is to avoid pack of nodes an lack
+    ** of nodes in some part of the snake. The average distance
+    ** between two consecutive points is \a average_dist. The
+    ** more the distance between \a prev and \a current is
+    ** far from \a average_dist, the higher the energy is.
+    */
     template <class I>
     class continuity_energy : public energy<I>
     {
@@ -82,6 +98,13 @@ namespace oln {
     };
 
 
+    /*! Energy of curvature.
+    **
+    ** The snake is supposed to be applied on object that
+    ** have smooth edge (example: an egg). The more the
+    ** \a prev \a current \a next nodes are aligned, the
+    ** less the energy is.
+    */
     template <class I>
     class curvature_energy : public energy<I>
     {
@@ -101,6 +124,11 @@ namespace oln {
     };
 
 
+    /*! Energy of the gradient.
+    **
+    ** The snake should follow the edge of the object.
+    ** The higher the gradient is, the less the energy is.
+    */
     template <class I>
     class image_energy : public energy<I>
     {
@@ -120,7 +148,10 @@ namespace oln {
     };
 
 
-    // This macro allows the user to define his own external energy.
+    /*! This macro allows the user to define his own external energy.
+    **
+    ** \see dummy_energy
+    */
 #define oln_snakes_define_external_energy(Energy, Gradient, PrevNode, CurrentNode, NextNode)	\
 												\
 template<class I>										\
@@ -148,7 +179,7 @@ Energy<I>::compute(const I& Gradient,								\
 		   const ::oln::snakes::node<I>& NextNode)
 
 
-    // 	Default external energy.
+    //! Default external energy.
     oln_snakes_define_external_energy(dummy_energy,,,,)
     {
       return 0;

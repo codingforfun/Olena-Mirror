@@ -1,5 +1,5 @@
 // -*- c++ -*-
-// Copyright (C) 2001, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,27 +26,46 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*=processing opening
- * ns: morpho, morpho::fast
- * what: Morphological opening.
- * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
- * arg: const abstract::struct_elt<E>&, se, IN, structural element
- * ret:oln_concrete_type(I)
- * doc:
- *   Compute the morphological opening of \var{input} using \var{se}
- *   as structural element.
- * see: morpho::erosion
- * see: morpho::dilation
- * see: morpho::closing
- * ex:
- * $ image2d<ntg::bin> im = load("object.pbm");
- * $ save(morpho::opening(im, win_c8p()), "out.pbm");
- * exi: object.pbm
- * exo: out.pbm
-=*/
+/*!
+** \brief Perform a morphological opening.
+**
+**   Compute  the   morphological  opening   of  input  using   se  as
+**   structuring element.
+**
+** \param I Exact type of the input image.
+** \param E Exact type of the structuring element.
+**
+** \arg input Image to process.
+** \arg se Structuring element.
+**
+** \code
+** #include <oln/basics2d.hh>
+** #include <oln/morpho/opening.hh>
+** #include <oln/level/compare.hh>
+** #include <ntg/all.hh>
+** int main()
+** {
+**   typedef oln::image2d<ntg::bin>	im_type;
+**
+**   im_type	im(oln::load(IMG_IN "object.pbm"));
+**
+**   oln::save(oln::morpho::opening(im, oln::win_c8p()),
+**                                       IMG_OUT "oln_morpho_fast_opening.pbm");
+**   return  0;
+** }
+** \endcode
+**
+** \image html object.png
+** \image latex object.png
+** =>
+** \image html oln_morpho_fast_opening.png
+** \image latex oln_morpho_fast_opening.png
+**
+** \todo FIXME: Histogram problems (fast version do not compile).
+*/
 template<class I, class E>
-oln_concrete_type(I) 
-opening(const abstract::non_vectorial_image<I>& input, 
+oln_concrete_type(I)
+opening(const abstract::non_vectorial_image<I>& input,
 	  const abstract::struct_elt<E>& se)
 {
   //  mlc::eq< I::dim, E::dim >::ensure();
