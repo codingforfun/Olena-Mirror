@@ -49,7 +49,7 @@ namespace mlc
 
     template <class T1, class T2> struct my_eq { typedef mlc::false_type ret; };
     template <class T> struct my_eq <T, T> { typedef mlc::true_type ret; };
-    
+
   }
 }
 
@@ -229,7 +229,7 @@ typename NAMESPACE::get_type_of<typename NAMESPACE::internal::get_category<TYPE>
                            NAMESPACE::target::TARGET##_type>::ret
 
 # define mlc_type_of_(NAMESPACE, TYPE, TARGET)				\
-NAMESPACE::get_type_of<typename NAMESPACE::internal::get_category<TYPE>::ret,	\
+NAMESPACE::get_type_of<NAMESPACE::internal::get_category<TYPE>::ret,	\
                            TYPE,					\
                            NAMESPACE::target::TARGET##_type>::ret
 

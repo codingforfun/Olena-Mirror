@@ -1,3 +1,7 @@
+2005-03-15  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* mlc/properties.hh (oln_type_of_): Remove a `typename'.
+
 2005-03-10  Thierry Geraud  <theo@lrde.epita.fr>
 
 	* mlc/types.hh (default_type): New.
