@@ -80,6 +80,11 @@ namespace oln {
              (unsigned long)ncols_;
     }
 
+    bool impl_eq(const any_size& rhs) const
+    {
+      return true;
+    }
+
     bool impl_eq(const size3d& rhs) const
     {
       return this->nslices_ == rhs.nslices_ &&

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005 EPITA Research and Development Laboratory
+// Copyright (C) 2005 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,52 +25,22 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+#ifndef OLENA_CORE_PW_ALL_HH
+# define OLENA_CORE_PW_ALL_HH
 
 
-#ifndef OLENA_BASICS_HH
-# define OLENA_BASICS_HH
+# include <oln/core/pw/abstract/function.hh>
+# include <oln/core/pw/image.hh>
+# include <oln/core/pw/literal.hh>
+
+# include <oln/core/pw/cmp.hh>
+
+# include <oln/core/pw/plus.hh>
+# include <oln/core/pw/minus.hh>
+# include <oln/core/pw/times.hh>
+# include <oln/core/pw/div.hh>
+
+// FIXME: not xor mod...
 
 
-// std::
-
-
-# include <iostream>
-
-
-// mlc::
-
-# include <mlc/contract.hh>
-# include <mlc/traits.hh>
-# include <mlc/any.hh>
-# include <mlc/types.hh>
-
-
-// ntg::
-
-// oln::
-
-# include <oln/core/coord.hh>
-# include <oln/core/properties.hh>
-# include <oln/core/value_box.hh>
-# include <oln/core/box.hh>
-
-# include <oln/core/abstract/size.hh>
-# include <oln/core/abstract/point.hh>
-# include <oln/core/any/all.hh>
-# include <oln/core/abstract/images.hh>
-# include <oln/core/abstract/entry.hh>
-# include <oln/core/abstract/image_operator.hh>
-
-# include <oln/core/pw/all.hh>
-
-# include <oln/core/abstract/piter.hh>
-# include <oln/core/abstract/witer.hh>
-// # include <oln/core/abstract/niter.hh>
-
-# include <oln/core/abstract/struct_elt.hh>
-# include <oln/core/abstract/neighborhood.hh>
-
-
-
-
-#endif // ! OLENA_BASICS_HH
+#endif // ! OLENA_CORE_PW_ALL_HH

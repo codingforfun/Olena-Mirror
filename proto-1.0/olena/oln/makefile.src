@@ -57,12 +57,25 @@ OLN_DEP =					\
   core/abstract/struct_elt.hh			\
   core/abstract/witer.hh			\
   core/accum.hh					\
+  core/any/all.hh				\
+  core/any/dpoint.hh				\
+  core/any/point.hh				\
+  core/any/size.hh				\
   core/apply.hh					\
   core/ch_value_type.hh				\
   core/compose.hh				\
   core/coord.hh					\
   core/gen/identity.hh				\
   core/properties.hh				\
+  core/pw/abstract/function.hh			\
+  core/pw/all.hh				\
+  core/pw/cmp.hh				\
+  core/pw/div.hh				\
+  core/pw/image.hh				\
+  core/pw/literal.hh				\
+  core/pw/minus.hh				\
+  core/pw/plus.hh				\
+  core/pw/times.hh				\
   core/value_box.hh				\
   fancy/iota.hh					\
   fancy/print.hh				\

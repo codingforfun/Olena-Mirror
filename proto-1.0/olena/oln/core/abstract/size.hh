@@ -34,23 +34,27 @@ namespace oln {
 
   namespace abstract {
 
+
+    /// Abstract class for size classes.
+
     template <typename E>
     struct size : public mlc::any__best_memory<E>
     {
 
+      // FIXME: remove?
       unsigned long npoints() const
       {
 	return this->exact().impl_npoints();
       }
 
-      template <typename Ep>
-      bool operator==(const size<Ep>& rhs) const
+      template <typename S>
+      bool operator==(const size<S>& rhs) const
       {
 	return this->exact().impl_eq(rhs.exact());
       }
 
-      template <typename Ep>
-      bool operator!=(const size<Ep>& rhs) const
+      template <typename S>
+      bool operator!=(const size<S>& rhs) const
       {
 	return ! this->operator==(rhs);
       }
@@ -59,9 +63,15 @@ namespace oln {
       size() {}
     };
 
+
   } // end of namespace abstract
 
 } // end of namespace oln
+
+
+
+# include <oln/core/any/size.hh>
+
 
 
 #endif // ! OLENA_CORE_ABSTRACT_SIZE_HH

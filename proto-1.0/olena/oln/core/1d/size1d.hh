@@ -69,6 +69,11 @@ namespace oln {
       return (unsigned long)nindices_;
     }
 
+    bool impl_eq(const any_size& rhs) const
+    {
+      return true;
+    }
+
     bool impl_eq(const size1d& rhs) const
     {
       return this->nindices_ == rhs.nindices_;

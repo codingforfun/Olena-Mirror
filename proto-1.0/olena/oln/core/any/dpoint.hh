@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005 EPITA Research and Development Laboratory
+// Copyright (C) 2005 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,52 +25,66 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+#ifndef OLENA_CORE_ANY_DPOINT_HH
+# define OLENA_CORE_ANY_DPOINT_HH
+
+# include <oln/core/abstract/dpoint.hh>
 
 
-#ifndef OLENA_BASICS_HH
-# define OLENA_BASICS_HH
+namespace oln {
 
 
-// std::
+  struct any_dpoint : public abstract::dpoint < any_dpoint >
+  {
+
+    template <typename D>
+    bool operator==(const abstract::dpoint<D>& rhs) const
+    {
+      return true;
+    }
+
+    template <typename D>
+    bool operator!=(const abstract::dpoint<D>& rhs) const
+    {
+      return false;
+    }
+
+    template <typename D>
+    const any_dpoint operator+(const abstract::dpoint<D>& rhs) const
+    {
+      return any_dpoint();
+    }
+
+    template <typename P>
+    const any_point operator+(const abstract::point<P>& rhs) const;
+
+    const any_dpoint operator-() const
+    {
+      return any_dpoint();
+    }
+
+  };
+
+} // end of namespace oln
 
 
-# include <iostream>
+std::ostream& operator<<(std::ostream& ostr, const oln::any_dpoint& dp)
+{
+  return ostr << "any";
+}
 
 
-// mlc::
-
-# include <mlc/contract.hh>
-# include <mlc/traits.hh>
-# include <mlc/any.hh>
-# include <mlc/types.hh>
+# include <oln/core/any/point.hh>
 
 
-// ntg::
+namespace oln {
 
-// oln::
+  template <typename P>
+  const any_point any_dpoint::operator+(const abstract::point<P>& rhs) const
+  {
+    return any_point();
+  }
 
-# include <oln/core/coord.hh>
-# include <oln/core/properties.hh>
-# include <oln/core/value_box.hh>
-# include <oln/core/box.hh>
+}
 
-# include <oln/core/abstract/size.hh>
-# include <oln/core/abstract/point.hh>
-# include <oln/core/any/all.hh>
-# include <oln/core/abstract/images.hh>
-# include <oln/core/abstract/entry.hh>
-# include <oln/core/abstract/image_operator.hh>
-
-# include <oln/core/pw/all.hh>
-
-# include <oln/core/abstract/piter.hh>
-# include <oln/core/abstract/witer.hh>
-// # include <oln/core/abstract/niter.hh>
-
-# include <oln/core/abstract/struct_elt.hh>
-# include <oln/core/abstract/neighborhood.hh>
-
-
-
-
-#endif // ! OLENA_BASICS_HH
+#endif // ! OLENA_CORE_ANY_DPOINT_HH

@@ -73,6 +73,11 @@ namespace oln {
       return (unsigned long)nrows_ * (unsigned long)ncols_;
     }
 
+    bool impl_eq(const any_size& rhs) const
+    {
+      return true;
+    }
+
     bool impl_eq(const size2d& rhs) const
     {
       return this->nrows_ == rhs.nrows_ &&

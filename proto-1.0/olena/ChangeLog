@@ -1,3 +1,27 @@
+2005-04-02  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* oln/core/pw/times.hh: New file.
+	* oln/core/pw/image.hh: New file.
+	* oln/core/pw/div.hh: New file.
+	* oln/core/pw/plus.hh: New file.
+	* oln/core/pw/abstract/function.hh: New file.
+	* oln/core/pw/all.hh: New file.
+	* oln/core/pw/minus.hh: New file.
+	* oln/core/pw/literal.hh: New file.
+	* oln/core/pw/cmp.hh: New file.
+	* oln/core/any/all.hh: New file.
+	* oln/core/any/point.hh: New file.
+	* oln/core/any/size.hh: New file.
+	* oln/core/any/dpoint.hh: New file.
+	* oln/core/abstract/point.hh (operator any_point): New.
+	* oln/core/abstract/size.hh: Cosmetic changes.
+	* oln/core/1d/size1d.hh (impl_eq(any_size)): New.
+	* oln/core/2d/size2d.hh (impl_eq(any_size)): New.
+	* oln/core/3d/size3d.hh (impl_eq(any_size)): New.
+	* oln/basics2d.hh: Include core/2d/fwd_piter2d and core/2d/bkd_piter2d.
+	* oln/basics.hh: Include core/any/all.hh and core/pw/all.hh.
+	* oln/makefile.src (OLN_DEP): Add new files.
+	
 2005-04-01  Roland Levillain  <roland@lrde.epita.fr>
 
 	First version of oln::apply, for Adaptable Unary Functions.

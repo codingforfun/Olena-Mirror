@@ -40,7 +40,10 @@
 namespace oln {
 
 
-  // fwd decl
+  // fwd decls
+
+  struct any_point;
+
   namespace abstract {
     template <typename E> struct point;
   }
@@ -89,6 +92,13 @@ namespace oln {
 
       typedef E exact_type;
 
+
+
+      /// Conversion to any_point (implemented in oln/core/any/point.hh).
+
+      operator any_point() const;
+
+
       /*! \brief Test equality of two points.  Nota bene: this method
       ** is abstract-like.
       **
@@ -98,6 +108,12 @@ namespace oln {
       {
 	return this->exact().impl_eq(rhs.exact());
       }
+
+//       // FIXME: compiler error (cannot be overloaded)
+//       bool operator==(const any_point& rhs) const
+//       {
+// 	return true;
+//       }
 
       /*! \brief Test difference of two points.  Nota bene: this method
       ** is concrete (and based on abstract::point::operator==).
