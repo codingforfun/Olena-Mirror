@@ -483,9 +483,9 @@ AC_DEFUN([AC_CXX_FLAGS],
 		      [case `$CXX --version` in
                       *3.[2-9]* | \
                       *[4-9].*  )
-                          ac_cv_bison_version=recent;;
+                          ac_cv_cxx_style=GNU;;
                       *)
-                          ac_cv_bison_version=old;;
+                          ac_cv_cxx_style=weakGNU;;
                        esac]
                    elif $CXX -V 2>&1 | grep -i "WorkShop">/dev/null 2>&1; then
 		      ac_cv_cxx_style=Sun

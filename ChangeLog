@@ -1,5 +1,9 @@
 2004-09-08  Damien Thivolle  <damien@lrde.epita.fr>
 
+	* config/oln.m4: Minor fix.
+
+2004-09-08  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* config/oln.m4: Add tests to check for future versions of doxygen and
 	gcc.
 
