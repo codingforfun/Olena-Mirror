@@ -25,22 +25,22 @@ bool
 check(void)
 {
   bool fail = false;
-  
-  image2d<int_u8> img = load("../data/random.pgm");
+
+  image2d<int_u8> img = load(data("random.pgm"));
   cout << "=== Image ===" << endl << endl << img << endl;
 
-  cout << "=== Convolution kernel ===" << endl << endl 
+  cout << "=== Convolution kernel ===" << endl << endl
        << "1 1 1" << endl
        << "1 1 1" << endl
        << "1 1 1" << endl
        << endl;
-  
+
   image2d< int_s< 10 > > ret;
-   
+
   //
   // Second way to do it, using meta-arrays.
   //
-  
+
   ret = convol::slow::convolve(img, (ints_2d =
 				     1, 1, 1, lbrk,
 				     1, x(1), 1,
@@ -49,9 +49,9 @@ check(void)
   cout << "=== Result image (by convolve(array2d)) ===" << endl << endl
        << ret << endl;
 
-  image2d< int_u8 > res_img = load("./sum_on_random.pgm");
+  image2d< int_u8 > res_img = load(srcdir + "sum_on_random.pgm");
   if (level::is_equal(ret, res_img))
     OK_OR_FAIL;
-  
+
    return fail;
 }

@@ -1,3 +1,14 @@
+2002-07-25  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* Makefile.am (SOURCEDATA): Add random.pgm.
+	* convol/Makefile.am (EXTRA_DIST): New.
+	* convol/slow_sum_2d_1.cc (check): Use data() and srcdir
+	* convol/slow_sum_2d_2.cc (check): Likewise.
+	* convol/sobel_gradient.cc (main): Likewise.  Rename as ...
+	(check): ... this, so that srcdir is initialized.
+	* array/gen_test.cc (write_postlude_and_test): Run CXX with
+	-I../.., for VPATH builds.
+
 2002-07-22  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* sanity/includes.test: Typo.

@@ -1,7 +1,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.52])
-AC_INIT([olena-doc], [0.4], [olena-bugs@lrde.epita.fr])
+AC_INIT([olena-doc], [0.5], [olena-bugs@lrde.epita.fr])
 AC_CONFIG_SRCDIR([ChangeLog])
 AC_CONFIG_AUX_DIR([../tools])
 

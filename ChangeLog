@@ -1,5 +1,10 @@
+2002-07-25  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* configure.ac: Bump version to 0.5.
+	* oln/config/system.hh: Include oln/config/pconf.hh, not pconf.hh.
+
 2002-07-24  David Lesage  <david@lrde.epita.fr>
-	
+
 	* oln/core/bkd_iter1d.hh, oln/core/fwd_iter1d.hh,
 	oln/core/bkd_iter2d.hh, oln/core/fwd_iter2d.hh,
 	oln/core/bkd_iter3d.hh, oln/core/fwd_iter3d.hh: Add Inferior

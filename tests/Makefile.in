@@ -93,7 +93,7 @@ SUBDIRS = . check \
 # SOURCEDATA should never be erased, they are needed to generate
 # BUILTDATA.  SOURCEDATA are the only data files worth to keep under
 # version control.
-SOURCEDATA = data/lena.ppm
+SOURCEDATA = data/lena.ppm data/random.pgm
 
 # BUILTDATA are generated from SOURCEDATA and can be erased
 # by maintainer-clean.

@@ -174,7 +174,7 @@ static bool             write_postlude_and_test(ofstream&               ofs,
         dup2(fd[1],2);
         close(fd[0]);
         close(fd[1]);
-	execlp(CXX, CXX,
+	execlp(CXX, CXX, "-I../..",
 	       Isrcdir("../..").c_str(), Isrcdir("../check").c_str(),
 	       "-L../check", "-lcheck",
 	       filename, NULL);

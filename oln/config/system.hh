@@ -31,7 +31,7 @@
 /* The GNU libc will not declare round, roundf, etc. unless this is set...  */
 # define _ISOC99_SOURCE 1
 
-# include "pconf.hh"
+# include <oln/config/pconf.hh>
 # include <cmath>
 
 # ifndef M_PI

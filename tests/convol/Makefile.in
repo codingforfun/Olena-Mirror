@@ -98,6 +98,7 @@ slow_sum_2d_2_SOURCES = slow_sum_2d_2.cc
 sobel_gradient_SOURCES = sobel_gradient.cc
 
 CLEANFILES = lena-sobel.pgm
+EXTRA_DIST = sum_on_random.pgm
 subdir = tests/convol
 mkinstalldirs = $(SHELL) $(top_srcdir)/tools/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/oln/config/config.h

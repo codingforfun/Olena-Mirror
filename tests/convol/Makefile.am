@@ -11,3 +11,4 @@ check_PROGRAMS += sobel_gradient
 sobel_gradient_SOURCES = sobel_gradient.cc
 
 CLEANFILES = lena-sobel.pgm
+EXTRA_DIST = sum_on_random.pgm
