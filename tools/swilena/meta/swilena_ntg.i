@@ -3,8 +3,11 @@
 
 
 /***** Generic class declaration for scalars ******/
+
+/* Predecls */
+
 %define decl_scalar_class(Ns, Name, ValueType)
-template<unsigned nbits, typename behavior>
+template <unsigned nbits, typename behavior>
 class Name
 {
  public:
@@ -18,23 +21,23 @@ class Name
       { *self = Ns::Name<nbits, behavior>(x); }
 
 #if defined(SWIGPYTHON) || defined(SWIGRUBY)
-    Ns::Name<nbits, behavior> operator+ (const Ns::Name<nbits, behavior>& other) const { return (*self) + other; }
-    Ns::Name<nbits, behavior> operator- (const Ns::Name<nbits, behavior>& other) const { return (*self) - other; }
-    Ns::Name<nbits, behavior> operator* (const Ns::Name<nbits, behavior>& other) const { return (*self) * other; }
-    Ns::Name<nbits, behavior> operator/ (const Ns::Name<nbits, behavior>& other) const { return (*self) / other; }
-    Ns::Name<nbits, behavior> operator+ (ValueType other) const { return (*self) + other; }
-    Ns::Name<nbits, behavior> operator- (ValueType other) const { return (*self) - other; }
-    Ns::Name<nbits, behavior> operator* (ValueType other) const { return (*self) * other; }
-    Ns::Name<nbits, behavior> operator/ (ValueType other) const { return (*self) / other; }
+    ValueType operator+ (const Ns::Name<nbits, behavior>& other) const { return (*self) + other; }
+    ValueType operator- (const Ns::Name<nbits, behavior>& other) const { return (*self) - other; }
+    ValueType operator* (const Ns::Name<nbits, behavior>& other) const { return (*self) * other; }
+    ValueType operator/ (const Ns::Name<nbits, behavior>& other) const { return (*self) / other; }
+    ValueType operator+ (ValueType other) const { return (*self) + other; }
+    ValueType operator- (ValueType other) const { return (*self) - other; }
+    ValueType operator* (ValueType other) const { return (*self) * other; }
+    ValueType operator/ (ValueType other) const { return (*self) / other; }
 #else
-    Ns::Name<nbits, behavior> add (const Ns::Name<nbits, behavior>& other) const { return (*self) + other; }
-    Ns::Name<nbits, behavior> sub (const Ns::Name<nbits, behavior>& other) const { return (*self) - other; }
-    Ns::Name<nbits, behavior> mul (const Ns::Name<nbits, behavior>& other) const { return (*self) * other; }
-    Ns::Name<nbits, behavior> div (const Ns::Name<nbits, behavior>& other) const { return (*self) / other; }
-    Ns::Name<nbits, behavior> add (ValueType other) const { return (*self) + other; }
-    Ns::Name<nbits, behavior> sub (ValueType other) const { return (*self) - other; }
-    Ns::Name<nbits, behavior> mul (ValueType other) const { return (*self) * other; }
-    Ns::Name<nbits, behavior> div (ValueType other) const { return (*self) / other; }
+    ValueType add (const Ns::Name<nbits, behavior>& other) const { return (*self) + other; }
+    ValueType sub (const Ns::Name<nbits, behavior>& other) const { return (*self) - other; }
+    ValueType mul (const Ns::Name<nbits, behavior>& other) const { return (*self) * other; }
+    ValueType div (const Ns::Name<nbits, behavior>& other) const { return (*self) / other; }
+    ValueType add (ValueType other) const { return (*self) + other; }
+    ValueType sub (ValueType other) const { return (*self) - other; }
+    ValueType mul (ValueType other) const { return (*self) * other; }
+    ValueType div (ValueType other) const { return (*self) / other; }
 #endif
 
 #if defined(SWIGPYTHON)
@@ -110,12 +113,12 @@ class Name
       { *self = Ns::Name(x); }
 
 #if defined(SWIGPYTHON)
-    Ns::Name operator| (const Ns::Name& other) const { return (*self) | other; }
-    Ns::Name operator| (ValueType other) const { return (*self) | other; }
-    Ns::Name operator& (const Ns::Name& other) const { return (*self) & other; }
-    Ns::Name operator& (ValueType other) const { return (*self) & other; }
-    Ns::Name operator^ (const Ns::Name& other) const { return (*self) ^ other; }
-    Ns::Name operator^ (ValueType other) const { return (*self) ^ other; }
+    ValueType operator| (const Ns::Name& other) const { return (*self) | other; }
+    ValueType operator| (ValueType other) const { return (*self) | other; }
+    ValueType operator& (const Ns::Name& other) const { return (*self) & other; }
+    ValueType operator& (ValueType other) const { return (*self) & other; }
+    ValueType operator^ (const Ns::Name& other) const { return (*self) ^ other; }
+    ValueType operator^ (ValueType other) const { return (*self) ^ other; }
     Ns::Name& operator|= (const Ns::Name& other) { return (*self) |= other; }
     Ns::Name& operator|= (ValueType other) { return (*self) |= other; }
     Ns::Name& operator&= (const Ns::Name& other) { return (*self) &= other; }
@@ -129,12 +132,12 @@ class Name
     bool operator== (ValueType other) const { return (*self) == other; }
     bool operator!= (ValueType other) const { return (*self) != other; }
 #else
-    Ns::Name lor (const Ns::Name& other) const { return (*self) | other; }
-    Ns::Name lor (ValueType other) const { return (*self) | other; }
-    Ns::Name land (const Ns::Name& other) const { return (*self) & other; }
-    Ns::Name land (ValueType other) const { return (*self) & other; }
-    Ns::Name lxor (const Ns::Name& other) const { return (*self) ^ other; }
-    Ns::Name lxor (ValueType other) const { return (*self) ^ other; }
+    ValueType lor (const Ns::Name& other) const { return (*self) | other; }
+    ValueType lor (ValueType other) const { return (*self) | other; }
+    ValueType land (const Ns::Name& other) const { return (*self) & other; }
+    ValueType land (ValueType other) const { return (*self) & other; }
+    ValueType lxor (const Ns::Name& other) const { return (*self) ^ other; }
+    ValueType lxor (ValueType other) const { return (*self) ^ other; }
     Ns::Name& ilor (const Ns::Name& other) { return (*self) |= other; }
     Ns::Name& ilor (ValueType other) { return (*self) |= other; }
     Ns::Name& iland (const Ns::Name& other) { return (*self) &= other; }
@@ -218,34 +221,36 @@ decl_ntg()
   - if another module use ntg::int_u32, operations on it won't be
     possible since this module won't recognize the type ntg::int_u32.
 
-  - ntg::int_u<32, ntg::strict> or ntg_uint should be used
+  - ntg::int_u<32, ntg::strict> or ntg_int_u32 should be used
     everywhere. ntg_uint is just a convenient macro.
 */
 
 #define ntg_bin ntg::bin
+#define ntg_bin_value bool
 
-%template(uint)  ntg::int_u< 32, ntg::strict >;
-#define ntg_uint ntg::int_u< 32, ntg::strict >
+%template(int_u32)  ntg::int_u< 32, ntg::strict >;
+#define ntg_int_u32 ntg::int_u< 32, ntg::strict >
+#define ntg_int_u32_value unsigned long
 
-%template(sint)  ntg::int_s< 32, ntg::strict >;
-#define ntg_sint ntg::int_s< 32, ntg::strict >
+%template(int_s32)  ntg::int_s< 32, ntg::strict >;
+#define ntg_int_s32 ntg::int_s< 32, ntg::strict >
+#define ntg_int_s32_value long
+
+%template(int_u8)  ntg::int_u< 8, ntg::strict >;
+#define ntg_int_u8 ntg::int_u< 8, ntg::strict >
+#define ntg_int_u8_value unsigned long
+
+%template(int_s8)  ntg::int_s< 8, ntg::strict >;
+#define ntg_int_s8 ntg::int_s< 8, ntg::strict >
+#define ntg_int_s8_value long
 
 #define ntg_float ntg::float_d
+#define ntg_float_value ntg_float
 
 %template(cplx_rect)  ntg::cplx< ntg::rect, ntg_float >;
 #define ntg_cplx_rect ntg::cplx< ntg::rect, ntg_float >
+#define ntg_cplx_rect_value ntg_cplx_rect
 
 %template(cplx_polar)  ntg::cplx< ntg::polar, ntg_float >;
 #define ntg_cplx_polar ntg::cplx< ntg::polar, ntg_float >
-
-#if defined(SWIGPYTHON)
-%typemap(in) ntg_uint {
-        $1 = ntg::int_u<32, ntg::strict>(PyLong_AsLong($input));
-}
-%typemap(in) ntg_sint {
-        $1 = ntg::int_s<32, ntg::strict>(PyLong_AsLong($input));
-}
-%typemap(in) ntg_bin {
-        $1 = ntg::bin(PyInt_AsLong($input));
-}
-#endif
+#define ntg_cplx_polar_value ntg_cplx_polar

@@ -1,3 +1,21 @@
+2003-10-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+ 	* meta/swilena_ntg.i: Use builtin value type when possible. Define
+	int_u8 and int_s8. Remove obsolete typemaps.
+
+	* generate_morpho_instantiations.py (write_algorithms): Add int_u8
+	and int_s8. Enable algorithms fixed by previous patches.
+
+	* meta/swilena_image.i: Cleanup. Use builtin value type instead of real
+	data type when possible.
+
+	* expand.sh: Adjust consequently.
+
+	* ruby/tests/simple1.rb: Adjust consequently.
+	* python/tests/simple1.py: Adjust consequently.	
+	* doc/examples/ruby/simple.rb: Adjust consequently.
+	* doc/examples/python/simple.py: Adjust consequently.	
+	
 2003-09-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* meta/swilena_ntg.i: Define typemaps for python.

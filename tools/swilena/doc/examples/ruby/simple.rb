@@ -15,11 +15,11 @@ display = SwilenaDisplay.new
 display.tmpdir = "/tmp/swilena"
 display.display_command = "display %{image_file}"
 
-ima = Image2d_uint.new(5,5)
+ima = Image2d_u8.new(5,5)
 
 for i in 0..5 do
   for j in 0..5 do
-    ima[i, j] = Uint.new(i + j)
+    ima[i, j] = i + j
   end
 end
 

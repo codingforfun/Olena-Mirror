@@ -46,6 +46,10 @@ namespace oln {
       class anything
       {
       public:
+	// FIXME: these constructors are required by swig
+	anything() : str_() {}
+	anything(const anything& rhs) : str_(rhs.str_) {}
+
 	anything(const std::string& str) : str_(str) {}
 	
 	anything(const char* c) : str_(c) {}

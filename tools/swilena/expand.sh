@@ -36,10 +36,12 @@ EOF
   # int_u8s int_u16s int_u32s 
   # float_s rgb_8 rgb_16 rgb_32
   cat >> "$SWILENA/src/swilena_image${dim}d.i" <<EOF
-make_image(image${dim}d_bin, $dim, ntg_bin)
-make_image(image${dim}d_uint, $dim, ntg_uint)
-make_image(image${dim}d_sint, $dim, ntg_sint)
-make_image(image${dim}d_float, $dim, ntg_float)
+make_image(image${dim}d_bin, $dim, ntg_bin, ntg_bin_value)
+make_image(image${dim}d_u8, $dim, ntg_int_u8, ntg_int_u8_value)
+make_image(image${dim}d_u32, $dim, ntg_int_u32, ntg_int_u32_value)
+make_image(image${dim}d_s8, $dim, ntg_int_s8, ntg_int_s8_value)
+make_image(image${dim}d_s32, $dim, ntg_int_s32, ntg_int_s32_value)
+make_image(image${dim}d_float, $dim, ntg_float, ntg_float_value)
 EOF
   ## Morpho algorithms
   MODULES="$MODULES morpho${dim}d"
@@ -61,7 +63,7 @@ cat <<EOF
 ##
 
 INCLUDES = \$(PYTHON_CPPFLAGS) -I\$(srcdir)/../src
-AM_CPPFLAGS = -DOLN_EXCEPTIONS 
+AM_CPPFLAGS = -DOLN_EXCEPTIONS
 AM_CXXFLAGS = \$(CXXFLAGS_OPTIMIZE)
 AM_LDFLAGS = -shared -lswigpy \$(ZLIB_LDFLAGS)
 
