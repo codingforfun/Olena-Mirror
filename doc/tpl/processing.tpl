@@ -135,14 +135,14 @@ int main()
 	    (if (> (system (string-append "test -f " exiname ".pdf")) 0)
 	       (begin
                   (psystem "convert " exiname " " exiname ".eps")
-                  (psystem "convert " exiname " html/" exiname ".png")
+                  (psystem "convert " exiname " html/" exiname ".png") ;(regexp-substitute/global #f "\.p.*$" exiname 'pre ".png"))
        	          (psystem "epstopdf " exiname ".eps > " exiname ".pdf")))
 	    (psystem "rm " exiname)))
        (if (exist? ".exo")
 	  (begin
 	    (psystem "rm " (get ".exo"))
        	    (psystem "convert " exoname " " exoname ".eps")
-       	    (psystem "convert " exoname " html/" exoname ".png")
+	    (psystem "convert " exoname " html/" exiname ".png"); (regexp-substitute/global #f "\.p.*$" exoname 'pre ".jpg"))
        	    (psystem "epstopdf " exoname ".eps > " exoname ".pdf")
 ))))
 ~][~ ENDIF ~][~ `rm -f .example example.cc` ~]

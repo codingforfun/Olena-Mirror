@@ -1,5 +1,10 @@
 2002-01-14  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
+	* configure.ac: Bump version to 0.3.
+	* NEWS: Update.
+
+2002-01-14  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
 	* src/level/connected.hh, src/level/cc.hh,
 	src/level/extrema_killer.hh: Update doc.  From Jerome
 
