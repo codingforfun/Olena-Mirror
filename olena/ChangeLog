@@ -1,3 +1,14 @@
+2004-03-29  Simon Odou  <simon@lrde.epita.fr>
+
+	* oln/morpher/piece_morpher.hh: To use a piece of image like a real one.
+	* oln/core/abstract/image_with_impl.hh:
+	* oln/core/point2d.hh: Able to construct a point2d from a point1d.
+	* oln/core/point2d.hxx: Likewise.
+	* oln/core/point3d.hh: Able to construct a point3d from a point2d.
+	* oln/core/point3d.hxx: Likewise.
+	* oln/core/abstract/image_with_dim.hh: Fix a bug.
+	* oln/core/abstract/image_with_impl.hh: Fix (same).
+
 2004-03-29  Niels Van Vliet  <niels@lrde.epita.fr>
 	* olena/oln/topo/inter-pixel/inter-pixel.hh: Change the return type
 	of operator[] from const & to const.

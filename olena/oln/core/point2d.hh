@@ -40,8 +40,8 @@ namespace oln {
   /*! \class point_traits<point2d>
   **
   ** The specialized version for point2d.
-  */ 
-  
+  */
+
   template<>
   struct point_traits<point2d>: public point_traits<abstract::point<point2d> >
   {
@@ -59,7 +59,7 @@ namespace oln {
   ** or\n
   ** oln_point_type(oln::image2d<ntg::rgb_8>) p(1, 2);
   */
-  
+
   class point2d : public abstract::point<point2d >
   {
   public:
@@ -72,89 +72,93 @@ namespace oln {
     point2d();
 
     /// The coordinates of the point2d are set to \a row and \a col.
-    
+
     point2d(coord row, coord col);
+
+    /// The coordinates of the point2d are set to \a p and \a col.
+
+    point2d(const point1d& p, coord col);
 
     /// Return Give the value of the point2d row coordinate.
 
-    coord 
+    coord
     row() const;
 
     /// Return a reference to the point2d row coordinate.
-    
-    coord& 
+
+    coord&
     row();
 
     /// Return the value of the point2d col coordinate.
-    
-    coord 
+
+    coord
     col() const;
 
     /// Return a reference to the point2d col coordinate.
 
-    coord& 
+    coord&
     col();
 
-    static std::string 
-    name() 
-    { 
-      return "point2d"; 
+    static std::string
+    name()
+    {
+      return "point2d";
     }
 
   protected:
 
-    /*! \brief Return a point2d whose coordinates are equal to 
+    /*! \brief Return a point2d whose coordinates are equal to
     ** \a dp coordinates plus the current point2d coordinates.
     */
-    
-    point2d 
+
+    point2d
     plus_dp(const dpoint2d& dp) const;
-    
+
     /*! \brief Return a point2d whose coordinates are equal to
     ** the current point2d coordinates minus \a dp coordinates.
     */
-    
-    point2d 
+
+    point2d
     minus_dp(const dpoint2d& dp) const;
 
-    /*! \brief Return a reference to the current point2d 
+    /*! \brief Return a reference to the current point2d
     ** plus \a dp.
     */
 
-    point2d& 
+    point2d&
     plus_assign_dp(const dpoint2d& dp);
 
     /*! \brief Return a reference to the current point2d
     ** minus \a dp.
     */
-    
-    point2d& 
+
+    point2d&
     minus_assign_dp(const dpoint2d& dp);
 
     /*! \brief Return a dpoint2d whose coordinates are equal
     ** to the current point2d coordinates minus \a p coordinates.
-    */ 
-    
-    dpoint2d 
+    */
+
+    dpoint2d
     minus_p(const point2d& p) const;
 
-    /*! \brief Return a point2d whose coordinates are equal to 
+    /*! \brief Return a point2d whose coordinates are equal to
     ** the opposite of the current point2d coordinates.
-    */ 
-    
-    point2d 
+    */
+
+    point2d
     minus() const;
 
   };
-    
+
   namespace internal
   {
-    
+
     /*! \class default_less<point2d>
-    ** 
+    **
     ** The specialized version for point2d.
     */
-    
+
     template<>
     struct default_less<point2d> :
       public default_less<point2d::super_type>
