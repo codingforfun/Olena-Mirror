@@ -1,5 +1,5 @@
 #include <oln/basics2d.hh>
-#include <oln/morpho/minmax.hh>
+#include <oln/arith/ops.hh>
 #include <oln/types/all.hh>
 
 using namespace oln;
@@ -16,12 +16,12 @@ int main()
   for_all (it2)
     im2[it2] = 1;
   
-  image2d<bin> imin = morpho::min (im1, im2);
+  image2d<bin> imin = arith::min (im1, im2);
   image2d<bin>::iter itmin(imin);
   for_all (itmin)
     assert (imin[itmin] == bin(0));
   
-  image2d<bin> imax = morpho::max (im1, im2);
+  image2d<bin> imax = arith::max (im1, im2);
   image2d<bin>::iter itmax(imax);
   for_all (itmax)
     assert (imax[itmax] == bin(1));

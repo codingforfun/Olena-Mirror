@@ -1,19 +1,12 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_6_stable 8)
-(Parent-Version oln 0_6_stable 6)
-(Version-Log "2003-01-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
-	* configure.ac: add arith directory.
-	* ISSUES: update.
-
-	* oln/arith/ops.hh: replace std::min and std::min by min and max.
-	* oln/core/apply.hh: add workaround for g++-2.95 bug.
-	* oln/types/optraits_bin.hh: add min and max traits.
+(Project-Version oln 0_6_stable 9)
+(Parent-Version oln 0_6_stable 8)
+(Version-Log "* arith/tests/min1: fix.
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 08 Jan 2003 13:27:12 +0100")
+(Checkin-Time "Wed, 08 Jan 2003 13:36:11 +0100")
 (Checkin-Login burrus_n)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -122,7 +115,7 @@
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.25.1.1.1.1 640))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.98.1.1.1.7 640))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.98.1.1.1.8 640))
   (configure.ac (oln/3_configure. 1.29.1.1 640))
   (configure (oln/e/7_configure 1.38.1.4 750))
   (README (oln/1_README 1.4 640))
@@ -767,16 +760,7 @@
 ;; Files added by populate at Wed, 08 Jan 2003 12:51:28 +0100,
 ;; to version 0_6_stable.6(w), by burrus_n:
 
-  (tests/arith/tests/min1 (oln/o/50_min1 1.1 640))
+  (tests/arith/tests/min1 (oln/o/50_min1 1.2 640))
 )
-(Merge-Parents
-  (0_6_stable.7 complete
-    (ChangeLog ChangeLog ChangeLog m) (Makefile.am Makefile.am Makefile.am r)
-    (Makefile.in Makefile.in Makefile.in m) (tests/Makefile.in tests/Makefile.in tests/Makefile.in m)
-    (utilities/Makefile.in utilities/Makefile.in utilities/Makefile.in m) (utilities/Makefile.am utilities/Makefile.am utilities/Makefile.am r)
-    (utilities/generate_morpho.sh utilities/generate_morpho.sh utilities/generate_morpho.sh r) (utilities/morpho/morpho_template.cc utilities/morpho/morpho_template.cc utilities/morpho/morpho_template.cc r)
-    (utilities/morpho/morpho_template_extrema.cc utilities/morpho/morpho_template_extrema.cc utilities/morpho/morpho_template_extrema.cc r) (utilities/morpho/morpho_template_watershed.cc utilities/morpho/morpho_template_watershed.cc utilities/morpho/morpho_template_watershed.cc r)
-    (utilities/morpho/morpho_template_with_neighb.cc utilities/morpho/morpho_template_with_neighb.cc utilities/morpho/morpho_template_with_neighb.cc r) (utilities/morpho/morpho_template_gaussian.cc utilities/morpho/morpho_template_gaussian.cc utilities/morpho/morpho_template_gaussian.cc r)
-    (utilities/morpho/morpho_template_with_twowin.cc utilities/morpho/morpho_template_with_twowin.cc utilities/morpho/morpho_template_with_twowin.cc r) (utilities/morpho/morpho_template_with_functor.cc utilities/morpho/morpho_template_with_functor.cc utilities/morpho/morpho_template_with_functor.cc r))
-)
+(Merge-Parents)
 (New-Merge-Parents)
