@@ -1,3 +1,11 @@
+2002-07-18  Akim Demaille  <akim@epita.fr>
+
+	* oln.prj: Equip with diff-ignore.
+	* configure.ac: Require Automake 1.6.2: previous versions have a
+	problem with ZLIB_LDFLAGS.
+	* tests/convol/Makefile.am (noinst_PROGRAMS): Depends on `make check'
+	results, so make it `check_PROGRAMS'.
+
 2002-07-18  Astrid Wang  <astrid@lrde.epita.fr>
 
 	* oln/core/w_window2d.hh: Fix the constructor taking an array2d.
@@ -15,7 +23,7 @@
 	* oln/core/w_window2d.hh: Likewise.
 	* oln/core/w_window3d.hh: Likewise.
 	* configure.ac (AC_CONFIG_FILES): Add tests/convol/Makefile.
-	
+
 2002-07-16  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* Makefile.am, configure.ac: Rename `src/' to `oln/'.

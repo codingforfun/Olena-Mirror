@@ -4,7 +4,7 @@ AC_PREREQ([2.52])
 AC_INIT([olena], [0.4.1], [olena-bugs@lrde.epita.fr])
 AC_CONFIG_SRCDIR([ChangeLog])
 AC_CONFIG_AUX_DIR([tools])
-AM_INIT_AUTOMAKE([no-define])
+AM_INIT_AUTOMAKE([no-define 1.6.2])
 
 AM_CONFIG_HEADER(oln/config/config.h:oln/config/config.hin)
 
