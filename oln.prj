@@ -1,20 +1,13 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 190)
-(Parent-Version oln 10 189)
-(Version-Log "2004-06-09  Niels Van Vliet  <niels@lrde.epita.fr>
-	* olena/oln/core/abstract/behavior.hh (adapt_border): Change
-	constness of the image modified to const.
-	* olena/oln/core/behavior.hh: Likewise.
-	* olena/oln/convol/slow_gaussian.hh: Add behavior. Remove parameter
-	mu. Add doc and example. Add radius_factor.
-	* olena/oln/convol/slow_gaussian.hxx: Clean code. Remove parameter
-	mu. Add radius_factor.
-	* olena/oln/morpho/gradient.inc: Fix doc.
+(Project-Version oln 10 191)
+(Parent-Version oln 10 190)
+(Version-Log "2004-06-13  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/tests/convol/tests/slow_gaussian: New file.
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 09 Jun 2004 20:13:57 +0200")
+(Checkin-Time "Sun, 13 Jun 2004 13:20:59 +0200")
 (Checkin-Login van-vl_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -121,7 +114,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.12 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.45 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.42 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.7 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.8 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.13 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.39 600))
 
@@ -1455,6 +1448,13 @@
 ;; to version 10.187(w), by thivol_d:
 
   (olena/oln/transforms/shapelets.hh (oln/r/10_shapelets. 1.2 600))
+
+;; Files added by populate at Sun, 13 Jun 2004 13:18:59 +0200,
+;; to version 10.190(w), by van-vl_n:
+
+  (olena/tests/convol/tests/slow_gaussian (oln/r/11_slow_gauss 1.1 644))
 )
-(Merge-Parents)
+(Merge-Parents
+  (10.190 complete)
+)
 (New-Merge-Parents)
