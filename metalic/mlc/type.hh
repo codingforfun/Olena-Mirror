@@ -52,19 +52,19 @@ namespace mlc_hierarchy
   {
   public:
     typedef E exact_type;
-    
-    E& exact()       
-    { 
+
+    E& exact()
+    {
       return *(E*)((char*)this - exact_offset);
     }
     const E& exact() const
-    { 
+    {
       return *(const E*)((const char*)this - exact_offset);
     }
-   
-    static std::string name() 
-    { 
-      return std::string("any_with_diamond<") + E::name() + ">"; 
+
+    static std::string name()
+    {
+      return std::string("any_with_diamond<") + E::name() + ">";
     }
 
   private:
@@ -78,17 +78,17 @@ namespace mlc_hierarchy
     static const E exact_obj;
     static const any_with_diamond<E>& ref_exact_obj;
   };
-  
+
   template <class E>
   const E any_with_diamond<E>::exact_obj = E();
 
   template <class E>
-  const any_with_diamond<E>& 
+  const any_with_diamond<E>&
   any_with_diamond<E>::ref_exact_obj = any_with_diamond<E>::exact_obj;
 
   template <class E>
-  const int any_with_diamond<E>::exact_offset = 
-  (const char*)(void*)(&any_with_diamond<E>::ref_exact_obj) 
+  const int any_with_diamond<E>::exact_offset =
+  (const char*)(void*)(&any_with_diamond<E>::ref_exact_obj)
     - (const char*)(void*)(&any_with_diamond<E>::exact_obj);
 
 
@@ -104,12 +104,12 @@ namespace mlc_hierarchy
   {
   public:
     typedef E exact_type;
-    
+
     E& exact()             { return static_cast<E&>(*this); }
     const E& exact() const { return static_cast<const E&>(*this); }
-   
-    static std::string name() 
-    { 
+
+    static std::string name()
+    {
       return std::string("any<") + E::name() + ">";
     }
 
@@ -131,12 +131,12 @@ namespace mlc
   class final
   {
   public:
-    static std::string name() { return "final"; } 
+    static std::string name() { return "final"; }
   protected:
-    final() {} 
+    final() {}
   };
 
-  class top 
+  class top
   {
   public:
     static std::string name() { return ""; }
@@ -147,7 +147,7 @@ namespace mlc
   /*------------------.
   | assign_exact_this |
   `------------------*/
- 
+
   // Helper struct for any_with_diamond hierarchies. See
   // mlc_init_static_hierarchy.
 
@@ -167,8 +167,8 @@ namespace mlc
     {
       if (!mlc_hierarchy::any_with_diamond<E>::offset_assigned)
 	{
-	  mlc_hierarchy::any_with_diamond<E>::exact_offset = 
-	    (const char*) 
+	  mlc_hierarchy::any_with_diamond<E>::exact_offset =
+	    (const char*)
 	    static_cast<const mlc_hierarchy::any_with_diamond<E>*>(t)
 	    - (const char*) t;
 	  mlc_hierarchy::any_with_diamond<E>::offset_assigned = true;
@@ -185,19 +185,19 @@ namespace mlc
   {
     typedef typename T::exact_type ret;
   };
-  
+
   template<class T>
   struct exact<const T>
   {
     typedef const typename exact<T>::ret ret;
   };
-  
+
   template<class T>
   struct exact<T*>
   {
     typedef typename exact<T>::ret* ret;
   };
-  
+
   template<class T>
   struct exact<T&>
   {
@@ -207,7 +207,7 @@ namespace mlc
   /*---------.
   | exact_vt |
   `---------*/
-  
+
   //
   //  exact virtual type traits
   //  (inheritance determination)
@@ -219,7 +219,7 @@ namespace mlc
   {
     typedef Exact ret;
   };
-  
+
   template<class Exact>
   struct exact_vt<Exact,final>
   {
@@ -237,20 +237,27 @@ namespace mlc
 # define mlc_exact_type(T) typename mlc::exact< T >::ret
 # define mlc_exact_type_(T) mlc::exact< T >::ret
 
+// Return the exact virtual type of two given types (inheritance determination).
+
+# define mlc_exact_vt_type(T, Exact)		typename mlc::exact_vt<T, Exact>::ret
+# define mlc_2_exact_vt_type(self, T, Exact)	typename mlc::exact_vt<self<T, Exact>, Exact>::ret
+# define mlc_exact_vt_type_(T, Exact)		mlc::exact_vt<T, Exact>::ret
+# define mlc_2_exact_vt_type_(self, T, Exact)	mlc::exact_vt<self<T, Exact>, Exact>::ret
+
 namespace mlc
 {
-  
+
   /*-------------------.
   | to_exact functions |
   `-------------------*/
-  
+
   template<class T> inline
   mlc_exact_type(T)&
   to_exact(T& ref)
   {
     return ref.exact();
   }
-  
+
   template<class T> inline
   const mlc_exact_type(T)&
   to_exact(const T& ref)
@@ -271,7 +278,7 @@ namespace mlc
   {
     return &ptr->exact();
   }
-  
+
 } // end of namespace mlc
 
 /*---------------.
@@ -280,9 +287,9 @@ namespace mlc
 
 // FIXME: uncomment when variadic macros become standardized
 
-// #define mlc_find_exact(...) 
+// #define mlc_find_exact(...)
 // typename mlc::exact_vt<__VA_ARGS__>::ret
-// #define mlc_find_exact_(...) 
+// #define mlc_find_exact_(...)
 // mlc::exact_vt<__VA_ARGS__>::ret
 
 /*--------------------------.
@@ -298,5 +305,11 @@ namespace mlc
 // method works fine.
 
 # define mlc_init_static_hierarchy(Exact)
+
+/*---------.
+| dispatch |
+`---------*/
+
+# define mlc_dispatch(Fun)			return exact().Fun##_impl
 
 #endif // ! METALIC_TYPE_HH

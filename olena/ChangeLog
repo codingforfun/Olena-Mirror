@@ -1,3 +1,12 @@
+2004-02-09  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* oln/morpho/attributes.hh: Add new attributes. Correct the olders.
+
+	* oln/morpho/attribute_union_find.hh: Change lambda type from ref
+	to pointer.
+	* oln/morpho/attribute_closing_opening.hh: Fix some argument
+	types. Add new declarations.
+
 2004-02-06  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* oln/morpho/attributes.hh: Add file. Add new atributes.

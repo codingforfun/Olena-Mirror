@@ -41,7 +41,7 @@ namespace oln {
 	oln_concrete_type(I)
 	  attr_closing_(const abstract::non_vectorial_image<I>& input,
 			const abstract::neighborhood<N>& Ng,
-			const attr_lambda_type(A) lambda)
+			const attr_lambda_type(A) &lambda)
 	{
 	  typedef tarjan::tarjan_set<oln_concrete_type(I), A > tarjan_set_type;
 	  tarjan_set_type area_closing(input.exact(), attr_env_type(A)());
@@ -53,7 +53,7 @@ namespace oln {
 	oln_concrete_type(I)
 	  attr_opening_(const abstract::non_vectorial_image<I>& input,
 			const abstract::neighborhood<N>& Ng,
-			const attr_lambda_type(A) lambda)
+			const attr_lambda_type(A) &lambda)
 	{
 	  typedef tarjan::tarjan_set<oln_concrete_type(I), A > tarjan_set_type;
 	  tarjan_set_type area_opening(input.exact(), attr_env_type(A)());
@@ -68,7 +68,7 @@ namespace oln {
       oln_concrete_type(I) \
 	T##_opening(const abstract::non_vectorial_image<I>& input, \
 		       const abstract::neighborhood<N>& Ng, \
-		       const attr_lambda_type(T##_type<unsigned>) lambda) \
+		       const attr_lambda_type(T##_type<unsigned>) &lambda) \
       { \
 	return internal::attr_opening_<I, N, T##_type<unsigned> >(input, Ng, lambda); \
       }
@@ -78,7 +78,7 @@ namespace oln {
       oln_concrete_type(I) \
 	T##_closing(const abstract::non_vectorial_image<I>& input, \
 		       const abstract::neighborhood<N>& Ng, \
-		       const attr_lambda_type(T##_type<unsigned>) lambda) \
+		       const attr_lambda_type(T##_type<unsigned>) &lambda) \
       { \
 	return internal::attr_closing_<I, N, T##_type<unsigned> >(input, Ng, lambda); \
       }
@@ -90,7 +90,7 @@ namespace oln {
       oln_concrete_type(I) \
 	T##_opening(const abstract::non_vectorial_image<I>& input, \
 		       const abstract::neighborhood<N>& Ng, \
-		       const attr_lambda_type(T##_type<I>) lambda) \
+		       const attr_lambda_type(T##_type<I>) &lambda) \
       { \
 	return internal::attr_opening_<I, N, T##_type<I> >(input, Ng, lambda); \
       }
@@ -100,7 +100,7 @@ namespace oln {
       oln_concrete_type(I) \
 	T##_closing(const abstract::non_vectorial_image<I>& input, \
 		       const abstract::neighborhood<N>& Ng, \
-		       const attr_lambda_type(T##_type<I>) lambda) \
+		       const attr_lambda_type(T##_type<I>) &lambda) \
       { \
 	return internal::attr_closing_<I, N, T##_type<I> >(input, Ng, lambda); \
       }
@@ -159,6 +159,9 @@ namespace oln {
 	xxx_closing_im_decl(dist)
 	xxx_closing_im_decl(square)
 	xxx_opening_im_decl(square)
+	xxx_closing_im_decl(rectangle)
+	xxx_opening_im_decl(rectangle)
+
     }
   }
 }

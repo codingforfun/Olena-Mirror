@@ -1,7 +1,17 @@
+Olena 0.10	Not yet
+
+	* Attribute opening/closing enhancement
+	  - Make the algothim more generic.
+	  - Add a lot of attributes.
+
+	* Change the color conversion system
+	  - CIE RGB is the main color system.
+	  - Conversion between 2 color systems should pass by the RGB one.
+
 Olena 0.9	August 8, 2003
 
         * New static hierarchy paradigm
-	  - Complete rewrite of the image hierarchy. 
+	  - Complete rewrite of the image hierarchy.
           - The new hierarchy benefits from multiple inheritance and
 	    diamond constructs.
           - Objects' abstract interfaces made available, leading to
@@ -25,9 +35,9 @@ Olena 0.8	April 10, 2003
 	versions of Olena. The project has been split into three part,
 	so many header files have moved and new namespaces have been
 	created. Please read the UPGRADING file for more informations.
-	
+
 	* Many source code cleanups.
-	* The source code has been split into 3 parts: image 
+	* The source code has been split into 3 parts: image
 	  processing (olena/), data types (integre/) and meta-programming
 	  tools (metalic/).
 	* First part of the new static hierarchy paradigm implementation.

@@ -1,3 +1,7 @@
+2004-02-09  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* NEWS: Describe color and attributes improvement.
+
 2003-09-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* config/oln-local.m4: Fix swig detection.

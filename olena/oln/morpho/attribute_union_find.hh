@@ -150,7 +150,7 @@ namespace oln {
 	{
 	  precondition((parent_[x] == ACTIVE()) || (parent_[x] == INACTIVE()));
 	  precondition((parent_[y] == ACTIVE()) || (parent_[y] == INACTIVE()));
-	  return ( (input_[x] == input_[y]) || (aux_data_[x] < lambda_));
+	  return ( (input_[x] == input_[y]) || (aux_data_[x] < *lambda_));
 	}
 
 	void
@@ -165,7 +165,7 @@ namespace oln {
 	      }
 	    else
 	      {
-		aux_data_[p] = lambda_;
+		aux_data_[p] = *lambda_;
 	      }
 	}
 
@@ -177,7 +177,7 @@ namespace oln {
 		     const abstract::neighborhood<N>& Ng,
 		     const bool closing)
 	{
-	  lambda_ = lambda;
+	  lambda_ = &lambda;
 
 	  std::vector<point_type>	I(input_.npoints());
 
@@ -232,7 +232,7 @@ namespace oln {
 	const image_type & input_;
 	typename mute<T, point_type>::ret parent_;
 	typename mute<T, ATTRIBUTE>::ret aux_data_;
-	lambda_type lambda_;
+	const lambda_type *lambda_;
 	const env_type	env_;
       };
     }
