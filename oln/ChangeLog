@@ -1,3 +1,21 @@
+2003-01-14  Yann Régis-Gianas  <yann@lrde.epita.fr>
+
+	* oln/oln/core/point1d.hh: Add dpoint1d typedef.
+	* oln/oln/core/point2d.hh: Add dpoint2d typedef.
+	* oln/oln/core/point3d.hh: Add dpoint3d typedef.
+	* oln/oln/core/point.hh: Minor change.
+	* oln/oln/meta/basics.hh: Add an 'undefined' class for static
+	                          error reporting.
+	* oln/oln/core/box.hh: 
+		- Parameter is changed to 'PointType'.
+		- (overlay): New.
+		- (inner_boxes_mean_dim): New.
+		- (inner_boxes_card): New.
+	* oln/oln/core/box.hxx: Implement new interface.
+	* oln/oln/level/set_level.hh: Empty box are not drawn.
+	* oln/oln/topo/dmap.hh: 'exact_dmap' is template <class _I>.
+	* oln/oln/topo/dmap.hxx: Implement it, Fix some bugs.
+
 2003-01-10  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/oln/arith/ops.hh: replace std::min and std::max by types min

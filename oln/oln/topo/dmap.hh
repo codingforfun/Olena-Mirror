@@ -126,7 +126,8 @@ namespace oln {
       T		       	_infTy;
     };
 
-    image<float> exact_dmap(const image<bin>& input);
+    template <class _I>
+    image2d<float> exact_dmap(const image<_I>& _input);
 
   } // end of topo.
 
