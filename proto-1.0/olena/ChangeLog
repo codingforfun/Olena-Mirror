@@ -1,3 +1,11 @@
+2005-03-23  Christophe Berger  <christophe@lrde.epita.fr>
+
+	* oln/core/abstract/point.hh: Fix point type.
+	* oln/core/3d/dpoint3d.hh: New.
+	* oln/core/3d/point3d.hh: Add operators (+-) implementations.
+	* oln/basics3d.hh: Add new header inclusion.
+	* oln/makefile.src: Add new file.
+
 2005-03-22  Simon Odou  <simon@lrde.epita.fr>
 
 	* tests/convert/tests/value_to_point: Fix a wrong instruction.

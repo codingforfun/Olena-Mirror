@@ -25,58 +25,43 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_3D_POINT3D_HH
-# define OLENA_CORE_3D_POINT3D_HH
+#ifndef OLENA_CORE_3D_DPOINT3D_HH
+# define OLENA_CORE_3D_DPOINT3D_HH
 
-# include <ostream>
+# include <iostream>
 
-# include <oln/core/abstract/point.hh>
 # include <oln/core/coord.hh>
+
+// FIXME: there's an assumption here: we do not need inheritance for
+// dpoints.  so abstract::dpoint does not exist...
+
+// FIXME: doc!
 
 namespace oln {
 
-
   struct point3d;
-  struct dpoint3d;
 
-  // category
-  template <>
-  struct set_category< point3d > { typedef category::point ret; };
-
-  // super_type
-  template <>
-  struct set_super_type< point3d > { typedef abstract::point< point3d > ret; };
-
-  // props
-  template <>
-  struct set_props < category::point, point3d > : public props_of<category::point>
+  struct dpoint3d
   {
-    typedef dpoint3d dpoint_type;
-  };
-
-
-  struct point3d : public abstract::point< point3d >
-  {
-    point3d()
+    dpoint3d()
     {
-      // no initialization here so that slice_, row_, and col_ are 'undef'
     }
 
-    point3d(coord_t slice_, coord_t row_, coord_t col_) :
+    dpoint3d(coord_t slice_, coord_t row_, coord_t col_) :
       slice_(slice_),
       row_(row_),
       col_(col_)
     {
     }
 
-    point3d(const point3d& rhs) :
+    dpoint3d(const dpoint3d& rhs) :
       slice_(rhs.slice_),
       row_(rhs.row_),
       col_(rhs.col_)
     {
     }
 
-    point3d& operator=(const point3d& rhs)
+    dpoint3d& operator=(const dpoint3d& rhs)
     {
       if (&rhs == this)
 	return *this;
@@ -86,22 +71,37 @@ namespace oln {
       return *this;
     }
 
-    bool impl_eq(const point3d& rhs) const
+    bool operator==(const dpoint3d& rhs) const
     {
-      return this->slice_ == rhs.slice_ and
-             this->row_ == rhs.row_     and
-             this->col_ == rhs.col_;
+      return this->row_ == rhs.row_ && this->col_ == rhs.col_ && this->slice_ == rhs.slice_;
     }
-    const point3d impl_plus(const dpoint3d& rhs) const;
-    const dpoint3d impl_minus(const point3d& rhs) const;
 
-    const coord_t slice() const { return slice_; }
+    bool operator!=(const dpoint3d& rhs) const
+    {
+      return ! this->operator==(rhs);
+    }
+
+    const dpoint3d operator+(const dpoint3d& rhs) const
+    {
+      dpoint3d tmp(this->slice() + rhs.slice(), this->row() + rhs.row(), this->col() + rhs.col());
+      return tmp;
+    }
+
+    const point3d operator+(const point3d& rhs) const;
+
+    const dpoint3d operator-() const
+    {
+      dpoint3d tmp(-this->slice(), -this->row(), -this->col());
+      return tmp;
+    }
+
     const coord_t row() const { return row_; }
     const coord_t col() const { return col_; }
+    const coord_t slice() const { return slice_; }
 
-    coord_t& slice() { return slice_; }
     coord_t& row() { return row_; }
     coord_t& col() { return col_; }
+    coord_t& slice() { return slice_; }
 
   protected:
     coord_t slice_, row_, col_;
@@ -110,30 +110,22 @@ namespace oln {
 } // end of namespace oln
 
 
-std::ostream& operator<<(std::ostream& ostr, const oln::point3d& p)
+std::ostream& operator<<(std::ostream& ostr, const oln::dpoint3d& dp)
 {
-  return ostr << '(' << p.slice() << ',' << p.row() << ',' << p.col() << ')';
+  return ostr << '(' << dp.slice() << ',' << dp.row() << ',' << dp.col() << ')';
 }
 
-
-# include <oln/core/3d/dpoint3d.hh>
-
+# include <oln/core/3d/point3d.hh>
 
 namespace oln {
 
-  const point3d point3d::impl_plus(const dpoint3d& rhs) const
+  const point3d dpoint3d::operator+(const point3d& rhs) const
   {
     point3d tmp(this->slice() + rhs.slice(), this->row() + rhs.row(), this->col() + rhs.col());
     return tmp;
   }
 
-  const dpoint3d point3d::impl_minus(const point3d& rhs) const
-  {
-    dpoint3d tmp(this->slice() - rhs.slice(), this->row() - rhs.row(), this->col() - rhs.col());
-    return tmp;
-  }
-
-} // end of namespace oln
+}
 
 
-#endif // ! OLENA_CORE_3D_POINT3D_HH
+#endif // ! OLENA_CORE_3D_DPOINT3D_HH

@@ -36,6 +36,7 @@ OLN_DEP =					\
   core/3d/fwd_piter3d.hh			\
   core/3d/image3d.hh				\
   core/3d/point3d.hh				\
+  core/3d/dpoint3d.hh				\
   core/3d/size3d.hh				\
   core/abstract/data_storage.hh			\
   core/abstract/dpoint.hh			\

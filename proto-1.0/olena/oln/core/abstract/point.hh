@@ -94,7 +94,7 @@ namespace oln {
       **
       ** \return True if both points are the same, false otherwise.
       */
-      bool operator==(const point& rhs) const
+      bool operator==(const exact_type& rhs) const
       {
 	return this->exact().impl_eq(rhs.exact());
       }
@@ -104,7 +104,7 @@ namespace oln {
       **
       ** \return True if both points are different, false otherwise.
       */
-      bool operator!=(const point& rhs) const
+      bool operator!=(const exact_type& rhs) const
       {
 	return ! this->operator==(rhs);
       }
@@ -118,7 +118,7 @@ namespace oln {
 	return this->exact().impl_plus(dp);
       }
 
-      const dpoint_type operator-(const point& rhs) const
+      const dpoint_type operator-(const exact_type& rhs) const
       {
 	return this->exact().impl_minus(rhs);
       }
@@ -126,6 +126,11 @@ namespace oln {
     protected:
 
       point() {}
+
+      /*! \brief Cpy constructor (protected, empty).
+      */
+      point(const exact_type& pt) {}
+
     };
 
   } // end of namespace abstract
