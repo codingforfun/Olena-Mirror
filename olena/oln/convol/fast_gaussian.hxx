@@ -151,11 +151,10 @@ namespace oln {
 	template<>
 	struct _gaussian<1>
 	{
-	  template <class I_, class F> static
+	  template <class I, class F> static
 	  void
-	  doit(image<I_>& _img, const F& coef)
+	  doit(abstract::image_with_dim<1, I>& img, const F& coef)
 	  {
-	    Exact_ref(I, img);
 
 	    // Apply on columns.
 	    _recursivefilter<float>(img, coef,
@@ -171,11 +170,10 @@ namespace oln {
 	template<>
 	struct _gaussian<2>
 	{
-	  template <class I_, class F> static
+	  template <class I, class F> static
 	  void
-	  doit(image<I_>& _img, const F& coef)
+	  doit(abstract::image_with_dim<2, I>& img, const F& coef)
 	  {
-	    Exact_ref(I, img);
 
 	    // Apply on rows.
 	    for (coord j = 0; j < img.ncols(); ++j)
@@ -199,12 +197,10 @@ namespace oln {
 	template<>
 	struct _gaussian<3>
 	{
-	  template <class I_, class F> static
+	  template <class I, class F> static
 	  void
-	  doit(image<I_>& _img, const F& coef)
+	  doit(abstract::image_with_dim<3, I>& img, const F& coef)
 	  {
-	    Exact_ref(I, img);
-
 	    // Apply on slices.
 	    for (coord j = 0; j < img.nrows(); ++j)
 	      for (coord k = 0; k < img.ncols(); ++k)
@@ -234,16 +230,15 @@ namespace oln {
 	  }
 	};
 
-	template <class C_, class I_, class F>
-	typename mute<I_, typename convoutput<C_,Value(I_)>::ret>::ret
+	template <class C_, class I, class F>
+	typename mute<I, typename convoutput<C_,Value(I)>::ret>::ret
 	_gaussian_common(const conversion<C_>& _c,
-			 const image<I_>& _in,
+			 const abstract::image<I>& in,
 			 const F& coef)
 	{
 	  Exact_cref(C, c);
-	  Exact_cref(I, in);
 
-	  typename mute<I_, ntg::float_s>::ret work_img(in.size());
+	  typename mute<I, ntg::float_s>::ret work_img(in.size());
 
 	  Iter(I) it(in);
 	  for_all(it)
@@ -254,7 +249,7 @@ namespace oln {
 	  /* Convert the result image to the user-requested datatype.
 	     FIXME: We are making an unnecessary copy in case the
 	     user expects a ntg::float_s image.  */
-	  typename mute<I_, typename convoutput<C_,Value(I_)>::ret>::ret
+	  typename mute<I, typename convoutput<C_,Value(I)>::ret>::ret
 	    out_img(in.size());
 	  for_all(it)
 	    out_img[it] = c(work_img[it]);
@@ -264,13 +259,11 @@ namespace oln {
 
       } // internal
 
-      template <class C, class I_>
-      typename mute<I_, typename convoutput<C,Value(I_)>::ret>::ret
+      template <class C, class I>
+      typename mute<I, typename convoutput<C,Value(I)>::ret>::ret
       gaussian(const conversion<C>& c,
-	       const image<I_>& _in, ntg::float_s sigma)
+	       const abstract::image<I>& in, ntg::float_s sigma)
       {
-	Exact_cref(I, in);
-
 	internal::_RecursiveFilterCoef<float>
 	  coef(1.68f, 3.735f,
 	       1.783f, 1.723f,
@@ -282,13 +275,11 @@ namespace oln {
 	return internal::_gaussian_common(c, in, coef);
       }
 
-      template <class C, class I_>
-      typename mute<I_, typename convoutput<C,Value(I_)>::ret>::ret
+      template <class C, class I>
+      typename mute<I, typename convoutput<C,Value(I)>::ret>::ret
       gaussian_derivative(const conversion<C>& c,
-			  const image<I_>& _in, ntg::float_s sigma)
+			  const abstract::image<I>& in, ntg::float_s sigma)
       {
-	Exact_cref(I, in);
-
 	internal::_RecursiveFilterCoef<float>
 	  coef(-0.6472f, -4.531f,
 	       1.527f, 1.516f,
@@ -301,13 +292,11 @@ namespace oln {
 	return internal::_gaussian_common(c, in, coef);
       }
 
-      template <class C, class I_>
-      typename mute<I_, typename convoutput<C,Value(I_)>::ret>::ret
+      template <class C, class I>
+      typename mute<I, typename convoutput<C,Value(I)>::ret>::ret
       gaussian_second_derivative(const conversion<C>& c,
-				 const image<I_>& _in, ntg::float_s sigma)
+				 const abstract::image<I>& in, ntg::float_s sigma)
       {
-	Exact_cref(I, in);
-
 	internal::_RecursiveFilterCoef<float>
 	  coef(-1.331f, 3.661f,
 	       1.24f, 1.314f,

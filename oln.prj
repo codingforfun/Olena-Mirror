@@ -1,14 +1,49 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 54)
-(Parent-Version oln 2003paradigm 53)
-(Version-Log "2003-07-29  David Lesage  <david@lrde.epita.fr>
+(Project-Version oln 2003paradigm 56)
+(Parent-Version oln 2003paradigm 54)
+(Version-Log "Index: olena/ChangeLog
+from  David Lesage  <david@lrde.epita.fr>
 
-	* oln/core/abstract/w_window.hh: Add w(i) member function..
+	* oln/convol/fast_gaussian.hxx, 
+	oln/core/dpoint3d.hh, 
+	oln/core/abstract/dpoint.hh,
+	oln/core/abstract/neighborhood.hh,
+	oln/morpho/closing.inc,
+	oln/morpho/thickening.inc,
+	oln/morpho/thinning.inc,
+	oln/core/abstract/image_with_dim.hh, 
+	oln/core/impl/image_impl.hh, 
+	oln/core/impl/image_array1d.hh: Fix includes and various bugs.
+
+Index: tools/ChangeLog
+from  David Lesage  <david@lrde.epita.fr>
+
+	* utilities/morpho/Makefile.am,
+	utilities/morpho/morpho_template.cc, 
+	utilities/morpho/morpho_template_extrema.cc,
+	utilities/morpho/morpho_template_gaussian.cc,
+	utilities/morpho/morpho_template_watershed.cc,
+	utilities/morpho/morpho_template_with_functor.cc,
+	utilities/morpho/morpho_template_with_neighb.cc,
+	utilities/morpho/morpho_template_with_twowin.cc: Fix.
+
+	* utilities/Makefile.am: Deactivate mosaic tool.
+
+	* utilities/mosaic.cc: Fix partially.
+
+Index: tools/swilena/ChangeLog
+from  David Lesage  <david@lrde.epita.fr>
+
+	* swilena/meta/swilena_w_win.i, 
+	swilena/meta/swilena_structelt.i,
+	swilena/meta/swilena_point.i,
+	swilena/meta/swilena_imagesize.i,
+	swilena/meta/swilena_image.i: Fix..
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 29 Jul 2003 15:55:35 +0200")
+(Checkin-Time "Tue, 29 Jul 2003 18:21:22 +0200")
 (Checkin-Login david)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -98,10 +133,10 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.8 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.38 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.40 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38 640))
-  (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.10 640))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.4 640))
+  (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.11 640))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.5 640))
 
   (attic/oln-ChangeLog (oln/6_ChangeLog 1.50.1.98.1.5 640))
 
@@ -152,7 +187,7 @@
   (olena/oln/basics1d.hh (oln/d/41_basics1d.h 1.4 640))
   (olena/oln/basics2d.hh (oln/b/7_basics2d.h 1.6 640))
   (olena/oln/basics3d.hh (oln/28_basics3d.h 1.3 640))
-  (olena/oln/basics.hh (oln/d/42_basics.hh 1.11 640))
+  (olena/oln/basics.hh (oln/d/42_basics.hh 1.12 640))
 
 
   (olena/oln/config/system.hh (oln/7_system.hh 1.17 640))
@@ -171,10 +206,10 @@
   (olena/oln/convert/rgbnrgb.hh (oln/17_rgbnrgb.hh 1.9 640))
   (olena/oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.9 640))
   (olena/oln/convert/stretch.hh (oln/f/51_stretch.hh 1.9 640))
-  (olena/oln/convol/convolution.hh (oln/f/39_convolutio 1.4.1.4.1.3 640))
+  (olena/oln/convol/convolution.hh (oln/f/39_convolutio 1.4.1.4.1.4 640))
   (olena/oln/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.5.1.4 640))
-  (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.4 640))
-  (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.5 640))
+  (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.5 640))
+  (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.7 640))
   (olena/oln/core/accum.hh (oln/d/40_accum.hh 1.3 640))
   (olena/oln/core/apply.hh (oln/d/39_apply.hh 1.10 640))
   (olena/oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.14 640))
@@ -193,9 +228,9 @@
   (olena/oln/core/dpoint1d.hxx (oln/d/26_dpoint1d.h 1.7 640))
   (olena/oln/core/dpoint2d.hh (oln/d/25_dpoint2d.h 1.9 640))
   (olena/oln/core/dpoint2d.hxx (oln/d/24_dpoint2d.h 1.6 640))
-  (olena/oln/core/dpoint3d.hh (oln/d/23_dpoint3d.h 1.8 640))
+  (olena/oln/core/dpoint3d.hh (oln/d/23_dpoint3d.h 1.9 640))
   (olena/oln/core/dpoint3d.hxx (oln/d/22_dpoint3d.h 1.6 640))
-  (olena/oln/core/abstract/dpoint.hh (oln/d/28_dpoint.hh 1.10 640))
+  (olena/oln/core/abstract/dpoint.hh (oln/d/28_dpoint.hh 1.11 640))
   
   (olena/oln/core/fold.hh (oln/c/7_fold.hh 1.10 640))
   (olena/oln/core/fwd_iter1d.hh (oln/d/21_fwd_iter1d 1.11 640))
@@ -233,7 +268,7 @@
   (olena/oln/core/neighborhood1d.hh (oln/c/37_neighborho 1.11 640))
   (olena/oln/core/neighborhood2d.hh (oln/c/36_neighborho 1.12 640))
   (olena/oln/core/neighborhood3d.hh (oln/c/35_neighborho 1.11 640))
-  (olena/oln/core/abstract/neighborhood.hh (oln/c/38_neighborho 1.12 640))
+  (olena/oln/core/abstract/neighborhood.hh (oln/c/38_neighborho 1.13 640))
   (metalic/mlc/objs.hh (oln/c/34_objs.hh 1.6 640))
   (olena/oln/core/point1d.hh (oln/c/32_point1d.hh 1.11 640))
   (olena/oln/core/point1d.hxx (oln/c/31_point1d.hx 1.5 640))
@@ -305,7 +340,7 @@
   
   (metalic/mlc/math.hh (oln/b/51_ufuncs.hh 1.9 640))
   (olena/oln/morpho/closing.hh (oln/b/6_closing.hh 1.6 640))
-  (olena/oln/morpho/closing.inc (oln/44_closing.in 1.8 640))
+  (olena/oln/morpho/closing.inc (oln/44_closing.in 1.9 640))
   (olena/oln/morpho/dilation.hh (oln/b/5_dilation.h 1.12 640))
   (olena/oln/morpho/erosion.hh (oln/b/4_erosion.hh 1.11 640))
   (olena/oln/morpho/extrema.hh (oln/38_extrema.hh 1.11 640))
@@ -328,17 +363,17 @@
   (olena/oln/morpho/splitse.hh (oln/34_splitse.hh 1.5 640))
   (olena/oln/morpho/stat.hh (oln/50_stat.hh 1.8.1.4 640))
   (olena/oln/morpho/thickening.hh (oln/e/29_thickening 1.7 640))
-  (olena/oln/morpho/thickening.inc (oln/e/28_thickening 1.6 640))
+  (olena/oln/morpho/thickening.inc (oln/e/28_thickening 1.7 640))
   (olena/oln/morpho/thinning.hh (oln/e/27_thinning.h 1.7 640))
-  (olena/oln/morpho/thinning.inc (oln/e/26_thinning.i 1.7 640))
+  (olena/oln/morpho/thinning.inc (oln/e/26_thinning.i 1.8 640))
   (olena/oln/morpho/top_hat.hh (oln/49_top_hat.hh 1.4 640))
   (olena/oln/morpho/top_hat.inc (oln/39_top_hat.in 1.6 640))
   (olena/oln/morpho/watershed.hh (oln/48_watershed. 1.6 640))
   (olena/oln/morpho/watershed.hxx (oln/47_watershed. 1.9.1.4 640))
   (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.5 640))
   (olena/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.7.1.4 640))
-  (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.6 640))
-  (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.5 640))
+  (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.7 640))
+  (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.6 640))
   (olena/oln/transforms/wavelet_coeffs.hh (oln/i/34_wavelet_co 1.5 640))
   (integre/ntg/all.hh (oln/g/32_all.hh 1.10.1.8 640))
   (integre/ntg/core/behavior.hh (oln/g/31_behaviour. 1.13.1.13 640))
@@ -443,9 +478,9 @@
   (olena/tests/README (oln/f/4_README 1.4 640))
   (olena/tests/sanity/includes.test (oln/f/46_includes.t 1.8 750))
   (olena/tests/sanity/Makefile.am (oln/f/48_Makefile.a 1.4.1.2 640))
-  (olena/tests/transforms/dwt.cc (oln/i/38_dwt.cc 1.8.1.4 640))
+  (olena/tests/transforms/dwt.cc (oln/i/38_dwt.cc 1.8.1.5 640))
   (olena/tests/transforms/fft.cc (oln/i/37_fft.cc 1.6.1.4 640))
-  (olena/tests/transforms/Makefile.am (oln/i/40_Makefile.a 1.8 640))
+  (olena/tests/transforms/Makefile.am (oln/i/40_Makefile.a 1.9 640))
 ;;  (oln/tests/transforms/output () :directory)
   (integre/tests/types/Makefile.am (oln/h/5_Makefile.a 1.11 640))
   (integre/tests/types/runtests (oln/h/3_runtests 1.14.1.4 750))
@@ -573,17 +608,17 @@
   
   (tools/swilena/TODO (oln/n/36_TODO 1.2 640))
   (tools/utilities/configure.ac (oln/o/27_configure. 1.2 640))
-  (tools/utilities/Makefile.am (oln/g/2_Makefile.a 1.12.1.4 640))
+  (tools/utilities/Makefile.am (oln/g/2_Makefile.a 1.12.1.5 640))
   (tools/utilities/morpho/generate_morpho.sh (oln/i/30_generate_m 1.3.1.5.1.2 750))
-  (tools/utilities/morpho/Makefile.am (oln/i/32_Makefile.a 1.9.1.4 640))
-  (tools/utilities/morpho/morpho_template.cc (oln/i/33_morpho_tem 1.5.1.2.1.3 640))
-  (tools/utilities/morpho/morpho_template_extrema.cc (oln/j/5_morpho_tem 1.1.1.2.1.2 640))
-  (tools/utilities/morpho/morpho_template_gaussian.cc (oln/j/8_morpho_tem 1.1.1.2.1.3 640))
-  (tools/utilities/morpho/morpho_template_watershed.cc (oln/j/6_morpho_tem 1.1.1.2.1.2 640))
-  (tools/utilities/morpho/morpho_template_with_functor.cc (oln/j/10_morpho_tem 1.1.1.2.1.2 640))
-  (tools/utilities/morpho/morpho_template_with_neighb.cc (oln/j/7_morpho_tem 1.1.1.2.1.2 640))
-  (tools/utilities/morpho/morpho_template_with_twowin.cc (oln/j/9_morpho_tem 1.1.1.2.1.2 640))
-  (tools/utilities/mosaic.cc (oln/g/0_mosaic.cc 1.5.1.4 640))
+  (tools/utilities/morpho/Makefile.am (oln/i/32_Makefile.a 1.9.1.5 640))
+  (tools/utilities/morpho/morpho_template.cc (oln/i/33_morpho_tem 1.5.1.2.1.4 640))
+  (tools/utilities/morpho/morpho_template_extrema.cc (oln/j/5_morpho_tem 1.1.1.2.1.3 640))
+  (tools/utilities/morpho/morpho_template_gaussian.cc (oln/j/8_morpho_tem 1.1.1.2.1.4 640))
+  (tools/utilities/morpho/morpho_template_watershed.cc (oln/j/6_morpho_tem 1.1.1.2.1.3 640))
+  (tools/utilities/morpho/morpho_template_with_functor.cc (oln/j/10_morpho_tem 1.1.1.2.1.3 640))
+  (tools/utilities/morpho/morpho_template_with_neighb.cc (oln/j/7_morpho_tem 1.1.1.2.1.3 640))
+  (tools/utilities/morpho/morpho_template_with_twowin.cc (oln/j/9_morpho_tem 1.1.1.2.1.3 640))
+  (tools/utilities/mosaic.cc (oln/g/0_mosaic.cc 1.5.1.5 640))
 
 ;; Files added by populate at Sun, 19 Jan 2003 21:48:10 +0100,
 ;; to version 7.25(w), by raph:
@@ -823,16 +858,16 @@
   (integre/tests/types/tests/int_u5c (oln/s/11_int_u5c 1.1 640))
   (tools/swilena/expand.sh (oln/s/25_expand.sh 1.3 750))
   (tools/swilena/meta/Makefile.am (oln/s/26_Makefile.a 1.1 640))
-  (tools/swilena/meta/swilena_w_win.i (oln/s/27_swilena_w_ 1.1 640))
-  (tools/swilena/meta/swilena_structelt.i (oln/s/28_swilena_st 1.1 640))
-  (tools/swilena/meta/swilena_point.i (oln/s/29_swilena_po 1.1 640))
+  (tools/swilena/meta/swilena_w_win.i (oln/s/27_swilena_w_ 1.2 640))
+  (tools/swilena/meta/swilena_structelt.i (oln/s/28_swilena_st 1.2 640))
+  (tools/swilena/meta/swilena_point.i (oln/s/29_swilena_po 1.2 640))
   (tools/swilena/meta/swilena_ntg_int_u.i (oln/s/30_swilena_nt 1.1 640))
   (tools/swilena/meta/swilena_ntg_int_s.i (oln/s/31_swilena_nt 1.1 640))
   (tools/swilena/meta/swilena_ntg_cplx.i (oln/s/32_swilena_nt 1.2 640))
   (tools/swilena/meta/swilena_ntg.i (oln/s/33_swilena_nt 1.2 640))
   (tools/swilena/meta/swilena_morpho.i (oln/s/34_swilena_mo 1.1 640))
-  (tools/swilena/meta/swilena_imagesize.i (oln/s/35_swilena_im 1.1 640))
-  (tools/swilena/meta/swilena_image.i (oln/s/36_swilena_im 1.1 640))
+  (tools/swilena/meta/swilena_imagesize.i (oln/s/35_swilena_im 1.2 640))
+  (tools/swilena/meta/swilena_image.i (oln/s/36_swilena_im 1.2 640))
   (tools/swilena/meta/swilena_exception.i (oln/s/37_swilena_ex 1.1 640))
   (tools/swilena/meta/swilena_describe.i (oln/s/38_swilena_de 1.1 640))
   (tools/swilena/meta/swilena_decl.i (oln/s/39_swilena_de 1.1 640))
@@ -873,10 +908,10 @@
 ;; to version 2003paradigm.7(w), by burrus_n:
 
   (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.9 640))
-  (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.9 640))
+  (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.10 640))
   (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.9 640))
   (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.3 640))
-  (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.7 640))
+  (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.8 640))
   (olena/oln/core/impl/image_array.hh (oln/t/30_image_arra 1.8 640))
   (olena/tests/core/tests/image1 (oln/t/31_image1 1.4 640))
 
@@ -899,7 +934,7 @@
 
   (olena/oln/core/impl/image_array3d.hh (oln/t/32_image_arra 1.5 644))
   (olena/oln/core/impl/image_array2d.hh (oln/t/33_image_arra 1.6 644))
-  (olena/oln/core/impl/image_array1d.hh (oln/t/34_image_arra 1.5 644))
+  (olena/oln/core/impl/image_array1d.hh (oln/t/34_image_arra 1.6 644))
 
 ;; Files deleted by depopulate at Fri, 18 Jul 2003 12:39:16 +0200,
 ;; from version 2003paradigm.8(w), by david:
@@ -1029,5 +1064,11 @@
   (olena/oln/io/image.hh (oln/u/11_image.hh 1.1 600))
   (olena/tests/convert/conv.cc (oln/u/12_conv.cc 1.1 640))
   (olena/tests/convert/conv.hh (oln/u/13_conv.hh 1.1 640)))
-(Merge-Parents)
+(Merge-Parents
+  (2003paradigm.55 complete
+    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (olena/oln/convol/convolution.hh olena/oln/convol/convolution.hh olena/oln/convol/convolution.hh r)
+    (olena/oln/convol/fast_gaussian.hh olena/oln/convol/fast_gaussian.hh olena/oln/convol/fast_gaussian.hh r) (olena/oln/convol/fast_gaussian.hxx olena/oln/convol/fast_gaussian.hxx olena/oln/convol/fast_gaussian.hxx r)
+    (olena/oln/transforms/dwt.hh olena/oln/transforms/dwt.hh olena/oln/transforms/dwt.hh r) (olena/oln/transforms/fft.hh olena/oln/transforms/fft.hh olena/oln/transforms/fft.hh r)
+    (olena/tests/transforms/dwt.cc olena/tests/transforms/dwt.cc olena/tests/transforms/dwt.cc r) (olena/tests/transforms/Makefile.am olena/tests/transforms/Makefile.am olena/tests/transforms/Makefile.am r))
+)
 (New-Merge-Parents)

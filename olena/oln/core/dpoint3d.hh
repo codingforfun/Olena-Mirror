@@ -40,7 +40,7 @@ namespace oln {
 
   template<>
   struct dpoint_traits<dpoint3d>: public
-  dpoint_traits<abstract::dpoint<dpoint2d> >
+  dpoint_traits<abstract::dpoint<dpoint3d> >
   {
     enum { dim = 3 };
     typedef point3d point_type;

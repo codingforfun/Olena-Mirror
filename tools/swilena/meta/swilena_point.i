@@ -20,20 +20,20 @@
      }
 
      // point arithmetics
-     T operator+(const dpoint ## Dim ## d&) const;
-     T& operator+=(const dpoint ## Dim ## d&);
+     T operator+(const oln::dpoint ## Dim ## d&) const;
+     T& operator+=(const oln::dpoint ## Dim ## d&);
 
-     T operator-(const dpoint ## Dim ## d&) const;
-     T& operator-=(const dpoint ## Dim ## d&);
+     T operator-(const oln::dpoint ## Dim ## d&) const;
+     T& operator-=(const oln::dpoint ## Dim ## d&);
 
      T operator-() const;
 
      // some scripting languages do not support operator
      // overloading. Provide a substitution.
      %extend {
-       T& add(const dpoint ## Dim ## d& d)
+       T& add(const oln::dpoint ## Dim ## d& d)
 	 { return (*self) += d; }
-       T& sub(const dpoint ## Dim ## d& d)
+       T& sub(const oln::dpoint ## Dim ## d& d)
 	 { return (*self) -= d; }
        T neg() const
 	 { return -(*self); }

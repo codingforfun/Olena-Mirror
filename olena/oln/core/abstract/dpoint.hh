@@ -91,12 +91,12 @@ namespace oln {
 	return to_exact(this)->minus_assign_dp(to_exact(dp));
       }
 
-      exact_type operator+(const self_type& dp)
+      exact_type operator+(const self_type& dp) const
       {
 	return to_exact(this)->plus_dp(to_exact(dp));
       }
 
-      exact_type operator-(const self_type& dp)
+      exact_type operator-(const self_type& dp) const
       {
 	return to_exact(this)->minus_dp(to_exact(dp));
       }

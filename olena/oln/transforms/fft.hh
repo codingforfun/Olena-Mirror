@@ -123,7 +123,7 @@ namespace oln {
 	image2d<T1> new_im(trans_im.size());
 	range<float_d, bounded_u<0, 1>, saturate> c(clip);
 	float_d max = 0;
-	typename image2d<cplx<R, float_d> >::iter it(trans_im);
+	typename image2d<cplx<R, float_d> >::iter_type it(trans_im);
 
 	for_all(it)
 	  if (max < trans_im[it].magn())
@@ -188,7 +188,7 @@ namespace oln {
 
 	image2d<T1> new_im(trans_im.size());
 	float_d max = 0;
-	typename image2d<cplx<R, float_d> >::iter it(trans_im);
+	typename image2d<cplx<R, float_d> >::iter_type it(trans_im);
 
 	for_all(it)
 	  if (max < trans_im[it].magn())

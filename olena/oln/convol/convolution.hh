@@ -31,12 +31,9 @@
 
 # include <oln/basics.hh>
 # include <oln/basics2d.hh>
-# include <oln/core/point.hh>
 # include <ntg/all.hh>
 # include <mlc/cmp.hh>
 # include <mlc/array/all.hh>
-
-# include <oln/core/w_window.hh>
 
 namespace oln {
 
@@ -45,17 +42,15 @@ namespace oln {
     namespace slow {
 
       //FIXME : we must always specify DestValue.
-      template<class DestValue, class I_, class Win_> 
-      typename mute<I_, DestValue>::ret
-      convolve(const image < I_ >& _input, 
-	       const w_window< Win_ >& _win)
+      template<class DestValue, class I, class Win> 
+      typename mute<I, DestValue>::ret
+      convolve(const abstract::image < I >& input, 
+	       const abstract::w_window< Win >& win)
       {
-	Exact_cref(I, input);
-	Exact_cref(Win, win);
 	mlc::eq<I::dim, Win::dim>::ensure();
 
-	typename mute<I_, DestValue>::ret output(input.size());
-	border::adapt_copy(input, win.delta());
+	typename mute<I, DestValue>::ret output(input.size());
+	input.border_adapt_copy(win.delta());
 	Iter(I) p_im(input);
 	for_all(p_im)
 	  {
@@ -70,12 +65,12 @@ namespace oln {
       }
 
       //FIXME: don't use array1d, ..., arraynd.
-      template<class DestValue, class I_, class Info, class Win_> 
-      typename mute<I_, DestValue>::ret
-      convolve(const image < I_ >& _input, 
-	       const mlc::array2d<Info, Win_ >& _arr)
+      template<class DestValue, class I, class Info, class Win> 
+      typename mute<I, DestValue>::ret
+      convolve(const abstract::image < I >& input, 
+	       const mlc::array2d<Info, Win >& arr)
       {
-	return convolve<DestValue>(_input, static_cast< w_window2d<Win_> >(_arr));
+	return convolve<DestValue>(input, static_cast< w_window2d<Win> >(arr));
 	// FIXME: Should be w_window<_T_arr>.  Adjust #include once done.
       }
 

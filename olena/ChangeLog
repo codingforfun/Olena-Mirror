@@ -1,5 +1,27 @@
 2003-07-29  David Lesage  <david@lrde.epita.fr>
 
+	* oln/convol/fast_gaussian.hxx, 
+	oln/core/dpoint3d.hh, 
+	oln/core/abstract/dpoint.hh,
+	oln/core/abstract/neighborhood.hh,
+	oln/morpho/closing.inc,
+	oln/morpho/thickening.inc,
+	oln/morpho/thinning.inc,
+	oln/core/abstract/image_with_dim.hh, 
+	oln/core/impl/image_impl.hh, 
+	oln/core/impl/image_array1d.hh: Fix includes and various bugs.
+
+2003-07-29  Reda Dehak  <reda@lrde.epita.fr>
+
+	* oln/convol/convolution.hh, oln/convol/fast_gaussian.hh,
+	oln/convol/fast_gaussian.hxx, oln/transforms/dwt.hh, 
+	oln/transforms/fft.hh: Adapt to new paradigm.
+
+	* tests/transforms/Makefile.am: Replace = by += in AM_LDFLAGS and
+	AM_CXXFLAGS definitionsi.
+
+2003-07-29  David Lesage  <david@lrde.epita.fr>
+
 	* oln/core/abstract/w_window.hh: Add w(i) member function.
 
 2003-07-29  David Lesage  <david@lrde.epita.fr>

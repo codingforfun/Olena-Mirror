@@ -234,7 +234,7 @@ main(int argc, char *argv[])
     }
   else
     {
-      image2d<TYPE>::iter p(output);
+      image2d<TYPE>::iter_type p(output);
       for_all(p)
 	{
 	  if (((p.row() / 8) ^ (p.col() / 8)) & 1)

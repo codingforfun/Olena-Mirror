@@ -46,7 +46,7 @@ check()
   // 1D tests
 
   image1d<int_u16> vec1(4096);
-  image1d<int_u16>::iter it1(vec1);
+  image1d<int_u16>::iter_type it1(vec1);
   for_all(it1)
     vec1[it1] = std::rand() / 10000000;
 
@@ -76,7 +76,7 @@ check()
   CHECK (level::is_equal(im1, im3));
 
   image2d<ntg::int_u<8, saturate> > out(im2.size());
-  image2d<float_d>::iter it2(im2);
+  image2d<float_d>::iter_type it2(im2);
   for_all(it2)
     out[it2] = im2[it2];
 
@@ -102,7 +102,7 @@ check()
   // 3D tests
 
   image3d<int_u32> cube1(64, 64, 64);
-  image3d<int_u32>::iter it3(cube1);
+  image3d<int_u32>::iter_type it3(cube1);
   for_all(it3)
     cube1[it3] = std::rand();
 

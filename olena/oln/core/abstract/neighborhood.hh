@@ -122,11 +122,13 @@ namespace oln
 
       neighborhood() {}
     };
-    
+   
+  } // end of abstract  
+
     template<class E>
     inline 
-    E inter(const neighborhood<E> &lhs, 
-	    const neighborhood<E> &rhs)
+    E inter(const abstract::neighborhood<E> &lhs, 
+	    const abstract::neighborhood<E> &rhs)
     {
       E neighb;
       for (unsigned j = 0; j < rhs.card(); ++j)
@@ -137,8 +139,8 @@ namespace oln
     
     template<class E>
     inline
-    E uni(const neighborhood<E> &lhs, 
-	  const neighborhood<E> &rhs)
+    E uni(const abstract::neighborhood<E> &lhs, 
+	  const abstract::neighborhood<E> &rhs)
     {
       E neighb;
       for (unsigned j = 0; j < rhs.card(); ++j)
@@ -149,8 +151,6 @@ namespace oln
 	  neighb.add(lhs.dp(j));
       return neighb;
     }
-
-  } // end of abstract  
 
   template<class E>
   inline

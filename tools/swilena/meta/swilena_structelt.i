@@ -17,8 +17,8 @@
      unsigned card() const;
      bool is_centered() const;
 
-     bool has(const dpoint ## Dim ## d& ) const;
-     dpoint ## Dim ## d dp(unsigned i) const;
+     bool has(const oln::dpoint ## Dim ## d& ) const;
+     oln::dpoint ## Dim ## d dp(unsigned i) const;
 
      // accessors & operations
 
@@ -51,7 +51,7 @@
      }
 
      // structure manipulators
-     T& add(const dpoint ## Dim ## d&);
+     T& add(const oln::dpoint ## Dim ## d&);
 
 
 // Specialized manipulators
@@ -63,14 +63,18 @@ T& add(coord, coord);
 T& add(coord, coord, coord);
 #endif
 
+#if Dim == 2
      // I/O
      %extend
      {
-       bool load(const char *name) const
+       bool load(const char *name)
 	 { return oln::load(*self, name); }
+       
        bool save(const char *name) const
 	 { return oln::save(*self, name); }
      }
+#endif
+
 %enddef
 
 
@@ -84,28 +88,19 @@ T& add(coord, coord, coord);
 
 #if Dim == 1
 %{
-#include <oln/core/neighborhood1d.hh>
-#include <oln/core/window1d.hh>
+#include <oln/basics1d.hh>
 %}
 #elif Dim == 2
 %{
-#include <oln/core/neighborhood2d.hh>
-#include <oln/core/window2d.hh>
+#include <oln/basics2d.hh>
 %}
 #elif Dim == 3
 %{
-#include <oln/core/neighborhood3d.hh>
-#include <oln/core/window3d.hh>
+#include <oln/basics3d.hh>
 %}
 #else
 #error Unsupported dimension.
 #endif
-
-%{
-#include <oln/io/basics.hh>
-#include <oln/io/pnm.hh>
-#include <oln/io/se.hh>
-%}
 
 namespace oln
 {

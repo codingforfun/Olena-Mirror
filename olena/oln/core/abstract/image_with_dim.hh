@@ -67,41 +67,41 @@ namespace oln {
 
   } // end of namespace abstract
 
-    template <class Exact>
-    struct image_traits<abstract::image_with_dim<1, Exact> >: public image_traits<abstract::image<Exact> >
-    {
-      enum {dim = 1};
-      typedef point1d point_type;
-      typedef dpoint1d dpoint_type;
-      typedef fwd_iter1d<mlc::final> iter_type;
-      typedef fwd_iter1d<mlc::final> fwd_iter_type;
-      typedef bkd_iter1d<mlc::final> bkd_iter_type;
-      typedef image1d_size size_type;
-    };
-
-    template <class Exact>
-    struct image_traits<abstract::image_with_dim<2, Exact> >: public image_traits<abstract::image<Exact> >
-    {
-      enum {dim = 2};
-      typedef point2d point_type;
-      typedef dpoint2d dpoint_type;
-      typedef fwd_iter2d<mlc::final> iter_type;
-      typedef fwd_iter2d<mlc::final> fwd_iter_type;
-      typedef bkd_iter2d<mlc::final> bkd_iter_type;
-      typedef image2d_size size_type;
-    };
-
-    template <class Exact>
-    struct image_traits<abstract::image_with_dim<3, Exact> >: public image_traits<abstract::image<Exact> >
-    {
-      enum {dim = 3};
-      typedef point3d point_type;
-      typedef dpoint3d dpoint_type;
-      typedef fwd_iter3d<mlc::final> iter_type;
-      typedef fwd_iter3d<mlc::final> fwd_iter_type;
-      typedef bkd_iter3d<mlc::final> bkd_iter_type;
-      typedef image3d_size size_type;
-    };
+  template <class Exact>
+  struct image_traits<abstract::image_with_dim<1, Exact> >: public image_traits<abstract::image<Exact> >
+  {
+    enum {dim = 1};
+    typedef point1d point_type;
+    typedef dpoint1d dpoint_type;
+    typedef fwd_iter1d<mlc::final> iter_type;
+    typedef fwd_iter1d<mlc::final> fwd_iter_type;
+    typedef bkd_iter1d<mlc::final> bkd_iter_type;
+    typedef image1d_size size_type;
+  };
+  
+  template <class Exact>
+  struct image_traits<abstract::image_with_dim<2, Exact> >: public image_traits<abstract::image<Exact> >
+  {
+    enum {dim = 2};
+    typedef point2d point_type;
+    typedef dpoint2d dpoint_type;
+    typedef fwd_iter2d<mlc::final> iter_type;
+    typedef fwd_iter2d<mlc::final> fwd_iter_type;
+    typedef bkd_iter2d<mlc::final> bkd_iter_type;
+    typedef image2d_size size_type;
+  };
+  
+  template <class Exact>
+  struct image_traits<abstract::image_with_dim<3, Exact> >: public image_traits<abstract::image<Exact> >
+  {
+    enum {dim = 3};
+    typedef point3d point_type;
+    typedef dpoint3d dpoint_type;
+    typedef fwd_iter3d<mlc::final> iter_type;
+    typedef fwd_iter3d<mlc::final> fwd_iter_type;
+    typedef bkd_iter3d<mlc::final> bkd_iter_type;
+    typedef image3d_size size_type;
+  };
 
 
   namespace abstract {
@@ -289,6 +289,8 @@ namespace oln {
 	return to_exact(*this)[point_type(slice, row, col)];
 	// return super_type::operator[](point_type(slice, row, col));
       }
+
+      using abstract::image<Exact>::hold;
 
       bool hold(coord slice, coord row, coord col) const
       {
