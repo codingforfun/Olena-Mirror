@@ -1,3 +1,8 @@
+2002-09-26  Emmanuel Turquin  <turqui_e@epita.fr>
+
+	* transform/fft.cc, transform/Makefile.am: Update.
+	* transform/output: New directory.
+
 2002-09-24  Emmanuel Turquin  <turqui_e@epita.fr>
 
 	* types/tests/cplx6: Fix.

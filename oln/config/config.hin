@@ -3,6 +3,9 @@
 /* The C++ compiler */
 #undef CXX
 
+/* Define to 1 if we can use fftw */
+#undef HAVE_FFTW
+
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 

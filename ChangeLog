@@ -1,3 +1,17 @@
+2002-09-26  Emmanuel Turquin  <turqui_e@epita.fr>
+
+	* oln/transform/fft.hh: Slightly modified.
+	* oln/types/cplx.hh: Small fix.
+	* oln/Makefile.am (PCONF_OCCURS): Add oln/transform/fft.hh.
+	(nobase_oln_HEADERS): Remove config/system.hh,already present in
+	PCONF_OCCURS.
+	* oln/configure.ac: Check from fftw. Define HAVE_FFTW, substitute
+	FFTW_CFLAGS, and FFTW_LDFLAGS.
+
+2002-09-24  jean-sebastien mouret  <js@lrde.epita.fr>
+
+	* oln/morpho/fast_morpho.hxx: Add reference to article.
+
 2002-09-24  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/types/to_oln.hh: Add bool to bin conversion.

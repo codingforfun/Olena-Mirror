@@ -67,6 +67,8 @@ AMTAR = @AMTAR@
 AWK = @AWK@
 CXX = @CXX@
 DEPDIR = @DEPDIR@
+FFTW_CFLAGS = @FFTW_CFLAGS@
+FFTW_LDFLAGS = @FFTW_LDFLAGS@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 PACKAGE = @PACKAGE@
 RANLIB = @RANLIB@
@@ -90,7 +92,6 @@ nobase_oln_HEADERS = \
   basics1d.hh					\
   basics2d.hh					\
   basics3d.hh					\
-  config/system.hh				\
   convert/basics.hh				\
   convert/bound.hh				\
   convert/colorconv.hh				\
@@ -330,7 +331,9 @@ nobase_oln_HEADERS = \
 EXTRA_DIST = config/extrconf.sh
 PERL = perl
 SCANDEFS_PL = $(top_srcdir)/tools/scandefs.pl
-PCONF_OCCURS = $(srcdir)/config/system.hh $(top_srcdir)/tests/io/2d.cc
+PCONF_OCCURS = $(srcdir)/config/system.hh $(top_srcdir)/tests/io/2d.cc \
+	$(srcdir)/transform/fft.hh
+
 
 DISTCLEANFILES = config/pconf.hh config/stamp-h1
 subdir = oln

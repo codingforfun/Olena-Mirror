@@ -71,6 +71,8 @@ AMTAR = @AMTAR@
 AWK = @AWK@
 CXX = @CXX@
 DEPDIR = @DEPDIR@
+FFTW_CFLAGS = @FFTW_CFLAGS@
+FFTW_LDFLAGS = @FFTW_LDFLAGS@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 PACKAGE = @PACKAGE@
 RANLIB = @RANLIB@
@@ -90,15 +92,19 @@ AM_CPPFLAGS = -I$(top_builddir) -I$(top_srcdir) -I$(top_srcdir)/tests/check
 LDADD = $(top_builddir)/tests/check/libcheck.a
 TESTS = $(check_PROGRAMS)
 
-check_PROGRAMS = \
-  fft
+AM_LDFLAGS = $(FFTW_LDFLAGS)
+AM_CFLAGS = $(FFTW_CFLAGS)
 
-
-CLEANFILES = lena_fft_clipped.pgm lena_fft_log.pgm lena_low_pass.pgm
-
-fft_LDFLAGS = -lfftw -lrfftw
-
+check_PROGRAMS = fft
 fft_SOURCES = fft.cc
+
+fft_OUTPUT_DIR = output/
+
+CLEANFILES = $(fft_OUTPUT_DIR)output_fft_clipped.pgm \
+	$(fft_OUTPUT_DIR)output_fft_log.pgm \
+	$(fft_OUTPUT_DIR)output_low_pass.pgm \
+	$(fft_OUTPUT_DIR)output_copy.pgm
+
 subdir = tests/transform
 mkinstalldirs = $(SHELL) $(top_srcdir)/tools/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/oln/config/config.h
@@ -108,6 +114,7 @@ am_fft_OBJECTS = fft.$(OBJEXT)
 fft_OBJECTS = $(am_fft_OBJECTS)
 fft_LDADD = $(LDADD)
 fft_DEPENDENCIES = $(top_builddir)/tests/check/libcheck.a
+fft_LDFLAGS =
 
 DEFS = @DEFS@
 DEFAULT_INCLUDES =  -I. -I$(srcdir) -I$(top_builddir)/oln/config

@@ -176,7 +176,7 @@ namespace oln {
 	_value[1] = an;
       }
 
-      cplx<rect, T>& operator=(const T& r)
+      cplx<polar, T>& operator=(const T& r)
       {
 	_value[0] = r;
 	_value[1] = 0;

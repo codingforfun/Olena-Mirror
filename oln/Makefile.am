@@ -12,7 +12,6 @@ nobase_oln_HEADERS =				\
   basics1d.hh					\
   basics2d.hh					\
   basics3d.hh					\
-  config/system.hh				\
   convert/basics.hh				\
   convert/bound.hh				\
   convert/colorconv.hh				\
@@ -253,7 +252,8 @@ nobase_oln_HEADERS =				\
 EXTRA_DIST = config/extrconf.sh
 PERL = perl
 SCANDEFS_PL = $(top_srcdir)/tools/scandefs.pl
-PCONF_OCCURS = $(srcdir)/config/system.hh $(top_srcdir)/tests/io/2d.cc
+PCONF_OCCURS = $(srcdir)/config/system.hh $(top_srcdir)/tests/io/2d.cc \
+	$(srcdir)/transform/fft.hh
 $(srcdir)/config/extrconf.sh: $(SCANDEFS_PL) $(PCONF_OCCURS)
 	$(PERL) $(SCANDEFS_PL) $(PCONF_OCCURS) >$@
 
