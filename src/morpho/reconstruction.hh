@@ -45,7 +45,7 @@ namespace oln {
      * arg: const image<I1>&, marker, IN, marker image
      * arg: const image<I2>&, mask, IN, mask image
      * arg: const struct_elt<E>&, se, IN, structural element
-     * ret: Concrete(_I1)
+     * ret: Concrete(I1)
      * doc:
      *  Compute the reconstruction by dilation of @var{marker} with respect
      * to the mask @var{mask} image using @var{se}
@@ -88,7 +88,7 @@ namespace oln {
      * arg: const image<I1>&, marker, IN, marker image
      * arg: const image<I2>&, mask, IN, mask image
      * arg: const struct_elt<E>&, se, IN, structural element
-     * ret: Concrete(_I1)
+     * ret: Concrete(I1)
      * doc:
      *  Compute the reconstruction by dilation of @var{marker} with respect
      * to the mask @var{mask} image using @var{se}
@@ -165,7 +165,7 @@ namespace oln {
      * arg: const image<I1>&, marker, IN, marker image
      * arg: const image<I2>&, mask, IN, mask image
      * arg: const struct_elt<E>&, se, IN, structural element
-     * ret: Concrete(_I1)
+     * ret: Concrete(I1)
      * doc:
      *  Compute the reconstruction by dilation of @var{marker} with respect
      * to the mask @var{mask} image using @var{se}
@@ -243,7 +243,7 @@ namespace oln {
      * arg: const image<I1>&, marker, IN, marker image
      * arg: const image<I2>&, mask, IN, mask image
      * arg: const struct_elt<E>&, se, IN, structural element
-     * ret: Concrete(_I1)
+     * ret: Concrete(I1)
      * doc:
      *  Compute the reconstruction by erosion of @var{marker} with respect
      * to the mask @var{mask} image using @var{se}
@@ -285,7 +285,7 @@ namespace oln {
      * arg: const image<I1>&, marker, IN, marker image
      * arg: const image<I2>&, mask, IN, mask image
      * arg: const struct_elt<E>&, se, IN, structural element
-     * ret: Concrete(_I1)
+     * ret: Concrete(I1)
      * doc:
      *  Compute the reconstruction by erosion of @var{marker} with respect
      * to the mask @var{mask} image using @var{se}
@@ -362,7 +362,7 @@ namespace oln {
      * arg: const image<I1>&, marker, IN, marker image
      * arg: const image<I2>&, mask, IN, mask image
      * arg: const struct_elt<E>&, se, IN, structural element
-     * ret: Concrete(_I1)
+     * ret: Concrete(I1)
      * doc:
      *  Compute the reconstruction by erosion of @var{marker} with respect
      * to the mask @var{mask} image using @var{se}

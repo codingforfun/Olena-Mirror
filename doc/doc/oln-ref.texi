@@ -130,6 +130,9 @@ worth looking at before digging the source or sending us an email
 @comment node-name,     next,           previous, up
 @section Morphological processings
 
+@emph{Soille} refers to @emph{P. Soille, morphological Image Analysis --
+Principals and Applications}.  Springer 1998.
+
 @include ref-morpho.texi
 
 

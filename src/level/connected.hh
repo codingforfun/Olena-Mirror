@@ -43,8 +43,9 @@ namespace oln {
      * arg: const struct_elt<E>&, se, IN, structural element
      * ret: typename mute<_I, DestType>::ret
      * doc: It removes the small (in area) connected components of the upper
-     * level sets of @var{input} using @var{se} as structural element. FIXME: The implementation
-     * is in REF Maitre.
+     * level sets of @var{input} using @var{se} as structural element. The
+     * implementation comes from @emph{Cocquerez et Philipp, Analyse d'images,
+     * filtrages et segmentations} p.62.
      * see: level::frontp_connected_component
      * ex:
      * $ image2d<int_u8> light = load("light.pgm");
