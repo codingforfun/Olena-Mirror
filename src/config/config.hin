@@ -3,6 +3,9 @@
 /* Define to 1 if you have the <ext/hash_map> header file. */
 #undef HAVE_EXT_HASH_MAP
 
+/* Define to 1 if you have the <hash_map> header file. */
+#undef HAVE_HASH_MAP
+
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 

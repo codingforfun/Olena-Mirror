@@ -20,10 +20,10 @@ using namespace oln;
 using namespace oln::level;
 
 #define OK_OR_FAIL				\
-      cout << "OK" << endl;			\
-    else 					\
+      std::cout << "OK" << std::endl;		\
+    else					\
       {						\
-	cout << "FAIL" << endl;			\
+	std::cout << "FAIL" << std::endl;	\
 	fail = true;				\
       }
 
@@ -44,12 +44,12 @@ check()
 
   // test regional minima
   {
-    cout << "regional minima sequential ... " << flush;
+    std::cout << "regional minima sequential ... " << std::flush;
     if (level::is_equal(morpho::sure_regional_minima(lena, neighb_c4()),
 			morpho::sequential_regional_minima(lena, neighb_c4())))
       OK_OR_FAIL;
 
-    cout << "regional minima hybrid ... " << flush;
+    std::cout << "regional minima hybrid ... " << std::flush;
     if (level::is_equal(morpho::sure_regional_minima(lena, neighb_c4()),
 			morpho::hybrid_regional_minima(lena, neighb_c4())))
       OK_OR_FAIL;
@@ -57,7 +57,7 @@ check()
 
   // test minima imposition
   {
-    cout << "minima impos sequential ... " << flush;
+    std::cout << "minima impos sequential ... " << std::flush;
     if (level::is_equal(morpho::sure_minima_imposition(lena,
 						       minima_map, neighb_c4()),
 			morpho::sequential_minima_imposition(lena,
@@ -65,7 +65,7 @@ check()
 							     neighb_c4())))
       OK_OR_FAIL;
 
-    cout << "minima impos hybrid ... " << flush;
+    std::cout << "minima impos hybrid ... " << std::flush;
     if (level::is_equal(morpho::sure_minima_imposition(lena,
 						       minima_map, neighb_c4()),
 			morpho::hybrid_minima_imposition(lena,
@@ -76,13 +76,13 @@ check()
 
   // test geodesic erosion and geodesic dilation
   {
-    cout << "geodesic erosion ... " << flush;
+    std::cout << "geodesic erosion ... " << std::flush;
     if (level::is_equal(morpho::geodesic_erosion(lena, lena_open, neighb_c4()),
 			morpho::simple_geodesic_erosion(lena, lena_open,
 							neighb_c4())))
       OK_OR_FAIL;
 
-    cout << "geodesic dilation ... " << flush;
+    std::cout << "geodesic dilation ... " << std::flush;
     if (level::is_equal(morpho::geodesic_dilation(lena_open, lena, neighb_c4()),
 			morpho::simple_geodesic_dilation(lena_open,
 							 lena, neighb_c4())))
@@ -92,14 +92,14 @@ check()
 
 
   {
-    cout << "sequential G.R. erosion ... " << flush;
+    std::cout << "sequential G.R. erosion ... " << std::flush;
     if (level::is_equal(morpho::sequential_geodesic_reconstruction_erosion
 			(max_map, lena_open, neighb_c4()),
 			morpho::sure_geodesic_reconstruction_erosion
 			(max_map, lena_open, neighb_c4())))
       OK_OR_FAIL;
 
-    cout << "hybrid G.R. erosion ... " << flush;
+    std::cout << "hybrid G.R. erosion ... " << std::flush;
     if (level::is_equal(morpho::hybrid_geodesic_reconstruction_erosion
 			(max_map, lena_open, neighb_c4()),
 			morpho::sure_geodesic_reconstruction_erosion
@@ -108,14 +108,14 @@ check()
   }
 
   {
-    cout << "sequential G.R. dilation ... " << flush;
+    std::cout << "sequential G.R. dilation ... " << std::flush;
     if (level::is_equal(morpho::sequential_geodesic_reconstruction_dilation
 			(lena_open, lena, neighb_c4()),
 			morpho::sure_geodesic_reconstruction_dilation
 			(lena_open, lena, neighb_c4())))
       OK_OR_FAIL;
 
-    cout << "hybrid G.R. dilation ... " << flush;
+    std::cout << "hybrid G.R. dilation ... " << std::flush;
     if (level::is_equal(morpho::hybrid_geodesic_reconstruction_dilation
 			(lena_open, lena, neighb_c4()),
 			morpho::sure_geodesic_reconstruction_dilation

@@ -1,4 +1,4 @@
-// Copyright 2001  EPITA Research and Development Laboratory
+// Copyright 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -38,11 +38,11 @@ namespace oln {
   // generate (generator)
 
   template<class AdaptableGen, class I> inline
-  typename image_for_dim<type::exact<I>::ret::dim>::with_type<typename AdaptableGen::result_type>::ret
+  typename image_for_dim<(typename type::exact<I>::ret)::dim>::with_type<typename AdaptableGen::result_type>::ret
   generate(AdaptableGen f, const image_size<I>& size)
   {
-    typename image_for_dim<type::exact<I>::ret::dim>::with_type<typename AdaptableGen::result_type>::ret output(to_exact(size));
-    Iter(typename image_for_dim<type::exact<I>::ret::dim>::with_type<typename AdaptableGen::result_type>::ret) p(output);
+    typename image_for_dim<(typename type::exact<I>::ret)::dim>::with_type<typename AdaptableGen::result_type>::ret output(to_exact(size));
+    Iter(typename image_for_dim<(typename type::exact<I>::ret)::dim>::with_type<typename AdaptableGen::result_type>::ret) p(output);
     for_all(p) output[p] = f();
     return output;
   }
@@ -59,4 +59,4 @@ namespace oln {
 
 } // end of oln
 
-#endif // ! OLENA_CORE_GENERATE_HH
+#endif // OLENA_CORE_GENERATE_HH

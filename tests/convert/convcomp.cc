@@ -13,8 +13,7 @@
 #  define CONC(a, b)    _CONC(a, b)
 #endif
 
-
-#include "convert/"STR(CONC(SRC,DEST))".hh"
+#include STR(convert/CONC(SRC,DEST).hh)
 
 bool check()
 {

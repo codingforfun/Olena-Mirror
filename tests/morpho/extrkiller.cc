@@ -7,10 +7,10 @@ using namespace oln;
 using namespace oln::level;
 
 #define OK_OR_FAIL				\
-      cout << "OK" << endl;			\
-    else 					\
+      std::cout << "OK" << std::endl;		\
+    else					\
       {						\
-	cout << "FAIL" << endl;			\
+	std::cout << "FAIL" << std::endl;	\
 	fail = true;				\
       }
 
@@ -23,7 +23,7 @@ check()
 
   {
     for (unsigned int size=1; size < 20; ++size) {
-      cout << "minima killer (size " << size << ") ... " << flush;
+      std::cout << "minima killer (size " << size << ") ... " << std::flush;
       if (level::is_equal(sure_minima_killer(lena, size, neighb_c4()),
 			  fast_minima_killer(lena, size, neighb_c4())))
 	OK_OR_FAIL;
@@ -31,7 +31,7 @@ check()
   }
   {
     for (unsigned int size=1; size < 20; ++size) {
-      cout << "maxima killer (size " << size << ") ... " << flush;
+      std::cout << "maxima killer (size " << size << ") ... " << std::flush;
       if (level::is_equal(sure_maxima_killer(lena, size, neighb_c4()),
 			  fast_maxima_killer(lena, size, neighb_c4())))
 	OK_OR_FAIL;

@@ -50,11 +50,11 @@ namespace oln {
 					  val1.self() / val2.self(),
 					  val.self() / _cst);
     _OLN_ARITH_DECLARE_BINRECVAL_FUNCTORS(min,
-					  min(val1.self(), val2.self()),
-					  min(val.self(), _cst));
+					  std::min(val1.self(), val2.self()),
+					  std::min(val.self(), _cst));
     _OLN_ARITH_DECLARE_BINRECVAL_FUNCTORS(max,
-					  max(val1.self(), val2.self()),
-					  max(val.self(), _cst));
+					  std::max(val1.self(), val2.self()),
+					  std::max(val.self(), _cst));
 
     _OLN_ARITH_DECLARE_ALL_BINOP_PROCS(plus);
     _OLN_ARITH_DECLARE_ALL_BINOP_PROCS(minus);

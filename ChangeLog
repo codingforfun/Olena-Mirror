@@ -1,3 +1,11 @@
+2002-04-10  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/generate.hh: Fix enum member deduction.
+	* src/arith/ops.hh: Use std::max() and std::min() instead of
+	max() and min().
+	* src/convert/nrgbhsv.hh: Likewise.
+	* src/convert/nrgbhsl.hh: Likewise. Include <cstdlib> for abs(float).
+
 2002-04-08  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* src/Makefile.am (nobase_oln_HEADERS): Add core/generate.hh.

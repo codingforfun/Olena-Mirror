@@ -1,16 +1,26 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_3 27)
-(Parent-Version oln 0_3 26)
-(Version-Log "2002-04-08  Alexandre Duret-Lutz  <duret_g@epita.fr>
+(Project-Version oln 0_3 28)
+(Parent-Version oln 0_3 27)
+(Version-Log "2002-04-10  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-	* doc/oln-ref.texi: Add @dircategory and @direntry.
+	* src/core/generate.hh: Fix enum member deduction.
+	* src/arith/ops.hh: Use std::max() and std::min() instead of
+	max() and min().
+	* src/convert/nrgbhsv.hh: Likewise.
+	* src/convert/nrgbhsl.hh: Likewise. Include <cstdlib> for abs(float).
+
+2002-04-10  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* convert/convcomp.cc: Fix the include statment.
+	* morpho/extrkiller.cc, morpho/reconstruction.cc: Use std:: as
+	appropriate.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 08 Apr 2002 09:50:58 +0200")
-(Checkin-Login adl)
+(Checkin-Time "Wed, 10 Apr 2002 16:20:35 +0200")
+(Checkin-Login duret_g)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
                   "\\.o$"
@@ -80,13 +90,13 @@
   (configure.ac (oln/3_configure. 1.5 644))
   (THANKS (oln/4_THANKS 1.1 644))
   (img/lena.pgm (oln/5_lena.pgm 1.1 640) :no-keywords)
-  (ChangeLog (oln/6_ChangeLog 1.31 644))
+  (ChangeLog (oln/6_ChangeLog 1.32 644))
   (src/config/system.hh (oln/7_system.hh 1.2 644))
   (src/utils/timer.hh (oln/8_timer.hh 1.1 644))
   (src/utils/stat.hh (oln/9_stat.hh 1.2 644))
   (src/utils/histogram.hh (oln/10_histogram. 1.1 644))
-  (src/convert/nrgbhsv.hh (oln/11_nrgbhsv.hh 1.1 644))
-  (src/convert/nrgbhsl.hh (oln/12_nrgbhsl.hh 1.1 644))
+  (src/convert/nrgbhsv.hh (oln/11_nrgbhsv.hh 1.2 644))
+  (src/convert/nrgbhsl.hh (oln/12_nrgbhsl.hh 1.2 644))
   (src/convert/nrgbyuv.hh (oln/13_nrgbyuv.hh 1.1 644))
   (src/convert/nrgbyiq.hh (oln/14_nrgbyiq.hh 1.1 644))
   (src/convert/nrgbhsi.hh (oln/15_nrgbhsi.hh 1.1 644))
@@ -149,7 +159,7 @@
   (src/io/base.hh (oln/b/20_base.hh 1.1 644))
   (src/math/macros.hh (oln/b/21_macros.hh 1.1 644))
   (src/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.2 644))
-  (src/arith/ops.hh (oln/b/23_ops.hh 1.1 644))
+  (src/arith/ops.hh (oln/b/23_ops.hh 1.2 644))
   (src/arith/logic.hh (oln/b/24_logic.hh 1.1 644))
   (src/value/hsv.hh (oln/b/25_hsv.hh 1.1 644))
   (src/value/hsl.hh (oln/b/26_hsl.hh 1.1 644))
@@ -370,11 +380,11 @@
 ;; Files added by populate at Thu, 28 Mar 2002 19:27:57 +0100,
 ;; to version 0_3.17(w), by adl:
 
-  (tests/ChangeLog (oln/e/30_ChangeLog 1.3 644))
-  (tests/morpho/extrkiller.cc (oln/e/31_extrkiller 1.2 644))
+  (tests/ChangeLog (oln/e/30_ChangeLog 1.4 644))
+  (tests/morpho/extrkiller.cc (oln/e/31_extrkiller 1.3 644))
   (tests/morpho/Makefile.am (oln/e/32_Makefile.a 1.2 644))
   (tests/morpho/Makefile.in (oln/e/33_Makefile.i 1.4 644))
-  (tests/morpho/reconstruction.cc (oln/e/34_reconstruc 1.2 644))
+  (tests/morpho/reconstruction.cc (oln/e/34_reconstruc 1.3 644))
   (tests/check/srcdir.hh (oln/e/35_srcdir.hh 1.2 644))
   (tests/check/Makefile.flags (oln/e/36_Makefile.f 1.1 644))
   (tests/check/Makefile.check (oln/e/37_Makefile.c 1.3 644))
@@ -399,7 +409,7 @@
   (tests/convert/Makefile.am (oln/f/0_Makefile.a 1.2 644))
   (tests/convert/convcomp.hh (oln/f/1_convcomp.h 1.1 644))
   (tests/convert/Makefile.in (oln/f/2_Makefile.i 1.3 644))
-  (tests/convert/convcomp.cc (oln/f/3_convcomp.c 1.2 644))
+  (tests/convert/convcomp.cc (oln/f/3_convcomp.c 1.3 644))
 
 ;; Files added by populate at Wed, 03 Apr 2002 11:58:24 +0200,
 ;; to version 0_3.20(w), by adl:
@@ -426,12 +436,12 @@
 ;; Files added by populate at Wed, 03 Apr 2002 17:38:13 +0200,
 ;; to version 0_3.22(w), by adl:
 
-  (src/config/config.hin (oln/f/10_config.hin 1.1 644))
+  (src/config/config.hin (oln/f/10_config.hin 1.2 644))
 
 ;; Files added by populate at Thu, 04 Apr 2002 16:27:57 +0200,
 ;; to version 0_3.23(w), by chojin:
 
-  (src/core/generate.hh (oln/f/12_generate.h 1.1 600))
+  (src/core/generate.hh (oln/f/12_generate.h 1.2 600))
 )
 (Merge-Parents)
 (New-Merge-Parents)
