@@ -1,5 +1,17 @@
 2005-03-31  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	* oln/core/abstract/image_like_.hh: Set concrete_type property.
+	* oln/core/abstract/image_operator.hh: Add typedefs.
+	* oln/morpho/dilation.hh
+	(proc::dilation): New.
+	(impl::dilation_type): Rename as...
+	(dilation_ret): ...this.
+	(dilation_type_classic): Rename as...
+	(generic_dilation): ...this.
+	* oln/morpho/erosion.hh: Likewise.
+	
+2005-03-31  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	* oln/core/abstract/image_like_.hh: New.
 	* oln/core/abstract/image_operator.hh: New.
 	* oln/core/abstract/image_by_delegation.hh: New.

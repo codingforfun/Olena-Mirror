@@ -31,12 +31,32 @@
 # include <oln/basics.hh>
 # include <oln/morpho/stat.hh>
 # include <oln/core/abstract/image_operator.hh>
-// # include <oln/morpho/fast_morpho.hh>
 # include <mlc/cmp.hh>
 
 namespace oln {
 
   namespace morpho {
+
+
+
+    namespace proc {
+
+      /// Dilation as a procedure (do not use it; prefer morpho::dilation).
+
+      template<typename I, typename S>
+      oln_type_of(I, concrete) dilation(const abstract::image<I>& input,
+					const abstract::struct_elt<S>& se)
+      {
+	oln_type_of(I, concrete) output(input.size());
+	oln_type_of(I, fwd_piter) p(input.size());
+	for_all (p)
+	  output[p] = morpho::max(input, p, se);
+	return output;
+      }
+
+    } // end of namespace oln::morpho::proc
+
+
 
     /*!
     ** \brief Processing dilation.
@@ -89,60 +109,70 @@ namespace oln {
     ** \image latex oln_morpho_dilation.png
     */
 
-        // fwd decl
-    namespace impl {
-      template <typename I, typename E> struct dilation_type;
-    }
+    // fwd decl
+    template <typename I, typename E> struct dilation_ret;
 
   }
 
   // category
   template <typename I, typename E>
-  struct set_category< morpho::impl::dilation_type<I,E> > { typedef category::image ret; };
+  struct set_category< morpho::dilation_ret<I,E> > { typedef category::image ret; };
 
   // super_type
   template <typename I, typename E>
-  struct set_super_type< morpho::impl::dilation_type<I,E> >
+  struct set_super_type< morpho::dilation_ret<I,E> >
   {
-    typedef abstract::image_unary_operator<I, I, morpho::impl::dilation_type<I, E> > ret; // FIXME: see below
+    typedef abstract::image_unary_operator<oln_type_of(I, concrete), I, morpho::dilation_ret<I, E> > ret;
   };
+
+
 
   namespace morpho {
 
+    /// Dilatation return.
+
+    template <typename I, typename S>
+    struct dilation_ret : public abstract::image_unary_operator<oln_type_of(I, concrete), I, dilation_ret<I, S> >
+    {
+      typedef abstract::image_unary_operator<oln_type_of(I, concrete), I, dilation_ret<I, S> > super_type;
+      typedef typename super_type::output_type output_type;
+
+      const S se;
+
+      dilation_ret(const abstract::image<I>& input,
+		   const abstract::struct_elt<S>& se) :
+	super_type(input.exact()),
+	se(se.exact())
+	{
+	}
+
+    };
+
+
+    // Implementation:
+
     namespace impl {
 
-      template <typename I, typename E>
-      struct dilation_type : public abstract::image_unary_operator<I, I, dilation_type<I, E> >
-      // FIXME: abstract::image_unary_operator<oln_type_of(I, concrete), ...
+      /// Dilation generic implementation.
+
+      template <typename I, typename S>
+      struct generic_dilation : public dilation_ret<I, S>
       {
-	typedef abstract::image_unary_operator<I, I, dilation_type<I, E> > super_type;
+	typedef dilation_ret<I, S> super_type;
+	typedef typename super_type::output_type output_type;
 
-	const E se;
-
-	dilation_type(const abstract::non_vectorial_image<I>& input,
-		      const abstract::struct_elt<E>& se) :
-	  super_type(input.exact()),
-	  se(se.exact())
-	{}
-
-      };
-
-      template <typename I, typename E>
-      struct dilation_type_classic : public dilation_type<I, E>
-      {
-	typedef dilation_type<I, E> super_type;
-
-	dilation_type_classic(const abstract::non_vectorial_image<I>& input,
-			      const abstract::struct_elt<E>& se) :
+	generic_dilation(const abstract::image<I>& input,
+			 const abstract::struct_elt<S>& se) :
 	  super_type(input, se)
-	{}
+	{
+	}
 
 	void impl_run()
 	{
 	  mlc::is_true<mlc::type::eq<oln_type_of(I, size),
-	    oln_type_of(E, size)>::ret>::ensure();
+	                             oln_type_of(S, size)>::ret>::ensure();
 
-	  I tmp(input.size()); // FIXME: trick
+	  output_type tmp(input.size()); // FIXME: trick
 	  output = tmp;
 
 	  oln_type_of(I, fwd_piter) p(input.size());
@@ -151,29 +181,20 @@ namespace oln {
 	}
       };
 
-    }
+    } // end of namespace oln::morpho::impl
 
-    template<typename I, typename E>
-    impl::dilation_type<I, E>
-    dilation(const abstract::non_vectorial_image<I>& input,
-	     const abstract::struct_elt<E>& se)
+
+    /// Dilation generic routine.
+
+    template<typename I, typename S>
+    dilation_ret<I, S> dilation(const abstract::image<I>& input,
+				const abstract::struct_elt<S>& se)
     {
-      impl::dilation_type_classic<I, E> tmp(input, se);
+      impl::generic_dilation<I, S> tmp(input, se);
       tmp.run();
       return tmp;
     }
 
-
-//     namespace fast {
-//       template<class I, class E>
-//       oln_concrete_type(I)
-// 	dilation(const abstract::non_vectorial_image<I>& input,
-// 		 const abstract::struct_elt<E>& se)
-//       {
-// 	return fast_morpho<I, E, utils::histogram_max<oln_value_type(I)> >
-// 	  (input, se);
-//       }
-//     }
   } // end of morpho
 
 } // end of oln

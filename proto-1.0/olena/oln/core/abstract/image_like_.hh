@@ -54,6 +54,13 @@ namespace oln {
     typedef abstract::image_by_delegation<I, E> ret;
   };
 
+  // props
+
+  template <typename I, typename E>
+  struct set_props < category::image, abstract::image_like_<I, E> > : public props_of<category::image>
+  {
+    typedef oln_type_of(I, concrete) concrete_type;
+  };
 
 
 

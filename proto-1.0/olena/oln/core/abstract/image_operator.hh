@@ -107,6 +107,7 @@ namespace oln {
       }
 
       box<O> output;
+      typedef O output_type;
 
     protected:
       image_operator() {}
@@ -120,6 +121,7 @@ namespace oln {
     struct image_unary_operator : public image_operator<O, E>
     {
       box<const I> input;
+      typedef I input_type;
 
     protected:
 
@@ -140,7 +142,10 @@ namespace oln {
     {
 
       box<const I1> input1;
+      typedef I1 input1_type;
+
       box<const I2> input2;
+      typedef I2 input2_type;
 
     protected:
 
