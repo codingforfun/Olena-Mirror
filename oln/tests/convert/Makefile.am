@@ -1,6 +1,6 @@
 ## Process this file through Automake to create Makefile.in -*- Makefile -*-
 
-include $(srcdir)/../check/Makefile.check
+include $(top_srcdir)/lib/check/Makefile.check
 
 check_PROGRAMS = \
   8-nrgb-hsi \

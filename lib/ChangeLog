@@ -1,0 +1,11 @@
+2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* check/defs.in: Define less variables since they are handled by
+	the `Makefile' of the pertaining testsuites.
+
+	* Makefile.am: New file.
+
+	* check/Makefile.flags (INCLUDES): Adjust path to lib/check.
+
+	* Create this directory.
+

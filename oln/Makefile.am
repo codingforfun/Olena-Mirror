@@ -1,7 +1,7 @@
 ## Process this file with Automake to produce Makefile.in -*- Makefile -*-
 
 # OLN_SRC_SUBDIRS is set when "configure" is run.
-SUBDIRS = img $(OLN_SRC_SUBDIRS)
+SUBDIRS = img lib $(OLN_SRC_SUBDIRS)
 
 ###
 ### Olena headers

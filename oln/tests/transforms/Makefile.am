@@ -1,4 +1,4 @@
-include $(srcdir)/../check/Makefile.check
+include $(top_srcdir)/lib/check/Makefile.check
 
 AM_LDFLAGS = $(FFTW_LDFLAGS)
 AM_CFLAGS = $(FFTW_CFLAGS)

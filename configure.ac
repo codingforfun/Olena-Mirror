@@ -26,6 +26,9 @@ AC_WITH_CXX_FFTW
 AC_CXX_FLAGS
 
 AC_CONFIG_FILES([Makefile
+                 lib/Makefile
+                 lib/check/defs
+                 lib/check/Makefile
                  oln/Makefile 
 		 oln/img/Makefile 
 		 oln/oln/config/pconf.hh:oln/oln/config/pconf-hh.in])
@@ -91,9 +94,7 @@ OLN_COLLECTION([OLN_TOP],
 		  [oln_cv_build_tests], 
 		  [the testsuite], 
 		  [OLN_SRC], 
-	          [oln/tests/Makefile
-                   oln/tests/check/defs
-	           oln/tests/check/Makefile],
+	          [oln/tests/Makefile],
     [dnl Configuration for the testsuite
 
       OLN_TESTS_SUBDIRS=""

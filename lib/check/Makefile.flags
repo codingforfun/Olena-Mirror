@@ -1,0 +1,5 @@
+# -*- Makefile -*-
+
+AM_CXXFLAGS = $(CXXFLAGS_OPTIMIZE) $(CXXFLAGS_STRICT_ERRORS)
+INCLUDES = -I$(OLN_LOCAL_SRC) -I$(OLN_LOCAL_BUILD) -I$(top_srcdir)/lib/check 
+

@@ -1,5 +1,26 @@
 2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 
+	* tests/check/Makefile.am, tests/check/Makefile.check,
+	tests/check/Makefile.flags, tests/check/Makefile.in,
+	tests/check/check.hh, tests/check/compile.cc,
+	tests/check/compile.hh, tests/check/data.cc, tests/check/data.hh,
+	tests/check/defs.in, tests/check/main.cc, tests/check/srcdir.cc,
+	tests/check/srcdir.hh, tests/check/verbose.cc,
+	tests/check/verbose.hh: Move to ../lib/check.
+	
+	* tests/Makefile.am, tests/transforms/Makefile.am,
+	tests/morpho/Makefile.am, tests/meta/Makefile.am,
+	tests/io/Makefile.am, tests/convol/Makefile.am,
+	tests/convert/Makefile.am: Update accordingly.
+
+	* tests/types/runtests, tests/arith/runtests: Likewise.
+
+	* tests/arith/Makefile.am (check-local): Define useful variables
+	here instead of within the shell script.
+	* tests/types/Makefile.am (check-local): Likewise.
+	
+2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+
 	* tests/check/Makefile.am (AM_CPPFLAGS): Minor fix.
 
 	* oln/meta/array.hh, oln/meta/array1d.hh, oln/meta/array1d.hxx,
