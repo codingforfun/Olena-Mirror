@@ -1,19 +1,12 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 8)
-(Parent-Version oln 10 7)
-(Version-Log "Index: olena/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* oln/core/abstract/image.hh: Make the has_impl() method public.
-	* oln/utils/copy.hh: Adjust consequently.
-	* oln/core/abstract/image_with_impl.hh: Likewise.
-
-	* oln/core/abstract/image_with_impl.hh: Minor fix.
+(Project-Version oln 10 9)
+(Parent-Version oln 10 8)
+(Version-Log "Fix doc/ChangeLog.
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 25 Aug 2003 11:47:33 +0200")
+(Checkin-Time "Mon, 25 Aug 2003 11:53:08 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -117,7 +110,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.3 640))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.3 640))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.4 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.25 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.34 640))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.25 640))
