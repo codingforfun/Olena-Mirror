@@ -213,7 +213,10 @@ namespace oln {
       U&
       operator[](const T& i)
       {
-	unsigned idx = unsigned(i - ntg_min_val(T));
+	// FIXME: subtractions is not necessarily defined for T
+	// Casts should be done sooner and type conformance checked.
+	// ntg_storage_type(T) is really weird.
+	unsigned idx = unsigned(ntg_storage_type(T)(i) - ntg_min_val(T));
 	adjust(idx);
 	return this->values_[idx];
       }
@@ -335,7 +338,7 @@ namespace oln {
 
       // Now iterate on the image to sort point in the order of their
       // level
-     oln_iter_type(I) p(im);
+      oln_iter_type(I) p(im);
       for_all(p)
 	*(ptr[unsigned(im[p])]++) = p;
     }

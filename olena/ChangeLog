@@ -1,3 +1,7 @@
+2003-10-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/utils/histogram.hh: Temporary fix for ntg::bin type.
+
 2003-10-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/arith/internal/opdecls.hh: Support builtin types. Document.
