@@ -33,6 +33,8 @@
   use.
 */
 
+# include <ntg/core/abstract_hierarchy.hh>
+
 namespace ntg {
 
   namespace internal {
@@ -43,16 +45,18 @@ namespace ntg {
 
     //! Associates types to types.
     /*!
-      Not defined by default, as accessing to undefined properties
-      does not make sense. Specialize it for every types.
+      Specialize it for every types.
 
       Please note that typetraits only associates types, and not
-      methods. This is necessary to handle mutual instanciation
+      methods. This is necessary to handle mutual instantiation
       problems, as optraits usually needs typetraits to be
-      instanciated.
+      instantiated.
     */    
     template <class T>
-    class typetraits;
+    struct typetraits
+    {
+      typedef data_type abstract_type;
+    };
     
     /*---------.
     | optraits |
@@ -60,7 +64,7 @@ namespace ntg {
 
     // top of hierarchy
     template <class T>
-    class optraits_top
+    struct optraits_top
     {};
 
     // enumerated types
@@ -75,11 +79,16 @@ namespace ntg {
 
     //! Associates functions to types.
     /*
-      Not defined by default, it has to be specialized for every
-      types.
+      It should be specialized for every types.
     */
     template <class T>
-    class optraits;
+    struct optraits
+    {
+      static std::string name()
+      {
+	return "unknown_data_type";
+      }
+    };
 
   } // end of internal.
 

@@ -1,3 +1,5 @@
+//								    -*- c++ -*-
+
 #include <ntg/int.hh>
 #include <oln/basics2d.hh>
 #include <oln/topo/combinatorial-map/cmap.hh>

@@ -1,68 +1,15 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 96)
-(Parent-Version oln 2003paradigm 95)
-(Version-Log "Index: olena/ChangeLog
+(Project-Version oln 2003paradigm 97)
+(Parent-Version oln 2003paradigm 96)
+(Version-Log "Index: integre/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	* oln/core/abstract/image_with_dim.hh: Inherit from abstract::image.
-	* oln/core/abstract/image_with_impl.h:: Inherit from image_with_type.
-	* oln/core/abstract/image_with_type.hh: Inherit from
-	image_with_dim. Add label images (binary_image, etc.).
-	* tests/core/tests/label_images: New test.
-
-	* oln/core/image.hh: Invert Dim and Exact template parameters.
-	* oln/core/image1d.hh: Adjust consequently.
-	* oln/core/image2d.hh: Likewise.
-	* oln/core/image3d.hh: Likewise.
-
-	* oln/utils/histogram.hh: Check if the given data type is valid.
-	* oln/morpho/closing.inc: Take non_vectorial_image instead of image.
-	* oln/morpho/dilation.hh: Likewise.
-	* oln/morpho/erosion.hh: Likewise.
-	* oln/morpho/extrema.hxx: Likewise.
-	* oln/morpho/extrema_killer.hh: Likewise.
-	* oln/morpho/fast_morpho.hh: Likewise.
-	* oln/morpho/fast_morpho.hxx: Likewise.
-	* oln/morpho/geodesic_dilation.hh: Likewise.
-	* oln/morpho/geodesic_erosion.hh: Likewise.
-	* oln/morpho/gradient.inc: Likewise.
-	* oln/morpho/hit_or_miss.inc: Likewise.
-	* oln/morpho/laplacian.inc: Likewise.
-	* oln/morpho/opening.inc: Likewise.
-	* oln/morpho/reconstruction.hh: Likewise.
-	* oln/morpho/stat.hh: Likewise.
-	* oln/morpho/thickening.inc: Likewise.
-	* oln/morpho/thinning.inc: Likewise.
-	* oln/morpho/top_hat.inc: Likewise.
-	* oln/morpho/watershed.hh: Likewise.
-	* oln/morpho/watershed.hxx: Likewise.
-	* oln/morpho/attribute_closing_opening.hh: Likewise.
-
-+2003-08-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-+
-+	* oln/core/w_window1d.hh: Fix name() call.
-+	* oln/core/w_window2d.hh: Likewise.
-+	* oln/core/w_window3d.hh: Likewise.
-+	
-+2003-08-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-+	
- 	* tests/io/loadsave.hh (compare): Handle neighborhoods.
- 	* tests/io/Makefile.am: Update.
- 
-Index: integre/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* ntg/core/abstract_hierarchy.hh: Add non_vectorial.
-
-Index: metalic/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* mlc/bool.hh(returns_bool_<true>): Add ensure_type.
-
+        * ntg/core/internal/traits.hh: Define default versions of optraits
+        and typetraits.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sun, 03 Aug 2003 19:36:17 +0200")
+(Checkin-Time "Sun, 03 Aug 2003 21:08:04 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -166,7 +113,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.12 640))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.10 640))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.22 640))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.23 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.30 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.3 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.11 640))
@@ -861,7 +808,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (tools/swilena/meta/attic () :directory)
   (olena/tests/topo/Makefile.am (oln/r/26_Makefile.a 1.3.1.3 640))
   (olena/tests/topo/tests/test-inter-pixel (oln/r/27_test-inter 1.6 640))
-  (olena/tests/topo/tests/test-cmap (oln/r/28_test-cmap. 1.7 640))
+  (olena/tests/topo/tests/test-cmap (oln/r/28_test-cmap. 1.8 640))
   (olena/oln/topo/combinatorial-map/internal/cmap-functor.hh (oln/r/29_cmap-funct 1.3 640))
   (olena/oln/topo/combinatorial-map/internal/cmap-functor.hxx (oln/r/30_cmap-funct 1.3 640))
   (olena/oln/topo/inter-pixel/inter-pixel.hxx (oln/r/31_inter-pixe 1.4 640))
@@ -906,7 +853,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (integre/ntg/int.hh (oln/s/0_int.hh 1.3 640))
   (integre/ntg/float.hh (oln/s/1_float.hh 1.3 640))
   (integre/ntg/real/real_value.hh (oln/s/15_real_value 1.2 640))
-  (integre/ntg/core/internal/traits.hh (oln/s/16_traits.hh 1.3 640))
+  (integre/ntg/core/internal/traits.hh (oln/s/16_traits.hh 1.4 640))
   (integre/ntg/core/internal/macros.hh (oln/s/17_macros.hh 1.2 640))
   (integre/ntg/core/type_traits.hh (oln/s/18_type_trait 1.2 640))
   (integre/ntg/core/macros.hh (oln/s/19_macros.hh 1.7 640))
