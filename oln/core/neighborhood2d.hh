@@ -50,6 +50,7 @@ namespace oln {
     neighborhood2d& add(const dpoint2d& dp)
     {
       super::add(dp);
+      super::add(-dp);
       _delta(abs(dp.row()));
       _delta(abs(dp.col()));
       return *this;

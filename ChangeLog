@@ -1,3 +1,9 @@
+2002-10-25  Reda Dehak  <reda@lrde.epita.fr>
+
+	* oln/core/neighborhood1d.hh: Fix add method.
+	* oln/core/neighborhood2d.hh: Likewise.
+	* oln/core/neighborhood3d.hh: Likewise.
+
 2002-10-01  Emmanuel Turquin  <turqui_e@epita.fr>
 
 	* oln/io/pnm_read_common.hxx: Change int_u<N> to int_u<N, behaviour>.

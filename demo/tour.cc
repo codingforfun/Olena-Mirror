@@ -265,8 +265,9 @@ main (void)
   // neighborhood1d, neighborhood2d, neighborhood3d.
   // The interface is just the same as the windows.
   neighborhood1d n1;
-  n1.add(-1).add(1);
+  n1.add(1);
   std::cout << "n1 = " << n1 << std::endl; // N[(-1)(1)]
+
 
   // Processings.
   // ============
