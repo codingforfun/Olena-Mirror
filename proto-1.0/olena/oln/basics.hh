@@ -61,5 +61,8 @@
 # include <oln/core/abstract/piter.hh>
 // # include <oln/core/abstract/niter.hh>
 
+# include <oln/core/abstract/struct_elt.hh>
+# include <oln/core/abstract/neighborhood.hh>
+
 
 #endif // ! OLENA_BASICS_HH

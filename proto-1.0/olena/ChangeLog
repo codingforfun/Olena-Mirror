@@ -1,5 +1,10 @@
 2005-03-20  Simon Odou  <simon@lrde.epita.fr>
 
+	* oln/basics.hh: Add structuring element and neighborhood headers.
+	* oln/basics2d.hh: Likewise.
+
+2005-03-20  Simon Odou  <simon@lrde.epita.fr>
+
 	* tests/core/tests/image_vectorialness: New.
 	* tests/core/tests/readwrite_image: Add vectorialness property.
 	* oln/makefile.src: Add new files.
