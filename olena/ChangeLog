@@ -1,11 +1,80 @@
 2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* oln/Makefile.am (nobase_oln_HEADERS): Adjust.
+
+	* oln/core/typeadj.hh: Move into $top_srcdir/metalic/mlc/.
+	
+	* Merge from 2003paradigm: 
+
+	2003-02-28  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
+	* oln/core/bkd_iter3d.hh, oln/core/fwd_iter1d.hh,
+	* oln/core/fwd_iter2d.hh, oln/core/fwd_iter3d.hh,
+	* oln/core/internal/iter1d.hh, oln/core/internal/iter2d.hh,
+	* oln/core/internal/iter3d.hh, oln/core/iter.hh:
+	Repare iterators hierarchy 
+	(classes iter, fwd_iter and bkd_iter never linked before).
+
+	* oln/core/type.hh: 
+	Prepare "FindExact" variadic macros arrival.
+
+	2003-02-28  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/type.hh: 
+	Rewrite existing tools and introduce new Exact-related tools.
+	
+	* oln/convert/bound.hh, oln/convert/colorconv.hh,
+	* oln/convert/conversion.hh, oln/convert/force.hh,
+	* oln/convert/nrgbhsi.hh, oln/convert/nrgbhsl.hh,
+	* oln/convert/nrgbhsv.hh, oln/convert/nrgbxyz.hh,
+	* oln/convert/nrgbyiq.hh, oln/convert/nrgbyuv.hh,
+	* oln/convert/rgbnrgb.hh, oln/convert/rgbxyz.hh,
+	* oln/convert/stretch.hh, oln/core/bkd_iter1d.hh,
+	* oln/core/bkd_iter2d.hh, oln/core/bkd_iter3d.hh,
+	* oln/core/dpoint1d.hh, oln/core/dpoint2d.hh, oln/core/dpoint3d.hh,
+	* oln/core/dpoint.hh, oln/core/dpointnd.hh, oln/core/fwd_iter1d.hh,
+	* oln/core/fwd_iter2d.hh, oln/core/fwd_iter3d.hh,
+	* oln/core/image1d.hh, oln/core/image1d_size.hh,
+	* oln/core/image2d.hh, oln/core/image2d_size.hh,
+	* oln/core/image3d.hh, oln/core/image3d_size.hh, oln/core/image.hh,
+	* oln/core/imagend_size.hh, oln/core/image_size.hh,
+	* oln/core/internal/image1d.hh, oln/core/internal/image2d.hh,
+	* oln/core/internal/image3d.hh, oln/core/internal/iter1d.hh,
+	* oln/core/internal/iter2d.hh, oln/core/internal/iter3d.hh,
+	* oln/core/internal/neighborhood.hh,
+	* oln/core/internal/real_image1d.hh,
+	* oln/core/internal/real_image2d.hh,
+	* oln/core/internal/real_image3d.hh, oln/core/internal/window.hh,
+	* oln/core/internal/w_window.hh, oln/core/iter.hh,
+	* oln/core/neighborhood1d.hh, oln/core/neighborhood2d.hh,
+	* oln/core/neighborhood3d.hh, oln/core/neighborhood.hh,
+	* oln/core/point1d.hh, oln/core/point2d.hh, oln/core/point3d.hh,
+	* oln/core/point.hh, oln/core/pointnd.hh, oln/core/pred_image.hh,
+	* oln/core/regular_image.hh, oln/core/structelt.hh,
+	* oln/core/typeadj.hh, oln/core/window1d.hh, oln/core/window2d.hh,
+	* oln/core/window3d.hh, oln/core/window.hh, oln/core/w_window1d.hh,
+	* oln/core/w_window2d.hh, oln/core/w_window3d.hh,
+	* oln/core/w_window.hh, oln/level/threshold.hh, oln/utils/copy.hh:
+	Change to Exact hierarchy.
+
+	2003-02-25  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/type.hh: Change to Exact hierarchy tools.
+
+
+2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Merge from cleanup: 
+	
+	2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/Makefile.am (nobase_oln_HEADERS): Adjust.
 
 	* oln/morpho/attribute_union_find.hh: Fix includes and
           namespaces.
 
-2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 	
 	* oln/arith/internal/opdecls.hh, oln/arith/logic.hh,
 	oln/convert/bound.hh, oln/convert/colorconv.hh,
@@ -67,12 +136,7 @@
 	tests/transforms/dwt.cc, tests/transforms/fft.cc: Update
 	namespaces.
 
-2003-03-04  Jerome Darbon  <jerome@epita.fr>
-
-	* oln/morpho/attribute_closing_opening.hh: New file.
-	* oln/morpho/attribute_union_find.hh: New file.
-	
-2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/morpho/stat.hh: Remove useless includes.
 
@@ -82,12 +146,12 @@
 
 	* oln/Makefile.am: Adjust consequently.
 
-2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* Makefile.am: Move header list ...
 	* oln/Makefile.am: ... here.
 	
-2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/basics.hh, oln/core/internal/iter1d.hh,
 	oln/core/internal/iter2d.hh, oln/core/internal/iter3d.hh,
@@ -101,7 +165,7 @@
 	* oln/core/objs.hh, oln/core/internal/objs.hxx: Move and merge into
 	$top_srcdir/metalic/mlc/objs.hh.
 	
-2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/core/type.hh, oln/core/contract.hh: Move into
 	$top_srcdir/metalic/mlc/.
@@ -130,32 +194,32 @@
 	oln/core/neighborhood.hh, oln/core/point.hh,
 	oln/core/pred_image.hh, oln/core/structelt.hh: Likewise.
 
-2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 	
 	* oln/core/generate.hh: Do not use wrap workaround (for g++-2.95
 	compatibility) anymore. Update includes.
 
-2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* config/oln.m4, config/oln-local.m4, tests/check/Makefile.am,
 	tests/check/Makefile.flags, tests/check/Makefile.check: Adapt to
 	new oln location.
 
-2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 	
 	* tests/arith/tests/min1: Add missing include.
 
 	* oln/convert/nrgbhsi.hh: Likewise.
 	
-2003-03-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-03-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/io/pnm3d.hh: Add missing include.
 
-2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/types: Move into ../integre/tests/.
 
-2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/check/defs.in, tests/check/Makefile.am,
 	tests/check/Makefile.check, tests/check/Makefile.flags: New
@@ -184,7 +248,7 @@
 	* tests/arith/runtests, tests/types/runtests,
 	tests/sanity/includes.test: Likewise.
 	
-2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/types/all.hh, oln/types/behaviour.hh, oln/types/bin.hh,
 	oln/types/builtins_properties.hh, oln/types/cast.hh,
@@ -246,20 +310,20 @@
 
 	* conf/configure.ac: Likewise.
 
-2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 	
 	* tests/sanity/includes.test: Fix defs path.
 
-2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+	2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* Makefile.am (nobase_include_HEADERS): Remove references to
 	oln/meta/. (SUBDIRS): Minor and _temporary_ tweak.
 
-2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+	2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* tests/meta: Rename to ../metalic/tests/array.
 
-2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+	2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* tests/check/Makefile.am, tests/check/Makefile.check,
 	tests/check/Makefile.flags, tests/check/Makefile.in,
@@ -280,7 +344,7 @@
 	here instead of within the shell script.
 	* tests/types/Makefile.am (check-local): Likewise.
 	
-2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+	2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* tests/check/Makefile.am (AM_CPPFLAGS): Minor fix.
 
@@ -315,8 +379,12 @@
 
 	* tests/meta/gen_test_utils/prelude, tests/meta/test_array1d.cc,
 	tests/meta/test_array2d.cc, tests/meta/test_array3d.cc: Likewise.
+	
+2003-03-04  Jerome Darbon  <jerome@epita.fr>
 
->>>>>>> cleanup.24/olena/ChangeLog Fri, 07 Mar 2003 15:57:20 +0100 burrus_n (oln/o/30_ChangeLog 1.27.1.20.1.4.1.10 640)
+	* oln/morpho/attribute_closing_opening.hh: New file.
+	* oln/morpho/attribute_union_find.hh: New file.
+	
 2003-02-23  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* config/oln.m4: Change default flags for icc.

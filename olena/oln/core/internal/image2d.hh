@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -41,9 +41,9 @@ namespace oln {
 
 
   // fwd decl
-  template<class Inferior>
+  template<class Exact>
   struct fwd_iter2d;
-  template<class Inferior>
+  template<class Exact>
   struct bkd_iter2d;
 
 
@@ -52,17 +52,15 @@ namespace oln {
 
     // _image2d is a base class for every 2d image type
 
-    template<class T, class Inferior = mlc::bottom>
-    class _image2d : public regular_image< 2, _image2d<T,Inferior> >
+    template<class T, class Exact>
+    class _image2d : public regular_image< 2, Exact >
     {
     public:
-
-      typedef Inferior inferior;
-
+  
       typedef T value;
-      typedef fwd_iter2d<mlc::bottom> iter;
-      typedef fwd_iter2d<mlc::bottom> fwd_iter;
-      typedef bkd_iter2d<mlc::bottom> bkd_iter;
+      typedef fwd_iter2d<mlc::final> iter;
+      typedef fwd_iter2d<mlc::final> fwd_iter;
+      typedef bkd_iter2d<mlc::final> bkd_iter;
 
       // the following methods are deduced from the method data() that
       // has to be provided by sub-classes
@@ -142,7 +140,7 @@ namespace oln {
 	return
 	  std::string("_image2d<")
 	  + T::name() + ","
-	  + Inferior::name() + ">";
+	  + Exact::name() + ">";
       }
 
     protected:

@@ -38,14 +38,14 @@
 namespace oln {
 
   // fwd decl
-  template< unsigned Dim, class Inferior >
+  template< unsigned Dim, class Exact >
   class dpointnd;
 
-  template< unsigned Dim, class Inferior = mlc::bottom >
-  class pointnd : public point< pointnd< Dim, Inferior > >
+  template< unsigned Dim, class Exact = mlc::final >
+  class pointnd : public point< typename mlc::exact_vt<pointnd< Dim, Exact >, Exact>::ret >
   {
   public:
-    typedef Inferior inferior;
+ 
     typedef pointnd self;
 
     enum { dim = Dim };
@@ -84,7 +84,7 @@ namespace oln {
     {
       std::ostringstream out;
       out << "pointnd<" << dim << ","
-	  << ntg::typename_of<Inferior>() << ">" << std::ends;
+	  << ntg::typename_of<Exact>() << ">" << std::ends;
       return out.str();
     }
 
@@ -94,11 +94,11 @@ namespace oln {
 
   namespace internal
   {
-    template<unsigned Dim, class Inferior>
-    struct default_less< pointnd<Dim, Inferior> >
+    template<unsigned Dim, class Exact>
+    struct default_less< pointnd<Dim, Exact> >
     {
-      bool operator()(const pointnd<Dim, Inferior>& l,
-		      const pointnd<Dim, Inferior>& r) const
+      bool operator()(const pointnd<Dim, Exact>& l,
+		      const pointnd<Dim, Exact>& r) const
       {
 	for (unsigned i = 0; i < Dim; ++i)
 	  if (l.nth(i) < r.nth(i))

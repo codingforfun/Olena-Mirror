@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -38,11 +38,10 @@ namespace oln {
     // FIXME: is this really useful with new types ?
 
     /* Like convert::force, but with saturation.  */
-    template<class Output, class Inferior = mlc::bottom>
-    struct bound : public conversion_to_type< Output, bound<Output, Inferior> >
+    template<class Output, class Exact = mlc::final>
+    struct bound : public conversion_to_type< Output, typename mlc::exact_vt<bound<Output, Exact>, Exact>::ret >
     {
-      typedef Inferior inferior;
-
+ 
       template< class Input >
       Output operator() (const Input& v) const {
 	return ntg::cast::bound<Output>(v);
@@ -51,7 +50,7 @@ namespace oln {
       static std::string name() {
 	return std::string("bound<")
 	  + ntg::typename_of<Output>() + ", "
-	  + ntg::typename_of<Inferior>() + ">";
+	  + ntg::typename_of<Exact>() + ">";
       }
     };
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_TYPEADJ_HH
-# define OLENA_TYPEADJ_HH
+#ifndef METALIC_TYPEADJ_HH
+# define METALIC_TYPEADJ_HH
 
-namespace oln {
+namespace mlc
+{
 
   /*
     This file defines typeadj, an helper struct that aids ajusting the
@@ -36,19 +37,38 @@ namespace oln {
     For instance `oln::typeadj<const int>::mutable_ref' equals `int &'.
   */
 
-# define _OLN_TYPEADJ_DEFS			\
-  {						\
-    typedef T mutable_val;			\
-    typedef const T const_val;			\
-    typedef T& mutable_ref;			\
-    typedef const T& const_ref;			\
-  } /* no ; */
+  template < class T > struct typeadj             
+  {						
+    typedef T mutable_val;			
+    typedef const T const_val;			    
+    typedef T& mutable_ref;			
+    typedef const T& const_ref;			
+  };
 
-  template < class T > struct typeadj             _OLN_TYPEADJ_DEFS;
-  template < class T > struct typeadj< T& >       _OLN_TYPEADJ_DEFS;
-  template < class T > struct typeadj< const T >  _OLN_TYPEADJ_DEFS;
-  template < class T > struct typeadj< const T& > _OLN_TYPEADJ_DEFS;
+  template < class T > struct typeadj< T& >       
+  {						
+    typedef T mutable_val;			
+    typedef const T const_val;			    
+    typedef T& mutable_ref;			
+    typedef const T& const_ref;			
+  };
 
-} // oln
+  template < class T > struct typeadj< const T >  
+  {						
+    typedef T mutable_val;			
+    typedef const T const_val;			    
+    typedef T& mutable_ref;			
+    typedef const T& const_ref;			
+  };
 
-#endif /* OLENA_TYPEADJ_HH */
+  template < class T > struct typeadj< const T& > 
+  {						
+    typedef T mutable_val;			
+    typedef const T const_val;			    
+    typedef T& mutable_ref;			
+    typedef const T& const_ref;			
+  };
+
+} // end of mlc
+
+#endif /* METALIC_TYPEADJ_HH */

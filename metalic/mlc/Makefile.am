@@ -20,4 +20,5 @@ nobase_mlc_HEADERS =				\
   math.hh					\
   objs.hh					\
   optional.hh					\
-  type.hh
+  type.hh					\
+  typeadj.hh

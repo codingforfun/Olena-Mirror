@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -38,8 +38,11 @@
 // a detailed problem description can be found on:
 // http://www.lrde.epita.fr/cgi-bin/twiki/view/Projects/OlenaConstImages
 
+# include <ntg/bin.hh>
 
 namespace oln {
+
+  using ntg::bin;
 
 # define OLENA_UTILS_IMAGE_DEEP_COPY		\
   if (rhs._has_data())				\
@@ -48,14 +51,14 @@ namespace oln {
 
 # ifdef OLENA_CORE_IMAGE1D_HH
 
-template<class T, class Inferior>
-image1d<T,Inferior>::image1d(const self& rhs)
+template<class T, class Exact>
+image1d<T,Exact>::image1d(const self& rhs)
 {
   OLENA_UTILS_IMAGE_DEEP_COPY;
 }
 
-template<class Inferior>
-image1d<ntg::bin,Inferior>::image1d(const self& rhs)
+template<class Exact>
+image1d<bin,Exact>::image1d(const self& rhs)
 {
   OLENA_UTILS_IMAGE_DEEP_COPY;
 }
@@ -65,14 +68,14 @@ image1d<ntg::bin,Inferior>::image1d(const self& rhs)
 
 # ifdef OLENA_CORE_IMAGE2D_HH
 
-template<class T, class Inferior>
-image2d<T,Inferior>::image2d(const self& rhs)
+template<class T, class Exact>
+image2d<T,Exact>::image2d(const self& rhs)
 {
   OLENA_UTILS_IMAGE_DEEP_COPY;
 }
 
-template<class Inferior>
-image2d<ntg::bin,Inferior>::image2d(const self& rhs)
+template<class Exact>
+image2d<bin,Exact>::image2d(const self& rhs)
 {
   OLENA_UTILS_IMAGE_DEEP_COPY;
 }
@@ -82,14 +85,14 @@ image2d<ntg::bin,Inferior>::image2d(const self& rhs)
 
 # ifdef OLENA_CORE_IMAGE3D_HH
 
-template<class T, class Inferior>
-image3d<T,Inferior>::image3d(const self& rhs)
+template<class T, class Exact>
+image3d<T,Exact>::image3d(const self& rhs)
 {
   OLENA_UTILS_IMAGE_DEEP_COPY;
 }
 
-template<class Inferior>
-image3d<ntg::bin,Inferior>::image3d(const self& rhs)
+template<class Exact>
+image3d<bin,Exact>::image3d(const self& rhs)
 {
   OLENA_UTILS_IMAGE_DEEP_COPY;
 }

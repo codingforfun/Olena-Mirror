@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,23 +28,25 @@
 #ifndef OLENA_CORE_INTERNAL_ITER1D_HH
 # define OLENA_CORE_INTERNAL_ITER1D_HH
 
-# include <mlc/contract.hh>
-# include <mlc/type.hh>
 # include <oln/core/coord.hh>
 # include <oln/core/point1d.hh>
 # include <oln/core/dpoint1d.hh>
 # include <oln/core/image1d.hh>
+# include <oln/core/iter.hh>
+
+# include <mlc/contract.hh>
+# include <mlc/type.hh>
 # include <mlc/objs.hh>
 
 namespace oln {
 
   namespace internal {
 
-    template<class Inferior = mlc::bottom>
-    class _iter1d : public mlc::any< _iter1d<Inferior> >
+    template<class Exact>
+    class _iter1d : public virtual iter< Exact >
     {
     public:
-      typedef Inferior inferior;
+
 //       typedef _iter1d<Inferior> self;
 //       typedef typename mlc::exact<self>::ret exact;
 
@@ -141,7 +143,7 @@ namespace oln {
 // 	return tmp;
 //       }
 
-      static std::string name() { return std::string("_iter1d<") + Inferior::name() + ">"; }
+      static std::string name() { return std::string("_iter1d<") + Exact::name() + ">"; }
 
     protected:
 

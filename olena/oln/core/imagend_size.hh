@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,12 +35,10 @@
 
 namespace oln {
 
-  template< unsigned Dim, class Inferior = mlc::bottom >
-  class imagend_size : public image_size< imagend_size<Dim, Inferior> >
+  template< unsigned Dim, class Exact = mlc::final >
+  class imagend_size : public image_size< typename mlc::exact_vt<imagend_size<Dim, Exact>, Exact>::ret >
   {
   public:
-
-    typedef Inferior inferior;
 
     enum { dim = Dim };
 
@@ -71,7 +69,7 @@ namespace oln {
     {
       std::ostringstream out;
       out << "imagend_size<" << dim << ","
-          << ntg::typename_of<Inferior>() << ">" << std::ends;
+          << ntg::typename_of<Exact>() << ">" << std::ends;
       return out.str();
     }
 

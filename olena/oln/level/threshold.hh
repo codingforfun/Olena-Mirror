@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -36,11 +36,11 @@ namespace oln {
   namespace level {
 
     /* Threshold the value of the image.  */
-    template<class Output, class Input, class Inferior = mlc::bottom>
+    template<class Output, class Input, class Exact = mlc::final>
     class threshold : public std::unary_function<const Input&, Output>
     {
     public:
-      typedef Inferior inferior;
+
 
       threshold(const Input& threshold, const Output& min = Output::min(), const Output& max = Output::max()) :
         m_threshold(threshold), m_min(min), m_max(max)
@@ -56,7 +56,7 @@ namespace oln {
 	return std::string("threshold<")
 	  + ntg::typename_of<Output>() + ", "
 	  + ntg::typename_of<Input>() + ", "
-	  + ntg::typename_of<Inferior>() + ">";
+	  + ntg::typename_of<Exact>() + ">";
       }
 
     private:

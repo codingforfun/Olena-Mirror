@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,19 +32,21 @@
 
 namespace oln {
 
-  template<class Inferior = mlc::bottom>
-  class bkd_iter1d : public internal::_iter1d<bkd_iter1d<Inferior> >
+  template<class Exact = mlc::final>
+  class bkd_iter1d : public internal::_iter1d<typename mlc::exact_vt<bkd_iter1d<Exact>, Exact>::ret>, 
+                     public bkd_iter<typename mlc::exact_vt<bkd_iter1d<Exact>, Exact>::ret>
   {
   public:
-    typedef Inferior inferior;
-    typedef internal::_iter1d<bkd_iter1d<Inferior> > super;
+
+    typedef internal::_iter1d<typename mlc::exact_vt<bkd_iter1d<Exact>, Exact>::ret> super;
+    typedef bkd_iter<typename mlc::exact_vt<bkd_iter1d<Exact>, Exact>::ret> super2;
 
     enum { dim = 1 };
     typedef point1d point;
 
     template<class Image>
     bkd_iter1d(const Image& ima) :
-      super(ima.size())
+      super(ima.size()), super2()
     {
     }
 
@@ -70,7 +72,7 @@ namespace oln {
       --_p.col();
     }
 
-    static std::string name() { return "bkd_iter1d"; }
+    static std::string name() { return std::string("bkd_iter1d<") + Exact::name() + ">"; }
 
   };
 

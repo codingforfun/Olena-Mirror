@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -40,7 +40,7 @@ namespace oln {
     public internal::_neighborhood< 3, neighborhood3d >
   {
   public:
-    typedef mlc::bottom inferior;
+
     typedef internal::_neighborhood< 3, neighborhood3d > super;
     typedef neighborhood3d self;
 

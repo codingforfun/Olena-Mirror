@@ -1,8 +1,12 @@
-2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Merge from cleanup:
+
+	2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* swilena/configure.ac: Adapt to new oln location.
 
-2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* swilena/python/typedefs.hh, swilena/src/swilena_dim.i,
 	swilena/src/swilena_types.i: Replace <oln/types by <ntg/.
@@ -38,5 +42,3 @@
 2002-11-15  Elrond  <raph@lrde.epita.fr>
 
 	* Initial check-in.
-
-

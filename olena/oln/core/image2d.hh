@@ -37,17 +37,19 @@
 
 namespace oln {
 
+  using ntg::bin;
+  using ntg::optraits;
+
   // client can use image2d; instances are real images, that is,
   // images with data ---conversely to proxy images
 
-  template<class T, class Inferior = mlc::bottom>
-  class image2d : public internal::_real_image2d< T, image2d<T,Inferior> >
+  template<class T, class Exact = mlc::final>
+  class image2d : public internal::_real_image2d< T, typename mlc::exact_vt<image2d<T, Exact>, Exact>::ret>
   {
   public:
 
-    typedef Inferior inferior;
-    typedef image2d<T,Inferior> self;
-    typedef internal::_real_image2d<T,self> super;
+    typedef image2d<T, Exact> self;
+    typedef internal::_real_image2d< T, typename mlc::exact_vt<image2d<T, Exact>, Exact>::ret> super;
 
     image2d() :
       super()
@@ -92,8 +94,8 @@ namespace oln {
     {
       return
 	std::string("image2d<")
-	+ ntg::optraits<T>::name() + ","
-	+ Inferior::name() + ">";
+	+ optraits<T>::name() + ","
+	+ Exact::name() + ">";
     }
 
     template<class U>
@@ -108,23 +110,21 @@ namespace oln {
 
   _ImageForDim(2, image2d)
 
-  // specialization for ntg::bin data
+  // specialization for bin data
 
-  // image2d<ntg::bin> is also a pred_image, that is, an image type that
+  // image2d<bin> is also a pred_image, that is, an image type that
   // can be used as a predicate having the structure of an image
 
 
-  template<class Inferior>
-  class image2d<ntg::bin,Inferior> 
-    : public internal::_real_image2d< ntg::bin, image2d<ntg::bin, Inferior> >,
-      public pred_image< image2d<ntg::bin, Inferior> >
+  template<class Exact>
+  class image2d<bin, Exact> : public internal::_real_image2d< bin, typename mlc::exact_vt<image2d<bin, Exact>, Exact>::ret >,
+			      public pred_image<typename mlc::exact_vt<image2d<bin, Exact>, Exact>::ret >
   {
   public:
 
-    typedef Inferior inferior;
-    typedef image2d<ntg::bin,Inferior> self;
-    typedef internal::_real_image2d<ntg::bin,self> super;
-    typedef pred_image< image2d<ntg::bin,Inferior> > super_pred;
+    typedef image2d<bin, Exact> self;
+    typedef internal::_real_image2d< bin, typename mlc::exact_vt<image2d<bin, Exact>, Exact>::ret > super;
+    typedef pred_image<typename mlc::exact_vt<image2d<bin, Exact>, Exact>::ret > super_pred;
 
     image2d() :
       super()
@@ -169,8 +169,8 @@ namespace oln {
     {
       return
 	std::string("image2d<")
-	+ ntg::optraits<ntg::bin>::name() + ","
-	+ Inferior::name() + ">";
+	+ optraits<bin>::name() + ","
+	+ Exact::name() + ">";
     }
 
     template<class U>

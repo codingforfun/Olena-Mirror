@@ -40,11 +40,10 @@ namespace oln {
 
   namespace convert {
 
-    template<class Output, class Inferior = mlc::bottom>
-    struct stretch : public conversion_to_type<Output,force<Output, Inferior> >
+    template<class Output, class Exact = mlc::final>
+    struct stretch : public conversion_to_type<Output, typename mlc::exact_vt<force<Output, Exact>, Exact>::ret >
     {
-      typedef Inferior inferior;
-
+  
       template< class Input >
       Output operator() (const Input& v) const {
 
@@ -59,7 +58,7 @@ namespace oln {
       
       static std::string name() {
         return std::string("stretch<") + typename_of<Output>() + ", "
-          + typename_of<Inferior>() + ">";
+          + typename_of<Exact>() + ">";
       }
     };
 
@@ -67,6 +66,5 @@ namespace oln {
   } // end of namespace convert
 
 } // end of namespace oln
-
 
 #endif // OLENA_CONVERT_STRETCH_HH

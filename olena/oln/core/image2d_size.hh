@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,8 +37,6 @@ namespace oln {
 
   struct image2d_size : public imagend_size< 2, image2d_size >
   {
-    typedef mlc::bottom inferior;
-
     image2d_size(coord nrows, coord ncols)
     {
       nth(0) = nrows;

@@ -41,11 +41,10 @@ namespace oln
 
   // iter
 
-  template<class Inferior = mlc::bottom>
-  struct iter : public mlc::any< iter<Inferior> >
+  template<class Exact>
+  struct iter : public mlc::any<Exact>
   {
-    typedef Inferior inferior;
-    static std::string name() { return std::string("iter<") + Inferior::name() + ">"; }
+    static std::string name() { return std::string("iter<") + Exact::name() + ">"; }
   protected:
     iter() {}
   };
@@ -53,11 +52,10 @@ namespace oln
 
   // fwd_iter
 
-  template<class Inferior = mlc::bottom>
-  struct fwd_iter : public mlc::any< fwd_iter<Inferior> >
+  template<class Exact>
+  struct fwd_iter : public virtual iter<Exact>
   {
-    typedef Inferior inferior;
-    static std::string name() { return std::string("fwd_iter<") + Inferior::name() + ">"; }
+    static std::string name() { return std::string("fwd_iter<") + Exact::name() + ">"; }
   protected:
     fwd_iter() {}
   };
@@ -65,11 +63,10 @@ namespace oln
 
   // bkd_iter
 
-  template<class Inferior = mlc::bottom>
-  struct bkd_iter : public mlc::any< bkd_iter<Inferior> >
+  template<class Exact>
+  struct bkd_iter : public virtual iter<Exact>
   {
-    typedef Inferior inferior;
-    static std::string name() { return std::string("bkd_iter<") + Inferior::name() + ">"; }
+    static std::string name() { return std::string("bkd_iter<") + Exact::name() + ">"; }
   protected:
     bkd_iter() {}
   };

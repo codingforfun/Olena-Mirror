@@ -33,7 +33,7 @@
 # include <mlc/contract.hh>
 # include <oln/core/macros.hh>
 # include <mlc/type.hh>
-# include <oln/core/typeadj.hh>
+# include <mlc/typeadj.hh>
 
 # include <mlc/objs.hh>
 

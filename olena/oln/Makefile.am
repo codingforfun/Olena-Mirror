@@ -105,7 +105,6 @@ nobase_oln_HEADERS =				\
   core/regular_image.hh				\
   core/structelt.hh				\
   core/traverse.hh				\
-  core/typeadj.hh				\
   core/w_window.hh				\
   core/w_window1d.hh				\
   core/w_window2d.hh				\

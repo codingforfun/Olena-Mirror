@@ -1,12 +1,16 @@
-2003-03-05  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Merge from cleanup:
+
+	2003-03-05  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* configure.ac: Update.
 
-2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* configure.ac: Update.
 
-2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* configure.ac: Change the tarball name.
 
@@ -15,11 +19,11 @@
 	* bootstrap.sh, cleanup.sh, configure.ac, Makefile.am: Adapt
 	consequently.
 	
-2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* configure.ac: Adapt to types tests move.
 
-2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* lib/check/Makefile.am, lib/check/Makefile.check,
 	lib/check/Makefile.flags, lib/check/defs.in, lib/check/compile.cc,
@@ -31,20 +35,20 @@
 
 	* configure.ac, Makefile.am: Adapt to new tests location.
 
-2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* configure.ac, Makefile.am: Tweak for finding Intègre headers.
 
-2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+	2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* configure.ac: AC_CONFIG_FILES for metalic/mlc/Makefile.am.
 	Create missing links if needed.
 
-2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+	2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* configure.ac: Tweak for finding Metalic headers.
 
-2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+	2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* doc/demo/Makefile.am, doc/ref/Makefile.am, oln/config/oln.m4,
 	oln/tests/check/Makefile.am, oln/tests/check/Makefile.flags,
