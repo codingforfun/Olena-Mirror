@@ -1,16 +1,26 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 7 61)
-(Parent-Version oln 7 60)
+(Project-Version oln 7 62)
+(Parent-Version oln 7 61)
 (Version-Log "Index: ChangeLog
-from  +2003-02-16  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+from  +2003-02-17  Raphaël Poss  <raph@lrde.epita.fr>
 
-        * configure.ac: Fix behavior for systems without help2man.
+   * configure.ac: Regenerate manpages even if help2man is not found
+   since `missing' handles this correctly.
+
+   * NEWS: Fix release year.
+
+Index: tools/ChangeLog
+from  +2003-02-17  Raphaël Poss  <raph@lrde.epita.fr>
+
+   * utilities/Makefile.am: Fix help2man invocation. Make it work
+   with BSD `make'.
+   * utilities/morpho/generate_morpho.sh: Likewise.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Sun, 16 Feb 2003 22:44:11 +0100")
+(Checkin-Time "Mon, 17 Feb 2003 13:40:56 +0100")
 (Checkin-Login raph)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -88,10 +98,10 @@ from  +2003-02-16  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.29.1.2 664))
+  (ChangeLog (oln/o/33_ChangeLog 1.29.1.3 664))
   (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.15.1.1 664))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.21.1.1 664))
-  (tools/ChangeLog (oln/o/32_ChangeLog 1.11 664))
+  (tools/ChangeLog (oln/o/32_ChangeLog 1.12 664))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.1 664))
 
   (attic/oln-ChangeLog (oln/6_ChangeLog 1.50.1.98.1.5 660))
@@ -103,7 +113,7 @@ from  +2003-02-16  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   
   (cleanup.sh (oln/o/29_cleanup.sh 1.4 775))
   
-  (configure.ac (oln/3_configure. 1.49 664))
+  (configure.ac (oln/3_configure. 1.50 664))
   
   (doc/demo/image.cc (oln/d/46_image.cc 1.2 660))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.13 660))
@@ -121,7 +131,7 @@ from  +2003-02-16  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   
   (INSTALL (oln/o/39_INSTALL 1.2 664))
   (Makefile.am (oln/n/32_Makefile.a 1.14 664))
-  (NEWS (oln/0_NEWS 1.11 660))
+  (NEWS (oln/0_NEWS 1.11.1.1 660))
   
   (oln/img/face_se.pbm (oln/n/17_face_se.pb 1.1 660) :no-keywords)
   (oln/img/lena256.pgm (oln/n/14_lena256.pg 1.1 660) :no-keywords)
@@ -566,8 +576,8 @@ from  +2003-02-16  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (tools/swilena/swilena.prj (oln/n/38_swilena.pr 1.1 664))
   (tools/swilena/TODO (oln/n/36_TODO 1.1 664))
   (tools/utilities/configure.ac (oln/o/27_configure. 1.1 664))
-  (tools/utilities/Makefile.am (oln/g/2_Makefile.a 1.13 660))
-  (tools/utilities/morpho/generate_morpho.sh (oln/i/30_generate_m 1.3.1.6 775))
+  (tools/utilities/Makefile.am (oln/g/2_Makefile.a 1.14 660))
+  (tools/utilities/morpho/generate_morpho.sh (oln/i/30_generate_m 1.3.1.7 775))
   (tools/utilities/morpho/Makefile.am (oln/i/32_Makefile.a 1.10 660))
   (tools/utilities/morpho/morpho_template.cc (oln/i/33_morpho_tem 1.5.1.3 660))
   (tools/utilities/morpho/morpho_template_extrema.cc (oln/j/5_morpho_tem 1.1.1.3 660))
@@ -789,7 +799,5 @@ from  +2003-02-16  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   ; (oln/oln/Makefile.am ())
 )
-(Merge-Parents
-  (7.60 complete)
-)
+(Merge-Parents)
 (New-Merge-Parents)

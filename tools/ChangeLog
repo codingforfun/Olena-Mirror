@@ -1,3 +1,9 @@
+2003-02-17  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* utilities/Makefile.am: Fix help2man invocation. Make it work
+	with BSD `make'.
+	* utilities/morpho/generate_morpho.sh: Likewise.
+
 2003-02-12  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* utilities/Makefile.am: Auto-generate manpages. Fix small

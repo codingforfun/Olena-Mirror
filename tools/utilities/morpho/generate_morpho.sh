@@ -104,7 +104,7 @@ print_man()
 {
   echo "if HAVE_HELP2MAN"
   echo "${prog}.1: ${prog}\$(EXEEXT)"
-  printf '\t'; echo "PATH=.:\$\$PATH \$(HELP2MAN) \$< >\$@"
+  printf '\t'; echo "PATH=.:\$\$PATH \$(HELP2MAN) -N --output=\$@ ${prog}\$(EXEEXT)"
   echo "endif"
 }
 get_flags()
