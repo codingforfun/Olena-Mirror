@@ -1,7 +1,9 @@
 2002-07-29  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* oln/core/generate.hh: Include meta/type.hh.
 	* oln/meta/cmp.hh: Add maxN and saturateN.  
 	* oln/meta/basics.hh: Add returns_bool_.
+	* oln/meta/type.hh: New file.
 	* oln/core/type.hh: Move wrap into oln/meta/type.hh.
 	* oln/types, oln/types/all.hh, oln/types/behaviour.hh,
 	oln/types/bin.hh, oln/types/builtins_properties.hh,

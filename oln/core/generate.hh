@@ -28,6 +28,8 @@
 #ifndef OLENA_CORE_GENERATE_HH
 # define OLENA_CORE_GENERATE_HH
 
+# include <oln/meta/type.hh>
+
 # include <oln/core/contract.hh>
 # include <oln/core/image.hh>
 # include <oln/core/image_size.hh>

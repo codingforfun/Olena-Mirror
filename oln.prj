@@ -1,11 +1,11 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 4)
-(Parent-Version oln 0_5 2)
+(Project-Version oln 0_5 5)
+(Parent-Version oln 0_5 4)
 (Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Mon, 29 Jul 2002 16:15:01 +0200")
+(Checkin-Time "Mon, 29 Jul 2002 16:23:12 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -73,7 +73,7 @@
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.16 640))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.19 600))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.20 600))
   (configure.ac (oln/3_configure. 1.18 600))
   (configure (oln/e/7_configure 1.22 700))
   (README (oln/1_README 1.4 600))
@@ -160,7 +160,7 @@
   (oln/core/fwd_iter1d.hh (oln/d/21_fwd_iter1d 1.3 600))
   (oln/core/fwd_iter2d.hh (oln/d/20_fwd_iter2d 1.3 600))
   (oln/core/fwd_iter3d.hh (oln/d/19_fwd_iter3d 1.3 600))
-  (oln/core/generate.hh (oln/f/12_generate.h 1.5 600))
+  (oln/core/generate.hh (oln/f/12_generate.h 1.6 600))
   (oln/core/image1d.hh (oln/c/47_image1d.hh 1.3 600))
   (oln/core/image1d_size.hh (oln/c/46_image1d_si 1.3 600))
   (oln/core/image2d.hh (oln/c/45_image2d.hh 1.3 600))
@@ -445,14 +445,11 @@
 
   (utilities/mosaic.cc (oln/g/0_mosaic.cc 1.1 640))
   (utilities/Makefile.in (oln/g/1_Makefile.i 1.1 640))
-  (utilities/Makefile.am (oln/g/2_Makefile.a 1.1 640)))
-(Merge-Parents
-  (0_5.3 complete
-    (aclocal.m4 aclocal.m4 aclocal.m4 r) (ChangeLog ChangeLog ChangeLog m)
-    (configure.ac configure.ac configure.ac r) (configure configure configure r)
-    (Makefile.am Makefile.am Makefile.am r) (Makefile.in Makefile.in Makefile.in r)
-    (() () utilities/mosaic.cc a) (() () utilities/Makefile.in a)
-    (() () utilities/Makefile.am a) 
-  )
+  (utilities/Makefile.am (oln/g/2_Makefile.a 1.1 640))
+;; Files added by populate at Mon, 29 Jul 2002 16:23:03 +0200,
+;; to version 0_5.4(w), by burrus_n:
+
+  (oln/meta/type.hh (oln/g/33_type.hh 1.1 600))
 )
+(Merge-Parents)
 (New-Merge-Parents)
