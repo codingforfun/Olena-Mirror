@@ -112,6 +112,12 @@ optimization and debug settings, which is inconsistent.
 Run @command{configure CXXFLAGS=''}. See the file
 @file{BUILD} at the toplevel source directory.
 
+@item Explanation 3
+Your compiler has internal problem.
+
+@item Solution 3
+Lower the limit of inlining: set CXXFLAGS_OPTIMIZE to -finline-limit-500 -O2
+
 @end table
 
 @unnumberedsubsec Wrong include path
@@ -168,6 +174,22 @@ GCC but not @option{-Werror}).
 
 @end table
 
+@unnumberedsubsec Errors in standard headers
+
+@cindex errors, in standard headers
+@cindex HP-UX
+@cindex NetBSD
+@cindex @env{CXXFLAGS}
+
+@table @strong
+@item Problem
+The math functions (acos, ...) are not declared.
+
+@item Solution
+Set CXXFLAGS to -includemath.h.
+
+@end table
+
 @unnumberedsubsec Invalid data saved on I/O
 
 @cindex big-endian
@@ -188,3 +210,5 @@ format instead of raw. Beware, while this is a correct workaround, the
 generated images are bigger.
 
 @end table
+
+
