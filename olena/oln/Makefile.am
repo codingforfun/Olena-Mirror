@@ -35,6 +35,11 @@ nobase_oln_HEADERS =					\
   convol/fast_gaussian.hh				\
   convol/fast_gaussian.hxx				\
   convol/fast_gaussian_coefficient.hh			\
+  core/abstract/binary_image.hh				\
+  core/abstract/image.hh				\
+  core/abstract/image_with_dim.hh			\
+  core/abstract/image_with_impl.hh			\
+  core/abstract/image_with_type.hh			\
   core/accum.hh						\
   core/apply.hh						\
   core/box.hh						\
@@ -42,10 +47,6 @@ nobase_oln_HEADERS =					\
   core/bkd_iter1d.hh					\
   core/bkd_iter2d.hh					\
   core/bkd_iter3d.hh					\
-  core/border.hh					\
-  core/border1d.hh					\
-  core/border2d.hh					\
-  core/border3d.hh					\
   core/compose.hh					\
   core/coord.hh						\
   core/dpoint.hh					\
@@ -70,20 +71,15 @@ nobase_oln_HEADERS =					\
   core/image3d_size.hh					\
   core/image_size.hh					\
   core/imagend_size.hh					\
+  core/impl/image_impl.hh 				\
+  core/impl/image_array1d.hh				\
+  core/impl/image_array2d.hh				\
+  core/impl/image_array3d.hh				\
   core/internal/fake.hh					\
-  core/internal/image1d.hh				\
-  core/internal/image1d_data.hh				\
-  core/internal/image2d.hh				\
-  core/internal/image2d_data.hh				\
-  core/internal/image3d.hh				\
-  core/internal/image3d_data.hh				\
   core/internal/iter1d.hh				\
   core/internal/iter2d.hh				\
   core/internal/iter3d.hh				\
   core/internal/neighborhood.hh				\
-  core/internal/real_image1d.hh				\
-  core/internal/real_image2d.hh				\
-  core/internal/real_image3d.hh				\
   core/internal/rec_operable.hh				\
   core/internal/w_window.hh				\
   core/internal/window.hh				\
@@ -101,8 +97,6 @@ nobase_oln_HEADERS =					\
   core/point3d.hh					\
   core/point3d.hxx					\
   core/pointnd.hh					\
-  core/pred_image.hh					\
-  core/regular_image.hh					\
   core/structelt.hh					\
   core/traverse.hh					\
   core/w_window.hh					\

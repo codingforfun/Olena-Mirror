@@ -1,3 +1,7 @@
+2003-07-22  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/Makefile.am: Adjust.
+
 2003-07-22  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/image1d.hh,                              
