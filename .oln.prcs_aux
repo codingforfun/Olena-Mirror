@@ -15,7 +15,7 @@
 (integre/tests/types/tests/float_c1 121 1051909959 h/13_float_c1 1.2)
 (doc/dev/srctree.texi 10446 1049920315 p/45_srctree.te 1.5)
 (olena/oln/utils/stat.hh 3007 1052067937 9_stat.hh 1.5.1.6)
-(olena/tests/topo/test-cmap.cc 792 1059126929 r/28_test-cmap. 1.4)
+(olena/tests/topo/test-cmap.cc 788 1059128103 r/28_test-cmap. 1.5)
 (integre/ntg/color/yuv.hh 1949 1052854365 i/25_yuv.hh 1.3.1.4)
 (tools/swilena/configure.ac 681 1046711214 o/26_configure. 1.2)
 (metalic/tests/sanity/Makefile.am 341 1052854365 t/2_Makefile.a 1.1)

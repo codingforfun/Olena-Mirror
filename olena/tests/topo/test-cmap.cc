@@ -20,7 +20,7 @@ check()
 
   typedef image2d<ntg::int_u8> input_t;
 
-  input_t src = load(rdata("test-cmap.pgm"));
+  input_t src = load(rdata("test-cmap"));
 
   std::cerr << "building inter pixel...";
   interpixel<input_t> ip(src);
