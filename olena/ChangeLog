@@ -1,3 +1,9 @@
+2003-07-30  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
+
+	* tests/utils/timer.cc, olena/tests/utils/stat.cc,
+	olena/tests/utils/histogram.cc, olena/tests/utils/Makefile.am: Add
+	new tests.
+
 2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
         * oln/arith/ops.hh: Fix compilation with g++ 3.4.
@@ -39,12 +45,12 @@
         * oln/core/abstract/neighborhoodnd.hh: Likewise.
 
 2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* oln/level/invert.hh: Don't call self() on non-class types.
 	* oln/morpho/extrema_killer.hh: Remove use namespace directive.
 
 2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* oln/io/pnm_write_data.hh: Fix includes.
 
 2003-07-30  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
@@ -73,13 +79,13 @@
 	* tests/core/multiple_sources_1.cc,
 	tests/core/multiple_sources_2.cc: New test.
 	* tests/core/Makefile.am: Adjust.
-	
+
 	* oln/io/pnm3d.hh: Disable until complete rewrite.
 	* oln/io/pnm_read3d.hxx: Likewise.
 	* oln/io/pnm_write3d.hxx: Likewise.
 
 2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* oln/core/abstract/dpoint.hh: Change to_exact() calls into
 	exact() calls to save compile time.
 	* oln/core/generate.hh: Likewise.
