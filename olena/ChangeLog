@@ -1,3 +1,8 @@
+2004-03-25  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* olena/oln/core/abstract/image.hh: Add macros.
+	* olena/oln/morpher/generic_morpher.hh: generic_morpher implementation.
+
 2004-03-25  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* oln/morpho/dilation.hh: Correct comments.

@@ -125,7 +125,7 @@ namespace oln {
       ** at \a p in the current image.
       */
 
-      const value_type&
+      const value_type
       operator[](const abstract::point<point_type>& p) const
       {
   	return this->exact().at(p.exact());
@@ -343,10 +343,35 @@ mlc_exact_type_(ImgType)::value_type
 # define oln_concrete_type(ImgType)		\
 typename mute<ImgType>::ret
 
+# define oln_exact_type(ImgType)		\
+mlc_exact_type(ImgType)::exact_type
+# define oln_exact_type_(ImgType)		\
+mlc_exact_type_(ImgType)::exact_type
+
 # define oln_iter_type(Iterable)		\
 mlc_exact_type(Iterable)::iter_type
 # define oln_iter_type_(Iterable)		\
 mlc_exact_type_(Iterable)::iter_type
+
+# define oln_fwd_iter_type(Fwd_Iterable)	\
+mlc_exact_type(Fwd_Iterable)::fwd_iter_type
+# define oln_fwd_iter_type_(Fwd_Iterable)	\
+mlc_exact_type_(Fwd_Iterable)
+
+# define oln_bkd_iter_type(Bkd_Iterable)	\
+mlc_exact_type(Bkd_Iterable)::bkd_iter_type
+# define oln_bkd_iter_type_(Bkd_Iterable)	\
+mlc_exact_type_(Bkd_Iterable)::bkd_iter_type
+
+# define oln_size_type(ImgType)			\
+mlc_exact_type(ImgType)::size_type
+# define oln_size_type_(ImgType)		\
+mlc_exact_type_(ImgType)::size_type
+
+# define oln_impl_type(ImgType)			\
+mlc_exact_type(ImgType)::impl_type
+# define oln_impl_type_(ImgType)		\
+mlc_exact_type_(ImgType)::impl_type
 
 # define oln_point_type(Pointable)		\
 mlc_exact_type(Pointable)::point_type
