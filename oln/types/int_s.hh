@@ -28,6 +28,7 @@
 #ifndef OLENA_VALUE_INT_S_HH
 # define OLENA_VALUE_INT_S_HH
 
+# include <oln/config/system.hh>
 # include <oln/meta/cmp.hh>
 
 # include <oln/types/rec_value.hh>
@@ -113,9 +114,6 @@ namespace oln
     INT_S_CTOR_FROM_BUILTIN(unsigned char);
     INT_S_CTOR_FROM_BUILTIN(signed   char);
 
-    INT_S_CTOR_FROM_BUILTIN(float);
-    INT_S_CTOR_FROM_BUILTIN(double);
-
     // FIXME: add int_s<mbits> here, and check only if mbits > nbits
 
     int_s (const self& rhs)
@@ -137,6 +135,26 @@ namespace oln
     self& operator=(const rec_scalar<T>& rhs)
     {
       _value = optraits_type::check(rhs.value());
+      return *this;
+    }
+
+    int_s (const float rhs)
+    {
+      _value = optraits_type::check(truncf(rhs));
+    }
+    self& operator=(const float rhs)
+    {
+      _value = optraits_type::check(truncf(rhs));
+      return *this;
+    }    
+
+    int_s (const double rhs)
+    {
+      _value = optraits_type::check(trunc(rhs));
+    }
+    self& operator=(const double rhs)
+    {
+      _value = optraits_type::check(trunc(rhs));
       return *this;
     }
 

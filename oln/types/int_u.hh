@@ -133,7 +133,7 @@ namespace oln
     {
       _value = optraits_type::check(trunc(rhs));
       return *this;
-    }    
+    }
 
 
     // FIXME: add int_u<mbits> here, and check only if mbits > nbits

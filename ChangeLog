@@ -4,6 +4,7 @@
 
 2002-08-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* oln/types/int_s.hh: Fix float/double conversion.
 	* oln/types/optraits_cycle.hh: Fix modulo with float/double.
 	* oln/types/optraits_builtins_float.hh: Add cycle float/double traits.
 
