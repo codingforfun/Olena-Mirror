@@ -61,6 +61,10 @@ namespace oln {
   template <typename T>
   struct props < cat::image, image2d<T> > : public default_props < cat::image >
   {
+    // intrusive properties
+    typedef prop_of<abstract::readwrite_image> image_constness;
+    typedef prop_of<abstract::image2d> image_dimension;
+
     typedef mlc::no_type delegated_type;
 
     typedef size2d  size_type;
@@ -78,10 +82,6 @@ namespace oln {
     // data_container_type (or value_storage_container_type)
     // FIXME: find a better name...
     typedef array2d<value_storage_type> value_container_type;
-
-    // tags
-    typedef tag::readwrite constness_tag;
-    typedef tag::dimension2 dimension_tag;
 
     // functions
 

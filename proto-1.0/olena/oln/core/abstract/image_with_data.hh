@@ -31,7 +31,7 @@
 
 # include <mlc/tracked_ptr.hh>
 
-# include <oln/core/tags.hh>
+# include <oln/core/entry.hh>
 # include <oln/core/macros.hh>
 
 /*! \namespace oln

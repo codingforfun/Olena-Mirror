@@ -17,6 +17,9 @@ namespace oln {
   struct props <cat::image, dummy_image> : 
          public default_props < cat::image >
   {
+    typedef prop_of<abstract::readwrite_image> image_constness;
+    typedef prop_of<abstract::image2d> image_dimension;
+
     typedef size2d size_type;
     typedef point2d point_type;
     typedef ntg::int_u8 value_type;
@@ -24,8 +27,6 @@ namespace oln {
     typedef mlc_encoding_type_(value_type) value_storage_type;
     typedef array2d<value_storage_type> value_container_type;
 
-    typedef tag::readwrite constness_tag;
-    typedef tag::dimension2 dimension_tag;
     typedef mlc::no_type delegated_type;
   };
 

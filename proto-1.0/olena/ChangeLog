@@ -1,3 +1,19 @@
+2005-03-02  simon odou  <simon@lrde.epita.fr>
+
+	* oln/core/entry.hh: New.
+        Just a basic and temporary property heredity system.
+	* oln/core/abstract/images.hh: Likewise.
+	* oln/core/abstract/image_with_data.hh: Likewiwe.
+	* oln/core/abstract/image_identity.hh: Likewiwe.
+	* oln/core/1d/image1d.hh: Likewiwe.
+	* oln/core/2d/image2d.hh: Likewiwe.
+	* oln/core/3d/image3d.hh: Likewiwe.
+	* tests/core/tests/readonly_image: Likewiwe.
+	* tests/core/tests/readwrite_image: Likewiwe.
+	* oln/core/tags.hh: Remove.
+        Old heredity system.
+	* oln/makefile.src: Remove tags.hh, add entry.hh.
+
 2005-02-24  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* oln/makefile.src: Add new files.

@@ -30,7 +30,7 @@
 
 # include <mlc/box.hh>
 
-# include <oln/core/tags.hh>
+# include <oln/core/entry.hh>
 
 namespace oln {
 

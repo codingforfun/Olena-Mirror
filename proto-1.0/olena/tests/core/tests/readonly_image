@@ -24,8 +24,8 @@ namespace oln {
     typedef mlc_encoding_type_(value_type) value_storage_type;
     typedef array2d<value_storage_type> value_container_type;
 
-    typedef tag::readonly constness_tag;
-    typedef tag::dimension2 dimension_tag;
+    typedef prop_of<abstract::readonly_image> image_constness;
+    typedef prop_of<abstract::image2d> image_dimension;
     typedef mlc::no_type delegated_type;
   };
 

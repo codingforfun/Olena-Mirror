@@ -38,7 +38,7 @@ OLN_DEP =					\
   core/coord.hh					\
   core/macros.hh				\
   core/props.hh					\
-  core/tags.hh					\
+  core/entry.hh					\
   core/value_box.hh				\
   fancy/iota.hh					\
   fancy/print.hh				\

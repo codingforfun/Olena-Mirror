@@ -25,18 +25,40 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_IMAGES_HH
-# define OLENA_CORE_ABSTRACT_IMAGES_HH
+#ifndef OLENA_CORE_ENTRY_HH
+# define OLENA_CORE_ENTRY_HH
 
-
-# include <oln/core/abstract/internal/image_impl.hh>
-
-
-# include <oln/core/abstract/image.hh>
 # include <oln/core/abstract/image_constness.hh>
+# include <oln/core/abstract/image_dimension.hh>
 
 
-# include <oln/core/entry.hh>
+namespace oln {
+
+  template <template <typename> class Base>
+  struct prop_of
+  {
+    template <typename E>
+    struct inherits
+    {
+      typedef Base<E> ret;
+    };
+  };
+
+  namespace abstract {
+
+    template <typename E>
+    struct image_entry : 
+            public props < cat::image, E >::image_constness::inherits<E>::ret,
+            public props < cat::image, E >::image_dimension::inherits<E>::ret
+            // ...
+    {
+    protected:
+      image_entry() {}
+    };
+
+  }
+
+} // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_IMAGES_HH
+#endif // ! OLENA_CORE_ENTRY_HH
