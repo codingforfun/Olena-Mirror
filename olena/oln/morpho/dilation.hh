@@ -76,8 +76,8 @@ namespace oln {
     **   typedef oln::image2d<ntg::bin>	im_type;
     **
     **   im_type im1(oln::load(IMG_IN "object.pbm"));
-    **   save(oln::morpho::dilation(im1, oln::win_c8p()), IMG_OUT "oln_morpho_dilation.pbm");
-    **   return  0;
+    **   save(oln::morpho::dilation(im1, oln::win_c8p()),
+    **        IMG_OUT "oln_morpho_dilation.pbm");
     ** }
     ** \endcode
     **
@@ -124,8 +124,8 @@ namespace oln {
     **   typedef oln::image2d<ntg::bin>	im_type;
     **
     **   im_type im1(oln::load(IMG_IN "object.pbm"));
-    **   save(oln::morpho::n_dilation(im1, oln::win_c8p(), 5), IMG_OUT "oln_morpho_n_dilation.pbm");
-    **   return  0;
+    **   save(oln::morpho::n_dilation(im1, oln::win_c8p(), 5),
+    **        IMG_OUT "oln_morpho_n_dilation.pbm");
     ** }
     ** \endcode
     **
@@ -158,7 +158,8 @@ namespace oln {
 	dilation(const abstract::non_vectorial_image<I>& input,
 		 const abstract::struct_elt<E>& se)
       {
-	return fast_morpho<I, E, utils::histogram_max>(input, se);
+	return fast_morpho<I, E, utils::histogram_max<oln_value_type(I)> >
+	  (input, se);
       }
     }
   } // end of morpho

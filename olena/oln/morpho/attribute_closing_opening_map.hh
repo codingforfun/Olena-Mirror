@@ -255,15 +255,14 @@ T##_closing(const abstract::image<I>& input,					\
       **
       **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::slow::card_closing(im1, oln::neighb_c4(), 200);
-      **   oln::save(im1, IMG_OUT "oln_morpho_fast_card_closing.ppm");
-      **   return  0;
+      **   oln::save(im1, IMG_OUT "oln_morpho_slow_card_closing.ppm");
       ** }
       ** \endcode
       ** \image html lena128_pgm.png
       ** \image latex lena128_pgm.png
       ** =>
-      ** \image html oln_morpho_fast_card_closing.png
-      ** \image latex oln_morpho_fast_card_closing.png
+      ** \image html oln_morpho_slow_card_closing.png
+      ** \image latex oln_morpho_slow_card_closing.png
       **
       */
       xxx_closing_map_decl(card);
@@ -282,15 +281,14 @@ T##_closing(const abstract::image<I>& input,					\
       **
       **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::slow::card_opening(im1, oln::neighb_c4(), 200);
-      **   oln::save(im1, IMG_OUT "oln_morpho_fast_card_opening.ppm");
-      **   return  0;
+      **   oln::save(im1, IMG_OUT "oln_morpho_slow_card_opening.ppm");
       ** }
       ** \endcode
       ** \image html lena128_pgm.png
       ** \image latex lena128_pgm.png
       ** =>
-      ** \image html oln_morpho_fast_card_opening.png
-      ** \image latex oln_morpho_fast_card_opening.png
+      ** \image html oln_morpho_slow_card_opening.png
+      ** \image latex oln_morpho_slow_card_opening.png
       **
       */
       xxx_opening_map_decl(card);
@@ -309,15 +307,14 @@ T##_closing(const abstract::image<I>& input,					\
       **
       **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::slow::integral_closing(im1, oln::neighb_c4(), 200);
-      **   oln::save(im1, IMG_OUT "oln_morpho_fast_integral_closing.ppm");
-      **   return  0;
+      **   oln::save(im1, IMG_OUT "oln_morpho_slow_integral_closing.ppm");
       ** }
       ** \endcode
       ** \image html lena128_pgm.png
       ** \image latex lena128_pgm.png
       ** =>
-      ** \image html oln_morpho_fast_integral_closing.png
-      ** \image latex oln_morpho_fast_integral_closing.png
+      ** \image html oln_morpho_slow_integral_closing.png
+      ** \image latex oln_morpho_slow_integral_closing.png
       **
       */
       xxx_closing_map_decl(integral);
@@ -336,15 +333,14 @@ T##_closing(const abstract::image<I>& input,					\
       **
       **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::slow::integral_opening(im1, oln::neighb_c4(), 200);
-      **   oln::save(im1, IMG_OUT "oln_morpho_fast_integral_opening.ppm");
-      **   return  0;
+      **   oln::save(im1, IMG_OUT "oln_morpho_slow_integral_opening.ppm");
       ** }
       ** \endcode
       ** \image html lena128_pgm.png
       ** \image latex lena128_pgm.png
       ** =>
-      ** \image html oln_morpho_fast_integral_opening.png
-      ** \image latex oln_morpho_fast_integral_opening.png
+      ** \image html oln_morpho_slow_integral_opening.png
+      ** \image latex oln_morpho_slow_integral_opening.png
       **
       */
       xxx_opening_map_decl(integral);
@@ -363,15 +359,14 @@ T##_closing(const abstract::image<I>& input,					\
       **
       **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::slow::height_opening(im1, oln::neighb_c4(), 5);
-      **   oln::save(im1, IMG_OUT "oln_morpho_fast_height_opening.ppm");
-      **   return  0;
+      **   oln::save(im1, IMG_OUT "oln_morpho_slow_height_opening.ppm");
       ** }
       ** \endcode
       ** \image html lena128_pgm.png
       ** \image latex lena128_pgm.png
       ** =>
-      ** \image html oln_morpho_fast_height_opening.png
-      ** \image latex oln_morpho_fast_height_opening.png
+      ** \image html oln_morpho_slow_height_opening.png
+      ** \image latex oln_morpho_slow_height_opening.png
       **
       */
       xxx_opening_map_decl(height);
@@ -391,15 +386,14 @@ T##_closing(const abstract::image<I>& input,					\
       **
       **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::slow::height_closing(im1, oln::neighb_c4(), 5);
-      **   oln::save(im1, IMG_OUT "oln_morpho_fast_height_closing.ppm");
-      **   return  0;
+      **   oln::save(im1, IMG_OUT "oln_morpho_slow_height_closing.ppm");
       ** }
       ** \endcode
       ** \image html lena128_pgm.png
       ** \image latex lena128_pgm.png
       ** =>
-      ** \image html oln_morpho_fast_height_closing.png
-      ** \image latex oln_morpho_fast_height_closing.png
+      ** \image html oln_morpho_slow_height_closing.png
+      ** \image latex oln_morpho_slow_height_closing.png
       **
       */
       xxx_closing_map_decl(height);
@@ -420,15 +414,14 @@ T##_closing(const abstract::image<I>& input,					\
       **
       **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::slow::maxvalue_closing(im1, oln::neighb_c4(), 5);
-      **   oln::save(im1, IMG_OUT "oln_morpho_fast_maxvalue_closing.ppm");
-      **   return  0;
+      **   oln::save(im1, IMG_OUT "oln_morpho_slow_maxvalue_closing.ppm");
       ** }
       ** \endcode
       ** \image html lena128_pgm.png
       ** \image latex lena128_pgm.png
       ** =>
-      ** \image html oln_morpho_fast_maxvalue_closing.png
-      ** \image latex oln_morpho_fast_maxvalue_closing.png
+      ** \image html oln_morpho_slow_maxvalue_closing.png
+      ** \image latex oln_morpho_slow_maxvalue_closing.png
       **
       */
       xxx_closing_map_decl(maxvalue);
@@ -448,15 +441,14 @@ T##_closing(const abstract::image<I>& input,					\
       **
       **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::slow::maxvalue_opening(im1, oln::neighb_c4(), 5);
-      **   oln::save(im1, IMG_OUT "oln_morpho_fast_maxvalue_opening.ppm");
-      **   return  0;
+      **   oln::save(im1, IMG_OUT "oln_morpho_slow_maxvalue_opening.ppm");
       ** }
       ** \endcode
       ** \image html lena128_pgm.png
       ** \image latex lena128_pgm.png
       ** =>
-      ** \image html oln_morpho_fast_maxvalue_opening.png
-      ** \image latex oln_morpho_fast_maxvalue_opening.png
+      ** \image html oln_morpho_slow_maxvalue_opening.png
+      ** \image latex oln_morpho_slow_maxvalue_opening.png
       **
       */
       xxx_opening_map_decl(maxvalue);
@@ -476,15 +468,14 @@ T##_closing(const abstract::image<I>& input,					\
       **
       **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::slow::minvalue_opening(im1, oln::neighb_c4(), 5);
-      **   oln::save(im1, IMG_OUT "oln_morpho_fast_minvalue_opening.ppm");
-      **   return  0;
+      **   oln::save(im1, IMG_OUT "oln_morpho_slow_minvalue_opening.ppm");
       ** }
       ** \endcode
       ** \image html lena128_pgm.png
       ** \image latex lena128_pgm.png
       ** =>
-      ** \image html oln_morpho_fast_minvalue_opening.png
-      ** \image latex oln_morpho_fast_minvalue_opening.png
+      ** \image html oln_morpho_slow_minvalue_opening.png
+      ** \image latex oln_morpho_slow_minvalue_opening.png
       **
       */
       xxx_opening_map_decl(minvalue);
@@ -504,15 +495,14 @@ T##_closing(const abstract::image<I>& input,					\
       **
       **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::slow::minvalue_closing(im1, oln::neighb_c4(), 5);
-      **   oln::save(im1, IMG_OUT "oln_morpho_fast_minvalue_closing.ppm");
-      **   return  0;
+      **   oln::save(im1, IMG_OUT "oln_morpho_slow_minvalue_closing.ppm");
       ** }
       ** \endcode
       ** \image html lena128_pgm.png
       ** \image latex lena128_pgm.png
       ** =>
-      ** \image html oln_morpho_fast_minvalue_closing.png
-      ** \image latex oln_morpho_fast_minvalue_closing.png
+      ** \image html oln_morpho_slow_minvalue_closing.png
+      ** \image latex oln_morpho_slow_minvalue_closing.png
       **
       */
       xxx_closing_map_decl(minvalue);
@@ -532,15 +522,14 @@ T##_closing(const abstract::image<I>& input,					\
       **
       **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::slow::ball_opening(im1, oln::neighb_c4(), 5);
-      **   oln::save(im1, IMG_OUT "oln_morpho_fast_ball_opening.ppm");
-      **   return  0;
+      **   oln::save(im1, IMG_OUT "oln_morpho_slow_ball_opening.ppm");
       ** }
       ** \endcode
       ** \image html lena128_pgm.png
       ** \image latex lena128_pgm.png
       ** =>
-      ** \image html oln_morpho_fast_ball_opening.png
-      ** \image latex oln_morpho_fast_ball_opening.png
+      ** \image html oln_morpho_slow_ball_opening.png
+      ** \image latex oln_morpho_slow_ball_opening.png
       **
       */
       xxx_opening_im_map_decl(ball);
@@ -560,15 +549,14 @@ T##_closing(const abstract::image<I>& input,					\
       **
       **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::slow::ball_closing(im1, oln::neighb_c4(), 5);
-      **   oln::save(im1, IMG_OUT "oln_morpho_fast_ball_closing.ppm");
-      **   return  0;
+      **   oln::save(im1, IMG_OUT "oln_morpho_slow_ball_closing.ppm");
       ** }
       ** \endcode
       ** \image html lena128_pgm.png
       ** \image latex lena128_pgm.png
       ** =>
-      ** \image html oln_morpho_fast_ball_closing.png
-      ** \image latex oln_morpho_fast_ball_closing.png
+      ** \image html oln_morpho_slow_ball_closing.png
+      ** \image latex oln_morpho_slow_ball_closing.png
       **
       */
       xxx_closing_im_map_decl(ball);
@@ -588,15 +576,14 @@ T##_closing(const abstract::image<I>& input,					\
       **
       **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::slow::dist_opening(im1, oln::neighb_c4(), 5);
-      **   oln::save(im1, IMG_OUT "oln_morpho_fast_dist_opening.ppm");
-      **   return  0;
+      **   oln::save(im1, IMG_OUT "oln_morpho_slow_dist_opening.ppm");
       ** }
       ** \endcode
       ** \image html lena128_pgm.png
       ** \image latex lena128_pgm.png
       ** =>
-      ** \image html oln_morpho_fast_dist_opening.png
-      ** \image latex oln_morpho_fast_dist_opening.png
+      ** \image html oln_morpho_slow_dist_opening.png
+      ** \image latex oln_morpho_slow_dist_opening.png
       **
       */
       xxx_opening_im_map_decl(dist);
@@ -616,15 +603,14 @@ T##_closing(const abstract::image<I>& input,					\
       **
       **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::slow::dist_closing(im1, oln::neighb_c4(), 5);
-      **   oln::save(im1, IMG_OUT "oln_morpho_fast_dist_closing.ppm");
-      **   return  0;
+      **   oln::save(im1, IMG_OUT "oln_morpho_slow_dist_closing.ppm");
       ** }
       ** \endcode
       ** \image html lena128_pgm.png
       ** \image latex lena128_pgm.png
       ** =>
-      ** \image html oln_morpho_fast_dist_closing.png
-      ** \image latex oln_morpho_fast_dist_closing.png
+      ** \image html oln_morpho_slow_dist_closing.png
+      ** \image latex oln_morpho_slow_dist_closing.png
       **
       */
       xxx_closing_im_map_decl(dist);
@@ -644,15 +630,14 @@ T##_closing(const abstract::image<I>& input,					\
       **
       **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::slow::cube_closing(im1, oln::neighb_c4(), 5);
-      **   oln::save(im1, IMG_OUT "oln_morpho_fast_cube_closing.ppm");
-      **   return  0;
+      **   oln::save(im1, IMG_OUT "oln_morpho_slow_cube_closing.ppm");
       ** }
       ** \endcode
       ** \image html lena128_pgm.png
       ** \image latex lena128_pgm.png
       ** =>
-      ** \image html oln_morpho_fast_cube_closing.png
-      ** \image latex oln_morpho_fast_cube_closing.png
+      ** \image html oln_morpho_slow_cube_closing.png
+      ** \image latex oln_morpho_slow_cube_closing.png
       **
       */
       xxx_closing_im_map_decl(cube);
@@ -672,15 +657,14 @@ T##_closing(const abstract::image<I>& input,					\
       **
       **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::slow::cube_opening(im1, oln::neighb_c4(), 5);
-      **   oln::save(im1, IMG_OUT "oln_morpho_fast_cube_opening.ppm");
-      **   return  0;
+      **   oln::save(im1, IMG_OUT "oln_morpho_slow_cube_opening.ppm");
       ** }
       ** \endcode
       ** \image html lena128_pgm.png
       ** \image latex lena128_pgm.png
       ** =>
-      ** \image html oln_morpho_fast_cube_opening.png
-      ** \image latex oln_morpho_fast_cube_opening.png
+      ** \image html oln_morpho_slow_cube_opening.png
+      ** \image latex oln_morpho_slow_cube_opening.png
       **
       */
       xxx_opening_im_map_decl(cube);
@@ -701,15 +685,14 @@ T##_closing(const abstract::image<I>& input,					\
       **   lambda[0] = lambda[1] = 50;
       **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::slow::box_closing(im1, oln::neighb_c4(), lambda);
-      **   oln::save(im1, IMG_OUT "oln_morpho_fast_box_closing.ppm");
-      **   return  0;
+      **   oln::save(im1, IMG_OUT "oln_morpho_slow_box_closing.ppm");
       ** }
       ** \endcode
       ** \image html lena128_pgm.png
       ** \image latex lena128_pgm.png
       ** =>
-      ** \image html oln_morpho_fast_box_closing.png
-      ** \image latex oln_morpho_fast_box_closing.png
+      ** \image html oln_morpho_slow_box_closing.png
+      ** \image latex oln_morpho_slow_box_closing.png
       **
       */
       xxx_closing_im_map_decl(box);
@@ -730,15 +713,14 @@ T##_closing(const abstract::image<I>& input,					\
       **   lambda[0] = lambda[1] = 50;
       **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::slow::box_opening(im1, oln::neighb_c4(), lambda);
-      **   oln::save(im1, IMG_OUT "oln_morpho_fast_box_opening.ppm");
-      **   return  0;
+      **   oln::save(im1, IMG_OUT "oln_morpho_slow_box_opening.ppm");
       ** }
       ** \endcode
       ** \image html lena128_pgm.png
       ** \image latex lena128_pgm.png
       ** =>
-      ** \image html oln_morpho_fast_box_opening.png
-      ** \image latex oln_morpho_fast_box_opening.png
+      ** \image html oln_morpho_slow_box_opening.png
+      ** \image latex oln_morpho_slow_box_opening.png
       **
       */
       xxx_opening_im_map_decl(box);

@@ -321,6 +321,8 @@ namespace oln {
     ** implementation  is based  on  stak. Guichard  and Morel,  Image
     ** iterative smoothing and PDE's.  Book in preparation. p 265.
     **
+    ** \see oln::morpho::fast::card_closing
+    **
     ** \param I Image exact type.
     ** \param N Neighborhood exact type.
     **
@@ -445,6 +447,8 @@ namespace oln {
     ** upper  level  sets of  input  using  Ng  as neighboorhood.  The
     ** implementation  is based  on  stak. Guichard  and Morel,  Image
     ** iterative smoothing and PDE's.  Book in preparation. p 265.
+    **
+    ** \see oln::morpho::fast::card_opening.
     **
     ** \param I Image exact type.
     ** \param N Neighborhood exact type.

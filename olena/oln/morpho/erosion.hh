@@ -68,8 +68,8 @@ namespace oln {
     **   typedef oln::image2d<ntg::bin>	im_type;
     **
     **   im_type im1(oln::load(IMG_IN "object.pbm"));
-    **   save(oln::morpho::erosion(im1, oln::win_c8p()), IMG_OUT "oln_morpho_erosion.pbm");
-    **   return  0;
+    **   save(oln::morpho::erosion(im1, oln::win_c8p()),
+    **        IMG_OUT "oln_morpho_erosion.pbm");
     ** }
     ** \endcode
     **
@@ -117,8 +117,8 @@ namespace oln {
     **   typedef oln::image2d<ntg::bin>	im_type;
     **
     **   im_type im1(oln::load(IMG_IN "object.pbm"));
-    **   save(oln::morpho::n_erosion(im1, oln::win_c8p(), 5), IMG_OUT "oln_morpho_n_erosion.pbm");
-    **   return  0;
+    **   save(oln::morpho::n_erosion(im1, oln::win_c8p(), 5),
+    **        IMG_OUT "oln_morpho_n_erosion.pbm");
     ** }
     ** \endcode
     **
@@ -170,8 +170,8 @@ namespace oln {
       **   typedef oln::image2d<ntg::bin>	im_type;
       **
       **   im_type im1(oln::load(IMG_IN "object.pbm"));
-      **   save(oln::morpho::erosion(im1, oln::win_c8p()), IMG_OUT "oln_morpho_fast_erosion.pbm");
-      **   return  0;
+      **   save(oln::morpho::fast::erosion(im1, oln::win_c8p()),
+      **        IMG_OUT "oln_morpho_fast_erosion.pbm");
       ** }
       ** \endcode
       **
@@ -180,16 +180,16 @@ namespace oln {
       ** =>
       ** \image html oln_morpho_fast_erosion.png
       ** \image latex oln_morpho_fast_erosion.png
-      ** \todo FIXME: Correct this function and make the example use it.
       */
       template<class I, class E>
       oln_concrete_type(I)
 	erosion(const abstract::non_vectorial_image<I>& input,
 		const abstract::struct_elt<E>& se)
       {
-        return fast_morpho<I, E, utils::histogram_min>(input, se);
+        return fast_morpho<I, E, utils::histogram_min<oln_value_type(I)> >
+	  (input, se);
       }
-    }
+    } // end of fast
 
   } // end of morpho
 

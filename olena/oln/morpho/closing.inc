@@ -56,9 +56,6 @@
 ** \arg input Input image to close.
 ** \arg se Structuring element to use.
 **
-** \warning  This  code  is  the  same  for  morpho  and  morpho::fast
-** namespaces.
-**
 ** \code
 ** #include <oln/basics2d.hh>
 ** #include <oln/morpho/closing.hh>
@@ -69,7 +66,8 @@
 **   typedef oln::image2d<ntg::bin>	im_type;
 **
 **   im_type im1(oln::load(IMG_IN "object.pbm"));
-**   save(oln::morpho::closing(im1, oln::win_c8p()), IMG_OUT "oln_morpho_closing.pbm");
+**   save(oln::morpho::closing(im1, oln::win_c8p()),
+**        IMG_OUT "oln_morpho_closing.pbm");
 **   return  0;
 ** }
 ** \endcode

@@ -49,9 +49,8 @@
 **
 **   im_type	im(oln::load(IMG_IN "object.pbm"));
 **
-**   oln::save(oln::morpho::opening(im, oln::win_c8p()),
-**                                       IMG_OUT "oln_morpho_fast_opening.pbm");
-**   return  0;
+**   oln::save(oln::morpho::fast::opening(im, oln::win_c8p()),
+**             IMG_OUT "oln_morpho_fast_opening.pbm");
 ** }
 ** \endcode
 **
@@ -61,7 +60,6 @@
 ** \image html oln_morpho_fast_opening.png
 ** \image latex oln_morpho_fast_opening.png
 **
-** \todo FIXME: Histogram problems (fast version do not compile).
 */
 template<class I, class E>
 oln_concrete_type(I)

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,7 +30,7 @@
 
 /*
   Behaviors for real datatypes int_u, int_s, etc ...
-  
+
   <WARNING> Don't forget that behaviors are checked on assignements
   and contruction of types, and use comparison, so create only vars
   with unsafe behaviors in comparison operators implementation.
@@ -60,7 +60,7 @@
 
 namespace ntg
 {
-  
+
   /*
     Behaviors work by callbacks. When an operator has some side effect
     to apply, it calls the corresponding behavior functions to wrap
@@ -73,7 +73,7 @@ namespace ntg
   /*-------.
   | unsafe |
   `-------*/
-  //! No check performed. 
+  //! No check performed.
   /*!
     Same behavior as the underlying builtin type.
   */
@@ -107,7 +107,7 @@ namespace ntg
       template <class P>
       static storage_type
       check (const P& p)
-      { return p; }
+      { return storage_type(p); }
     };
 
     static std::string
@@ -128,7 +128,7 @@ namespace ntg
 
     int_u<8, strict> a;
     a = force::get<int_u<8, strict> >::check_plus(5, 6);
-    
+
     => no check
 
     This construction is useful when we want to use code from a
@@ -333,7 +333,7 @@ namespace ntg
   | cycle_behavior |
   `---------------*/
   //! Apply a modulus when an overflow occurs.
-  /*! 
+  /*!
     This behavior is not really useful, but implement cycle<>
     internal calculus. You should note that a range<int_u, ...,
     cycle_behavior> is different than cycle<int_u, ...>. Refer to the
@@ -376,7 +376,7 @@ namespace ntg
       struct cycle_mod
       {
 	template <class T1, class T2>
-	static T1 
+	static T1
 	exec(const T1& lhs, const T2& rhs)
 	{ return lhs % rhs; }
       };
@@ -416,7 +416,7 @@ namespace ntg
     `-------------------*/
 
     //! Determine the resulting behavior of an operator return type.
-    /*! 
+    /*!
       The algorithm is quite simple and arbitrary, is the two
       behaviors are identicals, then use it for the return type. Else
       use a strict behavior.
@@ -434,7 +434,7 @@ namespace ntg
     `----------------*/
 
     //! Determine the behavior to use depending on check requirements.
-    /*! 
+    /*!
       If need_check is true, the returned behavior will be the same as
       the previously determined return type (generally safe).
 

@@ -106,9 +106,10 @@ namespace internal {
 **   im_type		light(oln::load(IMG_IN "lena.pgm"));
 **   bin_im_type	minima(oln::load(IMG_IN "map.pbm"));
 **
-**   oln::save(oln::morpho::sequential::minima_imposition(light, minima, oln::neighb_c4()),
+**   oln::save(oln::morpho::sequential::minima_imposition(light,
+**							  minima,
+**							  oln::neighb_c4()),
 **             IMG_OUT "oln_morpho_sequential_minima_imposition.pgm");
-**   return  0;
 ** }
 ** \endcode
 ** \image html lena_pgm.png
@@ -164,7 +165,6 @@ oln_concrete_type(I)
 **
 **   oln::save(oln::morpho::sequential::regional_minima(im, oln::neighb_c4()),
 **             IMG_OUT "oln_morpho_sequential_regional_minima.pgm");
-**   return  0;
 ** }
 ** \endcode
 ** \image html lena_pgm.png
