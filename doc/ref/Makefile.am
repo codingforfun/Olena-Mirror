@@ -7,7 +7,6 @@ include $(top_srcdir)/integre/ntg/makefile.src
 
 EXTRA_DIST = out/exdoc.config.in
 olnsrc = $(top_srcdir)/olena/oln
-DOXYGEN = doxygen
 EXDOC = $(srcdir)/exdoc.pl
 OUT_DIR = "out"
 IMG_CONV = $(srcdir)/img_conv.pl

@@ -1,5 +1,10 @@
 2004-04-13  Giovanni Palma  <giovanni@lrde.epita.fr>
 
+	* ref/Makefile.am: Make the makefile use the doxygen defined by
+	configure.
+
+2004-04-13  Giovanni Palma  <giovanni@lrde.epita.fr>
+
 	* ref/Makefile.am: Make the doc have good dependencies.
 
 2004-04-09  Damien Thivolle  <damien@lrde.epita.fr>

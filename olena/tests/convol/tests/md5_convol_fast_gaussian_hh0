@@ -10,10 +10,10 @@
 
 int main()
 {
-  oln::utils::key::value_type   data_key[16] = {0xcd, 0x87, 0xa8, 0x95, 0xa3,
-						0x44, 0x2f, 0x0, 0xc4, 0x39,
-						0x30, 0x77, 0x67, 0xa8, 0xb7,
-						0x36};
+  oln::utils::key::value_type   data_key[16] = {0x46, 0x11, 0x5, 0x21, 0x93,
+						0x3a, 0xd6, 0x15, 0x1e, 0xf0,
+						0x8a, 0x1, 0xf0, 0x32, 0x27,
+						0x9e};
 
   oln::utils::key		   key(data_key);
 
@@ -21,7 +21,7 @@ int main()
   im_type	im1(oln::load(rdata("lena256.pgm")));
 
   if (oln::utils::md5(oln::convol::fast::gaussian(im1,
-						  0.5,
+						  0.2,
 						  oln::value_behavior<oln_value_type_(im_type)>(0)))
       == key)
     std::cout << "OK" << std::endl;

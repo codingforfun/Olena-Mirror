@@ -1,5 +1,12 @@
 2004-04-13  Giovanni Palma  <giovanni@lrde.epita.fr>
 
+	* tests/convol/tests/md5_convol_fast_gaussian_hh3: Correct the
+	test to make it success on mac.
+
+	* tests/convol/tests/md5_convol_fast_gaussian_hh0: Likewise.
+
+2004-04-13  Giovanni Palma  <giovanni@lrde.epita.fr>
+
 	* oln/makefile.src: Add file.
 
 	* oln/Makefile.am: Move source listing into 'makefile.src'.
