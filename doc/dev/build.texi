@@ -1,0 +1,201 @@
+@ifplaintext
+@sp 1
+
+This file contains information about the build process of Olena.
+Please read the @file{README} file for general information about Olena.
+@end ifplaintext
+
+@ifnotplaintext
+@node Configuration
+@end ifnotplaintext
+@section Configuration
+
+In order to prepare the build process, you need to configure the
+source tree.
+
+Assuming your Olena distribution is uncompressed in directory
+@file{oln-0.7}, follow these steps:
+
+@example
+$ @kbd{mkdir ../build}
+$ @kbd{cd ../build && ../oln-0.7/configure}
+@end example
+
+The build process can be altered by a number of options you can pass
+to the @command{configure} script. The following sections describe them.
+
+@subsection Installation path
+
+By default, Olena is installed in the standard ``local'' directory
+of your system. This is usually @file{/usr/local} under Unix.
+
+You can change this path with the following flag:
+	
+@example
+ --prefix=<installation prefix>
+@end example
+
+@subsection Compiler selection and compilation flags
+
+By default, @command{configure} will try to use the first C++ compiler
+it encounters on your system. It will look, in order, for:
+
+@itemize @minus
+@item the value of the $CCC environment variable,
+@item the GNU C++ compiler (g++),
+@item the `c++' or `gpp' commands on your system,
+@item aCC, the HP-UX standard C++ compiler,
+@item the `CC', `cxx', `cc++' or `cl' commands on your system,
+@item KAI's C++ compiler (KCC),
+@item RCC, xlC_r or xlC.
+@end itemize
+
+You can override the detection system by passing your favourite compiler name
+to @command{configure}, as follows:
+
+@example
+$ @kbd{.../configure CXX=<your-favorite-C++-compiler>}
+@end example
+
+As an alternative, you can also set the environment variable @samp{CXX}.
+
+@sp 2
+             
+For most compilers, @command{configure} will select debugging and
+minimal optimization (@option{-g -O2} with g++). You can override the
+default C++ flags by giving @command{configure} your selection of flags:
+
+@example
+$ @kbd{.../configure CXXFLAGS="<your-favorite-flags>"}
+@end example
+    
+This is especially useful for solving a number of problems, described
+in the following section.
+
+@ifnotplaintext
+@node Using CXXFLAGS to solve compilation problems
+@end ifnotplaintext
+@section Using @env{CXXFLAGS} to solve compilation problems
+
+@subsection Olena needs C99
+
+While Olena is written in C++, it uses a number of features (math
+functions) from ISO C99. However most C++ compilers do not enable these
+features by default.  If your compilation fails with (e.g.) undefined
+references to @code{roundf}, but you know what flags can activate these
+functions, add them to @env{CXXFLAGS}.
+
+In case your system does not provide some math functions necessary
+for Olena, you can force the use of a local, overloaded, implementation,
+by using macros of the form @option{-DOLN_NEED_xxx}, where @option{xxx} 
+stands for the name of the missing function, in uppercase.
+For example, on Darwin (MacOS X), the flag @option{-DOLN_NEED_SQRTF} is
+needed (but @command{configure} should add it anyway).
+
+@subsection  Olena needs deep template recursion
+
+The C++ design patterns used in Olena use deep template nesting and
+recursion. However, the C++ standard specifies that C++ compiler need
+only handle template recursion upto 19 levels, which is insufficient for
+Olena. This is a problem for GCC 2.95 and probably other compilers.
+
+Hopefully, @command{configure} tries to fix this automatically by adding
+@option{-ftemplate-depth-NN} when necessary, but other compilers than
+GCC may need other flags. If you know these flags, add them to
+@env{CXXFLAGS}.
+
+@subsection Debugging flags make Olena slow:
+
+Because Olena depends on C++ optimizations to provide the best
+performance, and enabling debugging flags often disable optimizations,
+you are advised to override the @env{CXXFLAGS} with any options that
+gives the best optimization/conformance tradeoff.  However, note that
+passing @option{-DNDEBUG} disable many sanity checks, while providing
+only a poor performance improvement.
+
+@ifnotplaintext
+@node Speeding up the configuration process
+@end ifnotplaintext
+@section Speeding up the configuration process
+
+@command{configure} can manage a cache of autodetected features and
+values. This cache speeds up @command{configure} runs and can be
+activated with the @option{-C} option.
+
+@emph{NOTE}: the effects of many of the flags passed to
+@command{configure} are stored in the cache. If you decide to re-run
+@command{configure} with other flags, delete the @file{config.cache}
+file first.
+
+@ifnotplaintext
+@node Optional Features
+@end ifnotplaintext
+@section Optional Features
+
+@subsection Using external libraries
+
+Several parts of Olena can make use of the Zlib compression library (in
+Olena I/O) and the FFTW fast Fourier transforms library (in Olena fft
+transforms).
+
+By default, @command{configure} will try to autodetect their
+presence. However, iIf your version of any of these libraries is located
+in a non-standard path, you should specify it as follows:
+
+@example
+ --with-fftw=<path-to-libfftw>
+ --with-zlib=<path-to-zlib>
+@end example
+
+Additionally, if for a reason or another you need to prevent Olena
+from using any of these libraries, you can disable their use
+with the following flags:
+
+@example
+  --without-fftw
+  --without-zlib
+@end example
+
+@subsection Elidable components
+
+Several build targets can be disabled, in case you are only interested
+in ``parts'' of the full Olena distribution.
+
+The elidable parts are so-called @dfn{components}, and you can
+obtain a list of them by running:
+
+@example
+$ @kbd{.../configure --help}
+@end example
+
+@ifnotplaintext
+@node Build
+@end ifnotplaintext
+@section Build
+
+Once your build directory is @command{configure}d, you can run
+
+@example
+$ @kbd{make}
+@end example
+
+to recursively build all selected components.
+
+@sp 2
+
+Additionnally, you can build and run the testsuite and demonstration
+programs with:
+
+@example
+$ @kbd{make check}
+@end example
+
+However, this process is very time- and memory- consuming. It takes up
+to 45mn and 150-2O0Mb of virtual memory on a Debian GNU/Linux 1GHz bi-P3
+machine.
+
+@ifplaintext
+@sp 2
+
+You can now proceed after reading the @file{INSTALL} file.
+@end ifplaintext

@@ -1,0 +1,39 @@
+@ifnotplaintext
+@node Abstract
+@end ifnotplaintext
+@section Abstract
+
+This is the seventh public release of Olena, a generic image
+processing library in C++.
+
+@ifplaintext
+Please see the files BUILD and INSTALL for information about building
+and installing Olena.
+@end ifplaintext
+
+Olena is a project developed by the EPITA Research and Development
+Laboratory (@url{http://www.lrde.epita.fr}) since 1997.  We did numerous
+prototypes and throw-away experiments before settling into the kind of
+programming paradigm which is finally here.
+
+This version of Olena is quite young.  In fact most of the operators
+have been translated from the sources of Milena, an image processing
+library which works only on 2D images (Milena stands for "mini-Olena")
+and which is not publicly available.
+
+Therefore this code is still experimental and not very polished.  The
+file @file{ISSUES}, in the @file{oln/} directory of the distribution,
+contains a list of known issues about Olena.
+
+We haven't written a real documentation yet.  In the @file{doc/}
+directory you will find the start of a reference manual which presently
+documents only the morphological operators, together with a developer's
+guide to the use of Olena from user projects.  In the @file{doc/demo/}
+directory lie a few sample programs.  The file @file{doc/demo/tour.cc}
+attempts to introduce you to the basics of Olena.  For the rest, we're
+afraid you will have to dig the code or e-mail us.
+
+Please direct any question or comments to @email{olena@@lrde.epita.fr},
+or @email{olena-bugs@@lrde.epita.fr}.
+
+

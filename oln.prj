@@ -1,41 +1,21 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 7 40)
-(Parent-Version oln 7 39)
+(Project-Version oln 7 41)
+(Parent-Version oln 7 40)
 (Version-Log "Index: ChangeLog
-from   2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
-   * configure.ac: Add new doc-dev component. Rename
-   `--without-manuals' to `--without-doc-ref'.
-   * BUILD: Update accordingly.
+from  +2003-01-24  Raphaël Poss  <raph@lrde.epita.fr>
 
-+2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
-+
-        * configure.ac: Arrange to fit 80 columns better.
- 
- 2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
-Index: doc/ChangeLog
-from   2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
-   * ref/oln-dev.texi: Move to ...
-   * dev/oln-dev.texi: ... here.
-   * dev/Makefile.am: Add.
+   * THANKS: Auto-generate from `oln/dev/thanks.texi'.
+   * README: Auto-generate from `oln/dev/abstract.texi' and
+   `oln/dev/biblio.texi'.
+   * BUILD: Auto-generate from `oln/dev/build.texi'.
+   * INSTALL: Auto-generate from `oln/dev/install.texi'.
+   * Makefile.am: Modify accordingly.
 
-   * tpl/processing.tpl: Move to ...
-   * ref/processing.tpl: ... here.
-
-   * ref/Makefile.am (EXTRA_DIST): Distribute processing.tpl. Do not
-   mention `oln-dev.texi' any more. Fix path to processing.tpl. Do
-   not ship oln-ref.ps in the distribution, since dvi and pdf
-   versions are already distributed.
-
-+2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
-+
-        * demo/morpholena.cc,
-        demo/morpholena-base.cc,
-        demo/morpholena-minima.cc,
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 23 Jan 2003 15:51:02 +0100")
+(Checkin-Time "Fri, 24 Jan 2003 14:35:54 +0100")
 (Checkin-Login raph)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -112,7 +92,7 @@ from   2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.18 664))
+  (ChangeLog (oln/o/33_ChangeLog 1.19 664))
   (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.9 664))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.10 664))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.9 664))
@@ -124,7 +104,7 @@ from   2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
   (attic/tests-ChangeLog (oln/e/30_ChangeLog 1.52 660))
 
   (bootstrap.sh (oln/j/16_bootstrap. 1.7 775))
-  (BUILD (oln/o/38_BUILD 1.3 664))
+  
   (cleanup.sh (oln/o/29_cleanup.sh 1.4 775))
   
   (configure.ac (oln/3_configure. 1.43 664))
@@ -144,7 +124,7 @@ from   2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
   (doc/ref/processing.tpl (oln/d/48_processing 1.15 660))
   (FAQ (oln/j/31_FAQ 1.2 664))
   (INSTALL (oln/o/39_INSTALL 1.2 664))
-  (Makefile.am (oln/n/32_Makefile.a 1.9 664))
+  (Makefile.am (oln/n/32_Makefile.a 1.10 664))
   (NEWS (oln/0_NEWS 1.10 660))
   
   (oln/img/face_se.pbm (oln/n/17_face_se.pb 1.1 660) :no-keywords)
@@ -541,8 +521,8 @@ from   2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
   (oln/tests/types/tests/vec7 (oln/h/50_vec7 1.1 660))
   
   (prj (oln.prj) :symlink)
-  (README (oln/1_README 1.7 664))
-  (THANKS (oln/4_THANKS 1.5 660))
+  
+  
   
   (tools () :directory)
   (tools/Makefile.am (oln/o/37_Makefile.a 1.6 664))
@@ -719,7 +699,44 @@ from   2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
 ;; Files added by populate at Thu, 23 Jan 2003 15:43:23 +0100,
 ;; to version 7.39(w), by raph:
 
-  (doc/dev/Makefile.am (oln/p/38_Makefile.a 1.1 664))
+  (doc/dev/Makefile.am (oln/p/38_Makefile.a 1.2 664))
+
+;; Files deleted by depopulate at Fri, 24 Jan 2003 10:54:23 +0100,
+;; from version 7.40(w), by raph:
+
+  ; (THANKS ())
+
+;; Files added by populate at Fri, 24 Jan 2003 11:03:53 +0100,
+;; to version 7.40(w), by raph:
+
+  (doc/dev/biblio.texi (oln/p/39_biblio.tex 1.1 664))
+  (doc/dev/thanks.texi (oln/p/40_thanks.tex 1.1 664))
+  (doc/dev/abstract.texi (oln/p/41_abstract.t 1.1 664))
+
+;; Files deleted by depopulate at Fri, 24 Jan 2003 11:04:25 +0100,
+;; from version 7.40(w), by raph:
+
+  ; (README ())
+
+;; Files added by populate at Fri, 24 Jan 2003 14:34:30 +0100,
+;; to version 7.40(w), by raph:
+
+  (doc/dev/build.texi (oln/p/42_build.texi 1.1 664))
+
+;; Files added by populate at Fri, 24 Jan 2003 14:34:47 +0100,
+;; to version 7.40(w), by raph:
+
+  (doc/dev/install.texi (oln/p/43_install.te 1.1 664))
+
+;; Files deleted by depopulate at Fri, 24 Jan 2003 14:34:53 +0100,
+;; from version 7.40(w), by raph:
+
+  ; (BUILD ())
 )
-(Merge-Parents)
+(Merge-Parents
+  (7.40 complete
+    (() BUILD BUILD n) (() README README n)
+    (() THANKS THANKS n) 
+  )
+)
 (New-Merge-Parents)

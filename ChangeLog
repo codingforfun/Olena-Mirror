@@ -1,3 +1,12 @@
+2003-01-24  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* THANKS: Auto-generate from `oln/dev/thanks.texi'.
+	* README: Auto-generate from `oln/dev/abstract.texi' and
+	`oln/dev/biblio.texi'.
+	* BUILD: Auto-generate from `oln/dev/build.texi'.
+	* INSTALL: Auto-generate from `oln/dev/install.texi'.
+	* Makefile.am: Modify accordingly.
+
 2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* configure.ac: Add new doc-dev component. Rename

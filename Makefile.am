@@ -16,4 +16,25 @@ maintainer-check:
 	  echo "$@: GNU cppi is required" >&2; \
 	fi
 
+dist_noinst_DATA = README BUILD INSTALL THANKS
+INFOTOTEXT = $(MAKEINFO) --enable-encoding --no-headers
+
+README_SRC = $(srcdir)/doc/dev/abstract.texi $(srcdir)/doc/dev/biblio.texi
+README: $(README_SRC)
+	rm -f $@
+	for f in $(README_SRC); do \
+	  $(INFOTOTEXT) "$$f" >>$@ ; \
+	done
+
+BUILD_SRC = $(srcdir)/doc/dev/build.texi
+BUILD: $(BUILD_SRC)
+	$(INFOTOTEXT) $(BUILD_SRC) >$@ 
+
+INSTALL_SRC = $(srcdir)/doc/dev/install.texi
+INSTALL: $(INSTALL_SRC)
+	$(INFOTOTEXT) $(INSTALL_SRC) >$@
+
+THANKS_SRC = $(srcdir)/doc/dev/thanks.texi
+THANKS: $(THANKS_SRC)
+	$(INFOTOTEXT) $(THANKS_SRC) >$@
 

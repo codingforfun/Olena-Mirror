@@ -1,0 +1,57 @@
+@ifnotplaintext
+@node Bibliography
+@end ifnotplaintext
+@chapter Bibliography
+
+Further information about Olena, can be found into the following
+related papers:
+
+@itemize @bullet
+@item
+  Thierry Géraud, Yoann Fabre, Dimitri Papadopoulos-Orfanos, and
+Jean-François Mangin.  @cite{Vers une réutilisabilité totale des
+algorithmes de traitement d'images}.  In the Proceedings of the 17th
+Symposium GRETSI on Signal and Image Processing, vol. 2, pages 331-334,
+Vannes, France, September 1999.  In French (available in english as
+Technical Report 9902: @cite{Towards a Total Reusability of Image
+Processing Algorithms}).
+
+@item
+  Thierry Géraud, Yoann Fabre, Alexandre Duret-Lutz, Dimitri
+  Papadopoulos-Orfanos, and Jean-François Mangin.  @cite{Obtaining
+  Genericity for Image Processing and Pattern Recognition Algorithms}.
+  In the Proceedings of the 15th International Conference on Pattern
+  Recognition (ICPR'2000), IEEE Computer Society, vol. 4, pages
+  816-819, Barcelona, Spain, September 2000.
+
+@item
+  Alexandre Duret-Lutz. @cite{Olena: a Component-Based Platform for Image
+  Processing, mixing Generic, Generative and OO Programming}. In the
+  Proceedings of the 2nd International Symposium on Generative and
+  Component-Based Software Engineering (GCSE 2000), Young Researchers
+  Workshop (published in "Net.ObjectDays2000"; ISBN 3-89683-932-2),
+  pages 653-659, Erfurt, Germany, October 2000.
+
+@item
+  Alexandre Duret-Lutz, Thierry Géraud, and Akim Demaille. @cite{Generic
+  Design Patterns in C++}. In the Proceedings of the 6th USENIX
+  Conference on Object-Oriented Technologies and Systems (COOTS'2001),
+  pages 189-202, San Antonio, Texas, USA, January-February 2001.
+
+@item
+  Thierry Géraud, Yoann Fabre, and Alexandre Duret-Lutz. @cite{Applying
+  Generic Programming to Image Processing}. In the Proceedings of the
+  IASTED International Conference on Applied Informatics (AI'2001) --
+  Symposium Advances in Computer Applications, ACTA Press, pages
+  577-581, Innsbruck, Austria, February 2001.
+
+@item
+  @cite{Generic Implementation of Morphological Image Operators},
+  Jérôme Darbon, Thierry Géraud, and Alexandre Duret-Lutz,
+  submitted to International Symposium On Mathematical Morphology VI
+  (ISMM 2002), April 3-5, 2002, Sydney, Australia.
+@end itemize
+
+You can download these papers and related materials from
+@url{http://www.lrde.epita.fr/cgi-bin/twiki/view/Publications}
+

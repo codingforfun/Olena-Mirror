@@ -1,0 +1,49 @@
+@ifplaintext
+@sp 1
+
+This file contains information about the installation process of
+Olena. Make sure you have read the @file{BUILD} file first.
+
+You can read the @file{README} file for general information about Olena.
+@end ifplaintext
+
+@ifnotplaintext
+@node Installing
+@end ifnotplaintext
+@section Installing
+
+To install the Olena headers, command-lines utilities and additional
+files on your system, run:
+
+@example
+ $ @kbd{make install}
+@end example
+
+from the build directory.
+
+If not overriden with @option{--prefix}
+@ifplaintext
+(see the BUILD file)
+@end ifplaintext
+@ifnotplaintext
+(@pxref{Building})
+@end ifnotplaintext
+, this will install:
+
+@itemize @bullet
+@item the headers in @file{/usr/local/include/oln},
+@item the utilities in @file{/usr/local/bin},
+@item sample images in @file{/usr/local/share/oln},
+@item the autoconf helper @file{oln.m4} in @file{/usr/local/share/aclocal}.
+@end itemize
+
+@sp 2
+
+You can later remove Olena from your system by running
+
+@example
+ $ @kbd{make uninstall}
+@end example
+
+from the build directory.
+
