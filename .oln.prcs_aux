@@ -40,7 +40,7 @@
 (tests/convol/sum_on_random.pgm 354 1026970680 f/42_sum_on_ran 1.1)
 (oln/core/internal/window.hh 3446 1026899980 d/0_window.hh 1.4)
 (oln/io/pnm_read.hxx 6069 1027017573 b/16_pnm_read.h 1.4)
-(tools/mkinstalldirs 1865 1010854101 e/14_mkinstalld 1.1)
+(tools/mkinstalldirs 1809 1010854101 e/14_mkinstalld 1.1)
 (oln/morpho/stat.hh 3507 1027017573 50_stat.hh 1.4)
 (oln/meta/array3d.hxx 7993 1026899980 f/18_array3d.hx 1.3)
 (oln/core/compose.hh 3722 1009823825 c/22_compose.hh 1.1)
