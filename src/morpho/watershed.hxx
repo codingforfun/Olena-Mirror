@@ -188,9 +188,13 @@ namespace oln {
 
 	    Value(I) h = histo[i].second;
 
-	    Point(I) p = histo[i].first;
-	    while (i < histo.size() && im_i[p] == h)
+	    Point(I) p;
+	    while (i < histo.size())
 	      {
+		p = histo[i].first;
+		if (im_i[p] != h)
+		  break;
+
 		im_o[p] = mask;
 		Iter(N) p_prime(Ng);
 		bool flag_exist = false;
@@ -207,8 +211,7 @@ namespace oln {
 		    fifo.push(p);
 		  }
 
-		i++;
-		p = histo[i].first;
+		++i;
 	      }
 
 	  // ================================================================
@@ -221,9 +224,12 @@ namespace oln {
 	    /* Check for new minima.  */
 
 	    unsigned int j = level_start;
-	    p = histo[j].first;
-	    while (j < histo.size() && im_i[p] == h)
+	    while (j < histo.size())
 	      {
+		p = histo[j].first;
+		if (im_i[p] != h)
+		  break;
+
 		if (im_o[p] == mask)
 		  {
 		    current_label += 1;
@@ -249,8 +255,7 @@ namespace oln {
 			    }
 		      }
 		  }
-		j++;
-		p = histo[j].first;
+		++j;
 	      }
 	  }
 	return im_o;

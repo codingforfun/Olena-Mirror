@@ -1,3 +1,8 @@
+2002-03-26  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/morpho/watershed.hxx (_soille_watershed): Fix two off-by-one
+	reads.
+
 2002-03-25  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* src/meta/ufuncs.hh, src/meta/ucmp.hh, src/meta/logic.hh,

@@ -1,18 +1,12 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_3 12)
-(Parent-Version oln 0_3 11)
-(Version-Log "2002-03-25  Alexandre Duret-Lutz  <duret_g@epita.fr>
-
-	* src/meta/ufuncs.hh, src/meta/ucmp.hh, src/meta/logic.hh,
-	src/meta/control.hh, src/meta/basics.hh: Cosmetic changes.  Add
-	more comments.
-
-")
+(Project-Version oln 0_3 13)
+(Parent-Version oln 0_3 12)
+(Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Mon, 25 Mar 2002 17:54:58 +0100")
-(Checkin-Login adl)
+(Checkin-Time "Tue, 26 Mar 2002 17:14:52 +0100")
+(Checkin-Login duret_g)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
                   "\\.o$"
@@ -68,7 +62,7 @@
   (configure.ac (oln/3_configure. 1.2 644))
   (THANKS (oln/4_THANKS 1.1 644))
   (img/lena.pgm (oln/5_lena.pgm 1.1 640) :no-keywords)
-  (ChangeLog (oln/6_ChangeLog 1.21 644))
+  (ChangeLog (oln/6_ChangeLog 1.22 644))
   (src/config/system.hh (oln/7_system.hh 1.1 644))
   (src/utils/timer.hh (oln/8_timer.hh 1.1 644))
   (src/utils/stat.hh (oln/9_stat.hh 1.2 644))
@@ -109,7 +103,7 @@
   (src/morpho/closing.inc (oln/44_closing.in 1.3 644))
   (src/morpho/fast_morpho.hxx (oln/45_fast_morph 1.1 644))
   (src/morpho/fast_morpho.hh (oln/46_fast_morph 1.1 644))
-  (src/morpho/watershed.hxx (oln/47_watershed. 1.1 644))
+  (src/morpho/watershed.hxx (oln/47_watershed. 1.2 644))
   (src/morpho/watershed.hh (oln/48_watershed. 1.1 644))
   (src/morpho/top_hat.hh (oln/49_top_hat.hh 1.1 644))
   (src/morpho/stat.hh (oln/50_stat.hh 1.2 644))
