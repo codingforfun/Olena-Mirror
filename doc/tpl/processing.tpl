@@ -60,7 +60,7 @@
 @item Prototype
 
 @t{#include "}@i{[~(header)~]}@t{"}
-@example
+@flushleft
 @w{[~ ret ~]}[~ (if (> (string-length (get "ret")) 18) "@*" "") ~] @b{@w{[~ (cq-name) ~][~
   IF (exist? "tpl") ~]<[~
     FOR tpl ", " ~]@w{[~ type ~] [~ name ~]}[~
@@ -72,7 +72,7 @@
            (string-append "@w{" (texinfo-type-format type) "@var{" var "}}"))
  ~][~ ENDFOR arg ~])
 @findex [~ name ~]
-@end example
+@end flushleft
 
 [~ IF (exist? "arg") ~]
 @item Parameters

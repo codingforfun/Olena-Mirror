@@ -30,25 +30,19 @@ RM = rm -f
 
 MAKEINFO = env LANG= LANGUAGE= @MAKEINFO@
 
-# We distribute only the split HTML documentation.
-# The user can generate the others, via
-#   make oln-ref.ps
-#   make oln-ref.pdf
-#   make oln-ref.html
-
-all-local: html
-install-data-local: install-html
-installdirs-local: installdirs-html
-uninstall-local: uninstall-html
+all-local: html ps pdf
+install-data-local: install-html install-ps install-pdf
+installdirs-local: installdirs-html installdirs-ps installdirs-pdf
+uninstall-local: uninstall-html uninstall-ps uninstall-pdf
 
 html: html-split
 install-html: install-html-split
 uninstall-html: uninstall-html-split
 
-EXTRA_DIST_html = $(wildcard gettext_*.html)
-CLEANFILES = gettext.pdf gettext.html
-# gettext.dvi and gettext.ps are already known to automake.
-MAINTAINERCLEANFILES = gettext_*.html
+EXTRA_DIST_html = $(shell echo oln-ref*.html)
+CLEANFILES = oln-ref.pdf oln-ref*.html
+# oln-ref.dvi and oln-ref.ps are already known to automake.
+MAINTAINERCLEANFILES = oln-ref_*.html
 
 # Documentation in DVI format.
 
@@ -90,7 +84,7 @@ SUFFIXES = .pdf
 
 pdf: oln-ref.pdf
 
-.texi.pdf:
+.texi.pdf: version.texi
 	TEXINPUTS="$(top_srcdir)/../tools$(PATH_SEPARATOR)$$TEXINPUTS" \
 	  MAKEINFO='$(MAKEINFO) -I $(srcdir)' $(TEXI2PDF) $<
 

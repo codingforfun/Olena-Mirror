@@ -86,32 +86,53 @@ except that this permission notice may be stated in a
 translation approved by the Free Software Foundation.
 @end titlepage
 
-@node Top, Morphological processings, ,
+@node Top, Introduction, (dir), (dir)
 
 @ifinfo
 This document describes Olena, a generic image processing library.
 
-@c This document applies to version @value{VERSION}.
+This document applies to version @value{VERSION}.
 @end ifinfo
 
 @contents
 
 @menu
-* Morphological processings::
+* Introduction::
+* Processings::
 * Index::
 @end menu
 
 @c ======================================================================
-@node    Morphological processings, Index, Top, Top
+@node    Introduction, Processings, Top, Top
 @comment node-name,     next,           previous, up
-@chapter Morphological processings
+@chapter Introduction
 
-@raisesections
-@include ref-morpho.texi
-@lowersections
+This reference manual will eventually document any public class and
+functions available in Olena.  Sadly, it only covers the morphological
+processing presently.
+
+The @file{demo/} directory contains a few sample programs that may be
+worth looking at before digging the source or sending us an email
+(@email{olena@@lrde.epita.fr}).
 
 @c ======================================================================
-@node Index, , Morphological processings, Top
+@node    Processings, Index, Introduction, Top
+@comment node-name,     next,           previous, up
+@chapter Processings
+
+@c ======================================================================
+@menu
+* Morphological processings::
+@end menu
+
+@node    Morphological processings,  , Processings, Processings
+@comment node-name,     next,           previous, up
+@section Morphological processings
+
+@include ref-morpho.texi
+
+@c ======================================================================
+@node Index,  , Processings, Top
 @unnumbered Index
 @printindex cp
 @bye

@@ -85,10 +85,10 @@ RECURSIVE_TARGETS = info-recursive dvi-recursive install-info-recursive \
 	uninstall-info-recursive all-recursive install-data-recursive \
 	install-exec-recursive installdirs-recursive install-recursive \
 	uninstall-recursive check-recursive installcheck-recursive
-DIST_COMMON = ../tools/depcomp ../tools/install-sh ../tools/mdate-sh \
-	../tools/missing ../tools/mkinstalldirs ../tools/texinfo.tex \
-	ChangeLog Makefile.am Makefile.in aclocal.m4 configure \
-	configure.ac
+DIST_COMMON = ../tools/ChangeLog ../tools/depcomp ../tools/install-sh \
+	../tools/mdate-sh ../tools/missing ../tools/mkinstalldirs \
+	../tools/texinfo.tex ChangeLog Makefile.am Makefile.in \
+	aclocal.m4 configure configure.ac
 DIST_SUBDIRS = $(SUBDIRS)
 all: all-recursive
 

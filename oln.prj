@@ -1,16 +1,19 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_2 8)
-(Parent-Version oln 0_2 7)
+(Project-Version oln 0_2 9)
+(Parent-Version oln 0_2 8)
 (Version-Log "2002-01-13  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-	* texinfo.tex: Apply an old (2001-04-25) patch from Bertrand Petit
-	<elrond@phoe.frmug.org> to fix layout of unnumbered sections in
-	PDF bookmarks.
+	* doc/Makefile.am (.texi.pdf): Depend on version.texi.
+	(all-local, install-data-local, installdirs-local,
+	uninstall-local): Always build ps and pdf.
+	* doc/tpl/processing.tpl: Use @flushleft instead of @example.
+	* doc/doc/oln-ref.texi (Introduction): New.
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Sun, 13 Jan 2002 12:38:20 +0100")
+(Checkin-Time "Sun, 13 Jan 2002 16:59:11 +0100")
 (Checkin-Login adl)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
@@ -274,12 +277,12 @@
 ;; Files added by populate at Sat, 12 Jan 2002 17:25:43 +0100,
 ;; to version 0_2.4(w), by adl:
 
-  (doc/tpl/processing.tpl (oln/d/48_processing 1.1 644))
+  (doc/tpl/processing.tpl (oln/d/48_processing 1.2 644))
   (doc/img/object.pbm (oln/d/49_object.pbm 1.1 644))
-  (doc/doc/oln-ref.texi (oln/d/50_oln-ref.te 1.1 644))
-  (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.1 644))
+  (doc/doc/oln-ref.texi (oln/d/50_oln-ref.te 1.2 644))
+  (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.2 644))
   (doc/Makefile.am (oln/e/0_Makefile.a 1.1 644))
-  (doc/ChangeLog (oln/e/1_ChangeLog 1.2 644))
+  (doc/ChangeLog (oln/e/1_ChangeLog 1.3 644))
 
 ;; Files added by populate at Sat, 12 Jan 2002 17:28:39 +0100,
 ;; to version 0_2.5(w), by adl:
@@ -291,11 +294,11 @@
 
   (doc/configure (oln/e/3_configure 1.1 755))
   (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.1 644))
-  (doc/Makefile.in (oln/e/5_Makefile.i 1.1 644))
-  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.1 644))
+  (doc/Makefile.in (oln/e/5_Makefile.i 1.2 644))
+  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.2 644))
   (configure (oln/e/7_configure 1.1 755))
   (aclocal.m4 (oln/e/8_aclocal.m4 1.1 644))
-  (Makefile.in (oln/e/9_Makefile.i 1.1 644))
+  (Makefile.in (oln/e/9_Makefile.i 1.2 644))
   (tools/texinfo.tex (oln/e/10_texinfo.te 1.2 644))
   (tools/mdate-sh (oln/e/11_mdate-sh 1.1 755))
   (tools/depcomp (oln/e/12_depcomp 1.1 755))
