@@ -30,7 +30,7 @@
 
 # include <oln/config/system.hh>
 # include <string>
-# include <cstdio>
+# include <cstdlib>
 
 namespace oln {
 
