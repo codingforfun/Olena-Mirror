@@ -43,6 +43,7 @@ nobase_oln_HEADERS =				\
   core/abstract/image_with_dim.hh		\
   core/abstract/image_with_impl.hh		\
   core/abstract/image_with_type.hh		\
+  core/abstract/image_with_type_with_dim.hh	\
   core/abstract/iter.hh				\
   core/abstract/iter1d.hh			\
   core/abstract/iter2d.hh			\

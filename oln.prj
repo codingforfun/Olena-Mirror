@@ -1,63 +1,12 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 103)
-(Parent-Version oln 2003paradigm 102)
-(Version-Log "Index: olena/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-        * oln/core/abstract/image.hh: Inherit from any_with_diamond.
-        * oln/core/image1d.hh: Adjust consequently.
-        * oln/core/image2d.hh: Likewise.
-        * oln/core/image3d.hh: Likewise.
-
-        * oln/core/abstract/image_with_type.hh: Move label images to...
-        * oln/core/abstract/image_with_type_with_dim.hh: ... this. New.
-        * oln/core/abstract/image_with_dim.hh: Adjust inheritance.
-        * oln/core/abstract/image_with_impl.hh: Likewise.
-
-+2003-08-05  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-+
-+       * tests/check/Makefile.runtests: Add default CLEANFILES.
-+       * tests/convol/Makefile.am: Adjust consequently.
-+       * tests/io/Makefile.am: Likewise.
-+       * tests/level/Makefile.am: Likewise.
-+       * tests/transforms/Makefile.am: Likewise.
-+
-+       * oln/Makefile.am: Fix modified files in topo/.
-+
-+2003-08-05  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-+
-+       * oln/arith/ops.hh: Don't use deprecated self() method.
-+       * oln/math/macros.hh: Likewise.
-+       * oln/topo/combinatorial-map/internal/cmap-functor.hh: Likewise.
-+       * oln/topo/combinatorial-map/internal/cmap-functor.hxx: Likewise.
-+
-Index: integre/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-        * ntg/core/type.hh: Remove deprecated self() method.
-        * ntg/utils/cast.hh: Adjust consequently.
-        * ntg/core/internal/global_ops_defs.hh: Likewise.
-        * ntg/real/optraits_scalar_defs.hh: Likewise.
-        * ntg/vect/vec.hh: Likewise.
-
-        * tests/check/Makefile.runtests: Add default CLEANFILES.
-
-Index: metalic/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-        * mlc/type.hh: Add class any_with_diamond. Add new macro
-        mlc_init_static_hierarchy.
-
-+2003-08-05  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-+
-+       * mlc/type.hh: Remove deprecated self(). Remove deprecated class
-+       bottom.
-
+(Project-Version oln 2003paradigm 104)
+(Parent-Version oln 2003paradigm 103)
+(Version-Log "Minor fixes.
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 05 Aug 2003 21:39:33 +0200")
+(Checkin-Time "Tue, 05 Aug 2003 21:45:12 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -160,7 +109,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.15 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.15 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.16 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.24 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.31 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.4 640))
@@ -839,7 +788,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (integre/tests/check/defs.in (oln/q/42_defs.in 1.1 640))
   (metalic/mlc/array/objs.hh (oln/q/45_objs.hh 1.2 640))
   (metalic/mlc/config/system.hh (oln/q/46_system.hh 1.2 640))
-  (olena/oln/Makefile.am (oln/q/47_Makefile.a 1.3.1.1.1.6.1.3 640))
+  (olena/oln/Makefile.am (oln/q/47_Makefile.a 1.3.1.1.1.6.1.4 640))
   (integre/ntg/config/system.hh (oln/q/48_system.hh 1.2 640))
   (metalic/tests/main/tests/is_a1 (oln/r/17_is_a1 1.3 640))
   (metalic/tests/main/tests/ensure3 (oln/r/18_ensure3 1.2 640))

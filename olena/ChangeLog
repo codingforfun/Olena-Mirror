@@ -5,8 +5,8 @@
 	* oln/core/image2d.hh: Likewise.
 	* oln/core/image3d.hh: Likewise.
 
-	* oln/core/abstract/image_with_type.hh: Move label images to...
-	* oln/core/abstract/image_with_type_with_dim.hh: ... this. New.
+	* oln/core/abstract/image_with_type.hh: Move label images ...
+	* oln/core/abstract/image_with_type_with_dim.hh: ... here. New.
 	* oln/core/abstract/image_with_dim.hh: Adjust inheritance.
 	* oln/core/abstract/image_with_impl.hh: Likewise.
 
