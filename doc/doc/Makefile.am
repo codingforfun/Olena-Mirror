@@ -1,9 +1,11 @@
 noinst_DATA = oln-ref.ps oln-ref.pdf html/oln-ref.html
 
 tex_TEX = oln-ref.tex
-oln_ref_TEX = \
+built_oln_ref_TEX = \
   ref-morpho.tex \
   ref-level.tex \
+oln_ref_TEX = \
+  $(built_oln_ref_TEX) \
   ref-types.tex
 
 TEXI2PDF = $(TEXI2DVI) --pdf
@@ -45,5 +47,5 @@ ref-level.tex: $(level_files) $(srcdir)/../tpl/processing.tpl
 	$(GETDEFS) $(COMMONGETDEFSFLAGS) $(PROCESSINGGETDEFSFLAGS) \
 	  $(GETDEFSFLAGS) --base-name=ref-level $(level_files)
 
-CLEANFILES = $(oln_ref_TEX) $(noinst_DATA) *.pdf *.eps *.ps
+CLEANFILES = $(built_oln_ref_TEX) $(noinst_DATA) *.pdf *.eps *.ps
 CLEANFILES += *.aux *.bbl *blg *.dvi *.lot *.log *.out *.toc html/* bin/*

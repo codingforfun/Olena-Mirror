@@ -1,3 +1,12 @@
+2002-09-02  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* doc/Makefile.am (oln_ref_TEX): Split into ...
+	(built_oln_ref_TEX, oln_ref_TEX): ... these two variables.
+	(CLEANFILES): Clean only built_oln_ref_TEX.
+
+	* tpl/processing.tpl (md5sum): Use only the first word in md5sum
+	output.
+
 2002-08-05  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* doc/oln-ref.tex (\lstset): Set basicstyle=\ttfamily.

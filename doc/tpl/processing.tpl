@@ -130,7 +130,7 @@ int main()
 [~ `sed 's/^\\$//' .example` ~]
 }
 [~ (out-pop) ~][~
-  (define md5sum (shell "md5sum < example.cc"))
+  (define md5sum (shell "md5sum < example.cc | cut -f 1 -d ' '"))
   (define binname (string-append md5sum "-a.out"))
   (define b/binname (string-append "bin/" binname))
   (define exoname (string-append md5sum "-" (get ".exo")))
