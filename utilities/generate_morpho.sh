@@ -1,7 +1,7 @@
 #!/bin/sh
 # generate_toolbox.sh
 #
-# $Id: generate_morpho.sh 1.1 Fri, 08 Nov 2002 18:16:36 +0100 chojin $
+# $Id: generate_morpho.sh 1.2 Mon, 02 Dec 2002 20:22:25 +0100 chojin $
 
 # Global variables
 DESTDIR=morpho
@@ -9,7 +9,6 @@ DESTDIR=morpho
 # morpho_template.cc
 FILE=$DESTDIR/morpho_template.cc
 cat > $FILE <<EOF
-#include <iostream>
 #include <oln/types/all.hh>
 #include <oln/basics2d.hh>
 #include <oln/basics3d.hh>
@@ -26,19 +25,20 @@ cat > $FILE <<EOF
 #include <oln/morpho/thickening.hh>
 #include <oln/convol/fast_gaussian.hh>
 #include <oln/level/fill.hh>
+#include <iostream>
 
 using namespace oln;
 
 #ifndef DATA_TYPE
-# define DATA_TYPE int_u8
+# error
 #endif
 
 #ifndef IMG_TYPE
-# define IMG_TYPE image2d
+# error
 #endif
 
 #ifndef FUNC
-# define FUNC erosion
+# error
 #endif
 
 void usage(const char * progname)

@@ -19,15 +19,15 @@
 using namespace oln;
 
 #ifndef DATA_TYPE
-# define DATA_TYPE int_u8
+# error
 #endif
 
 #ifndef IMG_TYPE
-# define IMG_TYPE image2d
+# error
 #endif
 
 #ifndef FUNC
-# define FUNC erosion
+# error
 #endif
 
 void usage(const char * progname)

@@ -62,6 +62,31 @@ fi
 AC_SUBST([FFTW_CFLAGS])
 AC_SUBST([FFTW_LDFLAGS])
 
+# utilities check
+AC_ARG_ENABLE(utilities,
+  [AC_HELP_STRING([--disable-utilities], [disable utilities compilation])])
+
+
+UTILITIES=''
+if test "x$enable_utilities" != xno; then
+  UTILITIES=utilities
+fi
+
+AC_SUBST([UTILITIES])
+
+# morpho utilities check
+AC_ARG_ENABLE(morpho_utilities,
+  [AC_HELP_STRING([--disable-morpho-utilities], [disable morpho utilities compilation])])
+
+
+MORPHO_UTILITIES=''
+if test "x$enable_morpho_utilities" != xno; then
+  MORPHO_UTILITIES=morpho
+fi
+
+AC_SUBST([MORPHO_UTILITIES])
+
+#
 AC_DEFINE_UNQUOTED([CXX], ["$CXX"], [The C++ compiler])
 
 AC_CONFIG_FILES([

@@ -1,3 +1,12 @@
+2002-12-02  Quoc Peyrot  <chojin@lrde.epita.fr>
+
+	* configure.ac: add --disable-utilities and
+	--disable-morpho-utilities options.
+	* Makefile.am: modify SUBDIRS variable accordingly.
+	* utilities/Makefile.am: Likewise.
+	* utilities/morpho/morpho_template.cc: change default defines to #error.
+	* utilities/generate_morpho.sh: modifiy accordingly.
+
 2002-12-02  Jerome Darbon  <jerome@epita.fr>
 
 	* oln/morpho/geodesic_erosion.cc : add new namespace.
