@@ -30,6 +30,7 @@
 # define OLENA_CONVOL_CONVOLUTION_HH__
 
 # include <oln/basics.hh>
+# include <oln/basics2d.hh>
 # include <oln/core/point.hh>
 # include <oln/types/all.hh>
 # include <oln/meta/cmp.hh>

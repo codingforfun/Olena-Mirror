@@ -1,4 +1,3 @@
-#include <oln/basics2d.hh>
 #include <oln/convol/convolution.hh>
 
 #include <oln/level/compare.hh>

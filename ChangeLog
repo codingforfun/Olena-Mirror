@@ -1,3 +1,10 @@
+2002-12-26  Reda Dehak  <reda@nemours.epita.fr>
+
+	* oln/convol/convolution.hh: Fix include files.
+	* tests/convol/slow_sum_2d_1.cc: change accordingly.
+	* tests/convol/slow_sum_2d_2.cc: change accordingly.
+	* tests/convol/sobel_gradient.cc: change accordingly.
+
 2002-12-11  Quoc Peyrot  <chojin@lrde.epita.fr>
 
 	* oln/Makefile.am (nobase_oln_HEADERS): add morpho/extrema.hxx.
