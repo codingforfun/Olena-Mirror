@@ -28,6 +28,11 @@
 #ifndef NTG_CORE_MACROS_HH
 # define NTG_CORE_MACROS_HH
 
+# include <mlc/if.hh>
+# include <mlc/cmp.hh>
+# include <mlc/arith.hh>
+
+
 /*------.
 | casts |
 `------*/
@@ -169,18 +174,18 @@
 **
 ** If T is non vectorial, the value returned should not be considered.
 */
-#define ntg_if_vectorial_nb_comp(T)					\
-   ntg::type_traits<typename mlc::if_<ntg_is_a(T, ntg::vectorial)::ret,	\
-		            	      T,				\
+#define ntg_if_vectorial_nb_comp(T)								\
+   ntg::type_traits<typename mlc::if_< mlc::value<bool, ntg_is_a(T, ntg::vectorial)::ret>,	\
+		            	      T,							\
 				      ntg::vec<42, bool> >::ret>::nb_comp
 
 /*! Same as \a ntg_if_vectorial_nb_comp but without 'typename'
 **
 ** \see ntg_if_vectorial_nb_comp
-*/
-#define ntg_if_vectorial_nb_comp_(T)					\
-   ntg::type_traits<mlc::if_<ntg_is_a_(T, ntg::vectorial)::ret,		\
-		            	      T,				\
+*/											\
+#define ntg_if_vectorial_nb_comp_(T)							\
+   ntg::type_traits<mlc::if_< mlc::value<bool, ntg_is_a_(T, ntg::vectorial)::ret>,	\
+		            	      T,						\
 				      ntg::vec<42, bool> >::ret>::nb_comp
 
 /*! Compare the number of components.
@@ -193,9 +198,9 @@
 */
 #define ntg_compare_nb_comp(A, B)					\
 	mlc::if_<							\
-	  ntg_is_a(A, ntg::non_vectorial)::ret,				\
+	  mlc::value<bool, ntg_is_a(A, ntg::non_vectorial)::ret>,	\
 	  ntg_is_a(B, ntg::non_vectorial),				\
-	  mlc::eq<ntg_if_vectorial_nb_comp(A),				\
+	  mlc::on<unsigned>::eq<ntg_if_vectorial_nb_comp(A),		\
 	  ntg_if_vectorial_nb_comp(B) > >::ret
 
 /*! Same as \a ntg_compare_nb_comp but without 'typename'
@@ -204,9 +209,9 @@
 */
 #define ntg_compare_nb_comp_(A, B)					\
 	mlc::if_<							\
-	  ntg_is_a_(A, ntg::non_vectorial)::ret,			\
+	  mlc::value<bool, ntg_is_a_(A, ntg::non_vectorial)::ret>,	\
 	  ntg_is_a_(B, ntg::non_vectorial),				\
-	  mlc::eq<ntg_if_vectorial_nb_comp_(A),				\
+	  mlc::on<unsigned>::eq<ntg_if_vectorial_nb_comp_(A),		\
 	  ntg_if_vectorial_nb_comp_(B) > >::ret
 
 #endif // !NTG_CORE_MACROS_HH

@@ -386,7 +386,7 @@ namespace ntg
       static storage_type
       check (const P& rhs)
       {
-	typedef typename mlc::if_<ntg_is_a(P, decimal)::ret,
+	typedef typename mlc::if_< mlc::value<bool, ntg_is_a(P, decimal)::ret>,
 	  cycle_fmod,
 	  cycle_mod>::ret cycle_op;
 

@@ -1,3 +1,15 @@
+2005-04-05  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Conform to mlc.
+	
+	* ntg/core/math.hh: Delete cause redundant with mlc/arith.hh.
+	* ntg/real/int_s.hh: Update.
+	* ntg/real/int_u.hh: Likewise.
+	* ntg/real/behavior.hh: Likewise.
+	* ntg/core/macros.hh: Likewise.
+	* ntg/core/pred_succ.hh: Likewise.
+	* ntg/core/internal/global_ops_traits.hh: Likewise.
+
 2005-03-19  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* tests/utils: New.

@@ -38,7 +38,8 @@
 # include <ntg/core/macros.hh>
 # include <ntg/core/type_traits.hh>
 
-# include <mlc/bool.hh>
+# include <mlc/if.hh>
+
 
 namespace ntg {
 
@@ -183,14 +184,15 @@ namespace ntg {
       enum { can_invert = (operator_traits<Op, T2, T1>::commutative
 			   && is_defined<rev_traits>::ret) };
 
-      typedef typename
-      mlc::if_<is_defined<traits>::ret,
-		get_order<T1, T2>, typename
-		mlc::if_<can_invert,
-			 get_order_inv<T1, T2>,
-			 meta_undefined_traits<undefined_traits>
-                        >::ret
-              >::ret deduced_type;
+      typedef
+      typename mlc::if_< mlc::value<bool, (is_defined<traits>::ret)>,
+			 get_order<T1, T2>,
+			 typename mlc::if_< mlc::value<bool, can_invert>,
+			                    get_order_inv<T1, T2>,
+			                    meta_undefined_traits<undefined_traits>
+                                            >::ret
+	               >::ret
+	deduced_type;
 
       typedef typename deduced_type::traits_lhs_type traits_lhs_type;
       typedef typename deduced_type::traits_rhs_type traits_rhs_type;

@@ -29,7 +29,9 @@
 # define NTG_CORE_PRED_SUCC_HH
 
 
+#include <mlc/if.hh>
 #include <mlc/is_a.hh>
+
 #include <ntg/real/int_u.hh>
 #include <ntg/core/macros.hh>
 
@@ -45,9 +47,9 @@ namespace ntg {
       typedef int_u<1> bool_with_arith;
       typedef T non_vectorial_with_arith;
 
-      typedef typename mlc::if_<ntg_is_a(T, ntg::binary)::ret,
-				id_<bool_with_arith>,
-				id_<non_vectorial_with_arith> >::ret::ret ret;
+      typedef typename mlc::if_< mlc::value<bool,ntg_is_a(T, ntg::binary)::ret>,
+				 id_<bool_with_arith>,
+				 id_<non_vectorial_with_arith> >::ret ret;
     };
   }
 
