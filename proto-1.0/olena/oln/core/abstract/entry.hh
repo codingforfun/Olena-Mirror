@@ -25,53 +25,59 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_PROPS_HH
-# define OLENA_CORE_PROPS_HH
+#ifndef OLENA_CORE_ABSTRACT_ENTRY_HH
+# define OLENA_CORE_ABSTRACT_ENTRY_HH
 
-# include <mlc/types.hh>
+# include <oln/core/abstract/image_constness.hh>
+# include <oln/core/abstract/image_dimension.hh>
 
-# include <oln/core/cats.hh>
 
-/*! \namespace oln
-** \brief oln namespace.
-*/
+// FIXME: this file should move to oln/core/abstract/
+
+
 namespace oln {
 
 
-  /*! \class default_props
-  **
-  ** \brief Class that defines properties by default, so properties are
-  ** undefined.  // FIXME: this doc should be modified...
-  **
-  ** Practically all typedefs of default_props are thus set to
-  ** mlc::undefined_type.
-  **
-  ** When props<E> is specialized, the programmer should derive that
-  ** specialization from another props<E'> or from default_props.
-  ** That ensures that an undefined property is set to mlc::undefined_type.
-  **
-  ** \see props<E>
-  */
-  template < typename category >
-  struct default_props;
+  // fwd decl
+  namespace abstract {
+    template <typename E> struct image_entry;
+  }
+
+  // category
+  template <typename E>
+  struct set_category < abstract::image_entry<E> >
+  {
+    typedef category::image ret;
+  };
 
 
-  /*! \class props<E>
-  **
-  ** Declaration of the trait class for properties.
-  ** Parameter E is the targeted type.  FIXME: rewrite doc.
-  */
-  template <typename category, typename type>
-  struct props : public default_props <category>
-  {};
 
-  template <typename category, typename type>
-  struct props <category, const type> : public props <category, type>
-  {};
+  namespace abstract {
 
+//     namespace internal {
 
+//       template < typename isa, typename E >
+//       struct inherits
+//       {
+// 	typedef typename isa::template instantiated_with<E>::ret ret;
+//       };
+
+//     }
+
+    template <typename E>
+    struct image_entry :
+      // intrusive:
+      public oln_type_of_(E, image_constness) ::template instantiated_with<E>::ret,
+      public oln_type_of_(E, image_dimension) ::template instantiated_with<E>::ret
+      // ...
+    {
+    protected:
+      image_entry() {}
+    };
+
+  }
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_PROPS_HH
+#endif // ! OLENA_CORE_ABSTRACT_ENTRY_HH

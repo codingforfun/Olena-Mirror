@@ -31,13 +31,42 @@
 
 # include <mlc/tracked_ptr.hh>
 
-# include <oln/core/entry.hh>
-# include <oln/core/macros.hh>
+# include <oln/core/abstract/entry.hh>
+
 
 /*! \namespace oln
 ** \brief oln namespace.
 */
 namespace oln {
+
+
+  // fwd decl
+  namespace abstract {
+    template <typename E> class image_with_data;
+  }
+
+  // category
+  template <typename E>
+  struct set_category < abstract::image_with_data<E> >
+  {
+    typedef category::image ret;
+  };
+  
+  // super_type
+  template <typename E>
+  struct set_super_type < abstract::image_with_data<E> >
+  {
+    typedef abstract::image_entry<E> ret;
+  };
+
+  // props
+  template <typename E>
+  struct set_props < category::image, abstract::image_with_data<E> > : public props_of<category::image>
+  {
+    // intrusive property:
+    typedef is_a<abstract::readwrite_image> image_constness_type;
+  };
+
 
 
   /*! \namespace oln::abstract
@@ -59,6 +88,13 @@ namespace oln {
 
     public:
 
+      /// typedefs
+
+      typedef oln_type_of(E, size)  size_type;
+      typedef oln_type_of(E, point) point_type;
+      typedef oln_type_of(E, value) value_type;
+      typedef oln_type_of(E, storage) storage_type;
+
 
       /*! \brief Implement abstract::image<E>::size() so return the
       **  size of the current image.
@@ -68,7 +104,7 @@ namespace oln {
       ** size2d.
       */
 
-      const oln_size_type(E)& impl_size() const
+      const size_type& impl_size() const
       {
 	precondition(this->has_data());
 	return this->data_->size();
@@ -97,7 +133,7 @@ namespace oln {
       ** \return True if p belongs to the current image, false otherwise.
       */
 
-      bool impl_hold(const oln_point_type(E)& p) const
+      bool impl_hold(const point_type& p) const
       {
 	precondition(this->has_data());
 	return this->data_->hold(p);
@@ -111,7 +147,7 @@ namespace oln {
       ** \return True if p belongs to the current image, false otherwise.
       */
 
-      const oln_value_type(E) impl_get(const oln_point_type(E)& p) const
+      const value_type impl_get(const point_type& p) const
       {
 	precondition(this->has_data());
 	return this->data_->get(p);
@@ -123,7 +159,7 @@ namespace oln {
       */
 
       template <typename V>
-      void impl_set(const oln_point_type(E)& p, const V& v)
+      void impl_set(const point_type& p, const V& v)
       {
 	precondition(this->has_data());
 	this->data_->set(p, v);
@@ -151,8 +187,8 @@ namespace oln {
       /*! \brief Constructor (protected) with memory allocation for
       ** data.
       */
-      image_with_data(const oln_size_type(E)& size) :
-	data_(new oln_value_container_type(E)(size))
+      image_with_data(const size_type& size) :
+	data_(new storage_type(size))
       {
       }
 
@@ -166,7 +202,7 @@ namespace oln {
 
       /*! \brief Data storage.
       */
-      mlc::tracked_ptr<oln_value_container_type(E)> data_;
+      mlc::tracked_ptr<storage_type> data_;
 
     };
 

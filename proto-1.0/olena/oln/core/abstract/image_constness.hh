@@ -87,6 +87,11 @@ namespace oln {
       */
 
 
+      /// typedef
+
+      typedef oln_type_of(E, point) point_type;
+
+
       /*! \brief Write the value \a v at \a p in the current image.
       ** This method is used in value_box<I>.  Client should not use
       ** this method but abstract::image<I>::operator[](point)
@@ -96,7 +101,7 @@ namespace oln {
       */
 
       template <typename V>
-      void set(const oln_point_type(E)& p, const V& v)
+      void set(const point_type& p, const V& v)
       {
 	return this->exact().impl_set(p, v);
       }
@@ -104,7 +109,7 @@ namespace oln {
       // FIXME: NEW:
 
 //       template <typename A, typename V>
-//       void& set(const oln_point_type(E)& p,
+//       void& set(const point_type& p,
 // 		void (I::*method)(A),
 // 		const V& value)
 //       {
@@ -126,10 +131,12 @@ namespace oln {
       template <typename E>
       struct set_image_impl < readwrite_image<E>, E> : public virtual image_impl<E>
       {
+	/// typedefs
 	typedef typename image_impl<E>::D D;
+	typedef oln_type_of(D, point) point_type;
 
 	template <typename V>
-	void impl_set(const oln_point_type(D)& p, const V& v)
+	void impl_set(const point_type& p, const V& v)
 	{
 	  this->exact().impl_set_ante(p, v);
 	  this->delegate().impl_set(p, v);
@@ -139,10 +146,10 @@ namespace oln {
 	// extra code; default is 'do nothing':
 
 	template <typename V>
-	void impl_set_ante(const oln_point_type(D)&, const V&) {}
+	void impl_set_ante(const point_type&, const V&) {}
 
 	template <typename V>
-	void impl_set_post(const oln_point_type(D)&, const V&) {}
+	void impl_set_post(const point_type&, const V&) {}
       };
 
     } // end of namespace oln::abstract::internal

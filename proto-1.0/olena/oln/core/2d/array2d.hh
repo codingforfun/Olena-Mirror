@@ -35,19 +35,26 @@
 
 namespace oln {
 
-
+  // fwd decl
   template <typename T> struct array2d;
+
+  // category
   template <typename T> 
-  struct category_type< array2d<T> > { typedef cat::data_storage ret; };
+  struct set_category< array2d<T> > { typedef category::data_storage ret; };
 
-
+  // super_type
+  template <typename T> 
+  struct set_super_type< array2d<T> > { typedef abstract::data_storage< array2d<T> > ret; };
+  
+  // props
   template <typename T>
-  struct props < cat::data_storage, array2d<T> > // FIXME: add inheritance
+  struct set_props < category::data_storage, array2d<T> > : public props_of<category::data_storage>
   {
     typedef size2d  size_type;
     typedef point2d point_type;
     typedef T       data_type;
   };
+
 
 
   template <typename T>

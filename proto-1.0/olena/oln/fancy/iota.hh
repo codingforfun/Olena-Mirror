@@ -28,7 +28,6 @@
 #ifndef OLENA_FANCY_IOTA_HH
 # define OLENA_FANCY_IOTA_HH
 
-# include <oln/core/macros.hh>
 # include <oln/core/abstract/image.hh>
 # include <oln/core/abstract/piter.hh>
 
@@ -43,7 +42,7 @@ namespace oln {
     void iota(abstract::image<I>& inout)
     {
       unsigned counter = 0;
-      oln_piter_type(I) p(inout.size());
+      oln_type_of(I, fwd_piter) p(inout.size());
       for_all(p)
 	inout[p] = ++counter;
     }

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_IMAGE3D_HH
-# define OLENA_CORE_IMAGE3D_HH
+#ifndef OLENA_CORE_3D_IMAGE3D_HH
+# define OLENA_CORE_3D_IMAGE3D_HH
 
 # include <mlc/traits.hh>
 
@@ -39,28 +39,27 @@
 namespace oln {
 
 
+
   // fwd decl
   template <typename T> class image3d;
 
-  // category decl
-  template <typename T> 
-  struct category_type< image3d<T> > { typedef cat::image ret; };
+  // category
+  template <typename T>
+  struct set_category< image3d<T> > { typedef category::image ret; };
 
+  // super
+  template <typename T>
+  struct set_super_type < image3d<T> >
+  {
+    typedef abstract::image_with_data< image3d<T> > ret;
+  };
 
-  /*! \class props< abstract::image, image3d<T> >
-  **
-  ** Properties of common 3D images.  Specialization of props<abstraction,type>.
-  ** Parameter T is the type of pixel values.
-  **
-  ** \see image3d<T>, props<category,type>
-  */
 
   template <typename T>
-  struct props < cat::image, image3d<T> > : public default_props < cat::image >
+  struct set_props < category::image, image3d<T> > : public props_of<category::image>
   {
-    // intrusive properties
-    typedef prop_of<abstract::readwrite_image> image_constness;
-    typedef prop_of<abstract::image3d> image_dimension;
+    // intrusive property:
+    typedef is_a<abstract::image3d> image_dimension_type;
 
     typedef mlc::no_type delegated_type;
 
@@ -68,14 +67,18 @@ namespace oln {
     typedef point3d point_type;
     typedef T       value_type;
 
+//     typedef fwd_piter3d piter_type;
+//     typedef fwd_piter3d fwd_piter_type;
+
     // please note that value_storage_type means data_type
     // since image3d is an image_with_data
-    typedef mlc_encoding_type(T) value_storage_type;
+    typedef T value_storage_type;
+//     typedef mlc_encoding_type(T) value_storage_type;
 
     // please note that value_container_type means
     // data_container_type (or value_storage_container_type)
     // FIXME: find a better name...
-    typedef array3d<value_storage_type> value_container_type;
+    typedef array3d<value_storage_type> storage_type;
 
     // functions
 
@@ -84,7 +87,6 @@ namespace oln {
     {
       typedef image3d<U> ret;
     };
-
   };
 
 
@@ -127,4 +129,4 @@ namespace oln {
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_IMAGE3D_HH
+#endif // ! OLENA_CORE_3D_IMAGE3D_HH

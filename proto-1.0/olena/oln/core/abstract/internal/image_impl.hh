@@ -30,7 +30,8 @@
 
 # include <mlc/any.hh>
 
-# include <oln/core/macros.hh>
+# include <oln/core/properties.hh>
+
 
 namespace oln {
 
@@ -45,7 +46,7 @@ namespace oln {
 
       // entry point:
       template <typename A, typename E>
-      struct get_image_impl : public get_image_impl_helper <A, oln_delegated_type(E), E>
+      struct get_image_impl : public get_image_impl_helper <A, oln_type_of(E, delegated), E>
       {
       };
 
@@ -67,7 +68,7 @@ namespace oln {
       template <typename E>
       struct image_impl : public mlc::any__best_speed<E>
       {
-	typedef oln_delegated_type(E) D;
+	typedef oln_type_of(E, delegated) D;
 	D& delegate() { return this->exact().impl_delegate(); }
 	const D& delegate() const { return this->exact().impl_delegate(); }
       };

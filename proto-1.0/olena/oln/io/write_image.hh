@@ -37,11 +37,11 @@ namespace oln {
 
   namespace io {
 
-    template <typename E>
-    void write(const abstract::image<E>& im, const std::string& name)
+    template <typename I>
+    void write(const abstract::image<I>& im, const std::string& name)
     {
       std::string ext;
-      oln_value_type(E) t;
+      oln_type_of(I, value) t;
 
       ext = internal::utils::extension(name);
 

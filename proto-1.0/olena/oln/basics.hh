@@ -54,7 +54,7 @@
 // oln::
 
 # include <oln/core/coord.hh>
-# include <oln/core/macros.hh>
+# include <oln/core/properties.hh>
 # include <oln/core/value_box.hh>
 
 # include <oln/core/abstract/size.hh>

@@ -7,13 +7,13 @@ namespace oln {
   struct dummy_image;
 
   template <>
-  struct category_type< dummy_image >
+  struct set_category< dummy_image >
   {
-    typedef cat::image ret;
+    typedef category::image ret;
   };
 
   template <>
-  struct props <cat::image, dummy_image>
+  struct set_props < category::image, dummy_image > : public props_of <category::image>
   {
     typedef int size_type;
     typedef int point_type;

@@ -13,7 +13,6 @@
 # include <ntg/color/color.hh>
 
 # include <oln/core/2d/image2d.hh>
-# include <oln/core/macros.hh>
 # include <oln/core/abstract/op.hh>
 
 # include <oln/io/utils.hh>
@@ -24,30 +23,26 @@ namespace oln {
   template <typename I>
   struct image2d;
 
+  // fwd decl
   namespace io {
-
     namespace impl {
-
-      template <typename I>
-      struct read_image_2d_raw;
-
+      template <typename I> struct read_image_2d_raw;
     }
-
   }
 
+  // category
   template <typename I>
-  struct category_type< io::impl::read_image_2d_raw<I> >
+  struct set_category < io::impl::read_image_2d_raw<I> >
   {
-    typedef cat::image ret;
+    typedef category::image ret;
   };
 
+  // super_type
   template <typename I>
-  struct props <cat::image, io::impl::read_image_2d_raw<I> >
-    : public props<cat::image, I>
+  struct set_super_type < io::impl::read_image_2d_raw<I> >
   {
-    typedef I delegated_type;
+    typedef abstract::op<I, io::impl::read_image_2d_raw<I> > ret;
   };
-
 
 
   namespace io {
@@ -55,12 +50,12 @@ namespace oln {
     namespace impl {
 
       template <typename I>
-      struct read_image_2d_raw:
-	oln::abstract::op<I, read_image_2d_raw<I> >
+      struct read_image_2d_raw :
+	public oln::abstract::op<I, read_image_2d_raw<I> >
       {
 
 	typedef oln::abstract::op<I, read_image_2d_raw<I> > super_type;
-	typedef oln_value_type(I) value_type;
+	typedef oln_type_of(I, value) value_type;
 	typedef ntg_io_type(value_type) io_type;
 
 	mlc::box<I> image_;

@@ -13,7 +13,7 @@
 
 
 template <typename I>
-void foo(oln::abstract::image<I>& input, const oln_point_type(I)& p)
+void foo(oln::abstract::image<I>& input, const oln_type_of(I, point)& p)
 {
   // FIXME: dummy code below
 //   struct dummy {};

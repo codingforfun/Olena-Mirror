@@ -44,6 +44,8 @@ namespace oln {
   public:
 
     typedef int value_type;
+    static const value_type min_value = INT_MIN;
+    static const value_type max_value = INT_MAX;
 
     coord_t() :
       value_(undef_())
@@ -140,13 +142,13 @@ namespace oln {
 
     static const coord_t& infty()
     {
-      static coord_t infty_ = INT_MAX;
+      static coord_t infty_ = max_value;
       return infty_;
     }
 
     static const coord_t& _infty()
     {
-      static coord_t _infty_ = INT_MIN + 1;
+      static coord_t _infty_ = min_value + 1;
       return _infty_;
     }
 
@@ -158,7 +160,7 @@ namespace oln {
 
     static const value_type undef_()
     {
-      return INT_MIN;
+      return min_value;
     }
 
   };

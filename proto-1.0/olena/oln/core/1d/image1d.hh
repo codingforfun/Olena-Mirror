@@ -25,13 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_IMAGE1D_HH
-# define OLENA_CORE_IMAGE1D_HH
+#ifndef OLENA_CORE_1D_IMAGE1D_HH
+# define OLENA_CORE_1D_IMAGE1D_HH
 
 # include <mlc/traits.hh>
 
 # include <oln/core/abstract/image_with_data.hh>
 # include <oln/core/1d/array1d.hh>
+# include <oln/core/1d/fwd_piter1d.hh>
+
+
 
 /*! \namespace oln
 ** \brief oln namespace.
@@ -39,27 +42,27 @@
 namespace oln {
 
 
+
   // fwd decl
   template <typename T> class image1d;
 
-  // category decl
-  template <typename T> struct category_type< image1d<T> > { typedef cat::image ret; };
+  // category
+  template <typename T>
+  struct set_category< image1d<T> > { typedef category::image ret; };
 
+  // super
+  template <typename T>
+  struct set_super_type < image1d<T> >
+  {
+    typedef abstract::image_with_data< image1d<T> > ret;
+  };
 
-  /*! \class props< abstract::image, image1d<T> >
-  **
-  ** Properties of common 1D images.  Specialization of props<abstraction,type>.
-  ** Parameter T is the type of pixel values.
-  **
-  ** \see image1d<T>, props<category,type>
-  */
 
   template <typename T>
-  struct props < cat::image, image1d<T> > : public default_props < cat::image >
+  struct set_props < category::image, image1d<T> > : public props_of<category::image>
   {
-    // intrusive properties
-    typedef prop_of<abstract::readwrite_image> image_constness;
-    typedef prop_of<abstract::image1d> image_dimension;
+    // intrusive property:
+    typedef is_a<abstract::image1d> image_dimension_type;
 
     typedef mlc::no_type delegated_type;
 
@@ -67,14 +70,18 @@ namespace oln {
     typedef point1d point_type;
     typedef T       value_type;
 
+    typedef fwd_piter1d piter_type;
+    typedef fwd_piter1d fwd_piter_type;
+
     // please note that value_storage_type means data_type
     // since image1d is an image_with_data
-    typedef mlc_encoding_type(T) value_storage_type;
+    typedef T value_storage_type;
+//     typedef mlc_encoding_type(T) value_storage_type;
 
     // please note that value_container_type means
     // data_container_type (or value_storage_container_type)
     // FIXME: find a better name...
-    typedef array1d<value_storage_type> value_container_type;
+    typedef array1d<value_storage_type> storage_type;
 
     // functions
 
@@ -83,8 +90,10 @@ namespace oln {
     {
       typedef image1d<U> ret;
     };
-
   };
+
+
+
 
 
 
@@ -126,4 +135,4 @@ namespace oln {
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_IMAGE1D_HH
+#endif // ! OLENA_CORE_1D_IMAGE1D_HH

@@ -28,10 +28,10 @@
 #ifndef OLENA_CORE_ABSTRACT_IMAGE_HH
 # define OLENA_CORE_ABSTRACT_IMAGE_HH
 
+# include <mlc/types.hh>
+
 # include <oln/core/abstract/internal/image_impl.hh>
-# include <oln/core/cats.hh>
-# include <oln/core/props.hh>
-# include <oln/core/macros.hh>
+# include <oln/core/properties.hh>
 # include <oln/core/value_box.hh>
 
 
@@ -41,34 +41,69 @@
 namespace oln {
 
 
+  // fwd decl
+  namespace abstract {
+    template <typename E> struct image;
+    template <typename E> struct readonly_image;
+  }
 
-  // FIXME: doc
-  template <>
-  struct default_props < cat::image >
+  // category
+  template <typename E>
+  struct set_category< abstract::image<E> > { typedef category::image ret; };
+
+
+
+  /// properties of any type in category::image
+
+  template <typename type>
+  struct props_of <category::image, type>
   {
-    typedef mlc::undefined_type delegated_type;
+    typedef mlc::true_type user_defined_;
+    
+    mlc_decl_prop(category::image, value_type);
+    mlc_decl_prop(category::image, point_type);
+    mlc_decl_prop(category::image, size_type);
+    mlc_decl_prop(category::image, fwd_piter_type);
+    mlc_decl_prop_with_default(category::image, value_storage_type, mlc::no_type);
+    mlc_decl_prop_with_default(category::image, storage_type, mlc::no_type);
+    mlc_decl_prop_with_default(category::image, delegated_type, mlc::no_type);
 
-    typedef mlc::undefined_type size_type;
-    typedef mlc::undefined_type point_type;
-    typedef mlc::undefined_type value_type;
+    mlc_decl_prop_with_default(category::image, image_constness_type, is_a<abstract::readonly_image>);
+    mlc_decl_prop(category::image, image_dimension_type);
 
-    typedef mlc::undefined_type piter_type;
-    typedef mlc::undefined_type fwd_piter_type;
+    //...
 
-    typedef mlc::undefined_type value_storage_type;
-    typedef mlc::undefined_type value_container_type;
-
-    // FIXME: etc.
-
-    template <typename T>
-    struct ch_value_type
+    static void echo(std::ostream& ostr)
     {
-      typedef mlc::undefined_type ret;
-    };
+      ostr << "props_of(" // FIXME: << typeid(oln::category::image).name()
+	   << ", " << typeid(type).name() << ") = {"
+	   << "  value_type = " << typeid(value_type).name()
+	   << "  point_type = " << typeid(point_type).name()
+	   << "  size_type = " << typeid(size_type).name()
+	   << "  fwd_piter_type = " << typeid(fwd_piter_type).name()
+	   << "  value_storage_type = " << typeid(value_storage_type).name()
+	   << "  storage_type = " << typeid(storage_type).name()
+	   << "  delegated_type = " << typeid(delegated_type).name()
 
-  protected:
-    default_props() {}
+	   << "  image_constness_type = " << typeid(image_constness_type).name()
+	   << "  image_dimension_type = " << typeid(image_dimension_type).name()
+
+	   << "  }" << std::endl;
+    }
+
   };
+
+  mlc_register_prop(category::image, value_type);
+  mlc_register_prop(category::image, point_type); 
+  mlc_register_prop(category::image, size_type); 
+  mlc_register_prop(category::image, fwd_piter_type); 
+  mlc_register_prop(category::image, value_storage_type);
+  mlc_register_prop(category::image, storage_type);
+  mlc_register_prop(category::image, delegated_type);
+
+  mlc_register_prop(category::image, image_constness_type);
+  mlc_register_prop(category::image, image_dimension_type);
+
 
 
 
@@ -92,20 +127,27 @@ namespace oln {
     struct image : public internal::get_image_impl < image<E>, E>
     {
 
+      /// typedefs
+
+      typedef oln_type_of(E, size)  size_type;
+      typedef oln_type_of(E, value) value_type;
+      typedef oln_type_of(E, point) point_type;
+
+
       /*------------------*
        ! abstract methods !
        *------------------*/
 
 
-      /*! \brief Return the size of the current image.  Nota bene: this method is abstract-like.it
-      **  is a pseudo-abstract method.
+      /*! \brief Return the size of the current image.  Nota bene:
+      **  this method is abstract-like.it is a pseudo-abstract method.
       **
       ** \return An object deriving from abstract::size.  Ex: if the
       ** image is an image2d<something>, the returned object is a
       ** size2d.
       */
 
-      const oln_size_type(E)& size() const
+      const size_type& size() const
       {
 	return this->exact().impl_size();
       }
@@ -137,7 +179,7 @@ namespace oln {
       ** \see hold_large
       */
 
-      bool hold(const oln_point_type(E)& p) const
+      bool hold(const point_type& p) const
       {
 	precondition(this->npoints() != 0);
 	return this->exact().impl_hold(p);
@@ -158,7 +200,7 @@ namespace oln {
       ** \see hold
       */
 
-      bool hold_large(const oln_point_type(E)& p) const
+      bool hold_large(const point_type& p) const
       {
 	precondition(this->npoints() != 0);
 	return this->exact().impl_hold_large(p);
@@ -175,7 +217,7 @@ namespace oln {
       ** \see hold_large
       */
 
-      bool impl_hold_large(const oln_point_type(E)& p) const
+      bool impl_hold_large(const point_type& p) const
       {
 	return this->hold(p);
       }
@@ -196,11 +238,11 @@ namespace oln {
       ** \see value_box
       */
 
-      oln_value_box_type(const E) operator[](const oln_point_type(E)& p) const
+      value_box<const E> operator[](const point_type& p) const
       {
 	precondition(this->npoints() != 0);
 	precondition(this->hold_large(p));
-	oln_value_box_type(const E) tmp(this->exact(), p);
+	value_box<const E> tmp(this->exact(), p);
 	return tmp;
       }
 
@@ -214,11 +256,11 @@ namespace oln {
       ** \see value_box
       */
 
-      oln_value_box_type(E) operator[](const oln_point_type(E)& p)
+      value_box<E> operator[](const point_type& p)
       {
 	precondition(this->npoints() != 0);
 	precondition(this->hold_large(p));
-	oln_value_box_type(E) tmp(this->exact(), p);
+	value_box<E> tmp(this->exact(), p);
 	return tmp;
       }
 
@@ -251,7 +293,7 @@ namespace oln {
       ** \see value_box, abstract::image<I>::operator[](point)
       */
 
-      const oln_value_type(E) get(const oln_point_type(E)& p) const
+      const value_type get(const point_type& p) const
       {
 	return this->exact().impl_get(p);
       }
@@ -282,13 +324,21 @@ namespace oln {
       template <typename E>
       struct set_image_impl < image<E>, E > : public virtual image_impl<E>
       {
+
+	/// typedefs
+
 	typedef typename image_impl<E>::D D;
+
+	typedef oln_type_of(D, size)  size_type;
+	typedef oln_type_of(D, point) point_type;
+	typedef oln_type_of(D, value) value_type;
+
 
 	// delegations are "template methods" (Cf. the GOF's book)
 
-	const oln_size_type(D)& impl_size() const
+	const size_type& impl_size() const
 	{
-	  const oln_size_type(D)& s = this->delegate().size();
+	  const size_type& s = this->delegate().size();
 	  this->exact().impl_size_extra(s);
 	  return s;
 	}
@@ -300,31 +350,31 @@ namespace oln {
 	  return n;
 	}
 
-	bool impl_hold(const oln_point_type(D)& p) const
+	bool impl_hold(const point_type& p) const
 	{
 	  this->exact().impl_hold_extra(p);
 	  return this->delegate().hold(p);
 	}
 
-	bool impl_hold_large(const oln_point_type(D)& p) const
+	bool impl_hold_large(const point_type& p) const
 	{
 	  this->exact().impl_hold_large_extra(p);
 	  return this->delegate().hold_large(p);
 	}
 
-	oln_value_box_type(D) operator[](const oln_point_type(D)& p) const
+	value_box<D> operator[](const point_type& p) const
 	{
 	  precondition(this->hold_large(p));
 	  return this->delegate().operator[](p);
 	}
 
-	oln_value_box_type(const D) operator[](const oln_point_type(D)& p)
+	value_box<const D> operator[](const point_type& p)
 	{
 	  precondition(this->hold_large(p));
 	  return this->delegate().operator[](p);
 	}
 
-	const oln_value_type(D) impl_get(const oln_point_type(D)& p) const
+	const value_type impl_get(const point_type& p) const
 	{
 	  this->exact().impl_get_extra(p);
 	  return this->delegate().impl_get(p);
@@ -332,13 +382,13 @@ namespace oln {
 
 	// extra code; default is "do nothing"
 
-	void impl_size_extra(const oln_size_type(D)& s) const {}
+	void impl_size_extra(const size_type& s) const {}
 	void impl_npoints_extra(unsigned long n) const {}
 
-	void impl_hold_extra(const oln_point_type(D)& p) const {}
-	void impl_hold_large_extra(const oln_point_type(D)& p) const {}
+	void impl_hold_extra(const point_type& p) const {}
+	void impl_hold_large_extra(const point_type& p) const {}
 
-	void impl_get_extra(const oln_point_type(D)&) const {}
+	void impl_get_extra(const point_type&) const {}
       };
 
     } // end of namespace oln::abstract::internal

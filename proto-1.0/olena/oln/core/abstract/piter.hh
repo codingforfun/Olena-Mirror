@@ -33,9 +33,7 @@
 # include <mlc/contract.hh>
 
 # include <oln/core/abstract/point.hh>
-# include <oln/core/cats.hh>
-# include <oln/core/props.hh>
-# include <oln/core/macros.hh>
+# include <oln/core/properties.hh>
 
 
 
@@ -44,23 +42,39 @@
 
 namespace oln {
 
+  // fwd decl
   namespace abstract {
-
     template <typename E> struct piter;
-
   }
 
-
+  // category
   template <typename E>
-  struct category_type<abstract::piter<E> > { typedef cat::piter ret; };
+  struct set_category< abstract::piter<E> > { typedef category::piter ret; };
 
 
-  template <>
-  struct default_props < cat::piter >
+  /// properties of any type in category::piter
+
+  template <typename type>
+  struct props_of < category::piter, type >
   {
-    typedef mlc::undefined_type point_type;
-    typedef mlc::undefined_type size_type;
+    typedef mlc::true_type user_defined_;
+    
+    mlc_decl_prop(category::piter, size_type);
+    mlc_decl_prop(category::piter, point_type);
+
+    static void echo(std::ostream& ostr)
+    {
+      ostr << "props_of( category::piter, "
+	   << typeid(type).name() << ") = {"
+	   << "  size_type = " << typeid(size_type).name()
+	   << "  point_type = " << typeid(point_type).name() << "  }" << std::endl;
+    }
+
   };
+
+  mlc_register_prop(category::piter, size_type); 
+  mlc_register_prop(category::piter, point_type); 
+
 
 
   namespace abstract {
@@ -68,9 +82,14 @@ namespace oln {
     template <typename E>
     struct piter : public mlc::any__best_speed<E>
     {
+
+      /// typedefs
+
       typedef piter<E> self_type;
-      typedef oln_point_type(E) point_type;
-      typedef oln_size_type(E) size_type;
+
+      typedef oln_type_of(E, size)  size_type;
+      typedef oln_type_of(E, point) point_type;
+
 
       void start()
       {

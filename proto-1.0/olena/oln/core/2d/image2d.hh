@@ -35,6 +35,7 @@
 # include <oln/core/2d/array2d.hh>
 # include <oln/core/2d/fwd_piter2d.hh>
 
+
 /*! \namespace oln
 ** \brief oln namespace.
 */
@@ -48,28 +49,28 @@ namespace oln {
     void do_read(abstract::image<I>&, const filename&);
   }
 
+
+
   // fwd decl
   template <typename T> class image2d;
 
-  // category decl
+  // category
   template <typename T>
-  struct category_type< image2d<T> > { typedef cat::image ret; };
+  struct set_category< image2d<T> > { typedef category::image ret; };
 
-
-  /*! \class props< abstract::image, image2d<T> >
-  **
-  ** Properties of common 2D images.  Specialization of props<abstraction,type>.
-  ** Parameter T is the type of pixel values.
-  **
-  ** \see image2d<T>, props<category,type>
-  */
-
+  // super
   template <typename T>
-  struct props < cat::image, image2d<T> > : public default_props < cat::image >
+  struct set_super_type < image2d<T> >
   {
-    // intrusive properties
-    typedef prop_of<abstract::readwrite_image> image_constness;
-    typedef prop_of<abstract::image2d> image_dimension;
+    typedef abstract::image_with_data< image2d<T> > ret;
+  };
+
+
+  template <typename T>
+  struct set_props < category::image, image2d<T> > : public props_of<category::image>
+  {
+    // intrusive property:
+    typedef is_a<abstract::image2d> image_dimension_type;
 
     typedef mlc::no_type delegated_type;
 
@@ -82,12 +83,13 @@ namespace oln {
 
     // please note that value_storage_type means data_type
     // since image2d is an image_with_data
-    typedef mlc_encoding_type(T) value_storage_type;
+    typedef T value_storage_type;
+//     typedef mlc_encoding_type(T) value_storage_type;
 
     // please note that value_container_type means
     // data_container_type (or value_storage_container_type)
     // FIXME: find a better name...
-    typedef array2d<value_storage_type> value_container_type;
+    typedef array2d<value_storage_type> storage_type;
 
     // functions
 
@@ -96,8 +98,9 @@ namespace oln {
     {
       typedef image2d<U> ret;
     };
-
   };
+
+
 
 
 

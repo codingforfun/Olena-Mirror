@@ -33,8 +33,6 @@
 
 # include <mlc/box.hh>
 
-# include <oln/core/macros.hh>
-
 # include <oln/io/read_image_2d_pnm.hh>
 # include <oln/io/utils.hh>
 
@@ -65,7 +63,7 @@ namespace oln {
     void do_read(abstract::image<I>& ima, const filename& name)
     {
       std::string ext;
-      const oln_value_type(I) t;
+      const oln_type_of(I, value) t;
 
       ext = internal::utils::extension(name.get());
 

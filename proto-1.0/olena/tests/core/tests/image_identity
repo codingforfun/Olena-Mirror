@@ -10,14 +10,14 @@ struct image_identity;
 namespace oln {
 
   template <typename I>
-  struct category_type< image_identity<I> >
+  struct set_category< image_identity<I> >
   {
-    typedef cat::image ret;
+    typedef category::image ret;
   };
 
   template <typename I>
-  struct props <cat::image, image_identity<I> >
-    : public props<cat::image, I>
+  struct set_props < category::image, image_identity<I> >
+    : public get_props < category::image, I >
   {
     typedef I delegated_type;
   };
@@ -25,8 +25,7 @@ namespace oln {
 }
 
 template <typename I>
-struct image_identity:
-  public oln::abstract::image_identity<I, image_identity<I> >
+struct image_identity : public oln::abstract::image_identity<I, image_identity<I> >
 {
   typedef oln::abstract::image_identity<I, image_identity<I> > super_type;
 

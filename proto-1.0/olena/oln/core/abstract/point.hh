@@ -29,10 +29,9 @@
 # define OLENA_CORE_ABSTRACT_POINT_HH
 
 # include <mlc/any.hh>
+# include <mlc/bool.hh>
 
-# include <oln/core/cats.hh>
-# include <oln/core/props.hh>
-# include <oln/core/macros.hh>
+# include <oln/core/properties.hh>
 
 
 /*! \namespace oln
@@ -41,22 +40,35 @@
 namespace oln {
 
 
-  /// fwd decl
+  // fwd decl
   namespace abstract {
     template <typename E> struct point;
   }
 
+  // category
+  template <typename E>
+  struct set_category< abstract::point<E> > { typedef category::point ret; };
 
-  /*! \class default_props< cat::point >
-  **
-  ** Default properties for points.  Specialization of
-  ** default_props<category>.
-  */
-  template <>
-  struct default_props < cat::point >
+
+  /// properties of any type in category::point
+
+  template <typename type>
+  struct props_of < category::point, type >
   {
-    typedef mlc::undefined_type dpoint_type;
+    typedef mlc::true_type user_defined_;
+    
+    mlc_decl_prop(category::point, dpoint_type);
+
+    static void echo(std::ostream& ostr)
+    {
+      ostr << "props_of( category::point, "
+	   << typeid(type).name() << ") = {"
+	   << "  dpoint_type = " << typeid(dpoint_type).name() << "  }" << std::endl;
+    }
+
   };
+
+  mlc_register_prop(category::point, dpoint_type); 
 
 
   /*! \namespace oln::abstract
@@ -95,9 +107,10 @@ namespace oln {
 	return ! this->operator==(rhs);
       }
 
-      typedef oln_dpoint_type(E) dpoint_type;
+      // FIXME: doc...
 
-      // FIXME: doc
+      typedef oln_type_of(E, dpoint) dpoint_type;
+
       const point operator+(const dpoint_type& dp) const
       {
 	return this->exact().impl_plus(dp);

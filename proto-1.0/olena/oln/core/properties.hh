@@ -25,55 +25,71 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_CATS_HH
-# define OLENA_CORE_CATS_HH
+#ifndef OLENA_CORE_PROPERTIES_HH
+# define OLENA_CORE_PROPERTIES_HH
 
-# include <mlc/types.hh>
-
-
-/*! \macro FIXME:doc
-*/
-
-# define oln_category_type(T) typename oln::category_type<T>::ret
-
+# include <mlc/properties.hh>
 
 
 /*! \namespace oln
 ** \brief oln namespace.
 */
-namespace oln {
-
-
-  /*! \class category_type<T>
-  **
-  ** FIXME: doc
-  **
-  */
-  template <typename T>
-  struct category_type
+namespace oln
+{
+  
+  namespace category
   {
-    typedef mlc::undefined_type ret;
-  };
-
-
-  /*! \namespace oln::cat
-  ** \brief oln::cat namespace.
-  */
-  namespace cat {
-
-    struct image;
     struct data_storage;
-    struct piter;
+    struct image;
     struct point;
     struct size;
-    // FIXME:...
+    struct piter;
+    struct niter;
+    // FIXME: ...
+  }
 
-  } // end of namespace oln::cat
+  namespace target
+  {
+    struct data_type;
+    struct value_type;
+    struct value_storage_type;
+    struct storage_type;
+    struct point_type;
+    struct dpoint_type;
+    struct fwd_piter_type;
+    struct iter_type;
+    struct delegated_type;
+    struct size_type;
+
+    struct image_constness_type;
+    struct image_dimension_type;
+    // FIXME: ...
+  }
+
+  mlc_equip_namespace_for_properties();
+
+
+  // FIXME: change name?
+  template <template <typename> class abstraction>
+  struct is_a // abstraction
+  {
+    template <typename E>
+    struct instantiated_with // E
+    {
+      typedef abstraction<E> ret;
+    };
+  };
 
 
 } // end of namespace oln
 
 
 
+/// macro to retrieve a type (TARGET) from a class (oln::TYPE)
 
-#endif // ! OLENA_CORE_CATS_HH
+# define oln_type_of(TYPE, TARGET) mlc_type_of(oln, TYPE, TARGET)
+# define oln_type_of_(TYPE, TARGET) mlc_type_of_(oln, TYPE, TARGET)
+
+
+
+#endif // ! OLENA_CORE_PROPERTIES_HH

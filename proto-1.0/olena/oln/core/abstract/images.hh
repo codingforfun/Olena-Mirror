@@ -36,7 +36,4 @@
 # include <oln/core/abstract/image_constness.hh>
 
 
-# include <oln/core/entry.hh>
-
-
 #endif // ! OLENA_CORE_ABSTRACT_IMAGES_HH

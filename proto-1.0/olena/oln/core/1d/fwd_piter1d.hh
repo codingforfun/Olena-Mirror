@@ -33,21 +33,28 @@
 # include <oln/core/abstract/piter.hh>
 # include <oln/core/1d/point1d.hh>
 # include <oln/core/1d/size1d.hh>
-# include <oln/core/props.hh>
 
 
 namespace oln {
 
+
+  // fwd decl
   struct fwd_piter1d;
 
-  template <> struct category_type< fwd_piter1d > { typedef cat::piter ret; };
-
+  // category
   template <>
-  struct props < cat::piter, fwd_piter1d > : public default_props< cat::piter >
+  struct set_category<fwd_piter1d> { typedef category::piter ret; };
+
+
+  // props
+  template <>
+  struct set_props < category::piter, fwd_piter1d > : public props_of<category::piter>
   {
     typedef point1d point_type;
     typedef size1d  size_type;
   };
+
+
 
   struct fwd_piter1d : public abstract::piter< fwd_piter1d >
   {

@@ -41,7 +41,6 @@
 # include <ntg/color/color.hh>
 
 # include <oln/core/2d/image2d.hh>
-# include <oln/core/macros.hh>
 # include <oln/core/abstract/op.hh>
 
 # include <oln/io/utils.hh>
@@ -56,7 +55,7 @@ namespace oln {
       struct write_image_2d_raw
 	: public oln::abstract::void_op<write_image_2d_raw<I> >
       {
-	typedef oln_value_type(I) value_type;
+	typedef oln_type_of(I, value) value_type;
 	typedef ntg_io_type(value_type) io_type;
 
 	const I& to_write_;

@@ -30,12 +30,7 @@
 
 # include <iostream>
 
-# include <oln/core/macros.hh>
-
-// the proper macro:
-// for use in 'abstract::image::op[](point)'
-
-# define oln_value_box_type(E) typename oln::value_box<E>
+# include <oln/core/properties.hh>
 
 
 
@@ -78,6 +73,11 @@ namespace oln {
 
   public:
 
+    /// typedefs
+
+    typedef oln_type_of(I, value) value_type;
+    typedef oln_type_of(I, point) point_type;
+
 
     /*! \brief op=
     ** FIXME:...
@@ -103,7 +103,7 @@ namespace oln {
     template <typename II>
     value_box& operator=(const value_box<II>& rhs)
     {
-      ima_.set(p_, rhs); // automatic conversion from rhs to oln_value_type(I)
+      ima_.set(p_, rhs); // automatic conversion from rhs to value_type
       return *this;
     }
 
@@ -137,7 +137,7 @@ namespace oln {
       return value;
     }
 
-    operator const oln_value_type(I)() const
+    operator const value_type() const
     {
       return ima_.get(p_);
     }
@@ -154,7 +154,7 @@ namespace oln {
     ** \return a value (const, temp)
     */
 
-    const oln_value_type(I) value() const
+    const value_type value() const
     {
       return ima_.get(p_);
     }
@@ -179,7 +179,7 @@ namespace oln {
 
     /// Ctor (restricted access).
 
-    value_box(abstract::image<I>& ima, const oln_point_type(I)& p) :
+    value_box(abstract::image<I>& ima, const point_type& p) :
       ima_(ima.exact()),
       p_(p)
     {
@@ -190,7 +190,7 @@ namespace oln {
      *------------*/
 
     I& ima_;
-    oln_point_type(I) p_;
+    point_type p_;
 
   };
 
@@ -213,6 +213,13 @@ namespace oln {
 
   public:
 
+    /// typedefs
+
+    typedef oln_type_of(I, value) value_type;
+    typedef oln_type_of(I, point) point_type;
+
+
+
     /*! \brief Assignment (op=) is declared but undefined.
     */
 
@@ -232,7 +239,7 @@ namespace oln {
       return value;
     }
 
-    operator const oln_value_type(I)() const
+    operator const value_type() const
     {
       return ima_.get(p_);
     }
@@ -249,7 +256,7 @@ namespace oln {
     ** \return a value (const, temp)
     */
 
-    const oln_value_type(I) value() const
+    const value_type value() const
     {
       return ima_.get(p_);
     }
@@ -276,7 +283,7 @@ namespace oln {
 
     /// Ctor (restricted access).
 
-    value_box(const abstract::image<I>& ima, const oln_point_type(I)& p) :
+    value_box(const abstract::image<I>& ima, const point_type& p) :
       ima_(ima.exact()),
       p_(p)
     {
@@ -287,7 +294,7 @@ namespace oln {
      *------------*/
 
     const I& ima_;
-    oln_point_type(I) p_;
+    point_type p_;
 
   };
 

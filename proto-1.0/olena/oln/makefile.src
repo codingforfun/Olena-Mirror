@@ -24,6 +24,7 @@ OLN_DEP =					\
   core/3d/point3d.hh				\
   core/3d/size3d.hh				\
   core/abstract/data_storage.hh			\
+  core/abstract/entry.hh			\
   core/abstract/image.hh			\
   core/abstract/image_constness.hh		\
   core/abstract/image_identity.hh		\
@@ -34,11 +35,8 @@ OLN_DEP =					\
   core/abstract/piter.hh			\
   core/abstract/point.hh			\
   core/abstract/size.hh				\
-  core/cats.hh					\
   core/coord.hh					\
-  core/macros.hh				\
-  core/props.hh					\
-  core/entry.hh					\
+  core/properties.hh				\
   core/value_box.hh				\
   fancy/iota.hh					\
   fancy/print.hh				\

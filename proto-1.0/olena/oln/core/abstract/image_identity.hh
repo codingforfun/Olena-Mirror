@@ -30,14 +30,38 @@
 
 # include <mlc/box.hh>
 
-# include <oln/core/entry.hh>
+# include <oln/core/properties.hh>
+# include <oln/core/abstract/entry.hh>
+
 
 namespace oln {
+
+
+  // fwd decl
+  namespace abstract {
+    template <typename I, typename E> struct image_identity;
+  }
+
+  // category
+  template <typename I, typename E>
+  struct set_category< abstract::image_identity<I,E> > {
+    typedef category::image ret;
+  };
+
+  // props
+  template <typename I, typename E>
+  struct set_props < category::image, abstract::image_identity<I,E> >
+    : public get_props< category::image, I >
+  {
+    typedef I delegated_type;
+  };
+
+
 
   namespace abstract {
 
     template <typename I, typename E>
-    struct image_identity: public abstract::image_entry<E>
+    struct image_identity : public abstract::image_entry<E>
     {
     protected:
 

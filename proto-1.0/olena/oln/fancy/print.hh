@@ -40,6 +40,7 @@
 # include <oln/core/2d/point2d.hh>
 # include <oln/core/coord.hh>
 
+
 namespace oln {
 
   namespace fancy {
@@ -106,7 +107,7 @@ namespace oln {
 	// FIXME: lacks cleaning
 	for (coord_t index = 0; index < input.size().nindices(); ++index)
 	  {
-	    ostr << internal::pp<oln_value_type(E)>(input[point1d(index)]) << ' ';
+	    ostr << internal::pp<oln_type_of(E, value)>(input[point1d(index)]) << ' ';
 	  }
 	ostr << std::endl;
       }
@@ -118,7 +119,7 @@ namespace oln {
 	for (coord_t row = 0; row < input.size().nrows(); ++row)
 	  {
 	    for (coord_t col = 0; col < input.size().ncols(); ++col)
-	      ostr << internal::pp<oln_value_type(E)>(input[point2d(row,col)]) << ' ';
+	      ostr << internal::pp<oln_type_of(E, value)>(input[point2d(row,col)]) << ' ';
 	    ostr << std::endl;
 	  }
       }

@@ -32,8 +32,7 @@
 
 # include <oln/core/abstract/point.hh>
 # include <oln/core/coord.hh>
-# include <oln/core/cats.hh>
-# include <oln/core/props.hh>
+# include <oln/core/properties.hh>
 
 // FIXME: doc
 
@@ -41,17 +40,26 @@
 
 namespace oln {
 
+
   struct point1d;
   struct dpoint1d;
 
+  // category
   template <>
-  struct category_type< point1d > { typedef cat::point ret; };
+  struct set_category< point1d > { typedef category::point ret; };
 
+  // super_type
   template <>
-  struct props < cat::point, point1d > : default_props< cat::point >
+  struct set_super_type< point1d > { typedef abstract::point< point1d > ret; };
+
+  // props
+  template <>
+  struct set_props < category::point, point1d > : public props_of<category::point>
   {
     typedef dpoint1d dpoint_type;
   };
+
+
 
   struct point1d : public abstract::point< point1d >
   {

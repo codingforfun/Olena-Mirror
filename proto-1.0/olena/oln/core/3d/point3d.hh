@@ -35,14 +35,21 @@
 
 namespace oln {
 
-  struct dpoint3d; // FIXME: not implemented!!
+
   struct point3d;
+  struct dpoint3d;
 
+  // category
   template <>
-  struct category_type< point3d > { typedef cat::point ret; };
+  struct set_category< point3d > { typedef category::point ret; };
 
+  // super_type
   template <>
-  struct props < cat::point, point3d > : default_props< cat::point >
+  struct set_super_type< point3d > { typedef abstract::point< point3d > ret; };
+
+  // props
+  template <>
+  struct set_props < category::point, point3d > : public props_of<category::point>
   {
     typedef dpoint3d dpoint_type;
   };

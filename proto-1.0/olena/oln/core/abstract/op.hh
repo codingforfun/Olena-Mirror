@@ -32,14 +32,28 @@
 
 namespace oln {
 
+  // fwd decl
+  namespace abstract {
+    template <typename O, typename E> struct op;
+  }
+
+  // category
+  template <typename O, typename E>
+  struct set_category< abstract::op<O,E> > { typedef category::image ret; };
+
+  // super_type
+  template <typename O, typename E>
+  struct set_super_type< abstract::op<O,E> > { typedef abstract::image_identity<O, E> ret; };
+
+
   namespace abstract {
 
-    template <typename I, typename E>
-    struct op : public oln::abstract::image_identity<I, E>
+    template <typename O, typename E>
+    struct op : public image_identity<O, E>
     {
-      typedef oln::abstract::image_identity<I, E> super_type;
+      typedef image_identity<O, E> super_type;
 
-      op(I& ref): super_type(ref)
+      op(O& ref) : super_type(ref)
       {
 	this->exact_ptr = (E*)(void*)(this);
       }

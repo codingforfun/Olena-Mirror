@@ -1,3 +1,48 @@
+2005-03-10  Thierry Geraud  <theo@lrde.epita.fr>
+
+	* oln/core/entry.hh: Move to...
+	* oln/core/abstract/entry.hh: ...here.
+	* oln/core/properties.hh: New.
+	* tests/core/tests/image1d: Adapt to properties management.
+	* tests/core/tests/image2d: Likewise.
+	* tests/core/tests/image3d: Likewise.
+	* tests/core/tests/image_identity: Likewise.
+	* tests/core/tests/setget: Likewise.
+	* oln/fancy/print.hh: Likewise.
+	* oln/fancy/iota.hh: Likewise.
+	* oln/basics.hh: Likewise.
+	* oln/makefile.src: Likewise.
+	* oln/io/write_image_2d_pnm.hh: Likewise.
+	* oln/io/read_image_2d_pnm.hh: Likewise.
+	* oln/io/write_image.hh: Likewise.
+	* oln/io/read_image.hh: Likewise.
+	* oln/core/value_box.hh: Likewise.
+	* oln/core/abstract/image_constness.hh: Likewise.
+	* oln/core/abstract/image.hh: Likewise.
+	* oln/core/abstract/piter.hh: Likewise.
+	* oln/core/abstract/images.hh: Likewise.
+	* oln/core/abstract/image_with_data.hh: Likewise.
+	* oln/core/abstract/point.hh: Likewise.
+	* oln/core/abstract/image_identity.hh: Likewise.
+	* oln/core/abstract/data_storage.hh: Likewise.
+	* oln/core/abstract/internal/image_impl.hh: Likewise.
+	* oln/core/abstract/op.hh: Likewise.
+	* oln/core/1d/array1d.hh: Likewise.
+	* oln/core/1d/image1d.hh: Likewise.
+	* oln/core/1d/fwd_piter1d.hh: Likewise.
+	* oln/core/1d/point1d.hh: Likewise.
+	* oln/core/coord.hh: Likewise.
+	* oln/core/2d/array2d.hh: Likewise.
+	* oln/core/2d/image2d.hh: Likewise.
+	* oln/core/2d/fwd_piter2d.hh: Likewise.
+	* oln/core/2d/point2d.hh: Likewise.
+	* oln/core/3d/array3d.hh: Likewise.
+	* oln/core/3d/image3d.hh: Likewise.
+	* oln/core/3d/point3d.hh: Likewise.
+	* oln/core/cats.hh: Remove because obsolete.
+	* oln/core/props.hh: Likewise.
+	* oln/core/macros.hh: Likewise.
+
 2005-03-08  Roland Levillain  <roland@lrde.epita.fr>
 
 	* oln/core/abstract/image_with_data.hh (impl_size, impl_npoints)
