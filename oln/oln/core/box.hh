@@ -60,6 +60,8 @@ namespace oln {
     point	box_center();
     point	mass_center() const;
     point	box_center() const;
+    point	top_left() const;
+    point	bottom_right() const;
     point	top() const;
     unsigned	card() const;
     unsigned	inner_boxes_card() const;

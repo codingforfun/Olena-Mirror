@@ -182,8 +182,8 @@ namespace oln {
 	  nodes_.push_back(t);
 	  return nodes_.size() - 1;
 	}
-      hnode_t n = removed_nodes_.front();
-      removed_nodes_.pop_front();
+      hnode_t n = *removed_nodes_.begin();
+      removed_nodes_.erase(n);
       assertion(n < int(nodes_.size()));
       nodes_[n] = t;
       nodes_[n].edges.clear();
@@ -203,7 +203,7 @@ namespace oln {
 	   e != tmp.end();
 	   ++e)
 	this->del_edge(*e);
-      removed_nodes_.push_front(n);
+      removed_nodes_.insert(n);
       postcondition(! hold(n));
     }
 
@@ -221,8 +221,8 @@ namespace oln {
 	}
       else
 	{
-	  e = removed_edges_.front();
-	  removed_edges_.pop_front();
+	  e = *removed_edges_.begin();
+	  removed_edges_.erase(e);
 	  assertion(e < int(edges_.size()));
 	  edges_[e].from() = h1;
 	  edges_[e].to() = h2;
@@ -243,7 +243,7 @@ namespace oln {
       const decorated_edge_value_t& ev = edges_[e];
       nodes_[ev.from()].edges.remove(e);
       nodes_[ev.to()].edges.remove(e);
-      removed_edges_.push_front(e);
+      removed_edges_.insert(e);
       postcondition(! hold(e));
     }
 
@@ -315,16 +315,12 @@ namespace oln {
     bool			
     heavy_graph<NodeValue, EdgeValue>::hold(hnode_t n) const
     {
-      bool ret =  
-	((std::find(removed_nodes_.begin(), removed_nodes_.end(), n) 
-	 == removed_nodes_.end())
-	&& (n < int(nodes_.size())));
+      bool ret = (removed_nodes_.find(n) == removed_nodes_.end()) 
+	&& (n < int(nodes_.size()));
       if (ret == false)
 	{
-	  for (int i = 0; i < edges_.size(); ++i)
-	    if (std::find(removed_edges_.begin(), removed_edges_.end(), 
-			  hedge_t(i)) 
-		 == removed_edges_.end())
+	  for (int i = 0; i < int(edges_.size()); ++i)
+	    if (removed_edges_.find(hedge_t(i)) == removed_edges_.end())
 	      postcondition (((edges_[i].from() != n) &&
 			      (edges_[i].to() != n)));
 		
@@ -342,7 +338,7 @@ namespace oln {
 	&& (n < int(edges_.size())));
       if (ret == false)
 	{
-	  for (int i = 0; i < nodes_.size(); ++i)
+	  for (int i = 0; i < int(nodes_.size()); ++i)
 	    if (std::find(removed_nodes_.begin(), removed_nodes_.end(), 
 			  hnode_t(i)) 
 	     == removed_nodes_.end())

@@ -197,6 +197,18 @@ namespace oln {
   }
 
   template <class PointType>
+  typename box<PointType>::point box<PointType>::top_left() const
+  {
+    return bottom_;
+  }
+
+  template <class PointType>
+  typename box<PointType>::point box<PointType>::bottom_right() const
+  {
+    return top_;
+  }
+
+  template <class PointType>
   typename box<PointType>::point box<PointType>::top() const
   {
     return top_;

@@ -1,3 +1,12 @@
+2003-02-14  Yann Régis-Gianas  <yann@lrde.epita.fr>
+
+	* oln/core/box.hh (top_left, bottom_right): New.
+	* oln/core/box.hxx: Implement them.
+	* oln/level/invert.hh: Fix a 'return' in a void return function.
+	* oln/core/internal/graph_impl.hxx: 
+		Use std::set instead of std::list for removed_*.
+	* oln/core/internal/graph_impl.hh: Likewise.
+
 2003-02-03  Yann Régis-Gianas  <yann@lrde.epita.fr>
 
 	* oln/core/box.hh: 

@@ -85,7 +85,7 @@ namespace oln {
     template<class I> inline
     void invert_self(image<I>& input)
     {
-      return apply_self(f_invert<Value(I)>(), input);
+      apply_self(f_invert<Value(I)>(), input);
     }
 
   } // end of level

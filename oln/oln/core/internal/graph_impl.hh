@@ -31,6 +31,7 @@
 # include <oln/core/graph.hh>
 # include <vector>
 # include <list>
+# include <set>
 
 namespace oln {
 
@@ -136,8 +137,8 @@ namespace oln {
     private:
       nodes_set_t		nodes_;
       edges_set_t		edges_;
-      std::list<hnode_t>	removed_nodes_;
-      std::list<hedge_t>	removed_edges_;
+      std::set<hnode_t>		removed_nodes_;
+      std::set<hedge_t>		removed_edges_;
     };
 
   } // end of internal.
