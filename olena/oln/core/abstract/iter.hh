@@ -25,76 +25,84 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_INTERNAL_ITER1D_HH
-# define OLENA_CORE_INTERNAL_ITER1D_HH
+#ifndef OLENA_CORE_ABSTRACT_ITER_HH
+# define OLENA_CORE_ABSTRACT_ITER_HH
 
-# include <oln/core/coord.hh>
-# include <oln/core/point1d.hh>
-# include <oln/core/dpoint1d.hh>
-# include <oln/core/image1d.hh>
-# include <oln/core/iter.hh>
-
-# include <mlc/contract.hh>
 # include <mlc/type.hh>
 # include <mlc/objs.hh>
 
-namespace oln {
-
-  namespace internal {
-
+namespace oln
+{
+  namespace abstract
+  {
     template<class Exact>
-    class _iter1d : public virtual iter< Exact >
+    struct iter; // fwd_decl
+  } // end of abstract
+
+  template<class Exact>
+  struct iter_traits;
+
+  template<class Exact>
+  struct iter_traits<abstract::iter<Exact> >
+  {
+
+  };
+
+  // shortcuts
+  using mlc::_begin;
+  using mlc::begin;
+  using mlc::_end;
+  using mlc::end;
+  
+  namespace abstract 
+  {
+    // iter
+    
+    template<class Exact>
+    struct iter : public mlc::any<Exact>
     {
-    public:
 
-//       typedef _iter1d<Inferior> self;
-//       typedef typename mlc::exact<self>::ret exact;
+      typedef typename iter_traits<Exact>::point_type point_type;
+      typedef typename iter_traits<Exact>::dpoint_type dpoint_type;
 
-      const point1d& point_ref() const
+
+      const point_type& point_ref() const
       {
-	return _p;
+	return p_;
       }
 
-      bool operator==(const point1d& p) const
+      bool operator==(const point_type& p) const
       {
-	return _p == p;
+	return p_ == p;
       }
 
-      bool operator!=(const point1d& p) const
+      bool operator!=(const point_type& p) const
       {
-	return _p != p;
+	return p_ != p;
       }
 
-      point1d operator+(const dpoint1d& dp) const
+      point_type operator+(const dpoint_type& dp) const
       {
 	precondition(*this != end);
-	return _p + dp;
+	return p_ + dp;
       }
 
-      point1d operator-(const dpoint1d& dp) const
+      point_type operator-(const dpoint_type& dp) const
       {
 	precondition(*this != end);
-	return _p - dp;
+	return p_ - dp;
       }
 
-      operator point1d() const
+      operator point_type() const
       {
-	precondition(*this != end);
-	invariant(_p.col() >= 0 &&
-		  _p.col() < _ncols);
-	return _p;
+	return to_exact(this)->to_point();
       }
 
       // it's convenient to type `it.cur()' instead of `(point)it' when
       // necessary.
-      point1d cur() const
+      point_type cur() const
       {
 	return *this;
-      }
-
-      coord col() const
-      {
-	return _p.col();
       }
 
       // deferred methods are:
@@ -106,33 +114,25 @@ namespace oln {
 
       mlc::_begin operator=(mlc::_begin b)
       {
-	to_exact(this)->_goto_begin();
+	to_exact(this)->goto_begin_();
 	return b;
       }
 
       mlc::_end operator=(mlc::_end e)
       {
-	to_exact(this)->_goto_end();
+	to_exact(this)->goto_end_();
 	return e;
       }
 
       bool operator==(mlc::_end) const
       {
-	return to_exact(this)->_is_at_end();
+	return to_exact(this)->is_at_end_();
       }
 
       void operator++()
       {
 	precondition(*this != end);
-	to_exact(this)->_goto_next();
-// 	return to_exact(*this);
-      }
-
-      // deduced methods:
-
-      bool operator!=(mlc::_end e) const
-      {
-	return ! this->operator==(e);
+	to_exact(this)->goto_next_();
       }
 
 //       typename mlc::exact<self>::ret operator++(int)
@@ -143,25 +143,25 @@ namespace oln {
 // 	return tmp;
 //       }
 
-      static std::string name() { return std::string("_iter1d<") + Exact::name() + ">"; }
+      // deduced methods:
 
-    protected:
-
-      point1d _p;
-      const coord _ncols;
-
-      _iter1d(const image1d_size& size) :
-	_ncols(size.ncols())
+      bool operator!=(mlc::_end e) const
       {
-	precondition(size.ncols() > 0);
-	to_exact(this)->_goto_begin();
+	return ! this->operator==(e);
       }
+
+
+      static std::string name() { return std::string("iter<") +
+				    Exact::name() + ">"; }
+    protected:
+      point_type p_;
+
+      iter() {}
     };
-
-
-  } // end of internal
+        
+  } // end of abstract
 
 } // end of oln
 
 
-#endif // ! OLENA_CORE_INTERNAL_ITER1D_HH
+#endif // ! OLENA_CORE_ABSTRACT_ITER_HH

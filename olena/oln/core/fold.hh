@@ -29,7 +29,7 @@
 # define OLENA_CORE_FOLD_HH
 
 # include <oln/core/abstract/image.hh>
-# include <oln/core/iter.hh>
+# include <oln/core/abstract/iter.hh>
 # include <mlc/typeadj.hh>
 # include <oln/core/macros.hh>
 

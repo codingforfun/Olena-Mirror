@@ -29,12 +29,20 @@
 # define OLENA_CORE_IMAGE3D_SIZE_HH
 
 # include <mlc/contract.hh>
-# include <oln/core/imagend_size.hh>
+# include <oln/core/abstract/image_size.hh>
 # include <oln/core/coord.hh>
 
 namespace oln {
 
-  struct image3d_size : public imagend_size< 3, image3d_size >
+  struct image3d_size;
+
+  template<>
+  struct image_size_traits<image3d_size>
+  {
+    enum { dim = 3 };
+  };
+
+  struct image3d_size : public abstract::image_size<image3d_size >
   {
   public:
 

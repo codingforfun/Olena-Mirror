@@ -87,6 +87,11 @@
 # define ntg_unsigned_largest_type_(T) \
   ntg::type_traits<T>::unsigned_largest_type
 
+# define ntg_comp_type(T) \
+  typename ntg::type_traits<T>::comp_type
+# define ntg_comp_type_(T) \
+  ntg::type_traits<T>::comp_type
+
 /*-----------------.
 | values accessors |
 `-----------------*/
@@ -104,6 +109,8 @@
 # define ntg_sup_val(T) ntg::type_traits<T>::sup()
 
 # define ntg_max_print_width(T) ntg::type_traits<T>::max_print_width()
+
+# define ntg_nb_comp(T) ntg::type_traits<T>::nb_comp
 
 /*--------------------------.
 | operator traits accessors |

@@ -30,7 +30,7 @@
 
 # include <oln/core/point2d.hh>
 # include <oln/core/dpoint2d.hh>
-# include <oln/core/internal/window.hh>
+# include <oln/core/abstract/windownd.hh>
 # include <oln/core/winiter.hh>
 # include <oln/core/accum.hh>
 # include <oln/io/readable.hh>
@@ -38,91 +38,71 @@
 
 namespace oln {
 
-  class window2d : public internal::_window< 2, window2d >
+  class window2d; // fwd_decl
+
+  template<>
+  struct struct_elt_traits<window2d>: public
+  struct_elt_traits<abstract::windownd<window2d> >
+  {
+    enum { dim = 2 };
+    typedef point2d point_type;
+    typedef dpoint2d dpoint_type;
+    typedef winiter< window2d > iter_type;
+    typedef winneighb< window2d > neighb_type;
+  };
+
+  class window2d : public abstract::windownd< window2d >
   {
   public:
-    typedef internal::_window< 2, window2d > super;
-    typedef window2d self;
+    typedef abstract::windownd<window2d > super_type;
+    typedef window2d self_type;
 
-    typedef winiter< self >   iter;
-    typedef winneighb< self > neighb;
+    typedef struct_elt_traits< self_type >::iter_type   iter_type;
+    typedef struct_elt_traits< self_type >::neighb_type
+    neighb_type;
+    typedef struct_elt_traits< self_type >::dpoint_type
+    dpoint_type;
 
-    window2d& add(const dpoint2d& dp)
+    coord delta_update_(const dpoint_type& dp)
     {
-      super::add(dp);
-      _delta(abs(dp.row()));
-      _delta(abs(dp.col()));
-      return *this;
+      delta_(abs(dp.row()));
+      delta_(abs(dp.col()));
+      return delta_;
+    }
+
+    window2d& add(const dpoint_type& dp)
+    {
+      return to_exact(this)->add_(dp);
     }
 
     window2d& add(coord row, coord col)
     {
-      return this->add(dpoint2d(row, col));
+      dpoint_type dp(row, col);
+      return add(dp);
     }
 
-    window2d() : super(), _delta(0) {}
-    window2d(unsigned size) : super(size), _delta(0) {}
-    window2d(unsigned n, const coord crd[]) : super(), _delta(0)
+    window2d() : super_type() {}
+    window2d(unsigned size) : super_type(size) {}
+    window2d(unsigned n, const coord crd[]) : super_type(n)
     {
-      _dp.reserve(n);
-      _centered = false;
       for (unsigned i = 0; i < 2 * n; i += 2)
-	add(dpoint2d(crd[i], crd[i+1]));
+	add(dpoint_type(crd[i], crd[i+1]));
     }
 
     // io
-    window2d(const io::internal::anything& r) : super(), _delta(0)
+    window2d(const io::internal::anything& r) : super_type()
     {
       r.assign(*this);
     }
+
     window2d& operator=(const io::internal::anything& r)
     {
       return r.assign(*this);
     }
 
-    coord delta() const
-    {
-      return _delta;
-    }
-
     static std::string name() { return std::string("window2d"); }
 
-    self operator-() const
-    {
-      self win(*this);
-      win.sym();
-      return win;
-    }
-
-  private:
-    max_accumulator<coord> _delta;
   };
-
-
-  inline
-  window2d inter(const window2d& lhs, const window2d& rhs)
-  {
-    window2d win;
-    for (unsigned i = 0; i < lhs.card(); ++i)
-      if (rhs.has(lhs.dp(i)))
-	win.add(lhs.dp(i));
-    for (unsigned j = 0; j < rhs.card(); ++j)
-      if (! win.has(rhs.dp(j)) && lhs.has(rhs.dp(j)))
-	win.add(rhs.dp(j));
-    return win;
-  }
-
-  inline
-  window2d uni(const window2d& lhs, const window2d& rhs)
-  {
-    window2d win;
-    for (unsigned i = 0; i < lhs.card(); ++i)
-      win.add(lhs.dp(i));
-    for (unsigned j = 0; j < rhs.card(); ++j)
-      if (! win.has(rhs.dp(j)))
-	win.add(rhs.dp(j));
-    return win;
-  }
 
 
   // std win

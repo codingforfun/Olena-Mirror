@@ -28,58 +28,69 @@
 #ifndef OLENA_CORE_FWD_ITER3D_HH
 # define OLENA_CORE_FWD_ITER3D_HH
 
-# include <oln/core/internal/iter3d.hh>
+# include <oln/core/abstract/iter3d.hh>
 
 
 namespace oln {
 
   template<class Exact = mlc::final>
-  class fwd_iter3d : public internal::_iter3d<typename mlc::exact_vt<fwd_iter3d<Exact>, Exact>::ret>,
-                     public fwd_iter<typename mlc::exact_vt<fwd_iter3d<Exact>, Exact>::ret>
+  class fwd_iter3d; // fwd_decl
+
+  template<class Exact>
+  struct iter_traits<fwd_iter3d<Exact> >: public
+  iter_traits<abstract::iter3d<typename
+  mlc::exact_vt<fwd_iter3d<Exact>, Exact>::ret> >
+  {
+
+  };
+
+  template<class Exact>
+  class fwd_iter3d : public abstract::iter3d<typename mlc::exact_vt<fwd_iter3d<Exact>, Exact>::ret>
   {
   public:
 
-    typedef internal::_iter3d<typename mlc::exact_vt<fwd_iter3d<Exact>, Exact>::ret> super;
-    typedef fwd_iter<typename mlc::exact_vt<fwd_iter3d<Exact>, Exact>::ret> super2;
+    typedef typename mlc::exact_vt<fwd_iter3d<Exact>, Exact>::ret exact_type;
 
+    typedef abstract::iter3d<exact_type> super_type;
 
-    enum { dim = 3 };
-    typedef point3d point;
+    enum { dim = iter_traits<exact_type>::dim };
+    typedef typename iter_traits<exact_type>::point_type point_type;
+ 
 
     template<class Image>
     fwd_iter3d(const Image& ima) :
-      super(ima.size()), super2()
+      super_type(ima.size())
     {
     }
 
-    template<class U> U operator=(U u) { return super::operator=(u); }
+    template<class U> U operator=(U u) { return super_type::operator=(u); }
 
-    void _goto_begin()
+    void goto_begin_()
     {
-      _p.slice() = _p.row() = _p.col() = 0;
+      p_.slice() = p_.row() = p_.col() = 0;
     }
 
-    void _goto_end()
+    void goto_end_()
     {
-      _p.slice() = _nslices;
+      p_.slice() = nslices_;
     }
 
-    bool _is_at_end() const
+    bool is_at_end_() const
     {
-      return _p.slice() == _nslices;
+      return p_.slice() == nslices_;
     }
 
-    void _goto_next()
+    void goto_next_()
     {
-      ++_p.col();
-      if (_p.col() < _ncols)
+      ++p_.col();
+      if (p_.col() < ncols_)
 	return;
-      _p.col() = 0;
-      ++_p.row();
-      if (_p.row() < _nrows)
+      p_.col() = 0;
+      ++p_.row();
+      if (p_.row() < nrows_)
 	return;;
-      _p.row() = 0;
-      ++_p.slice();
+      p_.row() = 0;
+      ++p_.slice();
     }
 
     static std::string name() { return "fwd_iter3d<" + Exact::name() + ">"; }

@@ -158,6 +158,7 @@ GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   short);			\
 GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned short);			\
 GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   char);			\
 GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned char);			\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, char);				\
 GLOBAL_ARITH_OP_BUILTIN(Op, Name, float);				\
 GLOBAL_ARITH_OP_BUILTIN(Op, Name, double);				\
 GLOBAL_ARITH_OP_BUILTIN(Op, Name, bool);

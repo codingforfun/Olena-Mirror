@@ -74,10 +74,12 @@ namespace oln {
     typedef typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret exact_type;
     typedef typename abstract::image_with_impl<Impl,
 					       exact_type> super_type;
+    typedef abstract::image<Exact> super_image;
 
-    image() : super_type() {}
 
-    image(self_type& rhs): super_type(rhs) {}
+    image() : super_image(), super_type() {}
+
+    image(self_type& rhs): super_image(), super_type(rhs) {}
 
     static std::string name()
     {

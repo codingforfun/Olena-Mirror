@@ -1,0 +1,23 @@
+#include <oln/core/neighborhood1d.hh>
+#include <oln/core/neighborhood2d.hh>
+#include <oln/core/neighborhood3d.hh>
+
+#include <ntg/all.hh>
+
+#include <cassert>
+
+using namespace oln;
+using namespace ntg;
+
+int main()
+{
+  neighborhood1d n1d;
+  neighborhood2d n2d;
+  neighborhood3d n3d;
+  n1d.add(dpoint1d(2));
+  n2d.add(dpoint2d(0, 5));
+  
+  n2d.add(dpoint2d(0, 5));
+  n3d.add(dpoint3d(0, 2, 4));
+  return 0;
+}

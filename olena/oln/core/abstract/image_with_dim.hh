@@ -67,15 +67,6 @@ namespace oln {
 
   } // end of namespace abstract
 
-
-    template <unsigned Dim, class Exact>
-    struct image_traits<abstract::image_with_dim<Dim, Exact> >: public image_traits<abstract::image<Exact> >
-    {
-      enum {dim = Dim};
-      typedef pointnd<Dim> point_type;
-      //FIXME what about nd-iterators ?
-    };
-
     template <class Exact>
     struct image_traits<abstract::image_with_dim<1, Exact> >: public image_traits<abstract::image<Exact> >
     {
@@ -131,7 +122,7 @@ namespace oln {
       typedef abstract::image<Exact> super_type;
       typedef image_with_dim<1, Exact> self_type;
       typedef Exact exact_type;
-
+   
       coord ncols() const
       {
 	return size().ncols();
@@ -176,7 +167,7 @@ namespace oln {
       }
 
     protected:
-      image_with_dim() {}
+      image_with_dim() : super_type(){}
 
     }; // end of one-dimensional specialization
 
@@ -197,7 +188,7 @@ namespace oln {
       typedef image_with_dim<2, Exact> self_type;
       typedef Exact exact_type;
       typedef abstract::image<Exact> super_type;
-
+    
       coord nrows() const
       {
 	return size().nrows();
@@ -247,8 +238,8 @@ namespace oln {
       }
 
     protected:
-      image_with_dim() {}
-
+      image_with_dim() : super_type() {}
+ 
     }; // end of bi-dimensional specialization
 
     // tri-dimensional specialization
@@ -319,8 +310,8 @@ namespace oln {
       }
 
     protected:
-      image_with_dim(){}
-
+      image_with_dim() : super_type() {}
+ 
     }; // end of tri-dimensional specialization
 
 

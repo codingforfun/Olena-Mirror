@@ -25,28 +25,61 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_W_WINDOW_HH
-# define OLENA_CORE_W_WINDOW_HH
+#ifndef OLENA_CORE_ABSTRACT_NEIGHBORHOODND_HH
+# define OLENA_CORE_ABSTRACT_NEIGHBORHOODND_HH
 
-# include <oln/core/structelt.hh>
+# include <oln/core/abstract/window_base.hh>
 
-namespace oln {
+namespace oln 
+{
+  namespace abstract 
+  {
+    template<class Exact>
+    struct neighborhoodnd; //fwd_decl
+  } // end of abstract
 
   template<class Exact>
-  struct w_window : public struct_elt< Exact >
+  struct struct_elt_traits<abstract::neighborhoodnd<Exact> >: public
+  struct_elt_traits<abstract::window_base<abstract::neighborhood<Exact>, Exact> >
   {
 
-    static std::string name()
-    {
-      return std::string("w_window<") + Exact::name() + ">";
-    }
-  protected:
-    w_window() {}
   };
 
-# define Weight(WinType)                               \
-Exact(WinType)::weight
+  namespace abstract 
+  {
+    template<class Exact>
+    struct neighborhoodnd: public window_base<neighborhood<Exact>, Exact> 
+    {
+      typedef window_base<neighborhood<Exact>, Exact> super_type;
+      typedef neighborhoodnd<Exact> self_type;
+      typedef Exact exact_type;
+      typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
 
+      static std::string name()
+      {
+	return std::string("neighborhoodnd<") + Exact::name() + ">" ;
+      }
+
+      exact_type& add_(const dpoint_type& dp)
+      {
+	precondition( !dp.is_centered() );	
+	centered_ = true;
+	if (!(has_(dp)))
+	  dp_.push_back(dp);
+	delta_update(dp);
+	return to_exact(*this);
+      }
+
+    protected:
+      neighborhoodnd() : super_type() {}
+      
+      neighborhoodnd(unsigned size) : super_type(size)
+      {
+	
+      }
+      
+    };
+  } // end of abstract
 } // end of oln
 
-#endif // ! OLENA_CORE_W_WINDOW_HH
+#endif // OLENA_CORE_ABSTRACT_NEIGHBORHOODND_HH

@@ -91,6 +91,8 @@ namespace ntg {
     template <unsigned N, class T, class Self>
     struct typetraits<vec<N, T, Self> >
     {
+      enum { nb_comp = N };
+
       typedef vec<N, T, Self>	self;
       typedef vectorial		abstract_type;
       typedef self		ntg_type;
@@ -98,7 +100,9 @@ namespace ntg {
 
       ntg_build_value_type(vect_value<E>);
 
-      typedef typename typetraits<T>::base_type  base_type[N];
+      // FIXME: document comp_type
+      typedef T					 comp_type;
+      typedef self				 base_type;
       typedef T					 storage_type[N];
       typedef typename typetraits<T>::cumul_type cumul_type[N];
     };
@@ -143,12 +147,6 @@ namespace ntg {
 	this->val_[i] = v[i];
       return *this;
     }
-
-    // accessor
-    T &     operator[](unsigned i) 	 { return this->val_[i]; }
-    const T operator[](unsigned i) const { return this->val_[i]; }
-
-    unsigned size() const { return N; }
 
     static const vec<N,T> zero() { return vec(); }
     // There is no unit() for vec<>.

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,54 +25,55 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ITER_HH
-# define OLENA_CORE_ITER_HH
+#include <ntg/int.hh>
+#include <oln/basics2d.hh>
+#include <oln/level/fill.hh>
+#include <oln/level/compare.hh>
+#include <iostream>
+#include "check.hh"
+#include "data.hh"
 
-# include <mlc/type.hh>
-# include <mlc/objs.hh>
+using namespace oln;
+using namespace mlc;
+using namespace ntg;
 
-namespace oln
+#define OK_OR_FAIL				\
+      std::cout << "OK" << std::endl;		\
+    else					\
+      {						\
+	std::cout << "FAIL" << std::endl;	\
+	fail = true;				\
+      }
+
+#define ASSERT_CHECK(Val) { assert_check(Val, #Val, fail); }
+
+void assert_check(bool res, const std::string& desc, bool &fail)
 {
-
-  using mlc::_begin;
-  using mlc::begin;
-  using mlc::_end;
-  using mlc::end;
-
-  // iter
-
-  template<class Exact>
-  struct iter : public mlc::any<Exact>
-  {
-    static std::string name() { return std::string("iter<") + Exact::name() + ">"; }
-  protected:
-    iter() {}
-  };
+  std::cout << "---- " << desc << " ----" << std::endl;
+  if (res)
+    OK_OR_FAIL;
+}
 
 
-  // fwd_iter
+bool
+check(void)
+{
+  bool fail = false;
 
-  template<class Exact>
-  struct fwd_iter : public virtual iter<Exact>
-  {
-    static std::string name() { return std::string("fwd_iter<") + Exact::name() + ">"; }
-  protected:
-    fwd_iter() {}
-  };
+  image2d<int_u8>
+    im_0(16, 16),
+    im_20(16, 16);
+  level::fill(im_0, 0);
+  level::fill(im_20, 20);
 
+  ASSERT_CHECK(level::is_greater(im_20, im_0));
+  ASSERT_CHECK(!level::is_greater(im_0, im_20));
+  ASSERT_CHECK(level::is_greater_or_equal(im_0, im_0));
 
-  // bkd_iter
+  ASSERT_CHECK(level::is_lower(im_0, im_20));
+  ASSERT_CHECK(!level::is_lower(im_20, im_0));
+  ASSERT_CHECK(level::is_lower_or_equal(im_0, im_0));
 
-  template<class Exact>
-  struct bkd_iter : public virtual iter<Exact>
-  {
-    static std::string name() { return std::string("bkd_iter<") + Exact::name() + ">"; }
-  protected:
-    bkd_iter() {}
-  };
-
-
-} // end of oln
-
-
-#endif // ! OLENA_CORE_ITER_HH
+  ASSERT_CHECK(level::is_equal(im_0, im_0));
+  return fail;
+}

@@ -42,11 +42,8 @@
 # include <oln/core/fwd_iter2d.hh>
 # include <oln/core/bkd_iter2d.hh>
 
-// FIXME: uncomment when ready
-#if 0
 # include <oln/io/basics.hh>
 # include <oln/io/pnm.hh>
 # include <oln/io/se.hh>
-#endif
 
 #endif // ! OLENA_BASICS2D_HH

@@ -36,13 +36,15 @@ namespace oln {
   namespace level {
 
     /* Threshold the value of the image.  */
-    template<class Output, class Input, class Exact = mlc::final>
+    template<class Input, class Output, class Exact = mlc::final>
     class threshold : public std::unary_function<const Input&, Output>
     {
     public:
 
 
-      threshold(const Input& threshold, const Output& min = Output::min(), const Output& max = Output::max()) :
+      threshold(const Input& threshold,
+		const Output& min = ntg_min_val(Output),
+		const Output& max = ntg_min_val(Output)) :
         m_threshold(threshold), m_min(min), m_max(max)
       { }
 

@@ -72,7 +72,7 @@ namespace oln {
   }
 
   inline
-  dpoint2d::dpoint2d(const point2d& p) : super(p)
+  dpoint2d::dpoint2d(const point2d& p) : super_type(p)
   {
   }
 
