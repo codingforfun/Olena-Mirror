@@ -38,14 +38,15 @@
 namespace oln {
 
   // fwd decl
-  template< unsigned Dim, class Inferior >
+  template< unsigned Dim, class Exact >
   class pointnd;
 
-  template< unsigned Dim, class Inferior = type::bottom >
-  class dpointnd : public dpoint< dpointnd< Dim, Inferior > >
+  template< unsigned Dim, class Exact = type::final >
+  class dpointnd : public dpoint< typename type::exact_vt<dpointnd<Dim, Exact>, Exact>::ret>
   {
   public:
-    typedef Inferior inferior;
+  
+    typedef dpoint< typename type::exact_vt<dpointnd<Dim, Exact>, Exact>::ret > super;
     typedef dpointnd self;
 
     enum { dim = Dim };
@@ -54,8 +55,8 @@ namespace oln {
     {
     }
 
-    template< class I >
-    explicit dpointnd(const pointnd< Dim, I >& p)
+    template< class E >
+    explicit dpointnd(const pointnd< Dim, E >& p)
     {
       for (unsigned i = 0; i < dim; ++i)
 	nth(i) = p.nth(i);
@@ -100,7 +101,7 @@ namespace oln {
     {
       std::ostringstream out;
       out << "dpointnd<" << dim << ","
-	  << typename_of<Inferior>() << ">" << std::ends;
+	  << typename_of<Exact>() << ">" << std::endl;
       return out.str();
     }
 
@@ -110,11 +111,11 @@ namespace oln {
 
   namespace internal
   {
-    template<unsigned Dim, class Inferior>
-    struct default_less< dpointnd<Dim, Inferior> >
+    template<unsigned Dim, class Exact>
+    struct default_less< dpointnd<Dim, Exact> >
     {
-      bool operator()(const dpointnd<Dim, Inferior>& l,
-		      const dpointnd<Dim, Inferior>& r) const
+      bool operator()(const dpointnd<Dim, Exact>& l,
+		      const dpointnd<Dim, Exact>& r) const
       {
 	for (unsigned i = 0; i < dim; ++i)
 	  if (l.nth(i) < r.nth(i))

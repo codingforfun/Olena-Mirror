@@ -42,11 +42,11 @@ namespace oln {
   namespace internal {
 
 
-    template<class Inferior = type::bottom>
-    class _iter3d : public type::any< _iter3d<Inferior> >
+    template<class Exact>
+    class _iter3d : public type::any< Exact >
     {
     public:
-      typedef Inferior inferior;
+
 //       typedef _iter3d<Inferior> self;
 //       typedef typename type::exact<self>::ret exact;
 
@@ -157,7 +157,7 @@ namespace oln {
 // 	return tmp;
 //       }
 
-      static std::string name() { return std::string("_iter3d<") + Inferior::name() + ">"; }
+      static std::string name() { return std::string("_iter3d<") + Exact::name() + ">"; }
 
     protected:
 

@@ -35,12 +35,10 @@
 
 namespace oln {
 
-  template< unsigned Dim, class Inferior = type::bottom >
-  class imagend_size : public image_size< imagend_size<Dim, Inferior> >
+  template< unsigned Dim, class Exact = type::final >
+  class imagend_size : public image_size< typename type::exact_vt<imagend_size<Dim, Exact>, Exact>::ret >
   {
   public:
-
-    typedef Inferior inferior;
 
     enum { dim = Dim };
 
@@ -71,7 +69,7 @@ namespace oln {
     {
       std::ostringstream out;
       out << "imagend_size<" << dim << ","
-          << typename_of<Inferior>() << ">" << std::ends;
+          << typename_of<Exact>() << ">" << std::ends;
       return out.str();
     }
 

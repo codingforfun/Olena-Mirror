@@ -40,7 +40,7 @@ namespace oln {
     public internal::_neighborhood< 1, neighborhood1d >
   {
   public:
-    typedef type::bottom inferior;
+  
     typedef internal::_neighborhood< 1, neighborhood1d > super;
     typedef neighborhood1d self;
 

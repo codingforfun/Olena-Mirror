@@ -40,11 +40,11 @@ namespace oln {
 
   namespace internal {
 
-    template <unsigned Dim, class Weight, class Inferior = type::bottom>
-    class _w_window : public w_window< _w_window< Dim, Weight, Inferior > >
+    template <unsigned Dim, class Weight, class Exact>
+    class _w_window : public w_window< Exact >
     {
     public:
-      typedef Inferior inferior;
+ 
       enum { dim = Dim };
       typedef typename point_for_dim<Dim>::ret      point;
       typedef typename dpoint_for_dim<Dim>::ret     dpoint;
@@ -80,7 +80,7 @@ namespace oln {
       static std::string name()
       {
 	return std::string("_w_window<") + type::name_of<dpoint>() + "," +
-	  type::name_of<Weight>() + "," + inferior::name() + ">" ;
+	  type::name_of<Weight>() + "," + Exact::name() + ">" ;
       }
 
     protected:

@@ -43,14 +43,13 @@ namespace oln {
     // holds data, that is, every 3d image type which is not a proxy.
 
 
-    template<class T, class Inferior = type::bottom>
-    class _real_image3d : public _image3d< T, _real_image3d<T,Inferior> >
+    template<class T, class Exact>
+    class _real_image3d : public _image3d< T, Exact >
     {
     public:
 
-      typedef Inferior inferior;
-      typedef _real_image3d<T,Inferior> self;
-      typedef _image3d< T, _real_image3d<T,Inferior> > super;
+      typedef _real_image3d<T, Exact> self;
+      typedef _image3d< T, Exact > super;
 
       // ctors are protected; see below
 
@@ -102,7 +101,7 @@ namespace oln {
 	return
 	  std::string("_real_image3d<")
 	  + T::name() + ","
-	  + Inferior::name() + ">";
+	  + Exact::name() + ">";
       }
 
     protected:

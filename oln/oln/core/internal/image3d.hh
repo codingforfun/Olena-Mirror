@@ -41,9 +41,9 @@ namespace oln {
 
 
   // fwd decl
-  template<class Inferior>
+  template<class Exact>
   struct fwd_iter3d;
-  template<class Inferior>
+  template<class Exact>
   struct bkd_iter3d;
 
 
@@ -53,17 +53,15 @@ namespace oln {
 
     // _image3d is a base class for every 3d image type
 
-    template<class T, class Inferior = type::bottom>
-    class _image3d : public regular_image< 3, _image3d<T,Inferior> >
+    template<class T, class Exact>
+    class _image3d : public regular_image< 3, Exact >
     {
     public:
 
-      typedef Inferior inferior;
-
       typedef T value;
-      typedef fwd_iter3d<type::bottom> iter;
-      typedef fwd_iter3d<type::bottom> fwd_iter;
-      typedef bkd_iter3d<type::bottom> bkd_iter;
+      typedef fwd_iter3d<type::final> iter;
+      typedef fwd_iter3d<type::final> fwd_iter;
+      typedef bkd_iter3d<type::final> bkd_iter;
 
       // the following methods are deduced from the method data() that
       // has to be provided by sub-classes
@@ -150,7 +148,7 @@ namespace oln {
 	return
 	  std::string("_image3d<")
 	  + T::name() + ","
-	  + Inferior::name() + ">";
+	  + Exact::name() + ">";
       }
 
     protected:

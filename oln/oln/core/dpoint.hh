@@ -34,11 +34,10 @@
 namespace oln {
 
 
-  template<class Inferior = type::bottom>
-  struct dpoint : public type::any< dpoint<Inferior> >
+  template<class Exact>
+  struct dpoint : public type::any<Exact>
   {
-    typedef Inferior inferior;
-    static std::string name() { return std::string("dpoint<") + Inferior::name() + ">"; }
+    static std::string name() { return std::string("dpoint<") + Exact::name() + ">"; }
   protected:
     dpoint() {}
   };

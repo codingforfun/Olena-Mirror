@@ -42,7 +42,7 @@ namespace oln {
   class point3d : public pointnd< 3, point3d >
   {
   public:
-    typedef type::bottom		inferior;
+
     typedef pointnd< 3, point3d >	super;
     typedef dpoint3d			dpoint;
 

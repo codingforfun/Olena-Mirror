@@ -36,18 +36,37 @@ namespace oln {
     For instance `oln::typeadj<const int>::mutable_ref' equals `int &'.
   */
 
-# define _OLN_TYPEADJ_DEFS			\
-  {						\
-    typedef T mutable_val;			\
-    typedef const T const_val;			\
-    typedef T& mutable_ref;			\
-    typedef const T& const_ref;			\
-  } /* no ; */
+  template < class T > struct typeadj             
+  {						
+    typedef T mutable_val;			
+    typedef const T const_val;			    
+    typedef T& mutable_ref;			
+    typedef const T& const_ref;			
+  };
 
-  template < class T > struct typeadj             _OLN_TYPEADJ_DEFS;
-  template < class T > struct typeadj< T& >       _OLN_TYPEADJ_DEFS;
-  template < class T > struct typeadj< const T >  _OLN_TYPEADJ_DEFS;
-  template < class T > struct typeadj< const T& > _OLN_TYPEADJ_DEFS;
+  template < class T > struct typeadj< T& >       
+  {						
+    typedef T mutable_val;			
+    typedef const T const_val;			    
+    typedef T& mutable_ref;			
+    typedef const T& const_ref;			
+  };
+
+  template < class T > struct typeadj< const T >  
+  {						
+    typedef T mutable_val;			
+    typedef const T const_val;			    
+    typedef T& mutable_ref;			
+    typedef const T& const_ref;			
+  };
+
+  template < class T > struct typeadj< const T& > 
+  {						
+    typedef T mutable_val;			
+    typedef const T const_val;			    
+    typedef T& mutable_ref;			
+    typedef const T& const_ref;			
+  };
 
 } // oln
 

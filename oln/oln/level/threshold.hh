@@ -36,11 +36,11 @@ namespace oln {
   namespace level {
 
     /* Threshold the value of the image.  */
-    template<class Output, class Input, class Inferior = type::bottom>
+    template<class Output, class Input, class Exact = type::final>
     class threshold : public std::unary_function<const Input&, Output>
     {
     public:
-      typedef Inferior inferior;
+
 
       threshold(const Input& threshold, const Output& min = Output::min(), const Output& max = Output::max()) :
         m_threshold(threshold), m_min(min), m_max(max)
@@ -56,7 +56,7 @@ namespace oln {
 	return std::string("threshold<")
 	  + typename_of<Output>() + ", "
 	  + typename_of<Input>() + ", "
-	  + typename_of<Inferior>() + ">";
+	  + typename_of<Exact>() + ">";
       }
 
     private:

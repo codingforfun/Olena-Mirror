@@ -38,8 +38,6 @@ namespace oln {
   {
   public:
 
-    typedef type::bottom inferior;
-
     image3d_size(coord nslices, coord nrows, coord ncols)
     {
       nth(0) = nslices;

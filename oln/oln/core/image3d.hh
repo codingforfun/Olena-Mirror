@@ -42,14 +42,13 @@ namespace oln {
   // images with data ---conversely to proxy images
 
 
-  template<class T, class Inferior = type::bottom>
-  class image3d : public internal::_real_image3d< T, image3d<T,Inferior> >
+  template<class T, class Exact = type::final>
+  class image3d : public internal::_real_image3d< T, typename type::exact_vt<image3d<T, Exact>, Exact>::ret>
   {
   public:
 
-    typedef Inferior inferior;
-    typedef image3d<T,Inferior> self;
-    typedef internal::_real_image3d<T,self> super;
+    typedef image3d<T, Exact> self;
+    typedef internal::_real_image3d< T, typename type::exact_vt<image3d<T, Exact>, Exact>::ret> super;
 
     image3d() :
       super()
@@ -95,7 +94,7 @@ namespace oln {
       return
 	std::string("image3d<")
 	+ T::name() + ","
-	+ Inferior::name() + ">";
+	+ Exact::name() + ">";
     }
 
     template<class U>
@@ -116,16 +115,15 @@ namespace oln {
   // can be used as a predicate having the structure of an image
 
 
-  template<class Inferior>
-  class image3d<bin,Inferior> : public internal::_real_image3d< bin, image3d<bin,Inferior> >,
-				public pred_image< image3d<bin,Inferior> >
+  template<class Exact>
+  class image3d<bin, Exact> : public internal::_real_image3d< bin, typename type::exact_vt<image3d<bin, Exact>, Exact>::ret >,
+			      public pred_image<typename type::exact_vt<image3d<bin, Exact>, Exact>::ret >
   {
   public:
 
-    typedef Inferior inferior;
-    typedef image3d<bin,Inferior> self;
-    typedef internal::_real_image3d<bin,self> super;
-    typedef pred_image< image3d<bin,Inferior> > super_pred;
+    typedef image3d<bin, Exact> self;
+    typedef internal::_real_image3d< bin, typename type::exact_vt<image3d<bin, Exact>, Exact>::ret > super;
+    typedef pred_image<typename type::exact_vt<image3d<bin, Exact>, Exact>::ret > super_pred;
 
     image3d() :
       super()
@@ -171,7 +169,7 @@ namespace oln {
       return
 	std::string("image3d<")
 	+ bin::name() + ","
-	+ Inferior::name() + ">";
+	+ Exact::name() + ">";
     }
 
     template<class U>

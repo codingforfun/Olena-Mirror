@@ -42,12 +42,12 @@ namespace oln {
 
     /* Don't always inherit from window<>.  See _neighborhood for
        an example where we use another base class.  */
-    template <unsigned Dim, class Inferior = type::bottom,
+    template <unsigned Dim, class Exact,
 	      template <class> class Window = window>
-    class _window : public Window< _window< Dim, Inferior > >
+    class _window : public Window< Exact >
     {
     public:
-      typedef Inferior inferior;
+  
       enum { dim = Dim };
       typedef typename point_for_dim<Dim>::ret      point;
       typedef typename dpoint_for_dim<Dim>::ret     dpoint;
@@ -75,7 +75,7 @@ namespace oln {
 
       static std::string name()
       {
-	return std::string("_window<") + Inferior::name() + ">";
+	return std::string("_window<") + Exact::name() + ">";
       }
       
       bool operator==(const self& win) const

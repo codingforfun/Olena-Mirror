@@ -37,7 +37,6 @@ namespace oln {
 
   struct image2d_size : public imagend_size< 2, image2d_size >
   {
-    typedef type::bottom inferior;
 
     image2d_size(coord nrows, coord ncols)
     {

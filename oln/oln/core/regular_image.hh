@@ -36,10 +36,10 @@
 namespace oln {
 
   template<unsigned Dim, // 1D, 2D, etc.
-	   class Inferior = type::bottom>
-  struct regular_image : public image< regular_image< Dim, Inferior> >
+	   class Exact>
+  struct regular_image : public image< Exact >
   {
-    typedef Inferior inferior;
+
     enum { dim = Dim };
     typedef typename point_for_dim<Dim>::ret      point;
     typedef typename dpoint_for_dim<Dim>::ret     dpoint;
@@ -48,7 +48,7 @@ namespace oln {
     static std::string name()
     {
       return
-	std::string("regular_image<") + dim + ", " + Inferior::name() + ">";
+	std::string("regular_image<") + dim + ", " + Exact::name() + ">";
     }
   protected:
     regular_image() {}

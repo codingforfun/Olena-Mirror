@@ -38,12 +38,12 @@
 
 namespace oln {
 
-  template<class T, class Inferior = type::bottom>
-  class w_window3d : public internal::_w_window< 3, T, w_window3d<T> >
+  template<class T, class Exact = type::final>
+  class w_window3d : public internal::_w_window< 3, T, typename type::exact_vt<w_window3d<T, Exact>, Exact>::ret >
   {
-    typedef internal::_w_window< 3, T, w_window3d<T> > super;
+    typedef internal::_w_window< 3, T, typename type::exact_vt<w_window3d<T, Exact>, Exact>::ret > super;
   public:
-    typedef Inferior inferior;
+
     typedef w_window3d self;
 
     typedef winiter< self >   iter;
@@ -98,7 +98,9 @@ namespace oln {
       return win;
     }
 
-    static std::string name() { return std::string("w_window3d"); }
+    static std::string name() { return std::string("w_window3d")
+				       + T::name() + ","
+				       + Exact::name() + ">"; }
   private:
     max_accumulator<coord> _delta;
   };

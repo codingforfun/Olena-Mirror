@@ -33,12 +33,12 @@
 
 namespace oln {
 
-  template<class Inferior = type::bottom>
-  class bkd_iter2d : public internal::_iter2d<bkd_iter2d<Inferior> >
+  template<class Exact = type::final>
+  class bkd_iter2d : public internal::_iter2d<typename type::exact_vt<bkd_iter2d<Exact>, Exact>::ret>
   {
   public:
-    typedef Inferior inferior;
-    typedef internal::_iter2d<bkd_iter2d<Inferior> > super;
+
+    typedef internal::_iter2d<typename type::exact_vt<bkd_iter2d<Exact>, Exact>::ret> super;
 
     enum { dim = 2 };
     typedef point2d point;
@@ -76,7 +76,7 @@ namespace oln {
       --_p.row();
     }
 
-    static std::string name() { return "bkd_iter2d"; }
+    static std::string name() { return std::string("bkd_iter2d<") + Exact::name() + ">"; }
 
   };
 

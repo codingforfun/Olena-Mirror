@@ -51,8 +51,7 @@ namespace oln {
       : public color_conversion<3, nrgb_traits,
 				3, hsi_traits, nrgb_to_hsi>
     {
-      typedef type::bottom inferior;
-
+   
 
       template <unsigned qbits>
       color<3, qbits, hsi_traits>
@@ -80,8 +79,7 @@ namespace oln {
       : public color_conversion<3, hsi_traits,
 				3, nrgb_traits, hsi_to_nrgb>
     {
-      typedef type::bottom inferior;
-
+ 
 
       template <unsigned qbits>
       color<3, qbits, nrgb_traits>

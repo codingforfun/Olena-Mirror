@@ -32,14 +32,13 @@
 
 namespace oln {
 
-  template<class Inferior = type::bottom>
-  struct neighborhood : public type::any< neighborhood< Inferior > >
+  template<class Exact>
+  struct neighborhood : public type::any<Exact>
   {
-    typedef Inferior inferior;
 
     static std::string name()
     {
-      return std::string("neighborhood<") + Inferior::name() + ">";
+      return std::string("neighborhood<") + Exact::name() + ">";
     }
 
   protected:

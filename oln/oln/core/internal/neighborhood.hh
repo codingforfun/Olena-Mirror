@@ -35,7 +35,7 @@ namespace oln {
 
   namespace internal {
 
-    template <unsigned Dim, class Inferior = type::bottom>
+    template <unsigned Dim, class Exact>
     class _neighborhood :
       /* The inheritence is quite tricky here.
 
@@ -45,13 +45,12 @@ namespace oln {
 	 neighborhood<> instead of window<> using the third parameter.
 	 */
       public _window< Dim,
-		      _neighborhood< Dim,
-				     Inferior >,
-		      neighborhood >
+		      Exact,
+		      oln::neighborhood >
     {
     public:
-      typedef Inferior inferior;
-      typedef _window< Dim, _neighborhood< Dim, Inferior >,
+
+      typedef _window< Dim, Exact,
 		       oln::neighborhood > super;
 
       _neighborhood() : super() {}
@@ -59,7 +58,7 @@ namespace oln {
 
       static std::string name()
       {
-	return std::string("_neighborhood<") + Inferior::name() + ">";
+	return std::string("_neighborhood<") + Exact::name() + ">";
       }
     };
 

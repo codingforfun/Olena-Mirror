@@ -40,7 +40,7 @@ namespace oln {
     /* Conversions are unary functors which can be passed to
        processings to perform result conversions.
 
-       Conversions are organized as an Inferior-parametred hierarchy,
+       Conversions are organized as an Exact-parameterized hierarchy,
        like the image hierarchy.  conversion is the top type here,
        therefore the processings which accept a conversion usually
        looks as follow.
@@ -53,13 +53,12 @@ namespace oln {
        }
     */
 
-    template<class Inferior = type::bottom>
-    struct conversion : public type::any< conversion<Inferior> >
+    template<class Exact>
+    struct conversion : public type::any< Exact >
     {
-      typedef Inferior inferior;
-
+   
       static std::string name() {
-	return std::string("conversion<") + Inferior::name() + ">";
+	return std::string("conversion<") + Exact::name() + ">";
       }
 
     protected:
@@ -82,11 +81,10 @@ namespace oln {
        this case, output<T>::ret has the same definition for any T.
        Such conversions should inherit from the conversion_to_type<>
        class.  */
-    template<class Result_Type, class Inferior = type::bottom>
+    template<class Result_Type, class Exact = type::final>
     struct conversion_to_type :
-      public conversion< conversion_to_type< Result_Type, Inferior > >
+      public conversion< typename type::exact_vt<conversion_to_type< Result_Type, Exact >, Exact>::ret >
     {
-      typedef Inferior inferior;
 
       template< class Input >
       struct output {
@@ -106,19 +104,18 @@ namespace oln {
       static std::string name() {
 	return std::string("conversion_to_type<")
 	  + typename_of<Result_Type>() + ", "
-	  + typename_of<Inferior>() + ">";
+	  + typename_of<Exact>() + ">";
       }
     };
 
     /* If both input and output types of the conversion are fixed.
        Inherit from conversion_from_type_to_type<>.  */
     template<class Argument_Type, class Result_Type,
-	     class Inferior = type::bottom>
+	     class Exact = type::final>
     struct conversion_from_type_to_type :
       public conversion_to_type< Result_Type,
-        conversion_from_type_to_type< Argument_Type, Result_Type, Inferior> >
+        typename type::exact_vt<conversion_from_type_to_type< Argument_Type, Result_Type, Exact>, Exact>::ret >
     {
-      typedef Inferior inferior;
 
       /* By defining argument_type, and inheriting from result_type,
 	 we comply to the STL concept of Adaptable Unary Function.  */
@@ -128,7 +125,7 @@ namespace oln {
 	return std::string("conversion_from_type_to_type<")
 	  + typename_of<Argument_Type>() + ", "
 	  + typename_of<Result_Type>() + ", "
-	  + typename_of<Inferior>() + ">";
+	  + typename_of<Exact>() + ">";
       }
     };
 

@@ -39,14 +39,13 @@ namespace oln {
   // client can use image1d; instances are real images, that is,
   // images with data ---conversely to proxy images
 
-  template<class T, class Inferior = type::bottom>
-  class image1d : public internal::_real_image1d< T, image1d<T,Inferior> >
+  template<class T, class Exact = type::final>
+  class image1d : public internal::_real_image1d< T, typename type::exact_vt<image1d<T, Exact>, Exact>::ret >
   {
   public:
 
-    typedef Inferior inferior;
-    typedef image1d<T,Inferior> self;
-    typedef internal::_real_image1d<T,self> super;
+    typedef image1d<T, Exact> self;
+    typedef internal::_real_image1d< T, typename type::exact_vt<image1d<T, Exact>, Exact>::ret > super;
 
     image1d() :
       super()
@@ -82,7 +81,7 @@ namespace oln {
       return
 	std::string("image1d<")
 	+ T::name() + ","
-	+ Inferior::name() + ">";
+	+ Exact::name() + ">";
     }
 
     template<class U>
@@ -102,16 +101,15 @@ namespace oln {
   // can be used as a predicate having the structure of an image
 
 
-  template<class Inferior>
-  class image1d<bin,Inferior> : public internal::_real_image1d< bin, image1d<bin,Inferior> >,
-				public pred_image< image1d<bin,Inferior> >
+  template<class Exact>
+  class image1d<bin, Exact> : public internal::_real_image1d< bin, typename type::exact_vt<image1d<bin, Exact>, Exact>::ret >,
+			      public pred_image< typename type::exact_vt<image1d<bin, Exact>, Exact>::ret >
   {
   public:
 
-    typedef Inferior inferior;
-    typedef image1d<bin,Inferior> self;
-    typedef internal::_real_image1d<bin,self> super;
-    typedef pred_image< image1d<bin,Inferior> > super_pred;
+    typedef image1d<bin, Exact> self;
+    typedef internal::_real_image1d< bin, typename type::exact_vt<image1d<bin, Exact>, Exact>::ret > super;
+    typedef pred_image< typename type::exact_vt<image1d<bin, Exact>, Exact>::ret > super_pred;
 
     image1d() :
       super()
@@ -147,7 +145,7 @@ namespace oln {
       return
 	std::string("image1d<")
 	+ bin::name() + ","
-	+ Inferior::name() + ">";
+	+ Exact::name() + ">";
     }
 
     template<class U>

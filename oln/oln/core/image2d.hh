@@ -41,14 +41,13 @@ namespace oln {
   // images with data ---conversely to proxy images
 
 
-  template<class T, class Inferior = type::bottom>
-  class image2d : public internal::_real_image2d< T, image2d<T,Inferior> >
+  template<class T, class Exact = type::final>
+  class image2d : public internal::_real_image2d< T, typename type::exact_vt<image2d<T, Exact>, Exact>::ret>
   {
   public:
 
-    typedef Inferior inferior;
-    typedef image2d<T,Inferior> self;
-    typedef internal::_real_image2d<T,self> super;
+    typedef image2d<T, Exact> self;
+    typedef internal::_real_image2d< T, typename type::exact_vt<image2d<T, Exact>, Exact>::ret> super;
 
     image2d() :
       super()
@@ -94,7 +93,7 @@ namespace oln {
       return
 	std::string("image2d<")
 	+ optraits<T>::name() + ","
-	+ Inferior::name() + ">";
+	+ Exact::name() + ">";
     }
 
     template<class U>
@@ -115,16 +114,15 @@ namespace oln {
   // can be used as a predicate having the structure of an image
 
 
-  template<class Inferior>
-  class image2d<bin,Inferior> : public internal::_real_image2d< bin, image2d<bin,Inferior> >,
-				public pred_image< image2d<bin,Inferior> >
+  template<class Exact>
+  class image2d<bin, Exact> : public internal::_real_image2d< bin, typename type::exact_vt<image2d<bin, Exact>, Exact>::ret >,
+			      public pred_image<typename type::exact_vt<image2d<bin, Exact>, Exact>::ret >
   {
   public:
 
-    typedef Inferior inferior;
-    typedef image2d<bin,Inferior> self;
-    typedef internal::_real_image2d<bin,self> super;
-    typedef pred_image< image2d<bin,Inferior> > super_pred;
+    typedef image2d<bin, Exact> self;
+    typedef internal::_real_image2d< bin, typename type::exact_vt<image2d<bin, Exact>, Exact>::ret > super;
+    typedef pred_image<typename type::exact_vt<image2d<bin, Exact>, Exact>::ret > super_pred;
 
     image2d() :
       super()
@@ -170,7 +168,7 @@ namespace oln {
       return
 	std::string("image2d<")
 	+ optraits<bin>::name() + ","
-	+ Inferior::name() + ">";
+	+ Exact::name() + ">";
     }
 
     template<class U>

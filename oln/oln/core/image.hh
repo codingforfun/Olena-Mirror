@@ -36,11 +36,10 @@ namespace oln {
 
   // image
 
-  template<class Inferior = type::bottom>
-  struct image : public type::any< image<Inferior> >
+  template<class Exact>
+  struct image : public type::any< Exact >
   {
-    typedef Inferior inferior;
-    static std::string name() { return std::string("image<") + Inferior::name() + ">"; }
+    static std::string name() { return std::string("image<") + Exact::name() + ">"; }
   protected:
     image() {}
   };

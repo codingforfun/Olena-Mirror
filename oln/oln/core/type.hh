@@ -30,7 +30,7 @@
 
 # include <oln/config/system.hh>
 # include <string>
-
+# include <oln/core/typeadj.hh>
 
 namespace type
 {
@@ -40,22 +40,31 @@ namespace type
   //
   ///////////////////////////////
 
- //  class top {
-//   public:
-//     static std::string name() { return ""; }
-//   protected:
-//     top() {}
-//   };
+  class final
+  {
+  public:
+    static std::string name() { return "final"; } 
+  protected:
+    final() {} 
+  };
 
-//   class bottom {
-//   public:
-//     static std::string name() { return "bot"; }
-//   private:
-//     bottom();
-//   };
+  class top {
+  public:
+    static std::string name() { return ""; }
+  protected:
+    top() {}
+  };
+
+  class bottom {
+  public:
+    static std::string name() { return "bot"; }
+  private:
+    bottom();
+  };
 
   template<class E>
   class any 
+  {
   public:
     typedef E exact_type;
 
@@ -113,41 +122,7 @@ namespace type
   //
   ///////////////////////////////
 
-  namespace internal {
-
-    // FIXME : erase !!!
-
-    // fwd decl
-
-    // template<class T> struct _find_exact;
-
-    // helper
-
-    // template<class T, class I>
-    //     struct _find_exact_helper
-    //     {
-    //       typedef typename _find_exact<I>::ret ret;
-    //     };
-    
-    //     template<class T>
-    //     struct _find_exact_helper<T, bottom>
-    //     {
-    //       typedef T ret;
-    //     };
-    
-    // find exact
-
-    // template<class T>
-    //     struct _find_exact
-    //     {
-    //       typedef typename inferior<T>::ret I;
-    //       typedef typename _find_exact_helper<T,I>::ret ret;
-    //     };
-
-  } // end of namespace internal
-
-
-
+  
 
 
 
@@ -156,23 +131,32 @@ namespace type
   //
   ///////////////////////////////
 
+
   template<class T>
-  struct exact {
-    // typedef typename internal::_find_exact<T>::ret ret;
+  struct exact
+  {
     typedef typename T::exact_type ret;
-    static       ret& convert(      T& ref) { return ref.exact(); }
-    static const ret& convert(const T& ref) { return ref.exact(); }
   };
-
+  
   template<class T>
-  struct exact<T*> {
-    // typedef typename exact<T>::ret* ret;
-
-    typedef typename T::exact_type* ret;
-    static       ret* convert(      T* ptr) { return & ptr->exact(); }
-    static const ret* convert(const T* ptr) { return & ptr->exact(); }
+  struct exact<const T>
+  {
+    typedef const typename exact<T>::ret ret;
   };
-
+  
+  
+  template<class T>
+  struct exact<T*>
+  {
+    typedef typename exact<T>::ret* ret;
+  };
+  
+  template<class T>
+  struct exact<T&>
+  {
+    typedef typename exact<T>::ret& ret;
+  };
+  
   //
   //  exact virtual type traits
   //  (inheritance determination)
@@ -240,7 +224,7 @@ namespace type
 
 # define Exact(Type) \
 typename type::exact<Type>::ret
-#define Exact_(T) type::exact< T >::ret
+#define Exact_(Type) type::exact<Type>::ret
 
 
 //
@@ -248,33 +232,32 @@ typename type::exact<Type>::ret
 //
 ///////////////////////////////
 
-
-template<class T> inline
-Exact(T)*
-to_exact(T* ptr)
-{
-  return type::exact<T*>::convert(ptr);
-}
-
-template<class T> inline
-const Exact(T)*
-to_exact(const T* ptr)
-{
-  return type::exact<T*>::convert(ptr);
-}
-
 template<class T> inline
 Exact(T)&
 to_exact(T& ref)
 {
-  return type::exact<T>::convert(ref);
+  return ref.exact();
 }
 
 template<class T> inline
 const Exact(T)&
 to_exact(const T& ref)
 {
-  return type::exact<T>::convert(ref);
+  return ref.exact();
+}
+
+template<class T> inline
+Exact(T)*
+to_exact(T* ptr)
+{
+  return &ptr->exact();
+}
+
+template<class T> inline
+const Exact(T)*
+to_exact(const T* ptr)
+{
+  return &ptr->exact();
 }
 
 //
@@ -282,9 +265,9 @@ to_exact(const T& ref)
 //
 //////////////////////////////////////////////////////
 
-template<class E> inline E& any<E>::self(){ return reinterpret_cast<E&>(*this); }
+template<class E> inline E& type::any<E>::self(){ return reinterpret_cast<E&>(*this); }
 
-template<class E> inline const E& any<E>::self() const { return reinterpret_cast<E&>(*this); }
+template<class E> inline const E& type::any<E>::self() const { return reinterpret_cast<E&>(*this); }
 
 # define Exact_ptr(Type, Var)			\
 typedef Exact(Type##_) Type;			\

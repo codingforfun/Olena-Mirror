@@ -33,12 +33,12 @@
 
 namespace oln {
 
-  template<class Inferior = type::bottom>
-  class fwd_iter3d : public internal::_iter3d< fwd_iter3d<Inferior> >
+  template<class Exact = type::final>
+  class fwd_iter3d : public internal::_iter3d<typename type::exact_vt<fwd_iter3d<Exact>, Exact>::ret>
   {
   public:
-    typedef Inferior inferior;
-    typedef internal::_iter3d<fwd_iter3d<Inferior> > super;
+
+    typedef internal::_iter3d<typename type::exact_vt<fwd_iter3d<Exact>, Exact>::ret> super;
 
     enum { dim = 3 };
     typedef point3d point;
@@ -79,7 +79,7 @@ namespace oln {
       ++_p.slice();
     }
 
-    static std::string name() { return "fwd_iter3d"; }
+    static std::string name() { return "fwd_iter3d<" + Exact::name() + ">"; }
 
   };
 

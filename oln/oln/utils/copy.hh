@@ -48,14 +48,14 @@ namespace oln {
 
 # ifdef OLENA_CORE_IMAGE1D_HH
 
-template<class T, class Inferior>
-image1d<T,Inferior>::image1d(const self& rhs)
+template<class T, class Exact>
+image1d<T,Exact>::image1d(const self& rhs)
 {
   OLENA_UTILS_IMAGE_DEEP_COPY;
 }
 
-template<class Inferior>
-image1d<bin,Inferior>::image1d(const self& rhs)
+template<class Exact>
+image1d<bin,Exact>::image1d(const self& rhs)
 {
   OLENA_UTILS_IMAGE_DEEP_COPY;
 }
@@ -65,14 +65,14 @@ image1d<bin,Inferior>::image1d(const self& rhs)
 
 # ifdef OLENA_CORE_IMAGE2D_HH
 
-template<class T, class Inferior>
-image2d<T,Inferior>::image2d(const self& rhs)
+template<class T, class Exact>
+image2d<T,Exact>::image2d(const self& rhs)
 {
   OLENA_UTILS_IMAGE_DEEP_COPY;
 }
 
-template<class Inferior>
-image2d<bin,Inferior>::image2d(const self& rhs)
+template<class Exact>
+image2d<bin,Exact>::image2d(const self& rhs)
 {
   OLENA_UTILS_IMAGE_DEEP_COPY;
 }
@@ -82,14 +82,14 @@ image2d<bin,Inferior>::image2d(const self& rhs)
 
 # ifdef OLENA_CORE_IMAGE3D_HH
 
-template<class T, class Inferior>
-image3d<T,Inferior>::image3d(const self& rhs)
+template<class T, class Exact>
+image3d<T,Exact>::image3d(const self& rhs)
 {
   OLENA_UTILS_IMAGE_DEEP_COPY;
 }
 
-template<class Inferior>
-image3d<bin,Inferior>::image3d(const self& rhs)
+template<class Exact>
+image3d<bin,Exact>::image3d(const self& rhs)
 {
   OLENA_UTILS_IMAGE_DEEP_COPY;
 }

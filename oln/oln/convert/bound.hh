@@ -38,11 +38,10 @@ namespace oln {
     // FIXME: is this really useful with new types ?
 
     /* Like convert::force, but with saturation.  */
-    template<class Output, class Inferior = type::bottom>
-    struct bound : public conversion_to_type< Output, bound<Output, Inferior> >
+    template<class Output, class Exact = type::final>
+    struct bound : public conversion_to_type< Output, typename type::exact_vt<bound<Output, Exact>, Exact>::ret >
     {
-      typedef Inferior inferior;
-
+ 
       template< class Input >
       Output operator() (const Input& v) const {
 	return cast::bound<Output>(v);
@@ -51,7 +50,7 @@ namespace oln {
       static std::string name() {
 	return std::string("bound<")
 	  + typename_of<Output>() + ", "
-	  + typename_of<Inferior>() + ">";
+	  + typename_of<Exact>() + ">";
       }
     };
 

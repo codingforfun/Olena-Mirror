@@ -32,12 +32,12 @@
 
 namespace oln {
 
-  template<class Inferior = type::bottom>
-  class fwd_iter1d : public internal::_iter1d< fwd_iter1d<Inferior> >
+  template<class Exact = type::final>
+  class fwd_iter1d : public internal::_iter1d<typename type::exact_vt<fwd_iter1d<Exact>, Exact>::ret>
   {
   public:
-    typedef Inferior inferior;
-    typedef internal::_iter1d<fwd_iter1d<Inferior> > super;
+
+    typedef internal::_iter1d< typename type::exact_vt<fwd_iter1d<Exact>, Exact>::ret> super;
 
     enum { dim = 1 };
     typedef point1d point;
@@ -70,7 +70,7 @@ namespace oln {
       ++_p.col();
     }
 
-    static std::string name() { return "fwd_iter1d"; }
+    static std::string name() { return "fwd_iter1d<" + Exact::name() + ">"; }
   };
 
 } // end of oln

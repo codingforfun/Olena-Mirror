@@ -69,10 +69,10 @@ namespace oln {
 	      template<unsigned> class icolor,
 	      unsigned ocomps,
 	      template<unsigned> class ocolor,
-	      class Inferior = type::bottom >
-    class color_conversion : public conversion< Inferior >
+	      class Exact = type::final >
+    class color_conversion : public conversion< typename type::exact_vt<color_conversion<icomps, icolor, ocomps, ocolor, Exact>, Exact>::ret >
     {
-      typedef Inferior inferior;
+     
 
     public:
       template <class T>
