@@ -92,7 +92,7 @@ $<$, ...).  However Olena's type do not behave exactly like the
 the built-in types.  We believe it's safer To
 use Olena's type instead of the built-in types.
 
-\subsection{\lstinline$int_u<N, BEHAVIOR=abort>$}
+\subsection{\code{int_u<N, BEHAVIOR=abort>}}
 
 This template can be used to define unsigned integers of various size
 and behaviors.
@@ -261,7 +261,7 @@ typedef int_u<16, saturate>	int_u16s;
 typedef int_u<32, saturate>	int_u32s;
 \end{lstlisting}
 
-\subsection{\lstinline$int_s<N, BEHAVIOR=strict>$}
+\subsection{\code{int_s<N, BEHAVIOR=strict>}}
 
 This template can be used to define signed integers of various size
 and behaviors.  This is can be used exactly like
@@ -280,7 +280,7 @@ typedef int_s<16, saturate>	int_s16s;
 typedef int_s<32, saturate>	int_s32s;
 \end{lstlisting}
 
-\subsection{\lstinline$sfloat$ and \lstinline$dfloat$}
+\subsection{\code{sfloat} and \code{dfloat}}
 
 These are the Olena equivalents of \code{float} and \code{double},
 Contrary to signed and unsigned integer types, there is not
@@ -310,14 +310,14 @@ if (i < j)
   // ...
 \end{lstlisting}
 the code generated for \code{i<j} should be close to
-\lstinline$j >= 0 && i < cast::force<int_u32>(j)$.
+\code{j >= 0 && i < cast::force<int_u32>(j)}.
 
 \subsection{Decorators for scalar types}
 
 You can decorate a type to add some constraint or change it's
 behavior.
 
-\subsubsection{\lstinline$range<T, MIN, MAX, BEHAVIOR=strict>$}
+\subsubsection{\code{range<T, MIN, MAX, BEHAVIOR=strict>}}
 
 This class, like Ada's \code{range} keyword, adds a constrains on type
 \code{T}.  The constraint is that values should be bounded by
@@ -343,26 +343,26 @@ between $0$ and $1$, use \code{range<sfloat,0,1>}.
 
 %FIXME: How would we define a float \emph{cycling} over $[0...360[$?
 
-\subsubsection{\lstinline$cycle<T, MIN, MAX>$}
+\subsubsection{\code{cycle<T, MIN, MAX>}}
 
 This class defines a type, the values of which can be built from
 \code{T}, and that cycle between \code{MIN} (included) and
 \code{MAX} (excluded).
 
-For instance \lstinline$cycle<sfloat, 0, 360>$ defines a type which is
+For instance \code{cycle<sfloat, 0, 360>} defines a type which is
 useful to represent angles in degrees.
 
 Any value implicitely convertible to \code{T} can be involved in an
-arithmetic operation with \lstinline$cycle<T, MIN, MAX>$.
+arithmetic operation with \code{cycle<T, MIN, MAX>}.
 
-Any conversion from \lstinline$cycle<T, A, B>$ to
-\lstinline$cycle<T, C, D>$ must be explicit and should
+Any conversion from \code{cycle<T, A, B>} to
+\code{cycle<T, C, D>} must be explicit and should
 respect $B - A = D - C$ (i.e., the
 two cycles have equal length).
 
-%% \subsubsection{\lstinline$view_as<T,U>$}
+%% \subsubsection{\code{view_as<T,U>}}
 %%
-%% \lstinline$view_as<T,U>$ declares a variable stored in type \code{T}
+%% \code{view_as<T,U>} declares a variable stored in type \code{T}
 %% but seen as type \code{U}.
 %%
 %% For instance the following line defines a type which is stored as an
@@ -389,81 +389,81 @@ two cycles have equal length).
 
 \section{Enumerated types}
 
-\subsection{\lstinline$bin$}
+\subsection{\code{bin}}
 
-\lstinline$bin$ is a binary type, with two values: \code{0}
-and \code{1}.  This is unlike the built-in \lstinline$bool$, whose
+\code{bin} is a binary type, with two values: \code{0}
+and \code{1}.  This is unlike the built-in \code{bool}, whose
 values are \code{false} and \code{true}.
 
-\subsection{\lstinline$label<T, BEHAVIOR=cycle>$}
+\subsection{\code{label<T, BEHAVIOR=cycle>}}
 
 FIXME: not sure if we really need this.
 
 FIXME: This documentation is out of date.  We've decided to split
 \code{label} into ordered labels and unordered labels.
 
-\lstinline$label<T, BEHAVIOR=cycle>$ is used to label images.
+\code{label<T, BEHAVIOR=cycle>} is used to label images.
 
 Although it is not stricly correct to define an order on labels,
 we do.  This is useful (FIXME: Ask Jerome for an example).
 
-\subsection{The \lstinline$typetraits<T>$ trait}
+\subsection{The \code{typetraits<T>} trait}
 
 For each type \code{T} described in the previous section, Olena
-records additional relations in the \lstinline$typetraits<T>$ trait.
+records additional relations in the \code{typetraits<T>} trait.
 
-All the following members of \lstinline$typetraits<T>$ are typedefs.
+All the following members of \code{typetraits<T>} are typedefs.
 \begin{description}
 \item[\code{base_type}] The base type for \code{T}, i.e., \code{T} without
 any decoration.  For instance
-\lstinline$typetraits< range<int_u8,10,25> >::base_type$
+\code{typetraits< range<int_u8,10,25> >::base_type}
 is \code{int_u8}.
 
 Ada programmers will probably recognize the \code{T'Base} attribute.
 
-For a undecorated type \code{T}, \lstinline$typetraits<T>::base_type$ is
+For a undecorated type \code{T}, \code{typetraits<T>::base_type} is
 \code{T} itself.
 
 \item[\code{storage_type}] The C type used internally for storing the
-value.  E.g., \lstinline$typetraits< int_u<9> >::storage_type$ is
-\lstinline$unsigned short$.
+value.  E.g., \code{typetraits< int_u<9> >::storage_type} is
+\code{unsigned short}.
 
 %% \item[\code{view}] The type under which the value should be seen.
 %% For example,
-%% \lstinline$typetraits< view_as<int_u8, range<sfloat, 0, 1> > >::view$
-%% is \lstinline$range<sfloat, 0, 1>$.
+%% \code{typetraits< view_as<int_u8, range<sfloat, 0, 1> > >::view}
+%% is \code{range<sfloat, 0, 1>}.
 %%
-%% For a undecorated type \code{T}, \lstinline$typetraits<T>::view$ is
+%% For a undecorated type \code{T}, \code{typetraits<T>::view} is
 %% \code{T} itself.
 %%
 %% Note that the view of \code{fuzzy16} as defined above, i.e,
-%% \lstinline$typetraits< view_as<int_u8, view_as<int_u16, range<sfloat, 0, 1> > > >::view$
-%% is still \lstinline$range<sfloat, 0, 1>$.
+%% \code{typetraits< view_as<int_u8, view_as<int_u16, range<sfloat, 0, 1> > > >::view}
+%% is still \code{range<sfloat, 0, 1>}.
 
 \item[\code{signed_type}]
 The smallest signed type that can countain the values of \code{T}, if possible.
 For instance
-\lstinline$typetraits< int_u8 >::signed_type$ is \code{int_s<10>}.
+\code{typetraits< int_u8 >::signed_type} is \code{int_s<10>}.
 (\code{int_s<9>} is not large enough to hold the value 256.)
 
-However \lstinline$typetraits< int_u32 >::signed_type$ is \code{int_s<32>}.
+However \code{typetraits< int_u32 >::signed_type} is \code{int_s<32>}.
 
 \item[\code{unsigned_type}]
 The smalled unsigned type that can countain the non negative values of
 \code{T}.
 For instance,
-\lstinline$typetraits< int_s<9> >::unsigned_type$ is \code{int_u8}.
+\code{typetraits< int_s<9> >::unsigned_type} is \code{int_u8}.
 
 \item[\code{cumul_type}]
 A type that can be used to sum up a moderate number of values of type
 \code{T}.  (FIXME: a moderate number?  Come on...  I'm sure we can put
 it in a way which is even more fuzzy.)
 For instance
-\lstinline$typetraits< int_u8 >::cumul_type$ is \code{int_u16}.
+\code{typetraits< int_u8 >::cumul_type} is \code{int_u16}.
 
 \item[\code{largest_type}]
 The largest type in the familly of \code{T}.  For instance
-\lstinline$typetraits< int_u8 >::largest_type$ is \code{int_u32}.
+\code{typetraits< int_u8 >::largest_type} is \code{int_u32}.
 
 \item[\code{signed_largest_type}]
 \item[\code{signed_cumul_type}]
@@ -474,30 +474,30 @@ These are short-hands for some combinations of \code{signed_type},
 
 \item[\code{integer_type}]
 An \code{int} type of the same sign as \code{T}.
-For instance \lstinline$typetraits< int_u8 >::interger_type$ is \code{unsigned
-int}; \lstinline$typetraits< sfloat >::interger_type$ is \code{signed
+For instance \code{typetraits< int_u8 >::interger_type} is \code{unsigned
+int}; \code{typetraits< sfloat >::interger_type} is \code{signed
 int}.
 
-This type is used by the \lstinline$range<T, MIN, MAX, B>$ template
+This type is used by the \code{range<T, MIN, MAX, B>} template
 to define the type of it's arguments: \code{MIN} and \code{MAX} both
-have type \lstinline$typetraits< T >::interger_type$.
+have type \code{typetraits< T >::interger_type}.
 
 \end{description}
 
-\subsection{The \lstinline$optraits<T>$ trait}
+\subsection{The \code{optraits<T>} trait}
 
 Olena offers some additionnal supporting function or operators in the
-\lstinline$optraits<T>$ trait.  For example, sometimes while developping
+\code{optraits<T>} trait.  For example, sometimes while developping
 a generic algorithm on type \code{T} we need to need the maximum value
-that this type can take.  The \lstinline$optraits<T>$ trait provides
+that this type can take.  The \code{optraits<T>} trait provides
 support to anser this sort of question.  For instance
-\lstinline$optraits<T>::max()$ returns the maximum values for type
+\code{optraits<T>::max()} returns the maximum values for type
 \code{T}.
 
 \newfloat{OptraitsVersusInnerTypedef}{H}{lop}
 \begin{OptraitsVersusInnerTypedef}
 The reason why we have to use a separate class and write
-\lstinline$optraits<T>::max()$ instead of \lstinline$T::max()$ is that
+\code{optraits<T>::max()} instead of \code{T::max()} is that
 the latter case cannot work with built-in types.
 
 Besides, using a class distinct from the type itself to hold operators
@@ -505,11 +505,10 @@ and various support functions allows to reuse the support from another
 type by inheritance on the \code{optraits} hierarchy, without implying
 any inheritance on the type hierarchy.
 
-For instance \lstinline$optraits<range<int_u8, 10, 25> >$ inherits from
-\lstinline$optraits<int_u8>$ and simply redefine a few members like the
+For instance \code{optraits<range<int_u8, 10, 25> >} inherits from
+\code{optraits<int_u8>} and simply redefine a few members like the
 \code{max()} and \code{min()} functions.  However
-\lstinline$range<int_u8, 10, 25>$ is not a subclass of
-\lstinline$int_u8$.
+\code{range<int_u8, 10, 25>} is not a subclass of \code{int_u8}.
 \end{OptraitsVersusInnerTypedef}
 
 Here are the public \code{optraits<T>} members:

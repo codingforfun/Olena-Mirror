@@ -8,9 +8,11 @@
 \newcommand\var\textit
 %\newcommand\code\texttt
 %BEGIN latex
-\newcommand{\code}[1]{{\small{\begingroup \Url{#1}}}}
+\lstset{language=C++,basicstyle=\ttfamily}
+\newcommand{\code}[1]{{\lstinline$#1$}}
 %END latex
 %HEVEA \let\code\texttt
+%HEVEA \newenvironment{lstlisting}[1]{\verbatim}{\endverbatim}
 
 %% The \begin{itemize} cannot nest more than 4 level by default.
 %% We need 5.
@@ -19,8 +21,6 @@
 \makeatother
 
 \begin{document}
-
-\lstset{language=C++}
 
 \title{Olena Reference Manual}
 \author{EPITA Reserch and Development Laboratory}
