@@ -1,9 +1,13 @@
+2002-04-08  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/Makefile.am (nobase_oln_HEADERS): Add core/generate.hh.
+
 2002-04-04  Quôc Peyrot  <chojin@lrde.epita.fr>
 
 	* src/core/generate.hh: New file (generator function)
 	* src/core/image.hh (_ImageForDim): New macro
 	* src/core/image1d.hh, src/core/image2d.hh,
-	src/core/image3d.hh: Likewise
+	src/core/image3d.hh: Use it.
 	* src/basics.hh: Include core/generate.hh
 
 2002-04-03  Alexandre Duret-Lutz  <duret_g@epita.fr>

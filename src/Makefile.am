@@ -55,6 +55,7 @@ nobase_oln_HEADERS =				\
   core/fwd_iter1d.hh				\
   core/fwd_iter2d.hh				\
   core/fwd_iter3d.hh				\
+  core/generate.hh				\
   core/image.hh					\
   core/image1d.hh				\
   core/image1d_size.hh				\
