@@ -142,7 +142,7 @@ int main()
 	  (begin
 	    (psystem "rm " (get ".exo"))
        	    (psystem "convert " exoname " " exoname ".eps")
-	    (psystem "convert " exoname " html/" exiname ".png"); (regexp-substitute/global #f "\.p.*$" exoname 'pre ".jpg"))
+	    (psystem "convert " exoname " html/" exoname ".png"); (regexp-substitute/global #f "\.p.*$" exoname 'pre ".jpg"))
        	    (psystem "epstopdf " exoname ".eps > " exoname ".pdf")
 ))))
 ~][~ ENDIF ~][~ `rm -f .example example.cc` ~]

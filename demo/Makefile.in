@@ -74,13 +74,15 @@ install_sh = @install_sh@
 
 INCLUDES = -I$(top_srcdir)/src
 AM_CXXFLAGS = -Wall -W -DNDEBUG -ftemplate-depth-50 -ansi -pedantic
-noinst_PROGRAMS = tour morpholena
+noinst_PROGRAMS = tour morpholena test-reconstruction
 tour_SOURCES = tour.cc
 morpholena_SOURCES = morpholena.cc
+test_reconstruction_SOURCES = test-reconstruction.cc
 subdir = demo
 mkinstalldirs = $(SHELL) $(top_srcdir)/tools/mkinstalldirs
 CONFIG_CLEAN_FILES =
-noinst_PROGRAMS = tour$(EXEEXT) morpholena$(EXEEXT)
+noinst_PROGRAMS = tour$(EXEEXT) morpholena$(EXEEXT) \
+	test-reconstruction$(EXEEXT)
 PROGRAMS = $(noinst_PROGRAMS)
 
 am_morpholena_OBJECTS = morpholena.$(OBJEXT)
@@ -88,6 +90,11 @@ morpholena_OBJECTS = $(am_morpholena_OBJECTS)
 morpholena_LDADD = $(LDADD)
 morpholena_DEPENDENCIES =
 morpholena_LDFLAGS =
+am_test_reconstruction_OBJECTS = test-reconstruction.$(OBJEXT)
+test_reconstruction_OBJECTS = $(am_test_reconstruction_OBJECTS)
+test_reconstruction_LDADD = $(LDADD)
+test_reconstruction_DEPENDENCIES =
+test_reconstruction_LDFLAGS =
 am_tour_OBJECTS = tour.$(OBJEXT)
 tour_OBJECTS = $(am_tour_OBJECTS)
 tour_LDADD = $(LDADD)
@@ -101,16 +108,18 @@ LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
 depcomp = $(SHELL) $(top_srcdir)/tools/depcomp
 am__depfiles_maybe = depfiles
-@AMDEP_TRUE@DEP_FILES = $(DEPDIR)/morpholena.Po $(DEPDIR)/tour.Po
+@AMDEP_TRUE@DEP_FILES = $(DEPDIR)/morpholena.Po \
+@AMDEP_TRUE@	$(DEPDIR)/test-reconstruction.Po $(DEPDIR)/tour.Po
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 	-o $@
 CXXFLAGS = @CXXFLAGS@
-DIST_SOURCES = $(morpholena_SOURCES) $(tour_SOURCES)
+DIST_SOURCES = $(morpholena_SOURCES) $(test_reconstruction_SOURCES) \
+	$(tour_SOURCES)
 DIST_COMMON = Makefile.am Makefile.in
-SOURCES = $(morpholena_SOURCES) $(tour_SOURCES)
+SOURCES = $(morpholena_SOURCES) $(test_reconstruction_SOURCES) $(tour_SOURCES)
 
 all: all-am
 
@@ -127,6 +136,9 @@ clean-noinstPROGRAMS:
 morpholena$(EXEEXT): $(morpholena_OBJECTS) $(morpholena_DEPENDENCIES) 
 	@rm -f morpholena$(EXEEXT)
 	$(CXXLINK) $(morpholena_LDFLAGS) $(morpholena_OBJECTS) $(morpholena_LDADD) $(LIBS)
+test-reconstruction$(EXEEXT): $(test_reconstruction_OBJECTS) $(test_reconstruction_DEPENDENCIES) 
+	@rm -f test-reconstruction$(EXEEXT)
+	$(CXXLINK) $(test_reconstruction_LDFLAGS) $(test_reconstruction_OBJECTS) $(test_reconstruction_LDADD) $(LIBS)
 tour$(EXEEXT): $(tour_OBJECTS) $(tour_DEPENDENCIES) 
 	@rm -f tour$(EXEEXT)
 	$(CXXLINK) $(tour_LDFLAGS) $(tour_OBJECTS) $(tour_LDADD) $(LIBS)
@@ -138,6 +150,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/morpholena.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/test-reconstruction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/tour.Po@am__quote@
 
 distclean-depend:

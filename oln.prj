@@ -1,15 +1,18 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_2 17)
-(Parent-Version oln 0_2 16)
-(Version-Log "2002-01-14  Alexandre Duret-Lutz  <duret_g@epita.fr>
+(Project-Version oln 0_2 18)
+(Parent-Version oln 0_2 17)
+(Version-Log "2002-01-14  Jerome Darbon  <jerome@epita.fr>
 
-	* src/level/connected.hh: Doc update from Jerome.
+	* demo/Makefile.am (test_reconstruction_SOURCES): New.
+	* tests/test-construction.cc: New file.
+	* img/lena.pgm: New file.
+	* Makefile.am (EXTRA_DIST): Add it.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 14 Jan 2002 11:39:15 +0100")
+(Checkin-Time "Mon, 14 Jan 2002 11:59:52 +0100")
 (Checkin-Login adl)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
@@ -62,11 +65,11 @@
 
   (NEWS (oln/0_NEWS 1.2 644))
   (README (oln/1_README 1.2 644))
-  (Makefile.am (oln/2_Makefile.a 1.4 644))
+  (Makefile.am (oln/2_Makefile.a 1.5 644))
   (configure.ac (oln/3_configure. 1.2 644))
   (THANKS (oln/4_THANKS 1.1 644))
   (img/lena.pgm (oln/5_lena.pgm 1.1 640) :no-keywords)
-  (ChangeLog (oln/6_ChangeLog 1.11 644))
+  (ChangeLog (oln/6_ChangeLog 1.12 644))
   (src/config/system.hh (oln/7_system.hh 1.1 644))
   (src/utils/timer.hh (oln/8_timer.hh 1.1 644))
   (src/utils/stat.hh (oln/9_stat.hh 1.2 644))
@@ -260,7 +263,7 @@
   (src/basics1d.hh (oln/d/41_basics1d.h 1.1 644))
   (src/basics.hh (oln/d/42_basics.hh 1.1 644))
   (demo/morpholena.cc (oln/d/43_morpholena 1.1 644))
-  (demo/Makefile.am (oln/d/44_Makefile.a 1.1 644))
+  (demo/Makefile.am (oln/d/44_Makefile.a 1.2 644))
   (demo/tour.cc (oln/d/45_tour.cc 1.1 644))
   (demo/image.cc (oln/d/46_image.cc 1.1 644))
   (tools () :directory)
@@ -273,7 +276,7 @@
 ;; Files added by populate at Sat, 12 Jan 2002 17:25:43 +0100,
 ;; to version 0_2.4(w), by adl:
 
-  (doc/tpl/processing.tpl (oln/d/48_processing 1.6 644))
+  (doc/tpl/processing.tpl (oln/d/48_processing 1.7 644))
   (doc/img/object.pbm (oln/d/49_object.pbm 1.1 644))
   (doc/doc/oln-ref.texi (oln/d/50_oln-ref.te 1.4 644))
   (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.6 644))
@@ -294,14 +297,14 @@
   (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.6 644))
   (configure (oln/e/7_configure 1.2 755))
   (aclocal.m4 (oln/e/8_aclocal.m4 1.2 644))
-  (Makefile.in (oln/e/9_Makefile.i 1.4 644))
+  (Makefile.in (oln/e/9_Makefile.i 1.5 644))
   (tools/texinfo.tex (oln/e/10_texinfo.te 1.2 644))
   (tools/mdate-sh (oln/e/11_mdate-sh 1.1 755))
   (tools/depcomp (oln/e/12_depcomp 1.1 755))
   (tools/missing (oln/e/13_missing 1.1 755))
   (tools/mkinstalldirs (oln/e/14_mkinstalld 1.1 755))
   (tools/install-sh (oln/e/15_install-sh 1.1 755))
-  (demo/Makefile.in (oln/e/16_Makefile.i 1.2 644))
+  (demo/Makefile.in (oln/e/16_Makefile.i 1.3 644))
   (src/Makefile.in (oln/e/17_Makefile.i 1.3 644))
 
 ;; Files added by populate at Sun, 13 Jan 2002 12:33:06 +0100,
