@@ -29,7 +29,7 @@
 # define OLENA_UTILS_HISTOGRAM_HH
 
 # include <oln/basics.hh>
-# include <oln/types/optraits.hh>
+# include <ntg/optraits.hh>
 # include <vector>
 
 namespace oln {

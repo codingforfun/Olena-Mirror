@@ -31,8 +31,8 @@
 # include <oln/basics.hh>
 # include <oln/math/macros.hh>
 # include <oln/arith/internal/opdecls.hh>
-# include <oln/types/global_ops_traits.hh>
-# include <oln/types/typetraits_builtins.hh>
+# include <ntg/global_ops_traits.hh>
+# include <ntg/typetraits_builtins.hh>
 # include <oln/convert/basics.hh>
 # include <functional>
 

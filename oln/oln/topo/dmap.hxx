@@ -29,7 +29,7 @@
 # define OLENA_TOPO_DMAP_HXX
 
 # include <oln/arith/ops.hh>
-# include <oln/types/optraits_builtins_float.hh>
+# include <ntg/optraits_builtins_float.hh>
 # include <mlc/array2d.hh>
 
 namespace oln {

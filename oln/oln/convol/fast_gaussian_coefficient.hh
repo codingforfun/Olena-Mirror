@@ -42,7 +42,7 @@
 //// ------------------------------------------------------------ ////
 
 
-# include <oln/types/predecls.hh>
+# include <ntg/predecls.hh>
 # include <vector>
 
 namespace oln {

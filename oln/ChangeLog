@@ -1,3 +1,69 @@
+2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/types/all.hh, oln/types/behaviour.hh, oln/types/bin.hh,
+	oln/types/builtins_properties.hh, oln/types/cast.hh,
+	oln/types/color.hh, oln/types/cplx.hh,
+	oln/types/cplx_representation.hh, oln/types/cycle.hh,
+	oln/types/debug.hh, oln/types/global_ops.hh,
+	oln/types/global_ops_defs.hh, oln/types/global_ops_traits.hh,
+	oln/types/hsi.hh, oln/types/hsl.hh, oln/types/hsv.hh,
+	oln/types/int_s.hh, oln/types/int_u.hh, oln/types/interval.hh,
+	oln/types/nrgb.hh, oln/types/optraits.hh,
+	oln/types/optraits_bin.hh, oln/types/optraits_builtins.hh,
+	oln/types/optraits_builtins_bool.hh,
+	oln/types/optraits_builtins_float.hh,
+	oln/types/optraits_builtins_int.hh,
+	oln/types/optraits_builtins_int_defs.hh,
+	oln/types/optraits_cplx.hh, oln/types/optraits_cycle.hh,
+	oln/types/optraits_int_s.hh, oln/types/optraits_int_u.hh,
+	oln/types/optraits_range.hh, oln/types/optraits_scalar.hh,
+	oln/types/optraits_scalar_defs.hh, oln/types/optraits_vec.hh,
+	oln/types/predecls.hh, oln/types/range.hh,
+	oln/types/rec_value.hh, oln/types/rgb.hh, oln/types/to_oln.hh,
+	oln/types/type.hh, oln/types/typetraits.hh,
+	oln/types/typetraits_builtins.hh,
+	oln/types/typetraits_builtins_bool.hh,
+	oln/types/typetraits_builtins_float.hh,
+	oln/types/typetraits_builtins_int.hh, oln/types/vec.hh,
+	oln/types/xyz.hh, oln/types/yiq.hh, oln/types/yuv.hh: Move to
+	../integre/ntg.
+
+	* oln/arith/logic.hh, oln/arith/ops.hh, oln/convert/bound.hh,
+	oln/convert/colorconv.hh, oln/convert/conversion.hh,
+	oln/convert/force.hh, oln/convert/nrgbhsi.hh,
+	oln/convert/nrgbhsl.hh, oln/convert/nrgbhsv.hh,
+	oln/convert/nrgbxyz.hh, oln/convert/nrgbyiq.hh,
+	oln/convert/nrgbyuv.hh, oln/convert/rgbnrgb.hh,
+	oln/convert/rgbxyz.hh, oln/convert/stretch.hh,
+	oln/convol/convolution.hh, oln/convol/fast_gaussian.hh,
+	oln/convol/fast_gaussian.hxx,
+	oln/convol/fast_gaussian_coefficient.hh, oln/core/dpoint1d.hh,
+	oln/core/dpointnd.hh, oln/core/image1d.hh,
+	oln/core/image2d.hh, oln/core/image3d.hh,
+	oln/core/imagend_size.hh, oln/core/internal/real_image2d.hh,
+	oln/core/internal/real_image3d.hh, oln/core/point1d.hh,
+	oln/core/point3d.hh, oln/core/pointnd.hh, oln/io/pnm_read.hxx,
+	oln/io/pnm_read_common.hxx, oln/io/pnm_write.hxx,
+	oln/io/pnm_write_common.hxx, oln/level/cc.hh,
+	oln/level/connected.hh, oln/level/invert.hh,
+	oln/level/threshold.hh, oln/math/macros.hh,
+	oln/morpho/extrema_killer.hh, oln/morpho/geodesic_dilation.hh,
+	oln/morpho/reconstruction.hh, oln/morpho/stat.hh,
+	oln/morpho/watershed.hxx, oln/topo/dmap.hxx,
+	oln/transforms/dwt.hh, oln/transforms/fft.hh,
+	oln/utils/histogram.hh, oln/utils/stat.hh: Update
+	"<oln/types/" to "<ntg/".
+
+	* tests/arith/tests/min1, tests/io/loadsave.hh,
+	tests/morpho/edoc.cc, tests/transforms/dwt.cc,
+	tests/transforms/fft.cc, tests/types/runtests : Likewise.
+
+	* conf/configure.ac: Likewise.
+
+2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* tests/sanity/includes.test: Fix defs path.
+
 2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* Makefile.am (nobase_include_HEADERS): Remove references to

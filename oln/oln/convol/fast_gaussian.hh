@@ -30,7 +30,7 @@
 
 # include <oln/basics.hh>
 # include <oln/convert/basics.hh>
-# include <oln/types/predecls.hh>
+# include <ntg/predecls.hh>
 
 //
 // Gaussian filter implementation from

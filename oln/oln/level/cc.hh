@@ -32,7 +32,7 @@
 // FIXME: really need all ?
 # include <oln/arith/ops.hh>
 # include <mlc/optional.hh>
-# include <oln/types/all.hh>
+# include <ntg/all.hh>
 # include <oln/level/fill.hh>
 # include <oln/level/invert.hh>
 # include <oln/level/compare.hh>

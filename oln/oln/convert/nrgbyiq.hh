@@ -31,9 +31,9 @@
 
 # include <oln/convert/colorconv.hh>
 
-# include <oln/types/nrgb.hh>
-# include <oln/types/yiq.hh>
-# include <oln/types/typetraits_builtins.hh>
+# include <ntg/nrgb.hh>
+# include <ntg/yiq.hh>
+# include <ntg/typetraits_builtins.hh>
 
 /*--------------------------------------------------------------.
 | The formulas used here come from ``Digital Image Processing   |

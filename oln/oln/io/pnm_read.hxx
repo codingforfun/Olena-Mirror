@@ -30,7 +30,7 @@
 
 # include <oln/core/image2d.hh>
 # include <oln/core/fwd_iter2d.hh>
-# include <oln/types/bin.hh>
+# include <ntg/bin.hh>
 # include <oln/io/pnm_read_common.hxx>
 
 namespace oln {

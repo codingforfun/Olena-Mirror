@@ -31,9 +31,9 @@
 
 # include <oln/convert/colorconv.hh>
 
-# include <oln/types/nrgb.hh>
-# include <oln/types/hsl.hh>
-# include <oln/types/typetraits_builtins.hh>
+# include <ntg/nrgb.hh>
+# include <ntg/hsl.hh>
+# include <ntg/typetraits_builtins.hh>
 # include <cstdlib>
 
 /*------------------------------------------------------------------.

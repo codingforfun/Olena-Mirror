@@ -1,6 +1,6 @@
 #include <oln/basics2d.hh>
 #include <oln/arith/ops.hh>
-#include <oln/types/all.hh>
+#include <ntg/all.hh>
 
 using namespace oln;
 

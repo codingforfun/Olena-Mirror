@@ -1,7 +1,7 @@
 2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* tests/array/gen_test.cc (write_postlude_and_test): Fix builddir
-	includes.
+	* tests/array/gen_test.cc (write_postlude_and_test): Temporarily
+	fix includes.
 
 2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 

@@ -30,7 +30,7 @@
 
 # include <oln/config/system.hh>
 # include <oln/basics2d.hh>
-# include <oln/types/all.hh>
+# include <ntg/all.hh>
 # include <oln/morpho/extrema.hh>
 # include <oln/arith/ops.hh>
 # include <oln/morpho/watershed.hh>

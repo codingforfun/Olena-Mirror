@@ -30,7 +30,7 @@
 # define OLENA_CONVERT_BOUND_HH
 
 # include <oln/convert/conversion.hh>
-# include <oln/types/cast.hh>
+# include <ntg/cast.hh>
 
 namespace oln {
   namespace convert {

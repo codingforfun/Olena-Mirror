@@ -29,8 +29,8 @@
 # define OLENA_TRANSFORMS_DWT_HH
 
 # include <oln/config/system.hh>
-# include <oln/types/optraits.hh>
-# include <oln/types/cast.hh>
+# include <ntg/optraits.hh>
+# include <ntg/cast.hh>
 # include <oln/basics.hh>
 # include <mlc/array1d.hh>
 

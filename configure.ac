@@ -14,6 +14,9 @@ AC_WITH_OLN
 # Import local version of Metalic.
 CPPFLAGS="-I\$(top_srcdir)/metalic $CPPFLAGS"
 
+# Import local version of Integre.
+CPPFLAGS="-I\$(top_srcdir)/integre $CPPFLAGS"
+
 # Some library archives are used. Some C code used.
 AC_PROG_RANLIB
 AC_PROG_CC
@@ -29,6 +32,8 @@ AC_CONFIG_FILES([Makefile
                  lib/Makefile
                  lib/check/defs
                  lib/check/Makefile
+		 integre/Makefile
+		 integre/ntg/Makefile
                  metalic/Makefile 
                  metalic/mlc/Makefile
                  metalic/tests/Makefile

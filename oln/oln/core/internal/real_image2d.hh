@@ -30,7 +30,7 @@
 
 # include <oln/core/internal/image2d.hh>
 # include <oln/core/internal/image2d_data.hh>
-# include <oln/types/all.hh>
+# include <ntg/all.hh>
 # include <iostream>
 # include <cmath>
 

@@ -35,8 +35,8 @@
 #  include <fftw.h>
 #  include <rfftw.h>
 
-#  include <oln/types/optraits.hh>
-#  include <oln/types/all.hh>
+#  include <ntg/optraits.hh>
+#  include <ntg/all.hh>
 #  include <oln/basics2d.hh>
 
 namespace oln {

@@ -1,7 +1,7 @@
 #include <oln/basics2d.hh>
 #include <oln/level/compare.hh>
-#include <oln/types/nrgb.hh>
-#include <oln/types/debug.hh>
+#include <ntg/nrgb.hh>
+#include <ntg/debug.hh>
 #if HAVE_ZLIB
 # include <oln/io/gz.hh>
 #endif

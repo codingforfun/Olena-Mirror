@@ -188,58 +188,7 @@ nobase_include_HEADERS =			\
   oln/utils/copy.hh				\
   oln/utils/histogram.hh			\
   oln/utils/stat.hh				\
-  oln/utils/timer.hh				\
-  oln/types/all.hh				\
-  oln/types/behaviour.hh			\
-  oln/types/bin.hh				\
-  oln/types/builtins_properties.hh		\
-  oln/types/cast.hh				\
-  oln/types/color.hh				\
-  oln/types/cplx.hh				\
-  oln/types/cplx_representation.hh		\
-  oln/types/cycle.hh				\
-  oln/types/debug.hh				\
-  oln/types/global_ops.hh			\
-  oln/types/global_ops_defs.hh			\
-  oln/types/global_ops_traits.hh		\
-  oln/types/hsi.hh				\
-  oln/types/hsl.hh				\
-  oln/types/hsv.hh				\
-  oln/types/int_s.hh				\
-  oln/types/int_u.hh				\
-  oln/types/interval.hh				\
-  oln/types/nrgb.hh				\
-  oln/types/optraits.hh				\
-  oln/types/optraits_bin.hh			\
-  oln/types/optraits_builtins.hh		\
-  oln/types/optraits_builtins_bool.hh		\
-  oln/types/optraits_builtins_float.hh		\
-  oln/types/optraits_builtins_int.hh		\
-  oln/types/optraits_builtins_int_defs.hh	\
-  oln/types/optraits_cplx.hh			\
-  oln/types/optraits_cycle.hh			\
-  oln/types/optraits_int_s.hh			\
-  oln/types/optraits_int_u.hh			\
-  oln/types/optraits_range.hh			\
-  oln/types/optraits_scalar.hh			\
-  oln/types/optraits_scalar_defs.hh		\
-  oln/types/optraits_vec.hh			\
-  oln/types/predecls.hh				\
-  oln/types/range.hh				\
-  oln/types/rec_value.hh			\
-  oln/types/rgb.hh				\
-  oln/types/to_oln.hh				\
-  oln/types/type.hh				\
-  oln/types/typetraits.hh			\
-  oln/types/typetraits_builtins.hh		\
-  oln/types/typetraits_builtins_bool.hh		\
-  oln/types/typetraits_builtins_float.hh	\
-  oln/types/typetraits_builtins_int.hh		\
-  oln/types/vec.hh				\
-  oln/types/xyz.hh				\
-  oln/types/yiq.hh				\
-  oln/types/yuv.hh
-
+  oln/utils/timer.hh
 
 ###
 ### Autoconf macro repository

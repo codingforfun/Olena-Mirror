@@ -28,7 +28,7 @@
 #ifndef OLENA_IO_PNM_WRITE_HXX_
 # define OLENA_IO_PNM_WRITE_HXX_
 
-# include <oln/types/optraits.hh>
+# include <ntg/optraits.hh>
 # include <oln/io/pnm_write_common.hxx>
 
 namespace oln {

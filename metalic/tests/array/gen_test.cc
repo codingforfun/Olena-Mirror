@@ -180,7 +180,7 @@ write_postlude_and_test (ofstream & ofs,
 	std::string cmdline = compile_cmd(filename, "",
 					  Isrcdir ("../..") + ' '
 					  + Isrcdir ("../../../lib/check") + ' ' 
-					  // FIXME: the 2 next entries will become useless
+					  // FIXME: the 2 next entries should become useless
 					  // compile.cc should not include hard coded CPPFLAGS
 					  + Isrcdir ("../../../oln") + ' '
 					  + Isrcdir ("../../../mlc") + ' '

@@ -35,7 +35,7 @@ for test; do
   # Build the source code to compile.
   src=$dir/$test.cc
   cat >$src <<'EOF'
-#include <oln/types/all.hh>
+#include <ntg/all.hh>
 using namespace oln;
 int main() {
 EOF

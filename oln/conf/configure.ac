@@ -9,7 +9,7 @@ AC_WITH_OLN
 if test "x$have_olena" = xyes; then
   AC_MSG_CHECKING([whether Olena works with the selected development environment])
   AC_LANG_PUSH([C++])
-  AC_LINK_IFELSE([@%:@include <oln/types/all.hh>
+  AC_LINK_IFELSE([@%:@include <ntg/all.hh>
                   int main()
                   {
 	              oln::sfloat f = 3.14;
@@ -32,4 +32,3 @@ AC_CXX_FLAGS
 
 AC_CONFIG_FILES([oln-config.sh:oln-config.shin], [chmod +x oln-config.sh])
 AC_OUTPUT
-

@@ -31,7 +31,7 @@
 # include <oln/core/coord.hh>
 # include <oln/core/point.hh>
 # include <oln/core/dpoint.hh>
-# include <oln/types/debug.hh>
+# include <ntg/debug.hh>
 # include <iostream>
 # include <sstream>
 

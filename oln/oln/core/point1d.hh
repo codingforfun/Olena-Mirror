@@ -29,7 +29,7 @@
 # define OLENA_CORE_POINT1D_HH
 
 # include <oln/config/system.hh>
-# include <oln/types/predecls.hh>
+# include <ntg/predecls.hh>
 # include <oln/core/coord.hh>
 # include <oln/core/pointnd.hh>
 # include <iostream>

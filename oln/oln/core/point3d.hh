@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_POINT3D_HH
 # define OLENA_CORE_POINT3D_HH
 
-# include <oln/types/predecls.hh>
+# include <ntg/predecls.hh>
 # include <oln/core/coord.hh>
 # include <oln/core/pointnd.hh>
 # include <iostream>

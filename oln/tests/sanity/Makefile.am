@@ -5,6 +5,7 @@ maintainer-check:
         TOP_BUILDDIR=$(top_builddir) \
         PATH_TO_OLN_SRCDIR=$(OLN_LOCAL_SRC) \
 	PATH_TO_OLN_BUILDDIR=$(OLN_LOCAL_BUILD) \
+	CPPFLAGS="$(CPPFLAGS) $(DEFS) -I$(top_builddir) -I$(OLN_LOCAL_SRC) -I$(OLN_LOCAL_BUILD)" \
 	  $(SHELL) $(srcdir)/includes.test
 
 CLEANFILES = failures incltest.*

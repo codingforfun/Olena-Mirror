@@ -29,8 +29,8 @@
 # define OLENA_LEVEL_INVERT_HH
 
 # include <oln/basics.hh>
-# include <oln/types/rec_value.hh>
-# include <oln/types/bin.hh>
+# include <ntg/rec_value.hh>
+# include <ntg/bin.hh>
 # include <functional>
 
 namespace oln {

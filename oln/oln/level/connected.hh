@@ -28,7 +28,7 @@
 #ifndef OLENA_LEVEL_CONNECTED_HH
 # define OLENA_LEVEL_CONNECTED_HH
 
-# include <oln/types/optraits.hh>
+# include <ntg/optraits.hh>
 # include <oln/level/lut.hh>
 # include <oln/level/fill.hh>
 # include <oln/morpho/splitse.hh>

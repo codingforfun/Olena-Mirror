@@ -30,7 +30,7 @@
 
 # include <oln/basics.hh>
 # include <mlc/ucmp.hh>
-# include <oln/types/bin.hh>
+# include <ntg/bin.hh>
 
 namespace oln {
 

@@ -31,7 +31,7 @@
 // Deriche 93 INRIA REPORT
 //
 
-#include <oln/types/cast.hh>
+#include <ntg/cast.hh>
 #include <oln/convol/fast_gaussian_coefficient.hh>
 #include <vector>
 

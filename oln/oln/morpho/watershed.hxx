@@ -29,7 +29,7 @@
 # define OLENA_MORPHO_WATERSHED_HXX
 
 # include <oln/config/system.hh>
-# include <oln/types/all.hh>
+# include <ntg/all.hh>
 # include <oln/level/fill.hh>
 # include <queue>
 # include <map>

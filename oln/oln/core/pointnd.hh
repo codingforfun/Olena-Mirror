@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_POINTND_HH
 # define OLENA_CORE_POINTND_HH
 
-# include <oln/types/debug.hh>
+# include <ntg/debug.hh>
 # include <oln/core/coord.hh>
 # include <oln/core/point.hh>
 # include <iostream>
