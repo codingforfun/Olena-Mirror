@@ -321,7 +321,7 @@
 (oln/io/file.hh 2848 1026899980 b/17_file.hh 1.2)
 (oln/morpho/thinning.hh 1722 1026899980 e/27_thinning.h 1.3)
 (demo/Makefile.am 767 1033408273 d/44_Makefile.a 1.5)
-(oln/io/pnm_write3d.hxx 7532 1037395296 b/9_pnm_write3 1.1.1.5)
+(oln/io/pnm_write3d.hxx 7505 1037396273 b/9_pnm_write3 1.1.1.6)
 (tests/check/verbose.cc 428 1026230945 e/41_verbose.cc 1.2)
 (tests/check/Makefile.am 257 1019736908 e/44_Makefile.a 1.3)
 (oln/core/point3d.hh 2634 1033408273 c/28_point3d.hh 1.3)
