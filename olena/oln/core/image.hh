@@ -36,32 +36,32 @@
 
 namespace oln {
 
-  template<unsigned Dim, class T, class Impl, class Exact = mlc::final>
+  template<class T, unsigned Dim, class Impl, class Exact = mlc::final>
   class image; //fwd_decl
 
-  template<unsigned Dim, class T, class Impl, class Exact>
-  struct image_id<image<Dim, T, Impl, Exact> >
+  template<class T, unsigned Dim, class Impl, class Exact>
+  struct image_id<image<T, Dim, Impl, Exact> >
   {
     enum{dim = Dim};
     typedef T value_type;
     typedef Impl impl_type;
-    typedef typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret exact_type;
+    typedef typename mlc::exact_vt<image<T, Dim, Impl, Exact>, Exact>::ret exact_type;
   };
 
-  template<unsigned Dim, class T, class Impl, class Exact>
-  struct image_traits<image<Dim, T, Impl, Exact> >:
+  template<class T, unsigned Dim, class Impl, class Exact>
+  struct image_traits<image<T, Dim, Impl, Exact> >:
     public image_traits<abstract::image_with_impl<Impl,
-						  typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret> >
+						  typename mlc::exact_vt<image<T, Dim, Impl, Exact>, Exact>::ret> >
   {
 
   };
 
   // image
 
-  template<unsigned Dim, class T, class Impl, class Exact>
+  template<class T, unsigned Dim, class Impl, class Exact>
   class image:
     public abstract::image_with_impl<Impl,
-				     typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret>
+				     typename mlc::exact_vt<image<T, Dim, Impl, Exact>, Exact>::ret>
   {
   public:
     typedef typename image_traits<Exact>::point_type point_type;
@@ -73,8 +73,8 @@ namespace oln {
     typedef typename image_traits<Exact>::size_type size_type;
     typedef typename image_traits<Exact>::impl_type impl_type;
 
-    typedef image<Dim, T, Impl, Exact> self_type;
-    typedef typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret exact_type;
+    typedef image<T, Dim, Impl, Exact> self_type;
+    typedef typename mlc::exact_vt<image<T, Dim, Impl, Exact>, Exact>::ret exact_type;
     typedef typename abstract::image_with_impl<Impl,
 					       exact_type> super_type;
 

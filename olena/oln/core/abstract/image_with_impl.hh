@@ -67,15 +67,7 @@ namespace oln {
       typedef Exact exact_type;
       typedef image_with_dim<image_id<Exact>::dim, Exact> super_type;
 
-      const value_type& at(const point_type& p) const
-      {
-	return impl_->at(p);
-      }
-
-      value_type& at(const point_type& p)
-      {
-	return impl_->at(p);
-      }
+      friend class image<exact_type>;
 
       // shallow copy
       image_with_impl(self_type& rhs) 
@@ -89,6 +81,41 @@ namespace oln {
       exact_type& operator=(self_type rhs)
       {
 	return this->exact().assign(rhs.exact());
+      }
+
+      const impl_type* impl() const
+      {
+	return impl_;
+      }
+
+      impl_type* impl()
+      {
+	return impl_;
+      }
+
+      static std::string name()
+      {
+	return
+	  std::string("abstract::image_with_impl<")
+	  + Impl::name() + ", "
+	  + Exact::name() + ">";
+      }
+
+      void clone_to(impl_type* output_data) const
+      {
+	assertion(impl_ != 0);
+	impl()->clone_to(output_data);
+      }
+
+    protected:
+      const value_type& at(const point_type& p) const
+      {
+	return impl_->at(p);
+      }
+      
+      value_type& at(const point_type& p)
+      {
+	return impl_->at(p);
       }
 
       exact_type& assign(exact_type rhs) // shallow assignment
@@ -117,31 +144,6 @@ namespace oln {
 	  }
       }
 
-      const impl_type* impl() const
-      {
-	return impl_;
-      }
-
-      impl_type* impl()
-      {
-	return impl_;
-      }
-
-      static std::string name()
-      {
-	return
-	  std::string("abstract::image_with_impl<")
-	  + Impl::name() + ", "
-	  + Exact::name() + ">";
-      }
-
-      void clone_to(impl_type* output_data) const
-      {
-	assertion(impl_ != 0);
-	impl()->clone_to(output_data);
-      }
-
-    protected:
       image_with_impl() : super_type(), impl_(0)
       {}
 

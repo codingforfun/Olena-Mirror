@@ -42,20 +42,19 @@ namespace oln {
   namespace convol {
     namespace fast {
 
-      template <class C, class I>
+      template <class C, class B, class I>
       typename mute<I, typename convoutput<C,Value(I)>::ret>::ret
-      gaussian(const conversion<C>& input_conv,
+      gaussian(const convert::abstract::conversion<C, B>& input_conv,
 	       const abstract::image<I>& in, ntg::float_s sigma);
 
       template <class C, class I>
       typename mute<I, typename convoutput<C,Value(I)>::ret>::ret
-      gaussian_derivative(const conversion<C>& input_conv,
+      gaussian_derivative(const convert::abstract::conversion<C, B>& input_conv,
 			  const abstract::image<I>& in, ntg::float_s sigma);
-
       template <class C, class I>
       typename mute<I, typename convoutput<C,Value(I)>::ret>::ret
-      gaussian_second_derivative(const conversion<C>& input_conv,
-				 const abstract::image<I>& in, 
+      gaussian_second_derivative(const convert::abstract::conversion<C, B>& input_conv,
+				 const abstract::image<I>& in,
 				 ntg::float_s sigma);
 
 
@@ -73,7 +72,7 @@ namespace oln {
 
       template <class I> inline
       Concrete(I)
-      gaussian_second_derivative(const abstract::image<I>& in, 
+      gaussian_second_derivative(const abstract::image<I>& in,
 				 ntg::float_s sigma)
       { return gaussian_second_derivative(convert::force<Value(I)>(),
 					  in, sigma); }

@@ -54,6 +54,8 @@ namespace oln {
     typedef abstract::point< point3d >	super_type;
     typedef point_traits<point3d>::dpoint_type dpoint_type;
 
+    friend class super_type;
+
     point3d();
 
     point3d(coord slice, coord row, coord col);
@@ -70,6 +72,10 @@ namespace oln {
 
     coord& col();
 
+    static std::string name() { return "point3d"; }
+
+  protected:
+
     point3d plus_dp(const dpoint3d& dp) const;
 
     point3d minus_dp(const dpoint3d& dp) const;
@@ -82,7 +88,6 @@ namespace oln {
 
     point3d minus() const;
 
-    static std::string name() { return "point3d"; }
   };
 
   namespace internal

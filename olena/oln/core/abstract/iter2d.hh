@@ -64,16 +64,7 @@ namespace oln {
     public:
 
       typedef iter<Exact> super_type;
-
-      point2d to_point() const
-      {
-	precondition(*this != end);
-	invariant(this->p_.row() >= 0 &&
-		  (this->p_.row() < nrows_ || this->p_.row() == nrows_) &&
-		  this->p_.col() >= 0 &&
-		  this->p_.col() < ncols_);
-	return this->p_;
-      }
+      friend class super_type;
 
       coord row() const
       {
@@ -91,6 +82,16 @@ namespace oln {
 
       const coord nrows_;
       const coord ncols_;
+
+      point2d to_point() const
+      {
+	precondition(*this != end);
+	invariant(this->p_.row() >= 0 &&
+		  (this->p_.row() < nrows_ || this->p_.row() == nrows_) &&
+		  this->p_.col() >= 0 &&
+		  this->p_.col() < ncols_);
+	return this->p_;
+      }
 
       iter2d() : super_type(), nrows_(0), ncols_(0) {}
 

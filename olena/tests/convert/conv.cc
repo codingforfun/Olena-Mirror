@@ -27,8 +27,8 @@ bool check()
       for(int k = 0; k < 256; k += 3)
 	{
 	  CONC(SRC,_8) orig(i, j, k);
-	  CONC(DEST,_8) tmp = convert::CONC(CONC(SRC,_to_),DEST)(orig);
-	  CONC(SRC,_8) res = convert::CONC(CONC(DEST,_to_),SRC)(tmp);
+	  CONC(DEST,_8) tmp = convert::CONC(CONC(SRC,_to_),DEST)<8, 8>(orig);
+	  CONC(SRC,_8) res = convert::CONC(CONC(DEST,_to_),SRC)<8, 8>(tmp);
  
 	  if(dist<CONC(SRC,_8)>(orig, res) > EM)
             {

@@ -125,15 +125,11 @@ namespace oln {
       typedef image_with_dim<1, Exact> self_type;
       typedef Exact exact_type;
    
+      friend class image<exact_type>;
+
       coord ncols() const
       {
 	return this->size().ncols();
-      }
-
-      // FIXME: size_t ???
-      size_t npoints_() const
-      {
-	return size_t(ncols());
       }
 
       const value_type operator()(coord col) const
@@ -169,6 +165,13 @@ namespace oln {
       }
 
     protected:
+
+      // FIXME: size_t ???
+      size_t npoints_() const
+      {
+	return size_t(ncols());
+      }
+
       image_with_dim() : super_type(){}
 
     }; // end of one-dimensional specialization
@@ -189,6 +192,9 @@ namespace oln {
       typedef image_with_dim<2, Exact> self_type;
       typedef Exact exact_type;
       typedef image_with_type<typename image_id<Exact>::value_type, Exact> super_type;
+
+      friend class image<exact_type>;
+
       coord nrows() const
       {
 	return this->size().nrows();
@@ -197,12 +203,6 @@ namespace oln {
       coord ncols() const
       {
 	return this->size().ncols();
-      }
-
-      // FIXME: size_t ???
-      size_t npoints_() const
-      {
-	return size_t(nrows()) * size_t(ncols());
       }
 
       const value_type operator()(coord row, coord col) const
@@ -238,6 +238,13 @@ namespace oln {
       }
 
     protected:
+
+      // FIXME: size_t ???
+      size_t npoints_() const
+      {
+	return size_t(nrows()) * size_t(ncols());
+      }
+
       image_with_dim() : super_type() {}
  
     }; // end of bi-dimensional specialization
@@ -259,6 +266,8 @@ namespace oln {
       typedef image_with_dim<3, Exact> self_type;
       typedef Exact exact_type;
 
+      friend class image<exact_type>;
+
       coord nslices() const
       {
 	return this->size().nslices();
@@ -272,11 +281,6 @@ namespace oln {
       coord ncols() const
       {
 	return this->size().ncols();
-      }
-
-      size_t npoints_() const
-      {
-	return size_t(nslices()) * size_t(nrows()) * size_t(ncols());
       }
 
       const value_type operator()(coord slice, coord row, coord col) const
@@ -312,6 +316,12 @@ namespace oln {
       }
 
     protected:
+
+      size_t npoints_() const
+      {
+	return size_t(nslices()) * size_t(nrows()) * size_t(ncols());
+      }
+
       image_with_dim() : super_type() {}
  
     }; // end of tri-dimensional specialization

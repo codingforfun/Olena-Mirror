@@ -45,8 +45,8 @@ namespace oln {
 	// defined by two points (START and FINISH) and a displacement
 	// dpoint (D).
 	template <class WorkType, class FloatType, class I>
-	void _recursivefilter(I& image,
-			      const _RecursiveFilterCoef<FloatType>& c,
+	void recursivefilter_(I& image,
+			      const RecursiveFilterCoef_<FloatType>& c,
 			      const Point(I)& start,
 			      const Point(I)& finish,
 			      coord len,
@@ -144,12 +144,12 @@ namespace oln {
 
 
 	template<unsigned dim>
-	struct _gaussian {};
+	struct gaussian_ {};
 
 
 	// Gaussian filter for 1D images
 	template<>
-	struct _gaussian<1>
+	struct gaussian_<1>
 	{
 	  template <class I, class F> static
 	  void
@@ -157,7 +157,7 @@ namespace oln {
 	  {
 
 	    // Apply on columns.
-	    _recursivefilter<float>(img, coef,
+	    recursivefilter_<float>(img, coef,
 				    Point(I)(0),
 				    Point(I)(img.ncols() - 1),
 				    img.ncols(),
@@ -168,7 +168,7 @@ namespace oln {
 
 	// Gaussian filter for 2D images
 	template<>
-	struct _gaussian<2>
+	struct gaussian_<2>
 	{
 	  template <class I, class F> static
 	  void
@@ -177,7 +177,7 @@ namespace oln {
 
 	    // Apply on rows.
 	    for (coord j = 0; j < img.ncols(); ++j)
-	      _recursivefilter<float>(img, coef,
+	      recursivefilter_<float>(img, coef,
 				      Point(I)(0, j),
 				      Point(I)(img.nrows() - 1, j),
 				      img.nrows(),
@@ -185,7 +185,7 @@ namespace oln {
 
 	    // Apply on columns.
 	    for (coord i = 0; i < img.nrows(); ++i)
-	      _recursivefilter<float>(img, coef,
+	      recursivefilter_<float>(img, coef,
 				      Point(I)(i, 0),
 				      Point(I)(i, img.ncols() - 1),
 				      img.ncols(),
@@ -195,7 +195,7 @@ namespace oln {
 
 	// Gaussian filter for 3D images
 	template<>
-	struct _gaussian<3>
+	struct gaussian_<3>
 	{
 	  template <class I, class F> static
 	  void
@@ -204,7 +204,7 @@ namespace oln {
 	    // Apply on slices.
 	    for (coord j = 0; j < img.nrows(); ++j)
 	      for (coord k = 0; k < img.ncols(); ++k)
-		_recursivefilter<float>(img, coef,
+		recursivefilter_<float>(img, coef,
 					Point(I)(0, j, k),
 					Point(I)(img.nslices() - 1, j, k),
 					img.ncols(),
@@ -213,7 +213,7 @@ namespace oln {
 	    // Apply on rows.
 	    for (coord i = 0; i < img.nslices(); ++i)
 	      for (coord k = 0; k < img.ncols(); ++k)
-		_recursivefilter<float>(img, coef,
+		recursivefilter_<float>(img, coef,
 					Point(I)(i, 0, k),
 					Point(I)(i, img.nrows() - 1, k),
 					img.nrows(),
@@ -222,7 +222,7 @@ namespace oln {
 	    // Apply on columns.
 	    for (coord i = 0; i < img.nslices(); ++i)
 	      for (coord j = 0; j < img.nrows(); ++j)
-		_recursivefilter<float>(img, coef,
+		recursivefilter_<float>(img, coef,
 					Point(I)(i, j, 0),
 					Point(I)(i, j, img.ncols() - 1),
 					img.ncols(),
@@ -230,26 +230,24 @@ namespace oln {
 	  }
 	};
 
-	template <class C_, class I, class F>
-	typename mute<I, typename convoutput<C_,Value(I)>::ret>::ret
-	_gaussian_common(const conversion<C_>& _c,
+	template <class C, class I, class F>
+	typename mute<I, typename convoutput<C,Value(I)>::ret>::ret
+	gaussian_common_(const abstract::conversion<C>& c,
 			 const abstract::image<I>& in,
 			 const F& coef)
 	{
-	  Exact_cref(C, c);
-
 	  typename mute<I, ntg::float_s>::ret work_img(in.size());
 
 	  Iter(I) it(in);
 	  for_all(it)
 	    work_img[it] = ntg::cast::force<ntg::float_s>(in[it]);
 
-	  _gaussian<I::dim>::doit(work_img, coef);
+	  gaussian_<I::dim>::doit(work_img, coef);
 
 	  /* Convert the result image to the user-requested datatype.
 	     FIXME: We are making an unnecessary copy in case the
 	     user expects a ntg::float_s image.  */
-	  typename mute<I, typename convoutput<C_,Value(I)>::ret>::ret
+	  typename mute<I, typename convoutput<C,Value(I)>::ret>::ret
 	    out_img(in.size());
 	  for_all(it)
 	    out_img[it] = c(work_img[it]);
@@ -264,15 +262,15 @@ namespace oln {
       gaussian(const conversion<C>& c,
 	       const abstract::image<I>& in, ntg::float_s sigma)
       {
-	internal::_RecursiveFilterCoef<float>
+	internal::RecursiveFilterCoef_<float>
 	  coef(1.68f, 3.735f,
 	       1.783f, 1.723f,
 	       -0.6803f, -0.2598f,
 	       0.6318f, 1.997f,
 	       sigma,
-	       internal::_RecursiveFilterCoef<float>::DericheGaussian);
+	       internal::RecursiveFilterCoef_<float>::DericheGaussian);
 
-	return internal::_gaussian_common(c, in, coef);
+	return internal::gaussian_common_(c, in, coef);
       }
 
       template <class C, class I>
@@ -280,16 +278,16 @@ namespace oln {
       gaussian_derivative(const conversion<C>& c,
 			  const abstract::image<I>& in, ntg::float_s sigma)
       {
-	internal::_RecursiveFilterCoef<float>
+	internal::RecursiveFilterCoef_<float>
 	  coef(-0.6472f, -4.531f,
 	       1.527f, 1.516f,
 	       0.6494f, 0.9557f,
 	       0.6719f, 2.072f,
 	       sigma,
-	       internal::_RecursiveFilterCoef<float>
+	       internal::RecursiveFilterCoef_<float>
 	       ::DericheGaussianFirstDerivative);
 
-	return internal::_gaussian_common(c, in, coef);
+	return internal::gaussian_common_(c, in, coef);
       }
 
       template <class C, class I>
@@ -297,16 +295,16 @@ namespace oln {
       gaussian_second_derivative(const conversion<C>& c,
 				 const abstract::image<I>& in, ntg::float_s sigma)
       {
-	internal::_RecursiveFilterCoef<float>
+	internal::RecursiveFilterCoef_<float>
 	  coef(-1.331f, 3.661f,
 	       1.24f, 1.314f,
 	       0.3225f, -1.738f,
 	       0.748f, 2.166f,
 	       sigma,
-	       internal::_RecursiveFilterCoef<float>
+	       internal::RecursiveFilterCoef_<float>
 	       ::DericheGaussianSecondDerivative);
 
-	return internal::_gaussian_common(c, in, coef);
+	return internal::gaussian_common_(c, in, coef);
       }
 
     } // fast

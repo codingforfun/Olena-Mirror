@@ -78,10 +78,20 @@ namespace oln {
       typedef image_array<T, ExactI, image_array2d<T, ExactI> > super_type;
       typedef image_array2d<T, ExactI> self_type;
 
+      friend class image_impl<ExactI, image_array2d<T, ExactI> >;
+      friend class super_type;
+
       image_array2d(const size_type& s): super_type(s) 
       {
 	pretreat_2d_data_(this->buffer_, array_, s);
       }
+
+      ~image_array2d() 
+      {
+	desallocate_2d_data_(array_, this->size_); 
+      }
+
+    protected:
 
       bool hold_(const oln::point2d& p) const
       {
@@ -120,14 +130,6 @@ namespace oln {
 	return size_t(nrows_eff * ncols_eff);
       }
 
-      ~image_array2d() 
-      {
-	desallocate_2d_data_(array_, this->size_); 
-      }
-
-    protected:
-
-    public:
       // borders
 
       void border_reallocate_and_copy_(coord new_border, bool
