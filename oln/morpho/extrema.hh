@@ -46,11 +46,26 @@ namespace oln {
 	  // FIXME: min() and max() should be inf() and sup()
 	  // once these functions exist.  Otherwise it doesn't
 	  // work on float.
-	  output[p] = (input[p] ? 
-		       optraits<DestType>::min() : 
+	  output[p] = (input[p] ?
+		       optraits<DestType>::min() :
 		       optraits<DestType>::max());
 	return output;
       }
+
+
+      template <class _I>
+      typename mute<_I, bin>::ret
+      _ima_to_bin(const image<_I>& _input)
+      {
+	Exact_cref(I, input);
+	Iter(I) p(input);
+	typename mute<_I, bin>::ret output(input.size());
+	for_all (p)
+	  output[p] = (input[p] ? true : false);
+	return output;
+      }
+
+
     }
 
     // Minima Imposition
@@ -58,25 +73,22 @@ namespace oln {
     /*=processing sure_minima_imposition
      * ns: morpho
      * what: Minima Imposition.
-     * arg: const image<I1>&, input, IN, input image
-     * arg: const image<I2>&, minima_map, IN, bin image
-     * arg: const struct_elt<E>&, se, IN, structural element
+     * arg: const image<_I1>&, _input, IN, input image
+     * arg: const image<_I2>&, _minima_map, IN, bin image
+     * arg: const neighborhood<_N>& _Ng, IN, neighborhood
      * ret: Concrete(_I)
      * doc:
-     * Impose minima defined by \var{minima_map} on \var{input}
-     * using \var{se}
-     *   as structural element. Soille p.172. \var{minima_map} must
+     * Impose minima defined by \var{_minima_map} on \var{input}
+     * using \var{_Ng} as neighborhood. \var{_minima_map} must
      * be a bin image (true for a minimum, false for a non minimum).
-     * The algorithm uses
-     * sure_geodesic_reconstruction_erosion.
+     * Soille p.172.
      * see: morpho::sure_geodesic_reconstruction_erosion
      * ex:
-     * $ image2d<int_u8> light = load("light.pgm");
-     * $ image2d<bin> minima = load("minima.pbm");
-     * $ save(morpho::sure_minima_imposition(light, minima, win_c8p()), "out.pgm");
-     * exi: light.pgm minima.pbm
+     * $ image2d<int_u8> light = load("lena.pgm");
+     * $ image2d<bin> minima = load("map.pbm");
+     * $ save(morpho::sure_minima_imposition(light, minima, neighb_c4()), "out.pgm");
+     * exi: lena.pgm map.pbm
      * exo: out.pgm
-     * wontcompile: fixme
      =*/
     template<class _I, class _I2, class _N>
     Concrete(_I) sure_minima_imposition(const image<_I>& _input,
@@ -91,36 +103,31 @@ namespace oln {
       precondition(input.size() == minima_map.size());
       Concrete(I) mm =
 	internal::_create_minima_image_from_bin<Value(I)>(minima_map);
-      // FIXME: p172. Soille says marker = 0 || T::max(). What about float ?
-      // This is definitely not generic !! the highest value of input should
-      // be fine.
-      // 0 means minimum else set value to infty
-      //FIXME: min must be authorized even if types are not the same.
       return sure_geodesic_reconstruction_erosion(mm,
-						  arith::min(input, mm), Ng);
+						  arith::min(arith::plus_cst(input, Value(_I)(1)),
+							     (arith::plus_cst(mm, Value(_I)(0)))), Ng);
     }
+
 
     /*=processing sequential_minima_imposition
      * ns: morpho
      * what: Minima Imposition.
-     * arg: const image<I1>&, input, IN, input image
-     * arg: const image<I2>&, minima_map, IN, bin image
-     * arg: const struct_elt<E>&, se, IN, structural element
+     * arg: const image<_I1>&, _input, IN, input image
+     * arg: const image<_I2>&, _minima_map, IN, bin image
+     * arg: const neighborhood<_N>& _Ng, IN, neighborhood
      * ret: Concrete(_I)
      * doc:
-     * Impose minima defined by \var{minima_map} on \var{input}
-     * using \var{se}
-     *   as structural element. Soille p.172.  The algorithm uses
-     * sequential_geodesic_reconstruction_erosion. \var{minima_map} must
+     * Impose minima defined by \var{_minima_map} on \var{input}
+     * using \var{_Ng} as neighborhood. \var{_minima_map} must
      * be a bin image (true for a minimum, false for a non minimum).
-     * see: morpho::sequential_geodesic_reconstruction_erosion
+     * Soille p.172.
+     * see: morpho::sure_geodesic_reconstruction_erosion
      * ex:
-     * $ image2d<int_u8> light = load("light.pgm");
-     * $ image2d<bin> minima = load("minima.pbm");
-     * $ save(morpho::sequential_minima_imposition(light, minima, win_c8p()), "out.pgm");
-     * exi: light.pgm minima.pbm
+     * $ image2d<int_u8> light = load("lena.pgm");
+     * $ image2d<bin> minima = load("map.pbm");
+     * $ save(morpho::sure_minima_imposition(light, minima, neighb_c4()), "out.pgm");
+     * exi: lena.pgm map.pbm
      * exo: out.pgm
-     * wontcompile: fixme
      =*/
     template<class _I, class _I2, class _N>
     Concrete(_I) sequential_minima_imposition(const image<_I>& _input,
@@ -136,11 +143,12 @@ namespace oln {
       Concrete(I) mm =
 	internal::_create_minima_image_from_bin<Value(I)>(minima_map);
       return sequential_geodesic_reconstruction_erosion(mm,
-							arith::min(input, mm),
+							arith::min(arith::plus_cst(input, Value(_I)(1)),
+								   (arith::plus_cst(mm, Value(_I)(0)))),
 							Ng);
     }
 
-    /*=processing hybrid_minima_imposition
+     /*=processing hybrid_minima_imposition
      * ns: morpho
      * what: Minima Imposition.
      * arg: const image<I1>&, input, IN, input image
@@ -149,19 +157,16 @@ namespace oln {
      * ret: Concrete(_I)
      * doc:
      * Impose minima defined by \var{minima_map} on \var{input}
-     * using \var{se}
-     *   as structural element. Soille p.172.   \var{minima_map} must
+     * using \var{Ng} as neighborhood. \var{minima_map} must
      * be a bin image (true for a minimum, false for a non minimum).
-     * The algorithm uses
-     * hybrid_geodesic_reconstruction_erosion.
-     * see: morpho::hybrid_geodesic_reconstruction_erosion
+     * Soille p.172.
+     * see: morpho::sequential_geodesic_reconstruction_erosion
      * ex:
-     * $ image2d<int_u8> light = load("light.pgm");
-     * $ image2d<bin> minima = load("minima.pbm");
-     * $ save(morpho::hybrid_minima_imposition(light, minima, win_c8p()), "out.pgm");
-     * exi: light.pgm minima.pbm
+     * $ image2d<int_u8> light = load("lena.pgm");
+     * $ image2d<bin> minima = load("map.pbm");
+     * $ save(morpho::sure_minima_imposition(light, minima, neighb_c4()), "out.pgm");
+     * exi: lena.pgm map.pbm
      * exo: out.pgm
-     * wontcompile: fixme
      =*/
     template<class _I, class _I2, class _N>
     Concrete(_I) hybrid_minima_imposition(const image<_I>& _input,
@@ -176,7 +181,8 @@ namespace oln {
       precondition(input.size() == minima_map.size());
       Concrete(I) mm =
 	internal::_create_minima_image_from_bin<Value(I)>(minima_map);
-      return hybrid_geodesic_reconstruction_erosion(mm, arith::min(input, mm),
+      return hybrid_geodesic_reconstruction_erosion(mm, arith::min(arith::plus_cst(input, Value(_I)(1)),
+								   (arith::plus_cst(mm, Value(_I)(0)))),
 						    Ng);
 
     }
@@ -190,32 +196,31 @@ namespace oln {
      * what: Regional minima.
      * arg: const image<I1>&, input, IN, input image
      * arg: const struct_elt<E>&, se, IN, structural element
-     * ret: Concrete(_I)
+     * ret: typename mute<_I, bin>::ret
      * doc:
      * Extract regional minima of \var{input}
-     * using \var{se}
-     *   as structural element. Soille p.169.  The algorithm uses
+     * using \var{Ng}
+     *   as neighborhhod. Soille p.169.  The algorithm uses
      * sure_geodesic_reconstruction_erosion.
      * see: morpho::sure_geodesic_reconstruction_erosion
      * ex:
-     * $ image2d<int_u8> light = load("light.pgm");
-     * $ save(morpho::sure_minima_imposition(light, win_c8p()), "out.pgm");
-     * exi: light.pgm
+     * $ image2d<int_u8> light = load("lena.pgm");
+     * $ save(morpho::sure_regional_minima(lena,neighb_c4()), "out.pgm");
+     * exi: lena.pgm
      * exo: out.pgm
-     * wontcompile: fixme
      =*/
     template<class _I, class _N>
-    Concrete(_I) sure_regional_minima(const image<_I>& _input,
-				      const neighborhood<_N>& _Ng)
+    typename mute<_I, bin>::ret sure_regional_minima(const image<_I>& _input,
+						      const neighborhood<_N>& _Ng)
     {
       Exact_cref(I, input);
       Exact_cref(N, Ng);
       meta::eq<I::dim, N::dim>::ensure();
       return
-	arith::minus(convert::force<Value(I)>(),
+	internal::_ima_to_bin(arith::minus(convert::force<Value(I)>(),
 		     sure_geodesic_reconstruction_erosion
 		     (arith::plus_cst(input, Value(I) (1)), input, Ng),
-		     input);
+		     input));
     }
 
 
@@ -227,29 +232,28 @@ namespace oln {
      * ret: Concrete(_I)
      * doc:
      * Extract regional minima of \var{input}
-     * using \var{se}
-     *   as structural element. Soille p.169.  The algorithm uses
-     * sequential_geodesic_reconstruction_erosion.
-     * see: morpho::sequential_geodesic_reconstruction_erosion
+     * using \var{Ng}
+     *   as neighborhhod. Soille p.169.  The algorithm uses
+     * sure_geodesic_reconstruction_erosion.
+     * see: morpho::sure_geodesic_reconstruction_erosion
      * ex:
-     * $ image2d<int_u8> light = load("light.pgm");
-     * $ save(morpho::sequential_minima_imposition(light, win_c8p()), "out.pgm");
-     * exi: light.pgm
+     * $ image2d<int_u8> light = load("lena.pgm");
+     * $ save(morpho::sequential_regional_minima(lena,neighb_c4()), "out.pgm");
+     * exi: lena.pgm
      * exo: out.pgm
-     * wontcompile: fixme
      =*/
     template<class _I, class _N>
-    Concrete(_I) sequential_regional_minima(const image<_I>& _input,
-					    const neighborhood<_N>& _Ng)
+    typename mute<_I, bin>::ret sequential_regional_minima(const image<_I>& _input,
+								       const neighborhood<_N>& _Ng)
     {
       Exact_cref(I, input);
       Exact_cref(N, Ng);
       meta::eq<I::dim, N::dim>::ensure();
       return
-	arith::minus(convert::force<Value(I)>(),
+	internal::_ima_to_bin(arith::minus(convert::force<Value(I)>(),
 		     sequential_geodesic_reconstruction_erosion
 		     (arith::plus_cst(input, Value(I) (1)), input, Ng),
-		     input);
+		     input));
     }
 
     /*=processing hybrid_regional_minima
@@ -260,29 +264,28 @@ namespace oln {
      * ret: Concrete(_I)
      * doc:
      * Extract regional minima of \var{input}
-     * using \var{se}
-     *   as structural element. Soille p.169.  The algorithm uses
-     * hybrid_geodesic_reconstruction_erosion.
-     * see: morpho::hybrid_geodesic_reconstruction_erosion
+     * using \var{Ng}
+     *   as neighborhhod. Soille p.169.  The algorithm uses
+     * sure_geodesic_reconstruction_erosion.
+     * see: morpho::sure_geodesic_reconstruction_erosion
      * ex:
-     * $ image2d<int_u8> light = load("light.pgm");
-     * $ save(morpho::hybrid_minima_imposition(light, win_c8p()), "out.pgm");
-     * exi: light.pgm
+     * $ image2d<int_u8> light = load("lena.pgm");
+     * $ save(morpho::hybrid_regional_minima(lena,neighb_c4()), "out.pgm");
+     * exi: lena.pgm
      * exo: out.pgm
-     * wontcompile: fixme
      =*/
     template<class _I, class _N>
-    Concrete(_I) hybrid_regional_minima(const image<_I>& _input,
-					const neighborhood<_N>& _Ng)
+    typename mute<_I, bin>::ret hybrid_regional_minima(const image<_I>& _input,
+						       const neighborhood<_N>& _Ng)
     {
       Exact_cref(I, input);
       Exact_cref(N, Ng);
       meta::eq<I::dim, N::dim>::ensure();
       return
-	arith::minus(convert::force<Value(I)>(),
+	internal::_ima_to_bin(arith::minus(convert::force<Value(I)>(),
 		     hybrid_geodesic_reconstruction_erosion
 		     (arith::plus_cst(input, Value(I) (1)), input, Ng),
-		     input);
+		     input));
     }
 
   } // morpho

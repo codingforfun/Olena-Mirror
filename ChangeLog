@@ -1,3 +1,11 @@
+2002-12-02  Jerome Darbon  <jerome@epita.fr>
+
+	* dema/morpholena.cc : add new demos.
+	* oln/morpho/* : add documentation.
+	* oln/extrema.hh : bug fixes.
+	* ima/map.pbm : new file.
+	* ima/lena_dark.pbm : new file.
+
 2002-12-01  Emmanuel Turquin  <turqui_e@epita.fr>
 
 	* oln/transforms/dwt.hh: Remove the manual centering of static array.
@@ -15,7 +23,7 @@
 	oln/types/builtins_properties.hh, oln/types/cplx.hh, oln/types/vec.hh,
 	oln/types/typetraits_builtins_bool.hh, oln/types/color.hh,
 	oln/types/optraits_builtins_bool.hh: Remove FIXMEs.
-	
+
 2002-11-30  Jean-Sébastien Mouret  <js@lrde.epita.fr>
 
 	* oln/config/system.hh: Use HUGE_VAL for OLN_FLOAT_INFINITY if
@@ -32,7 +40,7 @@
 
 2002-11-27  Raphael Poss  <raph@lrde.epita.fr>
 
-	* configure.ac (fftw detection): minor fix in message. 
+	* configure.ac (fftw detection): minor fix in message.
 
 2002-11-27  Jean-Sébastien Mouret  <js@lrde.epita.fr>
 
@@ -46,21 +54,21 @@
 	* oln/core/contract.hh (OLN_EXCEPTIONS): report errors by means of
 	throwing  std::runtime_error()   instead  of  aborting,  when  the
 	OLN_EXCEPTIONS macro is defined.
- 
+
 2002-11-19  Jean-Sébastien Mouret  <js@lrde.epita.fr>
 
 	* Makefile.am (EXTRA_DIST): Remove documentation dependency.
 	* oln/io/se_window.hxx, oln/io/se_neighborhood.hxx: Additional
 	includes to pass sanity checks.
-	* oln/Makefile.am (nobase_oln_HEADERS): List new files.	
+	* oln/Makefile.am (nobase_oln_HEADERS): List new files.
 
 2002-11-19  Jean-Sébastien Mouret  <js@lrde.epita.fr>
 
-	* oln/io/se.hh, oln/io/se_window.hxx, 
+	* oln/io/se.hh, oln/io/se_window.hxx,
 	oln/io/se_neighborhood.hxx: New files.
 	* oln/basics2d.hh: Include io/se.hh
 	* oln/core/internal/window.hh: Add operator==.
-	* oln/core/neighborhood2d.hh: Make it readable.	
+	* oln/core/neighborhood2d.hh: Make it readable.
 	* oln/core/window2d.hh: Likewise.
 
 	* oln/io/pnm_write.hxx, oln/io/pnm_read.hxx: Bug fix.

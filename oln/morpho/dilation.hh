@@ -52,11 +52,19 @@ namespace oln {
      *   a logical \code{or} is performed between neighbors.
      *
      *   The \code{morpho::fast} version of this function use a different
-     *   algorithm: an
+     *   algorithm: This algorith; is described in
+     * Implementation of morphological operations from:
+     * M. Van Droogenbroeck and H. Talbot.
+     * "Fast computation of morphological operations with arbitrary
+     * structuring elements". Pattern Recognition Letters,
+     * 17(14):1451-1460, 1996.
+     *
+     *   An
      *   histogram of the value of the neighborhood indicated by
      *   \var{se} is updated while iterating over all point of the
      *   image.  Doing so is more efficient  when the
      *   structural element is large.
+     *
      * see: morpho::n_dilation
      * see: morpho::erosion
      * ex:

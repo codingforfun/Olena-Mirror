@@ -8,7 +8,6 @@
 #include <oln/morpho/geodesic_dilation.hh>
 #include <oln/morpho/geodesic_erosion.hh>
 #include <oln/morpho/reconstruction.hh>
-
 #include <oln/level/extrema_killer.hh>
 
 #include <oln/utils/timer.hh>
@@ -70,4 +69,5 @@ int main()
   t.start();
   fast_minima_killer(lena, 60, neighb_c4());
   cout << "minima killer  30 " << t.stop() << endl;
+
 }

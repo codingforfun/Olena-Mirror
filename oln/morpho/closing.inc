@@ -40,10 +40,10 @@
  * see: morpho::closing
  * ex:
  * $ image2d<bin> im = load("object.pbm");
- * $ save(morpho::closing(im, win_c8p()), "out.pbm");
+ * $ save(morpho::dilation(im, win_c8p()), "out.pbm");
  * exi: object.pbm
  * exo: out.pbm
-=*/
+ =*/
 template<class I, class E>
 Concrete(I) closing(const image<I>& input, const struct_elt<E>& se)
 {

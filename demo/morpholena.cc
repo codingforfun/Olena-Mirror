@@ -11,6 +11,7 @@
 #include <oln/morpho/thinning.hh>
 #include <oln/morpho/thickening.hh>
 #include <oln/convol/fast_gaussian.hh>
+#include <oln/morpho/extrema.hh>
 #include <oln/types/all.hh>
 #include <oln/level/fill.hh>
 
@@ -103,4 +104,16 @@ int main()
 
   window2d face_se = load("../img/face_se.pbm");
   save(morpho::fast::opening(lena,  face_se), "lena-ope-f-face.pgm");
+
+  {
+    // extrema
+    image2d<bin> minima_map = load("../img/map.pbm");
+    save(morpho::sure_minima_imposition(lena, minima_map, neighb_c4()), "minima_imposition_sure.pgm");
+    save(morpho::sequential_minima_imposition(lena, minima_map, neighb_c4()), "minima_imposition_sequential.pgm");
+    save(morpho::hybrid_minima_imposition(lena, minima_map, neighb_c4()), "minima_imposition_hybrid.pgm");
+
+    save(morpho::sure_regional_minima(lena, neighb_c4()), "regional_min_sure.pbm");
+    save(morpho::sequential_regional_minima(lena, neighb_c4()), "regional_min_sequential.pbm");
+    save(morpho::hybrid_regional_minima(lena, neighb_c4()), "regional_min_hybrid.pbm");
+  }
 }
