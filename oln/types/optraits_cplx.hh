@@ -42,161 +42,161 @@
 
 // Assignement operators macros
 
-# define ASSIGN_CPLX_SCALAR_OPERATOR_SINGLE(Rep, Name, Op)	\
-template <class T1, class T2> inline			\
-static cplx<Rep, T1>& Name(cplx<Rep, T1>& lhs, const T2& rhs)	\
-{							\
-  is_a(optraits<T2>, oln::optraits_scalar)::ensure();	\
-  lhs.first() Op rhs;				      	\
-  return lhs;						\
+# define ASSIGN_CPLX_SCALAR_OPERATOR_SINGLE(Rep, Name, Op)			\
+template <class T1, class T2> inline						\
+static cplx<Rep, T1>& Name(cplx<Rep, T1>& lhs, const T2& rhs)			\
+{										\
+  is_a(optraits<T2>, oln::optraits_scalar)::ensure();				\
+  lhs.first() Op rhs;								\
+  return lhs;									\
 }
 
-# define ASSIGN_CPLX_SCALAR_OPERATOR_BOTH(Rep, Name, Op)	\
-template <class T1, class T2> inline			\
-static cplx<Rep, T1>& Name(cplx<Rep, T1>& lhs, const T2& rhs)	\
-{							\
-  is_a(optraits<T2>, oln::optraits_scalar)::ensure();	\
-  lhs.first() Op rhs;					\
-  lhs.second() Op rhs;					\
-  return lhs;						\
+# define ASSIGN_CPLX_SCALAR_OPERATOR_BOTH(Rep, Name, Op)			\
+template <class T1, class T2> inline						\
+static cplx<Rep, T1>& Name(cplx<Rep, T1>& lhs, const T2& rhs)			\
+{										\
+  is_a(optraits<T2>, oln::optraits_scalar)::ensure();				\
+  lhs.first() Op rhs;								\
+  lhs.second() Op rhs;								\
+  return lhs;									\
 }
 
-# define ASSIGN_CPLX_POLAR_SCALAR_OPERATOR(Name, Op)			\
-template <class T1, class T2> inline		\
-static cplx<polar, T1>& Name(cplx<polar, T1>& lhs, const T2& rhs) \
-{									\
-  is_a(optraits<T2>, oln::optraits_scalar)::ensure();			\
-  cplx<rect, dfloat> tmp(lhs);						\
-  tmp.real() Op rhs;							\
-  lhs = tmp;								\
-  return lhs;								\
+# define ASSIGN_CPLX_POLAR_SCALAR_OPERATOR(Name, Op)				\
+template <class T1, class T2> inline						\
+static cplx<polar, T1>& Name(cplx<polar, T1>& lhs, const T2& rhs)		\
+{										\
+  is_a(optraits<T2>, oln::optraits_scalar)::ensure();				\
+  cplx<rect, dfloat> tmp(lhs);							\
+  tmp.real() Op rhs;								\
+  lhs = tmp;									\
+  return lhs;									\
 }
 
 # define ASSIGN_CPLX_RECT_CPLX_OPERATOR_MULT(Name, Op1, Op2)			\
-template <cplx_representation R, class T1, class T2> inline		\
-static cplx<rect, T1>& Name(cplx<rect, T1>& lhs, const cplx<R, T2>& rhs) \
-{									\
-  cplx<polar, dfloat> tmp(lhs);						\
-  tmp.magn() Op1 (dfloat)rhs.magn();					\
-  tmp.angle() Op2 (dfloat)rhs.angle();					\
-  lhs = tmp;								\
-  return lhs;								\
+template <class T1, cplx_representation R2, class T2> inline			\
+static cplx<rect, T1>& Name(cplx<rect, T1>& lhs, const cplx<R2, T2>& rhs)	\
+{										\
+  cplx<polar, dfloat> tmp(lhs);							\
+  tmp.magn() Op1 (dfloat)rhs.magn();						\
+  tmp.angle() Op2 (dfloat)rhs.angle();						\
+  lhs = tmp;									\
+  return lhs;									\
 }
 
-# define ASSIGN_CPLX_RECT_CPLX_OPERATOR_ADD(Name, Op1, Op2)		\
-template <cplx_representation R, class T1, class T2> inline		\
-static cplx<rect, T1>& Name(cplx<rect, T1>& lhs, const cplx<R, T2>& rhs) \
-{									\
-  lhs.first() Op1 rhs.real();						\
-  lhs.second() Op2 rhs.imag();						\
-  return lhs;								\
+# define ASSIGN_CPLX_RECT_CPLX_OPERATOR_ADD(Name, Op1, Op2)			\
+template <cplx_representation R, class T1, class T2> inline			\
+static cplx<rect, T1>& Name(cplx<rect, T1>& lhs, const cplx<R, T2>& rhs)	\
+{										\
+  lhs.first() Op1 rhs.real();							\
+  lhs.second() Op2 rhs.imag();							\
+  return lhs;									\
 }
 
-# define ASSIGN_CPLX_POLAR_CPLX_OPERATOR_MULT(Name, Op1, Op2)		\
-template <cplx_representation R, class T1, class T2> inline		\
-static cplx<polar, T1>& Name(cplx<polar, T1>& lhs, const cplx<R, T2>& rhs) \
-{									\
-  lhs.magn() Op1 rhs.magn();						\
-  lhs.angle() Op2 rhs.angle();						\
-  return lhs;								\
+# define ASSIGN_CPLX_POLAR_CPLX_OPERATOR_MULT(Name, Op1, Op2)			\
+template <cplx_representation R, class T1, class T2> inline			\
+static cplx<polar, T1>& Name(cplx<polar, T1>& lhs, const cplx<R, T2>& rhs)	\
+{										\
+  lhs.magn() Op1 rhs.magn();							\
+  lhs.angle() Op2 rhs.angle();							\
+  return lhs;									\
 }
 
-# define ASSIGN_CPLX_POLAR_CPLX_OPERATOR_ADD(Name, Op)			\
-template <cplx_representation R, class T1, class T2> inline		\
-static cplx<polar, T1>& Name(cplx<polar, T1>& lhs, const cplx<R, T2>& rhs) \
-{									\
-  cplx<rect, dfloat> tmp(lhs);						\
-  tmp.real() Op (dfloat)rhs.real();					\
-  tmp.imag() Op (dfloat)rhs.imag();					\
-  lhs = tmp;								\
-  return lhs;								\
+# define ASSIGN_CPLX_POLAR_CPLX_OPERATOR_ADD(Name, Op)				\
+template <cplx_representation R, class T1, class T2> inline			\
+static cplx<polar, T1>& Name(cplx<polar, T1>& lhs, const cplx<R, T2>& rhs)	\
+{										\
+  cplx<rect, dfloat> tmp(lhs);							\
+  tmp.real() Op (dfloat)rhs.real();						\
+  tmp.imag() Op (dfloat)rhs.imag();						\
+  lhs = tmp;									\
+  return lhs;									\
 }
 
-# define ASSIGN_CPLX_VECTOR_OPERATOR(Rep, Name, Op)	\
-template <class T1, class T2> inline			\
-static cplx<Rep, T1>& Name(cplx<Rep, T1>& lhs, const vec<2, T2>& rhs)	\
-{							\
-  lhs.first() Op rhs[0];				\
-  lhs.second() Op rhs[1];				\
-  return lhs;						\
+# define ASSIGN_CPLX_VECTOR_OPERATOR(Rep, Name, Op)				\
+template <class T1, class T2> inline						\
+static cplx<Rep, T1>& Name(cplx<Rep, T1>& lhs, const vec<2, T2>& rhs)		\
+{										\
+  lhs.first() Op rhs[0];							\
+  lhs.second() Op rhs[1];							\
+  return lhs;									\
 }
 
 // Arithmetic operators macros
 
-# define ARITH_CPLX_CPLX_OPERATOR(Rep, Name, Op)	       		\
-template <cplx_representation R, class T1, class T2>         		\
-inline static		              					\
-cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits, \
-                             T1, T2>::ret>   				\
-Name(const cplx<Rep, T1>& lhs, const cplx<R, T2>& rhs)			\
-{									\
-  typedef	                         				\
-    cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits, \
-    T1, T2>::ret> return_type; 						\
-  return_type result(lhs); 						\
-  result Op rhs;            						\
-  return result;							\
+# define ARITH_CPLX_CPLX_OPERATOR(Rep1, Rep2, Name, Op)						\
+template <class T1, class T2>									\
+inline static											\
+cplx<Rep1, typename internal::deduce_from_traits<internal::operator_##Name##_traits,		\
+                             T1, T2>::ret>							\
+Name(const cplx<Rep1, T1>& lhs, const cplx<Rep2, T2>& rhs)					\
+{												\
+  typedef											\
+    cplx<Rep1, typename internal::deduce_from_traits<internal::operator_##Name##_traits,	\
+    T1, T2>::ret> return_type;									\
+  return_type result(lhs);									\
+  result Op rhs;										\
+  return result;										\
 }
 
-# define ARITH_CPLX_SCALAR_OPERATOR(Rep, Name, Op)	       		\
-template <class T1, class T2>			         		\
-inline static		              					\
-cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits, \
-                             T1, T2>::ret>   				\
-Name(const cplx<Rep, T1>& lhs, const T2& rhs)				\
-{									\
-  is_a(optraits<T2>, oln::optraits_scalar)::ensure();			\
-  typedef	                         				\
-    cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits, \
-    T1, T2>::ret> return_type; 						\
-  return_type result(lhs); 						\
-  result Op rhs;            						\
-  return result;							\
+# define ARITH_CPLX_SCALAR_OPERATOR(Rep, Name, Op)						\
+template <class T1, class T2>									\
+inline static											\
+cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits,		\
+                             T1, T2>::ret>							\
+Name(const cplx<Rep, T1>& lhs, const T2& rhs)							\
+{												\
+  is_a(optraits<T2>, oln::optraits_scalar)::ensure();						\
+  typedef											\
+    cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits,		\
+    T1, T2>::ret> return_type;									\
+  return_type result(lhs);									\
+  result Op rhs;										\
+  return result;										\
 }
 
-# define ARITH_CPLX_SCALAR_OPERATOR_COMMUTE(Rep, Name, Op)	       	\
-template <class T1, class T2>			         		\
-inline static		              					\
-cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits, \
-                             T1, T2>::ret>   				\
-Name(const T1& lhs, const cplx<Rep, T2>& rhs)				\
-{									\
-  return Name(rhs, lhs);						\
+# define ARITH_CPLX_SCALAR_OPERATOR_COMMUTE(Rep, Name, Op)					\
+template <class T1, class T2>									\
+inline static											\
+cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits,		\
+                             T1, T2>::ret>							\
+Name(const T1& lhs, const cplx<Rep, T2>& rhs)							\
+{												\
+  return Name(rhs, lhs);									\
 }
 
-# define ARITH_CPLX_VECTOR_OPERATOR(Rep, Name, Op);			\
-template <class T1, class T2>						\
-inline static		              					\
-cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits, \
-                             T1, T2>::ret>   				\
-Name(const cplx<Rep, T1>& lhs, const vec<2, T2>& rhs)			\
-{									\
-  typedef	                         				\
-    cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits, \
-    T1, T2>::ret> return_type; 						\
-  return_type result(lhs); 						\
-  result Op rhs;            						\
-  return result;							\
+# define ARITH_CPLX_VECTOR_OPERATOR(Rep, Name, Op);						\
+template <class T1, class T2>									\
+inline static											\
+cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits,		\
+                             T1, T2>::ret>							\
+Name(const cplx<Rep, T1>& lhs, const vec<2, T2>& rhs)						\
+{												\
+  typedef											\
+    cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits,		\
+    T1, T2>::ret> return_type;									\
+  return_type result(lhs);									\
+  result Op rhs;										\
+  return result;										\
 }
 
-# define ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_PLUS(Rep, Name, Op);	\
-template <class T1, class T2>						\
-inline static		              					\
-cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits, \
-                             T1, T2>::ret>   				\
-Name(const vec<2, T1>& lhs, const cplx<Rep, T2>& rhs)			\
-{									\
-  return Name(rhs, lhs);						\
+# define ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_PLUS(Rep, Name, Op);				\
+template <class T1, class T2>									\
+inline static											\
+cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits,		\
+                             T1, T2>::ret>							\
+Name(const vec<2, T1>& lhs, const cplx<Rep, T2>& rhs)						\
+{												\
+  return Name(rhs, lhs);									\
 }
 
-# define ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_MINUS(Rep, Name, Op);	\
-template <class T1, class T2>						\
-inline static		              					\
-cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits, \
-                             T1, T2>::ret>   				\
-Name(const vec<2, T1>& lhs, const cplx<Rep, T2>& rhs)			\
-{									\
-  return Name(rhs, lhs).invert();					\
+# define ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_MINUS(Rep, Name, Op);				\
+template <class T1, class T2>									\
+inline static											\
+cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits,		\
+                             T1, T2>::ret>							\
+Name(const vec<2, T1>& lhs, const cplx<Rep, T2>& rhs)						\
+{												\
+  return Name(rhs, lhs).invert();								\
 }
 
 namespace oln
@@ -251,10 +251,15 @@ namespace oln
     ARITH_CPLX_SCALAR_OPERATOR_COMMUTE(rect, times, *=);
     ARITH_CPLX_SCALAR_OPERATOR(rect, div, /=);
 
-    ARITH_CPLX_CPLX_OPERATOR(rect, plus, +=);
-    ARITH_CPLX_CPLX_OPERATOR(rect, minus, -=);
-    ARITH_CPLX_CPLX_OPERATOR(rect, times, *=);
-    ARITH_CPLX_CPLX_OPERATOR(rect, div, /=);
+    ARITH_CPLX_CPLX_OPERATOR(rect, rect, plus, +=);
+    ARITH_CPLX_CPLX_OPERATOR(rect, rect, minus, -=);
+    ARITH_CPLX_CPLX_OPERATOR(rect, rect, times, *=);
+    ARITH_CPLX_CPLX_OPERATOR(rect, rect, div, /=);
+
+    ARITH_CPLX_CPLX_OPERATOR(rect, polar, plus, +=);
+    ARITH_CPLX_CPLX_OPERATOR(rect, polar, minus, -=);
+    ARITH_CPLX_CPLX_OPERATOR(rect, polar, times, *=);
+    ARITH_CPLX_CPLX_OPERATOR(rect, polar, div, /=);
 
     ARITH_CPLX_VECTOR_OPERATOR(rect, plus, +=);
     ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_PLUS(rect, plus, +=);
@@ -319,10 +324,15 @@ namespace oln
     ARITH_CPLX_SCALAR_OPERATOR_COMMUTE(polar, times, *=);
     ARITH_CPLX_SCALAR_OPERATOR(polar, div, /=);
 
-    ARITH_CPLX_CPLX_OPERATOR(polar, plus, +=);
-    ARITH_CPLX_CPLX_OPERATOR(polar, minus, -=);
-    ARITH_CPLX_CPLX_OPERATOR(polar, times, *=);
-    ARITH_CPLX_CPLX_OPERATOR(polar, div, /=);
+    ARITH_CPLX_CPLX_OPERATOR(polar, polar, plus, +=);
+    ARITH_CPLX_CPLX_OPERATOR(polar, polar, minus, -=);
+    ARITH_CPLX_CPLX_OPERATOR(polar, polar, times, *=);
+    ARITH_CPLX_CPLX_OPERATOR(polar, polar, div, /=);
+
+    ARITH_CPLX_CPLX_OPERATOR(polar, rect, plus, +=);
+    ARITH_CPLX_CPLX_OPERATOR(polar, rect, minus, -=);
+    ARITH_CPLX_CPLX_OPERATOR(polar, rect, times, *=);
+    ARITH_CPLX_CPLX_OPERATOR(polar, rect, div, /=);
 
     template <class T1, cplx_representation R2, class T2>
     inline static bool cmp_eq (const cplx<polar, T1>& lhs,
@@ -339,31 +349,31 @@ namespace oln
     
     // Operators traits macros
 
-# define CPLX_SCALAR_OPERATORS_TRAITS(Name, CommuteBool)				\
-    template <cplx_representation R1, class T1, class T2>				\
-    struct operator_##Name##_traits<cplx<R1, T1>, T2>					\
-    {											\
-      enum { commutative = CommuteBool };						\
-      typedef cplx<R1, typename deduce_from_traits<internal::operator_##Name##_traits, T1, T2>::ret> ret; \
-      typedef cplx<R1, T1> impl;							\
+# define CPLX_SCALAR_OPERATORS_TRAITS(Name, CommuteBool)							\
+    template <cplx_representation R1, class T1, class T2>							\
+    struct operator_##Name##_traits<cplx<R1, T1>, T2>								\
+    {														\
+      enum { commutative = CommuteBool };									\
+      typedef cplx<R1, typename deduce_from_traits<internal::operator_##Name##_traits, T1, T2>::ret> ret;	\
+      typedef cplx<R1, T1> impl;										\
     }
 
-# define CPLX_CPLX_OPERATORS_TRAITS(Name, CommuteBool)					\
-    template <cplx_representation R1, class T1, cplx_representation R2, class T2>	\
-    struct operator_##Name##_traits<cplx<R1, T1>, cplx<R2, T2> >			\
-    {											\
-      enum { commutative = CommuteBool };						\
-      typedef cplx<R1, typename deduce_from_traits<internal::operator_##Name##_traits, T1, T2>::ret> ret; \
-      typedef cplx<R1, T1> impl;							\
+# define CPLX_CPLX_OPERATORS_TRAITS(Name, CommuteBool)								\
+    template <cplx_representation R1, class T1, cplx_representation R2, class T2>				\
+    struct operator_##Name##_traits<cplx<R1, T1>, cplx<R2, T2> >						\
+    {														\
+      enum { commutative = CommuteBool };									\
+      typedef cplx<R1, typename deduce_from_traits<internal::operator_##Name##_traits, T1, T2>::ret> ret;	\
+      typedef cplx<R1, T1> impl;										\
     }
 
-# define CPLX_VECTOR_OPERATORS_TRAITS(Rep, Name, CommuteBool)				\
-    template <class T1, class T2>					   		\
-    struct operator_##Name##_traits<cplx<Rep, T1>, vec<2, T2> >				\
-    {											\
-      enum { commutative = CommuteBool };						\
-      typedef cplx<Rep, typename deduce_from_traits<internal::operator_##Name##_traits, T1, T2>::ret> ret; \
-      typedef cplx<Rep, T1> impl;							\
+# define CPLX_VECTOR_OPERATORS_TRAITS(Rep, Name, CommuteBool)							\
+    template <class T1, class T2>										\
+    struct operator_##Name##_traits<cplx<Rep, T1>, vec<2, T2> >							\
+    {														\
+      enum { commutative = CommuteBool };									\
+      typedef cplx<Rep, typename deduce_from_traits<internal::operator_##Name##_traits, T1, T2>::ret> ret;	\
+      typedef cplx<Rep, T1> impl;										\
     }
 
     //

@@ -1,3 +1,8 @@
+2002-09-20  Emmanuel Turquin  <turqui_e@epita.fr>
+
+	* oln/types/optraits_cplx.hh: Modify macros in order to allow
+	- again - operations between complex numbers.
+
 2002-09-20  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/types/global_ops_traits.hh: Allow instantiation of undefined 
