@@ -1,3 +1,12 @@
+2004-07-16  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* tests/md5_morpho_attribute_closing_opening_light_hh5: Remove file.
+	* tests/md5_morpho_attribute_closing_opening_light_hh4: Likewise.
+	* tests/md5_morpho_attribute_closing_opening_light_hh3: Likewise.
+	* tests/md5_morpho_attribute_closing_opening_light_hh2: Likewise.
+	* tests/md5_morpho_attribute_closing_opening_light_hh1: Likewise.
+	* tests/md5_morpho_attribute_closing_opening_light_hh0: Likewise.
+
 2004-07-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	* oln/morpho/watershed.hh: Fix doc.
