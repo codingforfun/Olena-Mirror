@@ -1,3 +1,23 @@
+2003-01-07  Quoc Peyrot  <chojin@lrde.epita.fr>
+
+	* Makefile.am (SUBDIRS): change @UTILITIES@ to $(UTILITIES).
+	(DIST_SUBDIRS): new rule filled with 'oln utilities demo tests'.
+
+	* utilities/Makefile.am: change @MORPHO_UTILITIES@ to
+	$(MORPHO_UTILITIES).
+	(DIST_SUBDIRS): new rule filled with 'morpho'.
+
+	* utilities/generate_morpho.sh: add error messages to #error
+	directive.
+	* utilities/morpho/morpho_template.cc,
+	utilities/morpho/morpho_template_extrema.cc,
+	utilities/morpho/morpho_template_watershed.cc,
+	utilities/morpho/morpho_template_with_neighb.cc,
+	utilities/morpho/morpho_template_gaussian.cc,
+	utilities/morpho/morpho_template_with_twowin.cc,
+	utilities/morpho/morpho_template_with_functor.cc: modify
+	accordingly.
+
 2003-01-02  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* oln/transforms/dwt.hh: remove names of unused arguments in

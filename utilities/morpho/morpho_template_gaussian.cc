@@ -9,15 +9,15 @@
 using namespace oln;
 
 #ifndef IMAGE_TYPE
-# error
+# error "IMAGE_TYPE not defined"
 #endif
 
 #ifndef DATA_TYPE
-# error
+# error "DATA_TYPE not defined"
 #endif
 
 #ifndef FUNC
-# error
+# error "FUNC not defined"
 #endif
 
 static struct option long_options[] =
