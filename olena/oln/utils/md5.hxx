@@ -281,4 +281,44 @@ key MD5::execute()
     step();
   return gen_key();
 }
+
+
+// md5 implementation.
+template <class I>
+inline
+key md5(const abstract::non_vectorial_image<I> &im)
+{
+  oln_iter_type(I)	p(im);
+  buffer	b;
+
+  for_all(p)
+    b.add(im[p]);
+  b.append_padding();
+  b.append_length();
+
+  oln::utils::MD5	md5(b);
+  return md5.execute();
+}
+
+// md5 implementation.
+template <class I>
+inline
+key md5(const abstract::vectorial_image<I> &im)
+{
+  oln_iter_type(I)	p(im);
+  buffer	b;
+  //  unsigned nb =
+
+  for_all(p)
+    {
+      for (unsigned i = 0; i < ntg_nb_comp(oln_value_type(I)); ++i)
+	b.add(im[p][i]);
+    }
+  b.append_padding();
+  b.append_length();
+
+  oln::utils::MD5	md5(b);
+  return md5.execute();
+}
+
 #endif // !OLENA_OLN_UTILS_MD5_HXX

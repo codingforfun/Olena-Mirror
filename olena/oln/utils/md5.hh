@@ -31,6 +31,8 @@
 # include <ntg/all.hh>
 # include <vector>
 
+# include <oln/core/abstract/image_with_type_with_dim.hh>
+
 # include <oln/utils/key.hh>
 # include <oln/utils/buffer.hh>
 
@@ -198,6 +200,30 @@ namespace oln {
     };
 
 #include <oln/utils/md5.hxx>
+
+    /*!
+    ** \brief Compute The Md5 value of an image.
+    **
+    ** \param I Exact type of the image.
+    **
+    ** \arg im Image to process.
+    **
+    ** Non vectorial image version.
+    */
+    template <class I>
+    key md5(const abstract::non_vectorial_image<I> &im);
+
+    /*!
+    ** \brief Compute The Md5 value of an image.
+    **
+    ** \param I Exact type of the image.
+    **
+    ** \arg im Image to process.
+    **
+    ** Vectorial image version.
+    */
+    template <class I>
+    key md5(const abstract::vectorial_image<I> &im);
 
   } // !utils
 } // !oln

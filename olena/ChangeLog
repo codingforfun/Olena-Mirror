@@ -1,5 +1,10 @@
 2004-03-19  Giovanni Palma  <giovanni@lrde.epita.fr>
 
+	* oln/utils/md5.hh: Add function for md5 calls.
+	* oln/utils/md5.hxx: Likewise.
+
+2004-03-19  Giovanni Palma  <giovanni@lrde.epita.fr>
+
 	* oln/utils/buffer.hxx:  Add file.
 	* oln/utils/buffer.hh: Likewise.
 	* oln/utils/key.hh: Likewise.
