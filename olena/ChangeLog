@@ -1,3 +1,12 @@
+2004-08-16  Roland Levillain  <roland@lrde.epita.fr>
+
+	* oln/utils/timer.hh (timer::restart): Fix method to allow a
+	running timer to be restarted.
+	(timer::resume): Fix documentation.
+
+	* tests/utils/tests/timer (check): Add a test case to check the
+	behavior of restart() on a running timer.
+
 2004-08-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	* oln/core/neighborhood1d.hh (mk_win_from_neighb): Swap

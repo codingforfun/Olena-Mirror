@@ -1,12 +1,20 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 211)
-(Parent-Version oln 10 210)
-(Version-Log "Typo in ChangeLog.
+(Project-Version oln 10 212)
+(Parent-Version oln 10 211)
+(Version-Log "2004-08-16  Roland Levillain  <roland@lrde.epita.fr>
+
+	* oln/utils/timer.hh (timer::restart): Fix method to allow a
+	running timer to be restarted.
+	(timer::resume): Fix documentation.
+
+	* tests/utils/tests/timer (check): Add a test case to check the
+	behavior of restart() on a running timer.
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 13 Aug 2004 19:06:35 +0200")
+(Checkin-Time "Mon, 16 Aug 2004 19:35:15 +0200")
 (Checkin-Login levill_r)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -113,7 +121,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.16 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.47 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.43 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.22 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.23 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.17 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.39 640))
 
@@ -401,7 +409,7 @@
   (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.9 640))
   (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.16 640))
   (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.10 640))
-  (olena/oln/utils/timer.hh (oln/8_timer.hh 1.9 640))
+  (olena/oln/utils/timer.hh (oln/8_timer.hh 1.10 640))
   (olena/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.5.1.1 640))
   
   (olena/tests/arith/tests/min1 (oln/o/44_min1 1.1.1.9 640))
@@ -987,7 +995,7 @@
   (olena/tests/utils/Makefile.am (oln/u/26_Makefile.a 1.2 600))
   (olena/tests/utils/tests/histogram (oln/u/27_histogram. 1.2.1.5 600))
   (olena/tests/utils/tests/stat (oln/u/28_stat.cc 1.3 600))
-  (olena/tests/utils/tests/timer (oln/u/29_timer.cc 1.5 600))
+  (olena/tests/utils/tests/timer (oln/u/29_timer.cc 1.6 600))
   (olena/tests/topo/tests/tarjan (oln/u/30_test-tarja 1.3 600))
   (olena/oln/convert/abstract/conversion.hh (oln/u/31_conversion 1.6 640))
   (olena/tests/check/Makefile.runtests (oln/u/32_Makefile.r 1.3 600))

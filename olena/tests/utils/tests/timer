@@ -68,5 +68,17 @@ check()
   if (b >= 0)
     OK_OR_FAIL;
 
+  b = t.total_time ();
+
+  t.restart ();
+
+  for (int i = 0; i < 1000000000; )
+    ++i;
+
+  b = t.total_time() - b;
+
+  if (b >= 0)
+    OK_OR_FAIL;
+
   return fail;
 }

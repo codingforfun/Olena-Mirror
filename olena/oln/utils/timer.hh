@@ -73,13 +73,14 @@ namespace oln {
       {
 	assertion(status_ != e_unknown);
 	float val = total_time();
+	status_ = e_stopped;
 	start();
 	return val;
       }
 
       /*! Resume the timer.
       **
-      ** \pre The timer should be running.
+      ** \pre The timer should be stopped.
       */
       void
       resume()
