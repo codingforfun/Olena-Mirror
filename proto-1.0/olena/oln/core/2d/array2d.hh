@@ -39,13 +39,13 @@ namespace oln {
   template <typename T> struct array2d;
 
   // category
-  template <typename T> 
+  template <typename T>
   struct set_category< array2d<T> > { typedef category::data_storage ret; };
 
   // super_type
-  template <typename T> 
+  template <typename T>
   struct set_super_type< array2d<T> > { typedef abstract::data_storage< array2d<T> > ret; };
-  
+
   // props
   template <typename T>
   struct set_props < category::data_storage, array2d<T> > : public props_of<category::data_storage>
@@ -56,6 +56,25 @@ namespace oln {
   };
 
 
+  template<class T>
+  void alloc_and_init(T*& buffer, T**& array, const size2d& s)
+  {
+    size_t nrows_eff = s.nrows() + 2 * s.border();
+    size_t ncols_eff = s.ncols() + 2 * s.border();
+    size_t nelts_eff = nrows_eff * ncols_eff;
+
+    buffer = new T[nelts_eff];
+    array = new T*[nrows_eff];
+
+    buffer = buffer;
+    T* buf = buffer + s.border();
+    for (size_t row = 0; row < nrows_eff; ++row)
+      {
+	array[row] = buf;
+	buf += ncols_eff;
+      }
+    array += s.border();
+  }
 
   template <typename T>
   class array2d : public abstract::data_storage< array2d<T> >
@@ -129,20 +148,44 @@ namespace oln {
       this->clear_data();
       size_ = s;
 
-      size_t nrows_eff = size_.nrows() + 2 * size_.border();
-      size_t ncols_eff = size_.ncols() + 2 * size_.border();
-      size_t nelts_eff = nrows_eff * ncols_eff;
+      alloc_and_init(buffer_, array_, s);
+      invariant_();
+    }
 
-      buffer_ = new T[nelts_eff];
-      array_ = new T*[nrows_eff];
+    void impl_resize_border(size_t new_border, bool copy_border)
+    {
+      invariant_();
+      T* new_buffer_;
+      T** new_array_;
+      size2d new_size_(this->size_.nrows(), this->size_.ncols(), new_border);
 
-      T* buf = buffer_ + size_.border();
-      for (size_t row = 0; row < nrows_eff; ++row)
+      alloc_and_init(new_buffer_, new_array_, new_size_);
+
+      if (buffer_ != 0)
 	{
-	  array_[row] = buf;
-	  buf += ncols_eff;
+	  size_t border = this->size_.border();
+
+	  if (border > new_border)
+	    border = new_border;
+
+	  coord_t row_min = copy_border ? -border : 0;
+	  coord_t row_max = int(this->size_.nrows())
+	    + (copy_border ? border : 0);
+	  coord_t col_min = copy_border ? -border : 0;
+	  size_t ncols = int(this->size_.ncols()) +
+	    (copy_border ? (border * 2) : 0);
+
+	  for (coord_t row = row_min; row < row_max; ++row)
+	    memcpy(new_array_[row] + col_min, this->array_[row] + col_min,
+		   ncols * sizeof (T));
+
+	  this->clear_data();
 	}
-      array_ += size_.border();
+
+      buffer_ = new_buffer_;
+      array_ = new_array_;
+      size_ = new_size_;
+
       invariant_();
     }
 
@@ -212,6 +255,8 @@ namespace oln {
 		 size_.ncols().is_undefined() &&
 		 size_.border().is_undefined()));
     }
+
+
 
   };
 

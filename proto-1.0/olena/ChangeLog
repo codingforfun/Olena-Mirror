@@ -1,3 +1,13 @@
+2005-03-20  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* tests/core/tests/border2d: New.
+	* oln/core/abstract/image_with_data.hh: Add resize_border and
+	impl_hold_large methods.
+	* oln/core/abstract/data_storage.hh: Add resize_border in generic
+	data_storage class.
+	* oln/core/2d/array2d.hh: Add resize_border implementation for array2d.
+	* oln/core/2d/image2d.hh: Add a border argument to image2d constructor.
+
 2005-03-19  Simon Odou  <simon@lrde.epita.fr>
 
 	* oln/makefile.src: Add compose.hh.

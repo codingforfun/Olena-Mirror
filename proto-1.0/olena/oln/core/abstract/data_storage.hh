@@ -49,7 +49,7 @@ namespace oln {
   struct props_of < category::data_storage, type >
   {
     typedef mlc::true_type user_defined_;
-    
+
     mlc_decl_prop(category::data_storage, size_type);
     mlc_decl_prop(category::data_storage, point_type);
     mlc_decl_prop(category::data_storage, data_type);
@@ -65,9 +65,9 @@ namespace oln {
 
   };
 
-  mlc_register_prop(category::data_storage, size_type); 
-  mlc_register_prop(category::data_storage, point_type); 
-  mlc_register_prop(category::data_storage, data_type); 
+  mlc_register_prop(category::data_storage, size_type);
+  mlc_register_prop(category::data_storage, point_type);
+  mlc_register_prop(category::data_storage, data_type);
 
 
   namespace abstract {
@@ -104,6 +104,11 @@ namespace oln {
       void resize(const size_type& s)
       {
 	this->exact().impl_resize(s);
+      }
+
+      void resize_border(size_t new_border, bool copy_border)
+      {
+	this->exact().impl_resize_border(new_border, copy_border);
       }
 
       unsigned long npoints() const

@@ -124,8 +124,8 @@ namespace oln {
       this->exact_ptr = this;
     }
 
-    image2d(coord_t nrows, coord_t ncols) :
-      super_type(size2d(nrows, ncols))
+    image2d(coord_t nrows, coord_t ncols, size_t border = 2) :
+      super_type(size2d(nrows, ncols, border))
     {
       this->exact_ptr = this;
     }

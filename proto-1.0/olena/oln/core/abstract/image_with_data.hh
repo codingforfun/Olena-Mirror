@@ -51,7 +51,7 @@ namespace oln {
   {
     typedef category::image ret;
   };
-  
+
   // super_type
   template <typename E>
   struct set_super_type < abstract::image_with_data<E> >
@@ -139,6 +139,12 @@ namespace oln {
 	return this->data_->hold(p);
       }
 
+      bool impl_hold_large(const point_type& p) const
+      {
+	precondition(this->has_data());
+	return this->data_->hold_large(p);
+      }
+
 
       /*! \brief Implement both abstract::readonly_image<E>::get(p)
       ** and abstract::readwrite_image<E>::get(p) so read-only access
@@ -170,6 +176,11 @@ namespace oln {
       bool has_data() const
       {
         return data_ != 0;
+      }
+
+      void resize_border(size_t new_border, bool copy_border = false)
+      {
+	this->data_->resize_border(new_border, copy_border);
       }
 
 

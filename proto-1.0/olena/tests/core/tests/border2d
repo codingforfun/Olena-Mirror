@@ -1,0 +1,38 @@
+
+#include <iostream>
+
+#include <ntg/all.hh>
+#include <oln/basics2d.hh>
+#include <oln/level/fill.hh>
+
+#include "check.hh"
+#include "data.hh"
+
+
+
+bool check()
+{
+  oln::point2d p(0,0);
+
+  typedef oln::image2d<ntg::int_u8> image_type;
+  image_type ima(10, 10, 2);
+
+  int i = 0;
+
+  for (p.col() = -0; p.col() < 10; p.col()++)
+    for (p.row() = -0; p.row() < 10; p.row()++)
+      ima[p] = i++;
+
+  ima.resize_border(3, true);
+
+  i = 0;
+  for (p.col() = -3; p.col() < 13; p.col()++)
+    for (p.row() = -3; p.row() < 13; p.row()++)
+      {
+	if (p.col() >= -0 && p.col() < 10 && p.row() >= -0 && p.row() < 10)
+	  if (ima[p] != i++)
+	      return true;
+      }
+
+  return false;
+}
