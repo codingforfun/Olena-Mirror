@@ -1,9 +1,12 @@
 #! /bin/sh
 
-[ -d "$1" -a -d "$1/python" -a -d "$1/src" -a -d "$1/meta" ] || \
+[ -d "$1" -a -f "$1/expand.sh" -a -f "$1/ChangeLog" ] || \
   { echo "usage: $0 <swilena srcdir>" >&2; exit 1; }
 
 SWILENA=`cd $1 && pwd`
+
+mkdir -p "$SWILENA/src"
+mkdir -p "$SWILENA/python"
 
 MODULES="$MODULES ntg ntg_cplx ntg_int_u ntg_int_s"
 for dim in 1 2 3; do
