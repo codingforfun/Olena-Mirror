@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,25 +29,26 @@
 # define OLENA_IO_READABLE_HH_
 
 # include <oln/config/system.hh>
+
 # include <string>
 # include <cstdlib>
 
 namespace oln {
-
+  
   namespace io {
-
+    
     namespace internal {
-
+      
       template<typename T>
       bool read_any(T& output, const std::string& name);
-
+      
       class anything
       {
       public:
 	anything(const std::string& str) : _str(str) {}
-
+	
 	anything(const char* c) : _str(c) {}
-
+	
 	template< typename T >
 	T& assign(T& output) const
 	{
@@ -55,7 +56,7 @@ namespace oln {
             std::exit(EXIT_FAILURE);
 	  return output;
 	}
-
+	
       private:
 	std::string _str;
       };
@@ -66,5 +67,4 @@ namespace oln {
 
 } // end of oln
 
-
-#endif // OLENA_IO_READABLE_HH_
+#endif // ! OLENA_IO_READABLE_HH_

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -38,7 +38,7 @@ namespace oln {
     namespace internal {
 
       template<>
-      struct wrapper<WrapGz>
+      struct stream_wrapper<StreamGz>
       {
 	static const std::string& name()
 	{ static const std::string _name("gz:"); return _name; }

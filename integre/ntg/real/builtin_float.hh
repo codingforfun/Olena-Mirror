@@ -34,8 +34,7 @@
 # include <ntg/core/internal/traits.hh>
 # include <ntg/real/builtin_properties.hh>
 # include <ntg/real/optraits_scalar.hh>
-# include <ntg/real/int_u.hh>
-# include <ntg/real/int_s.hh>
+# include <ntg/core/predecls.hh>
 
 # include <mlc/cmp.hh>
 

@@ -34,6 +34,7 @@
 # include <oln/topo/combinatorial-map/internal/cmap-functor.hh>
 
 # include <set>
+# include <list>
 # include <algorithm>
 # include <iterator>
 

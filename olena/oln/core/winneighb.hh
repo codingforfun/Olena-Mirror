@@ -121,7 +121,7 @@ namespace oln
   };
 
 # define Neighb(Neighbable)			\
-typename Neighbable::neighb
+typename Neighbable::neighb_type
 
 
 } // end of oln

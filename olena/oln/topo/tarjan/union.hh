@@ -58,7 +58,7 @@ namespace oln {
 	  parent = typename mute<I, point_t>::ret(ima.size());
 	  level::fill(parent, INACTIVE());
 
-	  border::adapt_assign(parent, 1, INACTIVE());
+	  parent.border_adapt_assign(1, INACTIVE());
 	}
 
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,35 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_IMAGE_SIZE_HH
-# define OLENA_CORE_IMAGE_SIZE_HH
+#include <ntg/bin.hh>
+#include <ntg/int.hh>
+#include <oln/basics2d.hh>
+#include <oln/level/fill.hh>
+#include <oln/level/connected.hh>
+#include <iostream>
+#include "check.hh"
+#include "data.hh"
 
-# include <mlc/type.hh>
-
-
-namespace oln {
-
-
-  template<class Exact>
-  struct image_size : public mlc::any< Exact >
-  {
-
-    static std::string name() { return std::string("image_size<") + Exact::name() + ">"; }
-  protected:
-    image_size() {}
-  };
-
-  /* Every dimension specializes this trait and define a ret typedef.  */
-  template< unsigned Dim >
-  struct image_size_for_dim {};
-
-# define _ImageSizeForDim(DIM, TYPE)		\
-  template<>					\
-  struct image_size_for_dim<DIM> {		\
-    typedef TYPE ret;				\
-  };
-
-} // end of oln
+using namespace oln;
+using namespace mlc;
+using namespace ntg;
 
 
-#endif // ! OLENA_CORE_IMAGE_SIZE_HH
+bool
+check(void)
+{
+  image2d<bin> lena = load(rdata("object"));
+
+  std::cout << "--- level::connected_component<int_u8> --" << std::endl
+	    << "\t/!\\ Only instanciation is tested" << std::endl;
+
+  save(level::connected_component<int_u8>(lena, neighb_c4()), "connected_out");
+
+  return true;
+}

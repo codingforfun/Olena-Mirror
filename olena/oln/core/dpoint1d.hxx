@@ -60,7 +60,7 @@ namespace oln {
   }
 
   inline
-  dpoint1d::dpoint1d(const point1d& p) : super(p)
+  dpoint1d::dpoint1d(const point1d& p) : super_type(p)
   {
   }
 

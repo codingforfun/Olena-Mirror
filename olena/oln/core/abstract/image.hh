@@ -162,6 +162,7 @@ namespace oln {
       }
     protected:
       image() {}
+      //image(self_type& rhs) {}
 
       bool has_impl_() const
       {

@@ -31,9 +31,9 @@
 # include <mlc/is_a.hh>
 
 # include <mlc/contract.hh>
-# include <oln/core/image.hh>
-# include <oln/core/image_size.hh>
-# include <oln/core/iter.hh>
+# include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/image_size.hh>
+# include <oln/core/abstract/iter.hh>
 # include <oln/core/macros.hh>
 
 namespace oln {

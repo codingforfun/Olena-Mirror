@@ -64,7 +64,7 @@ typename mute< ImgType, Node(ImgType) >::ret
 	{
 	  // FIXME: assume there is no boundary pixel with a max value.
 	  // pearhaps we should clone img with a higher type.
-	  border::adapt_assign(img, 1, ntg_max_val(Value(I)));
+	  img.border_adapt_assign(1, ntg_max_val(Value(I)));
 
 	  Iter(inter_pixel_t) p(_data);
 	  fwd_dir_iter_t it;
@@ -77,8 +77,7 @@ typename mute< ImgType, Node(ImgType) >::ret
 	    }
 	}
 
-	// FIXME: Why can't we use returning reference ?
-	const node_t operator[](const point_t & p) const
+	const node_t & operator[](const point_t & p) const
 	{
 	  return _data[p];
 	}

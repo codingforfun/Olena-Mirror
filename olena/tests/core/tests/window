@@ -1,0 +1,23 @@
+#include <oln/core/window1d.hh>
+#include <oln/core/window2d.hh>
+#include <oln/core/window3d.hh>
+
+#include <ntg/all.hh>
+
+#include <cassert>
+
+using namespace oln;
+using namespace ntg;
+
+int main()
+{
+  window1d w1d;
+  window2d w2d;
+  window3d w3d;
+  w1d.add(dpoint1d(2));
+  w2d.add(dpoint2d(0, 5));
+  
+  w2d.add(dpoint2d(0, 5));
+  w3d.add(dpoint3d(0, 2, 4));
+  return 0;
+}

@@ -1,3 +1,8 @@
+2003-07-24  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/enum/bin.hh, ntg/enum/builtin_bool.hh: Set abstract_type to
+	binary.
+
 2003-07-22  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/core/abstract_hierarchy.hh: Add binary abstraction.

@@ -80,7 +80,10 @@ namespace ntg {
     OPTRAITS_BUILTIN_INT_S(signed long,  LONG_MIN, LONG_MAX);
     OPTRAITS_BUILTIN_INT_S(signed int,   INT_MIN,  INT_MAX);
     OPTRAITS_BUILTIN_INT_S(signed short, SHRT_MIN, SHRT_MAX);
+    // char is not the same as signed char. 
     OPTRAITS_BUILTIN_INT_S(signed char,  CHAR_MIN, CHAR_MAX);
+    // FIXME: whether char is signed or not is implementation defined.
+    OPTRAITS_BUILTIN_INT_S(char,         CHAR_MIN, CHAR_MAX);
 
   } // end of internal.
 

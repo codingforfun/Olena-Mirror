@@ -63,10 +63,12 @@ oln-ref.pdf: $(tex_TEX) $(oln_ref_TEX) $(graphics_DIA)
 # be easily distributed (automake barks loudly when the filenames are
 # not known at the time Makefile.in is generated)
 
+# FIXME: uncomment when ready
+# cp $(srcdir)/graphics/*-html.png html/
+
 html.tar.gz: $(tex_TEX) $(oln_ref_TEX) $(graphics_DIA)
 	$(HEVEA) -fix -o html/oln-ref.html -I $(srcdir) -I $(srcdir)/graphics `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
 	cd html && $(HACHA) -tocbis -o index.html oln-ref.html; cd ..
-	cp $(srcdir)/graphics/*-html.png html/
 	$(TAR) -czf $@ html
 
 ###
@@ -76,7 +78,7 @@ html.tar.gz: $(tex_TEX) $(oln_ref_TEX) $(graphics_DIA)
 dist_noinst_DATA = oln-ref.pdf oln-ref.dvi bin.tar.gz html.tar.gz
 
 EXTRA_DIST = $(tex_TEX) $(oln_ref_TEX) \
-	processing.tpl filelists.make gen_filelists.sh graphics
+	processing.tpl filelists.make gen_filelists.sh
 
 bin.tar.gz: oln-ref.pdf oln-ref.dvi
 	$(TAR) -czf $@ `test -f bin/lena256.pdf || echo '$(srcdir)/'`bin

@@ -69,6 +69,7 @@ namespace oln {
       typedef Exact exact_type;
       typedef image_with_dim<image_id<Exact>::dim, Exact> super_image_with_dim;
       typedef image_with_type<typename image_id<Exact>::value_type, Exact> super_image_with_type;
+      typedef image<Exact> super_image;
 
       const value_type& at(const point_type& p) const
       {
@@ -82,7 +83,8 @@ namespace oln {
 
       // shallow copy
       image_with_impl(self_type& rhs) 
-	: super_image_with_dim(rhs),
+	: super_image(rhs),
+	  super_image_with_dim(rhs),
 	  super_image_with_type(rhs)
       {
 	assertion(rhs.has_impl_());
@@ -98,14 +100,12 @@ namespace oln {
       exact_type& assign(exact_type rhs) // shallow assignment
       {
 	assertion(rhs.impl() != 0);
-	assertion(impl_ != 0);
 	if ( &rhs == this )
 	  return to_exact(*this);
 	if (this->impl() != 0)
 	  this->impl()->unref();
 	this->impl_ = rhs.impl();
-	if (this->impl() != 0)
-	  this->impl()->ref();
+	this->impl()->ref();
 	return to_exact(*this);
       }
 
@@ -148,11 +148,14 @@ namespace oln {
       }
 
     protected:
-      image_with_impl() : impl_(0)
+      image_with_impl() : super_image(), super_image_with_dim(),
+			  super_image_with_type(), impl_(0)
       {}
 
-      image_with_impl(impl_type* impl) : 
+      image_with_impl(impl_type* impl) :
+	super_image(),
 	super_image_with_dim(), 
+	super_image_with_type(),
 	impl_(impl) {}
       
     private:

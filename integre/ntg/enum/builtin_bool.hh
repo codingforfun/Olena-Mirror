@@ -45,7 +45,7 @@ namespace ntg {
     struct typetraits<bool>
     {
       typedef bool		self;
-      typedef enumerated	abstract_type;	
+      typedef binary		abstract_type;	
       typedef bin		ntg_type;
       typedef optraits<self>	optraits_type;
       typedef unsafe::get<self>	behavior_type;

@@ -46,18 +46,18 @@ namespace oln {
   };
 
   template<unsigned Dim, class T, class Impl, class Exact>
-  struct image_traits<image<Dim, T, Impl, Exact> >: 
-    public image_traits<abstract::image_with_impl<Impl, 
+  struct image_traits<image<Dim, T, Impl, Exact> >:
+    public image_traits<abstract::image_with_impl<Impl,
 						  typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret> >
   {
-    
+
   };
 
   // image
 
   template<unsigned Dim, class T, class Impl, class Exact>
-  class image: 
-    public abstract::image_with_impl<Impl, 
+  class image:
+    public abstract::image_with_impl<Impl,
 				     typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret>
   {
   public:
@@ -72,25 +72,29 @@ namespace oln {
 
     typedef image<Dim, T, Impl, Exact> self_type;
     typedef typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret exact_type;
-    typedef typename abstract::image_with_impl<Impl, 
+    typedef typename abstract::image_with_impl<Impl,
 					       exact_type> super_type;
+    typedef abstract::image<Exact> super_image;
 
-    image(self_type& rhs): super_type(rhs) {}
 
-    static std::string name() 
-    { 
-      return std::string("image<") + Dim + ", " 
-	+ T::name() + ", " 
-	+ Impl::name() + ", " 
-	+ Exact::name() + ">"; 
+    image() : super_image(), super_type() {}
+
+    image(self_type& rhs): super_image(), super_type(rhs) {}
+
+    static std::string name()
+    {
+      return std::string("image<") + Dim + ", "
+	+ T::name() + ", "
+	+ Impl::name() + ", "
+	+ Exact::name() + ">";
     }
 
-    image(impl_type* i) : super_type(i) {}    
+    image(impl_type* i) : super_type(i) {}
   };
 
   // mute
 
-  template<class I, class T = typename mlc::exact<I>::ret::value>
+  template<class I, class T = typename mlc::exact<I>::ret::value_type>
   struct mute
   {
     typedef typename mlc::exact<I>::ret::mute<T>::ret ret;

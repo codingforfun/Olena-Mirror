@@ -63,27 +63,33 @@ Builtin&						\
 Op(Builtin& lhs, const value<T2>& rhs)			\
 { return optraits<Builtin>::Name(lhs, rhs.self()); }
 
-/*----------------------------------------------------.
-| Global assignements for both ntg_types and builtins |
-`----------------------------------------------------*/
+/*-----------------------------------------------.
+| Global assignements for ntg_types and builtins |
+`------------------------------------------------*/
 
-# define GLOBAL_ASSIGN_OP(Op, Name)			\
-template <class T1, class T2> inline			\
-T1&							\
-Op(value<T1>& lhs, const T2& rhs)			\
-{ return optraits<T1>::Name(lhs.self(), rhs); }		\
-							\
+# define GLOBAL_ASSIGN_OP_BUILTIN_INT(Op, Name)		\
 GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, signed   long);	\
 GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, unsigned long);	\
 GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, signed   int);	\
 GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, unsigned int);	\
 GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, signed   short);	\
 GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, unsigned short);	\
+GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, char);		\
 GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, signed   char);	\
-GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, unsigned char);	\
-GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, float);		\
-GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, double);		\
+GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, unsigned char);
+
+# define GLOBAL_ASSIGN_OP_BUILTIN_FLOAT(Op, Name)	\
+GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, float);	        \
+GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, double);
+
+# define GLOBAL_ASSIGN_OP_BUILTIN_BOOL(Op, Name)	\
 GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, bool);
+
+# define GLOBAL_ASSIGN_OP(Op, Name)		\
+template <class T1, class T2> inline		\
+T1&						\
+Op(value<T1>& lhs, const T2& rhs)		\
+{ return optraits<T1>::Name(lhs.self(), rhs); }
 
 /*---------------------.
 | ARITHMETIC OPERATORS |

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,31 +25,52 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_WINDOW_HH
-# define OLENA_CORE_WINDOW_HH
+#include <ntg/int.hh>
+#include <oln/basics2d.hh>
+#include <oln/level/fill.hh>
+#include <oln/level/compare.hh>
+#include <oln/level/invert.hh>
+#include <iostream>
+#include "check.hh"
+#include "data.hh"
 
-# include <oln/core/structelt.hh>
-# include <oln/core/winneighb.hh>
+using namespace oln;
+using namespace mlc;
+using namespace ntg;
 
-namespace oln {
+#define OK_OR_FAIL				\
+      std::cout << "OK" << std::endl;		\
+    else					\
+      {						\
+	std::cout << "FAIL" << std::endl;	\
+	fail = true;				\
+      }
 
-  template<class Exact>
-  struct window : public struct_elt<Exact>
-  {
+#define ASSERT_CHECK(Val) { assert_check(Val, #Val, fail); }
 
-    static std::string name()
-    {
-      return std::string("window<") + Exact::name() + ">";
-    }
-  protected:
-    window() {}
-  };
-
-   template<int N>
-   struct get_se
-   {};
+void assert_check(bool res, const std::string& desc, bool &fail)
+{
+  std::cout << "---- " << desc << " ----" << std::endl;
+  if (res)
+    OK_OR_FAIL;
+}
 
 
-} // end of oln
+bool
+check(void)
+{
+  bool fail = false;
 
-#endif // ! OLENA_CORE_WINDOW_HH
+  image2d<int_u8> src = load(rdata("lena.pgm"));
+
+  ASSERT_CHECK(level::is_equal(level::invert(level::invert(src)), src));
+
+  image2d<int_u8> src_copy = src.clone();
+  level::invert_self(src_copy);
+  level::invert_self(src_copy);
+  ASSERT_CHECK(level::is_equal(src_copy, src));
+
+  save(level::invert(src), "lena_inverted");
+
+  return fail;
+}

@@ -25,81 +25,74 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_IMAGEND_SIZE_HH
-# define OLENA_CORE_IMAGEND_SIZE_HH
+#ifndef OLENA_CORE_ABSTRACT_ITER1D_HH
+# define OLENA_CORE_ABSTRACT_ITER1D_HH
+
+# include <oln/core/coord.hh>
+# include <oln/core/point1d.hh>
+# include <oln/core/dpoint1d.hh>
+# include <oln/core/image1d.hh>
+# include <oln/core/abstract/iter.hh>
 
 # include <mlc/contract.hh>
-# include <oln/core/image_size.hh>
-# include <oln/core/coord.hh>
-# include <ntg/utils/debug.hh>
-# include <sstream>
+# include <mlc/type.hh>
+# include <mlc/objs.hh>
 
 namespace oln {
 
-  template< unsigned Dim, class Exact = mlc::final >
-  class imagend_size : public image_size< typename mlc::exact_vt<imagend_size<Dim, Exact>, Exact>::ret >
+  namespace abstract {
+    template<class Exact>
+    class iter1d; // fwd_decl
+  } // end of abstract
+
+  template<class Exact>
+  struct iter_traits<abstract::iter1d<Exact> >: public virtual
+  iter_traits<abstract::iter<Exact> >
   {
-  public:
-
-    enum { dim = Dim };
-
-    coord nth(unsigned n) const
-    {
-      assertion(n < dim);
-      return coord_[n];
-    }
-
-    coord& nth(unsigned n)
-    {
-      assertion(n < dim);
-      return coord_[n];
-    }
-
-    coord border() const
-    {
-      return border_;
-    }
-
-    coord& border()
-    {
-      return border_;
-    }
-
-    template< class S >
-    bool operator==(const imagend_size<Dim, S>& size) const
-    {
-      for (unsigned i = 0; i < Dim; ++i)
-	if (coord_[i] != size.coord_[i])
-	  return false;
-      return true;
-    }
-
-    template< class S >
-    bool operator!=(const imagend_size<Dim, S>& size) const
-    {
-      for (unsigned i = 0; i < Dim; ++i)
-	if (coord_[i] != size.coord_[i])
-	  return true;
-      return false;
-    }
-
-    static std::string name()
-    {
-      std::ostringstream out;
-      out << "imagend_size<" << dim << ","
-          << Exact::name() << ">" << std::ends;
-      return out.str();
-    }
-
- 
-
-  protected:
-    coord border_;
-  private:
-    coord coord_[dim];
-    
+    enum { dim = 1 };
+    typedef point1d point_type;
+    typedef dpoint1d dpoint_type;
   };
+
+  namespace abstract {
+
+    template<class Exact>
+    class iter1d : public iter< Exact >
+    {
+    public:
+
+      typedef iter<Exact> super_type;
+
+      point1d to_point() const
+      {
+	precondition(*this != end);
+	invariant(p_.col() >= 0 &&
+		  p_.col() < ncols_);
+	return p_;
+      }
+
+      coord col() const
+      {
+	return p_.col();
+      }
+
+      static std::string name() { return std::string("_iter1d<") + Exact::name() + ">"; }
+
+    protected:
+      const coord ncols_;
+
+      iter1d(const image1d_size& size) :
+	super_type(), ncols_(size.ncols())
+      {
+	precondition(size.ncols() > 0);
+	to_exact(this)->goto_begin_();
+      }
+    };
+
+
+  } // end of abstract
 
 } // end of oln
 
-#endif // ! OLENA_CORE_IMAGEND_SIZE_HH
+
+#endif // ! OLENA_CORE_ABSTRACT_ITER1D_HH

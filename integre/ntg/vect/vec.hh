@@ -126,27 +126,27 @@ namespace ntg {
     {
       mlc::is_true< ncols == N >::ensure();
       for (unsigned i = 0; i < N; ++i)
-	val_[i] = arr[i];
+	this->val_[i] = arr[i];
     }
 
     template<class U, class E2>
     vec(const vec<N, U, E2>& v)
     {
       for (unsigned i = 0; i < N; ++i)
-	val_[i] = v[i];
+	this->val_[i] = v[i];
     }
 
     template<class U, class E2>
     vec<N, T>& operator=(const vec<N, U, E2>& v)
     {
       for (unsigned i = 0; i < N; ++i)
-	val_[i] = v[i];
+	this->val_[i] = v[i];
       return *this;
     }
 
     // accessor
-    T &     operator[](unsigned i) 	 { return val_[i]; }
-    const T operator[](unsigned i) const { return val_[i]; }
+    T &     operator[](unsigned i) 	 { return this->val_[i]; }
+    const T operator[](unsigned i) const { return this->val_[i]; }
 
     unsigned size() const { return N; }
 
@@ -159,7 +159,7 @@ namespace ntg {
     vec& _fill(T t)
     {
       for (unsigned i = 0; i < N; ++i)
-	val_[i] = t;
+	this->val_[i] = t;
       return *this;
     }
   };

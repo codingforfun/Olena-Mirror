@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_NEIGHBORHOOD1D_HH
 # define OLENA_CORE_NEIGHBORHOOD1D_HH
 
-# include <oln/core/internal/neighborhood.hh>
+# include <oln/core/abstract/neighborhoodnd.hh>
 # include <oln/core/winiter.hh>
 # include <oln/core/accum.hh>
 # include <oln/core/window1d.hh>
@@ -36,56 +36,60 @@
 
 namespace oln {
 
+  class neighborhood1d; // fwd_decl
+
+  template<>
+  struct struct_elt_traits<neighborhood1d>: public
+  struct_elt_traits<abstract::neighborhoodnd<neighborhood1d> >
+  {
+    enum { dim = 1 };
+    typedef point1d point_type;
+    typedef dpoint1d dpoint_type;
+    typedef winiter< neighborhood1d > iter_type;
+    typedef winneighb< neighborhood1d > neighb_type;
+    typedef window1d win_type;
+  };
+
   class neighborhood1d :
-    public internal::_neighborhood< 1, neighborhood1d >
+    public abstract::neighborhoodnd< neighborhood1d >
   {
   public:
 
-    typedef internal::_neighborhood< 1, neighborhood1d > super;
-    typedef neighborhood1d self;
+    typedef abstract::neighborhoodnd< neighborhood1d > super_type;
+    typedef neighborhood1d self_type;
 
-    typedef winiter< self >   iter;
-    typedef winneighb< self > neighb;
+    typedef struct_elt_traits< self_type >::iter_type   iter_type;
+    typedef struct_elt_traits< self_type >::neighb_type
+    neighb_type;
+    typedef struct_elt_traits< self_type >::dpoint_type dpoint_type;
 
-    neighborhood1d& add(const dpoint1d& dp)
+    coord delta_update_(const dpoint_type& dp)
     {
-      precondition( !dp.is_centered() );
-      super::add(dp);
-      super::add(-dp);
-      _delta(abs(dp.col()));
-      return *this;
+      delta_(abs(dp.col()));
+      return delta_;
+    }
+
+    neighborhood1d& add(const dpoint_type& dp)
+    {
+      to_exact(this)->add_(dp);
+      return to_exact(this)->add_(-dp);
     }
 
     neighborhood1d& add(coord col)
     {
-      return this->add(dpoint1d(col));
+      return this->add(dpoint_type(col));
     }
 
-    neighborhood1d() : super(), _delta(0) {}
-    neighborhood1d(unsigned size) : super(size), _delta(0) {}
-    neighborhood1d(unsigned n, const coord crd[]) : super(), _delta(0)
+    neighborhood1d() : super_type() {}
+    neighborhood1d(unsigned size) : super_type(size) {}
+    neighborhood1d(unsigned n, const coord crd[]) : super_type()
     {
-      _dp.reserve(n);
-      _centered = false;
       for (unsigned i = 0; i < n; ++i)
-	add(dpoint1d(crd[i]));
-    }
-
-    coord delta() const
-    {
-      return _delta;
+	add(dpoint_type(crd[i]));
     }
 
     static std::string name() { return std::string("neighborhood1d"); }
 
-    // obsolete
-    self operator-() const
-    {
-      return *this;
-    }
-
-  private:
-    max_accumulator<coord> _delta;
   };
 
 

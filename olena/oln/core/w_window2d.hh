@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_W_WINDOW2D_HH
 # define OLENA_CORE_W_WINDOW2D_HH
 
-# include <oln/core/internal/w_window.hh>
+# include <oln/core/abstract/w_windownd.hh>
 # include <mlc/array/all.hh>
 # include <oln/core/accum.hh>
 # include <oln/core/winiter.hh>
@@ -39,39 +39,48 @@
 
 namespace oln {
 
-  template<class T, class Exact = mlc::final>
-  class w_window2d : public internal::_w_window< 2, T, typename mlc::exact_vt<w_window2d<T, Exact>, Exact>::ret >
+  template<class T>
+  class w_window2d; // fwd_decl
+
+
+  template<class T>
+  struct struct_elt_traits<w_window2d<T> >: public
+  struct_elt_traits<abstract::w_windownd<w_window2d<T> > >
   {
-    typedef internal::_w_window< 2, T, typename mlc::exact_vt<w_window2d<T, Exact>, Exact>::ret > super;
+    enum { dim = 2 };
+    typedef T weight_type;
+    typedef point2d point_type;
+    typedef dpoint2d dpoint_type;
+    typedef winiter< w_window2d<T> > iter_type;
+    typedef winneighb< w_window2d<T> > neighb_type;
+  };
+
+  template<class T>
+  class w_window2d : public abstract::w_windownd<w_window2d<T> >
+  {
+    typedef abstract::w_windownd< w_window2d<T> > super_type;
   public:
   
-    typedef w_window2d self;
+    typedef w_window2d<T> self_type;
+    typedef typename struct_elt_traits< self_type >::iter_type   iter_type;
+    typedef typename struct_elt_traits< self_type >::neighb_type
+    neighb_type;
+    typedef typename struct_elt_traits< self_type >::dpoint_type dpoint_type;
+    typedef typename struct_elt_traits< self_type >::weight_type weight_type;
 
-    typedef winiter< self >   iter;
-    typedef winneighb< self > neighb;
+    w_window2d(): super_type() {}
+    w_window2d(unsigned size) : super_type(size) {}
 
-    w_window2d<T>& add(coord row, coord col, T weight)
+    coord delta_update_(const dpoint_type& dp)
     {
-      return add(dpoint2d(row, col), weight);
-    }
-
-    w_window2d(): super(), _delta(0) {}
-    w_window2d(unsigned size) : super(size), _delta(0) {}
-
-    w_window2d<T>& add(const dpoint2d& dp, T weight)
-    {
-      if (weight == 0)		// Don't add 0 weighted entries
-	return *this;
-
-      super::add(dp, weight);
-      _delta(abs(dp.row()));
-      _delta(abs(dp.col()));
-      return *this;
+      delta_(abs(dp.row()));
+      delta_(abs(dp.col()));
+      return delta_;
     }
 
     template<class I, class T2>
     w_window2d(const mlc::array2d<I, T2 >& arr) :
-      super(I::card), _delta(0)
+      super_type(I::card)
     {
       unsigned i = 0;
       for (coord row = -I::center_row; row <= I::nrows - I::center_row - 1; ++row)
@@ -79,44 +88,29 @@ namespace oln {
           add(row, col, arr[i++]);
     }
 
-
-    T& set(const dpoint2d& dp, T weight)
+    w_window2d<T>& add(coord row, coord col, const weight_type& weight)
     {
-      // if the dp exists, return a ref to the existing entry
-      for (unsigned i = 0; i < card(); ++i)
-	if (_dp[i] == dp)
-	  {
-	    _w[i] = weight;
-	    return _w[i];
-	  }
-
-      // otherwise, create new entry
-      add(dp, weight);
-      return _w.back();
+      return add(dpoint_type(row, col), weight);
     }
 
-    T& set(coord row, coord col)
+    w_window2d<T>& add(const dpoint_type& dp, const weight_type& w)
     {
-      return set(dpoint2d(row, col));
+      return to_exact(this)->add_(dp, w);
     }
 
-    coord delta() const
+    const weight_type& set(const dpoint_type& dp, const weight_type& weight)
     {
-      return _delta;
+      return to_exact(this)->set_(dp, weight);
     }
 
-    self operator-() const
+    const weight_type& set(coord row, coord col, const weight_type& weight)
     {
-      self win(*this);
-      win.sym();
-      return win;
+      return set(dpoint_type(row, col), weight);
     }
 
     static std::string name() { return std::string("w_window2d<")
-				       + T::name() + ","
-				       + Exact::name() + ">"; }
-  private:
-    max_accumulator<coord> _delta;
+				       + T::name() +  ">"; }
+
   };
 
 

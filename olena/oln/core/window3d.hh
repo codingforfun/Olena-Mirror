@@ -30,89 +30,67 @@
 
 # include <oln/core/point3d.hh>
 # include <oln/core/dpoint3d.hh>
-# include <oln/core/internal/window.hh>
+# include <oln/core/abstract/windownd.hh>
 # include <oln/core/winiter.hh>
 # include <oln/core/accum.hh>
 # include <algorithm>
 
 namespace oln {
 
-  class window3d : public internal::_window< 3, window3d >
+  class window3d; // fwd_decl
+
+  template<>
+  struct struct_elt_traits<window3d>: public
+  struct_elt_traits<abstract::windownd<window3d> >
+  {
+    enum { dim = 3 };
+    typedef point3d point_type;
+    typedef dpoint3d dpoint_type;
+    typedef winiter< window3d > iter_type;
+    typedef winneighb< window3d > neighb_type;
+  };
+
+  class window3d : public abstract::windownd< window3d >
   {
   public:
-    typedef internal::_window< 3, window3d > super;
-    typedef window3d self;
 
-    typedef winiter< self >   iter;
-    typedef winneighb< self > neighb;
+    typedef abstract::windownd< window3d > super_type;
+    typedef window3d self_type;
 
-    window3d& add(const dpoint3d& dp)
+    typedef struct_elt_traits< self_type >::iter_type   iter_type;
+    typedef struct_elt_traits< self_type >::neighb_type
+    neighb_type;
+    typedef struct_elt_traits< self_type >::dpoint_type dpoint_type;
+
+
+    coord delta_update_(const dpoint_type& dp)
     {
-      super::add(dp);
-      _delta(abs(dp.slice()));
-      _delta(abs(dp.row()));
-      _delta(abs(dp.col()));
-      return *this;
+      delta_(abs(dp.slice()));
+      delta_(abs(dp.row()));
+      delta_(abs(dp.col()));
+      return delta_;
+    }
+
+    window3d& add(const dpoint_type& dp)
+    {
+      return to_exact(this)->add_(dp);
     }
 
     window3d& add(coord slice, coord row, coord col)
     {
-      return this->add(dpoint3d(slice, row, col));
+      return this->add(dpoint_type(slice, row, col));
     }
 
-    window3d() : super(), _delta(0) {}
-    window3d(unsigned size) : super(size), _delta(0) {}
-    window3d(unsigned n, const coord crd[]) : super(), _delta(0)
+    window3d() : super_type() {}
+    window3d(unsigned size) : super_type(size) {}
+    window3d(unsigned n, const coord crd[]) : super_type(n)
     {
-      _dp.reserve(n);
-      _centered = false;
       for (unsigned i = 0; i < 3 * n; i += 3)
-	add(dpoint3d(crd[i], crd[i+1], crd[i+2]));
-    }
-
-    coord delta() const
-    {
-      return _delta;
-    }
-
-    self operator-() const
-    {
-      self win(*this);
-      win.sym();
-      return win;
+	add(dpoint_type(crd[i], crd[i+1], crd[i+2]));
     }
 
     static std::string name() { return std::string("window3d"); }
-  private:
-    max_accumulator<coord> _delta;
   };
-
-
-  inline
-  window3d inter(const window3d& lhs, const window3d& rhs)
-  {
-    window3d win;
-    for (unsigned i = 0; i < lhs.card(); ++i)
-      if (rhs.has(lhs.dp(i)))
-	win.add(lhs.dp(i));
-    for (unsigned j = 0; j < rhs.card(); ++j)
-      if (! win.has(rhs.dp(j)) && lhs.has(rhs.dp(j)))
-	win.add(rhs.dp(j));
-    return win;
-  }
-
-  inline
-  window3d uni(const window3d& lhs, const window3d& rhs)
-  {
-    window3d win;
-    for (unsigned i = 0; i < lhs.card(); ++i)
-      win.add(lhs.dp(i));
-    for (unsigned j = 0; j < rhs.card(); ++j)
-      if (! win.has(rhs.dp(j)))
-	win.add(rhs.dp(j));
-    return win;
-  }
-
 
   // std win
 

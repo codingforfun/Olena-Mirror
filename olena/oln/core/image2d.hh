@@ -29,9 +29,8 @@
 # define OLENA_CORE_IMAGE2D_HH
 
 # include <oln/core/impl/image_array2d.hh>
-// # include <oln/io/readable.hh>
+# include <oln/io/readable.hh>
 # include <oln/core/image.hh>
-// # include <oln/core/abstract/image_with_impl.hh>
 
 # include <iostream>
 # include <stdlib.h>
@@ -79,37 +78,45 @@ namespace oln {
 		       impl_type, 
 		       exact_type> super_type;  
 
-    image2d() :
-      super_type()
+    typedef abstract::image<exact_type> super_image; 
+
+    image2d() : 
+      super_image(),
+      super_type((impl_type*) 0)
     {}
 
-    image2d(coord nrows, coord ncols, coord border = 2) :
+    image2d(coord nrows, coord ncols, coord border = 2) : 
+      super_image(),
       super_type(new impl_type(image2d_size(nrows, ncols, border)))
     {
       super_type::impl()->ref();
     }
 
-    image2d(const image2d_size& size) :
+    image2d(const image2d_size& size) : 
+      super_image(),
       super_type(new impl_type(size))
     {
       super_type::impl()->ref();
     }
 
     image2d(self_type& rhs) : // shallow copy
+      super_image(),
       super_type(rhs)
     {
     }
 
-    //     // io
-    //     image2d(const io::internal::anything& r) : super()
-    //     {
-    //       r.assign(*this);
-    //     }
-    //     image2d& operator=(const io::internal::anything& r)
-    //     {
-    //       return r.assign(*this);
-    //     }
+    // io
+    image2d(const io::internal::anything& r) 
+      : super_image(), super_type((impl_type*) 0)
+    {
+      r.assign(*this);
+    }
 
+    image2d& operator=(const io::internal::anything& r)
+    {
+      return r.assign(*this);
+    }
+    
     exact_type& operator=(self_type rhs)
     {
       return to_exact(this)->assign(to_exact(rhs));

@@ -29,7 +29,7 @@
 # define OLENA_CORE_POINT2D_HH
 
 # include <oln/core/coord.hh>
-# include <oln/core/pointnd.hh>
+# include <oln/core/abstract/point.hh>
 # include <iostream>
 
 
@@ -37,42 +37,56 @@ namespace oln {
 
   // fwd decl
   class dpoint2d;
+  class point2d;
 
-  class point2d : public pointnd< 2, point2d >
+  template<>
+  struct point_traits<point2d>: public point_traits<abstract::point<point2d> >
+  {
+    enum { dim = 2 };
+    typedef dpoint2d dpoint_type;
+  };
+
+  class point2d : public abstract::point<point2d >
   {
   public:
 
-    typedef pointnd< 2, point2d >	super;
-    typedef dpoint2d			dpoint;
+    typedef abstract::point< point2d >	super_type;
+    typedef point_traits<point2d>::dpoint_type dpoint_type;
 
     point2d();
+
     point2d(coord row, coord col);
 
     const point2d& point_ref() const;
 
     coord row() const;
+
     coord& row();
+
     coord col() const;
+
     coord& col();
 
     point2d operator+(const dpoint2d& dp) const;
+
     point2d operator-(const dpoint2d& dp) const;
+
     point2d& operator+=(const dpoint2d& dp);
+
     point2d& operator-=(const dpoint2d& dp);
 
     dpoint2d operator-(const point2d& p) const;
+
     point2d operator-() const;
 
     static std::string name() { return "point2d"; }
   };
 
-  _PointForDim(2, point2d);
-
   namespace internal
   {
     template<>
     struct default_less<point2d> :
-      public default_less<point2d::super>
+      public default_less<point2d::super_type>
     {};
   } // internal
 

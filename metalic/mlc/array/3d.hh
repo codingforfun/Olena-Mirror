@@ -105,7 +105,7 @@ namespace mlc
       sum = 0.f;
       for (i = 0; i < _Info::card; ++i)
 	sum += tmp[i];
-      postcondition(abs(sum - 1) <= epsilon);
+      postcondition(std::abs(sum - 1) <= epsilon);
       return tmp;
     }
 
@@ -132,7 +132,7 @@ namespace mlc
 
     array3d<Info, T> transpose() const // FIXME
     {
-      std::cerr << "[31m===> 3D transposition not implemented yet. <===[0m" << endl;
+      std::cerr << "[31m===> 3D transposition not implemented yet. <===[0m" << std::endl;
       throw not_implemented_yet();
     }
 
@@ -208,7 +208,8 @@ namespace mlc
       lesseq< -_Info::center_col, ncol >::ensure();
       lesseq< ncol, _Info::ncols - _Info::center_col - 1 >::ensure();
 
-      return *(_buffer + _Info::center + (nplane * Info::nrows * Info::ncols) + (row * Info::ncols) + col);
+      //FIXME:      return *(_buffer + _Info::center + (nplane * Info::nrows * Info::ncols) + (row * Info::ncols) + col);
+      return *(_buffer + _Info::center + (nplane * Info::nrows * Info::ncols) + (nrow * Info::ncols) + ncol);
     }
 
 

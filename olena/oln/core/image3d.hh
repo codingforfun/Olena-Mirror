@@ -80,18 +80,24 @@ namespace oln {
 		  value_type, 
 		  impl_type, 
 		  exact_type> super_type;
+    typedef abstract::image<exact_type> super_image; 
+
 
     image3d() :
-      super_type()
+      super_image(),
+      super_type((impl_type*) 0)
     {}
 
-    image3d(coord nslices, coord nrows, coord ncols, coord border = 2) :
+    image3d(coord nslices, coord nrows, coord ncols, coord border = 2)
+      :
+      super_image(),
       super_type(new impl_type(image3d_size(nslices,nrows, ncols, border)))
     {
       super_type::impl()->ref();
     }
 
     image3d(const image3d_size& size) :
+      super_image(),
       super_type(new impl_type(size))
     {
       super_type::impl()->ref(); 
@@ -99,11 +105,12 @@ namespace oln {
 
     // shallow copy
     image3d(self_type& rhs) :
+      super_image(),
       super_type(rhs)
     {}
 
 //     // io
-//     image3d(const io::internal::anything& r) : super()
+//     image3d(const io::internal::anything& r) : super_image(), super()
 //     {
 //       r.assign(*this);
 //     }

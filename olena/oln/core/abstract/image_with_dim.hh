@@ -1,4 +1,4 @@
-// Copyright (C) 2001  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -60,21 +60,12 @@ namespace oln {
 
 
   namespace abstract {
-    
+
     // fwd_decl
     template <unsigned Dim, class Exact>
     class image_with_dim;
 
   } // end of namespace abstract
-
-
-    template <unsigned Dim, class Exact>
-    struct image_traits<abstract::image_with_dim<Dim, Exact> >: public image_traits<abstract::image<Exact> >
-    {
-      enum {dim = Dim};
-      typedef pointnd<Dim> point_type;
-      //FIXME what about nd-iterators ?
-    };
 
     template <class Exact>
     struct image_traits<abstract::image_with_dim<1, Exact> >: public image_traits<abstract::image<Exact> >
@@ -131,7 +122,7 @@ namespace oln {
       typedef abstract::image<Exact> super_type;
       typedef image_with_dim<1, Exact> self_type;
       typedef Exact exact_type;
-
+   
       coord ncols() const
       {
 	return size().ncols();
@@ -149,11 +140,13 @@ namespace oln {
 	//          super_type::operator[](point_type(col));
       }
 
-      value_type& operator()(coord col) 
+      value_type& operator()(coord col)
       {
 	return to_exact(*this)[point_type(col)];
 	//return super_type::operator[](point_type(col));
       }
+
+      using abstract::image<Exact>::hold;
 
       bool hold(coord col) const
       {
@@ -174,7 +167,7 @@ namespace oln {
       }
 
     protected:
-      image_with_dim() {}
+      image_with_dim() : super_type(){}
 
     }; // end of one-dimensional specialization
 
@@ -195,7 +188,7 @@ namespace oln {
       typedef image_with_dim<2, Exact> self_type;
       typedef Exact exact_type;
       typedef abstract::image<Exact> super_type;
-
+    
       coord nrows() const
       {
 	return size().nrows();
@@ -205,7 +198,7 @@ namespace oln {
       {
 	return size().ncols();
       }
-      
+
       // FIXME: size_t ???
       size_t npoints_() const
       {
@@ -223,6 +216,8 @@ namespace oln {
 	return to_exact(*this)[point_type(row, col)];
 	//return super_type::operator[](point_type(row, col));
       }
+
+      using abstract::image<Exact>::hold;
 
       bool hold(coord row, coord col) const
       {
@@ -243,10 +238,8 @@ namespace oln {
       }
 
     protected:
-      image_with_dim() {}
-
-      
-
+      image_with_dim() : super_type() {}
+ 
     }; // end of bi-dimensional specialization
 
     // tri-dimensional specialization
@@ -280,7 +273,7 @@ namespace oln {
       {
 	return size().ncols();
       }
-   
+
       size_t npoints_() const
       {
 	return size_t(nslices()) * size_t(nrows()) * size_t(ncols());
@@ -317,8 +310,8 @@ namespace oln {
       }
 
     protected:
-      image_with_dim(){}     
-
+      image_with_dim() : super_type() {}
+ 
     }; // end of tri-dimensional specialization
 
 

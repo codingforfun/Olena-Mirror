@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,26 +25,47 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_STRUCTELT_HH
-# define OLENA_CORE_STRUCTELT_HH
+#include <ntg/int.hh>
+#include <ntg/bin.hh>
+#include <oln/basics2d.hh>
+#include <oln/level/threshold.hh>
 
-# include <mlc/type.hh>
+#include <iostream>
+#include "check.hh"
+#include "data.hh"
 
-namespace oln {
+using namespace oln;
+using namespace mlc;
+using namespace ntg;
 
-  template<class Exact>
-  struct struct_elt : public mlc::any< Exact >
-  {
- 
-    static std::string name()
-    {
-      return std::string("struct_elt<") + Exact::name() + ">";
-    }
+#define OK_OR_FAIL				\
+      std::cout << "OK" << std::endl;		\
+    else					\
+      {						\
+	std::cout << "FAIL" << std::endl;	\
+	fail = true;				\
+      }
 
-  protected:
-    struct_elt() {}
-  };
+#define ASSERT_CHECK(Val) { assert_check(Val, #Val, fail); }
 
-} // end of oln
+void assert_check(bool res, const std::string& desc, bool &fail)
+{
+  std::cout << "---- " << desc << " ----" << std::endl;
+  if (res)
+    OK_OR_FAIL;
+}
 
-#endif // ! OLENA_CORE_STRUCTELT_HH
+
+bool
+check(void)
+{
+  bool fail = false;
+
+  image2d<int_u8> src = load(rdata("lena"));
+
+  image2d<bin>	res = apply(level::threshold<int_u8, bin>(128), src);
+
+  save(res, "threshold_128");
+
+  return fail;
+}

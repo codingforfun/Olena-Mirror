@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,7 +28,7 @@
 #ifndef OLENA_IO_FILE_HH_
 # define OLENA_IO_FILE_HH_
 
-# include <oln/io/base.hh>
+# include <oln/io/stream_wrapper.hh>
 
 # include <fstream>
 # include <sys/types.h>
@@ -40,9 +40,8 @@ namespace oln {
 
     namespace internal {
 
-
       template<>
-      struct wrapper<WrapFile>
+      struct stream_wrapper<StreamFile>
       {
 	static const std::string& name()
 	{ static const std::string _name("file:"); return _name; }

@@ -25,82 +25,92 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_POINTND_HH
-# define OLENA_CORE_POINTND_HH
+#ifndef OLENA_CORE_ABSTRACT_POINT_HH
+# define OLENA_CORE_ABSTRACT_POINT_HH
 
+# include <mlc/type.hh>
 # include <ntg/utils/debug.hh>
 # include <oln/core/coord.hh>
-# include <oln/core/point.hh>
 
 # include <iostream>
 # include <sstream>
 
-namespace oln {
 
-  // fwd decl
-  template< unsigned Dim, class Exact >
-  class dpointnd;
+namespace oln
+{
+  namespace abstract {
+    template<class Exact>
+    struct point;
+  } // end of abstract 
 
-  template< unsigned Dim, class Exact = mlc::final >
-  class pointnd : public point< typename mlc::exact_vt<pointnd< Dim, Exact >, Exact>::ret >
+  template<class Exact>
+  struct point_traits;
+
+  template<class Exact>
+  struct point_traits<abstract::point<Exact> >
   {
-  public:
- 
-    typedef pointnd self;
 
-    enum { dim = Dim };
-
-    pointnd()
-    {
-    }
-
-    coord nth(const unsigned dim) const
-    {
-      return _coord[dim];
-    }
-
-    coord& nth(const unsigned dim)
-    {
-      return _coord[dim];
-    }
-
-    bool operator==(const self& p) const
-    {
-      for (unsigned i = 0; i < dim; ++i)
-	if (p.nth(i) != nth(i))
-	  return false;
-      return true;
-    }
-
-    bool operator!=(const self& p) const
-    {
-      for (unsigned i = 0; i < dim; ++i)
-	if (p.nth(i) != nth(i))
-	  return true;
-      return false;
-    }
-
-    static std::string name()
-    {
-      std::ostringstream out;
-      out << "pointnd<" << dim << ","
-	  << Exact::name() << ">" << std::ends;
-      return out.str();
-    }
-
-  private:
-    coord _coord[dim];
   };
+
+  namespace abstract {
+    template<class Exact>
+    struct point : public mlc::any<Exact>
+    {
+    public:
+      
+      typedef point<Exact> self_type;
+      
+      enum { dim = point_traits<Exact>::dim };
+      
+      coord nth(const unsigned dim) const
+      {
+	return coord_[dim];
+      }
+      
+      coord& nth(const unsigned dim)
+      {
+	return coord_[dim];
+      }
+      
+      bool operator==(const self_type& p) const
+      {
+	for (unsigned i = 0; i < dim; ++i)
+	  if (p.nth(i) != nth(i))
+	    return false;
+	return true;
+      }
+      
+      bool operator!=(const self_type& p) const
+      {
+	for (unsigned i = 0; i < dim; ++i)
+	  if (p.nth(i) != nth(i))
+	    return true;
+	return false;
+      }
+
+
+      static std::string name() 
+      { 
+	return std::string("point<") + Exact::name() + ">"; 
+      }
+    protected:
+      point() 
+      {}
+    private:
+      coord coord_[dim];
+    };
+    
+  } // end of abstract
 
   namespace internal
   {
-    template<unsigned Dim, class Exact>
-    struct default_less< pointnd<Dim, Exact> >
+    template<class Exact>
+    struct default_less< abstract::point<Exact> >
     {
-      bool operator()(const pointnd<Dim, Exact>& l,
-		      const pointnd<Dim, Exact>& r) const
+      bool operator()(const abstract::point<Exact>& l,
+		      const abstract::point<Exact>& r) const
       {
-	for (unsigned i = 0; i < Dim; ++i)
+	for (unsigned i = 0; i < abstract::point<Exact>::dim; ++i)
 	  if (l.nth(i) < r.nth(i))
 	    return true;
 	  else if (l.nth(i) > r.nth(i))
@@ -108,9 +118,10 @@ namespace oln {
 	return false;
       }
     };
-
+    
   } // internal
 
-} // oln
+} // end of oln
 
-#endif // ! OLENA_CORE_POINTND_HH
+
+#endif // ! OLENA_CORE_ABSTRACT_POINT_HH

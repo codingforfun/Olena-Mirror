@@ -31,6 +31,7 @@
 # include <ntg/basics.hh>
 # include <ntg/real/optraits_scalar.hh>
 # include <ntg/real/real_value.hh>
+# include <ntg/bin.hh>
 
 # include <mlc/cmp.hh>
 
@@ -44,11 +45,11 @@
 # define INT_U_CTOR_FROM_BUILTIN_INT(Builtin)   \
 int_u (const Builtin rhs)			\
 {						\
-  val_ = optraits_type::check(rhs);		\
+  this->val_ = optraits_type::check(rhs);	\
 }						\
 self& operator=(const Builtin rhs)	        \
 {						\
-  val_ = optraits_type::check(rhs);		\
+  this->val_ = optraits_type::check(rhs);	\
   return *this;					\
 }
 
@@ -70,7 +71,7 @@ namespace ntg {
       ntg_build_value_type(uint_value<E>);
 
       typedef optraits<self>			optraits_type;
-      typedef typename behavior::get<self>	behavior_type;
+      typedef typename behavior::template get<self>	behavior_type;
 
 
       typedef self					base_type;
@@ -104,7 +105,7 @@ namespace ntg {
     typedef ntgi_optraits_type(self) optraits_type;
 
   public:
-    int_u () { val_ = 0; }
+    int_u () { this->val_ = 0; }
 
     // We define ctor for each builtin to avoid implicit builtin
     // promotion.
@@ -123,23 +124,23 @@ namespace ntg {
 
     int_u (const float_s rhs)
     {
-      val_ = optraits_type::check(roundf(rhs));
+      this->val_ = optraits_type::check(roundf(rhs));
     }
     self&
     operator=(const float rhs)
     {
-      val_ = optraits_type::check(roundf(rhs));
+      this->val_ = optraits_type::check(roundf(rhs));
       return *this;
     }
 
     int_u (const float_d rhs)
     {
-      val_ = optraits_type::check(round(rhs));
+      this->val_ = optraits_type::check(round(rhs));
     }
     self&
     operator=(const double rhs)
     {
-      val_ = optraits_type::check(round(rhs));
+      this->val_ = optraits_type::check(round(rhs));
       return *this;
     }
 
@@ -147,47 +148,47 @@ namespace ntg {
     int_u (const int_u<mbits, B2>& rhs)
     {
       if (mbits <= nbits)
-	val_ = rhs.val();
+	this->val_ = rhs.val();
       else
-	val_ = optraits_type::check(rhs.val());
+	this->val_ = optraits_type::check(rhs.val());
     }
     template <unsigned mbits, class B2>
     self&
     operator=(const int_u<mbits, B2>& rhs)
     {
       if (mbits <= nbits)
-	val_ = rhs.val();
+	this->val_ = rhs.val();
       else
-	val_ = optraits_type::check(rhs.val());
+	this->val_ = optraits_type::check(rhs.val());
       return *this;
     }
 
     template <class T>
     int_u (const real_value<T>& rhs)
     {
-      val_ = optraits_type::check(rhs.val());
+      this->val_ = optraits_type::check(rhs.val());
     }
     template <class T>
     self&
     operator=(const real_value<T>& rhs)
     {
-      val_ = optraits_type::check(rhs.val());
+      this->val_ = optraits_type::check(rhs.val());
       return *this;
     }
 
     // bin is allowed since it has defined values 0 or 1.
     int_u (bin b)
     {
-      val_ = b.val();
+      this->val_ = b.val();
     }
     self&
     operator=(bin b)
     {
-      val_ = b.val();
+      this->val_ = b.val();
       return *this;
     }
 
-    operator storage_type () const { return val_; }
+    operator storage_type () const { return this->val_; }
 
   private:
     // We want to prevent this
@@ -216,7 +217,7 @@ namespace ntg {
     private:
       typedef int_u<nbits, behavior>			self;
       typedef typename typetraits<self>::storage_type	storage_type_;
-      typedef typename behavior::get<self>		behavior_type_;
+      typedef typename behavior::template get<self>		behavior_type_;
 
     public:
       template <class P>
