@@ -1,5 +1,9 @@
 2005-03-19  Damien Thivolle  <damien@lrde.epita.fr>
 
+	* oln/makefile.src: Add missing files.
+
+2005-03-19  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* Makefile.am: Add `img' to the subdirectories list.
 	* img/Makefile.am: Declare images to distribute.
 
