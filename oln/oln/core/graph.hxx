@@ -103,9 +103,10 @@ namespace oln {
   }
 
   template <class U>
-  typename graph<U>::hedge_t  graph<U>::add_edge(hnode_t h1, hnode_t h2)
+  typename graph<U>::hedge_t  graph<U>::add_edge(hnode_t h1, hnode_t h2,
+						 const edge_value_t& ev)
   {
-    return self().add_edge(h1, h2);
+    return self().add_edge(h1, h2, ev);
   }
 
   template <class U>

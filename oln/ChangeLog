@@ -1,3 +1,14 @@
+2003-01-21  Yann Régis-Gianas  <yann@lrde.epita.fr>
+
+	* oln/core/graph.hh (add_edge): Add an optional argument.
+	* oln/core/graph.hxx (add_edge): Implement it.
+	* oln/core/internal/graph_impl.hh: 
+		Decorated structures are not mentioned in services from now on:
+		   - Transform node_value_t into decorated_node_value_t ;
+		   - node_value_t is NodeValue.
+	* oln/core/internal/graph_impl.hxx: 
+		Take interfaces modifications into account.	
+
 2003-01-20  Yann Régis-Gianas  <yann@lrde.epita.fr>
 
 	* oln/basics_graph.hh: New.

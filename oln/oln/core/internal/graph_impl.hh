@@ -62,7 +62,7 @@ namespace oln {
     class edge_decorator : public EdgeValue
     {
     public:
-      edge_decorator(hnode_t, hnode_t);
+      edge_decorator(hnode_t, hnode_t, const EdgeValue& v = EdgeValue());
 
       hnode_t   from() const;
       hnode_t&  from();
@@ -78,6 +78,7 @@ namespace oln {
     template <class NodeValue>
     struct node_decorator : public NodeValue
     {
+      node_decorator(const NodeValue&);
       node_decorator();
       std::list<hedge_t> edges;
     };
@@ -87,10 +88,12 @@ namespace oln {
     class heavy_graph : public graph<heavy_graph<NodeValue, EdgeValue> >
     {
     public:
-      typedef node_decorator<NodeValue>		node_value_t;
-      typedef edge_decorator<EdgeValue>		edge_value_t;
-      typedef std::vector<node_value_t>		nodes_set_t;
-      typedef std::vector<edge_value_t>		edges_set_t;
+      typedef NodeValue				node_value_t;
+      typedef EdgeValue				edge_value_t;
+      typedef node_decorator<NodeValue>		decorated_node_value_t;
+      typedef edge_decorator<EdgeValue>		decorated_edge_value_t;
+      typedef std::vector<decorated_node_value_t>		nodes_set_t;
+      typedef std::vector<decorated_edge_value_t>		edges_set_t;
       typedef oln::internal::hnode_t		hnode_t;
       typedef oln::internal::hedge_t		hedge_t;
       typedef heavy_graph<NodeValue, EdgeValue> self_t;
@@ -112,7 +115,8 @@ namespace oln {
       hedge_t			handler_of(edges_set_const_iterator) const;
       hnode_t			add_node(const node_value_t& t);
       void			del_node(hnode_t n);
-      hedge_t			add_edge(hnode_t h1, hnode_t h2);
+      hedge_t			add_edge(hnode_t h1, hnode_t h2, 
+					 const edge_value_t& v = edge_value_t());
       void			del_edge(hedge_t e);
       hnode_t			from(hedge_t e1) const;
       hnode_t			to(hedge_t e2) const;
@@ -139,8 +143,8 @@ namespace oln {
   template <class NodeValue, class EdgeValue>
   struct graph_traits<internal::heavy_graph<NodeValue, EdgeValue> >
   {
-    typedef internal::node_decorator<NodeValue>		node_value_t;
-    typedef internal::edge_decorator<EdgeValue>		edge_value_t;
+    typedef NodeValue					node_value_t;
+    typedef EdgeValue					edge_value_t;
     typedef std::vector<node_value_t>			nodes_set_t;
     typedef std::vector<edge_value_t>			edges_set_t;
     typedef oln::internal::hnode_t			hnode_t;

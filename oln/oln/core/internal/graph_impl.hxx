@@ -61,9 +61,11 @@ namespace oln {
 
     template <class EdgeValue>
     edge_decorator<EdgeValue>::edge_decorator(hnode_t h1,
-					      hnode_t h2) :
+					      hnode_t h2, 
+					      const EdgeValue& v) :
       from_(h1),
-      to_(h2)
+      to_(h2),
+      EdgeValue(v)
     {}
 
     template <class EdgeValue>
@@ -96,6 +98,11 @@ namespace oln {
 
     template <class NodeValue>
     node_decorator<NodeValue>::node_decorator()
+    {}
+
+    template <class NodeValue>
+    node_decorator<NodeValue>::node_decorator(const NodeValue& n) :
+      NodeValue(n)
     {}
     
     template <class NodeValue, class EdgeValue>
@@ -197,13 +204,14 @@ namespace oln {
 
     template <class NodeValue, class EdgeValue>
     typename heavy_graph<NodeValue, EdgeValue>::hedge_t			
-    heavy_graph<NodeValue, EdgeValue>::add_edge(hnode_t h1, hnode_t h2)
+    heavy_graph<NodeValue, EdgeValue>::add_edge(hnode_t h1, hnode_t h2,
+						const edge_value_t& v)
     {
       precondition(hold(h1) && hold(h2));
       hedge_t e;
       if (removed_edges_.size() == 0)
 	{
-	  edges_.push_back(edge_value_t(h1, h2));
+	  edges_.push_back(decorated_edge_value_t(h1, h2, v));
 	  e = edges_.size() - 1;
 	}
       else

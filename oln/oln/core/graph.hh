@@ -99,8 +99,10 @@ namespace oln {
     // Remove a node.  The coherence maintenance of the graph is
     // implementation-dependent because of algorithmic issues.
     void		del_node(hnode_t n);
-    // Add a new edge between two nodes.
-    hedge_t		add_edge(hnode_t h1, hnode_t h2);
+    // Add a new edge between two nodes (optionally initialized with
+    // an edge_value).
+    hedge_t		add_edge(hnode_t h1, hnode_t h2, 
+				 const edge_value_t& v = edge_value_t());
     // Remove an edge. The coherence maintenance of the graph is
     // implementation-dependent because of algorithmic issues.
     void		del_edge(hedge_t e);
