@@ -1,3 +1,10 @@
+2002-09-17  Akim Demaille  <akim@epita.fr>,
+	Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/core/type.hh: Include oln/config/system.hh before `string'.
+	Fixes sanity/includes.test with G++ version 2.95.4 20011002
+	(Debian prerelease).
+
 2002-09-17  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/types/optraits_vec.hh: Fix typo, fix operators traits.
@@ -51,7 +58,6 @@
 	oln/types/optraits_range.hh, oln/types/optraits_scalar.hh,
 	oln/types/range.hh, oln/types/typetraits_builtins_float.hh,
 	oln/types/typetraits_builtins_int.hh: Complete typetraits.
-
 
 2002-09-11  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
@@ -428,7 +434,6 @@
 	syntax of the array.
 	* src/value/vec.hh: Likewise.
 
-
 2002-07-09  jean-sebastien mouret  <js@lrde.epita.fr>
 
 	* src/io/pnm_write3d.hxx (mosaic): Add inline.
@@ -686,9 +691,7 @@
 
 	* src/convert/conversion_ng_se.hh: New file.
 
-
 	* demo/test-reconstruction.cc: fix it because of above modifications.
-
 
 	Definition of get_se<N>, i.e construct a S.E from a dimension N.
 	* core/window.hh:   Definition of get_se<N>.
