@@ -65,9 +65,11 @@ namespace oln {
       typedef typename image_traits<Exact>::bkd_iter_type bkd_iter_type;
       typedef typename image_traits<Exact>::value_type value_type;
       typedef typename image_traits<Exact>::size_type size_type;
+      typedef typename image_traits<Exact>::impl_type impl_type;
       typedef image<Exact> self_type;
       typedef Exact exact_type;
 
+      enum { dim = image_traits<Exact>::dim };
 
       const value_type& operator[](const point_type& p) const
       {
@@ -111,8 +113,6 @@ namespace oln {
 	return to_exact(this)->assign(to_exact(rhs));
       }
 
-     
-
       static std::string name()
       {
 	return
@@ -122,43 +122,43 @@ namespace oln {
 
       // borders
 
-      void border_set_width(coord new_border, bool copy_border = false)
+      void border_set_width(coord new_border, bool copy_border = false) const
       {
 	precondition(new_border >= 0);
 	precondition(has_impl_());
 	if (border() == new_border)
 	  return;			// Nothing to do.
 	
-	to_exact(this)->impl()->border_reallocate_and_copy(new_border, copy_border);
+	const_cast<impl_type *>(to_exact(this)->impl())->border_reallocate_and_copy(new_border, copy_border);
       }
 
       void border_adapt_width(coord min_border, bool copy_border =
-			      false)
+			      false) const
       {
 	precondition(min_border >= 0);
 	if (border() >= min_border)
 	  return;			// Don't shrink.
 	
-	border_set_width(min_border, copy_border);
+	to_exact(this)->border_set_width(min_border, copy_border);
       }
 
-      void border_adapt_copy(coord min_border)
+      void border_adapt_copy(coord min_border) const
       {
 	border_adapt_width(min_border);
-	to_exact(this)->impl()->border_replicate();
+	const_cast<impl_type *>(to_exact(this)->impl())->border_replicate();
       }
 
 
-      void border_adapt_mirror(coord min_border)
+      void border_adapt_mirror(coord min_border) const
       {
 	border_adapt_width(min_border);
-	to_exact(this)->impl()->border_mirror();
+	const_cast<impl_type *>(to_exact(this)->impl())->border_mirror();
       }
 
-      void border_adapt_assign(coord min_border, value_type val)
+      void border_adapt_assign(coord min_border, value_type val) const
       {
 	border_adapt_width(min_border);
-	to_exact(this)->impl()->border_assign(val);
+	const_cast<impl_type *>(to_exact(this)->impl())->border_assign(val);
       }
     protected:
       image() {}

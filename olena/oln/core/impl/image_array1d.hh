@@ -96,7 +96,7 @@ namespace oln {
 
       // borders
       void border_reallocate_and_copy_(coord new_border, bool
-				      copy_border)
+				      copy_border) 
       {
 	T* buffer = 0;
 	// first allocate
@@ -119,7 +119,7 @@ namespace oln {
 	
       }
             
-      void border_replicate_(void)
+      void border_replicate_(void) 
       {
 	for (coord j = - size_.border(); j; ++j)
 	  {
@@ -137,7 +137,7 @@ namespace oln {
 	  }
       }
 
-      void border_assign_(value_type val)
+      void border_assign_(value_type val) 
       {
 	for (coord j = - size_.border(); j; ++j)
           {

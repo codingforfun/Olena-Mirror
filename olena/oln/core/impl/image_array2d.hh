@@ -130,7 +130,7 @@ namespace oln {
       // borders
 
       void border_reallocate_and_copy_(coord new_border, bool
-				      copy_border)
+				      copy_border) 
       {
 	T* buffer = 0;
 	T** array = 0;
@@ -180,7 +180,7 @@ namespace oln {
 	    }
       }
 
-      void border_mirror_(void)
+      void border_mirror_(void) 
       {
 	// top & bottom
 	const coord imax = size_.nrows() - 1;
@@ -201,7 +201,7 @@ namespace oln {
 	    }
       }
 
-      void border_assign_(value_type val)
+      void border_assign_(value_type val) 
       {
 	// top & bottom
         const coord imax = size_.nrows() - 1;

@@ -115,22 +115,22 @@ namespace oln {
       // borders
 
       void border_reallocate_and_copy(coord new_border, bool
-				      copy_border)
+				      copy_border) 
       {
 	to_exact(this)->border_reallocate_and_copy_(new_border, copy_border);
       }
 
-      void border_replicate(void)
+      void border_replicate(void) 
       {
 	to_exact(this)->border_replicate_();
       }
 
-      void border_mirror(void)
+      void border_mirror(void) 
       {
 	to_exact(this)->border_mirror_();
       }
 
-      void border_assign(value_type val)
+      void border_assign(value_type val) 
       {
 	to_exact(this)->border_assign_(val);
       }

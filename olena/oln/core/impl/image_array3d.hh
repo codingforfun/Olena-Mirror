@@ -146,7 +146,7 @@ namespace oln {
       // borders
 
       void border_reallocate_and_copy_(coord new_border, bool
-				      copy_border)
+				      copy_border) 
       {
 	T* buffer = 0;
 	T** array2 = 0;
@@ -182,7 +182,7 @@ namespace oln {
 	array_ = array;
       }
             
-      void border_replicate_(void)
+      void border_replicate_(void) 
       {
 	const coord imax = size_.nslices() - 1;
 	const coord jmax = size_.nrows() - 1;
@@ -213,7 +213,7 @@ namespace oln {
 	      }
       }
 
-      void border_mirror_(void)
+      void border_mirror_(void) 
       {
 	const coord imax = size_.nslices() - 1;
 	const coord jmax = size_.nrows() - 1;
@@ -244,7 +244,7 @@ namespace oln {
 	      }
       }
 
-      void border_assign_(value_type val)
+      void border_assign_(value_type val) 
       {
 	const coord imax = size_.nslices() - 1;
         const coord jmax = size_.nrows() - 1;

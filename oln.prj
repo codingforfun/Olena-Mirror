@@ -1,35 +1,14 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 17)
-(Parent-Version oln 2003paradigm 15)
-(Version-Log "	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
-	oln/core/bkd_iter3d.hh, oln/core/dpointnd.hh, 
-	oln/core/iter.hh, oln/core/image.hh: Rename template parameter E
-	as Exact.
-	
-	* oln/core/neighborhood.hh, oln/core/impl/image_array2d.hh: Remove
-	debug instructions.
+(Project-Version oln 2003paradigm 20)
+(Parent-Version oln 2003paradigm 17)
+(Version-Log "	* oln/core/abstract/image.hh: Make procedures on borders const.
 
-	* oln/core/abstract/image_with_impl.hh: Modify assign() member
-	function. Implement assignment operator.
-	
-	* oln/core/image1d.hh, oln/core/image2d.hh, oln/core/image3d.hh:
-	Implement assignment operator. Rename template parameter E as
-	Exact.
-
-	* oln/core/abstract/image.hh: Modify assignment operator.
-
-	* oln/core/abstract/image_with_dim.hh: Implement assignment
-	operators.
-
-	* oln/core/abstract/image_with_type.hh: Implement assignment
-	operator.
-
-	* tests/core/tests/ref: Adjust..
+	* tests/core/tests/borders: Adjust..
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 23 Jul 2003 16:09:43 +0200")
+(Checkin-Time "Wed, 23 Jul 2003 20:19:57 +0200")
 (Checkin-Login david)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -117,8 +96,8 @@
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.6 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.4 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.7 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.6 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.36 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.10 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.4 640))
@@ -306,7 +285,7 @@
   (olena/oln/level/lut.hh (oln/29_lut.hh 1.7 640))
   (olena/oln/level/set_level.hh (oln/p/1_set_level. 1.5 640))
   (olena/oln/level/threshold.hh (oln/f/15_threshold. 1.9 640))
-  (config/oln.m4 (oln/j/15_oln.m4 1.32 640))
+  (config/oln.m4 (oln/j/15_oln.m4 1.33 640))
 
   (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.7 640))
   (metalic/mlc/array/1d.hh (oln/f/23_array1d.hh 1.8 640))
@@ -893,11 +872,11 @@
 ;; Files added by populate at Wed, 16 Jul 2003 16:58:47 +0200,
 ;; to version 2003paradigm.7(w), by burrus_n:
 
-  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.5 640))
+  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.7 640))
   (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.5 640))
   (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.7 640))
   (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.2 640))
-  (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.5 640))
+  (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.6 640))
   (olena/oln/core/impl/image_array.hh (oln/t/30_image_arra 1.5 640))
   (olena/tests/core/tests/image1 (oln/t/31_image1 1.1 640))
 
@@ -918,9 +897,9 @@
 ;; Files added by populate at Fri, 18 Jul 2003 12:28:56 +0200,
 ;; to version 2003paradigm.8(w), by david:
 
-  (olena/oln/core/impl/image_array3d.hh (oln/t/32_image_arra 1.2 644))
-  (olena/oln/core/impl/image_array2d.hh (oln/t/33_image_arra 1.3 644))
-  (olena/oln/core/impl/image_array1d.hh (oln/t/34_image_arra 1.2 644))
+  (olena/oln/core/impl/image_array3d.hh (oln/t/32_image_arra 1.3 644))
+  (olena/oln/core/impl/image_array2d.hh (oln/t/33_image_arra 1.4 644))
+  (olena/oln/core/impl/image_array1d.hh (oln/t/34_image_arra 1.3 644))
 
 ;; Files deleted by depopulate at Fri, 18 Jul 2003 12:39:16 +0200,
 ;; from version 2003paradigm.8(w), by david:
@@ -933,7 +912,7 @@
 ;; Files added by populate at Tue, 22 Jul 2003 10:09:18 +0200,
 ;; to version 2003paradigm.10(w), by david:
 
-  (olena/tests/core/tests/borders (oln/t/35_borders 1.1 644))
+  (olena/tests/core/tests/borders (oln/t/35_borders 1.2 644))
 
 ;; Files added by populate at Tue, 22 Jul 2003 11:36:19 +0200,
 ;; to version 2003paradigm.11(w), by david:
@@ -943,8 +922,8 @@
 
   (olena/tests/core/tests/ref (oln/t/37_ref 1.2 640)))
 (Merge-Parents
-  (2003paradigm.15 complete)
-  (2003paradigm.16 complete
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (() () olena/tests/core/tests/ref a))
+  (2003paradigm.19 complete
+    (ChangeLog ChangeLog ChangeLog r) (olena/ChangeLog olena/ChangeLog olena/ChangeLog r)
+    (config/oln.m4 config/oln.m4 config/oln.m4 r) (olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh m))
 )
 (New-Merge-Parents)

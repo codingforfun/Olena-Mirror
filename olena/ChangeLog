@@ -1,5 +1,15 @@
 2003-07-23  David Lesage  <david@lrde.epita.fr>
 
+	* oln/core/abstract/image.hh: Make procedures on borders const.
+
+	* tests/core/tests/borders: Adjust.
+
+2003-07-23  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/core/abstract/image.hh: Add dim.
+
+2003-07-23  David Lesage  <david@lrde.epita.fr>
+
 	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
 	oln/core/bkd_iter3d.hh, oln/core/dpointnd.hh, 
 	oln/core/iter.hh, oln/core/image.hh: Rename template parameter E
