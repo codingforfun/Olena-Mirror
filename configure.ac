@@ -116,7 +116,7 @@ OLN_COLLECTION([OLN_TOP],
      DOC_CHECK_PROG([IMAGEMAGICK_CONVERT], [convert])
      DOC_CHECK_PROG([EPSTOPDF], [epstopdf])
 
-    ], [ref])dnl End of OLN_COMPONENT([doc/doc])
+    ], [ref])dnl End of OLN_COMPONENT([doc/ref])
 
 ### The development manuals directory is a component.
 
@@ -126,7 +126,12 @@ OLN_COLLECTION([OLN_TOP],
 	          [the Olena development manual], 
 	          [OLN_DOC], 
 		  [doc/dev/Makefile],
-    [], [dev])dnl End of OLN_COMPONENT([doc/dev])
+    [dnl Configuration for the dev directory.
+
+     AC_CHECK_PROGS([DVIPS], [dvips], [$am_aux_dir/missing texi2dvi])
+     AC_CHECK_PROGS([TEXI2DVI], [texi2dvi], [$am_aux_dir/missing texi2dvi])
+
+    ], [dev])dnl End of OLN_COMPONENT([doc/dev])
 
 ### The demonstration programs are a component.
 

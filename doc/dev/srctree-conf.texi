@@ -1,5 +1,0 @@
-
-@node User configuration tools
-@subsection User configuration tools: @file{oln/conf/}
-
-@c FIXME

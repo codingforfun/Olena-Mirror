@@ -28,7 +28,7 @@ check()
 {
   bool fail = false;
 
-  image2d<int_u8> lena(data("lena128.pgm"));
+  image2d<int_u8> lena(rdata("lena128.pgm"));
 
   std::cout << "erosion ... " << std::flush;
   if (level::is_equal(morpho::erosion(lena, win_c4p()),

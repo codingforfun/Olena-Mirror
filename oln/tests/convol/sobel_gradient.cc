@@ -14,7 +14,7 @@ using namespace meta;
 
 bool check()
 {
-  image2d<int_u8> img = load(data("lena.pgm"));
+  image2d<int_u8> img = load(rdata("lena.pgm"));
 
   image2d<int_s<10> > res_img = convol::slow::convolve<int_s<10> >(img, (ints_2d =
 							     -1, 0, 1, lbrk,

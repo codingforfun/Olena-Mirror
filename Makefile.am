@@ -7,6 +7,8 @@ SUBDIRS = oln $(OLN_TOP_SUBDIRS)
 ACLOCAL_AMFLAGS = -I oln/config
 CONFIGURE_DEPENDENCIES = oln/config/oln.m4
 
+EXTRA_DIST = ISSUES
+
 # This is totally experimental. Comments are welcome.
 maintainer-check:
 	if cppi --version >/dev/null 2>&1; then \

@@ -1,6 +1,0 @@
-@node User tools source tree
-@section User tools source tree: @file{tools/}
-
-@cindex @file{tools/}
-
-@c FIXME

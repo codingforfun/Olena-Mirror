@@ -17,7 +17,7 @@
 
 bool check()
 {
-  image2d< CONC(SRC, _8) > orig(data("lena.ppm")), res;
+  image2d< CONC(SRC, _8) > orig(rdata("lena.ppm")), res;
   image2d< CONC(DEST, _8) > tmp;
 
   tmp  = convert::apply(convert::CONC(CONC(SRC,_to_),DEST)(), orig);

@@ -6,7 +6,7 @@
 // else return OLN_IMG_AUX_DIR/file.
 
 std::string
-data(const std::string file)
+wdata(const std::string& file)
 {
   std::string s = std::string(OLN_IMG_AUX_DIR) + '/' + file;
   if (access(s.c_str(), R_OK) != -1) 
@@ -17,4 +17,16 @@ data(const std::string file)
     return s2;
 
   return s;
+}
+
+// Try OLN_IMG_AUX_DIR/file, else return OLN_IMG_DIR/file, 
+
+std::string
+rdata(const std::string& file)
+{
+  std::string s = std::string(OLN_IMG_AUX_DIR) + '/' + file;
+  if (access(s.c_str(), R_OK) != -1) 
+    return s;
+
+  return std::string(OLN_IMG_DIR) + '/' + file;
 }

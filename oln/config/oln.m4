@@ -243,7 +243,10 @@ AC_DEFUN([OLN_TEMPLATE_DEPTH],
   AC_LANG_POP([C++])
 
   case "$oln_cv_template_flags" in
-     unsupported|direct ) ;;
+     unsupported )
+       AC_MSG_WARN([C++ compiler does not handle template recursion upto $cxx_tdepth. Expect problems.])
+       ;;
+     direct ) ;;
      * )
        OLN_CXXFLAGS="$OLN_CXXFLAGS $oln_cv_template_flags"
        ;;
@@ -449,7 +452,11 @@ AC_DEFUN([AC_CXX_FLAGS],
                   [oln_cv_cxx_style],
                   [oln_cv_cxx_style=unknown
                    if test "x$ac_compiler_gnu" != xno; then
-                      oln_cv_cxx_style=GNU
+		      if $CXX --version | grep '^2\.' >/dev/null ; then
+			oln_cv_cxx_style=weakGNU
+                      else
+                        oln_cv_cxx_style=GNU
+                      fi
                    elif $CXX -V 2>&1 | grep -i "WorkShop">/dev/null 2>&1; then 
 		      oln_cv_cxx_style=Sun
                    elif $CXX -V 2>&1 | grep -i "Intel(R) C++">/dev/null 2>&1;
@@ -468,7 +475,13 @@ AC_DEFUN([AC_CXX_FLAGS],
    case "$oln_cv_cxx_style" in
      GNU)
       _CXXFLAGS_DEBUG="-g"
-      _CXXFLAGS_OPTIMIZE="-O3 -finline-limit-1000"
+      _CXXFLAGS_OPTIMIZE="-O3 -frename-registers -finline-limit-1000"
+      _CXXFLAGS_STRICT="-W -Wall -pedantic"
+      _CXXFLAGS_STRICT_ERRORS="-W -Wall -pedantic -Werror"
+      ;;
+     weakGNU)
+      _CXXFLAGS_DEBUG="-g"
+      _CXXFLAGS_OPTIMIZE="-O2 -finline-functions"
       _CXXFLAGS_STRICT="-W -Wall -pedantic"
       _CXXFLAGS_STRICT_ERRORS="-W -Wall -pedantic -Werror"
       ;;

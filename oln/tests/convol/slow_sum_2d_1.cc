@@ -26,7 +26,7 @@ check(void)
 {
   bool fail = false;
 
-  image2d<int_u8> img = load(data("random.pgm"));
+  image2d<int_u8> img = load(rdata("random.pgm"));
   cout << "=== Image ===" << endl << endl << img << endl;
 
   //

@@ -57,7 +57,7 @@ check()
 
   // 2D tests
 
-  image2d<int_u8> im1(data("lena.pgm"));
+  image2d<int_u8> im1(rdata("lena.pgm"));
 
   dwt<image2d<int_u8>, coiflet6> wave2d(im1);
 

@@ -29,7 +29,7 @@ check()
 
 #if HAVE_FFTW
 
-  image2d<int_u8> im1(data("lena.pgm"));
+  image2d<int_u8> im1(rdata("lena.pgm"));
 
   fft<int_u8> fourier(im1);
 

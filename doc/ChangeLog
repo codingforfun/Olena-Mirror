@@ -1,3 +1,13 @@
+2003-01-30  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* dev/srctree.texi: Merge other srctree files.
+
+	* dev/srctree-oln.texi, dev/srctree-headers.texi,
+	dev/srctree-testsuite.texi, dev/srctree-conf.texi,
+	dev/srctree-ac.texi, dev/srctree-tools.texi, dev/srctree-doc.texi:
+	Remove files.
+
+
 2003-01-25  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* dev/abstract.texi (Abstract): Fix path to ISSUES.

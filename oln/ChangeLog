@@ -1,3 +1,34 @@
+2003-02-03  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* tests/check/data.hh, tests/check/data.cc (data): Remove. (wdata,
+	rdata): Add.  Fix prototypes.
+	* tests/transforms/fft.cc,
+	tests/transforms/dwt.cc,
+	tests/morpho/reconstruction.cc,
+	tests/morpho/extrkiller.cc,
+	tests/morpho/edoc.cc,
+	tests/io/se_fail.cc,
+	tests/io/2d.cc,
+	tests/io/pretty.cc,
+	tests/io/se_pass.cc,
+	tests/convol/sobel_gradient.cc,
+	tests/convol/slow_sum_2d_2.cc,
+	tests/convol/slow_sum_2d_1.cc,
+	tests/convert/convcomp.cc (check): Update accordingly.
+
+
+	* tests/convol/Makefile.am (XFAIL_TESTS): use $(EXEEXT) in
+	XFAIL_TESTS.
+
+	* config/oln.m4 (OLN_TEMPLATE_DEPTH): Warn when the compiler is
+	deficient.
+	* config/oln.m4 (AC_CXX_FLAGS): Use '-O2' to optimize when g++ <3
+	is detected, to avoid a known compilation bug in 2.95.
+
+2003-01-29  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Makefile.am (EXTRA_DIST): Adapt to ISSUES' move.
+
 2003-01-24  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/types/global_ops.hh, oln/types/optraits_scalar_defs.hh: Add
