@@ -1,3 +1,7 @@
+2003-04-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/io/pnm_write_common.hxx: Update includes.
+
 2003-04-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/arith/ops.hh, oln/convert/bound.hh,

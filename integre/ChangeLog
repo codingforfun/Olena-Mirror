@@ -1,5 +1,15 @@
 2003-04-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* ntg/enum/optraits_bin.hh: Merge into ntg/enum/bin.hh
+	* ntg/real/optraits_cycle.hh: Merge into ntg/real/cycle.hh.
+	* ntg/real/optraits_int_u.hh: Merge into ntg/real/int_u.hh.
+	* ntg/real/optraits_int_s.hh: Merge into ntg/real/int_s.hh.
+	* ntg/real/optraits_range.hh: Merge into ntg/real/range.hh.
+	
+	* Makefile.am: Update consequently.
+	
+2003-04-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* ntg/core/behaviour.hh: Rename as ...
 	* ntg/core/behavior.hh: ... this.
 	* Makefile.am: Update consequently.

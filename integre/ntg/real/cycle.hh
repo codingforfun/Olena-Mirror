@@ -28,16 +28,22 @@
 #ifndef NTG_CYCLE_HH
 # define NTG_CYCLE_HH
 
+# include <ntg/config/system.hh>
+
 # include <mlc/is_a.hh>
 
 # include <ntg/core/behavior.hh>
 # include <ntg/core/global_ops.hh>
+# include <ntg/core/global_ops_traits.hh>
 # include <ntg/core/interval.hh>
 # include <ntg/core/optraits.hh>
+# include <ntg/core/predecls.hh>
 # include <ntg/core/rec_value.hh>
 # include <ntg/core/typetraits.hh>
+# include <ntg/utils/to_oln.hh>
 
-// FIXME: optraits_cycle.hh is included at the end of the file.
+# include <string>
+# include <sstream>
 
 namespace ntg
 {
@@ -132,9 +138,53 @@ namespace ntg
 
   } // type_definitions
 
+  template<class T,
+	   class interval>
+  struct optraits<cycle<T, interval> > : public optraits<T>
+  {
+  public:
+    typedef cycle<T, interval> self;
+    
+  private:
+    typedef typename typetraits<self>::storage_type storage_type;
+    typedef typename interval::storage_type interval_type;
+    typedef typename typetraits<self>::behaviour_type behaviour_type;
+
+  public:
+    //
+    //  Properties
+    //
+    ////
+
+    static interval_type min()
+    { return interval::min(); }
+
+    static interval_type max()
+    { return interval::max(); }
+
+    static interval_type inf()
+    { return interval::inf(); }
+
+    static interval_type sup()
+    { return interval::sup(); }
+
+
+    // behaviour's check
+
+    template <class P>
+    static storage_type check(const P& rhs)
+    { return behaviour_type::apply(rhs); }
+
+    // debug
+    static std::string name() {
+      std::ostringstream out;
+      out << "cycle<" << optraits<T>::name() << ", " 
+	  << interval::name() << ">"<< std::ends;
+      return out.str();
+    }
+  };
+
 } // end of ntg
 
-// FIXME: find another solution if we want self contained cycle.hh.
-# include <ntg/real/optraits_cycle.hh>
 
 #endif // ndef NTG_CYCLE_HH

@@ -32,11 +32,13 @@
 
 # include <ntg/core/behavior.hh>
 # include <ntg/core/global_ops.hh>
-# include <ntg/real/optraits_scalar.hh>
+# include <ntg/core/predecls.hh>
 # include <ntg/core/rec_value.hh>
 # include <ntg/core/typetraits.hh>
+# include <ntg/real/optraits_scalar.hh>
 
-// FIXME: optraits_range.hh is included at the end of the file.
+# include <string>
+# include <sstream>
 
 namespace ntg
 {
@@ -121,9 +123,58 @@ namespace ntg
     return stream;
   }
 
-} // end of ntg
+  template<class T, class interval, class behaviour>
+  struct optraits<range<T, interval, behaviour> > : public optraits<T>
+  {
+  public:
+    typedef range<T, interval, behaviour> self;
 
-// FIXME: find another solution if we want self contained range.hh.
-# include <ntg/real/optraits_range.hh>
+  private:
+    typedef typename typetraits<self>::storage_type storage_type;
+    typedef typename behaviour::get<self> behaviour_type;
+    typedef typename interval::storage_type interval_type;
+
+  public:
+    // behaviour's check
+
+    template <class P>
+    static storage_type check(const P& rhs)
+    { return behaviour_type::apply(rhs); }
+
+    //
+    //  Properties
+    //
+    ////
+
+    static interval_type min()
+    { return interval::min(); }
+    
+    static interval_type max()
+    { return interval::max(); }
+
+    static interval_type inf()
+    { return interval::inf(); }
+    
+    static interval_type sup()
+    { return interval::sup(); }
+    
+    // debug
+    static std::string name() 
+    {
+      std::ostringstream out;
+      out << "range<" << optraits<T>::name() << ", " << interval::name() 
+	  << ", " << behaviour::name() << ">"<< std::ends;
+      return out.str();
+    }
+  };
+  
+  //
+  //  dev note
+  //
+  //  Arithmetic and other binary operators use base_type, 
+  //  check typetraits<range>::op_traits
+  //
+  
+} // end of ntg
 
 #endif // ndef NTG_RANGE_HH

@@ -33,8 +33,10 @@
 # include <ntg/core/global_ops.hh>
 # include <ntg/core/rec_value.hh>
 # include <ntg/core/typetraits.hh>
+# include <ntg/core/optraits.hh>
+# include <ntg/core/predecls.hh>
 
-// FIXME: optraits_bin.hh is included at the end of the file.
+# include <string>
 
 namespace ntg
 {
@@ -117,10 +119,144 @@ namespace ntg
     }
 
   } // type_definitions
+  
+  //
+  //  optraits for bin
+  //
+  /////////////////////
+  
+  template <>
+  struct optraits<bin> : public optraits_enum<bin>
+  {
+    typedef typetraits<bin>::storage_type storage_type;
+
+    static storage_type zero() { return 0; }
+    static storage_type unit() { return 1; }
+    static storage_type min()  { return 0; }
+    static storage_type max()  { return 1; }
+    static storage_type inf()  { return min(); }
+    static storage_type sup()  { return max(); }
+
+    // logical assignement operators
+
+    static bin& logical_or_equal(bin& lhs, const bin& rhs)
+    {
+      lhs = lhs.value() | rhs.value();
+      return lhs;
+    }
+
+    static bin& logical_and_equal(bin& lhs, const bin& rhs)
+    {
+      lhs = lhs.value() & rhs.value();
+      return lhs;
+    }
+
+    static bin& logical_xor_equal(bin& lhs, const bin& rhs)
+    {
+      lhs = lhs.value() ^ rhs.value();
+      return lhs;
+    }
+
+    // logical binary ops
+
+    static bin logical_or(const bin& lhs, const bin& rhs)
+    {
+      bin tmp(lhs);
+      tmp |= rhs;
+      return tmp;
+    }
+
+    static bin logical_and(const bin& lhs, const bin& rhs)
+    {
+      bin tmp(lhs);
+      tmp &= rhs;
+      return tmp;
+    }
+
+    static bin logical_xor(const bin& lhs, const bin& rhs)
+    {
+      bin tmp(lhs);
+      tmp ^= rhs;
+      return tmp;
+    }
+
+
+    // comparisons
+
+    static bool cmp_lt(const bin& lhs, const bin& rhs)
+    {
+      return lhs.value() < rhs.value();
+    }
+
+    static bool cmp_eq(const bin& lhs, const bin& rhs)
+    {
+      return lhs.value() == rhs.value();
+    }
+
+    // debug
+    static std::string name() { return "bin"; }
+  };
+
+
+  namespace internal
+  {
+
+    //
+    //
+    //  Operators traits
+    //
+    /////////////////////
+
+    //
+    //  Logical operators
+    //
+
+    template <class T>
+    struct operator_logical_traits<bin, T>
+    {
+      enum { commutative = true };
+      typedef bin ret;
+      typedef bin impl;
+    };
+
+    //
+    //  Comparison operators
+    //
+
+    template <>
+    struct operator_cmp_traits<bin, bin>
+    {
+      enum { commutative = true };
+      typedef bin ret;
+      typedef bin impl;
+    };
+    
+    //
+    //  Max
+    //
+
+    template <>
+    struct operator_max_traits<bin, bin>
+    {
+      enum { commutative = true };
+      typedef bin ret;
+      typedef bin impl;
+    };
+
+    //
+    //  Min
+    //
+
+    template <>
+    struct operator_min_traits<bin, bin>
+    {
+      enum { commutative = true };
+      typedef bin ret;
+      typedef bin impl;
+    };
+
+  } // end of internal
 
 } // end of ntg
-
-// FIXME: find another solution to allow self contained bin.hh
-# include <ntg/enum/optraits_bin.hh>
 
 #endif // ndef NTG_BIN_HH

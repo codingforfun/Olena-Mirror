@@ -35,7 +35,6 @@ nobase_ntg_HEADERS =				\
   core/typetraits.hh				\
   core/typetraits_builtins.hh			\
   enum/bin.hh					\
-  enum/optraits_bin.hh				\
   enum/optraits_builtins_bool.hh		\
   enum/typetraits_builtins_bool.hh		\
   real/cycle.hh					\
@@ -44,10 +43,6 @@ nobase_ntg_HEADERS =				\
   real/optraits_builtins_float.hh		\
   real/optraits_builtins_int.hh			\
   real/optraits_builtins_int_defs.hh		\
-  real/optraits_cycle.hh			\
-  real/optraits_int_s.hh			\
-  real/optraits_int_u.hh			\
-  real/optraits_range.hh			\
   real/optraits_scalar.hh			\
   real/optraits_scalar_defs.hh			\
   real/range.hh					\
@@ -58,6 +53,4 @@ nobase_ntg_HEADERS =				\
   utils/to_oln.hh				\
   vect/cplx.hh					\
   vect/cplx_representation.hh			\
-  vect/optraits_cplx.hh				\
-  vect/optraits_vec.hh				\
   vect/vec.hh

@@ -36,7 +36,6 @@
 # include <ntg/utils/cast.hh>
 # include <ntg/core/global_ops.hh>
 # include <ntg/real/int_u.hh>
-# include <ntg/vect/optraits_vec.hh>
 # include <ntg/core/predecls.hh>
 # include <ntg/core/rec_value.hh>
 # include <ntg/core/typetraits.hh>
