@@ -1,6 +1,6 @@
 2005-04-01  Roland Levillain  <roland@lrde.epita.fr>
 
-	First version of oln::apply, for Adapatble Unary Functions.
+	First version of oln::apply, for Adaptable Unary Functions.
 
 	* oln/core/apply.hh: New file.
 	* oln/core/ch_value_type.hh: New file.
