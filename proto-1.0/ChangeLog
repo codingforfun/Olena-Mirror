@@ -1,3 +1,7 @@
+2005-03-20  Simon Odou  <simon@lrde.epita.fr>
+
+	* configure.ac: Activate test suite for morpho and convert.
+
 2005-03-20  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* configure.ac: Add utils directory for olena tests suite.
