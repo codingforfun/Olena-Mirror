@@ -1,12 +1,19 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 7)
-(Parent-Version oln 10 3)
-(Version-Log "Merge from 0.9 branch.
+(Project-Version oln 10 8)
+(Parent-Version oln 10 7)
+(Version-Log "Index: olena/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/core/abstract/image.hh: Make the has_impl() method public.
+	* oln/utils/copy.hh: Adjust consequently.
+	* oln/core/abstract/image_with_impl.hh: Likewise.
+
+	* oln/core/abstract/image_with_impl.hh: Minor fix.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sat, 23 Aug 2003 13:44:03 +0200")
+(Checkin-Time "Mon, 25 Aug 2003 11:47:33 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -113,7 +120,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.3 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.25 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.34 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.24 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.25 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.6 640))
 
@@ -398,7 +405,7 @@
   (integre/ntg/color/xyz.hh (oln/i/24_xyz.hh 1.3.1.6 640))
   (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.6 640))
   (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.6 640))
-  (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.6 640))
+  (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.7 640))
   (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.12 640))
   (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.9 640))
   (olena/oln/utils/timer.hh (oln/8_timer.hh 1.7 640))
@@ -608,7 +615,7 @@
   (doc/demo/morpholena-ops.cc (oln/p/11_morpholena 1.3 640))
   (doc/demo/morpholena-minima.cc (oln/p/12_morpholena 1.4 640))
 
-  (doc/demo/convol-gaussian.cc (oln/p/14_morpholena 1.5 640))
+  (doc/demo/convol-gaussian.cc (oln/p/14_morpholena 1.6 640))
   (doc/demo/morpholena-wshed-beucher.cc (oln/p/15_morpholena 1.3 640))
 
 
@@ -939,9 +946,9 @@
   (olena/tests/core/image_print.sh (oln/t/24_image_prin 1.2 640))
 
 
-  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.17 640))
+  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.18 640))
   (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.18 640))
-  (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.14.1.7 640))
+  (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.14.1.8 640))
   (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.11 640))
   (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.16 640))
   (olena/oln/core/impl/image_array.hh (oln/t/30_image_arra 1.13 640))
@@ -1021,15 +1028,5 @@
   (olena/oln/core/abstract/image_with_type_with_dim.hh (oln/v/11_image_with 1.3 600))
   (olena/tests/core/tests/image2 (oln/v/12_image2 1.2 600))
   (olena/tests/utils/tests/copy (oln/v/13_copy 1.1 600)))
-(Merge-Parents
-  (10.6 complete
-    (ChangeLog ChangeLog ChangeLog r) (doc/ChangeLog doc/ChangeLog doc/ChangeLog r)
-    (doc/dev/oln-dev.texi doc/dev/oln-dev.texi doc/dev/oln-dev.texi r) (Makefile.am Makefile.am Makefile.am r)
-    (doc/dev/biblio.texi doc/dev/biblio.texi doc/dev/biblio.texi r) (doc/dev/abstract.texi doc/dev/abstract.texi doc/dev/abstract.texi r)
-    (doc/dev/upgrading.texi doc/dev/upgrading.texi doc/dev/upgrading.texi r) 
-  )
-  (9.26 complete
-    (doc/ChangeLog doc/ChangeLog doc/ChangeLog m) (doc/ref/Makefile.am doc/ref/Makefile.am doc/ref/Makefile.am r)
-    (doc/dev/biblio.texi doc/dev/biblio.texi doc/dev/biblio.texi m) (doc/dev/abstract.texi doc/dev/abstract.texi doc/dev/abstract.texi m))
-)
+(Merge-Parents)
 (New-Merge-Parents)

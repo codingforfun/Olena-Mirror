@@ -52,7 +52,7 @@ namespace oln {
 
     template<class Impl, class Exact>
     class image_with_impl: 
-      public abstract::image_with_type_with_dim_switch<Exact>::ret
+      public image_with_type_with_dim_switch<Exact>::ret
     {
     public:
       typedef typename image_traits<Exact>::point_type point_type;
@@ -65,17 +65,17 @@ namespace oln {
       
       typedef image_with_impl<Impl, Exact> self_type;
       typedef Exact exact_type;
-      typedef image_with_type<typename image_id<Exact>::value_type, Exact> super_type;
+      typedef typename image_with_type_with_dim_switch<Exact>::ret super_type;
 
       friend class image<exact_type>;
       friend class image_with_dim<image_id<Exact>::dim, exact_type>;
-      friend class super_type;
+      friend class image_with_type<typename image_id<Exact>::value_type, Exact>;
 
       // shallow copy
       image_with_impl(self_type& rhs) 
 	: super_type(rhs)
       {
-	assertion(rhs.has_impl_());
+	assertion(rhs.has_impl());
 	impl_ = rhs.impl();
 	impl_->ref();
       }
@@ -156,7 +156,7 @@ namespace oln {
 	clear();
       }
 
-      image_with_impl() : super_type(), impl_(0)
+      image_with_impl() : impl_(0)
       {}
 
       image_with_impl(impl_type* impl) :

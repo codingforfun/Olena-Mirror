@@ -86,6 +86,12 @@ namespace oln {
 	return this->exact().at(p.exact());
       }
 
+      bool 
+      has_impl() const
+      {
+	return this->exact().impl() != 0;
+      }
+
       exact_type 
       clone() const
       {
@@ -95,14 +101,14 @@ namespace oln {
       bool 
       hold(const abstract::point<point_type>& p) const
       {
-	assertion(has_impl_());
+	assertion(has_impl());
 	return this->exact().impl()->hold(p.exact());
       }
 
       const size_type& 
       size() const
       {
-	assertion(has_impl_());
+	assertion(has_impl());
 	return this->exact().impl()->size();
       }
 
@@ -138,9 +144,9 @@ namespace oln {
       border_set_width(coord new_border, bool copy_border = false) const
       {
 	precondition(new_border >= 0);
-	precondition(has_impl_());
+	precondition(has_impl());
 	if (border() == new_border)
-	  return;			// Nothing to do.
+	  return; // Nothing to do.
 	
 	const_cast<impl_type *>(this->exact().impl())->border_reallocate_and_copy(new_border, copy_border);
       }
@@ -184,11 +190,6 @@ namespace oln {
       {}
       //image(self_type& rhs) {}
 
-      bool 
-      has_impl_() const
-      {
-	return this->exact().impl() != 0;
-      }
     };
 
   } // end of namespace abstract

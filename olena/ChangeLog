@@ -1,3 +1,11 @@
+2003-08-25  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/core/abstract/image.hh: Make the has_impl() method public.
+	* oln/utils/copy.hh: Adjust consequently.
+	* oln/core/abstract/image_with_impl.hh: Likewise.
+	
+	* oln/core/abstract/image_with_impl.hh: Minor fix.
+
 2003-08-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/README: Update.

@@ -42,7 +42,7 @@ namespace oln {
 
 # define OLENA_UTILS_IMAGE_DEEP_COPY		\
   mlc_init_static_hierarchy(Exact);		\
-  if (rhs.has_impl_())				\
+  if (rhs.has_impl())				\
     *this = rhs.clone()
 
 # ifdef OLENA_CORE_IMAGE1D_HH
