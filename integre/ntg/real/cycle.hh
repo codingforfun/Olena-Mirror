@@ -67,10 +67,6 @@ namespace ntg {
       typedef self					unsigned_largest_type;
       typedef self					unsigned_cumul_type;
       typedef typename typetraits<T>::integer_type	integer_type;
-
-
-      // internal type used for binary operations traits
-      typedef typename typetraits<T>::base_type op_traits;
     };
 
   } // end of internal.
@@ -81,13 +77,6 @@ namespace ntg {
   //  The interval has 0
   //
   ////////////////////////////////////////////////////
-
-  //
-  //  dev note
-  //
-  //  Arithmetic and other binary operators use base_type,
-  //  check typetraits<cycle>::op_traits
-  //
 
   template <class T,
 	    class interval>
@@ -179,6 +168,24 @@ namespace ntg {
 	return out.str();
       }
     };
+
+    // Inherit operator traits from the base type.
+    template <class Op, class T, class I, class U>
+    struct operator_traits<Op, cycle<T, I>, U> 
+      : public operator_traits<Op, T, U>
+    {}; 
+
+    // Inherit operator traits from the base type.
+    template <class Op, class T, class I, class U>
+    struct operator_traits<Op, U, cycle<T, I> >
+      : public operator_traits<Op, U, T>
+    {};
+
+    // Inherit operator traits from the base type.
+    template <class Op, class T1, class I1, class T2, class I2>
+    struct operator_traits<Op, cycle<T1, I1>, cycle<T2, I2> >
+      : public operator_traits<Op, T1, T2>
+    {};
 
   } // end of internal.
 

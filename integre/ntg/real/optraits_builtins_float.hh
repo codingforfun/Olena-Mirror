@@ -74,68 +74,68 @@ namespace ntg {
     //
 
     template <unsigned nbits, class B>
-    struct operator_plus_traits<float, int_u<nbits, B> > : all_float_traits {};
+    struct operator_traits<operator_plus, float, int_u<nbits, B> > : all_float_traits {};
 
     template <unsigned nbits, class B>
-    struct operator_plus_traits<float, int_s<nbits, B> > : all_float_traits {};
+    struct operator_traits<operator_plus, float, int_s<nbits, B> > : all_float_traits {};
 
     // We need this because to_oln<float> gives float.
     // So when using cycle<float,..> + float, it searches
-    // operator_plus_traits<float,float>
+    // operator_traits<operator_plus, float,float>
     template <>
-    struct operator_plus_traits<float, float> : all_float_traits {};
+    struct operator_traits<operator_plus, float, float> : all_float_traits {};
 
     //
     // minus
     //
 
     template <unsigned nbits, class B>
-    struct operator_minus_traits<float, int_u<nbits, B> > : all_float_traits {};
+    struct operator_traits<operator_minus, float, int_u<nbits, B> > : all_float_traits {};
 
     template <unsigned nbits, class B>
-    struct operator_minus_traits<float, int_s<nbits, B> > : all_float_traits {};
+    struct operator_traits<operator_minus, float, int_s<nbits, B> > : all_float_traits {};
 
     template <>
-    struct operator_minus_traits<float, float> : all_float_traits {};
+    struct operator_traits<operator_minus, float, float> : all_float_traits {};
 
     //
     // times
     //
 
     template <unsigned nbits, class B>
-    struct operator_times_traits<float, int_u<nbits, B> > : all_float_traits {};
+    struct operator_traits<operator_times, float, int_u<nbits, B> > : all_float_traits {};
 
     template <unsigned nbits, class B>
-    struct operator_times_traits<float, int_s<nbits, B> > : all_float_traits {};
+    struct operator_traits<operator_times, float, int_s<nbits, B> > : all_float_traits {};
 
     template <>
-    struct operator_times_traits<float, float> : all_float_traits {};
+    struct operator_traits<operator_times, float, float> : all_float_traits {};
 
     //
     // div
     //
 
     template <unsigned nbits, class B>
-    struct operator_div_traits<float, int_u<nbits, B> > : all_float_traits {};
+    struct operator_traits<operator_div, float, int_u<nbits, B> > : all_float_traits {};
 
     template <unsigned nbits, class B>
-    struct operator_div_traits<float, int_s<nbits, B> > : all_float_traits {};
+    struct operator_traits<operator_div, float, int_s<nbits, B> > : all_float_traits {};
 
     template <>
-    struct operator_div_traits<float, float> : all_float_traits {};
+    struct operator_traits<operator_div, float, float> : all_float_traits {};
 
     //
     // min
     //
 
     template <unsigned nbits, class B>
-    struct operator_min_traits<float, int_u<nbits, B> > : all_float_traits {};
+    struct operator_traits<operator_min, float, int_u<nbits, B> > : all_float_traits {};
 
     template <unsigned nbits, class B>
-    struct operator_min_traits<float, int_s<nbits, B> > : all_float_traits {};
+    struct operator_traits<operator_min, float, int_s<nbits, B> > : all_float_traits {};
 
     template <>
-    struct operator_min_traits<float, float> : all_float_traits {};
+    struct operator_traits<operator_min, float, float> : all_float_traits {};
 
 
     //
@@ -143,13 +143,13 @@ namespace ntg {
     //
 
     template <unsigned nbits, class B>
-    struct operator_max_traits<float, int_u<nbits, B> > : all_float_traits {};
+    struct operator_traits<operator_max, float, int_u<nbits, B> > : all_float_traits {};
 
     template <unsigned nbits, class B>
-    struct operator_max_traits<float, int_s<nbits, B> > : all_float_traits {};
+    struct operator_traits<operator_max, float, int_s<nbits, B> > : all_float_traits {};
 
     template <>
-    struct operator_max_traits<float, float> : all_float_traits {};
+    struct operator_traits<operator_max, float, float> : all_float_traits {};
 
 
     //
@@ -157,14 +157,14 @@ namespace ntg {
     //
 
     template <unsigned nbits, class B>
-    struct operator_cmp_traits<float, int_u<nbits, B> > : all_float_traits {};
+    struct operator_traits<operator_cmp, float, int_u<nbits, B> > : all_float_traits {};
 
     template <unsigned nbits, class B>
-    struct operator_cmp_traits<float, int_s<nbits, B> > : all_float_traits {};
+    struct operator_traits<operator_cmp, float, int_s<nbits, B> > : all_float_traits {};
 
 
     template <>
-    struct operator_cmp_traits<float, float> : all_float_traits {};
+    struct operator_traits<operator_cmp, float, float> : all_float_traits {};
 
     //
     //  double
@@ -199,80 +199,80 @@ namespace ntg {
     //
 
     template <unsigned nbits, class B>
-    struct operator_plus_traits<double, int_u<nbits, B> > : all_double_traits {};
+    struct operator_traits<operator_plus, double, int_u<nbits, B> > : all_double_traits {};
 
     template <unsigned nbits, class B>
-    struct operator_plus_traits<double, int_s<nbits, B> > : all_double_traits {};
+    struct operator_traits<operator_plus, double, int_s<nbits, B> > : all_double_traits {};
 
     template <>
-    struct operator_plus_traits<double, double> : all_double_traits {};
+    struct operator_traits<operator_plus, double, double> : all_double_traits {};
 
     template <>
-    struct operator_plus_traits<double, float> : all_double_traits {};
+    struct operator_traits<operator_plus, double, float> : all_double_traits {};
 
     //
     // minus
     //
 
     template <unsigned nbits, class B>
-    struct operator_minus_traits<double, int_u<nbits, B> > : all_double_traits {};
+    struct operator_traits<operator_minus, double, int_u<nbits, B> > : all_double_traits {};
 
     template <unsigned nbits, class B>
-    struct operator_minus_traits<double, int_s<nbits, B> > : all_double_traits {};
+    struct operator_traits<operator_minus, double, int_s<nbits, B> > : all_double_traits {};
 
     template <>
-    struct operator_minus_traits<double, double> : all_double_traits {};
+    struct operator_traits<operator_minus, double, double> : all_double_traits {};
 
     template <>
-    struct operator_minus_traits<double, float> : all_double_traits {};
+    struct operator_traits<operator_minus, double, float> : all_double_traits {};
 
     //
     // times
     //
 
     template <unsigned nbits, class B>
-    struct operator_times_traits<double, int_u<nbits, B> > : all_double_traits {};
+    struct operator_traits<operator_times, double, int_u<nbits, B> > : all_double_traits {};
 
     template <unsigned nbits, class B>
-    struct operator_times_traits<double, int_s<nbits, B> > : all_double_traits {};
+    struct operator_traits<operator_times, double, int_s<nbits, B> > : all_double_traits {};
 
     template <>
-    struct operator_times_traits<double, double> : all_double_traits {};
+    struct operator_traits<operator_times, double, double> : all_double_traits {};
 
     template <>
-    struct operator_times_traits<double, float> : all_double_traits {};
+    struct operator_traits<operator_times, double, float> : all_double_traits {};
 
     //
     // div
     //
 
     template <unsigned nbits, class B>
-    struct operator_div_traits<double, int_u<nbits, B> > : all_double_traits {};
+    struct operator_traits<operator_div, double, int_u<nbits, B> > : all_double_traits {};
 
     template <unsigned nbits, class B>
-    struct operator_div_traits<double, int_s<nbits, B> > : all_double_traits {};
+    struct operator_traits<operator_div, double, int_s<nbits, B> > : all_double_traits {};
 
     template <>
-    struct operator_div_traits<double, double> : all_double_traits {};
+    struct operator_traits<operator_div, double, double> : all_double_traits {};
 
     template <>
-    struct operator_div_traits<double, float> : all_double_traits {};
+    struct operator_traits<operator_div, double, float> : all_double_traits {};
 
     //
     // min
     //
 
     template <unsigned nbits, class B>
-    struct operator_min_traits<double, int_u<nbits, B> > : all_double_traits {};
+    struct operator_traits<operator_min, double, int_u<nbits, B> > : all_double_traits {};
 
     template <unsigned nbits, class B>
-    struct operator_min_traits<double, int_s<nbits, B> > : all_double_traits {};
+    struct operator_traits<operator_min, double, int_s<nbits, B> > : all_double_traits {};
 
     template <>
-    struct operator_min_traits<double, double> : all_double_traits {};
+    struct operator_traits<operator_min, double, double> : all_double_traits {};
 
     template <>
-    struct operator_min_traits<double, float> : all_double_traits {};
+    struct operator_traits<operator_min, double, float> : all_double_traits {};
 
 
     //
@@ -280,16 +280,16 @@ namespace ntg {
     //
 
     template <unsigned nbits, class B>
-    struct operator_max_traits<double, int_u<nbits, B> > : all_double_traits {};
+    struct operator_traits<operator_max, double, int_u<nbits, B> > : all_double_traits {};
 
     template <unsigned nbits, class B>
-    struct operator_max_traits<double, int_s<nbits, B> > : all_double_traits {};
+    struct operator_traits<operator_max, double, int_s<nbits, B> > : all_double_traits {};
 
     template <>
-    struct operator_max_traits<double, double> : all_double_traits {};
+    struct operator_traits<operator_max, double, double> : all_double_traits {};
 
     template <>
-    struct operator_max_traits<double, float> : all_double_traits {};
+    struct operator_traits<operator_max, double, float> : all_double_traits {};
 
    
     //
@@ -297,16 +297,16 @@ namespace ntg {
     //
 
     template <unsigned nbits, class B>
-    struct operator_cmp_traits<double, int_u<nbits, B> > : all_double_traits {};
+    struct operator_traits<operator_cmp, double, int_u<nbits, B> > : all_double_traits {};
 
     template <unsigned nbits, class B>
-    struct operator_cmp_traits<double, int_s<nbits, B> > : all_double_traits {};
+    struct operator_traits<operator_cmp, double, int_s<nbits, B> > : all_double_traits {};
 
     template <>
-    struct operator_cmp_traits<double, double> : all_double_traits {};
+    struct operator_traits<operator_cmp, double, double> : all_double_traits {};
 
     template <>
-    struct operator_cmp_traits<double, float> : all_double_traits {};
+    struct operator_traits<operator_cmp, double, float> : all_double_traits {};
 
   } // end of internal.
 

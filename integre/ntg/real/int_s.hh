@@ -320,7 +320,7 @@ namespace ntg {
     // int_s + int_s
 
     template<unsigned nbits, class B1, unsigned mbits, class B2>
-    struct operator_plus_traits<int_s<nbits, B1>, int_s<mbits, B2> >
+    struct operator_traits<operator_plus, int_s<nbits, B1>, int_s<mbits, B2> >
     {
       enum { commutative = true };
       typedef int_s<(unsigned)mlc::maxN<nbits + 1,mbits + 1, 32>::ret,
@@ -332,7 +332,7 @@ namespace ntg {
     // int_s + int_u ; int_u + int_s
 
     template <unsigned nbits, class B1, unsigned mbits, class B2>
-    struct operator_plus_traits<int_s<nbits, B1>, int_u<mbits, B2> >
+    struct operator_traits<operator_plus, int_s<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
       typedef int_s<(unsigned)mlc::maxN<nbits + 1,mbits + 2, 32>::ret,
@@ -348,7 +348,7 @@ namespace ntg {
     // int_s - int_s
 
     template<unsigned nbits, class B1, unsigned mbits, class B2>
-    struct operator_minus_traits<int_s<nbits, B1>, int_s<mbits, B2> >
+    struct operator_traits<operator_minus, int_s<nbits, B1>, int_s<mbits, B2> >
     {
       enum { commutative = true };
       typedef int_s<(unsigned)mlc::maxN<nbits + 1, mbits + 1, 32>::ret,
@@ -359,7 +359,7 @@ namespace ntg {
     // int_s - int_u ; int_u - int_s
 
     template <unsigned nbits, class B1, unsigned mbits, class B2>
-    struct operator_minus_traits<int_s<nbits, B1>, int_u<mbits, B2> >
+    struct operator_traits<operator_minus, int_s<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
       typedef int_s<(unsigned)mlc::maxN<nbits + 1, mbits + 2, 32>::ret,
@@ -375,7 +375,7 @@ namespace ntg {
     // int_s * int_s
 
     template<unsigned nbits, class B1, unsigned mbits, class B2>
-    struct operator_times_traits<int_s<nbits, B1>, int_s<mbits, B2> >
+    struct operator_traits<operator_times, int_s<nbits, B1>, int_s<mbits, B2> >
     {
       enum { commutative = true };
       typedef int_s<(unsigned)mlc::saturateN<nbits + mbits, 32>::ret,
@@ -387,7 +387,7 @@ namespace ntg {
     // int_s * int_u ; int_u * int_s
 
     template <unsigned nbits, class B1, unsigned mbits, class B2>
-    struct operator_times_traits<int_s<nbits, B1>, int_u<mbits, B2> >
+    struct operator_traits<operator_times, int_s<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
       typedef int_s<(unsigned)mlc::saturateN<nbits + mbits+1, 32>::ret,
@@ -403,7 +403,7 @@ namespace ntg {
     // int_s / int_s
 
     template<unsigned nbits, class B1, unsigned mbits, class B2>
-    struct operator_div_traits<int_s<nbits, B1>, int_s<mbits, B2> >
+    struct operator_traits<operator_div, int_s<nbits, B1>, int_s<mbits, B2> >
     {
       enum { commutative = true };
       typedef int_s<nbits, typename deduce_op_behaviour<B1, B2>::ret> ret;
@@ -414,7 +414,7 @@ namespace ntg {
     // int_s / int_u ; int_u / int_s
 
     template <unsigned nbits, class B1, unsigned mbits, class B2>
-    struct operator_div_traits<int_s<nbits, B1>, int_u<mbits, B2> >
+    struct operator_traits<operator_div, int_s<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = false };
       typedef int_s<nbits, typename deduce_op_behaviour<B1, B2>::ret> ret;
@@ -422,7 +422,7 @@ namespace ntg {
     };
 
     template <unsigned nbits, class B1, unsigned mbits, class B2>
-    struct operator_div_traits<int_u<mbits, B2>, int_s<nbits, B1> >
+    struct operator_traits<operator_div, int_u<mbits, B2>, int_s<nbits, B1> >
     {
       enum { commutative = false };
       typedef int_s<mlc::saturateN<mbits + 1, 32>::ret,
@@ -437,7 +437,7 @@ namespace ntg {
     // int_s % int_s
 
     template<unsigned nbits, class B1, unsigned mbits, class B2>
-    struct operator_mod_traits<int_s<nbits, B1>, int_s<mbits, B2> >
+    struct operator_traits<operator_mod, int_s<nbits, B1>, int_s<mbits, B2> >
     {
       enum { commutative = false };
       typedef int_s<mbits, typename deduce_op_behaviour<B1, B2>::ret> ret;
@@ -447,7 +447,7 @@ namespace ntg {
     // int_s % int_u ; int_u % int_s
 
     template <unsigned nbits, class B1, unsigned mbits, class B2>
-    struct operator_mod_traits<int_s<nbits, B1>, int_u<mbits, B2> >
+    struct operator_traits<operator_mod, int_s<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = false };
       typedef int_s<(unsigned)mlc::saturateN<mbits + 1, 32>::ret,
@@ -456,7 +456,7 @@ namespace ntg {
     };
 
     template <unsigned nbits, class B1, unsigned mbits, class B2>
-    struct operator_mod_traits<int_u<nbits, B1>, int_s<mbits, B2> >
+    struct operator_traits<operator_mod, int_u<nbits, B1>, int_s<mbits, B2> >
     {
       enum { commutative = false };
       typedef int_u<mbits, typename deduce_op_behaviour<B1, B2>::ret> ret;
@@ -471,7 +471,7 @@ namespace ntg {
     // MIN(int_s, int_s)
 
     template<unsigned nbits, class B1, unsigned mbits, class B2>
-    struct operator_min_traits<int_s<nbits, B1>, int_s<mbits, B2> >
+    struct operator_traits<operator_min, int_s<nbits, B1>, int_s<mbits, B2> >
     {
       enum { commutative = true };
       typedef int_s<(unsigned) mlc::min<nbits, mbits>::ret, 
@@ -486,7 +486,7 @@ namespace ntg {
     // MAX(int_s, int_s)
 
     template<unsigned nbits, class B1, unsigned mbits, class B2>
-    struct operator_max_traits<int_s<nbits, B1>, int_s<mbits, B2> >
+    struct operator_traits<operator_max, int_s<nbits, B1>, int_s<mbits, B2> >
     {
       enum { commutative = true };
       typedef int_s<(unsigned) mlc::max<nbits, mbits>::ret, 
@@ -501,7 +501,7 @@ namespace ntg {
     // int_s compared with int_s
 
     template<unsigned nbits, class B1, unsigned mbits, class B2>
-    struct operator_cmp_traits<int_s<nbits, B1>, int_s<mbits, B2> >
+    struct operator_traits<operator_cmp, int_s<nbits, B1>, int_s<mbits, B2> >
     {
       enum { commutative = true };
       typedef int_s<(unsigned)mlc::maxN<nbits,mbits,32>::ret, unsafe> ret;
@@ -512,7 +512,7 @@ namespace ntg {
     // int_s CMP int_u ; int_u CMP int_s
 
     template <unsigned nbits, class B1, unsigned mbits, class B2>
-    struct operator_cmp_traits<int_s<nbits, B1>, int_u<mbits, B2> >
+    struct operator_traits<operator_cmp, int_s<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
       typedef int_s<(unsigned)mlc::maxN<nbits,mbits+1, 32>::ret, unsafe> ret;

@@ -63,8 +63,6 @@ namespace ntg {
       typedef bin			unsigned_largest_type;
       typedef bin			unsigned_cumul_type;
       typedef unsigned int		integer_type;
-
-      typedef self op_traits;
     };
 
   } // end of internal.
@@ -211,7 +209,7 @@ namespace ntg {
     //
 
     template <class T>
-    struct operator_logical_traits<bin, T>
+    struct operator_traits<operator_logical, bin, T>
     {
       enum { commutative = true };
       typedef bin ret;
@@ -223,7 +221,7 @@ namespace ntg {
     //
 
     template <>
-    struct operator_cmp_traits<bin, bin>
+    struct operator_traits<operator_cmp, bin, bin>
     {
       enum { commutative = true };
       typedef bin ret;
@@ -235,7 +233,7 @@ namespace ntg {
     //
 
     template <>
-    struct operator_max_traits<bin, bin>
+    struct operator_traits<operator_max, bin, bin>
     {
       enum { commutative = true };
       typedef bin ret;
@@ -247,7 +245,7 @@ namespace ntg {
     //
 
     template <>
-    struct operator_min_traits<bin, bin>
+    struct operator_traits<operator_min, bin, bin>
     {
       enum { commutative = true };
       typedef bin ret;

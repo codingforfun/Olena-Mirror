@@ -80,15 +80,11 @@ GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, bool);
 
 # define GLOBAL_ARITH_OP_BUILTIN(Op, Name, Builtin)			\
 template <class T2>							\
-inline typename								\
-internal::deduce_from_traits<internal::operator_##Name##_traits, 	\
-                            Builtin, 					\
-                            T2>::ret					\
+inline \
+ntg_return_type(Name, Builtin, T2) \
 Op(Builtin lhs, const value<T2>& rhs)				\
 {									\
-  typedef								\
-    internal::deduce_from_traits<internal::operator_##Name##_traits,	\
-    Builtin, T2> deduced_type;						\
+  typedef ntg_deduced_traits_type(Name, Builtin, T2) deduced_type;							    \
 									\
   typedef typename deduced_type::impl impl;				\
   typedef typename deduced_type::lhs_type lhs_type;			\
@@ -105,13 +101,11 @@ Op(Builtin lhs, const value<T2>& rhs)				\
 
 # define GLOBAL_ARITH_OP(Op, Name)						\
 template <class T1, class T2>							\
-inline typename									\
-internal::deduce_from_traits<internal::operator_##Name##_traits, T1, T2>::ret	\
+inline \
+ntg_return_type(Name, T1, T2)	\
 Op(const value<T1>& lhs, const T2& rhs)					\
 {										\
-  typedef									\
-    internal::deduce_from_traits<internal::operator_##Name##_traits,		\
-    T1, T2> deduced_type;							\
+  typedef ntg_deduced_traits_type(Name, T1, T2) deduced_type;				\
 										\
   typedef typename deduced_type::impl impl;					\
   typedef typename deduced_type::lhs_type lhs_type;				\
@@ -144,15 +138,11 @@ GLOBAL_ARITH_OP_BUILTIN(Op, Name, bool);
 
 # define GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, Builtin)			\
 template <class T2>							\
-inline typename								\
-internal::deduce_from_traits<internal::operator_logical_traits, 	\
-			     Builtin, 					\
-			     T2>::ret					\
+inline \
+ntg_return_type(logical, Builtin, T2) \
 Op(const Builtin& lhs, const value<T2>& rhs)			\
 {									\
-  typedef								\
-    internal::deduce_from_traits<internal::operator_logical_traits,	\
-    Builtin, T2> deduced_type;						\
+  typedef ntg_deduced_traits_type(logical, Builtin, T2) deduced_type;		\
 									\
   typedef typename deduced_type::impl impl;				\
   typedef typename deduced_type::lhs_type lhs_type;			\
@@ -169,13 +159,11 @@ Op(const Builtin& lhs, const value<T2>& rhs)			\
 
 # define GLOBAL_LOGICAL_OP(Op, Name)						\
 template <class T1, class T2>							\
-inline typename									\
-internal::deduce_from_traits<internal::operator_logical_traits, T1, T2>::ret	\
+inline								\
+ntg_return_type(logical, T1, T2) \
 Op(const value<T1>& lhs, const T2& rhs)					\
 {										\
-  typedef									\
-    internal::deduce_from_traits<internal::operator_logical_traits,		\
-    T1, T2> deduced_type;							\
+  typedef ntg_deduced_traits_type(logical, T1, T2) deduced_type;			\
 										\
   typedef typename deduced_type::impl impl;					\
   typedef typename deduced_type::lhs_type lhs_type;				\
@@ -204,9 +192,7 @@ GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, bool);
 template <class T2>							\
 inline bool Op(const Builtin& lhs, const value<T2>& rhs)		\
 {									\
-  typedef								\
-    internal::deduce_from_traits<internal::operator_cmp_traits,		\
-                                 Builtin, T2> deduced_type;		\
+  typedef ntg_deduced_traits_type(cmp, Builtin, T2) deduced_type;		\
 									\
   typedef typename deduced_type::impl impl;				\
   typedef typename deduced_type::lhs_type lhs_type;			\
@@ -221,9 +207,7 @@ inline bool Op(const Builtin& lhs, const value<T2>& rhs)		\
 template <class T1, class T2>						\
 inline bool Op(const value<T1>& lhs, const T2& rhs)			\
 {									\
-  typedef								\
-    internal::deduce_from_traits<internal::operator_cmp_traits,		\
-                                 T1, T2> deduced_type;			\
+  typedef ntg_deduced_traits_type(cmp, T1, T2) deduced_type;			\
 									\
   typedef typename deduced_type::impl impl;				\
   typedef typename deduced_type::lhs_type lhs_type;			\

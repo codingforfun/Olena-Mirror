@@ -125,13 +125,10 @@ static cplx<Rep, T1>& Name(cplx<Rep, T1>& lhs, const vec<2, T2>& rhs)		\
 # define ARITH_CPLX_CPLX_OPERATOR(Rep1, Rep2, Name, Op)						\
 template <class T1, class T2>									\
 inline static											\
-cplx<Rep1, typename internal::deduce_from_traits<internal::operator_##Name##_traits,		\
-                             T1, T2>::ret>							\
+cplx<Rep1, ntg_return_type(Name, T1, T2)>							\
 Name(const cplx<Rep1, T1>& lhs, const cplx<Rep2, T2>& rhs)					\
 {												\
-  typedef											\
-    cplx<Rep1, typename internal::deduce_from_traits<internal::operator_##Name##_traits,	\
-    T1, T2>::ret> return_type;									\
+  typedef cplx<Rep1, ntg_return_type(Name, T1, T2)> return_type;									\
   return_type result(lhs);									\
   result Op rhs;										\
   return result;										\
@@ -140,14 +137,11 @@ Name(const cplx<Rep1, T1>& lhs, const cplx<Rep2, T2>& rhs)					\
 # define ARITH_CPLX_SCALAR_OPERATOR(Rep, Name, Op)					\
 template <class T1, class T2>								\
 inline static										\
-cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits,	\
-                             T1, T2>::ret>						\
+cplx<Rep, ntg_return_type(Name, T1, T2)>						\
 Name(const cplx<Rep, T1>& lhs, const T2& rhs)						\
 {											\
   ntg_is_a(T2, real)::ensure();								\
-  typedef										\
-    cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits,	\
-    T1, T2>::ret> return_type;								\
+  typedef cplx<Rep, ntg_return_type(Name, T1, T2)> return_type;				\
   return_type result(lhs);								\
   result Op rhs;									\
   return result;									\
@@ -156,8 +150,7 @@ Name(const cplx<Rep, T1>& lhs, const T2& rhs)						\
 # define ARITH_CPLX_SCALAR_OPERATOR_COMMUTE(Rep, Name, Op)					\
 template <class T1, class T2>									\
 inline static											\
-cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits,		\
-                             T1, T2>::ret>							\
+cplx<Rep, ntg_return_type(Name, T1, T2)>							\
 Name(const T1& lhs, const cplx<Rep, T2>& rhs)							\
 {												\
   return Name(rhs, lhs);									\
@@ -166,13 +159,10 @@ Name(const T1& lhs, const cplx<Rep, T2>& rhs)							\
 # define ARITH_CPLX_VECTOR_OPERATOR(Rep, Name, Op);						\
 template <class T1, class T2>									\
 inline static											\
-cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits,		\
-                             T1, T2>::ret>							\
+cplx<Rep, ntg_return_type(Name, T1, T2)>							\
 Name(const cplx<Rep, T1>& lhs, const vec<2, T2>& rhs)						\
 {												\
-  typedef											\
-    cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits,		\
-    T1, T2>::ret> return_type;									\
+  typedef cplx<Rep, ntg_return_type(Name, T1, T2)> return_type;									\
   return_type result(lhs);									\
   result Op rhs;										\
   return result;										\
@@ -181,8 +171,7 @@ Name(const cplx<Rep, T1>& lhs, const vec<2, T2>& rhs)						\
 # define ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_PLUS(Rep, Name, Op);				\
 template <class T1, class T2>									\
 inline static											\
-cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits,		\
-                             T1, T2>::ret>							\
+cplx<Rep, ntg_return_type(Name, T1, T2)>							\
 Name(const vec<2, T1>& lhs, const cplx<Rep, T2>& rhs)						\
 {												\
   return Name(rhs, lhs);									\
@@ -191,8 +180,7 @@ Name(const vec<2, T1>& lhs, const cplx<Rep, T2>& rhs)						\
 # define ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_MINUS(Rep, Name, Op);				\
 template <class T1, class T2>									\
 inline static											\
-cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits,		\
-                             T1, T2>::ret>							\
+cplx<Rep, ntg_return_type(Name, T1, T2)>							\
 Name(const vec<2, T1>& lhs, const cplx<Rep, T2>& rhs)						\
 {												\
   return Name(rhs, lhs).invert();								\
@@ -578,30 +566,32 @@ namespace ntg {
     
     // Operators traits macros
 
+    // FIXME: I think there is an easy way to simplify this. -- nes
+
 # define CPLX_SCALAR_OPERATORS_TRAITS(Name, CommuteBool)							\
     template <cplx_representation R1, class T1, class T2>							\
-    struct operator_##Name##_traits<cplx<R1, T1>, T2>								\
+    struct operator_traits<operator_##Name, cplx<R1, T1>, T2>								\
     {														\
       enum { commutative = CommuteBool };									\
-      typedef cplx<R1, typename deduce_from_traits<internal::operator_##Name##_traits, T1, T2>::ret> ret;	\
+      typedef cplx<R1, ntg_return_type(Name, T1, T2)> ret;	\
       typedef cplx<R1, T1> impl;										\
     }
 
 # define CPLX_CPLX_OPERATORS_TRAITS(Name, CommuteBool)								\
     template <cplx_representation R1, class T1, cplx_representation R2, class T2>				\
-    struct operator_##Name##_traits<cplx<R1, T1>, cplx<R2, T2> >						\
+    struct operator_traits<operator_##Name, cplx<R1, T1>, cplx<R2, T2> >					\
     {														\
       enum { commutative = CommuteBool };									\
-      typedef cplx<R1, typename deduce_from_traits<internal::operator_##Name##_traits, T1, T2>::ret> ret;	\
+      typedef cplx<R1, ntg_return_type(Name, T1, T2)> ret;	\
       typedef cplx<R1, T1> impl;										\
     }
 
 # define CPLX_VECTOR_OPERATORS_TRAITS(Rep, Name, CommuteBool)							\
     template <class T1, class T2>										\
-    struct operator_##Name##_traits<cplx<Rep, T1>, vec<2, T2> >							\
+    struct operator_traits<operator_##Name, cplx<Rep, T1>, vec<2, T2> >						\
     {														\
       enum { commutative = CommuteBool };									\
-      typedef cplx<Rep, typename deduce_from_traits<internal::operator_##Name##_traits, T1, T2>::ret> ret;	\
+      typedef cplx<Rep, ntg_return_type(Name, T1, T2)> ret;	\
       typedef cplx<Rep, T1> impl;										\
     }
 
@@ -624,10 +614,10 @@ namespace ntg {
     CPLX_VECTOR_OPERATORS_TRAITS(rect, minus, true);
 
     template<cplx_representation R1, class T1, cplx_representation R2, class T2>
-    struct operator_cmp_traits<cplx<R1, T1>, cplx<R2, T2> >
+    struct operator_traits<operator_cmp, cplx<R1, T1>, cplx<R2, T2> >
     {
       enum { commutative = true };
-      typedef cplx<R1, typename deduce_from_traits<internal::operator_cmp_traits, T1, T2>::ret> ret;
+      typedef cplx<R1, ntg_return_type(cmp, T1, T2)> ret;
       typedef cplx<R1, T1> impl;
     };
 

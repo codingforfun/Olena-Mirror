@@ -1,5 +1,21 @@
 2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* ntg/core/internal/global_ops_traits.hh: Rewrite the traits
+	deduction system.
+	
+	* ntg/core/internal/global_ops.hh,
+	ntg/core/internal/global_ops_defs.hh, ntg/core/macros.hh,
+	ntg/enum/bin.hh, ntg/real/cycle.hh, ntg/real/int_s.hh,
+	ntg/real/int_u.hh, ntg/real/optraits_builtins_float.hh,
+	ntg/real/optraits_scalar_defs.hh, ntg/real/range.hh,
+	ntg/vect/cplx.hh, ntg/vect/vec.hh: Modify accordingly.
+
+2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/types/tests/range4: New test.
+	
+2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
 	* ntg/utils/to_oln.hh: Remove file.
 	* ntg/utils/cast.hh: Add to_ntg.
 

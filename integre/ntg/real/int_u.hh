@@ -92,10 +92,6 @@ namespace ntg {
       typedef int_u<32, behaviour>			unsigned_largest_type;
       typedef int_u<32, behaviour>			unsigned_cumul_type;
       typedef unsigned int				integer_type;
-
-
-      // internal use, useful for decorators
-      typedef self op_traits;
     };
 
   } // end of internal.
@@ -249,7 +245,7 @@ namespace ntg {
     // int_u + int_u
 
     template<unsigned nbits, class B1, unsigned mbits, class B2>
-    struct operator_plus_traits<int_u<nbits, B1>, int_u<mbits, B2> >
+    struct operator_traits<operator_plus, int_u<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
       typedef int_u<(unsigned) mlc::maxN<nbits + 1, mbits + 1, 32>::ret,
@@ -264,7 +260,7 @@ namespace ntg {
     // int_u - int_u
 
     template<unsigned nbits, class B1, unsigned mbits, class B2>
-    struct operator_minus_traits<int_u<nbits, B1>, int_u<mbits, B2> >
+    struct operator_traits<operator_minus, int_u<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
       typedef int_s<(unsigned) mlc::maxN<nbits+1, mbits+1, 32>::ret,
@@ -276,7 +272,7 @@ namespace ntg {
     // want to access (UINT_MAX - 1)
 
     template<class B1, unsigned mbits, class B2>
-    struct operator_minus_traits<int_u<32, B1>, int_u<mbits, B2> >
+    struct operator_traits<operator_minus, int_u<32, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
       typedef int_u<32, typename deduce_op_behaviour<B1, B2>::ret> ret;
@@ -290,7 +286,7 @@ namespace ntg {
     // int_u * int_u
 
     template<unsigned nbits, class B1, unsigned mbits, class B2>
-    struct operator_times_traits<int_u<nbits, B1>, int_u<mbits, B2> >
+    struct operator_traits<operator_times, int_u<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
       typedef int_u<(unsigned) mlc::saturateN<nbits + mbits, 32>::ret,
@@ -305,7 +301,7 @@ namespace ntg {
     // int_u / int_u
 
     template<unsigned nbits, class B1, unsigned mbits, class B2>
-    struct operator_div_traits<int_u<nbits, B1>, int_u<mbits, B2> >
+    struct operator_traits<operator_div, int_u<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
       typedef int_u<nbits, typename deduce_op_behaviour<B1, B2>::ret> ret;
@@ -319,7 +315,7 @@ namespace ntg {
     // int_u % int_u
 
     template<unsigned nbits, class B1, unsigned mbits, class B2>
-    struct operator_mod_traits<int_u<nbits, B1>, int_u<mbits, B2> >
+    struct operator_traits<operator_mod, int_u<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = false };
       typedef int_u<mbits, typename deduce_op_behaviour<B1, B2>::ret> ret;
@@ -334,7 +330,7 @@ namespace ntg {
     // MIN(int_u, int_u)
 
     template<unsigned nbits, class B1, unsigned mbits, class B2>
-    struct operator_min_traits<int_u<nbits, B1>, int_u<mbits, B2> >
+    struct operator_traits<operator_min, int_u<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
       typedef int_u<(unsigned) mlc::min<nbits, mbits>::ret,
@@ -350,7 +346,7 @@ namespace ntg {
     // MAX(int_u, int_u)
 
     template<unsigned nbits, class B1, unsigned mbits, class B2>
-    struct operator_max_traits<int_u<nbits, B1>, int_u<mbits, B2> >
+    struct operator_traits<operator_max, int_u<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
       typedef int_u<(unsigned) mlc::max<nbits, mbits>::ret,
@@ -366,7 +362,7 @@ namespace ntg {
     // int_u CMP int_u
 
     template<unsigned nbits, class B1, unsigned mbits, class B2>
-    struct operator_cmp_traits<int_u<nbits, B1>, int_u<mbits, B2> >
+    struct operator_traits<operator_cmp, int_u<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
       typedef int_u<(unsigned) mlc::maxN<nbits, mbits, 32>::ret, unsafe> ret;

@@ -201,19 +201,19 @@ namespace ntg
 
     // min
     template <class T1, class T2> inline
-    ntg_return_type(operator_min_traits, T1, T2)
+    ntg_return_type(min, T1, T2)
     min (const T1& lhs, const T2& rhs)
     {
-      typedef ntg_return_type(operator_max_traits, T1, T2) result_type;     
+      typedef ntg_return_type(max, T1, T2) result_type;     
       return (lhs < rhs) ? result_type(lhs) : result_type(rhs);
     }
     
     // max
     template <class T1, class T2> inline
-    ntg_return_type(operator_max_traits, T1, T2)
+    ntg_return_type(max, T1, T2)
     max (const T1& lhs, const T2& rhs)
     {
-      typedef ntg_return_type(operator_max_traits, T1, T2) result_type;     
+      typedef ntg_return_type(max, T1, T2) result_type;     
       return (lhs > rhs) ? result_type(lhs) : result_type(rhs);
     }
 

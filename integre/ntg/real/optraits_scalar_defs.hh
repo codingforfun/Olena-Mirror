@@ -67,48 +67,43 @@
     return lhs.self();									\
   }
 
-# define ARITH_SCALAR_OPERATOR(Name, Op)					\
-  template <class T1, class T2> inline 						\
-  static typename								\
-  internal::deduce_from_traits<internal::operator_##Name##_traits, T1, T2>::ret	\
-  Name(const T1& lhs, const T2& rhs)						\
-  {										\
-    ntg_is_a(T1, ntg::real)::ensure();						\
-    ntg_is_a(T2, ntg::real)::ensure();						\
-										\
-    typedef typename								\
-      internal::deduce_from_traits<internal::operator_##Name##_traits,		\
-      T1, T2>::ret return_type;							\
-    return_type result(lhs);							\
-    result Op rhs;								\
-    return result;								\
+# define ARITH_SCALAR_OPERATOR(Name, Op)		\
+  template <class T1, class T2> inline			\
+  static ntg_return_type(Name, T1, T2)			\
+  Name(const T1& lhs, const T2& rhs)			\
+  {							\
+    ntg_is_a(T1, ntg::real)::ensure();			\
+    ntg_is_a(T2, ntg::real)::ensure();			\
+							\
+    typedef ntg_return_type(Name, T1, T2) return_type;	\
+    return_type result(lhs);				\
+    result Op rhs;					\
+    return result;					\
   }
 
 
-# define CMP_SCALAR_OPERATOR(Name, Op)					\
-  template <class T1, class T2> inline					\
-  static bool Name (const T1& lhs, const T2& rhs)			\
-  {									\
-    ntg_is_a(T1, ntg::real)::ensure();					\
-    ntg_is_a(T2, ntg::real)::ensure();					\
-									\
-    typedef typename							\
-      internal::deduce_from_traits<internal::operator_cmp_traits,	\
-      T1, T2>::ret tmp_type;						\
-									\
-    return Name##_impl<tmp_type>(static_cast<tmp_type>(lhs),		\
-				 static_cast<tmp_type>(rhs));		\
-  }									\
-									\
-  template <class T> inline						\
-  static bool Name##_impl(const ntg::real_value<T>& lhs, 		\
-			  const ntg::real_value<T>& rhs)		\
-  { return lhs.self().val() Op rhs.self().val(); }			\
-									\
-  template <class T> inline						\
-  static bool								\
-  Name##_impl(const ntg::any_const_class<T> lhs,			\
-	      const ntg::any_const_class<T> rhs)			\
+# define CMP_SCALAR_OPERATOR(Name, Op)				\
+  template <class T1, class T2> inline				\
+  static bool Name (const T1& lhs, const T2& rhs)		\
+  {								\
+    ntg_is_a(T1, ntg::real)::ensure();				\
+    ntg_is_a(T2, ntg::real)::ensure();				\
+								\
+    typedef ntg_return_type(cmp, T1, T2) tmp_type;		\
+								\
+    return Name##_impl<tmp_type>(static_cast<tmp_type>(lhs),	\
+				 static_cast<tmp_type>(rhs));	\
+  }								\
+								\
+  template <class T> inline					\
+  static bool Name##_impl(const ntg::real_value<T>& lhs,	\
+			  const ntg::real_value<T>& rhs)	\
+  { return lhs.self().val() Op rhs.self().val(); }		\
+								\
+  template <class T> inline					\
+  static bool							\
+  Name##_impl(const ntg::any_const_class<T> lhs,		\
+	      const ntg::any_const_class<T> rhs)		\
   { return lhs.self() Op rhs.self(); }
 
 
@@ -149,21 +144,18 @@
     return lhs.self();								\
   }    
 
-# define ARITH_INT_OPERATOR(Name, Op)						\
-  template <class T1, class T2> inline						\
-  static typename								\
-  internal::deduce_from_traits<internal::operator_##Name##_traits, T1, T2>::ret	\
-  Name(const T1& lhs, const T2& rhs)						\
-  {										\
-    ntg_is_a(T1, integer)::ensure();						\
-    ntg_is_a(T2, integer)::ensure();						\
-										\
-    typedef typename								\
-      internal::deduce_from_traits<internal::operator_##Name##_traits,		\
-      T1, T2>::ret return_type;							\
-    return_type result(lhs);							\
-    result Op rhs;								\
-    return result;								\
+# define ARITH_INT_OPERATOR(Name, Op)			\
+  template <class T1, class T2> inline			\
+  static ntg_return_type(Name, T1, T2)			\
+  Name(const T1& lhs, const T2& rhs)			\
+  {							\
+    ntg_is_a(T1, integer)::ensure();			\
+    ntg_is_a(T2, integer)::ensure();			\
+							\
+    typedef ntg_return_type(Name, T1, T2) return_type;	\
+    return_type result(lhs);				\
+    result Op rhs;					\
+    return result;					\
   }
 
 #endif // ndef NTG_OPTRAITS_SCALAR_DEFS_HH

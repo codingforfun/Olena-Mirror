@@ -69,16 +69,13 @@ static T1& Name(T1& lhs, const T2& rhs)			\
 
 # define ARITH_VECTOR_VECTOR_OPERATOR(Name, Op) 			\
 template <class T1, class T2>          					\
-inline static typename                 					\
-internal::deduce_from_traits<internal::operator_##Name##_traits, 	\
-                             T1, T2>::ret   				\
+inline static           					\
+ntg_return_type(Name,T1, T2)   				\
 Name(const T1& lhs, const T2& rhs)					\
 {									\
   ntg_is_a(T1, ntg::vectorial)::ensure();			\
   ntg_is_a(T2, ntg::vectorial)::ensure();			\
-  typedef typename                          				\
-    internal::deduce_from_traits<internal::operator_##Name##_traits,   	\
-    T1, T2>::ret return_type; 						\
+  typedef ntg_return_type(Name,T1, T2) return_type; 						\
   return_type result(lhs); 						\
   result Op rhs;            						\
   return result;							\
@@ -212,16 +209,13 @@ namespace ntg {
       // division
 
       template <class T1, class T2>
-      inline static typename
-      internal::deduce_from_traits<internal::operator_div_traits,
-				   T1, T2>::ret
+      inline static 
+      ntg_return_type(div, T1, T2)
       div(const T1& lhs, const T2& rhs)
       {
 	ntg_is_a(T1, ntg::vectorial)::ensure();
 	ntg_is_a(T2, ntg::real)::ensure();
-	typedef typename
-	  internal::deduce_from_traits<internal::operator_div_traits,
-	  T1, T2>::ret return_type;
+	typedef ntg_return_type(div, T1, T2) return_type;
 	return_type result(lhs);
 	result /= rhs;
 	return result;
@@ -230,16 +224,13 @@ namespace ntg {
       // modulo
 
       template <class T1, class T2>
-      inline static typename
-      internal::deduce_from_traits<internal::operator_mod_traits,
-				   T1, T2>::ret
+      inline static
+      ntg_return_type(mod, T1, T2)
       mod(const T1& lhs, const T2& rhs)
       {
 	ntg_is_a(T1, ntg::vectorial)::ensure();
 	ntg_is_a(T2, ntg::real)::ensure();
-	typedef typename
-	  internal::deduce_from_traits<internal::operator_mod_traits,
-	  T1, T2>::ret return_type;
+	typedef ntg_return_type(mod, T1, T2) return_type;
 	return_type result(lhs);
 	result %= rhs;
 	return result;
@@ -250,8 +241,9 @@ namespace ntg {
       // dot-product
       template <unsigned M, class T1, class T2>
       inline static typename
-      internal::deduce_from_traits<internal::operator_times_traits,
-				   vec<M, T1>, vec<M, T2> >::ret
+      internal::deduce_from_traits<internal::operator_times, 
+				   vec<M, T1>, 
+				   vec<M, T2> >::ret
       times(const vec<M, T1>& lhs, const vec<M, T2>& rhs)
       {
 	typedef vec<M, T1> vec1;
@@ -259,7 +251,7 @@ namespace ntg {
 	ntg_is_a(vec1, ntg::vectorial)::ensure();
 	ntg_is_a(vec2, ntg::vectorial)::ensure();
 	typedef typename
-	  internal::deduce_from_traits<internal::operator_times_traits,
+	  internal::deduce_from_traits<internal::operator_times,
 	  vec<M, T1>, vec<M, T2> >::ret return_type;
 	precondition(lhs.size() == rhs.size());
 
@@ -273,16 +265,13 @@ namespace ntg {
 
       // vector * scalar
       template <class T1, class T2>
-      inline static typename
-      internal::deduce_from_traits<internal::operator_times_traits,
-				   T1, T2>::ret
+      inline static
+      ntg_return_type(times, T1, T2)
       times(const vect_value<T1>& lhs, const T2& rhs)
       {
 	ntg_is_a(T1, ntg::vectorial)::ensure();
 	ntg_is_a(T2, ntg::real)::ensure();
-	typedef typename
-	  internal::deduce_from_traits<internal::operator_times_traits,
-	  T1, T2>::ret return_type;
+	typedef ntg_return_type(times, T1, T2) return_type;
 	return_type result(lhs.self());
 	result *= rhs;
 	return result;
@@ -290,9 +279,8 @@ namespace ntg {
 
       // scalar * vector
       template <class T1, class T2>
-      inline static typename
-      internal::deduce_from_traits<internal::operator_times_traits,
-				   T1, T2>::ret
+      inline static
+      ntg_return_type(times, T1, T2)
       times(const T1& lhs, const vect_value<T2>& rhs)
       {
 	return times(rhs, lhs);
@@ -306,9 +294,7 @@ namespace ntg {
 	ntg_is_a(T2, ntg::vectorial)::ensure();
 	precondition(lhs.size() == rhs.size());
 
-	typedef typename
-	  internal::deduce_from_traits<internal::operator_cmp_traits,
-	  T1, T2>::ret tmp_type;
+	typedef ntg_return_type(cmp, T1, T2) tmp_type;
 
 	unsigned s = lhs.size();
 	for (unsigned i = 0; i < s; ++i)
@@ -331,10 +317,10 @@ namespace ntg {
     // vec + vec
 
     template<unsigned N, class T1, class T2, class S1, class S2>
-    struct operator_plus_traits<vec<N, T1, S1>, vec<N, T2, S2> >
+    struct operator_traits<operator_plus, vec<N, T1, S1>, vec<N, T2, S2> >
     {
       enum { commutative = true };
-      typedef vec<N, typename deduce_from_traits<internal::operator_plus_traits, T1, T2>::ret> ret;
+      typedef vec<N, ntg_return_type(plus, T1, T2)> ret;
       typedef vec<N, T1> impl;
     };
 
@@ -346,10 +332,10 @@ namespace ntg {
     // vec - vec
 
     template<unsigned N, class T1, class T2>
-    struct operator_minus_traits<vec<N, T1>, vec<N, T2> >
+    struct operator_traits<operator_minus, vec<N, T1>, vec<N, T2> >
     {
       enum { commutative = true };
-      typedef vec<N, typename deduce_from_traits<internal::operator_minus_traits, T1, T2>::ret> ret;
+      typedef vec<N, ntg_return_type(minus, T1, T2)> ret;
       typedef vec<N, T1> impl;
     };
 
@@ -360,20 +346,20 @@ namespace ntg {
     // vec * s; s * vec
 
     template<unsigned N, class T1, class T2>
-    struct operator_times_traits<vec<N, T1>, T2>
+    struct operator_traits<operator_times, vec<N, T1>, T2>
     {
       enum { commutative = true };
-      typedef vec<N, typename deduce_from_traits<internal::operator_times_traits, T1, T2>::ret> ret;
+      typedef vec<N, ntg_return_type(times, T1, T2)> ret;
       typedef vec<N, T1> impl;
     };
 
     // vec * vec
 
     template<unsigned N, class T1, class T2>
-    struct operator_times_traits<vec<N, T1>, vec<N, T2> >
+    struct operator_traits<operator_times, vec<N, T1>, vec<N, T2> >
     {
       enum { commutative = true };
-      typedef typename deduce_from_traits<internal::operator_times_traits,T1,T2>::ret t;
+      typedef ntg_return_type(times,T1,T2) t;
       typedef typename typetraits<t>::cumul_type ret;
       typedef vec<N, T1> impl;
     };
@@ -385,10 +371,10 @@ namespace ntg {
     // vec / s
 
     template<unsigned N, class T1, class T2>
-    struct operator_div_traits<vec<N, T1>, T2>
+    struct operator_traits<operator_div, vec<N, T1>, T2>
     {
       enum { commutative = false };
-      typedef vec<N, typename deduce_from_traits<internal::operator_div_traits, T1, T2>::ret> ret;
+      typedef vec<N, ntg_return_type(div, T1, T2)> ret;
       typedef vec<N, T1> impl;
     };
 
@@ -399,10 +385,10 @@ namespace ntg {
     // vec % s
 
     template<unsigned N, class T1, class T2>
-    struct operator_mod_traits<vec<N, T1>, T2>
+    struct operator_traits<operator_mod, vec<N, T1>, T2>
     {
       enum { commutative = false };
-      typedef vec<N, typename deduce_from_traits<internal::operator_mod_traits, T1, T2>::ret> ret;
+      typedef vec<N, ntg_return_type(mod, T1, T2)> ret;
       typedef vec<N, T1> impl;
     };
 
@@ -413,10 +399,10 @@ namespace ntg {
     // vec compared with vec
 
     template<unsigned N, class T1, class T2, class S1, class S2>
-    struct operator_cmp_traits<vec<N, T1, S1>, vec<N, T2, S2> >
+    struct operator_traits<operator_cmp, vec<N, T1, S1>, vec<N, T2, S2> >
     {
       enum { commutative = true };
-      typedef vec<N, typename deduce_from_traits<internal::operator_cmp_traits, T1, T2>::ret> ret;
+      typedef vec<N, ntg_return_type(cmp, T1, T2)> ret;
       typedef vec<N, T1> impl;
     };
 

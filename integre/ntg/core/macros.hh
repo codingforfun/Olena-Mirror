@@ -107,9 +107,19 @@
 `--------------------------*/
 
 # define ntg_return_type(Op, T1, T2) \
-  typename internal::deduce_from_traits<Op, T1, T2>::ret
+  typename ntg::internal::deduce_from_traits<ntg::internal::operator_##Op, T1, T2>::ret
 # define ntg_return_type_(Op, T1, T2) \
-  internal::deduce_from_traits<Op, T1, T2>::ret
+  ntg::internal::deduce_from_traits<ntg::internal::operator_##Op, T1, T2>::ret
+
+# define ntg_deduced_traits_type(Op, T1, T2) \
+  typename ntg::internal::deduce_from_traits<ntg::internal::operator_##Op, T1, T2>
+# define ntg_deduced_traits_type_(Op, T1, T2) \
+  ntg::internal::deduce_from_traits<ntg::internal::operator_##Op, T1, T2>
+
+# define ntg_impl_type(Op, T1, T2) \
+  typename ntg::internal::deduce_from_traits<ntg::internal::operator_##Op, T1, T2>::impl
+# define ntg_impl_type_(Op, T1, T2) \
+  ntg::internal::deduce_from_traits<ntg::internal::operator_##Op, T1, T2>::impl
 
 /*----------.
 | utilities |

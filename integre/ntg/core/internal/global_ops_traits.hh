@@ -70,121 +70,56 @@ namespace ntg
     ////////////////////////////////////////////////
     
 
-    // plus
-    
-    template <class T, class U>
-    struct operator_plus_traits
-    { 
+    template <class Op, class T, class U>
+    struct operator_traits
+    {
       enum { commutative = false };
       typedef undefined_traits ret; 
       typedef undefined_traits impl; 
-    };  
+    };
 
-    // minus
-    
-    template <class T, class U>
-    struct operator_minus_traits
-    { 
-      enum { commutative = false };
-      typedef undefined_traits ret; 
-      typedef undefined_traits impl; 
-    };  
+    // plus    
+    struct operator_plus {};
 
-    // times
-    
-    template <class T, class U>
-    struct operator_times_traits
-    { 
-      enum { commutative = false };
-      typedef undefined_traits ret; 
-      typedef undefined_traits impl; 
-    };  
+    // minus    
+    struct operator_minus {};  
+
+    // times    
+    struct operator_times {};
 
     // div
-    
-    template <class T, class U>
-    struct operator_div_traits
-    { 
-      enum { commutative = false };
-      typedef undefined_traits ret; 
-      typedef undefined_traits impl; 
-    };  
+    struct operator_div {};
 
     // mod
+    struct operator_mod {};
     
-    template <class T, class U>
-    struct operator_mod_traits
-    { 
-      enum { commutative = false };
-      typedef undefined_traits ret; 
-      typedef undefined_traits impl; 
-    };  
-
     // logical ops
-    
-    template <class T, class U>
-    struct operator_logical_traits
-    { 
-      enum { commutative = false };
-      typedef undefined_traits ret; 
-      typedef undefined_traits impl; 
-    };  
+    struct operator_logical {};
 
     // comparison
-    
-    template <class T, class U>
-    struct operator_cmp_traits
-    { 
-      enum { commutative = false };
-      typedef undefined_traits ret;
-      typedef undefined_traits impl; 
-    };
+    struct operator_cmp {};
 
     // min
-    
-    template <class T, class U>
-    struct operator_min_traits
-    { 
-      enum { commutative = false };
-      typedef undefined_traits ret;
-      typedef undefined_traits impl; 
-    };
+    struct operator_min {};
 
     // max
-    
-    template <class T, class U>
-    struct operator_max_traits
-    { 
-      enum { commutative = false };
-      typedef undefined_traits ret;
-      typedef undefined_traits impl;
-    };
-    
+    struct operator_max {};
 
     //
-    //  Traits deducing algorithm
+    //  Traits deduction algorithm:
     //
-    //  1) Check if traits<T1, T2> is ok
-    //  2) Check if traits<T2, T1> ok AND traits<T2, T1>::commutative is true
-    //  3) Check if traits<ntg_type(T1), ntg_type(T2) > ok
-    //  4) Check if traits<ntg_type(T2), ntg_type(T1) > ok AND commutative 
-    //     is true
+    //  1) Convert T1 and T2 to ntg types.
+    //  2) Check if traits<T1, T2> is ok.
+    //  3) Else, check if traits<T2, T1> ok AND traits<T2, T1>::commutative 
+    //     is true.
     //
     //////////////////////////////////////////////////////////////////////////
 
-    //
-    //  Dev note : 
-    //  When using g++ >= 3.1, using deduce_from_traits<operator_xxx_traits, T, U>
-    //  may fail at compile time, using 
-    //  deduce_from_traits<ntg::internal::operator_xxx_traits, T, U> should resolve
-    //  the problem.
-    //
-  
     template <class T>
     struct is_defined { enum { ret = true }; };
     template <>
     struct is_defined<undefined_traits> { enum { ret = false }; };
-
+    
     //
     //  Struct get_order and get_order_inv
     //
@@ -211,42 +146,35 @@ namespace ntg
       typedef T2 rhs_type;
     };
    
-
-    template <template <class, class> class traits, class T1, class T2>
+    template <class Op, class T, class U>
     struct deduce_from_traits
     {
-      typedef typename typetraits<T1>::op_traits T1_op;
-      typedef typename typetraits<T2>::op_traits T2_op;
+      typedef ntg_type(T) T1;
+      typedef ntg_type(U) T2;
 
-      typedef ntg_type(T1_op) T1_oln;
-      typedef ntg_type(T2_op) T2_oln;
+      typedef typename operator_traits<Op, T1, T2>::ret traits;
+      typedef typename operator_traits<Op, T2, T1>::ret rev_traits;
 
       typedef typename
-      mlc::if_<is_defined<typename traits<T1_op, T2_op>::ret>::ret,
-		get_order<T1_op, T2_op>, typename
-		mlc::if_<is_defined<typename traits<T2_op, T1_op>::ret>::ret && traits<T2_op, T1_op>::commutative,
-			  get_order_inv<T1_op, T2_op>, typename
-			  mlc::if_<is_defined<typename traits<T1_oln, T2_oln>::ret>::ret,
-				    get_order<T1_oln, T2_oln>, typename
-				    mlc::if_<is_defined<typename traits<T2_oln, T1_oln>::ret>::ret && traits<T2_oln, T1_oln>::commutative,
-					      get_order_inv<T1_oln, T2_oln>,
-					      meta_undefined_traits<undefined_traits>
-					     >::ret_t
-                                   >::ret_t
-                         >::ret_t
-               >::ret_t deduced_type;
+      mlc::if_<is_defined<traits>::ret,
+		get_order<T1, T2>, typename
+		mlc::if_<operator_traits<Op, T2, T1>::commutative && is_defined<rev_traits>::ret,
+			 get_order_inv<T1, T2>,
+			 meta_undefined_traits<undefined_traits>
+                        >::ret_t
+              >::ret_t deduced_type;
 				    
       typedef typename deduced_type::lhs_type lhs_type;
       typedef typename deduced_type::rhs_type rhs_type;
       typedef typename deduced_type::traits_lhs_type traits_lhs_type;
       typedef typename deduced_type::traits_rhs_type traits_rhs_type;
 
-      typedef typename traits<traits_lhs_type, traits_rhs_type>::ret ret;
-      typedef typename traits<traits_lhs_type, traits_rhs_type>::impl impl;
+      typedef typename operator_traits<Op, traits_lhs_type, traits_rhs_type>::ret ret;
+      typedef typename operator_traits<Op, traits_lhs_type, traits_rhs_type>::impl impl;
     };
 
-  } // end of internal  
+  } // end of internal.
 
-} // end of ntg
+} // end of ntg.
 
 #endif // ndef NTG_GLOBAL_OPS_TRAITS_HH
