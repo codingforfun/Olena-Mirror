@@ -1,3 +1,8 @@
+2005-04-06  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* mlc/properties.hh: Replace macro use by real code.
+	* mlc/cmp.hh (ensure): New method.
+
 2005-04-05  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Cleaning.

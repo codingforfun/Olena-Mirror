@@ -51,6 +51,7 @@ namespace mlc
   struct eq <T, T>
   {
     typedef true_type ret;
+    static void ensure() {}
   };
 
 
@@ -60,6 +61,7 @@ namespace mlc
   struct neq
   {
     typedef true_type ret;
+    static void ensure() {}
   };
 
   template <typename T>

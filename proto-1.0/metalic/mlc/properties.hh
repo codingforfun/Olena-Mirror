@@ -116,53 +116,53 @@ void namespace_is_equiped_for_properties()
 
 /// macro to register a property in a props_of<..>:
 
-# define mlc_register_prop(CATEGORY, TARGET)					\
-										\
-namespace internal								\
-{										\
-										\
-  template <>									\
-  struct get_prop < CATEGORY, mlc::no_type, target::TARGET >			\
-  {										\
-    typedef props_of<CATEGORY, mlc::default_type>:: TARGET ret;			\
-  };										\
-										\
-  template <typename type>							\
-  struct get_prop < CATEGORY, type, target::TARGET >				\
-  {										\
-    typedef get_prop_helper<CATEGORY, type, target::TARGET,			\
-			      mlc_eq(type, mlc::no_type),			\
-			      typename get_props<CATEGORY, type>::user_defined_	\
-			      > helper_type;					\
-    typedef typename helper_type::ret ret;					\
-  };										\
-  template <typename type>							\
-  struct get_prop_helper < CATEGORY, type, target::TARGET, mlc::false_type,	\
-			     mlc::true_type >					\
-  {										\
-    typedef typename get_props<CATEGORY, type>:: TARGET prop_type;		\
-    typedef typename get_prop<CATEGORY,						\
-                              typename get_super_type<type>::ret,		\
-                              target::TARGET>::ret super_prop_type;		\
-										\
-    typedef mlc_if( mlc_eq(prop_type, mlc::unknown_type),			\
-			      super_prop_type,					\
-			      prop_type ) ret;					\
-  };										\
-  template <typename type>							\
-  struct get_prop_helper < CATEGORY, type, target::TARGET, mlc::false_type,	\
-			     mlc::false_type >					\
-  {										\
-    typedef typename get_prop<CATEGORY,						\
-                              typename get_super_type<type>::ret,		\
-                              target::TARGET>::ret ret;				\
-  };										\
-}										\
-										\
-template <typename type>							\
-struct set_type_of < CATEGORY, type, target::TARGET >				\
-{										\
-  typedef typename internal::get_prop<CATEGORY, type, target::TARGET>::ret ret;	\
+# define mlc_register_prop(CATEGORY, TARGET)						\
+											\
+namespace internal									\
+{											\
+											\
+  template <>										\
+  struct get_prop < CATEGORY, mlc::no_type, target::TARGET >				\
+  {											\
+    typedef props_of<CATEGORY, mlc::default_type>:: TARGET ret;				\
+  };											\
+											\
+  template <typename type>								\
+  struct get_prop < CATEGORY, type, target::TARGET >					\
+  {											\
+    typedef get_prop_helper<CATEGORY, type, target::TARGET,				\
+			      mlc_eq(type, mlc::no_type),				\
+			      typename get_props<CATEGORY, type>::user_defined_		\
+			      > helper_type;						\
+    typedef typename helper_type::ret ret;						\
+  };											\
+  template <typename type>								\
+  struct get_prop_helper < CATEGORY, type, target::TARGET, mlc::false_type,		\
+			     mlc::true_type >						\
+  {											\
+    typedef typename get_props<CATEGORY, type>:: TARGET prop_type;			\
+    typedef typename get_prop<CATEGORY,							\
+                              typename get_super_type<type>::ret,			\
+                              target::TARGET>::ret super_prop_type;			\
+											\
+    typedef typename mlc::if_< typename mlc::eq<prop_type, mlc::unknown_type>::ret,	\
+			      super_prop_type,						\
+			      prop_type >::ret ret;					\
+  };											\
+  template <typename type>								\
+  struct get_prop_helper < CATEGORY, type, target::TARGET, mlc::false_type,		\
+			     mlc::false_type >						\
+  {											\
+    typedef typename get_prop<CATEGORY,							\
+                              typename get_super_type<type>::ret,			\
+                              target::TARGET>::ret ret;					\
+  };											\
+}											\
+											\
+template <typename type>								\
+struct set_type_of < CATEGORY, type, target::TARGET >					\
+{											\
+  typedef typename internal::get_prop<CATEGORY, type, target::TARGET>::ret ret;		\
 }
 
 
@@ -176,21 +176,23 @@ struct set_type_of < CATEGORY, type, target::TARGET >				\
 
 /// macros to declare a property:
 
-# define mlc_decl_prop_with_default(CATEGORY, NAME, DEFAULT)			\
-  typedef  mlc_if(mlc_eq(type, mlc::default_type),				\
-		  DEFAULT,							\
-		  mlc_if(mlc_eq(type, mlc::no_type),				\
-			 mlc::unknown_type,					\
-			 mlc_internal_retrieve_prop(CATEGORY, type, NAME))	\
-		  )  NAME
+# define mlc_decl_prop_with_default(CATEGORY, NAME, DEFAULT)					\
+  typedef typename mlc::if_<typename mlc::eq<type, mlc::default_type>::ret,			\
+			    DEFAULT,								\
+			    typename mlc::if_<typename mlc::eq<type, mlc::no_type>::ret,	\
+					      mlc::unknown_type,				\
+					      mlc_internal_retrieve_prop(CATEGORY, type, NAME)	\
+                                             >::ret						\
+                           >::ret  NAME
 
-# define mlc_decl_prop(CATEGORY, NAME)						\
-  typedef  mlc_if(mlc_eq(type, mlc::default_type),				\
-		  mlc::undefined_type,						\
-		  mlc_if(mlc_eq(type, mlc::no_type),				\
-			 mlc::unknown_type,					\
-			 mlc_internal_retrieve_prop(CATEGORY, type, NAME))	\
-		  )  NAME
+# define mlc_decl_prop(CATEGORY, NAME)								\
+  typedef typename mlc::if_<typename mlc::eq<type, mlc::default_type>::ret,			\
+			    mlc::undefined_type,						\
+			    typename mlc::if_<typename mlc::eq<type, mlc::no_type>::ret,	\
+					      mlc::unknown_type,				\
+					      mlc_internal_retrieve_prop(CATEGORY, type, NAME)	\
+                                             >::ret						\
+		           >::ret  NAME
 
 
 
