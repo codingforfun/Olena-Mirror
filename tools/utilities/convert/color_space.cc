@@ -122,6 +122,7 @@ oln::image2d<ntg::rgb_8>
 from_x_to_rgb(const oln::image2d<T>			&in)
 {
   assert(0);
+  return oln::image2d<ntg::rgb_8>();
 }
 
 #define FROM_X_TO_RGB(T)						\
@@ -138,6 +139,7 @@ oln::image2d<T>
 from_rgb_to_x(const oln::image2d<ntg::rgb_8>		&in)
 {
   assert(0);
+  return oln::image2d<T>();
 }
 
 #define FROM_RGB_TO_X(T)						\

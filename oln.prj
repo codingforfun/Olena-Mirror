@@ -1,26 +1,47 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 201)
-(Parent-Version oln 10 187)
-(Version-Log ": tools/ChangeLog
+(Project-Version oln 10 202)
+(Parent-Version oln 10 201)
+(Version-Log "Index: tools/ChangeLog
 from  Giovanni Palma  <giovanni@lrde.epita.fr>
 
-	* utilities/convert/Makefile.am: Correct flags.
+	* utilities/convert/color_space.cc: Remove warnings.
+	* utilities/convert/Makefile.am: Add AM_LDFLAGS.
 
+Index: tools/utilities/convert/color_space.cc
+--- tools/utilities/convert/color_space.cc Mon, 28 Jun 2004 15:53:02 +0200 thivol_d (oln/u/19_color_spac 1.2 600)
++++ tools/utilities/convert/color_space.cc Wed, 07 Jul 2004 11:31:07 +0200 palma_g (oln/u/19_color_spac 1.2 600)
+@@ -122,6 +122,7 @@
+ from_x_to_rgb(const oln::image2d<T>			&in)
+ {
+   assert(0);
++  return oln::image2d<ntg::rgb_8>();
+ }
+ 
+ #define FROM_X_TO_RGB(T)						\\
+@@ -138,6 +139,7 @@
+ from_rgb_to_x(const oln::image2d<ntg::rgb_8>		&in)
+ {
+   assert(0);
++  return oln::image2d<T>();
+ }
+ 
+ #define FROM_RGB_TO_X(T)						\\
 Index: tools/utilities/convert/Makefile.am
---- tools/utilities/convert/Makefile.am Mon, 28 Jun 2004 15:53:02 +0200 thivol_d (oln/v/10_Makefile.a 1.2 600)
-+++ tools/utilities/convert/Makefile.am Tue, 29 Jun 2004 10:46:02 +0200 palma_g (oln/v/10_Makefile.a 1.2 600)
-@@ -1,4 +1,4 @@
--AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_OPTIMIZE) -lz
-+AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_OPTIMIZE) $(ZLIB_LDFLAGS)
+--- tools/utilities/convert/Makefile.am Tue, 29 Jun 2004 10:54:13 +0200 palma_g (oln/v/10_Makefile.a 1.3 600)
++++ tools/utilities/convert/Makefile.am Wed, 07 Jul 2004 11:26:33 +0200 palma_g (oln/v/10_Makefile.a 1.3 600)
+@@ -1,4 +1,5 @@
+-AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_OPTIMIZE) $(ZLIB_LDFLAGS)
++AM_LDFLAGS = $(ZLIB_LDFLAGS)
++AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_OPTIMIZE)
  INCLUDES = -I$(srcdir)/../../lib
  LDADD = ../../lib/libolntools.a
  bin_PROGRAMS = color_space
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 29 Jun 2004 10:54:13 +0200")
+(Checkin-Time "Wed, 07 Jul 2004 11:34:58 +0200")
 (Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -128,7 +149,7 @@ Index: tools/utilities/convert/Makefile.am
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.47 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.43 640))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.14 640))
-  (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.16 640))
+  (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.17 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.39 640))
 
   (olena/ChangeLog.0 (oln/6_ChangeLog 1.50.1.98.1.5 640))
@@ -1469,50 +1490,9 @@ Index: tools/utilities/convert/Makefile.am
   (olena/oln/geom/rotate.hh (oln/u/14_rotate.hh 1.1 600))
   (olena/oln/morpher/border_morpher.hh (oln/u/15_border_mor 1.2 600))
   (olena/tests/morpher/tests/border (oln/u/16_border 1.1 600))
-  (tools/utilities/convert/color_space.cc (oln/u/19_color_spac 1.2 600))
-  (tools/utilities/convert/Makefile.am (oln/v/10_Makefile.a 1.3 600)))
+  (tools/utilities/convert/color_space.cc (oln/u/19_color_spac 1.3 600))
+  (tools/utilities/convert/Makefile.am (oln/v/10_Makefile.a 1.4 600)))
 (Merge-Parents
-  (10.187 complete)
-  (10.200 complete
-    (ChangeLog ChangeLog ChangeLog r) (doc/ChangeLog doc/ChangeLog doc/ChangeLog r)
-    (integre/ChangeLog integre/ChangeLog integre/ChangeLog r) (metalic/ChangeLog metalic/ChangeLog metalic/ChangeLog r)
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (tools/ChangeLog tools/ChangeLog tools/ChangeLog r)
-    (configure.ac configure.ac configure.ac r) (NEWS NEWS NEWS r)
-    (olena/oln/basics.hh olena/oln/basics.hh olena/oln/basics.hh r) (olena/oln/convert/rgbnrgb.hh olena/oln/convert/rgbnrgb.hh olena/oln/convert/rgbnrgb.hh r)
-    (olena/oln/convert/rgbxyz.hh olena/oln/convert/rgbxyz.hh olena/oln/convert/rgbxyz.hh r) (olena/oln/convol/slow_convolution.hh olena/oln/convol/convolution.hh olena/oln/convol/slow_convolution.hh r)
-    (olena/oln/convol/fast_gaussian.hxx olena/oln/convol/fast_gaussian.hxx olena/oln/convol/fast_gaussian.hxx r) (metalic/mlc/type.hh metalic/mlc/type.hh metalic/mlc/type.hh r)
-    (config/oln.m4 config/oln.m4 config/oln.m4 r) (olena/oln/morpho/gradient.inc olena/oln/morpho/gradient.inc olena/oln/morpho/gradient.inc r)
-    (olena/oln/topo/dmap.hxx olena/oln/topo/dmap.hxx olena/oln/topo/dmap.hxx r) (olena/oln/transforms/fft.hh olena/oln/transforms/fft.hh olena/oln/transforms/fft.hh r)
-    (integre/ntg/utils/cast.hh integre/ntg/utils/cast.hh integre/ntg/utils/cast.hh r) (integre/ntg/core/internal/global_ops.hh integre/ntg/core/internal/global_ops.hh integre/ntg/core/internal/global_ops.hh r)
-    (integre/ntg/real/int_s.hh integre/ntg/real/int_s.hh integre/ntg/real/int_s.hh r) (integre/ntg/real/int_u.hh integre/ntg/real/int_u.hh integre/ntg/real/int_u.hh r)
-    (integre/ntg/real/optraits_real_defs.hh integre/ntg/real/optraits_real_defs.hh integre/ntg/real/optraits_real_defs.hh r) (olena/oln/utils/histogram.hh olena/oln/utils/histogram.hh olena/oln/utils/histogram.hh r)
-    (olena/tests/convol/Makefile.am olena/tests/convol/Makefile.am olena/tests/convol/Makefile.am r) (olena/tests/convol/tests/slow_sum_2d_1 olena/tests/convol/tests/slow_sum_2d_1 olena/tests/convol/tests/slow_sum_2d_1 r)
-    (olena/tests/convol/tests/slow_sum_2d_2 olena/tests/convol/tests/slow_sum_2d_2 olena/tests/convol/tests/slow_sum_2d_2 r) (olena/tests/convol/tests/sobel_gradient olena/tests/convol/tests/sobel_gradient olena/tests/convol/tests/sobel_gradient r)
-    (olena/oln/morpho/attribute_closing_opening.hh olena/oln/morpho/attribute_closing_opening.hh olena/oln/morpho/attribute_closing_opening.hh r) (olena/oln/topo/tarjan/flat-zone.hh olena/oln/topo/tarjan/flat-zone.hh olena/oln/topo/tarjan/flat-zone.hh r)
-    (integre/ntg/core/macros.hh integre/ntg/core/macros.hh integre/ntg/core/macros.hh r) (olena/oln/core/abstract/image_with_impl.hh olena/oln/core/abstract/image_with_impl.hh olena/oln/core/abstract/image_with_impl.hh r)
-    (olena/tests/utils/tests/histogram olena/tests/utils/tests/histogram olena/tests/utils/tests/histogram r) (olena/oln/io/pnm_write_2d.hh olena/oln/io/pnm_write_2d.hh olena/oln/io/pnm_write_2d.hh r)
-    (olena/oln/topo/combinatorial-map/internal/anyfunc.hh olena/oln/topo/combinatorial-map/internal/anyfunc.hh olena/oln/topo/combinatorial-map/internal/anyfunc.hh r) (olena/oln/topo/combinatorial-map/internal/beta.hh olena/oln/topo/combinatorial-map/internal/beta.hh olena/oln/topo/combinatorial-map/internal/beta.hh r)
-    (olena/oln/topo/combinatorial-map/internal/lambda.hh olena/oln/topo/combinatorial-map/internal/lambda.hh olena/oln/topo/combinatorial-map/internal/lambda.hh r) (olena/oln/topo/combinatorial-map/internal/level.hh olena/oln/topo/combinatorial-map/internal/level.hh olena/oln/topo/combinatorial-map/internal/level.hh r)
-    (olena/oln/topo/combinatorial-map/internal/sigma.hh olena/oln/topo/combinatorial-map/internal/sigma.hh olena/oln/topo/combinatorial-map/internal/sigma.hh r) (olena/oln/core/abstract/image_with_type_with_dim.hh olena/oln/core/abstract/image_with_type_with_dim.hh olena/oln/core/abstract/image_with_type_with_dim.hh r)
-    (olena/oln/convert/rgbhsv.hh olena/oln/convert/rgbhsv.hh olena/oln/convert/rgbhsv.hh r) (olena/oln/convert/rgbhsl.hh olena/oln/convert/rgbhsl.hh olena/oln/convert/rgbhsl.hh r)
-    (olena/oln/convert/rgbhsi.hh olena/oln/convert/rgbhsi.hh olena/oln/convert/rgbhsi.hh r) (olena/oln/convert/rgbyuv.hh olena/oln/convert/rgbyuv.hh olena/oln/convert/rgbyuv.hh r)
-    (olena/oln/convert/rgbyiq.hh olena/oln/convert/rgbyiq.hh olena/oln/convert/rgbyiq.hh r) (olena/oln/morpho/attributes.hh olena/oln/morpho/attributes.hh olena/oln/morpho/attributes.hh r)
-    (olena/oln/core/abstract/behavior.hh olena/oln/core/abstract/behavior.hh olena/oln/core/abstract/behavior.hh r) (olena/oln/core/behavior.hh olena/oln/core/behavior.hh olena/oln/core/behavior.hh r)
-    (olena/oln/morpho/attribute_closing_opening_map.hh olena/oln/morpho/attribute_closing_opening_map.hh olena/oln/morpho/attribute_closing_opening_map.hh r) (doc/ref/out/exdoc.config.in doc/ref/out/exdoc.config.in doc/ref/out/exdoc.config.in r)
-    (integre/ntg/core/pred_succ.hh integre/ntg/core/pred_succ.hh integre/ntg/core/pred_succ.hh r) (olena/oln/utils/buffer.hxx olena/oln/utils/buffer.hxx olena/oln/utils/buffer.hxx r)
-    (olena/oln/utils/key.hxx olena/oln/utils/key.hxx olena/oln/utils/key.hxx r) (olena/oln/utils/md5.hxx olena/oln/utils/md5.hxx olena/oln/utils/md5.hxx r)
-    (olena/oln/utils/md5.hh olena/oln/utils/md5.hh olena/oln/utils/md5.hh r) (olena/oln/morpher/subq_morpher.hh olena/oln/morpher/subq_morpher.hh olena/oln/morpher/subq_morpher.hh r)
-    (olena/oln/morpher/color_morpher.hh olena/oln/morpher/color_morpher.hh olena/oln/morpher/color_morpher.hh r) (olena/oln/morpher/piece_morpher.hh olena/oln/morpher/piece_morpher.hh olena/oln/morpher/piece_morpher.hh r)
-    (olena/oln/morpher/slicing_morpher.hh olena/oln/morpher/slicing_morpher.hh olena/oln/morpher/slicing_morpher.hh r) (olena/oln/topo/tarjan/tarjan_with_attr.hh olena/oln/topo/tarjan/tarjan_with_attr.hh olena/oln/topo/tarjan/tarjan_with_attr.hh r)
-    (olena/oln/makefile.src olena/oln/makefile.src olena/oln/makefile.src r) (olena/oln/convol/slow_gaussian.hh olena/oln/convol/slow_gaussian.hh olena/oln/convol/slow_gaussian.hh r)
-    (olena/oln/convol/slow_gaussian.hxx olena/oln/convol/slow_gaussian.hxx olena/oln/convol/slow_gaussian.hxx r) (olena/oln/utils/qsort.hh olena/oln/utils/qsort.hh olena/oln/utils/qsort.hh r)
-    (() () olena/oln/transforms/shapelets.hh a) (() () olena/tests/convol/tests/slow_gaussian a)
-    (() () olena/oln/convol/fast_convolution.hh a) (() () olena/tests/convol/tests/fast_convol a)
-    (() () olena/oln/morpher/func_morpher.hh a) (() () olena/oln/core/fpoint2d.hh a)
-    (() () olena/oln/core/fdpoint2d.hh a) (() () olena/oln/geom/translate.hh a)
-    (() () olena/oln/geom/rotate.hh a) (() () olena/oln/morpher/border_morpher.hh a)
-    (() () olena/tests/morpher/tests/border a) (() () tools/utilities/convert/color_space.cc a)
-    (() () tools/utilities/convert/Makefile.am a) 
-  )
+  (10.201 complete)
 )
 (New-Merge-Parents)

@@ -1,3 +1,8 @@
+2004-07-07  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* utilities/convert/color_space.cc: Remove warnings.
+	* utilities/convert/Makefile.am: Add AM_LDFLAGS.
+
 2004-06-29  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* utilities/convert/Makefile.am: Correct flags.
