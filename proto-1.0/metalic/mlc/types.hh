@@ -46,6 +46,7 @@ namespace mlc {
   // FIXME: document.
   class unknown_type { private: unknown_type(); };
   class no_type      { private: no_type(); };
+  class default_type { private: default_type(); };
 
 
 } // end of namespace mlc

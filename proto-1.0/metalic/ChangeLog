@@ -1,3 +1,8 @@
+2005-03-10  Thierry Geraud  <theo@lrde.epita.fr>
+
+	* mlc/types.hh (default_type): New.
+	* mlc/properties.hh: New.
+
 2005-03-09  Simon Odou  <simon@lrde.epita.fr>
 
 	* mlc/is_a.hh: New. Test inheritance between two classes.
