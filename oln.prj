@@ -1,12 +1,12 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_6_stable 5)
-(Parent-Version oln 0_6_stable 4)
+(Project-Version oln 0_6_stable 6)
+(Parent-Version oln 0_6_stable 5)
 (Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Thu, 26 Dec 2002 17:59:53 +0100")
-(Checkin-Login reda)
+(Checkin-Time "Thu, 02 Jan 2003 06:59:48 +0100")
+(Checkin-Login elrond)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
 ;; diff-ignore Makefile\.in$
@@ -114,7 +114,7 @@
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.25.1.1 644))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.98.1.1.1.4 600))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.98.1.1.1.5 600))
   (configure.ac (oln/3_configure. 1.29 600))
   (configure (oln/e/7_configure 1.38.1.3 700))
   (README (oln/1_README 1.4 600))
@@ -352,7 +352,7 @@
   (tests/meta/test_array1d.cc (oln/f/26_test_array 1.2 600))
   (tests/meta/test_array2d.cc (oln/f/25_test_array 1.2 600))
   (tests/meta/test_array3d.cc (oln/f/24_test_array 1.2 600))
-  (tests/ChangeLog (oln/e/30_ChangeLog 1.47.1.1 600))
+  (tests/ChangeLog (oln/e/30_ChangeLog 1.47.1.2 600))
   (tests/check/check.hh (oln/e/40_check.hh 1.2 600))
   (tests/check/data.cc (oln/f/5_data.cc 1.2 600))
   (tests/check/data.hh (oln/f/6_data.hh 1.1 600))
@@ -381,7 +381,7 @@
   (tests/convol/sum_on_random.pgm (oln/f/42_sum_on_ran 1.1 600))
 
 
-  (tests/data/lena.ppm (oln/e/51_lena.ppm 1.1 600) :no-keywords)
+  (tests/data/lena.ppm (oln/e/51_lena.ppm 1.1 660) :no-keywords)
   (tests/data/random.pgm (oln/f/43_random.pgm 1.1 600) :no-keywords)
   (tests/io/2d.cc (oln/e/47_2d.cc 1.4 600))
   (tests/io/loadsave.hh (oln/e/48_loadsave.h 1.5 600))
@@ -481,7 +481,7 @@
   (tests/types/tests/int_s2 (oln/g/39_int_s2 1.1 600))
   (tests/types/tests/int_s1 (oln/g/40_int_s1 1.1 600))
   (tests/types/tests/unsafe2 (oln/g/41_unsafe2 1.1 600))
-  (tests/types/tests/conv2 (oln/g/42_conv2 1.1 600))
+  (tests/types/tests/conv2 (oln/g/42_conv2 1.1.1.1 600))
   (tests/types/tests/int6d (oln/g/43_int6d 1.1 600))
   (tests/types/tests/int6c (oln/g/44_int6c 1.1 600))
   (tests/types/tests/int6b (oln/g/45_int6b 1.1 600))
@@ -678,7 +678,7 @@
 ;; to version 0_5.77(w), by ender:
 
   (oln/transforms/wavelet_coeffs.hh (oln/i/34_wavelet_co 1.2 600))
-  (oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2 600))
+  (oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.3 600))
   (oln/transforms/fft.hh (oln/i/36_fft.hh 1.2 600))
 
 ;; Files added by populate at Wed, 13 Nov 2002 10:22:37 +0100,
@@ -741,5 +741,7 @@
   (utilities/morpho/morpho_template_with_twowin.cc (oln/j/9_morpho_tem 1.1 600))
   (utilities/morpho/morpho_template_with_functor.cc (oln/j/10_morpho_tem 1.1 600))
 )
-(Merge-Parents)
+(Merge-Parents
+  (0_6_stable.5 complete)
+)
 (New-Merge-Parents)

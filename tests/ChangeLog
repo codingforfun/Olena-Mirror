@@ -1,3 +1,7 @@
+2003-01-02  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* types/tests/conv2: adjust.
+
 2002-12-11  Quoc Peyrot  <chojin@lrde.epita.fr>
 
 	* morpho/extrkiller.cc: use morpho namespace instead of level for

@@ -292,12 +292,12 @@ namespace oln {
     struct _dim_iterate_rec<dim, 0>
     {
       template <class _I, class K>
-      static void doit(image<_I>& _im,
-		       Point(Concrete(_I))& p,
-		       const unsigned l1,
-		       const unsigned l2,
-		       const K& coeffs,
-		       _dwt_transform_dir d)
+      static void doit(image<_I>& ,
+		       Point(Concrete(_I))& ,
+		       const unsigned ,
+		       const unsigned ,
+		       const K& ,
+		       _dwt_transform_dir )
       {
 	// end of recursion
       }

@@ -1,3 +1,8 @@
+2003-01-02  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* oln/transforms/dwt.hh: remove names of unused arguments in
+	declaration.
+
 2002-12-26  Reda Dehak  <reda@nemours.epita.fr>
 
 	* oln/convol/convolution.hh: Fix include files.
