@@ -1,5 +1,5 @@
 #include <ntg/int.hh>
-#include <oln/utils/timer.hh>
+#include <oln/math/macros.hh>
 
 #include <iostream>
 
@@ -7,7 +7,7 @@
 #include "data.hh"
 
 using namespace ntg;
-using namespace oln::utils;
+using namespace oln::math;
 
 #define OK_OR_FAIL				\
       std::cout << "OK" << std::endl;		\
@@ -22,22 +22,10 @@ check()
 {
   bool fail = false;
 
-  timer t;
+  if (sqr<int_u8>(4) == 16)
+    OK_OR_FAIL;
 
-  t.start();
-
-  t.stop();
-
-  float b = t.value();
-
-  t.resume();
-
-  for (int i = 0; i < 1000000000; )
-    ++i;
-
-  b = t.value() - b;
-
-  if (b >= 0)
+  if (abs<int_s8>(-4) == 4)
     OK_OR_FAIL;
 
   return fail;

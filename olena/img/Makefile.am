@@ -5,6 +5,7 @@ SOURCE_IMGS =			\
   white.pbm			\
   face_se.pbm			\
   lena.ppm			\
+  lena1d.ppm			\
   lena256.pgm			\
   lena_dark.pgm			\
   map.pbm			\
@@ -28,6 +29,17 @@ BUILT_IMGS =			\
   lena128.pgm			\
   lena16b.pgm			\
   lena16b.ppgm			\
+  lena1d.pbm			\
+  lena1d.pbm.gz			\
+  lena1d.pgm			\
+  lena1d.pgm.gz			\
+  lena1d.ppbm			\
+  lena1d.ppgm			\
+  lena1d.ppm.gz			\
+  lena1d.pppm			\
+  lena1d128.pgm			\
+  lena1d16b.pgm			\
+  lena1d16b.ppgm		\
   se.ppbm			\
   se9.ppbm			\
   se9.pbm.gz			\
@@ -47,6 +59,17 @@ SRC_BUILT_IMGS =			\
   $(srcdir)/lena128.pgm			\
   $(srcdir)/lena16b.pgm			\
   $(srcdir)/lena16b.ppgm		\
+  $(srcdir)/lena1d.pbm			\
+  $(srcdir)/lena1d.pbm.gz		\
+  $(srcdir)/lena1d.pgm			\
+  $(srcdir)/lena1d.pgm.gz		\
+  $(srcdir)/lena1d.ppbm			\
+  $(srcdir)/lena1d.ppgm			\
+  $(srcdir)/lena1d.ppm.gz		\
+  $(srcdir)/lena1d.pppm			\
+  $(srcdir)/lena1d128.pgm		\
+  $(srcdir)/lena1d16b.pgm		\
+  $(srcdir)/lena1d16b.ppgm		\
   $(srcdir)/se.ppbm			\
   $(srcdir)/se9.ppbm			\
   $(srcdir)/se9.pbm.gz			\
@@ -91,3 +114,8 @@ $(srcdir)/lena128.pgm: lena.pgm
 $(srcdir)/lena16b.pgm: lena.pgm
 	$(PNMDEPTH) 65535 `test -f '$<' || echo '$(srcdir)/'`$< > $@
 
+$(srcdir)/lena1d128.pgm: lena1d.pgm
+	$(IMAGEMAGICK_CONVERT) -scale 25% `test -f '$<' || echo '$(srcdir)/'`$< $@
+
+$(srcdir)/lena1d16b.pgm: lena1d.pgm
+	$(PNMDEPTH) 65535 `test -f '$<' || echo '$(srcdir)/'`$< > $@

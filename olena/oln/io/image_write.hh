@@ -29,7 +29,8 @@
 # define OLENA_IO_IMAGE_WRITE_HH_
 
 # include <oln/config/system.hh>
-# include <oln/core/image.hh>
+# include <oln/core/abstract/image_with_dim.hh>
+# include <oln/core/image2d.hh>
 
 # include <oln/io/image_base.hh>
 # include <oln/io/pnm_write.hh>
@@ -118,7 +119,8 @@ namespace oln {
 
       template <class E>
       inline bool
-      write(const abstract::image<E>& input, const std::string& name)
+      write(const abstract::image_with_dim<2, E>& input, 
+	    const std::string& name)
       {
 	typedef try_stream_wrappers_out<StreamAny, E, writers_trier> 
 	  stream_trier;
@@ -129,6 +131,20 @@ namespace oln {
 	  return true;
 	// std::clog << "[unable to write '" << name << "'] " << std::endl;
 	return false;
+      }
+
+      template <class E>
+      inline bool
+      write(const abstract::image_with_dim<1, E>& input, 
+	    const std::string& name)
+      {
+	image2d<Value(E)> tmp(1, input.ncols());
+	Iter(image1d<Value(E)>) it(input);
+	for_all(it)
+	  tmp(0, it.col()) = input[it];
+	if (!write(tmp, name))
+	  return false;
+	return true;
       }
 
     } // end of internal

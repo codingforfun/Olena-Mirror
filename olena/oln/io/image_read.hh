@@ -29,7 +29,8 @@
 # define OLENA_IO_IMAGE_READ_HH_
 
 # include <oln/config/system.hh>
-# include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/image_with_dim.hh>
+# include <oln/core/image2d.hh>
 
 # include <oln/io/image_base.hh>
 # include <oln/io/pnm_read.hh>
@@ -108,7 +109,7 @@ namespace oln {
 
       template <class E>
       inline bool
-      read(abstract::image<E>& output, const std::string& name)
+      read(abstract::image_with_dim<2,E>& output, const std::string& name)
       {
 	// FIXME: E or abstract::image<E> ?
 	// E is convenient.
@@ -151,6 +152,24 @@ namespace oln {
 	    }
 	// std::clog << "[unable to read '" << name << "'] " << std::endl;
 	return false;
+      }
+
+      template <class E>
+      inline bool
+      read(abstract::image_with_dim<1, E>& output, const std::string& name)
+      {
+	image2d<Value(E)> tmp;
+	if (!read(tmp, name))
+	  return false;
+	if (tmp.nrows() != 1)
+	  return false;
+	typename image2d<Value(E)>::iter_type it(tmp);
+	// FIXME: use resize
+	output.exact() = E(tmp.ncols());
+	for_all(it)
+	  output(it.col()) = tmp[it];
+	std::cout << output << std::endl;
+	return true;
       }
 
     } // end of internal

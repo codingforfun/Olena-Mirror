@@ -79,10 +79,9 @@ namespace oln {
       friend T min<T, U>(const histogram<T, U>& hist);
       friend T max<T, U>(const histogram<T, U>& hist);
 
-      template <class I_>
-      void init(const abstract::image<I_> &_img)
+      template <class I>
+      void init(const abstract::image<I> &img)
       {
-	Exact_cref(I, img);
 	Iter(I) p(img);
 
 	for_all (p)

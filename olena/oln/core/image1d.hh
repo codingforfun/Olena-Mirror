@@ -114,7 +114,7 @@ namespace oln {
     {
       return
 	std::string("image1d<")
-	+ T::name() + ","
+	+ ntg_name(T) + ","
 	+ Exact::name() + ">";
     }
 

@@ -51,10 +51,10 @@ namespace oln {
 	static std::string name()
 	{ return "-"; }
 	
-	static bool knows_ext(const std::string& ext)
+	static bool knows_ext(const std::string&)
 	{ return false; }
 	
-	static bool write(std::ostream& in, const I& output)
+	static bool write(std::ostream&, const I&)
 	{ return false; }
       };
 

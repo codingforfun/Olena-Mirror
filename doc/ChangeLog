@@ -1,5 +1,13 @@
 2003-08-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* demo/Makefile.am: Compile image.cc.
+
+2003-08-01  David Lesage  <david@lrde.epita.fr>
+
+	* demo/image.cc: Fix. Add some FIXME waiting for binary_image.
+	
+2003-08-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
 	* demo/test-reconstruction.cc: Move into
 	top_srcdir/olena/tests/morpho/tests/test-reconstruction.
 	* demo/Makefile.am: Adjust.

@@ -1,19 +1,44 @@
 2003-08-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* oln/core/image1d.hh(name): Fix.
+	* oln/core/image_with_impl.hh: Fix method visibility.
+
+	* oln/io/image_read.hh: Handle mono-dimensional images.
+	* oln/io/image_write.hh: Likewise.
+
+	* img/lena1d.ppm: New image.
+	* img/Makefile.am: Adjust.
+	* tests/io/tests/1d: New test.
+	
+2003-08-01  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
+
+	* tests/math/tests/macros: New test.
+	* tests/math/Makefile.am: Adjust.
+
+	* oln/math/macros.hh: Fix bugs.
+
+	* tests/utils/tests/timer: Fix extra include files.
+
+2003-08-01  David Lesage  <david@lrde.epita.fr>
+
+	* oln/utils/histogram.hh: Fix. Remove last Exact_cref.
+
+2003-08-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
 	* tests/morpho/tests/test-reconstruction(main): Use rdata.
 
 	* tests/io/Makefile.am (EXTRA_DIST): Distribute loadsave.hh.
 
 2003-08-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	Reorganize the testsuite.
 
 	* tests/check/Makefile.runtests: New.
 	* tests/check/Makefile.am: Adjust.
 	* tests/check/Makefile.flags: Likewise.
 	* tests/check/Makefile.check: Likewise.
-	
-	* tests/arith/runtests: Remove.	
+
+	* tests/arith/runtests: Remove.
 	* tests/arith/Makefile.am: Adjust.
 
 	* tests/core/runtests: Remove.
@@ -28,7 +53,7 @@
 	tests/convol/tests/slow_sum_2d_2.
 	* tests/convol/sobel_gradient.cc: Rename as
 	tests/convol/tests/sobel_gradient.
-		
+
 	* tests/io/Makefile.am: Use runtests.
 	* tests/io/2d.cc: Rename as...
 	* tests/io/tests/2d: ...this.
@@ -49,10 +74,10 @@
 	* tests/level/invert.cc: Rename as...
 	* tests/level/tests/invert: ...this.
 	* tests/level/set_level.cc: Rename as...
-	* tests/level/tests/set_level: ...this.	
+	* tests/level/tests/set_level: ...this.
 	* tests/level/threshold.cc: Rename as...
-	* tests/level/tests/threshold: ...this.		
-	
+	* tests/level/tests/threshold: ...this.
+
 	* tests/morpho/Makefile.am: Use runtests.
 	* tests/morpho/edoc.cc: Rename as...
 	* tests/morpho/tests/edoc: ...this.
@@ -65,7 +90,7 @@
 	* tests/topo/test-cmap.cc: Rename as...
 	* tests/topo/tests/test-cmap: ...this.
 	* tests/topo/test-dmap.cc: Rename as...
-	* tests/topo/tests/test-dcmap: ...this.	
+	* tests/topo/tests/test-dcmap: ...this.
 	* tests/topo/test-inter-pixel.cc: Rename as...
 	* tests/topo/tests/test-inter-pixel: ...this.
 	* tests/topo/test-tarjan.cc: Rename as...
@@ -76,7 +101,7 @@
 	* tests/transforms/tests/dwt: ...this.
 	* tests/transforms/fft.cc: Rename as...
 	* tests/transforms/tests/fft: ...this.
-	
+
 	* tests/utils/Makefile.am: Use runtests.
 	* tests/utils/histogram.cc: Rename as...
 	* tests/utils/tests/histogram: ...this.
@@ -84,9 +109,9 @@
 	* tests/utils/tests/stat: ...this.
 	* tests/utils/timer.cc: Rename as...
 	* tests/utils/tests/timer: ...this.
-	
+
 2003-08-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* tests/check/Makefile.flags: Add new flags.
 	* tests/arith/Makefile.am: Adjust.
 	* tests/core/Makefile.am: Likewise.
@@ -103,9 +128,9 @@
 	public.
 
 	* oln/Makefile.am: Add missing files.
-	
+
 	* tests/check/Makefile.flags: Minor fix.
-	
+
 2003-07-31  Giovanni Palma  <palma_g@lrde.epita.fr>
 
 	* oln/morpho/gradient.inc,
@@ -278,7 +303,7 @@
 
 	* oln/utils/timer.hh: Change namespace.
 	* oln/utils/histogram.hh: Remove exact_cref.
-	
+
 	* tests/utils/timer.cc: New test.
 	* tests/utils/stat.cc: Likewise.
 	* tests/utils/histogram.cc: Likewise.
