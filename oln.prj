@@ -1,21 +1,13 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 28)
-(Parent-Version oln 0_5 27)
-(Version-Log "2002-09-02  Alexandre Duret-Lutz  <duret_g@epita.fr>
-
-	* doc/Makefile.am (oln_ref_TEX): Split into ...
-	(built_oln_ref_TEX, oln_ref_TEX): ... these two variables.
-	(CLEANFILES): Clean only built_oln_ref_TEX.
-
-	* tpl/processing.tpl (md5sum): Use only the first word in md5sum
-	output.
-
+(Project-Version oln 0_5 29)
+(Parent-Version oln 0_5 28)
+(Version-Log "typo
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 02 Sep 2002 15:31:00 +0200")
-(Checkin-Login adl)
+(Checkin-Time "Mon, 02 Sep 2002 16:36:09 +0200")
+(Checkin-Login duret_g)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
 ;; diff-ignore Makefile\.in$
@@ -99,19 +91,19 @@
   (demo/tour.cc (oln/d/45_tour.cc 1.3 600))
 
 
-  (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.8 644))
+  (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.9 644))
   (doc/ChangeLog (oln/e/1_ChangeLog 1.20 600))
   (doc/configure.ac (oln/e/2_configure. 1.5 600))
   (doc/configure (oln/e/3_configure 1.9 700))
   (doc/doc/bin () :directory)
   (doc/doc/html () :directory)
-  (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.12 600))
-  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.14 644))
+  (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.13 600))
+  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.15 644))
   (doc/doc/oln-ref.tex (oln/f/14_oln-ref.te 1.3 600))
   (doc/img/lena256.pgm (oln/e/21_lena256.pg 1.1 600) :no-keywords)
   (doc/img/object.pbm (oln/d/49_object.pbm 1.1 600) :no-keywords)
   (doc/Makefile.am (oln/e/0_Makefile.a 1.1 600))
-  (doc/Makefile.in (oln/e/5_Makefile.i 1.9 644))
+  (doc/Makefile.in (oln/e/5_Makefile.i 1.10 644))
   (doc/tpl/processing.tpl (oln/d/48_processing 1.10 600))
 
   (img/lena128.pgm (oln/e/23_lena128.pg 1.1 600) :no-keywords)

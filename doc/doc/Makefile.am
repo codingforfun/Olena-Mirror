@@ -3,7 +3,7 @@ noinst_DATA = oln-ref.ps oln-ref.pdf html/oln-ref.html
 tex_TEX = oln-ref.tex
 built_oln_ref_TEX = \
   ref-morpho.tex \
-  ref-level.tex \
+  ref-level.tex
 oln_ref_TEX = \
   $(built_oln_ref_TEX) \
   ref-types.tex
