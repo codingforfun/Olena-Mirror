@@ -194,7 +194,7 @@
 (tools/swilena/src/swilena_morphodefs.i 7836 1045569366 o/18_swilena_mo 1.2)
 (doc/dev/faq.texi 5051 1045816900 p/44_faq.texi 1.8)
 (tools/lib/getopt.h 6404 1043138750 p/29_getopt.h 1.1)
-(oln/config/oln.m4 21005 1046013206 j/15_oln.m4 1.21)
+(oln/config/oln.m4 21015 1046013206 j/15_oln.m4 1.21)
 (oln/oln/io/gz_stream.hh 8250 1042929274 f/17_gz_stream. 1.6)
 (oln/oln/level/fill.hh 1714 1043018093 32_fill.hh 1.4)
 (oln/oln/core/bkd_iter1d.hh 2271 1042737226 d/38_bkd_iter1d 1.5)
