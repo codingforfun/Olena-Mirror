@@ -91,7 +91,7 @@ CLEANFILES = = *.tmp *.aux *.bbl *blg *.dvi *.lot *.log *.out *.toc
 ### What gets installed.
 ###
 
-docdir = $(datadir)/doc/@PACKAGE_NAME@-@PACKAGE_VERSION@
+docdir = $(datadir)/doc/@PACKAGE_TARNAME@
 
 install-data-hook:
 	$(mkinstalldirs) $(DESTDIR)$(docdir)

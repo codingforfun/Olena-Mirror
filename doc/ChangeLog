@@ -1,3 +1,14 @@
+2003-02-12  Raphaël Poss  <raph@lrde.epita.fr>
+
+	(Changes from 0.7)
+	
+	* dev/oln-dev.texi: Tweak copyright holder name.
+
+	* ref/Makefile.am (docdir): Minor fix.
+	* dev/Makefile.am (docdir): Minor fix.
+
+	* ref/oln-ref.tex: Update.
+
 2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* dev/abstract.texi (Abstract): Bump version.

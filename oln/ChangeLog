@@ -1,3 +1,14 @@
+2003-02-11  Raphaël Poss  <raph@lrde.epita.fr>
+
+	(Changes from 0.7)
+	
+	* oln/Makefile.am: Remove file.
+	
+	* config/oln.m4 (OLN_VERSION, OLN_MAJOR_VERSION): Put under
+	version control.
+
+	* conf/oln-config.shin (Usage): Minor fixes.
+
 2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* config/oln.m4 (OLN_VERSION): Bump version.

@@ -7,15 +7,6 @@ SUBDIRS = oln $(OLN_TOP_SUBDIRS)
 ACLOCAL_AMFLAGS = -I oln/config
 CONFIGURE_DEPENDENCIES = oln/config/oln.m4
 
-# This is totally experimental. Comments are welcome.
-maintainer-check:
-	if cppi --version >/dev/null 2>&1; then \
-	  find $(srcdir) -name '*.{cc,hh,hxx}' | \
-	    xargs cppi --check; \
-	else \
-	  echo "$@: GNU cppi is required" >&2; \
-	fi
-
 dist_noinst_DATA = README BUILD INSTALL THANKS FAQ
 MAINTAINERCLEANFILES = README BUILD INSTALL THANKS FAQ
 
@@ -37,3 +28,15 @@ THANKS:
 
 FAQ: 
 	$(INFOTOTEXT) $(devdoc)/faq.texi >$@
+
+DISTCHECK_CONFIGURE_FLAGS = --disable-manpages-regen
+
+# This is totally experimental. Comments are welcome.
+maintainer-check:
+	if cppi --version >/dev/null 2>&1; then \
+	  find $(srcdir) -name '*.{cc,hh,hxx}' | \
+	    xargs cppi --check; \
+	else \
+	  echo "$@: GNU cppi is required" >&2; \
+	fi
+

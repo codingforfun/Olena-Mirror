@@ -1,5 +1,6 @@
 #! /bin/sh
 
+progname=`basename "$0"`
 OLN_BUGS="@PACKAGE_BUGREPORT@"
 OLN_VERSION="@PACKAGE_VERSION@"
 CXX="@CXX@"
@@ -39,7 +40,7 @@ print_env_vars() {
 
 usage() {
   cat <<EOF
-$0 displays compilation flags for programs using Olena.
+$progname displays compilation flags for programs using Olena $OLN_VERSION.
 
 Usage: $0 [OPTIONS]
 
@@ -49,8 +50,8 @@ Usage: $0 [OPTIONS]
   -C, --csh           for --env: use csh-style syntax
 
   -c, --cxx           print the supported compiler name 
-  -cf, --cxxflags     print compilation flags for the supported compiler
-  -lf, --ldflags      print linker flags for the supported compiler
+  -X, --cxxflags     print compilation flags for the supported compiler
+  -L, --ldflags      print linker flags for the supported compiler
 
   -O, --optimize      add options for extra optimization
   -W, --strict        add options for extra warnings
@@ -80,7 +81,7 @@ while [ $# -gt 0 ]; do
        usage 0
        ;;
     -v | --version)
-       echo "$OLN_VERSION"
+       echo "$progname for Olena $OLN_VERSION"
        ;;
     -c | --cxx)
        print_cxx=yes
@@ -97,10 +98,10 @@ while [ $# -gt 0 ]; do
     -x | --strict-errors)
        strict=errors
        ;;
-    -cf | --cxxflags)
+    -X | --cxxflags)
        print_cxxflags=yes
        ;;
-    -lf | --ldflags)
+    -L | --ldflags)
        print_ldflags=yes 
        ;;
     -O | --optimize)

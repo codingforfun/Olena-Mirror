@@ -1,11 +1,14 @@
 #! /bin/sh
+# gen_scripts.sh
+
+# Copyright (C) 2003 Epita Research and Development Laboratory.
 
 die() {
   echo "$@" 1>&2
   exit 1
 }
 
-{ [ -d "$1" ] && [ -d "$2" ] && [ -d "$3" ]; } || die "usage: $0 <includedir> <srcdir> <builddir>"
+[ -d "$1" -a -d "$2" -a -d "$3" ] || die "usage: $0 <includedir> <srcdir> <builddir>"
 includedir=`cd "$1" && pwd`
 srcdir=`cd "$2" && pwd`
 destdir="$3"
@@ -43,5 +46,5 @@ while [ $n -le $nconf ]; do
   n=`expr $n + 1`
 done
 
-rm config.status
+rm -f config.status
 
