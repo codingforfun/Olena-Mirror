@@ -1,34 +1,17 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 135)
-(Parent-Version oln 10 134)
-(Version-Log "	* oln/core/image1d.hh: Add informations to image_id.
-	* oln/core/image2d.hh: Likewise
-        * oln/core/image3d.hh: Likewise
-	* oln/core/impl/image_array1d.hh: Add empty constructor for any_with_diamond.
-	* oln/core/impl/image_array.hh: Likewise.
-	* oln/core/impl/image_array2d.hh: Likewise.
-	* oln/core/impl/image_array3d.hh: Likewise.
-	* oln/core/impl/image_impl.hh: Likewise.
-	* oln/core/abstract/image_size.hh: Likewise.
-	* oln/core/image1d_size.hh: Likewise.
-	* oln/core/image2d_size.hh: Likewise.
-	* oln/core/image3d_size.hh: Likewise.
-	* tests/morpher/tests/piece: New.
-	* tests/morpher/tests/iter: New.
-	* tests/morpher/tests/slicing: New.
-	* oln/core/abstract/image.hh: Size() returns const inside of const &.
-	* oln/morpher/piece_morpher.hh: Adapt to new version of generic morpher.
-	Respect 80 columns.
-	* oln/morpher/slicing_morpher.hh: Likewise.
-	* oln/morpher/iter_morpher.hh: Likewise.
-	Better example for documentation.
-	* oln/Makefile.am: Add files.
+(Project-Version oln 10 136)
+(Parent-Version oln 10 135)
+(Version-Log "2004-04-07  Damien Thivolle  <damien@lrde.epita.fr>
+	* config/oln.m4: Fix compiler detection.
+	* doc/ref/Makefile.am: Add `CLEANFILES' variable to delete all the
+	created files.
+	* olena/oln/Makefile.am: Add forgotten files to the distribution.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sun, 04 Apr 2004 16:48:06 +0200")
-(Checkin-Login odou_s)
+(Checkin-Time "Wed, 07 Apr 2004 19:04:46 +0200")
+(Checkin-Login thivol_d)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -130,11 +113,11 @@
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.18 600))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.12 600))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19 600))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.13 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.40 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.74 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.75 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 600))
 
@@ -155,7 +138,7 @@
   (doc/demo/tour.cc (oln/d/45_tour.cc 1.13 600))
   (doc/ref/bin () :directory)
   
-  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.16 600))
+  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.17 600))
   (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.6.1.5 600))
   (doc/ref/oln-ref.tex (oln/f/14_oln-ref.te 1.3.1.3 600))
   (doc/ref/integre-ref.tex (oln/g/34_ref-types. 1.12 600))
@@ -320,7 +303,7 @@
   (olena/oln/level/lut.hh (oln/29_lut.hh 1.10 600))
   (olena/oln/level/set_level.hh (oln/p/1_set_level. 1.11 600))
   (olena/oln/level/threshold.hh (oln/f/15_threshold. 1.14 600))
-  (config/oln.m4 (oln/j/15_oln.m4 1.37 600))
+  (config/oln.m4 (oln/j/15_oln.m4 1.38 600))
 
   (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.15 600))
   (metalic/mlc/array/1d.hh (oln/f/23_array1d.hh 1.11 600))
@@ -811,7 +794,7 @@
   (integre/tests/check/defs.in (oln/q/42_defs.in 1.1 600))
   (metalic/mlc/array/objs.hh (oln/q/45_objs.hh 1.3 600))
   (metalic/mlc/config/system.hh (oln/q/46_system.hh 1.2 600))
-  (olena/oln/Makefile.am (oln/q/47_Makefile.a 1.3.1.1.1.6.1.7.1.6 600))
+  (olena/oln/Makefile.am (oln/q/47_Makefile.a 1.3.1.1.1.6.1.7.1.7 600))
   (integre/ntg/config/system.hh (oln/q/48_system.hh 1.2 600))
   (metalic/tests/main/tests/is_a1 (oln/r/17_is_a1 1.3 600))
   (metalic/tests/main/tests/ensure3 (oln/r/18_ensure3 1.3 600))

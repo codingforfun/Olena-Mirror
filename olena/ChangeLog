@@ -1,3 +1,7 @@
+2004-04-07  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* olena/oln/Makefile.am: Add forgotten files to the distribution.
+
 2004-04-04  Simon Odou  <simon@lrde.epita.fr>
 
 	* oln/core/image1d.hh: Add informations to image_id.

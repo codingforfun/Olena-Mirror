@@ -38,6 +38,8 @@ nobase_oln_HEADERS =				\
   convol/fast_gaussian.hh			\
   convol/fast_gaussian.hxx			\
   convol/fast_gaussian_coefficient.hh		\
+  convol/nagao.hh				\
+  convol/nagao.hxx				\
   core/abstract/binary_image.hh			\
   core/abstract/behavior.hh			\
   core/abstract/dpoint.hh			\
@@ -221,6 +223,8 @@ nobase_oln_HEADERS =				\
   utils/buffer.hh				\
   utils/buffer.hxx				\
   utils/histogram.hh				\
+  utils/se_stat.hh				\
+  utils/se_stat.hxx				\
   utils/stat.hh					\
   utils/special_points.hh			\
   utils/timer.hh

@@ -1,5 +1,10 @@
 2004-04-03  Damien Thivolle  <damien@lrde.epita.fr>
 
+	* doc/ref/Makefile.am: Add `CLEANFILES' variable to delete all the
+	created files.
+
+2004-04-03  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* doc/ref/out/exdoc.config.in: Remove -DNEED_ROUND -DNEED_ROUNDF flags.
 
 2004-04-03  Damien Thivolle  <damien@lrde.epita.fr>
