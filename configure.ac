@@ -59,6 +59,8 @@ OLN_COLLECTION([OLN_TOP],
      AC_CHECK_PROGS([PGMTOPBM], [pgmtopbm], [$am_aux_dir/missing pgmtopbm])
      AC_ARG_VAR([PNMTOPLAINPNM], [program to convert Portable Anymaps to plain text])
      AC_CHECK_PROGS([PNMTOPLAINPNM], [pnmtoplainpnm], [$am_aux_dir/missing pnmtoplainpnm])
+     AC_ARG_VAR([PNMDEPTH], [program to change depth of Portable Anymaps])
+     AC_CHECK_PROGS([PNMDEPTH], [pnmdepth], [$am_aux_dir/missing pnmdepth])
      AC_ARG_VAR([IMAGEMAGICK_CONVERT], [the `convert' utility from ImageMagick])
      AC_CHECK_PROGS([IMAGEMAGICK_CONVERT], [convert], [$am_aux_dir/missing convert])
 

@@ -1,16 +1,19 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 8 28)
-(Parent-Version oln 8 27)
+(Project-Version oln 8 31)
+(Parent-Version oln 8 28)
 (Version-Log "Index: olena/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* oln/Makefile.am: Add missing includes.
+        * tests/io/Makefile.am: Add lena16b.pgm and lena16b.ppgm to
+        cleanfiles.
+
+        * img/Makefile.am: Add test-cmap.pgm.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 04 Apr 2003 15:29:25 +0200")
+(Checkin-Time "Mon, 07 Apr 2003 20:17:36 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -92,11 +95,11 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.13 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.14 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.30 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.15 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.34 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.7 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.6 640))
 
@@ -108,7 +111,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (cleanup.sh (oln/o/29_cleanup.sh 1.5 750))
 
-  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.13 640))
+  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.14 640))
 
   (doc/demo/image.cc (oln/d/46_image.cc 1.5 640))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.16 640))
@@ -131,7 +134,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/img/lena256.pgm (oln/n/14_lena256.pg 1.1 640) :no-keywords)
   (olena/img/lena_dark.pgm (oln/n/13_lena_dark. 1.1 640) :no-keywords)
   (olena/img/lena.ppm (oln/n/10_lena.ppm 1.1 640) :no-keywords)
-  (olena/img/Makefile.am (oln/o/34_Makefile.a 1.2 640) :no-keywords)
+  (olena/img/Makefile.am (oln/o/34_Makefile.a 1.5 640) :no-keywords)
   ; (oln/img/Makefile.in ())
   (olena/img/map.pbm (oln/n/12_map.pbm 1.1 640) :no-keywords)
   (olena/img/neighbor9.pbm (oln/n/8_neighbor9. 1.1 640) :no-keywords)
@@ -265,8 +268,8 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/io/pnm3d.hh (oln/b/14_pnm3d.hh 1.4 640))
   (olena/oln/io/pnm.hh (oln/b/19_pnm.hh 1.3 640))
   (olena/oln/io/pnm_read3d.hxx (oln/b/11_pnm_read3d 1.8 640))
-  (olena/oln/io/pnm_read_common.hxx (oln/b/10_pnm_read_c 1.7.1.2 640))
-  (olena/oln/io/pnm_read.hxx (oln/b/16_pnm_read.h 1.9.1.2 640))
+  (olena/oln/io/pnm_read_common.hxx (oln/b/10_pnm_read_c 1.7.1.3 640))
+  (olena/oln/io/pnm_read.hxx (oln/b/16_pnm_read.h 1.9.1.3 640))
   (olena/oln/io/pnm_write3d.hxx (oln/b/9_pnm_write3 1.1.1.8 640))
   (olena/oln/io/pnm_write_common.hxx (oln/b/8_pnm_write_ 1.8.1.2 640))
   (olena/oln/io/pnm_write.hxx (oln/b/15_pnm_write. 1.8.1.2 640))
@@ -416,9 +419,9 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/tests/convol/sobel_gradient.cc (oln/f/45_sobel_grad 1.3.1.4 640))
   (olena/tests/convol/sum_on_random.pgm (oln/f/42_sum_on_ran 1.1 640) :no-keywords)
   
-  (olena/tests/io/2d.cc (oln/e/47_2d.cc 1.6 640))
+  (olena/tests/io/2d.cc (oln/e/47_2d.cc 1.7 640))
   (olena/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.7.1.3 640))
-  (olena/tests/io/Makefile.am (oln/e/49_Makefile.a 1.12 640))
+  (olena/tests/io/Makefile.am (oln/e/49_Makefile.a 1.13 640))
   (olena/tests/io/pretty.cc (oln/i/42_pretty.cc 1.2 640))
   (olena/tests/io/se_fail.cc (oln/i/43_se_fail.cc 1.2 640))
   (olena/tests/io/se_pass.cc (oln/i/44_se_pass.cc 1.2 640))
@@ -822,6 +825,11 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/topo/inter-pixel/internal/dir.hxx (oln/r/49_dir.hxx 1.1 600))
 )
 (Merge-Parents
-  (8.27 complete)
+  (8.30 complete
+    (ChangeLog ChangeLog ChangeLog r) (olena/ChangeLog olena/ChangeLog olena/ChangeLog m)
+    (configure.ac configure.ac configure.ac r) (olena/img/Makefile.am olena/img/Makefile.am olena/img/Makefile.am m)
+    (olena/oln/io/pnm_read_common.hxx olena/oln/io/pnm_read_common.hxx olena/oln/io/pnm_read_common.hxx r) (olena/oln/io/pnm_read.hxx olena/oln/io/pnm_read.hxx olena/oln/io/pnm_read.hxx r)
+    (olena/tests/io/2d.cc olena/tests/io/2d.cc olena/tests/io/2d.cc r) 
+  )
 )
 (New-Merge-Parents)

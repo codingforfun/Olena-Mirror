@@ -96,8 +96,8 @@ namespace oln {
 	}
       };
 
-      template <class behaviour>
-      struct reader<ReadPnmPlain, image2d<int_u<8, behaviour> > >
+      template <unsigned N, class behaviour>
+      struct reader<ReadPnmPlain, image2d<int_u<N, behaviour> > >
       {
 	static const std::string& name()
 	{ static const std::string _name("pnm/P2"); return _name; }
@@ -105,7 +105,7 @@ namespace oln {
 	static bool knows_ext(const std::string& ext)
 	{ return ext == "ppgm"; }
 
-	static bool read(std::istream& in, image2d<int_u<8, behaviour> >& im)
+	static bool read(std::istream& in, image2d<int_u<N, behaviour> >& im)
 	{
 	  if (!pnm_read_header(in, im, '2'))
 	    return false;
@@ -174,8 +174,8 @@ namespace oln {
 	}
       };
 
-      template <class behaviour>
-      struct reader<ReadPnmRaw, image2d<int_u<8, behaviour> > >
+      template <unsigned N, class behaviour>
+      struct reader<ReadPnmRaw, image2d<int_u<N, behaviour> > >
       {
 	static const std::string& name()
 	{ static const std::string _name("pnm/P5"); return _name;	}
@@ -183,7 +183,7 @@ namespace oln {
 	static bool knows_ext(const std::string& ext)
 	{ return ext == "pgm"; }
 
-	static bool read(std::istream& in, image2d<int_u<8, behaviour> >& im)
+	static bool read(std::istream& in, image2d<int_u<N, behaviour> >& im)
 	{
 	  if (!pnm_read_header(in, im, '5'))
 	    return false;
