@@ -41,7 +41,7 @@ check(void)
   // Second way to do it, using meta-arrays.
   //
 
-  ret = convol::slow::convolve(img, (ints_2d =
+  ret = convol::slow::convolve<int_s< 10 > >(img, (ints_2d =
 				     1, 1, 1, lbrk,
 				     1, x(1), 1,
 				     1, 1, 1, end));

@@ -40,8 +40,7 @@ check(void)
   cout << "=== Convolution kernel ===" << endl << endl
        << w_win << endl << endl;
 
-  image2d< int_s< 10 > > ret;
-  ret = convol::slow::convolve(img, w_win);
+  image2d< int_s< 10 > > ret = convol::slow::convolve< int_s< 10 > >(img, w_win);
   cout << "=== Result image (by convolve(w_window2d)) ===" << endl << endl
        << ret << endl;
   image2d< int_u8 > res_img = load(srcdir + "sum_on_random.pgm");

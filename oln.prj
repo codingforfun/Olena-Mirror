@@ -1,15 +1,12 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_6_stable 2)
-(Parent-Version oln 0_6_stable 1)
-(Version-Log "2002-12-11  Quoc Peyrot <chojin@lrde.epita.fr>
-
-	* Branch for olena 0.6 stable
-")
+(Project-Version oln 0_6_stable 3)
+(Parent-Version oln 0_6_stable 2)
+(Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Wed, 11 Dec 2002 16:16:02 +0100")
-(Checkin-Login chojin)
+(Checkin-Time "Wed, 11 Dec 2002 17:01:17 +0100")
+(Checkin-Login reda)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
 ;; diff-ignore Makefile\.in$
@@ -117,9 +114,9 @@
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.25 600))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.98.1.1.1.1 600))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.98.1.1.1.2 600))
   (configure.ac (oln/3_configure. 1.29 600))
-  (configure (oln/e/7_configure 1.38 700))
+  (configure (oln/e/7_configure 1.38.1.1 700))
   (README (oln/1_README 1.4 600))
   (ISSUES (oln/d/47_ISSUES 1.3 600))
   (Makefile.am (oln/2_Makefile.a 1.14 600))
@@ -176,7 +173,7 @@
   (oln/convert/nrgbyuv.hh (oln/13_nrgbyuv.hh 1.3 600))
   (oln/convert/rgbnrgb.hh (oln/17_rgbnrgb.hh 1.3 600))
   (oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.3 600))
-  (oln/convol/convolution.hh (oln/f/39_convolutio 1.4 600))
+  (oln/convol/convolution.hh (oln/f/39_convolutio 1.5 600))
   (oln/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.4 600))
   (oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.4 600))
   (oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.4 600))
@@ -378,9 +375,9 @@
   (tests/convol/Makefile.am (oln/f/38_Makefile.a 1.4 600))
   (tests/convol/Makefile.in (oln/f/44_Makefile.i 1.12 600))
   ; (tests/convol/slow.cc ())
-  (tests/convol/slow_sum_2d_1.cc (oln/f/41_slow_sum_2 1.2 600))
-  (tests/convol/slow_sum_2d_2.cc (oln/f/40_slow_sum_2 1.2 600))
-  (tests/convol/sobel_gradient.cc (oln/f/45_sobel_grad 1.3 600))
+  (tests/convol/slow_sum_2d_1.cc (oln/f/41_slow_sum_2 1.3 600))
+  (tests/convol/slow_sum_2d_2.cc (oln/f/40_slow_sum_2 1.3 600))
+  (tests/convol/sobel_gradient.cc (oln/f/45_sobel_grad 1.4 600))
   (tests/convol/sum_on_random.pgm (oln/f/42_sum_on_ran 1.1 600))
 
 
