@@ -325,7 +325,7 @@ namespace oln {
       coord
       nrows() const
       {
-	return this->size().nrows();
+	return this->exact().size().nrows();
       }
 
 
@@ -334,7 +334,7 @@ namespace oln {
       coord
       ncols() const
       {
-	return this->size().ncols();
+	return this->exact().size().ncols();
       }
 
       /*! \brief Return the value stored at \a row, \a col

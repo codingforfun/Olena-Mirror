@@ -1,0 +1,29 @@
+//                                                                  -*- c++ -*-
+#include <oln/morpher/subq_morpher.hh>
+#include <oln/basics2d.hh>
+#include <ntg/all.hh>
+
+#include <oln/utils/md5.hh>
+#include "data.hh"
+#include "check.hh"
+
+int main()
+{
+  bool fail (false);
+  oln::utils::key::value_type data_key_c[16]
+    = {0xd1, 0xcc, 0xe6, 0x1f, 0xec, 0x26, 0x2b, 0xfd,
+       0x2b, 0x9c, 0xea, 0x59, 0x35, 0x76, 0x64, 0x8};
+
+  oln::image2d<ntg::rgb_8> imc = oln::load(rdata("lena.ppm"));
+
+  fail = fail | (oln::utils::md5(oln::morpher::sqmorph<3>(imc)) != oln::utils::key(data_key_c));
+
+  if (!fail)
+    std::cout << "OK" << std::endl;
+  else
+    {
+      std::cout << "FAIL" << std::endl;
+      return true;
+    }
+}
+

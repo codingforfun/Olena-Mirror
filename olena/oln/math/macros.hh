@@ -85,6 +85,68 @@ namespace oln {
       return f(val);
     }
 
+    ///  Internal purpose only.
+    namespace internal {
+      /// Dot product for non-vectorial types.
+      template<typename DestValue, typename I, typename J>
+      struct f_dot_product_nv
+      {
+	typedef typename ntg_is_a(I, ntg::non_vectorial)::ensure_type t;
+
+	static DestValue
+	product(const I &i, const J &j)
+	{
+	  return i * j;
+	}
+      };
+
+      /// Dot product for vectorial types.
+      template<typename DestValue, typename I, typename J>
+      struct f_dot_product_v
+      {
+	typedef typename ntg_is_a(I, ntg::vectorial)::ensure_type t;
+	//typedef typename mlc::eq<ntg_nb_comp(I), ntg_nb_comp(J)>::ensure_type t;
+
+	static DestValue
+	product(const I &i, const J &j)
+	{
+	  DestValue d(ntg_zero_val(DestValue));
+
+	  for (unsigned k = 0; k < ntg_nb_comp(I); ++k)
+	    d += i[k] * j[k];
+	  return d;
+	}
+      };
+    }
+
+    /*! \brief Dot product.
+    **
+    ** \code
+    ** #include <oln/math/macros.hh>
+    ** #include <ntg/all.hh>
+    ** int main()
+    ** {
+    **   ntg::int_u8 i(3), j(4);
+    **   // Print "12"
+    **   std::cout << oln::math::dot_product<ntg::float_s>(i, j) << std::endl;
+    **
+    **   ntg::rgb_8 blue(0, 0, 200), yellow(0, 30, 10);
+    **   // Print "2000"
+    **   std::cout << oln::math::dot_product<ntg::float_s>(blue, yellow)
+    **             << std::endl;
+    ** }
+    ** \endcode
+    */
+    template<typename DestValue, typename I, typename J>
+    DestValue
+    dot_product(const I &i, const J &j)
+    {
+      typedef typename mlc::if_<ntg_is_a(I, ntg::vectorial)::ret,
+	internal::f_dot_product_v<DestValue, I, J>,
+	internal::f_dot_product_nv<DestValue, I, J> >::ret fctor;
+      return fctor::product(i, j);
+    }
+
   } // end of math
 
 } // end of oln

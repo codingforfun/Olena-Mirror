@@ -1,0 +1,14 @@
+bool should_just_compile;
+should_just_compile = ntg_if_vectorial_nb_comp_(int);
+
+bool fail = false;
+fail = fail || ntg_if_vectorial_nb_comp_(ntg::rgb_8) != 3;
+typedef ntg::vec<3, bool> vec3;
+typedef ntg::vec<4, bool> vec4;
+fail = fail || ntg_if_vectorial_nb_comp_(vec3) != 3;
+fail = fail || ntg_if_vectorial_nb_comp_(vec4) != 4;
+fail = fail || ntg_compare_nb_comp_(int, ntg::rgb_8)::ret != 0;
+fail = fail || ntg_compare_nb_comp_(int, float)::ret != 1;
+fail = fail || ntg_compare_nb_comp_(vec3, ntg::rgb_8)::ret != 1;
+fail = fail || ntg_compare_nb_comp_(vec4, ntg::rgb_8)::ret != 0;
+return fail;

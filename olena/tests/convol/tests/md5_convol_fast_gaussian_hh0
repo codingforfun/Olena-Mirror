@@ -2,27 +2,33 @@
 #include "data.hh"
 #include <oln/utils/md5.hh>
 
-#include "check.hh" 
-#include <oln/basics2d.hh> 
-#include <oln/convol/fast_gaussian.hh> 
-#include <oln/core/behavior.hh> 
-#include <ntg/all.hh> 
- 
-int main() 
+#include "check.hh"
+#include <oln/basics2d.hh>
+#include <oln/convol/fast_gaussian.hh>
+#include <oln/core/behavior.hh>
+#include <ntg/all.hh>
+
+int main()
 {
-oln::utils::key::value_type   data_key[16] = {0xc, 0xec, 0xc0, 0x4c, 0xf4, 0xd1, 0xab, 0xef, 0x1c, 0xd3, 0x9c, 0xa7, 0x4d, 0xd7, 0x28, 0x92};
+  oln::utils::key::value_type   data_key[16] = {0xcd, 0x87, 0xa8, 0x95, 0xa3,
+						0x44, 0x2f, 0x0, 0xc4, 0x39,
+						0x30, 0x77, 0x67, 0xa8, 0xb7,
+						0x36};
 
-oln::utils::key		   key(data_key);
+  oln::utils::key		   key(data_key);
 
-   typedef oln::image2d<ntg::
-int_u8>	im_type;
-   im_type	im1(oln::load(rdata("lena256.pgm")));
-   if (oln::utils::md5(oln::convol::fast::gaussian(im1, 2,                                         oln::value_behavior<oln_value_type_(im_type)>(0))) == key)
-  std::cout << "OK" << std::endl;
-else
-  {
-    std::cout << "FAIL" << std::endl;
-    return true;
-  }
+  typedef oln::image2d<ntg::int_u8>	im_type;
+  im_type	im1(oln::load(rdata("lena256.pgm")));
+
+  if (oln::utils::md5(oln::convol::fast::gaussian(im1,
+						  0.5,
+						  oln::value_behavior<oln_value_type_(im_type)>(0)))
+      == key)
+    std::cout << "OK" << std::endl;
+  else
+    {
+      std::cout << "FAIL" << std::endl;
+      return true;
+    }
    return 0;
  }

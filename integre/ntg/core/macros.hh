@@ -160,4 +160,49 @@
 `-----*/
 #define ntg_nbits(T)		ntg::internal::typetraits<T>::size
 
+
+/*! Return the number of components of T if T is vectorial.
+**
+** If T is non vectorial, the value returned should not be considered.
+*/
+#define ntg_if_vectorial_nb_comp(T)					\
+   ntg::type_traits<typename mlc::if_<ntg_is_a(T, ntg::vectorial)::ret,	\
+		            	      T,				\
+				      ntg::vec<42, bool> >::ret>::nb_comp
+
+/*! Same as \a ntg_if_vectorial_nb_comp but without 'typename'
+**
+** \see ntg_if_vectorial_nb_comp
+*/
+#define ntg_if_vectorial_nb_comp_(T)					\
+   ntg::type_traits<mlc::if_<ntg_is_a_(T, ntg::vectorial)::ret,		\
+		            	      T,				\
+				      ntg::vec<42, bool> >::ret>::nb_comp
+
+/*! Compare the number of components.
+**
+**   - If \a A and \a B are non_vectorial, then
+**     \a {ntg_compare_nb_comp(A, B)::ret = true}
+**   - If \a A and \a B are vectorial, then
+**     \a {ntg_compare_nb_comp(A, B)::ret = (ntg_nb_comp(A) = ntg_nb_comp(B))}
+**   - Otherwise, it returns false
+*/
+#define ntg_compare_nb_comp(A, B)					\
+	mlc::if_<							\
+	  ntg_is_a(A, ntg::non_vectorial)::ret,				\
+	  ntg_is_a(B, ntg::non_vectorial),				\
+	  mlc::eq<ntg_if_vectorial_nb_comp(A),				\
+	  ntg_if_vectorial_nb_comp(B)> >::ret
+
+/*! Same as \a ntg_compare_nb_comp but without 'typename'
+**
+** \see ntg_compare_nb_comp
+*/
+#define ntg_compare_nb_comp_(A, B)					\
+	mlc::if_<							\
+	  ntg_is_a_(A, ntg::non_vectorial)::ret,			\
+	  ntg_is_a_(B, ntg::non_vectorial),				\
+	  mlc::eq<ntg_if_vectorial_nb_comp_(A),				\
+	  ntg_if_vectorial_nb_comp_(B)> >::ret
+
 #endif // !NTG_CORE_MACROS_HH

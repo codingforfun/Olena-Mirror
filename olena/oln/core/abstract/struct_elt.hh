@@ -72,7 +72,7 @@ namespace oln {
       typedef typename struct_elt_traits<Exact>::abstract_type abstract_type;
       ///< Set the abstract type of hisself.
 
-      ///< Return the name of the type.
+      /// Return the name of the type.
       static std::string
       name()
       {

@@ -92,7 +92,7 @@ namespace oln {
       enum { dim = struct_elt_traits<Exact>::dim };
       ///< Set the dim of the points of the neighborhood.
 
-      ///< Return the name of the type.
+      /// Return the name of the type.
       static std::string
       name()
       {

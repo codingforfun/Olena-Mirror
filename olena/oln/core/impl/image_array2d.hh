@@ -35,11 +35,11 @@
 namespace oln {
 
   /// Build an image data array with the real data and the border.
-  
+
   template<class T>
-  void 
+  void
   pretreat_2d_data_(T*& buffer, T**& array, const image2d_size& s)
-  { 
+  {
     precondition(s.nrows() > 0 &&
 		 s.ncols() > 0 &&
 		 s.border() >= 0);
@@ -58,7 +58,7 @@ namespace oln {
   /// Free the image2d data array.
 
   template<class T>
-  void 
+  void
   desallocate_2d_data_(T**& array, const image2d_size& s)
   {
     array -= s.border();
@@ -76,7 +76,7 @@ namespace oln {
   ** Specialized version for impl::image_array2d<T>. Retrieve
   ** associated types.
   */
-  
+
   template<class T>
   struct impl_traits<impl::image_array2d<T> >: public impl_traits<impl::image_array<T, impl::image_array2d<T> > >
   {
@@ -87,16 +87,16 @@ namespace oln {
   };
 
 
-  namespace impl 
+  namespace impl
   {
-    
+
     /*! \class image_array2d
     **
     ** Data array implementation for image2d
     */
-    
+
     template<class T>
-    class image_array2d : 
+    class image_array2d :
       public image_array<T, image_array2d<T> >
     {
 
@@ -110,28 +110,28 @@ namespace oln {
       typedef typename impl_traits<exact_type>::size_type size_type;
 
       typedef image_array<T, image_array2d<T> > super_type;
- 
+
 
       friend class image_impl<image_array2d<T> >;
       friend class image_array<T, image_array2d<T> >;
 
-      
-      
-      image_array2d(const size_type& s): super_type(s) 
+
+
+      image_array2d(const size_type& s): super_type(s)
       {
 	pretreat_2d_data_(this->buffer_, array_, s);
       }
 
-      ~image_array2d() 
+      ~image_array2d()
       {
-	desallocate_2d_data_(array_, this->size_); 
+	desallocate_2d_data_(array_, this->size_);
       }
 
     protected:
 
       /// Return true if \a p belongs to the image.
-      
-      bool 
+
+      bool
       hold_(const point_type& p) const
       {
 	return
@@ -142,8 +142,8 @@ namespace oln {
       }
 
       /// Return true if \a p belongs to the image or the image border
-      
-      bool 
+
+      bool
       hold_large_(const point_type& p) const
       {
 	return
@@ -154,16 +154,16 @@ namespace oln {
       }
 
       /// Return a reference to the value stored at \a p.
-      
-      value_type& 
+
+      value_type&
       at_(const point_type& p)
       {
 	return at_(p.row(), p.col());
       }
 
       /// Return a reference to the value stored at \a row and \a col.
-      
-      value_type& 
+
+      value_type&
       at_(coord row, coord col)
       {
 	invariant(this->buffer_ != 0);
@@ -172,9 +172,9 @@ namespace oln {
       }
 
       /// Return the total size of the data array.
-      
-      size_t 
-      len_(const size_type& s) const 
+
+      size_t
+      len_(const size_type& s) const
       {
 	coord ncols_eff = s.ncols() + 2 * s.border();
 	coord nrows_eff = s.nrows() + 2 * s.border();
@@ -187,15 +187,15 @@ namespace oln {
       ** new_border.
       */
 
-      void 
+      void
       border_reallocate_and_copy_(coord new_border, bool
-				  copy_border) 
+				  copy_border)
       {
 	T* buffer = 0;
 	T** array = 0;
 	// first allocate
 	allocate_data_(buffer, len_(size_type(this->size_.nrows(), this->size_.ncols(), new_border)));
-	
+
 	pretreat_2d_data_(buffer, array, size_type(this->size_.nrows(),
 						   this->size_.ncols(), new_border));
 	// move data
@@ -213,18 +213,18 @@ namespace oln {
 
 	// then replace
 	desallocate_data_(this->buffer_);
-	desallocate_2d_data_(array_, this->size_); 
+	desallocate_2d_data_(array_, this->size_);
 	this->size_.border() = new_border;
 	this->buffer_ = buffer;
 	array_ = array;
       }
-         
 
-      /*! \brief The border points are all set to 
+
+      /*! \brief The border points are all set to
       ** the value of the closest image point.
       */
-      
-      void 
+
+      void
       border_replicate_(void)
       {
 	const coord imax = this->size_.nrows() - 1;
@@ -240,7 +240,7 @@ namespace oln {
 	for (coord i = - this->size_.border(); i <= imax + this->size_.border(); ++i)
 	  for (coord j = - this->size_.border(); j; ++j)
 	    {
-	      at_(i, j) = at_(i, 0); 
+	      at_(i, j) = at_(i, 0);
 	      at_(i, jmax - j) = at_(i, jmax );
 	    }
       }
@@ -249,8 +249,8 @@ namespace oln {
       ** the image edges.
       */
 
-      void 
-      border_mirror_(void) 
+      void
+      border_mirror_(void)
       {
 	// top & bottom
 	const coord imax = this->size_.nrows() - 1;
@@ -272,9 +272,9 @@ namespace oln {
       }
 
       /// The border points are set to \a val.
-      
-      void 
-      border_assign_(value_type val) 
+
+      void
+      border_assign_(value_type val)
       {
 	// top & bottom
         const coord imax = this->size_.nrows() - 1;

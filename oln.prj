@@ -1,881 +1,371 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 110)
-(Parent-Version oln 10 109)
-(Version-Log "Index: doc/ChangeLog
-from  Giovanni Palma  <giovanni@lrde.epita.fr>
-
-	* ref/doxygen.config.in: Remove deprecated entries.
-
-Index: olena/ChangeLog
-from  Giovanni Palma  <giovanni@lrde.epita.fr>
-
-	* oln/morpho/dilation.hh: Correct comments.
-	* oln/morpho/attribute_closing_opening.hh: Correct namespaces.
-	* oln/morpho/attribute_closing_opening_map.hh: Likewise.
-	* tests/morpho/tests/attribute: Likewise.
-	* oln/morpho/attributes.hh: Add attr namespace.
-	* oln/morpho/environments.hh: Add file.
-
-Index: olena/oln/morpho/dilation.hh
---- olena/oln/morpho/dilation.hh Thu, 18 Mar 2004 18:24:14 +0100 van-vl_n (oln/b/5_dilation.h 1.19 640)
-+++ olena/oln/morpho/dilation.hh Wed, 24 Mar 2004 16:06:41 +0100 palma_g (oln/b/5_dilation.h 1.19 640)
-@@ -41,11 +41,11 @@
-     ** \\brief Processing dilation.
-     **
-     ** Compute the morphological dilation of input using se
--    ** as structural element.
-+    ** as structural element.\\n
-     **
-     ** On grey-scale images, each point is replaced by the maximum value
-     ** of its neighbors, as indicated by se.  On binary images,
--    ** a logical or is performed between neighbors.
-+    ** a logical or is performed between neighbors.\\n
-     **
-     ** The morpho::fast version of this function use a different
-     ** algorithm: This algorithm is described in
-@@ -53,12 +53,12 @@
-     ** M. Van Droogenbroeck and H. Talbot.
-     ** \"Fast computation of morphological operations with arbitrary
-     ** structuring elements\". Pattern Recognition Letters,
--    ** 17(14):1451-1460, 1996.
-+    ** 17(14):1451-1460, 1996.\\n
-     **
-     ** An histogram of the value of the neighborhood indicated by
-     ** se is updated while iterating over all point of the
-     ** image.  Doing so is more efficient  when the
--    ** structural element is large.
-+    ** structural element is large.\\n
-     **
-     ** \\param I Exact type of the input image.
-     ** \\param E Exact type of the neighborhood.
-Index: olena/oln/morpho/attribute_closing_opening.hh
---- olena/oln/morpho/attribute_closing_opening.hh Mon, 15 Mar 2004 17:40:54 +0100 van-vl_n (oln/q/49_attribute_ 1.22 640)
-+++ olena/oln/morpho/attribute_closing_opening.hh Wed, 24 Mar 2004 11:41:41 +0100 palma_g (oln/q/49_attribute_ 1.22 640)
-@@ -101,9 +101,9 @@
-       oln_concrete_type(I) \\
- 	T##_opening(const abstract::non_vectorial_image<I>& input, \\
- 		       const abstract::neighborhood<N>& Ng, \\
--		       const attr_lambda_type(T##_type<unsigned>) &lambda) \\
-+		       const attr_lambda_type(attr::T##_type<unsigned>) &lambda) \\
-       { \\
--	return tarjan::internal::attr_opening_<I, N, T##_type<unsigned> >(input, Ng, lambda); \\
-+	return tarjan::internal::attr_opening_<I, N, attr::T##_type<unsigned> >(input, Ng, lambda); \\
-       }
- 
- # define xxx_closing_decl(T) \\
-@@ -111,9 +111,9 @@
-       oln_concrete_type(I) \\
- 	T##_closing(const abstract::non_vectorial_image<I>& input, \\
- 		       const abstract::neighborhood<N>& Ng, \\
--		       const attr_lambda_type(T##_type<unsigned>) &lambda) \\
-+		       const attr_lambda_type(attr::T##_type<unsigned>) &lambda) \\
-       { \\
--	return tarjan::internal::attr_closing_<I, N, T##_type<unsigned> >(input, Ng, lambda); \\
-+	return tarjan::internal::attr_closing_<I, N, attr::T##_type<unsigned> >(input, Ng, lambda); \\
-       }
- 
- 
-@@ -123,9 +123,9 @@
-       oln_concrete_type(I) \\
- 	T##_opening(const abstract::non_vectorial_image<I>& input, \\
- 		       const abstract::neighborhood<N>& Ng, \\
--		       const attr_lambda_type(T##_type<I>) &lambda) \\
-+		       const attr_lambda_type(attr::T##_type<I>) &lambda) \\
-       { \\
--	return tarjan::internal::attr_opening_<I, N, T##_type<I> >(input, Ng, lambda); \\
-+	return tarjan::internal::attr_opening_<I, N, attr::T##_type<I> >(input, Ng, lambda); \\
-       }
- 
- # define xxx_closing_im_decl(T) \\
-@@ -133,9 +133,9 @@
-       oln_concrete_type(I) \\
- 	T##_closing(const abstract::non_vectorial_image<I>& input, \\
- 		       const abstract::neighborhood<N>& Ng, \\
--		       const attr_lambda_type(T##_type<I>) &lambda) \\
-+		       const attr_lambda_type(attr::T##_type<I>) &lambda) \\
-       { \\
--	return tarjan::internal::attr_closing_<I, N, T##_type<I> >(input, Ng, lambda); \\
-+	return tarjan::internal::attr_closing_<I, N, attr::T##_type<I> >(input, Ng, lambda); \\
-       }
- 
-       /*!
-Index: olena/oln/morpho/attributes.hh
---- olena/oln/morpho/attributes.hh Mon, 15 Mar 2004 17:40:54 +0100 van-vl_n (oln/j/45_attributes 1.9 644)
-+++ olena/oln/morpho/attributes.hh Wed, 24 Mar 2004 19:01:19 +0100 palma_g (oln/j/45_attributes 1.9 644)
-@@ -27,17 +27,19 @@
- 
- #ifndef OLN_MORPHO_ATTRIBUTES_HH
- # define OLN_MORPHO_ATTRIBUTES_HH
-+# include <oln/basics.hh>
- # include <mlc/type.hh>
- # include <vector>
-+# include <oln/morpho/environments.hh>
- 
- // attribute dedicated macros
--# define attr_lambda_type(T)	typename oln::morpho::attr_traits<T>::lambda_type
--# define attr_env_type(T)	typename oln::morpho::attr_traits<T>::env_type
--# define attr_value_type(T)	typename oln::morpho::attr_traits<T>::value_type
--
--# define attr_lambda_type_(T)	 oln::morpho::attr_traits<T>::lambda_type
--# define attr_env_type_(T)	 oln::morpho::attr_traits<T>::env_type
--# define attr_value_type_(T)	 oln::morpho::attr_traits<T>::value_type
-+# define attr_lambda_type(T)	typename oln::morpho::attr::attr_traits<T>::lambda_type
-+# define attr_env_type(T)	typename oln::morpho::attr::attr_traits<T>::env_type
-+# define attr_value_type(T)	typename oln::morpho::attr::attr_traits<T>::value_type
-+
-+# define attr_lambda_type_(T)	 oln::morpho::attr::attr_traits<T>::lambda_type
-+# define attr_env_type_(T)	 oln::morpho::attr::attr_traits<T>::env_type
-+# define attr_value_type_(T)	 oln::morpho::attr::attr_traits<T>::value_type
- 
- 
- # define attr_type_decl(self_type) \\
-@@ -48,6 +50,9 @@
- 
- namespace oln {
-   namespace morpho {
-+    /*! \\brief Implementation of attributes.
-+     */
-+    namespace attr {
-     /*! \\brief Useful tools for morphological math.
-     */
-     namespace tools {
-@@ -63,66 +68,6 @@
-       }
-     } // !tools
- 
--    /*!
--    ** \\brief Top of environment hierarchy.
--    */
--    template <class Exact>
--    struct env: public mlc_hierarchy::any<Exact>
--    {
--    };
--
--    /*!
--    ** \\brief Useless environment.
--    **
--    ** This environment is an empty one.
--    */
--    struct NullEnv: public env<NullEnv>
--    {
--    };
--
--    /*!
--    ** \\brief Environment containing image.
--    **
--    ** Used for image substitution in other_image attribute.
--    */
--    template <class I>
--    struct OtherImageEnv: public env<OtherImageEnv<I> >
--    {
--      typedef abstract::image<I>	im_type;
--
--      OtherImageEnv(const abstract::image<I> &im): im_(im)
--      {};
--
--      const im_type	&getImage() const
--      {
--	return im_;
--      }
--
--    protected:
--      const im_type	&im_;
--    };
--
--    /*!
--    ** \\brief Environment containing point.
--    **
--    ** Used for point substitution in other_point attribute.
--    */
--    template <class I>
--    struct OtherPointEnv: public env<OtherPointEnv<I> >
--    {
--      typedef abstract::image<I>	im_type;
--
--//       OtherImageEnv(const abstract::image<I> &im): im_(im)
--//       {};
--
--      const oln_point_type(I)	&getPoint(const oln_point_type(I) &p) const
--      {
--	return p;
--      }
--
--//     protected:
--//       const im_type	&im_;
--    };
- 
-     // the traits fwd declaration
-     /*!
-@@ -526,60 +471,177 @@
-       };
-     };
- 
--    /*--------------*
--      | other_point |
--      *------------*/
--//     /*!
--//     ** \\class other_point
--//     **
--//     ** \\brief Metaclass used to change attribute behavior.
--//     **
--//     ** This class do the same job  that its Dad parameter, but force it
--//     ** to work on other data.
--//     */
--//     template <class Dad, class I, class Exact = mlc::final>
--//     class other_point:
--//       public change_exact<Dad, typename mlc::exact_vt<other_point<Dad, I, Exact>, Exact>::ret >::ret
--//     {
--//     public:
--//       typedef other_image<Dad, I,  Exact>						self_type; /*< Self type of the class.*/
--//       typedef typename abstract::image<mlc_exact_type(I)>				im_type; /*< Type of substituted image.*/
--//       attr_type_decl(self_type);
--//       typedef typename change_exact<Dad,
--// 				    typename mlc::exact_vt<other_point<Dad, I, Exact>,
--// 							   Exact>::ret >::ret		super_type; /*< Mother class type.*/
--
--//       /*!
--//       ** \\brief Constructor.
--//       **
--//       ** Dispatch to Dad constructor.
--//       */
--//       other_point(): super_type()
--//       {
--//       };
--
--//       /*!
--//       ** \\brief lambda_type Constructor.
--//       **
--//       ** Dispatch to Dad constructor.
--//       */
--//       other_point(const lambda_type &lambda): super_type(lambda)
--//       {
--//       };
--
--//       /*!
--//       ** \\brief Image Constructor.
--//       **
--//       ** Dispatch to Dad constructor but substitute image argument with
--//       ** the image contained in the environment.
--//       */
--//       template <typename IM>
--//       other_point(const abstract::image<IM> &im,
--// 		  const oln_point_type(I) &p,
--// 		  const env_type &e): super_type(im, e.getPoint(p), e)
--//       {
--//       };
--//     };
-+      /*----------------------*
-+	| ball_parent_change |
-+	*--------------------*/
-+      /*!
-+      ** \\class other_point
-+      **
-+      ** \\brief Metaclass used to change attribute behavior.
-+      **
-+      ** This class do the same job  that its Dad parameter, but force it
-+      ** to work on other data.
-+      */
-+      template <class I, class Exact = mlc::final>
-+      class ball_parent_change:
-+	public attribute<mlc_2_exact_vt_type(ball_parent_change, I, Exact)>
-+      {
-+      public:
-+	typedef ball_parent_change<I,  Exact>			self_type; /*< Self type of the class.*/
-+	typedef typename abstract::image<mlc_exact_type(I)>	im_type; /*< Type of substituted image.*/
-+	attr_type_decl(self_type);
-+	typedef oln_value_type(I)				pts_type; ///< should be list <?>
-+	typedef typename pts_type::const_iterator		cst_iter_type; ///< const iterator on Point vector.
-+	typedef typename pts_type::value_type			point_type; ///< Point type associated to im_type.
-+	typedef oln_dpoint_type(point_type)	dpoint_type; ///< Dpoint type associated to im_type.
-+
-+	/*!
-+	** \\brief Constructor.
-+	**
-+	** Dispatch to Dad constructor.
-+	*/
-+	ball_parent_change(): value_(ntg_zero_val(value_type)), points_()
-+	{
-+	};
-+
-+	/*!
-+	** \\brief lambda_type Constructor.
-+	**
-+	** Dispatch to Dad constructor.
-+	*/
-+	ball_parent_change(const lambda_type &lambda): value_(lambda), points_()
-+	{
-+	};
-+
-+	/*!
-+	** \\brief Image Constructor.
-+	**
-+	** Dispatch to Dad constructor but substitute image argument with
-+	** the image contained in the environment.
-+	*/
-+	template <typename IM>
-+	ball_parent_change(const abstract::image<IM> &,
-+			   const oln_point_type(IM) &p,
-+			   const env_type &e): points_()//: super_type(/*e.getImage(), */e.getPoint(p), e)
-+	{
-+	  std::copy(e.getParent()[p].begin(),
-+		    e.getParent()[p].end(),
-+		    std::back_inserter(points_));
-+	};
-+
-+	/*!
-+	** \\brief Accessor to value_.
-+	**
-+	** Virtual method.
-+	** \\see getValue_impl()
-+	*/
-+	const value_type &getValue() const
-+	  {
-+	    mlc_dispatch(getValue)();
-+	  };
-+
-+
-+	/*!
-+	** \\brief Accessor to pts_.
-+	**
-+	** Virtual method.
-+	** \\see getPts_impl()
-+	*/
-+	const pts_type &getPts() const
-+	  {
-+	    mlc_dispatch(getPts)();
-+	  };
-+
-+	// impl
-+	/*!
-+	** \\brief Implementation of getValue().
-+	**
-+	** Override this  method in  order to provide  a new  version of
-+	** getValue().
-+	**
-+	** \\warning Do not call this method, use getValue() instead.
-+	*/
-+	const value_type &getValue_impl() const
-+	  {
-+	    return value_;
-+	  };
-+
-+	/*!
-+	** \\brief Implementation of getValue().
-+	**
-+	** Override this  method in  order to provide  a new  version of
-+	** getPts().
-+	**
-+	** \\warning Do not call this method, use getPts() instead.
-+	*/
-+	const pts_type &getPts_impl() const
-+	  {
-+	    return points_;
-+	  };
-+
-+	/*!
-+	** \\brief += operator implementation.
-+	**
-+	** This is an implementation  of the += operator.  Override this
-+	** method to provide a new implementation of this operator.
-+	** \\warning This method SHOULDN'T directly be called.
-+	*/
-+	void pe_impl(const self_type &rhs)
-+	  {
-+	    precondition(points_.size() < (128 * 128 * 128 + 1));
-+	    std::copy(rhs.getPts().begin(),
-+		      rhs.getPts().end(),
-+		      std::back_inserter(points_));
-+	    compute_value();
-+	    value_ = ntg::max(value_, rhs.getValue());
-+	  };
-+
-+	/*!
-+	** \\brief \"<\" operator implementation.
-+	**
-+	** This is an implementation  of the += operator.  Override this
-+	** method to provide a new implementation of this operator.
-+	** \\warning This method SHOULDN'T directly be called.
-+	*/
-+	bool less_impl(const lambda_type &lambda) const
-+	  {
-+	    return value_ < lambda;
-+	  };
-+
-+	/*!
-+	** \\brief != operator implementation.
-+	**
-+	** This is an implementation  of the += operator.  Override this
-+	** method to provide a new implementation of this operator.
-+	** \\warning This method SHOULDN'T directly be called.
-+	*/
-+	bool ne_impl(const lambda_type &lambda) const
-+	  {
-+	    return lambda != value_;
-+	  };
-+
-+      protected:
-+	void compute_value()
-+	  {
-+	    value_type	last = value_;
-+	    value_ = ntg_zero_val(value_type);
-+	    for (cst_iter_type p1 = points_.begin(); p1 != points_.end(); ++p1)
-+	      for (cst_iter_type p2 = points_.begin(); p2 != points_.end(); ++p2)
-+		{
-+		  unsigned d = 0;
-+		  dpoint_type	p = *p1 - *p2;
-+		  for (int i = 0; i < point_traits<point_type>::dim; ++i)
-+		    d += p.nth(i) * p.nth(i);
-+		  if (d > value_)
-+		    value_ = d;
-+		}
-+	    value_ /= 2;
-+	    value_ = ntg::max(value_, last);
-+	  }
-+
-+	value_type	value_;
-+	pts_type	points_;
-+      };
- 
-       /*-----------*
- 	|  height   |
-@@ -1151,11 +1213,11 @@
+(Project-Version oln 10 122)
+(Parent-Version oln 10 110)
+(Version-Log "Index: olena/oln/convol/fast_gaussian.hh
+--- olena/oln/convol/fast_gaussian.hh Fri, 19 Mar 2004 14:01:37 +0100 palma_g (oln/26_fast_gauss 1.6.1.6.1.7 600)
++++ olena/oln/convol/fast_gaussian.hh Mon, 29 Mar 2004 15:22:05 +0200 palma_g (oln/26_fast_gauss 1.6.1.6.1.7 640)
+@@ -67,6 +67,8 @@
+       ** \\arg sigma Value of sigma when computing the gaussian.
+       ** \\arg behavior Object to know how to work on borders.
        **
-       ** \\arg p Point to consider in the image.
++      ** \\warning If sigma is big enough, the result may differ a
++      ** little bit with the -O3 flag of g++.
        */
--      dist_type(const im_type&,
-+	dist_type(//const im_type&,
- 		const point_type &p,
--		const env_type &) :
--	value_(ntg_zero_val(value_type)),
--	center_(p)
-+		  const env_type &) //:
-+	  //	  value_(ntg_zero_val(value_type)),
-+	  //center_(p)
+       template <class C, class B, class I, class BE>
+       typename mute<I, typename convoutput<C, B, oln_value_type(I)>::ret>::ret
+@@ -90,6 +92,9 @@
+       ** \\arg sigma Value of sigma when computing the gaussian.
+       ** \\arg behavior Object to know how to work on borders.
+       **
++      ** \\warning If sigma is big enough, the result may differ a
++      ** little bit with the -O3 flag of g++.
++      **
+       */
+       template <class C, class B, class I, class BE>
+       typename mute<I, typename convoutput<C, B, oln_value_type(I)>::ret>::ret
+@@ -113,6 +118,9 @@
+       ** \\arg sigma Value of sigma when computing the gaussian.
+       ** \\arg behavior Object to know how to work on borders.
+       **
++      ** \\warning If sigma is big enough, the result may differ a
++      ** little bit with the -O3 flag of g++.
++      **
+       */
+       template <class C, class B, class I, class BE>
+       typename mute<I, typename convoutput<C, B, oln_value_type(I)>::ret>::ret
+@@ -159,6 +167,9 @@
+       ** =>
+       ** \\image html oln_convol_fast_gaussian.png
+       ** \\image latex oln_convol_fast_gaussian.png
++      **
++      ** \\warning If sigma is big enough, the result may differ a
++      ** little bit with the -O3 flag of g++.
+       */
+       template <class I, class BE> inline
+       oln_concrete_type(I)
+@@ -191,7 +202,7 @@
+       **
+       **   im_type	im1(oln::load(IMG_IN \"lena256.pgm\"));
+       **
+-      **   oln::save(oln::convol::fast::gaussian(im1, 2,
++      **   oln::save(oln::convol::fast::gaussian_derivative(im1, 2,
+       **                                         oln::value_behavior<oln_value_type_(im_type)>(0)),
+       **             IMG_OUT \"oln_convol_fast_gaussian_derivative.pbm\");
+       **   return  0;
+@@ -204,7 +215,8 @@
+       ** \\image html oln_convol_fast_gaussian_derivative.png
+       ** \\image latex oln_convol_fast_gaussian_derivative.png
+       **
+-      ** \\todo FIXME: Make the example use the good function.
++      ** \\warning If sigma is big enough, the result may differ a
++      ** little bit with the -O3 flag of g++.
+       */
+       template <class I, class BE> inline
+       oln_concrete_type(I)
+@@ -236,7 +248,7 @@
+       **
+       **   im_type	im1(oln::load(IMG_IN \"lena256.pgm\"));
+       **
+-      **   oln::save(oln::convol::fast::gaussian(im1, 2,
++      **   oln::save(oln::convol::fast::gaussian_second_derivative(im1, 2,
+       **                                         oln::value_behavior<oln_value_type_(im_type)>(0)),
+       **             IMG_OUT \"oln_convol_fast_gaussian_second_derivative.pbm\");
+       **   return 0;
+@@ -249,7 +261,8 @@
+       ** \\image html oln_convol_fast_gaussian_second_derivative.png
+       ** \\image latex oln_convol_fast_gaussian_second_derivative.png
+       **
+-      ** \\todo FIXME: Make the example use the good function.
++      ** \\warning If sigma is big enough, the result may differ a
++      ** little bit with the -O3 flag of g++.
+       */
+       template <class I, class BE> inline
+       oln_concrete_type(I)
+@@ -297,6 +310,9 @@
+       ** =>
+       ** \\image html oln_convol_fast_gaussian_default.png
+       ** \\image latex oln_convol_fast_gaussian_default.png
++      **
++      ** \\warning If sigma is big enough, the result may differ a
++      ** little bit with the -O3 flag of g++.
+       */
+       template <class I> inline
+       oln_concrete_type(I)
+@@ -332,7 +348,7 @@
+       **
+       **   im_type	im1(oln::load(IMG_IN \"lena256.pgm\"));
+       **
+-      **   oln::save(oln::convol::fast::gaussian(im1, 2),
++      **   oln::save(oln::convol::fast::gaussian_derivative(im1, 2),
+       **             IMG_OUT \"oln_convol_fast_gaussian_derivative_default.pbm\");
+       **   return 0;
+       ** }
+@@ -344,7 +360,8 @@
+       ** \\image html oln_convol_fast_gaussian_derivative_default.png
+       ** \\image latex oln_convol_fast_gaussian_derivative_default.png
+       **
+-      ** \\todo FIXME: Make the example use the good function.
++      ** \\warning If sigma is big enough, the result may differ a
++      ** little bit with the -O3 flag of g++.
+       */
+       template <class I> inline
+       oln_concrete_type(I)
+@@ -380,7 +397,7 @@
+       **
+       **   im_type	im1(oln::load(IMG_IN \"lena256.pgm\"));
+       **
+-      **   oln::save(oln::convol::fast::gaussian(im1, 2),
++      **   oln::save(oln::convol::fast::gaussian_second_derivative(im1, 2),
+       **             IMG_OUT \"oln_convol_fast_gaussian_second_derivative_default.pbm\");
+       **   return 0;
+       ** }
+@@ -392,7 +409,8 @@
+       ** \\image html oln_convol_fast_gaussian_second_derivative_default.png
+       ** \\image latex oln_convol_fast_gaussian_second_derivative_default.png
+       **
+-      ** \\todo FIXME: Make the example use the good function.
++      ** \\warning If sigma is big enough, the result may differ a
++      ** little bit with the -O3 flag of g++.
+       */
+       template <class I> inline
+       oln_concrete_type(I)
+Index: olena/oln/convol/fast_gaussian.hxx
+--- olena/oln/convol/fast_gaussian.hxx Mon, 15 Mar 2004 17:40:54 +0100 van-vl_n (oln/25_fast_gauss 1.7.1.8.1.9 600)
++++ olena/oln/convol/fast_gaussian.hxx Mon, 29 Mar 2004 15:26:31 +0200 palma_g (oln/25_fast_gauss 1.7.1.8.1.9 640)
+@@ -104,7 +104,6 @@
+ 	    - c.d[1]*tmp1[2] - c.d[2]*tmp1[1]
+ 	    - c.d[3]*tmp1[0];
+ 
+-
+ 	  oln_point_type(I) current(start + d + d + d + d);
+ 	  for (coord i = 4; i < len; ++i)
+ 	    {
+@@ -170,7 +169,16 @@
+ 	struct gaussian_ {};
+ 
+ 
+-	// Gaussian filter for 1D images
++	/*! Gaussian filter for 1D images
++	**
++	** gaussian_ specialization for 1D images.
++	**
++	** \\param I Exact type of the image.
++	** \\param F Type of coefficients.
++	**
++	** \\arg img Image to process.
++	** \\arg coef Coefficients to use.
++	*/
+ 	template<>
+ 	struct gaussian_<1>
  	{
+@@ -189,7 +197,16 @@
  	};
  
-@@ -1605,112 +1667,130 @@
- 	\\------------------------*/
  
- 
--      // integral traits
-+      /*!
-+      ** \\brief Trait specialization for the integral attribute.
-+      */
-       template <class T, class Exact>
-       struct attr_traits<integral_type<T, Exact> >
-       {
--	typedef T		value_type;
--	typedef value_type	lambda_type;
--	typedef NullEnv		env_type;
-+	typedef T		value_type; ///< Type of data.
-+	typedef value_type	lambda_type; ///< Type of lambda.
-+	typedef env::NullEnv	env_type; ///< Type of environment.
-       };
- 
--      // height traits
-+      /*!
-+      ** \\brief Trait specialization for the height attribute.
-+      */
-       template <class T, class Exact>
-       struct attr_traits<height_type<T, Exact> >
-       {
--	typedef T		value_type;
--	typedef value_type	lambda_type;
--	typedef NullEnv		env_type;
-+	typedef T		value_type; ///< Type of data.
-+	typedef value_type	lambda_type; ///< Type of lambda.
-+	typedef env::NullEnv	env_type; ///< Type of environment.
-       };
- 
--      // card traits
-+      /*!
-+      ** \\brief Trait specialization for card attribute.
-+      */
-       template <class T, class Exact>
-       struct attr_traits<card_type<T, Exact> >
-       {
--	typedef T		value_type;
--	typedef value_type	lambda_type;
--	typedef NullEnv		env_type;
-+	typedef T		value_type; ///< Type of data.
-+	typedef value_type	lambda_type; ///< Type of lambda.
-+	typedef env::NullEnv	env_type; ///< Type of environment.
-       };
- 
--      // maxvalue traits
-+      /*!
-+      ** \\brief Trait specialization for the maxvalue attribute.
-+      */
-       template <class T, class Exact>
-       struct attr_traits<maxvalue_type<T, Exact> >
-       {
--	typedef T		value_type;
--	typedef value_type	lambda_type;
--	typedef NullEnv		env_type;
-+	typedef T		value_type; ///< Type of data.
-+	typedef value_type	lambda_type; ///< Type of lambda.
-+	typedef env::NullEnv	env_type; ///< Type of environment.
-       };
- 
--      // minvalue traits
-+      /*!
-+      ** \\brief Trait specialization for the minvalue attribute.
-+      */
-       template <class T, class Exact>
-       struct attr_traits<minvalue_type<T, Exact> >
-       {
--	typedef T		value_type;
--	typedef value_type	lambda_type;
--	typedef NullEnv		env_type;
-+	typedef T		value_type; ///< Type of data.
-+	typedef value_type	lambda_type; ///< Type of lambda.
-+	typedef env::NullEnv	env_type; ///< Type of environment.
-       };
- 
--      // ball traits
-+      /*!
-+      ** \\brief Trait specialization for the ball attribute.
-+      */
-       template <class I, class Exact>
-       struct attr_traits<ball_type<I, Exact> >
-       {
--	typedef unsigned	value_type;
--	typedef value_type	lambda_type;
--	typedef NullEnv		env_type;
-+	typedef unsigned			value_type; ///< Type of data.
-+	typedef value_type			lambda_type; ///< Type of lambda.
-+	typedef oln::morpho::env::NullEnv	env_type; ///< Type of environment.
-       };
- 
--      // dist traits
-+      /*!
-+      ** \\brief Trait specialization for the dist attribute.
-+      */
-       template <class I, class Exact>
-       struct attr_traits<dist_type<I, Exact> >
-       {
--	typedef float		value_type;
--	typedef value_type	lambda_type;
--	typedef NullEnv		env_type;
-+	typedef float				value_type; ///< Type of data.
-+	typedef value_type			lambda_type; ///< Type of lambda.
-+	typedef oln::morpho::env::NullEnv	env_type; ///< Type of environment.
-       };
- 
--      // cube traits
-+      /*!
-+      ** \\brief Trait specialization for the cube attribute.
-+      */
-       template <class I, class Exact>
-       struct attr_traits<cube_type<I, Exact> >
-       {
--	typedef unsigned	value_type;
--	typedef value_type	lambda_type;
--	typedef NullEnv		env_type;
-+	typedef unsigned			value_type; ///< Type of data.
-+	typedef value_type			lambda_type; ///< Type of lambda.
-+	typedef oln::morpho::env::NullEnv	env_type; ///< Type of environment.
-       };
- 
--      // box traits
-+      /*!
-+      ** \\brief Trait specialization for the box attribute.
-+      */
-       template <class I, class Exact>
-       struct attr_traits<box_type<I, Exact> >
-       {
--	typedef unsigned					value_type;
--	typedef ntg::vec<I::dim, value_type, mlc::final>	lambda_type;
--	typedef NullEnv						env_type;
-+	typedef unsigned					value_type; ///< Type of data.
-+	typedef ntg::vec<I::dim, value_type, mlc::final>	lambda_type; ///< Type of lambda.
-+	typedef oln::morpho::env::NullEnv			env_type; ///< Type of environment.
-       };
- 
--      // other_image traits
-+      /*!
-+      ** \\brief Trait specialization for the other_image attribute.
-+      */
-       template <class Dad, class I, class Exact>
-       struct attr_traits<other_image<Dad, I, Exact> >
-       {
- 	//typedef typename change_exact<Dad, other_image<Dad, I, Exact> >::ret	super_type;
- 	typedef typename change_exact<Dad,
- 				      typename mlc::exact_vt<other_image<Dad, I, Exact>,
--							     Exact>::ret>::ret		super_type;
--	typedef attr_value_type(super_type)						value_type;
--	typedef attr_lambda_type(super_type)						lambda_type;
--	typedef OtherImageEnv<I>							env_type;
--      };
--
--//       // other_point traits
--//       template <class Dad, class I, class Exact>
--//       struct attr_traits<other_point<Dad, I, Exact> >
--//       {
--// 	//typedef typename change_exact<Dad, other_image<Dad, I, Exact> >::ret	super_type;
--// 	typedef typename change_exact<Dad,
--// 				      typename mlc::exact_vt<other_point<Dad, I, Exact>,
--// 							     Exact>::ret>::ret		super_type;
--// 	typedef attr_value_type(super_type)						value_type;
--// 	typedef attr_lambda_tye(super_type)						lambda_type;
--// 	typedef OtherPointEnv<I>							env_type;
--//       };
-+							     Exact>::ret>::ret		super_type; ///< Parent class type.
-+	typedef attr_value_type(super_type)						value_type; ///< Type of data.
-+	typedef attr_lambda_type(super_type)						lambda_type; ///< Type of lambda.
-+	typedef oln::morpho::env::OtherImageEnv<I>					env_type; ///< Type of environment.
-+      };
-+
-+      /*!
-+      ** \\brief Trait specialization for the ball_parent_change attribute.
-+      */
-+      template <class I, class Exact>
-+      struct attr_traits<ball_parent_change<I, Exact> >
-+      {
-+	typedef unsigned		value_type; ///< Type of data.
-+	typedef value_type		lambda_type; ///< Type of lambda.
-+	typedef env::ParentEnv<I>	env_type; ///< Type of environment.
-+      };
- 
-     // traits for other_image derivation
- 
-@@ -1725,17 +1805,7 @@
-       typedef integral_type<T, NewExact>	ret;
-     };
- 
--//     /*!
--//     ** \\brief Change the exact type of an attribute.
--//     **
--//     ** Traits to change dist_type exact type.
--//     */
--//     template <class NewExact, class OldExact, class T>
--//     struct change_exact<dist_type<T, OldExact>, NewExact>
--//     {
--//       typedef dist_type<T, NewExact>	ret;
--//     };
--
-+    }// !attr
-   } // !morpho
- } //!oln
- 
-@@ -1748,3 +1818,4 @@
- 
- #endif // !OLN_MORPHO_ATTRIBUTES
- 
-+
-Index: olena/oln/morpho/attribute_closing_opening_map.hh
---- olena/oln/morpho/attribute_closing_opening_map.hh Tue, 23 Mar 2004 13:37:46 +0100 van-vl_n (oln/j/49_attribute_ 1.10 600)
-+++ olena/oln/morpho/attribute_closing_opening_map.hh Wed, 24 Mar 2004 12:01:08 +0100 palma_g (oln/j/49_attribute_ 1.10 600)
-@@ -61,7 +61,7 @@
-       ** \\param D Attribute exact type.
-       ** \\param Env Type of environment.
-       */
--      template <class I, class D, class Env = morpho::NullEnv>
-+      template <class I, class D, class Env = morpho::env::NullEnv>
-       struct f_tarjan_map
-       {
-       public:
-@@ -213,10 +213,10 @@
- oln_concrete_type(I)							\\
- T##_opening(const abstract::non_vectorial_image<I>& input,		\\
- 	    const abstract::neighborhood<N>& ng,			\\
--	    const attr_lambda_type(T##_type<>)& lambda)			\\
-+	    const attr_lambda_type(attr::T##_type<>)& lambda)			\\
-     {									\\
--      return tarjan_map<T##_type<>, I, N>(false, input, ng, lambda,	\\
--					  attr_env_type(T##_type<>)());	\\
-+      return tarjan_map<attr::T##_type<>, I, N>(false, input, ng, lambda,	\\
-+					  attr_env_type(attr::T##_type<>)());	\\
-     }
- 
-       // same but attribute take care of the image type
-@@ -225,10 +225,10 @@
- oln_concrete_type(I)							\\
- T##_opening(const abstract::non_vectorial_image<I>& input,		\\
- 	    const abstract::neighborhood<N>& ng,			\\
--	    const attr_lambda_type(T##_type<I>)& lambda)		\\
-+	    const attr_lambda_type(attr::T##_type<I>)& lambda)		\\
-     {									\\
--      return tarjan_map<T##_type<I>, I, N>(false, input, ng, lambda,	\\
--				  attr_env_type(T##_type<I>)());	\\
-+      return tarjan_map<attr::T##_type<I>, I, N>(false, input, ng, lambda,	\\
-+				  attr_env_type(attr::T##_type<I>)());	\\
-     }
- 
-       //return input;
-@@ -239,10 +239,10 @@
- oln_concrete_type(I)							\\
- T##_closing(const abstract::non_vectorial_image<I>& input,		\\
- 	    const abstract::neighborhood<N>& ng,			\\
--	    const attr_lambda_type(T##_type<>)& lambda)			\\
-+	    const attr_lambda_type(attr::T##_type<>)& lambda)			\\
-     {									\\
--      return tarjan_map<T##_type<>, I, N>(true, input, ng, lambda,	\\
--					  attr_env_type(T##_type<>)()); \\
-+      return tarjan_map<attr::T##_type<>, I, N>(true, input, ng, lambda,	\\
-+					  attr_env_type(attr::T##_type<>)()); \\
-     }
- 
-       // same but attribute take care of the image type
-@@ -251,10 +251,10 @@
- oln_concrete_type(I)							\\
- T##_closing(const abstract::non_vectorial_image<I>& input,		\\
- 	    const abstract::neighborhood<N>& ng,			\\
--	    const attr_lambda_type(T##_type<I>)& lambda)		\\
-+	    const attr_lambda_type(attr::T##_type<I>)& lambda)		\\
-     {									\\
--      return tarjan_map<T##_type<I>, I, N>(true, input, ng, lambda,	\\
--					   attr_env_type(T##_type<I>)());\\
-+      return tarjan_map<attr::T##_type<I>, I, N>(true, input, ng, lambda,	\\
-+					   attr_env_type(attr::T##_type<I>)());\\
-     }
- 
-       /*!
-Index: olena/tests/morpho/tests/attribute
---- olena/tests/morpho/tests/attribute Mon, 15 Mar 2004 17:17:49 +0100 palma_g (oln/j/51_attribute 1.4 644)
-+++ olena/tests/morpho/tests/attribute Wed, 24 Mar 2004 12:07:10 +0100 palma_g (oln/j/51_attribute 1.4 644)
-@@ -28,7 +28,7 @@
-   bool fail(false);
- 
-   typedef image2d<int_u8> img_type;
--  typedef oln::morpho::card_type<unsigned> area_type;
-+  typedef oln::morpho::attr::card_type<unsigned> area_type;
-   const area_type::lambda_type area = 100;
-   const neighborhood2d nb = neighb_c8();
-   //  const oln::morpho::NullEnv env;
-Index: doc/ref/doxygen.config.in
---- doc/ref/doxygen.config.in Mon, 15 Mar 2004 16:47:03 +0100 palma_g (oln/v/29_doxygen.co 1.3 644)
-+++ doc/ref/doxygen.config.in Wed, 24 Mar 2004 12:03:43 +0100 palma_g (oln/v/29_doxygen.co 1.3 644)
-@@ -206,8 +206,3 @@
- # Configuration::addtions related to the search engine
- #---------------------------------------------------------------------------
- SEARCHENGINE           = YES
--CGI_NAME               = search.cgi
--CGI_URL                =
--DOC_URL                =
--DOC_ABSPATH            =
--BIN_ABSPATH            = /usr/local/bin/
-Index: olena/oln/morpho/environments.hh
---- olena/oln/morpho/environments.hh Thu, 25 Mar 2004 14:59:49 +0100 palma_g ()
-+++ olena/oln/morpho/environments.hh Wed, 24 Mar 2004 17:53:34 +0100 palma_g (oln/m/17_environmen  644)
-@@ -0,0 +1,110 @@
-+// Copyright (C)  2004  EPITA Research and Development Laboratory
-+//
-+// This  file is  part of  the Olena  Library.  This  library  is free
-+// software; you can redistribute it  and/or modify it under the terms
-+// of the  GNU General  Public License version  2 as published  by the
-+// Free Software Foundation.
-+//
-+// This library is distributed in the hope that it will be useful, but
-+// WITHOUT  ANY  WARRANTY;  without   even  the  implied  warranty  of
-+// MERCHANTABILITY or  FITNESS FOR A PARTICULAR PURPOSE.   See the GNU
-+// General Public License for more details.
-+//
-+// You should have  received a copy of the  GNU General Public License
-+// along with  this library; see the  file COPYING.  If  not, write to
-+// the Free Software Foundation, 59  Temple Place - Suite 330, Boston,
-+// MA 02111-1307, USA.
-+//
-+// As a  special exception, you  may use this  file as part of  a free
-+// software library without restriction.  Specifically, if other files
-+// instantiate templates  or use macros or inline  functions from this
-+// file, or  you compile  this file  and link it  with other  files to
-+// produce  an executable,  this file  does  not by  itself cause  the
-+// resulting  executable  to be  covered  by  the  GNU General  Public
-+// License.   This exception  does  not however  invalidate any  other
-+// reasons why the executable file might be covered by the GNU General
-+// Public License.
-+
-+#ifndef OLN_MORPHO_ENVIRONMENTS_HH
-+# define OLN_MORPHO_ENVIRONMENTS_HH
-+# include <oln/basics.hh>
-+# include <mlc/type.hh>
-+
-+namespace oln
-+{
-+  namespace morpho
-+  {
-+    /*! \\brief Implementation of environments used by attributes.
-+     */
-+    namespace env
-+    {
-+      /*! brief Abstract stuff for environments.
-+       */
-+      namespace abstract
-+      {
-+	/*!
-+	** \\brief Top of environment hierarchy.
+-	// Gaussian filter for 2D images
++	/*! Gaussian filter for 2D images
++	**
++	** gaussian_ specialization for 2D images.
++	**
++	** \\param I Exact type of the image.
++	** \\param F Type of coefficients.
++	**
++	** \\arg img Image to process.
++	** \\arg coef Coefficients to use.
 +	*/
-+	template <class Exact>
-+	struct env: public mlc_hierarchy::any<Exact>
-+	{
-+	};
-+      } // !abstract
+ 	template<>
+ 	struct gaussian_<2>
+ 	{
+@@ -215,7 +232,16 @@
+ 	  }
+ 	};
+ 
+-	// Gaussian filter for 3D images
++	/*! Gaussian filter for 3D images
++	**
++	** gaussian_ specialization for 3D images.
++	**
++	** \\param I Exact type of the image.
++	** \\param F Type of coefficients.
++	**
++	** \\arg img Image to process.
++	** \\arg coef Coefficients to use.
++	*/
+ 	template<>
+ 	struct gaussian_<3>
+ 	{
+Index: olena/tests/convol/tests/md5_convol_fast_gaussian_hh5
+--- olena/tests/convol/tests/md5_convol_fast_gaussian_hh5 Tue, 23 Mar 2004 14:27:20 +0100 palma_g (oln/k/23_md5_convol 1.1 600)
++++ olena/tests/convol/tests/md5_convol_fast_gaussian_hh5 Mon, 29 Mar 2004 15:33:06 +0200 palma_g (oln/k/23_md5_convol 1.1 644)
+@@ -10,17 +10,17 @@
+ 
+ int main()
+ {
+-  oln::utils::key::value_type   data_key[16] = {0x70, 0x53, 0xa8, 0x84, 0x81,
+-						0x4, 0xbc, 0x30, 0x71, 0x23,
+-						0x78, 0xba, 0xed, 0x6, 0xc6,
+-						0x9e};
++  oln::utils::key::value_type   data_key[16] = {0xfc, 0xd6, 0xbc, 0xb5, 0x6c,
++						0x16, 0x89, 0xfc, 0xef, 0x28,
++						0xb5, 0x7c, 0x22, 0x47, 0x5b,
++						0xad};
+ 
+   oln::utils::key		   key(data_key);
+ 
+   typedef oln::image2d<ntg::int_u8>	im_type;
+   im_type	im1(oln::load(rdata(\"lena256.pgm\")));
+ 
+-  if (oln::utils::md5(oln::convol::fast::gaussian(im1, 2)) == key)
++  if (oln::utils::md5(oln::convol::fast::gaussian_second_derivative(im1, 0.5)) == key)
+     std::cout << \"OK\" << std::endl;
+   else
+     {
+Index: olena/tests/convol/tests/md5_convol_fast_gaussian_hh4
+--- olena/tests/convol/tests/md5_convol_fast_gaussian_hh4 Tue, 23 Mar 2004 14:27:20 +0100 palma_g (oln/k/24_md5_convol 1.1 600)
++++ olena/tests/convol/tests/md5_convol_fast_gaussian_hh4 Mon, 29 Mar 2004 15:32:39 +0200 palma_g (oln/k/24_md5_convol 1.1 644)
+@@ -10,14 +10,17 @@
+  
+ int main() 
+ {
+-oln::utils::key::value_type   data_key[16] = {0x56, 0x10, 0x9f, 0xa9, 0xec, 0x89, 0x99, 0x14, 0x42, 0x4a, 0xcf, 0x42, 0xa9, 0xa2, 0xe3, 0xf4};
++  oln::utils::key::value_type   data_key[16] = {0x4d, 0xbc, 0xd, 0x2, 0x73,
++						0x93, 0xf4, 0x6, 0xbc, 0x5c,
++						0x55, 0xac, 0x6, 0xb, 0x67,
++						0x9};
+ 
+ oln::utils::key		   key(data_key);
+ 
+-   typedef oln::image2d<ntg::
+-int_u8>	im_type;
++  typedef oln::image2d<ntg::int_u8>	im_type;
+    im_type	im1(oln::load(rdata(\"lena256.pgm\")));
+-   if (oln::utils::md5(oln::convol::fast::gaussian(im1, 2)) == key)
 +
-+      /*!
-+      ** \\brief Useless environment.
-+      **
-+      ** This environment is an empty one.
-+      */
-+      struct NullEnv: public abstract::env<NullEnv>
-+      {
-+      };
++  if (oln::utils::md5(oln::convol::fast::gaussian_derivative(im1, 0.5)) == key)
+   std::cout << \"OK\" << std::endl;
+ else
+   {
+Index: olena/tests/convol/tests/md5_convol_fast_gaussian_hh3
+--- olena/tests/convol/tests/md5_convol_fast_gaussian_hh3 Tue, 23 Mar 2004 14:27:20 +0100 palma_g (oln/k/25_md5_convol 1.1 600)
++++ olena/tests/convol/tests/md5_convol_fast_gaussian_hh3 Mon, 29 Mar 2004 15:32:05 +0200 palma_g (oln/k/25_md5_convol 1.1 644)
+@@ -10,14 +10,16 @@
+  
+ int main() 
+ {
+-oln::utils::key::value_type   data_key[16] = {0x56, 0x10, 0x9f, 0xa9, 0xec, 0x89, 0x99, 0x14, 0x42, 0x4a, 0xcf, 0x42, 0xa9, 0xa2, 0xe3, 0xf4};
+-
++  oln::utils::key::value_type   data_key[16] = {0xf5, 0x37, 0xe0, 0xad, 0x5f,
++						0xcc, 0x7f, 0x44, 0x32, 0x53,
++						0x2a, 0x37, 0x80, 0x38, 0x3f,
++						0xbb};
+ oln::utils::key		   key(data_key);
+ 
+-   typedef oln::image2d<ntg::
+-int_u8>	im_type;
++   typedef oln::image2d<ntg::int_u8>	im_type;
+    im_type	im1(oln::load(rdata(\"lena256.pgm\")));
+-   if (oln::utils::md5(oln::convol::fast::gaussian(im1, 2)) == key)
 +
-+      /*!
-+      ** \\brief Environment containing image.
-+      **
-+      ** Used for image substitution in other_image attribute.
-+      */
-+      template <class I>
-+      struct OtherImageEnv: public abstract::env<OtherImageEnv<I> >
-+      {
-+	typedef oln::abstract::image<I>	im_type;
++   if (oln::utils::md5(oln::convol::fast::gaussian(im1, 0.5)) == key)
+   std::cout << \"OK\" << std::endl;
+ else
+   {
+Index: olena/tests/convol/tests/md5_convol_fast_gaussian_hh2
+--- olena/tests/convol/tests/md5_convol_fast_gaussian_hh2 Tue, 23 Mar 2004 14:27:20 +0100 palma_g (oln/k/26_md5_convol 1.1 600)
++++ olena/tests/convol/tests/md5_convol_fast_gaussian_hh2 Mon, 29 Mar 2004 15:31:37 +0200 palma_g (oln/k/26_md5_convol 1.1 644)
+@@ -10,14 +10,20 @@
+  
+ int main() 
+ {
+-oln::utils::key::value_type   data_key[16] = {0xc, 0xec, 0xc0, 0x4c, 0xf4, 0xd1, 0xab, 0xef, 0x1c, 0xd3, 0x9c, 0xa7, 0x4d, 0xd7, 0x28, 0x92};
++  oln::utils::key::value_type   data_key[16] = {0xfc, 0xd6, 0xbc, 0xb5, 0x6c,
++						0x16, 0x89, 0xfc, 0xef, 0x28,
++						0xb5, 0x7c, 0x22, 0x47, 0x5b,
++						0xad};
+ 
+ oln::utils::key		   key(data_key);
+ 
+-   typedef oln::image2d<ntg::
+-int_u8>	im_type;
++  typedef oln::image2d<ntg::int_u8>	im_type;
+    im_type	im1(oln::load(rdata(\"lena256.pgm\")));
+-   if (oln::utils::md5(oln::convol::fast::gaussian(im1, 2,                                         oln::value_behavior<oln_value_type_(im_type)>(0))) == key)
 +
-+	OtherImageEnv(const oln::abstract::image<I> &im): im_(im)
-+	{};
++  if (oln::utils::md5(oln::convol::fast::gaussian_second_derivative(im1,
++								    0.5,
++								    oln::value_behavior<oln_value_type_(im_type)>(0)))
++      == key)
+   std::cout << \"OK\" << std::endl;
+ else
+   {
+Index: olena/tests/convol/tests/md5_convol_fast_gaussian_hh1
+--- olena/tests/convol/tests/md5_convol_fast_gaussian_hh1 Tue, 23 Mar 2004 14:27:20 +0100 palma_g (oln/k/27_md5_convol 1.1 600)
++++ olena/tests/convol/tests/md5_convol_fast_gaussian_hh1 Mon, 29 Mar 2004 15:31:03 +0200 palma_g (oln/k/27_md5_convol 1.1 644)
+@@ -10,19 +10,26 @@
+  
+ int main() 
+ {
+-oln::utils::key::value_type   data_key[16] = {0xc, 0xec, 0xc0, 0x4c, 0xf4, 0xd1, 0xab, 0xef, 0x1c, 0xd3, 0x9c, 0xa7, 0x4d, 0xd7, 0x28, 0x92};
++  oln::utils::key::value_type   data_key[16] = {0x0, 0x8f, 0x63, 0xff, 0xca,
++						0xae, 0xb5, 0xdb, 0x32, 0xf5,
++						0x38, 0xfd, 0x13, 0x11, 0x67,
++						0x9c};
+ 
+ oln::utils::key		   key(data_key);
+ 
+-   typedef oln::image2d<ntg::
+-int_u8>	im_type;
++  typedef oln::image2d<ntg::int_u8>	im_type;
+    im_type	im1(oln::load(rdata(\"lena256.pgm\")));
+-   if (oln::utils::md5(oln::convol::fast::gaussian(im1, 2,                                         oln::value_behavior<oln_value_type_(im_type)>(0))) == key)
 +
-+	const im_type	&getImage() const
-+	{
-+	  return im_;
-+	}
++  if (oln::utils::md5(oln::convol::fast::gaussian_derivative(im1,
++							     0.5,
++							     oln::value_behavior<oln_value_type_(im_type)>(0)))
++      == key)
+   std::cout << \"OK\" << std::endl;
+ else
+   {
+     std::cout << \"FAIL\" << std::endl;
+     return true;
+   }
 +
-+      protected:
-+	const im_type	&im_;
-+      };
+    return  0;
+  }
+Index: olena/tests/convol/tests/md5_convol_fast_gaussian_hh0
+--- olena/tests/convol/tests/md5_convol_fast_gaussian_hh0 Tue, 23 Mar 2004 14:27:20 +0100 palma_g (oln/k/28_md5_convol 1.1 600)
++++ olena/tests/convol/tests/md5_convol_fast_gaussian_hh0 Mon, 29 Mar 2004 15:33:16 +0200 palma_g (oln/k/28_md5_convol 1.1 644)
+@@ -10,14 +10,20 @@
+  
+ int main() 
+ {
+-oln::utils::key::value_type   data_key[16] = {0xc, 0xec, 0xc0, 0x4c, 0xf4, 0xd1, 0xab, 0xef, 0x1c, 0xd3, 0x9c, 0xa7, 0x4d, 0xd7, 0x28, 0x92};
++  oln::utils::key::value_type   data_key[16] = {0xcd, 0x87, 0xa8, 0x95, 0xa3,
++						0x44, 0x2f, 0x0, 0xc4, 0x39,
++						0x30, 0x77, 0x67, 0xa8, 0xb7,
++						0x36};
+ 
+ oln::utils::key		   key(data_key);
+ 
+-   typedef oln::image2d<ntg::
+-int_u8>	im_type;
++  typedef oln::image2d<ntg::int_u8>	im_type;
+    im_type	im1(oln::load(rdata(\"lena256.pgm\")));
+-   if (oln::utils::md5(oln::convol::fast::gaussian(im1, 2,                                         oln::value_behavior<oln_value_type_(im_type)>(0))) == key)
 +
-+      /*!
-+      ** \\brief Environment containing point.
-+      **
-+      ** Used for point substitution in other_point attribute.
-+      */
-+      template <class I>
-+      struct ParentEnv: public abstract::env<ParentEnv<I> >
-+      {
-+	typedef oln::abstract::image<I>	im_type;
-+
-+	ParentEnv(const oln::abstract::image<I> &im): im_(im)
-+	{};
-+
-+	const im_type	&getParent() const
-+	{
-+	  return im_;
-+	}
-+
-+      protected:
-+	const im_type	&im_;
-+      };
-+
-+    }
-+  }
-+}
-+#endif // !OLN_MORPHO_ENVIRONMENTS_HH
++  if (oln::utils::md5(oln::convol::fast::gaussian(im1,
++						  0.5,
++						  oln::value_behavior<oln_value_type_(im_type)>(0)))
++      == key)
+   std::cout << \"OK\" << std::endl;
+ else
+   {
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 25 Mar 2004 15:00:37 +0100")
+(Checkin-Time "Mon, 29 Mar 2004 15:45:23 +0200")
 (Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -978,11 +468,11 @@ Index: olena/oln/morpho/environments.hh
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.15 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.16 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.9 640))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.38 640))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.39 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.51 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.63 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 640))
 
@@ -994,7 +484,7 @@ Index: olena/oln/morpho/environments.hh
 
   (cleanup.sh (oln/o/29_cleanup.sh 1.5 750))
 
-  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.15 640))
+  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.16 640))
 
   (doc/demo/image.cc (oln/d/46_image.cc 1.8 640))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.16.1.2 640))
@@ -1055,13 +545,13 @@ Index: olena/oln/morpho/environments.hh
   (olena/oln/convert/stretch.hh (oln/f/51_stretch.hh 1.17 640))
   (olena/oln/convol/convolution.hh (oln/f/39_convolutio 1.4.1.4.1.6.1.3 640))
   (olena/oln/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.5.1.7 640))
-  (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.6.1.7 640))
-  (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.8.1.9 640))
+  (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.6.1.8 640))
+  (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.8.1.10 640))
   (olena/oln/core/accum.hh (oln/d/40_accum.hh 1.5 640))
   (olena/oln/core/apply.hh (oln/d/39_apply.hh 1.16 640))
-  (olena/oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.19 640))
-  (olena/oln/core/bkd_iter2d.hh (oln/d/37_bkd_iter2d 1.19 640))
-  (olena/oln/core/bkd_iter3d.hh (oln/d/36_bkd_iter3d 1.19 640))
+  (olena/oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.20 640))
+  (olena/oln/core/bkd_iter2d.hh (oln/d/37_bkd_iter2d 1.20 640))
+  (olena/oln/core/bkd_iter3d.hh (oln/d/36_bkd_iter3d 1.20 640))
   
   
   
@@ -1080,9 +570,9 @@ Index: olena/oln/morpho/environments.hh
   (olena/oln/core/abstract/dpoint.hh (oln/d/28_dpoint.hh 1.20 640))
   
   (olena/oln/core/fold.hh (oln/c/7_fold.hh 1.14 640))
-  (olena/oln/core/fwd_iter1d.hh (oln/d/21_fwd_iter1d 1.16 640))
-  (olena/oln/core/fwd_iter2d.hh (oln/d/20_fwd_iter2d 1.16 640))
-  (olena/oln/core/fwd_iter3d.hh (oln/d/19_fwd_iter3d 1.16 640))
+  (olena/oln/core/fwd_iter1d.hh (oln/d/21_fwd_iter1d 1.17 640))
+  (olena/oln/core/fwd_iter2d.hh (oln/d/20_fwd_iter2d 1.17 640))
+  (olena/oln/core/fwd_iter3d.hh (oln/d/19_fwd_iter3d 1.17 640))
   (olena/oln/core/generate.hh (oln/f/12_generate.h 1.18 640))
   (olena/oln/core/image1d.hh (oln/c/47_image1d.hh 1.28.1.2 640))
   (olena/oln/core/image1d_size.hh (oln/c/46_image1d_si 1.11 640))
@@ -1100,9 +590,9 @@ Index: olena/oln/morpho/environments.hh
   
   
   
-  (olena/oln/core/abstract/iter1d.hh (oln/d/10_iter1d.hh 1.20 640))
-  (olena/oln/core/abstract/iter2d.hh (oln/d/9_iter2d.hh 1.20 640))
-  (olena/oln/core/abstract/iter3d.hh (oln/d/8_iter3d.hh 1.20 640))
+  (olena/oln/core/abstract/iter1d.hh (oln/d/10_iter1d.hh 1.21 640))
+  (olena/oln/core/abstract/iter2d.hh (oln/d/9_iter2d.hh 1.21 640))
+  (olena/oln/core/abstract/iter3d.hh (oln/d/8_iter3d.hh 1.21 640))
   
 
   
@@ -1111,37 +601,37 @@ Index: olena/oln/morpho/environments.hh
   
   
   
-  (olena/oln/core/abstract/iter.hh (oln/c/40_iter.hh 1.22 640))
+  (olena/oln/core/abstract/iter.hh (oln/c/40_iter.hh 1.23 640))
   (olena/oln/core/macros.hh (oln/c/39_macros.hh 1.5 640))
-  (olena/oln/core/neighborhood1d.hh (oln/c/37_neighborho 1.18 640))
-  (olena/oln/core/neighborhood2d.hh (oln/c/36_neighborho 1.19 640))
-  (olena/oln/core/neighborhood3d.hh (oln/c/35_neighborho 1.18 640))
-  (olena/oln/core/abstract/neighborhood.hh (oln/c/38_neighborho 1.22 640))
+  (olena/oln/core/neighborhood1d.hh (oln/c/37_neighborho 1.19 640))
+  (olena/oln/core/neighborhood2d.hh (oln/c/36_neighborho 1.20 640))
+  (olena/oln/core/neighborhood3d.hh (oln/c/35_neighborho 1.19 640))
+  (olena/oln/core/abstract/neighborhood.hh (oln/c/38_neighborho 1.23 640))
   (metalic/mlc/objs.hh (oln/c/34_objs.hh 1.7 640))
   (olena/oln/core/point1d.hh (oln/c/32_point1d.hh 1.15 640))
   (olena/oln/core/point1d.hxx (oln/c/31_point1d.hx 1.6 640))
-  (olena/oln/core/point2d.hh (oln/c/30_point2d.hh 1.13 640))
-  (olena/oln/core/point2d.hxx (oln/c/29_point2d.hx 1.6 640))
-  (olena/oln/core/point3d.hh (oln/c/28_point3d.hh 1.15 640))
-  (olena/oln/core/point3d.hxx (oln/c/27_point3d.hx 1.5 640))
+  (olena/oln/core/point2d.hh (oln/c/30_point2d.hh 1.14 640))
+  (olena/oln/core/point2d.hxx (oln/c/29_point2d.hx 1.7 640))
+  (olena/oln/core/point3d.hh (oln/c/28_point3d.hh 1.16 640))
+  (olena/oln/core/point3d.hxx (oln/c/27_point3d.hx 1.6 640))
   (olena/oln/core/abstract/point.hh (oln/c/33_point.hh 1.16 640))
   
   (olena/oln/core/abstract/binary_image.hh (oln/c/24_pred_image 1.6 640))
   
-  (olena/oln/core/abstract/struct_elt.hh (oln/c/25_structelt. 1.23 640))
+  (olena/oln/core/abstract/struct_elt.hh (oln/c/25_structelt. 1.24 640))
   (olena/oln/core/traverse.hh (oln/d/30_traverse.h 1.12 640))
   (metalic/mlc/typeadj.hh (oln/e/25_typeadj.hh 1.6 640))
   (metalic/mlc/type.hh (oln/c/21_type.hh 1.28 640))
-  (olena/oln/core/window1d.hh (oln/c/15_window1d.h 1.18 640))
-  (olena/oln/core/window2d.hh (oln/c/14_window2d.h 1.20 640))
-  (olena/oln/core/window3d.hh (oln/c/13_window3d.h 1.19 640))
-  (olena/oln/core/abstract/window.hh (oln/c/16_window.hh 1.20 640))
+  (olena/oln/core/window1d.hh (oln/c/15_window1d.h 1.19 640))
+  (olena/oln/core/window2d.hh (oln/c/14_window2d.h 1.21 640))
+  (olena/oln/core/window3d.hh (oln/c/13_window3d.h 1.20 640))
+  (olena/oln/core/abstract/window.hh (oln/c/16_window.hh 1.21 640))
   (olena/oln/core/winiter.hh (oln/c/12_winiter.hh 1.12 640))
   (olena/oln/core/winneighb.hh (oln/c/11_winneighb. 1.14 640))
-  (olena/oln/core/w_window1d.hh (oln/c/19_w_window1d 1.19 640))
-  (olena/oln/core/w_window2d.hh (oln/c/18_w_window2d 1.6.1.14 640))
-  (olena/oln/core/w_window3d.hh (oln/c/17_w_window3d 1.19 640))
-  (olena/oln/core/abstract/w_window.hh (oln/c/20_w_window.h 1.17 640))
+  (olena/oln/core/w_window1d.hh (oln/c/19_w_window1d 1.20 640))
+  (olena/oln/core/w_window2d.hh (oln/c/18_w_window2d 1.6.1.15 640))
+  (olena/oln/core/w_window3d.hh (oln/c/17_w_window3d 1.20 640))
+  (olena/oln/core/abstract/w_window.hh (oln/c/20_w_window.h 1.18 640))
   (olena/oln/io/base.hh (oln/b/20_base.hh 1.10 640))
   
   (olena/oln/io/basics.hh (oln/b/12_basics.hh 1.6 640))
@@ -1170,7 +660,7 @@ Index: olena/oln/morpho/environments.hh
   (olena/oln/level/threshold.hh (oln/f/15_threshold. 1.14 640))
   (config/oln.m4 (oln/j/15_oln.m4 1.36 640))
 
-  (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.14 640))
+  (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.15 640))
   (metalic/mlc/array/1d.hh (oln/f/23_array1d.hh 1.11 640))
   (metalic/mlc/array/1d.hxx (oln/f/22_array1d.hx 1.10 640))
   (metalic/mlc/array/2d.hh (oln/f/21_array2d.hh 1.11 640))
@@ -1268,7 +758,7 @@ Index: olena/oln/morpho/environments.hh
   (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.7 640))
   (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.7 640))
   (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.9 640))
-  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.11 640))
+  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.12 640))
   (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.10 640))
   (olena/oln/utils/timer.hh (oln/8_timer.hh 1.9 640))
   (olena/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.5.1.1 640))
@@ -1681,7 +1171,7 @@ Index: olena/oln/morpho/environments.hh
   
   
   (olena/oln/topo/tarjan/union.hh (oln/r/33_union.hh 1.11 640))
-  (olena/oln/topo/inter-pixel/inter-pixel.hh (oln/r/34_inter-pixe 1.15 640))
+  (olena/oln/topo/inter-pixel/inter-pixel.hh (oln/r/34_inter-pixe 1.16 640))
   (olena/oln/topo/tarjan/flat-zone.hh (oln/r/35_flat-zone. 1.12 640))
   (olena/oln/topo/combinatorial-map/cmap.hh (oln/r/36_cmap.hh 1.13 640))
 
@@ -1750,7 +1240,7 @@ Index: olena/oln/morpho/environments.hh
   (integre/ntg/core/internal/traits.hh (oln/s/16_traits.hh 1.4.1.1 640))
   (integre/ntg/core/internal/macros.hh (oln/s/17_macros.hh 1.2 640))
   (integre/ntg/core/type_traits.hh (oln/s/18_type_trait 1.3 640))
-  (integre/ntg/core/macros.hh (oln/s/19_macros.hh 1.10 640))
+  (integre/ntg/core/macros.hh (oln/s/19_macros.hh 1.11 640))
   (integre/ntg/core/abstract_hierarchy.hh (oln/s/20_abstract_h 1.2.1.2 640))
   (integre/ntg/basics.hh (oln/s/21_basics.hh 1.3.1.1 640))
   (integre/ntg/vect/vect_value.hh (oln/s/22_vect_value 1.2.1.1 640))
@@ -1808,15 +1298,15 @@ Index: olena/oln/morpho/environments.hh
   (olena/tests/core/image_print.sh (oln/t/24_image_prin 1.2 640))
 
 
-  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.27 640))
-  (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.21 600))
-  (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.14.1.9 640))
+  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.29 640))
+  (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.22 600))
+  (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.14.1.11 640))
   (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.12 640))
   (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.18 640))
   (olena/oln/core/impl/image_array.hh (oln/t/30_image_arra 1.16 640))
   (olena/tests/core/tests/image1 (oln/t/31_image1 1.4 640))
   (olena/oln/core/impl/image_array3d.hh (oln/t/32_image_arra 1.11 640))
-  (olena/oln/core/impl/image_array2d.hh (oln/t/33_image_arra 1.12 640))
+  (olena/oln/core/impl/image_array2d.hh (oln/t/33_image_arra 1.13 640))
   (olena/oln/core/impl/image_array1d.hh (oln/t/34_image_arra 1.13 640))
   (olena/tests/core/tests/borders (oln/t/35_borders 1.3 640))
   (olena/tests/core/tests/clone (oln/t/36_clone 1.1 640))
@@ -1836,10 +1326,10 @@ Index: olena/oln/morpho/environments.hh
   (olena/tests/level/tests/threshold (oln/u/0_threshold. 1.1 600))
   (olena/tests/core/tests/window (oln/u/1_window 1.1 640))
   (olena/tests/core/tests/neighborhood (oln/u/2_neighborho 1.1 640))
-  (olena/oln/core/abstract/window_base.hh (oln/u/3_window_bas 1.12 640))
-  (olena/oln/core/abstract/windownd.hh (oln/u/4_windownd.h 1.10 640))
-  (olena/oln/core/abstract/w_windownd.hh (oln/u/5_w_windownd 1.9 640))
-  (olena/oln/core/abstract/neighborhoodnd.hh (oln/u/6_neighborho 1.9 640))
+  (olena/oln/core/abstract/window_base.hh (oln/u/3_window_bas 1.13 640))
+  (olena/oln/core/abstract/windownd.hh (oln/u/4_windownd.h 1.11 640))
+  (olena/oln/core/abstract/w_windownd.hh (oln/u/5_w_windownd 1.10 640))
+  (olena/oln/core/abstract/neighborhoodnd.hh (oln/u/6_neighborho 1.10 640))
   (olena/tests/core/tests/traverse (oln/u/7_traverse 1.1 640))
   (integre/tests/types/tests/int_u7 (oln/u/8_int_u7 1.1 640))
   (olena/oln/io/pnm_read_data.hh (oln/u/9_pnm_read_d 1.6 640))
@@ -2051,7 +1541,7 @@ Index: olena/oln/morpho/environments.hh
 ;; Files added by populate at Fri, 06 Feb 2004 16:00:19 +0100,
 ;; to version 10.57(w), by palma_g:
 
-  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.10 644))
+  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.11 644))
 
 ;; Files added by populate at Tue, 10 Feb 2004 15:26:15 +0100,
 ;; to version 10.62(w), by palma_g:
@@ -2139,12 +1629,12 @@ Index: olena/oln/morpho/environments.hh
 ;; Files added by populate at Tue, 23 Mar 2004 14:24:00 +0100,
 ;; to version 10.104(w), by palma_g:
 
-  (olena/tests/convol/tests/md5_convol_fast_gaussian_hh5 (oln/k/23_md5_convol 1.1 644))
-  (olena/tests/convol/tests/md5_convol_fast_gaussian_hh4 (oln/k/24_md5_convol 1.1 644))
-  (olena/tests/convol/tests/md5_convol_fast_gaussian_hh3 (oln/k/25_md5_convol 1.1 644))
-  (olena/tests/convol/tests/md5_convol_fast_gaussian_hh2 (oln/k/26_md5_convol 1.1 644))
-  (olena/tests/convol/tests/md5_convol_fast_gaussian_hh1 (oln/k/27_md5_convol 1.1 644))
-  (olena/tests/convol/tests/md5_convol_fast_gaussian_hh0 (oln/k/28_md5_convol 1.1 644))
+  (olena/tests/convol/tests/md5_convol_fast_gaussian_hh5 (oln/k/23_md5_convol 1.2 644))
+  (olena/tests/convol/tests/md5_convol_fast_gaussian_hh4 (oln/k/24_md5_convol 1.2 644))
+  (olena/tests/convol/tests/md5_convol_fast_gaussian_hh3 (oln/k/25_md5_convol 1.2 644))
+  (olena/tests/convol/tests/md5_convol_fast_gaussian_hh2 (oln/k/26_md5_convol 1.2 644))
+  (olena/tests/convol/tests/md5_convol_fast_gaussian_hh1 (oln/k/27_md5_convol 1.2 644))
+  (olena/tests/convol/tests/md5_convol_fast_gaussian_hh0 (oln/k/28_md5_convol 1.2 644))
 
 ;; Files added by populate at Tue, 23 Mar 2004 14:29:08 +0100,
 ;; to version 10.105(w), by palma_g:
@@ -2258,8 +1748,86 @@ Index: olena/oln/morpho/environments.hh
 ;; to version 10.109(w), by palma_g:
 
   (olena/oln/morpho/environments.hh (oln/m/17_environmen 1.1 644))
-)
+
+
+  (olena/oln/morpher/generic_morpher.hh (oln/m/18_generic_mo 1.3 600))
+  (olena/tests/convol/tests/nagao (oln/m/19_nagao 1.1 600))
+  (integre/tests/types/tests/ntg_compare_nb_comp (oln/m/20_ntg_compar 1.1 600))
+  (olena/oln/convol/nagao.hxx (oln/m/21_nagao.hxx 1.1 600))
+  (olena/oln/convol/nagao.hh (oln/m/22_nagao.hh 1.2 600))
+  (olena/oln/utils/se_stat.hh (oln/m/23_se_stat.hh 1.2 600))
+  (olena/oln/utils/se_stat.hxx (oln/m/24_se_stat.hx 1.2 600))
+  (olena/oln/morpher/subq_morpher.hh (oln/m/25_subq_morph 1.1 600))
+  (olena/oln/morpher/color_morpher.hh (oln/m/26_color_morp 1.1 600))
+  (olena/tests/morpher/Makefile.am (oln/m/27_Makefile.a 1.1 600))
+  (olena/tests/morpher/tests/sq_morph_8 (oln/m/28_sq_morph_8 1.1 600))
+  (olena/tests/morpher/tests/sq_morph_7 (oln/m/29_sq_morph_7 1.1 600))
+  (olena/tests/morpher/tests/sq_morph_6 (oln/m/30_sq_morph_6 1.1 600))
+  (olena/tests/morpher/tests/sq_morph_5 (oln/m/31_sq_morph_5 1.1 600))
+  (olena/tests/morpher/tests/sq_morph_4 (oln/m/32_sq_morph_4 1.1 600))
+  (olena/tests/morpher/tests/sq_morph_3 (oln/m/33_sq_morph_3 1.1 600))
+  (olena/tests/morpher/tests/sq_morph_2 (oln/m/34_sq_morph_2 1.1 600))
+  (olena/tests/morpher/tests/sq_morph_1 (oln/m/35_sq_morph_1 1.1 600))
+  (olena/tests/morpher/tests/rmorph (oln/m/36_rmorph 1.1 600))
+  (olena/tests/morpher/tests/gmorph (oln/m/37_gmorph 1.1 600))
+  (olena/tests/morpher/tests/color_sq_morph (oln/m/38_color_sq_m 1.1 600))
+  (olena/tests/morpher/tests/bmorph (oln/m/39_bmorph 1.1 600))
+  (olena/oln/morpher/piece_morpher.hh (oln/m/40_piece_morp 1.1 600))
+  (olena/oln/morpher/iter_morpher.hh (oln/m/41_iter_morph 1.1 600))
+  (olena/oln/morpher/slicing_morpher.hh (oln/m/42_slicing_mo 1.2 600)))
 (Merge-Parents
+  (10.110 complete)
   (10.109 complete)
+  (10.108 complete)
+  (10.107 complete)
+  (10.105 complete)
+  (10.104 complete
+    (() olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh5 olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh5 n) (() olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh4 olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh4 n)
+    (() olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh3 olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh3 n) (() olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh2 olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh2 n)
+    (() olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh1 olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh1 n) (() olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh0 olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh0 n))
+  (10.103 complete
+    (() olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh5 olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh5 n) (() olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh4 olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh4 n)
+    (() olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh3 olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh3 n) (() olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh2 olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh2 n)
+    (() olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh1 olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh1 n) (() olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh0 olena/tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh0 n))
+  (10.119 complete
+    (ChangeLog ChangeLog ChangeLog r) (integre/ChangeLog integre/ChangeLog integre/ChangeLog r)
+    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (configure.ac configure.ac configure.ac r)
+    (olena/oln/core/point2d.hh olena/oln/core/point2d.hh olena/oln/core/point2d.hh r) (olena/oln/core/point2d.hxx olena/oln/core/point2d.hxx olena/oln/core/point2d.hxx r)
+    (olena/oln/core/point3d.hh olena/oln/core/point3d.hh olena/oln/core/point3d.hh r) (olena/oln/core/point3d.hxx olena/oln/core/point3d.hxx olena/oln/core/point3d.hxx r)
+    (olena/oln/math/macros.hh olena/oln/math/macros.hh olena/oln/math/macros.hh r) (olena/oln/utils/histogram.hh olena/oln/utils/histogram.hh olena/oln/utils/histogram.hh r)
+    (olena/oln/topo/inter-pixel/inter-pixel.hh olena/oln/topo/inter-pixel/inter-pixel.hh olena/oln/topo/inter-pixel/inter-pixel.hh r) (integre/ntg/core/macros.hh integre/ntg/core/macros.hh integre/ntg/core/macros.hh r)
+    (olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh r) (olena/oln/core/abstract/image_with_dim.hh olena/oln/core/abstract/image_with_dim.hh olena/oln/core/abstract/image_with_dim.hh r)
+    (olena/oln/core/abstract/image_with_impl.hh olena/oln/core/abstract/image_with_impl.hh olena/oln/core/abstract/image_with_impl.hh r) (olena/oln/morpho/attributes.hh olena/oln/morpho/attributes.hh olena/oln/morpho/attributes.hh r)
+    (() () olena/oln/morpher/generic_morpher.hh a) (() () olena/tests/convol/tests/nagao a)
+    (() () integre/tests/types/tests/ntg_compare_nb_comp a) (() () olena/oln/convol/nagao.hxx a)
+    (() () olena/oln/convol/nagao.hh a) (() () olena/oln/utils/se_stat.hh a)
+    (() () olena/oln/utils/se_stat.hxx a) (() () olena/oln/morpher/subq_morpher.hh a)
+    (() () olena/oln/morpher/color_morpher.hh a) (() () olena/tests/morpher/Makefile.am a)
+    (() () olena/tests/morpher/tests/sq_morph_8 a) (() () olena/tests/morpher/tests/sq_morph_7 a)
+    (() () olena/tests/morpher/tests/sq_morph_6 a) (() () olena/tests/morpher/tests/sq_morph_5 a)
+    (() () olena/tests/morpher/tests/sq_morph_4 a) (() () olena/tests/morpher/tests/sq_morph_3 a)
+    (() () olena/tests/morpher/tests/sq_morph_2 a) (() () olena/tests/morpher/tests/sq_morph_1 a)
+    (() () olena/tests/morpher/tests/rmorph a) (() () olena/tests/morpher/tests/gmorph a)
+    (() () olena/tests/morpher/tests/color_sq_morph a) (() () olena/tests/morpher/tests/bmorph a)
+    (() () olena/oln/morpher/piece_morpher.hh a) (() () olena/oln/morpher/iter_morpher.hh a)
+    (() () olena/oln/morpher/slicing_morpher.hh a) 
+  )
+  (10.121 complete
+    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (olena/oln/core/bkd_iter1d.hh olena/oln/core/bkd_iter1d.hh olena/oln/core/bkd_iter1d.hh r)
+    (olena/oln/core/bkd_iter2d.hh olena/oln/core/bkd_iter2d.hh olena/oln/core/bkd_iter2d.hh r) (olena/oln/core/bkd_iter3d.hh olena/oln/core/bkd_iter3d.hh olena/oln/core/bkd_iter3d.hh r)
+    (olena/oln/core/fwd_iter1d.hh olena/oln/core/fwd_iter1d.hh olena/oln/core/fwd_iter1d.hh r) (olena/oln/core/fwd_iter2d.hh olena/oln/core/fwd_iter2d.hh olena/oln/core/fwd_iter2d.hh r)
+    (olena/oln/core/fwd_iter3d.hh olena/oln/core/fwd_iter3d.hh olena/oln/core/fwd_iter3d.hh r) (olena/oln/core/abstract/iter1d.hh olena/oln/core/abstract/iter1d.hh olena/oln/core/abstract/iter1d.hh r)
+    (olena/oln/core/abstract/iter2d.hh olena/oln/core/abstract/iter2d.hh olena/oln/core/abstract/iter2d.hh r) (olena/oln/core/abstract/iter3d.hh olena/oln/core/abstract/iter3d.hh olena/oln/core/abstract/iter3d.hh r)
+    (olena/oln/core/abstract/iter.hh olena/oln/core/abstract/iter.hh olena/oln/core/abstract/iter.hh r) (olena/oln/core/neighborhood1d.hh olena/oln/core/neighborhood1d.hh olena/oln/core/neighborhood1d.hh r)
+    (olena/oln/core/neighborhood2d.hh olena/oln/core/neighborhood2d.hh olena/oln/core/neighborhood2d.hh r) (olena/oln/core/neighborhood3d.hh olena/oln/core/neighborhood3d.hh olena/oln/core/neighborhood3d.hh r)
+    (olena/oln/core/abstract/neighborhood.hh olena/oln/core/abstract/neighborhood.hh olena/oln/core/abstract/neighborhood.hh r) (olena/oln/core/abstract/struct_elt.hh olena/oln/core/abstract/struct_elt.hh olena/oln/core/abstract/struct_elt.hh r)
+    (olena/oln/core/window1d.hh olena/oln/core/window1d.hh olena/oln/core/window1d.hh r) (olena/oln/core/window2d.hh olena/oln/core/window2d.hh olena/oln/core/window2d.hh r)
+    (olena/oln/core/window3d.hh olena/oln/core/window3d.hh olena/oln/core/window3d.hh r) (olena/oln/core/abstract/window.hh olena/oln/core/abstract/window.hh olena/oln/core/abstract/window.hh r)
+    (olena/oln/core/w_window1d.hh olena/oln/core/w_window1d.hh olena/oln/core/w_window1d.hh r) (olena/oln/core/w_window2d.hh olena/oln/core/w_window2d.hh olena/oln/core/w_window2d.hh r)
+    (olena/oln/core/w_window3d.hh olena/oln/core/w_window3d.hh olena/oln/core/w_window3d.hh r) (olena/oln/core/abstract/w_window.hh olena/oln/core/abstract/w_window.hh olena/oln/core/abstract/w_window.hh r)
+    (olena/oln/core/abstract/window_base.hh olena/oln/core/abstract/window_base.hh olena/oln/core/abstract/window_base.hh r) (olena/oln/core/abstract/windownd.hh olena/oln/core/abstract/windownd.hh olena/oln/core/abstract/windownd.hh r)
+    (olena/oln/core/abstract/w_windownd.hh olena/oln/core/abstract/w_windownd.hh olena/oln/core/abstract/w_windownd.hh r) (olena/oln/core/abstract/neighborhoodnd.hh olena/oln/core/abstract/neighborhoodnd.hh olena/oln/core/abstract/neighborhoodnd.hh r)
+    (olena/oln/morpher/slicing_morpher.hh olena/oln/morpher/slicing_morpher.hh olena/oln/morpher/slicing_morpher.hh r) 
+  )
 )
 (New-Merge-Parents)

@@ -122,7 +122,7 @@ namespace oln {
 	  this->exact().clear_impl();
 	}
 	/// Read the number of occurrence of \a v.
-	const cpt_type&
+	const cpt_type
 	operator[](const value_type &v)const
 	{
 	  return this->exact().at(v);
@@ -256,7 +256,7 @@ namespace oln {
       }
 
       /// operator[] should be called.
-      const cpt_type&
+      const cpt_type
       at(const T &v)const
       {
 	return img_[v2p_(v)];
@@ -404,7 +404,7 @@ namespace oln {
 	min_(ntg_min_val(value_type)), max_(ntg_max_val(value_type)) {}
 
       /// operator[] should be called.
-      const cpt_type&
+      const cpt_type
       at(const value_type& i) const
       {
 	adjust(i);
@@ -503,7 +503,7 @@ namespace oln {
 	upper_type(input, v2p), min_(ntg_min_val(value_type)) {}
 
       /// operator[] should be called.
-      const cpt_type&
+      const cpt_type
       at(const value_type& i) const
       {
 	return img_[v2p_(i)];
@@ -594,7 +594,7 @@ namespace oln {
 	upper_type(input, v2p),max_(ntg_max_val(value_type)) {}
 
       /// operator[] should be called.
-      const cpt_type&
+      const cpt_type
       at(const value_type& i) const
       {
 	return img_[v2p_(i)];

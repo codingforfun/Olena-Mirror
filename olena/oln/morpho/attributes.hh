@@ -1213,11 +1213,11 @@ namespace oln {
 	**
 	** \arg p Point to consider in the image.
 	*/
-	dist_type(//const im_type&,
+	dist_type(const im_type&,
 		  const point_type &p,
-		  const env_type &) //:
-	  //	  value_(ntg_zero_val(value_type)),
-	  //center_(p)
+		  const env_type &):
+	  value_(ntg_zero_val(value_type)),
+	  center_(p)
 	  {
 	  };
 

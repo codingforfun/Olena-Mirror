@@ -67,6 +67,8 @@ namespace oln {
       ** \arg sigma Value of sigma when computing the gaussian.
       ** \arg behavior Object to know how to work on borders.
       **
+      ** \warning If sigma is big enough, the result may differ a
+      ** little bit with the -O3 flag of g++.
       */
       template <class C, class B, class I, class BE>
       typename mute<I, typename convoutput<C, B, oln_value_type(I)>::ret>::ret
@@ -90,6 +92,9 @@ namespace oln {
       ** \arg sigma Value of sigma when computing the gaussian.
       ** \arg behavior Object to know how to work on borders.
       **
+      ** \warning If sigma is big enough, the result may differ a
+      ** little bit with the -O3 flag of g++.
+      **
       */
       template <class C, class B, class I, class BE>
       typename mute<I, typename convoutput<C, B, oln_value_type(I)>::ret>::ret
@@ -112,6 +117,9 @@ namespace oln {
       ** \arg in Input image.
       ** \arg sigma Value of sigma when computing the gaussian.
       ** \arg behavior Object to know how to work on borders.
+      **
+      ** \warning If sigma is big enough, the result may differ a
+      ** little bit with the -O3 flag of g++.
       **
       */
       template <class C, class B, class I, class BE>
@@ -159,6 +167,9 @@ namespace oln {
       ** =>
       ** \image html oln_convol_fast_gaussian.png
       ** \image latex oln_convol_fast_gaussian.png
+      **
+      ** \warning If sigma is big enough, the result may differ a
+      ** little bit with the -O3 flag of g++.
       */
       template <class I, class BE> inline
       oln_concrete_type(I)
@@ -191,7 +202,7 @@ namespace oln {
       **
       **   im_type	im1(oln::load(IMG_IN "lena256.pgm"));
       **
-      **   oln::save(oln::convol::fast::gaussian(im1, 2,
+      **   oln::save(oln::convol::fast::gaussian_derivative(im1, 2,
       **                                         oln::value_behavior<oln_value_type_(im_type)>(0)),
       **             IMG_OUT "oln_convol_fast_gaussian_derivative.pbm");
       **   return  0;
@@ -204,7 +215,8 @@ namespace oln {
       ** \image html oln_convol_fast_gaussian_derivative.png
       ** \image latex oln_convol_fast_gaussian_derivative.png
       **
-      ** \todo FIXME: Make the example use the good function.
+      ** \warning If sigma is big enough, the result may differ a
+      ** little bit with the -O3 flag of g++.
       */
       template <class I, class BE> inline
       oln_concrete_type(I)
@@ -236,7 +248,7 @@ namespace oln {
       **
       **   im_type	im1(oln::load(IMG_IN "lena256.pgm"));
       **
-      **   oln::save(oln::convol::fast::gaussian(im1, 2,
+      **   oln::save(oln::convol::fast::gaussian_second_derivative(im1, 2,
       **                                         oln::value_behavior<oln_value_type_(im_type)>(0)),
       **             IMG_OUT "oln_convol_fast_gaussian_second_derivative.pbm");
       **   return 0;
@@ -249,7 +261,8 @@ namespace oln {
       ** \image html oln_convol_fast_gaussian_second_derivative.png
       ** \image latex oln_convol_fast_gaussian_second_derivative.png
       **
-      ** \todo FIXME: Make the example use the good function.
+      ** \warning If sigma is big enough, the result may differ a
+      ** little bit with the -O3 flag of g++.
       */
       template <class I, class BE> inline
       oln_concrete_type(I)
@@ -297,6 +310,9 @@ namespace oln {
       ** =>
       ** \image html oln_convol_fast_gaussian_default.png
       ** \image latex oln_convol_fast_gaussian_default.png
+      **
+      ** \warning If sigma is big enough, the result may differ a
+      ** little bit with the -O3 flag of g++.
       */
       template <class I> inline
       oln_concrete_type(I)
@@ -332,7 +348,7 @@ namespace oln {
       **
       **   im_type	im1(oln::load(IMG_IN "lena256.pgm"));
       **
-      **   oln::save(oln::convol::fast::gaussian(im1, 2),
+      **   oln::save(oln::convol::fast::gaussian_derivative(im1, 2),
       **             IMG_OUT "oln_convol_fast_gaussian_derivative_default.pbm");
       **   return 0;
       ** }
@@ -344,7 +360,8 @@ namespace oln {
       ** \image html oln_convol_fast_gaussian_derivative_default.png
       ** \image latex oln_convol_fast_gaussian_derivative_default.png
       **
-      ** \todo FIXME: Make the example use the good function.
+      ** \warning If sigma is big enough, the result may differ a
+      ** little bit with the -O3 flag of g++.
       */
       template <class I> inline
       oln_concrete_type(I)
@@ -380,7 +397,7 @@ namespace oln {
       **
       **   im_type	im1(oln::load(IMG_IN "lena256.pgm"));
       **
-      **   oln::save(oln::convol::fast::gaussian(im1, 2),
+      **   oln::save(oln::convol::fast::gaussian_second_derivative(im1, 2),
       **             IMG_OUT "oln_convol_fast_gaussian_second_derivative_default.pbm");
       **   return 0;
       ** }
@@ -392,7 +409,8 @@ namespace oln {
       ** \image html oln_convol_fast_gaussian_second_derivative_default.png
       ** \image latex oln_convol_fast_gaussian_second_derivative_default.png
       **
-      ** \todo FIXME: Make the example use the good function.
+      ** \warning If sigma is big enough, the result may differ a
+      ** little bit with the -O3 flag of g++.
       */
       template <class I> inline
       oln_concrete_type(I)

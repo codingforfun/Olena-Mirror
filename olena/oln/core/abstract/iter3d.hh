@@ -114,7 +114,7 @@ namespace oln {
 	return this->p_.col();
       }
 
-      ///< Return the name of the type.
+      /// Return the name of the type.
       static std::string name()
       {
 	return std::string("_iter3d<") + Exact::name() + ">";

@@ -104,7 +104,6 @@ namespace oln {
 	    - c.d[1]*tmp1[2] - c.d[2]*tmp1[1]
 	    - c.d[3]*tmp1[0];
 
-
 	  oln_point_type(I) current(start + d + d + d + d);
 	  for (coord i = 4; i < len; ++i)
 	    {
@@ -170,7 +169,16 @@ namespace oln {
 	struct gaussian_ {};
 
 
-	// Gaussian filter for 1D images
+	/*! Gaussian filter for 1D images
+	**
+	** gaussian_ specialization for 1D images.
+	**
+	** \param I Exact type of the image.
+	** \param F Type of coefficients.
+	**
+	** \arg img Image to process.
+	** \arg coef Coefficients to use.
+	*/
 	template<>
 	struct gaussian_<1>
 	{
@@ -189,7 +197,16 @@ namespace oln {
 	};
 
 
-	// Gaussian filter for 2D images
+	/*! Gaussian filter for 2D images
+	**
+	** gaussian_ specialization for 2D images.
+	**
+	** \param I Exact type of the image.
+	** \param F Type of coefficients.
+	**
+	** \arg img Image to process.
+	** \arg coef Coefficients to use.
+	*/
 	template<>
 	struct gaussian_<2>
 	{
@@ -211,11 +228,20 @@ namespace oln {
 				      oln_point_type(I)(i, -img.border()),
 				      oln_point_type(I)(i, img.ncols() - 1 + img.border()),
 				      img.ncols() + 2 * img.border(),
-				      oln_dpoint_type(I)(0, 1));
+ 				      oln_dpoint_type(I)(0, 1));
 	  }
 	};
 
-	// Gaussian filter for 3D images
+	/*! Gaussian filter for 3D images
+	**
+	** gaussian_ specialization for 3D images.
+	**
+	** \param I Exact type of the image.
+	** \param F Type of coefficients.
+	**
+	** \arg img Image to process.
+	** \arg coef Coefficients to use.
+	*/
 	template<>
 	struct gaussian_<3>
 	{

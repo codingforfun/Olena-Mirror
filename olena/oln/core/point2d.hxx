@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -46,6 +46,13 @@ namespace oln {
   {
     nth(0) = row;
     nth(1) = col;
+  }
+
+  inline
+  point2d::point2d(const point1d& p, coord row)
+  {
+    nth(0) = row;
+    nth(1) = p.col();
   }
 
   inline coord

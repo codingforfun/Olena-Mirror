@@ -1,3 +1,118 @@
+2004-03-29  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* tests/convol/tests/md5_convol_fast_gaussian_hh5: Correct test.
+	* tests/convol/tests/md5_convol_fast_gaussian_hh4: Likewise.
+	* tests/convol/tests/md5_convol_fast_gaussian_hh3: Likewise.
+	* tests/convol/tests/md5_convol_fast_gaussian_hh2: Likewise.
+	* tests/convol/tests/md5_convol_fast_gaussian_hh1: Likewise.
+	* tests/convol/tests/md5_convol_fast_gaussian_hh0: Likewise.
+
+	* oln/convol/fast_gaussian.hh: Add comments.
+	* oln/convol/fast_gaussian.hxx: Likewise.
+
+2004-03-29  Simon Odou  <simon@lrde.epita.fr>
+
+	* oln/morpher/slicing_morpher.hh: Minor fix.
+
+	* olena/oln/core/bkd_iter1d.hh: Fix comments.
+	* olena/oln/core/bkd_iter2d.hh: Likewise.
+	* olena/oln/core/bkd_iter3d.hh: Likewise.
+	* olena/oln/core/fwd_iter1d.hh: Likewise.
+	* olena/oln/core/fwd_iter2d.hh: Likewise.
+	* olena/oln/core/fwd_iter3d.hh: Likewise.
+	* olena/oln/core/abstract/iter1d.hh: Likewise.
+	* olena/oln/core/abstract/iter2d.hh: Likewise.
+	* olena/oln/core/abstract/iter3d.hh: Likewise.
+	* olena/oln/core/abstract/iter.hh: Likewise.
+	* olena/oln/core/neighborhood1d.hh: Likewise.
+	* olena/oln/core/neighborhood2d.hh: Likewise.
+	* olena/oln/core/neighborhood3d.hh: Likewise.
+	* olena/oln/core/abstract/neighborhood.hh: Likewise.
+	* olena/oln/core/window1d.hh: Likewise.
+	* olena/oln/core/window2d.hh: Likewise.
+	* olena/oln/core/window3d.hh: Likewise.
+	* olena/oln/core/abstract/window.hh: Likewise.
+	* olena/oln/core/w_window1d.hh: Likewise.
+	* olena/oln/core/w_window2d.hh: Likewise.
+	* olena/oln/core/w_window3d.hh: Likewise.
+	* olena/oln/core/abstract/w_window.hh: Likewise.
+	* olena/oln/core/abstract/window_base.hh: Likewise.
+	* olena/oln/core/abstract/windownd.hh: Likewise.
+	* olena/oln/core/abstract/w_windownd.hh: Likewise.
+	* olena/oln/core/abstract/neighborhoodnd.hh: Likewise.
+
+	* oln/morpher/slicing_morpher.hh: To have a slice of an image.
+
+	* oln/morpher/iter_morpher.hh: To have a specific default iterator.
+
+	* oln/morpher/piece_morpher.hh: To use a piece of image like a real one.
+	* oln/core/abstract/image_with_impl.hh:
+	* oln/core/point2d.hh: Able to construct a point2d from a point1d.
+	* oln/core/point2d.hxx: Likewise.
+	* oln/core/point3d.hh: Able to construct a point3d from a point2d.
+	* oln/core/point3d.hxx: Likewise.
+	* oln/core/abstract/image_with_dim.hh: Fix a bug.
+	* oln/core/abstract/image_with_impl.hh: Fix (same).
+
+2004-03-29  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/topo/inter-pixel/inter-pixel.hh: Change the return type
+	of operator[] from const & to const.
+
+2004-03-29  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* olena/oln/morpher/generic_morpher.hh: Correct code and comments.
+	* olena/oln/morpher/subq_morpher.hh: Add file. Sub quantify morpher
+	implementation.
+	* olena/oln/morpher/color_morpher.hh: Add file. Color morpher
+	implementation.
+	* olena/tests/morpher/Makefile.am: Add file. Morphers test suite.
+	* olena/tests/morpher/tests/sq_morph_8: Add file.
+	* olena/tests/morpher/tests/sq_morph_7: Likewise.
+	* olena/tests/morpher/tests/sq_morph_6: Likewise.
+	* olena/tests/morpher/tests/sq_morph_5: Likewise.
+	* olena/tests/morpher/tests/sq_morph_4: Likewise.
+	* olena/tests/morpher/tests/sq_morph_3: Likewise.
+	* olena/tests/morpher/tests/sq_morph_2: Likewise.
+	* olena/tests/morpher/tests/sq_morph_1: Likewise.
+	* olena/tests/morpher/tests/rmorph: Likewise.
+	* olena/tests/morpher/tests/gmorph: Likewise.
+	* olena/tests/morpher/tests/color_sq_morph: Likewise.
+	* olena/tests/morpher/tests/bmorph: Likewise.
+
+2004-03-27  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/utils/histogram.hh: Change the return type
+	of `at' method to const value_type.
+	* olena/oln/morpho/attributes.hh: Uncomment some lines.
+
+	* olena/oln/convol/nagao.hh: Correct comments.
+	* olena/oln/convol/nagao.hxx: Likewise.
+	* olena/oln/utils/se_stat.hh: Likewise.
+	* olena/oln/utils/se_stat.hxx: Likewise.
+
+2004-03-26  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/math/macros.hh: Add dot_product.
+	* olena/oln/utils/se_stat.hh: Add file. Mean and variance using a
+	structuring element.
+	* olena/oln/utils/se_stat.hxx: Add file.
+	* olena/oln/convol/nagao.hh: Add file. Nagao filter.
+	* olena/oln/convol/nagao.hxx: Add file.
+	* olena/tests/convol/tests/nagao : Add file.
+
+2004-03-25  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* olena/oln/core/abstract/image.hh: Correct macros.
+	* olena/oln/core/abstract/image_with_impl.hh: Change the return type
+	of `at' method to const value_type.
+	* olena/oln/morpher/generic_morpher.hh: Correct comments.
+	Change parameter names. Fix coding style.
+
+2004-03-25  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* olena/oln/core/abstract/image.hh: Change the return type of
+	`operator[]' method to const value_type.
+	Add macros for retrieving types associated to an image.
+	* olena/oln/morpher/generic_morpher.hh: generic_morpher implementation.
+
 2004-03-25  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* oln/morpho/dilation.hh: Correct comments.
