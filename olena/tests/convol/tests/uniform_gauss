@@ -1,0 +1,31 @@
+// -*- c++ -*-
+#include <oln/basics2d.hh>
+#include <oln/convol/fast_gaussian.hh>
+#include <oln/convert/basics.hh>
+
+#include "check.hh"
+#include "data.hh"
+
+#include <iostream>
+using std::cout;
+using std::endl;
+
+using namespace oln;
+using namespace mlc;
+using namespace ntg;
+
+// check if the gaussian of an uniform image doesn't destroy the image
+bool check()
+{
+  image2d<int_u8>		img(50, 50);
+  image2d<int_u8>::iter_type	it(img);
+
+  for_all(it)
+    img[it] = 42;
+  image2d<int_u8>		img2 = convol::fast::gaussian(img, 5);
+
+  for_all(it)
+    if (img[it] != img2[it])
+      return true;
+  return false;
+}

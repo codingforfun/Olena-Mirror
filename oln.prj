@@ -1,217 +1,91 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 56)
-(Parent-Version oln 10 52)
-(Version-Log "Index: integre/ChangeLog
+(Project-Version oln 10 57)
+(Parent-Version oln 10 56)
+(Version-Log "Index: olena/ChangeLog
 from  Giovanni Palma  <giovanni@lrde.epita.fr>
 
-	* ntg/utils/cast.hh: Make force use a single cast instead of
-	delegate its work to an unsafe type.
+	* tests/convol/tests/uniform_gauss:  Add test to make sure
+	fast_gaussian take care of the borders.
+	* tests/convol/tests/uniform2_gauss: Add test to make sure
+	fast_gaussian take care of the borders.
 
-Index: olena/ChangeLog
-from  Giovanni Palma  <giovanni@lrde.epita.fr>
-
-	* oln/convol/fast_gaussian.hxx: Make the gaussian take care of the
-	borders.
-
-Index: olena/oln/convol/fast_gaussian.hxx
---- olena/oln/convol/fast_gaussian.hxx Thu, 07 Aug 2003 02:08:21 +0200 david (oln/25_fast_gauss 1.7.1.8.1.4 640)
-+++ olena/oln/convol/fast_gaussian.hxx Wed, 28 Jan 2004 15:34:38 +0100 palma_g (oln/25_fast_gauss 1.7.1.8.1.4 640)
-@@ -159,9 +159,9 @@
- 
- 	    // Apply on columns.
- 	    recursivefilter_<float>(img, coef,
--				    oln_point_type(I)(0),
--				    oln_point_type(I)(img.ncols() - 1),
--				    img.ncols(),
-+				    oln_point_type(I)(-img.border()),
-+				    oln_point_type(I)(img.ncols() - 1 + img.border()),
-+				    img.ncols() + 2 * img.border(),
- 				    oln_dpoint_type(I)(1));
- 	  }
- 	};
-@@ -175,21 +175,20 @@
- 	  void
- 	  doit(abstract::image_with_dim<2, I>& img, const F& coef)
- 	  {
--
- 	    // Apply on rows.
- 	    for (coord j = 0; j < img.ncols(); ++j)
- 	      recursivefilter_<float>(img, coef,
--				      oln_point_type(I)(0, j),
--				      oln_point_type(I)(img.nrows() - 1, j),
--				      img.nrows(),
-+				      oln_point_type(I)(-img.border(), j),
-+				      oln_point_type(I)(img.nrows() - 1 + img.border(), j),
-+				      img.nrows() + 2 * img.border(),
- 				      oln_dpoint_type(I)(1, 0));
- 
- 	    // Apply on columns.
- 	    for (coord i = 0; i < img.nrows(); ++i)
- 	      recursivefilter_<float>(img, coef,
--				      oln_point_type(I)(i, 0),
--				      oln_point_type(I)(i, img.ncols() - 1),
--				      img.ncols(),
-+				      oln_point_type(I)(i, -img.border()),
-+				      oln_point_type(I)(i, img.ncols() - 1 + img.border()),
-+				      img.ncols() + 2 * img.border(),
- 				      oln_dpoint_type(I)(0, 1));
- 	  }
- 	};
-@@ -206,27 +205,27 @@
- 	    for (coord j = 0; j < img.nrows(); ++j)
- 	      for (coord k = 0; k < img.ncols(); ++k)
- 		recursivefilter_<float>(img, coef,
--					oln_point_type(I)(0, j, k),
--					oln_point_type(I)(img.nslices() - 1, j, k),
--					img.ncols(),
-+					oln_point_type(I)(-img.border(), j, k),
-+					oln_point_type(I)(img.nslices() - 1 + img.border(), j, k),
-+					img.ncols() + 2 * img.border(),
- 					oln_dpoint_type(I)(1, 0, 0));
- 
- 	    // Apply on rows.
- 	    for (coord i = 0; i < img.nslices(); ++i)
- 	      for (coord k = 0; k < img.ncols(); ++k)
- 		recursivefilter_<float>(img, coef,
--					oln_point_type(I)(i, 0, k),
--					oln_point_type(I)(i, img.nrows() - 1, k),
--					img.nrows(),
-+					oln_point_type(I)(i, -img.border(), k),
-+					oln_point_type(I)(i, img.nrows() - 1 + img.border(), k),
-+					img.nrows() + 2 * img.border(),
- 					oln_dpoint_type(I)(0, 1, 0));
- 
- 	    // Apply on columns.
- 	    for (coord i = 0; i < img.nslices(); ++i)
- 	      for (coord j = 0; j < img.nrows(); ++j)
- 		recursivefilter_<float>(img, coef,
--					oln_point_type(I)(i, j, 0),
--					oln_point_type(I)(i, j, img.ncols() - 1),
--					img.ncols(),
-+					oln_point_type(I)(i, j, -img.border()),
-+					oln_point_type(I)(i, j, img.ncols() - 1 + img.border()),
-+					img.ncols() + 2 * img.border(),
- 					oln_dpoint_type(I)(0, 0, 1));
- 	  }
- 	};
-@@ -235,7 +234,8 @@
- 	typename mute<I, typename convoutput<C,B,oln_value_type(I)>::ret>::ret
- 	gaussian_common_(const convert::abstract::conversion<C,B>& c,
- 			 const abstract::image<I>& in,
--			 const F& coef)
-+			 const F& coef,
-+			 ntg::float_s sigma)
- 	{
- 	  typename mute<I, ntg::float_s>::ret work_img(in.size());
- 
-@@ -243,6 +243,12 @@
- 	  for_all(it)
- 	    work_img[it] = ntg::cast::force<ntg::float_s>(in[it]);
- 
-+	  /* FIXME: relation between sigma and the border shouldn't
-+	     be linear, so when sigma is big enougth, the signal may
-+	     be parasitized by the non signal values.
-+	   */
-+	  work_img.border_adapt_mirror(ntg::cast::round<coord>(5 * sigma));
+Index: olena/tests/convol/tests/uniform2_gauss
+--- olena/tests/convol/tests/uniform2_gauss Fri, 30 Jan 2004 10:24:22 +0100 palma_g ()
++++ olena/tests/convol/tests/uniform2_gauss Thu, 29 Jan 2004 17:26:24 +0100 palma_g (oln/j/40_uniform2_g  644)
+@@ -0,0 +1,32 @@
++// -*- c++ -*-
++#include <oln/basics2d.hh>
++#include <oln/convol/fast_gaussian.hh>
++#include <oln/convert/basics.hh>
 +
- 	  gaussian_<I::dim>::doit(work_img, coef);
- 
- 	  /* Convert the result image to the user-requested datatype.
-@@ -250,6 +256,7 @@
- 	     user expects a ntg::float_s image.  */
- 	  typename mute<I, typename convoutput<C,B,oln_value_type(I)>::ret>::ret
- 	    out_img(in.size());
++#include \"check.hh\"
++#include \"data.hh\"
 +
- 	  for_all(it)
- 	    out_img[it] = c(work_img[it]);
- 
-@@ -271,7 +278,7 @@
- 	       sigma,
- 	       internal::recursivefilter_coef_<float>::DericheGaussian);
- 
--	return internal::gaussian_common_(c, in, coef);
-+	return internal::gaussian_common_(c, in, coef, sigma);
-       }
- 
-       template <class C, class B, class I>
-@@ -288,7 +295,7 @@
- 	       internal::recursivefilter_coef_<float>
- 	       ::DericheGaussianFirstDerivative);
- 
--	return internal::gaussian_common_(c, in, coef);
-+	return internal::gaussian_common_(c, in, coef, sigma);
-       }
- 
-       template <class C, class B, class I>
-@@ -305,7 +312,7 @@
- 	       internal::recursivefilter_coef_<float>
- 	       ::DericheGaussianSecondDerivative);
- 
--	return internal::gaussian_common_(c, in, coef);
-+	return internal::gaussian_common_(c, in, coef, sigma);
-       }
- 
-     } // fast
-Index: integre/ntg/utils/cast.hh
---- integre/ntg/utils/cast.hh Thu, 27 Nov 2003 11:26:27 +0100 burrus_n (oln/i/26_cast.hh 1.3.1.11 640)
-+++ integre/ntg/utils/cast.hh Wed, 28 Jan 2004 16:22:43 +0100 palma_g (oln/i/26_cast.hh 1.3.1.11 640)
-@@ -70,12 +70,14 @@
-     | force |
-     `------*/
- 
-+    // a cast is performed instead of a constructor (unsafe one) call
-+    // because this last one may not be available with the good
-+    // signature.
-     template<class Tdest, class Tsrc> inline
-     const Tdest
-     force(const Tsrc& val)
-     {
--      ntg_unsafe_type(Tdest) tmp (val);
--      return tmp;
-+      return (Tdest)val;
-     }
- 
-     /*------.
-@@ -115,13 +117,13 @@
- 	{
- 	  // FIXME: this code seems out of date.
- 
--#if 0
-+#if 1
- 	  // KLUDGE: Cast the rounded value to Tdest::value_t before
--	  // returning it as Tdest. Otherwise g++-3.0 complains there
-+	  // returning it as Tdest. Otherwise g++-3.* complains there
- 	  // is no Tdest constructor taking a float argument.
- 	  return (ntg_storage_type(Tdest)) round(val.exact());
- #endif
--	  return round(val.exact());
-+	  //	  return round(val.exact());
- 	}
-       };
- 
-@@ -132,13 +134,13 @@
- 	doit(const float_s& val)
- 	{
- 	  // FIXME: this code seems out of date.
--#if 0
-+#if 1
- 	  // KLUDGE: Cast the rounded value to Tdest::value_t before
--	  // returning it as Tdest. Otherwise g++-3.0 complains there
-+	  // returning it as Tdest. Otherwise g++-3.* complains there
- 	  // is no Tdest constructor taking a float argument.
--	  //	  return (ntg_storage_type(Tdest)) roundf(val);
-+	  return (ntg_storage_type(Tdest)) roundf(val);
- #endif
--	  return roundf(val);
-+	  //	  return roundf(val);
- 	}
-       };
- 
++#include <iostream>
++using std::cout;
++using std::endl;
++
++using namespace oln;
++using namespace mlc;
++using namespace ntg;
++
++// check if the gaussian of an uniform image doesn't destroy the image
++// this test will fail since the relation between the border size and sigma is non linear
++bool check()
++{
++  image2d<int_u8>		img(50, 50);
++  image2d<int_u8>::iter_type	it(img);
++
++  for_all(it)
++    img[it] = 42;
++  image2d<int_u8>		img2 = convol::fast::gaussian(img, 50); // XFAIL
++
++  for_all(it)
++    if (img[it] != img2[it])
++      return true;
++  return false;
++}
+Index: olena/tests/convol/tests/uniform_gauss
+--- olena/tests/convol/tests/uniform_gauss Fri, 30 Jan 2004 10:24:22 +0100 palma_g ()
++++ olena/tests/convol/tests/uniform_gauss Thu, 29 Jan 2004 17:21:49 +0100 palma_g (oln/j/41_uniform_ga  644)
+@@ -0,0 +1,31 @@
++// -*- c++ -*-
++#include <oln/basics2d.hh>
++#include <oln/convol/fast_gaussian.hh>
++#include <oln/convert/basics.hh>
++
++#include \"check.hh\"
++#include \"data.hh\"
++
++#include <iostream>
++using std::cout;
++using std::endl;
++
++using namespace oln;
++using namespace mlc;
++using namespace ntg;
++
++// check if the gaussian of an uniform image doesn't destroy the image
++bool check()
++{
++  image2d<int_u8>		img(50, 50);
++  image2d<int_u8>::iter_type	it(img);
++
++  for_all(it)
++    img[it] = 42;
++  image2d<int_u8>		img2 = convol::fast::gaussian(img, 5);
++
++  for_all(it)
++    if (img[it] != img2[it])
++      return true;
++  return false;
++}
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 28 Jan 2004 16:28:44 +0100")
+(Checkin-Time "Fri, 30 Jan 2004 10:25:13 +0100")
 (Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -318,7 +192,7 @@ Index: integre/ntg/utils/cast.hh
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.2 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.34 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.37 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.46 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 640))
 
@@ -1373,12 +1247,14 @@ Index: integre/ntg/utils/cast.hh
   (olena/oln/snakes/greedy.hh (oln/j/25_greedy.hh 1.1 644))
   (olena/oln/snakes/node.hh (oln/j/32_node.hh 1.1 644))
   (olena/oln/snakes/node.hxx (oln/j/33_node.hxx 1.1 644))
-  (olena/oln/snakes/segment.hh (oln/j/34_segment.hh 1.1 644)))
+  (olena/oln/snakes/segment.hh (oln/j/34_segment.hh 1.1 644))
+;; Files added by populate at Fri, 30 Jan 2004 10:19:55 +0100,
+;; to version 10.56(w), by palma_g:
+
+  (olena/tests/convol/tests/uniform2_gauss (oln/j/40_uniform2_g 1.1 644))
+  (olena/tests/convol/tests/uniform_gauss (oln/j/41_uniform_ga 1.1 644))
+)
 (Merge-Parents
-  (10.55 complete
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (tools/swilena/ChangeLog tools/swilena/ChangeLog tools/swilena/ChangeLog r)
-    (olena/oln/core/abstract/dpoint.hh olena/oln/core/abstract/dpoint.hh olena/oln/core/abstract/dpoint.hh r) (olena/oln/topo/dmap.hxx olena/oln/topo/dmap.hxx olena/oln/topo/dmap.hxx r)
-    (tools/swilena/doc/swilena.texi tools/swilena/doc/swilena.texi tools/swilena/doc/swilena.texi r) 
-  )
+  (10.56 complete)
 )
 (New-Merge-Parents)

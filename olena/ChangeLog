@@ -1,3 +1,10 @@
+2004-01-30  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* tests/convol/tests/uniform_gauss:  Add test to make sure
+	fast_gaussian take care of the borders.
+	* tests/convol/tests/uniform2_gauss: Add test to make sure
+	fast_gaussian take care of the borders.
+
 2004-01-28  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* oln/convol/fast_gaussian.hxx: Make the gaussian take care of the
