@@ -34,7 +34,7 @@
 namespace oln {
 
   namespace abstract {
-    
+  
     template<class T, class Exact>
     class image_with_type;
     

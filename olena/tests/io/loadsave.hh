@@ -29,6 +29,13 @@ bool compare(const abstract::struct_elt<E>& a,
   return a == b;
 }
 
+template<class E>
+bool compare(const abstract::neighborhood<E>& a, 
+	     const abstract::neighborhood<E>& b)
+{
+  return a == b;
+}
+
 template< typename T >
 bool
 loadsave(const string& name, const string& savename)

@@ -1,22 +1,16 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 94)
-(Parent-Version oln 2003paradigm 93)
+(Project-Version oln 2003paradigm 95)
+(Parent-Version oln 2003paradigm 94)
 (Version-Log "Index: olena/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-        * oln/io/se_window.hh: Handle 1d and 3d windows.
 
-        * tests/io/tests/se_1d: New test.
-        * tests/io/tests/se_3d: Likewise.
-        * img/wrong_3d.pbm: New image.
-        * img/se_3d.pbm: Likewise.
-        * img/se_1d.pbm: Likewise.
-        * img/se9_1d.pbm: Likewise.
-
+        * tests/io/loadsave.hh (compare): Handle neighborhoods.
+        * tests/io/Makefile.am: Update.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sat, 02 Aug 2003 18:17:10 +0200")
+(Checkin-Time "Sun, 03 Aug 2003 17:29:31 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -119,7 +113,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.12 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.8 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.9 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.21 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.29 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.3 640))
@@ -443,8 +437,8 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/tests/convol/sum_on_random.pgm (oln/f/42_sum_on_ran 1.1 640) :no-keywords)
 
   (olena/tests/io/tests/2d (oln/e/47_2d.cc 1.7.1.7 640))
-  (olena/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.7.1.9 640))
-  (olena/tests/io/Makefile.am (oln/e/49_Makefile.a 1.21 640))
+  (olena/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.7.1.10 640))
+  (olena/tests/io/Makefile.am (oln/e/49_Makefile.a 1.22 640))
   (olena/tests/io/tests/pretty (oln/i/42_pretty.cc 1.2 640))
   (olena/tests/io/tests/se_fail (oln/i/43_se_fail.cc 1.3 640))
   (olena/tests/io/tests/se_pass (oln/i/44_se_pass.cc 1.2 640))
@@ -895,8 +889,8 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.14 640))
   (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.15 640))
   (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.14.1.2 640))
-  (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.6 640))
-  (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.12 640))
+  (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.7 640))
+  (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.13 640))
   (olena/oln/core/impl/image_array.hh (oln/t/30_image_arra 1.11 640))
   (olena/tests/core/tests/image1 (oln/t/31_image1 1.4 640))
 
@@ -919,7 +913,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (olena/oln/core/impl/image_array3d.hh (oln/t/32_image_arra 1.7 640))
   (olena/oln/core/impl/image_array2d.hh (oln/t/33_image_arra 1.8 640))
-  (olena/oln/core/impl/image_array1d.hh (oln/t/34_image_arra 1.8 640))
+  (olena/oln/core/impl/image_array1d.hh (oln/t/34_image_arra 1.9 640))
 
 ;; Files deleted by depopulate at Fri, 18 Jul 2003 12:39:16 +0200,
 ;; from version 2003paradigm.8(w), by david:

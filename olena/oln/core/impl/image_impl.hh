@@ -53,8 +53,6 @@ namespace oln {
 
       typedef Exact exact_type;
 
-
-
       image_impl(const size_type s): refcount_(0), size_(s) {}
 
       void ref() const

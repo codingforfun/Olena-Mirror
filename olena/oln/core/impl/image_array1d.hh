@@ -61,7 +61,7 @@ namespace oln {
       friend class image_impl<ExactI, image_array1d<T, ExactI> >;
       friend class super_type;
 
-      image_array1d(const size_type& s): super_type(s) 
+      image_array1d(const size_type& s): super_type(s)
       {
 	pretreat_1d_data_(this->buffer_, buffer__, s);
       }

@@ -1,3 +1,8 @@
+2003-08-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/io/loadsave.hh (compare): Handle neighborhoods.
+	* tests/io/Makefile.am: Update.
+
 2003-08-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/io/se_window.hh: Handle 1d and 3d windows.
