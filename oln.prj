@@ -1,121 +1,20 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 64)
-(Parent-Version oln 10 63)
-(Version-Log "Index: olena/ChangeLog
-from  Giovanni Palma  <giovanni@lrde.epita.fr>
-	* oln/morpho/attribute_closing_opening.hh: Make the
-	opening/closing choice at compile time.
-	* oln/morpho/attribute_union_find.hh: Likewise.
+(Project-Version oln 10 65)
+(Parent-Version oln 10 64)
+(Version-Log "2004-02-10  Niels Van Vliet  <niels@lrde.epita.fr>
 
-	* oln/utils/histogram.hh: Add a distrib sort functor.
-
-Index: NEWS
---- NEWS Tue, 10 Feb 2004 15:35:04 +0100 palma_g (oln/0_NEWS 1.18 640)
-+++ NEWS Tue, 10 Feb 2004 17:19:37 +0100 palma_g (oln/0_NEWS 1.18 640)
-@@ -11,7 +11,7 @@
-             rectangle, volume, height, maxvalue, minvalue).
- 
- 	* Change the color conversion system
--	  - CIE RGB is the main color system e.g. it can be converted
-+	  - CIE RGB is the main color system i.e. it can be converted
- 	    directly into any other color system.
- 	  - Conversion between 2 color systems should pass by the RGB one.
- 
-Index: olena/oln/utils/histogram.hh
---- olena/oln/utils/histogram.hh Fri, 06 Feb 2004 16:02:37 +0100 palma_g (oln/10_histogram. 1.6.1.14.1.4 640)
-+++ olena/oln/utils/histogram.hh Tue, 10 Feb 2004 17:13:39 +0100 palma_g (oln/10_histogram. 1.6.1.14.1.4 640)
-@@ -523,6 +523,30 @@
- 	*(ptr[unsigned(im[p] - ntg_min_val(val))]++) = p;
-     }
- 
-+    // to select staticly the good distrib_sort
-+    template <bool reverse>
-+    struct select_distrib_sort
-+    {
-+      template <class I>
-+      void
-+      operator ()(const oln::abstract::image<I>& im,
-+		  std::vector<oln_point_type(I)> &v)
-+      {
-+	distrib_sort_inv(im, v);
-+      }
-+    };
-+
-+    template <>
-+    struct select_distrib_sort<true>
-+    {
-+      template <class I>
-+      void
-+      operator ()(const oln::abstract::image<I>& im,
-+		  std::vector<oln_point_type(I)> &v)
-+      {
-+	distrib_sort(im, v);
-+      }
-+    };
-   } // end of namespace utils
- 
- } // end of namespace oln
-Index: olena/oln/morpho/attribute_closing_opening.hh
---- olena/oln/morpho/attribute_closing_opening.hh Mon, 09 Feb 2004 18:57:03 +0100 palma_g (oln/q/49_attribute_ 1.12 640)
-+++ olena/oln/morpho/attribute_closing_opening.hh Tue, 10 Feb 2004 16:52:24 +0100 palma_g (oln/q/49_attribute_ 1.12 640)
-@@ -43,9 +43,10 @@
- 			const abstract::neighborhood<N>& Ng,
- 			const attr_lambda_type(A) &lambda)
- 	{
-+	  typedef N	toto;
- 	  typedef tarjan::tarjan_set<oln_concrete_type(I), A > tarjan_set_type;
--	  tarjan_set_type area_closing(input.exact(), attr_env_type(A)());
--	  return area_closing.get_comptute(lambda, Ng, true);
-+	  tarjan_set_type attr_closing(input.exact(), attr_env_type(A)());
-+	  return attr_closing.template get_comptute<true>(lambda, Ng);
- 	}
- 
- 	// attribute opening
-@@ -56,8 +57,8 @@
- 			const attr_lambda_type(A) &lambda)
- 	{
- 	  typedef tarjan::tarjan_set<oln_concrete_type(I), A > tarjan_set_type;
--	  tarjan_set_type area_opening(input.exact(), attr_env_type(A)());
--	  return area_opening.get_comptute(lambda , Ng, false);
-+	  tarjan_set_type attr_opening(input.exact(), attr_env_type(A)());
-+	  return attr_opening.template get_comptute<false>(lambda, Ng);
- 	}
- 
-       } // !internal
-Index: olena/oln/morpho/attribute_union_find.hh
---- olena/oln/morpho/attribute_union_find.hh Mon, 09 Feb 2004 18:57:03 +0100 palma_g (oln/q/50_attribute_ 1.10 640)
-+++ olena/oln/morpho/attribute_union_find.hh Tue, 10 Feb 2004 17:15:02 +0100 palma_g (oln/q/50_attribute_ 1.10 640)
-@@ -171,20 +171,16 @@
- 
- 	// bool closing = true -> a closing is performed,
- 	// an opening otherwise.
--	template<class N>
-+	template<bool closing, class N>
- 	image_type
- 	get_comptute(const lambda_type & lambda,
--		     const abstract::neighborhood<N>& Ng,
--		     const bool closing)
-+		     const abstract::neighborhood<N>& Ng)
- 	{
- 	  lambda_ = &lambda;
- 
- 	  std::vector<point_type>	I(input_.npoints());
- 
--	  if (closing)
--	    oln::utils::distrib_sort(input_, I);
--	  else
--	    oln::utils::distrib_sort_inv(input_, I);
-+	  oln::utils::select_distrib_sort<closing>()(input_, I);
- 
- 	  level::fill(aux_data_, ntg_sup_val(lambda_type));
- 	  aux_data_.border_adapt_assign(Ng.delta(), ntg_sup_val(lambda_type));
-
+	* oln/morpho/attribute_closing_opening_map.hh: Add file.
+	Attribute closing and opening using std::map.
+	* oln/morpho/attribute_closing_opening_map.hxx: Add file.
+	* oln/utils/special_points.hh: Add file. Point used as a state.
+	* tests/morpho/attributes: Add file. Add tests on attribute
+	closing and opening.
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 10 Feb 2004 17:32:17 +0100")
-(Checkin-Login palma_g)
+(Checkin-Time "Tue, 10 Feb 2004 19:49:03 +0100")
+(Checkin-Login van-vl_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -221,7 +120,7 @@ Index: olena/oln/morpho/attribute_union_find.hh
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.2 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.35 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.7 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.8 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 640))
 
@@ -1301,8 +1200,24 @@ Index: olena/oln/morpho/attribute_union_find.hh
 ;; to version 10.62(w), by palma_g:
 
   (olena/oln/core/behavior.hh (oln/j/47_behavior.h 1.1 644))
+
+;; Files added by populate at Tue, 10 Feb 2004 19:07:23 +0100,
+;; to version 10.64(w), by van-vl_n:
+
+  (olena/oln/morpho/attribute_closing_opening_map.hxx (oln/j/48_attribute_ 1.1 644))
+  (olena/oln/morpho/attribute_closing_opening_map.hh (oln/j/49_attribute_ 1.1 600))
+
+;; Files added by populate at Tue, 10 Feb 2004 19:08:17 +0100,
+;; to version 10.64(w), by van-vl_n:
+
+  (olena/oln/utils/special_points.hh (oln/j/50_special_po 1.1 644))
+
+;; Files added by populate at Tue, 10 Feb 2004 19:09:33 +0100,
+;; to version 10.64(w), by van-vl_n:
+
+  (olena/tests/morpho/tests/attribute (oln/j/51_attribute 1.1 644))
 )
 (Merge-Parents
-  (10.63 complete)
+  (10.64 complete)
 )
 (New-Merge-Parents)
