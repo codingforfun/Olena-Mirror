@@ -1,3 +1,28 @@
+2005-03-14  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* tests/io: New.
+	* tests/io/tests: New.
+	* tests/io/tests/2d: New.
+	* tests/io/Makefile.am: New.
+	* tests/io/loadsave.hh: New.
+	* oln/makefile.src: Add new files.
+	* oln/io/write_image_2d_pnm.hh: Modify function prototypes.
+	* oln/io/gz_stream.hh: New. Gz stream classes.
+	* oln/io/read_image_2d_pnm.hh: Modify function prototypes.
+	* oln/io/write_image.hh: Add gz stream support.
+	* oln/io/read_image.hh: Likewise.
+	* oln/io/utils.hh: Modify function prototypes.
+	* oln/core/value_box.hh: Add new operator== for value_box.
+	* oln/core/2d/image2d.hh: Remove debug output.
+	* img/lena.pgm.gz: New.
+	* img/lena.pgm: New.
+	* img/chien.pbm.gz: New.
+	* img/chien.pbm: New.
+	* img/lena.ppm.gz: New.
+	* img/lena.ppm: New.
+	* img/lena.pbm.gz: New.
+	* img/lena.pbm: New.
+
 2005-03-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	Use the compiler's debug flags in the test suite.

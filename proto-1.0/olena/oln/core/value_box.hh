@@ -79,6 +79,26 @@ namespace oln {
     typedef oln_type_of(I, point) point_type;
 
 
+    /// op==
+
+    bool operator==(const value_box<I>& value) const
+    {
+      return this->value() == value.value();
+    }
+
+    template <typename V>
+    bool operator==(const V& value) const
+    {
+      return this->value() == value;
+    }
+
+    template <typename V>
+    bool operator!=(const V& value) const
+    {
+      return ! this->operator==(value);
+    }
+
+
     /*! \brief op=
     ** FIXME:...
     ** \return (*this)
@@ -87,7 +107,7 @@ namespace oln {
     template <typename V>
     value_box& operator=(const V& value)
     {
-      ima_.set(p_, value);
+      this->ima_->set(this->p_, value);
       return *this;
     }
 
@@ -103,7 +123,7 @@ namespace oln {
     template <typename II>
     value_box& operator=(const value_box<II>& rhs)
     {
-      ima_.set(p_, rhs); // automatic conversion from rhs to value_type
+      ima_->set(p_, rhs); // automatic conversion from rhs to value_type
       return *this;
     }
 
@@ -118,7 +138,7 @@ namespace oln {
     template <typename A, typename V>
     value_box& set(void (I::*method)(A), const V& value)
     {
-      ima_.set(p_, method, value);
+      ima_->set(p_, method, value);
       return *this;
     }
 
@@ -133,13 +153,13 @@ namespace oln {
     template <typename V>
     operator const V() const
     {
-      const V value = ima_.get(p_);
+      const V value = ima_->get(p_);
       return value;
     }
 
     operator const value_type() const
     {
-      return ima_.get(p_);
+      return ima_->get(p_);
     }
 
 
@@ -156,7 +176,7 @@ namespace oln {
 
     const value_type value() const
     {
-      return ima_.get(p_);
+      return ima_->get(p_);
     }
 
 
@@ -180,7 +200,7 @@ namespace oln {
     /// Ctor (restricted access).
 
     value_box(abstract::image<I>& ima, const point_type& p) :
-      ima_(ima.exact()),
+      ima_(&ima.exact()),
       p_(p)
     {
     }
@@ -189,7 +209,7 @@ namespace oln {
      ! attributes !
      *------------*/
 
-    I& ima_;
+    I* ima_;
     point_type p_;
 
   };
@@ -219,6 +239,24 @@ namespace oln {
     typedef oln_type_of(I, point) point_type;
 
 
+    /// op==
+    bool operator==(const value_box<const I>& value) const
+    {
+      return this->value() == value.value();
+    }
+
+    template <typename V>
+    bool operator==(const V& value) const
+    {
+      return this->value() == value;
+    }
+
+    template <typename V>
+    bool operator!=(const V& value) const
+    {
+      return ! this->operator==(value);
+    }
+
 
     /*! \brief Assignment (op=) is declared but undefined.
     */
@@ -235,13 +273,13 @@ namespace oln {
     template <typename V>
     operator const V() const
     {
-      const V value = ima_.get(p_);
+      const V value = ima_->get(p_);
       return value;
     }
 
     operator const value_type() const
     {
-      return ima_.get(p_);
+      return ima_->get(p_);
     }
 
 
@@ -258,7 +296,7 @@ namespace oln {
 
     const value_type value() const
     {
-      return ima_.get(p_);
+      return ima_->get(p_);
     }
 
     // IDEA: provide op->
@@ -284,7 +322,7 @@ namespace oln {
     /// Ctor (restricted access).
 
     value_box(const abstract::image<I>& ima, const point_type& p) :
-      ima_(ima.exact()),
+      ima_(&ima.exact()),
       p_(p)
     {
     }
@@ -293,7 +331,7 @@ namespace oln {
      ! attributes !
      *------------*/
 
-    const I& ima_;
+    const I* ima_;
     point_type p_;
 
   };

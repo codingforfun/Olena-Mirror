@@ -140,7 +140,6 @@ namespace oln {
     {
       if (&rhs == this)
 	return *this;
-      std::cout << "shallow copy" << std::endl;
       super_type::operator=(rhs);
       return *this;
     };

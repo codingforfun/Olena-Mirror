@@ -59,9 +59,9 @@ namespace oln {
 	typedef ntg_io_type(value_type) io_type;
 
 	const I& to_write_;
-	std::ofstream& ostr_;
+	std::ostream& ostr_;
 
-	write_image_2d_raw(const I& to_write, std::ofstream& ostr):
+	write_image_2d_raw(const I& to_write, std::ostream& ostr):
 	  to_write_(to_write),
 	  ostr_(ostr)
 	{}
@@ -70,7 +70,7 @@ namespace oln {
 	{
 	  point2d p;
 	  value_type c;
-	  bool b;
+	  bool b = false;
 
 	  for (p.row() = 0; p.row() < to_write_.size().nrows(); ++p.row())
 	    for (p.col() = 0; p.col() < to_write_.size().ncols(); ++p.col())
@@ -80,21 +80,25 @@ namespace oln {
 	      }
 	  while (b == false)
 	    b = write_value_type(c);
-	  ostr_.close();
 	}
 
 	bool write_value_type(const ntg::integer<value_type> &c)
 	{
-	  ostr_ << (io_type)(c.exact());
+	  io_type v = c.exact();
+	  ostr_.write((char *)&v, sizeof(io_type));
 	  return true;
 	}
 
 	bool write_value_type(const ntg::color<value_type> &c)
 	{
-	  assert ((ntg_nb_comp(value_type) == 3));
+	  assert ((ntg_depth(value_type) == 3));
+	  io_type v;
 
 	  for (unsigned i = 0; i < 3; i++)
-	    ostr_ << (io_type)(c[i]);
+	    {
+	      v = c[i];
+	      ostr_.write((char *)(&v), sizeof(io_type));
+	    }
 	  return true;
 	}
 
@@ -107,7 +111,7 @@ namespace oln {
 
 	  if (offset == -1)
 	    {
-	      ostr_ << v;
+	      ostr_.write((char *)&v, 1);
 	      offset = 7;
 	      v = 0;
 	      ret = true;
@@ -123,15 +127,15 @@ namespace oln {
       template <typename I, typename T>
       void write(const abstract::image2d<I>& to_write,
 		 const ntg::integer<T>&,
-		 const std::string& name,
+		 std::ostream&	ostr,
 		 const std::string& ext)
       {
-	std::ofstream	ostr;
+
 	point2d p;
 	size2d s = to_write.size();
 
 	if (ext == "pgm")
-	  if (internal::write_pnm_header(ostr, name, "P5",
+	  if (internal::write_pnm_header(ostr, "P5",
 					 s.ncols(), s.nrows(),
 					 ntg_max_val(T)))
 	    {
@@ -139,7 +143,7 @@ namespace oln {
 	      tmp.run();
 	    }
 	  else
-	    std::cerr << "error: unable to write header" << std::endl;
+	    std::cerr << "error: unable to write file header" << std::endl;
 	else
 	  std::cerr << "error: image data type (`integer') does not match"
 		    << " file extension (`" << ext << "')" << std::endl;
@@ -148,15 +152,15 @@ namespace oln {
       template <typename I, typename T>
       void write(const abstract::image2d<I>& to_write,
 		 const ntg::color<T>&,
-		 const std::string& name,
+		 std::ostream& ostr,
 		 const std::string& ext)
       {
-	std::ofstream	ostr;
+
 	point2d p;
 	size2d s = to_write.size();
 
 	if (ext == "ppm")
-	  if (internal::write_pnm_header(ostr, name, "P6",
+	  if (internal::write_pnm_header(ostr, "P6",
 					 s.ncols(), s.nrows(),
 					 ntg_max_val(T)))
 	    {
@@ -173,15 +177,14 @@ namespace oln {
       template <typename I, typename T>
       void write(const abstract::image2d<I>& to_write,
 		 const ntg::enum_value<T>&,
-		 const std::string& name,
+		 std::ostream& ostr,
 		 const std::string& ext)
       {
-	std::ofstream	ostr;
 	point2d p;
 	size2d s = to_write.size();
 
 	if (ext == "pbm")
-	  if (internal::write_pnm_header(ostr, name, "P4",
+	  if (internal::write_pnm_header(ostr, "P4",
 					 s.ncols(), s.nrows(),
 					 ntg_max_val(T)))
 	    {

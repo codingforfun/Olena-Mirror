@@ -30,6 +30,7 @@
 
 # include <string>
 
+# include <oln/io/gz_stream.hh>
 # include <oln/io/utils.hh>
 # include <oln/io/write_image_2d_pnm.hh>
 
@@ -38,22 +39,68 @@ namespace oln {
   namespace io {
 
     template <typename I>
-    void write(const abstract::image<I>& im, const std::string& name)
+    void do_write(const abstract::image<I>& ima,
+		  std::ostream& ostr,
+		  const std::string& ext)
+    {
+      typedef oln_type_of(I, value) value_type;
+      value_type t;
+
+      impl::write(ima.exact(), t, ostr, ext);
+    }
+
+#if defined HAVE_ZLIB && HAVE_ZLIB == 1
+    template <typename I>
+    void write_gz(const abstract::image<I>& ima, const std::string& name)
+    {
+      gz::zofstream zostr(name.c_str(), std::ios::out);
+
+      if (zostr.is_open() == false)
+	std::cerr << "error: couldn't open " << name << std::endl;
+      else
+	{
+	  std::string ext;
+
+	  ext = internal::utils::extension(name.substr(0, name.size() - 3));
+	  do_write(ima, zostr, ext);
+	}
+      zostr.close();
+    }
+
+#endif // ! HAVE_ZLIB
+
+    template <typename I>
+    void write_non_gz(const abstract::image<I>& ima,
+		      const std::string& name,
+		      const std::string& ext)
+    {
+      std::ofstream ostr;
+
+      ostr.open(name.c_str(), std::ifstream::out);
+
+      if (ostr.is_open() == false)
+	std::cerr << "error: couldn't open " << name << std::endl;
+      else
+	do_write(ima, ostr, ext);
+      ostr.close();
+    }
+
+    template <typename I>
+    void write(const abstract::image<I>& ima, const std::string& name)
     {
       std::string ext;
       oln_type_of(I, value) t;
 
       ext = internal::utils::extension(name);
 
-      if (ext == "pgm" ||
-	  ext == "ppm" ||
-	  ext == "pbm")
-	impl::write(im.exact(), t, name, ext);
+#if defined HAVE_ZLIB && HAVE_ZLIB == 1
+      if (ext == "gz")
+	write_gz(ima, name);
       else
-	std::cerr << "error: output method for '"
-		  << name.c_str()
-		  << "' not implemented"
-		  << std::endl;
+	write_non_gz(ima, name, ext);
+# else
+      write_non_gz(ima, name, ext);
+#endif // ! HAVE_ZLIB
     }
 
   }

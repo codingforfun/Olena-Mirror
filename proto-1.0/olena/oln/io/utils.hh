@@ -76,16 +76,12 @@ namespace oln {
 	std::string type;
       };
 
-      bool read_pnm_header(std::ifstream& istr,
-			   internal::pnm_info& info,
-			   const std::string& name)
+      bool read_pnm_header(std::istream& istr,
+			   internal::pnm_info& info)
       {
-	istr.open(name.c_str(), std::ifstream::in);
-
-	if (!istr.is_open())
-	  return false;
-
 	std::getline(istr, info.type);
+
+	info.max_val = 1;
 
 	// skip comments
 	while (istr.peek() == '#')
@@ -121,11 +117,9 @@ namespace oln {
 	    std::getline(istr, line);
 	  }
 
-
 	// FIXME: it can be either '\n', 'whitespace', ..., not only '\n'!
-
-	// extract or skip maxvalue
 	if (istr.get() != '\n') return false;
+	// extract or skip maxvalue
 	if (info.type != "P1" && info.type != "P4")
 	  {
 	    istr >> info.max_val;
@@ -137,28 +131,14 @@ namespace oln {
 	return true;
       }
 
-      bool write_pnm_header(std::ofstream& ostr,
-			    const std::string& name,
+      bool write_pnm_header(std::ostream& ostr,
 			    const std::string& type,
 			    int ncols,
 			    int nrows,
 			    int max_val)
       {
 	if (max_val > 65535)
-	  {
-	    std::cerr << "error: can't save " << name
-		      << ", data type too large"
-		      << std::endl;
-	    return false;
-	  }
-
-	ostr.open(name.c_str(), std::ofstream::out);
-
-	if (ostr.is_open() == false)
-	  {
-	    std::cerr << "error: couldn't open " << name << std::endl;
-	    return false;
-	  }
+	  return false;
 
 	ostr << type << std::endl
 	     << "# Olena 1.0" << std::endl

@@ -1,3 +1,30 @@
+// Copyright (C) 2005  EPITA Research and Development Laboratory
+//
+// This file is part of the Olena Library.  This library is free
+// software; you can redistribute it and/or modify it under the terms
+// of the GNU General Public License version 2 as published by the
+// Free Software Foundation.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this library; see the file COPYING.  If not, write to
+// the Free Software Foundation, 59 Temple Place - Suite 330, Boston,
+// MA 02111-1307, USA.
+//
+// As a special exception, you may use this file as part of a free
+// software library without restriction.  Specifically, if other files
+// instantiate templates or use macros or inline functions from this
+// file, or you compile this file and link it with other files to
+// produce an executable, this file does not by itself cause the
+// resulting executable to be covered by the GNU General Public
+// License.  This exception does not however invalidate any other
+// reasons why the executable file might be covered by the GNU General
+// Public License.
+
 #ifndef OLN_IO_READ_IMAGE_2D_PNM_HH
 # define OLN_IO_READ_IMAGE_2D_PNM_HH
 
@@ -59,11 +86,11 @@ namespace oln {
 	typedef ntg_io_type(value_type) io_type;
 
 	mlc::box<I> image_;
-	std::ifstream& istr_;
+	std::istream& istr_;
 	internal::pnm_info& info_;
 
 	read_image_2d_raw(I& image,
-			  std::ifstream &istr,
+			  std::istream &istr,
 			  internal::pnm_info &info) :
 	  super_type(image),
 	  image_(image),
@@ -97,7 +124,6 @@ namespace oln {
 		read_value_type(c);
 		tmp[p] = c;
 	      }
-	  istr_.close();
 	  *image_ = tmp;
 	}
 
@@ -110,10 +136,9 @@ namespace oln {
 
 	void read_value_type(ntg::color<value_type> &c)
 	{
-	  assert((ntg_nb_comp(value_type) == 3));
 	  io_type v;
 
-	  for (unsigned i = 0; i < 3; i++)
+	  for (unsigned i = 0; i < ntg_depth(value_type); i++)
 	    {
 	      istr_.read(&v, sizeof (v));
 	      c[i] = v;
@@ -135,105 +160,18 @@ namespace oln {
 	  else
 	    c = 1;
 	}
-
-
       };
 
 
 
-      template <typename I, typename T>
+      template <typename I>
       void read(abstract::image2d<I>& ima,
-		const ntg::integer<T>&,
-		const std::string& filename,
-		const std::string& ext)
+		std::istream& istr,
+		internal::pnm_info info)
       {
-	std::ifstream istr;
-	internal::pnm_info info;
-
-	if (internal::read_pnm_header(istr, info, filename))
-	  if (ext == "pgm")
-	    if (info.type == "P5")
-	      {
-		read_image_2d_raw<I> tmp(ima.exact(), istr, info);
-		tmp.run();
-		tmp.output(ima.exact());
-	      }
-	    else if (info.type == "P2")
-	      std::cerr << "error: read_image_2d_pgm_ascii not implemented"
-			<< std::endl;
-	    else
-	      std::cerr << "error: file header (`" << info.type
-			<< "') does not match file extension (`"
-			<< ext << "')" << std::endl;
-	  else
-	    std::cerr << "error: image data type (`integer') does not match"
-		      << " file extension (`" << ext << "')" << std::endl;
-	else
-	  std::cerr << "error: unable to get a valid header" << std::endl;
-      }
-
-
-
-      template <typename I, typename T>
-      void read(abstract::image2d<I>& ima,
-		const ntg::color<T>&,
-		const std::string& filename,
-		const std::string& ext)
-      {
-	std::ifstream istr;
-	internal::pnm_info info;
-
-	if (internal::read_pnm_header(istr, info, filename))
-	  if (ext == "ppm")
-	    if (info.type == "P6")
-	      {
-		read_image_2d_raw<I> tmp(ima.exact(), istr, info);
-		tmp.run();
-		tmp.output(ima.exact());
-	      }
-	    else if (info.type == "P3")
-	      std::cerr << "error: read_image_2d_ppm_ascii not implemented"
-			<< std::endl;
-	    else
-	      std::cerr << "error: file header (`" << info.type
-			<< "') does not match file extension (`"
-			<< ext << "')" << std::endl;
-	  else
-	    std::cerr << "error: image data type (`color') does not match"
-		      << " file extension (`" << ext << "')" << std::endl;
-	else
-	  std::cerr << "error: unable to get a valid header" << std::endl;
-      }
-
-      template <typename I, typename T>
-      void read(abstract::image2d<I>& ima,
-		const ntg::enum_value<T>&,
-		const std::string& filename,
-		const std::string& ext)
-      {
-	std::ifstream istr;
-	internal::pnm_info info;
-
-	if (internal::read_pnm_header(istr, info, filename))
-	  if (ext == "pbm")
-	    if (info.type == "P4")
-	      {
-		read_image_2d_raw<I> tmp(ima.exact(), istr, info);
-		tmp.run();
-		tmp.output(ima.exact());
-	      }
-	    else if (info.type == "P1")
-	      std::cerr << "error: read_image_2d_ppm_ascii not implemented"
-			<< std::endl;
-	    else
-	      std::cerr << "error: file header (`" << info.type
-			<< "') does not match file extension (`"
-			<< ext << "')" << std::endl;
-	  else
-	    std::cerr << "error: image data type (`enum_value') does not match"
-		      << " file extension (`" << ext << "')" << std::endl;
-	else
-	  std::cerr << "error: unable to get a valid header" << std::endl;
+	read_image_2d_raw<I> tmp(ima.exact(), istr, info);
+	tmp.run();
+	tmp.output(ima.exact());
       }
 
     }

@@ -40,6 +40,7 @@ OLN_DEP =					\
   core/value_box.hh				\
   fancy/iota.hh					\
   fancy/print.hh				\
+  io/gz_stream.hh				\
   io/read_image.hh				\
   io/read_image_2d_pnm.hh			\
   io/utils.hh					\
