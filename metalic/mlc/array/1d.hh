@@ -102,7 +102,7 @@ namespace mlc
       sum = 0.f;
       for (i = 0; i < _Info::card; ++i)
 	sum += tmp[i];
-      postcondition(abs(sum - 1) <= epsilon);
+      postcondition(std::abs(sum - 1) <= epsilon);
       return tmp;
     }
 

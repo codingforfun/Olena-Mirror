@@ -48,6 +48,7 @@
 # include <ntg/real/optraits_scalar.hh>
 # include <ntg/real/real_value.hh>
 # include <ntg/utils/debug.hh>
+# include <ntg/utils/cast.hh>
 
 # include <string>
 # include <sstream>

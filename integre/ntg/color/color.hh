@@ -186,37 +186,37 @@ namespace ntg {
     typedef vec<ncomps, float>		float_vec_type;
 
     color() {};
-    color(const vec_type& vec) { val_ = vec; };
+    color(const vec_type& vec) { this->val_ = vec; };
     color(const float_vec_type& vec)
     {
-      internal::_from_float<0,ncomps,qbits,color_system>::doit(vec,val_);
+      internal::_from_float<0,ncomps,qbits,color_system>::doit(vec,this->val_);
     }
 
     color(const comp_type& c1, const comp_type& c2, const comp_type& c3)
     {
       mlc::is_true<ncomps == 3>::ensure();
-      val_[0] = c1;
-      val_[1] = c2;
-      val_[2] = c3;
+      this->val_[0] = c1;
+      this->val_[1] = c2;
+      this->val_[2] = c3;
     }
 
-    comp_type&		operator[](unsigned i)	     { return val_[i]; }
-    const comp_type	operator[](unsigned i) const { return val_[i]; }
+    comp_type&		operator[](unsigned i)	     { return this->val_[i]; }
+    const comp_type	operator[](unsigned i) const { return this->val_[i]; }
 
-    vec_type&		as_vec()       { return val_; }
-    const vec_type&	as_vec() const { return val_; }
+    vec_type&		as_vec()       { return this->val_; }
+    const vec_type&	as_vec() const { return this->val_; }
 
     float_vec_type 
     to_float() const
     {
       float_vec_type tmp;
-      internal::_to_float<0,ncomps,qbits,color_system>::doit(val_, tmp);
+      internal::_to_float<0,ncomps,qbits,color_system>::doit(this->val_, tmp);
       return tmp;
     }
 
     bool 
     operator==(const color& r) const
-    { return val_ == r.val_; }
+    { return this->val_ == r.val_; }
   };
 
   /*!

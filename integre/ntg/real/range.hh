@@ -52,7 +52,7 @@ namespace ntg {
       typedef ntgi_abstract_type(T)		abstract_type;
       typedef self				ntg_type;
       typedef optraits<self>			optraits_type;
-      typedef typename behavior::get<self>	behavior_type;
+      typedef typename behavior::template get<self>	behavior_type;
 
       typedef ntgi_base_type(T)			base_type;
       typedef T					storage_type;
@@ -81,7 +81,7 @@ namespace ntg {
   */
   template <class T, class interval, class behavior>
   class range : 
-    public type_traits<T>::build_value_type<range<T, interval, behavior> >::ret
+    public type_traits<T>::template build_value_type<range<T, interval, behavior> >::ret
   {
   public:
     typedef range<T, interval, behavior> self;
@@ -92,23 +92,23 @@ namespace ntg {
     typedef ntg_storage_type(base_type)	base_storage_type;
 
   public:
-    range () { val_ = 0; }
+    range () { this->val_ = 0; }
 
     template <class U>
     range (const U& u)
     {
       ntg_is_a(U, real)::ensure();
-      val_ = optraits_type::check(u);
+      this->val_ = optraits_type::check(u);
     }
     template <class U>
     self&
     operator=(const U& u)
     {
-      val_ = optraits_type::check(u);
+      this->val_ = optraits_type::check(u);
       return *this;
     }
 
-    operator base_storage_type() const { return val_; }
+    operator base_storage_type() const { return this->val_; }
   };
 
   template<class T, class interval, class behavior>
@@ -134,7 +134,7 @@ namespace ntg {
 
     private:
       typedef typename typetraits<self>::storage_type	storage_type_;
-      typedef typename behavior::get<self>		behavior_type_;
+      typedef typename behavior::template get<self>		behavior_type_;
       typedef typename interval::storage_type		interval_type_;
 
     public:

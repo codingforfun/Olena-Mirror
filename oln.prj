@@ -1,12 +1,41 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 9 18)
-(Parent-Version oln 9 17)
-(Version-Log "Repair olena/tests/core/Makefile.am.
+(Project-Version oln 9 19)
+(Parent-Version oln 9 18)
+(Version-Log "Index: integre/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+        * ntg/core/internal/global_ops_defs.hh: Split builtin macros by
+        classes of types.
+
+        * ntg/core/internal/global_ops.hh: Define operators for compatible
+        builtins only.
+
+        * ntg/real/int_s.hh, ntg/real/int_u.hh, ntg/real/range.hh,
+        ntg/real/cycle.hh, ntg/vect/vec.hh, ntg/vect/cplx.hh,
+        ntg/color/color.hh, ntg/enum/bin.hh: Fix compilation with g++-3.4.
+
+        * ntg/core/behavior.hh, ntg/real/builtin_float.hh: Fix includes.
+
+Index: metalic/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+        * mlc/array/1d.hh, mlc/array/2d.hh, mlc/array/3d.hh: Add
+        prefix abs() with std:: prefix.
+
+        * mlc/array/2d.hh, mlc/array/3d.hh: Fix problems raised by g++
+        3.4.
+
+Index: olena/ChangeLog
+-2003-07-12  Nicolas Burrus  <nes@lrde.epita.fr>
++2003-07-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
++
++       * tests/io/2d.cc: Test more data types.
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Sun, 13 Jul 2003 00:40:13 +0200")
+(Checkin-Time "Mon, 21 Jul 2003 17:51:12 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -99,9 +128,9 @@
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.5 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.37 640))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.12 640))
-  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.21 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.12 640))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.13 640))
+  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.22 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.13 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.10 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.4 640))
 
@@ -290,11 +319,11 @@
   (config/oln.m4 (oln/j/15_oln.m4 1.31 640))
 
   (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.7 640))
-  (metalic/mlc/array/1d.hh (oln/f/23_array1d.hh 1.8 640))
+  (metalic/mlc/array/1d.hh (oln/f/23_array1d.hh 1.9 640))
   (metalic/mlc/array/1d.hxx (oln/f/22_array1d.hx 1.9 640))
-  (metalic/mlc/array/2d.hh (oln/f/21_array2d.hh 1.8 640))
+  (metalic/mlc/array/2d.hh (oln/f/21_array2d.hh 1.9 640))
   (metalic/mlc/array/2d.hxx (oln/f/20_array2d.hx 1.8 640))
-  (metalic/mlc/array/3d.hh (oln/f/19_array3d.hh 1.9 640))
+  (metalic/mlc/array/3d.hh (oln/f/19_array3d.hh 1.10 640))
   (metalic/mlc/array/3d.hxx (oln/f/18_array3d.hx 1.9 640))
   (metalic/mlc/array/all.hh (oln/f/36_array.hh 1.7 640))
   (metalic/mlc/array/nd.hh (oln/f/35_arraynd.hh 1.3 640))
@@ -343,20 +372,20 @@
   (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.5 640))
   (olena/oln/transforms/wavelet_coeffs.hh (oln/i/34_wavelet_co 1.5 640))
   (integre/ntg/all.hh (oln/g/32_all.hh 1.10.1.8 640))
-  (integre/ntg/core/behavior.hh (oln/g/31_behaviour. 1.13.1.12 640))
+  (integre/ntg/core/behavior.hh (oln/g/31_behaviour. 1.13.1.13 640))
   
   (integre/ntg/utils/cast.hh (oln/i/26_cast.hh 1.3.1.7 640))
   (integre/ntg/vect/cplx_representation.hh (oln/i/3_cplx_repre 1.5 640))
   (integre/ntg/utils/debug.hh (oln/i/8_debug.hh 1.2.1.7 640))
-  (integre/ntg/core/internal/global_ops_defs.hh (oln/g/26_global_ops 1.13 640))
-  (integre/ntg/core/internal/global_ops.hh (oln/g/27_global_ops 1.11.1.11 640))
+  (integre/ntg/core/internal/global_ops_defs.hh (oln/g/26_global_ops 1.14 640))
+  (integre/ntg/core/internal/global_ops.hh (oln/g/27_global_ops 1.11.1.12 640))
   (integre/ntg/core/internal/global_ops_traits.hh (oln/g/25_global_ops 1.7.1.8 640))
   (integre/ntg/color/hsi.hh (oln/i/20_hsi.hh 1.3.1.4 640))
   (integre/ntg/color/hsl.hh (oln/i/21_hsl.hh 1.3.1.4 640))
   (integre/ntg/color/hsv.hh (oln/i/22_hsv.hh 1.3.1.4 640))
   (integre/ntg/core/interval.hh (oln/g/22_interval.h 1.6.1.8 640))
-  (integre/ntg/real/int_s.hh (oln/g/24_int_s.hh 1.16.1.14 640))
-  (integre/ntg/real/int_u.hh (oln/g/23_int_u.hh 1.19.1.14 640))
+  (integre/ntg/real/int_s.hh (oln/g/24_int_s.hh 1.16.1.15 640))
+  (integre/ntg/real/int_u.hh (oln/g/23_int_u.hh 1.19.1.15 640))
   (integre/ntg/color/nrgb.hh (oln/i/19_nrgb.hh 1.5.1.4 640))
   
   
@@ -415,8 +444,8 @@
   (olena/tests/convol/sobel_gradient.cc (oln/f/45_sobel_grad 1.3.1.4 640))
   (olena/tests/convol/sum_on_random.pgm (oln/f/42_sum_on_ran 1.1 640) :no-keywords)
   
-  (olena/tests/io/2d.cc (oln/e/47_2d.cc 1.7 640))
-  (olena/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.7.1.5 640))
+  (olena/tests/io/2d.cc (oln/e/47_2d.cc 1.7.1.1 640))
+  (olena/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.7.1.6 640))
   (olena/tests/io/Makefile.am (oln/e/49_Makefile.a 1.13 640))
   (olena/tests/io/pretty.cc (oln/i/42_pretty.cc 1.2 640))
   (olena/tests/io/se_fail.cc (oln/i/43_se_fail.cc 1.2 640))
@@ -881,7 +910,7 @@
   
   (integre/ntg/core/contract.hh (oln/s/45_contract.h 1.2 640))
   (integre/ntg/real/builtin_int.hh (oln/s/46_builtin_in 1.1 640))
-  (integre/ntg/real/builtin_float.hh (oln/s/47_builtin_fl 1.1 640))
+  (integre/ntg/real/builtin_float.hh (oln/s/47_builtin_fl 1.2 640))
   (integre/ntg/real/builtin_properties.hh (oln/s/48_builtin_pr 1.1 640))
   (integre/ntg/enum/builtin_bool.hh (oln/s/50_builtin_bo 1.2 640))
   (integre/tests/sanity/includes.test (oln/s/51_includes.t 1.1 750))
@@ -903,12 +932,12 @@
 ;; Files added by populate at Mon, 02 Jun 2003 17:25:14 +0200,
 ;; to version 9.7(w), by burrus_n:
 
-  (integre/ntg/real/range.hh (oln/t/16_range.hh 1.1 640))
-  (integre/ntg/real/cycle.hh (oln/t/17_cycle.hh 1.1 640))
-  (integre/ntg/vect/vec.hh (oln/t/18_vec.hh 1.2 640))
-  (integre/ntg/vect/cplx.hh (oln/t/19_cplx.hh 1.2 640))
-  (integre/ntg/color/color.hh (oln/t/20_color.hh 1.2 640))
-  (integre/ntg/enum/bin.hh (oln/t/21_bin.hh 1.2 640))
+  (integre/ntg/real/range.hh (oln/t/16_range.hh 1.2 640))
+  (integre/ntg/real/cycle.hh (oln/t/17_cycle.hh 1.2 640))
+  (integre/ntg/vect/vec.hh (oln/t/18_vec.hh 1.3 640))
+  (integre/ntg/vect/cplx.hh (oln/t/19_cplx.hh 1.3 640))
+  (integre/ntg/color/color.hh (oln/t/20_color.hh 1.3 640))
+  (integre/ntg/enum/bin.hh (oln/t/21_bin.hh 1.3 640))
 
 ;; Files deleted by populate at Mon, 30 Jun 2003 20:01:55 +0200,
 ;; from version 9.10(w), by nes:

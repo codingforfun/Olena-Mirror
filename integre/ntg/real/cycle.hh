@@ -76,7 +76,7 @@ namespace ntg {
   template <class T,
 	    class interval>
   class cycle : 
-    public type_traits<T>::build_value_type<cycle<T, interval> >::ret
+    public type_traits<T>::template build_value_type<cycle<T, interval> >::ret
   {
   public:
     typedef cycle<T, interval> self;
@@ -87,23 +87,23 @@ namespace ntg {
     typedef ntgi_storage_type(base_type)	base_storage_type;
 
   public:
-    cycle () { val_ = 0; }
+    cycle () { this->val_ = 0; }
 
     template <class U>
     cycle (const U& u)
     {
       ntg_is_a(U, real)::ensure();
-      val_ = optraits_type::check(u);
+      this->val_ = optraits_type::check(u);
     }
     template <class U>
     self&
     operator=(const U& u)
     {
-      val_ = optraits_type::check(u);
+      this->val_ = optraits_type::check(u);
       return *this;
     }
 
-    operator base_storage_type() const { return val_; }
+    operator base_storage_type() const { return this->val_; }
   };
 
   template<class T, class interval>

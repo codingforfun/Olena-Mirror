@@ -34,6 +34,7 @@
 
 # include <ntg/basics.hh>
 # include <ntg/enum/enum_value.hh>
+# include <ntg/core/internal/global_ops.hh>
 
 # include <mlc/contract.hh>
 
@@ -81,7 +82,7 @@ namespace ntg {
   {
   public:
     bin ()
-    { val_ = 0; }
+    { this->val_ = 0; }
 
     // FIXME: create a template constructor and check into it if T
     // is a real or whatever ?
@@ -89,14 +90,14 @@ namespace ntg {
     bin (unsigned char val)
     {
       ntg_assert(val < 2);
-      val_ = val;
+      this->val_ = val;
     }
 
     bin&
     operator=(unsigned char val)
     {
       ntg_assert(val < 2);
-      val_ = val;
+      this->val_ = val;
       return *this;
     }
 
@@ -104,18 +105,18 @@ namespace ntg {
     bin (const real_value<T>& val)
     {
       ntg_assert(val < 2);
-      val_ = val;
+      this->val_ = val;
     }
     template <class T>
     bin&
     operator=(const real_value<T>& val)
     {
       ntg_assert(val < 2);
-      val_ = val;
+      this->val_ = val;
       return *this;
     }
 
-    operator unsigned char() const { return val_; }
+    operator unsigned char() const { return this->val_; }
   };
 
   inline std::ostream&

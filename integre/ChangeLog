@@ -1,3 +1,17 @@
+2003-07-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/core/internal/global_ops_defs.hh: Split builtin macros by
+	classes of types.
+
+	* ntg/core/internal/global_ops.hh: Define operators for compatible
+	builtins only.
+
+	* ntg/real/int_s.hh, ntg/real/int_u.hh, ntg/real/range.hh,
+	ntg/real/cycle.hh, ntg/vect/vec.hh, ntg/vect/cplx.hh,
+	ntg/color/color.hh, ntg/enum/bin.hh: Fix compilation with g++-3.4.
+
+	* ntg/core/behavior.hh, ntg/real/builtin_float.hh: Fix includes.
+	
 2003-07-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/types/tests/char1: New test.
