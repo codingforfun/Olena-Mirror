@@ -1,3 +1,7 @@
+2005-01-19  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* proto-1.0: New prototype for Olena.
+
 2005-01-19  Damien Thivolle <damien@lrde.epita.fr>
 
 	* prop_heredity: Remove obsolete prototype.
