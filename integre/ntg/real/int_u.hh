@@ -63,6 +63,7 @@ namespace ntg {
 
     template <unsigned nbits, class behavior>
     struct typetraits<int_u<nbits, behavior> >
+      : public typetraits<uint_value<int_u<nbits, behavior> > >
     {
       typedef int_u<nbits, behavior>		self;
       typedef unsigned_integer			abstract_type;
@@ -70,7 +71,7 @@ namespace ntg {
 
       ntg_build_value_type(uint_value<E>);
 
-      typedef optraits<self>			optraits_type;
+      typedef optraits<self>				optraits_type;
       typedef typename behavior::template get<self>	behavior_type;
 
 
@@ -213,12 +214,12 @@ namespace ntg {
 
     template <unsigned nbits, class behavior>
     struct optraits<int_u<nbits, behavior> > :
-      public optraits_int_u<int_u<nbits, behavior> >
+      public optraits<uint_value<int_u<nbits, behavior> > >
     {
     private:
       typedef int_u<nbits, behavior>			self;
       typedef typename typetraits<self>::storage_type	storage_type_;
-      typedef typename behavior::template get<self>		behavior_type_;
+      typedef typename behavior::template get<self>	behavior_type_;
 
     public:
       template <class P>

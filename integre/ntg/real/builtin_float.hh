@@ -47,7 +47,7 @@ namespace ntg {
     `------------------*/
 
     template <>
-    struct typetraits<float>
+    struct typetraits<float> : public typetraits<float_value<float> >
     {
       typedef float	self;
       typedef decimal	abstract_type;
@@ -56,7 +56,7 @@ namespace ntg {
       ntg_build_value_type(float_value<E>);
       
       typedef optraits<self>	optraits_type;
-      typedef unsafe::get<self>	behavior_type;     
+      typedef unsafe::get<self>	behavior_type;
 
       typedef self base_type;
       typedef self storage_type;
@@ -76,7 +76,7 @@ namespace ntg {
     `-------------------*/
 
     template <>
-    struct typetraits<double>
+    struct typetraits<double> : public typetraits<float_value<double> >
     {
       typedef double	self;
       typedef decimal	abstract_type;
@@ -105,7 +105,7 @@ namespace ntg {
     `----------------*/
 
     template <>
-    struct optraits<float> : public optraits_float<float>
+    struct optraits<float> : public optraits<float_value<float> >
     {
     private:
       typedef float self;
@@ -251,7 +251,7 @@ namespace ntg {
     `-----------------*/
 
     template <>
-    struct optraits<double> : public optraits_float<double>
+    struct optraits<double> : public optraits<float_value<double> >
     {
     private:
       // shortcuts

@@ -46,7 +46,7 @@ namespace ntg {
     `------------------*/
 
     template <class T, class interval, class behavior>
-    struct typetraits<range<T, interval, behavior> >
+    struct typetraits<range<T, interval, behavior> > : public typetraits<T>
     {
       typedef range<T, interval, behavior>	self;
       typedef ntgi_abstract_type(T)		abstract_type;

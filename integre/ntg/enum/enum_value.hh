@@ -29,6 +29,7 @@
 # define NTG_ENUM_ENUM_VALUE_HH
 
 # include <ntg/core/value.hh>
+# include <ntg/core/type_traits.hh>
 
 namespace ntg
 {
@@ -40,6 +41,18 @@ namespace ntg
   template <class E>
   class enum_value : public value<E>
   {};
+
+  namespace internal {
+
+    template <class E>
+    class typetraits<enum_value<E> > : public typetraits<value<E> >
+    {};
+
+    template <class E>
+    class optraits<enum_value<E> > : public optraits<value<E> >
+    {};
+
+  }
 
 }
 

@@ -39,7 +39,6 @@
 // --
 
 # include <ntg/core/internal/global_ops_traits.hh>
-# include <ntg/core/type_traits.hh>
 # include <ntg/core/macros.hh>
 
 // macros definitions
@@ -49,16 +48,16 @@ namespace ntg {
 
   namespace internal {
 
-    /*----------------.
-    | optraits_scalar |
-    `----------------*/
+    /*---------------------.
+    | optraits<real_value> |
+    `---------------------*/
 
     //! Implement common operators for scalars
-    template <class Self>
-    class optraits_scalar : public optraits_top<Self>
+    template <class E>
+    class optraits<real_value<E> > : public optraits<value<E> >
     {
     private:
-      typedef typename typetraits<Self>::storage_type storage_type_;
+      typedef typename typetraits<E>::storage_type storage_type_;
 
     public:
       static storage_type_ zero () { return 0; }
@@ -86,60 +85,61 @@ namespace ntg {
       CMP_SCALAR_OPERATOR(cmp_lt, <)
     };
 
-    /*---------------.
-    | optraits_float |
-    `---------------*/
 
-    template <class Self>
-    class optraits_float : public optraits_scalar<Self>
+    /*----------------------.
+    | optraits<float_value> |
+    `----------------------*/
+
+    template <class E>
+    class optraits<float_value<E> > : public optraits<real_value<E> >
     {
     public:
       // This is the standard size for float on std::ostream.
       static unsigned max_print_width () { return 11U; }
     };
 
-    /*-------------.
-    | optraits_int |
-    `-------------*/
+    /*--------------------.
+    | optraits<int_value> |
+    `--------------------*/
 
-    template <class Self>
-    class optraits_int : public optraits_scalar<Self>
+    template <class E>
+    class optraits<int_value<E> > : public optraits<real_value<E> >
     {
-      typedef typename typetraits<Self>::storage_type storage_type_;
+      typedef typename typetraits<E>::storage_type storage_type_;
 
     public:
-      static storage_type_ inf () { return optraits<Self>::min(); }
-      static storage_type_ sup () { return optraits<Self>::max(); }
+      static storage_type_ inf () { return optraits<E>::min(); }
+      static storage_type_ sup () { return optraits<E>::max(); }
 
       static unsigned max_print_width ()
       { 
-	return (unsigned) log10(double(optraits<Self>::max())) + 1;
+	return (unsigned) log10(double(optraits<E>::max())) + 1;
       }
 
       ASSIGN_INT_OPERATOR(mod_equal,  %)
       ARITH_INT_OPERATOR(mod,  %=)
     };
 
-    /*---------------.
-    | optraits_int_u |
-    `---------------*/
+    /*---------------------.
+    | optraits<uint_value> |
+    `---------------------*/
 
-    template <class Self>
-    class optraits_int_u : public optraits_int<Self>
+    template <class E>
+    class optraits<uint_value<E> > : public optraits<int_value<E> >
     {
     private:
-      typedef typename typetraits<Self>::storage_type storage_type_;
+      typedef typename typetraits<E>::storage_type storage_type_;
 
     public:
       static storage_type_ min () { return 0; }
     };
 
-    /*---------------.
-    | optraits_int_s |
-    `---------------*/
+    /*---------------------.
+    | optraits<sint_value> |
+    `---------------------*/
 
-    template <class Self>
-    class optraits_int_s : public optraits_int<Self>
+    template <class E>
+    class optraits<sint_value<E> > : public optraits<int_value<E> >
     {};
 
   } // end of internal

@@ -67,6 +67,7 @@ namespace ntg {
 
     template <unsigned nbits, class behavior>
     struct typetraits<int_s<nbits, behavior> >
+      : public typetraits<sint_value<int_s<nbits, behavior> > >
     {
       typedef int_s<nbits, behavior>		self;
       typedef signed_integer			abstract_type;
@@ -213,10 +214,11 @@ namespace ntg {
 
     template <unsigned nbits, class behavior>
     struct optraits<int_s<nbits, behavior> > :
-      public optraits_int_s<int_s<nbits, behavior> >
+      public optraits<sint_value<int_s<nbits, behavior> > >
     {
     public:
       typedef int_s<nbits, behavior> self;
+      typedef optraits<sint_value<int_s<nbits, behavior> > > super;
 
     private:
       typedef typename typetraits<self>::base_type	base_type_;
@@ -250,17 +252,17 @@ namespace ntg {
 
       // int_sN == int_u32; int_u32 == int_sN
 
-      template <class B2>
+      template <unsigned mbits, class B1, class B2>
       static bool
-      cmp_eq(const self& lhs, const int_u<32, B2>& rhs)
+      cmp_eq(const int_s<mbits, B1>& lhs, const int_u<32, B2>& rhs)
       {
 	if (lhs.val() < 0)
 	  return false;
 
 	return static_cast<int_u<32, B2> >(lhs).val() == rhs.val();
       }
-      template <class B1>
-      static bool cmp_eq(const int_u<32, B1>& lhs, const self& rhs)
+      template <unsigned mbits, class B1, class B2>
+      static bool cmp_eq(const int_u<32, B1>& lhs, const int_s<mbits, B2>& rhs)
       { return cmp_eq(rhs, lhs); }
 
       // <T1> == <T2>
@@ -268,7 +270,7 @@ namespace ntg {
       template <class T1, class T2>
       static bool
       cmp_eq(const T1& lhs, const T2& rhs)
-      { return optraits_scalar<self>::cmp_eq(lhs, rhs); }
+      { return super::cmp_eq(lhs, rhs); }
 
       //
       // cmp_lt
@@ -276,17 +278,17 @@ namespace ntg {
 
       // int_sN < int_u32; int_u32 < int_sN
 
-      template <class B2>
+      template <unsigned mbits, class B1, class B2>
       static bool
-      cmp_lt(const self& lhs, const int_u<32, B2>& rhs)
+      cmp_lt(const int_s<mbits, B1>& lhs, const int_u<32, B2>& rhs)
       {
 	if (lhs.val() < 0)
 	  return true;
 
 	return static_cast<int_u<32, B2> >(lhs).val() < rhs.val();
       }
-      template <class B1>
-      static bool cmp_lt(const int_u<32, B1>& lhs, const self& rhs)
+      template <unsigned mbits, class B1, class B2>
+      static bool cmp_lt(const int_u<32, B1>& lhs, const int_s<mbits, B2>& rhs)
       {
 	if (rhs.val() < 0)
 	  return false;
@@ -299,7 +301,7 @@ namespace ntg {
       template <class T1, class T2>
       static bool
       cmp_lt(const T1& lhs, const T2& rhs)
-      { return optraits_scalar<self>::cmp_lt(lhs, rhs); }
+      { return super::cmp_lt(lhs, rhs); }
 
       // debug
       static std::string name() {

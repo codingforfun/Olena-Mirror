@@ -51,6 +51,18 @@ namespace ntg
     static unsigned size() { return nb_comp; }
   };
 
+  namespace internal {
+
+    template <class E>
+    class typetraits<vect_value<E> > : public typetraits<value<E> >
+    {};
+
+    template <class E>
+    class optraits<vect_value<E> > : public optraits<value<E> >
+    {};
+
+  }
+
 }
 
 #endif // !NTG_VECT_VECT_VALUE_HH

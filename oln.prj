@@ -1,16 +1,36 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 43)
-(Parent-Version oln 10 42)
-(Version-Log "Index: olena/ChangeLog
+(Project-Version oln 10 44)
+(Parent-Version oln 10 43)
+(Version-Log "Index: integre/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-        * oln/Makefile.am: Include convert/cast.hh.
+        Make typetraits and optraits reproduce more accurately the value
+        hierarchy.
+
+        * ntg/real/int_s.hh: Fix traits inheritance.
+        * ntg/real/int_u.hh: Likewise.
+        * ntg/real/optraits_builtin_int.hh: Likewise.
+        * ntg/real/typetraits_builtin_int.hh: Likewise.
+        * ntg/real/builtin_float.hh: Likewise.
+        * ntg/real/range.hh: Likewise.
+        * ntg/real/cycle.hh: Likewise.
+        * ntg/vect/vec.hh: Likewise.
+        * ntg/enum/bin.hh: Likewise.
+
+        * ntg/real/real_value.hh: Define typetraits.
+        * ntg/vect/vect_value.hh: Likewise.
+        * ntg/enum/enum_value.hh: Likewise.
+        * ntg/real/optraits_real.hh: Rename optraits_xxx as
+        optraits<xxx_value>.
+        * ntg/core/value.hh: Define typetraits<value> and optraits<value>.
+
+        * ntg/core/internal/traits.hh: Remove useless optraits_xxx definitions.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 27 Nov 2003 10:33:30 +0100")
+(Checkin-Time "Thu, 27 Nov 2003 11:17:00 +0100")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -115,7 +135,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.10 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5 640))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.29 640))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.30 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.36 640))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.39 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
@@ -371,15 +391,15 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (integre/ntg/color/hsl.hh (oln/i/21_hsl.hh 1.3.1.4 640))
   (integre/ntg/color/hsv.hh (oln/i/22_hsv.hh 1.3.1.4 640))
   (integre/ntg/core/interval.hh (oln/g/22_interval.h 1.6.1.8 640))
-  (integre/ntg/real/int_s.hh (oln/g/24_int_s.hh 1.16.1.17 640))
-  (integre/ntg/real/int_u.hh (oln/g/23_int_u.hh 1.19.1.17 640))
+  (integre/ntg/real/int_s.hh (oln/g/24_int_s.hh 1.16.1.18 640))
+  (integre/ntg/real/int_u.hh (oln/g/23_int_u.hh 1.19.1.18 640))
   (integre/ntg/color/nrgb.hh (oln/i/19_nrgb.hh 1.5.1.5 640))
 
 
 
 
 
-  (integre/ntg/real/optraits_builtin_int.hh (oln/g/18_optraits_b 1.6.1.9 640))
+  (integre/ntg/real/optraits_builtin_int.hh (oln/g/18_optraits_b 1.6.1.10 640))
 
 
 
@@ -387,17 +407,17 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 
   (integre/ntg/real/optraits_real_defs.hh (oln/g/11_optraits_s 1.15 640))
-  (integre/ntg/real/optraits_real.hh (oln/g/12_optraits_s 1.11.1.9 640))
+  (integre/ntg/real/optraits_real.hh (oln/g/12_optraits_s 1.11.1.10 640))
 
   (integre/ntg/core/predecls.hh (oln/g/10_predecls.h 1.10.1.3.1.2 640))
-  (integre/ntg/core/value.hh (oln/g/8_rec_value. 1.8.1.8 640))
+  (integre/ntg/core/value.hh (oln/g/8_rec_value. 1.8.1.9 640))
   (integre/ntg/color/rgb.hh (oln/i/18_rgb.hh 1.3.1.4 640))
 
   (integre/ntg/core/type.hh (oln/g/6_type.hh 1.10 640))
 
 
 
-  (integre/ntg/real/typetraits_builtin_int.hh (oln/g/3_typetraits 1.7.1.12 640))
+  (integre/ntg/real/typetraits_builtin_int.hh (oln/g/3_typetraits 1.7.1.13 640))
 
   (integre/ntg/color/xyz.hh (oln/i/24_xyz.hh 1.3.1.6 640))
   (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.6 640))
@@ -881,15 +901,15 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (integre/ntg/int.hh (oln/s/0_int.hh 1.3 640))
   (integre/ntg/float.hh (oln/s/1_float.hh 1.3 640))
-  (integre/ntg/real/real_value.hh (oln/s/15_real_value 1.2 640))
-  (integre/ntg/core/internal/traits.hh (oln/s/16_traits.hh 1.4 640))
+  (integre/ntg/real/real_value.hh (oln/s/15_real_value 1.3 640))
+  (integre/ntg/core/internal/traits.hh (oln/s/16_traits.hh 1.5 640))
   (integre/ntg/core/internal/macros.hh (oln/s/17_macros.hh 1.2 640))
   (integre/ntg/core/type_traits.hh (oln/s/18_type_trait 1.2 640))
   (integre/ntg/core/macros.hh (oln/s/19_macros.hh 1.7 640))
   (integre/ntg/core/abstract_hierarchy.hh (oln/s/20_abstract_h 1.2.1.2 640))
   (integre/ntg/basics.hh (oln/s/21_basics.hh 1.4 640))
-  (integre/ntg/vect/vect_value.hh (oln/s/22_vect_value 1.2 640))
-  (integre/ntg/enum/enum_value.hh (oln/s/23_enum_value 1.1 640))
+  (integre/ntg/vect/vect_value.hh (oln/s/22_vect_value 1.3 640))
+  (integre/ntg/enum/enum_value.hh (oln/s/23_enum_value 1.2 640))
   (integre/tests/types/tests/range4 (oln/s/24_range4 1.1 640))
   (integre/tests/utils/tests/debug1 (oln/s/41_debug1 1.3 640))
   
@@ -897,7 +917,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (integre/ntg/core/contract.hh (oln/s/45_contract.h 1.3 640))
   (integre/ntg/real/builtin_int.hh (oln/s/46_builtin_in 1.1 640))
-  (integre/ntg/real/builtin_float.hh (oln/s/47_builtin_fl 1.3 640))
+  (integre/ntg/real/builtin_float.hh (oln/s/47_builtin_fl 1.4 640))
   (integre/ntg/real/builtin_properties.hh (oln/s/48_builtin_pr 1.1 640))
   (integre/ntg/enum/builtin_bool.hh (oln/s/50_builtin_bo 1.5 640))
   (integre/tests/sanity/includes.test (oln/s/51_includes.t 1.1 750))
@@ -919,12 +939,12 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 ;; Files added by populate at Mon, 02 Jun 2003 17:25:14 +0200,
 ;; to version 9.7(w), by burrus_n:
 
-  (integre/ntg/real/range.hh (oln/t/16_range.hh 1.4 640))
-  (integre/ntg/real/cycle.hh (oln/t/17_cycle.hh 1.2 640))
-  (integre/ntg/vect/vec.hh (oln/t/18_vec.hh 1.7 640))
+  (integre/ntg/real/range.hh (oln/t/16_range.hh 1.5 640))
+  (integre/ntg/real/cycle.hh (oln/t/17_cycle.hh 1.3 640))
+  (integre/ntg/vect/vec.hh (oln/t/18_vec.hh 1.8 640))
   (integre/ntg/vect/cplx.hh (oln/t/19_cplx.hh 1.5 640))
   (integre/ntg/color/color.hh (oln/t/20_color.hh 1.5 640))
-  (integre/ntg/enum/bin.hh (oln/t/21_bin.hh 1.5 640))
+  (integre/ntg/enum/bin.hh (oln/t/21_bin.hh 1.6 640))
 
 ;; Files deleted by populate at Mon, 30 Jun 2003 20:01:55 +0200,
 ;; from version 9.10(w), by nes:

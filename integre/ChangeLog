@@ -1,3 +1,27 @@
+2003-11-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	Make typetraits and optraits reproduce more accurately the value
+	hierarchy.
+	
+	* ntg/real/int_s.hh: Fix traits inheritance.
+	* ntg/real/int_u.hh: Likewise.
+	* ntg/real/optraits_builtin_int.hh: Likewise.
+	* ntg/real/typetraits_builtin_int.hh: Likewise.
+	* ntg/real/builtin_float.hh: Likewise.
+	* ntg/real/range.hh: Likewise.
+	* ntg/real/cycle.hh: Likewise.
+	* ntg/vect/vec.hh: Likewise.
+	* ntg/enum/bin.hh: Likewise.
+	
+	* ntg/real/real_value.hh: Define typetraits.
+	* ntg/vect/vect_value.hh: Likewise.
+	* ntg/enum/enum_value.hh: Likewise.
+	* ntg/real/optraits_real.hh: Rename optraits_xxx as
+	optraits<xxx_value>.
+	* ntg/core/value.hh: Define typetraits<value> and optraits<value>.
+
+	* ntg/core/internal/traits.hh: Remove useless optraits_xxx definitions.
+	
 2003-11-26  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/real/optraits_scalar_defs.hh: Rename as...
