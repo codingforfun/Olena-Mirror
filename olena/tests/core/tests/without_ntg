@@ -1,0 +1,16 @@
+//								    -*- c++ -*-
+
+#include <oln/basics2d.hh>
+#include <iostream>
+
+class foo
+{};
+
+int main()
+{
+  oln::image2d< foo > i(60, 60);
+
+  std::cout << i.hold(0, 0) << std::endl;
+
+  return 0;
+}

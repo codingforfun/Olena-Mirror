@@ -1,22 +1,21 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 32)
-(Parent-Version oln 10 31)
+(Project-Version oln 10 33)
+(Parent-Version oln 10 32)
 (Version-Log "Index: olena/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-        * oln/core/dpoint1d.hh, oln/core/dpoint2d.hh,
-        * oln/core/dpoint3d.hh, oln/core/abstract/iter1d.hh,
-        * oln/core/abstract/iter2d.hh, oln/core/abstract/iter3d.hh,
-        * oln/core/point1d.hh, oln/core/point2d.hh, oln/core/point3d.hh,
-        * oln/core/impl/image_array.hh, oln/core/impl/image_array3d.hh,
-        * oln/core/impl/image_array2d.hh, oln/core/impl/image_array1d.h:
-        Don't use typedefs with the friend specifier.
+        * oln/core/abstract/image_with_type_with_dim.hh
+        (image_with_type_with_dim_swith): Select data_type_image_with_dim
+        by default, not data_type_image.
+
+        * tests/core/tests/without_ntg:
+        New test.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 14 Oct 2003 09:40:52 +0200")
+(Checkin-Time "Sun, 02 Nov 2003 17:27:23 +0100")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -124,7 +123,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.26 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.35 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.34 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.35 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.15 640))
 
@@ -1029,7 +1028,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/topo/combinatorial-map/internal/lambda.hh (oln/v/6_lambda.hh 1.2 600))
   (olena/oln/topo/combinatorial-map/internal/level.hh (oln/v/7_level.hh 1.2 600))
   (olena/oln/topo/combinatorial-map/internal/sigma.hh (oln/v/9_sigma.hh 1.2 600))
-  (olena/oln/core/abstract/image_with_type_with_dim.hh (oln/v/11_image_with 1.3 600))
+  (olena/oln/core/abstract/image_with_type_with_dim.hh (oln/v/11_image_with 1.4 600))
   (olena/tests/core/tests/image2 (oln/v/12_image2 1.2 600))
   (olena/tests/utils/tests/copy (oln/v/13_copy 1.1 600))
 ;; Files added by populate at Mon, 25 Aug 2003 13:48:55 +0200,
@@ -1085,6 +1084,13 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 ;; to version 10.27(w), by burrus_n:
 
   (olena/tests/morpho/tests/builtin_types (oln/v/30_builtin_ty 1.2 640))
+
+;; Files added by populate at Sun, 02 Nov 2003 17:15:34 +0100,
+;; to version 10.32(w), by nes:
+
+  (olena/tests/core/tests/without_ntg (oln/v/31_without_nt 1.1 600))
 )
-(Merge-Parents)
+(Merge-Parents
+  (10.32 complete)
+)
 (New-Merge-Parents)
