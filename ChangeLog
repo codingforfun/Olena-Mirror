@@ -1,3 +1,7 @@
+2003-01-29  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Makefile.am: Add ISSUES to EXTRA_DIST.
+
 2003-01-24  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* ISSUES: rename from `oln/ISSUES'.

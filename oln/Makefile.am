@@ -7,7 +7,7 @@ SUBDIRS = oln img $(OLN_SRC_SUBDIRS)
 m4datadir = $(datadir)/aclocal
 dist_m4data_DATA = config/oln.m4
 
-EXTRA_DIST = ISSUES config/oln-local.m4
+EXTRA_DIST = config/oln-local.m4
 
 # Stuff pertaining to compiler-specific auto-configuration
 
