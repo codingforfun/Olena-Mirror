@@ -1,16 +1,12 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 8 34)
-(Parent-Version oln 8 33)
-(Version-Log "Index: integre/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-        * ntg/global_ops_defs.hh: Add missing builtin specializations.
-        * tests/types/tests/builtin1: New test.
+(Project-Version oln 8 35)
+(Parent-Version oln 8 34)
+(Version-Log "Forgot to populate.
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 30 Apr 2003 13:21:59 +0200")
+(Checkin-Time "Wed, 30 Apr 2003 13:26:19 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -825,8 +821,11 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 ;; to version 8.31(w), by nes:
 
   (doc/dev/upgrading.texi (oln/r/50_upgrading. 1.1 600))
+
+;; Files added by populate at Wed, 30 Apr 2003 13:26:10 +0200,
+;; to version 8.34(w), by burrus_n:
+
+  (integre/tests/types/tests/builtin1 (oln/s/7_builtin1 1.1 640))
 )
-(Merge-Parents
-  (8.33 complete)
-)
+(Merge-Parents)
 (New-Merge-Parents)
