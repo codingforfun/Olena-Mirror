@@ -163,7 +163,7 @@ namespace oln {
       ** \image latex oln_morpho_fast_card_closing.png
       **
       */
-      xxx_closing_decl(card);
+      xxx_closing_decl(card)
 
       /*!
       ** \brief Perform a cardinal opening.
@@ -190,7 +190,7 @@ namespace oln {
       ** \image latex oln_morpho_fast_card_opening.png
       **
       */
-      xxx_opening_decl(card);
+      xxx_opening_decl(card)
 
       /*!
       ** \brief Perform an integral closing.
@@ -217,7 +217,7 @@ namespace oln {
       ** \image latex oln_morpho_fast_integral_closing.png
       **
       */
-      xxx_closing_decl(integral);
+      xxx_closing_decl(integral)
 
       /*!
       ** \brief Perform an integral opening.
@@ -244,7 +244,7 @@ namespace oln {
       ** \image latex oln_morpho_fast_integral_opening.png
       **
       */
-      xxx_opening_decl(integral);
+      xxx_opening_decl(integral)
 
       /*!
       ** \brief Perform a height closing.
@@ -271,7 +271,7 @@ namespace oln {
       ** \image latex oln_morpho_fast_height_opening.png
       **
       */
-      xxx_opening_decl(height);
+      xxx_opening_decl(height)
 
       /*!
       ** \brief Perform a height closing.
@@ -299,7 +299,7 @@ namespace oln {
       ** \image latex oln_morpho_fast_height_closing.png
       **
       */
-      xxx_closing_decl(height);
+      xxx_closing_decl(height)
 
 
       /*!
@@ -328,7 +328,7 @@ namespace oln {
       ** \image latex oln_morpho_fast_maxvalue_closing.png
       **
       */
-      xxx_closing_decl(maxvalue);
+      xxx_closing_decl(maxvalue)
 
       /*!
       ** \brief Perform a maxvalue opening.
@@ -356,7 +356,7 @@ namespace oln {
       ** \image latex oln_morpho_fast_maxvalue_opening.png
       **
       */
-      xxx_opening_decl(maxvalue);
+      xxx_opening_decl(maxvalue)
 
       /*!
       ** \brief Perform a minvalue opening.
@@ -384,7 +384,7 @@ namespace oln {
       ** \image latex oln_morpho_fast_minvalue_opening.png
       **
       */
-      xxx_opening_decl(minvalue);
+      xxx_opening_decl(minvalue)
 
       /*!
       ** \brief Perform a minvalue closing.
@@ -412,7 +412,7 @@ namespace oln {
       ** \image latex oln_morpho_fast_minvalue_closing.png
       **
       */
-      xxx_closing_decl(minvalue);
+      xxx_closing_decl(minvalue)
 
       /*!
       ** \brief Perform a ball opening.
@@ -440,7 +440,7 @@ namespace oln {
       ** \image latex oln_morpho_fast_ball_opening.png
       **
       */
-      xxx_opening_im_decl(ball);
+      xxx_opening_im_decl(ball)
 
       /*!
       ** \brief Perform a ball closing.
@@ -468,7 +468,7 @@ namespace oln {
       ** \image latex oln_morpho_fast_ball_closing.png
       **
       */
-      xxx_closing_im_decl(ball);
+      xxx_closing_im_decl(ball)
 
       /*!
       ** \brief Perform a dist opening.
@@ -496,7 +496,7 @@ namespace oln {
       ** \image latex oln_morpho_fast_dist_opening.png
       **
       */
-      xxx_opening_im_decl(dist);
+      xxx_opening_im_decl(dist)
 
       /*!
       ** \brief Perform a dist closing.
@@ -524,7 +524,7 @@ namespace oln {
       ** \image latex oln_morpho_fast_dist_closing.png
       **
       */
-      xxx_closing_im_decl(dist);
+      xxx_closing_im_decl(dist)
 
       /*!
       ** \brief Perform a cube closing.
@@ -552,7 +552,7 @@ namespace oln {
       ** \image latex oln_morpho_fast_cube_closing.png
       **
       */
-      xxx_closing_im_decl(cube);
+      xxx_closing_im_decl(cube)
 
       /*!
       ** \brief Perform a cube opening.
@@ -580,7 +580,7 @@ namespace oln {
       ** \image latex oln_morpho_fast_cube_opening.png
       **
       */
-      xxx_opening_im_decl(cube);
+      xxx_opening_im_decl(cube)
 
       /*!
       ** \brief Perform a box closing.
@@ -609,7 +609,7 @@ namespace oln {
       ** \image latex oln_morpho_fast_box_closing.png
       **
       */
-      xxx_closing_im_decl(box);
+      xxx_closing_im_decl(box)
 
       /*!
       ** \brief Perform a box opening.
@@ -638,7 +638,7 @@ namespace oln {
       ** \image latex oln_morpho_fast_box_opening.png
       **
       */
-      xxx_opening_im_decl(box);
+      xxx_opening_im_decl(box)
 
     } // !fast
   } // !morpho

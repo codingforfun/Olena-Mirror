@@ -310,6 +310,6 @@ namespace mlc
 | dispatch |
 `---------*/
 
-# define mlc_dispatch(Fun)			return exact().Fun##_impl
+# define mlc_dispatch(Fun)			return this->exact().Fun##_impl
 
 #endif // ! METALIC_TYPE_HH

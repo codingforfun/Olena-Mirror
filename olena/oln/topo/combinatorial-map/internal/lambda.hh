@@ -59,20 +59,20 @@ namespace oln {
 	  void
 	  resize_(unsigned n)
 	  {
-	    f_.resize(n+1);
+	    this->f_.resize(n+1);
 	  }
 
 	  void
 	  assign_(const U & i, const V & e)
 	  {
-	    f_[i] = e;
+	    this->f_[i] = e;
 	  }
 
 	  void
 	  erase(const U & i)
 	  {
-	    f_[i] = 0;
-	    f_[alpha<U>::result(i)] = 0;
+	    this->f_[i] = 0;
+	    this->f_[alpha<U>::result(i)] = 0;
 	  }
 	};
 

@@ -111,8 +111,8 @@ namespace oln
 	    oln_iter_type(I) it(ima);
 	    for_all(it)
 	      {
-		s += (ima[it] - ntg_max_val(oln_value_type(I)) / 2) *
-		    func(k, l, double(it.row() - row), double(it.col() - col), b);
+		s += (ima[it]) * //ntg_max_val(oln_value_type(I)) - ima[it]) *
+		  func(k, l, double(it.row() - row), double(it.col() - col), b);
 	      }
 	    res[k * n + l] = s;
 	    //	    std::cout << k << " - " << l << " = " << s << std::endl;
@@ -137,18 +137,18 @@ namespace oln
 
       oln_iter_type(tmp_type) it(resf);
 
-      oln::level::fill(resf, ntg_max_val(D) / 2);
+      oln::level::fill(resf, ntg_min_val(D));
       // For each vector
       for (int k = 0; k < m; k++)
 	for (int l = 0; l < n; l++)
 	  // Add the value at the point
 	  {
-	    if (vec[k * n + l] * vec[k * n + l] > 40000)
+	    if (vec[k * n + l] * vec[k * n + l] > 20000)
 	      {
 		for_all(it)
 		  resf[it] += vec[k * n + l] *
 		  shapelets_basis<2, double>()(k, l, double(it.row() - nrows / 2), double(it.col() - ncols / 2), b);
-		//std::cout << k << " - " << l << std::endl;
+		std::cout << k << " - " << l << " = " << vec[k * n + l] << std::endl;
 	      }
 	  }
 

@@ -51,7 +51,7 @@ namespace oln {
 			     coord border_size) const
       {
 	im.border_adapt_mirror(border_size);
-      };
+      }
   };
 
   // set the border to a specific value
@@ -81,7 +81,7 @@ namespace oln {
       {
 	im.border_adapt_assign(border_size,
 			       ntg::cast::force<oln_value_type(I)>(value_));
-      };
+      }
 
       /// Empty constructor for any_with_diamond hierarchy.
       value_behavior() {}
@@ -111,7 +111,8 @@ namespace oln {
 			     coord border_size) const
       {
 	im.border_adapt_copy(border_size);
-      };
+      }
+
   };
 
   // tools to call ctors with type inference

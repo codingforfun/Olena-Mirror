@@ -205,7 +205,7 @@ namespace oln {
       ** since it is protected.
       */
       super_slicing_morpher(const SrcType &ima, const coord slice)
-	: super_type(ima), slice_(slice), size_(image_size_dec(ima_.size())), impl_(size_)
+	: super_type(ima), slice_(slice), size_(image_size_dec(this->ima_.size())), impl_(size_)
       {}
 
       /*!
@@ -273,13 +273,13 @@ namespace oln {
       value_type&
       at(const point_type &p)
       {
-	typename SrcType::point_type tmp_p(p, slice_);
+	typename SrcType::point_type tmp_p(p, this->slice_);
 	return const_cast<value_type &>(this->ima_)[tmp_p];
       }
 
       const value_type at(const point_type& p) const
       {
-	typename SrcType::point_type tmp_p(p, slice_);
+	typename SrcType::point_type tmp_p(p, this->slice_);
 	return this->ima_[tmp_p];
       }
 
@@ -363,7 +363,7 @@ namespace oln {
       const value_type
       at(const point_type &p) const
       {
-	typename SrcType::point_type tmp_p(p, slice_);
+	typename SrcType::point_type tmp_p(p, this->slice_);
 	return this->ima_[tmp_p];
       }
 

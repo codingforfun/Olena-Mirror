@@ -281,7 +281,7 @@ T##_closing(const abstract::non_vectorial_image<I>& input,		\
       ** \image latex oln_morpho_slow_card_closing.png
       **
       */
-      xxx_closing_map_decl(card);
+      xxx_closing_map_decl(card)
 
       /*!
       ** \brief Perform a cardinal opening.
@@ -307,7 +307,7 @@ T##_closing(const abstract::non_vectorial_image<I>& input,		\
       ** \image latex oln_morpho_slow_card_opening.png
       **
       */
-      xxx_opening_map_decl(card);
+      xxx_opening_map_decl(card)
 
       /*!
       ** \brief Perform an integral closing.
@@ -334,7 +334,7 @@ T##_closing(const abstract::non_vectorial_image<I>& input,		\
       ** \image latex oln_morpho_slow_integral_closing.png
       **
       */
-      xxx_closing_map_decl(integral);
+      xxx_closing_map_decl(integral)
 
       /*!
       ** \brief Perform an integral opening.
@@ -361,7 +361,7 @@ T##_closing(const abstract::non_vectorial_image<I>& input,		\
       ** \image latex oln_morpho_slow_integral_opening.png
       **
       */
-      xxx_opening_map_decl(integral);
+      xxx_opening_map_decl(integral)
 
       /*!
       ** \brief Perform a height closing.
@@ -387,7 +387,7 @@ T##_closing(const abstract::non_vectorial_image<I>& input,		\
       ** \image latex oln_morpho_slow_height_opening.png
       **
       */
-      xxx_opening_map_decl(height);
+      xxx_opening_map_decl(height)
 
       /*!
       ** \brief Perform a height closing.
@@ -414,7 +414,7 @@ T##_closing(const abstract::non_vectorial_image<I>& input,		\
       ** \image latex oln_morpho_slow_height_closing.png
       **
       */
-      xxx_closing_map_decl(height);
+      xxx_closing_map_decl(height)
 
 
       /*!
@@ -442,7 +442,7 @@ T##_closing(const abstract::non_vectorial_image<I>& input,		\
       ** \image latex oln_morpho_slow_maxvalue_closing.png
       **
       */
-      xxx_closing_map_decl(maxvalue);
+      xxx_closing_map_decl(maxvalue)
 
       /*!
       ** \brief Perform a maxvalue opening.
@@ -469,7 +469,7 @@ T##_closing(const abstract::non_vectorial_image<I>& input,		\
       ** \image latex oln_morpho_slow_maxvalue_opening.png
       **
       */
-      xxx_opening_map_decl(maxvalue);
+      xxx_opening_map_decl(maxvalue)
 
       /*!
       ** \brief Perform a minvalue opening.
@@ -496,7 +496,7 @@ T##_closing(const abstract::non_vectorial_image<I>& input,		\
       ** \image latex oln_morpho_slow_minvalue_opening.png
       **
       */
-      xxx_opening_map_decl(minvalue);
+      xxx_opening_map_decl(minvalue)
 
       /*!
       ** \brief Perform a minvalue closing.
@@ -523,7 +523,7 @@ T##_closing(const abstract::non_vectorial_image<I>& input,		\
       ** \image latex oln_morpho_slow_minvalue_closing.png
       **
       */
-      xxx_closing_map_decl(minvalue);
+      xxx_closing_map_decl(minvalue)
 
       /*!
       ** \brief Perform a ball opening.
@@ -550,7 +550,7 @@ T##_closing(const abstract::non_vectorial_image<I>& input,		\
       ** \image latex oln_morpho_slow_ball_opening.png
       **
       */
-      xxx_opening_im_map_decl(ball);
+      xxx_opening_im_map_decl(ball)
 
       /*!
       ** \brief Perform a ball closing.
@@ -577,7 +577,7 @@ T##_closing(const abstract::non_vectorial_image<I>& input,		\
       ** \image latex oln_morpho_slow_ball_closing.png
       **
       */
-      xxx_closing_im_map_decl(ball);
+      xxx_closing_im_map_decl(ball)
 
       /*!
       ** \brief Perform a dist opening.
@@ -604,7 +604,7 @@ T##_closing(const abstract::non_vectorial_image<I>& input,		\
       ** \image latex oln_morpho_slow_dist_opening.png
       **
       */
-      xxx_opening_im_map_decl(dist);
+      xxx_opening_im_map_decl(dist)
 
       /*!
       ** \brief Perform a dist closing.
@@ -631,7 +631,7 @@ T##_closing(const abstract::non_vectorial_image<I>& input,		\
       ** \image latex oln_morpho_slow_dist_closing.png
       **
       */
-      xxx_closing_im_map_decl(dist);
+      xxx_closing_im_map_decl(dist)
 
       /*!
       ** \brief Perform a cube closing.
@@ -658,7 +658,7 @@ T##_closing(const abstract::non_vectorial_image<I>& input,		\
       ** \image latex oln_morpho_slow_cube_closing.png
       **
       */
-      xxx_closing_im_map_decl(cube);
+      xxx_closing_im_map_decl(cube)
 
       /*!
       ** \brief Perform a cube opening.
@@ -685,7 +685,7 @@ T##_closing(const abstract::non_vectorial_image<I>& input,		\
       ** \image latex oln_morpho_slow_cube_opening.png
       **
       */
-      xxx_opening_im_map_decl(cube);
+      xxx_opening_im_map_decl(cube)
 
       /*!
       ** \brief Perform a box closing.
@@ -713,7 +713,7 @@ T##_closing(const abstract::non_vectorial_image<I>& input,		\
       ** \image latex oln_morpho_slow_box_closing.png
       **
       */
-      xxx_closing_im_map_decl(box);
+      xxx_closing_im_map_decl(box)
 
       /*!
       ** \brief Perform a box opening.
@@ -741,7 +741,7 @@ T##_closing(const abstract::non_vectorial_image<I>& input,		\
       ** \image latex oln_morpho_slow_box_opening.png
       **
       */
-      xxx_opening_im_map_decl(box);
+      xxx_opening_im_map_decl(box)
 
 
     } // end of namespace slow

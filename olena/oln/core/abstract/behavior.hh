@@ -61,7 +61,7 @@ namespace oln {
       void adapt_border(const oln::abstract::image<I> &im, coord border_size) const
       {
 	mlc_dispatch(adapt_border)(im, border_size);
-      };
+      }
     protected:
       /*!
       ** \brief CTor

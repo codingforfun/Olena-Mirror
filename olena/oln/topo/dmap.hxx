@@ -144,11 +144,11 @@ namespace oln {
       return tmp;						\
     }
 
-    oln_topo_chamfer2_(chamfer, 1,   1,  3, 0.9003);
-    oln_topo_chamfer2_(chamfer, 1,   2,  3, 1.2732);
-    oln_topo_chamfer2_(chamfer,  2,   3,  3, 2.1736);
-    oln_topo_chamfer2_(chamfer,  5,   7,  3, 5.2474);
-    oln_topo_chamfer2_(chamfer, 12,  17,  3, 12.6684);
+    oln_topo_chamfer2_(chamfer, 1,   1,  3, 0.9003)
+    oln_topo_chamfer2_(chamfer, 1,   2,  3, 1.2732)
+    oln_topo_chamfer2_(chamfer,  2,   3,  3, 2.1736)
+    oln_topo_chamfer2_(chamfer,  5,   7,  3, 5.2474)
+    oln_topo_chamfer2_(chamfer, 12,  17,  3, 12.6684)
 
     inline const chamfer<int>&
     chessboard()
@@ -162,10 +162,10 @@ namespace oln {
       return chamfer_1_2();
     }
 
-    oln_topo_chamfer3_(chamfer, 4,  6, 9, 5, 4.1203);
-    oln_topo_chamfer3_(chamfer, 5,  7, 11, 5, 5.0206);
-    oln_topo_chamfer3_(chamfer, 9,  13, 20, 5, 9.1409);
-    oln_topo_chamfer3_(chamfer, 16, 23, 36, 5, 16.3351);
+    oln_topo_chamfer3_(chamfer, 4,  6, 9, 5, 4.1203)
+    oln_topo_chamfer3_(chamfer, 5,  7, 11, 5, 5.0206)
+    oln_topo_chamfer3_(chamfer, 9,  13, 20, 5, 9.1409)
+    oln_topo_chamfer3_(chamfer, 16, 23, 36, 5, 16.3351)
 
     inline const chamfer<float>& best_set_3x3()
     { return mk_chamfer_3x3(0.9481, 1.3408); }
@@ -173,19 +173,19 @@ namespace oln {
     { return mk_chamfer_5x5(0.9801, 1.4060, 2.2044); }
 
     // maximum absolute error for integer local distances (Table 2)
-    oln_topo_chamfer2_(mchamfer, 1, 1, 3, 0.8536);
-    oln_topo_chamfer2_(mchamfer, 1, 2, 3, 1.2071);
-    oln_topo_chamfer2_(mchamfer, 2, 3, 3, 2.1180);
-    oln_topo_chamfer2_(mchamfer, 5, 7, 3, 5.1675);
-    oln_topo_chamfer2_(mchamfer, 12, 17, 3, 12.5000);
+    oln_topo_chamfer2_(mchamfer, 1, 1, 3, 0.8536)
+    oln_topo_chamfer2_(mchamfer, 1, 2, 3, 1.2071)
+    oln_topo_chamfer2_(mchamfer, 2, 3, 3, 2.1180)
+    oln_topo_chamfer2_(mchamfer, 5, 7, 3, 5.1675)
+    oln_topo_chamfer2_(mchamfer, 12, 17, 3, 12.5000)
 
     inline const chamfer<int>& mchessboard()    { return mchamfer_1_1(); }
     inline const chamfer<int>& mcityblock()     { return mchamfer_1_2(); }
 
-    oln_topo_chamfer3_(mchamfer, 4,  6,  9, 5, 4.1213);
-    oln_topo_chamfer3_(mchamfer, 5,  7, 11, 5, 5.0092);
-    oln_topo_chamfer3_(mchamfer, 9, 13, 20, 5, 9.0819);
-    oln_topo_chamfer3_(mchamfer, 17, 24, 38, 5, 17.2174);
+    oln_topo_chamfer3_(mchamfer, 4,  6,  9, 5, 4.1213)
+    oln_topo_chamfer3_(mchamfer, 5,  7, 11, 5, 5.0092)
+    oln_topo_chamfer3_(mchamfer, 9, 13, 20, 5, 9.0819)
+    oln_topo_chamfer3_(mchamfer, 17, 24, 38, 5, 17.2174)
 
     inline const chamfer<float>& mbest_set_3x3() {
       const float coef = 1.0412;

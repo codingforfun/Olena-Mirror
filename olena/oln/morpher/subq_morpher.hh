@@ -184,7 +184,7 @@ namespace oln {
       const impl_type*
       impl() const
       {
-        return ima_.impl();
+        return this->ima_.impl();
       }
 
       static std::string

@@ -29,6 +29,8 @@
 # define OLENA_IO_PNM_WRITE_2D_HH
 
 # include <ntg/basics.hh>
+# include <ntg/real/typetraits_builtin_int.hh>
+# include <ntg/real/int_u.hh>
 # include <oln/core/traverse.hh>
 # include <oln/utils/stat.hh>
 # include <oln/io/pnm_common.hh>
@@ -36,7 +38,7 @@
 # include <oln/io/pnm_write.hh>
 
 namespace oln {
-  
+
   namespace io {
 
     namespace internal {
@@ -49,9 +51,9 @@ namespace oln {
       **
       ** \todo FIXME: should be in a .cc file ?
       */
-      
+
       // FIXME: should be in a .cc file ?
-      static bool 
+      static bool
       pnm_write_header2d(std::ostream& s, char type, const pnm2d_info& info)
       {
 	s.put('P'); s.put(type); s.put('\n');
@@ -71,7 +73,7 @@ namespace oln {
       **
       ** Specialized version for pbm images.
       */
-      
+
       template <writer_id W, class I>
       struct pnm_writer<W, 2, PnmBinary, I>
       {
@@ -79,14 +81,14 @@ namespace oln {
 
 	static std::string
 	name()
-	{ 
+	{
 	  static const std::string name_("pnm/P");
 	  return name_ + pnm_id;
 	}
-	
+
 	static bool
 	knows_ext(const std::string& ext)
-	{ 
+	{
 	  if (W == WritePnmPlain)
 	    return (ext == "ppbm") || (ext == "pbm");
 	  return ext == "pbm";
@@ -95,7 +97,7 @@ namespace oln {
 	/*! \brief write \a im on \a out according to the pbm format,
 	** then return true.
 	*/
-	
+
 	static bool
 	write(std::ostream& out, const I& im)
 	{
@@ -121,7 +123,7 @@ namespace oln {
       **
       ** Specialized version for pgm images.
       */
-      
+
       template <writer_id W, class I>
       struct pnm_writer<W, 2, PnmInteger, I>
       {
@@ -129,23 +131,23 @@ namespace oln {
 
 	static std::string
 	name()
-	{ 
-	  static const std::string name_("pnm/P");	  
+	{
+	  static const std::string name_("pnm/P");
 	  return name_ + pnm_id;
 	}
 
 	static bool
 	knows_ext(const std::string& ext)
-	{ 
+	{
 	  if (W == WritePnmPlain)
 	    return (ext == "ppgm") || (ext == "pgm");
 	  return ext == "pgm";
 	}
 
-	/*! \brief Write \a im on \a out according to the pgm format, 
+	/*! \brief Write \a im on \a out according to the pgm format,
 	** then return true.
 	*/
-	
+
 	static bool
 	write(std::ostream& out, const I& im)
 	{
@@ -154,7 +156,7 @@ namespace oln {
 	  info.rows = im.nrows();
 	  info.max_val = ntg_max_val(oln_value_type(I));
 
-	  if (info.max_val > ntg::to_ntg(65535U))
+	  if (ntg::to_ntg(65535U) < info.max_val)
 	    return false;
 
 	  if (!pnm_write_header2d(out, pnm_id, info))
@@ -174,7 +176,7 @@ namespace oln {
       **
       ** Specialized version for ppm images.
       */
-      
+
       template <writer_id W, class I>
       struct pnm_writer<W, 2, PnmVectorial, I>
       {
@@ -182,14 +184,14 @@ namespace oln {
 
 	static std::string
 	name()
-	{ 
+	{
 	  static const std::string name_("pnm/P");
 	  return name_ + pnm_id;
 	}
 
 	static bool
 	knows_ext(const std::string& ext)
-	{ 
+	{
 	  if (W == WritePnmPlain)
 	    return (ext == "pppm") || (ext == "ppm");
 	  return ext == "ppm";
@@ -198,18 +200,18 @@ namespace oln {
 	/*! \brief Write \a im on \a out according to the ppm format,
 	** then return true.
 	*/
-		
+
 	static bool
 	write(std::ostream& out, const I& im)
 	{
 	  typedef ntg_comp_type(oln_value_type(I)) comp_type;
-	  
+
 	  if (!ntg_is_a(comp_type, ntg::unsigned_integer)::ret)
 	    return false;
-	  
+
 	  if (ntg_nb_comp(oln_value_type(I)) != 3)
 	    return false;
-	  
+
 	  if (ntg_max_val(comp_type) > ntg::to_ntg(65535U))
 	    return false;
 
@@ -217,10 +219,10 @@ namespace oln {
 	  info.cols = im.ncols();
 	  info.rows = im.nrows();
 	  info.max_val = ntg_max_val(comp_type);
-	  
+
 	  if (!pnm_write_header2d(out, pnm_id, info))
 	    return false;
-	  
+
 	  if (!pnm_write_data<PnmVectorial, W>::write(out, im, info))
 	    ; // std::clog << "Unable to write data!" << std::endl;
 	  return true;

@@ -76,7 +76,7 @@ namespace oln {
       {
 	std::ostringstream s;
 	s << "f_rgb_to_yiq<" << inbits << ", " << outbits << '>';
-	s.str();
+	return s.str();
       }
     };
 
@@ -118,7 +118,7 @@ namespace oln {
       {
 	std::ostringstream s;
 	s << "f_yiq_to_rgb<" << inbits << ", " << outbits << '>';
-	s.str();
+	return s.str();
       }
     };
 

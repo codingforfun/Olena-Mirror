@@ -1,22 +1,13 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 197)
-(Parent-Version oln 10 196)
-(Version-Log "Index: ChangeLog
-from  Simon Odou  <simon@lrde.epita.fr>
-
-        * config/oln.m4: set TOOLS_LDFLAGS inside of LDFLAGS.
-        * configure.ac: Export TOOLS_LDFLAGS.
-
-Index: doc/ChangeLog
-from  Simon Odou  <simon@lrde.epita.fr>
-
-        * ref/out/exdoc.config.in: Use TOOLS_LDFLAGS instead of LDLAGS.
+(Project-Version oln 10 198)
+(Parent-Version oln 10 197)
+(Version-Log "Make Olena compliant to g++-3.4 (see Chanlogs)
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 24 Jun 2004 18:10:23 +0200")
-(Checkin-Login odou_s)
+(Checkin-Time "Sat, 26 Jun 2004 23:19:24 +0200")
+(Checkin-Login thivol_d)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -120,9 +111,9 @@ from  Simon Odou  <simon@lrde.epita.fr>
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.15 600))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.15 600))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.46 600))
-  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.42 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.12 600))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.47 600))
+  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.43 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.13 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.14 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.39 600))
 
@@ -190,8 +181,8 @@ from  Simon Odou  <simon@lrde.epita.fr>
   (olena/oln/convert/nrgbxyz.hh (oln/16_nrgbxyz.hh 1.15 600))
   
   
-  (olena/oln/convert/rgbnrgb.hh (oln/17_rgbnrgb.hh 1.13 600))
-  (olena/oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.14 600))
+  (olena/oln/convert/rgbnrgb.hh (oln/17_rgbnrgb.hh 1.14 600))
+  (olena/oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.15 600))
   (olena/oln/convert/stretch.hh (oln/f/51_stretch.hh 1.18 600))
   (olena/oln/convol/slow_convolution.hh (oln/f/39_convolutio 1.4.1.4.1.6.1.5 600))
   (olena/oln/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.5.1.7 600))
@@ -271,7 +262,7 @@ from  Simon Odou  <simon@lrde.epita.fr>
   (olena/oln/core/abstract/struct_elt.hh (oln/c/25_structelt. 1.24 600))
   (olena/oln/core/traverse.hh (oln/d/30_traverse.h 1.12 600))
   (metalic/mlc/typeadj.hh (oln/e/25_typeadj.hh 1.6 600))
-  (metalic/mlc/type.hh (oln/c/21_type.hh 1.29 600))
+  (metalic/mlc/type.hh (oln/c/21_type.hh 1.30 600))
   (olena/oln/core/window1d.hh (oln/c/15_window1d.h 1.19 600))
   (olena/oln/core/window2d.hh (oln/c/14_window2d.h 1.22 600))
   (olena/oln/core/window3d.hh (oln/c/13_window3d.h 1.20 600))
@@ -359,7 +350,7 @@ from  Simon Odou  <simon@lrde.epita.fr>
   (olena/oln/morpho/watershed.hh (oln/48_watershed. 1.15 600))
   (olena/oln/morpho/watershed.hxx (oln/47_watershed. 1.9.1.5.1.7 600))
   (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.11 600))
-  (olena/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.7.1.10 600))
+  (olena/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.7.1.11 600))
   (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.14 600))
   (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.11 600))
   (olena/oln/transforms/wavelet_coeffs.hh (oln/i/34_wavelet_co 1.8 600))
@@ -370,14 +361,14 @@ from  Simon Odou  <simon@lrde.epita.fr>
   (integre/ntg/vect/cplx_representation.hh (oln/i/3_cplx_repre 1.5 600))
   (integre/ntg/utils/debug.hh (oln/i/8_debug.hh 1.2.1.8 600))
   (integre/ntg/core/internal/global_ops_defs.hh (oln/g/26_global_ops 1.17 600))
-  (integre/ntg/core/internal/global_ops.hh (oln/g/27_global_ops 1.11.1.14 600))
+  (integre/ntg/core/internal/global_ops.hh (oln/g/27_global_ops 1.11.1.15 600))
   (integre/ntg/core/internal/global_ops_traits.hh (oln/g/25_global_ops 1.7.1.10 600))
   (integre/ntg/color/hsi.hh (oln/i/20_hsi.hh 1.3.1.7 600))
   (integre/ntg/color/hsl.hh (oln/i/21_hsl.hh 1.3.1.4 600))
   (integre/ntg/color/hsv.hh (oln/i/22_hsv.hh 1.3.1.5 600))
   (integre/ntg/core/interval.hh (oln/g/22_interval.h 1.6.1.8 600))
-  (integre/ntg/real/int_s.hh (oln/g/24_int_s.hh 1.16.1.16.1.1 600))
-  (integre/ntg/real/int_u.hh (oln/g/23_int_u.hh 1.19.1.16.1.1 600))
+  (integre/ntg/real/int_s.hh (oln/g/24_int_s.hh 1.16.1.16.1.2 600))
+  (integre/ntg/real/int_u.hh (oln/g/23_int_u.hh 1.19.1.16.1.2 600))
   (integre/ntg/color/nrgb.hh (oln/i/19_nrgb.hh 1.5.1.6 600))
 
 
@@ -391,7 +382,7 @@ from  Simon Odou  <simon@lrde.epita.fr>
 
 
 
-  (integre/ntg/real/optraits_real_defs.hh (oln/g/11_optraits_s 1.14.1.1 600))
+  (integre/ntg/real/optraits_real_defs.hh (oln/g/11_optraits_s 1.14.1.2 600))
   (integre/ntg/real/optraits_real.hh (oln/g/12_optraits_s 1.11.1.8.1.1 600))
 
   (integre/ntg/core/predecls.hh (oln/g/10_predecls.h 1.10.1.3.1.2 600))
@@ -408,7 +399,7 @@ from  Simon Odou  <simon@lrde.epita.fr>
   (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.7 600))
   (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.7 600))
   (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.9 600))
-  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.14 600))
+  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.15 600))
   (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.10 600))
   (olena/oln/utils/timer.hh (oln/8_timer.hh 1.9 600))
   (olena/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.5.1.1 600))
@@ -773,7 +764,7 @@ from  Simon Odou  <simon@lrde.epita.fr>
 ;; Files added by populate at Tue, 04 Mar 2003 19:30:28 +0100,
 ;; to version 8.9(w), by jerome:
 
-  (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.23 600))
+  (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.24 600))
   (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.19 600))
 
   (olena/tests/convol () :directory)
@@ -822,7 +813,7 @@ from  Simon Odou  <simon@lrde.epita.fr>
   
   (olena/oln/topo/tarjan/union.hh (oln/r/33_union.hh 1.12 600))
   (olena/oln/topo/inter-pixel/inter-pixel.hh (oln/r/34_inter-pixe 1.16 600))
-  (olena/oln/topo/tarjan/flat-zone.hh (oln/r/35_flat-zone. 1.14 600))
+  (olena/oln/topo/tarjan/flat-zone.hh (oln/r/35_flat-zone. 1.15 600))
   (olena/oln/topo/combinatorial-map/cmap.hh (oln/r/36_cmap.hh 1.14 600))
 
 ;; Files added by populate at Thu, 20 Mar 2003 18:06:35 +0100,
@@ -950,7 +941,7 @@ from  Simon Odou  <simon@lrde.epita.fr>
 
   (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.32 600))
   (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.22 600))
-  (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.14.1.11 600))
+  (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.14.1.12 600))
   (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.12 600))
   (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.19 600))
   (olena/oln/core/impl/image_array.hh (oln/t/30_image_arra 1.17 600))
@@ -994,7 +985,7 @@ from  Simon Odou  <simon@lrde.epita.fr>
   (olena/tests/core/multiple_sources_2.cc (oln/u/24_multiple_s 1.1 600))
   (olena/tests/core/multiple_sources_1.cc (oln/u/25_multiple_s 1.1 600))
   (olena/tests/utils/Makefile.am (oln/u/26_Makefile.a 1.2 600))
-  (olena/tests/utils/tests/histogram (oln/u/27_histogram. 1.2.1.4 600))
+  (olena/tests/utils/tests/histogram (oln/u/27_histogram. 1.2.1.5 600))
   (olena/tests/utils/tests/stat (oln/u/28_stat.cc 1.3 600))
   (olena/tests/utils/tests/timer (oln/u/29_timer.cc 1.5 600))
   (olena/tests/topo/tests/tarjan (oln/u/30_test-tarja 1.3 600))
@@ -1011,7 +1002,7 @@ from  Simon Odou  <simon@lrde.epita.fr>
   (olena/tests/core/tests/image_list (oln/u/41_image_list 1.2 600))
   (olena/tests/io/tests/3d (oln/u/42_3d 1.3 600))
   (olena/oln/io/pnm_read_2d.hh (oln/u/43_pnm_read_2 1.5 600))
-  (olena/oln/io/pnm_write_2d.hh (oln/u/44_pnm_write_ 1.6 600))
+  (olena/oln/io/pnm_write_2d.hh (oln/u/44_pnm_write_ 1.7 600))
   (olena/img/lena3d.ppm (oln/u/45_lena3d.ppm 1.1 600))
   (olena/tests/io/tests/se_3d (oln/u/46_se_3d 1.2 600))
   (olena/tests/io/tests/se_1d (oln/u/47_se_1d 1.2 600))
@@ -1022,12 +1013,12 @@ from  Simon Odou  <simon@lrde.epita.fr>
   (olena/tests/core/tests/label_images (oln/v/0_label_imag 1.1 600))
   (olena/oln/topo/combinatorial-map/internal/allfunc.hh (oln/v/1_allfunc.hh 1.2 600))
   (olena/oln/topo/combinatorial-map/internal/alpha.hh (oln/v/2_alpha.hh 1.3 600))
-  (olena/oln/topo/combinatorial-map/internal/anyfunc.hh (oln/v/3_anyfunc.hh 1.4 600))
-  (olena/oln/topo/combinatorial-map/internal/beta.hh (oln/v/5_beta.hh 1.3 600))
-  (olena/oln/topo/combinatorial-map/internal/lambda.hh (oln/v/6_lambda.hh 1.3 600))
-  (olena/oln/topo/combinatorial-map/internal/level.hh (oln/v/7_level.hh 1.3 600))
-  (olena/oln/topo/combinatorial-map/internal/sigma.hh (oln/v/9_sigma.hh 1.3 600))
-  (olena/oln/core/abstract/image_with_type_with_dim.hh (oln/v/11_image_with 1.5 600))
+  (olena/oln/topo/combinatorial-map/internal/anyfunc.hh (oln/v/3_anyfunc.hh 1.5 600))
+  (olena/oln/topo/combinatorial-map/internal/beta.hh (oln/v/5_beta.hh 1.4 600))
+  (olena/oln/topo/combinatorial-map/internal/lambda.hh (oln/v/6_lambda.hh 1.4 600))
+  (olena/oln/topo/combinatorial-map/internal/level.hh (oln/v/7_level.hh 1.4 600))
+  (olena/oln/topo/combinatorial-map/internal/sigma.hh (oln/v/9_sigma.hh 1.4 600))
+  (olena/oln/core/abstract/image_with_type_with_dim.hh (oln/v/11_image_with 1.6 600))
   (olena/tests/core/tests/image2 (oln/v/12_image2 1.3 600))
   (olena/tests/utils/tests/copy (oln/v/13_copy 1.2 600))
 ;; Files added by populate at Mon, 25 Aug 2003 13:48:55 +0200,
@@ -1161,11 +1152,11 @@ from  Simon Odou  <simon@lrde.epita.fr>
 ;; Files added by populate at Thu, 22 Jan 2004 21:09:49 +0100,
 ;; to version 10.48(w), by palma_g:
 
-  (olena/oln/convert/rgbhsv.hh (oln/j/35_rgbhsv.hh 1.3 600))
-  (olena/oln/convert/rgbhsl.hh (oln/j/36_rgbhsl.hh 1.5 600))
-  (olena/oln/convert/rgbhsi.hh (oln/j/37_rgbhsi.hh 1.3 600))
-  (olena/oln/convert/rgbyuv.hh (oln/j/38_rgbyuv.hh 1.3 600))
-  (olena/oln/convert/rgbyiq.hh (oln/j/39_rgbyiq.hh 1.3 600))
+  (olena/oln/convert/rgbhsv.hh (oln/j/35_rgbhsv.hh 1.4 600))
+  (olena/oln/convert/rgbhsl.hh (oln/j/36_rgbhsl.hh 1.6 600))
+  (olena/oln/convert/rgbhsi.hh (oln/j/37_rgbhsi.hh 1.4 600))
+  (olena/oln/convert/rgbyuv.hh (oln/j/38_rgbyuv.hh 1.4 600))
+  (olena/oln/convert/rgbyiq.hh (oln/j/39_rgbyiq.hh 1.4 600))
 
 
   (olena/oln/snakes/snakes_base.hxx (oln/f/11_snakes_bas 1.1 600))
@@ -1191,21 +1182,21 @@ from  Simon Odou  <simon@lrde.epita.fr>
 ;; Files added by populate at Fri, 06 Feb 2004 16:00:19 +0100,
 ;; to version 10.57(w), by palma_g:
 
-  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.13.1.3 600))
+  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.13.1.4 600))
 
 ;; Files added by populate at Tue, 10 Feb 2004 15:26:15 +0100,
 ;; to version 10.62(w), by palma_g:
 
-  (olena/oln/core/abstract/behavior.hh (oln/j/46_behavior.h 1.4 600))
+  (olena/oln/core/abstract/behavior.hh (oln/j/46_behavior.h 1.5 600))
 
 ;; Files added by populate at Tue, 10 Feb 2004 15:26:20 +0100,
 ;; to version 10.62(w), by palma_g:
 
-  (olena/oln/core/behavior.hh (oln/j/47_behavior.h 1.5 600))
+  (olena/oln/core/behavior.hh (oln/j/47_behavior.h 1.6 600))
 
 
   (olena/oln/morpho/attribute_closing_opening_map.hxx (oln/j/48_attribute_ 1.2 600))
-  (olena/oln/morpho/attribute_closing_opening_map.hh (oln/j/49_attribute_ 1.11 600))
+  (olena/oln/morpho/attribute_closing_opening_map.hh (oln/j/49_attribute_ 1.12 600))
   (olena/oln/utils/special_points.hh (oln/j/50_special_po 1.3 600))
   (olena/tests/morpho/tests/attribute (oln/j/51_attribute 1.6 600))
 ;; Files added by populate at Mon, 16 Feb 2004 18:59:27 +0100,
@@ -1235,16 +1226,16 @@ from  Simon Odou  <simon@lrde.epita.fr>
   ; (doc/ref/html () :directory)
 
 
-  (integre/ntg/core/pred_succ.hh (oln/k/8_pred_succ. 1.2 600))
+  (integre/ntg/core/pred_succ.hh (oln/k/8_pred_succ. 1.3 600))
 ;; Files added by populate at Fri, 19 Mar 2004 15:49:20 +0100,
 ;; to version 10.97(w), by palma_g:
 
-  (olena/oln/utils/buffer.hxx (oln/k/9_buffer.hxx 1.2 600))
+  (olena/oln/utils/buffer.hxx (oln/k/9_buffer.hxx 1.3 600))
   (olena/oln/utils/buffer.hh (oln/k/10_buffer.hh 1.2 600))
-  (olena/oln/utils/key.hxx (oln/k/11_key.hxx 1.2 600))
+  (olena/oln/utils/key.hxx (oln/k/11_key.hxx 1.3 600))
   (olena/oln/utils/key.hh (oln/k/12_key.hh 1.2 600))
-  (olena/oln/utils/md5.hxx (oln/k/13_md5.hxx 1.3 600))
-  (olena/oln/utils/md5.hh (oln/k/14_md5.hh 1.3 600))
+  (olena/oln/utils/md5.hxx (oln/k/13_md5.hxx 1.4 600))
+  (olena/oln/utils/md5.hh (oln/k/14_md5.hh 1.4 600))
 
 ;; Files added by populate at Fri, 19 Mar 2004 17:25:06 +0100,
 ;; to version 10.99(w), by palma_g:
@@ -1407,8 +1398,8 @@ from  Simon Odou  <simon@lrde.epita.fr>
   (olena/oln/convol/nagao.hh (oln/m/22_nagao.hh 1.3 600))
   (olena/oln/utils/se_stat.hh (oln/m/23_se_stat.hh 1.2 600))
   (olena/oln/utils/se_stat.hxx (oln/m/24_se_stat.hx 1.2 600))
-  (olena/oln/morpher/subq_morpher.hh (oln/m/25_subq_morph 1.3 600))
-  (olena/oln/morpher/color_morpher.hh (oln/m/26_color_morp 1.4 600))
+  (olena/oln/morpher/subq_morpher.hh (oln/m/25_subq_morph 1.4 600))
+  (olena/oln/morpher/color_morpher.hh (oln/m/26_color_morp 1.5 600))
   (olena/tests/morpher/Makefile.am (oln/m/27_Makefile.a 1.1 600))
   
   
@@ -1422,9 +1413,9 @@ from  Simon Odou  <simon@lrde.epita.fr>
   
   
   
-  (olena/oln/morpher/piece_morpher.hh (oln/m/40_piece_morp 1.2 600))
+  (olena/oln/morpher/piece_morpher.hh (oln/m/40_piece_morp 1.3 600))
   (olena/oln/morpher/iter_morpher.hh (oln/m/41_iter_morph 1.2 600))
-  (olena/oln/morpher/slicing_morpher.hh (oln/m/42_slicing_mo 1.3 600))
+  (olena/oln/morpher/slicing_morpher.hh (oln/m/42_slicing_mo 1.4 600))
 
   (olena/tests/morpher/tests/compose_morph (oln/m/43_compose_mo 1.2 600))
   (olena/tests/morpher/tests/sq_morph (oln/m/44_sq_morph 1.2 600))
@@ -1432,7 +1423,7 @@ from  Simon Odou  <simon@lrde.epita.fr>
 ;; Files added by populate at Wed, 31 Mar 2004 19:07:28 +0200,
 ;; to version 10.123(w), by palma_g:
 
-  (olena/oln/topo/tarjan/tarjan_with_attr.hh (oln/m/46_tarjan_wit 1.3 600))
+  (olena/oln/topo/tarjan/tarjan_with_attr.hh (oln/m/46_tarjan_wit 1.4 600))
   (olena/oln/topo/tarjan/tarjan.hh (oln/m/47_tarjan.hh 1.4 600))
 
 
@@ -1450,12 +1441,12 @@ from  Simon Odou  <simon@lrde.epita.fr>
 ;; Files added by populate at Sun, 23 May 2004 13:50:56 +0200,
 ;; to version 10.186(w), by palma_g:
 
-  (olena/oln/utils/qsort.hh (oln/r/9_qsort.hh 1.1 600))
+  (olena/oln/utils/qsort.hh (oln/r/9_qsort.hh 1.2 600))
 
 ;; Files added by populate at Sun, 06 Jun 2004 23:11:34 +0200,
 ;; to version 10.187(w), by thivol_d:
 
-  (olena/oln/transforms/shapelets.hh (oln/r/10_shapelets. 1.3 600))
+  (olena/oln/transforms/shapelets.hh (oln/r/10_shapelets. 1.4 600))
 
 ;; Files added by populate at Sun, 13 Jun 2004 13:18:59 +0200,
 ;; to version 10.190(w), by van-vl_n:
@@ -1475,12 +1466,12 @@ from  Simon Odou  <simon@lrde.epita.fr>
 ;; Files added by populate at Tue, 15 Jun 2004 19:48:03 +0200,
 ;; to version 10.193(w), by thivol_d:
 
-  (olena/oln/morpher/func_morpher.hh (oln/r/14_func_morph 1.1 600))
+  (olena/oln/morpher/func_morpher.hh (oln/r/14_func_morph 1.2 600))
 
 ;; Files added by populate at Tue, 15 Jun 2004 19:48:10 +0200,
 ;; to version 10.193(w), by thivol_d:
 
-  (olena/oln/core/fpoint2d.hh (oln/r/15_fpoint2d.h 1.1 600))
+  (olena/oln/core/fpoint2d.hh (oln/r/15_fpoint2d.h 1.2 600))
   (olena/oln/core/fdpoint2d.hh (oln/r/16_fdpoint2d. 1.1 600))
 
 ;; Files added by populate at Tue, 15 Jun 2004 19:48:12 +0200,

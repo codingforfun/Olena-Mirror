@@ -28,6 +28,7 @@
 # define OLN_UTILS_QSORT_HH
 # include <vector>
 # include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/image_with_type_with_dim.hh>
 
 # include <algorithm>
 # include <iostream>

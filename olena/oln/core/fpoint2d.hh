@@ -30,6 +30,7 @@
 
 # include <iostream>
 
+# include <oln/core/image2d.hh>
 # include <oln/core/abstract/image.hh>
 # include <oln/core/point2d.hh>
 

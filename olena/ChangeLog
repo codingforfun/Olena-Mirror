@@ -1,3 +1,43 @@
+2004-06-26  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* oln/convert/rgbnrgb.hh: Make compliant to g++-3.4.
+	* oln/convert/rgbxyz.hh: Likewise.
+	* oln/topo/dmap.hxx: Likewise.
+	* oln/utils/histogram.hh: Likewise.
+	* oln/morpho/attribute_closing_opening.hh: Likewise.
+	* oln/topo/tarjan/flat-zone.hh: Likewise.
+	* oln/core/abstract/image_with_impl.hh: Likewise.
+	* tests/utils/tests/histogram: Likewise.
+	* oln/io/pnm_write_2d.hh: Likewise.
+	* oln/topo/combinatorial-map/internal/anyfunc.hh: Likewise.
+	* oln/topo/combinatorial-map/internal/beta.hh: Likewise.
+	* oln/topo/combinatorial-map/internal/lambda.hh: Likewise.
+	* oln/topo/combinatorial-map/internal/level.hh: Likewise.
+	* oln/topo/combinatorial-map/internal/sigma.hh: Likewise.
+	* oln/core/abstract/image_with_type_with_dim.hh: Likewise.
+	* oln/convert/rgbhsv.hh: Likewise.
+	* oln/convert/rgbhsl.hh: Likewise.
+	* oln/convert/rgbhsi.hh: Likewise.
+	* oln/convert/rgbyuv.hh: Likewise.
+	* oln/convert/rgbyiq.hh: Likewise.
+	* oln/morpho/attributes.hh: Likewise.
+	* oln/core/abstract/behavior.hh: Likewise.
+	* oln/core/behavior.hh: Likewise.
+	* oln/morpho/attribute_closing_opening_map.hh: Likewise.
+	* oln/utils/buffer.hxx: Likewise.
+	* oln/utils/key.hxx: Likewise.
+	* oln/utils/md5.hxx: Likewise.
+	* oln/utils/md5.hh: Likewise.
+	* oln/morpher/subq_morpher.hh: Likewise.
+	* oln/morpher/color_morpher.hh: Likewise.
+	* oln/morpher/piece_morpher.hh: Likewise.
+	* oln/morpher/slicing_morpher.hh: Likewise.
+	* oln/topo/tarjan/tarjan_with_attr.hh: Likewise.
+	* oln/utils/qsort.hh: Likewise.
+	* oln/transforms/shapelets.hh: Likewise.
+	* oln/morpher/func_morpher.hh: Likewise.
+	* oln/core/fpoint2d.hh: Likewise.
+
 2004-06-15  Simon Odou  <simon@lrde.epita.fr>
 
 	* oln/basics.hh: Add behavior.hh.

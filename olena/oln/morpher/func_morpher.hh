@@ -117,14 +117,14 @@ namespace oln {
       const value_type
       at(const point_type& p) const
       {
-	return f(ima_, p);
+	return f(this->ima_, p);
       }
 
       /// Return the implementation.
       const impl_type*
       impl() const
       {
-        return ima_.impl();
+        return this->ima_.impl();
       }
 
       static std::string

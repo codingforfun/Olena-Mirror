@@ -1,4 +1,4 @@
-// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,7 +33,9 @@
 # include <ntg/real/real_value.hh>
 # include <ntg/bin.hh>
 
+# include <mlc/bool.hh>
 # include <mlc/cmp.hh>
+# include <mlc/is_a.hh>
 
 # include <string>
 # include <sstream>
@@ -79,8 +81,8 @@ namespace ntg {
     | typetraits<int_u> |
     `------------------*/
 
-    template <unsigned nbits, class behavior>
-    struct typetraits<int_u<nbits, behavior> > 
+    template <unsigned nbits, typename behavior>
+    struct typetraits<int_u<nbits, behavior> >
       : public typetraits<uint_value<int_u<nbits, behavior> > >
     {
       typedef int_u<nbits, behavior>		self;
@@ -95,7 +97,7 @@ namespace ntg {
 
       typedef self					base_type;
       typedef typename C_for_int_u<nbits>::type		storage_type;
-      typedef int_s<mlc::saturateN<nbits+1, 32>::ret, 
+      typedef int_s<mlc::saturateN<nbits+1, 32>::ret,
 		    behavior>				signed_type;
       typedef self					unsigned_type;
       // FIXME: calculate it more precisely
@@ -276,7 +278,7 @@ namespace ntg {
     template<unsigned nbits, class B1, unsigned mbits, class B2>
     struct operator_traits<operator_plus, int_u<nbits, B1>, int_u<mbits, B2> >
     {
-      enum { commutative = true, 
+      enum { commutative = true,
 	     need_check = ((unsigned) mlc::max<nbits, mbits>::ret >= 32) };
       typedef int_u<(unsigned) mlc::maxN<nbits + 1, mbits + 1, 32>::ret,
 		    typename deduce_op_behavior<B1, B2>::ret> ret;
@@ -293,7 +295,7 @@ namespace ntg {
     template<unsigned nbits, class B1, unsigned mbits, class B2>
     struct operator_traits<operator_minus, int_u<nbits, B1>, int_u<mbits, B2> >
     {
-      enum { commutative = true, 
+      enum { commutative = true,
 	     need_check = ((unsigned) mlc::max<nbits, mbits>::ret >= 32) };
       typedef int_s<(unsigned) mlc::maxN<nbits+1, mbits+1, 32>::ret,
 		    typename deduce_op_behavior<B1, B2>::ret> ret;

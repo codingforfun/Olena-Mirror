@@ -87,7 +87,7 @@ namespace oln {
 	typedef mlc_exact_vt_type(self_type, Exact)	exact_type; ///< Exact type of the class.
 	typedef abstract::tarjan_with_attr<exact_type>	super_type; ///< Type of parent class.
 
-	friend class super_type;
+	//friend class super_type;
 	friend class abstract::tarjan<exact_type>;
 	/*!
 	** \brief Constructor.
@@ -104,9 +104,9 @@ namespace oln {
 	get_processing_order_impl()
 	{
 	  std::vector<point_type>	res;
-	  oln_iter_type(image_type)	it(input_);
+	  oln_iter_type(image_type)	it(this->input_);
 
-	  res.reserve(input_.npoints());
+	  res.reserve(this->input_.npoints());
 	  for_all(it)
 	    res.push_back(it);
 	  return res;
@@ -124,16 +124,16 @@ namespace oln {
 	void
 	mark_set_impl(const point_type &x)
 	{
-	  if (parent_.size() == parent_.capacity())
+	  if (this->parent_.size() == this->parent_.capacity())
 	    {
-	      capacity = parent_.capacity() + capacity_chunk;
-	      parent_.reserve(capacity);
-	      comp_value_.reserve(capacity);
+	      this->capacity = this->parent_.capacity() + this->capacity_chunk;
+	      this->parent_.reserve(this->capacity);
+	      this->comp_value_.reserve(this->capacity);
 	    }
-	  to_comp_[x] = ncomps_ + 1;
-	  data_.push_back(A(input_, x, env_));
-	  parent_.push_back(ncomps_ + 1);
-	  comp_value_.push_back(ncomps_ + 1);
+	  this->to_comp_[x] = this->ncomps_ + 1;
+	  this->data_.push_back(A(this->input_, x, this->env_));
+	  this->parent_.push_back(this->ncomps_ + 1);
+	  this->comp_value_.push_back(this->ncomps_ + 1);
 	}
 
 	/*!
@@ -147,24 +147,24 @@ namespace oln {
 	void
 	uni_impl(const point_type& n, const point_type& p)
 	{
-	  comp_type		r = find_root(to_comp_[n]);
-	  precondition(to_comp_[n] <= ncomps_);
-	  precondition(to_comp_[p] <= (ncomps_ + 1));
-	  if (r != to_comp_[p])
-	    if (input_[n] == input_[p])
+	  comp_type		r = find_root(this->to_comp_[n]);
+	  precondition(this->to_comp_[n] <= this->ncomps_);
+	  precondition(this->to_comp_[p] <= (this->ncomps_ + 1));
+	  if (r != this->to_comp_[p])
+	    if (this->input_[n] == this->input_[p])
 	      {
-		if (to_comp_[p] == (ncomps_ + 1)) // first merge of p component
+		if (this->to_comp_[p] == (this->ncomps_ + 1)) // first merge of p component
 		  {
-		    precondition(r < comp_value_.capacity());
-		    data_[r] += data_[to_comp_[p]];
-		    precondition(r <= ncomps_);
-		    to_comp_[p] = r;
+		    precondition(r < this->comp_value_.capacity());
+		    this->data_[r] += this->data_[this->to_comp_[p]];
+		    precondition(r <= this->ncomps_);
+		    this->to_comp_[p] = r;
 		  }
 		else
 		  {
-		    precondition(r < parent_.capacity());
-		    data_[parent_[to_comp_[p]]] += data_[parent_[r]];
-		    parent_[r] = parent_[to_comp_[p]];
+		    precondition(r < this->parent_.capacity());
+		    this->data_[this->parent_[this->to_comp_[p]]] += this->data_[this->parent_[r]];
+		    this->parent_[r] = this->parent_[this->to_comp_[p]];
 
 		  }
 	      }

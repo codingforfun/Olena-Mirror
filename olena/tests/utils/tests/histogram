@@ -67,7 +67,7 @@ check_int_u8()
     hu8[ntg_max_val(int_u8)] == 0 &&
     hu8[ntg_min_val(int_u8)] == 0;
   return res;
-};
+}
 
 bool
 check_int_s4_and_distr()
@@ -141,7 +141,7 @@ check_min_max()
     utils::max(his4) == utils::max(his4_max) &&
     utils::max(his4) == utils::max(his4_minmax);
   return res;
-};
+}
 
 
 bool
@@ -162,7 +162,7 @@ check_rgb_8()
     hr8[rgb_8(0, 0, 0)] == 0 &&
     hr8[rgb_8(44, 44, 44)] == 0;
   return res;
-};
+}
 
 bool
 check()

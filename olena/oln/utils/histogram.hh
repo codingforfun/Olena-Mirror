@@ -233,7 +233,7 @@ namespace oln {
       histogram(const value_to_point_type & c2p = value_to_point_type()):
 	v2p_(c2p), img_(internal::img_max_size<value_type>()())
       {
-	clear();
+	this->clear();
       }
 
       /// This compute the histogram of an image.
@@ -242,8 +242,8 @@ namespace oln {
 		const value_to_point_type & v2p = value_to_point_type()):
 	v2p_(v2p), img_(internal::img_max_size<value_type>()())
       {
-	clear();
-	init(input);
+	this->clear();
+	this->init(input);
       }
 
       /// clear() should be called.
@@ -408,7 +408,7 @@ namespace oln {
       at(const value_type& i) const
       {
 	adjust(i);
-	return img_[v2p_(i)];
+	return this->img_[v2p_(i)];
       }
 
       /// operator[] should be called.
@@ -416,7 +416,7 @@ namespace oln {
       at(const value_type& i)
       {
 	adjust(i);
-	return img_[v2p_(i)];
+	return this->img_[v2p_(i)];
       }
 
       /// Quick function min.
@@ -424,7 +424,7 @@ namespace oln {
       min()
       {
 	for (; min_ != ntg_max_val(value_type); min_ = ntg::succ(min_))
-  	  if (img_[v2p_(min_)] > ntg_zero_val(cpt_type))
+  	  if (this->img_[v2p_(min_)] > ntg_zero_val(cpt_type))
      	    break;
 	return min_;
       }
@@ -433,7 +433,7 @@ namespace oln {
       max()
       {
 	for (; max_ != ntg_min_val(value_type); max_ = ntg::pred(max_))
-  	  if (img_[v2p_(max_)] > ntg_zero_val(cpt_type))
+  	  if (this->img_[v2p_(max_)] > ntg_zero_val(cpt_type))
    	    break;
 	return max_;
       }
@@ -506,7 +506,7 @@ namespace oln {
       const cpt_type
       at(const value_type& i) const
       {
-	return img_[v2p_(i)];
+	return this->img_[v2p_(i)];
       }
 
       /// operator[] should be called.
@@ -514,14 +514,14 @@ namespace oln {
       at(const value_type& i)
       {
 	adjust(i);
-	return img_[v2p_(i)];
+	return this->img_[v2p_(i)];
       }
       /// Quick function min.
       value_type
       min()
       {
 	for (; min_ != ntg_max_val(value_type); min_ = succ(min_))
-  	  if (img_[v2p_(min_)] > ntg_zero_val(cpt_type))
+  	  if (this->img_[v2p_(min_)] > ntg_zero_val(cpt_type))
    	    break;
 	return min_;
       }
@@ -597,7 +597,7 @@ namespace oln {
       const cpt_type
       at(const value_type& i) const
       {
-	return img_[v2p_(i)];
+	return this->img_[v2p_(i)];
       }
 
       /// operator[] should be called.
@@ -605,14 +605,14 @@ namespace oln {
       at(const value_type& i)
       {
 	adjust(i);
-	return img_[v2p_(i)];
+	return this->img_[v2p_(i)];
       }
       /// Quick function max.
       value_type
       max()
       {
 	for (; max_ != ntg_min_val(value_type); max_ = ntg::pred(max_))
-	  if (img_[v2p_(max_)] > ntg_zero_val(cpt_type))
+	  if (this->img_[v2p_(max_)] > ntg_zero_val(cpt_type))
   	    break;
 	return max_;
       }

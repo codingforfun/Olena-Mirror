@@ -54,13 +54,13 @@ namespace oln {
 	  void
 	  assign_(const U & i, const V & e)
 	  {
-	    f_[i] = e;
+	    this->f_[i] = e;
 	  }
 
 	  void
 	  erase_(const U & i)
 	  {
-	    f_[i] = 0;
+	    this->f_[i] = 0;
 	  }
 	};
 

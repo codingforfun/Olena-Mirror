@@ -75,7 +75,7 @@ namespace oln {
       {
 	std::ostringstream s;
 	s << "f_rgb_to_yuv<" << inbits << ", " << outbits << '>';
-	s.str();
+	return s.str();
       }
     };
     /* Conversion from RGB to YUV.
@@ -116,7 +116,7 @@ namespace oln {
       {
 	std::ostringstream s;
 	s << "f_yuv_to_rgb<" << inbits << ", " << outbits << '>';
-	s.str();
+	return s.str();
       }
     };
 

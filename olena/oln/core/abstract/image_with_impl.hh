@@ -152,7 +152,7 @@ namespace oln {
       const size_type&
       size() const
       {
-	assertion(has_impl());
+	assertion(this->has_impl());
 	return this->exact().impl()->size();
       }
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -94,7 +94,7 @@
   {									\
     typedef ntg_return_type(Name, T1, T2) return_type;			\
     typedef typename							\
-      typetraits<E>::abstract_behavior_type::get<return_type>	\
+      typetraits<E>::abstract_behavior_type::template get<return_type>	\
         behavior_type;							\
     return_type tmp;							\
     tmp = behavior_type::check_##Name(lhs.exact().val(),		\
@@ -109,7 +109,7 @@
   {									\
     typedef ntg_return_type(Name, T1, T2) return_type;			\
     typedef typename							\
-      typetraits<E>::abstract_behavior_type::get<return_type>	\
+      typetraits<E>::abstract_behavior_type::template get<return_type>	\
         behavior_type;							\
     return_type tmp;							\
     tmp = behavior_type::check_##Name(lhs.exact().val(),		\
@@ -124,7 +124,7 @@
   {									\
     typedef ntg_return_type(Name, T1, T2) return_type;			\
     typedef typename							\
-      typetraits<E>::abstract_behavior_type::get<return_type>	\
+      typetraits<E>::abstract_behavior_type::template get<return_type>	\
         behavior_type;							\
     return_type tmp;							\
     tmp = behavior_type::check_##Name(lhs.exact(),			\
@@ -194,7 +194,7 @@
   {									\
     lhs.exact() = lhs.exact() Op rhs.exact().val();			\
     return lhs.exact();							\
-  }    
+  }
 
 # define ARITH_INT_OPERATOR(Name, Op)			\
   template <class T1, class T2> inline			\

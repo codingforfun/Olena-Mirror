@@ -70,7 +70,8 @@ namespace oln {
 	  typedef tarjan<exact_type>			super_type; ///< Type of parent class.
 
 	  // Make parent class able to call implementations.
-	  friend class super_type;
+	  friend class tarjan<exact_type>;
+	  //friend class super_type;
 
 	  /*!
 	  ** \brief Return the attribute value associated to a
@@ -148,7 +149,7 @@ namespace oln {
 	  image_out_type
 	  get_compute_impl(const oln::abstract::neighborhood<N> &Ng)
 	  {
-	    std::vector<point_type>	I(get_processing_order());
+	    std::vector<point_type>	I(this->get_processing_order());
 
 	    level::fill(to_comp_, ntg_sup_val(comp_type));
 	    to_comp_.border_adapt_assign(Ng.delta(), ntg_sup_val(comp_type));

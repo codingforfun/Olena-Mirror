@@ -206,7 +206,7 @@ namespace oln {
       at(const point_type& p)
       {
 	return const_cast<value_type &>
-	  ( const_cast<SrcType &>(this->ima_)[p + p_] );
+	  ( const_cast<SrcType &>(this->ima_)[p + this->p_] );
       }
 
       /*!
@@ -217,7 +217,7 @@ namespace oln {
       const value_type
       at(const point_type& p) const
       {
-	return this->ima_[p + p_];
+	return this->ima_[p + this->p_];
       }
 
       /*! Perform a shallow copy from the decorated image of \a rhs
@@ -301,7 +301,7 @@ namespace oln {
       const value_type
       at(const point_type &p) const
       {
-	return this->ima_[p + p_];
+	return this->ima_[p + this->p_];
       }
 
       /// Useful to debug.

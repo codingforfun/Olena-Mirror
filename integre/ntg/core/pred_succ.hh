@@ -59,7 +59,7 @@ namespace ntg {
   T
   succ(const T &t)
   {
-    return T(internal::with_arith<T>::ret(t) + 1);
+    return T(typename internal::with_arith<T>::ret(t) + 1);
   }
 
   /*! Return the predecessor of \a t.
@@ -70,7 +70,7 @@ namespace ntg {
   T
   pred(const T&t)
   {
-    return T(internal::with_arith<T>::ret(t) - 1);
+    return T(typename internal::with_arith<T>::ret(t) - 1);
   }
 
   namespace internal {
