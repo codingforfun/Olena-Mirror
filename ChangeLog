@@ -1,5 +1,6 @@
 2002-07-29  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* oln/types/rec_value.hh, oln/types/type.hh: Rename any.
 	* oln/core/generate.hh: Include meta/type.hh.
 	* oln/meta/cmp.hh: Add maxN and saturateN.  
 	* oln/meta/basics.hh: Add returns_bool_.

@@ -32,7 +32,7 @@ namespace type {
 
   // Static hierarchy tool
   template <class Self>
-  class any
+  class any_type
   {
   public:
     Self& self() { return static_cast<Self&>(*this); }

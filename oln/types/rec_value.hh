@@ -42,7 +42,7 @@ namespace oln
   ////////////////////////////////////////////
 
   template <class Self>
-  class rec_value : type::any<Self>
+  class rec_value : type::any_type<Self>
   {
     typedef typename typetraits<Self>::store store_type;
 
