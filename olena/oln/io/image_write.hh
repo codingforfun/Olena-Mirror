@@ -72,9 +72,9 @@ namespace oln {
 	{
 	  if (writer<W,T>::write(out, input))
 	    {
-	      std::clog << "[ambiguous extension '" << ext
-			<< "' wrote as " << writer<W,T>::name() << "] " 
-			<< std::flush;
+	      // std::clog << "[ambiguous extension '" << ext
+	      //	<< "' wrote as " << writer<W,T>::name() << "] " 
+	      //	<< std::flush;
 	      return true;
 	    }
 	  return try_writers<writer_id(unsigned(W)-1), T>
@@ -127,7 +127,7 @@ namespace oln {
 
 	if (stream_trier::by_extension(input.exact(), name, ext))
 	  return true;
-	std::clog << "[unable to write '" << name << "'] " << std::endl;
+	// std::clog << "[unable to write '" << name << "'] " << std::endl;
 	return false;
       }
 

@@ -87,11 +87,11 @@ namespace ntg {
       doit (const in_type& in, out_type& out)
       {
 	float in_range = float(ntg_max_val(T)) - float(ntg_min_val(T));
-	float out_range = float(color_system<n>::upper_bound)
-	  - float(color_system<n>::lower_bound);
+	float out_range = float(color_system<n>::upper_bound())
+	  - float(color_system<n>::lower_bound());
 	out[n] = ((float(in[n]) - float(ntg_min_val(T)))
 		  * out_range / in_range
-		  + float(color_system<n>::lower_bound));
+		  + float(color_system<n>::lower_bound()));
 
 	// process next componant recursively:
 	_to_float<n + 1, ncomps, qbits, color_system>::doit(in, out);
@@ -131,13 +131,13 @@ namespace ntg {
       {
 	float out_range = float(optraits<T>::max()) 
 	  - float(optraits<T>::min());
-	float in_range = float(color_system<n>::upper_bound)
-	  - float(color_system<n>::lower_bound);
+	float in_range = float(color_system<n>::upper_bound())
+	  - float(color_system<n>::lower_bound());
 
 	out[n] = cast::rbound<int_u<qbits> >
-	  ((in[n] - float(color_system<n>::lower_bound))
+	  ((in[n] - float(color_system<n>::lower_bound()))
 	   * out_range / in_range
-	   + float(color_system<n>::lower_bound));
+	   + float(color_system<n>::lower_bound()));
 	
 	// process next componant recursively:
 	_from_float<n + 1, ncomps, qbits, color_system>::doit(in, out);
@@ -180,11 +180,6 @@ namespace ntg {
 	    template <unsigned> class color_system>
   struct color : public vect_value<color<ncomps, qbits, color_system> >
   {
-    template<unsigned icomp>
-    struct lower_bound { enum { ret = color_system<icomp>::lower_bound }; };
-    template<unsigned icomp>
-    struct upper_bound { enum { ret = color_system<icomp>::upper_bound }; };
-
     typedef int_u<qbits>		comp_type;
     typedef vec<ncomps, comp_type>	vec_type;
     typedef vec<ncomps, float>		float_vec_type;
@@ -226,10 +221,8 @@ namespace ntg {
   template<int lval, int uval>
   struct interval
   {
-    enum {
-      lower_bound = lval,
-      upper_bound = uval
-    };
+    static int lower_bound() { return lval; }
+    static int upper_bound() { return uval; }
   };
 
   template <unsigned ncomps, 

@@ -41,14 +41,14 @@
 `--------------------------------------------------------------*/
 
 namespace oln {
-  
-  using namespace ntg;
 
+  using namespace ntg;
+  
   namespace convert {
 
-    struct rgb_to_xyz
+    struct f_rgb_to_xyz
       : public color_conversion<3, rgb_traits,
-				3, xyz_traits, rgb_to_xyz>
+				3, xyz_traits, f_rgb_to_xyz>
     {
       template <unsigned qbits>
       color<3, qbits, xyz_traits>
@@ -62,12 +62,21 @@ namespace oln {
 	return out;
       }
 
-      static std::string name() { return "rgb_to_xyz"; }
+      static std::string name() { return "f_rgb_to_xyz"; }
     };
 
-    struct xyz_to_rgb
+    template <unsigned qbits>
+    color<3, qbits, xyz_traits>
+    rgb_to_xyz(const color<3, qbits, rgb_traits>& v)
+    {
+      f_rgb_to_xyz f;
+
+      return f(v);
+    }
+
+    struct f_xyz_to_rgb
       : public color_conversion<3, xyz_traits,
-				3, rgb_traits, xyz_to_rgb>
+				3, rgb_traits, f_xyz_to_rgb>
     {
       template <unsigned qbits>
       color<3, qbits, rgb_traits>
@@ -84,8 +93,17 @@ namespace oln {
 	return out;
       }
 
-      static std::string name() { return "xyz_to_rgb"; }
+      static std::string name() { return "f_xyz_to_rgb"; }
     };
+
+    template <unsigned qbits>
+    color<3, qbits, rgb_traits>
+    xyz_to_rgb(const color<3, qbits, xyz_traits>& v)
+    {
+      f_xyz_to_rgb f;
+
+      return f(v);
+    }
 
   } // convert
 } // oln

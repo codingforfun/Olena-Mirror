@@ -135,8 +135,8 @@ namespace oln {
 	    std::string ext = utils::extension(*it);
 	    if (stream_trier::by_extension(output.exact(), *it, ext))
 	      {
-		std::clog << "[" << name << " found as " << *it << "] " 
-			  << std::flush;
+		// std::clog << "[" << name << " found as " << *it << "] " 
+		//           << std::flush;
 		return true;
 	      }
 	  }
@@ -145,11 +145,11 @@ namespace oln {
 	     ++it)
 	  if (stream_trier::by_data(output.exact(), *it))
 	    {
-	      std::clog << "['" << name << "' found as '" << *it << "'] " 
-			<< std::flush;
+	      // std::clog << "['" << name << "' found as '" << *it << "'] " 
+	      //	<< std::flush;
 	      return true;
 	    }
-	std::clog << "[unable to read '" << name << "'] " << std::endl;
+	// std::clog << "[unable to read '" << name << "'] " << std::endl;
 	return false;
       }
 

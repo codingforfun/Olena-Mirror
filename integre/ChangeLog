@@ -1,5 +1,16 @@
 2003-07-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* ntg/color/hsi.hh, ntg/color/xyz.hh, ntg/color/yiq.hh,
+	ntg/color/yuv.hh, ntg/color/color.hh: Make lower_bound and
+	upper_bound functions to be able to return float values.
+
+2003-07-28  Reda Dehak  <reda@lrde.epita.fr>
+
+	* ntg/color/hsi.hh, ntg/color/xyz.hh, ntg/color/yiq.hh, 
+	ntg/color/yuv.hh: Fix upper and lower bound of color channel. 
+
+2003-07-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
 	* tests/types/runtests, tests/utils/runtests: Don't test temporary
 	files.
 

@@ -48,9 +48,9 @@ namespace oln {
 
   namespace convert {
 
-    struct nrgb_to_hsv
+    struct f_nrgb_to_hsv
       : public color_conversion<3, nrgb_traits,
-				3, hsv_traits, nrgb_to_hsv>
+				3, hsv_traits, f_nrgb_to_hsv>
     {
       template <unsigned qbits>
       color<3, qbits, hsv_traits>
@@ -62,37 +62,45 @@ namespace oln {
 	float min_in = std::min(in[nrgb_R], std::min(in[nrgb_B], in[nrgb_G]));
 	float delta = max_in - min_in;
 
-	// FIXME: what if delta is 0 ?
-	precondition(delta != 0);
 
 	out[hsv_V] = max_in;
 
 	if (max_in != 0)
 	  out[hsv_S] = delta / max_in;
-	else {
+	else 
 	  out[hsv_S] = 0;
-	  out[hsv_H] = -1;
-        }
-	if (in[nrgb_R] == max_in)
-	  out[hsv_H] = (in[nrgb_G] - in[nrgb_B]) / delta;
-	else if (in[nrgb_G] == max_in)
-	  out[hsv_H] = 2 + (in[nrgb_B] - in[nrgb_R]) / delta;
-	else
-	  out[hsv_H] = 4 + (in[nrgb_R] - in[nrgb_G]) / delta;
-	out[hsv_H] *= 60;
-	if (out[hsv_H] < 0)
-	  out[hsv_H] += 360;
+
+	if (out[hsv_S] == 0)
+	  out[hsv_H] = -1;   // undefined
+	else { 
+	  if (in[nrgb_R] == max_in)
+	    out[hsv_H] = (in[nrgb_G] - in[nrgb_B]) / delta;
+	  else if (in[nrgb_G] == max_in)
+	    out[hsv_H] = 2 + (in[nrgb_B] - in[nrgb_R]) / delta;
+	  else
+	    out[hsv_H] = 4 + (in[nrgb_R] - in[nrgb_G]) / delta;
+	  out[hsv_H] *= 60;
+	  if (out[hsv_H] < 0)
+	    out[hsv_H] += 360;
+	}
 
 	return out;
       }
 
-      static std::string name() { return "nrgb_to_hsv"; }
+      static std::string name() { return "f_nrgb_to_hsv"; }
     };
 
+    template <unsigned qbits>
+    color<3, qbits, hsv_traits>
+    nrgb_to_hsv(const color<3, qbits, nrgb_traits>& v)
+    {
+      f_nrgb_to_hsv f;
+      return f(v);
+    }
 
-    struct hsv_to_nrgb
+    struct f_hsv_to_nrgb
       : public color_conversion<3, hsv_traits,
-				3, nrgb_traits, hsv_to_nrgb>
+				3, nrgb_traits, f_hsv_to_nrgb>
     {
       template <unsigned qbits>
       color<3, qbits, nrgb_traits>
@@ -103,52 +111,62 @@ namespace oln {
 
 	if(in[hsv_S] == 0)
 	  out[nrgb_G] = out[nrgb_B] = out[nrgb_R] = in[hsv_V];
+	else
+	  {
+	    in[hsv_H] /= 60;
+	    int i = (int)floor (in[hsv_H]);
+	    float f = in[hsv_H] - i;
+	    float p = in[hsv_V] * (1 - in[hsv_S]);
+	    float q = in[hsv_V] * (1 - in[hsv_S] * f);
+	    float t = in[hsv_V] * (1 - in[hsv_S] * (1 - f));
 
-	in[hsv_H] /= 60;
-	int i = (int)floor (in[hsv_H]);
-	float f = in[hsv_H] - i;
-	float p = in[hsv_V] * (1 - in[hsv_S]);
-	float q = in[hsv_V] * (1 - in[hsv_S] * f);
-	float t = in[hsv_V] * (1 - in[hsv_S] * (1 - f));
-
-	switch (i){
-	case 0:
-	  out[nrgb_R] = in[hsv_V];
-	  out[nrgb_G] = t;
-	  out[nrgb_B] = p;
-	  break;
-	case 1:
-	  out[nrgb_R] = q;
-	  out[nrgb_G] = in[hsv_V];
-	  out[nrgb_B] = p;
-	  break;
-	case 2:
-	  out[nrgb_R] = p;
-	  out[nrgb_G] = in[hsv_V];
-	  out[nrgb_B] = t;
-	  break;
-	case 3:
-	  out[nrgb_R] = p;
-	  out[nrgb_G] = q;
-	  out[nrgb_B] = in[hsv_V];
-	  break;
-	case 4:
-	  out[nrgb_R] = t;
-	  out[nrgb_G] = p;
-	  out[nrgb_B] = in[hsv_V];
-	  break;
-	default:
-	  out[nrgb_R] = in[hsv_V];
-	  out[nrgb_G] = p;
-	  out[nrgb_B] = q;
-	  break;
-	}
-
+	    switch (i){
+	    case 0:
+	    case 6:
+	      out[nrgb_R] = in[hsv_V];
+	      out[nrgb_G] = t;
+	      out[nrgb_B] = p;
+	      break;
+	    case 1:
+	      out[nrgb_R] = q;
+	      out[nrgb_G] = in[hsv_V];
+	      out[nrgb_B] = p;
+	      break;
+	    case 2:
+	      out[nrgb_R] = p;
+	      out[nrgb_G] = in[hsv_V];
+	      out[nrgb_B] = t;
+	      break;
+	    case 3:
+	      out[nrgb_R] = p;
+	      out[nrgb_G] = q;
+	      out[nrgb_B] = in[hsv_V];
+	      break;
+	    case 4:
+	      out[nrgb_R] = t;
+	      out[nrgb_G] = p;
+	      out[nrgb_B] = in[hsv_V];
+	      break;
+	    default:
+	      out[nrgb_R] = in[hsv_V];
+	      out[nrgb_G] = p;
+	      out[nrgb_B] = q;
+	      break;
+	    }
+	  }
 	return out;
       }
 
       static std::string name() { return "hsv_to_nrgb"; }
     };
+
+    template <unsigned qbits>
+    color<3, qbits, nrgb_traits>
+    hsv_to_nrgb(const color<3, qbits, hsv_traits>& v)
+    {
+      f_hsv_to_nrgb f;
+      return f(v);
+    }
 
   } // convert
 } // oln

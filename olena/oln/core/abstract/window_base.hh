@@ -107,23 +107,23 @@ namespace oln
 
       void sym_()
       {
-	for (unsigned i = 0; i < card(); ++i)
+	for (unsigned i = 0; i < this->card(); ++i)
 	  dp_[i] = - dp_[i];
       }
 
       const dpoint_type at(unsigned i) const
       {
-	precondition(i < card());
+	precondition(i < this->card());
 	return dp_[i];
       }
 
     protected:
-      window_base() : super_type(), delta_(0)
+      window_base() : super_type(), dp_(), delta_(0)
       {
 	centered_ = false;
       }
 
-      window_base(unsigned size) : super_type(), delta_(0)
+      window_base(unsigned size) : super_type(), dp_(), delta_(0)
       {
 	dp_.reserve(size);
 	centered_ = false;
@@ -132,7 +132,6 @@ namespace oln
       std::vector<dpoint_type> dp_;
       max_accumulator<coord> delta_;
       bool centered_;
-
     }; 
     
     

@@ -36,7 +36,7 @@ check()
   if (level::is_equal(morpho::erosion(lena, win_c4p()),
 		      morpho::fast::erosion(lena, win_c4p())))
     OK_OR_FAIL;
-  std::cout << "dilation ... " << std::flush;
+    std::cout << "dilation ... " << std::flush;
   if (level::is_equal(morpho::dilation(lena, win_c4p()),
 		      morpho::fast::dilation(lena, win_c4p())))
     OK_OR_FAIL;

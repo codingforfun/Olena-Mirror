@@ -58,21 +58,21 @@ namespace oln {
 
       image_array1d(const size_type& s): super_type(s) 
       {
-	pretreat_1d_data_(buffer_, buffer__, s);
+	pretreat_1d_data_(this->buffer_, buffer__, s);
       }
 
       bool hold_(const oln::point1d& p) const
       {
 	return
 	  p.col() >= 0 &&
-	  p.col() < size_.ncols();
+	  p.col() < this->size_.ncols();
       }
 
       bool hold_large_(const oln::point1d& p) const
       {
 	return
-	  p.col() >= - size_.border() &&
-	  p.col() < size_.ncols() + size_.border();
+	  p.col() >= - this->size_.border() &&
+	  p.col() < this->size_.ncols() + this->size_.border();
       }
 
 
@@ -83,7 +83,7 @@ namespace oln {
 
       value_type& at_(coord col)
       {
-	invariant(buffer_ != 0);
+	invariant(this->buffer_ != 0);
 	precondition_hold_large(point_type(col));
 	return buffer__[col];
       }
@@ -95,56 +95,58 @@ namespace oln {
       }
 
       // borders
-      void border_reallocate_and_copy_(coord new_border, bool
-				      copy_border) 
+      void border_reallocate_and_copy_(coord new_border, bool copy_border) 
       {
 	T* buffer = 0;
 	// first allocate
-	allocate_data_(buffer, len_(image1d_size(size_.ncols(), new_border)));
+	allocate_data_(buffer, len_(image1d_size(this->size_.ncols(), new_border)));
 	// move data
-	coord border = size_.border();
+	coord border = this->size_.border();
 	if (border > new_border)
 	  border = new_border;
 	coord src_min_col = copy_border ? -border : 0;
-	coord src_ncols = size_.ncols() + (copy_border ? (border * 2) : 0);
+	coord src_ncols = this->size_.ncols() + (copy_border ? (border * 2) : 0);
 	memcpy(buffer + new_border, &at_(src_min_col),
 	       src_ncols * sizeof(T));
 
 	// then replace
-	size_.border() = new_border;
+	this->size_.border() = new_border;
 	pretreat_1d_data_(buffer, buffer__,
-			  image1d_size(size_.ncols(), new_border));
-	desallocate_data_(buffer_);
-	buffer_ = buffer;
+			  image1d_size(this->size_.ncols(), new_border));
+	desallocate_data_(this->buffer_);
+	this->buffer_ = buffer;
 	
       }
             
       void border_replicate_(void) 
       {
-	for (coord j = - size_.border(); j; ++j)
+	for (coord j = - this->size_.border(); j; ++j)
 	  {
 	    at_(j) = at_(0);
-	    at_(size_.ncols() - j - 1) = at_(size_.ncols() - 1);
+	    at_(this->size_.ncols() - j - 1) = at_(this->size_.ncols() - 1);
 	  }
       }
 
       void border_mirror_(void)
       {
-	for (coord j = - size_.border(); j; ++j)
+	for (coord j = - this->size_.border(); j; ++j)
 	  {
 	    at_(j) = at_(-j);
-	    at_(size_.ncols() - j - 1) = at_(size_.ncols() + j - 1);
+	    at_(this->size_.ncols() - j - 1) = at_(this->size_.ncols() + j - 1);
 	  }
       }
 
       void border_assign_(value_type val) 
       {
-	for (coord j = - size_.border(); j; ++j)
+	for (coord j = - this->size_.border(); j; ++j)
           {
             at_(j) = val;
-            at_(size_.ncols() - j - 1) = val;
+            at_(this->size_.ncols() - j - 1) = val;
           }
       }
+
+      ~image_array1d() {}
+
     protected:
 
     private:

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,6 +34,7 @@
 // structuring elements". Pattern Recognition Letters,
 // 17(14):1451-1460, 1996.
 
+# include <mlc/is_a.hh>
 # include <oln/utils/histogram.hh>
 
 namespace oln {
@@ -47,9 +48,11 @@ namespace oln {
       template<class E1, class E2, class E3>
       void
       find_struct_elts(const abstract::struct_elt<E1>& se,
-		       abstract::struct_elt<E2> se_add[mlc::exact<E1>::ret::dim],
-		       abstract::struct_elt<E3> se_rem[mlc::exact<E1>::ret::dim])
+		       E2 se_add[mlc::exact<E2>::ret::dim],
+		       E3 se_rem[mlc::exact<E3>::ret::dim])
       {
+	mlc_is_a(E2, abstract::struct_elt)::ensure();
+	mlc_is_a(E3, abstract::struct_elt)::ensure();
 	const unsigned dim = E1::dim;
 
 	// back[n] allows to move backward on coordinate `n'.
@@ -83,9 +86,13 @@ namespace oln {
 	    for (unsigned n = 0; n < dim; ++n)
 	      {
 		if (add[n])
-		  se_add[n].add(dp);
+		  {
+		    se_add[n].add(dp);
+		  }
 		if (rem[n])
-		  se_rem[n].add(dp.cur() + back[n]);
+		  {
+		    se_rem[n].add(dp.cur() + back[n]);
+		  }
 	      }
 	  }
 

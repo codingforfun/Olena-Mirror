@@ -54,14 +54,14 @@ namespace oln {
        * exo: out.pgm
        =*/
       template<class I, class N>
-      Concrete(I) area_closing(const image<I>& input,
-			       const neighborhood<N>& Ng,
+      Concrete(I) area_closing(const abstract::image<I>& input,
+			       const abstract::neighborhood<N>& Ng,
 			       const unsigned int area)
       {
 	typedef T_attribute<unsigned int> area_t;
 
-	typedef tarjan::tarjan_set<Concrete(I_), area_t > tarjan_set_t;
-	tarjan_set_t area_closing(input);
+	typedef tarjan::tarjan_set<Concrete(I), area_t > tarjan_set_t;
+	tarjan_set_t area_closing(to_exact(input));
 	return area_closing.get_comptute(area_t(area) , Ng, true);
       }
 
@@ -85,14 +85,14 @@ namespace oln {
        * exo: out.pgm
        =*/
       template<class I, class N>
-      Concrete(I) area_opening(const image<I>& input,
-			       const neighborhood<N>& Ng,
+      Concrete(I) area_opening(const abstract::image<I>& input,
+			       const abstract::neighborhood<N>& Ng,
 			       const unsigned int area)
       {
 	typedef T_attribute<unsigned int> area_t;
 
-	typedef tarjan::tarjan_set<Concrete(I_), T_attribute<unsigned int> > tarjan_set_t;
-	tarjan_set_t area_closing(input);
+	typedef tarjan::tarjan_set<Concrete(I), T_attribute<unsigned int> > tarjan_set_t;
+	tarjan_set_t area_closing(to_exact(input));
 	return area_closing.get_comptute(area_t(area) , Ng, false);
       }
 

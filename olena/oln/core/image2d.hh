@@ -29,8 +29,8 @@
 # define OLENA_CORE_IMAGE2D_HH
 
 # include <oln/core/impl/image_array2d.hh>
-# include <oln/io/readable.hh>
 # include <oln/core/image.hh>
+# include <oln/io/readable.hh>
 
 # include <iostream>
 # include <stdlib.h>
@@ -125,7 +125,9 @@ namespace oln {
 
     self_type clone_() const // deep copy
     {
-      self_type output(nrows(), ncols(), this->border());
+      // FIXME: it may be really dangerous to instantiate a self_type
+      // and not an exact_type is Exact != mlc::final.
+      self_type output(this->nrows(), this->ncols(), this->border());
       clone_to(output.impl());
       return output;
     }

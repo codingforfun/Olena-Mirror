@@ -66,14 +66,14 @@ namespace oln {
 	  nth(i) = to_exact(p).nth(i);
       }
       
-      coord nth(const unsigned dim) const
+      coord nth(const unsigned d) const
       {
-	return coord_[dim];
+	return coord_[d];
       }
       
-      coord& nth(const unsigned dim)
+      coord& nth(const unsigned d)
       {
-	return coord_[dim];
+	return coord_[d];
       }
 
       exact_type operator-() const

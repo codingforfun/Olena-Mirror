@@ -125,7 +125,7 @@ namespace oln {
    
       coord ncols() const
       {
-	return size().ncols();
+	return this->size().ncols();
       }
 
       // FIXME: size_t ???
@@ -162,7 +162,7 @@ namespace oln {
       {
 	return
 	  std::string("abstract::image_with_dim<")
-	  + Dim + ","
+	  + self_type::Dim + ","
 	  + Exact::name() + ">";
       }
 
@@ -184,19 +184,18 @@ namespace oln {
       typedef typename image_traits<Exact>::value_type value_type;
       typedef typename image_traits<Exact>::size_type size_type;
 
-
       typedef image_with_dim<2, Exact> self_type;
       typedef Exact exact_type;
       typedef abstract::image<Exact> super_type;
     
       coord nrows() const
       {
-	return size().nrows();
+	return this->size().nrows();
       }
 
       coord ncols() const
       {
-	return size().ncols();
+	return this->size().ncols();
       }
 
       // FIXME: size_t ???
@@ -233,7 +232,7 @@ namespace oln {
       {
 	return
 	  std::string("abstract::image_with_dim<")
-	  + Dim + ","
+	  + self_type::Dim + ","
 	  + Exact::name() + ">";
       }
 
@@ -261,17 +260,17 @@ namespace oln {
 
       coord nslices() const
       {
-	return size().nslices();
+	return this->size().nslices();
       }
 
       coord nrows() const
       {
-	return size().nrows();
+	return this->size().nrows();
       }
 
       coord ncols() const
       {
-	return size().ncols();
+	return this->size().ncols();
       }
 
       size_t npoints_() const
@@ -305,7 +304,7 @@ namespace oln {
       {
 	return
 	  std::string("abstract::image_with_dim<")
-	  + Dim + ","
+	  + self_type::Dim + ","
 	  + Exact::name() + ">";
       }
 

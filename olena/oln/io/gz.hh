@@ -28,7 +28,7 @@
 #ifndef OLENA_IO_GZ_HH_
 # define OLENA_IO_GZ_HH_
 
-# include <oln/io/base.hh>
+# include <oln/io/stream_wrapper.hh>
 # include <oln/io/gz_stream.hh>
 
 namespace oln {

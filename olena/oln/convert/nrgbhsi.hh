@@ -52,9 +52,9 @@ namespace oln {
     static const float inv_sqrt6 = 1 / sqrt(6);
     static const float inv_sqrt2 = 1 / sqrt(2);
 
-    struct nrgb_to_hsi
+    struct f_nrgb_to_hsi
       : public color_conversion<3, nrgb_traits,
-				3, hsi_traits, nrgb_to_hsi>
+				3, hsi_traits, f_nrgb_to_hsi>
     {
       template <unsigned qbits>
       color<3, qbits, hsi_traits>
@@ -75,12 +75,21 @@ namespace oln {
 	return out;
       }
 
-      static std::string name() { return "nrgb_to_hsi"; }
+      static std::string name() { return "f_nrgb_to_hsi"; }
     };
 
-    struct hsi_to_nrgb
+    template <unsigned qbits>
+    color<3, qbits, hsi_traits>
+    nrgb_to_hsi(const color<3, qbits, nrgb_traits>& v)
+    {
+      f_nrgb_to_hsi f;
+
+      return f(v);
+    } 
+
+    struct f_hsi_to_nrgb
       : public color_conversion<3, hsi_traits,
-				3, nrgb_traits, hsi_to_nrgb>
+				3, nrgb_traits, f_hsi_to_nrgb>
     {
       template <unsigned qbits>
       color<3, qbits, nrgb_traits>
@@ -97,10 +106,19 @@ namespace oln {
 	return out;
       }
 
-      static std::string name() { return "hsi_to_nrgb"; }
+      static std::string name() { return "f_hsi_to_nrgb"; }
     };
 
+    template <unsigned qbits>
+    color<3, qbits, nrgb_traits>
+    hsi_to_nrgb (const color<3, qbits, hsi_traits>& v)
+    {
+      f_hsi_to_nrgb f;
+
+      return f(v);
+    }
+
   } // convert
-} // oln
+} // oln 
 
 #endif // OLENA_CONVERT_NRGBHSI_HH
