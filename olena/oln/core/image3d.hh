@@ -117,7 +117,7 @@ namespace oln {
 
     exact_type& operator=(self_type rhs)
     {
-      return to_exact(this)->assign(to_exact(rhs));
+      return this->exact().assign(rhs.exact());
     }
 
     self_type clone_() const // deep copy

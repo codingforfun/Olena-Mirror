@@ -28,6 +28,7 @@
 #ifndef NTG_UTILS_CAST_HH
 # define NTG_UTILS_CAST_HH
 
+# include <ntg/config/system.hh>
 # include <ntg/core/macros.hh>
 # include <ntg/core/predecls.hh>
 # include <ntg/core/type_traits.hh>
@@ -59,7 +60,7 @@ namespace ntg {
     return static_cast<ntg_type(T)>(val);
   }
   
-  TO_NTG_CAST(signed);
+  TO_NTG_CAST(signed)
 
   namespace cast {
 

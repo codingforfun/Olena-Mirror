@@ -48,29 +48,27 @@ namespace oln {
 
   namespace morpho {
 
-    using namespace ntg;
-
     template<class I, class N>
-    typename mute<I, bin>::ret
+    typename mute<I, ntg::bin>::ret
     internal_kill_cc_area(const abstract::image<I>& input,
 			  const unsigned int area,
 			  const abstract::neighborhood<N>& Ng)
     {
-      typename mute<I, int_u<20> >::ret cc = level::connected_component<int_u<20> >(input, Ng);
+      typename mute<I, ntg::int_u<20> >::ret cc = level::connected_component<ntg::int_u<20> >(input, Ng);
       // label 0 is background
-      int_u<20> max_label = 0;
-      image2d<int_u<20> >::iter_type p(cc);
+      ntg::int_u<20> max_label = 0;
+      image2d<ntg::int_u<20> >::iter_type p(cc);
       for_all(p)
 	if (cc[p] > max_label)
 	  max_label = cc[p];
-      level::hlut_def<int_u<20> > region_area;
+      level::hlut_def<ntg::int_u<20> > region_area;
       for_all(p)
-	region_area.set(cc[p], cast::force<int_u<20> >(region_area(cc[p]) + 1));
-      image2d<bin> output(input.size());
+	region_area.set(cc[p], ntg::cast::force<ntg::int_u<20> >(region_area(cc[p]) + 1));
+      image2d<ntg::bin> output(input.size());
       for_all(p)
 	if (input[p] == true)
 	  {
-	    if (region_area(cc[p]) >= int_u<20> (area))
+	    if (region_area(cc[p]) >= ntg::int_u<20> (area))
 	      output[p] = true;
 	    else
 	      output[p] = false;
@@ -86,9 +84,9 @@ namespace oln {
     /*=processing sure_maxima_killer
      * ns: morpho
      * what: Maxima killer.
-     * arg: const image<I1>&, marker, IN, marker image
+     * arg: const abstract::image<I1>&, marker, IN, marker image
      * arg: const unsigned int area, area, IN, area
-     * arg: const struct_elt<E>&, se, IN, structural element
+     * arg: const abstract::struct_elt<E>&, se, IN, structural element
      * ret: Concrete(I1)
      * doc: It removes the small (in area) connected components of the upper
      * level sets of \var{input} using \var{se} as structual element. The implementation
@@ -108,13 +106,13 @@ namespace oln {
 				   const abstract::neighborhood<N>& Ng)
     {
       mlc::eq<I::dim, N::dim>::ensure();
-      typedef typename mute<I, bin >::ret ima_bin_t;
+      typedef typename mute<I, ntg::bin >::ret ima_bin_t;
 
-      ima_bin_t* cc_level_sets = new (image2d<bin> [256]);
+      ima_bin_t* cc_level_sets = new (image2d<ntg::bin> [256]);
       for (unsigned int i=0; i <= 255; ++i)
 	{
-	  image2d<bin> level_sets_i(input.size());
-	  image2d<int_u8>::iter_type p(input);
+	  image2d<ntg::bin> level_sets_i(input.size());
+	  image2d<ntg::int_u8>::iter_type p(input);
 	  for_all(p)
 	    if (input[p] >= Value(I) (i))
 	      level_sets_i[p] = true;
@@ -122,10 +120,10 @@ namespace oln {
 	      level_sets_i[p] = false;
 	  cc_level_sets[i] = internal_kill_cc_area(level_sets_i, area, Ng);
 	}
-      image2d<int_u8> output(input.size());
+      image2d<ntg::int_u8> output(input.size());
       for (int i=0; i < 255 ; ++i)
 	{
-	  image2d<int_u8>::iter_type p(input);
+	  image2d<ntg::int_u8>::iter_type p(input);
 	  for_all(p)
 	    {
 	      if ((cc_level_sets[i])[p] == true)
@@ -141,9 +139,9 @@ namespace oln {
     /*=processing sure_minima_killer
      * ns: morpho
      * what: Minima killer.
-     * arg: const image<I1>&, marker, IN, marker image
+     * arg: const abstract::image<I1>&, marker, IN, marker image
      * arg: const unsigned int area, area, IN, area
-     * arg: const struct_elt<E>&, se, IN, structural element
+     * arg: const abstract::struct_elt<E>&, se, IN, structural element
      * ret: Concrete(I1)
      * doc: It removes the small (in area) connected components of the lower
      * level sets of \var{input} using \var{se} as structual element. The implementation
@@ -158,19 +156,19 @@ namespace oln {
      * wontcompile: fixme
      =*/
     template<class I, class N>
-    image2d<int_u8> sure_minima_killer(const abstract::image<I>& input,
+    image2d<ntg::int_u8> sure_minima_killer(const abstract::image<I>& input,
 				       const unsigned int area,
 				       const abstract::neighborhood<N>& Ng)
     {
       mlc::eq<I::dim, N::dim>::ensure();
 
-      typedef image2d<bin> ima_bin_t;
+      typedef image2d<ntg::bin> ima_bin_t;
 
-      ima_bin_t* cc_level_sets = new (image2d<bin> [256]);
+      ima_bin_t* cc_level_sets = new (image2d<ntg::bin> [256]);
       for (unsigned int i=0; i <= 255; ++i)
 	{
-	  image2d<bin> level_sets_i(input.size());
-	  image2d<int_u8>::iter_type p(input);
+	  image2d<ntg::bin> level_sets_i(input.size());
+	  image2d<ntg::int_u8>::iter_type p(input);
 	  for_all(p)
 	    if (input[p] <= Value(I) (i))
 	      level_sets_i[p] = true;
@@ -178,10 +176,10 @@ namespace oln {
 	      level_sets_i[p] = false;
 	  cc_level_sets[i] = internal_kill_cc_area(level_sets_i, area, Ng);
 	}
-      image2d<int_u8> output(input.size());
+      image2d<ntg::int_u8> output(input.size());
       for (int i=255; i >= 0 ; --i)
 	{
-	  image2d<int_u8>::iter_type p(input);
+	  image2d<ntg::int_u8>::iter_type p(input);
 	  for_all(p)
 	    {
 	      if ((cc_level_sets[i])[p] == true)
@@ -199,7 +197,7 @@ namespace oln {
     // FAST VERSIONS
 
     template<class P, class I, class N>
-    inline
+    //    inline
     static
     bool is_a_strict_minimum(const abstract::point<P>& p,
 			     const abstract::image<I>& input,
@@ -223,7 +221,7 @@ namespace oln {
 
 
     template<class P, class I, class N>
-    inline
+    // inline
     static
     bool is_a_strict_maximum(const abstract::point<P>& p,
 			     const abstract::image<I>& input,
@@ -250,10 +248,10 @@ namespace oln {
     /*=processing fast_minima_killer
      * ns: morpho
      * what: Minima killer.
-     * arg: const image<I1>&, marker, IN, marker image
+     * arg: const abstract::image<I1>&, marker, IN, marker image
      * arg: const unsigned int area, area, IN, area
-     * arg: const neighborhood<N_>&, Ng, IN, neighboorhood
-     * ret: Concrete(I1_)
+     * arg: const abstract::neighborhood<N>&, Ng, IN, neighboorhood
+     * ret: Concrete(I1)
      * doc: It removes the small (in area) connected components of the lower
      * level sets of \var{input} using \var{Ng} as neighboorhood. The implementation
      * is based on stak. Guichard and Morel, Image iterative smoothing and PDE's.
@@ -277,7 +275,7 @@ namespace oln {
       std::vector<Point(I)> cur_minimum;
       cur_minimum.reserve(15000);
       Concrete(I) working_input = input.clone();
-      typename mute<I, bin>::ret not_processed_map(input.size());
+      typename mute<I, ntg::bin>::ret not_processed_map(input.size());
       level::fill(not_processed_map, true);
 
       // STEP 2: search for a local miminum
@@ -291,7 +289,7 @@ namespace oln {
 	      Value(I) lambda = working_input[p];
 
 	      // FIXME: This should better be moved out of the loop.
-	      typename mute<I, bin>::ret is_visited(input.size());
+	      typename mute<I, ntg::bin>::ret is_visited(input.size());
 	      level::fill(is_visited, false);
 	      is_visited[p] = true;
 	      //STEP 3
@@ -355,10 +353,10 @@ namespace oln {
     /*=processing fast_maxima_killer
      * ns: morpho
      * what: Maxima killer.
-     * arg: const image<I1>&, marker, IN, marker image
+     * arg: const abstract::image<I1>&, marker, IN, marker image
      * arg: const unsigned int area, area, IN, area
-     * arg: const neighborhood<N_>&, Ng, IN, neighboorhood
-     * ret: Concrete(I1_)
+     * arg: const abstract::neighborhood<N>&, Ng, IN, neighboorhood
+     * ret: Concrete(I1)
      * doc: It removes the small (in area) connected components of the upper
      * level sets of \var{input} using \var{Ng} as neighboorhood. The implementation
      * is based on stak. Guichard and Morel, Image iterative smoothing and PDE's. Book in preparation. p 265.
@@ -380,7 +378,7 @@ namespace oln {
 
       std::vector<Point(I)> cur_maximum;
       Concrete(I) working_input = input.clone();
-      typename mute<I, bin>::ret not_processed_map(input.size());
+      typename mute<I, ntg::bin>::ret not_processed_map(input.size());
       level::fill(not_processed_map, true);
 
       // STEP 2: search for a local miminum
@@ -393,7 +391,7 @@ namespace oln {
 	      cur_maximum.push_back(p);
 	      Value(I) lambda = working_input[p];
 
-	      typename mute<I, bin>::ret is_visited(input.size());
+	      typename mute<I, ntg::bin>::ret is_visited(input.size());
 	      level::fill(is_visited, false);
 	      is_visited[p] = true;
 	      //STEP 3

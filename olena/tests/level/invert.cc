@@ -61,7 +61,7 @@ check(void)
 {
   bool fail = false;
 
-  image2d<int_u8> src = load(rdata("lena.pgm"));
+  image2d<int_u8> src = load(rdata("lena256.pgm"));
 
   ASSERT_CHECK(level::is_equal(level::invert(level::invert(src)), src));
 

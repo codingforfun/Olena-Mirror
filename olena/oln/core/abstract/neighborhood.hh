@@ -70,55 +70,55 @@ namespace oln
       
       bool has(const abstract::dpoint<dpoint_type>& dp) const
       {
-	return to_exact(this)->has_(to_exact(dp));
+	return this->exact().has_(dp.exact());
       }
       
       unsigned card() const
       {
-	return to_exact(this)->card_();
+	return this->exact().card_();
       }
       
       bool is_centered() const
       {
-	return to_exact(this)->is_centered_();
+	return this->exact().is_centered_();
       }
       
       const dpoint_type dp(unsigned i) const
       {
-	return to_exact(*this)[i];
+	return this->exact()[i];
       }
 
       bool operator==(const self_type& win) const
       {
-	return to_exact(this)->is_equal(to_exact(win));
+	return this->exact().is_equal(win.exact());
       }
 
       coord delta() const
       {
-	return to_exact(this)->get_delta();
+	return this->exact().get_delta();
       }
 
       const dpoint_type operator[](unsigned i) const
       {
-	return to_exact(this)->at(i);
+	return this->exact().at(i);
       }
 
       exact_type& add(const abstract::dpoint<dpoint_type>& dp)
       {
-	to_exact(this)->add_(to_exact(dp));
-	return to_exact(this)->add_(-to_exact(dp));
+	this->exact().add_(dp.exact());
+	return this->exact().add_(-dp.exact());
       }
       // obsolete
       exact_type operator-() const
       {
-	return to_exact(*this);
+	return this->exact();
       }
 
     protected:
       
       void sym()
       {
-	to_exact(this)->sym_();
+	this->exact().sym_();
       }
 
       neighborhood() {}

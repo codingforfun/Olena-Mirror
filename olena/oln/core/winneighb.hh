@@ -43,7 +43,7 @@ namespace oln
 
     template< class T >
     winneighb(const typename Win::abstract_type& win, const T& anchor) :
-      win_(to_exact(win)), pos_(0), anchor_(anchor.point_ref()) {}
+      win_(win.exact()), pos_(0), anchor_(anchor.point_ref()) {}
 
     const point& point_ref() const
     {

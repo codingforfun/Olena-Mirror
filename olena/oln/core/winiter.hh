@@ -36,7 +36,7 @@ namespace oln {
   template< class Win >
   struct winiter {
 
-    winiter(const typename Win::abstract_type& win) : win_(to_exact(win)), pos_(0) {}
+    winiter(const typename Win::abstract_type& win) : win_(win.exact()), pos_(0) {}
 
     mlc::_begin
     operator=(mlc::_begin)

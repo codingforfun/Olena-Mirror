@@ -29,7 +29,7 @@
 #ifndef OLENA_CONVERT_FORCE_HH
 # define OLENA_CONVERT_FORCE_HH
 
-# include <oln/convert/conversion.hh>
+# include <oln/convert/abstract/conversion.hh>
 # include <ntg/utils/cast.hh>
 
 namespace oln {
@@ -39,11 +39,11 @@ namespace oln {
 
     /* Like cast::force, but as a conversion functor.  */
     template<class Output, class Exact = mlc::final>
-    struct force : public conversion_to_type< Output, typename mlc::exact_vt<force<Output, Exact>, Exact>::ret >
+    struct force : public abstract::conversion_to_type< Output, typename mlc::exact_vt<force<Output, Exact>, Exact>::ret >
     {
 
       template< class Input >
-      Output operator() (const Input& v) const {
+      Output doit() (const Input& v) const {
 	return ntg::cast::force<Output>(v);
       }
 
@@ -56,7 +56,7 @@ namespace oln {
 	  + Exact::name() + ">";
       }
     };
-
+    
   } // convert
 } // oln
 

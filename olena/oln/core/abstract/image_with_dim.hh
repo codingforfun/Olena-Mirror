@@ -138,13 +138,13 @@ namespace oln {
 
       const value_type operator()(coord col) const
       {
-	return to_exact(*this)[point_type(col)];
+	return this->exact()[point_type(col)];
 	//          super_type::operator[](point_type(col));
       }
 
       value_type& operator()(coord col)
       {
-	return to_exact(*this)[point_type(col)];
+	return this->exact()[point_type(col)];
 	//return super_type::operator[](point_type(col));
       }
 
@@ -157,7 +157,7 @@ namespace oln {
 
       exact_type& operator=(self_type rhs)
       {
-	return to_exact(this)->assign(to_exact(rhs));
+	return this->exact().assign(rhs.exact());
       }
 
       static std::string name()
@@ -207,13 +207,13 @@ namespace oln {
 
       const value_type operator()(coord row, coord col) const
       {
-	return to_exact(*this)[point_type(row, col)];
+	return this->exact()[point_type(row, col)];
 	//return super_type::operator[](point_type(row, col));
       }
 
       value_type& operator()(coord row, coord col)
       {
-	return to_exact(*this)[point_type(row, col)];
+	return this->exact()[point_type(row, col)];
 	//return super_type::operator[](point_type(row, col));
       }
 
@@ -226,7 +226,7 @@ namespace oln {
 
       exact_type& operator=(self_type rhs)
       {
-	return to_exact(this)->assign(to_exact(rhs));
+	return this->exact().assign(rhs.exact());
       }
 
       static std::string name()
@@ -281,13 +281,13 @@ namespace oln {
 
       const value_type operator()(coord slice, coord row, coord col) const
       {
-	return to_exact(*this)[point_type(slice, row, col)];
+	return this->exact()[point_type(slice, row, col)];
 	// return super_type::operator[](point_type(slice, row, col));
       }
 
       value_type& operator()(coord slice, coord row, coord col)
       {
-	return to_exact(*this)[point_type(slice, row, col)];
+	return this->exact()[point_type(slice, row, col)];
 	// return super_type::operator[](point_type(slice, row, col));
       }
 
@@ -300,7 +300,7 @@ namespace oln {
 
       exact_type& operator=(self_type rhs)
       {
-	return to_exact(this)->assign(to_exact(rhs));
+	return this->exact().assign(rhs.exact());
       }
 
       static std::string name()
@@ -325,7 +325,7 @@ namespace oln {
 template<class Exact> inline std::ostream&
 operator<<(std::ostream& o, const oln::abstract::image_with_dim<1, Exact>& ima)
 {
-  if (to_exact(ima).impl() == 0)
+  if (ima.exact().impl() == 0)
     return o << "null";
   for (oln::coord col = 0; col < ima.ncols(); ++col)
     o << ima(col) << ' ';
@@ -337,7 +337,7 @@ template<class Exact> inline std::ostream&
 operator<<(std::ostream& o, const oln::abstract::image_with_dim<2, Exact>& ima)
 {
   typedef typename oln::image_id<Exact>::value_type value_type;
-  if (to_exact(ima).impl() == 0)
+  if (ima.exact().impl() == 0)
     return o << "null";
 
   for (oln::coord row = 0; row < ima.nrows(); ++row)
@@ -357,7 +357,7 @@ operator<<(std::ostream& o, const oln::abstract::image_with_dim<3, Exact>& ima)
 {
   typedef typename oln::image_id<Exact>::value_type value_type;
 
-  if (to_exact(ima).impl() == 0)
+  if (ima.exact().impl() == 0)
     return o << "null";
   for (oln::coord slice = 0; slice < ima.nslices(); ++slice) {
     o << "### " << slice << std::endl;

@@ -62,9 +62,10 @@ namespace oln {
       | pnm_write_header2d |
       `------------------*/
 
-      bool pnm_write_header2d(std::ostream& s, 
-			      char type, 
-			      const pnm2d_info& info)
+      // FIXME: should be in a .cc file ?
+      static bool pnm_write_header2d(std::ostream& s, 
+				     char type, 
+				     const pnm2d_info& info)
       {
 	s.put('P'); s.put(type); s.put('\n');
 	s << "# Creator: OLENA / Epita-LRDE" << std::endl

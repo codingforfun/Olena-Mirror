@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -40,8 +40,8 @@ namespace oln {
     /*=processing erosion
      * ns: morpho, morpho::fast
      * what: Morphological erosion.
-     * arg: const image<I>&, input, IN, input image
-     * arg: const struct_elt<E>&, se, IN, structural element
+     * arg: const abstract::image<I>&, input, IN, input image
+     * arg: const abstract::struct_elt<E>&, se, IN, structural element
      * ret: Concrete(I)
      * doc:
      *   Compute the morphological erosion of \var{input} using \var{se}
@@ -81,8 +81,8 @@ namespace oln {
     /*=processing n_erosion
      * ns: morpho
      * what: Morphological erosion itered n times.
-     * arg: const image<I>&, input, IN, input image
-     * arg: const struct_elt<E>&, se, IN, structural element
+     * arg: const abstract::image<I>&, input, IN, input image
+     * arg: const abstract::struct_elt<E>&, se, IN, structural element
      * arg: unsigned, n, IN, number of iterations
      * ret: Concrete(I)
      * doc:
@@ -96,7 +96,7 @@ namespace oln {
 			  const abstract::struct_elt<E>& se,
 			  unsigned n)
     {
-      //mlc::eq<I_::dim, E_::dim>::ensure();
+      //mlc::eq<I::dim, E::dim>::ensure();
       precondition(n > 0);
       Concrete(I) output = input.clone();
       for (unsigned i = 0; i < n; ++i)

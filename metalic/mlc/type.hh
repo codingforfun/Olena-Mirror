@@ -77,25 +77,25 @@ namespace mlc
   {
   public:
     typedef E exact_type;
-
+    
     // these reinterpret_casts allow for diamond hierarchies
-    // whereas *static_cast<const E*>(this) is forbiden
+    // whereas *static_cast<const E*>(this) is forbidden
     // in such cases; if a bug occurs because of one of these
     // casts, please submit a bug report!
-
-          E& exact()       { return static_cast<E&>(*this); }
+    
+    E& exact()       { return static_cast<E&>(*this); }
     const E& exact() const { return static_cast<const E&>(*this); }
-
+    
     // self() is only for bwd compatibility purpose
     // please now use exact() instead of self()
     inline       E& self();
     inline const E& self() const;
-
+    
     static std::string name() { return std::string("any<") + E::name() + ">"; }
   protected:
     any() {}
   };
-
+  
   //
   //  Helper for static hierarchies: 
   //  FIXME : should not be necessary 
@@ -273,9 +273,11 @@ to_exact(const T* ptr)
 //
 //////////////////////////////////////////////////////
 
-template<class E> inline E& mlc::any<E>::self(){ return reinterpret_cast<E&>(*this); }
+template<class E> inline E& mlc::any<E>::self()
+{ return static_cast<E&>(*this); }
 
-template<class E> inline const E& mlc::any<E>::self() const { return reinterpret_cast<E&>(*this); }
+template<class E> inline const E& mlc::any<E>::self() const 
+{ return static_cast<E&>(*this); }
 
 # define Exact(Type) \
 typename mlc::exact<Type>::ret

@@ -31,6 +31,7 @@
 # include <oln/basics.hh>
 
 # include <ntg/bin.hh>
+# include <ntg/float.hh>
 
 # include <functional>
 
@@ -47,7 +48,7 @@ namespace oln {
 
       const typename self::result_type
       operator()(typename self::argument_type val) const {
-	return doit(val.self());
+	return doit(val.exact());
       }
 
       // FIXME: It sounds unnatural to specialize here.
@@ -56,17 +57,17 @@ namespace oln {
 
       template<unsigned N, class B> static
       const ntg::int_s<N, B> doit(const ntg::int_s<N, B>& val) {
-	return - val.self();
+	return - val;
       }
 
       static
       const ntg::float_d doit(const ntg::float_d& val) {
-	return - val.self();
+	return - val;
       }
 
       static
       const ntg::float_s doit(const ntg::float_s& val) {
-	return - val.self();
+	return - val;
       }
 
       template<unsigned N, class B> static

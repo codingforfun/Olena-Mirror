@@ -18,7 +18,8 @@ nobase_oln_HEADERS =					\
   config/pconf.hh					\
   convert/basics.hh					\
   convert/bound.hh					\
-  convert/colorconv.hh					\
+  convert/abstract/colorconv.hh				\
+  convert/abstract/conversion.hh                        \
   convert/conversion.hh					\
   convert/conversion_ng_se.hh				\
   convert/force.hh					\
@@ -111,7 +112,6 @@ nobase_oln_HEADERS =					\
   io/file.hh						\
   io/gz.hh						\
   io/gz_stream.hh					\
-  io/pnm.hh						\
   io/pnm3d.hh						\
   io/pnm_read.hh					\
   io/pnm_read3d.hxx					\

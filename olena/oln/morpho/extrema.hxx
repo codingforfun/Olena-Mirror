@@ -29,7 +29,7 @@
 namespace internal {
   template <class DestType, class I>
   typename mute<I, DestType>::ret
-  _create_minima_image_from_bin(const abstract::image<I>& input)
+  create_minima_image_from_bin_(const abstract::image<I>& input)
   {
     Iter(I) p(input);
     typename mute<I, DestType>::ret output(input.size());
@@ -46,7 +46,7 @@ namespace internal {
 
   template <class I>
   typename mute<I, ntg::bin>::ret
-  _ima_to_bin(const abstract::image<I>& input)
+  ima_to_bin_(const abstract::image<I>& input)
   {
     Iter(I) p(input);
     typename mute<I, ntg::bin>::ret output(input.size());
@@ -66,13 +66,13 @@ namespace internal {
 /*=processing sure_minima_imposition
  * ns: morpho
  * what: Minima Imposition.
- * arg: const image<I1_>&, _input, IN, input image
- * arg: const image<I2_>&, _minima_map, IN, bin image
- * arg: const neighborhood<N_>& _Ng, IN, neighborhood
- * ret: Concrete(I_)
+ * arg: const abstract::image<I1>&, input, IN, input image
+ * arg: const abstract::image<I2>&, minima_map, IN, bin image
+ * arg: const abstract::neighborhood<N>& Ng, IN, neighborhood
+ * ret: Concrete(I)
  * doc:
- * Impose minima defined by \var{_minima_map} on \var{input}
- * using \var{_Ng} as neighborhood. \var{_minima_map} must
+ * Impose minima defined by \var{minima_map} on \var{input}
+ * using \var{Ng} as neighborhood. \var{minima_map} must
  * be a bin image (true for a minimum, false for a non minimum).
  * Soille p.172.
  * see: morpho::sure_geodesic_reconstruction_erosion
@@ -92,7 +92,7 @@ Concrete(I) minima_imposition(const abstract::image<I>& input,
   mlc::eq<I::dim, N::dim>::ensure();
   precondition(input.size() == minima_map.size());
   Concrete(I) mm =
-    internal::_create_minima_image_from_bin<Value(I)>(minima_map);
+    internal::create_minima_image_from_bin_<Value(I)>(minima_map);
   return geodesic_reconstruction_erosion(mm,
 					 arith::min(arith::plus_cst(input, Value(I)(1)),
 						    (arith::plus_cst(mm, Value(I)(0)))), Ng);
@@ -107,9 +107,9 @@ Concrete(I) minima_imposition(const abstract::image<I>& input,
 /*=processing sure_regional_minima
  * ns: morpho
  * what: Regional minima.
- * arg: const image<I1>&, input, IN, input image
- * arg: const struct_elt<E>&, se, IN, structural element
- * ret: typename mute<I_, ntg::bin>::ret
+ * arg: const abstract::image<I1>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se, IN, structural element
+ * ret: typename mute<I, ntg::bin>::ret
  * doc:
  * Extract regional minima of \var{input}
  * using \var{Ng}
@@ -128,7 +128,7 @@ typename mute<I, ntg::bin>::ret regional_minima(const abstract::image<I>& input,
 {
   mlc::eq<I::dim, N::dim>::ensure();
   return
-    internal::_ima_to_bin(arith::minus(convert::force<Value(I)>(),
+    internal::ima_to_bin_(arith::minus(convert::force<Value(I)>(),
 				       geodesic_reconstruction_erosion
 				       (arith::plus_cst(input, Value(I) (1)), input, Ng),
 				       input));

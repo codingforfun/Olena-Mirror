@@ -25,65 +25,34 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CONVERT_COLORCONV_HH
-# define OLENA_CONVERT_COLORCONV_HH
+#ifndef OLENA_CONVERT_ABSTRACT_COLORCONV_HH
+# define OLENA_CONVERT_ABSTRACT_COLORCONV_HH
 
 # include <ntg/color/color.hh>
-# include <oln/convert/conversion.hh>
+# include <oln/convert/abstract/conversion.hh>
 
 namespace oln {
+
   namespace convert {
 
-    namespace internal {
+    namespace abstract {
 
-      /* Define this specialization separately to work around a bug
-	 in gcc.  Specializing
-	   conv_output<icomps,icolors,ocomps,ocolors,I>::output<T>
-         for T = ntg::color<icomps,Q,colors> (Q generic) does not work.
-
-	 See PR/4882.
-	 http://gcc.gnu.org/cgi-bin/gnatsweb.pl?cmd=view&pr=4882&database=gcc
-      */
-
-      template< class T,
-		unsigned icomps,
+      template< unsigned icomps,
+		unsigned iqbits,
 		template<unsigned> class icolor,
 		unsigned ocomps,
-		template<unsigned> class ocolor >
-      struct _color_conversion {};
-
-      template< unsigned qbits,
-		unsigned icomps,
-		template<unsigned> class icolor,
-		unsigned ocomps,
-		template<unsigned> class ocolor >
-      struct _color_conversion<ntg::color<icomps, qbits, icolor>,
-			       icomps, icolor, ocomps, ocolor >
+		unsigned oqbits,		
+		template<unsigned> class ocolor,
+		class Exact = mlc::final >
+      struct color_conversion : 
+	public abstract::conversion_from_type_to_type< color<icomps, iqbits, icolor>, 
+						       color<ocomps, oqbits, ocolor>, 
+						       typename mlc::exact_vt<color_conversion<icomps, iqbits, icolor, ocomps, oqbits, ocolor, Exact>, Exact>::ret >
       {
-	typedef ntg::color<ocomps, qbits, ocolor> ret;
       };
-
     }
-
-    template< unsigned icomps,
-	      template<unsigned> class icolor,
-	      unsigned ocomps,
-	      template<unsigned> class ocolor,
-	      class Exact = mlc::final >
-    class color_conversion : public conversion< typename mlc::exact_vt<color_conversion<icomps, icolor, ocomps, ocolor, Exact>, Exact>::ret >
-    {
-
-    public:
-      template <class T>
-      struct output {
-	typedef typename internal::_color_conversion<T,
-						     icomps, icolor,
-						     ocomps, ocolor>::ret ret;
-      };
-    };
-
   } // convert
 } // oln
 
 
-#endif // OLENA_CONVERT_COLORCONV_HH
+#endif // OLENA_CONVERT_ABSTRACT_COLORCONV_HH

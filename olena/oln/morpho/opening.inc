@@ -29,8 +29,8 @@
 /*=processing opening
  * ns: morpho, morpho::fast
  * what: Morphological opening.
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se, IN, structural element
+ * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: Concrete(I)
  * doc:
  *   Compute the morphological opening of \var{input} using \var{se}
@@ -44,9 +44,9 @@
  * exi: object.pbm
  * exo: out.pbm
 =*/
-template<class I_, class E_>
-Concrete(I_) opening(const abstract::image<I_>& input, const abstract::struct_elt<E_>& _se)
+template<class I, class E>
+Concrete(I) opening(const abstract::image<I>& input, const abstract::struct_elt<E>& se)
 {
-  //  mlc::eq< I_::dim, E_::dim >::ensure();
-  return dilation(erosion(input, _se), -to_exact(_se));
+  //  mlc::eq< I::dim, E::dim >::ensure();
+  return dilation(erosion(input, se), -to_exact(se));
 }

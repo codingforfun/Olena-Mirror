@@ -1,36 +1,256 @@
+2003-07-31  Reda Dehak  <reda@lrde.epita.fr>
+
+	* oln/convert/basics.hh,
+	oln/convert/bound.hh,
+	oln/convert/conversion.hh,
+	oln/convert/force.hh,
+	oln/convert/nrgbhsi.hh,
+	oln/convert/nrgbhsl.hh,
+	oln/convert/nrgbhsv.hh,
+	oln/convert/nrgbxyz.hh,
+	oln/convert/nrgbyiq.hh,
+	oln/convert/nrgbyuv.hh,
+	oln/convert/rgbnrgb.hh,
+	oln/convert/rgbxyz.hh,
+	oln/convert/stretch.hh: Rewrite using the new design to avoid use of exact_cref. 
+
+	* oln/convert/abstract/conversion.hh: New.
+		
+	* oln/Makefile.am: add convert/abstract/conversion.hh.
+	
+	* oln/convert/colorconv.hh: Move ...
+
+	* oln/convert/abstract/colorconv.hh: ... here.
+	
+	* oln/arith/internal/opdecls.hh,
+	tests/convert/conv.cc: Adjust according to previous changes.
+
+	* oln/convert/conversion_ng_se.hh: Remove exact_cref.
+
+2003-07-31  Giovanni Palma  <palma_g@lrde.epita.fr>
+
+	* oln/morpho/closing.inc,
+	oln/morpho/dilation.hh,
+	oln/morpho/erosion.hh,
+	oln/morpho/geodesic_dilation.hh,
+	oln/morpho/geodesic_erosion.hh,
+	oln/morpho/gradient.inc,
+	oln/morpho/hit_or_miss.inc,
+	oln/morpho/laplacian.inc,
+	oln/morpho/reconstruction.hh,
+	oln/morpho/top_hat.inc,
+	oln/morpho/watershed.hh,
+	oln/morpho/attribute_closing_opening.hh: Fix comments.
+
+	* oln/morpho/extrema.hxx,
+	oln/morpho/fast_morpho.hxx,
+	oln/morpho/stat.hh,
+	oln/morpho/watershed.hxx,
+	oln/morpho/attribute_union_find.hh: Fix coding style.
+
+	* oln/morpho/extrema_killer.hh,
+	oln/morpho/opening.inc: Fix coding style. Fix comments.
+
+2003-07-31  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
+
+	* olena/tests/level/invert.cc: Fix IO bug.
+
+2003-07-31  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
+
+	* olena/tests/level/connected.cc: Fix return value.
+
+2003-07-31  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
+
+	* olena/oln/topo/dmap.hxx,
+	olena/oln/topo/inter-pixel/internal/dir-iter.hh: Fix bugs.
+
+	* olena/tests/topo/test-tarjan.cc: New test.
+
+	* olena/tests/topo/Makefile.am: Adjust.
+
+	* olena/tests/topo/test-inter-pixel.cc,
+	olena/tests/topo/test-cmap.cc, olena/tests/topo/test-dmap.cc:
+	Change outer stream cerr to cout.
+
+2003-07-30  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
+
+	* tests/utils/timer.cc, olena/tests/utils/stat.cc,
+	olena/tests/utils/histogram.cc, olena/tests/utils/Makefile.am: Add
+	new tests.
+
+2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+        * oln/arith/ops.hh: Fix compilation with g++ 3.4.
+        * oln/core/abstract/dpoint.hh: Likewise.
+        * oln/core/image1d.hh: Likewise.
+        * oln/core/image2d.hh: Likewise.
+        * oln/core/image3d.hh: Likewise.
+        * oln/core/abstract/iter1d.hh: Likewise.
+        * oln/core/abstract/iter2d.hh: Likewise.
+        * oln/core/abstract/iter3d.hh: Likewise.
+        * oln/core/abstract/iter.hh: Likewise.
+        * oln/core/neighborhood1d.hh: Likewise.
+        * oln/core/neighborhood2d.hh: Likewise.
+        * oln/core/neighborhood3d.hh: Likewise.
+        * oln/core/abstract/neighborhood.hh: Likewise.
+        * oln/core/abstract/point.hh: Likewise.
+        * oln/core/abstract/struct_elt.hh: Likewise.
+        * oln/core/window1d.hh: Likewise.
+        * oln/core/window2d.hh: Likewise.
+        * oln/core/window3d.hh: Likewise.
+        * oln/core/abstract/window.hh: Likewise.
+        * oln/core/w_window1d.hh: Likewise.
+        * oln/core/w_window2d.hh: Likewise.
+        * oln/core/w_window3d.hh: Likewise.
+        * oln/core/abstract/w_window.hh: Likewise.
+        * oln/level/invert.hh: Likewise.
+        * oln/morpho/erosion.hh: Likewise.
+        * tests/morpho/extrkiller.cc: Likewise.
+        * oln/topo/inter-pixel/internal/dir-iter.hh: Likewise.
+        * oln/core/abstract/image.hh: Likewise.
+        * oln/core/abstract/image_with_dim.hh: Likewise.
+        * oln/core/abstract/image_with_impl.hh: Likewise.
+        * oln/core/abstract/image_with_type.hh: Likewise.
+        * oln/core/impl/image_impl.hh: Likewise.
+        * oln/core/impl/image_array.hh: Likewise.
+        * oln/core/abstract/window_base.hh: Likewise.
+        * oln/core/abstract/windownd.hh: Likewise.
+        * oln/core/abstract/w_windownd.hh: Likewise.
+        * oln/core/abstract/neighborhoodnd.hh: Likewise.
+
+2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/level/invert.hh: Don't call self() on non-class types.
+	* oln/morpho/extrema_killer.hh: Remove use namespace directive.
+
+2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/io/pnm_write_data.hh: Fix includes.
+
+2003-07-30  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
+
+	* tests/topo/Makefile.am: Adjust.
+
+2003-07-30  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
+
+	* tests/topo/test.sh, tests/topo/test-cmap.ref,
+	tests/topo/test-inter-pixel.ref: Delete files.
+
+	* tests/topo/Makefile.am: Adjust.
+
+	* tests/topo/test-dmap.cc: Add new test.
+
+	* tests/topo/test-inter-pixel.cc, tests/topo/test-cmap.cc,
+	oln/topo/dmap.hxx: Fix bugs.
+
+2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/io/se_neighborhood.hh: Make read and write functions static.
+	* oln/io/se_window.hh: Likewise.
+	* oln/io/pnm_read.hh: Make pnm_read_header2d static.
+	* oln/io/pnm_write.hh: Make pnm_write_header2d static.
+
+	* tests/core/multiple_sources_1.cc,
+	tests/core/multiple_sources_2.cc: New test.
+	* tests/core/Makefile.am: Adjust.
+
+	* oln/io/pnm3d.hh: Disable until complete rewrite.
+	* oln/io/pnm_read3d.hxx: Likewise.
+	* oln/io/pnm_write3d.hxx: Likewise.
+
+2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/core/abstract/dpoint.hh: Change to_exact() calls into
+	exact() calls to save compile time.
+	* oln/core/generate.hh: Likewise.
+	* oln/core/image1d.hh: Likewise.
+	* oln/core/image2d.hh: Likewise.
+	* oln/core/image3d.hh: Likewise.
+	* oln/core/abstract/iter1d.hh: Likewise.
+	* oln/core/abstract/iter2d.hh: Likewise.
+	* oln/core/abstract/iter3d.hh: Likewise.
+	* oln/core/abstract/iter.hh: Likewise.
+	* oln/core/neighborhood1d.hh: Likewise.
+	* oln/core/neighborhood2d.hh: Likewise.
+	* oln/core/neighborhood3d.hh: Likewise.
+	* oln/core/abstract/neighborhood.hh: Likewise.
+	* oln/core/point1d.hxx: Likewise.
+	* oln/core/abstract/point.hh: Likewise.
+	* oln/core/abstract/struct_elt.hh: Likewise.
+	* oln/core/window1d.hh: Likewise.
+	* oln/core/window2d.hh: Likewise.
+	* oln/core/window3d.hh: Likewise.
+	* oln/core/abstract/window.hh: Likewise.
+	* oln/core/winiter.hh: Likewise.
+	* oln/core/winneighb.hh: Likewise.
+	* oln/core/w_window1d.hh: Likewise.
+	* oln/core/w_window2d.hh: Likewise.
+	* oln/core/w_window3d.hh: Likewise.
+	* oln/core/abstract/w_window.hh: Likewise.
+	* oln/level/fill.hh: Likewise.
+	* oln/morpho/extrema_killer.hh: Likewise.
+	* oln/morpho/fast_morpho.hxx: Likewise.
+	* oln/morpho/stat.hh: Likewise.
+	* tests/morpho/extrkiller.cc: Likewise.
+	* oln/morpho/attribute_closing_opening.hh: Likewise.
+	* oln/Makefile.am: Likewise.
+	* oln/core/abstract/image.hh: Likewise.
+	* oln/core/abstract/image_with_dim.hh: Likewise.
+	* oln/core/abstract/image_with_impl.hh: Likewise.
+	* oln/core/abstract/image_with_type.hh: Likewise.
+	* oln/core/impl/image_impl.hh: Likewise.
+	* oln/core/impl/image_array.hh: Likewise.
+	* oln/core/abstract/window_base.hh: Likewise.
+	* oln/core/abstract/windownd.hh: Likewise.
+	* oln/core/abstract/w_windownd.hh: Likewise.
+	* oln/core/abstract/neighborhoodnd.hh: Likewise.
+
+2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/Makefile.am: Remove pnm.hh
+
+	* oln/io/se_neighborhood.hh: Fix bug with binary images.
+	* oln/io/se_window.hh: Likewise.
+	* oln/io/pnm_read_data.hh: Likewise.
+	* oln/io/pnm_write_data.hh: Likewise.
+
+	* img/Makefile.am: Add black.pbm and white.pbm.
+	* tests/io/bin.cc: New test.
+	* tests/io/Makefile.am: Adjust.
+
 2003-07-30  Reda Dehak  <reda@lrde.epita.fr>
 
 	* oln/core/box.hh,
-	oln/core/box.hxx: Fix typedefs. 
+	oln/core/box.hxx: Fix typedefs.
 
 	* oln/level/cc.hh, oln/level/compare.hh,
 	oln/level/connected.hh, oln/level/lut.hh,
-	oln/level/set_level.hh: Remove some Exact_cref.	
+	oln/level/set_level.hh: Remove some Exact_cref.
 
 2003-07-30  David Lesage  <david@lrde.epita.fr>
 
-	* oln/core/apply.hh, 
+	* oln/core/apply.hh,
 	oln/core/abstract/dpoint.hh,
-	oln/core/fold.hh, 
+	oln/core/fold.hh,
 	oln/core/image1d.hh,
-	oln/core/image2d.hh, 
+	oln/core/image2d.hh,
 	oln/core/image3d.hh,
-	oln/core/image.hh, 
+	oln/core/image.hh,
 	oln/core/abstract/iter1d.hh,
-	oln/core/abstract/iter2d.hh, 
+	oln/core/abstract/iter2d.hh,
 	oln/core/abstract/iter3d.hh,
-	oln/core/abstract/neighborhood.hh, 
+	oln/core/abstract/neighborhood.hh,
 	oln/io/se_neighborhood.hh,
-	oln/io/se_window.hh, 
+	oln/io/se_window.hh,
 	oln/core/abstract/image.hh,
 	oln/core/abstract/image_with_impl.hh,
 	oln/core/impl/image_array3d.hh,
-	oln/core/impl/image_array2d.hh, 
+	oln/core/impl/image_array2d.hh,
 	oln/core/impl/image_array1d.hh: Fix includes for sanity check.
 
 	* oln/topo/dmap.hh, oln/topo/dmap.hxx: Fix typedefs and coding
 	style. Remove some Exact_cref.
-	
+
 2003-07-29  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/convert/conversion.hh: Fix compilation with g++-3.4.
@@ -47,7 +267,7 @@
 	* oln/core/image.hh: Likewise.
 
 2003-07-29  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* oln/core/abstract/iter1d.hh, oln/core/abstract/iter2d.hh,
 	oln/core/abstract/iter3d.hh: Remove virtual inheritance.
 
@@ -55,21 +275,21 @@
 
 2003-07-29  David Lesage  <david@lrde.epita.fr>
 
-	* oln/convol/fast_gaussian.hxx, 
-	oln/core/dpoint3d.hh, 
+	* oln/convol/fast_gaussian.hxx,
+	oln/core/dpoint3d.hh,
 	oln/core/abstract/dpoint.hh,
 	oln/core/abstract/neighborhood.hh,
 	oln/morpho/closing.inc,
 	oln/morpho/thickening.inc,
 	oln/morpho/thinning.inc,
-	oln/core/abstract/image_with_dim.hh, 
-	oln/core/impl/image_impl.hh, 
+	oln/core/abstract/image_with_dim.hh,
+	oln/core/impl/image_impl.hh,
 	oln/core/impl/image_array1d.hh: Fix includes and various bugs.
 
 2003-07-29  Reda Dehak  <reda@lrde.epita.fr>
 
 	* oln/convol/convolution.hh, oln/convol/fast_gaussian.hh,
-	oln/convol/fast_gaussian.hxx, oln/transforms/dwt.hh, 
+	oln/convol/fast_gaussian.hxx, oln/transforms/dwt.hh,
 	oln/transforms/fft.hh: Adapt to new paradigm.
 
 	* tests/transforms/Makefile.am: Replace = by += in AM_LDFLAGS and
@@ -82,7 +302,7 @@
 2003-07-29  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/accum.hh, oln/core/compose.hh: Adapt coding style.
-	
+
 2003-07-29  Giovanni Palma  <giovanni.palma@lrde.epita.fr>
 
 	* doc/ref/integre-ref.tex: Remove includeimage.
@@ -508,7 +728,8 @@
 
 2003-07-25  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
-	* tests/topo/test-inter-pixel.cc, tests/topo/test-cmap.cc, : Fix tests suite.
+	* tests/topo/test-inter-pixel.cc, tests/topo/test-cmap.cc, : Fix
+	tests suite.
 
 	* oln/basics2d.hh: Uncomment io files includes.
 

@@ -40,7 +40,7 @@ EOF
     float_s float_d # rgb_8 rgb_16 rgb_32
     do
     short=`echo $t | sed -e 's,int_,,g;s,_,,g'`
-    echo "make_image(image${dim}d_$short, $dim, oln::$t)" >> "$SWILENA/src/swilena_image${dim}d.i"
+    echo "make_image(image${dim}d_$short, $dim, ntg::$t)" >> "$SWILENA/src/swilena_image${dim}d.i"
   done
 done
 

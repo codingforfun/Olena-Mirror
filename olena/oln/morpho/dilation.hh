@@ -40,8 +40,8 @@ namespace oln {
     /*=processing dilation
      * ns: morpho, morpho::fast
      * what: Morphological dilation.
-     * arg: const image<I>&, input, IN, input image
-     * arg: const struct_elt<E>&, se, IN, structural element
+     * arg: const abstract::image<I>&, input, IN, input image
+     * arg: const abstract::struct_elt<E>&, se, IN, structural element
      * ret: Concrete(I)
      * doc:
      *   Compute the morphological dilation of \var{input} using \var{se}
@@ -90,8 +90,8 @@ namespace oln {
     /*=processing n_dilation
      * ns: morpho
      * what: Morphological dilation itered n times.
-     * arg: const image<I>&, input, IN, input image
-     * arg: const struct_elt<E>&, se, IN, structural element
+     * arg: const abstract::image<I>&, input, IN, input image
+     * arg: const abstract::struct_elt<E>&, se, IN, structural element
      * arg: unsigned, n, IN, number of iterations
      * ret: Concrete(I)
      * doc:

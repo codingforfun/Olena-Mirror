@@ -29,8 +29,8 @@
 /*=processing closing
  * ns: morpho, morpho::fast
  * what: Morphological closing.
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se, IN, structural element
+ * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: Concrete(I)
  * doc:
  *   Compute the morphological closing of \var{input} using \var{se}
@@ -45,7 +45,7 @@
  * exo: out.pbm
  =*/
 template<class I, class E>
-Concrete(I) closing(const abstract::image<I>& input, 
+Concrete(I) closing(const abstract::image<I>& input,
 		    const abstract::struct_elt<E>& se)
 {
   return erosion(dilation(input, se), -to_exact(se));

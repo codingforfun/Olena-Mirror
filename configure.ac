@@ -135,6 +135,7 @@ OLN_COLLECTION([OLN_TOP],
       OLN_TESTS([sanity])
       OLN_TESTS([topo])
       OLN_TESTS([transforms])
+      OLN_TESTS([utils])
 
       AC_SUBST([OLN_TESTS_SUBDIRS])
 

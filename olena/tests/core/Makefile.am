@@ -1,6 +1,12 @@
-include ../check/Makefile.flags
+include ../check/Makefile.check
 
 EXTRA_DIST = tests runtests image_print.sh
+
+check_PROGRAMS = multiple_sources
+
+multiple_sources_SOURCES = multiple_sources_1.cc multiple_sources_2.cc
+multiple_sources_LDFLAGS = $(AM_LDFLAGS) $(FFTW_LDFLAGS)
+multiple_sources_CXXFLAGS = $(AM_CXXFLAGS) $(FFTW_CFLAGS)
 
 image-print:
 	TOP_SRCDIR=$(top_srcdir) SRCDIR=$(srcdir) \

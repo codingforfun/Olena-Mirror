@@ -74,8 +74,8 @@ namespace oln {
 
     neighborhood2d& add(const dpoint_type& dp)
     {
-      to_exact(this)->add_(dp);
-      return to_exact(this)->add_(-dp);
+      this->exact().add_(dp);
+      return this->exact().add_(-dp);
     }
 
     neighborhood2d& add(coord row, coord col)

@@ -42,9 +42,9 @@ namespace oln {
     /*=processing geodesic_erosion
      * ns: morpho
      * what: Geodesic erosion.
-     * arg: const image<I1>&, marker, IN, marker image
-     * arg: const image<I2>&, mask, IN, mask image
-     * arg: const struct_elt<E>&, se, IN, structural element
+     * arg: const abstract::image<I1>&, marker, IN, marker image
+     * arg: const abstract::image<I2>&, mask, IN, mask image
+     * arg: const abstract::struct_elt<E>&, se, IN, structural element
      * ret: Concrete(I1)
      * doc:
      *  Compute the geodesic erosion of \var{marker} with respect
@@ -77,9 +77,9 @@ namespace oln {
       /*=processing simple_geodesic_erosion
        * ns: morpho
        * what: Geodesic erosion.
-       * arg: const image<I1>&, marker, IN, marker image
-       * arg: const image<I2>&, mask, IN, mask image
-       * arg: const struct_elt<E>&, se, IN, structural element
+       * arg: const abstract::image<I1>&, marker, IN, marker image
+       * arg: const abstract::image<I2>&, mask, IN, mask image
+       * arg: const abstract::struct_elt<E>&, se, IN, structural element
        * ret: Concrete(I1)
        * doc:
        *  Compute the geodesic erosion of \var{marker} with respect

@@ -33,7 +33,9 @@
 
 # include <cassert>
 
+# if 0
 # include <oln/io/pnm_read3d.hxx>
 # include <oln/io/pnm_write3d.hxx>
+# endif
 
 #endif // OLENA_IO_PNM_HH_

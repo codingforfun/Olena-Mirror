@@ -152,18 +152,18 @@ namespace ntg {
 
   namespace internal {
 
-    TYPETRAITS_BUILTIN_INT(unsigned long);
-    TYPETRAITS_BUILTIN_INT(  signed long);
+    TYPETRAITS_BUILTIN_INT(unsigned long)
+    TYPETRAITS_BUILTIN_INT(  signed long)
     
-    TYPETRAITS_BUILTIN_INT(unsigned int);
-    TYPETRAITS_BUILTIN_INT(  signed int);
+    TYPETRAITS_BUILTIN_INT(unsigned int)
+    TYPETRAITS_BUILTIN_INT(  signed int)
     
-    TYPETRAITS_BUILTIN_INT(unsigned short);
-    TYPETRAITS_BUILTIN_INT(  signed short);
+    TYPETRAITS_BUILTIN_INT(unsigned short)
+    TYPETRAITS_BUILTIN_INT(  signed short)
 
-    TYPETRAITS_BUILTIN_INT(unsigned char);
-    TYPETRAITS_BUILTIN_INT(  signed char);
-    TYPETRAITS_BUILTIN_INT(         char);
+    TYPETRAITS_BUILTIN_INT(unsigned char)
+    TYPETRAITS_BUILTIN_INT(  signed char)
+    TYPETRAITS_BUILTIN_INT(         char)
 
   } // end of internal.
 

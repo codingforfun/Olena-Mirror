@@ -1,3 +1,18 @@
+2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+        * ntg/utils/cast.hh: Fix compilation with g++ 3.4.
+        * ntg/utils/debug.hh: Likewise.
+        * ntg/core/internal/global_ops_defs.hh: Likewise.
+        * ntg/core/internal/global_ops.hh: Likewise.
+        * ntg/color/nrgb.hh: Likewise.
+        * ntg/real/optraits_builtin_int.hh: Likewise.
+        * ntg/real/optraits_scalar.hh: Likewise.
+        * ntg/real/typetraits_builtin_int.hh: Likewise.
+        * tests/utils/tests/debug1: Likewise.
+        * ntg/core/contract.hh: Likewise.
+        * ntg/vect/vec.hh: Likewise.
+        * ntg/vect/cplx.hh: Likewise.
+
 2003-07-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/color/hsi.hh, ntg/color/xyz.hh, ntg/color/yiq.hh,
