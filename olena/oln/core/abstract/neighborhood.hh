@@ -56,17 +56,17 @@ namespace oln {
     ** \brief Neighborhood.
     **
     ** It looks like structuring elements but here, when
-    ** you add an element, you add his opposite (cf mathematical
+    ** you add an element, you add its opposite (cf mathematical
     ** definition to know more about).
     ** This abstract class defines several virtual methods for his
-    ** subclasses. His aim is to deal with a set of deplacement points.
+    ** subclasses. Its goal is to deal with a set of deplacement points.
     **
     */
     template<class Exact>
     struct neighborhood : public mlc_hierarchy::any<Exact>
     {
       typedef Exact exact_type; ///< Set the exact type.
-      typedef neighborhood<Exact> self_type; ///< Set his type.
+      typedef neighborhood<Exact> self_type; ///< Set its type.
 
       /*!
       ** \brief The associate image's type of iterator.
@@ -94,7 +94,7 @@ namespace oln {
       ///< Set the dim of the points of the neighborhood.
 
       /*!
-      ** \brief Return his type in a string.
+      ** \brief Return its type in a string.
       ** \return The type in a string.
       **
       ** Very useful to debug.
@@ -117,8 +117,8 @@ namespace oln {
       }
 
       /*!
-      ** \brief Get the number of point we get.
-      ** \return The number of point.
+      ** \brief Get the number of points.
+      ** \return The number of points.
       */
       unsigned
       card() const
@@ -210,7 +210,7 @@ namespace oln {
       /*!
       ** \brief Set neighborhood to opposite.
       **
-      ** Each point of neighborhood is assigned to his opposite.
+      ** Each point of neighborhood is assigned to its opposite.
       **
       */
       void

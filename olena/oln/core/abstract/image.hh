@@ -34,9 +34,14 @@
 # include <oln/core/abstract/point.hh>
 # include <oln/core/abstract/iter.hh>
 
-
+/*! \namespace oln
+** \brief oln namespace.
+*/
 namespace oln {
 
+  /*! \namespace oln::abstract
+  ** \brief oln::abstract namespace.
+  */
   namespace abstract {
 
     // fwd_decl

@@ -57,7 +57,7 @@ namespace oln {
   ** \brief Neighborhood 1 dimension.
   **
   ** It looks like structuring elements but here, when
-  ** you add an element, you add his opposite.
+  ** you add an element, you add its opposite.
   ** Points have 1 dimensions.
   **
   */
@@ -140,7 +140,7 @@ namespace oln {
     }
 
     /*!
-    ** \brief Return his type in a string.
+    ** \brief Return its type in a string.
     ** \return The type in a string.
     **
     ** Very useful to debug.

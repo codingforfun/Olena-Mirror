@@ -74,7 +74,7 @@ namespace oln {
       friend class struct_elt<exact_type>;
 
       /*!
-      ** \brief Return his type in a string.
+      ** \brief Return its type in a string.
       ** \return The type in a string.
       **
       ** Very useful to debug.

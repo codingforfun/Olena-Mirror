@@ -1,3 +1,42 @@
+2004-03-15  Simon Odou  <simon@lrde.epita.fr>
+	* olena/oln/io/base.hh: Add comments.
+	* olena/oln/io/readable.hh: Likewise.
+	* olena/oln/io/se_neighborhood.hh: Likewise.
+	* olena/oln/io/se_window.hh: Likewise.
+	* olena/oln/io/image_base.hh: Likewise.
+	* olena/oln/io/image_write.hh: Likewise.
+	* olena/oln/io/stream_wrapper.hh: Likewise.
+	* olena/oln/io/utils.hh: Likewise.
+	* olena/oln/io/image_read.hh: Likewise.
+	* olena/oln/core/abstract/image.hh: Likewise.
+	* olena/oln/core/bkd_iter1d.hh: Correct comments.
+	* olena/oln/core/bkd_iter2d.hh: Likewise.
+	* olena/oln/core/bkd_iter3d.hh: Likewise.
+	* olena/oln/core/fwd_iter1d.hh: Likewise.
+	* olena/oln/core/fwd_iter2d.hh: Likewise.
+	* olena/oln/core/fwd_iter3d.hh: Likewise.
+	* olena/oln/core/abstract/iter1d.hh: Likewise.
+	* olena/oln/core/abstract/iter2d.hh: Likewise.
+	* olena/oln/core/abstract/iter3d.hh: Likewise.
+	* olena/oln/core/abstract/iter.hh: Likewise.
+	* olena/oln/core/neighborhood1d.hh: Likewise.
+	* olena/oln/core/neighborhood2d.hh: Likewise.
+	* olena/oln/core/neighborhood3d.hh: Likewise.
+	* olena/oln/core/abstract/neighborhood.hh: Likewise.
+	* olena/oln/core/abstract/struct_elt.hh: Likewise.
+	* olena/oln/core/window1d.hh: Likewise.
+	* olena/oln/core/window2d.hh: Likewise.
+	* olena/oln/core/window3d.hh: Likewise.
+	* olena/oln/core/abstract/window.hh: Likewise.
+	* olena/oln/core/w_window1d.hh: Likewise.
+	* olena/oln/core/w_window2d.hh: Likewise.
+	* olena/oln/core/w_window3d.hh: Likewise.
+	* olena/oln/core/abstract/w_window.hh: Likewise.
+	* olena/oln/core/abstract/window_base.hh: Likewise.
+	* olena/oln/core/abstract/windownd.hh: Likewise.
+	* olena/oln/core/abstract/w_windownd.hh: Likewise.
+	* olena/oln/core/abstract/neighborhoodnd.hh: Likewise.
+
 2004-03-15  Niels Van Vliet  <niels@lrde.epita.fr>
 	* olena/oln/arith/internal/opdecls.hh: Clean doc.
 	* olena/oln/arith/ops.hh: Likewise.

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -49,18 +49,22 @@ namespace oln {
   namespace io {
 
     namespace internal {
-      
-      /*------------.
-      | try_writers |
-      `------------*/
 
-      // Try writers recursively
-
+      /*!
+      ** \brief Image's writer.
+      ** \param W Type of writer.
+      */
       template< writer_id W, typename T >
       struct try_writers
       {
-	// Try to deduce the file format from the extension
-	static bool 
+	/*!
+	** \brief Write object on the stream.
+	** Try do deduce the image format from the extension.
+	** \arg input The object to read.
+	** \arg out The stream.
+	** \arg ext The extension's filename.
+	*/
+	static bool
 	by_extension(const T& input, std::ostream& out, const std::string& ext)
 	{
 	  if (image_writer<W,T>::knows_ext(ext))
@@ -70,14 +74,18 @@ namespace oln {
                    ::by_extension(input, out, ext);
 	}
 
-	// Try to match the file format referring to the data only
-	static bool 
+	/*!
+	** \brief Try to match the file format referring to the data only.
+	** \arg input The  object to read.
+	** \arg out The stream.
+	*/
+	static bool
 	by_data(const T& input, std::ostream& out, const std::string& ext)
 	{
 	  if (image_writer<W,T>::write(out, input))
 	    {
 	      // std::clog << "[ambiguous extension '" << ext
-	      //	<< "' wrote as " << image_writer<W,T>::name() << "] " 
+	      //	<< "' wrote as " << image_writer<W,T>::name() << "] "
 	      //	<< std::flush;
 	      return true;
 	    }
@@ -86,36 +94,54 @@ namespace oln {
 	}
       };
 
-      // End of try_writers loop
 
+      /*!
+      ** \brief Reader for image of type None.
+      **
+      ** In fact, do nothing because of the type of writer.
+      ** Used when an errors occurs on others types of writer.
+      */
       template< typename T >
       struct try_writers<WriteNone, T>
       {
-	static bool 
-	by_extension(const T&, std::ostream&, const std::string&) 
-	{ 
-	  return false; 
+	/*!
+	** \brief Write object on the stream.
+	** Try do deduce the image format from the extension.
+	*/
+	static bool
+	by_extension(const T&, std::ostream&, const std::string&)
+	{
+	  return false;
 	}
 
-	static bool 
-	by_data(const T&, std::ostream&, const std::string&) 
-	{ 
-	  return false; 
+	/*!
+	** \brief Write object on the stream.
+	** Try to match the file format referring to the data only.
+	*/
+	static bool
+	by_data(const T&, std::ostream&, const std::string&)
+	{
+	  return false;
 	}
       };
 
-      /*----------------------.
-      | write(image, filename) |
-      `----------------------*/
-
-      // Writers trier functor, helper for stream_wrappers
-
+      /*!
+      ** \brief Writers trier functor, helper for stream_wrappers.
+      */
       struct writers_trier
       {
+	/*!
+	** \brief Writers trier functor, helper for stream_wrappers.
+	** \arg output The new object.
+	** \arg in The stream to read from.
+	** \arg ext The extension.
+	**
+	** First try to write by extension, then by data.
+	*/
 	template <class T>
 	static bool
 	doit(const T& input, std::ostream& out, const std::string ext)
-	{	  
+	{
 	  bool result = try_writers<WriteAny,T>::by_extension(input, out, ext);
 	  if (!result)
 	    result = try_writers<WriteAny,T>::by_data(input, out, ext);
@@ -123,16 +149,21 @@ namespace oln {
 	}
       };
 
-      // Write images
 
+      /*!
+      ** \brief Write an image (2 dimensions) to a file.
+      ** \arg input The image to write to file.
+      ** \arg name The filename.
+      ** \return True if successful.
+      */
       template <class E, unsigned N>
       inline bool
-      write(const abstract::image_with_dim<N, E>& input, 
+      write(const abstract::image_with_dim<N, E>& input,
 	    const std::string& name)
       {
 	mlc::is_true<N == 2 || N == 3>::ensure();
 
-	typedef try_stream_wrappers_out<StreamAny, E, writers_trier> 
+	typedef try_stream_wrappers_out<StreamAny, E, writers_trier>
 	  stream_trier;
 
 	std::string ext = utils::extension(name);
@@ -143,12 +174,20 @@ namespace oln {
 	return false;
       }
 
-      // Mono-dimensional images is a special case of bi-dimensional
-      // images.
-
+      /*!
+      ** \brief Write an image (1 dimension) to a file.
+      ** \arg input The image to write to file.
+      ** \arg name The filename.
+      ** \return True if successful.
+      **
+      ** In fact, real work is not done here : this function calls 'write' for
+      ** images of 2 dimensions:
+      ** Mono-dimensional images is a special case of bi-dimensional
+      ** images.
+      */
       template <class E>
       inline bool
-      write(const abstract::image_with_dim<1, E>& input, 
+      write(const abstract::image_with_dim<1, E>& input,
 	    const std::string& name)
       {
 	image2d<oln_value_type(E)> tmp(1, input.ncols());
@@ -161,9 +200,9 @@ namespace oln {
       }
 
     } // end of namespace internal
-    
+
   } // end of namespace io
-  
+
 } // end of namespace oln
 
 #endif // ! OLENA_IO_IMAGE_WRITE_HH
