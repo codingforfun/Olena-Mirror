@@ -28,6 +28,12 @@
 #ifndef OLENA_MORPHO_FAST_MORPHO_HXX
 # define OLENA_MORPHO_FAST_MORPHO_HXX
 
+// Implementation of morphological operations from:
+// M. Van Droogenbroeck and H. Talbot.
+// "Fast computation of morphological operations with arbitrary
+// structuring elements". Pattern Recognition Letters,
+// 17(14):1451-1460, 1996.
+
 #include <oln/utils/histogram.hh>
 
 namespace oln {

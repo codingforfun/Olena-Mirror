@@ -1,3 +1,7 @@
+2002-09-24  jean-sebastien mouret  <js@lrde.epita.fr>
+
+	* oln/morpho/fast_morpho.hxx: Add reference to article.
+
 2002-09-24  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/types/to_oln.hh: Add bool to bin conversion.
