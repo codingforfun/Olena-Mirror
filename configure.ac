@@ -98,14 +98,14 @@ OLN_COLLECTION([OLN_TOP],
   [OLN_COLLECTION([OLN_DOC], dnl ... and a collection.
   [dnl
 
-### The manuals directory is a component.
+### The reference manuals directory is a component.
 
-    OLN_COMPONENT([doc/doc], 
-	          [manuals], 
+    OLN_COMPONENT([doc/ref], 
+	          [doc-ref], 
 	          [oln_cv_build_ref], 
-	          [the Olena manuals], 
+	          [the Olena reference manuals], 
 	          [OLN_DOC], 
-		  [doc/doc/Makefile],
+		  [doc/ref/Makefile],
     [dnl Configuration for the manuals directory.
 
      # DOC_CHECK_PROG defined in oln-local.m4
@@ -116,7 +116,17 @@ OLN_COLLECTION([OLN_TOP],
      DOC_CHECK_PROG([IMAGEMAGICK_CONVERT], [convert])
      DOC_CHECK_PROG([EPSTOPDF], [epstopdf])
 
-    ], [doc])dnl End of OLN_COMPONENT([doc/doc])
+    ], [ref])dnl End of OLN_COMPONENT([doc/doc])
+
+### The development manuals directory is a component.
+
+    OLN_COMPONENT([doc/dev], 
+	          [doc-dev], 
+	          [oln_cv_build_devdoc], 
+	          [the Olena development manual], 
+	          [OLN_DOC], 
+		  [doc/dev/Makefile],
+    [], [dev])dnl End of OLN_COMPONENT([doc/dev])
 
 ### The demonstration programs are a component.
 

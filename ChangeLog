@@ -1,5 +1,11 @@
 2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
 
+	* configure.ac: Add new doc-dev component. Rename
+	`--without-manuals' to `--without-doc-ref'.
+	* BUILD: Update accordingly.
+
+2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
+
 	* configure.ac: Arrange to fit 80 columns better.
 
 2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>

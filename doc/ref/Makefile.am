@@ -1,7 +1,4 @@
-dist_noinst_DATA = oln-ref.ps oln-ref.pdf oln-ref.dvi html/oln-ref.html \
-              oln-dev.ps oln-dev.pdf oln-dev.dvi
-
-info_TEXINFOS = oln-dev.texi
+dist_noinst_DATA = oln-ref.pdf oln-ref.dvi html/oln-ref.html 
 
 tex_TEX = oln-ref.tex
 
@@ -12,9 +9,9 @@ oln_ref_TEX = \
   $(built_oln_ref_TEX) \
   ref-types.tex
 
-EXTRA_DIST = $(tex_TEX) $(oln_ref_TEX) html bin
+EXTRA_DIST = $(tex_TEX) $(oln_ref_TEX) html bin processing.tpl
 dist-local:
-	rm -rf bin/*a.out$(EXEEXT)
+	rm -f bin/*a.out$(EXEEXT)
 
 TEXI2PDF = $(TEXI2DVI) --pdf
 
@@ -34,26 +31,26 @@ INCLUDES = -I$(top_srcdir)/oln -I$(top_builddir)/oln
 COMMONGETDEFSFLAGS =  --agarg=-DCXXCOMPILE="$(CXX) -I$(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(CPPFLAGS) $(OLN_CPPFLAGS) $(CXXFLAGS) $(OLN_CXXFLAGS)" \
 		      --agarg=-DEPSTOPDF="$(EPSTOPDF)" \
 		      --agarg=-DCONVERT="$(IMAGEMAGICK_CONVERT)" \
-	              --agarg=--templ-dirs=$(srcdir)/../tpl \
+	              --agarg=--templ-dirs=$(srcdir) \
 	              --agarg=-DIMGDIR=$(top_srcdir)/oln/img
 PROCESSINGGETDEFSFLAGS = \
   --subblock=tpl=type,name,doc \
   --subblock=arg=type,name,mode,doc \
   --listattr=exh \
   --listattr=ns \
-  --template $(srcdir)/../tpl/processing.tpl \
+  --template $(srcdir)/processing.tpl \
   --srcfile
 
 morpho_files = $(shell fgrep -l '/*=' \
 	         $(olnsrc)/morpho/*.hh $(olnsrc)/morpho/*.inc)
 
-ref-morpho.tex: $(morpho_files) $(srcdir)/../tpl/processing.tpl
+ref-morpho.tex: $(morpho_files) $(srcdir)/processing.tpl
 	$(GETDEFS) $(COMMONGETDEFSFLAGS) $(PROCESSINGGETDEFSFLAGS) \
 	  $(GETDEFSFLAGS) --base-name=ref-morpho $(morpho_files)
 
 level_files = $(shell fgrep -l '/*=' $(olnsrc)/level/*.hh)
 
-ref-level.tex: $(level_files) $(srcdir)/../tpl/processing.tpl
+ref-level.tex: $(level_files) $(srcdir)/processing.tpl
 	$(GETDEFS) $(COMMONGETDEFSFLAGS) $(PROCESSINGGETDEFSFLAGS) \
 	  $(GETDEFSFLAGS) --base-name=ref-level $(level_files)
 

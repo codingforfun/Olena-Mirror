@@ -1,5 +1,19 @@
 2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
 
+	* ref/oln-dev.texi: Move to ...
+	* dev/oln-dev.texi: ... here.
+	* dev/Makefile.am: Add.
+
+	* tpl/processing.tpl: Move to ...
+	* ref/processing.tpl: ... here.
+	
+	* ref/Makefile.am (EXTRA_DIST): Distribute processing.tpl. Do not
+	mention `oln-dev.texi' any more. Fix path to processing.tpl. Do
+	not ship oln-ref.ps in the distribution, since dvi and pdf
+	versions are already distributed.
+	
+2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
+
 	* demo/morpholena.cc,
 	demo/morpholena-base.cc,
 	demo/morpholena-minima.cc,

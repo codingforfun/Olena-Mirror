@@ -1,15 +1,41 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 7 39)
-(Parent-Version oln 7 38)
+(Project-Version oln 7 40)
+(Parent-Version oln 7 39)
 (Version-Log "Index: ChangeLog
 from   2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
-   * configure.ac: Arrange to fit 80 columns better.
+   * configure.ac: Add new doc-dev component. Rename
+   `--without-manuals' to `--without-doc-ref'.
+   * BUILD: Update accordingly.
 
++2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
++
+        * configure.ac: Arrange to fit 80 columns better.
+ 
+ 2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
+Index: doc/ChangeLog
+from   2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
+   * ref/oln-dev.texi: Move to ...
+   * dev/oln-dev.texi: ... here.
+   * dev/Makefile.am: Add.
+
+   * tpl/processing.tpl: Move to ...
+   * ref/processing.tpl: ... here.
+
+   * ref/Makefile.am (EXTRA_DIST): Distribute processing.tpl. Do not
+   mention `oln-dev.texi' any more. Fix path to processing.tpl. Do
+   not ship oln-ref.ps in the distribution, since dvi and pdf
+   versions are already distributed.
+
++2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
++
+        * demo/morpholena.cc,
+        demo/morpholena-base.cc,
+        demo/morpholena-minima.cc,
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 23 Jan 2003 15:21:16 +0100")
+(Checkin-Time "Thu, 23 Jan 2003 15:51:02 +0100")
 (Checkin-Login raph)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -45,11 +71,12 @@ from   2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
    "\\.pdf$"
    "\\.eps$"
    "tools/swilena/.*_wrap.cxx$"
-   "doc/doc/.*\\.pbm$"
-   "doc/doc/bin/.*$"
-   "doc/doc/html/.*$"
-   "doc/doc/oln-\\(dev\\|ref\\).\\(dvi\\|tmp\\|toc\\|pg\\|ps\\|ky\\|tp\\|vr\\|fn\\|cps\\?\\|aux\\|info\\)$"
-   "doc/doc/version.texi$"
+   "doc/ref/.*\\.pbm$"
+   "doc/ref/bin/.*$"
+   "doc/ref/html/.*$"
+   "doc/ref/oln-ref.\\(dvi\\|tmp\\|toc\\|pg\\|ps\\|ky\\|tp\\|vr\\|fn\\|cps\\?\\|aux\\|info\\)$"
+   "doc/dev/oln-dev.\\(dvi\\|tmp\\|toc\\|pg\\|ps\\|ky\\|tp\\|vr\\|fn\\|cps\\?\\|aux\\|info\\)$"
+   "doc/dev/version.texi$"
    "src/tests/convert/.*-.*-.*$"
    "\\.#"
    "^#"
@@ -66,8 +93,8 @@ from   2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
    "^configure$"
    "utilities/morpho/morpho-rules.make$"
    "config.h\\(in\\)\\?$"
-   "doc/doc/ref-level.tex"
-   "doc/doc/ref-morpho.tex"
+   "doc/ref/ref-level.tex"
+   "doc/ref/ref-morpho.tex"
    "oln/img/lena128.pgm"
    "oln/img/lena.pbm"
    "oln/img/lena.pgm"
@@ -85,9 +112,9 @@ from   2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.17 664))
+  (ChangeLog (oln/o/33_ChangeLog 1.18 664))
   (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.9 664))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.9 664))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.10 664))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.9 664))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.1 664))
 
@@ -97,24 +124,24 @@ from   2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
   (attic/tests-ChangeLog (oln/e/30_ChangeLog 1.52 660))
 
   (bootstrap.sh (oln/j/16_bootstrap. 1.7 775))
-  (BUILD (oln/o/38_BUILD 1.2 664))
+  (BUILD (oln/o/38_BUILD 1.3 664))
   (cleanup.sh (oln/o/29_cleanup.sh 1.4 775))
   
-  (configure.ac (oln/3_configure. 1.42 664))
+  (configure.ac (oln/3_configure. 1.43 664))
   
   (doc/demo/image.cc (oln/d/46_image.cc 1.2 660))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.11 660))
   (doc/demo/morpholena.cc (oln/d/43_morpholena 1.11 660))
   (doc/demo/test-reconstruction.cc (oln/e/22_test-recon 1.7.1.1 660))
   (doc/demo/tour.cc (oln/d/45_tour.cc 1.6 660))
-  (doc/doc/bin () :directory)
-  (doc/doc/html () :directory)
-  (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.25 660))
-  (doc/doc/oln-dev.texi (oln/j/1_oln-dev.te 1.1 660))
-  (doc/doc/oln-ref.tex (oln/f/14_oln-ref.te 1.3 660))
-  (doc/doc/ref-types.tex (oln/g/34_ref-types. 1.5 660))
-  (doc/Makefile.am (oln/e/0_Makefile.a 1.13 660))
-  (doc/tpl/processing.tpl (oln/d/48_processing 1.15 660))
+  (doc/ref/bin () :directory)
+  (doc/ref/html () :directory)
+  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.26 660))
+  (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.1 660))
+  (doc/ref/oln-ref.tex (oln/f/14_oln-ref.te 1.3 660))
+  (doc/ref/ref-types.tex (oln/g/34_ref-types. 1.5 660))
+  (doc/Makefile.am (oln/e/0_Makefile.a 1.14 660))
+  (doc/ref/processing.tpl (oln/d/48_processing 1.15 660))
   (FAQ (oln/j/31_FAQ 1.2 664))
   (INSTALL (oln/o/39_INSTALL 1.2 664))
   (Makefile.am (oln/n/32_Makefile.a 1.9 664))
@@ -688,6 +715,11 @@ from   2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
 
   ; (doc/demo/morpholena-minima-imp.cc ())
   ; (doc/demo/morpholena-opening-closing.cc ())
+
+;; Files added by populate at Thu, 23 Jan 2003 15:43:23 +0100,
+;; to version 7.39(w), by raph:
+
+  (doc/dev/Makefile.am (oln/p/38_Makefile.a 1.1 664))
 )
 (Merge-Parents)
 (New-Merge-Parents)

@@ -182,8 +182,10 @@ OPTIONAL FEATURES
 
         It contains:
 
-	* doc/doc/: the manuals.
-	  This directory can be excluded with `--without-manuals'.
+	* doc/ref/: the reference manuals.
+	  This directory can be excluded with `--without-doc-ref'.
+	* doc/dev/: the development manuals.
+	  This directory can be excluded with `--without-doc-dev'.
         * doc/demo/: demonstration programs.
           This directory can be excluded with `--without-demo'.
 
