@@ -42,9 +42,9 @@ namespace oln {
     namespace slow {
 
       //FIXME : we must always specify DestValue.
-      template<class DestValue, class I, class Win> 
+      template<class DestValue, class I, class Win>
       typename mute<I, DestValue>::ret
-      convolve(const abstract::image < I >& input, 
+      convolve(const abstract::image < I >& input,
 	       const abstract::w_window< Win >& win)
       {
 	mlc::eq<I::dim, Win::dim>::ensure();
@@ -56,22 +56,22 @@ namespace oln {
 	  {
 	    DestValue sum = 0;
 	    for (unsigned i = 0; i < win.card(); ++i)
-	      sum += static_cast<DestValue> (win.w(i)) * 
+	      sum += static_cast<DestValue> (win.w(i)) *
 		     static_cast<DestValue> (input[p_im - win.dp(i)]);
 	    output[p_im] = sum;
 	  }
-	
+
 	return output;
       }
 
       //FIXME: don't use array1d, ..., arraynd.
-      template<class DestValue, class I, class Info, class Win> 
+      template<class DestValue, class I, class Info, class Win>
       typename mute<I, DestValue>::ret
-      convolve(const abstract::image < I >& input, 
+      convolve(const abstract::image < I >& input,
 	       const mlc::array2d<Info, Win >& arr)
       {
 	return convolve<DestValue>(input, static_cast< w_window2d<Win> >(arr));
-	// FIXME: Should be w_window<_T_arr>.  Adjust #include once done.
+	// FIXME: Should be abstract::w_window<T_arr>.  Adjust #include once done.
       }
 
     } // end namespace slow
@@ -79,5 +79,5 @@ namespace oln {
   } // end namespace convol
 
 } // end namespace oln
-  
+
 #endif // OLENA_CONVOL_CONVOLUTION_HH__

@@ -52,7 +52,7 @@ namespace oln {
 
   namespace abstract {
     template<class Exact>
-    struct dpoint : public mlc::any<Exact>
+    struct dpoint : public mlc_hierarchy::any<Exact>
     {
      
       typedef Exact exact_type;

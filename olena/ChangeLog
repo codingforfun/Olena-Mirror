@@ -1,3 +1,119 @@
+2003-07-31  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/convert/conversion.hh: Inherit from mlc_hierarchy::any
+	instead of mlc::any.
+	* oln/core/abstract/dpoint.hh: Likewise.
+	* oln/core/abstract/image_size.hh: Likewise.
+	* oln/core/abstract/iter.hh: Likewise.
+	* oln/core/abstract/neighborhood.hh: Likewise.
+	* oln/core/abstract/point.hh: Likewise.
+	* oln/core/abstract/struct_elt.hh: Likewise.
+	* oln/core/abstract/image.hh: Likewise.
+	* oln/core/impl/image_impl.hh: Likewise.
+	
+	* tests/core/Makefile.am: Fix targets.
+
+2003-07-31  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* oln/io/se_neighborhood.hh: Make read and write inline instead of
+	static to avoid g++ warnings when unused.
+	* oln/io/se_window.hh: Likewise.
+
+2003-07-31  Astrid Wang  <astrid@lrde.epita.fr>
+
+	* oln/convol/convolution.hh,
+	oln/convol/fast_gaussian.hh,
+	oln/convol/fast_gaussian.hxx,
+	oln/convol/fast_gaussian_coefficient.hh: Remove Exact_cref.
+	Fix coding style.
+
+2003-07-31  Giovanni Palma  <palma_g@lrde.epita.fr>
+
+	* oln/morpho/gradient.inc,
+	oln/morpho/hit_or_miss.inc,
+	oln/morpho/laplacian.inc,
+	oln/morpho/top_hat.inc: Fix comments.
+
+2003-07-31  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
+	oln/core/bkd_iter3d.hh, oln/core/dpoint1d.hh,
+	oln/core/dpoint2d.hh, oln/core/dpoint3d.hh,
+	oln/core/fwd_iter1d.hh, oln/core/fwd_iter2d.hh,
+	oln/core/fwd_iter3d.hh, oln/core/image1d.hh,
+	oln/core/image2d.hh, oln/core/image3d.hh,
+	oln/core/image.hh, oln/core/abstract/iter1d.hh,
+	oln/core/abstract/iter2d.hh, oln/core/abstract/iter3d.hh,
+	oln/core/neighborhood1d.hh, oln/core/neighborhood2d.hh,
+	oln/core/neighborhood3d.hh, oln/core/point1d.hh,
+	oln/core/point2d.hh, oln/core/point3d.hh,
+	oln/core/window1d.hh, oln/core/window2d.hh,
+	oln/core/window3d.hh, oln/core/w_window1d.hh,
+	oln/core/w_window2d.hh, oln/core/w_window3d.hh,
+	oln/core/abstract/image_with_dim.hh,
+	oln/core/abstract/image_with_impl.hh,
+	oln/core/impl/image_impl.hh, oln/core/impl/image_array.hh,
+	oln/core/impl/image_array3d.hh, oln/core/impl/image_array2d.hh,
+	oln/core/impl/image_array1d.hh, oln/core/abstract/window_base.hh,
+	oln/core/abstract/windownd.hh, oln/core/abstract/w_windownd.hh,
+	oln/core/abstract/neighborhoodnd.hh: Fix method visibility.
+
+2003-07-31  Giovanni Palma  <palma_g@lrde.epita.fr>
+
+	* oln/convert/abstract/colorconv.hh,
+	oln/convert/nrgbyuv.hh,
+	oln/convert/stretch.hh,
+	oln/morpho/gradient.inc,
+	oln/morpho/hit_or_miss.inc,
+	oln/morpho/laplacian.inc,
+	oln/morpho/top_hat.inc: Fix convert usage.
+
+2003-07-31  Reda Dehak  <reda@lrde.epita.fr>
+
+	* olena/oln/convert/abstract/colorconv.hh,
+	olena/oln/convert/nrgbyuv.hh,
+	olena/oln/convert/stretch.hh: Minor update.
+
+2003-07-31  Reda Dehak  <reda@lrde.epita.fr>
+
+	* olena/oln/arith/internal/opdecls.hh,
+	olena/oln/convert/conversion.hh,
+	olena/oln/convert/conversion_ng_se.hh: Fix namespaces.
+
+	* olena/oln/convert/force.hh,
+	olena/oln/convert/stretch.hh: Minor update.
+
+
+2003-07-31  Reda Dehak  <reda@lrde.epita.fr>
+
+	* oln/convert/basics.hh,
+	oln/convert/bound.hh,
+	oln/convert/conversion.hh,
+	oln/convert/force.hh,
+	oln/convert/nrgbhsi.hh,
+	oln/convert/nrgbhsl.hh,
+	oln/convert/nrgbhsv.hh,
+	oln/convert/nrgbxyz.hh,
+	oln/convert/nrgbyiq.hh,
+	oln/convert/nrgbyuv.hh,
+	oln/convert/rgbnrgb.hh,
+	oln/convert/rgbxyz.hh,
+	oln/convert/stretch.hh: Rewrite using the new design to avoid
+	the use of exact_cref.
+
+	* oln/convert/abstract/conversion.hh: New.
+
+	* oln/Makefile.am: add convert/abstract/conversion.hh.
+
+	* oln/convert/colorconv.hh: Move ...
+
+	* oln/convert/abstract/colorconv.hh: ... here.
+
+	* oln/arith/internal/opdecls.hh,
+	tests/convert/conv.cc: Adjust according to previous changes.
+
+	* oln/convert/conversion_ng_se.hh: Remove exact_cref.
+
 2003-07-31  Giovanni Palma  <palma_g@lrde.epita.fr>
 
 	* oln/morpho/closing.inc,

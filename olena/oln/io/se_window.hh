@@ -42,7 +42,8 @@ namespace oln {
     
     namespace internal {
       
-      static bool read(window2d& output, const std::string& name)
+      // FIXME: put it in a .cc file ?
+      inline bool read(window2d& output, const std::string& name)
       {
 	image2d<ntg::bin> im;
 	if (!read(im, name))
@@ -63,7 +64,8 @@ namespace oln {
 	return true;
       }
 
-      static bool write(const window2d& input, const std::string& name)
+      // FIXME: put it in a .cc file ?
+      inline bool write(const window2d& input, const std::string& name)
       {
 	image2d<ntg::bin> im(input.delta()*2+1, input.delta()*2+1);
 	image2d<ntg::bin>::fwd_iter_type it(im);

@@ -51,9 +51,7 @@ namespace oln
   };
 
   // shortcuts
-  using mlc::_begin;
   using mlc::begin;
-  using mlc::_end;
   using mlc::end;
   
   namespace abstract 
@@ -61,7 +59,7 @@ namespace oln
     // iter
     
     template<class Exact>
-    struct iter : public mlc::any<Exact>
+    struct iter : public mlc_hierarchy::any<Exact>
     {
 
       typedef typename iter_traits<Exact>::point_type point_type;

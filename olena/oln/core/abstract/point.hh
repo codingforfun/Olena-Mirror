@@ -57,7 +57,7 @@ namespace oln
 
   namespace abstract {
     template<class Exact>
-    struct point : public mlc::any<Exact>
+    struct point : public mlc_hierarchy::any<Exact>
     {
     public:
       

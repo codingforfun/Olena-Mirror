@@ -72,6 +72,8 @@ namespace oln {
 
       enum { dim = image_traits<ExactI>::dim };
 
+      friend class super_type;
+
       image_array(const size_type& s): super_type(s), buffer_(0)
       {
 	allocate_data_(buffer_, len(s));
@@ -92,15 +94,6 @@ namespace oln {
 	return buffer_;
       }
 
-      void clone_to_(exact_type* output_data) const
-      {
-	precondition(output_data != 0);
-	precondition(output_data->len() == len());
-	memcpy(output_data->buffer(),
-	       buffer_,
-	       len() * sizeof(T));
-      }
-
       size_t len() const
       {
 	return len(this->size());
@@ -111,12 +104,22 @@ namespace oln {
 	return this->exact().len_(s);
       }
 
+    protected:
+
       ~image_array()
       {
 	desallocate_data_(buffer_);
       }
 
-    protected:
+      void clone_to_(exact_type* output_data) const
+      {
+	precondition(output_data != 0);
+	precondition(output_data->len() == len());
+	memcpy(output_data->buffer(),
+	       buffer_,
+	       len() * sizeof(T));
+      }
+
       T* buffer_;
     };
 

@@ -29,7 +29,7 @@
 #ifndef OLENA_CONVERT_BOUND_HH
 # define OLENA_CONVERT_BOUND_HH
 
-# include <oln/convert/conversion.hh>
+# include <oln/convert/abstract/conversion.hh>
 # include <ntg/utils/cast.hh>
 
 namespace oln {
@@ -39,11 +39,11 @@ namespace oln {
 
     /* Like convert::force, but with saturation.  */
     template<class Output, class Exact = mlc::final>
-    struct bound : public conversion_to_type< Output, typename mlc::exact_vt<bound<Output, Exact>, Exact>::ret >
+    struct bound : public abstract::conversion_to_type< Output, typename mlc::exact_vt<bound<Output, Exact>, Exact>::ret >
     {
  
       template< class Input >
-      Output operator() (const Input& v) const {
+      Output doit(const Input& v) const {
 	return ntg::cast::bound<Output>(v);
       }
 
@@ -56,7 +56,7 @@ namespace oln {
 	  + "FIXME: ntg_name(Exact)" + ">";
       }
     };
-
+    
   } // convert
 } // oln
 

@@ -41,7 +41,7 @@ namespace oln {
   namespace impl {
 
     template<class ExactI, class Exact>
-    class image_impl : public mlc::any<Exact>
+    class image_impl : public mlc_hierarchy::any<Exact>
     {
     public:
       typedef typename image_traits<ExactI>::point_type point_type;
@@ -52,6 +52,8 @@ namespace oln {
       typedef typename image_traits<ExactI>::size_type size_type;
 
       typedef Exact exact_type;
+
+
 
       image_impl(const size_type s): refcount_(0), size_(s) {}
 

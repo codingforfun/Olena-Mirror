@@ -32,166 +32,54 @@
 # include <oln/core/image.hh>
 # include <oln/core/compose.hh>
 # include <ntg/utils/debug.hh>
+# include <oln/convert/abstract/conversion.hh> 
 # include <functional>
 
 namespace oln {
   namespace convert {
 
-    /* Conversions are unary functors which can be passed to
-       processings to perform result conversions.
-
-       Conversions are organized as an Exact-parameterized hierarchy,
-       like the image hierarchy.  conversion is the top type here,
-       therefore the processings which accept a conversion usually
-       looks as follow.
-
-       template< class C_, ...>
-       ... fubar(const converstion<C_>& _conv, ...)
-       {
-          Exact_cref(C, conv);
-	  ...
-       }
-    */
-
-    template<class Exact>
-    struct conversion : public mlc::any< Exact >
-    {
-
-      static std::string
-      name()
-      {
-	return std::string("conversion<") + Exact::name() + ">";
-      }
-
-    protected:
-      conversion() {}
-    };
-
-    /*  Conversion's children should feature two things:
-
-	1. a unary operator<T>() function, which perform the conversion.
-	2. a output<T>::ret typedef, which is set to the type
-	   returned by operator() for an input of type T.
-
-       Note that a conversion is generic w.r.t. the input type of
-       operator().  Different input types can lead to different
-       output types, hence the inner output<T>::ret typedef.
-    */
-
-
-    /* However, some conversions do always return the same type.  In
-       this case, output<T>::ret has the same definition for any T.
-       Such conversions should inherit from the conversion_to_type<>
-       class.  */
-    template<class Result_Type, class Exact = mlc::final>
-    struct conversion_to_type :
-      public conversion< typename mlc::exact_vt<conversion_to_type< Result_Type, Exact >, Exact>::ret >
-    {
-
-      template< class Input >
-      struct output {
-	/* We always convert to type Output, whatever is the Input
-	   type.  */
-	typedef Result_Type ret;
-      };
-
-      /* Additionally define result_type.  This is not required
-         in a conversion class (generally not possible to define).
-	 But it's useful when it's available (like here)
-	 because it make the conversion appear almost as Adaptable
-	 Unary Function (it will just lack the argument_type, but
-	 this typedef is not used very much.)  */
-      typedef Result_Type result_type;
-
-      static std::string name()
-      {
-	// FIXME: Exact is not an integre type !
-	return std::string("conversion_to_type<")
-	  + ntg_name(Result_Type) + ", "
-	  + Exact::name() + ">";
-      }
-    };
-
-    /* If both input and output types of the conversion are fixed.
-       Inherit from conversion_from_type_to_type<>.  */
-    template<class Argument_Type, class Result_Type,
-	     class Exact = mlc::final>
-    struct conversion_from_type_to_type :
-      public conversion_to_type< Result_Type,
-        typename mlc::exact_vt<conversion_from_type_to_type< Argument_Type, Result_Type, Exact>, Exact>::ret >
-    {
-
-      /* By defining argument_type, and inheriting from result_type,
-	 we comply to the STL concept of Adaptable Unary Function.  */
-      typedef Argument_Type argument_type;
-
-      static std::string name() {
-	// FIXME: Exact is not an integre type !
-	return std::string("conversion_from_type_to_type<")
-	  + ntg_name(Argument_Type) + ", "
-	  + ntg_name(Result_Type) + ", "
-	  + "FIXME: ntg_name(Exact)" + ">";
-      }
-    };
-
-
     /* ConvOutput queries the output type of conversion ConvType for
        an input of type InputType.  This comes handy when computing
        the return type of a function which takes a conversion function
        in argument.  */
-    template<class ConvType, class InputType>
+    template<class ConvType, class Base, class InputType>
     struct convoutput
     {
-      typedef Exact(ConvType)::template output<InputType>::ret ret;
+      typedef typename abstract::conversion<ConvType, Base>::template output<InputType>::ret ret;
     };
-
-
-    /* Because a conversion is generic w.r.t. its input type, it can't
-       _always_ be seen as an Adaptable Unary Function.  (Althought, It
-       can always be seen as a Unary Function.)
-
-       However, if C is a conversion function and A an Adaptable Unary
-       Function, then we can define (C o A) as an Adaptable Unary
-       Function.  Indeed, we know the i/o types of (C o A): it takes
-       A::argument_type and returns C::output<A::result_type>::ret.
-
-       Similary, if B is an Adaptable Binary Function, we can define
-       (C o B) as an Adaptable Binary Function.
-
-       The tools below create such compound functions.  */
 
     namespace internal {
       /* Compose a conversion C and an adaptable unary function UF,
 	 producing an adaptable unary function.  */
       template <class C, class UF>
-      struct _compconv1 :
+      struct compconv1_ :
 	public std::unary_function <typename UF::argument_type,
 	  typename C::template output<typename UF::argument_type>::ret>
       {
-	typedef _compconv1 self;
+	typedef compconv1_ self;
 
 	typename self::result_type
 	operator()(typename self::argument_type arg) const {
 	  return _conv(_func(arg));
 	}
 
-	_compconv1(const C& conv, const UF& func)
+	compconv1_(const C& conv, const UF& func)
 	  : _conv(conv), _func(func)
 	{}
       private:
 	const C _conv;
 	const UF _func;
       };
-
+      
       /* Compose a conversion C and an adaptable binary function BF,
 	 producing an adaptable binary function.  */
       template <class C, class BF>
-      struct _compconv2 :
+      struct compconv2_ :
 	public std::binary_function <typename BF::first_argument_type,
           typename BF::second_argument_type,
           typename C::template output<typename BF::result_type>::ret>
       {
-	typedef _compconv2 self;
+	typedef compconv2_ self;
 
 	typename self::result_type
 	operator()(typename self::first_argument_type arg1,
@@ -199,7 +87,7 @@ namespace oln {
 	  return _conv(_func(arg1, arg2));
 	}
 
-	_compconv2(const C &conv, const BF &func)
+	compconv2_(const C &conv, const BF &func)
 	  : _conv(conv), _func(func)
 	{}
       private:
@@ -209,30 +97,28 @@ namespace oln {
 
     } // end of internal
 
-    /* Friendly procedure that build an internal::_compconv1 with
+    /* Friendly procedure that build an internal::compconv1_ with
        type deduction.  */
-    template <class C_, class UF>
-    internal::_compconv1<Exact(C_), UF>
-    compconv1(const conversion<C_>& _conv, const UF &func) {
-      Exact_cref(C, conv);
-      return internal::_compconv1<C, UF>(conv, func);
+    template <class C, class B, class UF>
+    internal::compconv1_<C, UF>
+    compconv1(const abstract::conversion<C, B>& conv, const UF &func) {
+      return internal::compconv1_<C, UF>(conv.exact(), func);
     }
 
-    /* Likewise for _compconv2.  */
-    template <class C_, class BF>
-    internal::_compconv2<Exact(C_), BF>
-    compconv2(const conversion<C_>& _conv, const BF &func) {
-      Exact_cref(C, conv);
-      return internal::_compconv2<C, BF>(conv, func);
+    /* Likewise for compconv2_.  */
+    template <class C, class B, class BF>
+    internal::compconv2_<C, BF>
+    compconv2(const abstract::conversion<C, B>& conv, const BF &func) {
+      return internal::compconv2_<C, BF>(conv.exact(), func);
     }
 
 
     /* The core oln::apply function, cannot apply all conversion function,
        because they do not all define result_type.  So we define another
        apply function here, to apply conversions.  */
-    template<class C, class I> inline
-    typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
-    apply(const conversion<C>& conv, const abstract::image<I>& input)
+    template<class C, class B, class I> inline
+    typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
+    apply(const abstract::conversion<C, B>& conv, const oln::abstract::image<I>& input)
     {
       /* CONV can now be wrapped as an Adaptable Unary Function
 	 because we know the input type.  Composing CONV with the
@@ -245,7 +131,6 @@ namespace oln {
 
   /* Export conversion and convouput into oln:: to simplify the
      writing of processings.  */
-  using convert::conversion;
   using convert::convoutput;
 
 } // oln
