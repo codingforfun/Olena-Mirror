@@ -1,38 +1,16 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln cleanup 6)
-(Parent-Version oln cleanup 5)
-(Version-Log "Index: ChangeLog
-from   2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
-        * configure.ac: AC_CONFIG_FILES for metalic/mlc/Makefile.am.
-        Create missing links if needed.
+(Project-Version oln cleanup 7)
+(Parent-Version oln cleanup 6)
+(Version-Log "2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-+2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
-+
-        * configure.ac: Tweak for finding Metalic headers.
- 
- 2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
-Index: metalic/ChangeLog
-from   2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
-        * mlc/Makefile.am: New file.
-
-        * Makefile.am: Update accordingly. (SUBDIRS): Minor tweak.
-
-+2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
-+
-        * Makefile.am,
-        tests/Makefile.am,
-        tests/array/Makefile.am: New files.
-Index: oln/ChangeLog
-from   2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
-        * Makefile.am (nobase_include_HEADERS): Remove references to
-        oln/meta/. (SUBDIRS): Minor and _temporary_ tweak.
-
+	* tests/array/gen_test.cc (write_postlude_and_test): Fix builddir
+	includes
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 27 Feb 2003 20:51:37 +0100")
-(Checkin-Login raph)
+(Checkin-Time "Fri, 28 Feb 2003 10:47:22 +0100")
+(Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
 ;; diff-ignore doc/doc/ref-morpho.tex$
@@ -115,8 +93,8 @@ from   2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37 640))
-  (lib/ChangeLog (oln/q/28_ChangeLog 1.1 664))
-  (metalic/ChangeLog (oln/q/30_ChangeLog 1.2 664))
+  (lib/ChangeLog (oln/q/28_ChangeLog 1.1 640))
+  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3 640))
   (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.20.1.4 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.24 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.2 640))
@@ -446,7 +424,7 @@ from   2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
   (oln/tests/io/se_fail.cc (oln/i/43_se_fail.cc 1.2 640))
   (oln/tests/io/se_pass.cc (oln/i/44_se_pass.cc 1.2 640))
   (oln/tests/Makefile.am (oln/e/45_Makefile.a 1.19 640))
-  (metalic/tests/array/gen_test.cc (oln/f/34_gen_test.c 1.9 640))
+  (metalic/tests/array/gen_test.cc (oln/f/34_gen_test.c 1.10 640))
   (metalic/tests/array/gen_test_utils/errors.cc (oln/f/33_errors.cc 1.1 640))
   (metalic/tests/array/gen_test_utils/errors.hh (oln/f/32_errors.hh 1.1 640))
   (metalic/tests/array/gen_test_utils/postlude (oln/f/31_postlude 1.1 640))
@@ -787,7 +765,7 @@ from   2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 ;; Files added by populate at Thu, 27 Feb 2003 19:48:40 +0100,
 ;; to version cleanup.3(w), by raph:
 
-  (lib/Makefile.am (oln/q/29_Makefile.a 1.2 664))
+  (lib/Makefile.am (oln/q/29_Makefile.a 1.2 640))
 
 ;; Files added by populate at Thu, 27 Feb 2003 19:48:43 +0100,
 ;; to version cleanup.3(w), by raph:
@@ -796,8 +774,8 @@ from   2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 ;; Files added by populate at Thu, 27 Feb 2003 19:57:05 +0100,
 ;; to version cleanup.4(w), by raph:
 
-  (metalic/tests/Makefile.am (oln/q/31_Makefile.a 1.1 664))
-  (metalic/Makefile.am (oln/q/32_Makefile.a 1.2 664))
+  (metalic/tests/Makefile.am (oln/q/31_Makefile.a 1.1 640))
+  (metalic/Makefile.am (oln/q/32_Makefile.a 1.2 640))
 
 ;; Files added by populate at Thu, 27 Feb 2003 19:57:14 +0100,
 ;; to version cleanup.4(w), by raph:
@@ -806,7 +784,7 @@ from   2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 ;; Files added by populate at Thu, 27 Feb 2003 20:06:47 +0100,
 ;; to version cleanup.5(w), by raph:
 
-  (metalic/mlc/Makefile.am (oln/q/33_Makefile.a 1.1 664))
+  (metalic/mlc/Makefile.am (oln/q/33_Makefile.a 1.1 640))
 )
 (Merge-Parents)
 (New-Merge-Parents)

@@ -1,3 +1,8 @@
+2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/array/gen_test.cc (write_postlude_and_test): Fix builddir
+	includes.
+
 2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* mlc/Makefile.am: New file.
@@ -11,4 +16,3 @@
 	tests/array/Makefile.am: New files.
 	
 	* ChangeLog: New file.
-

@@ -178,8 +178,9 @@ write_postlude_and_test (ofstream & ofs,
 	close (fd[1]);
 	std::string cmdline = compile_cmd(filename, "",
 					  Isrcdir ("../..") + ' '
-					  + Isrcdir ("../check") + ' ' 
-					  + "-L../check -lcheck " +
+					  + Isrcdir ("../../../lib/check") + ' ' 
+					  + "-I../../../oln -I../../.. " +
+					  + "-L../../../lib/check -lcheck " +
 					  cxxflags_strict_errors());
 	int ret = system (cmdline.c_str ());
 	exit (WEXITSTATUS (ret));
