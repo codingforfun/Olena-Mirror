@@ -1,3 +1,11 @@
+2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* tests/types/runtests: Fix test for $VERBOSE.
+	* tests/arith/runtests: Likewise.
+
+	* oln/config/math.hh: Move replacement math functions to namespace
+	oln, to avoid redefinition warnings from the C library.
+
 2003-01-22  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* tests/arith/runtests: Run generated script with $SHELL and from

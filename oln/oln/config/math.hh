@@ -53,6 +53,8 @@
 #  define M_PI 3.14159265358979323846264338327
 # endif
 
+namespace oln {
+
 # ifdef OLN_NEED_SQRTF
 static inline float sqrtf(float f)
 {
@@ -80,6 +82,6 @@ static inline float roundf(float f)
 }
 # endif
 
-
+}
 
 #endif

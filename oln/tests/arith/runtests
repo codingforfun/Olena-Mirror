@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if "x$VERBOSE" != x; then
+if test "x$VERBOSE" != x; then
   verb='echo'
   quiet=''
 else
