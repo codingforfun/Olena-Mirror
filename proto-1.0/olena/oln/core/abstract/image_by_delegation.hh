@@ -25,11 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_IMAGE_IDENTITY_HH
-# define OLENA_CORE_ABSTRACT_IMAGE_IDENTITY_HH
+#ifndef OLENA_CORE_ABSTRACT_IMAGE_BY_DELEGATION_HH
+# define OLENA_CORE_ABSTRACT_IMAGE_BY_DELEGATION_HH
 
-# include <mlc/box.hh>
-
+# include <oln/core/box.hh>
 # include <oln/core/properties.hh>
 # include <oln/core/abstract/entry.hh>
 
@@ -39,18 +38,32 @@ namespace oln {
 
   // fwd decl
   namespace abstract {
-    template <typename I, typename E> struct image_identity;
+    template <typename I, typename E> struct image_by_delegation;
   }
 
   // category
+
   template <typename I, typename E>
-  struct set_category< abstract::image_identity<I,E> > {
+  struct set_category< abstract::image_by_delegation<I, E> > {
+    typedef category::image ret;
+  };
+
+  template <typename I, typename E>
+  struct set_category< abstract::image_by_delegation<const I, E> > {
     typedef category::image ret;
   };
 
   // props
+
   template <typename I, typename E>
-  struct set_props < category::image, abstract::image_identity<I,E> >
+  struct set_props < category::image, abstract::image_by_delegation<I, E> >
+    : public get_props< category::image, I >
+  {
+    typedef I delegated_type;
+  };
+
+  template <typename I, typename E>
+  struct set_props < category::image, abstract::image_by_delegation<const I, E> >
     : public get_props< category::image, I >
   {
     typedef I delegated_type;
@@ -58,62 +71,70 @@ namespace oln {
 
 
 
+
   namespace abstract {
 
+    /// Mutable version of image_by_delegation
+
     template <typename I, typename E>
-    struct image_identity : public abstract::image_entry<E>
+    struct image_by_delegation : public image_entry<E>
     {
     protected:
 
-      image_identity () {}
+      image_by_delegation ()
+      {
+ 	this->exact_ptr = (E*)(void*)(this);
+      }
 
-      image_identity(abstract::image<I>& image) : image_(image.exact())
-      {}
-
-      image_identity(const image_identity& rhs) : image_(rhs.image())
+      image_by_delegation(abstract::image<I>& image) :
+	image_(image.exact())
       {
 	this->exact_ptr = (E*)(void*)(this);
       }
 
-      mlc::box<I> image_;
+      image_by_delegation(const image_by_delegation& rhs) :
+	image_(rhs.image_)
+      {
+	this->exact_ptr = (E*)(void*)(this);
+      }
+
+      box<I> image_;
 
     public:
 
-      I& image () const
-      {
-	return const_cast<I&>(*image_);
-      }
-
-      I& impl_delegate() { return *image_; }
-      const I& impl_delegate() const { return *image_; }
+      I& impl_delegate() { return this->image_.unbox(); }
+      const I& impl_delegate() const { return this->image_.unbox(); }
     };
 
+    /// Const version of image_by_delegation
 
     template <typename I, typename E>
-    struct image_identity<const I, E>: public abstract::image_entry<E>
+    struct image_by_delegation<const I, E> : public image_entry<E>
     {
     protected:
 
-      image_identity() {}
-
-      image_identity(const abstract::image<I>& image_) : image_(image.exact())
-      {}
-
-      image_identity(const image_identity& rhs) : image_(rhs.image())
+      image_by_delegation()
       {
 	this->exact_ptr = (E*)(void*)(this);
       }
 
-      mlc::box<const I> image_;
-
-    public:
-      const I& image () const
+      image_by_delegation(const abstract::image<I>& ima) :
+	image_(ima.exact())
       {
-	return *image_;
+	this->exact_ptr = (E*)(void*)(this);
       }
 
-      I& impl_delegate() { return *image_; }
-      const I& impl_delegate() const { return *image_; }
+      image_by_delegation(const image_by_delegation& rhs) :
+	image_(rhs.image())
+      {
+	this->exact_ptr = (E*)(void*)(this);
+      }
+
+      box<const I> image_;
+
+    public:
+
+      const I& impl_delegate() const { return this->image_.unbox(); }
     };
 
   }
@@ -121,4 +142,4 @@ namespace oln {
 }
 
 
-#endif // ! OLENA_CORE_ABSTRACT_IMAGE_IDENTITY_HH
+#endif // ! OLENA_CORE_ABSTRACT_IMAGE_BY_DELEGATION_HH

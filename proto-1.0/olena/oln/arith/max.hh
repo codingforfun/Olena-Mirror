@@ -29,6 +29,7 @@
 # define OLENA_ARITH_MAX_HH
 
 # include <oln/basics.hh>
+# include <oln/core/abstract/op.hh>
 # include <ntg/all.hh>
 
 namespace oln {
@@ -60,7 +61,7 @@ namespace oln {
     namespace impl {
 
       template <class I>
-      struct max_type : abstract::op<I, max_type<I> >
+      struct max_type : public abstract::op<I, max_type<I> >
       {
 	box<const I> input1_;
 	box<const I> input2_;
@@ -80,7 +81,7 @@ namespace oln {
 	  for_all(p)
 	    output[p] = ntg::max(input1_[p].value(), input2_[p].value());
 
-	  *this->image_ = output; // FIXME: remove * when image_ is oln::box
+	  this->image_ = output;
 	}
 
       };

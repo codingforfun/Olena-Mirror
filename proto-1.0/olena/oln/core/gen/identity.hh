@@ -25,76 +25,75 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_UTILS_CLONE_HH
-# define OLN_UTILS_CLONE_HH
+#ifndef OLENA_CORE_GEN_IDENTITY_HH
+# define OLENA_CORE_GEN_IDENTITY_HH
 
-# include <oln/basics.hh>
+# include <oln/core/abstract/image_like_.hh>
+
 
 namespace oln {
 
-  // fwd decl
-  namespace utils {
-    namespace impl {
-      template <typename I> struct clone_type;
-    }
+
+  // fwd decls
+
+  namespace internal {
+    template <typename I> struct image_identity;
   }
 
-  // category
   template <typename I>
-  struct set_category < utils::impl::clone_type<I> >
-  {
+  internal::image_identity<I> identity(abstract::image<I>& ima);
+
+
+
+  // category
+
+  template <typename I>
+  struct set_category< internal::image_identity<I> > {
     typedef category::image ret;
   };
 
-  // super_type
+  // super type
+
   template <typename I>
-  struct set_super_type < utils::impl::clone_type<I> >
+  struct set_super_type < internal::image_identity<I> >
   {
-    typedef abstract::image_unary_operator<I, I, utils::impl::clone_type<I> > ret;
+    typedef abstract::image_like_< I, internal::image_identity<I> > ret;
   };
 
 
-
-  namespace utils {
-
-    namespace impl {
-
-      template <typename I>
-      struct clone_type : public abstract::image_unary_operator<I, I, clone_type<I> >
-      // FIXME: use concrete_type; Cf. erosion.hh
-      {
-	typedef abstract::image_unary_operator<I, I, clone_type<I> > super_type;
-
-	clone_type(const abstract::image<I>& input) :
-	  super_type(input)
-	{
-	}
-
-	void impl_run()
-	{
-	  I tmp(input.size()); // FIXME: trick
-	  output = tmp;
-
-	  oln_type_of(I, fwd_piter) p(input.size());
-	  for_all(p)
-	    output[p] = input[p];
-	}
-      };
-
-    } // end of namespace oln::utils::impl
-
+  namespace internal
+  {
 
     template <typename I>
-    impl::clone_type<I> clone(const abstract::image<I>& ima)
+    struct image_identity : public abstract::image_like_< I, image_identity<I> >
     {
-      impl::clone_type<I> tmp(ima.exact());
-      tmp.run();
-      return tmp;
-    }
+      typedef image_identity<I> self_type;
+      typedef abstract::image_like_< I, self_type > super_type;
 
-  } // end of namespace oln::utils
+    public:
+
+      image_identity(abstract::image<I>& rhs) :
+	super_type(rhs)
+      {
+      }
+
+    };
+
+  } // end of namespace oln::internal
+
+
+
+  /// the 'identity' method for images
+
+  template <typename I>
+  internal::image_identity<I> identity(abstract::image<I>& ima)
+  {
+    internal::image_identity<I> tmp(ima);
+    return tmp;
+  }
+
 
 } // end of namespace oln
 
 
-#endif // ! OLN_UTILS_CLONE_HH
+#endif // ! OLENA_CORE_GEN_IDENTITY_HH

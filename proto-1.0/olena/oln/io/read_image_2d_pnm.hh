@@ -74,8 +74,7 @@ namespace oln {
     namespace impl {
 
       template <typename I>
-      struct read_image_2d_raw :
-	public oln::abstract::op<I, read_image_2d_raw<I> >
+      struct read_image_2d_raw : public oln::abstract::op<I, read_image_2d_raw<I> >
       {
 
 	typedef oln::abstract::op<I, read_image_2d_raw<I> > super_type;

@@ -31,7 +31,7 @@
 # include <oln/basics.hh>
 # include <oln/morpho/stat.hh>
 // # include <oln/morpho/fast_morpho.hh>
-# include <oln/core/abstract/op.hh>
+# include <oln/core/abstract/image_operator.hh>
 # include <mlc/cmp.hh>
 
 namespace oln {
@@ -98,29 +98,30 @@ namespace oln {
   template <typename I, typename E>
   struct set_super_type< morpho::impl::erosion_type<I,E> >
   {
-    typedef abstract::op<I, morpho::impl::erosion_type<I, E> > ret;
+    typedef abstract::image_unary_operator<I, I, morpho::impl::erosion_type<I, E> > ret; // FIXME: see below
   };
 
   namespace morpho {
 
     namespace impl {
 
-      template <class I, class E>
-      struct erosion_type : abstract::op<I, erosion_type<I, E> >
+      template <typename I, typename E>
+      struct erosion_type : abstract::image_unary_operator<I, I, erosion_type<I, E> >
+      // FIXME: abstract::image_unary_operator<oln_type_of(I, concrete), ...
       {
-	box<const I> input_;
-	const E se_;
+	typedef abstract::image_unary_operator<I, I, erosion_type<I, E> > super_type;
+	const E se;
 
 	erosion_type(const abstract::non_vectorial_image<I>& input,
 		     const abstract::struct_elt<E>& se) :
-	  input_(input.exact()),
-	  se_(se.exact())
+	  super_type(input),
+	  se(se.exact())
 	{}
 
       };
 
-      template <class I, class E>
-      struct erosion_type_classic : erosion_type<I, E>
+      template <typename I, typename E>
+      struct erosion_type_classic : public erosion_type<I, E>
       {
 	typedef erosion_type<I, E> super_type;
 
@@ -133,26 +134,20 @@ namespace oln {
 	{
 	  mlc::is_true<mlc::type::eq<oln_type_of(I, size),
 	    oln_type_of(E, size)>::ret>::ensure();
-	  I output(this->input_.size());
 
-	  // FIXME: not only resize but also set values in border!
-	  // FIXME: code commented below cause only valid with bordered_image
+	  I tmp(input.size()); // FIXME: trick
+	  output = tmp;
 
- 	  this->input_.resize_border(this->se_.get_delta());
-
-	  oln_type_of(I, fwd_piter) p(this->input_.size());
-
+	  oln_type_of(I, fwd_piter) p(input.size());
 	  for_all (p)
-	    output[p] = morpho::min(this->input_, p, this->se_);
-	  // FIXME: remove * below (oln::box)
-	  *this->image_ = output;
+	    output[p] = morpho::min(input, p, se);
 	}
       };
 
     }
 
 
-    template<class I, class E>
+    template<typename I, typename E>
     impl::erosion_type<I, E>
     erosion(const abstract::non_vectorial_image<I>& input,
 	    const abstract::struct_elt<E>& se)
@@ -197,7 +192,7 @@ namespace oln {
       ** \image html oln_morpho_fast_erosion.png
       ** \image latex oln_morpho_fast_erosion.png
       */
-//       template<class I, class E>
+//       template<typename I, typename E>
 //       oln_concrete_type(I)
 // 	erosion(const abstract::non_vectorial_image<I>& input,
 // 		const abstract::struct_elt<E>& se)

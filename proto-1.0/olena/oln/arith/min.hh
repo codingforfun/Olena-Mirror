@@ -29,6 +29,7 @@
 # define OLENA_ARITH_MIN_HH
 
 # include <oln/basics.hh>
+# include <oln/core/abstract/op.hh>
 # include <ntg/all.hh>
 
 namespace oln {
@@ -60,7 +61,7 @@ namespace oln {
     namespace impl {
 
       template <class I>
-      struct min_type : abstract::op<I, min_type<I> >
+      struct min_type : public abstract::op<I, min_type<I> >
       {
 	box<const I> input1_;
 	box<const I> input2_;
@@ -80,7 +81,7 @@ namespace oln {
 	  for_all(p)
 	    output[p] = ntg::min(input1_[p].value(), input2_[p].value());
 
-	  *this->image_ = output;
+	  this->image_ = output;
 	}
 
       };

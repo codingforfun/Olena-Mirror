@@ -1,3 +1,23 @@
+2005-03-31  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* oln/core/abstract/image_like_.hh: New.
+	* oln/core/abstract/image_operator.hh: New.
+	* oln/core/abstract/image_by_delegation.hh: New.
+	* oln/core/abstract/image_identity.hh: Move to...
+	* oln/core/gen/identity.hh: here.
+	* tests/core/tests/image_identity: Update.
+	* oln/core/abstract/op.hh: Update.
+	* oln/core/2d/image2d.hh: Update.
+	* oln/core/box.hh (image()): Rename into...
+	* oln/core/box.hh (unbox()): this.
+	* oln/utils/clone.hh: Update.
+	* oln/basics.hh: Likewise.
+	* oln/morpho/dilation.hh: Likewise.
+	* oln/morpho/erosion.hh: Likewise.
+	* oln/io/read_image_2d_pnm.hh: Cosmetic change.
+	* oln/arith/min.hh: Likewise.
+	* oln/arith/max.hh: Likewise.
+
 2005-03-30  Thierry Geraud  <theo@lrde.epita.fr>
 
 	* oln/core/box.hh: New.

@@ -25,76 +25,75 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_UTILS_CLONE_HH
-# define OLN_UTILS_CLONE_HH
+#ifndef OLENA_CORE_ABSTRACT_IMAGE_LIKE__HH
+# define OLENA_CORE_ABSTRACT_IMAGE_LIKE__HH
 
-# include <oln/basics.hh>
+# include <oln/core/abstract/image_by_delegation.hh>
+
 
 namespace oln {
 
+
   // fwd decl
-  namespace utils {
-    namespace impl {
-      template <typename I> struct clone_type;
-    }
+  namespace abstract {
+    template <typename I, typename E> struct image_like_;
   }
 
   // category
-  template <typename I>
-  struct set_category < utils::impl::clone_type<I> >
-  {
+
+  template <typename I, typename E>
+  struct set_category< abstract::image_like_<I, E> > {
     typedef category::image ret;
   };
 
-  // super_type
-  template <typename I>
-  struct set_super_type < utils::impl::clone_type<I> >
+  // super type
+
+  template <typename I, typename E>
+  struct set_super_type < abstract::image_like_<I, E> >
   {
-    typedef abstract::image_unary_operator<I, I, utils::impl::clone_type<I> > ret;
+    typedef abstract::image_by_delegation<I, E> ret;
   };
 
 
 
-  namespace utils {
 
-    namespace impl {
+  namespace abstract {
 
-      template <typename I>
-      struct clone_type : public abstract::image_unary_operator<I, I, clone_type<I> >
-      // FIXME: use concrete_type; Cf. erosion.hh
-      {
-	typedef abstract::image_unary_operator<I, I, clone_type<I> > super_type;
+    /// Mutable version of image_like_.
 
-	clone_type(const abstract::image<I>& input) :
-	  super_type(input)
-	{
-	}
-
-	void impl_run()
-	{
-	  I tmp(input.size()); // FIXME: trick
-	  output = tmp;
-
-	  oln_type_of(I, fwd_piter) p(input.size());
-	  for_all(p)
-	    output[p] = input[p];
-	}
-      };
-
-    } // end of namespace oln::utils::impl
-
-
-    template <typename I>
-    impl::clone_type<I> clone(const abstract::image<I>& ima)
+    template <typename I, typename E>
+    struct image_like_ : public image_by_delegation<I, E>
     {
-      impl::clone_type<I> tmp(ima.exact());
-      tmp.run();
-      return tmp;
-    }
+      typedef image_by_delegation<I, E> super_type;
 
-  } // end of namespace oln::utils
+    public:
+
+      image_like_ ()
+      {
+      }
+
+      image_like_(abstract::image<I>& image) :
+	super_type(image)
+      {
+      }
+
+      const I& real() const
+      {
+	return this->image_.unbox();
+      }
+
+      I& real()
+      {
+	return this->image_.unbox();
+      }
+
+    };
+
+  } // end of namespace oln::abstract
+
+
 
 } // end of namespace oln
 
 
-#endif // ! OLN_UTILS_CLONE_HH
+#endif // ! OLENA_CORE_ABSTRACT_IMAGE_LIKE__HH

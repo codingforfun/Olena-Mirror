@@ -117,15 +117,15 @@ namespace oln {
 
     /// Hooks.
 
-//     I& image()
-//     {
-//       return this->image_;
-//     }
+    I& unbox()
+    {
+      return this->image_;
+    }
 
-//     const I& image() const
-//     {
-//       return this->image_;
-//     }
+    const I& unbox() const
+    {
+      return this->image_;
+    }
 
   private:
 
@@ -194,10 +194,10 @@ namespace oln {
 
     /// Hook.
 
-//     const I& image() const
-//     {
-//       return this->image_;
-//     }
+    const I& unbox() const
+    {
+      return this->image_;
+    }
 
   private:
 

@@ -30,6 +30,7 @@
 
 # include <oln/basics.hh>
 # include <oln/morpho/stat.hh>
+# include <oln/core/abstract/image_operator.hh>
 // # include <oln/morpho/fast_morpho.hh>
 # include <mlc/cmp.hh>
 
@@ -103,34 +104,36 @@ namespace oln {
   template <typename I, typename E>
   struct set_super_type< morpho::impl::dilation_type<I,E> >
   {
-    typedef abstract::op<I, morpho::impl::dilation_type<I, E> > ret;
+    typedef abstract::image_unary_operator<I, I, morpho::impl::dilation_type<I, E> > ret; // FIXME: see below
   };
 
   namespace morpho {
 
     namespace impl {
 
-      template <class I, class E>
-      struct dilation_type : abstract::op<I, dilation_type<I, E> >
+      template <typename I, typename E>
+      struct dilation_type : public abstract::image_unary_operator<I, I, dilation_type<I, E> >
+      // FIXME: abstract::image_unary_operator<oln_type_of(I, concrete), ...
       {
-	box<const I> input_;
-	const E se_;
+	typedef abstract::image_unary_operator<I, I, dilation_type<I, E> > super_type;
+
+	const E se;
 
 	dilation_type(const abstract::non_vectorial_image<I>& input,
-		     const abstract::struct_elt<E>& se) :
-	  input_(input.exact()),
-	  se_(se.exact())
+		      const abstract::struct_elt<E>& se) :
+	  super_type(input.exact()),
+	  se(se.exact())
 	{}
 
       };
 
-      template <class I, class E>
-      struct dilation_type_classic : dilation_type<I, E>
+      template <typename I, typename E>
+      struct dilation_type_classic : public dilation_type<I, E>
       {
 	typedef dilation_type<I, E> super_type;
 
 	dilation_type_classic(const abstract::non_vectorial_image<I>& input,
-			     const abstract::struct_elt<E>& se) :
+			      const abstract::struct_elt<E>& se) :
 	  super_type(input, se)
 	{}
 
@@ -138,25 +141,22 @@ namespace oln {
 	{
 	  mlc::is_true<mlc::type::eq<oln_type_of(I, size),
 	    oln_type_of(E, size)>::ret>::ensure();
-	  I output(this->input_.size());
 
-	  // FIXME: see erosion.hh
-	  this->input_.resize_border(this->se_.get_delta());
+	  I tmp(input.size()); // FIXME: trick
+	  output = tmp;
 
-	  oln_type_of(I, fwd_piter) p(this->input_.size());
-
+	  oln_type_of(I, fwd_piter) p(input.size());
 	  for_all (p)
-	    output[p] = morpho::max(this->input_, p, this->se_);
-	  *this->image_ = output;
+	    output[p] = morpho::max(input, p, se);
 	}
       };
 
     }
 
-    template<class I, class E>
+    template<typename I, typename E>
     impl::dilation_type<I, E>
     dilation(const abstract::non_vectorial_image<I>& input,
-	    const abstract::struct_elt<E>& se)
+	     const abstract::struct_elt<E>& se)
     {
       impl::dilation_type_classic<I, E> tmp(input, se);
       tmp.run();

@@ -29,7 +29,7 @@
 # define OLENA_CORE_ABSTRACT_OP_HH
 
 # include <oln/core/box.hh>
-# include <oln/core/abstract/image_identity.hh>
+# include <oln/core/abstract/image_like_.hh>
 
 namespace oln {
 
@@ -44,15 +44,15 @@ namespace oln {
 
   // super_type
   template <typename O, typename E>
-  struct set_super_type< abstract::op<O,E> > { typedef abstract::image_identity<O, E> ret; };
+  struct set_super_type< abstract::op<O,E> > { typedef abstract::image_like_<O, E> ret; };
 
 
   namespace abstract {
 
     template <typename O, typename E>
-    struct op : public image_identity<O, E>
+    struct op : public image_like_<O, E>
     {
-      typedef image_identity<O, E> super_type;
+      typedef image_like_<O, E> super_type;
 
       op(O& ref) : super_type(ref)
       {

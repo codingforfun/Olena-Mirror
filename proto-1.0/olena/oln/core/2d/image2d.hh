@@ -30,7 +30,7 @@
 
 # include <mlc/traits.hh>
 
-# include <oln/core/abstract/image_identity.hh>
+# include <oln/core/abstract/image_like_.hh>
 # include <oln/core/abstract/image_with_data.hh>
 # include <oln/core/abstract/image_vectorialness.hh>
 # include <oln/core/2d/array2d.hh>
@@ -155,9 +155,10 @@ namespace oln {
     };
 
     template <typename I, typename E>
-    image2d& operator=(const abstract::image_identity<I, E>& rhs)
+    image2d& operator=(abstract::image_like_<I, E> rhs)
     {
-      return *this = rhs.image();
+      *this = rhs.real();
+      return *this;
     }
 
     image2d& operator=(const io::filename& rhs)
