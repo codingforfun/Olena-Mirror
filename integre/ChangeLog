@@ -1,3 +1,9 @@
+2003-04-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/core/behaviour.hh: Rename as ...
+	* ntg/core/behavior.hh: ... this.
+	* Makefile.am: Update consequently.
+	
 2003-04-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/all.hh: Update includes.

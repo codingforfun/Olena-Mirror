@@ -30,7 +30,7 @@
 
 # include <mlc/is_a.hh>
 
-# include <ntg/core/behaviour.hh>
+# include <ntg/core/behavior.hh>
 # include <ntg/core/global_ops.hh>
 # include <ntg/core/interval.hh>
 # include <ntg/core/optraits.hh>

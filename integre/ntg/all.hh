@@ -36,7 +36,7 @@
 # include <ntg/core/builtins_properties.hh>
 # include <ntg/utils/to_oln.hh>
 
-# include <ntg/core/behaviour.hh>
+# include <ntg/core/behavior.hh>
 # include <ntg/core/interval.hh>
 
 # include <ntg/real/int_u.hh>

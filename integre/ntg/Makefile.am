@@ -21,7 +21,7 @@ nobase_ntg_HEADERS =				\
   color/yuv.hh					\
   config/math.hh				\
   config/system.hh				\
-  core/behaviour.hh				\
+  core/behavior.hh				\
   core/builtins_properties.hh			\
   core/global_ops.hh				\
   core/global_ops_defs.hh			\

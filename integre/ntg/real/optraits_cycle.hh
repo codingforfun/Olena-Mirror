@@ -37,7 +37,7 @@
 # include <ntg/core/optraits.hh>
 # include <ntg/core/typetraits.hh>
 # include <ntg/core/global_ops_traits.hh>
-# include <ntg/core/behaviour.hh>
+# include <ntg/core/behavior.hh>
 # include <ntg/core/predecls.hh>
 # include <ntg/real/cycle.hh>
 

@@ -30,7 +30,7 @@
 
 # include <mlc/is_a.hh>
 
-# include <ntg/core/behaviour.hh>
+# include <ntg/core/behavior.hh>
 # include <ntg/core/global_ops.hh>
 # include <ntg/real/optraits_scalar.hh>
 # include <ntg/core/rec_value.hh>

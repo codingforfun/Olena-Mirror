@@ -32,7 +32,7 @@
 
 # include <mlc/cmp.hh>
 
-# include <ntg/core/behaviour.hh>
+# include <ntg/core/behavior.hh>
 # include <ntg/utils/cast.hh>
 # include <ntg/core/global_ops.hh>
 # include <ntg/real/int_u.hh>

@@ -34,7 +34,7 @@
 # include <ntg/real/optraits_scalar.hh>
 # include <ntg/core/typetraits.hh>
 # include <ntg/core/predecls.hh>
-# include <ntg/core/behaviour.hh>
+# include <ntg/core/behavior.hh>
 # include <ntg/core/global_ops.hh>
 # include <ntg/real/int_u.hh>
 # include <ntg/real/int_s.hh>

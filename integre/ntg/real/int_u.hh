@@ -31,7 +31,7 @@
 # include <ntg/config/system.hh>
 # include <mlc/cmp.hh>
 
-# include <ntg/core/behaviour.hh>
+# include <ntg/core/behavior.hh>
 # include <ntg/core/builtins_properties.hh>
 # include <ntg/core/global_ops.hh>
 # include <ntg/core/optraits.hh>

@@ -35,7 +35,7 @@
 # include <ntg/utils/to_oln.hh>
 # include <ntg/core/optraits.hh>
 # include <ntg/core/typetraits_builtins.hh>
-# include <ntg/core/behaviour.hh>
+# include <ntg/core/behavior.hh>
 # include <ntg/core/global_ops_traits.hh>
 # include <ntg/vect/cplx.hh>
 

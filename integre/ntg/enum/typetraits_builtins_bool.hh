@@ -30,7 +30,7 @@
 
 # include <ntg/core/optraits.hh>
 # include <ntg/core/typetraits.hh>
-# include <ntg/core/behaviour.hh>
+# include <ntg/core/behavior.hh>
 
 namespace ntg
 {
