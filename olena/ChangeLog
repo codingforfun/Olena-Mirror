@@ -1,3 +1,38 @@
+2004-02-06  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* oln/morpho/attributes.hh: Add file. Add new atributes.
+	* oln/morpho/attribute_union_find.hh: Correct genericity errors.
+	* oln/morpho/attribute_closing_opening.hh: Add some prototypes for
+	attribute opening/closing.
+
+	* oln/utils/histogram.hh: Add comments.
+
+2004-02-05  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* oln/utils/histogram.hh: Inherit from mlc_hierarchy::any.
+	* value_to_point.hh: Inherit from conversion_from_type_to_type.
+	* tests/utils/tests/histogram: Add namespace.
+	* tests/morpho/tests/area: Add file.
+
+2004-02-02  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* oln/utils/histogram.hh: Add revert sort.
+	* tests/utils/tests/histogram: Add tests.
+
+2004-02-30  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* oln/utils/histogram.hh: Store histograms in images. Support
+	histograms of non-scalar types (ie. rgb_8). Fix bugs.
+	* oln/convert/value_to_point: Add file. Add conversions from values
+	to points.
+	* tests/utils/tests/histogram: Add tests.
+	* oln/core/image.hh: Add dim_traits.
+	* oln/core/image1.hh: Likewise.
+	* oln/core/image2.hh: Likewise.
+	* oln/core/image3.hh: Likewise.
+	* Makefile.am: Include convert/value_to_point.hh
+
+
 2004-01-30  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* tests/convol/tests/uniform_gauss:  Add test to make sure

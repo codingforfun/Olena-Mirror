@@ -33,49 +33,8 @@
 #include <ntg/bin.hh>
 
 #include <vector>
-
-namespace oln {
-  namespace morpho {
-    namespace tarjan {
-      namespace internal_tarjan_ {
-
-	template <class P, class V>
-	bool 
-	vec_sort_max(const std::pair<P, V>& l,
-		     const std::pair<P, V>& r)
-	{
-	  if (r.second != l.second)
-	    return r.second < l.second;
-
-	  const unsigned dim = 2;
-	  for (unsigned i = 0; i< dim; ++i)
-	    if (l.first.nth(i) != r.first.nth(i))
-	      return l.first.nth(i) < r.first.nth(i);
-	  // it means l == r
-	  return true;
-	}
-
-
-	template <class P, class V>
-	bool 
-	vec_sort_min(const std::pair<P, V>& l,
-		     const std::pair<P, V>& r)
-	{
-	  if (r.second != l.second)
-	    return r.second > l.second;
-
-	  const unsigned dim = P::dim;
-	  for (unsigned i = 0; i< dim; ++i)
-	    if (l.first.nth(i) != r.first.nth(i))
-	      return l.first.nth(i) < r.first.nth(i);
-	  // it means l == r
-	  return true;
-	}
-
-      }
-    }
-  }
-}
+#include <oln/utils/histogram.hh>
+#include <oln/morpho/attributes.hh>
 
 namespace oln {
   namespace morpho {
@@ -91,20 +50,20 @@ namespace oln {
 
 	T_attribute(const T_attribute& rhs){ value = rhs.value;}
 
-	T_attribute 
+	T_attribute
 	operator+(const T_attribute & rhs) const
 	{
 	  return T_attribute(value + rhs.value);
 	}
 
-	T_attribute& 
+	T_attribute&
 	operator=(const T_attribute & rhs)
 	{
 	  value = rhs.value;
 	  return *this;
 	}
 
-	const bool 
+	const bool
 	operator<(const T_attribute & rhs) const
 	{
 	  return value < rhs.value;
@@ -114,17 +73,18 @@ namespace oln {
 
       };
 
-      template<class T, class ATTRIBUTE>
+      template<class T, class ATTRIBUTE, class Env = NullEnv>
       struct tarjan_set
       {
 	typedef oln_point_type(T) point_type;
 	typedef oln_value_type(T) data_type;
 	typedef oln_concrete_type(T) image_type;
-
+	typedef typename ATTRIBUTE::lambda_type	lambda_type;
+	typedef Env	env_type;
 
 	// ACTIVE and INACTIVE are defined with a hook to be static
 	// and initialized ionly once.
-	static const point_type& 
+	static const point_type&
 	ACTIVE()
 	{
 	  static struct foo_def
@@ -157,22 +117,23 @@ namespace oln {
 	  return tmp.elt;
 	}
 
-	tarjan_set(const image_type& ima) : input_(ima),
-					 parent_(ima.size()),
-					 aux_data_(ima.size())
+	tarjan_set(const image_type& ima, const env_type &env) : input_(ima),
+								 parent_(ima.size()),
+								 aux_data_(ima.size()),
+								 env_(env)
 	{
 	  level::fill(parent_, INACTIVE());
 	}
 
-	void 
+	void
 	make_set(const point_type& x)
 	{
 	  precondition(parent_[x] == INACTIVE());
 	  parent_[x] = ACTIVE();
-	  aux_data_[x] = 1;
+	  aux_data_[x] = ATTRIBUTE(input_, x, env_);
 	}
 
-	point_type 
+	point_type
 	find_root(const point_type& x)
 	{
 	  if ((parent_[x] != ACTIVE()) && (parent_[x] != INACTIVE()))
@@ -184,7 +145,7 @@ namespace oln {
 	    return x;
 	}
 
-	bool 
+	bool
 	criterion(const point_type& x, const point_type& y)
 	{
 	  precondition((parent_[x] == ACTIVE()) || (parent_[x] == INACTIVE()));
@@ -192,14 +153,14 @@ namespace oln {
 	  return ( (input_[x] == input_[y]) || (aux_data_[x] < lambda_));
 	}
 
-	void 
+	void
 	uni(const point_type& n, const point_type& p)
 	{
 	  point_type r = find_root(n);
 	  if (r != p)
 	    if (criterion(r,p))
 	      {
-		aux_data_[p] = aux_data_[p] + aux_data_[r];
+		aux_data_[p] += aux_data_[r];
 		parent_[r] = p;
 	      }
 	    else
@@ -211,50 +172,41 @@ namespace oln {
 	// bool closing = true -> a closing is performed,
 	// an opening otherwise.
 	template<class N>
-	image_type 
-	get_comptute(const ATTRIBUTE & lambda,
+	image_type
+	get_comptute(const lambda_type & lambda,
 		     const abstract::neighborhood<N>& Ng,
 		     const bool closing)
 	{
-	  typedef std::pair<point_type, data_type> pixel_type;
 	  lambda_ = lambda;
 
-	  std::vector<pixel_type> I;
-	  I.reserve(input_.npoints());
+	  std::vector<point_type>	I(input_.npoints());
 
-	  {
-	    // sort pixels with respect to their level and scanning order
-	   oln_iter_type(T) p(input_);
-	    for_all(p)
-	      I.push_back(pixel_type(p.cur(), input_[p]));
-	    if (closing)
-	      sort(I.begin(), I.end(), internal_tarjan_::vec_sort_min<point_type, data_type> );
-	    else
-	      sort(I.begin(), I.end(), internal_tarjan_::vec_sort_max<point_type, data_type> );
-	  }
+	  if (closing)
+	    oln::utils::distrib_sort(input_, I);
+	  else
+	    oln::utils::distrib_sort_inv(input_, I);
 
-	  // Image to know which pixels have been processed
-	  typename mute<T, ntg::bin>::ret is_proc(input_.size());
-	  level::fill(is_proc, false);
+	  level::fill(aux_data_, ntg_sup_val(lambda_type));
+	  aux_data_.border_adapt_assign(Ng.delta(), ntg_sup_val(lambda_type));
 
 	  // We are ready to perform stuff
 	  for (unsigned int p = 0; p < I.size(); ++p)
 	    {
-	      point_type p_p = I[p].first;
+	      point_type p_p = I[p];
 	      make_set(p_p);
-	      is_proc[p_p] = true;
 	      oln_neighb_type(N) Q_prime(Ng, p_p);
-	      for_all (Q_prime) if (input_.hold(Q_prime)) if (is_proc[Q_prime] == true)
-		uni(Q_prime.cur(), p_p);
+	      for_all (Q_prime)
+		if (is_proc(Q_prime))
+		  uni(Q_prime.cur(), p_p);
 	    }
 
 	  // Resolving phase
 	  image_type output(input_.size());
 	  for (int p = I.size() - 1; p >= 0; --p)
 	    {
-	      point_type p_p = I[p].first;
+	      point_type p_p = I[p];
 	      if ((parent_[p_p] == ACTIVE()) ||  (parent_[p_p] == INACTIVE()))
-		output[p_p] = I[p].second;
+		output[p_p] = input_[p_p];
 	      else
 		output[p_p] = output[parent_[p_p]];
 	      // this code is equivalent to
@@ -264,11 +216,24 @@ namespace oln {
 	  return output;
 	}
 
+      protected:
+	// tells if a point has been proceded
+	bool is_proc(const point_type &p) const
+	{
+	  //FIXME: odd way to call !=,  but it is to help the compiler
+	  //to find the good one  when ATTRIBUTE is templeted by types
+	  //in other namepaces.
+
+	  // return aux_data_[p] != ntg_max_val(lambda_type);
+	  return aux_data_[p].operator!=(ntg_sup_val(lambda_type));
+	};
+
+
 	const image_type & input_;
 	typename mute<T, point_type>::ret parent_;
 	typename mute<T, ATTRIBUTE>::ret aux_data_;
-	ATTRIBUTE lambda_;
-
+	lambda_type lambda_;
+	const env_type	env_;
       };
     }
   }

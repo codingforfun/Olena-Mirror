@@ -34,6 +34,76 @@ namespace oln {
   namespace morpho {
     namespace tarjan {
 
+      namespace internal {
+
+	// attribute closing
+	template<class I, class N, class A>
+	oln_concrete_type(I)
+	  attr_closing_(const abstract::non_vectorial_image<I>& input,
+			const abstract::neighborhood<N>& Ng,
+			const attr_lambda_type(A) lambda)
+	{
+	  typedef tarjan::tarjan_set<oln_concrete_type(I), A > tarjan_set_type;
+	  tarjan_set_type area_closing(input.exact(), attr_env_type(A)());
+	  return area_closing.get_comptute(lambda, Ng, true);
+	}
+
+	// attribute opening
+	template<class I, class N, class A>
+	oln_concrete_type(I)
+	  attr_opening_(const abstract::non_vectorial_image<I>& input,
+			const abstract::neighborhood<N>& Ng,
+			const attr_lambda_type(A) lambda)
+	{
+	  typedef tarjan::tarjan_set<oln_concrete_type(I), A > tarjan_set_type;
+	  tarjan_set_type area_opening(input.exact(), attr_env_type(A)());
+	  return area_opening.get_comptute(lambda , Ng, false);
+	}
+
+      } // !internal
+
+// macro for some attribute opening/closing declarations
+# define xxx_opening_decl(T) \
+      template<class I, class N> \
+      oln_concrete_type(I) \
+	T##_opening(const abstract::non_vectorial_image<I>& input, \
+		       const abstract::neighborhood<N>& Ng, \
+		       const attr_lambda_type(T##_type<unsigned>) lambda) \
+      { \
+	return internal::attr_opening_<I, N, T##_type<unsigned> >(input, Ng, lambda); \
+      }
+
+# define xxx_closing_decl(T) \
+      template<class I, class N> \
+      oln_concrete_type(I) \
+	T##_closing(const abstract::non_vectorial_image<I>& input, \
+		       const abstract::neighborhood<N>& Ng, \
+		       const attr_lambda_type(T##_type<unsigned>) lambda) \
+      { \
+	return internal::attr_closing_<I, N, T##_type<unsigned> >(input, Ng, lambda); \
+      }
+
+
+      // same as previous, but for attribute based on image types
+# define xxx_opening_im_decl(T) \
+      template<class I, class N> \
+      oln_concrete_type(I) \
+	T##_opening(const abstract::non_vectorial_image<I>& input, \
+		       const abstract::neighborhood<N>& Ng, \
+		       const attr_lambda_type(T##_type<I>) lambda) \
+      { \
+	return internal::attr_opening_<I, N, T##_type<I> >(input, Ng, lambda); \
+      }
+
+# define xxx_closing_im_decl(T) \
+      template<class I, class N> \
+      oln_concrete_type(I) \
+	T##_closing(const abstract::non_vectorial_image<I>& input, \
+		       const abstract::neighborhood<N>& Ng, \
+		       const attr_lambda_type(T##_type<I>) lambda) \
+      { \
+	return internal::attr_closing_<I, N, T##_type<I> >(input, Ng, lambda); \
+      }
 
       /*=processing area_closing
        * ns: morpho
@@ -53,19 +123,7 @@ namespace oln {
        * exi: lena256.pgm
        * exo: out.pgm
        =*/
-      template<class I, class N>
-      oln_concrete_type(I) 
-	area_closing(const abstract::non_vectorial_image<I>& input,
-		     const abstract::neighborhood<N>& Ng,
-		     const unsigned int area)
-      {
-	typedef T_attribute<unsigned int> area_type;
-
-	typedef tarjan::tarjan_set<oln_concrete_type(I), area_type > tarjan_set_type;
-	tarjan_set_type area_closing(input.exact());
-	return area_closing.get_comptute(area_type(area) , Ng, true);
-      }
-
+      xxx_closing_decl(area)
 
       /*=processing area_opening
        * ns: morpho
@@ -85,19 +143,22 @@ namespace oln {
        * exi: lena256.pgm
        * exo: out.pgm
        =*/
-      template<class I, class N>
-      oln_concrete_type(I) 
-	area_opening(const abstract::non_vectorial_image<I>& input,
-		     const abstract::neighborhood<N>& Ng,
-		     const unsigned int area)
-      {
-	typedef T_attribute<unsigned int> area_type;
+	xxx_opening_decl(area)
 
-	typedef tarjan::tarjan_set<oln_concrete_type(I), T_attribute<unsigned int> > tarjan_set_type;
-	tarjan_set_type area_closing(input.exact());
-	return area_closing.get_comptute(area_type(area) , Ng, false);
-      }
-
+	xxx_opening_decl(volume)
+	xxx_closing_decl(volume)
+	xxx_opening_decl(height)
+	xxx_closing_decl(height)
+	xxx_opening_decl(maxvalue)
+	xxx_closing_decl(maxvalue)
+	xxx_opening_decl(minvalue)
+	xxx_closing_decl(minvalue)
+	xxx_opening_im_decl(disk)
+	xxx_closing_im_decl(disk)
+	xxx_opening_im_decl(dist)
+	xxx_closing_im_decl(dist)
+	xxx_closing_im_decl(square)
+	xxx_opening_im_decl(square)
     }
   }
 }

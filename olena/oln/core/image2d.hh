@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -54,10 +54,10 @@ namespace oln {
   };
 
   template<class T, class Exact>
-  struct image_traits<image2d<T, Exact> >: 
-    public image_traits<image<image_id<image2d<T, Exact> >::dim, 
+  struct image_traits<image2d<T, Exact> >:
+    public image_traits<image<image_id<image2d<T, Exact> >::dim,
 			      typename image_id<image2d<T, Exact> >::value_type,
-			      typename image_id<image2d<T, Exact> >::impl_type, 
+			      typename image_id<image2d<T, Exact> >::impl_type,
 			      typename image_id<image2d<T, Exact> >::exact_type> >
   {};
 
@@ -65,39 +65,39 @@ namespace oln {
   // images with data ---conversely to proxy images
 
   template<class T, class Exact>
-  class image2d: 
-    public image<image_id<image2d<T, Exact> >::dim, 
-		 typename image_id<image2d<T, Exact> >::value_type, 
-		 typename image_id<image2d<T, Exact> >::impl_type, 
+  class image2d:
+    public image<image_id<image2d<T, Exact> >::dim,
+		 typename image_id<image2d<T, Exact> >::value_type,
+		 typename image_id<image2d<T, Exact> >::impl_type,
 		 typename image_id<image2d<T, Exact> >::exact_type>
   {
-    
+
   public:
 
     typedef image2d<T, Exact> self_type;
     typedef typename image_id<image2d<T, Exact> >::value_type value_type;
     typedef typename image_id<image2d<T, Exact> >::exact_type exact_type;
     typedef typename image_id<image2d<T, Exact> >::impl_type impl_type;
-    typedef oln::image<image_id<image2d<T, Exact> >::dim, 
-		       value_type, 
-		       impl_type, 
-		       exact_type> super_type;  
+    typedef oln::image<image_id<image2d<T, Exact> >::dim,
+		       value_type,
+		       impl_type,
+		       exact_type> super_type;
 
     friend class abstract::image<exact_type>;
 
-    image2d() : 
+    image2d() :
       super_type()
     {
       mlc_init_static_hierarchy(Exact);
     }
 
-    image2d(coord nrows, coord ncols, coord border = 2) : 
+    image2d(coord nrows, coord ncols, coord border = 2) :
       super_type(new impl_type(image2d_size(nrows, ncols, border)))
     {
       mlc_init_static_hierarchy(Exact);
     }
 
-    image2d(const image2d_size& size) : 
+    image2d(const image2d_size& size) :
       super_type(new impl_type(size))
     {
       mlc_init_static_hierarchy(Exact);
@@ -110,26 +110,26 @@ namespace oln {
     }
 
     // io
-    image2d(const io::internal::anything& r) 
+    image2d(const io::internal::anything& r)
       : super_type()
     {
       mlc_init_static_hierarchy(Exact);
       r.assign(*this);
     }
 
-    image2d& 
+    image2d&
     operator=(const io::internal::anything& r)
     {
       return r.assign(*this);
     }
-    
-    exact_type& 
+
+    exact_type&
     operator=(self_type rhs)
     {
       return this->exact().assign(rhs.exact());
     }
 
-    static std::string 
+    static std::string
     name()
     {
       return
@@ -148,7 +148,7 @@ namespace oln {
 
   protected:
 
-    self_type 
+    self_type
     clone_() const // deep copy
     {
       // FIXME: it may be really dangerous to instantiate a self_type
@@ -160,6 +160,11 @@ namespace oln {
 
   };
 
+  template <class T, class Exact>
+  struct dim_traits<2, T, Exact>
+  {
+    typedef image2d<T, Exact> img_type;
+  };
 } // end of oln
 
 #endif // ! OLENA_CORE_IMAGE2D_HH

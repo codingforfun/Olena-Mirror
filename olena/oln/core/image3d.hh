@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -54,10 +54,10 @@ namespace oln {
   };
 
   template<class T, class Exact>
-  struct image_traits<image3d<T, Exact> >: 
-    public image_traits<image<image_id<image3d<T, Exact> >::dim, 
+  struct image_traits<image3d<T, Exact> >:
+    public image_traits<image<image_id<image3d<T, Exact> >::dim,
 			      typename image_id<image3d<T, Exact> >::value_type,
-			      typename image_id<image3d<T, Exact> >::impl_type, 
+			      typename image_id<image3d<T, Exact> >::impl_type,
 			      typename image_id<image3d<T, Exact> >::exact_type> >
   {};
 
@@ -65,10 +65,10 @@ namespace oln {
   // images with data ---conversely to proxy images
 
   template<class T, class Exact>
-  class image3d: 
-    public image<image_id<image3d<T, Exact> >::dim, 
+  class image3d:
+    public image<image_id<image3d<T, Exact> >::dim,
 		 typename image_id<image3d<T, Exact> >::value_type,
-		 typename image_id<image3d<T, Exact> >::impl_type, 
+		 typename image_id<image3d<T, Exact> >::impl_type,
 		 typename image_id<image3d<T, Exact> >::exact_type>
   {
 
@@ -78,9 +78,9 @@ namespace oln {
     typedef typename image_id<image3d<T, Exact> >::value_type value_type;
     typedef typename image_id<image3d<T, Exact> >::exact_type exact_type;
     typedef typename image_id<image3d<T, Exact> >::impl_type impl_type;
-    typedef image<image_id<image3d<T, Exact> >::dim, 
-		  value_type, 
-		  impl_type, 
+    typedef image<image_id<image3d<T, Exact> >::dim,
+		  value_type,
+		  impl_type,
 		  exact_type> super_type;
 
     friend class abstract::image<exact_type>;
@@ -116,19 +116,19 @@ namespace oln {
       mlc_init_static_hierarchy(Exact);
       r.assign(*this);
     }
-    image3d& 
+    image3d&
     operator=(const io::internal::anything& r)
     {
       return r.assign(*this);
     }
 
-    exact_type& 
+    exact_type&
     operator=(self_type rhs)
     {
       return this->exact().assign(rhs.exact());
     }
 
-    static std::string 
+    static std::string
     name()
     {
       return
@@ -147,7 +147,7 @@ namespace oln {
 
   protected:
 
-    self_type 
+    self_type
     clone_() const // deep copy
     {
       // FIXME: it may be really dangerous to instantiate a self_type
@@ -159,6 +159,11 @@ namespace oln {
 
   };
 
+  template <class T, class Exact>
+  struct dim_traits<3, T, Exact>
+  {
+    typedef image3d<T, Exact> img_type;
+  };
 } // end of oln
 
 #endif // ! OLENA_CORE_IMAGE3D_HH
