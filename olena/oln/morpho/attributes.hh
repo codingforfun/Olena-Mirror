@@ -353,6 +353,7 @@ namespace oln {
       ** \brief Integral attribute.
       **
       ** It is equivalent to volume in 2D, and weight in 3D.
+      ** FIXME: Add math definition here.
       */
       template <class T = unsigned, class Exact = mlc::final>
       class integral_type:
@@ -386,8 +387,6 @@ namespace oln {
 	  integral_type(const abstract::image<I> &input,
 			const oln_point_type(I) &p,
 			const env_type &) :
-	  reflevel_(input[p]),
-	  area_(ntg_unit_val(value_type)),
 	  value_(input[p])
 	  {
 	  };
@@ -404,26 +403,6 @@ namespace oln {
 	    mlc_dispatch(getValue)();
 	  };
 
-	/*!
-	** \brief Accessor to the reference level.
-	**
-	** \see getReflevel_impl()
-	*/
-	const value_type &getReflevel() const
-	  {
-	    mlc_dispatch(getReflevel)();
-	  };
-
-	/*!
-	** \brief Accessor to the current area.
-	**
-	** \see getArea_impl()
-	*/
-	const value_type &getArea() const
-	  {
-	    mlc_dispatch(getArea)();
-	  };
-
 	// impl part
 	/*!
 	** \brief Implementation of getValue().
@@ -438,31 +417,6 @@ namespace oln {
 	    return value_;
 	  };
 
-	/*!
-	** \brief Implementation of getReflevel().
-	**
-	** Override this  method in  order to provide  a new  version of
-	** getReflevel().
-	**
-	** \warning Do not call this method, use getReflevel() instead.
-	*/
-	const value_type &getReflevel_impl() const
-	  {
-	    return reflevel_;
-	  };
-
-	/*!
-	** \brief Implementation of getArea().
-	**
-	** Override this  method in  order to provide  a new  version of
-	** getArea().
-	**
-	** \warning Do not call this method, use getArea() instead.
-	*/
-	const value_type &getArea_impl() const
-	  {
-	    return area_;
-	  };
 
 	/*!
 	** \brief += operator implementation.
@@ -473,8 +427,7 @@ namespace oln {
 	*/
 	void pe_impl(const self_type &rhs)
 	  {
-	    value_ += rhs.getValue() + area_ * tools::diffabs(reflevel_, rhs.getReflevel());
-	    area_ += rhs.getArea();
+	    value_ += rhs.getValue();
 	  };
 
 	/*!
@@ -502,8 +455,6 @@ namespace oln {
 	  };
 
       protected:
-	value_type reflevel_; ///< Reference level.
-	value_type area_; ///< Current area.
 	value_type value_; ///< Current value (deduced from area and level).
       };
 

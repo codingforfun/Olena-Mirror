@@ -1,3 +1,7 @@
+2004-05-15  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* olena/oln/morpho/attributes.hh (integral): Change the function.
+
 2004-05-14  Niels Van Vliet  <niels@lrde.epita.fr>
 
 	* olena/oln/morpho/attributes.hh (integral): Fix a bug in the

@@ -1,14 +1,13 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 184)
-(Parent-Version oln 10 183)
-(Version-Log "2004-05-14  Niels Van Vliet  <niels@lrde.epita.fr>
-	* olena/oln/morpho/attributes.hh (integral): Fix a bug in the
-	constructor.
+(Project-Version oln 10 185)
+(Parent-Version oln 10 184)
+(Version-Log "2004-05-15  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/morpho/attributes.hh (integral): Change the function.
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 14 May 2004 20:29:58 +0200")
+(Checkin-Time "Sat, 15 May 2004 19:16:56 +0200")
 (Checkin-Login van-vl_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -115,7 +114,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.12 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.45 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.42 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.1 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.2 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.13 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.39 600))
 
@@ -1184,7 +1183,7 @@
 ;; Files added by populate at Fri, 06 Feb 2004 16:00:19 +0100,
 ;; to version 10.57(w), by palma_g:
 
-  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.13.1.1 600))
+  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.13.1.2 600))
 
 ;; Files added by populate at Tue, 10 Feb 2004 15:26:15 +0100,
 ;; to version 10.62(w), by palma_g:
