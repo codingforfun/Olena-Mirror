@@ -28,7 +28,8 @@
 #ifndef OLENA_VALUE_OPTRAITS_CYCLE_HH
 # define OLENA_VALUE_OPTRAITS_CYCLE_HH
 
-
+# include <oln/config/system.hh>
+# include <oln/meta/type.hh>
 # include <oln/types/to_oln.hh>
 # include <oln/types/cycle.hh>
 # include <oln/types/optraits.hh>
@@ -67,12 +68,34 @@ namespace oln
     static interval_type sup()
     { return interval::sup(); }
 
+    struct cycle_fmod
+    {
+      static double exec (double lhs, double rhs)
+      {
+	return fmod(lhs, rhs);
+      }
+    };
+
+    template <class U>
+    struct cycle_mod
+    {
+      static U exec (const U& lhs, const U& rhs)
+      {
+	return lhs % rhs;
+      }
+    };    
+
     // behaviour's check
 
     template <class P>
     static store_type check(const P& rhs)
     { 
-      typename internal::to_oln<P>::ret tmp = rhs % (max() - min());
+      typedef typename meta::if_<is_a(optraits<P>, optraits_float)::ret,
+	                         cycle_fmod,
+	                         cycle_mod<P> >::ret_t cycle_op;;
+      typename internal::to_oln<P>::ret 
+	tmp = cycle_op::exec(abs(rhs), max() - min());
+      if (rhs < 0) tmp = -tmp;
 
       if (tmp < min())
 	return max() - min() + tmp;

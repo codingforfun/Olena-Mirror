@@ -153,7 +153,7 @@ namespace oln
   const T& operator++(T& val)
   {
     val += optraits<T>::unit();
-    return rhs;
+    return val;
   }
 
   template<class T> inline
@@ -176,7 +176,7 @@ namespace oln
   const T& operator--(T& val)
   {
     val -= optraits<T>::unit();
-    return rhs;
+    return val;
   }
 
   template<class T> inline

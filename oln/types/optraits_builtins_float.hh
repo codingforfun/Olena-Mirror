@@ -62,85 +62,82 @@ namespace oln
   namespace internal
   {
 
+    struct all_float_traits
+    {
+      enum { commutative = true };
+      typedef float ret;
+      typedef float impl;      
+    };
+
     //
     // plus
     //
 
     template <unsigned nbits, class B>
-    struct operator_plus_traits<float, int_u<nbits, B> >
-    {
-      enum { commutative = true };
-      typedef float ret;
-      typedef float impl;
-    };
+    struct operator_plus_traits<float, int_u<nbits, B> > : all_float_traits {};
 
     template <unsigned nbits, class B>
-    struct operator_plus_traits<float, int_s<nbits, B> >
-    {
-      enum { commutative = true };
-      typedef float ret;
-      typedef float impl;
-    };
+    struct operator_plus_traits<float, int_s<nbits, B> > : all_float_traits {};
+
+    // We need this because to_oln<float> gives float.
+    // So when using cycle<float,..> + float, it searches 
+    // operator_plus_traits<float,float>    
+    template <>
+    struct operator_plus_traits<float, float> : all_float_traits {};    
 
     //
     // minus
     //
 
     template <unsigned nbits, class B>
-    struct operator_minus_traits<float, int_u<nbits, B> >
-    {
-      enum { commutative = true };
-      typedef float ret;
-      typedef float impl;
-    };
+    struct operator_minus_traits<float, int_u<nbits, B> > : all_float_traits {};
 
     template <unsigned nbits, class B>
-    struct operator_minus_traits<float, int_s<nbits, B> >
-    {
-      enum { commutative = true };
-      typedef float ret;
-      typedef float impl;
-    };
+    struct operator_minus_traits<float, int_s<nbits, B> > : all_float_traits {};
+
+    template <>
+    struct operator_minus_traits<float, float> : all_float_traits {};
 
     //
     // times
     //
 
     template <unsigned nbits, class B>
-    struct operator_times_traits<float, int_u<nbits, B> >
-    {
-      enum { commutative = true };
-      typedef float ret;
-      typedef float impl;
-    };
+    struct operator_times_traits<float, int_u<nbits, B> > : all_float_traits {};
 
     template <unsigned nbits, class B>
-    struct operator_times_traits<float, int_s<nbits, B> >
-    {
-      enum { commutative = true };
-      typedef float ret;
-      typedef float impl;
-    };
+    struct operator_times_traits<float, int_s<nbits, B> > : all_float_traits {};
+
+    template <>
+    struct operator_times_traits<float, float> : all_float_traits {};
 
     //
     // div
     //
 
     template <unsigned nbits, class B>
-    struct operator_div_traits<float, int_u<nbits, B> >
-    {
-      enum { commutative = true };
-      typedef float ret;
-      typedef float impl;
-    };
+    struct operator_div_traits<float, int_u<nbits, B> > : all_float_traits {};
 
     template <unsigned nbits, class B>
-    struct operator_div_traits<float, int_s<nbits, B> >
-    {
-      enum { commutative = true };
-      typedef float ret;
-      typedef float impl;
-    };
+    struct operator_div_traits<float, int_s<nbits, B> > : all_float_traits {};
+
+    template <>
+    struct operator_div_traits<float, float> : all_float_traits {};
+
+
+    //
+    // Comparison
+    //
+
+    template <unsigned nbits, class B>
+    struct operator_cmp_traits<float, int_u<nbits, B> > : all_float_traits {};
+
+    template <unsigned nbits, class B>
+    struct operator_cmp_traits<float, int_s<nbits, B> > : all_float_traits {};
+    
+
+    template <>
+    struct operator_cmp_traits<float, float> : all_float_traits {};
 
   } // end of namespace internal
 
@@ -166,85 +163,93 @@ namespace oln
   namespace internal
   {
 
+    struct all_double_traits
+    {
+      enum { commutative = true };
+      typedef double ret;
+      typedef double impl;
+    };
+
     //
     // plus
     //
 
     template <unsigned nbits, class B>
-    struct operator_plus_traits<double, int_u<nbits, B> >
-    {
-      enum { commutative = true };
-      typedef double ret;
-      typedef double impl;
-    };
+    struct operator_plus_traits<double, int_u<nbits, B> > : all_double_traits {};
 
     template <unsigned nbits, class B>
-    struct operator_plus_traits<double, int_s<nbits, B> >
-    {
-      enum { commutative = true };
-      typedef double ret;
-      typedef double impl;
-    };
+    struct operator_plus_traits<double, int_s<nbits, B> > : all_double_traits {};
+
+    template <>
+    struct operator_plus_traits<double, double> : all_double_traits {};
+
+    template <>
+    struct operator_plus_traits<double, float> : all_double_traits {};
 
     //
     // minus
     //
 
     template <unsigned nbits, class B>
-    struct operator_minus_traits<double, int_u<nbits, B> >
-    {
-      enum { commutative = true };
-      typedef double ret;
-      typedef double impl;
-    };
+    struct operator_minus_traits<double, int_u<nbits, B> > : all_double_traits {};
 
     template <unsigned nbits, class B>
-    struct operator_minus_traits<double, int_s<nbits, B> >
-    {
-      enum { commutative = true };
-      typedef double ret;
-      typedef double impl;
-    };
+    struct operator_minus_traits<double, int_s<nbits, B> > : all_double_traits {};
+
+    template <>
+    struct operator_minus_traits<double, double> : all_double_traits {};
+
+    template <>
+    struct operator_minus_traits<double, float> : all_double_traits {};
 
     //
     // times
     //
 
     template <unsigned nbits, class B>
-    struct operator_times_traits<double, int_u<nbits, B> >
-    {
-      enum { commutative = true };
-      typedef double ret;
-      typedef double impl;
-    };
+    struct operator_times_traits<double, int_u<nbits, B> > : all_double_traits {};
 
     template <unsigned nbits, class B>
-    struct operator_times_traits<double, int_s<nbits, B> >
-    {
-      enum { commutative = true };
-      typedef double ret;
-      typedef double impl;
-    };
+    struct operator_times_traits<double, int_s<nbits, B> > : all_double_traits {};
+
+    template <>
+    struct operator_times_traits<double, double> : all_double_traits {};
+
+    template <>
+    struct operator_times_traits<double, float> : all_double_traits {};
 
     //
     // div
     //
 
     template <unsigned nbits, class B>
-    struct operator_div_traits<double, int_u<nbits, B> >
-    {
-      enum { commutative = true };
-      typedef double ret;
-      typedef double impl;
-    };
+    struct operator_div_traits<double, int_u<nbits, B> > : all_double_traits {};
 
     template <unsigned nbits, class B>
-    struct operator_div_traits<double, int_s<nbits, B> >
-    {
-      enum { commutative = true };
-      typedef double ret;
-      typedef double impl;
-    };
+    struct operator_div_traits<double, int_s<nbits, B> > : all_double_traits {};
+
+    template <>
+    struct operator_div_traits<double, double> : all_double_traits {};
+
+    template <>
+    struct operator_div_traits<double, float> : all_double_traits {};
+
+    //
+    // Comparison
+    //
+
+    template <unsigned nbits, class B>
+    struct operator_cmp_traits<double, int_u<nbits, B> > : all_double_traits {};
+
+    template <unsigned nbits, class B>
+    struct operator_cmp_traits<double, int_s<nbits, B> > : all_double_traits {};
+
+    template <>
+    struct operator_cmp_traits<double, double> : all_double_traits {};
+
+    template <>
+    struct operator_cmp_traits<double, float> : all_double_traits {};
+    
 
   } // end of namespace internal
 

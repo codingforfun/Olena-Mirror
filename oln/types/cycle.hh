@@ -105,6 +105,13 @@ namespace oln
     operator base_store_type() const { return _value; }
   };
 
+  //
+  //  dev note
+  //
+  //  Arithmetic and other binary operators use base_type, 
+  //  check typetraits<cycle>::op_traits
+  //
+
 } // end of namespace oln
 
 #endif // ndef OLENA_VALUE_CYCLE_HH
