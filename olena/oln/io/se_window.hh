@@ -47,9 +47,9 @@ namespace oln {
 	  return false;
 	if (!(im.ncols() % 2) || !(im.nrows() % 2))
 	  {
-	    std::clog << "[both image dimensions have to be odd for a"
-		      << "window2d]"
-		      << std::flush;
+	    // std::clog << "[both image dimensions have to be odd for a"
+	    //	      << "window2d]"
+	    //	      << std::flush;
 	    return false;
 	  }
 	image2d<ntg::bin>::fwd_iter_type it(im);

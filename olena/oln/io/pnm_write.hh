@@ -108,7 +108,7 @@ namespace oln {
 	    return false;
 
 	  if (!pnm_write_data<PnmBinary, W>::write(out, im, info))
-	    std::clog << "Unable to write data!" << std::endl;
+	    ; // std::clog << "Unable to write data!" << std::endl;
 	  return true;
 	}
       };
@@ -151,7 +151,7 @@ namespace oln {
 	    return false;
 
 	  if (!pnm_write_data<PnmInteger, W>::write(out, im, info))
-	    std::clog << "Unable to write data!" << std::endl;
+	    ; // std::clog << "Unable to write data!" << std::endl;
 	  return true;
 	}
       };
@@ -200,7 +200,7 @@ namespace oln {
 	    return false;
 	  
 	  if (!pnm_write_data<PnmVectorial, W>::write(out, im, info))
-	    std::clog << "Unable to write data!" << std::endl;
+	    ; // std::clog << "Unable to write data!" << std::endl;
 	  return true;
 	}
       };

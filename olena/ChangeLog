@@ -1,3 +1,9 @@
+2003-07-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/io/pnm_write.hh, oln/io/se_neighborhood.hh,
+	oln/io/se_window.hh, oln/io/image_write.hh, oln/io/image_read.hh:
+	Disable output on std::clog.
+
 2003-07-28  Giovanni Palma  <giovanni.palma@lrde.epita.fr>
 
 	* oln/convert/conversion.hh,
