@@ -1,7 +1,7 @@
 #ifndef PROTO_OLN_CORE_ABSTRACT_SIZE_HH
 # define PROTO_OLN_CORE_ABSTRACT_SIZE_HH
 
-#include <mlc/any.hh>
+# include <mlc/any.hh>
 
 namespace oln {
 

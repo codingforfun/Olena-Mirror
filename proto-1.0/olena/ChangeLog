@@ -1,0 +1,8 @@
+2005-01-21  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* ChangeLog: New.
+	* oln/makefile.src: Adds file dependencies.
+	* oln/core/abstract/iter.hh: New.
+	* oln/core/abstract/size.hh: Adapts to coding style.
+	* oln/core/2d/iter2d.hh: New.
+

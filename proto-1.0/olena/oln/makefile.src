@@ -6,6 +6,7 @@
 OLN_DEP =					\
   core/2d/array2d.hh				\
   core/2d/image2d.hh				\
+  core/2d/iter2d.hh				\
   core/2d/point2d.hh				\
   core/2d/size2d.hh				\
   core/abstract/data_storage.hh			\
@@ -14,6 +15,7 @@ OLN_DEP =					\
   core/abstract/image_with_data.hh		\
   core/abstract/images.hh			\
   core/abstract/internal/image_impl.hh		\
+  core/abstract/iter.hh				\
   core/abstract/point.hh			\
   core/abstract/size.hh				\
   core/cats.hh					\
@@ -22,4 +24,3 @@ OLN_DEP =					\
   core/props.hh					\
   core/tags.hh					\
   core/value_box.hh
-
