@@ -5,10 +5,29 @@
 #if HAVE_ZLIB
 # include <oln/io/gz.hh>
 #endif
+# include <oln/io/se.hh>
 #include "check.hh"
 
 using namespace oln;
 using namespace std;
+
+template<typename T>
+static bool compare(const T& a, const T& b)
+{
+  return level::is_equal(a, b);
+}
+
+template<>
+static bool compare(const window2d& a, const window2d& b)
+{
+  return a == b;
+}
+
+template<>
+static bool compare(const neighborhood2d& a, const neighborhood2d& b)
+{
+  return a == b;
+}
 
 template< typename T >
 static bool
@@ -36,7 +55,7 @@ loadsave(const string& name, const string& savename)
       else
 	{
 	  cout << "OK" << endl << "  integrity " << flush;
-	  if (level::is_equal(im, im2))
+	  if (compare(im, im2))
 	    cout << "OK";
 	  else
 	    {
@@ -60,7 +79,7 @@ loadsave(const string& name, const string& savename)
 	      else
 		{
 		  cout << "OK" << endl << "  compare " << flush;
-		  if (level::is_equal(im2, im))
+		  if (compare(im2, im))
 		    cout << "OK";
 		  else
 		    {

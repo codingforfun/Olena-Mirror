@@ -14,7 +14,10 @@ SUBDIRS = . check \
 # SOURCEDATA should never be erased, they are needed to generate
 # BUILTDATA.  SOURCEDATA are the only data files worth to keep under
 # version control.
-SOURCEDATA = data/lena.ppm data/random.pgm
+SOURCEDATA =					\
+  data/lena.ppm data/random.pgm			\
+  data/se.pbm data/se9.pbm			\
+  data/neighbor.pbm data/neighbor9.pbm
 
 # BUILTDATA are generated from SOURCEDATA and can be erased
 # by maintainer-clean.
@@ -27,7 +30,13 @@ BUILTDATA =					\
   data/lena.ppgm				\
   data/lena.ppm.gz				\
   data/lena.pppm				\
-  data/lena128.pgm
+  data/lena128.pgm				\
+  data/se.ppbm					\
+  data/se9.ppbm					\
+  data/se9.pbm.gz				\
+  data/neighbor.ppbm				\
+  data/neighbor9.ppbm				\
+  data/neighbor9.pbm.gz
 
 MAINTAINERCLEANFILES = $(BUILTDATA)
 

@@ -100,4 +100,7 @@ int main()
        "lena-gd1.pgm");
   save(convol::fast::gaussian_second_derivative(lena, dfloat(0.50f)),
        "lena-gd2.pgm");
+
+  window2d face_se = load("../img/face_se.pbm");
+  save(morpho::fast::opening(lena,  face_se), "lena-ope-f-face.pgm");
 }

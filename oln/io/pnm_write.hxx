@@ -140,18 +140,18 @@ namespace oln {
 	      c += (im[it] == true ? 0 : 1);
 	      if (++cols >= im.ncols())
 		{
+		  c <<= (8 - stride - 1);
 		  out << c;
-		  cols = stride = 0;
+		  c = cols = stride = 0;
 		}
 	      else
 		if (++stride >= 8)
 		  {
 		    out << c;
-		    stride = 0;
+		    c = stride = 0;
 		  }
 	    }
-	  if (stride > 0)
-	    out << c;
+	  assertion(stride == 0);
 	  return true;
 	}
       };

@@ -1,4 +1,4 @@
-// Copyright 2001  EPITA Research and Development Laboratory
+// Copyright 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,25 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_BASICS2D_HH
-# define OLENA_BASICS2D_HH
+#ifndef OLENA_IO_SE_HH_
+# define OLENA_IO_SE_HH_
 
-# include "basics.hh"
+# include <oln/io/se_window.hxx>
+# include <oln/io/se_neighborhood.hxx>
 
-# include "core/point2d.hh"
-# include "core/dpoint2d.hh"
-# include "core/image2d.hh"
-# include "core/border2d.hh"
 
-# include "core/window2d.hh"
-# include "core/w_window2d.hh"
-# include "core/neighborhood2d.hh"
-
-# include "core/fwd_iter2d.hh"
-# include "core/bkd_iter2d.hh"
-
-# include "io/basics.hh"
-# include "io/pnm.hh"
-# include "io/se.hh"
-
-#endif // ! OLENA_BASICS2D_HH
+#endif // OLENA_IO_SE_HH_

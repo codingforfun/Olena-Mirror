@@ -163,7 +163,7 @@ namespace oln {
 		}
 	      im[it] = (c & (1 << --bits)) ? false : true;
 	      if (++cols >= im.ncols())
-		cols = bits = 0;
+		c = cols = bits = 0;
 	    }
 	  return true;
 	}

@@ -77,13 +77,21 @@ namespace oln {
       {
 	return std::string("_window<") + Inferior::name() + ">";
       }
-
+      
+      bool operator==(const self& win) const
+      {
+	for (typename std::vector<dpoint>::const_iterator it = _dp.begin(); it != _dp.end(); ++it)
+	  if (find(win._dp.begin(), win._dp.end(), *it) == win._dp.end())
+	    return false;
+	return true;
+      }
+      
     protected:
       _window()
       {
 	_centered = false;
       }
-
+      
       _window(unsigned size)
       {
 	_dp.reserve(size);

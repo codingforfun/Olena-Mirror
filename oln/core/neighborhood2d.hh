@@ -32,6 +32,7 @@
 # include <oln/core/winiter.hh>
 # include <oln/core/accum.hh>
 # include <oln/core/window2d.hh>
+# include <oln/io/readable.hh>
 # include <algorithm>
 
 namespace oln {
@@ -70,6 +71,16 @@ namespace oln {
       _centered = false;
       for (unsigned i = 0; i < 2 * n; i += 2)
 	add(dpoint2d(crd[i], crd[i+1]));
+    }
+
+    // io
+    neighborhood2d(const io::internal::anything& r) : super(), _delta(0)
+    {
+      r.assign(*this);
+    }
+    neighborhood2d& operator=(const io::internal::anything& r)
+    {
+      return r.assign(*this);
     }
 
     coord delta() const
