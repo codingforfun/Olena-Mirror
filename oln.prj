@@ -1,19 +1,11 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_4 28)
-(Parent-Version oln 0_4 27)
-(Version-Log "2002-07-18  Astrid Wang  <astrid@lrde.epita.fr>
-
-	* oln/convert/stretch.hh: New file.
-	* oln/Makefile.am (nobase_oln_HEADERS): Add convert/stretch.hh.
-	* oln/convert/basics.hh: Include <oln/convert/stretch.hh>.
-
-	* oln/convol/convolution.hh: Typo (rewrite the FIXME as required).
-	* oln/core/type.hh (type): Typo (rewrite the FIXME as required).
-")
+(Project-Version oln 0_4 29)
+(Parent-Version oln 0_4 28)
+(Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Thu, 18 Jul 2002 21:05:39 +0200")
+(Checkin-Time "Thu, 18 Jul 2002 21:14:28 +0200")
 (Checkin-Login astrid)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -410,6 +402,11 @@
 ;; to version 0_4.26(w), by duret_g:
 
   (tests/defs.in (oln/f/49_defs.in 1.1 644))
+
+;; Files added by populate at Thu, 18 Jul 2002 21:13:31 +0200,
+;; to version 0_4.28(w), by astrid:
+
+  (oln/convert/stretch.hh (oln/f/51_stretch.hh 1.1 664))
 )
 (Merge-Parents)
 (New-Merge-Parents)

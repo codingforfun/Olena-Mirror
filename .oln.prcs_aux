@@ -176,6 +176,7 @@
 (tests/sanity/includes.test 640 1027017573 f/46_includes.t 1.1)
 (tests/check/srcdir.cc 373 1026316442 e/38_srcdir.cc 1.4)
 (oln/core/old/image2d.hxx 5905 1026899980 c/51_image2d.hx 1.2)
+(oln/convert/stretch.hh 2265 1027019668 f/51_stretch.hh 1.1)
 (tests/check/data.cc 272 1019640100 f/5_data.cc 1.2)
 (oln/meta/array2d.hxx 7058 1026899980 f/20_array2d.hx 1.2)
 (oln/value/rec_int.hh 3514 1026899980 b/37_rec_int.hh 1.2)
