@@ -1,3 +1,9 @@
+2002-05-23  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/config/system.hh (__STL_BEGIN_RELOPS_NAMESPACE,
+	__STL_END_RELOPS_NAMESPACE): Redefine if needed.
+	* configure.ac: Check for stl_config.h.
+
 2002-05-21  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* src/morpho/dilation.hh (n_dilation): Declare input.
