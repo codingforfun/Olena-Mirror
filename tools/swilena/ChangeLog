@@ -1,3 +1,9 @@
+2004-10-04  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* tools/swilena/meta/swilena_structelt.i: Fix a bug.
+	* tools/swilena/doc/swilena.texi: Fix a bug.
+	* tools/swilena/python/Makefile.am: Add clean_local.
+
 2004-01-26  Astrid Wang  <astrid@lrde.epita.fr>
 
 	* doc/swilena.texi: Fix body.

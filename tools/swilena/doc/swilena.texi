@@ -45,7 +45,9 @@ wrappers around the image processing library Olena.
 
 @node Introduction
 @chapter Introduction
-
+@menu
+* Using Swilena for Olena development::
+@end menu
 Swilena aims at providing interpreted languages access to the Olena
 image software processing library. In order to reach this goal,
 it relies on SWIG to create interfaces to Olena in different languages.
@@ -104,7 +106,10 @@ Scheme.
 Currently, the source tree only knows about Python and Ruby, but this
 may evolve in the future.
 
-@unnumberedsubsec Using Swilena for Olena development
+@c FIXME: The section should be unnumbered (using @unnumberedsubsec).
+@node Using Swilena for Olena development
+@section Using Swilena for Olena development
+
 
 Obviously, Swilena provides the developer with a programming framework
 around Olena that has much shorter development cycles: new algorithms
