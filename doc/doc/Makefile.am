@@ -1,7 +1,10 @@
 noinst_DATA = oln-ref.ps oln-ref.pdf html/oln-ref.html
 
 tex_TEX = oln-ref.tex
-oln_ref_TEX = ref-morpho.tex ref-level.tex
+oln_ref_TEX = \
+  ref-morpho.tex \
+  ref-level.tex \
+  ref-types.tex
 
 TEXI2PDF = $(TEXI2DVI) --pdf
 

@@ -1,11 +1,27 @@
 \documentclass{book}
 \usepackage{graphicx}
 \usepackage{hevea}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{float}
 
 \newcommand\var\textit
-\newcommand\code\texttt
+%\newcommand\code\texttt
+%BEGIN latex
+\newcommand{\code}[1]{{\small{\begingroup \Url{#1}}}}
+%END latex
+%HEVEA \let\code\texttt
+
+%% The \begin{itemize} cannot nest more than 4 level by default.
+%% We need 5.
+\makeatletter
+\chardef\thr@@=5
+\makeatother
 
 \begin{document}
+
+\lstset{language=C++}
+
 \title{Olena Reference Manual}
 \author{EPITA Reserch and Development Laboratory}
 \date{FIXME:}
@@ -50,6 +66,14 @@ The \texttt{demo/} directory contains a few sample programs that may be
 worth looking at before digging the source or sending us an email
 (\texttt{olena@lrde.epita.fr}).
 
+
+\chapter{Core library}
+
+This chapter documents the core of the Olena library.
+
+\section{Basic types}
+
+\input{ref-types.tex}
 
 \chapter{Processings}
 
