@@ -62,7 +62,7 @@ OLN_COLLECTION([OLN_TOP],
      AC_CACHE_CHECK([whether to re-generate manual pages from programs],
                     [oln_cv_regen_manpages],
                     [oln_cv_regen_manpages=no
-                     if test "x$ac_cv_prog_HELP2MAN" != xno; then
+                     if test "x$HELP2MAN" != "x$am_aux_dir/missing help2man"; then
                         oln_cv_regen_manpages=yes
                      fi
                      AC_ARG_ENABLE([manpages-regen],
