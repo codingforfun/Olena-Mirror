@@ -1,3 +1,9 @@
+2002-07-24  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* ISSUES: Mention runtimes of `make check' and the `const image'
+	issue.
+	* NEWS, THANKS, README: Update for next release.
+
 2002-07-23  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* demo/tour.cc: Include oln/convert/basics.hh.

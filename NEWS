@@ -1,3 +1,17 @@
+Olena
+
+	* Documentation in LaTeX (instead of Texinfo).
+	* Support reading/writing gziped images
+	  (include <oln/io/gz.hh> and link with libz).
+	* Complete rewrite of the static arrays
+	  (meta::array1d, meta::array2d, meta::array3d).
+	* Preliminary implementation of convolutions
+	  (oln::convol::convolve)
+	* All headers should now be referenced with the `oln/' prefix,
+	  as in `#include <oln/basics2d.hh>'.
+	* New conversion operator: convert::stretch.
+	* Many bug fixes.
+
 Olena 0.4.1	April 25, 2002
 
 	* Buglet in the 0.4 Makefiles.

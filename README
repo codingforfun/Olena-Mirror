@@ -1,13 +1,5 @@
-This is the third public release of Olena, a generic image processing
+This is the fifth public release of Olena, a generic image processing
 library in C++.
-
-This release accompanies the following article
-
-  Generic Implementation of Morphological Image Operators,
-  Jérôme Darbon, Thierry Géraud, and Alexandre Duret-Lutz,
-  submitted to International Symposium On Mathematical Morphology VI
-  (ISMM 2002), April 3-5, 2002, Sydney, Australia.
-
 
 Olena is a project developed by the EPITA Research and Development
 Laboratory (www.lrde.epita.fr) since 1997.  We did numerous prototypes
@@ -35,7 +27,7 @@ or <olena-bugs@lrde.epita.fr>.
 
 ----------------------------------------------------------------------
 
-This code has been tested with GCC 2.95.3 and GCC 3.0.2.
+This code has been tested with GCC 2.95.3, GCC 3.0.4, and GCC 3.1.
 
 To compile the libray, run
 
@@ -75,8 +67,8 @@ using an option like -ftemplate-depth-50.
 
 Finally, the tests/ directory contains a few programs that ensure some
 features of the library behave as expected.  You can run them using
-`make check' at the top directory.  If you have to work in this area,
-please read tests/README.
+`make check' from the top directory (be prepared to wait).  If you
+have to work in this area, please read tests/README.
 
 ----------------------------------------------------------------------
 
@@ -115,6 +107,11 @@ related papers:
   IASTED International Conference on Applied Informatics (AI'2001) --
   Symposium Advances in Computer Applications, ACTA Press, pages
   577-581, Innsbruck, Austria, February 2001.
+
+* Generic Implementation of Morphological Image Operators,
+  Jérôme Darbon, Thierry Géraud, and Alexandre Duret-Lutz,
+  submitted to International Symposium On Mathematical Morphology VI
+  (ISMM 2002), April 3-5, 2002, Sydney, Australia.
 
 
 You can download these papers and related materials from

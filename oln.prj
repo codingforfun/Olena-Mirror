@@ -1,15 +1,16 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_4 33)
-(Parent-Version oln 0_4 32)
-(Version-Log "2002-07-23  Alexandre Duret-Lutz  <duret_g@epita.fr>
+(Project-Version oln 0_4 34)
+(Parent-Version oln 0_4 33)
+(Version-Log "2002-07-24  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-	* demo/tour.cc: Include oln/convert/basics.hh.
-
+	* ISSUES: Mention runtimes of `make check' and the `const image'
+	issue.
+	* NEWS, THANKS, README: Update for next release.
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 23 Jul 2002 11:22:09 +0200")
+(Checkin-Time "Wed, 24 Jul 2002 18:01:16 +0200")
 (Checkin-Login adl)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -77,14 +78,14 @@
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.13 644))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.13 600))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.14 600))
   (configure.ac (oln/3_configure. 1.16 600))
   (configure (oln/e/7_configure 1.20 700))
-  (README (oln/1_README 1.3 600))
-  (ISSUES (oln/d/47_ISSUES 1.2 600))
+  (README (oln/1_README 1.4 600))
+  (ISSUES (oln/d/47_ISSUES 1.3 600))
   (Makefile.am (oln/2_Makefile.a 1.9 600))
   (Makefile.in (oln/e/9_Makefile.i 1.20 644))
-  (NEWS (oln/0_NEWS 1.5 600))
+  (NEWS (oln/0_NEWS 1.6 600))
 
   (demo/image.cc (oln/d/46_image.cc 1.2 600))
   (demo/Makefile.am (oln/d/44_Makefile.a 1.4 600))
@@ -384,7 +385,7 @@
   (tests/morpho/Makefile.in (oln/e/33_Makefile.i 1.15 644))
   (tests/morpho/reconstruction.cc (oln/e/34_reconstruc 1.5 600))
   (tests/README (oln/f/4_README 1.2 600))
-  (THANKS (oln/4_THANKS 1.1 600))
+  (THANKS (oln/4_THANKS 1.2 600))
   (tools/ChangeLog (oln/e/18_ChangeLog 1.1 600))
   (tools/depcomp (oln/e/12_depcomp 1.6 755))
   (tools () :directory)
