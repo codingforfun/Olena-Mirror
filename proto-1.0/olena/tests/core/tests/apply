@@ -1,0 +1,22 @@
+							// -*- C++ -*-
+#include <functional>
+#include <oln/basics2d.hh>
+#include <oln/core/apply.hh>
+#include <oln/level/fill.hh>
+#include <oln/level/compare.hh>
+#include <ntg/int.hh>
+
+
+bool check()
+{
+   oln::image2d<ntg::int_u8> ima1(10, 10);
+   oln::level::fill(ima1, 10);
+   oln::image2d<ntg::int_u8> ima2(10, 10);
+   oln::level::fill(ima2, 30);
+   oln::image2d<ntg::int_u8> ima;
+   ima = oln::apply (std::bind2nd(std::multiplies<ntg::int_u8>(), 3), ima1);
+
+   if (oln::level::is_equal(ima, ima2))
+     return false;
+   return true;
+}

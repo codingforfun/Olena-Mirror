@@ -1,4 +1,4 @@
-// Copyright (C) 2005 EPITA Research and Development Laboratory
+// Copyright (C)  2005  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,67 +25,23 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_IMAGE_DIMENSION_HH
-# define OLENA_CORE_ABSTRACT_IMAGE_DIMENSION_HH
+#ifndef OLENA_CORE_CH_VALUE_TYPE_HH
+# define OLENA_CORE_CH_VALUE_TYPE_HH
 
-# include <oln/core/abstract/image.hh>
+# include <oln/core/properties.hh>
 
-/*! \namespace oln
-** \brief oln namespace.
-*/
 namespace oln {
 
-  /*! \namespace oln::abstract
-  ** \brief oln::abstract namespace.
-  */
-  namespace abstract {
-
-    /*! \class abstract::image1d<E>
-    **
-    ** Class of 1d images.
-    */
-    template <typename E>
-    struct image1d : public virtual image<E>
-    {
-    protected:
-
-      /*! \brief Constructor (protected, empty).
-      */
-      image1d() {}
-    };
-
-    /*! \class abstract::image2d<E>
-    **
-    ** Class of 2d images.
-    */
-    template <typename E>
-    struct image2d : public virtual image<E>
-    {
-    protected:
-
-      /*! \brief Constructor (protected, empty).
-      */
-      image2d() {}
-    };
- 
-    /*! \class abstract::image3d<E>
-    **
-    ** Class of 3d images.
-    */
-    template <typename E>
-    struct image3d : public virtual image<E>
-    {
-    protected:
-
-      /*! \brief Constructor (protected, empty).
-      */
-      image3d() {}
-    };
- 
- 
-  } // end of namespace oln::abstract
+  template<class I, class T = oln_type_of(I, value)>
+  struct ch_value_type
+  {
+    // FIXME: Use/extend oln/core/properties.hh mechanisms, instead of
+    // using mlc/properties.hh directly.
+    typedef typename
+      internal::get_props<category::image, I>::template ch_value_type<T>::ret
+      ret;
+  };
 
 } // end of namespace oln
- 
 
-#endif // ! OLENA_CORE_ABSTRACT_IMAGE_DIMENSION_HH
+#endif // ! OLENA_CORE_CH_VALUE_TYPE_HH

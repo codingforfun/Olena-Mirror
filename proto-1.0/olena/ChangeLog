@@ -1,3 +1,20 @@
+2005-04-01  Roland Levillain  <roland@lrde.epita.fr>
+
+	First version of oln::apply, for Adapatble Unary Functions.
+
+	* oln/core/apply.hh: New file.
+	* oln/core/ch_value_type.hh: New file.
+	* oln/makefile.src (OLN_DEP): Add core/apply.hh and
+	core/ch_value_type.hh.
+	* tests/core/tests/apply: New test.
+
+	* oln/makefile.src (OLN_DEP): Add
+	core/abstract/image_by_delegation.hh, core/abstract/image_like_.hh,
+	core/abstract/image_operator.hh and core/gen/identity.hh.
+	Remove core/abstract/image_identity.hh.
+	* oln/core/abstract/image.hh (echo): Print concrete_type.
+	* oln/core/abstract/image_dimension.hh: Add missing comments.
+
 2005-03-31  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* oln/core/abstract/image_like_.hh: Set concrete_type property.

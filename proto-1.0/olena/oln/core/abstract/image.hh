@@ -79,6 +79,7 @@ namespace oln {
     {
       ostr << "props_of(" // FIXME: << typeid(oln::category::image).name()
 	   << ", " << typeid(type).name() << ") = {"
+	   << "  concrete_type = " << typeid(concrete_type).name()
 	   << "  value_type = " << typeid(value_type).name()
 	   << "  point_type = " << typeid(point_type).name()
 	   << "  size_type = " << typeid(size_type).name()
