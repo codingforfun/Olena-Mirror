@@ -29,9 +29,8 @@
 # define OLENA_MATH_MACROS_HH
 
 # include <oln/basics.hh>
-# include <ntg/core/value.hh>
-# include <ntg/core/global_ops_traits.hh>
-# include <ntg/utils/cast.hh>
+
+# include <ntg/basics.hh>
 
 namespace oln {
 

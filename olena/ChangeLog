@@ -1,5 +1,11 @@
 2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* oln/arith/internal/opdecls.hh, oln/math/macros.hh,
+	oln/morpho/geodesic_dilation.hh, oln/morpho/reconstruction.hh,
+	oln/utils/stat.hh: Modify according to integre's changes.
+
+2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* oln/arith/ops.hh, oln/convert/nrgbhsi.hh,
 	oln/convert/nrgbhsl.hh, oln/convert/nrgbhsv.hh,
 	oln/convert/nrgbxyz.hh, oln/convert/nrgbyiq.hh,

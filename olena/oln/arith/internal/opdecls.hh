@@ -37,9 +37,8 @@
 # define _OLN_ARITH_DECLARE_BINRECVAL_FUNCTOR(OPNAME, OPCODE)		\
     template<class T1, class T2 = T1>					\
     struct f_##OPNAME : std::binary_function<const ntg::value<T1>&,	\
-      const ntg::value<T2>&,					\
-      typename ntg::internal::deduce_from_traits<			\
-        ntg::internal::operator_##OPNAME##_traits, T1, T2 >::ret >		\
+      const ntg::value<T2>&,						\
+      ntg_return_type(OPNAME, T1, T2) >					\
     {									\
       typedef f_##OPNAME self;						\
       typename self::result_type					\
@@ -50,24 +49,23 @@
       }									\
     } /* no ; */
 
-/* For binary operators that takes rev_values<T> arguments
-   and define ntg::internal::operator_##OPNAME##_traits.  */
-# define _OLN_ARITH_DECLARE_BINRECVALCST_FUNCTOR(OPNAME, OPCODE_CST)	\
-    template<class T1, class T2 = T1>					\
-    struct f_##OPNAME##_cst : std::unary_function<const ntg::value<T1>&,\
-      typename ntg::internal::deduce_from_traits<			\
-        ntg::internal::operator_##OPNAME##_traits, T1, T2>::ret >		\
-    {									\
-      typedef f_##OPNAME##_cst self;					\
-      f_##OPNAME##_cst(T2 cst) : _cst(cst) {}				\
-									\
-      typename self::result_type					\
-      operator()(typename self::argument_type val) const		\
-      {									\
-	return OPCODE_CST;						\
-      }									\
-    private:								\
-      T2 _cst;								\
+/* For binary operators that takes rev_values<T> arguments			\
+   and define ntg::internal::operator_##OPNAME##_traits.  */			\
+# define _OLN_ARITH_DECLARE_BINRECVALCST_FUNCTOR(OPNAME, OPCODE_CST)		\
+    template<class T1, class T2 = T1>						\
+    struct f_##OPNAME##_cst : std::unary_function<const ntg::value<T1>&,	\
+      ntg_return_type(OPNAME, T1, T2) >						\
+    {										\
+      typedef f_##OPNAME##_cst self;						\
+      f_##OPNAME##_cst(T2 cst) : _cst(cst) {}					\
+										\
+      typename self::result_type						\
+      operator()(typename self::argument_type val) const			\
+      {										\
+	return OPCODE_CST;							\
+      }										\
+    private:									\
+      T2 _cst;									\
     } /* no ; */
 
 /* Both the above. */

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,13 +29,15 @@
 # define OLENA_MORPHO_RECONSTRUCTION_HH
 
 # include <oln/basics.hh>
-# include <oln/morpho/stat.hh>
+# include <oln/convert/conversion_ng_se.hh>
+# include <oln/level/compare.hh>
 # include <oln/morpho/geodesic_dilation.hh>
 # include <oln/morpho/geodesic_erosion.hh>
 # include <oln/morpho/splitse.hh>
-# include <oln/level/compare.hh>
-# include <ntg/core/global_ops_traits.hh>
-# include <oln/convert/conversion_ng_se.hh>
+# include <oln/morpho/stat.hh>
+
+# include <ntg/basics.hh>
+
 # include <queue>
 
 namespace oln {
