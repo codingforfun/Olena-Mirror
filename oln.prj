@@ -1,14 +1,81 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 157)
-(Parent-Version oln 10 156)
-(Version-Log "        * olena/tests/convol/tests/md5_convol_fast_gaussian_hh4: Make this test xfail.
-       * olena/tests/convol/tests/md5_convol_fast_gaussian_hh1: Likewise.
+(Project-Version oln 10 159)
+(Parent-Version oln 10 157)
+(Version-Log "prcs: Producing diffs from 10.158 to 10.157(w).
+Index: olena/ChangeLog
+from  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+        * tests/morpho/tests/md5_morpho_watershed_hh0: Disable the test.
+        * tests/morpho/tests/md5_morpho_watershed_hh1: Likewise.
+
+Index: olena/tests/morpho/tests/md5_morpho_watershed_hh1
+--- olena/tests/morpho/tests/md5_morpho_watershed_hh1 Tue, 23 Mar 2004 14:36:33 +0100 palma_g (oln/k/29_md5_morpho 1.1 600)
++++ olena/tests/morpho/tests/md5_morpho_watershed_hh1 Wed, 14 Apr 2004 16:47:27 +0200 palma_g (oln/k/29_md5_morpho 1.1 600)
+@@ -10,16 +10,21 @@
+  
+ int main() 
+ {
+-oln::utils::key::value_type   data_key[16] = {0xdd, 0x59, 0x5a, 0x51, 0x68, 0xc5, 0xfc, 0xb7, 0x79, 0x67, 0x33, 0xa8, 0xd8, 0x40, 0x95, 0xd};
++  oln::utils::key::value_type   data_key[16] = {0xdd, 0x59, 0x5a, 0x51, 0x68,
++                                               0xc5, 0xfc, 0xb7, 0x79, 0x67,
++                                               0x33, 0xa8, 0xd8, 0x40, 0x95,
++                                               0xd};
+ 
+ oln::utils::key                   key(data_key);
+ 
+-   typedef oln::image2d<ntg::
+-int_u8>        im_type;
++  typedef oln::image2d<ntg::int_u8>    im_type;
+    im_type     im1(oln::load(rdata(\"lena256.pgm\")));
+-   if (oln::utils::md5(oln::morpho::watershed_con<ntg::
+-int_u16>(im1,                                                      oln::neighb_c4())) == key)
++   if (oln::utils::md5(oln::morpho::watershed_con<ntg::int_u16>(im1,
++                                                               oln::neighb_c4())) == key)
++     {
+   std::cout << \"OK\" << std::endl;
++       return true; // XFAIL Don't give the same result with icc and g++
++     }
+ else
+   {
+     std::cout << \"FAIL\" << std::endl;
+Index: olena/tests/morpho/tests/md5_morpho_watershed_hh0
+--- olena/tests/morpho/tests/md5_morpho_watershed_hh0 Tue, 23 Mar 2004 14:36:33 +0100 palma_g (oln/k/30_md5_morpho 1.1 600)
++++ olena/tests/morpho/tests/md5_morpho_watershed_hh0 Wed, 14 Apr 2004 16:47:25 +0200 palma_g (oln/k/30_md5_morpho 1.1 600)
+@@ -10,16 +10,22 @@
+  
+ int main() 
+ {
+-oln::utils::key::value_type   data_key[16] = {0xc4, 0x69, 0x68, 0x78, 0xd6, 0x80, 0x46, 0x20, 0x3f, 0x93, 0x93, 0x46, 0x9c, 0x90, 0x8d, 0x5b};
++  oln::utils::key::value_type   data_key[16] = {0xc4, 0x69, 0x68, 0x78, 0xd6,
++                                               0x80, 0x46, 0x20, 0x3f, 0x93,
++                                               0x93, 0x46, 0x9c, 0x90, 0x8d,
++                                               0x5b};
+ 
+ oln::utils::key                   key(data_key);
+ 
+-   typedef oln::image2d<ntg::
+-int_u8>        im_type;
++  typedef oln::image2d<ntg::int_u8>    im_type;
+    im_type     im1(oln::load(rdata(\"lena256.pgm\")));
+-   if (oln::utils::md5(oln::morpho::watershed_seg<ntg::
+-int_u16>(im1,                                                      oln::neighb_c4())) == key)
++
++  if (oln::utils::md5(oln::morpho::watershed_seg<ntg::int_u16>(im1,
++                                                              oln::neighb_c4())) == key)
++    {
+   std::cout << \"OK\" << std::endl;
++      return true; // XFAIL Don't give the same result with icc and g++
++    }
+ else
+   {
+     std::cout << \"FAIL\" << std::endl;
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 14 Apr 2004 00:29:46 +0200")
-(Checkin-Login thivol_d)
+(Checkin-Time "Wed, 14 Apr 2004 16:52:13 +0200")
+(Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -110,11 +177,11 @@
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.5 600))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.6 600))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.3 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.42 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.40 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.85 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.86 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.29 600))
 
@@ -126,7 +193,7 @@
 
   (cleanup.sh (oln/o/29_cleanup.sh 1.5.1.1 700))
 
-  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.16.1.4 600))
+  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.16.1.5 600))
 
   (doc/demo/image.cc (oln/d/46_image.cc 1.8 600))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.16.1.2 600))
@@ -1281,8 +1348,8 @@
 ;; Files added by populate at Tue, 23 Mar 2004 14:29:08 +0100,
 ;; to version 10.105(w), by palma_g:
 
-  (olena/tests/morpho/tests/md5_morpho_watershed_hh1 (oln/k/29_md5_morpho 1.1 600))
-  (olena/tests/morpho/tests/md5_morpho_watershed_hh0 (oln/k/30_md5_morpho 1.1 600))
+  (olena/tests/morpho/tests/md5_morpho_watershed_hh1 (oln/k/29_md5_morpho 1.2 600))
+  (olena/tests/morpho/tests/md5_morpho_watershed_hh0 (oln/k/30_md5_morpho 1.2 600))
   (olena/tests/morpho/tests/md5_morpho_top_hat_inc7 (oln/k/31_md5_morpho 1.1 600))
   (olena/tests/morpho/tests/md5_morpho_top_hat_inc6 (oln/k/32_md5_morpho 1.1 600))
   (olena/tests/morpho/tests/md5_morpho_top_hat_inc5 (oln/k/33_md5_morpho 1.1 600))
@@ -1454,5 +1521,8 @@
   (metalic/mlc/makefile.src (oln/r/3_makefile.s 1.1 600))
   (olena/oln/makefile.src (oln/r/4_makefile.s 1.1 600))
 )
-(Merge-Parents)
+(Merge-Parents
+  (10.158 complete
+    (ChangeLog ChangeLog ChangeLog r) (configure.ac configure.ac configure.ac r))
+)
 (New-Merge-Parents)

@@ -1,3 +1,8 @@
+2004-04-14  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* tests/morpho/tests/md5_morpho_watershed_hh0: Disable the test.
+	* tests/morpho/tests/md5_morpho_watershed_hh1: Likewise.
+
 2004-04-13  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* olena/tests/convol/tests/md5_convol_fast_gaussian_hh4: Make this test xfail.
