@@ -1,57 +1,16 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 7 60)
-(Parent-Version oln 7 59)
+(Project-Version oln 7 61)
+(Parent-Version oln 7 60)
 (Version-Log "Index: ChangeLog
-from  +2003-02-12  Raphaël Poss  <raph@lrde.epita.fr>
+from  +2003-02-16  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-        * configure.ac: More verbose help. Better version support. Allow
-        disabling manpages regeneration.
-
-Index: oln/ChangeLog
-from  +2003-02-11  Raphaël Poss  <raph@lrde.epita.fr>
-
-        * oln/Makefile.am: Remove file.
-
-        * config/oln.m4 (OLN_VERSION, OLN_MAJOR_VERSION): Put under
-        version control.
-
-        * conf/oln-config.shin (Usage): Minor fixes.
-
-Index: doc/ChangeLog
-from  +2003-02-12  Raphaël Poss  <raph@lrde.epita.fr>
-
-        * dev/oln-dev.texi: Tweak copyright holder name.
-
-        * ref/Makefile.am (docdir): Minor fix.
-        * dev/Makefile.am (docdir): Minor fix.
-
-        * ref/oln-ref.tex: Update.
-
-Index: tools/ChangeLog
-from  +2003-02-12  Raphaël Poss  <raph@lrde.epita.fr>
-
-        * utilities/Makefile.am: Auto-generate manpages. Fix small
-        dependency problem.
-        * utilities/morpho/Makefile.am: Likewise.
-
-        * utilities/morpho/generate_morpho.sh: Add copyright information.
-
-        * utilities/mosaic.cc: Add copyright information. Modify to use
-        with help2man.
-        * utilities/morpho/morpho_template.cc,
-        utilities/morpho/morpho_template_extrema.cc,
-        utilities/morpho/morpho_template_gaussian.cc,
-        utilities/morpho/morpho_template_watershed.cc,
-        utilities/morpho/morpho_template_with_twowin.cc, 
-        utilities/morpho/morpho_template_with_neighb.cc, 
-        utilities/morpho/morpho_template_with_functor.cc: Likewise.
-
+        * configure.ac: Fix behavior for systems without help2man.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 12 Feb 2003 06:09:39 +0100")
+(Checkin-Time "Sun, 16 Feb 2003 22:44:11 +0100")
 (Checkin-Login raph)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -129,7 +88,7 @@ from  +2003-02-12  Raphaël Poss  <raph@lrde.epita.fr>
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.29.1.1 664))
+  (ChangeLog (oln/o/33_ChangeLog 1.29.1.2 664))
   (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.15.1.1 664))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.21.1.1 664))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.11 664))
@@ -144,7 +103,7 @@ from  +2003-02-12  Raphaël Poss  <raph@lrde.epita.fr>
   
   (cleanup.sh (oln/o/29_cleanup.sh 1.4 775))
   
-  (configure.ac (oln/3_configure. 1.48 664))
+  (configure.ac (oln/3_configure. 1.49 664))
   
   (doc/demo/image.cc (oln/d/46_image.cc 1.2 660))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.13 660))
@@ -830,5 +789,7 @@ from  +2003-02-12  Raphaël Poss  <raph@lrde.epita.fr>
 
   ; (oln/oln/Makefile.am ())
 )
-(Merge-Parents)
+(Merge-Parents
+  (7.60 complete)
+)
 (New-Merge-Parents)

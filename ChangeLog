@@ -1,3 +1,7 @@
+2003-02-16  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Fix behavior for systems without help2man.
+
 2003-02-12  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* configure.ac: More verbose help. Better version support. Allow
