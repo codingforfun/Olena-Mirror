@@ -75,7 +75,7 @@ namespace oln {
     {
       delta_(abs(dp.row()));
       delta_(abs(dp.col()));
-      return delta_;
+      return this->delta_;
     }
 
     template<class I, class T2>

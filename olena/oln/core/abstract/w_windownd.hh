@@ -63,7 +63,7 @@ namespace oln
 
       weight_type get_weight(unsigned i) const
       {
-	precondition(i < card());
+	precondition(i < this->card());
 	return w_[i];
       }
 
@@ -73,8 +73,8 @@ namespace oln
 	if (w == 0)		// Don't add 0 weighted entries
 	  return to_exact(*this);
 	if (dp.is_centered())
-	  centered_ = true;
-	dp_.push_back(dp);
+	  this->centered_ = true;
+	this->dp_.push_back(dp);
 	delta_update(dp);
 	w_.push_back(w);
 	return to_exact(*this);
@@ -83,8 +83,8 @@ namespace oln
       const weight_type& set_(const dpoint_type& dp, const weight_type& w)
       {
 	// if the dp exists, return a ref to the existing entry
-	for (unsigned i = 0; i < card_(); ++i)
-	  if (dp_[i] == dp)
+	for (unsigned i = 0; i < this->card_(); ++i)
+	  if (this->dp_[i] == dp)
 	  {
 	    w_[i] = w;
 	    return w_[i];

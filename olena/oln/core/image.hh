@@ -30,6 +30,9 @@
 
 # include <mlc/type.hh>
 # include <oln/core/abstract/image_with_impl.hh>
+# include <oln/core/abstract/iter.hh>
+
+# include <sstream>
 
 namespace oln {
 
@@ -83,10 +86,10 @@ namespace oln {
 
     static std::string name()
     {
-      return std::string("image<") + Dim + ", "
-	+ T::name() + ", "
-	+ Impl::name() + ", "
-	+ Exact::name() + ">";
+      std::ostringstream s;
+      s << "image<" << Dim << ", " << T::name() << ", " << Impl::name() 
+	<< ", " << Exact::name() << ">";
+      return s.str();
     }
 
     image(impl_type* i) : super_type(i) {}
@@ -97,7 +100,7 @@ namespace oln {
   template<class I, class T = typename mlc::exact<I>::ret::value_type>
   struct mute
   {
-    typedef typename mlc::exact<I>::ret::mute<T>::ret ret;
+    typedef typename mlc::exact<I>::ret::template mute<T>::ret ret;
   };
 
 

@@ -102,7 +102,7 @@ namespace oln {
 
       size_t len() const
       {
-	return len(size());
+	return len(this->size());
       }
 
       size_t len(const size_type& s) const 

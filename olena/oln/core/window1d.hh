@@ -118,6 +118,7 @@ namespace oln {
     return win;
   }
 
+  template <>
   struct get_se<1>
   {
     typedef window1d ret;

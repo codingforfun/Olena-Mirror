@@ -69,22 +69,22 @@ namespace oln {
 
     void goto_begin_()
     {
-      p_.col() = ncols_ - 1;
+      this->p_.col() = this->ncols_ - 1;
     }
 
     void goto_end_()
     {
-      p_.col() = -1;
+      this->p_.col() = -1;
     }
 
     bool is_at_end_() const
     {
-      return p_.col() == -1;
+      return this->p_.col() == -1;
     }
 
     void goto_next_()
     {
-      --p_.col();
+      --this->p_.col();
     }
 
     static std::string name() { return std::string("bkd_iter1d<") + Exact::name() + ">"; }

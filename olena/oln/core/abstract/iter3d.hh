@@ -68,28 +68,28 @@ namespace oln {
       point3d to_point() const
       {
 	precondition(*this != end);
-	invariant(p_.slice() >=0
-		  && p_.slice() < nslices_
-		  && p_.row() >= 0
-		  && p_.row() < nrows_
-		  && p_.col() >= 0
-		  && p_.col() < ncols_);
-	return p_;
+	invariant(this->p_.slice() >=0
+		  && this->p_.slice() < nslices_
+		  && this->p_.row() >= 0
+		  && this->p_.row() < nrows_
+		  && this->p_.col() >= 0
+		  && this->p_.col() < ncols_);
+	return this->p_;
       }
 
       coord slice() const
       {
-	return p_.slice();
+	return this->p_.slice();
       }
 
       coord row() const
       {
-	return p_.row();
+	return this->p_.row();
       }
 
       coord col() const
       {
-	return p_.col();
+	return this->p_.col();
       }
 
       static std::string name() { return std::string("_iter3d<") + Exact::name() + ">"; }

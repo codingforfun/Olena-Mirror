@@ -30,10 +30,12 @@
 
 # include <mlc/objs.hh>
 # include <oln/core/image.hh>
+
 # include <string>
 
 namespace oln
 {
+
   template< class Win >
   struct winneighb {
     typedef Point(Win) point;

@@ -68,21 +68,21 @@ namespace oln {
       point2d to_point() const
       {
 	precondition(*this != end);
-	invariant(p_.row() >= 0 &&
-		  (p_.row() < nrows_ || p_.row() == nrows_) &&
-		  p_.col() >= 0 &&
-		  p_.col() < ncols_);
-	return p_;
+	invariant(this->p_.row() >= 0 &&
+		  (this->p_.row() < nrows_ || this->p_.row() == nrows_) &&
+		  this->p_.col() >= 0 &&
+		  this->p_.col() < ncols_);
+	return this->p_;
       }
 
       coord row() const
       {
-	return p_.row();
+	return this->p_.row();
       }
 
       coord col() const
       {
-	return p_.col();
+	return this->p_.col();
       }
 
       static std::string name() { return std::string("_iter2d<") + Exact::name() + ">"; }

@@ -69,27 +69,27 @@ namespace oln {
 
     void goto_begin_()
     {
-      p_.row() = nrows_ - 1;
-      p_.col() = ncols_ - 1;
+      this->p_.row() = this->nrows_ - 1;
+      this->p_.col() = this->ncols_ - 1;
     }
 
     void goto_end_()
     {
-      p_.row() = -1;
+      this->p_.row() = -1;
     }
 
     bool is_at_end_() const
     {
-      return p_.row() == -1;
+      return this->p_.row() == -1;
     }
 
     void goto_next_()
     {
-      --p_.col();
-      if (p_.col() >= 0)
+      --this->p_.col();
+      if (this->p_.col() >= 0)
 	return;
-      p_.col() = ncols_ - 1;
-      --p_.row();
+      this->p_.col() = this->ncols_ - 1;
+      --this->p_.row();
     }
 
     static std::string name() { return std::string("bkd_iter2d<") + Exact::name() + ">"; }

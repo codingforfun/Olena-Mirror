@@ -73,7 +73,7 @@ namespace oln {
       delta_(abs(dp.slice()));
       delta_(abs(dp.row()));
       delta_(abs(dp.col()));
-      return delta_;
+      return this->delta_;
     }
 
     w_window3d<T>& add(const dpoint_type& dp, const weight_type& w)

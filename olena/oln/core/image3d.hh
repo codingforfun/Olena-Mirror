@@ -31,7 +31,6 @@
 # include <oln/core/impl/image_array3d.hh>
 // # include <oln/io/readable.hh>
 # include <oln/core/image.hh>
-// # include <oln/core/abstract/image_with_impl.hh>
 
 # include <iostream>
 # include <stdlib.h>
@@ -91,7 +90,7 @@ namespace oln {
     image3d(coord nslices, coord nrows, coord ncols, coord border = 2)
       :
       super_image(),
-      super_type(new impl_type(image3d_size(nslices,nrows, ncols, border)))
+      super_type(new impl_type(image3d_size(nslices, nrows, ncols, border)))
     {
       super_type::impl()->ref();
     }
@@ -126,7 +125,9 @@ namespace oln {
 
     self_type clone_() const // deep copy
     {
-      self_type output(nslices(), nrows(), ncols(), this->border());
+      // FIXME: it may be really dangerous to instantiate a self_type
+      // and not an exact_type is Exact != mlc::final.
+      self_type output(this->nslices(), this->nrows(), this->ncols(), this->border());
       clone_to(output.impl());
       return output;
     }
