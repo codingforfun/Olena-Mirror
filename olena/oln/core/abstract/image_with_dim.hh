@@ -137,19 +137,8 @@ namespace oln {
 	return size().ncols();
       }
 
-      coord border() const
-      {
-	return size().border();
-      }
-
-      const size_type& size() const
-      {
-	assertion(has_impl_());
-	return to_exact(this)->impl()->size();
-      }
-
       // FIXME: size_t ???
-      size_t npoints() const
+      size_t npoints_() const
       {
 	return size_t(ncols());
       }
@@ -171,12 +160,6 @@ namespace oln {
 	return hold(point_type(col));
       }
 
-      bool hold(const point_type& p) const
-      {
-	assertion(has_impl_());
-	return to_exact(this)->impl()->hold(p);
-      }
-
       static std::string name()
       {
 	return
@@ -187,11 +170,6 @@ namespace oln {
 
     protected:
       image_with_dim() {}
-
-      bool has_impl_() const
-      {
-	return to_exact(this)->impl() != 0;
-      }
 
     }; // end of one-dimensional specialization
 
@@ -222,20 +200,9 @@ namespace oln {
       {
 	return size().ncols();
       }
-
-      coord border() const
-      {
-	return size().border();
-      }
-
-      const size_type& size() const
-      {
-	assertion(has_impl_());
-	return to_exact(this)->impl()->size();
-      }
-
+      
       // FIXME: size_t ???
-      size_t npoints() const
+      size_t npoints_() const
       {
 	return size_t(nrows()) * size_t(ncols());
       }
@@ -257,12 +224,6 @@ namespace oln {
 	return hold(point_type(row, col));
       }
 
-      bool hold(const point_type& p) const
-      {
-	assertion(has_impl_());
-	return to_exact(this)->impl()->hold(p);
-      }
-
       static std::string name()
       {
 	return
@@ -274,10 +235,7 @@ namespace oln {
     protected:
       image_with_dim() {}
 
-      bool has_impl_() const
-      {
-	return to_exact(this)->impl() != 0;
-      }
+      
 
     }; // end of bi-dimensional specialization
 
@@ -312,20 +270,8 @@ namespace oln {
       {
 	return size().ncols();
       }
-
-      coord border() const
-      {
-	return size().border();
-      }
-
-      const size_type size() const
-      {
-	assertion(has_impl_());
-	return to_exact(this)->impl()->size();
-      }
-
-      
-      size_t npoints() const
+   
+      size_t npoints_() const
       {
 	return size_t(nslices()) * size_t(nrows()) * size_t(ncols());
       }
@@ -347,12 +293,6 @@ namespace oln {
 	return hold(point_type(slice, row, col));
       }
 
-      bool hold(const point_type& p) const
-      {
-	assertion(has_impl_());
-	return to_exact(this)->impl()->hold(p);
-      }
-
       static std::string name()
       {
 	return
@@ -362,12 +302,8 @@ namespace oln {
       }
 
     protected:
-      image_with_dim(){}
+      image_with_dim(){}     
 
-      bool has_impl_() const
-      {
-	return to_exact(this)->impl() != 0;
-      }
     }; // end of tri-dimensional specialization
 
 

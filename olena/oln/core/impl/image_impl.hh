@@ -112,16 +112,6 @@ namespace oln {
 	return size_;
       }
 
-      size_t len() const
-      {
-	return len(size());
-      }
-
-      size_t len(const size_type& s) const 
-      {
-	return to_exact(*this).len_(s);
-      }
-
       // borders
 
       void border_reallocate_and_copy(coord new_border, bool

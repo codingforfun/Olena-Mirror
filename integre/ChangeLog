@@ -1,3 +1,7 @@
+2003-07-22  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/core/abstract_hierarchy.hh: Add binary abstraction.
+
 2003-07-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/enum/bin.hh, ntg/enum/builtin_bool.hh: Add max_print_width.

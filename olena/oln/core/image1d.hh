@@ -100,7 +100,7 @@ namespace oln {
       super_type(rhs)
     {}
 
-    self_type clone() const // deep copy
+    self_type clone_() const // deep copy
     {
       self_type output(ncols(), this->border());
       clone_to(output.impl());
