@@ -193,8 +193,10 @@ nobase_oln_HEADERS = \
   io/pnm_write3d.hxx				\
   io/pnm_write_common.hxx			\
   io/readable.hh				\
+  level/cc.hh					\
   level/compare.hh				\
   level/connected.hh				\
+  level/extrema_killer.hh			\
   level/fill.hh					\
   level/invert.hh				\
   level/lut.hh					\

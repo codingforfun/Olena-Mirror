@@ -1,3 +1,8 @@
+2002-01-13  Jerome Darbon  <darbon_j@epita.fr>
+
+	* src/level/extrema_killer.hh, src/level/cc.hh: New files.
+	* src/Makefile.am (nobase_oln_HEADERS): Add them.
+
 2002-01-13  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* Makefile.am (EXTRA_DIST): Add doc/doc/oln-ref.pdf,
