@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,98 +30,123 @@
 
 # include <ntg/basics.hh>
 # include <oln/basics.hh>
-
+# include <oln/convert/value_to_point.hh>
 # include <vector>
 
 namespace oln {
 
   namespace utils {
 
-    template< typename T, typename U>
+    template< typename T, typename CPT, class V2P>
     class histogram;
 
-    template< typename T, typename U >
+    template< typename T, typename CPT, class V2P >
     T
-    min(const histogram<T, U>& hist);
+    min(const histogram<T, CPT, V2P>& hist);
 
-    template< typename T, typename U >
+    template< typename T, typename CPT, class V2P >
     T
-    max(const histogram<T, U>& hist);
+    max(const histogram<T, CPT, V2P>& hist);
 
-    template< typename T, typename U = unsigned>
+    template<typename T,
+	     typename CPT = unsigned,
+	     class V2P = value_to_point<T> >
     class histogram
     {
-    private:
-      typedef typename ntg_is_a(T, ntg::non_vectorial)::ensure_type ensure_type;
     public:
+      typedef T input_type;
+      typedef V2P value_to_point_type;
+      typedef CPT cpt_type;
+      typedef histogram<T, CPT, V2P> self_type;
+      typedef typename value_to_point_type::result_type point_type;
+      enum {dim = value_to_point_type::result_type::dim};
+      typedef typename dim_traits<dim, CPT>::img_type img_type;
 
-      histogram() : values_(0)
+      friend T min<T, CPT, V2P>(const histogram<T, CPT, V2P>& hist);
+      friend T max<T, CPT, V2P>(const histogram<T, CPT, V2P>& hist);
+
+      histogram(const value_to_point_type & c2p = value_to_point_type()):
+	v2p_(c2p), img_(v2p_.size())
       {
-	unsigned size = unsigned(ntg_max_val(T)
-				 - ntg_min_val(T)
-				 + ntg_unit_val(T));
-	// FIXME: what if T is an unsigned int?
-	// This should be checked more strictly somewhere.
-	// size = max + 1 = 0
-	precondition(size > 0);
-	values_ = new U[size];
-	for (unsigned i = 0; i < size; ++i)
-	  values_[i] = 0;
+	clear();
       }
 
-      ~histogram()
+      template <class I>
+      histogram(const abstract::image<I> & input,
+		const value_to_point_type & v2p = value_to_point_type()):
+	v2p_(v2p), img_(v2p_.size())
       {
-	if (values_)
-	  {
-	    delete[] values_;
-	    values_ = 0;
-	  }
+	clear();
+	init(input);
       }
 
-      U&
-      operator[](const T& i)
+      void
+      clear()
       {
-	return values_[unsigned(i - ntg_min_val(T))];
+	typename img_type::iter_type it(img_ );
+	for_all(it)
+	  img_[it] = ntg_zero_val(CPT);
       }
 
-      friend T min<T, U>(const histogram<T, U>& hist);
-      friend T max<T, U>(const histogram<T, U>& hist);
+      const CPT&
+      operator[](const T &v)const
+      {
+	return img_[v2p_(v)];
+      }
+
+      CPT&
+      operator[](const T &v)
+      {
+	return img_[v2p_(v)];
+      }
 
       template <class I>
       void
       init(const abstract::image<I> &img)
       {
-	oln_iter_type(I) p(img);
+	oln_iter_type(I) it_img(img);
 
-	for_all (p)
-	  values_[unsigned(img[p])]++;
+	for_all(it_img)
+	  ++img_[v2p_(img[it_img])];
+      }
+
+      const img_type &
+      image() const
+      {
+	return img_;
       }
 
     protected:
-      U *values_;
+      const value_to_point_type v2p_;
+      img_type img_;
     };
 
-    template< typename T, typename U >
+    //Note: If there is no min an assertion will fail at the end of the loop.
+    template< typename T, typename CPT, class V2P >
     inline T
-    min(const histogram<T, U>& hist)
+    min(const histogram<T, CPT, V2P>& hist)
     {
-      unsigned i;
-      for (i = 0; i < unsigned(ntg_max_val(T) - ntg_min_val(T)); ++i)
-	if (hist.values_[i] > 0)
+      typedef typename ntg_is_a(T, ntg::non_vectorial)::ensure_type ensure_type;
+
+      T i;
+      for (i = ntg_min_val(T); i <= ntg_max_val(T); ++i)
+	if (hist[i] > ntg_zero_val(CPT))
 	  break;
-      return T(ntg_min_val(T) + i);
+      return i;
     }
 
-
-    template< typename T, typename U >
-    inline T 
-    max(const histogram<T, U>& hist)
+    //Note: If there is no max an assertion will fail at the end of the loop.
+    template< typename T, typename CPT, class V2P >
+    inline T
+    max(const histogram<T, CPT, V2P>& hist)
     {
-      unsigned i;
-      for (i = unsigned(ntg_max_val(T) - ntg_min_val(T)); i > 0; --i)
-	if (hist.values_[i] > 0)
+      typedef typename ntg_is_a(T, ntg::non_vectorial)::ensure_type ensure_type;
+
+      T i;
+      for (i = ntg_max_val(T); i >= ntg_min_val(T); --i)
+	if (hist[i] > ntg_zero_val(CPT))
 	  break;
-      return T(ntg_min_val(T) + i);
+      return i;
     }
 
 /* The two functions above can be slow when the histogram is sparse
@@ -144,12 +169,14 @@ namespace oln {
    value are accessed, and delay the _real_ min and max compuation
    until min() or max() is called.  */
 
-    template< typename T, typename U = unsigned>
-    class histogram_minmax : public histogram<T, U>
+    template< typename T, typename CPT = unsigned, class V2P = value_to_point<T> >
+    class histogram_minmax : public histogram<T, CPT, V2P>
     {
+    private:
+      typedef typename ntg_is_a(T, ntg::non_vectorial)::ensure_type ensure_type;
     protected:
       void
-      adjust(unsigned idx)
+      adjust(const T &idx)
       {
 	if (idx > max_)
 	  max_ = idx;
@@ -158,78 +185,101 @@ namespace oln {
       }
 
     public:
-      histogram_minmax() :
-	histogram<T,U>(),
-	min_(0), max_(unsigned(ntg_max_val(T) - ntg_min_val(T))) {}
 
-      U&
-      operator[](const T& i)
+      typedef V2P value_to_point_type;
+
+      histogram_minmax(const value_to_point_type & v2p = value_to_point_type()) :
+	histogram<T, CPT, V2P>(v2p),
+	min_(ntg_min_val(T)), max_(ntg_max_val(T)) {}
+
+      template <class I>
+      histogram_minmax(const abstract::image<I> & input,
+		       const value_to_point_type & v2p = value_to_point_type()) :
+	histogram<T, CPT, V2P>(input, v2p),
+	min_(ntg_min_val(T)), max_(ntg_max_val(T)) {}
+
+
+      const CPT&
+      operator[](const T& i) const
       {
-	unsigned idx = unsigned(i - ntg_min_val(T));
-	adjust(idx);
-	return this->values_[idx];
+	adjust(i);
+	return img_[v2p_(i)];
       }
 
-      U
+      CPT&
+      operator[](const T& i)
+      {
+	adjust(i);
+	return img_[v2p_(i)];
+      }
+
+      T
       min()
       {
-	unsigned i;
-	for (i = min_; i < unsigned(ntg_max_val(T) - ntg_min_val(T)); ++i)
-	  if (this->values_[i] > 0)
-	    break;
-	min_ = i;
-	return T(ntg_min_val(T) + i);
+	for (; min_ <= ntg_max_val(T); ++min_)
+  	  if (img_[v2p_(min_)] > ntg_zero_val(CPT))
+   	  break;
+	return min_;
       }
 
       T
       max()
       {
-	unsigned i;
-	for (i = max_; i > 0; --i)
-	  if (this->values_[i] > 0)
-	    break;
-	max_ = i;
-	return T(ntg_min_val(T) + i);
+	for (; max_ > 0; --max_)
+  	  if (img_[v2p_(max_)] > ntg_zero_val(CPT))
+   	  break;
+	return max_;
       }
 
     protected:
-      unsigned min_, max_;	// indices of min and max elements
+      T min_, max_;	// indices of min and max elements
     };
 
-    template< typename T, typename U = unsigned>
-    class histogram_min : public histogram<T, U>
+    template< typename T, typename CPT = unsigned, class V2P = value_to_point<T> >
+    class histogram_min : public histogram<T, CPT, V2P>
     {
+    private:
+      typedef typename ntg_is_a(T, ntg::non_vectorial)::ensure_type ensure_type;
     protected:
       void
-      adjust(unsigned idx)
+      adjust(const T& idx)
       {
 	if (idx < min_)
 	  min_ = idx;
       }
-
     public:
-      histogram_min() : histogram<T,U>(), min_(0) {}
+      typedef V2P value_to_point_type;
 
-      U&
-      operator[](const T& i)
+      histogram_min(const value_to_point_type & v2p = value_to_point_type()) :
+	histogram<T, CPT, V2P>(v2p), min_(ntg_min_val(T)) {}
+
+      template <class I>
+      histogram_min(const abstract::image<I> & input,
+		    const value_to_point_type & v2p = value_to_point_type()) :
+	histogram<T, CPT, V2P>(input, v2p), min_(ntg_min_val(T)) {}
+
+
+      const CPT&
+      operator[](const T& i) const
       {
-	// FIXME: subtractions is not necessarily defined for T
-	// Casts should be done sooner and type conformance checked.
-	// ntg_storage_type(T) is really weird.
-	unsigned idx = unsigned(ntg_storage_type(T)(i) - ntg_min_val(T));
-	adjust(idx);
-	return this->values_[idx];
+	adjust(i);
+	return img_[v2p_(i)];
       }
 
-      U
+      CPT&
+      operator[](const T& i)
+      {
+	adjust(i);
+	return img_[v2p_(i)];
+      }
+
+      T
       min()
       {
-	unsigned i;
-	for (i = min_; i < unsigned(ntg_max_val(T) - ntg_min_val(T)); ++i)
-	  if (this->values_[i] > 0)
-	    break;
-	min_ = i;
-	return T(ntg_min_val(T) + i);
+	for (; min_ <= ntg_max_val(T); ++min_)
+  	  if (img_[v2p_(min_)] > ntg_zero_val(CPT))
+   	  break;
+	return min_;
       }
 
       T
@@ -239,41 +289,52 @@ namespace oln {
       }
 
     protected:
-      unsigned min_;	// index of min element
+      T min_;	// index of min element
     };
 
-    template< typename T, typename U = unsigned>
-    class histogram_max : public histogram<T, U>
+    template< typename T, typename CPT = unsigned, class V2P = value_to_point<T> >
+    class histogram_max : public histogram<T, CPT, V2P>
     {
     protected:
       void
-      adjust(unsigned idx)
+      adjust(const T& idx)
       {
 	if (idx > max_)
 	  max_ = idx;
       }
 
     public:
-      histogram_max() :
-	histogram<T,U>(),max_(unsigned(ntg_max_val(T) - ntg_min_val(T))) {}
+      typedef V2P value_to_point_type;
 
-      U&
+      histogram_max(const value_to_point_type & v2p = value_to_point_type()) :
+	histogram<T, CPT, V2P>(v2p),max_(ntg_max_val(T)) {}
+
+      template <class I>
+      histogram_max(const abstract::image<I> & input,
+		    const value_to_point_type & v2p = value_to_point_type()) :
+	histogram<T, CPT, V2P>(input, v2p),max_(ntg_max_val(T)) {}
+
+      const CPT&
+      operator[](const T& i) const
+      {
+	adjust(i);
+	return img_[v2p_(i)];
+      }
+
+      CPT&
       operator[](const T& i)
       {
-	unsigned idx = unsigned(unsigned(i) - unsigned(ntg_min_val(T)));
-	adjust(idx);
-	return this->values_[idx];
+	adjust(i);
+	return img_[v2p_(i)];
       }
 
       T
       max()
       {
-	unsigned i;
-	for (i = max_; i > 0; --i)
-	  if (this->values_[i] > 0)
-	    break;
-	max_ = i;
-	return T(ntg_min_val(T) + i);
+	for (; max_ > 0; --max_)
+ 	  if (img_[v2p_(max_)] > ntg_zero_val(CPT))
+  	    break;
+	return max_;
       }
 
       T
@@ -283,64 +344,64 @@ namespace oln {
       }
 
     protected:
-      unsigned max_;	// index of max element
+      T max_;	// index of max element
     };
 
-
-    template< typename T, typename U >
-    inline T 
-    min(histogram_minmax<T, U>& hist)
+    template< typename T, typename CPT, class V2P >
+    inline T
+    min(histogram_minmax<T, CPT, V2P>& hist)
     {
       return hist.min();
     }
-    template< typename T, typename U >
-    inline T 
-    min(histogram_min<T, U>& hist)
+    template< typename T, typename CPT, class V2P >
+    inline T
+    min(histogram_min<T, CPT, V2P>& hist)
     {
       return hist.min();
     }
-    template< typename T, typename U >
-    inline T 
-    max(histogram_minmax<T, U>& hist)
+    template< typename T, typename CPT, class V2P >
+    inline T
+    max(histogram_minmax<T, CPT, V2P>& hist)
     {
       return hist.max();
     }
-    template< typename T, typename U >
-    inline T 
-    max(histogram_max<T, U>& hist)
+    template< typename T, typename CPT, class V2P >
+    inline T
+    max(histogram_max<T, CPT, V2P>& hist)
     {
       return hist.max();
     }
 
     template<class I>
     void
-    distrib_sort(const abstract::image<I>& im, 
-		 std::vector<oln_point_type(I)> &v)
+    distrib_sort(const abstract::image<I>& im,
+		     std::vector<oln_point_type(I)> &v)
     {
       typedef oln_value_type(I) val;
 
+      typedef typename ntg_is_a(val, ntg::non_vectorial)::ensure_type ensure_type;
+
       // check the size
-      precondition(v.size() == unsigned(im.npoints())); 
-      // unsigned(im.nrows() * im.ncols()));
+      precondition(v.size() == im.npoints());
 
       // calculate the histogram of the image
-      utils::histogram<oln_value_type(I) > histo;
-      histo.init(im);
+      utils::histogram<val> histo(im);
 
       // initialize the array of pointer to the point in the result
       // with the histogram we can know the number of each color and
       // then calculate an array of pointer for quick access to each
       // value of the image
-      std::vector<oln_point_type(I)* > ptr(ntg_max_val(val) + 1);
+      const ntg_cumul_type(val) card = ntg_max_val(val) - ntg_min_val(val) + 1;
+      std::vector<oln_point_type(I)* > ptr(card);
       ptr[0] = &(v[0]);
-      for (int i = ntg_min_val(val) + 1; i <= ntg_max_val(val); i++)
-	ptr[unsigned(i)] = ptr[unsigned(i - 1)] + histo[i - 1];
+      for (ntg_cumul_type(val) i = 1; i < card; i++)
+	ptr[i] = ptr[i - 1] + histo[i - 1 + ntg_min_val(val)];
 
       // Now iterate on the image to sort point in the order of their
       // level
       oln_iter_type(I) p(im);
       for_all(p)
-	*(ptr[unsigned(im[p])]++) = p;
+	*(ptr[unsigned(im[p] - ntg_min_val(val))]++) = p;
     }
 
   } // end of namespace utils

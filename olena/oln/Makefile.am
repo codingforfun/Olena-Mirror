@@ -33,6 +33,7 @@ nobase_oln_HEADERS =				\
   convert/rgbnrgb.hh				\
   convert/rgbxyz.hh				\
   convert/stretch.hh				\
+  convert/value_to_point.hh			\
   convol/convolution.hh				\
   convol/fast_gaussian.hh			\
   convol/fast_gaussian.hxx			\

@@ -1,3 +1,17 @@
+2004-02-30  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* oln/utils/histogram.hh: Store histograms in images. Support
+	histograms of non-scalar types (ie. rgb_8). Fix bugs.
+	* oln/convert/value_to_point: Add file. Add conversions from values
+	to points.
+	* tests/utils/tests/histogram: Add tests.
+	* oln/core/image.hh: Add dim_traits.
+	* oln/core/image1.hh: Likewise.
+	* oln/core/image2.hh: Likewise.
+	* oln/core/image3.hh: Likewise.
+	* Makefile.am: Include convert/value_to_point.hh
+
+
 2004-01-30  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* tests/convol/tests/uniform_gauss:  Add test to make sure

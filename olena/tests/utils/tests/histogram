@@ -2,6 +2,7 @@
 
 #include <ntg/int.hh>
 #include <oln/basics2d.hh>
+#include <oln/basics1d.hh>
 #include <oln/utils/histogram.hh>
 
 #include <iostream>
@@ -21,6 +22,112 @@ using namespace utils;
 	fail = true;				\
       }
 
+
+bool
+check_int_u8()
+{
+  bool res(true);
+  image1d<int_u8> iu8(4);
+  iu8(0) = 8;
+  iu8(1) = 8;
+  iu8(2) = 7;
+  iu8(3) = 1;
+  histogram<int_u8> hu8(iu8);
+  res = res &&
+    hu8[8] == 2 &&
+    hu8[7] == 1 &&
+    hu8[1] == 1 &&
+    hu8[4] == 0 &&
+    hu8[ntg_max_val(int_u8)] == 0 &&
+    hu8[ntg_min_val(int_u8)] == 0;
+  return res;
+};
+
+bool
+check_int_s4_and_distr()
+{
+  bool res(true);
+  image1d<int_s<4> > is4(4);
+  is4(0) = -8;
+  is4(1) = -8;
+  is4(2) = +7;
+  is4(3) = 0;
+  histogram<int_s<4> > his4(is4);
+  res = res &&
+    his4[-8] == 2 &&
+    his4[+7] == 1 &&
+    his4[0] == 1 &&
+    his4[-7] == 0;
+  std::vector<point1d> v1(is4.npoints());
+  distrib_sort(is4, v1);
+  res = res &&
+    (v1[0] == point1d(0) || v1[0] == point1d(1)) &&
+    (v1[1] == point1d(0) || v1[1] == point1d(1)) &&
+    v1[2] == point1d(3) &
+    v1[3] == point1d(2);
+  return res;
+}
+
+
+
+bool
+check_min_max()
+{
+  bool res(true);
+  image1d<int_s<4> > is4(4);
+  is4(0) = -4;
+  is4(1) = -2;
+  is4(2) = +3;
+  is4(3) = 1;
+  histogram<int_s<4> > his4(is4);
+
+  res = res &&
+    min(his4) == -4
+    &&
+    max(his4) == 3;
+
+  histogram_min<int_s<4> > his4_min(is4);
+  histogram_max<int_s<4> > his4_max(is4);
+  histogram_minmax<int_s<4> > his4_minmax(is4);
+
+  his4_minmax[-5] = his4_min[-5] = his4_max[-5] = his4[-5] = 20;
+  his4_minmax[3] = his4_min[3] = his4_max[3] = his4[3] = 0;
+
+  his4_minmax[2] = his4_min[2] = his4_max[2] = his4[2] = 42;
+
+  res = res &&
+    min(his4) == -5 &&
+    max(his4) == 2 &&
+    min(his4) == min(his4_min) &&
+    min(his4) == min(his4_max) &&
+    min(his4) == min(his4_minmax) &&
+    max(his4) == max(his4_min) &&
+    max(his4) == max(his4_max) &&
+    max(his4) == max(his4_minmax);
+  return res;
+};
+
+
+bool
+check_rgb_8()
+{
+  bool res(true);
+  image1d<rgb_8> ir8(4);
+  ir8(0) = rgb_8(1, 1, 1);
+  ir8(1) = rgb_8(1, 2, 1);
+  ir8(2) = rgb_8(255, 255, 255);
+  ir8(3) = rgb_8(1, 2, 1);
+
+  histogram<rgb_8> hr8(ir8);
+  res = res &&
+    hr8[rgb_8(1, 1, 1)] == 1 &&
+    hr8[rgb_8(1, 2, 1)] == 2 &&
+    hr8[rgb_8(255, 255, 255)] == 1 &&
+    hr8[rgb_8(0, 0, 0)] == 0 &&
+    hr8[rgb_8(44, 44, 44)] == 0;
+  return res;
+};
+
 bool
 check()
 {
@@ -33,6 +140,12 @@ check()
   std::vector<point2d> v(src.nrows() * src.ncols());
 
   distrib_sort<input>(src, v);
+
+  fail = fail
+    || check_int_u8() == false
+    || check_rgb_8() == false
+    || check_int_s4_and_distr() == false
+    || check_min_max() == false;
 
   return fail;
 }
