@@ -32,7 +32,7 @@ Copyright © 2002, 2003, 2004 @strong{L.R.D.E.}
 @node Top
 @top Swilena
 @end ifnottex
-This documents is intended to describe Swilena, a simplified set of
+This document is intended to describe Swilena, a simplified set of
 wrappers around the image processing library Olena.
 
 @menu
@@ -82,9 +82,9 @@ Contain arithmetical operators over images.
 The primary target language for Swilena is Python, because Python is
 the best supported back-end for SWIG. However, the SWIG definition
 files of Swilena are not bound to a particular interpreted language:
-any SWIG target language @emph{providing enough expressivity} can be
+any SWIG target language @emph{providing enough expressiveness} can be
 used.  Ruby modules are defined too, they are not documented here but
-they work almost the same way than Python modules.  Here are the
+they work almost the same way as Python modules.  Here are the
 required features from the interpreted language:
 
 @itemize @bullet
@@ -102,31 +102,31 @@ Typically ``ideal'' target languages are Python, Ruby, Perl5, Tcl,
 Scheme.
 
 Currently, the source tree only knows about Python and Ruby, but this
-may evolute in the future.
+may evolve in the future.
 
 @unnumberedsubsec Using Swilena for Olena development
 
 Obviously, Swilena provides the developer with a programming framework
 around Olena that has much shorter development cycles: new algorithms
-can be tested in python without waiting for the compilation of test
-C++ sources.
+can be tested in Python without waiting for the compilation of C++ test
+sources.
 
-Moreover, because compiling Swilena actually means instanciating Olena
-templates for a nearly complete cartesian product of types, the success
+Moreover, because compiling Swilena actually means instantiating Olena
+templates for a nearly complete Cartesian product of types, the success
 of the Swilena build process proves Olena's completeness.
 
 @node Of SWIG and Swilena principles
 @chapter Of SWIG and Swilena principles
 
 As already suggested, Swilena and SWIG are closely related. In fact,
-SWIG is a wrapper generator, and Swilena is a set of input files for SWIG,
-bundled in a package providing appropriate @file{Makefile}'s to ease
+SWIG is a wrapper generator, and Swilena is a set of input files for SWIG
+bundled in a package providing appropriate @file{Makefile}s to ease
 their handling.
 
-This sections provides some information about SWIG itself and presents
-the general guidelines that guided Swilena's development.
+This section provides some information about SWIG itself and presents
+the general guidelines that directed Swilena's development.
 
-@menu 
+@menu
 * Introduction to SWIG::
 * SWIG and C++::
 * Olena and SWIG::
@@ -146,16 +146,16 @@ following C code:
 
 double  My_variable  = 3.0;
 
-/* Compute factorial of n */
+/* Compute n factorial */
 int  fact(int n) @{
         if (n <= 1) return 1;
-        else return n*fact(n-1);
+        else return n * fact(n-1);
 @}
 
 /* Compute n mod m */
 int my_mod(int n, int m) @{
-        return(n % m);
-@} 
+        return n % m;
+@}
 @end cartouche
 @end example
 
@@ -165,7 +165,7 @@ as shown below (by convention, these files carry a .i suffix) :
 
 @subsection SWIG interface file
 
-@example 
+@example
 @cartouche
 /* File : example.i */
 %module example
@@ -224,7 +224,7 @@ mess. However, you almost never need to worry about it.
 Hopefully for our purpose, SWIG knows about many C++ language features. The following
 sections present SWIG features and their application with Olena.
 
-@menu 
+@menu
 * A first example::
 * Operators and class extensions::
 * SWIG and C++ templates::
@@ -234,7 +234,7 @@ sections present SWIG features and their application with Olena.
 @node A first example
 @subsection A first example
 
-For instance, it knows about classes: a SWIG description of a 
+For instance, it knows about classes: a SWIG description of a
 class yields the availability of this class in the target interpreted language.
 Here is an example:
 
@@ -258,7 +258,7 @@ namespace oln
         window2d& add(int, int) ;
     @};
 
-  const window2d& win_c4p();  
+  const window2d& win_c4p();
 @}
 @end cartouche
 @end example
@@ -294,22 +294,25 @@ This example exhibits several key points:
 @item
 SWIG knows about class constructors and references and treats them trivially.
 @item
-The SWIG description need not follow exactly the strict C++ definition. In the previous example,
-the Olena class @code{window2d} is far more complex than what is expressed in the SWIG declaration;
-however, for a SWIG description to be valid, it only needs to describe a class more @emph{general}
-than the real one.
+The SWIG description need not follow exactly the strict C++
+definition. In the previous example, the Olena class @code{window2d}
+is far more complex than what is expressed in the SWIG declaration;
+however, for a SWIG description to be valid, it only needs to describe
+a class more @emph{general} than the real one.
 @item
-Although it is possible to do so, the SWIG description need not express class inheritance.
+Although it is possible to do so, the SWIG description need not
+express class inheritance.
 @end itemize
 
 @node Operators and class extensions
 @subsection Operators and class extensions
 
-When the target interpreted language allows overloading arithmetical operators for classes, SWIG
-can propagate this C++ feature. However, if it does not, it is needed to provide an artificial
- method-like interface to the class operators.
+When the target interpreted language allows overloading arithmetical
+operators for classes, SWIG can propagate this C++ feature. However,
+if it does not, it is needed to provide an artificial method-like
+interface to the class operators.
 
-Here is a demonstration: 
+Here is a demonstration:
 
 @example
 @cartouche
@@ -329,16 +332,16 @@ namespace oln
         window2d();
         window2d operator-() const;
 
-        // the negation cannot be overload in all interpreted 
+        // the negation cannot be overload in all interpreted
         // languages. Therefore, we create on-the-fly a new
-        // method in class window2d to call operator- : 
+        // method in class window2d to call operator- :
         %extend @{
            window2d neg() const
            @{ return -(*self); @}
         @};
 
         // Similarly, interpreted languages cannot cope
-        // with C++ iostreams. Therefore, here is a workaround: 
+        // with C++ iostreams. Therefore, here is a workaround:
         %extend @{
            std::string describe() const
            @{
@@ -364,31 +367,35 @@ unix > @kbd{python}
 >>> @kbd{w2.describe()}
 '[(-1,-1)(0,-1)]'
 >>> @kbd{w2.neg().describe()}
-'[(1,1)(0,1)]' 
+'[(1,1)(0,1)]'
 >>>
 @end example
 
 Here are the key points exhibited by this example:
-
 @itemize @minus
 @item
-When the interpreted language allows so, SWIG understands C++ operator overloading and treats it trivially.
+When the interpreted language allows so, SWIG understands C++ operator
+overloading and treats it trivially.
 @item
-The @code{%extend} SWIG sections allows adding pseudo-methods to interfaced classes. It can be used to provide
-function names to C++ operators for interpreted languages that do no not cope with operator overloading (e.g. Perl).
+The @code{%extend} SWIG sections allows adding pseudo-methods to
+interfaced classes. It can be used to provide function names to C++
+operators for interpreted languages that do no not cope with operator
+overloading (e.g. Perl).
 @item
-When the description file includes @file{std_string.i}, SWIG knows about the C++ standard type @code{std::string},
-and knows how to convert it to and from the interpreted language's native string type.
+When the description file includes @file{std_string.i}, SWIG knows
+about the C++ standard type @code{std::string}, and knows how to
+convert it to and from the interpreted language's native string type.
 @end itemize
 
 @node SWIG and C++ templates
 @subsection SWIG and C++ templates
+In addition to function, variables, structures and classes, SWIG knows
+about templates. However, because scripting languages do not support
+templates and template instanciation, information must be provided to
+SWIG to explain what template instances must be available to the
+scripting language.
 
-In addition to function, variables, structures and classes, SWIG knows about templates. However, because scripting languages
-do not support templates and template instanciation, information must be provided to SWIG to explain
-what template instances must be available to the scripting language.
-
-Here is a demonstration: 
+Here is a demonstration:
 
 @example
 @cartouche
@@ -403,7 +410,7 @@ Here is a demonstration:
 
 namespace oln
 @{
-  template <typename T>        
+  template <typename T>
   class w_window2d
     @{
         w_window2d();
@@ -450,9 +457,11 @@ Here are the key points exhibited by this example:
 
 @itemize @minus
 @item
-SWIG can only wrap template @emph{instances}. The instanciation must be made explicit.
+SWIG can only wrap template @emph{instances}. The instantiation must
+be made explicit.
 @item
-However, when instanciating a template class, all its methods are instanciated at the same time.
+However, when instantiating a template class, all its methods are
+instantiated at the same time.
 @item
 Template instances must be given a unique identifier
 (e.g. @code{w_win2d_int}), because C++ template instance names
@@ -461,24 +470,25 @@ identifiers.
 @end itemize
 
 @node SWIG & C++ gotchas
-@subsection SWIG & C++ gotchas 
+@subsection SWIG & C++ gotchas
 
 When using SWIG and C++ sources, the following notes need be taken into consideration.
 
 @itemize @minus
 @item
-SWIG collates all C++ namespaces in the global module namespace. Therefore, beware
-of wrapped function or class names that appear simultaneously in several namespaces with
-different definitions: they are not handled properly by SWIG.
-
+SWIG collates all C++ namespaces in the global module
+namespace. Therefore, beware of wrapped function or class names that
+appear simultaneously in several namespaces with different
+definitions: they are not handled properly by SWIG.
 @item
-The C++ parser in SWIG cannot deal with C++ template partial specialization. Therefore,
-C++ tricks such as static hierarchies and virtual types cannot be exposed to SWIG. Consider
-hiding the static inheritance tree and exposing the most derived classes instead.
-
+The C++ parser in SWIG cannot deal with C++ template partial
+specialization. Therefore, C++ tricks such as static hierarchies and
+virtual types cannot be exposed to SWIG. Consider hiding the static
+inheritance tree and exposing the most derived classes instead.
 @item
-Families of similar template functions cannot be instanciated with a single SWIG directive.
-Use SWIG macros and appropriate naming conventions for this purpose:
+Families of similar template functions cannot be instantiated with a
+single SWIG directive.  Use SWIG macros and appropriate naming
+conventions for this purpose:
 
 @example
 @cartouche
@@ -488,16 +498,16 @@ void foo(T x);
 template<typename T>
 void bar(T x);
 
-%define Instanciate_Templates_For(Type)
+%define Instantiate_Templates_For(Type)
 %template (foo_ ## Type) foo<Type >;
 %template (bar_ ## Type) bar<Type >;
 %enddef
 
-Instanciate_Templates_For(int); 
+Instantiate_Templates_For(int);
         // yields foo_int and bar_int
 
-Instanciate_Templates_For(float); 
-        // yields foo_float and bar_float  
+Instantiate_Templates_For(float);
+        // yields foo_float and bar_float
 
 @end cartouche
 @end example
@@ -523,13 +533,13 @@ Type "help", "copyright", "credits" or "license" for more information.
 @end example
 
 The @code{>>>} text is the Python standard prompt, where
-you can enter python statements.
+you can enter Python statements.
 
-You can also write Python programs as scripts, using the following 
+You can also write Python programs as scripts, using the following
 script template:
 
 @example
-#! /usr/bin/python 
+#! /usr/bin/env python
 
 ... your program here ...
 @end example
@@ -537,9 +547,9 @@ script template:
 
 @section Python Basics
 
-Python does not have mandatory statement terminators. Statements end at the end
-of the line. However, you can use the semicolon (@samp{;}) as
-a command separator.
+Python does not have mandatory statement terminators. Statements end
+at the end of the line. However, you can use the semicolon (@samp{;})
+as a command separator.
 
 @example
 >>> @kbd{print "hello"}
@@ -550,7 +560,8 @@ world
 @end example
 
 
-Python data types are the integer (signed), the float (C @samp{double}), and the character string. 
+Python data types are the integer (signed), the float (C
+@samp{double}), and the character string.
 Constants can be expressed intuitively:
 
 @example
@@ -626,7 +637,7 @@ to avoid prefixing function calls:
 @subsection Python Objects
 
 By convention, standard Python Classes have names that start with
-a capital. This helps disambiguise class names and module names:
+a capital. This helps disambiguate class names and module names:
 
 @example
 >>> @kbd{import random}
@@ -710,9 +721,12 @@ return a reference to the indicated pixel.
 @item set
 set the value of the indicated pixel.
 @item ncols
-return the number of columns in the image. This method is valid for 1D, 2D and 3D images.
+return the number of columns in the image. This method is valid for
+1D, 2D and 3D images.
+
 @item nrows
-return the number of rows in the image. This method is only valid for 2D and 3D images.
+return the number of rows in the image. This method is only valid for
+2D and 3D images.
 @item nslices
 return the number of slices of a 3D image.
 @end table
@@ -765,9 +779,9 @@ description of what are valid calls.
 @item int_s32 @tab ntg::int_s32 @tab 32-bit signed integer
 @item bin @tab ntg::bin @tab 1-bit value
 @item float_d @tab ntg::float_d @tab double precision float
-@item cplx_rect @tab ntg::cplx<rect, float_d> @tab complex number in 
+@item cplx_rect @tab ntg::cplx<rect, float_d> @tab complex number in
       rectangular representation.
-@item cplx_polar @tab ntg::cplx<polar, float_d> @tab complex number in 
+@item cplx_polar @tab ntg::cplx<polar, float_d> @tab complex number in
       polar representation.
 @end multitable
 
@@ -825,9 +839,9 @@ Set the coordinates of the point.
 @end table
 
 ``dpoints'' represent distances between points, hence can be
-added to ``points''. 
+added to ``points''.
 
-The module names for these types are @strong{swilena1d}, 
+The module names for these types are @strong{swilena1d},
 @strong{swilena2d} and @strong{swilena3d}.
 
 @node Image Types
@@ -875,7 +889,7 @@ to serve as a ``border'' for algorithms.
 @item (constructor with dimensions)
 Create a blank image, using a default border width of 2.
 @item at(point)
-Access the pixel at @samp{point}, which can be of type @samp{point1d}, @samp{point2d} or 
+Access the pixel at @samp{point}, which can be of type @samp{point1d}, @samp{point2d} or
 @samp{point3d}.
 @item at(dimensions)
 Access the pixel at point specified by one, two, or three coordinates.
@@ -889,7 +903,7 @@ Retrieve the dimensions of the image.
 Input/output to files.
 @end table
 
-The module names for these types are @strong{swilena_image1d}, 
+The module names for these types are @strong{swilena_image1d},
 @strong{swilena_image2d} and @strong{swilena_image3d}.
 
 @node Structural Element Types
@@ -920,7 +934,7 @@ Return the number of points defined in the window.
 @item dp(i)
 Return the i'nth ``dpoint'' in the window.
 @item has(dpoint)
-Return true if the window contains the specified dpoint. 
+Return true if the window contains the specified dpoint.
 @item describe()
 Return a string describing the structure of the window.
 @end table
@@ -971,7 +985,7 @@ have the same name as their C++ counterpart:
 See the documentation of Olena for a description of these
 functions.
 
-The module names for these types and functions are @strong{swilena1d}, 
+The module names for these types and functions are @strong{swilena1d},
 @strong{swilena2d} and @strong{swilena3d}.
 
 @node Neighborhood Types
@@ -986,7 +1000,7 @@ Here are the neighborhoods:
 @item neighborhood3d @tab oln::neighborhood3d
 @end multitable
 
-Neighborhoods behave like windows in regards to their interface. 
+Neighborhoods behave like windows in regards to their interface.
 
 Here are the corresponding instantiation functions, which
 have the same name as their C++ counterpart:
@@ -1011,7 +1025,7 @@ have the same name as their C++ counterpart:
 @item mk_win_from_neighb(neigh3d) @tab window3d
 @end multitable
 
-The module names for these types and functions are @strong{swilena1d}, 
+The module names for these types and functions are @strong{swilena1d},
 @strong{swilena2d} and @strong{swilena3d}.
 
 @node Conversion Functions
