@@ -44,7 +44,7 @@ namespace oln {
 	s << "# Creator: OLENA / Epita-LRDE" << std::endl
 	  << im.ncols() << ' ' << im.nrows() << std::endl;
 	if (type != '1' && type != '4')
-	  s << optraits<U>::max() << std::endl;
+	  s << (unsigned) optraits<U>::max() << std::endl;
 	return true;
       }
 

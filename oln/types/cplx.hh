@@ -74,6 +74,13 @@ namespace oln {
 	_value[1] = im;
       }
 
+      cplx<rect, T>& operator=(const T& r)
+      {
+	_value[0] = r;
+	_value[1] = 0;
+	return *this;
+      }
+
       template<cplx_representation R, class T2>
       cplx(const cplx<R, T2>& rhs)
       {
@@ -167,6 +174,13 @@ namespace oln {
 	precondition (ma >= 0);
 	_value[0] = ma;
 	_value[1] = an;
+      }
+
+      cplx<rect, T>& operator=(const T& r)
+      {
+	_value[0] = r;
+	_value[1] = 0;
+	return *this;
       }
 
       template<cplx_representation R, class T2>

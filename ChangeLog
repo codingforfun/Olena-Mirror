@@ -1,3 +1,13 @@
+2002-09-24  Emmanuel Turquin  <turqui_e@epita.fr>
+
+	* oln/transform/fft.hh: New file.
+	* oln/types/cplx.hh: Add overloading of = operator with scalar.
+	* oln/core/image2d.hh: Include oln/types/bin.hh rather than
+	oln/value/bin.hh.
+	* oln/io/pnm_write.hxx: Fix a little casting problem.
+	* oln/io/readable.hh:  Add constructor taking const char* argument.
+	* configure.ac: Add a new branch of tests (tests/transform).
+
 2002-09-23  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/types/optraits.hh: Add temporary fix for debug.

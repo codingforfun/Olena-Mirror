@@ -88,6 +88,7 @@ SUBDIRS = . check \
   meta \
   morpho \
   sanity \
+  transform \
   types
 
 

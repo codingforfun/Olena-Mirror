@@ -1,3 +1,10 @@
+2002-09-24  Emmanuel Turquin  <turqui_e@epita.fr>
+
+	* types/tests/cplx6: Fix.
+	* transform/Makefile.am, transform/Makefile.in,
+	transform/fft.cc: New files.
+	* Makefile.am: Adjust.
+
 2002-09-20  Emmanuel Turquin  <turqui_e@epita.fr>
 
 	* types/tests/cplx6: New file.

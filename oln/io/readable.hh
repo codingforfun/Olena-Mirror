@@ -45,6 +45,8 @@ namespace oln {
       public:
 	anything(const std::string& str) : _str(str) {}
 
+	anything(const char* c) : _str(c) {}
+
 	template< typename T >
 	T& assign(T& output) const
 	{

@@ -94,11 +94,10 @@ RECURSIVE_TARGETS = info-recursive dvi-recursive install-info-recursive \
 	uninstall-info-recursive all-recursive install-data-recursive \
 	install-exec-recursive installdirs-recursive install-recursive \
 	uninstall-recursive check-recursive installcheck-recursive
-DIST_COMMON = README ././oln/config/config.hin ./oln/config/config.hin \
-	ChangeLog Makefile.am Makefile.in NEWS THANKS aclocal.m4 \
-	configure configure.ac tools/ChangeLog tools/depcomp \
-	tools/install-sh tools/mdate-sh tools/missing \
-	tools/mkinstalldirs tools/texinfo.tex
+DIST_COMMON = README ./oln/config/config.hin ChangeLog Makefile.am \
+	Makefile.in NEWS THANKS aclocal.m4 configure configure.ac \
+	tools/ChangeLog tools/depcomp tools/install-sh tools/mdate-sh \
+	tools/missing tools/mkinstalldirs tools/texinfo.tex
 DIST_SUBDIRS = $(SUBDIRS)
 all: all-recursive
 
@@ -249,7 +248,7 @@ distcleancheck_listfiles = find . -type f -print
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkinstalldirs) $(distdir)/././oln/config $(distdir)/./oln/config $(distdir)/doc/doc $(distdir)/img $(distdir)/tests $(distdir)/tools
+	$(mkinstalldirs) $(distdir)/./oln/config $(distdir)/doc/doc $(distdir)/img $(distdir)/tests $(distdir)/tools
 	@list='$(DISTFILES)'; for file in $$list; do \
 	  if test -f $$file || test -d $$file; then d=.; else d=$(srcdir); fi; \
 	  dir=`echo "$$file" | sed -e 's,/[^/]*$$,,'`; \
