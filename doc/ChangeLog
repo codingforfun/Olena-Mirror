@@ -1,3 +1,7 @@
+2004-04-09  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* ref/out/exdoc.config.in: Add include directory.
+
 2004-04-03  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* doc/ref/Makefile.am: Add `CLEANFILES' variable to delete all the
