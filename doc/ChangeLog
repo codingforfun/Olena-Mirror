@@ -1,5 +1,9 @@
 2004-04-03  Damien Thivolle  <damien@lrde.epita.fr>
 
+	* doc/ref/out/exdoc.config.in: Remove -DNEED_ROUND -DNEED_ROUNDF flags.
+
+2004-04-03  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* doc/ref/Makefile.am: Replace `make' by $(MAKE).
 	* doc/ref/out/exdoc.config.in: Add -DNEED_ROUND -DNEED_ROUNDF flags
 	to examples compilation.
