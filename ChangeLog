@@ -1,4 +1,10 @@
-2002-12-05  Raphael Poss  <raph@sandrock>
+2002-12-09  Raphael Poss  <raph@lrde.epita.fr>
+
+	* Makefile.am (EXTRA_DIST): add FAQ.
+	* all Makefile.in's, configure's, aclocal.m4's, texinfo.tex: remove.
+	* pconf-inc.in pconf.inc: remove.
+	
+2002-12-05  Raphael Poss  <raph@lrde.epita.fr>
 
 	* FAQ: add.
 

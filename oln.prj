@@ -1,12 +1,17 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 103)
-(Parent-Version oln 0_5_reconf 14)
-(Version-Log "Branch merge from 0_5_reconf
+(Project-Version oln 0_5 104)
+(Parent-Version oln 0_5 103)
+(Version-Log "2002-12-09  Raphael Poss  <raph@lrde.epita.fr>
+
+        * Makefile.am (EXTRA_DIST): add FAQ.
+        * all Makefile.in's, configure's, aclocal.m4's, texinfo.tex: remove.
+        * pconf-inc.in pconf.inc: remove. 
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 05 Dec 2002 18:25:16 +0100")
+(Checkin-Time "Mon, 09 Dec 2002 20:59:37 +0100")
 (Checkin-Login raph)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -165,37 +170,37 @@
                   "tests/array/gen_test_utils/prelude$"))
 (Project-Keywords)
 (Files
-  (aclocal.m4 (oln/e/8_aclocal.m4 1.26 660))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.98.1.2 660))
+  
+  (ChangeLog (oln/6_ChangeLog 1.50.1.98.1.3 660))
   (configure.ac (oln/3_configure. 1.32 660))
-  (configure (oln/e/7_configure 1.41 770))
+  
   (README (oln/1_README 1.5 660))
   (ISSUES (oln/d/47_ISSUES 1.4 660))
-  (Makefile.am (oln/2_Makefile.a 1.16 660))
-  (Makefile.in (oln/e/9_Makefile.i 1.42 664))
+  (Makefile.am (oln/2_Makefile.a 1.17 660))
+  
   (NEWS (oln/0_NEWS 1.7 660))
 
   (src/demo/image.cc (oln/d/46_image.cc 1.2 660))
   (src/demo/Makefile.am (oln/d/44_Makefile.a 1.6 660))
-  (src/demo/Makefile.in (oln/e/16_Makefile.i 1.27 664))
+  
   (src/demo/morpholena.cc (oln/d/43_morpholena 1.8 660))
   (src/demo/test-reconstruction.cc (oln/e/22_test-recon 1.7 660))
   (src/demo/tour.cc (oln/d/45_tour.cc 1.5 660))
 
 
-  (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.13 664))
+  
   (doc/ChangeLog (oln/e/1_ChangeLog 1.30 660))
   (doc/configure.ac (oln/e/2_configure. 1.9 660))
-  (doc/configure (oln/e/3_configure 1.15 770))
+  (doc/configure (oln/e/3_configure 1.16 775))
   (doc/doc/bin () :directory)
   (doc/doc/html () :directory)
   (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.21 660))
-  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.21 664))
+  
   (doc/doc/oln-ref.tex (oln/f/14_oln-ref.te 1.3 660))
   (doc/img/lena256.pgm (oln/e/21_lena256.pg 1.1 660) :no-keywords)
   (doc/img/object.pbm (oln/d/49_object.pbm 1.1 660) :no-keywords)
   (doc/Makefile.am (oln/e/0_Makefile.a 1.4 660))
-  (doc/Makefile.in (oln/e/5_Makefile.i 1.14 664))
+  
   (doc/tpl/processing.tpl (oln/d/48_processing 1.14 660))
 
   (img/lena128.pgm (oln/e/23_lena128.pg 1.1 660) :no-keywords)
@@ -341,7 +346,7 @@
   (oln/level/lut.hh (oln/29_lut.hh 1.6 660))
   (oln/level/threshold.hh (oln/f/15_threshold. 1.4 660))
   (oln/Makefile.am (oln/27_Makefile.a 1.30 660))
-  (oln/Makefile.in (oln/e/17_Makefile.i 1.40 664))
+  
   (oln/math/macros.hh (oln/b/21_macros.hh 1.4 660))
   (oln/meta/array1d.hh (oln/f/23_array1d.hh 1.2 660))
   (oln/meta/array1d.hxx (oln/f/22_array1d.hx 1.3 660))
@@ -400,7 +405,7 @@
   (src/tests/meta/gen_test_utils/postlude (oln/f/31_postlude 1.1 660))
   (src/tests/meta/gen_test_utils/prelude (oln/f/30_prelude 1.2 660))
   (src/tests/meta/Makefile.am (oln/f/27_Makefile.a 1.2 660))
-  (src/tests/meta/Makefile.in (oln/f/37_Makefile.i 1.17 664))
+  
   (src/tests/meta/test_array1d.cc (oln/f/26_test_array 1.2 660))
   (src/tests/meta/test_array2d.cc (oln/f/25_test_array 1.2 660))
   (src/tests/meta/test_array3d.cc (oln/f/24_test_array 1.2 660))
@@ -412,7 +417,7 @@
   (src/tests/check/Makefile.am (oln/e/44_Makefile.a 1.3 660))
   (src/tests/check/Makefile.check (oln/e/37_Makefile.c 1.3 660))
   (src/tests/check/Makefile.flags (oln/e/36_Makefile.f 1.5 660))
-  (src/tests/check/Makefile.in (oln/e/39_Makefile.i 1.25 664))
+  
   (src/tests/check/srcdir.cc (oln/e/38_srcdir.cc 1.5 660))
   (src/tests/check/srcdir.hh (oln/e/35_srcdir.hh 1.3 660))
   (src/tests/check/verbose.cc (oln/e/41_verbose.cc 1.2 660))
@@ -420,12 +425,12 @@
   (src/tests/convert/convcomp.cc (oln/f/3_convcomp.c 1.4 660))
   (src/tests/convert/convcomp.hh (oln/f/1_convcomp.h 1.3 660))
   (src/tests/convert/Makefile.am (oln/f/0_Makefile.a 1.2 660))
-  (src/tests/convert/Makefile.in (oln/f/2_Makefile.i 1.24 664))
+  
 
 
   (src/tests/convol () :directory)
   (src/tests/convol/Makefile.am (oln/f/38_Makefile.a 1.4 660))
-  (src/tests/convol/Makefile.in (oln/f/44_Makefile.i 1.16 664))
+  
   ; (src/tests/convol/slow.cc ())
   (src/tests/convol/slow_sum_2d_1.cc (oln/f/41_slow_sum_2 1.2 660))
   (src/tests/convol/slow_sum_2d_2.cc (oln/f/40_slow_sum_2 1.2 660))
@@ -438,23 +443,23 @@
   (src/tests/io/2d.cc (oln/e/47_2d.cc 1.4 660))
   (src/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.5 660))
   (src/tests/io/Makefile.am (oln/e/49_Makefile.a 1.6 660))
-  (src/tests/io/Makefile.in (oln/e/50_Makefile.i 1.26 664))
+  
   (src/tests/Makefile.am (oln/e/45_Makefile.a 1.14 660))
-  (src/tests/Makefile.in (oln/e/46_Makefile.i 1.31 664))
+  
   (src/tests/morpho/edoc.cc (oln/f/13_edoc.cc 1.3 660))
   (src/tests/morpho/extrkiller.cc (oln/e/31_extrkiller 1.5 660))
   (src/tests/morpho/Makefile.am (oln/e/32_Makefile.a 1.5 660))
-  (src/tests/morpho/Makefile.in (oln/e/33_Makefile.i 1.27 664))
+  
   (src/tests/morpho/reconstruction.cc (oln/e/34_reconstruc 1.6 660))
   (src/tests/README (oln/f/4_README 1.3 660))
   (THANKS (oln/4_THANKS 1.3 660))
   
-  (tools/depcomp (oln/e/12_depcomp 1.6 755))
-  (tools () :directory)
-  (tools/install-sh (oln/e/15_install-sh 1.5 755))
   
-  (tools/missing (oln/e/13_missing 1.5 755))
-  (tools/mkinstalldirs (oln/e/14_mkinstalld 1.4 755) :no-keywords)
+  (tools () :directory)
+  
+  
+  
+  
   
   
 
@@ -462,7 +467,7 @@
 ;; to version 0_4.26(w), by adl:
 
   (src/tests/sanity/includes.test (oln/f/46_includes.t 1.2 770))
-  (src/tests/sanity/Makefile.in (oln/f/47_Makefile.i 1.12 664))
+  
   (src/tests/sanity/Makefile.am (oln/f/48_Makefile.a 1.1 660))
 
 ;; Files added by populate at Thu, 18 Jul 2002 20:30:39 +0200,
@@ -511,7 +516,7 @@
 
 
   (src/utilities/mosaic.cc (oln/g/0_mosaic.cc 1.3 660))
-  (src/utilities/Makefile.in (oln/g/1_Makefile.i 1.12 664))
+  
   (src/utilities/Makefile.am (oln/g/2_Makefile.a 1.6 660))
 ;; Files added by populate at Mon, 29 Jul 2002 16:23:03 +0200,
 ;; to version 0_5.4(w), by burrus_n:
@@ -547,7 +552,7 @@
   (src/tests/types/tests/int1 (oln/h/1_int1 1.1 660))
   (src/tests/types/tests/unsafe1 (oln/h/2_unsafe1 1.1 660))
   (src/tests/types/runtests (oln/h/3_runtests 1.5 770))
-  (src/tests/types/Makefile.in (oln/h/4_Makefile.i 1.13 664))
+  
   (src/tests/types/Makefile.am (oln/h/5_Makefile.a 1.3 660))
 
 ;; Files added by populate at Tue, 27 Aug 2002 18:05:09 +0200,
@@ -709,7 +714,7 @@
 ;; to version 0_5.74(w), by chojin:
 
   (src/utilities/generate_morpho.sh (oln/i/30_generate_m 1.3.1.2 770))
-  (src/utilities/morpho/Makefile.in (oln/i/31_Makefile.i 1.9 664))
+  
   (src/utilities/morpho/Makefile.am (oln/i/32_Makefile.a 1.4 660))
   (src/utilities/morpho/morpho_template.cc (oln/i/33_morpho_tem 1.5 660))
 
@@ -739,7 +744,7 @@
   (src/tests/transforms/output () :directory)
   (src/tests/transforms/fft.cc (oln/i/37_fft.cc 1.2 660))
   (src/tests/transforms/dwt.cc (oln/i/38_dwt.cc 1.3 660))
-  (src/tests/transforms/Makefile.in (oln/i/39_Makefile.i 1.9 664))
+  
   (src/tests/transforms/Makefile.am (oln/i/40_Makefile.a 1.2 660))
 
 ;; Files added by populate at Fri, 15 Nov 2002 21:42:09 +0100,
@@ -808,12 +813,12 @@
 ;; Files added by populate at Wed, 04 Dec 2002 15:48:52 +0100,
 ;; to version 0_5_reconf.1(w), by raph:
 
-  (oln/config/pconf.inc (oln/j/11_pconf.inc 1.2 664))
+  
 
 ;; Files added by populate at Wed, 04 Dec 2002 15:49:00 +0100,
 ;; to version 0_5_reconf.1(w), by raph:
 
-  (oln/config/pconf-inc.in (oln/j/12_pconf-hh.i 1.3 664))
+  
 
 ;; Files added by populate at Wed, 04 Dec 2002 15:49:10 +0100,
 ;; to version 0_5_reconf.1(w), by raph:
@@ -834,13 +839,13 @@
 ;; to version 0_5_reconf.1(w), by raph:
 
   (bootstrap.sh (oln/j/16_bootstrap. 1.1 775))
-  (src/Makefile.in (oln/j/17_Makefile.i 1.5 664))
-  (src/configure (oln/j/18_configure 1.4 775))
+  
+  
 
 ;; Files added by populate at Wed, 04 Dec 2002 15:53:26 +0100,
 ;; to version 0_5_reconf.1(w), by raph:
 
-  (src/aclocal.m4 (oln/j/19_aclocal.m4 1.3 664))
+  
 
 ;; Files added by populate at Wed, 04 Dec 2002 16:24:21 +0100,
 ;; to version 0_5_reconf.2(w), by raph:
@@ -855,11 +860,11 @@
 ;; Files added by populate at Thu, 05 Dec 2002 17:19:36 +0100,
 ;; to version 0_5_reconf.11(w), by raph:
 
-  (doc/doc/texinfo.tex (oln/j/26_texinfo.te 1.1 644))
-  (doc/install-sh (oln/j/27_install-sh 1.1 755))
-  (doc/mkinstalldirs (oln/j/28_mkinstalld 1.1 755))
-  (doc/missing (oln/j/29_missing 1.1 755))
-  (src/config.hin (oln/j/30_config.hin 1.1 664))
+  
+  
+  
+  
+  
 
 ;; Files deleted by depopulate at Thu, 05 Dec 2002 17:19:44 +0100,
 ;; from version 0_5_reconf.11(w), by raph:
@@ -875,15 +880,60 @@
 ;; to version 0_5_reconf.12(w), by raph:
 
   (FAQ (oln/j/31_FAQ 1.1 664))
+
+;; Files deleted by depopulate at Mon, 09 Dec 2002 20:49:26 +0100,
+;; from version 0_5.103(w), by raph:
+
+  ; (aclocal.m4 ())
+  ; (configure ())
+  ; (Makefile.in ())
+  ; (doc/doc/Makefile.in ())
+  ; (tools/depcomp ())
+  ; (tools/install-sh ())
+  ; (tools/missing ())
+  ; (tools/mkinstalldirs () :no-keywords)
+  ; (doc/doc/texinfo.tex ())
+  ; (doc/install-sh ())
+  ; (doc/mkinstalldirs ())
+  ; (doc/missing ())
+
+;; Files deleted by depopulate at Mon, 09 Dec 2002 20:49:58 +0100,
+;; from version 0_5.103(w), by raph:
+
+  ; (src/demo/Makefile.in ())
+  ; (src/Makefile.in ())
+  ; (src/configure ())
+  ; (src/aclocal.m4 ())
+  ; (src/config.hin ())
+
+;; Files deleted by depopulate at Mon, 09 Dec 2002 20:50:24 +0100,
+;; from version 0_5.103(w), by raph:
+
+  ; (doc/Makefile.in ())
+  ; (oln/Makefile.in ())
+  ; (src/tests/meta/Makefile.in ())
+  ; (src/tests/check/Makefile.in ())
+  ; (src/tests/convert/Makefile.in ())
+  ; (src/tests/convol/Makefile.in ())
+  ; (src/tests/io/Makefile.in ())
+  ; (src/tests/Makefile.in ())
+  ; (src/tests/morpho/Makefile.in ())
+  ; (src/tests/sanity/Makefile.in ())
+  ; (src/utilities/Makefile.in ())
+  ; (src/tests/types/Makefile.in ())
+  ; (src/utilities/morpho/Makefile.in ())
+  ; (src/tests/transforms/Makefile.in ())
+
+;; Files deleted by depopulate at Mon, 09 Dec 2002 20:53:04 +0100,
+;; from version 0_5.103(w), by raph:
+
+  ; (oln/config/pconf.inc ())
+  ; (oln/config/pconf-inc.in ())
+
+;; Files deleted by depopulate at Mon, 09 Dec 2002 20:54:58 +0100,
+;; from version 0_5.103(w), by raph:
+
+  ; (doc/aclocal.m4 ())
 )
-(Merge-Parents
-  (0_5.102 incomplete
-    (() oln/config/config.hin oln/config/config.hin n) (() oln/config/README oln/config/README n)
-    (() tests/meta tests/meta n) (() tests/convol tests/convol n)
-    (() tools/ChangeLog tools/ChangeLog n) (() tools/mdate-sh tools/mdate-sh n)
-    (() tools/scandefs.pl tools/scandefs.pl n) (() tools/texinfo.tex tools/texinfo.tex n)
-    (() tests/transforms/output tests/transforms/output n) 
-  )
-  (0_5.102 complete)
-)
+(Merge-Parents)
 (New-Merge-Parents)
