@@ -76,71 +76,125 @@ flag to see what data is available.
 
 @section Troubleshooting
 
-Problem: My program compiles successfully, but refuses to link: the linker
+@unnumberedsubsec Missing functions at link-time
+
+@cindex link failures
+@cindex @code{roundf}, missing
+@cindex @code{OLN_NEED_ROUNDF}
+@cindex @env{CXXFLAGS}
+
+@table @strong
+@item Problem
+My program compiles successfully, but refuses to link: the linker
 complains about missing @code{_roundf}.
 
-Explanation: Your standard library headers declare @code{roundf} but it is
+@item Explanation
+Your standard library headers declare @code{roundf} but it is
 not actually defined. 
 
-Solution: Add @option{-DOLN_NEED_ROUNDF} to your
+@item Solution
+Add @option{-DOLN_NEED_ROUNDF} to your
 @env{CXXFLAGS}.
+@end table
 
-@sp 1
+@unnumberedsubsec Incorrect behaviour of generated code
 
-Problem: My programs compiles and runs, but either the compiler (GCC)
+@table @strong
+@item Problem
+My programs compiles and runs, but either the compiler (GCC)
 issues warnings at compile-time in the Olena headers, or the results
 are weird and/or inaccurate.
 
-Explanation 1: You are using GCC 2.95 and heavy optimisation
+@item Explanation 1
+You are using GCC 2.95 and heavy optimisation
 (@option{-O3}) flags.  This is known to produce invalid code with Olena.
 
-Solution 1: Use @option{-O2} instead.
+@item Solution 1
+Use @option{-O2} instead.
 
-Explanation 2: You used the default, invalid, value for @env{CXXFLAGS}
+@item Explanation 2
+You used the default, invalid, value for @env{CXXFLAGS}
 when `configure' has run, and the sources were compiled using heavy
 optimization and debug settings, which is inconsistent.
 
-Solution 2: run @command{configure CXXFLAGS=''}. See the file
+@item Solution 2
+Run @command{configure CXXFLAGS=''}. See the file
 @file{BUILD} at the toplevel source directory.
 
-@sp 1
+@end table
 
-Problem: My source file includes @file{basics2d.hh} but compilation
+@unnumberedsubsec Wrong include path
+
+@table @strong
+@item Problem
+My source file includes @file{basics2d.hh} but compilation
 fails: the compiler complains about missing @file{oln/config/system.hh}.
 
-Solution: Include @file{oln/basics2d.hh} instead, and use
+@item Solution
+Include @file{oln/basics2d.hh} instead, and use
 @option{-I/usr/local/include} instead of
 @option{-I/usr/local/include/oln} in your compilation flags.
 
-@sp 1
+@end table
 
-Problem: Compilation fails at points where @code{OLN_FLOAT_INFINITY} or
+@unnumberedsubsec Errors defining Infinity
+
+@cindex infinity
+@cindex @code{std::numeric_limits}
+@cindex @code{OLN_USE_C_LIMITS}
+
+@table @strong
+@item Problem
+Compilation fails at points where @code{OLN_FLOAT_INFINITY} or
 @code{std::numeric_limits} is used.
 
-Explanation: Your C++ standard library is broken. 
+@item Explanation
+Your C++ standard library is broken. 
 
-Solution: As a workaround, add @option{-DOLN_USE_C_LIMITS} to
+@item Solution
+As a workaround, add @option{-DOLN_USE_C_LIMITS} to
 your @env{CXXFLAGS}.
 
-@sp 1
+@end table
 
-Problem: @command{make check} fails because warnings are treated as
+@unnumberedsubsec Warnings in standard headers
+
+@cindex warnings, in system headers
+@cindex HP-UX
+@cindex FreeBSD
+@cindex @env{CXXFLAGS_STRICT_ERRORS}
+
+@table @strong
+@item Problem
+@command{make check} fails because warnings are treated as
 errors and the standard headers on my system generate warnings (as on
 e.g. HP-UX and FreeBSD).
 
-Solution: Run @command{configure} with @env{CXXFLAGS_STRICT_ERRORS} set
+@item Solution
+Run @command{configure} with @env{CXXFLAGS_STRICT_ERRORS} set
 to more tolerant warning flags (for example, set @option{-Wall -W} for
 GCC but not @option{-Werror}).
 
-@sp 1
+@end table 
 
-Problem: High resolution images are saved with invalid data on the
+@unnumberedsubsec Invalid data saved on I/O
+
+@cindex big-endian
+@cindex Macintosh
+
+@table @strong
+@item Problem
+High resolution images are saved with invalid data on the
 Macintosh.
 
-Explanation: You are using a big-endian host and there are known bugs in
+@item Explanation
+You are using a big-endian host and there are known bugs in
 the image I/O operators.
 
-Solution: Save your images in the ``plain pnm'' (@file{.ppnm}) file
+@item Solution
+Save your images in the ``plain pnm'' (@file{.ppnm}) file
 format instead of raw. Beware, while this is a correct workaround, the
 generated images are bigger.
+
+@end table
 
