@@ -30,7 +30,7 @@
 
 # include <mlc/array/objs.hh>
 # include <mlc/contract.hh>
-# include <mlc/cmp.hh>
+# include <mlc/arith.hh>
 # include <ntg/basics.hh>
 
 # include <iostream>
@@ -60,10 +60,10 @@ namespace mlc
 
     array3d(T* ptr)
     {
-      less< 0, Info_::nplanes >::ensure();
-      less< 0, Info_::nrows >::ensure();
-      less< 0, Info_::ncols >::ensure();
-      less< Info_::card, internal::max_card_ >::ensure();
+      on<unsigned>::less< 0, Info_::nplanes >::ensure();
+      on<unsigned>::less< 0, Info_::nrows >::ensure();
+      on<unsigned>::less< 0, Info_::ncols >::ensure();
+      on<unsigned>::less< Info_::card, internal::max_card_ >::ensure();
       for (unsigned i = 0; i < Info_::card; ++i)
 	buffer_[i] = *ptr++;
     }
@@ -259,18 +259,18 @@ namespace mlc
 
     template<unsigned i>
     T get_at_() const {
-      lesseq<i, Info_::card>::ensure();
+      on<int>::leq<i, Info_::card>::ensure();
       return *(buffer_ + i);
     }
 
     template<int nplane, int nrow, int ncol>
     T get_() const {
-      lesseq< -Info_::center_plane, nplane >::ensure();
-      lesseq< nplane, Info::nplanes - Info_::center_plane - 1 >::ensure();
-      lesseq< -Info_::center_row, nrow >::ensure();
-      lesseq< nrow, Info_::nrows - Info_::center_row - 1 >::ensure();
-      lesseq< -Info_::center_col, ncol >::ensure();
-      lesseq< ncol, Info_::ncols - Info_::center_col - 1 >::ensure();
+      on<int>::leq< -Info_::center_plane, nplane >::ensure();
+      on<int>::leq< nplane, Info::nplanes - Info_::center_plane - 1 >::ensure();
+      on<int>::leq< -Info_::center_row, nrow >::ensure();
+      on<int>::leq< nrow, Info_::nrows - Info_::center_row - 1 >::ensure();
+      on<int>::leq< -Info_::center_col, ncol >::ensure();
+      on<int>::leq< ncol, Info_::ncols - Info_::center_col - 1 >::ensure();
       return *(buffer_ + Info_::center + (nplane * Info::nrows * Info::ncols) + (nrow * Info::ncols) + ncol);
     }
 

@@ -1,3 +1,26 @@
+2005-04-05  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Cleaning.
+	
+	* mlc/types.hh: Rewrite and split into...
+	* mlc/bool.hh: Likewise.
+	* mlc/if.hh: ... this new file.
+	* mlc/switch.hh: ... this new file.
+	* mlc/value.hh: ... this new file.
+	* mlc/cmp.hh: Rewrite and arithmetics move to...
+	* mlc/arith.hh: ... this new file.
+	* mlc/math.hh: Update.
+	* mlc/properties.hh: Likewise.
+	* mlc/makefile.src: Likewise.
+	* mlc/is_a.hh: Likewise.
+	* mlc/contract.hh: Likewise.
+	* mlc/array/1d.hh: Likewise.
+	* mlc/array/2d.hh: Likewise.
+	* mlc/array/3d.hh: Likewise.
+	* mlc/array/1d.hxx: Likewise.
+	* mlc/array/2d.hxx: Likewise.
+	* mlc/array/3d.hxx: Likewise.
+	
 2005-03-22  Simon Odou  <simon@lrde.epita.fr>
 
 	* mlc/any.hh: Make the `any__best_memory' fast when using gcc-3.

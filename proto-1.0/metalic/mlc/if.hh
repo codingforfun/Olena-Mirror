@@ -25,40 +25,37 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_BOOL_HH
-# define METALIC_BOOL_HH
+#ifndef METALIC_IF_HH
+# define METALIC_IF_HH
 
-# include <mlc/value.hh>
+# include <mlc/bool.hh>
+
+
+/// Macro mlc_if.
+# define mlc_if(Cond, Then, Else)  typename mlc::if_<(Cond), (Then), (Else)>::ret
 
 
 namespace mlc
 {
 
+  template <typename cond_type, typename then_type, typename else_type>
+  struct if_;
 
-  /// Specialization of mlc::value for T = bool and v = true; it provides ::ensure().
-  template <>
-  struct value <bool, true>
+  template <typename then_type, typename else_type>
+  struct if_ <true_type,  then_type, else_type>
   {
-    static void ensure() {}
-    static const bool ret = true;
-  private:
-    value();
+    typedef then_type ret;
   };
 
-
-  /// Typedefs of true_type and false_type.
-  typedef value<bool, true>  true_type;
-  typedef value<bool, false> false_type;
-
-
-  /// Class is_true<b> (provided for bkd compability).
-  template <bool b>
-  struct is_true : public value<bool, b>
+  template <typename then_type, typename else_type>
+  struct if_ <false_type, then_type, else_type>
   {
+    typedef else_type ret;
   };
 
 
 } // end of namespace mlc
 
 
-#endif // ! METALIC_BOOL_HH
+
+#endif // ! METALIC_IF_HH

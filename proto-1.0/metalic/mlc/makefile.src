@@ -5,6 +5,7 @@
 
 MLC_DEP =					\
   any.hh					\
+  arith.hh					\
   array/1d.hh					\
   array/1d.hxx					\
   array/2d.hh					\
@@ -19,10 +20,12 @@ MLC_DEP =					\
   cmp.hh					\
   config/system.hh				\
   contract.hh					\
+  if.hh						\
   is_a.hh					\
   math.hh					\
   properties.hh					\
+  switch.hh					\
   tracked_ptr.hh				\
   traits.hh					\
-  types.hh
-
+  types.hh					\
+  value.hh

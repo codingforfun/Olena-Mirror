@@ -31,35 +31,8 @@
 # include <iostream>
 # include <typeinfo>
 
-# include <mlc/types.hh>
-# include <mlc/bool.hh>
+# include <mlc/if.hh>
 # include <mlc/cmp.hh>
-
-
-// FIXME: temporary routines; equivalent to the ones of mlc/bool.hh and mlc/cmp.hh
-// FIXME: modify mlc/* so that "types" are prefered to "values"...
-
-namespace mlc
-{
-  namespace internal
-  {
-    template <class C, class T, class F> struct my_if;
-    template <class T, class F> struct my_if <mlc::true_type,  T, F> { typedef T ret; };
-    template <class T, class F> struct my_if <mlc::false_type, T, F> { typedef F ret; };
-
-    template <class T1, class T2> struct my_eq { typedef mlc::false_type ret; };
-    template <class T> struct my_eq <T, T> { typedef mlc::true_type ret; };
-
-  }
-}
-
-// FIXME: temporary macros (Cf. above)
-
-# define mlc_internal_if(C,T,F) \
-typename mlc::internal::my_if<C,T,F>::ret
-
-# define mlc_internal_eq(T1,T2) \
-typename mlc::internal::my_eq<T1,T2>::ret
 
 
 
@@ -158,7 +131,7 @@ namespace internal								\
   struct get_prop < CATEGORY, type, target::TARGET >				\
   {										\
     typedef get_prop_helper<CATEGORY, type, target::TARGET,			\
-			      mlc_internal_eq(type, mlc::no_type),		\
+			      mlc_eq(type, mlc::no_type),			\
 			      typename get_props<CATEGORY, type>::user_defined_	\
 			      > helper_type;					\
     typedef typename helper_type::ret ret;					\
@@ -172,7 +145,7 @@ namespace internal								\
                               typename get_super_type<type>::ret,		\
                               target::TARGET>::ret super_prop_type;		\
 										\
-    typedef mlc_internal_if( mlc_internal_eq(prop_type, mlc::unknown_type),	\
+    typedef mlc_if( mlc_eq(prop_type, mlc::unknown_type),			\
 			      super_prop_type,					\
 			      prop_type ) ret;					\
   };										\
@@ -204,17 +177,17 @@ struct set_type_of < CATEGORY, type, target::TARGET >				\
 /// macros to declare a property:
 
 # define mlc_decl_prop_with_default(CATEGORY, NAME, DEFAULT)			\
-  typedef  mlc_internal_if(mlc_internal_eq(type, mlc::default_type),		\
+  typedef  mlc_if(mlc_eq(type, mlc::default_type),				\
 		  DEFAULT,							\
-		  mlc_internal_if(mlc_internal_eq(type, mlc::no_type),		\
+		  mlc_if(mlc_eq(type, mlc::no_type),				\
 			 mlc::unknown_type,					\
 			 mlc_internal_retrieve_prop(CATEGORY, type, NAME))	\
 		  )  NAME
 
 # define mlc_decl_prop(CATEGORY, NAME)						\
-  typedef  mlc_internal_if(mlc_internal_eq(type, mlc::default_type),		\
+  typedef  mlc_if(mlc_eq(type, mlc::default_type),				\
 		  mlc::undefined_type,						\
-		  mlc_internal_if(mlc_internal_eq(type, mlc::no_type),		\
+		  mlc_if(mlc_eq(type, mlc::no_type),				\
 			 mlc::unknown_type,					\
 			 mlc_internal_retrieve_prop(CATEGORY, type, NAME))	\
 		  )  NAME
@@ -228,9 +201,9 @@ typename NAMESPACE::get_type_of<typename NAMESPACE::internal::get_category<TYPE>
                            TYPE,							\
                            NAMESPACE::target::TARGET##_type>::ret
 
-# define mlc_type_of_(NAMESPACE, TYPE, TARGET)				\
+# define mlc_type_of_(NAMESPACE, TYPE, TARGET)					\
 NAMESPACE::get_type_of<typename NAMESPACE::internal::get_category<TYPE>::ret,	\
-                           TYPE,					\
+                           TYPE,						\
                            NAMESPACE::target::TARGET##_type>::ret
 
 

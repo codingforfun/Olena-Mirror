@@ -25,40 +25,39 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_BOOL_HH
-# define METALIC_BOOL_HH
+#ifndef METALIC_ARITH_HH
+# define METALIC_ARITH_HH
 
-# include <mlc/value.hh>
+# include <mlc/bool.hh>
+
 
 
 namespace mlc
 {
 
-
-  /// Specialization of mlc::value for T = bool and v = true; it provides ::ensure().
-  template <>
-  struct value <bool, true>
+  template <typename T>
+  struct on
   {
-    static void ensure() {}
-    static const bool ret = true;
-  private:
-    value();
-  };
+    template <T i, T j> struct eq  : public value <bool, (i == j)> {};
+    template <T i, T j> struct neq : public value <bool, (i != j)> {};
 
+    template <T i, T j> struct less : public value <bool, (i < j)> {};
+    template <T i, T j> struct leq  : public value <bool, (i <= j)> {};
 
-  /// Typedefs of true_type and false_type.
-  typedef value<bool, true>  true_type;
-  typedef value<bool, false> false_type;
+    template <T i, T j> struct greater : public value <bool, (i > j)> {};
+    template <T i, T j> struct geq     : public value <bool, (i >= j)> {};
 
+    template <T i, T j> struct min : public value<T, (i < j ? i : j)> {};
+    template <T i, T j> struct max : public value<T, (i > j ? i : j)> {};
 
-  /// Class is_true<b> (provided for bkd compability).
-  template <bool b>
-  struct is_true : public value<bool, b>
-  {
+    template <T i, T j, T N> struct maxN : public value<T, (i > j ?
+									(i > N ? N : i) :
+									(j > N ? N : j))> {};
+    template <T i, T N> struct saturateN : public value<T, (i > N ? N : i)> {};
   };
 
 
 } // end of namespace mlc
 
 
-#endif // ! METALIC_BOOL_HH
+#endif // ! METALIC_ARITH_HH

@@ -122,7 +122,7 @@ namespace mlc
 
       template<class T, class U>
       struct check
-	: public mlc::returns_bool_<( is_a__check_result_ )>
+	: public value<bool,( is_a__check_result_ )>
       {
       };
     };
@@ -145,7 +145,7 @@ namespace mlc
 
       template<class T, template<class> class U>
       struct check
-	: public mlc::returns_bool_<( is_a__check_result_ )>
+	: public value<bool,( is_a__check_result_ )>
       {
       };
     };
@@ -168,7 +168,7 @@ namespace mlc
 
       template<class T, template<class,class> class U>
       struct check
-	: public mlc::returns_bool_<( is_a__check_result_ )>
+	: public value<bool,( is_a__check_result_ )>
       {};
     };
 

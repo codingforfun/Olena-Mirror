@@ -28,6 +28,9 @@
 #ifndef METALIC_TYPES_HH
 # define METALIC_TYPES_HH
 
+# include <mlc/value.hh>
+
+
 
 /*! \namespace mlc
 ** \brief mlc namespace.

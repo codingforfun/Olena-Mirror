@@ -28,101 +28,44 @@
 #ifndef METALIC_CMP_HH
 # define METALIC_CMP_HH
 
-
 # include <mlc/bool.hh>
+
+
+/// Macro mlc_eq.
+# define mlc_eq(T1, T2)  typename mlc::eq<T1, T2>::ret
+
 
 
 namespace mlc
 {
 
-  namespace type {
+  /// Equality test between a couple of types.
 
-    /*-----------------.
-    | Type comparisons |
-    `-----------------*/
-
-
-    template <typename T, typename U>
-    struct eq : returns_bool_<false> {};
-
-    template <typename T>
-    struct eq<T, T> : returns_bool_<true> {};
-
-  } // end of namespace type
-
-  /*-------------------.
-  | Values comparisons |
-  `-------------------*/
-
-  // These struct are quite handy since constructions like
-  // is_true<a < b>::ensure() cannot be parsed.
-
-  template<int i, int j>
-  struct less
-  {
-    enum { ret = (i < j) };
-    static void ensure() { is_true<ret>::ensure(); };
-  };
-
-  template<int i, int j>
-  struct lesseq
-  {
-    enum { ret = (i <= j) };
-    static void ensure() { is_true<ret>::ensure(); };
-  };
-
-  template<int i, int j>
+  template <typename T1, typename T2>
   struct eq
   {
-    enum { ret = (i == j) };
-    static void ensure() { is_true<ret>::ensure(); };
+    typedef false_type ret;
   };
 
-  template<int i, int j>
+  template <typename T>
+  struct eq <T, T>
+  {
+    typedef true_type ret;
+  };
+
+
+  /// Inequality test between a couple of types.
+
+  template <typename T1, typename T2>
   struct neq
   {
-    enum { ret = (i != j) };
-    static void ensure() { is_true<ret>::ensure(); };
+    typedef true_type ret;
   };
 
-  template<int i, int j>
-  struct greater
+  template <typename T>
+  struct neq <T, T>
   {
-    enum { ret = (i > j) };
-    static void ensure() { is_true<ret>::ensure(); };
-  };
-
-  template<int i, int j>
-  struct greatereq
-  {
-    enum { ret = (i >= j) };
-    static void ensure() { is_true<ret>::ensure(); };
-  };
-
-  template<int i, int j>
-  struct min
-  {
-    enum { ret = (i < j ? i : j) };
-  };
-
-  template<int i, int j>
-  struct max
-  {
-    enum { ret = (i > j ? i : j) };
-  };
-
-  template<int i, int j, int N>
-  struct maxN
-  {
-    enum { ret = (i > j ?
-		  (i > N ? N : i) :
-		  (j > N ? N : j)) };
-  };
-
-  template<int i, int N>
-  struct saturateN
-  {
-    enum { ret = (i > N ? N : i) };
+    typedef false_type ret;
   };
 
 

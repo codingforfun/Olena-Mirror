@@ -174,7 +174,7 @@ namespace mlc
 
       next_elt_t_ operator,(T val)
       {
-	is_true<Info::nplanes == unknown_>::ensure();
+	value<bool, (Info::nplanes == unknown_)>::ensure();
 	*ptr = val;
 	return next_elt_t_(ptr + 1, arr);
       }
@@ -184,7 +184,7 @@ namespace mlc
 
       eat_center_t_ operator,(x_<T> val)
       {
-	is_true<Info::center == unknown_>::ensure();
+	value<bool, (Info::center == unknown_)>::ensure();
 	*ptr = val.ue; // FIXME : give a *name* to this variable !!
 	return eat_center_t_(ptr + 1, arr);
       }
@@ -194,7 +194,7 @@ namespace mlc
 
       eat_center_t_ operator,(x_<void>)
       {
-	is_true<Info::center == unknown_>::ensure();
+	value<bool, (Info::center == unknown_)>::ensure();
 	*ptr = T(0);
 	return eat_center_t_(ptr + 1, arr);
       }
@@ -204,7 +204,7 @@ namespace mlc
 
       eat_lbrk_t_ operator,(lbrk_)
       {
-	is_true<Info::ncols == unknown_>::ensure();
+	value<bool, (Info::ncols == unknown_)>::ensure();
 	return eat_lbrk_t_(ptr, arr);
       }
 
@@ -212,7 +212,7 @@ namespace mlc
       // elt, pbrk
       eat_pbrk_t_ operator,(pbrk_)
       {
-	is_true<Info::nplanes == unknown_>::ensure();
+	value<bool, (Info::nplanes == unknown_)>::ensure();
 	return eat_pbrk_t_(ptr, arr);
       }
 
@@ -223,19 +223,19 @@ namespace mlc
 	enum { nplanes = (Info::i / (Info::ncols * Info::nrows)) };
 	  
 	// array is well-formed :
-	is_true<Info::well_formed>::ensure();
+	value<bool, (Info::well_formed)>::ensure();
 	// centering is automatic or user-defined :
 
-	is_true<Info::ncols != unknown_>::ensure();
-	is_true<Info::nrows != unknown_>::ensure();
+	value<bool, (Info::ncols != unknown_)>::ensure();
+	value<bool, (Info::nrows != unknown_)>::ensure();
 
 	// all of nplanes, nrows and ncols are odd
 	// or the center is user-defined
 
-	is_true<	    
+	value<bool, (	    
 	  (Info::ncols % 2 == 1 && Info::nrows % 2 == 1 && nplanes % 2 == 1)
 	  || (Info::center != unknown_)
-	  >::ensure();
+	  )>::ensure();
 	  
 	return array3d_t_(arr->ptr);
       }

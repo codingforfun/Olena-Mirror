@@ -25,40 +25,68 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_BOOL_HH
-# define METALIC_BOOL_HH
+#ifndef METALIC_SWITCH_HH
+# define METALIC_SWITCH_HH
 
-# include <mlc/value.hh>
+# include <mlc/bool.hh>
+# include <mlc/if.hh>
 
 
 namespace mlc
 {
 
 
-  /// Specialization of mlc::value for T = bool and v = true; it provides ::ensure().
-  template <>
-  struct value <bool, true>
+  // FIXME: not yet cleaned.
+
+  struct invalid {};
+
+  template<unsigned Cond, class Ret, class Cases = invalid>
+  struct case_ {};
+
+  template<unsigned Cond, class Cases, class Default = invalid>
+  struct switch_;
+
+  template<unsigned Cond, unsigned Compare, class Ret, class Default>
+  struct switch_<Cond, case_<Compare, Ret>, Default >
   {
-    static void ensure() {}
-    static const bool ret = true;
-  private:
-    value();
+    typedef typename if_< value<bool,(Cond == Compare)>, Ret, Default >::ret ret;
   };
 
-
-  /// Typedefs of true_type and false_type.
-  typedef value<bool, true>  true_type;
-  typedef value<bool, false> false_type;
-
-
-  /// Class is_true<b> (provided for bkd compability).
-  template <bool b>
-  struct is_true : public value<bool, b>
+  template<unsigned Cond,
+      unsigned Compare,
+      class Ret,
+      class Cases,
+      class Default>
+  struct switch_<Cond, case_<Compare, Ret, Cases>, Default >
   {
+    typedef typename
+      if_< value<bool, bool(Cond == Compare)>,
+	   Ret,
+	   typename switch_<Cond, Cases, Default>::ret>::ret ret;
   };
 
+  template<bool Cond, class Ret, class Cases = invalid>
+  struct bool_case_ {};
+
+  template<class Cases, class Default = invalid>
+  struct bool_switch_;
+
+  template<bool Cond, class Ret, class Default>
+  struct bool_switch_<bool_case_<Cond, Ret>, Default >
+  {
+    typedef typename if_< value<bool,Cond>, Ret, Default >::ret ret;
+  };
+
+  template<bool Cond,class Ret, class Cases, class Default>
+  struct bool_switch_<bool_case_<Cond, Ret, Cases>, Default >
+  {
+    typedef typename
+    if_< value<bool, Cond>,
+	 Ret,
+	 typename bool_switch_<Cases, Default>::ret >::ret ret;
+  };
 
 } // end of namespace mlc
 
 
-#endif // ! METALIC_BOOL_HH
+#endif // ! METALIC_SWITCH_HH

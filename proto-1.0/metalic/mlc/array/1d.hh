@@ -29,7 +29,7 @@
 # define METALIC_ARRAY_1D_HH
 
 # include <mlc/contract.hh>
-# include <mlc/cmp.hh>
+# include <mlc/arith.hh>
 # include <mlc/array/objs.hh>
 # include <ntg/basics.hh>
 # include <iostream>
@@ -59,8 +59,8 @@ namespace mlc
 
     array1d(T* ptr)
     {
-      less<0, Info_::card>::ensure();
-      less< Info_::card, internal::max_card_ >::ensure();
+      on<unsigned>::less<0, Info_::card>::ensure();
+      on<unsigned>::less< Info_::card, internal::max_card_ >::ensure();
       for (unsigned i = 0; i < Info_::card; ++i)
 	buffer_[i] = *ptr++;
     }
@@ -230,14 +230,14 @@ namespace mlc
 
     template<unsigned i>
     T get_at_() const {
-      lesseq<i, Info_::card>::ensure();
+      on<unsigned>::leq<i, Info_::card>::ensure();
       return *(buffer_ + i);
     }
 
     template<int i>
     T get_() const {
-      lesseq<-Info_::center, i>::ensure();
-      lesseq<i, Info_::card - Info_::center - 1>::ensure();
+      on<int>::leq<-Info_::center, i>::ensure();
+      on<int>::leq<i, Info_::card - Info_::center - 1>::ensure();
       return *(buffer_ + Info_::center + i);
     }
 

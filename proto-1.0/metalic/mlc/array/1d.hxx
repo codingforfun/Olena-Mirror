@@ -146,7 +146,7 @@ namespace mlc
 
       next_elt_t_ operator,(T val)
       {
-	is_true<Info::card == unknown_>::ensure();
+	value<bool, (Info::card == unknown_)>::ensure();
 	*ptr = val;
 	return next_elt_t_(ptr + 1, arr);
       }
@@ -156,7 +156,7 @@ namespace mlc
 
       eat_center_t_ operator,(x_<T> val)
       {
-	is_true<Info::center == unknown_>::ensure();
+	value<bool, (Info::center == unknown_)>::ensure();
 	*ptr = val.ue; // FIXME : give a *name* to this variable !!
 	return eat_center_t_(ptr+1, arr);
       }
@@ -166,7 +166,7 @@ namespace mlc
 
       eat_center_t_ operator,(x_<void>)
       {
-	is_true<Info::center == unknown_>::ensure();
+	value<bool, (Info::center == unknown_)>::ensure();
 	*ptr = T(0);
 	return eat_center_t_(ptr+1, arr);
       }
@@ -177,7 +177,7 @@ namespace mlc
       array1d_t_ operator,(end_type)
       {
 	// array is well-formed :
-	is_true<Info::well_formed>::ensure();
+	value<bool, Info::well_formed>::ensure();
 	// centering is automatic or user-defined :
 	// (commented out to allow automatic centering on even sized arrays)
 	// mlc::logical_or< mlc::eq< Info::i % 2, 1 >::ret, mlc::neq< Info::center, unknown_ >::ret >::ensure();

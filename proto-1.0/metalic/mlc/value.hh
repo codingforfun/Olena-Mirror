@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005 EPITA Research and Development Laboratory
+// Copyright (C) 2005 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,40 +25,27 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_BOOL_HH
-# define METALIC_BOOL_HH
-
-# include <mlc/value.hh>
+#ifndef METALIC_VALUE_HH
+# define METALIC_VALUE_HH
 
 
-namespace mlc
-{
+/*! \namespace mlc
+** \brief mlc namespace.
+*/
+namespace mlc {
 
 
-  /// Specialization of mlc::value for T = bool and v = true; it provides ::ensure().
-  template <>
-  struct value <bool, true>
+  /// Class that defines a mlc value as a type (for instance mlc::value<int,3>).
+  template <typename T, T v>
+  struct value
   {
-    static void ensure() {}
-    static const bool ret = true;
+    static const T ret = v;
   private:
     value();
-  };
-
-
-  /// Typedefs of true_type and false_type.
-  typedef value<bool, true>  true_type;
-  typedef value<bool, false> false_type;
-
-
-  /// Class is_true<b> (provided for bkd compability).
-  template <bool b>
-  struct is_true : public value<bool, b>
-  {
   };
 
 
 } // end of namespace mlc
 
 
-#endif // ! METALIC_BOOL_HH
+#endif // ! METALIC_VALUE_HH

@@ -64,17 +64,14 @@ namespace mlc
       internal::find_pow2sup< N,
       typename internal::is_pow2<N>::ret >::value
     };
-  private:
-    typedef typename is_true<N < 32>::ensure_type precondition_type;
+    ~pow2sup() { mlc::value<bool, (N < 32)>::ensure(); }
   };
 
   // Various tests on N (actually, we tests only oddness.)
 
   template<unsigned N>
-  class utest {
-  public:
-    typedef typename is_true<N/2 == (N+1)/2>::ensure_type is_odd_type;
-    static void ensure_odd()   { is_odd_type::is_true(); }
+  struct utest {
+    static void ensure_odd()   { mlc::value<bool, (N/2 == (N+1)/2)>::ensure(); }
   };
 
 } // end of namespace mlc
