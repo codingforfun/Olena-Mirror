@@ -1,15 +1,16 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 8 33)
-(Parent-Version oln 8 32)
-(Version-Log "Index: tools/swilena/ChangeLog
+(Project-Version oln 8 34)
+(Parent-Version oln 8 33)
+(Version-Log "Index: integre/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* src/swilena_types.i: Ajust namespace of data types.
+        * ntg/global_ops_defs.hh: Add missing builtin specializations.
+        * tests/types/tests/builtin1: New test.
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 24 Apr 2003 13:53:13 +0200")
+(Checkin-Time "Wed, 30 Apr 2003 13:21:59 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -93,7 +94,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.15 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.31 640))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12 640))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.1 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.15 640))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.7 640))
@@ -346,7 +347,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (integre/ntg/cplx_representation.hh (oln/i/3_cplx_repre 1.3 640))
   (integre/ntg/cycle.hh (oln/g/28_cycle.hh 1.11.1.3 640))
   (integre/ntg/debug.hh (oln/i/8_debug.hh 1.2.1.3 640))
-  (integre/ntg/global_ops_defs.hh (oln/g/26_global_ops 1.7 640))
+  (integre/ntg/global_ops_defs.hh (oln/g/26_global_ops 1.8 640))
   (integre/ntg/global_ops.hh (oln/g/27_global_ops 1.11.1.4 640))
   (integre/ntg/global_ops_traits.hh (oln/g/25_global_ops 1.7.1.3 640))
   (integre/ntg/hsi.hh (oln/i/20_hsi.hh 1.3.1.2 640))
@@ -826,6 +827,6 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (doc/dev/upgrading.texi (oln/r/50_upgrading. 1.1 600))
 )
 (Merge-Parents
-  (8.32 complete)
+  (8.33 complete)
 )
 (New-Merge-Parents)
