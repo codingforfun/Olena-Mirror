@@ -109,11 +109,55 @@ namespace oln
     structelt_methods_now(window ## Dim ## d, Dim)
   };
 
+#if Dim == 1
+  const window1d& win_c2_only();
+  const window1d& win_c2p();
+  window1d mk_win_segment(unsigned);
+#elif Dim == 2
+  const window2d& win_c4_only();
+  const window2d& win_c4p();
+  const window2d& win_c8_only();
+  const window2d& win_c8p();
+  window2d mk_win_rectangle(unsigned, unsigned);
+  window2d mk_win_ellipse(float, float);
+  window2d mk_win_square(unsigned);
+  window2d mk_win_disc(float);
+#elif Dim == 3
+  const window3d& win_c6_only();
+  const window3d& win_c6p();
+  const window3d& win_c18_only();
+  const window3d& win_c18p();
+  const window3d& win_c26_only();
+  const window3d& win_c26p();
+  window3d mk_win_block(unsigned, unsigned, unsigned);
+  window3d mk_win_ellipsoid(float, float, float);
+  window3d mk_win_cube(unsigned);
+  window3d mk_win_ball(float);
+#endif
+
   struct neighborhood ## Dim ## d
   {
     structelt_methods_now(neighborhood ## Dim ## d, Dim)
   };
 
+#if Dim == 1
+  const neighborhood1d& neighb_c2();
+  neighborhood1d mk_neighb_segment(unsigned);
+  window1d mk_win_from_neighb(const neighborhood1d&);
+#elif Dim == 2
+  const neighborhood2d& neighb_c4();
+  const neighborhood2d& neighb_c8();
+  neighborhood2d mk_neighb_square(unsigned);
+  neighborhood2d mk_neighb_rectangle(unsigned, unsigned);
+  window2d mk_win_from_neighb(const neighborhood2d&);
+#elif Dim == 3
+  const neighborhood3d& neighb_c6();
+  const neighborhood3d& neighb_c18();
+  const neighborhood3d& neighb_c26();
+  neighborhood3d mk_neighb_block(unsigned, unsigned, unsigned);
+  neighborhood3d mk_neighb_cube(unsigned);
+  window3d mk_win_from_neighb(const neighborhood3d&);
+#endif
 }
 
 %enddef

@@ -1,14 +1,15 @@
 
-Top
-===
+* Top
 
-Bind other stuff from Olena.
+** Simplify algorithm declaration (in the same spirit than
+   generate_morpho_instantiations.py)
+** Bind other stuff from Olena.
+** Typemaps for integre types
+** Document.
+** More examples.
 
-Document.
+* Medium
 
-Medium
-======
-
-Compile to Perl.
-
-Think about compiling to Caml.
+** Improve ruby support
+** Compile to Perl.
+** Think about compiling to Caml.

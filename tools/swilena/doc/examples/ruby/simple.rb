@@ -4,10 +4,10 @@
 $: << ENV["SWILENA_PATH"] if ENV.has_key? "SWILENA_PATH"
 
 require "swilena_image2d"
-require "swilena_ntg_int_u"
+require "swilena_ntg"
 require "swilena_display"
 
-include Swilena_ntg_int_u
+include Swilena_ntg
 include Swilena_image2d
 
 display = SwilenaDisplay.new
@@ -15,23 +15,15 @@ display = SwilenaDisplay.new
 display.tmpdir = "/tmp/swilena"
 display.display_command = "display %{image_file}"
 
-ima = Image2d_u8.new(5,5)
+ima = Image2d_uint.new(5,5)
 
-0.upto(5) do |i|
-  0.upto(5) do |j|
-    ima.set(i, j, Int_u8.new(i + j))
+for i in 0..5 do
+  for j in 0..5 do
+    ima.set(i, j, Uint.new(i + j))
   end
 end
 
 print ima
 display.display_image (ima, "image1")
-
-ima2 = Image2d_u16.new(10, 10)
-0.upto(5) do |i|
-  0.upto(5) do |j|
-    ima2.set(i, j, Int_u16.new(1))
-  end
-end
-display.display_image (ima2, "image2")
 
 display.wait_all_displays()

@@ -4,7 +4,7 @@
 
 /***** Generic class declaration for scalars ******/
 %define decl_scalar_class(Ns, Name, ValueType)
-template<unsigned nbits, typename behaviour>
+template<unsigned nbits, typename behavior>
 class Name
 {
  public:
@@ -15,65 +15,65 @@ class Name
     ValueType value() const
       { return (*self); }
     void value(ValueType x) 
-      { *self = Ns::Name<nbits, behaviour>(x); }
+      { *self = Ns::Name<nbits, behavior>(x); }
 
 #if defined(SWIGPYTHON) || defined(SWIGRUBY)
-    Ns::Name<nbits, behaviour> operator+ (const Ns::Name<nbits, behaviour>& other) const { return (*self) + other; }
-    Ns::Name<nbits, behaviour> operator- (const Ns::Name<nbits, behaviour>& other) const { return (*self) - other; }
-    Ns::Name<nbits, behaviour> operator* (const Ns::Name<nbits, behaviour>& other) const { return (*self) * other; }
-    Ns::Name<nbits, behaviour> operator/ (const Ns::Name<nbits, behaviour>& other) const { return (*self) / other; }
-    Ns::Name<nbits, behaviour> operator+ (ValueType other) const { return (*self) + other; }
-    Ns::Name<nbits, behaviour> operator- (ValueType other) const { return (*self) - other; }
-    Ns::Name<nbits, behaviour> operator* (ValueType other) const { return (*self) * other; }
-    Ns::Name<nbits, behaviour> operator/ (ValueType other) const { return (*self) / other; }
+    Ns::Name<nbits, behavior> operator+ (const Ns::Name<nbits, behavior>& other) const { return (*self) + other; }
+    Ns::Name<nbits, behavior> operator- (const Ns::Name<nbits, behavior>& other) const { return (*self) - other; }
+    Ns::Name<nbits, behavior> operator* (const Ns::Name<nbits, behavior>& other) const { return (*self) * other; }
+    Ns::Name<nbits, behavior> operator/ (const Ns::Name<nbits, behavior>& other) const { return (*self) / other; }
+    Ns::Name<nbits, behavior> operator+ (ValueType other) const { return (*self) + other; }
+    Ns::Name<nbits, behavior> operator- (ValueType other) const { return (*self) - other; }
+    Ns::Name<nbits, behavior> operator* (ValueType other) const { return (*self) * other; }
+    Ns::Name<nbits, behavior> operator/ (ValueType other) const { return (*self) / other; }
 #else
-    Ns::Name<nbits, behaviour> add (const Ns::Name<nbits, behaviour>& other) const { return (*self) + other; }
-    Ns::Name<nbits, behaviour> sub (const Ns::Name<nbits, behaviour>& other) const { return (*self) - other; }
-    Ns::Name<nbits, behaviour> mul (const Ns::Name<nbits, behaviour>& other) const { return (*self) * other; }
-    Ns::Name<nbits, behaviour> div (const Ns::Name<nbits, behaviour>& other) const { return (*self) / other; }
-    Ns::Name<nbits, behaviour> add (ValueType other) const { return (*self) + other; }
-    Ns::Name<nbits, behaviour> sub (ValueType other) const { return (*self) - other; }
-    Ns::Name<nbits, behaviour> mul (ValueType other) const { return (*self) * other; }
-    Ns::Name<nbits, behaviour> div (ValueType other) const { return (*self) / other; }
+    Ns::Name<nbits, behavior> add (const Ns::Name<nbits, behavior>& other) const { return (*self) + other; }
+    Ns::Name<nbits, behavior> sub (const Ns::Name<nbits, behavior>& other) const { return (*self) - other; }
+    Ns::Name<nbits, behavior> mul (const Ns::Name<nbits, behavior>& other) const { return (*self) * other; }
+    Ns::Name<nbits, behavior> div (const Ns::Name<nbits, behavior>& other) const { return (*self) / other; }
+    Ns::Name<nbits, behavior> add (ValueType other) const { return (*self) + other; }
+    Ns::Name<nbits, behavior> sub (ValueType other) const { return (*self) - other; }
+    Ns::Name<nbits, behavior> mul (ValueType other) const { return (*self) * other; }
+    Ns::Name<nbits, behavior> div (ValueType other) const { return (*self) / other; }
 #endif
 
 #if defined(SWIGPYTHON)
-    Ns::Name<nbits, behaviour>& operator+= (const Ns::Name<nbits, behaviour>& other) { return (*self) += other; }
-    Ns::Name<nbits, behaviour>& operator-= (const Ns::Name<nbits, behaviour>& other) { return (*self) -= other; }
-    Ns::Name<nbits, behaviour>& operator*= (const Ns::Name<nbits, behaviour>& other) { return (*self) *= other; }
-    Ns::Name<nbits, behaviour>& operator/= (const Ns::Name<nbits, behaviour>& other) { return (*self) /= other; }
-    Ns::Name<nbits, behaviour>& operator+= (ValueType other) { return (*self) += other; }
-    Ns::Name<nbits, behaviour>& operator-= (ValueType other) { return (*self) -= other; }
-    Ns::Name<nbits, behaviour>& operator*= (ValueType other) { return (*self) *= other; }
-    Ns::Name<nbits, behaviour>& operator/= (ValueType other) { return (*self) /= other; }
+    Ns::Name<nbits, behavior>& operator+= (const Ns::Name<nbits, behavior>& other) { return (*self) += other; }
+    Ns::Name<nbits, behavior>& operator-= (const Ns::Name<nbits, behavior>& other) { return (*self) -= other; }
+    Ns::Name<nbits, behavior>& operator*= (const Ns::Name<nbits, behavior>& other) { return (*self) *= other; }
+    Ns::Name<nbits, behavior>& operator/= (const Ns::Name<nbits, behavior>& other) { return (*self) /= other; }
+    Ns::Name<nbits, behavior>& operator+= (ValueType other) { return (*self) += other; }
+    Ns::Name<nbits, behavior>& operator-= (ValueType other) { return (*self) -= other; }
+    Ns::Name<nbits, behavior>& operator*= (ValueType other) { return (*self) *= other; }
+    Ns::Name<nbits, behavior>& operator/= (ValueType other) { return (*self) /= other; }
 #elseif !defined(SWIGRUBY) // These operators are generated by default in Ruby
-    Ns::Name<nbits, behaviour>& iadd (const Ns::Name<nbits, behaviour>& other) { return (*self) += other; }
-    Ns::Name<nbits, behaviour>& isub (const Ns::Name<nbits, behaviour>& other) { return (*self) -= other; }
-    Ns::Name<nbits, behaviour>& imul (const Ns::Name<nbits, behaviour>& other) { return (*self) *= other; }
-    Ns::Name<nbits, behaviour>& idiv (const Ns::Name<nbits, behaviour>& other) { return (*self) /= other; }
-    Ns::Name<nbits, behaviour>& iadd (ValueType other) { return (*self) += other; }
-    Ns::Name<nbits, behaviour>& isub (ValueType other) { return (*self) -= other; }
-    Ns::Name<nbits, behaviour>& imul (ValueType other) { return (*self) *= other; }
-    Ns::Name<nbits, behaviour>& idiv (ValueType other) { return (*self) /= other; }
+    Ns::Name<nbits, behavior>& iadd (const Ns::Name<nbits, behavior>& other) { return (*self) += other; }
+    Ns::Name<nbits, behavior>& isub (const Ns::Name<nbits, behavior>& other) { return (*self) -= other; }
+    Ns::Name<nbits, behavior>& imul (const Ns::Name<nbits, behavior>& other) { return (*self) *= other; }
+    Ns::Name<nbits, behavior>& idiv (const Ns::Name<nbits, behavior>& other) { return (*self) /= other; }
+    Ns::Name<nbits, behavior>& iadd (ValueType other) { return (*self) += other; }
+    Ns::Name<nbits, behavior>& isub (ValueType other) { return (*self) -= other; }
+    Ns::Name<nbits, behavior>& imul (ValueType other) { return (*self) *= other; }
+    Ns::Name<nbits, behavior>& idiv (ValueType other) { return (*self) /= other; }
 #endif
 
 #if defined(SWIGPYTHON) || defined(SWIGRUBY)
-    bool operator< (const Ns::Name<nbits, behaviour>&  other) const { return (*self) < other; }
-    bool operator> (const Ns::Name<nbits, behaviour>&  other) const { return (*self) > other; }
-    bool operator<= (const Ns::Name<nbits, behaviour>&  other) const { return (*self) <= other; }
-    bool operator>= (const Ns::Name<nbits, behaviour>&  other) const { return (*self) >= other; }
-    bool operator== (const Ns::Name<nbits, behaviour>&  other) const { return (*self) == other; }
+    bool operator< (const Ns::Name<nbits, behavior>&  other) const { return (*self) < other; }
+    bool operator> (const Ns::Name<nbits, behavior>&  other) const { return (*self) > other; }
+    bool operator<= (const Ns::Name<nbits, behavior>&  other) const { return (*self) <= other; }
+    bool operator>= (const Ns::Name<nbits, behavior>&  other) const { return (*self) >= other; }
+    bool operator== (const Ns::Name<nbits, behavior>&  other) const { return (*self) == other; }
     bool operator< (ValueType other) const { return (*self) < other; }
     bool operator> (ValueType other) const { return (*self) > other; }
     bool operator<= (ValueType other) const { return (*self) <= other; }
     bool operator>= (ValueType other) const { return (*self) >= other; }
     bool operator== (ValueType other) const { return (*self) == other; }
 #else
-    bool lt (const Ns::Name<nbits, behaviour>&  other) const { return (*self) < other; }
-    bool gt (const Ns::Name<nbits, behaviour>&  other) const { return (*self) > other; }
-    bool le (const Ns::Name<nbits, behaviour>&  other) const { return (*self) <= other; }
-    bool ge (const Ns::Name<nbits, behaviour>&  other) const { return (*self) >= other; }
-    bool eq (const Ns::Name<nbits, behaviour>&  other) const { return (*self) == other; }
+    bool lt (const Ns::Name<nbits, behavior>&  other) const { return (*self) < other; }
+    bool gt (const Ns::Name<nbits, behavior>&  other) const { return (*self) > other; }
+    bool le (const Ns::Name<nbits, behavior>&  other) const { return (*self) <= other; }
+    bool ge (const Ns::Name<nbits, behavior>&  other) const { return (*self) >= other; }
+    bool eq (const Ns::Name<nbits, behavior>&  other) const { return (*self) == other; }
     bool lt (ValueType other) const { return (*self) < other; }
     bool gt (ValueType other) const { return (*self) > other; }
     bool le (ValueType other) const { return (*self) <= other; }
@@ -82,16 +82,16 @@ class Name
 #endif
 
 #if defined(SWIGPYTHON)
-    bool operator!= (const Ns::Name<nbits, behaviour>&  other) const { return (*self) != other; }
+    bool operator!= (const Ns::Name<nbits, behavior>&  other) const { return (*self) != other; }
     bool operator!= (ValueType other) const { return (*self) != other; }
 #elseif !defined(SWIGRUBY)
-    bool ne (const Ns::Name<nbits, behaviour>&  other) const { return (*self) != other; }
+    bool ne (const Ns::Name<nbits, behavior>&  other) const { return (*self) != other; }
     bool ne (ValueType other) const { return (*self) != other; }
 #endif
 
   }
 
-  EXTEND_DESCRIBE2(Ns::Name<nbits, behaviour>);
+  EXTEND_DESCRIBE2(Ns::Name<nbits, behavior>);
 };  
 %enddef
 
@@ -206,7 +206,34 @@ namespace ntg
 
 decl_ntg()
 
-// Compatibility macro, see swilena_ntg_int_u.i
+/* 
+   Macro are defined for every type and should be used in all modules
+   Using ntg::int_u32 (the typedef in predecls.hh) directly leads to
+   type matching problems:
+
+  - it is a typedef never used in module swilena_ntg
+    => no type correspondence is created between ntg::int_u32 
+       and ntg::int_u<32, ntg::strict>.
+
+  - if another module use ntg::int_u32, operations on it won't be
+    possible since this module won't recognize the type ntg::int_u32.
+
+  - ntg::int_u<32, ntg::strict> or ntg_uint should be used
+    everywhere. ntg_uint is just a convenient macro.
+*/
+
 #define ntg_bin ntg::bin
-#define ntg_float_s ntg::float_s
-#define ntg_float_d ntg::float_d
+
+%template(uint)  ntg::int_u< 32, ntg::strict >;
+#define ntg_uint ntg::int_u< 32, ntg::strict >
+
+%template(sint)  ntg::int_s< 32, ntg::strict >;
+#define ntg_sint ntg::int_s< 32, ntg::strict >
+
+#define ntg_float ntg::float_d
+
+%template(cplx_rect)  ntg::cplx< ntg::rect, ntg_float >;
+#define ntg_cplx_rect ntg::cplx< ntg::rect, ntg_float >
+
+%template(cplx_polar)  ntg::cplx< ntg::polar, ntg_float >;
+#define ntg_cplx_polar ntg::cplx< ntg::polar, ntg_float >

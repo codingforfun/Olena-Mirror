@@ -72,5 +72,3 @@ swdecl(Name, Func, Pref, Args)
 %define swmake5(Name, R, A1, A2, A3, A4, A5)
 %template(Name) my_ ## Name<R, A1, A2, A3, A4, A5 >;
 %enddef
-
-

@@ -1,4 +1,27 @@
 2003-09-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* generate_morpho_instantiations.py: New file.
+
+	* meta/swilena_morpho.i: Cleanup. Remove make_xxx macros, since
+	instantiations are now performed by generate_morpho_instantiation.py.
+
+	* meta/swilena_structelt.i: Add common window and neighborhood
+	creation functions.
+
+	* meta/swilena_ntg_int_u.i, meta/swilena_ntg_int_s.i,
+	meta/swilena_ntg_cplx.i: Merge into...
+	* meta/swilena_ntg.i: ... this file. Declare only usual types.
+	* meta/Makefile.am: Adjust consequently.
+	
+	* expand.sh: Generate uint, sint and float images only. Call
+	generate_morpho_instantiations.py. Adjust.
+
+	* python/tests/simple1.py: Adjust consequently.
+	* ruby/tests/simple1.rb: Likewise.
+	* doc/examples/python/simple.py: Likewise.
+	* doc/examples/ruby/simple.rb: Likewise.
+	
+2003-09-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 	
 	* meta/swilena_image.i: Add operator[] for python and ruby.
 	* meta/swilena_describe.i: Fix __str__ return type.
