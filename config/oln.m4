@@ -35,7 +35,7 @@ AC_DEFUN([MLC_PATH_LOCAL],
 
 AC_DEFUN([NTG_PATH_LOCAL],
 [ifelse([$1], [], [ntg_cv_local_src=no], [dnl
-    AC_CACHE_CHECK([for Metalic sources in local distribution],
+    AC_CACHE_CHECK([for Integre sources in local distribution],
                    [ntg_cv_local_src],
 	           [ntg_cv_local_src=no
                     if test -r "$srcdir/$1/ntg/config/system.hh"; then

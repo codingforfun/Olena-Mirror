@@ -1,5 +1,5 @@
 ## Process this file with Automake to produce Makefile.in -*- Makefile -*- 
 
-SUBDIRS = types
+SUBDIRS = $(NTG_TESTS_SUBDIRS)
 
 EXTRA_DIST = check/defs.in

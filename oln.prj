@@ -1,12 +1,36 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 8 18)
-(Parent-Version oln 8 17)
-(Version-Log "Ooops.
+(Project-Version oln 8 19)
+(Parent-Version oln 8 18)
+(Version-Log "Index: ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	* configure.ac: Update components.
+	* config/oln-local.m4: Add macros for metalic and integre.
+	* config/oln.m4: Minor fix.
+
++2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+ 
++	* config/oln.m4: Add new macros. Simplify flags.
+ 	* configure.ac, Makefile.am, bootstrap.sh: Adapt to m4 changes.
+ 
+ 2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+Index: integre/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/Makefile.am: Adjust with components.
+
+Index: metalic/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	* tests/Makefile.am: Adjust with components.
+
++2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
++	
+ 	* tests/check/Makefile.am: Remove useless flags.
+ 
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 12 Mar 2003 17:19:21 +0100")
+(Checkin-Time "Wed, 12 Mar 2003 18:27:06 +0100")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -86,10 +110,10 @@
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.8 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.9 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.30 640))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.10 640))
-  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.13 640))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.11 640))
+  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.14 640))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.27 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.7 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.6 640))
@@ -102,7 +126,7 @@
 
   (cleanup.sh (oln/o/29_cleanup.sh 1.5 750))
 
-  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.8 640))
+  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.9 640))
 
   (doc/demo/image.cc (oln/d/46_image.cc 1.5 640))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.16 640))
@@ -276,7 +300,7 @@
   (olena/oln/level/lut.hh (oln/29_lut.hh 1.7 640))
   (olena/oln/level/set_level.hh (oln/p/1_set_level. 1.5 640))
   (olena/oln/level/threshold.hh (oln/f/15_threshold. 1.7 640))
-  (config/oln.m4 (oln/j/15_oln.m4 1.26 640))
+  (config/oln.m4 (oln/j/15_oln.m4 1.27 640))
 
   (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.2 640))
   (metalic/mlc/array/1d.hh (oln/f/23_array1d.hh 1.8 640))
@@ -677,7 +701,7 @@
 ;; Files added by populate at Thu, 23 Jan 2003 14:26:31 +0100,
 ;; to version 7.36(w), by raph:
 
-  (config/oln-local.m4 (oln/p/37_oln-local. 1.4 640))
+  (config/oln-local.m4 (oln/p/37_oln-local. 1.5 640))
 
 ;; Files deleted by depopulate at Thu, 23 Jan 2003 14:57:33 +0100,
 ;; from version 7.37(w), by raph:
@@ -755,7 +779,7 @@
   (metalic/mlc () :directory)
   (metalic/lib (../lib) :symlink)
   (olena/lib (../lib) :symlink)
-  (metalic/tests/Makefile.am (oln/q/31_Makefile.a 1.3 640))
+  (metalic/tests/Makefile.am (oln/q/31_Makefile.a 1.4 640))
   (metalic/Makefile.am (oln/q/32_Makefile.a 1.2 640))
   (metalic/mlc/Makefile.am (oln/q/33_Makefile.a 1.7 640))
   (integre () :directory)
@@ -766,7 +790,7 @@
   (olena/tests/check/Makefile.am (oln/q/38_Makefile.a 1.2 600))
   (olena/tests/check/Makefile.flags (oln/q/39_Makefile.f 1.3 600))
   (olena/tests/check/Makefile.check (oln/q/40_Makefile.c 1.2 600))
-  (integre/tests/Makefile.am (oln/q/41_Makefile.a 1.2 600))
+  (integre/tests/Makefile.am (oln/q/41_Makefile.a 1.3 600))
   (integre/tests/check/defs.in (oln/q/42_defs.in 1.1 600))
   (metalic/mlc/array/objs.hh (oln/q/45_objs.hh 1.2 640))
   (metalic/mlc/config/system.hh (oln/q/46_system.hh 1.2 640))
