@@ -122,7 +122,7 @@ namespace oln {
 	      bin_v = 0;
 	      ret = true;
 	    }
-	  if (c == value_type(1))
+	  if (c == value_type(0))
 	    bin_v |= 1 << bin_offset;
 	  bin_offset--;
 	  return ret;

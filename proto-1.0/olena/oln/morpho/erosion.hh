@@ -43,7 +43,7 @@ namespace oln {
       /// Erosion as a procedure (do not use it; prefer morpho::erosion).
 
       template<typename I, typename S>
-      oln_type_of(I, concrete) dilation(const abstract::image<I>& input,
+      oln_type_of(I, concrete) erosion(const abstract::image<I>& input,
 					const abstract::struct_elt<S>& se)
       {
 	oln_type_of(I, concrete) output(input.size());
@@ -131,14 +131,14 @@ namespace oln {
       typedef typename super_type::output_type output_type;
 
       const E se;
-      
+
       erosion_ret(const abstract::image<I>& input,
 		  const abstract::struct_elt<E>& se) :
 	super_type(input),
 	se(se.exact())
 	{
 	}
-      
+
     };
 
 

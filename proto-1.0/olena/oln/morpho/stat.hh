@@ -47,7 +47,7 @@ namespace oln {
       ** \param E Structuring element type.
       ** \param V Associated value type.
       */
-      template <class I, class E, class V =oln_type_of(I, value)>
+      template <class I, class E, class V = oln_type_of(I, value)>
       struct stat_
       {
 	/*!

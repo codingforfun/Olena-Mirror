@@ -81,9 +81,15 @@ namespace oln {
 
     /// op==
 
-    bool operator==(const value_box<const I>& rhs) const
+    bool operator==(const value_box<I>& rhs) const
     {
       return this->value() == rhs.value();
+    }
+
+    template <typename II>
+    bool operator==(const value_box<II>& rhs) const
+    {
+      return this->value() < rhs.value();
     }
 
     template <typename V>
@@ -113,7 +119,7 @@ namespace oln {
     template <typename II>
     bool operator<(const value_box<II>& rhs) const
     {
-      return this->value() < value.value();
+      return this->value() < rhs.value();
     }
 
     /*! \brief specialized version for value_box<I>
@@ -122,7 +128,7 @@ namespace oln {
     */
     bool operator<(const value_box<I>& rhs) const
     {
-      return this->value() < value.value();
+      return this->value() < rhs.value();
     }
 
     /*! \brief op=
@@ -275,6 +281,12 @@ namespace oln {
     bool operator==(const value_box<const I>& rhs) const
     {
       return this->value() == rhs.value();
+    }
+
+    template <typename II>
+    bool operator==(const value_box<const II>& rhs) const
+    {
+      return this->value() < rhs.value();
     }
 
     template <typename V>

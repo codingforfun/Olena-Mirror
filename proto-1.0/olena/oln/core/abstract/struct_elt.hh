@@ -47,7 +47,7 @@ namespace oln {
 
   // category
   template <typename E>
-  struct set_category< abstract::struct_elt<E> > 
+  struct set_category< abstract::struct_elt<E> >
   {
     typedef category::struct_elt ret;
   };
@@ -71,7 +71,7 @@ namespace oln {
 	   << "  fwd_witer_type = " << typeid(fwd_witer_type).name() << "," << std::endl
 	   << "  dpoint_type = " << typeid(dpoint_type).name() << "  }" << std::endl;
     }
- 
+
   };
 
   mlc_register_prop(category::struct_elt, dpoint_type);
@@ -137,7 +137,7 @@ namespace oln {
       get_delta() const
       {
 	return this->exact().impl_get_delta();
-      } 
+      }
 
       coord_t
       delta_update(const dpoint_type& dp)
@@ -145,14 +145,36 @@ namespace oln {
 	return this->exact().impl_delta_update(dp);
       }
 
+      exact_type
+      operator-() const
+      {
+	exact_type se(this->exact());
+
+	se.sym();
+	return se;
+      }
+
+      void
+      sym()
+      {
+	this->exact().impl_sym();
+      }
+
     protected:
+
+      void
+      impl_sym()
+      {
+	for (unsigned i = 0; i < this->card(); ++i)
+	  dp_[i] = - dp_[i];
+      }
 
       bool
       impl_has(const dpoint_type& dp) const
       {
 	return std::find(dp_.begin(), dp_.end(), dp) != dp_.end();
-      } 
-  
+      }
+
       exact_type&
       impl_add(const dpoint_type& dp)
       {
@@ -172,14 +194,14 @@ namespace oln {
       impl_card() const
       {
 	return dp_.size();
-      } 
+      }
 
       const dpoint_type
       impl_at(unsigned i) const
       {
 	precondition(i < this->card());
 	return dp_[i];
-      } 
+      }
 
       struct_elt() : dp_(), delta_(0)
       {};
@@ -208,6 +230,6 @@ operator<<(std::ostream& o, const oln::abstract::struct_elt<E>& se)
   o << "]";
   return o;
 }
- 
+
 
 #endif // ! OLENA_CORE_STRUCT_ELT_HH

@@ -30,6 +30,7 @@
 
 # include <oln/core/2d/dpoint2d.hh>
 # include <oln/core/2d/size2d.hh>
+# include <oln/core/2d/window2d.hh>
 # include <oln/core/coord.hh>
 # include <oln/core/abstract/neighborhood.hh>
 
@@ -39,7 +40,7 @@ namespace oln {
 
   // category
   template <>
-  struct set_category< neighborhood2d > 
+  struct set_category< neighborhood2d >
   { typedef category::neighborhood ret; };
 
   // super_type
@@ -50,18 +51,19 @@ namespace oln {
   };
 
   template <>
-  struct set_props< category::neighborhood, neighborhood2d > 
+  struct set_props< category::neighborhood, neighborhood2d >
   : public props_of<category::neighborhood>
   {
     typedef dpoint2d    dpoint_type;
     typedef size2d      size_type;
+    typedef window2d    window_type;
   };
 
   class neighborhood2d : public abstract::neighborhood<neighborhood2d>
   {
 
   public:
-   
+
     typedef abstract::neighborhood<neighborhood2d>      super_type;
 
     /*!
@@ -86,13 +88,13 @@ namespace oln {
     {
       for (unsigned i = 0; i < 2 * n; i += 2)
         this->add(dpoint_type(crd[i], crd[i+1]));
-    }    
+    }
 
     neighborhood2d&
     add(const dpoint_type& dp)
     {
       return this->exact().impl_add(dp);
-    } 
+    }
 
     neighborhood2d&
     add(coord_t row, coord_t col)
@@ -100,7 +102,7 @@ namespace oln {
       dpoint_type dp(row, col);
       return add(dp);
     }
- 
+
 
     /// Return the name of the type.
     static std::string
@@ -116,7 +118,7 @@ namespace oln {
       delta_(abs(dp.col()));
       return delta_;
     }
- 
+
   };
 
   inline const neighborhood2d&
@@ -134,7 +136,7 @@ namespace oln {
     static const neighborhood2d neighb(4, crd);
     return neighb;
   }
- 
+
 } // end of oln
 
 #endif // OLENA_CORE_NEIGHBORHOOD2D_HH

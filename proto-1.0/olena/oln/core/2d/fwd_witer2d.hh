@@ -48,13 +48,13 @@ namespace oln {
   {
     typedef window2d se_type;
   };
- 
+
   struct fwd_witer2d : public abstract::witer< fwd_witer2d >
   {
 
     typedef abstract::witer<fwd_witer2d> super_type;
 
-    fwd_witer2d(const se_type& se) :
+    fwd_witer2d(const window2d& se) :
         super_type(se)
     {
       this->exact_ptr = this;

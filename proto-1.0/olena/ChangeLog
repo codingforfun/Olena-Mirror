@@ -1,3 +1,25 @@
+2005-04-04  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* oln/convert/ng_to_se.hh: Convert a neighborhood to a structuring
+	element.
+	* oln/core/value_box.hh: Fix operator==.
+	* oln/core/properties.hh: Add window property.
+	* oln/core/abstract/struct_elt.hh: Add operator-.
+	* oln/core/abstract/witer.hh (nth): Add method.
+	* oln/core/abstract/dpoint.hh (nth): Add method.
+	* oln/core/abstract/neighborhood.hh: Add a window property.
+	* oln/core/2d/dpoint2d.hh (nth): Add method.
+	* oln/core/2d/neighborhood2d.hh: Add a window property.
+	* oln/core/2d/fwd_witer2d.hh: Replace unknown type in constructor.
+	* oln/utils/clone.hh: Use concrete_type.
+	* oln/makefile.src: Add new files.
+	* oln/morpho/reconstruction.hh: New. Sequential and hybrid versions.
+	* oln/morpho/splitse.hh: New. Split a structuring element.
+	* oln/morpho/stat.hh: Typo fix.
+	* oln/morpho/erosion.hh: Fix erroneus function name .
+	* oln/io/write_image_2d_pnm.hh: Invert binary values (0=>1, 1=>0).
+	* oln/io/read_image_2d_pnm.hh: Invert binary values.
+
 2005-04-03  Simon Odou  <simon@lrde.epita.fr>
 
 	* oln/morpho/cc_tarjan.hh: New. Add the connected component

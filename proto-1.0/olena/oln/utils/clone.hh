@@ -60,10 +60,11 @@ namespace oln {
     namespace impl {
 
       template <typename I>
-      struct clone_type : public abstract::image_unary_operator<I, I, clone_type<I> >
+      struct clone_type
+	: public abstract::image_unary_operator<oln_type_of(I, concrete), I, clone_type<I> >
       // FIXME: use concrete_type; Cf. erosion.hh
       {
-	typedef abstract::image_unary_operator<I, I, clone_type<I> > super_type;
+	typedef abstract::image_unary_operator<oln_type_of(I, concrete), I, clone_type<I> > super_type;
 
 	clone_type(const abstract::image<I>& input) :
 	  super_type(input)
@@ -72,7 +73,7 @@ namespace oln {
 
 	void impl_run()
 	{
-	  I tmp(this->input.size()); // FIXME: trick
+	  oln_type_of(I, concrete) tmp(this->input.size()); // FIXME: trick
 	  this->output = tmp;
 
 	  oln_type_of(I, fwd_piter) p(this->input.size());

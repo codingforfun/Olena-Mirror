@@ -172,9 +172,9 @@ namespace oln {
 	      offset = 7;
 	    }
 	  if ((int)(v & (1<<offset--)) == 0)
-	    c = 1;
-	  else
 	    c = 0;
+	  else
+	    c = 1;
 	}
       };
 

@@ -65,6 +65,11 @@ namespace oln {
 	return not this->operator==(rhs);
       }
 
+      coord_t nth(unsigned i) const
+      {
+	return this->exact().impl_nth(i);
+      }
+
     protected:
 
       dpoint() {}

@@ -47,7 +47,7 @@ namespace oln {
 
   // category
   template <typename E>
-  struct set_category< abstract::neighborhood<E> > 
+  struct set_category< abstract::neighborhood<E> >
   {
     typedef category::neighborhood ret;
   };
@@ -61,6 +61,7 @@ namespace oln {
 
     mlc_decl_prop(category::neighborhood, dpoint_type);
     mlc_decl_prop(category::neighborhood, size_type);
+    mlc_decl_prop(category::neighborhood, window_type);
 
     static void echo(std::ostream& ostr)
     {
@@ -69,11 +70,12 @@ namespace oln {
 	   << "  size_type = " << typeid(size_type).name() << "," << std::endl
 	   << "  dpoint_type = " << typeid(dpoint_type).name() << "  }" << std::endl;
     }
- 
+
   };
 
   mlc_register_prop(category::neighborhood, dpoint_type);
   mlc_register_prop(category::neighborhood, size_type);
+  mlc_register_prop(category::neighborhood, window_type);
 
 
   namespace abstract {
@@ -134,7 +136,7 @@ namespace oln {
       get_delta() const
       {
 	return this->exact().impl_get_delta();
-      } 
+      }
 
       coord_t
       delta_update(const dpoint_type& dp)
@@ -148,8 +150,8 @@ namespace oln {
       impl_has(const dpoint_type& dp) const
       {
 	return std::find(dp_.begin(), dp_.end(), dp) != dp_.end();
-      } 
-  
+      }
+
       exact_type&
       impl_add(const dpoint_type& dp)
       {
@@ -161,25 +163,25 @@ namespace oln {
         this->delta_update(dp);
 	return this->exact();
       }
- 
+
       coord_t
       impl_get_delta() const
       {
         return delta_;
       }
- 
+
       unsigned
       impl_card() const
       {
 	return dp_.size();
-      } 
+      }
 
       const dpoint_type
       impl_at(unsigned i) const
       {
 	precondition(i < this->card());
 	return dp_[i];
-      } 
+      }
 
       neighborhood() : dp_(), delta_(0)
       {};
@@ -208,6 +210,6 @@ operator<<(std::ostream& o, const oln::abstract::neighborhood<E>& se)
   o << "]";
   return o;
 }
- 
+
 
 #endif // ! OLENA_CORE_NEIGHBORHOOD_HH

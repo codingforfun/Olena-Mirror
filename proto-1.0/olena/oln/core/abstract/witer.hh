@@ -64,7 +64,7 @@ namespace oln {
     }
   };
 
-  mlc_register_prop(category::witer, se_type); 
+  mlc_register_prop(category::witer, se_type);
 
   namespace abstract {
 
@@ -104,7 +104,12 @@ namespace oln {
         this->exact().impl_invalidate();
         postcondition(! this->is_valid());
       }
- 
+
+      coord_t nth(unsigned i)
+      {
+	return this->se_[this->pos_].nth(i);
+      }
+
     protected:
 
       void impl_start()
@@ -127,8 +132,8 @@ namespace oln {
         pos_ = se_.card();
       }
 
-      witer(const se_type& se) 
-        : se_(se), pos_(0) 
+      witer(const se_type& se)
+        : se_(se), pos_(0)
       {}
 
       const se_type& se_;

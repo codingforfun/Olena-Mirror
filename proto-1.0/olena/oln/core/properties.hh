@@ -68,6 +68,7 @@ namespace oln
     struct delegated_type;
     struct size_type;
     struct se_type;
+    struct window_type;
 
     struct image_constness_type;
     struct image_dimension_type;
