@@ -1,23 +1,15 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 34)
-(Parent-Version oln 0_5 33)
-(Version-Log "Index: ChangeLog
+(Project-Version oln 0_5 35)
+(Parent-Version oln 0_5 34)
+(Version-Log "Index: doc/ChangeLog
 from  Alexandre Duret-Lutz  <duret_g@epita.fr>
-
-	* oln/types/predecls.hh (int_u, int_s, range): Set default
-	behaviour to `strict'.
-
-Index: tests/ChangeLog
-from  Alexandre Duret-Lutz  <duret_g@epita.fr>
-
-	* types/tests/range3d, types/tests/range3c, types/tests/range3,
-	types/tests/range3b, types/tests/range2, types/tests/range1,
-	types/tests/int4b, types/tests/range2b: New files.
+        * doc/ref-types.tex (range, cycle): Remove documentation for
+        range_u, range_s, cycle_u, and cycle_s; these can't work.
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 10 Sep 2002 16:42:40 +0200")
+(Checkin-Time "Tue, 10 Sep 2002 16:55:20 +0200")
 (Checkin-Login duret_g)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -103,7 +95,7 @@ from  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 
   (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.9 644))
-  (doc/ChangeLog (oln/e/1_ChangeLog 1.21 600))
+  (doc/ChangeLog (oln/e/1_ChangeLog 1.22 600))
   (doc/configure.ac (oln/e/2_configure. 1.5 600))
   (doc/configure (oln/e/3_configure 1.9 700))
   (doc/doc/bin () :directory)
@@ -466,7 +458,7 @@ from  Alexandre Duret-Lutz  <duret_g@epita.fr>
 ;; Files added by populate at Thu, 01 Aug 2002 15:28:28 +0200,
 ;; to version 0_5.11(w), by adl:
 
-  (doc/doc/ref-types.tex (oln/g/34_ref-types. 1.3 644))
+  (doc/doc/ref-types.tex (oln/g/34_ref-types. 1.4 644))
 
 ;; Files added by populate at Mon, 26 Aug 2002 17:10:21 +0200,
 ;; to version 0_5.18(w), by duret_g:

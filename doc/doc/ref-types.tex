@@ -341,22 +341,17 @@ stored on 8 bits, but restricted to the $[10...25]$ interval.  Because
 \code{strict} is the default behavior, any attempt to escape this
 interval will abort the program.
 
-For brevity, the \code{range_u} and \code{range_s} shorthands are
-supported.  The above example could be rewritten as
-\code{range_u<int_u<8>, 10, 25 >}
-
 
 \subsubsection{\code{cycle<T, INTERVAL>}}
 
 This class defines a type, the values of which can be built from
 \code{T}, and that cycle over \code{INTERVAL}, where \code{INTERVAL} is
 defined using \code{bounded_u<MIN, MAX>} or \code{bounded_s<MIN,MAX>}
-as in \code{range}.  Similarly, the \code{cycle_u} and \code{cycle_s}
-shorthands are supported.
+as in \code{range}.
 
-For instance \code{typedef cycle_u<sfloat, 0, 360> deg} defines a type
-which is useful to represent angles in degrees.  \code{deg d = 400.0}
-will set \code{d} to \code{40.0}.
+For instance \code{typedef cycle<sfloat, bounded_u<0, 360> > deg}
+defines a type which is useful to represent angles in degrees.
+\code{deg d = 400.0} will set \code{d} to \code{40.0}.
 
 For the purpose of cycling, the upper bound of the range, \code{MAX},
 is excluded.  \code{deg d = 360.0} will set \code{d} to \code{0.0}.
