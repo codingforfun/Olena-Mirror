@@ -29,4 +29,4 @@ libolncheck_a_SOURCES =				\
   $(COMMON_CHECK_SOURCES)
 
 
-EXTRA_DIST = Makefile.flags Makefile.check
+EXTRA_DIST = Makefile.flags Makefile.check Makefile.runtests

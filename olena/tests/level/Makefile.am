@@ -1,15 +1,4 @@
-include ../check/Makefile.check
+include ../check/Makefile.runtests
 
-check_PROGRAMS = 	cc	\
-			compare	\
-			connected \
-			invert	 \
-			set_level \
-			threshold
-
-cc_SOURCES = cc.cc
-compare_SOURCES = compare.cc
-connected_SOURCES = connected.cc
-invert_SOURCES = invert.cc
-set_level_SOURCES = set_level.cc
-threshold_SOURCES = threshold.cc
+CLEANFILES = cc 2nd_cc connected_out lena_inverted set_level \
+	set_level2 threshold_128

@@ -19,7 +19,7 @@ dist_m4data_DATA = config/oln.m4
 ### Development files.
 ###
 
-EXTRA_DIST = config/oln-local.m4
+EXTRA_DIST = config/oln-local.m4 contrib/runtests
 
 ###
 ### Basic doc files generation.

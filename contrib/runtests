@@ -9,7 +9,7 @@ else
 fi
 
 exec 6>&2
-. ../check/defs
+. ../check/defs || exit 1
 exec 2>&6
 
 failures=0
@@ -17,6 +17,10 @@ failures=0
 indir=${SRCDIR-.}/tests
 rundir=runs
 test -d $rundir || mkdir $rundir
+
+if test ${TESTS+set}; then
+  set $TESTS
+fi
 
 # If no tests were given on the command line, get the list from $indir.
 if test $# = 0; then
@@ -36,24 +40,25 @@ for test; do
   mkdir $dir
   # Build the source code to compile.
   src=$dir/$test.cc
-  cp $input $src
+  cat $input >>$src
   # Build the compile script (using such a script make it easier
   # to debug failures);
   cat >$dir/try <<EOF
+dir="\$2"
 exec 6>&2
 if test "x\$1" = "x-q"; then
   exec 2>$dir/cxx.errors
 else
-  echo $CXX $CPPFLAGS $CXXFLAGS $LDFLAGS $dir/$test.cc
+  echo $CXX $CPPFLAGS $CXXFLAGS $LDFLAGS $dir/$test.cc $LDADD
 fi
-$CXX $CPPFLAGS $CXXFLAGS $LDFLAGS "$dir/$test.cc" -o "$dir/test$EXEEXT" || exit 50
+$CXX $CPPFLAGS $CXXFLAGS $LDFLAGS "$dir/$test.cc" -o "$dir/test$EXEEXT" $LDADD || exit 50
 
 if test "x\$1" = "x-q"; then
   exec 2>$dir/run.errors
 else
-  echo $dir/test$EXEEXT
+  echo srcdir="$SRCDIR" $dir/test$EXEEXT
 fi
-$dir/test$EXEEXT
+srcdir="$SRCDIR" $dir/test$EXEEXT
 estatus=\$?
 
 exec 2>&6
@@ -78,7 +83,11 @@ EOF
 
   msg="";
   case $expected:$estatus in
-    ok:0 | compfail:50 | abort:134) rm -rf "$dir" ;;
+    ok:0 | compfail:50 | abort:134) 
+      if test ! x"$KEEP_RUN" = x"1"; then
+        rm -rf "$dir";
+      fi
+      msg="(ok)" ;;
     *:50) msg="(doesn't compile)" ;;
     *:134) msg="(aborts at run-time)" ;;
     compfail:*) msg="(compiles!)" ;;
@@ -86,7 +95,7 @@ EOF
     ok:*) msg="(exits with \$?=$estatus)" ;;
     *) ;;
   esac
-  if test -d $dir; then
+  if test x"$msg" != x"(ok)"; then
     if test "$xfail" = "no"; then
       echo "FAIL: $test $msg" >&2
       failures=`expr $failures + 1`

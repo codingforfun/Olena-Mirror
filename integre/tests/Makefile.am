@@ -2,4 +2,4 @@
 
 SUBDIRS = $(NTG_TESTS_SUBDIRS)
 
-EXTRA_DIST = check/defs.in
+EXTRA_DIST = check/defs.in check/Makefile.flags check/Makefile.runtests

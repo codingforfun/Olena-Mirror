@@ -11,7 +11,8 @@ AM_LDFLAGS = $(ZLIB_LDFLAGS)
 #      ship the directory unbuilt, but still has to run make for
 #      the other directories).
 # So for now we'll just build these programs on `make check' and `make demo'.
-check_PROGRAMS = tour morpholena test-reconstruction convol-gaussian
+
+check_PROGRAMS = tour morpholena convol-gaussian
 
 .PHONY: demo
 demo: $(check_PROGRAMS)
@@ -27,7 +28,6 @@ morpholena_SOURCES = morpholena.cc \
   morpholena-wshed.cc \
   morpholena-wshed-beucher.cc
 
-test_reconstruction_SOURCES = test-reconstruction.cc
 convol_gaussian_SOURCES = convol-gaussian.cc
 
 CLEANFILES = \
