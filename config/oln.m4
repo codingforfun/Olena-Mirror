@@ -8,7 +8,7 @@
 # This macro is noticeably used in the Olena distribution itself
 # to instruct "configure" to use the bundled Olena sources.
 
-# User projects can use this macro to point their "configure" to a 
+# User projects can use this macro to point their "configure" to a
 # nonstandard Olena sources location, by invoking it _before_ using
 # AC_WITH_OLN. See olena/configure.ac or doc/configure.ac in the Olena
 # distribution for an example.
@@ -50,13 +50,13 @@ AC_DEFUN([NTG_PATH_LOCAL],
 # integre and metalic. This will certainely change when integre and
 # metalic will be distributed separately.
 
-AC_DEFUN([OLN_PATH_USER], 
+AC_DEFUN([OLN_PATH_USER],
 [dnl
   AC_CACHE_CHECK([for Olena in user-specified directory],
-		 [oln_cv_user_hint], 
+		 [oln_cv_user_hint],
                  [oln_cv_user_hint=no
                   AC_ARG_WITH([oln],
-                     [AC_HELP_STRING([--with-oln=DIR], 
+                     [AC_HELP_STRING([--with-oln=DIR],
                      [Include directory where Olena is installed (optional)])],
                      [if test -r "$withval/oln/config/system.hh"; then
 		        oln_cv_user_hint=$withval
@@ -69,7 +69,7 @@ AC_DEFUN([OLN_PATH_USER],
 # This macro checks the actual availability of Olena headers after
 # the other heuristics have tried setting OLN_INCLUDE_DIR and CPPFLAGS.
 
-AC_DEFUN([_OLN_CHECK_HEADERS], 
+AC_DEFUN([_OLN_CHECK_HEADERS],
 [dnl
  AC_REQUIRE([AC_PROG_CXX])
  AC_LANG_PUSH([C++])
@@ -79,7 +79,7 @@ AC_DEFUN([_OLN_CHECK_HEADERS],
  CPPFLAGS="$OLN_EXTRA_CPPFLAGS $CPPFLAGS"
  # At this point, we can be in a situation where pconf.hh does not
  # exist _yet_. In that particular case, we need a workaround.
- AC_CHECK_HEADER([oln/config/pconf.hh], [], 
+ AC_CHECK_HEADER([oln/config/pconf.hh], [],
           [CPPFLAGS="$CPPFLAGS -DIGNORE_PCONF_HH"])
  AC_CHECK_HEADER([oln/config/system.hh], [], [have_olena=no])
  CPPFLAGS=$oln_save_CPPFLAGS
@@ -97,7 +97,7 @@ AC_DEFUN([_OLN_CHECK_HEADERS],
 # _OLN_CHECK_HEADERS.
 
 AC_DEFUN([OLN_PATH_HEADERS],
-[dnl 
+[dnl
   AC_REQUIRE([OLN_PATH_LOCAL])
   AC_REQUIRE([OLN_PATH_USER])
 
@@ -140,7 +140,7 @@ AC_DEFUN([OLN_PATH_HEADERS],
     fi
   fi
 
-  AC_ARG_VAR([OLN_INCLUDE_DIR], 
+  AC_ARG_VAR([OLN_INCLUDE_DIR],
 	     [location of Olena (<include dir>, should be autodetected)])
   if test "x$OLN_INCLUDE_DIR" != x ; then
      CPPFLAGS="-I$OLN_INCLUDE_DIR $CPPFLAGS"
@@ -161,7 +161,7 @@ AC_DEFUN([OLN_PATH_HEADERS],
 
 # Automatically adds the flag `-ftemplate-depth' to OLN_CXXFLAGS when :
 # - deep template recursion is not available when it is not present
-# - the compiler supports it 
+# - the compiler supports it
 # - it provides the right effect when present
 
 AC_DEFUN([AC_CXX_TEMPLATE_DEPTH],
@@ -176,25 +176,25 @@ AC_DEFUN([AC_CXX_TEMPLATE_DEPTH],
                   oln_save_CPPFLAGS=$CPPFLAGS
                   oln_save_CXXFLAGS=$CXXFLAGS
                   CPPFLAGS="$CPPFLAGS -DTDEPTH=$cxx_tdepth"
-                  AC_LINK_IFELSE([template<unsigned n> 
-				  struct rec { 
-			             typedef typename rec<n-1>::ret ret; 
+                  AC_LINK_IFELSE([template<unsigned n>
+				  struct rec {
+			             typedef typename rec<n-1>::ret ret;
                                   };
-                                  template<> struct rec<0> 
+                                  template<> struct rec<0>
                                   { typedef int ret; };
-                                  int main(void) 
-                                  { rec<TDEPTH>::ret i = 0; return i; }], 
-                      [], 
+                                  int main(void)
+                                  { rec<TDEPTH>::ret i = 0; return i; }],
+                      [],
                       [CXXFLAGS="$CXXFLAGS -ftemplate-depth-$cxx_tdepth"
-                       AC_LINK_IFELSE([template<unsigned n> 
-                                       struct rec { 
+                       AC_LINK_IFELSE([template<unsigned n>
+                                       struct rec {
                                            typedef typename rec<n-1>::ret ret;
                                        };
-                                      template<> struct rec<0> 
+                                      template<> struct rec<0>
                                       { typedef int ret; };
-                                      int main(void) 
+                                      int main(void)
                                       { rec<TDEPTH>::ret i = 0; return i; }],
-                       [ac_cv_cxx_template_flags="-ftemplate-depth-$cxx_tdepth"], 
+                       [ac_cv_cxx_template_flags="-ftemplate-depth-$cxx_tdepth"],
                        [ac_cv_cxx_template_flags=unsupported])])
                   CPPFLAGS=$oln_save_CPPFLAGS
                   CXXFLAGS=$oln_save_CXXFLAGS])
@@ -230,13 +230,13 @@ AC_DEFUN([AC_CXX_EXCEPTIONS],
                  [ac_cv_cxx_exceptions],
                  [AC_REQUIRE([AC_PROG_CXX])
                   AC_LANG_PUSH([C++])
-                  AC_COMPILE_IFELSE([try { throw 1; } 
+                  AC_COMPILE_IFELSE([try { throw 1; }
                                      catch (int i) { return i; }],
 			            [ac_cv_cxx_exceptions=yes],
 				    [ac_cv_cxx_exceptions=no])
 		  AC_LANG_POP([C++])])
   if test "$ac_cv_cxx_exceptions" = yes; then
-     AC_DEFINE([HAVE_EXCEPTIONS], 1, 
+     AC_DEFINE([HAVE_EXCEPTIONS], 1,
                [define if the compiler supports exceptions])
   fi
 ])
@@ -244,7 +244,7 @@ AC_DEFUN([AC_CXX_EXCEPTIONS],
 # OLN_ENABLE_EXCEPTIONS([yes|no])
 # OLN_DISABLE_EXCEPTIONS
 
-# Add -DOLN_EXCEPTIONS to OLN_CXXFLAGS when the flag --enable-oln-exceptions 
+# Add -DOLN_EXCEPTIONS to OLN_CXXFLAGS when the flag --enable-oln-exceptions
 # is given to configure and exceptions are available.
 
 AC_DEFUN([OLN_ENABLE_EXCEPTIONS],
@@ -255,9 +255,9 @@ AC_DEFUN([OLN_ENABLE_EXCEPTIONS],
   AC_CACHE_CHECK([whether to use exceptions instead of assertions],
             [oln_cv_use_exceptions],
             [AC_ARG_ENABLE([oln-exceptions],
-                           [AC_HELP_STRING([--enable-oln-exceptions], 
+                           [AC_HELP_STRING([--enable-oln-exceptions],
                               [enable generation of C++ exceptions instead of aborts on error (default is $oln_exn_default)])],
-                           [oln_cv_use_exceptions=$enableval], 
+                           [oln_cv_use_exceptions=$enableval],
                            [oln_cv_use_exceptions=$oln_exn_default])])
 
   if test x$oln_cv_use_exceptions != xno; then
@@ -286,23 +286,23 @@ AC_DEFUN([AC_CXX_NUMERIC_LIMITS],
   AC_LANG_PUSH([C++])
 
   ### Olena needs definitions for infinity values for the `float' and
-  ### `double' data types. 
+  ### `double' data types.
 
   # In ISO C++98, these are provided by std::numeric_limits, declared
-  # in header <limits>. 
+  # in header <limits>.
 
   AC_CHECK_HEADERS([limits])
 
-  # Some old (and faulty) <limits> implementations define unusable 
+  # Some old (and faulty) <limits> implementations define unusable
   # std::numeric_limits. Check it.
 
   AC_CACHE_CHECK([for std::numeric_limits::infinity in <limits>],
-                 [ac_cv_have_limits_infinity], 
+                 [ac_cv_have_limits_infinity],
 	         [if test x$ac_cv_header_limits != xno; then
                      AC_TRY_LINK([@%:@include <limits>],
-	        		 [float f1 = 
+	        		 [float f1 =
 				     std::numeric_limits<float>::infinity();
-		                  double f2 = 
+		                  double f2 =
 				     std::numeric_limits<double>::infinity();],
                 		 [ac_cv_have_limits_infinity=yes],
                 		 [ac_cv_have_limits_infinity=no])
@@ -354,7 +354,7 @@ AC_DEFUN([AC_CXX_CHECK_MATH],
      CPPFLAGS="$CPPFLAGS -D_ISOC99_SOURCE=1"
   fi
   AC_LANG_POP([C++])
-])  
+])
 
 AC_DEFUN([AC_CXX_FLOAT_MATH],
 [dnl
@@ -435,12 +435,12 @@ AC_DEFUN([AC_CXX_FLAGS],
                   [ac_cv_cxx_style],
                   [ac_cv_cxx_style=unknown
                    if test "x$ac_compiler_gnu" != xno; then
-		      if $CXX --version | grep '^2\.' >/dev/null ; then
-			ac_cv_cxx_style=weakGNU
+		      if $CXX --version | grep ' 3\.[34]' >/dev/null ; then
+			ac_cv_cxx_style=GNU
                       else
-                        ac_cv_cxx_style=GNU
+                        ac_cv_cxx_style=weakGNU
                       fi
-                   elif $CXX -V 2>&1 | grep -i "WorkShop">/dev/null 2>&1; then 
+                   elif $CXX -V 2>&1 | grep -i "WorkShop">/dev/null 2>&1; then
 		      ac_cv_cxx_style=Sun
                    elif $CXX -V 2>&1 | grep -i "Intel(R) C++">/dev/null 2>&1;
                    then
@@ -448,7 +448,7 @@ AC_DEFUN([AC_CXX_FLAGS],
                    else
                       echo "int main() {}" >conftest.cc
                       if $CXX --version conftest.cc 2>&1 \
-		         | grep -i "Comeau C/C++" >/dev/null 2>&1; then       
+		         | grep -i "Comeau C/C++" >/dev/null 2>&1; then
                          ac_cv_cxx_style=Comeau
 		      fi
                       rm -f conftest.*
@@ -468,7 +468,7 @@ AC_DEFUN([AC_CXX_FLAGS],
       _CXXFLAGS_DEBUG="-g"
       _CXXFLAGS_OPTIMIZE="-O2 -felide-constructors -funroll-loops"
       _CXXFLAGS_STRICT="-Wall -pedantic"
-      _CXXFLAGS_STRICT_ERRORS="-Wall -pedantic -Werror"
+      _CXXFLAGS_STRICT_ERRORS="-Wall -pedantic"
       ;;
      Sun)
       _CXXFLAGS_DEBUG="-g"
@@ -521,7 +521,7 @@ AC_DEFUN([AC_WITH_CXX_FFTW],
  AC_LANG_PUSH([C++])
 
  AC_ARG_WITH([fftw],
-      [AC_HELP_STRING([--with-fftw@<:@=DIR@:>@], 
+      [AC_HELP_STRING([--with-fftw@<:@=DIR@:>@],
                       [using fftw (DIR = prefix for fftw installation)])])
  FFTW_CXXFLAGS=''
  FFTW_LDFLAGS=''
@@ -536,11 +536,11 @@ AC_DEFUN([AC_WITH_CXX_FFTW],
    LDFLAGS="$LDFLAGS $FFTW_LDFLAGS"
    oln_have_fftw=no
    AC_CHECK_HEADER([fftw.h],
-                 [AC_CHECK_LIB([fftw], 
+                 [AC_CHECK_LIB([fftw],
                                [fftw2d_create_plan],
                                [oln_have_fftw=yes
                                 FFTW_LDFLAGS="$FFTW_LDFLAGS -lfftw -lrfftw"
-                                AC_DEFINE([HAVE_FFTW], 1, 
+                                AC_DEFINE([HAVE_FFTW], 1,
                                           [Define to 1 if we can use fftw])])])
    CXXFLAGS=$oln_save_CXXFLAGS
    LDFLAGS=$oln_save_LDFLAGS
@@ -564,7 +564,7 @@ AC_DEFUN([AC_WITH_CXX_ZLIB],
  AC_LANG_PUSH([C++])
 
  AC_ARG_WITH([zlib],
-             [AC_HELP_STRING([--with-zlib@<:@=DIR@:>@], 
+             [AC_HELP_STRING([--with-zlib@<:@=DIR@:>@],
                     [using zlib (DIR = prefix for zlib installation)])])
  ZLIB_CXXFLAGS=''
  ZLIB_LDFLAGS=''
@@ -579,11 +579,11 @@ AC_DEFUN([AC_WITH_CXX_ZLIB],
    LDFLAGS="$LDFLAGS $ZLIB_LDFLAGS"
    oln_have_zlib=no
    AC_CHECK_HEADER([zlib.h],
-                   [AC_CHECK_LIB([z], 
+                   [AC_CHECK_LIB([z],
                                [gzopen],
                                [oln_have_zlib=yes
                                 ZLIB_LDFLAGS="$ZLIB_LDFLAGS -lz"
-                                AC_DEFINE([HAVE_ZLIB], 1, 
+                                AC_DEFINE([HAVE_ZLIB], 1,
                                           [Define to 1 if we can use zlib])])])
    CXXFLAGS=$oln_save_CXXFLAGS
    LDFLAGS=$oln_save_LDFLAGS

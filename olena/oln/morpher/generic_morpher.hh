@@ -65,6 +65,32 @@ namespace oln {
 
     namespace abstract {
 
+      template <unsigned Dim, class T>
+      struct dest_type;
+
+      template <class T>
+      struct dest_type<1, T>
+      {
+	typedef image1d<T> ret;
+      };
+
+
+      template <class T>
+      struct dest_type<2, T>
+      {
+	typedef image2d<T> ret;
+      };
+
+
+      template <class T>
+      struct dest_type<3, T>
+      {
+	typedef image3d<T> ret;
+      };
+
+
+
+
       /*! The Abstract morpher class.
       **
       ** Define a default implementation for all the
@@ -80,7 +106,7 @@ namespace oln {
       template <class SrcType, class Exact>
       class generic_morpher :
 	public oln::abstract::image_with_impl<typename image_id<Exact>::impl_type,
-					      typename image_id<Exact>::exact_type>
+					      Exact>
       {
       protected:
 
@@ -119,10 +145,7 @@ namespace oln {
  	/// The morpher underlying implementation.
 	typedef typename image_traits<exact_type>::impl_type impl_type;
 
-	typedef oln::image<image_traits<exact_type>::dim,
-			   value_type,
-			   impl_type,
-			   mlc::final> DestType;
+	typedef typename dest_type<image_traits<exact_type>::dim, value_type>::ret DestType;
 
 	/// Type of the decorated image.
 	typedef SrcType src_self_type;
@@ -159,6 +182,19 @@ namespace oln {
 	  return ima_;
 	}
 
+	/// Instantiate and return the image that the morpher is simulating.
+	DestType
+	unmorph() const
+	{
+	  DestType			res(to_exact(*this).size());
+	  oln_iter_type(DestType)	it(res);
+
+	  for_all(it)
+	    res[it] = (*this)[it];
+	  return res;
+	}
+
+
 	/*! Default implementation of at.
 	**
 	** Return the value stored at \a p in the decorated image.
@@ -169,7 +205,7 @@ namespace oln {
 	const src_value_type
 	at(const src_point_type& p) const
 	{
-	  return to_exact(ima_).at(p);
+	  return ima_[p];
 	}
 
 	/*! Default implementation of at.
@@ -182,31 +218,31 @@ namespace oln {
 	src_value_type&
 	at(const src_point_type& p)
 	{
-	  return to_exact(ima_).at(p);
+	  return ima_[p];
 	}
 
 	/// Default implementation of impl.
 	const src_impl_type*
 	impl() const
 	{
-	  return to_exact(ima_).impl();
+	  return ima_.impl();
 	}
 
 	/// Default implementation of impl.
 	src_impl_type*
 	impl()
 	{
-	  return to_exact(ima_).impl();
+	  return ima_.impl();
 	}
 
 	/*! Default implementation of clone_.
 	**
 	** Return a copy of the decorated image.
 	*/
-	src_self_type
+	src_exact_type
 	clone_() const
 	{
-	  return to_exact(ima_).clone_();
+	  return to_exact(ima_).clone();
 	}
 
 	/*! Default implementation of npoints_.
@@ -216,7 +252,7 @@ namespace oln {
 	size_t
 	npoints_()
 	{
-	  return to_exact(ima_).npoints_();
+	  return to_exact(ima_).npoints();
 	}
 
 	/*! Default implementation of assign.

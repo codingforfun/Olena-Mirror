@@ -1,16 +1,20 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 132)
-(Parent-Version oln 10 131)
+(Project-Version oln 10 133)
+(Parent-Version oln 10 132)
 (Version-Log "2004-04-03  Damien Thivolle  <damien@lrde.epita.fr>
-	* olena/oln/morpher/generic_morpher.hh: Inherit directly from oln::image.
-	* olena/oln/morpher/subq_morpher.hh: Change inheritance system.
-	* olena/oln/morpher/color_morpher.hh: Likewise.
-	* olena/tests/morpher/tests/color_morph: Remove a test.
+	* config/oln.m4: Remove `-Werror' flag for g++-3.2.
+	* doc/ref/Makefile.am: Replace `make' by $(MAKE).
+	* doc/ref/out/exdoc.config.in: Add -DNEED_ROUND -DNEED_ROUNDF flags
+	to examples compilation.
+	* olena/oln/Makefile.am: Add files.
+	* olena/oln/morpher/generic_morpher.hh: Repair unmorph().
+	* olena/oln/morpher/color_morpher.hh: Correct comments.
+	* olena/tests/morpher/tests/color_morph: Readd a test.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sat, 03 Apr 2004 14:42:26 +0200")
+(Checkin-Time "Sat, 03 Apr 2004 23:02:21 +0200")
 (Checkin-Login thivol_d)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -113,11 +117,11 @@
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.16 600))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.10 600))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.17 600))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.11 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.40 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.72 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.73 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 600))
 
@@ -138,7 +142,7 @@
   (doc/demo/tour.cc (oln/d/45_tour.cc 1.13 600))
   (doc/ref/bin () :directory)
   
-  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.15 600))
+  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.16 600))
   (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.6.1.5 600))
   (doc/ref/oln-ref.tex (oln/f/14_oln-ref.te 1.3.1.3 600))
   (doc/ref/integre-ref.tex (oln/g/34_ref-types. 1.12 600))
@@ -303,7 +307,7 @@
   (olena/oln/level/lut.hh (oln/29_lut.hh 1.10 600))
   (olena/oln/level/set_level.hh (oln/p/1_set_level. 1.11 600))
   (olena/oln/level/threshold.hh (oln/f/15_threshold. 1.14 600))
-  (config/oln.m4 (oln/j/15_oln.m4 1.36 600))
+  (config/oln.m4 (oln/j/15_oln.m4 1.37 600))
 
   (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.15 600))
   (metalic/mlc/array/1d.hh (oln/f/23_array1d.hh 1.11 600))
@@ -794,7 +798,7 @@
   (integre/tests/check/defs.in (oln/q/42_defs.in 1.1 600))
   (metalic/mlc/array/objs.hh (oln/q/45_objs.hh 1.3 600))
   (metalic/mlc/config/system.hh (oln/q/46_system.hh 1.2 600))
-  (olena/oln/Makefile.am (oln/q/47_Makefile.a 1.3.1.1.1.6.1.7.1.4 600))
+  (olena/oln/Makefile.am (oln/q/47_Makefile.a 1.3.1.1.1.6.1.7.1.5 600))
   (integre/ntg/config/system.hh (oln/q/48_system.hh 1.2 600))
   (metalic/tests/main/tests/is_a1 (oln/r/17_is_a1 1.3 600))
   (metalic/tests/main/tests/ensure3 (oln/r/18_ensure3 1.3 600))
@@ -1222,7 +1226,7 @@
 ;; Files added by populate at Wed, 25 Feb 2004 16:41:16 +0100,
 ;; to version 10.67(w), by palma_g:
 
-  (doc/ref/out/exdoc.config.in (oln/k/7_exdoc.conf 1.2 600))
+  (doc/ref/out/exdoc.config.in (oln/k/7_exdoc.conf 1.3 600))
 
 ;; Files deleted by depopulate at Tue, 09 Mar 2004 10:41:51 +0100,
 ;; from version 10.70(w), by palma_g:
@@ -1395,7 +1399,7 @@
   (olena/oln/morpho/environments.hh (oln/m/17_environmen 1.1 600))
 
 
-  (olena/oln/morpher/generic_morpher.hh (oln/m/18_generic_mo 1.5 600))
+  (olena/oln/morpher/generic_morpher.hh (oln/m/18_generic_mo 1.6 600))
   (olena/tests/convol/tests/nagao (oln/m/19_nagao 1.1 600))
   (integre/tests/types/tests/ntg_compare_nb_comp (oln/m/20_ntg_compar 1.1 600))
   (olena/oln/convol/nagao.hxx (oln/m/21_nagao.hxx 1.1 600))
@@ -1403,7 +1407,7 @@
   (olena/oln/utils/se_stat.hh (oln/m/23_se_stat.hh 1.2 600))
   (olena/oln/utils/se_stat.hxx (oln/m/24_se_stat.hx 1.2 600))
   (olena/oln/morpher/subq_morpher.hh (oln/m/25_subq_morph 1.3 600))
-  (olena/oln/morpher/color_morpher.hh (oln/m/26_color_morp 1.3 600))
+  (olena/oln/morpher/color_morpher.hh (oln/m/26_color_morp 1.4 600))
   (olena/tests/morpher/Makefile.am (oln/m/27_Makefile.a 1.1 600))
   
   
@@ -1423,7 +1427,7 @@
 
   (olena/tests/morpher/tests/compose_morph (oln/m/43_compose_mo 1.1 600))
   (olena/tests/morpher/tests/sq_morph (oln/m/44_sq_morph 1.1 600))
-  (olena/tests/morpher/tests/color_morph (oln/m/45_color_morp 1.2 600))
+  (olena/tests/morpher/tests/color_morph (oln/m/45_color_morp 1.3 600))
 ;; Files added by populate at Wed, 31 Mar 2004 19:07:28 +0200,
 ;; to version 10.123(w), by palma_g:
 

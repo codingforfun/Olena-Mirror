@@ -157,6 +157,7 @@ nobase_oln_HEADERS =				\
   morpho/closing.hh				\
   morpho/closing.inc				\
   morpho/dilation.hh				\
+  morpho/environments.hh			\
   morpho/erosion.hh				\
   morpho/extrema.hh				\
   morpho/extrema.hxx				\
@@ -203,6 +204,8 @@ nobase_oln_HEADERS =				\
   topo/inter-pixel/internal/dir-iter.hh		\
   topo/inter-pixel/internal/dir.hh		\
   topo/tarjan/flat-zone.hh			\
+  topo/tarjan/tarjan.hh				\
+  topo/tarjan/tarjan_with_attr.hh		\
   topo/tarjan/union.hh				\
   transforms/fft.hh				\
   transforms/dwt.hh				\

@@ -1,5 +1,12 @@
 2004-04-03  Damien Thivolle  <damien@lrde.epita.fr>
 
+	* olena/oln/Makefile.am: Add files.
+	* olena/oln/morpher/generic_morpher.hh: Repair unmorph().
+	* olena/oln/morpher/color_morpher.hh: Correct comments.
+	* olena/tests/morpher/tests/color_morph: Readd a test.
+
+2004-04-03  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* olena/oln/morpher/generic_morpher.hh: Inherit directly from oln::image.
 	* olena/oln/morpher/subq_morpher.hh: Change inheritance system.
 	* olena/oln/morpher/color_morpher.hh: Likewise.

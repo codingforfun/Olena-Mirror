@@ -72,7 +72,7 @@ namespace oln {
 
   /*! \brief Specialized version for color_morpher.
   **
-  ** \param I The type of the decorated image.
+  ** \param SrcType The type of the decorated image.
   **
   ** \param Exact The exact type of the object.
   */
@@ -88,8 +88,6 @@ namespace oln {
 
     /*! \brief Abstract color_morpher class used for
     ** code factorization.
-    **
-    ** \param DestType Output type of the morpher.
     **
     ** \param SrcType Input type decorated.
     **

@@ -15,7 +15,7 @@ doc: html.tar.gz oln-ref.pdf
 doxy:
 	$(EXDOC) --config=$(OUT_DIR)/exdoc.config  --output-dir=$(OUT_DIR) --input-dir=$(top_srcdir)
 	mkdir -p img
-	cd $(OUT_DIR) && make -f makefile
+	cd $(OUT_DIR) && $(MAKE) -f makefile
 	$(IMG_CONV) $(top_srcdir)/olena/img img preserve
 	$(IMG_CONV) img img nopreserve
 	$(DOXYGEN) doxygen.config
@@ -30,7 +30,7 @@ oln-ref.pdf: doxy
 dist_noinst_DATA = oln-ref.pdf html.tar.gz $(srcdir)/exdoc.pl $(srcdir)/img_conv.pl
 
 dist-local:
-	rm -f img/*
+	rm -rf img/* out/*
 
 MAINTAINERCLEANFILES = $(dist_noinst_DATA) \
 	./html/* ./img/* ./$(OUT_DIR)/*
