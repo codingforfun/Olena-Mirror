@@ -18,7 +18,7 @@ variables through ``Exact_ref'', ``Exact_cref'', ``Exact_ptr'' or
 
 Abstract classes have moved from ``oln'' to ``oln::abstract''
 namespace.
- 
+
 @itemize @minus
 @item oln::image => oln::abstract::image
 @item oln::iter => oln::abstract::iter
@@ -35,7 +35,7 @@ it will also provide special proxies and function-generated
 images. The access to this ``implementation'' has changed from
 ``data()'' to ``impl()'' member function.
 
-Functions modifying borders were made image member functions. 
+Functions modifying borders were made image member functions.
 
 @itemize @minus
 @item border::set_width()  => abstract::image::border_set_width()
@@ -54,6 +54,7 @@ In particular, macros have been renamed:
 @item Exact(I) => mlc_exact_type(I)
 @item Point(I) => oln_point_type(I)
 @item Iter(I) => oln_iter_type(I)
+@item Value(I) => oln_value_type(I)
 @end itemize
 
 Typedefs have been renamed too:
@@ -80,12 +81,12 @@ idea was to split the library into three distinct components:
 Thus, two additional directories and namespaces have been created:
 
 @itemize @minus
-@item @file{mlc/} directory and @code{mlc} namespace for 
+@item @file{mlc/} directory and @code{mlc} namespace for
       meta-programming tools
 @item @file{ntg/} directory and @code{ntg} namespace for data types
 @end itemize
 
-Here is the list of general renaming rules for header files: 
+Here is the list of general renaming rules for header files:
 
 @itemize @minus
 @item @file{<oln/types/*.hh>} => @file{<ntg/*.hh>}

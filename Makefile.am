@@ -25,10 +25,10 @@ EXTRA_DIST = config/oln-local.m4 contrib/runtests
 ### Basic doc files generation.
 ###
 
+if HAVE_DOC_DEV
+
 dist_noinst_DATA = README BUILD INSTALL THANKS FAQ UPGRADING
 MAINTAINERCLEANFILES = README BUILD INSTALL THANKS FAQ UPGRADING
-
-if HAVE_DOC_DEV
 
 INFOTOTEXT = $(MAKEINFO) --enable-encoding --no-headers --no-validate
 devdoc = $(srcdir)/doc/dev

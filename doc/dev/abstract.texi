@@ -5,13 +5,13 @@ This is the tenth public release of Olena, a generic image
 processing library in C++.
 
 @ifplaintext
-Please see the files BUILD and INSTALL for information about building
+Please read the files BUILD and INSTALL for information about building
 and installing Olena.
 @end ifplaintext
 
 Olena is a project developed by the EPITA Research and Development
 Laboratory (@url{http://www.lrde.epita.fr}) since 1997.  We did numerous
-prototypes and throw-away experiments before settling into the kind of
+prototypes and throwaway experiments before settling into the kind of
 programming paradigm which is finally here.
 
 This version of Olena is quite young.  In fact most of the operators
