@@ -1,8 +1,14 @@
+2004-03-29  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/topo/inter-pixel/inter-pixel.hh: Change the return type
+	of operator[] from const & to const.
+
 2004-03-29  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* olena/oln/morpher/generic_morpher.hh: Correct code and comments.
-	* olena/oln/morpher/subq_morpher.hh: Add file. Sub quantify morpher implementation.
-	* olena/oln/morpher/color_morpher.hh: Add file. Color morpher implementation.
+	* olena/oln/morpher/subq_morpher.hh: Add file. Sub quantify morpher
+	implementation.
+	* olena/oln/morpher/color_morpher.hh: Add file. Color morpher
+	implementation.
 	* olena/tests/morpher/Makefile.am: Add file. Morphers test suite.
 	* olena/tests/morpher/tests/sq_morph_8: Add file.
 	* olena/tests/morpher/tests/sq_morph_7: Likewise.

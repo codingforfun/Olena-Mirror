@@ -106,7 +106,7 @@ typename oln::mute< ImgType, oln_node_type(ImgType) >::ret
 	}
 
 	/// \todo FIXME: add doc.
-	const node_type&
+	const node_type
 	operator[](const point_type & p) const
 	{
 	  return data_[p];
