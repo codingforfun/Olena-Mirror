@@ -7,7 +7,7 @@ AC_CONFIG_AUX_DIR([tools])
 AM_INIT_AUTOMAKE([1.7.1 no-define foreign dist-bzip2])
 AM_MAINTAINER_MODE
 
-AC_CONFIG_HEADERS(oln/config/pconf.hh:oln/config/pconf-hh.in)
+AC_CONFIG_HEADERS(oln/config/pconf.inc:oln/config/pconf-inc.in)
 
 AC_CONFIG_SUBDIRS([src doc])
 

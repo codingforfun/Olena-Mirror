@@ -1,5 +1,9 @@
 2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
 
+	* oln/config/README: remove obsolete file 
+
+2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
+
 	* oln/config/pconf.hh: add (useful for initial builds).
 
 2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
