@@ -119,6 +119,7 @@
 (src/morpho/laplacian.hh 1715 1014045017 b/1_laplacian. 1.2)
 (src/convert/nrgbhsl.hh 4260 1009823825 12_nrgbhsl.hh 1.1)
 (src/core/old/image2d.hxx 5883 1009823825 c/51_image2d.hx 1.1)
+(src/config/config.hin 1381 1017848311 f/10_config.hin 1.1)
 (src/basics2d.hh 1768 1009823825 b/7_basics2d.h 1.1)
 (src/io/file.hh 2841 1009823825 b/17_file.hh 1.1)
 (src/utils/timer.hh 2554 1009823825 8_timer.hh 1.1)

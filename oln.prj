@@ -1,23 +1,12 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_3 22)
-(Parent-Version oln 0_3 21)
-(Version-Log "2002-04-03  Alexandre Duret-Lutz  <duret_g@epita.fr>
-
-	* src/level/lut.hh: Include \"hash_map.hh\" not <hash_map>.
-	* src/config/hash_map.hh, src/config/README: New file.
-	* src/config/system.hh: Include pconf.hh.
-	* src/Makefile.am (nobase_nodist_oln_HEADERS): New variable.
-	(nobase_oln_HEADERS): Add config/hash_map.hh.
-	(EXTRA_SCRIPTS, PERL, SCANDEFS_PL, PCONF_OCCURS): New variables.
-	(config/extrconf.sh, config/pconf.hh): New targets.
-	* tools/scandefs.pl: New file.
-	* Makefile.am (EXTRA_DIST): Add tools/scandefs.pl.
-
+(Project-Version oln 0_3 23)
+(Parent-Version oln 0_3 22)
+(Version-Log "Add missing src/config/config.hin.
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 03 Apr 2002 16:09:41 +0200")
+(Checkin-Time "Wed, 03 Apr 2002 17:38:31 +0200")
 (Checkin-Login adl)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
@@ -64,7 +53,6 @@
 		  "src/config/pconf.hh$"
 		  "src/config/extrconf.sh$"
 		  "src/config/config.h$"
-		  "src/config/config.hin$"
 		  "tests/morpho/reconstruction$"
 		  "tests/morpho/extrkiller$"
 		  "tests/io/savetmp$"
@@ -431,6 +419,11 @@
 ;; to version 0_3.21(w), by adl:
 
   (src/config/README (oln/f/9_README 1.1 644))
+
+;; Files added by populate at Wed, 03 Apr 2002 17:38:13 +0200,
+;; to version 0_3.22(w), by adl:
+
+  (src/config/config.hin (oln/f/10_config.hin 1.1 644))
 )
 (Merge-Parents)
 (New-Merge-Parents)
