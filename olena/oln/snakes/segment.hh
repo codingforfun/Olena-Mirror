@@ -37,6 +37,10 @@ namespace oln {
 
   namespace snakes {
 
+    /*! A segment is a list of node.
+    **
+    ** \attention FIXME: Do not work due to the function node::energy.
+    */
     template <class I>
     class segment
     {
@@ -53,6 +57,9 @@ namespace oln {
       ntg::float_s
       energy(const I& gradient) const;
       ///< Just iterate through the vector and sums up point energies.
+      ///<
+      ///< \attention FIXME: Do not work due to the function node::energy.
+
 
     public:
       std::list<point_type>

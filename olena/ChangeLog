@@ -1,3 +1,14 @@
+2004-03-10  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* olena/oln/snakes/snakes_base.hh: Add comments
+	* olena/oln/snakes/energies.hh: Add comments
+	* olena/oln/snakes/greedy.hh: Add comments
+	* olena/oln/snakes/node.hh: Add comments
+	* olena/oln/snakes/segment.hh: Add comments
+	* olena/oln/snakes/snakes_base.hh: Add comments
+	* olena/oln/morpho/attribute_closing_opening.hh: Fix bug in doc
+	* olena/oln/morpho/attribute_closing_opening_map.hh: Fix bug in doc
+
 2004-03-10  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* tests/morpho/tests/attr_op_cl: Initialize uninitialized variable.

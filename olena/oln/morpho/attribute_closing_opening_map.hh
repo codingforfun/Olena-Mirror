@@ -423,7 +423,7 @@ T##_closing(const abstract::image<I>& input,					\
       **
       **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::slow::maxvalue_closing(im1, oln::neighb_c4(), 5);
-      **   oln::save(im1, IMG_OUT "oln_morpho_fast_maxvalue_closing.png.ppm");
+      **   oln::save(im1, IMG_OUT "oln_morpho_fast_maxvalue_closing.ppm");
       **   return  0;
       ** }
       ** \endcode
