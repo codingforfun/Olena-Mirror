@@ -1,0 +1,77 @@
+
+Environment-specific configuration
+==================================
+
+    This directory contains programs, scripts and definitions intended
+    to provide the user who installs Olena with precomputed
+    configuration files (config.hh).
+
+Generalities
+------------
+
+    The idea behind this is that Olena is not totally independent from
+    the compiler, standard library and architecture and needs some
+    form of configuration before being used. On the other hand,
+    nothing but details prevent a single installation from being used
+    with different compilers, standard libraries and architectures.
+
+    These "details" are actually the combination of preprocessor
+    macros, or 'flags', that can be defined to enable optional
+    features or workarounds. There they are :
+
+    * OLN_EXCEPTIONS, set to throw exceptions on error instead of
+		      abort traps
+
+    * USE_C_LIMITS, set if the C++ standard library does not provide
+		    appropriate std::numeric_limits
+
+    * _ISOC99_SOURCE, set to 1 to force the declaration of C99
+		      functions in the GNU C standard library
+
+    * NEED_SQRTF, NEED_FLOORF, NEED_ROUND, NEED_ROUNDF, set if any of
+      these functions are not present in the math library and need to
+      be substituted by local definitions in Olena
+
+    * HAVE_FFTW, set to 1 if the fftw library is available
+
+    * HAVE_ZLIB, set to 1 if the zlib is available
+
+    
+
+    Because these flags are not numerous, it is simple for an Olena
+    user to provide them manually on the compilation command
+    line. 
+
+    However, it is traditional to provide them in a config.hh file
+    instead, that can contain definitions for other parts of the
+    user's project. Olena can then be told to use this file by
+    providing only the standard HAVE_CONFIG_H preprocessor macro
+    definition on the command line.
+
+Aim of the provided tools
+-------------------------
+
+    Because the process of actually chosing the right combination of
+    flags is a simple but potentially tedious operation, some efforts
+    have been made in order to provide tools to automatically generate
+    scripts specific to all available compiler configurations.
+
+    Actually, the gen-scripts.sh program actually tests each known
+    compiler configuration XXX (as specified in compilers.def), and
+    generates a script program called 'oln-config-XXX.sh'.
+
+    These scripts are in turn able to provide the necessary
+    compilation flags for Olena, in a manner similar to other GNU
+    -config files (such as gtk-config, kde-config and the like).
+
+    For example, if Intel's C++ compiler (icc) is found to be
+    available and useable with Olena, gen-scripts.sh generates the
+    script 'oln-config-icc.sh' which itself can be used as such:
+
+       oln-config-icc.sh --cxxflags # prints needed compiler flags
+       
+       oln-config-icc.sh --cxx # prints "icc"
+     
+       oln-config-icc.sh --help # displays available options
+
+

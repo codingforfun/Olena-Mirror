@@ -1,13 +1,23 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 9)
-(Parent-Version oln 10 8)
-(Version-Log "Fix doc/ChangeLog.
+(Project-Version oln 10 10)
+(Parent-Version oln 10 9)
+(Version-Log "Index: ChangeLog
+from  Raphaël Poss  <raph@lrde.epita.fr>
+
+   * configure.ac: Comment out dysfunctional stuff.
+
+Index: olena/ChangeLog
+from  Raphaël Poss  <raph@lrde.epita.fr>
+
+   * conf/README: Add.
+   * Makefile.am: Comment out dysfunctional stuff.
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 25 Aug 2003 11:53:08 +0200")
-(Checkin-Login burrus_n)
+(Checkin-Time "Mon, 25 Aug 2003 13:50:56 +0200")
+(Checkin-Login raph)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -109,11 +119,11 @@
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.3 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.4 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.4 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.25 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.34 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.25 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.26 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.6 640))
 
@@ -125,7 +135,7 @@
 
   (cleanup.sh (oln/o/29_cleanup.sh 1.5 750))
 
-  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.8 640))
+  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.9 640))
 
   (doc/demo/image.cc (oln/d/46_image.cc 1.8 640))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.16.1.2 640))
@@ -158,7 +168,7 @@
   (olena/img/se9.pbm (oln/n/5_se9.pbm 1.1 640) :no-keywords)
   (olena/img/se.pbm (oln/n/6_se.pbm 1.1 640) :no-keywords)
 
-  (olena/Makefile.am (oln/2_Makefile.a 1.30.1.1.1.2.1.9 640))
+  (olena/Makefile.am (oln/2_Makefile.a 1.30.1.1.1.2.1.10 640))
   (olena/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.13 640))
   (olena/oln/arith/logic.hh (oln/b/24_logic.hh 1.6.1.3 640))
   (olena/oln/arith/ops.hh (oln/b/23_ops.hh 1.5.1.2.1.7 640))
@@ -1020,6 +1030,11 @@
   (olena/oln/topo/combinatorial-map/internal/sigma.hh (oln/v/9_sigma.hh 1.2 600))
   (olena/oln/core/abstract/image_with_type_with_dim.hh (oln/v/11_image_with 1.3 600))
   (olena/tests/core/tests/image2 (oln/v/12_image2 1.2 600))
-  (olena/tests/utils/tests/copy (oln/v/13_copy 1.1 600)))
+  (olena/tests/utils/tests/copy (oln/v/13_copy 1.1 600))
+;; Files added by populate at Mon, 25 Aug 2003 13:48:55 +0200,
+;; to version 10.9(w), by raph:
+
+  (olena/conf/README (oln/v/14_README 1.1 664))
+)
 (Merge-Parents)
 (New-Merge-Parents)

@@ -85,15 +85,19 @@ OLN_COLLECTION([OLN_TOP],
 
      AM_CONDITIONAL([REGEN_MANPAGES], [test "x$oln_cv_regen_manpages" != xno])
 
-### Compiler-specific auto-configuration
-    AC_CACHE_CHECK([whether to enable auto-configuration for multiple compilers],
-                   [oln_cv_enable_config_sh],
-                   [oln_cv_enable_config_sh=yes
-                    AC_ARG_WITH([config-sh],
-                          [AC_HELP_STRING([--without-config-sh],
-                          [disable generation of oln-config-xxx.sh])],
-                          [oln_cv_enable_config_sh=$withval])])
-    AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno])
+###
+### Experimental stuff. Read olena/conf/README
+###
+
+dnl ### Compiler-specific auto-configuration
+dnl     AC_CACHE_CHECK([whether to enable auto-configuration for multiple compilers],
+dnl                    [oln_cv_enable_config_sh],
+dnl                    [oln_cv_enable_config_sh=yes
+dnl                     AC_ARG_WITH([config-sh],
+dnl                           [AC_HELP_STRING([--without-config-sh],
+dnl                           [disable generation of oln-config-xxx.sh])],
+dnl                           [oln_cv_enable_config_sh=$withval])])
+dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno])
 
 
 ### The testsuite is a component.

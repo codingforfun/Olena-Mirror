@@ -23,7 +23,12 @@ EXTRA_DIST += conf/configure.ac \
 
 dist_pkgdata_DATA = conf/configure conf/oln-config.shin
 
-if OLN_CONFIG_SH
+###
+### Experimental stuff: read olena/conf/README
+###
+
+#if OLN_CONFIG_SH
+
 # FIXME: when the two following rules are enabled, they are
 # always run, resulting in errors if aclocal and/or autoconf
 # are not available.
@@ -34,22 +39,27 @@ if OLN_CONFIG_SH
 # $(srcdir)/conf/configure: $(srcdir)/conf/configure.ac $(srcdir)/conf/aclocal.m4
 #	cd $(srcdir)/conf && $(AUTOCONF)
 
-install-data-hook: $(srcdir)/conf/configure $(srcdir)/conf/gen-scripts.sh $(srcdir)/conf/compilers.def
-	mkdir -p conf && $(SHELL) $(srcdir)/conf/gen-scripts.sh $(DESTDIR)$(includedir) $(srcdir)/conf ./conf
-	$(mkinstalldirs) $(DESTDIR)$(bindir)
-	@ for p in conf/oln-config-*.sh; do \
-	  if test -f $$p; then \
-	    f=`echo "$$p" | sed 's,^.*/,,;$(transform)'`; \
-	    echo " $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$p $(DESTDIR)$(bindir)/$$f"; \
-	    $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$p $(DESTDIR)$(bindir)/$$f || exit 1; \
-	  else :; fi; \
-	done
+#
+# FIXME: this section is ugly and exists because no good substitute
+# has been found yet. Please improve.
+#
 
-uninstall-hook:
-	@ for p in conf/oln-config-*.sh; do \
-	  f=`echo "$$p" | sed 's,^.*/,,;$(transform)'`; \
-	  echo " rm -f $(DESTDIR)$(bindir)/$$f"; \
-	  rm -f $(DESTDIR)$(bindir)/$$f; \
-	done
+#install-data-hook: $(srcdir)/conf/configure $(srcdir)/conf/gen-scripts.sh $(srcdir)/conf/compilers.def
+#	mkdir -p conf && $(SHELL) $(srcdir)/conf/gen-scripts.sh $(DESTDIR)$(includedir) $(srcdir)/conf ./conf
+#	$(mkinstalldirs) $(DESTDIR)$(bindir)
+#	@ for p in conf/oln-config-*.sh; do \
+#	  if test -f $$p; then \
+#	    f=`echo "$$p" | sed 's,^.*/,,;$(transform)'`; \
+#	    echo " $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$p $(DESTDIR)$(bindir)/$$f"; \
+#	    $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$p $(DESTDIR)$(bindir)/$$f || exit 1; \
+#	  else :; fi; \
+#	done
 
-endif
+#uninstall-hook:
+#	@ for p in conf/oln-config-*.sh; do \
+#	  f=`echo "$$p" | sed 's,^.*/,,;$(transform)'`; \
+#	  echo " rm -f $(DESTDIR)$(bindir)/$$f"; \
+#	  rm -f $(DESTDIR)$(bindir)/$$f; \
+#	done
+
+#endif
