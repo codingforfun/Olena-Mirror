@@ -74,7 +74,7 @@ namespace oln {
     }
 
     inline // FIXME: how to define float by parameters?
-    const chamfer<float>& mk_chamfer_3x3(float d10, float d11) 
+    const chamfer<float>& mk_chamfer_3x3(float d10, float d11)
       // FIXME: add (?)  , float coef = 1.f
     {
       static const w_window2d<float> w_win_fwd = ( mlc::floats_2d =
@@ -83,7 +83,7 @@ namespace oln {
       static const w_window2d<float> w_win_bkd = ( mlc::floats_2d =
 						 0.f, x(),  d10, lbrk,
 						 d11, d10,  d11, end );
-      static const chamfer<float> ch_ = 
+      static const chamfer<float> ch_ =
 	chamfer<float>(w_win_fwd, w_win_bkd, 1.f);
       return ch_;
     }
@@ -115,7 +115,7 @@ namespace oln {
 						 O,   O, x(), d10,   O, lbrk,
 						 d21, d11, d10, d11, d21,
 						 O, d21,   O, d21,   O, end );
-      static const chamfer<float> ch_ = 
+      static const chamfer<float> ch_ =
 	chamfer<float>(w_win_fwd, w_win_bkd, 1.f);
       return ch_;
     }
@@ -146,14 +146,14 @@ namespace oln {
     CHAMFER2(chamfer,  5,   7,  3, 5.2474);
     CHAMFER2(chamfer, 12,  17,  3, 12.6684);
 
-    inline const chamfer<int>& chessboard()    
-    { 
-      return chamfer_1_1(); 
+    inline const chamfer<int>& chessboard()
+    {
+      return chamfer_1_1();
     }
 
-    inline const chamfer<int>& cityblock()     
-    { 
-      return chamfer_1_2(); 
+    inline const chamfer<int>& cityblock()
+    {
+      return chamfer_1_2();
     }
 
     CHAMFER3(chamfer, 4,  6, 9, 5, 4.1203);
@@ -161,9 +161,9 @@ namespace oln {
     CHAMFER3(chamfer, 9,  13, 20, 5, 9.1409);
     CHAMFER3(chamfer, 16, 23, 36, 5, 16.3351);
 
-    inline const chamfer<float>& best_set_3x3() 
+    inline const chamfer<float>& best_set_3x3()
     { return mk_chamfer_3x3(0.9481, 1.3408); }
-    inline const chamfer<float>& best_set_5x5() 
+    inline const chamfer<float>& best_set_5x5()
     { return mk_chamfer_5x5(0.9801, 1.4060, 2.2044); }
 
 
@@ -206,24 +206,24 @@ namespace oln {
 
     template <class T, class T2>
     template <class V>
-    void dmap<T, T2>::compute(const image2d<V>&   input, 
+    void dmap<T, T2>::compute(const image2d<V>&   input,
 			      float		  infty)
     {
-      image2d<point_type> dummy;
+      image2d<point_type> dummy(input.size());
       compute(input, dummy, infty);
     }
 
     template <class T, class T2>
     template <class V>
-    void dmap<T, T2>::compute(const image2d<V>&     input, 
+    void dmap<T, T2>::compute(const image2d<V>&     input,
 			      image2d<point_type>&  nearest_point_map,
 			      float		    infty)
     {
       precondition(input.size() == imap_.size());
       if (infty == 0.f)
 	{
-	  inFty_ = 1e4;
-	  infTy_ = 1e4; // FIXME: !!!
+	  inFty_ = ntg_max_val(T);
+	  infTy_ = ntg_max_val(T);
 	}
       else
 	{
@@ -260,7 +260,7 @@ namespace oln {
 		  continue;
 		if (imap_[q] + ch_.fwd.w(i) < min)
 		  {
-		    nearest_point_map[p] = nearest_point_map[q];		    
+		    nearest_point_map[p] = nearest_point_map[q];
 		    min = imap_[q] + ch_.fwd.w(i);
 		  }
 	      }
@@ -293,9 +293,9 @@ namespace oln {
     }
 
     template <class T, class T2>
-    const image2d<T>& dmap<T, T2>::imap() const 
-    { 
-      return imap_; 
+    const image2d<T>& dmap<T, T2>::imap() const
+    {
+      return imap_;
     }
 
     template <class T, class T2>

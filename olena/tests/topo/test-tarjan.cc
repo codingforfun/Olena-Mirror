@@ -1,6 +1,6 @@
-#include <ntg/int.hh>
+#include <ntg/bin.hh>
 #include <oln/basics2d.hh>
-#include <oln/topo/dmap.hh>
+#include <oln/topo/tarjan/flat-zone.hh>
 
 #include <iostream>
 
@@ -9,7 +9,7 @@
 
 using namespace oln;
 using namespace ntg;
-using namespace topo;
+using namespace topo::tarjan;
 
 #define OK_OR_FAIL				\
       std::cout << "OK" << std::endl;		\
@@ -24,15 +24,14 @@ check()
 {
   bool fail = false;
 
-  chamfer<int> ch = cityblock();
+  typedef image2d<bin> input_t;
 
-  image2d<int_u8> src = load(rdata("lena256.pgm"));
+  input_t src = load(rdata("object"));
 
-  dmap<int_u8, int> d(src.size(), ch);
+  flat_zone<input_t> cc(src);
 
-  d.compute(src);
-
-  std::cout << "OK" << std::endl;
+  if (cc.nlabels() == 79)
+    OK_OR_FAIL;
 
   return fail;
 }

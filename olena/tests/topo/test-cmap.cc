@@ -8,10 +8,10 @@
 #include "data.hh"
 
 using namespace oln;
-using namespace topo;
-using namespace tarjan;
-using namespace inter_pixel;
-using namespace combinatorial_map;
+using namespace ntg;
+using namespace topo::tarjan;
+using namespace topo::inter_pixel;
+using namespace topo::combinatorial_map;
 
 #define OK_OR_FAIL				\
       std::cout << "OK" << std::endl;		\
@@ -26,21 +26,17 @@ check()
 {
   bool fail = false;
 
-  typedef image2d<ntg::int_u8> input_t;
+  typedef image2d<int_u8> input_t;
 
   input_t src = load(rdata("test-cmap"));
 
-  std::cerr << "building inter pixel...";
   interpixel<input_t> ip(src);
-  std::cerr << "OK" << std::endl;
 
-  std::cerr << "building connected components...";
   flat_zone<input_t> cc(src);
-  std::cerr << "OK" << std::endl;
 
-  std::cerr << "building cmap...";
   cmap<input_t> cm(src, ip, cc);
-  std::cerr << "OK" << std::endl;
+
+  std::cout << "OK" << std::endl;
 
   return fail;
 }

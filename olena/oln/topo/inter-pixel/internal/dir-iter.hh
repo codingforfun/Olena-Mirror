@@ -85,7 +85,7 @@ namespace oln {
 	  typedef typename dir_traits<Dim>::ret dir_t;
 	  typedef typename iter_traits<_dir_iter<Dim, Exact> >::super_type super_type;
 
-	  _dir_iter() : super_type(), _cur(this->exact()->begin()), _cnt(0) {}
+	  _dir_iter() : super_type(), _cur(this->exact().begin()), _cnt(0) {}
 	  _dir_iter(dir_t i) : super_type(), _cur(i), _cnt(0) {}
 
 	public:
@@ -102,7 +102,7 @@ namespace oln {
 	  void operator++()
 	  {
 	    precondition(_cnt != Dim * 2);
-	    _cur = this->exact()->next();
+	    _cur = this->exact().next();
 	    ++_cnt;
 	  }
 
@@ -117,13 +117,13 @@ namespace oln {
 
 	  mlc::_begin operator=(mlc::_begin b)
 	  {
-	    _cur = this->exact()->begin();
+	    _cur = this->exact().begin();
 	    _cnt = 0;
 	    return b;
 	  }
 	  mlc::_end operator=(mlc::_end e)
 	  {
-	    _cur = this->exact()->begin();
+	    _cur = this->exact().begin();
 	    _cnt = Dim * 2;
 	    return e;
 	  }

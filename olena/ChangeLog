@@ -1,3 +1,16 @@
+2003-07-31  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
+
+	* olena/oln/topo/dmap.hxx,
+	olena/oln/topo/inter-pixel/internal/dir-iter.hh: Fix bugs.
+
+	* olena/tests/topo/test-tarjan.cc: New test.
+
+	* olena/tests/topo/Makefile.am: Adjust.
+
+	* olena/tests/topo/test-inter-pixel.cc,
+	olena/tests/topo/test-cmap.cc, olena/tests/topo/test-dmap.cc:
+	Change outer stream cerr to cout.
+
 2003-07-30  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
 	* tests/utils/timer.cc, olena/tests/utils/stat.cc,
