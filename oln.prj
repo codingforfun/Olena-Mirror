@@ -1,14 +1,16 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_3 5)
-(Parent-Version oln 0_3 4)
-(Version-Log "2002-02-11  Jerome Darbon  <jerome@epita.fr>
+(Project-Version oln 0_3 6)
+(Parent-Version oln 0_3 5)
+(Version-Log "
 
-	* img/lena128.pgm: Add it.
+
+ 
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 11 Feb 2002 17:40:30 +0100")
+(Checkin-Time "Mon, 11 Feb 2002 17:45:26 +0100")
 (Checkin-Login jerome)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
@@ -328,6 +330,11 @@
 ;; to version 0_3.1(w), by adl:
 
   (demo/test-reconstruction.cc (oln/e/22_test-recon 1.1 644))
+
+;; Files added by populate at Mon, 11 Feb 2002 17:44:42 +0100,
+;; to version 0_3.5(w), by jerome:
+
+  (img/lena128.pgm (oln/e/23_lena128.pg 1.1 644))
 )
 (Merge-Parents)
 (New-Merge-Parents)

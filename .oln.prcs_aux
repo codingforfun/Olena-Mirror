@@ -182,6 +182,7 @@
 (src/io/base.hh 3734 1009823825 b/20_base.hh 1.1)
 (src/core/structelt.hh 1792 1009823825 c/25_structelt. 1.1)
 (src/core/internal/fake.hh 1888 1009823825 d/17_fake.hh 1.1)
+(img/lena128.pgm 16442 1013445926 e/23_lena128.pg 1.1)
 (src/value/yiq.hh 1911 1009823825 b/29_yiq.hh 1.1)
 (src/value/int_u.hh 6745 1009823825 b/42_int_u.hh 1.1)
 (Makefile.am 262 1011005992 2_Makefile.a 1.5)
