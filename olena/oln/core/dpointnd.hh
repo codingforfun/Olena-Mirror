@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -38,14 +38,15 @@
 namespace oln {
 
   // fwd decl
-  template< unsigned Dim, class Inferior >
+  template< unsigned Dim, class Exact >
   class pointnd;
 
-  template< unsigned Dim, class Inferior = mlc::bottom >
-  class dpointnd : public dpoint< dpointnd< Dim, Inferior > >
+  template< unsigned Dim, class Exact = mlc::final >
+  class dpointnd : public dpoint< typename mlc::exact_vt<dpointnd<Dim, Exact>, Exact>::ret>
   {
   public:
-    typedef Inferior inferior;
+  
+    typedef dpoint< typename mlc::exact_vt<dpointnd<Dim, Exact>, Exact>::ret > super;
     typedef dpointnd self;
 
     enum { dim = Dim };
@@ -54,8 +55,8 @@ namespace oln {
     {
     }
 
-    template< class I >
-    explicit dpointnd(const pointnd< Dim, I >& p)
+    template< class E >
+    explicit dpointnd(const pointnd< Dim, E >& p)
     {
       for (unsigned i = 0; i < dim; ++i)
 	nth(i) = p.nth(i);
@@ -100,7 +101,7 @@ namespace oln {
     {
       std::ostringstream out;
       out << "dpointnd<" << dim << ","
-	  << ntg::typename_of<Inferior>() << ">" << std::ends;
+	  << ntg::typename_of<Exact>() << ">" << std::endl;
       return out.str();
     }
 
@@ -110,11 +111,11 @@ namespace oln {
 
   namespace internal
   {
-    template<unsigned Dim, class Inferior>
-    struct default_less< dpointnd<Dim, Inferior> >
+    template<unsigned Dim, class Exact>
+    struct default_less< dpointnd<Dim, Exact> >
     {
-      bool operator()(const dpointnd<Dim, Inferior>& l,
-		      const dpointnd<Dim, Inferior>& r) const
+      bool operator()(const dpointnd<Dim, Exact>& l,
+		      const dpointnd<Dim, Exact>& r) const
       {
 	for (unsigned i = 0; i < dim; ++i)
 	  if (l.nth(i) < r.nth(i))

@@ -1,5 +1,102 @@
+2003-03-14  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/arith/tests/min1: Remove useless namespace prefixes.
+
+2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/check/Makefile.flags, tests/sanity/Makefile.am: Remove
+          useless flags.
+
+	* Makefile.am: Adjust consequently.
+
+	* config/oln.m4, config/oln-local.m4: Move into ../config/.
+
+2003-03-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/core/internal/window.hh: Add missing std:: prefix to find.
+
+2003-03-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/morpho/attribute_closing_opening.hh: Fix example.
+
+2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* oln/Makefile.am (nobase_oln_HEADERS): Adjust.
+
+	* oln/core/typeadj.hh: Move into $top_srcdir/metalic/mlc/.
+	
+	* Merge from 2003paradigm: 
+
+	2003-02-28  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
+	* oln/core/bkd_iter3d.hh, oln/core/fwd_iter1d.hh,
+	* oln/core/fwd_iter2d.hh, oln/core/fwd_iter3d.hh,
+	* oln/core/internal/iter1d.hh, oln/core/internal/iter2d.hh,
+	* oln/core/internal/iter3d.hh, oln/core/iter.hh:
+	Repare iterators hierarchy 
+	(classes iter, fwd_iter and bkd_iter never linked before).
+
+	* oln/core/type.hh: 
+	Prepare "FindExact" variadic macros arrival.
+
+	2003-02-28  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/type.hh: 
+	Rewrite existing tools and introduce new Exact-related tools.
+	
+	* oln/convert/bound.hh, oln/convert/colorconv.hh,
+	* oln/convert/conversion.hh, oln/convert/force.hh,
+	* oln/convert/nrgbhsi.hh, oln/convert/nrgbhsl.hh,
+	* oln/convert/nrgbhsv.hh, oln/convert/nrgbxyz.hh,
+	* oln/convert/nrgbyiq.hh, oln/convert/nrgbyuv.hh,
+	* oln/convert/rgbnrgb.hh, oln/convert/rgbxyz.hh,
+	* oln/convert/stretch.hh, oln/core/bkd_iter1d.hh,
+	* oln/core/bkd_iter2d.hh, oln/core/bkd_iter3d.hh,
+	* oln/core/dpoint1d.hh, oln/core/dpoint2d.hh, oln/core/dpoint3d.hh,
+	* oln/core/dpoint.hh, oln/core/dpointnd.hh, oln/core/fwd_iter1d.hh,
+	* oln/core/fwd_iter2d.hh, oln/core/fwd_iter3d.hh,
+	* oln/core/image1d.hh, oln/core/image1d_size.hh,
+	* oln/core/image2d.hh, oln/core/image2d_size.hh,
+	* oln/core/image3d.hh, oln/core/image3d_size.hh, oln/core/image.hh,
+	* oln/core/imagend_size.hh, oln/core/image_size.hh,
+	* oln/core/internal/image1d.hh, oln/core/internal/image2d.hh,
+	* oln/core/internal/image3d.hh, oln/core/internal/iter1d.hh,
+	* oln/core/internal/iter2d.hh, oln/core/internal/iter3d.hh,
+	* oln/core/internal/neighborhood.hh,
+	* oln/core/internal/real_image1d.hh,
+	* oln/core/internal/real_image2d.hh,
+	* oln/core/internal/real_image3d.hh, oln/core/internal/window.hh,
+	* oln/core/internal/w_window.hh, oln/core/iter.hh,
+	* oln/core/neighborhood1d.hh, oln/core/neighborhood2d.hh,
+	* oln/core/neighborhood3d.hh, oln/core/neighborhood.hh,
+	* oln/core/point1d.hh, oln/core/point2d.hh, oln/core/point3d.hh,
+	* oln/core/point.hh, oln/core/pointnd.hh, oln/core/pred_image.hh,
+	* oln/core/regular_image.hh, oln/core/structelt.hh,
+	* oln/core/typeadj.hh, oln/core/window1d.hh, oln/core/window2d.hh,
+	* oln/core/window3d.hh, oln/core/window.hh, oln/core/w_window1d.hh,
+	* oln/core/w_window2d.hh, oln/core/w_window3d.hh,
+	* oln/core/w_window.hh, oln/level/threshold.hh, oln/utils/copy.hh:
+	Change to Exact hierarchy.
+
+	2003-02-25  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/type.hh: Change to Exact hierarchy tools.
+
+
 2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* Merge from cleanup: 
+	
+	2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/Makefile.am (nobase_oln_HEADERS): Adjust.
+
+	* oln/morpho/attribute_union_find.hh: Fix includes and
+          namespaces.
+
+	2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* oln/arith/internal/opdecls.hh, oln/arith/logic.hh,
 	oln/convert/bound.hh, oln/convert/colorconv.hh,
 	oln/convert/conversion.hh, oln/convert/force.hh,
@@ -9,63 +106,58 @@
 	oln/convert/rgbnrgb.hh, oln/convert/rgbxyz.hh,
 	oln/convert/stretch.hh, oln/convol/convolution.hh,
 	oln/convol/fast_gaussian.hxx,
-	oln/convol/fast_gaussian_coefficient.hh,
-	oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
-	oln/core/bkd_iter3d.hh, oln/core/box.hxx, oln/core/dpoint.hh,
-	oln/core/dpoint1d.hh, oln/core/dpoint2d.hh,
+	oln/convol/fast_gaussian_coefficient.hh, oln/core/bkd_iter1d.hh,
+	oln/core/bkd_iter2d.hh, oln/core/bkd_iter3d.hh, oln/core/box.hxx,
+	oln/core/dpoint.hh, oln/core/dpoint1d.hh, oln/core/dpoint2d.hh,
 	oln/core/dpoint3d.hh, oln/core/dpointnd.hh,
 	oln/core/fwd_iter1d.hh, oln/core/fwd_iter2d.hh,
-	oln/core/fwd_iter3d.hh, oln/core/generate.hh,
-	oln/core/image.hh, oln/core/image1d.hh,
-	oln/core/image1d_size.hh, oln/core/image2d.hh,
-	oln/core/image2d_size.hh, oln/core/image3d.hh,
-	oln/core/image3d_size.hh, oln/core/image_size.hh,
-	oln/core/imagend_size.hh, oln/core/internal/image1d.hh,
-	oln/core/internal/image2d.hh, oln/core/internal/image3d.hh,
-	oln/core/internal/iter1d.hh, oln/core/internal/iter2d.hh,
-	oln/core/internal/iter3d.hh,
+	oln/core/fwd_iter3d.hh, oln/core/generate.hh, oln/core/image.hh,
+	oln/core/image1d.hh, oln/core/image1d_size.hh,
+	oln/core/image2d.hh, oln/core/image2d_size.hh,
+	oln/core/image3d.hh, oln/core/image3d_size.hh,
+	oln/core/image_size.hh, oln/core/imagend_size.hh,
+	oln/core/internal/image1d.hh, oln/core/internal/image2d.hh,
+	oln/core/internal/image3d.hh, oln/core/internal/iter1d.hh,
+	oln/core/internal/iter2d.hh, oln/core/internal/iter3d.hh,
 	oln/core/internal/neighborhood.hh,
 	oln/core/internal/real_image1d.hh,
 	oln/core/internal/real_image2d.hh,
-	oln/core/internal/real_image3d.hh,
-	oln/core/internal/w_window.hh, oln/core/internal/window.hh,
-	oln/core/iter.hh, oln/core/neighborhood.hh,
-	oln/core/neighborhood1d.hh, oln/core/neighborhood2d.hh,
-	oln/core/neighborhood3d.hh, oln/core/point.hh,
-	oln/core/point1d.hh, oln/core/point2d.hh, oln/core/point3d.hh,
-	oln/core/pointnd.hh, oln/core/pred_image.hh,
+	oln/core/internal/real_image3d.hh, oln/core/internal/w_window.hh,
+	oln/core/internal/window.hh, oln/core/iter.hh,
+	oln/core/neighborhood.hh, oln/core/neighborhood1d.hh,
+	oln/core/neighborhood2d.hh, oln/core/neighborhood3d.hh,
+	oln/core/point.hh, oln/core/point1d.hh, oln/core/point2d.hh,
+	oln/core/point3d.hh, oln/core/pointnd.hh, oln/core/pred_image.hh,
 	oln/core/regular_image.hh, oln/core/structelt.hh,
 	oln/core/w_window.hh, oln/core/w_window1d.hh,
 	oln/core/w_window2d.hh, oln/core/w_window3d.hh,
-	oln/core/window.hh, oln/core/window1d.hh,
-	oln/core/window2d.hh, oln/core/window3d.hh,
-	oln/core/winiter.hh, oln/core/winneighb.hh,
+	oln/core/window.hh, oln/core/window1d.hh, oln/core/window2d.hh,
+	oln/core/window3d.hh, oln/core/winiter.hh, oln/core/winneighb.hh,
 	oln/io/pnm_read.hxx, oln/io/pnm_read3d.hxx,
 	oln/io/pnm_read_common.hxx, oln/io/pnm_write.hxx,
 	oln/io/pnm_write3d.hxx, oln/io/pnm_write_common.hxx,
-	oln/io/se_neighborhood.hxx, oln/io/se_window.hxx,
-	oln/level/cc.hh, oln/level/connected.hh, oln/level/invert.hh,
+	oln/io/se_neighborhood.hxx, oln/io/se_window.hxx, oln/level/cc.hh,
+	oln/level/connected.hh, oln/level/invert.hh,
 	oln/level/threshold.hh, oln/math/macros.hh,
 	oln/morpho/closing.inc, oln/morpho/dilation.hh,
 	oln/morpho/erosion.hh, oln/morpho/extrema.hxx,
 	oln/morpho/extrema_killer.hh, oln/morpho/fast_morpho.hxx,
-	oln/morpho/geodesic_dilation.hh,
-	oln/morpho/geodesic_erosion.hh, oln/morpho/hit_or_miss.inc,
-	oln/morpho/opening.inc, oln/morpho/reconstruction.hh,
-	oln/morpho/stat.hh, oln/morpho/thickening.inc,
-	oln/morpho/thinning.inc, oln/morpho/watershed.hxx,
-	oln/topo/dmap.hh, oln/topo/dmap.hxx, oln/transforms/dwt.hh,
-	oln/transforms/fft.hh, oln/transforms/wavelet_coeffs.hh,
-	oln/utils/copy.hh, oln/utils/histogram.hh, oln/utils/stat.hh,
-	tests/arith/tests/min1, tests/convert/convcomp.hh,
-	tests/convol/slow_sum_2d_1.cc, tests/convol/slow_sum_2d_2.cc,
-	tests/convol/sobel_gradient.cc, tests/io/2d.cc,
-	tests/io/loadsave.hh, tests/morpho/edoc.cc,
+	oln/morpho/geodesic_dilation.hh, oln/morpho/geodesic_erosion.hh,
+	oln/morpho/hit_or_miss.inc, oln/morpho/opening.inc,
+	oln/morpho/reconstruction.hh, oln/morpho/stat.hh,
+	oln/morpho/thickening.inc, oln/morpho/thinning.inc,
+	oln/morpho/watershed.hxx, oln/topo/dmap.hh, oln/topo/dmap.hxx,
+	oln/transforms/dwt.hh, oln/transforms/fft.hh,
+	oln/transforms/wavelet_coeffs.hh, oln/utils/copy.hh,
+	oln/utils/histogram.hh, oln/utils/stat.hh, tests/arith/tests/min1,
+	tests/convert/convcomp.hh, tests/convol/slow_sum_2d_1.cc,
+	tests/convol/slow_sum_2d_2.cc, tests/convol/sobel_gradient.cc,
+	tests/io/2d.cc, tests/io/loadsave.hh, tests/morpho/edoc.cc,
 	tests/morpho/extrkiller.cc, tests/morpho/reconstruction.cc,
 	tests/transforms/dwt.cc, tests/transforms/fft.cc: Update
 	namespaces.
 
-2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/morpho/stat.hh: Remove useless includes.
 
@@ -75,12 +167,12 @@
 
 	* oln/Makefile.am: Adjust consequently.
 
-2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* Makefile.am: Move header list ...
 	* oln/Makefile.am: ... here.
 	
-2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/basics.hh, oln/core/internal/iter1d.hh,
 	oln/core/internal/iter2d.hh, oln/core/internal/iter3d.hh,
@@ -94,7 +186,7 @@
 	* oln/core/objs.hh, oln/core/internal/objs.hxx: Move and merge into
 	$top_srcdir/metalic/mlc/objs.hh.
 	
-2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/core/type.hh, oln/core/contract.hh: Move into
 	$top_srcdir/metalic/mlc/.
@@ -123,32 +215,32 @@
 	oln/core/neighborhood.hh, oln/core/point.hh,
 	oln/core/pred_image.hh, oln/core/structelt.hh: Likewise.
 
-2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 	
 	* oln/core/generate.hh: Do not use wrap workaround (for g++-2.95
 	compatibility) anymore. Update includes.
 
-2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* config/oln.m4, config/oln-local.m4, tests/check/Makefile.am,
 	tests/check/Makefile.flags, tests/check/Makefile.check: Adapt to
 	new oln location.
 
-2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 	
 	* tests/arith/tests/min1: Add missing include.
 
 	* oln/convert/nrgbhsi.hh: Likewise.
 	
-2003-03-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-03-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/io/pnm3d.hh: Add missing include.
 
-2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/types: Move into ../integre/tests/.
 
-2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/check/defs.in, tests/check/Makefile.am,
 	tests/check/Makefile.check, tests/check/Makefile.flags: New
@@ -177,7 +269,7 @@
 	* tests/arith/runtests, tests/types/runtests,
 	tests/sanity/includes.test: Likewise.
 	
-2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/types/all.hh, oln/types/behaviour.hh, oln/types/bin.hh,
 	oln/types/builtins_properties.hh, oln/types/cast.hh,
@@ -239,20 +331,20 @@
 
 	* conf/configure.ac: Likewise.
 
-2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 	
 	* tests/sanity/includes.test: Fix defs path.
 
-2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+	2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* Makefile.am (nobase_include_HEADERS): Remove references to
 	oln/meta/. (SUBDIRS): Minor and _temporary_ tweak.
 
-2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+	2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* tests/meta: Rename to ../metalic/tests/array.
 
-2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+	2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* tests/check/Makefile.am, tests/check/Makefile.check,
 	tests/check/Makefile.flags, tests/check/Makefile.in,
@@ -273,7 +365,7 @@
 	here instead of within the shell script.
 	* tests/types/Makefile.am (check-local): Likewise.
 	
-2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+	2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* tests/check/Makefile.am (AM_CPPFLAGS): Minor fix.
 
@@ -308,7 +400,12 @@
 
 	* tests/meta/gen_test_utils/prelude, tests/meta/test_array1d.cc,
 	tests/meta/test_array2d.cc, tests/meta/test_array3d.cc: Likewise.
+	
+2003-03-04  Jerome Darbon  <jerome@epita.fr>
 
+	* oln/morpho/attribute_closing_opening.hh: New file.
+	* oln/morpho/attribute_union_find.hh: New file.
+	
 2003-02-23  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* config/oln.m4: Change default flags for icc.
@@ -327,9 +424,9 @@
 2003-02-11  Raphaël Poss  <raph@lrde.epita.fr>
 
 	(Changes from 0.7)
-	
+
 	* oln/Makefile.am: Remove file.
-	
+
 	* config/oln.m4 (OLN_VERSION, OLN_MAJOR_VERSION): Put under
 	version control.
 
@@ -343,7 +440,7 @@
 
 	* conf/compilers.def: Do not test for GCC 2 any more.
 
-	* tests/check/defs.in (AC_SHELL): Add variable.  
+	* tests/check/defs.in (AC_SHELL): Add variable.
 	* tests/types/runtests, tests/arith/runtests: Use $AC_SHELL.
 
 2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
@@ -355,11 +452,11 @@
 	* tests/morpho/Makefile.am (CXXFLAGS): Remove optimization
 	adjustement, since all tests are compiled with optimization by
 	default.
-		
+
 	* tests/arith/runtests (rundir): Move more stuff to runtime
 	subdirectories.
 	* tests/types/runtests (rundir): Likewise.
-	
+
 	* config/oln.m4: Simplify. Use -felide-constructors -funroll-loops
 	for GCC 2.95 optimizations.
 
@@ -476,7 +573,7 @@
 2003-01-22  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* oln.m4: Quote macro names. Merge oln-version.m4 and
-	component.m4.  
+	component.m4.
 	* Makefile.am (ACLOCAL_AMFLAGS, CONFIGURE_DEPENDENCIES): Simplify
 	accordingly.
 
@@ -579,7 +676,7 @@
 	tests. Complete AC_CXX_FLAGS (renamed from AC_CXX_WARNINGS).
 	* tests/check/data.cc: use OLN_IMG_DIR and OLN_IMG_AUX_DIR instead
 	of RDATADIR and WDATADIR.
-	
+
 	* oln/Makefile.am (EXTRA_DIST): Mention
 	`config/pconf-hh.in'. FIXME: this should not be necessary since
 	configure.ac mentions in it AC_CONFIG_FILES. To investigate.
@@ -607,7 +704,7 @@
 	* tests/check/Makefile.flags (AM_CPPFLAGS): Adjust directories.
 	* tests/check/Makefile.check: Adjust directories.
 	* tests/configure.ac: Remove.
-	
+
 	* configure.ac: Merge tests/configure.ac. Use AC_CONFIG_FILES
 	instead of AC_CONFIG_HEADERS for pconf.inc.
 	* tests/defs.in (CXXFLAGS): Remove warning options (added by "configure")
@@ -628,7 +725,7 @@
 	problems.
 	* tests/io/loadsave.hh: Remove static keyword before function
 	definitions.
-	
+
 	* tests/arith/runtest, tests/types/runtests, tests/defs.in: Add
 	LDFLAGS support.
 	* tests/check/Makefile.flags, tests/morpho/Makefile.am: Allow
@@ -914,10 +1011,10 @@
 	* Makefile.am (m4datadir, dist_m4data_DATA): Add for
 	oln.m4. (EXAMPLE_IMGS, dist_pkgdata_DATA): Add for images.
 
-	* oln/Makefile.am (pkginclude_HEADERS): Use instead of 
+	* oln/Makefile.am (pkginclude_HEADERS): Use instead of
 	nobase_inst_HEADERS.
 
-	* configure.ac: The testsuite is now optional. Depend again on 
+	* configure.ac: The testsuite is now optional. Depend again on
 	Automake 1.7.1.
 
 	* ChangeLog: Create. Old version moves to ../attic.

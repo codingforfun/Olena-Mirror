@@ -7,7 +7,7 @@ AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_OPTIMIZE) $(ZLIB_CXXFLAGS)
 bin_PROGRAMS = oln-mosaic-u8 oln-mosaic-u16
 dist_man_MANS = oln-mosaic-u8.1 oln-mosaic-u16.1
 
-INCLUDES = -I$(srcdir)/../lib -I$(OLN_LOCAL_SRC) -I$(OLN_LOCAL_BUILD)
+INCLUDES = -I$(srcdir)/../lib
 LDADD = ../lib/libolntools.a
 
 oln_mosaic_u8_SOURCES = mosaic.cc

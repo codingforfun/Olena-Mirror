@@ -1,6 +1,16 @@
+2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/Makefile.am: Adjust with components.
+
+2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* tests/check/Makefile.am: Remove useless flags.
+
 2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* ChangeLog, mlc/array/1d.hh, mlc/array/1d.hxx,
+	* mlc/typeadj.hh: Update namespaces and header guards.
+
+	* mlc/array/1d.hh, mlc/array/1d.hxx,
 	mlc/array/2d.hh, mlc/array/2d.hxx, mlc/array/3d.hh,
 	mlc/array/3d.hxx, mlc/array/all.hh, mlc/array/nd.hh,
 	mlc/array/objs.hh, mlc/bool.hh, mlc/cmp.hh, mlc/contract.hh,

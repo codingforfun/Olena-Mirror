@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,7 +30,7 @@
 
 # include <oln/core/image.hh>
 # include <oln/core/iter.hh>
-# include <oln/core/typeadj.hh>
+# include <mlc/typeadj.hh>
 # include <oln/core/macros.hh>
 
 namespace oln {
@@ -41,7 +41,7 @@ namespace oln {
   typename AdaptableBinaryFun::result_type
   fold(AdaptableBinaryFun f,
        // f could return a reference or a const.  Make sure VAL is assignable.
-       typename typeadj<
+       typename mlc::typeadj<
          typename AdaptableBinaryFun::result_type>::mutable_val val,
        const image<I_>& _input)
   {
@@ -64,7 +64,7 @@ namespace oln {
     Iter(I) p(input);
     p = begin;
     // f could return a reference or a const, so make sure VAL is assignable.
-    typename typeadj<
+    typename mlc::typeadj<
       typename AdaptableBinaryFun::result_type>::mutable_val val
         = input[p];
     for_all_remaining(p)

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,7 +35,7 @@ namespace oln {
 
   namespace internal {
 
-    template <unsigned Dim, class Inferior = mlc::bottom>
+    template <unsigned Dim, class Exact>
     class _neighborhood :
       /* The inheritence is quite tricky here.
 
@@ -45,13 +45,12 @@ namespace oln {
 	 neighborhood<> instead of window<> using the third parameter.
 	 */
       public _window< Dim,
-		      _neighborhood< Dim,
-				     Inferior >,
-		      neighborhood >
+		      Exact,
+		      oln::neighborhood >
     {
     public:
-      typedef Inferior inferior;
-      typedef _window< Dim, _neighborhood< Dim, Inferior >,
+
+      typedef _window< Dim, Exact,
 		       oln::neighborhood > super;
 
       _neighborhood() : super() {}
@@ -59,7 +58,7 @@ namespace oln {
 
       static std::string name()
       {
-	return std::string("_neighborhood<") + Inferior::name() + ">";
+	return std::string("_neighborhood<") + Exact::name() + ">";
       }
     };
 

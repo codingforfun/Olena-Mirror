@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -40,11 +40,11 @@ namespace oln {
 
   namespace internal {
 
-    template <unsigned Dim, class Weight, class Inferior = mlc::bottom>
-    class _w_window : public w_window< _w_window< Dim, Weight, Inferior > >
+    template <unsigned Dim, class Weight, class Exact>
+    class _w_window : public w_window< Exact >
     {
     public:
-      typedef Inferior inferior;
+ 
       enum { dim = Dim };
       typedef typename point_for_dim<Dim>::ret      point;
       typedef typename dpoint_for_dim<Dim>::ret     dpoint;
@@ -80,7 +80,7 @@ namespace oln {
       static std::string name()
       {
 	return std::string("_w_window<") + mlc::name_of<dpoint>() + "," +
-	  mlc::name_of<Weight>() + "," + inferior::name() + ">" ;
+	  mlc::name_of<Weight>() + "," + Exact::name() + ">" ;
       }
 
     protected:

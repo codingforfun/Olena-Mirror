@@ -37,19 +37,20 @@
 
 namespace oln {
 
+  using ntg::bin;
+  using ntg::optraits;
 
   // client can use image3d; instances are real images, that is,
   // images with data ---conversely to proxy images
 
 
-  template<class T, class Inferior = mlc::bottom>
-  class image3d : public internal::_real_image3d< T, image3d<T,Inferior> >
+  template<class T, class Exact = mlc::final>
+  class image3d : public internal::_real_image3d< T, typename mlc::exact_vt<image3d<T, Exact>, Exact>::ret>
   {
   public:
 
-    typedef Inferior inferior;
-    typedef image3d<T,Inferior> self;
-    typedef internal::_real_image3d<T,self> super;
+    typedef image3d<T, Exact> self;
+    typedef internal::_real_image3d< T, typename mlc::exact_vt<image3d<T, Exact>, Exact>::ret> super;
 
     image3d() :
       super()
@@ -95,7 +96,7 @@ namespace oln {
       return
 	std::string("image3d<")
 	+ T::name() + ","
-	+ Inferior::name() + ">";
+	+ Exact::name() + ">";
     }
 
     template<class U>
@@ -112,21 +113,19 @@ namespace oln {
 
   // specialization for bin data
 
-  // image3d<ntg::bin> is also a pred_image, that is, an image type that
+  // image3d<bin> is also a pred_image, that is, an image type that
   // can be used as a predicate having the structure of an image
 
 
-  template<class Inferior>
-  class image3d<ntg::bin,Inferior> : 
-    public internal::_real_image3d<ntg::bin, image3d<ntg::bin,Inferior> >,
-		     public pred_image< image3d<ntg::bin,Inferior> >
+  template<class Exact>
+  class image3d<bin, Exact> : public internal::_real_image3d< bin, typename mlc::exact_vt<image3d<bin, Exact>, Exact>::ret >,
+			      public pred_image<typename mlc::exact_vt<image3d<bin, Exact>, Exact>::ret >
   {
   public:
 
-    typedef Inferior inferior;
-    typedef image3d<ntg::bin,Inferior> self;
-    typedef internal::_real_image3d<ntg::bin,self> super;
-    typedef pred_image< image3d<ntg::bin,Inferior> > super_pred;
+    typedef image3d<bin, Exact> self;
+    typedef internal::_real_image3d< bin, typename mlc::exact_vt<image3d<bin, Exact>, Exact>::ret > super;
+    typedef pred_image<typename mlc::exact_vt<image3d<bin, Exact>, Exact>::ret > super_pred;
 
     image3d() :
       super()
@@ -171,8 +170,8 @@ namespace oln {
     {
       return
 	std::string("image3d<")
-	+ ntg::optraits<ntg::bin>::name() + ","
-	+ Inferior::name() + ">";
+	+ optraits<bin>::name() + ","
+	+ Exact::name() + ">";
     }
 
     template<class U>

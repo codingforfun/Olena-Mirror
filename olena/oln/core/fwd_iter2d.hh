@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,19 +33,21 @@
 
 namespace oln {
 
-  template<class Inferior = mlc::bottom>
-  class fwd_iter2d : public internal::_iter2d< fwd_iter2d<Inferior> >
+  template<class Exact = mlc::final>
+  class fwd_iter2d : public internal::_iter2d<typename mlc::exact_vt<fwd_iter2d<Exact>, Exact>::ret>,
+                     public fwd_iter<typename mlc::exact_vt<fwd_iter2d<Exact>, Exact>::ret>
   {
   public:
-    typedef Inferior inferior;
-    typedef internal::_iter2d<fwd_iter2d<Inferior> > super;
+
+    typedef internal::_iter2d<typename mlc::exact_vt<fwd_iter2d<Exact>, Exact>::ret> super;
+    typedef fwd_iter<typename mlc::exact_vt<fwd_iter2d<Exact>, Exact>::ret> super2;
 
     enum { dim = 2 };
     typedef point2d point;
 
     template<class Image>
     fwd_iter2d(const Image& ima) :
-      super(ima.size())
+      super(ima.size()), super2()
     {
     }
 
@@ -75,7 +77,7 @@ namespace oln {
       ++_p.row();
     }
 
-    static std::string name() { return "fwd_iter2d"; }
+    static std::string name() { return "fwd_iter2d<" + Exact::name() + ">"; }
 
   };
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -69,10 +69,9 @@ namespace oln {
 	      template<unsigned> class icolor,
 	      unsigned ocomps,
 	      template<unsigned> class ocolor,
-	      class Inferior = mlc::bottom >
-    class color_conversion : public conversion< Inferior >
+	      class Exact = mlc::final >
+    class color_conversion : public conversion< typename mlc::exact_vt<color_conversion<icomps, icolor, ocomps, ocolor, Exact>, Exact>::ret >
     {
-      typedef Inferior inferior;
 
     public:
       template <class T>

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,14 +32,13 @@
 
 namespace oln {
 
-  template<class Inferior = mlc::bottom>
-  struct struct_elt : public mlc::any< struct_elt< Inferior > >
+  template<class Exact>
+  struct struct_elt : public mlc::any< Exact >
   {
-    typedef Inferior inferior;
-
+ 
     static std::string name()
     {
-      return std::string("struct_elt<") + Inferior::name() + ">";
+      return std::string("struct_elt<") + Exact::name() + ">";
     }
 
   protected:

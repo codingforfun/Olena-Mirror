@@ -23,10 +23,32 @@ AC_DEFUN([OLN_PATH_LOCAL],
                     fi])
 ])])
 
+AC_DEFUN([MLC_PATH_LOCAL],
+[ifelse([$1], [], [mlc_cv_local_src=no], [dnl
+    AC_CACHE_CHECK([for Metalic sources in local distribution],
+                   [mlc_cv_local_src],
+	           [mlc_cv_local_src=no
+                    if test -r "$srcdir/$1/mlc/config/system.hh"; then
+                       mlc_cv_local_src="$1"
+                    fi])
+])])
+
+AC_DEFUN([NTG_PATH_LOCAL],
+[ifelse([$1], [], [ntg_cv_local_src=no], [dnl
+    AC_CACHE_CHECK([for Integre sources in local distribution],
+                   [ntg_cv_local_src],
+	           [ntg_cv_local_src=no
+                    if test -r "$srcdir/$1/ntg/config/system.hh"; then
+                       ntg_cv_local_src="$1"
+                    fi])
+])])
+
 # OLN_PATH_USER
 
-# Checks for the location of Olena sources specified with the
-# user with the flag --with-oln.
+# Checks for the location of Olena sources specified with the user
+# with the flag --with-oln.  Currently the same path is used for
+# integre and metalic. This will certainely change when integre and
+# metalic will be distributed separately.
 
 AC_DEFUN([OLN_PATH_USER], 
 [dnl
@@ -88,12 +110,23 @@ AC_DEFUN([OLN_PATH_HEADERS],
   else
     if test "x$oln_cv_local_src" != xno; then
       if test "x$OLN_INCLUDE_DIR" != x ; then
-        AC_MSG_WARN([using $oln_cv_user_hint instead of $OLN_INCLUDE_DIR])
+        AC_MSG_WARN([using $oln_cv_user_src instead of $OLN_INCLUDE_DIR])
       fi
       OLN_INCLUDE_DIR=''
-      OLN_EXTRA_CPPFLAGS="-I$oln_cv_local_src -I$srcdir/$oln_cv_local_src"
+
+      # This is useful for sanity checks.
       OLN_LOCAL_SRC='$(top_srcdir)/'$oln_cv_local_src
       OLN_LOCAL_BUILD='$(top_builddir)/'$oln_cv_local_src
+
+      #
+      OLN_EXTRA_CPPFLAGS="-I$oln_cv_local_src -I$srcdir/$oln_cv_local_src"
+      OLN_LOCAL_CPPFLAGS="-I\$(top_srcdir)/$oln_cv_local_src -I\$(top_builddir)/$oln_cv_local_src"
+
+      MLC_LOCAL_CPPFLAGS="-I\$(top_srcdir)/$mlc_cv_local_src -I\$(top_builddir)/$mlc_cv_local_src"
+      NTG_LOCAL_CPPFLAGS="-I\$(top_srcdir)/$ntg_cv_local_src -I\$(top_builddir)/$ntg_cv_local_src"
+
+      # CPPFLAGS will need local paths.
+      CPPFLAGS="$MLC_LOCAL_CPPFLAGS $NTG_LOCAL_CPPFLAGS $OLN_LOCAL_CPPFLAGS $CPPFLAGS"
       AC_SUBST([OLN_LOCAL_SRC])
       AC_SUBST([OLN_LOCAL_BUILD])
     fi
@@ -556,6 +589,7 @@ AC_DEFUN([AC_WITH_CXX_ZLIB],
 ###
 # $Format: "m4_define([OLN_VERSION], [0.$ProjectMajorVersion$])"$
 m4_define([OLN_VERSION], [0.cleanup])
+m4_define([OLN_VERSION], [0.8])
 m4_define([OLN_CONTACT], [olena-bugs@lrde.epita.fr])
 
 # OLN_COLLECTION([subdirs-variable-name],

@@ -105,7 +105,6 @@ nobase_oln_HEADERS =				\
   core/regular_image.hh				\
   core/structelt.hh				\
   core/traverse.hh				\
-  core/typeadj.hh				\
   core/w_window.hh				\
   core/w_window1d.hh				\
   core/w_window2d.hh				\
@@ -143,6 +142,8 @@ nobase_oln_HEADERS =				\
   level/set_level.hh				\
   level/threshold.hh				\
   math/macros.hh				\
+  morpho/attribute_closing_opening.hh		\
+  morpho/attribute_union_find.hh		\
   morpho/closing.hh				\
   morpho/closing.inc				\
   morpho/dilation.hh				\

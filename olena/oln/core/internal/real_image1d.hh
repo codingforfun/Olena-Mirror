@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -41,14 +41,13 @@ namespace oln {
     // holds data, that is, every 1d image type which is not a proxy.
 
 
-    template<class T, class Inferior = mlc::bottom>
-    class _real_image1d : public _image1d< T, _real_image1d<T,Inferior> >
+    template<class T, class Exact>
+    class _real_image1d : public _image1d< T, Exact >
     {
     public:
 
-      typedef Inferior inferior;
-      typedef _real_image1d<T,Inferior> self;
-      typedef _image1d< T, _real_image1d<T,Inferior> > super;
+      typedef _real_image1d<T, Exact> self;
+      typedef _image1d< T, Exact > super;
 
       // ctors are protected; see below
 
@@ -100,7 +99,7 @@ namespace oln {
 	return
 	  std::string("_real_image1d<")
 	  + T::name() + ","
-	  + Inferior::name() + ">";
+	  + Exact::name() + ">";
       }
 
     protected:

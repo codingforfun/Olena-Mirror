@@ -50,8 +50,6 @@ namespace oln {
       : public color_conversion<3, nrgb_traits,
 				3, xyz_traits, nrgb_to_xyz>
     {
-      typedef mlc::bottom inferior;
-
       template <unsigned qbits>
       color<3, qbits, xyz_traits>
       operator() (const color<3, qbits, nrgb_traits>& v) const
@@ -74,8 +72,6 @@ namespace oln {
       : public color_conversion<3, xyz_traits,
 				3, nrgb_traits, xyz_to_nrgb>
     {
-      typedef mlc::bottom inferior;
-
       template <unsigned qbits>
       color<3, qbits, nrgb_traits>
       operator() (const color<3, qbits, xyz_traits>& v) const
