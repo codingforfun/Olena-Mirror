@@ -39,6 +39,13 @@ namespace type
 {
 
   //
+  //  Useful types
+  //
+  /////////////////
+
+  struct undefined {};
+
+  //
   //  top, bottom, and any
   //
   /////////////////////////

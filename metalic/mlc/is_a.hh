@@ -190,5 +190,6 @@ struct id_ { typedef T ret; };
 
 // FIXME: can we get rid of type::wrap ?
 # define is_a(T, U) type::internal::wrap<typename type::internal::_is_a< id_of_typeform(U) >::check<T, U> >
+# define is_a_(T, U) type::internal::wrap<type::internal::_is_a< id_of_typeform(U) >::check<T, U> >
 
 #endif // ndef OLENA_META_TYPE_HH

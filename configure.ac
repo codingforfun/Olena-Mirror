@@ -39,6 +39,8 @@ AC_CONFIG_FILES([Makefile
                  metalic/tests/Makefile
                  metalic/tests/array/Makefile
                  metalic/tests/check/Makefile
+		 metalic/tests/check/defs
+                 metalic/tests/main/Makefile
 		 olena/Makefile
 		 olena/img/Makefile
 		 olena/oln/Makefile

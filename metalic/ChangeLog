@@ -1,6 +1,28 @@
+2003-03-05  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/main: New directory.
+	* tests/main/Makefile.am, tests/main/runtests: New files.
+
+	* tests/Makefile.am: Adapt consequetly.	
+
+	* tests/check/defs.in: New file.
+	
+	* tests/main/tests/ensure1, tests/main/tests/ensure2,
+	tests/main/tests/ensure3, tests/main/tests/is_a1,
+	tests/main/tests/pow2sup1, tests/main/tests/pow2sup2: New tests.
+	
+2003-03-05  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* mlc/is_a.hh: Add is_a_ macro.
+
 2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* mlc/bool.hh: Improve if_.
+	* mlc/bool.hh: Move undefined type ...
+	* mlc/type.hh: ... here.
+
+2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* mlc/bool.hh: Improve if_.	
 
 	* mlc/math.hh: Do not use ucmp.
 

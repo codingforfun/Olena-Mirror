@@ -48,9 +48,6 @@ namespace oln {
 
     struct false_t;
 
-    // FIXME: Move this elsewhere
-    struct undefined {};
-
     struct true_t  {
       static void is_true() {}
       typedef false_t not_t;

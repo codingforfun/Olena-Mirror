@@ -120,6 +120,4 @@ inline void __FailedCondition( const char* condType,
 
 # endif
 
-
-
 #endif // ! OLENA_CORE_CONTRACT_HH

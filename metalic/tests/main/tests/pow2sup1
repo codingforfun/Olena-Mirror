@@ -1,0 +1,10 @@
+#include <mlc/math.hh>
+
+using namespace oln;
+using namespace meta;
+
+int main()
+{
+  const int i = pow2sup<33>::value; // COMPFAIL
+  return i;
+}

@@ -1,3 +1,3 @@
 ## Process this file through Automake to create Makefile.in -*- Makefile -*-
 
-SUBDIRS = check array
+SUBDIRS = check array main

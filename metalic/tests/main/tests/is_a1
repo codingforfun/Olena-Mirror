@@ -1,0 +1,34 @@
+#include <mlc/bool.hh>
+#include <mlc/is_a.hh>
+
+using namespace oln;
+using namespace meta;
+
+class A {};
+class B : public A {};
+class C : public B {};
+
+template <class E> class T_A {};
+template <class T> class T_B : public T_A<T> {};
+
+template <class T>
+void foo()
+{
+  is_false<is_a(int, bool)::ret>::ensure();
+  is_true<is_a(B, A)::ret>::ensure();
+  is_true<is_a(C, A)::ret>::ensure();
+  is_false<is_a(A, B)::ret>::ensure();
+}
+
+int main()
+{
+  is_false<is_a_(int, bool)::ret>::ensure();
+  is_true<is_a_(B, A)::ret>::ensure();
+  is_true<is_a_(C, A)::ret>::ensure();
+  is_false<is_a_(A, B)::ret>::ensure();
+
+  is_true<is_a_(T_B<int>, T_A)::ret>::ensure();
+  is_false<is_a_(T_A<int>, T_B)::ret>::ensure();
+
+  foo<int>();
+}
