@@ -1,5 +1,9 @@
 2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
 
+	* config/oln.m4: Remove many unnecessary double quotes.
+	* tests/arith/runtests (indir): Likewise.
+	* tests/types/runtests (indir): Likewise.
+
 	* tests/types/runtests: Fix test for $VERBOSE.
 	* tests/arith/runtests: Likewise.
 

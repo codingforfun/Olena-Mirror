@@ -61,22 +61,8 @@ OLN_COLLECTION([OLN_TOP],
                                   [oln_cv_tests_selection=all])dnl
                      ])dnl
       
-      AC_DEFUN([OLN_TESTS], dnl Auxiliary function for test categories selection
-               [AC_CACHE_CHECK([whether to enable tests in `$1'],
-                               [oln_cv_tests_$1],
-                               [oln_cv_tests_$1=no
-                                if test -d "$srcdir/oln/tests/$1"; then
-                                  case "$oln_cv_tests_selection" in
-                                    *all* | *$1* )
-                                        oln_cv_tests_$1=yes
-                                     ;;
-                                  esac
-                                fi])
-                if test x$oln_cv_tests_$1 != xno; then
-                  OLN_TESTS_SUBDIRS="$OLN_TESTS_SUBDIRS $1"
-                  AC_CONFIG_FILES([oln/tests/$1/Makefile])
-                fi])dnl End of OLN_TESTS
 
+      # OLN_TESTS defined in oln-local.m4
       OLN_TESTS([arith])
       OLN_TESTS([convert])
       OLN_TESTS([convol])
@@ -110,13 +96,7 @@ OLN_COLLECTION([OLN_TOP],
 		  [doc/doc/Makefile],
     [dnl Configuration for the manuals directory.
 
-     AC_DEFUN([DOC_CHECK_PROG], dnl Auxiliary function for program checking
-          [AC_CHECK_PROGS([$1], [$2], [$am_aux_dir/missing $2])
-           if test -z "$[]$1"; then
-              oln_cv_build_ref=no
-              AC_MSG_WARN([$2 not found -- cannot build documentation])
-           fi])dnl End of DOC_CHECK_PROG
-
+     # DOC_CHECK_PROG defined in oln-local.m4
      DOC_CHECK_PROG([DVIPS], [dvips])
      DOC_CHECK_PROG([TEXI2DVI], [texi2dvi])
      DOC_CHECK_PROG([GETDEFS], [getdefs])

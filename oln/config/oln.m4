@@ -37,7 +37,7 @@ AC_DEFUN([OLN_PATH_USER],
                      [AC_HELP_STRING([--with-oln=DIR], 
                      [Include directory where Olena is installed (optional)])],
                      [if test -r "$withval/oln/config/system.hh"; then
-		        oln_cv_user_hint="$withval"
+		        oln_cv_user_hint=$withval
 		      fi])])
 ])
 
@@ -53,14 +53,14 @@ AC_DEFUN([_OLN_CHECK_HEADERS],
  AC_LANG_PUSH([C++])
 
  have_olena=yes
- oln_save_CPPFLAGS="$CPPFLAGS"
+ oln_save_CPPFLAGS=$CPPFLAGS
  CPPFLAGS="$OLN_EXTRA_CPPFLAGS $OLN_CPPFLAGS $CPPFLAGS"
  # At this point, we can be in a situation where pconf.hh does not
  # exist _yet_. In that particular case, we need a workaround.
  AC_CHECK_HEADER([oln/config/pconf.hh], [], 
           [CPPFLAGS="$CPPFLAGS -DIGNORE_PCONF_HH"])
  AC_CHECK_HEADER([oln/config/system.hh], [], [have_olena=no])
- CPPFLAGS="$oln_save_CPPFLAGS"
+ CPPFLAGS=$oln_save_CPPFLAGS
 
  AC_LANG_POP([C++])
 ])
@@ -92,8 +92,8 @@ AC_DEFUN([OLN_PATH_HEADERS],
       fi
       OLN_INCLUDE_DIR=''
       OLN_EXTRA_CPPFLAGS="-I$oln_cv_local_src -I$srcdir/$oln_cv_local_src"
-      OLN_LOCAL_SRC='$(top_srcdir)/'"$oln_cv_local_src"
-      OLN_LOCAL_BUILD='$(top_builddir)/'"$oln_cv_local_src"
+      OLN_LOCAL_SRC='$(top_srcdir)/'$oln_cv_local_src
+      OLN_LOCAL_BUILD='$(top_builddir)/'$oln_cv_local_src
       AC_SUBST([OLN_LOCAL_SRC])
       AC_SUBST([OLN_LOCAL_BUILD])
     fi
@@ -149,7 +149,7 @@ AC_DEFUN([OLN_PATH_USER_IMGS],
                     [AC_HELP_STRING([--with-oln-imgs=DIR], 
                     [Directory where Olena images are installed (optional)])],
                     [if test -r "$withval/lena.ppm"; then
-		       oln_cv_user_img_hint="$withval"
+		       oln_cv_user_img_hint=$withval
                      fi])])
 ])
 
@@ -169,15 +169,15 @@ AC_DEFUN([OLN_PATH_IMGS],
      if test "x$OLN_IMG_DIR" != x ; then
        AC_MSG_WARN([using $oln_cv_user_img_hint instead of $OLN_IMG_DIR])
      fi
-     OLN_IMG_DIR="$oln_cv_user_img_hint"
+     OLN_IMG_DIR=$oln_cv_user_img_hint
   else
     if test "x$oln_cv_local_imgs" != xno; then
       if test "x$OLN_IMG_DIR" != x ; then
         AC_MSG_WARN([using local images path instead of $OLN_IMG_DIR])
       fi
       OLN_IMG_DIR=''
-      OLN_LOCAL_IMGS='$(top_srcdir)/'"$oln_cv_local_imgs"
-      OLN_LOCAL_AUX_IMGS='$(top_builddir)/'"$oln_cv_local_imgs"
+      OLN_LOCAL_IMGS='$(top_srcdir)/'$oln_cv_local_imgs
+      OLN_LOCAL_AUX_IMGS='$(top_builddir)/'$oln_cv_local_imgs
       AC_SUBST([OLN_LOCAL_IMGS])
       AC_SUBST([OLN_LOCAL_AUX_IMGS])
     fi
@@ -212,8 +212,8 @@ AC_DEFUN([OLN_TEMPLATE_DEPTH],
   AC_CACHE_CHECK([for C++ template recursion upto $cxx_tdepth levels],
                  [oln_cv_template_flags],
                  [oln_cv_template_flags=direct
-                  oln_save_CPPFLAGS="$CPPFLAGS"
-                  oln_save_CXXFLAGS="$CXXFLAGS"
+                  oln_save_CPPFLAGS=$CPPFLAGS
+                  oln_save_CXXFLAGS=$CXXFLAGS
                   CPPFLAGS="$CPPFLAGS $OLN_CPPFLAGS -DTDEPTH=$cxx_tdepth"
                   CXXFLAGS="$CXXFLAGS $OLN_CXXFLAGS"
                   AC_LINK_IFELSE([template<unsigned n> 
@@ -236,8 +236,8 @@ AC_DEFUN([OLN_TEMPLATE_DEPTH],
                                       { rec<TDEPTH>::ret i = 0; return i; }],
                        [oln_cv_template_flags="-ftemplate-depth-$cxx_tdepth"], 
                        [oln_cv_template_flags=unsupported])])
-                  CPPFLAGS="$oln_save_CPPFLAGS"
-                  CXXFLAGS="$oln_save_CXXFLAGS"])
+                  CPPFLAGS=$oln_save_CPPFLAGS
+                  CXXFLAGS=$oln_save_CXXFLAGS])
 
 
   AC_LANG_POP([C++])
@@ -378,8 +378,8 @@ AC_DEFUN([OLN_MATH_FUNC],
   AC_LANG_PUSH([C++])
   AC_CACHE_CHECK([for flags to enable $1() from C++],
                  [oln_cv_$1_flags],
-                 [oln_save_CPPFLAGS="$CPPFLAGS"
-                  oln_save_CXXFLAGS="$CXXFLAGS"
+                 [oln_save_CPPFLAGS=$CPPFLAGS
+                  oln_save_CXXFLAGS=$CXXFLAGS
 		  CPPFLAGS="$OLN_CPPFLAGS $CPPFLAGS"
 		  CXXFLAGS="$OLN_CXXFLAGS $CXXFLAGS"
                   AC_LINK_IFELSE([@%:@include <cmath>
@@ -390,8 +390,8 @@ AC_DEFUN([OLN_MATH_FUNC],
                                                   int main() { $3 }],
                                        [oln_cv_$1_flags=isodef],
                                        [oln_cv_$1_flags=redef])])
-                  CPPFLAGS="$oln_save_CPPFLAGS"
-                  CXXFLAGS="$oln_save_CXXFLAGS"])
+                  CPPFLAGS=$oln_save_CPPFLAGS
+                  CXXFLAGS=$oln_save_CXXFLAGS])
   if test "x$[]oln_cv_$1_flags" = xredef; then
      OLN_CPPFLAGS="$OLN_CPPFLAGS -DOLN_NEED_$2"
   elif test "x$[]oln_cv_$1_flags" = xisodef; then
@@ -492,16 +492,16 @@ AC_DEFUN([AC_CXX_FLAGS],
    esac
 
    if test "x$CXXFLAGS_OPTIMIZE" = "x"; then
-	CXXFLAGS_OPTIMIZE="$_CXXFLAGS_OPTIMIZE"
+	CXXFLAGS_OPTIMIZE=$_CXXFLAGS_OPTIMIZE
    fi
    if test "x$CXXFLAGS_DEBUG" = "x"; then
-	CXXFLAGS_DEBUG="$_CXXFLAGS_DEBUG"
+	CXXFLAGS_DEBUG=$_CXXFLAGS_DEBUG
    fi
    if test "x$CXXFLAGS_STRICT" = "x"; then
-	CXXFLAGS_STRICT="$_CXXFLAGS_STRICT"
+	CXXFLAGS_STRICT=$_CXXFLAGS_STRICT
    fi
    if test "x$CXXFLAGS_STRICT_ERRORS" = "x"; then
-	CXXFLAGS_STRICT_ERRORS="$_CXXFLAGS_STRICT_ERRORS"
+	CXXFLAGS_STRICT_ERRORS=$_CXXFLAGS_STRICT_ERRORS
    fi
 
    AC_SUBST([CXXFLAGS_DEBUG])
@@ -532,8 +532,8 @@ AC_DEFUN([AC_WITH_CXX_FFTW],
      FFTW_CXXFLAGS="-I${with_fftw}/include"
      FFTW_LDFLAGS="-L${with_fftw}/lib"
    fi
-   oln_save_CXXFLAGS="$CXXFLAGS"
-   oln_save_LDFLAGS="$LDFLAGS"
+   oln_save_CXXFLAGS=$CXXFLAGS
+   oln_save_LDFLAGS=$LDFLAGS
    CXXFLAGS="$CXXFLAGS $FFTW_CXXFLAGS"
    LDFLAGS="$LDFLAGS $FFTW_LDFLAGS"
    oln_have_fftw=no
@@ -544,8 +544,8 @@ AC_DEFUN([AC_WITH_CXX_FFTW],
                                 FFTW_LDFLAGS="$FFTW_LDFLAGS -lfftw -lrfftw"
                                 AC_DEFINE([HAVE_FFTW], 1, 
                                           [Define to 1 if we can use fftw])])])
-   CXXFLAGS="$oln_save_CXXFLAGS"
-   LDFLAGS="$oln_save_LDFLAGS"
+   CXXFLAGS=$oln_save_CXXFLAGS
+   LDFLAGS=$oln_save_LDFLAGS
  fi
  AC_SUBST([FFTW_CXXFLAGS])
  AC_SUBST([FFTW_LDFLAGS])
@@ -575,8 +575,8 @@ AC_DEFUN([AC_WITH_CXX_ZLIB],
      ZLIB_CXXFLAGS="-I${with_zlib}/include"
      ZLIB_LDFLAGS="-L${with_zlib}/lib"
    fi
-   oln_save_CXXFLAGS="$CXXFLAGS"
-   oln_save_LDFLAGS="$LDFLAGS"
+   oln_save_CXXFLAGS=$CXXFLAGS
+   oln_save_LDFLAGS=$LDFLAGS
    CXXFLAGS="$CXXFLAGS $ZLIB_CXXFLAGS"
    LDFLAGS="$LDFLAGS $ZLIB_LDFLAGS"
    oln_have_zlib=no
@@ -587,8 +587,8 @@ AC_DEFUN([AC_WITH_CXX_ZLIB],
                                 ZLIB_LDFLAGS="$ZLIB_LDFLAGS -lz"
                                 AC_DEFINE([HAVE_ZLIB], 1, 
                                           [Define to 1 if we can use zlib])])])
-   CXXFLAGS="$oln_save_CXXFLAGS"
-   LDFLAGS="$oln_save_LDFLAGS"
+   CXXFLAGS=$oln_save_CXXFLAGS
+   LDFLAGS=$oln_save_LDFLAGS
  fi
  AC_SUBST([ZLIB_CXXFLAGS])
  AC_SUBST([ZLIB_LDFLAGS])

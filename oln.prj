@@ -1,20 +1,26 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 7 35)
-(Parent-Version oln 7 34)
-(Version-Log "Index: oln/ChangeLog
+(Project-Version oln 7 36)
+(Parent-Version oln 7 35)
+(Version-Log "Index: ChangeLog
 from  +2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
 
-   * tests/types/runtests: Fix test for $VERBOSE.
-   * tests/arith/runtests: Likewise.
+   * configure.ac: Move auxiliary macro definitions to ...
+   * oln/config/oln-local.m4: ... this new file ...
+   * oln/Makefile.am: ... and distribute it.
 
-   * oln/config/math.hh: Move replacement math functions to namespace
-   oln, to avoid redefinition warnings from the C library.
+   * bootstrap.sh: Fix aclocal invocation to find oln.m4 again.
+
+Index: oln/ChangeLog
+from   2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
+   * config/oln.m4: Remove many unnecessary double quotes.
+   * tests/arith/runtests (indir): Likewise.
+   * tests/types/runtests (indir): Likewise.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 23 Jan 2003 01:38:34 +0100")
+(Checkin-Time "Thu, 23 Jan 2003 14:13:02 +0100")
 (Checkin-Login raph)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -90,8 +96,8 @@ from  +2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.15 664))
-  (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.8 664))
+  (ChangeLog (oln/o/33_ChangeLog 1.16 664))
+  (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.9 664))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.8 664))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.9 664))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.1 664))
@@ -101,11 +107,11 @@ from  +2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
   (attic/doc-ChangeLog (oln/e/1_ChangeLog 1.31 660))
   (attic/tests-ChangeLog (oln/e/30_ChangeLog 1.52 660))
 
-  (bootstrap.sh (oln/j/16_bootstrap. 1.6 775))
+  (bootstrap.sh (oln/j/16_bootstrap. 1.7 775))
   (BUILD (oln/o/38_BUILD 1.2 664))
   (cleanup.sh (oln/o/29_cleanup.sh 1.4 775))
   
-  (configure.ac (oln/3_configure. 1.40 664))
+  (configure.ac (oln/3_configure. 1.41 664))
   
   (doc/demo/image.cc (oln/d/46_image.cc 1.2 660))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.10 660))
@@ -139,7 +145,7 @@ from  +2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
   (oln/img/se9.pbm (oln/n/5_se9.pbm 1.1 660) :no-keywords)
   (oln/img/se.pbm (oln/n/6_se.pbm 1.1 660) :no-keywords)
   (oln/ISSUES (oln/d/47_ISSUES 1.5 660))
-  (oln/Makefile.am (oln/2_Makefile.a 1.27 660))
+  (oln/Makefile.am (oln/2_Makefile.a 1.28 660))
   (oln/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.5 664))
   (oln/oln/arith/logic.hh (oln/b/24_logic.hh 1.6 664))
   (oln/oln/arith/ops.hh (oln/b/23_ops.hh 1.5.1.2 664))
@@ -280,7 +286,7 @@ from  +2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
   (oln/oln/level/lut.hh (oln/29_lut.hh 1.7 664))
   (oln/oln/level/set_level.hh (oln/p/1_set_level. 1.5 664))
   (oln/oln/level/threshold.hh (oln/f/15_threshold. 1.5 664))
-  (oln/config/oln.m4 (oln/j/15_oln.m4 1.12 664))
+  (oln/config/oln.m4 (oln/j/15_oln.m4 1.13 664))
   (oln/oln/Makefile.am (oln/27_Makefile.a 1.37 600))
   (oln/oln/math/macros.hh (oln/b/21_macros.hh 1.6 664))
   (oln/oln/meta/array1d.hh (oln/f/23_array1d.hh 1.4 664))
@@ -390,7 +396,7 @@ from  +2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
   (oln/oln/utils/stat.hh (oln/9_stat.hh 1.5 664))
   (oln/oln/utils/timer.hh (oln/8_timer.hh 1.4 664))
   (oln/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.2 640))
-  (oln/tests/arith/runtests (oln/o/45_runtests 1.4 750))
+  (oln/tests/arith/runtests (oln/o/45_runtests 1.5 750))
   (oln/tests/arith/tests/min1 (oln/o/44_min1 1.1 640))
   (oln/tests/check/check.hh (oln/e/40_check.hh 1.3 664))
   (oln/tests/check/data.cc (oln/f/5_data.cc 1.6 660))
@@ -443,7 +449,7 @@ from  +2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
   (oln/tests/transforms/Makefile.am (oln/i/40_Makefile.a 1.6 660))
 ;;  (oln/tests/transforms/output () :directory)
   (oln/tests/types/Makefile.am (oln/h/5_Makefile.a 1.4 660))
-  (oln/tests/types/runtests (oln/h/3_runtests 1.9 770))
+  (oln/tests/types/runtests (oln/h/3_runtests 1.10 770))
   (oln/tests/types/tests/bin1 (oln/i/28_bin1 1.1 660))
   (oln/tests/types/tests/bin2 (oln/o/42_bin2 1.2 640))
   (oln/tests/types/tests/bin3 (oln/o/46_bin3 1.1 640))
@@ -678,5 +684,7 @@ from  +2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
 
   ; (oln/configure.ac ())
 )
-(Merge-Parents)
+(Merge-Parents
+  (7.35 complete)
+)
 (New-Merge-Parents)

@@ -1,3 +1,11 @@
+2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* configure.ac: Move auxiliary macro definitions to ...
+	* oln/config/oln-local.m4: ... this new file ...
+	* oln/Makefile.am: ... and distribute it.
+
+	* bootstrap.sh: Fix aclocal invocation to find oln.m4 again.
+
 2003-01-22  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* configure.ac: Propagate the location of the distribution to
