@@ -30,6 +30,7 @@ AC_CONFIG_FILES([Makefile
                  lib/check/defs
                  lib/check/Makefile
                  metalic/Makefile 
+                 metalic/mlc/Makefile
                  metalic/tests/Makefile
                  metalic/tests/array/Makefile
                  oln/Makefile 

@@ -1,5 +1,10 @@
 2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 
+	* configure.ac: AC_CONFIG_FILES for metalic/mlc/Makefile.am.
+	Create missing links if needed.
+
+2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+
 	* configure.ac: Tweak for finding Metalic headers.
 
 2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>

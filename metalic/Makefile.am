@@ -1,3 +1,4 @@
 ## Process this file through Automake to create Makefile.in -*- Makefile -*-
 
-SUBDIRS = lib tests
+SUBDIRS = mlc tests
+

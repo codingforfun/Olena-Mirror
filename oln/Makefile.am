@@ -1,7 +1,7 @@
 ## Process this file with Automake to produce Makefile.in -*- Makefile -*-
 
 # OLN_SRC_SUBDIRS is set when "configure" is run.
-SUBDIRS = img lib $(OLN_SRC_SUBDIRS)
+SUBDIRS = img $(OLN_SRC_SUBDIRS)
 
 ###
 ### Olena headers
@@ -149,22 +149,6 @@ nobase_include_HEADERS =			\
   oln/level/set_level.hh			\
   oln/level/threshold.hh			\
   oln/math/macros.hh				\
-  oln/meta/array.hh				\
-  oln/meta/array1d.hh				\
-  oln/meta/array1d.hxx				\
-  oln/meta/array2d.hh				\
-  oln/meta/array2d.hxx				\
-  oln/meta/array3d.hh				\
-  oln/meta/array3d.hxx				\
-  oln/meta/arraynd.hh				\
-  oln/meta/basics.hh				\
-  oln/meta/cmp.hh				\
-  oln/meta/control.hh				\
-  oln/meta/logic.hh				\
-  oln/meta/optional.hh				\
-  oln/meta/type.hh				\
-  oln/meta/ucmp.hh				\
-  oln/meta/ufuncs.hh				\
   oln/morpho/closing.hh				\
   oln/morpho/closing.inc			\
   oln/morpho/dilation.hh			\

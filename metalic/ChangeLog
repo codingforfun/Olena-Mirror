@@ -1,5 +1,11 @@
 2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 
+	* mlc/Makefile.am: New file.
+
+	* Makefile.am: Update accordingly. (SUBDIRS): Minor tweak.
+
+2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+
 	* Makefile.am,
 	tests/Makefile.am,
 	tests/array/Makefile.am: New files.

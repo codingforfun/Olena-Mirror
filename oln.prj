@@ -1,15 +1,37 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln cleanup 5)
-(Parent-Version oln cleanup 4)
-(Version-Log "Index: oln/ChangeLog
+(Project-Version oln cleanup 6)
+(Parent-Version oln cleanup 5)
+(Version-Log "Index: ChangeLog
 from   2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
-        * tests/meta: Rename to ../metalic/tests/array.
+        * configure.ac: AC_CONFIG_FILES for metalic/mlc/Makefile.am.
+        Create missing links if needed.
+
++2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
++
+        * configure.ac: Tweak for finding Metalic headers.
+ 
+ 2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+Index: metalic/ChangeLog
+from   2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+        * mlc/Makefile.am: New file.
+
+        * Makefile.am: Update accordingly. (SUBDIRS): Minor tweak.
+
++2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
++
+        * Makefile.am,
+        tests/Makefile.am,
+        tests/array/Makefile.am: New files.
+Index: oln/ChangeLog
+from   2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+        * Makefile.am (nobase_include_HEADERS): Remove references to
+        oln/meta/. (SUBDIRS): Minor and _temporary_ tweak.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 27 Feb 2003 19:59:31 +0100")
+(Checkin-Time "Thu, 27 Feb 2003 20:51:37 +0100")
 (Checkin-Login raph)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -92,10 +114,10 @@ from   2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.36 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37 640))
   (lib/ChangeLog (oln/q/28_ChangeLog 1.1 664))
-  (metalic/ChangeLog (oln/q/30_ChangeLog 1.1 664))
-  (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.20.1.3 640))
+  (metalic/ChangeLog (oln/q/30_ChangeLog 1.2 664))
+  (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.20.1.4 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.24 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.2 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.2 640))
@@ -109,7 +131,7 @@ from   2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 
   (cleanup.sh (oln/o/29_cleanup.sh 1.4 750))
 
-  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.3 640))
+  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4 640))
 
   (doc/demo/image.cc (oln/d/46_image.cc 1.3 640))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.14 640))
@@ -125,7 +147,7 @@ from   2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
   (doc/Makefile.am (oln/e/0_Makefile.a 1.14 640))
   (doc/ref/processing.tpl (oln/d/48_processing 1.15 640))
 
-  (Makefile.am (oln/n/32_Makefile.a 1.17.1.1 640))
+  (Makefile.am (oln/n/32_Makefile.a 1.17.1.2 640))
   (NEWS (oln/0_NEWS 1.13 640))
 
   (oln/img/face_se.pbm (oln/n/17_face_se.pb 1.1 640) :no-keywords)
@@ -142,7 +164,7 @@ from   2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
   (oln/img/se9.pbm (oln/n/5_se9.pbm 1.1 640) :no-keywords)
   (oln/img/se.pbm (oln/n/6_se.pbm 1.1 640) :no-keywords)
 
-  (oln/Makefile.am (oln/2_Makefile.a 1.30.1.1.1.1 640))
+  (oln/Makefile.am (oln/2_Makefile.a 1.30.1.1.1.2 640))
   (oln/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.5 640))
   (oln/oln/arith/logic.hh (oln/b/24_logic.hh 1.6 640))
   (oln/oln/arith/ops.hh (oln/b/23_ops.hh 1.5.1.2 640))
@@ -765,7 +787,7 @@ from   2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 ;; Files added by populate at Thu, 27 Feb 2003 19:48:40 +0100,
 ;; to version cleanup.3(w), by raph:
 
-  (lib/Makefile.am (oln/q/29_Makefile.a 1.1 664))
+  (lib/Makefile.am (oln/q/29_Makefile.a 1.2 664))
 
 ;; Files added by populate at Thu, 27 Feb 2003 19:48:43 +0100,
 ;; to version cleanup.3(w), by raph:
@@ -775,11 +797,16 @@ from   2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 ;; to version cleanup.4(w), by raph:
 
   (metalic/tests/Makefile.am (oln/q/31_Makefile.a 1.1 664))
-  (metalic/Makefile.am (oln/q/32_Makefile.a 1.1 664))
+  (metalic/Makefile.am (oln/q/32_Makefile.a 1.2 664))
 
 ;; Files added by populate at Thu, 27 Feb 2003 19:57:14 +0100,
 ;; to version cleanup.4(w), by raph:
 
+
+;; Files added by populate at Thu, 27 Feb 2003 20:06:47 +0100,
+;; to version cleanup.5(w), by raph:
+
+  (metalic/mlc/Makefile.am (oln/q/33_Makefile.a 1.1 664))
 )
 (Merge-Parents)
 (New-Merge-Parents)

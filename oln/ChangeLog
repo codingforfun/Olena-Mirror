@@ -1,5 +1,10 @@
 2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
 
+	* Makefile.am (nobase_include_HEADERS): Remove references to
+	oln/meta/. (SUBDIRS): Minor and _temporary_ tweak.
+
+2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+
 	* tests/meta: Rename to ../metalic/tests/array.
 
 2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
