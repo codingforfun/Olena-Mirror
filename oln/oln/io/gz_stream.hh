@@ -43,7 +43,7 @@ namespace oln {
       {
       public:
 
-	zfilebuf() : file(NULL),  mode(0),  own_file_descriptor(0)
+	zfilebuf() : file(0),  mode(0),  own_file_descriptor(0)
 	{
 	  inbuf = new char[lenbuf];
 	  outbuf = new char[lenbuf];
@@ -63,7 +63,7 @@ namespace oln {
 	zfilebuf *open( const char *name, int io_mode )
 	{
 	  if (is_open())
-	    return NULL;
+	    return 0;
 
 	  char char_mode[10];
 	  char *p;
@@ -96,8 +96,8 @@ namespace oln {
 	  if ( io_mode & (std::ios::out|std::ios::app ))
 	    *p++ = '9';
 
-	  if ( (file = gzopen(name, char_mode)) == NULL )
-	    return NULL;
+	  if ( (file = gzopen(name, char_mode)) == 0 )
+	    return 0;
 
 	  _name = name;
 	  own_file_descriptor = 1;
@@ -107,7 +107,7 @@ namespace oln {
 	zfilebuf *attach( int file_descriptor, int io_mode )
 	{
 	  if ( is_open() )
-	    return NULL;
+	    return 0;
 
 	  char char_mode[10];
 	  char *p;
@@ -141,8 +141,8 @@ namespace oln {
 	  if ( io_mode & (std::ios::out|std::ios::app ))
 	    *p++ = '9';
 
-	  if ( (file = gzdopen(file_descriptor, char_mode)) == NULL )
-	    return NULL;
+	  if ( (file = gzdopen(file_descriptor, char_mode)) == 0 )
+	    return 0;
 
 	  own_file_descriptor = 0;
 	  return this;
@@ -154,7 +154,7 @@ namespace oln {
 	    {
 	      sync();
 	      gzclose(file);
-	      file = NULL;
+	      file = 0;
 	    }
 	  return this;
 	}
@@ -169,7 +169,7 @@ namespace oln {
 	  return gzsetparams(file, -2, comp_strategy);
 	}
 
-	inline int is_open() const { return (file !=NULL); }
+	inline int is_open() const { return (file != 0); }
 
 	virtual std::streampos seekoff(std::streamoff off,
 				       std::ios::seekdir dir,
@@ -356,8 +356,17 @@ namespace oln {
 
       };
 
+      // Forward declaration.
+      template <class T>
+      class zomanip;     
+
+      template <class T>
+      zofstream &operator<<(zofstream &s, const zomanip<T> &m) {
+	return (*m.func)(s, m.val);
+      }
+
       template<class T> class zomanip
-      {
+      {		
 	friend zofstream &operator<< <T>(zofstream &, const zomanip<T> &);
       public:
 	zomanip(zofstream &(*f)(zofstream &, T), T v) : func(f), val(v) { }
@@ -365,12 +374,6 @@ namespace oln {
 	zofstream &(*func)(zofstream &, T);
 	T val;
       };
-
-      template<class T> zofstream &operator<<(zofstream &s,
-					      const zomanip<T> &m) {
-	return (*m.func)(s, m.val);
-
-      }
 
       inline zofstream &setcompressionlevel( zofstream &s, int l ) {
 	(s.rdbuf())->setcompressionlevel(l);

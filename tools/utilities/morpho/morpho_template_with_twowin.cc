@@ -27,10 +27,10 @@ using namespace oln;
 
 static struct option long_options[] =
   {
-    { "help", no_argument, NULL, 'h' },
-    { "win1", 1, NULL, 'w' },
-    { "win2", 1, NULL, 'W' },
-    { NULL, 0, NULL, 0 }
+    { "help", no_argument, 0, 'h' },
+    { "win1", 1, 0, 'w' },
+    { "win2", 1, 0, 'W' },
+    { 0, 0, 0, 0 }
   };
 
 

@@ -1,7 +1,8 @@
 include $(top_srcdir)/check/Makefile.check
 
-
-CXXFLAGS += -O3
+# FIXME: set this variable at configure time.
+OLN_OPTIMS_CXXFLAGS = "-O3"
+AM_CXXFLAGS += $(OLN_OPTIMS_CXXFLAGS)
 
 check_PROGRAMS = \
   edoc \

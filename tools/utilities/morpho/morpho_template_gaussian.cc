@@ -22,9 +22,9 @@ using namespace oln;
 
 static struct option long_options[] =
   {
-    { "help", no_argument, NULL, 'h' },
-    { "threshold", 1, NULL, 't' },
-    { NULL, 0, NULL, 0 }
+    { "help", no_argument, 0, 'h' },
+    { "threshold", 1, 0, 't' },
+    { 0, 0, 0, 0 }
   };
 
 
@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
         usage(argv[0]);
 
       case 't':
-        thres = dfloat(strtod(optarg, NULL));
+        thres = dfloat(strtod(optarg, 0));
 
       default:
         opt_index = 0;

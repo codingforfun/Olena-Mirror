@@ -1,7 +1,7 @@
 #!/bin/sh
 # generate_toolbox.sh
 #
-# $Id: generate_morpho.sh 1.3.1.3 Sun, 05 Jan 2003 02:31:13 +0100 raph $
+# $Id: generate_morpho.sh 1.3.1.4 Sat, 18 Jan 2003 23:34:34 +0100 burrus_n $
 
 if [ "x$1" = "x" ]; then
    echo "usage: $0 <source directory>" >&2
@@ -93,7 +93,7 @@ for dim in $DIM_TYPE_LIST; do
     done
 
     echo "laplacian"_"$dim"_"$data"_"SOURCES = morpho_template_with_functor.cc" 
-    echo "laplacian"_"$dim"_"$data"_"CXXFLAGS = \$(AM_CXXFLAGS) -DDATA_TYPE=$data -DIMAGE_TYPE=image$dim -DWINDOW_TYPE=window$dim -DFUNC='laplacian' -DFUNCTOR='convert::force<$data>()'" 
+    echo "laplacian"_"$dim"_"$data"_"CXXFLAGS = \$(AM_CXXFLAGS) -DDATA_TYPE=$data -DIMAGE_TYPE=image$dim -DWINDOW_TYPE=window$dim -DFUNC='laplacian' -DFUNCTOR='convert::force<$data>()'"
     echo 
     echo "fast_laplacian"_"$dim"_"$data"_"SOURCES = morpho_template_with_functor.cc" 
     echo "fast_laplacian"_"$dim"_"$data"_"CXXFLAGS = \$(AM_CXXFLAGS) -DDATA_TYPE=$data -DIMAGE_TYPE=image$dim -DWINDOW_TYPE=window$dim -DFUNC='fast::laplacian' -DFUNCTOR='convert::force<$data>()'" 

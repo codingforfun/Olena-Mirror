@@ -1,3 +1,24 @@
+2003-01-18  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/convert/nrgbhsl.hh: Remove std:: prefix before abs() C
+	function, it is not standard.
+	* oln/io/readable.hh: Likewise for exit().
+	* tests/transforms/dwt.cc: Likewise for rand().
+	* oln/io/gz_stream.hh: Replace NULL by 0. Add missing forward
+	declaration.
+	* oln/topo/dmap.hxx: Fix function default parameter redefinition.
+	* oln/types/behaviour.hh: Remove useless typedef.
+	* oln/types/global_ops_traits.hh: Fix traits members accessibility
+	problems.
+	* tests/io/loadsave.hh: Remove static keyword before function
+	definitions.
+	
+	* tests/arith/runtest, tests/types/runtests, tests/defs.in: Add
+	LDFLAGS support.
+	* tests/check/Makefile.flags, tests/morpho/Makefile.am: Allow
+	flags redefinition. This is a temporary fix, flags should be
+	entierely defined at configure time.
+
 2003-01-17  Akim Demaille  <akim@epita.fr>
 
 	* tests/transforms/fft.cc, tests/transforms/dwt.cc
@@ -276,9 +297,11 @@
 	* Makefile.am (m4datadir, dist_m4data_DATA): Add for
 	oln.m4. (EXAMPLE_IMGS, dist_pkgdata_DATA): Add for images.
 
-	* oln/Makefile.am (pkginclude_HEADERS): Use instead of nobase_inst_HEADERS.
+	* oln/Makefile.am (pkginclude_HEADERS): Use instead of 
+	nobase_inst_HEADERS.
 
-	* configure.ac: The testsuite is now optional. Depend again on Automake 1.7.1.
+	* configure.ac: The testsuite is now optional. Depend again on 
+	Automake 1.7.1.
 
 	* ChangeLog: Create. Old version moves to ../attic.
 	* tests/ChangeLog: Remove. Old version moves to ../attic.

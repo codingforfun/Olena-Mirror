@@ -62,7 +62,7 @@ namespace oln {
 	float diff = max_in-min_in;
 
 	out[hsl_L] = (max_in + min_in) / 2;
-	if (std::abs(diff) <= 0.0000001) {
+	if (::abs(diff) <= 0.0000001) {
 	  out[hsl_S] = 0;
 	  out[hsl_H] = -1;
 	} else if (out[hsl_L] < 0.5)

@@ -143,8 +143,6 @@ namespace oln
       template <class P>
       static storage_type apply (const P& p)
       {
-	typedef typename internal::to_oln<P>::ret p_oln_type;
-
 	precondition(TO_OLN_CAST (P, p) <= optraits<T>::max());
 	precondition(TO_OLN_CAST (P, p) >= optraits<T>::min());
 
@@ -286,7 +284,7 @@ namespace oln
 	  cycle_mod>::ret_t cycle_op;
 
 	typename internal::to_oln<P>::ret
-	  tmp = cycle_op::exec(std::abs(SIGNED_CAST(P, rhs)),
+	  tmp = cycle_op::exec(::abs(SIGNED_CAST(P, rhs)),
 			       optraits<T>::max() - optraits<T>::min());
 
 	if (rhs < 0) tmp = -tmp;

@@ -57,7 +57,7 @@ namespace oln {
     // mk_chamfer...
     // FIXME: this is highly not thread safe !
     template<int d10, int d11> inline
-    const chamfer<int>& mk_chamfer_3x3(float coef = 1.f)
+    const chamfer<int>& mk_chamfer_3x3(float coef)
     {
       static const w_window2d<int> w_win_fwd = ( meta::ints_2d =
 					       d11, d10, d11, lbrk,
@@ -85,7 +85,7 @@ namespace oln {
     }
 
     template<int d10, int d11, int d21> inline
-    const chamfer<int>& mk_chamfer_5x5(float coef = 1.f)
+    const chamfer<int>& mk_chamfer_5x5(float coef)
     {
       static const w_window2d<int> w_win_fwd = ( meta::ints_2d =
 					       0, d21,   0, d21,   0, lbrk,

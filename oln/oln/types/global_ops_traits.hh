@@ -50,10 +50,10 @@ namespace oln
 {
   namespace internal
   {
-    class undefined_traits {};
+    struct undefined_traits {};
 
     template <class T>
-    class meta_undefined_traits 
+    struct meta_undefined_traits 
     {
       typedef undefined_traits ret;
       typedef undefined_traits lhs_type;

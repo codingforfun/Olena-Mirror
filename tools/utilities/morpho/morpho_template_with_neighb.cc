@@ -25,9 +25,9 @@ using namespace oln;
 
 static struct option long_options[] =
   {
-    { "help", no_argument, NULL, 'h' },
-    { "neighb", 1, NULL, 'n' },
-    { NULL, 0, NULL, 0 }
+    { "help", no_argument, 0, 'h' },
+    { "neighb", 1, 0, 'n' },
+    { 0, 0, 0, 0 }
   };
 
 

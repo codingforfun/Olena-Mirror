@@ -1,3 +1,13 @@
+2003-01-18  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* utilities/morpho/morpho_template.cc,
+	utilities/morpho/morpho_template_extrema.cc,
+	utilities/morpho/morpho_template_gaussian.cc,
+	utilities/morpho/morpho_template_watershed.cc,
+	utilities/morpho/morpho_template_with_functor.cc,
+	utilities/morpho/morpho_template_with_neighb.cc,
+	utilities/morpho/morpho_template_with_twowin.cc: Replace NULL by 0.
+
 2003-01-15  Akim Demaille  <akim@epita.fr>
 
 	* configure.ac: Require Autoconf 2.57, Automake 1.7.2.

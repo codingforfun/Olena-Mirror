@@ -12,25 +12,25 @@ using namespace oln;
 using namespace std;
 
 template<typename T>
-static bool compare(const T& a, const T& b)
+bool compare(const T& a, const T& b)
 {
   return level::is_equal(a, b);
 }
 
 template<>
-static bool compare(const window2d& a, const window2d& b)
+bool compare(const window2d& a, const window2d& b)
 {
   return a == b;
 }
 
 template<>
-static bool compare(const neighborhood2d& a, const neighborhood2d& b)
+bool compare(const neighborhood2d& a, const neighborhood2d& b)
 {
   return a == b;
 }
 
 template< typename T >
-static bool
+bool
 loadsave(const string& name, const string& savename)
 {
   bool fail = false;
