@@ -123,7 +123,7 @@
 (metalic/tests/array/Makefile.am 630 1046524058 f/27_Makefile.a 1.6.1.2)
 (metalic/mlc/typeadj.hh 2471 1047072898 e/25_typeadj.hh 1.5)
 (olena/oln/core/internal/image2d.hh 4201 1047072898 d/14_image2d.hh 1.8)
-(doc/ref/Makefile.am 3421 1057968372 d/51_Makefile.a 1.27.1.5)
+(doc/ref/Makefile.am 3444 1058047658 d/51_Makefile.a 1.27.1.6)
 (tools/swilena/meta/attic/swilena_morphodefs.i 7836 1045569366 o/18_swilena_mo 1.2)
 (olena/oln/core/window3d.hh 7746 1047072898 c/13_window3d.h 1.8)
 (olena/oln/core/point.hh 1969 1047072898 c/33_point.hh 1.7)
