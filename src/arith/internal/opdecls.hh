@@ -1,4 +1,4 @@
-// Copyright 2001  EPITA Research and Development Laboratory
+// Copyright 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,7 +35,7 @@
 /* For binary operators that takes rev_values<T> arguments
    and define internal::operator_##OPNAME##_traits.  */
 # define _OLN_ARITH_DECLARE_BINRECVAL_FUNCTOR(OPNAME, OPCODE)		\
-    template<class T1, class T2>					\
+    template<class T1, class T2 = T1>					\
     struct f_##OPNAME : std::binary_function<const rec_value<T1>&,	\
       const rec_value<T2>&,						\
       typename internal::deduced_from_traits<				\
@@ -53,7 +53,7 @@
 /* For binary operators that takes rev_values<T> arguments
    and define internal::operator_##OPNAME##_traits.  */
 # define _OLN_ARITH_DECLARE_BINRECVALCST_FUNCTOR(OPNAME, OPCODE_CST)	\
-    template<class T1, class T2>					\
+    template<class T1, class T2 = T1>					\
     struct f_##OPNAME##_cst : std::unary_function<const rec_value<T1>&,	\
       typename internal::deduced_from_traits<				\
         internal::operator_##OPNAME##_traits, T1, T2>::ret_t >		\

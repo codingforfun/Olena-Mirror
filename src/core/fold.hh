@@ -1,4 +1,4 @@
-// Copyright 2001  EPITA Research and Development Laboratory
+// Copyright 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -38,7 +38,9 @@ namespace oln {
   template<class AdaptableBinaryFun, class _I> inline
   typename AdaptableBinaryFun::result_type
   fold(AdaptableBinaryFun f,
-       typename AdaptableBinaryFun::first_argument_type val,
+       // f could return a reference or a const.  Make sure VAL is assignable.
+       typename typeadj<
+         typename AdaptableBinaryFun::result_type>::mutable_val val,
        const image<_I>& _input)
   {
     // FIXME: ensure that first_argument_type == result_type.
@@ -59,7 +61,10 @@ namespace oln {
     Exact_cref (I, input);
     Iter(I) p(input);
     p = begin;
-    typename AdaptableBinaryFun::first_argument_type val = input[p];
+    // f could return a reference or a const, so make sure VAL is assignable.
+    typename typeadj<
+      typename AdaptableBinaryFun::result_type>::mutable_val val
+        = input[p];
     for_all_remaining(p)
       val = f(val, input[p]);
     return val;

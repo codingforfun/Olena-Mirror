@@ -1,12 +1,23 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_3 13)
-(Parent-Version oln 0_3 12)
-(Version-Log "")
+(Project-Version oln 0_3 14)
+(Parent-Version oln 0_3 13)
+(Version-Log "2002-03-27  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/typeadj.hh: New file.
+	* src/Makefile.am (nobase_oln_HEADERS): Add it.
+	* src/basics.hh: Include it.
+	* src/core/fold.hh (fold, fold): Make sure VAL is assignable.
+	Use f::result_type instead of f::first_value_type.
+	* src/arith/internal/opdecs.hh
+	(_OLN_ARITH_DECLARE_BINRECVAL_FUNCTOR,
+	_OLN_ARITH_DECLARE_BINRECVALCST_FUNCTOR): Have T2 default to T1
+	so that the resulting functors are easier
+")
 (New-Version-Log "")
-(Checkin-Time "Tue, 26 Mar 2002 17:14:52 +0100")
-(Checkin-Login duret_g)
+(Checkin-Time "Wed, 27 Mar 2002 13:01:48 +0100")
+(Checkin-Login adl)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
                   "\\.o$"
@@ -62,7 +73,7 @@
   (configure.ac (oln/3_configure. 1.2 644))
   (THANKS (oln/4_THANKS 1.1 644))
   (img/lena.pgm (oln/5_lena.pgm 1.1 640) :no-keywords)
-  (ChangeLog (oln/6_ChangeLog 1.22 644))
+  (ChangeLog (oln/6_ChangeLog 1.23 644))
   (src/config/system.hh (oln/7_system.hh 1.1 644))
   (src/utils/timer.hh (oln/8_timer.hh 1.1 644))
   (src/utils/stat.hh (oln/9_stat.hh 1.2 644))
@@ -83,7 +94,7 @@
   (src/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.1 644))
   (src/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.2 644))
   (src/convol/fast_gaussian.hh (oln/26_fast_gauss 1.1 644))
-  (src/Makefile.am (oln/27_Makefile.a 1.3 644))
+  (src/Makefile.am (oln/27_Makefile.a 1.4 644))
   (src/basics3d.hh (oln/28_basics3d.h 1.1 644))
   (src/level/lut.hh (oln/29_lut.hh 1.1 644))
   (src/level/connected.hh (oln/30_connected. 1.4 644))
@@ -130,7 +141,7 @@
   (src/io/pnm.hh (oln/b/19_pnm.hh 1.1 644))
   (src/io/base.hh (oln/b/20_base.hh 1.1 644))
   (src/math/macros.hh (oln/b/21_macros.hh 1.1 644))
-  (src/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.1 644))
+  (src/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.2 644))
   (src/arith/ops.hh (oln/b/23_ops.hh 1.1 644))
   (src/arith/logic.hh (oln/b/24_logic.hh 1.1 644))
   (src/value/hsv.hh (oln/b/25_hsv.hh 1.1 644))
@@ -167,7 +178,7 @@
   (src/meta/basics.hh (oln/c/4_basics.hh 1.2 644))
   (src/meta/array.hxx (oln/c/5_array.hxx 1.1 644))
   (src/meta/array.hh (oln/c/6_array.hh 1.1 644))
-  (src/core/fold.hh (oln/c/7_fold.hh 1.1 644))
+  (src/core/fold.hh (oln/c/7_fold.hh 1.2 644))
   (src/core/imagend_size.hh (oln/c/8_imagend_si 1.1 644))
   (src/core/dpointnd.hh (oln/c/9_dpointnd.h 1.1 644))
   (src/core/pointnd.hh (oln/c/10_pointnd.hh 1.1 644))
@@ -254,7 +265,7 @@
   (src/core/apply.hh (oln/d/39_apply.hh 1.1 644))
   (src/core/accum.hh (oln/d/40_accum.hh 1.1 644))
   (src/basics1d.hh (oln/d/41_basics1d.h 1.1 644))
-  (src/basics.hh (oln/d/42_basics.hh 1.1 644))
+  (src/basics.hh (oln/d/42_basics.hh 1.2 644))
   (demo/morpholena.cc (oln/d/43_morpholena 1.1 644))
   (demo/Makefile.am (oln/d/44_Makefile.a 1.2 644))
   (demo/tour.cc (oln/d/45_tour.cc 1.1 644))
@@ -298,7 +309,7 @@
   (tools/mkinstalldirs (oln/e/14_mkinstalld 1.1 700))
   (tools/install-sh (oln/e/15_install-sh 1.2 755))
   (demo/Makefile.in (oln/e/16_Makefile.i 1.4 644))
-  (src/Makefile.in (oln/e/17_Makefile.i 1.4 644))
+  (src/Makefile.in (oln/e/17_Makefile.i 1.5 644))
 
 ;; Files added by populate at Sun, 13 Jan 2002 12:33:06 +0100,
 ;; to version 0_2.7(w), by adl:
@@ -335,6 +346,11 @@
 ;; to version 0_3.6(w), by jerome:
 
   (src/convert/conversion_ng_se.hh (oln/e/24_conversion 1.1 644))
+
+;; Files added by populate at Wed, 27 Mar 2002 12:29:30 +0100,
+;; to version 0_3.13(w), by adl:
+
+  (src/core/typeadj.hh (oln/e/25_typeadj.hh 1.1 644))
 )
 (Merge-Parents)
 (New-Merge-Parents)

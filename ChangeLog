@@ -1,3 +1,15 @@
+2002-03-27  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/core/typeadj.hh: New file.
+	* src/Makefile.am (nobase_oln_HEADERS): Add it.
+	* src/basics.hh: Include it.
+	* src/core/fold.hh (fold): Make sure VAL is assignable.
+	Use f::result_type instead of f::first_value_type.
+	* src/arith/internal/opdecs.hh
+	(_OLN_ARITH_DECLARE_BINRECVAL_FUNCTOR,
+	_OLN_ARITH_DECLARE_BINRECVALCST_FUNCTOR): Have T2 default to T1
+	so that the resulting functors are easier
+
 2002-03-26  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* src/morpho/watershed.hxx (_soille_watershed): Fix two off-by-one

@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,34 +25,30 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_BASICS_HH
-# define OLENA_BASICS_HH
+#ifndef OLENA_TYPEADJ_HH
+# define OLENA_TYPEADJ_HH
 
-# include "config/system.hh"
+namespace oln {
 
-# include "core/contract.hh"
-# include "core/macros.hh"
-# include "core/type.hh"
-# include "core/typeadj.hh"
+  /*
+    This file defines typeadj, an helper struct that aids ajusting the
+    constness or referenceness of a type.
+    For instance `oln::typeadj<const int>::mutable_ref' equals `int &'.
+  */
 
-# include "core/objs.hh"
+#define _OLN_TYPEADJ_DEFS			\
+  {						\
+    typedef T mutable_val;			\
+    typedef const T const_val;			\
+    typedef T& mutable_ref;			\
+    typedef const T& const_ref;			\
+  } /* no ; */
 
-# include "core/coord.hh"
-# include "core/point.hh"
-# include "core/dpoint.hh"
-# include "core/image.hh"
-# include "core/border.hh"
+  template < class T > struct typeadj             _OLN_TYPEADJ_DEFS;
+  template < class T > struct typeadj< T& >       _OLN_TYPEADJ_DEFS;
+  template < class T > struct typeadj< const T >  _OLN_TYPEADJ_DEFS;
+  template < class T > struct typeadj< const T& > _OLN_TYPEADJ_DEFS;
 
-# include "core/window.hh"
-# include "core/w_window.hh"
-# include "core/neighborhood.hh"
+} // oln
 
-# include "core/iter.hh"
-# include "core/apply.hh"
-# include "core/fold.hh"
-# include "core/traverse.hh"
-# include "core/compose.hh"
-
-# include "convert/basics.hh"
-
-#endif // ! OLENA_BASICS_HH
+#endif /* OLENA_TYPEADJ_HH */
