@@ -34,7 +34,7 @@
 /////////////////////////////////////////////
 
 # define ASSIGN_SCALAR_OPERATOR(Name, Op)						\
-  template <class T1, class T2>	inline							\
+  template <class T1, class T2> inline							\
   static T1& Name(T1& lhs, const T2& rhs)						\
   {											\
     is_a(optraits<T1>, oln::optraits_scalar)::ensure();					\
@@ -43,7 +43,7 @@
     return Name##_impl<T1,T2>(lhs, rhs);						\
   }											\
 											\
-  template <class T1, class T2>	inline							\
+  template <class T1, class T2> inline							\
   static T1& Name##_impl(rec_scalar<T1>& lhs, const rec_scalar<T2>& rhs)		\
   {											\
     typedef typename typetraits<T1>::behaviour_type behaviour_type;			\
@@ -51,7 +51,7 @@
     return lhs.self();									\
   }											\
 											\
-  template <class T1, class T2>	inline							\
+  template <class T1, class T2> inline							\
   static T1& Name##_impl(rec_scalar<T1>& lhs, const type::any_const_class<T2> rhs)	\
   {											\
     typedef typename typetraits<T1>::behaviour_type behaviour_type;			\
@@ -59,7 +59,7 @@
     return lhs.self();									\
   }											\
 											\
-  template <class T1, class T2>	inline							\
+  template <class T1, class T2> inline							\
   static T1& Name##_impl(type::any_class<T1> lhs, const rec_scalar<T2>& rhs)		\
   {											\
     typedef typename typetraits<T1>::behaviour_type behaviour_type;			\
@@ -68,7 +68,7 @@
   }
 
 # define ARITH_SCALAR_OPERATOR(Name, Op)					\
-  template <class T1, class T2>	inline 						\
+  template <class T1, class T2> inline 						\
   static typename								\
   internal::deduce_from_traits<internal::operator_##Name##_traits, T1, T2>::ret	\
   Name(const T1& lhs, const T2& rhs)						\
@@ -86,7 +86,7 @@
 
 
 # define CMP_SCALAR_OPERATOR(Name, Op)							\
-  template <class T1, class T2>	inline							\
+  template <class T1, class T2> inline							\
   static bool Name (const T1& lhs, const T2& rhs)					\
   {											\
     is_a(optraits<T1>, oln::optraits_scalar)::ensure();					\
@@ -118,7 +118,7 @@
 
 
 # define ASSIGN_INT_OPERATOR(Name, Op)						\
-  template <class T1, class T2>	inline						\
+  template <class T1, class T2> inline						\
   static T1& Name(T1& lhs, const T2& rhs)					\
   {										\
     is_a(optraits<T1>, oln::optraits_int)::ensure();				\
@@ -127,21 +127,21 @@
     return Name##_impl<T1,T2>(lhs, rhs);					\
   }										\
 										\
-  template <class T1, class T2>	inline						\
+  template <class T1, class T2> inline						\
   static T1& Name##_impl(rec_int<T1>& lhs, const rec_int<T2>& rhs)		\
   {										\
     lhs.self() = lhs.self().value() Op rhs.self().value();			\
     return lhs.self();								\
   }										\
 										\
-  template <class T1, class T2>	inline						\
+  template <class T1, class T2> inline						\
   static T1& Name##_impl(rec_int<T1>& lhs, const type::any_const_class<T2>& rhs) \
   {										\
     lhs.self() = lhs.self().value() Op rhs.self();				\
     return lhs.self();								\
   }										\
 										\
-  template <class T1, class T2>	inline						\
+  template <class T1, class T2> inline						\
   static T1& Name##_impl(type::any_class<T1>& lhs, const rec_int<T2>& rhs)	\
   {										\
     lhs.self() = lhs.self() Op rhs.self().value();				\
@@ -149,7 +149,7 @@
   }    
 
 # define ARITH_INT_OPERATOR(Name, Op)						\
-  template <class T1, class T2>	inline						\
+  template <class T1, class T2> inline						\
   static typename								\
   internal::deduce_from_traits<internal::operator_##Name##_traits, T1, T2>::ret	\
   Name(const T1& lhs, const T2& rhs)						\
