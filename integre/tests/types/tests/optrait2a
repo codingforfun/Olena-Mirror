@@ -1,2 +1,2 @@
-sfloat s = optraits<sfloat>::max(); // COMPFAIL
+float_s s = optraits<float_s>::max(); // COMPFAIL
 (void) s;

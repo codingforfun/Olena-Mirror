@@ -53,8 +53,8 @@ namespace ntg
   template <class T, class interval> class		cycle;
 
   // floats
-  typedef float						sfloat;
-  typedef double					dfloat;
+  typedef float						float_s;
+  typedef double					float_d;
 
   // enumerated types
   class bin;

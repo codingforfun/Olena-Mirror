@@ -79,8 +79,8 @@ namespace ntg
 	}
       };
       template<class Tdest>
-      struct _round<Tdest, sfloat > {
-	static const Tdest doit(const sfloat& val)
+      struct _round<Tdest, float_s > {
+	static const Tdest doit(const float_s& val)
 	{
 	  // FIXME: update comments
 
@@ -102,7 +102,7 @@ namespace ntg
 	  return (typename typetraits<Tdest>::storage_type) round(val);
 	}
       };
-# if 0 // useless as sfloat == float alias
+# if 0 // useless as float_s == float alias
       template<class Tdest>
       struct _round<Tdest, float> {
 	static const Tdest doit(const float& val)

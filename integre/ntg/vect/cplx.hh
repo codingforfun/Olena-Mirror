@@ -67,7 +67,7 @@ template <class T1, class T2> inline						\
 static cplx<polar, T1>& Name(cplx<polar, T1>& lhs, const T2& rhs)		\
 {										\
   is_a(optraits<T2>, ntg::optraits_scalar)::ensure();				\
-  cplx<rect, dfloat> tmp(lhs);							\
+  cplx<rect, float_d> tmp(lhs);							\
   tmp.real() Op rhs;								\
   lhs = tmp;									\
   return lhs;									\
@@ -77,9 +77,9 @@ static cplx<polar, T1>& Name(cplx<polar, T1>& lhs, const T2& rhs)		\
 template <class T1, cplx_representation R2, class T2> inline			\
 static cplx<rect, T1>& Name(cplx<rect, T1>& lhs, const cplx<R2, T2>& rhs)	\
 {										\
-  cplx<polar, dfloat> tmp(lhs);							\
-  tmp.magn() Op1 (dfloat)rhs.magn();						\
-  tmp.angle() Op2 (dfloat)rhs.angle();						\
+  cplx<polar, float_d> tmp(lhs);							\
+  tmp.magn() Op1 (float_d)rhs.magn();						\
+  tmp.angle() Op2 (float_d)rhs.angle();						\
   lhs = tmp;									\
   return lhs;									\
 }
@@ -106,9 +106,9 @@ static cplx<polar, T1>& Name(cplx<polar, T1>& lhs, const cplx<R, T2>& rhs)	\
 template <cplx_representation R, class T1, class T2> inline			\
 static cplx<polar, T1>& Name(cplx<polar, T1>& lhs, const cplx<R, T2>& rhs)	\
 {										\
-  cplx<rect, dfloat> tmp(lhs);							\
-  tmp.real() Op (dfloat)rhs.real();						\
-  tmp.imag() Op (dfloat)rhs.imag();						\
+  cplx<rect, float_d> tmp(lhs);							\
+  tmp.real() Op (float_d)rhs.real();						\
+  tmp.imag() Op (float_d)rhs.imag();						\
   lhs = tmp;									\
   return lhs;									\
 }
@@ -296,12 +296,12 @@ namespace ntg
 
     // methods
 
-    const dfloat magn() const
+    const float_d magn() const
     {
       return sqrt(val_[0] * val_[0] + val_[1] * val_[1]);
     }
 
-    const dfloat angle() const
+    const float_d angle() const
     {
       return atan2(val_[1], val_[0]);
     }
@@ -316,9 +316,9 @@ namespace ntg
       return cplx<rect, T>(-val_[0], -val_[1]);
     }
 
-    const cplx<polar, dfloat> to_polar() const
+    const cplx<polar, float_d> to_polar() const
     {
-      return cplx<polar, dfloat>(magn(), angle());
+      return cplx<polar, float_d>(magn(), angle());
     }
 
   };
@@ -383,12 +383,12 @@ namespace ntg
 
     // methods
 
-    const dfloat real() const
+    const float_d real() const
     {
       return val_[0] * cos(val_[1]);
     }
 
-    const dfloat imag() const
+    const float_d imag() const
     {
       return val_[0] * sin(val_[1]);
     }
@@ -403,9 +403,9 @@ namespace ntg
       return cplx<rect, T>(val_[0], val_[1] + M_PI);
     }
 
-    const cplx<rect, dfloat> to_rect() const
+    const cplx<rect, float_d> to_rect() const
     {
-      return cplx<rect, dfloat>(real(), imag());
+      return cplx<rect, float_d>(real(), imag());
     }
 
   };

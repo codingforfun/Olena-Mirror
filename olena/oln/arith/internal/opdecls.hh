@@ -36,8 +36,8 @@
    and define ntg::internal::operator_##OPNAME##_traits.  */
 # define _OLN_ARITH_DECLARE_BINRECVAL_FUNCTOR(OPNAME, OPCODE)		\
     template<class T1, class T2 = T1>					\
-    struct f_##OPNAME : std::binary_function<const ntg::rec_value<T1>&,	\
-      const ntg::rec_value<T2>&,					\
+    struct f_##OPNAME : std::binary_function<const ntg::value<T1>&,	\
+      const ntg::value<T2>&,					\
       typename ntg::internal::deduce_from_traits<			\
         ntg::internal::operator_##OPNAME##_traits, T1, T2 >::ret >		\
     {									\
@@ -54,7 +54,7 @@
    and define ntg::internal::operator_##OPNAME##_traits.  */
 # define _OLN_ARITH_DECLARE_BINRECVALCST_FUNCTOR(OPNAME, OPCODE_CST)	\
     template<class T1, class T2 = T1>					\
-    struct f_##OPNAME##_cst : std::unary_function<const ntg::rec_value<T1>&,\
+    struct f_##OPNAME##_cst : std::unary_function<const ntg::value<T1>&,\
       typename ntg::internal::deduce_from_traits<			\
         ntg::internal::operator_##OPNAME##_traits, T1, T2>::ret >		\
     {									\

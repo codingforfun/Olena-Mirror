@@ -1,31 +1,60 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln integre 9)
-(Parent-Version oln integre 8)
-(Version-Log "Index: integre/ChangeLog
+(Project-Version oln integre 10)
+(Parent-Version oln integre 9)
+(Version-Log "Index: doc/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* ntg/enum/bin.hh, ntg/color/color.hh, ntg/vect/cplx.hh,
-	ntg/vect/cplx_representation.hh, ntg/real/cycle.hh,
-	ntg/core/global_ops_defs.hh, ntg/core/global_ops.hh,
-	ntg/core/interval.hh, ntg/real/int_s.hh, ntg/real/int_u.hh,
-	ntg/core/predecls.hh, ntg/real/range.hh, ntg/vect/vec.hh,
-	ntg/real/real.hh, ntg/vect/vectorial.hh,
-	ntg/enum/enumerated.hh: Remove namespace type_definitions.
+	* demo/convol-gaussian.cc, demo/tour.cc,
+	ref/ref-types.tex: Rename sfloat and dfloat.
 
-	* ntg/core/rec_value.hh: Rename as ...
-	* ntg/core/value.hh: ... this.
-	* ntg/core/value.hh: Rename rec_value as value.
+Index: integre/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	* ntg/core/builtins_properties.hh, ntg/core/predecls.hh,
+	ntg/float.hh, ntg/utils/cast.hh, ntg/vect/cplx.hh,
+	tests/types/tests/conv1, tests/types/tests/conv2,
+	tests/types/tests/cplx1, tests/types/tests/cplx2,
+	tests/types/tests/cplx3, tests/types/tests/cplx4,
+	tests/types/tests/cplx6, tests/types/tests/float1,
+	tests/types/tests/float2, tests/types/tests/float_c1,
+	tests/types/tests/float_r1, tests/types/tests/float_r2,
+	tests/types/tests/optrait2a, tests/types/tests/optrait2b,
+	tests/types/tests/optrait3: Rename sfloat and dfloat.
 
-	* ntg/enum/enumerated.hh, ntg/real/real.hh, 
-	ntg/vect/vectorial.hh: New files.
++2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
++	
+ 	* ntg/enum/bin.hh, ntg/color/color.hh, ntg/vect/cplx.hh,
+ 	ntg/vect/cplx_representation.hh, ntg/real/cycle.hh,
+ 	ntg/core/global_ops_defs.hh, ntg/core/global_ops.hh,
+Index: olena/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* ntg/core/behavior.hh: Update includes.
+	* conf/configure.ac, oln/arith/internal/opdecls.hh,
+	oln/convol/fast_gaussian.hh, oln/convol/fast_gaussian.hxx,
+	oln/convol/fast_gaussian_coefficient.hh, oln/level/invert.hh,
+	oln/math/macros.hh, oln/transforms/dwt.hh,
+	oln/transforms/fft.hh, oln/transforms/wavelet_coeffs.hh,
+	oln/utils/stat.hh, tests/convert/convcomp.cc,
+	tests/convert/convcomp.hh, tests/transforms/dwt.cc,
+	tests/transforms/fft.cc: Rename sfloat and dfloat.
 
+Index: tools/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* utilities/morpho/morpho_template_gaussian.cc: Rename sfloat and
+	dfloat.
+
+Index: tools/swilena/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* doc/swilena.texi, python/typedefs.hh, src/swilena.i,
+	src/swilena_convert_dim.i, src/swilena_convoldefs.i,
+	src/swilena_dim.i, src/swilena_morpho_dim.i,
+	src/swilena_typedefs.i: Rename sfloat and dfloat..
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 02 May 2003 22:44:58 +0200")
+(Checkin-Time "Fri, 02 May 2003 23:12:39 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -111,12 +140,12 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.17 640))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.31 640))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.4 640))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.32 640))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.5 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.15 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.4 640))
-  (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.7 640))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.5 640))
+  (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.8 640))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.8 640))
 
   (attic/oln-ChangeLog (oln/6_ChangeLog 1.50.1.98.1.5 600))
   (attic/doc-ChangeLog (oln/e/1_ChangeLog 1.31 600))
@@ -132,13 +161,13 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.16 640))
   (doc/demo/morpholena.cc (oln/d/43_morpholena 1.11 640))
   (doc/demo/test-reconstruction.cc (oln/e/22_test-recon 1.7.1.3 640))
-  (doc/demo/tour.cc (oln/d/45_tour.cc 1.10 640))
+  (doc/demo/tour.cc (oln/d/45_tour.cc 1.11 640))
   (doc/ref/bin () :directory)
   (doc/ref/html () :directory)
   (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.3 640))
   (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.6.1.2 640))
   (doc/ref/oln-ref.tex (oln/f/14_oln-ref.te 1.3.1.1 640))
-  (doc/ref/ref-types.tex (oln/g/34_ref-types. 1.6 640))
+  (doc/ref/ref-types.tex (oln/g/34_ref-types. 1.7 640))
   (doc/Makefile.am (oln/e/0_Makefile.a 1.14 640))
   (doc/ref/processing.tpl (oln/d/48_processing 1.16 640))
 
@@ -160,7 +189,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/img/se.pbm (oln/n/6_se.pbm 1.1 640) :no-keywords)
 
   (olena/Makefile.am (oln/2_Makefile.a 1.30.1.1.1.2.1.5 640))
-  (olena/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.6 640))
+  (olena/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.7 640))
   (olena/oln/arith/logic.hh (oln/b/24_logic.hh 1.6.1.2 640))
   (olena/oln/arith/ops.hh (oln/b/23_ops.hh 1.5.1.2.1.2 640))
   (olena/oln/basics1d.hh (oln/d/41_basics1d.h 1.2 640))
@@ -186,9 +215,9 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.7 640))
   (olena/oln/convert/stretch.hh (oln/f/51_stretch.hh 1.7 640))
   (olena/oln/convol/convolution.hh (oln/f/39_convolutio 1.4.1.4.1.3 640))
-  (olena/oln/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.5.1.3 640))
-  (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.2 640))
-  (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.3 640))
+  (olena/oln/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.5.1.4 640))
+  (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.3 640))
+  (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.4 640))
   (olena/oln/core/accum.hh (oln/d/40_accum.hh 1.2 640))
   (olena/oln/core/apply.hh (oln/d/39_apply.hh 1.7 640))
   (olena/oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.8 640))
@@ -296,13 +325,13 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/level/compare.hh (oln/31_compare.hh 1.4 640))
   (olena/oln/level/connected.hh (oln/30_connected. 1.9.1.3 640))
   (olena/oln/level/fill.hh (oln/32_fill.hh 1.4 640))
-  (olena/oln/level/invert.hh (oln/33_invert.hh 1.5.2.2.1.1 640))
+  (olena/oln/level/invert.hh (oln/33_invert.hh 1.5.2.2.1.2 640))
   (olena/oln/level/lut.hh (oln/29_lut.hh 1.7 640))
   (olena/oln/level/set_level.hh (oln/p/1_set_level. 1.5 640))
   (olena/oln/level/threshold.hh (oln/f/15_threshold. 1.8 640))
   (config/oln.m4 (oln/j/15_oln.m4 1.27 640))
 
-  (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.3 640))
+  (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.4 640))
   (metalic/mlc/array/1d.hh (oln/f/23_array1d.hh 1.8 640))
   (metalic/mlc/array/1d.hxx (oln/f/22_array1d.hx 1.9 640))
   (metalic/mlc/array/2d.hh (oln/f/21_array2d.hh 1.8 640))
@@ -352,14 +381,14 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/morpho/watershed.hxx (oln/47_watershed. 1.9.1.2 640))
   (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.5 640))
   (olena/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.7.1.3 640))
-  (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.4 640))
-  (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.3 640))
-  (olena/oln/transforms/wavelet_coeffs.hh (oln/i/34_wavelet_co 1.4 640))
+  (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.5 640))
+  (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.4 640))
+  (olena/oln/transforms/wavelet_coeffs.hh (oln/i/34_wavelet_co 1.5 640))
   (integre/ntg/all.hh (oln/g/32_all.hh 1.10.1.5 640))
   (integre/ntg/core/behavior.hh (oln/g/31_behaviour. 1.13.1.6 640))
   (integre/ntg/enum/bin.hh (oln/g/30_bin.hh 1.9.1.7 640))
-  (integre/ntg/core/builtins_properties.hh (oln/g/29_builtins_p 1.9 640))
-  (integre/ntg/utils/cast.hh (oln/i/26_cast.hh 1.3.1.4 640))
+  (integre/ntg/core/builtins_properties.hh (oln/g/29_builtins_p 1.10 640))
+  (integre/ntg/utils/cast.hh (oln/i/26_cast.hh 1.3.1.5 640))
   (integre/ntg/color/color.hh (oln/i/17_color.hh 1.7.1.7 640))
   (integre/ntg/color/hsi.hh (oln/i/20_hsi.hh 1.3.1.3 640))
   (integre/ntg/color/hsl.hh (oln/i/21_hsl.hh 1.3.1.3 640))
@@ -369,7 +398,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (integre/ntg/color/xyz.hh (oln/i/24_xyz.hh 1.3.1.3 640))
   (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.3 640))
   (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.3 640))
-  (integre/ntg/vect/cplx.hh (oln/i/4_cplx.hh 1.9.1.7 640))
+  (integre/ntg/vect/cplx.hh (oln/i/4_cplx.hh 1.9.1.8 640))
   (integre/ntg/vect/cplx_representation.hh (oln/i/3_cplx_repre 1.4 640))
   (integre/ntg/real/cycle.hh (oln/g/28_cycle.hh 1.11.1.7 640))
   (integre/ntg/utils/debug.hh (oln/i/8_debug.hh 1.2.1.4 640))
@@ -394,7 +423,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (integre/ntg/real/optraits_scalar_defs.hh (oln/g/11_optraits_s 1.9 640))
   (integre/ntg/real/optraits_scalar.hh (oln/g/12_optraits_s 1.11.1.5 640))
   
-  (integre/ntg/core/predecls.hh (oln/g/10_predecls.h 1.10.1.5 640))
+  (integre/ntg/core/predecls.hh (oln/g/10_predecls.h 1.10.1.6 640))
   (integre/ntg/real/range.hh (oln/g/9_range.hh 1.9.1.7 640))
   (integre/ntg/core/value.hh (oln/g/8_rec_value. 1.8.1.4 640))
   (integre/ntg/utils/to_oln.hh (oln/g/7_to_oln.hh 1.7.1.3 640))
@@ -407,7 +436,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (integre/ntg/vect/vec.hh (oln/h/43_vec.hh 1.7.1.7 640))
   (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.5 640))
   (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.3 640))
-  (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.3 640))
+  (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.4 640))
   (olena/oln/utils/timer.hh (oln/8_timer.hh 1.5 640))
   (olena/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.4 640))
   (olena/tests/arith/runtests (oln/o/45_runtests 1.8 750))
@@ -424,8 +453,8 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (metalic/tests/check/verbose.cc (oln/e/41_verbose.cc 1.3 640))
   (metalic/tests/check/verbose.hh (oln/e/42_verbose.hh 1.3 640))
 
-  (olena/tests/convert/convcomp.cc (oln/f/3_convcomp.c 1.6 640))
-  (olena/tests/convert/convcomp.hh (oln/f/1_convcomp.h 1.6 640))
+  (olena/tests/convert/convcomp.cc (oln/f/3_convcomp.c 1.7 640))
+  (olena/tests/convert/convcomp.hh (oln/f/1_convcomp.h 1.7 640))
   (olena/tests/convert/Makefile.am (oln/f/0_Makefile.a 1.8 640))
   
   (olena/tests/convol/Makefile.am (oln/f/38_Makefile.a 1.11 640))
@@ -458,8 +487,8 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/tests/README (oln/f/4_README 1.4 640))
   (olena/tests/sanity/includes.test (oln/f/46_includes.t 1.8 750))
   (olena/tests/sanity/Makefile.am (oln/f/48_Makefile.a 1.4.1.2 640))
-  (olena/tests/transforms/dwt.cc (oln/i/38_dwt.cc 1.8.1.3 640))
-  (olena/tests/transforms/fft.cc (oln/i/37_fft.cc 1.6.1.3 640))
+  (olena/tests/transforms/dwt.cc (oln/i/38_dwt.cc 1.8.1.4 640))
+  (olena/tests/transforms/fft.cc (oln/i/37_fft.cc 1.6.1.4 640))
   (olena/tests/transforms/Makefile.am (oln/i/40_Makefile.a 1.8 640))
 ;;  (oln/tests/transforms/output () :directory)
   (integre/tests/types/Makefile.am (oln/h/5_Makefile.a 1.8 640))
@@ -470,19 +499,19 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (integre/tests/types/tests/comp1 (oln/h/9_comp1 1.1 640))
   (integre/tests/types/tests/comp2 (oln/h/8_comp2 1.1 640))
   (integre/tests/types/tests/comp3 (oln/h/7_comp3 1.1 640))
-  (integre/tests/types/tests/conv1 (oln/g/49_conv1 1.2 640))
-  (integre/tests/types/tests/conv2 (oln/g/42_conv2 1.2 640))
-  (integre/tests/types/tests/cplx1 (oln/i/2_cplx1 1.1 640))
-  (integre/tests/types/tests/cplx2 (oln/i/1_cplx2 1.1 640))
-  (integre/tests/types/tests/cplx3 (oln/i/0_cplx3 1.1 640))
-  (integre/tests/types/tests/cplx4 (oln/h/51_cplx4 1.1 640))
+  (integre/tests/types/tests/conv1 (oln/g/49_conv1 1.3 640))
+  (integre/tests/types/tests/conv2 (oln/g/42_conv2 1.3 640))
+  (integre/tests/types/tests/cplx1 (oln/i/2_cplx1 1.2 640))
+  (integre/tests/types/tests/cplx2 (oln/i/1_cplx2 1.2 640))
+  (integre/tests/types/tests/cplx3 (oln/i/0_cplx3 1.2 640))
+  (integre/tests/types/tests/cplx4 (oln/h/51_cplx4 1.2 640))
   (integre/tests/types/tests/cplx5 (oln/i/7_cplx5 1.1 640))
-  (integre/tests/types/tests/cplx6 (oln/i/6_cplx6 1.3 640))
-  (integre/tests/types/tests/float1 (oln/h/12_float1 1.1 640))
-  (integre/tests/types/tests/float2 (oln/h/40_float2 1.1 640))
-  (integre/tests/types/tests/float_c1 (oln/h/13_float_c1 1.1 640))
-  (integre/tests/types/tests/float_r1 (oln/h/10_float_r1 1.2 640))
-  (integre/tests/types/tests/float_r2 (oln/h/11_float_r2 1.1 640))
+  (integre/tests/types/tests/cplx6 (oln/i/6_cplx6 1.4 640))
+  (integre/tests/types/tests/float1 (oln/h/12_float1 1.2 640))
+  (integre/tests/types/tests/float2 (oln/h/40_float2 1.2 640))
+  (integre/tests/types/tests/float_c1 (oln/h/13_float_c1 1.2 640))
+  (integre/tests/types/tests/float_r1 (oln/h/10_float_r1 1.3 640))
+  (integre/tests/types/tests/float_r2 (oln/h/11_float_r2 1.2 640))
   (integre/tests/types/tests/int1b (oln/g/48_int1b 1.1 640))
   (integre/tests/types/tests/int1 (oln/h/1_int1 1.1 640))
   (integre/tests/types/tests/int2 (oln/h/0_int2 1.1 640))
@@ -517,9 +546,9 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (integre/tests/types/tests/op2 (oln/h/6_op2 1.2 640))
   (integre/tests/types/tests/optrait1a (oln/h/25_optrait1a 1.2 640))
   (integre/tests/types/tests/optrait1b (oln/h/26_optrait1b 1.2 640))
-  (integre/tests/types/tests/optrait2a (oln/h/28_optrait2a 1.2 640))
-  (integre/tests/types/tests/optrait2b (oln/h/27_optrait2b 1.1 640))
-  (integre/tests/types/tests/optrait3 (oln/h/24_optrait3 1.3 640))
+  (integre/tests/types/tests/optrait2a (oln/h/28_optrait2a 1.3 640))
+  (integre/tests/types/tests/optrait2b (oln/h/27_optrait2b 1.2 640))
+  (integre/tests/types/tests/optrait3 (oln/h/24_optrait3 1.4 640))
   (integre/tests/types/tests/range1 (oln/h/34_range1 1.1 640))
   (integre/tests/types/tests/range2b (oln/h/36_range2b 1.1 640))
   (integre/tests/types/tests/range2 (oln/h/33_range2 1.1 640))
@@ -546,12 +575,12 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (tools/Makefile.am (oln/o/37_Makefile.a 1.6 640))
   (tools/swilena/configure.ac (oln/o/26_configure. 1.2 640))
   (tools/swilena/doc/Makefile.am (oln/n/39_Makefile.a 1.2 640))
-  (tools/swilena/doc/swilena.texi (oln/n/40_swilena.te 1.1 600))
+  (tools/swilena/doc/swilena.texi (oln/n/40_swilena.te 1.2 600))
   (tools/swilena/java/Makefile.am (oln/n/42_Makefile.a 1.1 600))
   ; (tools/swilena/java/Makefile.in ())
   (tools/swilena/Makefile.am (oln/o/25_Makefile.a 1.3 640))
   (tools/swilena/python/Makefile.am (oln/n/44_Makefile.a 1.4 640))
-  (tools/swilena/python/typedefs.hh (oln/n/43_typedefs.h 1.3 640))
+  (tools/swilena/python/typedefs.hh (oln/n/43_typedefs.h 1.4 640))
   (tools/swilena/README (oln/n/35_README 1.1 600))
   (tools/swilena/src/lena128.pgm (oln/o/19_lena128.pg 1.1 600) :no-keywords)
   (tools/swilena/src/lena2.pgm (oln/o/14_lena2.pgm 1.1 600) :no-keywords)
@@ -569,19 +598,19 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (tools/swilena/src/swilena3d.i (oln/o/1_swilena3d. 1.1 600))
   (tools/swilena/src/swilena3d_morpho.i (oln/n/45_swilena3d_ 1.1 600))
   (tools/swilena/src/swilena_conversions.i (oln/o/15_swilena_co 1.1 600))
-  (tools/swilena/src/swilena_convert_dim.i (oln/n/49_swilena_co 1.1 600))
-  (tools/swilena/src/swilena_convoldefs.i (oln/o/10_swilena_co 1.1 600))
-  (tools/swilena/src/swilena_dim.i (oln/o/22_swilena_di 1.2 640))
+  (tools/swilena/src/swilena_convert_dim.i (oln/n/49_swilena_co 1.2 600))
+  (tools/swilena/src/swilena_convoldefs.i (oln/o/10_swilena_co 1.2 600))
+  (tools/swilena/src/swilena_dim.i (oln/o/22_swilena_di 1.3 640))
   (tools/swilena/src/swilena_dpoint.i (oln/o/13_swilena_dp 1.1 600))
   (tools/swilena/src/swilena_exceptions.i (oln/o/21_swilena_ex 1.1 600))
   (tools/swilena/src/swilena_image.i (oln/o/12_swilena_im 1.1 600))
-  (tools/swilena/src/swilena.i (oln/o/24_swilena.i 1.1 600))
+  (tools/swilena/src/swilena.i (oln/o/24_swilena.i 1.2 600))
   (tools/swilena/src/swilena_meta_win.i (oln/o/7_swilena_me 1.1 600))
   (tools/swilena/src/swilena_morphodefs.i (oln/o/18_swilena_mo 1.2 640))
-  (tools/swilena/src/swilena_morpho_dim.i (oln/n/50_swilena_mo 1.2 640))
+  (tools/swilena/src/swilena_morpho_dim.i (oln/n/50_swilena_mo 1.3 640))
   (tools/swilena/src/swilena_neighborhood.i (oln/o/8_swilena_ne 1.1 600))
   (tools/swilena/src/swilena_point.i (oln/o/11_swilena_po 1.1 600))
-  (tools/swilena/src/swilena_typedefs.i (oln/o/16_swilena_ty 1.1 600))
+  (tools/swilena/src/swilena_typedefs.i (oln/o/16_swilena_ty 1.2 600))
   (tools/swilena/src/swilena_types.i (oln/o/3_swilena_ty 1.3 640))
   (tools/swilena/src/swilena_window.i (oln/o/9_swilena_wi 1.1 600))
   (tools/swilena/src/swilena_w_window.i (oln/o/6_swilena_w_ 1.1 600))
@@ -593,7 +622,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (tools/utilities/morpho/Makefile.am (oln/i/32_Makefile.a 1.9.1.4 640))
   (tools/utilities/morpho/morpho_template.cc (oln/i/33_morpho_tem 1.5.1.2.1.3 640))
   (tools/utilities/morpho/morpho_template_extrema.cc (oln/j/5_morpho_tem 1.1.1.2.1.2 640))
-  (tools/utilities/morpho/morpho_template_gaussian.cc (oln/j/8_morpho_tem 1.1.1.2.1.2 640))
+  (tools/utilities/morpho/morpho_template_gaussian.cc (oln/j/8_morpho_tem 1.1.1.2.1.3 640))
   (tools/utilities/morpho/morpho_template_watershed.cc (oln/j/6_morpho_tem 1.1.1.2.1.2 640))
   (tools/utilities/morpho/morpho_template_with_functor.cc (oln/j/10_morpho_tem 1.1.1.2.1.2 640))
   (tools/utilities/morpho/morpho_template_with_neighb.cc (oln/j/7_morpho_tem 1.1.1.2.1.2 640))
@@ -612,7 +641,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (doc/demo/morpholena-ops.cc (oln/p/11_morpholena 1.3 640))
   (doc/demo/morpholena-minima.cc (oln/p/12_morpholena 1.4 640))
 
-  (doc/demo/convol-gaussian.cc (oln/p/14_morpholena 1.4 640))
+  (doc/demo/convol-gaussian.cc (oln/p/14_morpholena 1.5 640))
   (doc/demo/morpholena-wshed-beucher.cc (oln/p/15_morpholena 1.3 640))
 
 
@@ -639,7 +668,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 ;; Files added by populate at Mon, 20 Jan 2003 11:43:58 +0100,
 ;; to version 7.27(w), by raph:
 
-  (olena/conf/configure.ac (oln/p/23_configure. 1.5.1.1 640))
+  (olena/conf/configure.ac (oln/p/23_configure. 1.5.1.2 640))
   (olena/conf/gen-scripts.sh (oln/p/24_gen-script 1.3.1.1 750))
   (olena/conf/oln-config.shin (oln/p/25_oln-config 1.1.1.2 640))
   (olena/conf/compilers.def (oln/p/26_compilers. 1.3 640))
@@ -835,7 +864,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (integre/ntg/vec.hh (oln/r/51_vec.hh 1.2 600))
   (integre/ntg/int.hh (oln/s/0_int.hh 1.2 600))
-  (integre/ntg/float.hh (oln/s/1_float.hh 1.1 600))
+  (integre/ntg/float.hh (oln/s/1_float.hh 1.2 600))
   (integre/ntg/cplx.hh (oln/s/2_cplx.hh 1.2 600))
   (integre/ntg/bin.hh (oln/s/3_bin.hh 1.2 600))
 

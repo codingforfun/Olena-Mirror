@@ -53,7 +53,7 @@ main (void)
   // Olena ships with a set of basic value types such as
   //   int_u8, int_u16, int_u32,   (common unsigned integer types)
   //   int_s8, int_s16, int_s32,   (common signed integer types)
-  //   sfloat, dfloat,             (common float types)
+  //   float_s, float_d,             (common float types)
   //   bin			   (binary type: false|true)
   //
   // These value are defined in the value/ subdirectory.  Actually

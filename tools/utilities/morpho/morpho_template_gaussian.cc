@@ -90,7 +90,7 @@ void usage(const char * progname)
 
 int main(int argc, char *argv[])
 {
-  dfloat thres(0.5);
+  float_d thres(0.5);
 
   int c;
   int opt_index = 0;
@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
 	version(argv[0]);
 
       case 't':
-        thres = dfloat(strtod(optarg, 0));
+        thres = float_d(strtod(optarg, 0));
 
       default:
         opt_index = 0;

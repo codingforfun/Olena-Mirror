@@ -71,8 +71,8 @@ MakeWWindow(3, float);
      MakeImage(image ## Dim ## d_s8s, Dim, int_s8s);
      MakeImage(image ## Dim ## d_s16s, Dim, int_s16s);
      MakeImage(image ## Dim ## d_s32s, Dim, int_s32s);
-     MakeImage(image ## Dim ## d_sfloat, Dim, sfloat);
-     MakeImage(image ## Dim ## d_dfloat, Dim, dfloat);
+     MakeImage(image ## Dim ## d_float_s, Dim, float_s);
+     MakeImage(image ## Dim ## d_float_d, Dim, float_d);
 %enddef
 %define MakeDimImages(Dim)
      MakeDimScalarImages(Dim);

@@ -29,7 +29,7 @@
 # define OLENA_LEVEL_INVERT_HH
 
 # include <oln/basics.hh>
-# include <ntg/core/rec_value.hh>
+# include <ntg/core/value.hh>
 # include <ntg/bin.hh>
 # include <functional>
 
@@ -42,7 +42,7 @@ namespace oln {
     // ftors
 
     template<class T>
-    struct f_invert : public std::unary_function<const rec_value<T>&, T>
+    struct f_invert : public std::unary_function<const value<T>&, T>
     {
       typedef f_invert self;
 

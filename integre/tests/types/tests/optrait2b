@@ -1,2 +1,2 @@
-dfloat s = oln::optraits<dfloat>::min(); // COMPFAIL
+float_d s = oln::optraits<float_d>::min(); // COMPFAIL
 (void) s;

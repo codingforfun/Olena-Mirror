@@ -774,8 +774,8 @@ for a description of what are valid calls.
 @item int_s16s @tab oln::int_s16s @tab 16-bit saturated signed integer
 @item int_s32s @tab oln::int_s32s @tab 32-bit saturated signed integer
 @item bin @tab oln::bin @tab 1-bit value
-@item sfloat @tab oln::sfloat @tab single precision float
-@item dfloat @tab oln::dfloat @tab double precision float
+@item float_s @tab oln::float_s @tab single precision float
+@item float_d @tab oln::float_d @tab double precision float
 @item rgb_8 @tab oln::rgb_8 @tab 3-uple of 8-bit values
 @item rgb_16 @tab oln::rgb_16 @tab 3-uple of 16-bit values
 @item rgb_32 @tab oln::rgb_16 @tab 3-uple of 32-bit values
@@ -882,8 +882,8 @@ Here are the image types corresponding to pixel data types:
 @item image1d_s8s @tab oln::image1d<oln::int_s8s> @tab ready
 @item image1d_s16s @tab oln::image1d<oln::int_s16s> @tab ready
 @item image1d_s32s @tab oln::image1d<oln::int_s32s> @tab ready
-@item image1d_sfloat @tab oln::image1d<oln::sfloat> @tab ready
-@item image1d_dfloat @tab oln::image1d<oln::dfloat> @tab ready
+@item image1d_float_s @tab oln::image1d<oln::float_s> @tab ready
+@item image1d_float_d @tab oln::image1d<oln::float_d> @tab ready
 @item image1d_rgb_8 @tab oln::image1d<oln::rgb_8> @tab ready
 @item image1d_rgb_16 @tab oln::image1d<oln::rgb_16> @tab ready
 @item image1d_rgb_32 @tab oln::image1d<oln::rgb_32> @tab ready
@@ -901,8 +901,8 @@ Here are the image types corresponding to pixel data types:
 @item image2d_s8s @tab oln::image2d<oln::int_s8s> @tab ready
 @item image2d_s16s @tab oln::image2d<oln::int_s16s> @tab ready
 @item image2d_s32s @tab oln::image2d<oln::int_s32s> @tab ready
-@item image2d_sfloat @tab oln::image2d<oln::sfloat> @tab ready
-@item image2d_dfloat @tab oln::image2d<oln::dfloat> @tab ready
+@item image2d_float_s @tab oln::image2d<oln::float_s> @tab ready
+@item image2d_float_d @tab oln::image2d<oln::float_d> @tab ready
 @item image2d_rgb_8 @tab oln::image2d<oln::rgb_8> @tab ready
 @item image2d_rgb_16 @tab oln::image2d<oln::rgb_16> @tab ready
 @item image2d_rgb_32 @tab oln::image2d<oln::rgb_32> @tab ready
@@ -920,8 +920,8 @@ Here are the image types corresponding to pixel data types:
 @item image3d_s8s @tab oln::image3d<oln::int_s8s> @tab ready
 @item image3d_s16s @tab oln::image3d<oln::int_s16s> @tab ready
 @item image3d_s32s @tab oln::image3d<oln::int_s32s> @tab ready
-@item image3d_sfloat @tab oln::image3d<oln::sfloat> @tab ready
-@item image3d_dfloat @tab oln::image3d<oln::dfloat> @tab ready
+@item image3d_float_s @tab oln::image3d<oln::float_s> @tab ready
+@item image3d_float_d @tab oln::image3d<oln::float_d> @tab ready
 @item image3d_rgb_8 @tab oln::image3d<oln::rgb_8> @tab not ready
 @item image3d_rgb_16 @tab oln::image3d<oln::rgb_16> @tab not ready
 @item image3d_rgb_32 @tab oln::image3d<oln::rgb_32> @tab not ready

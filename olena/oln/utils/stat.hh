@@ -88,7 +88,7 @@ namespace oln {
       T _max;
     };
 
-    template< class T, class C = ntg::sfloat >
+    template< class T, class C = ntg::float_s >
     struct f_moments : f_minmax< T >
     {
       typedef f_minmax< T > super;

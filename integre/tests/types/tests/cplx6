@@ -1,6 +1,6 @@
-cplx<rect, dfloat> rect1(42, 51);
-cplx<rect, dfloat> rect2(rect1);
-cplx<polar, dfloat> polar1(rect1);
-cplx<polar, dfloat> polar2(polar1);
+cplx<rect, float_d> rect1(42, 51);
+cplx<rect, float_d> rect2(rect1);
+cplx<polar, float_d> polar1(rect1);
+cplx<polar, float_d> polar2(polar1);
 
 return !(rect1 == rect2 && polar1 == polar2);

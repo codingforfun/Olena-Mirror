@@ -18,8 +18,8 @@
   typedef oln::image1d<oln:: int_s8s > image1d_s8s;
   typedef oln::image1d<oln:: int_s16s > image1d_s16s;
   typedef oln::image1d<oln:: int_s32s > image1d_s32s;
-  typedef oln::image1d<oln:: sfloat > image1d_sfloat;
-  typedef oln::image1d<oln:: dfloat > image1d_dfloat;
+  typedef oln::image1d<oln:: float_s > image1d_float_s;
+  typedef oln::image1d<oln:: float_d > image1d_float_d;
   typedef oln::image1d<oln:: rgb_8 > image1d_rgb_8;
   typedef oln::image1d<oln:: rgb_16 > image1d_rgb_16;
   typedef oln::image1d<oln:: rgb_32 > image1d_rgb_32;
@@ -36,8 +36,8 @@
   typedef oln::image2d<oln:: int_s8s > image2d_s8s;
   typedef oln::image2d<oln:: int_s16s > image2d_s16s;
   typedef oln::image2d<oln:: int_s32s > image2d_s32s;
-  typedef oln::image2d<oln:: sfloat > image2d_sfloat;
-  typedef oln::image2d<oln:: dfloat > image2d_dfloat;
+  typedef oln::image2d<oln:: float_s > image2d_float_s;
+  typedef oln::image2d<oln:: float_d > image2d_float_d;
   typedef oln::image2d<oln:: rgb_8 > image2d_rgb_8;
   typedef oln::image2d<oln:: rgb_16 > image2d_rgb_16;
   typedef oln::image2d<oln:: rgb_32 > image2d_rgb_32;
@@ -54,8 +54,8 @@
   typedef oln::image3d<oln:: int_s8s > image3d_s8s;
   typedef oln::image3d<oln:: int_s16s > image3d_s16s;
   typedef oln::image3d<oln:: int_s32s > image3d_s32s;
-  typedef oln::image3d<oln:: sfloat > image3d_sfloat;
-  typedef oln::image3d<oln:: dfloat > image3d_dfloat;
+  typedef oln::image3d<oln:: float_s > image3d_float_s;
+  typedef oln::image3d<oln:: float_d > image3d_float_d;
   typedef oln::w_window1d<int > w_win1d_int;
   typedef oln::w_window1d<float > w_win1d_float;
   typedef oln::w_window2d<int > w_win2d_int;

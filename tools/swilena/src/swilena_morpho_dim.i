@@ -95,8 +95,8 @@ MakeMorpho(Dim, int_s32);
 %enddef
 
 %define Float_MakeMorphoDim(Dim)
-  Float_MakeMorpho(Dim, sfloat);
-  Float_MakeMorpho(Dim, dfloat);
+  Float_MakeMorpho(Dim, float_s);
+  Float_MakeMorpho(Dim, float_d);
 %enddef
 
 

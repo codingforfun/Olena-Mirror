@@ -1,5 +1,18 @@
 2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* ntg/core/builtins_properties.hh, ntg/core/predecls.hh,
+	ntg/float.hh, ntg/utils/cast.hh, ntg/vect/cplx.hh,
+	tests/types/tests/conv1, tests/types/tests/conv2,
+	tests/types/tests/cplx1, tests/types/tests/cplx2,
+	tests/types/tests/cplx3, tests/types/tests/cplx4,
+	tests/types/tests/cplx6, tests/types/tests/float1,
+	tests/types/tests/float2, tests/types/tests/float_c1,
+	tests/types/tests/float_r1, tests/types/tests/float_r2,
+	tests/types/tests/optrait2a, tests/types/tests/optrait2b,
+	tests/types/tests/optrait3: Rename sfloat and dfloat.
+
+2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* ntg/enum/bin.hh, ntg/color/color.hh, ntg/vect/cplx.hh,
 	ntg/vect/cplx_representation.hh, ntg/real/cycle.hh,
 	ntg/core/global_ops_defs.hh, ntg/core/global_ops.hh,

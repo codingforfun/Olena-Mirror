@@ -1,3 +1,8 @@
+2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* utilities/morpho/morpho_template_gaussian.cc: Rename sfloat and
+	dfloat.
+
 2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* utilities/Makefile.am: Remove useless flags.

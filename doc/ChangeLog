@@ -1,3 +1,8 @@
+2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* demo/convol-gaussian.cc, demo/tour.cc,
+	ref/ref-types.tex: Rename sfloat and dfloat.
+
 2003-04-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* dev/oln-dev.texi: Include upgrading.texi.

@@ -1,5 +1,5 @@
-cplx<rect, dfloat> rect1(4, 5);
-cplx<rect, dfloat> rect2(rect1);
+cplx<rect, float_d> rect1(4, 5);
+cplx<rect, float_d> rect2(rect1);
 cplx<polar, int> polar1(rect1);
 cplx<polar, int> polar2(polar1);
 

@@ -28,7 +28,7 @@
 #ifndef NTG_FLOAT_HH
 # define NTG_FLOAT_HH
 
-// Proxy header for float types (s_float and d_float).
+// Proxy header for float types (float_s and float_d).
 
 # include <ntg/core/predecls.hh>
 

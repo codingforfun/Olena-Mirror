@@ -29,7 +29,7 @@
 # define OLENA_MATH_MACROS_HH
 
 # include <oln/basics.hh>
-# include <ntg/core/rec_value.hh>
+# include <ntg/core/value.hh>
 # include <ntg/core/global_ops_traits.hh>
 # include <ntg/utils/cast.hh>
 
@@ -48,14 +48,14 @@ namespace oln {
     struct f_sqr
     {
       typedef Self output_t;
-      const Self operator()(const ntg::rec_value<Self>& val) const
+      const Self operator()(const ntg::value<Self>& val) const
       {
 	return val.real_value() * val.real_value();
       }
     };
 
     template<class Self>
-    const Self sqr(const ntg::rec_value<Self>& val)
+    const Self sqr(const ntg::value<Self>& val)
     {
       f_sqr<Self> f;
       return f(val);
@@ -67,14 +67,14 @@ namespace oln {
     struct f_abs
     {
       typedef Self output_t;
-      const Self operator()(const ntg::rec_value<Self>& val) const
+      const Self operator()(const ntg::value<Self>& val) const
       {
 	return ::abs(val.real_value());
       }
     };
 
     template<class Self>
-    const Self abs(const ntg::rec_value<Self>& val)
+    const Self abs(const ntg::value<Self>& val)
     {
       f_abs<Self> f;
       return f(val);
@@ -91,8 +91,8 @@ namespace oln {
       typedef typename 
       internal::operator_plus_traits<Self,Self>::ret_t output_t;
       
-      const output_t operator()(const ntg::rec_value<Self>& val1,
-				const ntg::rec_value<Self>& val2) const
+      const output_t operator()(const ntg::value<Self>& val1,
+				const ntg::value<Self>& val2) const
       {
 	return math::abs(val1.self()) + math::abs(val2.self());
       }
@@ -100,8 +100,8 @@ namespace oln {
 
     template<class Self>
     const typename f_plus_abs<Self>::output_t
-    plus_abs(const ntg::rec_value<Self>& val1,
-	     const ntg::rec_value<Self>& val2)
+    plus_abs(const ntg::value<Self>& val1,
+	     const ntg::value<Self>& val2)
     {
       f_plus_abs<Self> f;
       return f(val);
@@ -111,8 +111,8 @@ namespace oln {
     struct f_plus_abs_to
     {
       typedef T_out output_t;
-      const output_t operator()(const ntg::rec_value<Self>& val1,
-				const ntg::rec_value<Self>& val2) const
+      const output_t operator()(const ntg::value<Self>& val1,
+				const ntg::value<Self>& val2) const
       {
 	return ntg::cast::force<T_out>(math::abs(val1.self()) 
 				  + math::abs(val2.self()));
@@ -120,8 +120,8 @@ namespace oln {
     };
 
     template<class T_out, class Self>
-    const T_out plus_abs(const ntg::rec_value<Self>& val1,
-			 const ntg::rec_value<Self>& val2)
+    const T_out plus_abs(const ntg::value<Self>& val1,
+			 const ntg::value<Self>& val2)
     {
       f_plus_abs_to<Self,T_out> f;
       return f(val);

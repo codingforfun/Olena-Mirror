@@ -54,8 +54,8 @@ implemented hierarchically in the C++ code.
       \end{list}
     \item Olena types
       \begin{list}{--}{}
-        \item \code{sfloat}
-        \item \code{dfloat}
+        \item \code{float_s}
+        \item \code{float_d}
       \end{list}
     \end{list}
   \end{list}
@@ -280,12 +280,12 @@ typedef int_s<16, saturate>     int_s16s;
 typedef int_s<32, saturate>     int_s32s;
 \end{lstlisting}
 
-\subsection{\code{sfloat} and \code{dfloat}}
+\subsection{\code{float_s} and \code{float_d}}
 
 These are the Olena equivalents of \code{float} and \code{double},
 Contrary to signed and unsigned integer types, there is not
-\emph{extension} during operations.  Multiplying two \code{sfloat}
-yields a \code{sfloat}.
+\emph{extension} during operations.  Multiplying two \code{float_s}
+yields a \code{float_s}.
 
 FIXME: so why do we use \code{float} and \code{double}?
 
@@ -329,9 +329,9 @@ Interval should be expressed using the \code{bounded_s<MIN, MAX>} and
 signed integer in \code{bounded_s} and unsigned integer in
 \code{bounded_u<MIN, MAX>}.\footnote{%%%
   \code{MIN} and \code{MAX} are always integers (the C++ language does
-not allow floats as template arguments), so to define a \code{sfloat}
-between $0$ and $1$, use \code{range<sfloat,bounded_u<0,1> >}, not
-\code{range<sfloat,bounded_u<0.0,1.0> >}. }%%%
+not allow floats as template arguments), so to define a \code{float_s}
+between $0$ and $1$, use \code{range<float_s,bounded_u<0,1> >}, not
+\code{range<float_s,bounded_u<0.0,1.0> >}. }%%%
 
 %% This changes the \code{min}inimum and \code{max}imum value of a type.
 %% These values are used during overflow checking.
@@ -349,7 +349,7 @@ This class defines a type, the values of which can be built from
 defined using \code{bounded_u<MIN, MAX>} or \code{bounded_s<MIN,MAX>}
 as in \code{range}.
 
-For instance \code{typedef cycle<sfloat, bounded_u<0, 360> > deg}
+For instance \code{typedef cycle<float_s, bounded_u<0, 360> > deg}
 defines a type which is useful to represent angles in degrees.
 \code{deg d = 400.0} will set \code{d} to \code{40.0}.
 
@@ -371,9 +371,9 @@ two cycles have equal length).
 %%
 %% For instance the following line defines a type which is stored as an
 %% \code{int_u8} in memory, but that will be read and set as
-%% \code{sfloat} values between 0 and 1.
+%% \code{float_s} values between 0 and 1.
 %% \begin{lstlisting}{}
-%% typedef view_as<int_u8, range<sfloat, 0, 1> > fuzzy8;
+%% typedef view_as<int_u8, range<float_s, 0, 1> > fuzzy8;
 %% \end{lstlisting}
 %%
 %% In other words, \code{view_as} performs a linear transformation to
@@ -387,7 +387,7 @@ two cycles have equal length).
 %% typedef view_as<int_u16, fuzzy8> fuzzy16;
 %% \end{lstlisting}
 %% This describe a type whose variables are stored on 16 bits, but
-%% which are seen like \code{fuzzy8}, i.e., a \code{sfloat} value between
+%% which are seen like \code{fuzzy8}, i.e., a \code{float_s} value between
 %% 0 and 1.  The fact that \code{U} is stored on 8 bits has no influence
 %% on \code{T}.
 
@@ -434,15 +434,15 @@ value.  E.g., \code{typetraits< int_u<9> >::storage_type} is
 
 %% \item[\code{view}] The type under which the value should be seen.
 %% For example,
-%% \code{typetraits< view_as<int_u8, range<sfloat, 0, 1> > >::view}
-%% is \code{range<sfloat, 0, 1>}.
+%% \code{typetraits< view_as<int_u8, range<float_s, 0, 1> > >::view}
+%% is \code{range<float_s, 0, 1>}.
 %%
 %% For a undecorated type \code{T}, \code{typetraits<T>::view} is
 %% \code{T} itself.
 %%
 %% Note that the view of \code{fuzzy16} as defined above, i.e,
-%% \code{typetraits< view_as<int_u8, view_as<int_u16, range<sfloat, 0, 1> > > >::view}
-%% is still \code{range<sfloat, 0, 1>}.
+%% \code{typetraits< view_as<int_u8, view_as<int_u16, range<float_s, 0, 1> > > >::view}
+%% is still \code{range<float_s, 0, 1>}.
 
 \item[\code{signed_type}]
 The smallest signed type that can contain the values of \code{T}, if possible.
@@ -479,7 +479,7 @@ These are short-hands for some combinations of \code{signed_type},
 \item[\code{integer_type}]
 An \code{int} type of the same sign as \code{T}.
 For instance \code{typetraits< int_u8 >::interger_type} is \code{unsigned
-int}; \code{typetraits< sfloat >::interger_type} is \code{signed
+int}; \code{typetraits< float_s >::interger_type} is \code{signed
 int}.
 
 % FIXME: Is this type needed anymore?

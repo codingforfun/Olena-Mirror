@@ -137,14 +137,14 @@
    //      DBL_EPSILON     2.2204460492503131E-016
 
 
-   struct C_for_sfloat
+   struct C_for_float_s
    {
      typedef float type;
      static type min() { return FLT_MIN; }
      static type max() { return FLT_MAX; }
    };
 
-   struct C_for_dfloat
+   struct C_for_float_d
    {
      typedef double type;
      static type min() { return DBL_MIN; }

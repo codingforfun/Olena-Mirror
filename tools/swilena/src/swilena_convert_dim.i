@@ -24,8 +24,8 @@
      SimpleConverter(Dim, To, int_s8s);
      SimpleConverter(Dim, To, int_s16s);
      SimpleConverter(Dim, To, int_s32s);
-     SimpleConverter(Dim, To, sfloat);
-     SimpleConverter(Dim, To, dfloat);
+     SimpleConverter(Dim, To, float_s);
+     SimpleConverter(Dim, To, float_d);
 %enddef
 %define SimpleDimConverters(Dim)
      SimpleConverters(Dim, bin);
@@ -41,8 +41,8 @@
      SimpleConverters(Dim, int_s8s);
      SimpleConverters(Dim, int_s16s);
      SimpleConverters(Dim, int_s32s);
-     SimpleConverters(Dim, sfloat);
-     SimpleConverters(Dim, dfloat);
+     SimpleConverters(Dim, float_s);
+     SimpleConverters(Dim, float_d);
 %enddef
 
 #if DIMENSION == 1

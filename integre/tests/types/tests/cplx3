@@ -1,7 +1,7 @@
 cplx<rect, float> rect1(4, 5);
 cplx<rect, float> rect2(rect1);
-cplx<polar, sfloat> polar1(rect1);
-cplx<polar, sfloat> polar2(polar1);
+cplx<polar, float_s> polar1(rect1);
+cplx<polar, float_s> polar2(polar1);
 
 rect1 += polar2;
 rect1 *= polar2;

@@ -1,3 +1,14 @@
+2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* conf/configure.ac, oln/arith/internal/opdecls.hh,
+	oln/convol/fast_gaussian.hh, oln/convol/fast_gaussian.hxx,
+	oln/convol/fast_gaussian_coefficient.hh, oln/level/invert.hh,
+	oln/math/macros.hh, oln/transforms/dwt.hh,
+	oln/transforms/fft.hh, oln/transforms/wavelet_coeffs.hh,
+	oln/utils/stat.hh, tests/convert/convcomp.cc,
+	tests/convert/convcomp.hh, tests/transforms/dwt.cc,
+	tests/transforms/fft.cc: Rename sfloat and dfloat.
+
 2003-04-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/io/pnm_write_common.hxx: Update includes.

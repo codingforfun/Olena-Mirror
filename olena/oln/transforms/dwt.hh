@@ -66,7 +66,7 @@ namespace oln {
   namespace internal
   {
 
-    static const dfloat _ln_2 = 0.6931471805599453092;
+    static const float_d _ln_2 = 0.6931471805599453092;
 
     //
     // _wavelet_coeffs<T, N, Self>
@@ -137,7 +137,7 @@ namespace oln {
 
       const unsigned half = n >> 1;
       unsigned lim = n + 1 - coeffs.size();
-      dfloat* tmp = new dfloat[n];
+      float_d* tmp = new float_d[n];
       Point(I) p(_p);
       unsigned i, j, k;
 
@@ -182,7 +182,7 @@ namespace oln {
 
       const unsigned half = n >> 1;
       unsigned lim = coeffs.size() - 2;
-      dfloat* tmp = new dfloat[n];
+      float_d* tmp = new float_d[n];
       Point(I) p(_p), q(_p);
       unsigned i, j, k, l;
 
@@ -364,7 +364,7 @@ namespace oln {
 
       typedef Concrete(I_)			original_im_t;
       typedef Value(I_)				original_im_value_t;
-      typedef typename mute<I_, dfloat>::ret	trans_im_t;
+      typedef typename mute<I_, float_d>::ret	trans_im_t;
       typedef typename K::self_t		coeffs_t;
 
       dwt(const original_im_t& im) : original_im(im)
@@ -480,7 +480,7 @@ namespace oln {
       unsigned			im_size;
       unsigned			max_level;
       unsigned			current_level;
-      dfloat			norm;
+      float_d			norm;
       dwt_transform_type	transform_type;
     };
 
