@@ -1,4 +1,4 @@
-# aclocal.m4 generated automatically by aclocal 1.6.1a -*- Autoconf -*-
+# aclocal.m4 generated automatically by aclocal 1.6.2 -*- Autoconf -*-
 
 # Copyright 1996, 1997, 1998, 1999, 2000, 2001, 2002
 # Free Software Foundation, Inc.
@@ -138,7 +138,7 @@ AC_DEFUN([AM_AUTOMAKE_VERSION],[am__api_version="1.6"])
 # Call AM_AUTOMAKE_VERSION so it can be traced.
 # This function is AC_REQUIREd by AC_INIT_AUTOMAKE.
 AC_DEFUN([AM_SET_CURRENT_AUTOMAKE_VERSION],
-	 [AM_AUTOMAKE_VERSION([1.6.1a])])
+	 [AM_AUTOMAKE_VERSION([1.6.2])])
 
 # Helper functions for option handling.                    -*- Autoconf -*-
 
@@ -470,7 +470,7 @@ AC_REQUIRE([AM_DEP_TRACK])dnl
 
 ifelse([$1], CC,   [depcc="$CC"   am_compiler_list=],
        [$1], CXX,  [depcc="$CXX"  am_compiler_list=],
-       [$1], OBJC, [depcc="$OBJC" am_compiler_list='gcc3 gcc']
+       [$1], OBJC, [depcc="$OBJC" am_compiler_list='gcc3 gcc'],
        [$1], GCJ,  [depcc="$GCJ"  am_compiler_list='gcc3 gcc'],
                    [depcc="$$1"   am_compiler_list=])
 

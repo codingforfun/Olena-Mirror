@@ -13,7 +13,6 @@ nobase_oln_HEADERS =				\
   basics2d.hh					\
   basics3d.hh					\
   config/system.hh				\
-  config/hash_map.hh				\
   convert/basics.hh				\
   convert/bound.hh				\
   convert/colorconv.hh				\
@@ -207,7 +206,7 @@ nobase_oln_HEADERS =				\
 EXTRA_DIST = config/extrconf.sh
 PERL = perl
 SCANDEFS_PL = $(top_srcdir)/tools/scandefs.pl
-PCONF_OCCURS = config/system.hh config/hash_map.hh
+PCONF_OCCURS = config/system.hh
 $(top_srcdir)/src/config/extrconf.sh: $(SCANDEFS_PL) $(PCONF_OCCURS)
 	$(PERL) $(SCANDEFS_PL) $(PCONF_OCCURS) >$@
 

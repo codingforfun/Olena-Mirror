@@ -12,7 +12,7 @@ AC_PROG_CXX
 AC_PROG_RANLIB
 
 AC_LANG(C++)
-AC_CHECK_HEADERS([hash_map ext/hash_map stl_config.h])
+AC_CHECK_HEADERS([stl_config.h])
 
 AC_CONFIG_FILES([
   Makefile

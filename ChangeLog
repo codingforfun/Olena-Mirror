@@ -1,17 +1,23 @@
+2002-06-27  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* configure.ac: Don't check for hash_map and ext/hash_map.
+	* src/config/hash_map.hh: Delete.
+	* src/Makefile.am (nobase_oln_HEADERS, PCONF_OCCURS): Remove
+	config/hash_map.hh.
+
 2002-06-26  Jerome Darbon  <jerome@epita.fr>
 
-	* src/level/lut.hh Change hash_map to map
+	* src/level/lut.hh: Change hash_map to map.
 
 2002-06-24  Quôc Peyrot  <chojin@lrde.epita.fr>
 
-	* src/Makefile.am (nobase_oln_HEADERS): Add core/threshold.hh.
-
+	* src/Makefile.am (nobase_oln_HEADERS): Add level/threshold.hh.
 
 2002-06-18  Quôc Peyrot  <chojin@lrde.epita.fr>
 
-	* src/level/threshold.hh: new functor
+	* src/level/threshold.hh: New file.
 
-2002-06-17  Quôc Peyrt  <chojin@lrde.epita.fr>
+2002-06-17  Quôc Peyrot  <chojin@lrde.epita.fr>
 
 	* src/core/internal/image3d.hh (nslices): Typo.
 
