@@ -31,22 +31,18 @@
 # include <mlc/type.hh>
 # include <vector>
 # include <oln/morpho/environments.hh>
+# include <oln/morpho/abstract/attribute.hh>
 
-// attribute dedicated macros
-# define attr_lambda_type(T)	typename oln::morpho::attr::attr_traits< T >::lambda_type
-# define attr_env_type(T)	typename oln::morpho::attr::attr_traits< T >::env_type
-# define attr_value_type(T)	typename oln::morpho::attr::attr_traits< T >::value_type
+// // attribute dedicated macros
+// # define attr_lambda_type(T)	typename oln::morpho::attr::attr_traits< T >::lambda_type
+// # define attr_env_type(T)	typename oln::morpho::attr::attr_traits< T >::env_type
+// # define attr_value_type(T)	typename oln::morpho::attr::attr_traits< T >::value_type
 
-# define attr_lambda_type_(T)	 oln::morpho::attr::attr_traits< T >::lambda_type
-# define attr_env_type_(T)	 oln::morpho::attr::attr_traits< T >::env_type
-# define attr_value_type_(T)	 oln::morpho::attr::attr_traits< T >::value_type
+// # define attr_lambda_type_(T)	 oln::morpho::attr::attr_traits< T >::lambda_type
+// # define attr_env_type_(T)	 oln::morpho::attr::attr_traits< T >::env_type
+// # define attr_value_type_(T)	 oln::morpho::attr::attr_traits< T >::value_type
 
 
-# define attr_type_decl(self_type) \
-      typedef mlc_exact_vt_type(self_type, Exact)	exact_type; \
-      typedef attr_value_type(exact_type)		value_type; \
-      typedef attr_env_type(exact_type)			env_type; \
-      typedef attr_lambda_type(exact_type)		lambda_type
 
 namespace oln {
   namespace morpho {
@@ -69,13 +65,13 @@ namespace oln {
       } // !tools
 
 
-      // the traits fwd declaration
-      /*!
-      ** Traits  for attributes information.
-      ** \param T Exact type of the attribute.
-      */
-      template <class T>
-      struct attr_traits;
+//       // the traits fwd declaration
+//       /*!
+//       ** Traits  for attributes information.
+//       ** \param T Exact type of the attribute.
+//       */
+//       template <class T>
+//       struct attr_traits;
 
       /*!
       ** \brief Change the exact type of an attribute.
@@ -90,115 +86,6 @@ namespace oln {
 
       // the attributes hierarchy
 
-      /*------------*
-	| attribute |
-	*-----------*/
-      /*!
-      ** \brief Attribute abstract class
-      **
-      ** Top of the attribute hierarchy.
-      */
-      template <class Exact>
-      class attribute: public mlc_hierarchy::any<Exact>
-      {
-      public:
-	typedef attribute<Exact>	self_type; /*< Self type of the class.*/
-	attr_type_decl(self_type);
-
-	/*!
-	** \brief += operator
-	**
-	** This is a static dispatcher for the += operator.
-	** This method is abstract.
-	*/
-	void operator+=(const exact_type &rhs)
-	{
-	  mlc_dispatch(pe)(rhs);
-	};
-
-	/*!
-	** \brief >= operator
-	**
-	** This is a static dispatcher for the >= operator.
-	*/
-	bool operator>=(const lambda_type &lambda) const
-	{
-	  mlc_dispatch(ge)(lambda);
-	};
-
-	/*!
-	** \brief "<" operator
-	**
-	** This is a static dispatcher for the "<" operator.
-	** This method is abstract.
-	*/
-	bool operator<(const lambda_type &lambda) const
-	{
-	  mlc_dispatch(less)(lambda);
-	};
-
-	/*!
-	** \brief "<" operator
-	**
-	** This is a static dispatcher for the "<" operator.
-	** This method is abstract.
-	*/
-	bool operator<(const exact_type &x) const
-	{
-	  mlc_dispatch(less2)(x);
-	};
-
-	/*!
-	** \brief != operator
-	**
-	** This is a static dispatcher for the != operator.
-	** This method is abstract.
-	*/
-	bool operator!=(const lambda_type &lambda) const
-	{
-	  mlc_dispatch(ne)(lambda);
-	};
-
-	/*!
-	** \brief conversion to lambda type.
-	**
-	** \warning Virtual method.
-	*/
-	const lambda_type &toLambda() const
-	{
-	  mlc_dispatch(toLambda)();
-	};
-
-	/*!
-	** \brief >= operator implementation.
-	**
-	** This is an implementation  of the >= operator.  Override this
-	** method to provide a new implementation of this operator.
-	** \warning This method SHOULDN'T be called.
-	*/
-	bool ge_impl(const lambda_type &lambda) const
-	{
-	  return !(*this < lambda);
-	};
-
-	/*!
-	** \brief "<" operator implementation.
-	**
-	** This is an implementation  of the < operator.  Override this
-	** method to provide a new implementation of this operator.
-	** \warning This method SHOULDN'T be called.
-	*/
-	bool less2_impl(const exact_type &x) const
-	{
-	  return *this < x.toLambda();
-	};
-
-
-
-      protected:
-	attribute() {};
-
-      };
 
       /*-----------*
 	|   card    |
@@ -211,7 +98,7 @@ namespace oln {
       */
       template <class T = unsigned, class Exact = mlc::final>
       class card_type:
-	public attribute<mlc_2_exact_vt_type(card_type, T, Exact)>
+	public abstract::attribute<mlc_2_exact_vt_type(card_type, T, Exact)>
       {
       public:
 	typedef card_type<T, Exact>			self_type; /*!< Self type of the class. */
@@ -240,7 +127,7 @@ namespace oln {
 	** Every parameters are useless.
 	*/
 	template <class I>
-	  card_type(const abstract::image<I>&,
+	  card_type(const oln::abstract::image<I>&,
 		    const oln_point_type(I)&,
 		    const env_type&):
 	  value_(ntg_unit_val(value_type))
@@ -338,9 +225,9 @@ namespace oln {
 	** Every parameters are useless.
 	*/
 	template <class I2>
-	  card_full_type(const abstract::image<I2> &im,
-		    const oln_point_type(I2) &p,
-		    const env_type &env): super_type(im, p, env)
+	  card_full_type(const oln::abstract::image<I2> &im,
+			 const oln_point_type(I2) &p,
+			 const env_type &env): super_type(im, p, env)
 	  {
 	  }
       };
@@ -356,7 +243,7 @@ namespace oln {
       */
       template <class I, class Exact = mlc::final>
       class volume_type:
-	public attribute<mlc_2_exact_vt_type(volume_type, I, Exact)>
+	public abstract::attribute<mlc_2_exact_vt_type(volume_type, I, Exact)>
       {
       public:
 	typedef volume_type<I, Exact>			self_type; /*!< Self type of the class. */
@@ -383,7 +270,7 @@ namespace oln {
 	** \brief Ctor from a point and an image.
 	*/
 	template <class J>
-	  volume_type(const abstract::image<J> &,
+	  volume_type(const oln::abstract::image<J> &,
 		      const oln_point_type(J) &p,
 		      const env_type &e) :
 	  //	  reflevel_(e.getImage()[p]),
@@ -521,7 +408,7 @@ namespace oln {
       */
       template <class T = unsigned, class Exact = mlc::final>
       class integral_type:
-	public attribute<mlc_2_exact_vt_type(integral_type, T, Exact)>
+	public abstract::attribute<mlc_2_exact_vt_type(integral_type, T, Exact)>
       {
       public:
 	typedef integral_type<T, Exact>			self_type; /*!< Self type of the class. */
@@ -548,7 +435,7 @@ namespace oln {
 	** \brief Ctor from a point and an image.
 	*/
 	template <class I>
-	  integral_type(const abstract::image<I> &input,
+	  integral_type(const oln::abstract::image<I> &input,
 			const oln_point_type(I) &p,
 			const env_type &) :
 	  value_(input[p])
@@ -639,7 +526,7 @@ namespace oln {
       {
       public:
 	typedef other_image<Dad, I,  Exact>						self_type; /*< Self type of the class.*/
-	typedef typename abstract::image<mlc_exact_type(I)>				im_type; /*< Type of substituted image.*/
+	typedef typename oln::abstract::image<mlc_exact_type(I)>				im_type; /*< Type of substituted image.*/
 	attr_type_decl(self_type);
 	typedef typename change_exact<Dad,
 				      typename mlc::exact_vt<other_image<Dad, I, Exact>,
@@ -670,7 +557,7 @@ namespace oln {
 	** the image contained in the environment.
 	*/
 	template <typename IM>
-	other_image(const abstract::image<IM> &,
+	other_image(const oln::abstract::image<IM> &,
 		    const oln_point_type(I) &p,
 		    const env_type & e): super_type(e.getImage(), p, e)
 	{
@@ -690,11 +577,11 @@ namespace oln {
       */
       template <class I, class Exact = mlc::final>
       class ball_parent_change:
-	public attribute<mlc_2_exact_vt_type(ball_parent_change, I, Exact)>
+	public abstract::attribute<mlc_2_exact_vt_type(ball_parent_change, I, Exact)>
       {
       public:
 	typedef ball_parent_change<I,  Exact>			self_type; /*< Self type of the class.*/
-	typedef typename abstract::image<mlc_exact_type(I)>	im_type; /*< Type of substituted image.*/
+	typedef typename oln::abstract::image<mlc_exact_type(I)>	im_type; /*< Type of substituted image.*/
 	attr_type_decl(self_type);
 	typedef oln_value_type(I)				pts_type; ///< should be list <?>
 	typedef typename pts_type::const_iterator		cst_iter_type; ///< const iterator on Point vector.
@@ -726,7 +613,7 @@ namespace oln {
 	** the image contained in the environment.
 	*/
 	template <typename IM>
-	ball_parent_change(const abstract::image<IM> &,
+	ball_parent_change(const oln::abstract::image<IM> &,
 			   const oln_point_type(IM) &p,
 			   const env_type &e): points_()//: super_type(/*e.getImage(), */e.getPoint(p), e)
 	{
@@ -857,7 +744,7 @@ namespace oln {
       */
       template <class T = unsigned, class Exact = mlc::final>
       class height_type:
-	public attribute<mlc_2_exact_vt_type(height_type, T, Exact)>
+	public abstract::attribute<mlc_2_exact_vt_type(height_type, T, Exact)>
       {
       public:
 	typedef height_type<T, Exact>			self_type;
@@ -887,7 +774,7 @@ namespace oln {
 	** \brief Ctor from a point and an image.
 	*/
 	template <class I>
-	  height_type(const abstract::image<I> &input,
+	  height_type(const oln::abstract::image<I> &input,
 		      const oln_point_type(I) &p,
 		      const env_type&):
 	  value_(ntg_zero_val(value_type)),
@@ -1000,7 +887,7 @@ namespace oln {
       */
       template <class T = unsigned, class Exact = mlc::final>
       class maxvalue_type:
-	public attribute<mlc_2_exact_vt_type(maxvalue_type, T, Exact)>
+	public abstract::attribute<mlc_2_exact_vt_type(maxvalue_type, T, Exact)>
       {
       public:
 	typedef maxvalue_type<T, Exact>			self_type; ///< Self type of the class.
@@ -1034,7 +921,7 @@ namespace oln {
 	** \arg p Point to consider in the image.
 	*/
 	template <class I>
-	  maxvalue_type(const abstract::image<I> &input,
+	  maxvalue_type(const oln::abstract::image<I> &input,
 			const oln_point_type(I) &p,
 			const env_type &):
 	  value_(input[p])
@@ -1116,7 +1003,7 @@ namespace oln {
       */
       template <class T = unsigned, class Exact = mlc::final>
       class minvalue_type:
-	public attribute<mlc_2_exact_vt_type(minvalue_type, T, Exact)>
+	public abstract::attribute<mlc_2_exact_vt_type(minvalue_type, T, Exact)>
       {
       public:
 	typedef minvalue_type<T, Exact>			self_type;
@@ -1150,7 +1037,7 @@ namespace oln {
 	** \arg p Point to consider in the image.
 	*/
 	template <class I>
-	  minvalue_type(const abstract::image<I> &input,
+	  minvalue_type(const oln::abstract::image<I> &input,
 			const oln_point_type(I) &p,
 			const env_type &) :
 	  value_(input[p])
@@ -1232,12 +1119,12 @@ namespace oln {
       */
       template <class I, class Exact = mlc::final>
       class ball_type:
-	public attribute<mlc_2_exact_vt_type(ball_type, I, Exact)>
+	public abstract::attribute<mlc_2_exact_vt_type(ball_type, I, Exact)>
       {
       public:
 	typedef ball_type<I, Exact>			self_type; ///< Self type of the class.
 	attr_type_decl(self_type);
-	typedef abstract::image<mlc_exact_type(I)>	im_type; ///< Image type.
+	typedef oln::abstract::image<mlc_exact_type(I)>	im_type; ///< Image type.
 	typedef oln_point_type(im_type)			point_type; ///< Point type associated to im_type.
 	typedef oln_dpoint_type(im_type)			dpoint_type; ///< Dpoint type associated to im_type.
 	typedef std::vector<point_type>			pts_type; ///< Point vector type.
@@ -1395,12 +1282,12 @@ namespace oln {
       */
       template <class I, class Exact = mlc::final>
       class dist_type:
-	public attribute<mlc_2_exact_vt_type(dist_type, I, Exact)>
+	public abstract::attribute<mlc_2_exact_vt_type(dist_type, I, Exact)>
       {
       public:
 	typedef dist_type<I, Exact>			self_type; ///< Self type of the class.
 	attr_type_decl(self_type);
-	typedef abstract::image<mlc_exact_type(I)>	im_type; ///< Image type.
+	typedef oln::abstract::image<mlc_exact_type(I)>	im_type; ///< Image type.
 	typedef oln_point_type(im_type)			point_type; ///< Point type associated to im_type.
 	typedef oln_dpoint_type(im_type)			dpoint_type; ///< Dpoint type associated to im_type.
 
@@ -1547,12 +1434,12 @@ namespace oln {
       */
       template <class I, class Exact = mlc::final>
       class cube_type:
-	public attribute<mlc_2_exact_vt_type(cube_type, I, Exact)>
+	public abstract::attribute<mlc_2_exact_vt_type(cube_type, I, Exact)>
       {
       public:
 	typedef cube_type<I, Exact>			self_type; ///< Self type of the class.
 	attr_type_decl(self_type);
-	typedef abstract::image<mlc_exact_type(I)>	im_type; ///< Image type.
+	typedef oln::abstract::image<mlc_exact_type(I)>	im_type; ///< Image type.
 	typedef oln_point_type(im_type)			point_type; ///< Point type associated to im_type.
 	typedef oln_dpoint_type(im_type)			dpoint_type; ///< Dpoint type associated to im_type.
 
@@ -1716,12 +1603,12 @@ namespace oln {
       */
       template <class I, class Exact = mlc::final>
       class box_type:
-	public attribute<mlc_2_exact_vt_type(box_type, I, Exact)>
+	public abstract::attribute<mlc_2_exact_vt_type(box_type, I, Exact)>
       {
       public:
 	typedef box_type<I, Exact>			self_type; ///< Self type of the class.
 	attr_type_decl(self_type);
-	typedef abstract::image<mlc_exact_type(I)>	im_type; ///< Image type.
+	typedef oln::abstract::image<mlc_exact_type(I)>	im_type; ///< Image type.
 	typedef oln_point_type(im_type)			point_type; ///< Point type associated to im_type.
 	typedef oln_dpoint_type(im_type)			dpoint_type; ///< Dpoint type associated to im_type.
 	enum {dim = point_traits<point_type>::dim };

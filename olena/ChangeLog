@@ -1,3 +1,9 @@
+2004-09-08  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* oln/morpho/abstract/attribute.hh: Add file.
+	* oln/morpho/abstract/attribute.hxx: Likewse.
+	* oln/morpho/attributes.hh: Clean the file.
+
 2004-08-16  Roland Levillain  <roland@lrde.epita.fr>
 
 	* oln/utils/timer.hh (timer::restart): Fix method to allow a
