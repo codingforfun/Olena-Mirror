@@ -41,6 +41,7 @@ AC_CONFIG_FILES([Makefile
                  metalic/tests/check/Makefile
 		 olena/Makefile
 		 olena/img/Makefile
+		 olena/oln/Makefile
 		 olena/oln/config/pconf.hh:olena/oln/config/pconf-hh.in])
 
 ### Olena components.

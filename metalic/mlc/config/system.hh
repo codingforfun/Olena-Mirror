@@ -25,11 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CONFIG_SYSTEM_HH
-# define OLENA_CONFIG_SYSTEM_HH
+#ifndef METALIC_CONFIG_SYSTEM_HH
+# define METALIC_CONFIG_SYSTEM_HH
 
 # ifdef HAVE_CONFIG_H
 #  include <config.h>
 # endif 
 
-#endif // OLENA_CONFIG_SYSTEM_HH
+#endif // !METALIC_CONFIG_SYSTEM_HH

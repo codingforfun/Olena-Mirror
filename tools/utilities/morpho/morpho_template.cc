@@ -1,4 +1,4 @@
-// Copyright (C) 2002,2003  EPITA Research and Development Laboratory
+// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,14 +26,17 @@
 // Public License.
 
 #include <ntg/all.hh>
+
 #include <oln/basics2d.hh>
 #include <oln/basics3d.hh>
+#include <oln/config/system.hh>
 #include <oln/morpho/erosion.hh>
 #include <oln/morpho/dilation.hh>
 #include <oln/morpho/opening.hh>
 #include <oln/morpho/closing.hh>
 #include <oln/morpho/gradient.hh>
 #include <oln/morpho/top_hat.hh>
+
 #include <iostream>
 
 #include "getopt.hh"

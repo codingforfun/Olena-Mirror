@@ -28,7 +28,7 @@
 #ifndef OPTRAITS_BUILTINS_INT_HH
 # define OPTRAITS_BUILTINS_INT_HH
 
-# include <oln/config/system.hh>
+# include <ntg/config/system.hh>
 
 # include <ntg/optraits_scalar.hh>
 # include <ntg/optraits_builtins_int_defs.hh>

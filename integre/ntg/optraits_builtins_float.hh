@@ -28,7 +28,7 @@
 #ifndef OLENA_VALUE_OPTRAITS_BUILTINS_FLOAT_HH
 # define OLENA_VALUE_OPTRAITS_BUILTINS_FLOAT_HH
 
-# include <oln/config/system.hh> // for OLN_FLOAT_INFINITY
+# include <ntg/config/system.hh> // for OLN_FLOAT_INFINITY
 # include <mlc/cmp.hh>
 # include <ntg/builtins_properties.hh>
 # include <ntg/global_ops_traits.hh>

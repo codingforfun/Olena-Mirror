@@ -1,6 +1,4 @@
 # -*- Makefile -*-
 
 AM_CXXFLAGS = $(CXXFLAGS_OPTIMIZE) $(CXXFLAGS_STRICT_ERRORS)
-# FIXME: metalic should not need Olena includes.
-AM_CPPFLAGS = -I$(top_srcdir)/metalic/tests/check \
-  -I$(OLN_LOCAL_BUILD) -I$(OLN_LOCAL_SRC)
+AM_CPPFLAGS = -I$(top_srcdir)/metalic/tests/check

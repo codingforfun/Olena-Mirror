@@ -28,7 +28,7 @@
 #ifndef OLENA_VALUE_ALL_HH
 # define OLENA_VALUE_ALL_HH
 
-# include <oln/config/system.hh>
+# include <ntg/config/system.hh>
 
 # include <ntg/type.hh>
 # include <ntg/predecls.hh>

@@ -1,4 +1,4 @@
-// Copyright (C) 2001,2002,2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,9 +26,9 @@
 // Public License.
 
 #ifndef OLENA_CONFIG_MATH_HH
-# define OLENA_CONFIG_SYSTEM_HH
+# define OLENA_CONFIG_MATH_HH
 
-# include <oln/config/system.hh>
+# include <ntg/config/system.hh>
 
 # include <cmath>
 
@@ -84,4 +84,4 @@ static inline float roundf(float f)
 
 }
 
-#endif
+#endif // !OLENA_CONFIG_MATH_HH

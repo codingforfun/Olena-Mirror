@@ -1,5 +1,14 @@
 2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* tests/array/gen_test_utils/prelude: Fix includes.
+
+	* mlc/config/system.hh: Fix header guard.
+
+	* tests/check/Makefile.flags: Remove useless reference to Olena
+	headers path.
+
+2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* mlc/objs.hh: Move array related code ...
 	* mlc/array/objs.hh: ... here.
 

@@ -36,50 +36,6 @@
 #  include <oln/config/pconf.hh>
 # endif
 
-# include <oln/config/math.hh>
+# include <ntg/config/system.hh>
 
-/* The STL used by g++ versions < 3 have namespaces disabled,
-   because these g++ versions do not honor `std::' (unless requested).
-
-   This means that all STL entities are declared in the global namespace,
-   even the template operators that normally lie in std::rel_ops.  This
-   is harmful because a global template operator have priority over
-   any herited operator (these involve a derived-to-base-class conversion).
-   Consider:
-
-   #include <utility> // this defines the rel_ops operators.
-   #include <iostream>
-
-   struct A
-   {
-     bool operator>(const A& a) const { return true; }
-     bool operator<(const A& a) const { return false; }
-   };
-
-   struct B : public A { };
-
-   int main()
-   {
-     B b1, b2;
-     cout << (b1 > b2) << endl;
-   }
-
-   The above example will print `0' instead of `1' because the template
-   `operator>' defined by STL is used instead of our `A::operator>'.
-
-   Because of this, and other similar errors hard to spot,
-   we tweak the STL definitions so that these operators
-   are declared in the `rel_ops' namespace.  (The standard requires
-   `std::rel_ops' but since g++ < 3 doesn't honor `std' it makes sense
-   to use only `rel_ops'.)
-*/
-
-# if defined(__GNUC__) && (__GNUC__ < 3) 
-#  include <stl_config.h>
-#  undef __STL_BEGIN_RELOPS_NAMESPACE
-#  define __STL_BEGIN_RELOPS_NAMESPACE namespace rel_ops {
-#  undef __STL_END_RELOPS_NAMESPACE
-#  define __STL_END_RELOPS_NAMESPACE }
-# endif
-
-#endif // OLENA_CONFIG_SYSTEM_HH
+#endif // !OLENA_CONFIG_SYSTEM_HH

@@ -28,7 +28,7 @@
 #ifndef OLENA_VALUE_OPTRAITS_INT_S_HH
 # define OLENA_VALUE_OPTRAITS_INT_S_HH
 
-# include <oln/config/system.hh>
+# include <ntg/config/system.hh>
 
 # include <mlc/bool.hh>
 # include <mlc/is_a.hh>

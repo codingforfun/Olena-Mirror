@@ -28,7 +28,7 @@
 #ifndef OLENA_VALUE_CPLX_HH
 # define OLENA_VALUE_CPLX_HH
 
-# include <oln/config/system.hh>
+# include <ntg/config/system.hh>
 
 # include <mlc/cmp.hh>
 # include <mlc/is_a.hh>

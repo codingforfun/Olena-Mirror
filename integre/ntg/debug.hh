@@ -28,7 +28,7 @@
 #ifndef OLENA_VALUE_DEBUG_HH
 # define OLENA_VALUE_DEBUG_HH
 
-# include <oln/config/system.hh>
+# include <ntg/config/system.hh>
 # include <ntg/optraits.hh>
 # include <string>
 

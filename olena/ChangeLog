@@ -1,5 +1,18 @@
 2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* oln/config/system.hh: Include ntg/config/system.hh.
+
+	* oln/config/math.hh: Move into $top_srcdir/integre/ntg/config/.
+
+	* oln/Makefile.am: Adjust consequently.
+
+2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Makefile.am: Move header list ...
+	* oln/Makefile.am: ... here.
+	
+2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
 	* oln/basics.hh, oln/core/internal/iter1d.hh,
 	oln/core/internal/iter2d.hh, oln/core/internal/iter3d.hh,
 	oln/core/winiter.hh, oln/core/winneighb.hh: Update includes.

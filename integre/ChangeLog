@@ -1,5 +1,24 @@
 2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* ntg/Makefile.am (nobase_ntg_HEADERS): Update.
+
+	* ntg/config/math.hh: Fix header guard.
+
+	* tests/types/Makefile.am (check-local): Remove useless Olena
+	headers path.
+
+	* ntg/all.hh, ntg/color.hh, ntg/cplx.hh, ntg/debug.hh,
+	ntg/int_s.hh, ntg/int_u.hh, interval.hh, ntg/optraits.hh,
+	ntg/optraits_builtins_float.hh, optraits_builtins_int.hh,
+	ntg/optraits_cycle.hh, optraits_int_s.hh,
+	ntg/optraits_int_u.hh: Update includes.
+
+	* ntg/config/system.hh: New file.
+
+	* ntg/Makefile.am: Adjust consequently.
+	
+2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* ntg/vec.hh: Update includes.
 
 2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>

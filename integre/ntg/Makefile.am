@@ -8,6 +8,8 @@ nobase_ntg_HEADERS =				\
   builtins_properties.hh			\
   cast.hh					\
   color.hh					\
+  config/math.hh				\
+  config/system.hh				\
   cplx.hh					\
   cplx_representation.hh			\
   cycle.hh					\

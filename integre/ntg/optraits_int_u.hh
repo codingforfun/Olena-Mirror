@@ -28,7 +28,7 @@
 #ifndef OLENA_VALUE_OPTRAITS_INT_U_HH
 # define OLENA_VALUE_OPTRAITS_INT_U_HH
 
-# include <oln/config/system.hh>
+# include <ntg/config/system.hh>
 # include <ntg/builtins_properties.hh>
 
 # include <ntg/optraits_scalar.hh>
