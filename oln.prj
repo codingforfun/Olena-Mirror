@@ -1,11 +1,13 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 179)
-(Parent-Version oln 10 178)
-(Version-Log "")
+(Project-Version oln 10 180)
+(Parent-Version oln 10 179)
+(Version-Log "2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
+	* doc/dev/build.texi: Replace '@item @strong[...]' by '@headitem'.
+")
 (New-Version-Log "")
-(Checkin-Time "Tue, 20 Apr 2004 18:18:10 +0200")
+(Checkin-Time "Tue, 20 Apr 2004 18:45:34 +0200")
 (Checkin-Login van-vl_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -109,7 +111,7 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.11 600))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.9 600))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.10 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.45 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.42 600))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.92 600))
@@ -734,7 +736,7 @@
 ;; Files added by populate at Fri, 24 Jan 2003 14:34:30 +0100,
 ;; to version 7.40(w), by raph:
 
-  (doc/dev/build.texi (oln/p/42_build.texi 1.12 600))
+  (doc/dev/build.texi (oln/p/42_build.texi 1.13 600))
 
 ;; Files added by populate at Fri, 24 Jan 2003 14:34:47 +0100,
 ;; to version 7.40(w), by raph:

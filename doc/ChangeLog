@@ -1,3 +1,7 @@
+2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* doc/dev/build.texi: Replace '@item @strong[...]' by '@headitem'.
+
 2004-04-15  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* dev/faq.texi: Update the file.
