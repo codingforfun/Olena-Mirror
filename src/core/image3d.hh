@@ -109,6 +109,7 @@ namespace oln {
     image3d(const self& rhs); // w/o impl
   };
 
+  _ImageForDim(3, image3d)
 
 
   // specialization for bin data

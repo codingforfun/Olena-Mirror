@@ -95,7 +95,7 @@ namespace oln {
     image1d(const self& rhs); // w/o impl
   };
 
-
+  _ImageForDim(1, image1d)
 
   // specialization for bin data
 

@@ -70,6 +70,17 @@ Exact(Pointable)::point
 # define DPoint(DPointable)			\
 Exact(DPointable)::dpoint
 
+  template<unsigned DIM>  struct image_for_dim {};
+
+#define _ImageForDim(DIM, TYPE)                 \
+  template<>                                    \
+  struct image_for_dim<DIM> {                   \
+    template<class T>                           \
+    struct with_type {                          \
+      typedef TYPE<T> ret;                      \
+    };                                          \
+  };
+
 } // end of oln
 
 

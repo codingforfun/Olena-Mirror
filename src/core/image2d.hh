@@ -108,6 +108,7 @@ namespace oln {
   };
 
 
+  _ImageForDim(2, image2d)
 
   // specialization for bin data
 
