@@ -1,5 +1,12 @@
 2004-04-09  Damien Thivolle  <damien@lrde.epita.fr>
 
+	* configure.ac: Add a workaround for some versions of cc1plus.
+	Add new variable `DOC_CPPFLAGS' for the documentation generation.
+	* config/oln.m4: Readd normal flags for g++-3.2
+	Add `DOC_CPPFLAGS ' affectation.
+
+2004-04-09  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* cleanup.sh: Replace `-or' by `-o' which is more portable.
 	* config/oln.m4: Improve quoting.
 

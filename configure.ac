@@ -436,6 +436,18 @@ AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
 
 ])dnl End of OLN_COLLECTION([OLN_TOP])
 
+
+# Workaround for old versions of cc1plus.
+
+if test x"$srcdir" = x. ; then
+  DEFAULT_INCLUDES=-I.
+else
+  DEFAULT_INCLUDES="-I. -I\$(srcdir)"
+fi
+AC_SUBST([DEFAULT_INCLUDES])
+AC_SUBST([DOC_CPPFLAGS])
+
+
 AC_OUTPUT
 
 if test "x$oln_cxxflags_clean" = xno; then

@@ -15,7 +15,7 @@ doc: html.tar.gz oln-ref.pdf
 doxy:
 	$(EXDOC) --config=$(OUT_DIR)/exdoc.config  --output-dir=$(OUT_DIR) --input-dir=$(top_srcdir)
 	mkdir -p img
-	cd $(OUT_DIR) && $(MAKE) -f makefile MY_CPPFLAGS="$(CPPFLAGS)"
+	cd $(OUT_DIR) && $(MAKE) -f makefile
 	$(IMG_CONV) $(top_srcdir)/olena/img img preserve
 	$(IMG_CONV) img img nopreserve
 	$(DOXYGEN) doxygen.config

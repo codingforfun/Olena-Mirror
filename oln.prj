@@ -1,18 +1,20 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 138)
-(Parent-Version oln 10 137)
+(Project-Version oln 10 139)
+(Parent-Version oln 10 138)
 (Version-Log "2004-04-09  Damien Thivolle  <damien@lrde.epita.fr>
-	* doc/ref/Makefile.am: Fix files cleaning.
-	Add MY_CPPFLAGS=... when running make on out/makefile.
-	* doc/ref/exdoc.pl: Add a third argument to the generated scripts.
-	* doc/ref/out/exdoc.config.in: Add `CPPFLAGS' to the compilation line.
-	* cleanup.sh: Replace `-or' by `-o' which is more portable.
-	* config/oln.m4: Improve quoting.
+	* configure.ac: Add a workaround for some versions of cc1plus.
+	Add new variable `DOC_CPPFLAGS' for the documentation generation.
+	* config/oln.m4: Readd normal flags for g++-3.2
+	Add `DOC_CPPFLAGS ' affectation.
+	* doc/ref/Makefile.am: Remove MY_CPPFLAGS.
+	* doc/ref/exdoc.pl: Likewise.
+	* doc/ref/out/exdoc.config.in: Remove the use of the third argument.
+	The script directly use the `DOC_CPPFLAGS' variable.
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 09 Apr 2004 13:01:18 +0200")
+(Checkin-Time "Fri, 09 Apr 2004 16:53:44 +0200")
 (Checkin-Login thivol_d)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -115,8 +117,8 @@
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.20 600))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.15 600))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.21 600))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.16 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.40 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 600))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.75 600))
@@ -131,7 +133,7 @@
 
   (cleanup.sh (oln/o/29_cleanup.sh 1.6 700))
 
-  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.16 600))
+  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.17 600))
 
   (doc/demo/image.cc (oln/d/46_image.cc 1.8 600))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.16.1.2 600))
@@ -140,7 +142,7 @@
   (doc/demo/tour.cc (oln/d/45_tour.cc 1.13 600))
   (doc/ref/bin () :directory)
   
-  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.18 600))
+  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.19 600))
   (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.6.1.5 600))
   (doc/ref/oln-ref.tex (oln/f/14_oln-ref.te 1.3.1.3 600))
   (doc/ref/integre-ref.tex (oln/g/34_ref-types. 1.12 600))
@@ -305,7 +307,7 @@
   (olena/oln/level/lut.hh (oln/29_lut.hh 1.10 600))
   (olena/oln/level/set_level.hh (oln/p/1_set_level. 1.11 600))
   (olena/oln/level/threshold.hh (oln/f/15_threshold. 1.14 600))
-  (config/oln.m4 (oln/j/15_oln.m4 1.39 600))
+  (config/oln.m4 (oln/j/15_oln.m4 1.40 600))
 
   (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.15 600))
   (metalic/mlc/array/1d.hh (oln/f/23_array1d.hh 1.11 600))
@@ -1211,7 +1213,7 @@
   (olena/tests/morpho/tests/attr_op_cl (oln/k/0_attr_op_cl 1.3 600))
 
 
-  (doc/ref/exdoc.pl (oln/v/26_exdoc.pl 1.5 700))
+  (doc/ref/exdoc.pl (oln/v/26_exdoc.pl 1.6 700))
   (doc/ref/doxygen.config.in (oln/v/29_doxygen.co 1.4 600))
   (doc/ref/exdoc.mk.in (oln/k/4_exdoc.mk.i 1.1 600))
   
@@ -1224,7 +1226,7 @@
 ;; Files added by populate at Wed, 25 Feb 2004 16:41:16 +0100,
 ;; to version 10.67(w), by palma_g:
 
-  (doc/ref/out/exdoc.config.in (oln/k/7_exdoc.conf 1.6 600))
+  (doc/ref/out/exdoc.config.in (oln/k/7_exdoc.conf 1.7 600))
 
 ;; Files deleted by depopulate at Tue, 09 Mar 2004 10:41:51 +0100,
 ;; from version 10.70(w), by palma_g:

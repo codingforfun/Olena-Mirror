@@ -1,5 +1,12 @@
 2004-04-09  Damien Thivolle  <damien@lrde.epita.fr>
 
+	* doc/ref/Makefile.am: Remove MY_CPPFLAGS.
+	* doc/ref/exdoc.pl: Likewise.
+	* doc/ref/out/exdoc.config.in: Remove the use of the third argument.
+	The script directly use the `DOC_CPPFLAGS' variable.
+
+2004-04-09  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* doc/ref/Makefile.am: Fix files cleaning.
 	Add MY_CPPFLAGS=... when running make on out/makefile.
 	* doc/ref/exdoc.pl: Add a third argument to the generated scripts.
