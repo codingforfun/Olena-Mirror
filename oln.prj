@@ -1,29 +1,15 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 8 32)
-(Parent-Version oln 8 31)
-(Version-Log "Index: ChangeLog
+(Project-Version oln 8 33)
+(Parent-Version oln 8 32)
+(Version-Log "Index: tools/swilena/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* Makefile.am: Generate UPGRADING.
-
-	* NEWS: Update.
-
-Index: doc/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* dev/oln-dev.texi: Include upgrading.texi.
-	* Makefile.am: Adjust consequently.
-	* dev/upgrading.texi: New file.
-
-	* dev/thanks.texi, dev/srctree.texi: Update.
-
-	* ref/ref-types.tex: Fix typos.
-
+	* src/swilena_types.i: Ajust namespace of data types.
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 09 Apr 2003 22:31:55 +0200")
+(Checkin-Time "Thu, 24 Apr 2003 13:53:13 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -111,7 +97,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.15 640))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.7 640))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.6 640))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7 640))
 
   (attic/oln-ChangeLog (oln/6_ChangeLog 1.50.1.98.1.5 640))
   (attic/doc-ChangeLog (oln/e/1_ChangeLog 1.31 640))
@@ -577,7 +563,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (tools/swilena/src/swilena_neighborhood.i (oln/o/8_swilena_ne 1.1 640))
   (tools/swilena/src/swilena_point.i (oln/o/11_swilena_po 1.1 640))
   (tools/swilena/src/swilena_typedefs.i (oln/o/16_swilena_ty 1.1 640))
-  (tools/swilena/src/swilena_types.i (oln/o/3_swilena_ty 1.2 640))
+  (tools/swilena/src/swilena_types.i (oln/o/3_swilena_ty 1.3 640))
   (tools/swilena/src/swilena_window.i (oln/o/9_swilena_wi 1.1 640))
   (tools/swilena/src/swilena_w_window.i (oln/o/6_swilena_w_ 1.1 640))
   (tools/swilena/swilena.prj (oln/n/38_swilena.pr 1.1 640))
@@ -840,6 +826,6 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (doc/dev/upgrading.texi (oln/r/50_upgrading. 1.1 600))
 )
 (Merge-Parents
-  (8.31 complete)
+  (8.32 complete)
 )
 (New-Merge-Parents)
