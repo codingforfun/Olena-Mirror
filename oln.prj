@@ -1,13 +1,15 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 7 12)
-(Parent-Version oln 7 11)
+(Project-Version oln 7 13)
+(Parent-Version oln 7 12)
 (Version-Log "2003-01-16  Akim Demaille  <akim@epita.fr>
 
-	* oln/tests/meta/gen_test.cc: Indenting changes.")
+	* doc/doc/Makefile.am, doc/Makefile.am, oln/tests/Makefile.am,
+	* tools/utilities/Makefile.am, Makefile.am: Use $(FOO), not @FOO@:
+	's/@(w+)@/$($1)/g'.")
 (New-Version-Log "")
-(Checkin-Time "Thu, 16 Jan 2003 11:18:54 +0100")
+(Checkin-Time "Thu, 16 Jan 2003 13:38:59 +0100")
 (Checkin-Login akim)
 ;; diff-ignore configure$
 ;; diff-ignore aclocal\.m4$
@@ -102,7 +104,7 @@
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.7 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.8 640))
   (oln/ChangeLog (oln/o/30_ChangeLog 1.15 600))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.4 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.4 640))
@@ -129,10 +131,10 @@
 
   (doc/doc/bin () :directory)
   (doc/doc/html () :directory)
-  (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.22 640))
+  (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.23 640))
 
   (doc/doc/oln-ref.tex (oln/f/14_oln-ref.te 1.3 600))
-  (doc/Makefile.am (oln/e/0_Makefile.a 1.9 640))
+  (doc/Makefile.am (oln/e/0_Makefile.a 1.10 640))
 
   (doc/tpl/processing.tpl (oln/d/48_processing 1.14 640))
 
@@ -367,7 +369,7 @@
   (oln/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.6 640))
   (oln/tests/io/Makefile.am (oln/e/49_Makefile.a 1.8 640))
 
-  (oln/tests/Makefile.am (oln/e/45_Makefile.a 1.16 640))
+  (oln/tests/Makefile.am (oln/e/45_Makefile.a 1.17 640))
 
   (oln/tests/morpho/edoc.cc (oln/f/13_edoc.cc 1.3 640))
   (oln/tests/morpho/extrkiller.cc (oln/e/31_extrkiller 1.5.1.1 640))
@@ -433,7 +435,7 @@
 
   (tools/utilities/mosaic.cc (oln/g/0_mosaic.cc 1.4 640))
 
-  (tools/utilities/Makefile.am (oln/g/2_Makefile.a 1.8 640))
+  (tools/utilities/Makefile.am (oln/g/2_Makefile.a 1.9 640))
 ;; Files added by populate at Mon, 29 Jul 2002 16:23:03 +0200,
 ;; to version 0_5.4(w), by burrus_n:
 
@@ -738,7 +740,7 @@
 
 
 
-  (Makefile.am (oln/n/32_Makefile.a 1.4 640))
+  (Makefile.am (oln/n/32_Makefile.a 1.5 640))
 
 
   (tools/swilena/README (oln/n/35_README 1.1 640))

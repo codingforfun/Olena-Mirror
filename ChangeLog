@@ -1,5 +1,11 @@
 2003-01-16  Akim Demaille  <akim@epita.fr>
 
+	* doc/doc/Makefile.am, doc/Makefile.am, oln/tests/Makefile.am,
+	* tools/utilities/Makefile.am, Makefile.am: Use $(FOO), not @FOO@:
+	's/\@(\w+)\@/\$($1)/g'.
+
+2003-01-16  Akim Demaille  <akim@epita.fr>
+
 	* oln/oln/arith/internal/opdecls.hh, oln/oln/config/system.hh,
 	* oln/oln/convol/fast_gaussian.hh, oln/oln/convol/fast_gaussian.hxx,
 	* oln/oln/core/compose.hh, oln/oln/core/contract.hh,
