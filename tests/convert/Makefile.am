@@ -1,7 +1,5 @@
 include $(top_srcdir)/tests/check/Makefile.check
 
-TESTS = $(check_PROGRAMS)
-
 check_PROGRAMS = \
   8-nrgb-hsi \
   8-nrgb-hsl \

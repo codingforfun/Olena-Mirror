@@ -6,5 +6,3 @@ check_PROGRAMS =				\
 
 extrkiller_SOURCES = extrkiller.cc
 reconstruction_SOURCES = reconstruction.cc
-
-TESTS = $(check_PROGRAMS)

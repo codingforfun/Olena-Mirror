@@ -83,11 +83,10 @@ AM_CXXFLAGS = -Wall -W -ftemplate-depth-50 -ansi -pedantic
 AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/tests/check
 
 LDADD = $(top_builddir)/tests/check/libcheck.a
+TESTS = $(check_PROGRAMS)
 
 check_PROGRAMS = 2d
 2d_SOURCES = 2d.cc loadsave.hh
-
-TESTS = 2d
 subdir = tests/io
 mkinstalldirs = $(SHELL) $(top_srcdir)/tools/mkinstalldirs
 CONFIG_CLEAN_FILES =

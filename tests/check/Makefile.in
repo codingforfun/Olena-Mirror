@@ -84,6 +84,8 @@ check_LIBRARIES = libcheck.a
 
 libcheck_a_SOURCES = \
   check.hh					\
+  data.cc					\
+  data.hh					\
   main.cc					\
   srcdir.cc					\
   srcdir.hh					\
@@ -95,7 +97,7 @@ mkinstalldirs = $(SHELL) $(top_srcdir)/tools/mkinstalldirs
 CONFIG_CLEAN_FILES =
 libcheck_a_AR = $(AR) cru
 libcheck_a_LIBADD =
-am_libcheck_a_OBJECTS = main.$(OBJEXT) srcdir.$(OBJEXT) \
+am_libcheck_a_OBJECTS = data.$(OBJEXT) main.$(OBJEXT) srcdir.$(OBJEXT) \
 	verbose.$(OBJEXT)
 libcheck_a_OBJECTS = $(am_libcheck_a_OBJECTS)
 
@@ -106,8 +108,8 @@ LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
 depcomp = $(SHELL) $(top_srcdir)/tools/depcomp
 am__depfiles_maybe = depfiles
-@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/main.Po ./$(DEPDIR)/srcdir.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/verbose.Po
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/data.Po ./$(DEPDIR)/main.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/srcdir.Po ./$(DEPDIR)/verbose.Po
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
@@ -148,6 +150,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/data.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/srcdir.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/verbose.Po@am__quote@

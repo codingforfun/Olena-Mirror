@@ -19,7 +19,7 @@ check()
 {
   bool fail = false;
 
-  image2d<int_u8> lena = load(srcdir + "/../data/lena128.pgm");
+  image2d<int_u8> lena = load(data("lena128.pgm"));
 
   {
     for (unsigned int size=1; size < 20; ++size) {

@@ -83,6 +83,7 @@ AM_CXXFLAGS = -Wall -W -ftemplate-depth-50 -ansi -pedantic
 AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/tests/check
 
 LDADD = $(top_builddir)/tests/check/libcheck.a
+TESTS = $(check_PROGRAMS)
 
 check_PROGRAMS = \
   extrkiller					\
@@ -91,8 +92,6 @@ check_PROGRAMS = \
 
 extrkiller_SOURCES = extrkiller.cc
 reconstruction_SOURCES = reconstruction.cc
-
-TESTS = $(check_PROGRAMS)
 subdir = tests/morpho
 mkinstalldirs = $(SHELL) $(top_srcdir)/tools/mkinstalldirs
 CONFIG_CLEAN_FILES =

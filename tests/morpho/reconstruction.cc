@@ -32,7 +32,7 @@ check()
 {
   bool fail = false;
 
-  image2d<int_u8> lena = load(srcdir + "/../data/lena128.pgm");
+  image2d<int_u8> lena = load(data("lena128.pgm"));
   image2d<int_u8> lena_open = morpho::opening(lena, win_c4p());
   image2d<bin> minima_map(lena.size());
   image2d<int_u8> max_map(lena.size());

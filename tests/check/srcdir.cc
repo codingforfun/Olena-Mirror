@@ -10,7 +10,7 @@ srcdir_setup ()
 
   if (s == 0)
     // Assume we are run from the current directory.
-    srcdir = ".";
+    srcdir = "./";
   else
-    srcdir = s;
+    srcdir = std::string(s) + "/";
 }

@@ -1,0 +1,178 @@
+* The Olena test suite
+
+
+** Structure
+
+For each directory X in the source tree (src/), we should have a
+directory in the test tree (tests/), focusing on this part of Olena.
+
+There are two additional directories:
+
+ data/   contains data needed by the test from the other directories
+ check/  contains code common to all tests (libcheck.a, described below)
+
+
+** Prerequisites
+
+Some images in the data/ directory may need to be built.
+The following tools are used:
+
+  pngtopnm
+  ppmtopgm
+  pgmtopbm
+  pnmtoplainpnm
+  convert
+
+(Under Debian GNU/Linux, these are in the `netpbm' and `convert'
+packages.)
+
+
+** Running
+
+The first time, run
+
+  make check
+
+from the root directory (either the root directory of Olena, or
+tests/, the root directory of the test suite).  This will run `make
+check' into each directory recursively.  Especially, this will enter
+tests/data/ et tests/check/ and build stuff required by this other
+tests/ subdirectories, entered latter.
+
+Once the tests/data/ and tests/check/ files have been built once, it's
+possible to run `make check' from a specific directory in order to run
+only this particular part of the test suite.
+
+In each tests/ subdirectory, `make check' will compile all the
+programs, and run them one after the other producing an output
+such as
+
+PASS: extrkiller
+PASS: reconstruction
+==================
+All 2 tests passed
+==================
+
+The line `PASS: extrkiller' is displayed only once the extrkiller test
+has completed, so it may take a long time before something is actually
+displayed.
+
+Possible outcomes are
+
+  PASS:   the test was successful, as expected
+  XFAIL:  the test failed, as expected
+  FAIL:   the test failed, unexpectedly (it ought to PASS)
+  XPASS:  the test was successful, unexpectedly (it ought to XFAIL)
+  (none)  the test was skipped
+
+
+To run all tests with more details, use
+
+  make VERBOSE=1 check
+
+To restrict the list of tests run to test1 and test2, override
+the TESTS variable as follow:
+
+  make TESTS='test1 test2' check
+
+Finally, running one test manually can be done as follow
+
+  make extrkiller   # if it doesn't exist yet
+  ./extrkiller
+
+
+** Adding new tests
+
+*** Programming considerations
+
+**** check()
+
+The tests/check/libcheck.a library contains the common initialization
+and finalization code for all tests.  Especially, it supplies a main()
+function which will handle VERBOSE, and several helper functions such
+as data() or skip() defined below.
+
+Every test should define a check() function:
+
+  bool check (void);  // return true on failure, false otherwise.
+
+This function will be called by the main() function defined in
+libcheck.a.  The outcome of the test is of course tied to the
+result of check().
+
+**** std::cout
+
+When writing your test, think about the people who will have to debug
+it, should it ever fail.  Document it while you still now what it
+checks and how it does it.
+
+It's a good idea to display some tracing, or important values on
+std::cout, so as to help narrowing potential failure.  For instance,
+if your test run many sub-tests, display the outcome of each of them.
+
+(std::cout is inhibited by libcheck unless VERBOSE is defined, or the
+test is run manually)
+
+**** data()
+
+Try not to bloat the test suite with many different data files, if
+possible reuse the files already present in tests/data/.
+
+When reading a file from tests/data/, use the data(string) function to
+compute the filename (data() is supplied by libcheck.a).  For
+instance:
+
+  image2d<int_u8> img(data("lena.ppm"));
+
+Using data() in preference to a relative path to tests/data/ is
+required to support the so called VPATH configurations, where built
+files lie in a directory separate from the source.  Moreover this
+helps keeping the test cases independent from the location if the data
+(should a source quake occur).
+
+The file passed to data() must exist.
+
+**** skip()
+
+Testing outcomes are usually returned as a boolean by the check()
+function: false if the test succeeded, true if it failed.
+
+In the special event where you detect that your test cannot run (e.g.,
+because it tries to check an unsupported functionality), and should
+be skipped, call the skip() function.
+
+
+*** Makefiles
+
+Begin each Makefile.am with
+
+  include $(top_srcdir)/tests/check/Makefile.check
+
+lists all your test programs in a check_PROGRAMS variable:
+
+  check_PROGRAMS = test1 test2 ...
+
+and finally define the source for each of the above programs as
+follow:
+
+  test1_SOURCES = test1.cc test1.hh
+  test2_SOURCES = test2.cc
+
+In case your test requires some additional flags, list them in a
+_CXXFLAGS variable:
+
+  test2_CXXFLAGS = -DTORTURE=yes
+
+Finally, if you created a Makefile.am for a new directory add this
+directory to the SUBDIRS declaration of ../Makefile.am, update
+configure.ac to output the Makefile in your new directory, and run
+autoreconf.
+
+
+Local Variables:
+mode: outline
+End:
+
+ LocalWords:  src libcheck pngtopnm ppmtopgm pgmtopbm pnmtoplainpnm netpbm bool
+ LocalWords:  extrkiller XFAIL XPASS int img lena ppm VPATH srcdir cc hh ac
+ LocalWords:  CXXFLAGS DTORTURE SUBDIRS autoreconf
