@@ -1,47 +1,47 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 202)
-(Parent-Version oln 10 201)
-(Version-Log "Index: tools/ChangeLog
+(Project-Version oln 10 203)
+(Parent-Version oln 10 202)
+(Version-Log "Index: doc/ChangeLog
 from  Giovanni Palma  <giovanni@lrde.epita.fr>
 
-	* utilities/convert/color_space.cc: Remove warnings.
-	* utilities/convert/Makefile.am: Add AM_LDFLAGS.
+	* dev/build.texi: Use @item in doc.
 
-Index: tools/utilities/convert/color_space.cc
---- tools/utilities/convert/color_space.cc Mon, 28 Jun 2004 15:53:02 +0200 thivol_d (oln/u/19_color_spac 1.2 600)
-+++ tools/utilities/convert/color_space.cc Wed, 07 Jul 2004 11:31:07 +0200 palma_g (oln/u/19_color_spac 1.2 600)
-@@ -122,6 +122,7 @@
- from_x_to_rgb(const oln::image2d<T>			&in)
- {
-   assert(0);
-+  return oln::image2d<ntg::rgb_8>();
- }
+Index: doc/dev/build.texi
+--- doc/dev/build.texi Wed, 12 May 2004 11:18:13 +0200 reda (oln/p/42_build.texi 1.14 640)
++++ doc/dev/build.texi Fri, 09 Jul 2004 15:33:01 +0200 palma_g (oln/p/42_build.texi 1.14 640)
+@@ -259,7 +259,7 @@
+ Olena has been tested on the following configurations :
  
- #define FROM_X_TO_RGB(T)						\\
-@@ -138,6 +139,7 @@
- from_rgb_to_x(const oln::image2d<ntg::rgb_8>		&in)
- {
-   assert(0);
-+  return oln::image2d<T>();
- }
+ @multitable @columnfractions .33 .66
+-@headitem System @tab Compiler
++@item System @tab Compiler
+ @item Linux @tab g++ 3.0, 3.1, 3.2 and 3.3
+ @item Linux @tab icc (Intel's C++ Compiler) v7
+ @item MacOS X @tab g++ 3.1
+@@ -288,7 +288,7 @@
+ @command{make check}. The tests have been run on a Bi-Xeon 2.4Ghz machine.
  
- #define FROM_RGB_TO_X(T)						\\
-Index: tools/utilities/convert/Makefile.am
---- tools/utilities/convert/Makefile.am Tue, 29 Jun 2004 10:54:13 +0200 palma_g (oln/v/10_Makefile.a 1.3 600)
-+++ tools/utilities/convert/Makefile.am Wed, 07 Jul 2004 11:26:33 +0200 palma_g (oln/v/10_Makefile.a 1.3 600)
-@@ -1,4 +1,5 @@
--AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_OPTIMIZE) $(ZLIB_LDFLAGS)
-+AM_LDFLAGS = $(ZLIB_LDFLAGS)
-+AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_OPTIMIZE)
- INCLUDES = -I$(srcdir)/../../lib
- LDADD = ../../lib/libolntools.a
- bin_PROGRAMS = color_space
+ @multitable @columnfractions .5 .5
+-@headitem Compiler @tab Time
++@item Compiler @tab Time
+ @item  g++-3.0 @tab 23m20s
+ @item  g++-3.2 @tab 20m03s
+ @item  icc-7 @tab 12m52s
+@@ -298,7 +298,7 @@
+ just show the runtime benchmarks for the @file{extrkiller} test:
+ 
+ @multitable @columnfractions .25 .5 .25
+-@headitem Compiler @tab Options @tab Time
++@item Compiler @tab Options @tab Time
+ @item g++-3.0 @tab @option{-O3 -finline-limit-1500} @tab 2m08s
+ @item g++-3.2 @tab @option{-O3 -finline-limit-1500} @tab 1m50s
+ @item icc-7   @tab @option{-O3} @tab 5m41s
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 07 Jul 2004 11:34:58 +0200")
+(Checkin-Time "Fri, 09 Jul 2004 15:37:35 +0200")
 (Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -145,7 +145,7 @@ Index: tools/utilities/convert/Makefile.am
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.16 600))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.15 600))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.16 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.47 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.43 640))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.14 640))
@@ -770,7 +770,7 @@ Index: tools/utilities/convert/Makefile.am
 ;; Files added by populate at Fri, 24 Jan 2003 14:34:30 +0100,
 ;; to version 7.40(w), by raph:
 
-  (doc/dev/build.texi (oln/p/42_build.texi 1.14 640))
+  (doc/dev/build.texi (oln/p/42_build.texi 1.15 640))
 
 ;; Files added by populate at Fri, 24 Jan 2003 14:34:47 +0100,
 ;; to version 7.40(w), by raph:
@@ -1492,7 +1492,5 @@ Index: tools/utilities/convert/Makefile.am
   (olena/tests/morpher/tests/border (oln/u/16_border 1.1 600))
   (tools/utilities/convert/color_space.cc (oln/u/19_color_spac 1.3 600))
   (tools/utilities/convert/Makefile.am (oln/v/10_Makefile.a 1.4 600)))
-(Merge-Parents
-  (10.201 complete)
-)
+(Merge-Parents)
 (New-Merge-Parents)
