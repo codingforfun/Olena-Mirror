@@ -29,10 +29,10 @@
 /*=processing laplacian
  * ns: morpho, morpho::fast
  * what: Laplacian.
- * arg: const conversion<C>&, c, IN, conversion object
+ * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
  * arg: const abstract::image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
- * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
+ * ret: typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
  * doc:
  *   Compute the laplacian of \var{input} using \var{se}
  *   as structural element.

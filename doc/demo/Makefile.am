@@ -1,7 +1,8 @@
 ## Process this file with Automake to produce Makefile.in -*-Makefile-*-
 
 AM_CPPFLAGS = -DIMGDIR=\"$(top_srcdir)/olena/img\"
-AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_OPTIMIZE)
+AM_CXXFLAGS = $(CXXFLAGS_STRICT_ERRORS) $(CXXFLAGS_OPTIMIZE) $(ZLIB_CXXFLAGS)
+AM_LDFLAGS = $(ZLIB_LDFLAGS)
 
 # We used to declare these programs as `noinst_PROGRAMS', however
 # building them on each run of `make' turned to
@@ -10,7 +11,8 @@ AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_OPTIMIZE)
 #      ship the directory unbuilt, but still has to run make for
 #      the other directories).
 # So for now we'll just build these programs on `make check' and `make demo'.
-check_PROGRAMS = tour morpholena test-reconstruction convol-gaussian
+
+check_PROGRAMS = tour morpholena convol-gaussian
 
 .PHONY: demo
 demo: $(check_PROGRAMS)
@@ -26,7 +28,6 @@ morpholena_SOURCES = morpholena.cc \
   morpholena-wshed.cc \
   morpholena-wshed-beucher.cc
 
-test_reconstruction_SOURCES = test-reconstruction.cc
 convol_gaussian_SOURCES = convol-gaussian.cc
 
 CLEANFILES = \

@@ -31,10 +31,10 @@
 /*=processing beucher_gradient
  * ns: morpho, morpho::fast
  * what: Morphological Beucher Gradient.
- * arg: const conversion<C>&, c, IN, conversion object
+ * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
  * arg: const abstract::image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
- * ret: mute<I, typename convoutput<C, Value(I)>::ret>::ret
+ * ret: mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
  * doc:
  *   Compute the arithmetic difference between the diltation and
  * the erosion of \var{input}  using \var{se} as structural element. Soille, p67.
@@ -76,10 +76,10 @@ Concrete(I) beucher_gradient(const abstract::image<I>& input,
 /*=processing internal_gradient
  * ns: morpho, morpho::fast
  * what: Morphological Internal Gradient.
- * arg: const conversion<C>&, c, IN, conversion object
+ * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
  * arg: const abstract::image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
- * ret: mute<I, typename convoutput<C, Value(I)>::ret>::ret
+ * ret: mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
  * doc:
  *   Compute the arithmetic difference between the original image \var{input} and
  * the erosion of \var{input} using \var{se} as structural element. Soille, p67.
@@ -118,10 +118,10 @@ Concrete(I) internal_gradient(const abstract::image<I>& input, const
 /*=processing external_gradient
  * ns: morpho, morpho::fast
  * what: Morphological External Gradient.
- * arg: const conversion<C>&, c, IN, conversion object
+ * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
  * arg: const abstract::image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
- * ret: mute<I, typename convoutput<C, Value(I)>::ret>::ret
+ * ret: mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
  * doc:
  *   Compute the arithmetic difference between  and the dilatation of
  * \var{input} using \var{se} as structural element, and the original image

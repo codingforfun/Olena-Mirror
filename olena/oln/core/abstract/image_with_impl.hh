@@ -107,6 +107,15 @@ namespace oln {
 	impl()->clone_to(output_data);
       }
 
+      void clear()
+      {
+	if (impl_ != 0)
+	  {
+	    impl_->unref();
+	    impl_ = 0; // security
+	  }
+      }
+
     protected:
       const value_type& at(const point_type& p) const
       {
@@ -133,15 +142,6 @@ namespace oln {
       ~image_with_impl()
       {
 	clear();
-      }
-
-      void clear()
-      {
-	if (impl_ != 0)
-	  {
-	    impl_->unref();
-	    impl_ = 0; // security
-	  }
       }
 
       image_with_impl() : super_type(), impl_(0)

@@ -1,6 +1,7 @@
+include ../check/Makefile.runtests
 include ../check/Makefile.check
 
-EXTRA_DIST = tests runtests image_print.sh
+EXTRA_DIST += image_print.sh
 
 check_PROGRAMS = multiple_sources
 
@@ -8,25 +9,12 @@ multiple_sources_SOURCES = multiple_sources_1.cc multiple_sources_2.cc
 multiple_sources_LDFLAGS = $(AM_LDFLAGS) $(FFTW_LDFLAGS)
 multiple_sources_CXXFLAGS = $(AM_CXXFLAGS) $(FFTW_CFLAGS)
 
-image-print:
+check-image-print:
 	TOP_SRCDIR=$(top_srcdir) SRCDIR=$(srcdir) \
 	TOP_BUILDDIR=$(top_builddir) \
-	LDFLAGS="$(AM_LDFLAGS)" \
-	CPPFLAGS="$(AM_CPPFLAGS)" \
-	CXXFLAGS="$(AM_CXXFLAGS)" \
+	LDFLAGS="$(LDFLAGS_RUNTESTS)" \
+	CPPFLAGS="$(CPPFLAGS_RUNTESTS)" \
+	CXXFLAGS="$(CXXFLAGS_RUNTESTS)" \
 	  $(SHELL) $(srcdir)/image_print.sh
 
-tests: 
-	TOP_SRCDIR=$(top_srcdir) SRCDIR=$(srcdir) \
-	TOP_BUILDDIR=$(top_builddir) \
-	LDFLAGS="$(AM_LDFLAGS)" \
-	CPPFLAGS="$(AM_CPPFLAGS)" \
-	CXXFLAGS="$(AM_CXXFLAGS)" \
-	  $(SHELL) $(srcdir)/runtests
-
-check-local: image-print tests
-
-distclean-local:
-	rm -rf runs
-
-.PHONY: tests
+check-local: check-runtests check-image-print

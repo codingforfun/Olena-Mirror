@@ -51,7 +51,7 @@ namespace oln
   {
 
     template<class Exact>
-    struct neighborhood : public mlc::any<Exact>
+    struct neighborhood : public mlc_hierarchy::any<Exact>
     {
       typedef Exact exact_type;
       typedef neighborhood<Exact> self_type;

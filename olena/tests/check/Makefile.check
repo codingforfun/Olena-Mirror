@@ -2,6 +2,5 @@
 
 # This Makefile is designed to be included by olena/tests/* directories.
 
-include ../check/Makefile.flags
 LDADD = ../check/libolncheck.a
 TESTS = $(check_PROGRAMS)

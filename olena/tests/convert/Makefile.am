@@ -1,5 +1,6 @@
 ## Process this file through Automake to create Makefile.in -*- Makefile -*-
 
+include ../check/Makefile.flags
 include ../check/Makefile.check
 
 check_PROGRAMS = \
@@ -74,5 +75,3 @@ f_8_rgb_nrgb_CPPFLAGS = $(AM_CPPFLAGS) -DSRC=rgb -DDEST=nrgb -DEM=0.426287 -DEV=
 
 f_8_rgb_xyz_SOURCES = convcomp.cc convcomp.hh
 f_8_rgb_xyz_CPPFLAGS = $(AM_CPPFLAGS) -DSRC=rgb -DDEST=xyz -DEM=0.865949 -DEV=0.356157
-
-

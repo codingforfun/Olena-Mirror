@@ -39,7 +39,8 @@ namespace oln {
 
     namespace internal {
 
-      static bool read(neighborhood2d& output, const std::string& name)
+      inline bool read(neighborhood2d& output, 
+		       const std::string& name)
       {
 	image2d<ntg::bin> im;
 	if (!read(im, name))
@@ -80,7 +81,8 @@ namespace oln {
 	return true;
       }
 
-      static bool write(const neighborhood2d& input, const std::string& name)
+      inline bool write(const neighborhood2d& input, 
+			const std::string& name)
       {
 	image2d<ntg::bin> im(input.delta()*2+1, input.delta()*2+1);
 	image2d<ntg::bin>::fwd_iter_type it(im);

@@ -1,13 +1,8 @@
 ## Process this file through Automake to create Makefile.in -*- Makefile -*-
 
-include ../check/Makefile.check
+include ../check/Makefile.runtests
 
-check_PROGRAMS = 2d bin se_pass se_fail pretty
-2d_SOURCES = 2d.cc loadsave.hh
-se_pass_SOURCES = se_pass.cc loadsave.hh
-se_fail_SOURCES = se_fail.cc loadsave.hh
-pretty_SOURCES = pretty.cc loadsave.hh
-bin_SOURCES = bin.cc
+noinst_HEADERS = loadsave.hh
 
 CLEANFILES =					\
   black-test.pbm white-test.pbm			\

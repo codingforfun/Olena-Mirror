@@ -75,7 +75,7 @@ namespace oln {
     namespace abstract {
 
       template<class Exact, class Base>
-      struct conversion : public mlc::any< Exact >
+      struct conversion : public mlc_hierarchy::any< Exact >
       {
 	static std::string
 	name()

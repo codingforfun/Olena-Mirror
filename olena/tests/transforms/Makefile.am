@@ -1,13 +1,7 @@
-include ../check/Makefile.check
+include ../check/Makefile.runtests
 
-AM_LDFLAGS += $(FFTW_LDFLAGS)
-AM_CXXFLAGS += $(FFTW_CFLAGS)
-
-check_PROGRAMS = fft dwt
-
-fft_SOURCES = fft.cc
-
-dwt_SOURCES = dwt.cc
+LDFLAGS_RUNTESTS += $(FFTW_LDFLAGS)
+CXXFLAGS_RUNTESTS += $(FFTW_CFLAGS)
 
 CLEANFILES = fft_trans_clipped.pgm \
 	fft_trans_log.pgm \

@@ -31,10 +31,10 @@
 /*=processing white_top_hat
  * ns: morpho, morpho::fast
  * what: White top hat.
- * arg: const conversion<C>&, c, IN, conversion object
+ * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
  * arg: const abstract::image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
- * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
+ * ret: typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
  * doc:
  *   Compute white top hat of \var{input} using \var{se}
  *   as structural element. Soille p.105.
@@ -74,10 +74,10 @@ Concrete(I) white_top_hat(const abstract::image<I>& input,
 /*=processing black_top_hat
  * ns: morpho, morpho::fast
  * what: Black top hat.
- * arg: const conversion<C>&, c, IN, conversion object
+ * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
  * arg: const abstract::image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
- * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
+ * ret: typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
  * doc:
  *   Compute black top hat of \var{input} using \var{se}
  *   as structural element. Soille p.105.
@@ -103,7 +103,7 @@ black_top_hat(const convert::abstract::conversion<C, B>& c,
  * what: Black top hat.
  * arg: const abstract::image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
- * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
+ * ret: typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
 =*/
 template<class I, class E>
 Concrete(I) black_top_hat(const abstract::image<I>& input,
@@ -121,10 +121,10 @@ Concrete(I) black_top_hat(const abstract::image<I>& input,
 /*=processing self_complementary_top_hat
  * ns: morpho, morpho::fast
  * what: Self complementary top hat.
- * arg: const conversion<C>&, c, IN, conversion object
+ * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
  * arg: const abstract::image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
- * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
+ * ret: typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
  * doc:
  *   Compute self complementary top hat of \var{input} using \var{se}
  *   as structural element. Soille p.106.
@@ -151,7 +151,7 @@ self_complementary_top_hat(const convert::abstract::conversion<C, B>& c,
  * what: Self complementary top hat.
  * arg: const abstract::image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
- * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
+ * ret: typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
 =*/
 template<class I, class E>
 Concrete(I) self_complementary_top_hat(const abstract::image<I>& input,
@@ -166,10 +166,10 @@ Concrete(I) self_complementary_top_hat(const abstract::image<I>& input,
 /*=processing top_hat_contrast_op
  * ns: morpho, morpho::fast
  * what: Top hat contrastor operator.
- * arg: const conversion<C>&, c, IN, conversion object
+ * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
  * arg: const abstract::image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
- * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
+ * ret: typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
  * doc:
  *   Enhance contrast \var{input} by adding the white top hat, then
  * substracting the black top hat to \var{input}. Top hats are computed using
@@ -202,7 +202,7 @@ top_hat_contrast_op(const convert::abstract::conversion<C, B>& c,
  * what: Top hat contrastor operator.
  * arg: const abstract::image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
- * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
+ * ret: typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
 =*/
 template<class I, class E>
 Concrete(I) top_hat_contrast_op(const abstract::image<I>& input,

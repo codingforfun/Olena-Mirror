@@ -54,7 +54,7 @@ namespace oln {
   namespace abstract {
 
     template<class Exact>
-    struct image_size : public mlc::any< Exact >
+    struct image_size : public mlc_hierarchy::any< Exact >
     {
       
     public:

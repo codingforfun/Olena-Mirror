@@ -29,8 +29,8 @@
 # define OLENA_ARITH_OPS_HH
 
 # include <oln/basics.hh>
-# include <oln/arith/internal/opdecls.hh>
 # include <oln/convert/basics.hh>
+# include <oln/arith/internal/opdecls.hh>
 # include <oln/math/macros.hh>
 
 # include <ntg/basics.hh>

@@ -44,7 +44,6 @@ namespace oln {
     {  
       template< class Input >
       Output doit(const Input& v) const {
-
 	return Output(ntg::cast::rbound<Output, float>
 		      (
 		       double(v - ntg_min_val(Input))
