@@ -1,4 +1,5 @@
-
+# FIXME: install the examples somewhere
+EXTRA_DIST = examples
 dist_noinst_DATA = swilena.dvi swilena.pdf
 info_TEXINFOS = swilena.texi
 

@@ -79,7 +79,7 @@ dump_python()
       ilist=`expr $ilist + 1`
     done
     echo; echo
-    echo -n "python_PYTHON ="
+    echo -n "python_PYTHON +="
     ilist=0
     for mod in $MODULES; do
       if [ `expr $ilist % 4` = 0 ]; then 
@@ -122,8 +122,6 @@ AM_CPPFLAGS = -DOLN_EXCEPTIONS
 AM_CXXFLAGS = \$(CXXFLAGS_OPTIMIZE)
 AM_LDFLAGS = -shared -lswigrb \$(ZLIB_LDFLAGS)
 
-rubydir = \$(libdir)/ruby
-
 EOF
 }
 
@@ -139,16 +137,6 @@ dump_ruby()
       ilist=`expr $ilist + 1`
     done
     echo; echo
-    echo -n "ruby_DATA ="
-    ilist=0
-    for mod in $MODULES; do
-      if [ `expr $ilist % 4` = 0 ]; then 
-         echo " \\"; echo -ne "\t" 
-      fi 
-      echo -n " swilena_$mod.rb"
-      ilist=`expr $ilist + 1` 
-    done
-    echo; echo
     for mod in $MODULES; do
       echo "swilena_${mod}_so_SOURCES = swilena_${mod}_wrap.cxx"
     done
@@ -160,7 +148,7 @@ dump_ruby()
       else
          sdir=meta
       fi
-      echo "swilena_${mod}_wrap.cxx swilena_${mod}.rb: \$(srcdir)/../$sdir/swilena_${mod}.i"
+      echo "swilena_${mod}_wrap.cxx: \$(srcdir)/../$sdir/swilena_${mod}.i"
       echo -e "\t\$(SWIG) -c -c++ -ruby -I\$(srcdir)/../src -I\$(srcdir)/../meta \$(CPPFLAGS) -o swilena_${mod}_wrap.cxx \$(srcdir)/../$sdir/swilena_${mod}.i"
       echo
     done

@@ -1,3 +1,17 @@
+2003-09-22  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* doc/examples/ruby/simple.rb: New example.
+	* doc/examples/python/simple.py: New example.
+	* doc/Makefile.am: Distribute examples.
+	
+	* ruby/swilena_display.rb: New file.
+	* ruby/Makefile.am: Install swilena_display.rb
+
+	* python/swilena_display.py: New file.
+	* python/Makefile.am: Install swilena_display.py.
+
+	* expand.sh: Adjust.
+	
 2003-09-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* expand.sh: Generate makefile.swig files instead of Makefile.am.
