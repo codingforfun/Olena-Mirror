@@ -1,23 +1,12 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 26)
-(Parent-Version oln 10 25)
-(Version-Log "Index: tools/swilena/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-        * meta/swilena_ntg.i: Define typemaps for python.
-        * meta/swilena_image.i: Don't define set, at and ref methods
-        taking point2d for python and ruby.
-
-        * python/tests/simple1.py: Adjust consequently.
-        * ruby/tests/simple1.rb: Likewise.
-        * doc/examples/python/simple.py: Likewise.
-        * doc/examples/ruby/simple.rb: Likewise.
-
+(Project-Version oln 10 27)
+(Parent-Version oln 10 26)
+(Version-Log "tools/swilena/src/Makefile.am: New file.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sun, 28 Sep 2003 22:01:27 +0200")
+(Checkin-Time "Mon, 29 Sep 2003 19:24:47 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -103,7 +92,6 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
                   "^CODING_STYLE$"
                   "olena/img/lena16b.ppgm"
                   "olena/img/lena16b.pgm"
-                  "^tools/swilena/src/Makefile.am"
                   "^tools/swilena/python/Makefile.am"
                   "^tools/swilena/src/.*\\.i"
                   "olena/img/lena1d.ppbm"
@@ -1077,6 +1065,11 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   ; (tools/swilena/meta/swilena_ntg_cplx.i ())
   ; (tools/swilena/meta/swilena_ntg_int_s.i ())
   ; (tools/swilena/meta/swilena_ntg_int_u.i ())
+
+;; Files added by populate at Mon, 29 Sep 2003 19:17:53 +0200,
+;; to version 10.26(w), by nes:
+
+  (tools/swilena/src/Makefile.am (oln/v/25_Makefile.a 1.1 640))
 )
 (Merge-Parents)
 (New-Merge-Parents)

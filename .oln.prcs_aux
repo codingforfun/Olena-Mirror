@@ -516,6 +516,7 @@
 (olena/oln/core/image.hh 4164 1060214901 d/18_image.hh 1.20)
 (olena/tests/Makefile.am 167 1046524058 e/45_Makefile.a 1.20)
 (tools/swilena/meta/attic/swilena_window.i 1206 1039630292 o/9_swilena_wi 1.1)
+(tools/swilena/src/Makefile.am 140 1064856287 v/25_Makefile.a 1.1)
 (olena/tests/core/multiple_sources_2.cc 542 1059576121 u/24_multiple_s 1.1)
 (olena/oln/core/abstract/image.hh 5628 1062439958 t/25_image.hh 1.19)
 (olena/tests/core/tests/image_list 209 1059836578 u/41_image_list 1.1)
