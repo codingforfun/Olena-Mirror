@@ -32,7 +32,7 @@
 
 # include <ntg/basics.hh>
 # include <ntg/core/internal/macros.hh>
-# include <ntg/real/optraits_scalar.hh>
+# include <ntg/real/optraits_real.hh>
 
 # include <string>
 # include <sstream>
@@ -46,13 +46,14 @@ namespace ntg {
     `------------------*/
 
     template <class T, class interval, class behavior>
-    struct typetraits<range<T, interval, behavior> >
+    struct typetraits<range<T, interval, behavior> > : public typetraits<T>
     {
       typedef range<T, interval, behavior>	self;
       typedef ntgi_abstract_type(T)		abstract_type;
       typedef self				ntg_type;
       typedef optraits<self>			optraits_type;
       typedef typename behavior::template get<self>	behavior_type;
+      typedef behavior				abstract_behavior_type;
 
       typedef ntgi_base_type(T)			base_type;
       typedef T					storage_type;

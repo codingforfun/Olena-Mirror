@@ -1,3 +1,77 @@
+2003-11-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/types/tests/int_u8: New test.
+	* tests/types/runtests: Rename KEEP_RUN as KEEP_RUNS.
+
+2003-11-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/real/behavior.hh: Check arithmetic operators, not arithmetic
+	assignment operators.
+	(force): New behavior.
+	(ret_behavior_if): New helper struct.
+
+	* ntg/core/value.hh: Define unsafe_type.
+	* ntg/core/macros.hh (ntg_unsafe_type): New macro.
+	* ntg/utils/cast.hh: Use ntg_unsafe_type.
+
+	* ntg/real/typetraits_builtin_int.hh: Define abstract_behavior_type.
+	* ntg/real/builtin_float.hh: Likewise.
+	* ntg/real/range.hh: Likewise.
+	* ntg/real/cycle.hh: Likewise.
+	
+	* ntg/real/int_s.hh: Remove useless arithmetic operations
+	checks. Define need_check for operation traits.
+	* ntg/real/int_u.hh: Likewise.
+
+	* ntg/real/optraits_real_defs.hh: Derive arithmetic assignment
+	operators from arithmetic operators. Use the behavior given by the
+	operator traits instead of the behavior of the return type.
+	* ntg/real/optraits_real.hh: Adjust consequently.
+	
+2003-11-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	Make typetraits and optraits reproduce more accurately the value
+	hierarchy.
+	
+	* ntg/real/int_s.hh: Fix traits inheritance.
+	* ntg/real/int_u.hh: Likewise.
+	* ntg/real/optraits_builtin_int.hh: Likewise.
+	* ntg/real/typetraits_builtin_int.hh: Likewise.
+	* ntg/real/builtin_float.hh: Likewise.
+	* ntg/real/range.hh: Likewise.
+	* ntg/real/cycle.hh: Likewise.
+	* ntg/vect/vec.hh: Likewise.
+	* ntg/enum/bin.hh: Likewise.
+	
+	* ntg/real/real_value.hh: Define typetraits.
+	* ntg/vect/vect_value.hh: Likewise.
+	* ntg/enum/enum_value.hh: Likewise.
+	* ntg/real/optraits_real.hh: Rename optraits_xxx as
+	optraits<xxx_value>.
+	* ntg/core/value.hh: Define typetraits<value> and optraits<value>.
+
+	* ntg/core/internal/traits.hh: Remove useless optraits_xxx definitions.
+	
+2003-11-26  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/real/optraits_scalar_defs.hh: Rename as...
+	* ntg/real/optraits_real_defs.hh: ... this.
+	* ntg/real/optraits_scalar.hh: Rename as...
+	* ntg/real/optraits_real.hh: ... this.
+
+	* ntg/core/behavior.hh: Rename as...
+	* ntg/real/behavior.hh: ... this.
+
+	* ntg/real/int_s.hh,
+	* ntg/real/int_u.hh,
+	* ntg/real/optraits_builtin_int.hh,
+	* ntg/real/typetraits_builtin_int.hh,
+	* ntg/Makefile.am,
+	* ntg/basics.hh,
+	* ntg/real/builtin_float.hh,
+	* ntg/enum/builtin_bool.hh,
+	* ntg/real/range.hh: Adjust consequently.
+
 2003-11-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/enum/bin.hh: Fix assignment from a real_value.

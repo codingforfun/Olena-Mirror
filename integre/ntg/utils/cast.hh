@@ -74,7 +74,7 @@ namespace ntg {
     const Tdest
     force(const Tsrc& val)
     {
-      Tdest tmp(static_cast<ntg_storage_type(Tdest)>(val));
+      ntg_unsafe_type(Tdest) tmp (val);
       return tmp;
     }
 

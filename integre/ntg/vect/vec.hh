@@ -89,7 +89,7 @@ namespace ntg {
     `----------------*/
 
     template <unsigned N, class T, class Self>
-    struct typetraits<vec<N, T, Self> >
+    struct typetraits<vec<N, T, Self> > : public typetraits<vect_value<vec<N, T, Self> > >
     {
       enum { nb_comp = N };
 
@@ -186,7 +186,7 @@ namespace ntg {
     `--------------*/
 
     template <unsigned N, class T, class E>
-    class optraits<vec<N, T, E> > : public optraits_vector<vec<N, T, E> >
+    class optraits<vec<N, T, E> > : public optraits<vect_value<vec<N, T, E> > >
     {
       typedef vec<N, T, E> self;
       typedef ntgi_storage_type(self) storage_type_;

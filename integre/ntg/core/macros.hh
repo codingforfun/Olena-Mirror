@@ -92,6 +92,9 @@
 # define ntg_comp_type_(T) \
   ntg::type_traits<T>::comp_type
 
+# define ntg_unsafe_type(T) typename ntg::type_traits<T>::unsafe_type
+# define ntg_unsafe_type_(T) ntg::type_traits<T>::unsafe_type
+
 /*-----------------.
 | values accessors |
 `-----------------*/

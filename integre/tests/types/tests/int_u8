@@ -1,0 +1,9 @@
+int_u8 u1 = (unsigned char) 56;
+int_u8 u2 = (unsigned char) 153;
+int_u32 u = 0U;
+
+for (unsigned i = 0; i < 5000000; ++i)
+  for (unsigned j = 0; j < 10; ++j)
+    u = u1 * u2 + int_u8u(i % 50);
+
+return u != 8617;

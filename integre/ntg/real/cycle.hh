@@ -46,13 +46,14 @@ namespace ntg {
     `------------------*/
 
     template <class T, class interval>
-    struct typetraits<cycle<T, interval> >
+    struct typetraits<cycle<T, interval> > : public typetraits<T>
     {
       typedef cycle<T, interval>			self;
       typedef typename typetraits<T>::abstract_type	abstract_type;
       typedef self					ntg_type;
       typedef optraits<self>				optraits_type;
       typedef cycle_behavior::get<self>			behavior_type;
+      typedef cycle_behavior				abstract_behavior_type;
 
       typedef typename typetraits<T>::base_type		base_type;
       typedef T						storage_type;

@@ -103,6 +103,20 @@ namespace ntg {
     storage_type val_;
   };
 
+  namespace internal {
+    
+    template <class E>
+    struct typetraits<value<E> >
+    {
+      typedef E unsafe_type;
+    };
+
+    template <class E>
+    struct optraits<value<E> >
+    {};
+
+  }
+
 } // end of ntg.
 
 #endif // !NTG_CORE_VALUE_HH

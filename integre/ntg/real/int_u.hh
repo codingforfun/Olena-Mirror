@@ -29,7 +29,7 @@
 # define NTG_REAL_INT_U_HH
 
 # include <ntg/basics.hh>
-# include <ntg/real/optraits_scalar.hh>
+# include <ntg/real/optraits_real.hh>
 # include <ntg/real/real_value.hh>
 # include <ntg/bin.hh>
 
@@ -42,16 +42,34 @@
 | macros |
 `-------*/
 
+# define INT_U_CTOR_FROM_UNSIGNED_BUILTIN_INT(Builtin)			 \
+int_u (const Builtin rhs)						 \
+{									 \
+  if ((unsigned) internal::typetraits<ntg_type(Builtin)>::size <= nbits) \
+    this->val_ = rhs;							 \
+  else									 \
+    this->val_ = optraits_type::check(rhs);				 \
+}									 \
+self& operator=(const Builtin rhs)					 \
+{									 \
+  if ((unsigned) internal::typetraits<ntg_type(Builtin)>::size <= nbits) \
+    this->val_ = rhs;							 \
+  else									 \
+    this->val_ = optraits_type::check(rhs);				 \
+  return *this;								 \
+}
+
 # define INT_U_CTOR_FROM_BUILTIN_INT(Builtin)   \
 int_u (const Builtin rhs)			\
 {						\
-  this->val_ = optraits_type::check(rhs);	\
+    this->val_ = optraits_type::check(rhs);	\
 }						\
 self& operator=(const Builtin rhs)	        \
 {						\
   this->val_ = optraits_type::check(rhs);	\
   return *this;					\
 }
+
 
 namespace ntg {
 
@@ -62,7 +80,8 @@ namespace ntg {
     `------------------*/
 
     template <unsigned nbits, class behavior>
-    struct typetraits<int_u<nbits, behavior> >
+    struct typetraits<int_u<nbits, behavior> > 
+      : public typetraits<uint_value<int_u<nbits, behavior> > >
     {
       typedef int_u<nbits, behavior>		self;
       typedef unsigned_integer			abstract_type;
@@ -70,9 +89,9 @@ namespace ntg {
 
       ntg_build_value_type(uint_value<E>);
 
-      typedef optraits<self>			optraits_type;
+      typedef optraits<self>				optraits_type;
+      typedef behavior					abstract_behavior_type;
       typedef typename behavior::template get<self>	behavior_type;
-
 
       typedef self					base_type;
       typedef typename C_for_int_u<nbits>::type		storage_type;
@@ -87,6 +106,10 @@ namespace ntg {
       typedef int_u<32, behavior>			unsigned_largest_type;
       typedef int_u<32, behavior>			unsigned_cumul_type;
       typedef unsigned int				integer_type;
+      typedef int_u<nbits, unsafe>			unsafe_type;
+
+      // Particular properties
+      enum { size = nbits };
     };
 
   } // end of internal.
@@ -110,17 +133,19 @@ namespace ntg {
     // We define ctor for each builtin to avoid implicit builtin
     // promotion.
 
-    INT_U_CTOR_FROM_BUILTIN_INT(unsigned long);
-    INT_U_CTOR_FROM_BUILTIN_INT(signed   long);
+    // FIXME: dynamic checks are not necessary for all builtin types!
 
-    INT_U_CTOR_FROM_BUILTIN_INT(unsigned int);
-    INT_U_CTOR_FROM_BUILTIN_INT(signed   int);
+    INT_U_CTOR_FROM_UNSIGNED_BUILTIN_INT(unsigned long);
+    INT_U_CTOR_FROM_BUILTIN_INT(signed long);
 
-    INT_U_CTOR_FROM_BUILTIN_INT(unsigned short);
-    INT_U_CTOR_FROM_BUILTIN_INT(signed   short);
+    INT_U_CTOR_FROM_UNSIGNED_BUILTIN_INT(unsigned int);
+    INT_U_CTOR_FROM_BUILTIN_INT(signed int);
 
-    INT_U_CTOR_FROM_BUILTIN_INT(unsigned char);
-    INT_U_CTOR_FROM_BUILTIN_INT(signed   char);
+    INT_U_CTOR_FROM_UNSIGNED_BUILTIN_INT(unsigned short);
+    INT_U_CTOR_FROM_BUILTIN_INT(signed short);
+
+    INT_U_CTOR_FROM_UNSIGNED_BUILTIN_INT(unsigned char);
+    INT_U_CTOR_FROM_BUILTIN_INT(signed char);
     INT_U_CTOR_FROM_BUILTIN_INT(char);
 
     int_u (const float_s rhs)
@@ -160,7 +185,7 @@ namespace ntg {
       if (mbits <= nbits)
 	this->val_ = rhs.val();
       else
-	this->val_ = optraits_type::check(rhs.val());
+	  this->val_ = optraits_type::check(rhs.val());
       return *this;
     }
 
@@ -213,12 +238,12 @@ namespace ntg {
 
     template <unsigned nbits, class behavior>
     struct optraits<int_u<nbits, behavior> > :
-      public optraits_int_u<int_u<nbits, behavior> >
+      public optraits<uint_value<int_u<nbits, behavior> > >
     {
     private:
       typedef int_u<nbits, behavior>			self;
       typedef typename typetraits<self>::storage_type	storage_type_;
-      typedef typename behavior::template get<self>		behavior_type_;
+      typedef typename behavior::template get<self>	behavior_type_;
 
     public:
       template <class P>
@@ -251,10 +276,12 @@ namespace ntg {
     template<unsigned nbits, class B1, unsigned mbits, class B2>
     struct operator_traits<operator_plus, int_u<nbits, B1>, int_u<mbits, B2> >
     {
-      enum { commutative = true };
+      enum { commutative = true, 
+	     need_check = ((unsigned) mlc::max<nbits, mbits>::ret >= 32) };
       typedef int_u<(unsigned) mlc::maxN<nbits + 1, mbits + 1, 32>::ret,
 		    typename deduce_op_behavior<B1, B2>::ret> ret;
-      typedef int_u<nbits, B1> impl;
+      typedef int_u<nbits,
+		    typename ret_behavior_if<need_check, ret>::ret> impl;
     };
 
     //
@@ -266,10 +293,12 @@ namespace ntg {
     template<unsigned nbits, class B1, unsigned mbits, class B2>
     struct operator_traits<operator_minus, int_u<nbits, B1>, int_u<mbits, B2> >
     {
-      enum { commutative = true };
+      enum { commutative = true, 
+	     need_check = ((unsigned) mlc::max<nbits, mbits>::ret >= 32) };
       typedef int_s<(unsigned) mlc::maxN<nbits+1, mbits+1, 32>::ret,
 		    typename deduce_op_behavior<B1, B2>::ret> ret;
-      typedef int_u<nbits, B1> impl;
+      typedef int_u<nbits,
+		    typename ret_behavior_if<need_check, ret>::ret> impl;
     };
 
     // int_u32 - int_u : we do not convert result to int_s because we
@@ -280,7 +309,7 @@ namespace ntg {
     {
       enum { commutative = true };
       typedef int_u<32, typename deduce_op_behavior<B1, B2>::ret> ret;
-      typedef int_u<32, B1> impl;
+      typedef int_u<32, force> impl;
     };
 
     //
@@ -292,10 +321,11 @@ namespace ntg {
     template<unsigned nbits, class B1, unsigned mbits, class B2>
     struct operator_traits<operator_times, int_u<nbits, B1>, int_u<mbits, B2> >
     {
-      enum { commutative = true };
+      enum { commutative = true, need_check = (nbits + mbits > 32) };
       typedef int_u<(unsigned) mlc::saturateN<nbits + mbits, 32>::ret,
 	typename deduce_op_behavior<B1, B2>::ret> ret;
-      typedef int_u<nbits, B1> impl;
+      typedef int_u<nbits,
+		    typename ret_behavior_if<need_check, ret>::ret> impl;
     };
 
     //
@@ -309,7 +339,7 @@ namespace ntg {
     {
       enum { commutative = true };
       typedef int_u<nbits, typename deduce_op_behavior<B1, B2>::ret> ret;
-      typedef int_u<nbits, B1> impl;
+      typedef int_u<nbits, force> impl;
     };
 
     //
@@ -323,7 +353,7 @@ namespace ntg {
     {
       enum { commutative = false };
       typedef int_u<mbits, typename deduce_op_behavior<B1, B2>::ret> ret;
-      typedef int_u<nbits, B1> impl;
+      typedef int_u<nbits, force> impl;
     };
 
     //
@@ -338,7 +368,7 @@ namespace ntg {
       enum { commutative = true };
       typedef int_u<(unsigned) mlc::min<nbits, mbits>::ret,
 		    typename deduce_op_behavior<B1, B2>::ret> ret;
-      typedef int_u<nbits, B1> impl;
+      typedef int_u<nbits, force> impl;
     };
 
 
@@ -354,7 +384,7 @@ namespace ntg {
       enum { commutative = true };
       typedef int_u<(unsigned) mlc::max<nbits, mbits>::ret,
 		    typename deduce_op_behavior<B1, B2>::ret> ret;
-      typedef int_u<nbits, B1> impl;
+      typedef int_u<nbits, force> impl;
     };
 
 
@@ -368,8 +398,9 @@ namespace ntg {
     struct operator_traits<operator_cmp, int_u<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
+      // FIXME: why unsafe? I think there is a reason.
       typedef int_u<(unsigned) mlc::maxN<nbits, mbits, 32>::ret, unsafe> ret;
-      typedef int_u<nbits, B1> impl;
+      typedef int_u<nbits, force> impl;
     };
 
   } // end of internal.

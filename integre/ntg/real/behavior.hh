@@ -25,11 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_CORE_BEHAVIOUR_HH
-# define NTG_CORE_BEHAVIOUR_HH
+#ifndef NTG_REAL_BEHAVIOUR_HH
+# define NTG_REAL_BEHAVIOUR_HH
 
 /*
-  Behaviors for data_types int_u, int_s, etc ...
+  Behaviors for real datatypes int_u, int_s, etc ...
   
   <WARNING> Don't forget that behaviors are checked on assignements
   and contruction of types, and use comparison, so create only vars
@@ -45,7 +45,7 @@
 # include <ntg/core/type_traits.hh>
 # include <ntg/core/value.hh>
 # include <ntg/core/internal/macros.hh>
-# include <ntg/real/optraits_scalar.hh>
+# include <ntg/real/optraits_real.hh>
 # include <ntg/real/real_value.hh>
 # include <ntg/utils/debug.hh>
 # include <ntg/utils/cast.hh>
@@ -53,10 +53,10 @@
 # include <string>
 # include <sstream>
 
-
 // FIXME: there is maybe simpler a way to write that, but we want it
 // to be compatible with icc, so the behaviors must stay classes, not
 // meta classes.
+// FIXME: are these considerations still accurate?
 
 namespace ntg
 {
@@ -86,33 +86,90 @@ namespace ntg
 
       template <class T1, class T2>
       static T
-      check_plus_equal (T1 lhs, T2 rhs)
+      check_plus (T1 lhs, T2 rhs)
       {	return lhs + rhs; }
 
       template <class T1, class T2>
       static T
-      check_minus_equal (T1 lhs, T2 rhs)
+      check_minus (T1 lhs, T2 rhs)
       {	return lhs - rhs; }
 
       template <class T1, class T2>
       static T
-      check_times_equal (T1 lhs, T2 rhs)
+      check_times (T1 lhs, T2 rhs)
       {	return lhs * rhs; }
 
       template <class T1, class T2>
       static T
-      check_div_equal (T1 lhs, T2 rhs)
+      check_div (T1 lhs, T2 rhs)
       {	return lhs / rhs; }
 
       template <class P>
       static storage_type
       check (const P& p)
-      { return static_cast<storage_type>(p); }
+      { return p; }
     };
 
     static std::string
     name()
     { return "unsafe"; }
+  };
+
+  /*------.
+  | force |
+  `------*/
+  //! Force the value to be assigned without checks.
+  /*!
+    Quite similar to unsafe, but even if the destination type has a
+    strict behavior, by using cast::force we ensure that no check will
+    be performed.
+
+    Example:
+
+    int_u<8, strict> a;
+    a = force::get<int_u<8, strict> >::check_plus(5, 6);
+    
+    => no check
+
+    This construction is useful when we want to use code from a
+    particular behavior to a type defined with another behavior.
+  */
+  struct force
+  {
+    template <class T>
+    struct get
+    {
+      typedef ntgi_storage_type(T) storage_type;
+
+      template <class T1, class T2>
+      static T
+      check_plus (T1 lhs, T2 rhs)
+      {	return cast::force<T>(lhs + rhs); }
+
+      template <class T1, class T2>
+      static T
+      check_minus (T1 lhs, T2 rhs)
+      {	return cast::force<T>(lhs - rhs); }
+
+      template <class T1, class T2>
+      static T
+      check_times (T1 lhs, T2 rhs)
+      {	return cast::force<T>(lhs * rhs); }
+
+      template <class T1, class T2>
+      static T
+      check_div (T1 lhs, T2 rhs)
+      {	return cast::force<T>(lhs / rhs); }
+
+      template <class P>
+      static storage_type
+      check (const P& p)
+      { return cast::force<T>(p); }
+    };
+
+    static std::string
+    name()
+    { return "force"; }
   };
 
   /*-------.
@@ -136,7 +193,7 @@ namespace ntg
 
       template <class T1, class T2>
       static T
-      check_plus_equal (T1 lhs, T2 rhs)
+      check_plus (T1 lhs, T2 rhs)
       {
 	T ret = lhs + rhs;
 	if (rhs > 0)
@@ -148,7 +205,7 @@ namespace ntg
 
       template <class T1, class T2>
       static T
-      check_minus_equal (T1 lhs, T2 rhs)
+      check_minus (T1 lhs, T2 rhs)
       {
 	T ret = lhs - rhs;
 	if (rhs > 0)
@@ -161,7 +218,7 @@ namespace ntg
       // FIXME: this check is very slow! Find another solution.
       template <class T1, class T2>
       static T
-      check_times_equal (T1 lhs, T2 rhs)
+      check_times (T1 lhs, T2 rhs)
       {
 	T ret = lhs * rhs;
 	if (rhs != 0)
@@ -171,7 +228,7 @@ namespace ntg
 
       template <class T1, class T2>
       static T
-      check_div_equal (T1 lhs, T2 rhs)
+      check_div (T1 lhs, T2 rhs)
       {	return lhs / rhs; }
 
       template <class P>
@@ -203,7 +260,7 @@ namespace ntg
 
       template <class T1, class T2>
       static T
-      check_plus_equal (T1 lhs, T2 rhs)
+      check_plus (T1 lhs, T2 rhs)
       {
 	T ret = lhs + rhs;
 	if (rhs > 0)
@@ -218,7 +275,7 @@ namespace ntg
 
       template <class T1, class T2>
       static T
-      check_minus_equal (T1 lhs, T2 rhs)
+      check_minus (T1 lhs, T2 rhs)
       {
 	T ret = lhs - rhs;
 	if (rhs > 0)
@@ -234,7 +291,7 @@ namespace ntg
       // FIXME: this check is very slow ! find another solution ...
       template <class T1, class T2>
       static T
-      check_times_equal (T1 lhs, T2 rhs)
+      check_times (T1 lhs, T2 rhs)
       {
 	T ret = lhs * rhs;
 	if ((ret / rhs) != lhs)
@@ -250,7 +307,7 @@ namespace ntg
 
       template <class T1, class T2>
       static T
-      check_div_equal (T1 lhs, T2 rhs)
+      check_div (T1 lhs, T2 rhs)
       {	return lhs / rhs; }
 
       template <class P>
@@ -292,19 +349,19 @@ namespace ntg
       // FIXME: calculate real values!
 
       template <class T1, class T2>
-      static T check_plus_equal (T1 lhs, T2 rhs)
+      static T check_plus (T1 lhs, T2 rhs)
       {	return lhs + rhs; }
 
       template <class T1, class T2>
-      static T check_minus_equal (T1 lhs, T2 rhs)
+      static T check_minus (T1 lhs, T2 rhs)
       {	return lhs - rhs; }
 
       template <class T1, class T2>
-      static T check_times_equal (T1 lhs, T2 rhs)
+      static T check_times (T1 lhs, T2 rhs)
       {	return lhs * rhs; }
 
       template <class T1, class T2>
-      static T check_div_equal (T1 lhs, T2 rhs)
+      static T check_div (T1 lhs, T2 rhs)
       {	return lhs / rhs; }
 
       // float modulus
@@ -372,8 +429,34 @@ namespace ntg
     struct deduce_op_behavior<B, B>
     { typedef B ret; };
 
+    /*----------------.
+    | ret_behavior_if |
+    `----------------*/
+
+    //! Determine the behavior to use depending on check requirements.
+    /*! 
+      If need_check is true, the returned behavior will be the same as
+      the previously determined return type (generally safe).
+
+      In some cases, no check is required, thus type used to perform
+      the calculus does not need to be safe. The force behavior is
+      returned in such cases.
+    */
+
+    template <bool need_check, class Ret>
+    struct ret_behavior_if
+    {
+      typedef typename typetraits<Ret>::abstract_behavior_type ret;
+    };
+
+    template <class Ret>
+    struct ret_behavior_if<false, Ret>
+    {
+      typedef ntg::force ret;
+    };
+
   } // end of internal.
 
 } // end of ntg.
 
-#endif // !NTG_CORE_BEHAVIOUR_HH
+#endif // !NTG_REAL_BEHAVIOUR_HH

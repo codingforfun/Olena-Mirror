@@ -25,28 +25,28 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_OPTRAITS_SCALAR_DEFS_HH
-# define NTG_OPTRAITS_SCALAR_DEFS_HH
+#ifndef NTG_OPTRAITS_REAL_DEFS_HH
+# define NTG_OPTRAITS_REAL_DEFS_HH
 
 //
-// macros used in optraits_scalar definition
+// macros used in optraits_real definition
 //
 /////////////////////////////////////////////
 
-# define ASSIGN_SCALAR_OPERATOR(Name, Op)				\
+# define ASSIGN_SCALAR_OPERATOR(Name)					\
   template <class T1, class T2> inline					\
-  static T1& Name(T1& lhs, const T2& rhs)				\
+  static T1& Name##_equal(T1& lhs, const T2& rhs)			\
   {									\
     ntg_is_a(T1, ntg::real)::ensure();					\
     ntg_is_a(T2, ntg::real)::ensure();					\
 									\
-    return Name##_impl<T1,T2>(lhs, rhs);				\
+    return Name##_equal_impl<T1,T2>(lhs, rhs);				\
   }									\
 									\
   template <class T1, class T2> inline					\
   static T1&								\
-  Name##_impl(ntg::real_value<T1>& lhs, 				\
-	      const ntg::real_value<T2>& rhs)				\
+  Name##_equal_impl(ntg::real_value<T1>& lhs,				\
+	            const ntg::real_value<T2>& rhs)			\
   {									\
     typedef typename typetraits<T1>::behavior_type behavior_type;	\
     lhs.exact() = behavior_type::check_##Name(lhs.exact().val(),	\
@@ -56,40 +56,81 @@
 									\
   template <class T1, class T2> inline					\
   static T1&								\
-  Name##_impl(ntg::real_value<T1>& lhs, 				\
-	      const ntg::any_const_class<T2> rhs)			\
+  Name##_equal_impl(ntg::real_value<T1>& lhs,				\
+	            const ntg::any_const_class<T2> rhs)			\
   {									\
     typedef typename typetraits<T1>::behavior_type behavior_type;	\
-    lhs.exact() = behavior_type::check_##Name(lhs.exact().val(), 	\
+    lhs.exact() = behavior_type::check_##Name(lhs.exact().val(),	\
 					      rhs.exact());		\
     return lhs.exact();							\
   }									\
 									\
   template <class T1, class T2> inline					\
   static T1&								\
-  Name##_impl(ntg::any_class<T1> lhs, 					\
-	      const ntg::real_value<T2>& rhs)				\
+  Name##_equal_impl(ntg::any_class<T1> lhs,				\
+	            const ntg::real_value<T2>& rhs)			\
   {									\
     typedef typename typetraits<T1>::behavior_type behavior_type;	\
-    lhs.exact() = behavior_type::check_##Name(lhs.exact(), 		\
+    lhs.exact() = behavior_type::check_##Name(lhs.exact(),		\
 					      rhs.exact().val());	\
     return lhs.exact();							\
   }
 
-# define ARITH_SCALAR_OPERATOR(Name, Op)		\
-  template <class T1, class T2> inline			\
-  static ntg_return_type(Name, T1, T2)			\
-  Name(const T1& lhs, const T2& rhs)			\
-  {							\
-    ntg_is_a(T1, ntg::real)::ensure();			\
-    ntg_is_a(T2, ntg::real)::ensure();			\
-							\
-    typedef ntg_return_type(Name, T1, T2) return_type;	\
-    return_type result(lhs);				\
-    result Op rhs;					\
-    return result;					\
+# define ARITH_SCALAR_OPERATOR(Name)					\
+  template <class T1, class T2> inline					\
+  static ntg_return_type(Name, T1, T2)					\
+  Name(const T1& lhs, const T2& rhs)					\
+  {									\
+    ntg_is_a(T1, ntg::real)::ensure();					\
+    ntg_is_a(T2, ntg::real)::ensure();					\
+									\
+    return Name##_impl<T1,T2>(lhs, rhs);				\
+  }									\
+									\
+  template <class T1, class T2> inline					\
+  static ntg_return_type(Name, T1, T2)					\
+  Name##_impl(const ntg::real_value<T1>& lhs,				\
+	      const ntg::real_value<T2>& rhs)				\
+  {									\
+    typedef ntg_return_type(Name, T1, T2) return_type;			\
+    typedef typename							\
+      typetraits<E>::abstract_behavior_type::get<return_type>	\
+        behavior_type;							\
+    return_type tmp;							\
+    tmp = behavior_type::check_##Name(lhs.exact().val(),		\
+				      rhs.exact().val());		\
+    return tmp;								\
+  }									\
+									\
+  template <class T1, class T2> inline					\
+  static ntg_return_type(Name, T1, T2)					\
+  Name##_impl(const ntg::real_value<T1>& lhs,				\
+	      const ntg::any_const_class<T2>& rhs)			\
+  {									\
+    typedef ntg_return_type(Name, T1, T2) return_type;			\
+    typedef typename							\
+      typetraits<E>::abstract_behavior_type::get<return_type>	\
+        behavior_type;							\
+    return_type tmp;							\
+    tmp = behavior_type::check_##Name(lhs.exact().val(),		\
+				      rhs.exact());			\
+    return tmp;								\
+  }									\
+									\
+  template <class T1, class T2> inline					\
+  static ntg_return_type(Name, T1, T2)					\
+  Name##_impl(const ntg::any_const_class<T1>& lhs,			\
+	      const ntg::real_value<T2>& rhs)				\
+  {									\
+    typedef ntg_return_type(Name, T1, T2) return_type;			\
+    typedef typename							\
+      typetraits<E>::abstract_behavior_type::get<return_type>	\
+        behavior_type;							\
+    return_type tmp;							\
+    tmp = behavior_type::check_##Name(lhs.exact(),			\
+				      rhs.exact().val());		\
+    return tmp;								\
   }
-
 
 # define CMP_SCALAR_OPERATOR(Name, Op)				\
   template <class T1, class T2> inline				\
@@ -105,8 +146,9 @@
   }								\
 								\
   template <class T> inline					\
-  static bool Name##_impl(const ntg::real_value<T>& lhs,	\
-			  const ntg::real_value<T>& rhs)	\
+  static bool 							\
+  Name##_impl(const ntg::real_value<T>& lhs,			\
+              const ntg::real_value<T>& rhs)			\
   { return lhs.exact().val() Op rhs.exact().val(); }		\
 								\
   template <class T> inline					\
@@ -120,7 +162,6 @@
 //  Macros for optraits_int
 //
 ////////////////////////////
-
 
 # define ASSIGN_INT_OPERATOR(Name, Op)					\
   template <class T1, class T2> inline					\
@@ -169,4 +210,4 @@
     return result;					\
   }
 
-#endif // ndef NTG_OPTRAITS_SCALAR_DEFS_HH
+#endif // ndef NTG_OPTRAITS_REAL_DEFS_HH
