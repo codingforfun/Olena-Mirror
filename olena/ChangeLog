@@ -1,3 +1,11 @@
+2003-07-24  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
+
+	* oln/core/abstract/image_with_dim.hh: Add upper hold function.
+
+	* oln/core/internal/window.hh: Adjust typedef name.
+
+	* oln/core/image.hh: Add empty constructor.
+
 2003-07-23  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/abstract/image.hh: Make procedures on borders const.
@@ -11,16 +19,16 @@
 2003-07-23  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
-	oln/core/bkd_iter3d.hh, oln/core/dpointnd.hh, 
+	oln/core/bkd_iter3d.hh, oln/core/dpointnd.hh,
 	oln/core/iter.hh, oln/core/image.hh: Rename template parameter E
 	as Exact.
-	
+
 	* oln/core/neighborhood.hh, oln/core/impl/image_array2d.hh: Remove
 	debug instructions.
 
 	* oln/core/abstract/image_with_impl.hh: Modify assign() member
 	function. Implement assignment operator.
-	
+
 	* oln/core/image1d.hh, oln/core/image2d.hh, oln/core/image3d.hh:
 	Implement assignment operator. Rename template parameter E as
 	Exact.
@@ -58,14 +66,14 @@
 	* oln/core/impl/image_impl.hh: Move len() member functions...
 
 	* oln/core/impl/image_array.hh: ...here.
-	
+
 2003-07-22  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/Makefile.am: Adjust.
 
 2003-07-22  David Lesage  <david@lrde.epita.fr>
 
-	* oln/core/image1d.hh,                              
+	* oln/core/image1d.hh,
 	oln/core/image2d.hh,
 	oln/core/image3d.hh: Implement clone() procedures.
 
@@ -79,12 +87,12 @@
 
 	* oln/core/impl/image_impl.hh: ...here. Correct bug. Add len()
 	procedure.
-	
+
 	* oln/core/impl/image_array1d.hh,
 	oln/core/impl/image_array2d.hh
 	oln/core/impl/image_array3d.hh: Correct bugs in the procedures on
 	borders.
-	
+
 	* tests/core/tests/borders: New.
 
 	* tests/core/tests/clone: New.
@@ -102,7 +110,7 @@
 
 	* oln/core/abstract/image_with_impl.hh: Suppress Dim and Impl
 	parameters. Move ostream operators...
-	
+
 	* oln/core/abstract/image_with_dim.hh: ...here.
 
 2003-07-18  David Lesage  <david@lrde.epita.fr>
@@ -112,38 +120,38 @@
 
 	* oln/core/abstract/image_with_impl.hh: Implement the interface
 	for operations on borders.
-	
+
 	* oln/core/impl/image_impl.hh: Implement the interface
 	for internal operations on borders.
 
 	* oln/core/impl/image_array.hh: Split into...
-	
-	* oln/core/impl/image_array1d.hh, 
-	ln/core/impl/image_array2d.hh, 
+
+	* oln/core/impl/image_array1d.hh,
+	ln/core/impl/image_array2d.hh,
 	oln/core/impl/image_array3d.hh: ...these files. Implement
-	operations on borders. 
-	
-	* oln/core/image1d.hh, 
-	oln/core/image2d.hh, 
+	operations on borders.
+
+	* oln/core/image1d.hh,
+	oln/core/image2d.hh,
 	oln/core/image3d.hh: Modify constructors and includes in
-	consequence. 
+	consequence.
 
 	* oln/core/image1d_size.hh, oln/core/image2d_size.hh,
 	oln/core/image3d_size.hh, oln/core/imagend_size.hh: Add write
 	access to sizes.
 
 	* oln/core/abstract/image_with_dim.hh: Modify constructor.
-	
+
 2003-07-16  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/basics1d.hh, oln/basics2d.hh, oln/basics3d.hh,
 	oln/basics.hh, oln/core/apply.hh, oln/core/bkd_iter1d.hh,
 	oln/core/bkd_iter2d.hh, oln/core/bkd_iter3d.hh,
-	oln/core/traverse.hh, oln/core/fold.hh, 
+	oln/core/traverse.hh, oln/core/fold.hh,
 	oln/core/generate.hh: Adjust.
-	
+
 	* tests/core/tests/image1: New test.
-	
+
 2003-07-16  David Lesage  <david@lrde.epita.fr>
 
 	Major changes, redesign the image hierarchy.
@@ -155,14 +163,14 @@
 	new design.
 
 	* oln/core/pred_image.hh: Rename as...
-	* oln/core/abstract/binary_image.hh: ...this. Rewrite 
+	* oln/core/abstract/binary_image.hh: ...this. Rewrite
 	using the new design.
 
 	* oln/core/abstract/image.hh,
 	oln/core/abstract/image_with_dim.hh,
 	oln/core/abstract/image_with_impl.hh,
 	oln/core/abstract/image_with_type.hh,
-	oln/core/impl/image_impl.hh, 
+	oln/core/impl/image_impl.hh,
 	oln/core/impl/image_array.hh: New.
 
 	* oln/core/internal/image1d_data.hh,
@@ -173,16 +181,16 @@
 	oln/core/internal/image3d.hh,
 	oln/core/internal/real_image1d.hh,
 	oln/core/internal/real_image2d.hh,
-	oln/core/internal/real_image3d.hh, 
+	oln/core/internal/real_image3d.hh,
 	oln/core/regular_image.hh: Remove.
-	
+
 2003-07-11  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/core/internal/real_image2d.hh,
 	oln/core/internal/real_image3d.hh: Fix pretty print.
 
 	* tests/core/tests/print_image: New test.
-	
+
 2003-07-05  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
 	* oln/topo/inter-pixel/inter-pixel.hxx,

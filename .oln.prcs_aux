@@ -131,7 +131,7 @@
 (olena/oln/topo/inter-pixel/inter-pixel.hxx 2004 1057433031 r/31_inter-pixe 1.4)
 (attic/oln-ChangeLog 90565 1041965925 6_ChangeLog 1.50.1.98.1.5)
 (olena/oln/Makefile.am 5355 1058868704 q/47_Makefile.a 1.3.1.1.1.1)
-(olena/ChangeLog 50713 1058984397 o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.6)
+(olena/ChangeLog 50890 1059059978 o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.7)
 (integre/ntg/real/range.hh 6038 1054567521 t/16_range.hh 1.1)
 (olena/tests/convol/slow_sum_2d_1.cc 1123 1047049040 f/41_slow_sum_2 1.2.1.4)
 (integre/tests/types/tests/int_u4 49 1030531145 h/19_int_u4 1.1)
