@@ -48,21 +48,21 @@ namespace oln {
 
       typedef std::set<unsigned> labels_t;
 
-      template <class _I>
+      template <class I>
       class cmap
       {
       public:
-	typedef DPoint(_I)	dpoint_t;
-	typedef Point(_I)	point_t;
-	typedef FwdDirIter(_I)	fwd_dir_iter_t;
-	typedef BkdDirIter(_I)	bkd_dir_iter_t;
-	typedef Head(_I)	head_t;
-	typedef Zeta(_I)	zeta_t;
+	typedef DPoint(I)	dpoint_t;
+	typedef Point(I)	point_t;
+	typedef FwdDirIter(I)	fwd_dir_iter_t;
+	typedef BkdDirIter(I)	bkd_dir_iter_t;
+	typedef Head(I)		head_t;
+	typedef Zeta(I)		zeta_t;
 
       public:
-	cmap(const _I & input,
-	     const interpixel<_I> & ip,
-	     const flat_zone<_I> & cc) :
+	cmap(const I & input,
+	     const interpixel<I> & ip,
+	     const flat_zone<I> & cc) :
 	  _zeta(input.nrows() + 1, input.ncols() + 1),
 	  _beta(cc.nlabels()),
 	  _moth(cc.nlabels()),
@@ -215,8 +215,8 @@ namespace oln {
 	// building combinatorial map
 	////////////////////////
 
-	unsigned _build_zeta(const interpixel<_I> & ip,
-			     const flat_zone<_I> & cc)
+	unsigned _build_zeta(const interpixel<I> & ip,
+			     const flat_zone<I> & cc)
 	{
 	  unsigned ndarts = 0;
 	  unsigned moth = 0;
@@ -233,7 +233,7 @@ namespace oln {
 
 		moth = cc.get_label(n1 + dpoint_t(0, -1));
 
-		head_t h1 = ip.folw(head_t(n1, DirTraits(_I)::first()));
+		head_t h1 = ip.folw(head_t(n1, DirTraits(I)::first()));
 
 		acc.push_back(h1.first);
 
@@ -268,8 +268,8 @@ namespace oln {
 	  return ndarts;
 	}
 
-	void _build_functions(const interpixel<_I> & ip,
-			      const flat_zone<_I> & cc)
+	void _build_functions(const interpixel<I> & ip,
+			      const flat_zone<I> & cc)
 	{
 	  Iter(zeta_t) it(_zeta);
 	  fwd_dir_iter_t i;
@@ -324,10 +324,10 @@ namespace oln {
 
 } // end oln
 
-template<class _I>
+template<class I>
 inline std::ostream &
 operator<<(std::ostream & ostr,
-	   const oln::topo::combinatorial_map::cmap<_I> & cm);
+	   const oln::topo::combinatorial_map::cmap<I> & cm);
 
 inline std::ostream &
 operator<<(std::ostream & ostr,

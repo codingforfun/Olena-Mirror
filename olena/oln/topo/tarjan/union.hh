@@ -42,20 +42,20 @@ namespace oln {
       struct EMPTY_CLASS
       {};
 
-      template< class _I, class aux_data_t>
+      template< class I, class aux_data_t>
       struct tarjan_set
       {
-	typedef Point(_I) point_t;
-	typedef Value(_I) data_t;
-	typedef Concrete(_I) image_t;
+	typedef Point(I) point_t;
+	typedef Value(I) data_t;
+	typedef Concrete(I) image_t;
 
-	typedef typename mute<_I, point_t>::ret ima_parent_t;
-	typedef typename mute<_I, aux_data_t>::ret ima_aux_data_t;
+	typedef typename mute<I, point_t>::ret ima_parent_t;
+	typedef typename mute<I, aux_data_t>::ret ima_aux_data_t;
 
       public:
 	tarjan_set(const image_t & ima) : input(ima)
 	{
-	  parent = typename mute<_I, point_t>::ret(ima.size());
+	  parent = typename mute<I, point_t>::ret(ima.size());
 	  level::fill(parent, INACTIVE());
 
 	  border::adapt_assign(parent, 1, INACTIVE());

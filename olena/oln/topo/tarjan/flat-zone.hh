@@ -41,16 +41,16 @@ namespace oln {
     namespace tarjan {
 
       //
-      //  Class flat_zone<_I>
+      //  Class flat_zone<I>
       //
       //////////////////////////////////
 
-      template <class _I>
+      template <class I>
       struct flat_zone
       {
-	typedef Point(_I) point_t;
-	typedef Value(_I)  data_t;
-	typedef Concrete(_I) image_t;
+	typedef Point(I) point_t;
+	typedef Value(I)  data_t;
+	typedef Concrete(I) image_t;
 	typedef tarjan::tarjan_set<image_t, tarjan::EMPTY_CLASS> tarjan_cc;
 
 	const image_t &input;

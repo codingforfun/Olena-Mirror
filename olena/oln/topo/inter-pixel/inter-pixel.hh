@@ -44,27 +44,27 @@ namespace oln {
 # define InterPixel(ImgType)			\
 typename mute< ImgType, Node(ImgType) >::ret
 
-      template <class _I>
+      template <class I>
       class interpixel
       {
       public:
-	typedef DPoint(_I)	dpoint_t;
-	typedef Point(_I)	point_t;
-	typedef Node(_I)	node_t;
-	typedef FwdDirIter(_I)	fwd_dir_iter_t;
-	typedef BkdDirIter(_I)	bck_dir_iter_t;
-	typedef Dir(_I)		dir_t;
-	typedef DirTraits(_I)	dir_traits_t;
-	typedef Head(_I)	head_t;
-	typedef InterPixel(_I)	inter_pixel_t;
+	typedef DPoint(I)	dpoint_t;
+	typedef Point(I)	point_t;
+	typedef Node(I)		node_t;
+	typedef FwdDirIter(I)	fwd_dir_iter_t;
+	typedef BkdDirIter(I)	bck_dir_iter_t;
+	typedef Dir(I)		dir_t;
+	typedef DirTraits(I)	dir_traits_t;
+	typedef Head(I)		head_t;
+	typedef InterPixel(I)	inter_pixel_t;
 
       public:
-	interpixel(const _I & img) :
+	interpixel(const I & img) :
 	  _data(img.nrows() + 1, img.ncols() + 1)
 	{
 	  // FIXME: assume there is no boundary pixel with a max value.
 	  // pearhaps we should clone img with a higher type.
-	  border::adapt_assign(img, 1, ntg_max_val(Value(_I)));
+	  border::adapt_assign(img, 1, ntg_max_val(Value(I)));
 
 	  Iter(inter_pixel_t) p(_data);
 	  fwd_dir_iter_t it;
