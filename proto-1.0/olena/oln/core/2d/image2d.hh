@@ -32,6 +32,7 @@
 
 # include <oln/core/abstract/image_identity.hh>
 # include <oln/core/abstract/image_with_data.hh>
+# include <oln/core/abstract/image_vectorialness.hh>
 # include <oln/core/2d/array2d.hh>
 # include <oln/core/2d/fwd_piter2d.hh>
 # include <oln/core/2d/bkd_piter2d.hh>
@@ -72,6 +73,8 @@ namespace oln {
   {
     // intrusive property:
     typedef is_a<abstract::image2d> image_dimension_type;
+    // FIXME: should be generalized
+    typedef vectorialness_from_valuetype(T) image_vectorialness_type;
 
     typedef mlc::no_type delegated_type;
 

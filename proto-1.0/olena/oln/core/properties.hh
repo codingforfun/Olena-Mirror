@@ -66,6 +66,7 @@ namespace oln
 
     struct image_constness_type;
     struct image_dimension_type;
+    struct image_vectorialness_type;
     // FIXME: ...
   }
 

@@ -37,6 +37,7 @@ OLN_DEP =					\
   core/abstract/image.hh			\
   core/abstract/image_constness.hh		\
   core/abstract/image_dimension.hh		\
+  core/abstract/image_vectorialness.hh		\
   core/abstract/image_identity.hh		\
   core/abstract/image_with_data.hh		\
   core/abstract/images.hh			\

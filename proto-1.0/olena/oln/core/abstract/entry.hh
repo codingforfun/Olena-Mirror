@@ -30,6 +30,7 @@
 
 # include <oln/core/abstract/image_constness.hh>
 # include <oln/core/abstract/image_dimension.hh>
+# include <oln/core/abstract/image_vectorialness.hh>
 
 
 // FIXME: this file should move to oln/core/abstract/
@@ -68,7 +69,8 @@ namespace oln {
     struct image_entry :
       // intrusive:
       public oln_type_of_(E, image_constness) ::template instantiated_with<E>::ret,
-      public oln_type_of_(E, image_dimension) ::template instantiated_with<E>::ret
+      public oln_type_of_(E, image_dimension) ::template instantiated_with<E>::ret,
+      public oln_type_of_(E, image_vectorialness) ::template instantiated_with<E>::ret
       // ...
     {
     protected:

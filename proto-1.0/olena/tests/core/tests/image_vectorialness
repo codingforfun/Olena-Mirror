@@ -1,0 +1,26 @@
+
+#include <iostream>
+
+#include <ntg/all.hh>
+#include <oln/basics2d.hh>
+
+#include <oln/fancy/iota.hh>
+#include <oln/fancy/print.hh>
+
+#include "check.hh"
+#include "data.hh"
+
+
+
+template <typename I>
+void foo_i(const oln::abstract::integer_image<I>& input)
+{}
+
+
+bool check()
+{
+  // it lacks test for decimal, vectorial, ... images.
+  oln::image2d<ntg::int_u8> ima_i;
+  foo_i(ima_i);
+  return false;
+}

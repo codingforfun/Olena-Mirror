@@ -1,3 +1,18 @@
+2005-03-20  Simon Odou  <simon@lrde.epita.fr>
+
+	* tests/core/tests/image_vectorialness: New.
+	* tests/core/tests/readwrite_image: Add vectorialness property.
+	* oln/makefile.src: Add new files.
+	* oln/core/abstract/image.hh: Register `vectorialness' property.
+	* oln/core/abstract/image_vectorialness.hh: New. Add vectorialness
+	abstraction.
+	* oln/core/abstract/entry.hh: Add inheritance to new branch
+	`vectorialness'.
+	* oln/core/1d/image1d.hh: Add `vectorialness' property.
+	* oln/core/2d/image2d.hh: Likewise.
+	* oln/core/3d/image3d.hh: Likewise.
+	* oln/core/properties.hh: Declare `vectorialness' property..
+
 2005-03-20  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* tests/core/tests/piter2d: Add a test for backward 2d iterators.

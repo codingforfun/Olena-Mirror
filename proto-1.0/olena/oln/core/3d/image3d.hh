@@ -31,6 +31,7 @@
 # include <mlc/traits.hh>
 
 # include <oln/core/abstract/image_with_data.hh>
+# include <oln/core/abstract/image_vectorialness.hh>
 # include <oln/core/3d/array3d.hh>
 # include <oln/core/3d/fwd_piter3d.hh>
 
@@ -61,6 +62,8 @@ namespace oln {
   {
     // intrusive property:
     typedef is_a<abstract::image3d> image_dimension_type;
+    // FIXME: should be generalized
+    typedef vectorialness_from_valuetype(T) image_vectorialness_type;
 
     typedef mlc::no_type delegated_type;
 

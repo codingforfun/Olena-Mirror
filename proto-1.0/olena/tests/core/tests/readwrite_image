@@ -24,6 +24,7 @@ namespace oln {
   {
     typedef is_a<abstract::readwrite_image> image_constness;
     typedef is_a<abstract::image2d> image_dimension_type;
+    typedef vectorialness_from_valuetype_(ntg::int_u8) image_vectorialness_type;
 
     typedef size2d size_type;
     typedef point2d point_type;
