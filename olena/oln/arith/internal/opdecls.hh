@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,27 +28,31 @@
 #ifndef OLENA_ARITH_INTERNAL_OPDECLS_HH
 # define OLENA_ARITH_INTERNAL_OPDECLS_HH
 
-/*
-  These macros should be rewritten / split into real code to make
-  things clearer.
-
-  Operations are defined between two images and between one image and
-  one constant value (with the cst suffix).
-
-  The two main components are:
-  
-  1) Define functors for each operations, taking two values and
-     returning the result.
-
-  2) Define front-end functions applying a functor on the whole image.
-     3 versions are defined, leaving the possibility to specify the
-     return type automatically, manually or using a conversion (from
-     convert).
+/*! \file opdecls.hh
+**
+** Operations are defined between two images and between one image and
+**  one constant value (with the cst suffix).
+** The two main components are:
+** \n
+** 1) Define functors for each operations, taking two values and
+**   returning the result.
+**\n
+**  2) Define front-end functions applying a functor on the whole image.
+**  3 versions are defined, leaving the possibility to specify the
+**   return type automatically, manually or using a conversion (from
+**   convert).
+**
+** \todo FIXME: These macros should be rewritten / split into real code to make
+** things clearer.
 */
 
-/*------------------.
-| Binary functors.  |
-`------------------*/
+/*! Binary functors.
+**
+** Produce a functor named f_##OPNAME using the code OPCODE.
+**
+** \arg OPNAME Will produce the name of the function
+** \arg OPCODE Operation that may use \a val1 and \a val2
+*/
 
 # define oln_arith_declare_binrecval_functor_(OPNAME, OPCODE)		\
     template<class T1, class T2, class Ret>				\
@@ -70,8 +74,16 @@
       : public f_##OPNAME< T1, T2, ntg_return_type(OPNAME, T1, T2) >	\
     {}  /* no ; */
 
-// Functor used by operations between an image and a constant
 
+
+/*! Unary functor, using a constant.
+**
+** Produce a functor named f_##OPNAME using the code OPCODE. The object
+** is constructed using a constant.
+**
+** \arg OPNAME Will produce the name of the function
+** \arg OPCODE_CST Operation that may use \a val1 and \a cst_
+*/
 # define oln_arith_declare_binrecvalcst_functor_(OPNAME, OPCODE_CST)	\
     template<class T1, class T2, class Ret>				\
      struct f_##OPNAME##_cst : std::unary_function<const T1&,		\
@@ -89,12 +101,25 @@
       T2 cst_;								\
     } /* no ; */
 
-/* Both the above. */
+
+/*! Produces an unary function and a binary and a Unary Functor using a constant.
+**
+** \arg OPNAME Will produce the name of the function.
+** \arg OPCODE Operation that may use \a val1 and \a val2.
+** \arg OPCODE_CST Operation that may use \a val1 and \a cst_.
+** \see oln_arith_declare_binrecval_functor_
+** \see oln_arith_declare_binrecvalcst_functor_
+*/
 # define oln_arith_declare_binrecval_functors_(OPNAME, OPCODE, OPCODE_CST)	\
     oln_arith_declare_binrecval_functor_(OPNAME, OPCODE);			\
     oln_arith_declare_binrecvalcst_functor_(OPNAME, OPCODE_CST)
 
-/* For binary functions that work on a single known datatype.  */
+/*! For binary functions that work on a single known datatype.
+**
+** \arg OPNAME Will produce the name of the function.
+** \arg OPCODE Operation that may use \a val1 and \a val2.
+** \arg TYPE Type that can be used.
+*/
 # define oln_arith_declare_binfixedtype_functor_(OPNAME, OPCODE, TYPE)	      \
     struct f_##OPNAME : std::binary_function< const TYPE&, const TYPE&, TYPE> \
     {									      \
@@ -106,7 +131,12 @@
       }									      \
     } /* no ; */
 
-/* For binary functions that work on a single known datatype.  */
+/*! For Binary functions that work on a single known datatype.
+**
+** \arg OPNAME Will produce the name of the function.
+** \arg OPCODE_CST Operation that may use \a val1 and \a cst_
+** \arg TYPE Type that can be used.
+*/
 # define oln_arith_declare_binfixedtypecst_functor_(OPNAME, OPCODE_CST, TYPE) \
     struct f_##OPNAME##_cst: std::unary_function<const TYPE, TYPE>	     \
     {									     \
@@ -121,12 +151,13 @@
       TYPE cst_;							     \
     } /* no ; */
 
-/* Both the above.  */
+/*! oln_arith_declare_binfixedtype_functor_ & oln_arith_declare_binfixedtypecst_functor_.
+*/
 # define oln_arith_declare_binfixedtype_functors_(NAME, TYPE, CODE, CODE_CST)	\
     oln_arith_declare_binfixedtype_functor_(NAME, CODE, TYPE);			\
     oln_arith_declare_binfixedtypecst_functor_(NAME, CODE_CST, TYPE)
 
-// Shortcuts
+/// Shortcut
 #define default_functor_return_type_(OPNAME, I1, I2)			\
   typename f_##OPNAME<oln_value_type(I1),				\
                       oln_value_type(I2),				\
@@ -134,6 +165,7 @@
 				      oln_value_type(I1),		\
 				      oln_value_type(I2))>::result_type
 
+/// Shortcut.
 #define default_functor_type_cst_(OPNAME, I1, T2)	\
   f_##OPNAME##_cst<oln_value_type(I1),			\
                    T2,					\
@@ -141,13 +173,11 @@
 			           oln_value_type(I1),	\
 			           T2)>
 
+/// Shortcut.
 #define default_functor_return_type_cst_(OPNAME, I1, T2)		\
   typename default_functor_type_cst_(OPNAME, I1, T2)::result_type
 
-/*----------------------------.
-| Declare front-end functions |
-`----------------------------*/
-
+///  Declare front-end functions.
 # define oln_arith_declare_binop_procs_(OPNAME)									\
     /* 														\
        FIXME: this is a workaround for an odd bug of icc and como						\
@@ -203,8 +233,8 @@
 		    input1, input2);										\
     }
 
+/// Apply OPNAME with a constant as second operand.
 # define oln_arith_declare_binopcst_procs_(OPNAME)						\
-    /* Apply OPNAME with a constant as second operand.  */					\
 												\
     /* FIXME: cf explications above */								\
     template <class I, class T>									\
@@ -243,8 +273,7 @@
     oln_arith_declare_binop_procs_(OPNAME)		\
     oln_arith_declare_binopcst_procs_(OPNAME)
 
-/* Same as oln_arith_declare_nongenericbinop_procs_ but for non template
-   functors.  */
+/// Same as oln_arith_declare_nongenericbinop_procs_ but for non template functors.
 # define oln_arith_declare_nongenericbinop_procs_(OPNAME)				\
     /* Standard application of OPNAME */						\
     template<class I1, class I2> inline							\
@@ -267,8 +296,9 @@
 
 /* Same as oln_arith_declare_nongenericbinopcst_procs_ but for non
    template functors.  */
+
+/// Apply OPNAME with a constant as second operand.
 # define oln_arith_declare_nongenericbinopcst_procs_(OPNAME)		\
-    /* Apply OPNAME with a constant as second operand.  */		\
     template<class I, class T> inline					\
     typename mute<I, typename f_##OPNAME##_cst::result_type>::ret	\
     OPNAME##_cst(const abstract::image<I>& input, T val)		\
@@ -298,7 +328,7 @@
 | Unary functions.  |
 `------------------*/
 
-/* For binary functions that work on a single known datatype.  */
+/*! Unary function for binary functions that work on a single known datatype.  */
 # define oln_arith_declare_unfixedtype_functor_(OPNAME, TYPE, OPCODE)	\
     struct f_##OPNAME : std::unary_function< const TYPE&, TYPE>		\
     {									\

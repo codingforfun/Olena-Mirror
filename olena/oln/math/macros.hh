@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,18 +33,19 @@
 
 namespace oln {
 
+  /*! \namespace oln:math
+  ** useful functions.
+  **
+  ** \note FIXME: I'm not proud of the code below
+  ** think it could be better...
+  **
+  ** \todo FIXME: this code sounds really odd. Why does the operator()
+  ** take value<Self> instead of Self directly ?
+  ** FIXME: Self should be renamed into Exact.
+  */
   namespace math {
 
-    // FIXME: I'm not proud of the code below
-    // I think it could be better...
-
-    // FIXME: this code sounds really odd. Why does the operator()
-    // take value<Self> instead of Self directly ?
-
-    // FIXME: Self should be renamed into Exact.
-
-    // sqr
-
+    //! \brief Square fctor.
     template<class T>
     struct f_sqr
     {
@@ -55,6 +56,7 @@ namespace oln {
       }
     };
 
+    //! Square function.
     template<class T>
     const T sqr(const T& val)
     {
@@ -62,8 +64,7 @@ namespace oln {
       return f(val);
     }
 
-    // abs
-
+    //! Absolute value fctor.
     template<class T>
     struct f_abs
     {
@@ -76,6 +77,7 @@ namespace oln {
       }
     };
 
+    //! Absolute value function.
     template<class T>
     const T
     abs(const T& val)
