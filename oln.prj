@@ -1,54 +1,28 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 7 27)
-(Parent-Version oln 7 26)
-(Version-Log "Index: oln/ChangeLog
+(Project-Version oln 7 28)
+(Parent-Version oln 7 27)
+(Version-Log "Index: ChangeLog
 from  +2003-01-20  Raphaël Poss  <raph@lrde.epita.fr>
 
-   * oln/convert/conversion.hh,
-   oln/convert/conversion_ng_se.hh,
-   oln/convol/convolution.hh,
-   oln/convol/fast_gaussian.hxx,
-   oln/core/apply.hh,
-   oln/core/border.hh,
-   oln/core/fold.hh,
-   oln/core/generate.hh,
-   oln/core/neighborhood.hh,
-   oln/core/traverse.hh,
-   oln/level/cc.hh,
-   oln/level/compare.hh,
-   oln/level/connected.hh,
-   oln/level/fill.hh,
-   oln/level/set_level.hh,
-   oln/meta/array1d.hh,
-   oln/meta/array2d.hh,
-   oln/meta/array3d.hh,
-   oln/morpho/dilation.hh,
-   oln/morpho/erosion.hh,
-   oln/morpho/extrema.hxx,
-   oln/morpho/extrema_killer.hh,
-   oln/morpho/fast_morpho.hxx,
-   oln/morpho/geodesic_dilation.hh,
-   oln/morpho/geodesic_erosion.hh,
-   oln/morpho/hit_or_miss.inc,
-   oln/morpho/opening.inc,
-   oln/morpho/reconstruction.hh,
-   oln/morpho/splitse.hh,
-   oln/morpho/stat.hh,
-   oln/morpho/thickening.inc,
-   oln/morpho/thinning.inc,
-   oln/morpho/watershed.hxx,
-   oln/topo/dmap.hh,
-   oln/topo/dmap.hxx,
-   oln/transforms/dwt.hh,
-   oln/utils/histogram.hh,
-   tests/convert/convcomp.hh: Rename _X template parameters to X_.
-   * oln/core/type.hh: Correct `Exact_...()' accordingly.
+   * bootstrap.sh: Recurse autoconf into oln/conf.
+
+   * configure.ac: Add comments.
+   * component.m4 (OLN_COLLECTION): Comment exhaustively.
+
+Index: oln/ChangeLog
+from   2003-01-20  Raphaël Poss  <raph@lrde.epita.fr>
+   * Makefile.am: Add a section pertaining to per-compiler
+   configuration.
+   * conf/configure.ac,
+   conf/oln-config.shin,
+   conf/gen-scripts.sh,
+   conf/compilers.def: Add.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 20 Jan 2003 00:14:53 +0100")
+(Checkin-Time "Mon, 20 Jan 2003 12:05:54 +0100")
 (Checkin-Login raph)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -170,8 +144,8 @@ from  +2003-01-20  Raphaël Poss  <raph@lrde.epita.fr>
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.10 664))
-  (oln/ChangeLog (oln/o/30_ChangeLog 1.27 664))
+  (ChangeLog (oln/o/33_ChangeLog 1.11 664))
+  (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.1 664))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.5 664))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.6 664))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.1 664))
@@ -181,11 +155,11 @@ from  +2003-01-20  Raphaël Poss  <raph@lrde.epita.fr>
   (attic/doc-ChangeLog (oln/e/1_ChangeLog 1.31 660))
   (attic/tests-ChangeLog (oln/e/30_ChangeLog 1.52 660))
 
-  (bootstrap.sh (oln/j/16_bootstrap. 1.4 775))
+  (bootstrap.sh (oln/j/16_bootstrap. 1.5 775))
   (BUILD (oln/o/38_BUILD 1.2 664))
   (cleanup.sh (oln/o/29_cleanup.sh 1.3 775))
-  (component.m4 (oln/o/40_component. 1.3 664))
-  (configure.ac (oln/3_configure. 1.37 664))
+  (component.m4 (oln/o/40_component. 1.4 664))
+  (configure.ac (oln/3_configure. 1.38 664))
   (doc/configure.ac (oln/e/2_configure. 1.15 660))
   (doc/demo/image.cc (oln/d/46_image.cc 1.2 660))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.9 660))
@@ -219,7 +193,7 @@ from  +2003-01-20  Raphaël Poss  <raph@lrde.epita.fr>
   (oln/img/se9.pbm (oln/n/5_se9.pbm 1.1 660) :no-keywords)
   (oln/img/se.pbm (oln/n/6_se.pbm 1.1 660) :no-keywords)
   (oln/ISSUES (oln/d/47_ISSUES 1.5 660))
-  (oln/Makefile.am (oln/2_Makefile.a 1.23 660))
+  (oln/Makefile.am (oln/2_Makefile.a 1.24 660))
   (oln/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.5 664))
   (oln/oln/arith/logic.hh (oln/b/24_logic.hh 1.6 664))
   (oln/oln/arith/ops.hh (oln/b/23_ops.hh 1.5.1.2 664))
@@ -360,7 +334,7 @@ from  +2003-01-20  Raphaël Poss  <raph@lrde.epita.fr>
   (oln/oln/level/lut.hh (oln/29_lut.hh 1.7 664))
   (oln/oln/level/set_level.hh (oln/p/1_set_level. 1.5 664))
   (oln/oln/level/threshold.hh (oln/f/15_threshold. 1.5 664))
-  (oln/oln.m4 (oln/j/15_oln.m4 1.6 664))
+  (oln/oln.m4 (oln/j/15_oln.m4 1.7 664))
   (oln/oln/Makefile.am (oln/27_Makefile.a 1.36 600))
   (oln/oln/math/macros.hh (oln/b/21_macros.hh 1.6 664))
   (oln/oln/meta/array1d.hh (oln/f/23_array1d.hh 1.4 664))
@@ -695,6 +669,16 @@ from  +2003-01-20  Raphaël Poss  <raph@lrde.epita.fr>
 ;; from version 7.25(w), by raph:
 
   ; (oln/tests/configure.ac ())
+
+;; Files added by populate at Mon, 20 Jan 2003 11:43:58 +0100,
+;; to version 7.27(w), by raph:
+
+  (oln/conf/configure.ac (oln/p/23_configure. 1.1 664))
+  (oln/conf/gen-scripts.sh (oln/p/24_gen-script 1.1 775))
+  (oln/conf/oln-config.shin (oln/p/25_oln-config 1.1 664))
+  (oln/conf/compilers.def (oln/p/26_compilers. 1.1 664))
 )
-(Merge-Parents)
+(Merge-Parents
+  (7.27 complete)
+)
 (New-Merge-Parents)

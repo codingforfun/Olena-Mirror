@@ -433,9 +433,11 @@ AC_DEFUN(OLN_C99_MATH,
 
 # The checks are done using AC_TRY_COMPILE instead of AC_TRY_FUNC,
 # because the latter uses invalid C++ syntax.
-                  AC_TRY_COMPILE([@%:@include <cmath>],
-                                 [float f1 = roundf(0f); 
-				  float f2 = nearbyintf(0f);],  
+                  AC_LINK_IFELSE([@%:@include <cmath>
+                                  int main() {
+                                    float f1 = roundf(0f); 
+				    float f2 = nearbyintf(0f);
+                                  }],  
                                  [oln_cv_c99_flags=unneeded],
                                  [
 # When using a ISO-compliant C++98 compiler with a C99 standard library,
@@ -443,9 +445,11 @@ AC_DEFUN(OLN_C99_MATH,
 # However, with GNU systems, the _ISOC99_SOURCE macro conditional
 # forces C99 declarations when set to 1. 
                                   CPPFLAGS="$CPPFLAGS -D_ISOC99_SOURCE=1"
-                                  AC_TRY_COMPILE([@%:@include <cmath>],
-                                                 [float f1 = roundf(0.); 
-						  float f2 = nearbyintf(0.);],
+                                  AC_LINK_IFELSE([@%:@include <cmath>
+                                                  int main() {
+                                                    float f1 = roundf(0.); 
+						    float f2 = nearbyintf(0.);
+                                                  }],
                                        [oln_cv_c99_flags="-D_ISOC99_SOURCE=1"],
                                        [oln_cv_c99_flags=unavailable])])
                   CPPFLAGS="$oln_save_CPPFLAGS"
@@ -469,11 +473,11 @@ AC_DEFUN(OLN_C99_MATH,
 
 AC_DEFUN(AC_WITH_OLN,
 [dnl
-  AC_REQUIRE([OLN_PATH_HEADERS])
-  AC_REQUIRE([OLN_PATH_IMGS])
   AC_REQUIRE([OLN_TEMPLATE_DEPTH])
   AC_REQUIRE([OLN_NUMERIC_LIMITS])
   AC_REQUIRE([OLN_C99_MATH])
+  AC_REQUIRE([OLN_PATH_HEADERS])
+  AC_REQUIRE([OLN_PATH_IMGS])
 ])
 
 # AC_CXX_FLAGS

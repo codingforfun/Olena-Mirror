@@ -1,5 +1,12 @@
 2003-01-20  Raphaël Poss  <raph@lrde.epita.fr>
 
+	* Makefile.am: Add a section pertaining to per-compiler
+	configuration.
+	* conf/configure.ac,
+	conf/oln-config.shin,
+	conf/gen-scripts.sh,
+	conf/compilers.def: Add.
+
 	* oln/convert/conversion.hh,
 	oln/convert/conversion_ng_se.hh,
 	oln/convol/convolution.hh,

@@ -1,3 +1,10 @@
+2003-01-20  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* bootstrap.sh: Recurse autoconf into oln/conf.
+
+	* configure.ac: Add comments.
+	* component.m4 (OLN_COLLECTION): Comment exhaustively.
+
 2003-01-19  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* INSTALL (install): Mention installation of sample images.
