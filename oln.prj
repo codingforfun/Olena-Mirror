@@ -1,14 +1,14 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 53)
-(Parent-Version oln 2003paradigm 49)
+(Project-Version oln 2003paradigm 54)
+(Parent-Version oln 2003paradigm 53)
 (Version-Log "2003-07-29  David Lesage  <david@lrde.epita.fr>
 
-	* oln/core/accum.hh, oln/core/compose.hh: Adapt coding style..
+	* oln/core/abstract/w_window.hh: Add w(i) member function..
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 29 Jul 2003 14:12:32 +0200")
+(Checkin-Time "Tue, 29 Jul 2003 15:55:35 +0200")
 (Checkin-Login david)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -98,7 +98,7 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.8 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.37 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.38 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.10 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.4 640))
@@ -258,7 +258,7 @@
   (olena/oln/core/w_window1d.hh (oln/c/19_w_window1d 1.11 640))
   (olena/oln/core/w_window2d.hh (oln/c/18_w_window2d 1.6.1.6 640))
   (olena/oln/core/w_window3d.hh (oln/c/17_w_window3d 1.11 640))
-  (olena/oln/core/abstract/w_window.hh (oln/c/20_w_window.h 1.9 640))	
+  (olena/oln/core/abstract/w_window.hh (oln/c/20_w_window.h 1.10 640))	
   (olena/oln/io/base.hh (oln/b/20_base.hh 1.7 640))
   
   (olena/oln/io/basics.hh (oln/b/12_basics.hh 1.5 640))
@@ -1029,32 +1029,5 @@
   (olena/oln/io/image.hh (oln/u/11_image.hh 1.1 600))
   (olena/tests/convert/conv.cc (oln/u/12_conv.cc 1.1 640))
   (olena/tests/convert/conv.hh (oln/u/13_conv.hh 1.1 640)))
-(Merge-Parents
-  (2003paradigm.51 complete
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (olena/oln/core/bkd_iter1d.hh olena/oln/core/bkd_iter1d.hh olena/oln/core/bkd_iter1d.hh r)
-    (olena/oln/core/bkd_iter2d.hh olena/oln/core/bkd_iter2d.hh olena/oln/core/bkd_iter2d.hh r) (olena/oln/core/bkd_iter3d.hh olena/oln/core/bkd_iter3d.hh olena/oln/core/bkd_iter3d.hh r)
-    (olena/oln/core/fwd_iter1d.hh olena/oln/core/fwd_iter1d.hh olena/oln/core/fwd_iter1d.hh r) (olena/oln/core/fwd_iter2d.hh olena/oln/core/fwd_iter2d.hh olena/oln/core/fwd_iter2d.hh r)
-    (olena/oln/core/fwd_iter3d.hh olena/oln/core/fwd_iter3d.hh olena/oln/core/fwd_iter3d.hh r) (olena/oln/core/image1d.hh olena/oln/core/image1d.hh olena/oln/core/image1d.hh r)
-    (olena/oln/core/image2d.hh olena/oln/core/image2d.hh olena/oln/core/image2d.hh r) (olena/oln/core/image3d.hh olena/oln/core/image3d.hh olena/oln/core/image3d.hh r)
-    (olena/oln/core/image.hh olena/oln/core/image.hh olena/oln/core/image.hh r) (olena/oln/core/abstract/iter1d.hh olena/oln/core/abstract/iter1d.hh olena/oln/core/abstract/iter1d.hh r)
-    (olena/oln/core/abstract/iter2d.hh olena/oln/core/abstract/iter2d.hh olena/oln/core/abstract/iter2d.hh r) (olena/oln/core/abstract/iter3d.hh olena/oln/core/abstract/iter3d.hh olena/oln/core/abstract/iter3d.hh r)
-    (olena/oln/core/abstract/struct_elt.hh olena/oln/core/abstract/struct_elt.hh olena/oln/core/abstract/struct_elt.hh r) (olena/oln/core/window1d.hh olena/oln/core/window1d.hh olena/oln/core/window1d.hh r)
-    (olena/oln/core/window2d.hh olena/oln/core/window2d.hh olena/oln/core/window2d.hh r) (olena/oln/core/window3d.hh olena/oln/core/window3d.hh olena/oln/core/window3d.hh r)
-    (olena/oln/core/winneighb.hh olena/oln/core/winneighb.hh olena/oln/core/winneighb.hh r) (olena/oln/core/w_window1d.hh olena/oln/core/w_window1d.hh olena/oln/core/w_window1d.hh r)
-    (olena/oln/core/w_window2d.hh olena/oln/core/w_window2d.hh olena/oln/core/w_window2d.hh r) (olena/oln/core/w_window3d.hh olena/oln/core/w_window3d.hh olena/oln/core/w_window3d.hh r)
-    (olena/oln/morpho/fast_morpho.hxx olena/oln/morpho/fast_morpho.hxx olena/oln/morpho/fast_morpho.hxx r) (olena/oln/utils/stat.hh olena/oln/utils/stat.hh olena/oln/utils/stat.hh r)
-    (olena/oln/core/abstract/image_with_dim.hh olena/oln/core/abstract/image_with_dim.hh olena/oln/core/abstract/image_with_dim.hh r) (olena/oln/core/impl/image_array.hh olena/oln/core/impl/image_array.hh olena/oln/core/impl/image_array.hh r)
-    (olena/tests/core/tests/image1 olena/tests/core/tests/image1 olena/tests/core/tests/image1 r) (olena/oln/core/impl/image_array3d.hh olena/oln/core/impl/image_array3d.hh olena/oln/core/impl/image_array3d.hh r)
-    (olena/oln/core/impl/image_array2d.hh olena/oln/core/impl/image_array2d.hh olena/oln/core/impl/image_array2d.hh r) (olena/oln/core/impl/image_array1d.hh olena/oln/core/impl/image_array1d.hh olena/oln/core/impl/image_array1d.hh r)
-    (olena/oln/core/abstract/window_base.hh olena/oln/core/abstract/window_base.hh olena/oln/core/abstract/window_base.hh r) (olena/oln/core/abstract/windownd.hh olena/oln/core/abstract/windownd.hh olena/oln/core/abstract/windownd.hh r)
-    (olena/oln/core/abstract/w_windownd.hh olena/oln/core/abstract/w_windownd.hh olena/oln/core/abstract/w_windownd.hh r) (olena/oln/core/abstract/neighborhoodnd.hh olena/oln/core/abstract/neighborhoodnd.hh olena/oln/core/abstract/neighborhoodnd.hh r))
-  (2003paradigm.52 complete
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (doc/ref/integre-ref.tex doc/ref/integre-ref.tex doc/ref/integre-ref.tex r)
-    (olena/oln/core/abstract/struct_elt.hh olena/oln/core/abstract/struct_elt.hh olena/oln/core/abstract/struct_elt.hh r) (olena/oln/morpho/gradient.inc olena/oln/morpho/gradient.inc olena/oln/morpho/gradient.inc r)
-    (olena/oln/morpho/hit_or_miss.inc olena/oln/morpho/hit_or_miss.inc olena/oln/morpho/hit_or_miss.inc r) (olena/oln/morpho/laplacian.inc olena/oln/morpho/laplacian.inc olena/oln/morpho/laplacian.inc r)
-    (olena/oln/morpho/top_hat.inc olena/oln/morpho/top_hat.inc olena/oln/morpho/top_hat.inc r) (olena/tests/morpho/edoc.cc olena/tests/morpho/edoc.cc olena/tests/morpho/edoc.cc r)
-    (olena/oln/morpho/attribute_closing_opening.hh olena/oln/morpho/attribute_closing_opening.hh olena/oln/morpho/attribute_closing_opening.hh r) (olena/oln/morpho/attribute_union_find.hh olena/oln/morpho/attribute_union_find.hh olena/oln/morpho/attribute_union_find.hh r)
-    (olena/oln/core/impl/image_array.hh olena/oln/core/impl/image_array.hh olena/oln/core/impl/image_array.hh r) 
-  )
-)
+(Merge-Parents)
 (New-Merge-Parents)

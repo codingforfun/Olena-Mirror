@@ -1,5 +1,9 @@
 2003-07-29  David Lesage  <david@lrde.epita.fr>
 
+	* oln/core/abstract/w_window.hh: Add w(i) member function.
+
+2003-07-29  David Lesage  <david@lrde.epita.fr>
+
 	* oln/core/accum.hh, oln/core/compose.hh: Adapt coding style.
 	
 2003-07-29  Giovanni Palma  <giovanni.palma@lrde.epita.fr>
