@@ -1,3 +1,10 @@
+2003-07-29  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/core/abstract/iter1d.hh, oln/core/abstract/iter2d.hh,
+	oln/core/abstract/iter3d.hh: Remove virtual inheritance.
+
+	* oln/morpho/fast_morpho.hxx: Fix typo.
+
 2003-07-29  David Lesage  <david@lrde.epita.fr>
 
 	* oln/convol/fast_gaussian.hxx, 

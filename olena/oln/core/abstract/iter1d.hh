@@ -46,7 +46,7 @@ namespace oln {
   } // end of abstract
 
   template<class Exact>
-  struct iter_traits<abstract::iter1d<Exact> >: public virtual
+  struct iter_traits<abstract::iter1d<Exact> >: public
   iter_traits<abstract::iter<Exact> >
   {
     enum { dim = 1 };
