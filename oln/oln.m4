@@ -494,6 +494,7 @@ AC_DEFUN(AC_WITH_OLN,
 # and sets the following autoconf variables:
 #   CXXFLAGS_DEBUG
 #   CXXFLAGS_STRICT
+#   CXXFLAGS_STRICT_ERRORS
 #   CXXFLAGS_OPTIMIZE
 
 AC_DEFUN([AC_CXX_FLAGS],
@@ -522,29 +523,43 @@ AC_DEFUN([AC_CXX_FLAGS],
 
    case "$oln_cv_cxx_style" in
      GNU)
-      CXXFLAGS_DEBUG="-g"
-      CXXFLAGS_OPTIMIZE="-O3 -finline-limit-1000"
-      CXXFLAGS_STRICT="-W -Wall -pedantic"
-      CXXFLAGS_STRICT_ERRORS="-W -Wall -pedantic -Werror"
+      _CXXFLAGS_DEBUG="-g"
+      _CXXFLAGS_OPTIMIZE="-O3 -finline-limit-1000"
+      _CXXFLAGS_STRICT="-W -Wall -pedantic"
+      _CXXFLAGS_STRICT_ERRORS="-W -Wall -pedantic -Werror"
       ;;
      Sun)
-      CXXFLAGS_DEBUG="-g"
-      CXXFLAGS_OPTIMIZE="-fast"
-      CXXFLAGS_STRICT="-v"
-      CXXFLAGS_STRICT_ERRORS="-v -xwe"
+      _CXXFLAGS_DEBUG="-g"
+      _CXXFLAGS_OPTIMIZE="-fast"
+      _CXXFLAGS_STRICT="-v"
+      _CXXFLAGS_STRICT_ERRORS="-v -xwe"
       ;;
      Comeau)
-      CXXFLAGS_DEBUG="-g"
-      CXXFLAGS_STRICT="-r -a"
-      CXXFLAGS_STRICT_ERRORS="-r -A"
+      _CXXFLAGS_DEBUG="-g"
+      _CXXFLAGS_STRICT=""
+      _CXXFLAGS_STRICT_ERRORS =""
       ;;
      Intel)
-      CXXFLAGS_OPTIMIZE="-O3"
-      CXXFLAGS_DEBUG="-g"
-      CXXFLAGS_STRICT="-w2 -Wall"
-      CXXFLAGS_STRICT_ERRORS="-w2 -Wall -Werror"
+      _CXXFLAGS_OPTIMIZE="-O3"
+      _CXXFLAGS_DEBUG="-g"
+      _CXXFLAGS_STRICT="-w2 -Wall"
+      _CXXFLAGS_STRICT_ERRORS="-w2 -Wall -Werror"
       ;;
    esac
+
+   if test "x$CXXFLAGS_OPTIMIZE" = "x"; then
+	CXXFLAGS_OPTIMIZE=$_CXXFLAGS_OPTIMIZE
+   fi
+   if test "x$CXXFLAGS_DEBUG" = "x"; then
+	CXXFLAGS_DEBUG=$_CXXFLAGS_DEBUG
+   fi
+   if test "x$CXXFLAGS_STRICT" = "x"; then
+	CXXFLAGS_STRICT=$_CXXFLAGS_STRICT
+   fi
+   if test "x$CXXFLAGS_STRICT_ERRORS" = "x"; then
+	CXXFLAGS_STRICT_ERRORS=$_CXXFLAGS_STRICT_ERRORS
+   fi
+
    AC_SUBST([CXXFLAGS_DEBUG])
    AC_SUBST([CXXFLAGS_OPTIMIZE])
    AC_SUBST([CXXFLAGS_STRICT])
