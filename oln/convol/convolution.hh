@@ -40,7 +40,7 @@ namespace oln {
 
     namespace output {
       
-      // FIXME
+      // FIXME: Shouldn't be there.
 
       template<class T_in, class T_win>
       struct output_traits;
@@ -101,12 +101,12 @@ namespace oln {
 	return output;
       }
 
-      // FIXME : What about 1D and 3D ??
+      // FIXME: What about 1D and 3D ??
       template<class _T_in, class Info, class _T_arr>
       typename mute <_T_in, typename output::output_traits< Value(_T_in), _T_arr>::ret >::ret
       convolve(const image < _T_in >& _input, const meta::array2d< Info, _T_arr >& _arr)
       {
-	return convolve(_input, static_cast< w_window2d<_T_arr> >(_arr)); // FIXME -> Should be w_window<_T_arr>
+	return convolve(_input, static_cast< w_window2d<_T_arr> >(_arr)); // FIXME: Should be w_window<_T_arr>
       }
       
     } // end namespace slow

@@ -1,41 +1,20 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_4 27)
-(Parent-Version oln 0_4 26)
-(Version-Log "2002-07-18  Alexandre Duret-Lutz  <duret_g@epita.fr>
+(Project-Version oln 0_4 28)
+(Parent-Version oln 0_4 27)
+(Version-Log "2002-07-18  Astrid Wang  <astrid@lrde.epita.fr>
 
-	* configure.ac: Output tests/defs and tests/sanity/Makefile.
-	* oln/basics.hh: Don't include oln/convert/basics.hh, this causes
-	loops.
-	* oln/arith/logic.hh, oln/arith/ops.hh, oln/config/system.hh,
-	oln/convert/conversion.hh,
-	oln/convol/fast_gaussian_coefficient.hh,
-	oln/convol/fast_gaussian.hh, oln/core/apply.hh,
-	oln/core/border.hh, oln/core/contract.hh, oln/core/dpointnd.hh,
-	oln/core/fold.hh, oln/core/generate.hh, oln/core/image1d_size.hh,
-	oln/core/image2d_size.hh, oln/core/image3d_size.hh,
-	oln/core/imagend_size.hh, oln/core/internal/image3d.hh,
-	oln/core/internal/w_window.hh, oln/core/neighborhood.hh,
-	oln/core/pointnd.hh, oln/core/pred.hh, oln/core/regular_image.hh,
-	oln/core/traverse.hh, oln/core/window1d.hh, oln/core/window2d.hh,
-	oln/core/window3d.hh, oln/core/window.hh, oln/core/winneighb.hh,
-	oln/core/w_window1d.hh, oln/core/w_window2d.hh,
-	oln/core/w_window3d.hh, oln/io/pnm_read3d.hxx,
-	oln/io/pnm_read.hxx, oln/io/readable.hh, oln/level/threshold.hh,
-	oln/math/macros.hh, oln/meta/logic.hh, oln/morpho/stat.hh,
-	oln/value/cast.hh, oln/value/debug.hh, oln/value/float_p.hh,
-	oln/value/int_u.hh: Include required headers.
+	* oln/convert/stretch.hh: New file.
+	* oln/Makefile.am (nobase_oln_HEADERS): Add convert/stretch.hh.
+	* oln/convert/basics.hh: Include <oln/convert/stretch.hh>.
 
-2002-07-18  Alexandre Duret-Lutz  <duret_g@epita.fr>
-
-	* Makefile.am (SUBDIRS): Add sanity.
-	* defs.in, sanity/Makefile.am, sanity/includes.test: New files.
-
+	* oln/convol/convolution.hh: Typo (rewrite the FIXME as required).
+	* oln/core/type.hh (type): Typo (rewrite the FIXME as required).
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 18 Jul 2002 20:39:33 +0200")
-(Checkin-Login adl)
+(Checkin-Time "Thu, 18 Jul 2002 21:05:39 +0200")
+(Checkin-Login astrid)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
 ;; diff-ignore Makefile\.in$
@@ -101,19 +80,19 @@
                   "^#"))
 (Project-Keywords)
 (Files
-  (aclocal.m4 (oln/e/8_aclocal.m4 1.13 644))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.9 600))
+  (aclocal.m4 (oln/e/8_aclocal.m4 1.13 664))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.10 600))
   (configure.ac (oln/3_configure. 1.16 600))
   (configure (oln/e/7_configure 1.20 700))
   (README (oln/1_README 1.3 600))
   (ISSUES (oln/d/47_ISSUES 1.2 600))
   (Makefile.am (oln/2_Makefile.a 1.9 600))
-  (Makefile.in (oln/e/9_Makefile.i 1.20 644))
+  (Makefile.in (oln/e/9_Makefile.i 1.20 664))
   (NEWS (oln/0_NEWS 1.5 600))
 
   (demo/image.cc (oln/d/46_image.cc 1.2 600))
   (demo/Makefile.am (oln/d/44_Makefile.a 1.4 600))
-  (demo/Makefile.in (oln/e/16_Makefile.i 1.16 644))
+  (demo/Makefile.in (oln/e/16_Makefile.i 1.16 664))
   (demo/morpholena.cc (oln/d/43_morpholena 1.4 600))
   (demo/test-reconstruction.cc (oln/e/22_test-recon 1.4 600))
   (demo/tour.cc (oln/d/45_tour.cc 1.2 600))
@@ -147,7 +126,7 @@
   (oln/config/config.hin (oln/f/10_config.hin 1.6 644))
   (oln/config/README (oln/f/9_README 1.1 600))
   (oln/config/system.hh (oln/7_system.hh 1.4 600))
-  (oln/convert/basics.hh (oln/23_basics.hh 1.2 600))
+  (oln/convert/basics.hh (oln/23_basics.hh 1.3 600))
   (oln/convert/bound.hh (oln/22_bound.hh 1.2 600))
   (oln/convert/colorconv.hh (oln/18_colorconv. 1.2 600))
   (oln/convert/conversion.hh (oln/21_conversion 1.3 600))
@@ -161,7 +140,7 @@
   (oln/convert/nrgbyuv.hh (oln/13_nrgbyuv.hh 1.2 600))
   (oln/convert/rgbnrgb.hh (oln/17_rgbnrgb.hh 1.2 600))
   (oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.2 600))
-  (oln/convol/convolution.hh (oln/f/39_convolutio 1.1 644))
+  (oln/convol/convolution.hh (oln/f/39_convolutio 1.2 644))
   (oln/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.3 600))
   (oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.3 600))
   (oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.3 600))
@@ -242,7 +221,7 @@
   (oln/core/structelt.hh (oln/c/25_structelt. 1.2 600))
   (oln/core/traverse.hh (oln/d/30_traverse.h 1.3 600))
   (oln/core/typeadj.hh (oln/e/25_typeadj.hh 1.1 600))
-  (oln/core/type.hh (oln/c/21_type.hh 1.2 600))
+  (oln/core/type.hh (oln/c/21_type.hh 1.3 600))
   (oln/core/window1d.hh (oln/c/15_window1d.h 1.5 600))
   (oln/core/window2d.hh (oln/c/14_window2d.h 1.5 600))
   (oln/core/window3d.hh (oln/c/13_window3d.h 1.5 600))
@@ -276,8 +255,8 @@
   (oln/level/invert.hh (oln/33_invert.hh 1.3 600))
   (oln/level/lut.hh (oln/29_lut.hh 1.6 600))
   (oln/level/threshold.hh (oln/f/15_threshold. 1.3 600))
-  (oln/Makefile.am (oln/27_Makefile.a 1.15 600))
-  (oln/Makefile.in (oln/e/17_Makefile.i 1.21 644))
+  (oln/Makefile.am (oln/27_Makefile.a 1.16 600))
+  (oln/Makefile.in (oln/e/17_Makefile.i 1.22 664))
   (oln/math/macros.hh (oln/b/21_macros.hh 1.3 600))
   (oln/meta/array1d.hh (oln/f/23_array1d.hh 1.2 644))
   (oln/meta/array1d.hxx (oln/f/22_array1d.hx 1.2 644))
@@ -362,11 +341,11 @@
   (tests/array/gen_test_utils/postlude (oln/f/31_postlude 1.1 644))
   (tests/array/gen_test_utils/prelude (oln/f/30_prelude 1.2 644))
   (tests/array/Makefile.am (oln/f/27_Makefile.a 1.2 644))
-  (tests/array/Makefile.in (oln/f/37_Makefile.i 1.5 644))
+  (tests/array/Makefile.in (oln/f/37_Makefile.i 1.5 664))
   (tests/array/test_array1d.cc (oln/f/26_test_array 1.2 644))
   (tests/array/test_array2d.cc (oln/f/25_test_array 1.2 644))
   (tests/array/test_array3d.cc (oln/f/24_test_array 1.2 644))
-  (tests/ChangeLog (oln/e/30_ChangeLog 1.14 600))
+  (tests/ChangeLog (oln/e/30_ChangeLog 1.15 600))
   (tests/check/check.hh (oln/e/40_check.hh 1.2 600))
   (tests/check/data.cc (oln/f/5_data.cc 1.2 600))
   (tests/check/data.hh (oln/f/6_data.hh 1.1 600))
@@ -374,7 +353,7 @@
   (tests/check/Makefile.am (oln/e/44_Makefile.a 1.3 600))
   (tests/check/Makefile.check (oln/e/37_Makefile.c 1.3 600))
   (tests/check/Makefile.flags (oln/e/36_Makefile.f 1.3 600))
-  (tests/check/Makefile.in (oln/e/39_Makefile.i 1.14 644))
+  (tests/check/Makefile.in (oln/e/39_Makefile.i 1.14 664))
   (tests/check/srcdir.cc (oln/e/38_srcdir.cc 1.4 600))
   (tests/check/srcdir.hh (oln/e/35_srcdir.hh 1.3 600))
   (tests/check/verbose.cc (oln/e/41_verbose.cc 1.2 600))
@@ -382,16 +361,16 @@
   (tests/convert/convcomp.cc (oln/f/3_convcomp.c 1.4 600))
   (tests/convert/convcomp.hh (oln/f/1_convcomp.h 1.2 600))
   (tests/convert/Makefile.am (oln/f/0_Makefile.a 1.2 600))
-  (tests/convert/Makefile.in (oln/f/2_Makefile.i 1.13 644))
+  (tests/convert/Makefile.in (oln/f/2_Makefile.i 1.13 664))
 
 
   (tests/convol () :directory)
   (tests/convol/Makefile.am (oln/f/38_Makefile.a 1.2 644))
-  (tests/convol/Makefile.in (oln/f/44_Makefile.i 1.3 644))
+  (tests/convol/Makefile.in (oln/f/44_Makefile.i 1.3 664))
   ; (tests/convol/slow.cc ())
   (tests/convol/slow_sum_2d_1.cc (oln/f/41_slow_sum_2 1.1 644))
   (tests/convol/slow_sum_2d_2.cc (oln/f/40_slow_sum_2 1.1 644))
-  (tests/convol/sobel_gradient.cc (oln/f/45_sobel_grad 1.1 644))
+  (tests/convol/sobel_gradient.cc (oln/f/45_sobel_grad 1.2 644))
   (tests/convol/sum_on_random.pgm (oln/f/42_sum_on_ran 1.1 644))
 
 
@@ -400,13 +379,13 @@
   (tests/io/2d.cc (oln/e/47_2d.cc 1.4 600))
   (tests/io/loadsave.hh (oln/e/48_loadsave.h 1.3 600))
   (tests/io/Makefile.am (oln/e/49_Makefile.a 1.4 600))
-  (tests/io/Makefile.in (oln/e/50_Makefile.i 1.14 644))
+  (tests/io/Makefile.in (oln/e/50_Makefile.i 1.14 664))
   (tests/Makefile.am (oln/e/45_Makefile.a 1.6 600))
-  (tests/Makefile.in (oln/e/46_Makefile.i 1.14 644))
+  (tests/Makefile.in (oln/e/46_Makefile.i 1.14 664))
   (tests/morpho/edoc.cc (oln/f/13_edoc.cc 1.2 600))
   (tests/morpho/extrkiller.cc (oln/e/31_extrkiller 1.4 600))
   (tests/morpho/Makefile.am (oln/e/32_Makefile.a 1.3 600))
-  (tests/morpho/Makefile.in (oln/e/33_Makefile.i 1.15 644))
+  (tests/morpho/Makefile.in (oln/e/33_Makefile.i 1.15 664))
   (tests/morpho/reconstruction.cc (oln/e/34_reconstruc 1.5 600))
   (tests/README (oln/f/4_README 1.2 600))
   (THANKS (oln/4_THANKS 1.1 600))

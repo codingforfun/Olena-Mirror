@@ -151,7 +151,7 @@ namespace type
     return T::name();
   }
 
-  // FIXME : many other builtin-types should be specialized this way.
+  // FIXME: many other builtin-types should be specialized this way.
   template<>
   std::string name_of<int>()
   {

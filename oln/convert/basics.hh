@@ -31,5 +31,6 @@
 # include <oln/convert/conversion.hh>
 # include <oln/convert/force.hh>
 # include <oln/convert/bound.hh>
+# include <oln/convert/stretch.hh>
 
 #endif // OLENA_CONVERT_BASICS_HH

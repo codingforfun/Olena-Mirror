@@ -1,3 +1,7 @@
+2002-07-18  Astrid Wang  <astrid@lrde.epita.fr>
+	
+	* tests/convol/sobel_gradient.cc: Fix, thanks to convert::stretch.
+	
 2002-07-18  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* Makefile.am (SUBDIRS): Add sanity.
@@ -5,9 +9,8 @@
 
 2002-07-18  Astrid Wang  <astrid@lrde.epita.fr>
 
-	* convol/Makefile.am: New test: sobel_gradient.
-	* convol/sobel_gradient.cc: New file.
-
+	* tests/convol/Makefile.am: New test: sobel_gradient.
+	* tests/convol/sobel_gradient.cc: New file.
 	* tests/convol/slow_sum_2d_1.cc, tests/convol/slow_sum_2d_2.cc,
 	tests/data/random.pgm, tests/convol/sum_on_random.pgm: New files.
 

@@ -1,3 +1,12 @@
+2002-07-18  Astrid Wang  <astrid@lrde.epita.fr>
+
+	* oln/convert/stretch.hh: New file.
+	* oln/Makefile.am (nobase_oln_HEADERS): Add convert/stretch.hh.
+	* oln/convert/basics.hh: Include <oln/convert/stretch.hh>.
+
+	* oln/convol/convolution.hh: Typo (rewrite the FIXME as required).
+	* oln/core/type.hh (type): Typo (rewrite the FIXME as required).
+	
 2002-07-18  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* configure.ac: Output tests/defs and tests/sanity/Makefile.
