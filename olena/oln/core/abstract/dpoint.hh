@@ -35,7 +35,7 @@
 
 namespace oln {
 
-  
+
   namespace abstract {
     template<class Exact>
     struct dpoint; // fwd_decl
@@ -46,27 +46,27 @@ namespace oln {
 
   template<class Exact>
   struct dpoint_traits; // fwd_decl
-  
+
   /*! \class dpoint_traits<abstract::dpoint<Exact> >
   **
   ** The specialized version for abstract::dpoint<Exact>.
   */
-  
+
   template<class Exact>
   struct dpoint_traits<abstract::dpoint<Exact> >
   {
 
   };
-  
-  
+
+
   namespace abstract {
-   
+
     /*! \class dpoint
     **
-    ** The abstract dpoint class from whom derives 
+    ** The abstract dpoint class from whom derives
     ** all the others dpoint classes.
     */
-    
+
     template<class Exact>
     struct dpoint : public mlc_hierarchy::any<Exact>
     {
@@ -79,7 +79,7 @@ namespace oln {
       /*! \brief Construct a dpoint with the same coordinates
       ** a the point \a p.
       */
-      
+
       explicit dpoint(const abstract::point<point_type>& p)
       {
 	for (unsigned i = 0; i < dim; ++i)
@@ -104,7 +104,7 @@ namespace oln {
       /*! \brief Return a dpoint whose coordinates are the opposite
       ** of the current dpoint coordinates.
       */
-      
+
       exact_type
       operator-() const
       {
@@ -112,10 +112,10 @@ namespace oln {
       }
 
       /*! \brief Add a dpoint \a dp to the current dpoint.
-      ** 
+      **
       ** \return A reference to the current dpoint plus \a dp.
       */
-      
+
       exact_type&
       operator+=(const self_type& dp)
       {
@@ -126,7 +126,7 @@ namespace oln {
       **
       ** \return A reference to the current point minus \a dp.
       */
-      
+
       exact_type&
       operator-=(const self_type& dp)
       {
@@ -137,7 +137,7 @@ namespace oln {
       **
       ** \return The value of the current point plus \a dp.
       */
-      
+
       exact_type
       operator+(const self_type& dp) const
       {
@@ -148,21 +148,21 @@ namespace oln {
       **
       ** \return The value of the current point minus \a dp.
       */
-      
+
       exact_type
       operator-(const self_type& dp) const
       {
 	return this->exact().minus_dp(dp.exact());
       }
-      
+
       /*! \brief Test if two dpoints have the same coordinates.
       **
       ** \arg dp A dpoint.
-      ** 
+      **
       ** \return True if \a dp and the current point have the same
       ** coordinate, false otherwise.
       */
-      
+
       bool
       operator==(const self_type& dp) const
       {
@@ -173,13 +173,13 @@ namespace oln {
       }
 
       /*! \brief Test if two dpoints do not have the same coordinates.
-      ** 
+      **
       ** \arg dp A dpoint.
-      ** 
+      **
       ** \return False if \a dp and the current point have the same
       ** coordinate, true otherwise.
       */
-      
+
       bool
       operator!=(const self_type& dp) const
       {
@@ -188,7 +188,7 @@ namespace oln {
 	    return true;
 	return false;
       }
-      
+
       /*! \brief Test if all the dpoint coordinates are set to zero.
       **
       ** \return True if all the coordinates of the current dpoint
@@ -205,7 +205,7 @@ namespace oln {
       }
 
       /// Return the norm of the current dpoint.
-      
+
       ntg::float_d
       norm2(void) const
       {
@@ -247,24 +247,21 @@ namespace oln {
 
   } // end of abstract
 
-  /*! \namespace oln::internal
-  ** \brief internal namespace.
+  /*! \brief Internal purpose only.
   */
-  
-  
   namespace internal
   {
-    
+
     /*! \class default_less< abstract::dpoint<Exact> >
     **
     ** The specialized version for < abstract::dpoint<Exact> >.
     */
-    
-    
+
+
     template<class Exact>
     struct default_less< abstract::dpoint<Exact> >
     {
-      
+
       /*! \brief Test if the coordinates of a dpoint l
       ** are not greater than the coordinates of a dpoint r.
       **

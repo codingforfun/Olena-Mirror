@@ -35,7 +35,7 @@
 namespace oln {
   namespace convert {
     /*!
-    ** \brief Namespace oln::convert::abstract.
+    ** \brief Base classes for conversion.
     */
     namespace abstract {
 
@@ -54,8 +54,7 @@ namespace oln {
       template<class Conv>
       struct conversion_traits;
 
-      /*!
-      ** Namespace oln::convert::abstract::internal, for internal usage only.
+      /*! \brief Internal purpose only.
       */
       namespace internal {
 	/// Retrieve the result type of a conversion.
@@ -82,7 +81,7 @@ namespace oln {
     namespace abstract {
       /*! Base class for conversion.
       **
-      ** \note If you write an class inherited from this one, you
+      ** \note If you write an class derived from this one, you
       ** must write the specialization of the output trait.
       */
       template<class Exact, class Base>

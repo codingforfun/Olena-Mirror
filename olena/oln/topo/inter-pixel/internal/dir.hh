@@ -37,7 +37,7 @@ namespace oln {
   namespace topo {
 
     namespace inter_pixel {
-      /// oln::topo::inter_pixel Internal namespace.
+      /// \brief Internal purpose only.
       namespace internal {
 	/// Provides the enum dir.
 	template<unsigned Dim>

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -40,6 +40,12 @@ namespace oln {
 
     namespace internal {
 
+      
+      /*! \class pnm_read_data
+      **
+      ** Default version.
+      */
+      
       template<pnm_type V, reader_id R>
       struct pnm_read_data
       {
@@ -54,6 +60,14 @@ namespace oln {
       /*---------------------.
       | pnm read data binary |
       `---------------------*/
+
+      /*! \class pnm_read_data<PnmBinary, ReadPnmPlain>
+      **
+      ** Specialized version for extracting pnm binary 2d image
+      ** in plain file.
+      **
+      ** \todo FIXME: implement an iterator over data
+      */
 
       template <>
       struct pnm_read_data<PnmBinary, ReadPnmPlain>
@@ -78,7 +92,13 @@ namespace oln {
 	  return true;
 	}
       };
-
+      
+      /*! \class pnm_read_data<PnmBinary, ReadPnmRaw>
+      **
+      ** Specialized version for extracting pnm binary 2d image
+      ** in raw file.
+      */
+      
       template <>
       struct pnm_read_data<PnmBinary, ReadPnmRaw>
       {
@@ -111,7 +131,16 @@ namespace oln {
       /*----------------------.
       | pnm read data integer |
       `----------------------*/
-
+        
+      /*! \class pnm_read_data<PnmInteger, ReadPnmPlain>
+      **
+      ** Specialized version for extracting pnm integer 2d image
+      ** in plain file.
+      **
+      ** \todo FIXME: implement an iterator over data
+      */
+      
+      
       template <>
       struct pnm_read_data<PnmInteger, ReadPnmPlain>
       {
@@ -131,6 +160,15 @@ namespace oln {
 	  return true;
 	}
       };
+      
+          
+      /*! \class pnm_read_data<PnmInteger, ReadPnmRaw>
+      **
+      ** Specialized version for extracting pnm integer 2d image
+      ** in raw file.
+      **
+      ** \todo FIXME: implement an iterator over data
+      */
       
       template <>
       struct pnm_read_data<PnmInteger, ReadPnmRaw>
@@ -165,6 +203,15 @@ namespace oln {
       | pnm read data vectorial |
       `------------------------*/
 
+          
+      /*! \class pnm_read_data<PnmVectorial, ReadPnmPlain>
+      **
+      ** Specialized version for extracting pnm vectorial 2d image
+      ** in plain file.
+      **
+      ** \todo FIXME: implement an iterator over data
+      */
+      
       template <>
       struct pnm_read_data<PnmVectorial, ReadPnmPlain>
       {
@@ -186,6 +233,15 @@ namespace oln {
 	}
       };
 
+          
+      /*! \class pnm_read_data<PnmInteger, ReadPnmRaw>
+      **
+      ** Specialized version for extracting pnm integer 2d image
+      ** in raw file.
+      **
+      ** \todo FIXME: implement an iterator over data
+      */
+      
       template <>
       struct pnm_read_data<PnmVectorial, ReadPnmRaw>
       {

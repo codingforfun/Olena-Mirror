@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -48,19 +48,23 @@ namespace oln {
 
   namespace io {
 
-    namespace internal {      
+    namespace internal {
 
-      /*------------.
-      | try_readers |
-      `------------*/
-
-      // Try readers recursively
-
+      /*!
+      ** \brief Image's reader.
+      ** \param R Type of reader.
+      */
       template< reader_id R, typename T >
       struct try_readers
       {
-	// Try to deduce the file format from the extension
-	static bool 
+	/*!
+	** \brief Read an object from a stream.
+	** Try do deduce the image format from the extension.
+	** \arg output The new object to write.
+	** \arg in The stream.
+	** \arg ext The extension's filename.
+	*/
+	static bool
 	by_extension(T& output, std::istream& in, const std::string& ext)
 	{
 	  if (image_reader<R,T>::knows_ext(ext))
@@ -71,7 +75,12 @@ namespace oln {
 	           ::by_extension(output, in, ext);
 	}
 
-	// Try to match the file format referring to the data only
+	/*!
+	** \brief Read an object from a stream.
+	** Try to match the file format referring to the data only.
+	** \arg output The new object to write.
+	** \arg in The stream.
+	*/
 	static bool
 	by_data(T& output, std::istream& in)
 	{
@@ -82,36 +91,53 @@ namespace oln {
 	}
       };
 
-      // End of try_readers loop
-
+      /*!
+      ** \brief Reader for image of type None.
+      **
+      ** In fact, do nothing because of the type of reader.
+      ** Used when an errors occurs on others types of reader.
+      */
       template< typename T >
       struct try_readers<ReadNone, T>
       {
-	static bool 
-	by_extension(T&, std::istream&, const std::string&) 
-	{ 
-	  return false; 
-	}
-	
+	/*!
+	** \brief Read an object from a stream.
+	** Try do deduce the image format from the extension.
+	*/
 	static bool
-	by_data(T&, std::istream&) 
-	{ 
-	  return false; 
+	by_extension(T&, std::istream&, const std::string&)
+	{
+	  return false;
+	}
+
+	/*!
+	** \brief Read an object from a stream.
+	** Try to match the file format referring to the data only.
+	*/
+	static bool
+	by_data(T&, std::istream&)
+	{
+	  return false;
 	}
       };
 
-      /*----------------------.
-      | read(image, filename) |
-      `----------------------*/
-
-      // Readers trier functor, helper for stream_wrappers
-
+      /*!
+      ** \brief Readers trier functor, helper for stream_wrappers.
+      */
       struct readers_trier
       {
+	/*!
+	** \brief Readers trier functor, helper for stream_wrappers.
+	** \arg output The new object.
+	** \arg in The stream to read from.
+	** \arg ext The extension.
+	**
+	** First try to read by extension, then by data.
+	*/
 	template <class T>
-	static bool 
+	static bool
 	doit(T& output, std::istream& in, const std::string ext)
-	{	  
+	{
 	  bool result = try_readers<ReadAny,T>::by_extension(output, in, ext);
 	  if (!result)
 	    result = try_readers<ReadAny,T>::by_data(output, in);
@@ -119,21 +145,28 @@ namespace oln {
 	}
       };
 
-      // Read images
-
+      /*!
+      ** \brief Read an image (2 dimensions) from a file.
+      ** \arg output Where to write the new image.
+      ** \arg name The filename.
+      ** \return True if successful.
+      **
+      ** Try to read first by extension and then by data.
+      ** If you want to know more about, see
+      ** oln::io::internal::try_stream_wrappers_in
+      */
       template <unsigned N, class E>
       inline bool
       read(abstract::image_with_dim<N,E>& output, const std::string& name)
       {
 	mlc::is_true<N == 2 || N == 3>::ensure();
 
-	// FIXME: E or abstract::image_with_dim<N,E> ?
-	// E is convenient.
+	///< \todo FIXME: E or abstract::image_with_dim<N,E> ? E is convenient.
 	typedef try_stream_wrappers_in<StreamAny, E, readers_trier>
 	  stream_trier;
 
 	std::string ext = internal::utils::extension(name);
-	
+
 	if (stream_trier::by_extension(output.exact(), name, ext))
 	  return true;
 	if (stream_trier::by_data(output.exact(), name))
@@ -145,24 +178,24 @@ namespace oln {
 	std::list<std::string> names;
 	stream_wrappers_find_files<StreamAny>::doit(names, name);
 
-	for (std::list<std::string>::iterator it = names.begin(); 
-	     it !=  names.end(); 
+	for (std::list<std::string>::iterator it = names.begin();
+	     it !=  names.end();
 	     ++it)
 	  {
 	    std::string ext = utils::extension(*it);
 	    if (stream_trier::by_extension(output.exact(), *it, ext))
 	      {
-		// std::clog << "[" << name << " found as " << *it << "] " 
+		// std::clog << "[" << name << " found as " << *it << "] "
 		//           << std::flush;
 		return true;
 	      }
 	  }
-	for (std::list<std::string>::iterator it = names.begin(); 
-	     it !=  names.end(); 
+	for (std::list<std::string>::iterator it = names.begin();
+	     it !=  names.end();
 	     ++it)
 	  if (stream_trier::by_data(output.exact(), *it))
 	    {
-	      // std::clog << "['" << name << "' found as '" << *it << "'] " 
+	      // std::clog << "['" << name << "' found as '" << *it << "'] "
 	      //	<< std::flush;
 	      return true;
 	    }
@@ -170,6 +203,17 @@ namespace oln {
 	return false;
       }
 
+      /*!
+      ** \brief Read an image (1 dimension) from a file.
+      ** \arg output Where to write the new image.
+      ** \arg name The filename.
+      ** \return True if successful.
+      **
+      ** In fact, real work is not done here : this function calls 'read' for
+      ** images of 2 dimensions:
+      ** Mono-dimensional images is a special case of bi-dimensional
+      ** images.
+      */
       template <class E>
       inline bool
       read(abstract::image_with_dim<1, E>& output, const std::string& name)
@@ -187,9 +231,9 @@ namespace oln {
       }
 
     } // end of namespace internal
-    
+
   } // end of namespace io
-  
+
 } // end of namespace oln
 
 #endif // ! OLENA_IO_IMAGE_READ_HH

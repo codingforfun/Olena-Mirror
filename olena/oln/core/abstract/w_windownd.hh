@@ -75,7 +75,7 @@ namespace oln {
       friend class w_window<exact_type>;
 
       /*!
-      ** \brief Return his type in a string.
+      ** \brief Return its type in a string.
       ** \return The type in a string.
       **
       ** Very useful to debug.
@@ -154,7 +154,7 @@ namespace oln {
 
       /*!
       ** \brief Construct a w_window of 'size' elements.
-      ** \arg size The number of element to reserve for the window.
+      ** \arg size The number of elements to reserve for the window.
       */
       w_windownd(unsigned size) : super_type(size)
       {

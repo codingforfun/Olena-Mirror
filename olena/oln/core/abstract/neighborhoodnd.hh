@@ -50,10 +50,10 @@ namespace oln {
   namespace abstract {
 
     /*!
-    ** \brief Neighborhoodnd.
+    ** \brief Neighborhood N dimensions.
     **
     ** It looks like structuring elements but here, when
-    ** you add an element, you add his opposite.
+    ** you add an element, you add its opposite.
     ** Points have N dimensions.
     **
     */
@@ -75,7 +75,7 @@ namespace oln {
       friend class neighborhood<exact_type>;
 
       /*!
-      ** \brief Return his type in a string.
+      ** \brief Return its type in a string.
       ** \return The type in a string.
       **
       ** Very useful to debug.
@@ -107,14 +107,14 @@ namespace oln {
       }
 
       /*!
-      ** \brief Construct a neighborhoodnd.
+      ** \brief Construct a neighborhood N dimensions.
       */
       neighborhoodnd() : super_type()
       {}
 
       /*!
       ** \brief Construct a neighborhood of 'size' elements.
-      ** \arg size The number of element to reserve for the neighborhood.
+      ** \arg size The number of elements to reserve for the neighborhood.
       */
       neighborhoodnd(unsigned size) : super_type(size)
       {}

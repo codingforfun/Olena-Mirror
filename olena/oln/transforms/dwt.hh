@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -41,10 +41,13 @@
 
 namespace oln {
 
+  /*!
+  ** \brief Transform algorithm implementation.
+  */
   namespace transforms {
 
     // macros used to define all the wavelets coefficients
-    
+
 # define Wavelet_coeffs_definition(Name, Type, Size) \
     struct Name : public oln::internal::wavelet_coeffs_<Type, Size, Name> \
     { \
@@ -58,6 +61,9 @@ namespace oln {
       init(); \
     }
 
+    /*!
+    ** \brief type of dwt to perform.
+    */
     typedef enum {
       dwt_std,
       dwt_non_std
@@ -65,34 +71,47 @@ namespace oln {
 
   } // end of namespace transforms
 
+  /*!
+  ** \brief internal stuff.
+  */
   namespace internal
   {
-
+    /// \brief Value of ln(2).
     static const ntg::float_d ln_2_ = 0.6931471805599453092;
 
-    //
-    // wavelet_coeffs_<T, N, Self>
-    //
-    //////////////////////////////////////
-
+    /*!
+    ** \brief Wavelet coefficient data structure.
+    **
+    ** \param T Coefficients data type.
+    ** \param N Number of coefficients.
+    ** \param Self Self type.
+    */
     template <class T, unsigned N, class Self>
     struct wavelet_coeffs_
     {
-      typedef T		value_t;
-      typedef Self	self_t;
+      typedef T		value_t; ///< \brType of data used.
+      typedef Self	self_t; ///< \brief Self type.
 
     public:
 
       // accessors
+      /// \brief Accessor to ith element of g.
       const value_t getG(unsigned i) const { return g[i]; }
+      /// \brief Accessor to ith element of ig.
       const value_t getInvG(unsigned i) const { return ig[i]; }
+      /// \brief Accessor to ith element of h.
       const value_t getH(unsigned i) const { return h[i]; }
+      /// \brief Accessor to ith element of ih.
       const value_t getInvH(unsigned i) const { return ih[i]; }
-
+      /// \brief Give the size of the arrays.
       const unsigned size() const { return size_; }
 
     protected:
-
+      /*!
+      ** \brief Initialization method.
+      **
+      ** Fill coefficients.
+      */
       void init()
       {
 	for (unsigned i = 0; i < size_; i += 2) {
@@ -105,28 +124,46 @@ namespace oln {
 	}
       }
 
+      /*!
+      ** \brief Constructor.
+      */
       wavelet_coeffs_(){}
 
+      /*!
+      ** \brief Destructor.
+      **
+      ** Its aim is to check N is pair.
+      */
       ~wavelet_coeffs_()
       {
 	mlc::is_false<N % 2>::ensure();
       }
 
-      mlc::array1d< mlc::array1d_info<N>, value_t>	h;
-      mlc::internal::array1d_start_<value_t>		wc_start;
+      mlc::array1d< mlc::array1d_info<N>, value_t>	h; /// \brief array of value_t.
+      mlc::internal::array1d_start_<value_t>		wc_start; /// \brief First coefficient.
 
     private:
 
-      value_t	g[N];
-      value_t	ih[N];
-      value_t	ig[N];
+      value_t	g[N]; /// \brief array of value_t.
+      value_t	ih[N]; /// \brief array of value_t.
+      value_t	ig[N]; /// \brief array of value_t.
       enum {
 	size_ = N
       };
     };
 
-    // _dwt_transform_step
-
+    /*!
+    ** \brief Step of a dwt transform.
+    **
+    ** \param I Exact type of the input image.
+    ** \param K type of coefficients.
+    **
+    ** \arg im Image to process.
+    ** \arg p_ Point to work on.
+    ** \arg d Component d of p.
+    ** \arg n Step number.
+    ** \arg coeffs Coefficients.
+    */
     template <class I, class K>
     void dwt_transform_step_(abstract::image<I>& im,
 			     const oln_point_type(I)& p_,
@@ -136,11 +173,11 @@ namespace oln {
     {
       assertion(n >= coeffs.size());
 
-      const unsigned half = n >> 1;
-      unsigned lim = n + 1 - coeffs.size();
-      ntg::float_d* tmp = new ntg::float_d[n];
-     oln_point_type(I) p(p_);
-      unsigned i, j, k;
+      const unsigned	half = n >> 1;
+      unsigned		lim = n + 1 - coeffs.size();
+      ntg::float_d*	tmp = new ntg::float_d[n];
+      oln_point_type(I)	p(p_);
+      unsigned		i, j, k;
 
       for (i = 0, j = 0; j < lim; j += 2, i++) {
 	tmp[i] = 0;
@@ -169,8 +206,18 @@ namespace oln {
       delete[] tmp;
     }
 
-    // _dwt_transform_inv_step
-
+    /*!
+    ** \brief Step of a dwt invert transform.
+    **
+    ** \param I Exact type of the input image.
+    ** \param K type of coefficients.
+    **
+    ** \arg im Image to process.
+    ** \arg p_ Point to work on.
+    ** \arg d Component d of p.
+    ** \arg n Step number.
+    ** \arg coeffs Coefficients.
+    */
     template <class I, class K>
     void dwt_transform_inv_step_(abstract::image<I>& im,
 				 const oln_point_type(I)& p_,
@@ -217,16 +264,28 @@ namespace oln {
     }
 
     // Functions used to iterate over all dimensions except one
-
+    /*!
+    ** \brief Enum to know if you go in forward or backward order.
+    */
     typedef enum {
       dwt_fwd,
       dwt_bwd
     } dwt_transform_dir_;
 
+    /*!
+    ** \brief Functions used to iterate over all dimensions except one.
+    **
+    ** \param dim Number of dimension to treat.
+    ** \param skip Dimension to skip.
+    ** \param current Current dimension.
+    */
     template <unsigned dim, unsigned skip,
 	      unsigned current = dim>
     struct dim_skip_iterate_rec_
     {
+      /*!
+      ** \brief Iterate over all dimensions except one.
+      */
       template <class I, class K>
       static void doit(abstract::image<I>& im,
 		      oln_point_type(I)& p,
@@ -249,9 +308,24 @@ namespace oln {
       }
     };
 
+    /*!
+    ** \brief  Specialization  of  dim_skip_iterate_rec_ with  current
+    ** dimension set to 0.
+    **
+    ** \param dim Number of dimension to process.
+    ** \param skip Dimension to skip.
+    */
     template <unsigned dim, unsigned skip>
     struct dim_skip_iterate_rec_<dim, skip, 0>
     {
+      /*!
+      ** \brief Iterate over all dimensions except one.
+      **
+      ** \param I Exact type of the image to process.
+      ** \param K Type of coefficients.
+      **
+      ** It is leaf call, thus you can call a dwt transform step.
+      */
       template <class I, class K>
       static void doit(abstract::image<I>& im,
 		      oln_point_type(I)& p,
@@ -275,9 +349,21 @@ namespace oln {
       }
     };
 
+    /*!
+    ** \brief Iterate over all dimensions except one.
+    **
+    ** \param dim Number of dimension to process.
+    ** \param skip Dimension to skip.
+    */
     template <unsigned dim, unsigned skip>
     struct dim_iterate_rec_
     {
+      /*!
+      ** \brief Iterate over all dimensions except one.
+      **
+      ** \param I Exact type of the image to process.
+      ** \param K Type of coefficients.
+      */
       template <class I, class K>
       static void doit(abstract::image<I>& im,
 		      oln_point_type(I)& p,
@@ -291,9 +377,24 @@ namespace oln {
       }
     };
 
+    /*!
+    ** \brief Specialization  of dim_iterate_rec_ with  skip dimension
+    ** set to 0.
+    **
+    ** \param dim Number of dimension to process.
+    */
     template <unsigned dim>
     struct dim_iterate_rec_<dim, 0>
     {
+
+      /*!
+      ** \brief Iterate over all dimensions except one.
+      **
+      ** \param I Exact type of the image to process.
+      ** \param K Type of coefficients.
+      **
+      ** End of recursion.
+      */
       template <class I, class K>
       static void doit(abstract::image<I>& ,
 		      oln_point_type(I)& ,
@@ -306,10 +407,16 @@ namespace oln {
       }
     };
 
+    /*!
+    ** \brief Internal dwt transform function.
+    **
+    ** \param I Exact type of the image to process.
+    ** \param K Type of coefficients.
+    */
     template <class I, class K>
     void dwt_transform_(abstract::image<I>& im,
 			const unsigned l1,
-			const unsigned l2,	
+			const unsigned l2,
 			const K& coeffs,
 			transforms::dwt_transform_type t)
     {
@@ -321,27 +428,33 @@ namespace oln {
 	break;
       case transforms::dwt_non_std:
 	for (unsigned n = l2; n >= l1; n >>= 1)
-	  dim_iterate_rec_<I::dim, I::dim>::doit(im, p, n, n, coeffs, dwt_fwd);	  
+	  dim_iterate_rec_<I::dim, I::dim>::doit(im, p, n, n, coeffs, dwt_fwd);
 	break;
       }
     }
 
+    /*!
+    ** \brief Internal dwt invert transform function.
+    **
+    ** \param I Exact type of the image to process.
+    ** \param K Type of coefficients.
+    */
     template <class I, class K>
     void dwt_transform_inv_(abstract::image<I>& im,
 			    const unsigned l1,
-			    const unsigned l2,	
+			    const unsigned l2,
 			    const K& coeffs,
 			    transforms::dwt_transform_type t)
     {
      oln_point_type(I) p;
-      
+
       switch (t) {
       case transforms::dwt_std:
 	dim_iterate_rec_<I::dim, I::dim>::doit(im, p, l1, l2, coeffs, dwt_bwd);
 	break;
       case transforms::dwt_non_std:
 	for (unsigned n = l1; n <= l2; n <<= 1)
-	  dim_iterate_rec_<I::dim, I::dim>::doit(im, p, n, n, coeffs, dwt_bwd);	  
+	  dim_iterate_rec_<I::dim, I::dim>::doit(im, p, n, n, coeffs, dwt_bwd);
 	break;
       }
     }
@@ -350,21 +463,29 @@ namespace oln {
 
   namespace transforms {
 
-    //
-    // dwt<T, K>
-    //
-    //////////////////////////////////////
-
+    /*!
+    ** \brief Object to compute dwt transforms.
+    **
+    ** \param I Exact type of the image to process.
+    ** \param K Type of coefficients.
+    */
     template <class I, class K>
     class dwt
     {
     public:
 
-      typedef I					original_im_t;
-      typedef oln_value_type(I)				original_im_value_t;
-      typedef typename mute<I, ntg::float_d>::ret	trans_im_t;
-      typedef typename K::self_t		coeffs_t;
+      typedef I						original_im_t; ///< \brief Exact of the image.
+      typedef oln_value_type(I)				original_im_value_t; ///< \brief Original data type of the image.
+      typedef typename mute<I, ntg::float_d>::ret	trans_im_t; ///< \brief Type of the transformed image.
+      typedef typename K::self_t			coeffs_t; ///< \brief Data type of coefficients.
 
+      /*!
+      ** \brief Constructor from an image.
+      **
+      ** Initialization of dwt transform.
+      **
+      ** \arg im Image to process.
+      */
       dwt(const original_im_t& im) : original_im(im)
       {
 	ntg_is_a(original_im_value_t, ntg::real)::ensure();
@@ -380,20 +501,37 @@ namespace oln {
 	current_level = max_level;
 
 	assertion(!(im_size % (1 << max_level)));
-	
+
 	trans_im = trans_im_t(im.size());
       }
 
+      /*!
+      ** \brief Accessor to the transformed image.
+      **
+      ** Const version.
+      */
       const trans_im_t transformed_image() const
       {
 	return trans_im;
       }
 
+      /*!
+      ** \brief Accessor to the transformed image.
+      **
+      ** Non const version.
+      */
       trans_im_t& transformed_image()
       {
 	return trans_im;
       }
 
+      /*!
+      ** \brief Compute the dwt transform.
+      **
+      ** \arg t Type of the transform (standard or non standard)
+      ** \arg normalized Do you want a normalized result ?
+      ** \arg l Level.
+      */
       trans_im_t transform(dwt_transform_type t = dwt_non_std,
 			   bool normalized = true, unsigned l = 0)
       {
@@ -406,7 +544,8 @@ namespace oln {
 	  current_level = l;
 	}
 
-oln_iter_type(trans_im_t) it(trans_im);
+	oln_iter_type(trans_im_t) it(trans_im);
+
 	if (normalized) {
 	  norm = pow(sqrt(2), original_im_t::dim * l);
 	  for_all(it)
@@ -426,6 +565,11 @@ oln_iter_type(trans_im_t) it(trans_im);
 	return trans_im;
       }
 
+      /*!
+      ** \brief Compute the invert dwt transform.
+      **
+      ** \arg l Level.
+      */
       trans_im_t transform_inv(unsigned l = 0)
       {
 	if (l == 0)
@@ -434,7 +578,8 @@ oln_iter_type(trans_im_t) it(trans_im);
 	  l = current_level;
 
 	trans_im_t new_im(trans_im.size());
-oln_iter_type(trans_im_t) it(trans_im);
+	oln_iter_type(trans_im_t) it(trans_im);
+
 	if (norm != 1) {
 	  for_all(it)
 	    new_im[it] = trans_im[it] * norm;
@@ -451,6 +596,13 @@ oln_iter_type(trans_im_t) it(trans_im);
 	return new_im;
       }
 
+      /*!
+      ** \brief Compute the invert dwt transform.
+      **
+      ** \param T1 Data type you want the output image contains.
+      **
+      ** \arg l Level.
+      */
       template <class T1>
       typename mute<I, T1>::ret transform_inv(unsigned l = 0)
       {
@@ -459,7 +611,8 @@ oln_iter_type(trans_im_t) it(trans_im);
 	trans_im_t tmp_im = transform_inv(l);
 	typename mute<I, T1>::ret new_im(tmp_im.size());
 
-oln_iter_type(trans_im_t) it(tmp_im);
+	oln_iter_type(trans_im_t) it(tmp_im);
+
 	for_all(it)
 	  new_im[it] = (tmp_im[it] >= ntg_inf_val(T1) ?
 			(tmp_im[it] <= ntg_sup_val(T1) ?
@@ -471,14 +624,14 @@ oln_iter_type(trans_im_t) it(tmp_im);
 
     private:
 
-      const original_im_t&	original_im;
-      trans_im_t		trans_im;
-      const coeffs_t		coeffs;
-      unsigned			im_size;
-      unsigned			max_level;
-      unsigned			current_level;
-      ntg::float_d		norm;
-      dwt_transform_type	transform_type;
+      const original_im_t&	original_im; ///< The original image.
+      trans_im_t		trans_im; ///< The transformed image.
+      const coeffs_t		coeffs; ///< The coefficients.
+      unsigned			im_size; ///< Size of the image.
+      unsigned			max_level; ///< Higher level.
+      unsigned			current_level; ///< Current level.
+      ntg::float_d		norm; ///< Norm.
+      dwt_transform_type	transform_type; ///< Type of transform wanted.
     };
 
   } // end of namespace transforms

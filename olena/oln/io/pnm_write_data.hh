@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -40,6 +40,12 @@ namespace oln {
 
     namespace internal {
 
+      
+      /*! \class pnm_write_data
+      ** 
+      ** Default version
+      */
+      
       template<pnm_type V, writer_id R>
       struct pnm_write_data
       {
@@ -54,6 +60,15 @@ namespace oln {
       /*----------------------.
       | pnm write data binary |
       `----------------------*/
+
+             
+      /*! \class pnm_write_data<PnmBinary, WritePnmPlain>
+      **
+      ** Specialized version for writing pnm binary 3d image
+      ** in plain file.
+      **
+      ** \todo FIXME: implement an iterator over data
+      */
 
       template <>
       struct pnm_write_data<PnmBinary, WritePnmPlain>
@@ -81,6 +96,14 @@ namespace oln {
 	  return true;
 	}
       };
+
+      /*! \class pnm_write_data<PnmBinary, WritePnmRaw>
+      **
+      ** Specialized version for writing pnm binary 3d image
+      ** in raw file.
+      **
+      ** \todo FIXME: implement an iterator over data
+      */
 
       template <>
       struct pnm_write_data<PnmBinary, WritePnmRaw>
@@ -121,6 +144,14 @@ namespace oln {
       | pnm write data integer |
       `-----------------------*/
 
+      /*! \class pnm_write_data<PnmInteger, WritePnmPlain>
+      **
+      ** Specialized version for writing pnm integer 3d image
+      ** in plain file.
+      **
+      ** \todo FIXME: implement an iterator over data
+      */     
+      
       template <>
       struct pnm_write_data<PnmInteger, WritePnmPlain>
       {
@@ -148,6 +179,14 @@ namespace oln {
 	}
       };
 
+      /*! \class pnm_write_data<PnmInteger, WritePnmRaw>
+      **
+      ** Specialized version for writing pnm integer 3d image
+      ** in raw file.
+      **
+      ** \todo FIXME: implement an iterator over data
+      */
+      
       template <>
       struct pnm_write_data<PnmInteger, WritePnmRaw>
       {
@@ -179,6 +218,14 @@ namespace oln {
       | pnm write data vectorial |
       `-------------------------*/
 
+      /*! \class pnm_write_data<PnmVectorial, WritePnmPlain>
+      **
+      ** Specialized version for writing pnm vectorial 3d image
+      ** in plain file.
+      **
+      ** \todo FIXME: implement an iterator over data
+      */
+      
       template <>
       struct pnm_write_data<PnmVectorial, WritePnmPlain>
       {
@@ -208,7 +255,15 @@ namespace oln {
 	  return true;
 	}
       };	
-
+      
+      /*! \class pnm_write_data<PnmVectorial, WritePnmRaw>
+      **
+      ** Specialized version for writing pnm vectorial 3d image
+      ** in raw file.
+      **
+      ** \todo FIXME: implement an iterator over data
+      */
+      
       template <>
       struct pnm_write_data<PnmVectorial, WritePnmRaw>
       {

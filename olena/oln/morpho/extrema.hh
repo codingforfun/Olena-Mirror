@@ -35,29 +35,19 @@
 
 namespace oln {
   namespace morpho {
-    /*!
-    ** \brief oln::morpho::sure namespace.
-    **
-    ** Namespace where  you can find reference  algorithms, i.e. those
-    ** that are sure.
+    /*! \brief Reference algorithm implementation: sure but slow.
     */
     namespace sure {
 # include <oln/morpho/extrema.hxx>
     }
 
-    /*!
-    ** \brief oln::morpho::sequential namespace.
-    **
-    ** Namespace where you can find sequential algorithms.
+    /*! \brief Sequential algorithm implementation.
     */
     namespace sequential {
 # include <oln/morpho/extrema.hxx>
     }
 
-    /*!
-    ** \brief oln::morpho::hybrid namespace.
-    **
-    ** Namespace where you can find hybrid algorithms.
+    /*! \brief Hybrid (sure and sequential) algorithm implementation.
     */
     namespace hybrid {
 # include <oln/morpho/extrema.hxx>

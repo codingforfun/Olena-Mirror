@@ -58,8 +58,8 @@ namespace oln {
     /*!
     ** Structuring elements (set of points).
     **
-    ** This abstract class defines several virtual methods for his
-    ** subclasses. His aim is to deal with a set of deplacement points.
+    ** This abstract class defines several virtual methods for its
+    ** subclasses. Its goal is to deal with a set of 'move' points.
     */
     template<class Exact>
     struct struct_elt : public mlc_hierarchy::any< Exact >
@@ -73,7 +73,7 @@ namespace oln {
       ///< Set the abstract type of hisself.
 
       /*!
-      ** \brief Return his type in a string.
+      ** \brief Return its type in a string.
       ** \return The type in a string.
       **
       ** Very useful to debug.
@@ -102,8 +102,8 @@ namespace oln {
       }
 
       /*!
-      ** \brief Get the number of point we get.
-      ** \return The number of point.
+      ** \brief Get the number of points.
+      ** \return The number of points.
       */
       unsigned
       card() const
@@ -185,7 +185,7 @@ namespace oln {
       /*!
       ** \brief Set structuring elements to opposite.
       **
-      ** Each point of structuring elements is assigned to his opposite.
+      ** Each point of structuring elements is assigned to its opposite.
       */
       exact_type
       operator-() const
@@ -200,7 +200,7 @@ namespace oln {
       /*!
       ** \brief Set structuring elements to opposite.
       **
-      ** Each point of structuring elements is assigned to his opposite.
+      ** Each point of structuring elements is assigned to its opposite.
       */
       void
       sym()

@@ -39,10 +39,10 @@
 # include <vector>
 
 namespace oln {
-  /// Namespace for utilities, such as statistic.
+  /// \brief Utilities, such as statistics.
   namespace utils {
 
-    /// Function within this namespace should not be used outside this file.
+    /// \brief Internal purpose only.
     namespace internal {
       //! Return the size of the space needed to explore the type T.
       template <typename T>
@@ -83,7 +83,7 @@ namespace oln {
       };
     } // end of namespace internal
 
-    /// Namespace for abstract utilities.
+    /// \brief Abstract utilities.
     namespace abstract
     {
       /*! Abstract base class for historgram.

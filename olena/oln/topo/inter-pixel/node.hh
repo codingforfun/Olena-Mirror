@@ -33,7 +33,7 @@
 namespace oln {
 
   namespace topo {
-    /// Namespace for inter pixel,
+    /// oln::topo::inter_pixel::interpixel implementation.
     namespace inter_pixel {
       /*! Inter pixel node.
       **

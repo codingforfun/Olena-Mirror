@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,37 +34,63 @@
 # include <cstdlib>
 
 namespace oln {
-  
+
   namespace io {
-    
+
     namespace internal {
-      
+
       template<typename T>
       bool
-      read_any(T& output, const std::string& name);
-      
+      read_any(T& output, const std::string& name);  //forward declaration
+
+      /*!
+      ** \brief Anything.
+      **
+      ** This class is called by oln::load and just keep the filename to load.
+      ** As soon as you will use the operator = on it, assign will be called
+      ** and it will read the file.
+      ** If you would like some examples to know how to use that, go to
+      ** oln::abstract::iter
+      */
       class anything
       {
       public:
-	// FIXME: these constructors are required by swig
+	/*!
+	** \brief Constructor
+	** \todo FIXME: these constructors are required by swig
+	*/
 	anything() : str_() {}
+
+	/*!
+	** \brief Constructor
+	*/
 	anything(const anything& rhs) : str_(rhs.str_) {}
 
+	/*!
+	** \brief Constructor
+	*/
 	anything(const std::string& str) : str_(str) {}
-	
+
+	/*!
+	** \brief Constructor
+	*/
 	anything(const char* c) : str_(c) {}
-	
+
+	/*!
+	** \brief This function will be called when applied to an operator =
+	** and load the file (str_ is the filename).
+	*/
 	template< typename T >
 	T&
 	assign(T& output) const
 	{
 	  read_any(output, str_);
-	  // FIXME: call output.clear()?
+	  ///< \todo FIXME: call output.clear()?
 	  return output;
 	}
-	
+
       private:
-	std::string str_;
+	std::string str_; ///< The filename to load.
       };
 
     } // end of namespace internal

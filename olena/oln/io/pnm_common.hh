@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -66,6 +66,14 @@ namespace oln {
       // Return the pnm type associated to an image type
       // FIXME: this could be done by using labels images
       // eg: read(binary_image_with_dim<2>& ima) { // ... }
+      
+      /*! \class get_pnm_type
+      **
+      ** A metaswitch that return the pnm type associated to an image type.
+      **
+      ** \todo FIXME: this could be done by using labels images
+      ** eg: read(binary_image_with_dim<2>& ima) { // ... }
+      */
       template <class I>
       struct get_pnm_type
       {

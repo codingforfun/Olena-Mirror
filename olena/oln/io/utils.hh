@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,26 +33,36 @@
 # include <string>
 
 namespace oln {
-  
+
   namespace io {
 
     namespace internal {
 
+      /*!
+      ** \brief Utils for io (get extension of a file).
+      */
       struct utils
       {
+
+	/*!
+	** \brief Return the extension of a filename.
+	** \arg name The filename.
+	** \return The extension (lower case).
+	*/
 	static std::string
 	extension(const std::string& name)
 	{
 	  std::string ext;
 	  int pos = name.rfind('.');
 	  if (pos > 0)
-	    {
-	      ext.assign(name, pos + 1, name.size() - pos);
-	      for (std::string::iterator i = ext.begin(); i != ext.end(); ++i)
-		*i = tolower(*i);
-	    }
+	  {
+	    ext.assign(name, pos + 1, name.size() - pos);
+	    for (std::string::iterator i = ext.begin(); i != ext.end(); ++i)
+	      *i = tolower(*i);
+	  }
 	  return ext;
 	}
+
       };
 
     } // end of namespace internal

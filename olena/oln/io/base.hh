@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -36,19 +36,35 @@
 
 namespace oln {
 
+  /*! \namespace io
+  ** \brief io namespace.
+  */
   namespace io {
 
+    /*! \namespace internal
+    ** \brief abstract internal.
+    */
     namespace internal {
 
+      /*!
+      ** \brief Read anything from a file.
+      **
+      ** The "good" read function is called by template specialization.
+      */
       template<typename T>
-      bool 
+      bool
       read_any(T& output, const std::string& name)
       {
 	return read(output, name);
       }
 
+      /*!
+      ** \brief Write anything to a file.
+      **
+      ** The "good" write function is called by template specialization.
+      */
       template<typename T>
-      bool 
+      bool
       write_any(const T& input, const std::string& name)
       {
 	return write(input, name);
@@ -57,25 +73,55 @@ namespace oln {
     } // end of internal
 
     // aliases
-    
+
+    /*
+    ** \brief Load object from a file. This could be an image but also
+    ** a window or a neighborhood.
+    ** \arg name The name of the file.
+    ** \return The new object.
+    **
+    ** Here is the external interface.
+    ** If you would like some examples to know how to use that, go to
+    ** oln::abstract::iter
+    */
     inline
-    internal::anything 
+    internal::anything
     load(const std::string& name)
-    { 
-      return internal::anything(name); 
+    {
+      return internal::anything(name);
     }
 
+    /*
+    ** \brief Load object from a file. This could be an image but also
+    ** a window or a neighborhood.
+    ** \arg output The object to write to a file.
+    ** \arg name The name of the file.
+    ** \return True if successful.
+    **
+    ** Here is the external interface. Depending of T, work is dispatched.
+    */
     template<class T>
-    bool 
+    bool
     load(T& output, std::string name)
-    { 
-      return internal::read_any(output, name); 
+    {
+      return internal::read_any(output, name);
     }
 
+    /*
+    ** \brief Writing object to a file. This could be an image but also
+    ** a window or a neighborhood.
+    ** \arg input The object to read.
+    ** \arg name The name of the file.
+    ** \return True if successful.
+    **
+    ** Here is the external interface. Depending of T, work is dispatched.
+    ** If you would like some examples to know how to use that, go to
+    ** oln::abstract::iter
+    */
     template< typename T >
-    bool 
+    bool
     save(const T& input, const std::string& name)
-    { 
+    {
       return internal::write_any(input, name);
     }
 

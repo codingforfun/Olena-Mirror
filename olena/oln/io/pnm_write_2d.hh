@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -45,6 +45,11 @@ namespace oln {
       | pnm_write_header2d |
       `------------------*/
 
+      /*! \brief Write headers in \a s output file, then return true.
+      **
+      ** \todo FIXME: should be in a .cc file ?
+      */
+      
       // FIXME: should be in a .cc file ?
       static bool 
       pnm_write_header2d(std::ostream& s, char type, const pnm2d_info& info)
@@ -62,6 +67,11 @@ namespace oln {
       | pnm_writer (Binary) |
       `--------------------*/
 
+      /*! \class pnm_writer<W, 2, PnmBinary, I>
+      **
+      ** Specialized version for pbm images.
+      */
+      
       template <writer_id W, class I>
       struct pnm_writer<W, 2, PnmBinary, I>
       {
@@ -82,6 +92,10 @@ namespace oln {
 	  return ext == "pbm";
 	}
 
+	/*! \brief write \a im on \a out according to the pbm format,
+	** then return true.
+	*/
+	
 	static bool
 	write(std::ostream& out, const I& im)
 	{
@@ -103,6 +117,11 @@ namespace oln {
       | pnm_writer (Integer) |
       `---------------------*/
 
+      /*! \class pnm_writer<W, 2, PnmInteger, I>
+      **
+      ** Specialized version for pgm images.
+      */
+      
       template <writer_id W, class I>
       struct pnm_writer<W, 2, PnmInteger, I>
       {
@@ -123,6 +142,10 @@ namespace oln {
 	  return ext == "pgm";
 	}
 
+	/*! \brief Write \a im on \a out according to the pgm format, 
+	** then return true.
+	*/
+	
 	static bool
 	write(std::ostream& out, const I& im)
 	{
@@ -147,6 +170,11 @@ namespace oln {
       | pnm_writer (Vectorial) |
       `-----------------------*/
 
+      /*! \class pnm_writer<W, 2, PnmVectorial, I>
+      **
+      ** Specialized version for ppm images.
+      */
+      
       template <writer_id W, class I>
       struct pnm_writer<W, 2, PnmVectorial, I>
       {
@@ -167,6 +195,10 @@ namespace oln {
 	  return ext == "ppm";
 	}
 
+	/*! \brief Write \a im on \a out according to the ppm format,
+	** then return true.
+	*/
+		
 	static bool
 	write(std::ostream& out, const I& im)
 	{

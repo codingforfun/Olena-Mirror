@@ -26,7 +26,7 @@
 // Public License.
 
 /*!
-** \brief  internal namespace
+** \brief Internal purpose only.
 */
 namespace internal {
 

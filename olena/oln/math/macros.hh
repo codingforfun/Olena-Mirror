@@ -33,7 +33,7 @@
 
 namespace oln {
 
-  /*! Useful functions.
+  /*! \brief Useful functions.
   **
   ** \todo FIXME: I'm not proud of the code below
   ** think it could be better...

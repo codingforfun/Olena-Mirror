@@ -102,7 +102,7 @@ namespace oln {
       }
 
       /*!
-      ** \brief Return his type in a string.
+      ** \brief Return its type in a string.
       ** \return The type in a string.
       **
       ** Very useful to debug.
@@ -115,7 +115,7 @@ namespace oln {
     protected:
 
       const coord nrows_; ///< The number of rows of the image you are iterating.
-      const coord ncols_; ///< The number of column of the image you are iterating.
+      const coord ncols_; ///< The number of columns of the image you are iterating.
 
       /*!
       ** \brief Get the current point viewed by the iterator.

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -41,56 +41,71 @@ namespace oln {
 
     namespace internal {
 
-      // stream wrappers
-    
+      /*!
+      ** \brief Stream identifiers.
+      **
+      ** They are used recursively: each time a StreamId fails, then
+      ** try with StreamId - 1.
+      */
       enum stream_id { StreamNone = 0,
 		       StreamFile = 1,
 		       StreamGz   = 2,
 		       StreamAny  = 2 };
-    
+
+      /*! \class stream_wrapper
+      **
+      ** Default version, if you instantiate one, all the 
+      ** operations on the stream will fail
+      **
+      ** \see stream_wrapper<StreamFile>
+      **
+      ** \see stream_wrapper<StreamGz>
+      **
+      */
       template< stream_id W >
       struct stream_wrapper
       {
 	static const std::string&
 	name()
-	{ 
-	  static const std::string name_("-"); 
-	  return name_; 
-	}
-      
-	static bool 
-	knows_ext(const std::string&) 
-	{ 
-	  return false; 
-	}
-      
-	static std::istream* 
-	wrap_in(std::string&) 
-	{ 
-	  return 0; 
+	{
+	  static const std::string name_("-");
+	  return name_;
 	}
 
-	static std::ostream* 
-	wrap_out(std::string&) 
-	{ 
-	  return 0; 
+	static bool
+	knows_ext(const std::string&)
+	{
+	  return false;
 	}
-      
-	static void 
-	find(std::list<std::string>&, const std::string&) 
+
+	static std::istream*
+	wrap_in(std::string&)
+	{
+	  return 0;
+	}
+
+	static std::ostream*
+	wrap_out(std::string&)
+	{
+	  return 0;
+	}
+
+	static void
+	find(std::list<std::string>&, const std::string&)
 	{}
       };
 
-      /*---------------------------.
-      | stream_wrappers_find_files |
-      `---------------------------*/
-    
-      // Find files compatible with the given root, extension free filename
-
+      /*!
+      ** \brief Find files compatible with the given root, extension free
+      ** filename
+      */
       template <stream_id W>
       struct stream_wrappers_find_files
       {
-	static void 
+	/*!
+	** \brief Just a functor.
+	*/
+	static void
 	doit(std::list<std::string>& names, const std::string& name)
 	{
 	  stream_wrapper<W>::find(names, name);
@@ -99,27 +114,32 @@ namespace oln {
 	}
       };
 
-      // End of the loop
-
+      /*!
+      ** \brief Do nothing because of the type of stream.
+      */
       template <>
       struct stream_wrappers_find_files<StreamNone>
       {
-	static void 
-	doit(std::list<std::string>&, const std::string&) 
+	static void
+	doit(std::list<std::string>&, const std::string&)
 	{}
       };
 
-      /*-----------------------.
-      | try_stream_wrappers_in |
-      `-----------------------*/
 
-      // Try stream wrappers recursively   
-      // On each potential stream format, try to read using Reader
-
+      /*!
+      ** \brief Read a stream.
+      ** \param W The type of stream
+      ** \param Reader The real reader of this stream.
+      */
       template<stream_id W, typename T, class Reader>
       struct try_stream_wrappers_in
       {
-	static bool 
+
+	/*!
+	** \brief Open file as a stream, take extension and call the "real" reader.
+	** If the extension is not known, reiterate with a stream_id - 1.
+	*/
+	static bool
 	by_extension(T& output, const std::string& name, const std::string& ext)
 	{
 	  if (stream_wrapper<W>::knows_ext(ext))
@@ -138,9 +158,16 @@ namespace oln {
                    ::by_extension(output, name, ext);
 	}
 
-	// FIXME: it sounds strange to read wrapped file without
-	// matching its extension.
-	static bool 
+	/*!
+	** \brief Open file as a stream, take extension and call the "real" reader.
+	** If the extension is not known, reiterate with a stream_id - 1.
+	** \arg output The new object.
+	** \arg name The filename.
+	**
+	** \todo FIXME: it sounds strange to read wrapped file without
+	** matching its extension.
+	*/
+	static bool
 	by_data(T& output, const std::string& name)
 	{
 	  std::string wrapped_name = name;
@@ -157,37 +184,47 @@ namespace oln {
 	}
       };
 
-      // End of loop
-    
+      /*!
+      ** \brief Read a stream of type None.
+      **
+      ** In fact, do nothing because of the type of stream.
+      ** Used when an errors occurs on others types of stream.
+      */
       template< typename T, class Reader >
       struct try_stream_wrappers_in<StreamNone, T, Reader>
       {
-	static bool 
+	///< Read s stream of type None by extension.
+	static bool
 	by_extension(T&, const std::string&, const std::string&)
-	{ 
-	  return false; 
+	{
+	  return false;
 	}
 
-	static bool 
-	by_data(T&, const std::string&) 
-	{ 
-	  return false; 
+	///< Read a stream of type None by data.
+	static bool
+	by_data(T&, const std::string&)
+	{
+	  return false;
 	}
       };
 
-      /*------------------------.
-      | try_stream_wrappers_out |
-      `------------------------*/
 
-      // Try stream wrappers recursively
-      // On each potential stream format, try to write using the given Writer
-
+      /*!
+      ** \brief Write a stream.
+      ** \param W The type of stream
+      ** \param Writer The "real" writer of this stream.
+      */
       template<stream_id W, typename T, class Writer>
       struct try_stream_wrappers_out
       {
-	static bool 
-	by_extension(const T& input, 
-		     const std::string& name, 
+
+	/*!
+	** \brief Open file as a stream, take extension and call the "real" writer.
+	** If the extension is not known, reiterate with a stream_id - 1.
+	*/
+	static bool
+	by_extension(const T& input,
+		     const std::string& name,
 		     const std::string& ext)
 	{
 	  if (stream_wrapper<W>::knows_ext(ext))
@@ -208,15 +245,20 @@ namespace oln {
 	}
       };
 
-      // End of loop
-    
+      /*!
+      ** \brief Write a stream of type None.
+      **
+      ** In fact, do nothing because of the type of stream.
+      ** Used when an errors occurs on others types of stream.
+      */
       template< typename T, class Reader >
       struct try_stream_wrappers_out<StreamNone, T, Reader>
       {
-	static bool 
-	by_extension(const T&, const std::string&, const std::string&) 
-	{ 
-	  return false; 
+	///< Do nothing because of the type of stream.
+	static bool
+	by_extension(const T&, const std::string&, const std::string&)
+	{
+	  return false;
 	}
       };
 

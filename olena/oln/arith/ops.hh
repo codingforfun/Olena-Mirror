@@ -39,7 +39,7 @@
 
 namespace oln {
   /*!
-  ** \brief Namespace for arithmetic.
+  ** \brief Arithmetic implementation.
   */
   namespace arith {
 

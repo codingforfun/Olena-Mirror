@@ -40,9 +40,7 @@
 namespace oln {
   namespace morpho {
 
-    /*!
-    ** \brief oln::morpho::internal namespace
-    ** Internal stuff.
+    /*! \brief Internal purpose only.
     */
     namespace internal {
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,11 +39,9 @@ namespace oln {
 
   namespace transforms {
 
-    //
-    // Haar wavelet coefficients
-    //
-    //////////////////////////////////////
-
+    /*!
+    ** \brief Haar wavelet coefficients
+    */
     Wavelet_coeffs_definition(haar, ntg::float_d, 2)
     {
       const ntg::float_d sqrt_2 = sqrt(2);
@@ -55,11 +53,11 @@ namespace oln {
     };
 
 
-    //
-    // Daubechies wavelet coefficients
-    //
-    //////////////////////////////////////
-
+    /*!
+    ** \brief Daubechies wavelet coefficients
+    **
+    ** Four coefficients version.
+    */
     Wavelet_coeffs_definition(daub4, ntg::float_d, 4)
     {
       const ntg::float_d sqrt_3 = sqrt(3);
@@ -73,6 +71,11 @@ namespace oln {
       Wavelet_coeffs_end
     };
 
+    /*!
+    ** \brief Daubechies wavelet coefficients
+    **
+    ** Six coefficients version.
+    */
     Wavelet_coeffs_definition(daub6, ntg::float_d, 6)
     {
       Wavelet_coeffs_begin
@@ -85,6 +88,11 @@ namespace oln {
       Wavelet_coeffs_end
     };
 
+    /*!
+    ** \brief Daubechies wavelet coefficients
+    **
+    ** Eight coefficients version.
+    */
     Wavelet_coeffs_definition(daub8, ntg::float_d, 8)
     {
       Wavelet_coeffs_begin
@@ -99,6 +107,11 @@ namespace oln {
       Wavelet_coeffs_end
     };
 
+    /*!
+    ** \brief Daubechies wavelet coefficients
+    **
+    ** Ten coefficients version.
+    */
     Wavelet_coeffs_definition(daub10, ntg::float_d, 10)
     {
       Wavelet_coeffs_begin
@@ -115,6 +128,11 @@ namespace oln {
       Wavelet_coeffs_end
     };
 
+    /*!
+    ** \brief Daubechies wavelet coefficients
+    **
+    ** Twelve coefficients version.
+    */
     Wavelet_coeffs_definition(daub12, ntg::float_d, 12)
     {
       Wavelet_coeffs_begin
@@ -133,6 +151,11 @@ namespace oln {
       Wavelet_coeffs_end
     };
 
+    /*!
+    ** \brief Daubechies wavelet coefficients
+    **
+    ** Twenty coefficients version.
+    */
     Wavelet_coeffs_definition(daub20, ntg::float_d, 20)
     {
       Wavelet_coeffs_begin
@@ -160,11 +183,11 @@ namespace oln {
     };
 
 
-    //
-    // Coifman wavelet coefficients
-    //
-    //////////////////////////////////////
-
+    /*!
+    ** \brief Coifman wavelet coefficients
+    **
+    ** Six coefficients version.
+    */
     Wavelet_coeffs_definition(coiflet2, ntg::float_d, 6)
     {
       const ntg::float_d sqrt_2 = sqrt(2);
@@ -180,6 +203,11 @@ namespace oln {
       Wavelet_coeffs_end
     };
 
+    /*!
+    ** \brief Coifman wavelet coefficients
+    **
+    ** Twelve coefficients version.
+    */
     Wavelet_coeffs_definition(coiflet4, ntg::float_d, 12)
     {
       Wavelet_coeffs_begin
@@ -198,6 +226,11 @@ namespace oln {
       Wavelet_coeffs_end
     };
 
+    /*!
+    ** \brief Coifman wavelet coefficients
+    **
+    ** Eighteen coefficients version.
+    */
     Wavelet_coeffs_definition(coiflet6, ntg::float_d, 18)
     {
       Wavelet_coeffs_begin

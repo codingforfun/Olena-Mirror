@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -46,10 +46,14 @@ namespace oln {
       /*-------------------.
       | pnm_reader3d (Any) |
       `-------------------*/
-
-      // Only PnmRaw images can store more than one 2d image. The
-      // format is simple: each slice is stored as a bi-dimensional
-      // image.
+      
+      /*! \class pnm_reader<ReadPnmRaw, 3, P, I>
+      **
+      ** Specialized version for 3d image.
+      ** Only PnmRaw images can store more than one 2d image. The
+      ** format is simple: each slice is stored as a bi-dimensional
+      ** image.
+      */
 
       template <pnm_type P, class I>
       struct pnm_reader<ReadPnmRaw, 3, P, I>
@@ -69,6 +73,11 @@ namespace oln {
 	{ 
 	  return reader_2d::knows_ext(ext);
 	}
+
+
+	/*! \brief Initialize \a im and return true if \a in
+	** is a valid pnm file format, return false otherwise.
+	*/
 
 	static bool 
 	read(std::istream& in, I& im)
@@ -114,6 +123,8 @@ namespace oln {
 	}
 
       private:
+	
+	/// Function used in \a read method.
 	static void 
 	to_image3d_(std::list<image2d_type*>& image2d_list, I& output)
 	{

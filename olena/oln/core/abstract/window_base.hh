@@ -135,7 +135,7 @@ namespace oln {
       // friend class window_base_friend_traits<Sup>::ret;
 
       /*!
-      ** \brief Return his type in a string.
+      ** \brief Return its type in a string.
       ** \return The type in a string.
       **
       ** Very useful to debug.
@@ -160,8 +160,8 @@ namespace oln {
       }
 
       /*!
-      ** \brief Get the number of point we get.
-      ** \return The number of point.
+      ** \brief Get the number of points.
+      ** \return The number of points.
       */
       unsigned
       card_() const
@@ -226,7 +226,7 @@ namespace oln {
       /*!
       ** \brief Set a set of point to opposite.
       **
-      ** Each point of the set of point is assigned to his opposite.
+      ** Each point of the set of point is assigned to its opposite.
       */
       void
       sym_()
@@ -262,7 +262,7 @@ namespace oln {
       ** \brief Used only by sub-classes
       ** \arg size The number of point.
       **
-      ** Set the number of point this object will get.
+      ** Set the number of points this object will get.
       ** Used only by sub-classes
       */
       window_base(unsigned size) : super_type(), dp_(), delta_(0)

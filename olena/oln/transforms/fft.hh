@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -46,46 +46,73 @@ namespace oln {
 
   namespace internal {
 
-    // dispatch traits for fftw
-    
+    /// \brief dispatch traits for fftw
     enum fft_dispatch { fft_cplx, fft_real };
 
+    /*!
+    ** \brief fft trait.
+    */
     template <class T>
     struct fft_trait
     {
       void ensure() { ntg_is_a(T, ntg::real)::ensure(); }
 
-      static const fft_dispatch		which = fft_real;
-      typedef fftw_real			fftw_input;
+      static const fft_dispatch		which = fft_real; ///< Real dispatch.
+      typedef fftw_real			fftw_input; ///< Type of input.
     };
 
+    /*!
+    ** \brief fft trait.
+    **
+    ** \specialization for ntg::cplx<R, T>
+    */
     template <ntg::cplx_representation R, class T>
     struct fft_trait<ntg::cplx<R, T> >
     {
-      static const fft_dispatch		which = fft_cplx;
-      typedef fftw_complex		fftw_input;
+      static const fft_dispatch		which = fft_cplx; ///< Complex dispatch.
+      typedef fftw_complex		fftw_input; ///< Type of input.
     };
 
-    //
-    // _fft<ntg::cplx_representation, T>
-    //
-    //////////////////////////////////////
-
+    /*!
+    ** _fft<ntg::cplx_representation, T>
+    **
+    ** \param T Data type.
+    ** \param R type of representation.
+    */
     template <class T, ntg::cplx_representation R>
     class _fft
     {
     public:
-
+      /*!
+      ** \brief Accessor to transformed image.
+      **
+      ** Const version.
+      */
       const image2d<ntg::cplx<R, ntg::float_d> > transformed_image() const
       {
 	return trans_im;
       }
 
+      /*!
+      ** \brief Accessor to transformed image.
+      **
+      ** Non const version.
+      */
       image2d<ntg::cplx<R, ntg::float_d> >& transformed_image()
       {
 	return trans_im;
       }
 
+      /*!
+      ** \brief Accessor to transformed image.
+      **
+      ** For each point p of the transformed image T, you get
+      ** |T[p]|.
+      **
+      ** \param T1 Data type of the resulting image.
+      **
+      ** \arg ordered Kind of traversal.
+      */
       template <class T1>
       image2d<T1> transformed_image_magn(bool ordered = true) const
       {
@@ -110,11 +137,30 @@ namespace oln {
 	return new_im;
       }
 
+      /*!
+      ** \brief Accessor to transformed image.
+      **
+      ** For each point p of the transformed image T, you get
+      ** |T[p]|.
+      **
+      ** \arg ordered Kind of traversal.
+      */
       image2d<T> transformed_image_magn(bool ordered = true) const
       {
 	return transformed_image_magn<T>(ordered);
       }
 
+      /*!
+      ** \brief Accessor to transformed image.
+      **
+      ** For each point p of the transformed image T, you get
+      **  a clipped value of |T[p]|.\n
+      **
+      ** \param T1 Data type of the resulting image.
+      **
+      ** \arg clip Value used for clipping.
+      ** \arg ordered Kind of traversal.
+      */
       template <class T1>
       image2d<T1> transformed_image_clipped_magn(const ntg::float_d clip,
 						 bool ordered = true) const
@@ -150,32 +196,71 @@ namespace oln {
 	      {
 		if (trans_im[it].magn() >= max * c)
 		  new_im[it] = ntg_max_val(T);
-		else 
+		else
 		  new_im[it] = ntg_max_val(T) *
 		    trans_im[it].magn() / (max * c);
 	      }
-      
+
 	return new_im;
       }
 
+      /*!
+      ** \brief Accessor to transformed image.
+      **
+      ** For each point p of the transformed image T, you get
+      **  a clipped value of |T[p]|.\n
+      **
+      ** \arg clip Value used for clipping.
+      ** \arg ordered Kind of traversal.
+      */
       image2d<T> transformed_image_clipped_magn(const ntg::float_d clip,
 						bool ordered = true) const
       {
 	return transformed_image_clipped_magn<T>(clip, ordered);
       }
 
+      /*!
+      ** \brief Accessor to transformed image.
+      **
+      ** For each point p of the transformed image T, you get
+      ** a clipped value of |T[p]|.\n
+      **
+      ** \param T1 Data type of the resulting image.
+      **
+      ** \arg ordered Kind of traversal.
+      */
       template <class T1>
       image2d<T1> transformed_image_clipped_magn(bool ordered = true) const
       {
 	return transformed_image_clipped_magn<T1>(1, ordered);
       }
 
+      /*!
+      ** \brief Accessor to transformed image.
+      **
+      ** For each point p of the transformed image T, you get
+      ** a clipped value of |T[p]|.\n
+      **
+      ** \param T1 Data type of the resulting image.
+      **
+      ** \arg ordered Kind of traversal.
+      */
       image2d<T> transformed_image_clipped_magn(bool ordered = true) const
       {
 	return transformed_image_clipped_magn<T>(1, ordered);
       }
 
       // FIXME: Find a more elegant way to fix range interval on a and b.
+      /*!
+      ** \brief Accessor to transformed image.
+      **
+      ** For each point p of the transformed image T, you get
+      ** a log translated value of |T[p]| on interval [a; b].\n
+      **
+      ** \arg a Lower bound.
+      ** \arg b Upper bound.
+      ** \arg ordered Kind of traversal.
+      */
       template <class T1>
       image2d<T1> transformed_image_log_magn(const ntg::range<ntg::float_d,
 					     ntg::bounded_u<0, 1000>,
@@ -213,6 +298,16 @@ namespace oln {
       }
 
       // FIXME: Find a more elegant way to fix boundaries of a and b.
+      /*!
+      ** \brief Accessor to transformed image.
+      **
+      ** For each point p of the transformed image T, you get
+      ** a log translated value of |T[p]| on interval [a; b].\n
+      **
+      ** \arg a Lower bound.
+      ** \arg b Upper bound.
+      ** \arg ordered Kind of traversal.
+      */
       image2d<T> transformed_image_log_magn(const ntg::range<ntg::float_d,
 					    ntg::bounded_u<0, 1000>,
 					    ntg::saturate> a,
@@ -224,17 +319,40 @@ namespace oln {
 	return transformed_image_log_magn<T>(a, b, ordered);
       }
 
+      /*!
+      ** \brief Accessor to transformed image.
+      **
+      ** For each point p of the transformed image T, you get
+      ** a log translated value of |T[p]| on interval [1; 100].\n
+      **
+      ** \param T1 Data type of the resulting image.
+      **
+      ** \arg ordered Kind of traversal.
+      */
       template <class T1>
       image2d<T1> transformed_image_log_magn(bool ordered = true) const
       {
 	return transformed_image_log_magn<T1>(1, 100, ordered);
       }
 
+      /*!
+      ** \brief Accessor to transformed image.
+      **
+      ** For each point p of the transformed image T, you get
+      ** a log translated value of |T[p]| on interval [1; 100].\n
+      **
+      ** \arg ordered Kind of traversal.
+      */
       image2d<T> transformed_image_log_magn(bool ordered = true) const
       {
 	return transformed_image_log_magn<T>(1, 100, ordered);
       }
 
+      /*!
+      ** \brief Destructor.
+      **
+      ** Let memory free for other big images !!!
+      */
       ~_fft()
       {
 	delete [] in;
@@ -245,11 +363,11 @@ namespace oln {
 
     protected:
 
-      typename fft_trait<T>::fftw_input	*in;
-      fftw_complex			*out;
-      fftwnd_plan			p;
-      fftwnd_plan			p_inv;
-      image2d<ntg::cplx<R, ntg::float_d> >		trans_im;
+      typename fft_trait<T>::fftw_input	*in; ///< Input image.
+      fftw_complex			*out; ///< Complex image.
+      fftwnd_plan			p; ///< Plan.
+      fftwnd_plan			p_inv; ///< inverted plan.
+      image2d<ntg::cplx<R, ntg::float_d> >		trans_im; ///< Transformed image.
 
     };
 
@@ -257,22 +375,37 @@ namespace oln {
 
   namespace transforms {
 
+    /*!
+    ** \brief fft class declaration.
+    **
+    ** \param T Data type.
+    ** \param R Complex representation kind.
+    ** \param which Dispatch.
+    */
     template <class T,
 	      ntg::cplx_representation R = ntg::polar,
 	      internal::fft_dispatch which = internal::fft_trait<T>::which >
     class fft;
 
-    //
-    // fft<T, ntg::cplx_representation, fft_real>
-    //
-    //////////////////////////////////////
-
+    /*!
+    ** \brief fft specialization for fft real dispatch.
+    **
+    ** \param T Data type.
+    ** \param R Complex representation kind.
+    */
     template <class T, ntg::cplx_representation R>
     class fft<T, R, internal::fft_real> : public internal::_fft<T, R>
     {
 
     public:
 
+      /*!
+      ** \brief Constructor.
+      **
+      ** Initialization of data in order to compute the fft.
+      **
+      ** \arg original_im Image to process.
+      */
       fft(const image2d<T>& original_im)
       {
 	this->in  = new fftw_real[original_im.nrows() * original_im.ncols()];
@@ -291,6 +424,9 @@ namespace oln {
 	this->trans_im = image2d<ntg::cplx<R, ntg::float_d> >(original_im.size());
       }
 
+      /*!
+      ** \brief Compute and return the transform.
+      */
       image2d<ntg::cplx<R, ntg::float_d> > transform()
       {
 	rfftwnd_one_real_to_complex(this->p, this->in, this->out);
@@ -302,7 +438,7 @@ namespace oln {
 	    {
 	      this->out[i].re /= denom;
 	      this->out[i].im /= denom;
-	      this->trans_im(row, col) = ntg::cplx<ntg::rect, ntg::float_d>(this->out[i].re, 
+	      this->trans_im(row, col) = ntg::cplx<ntg::rect, ntg::float_d>(this->out[i].re,
 							     this->out[i].im);
 	      ++i;
 	    }
@@ -313,6 +449,11 @@ namespace oln {
 	return this->trans_im;
       }
 
+      /*!
+      ** \brief Compute and return the invert transform.
+      **
+      ** \param T1 Data type of output image.
+      */
       template <class T1>
       image2d<T1> transform_inv()
       {
@@ -343,6 +484,9 @@ namespace oln {
 	return new_im;
       }
 
+      /*!
+      ** \brief Compute and return the invert transform.
+      */
       image2d<T> transform_inv()
       {
 	return transform_inv<T>();
@@ -350,17 +494,25 @@ namespace oln {
 
     };
 
-    //
-    // fft<T, ntg::cplx_representation, fft_cplx>
-    //
-    //////////////////////////////////////
-
+    /*!
+    ** \brief fft specialization for fft complex dispatch.
+    **
+    ** \param T Data type.
+    ** \param R Complex representation kind.
+    */
     template <class T, ntg::cplx_representation R>
     class fft<T, R, internal::fft_cplx> : public internal::_fft<T, R>
     {
 
     public:
 
+      /*!
+      ** \brief Constructor.
+      **
+      ** Initialization of data in order to compute the fft.
+      **
+      ** \arg original_im Image to process.
+      */
       template <ntg::cplx_representation R1>
       fft(const image2d<ntg::cplx<R1, T> >& original_im)
       {
@@ -384,6 +536,9 @@ namespace oln {
 	this->trans_im = image2d<ntg::cplx<ntg::rect, ntg::float_d> >(original_im.size());
       }
 
+      /*!
+      ** \brief Compute and return the transform.
+      */
       image2d<ntg::cplx<R, ntg::float_d> > transform()
       {
 	fftwnd_one(this->p, this->in, this->out);
@@ -395,13 +550,18 @@ namespace oln {
 	    {
 	      this->out[i].re /= denom;
 	      this->out[i].im /= denom;
-	      this->trans_im(row, col) = ntg::cplx<ntg::rect, ntg::float_d>(this->out[i].re, 
+	      this->trans_im(row, col) = ntg::cplx<ntg::rect, ntg::float_d>(this->out[i].re,
 						       this->out[i].im);
 	      ++i;
 	    }
 	return this->trans_im;
       }
 
+      /*!
+      ** \brief Compute and return the invert transform.
+      **
+      ** \param T1 Data type of output image.
+      */
       template <class T1>
       image2d<ntg::cplx<R, T1> > transform_inv()
       {
@@ -424,6 +584,9 @@ namespace oln {
 	return new_im;
       }
 
+      /*!
+      ** \brief Compute and return the invert transform.
+      */
       image2d<ntg::cplx<R, T> > transform_inv()
       {
 	return transform_inv<T>();
@@ -432,7 +595,7 @@ namespace oln {
     };
 
   } // end of namespace transforms
-  
+
 } // end of namespace oln
 
 # endif // HAVE_FFTW

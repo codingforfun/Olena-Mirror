@@ -48,8 +48,7 @@
 
 namespace oln {
   namespace morpho {
-    /*!
-    ** \brief oln::morpho::tools namespace
+    /*! \brief Useful tools for morphological math.
     */
     namespace tools {
 

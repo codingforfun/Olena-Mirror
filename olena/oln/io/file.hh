@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -40,6 +40,11 @@ namespace oln {
 
     namespace internal {
 
+      /*! \class stream_wrapper<StreamFile>
+      **
+      ** Specialized version for StreamFile.
+      */
+      
       template<>
       struct stream_wrapper<StreamFile>
       {
@@ -49,12 +54,14 @@ namespace oln {
 	  static const std::string name_("file:"); return name_; 
 	}
 
+	
 	static bool 
 	knows_ext(const std::string&) // knows all extensions
 	{ 
 	  return true; 
 	}
 
+	/// Open a input stream on the file named \a name. Return 0 on failure.
 	static std::istream* 
 	wrap_in(std::string& name)
 	{
@@ -65,6 +72,7 @@ namespace oln {
 	  return 0;
 	}
 
+	/// Open a output stream on the file named \a name. Return 0 on failure.
 	static std::ostream* 
 	wrap_out(std::string& name)
 	{
@@ -74,6 +82,10 @@ namespace oln {
 	  delete out;
 	  return 0;
 	}
+
+	/*! \brief Insert in \a names all the files that have the same 
+	** suffix as \a name in the \a name or the current directory.
+	*/
 
   	static void 
 	find(std::list<std::string>& names, const std::string& name)

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -36,10 +36,19 @@ namespace oln {
   namespace io {
 
     namespace internal {
+      
 
+      /*! \class stream_wrapper<StreamGz>
+      **
+      ** Specialized version for StreamGz.
+      */
+      
       template<>
       struct stream_wrapper<StreamGz>
       {
+	
+	/// Return "gz:"
+
 	static const std::string& 
 	name()
 	{ 
@@ -47,12 +56,16 @@ namespace oln {
 	  return name_; 
 	}
 
+	/// Return true if \a ext == "gz" or \a ext == "z'
+	
 	static bool 
 	knows_ext(const std::string& ext)
 	{ 
 	  return ext == "gz" || ext == "z"; 
 	}
-
+	
+	
+	/// Delete the file extension of \a name.
 	static void 
 	adjust_name(std::string& name)
 	{
@@ -60,6 +73,10 @@ namespace oln {
 	  if (knows_ext(ext))
 	    name.erase(name.rfind('.'));
 	}
+	
+	/*! \brief Open a input stream on \a name then return it.
+	** On failure \a wrap_in returns 0.
+	*/
 
 	static std::istream* 
 	wrap_in(std::string& name)
@@ -74,6 +91,9 @@ namespace oln {
 	  return 0;
 	}
 
+	/*! \brief Open a output stream on \a name then return it.
+	** On failure \a wrap_out returns 0.
+	*/
 	static std::ostream* 
 	wrap_out(std::string& name)
 	{

@@ -36,9 +36,7 @@
 
 namespace oln {
 
-  /*!
-  ** \namespace oln::abstract
-  ** \brief oln::abstract namespace.
+  /*! \brief Abstract class implementation.
   */
   namespace abstract {
     template<class Exact>
@@ -136,7 +134,7 @@ namespace oln {
     ** \endcode
     **
     ** You can iterate not only image but windows. This example make a binary
-    ** dilatation to show you how use them:
+    ** dilatation to show you how to use them:
     ** \code
     ** #include <oln/basics2d.hh>
     ** #include <ntg/all.hh>
@@ -361,7 +359,7 @@ namespace oln {
       }
 
       /*!
-      ** \brief Return his type in a string.
+      ** \brief Return its type in a string.
       ** \return The type in a string.
       **
       ** Very useful to debug.

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -46,6 +46,11 @@ namespace oln {
       | default pnm_reader |
       `-------------------*/
 
+      /*! \class pnm_reader
+      **
+      ** Default version.
+      */
+      
       template <reader_id R, unsigned Dim, pnm_type V, class I>
       struct pnm_reader
       {
@@ -72,10 +77,20 @@ namespace oln {
       | reader for pnm |
       `---------------*/
 
+      /*! \class image_reader<ReadPnmPlain, I>
+      **
+      ** Specialized version for ReadPnmPlain
+      */
+
       template <class I>
       struct image_reader<ReadPnmPlain, I>
 	: public pnm_reader<ReadPnmPlain, I::dim, get_pnm_type<I>::ret, I>
       {};
+      
+      /*! \class image_reader<ReadPnmRaw, I>
+      **
+      ** Specialized version for ReadPnmRaw
+      */
 
       template <class I>
       struct image_reader<ReadPnmRaw, I>

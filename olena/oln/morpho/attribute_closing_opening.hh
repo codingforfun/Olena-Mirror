@@ -32,24 +32,16 @@
 
 
 namespace oln {
-  /*! \namespace oln::morpho
-  ** \brief oln::morpho namespace
+  /*! \brief Algorithm based on morphological mathematic.
   */
   namespace morpho {
-    /*!
-    ** \brief oln::morpho::fast namespace
-    **
-    ** In this namespace, you will find fast algorithms, but with intensive memory usage
+    /*! \brief Algorithm enhanced for large structuring elements.
     */
     namespace fast {
-      /*!
-      ** \brief oln::morpho::fast::tarjan namespace
+      /*! \brief oln::morpho::tarjan implementation.
       */
       namespace tarjan {
-	/*!
-	** \brief oln::morpho::fast::tarjan::internal namespace
-	**
-	** Internal usage only.
+	/*! \brief Internal purpose only.
 	*/
 	namespace internal {
 

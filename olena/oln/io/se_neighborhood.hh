@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,7 +39,13 @@ namespace oln {
 
     namespace internal {
 
-      inline bool 
+      /*!
+      ** \brief Read a neighborhood from a file.
+      ** \arg output The new neighborhood.
+      ** \arg name The name of the file.
+      ** \return True if successful.
+      */
+      inline bool
       read(neighborhood2d& output, const std::string& name)
       {
 	image2d<ntg::bin> im;
@@ -72,7 +78,7 @@ namespace oln {
 	    point2d inv_p = -p + dcenter;
 	    if (im[it] != im[inv_p])
 	      {
-		// std::clog << "[a neighborhood2d must be symmetric]" 
+		// std::clog << "[a neighborhood2d must be symmetric]"
 		//  << std::flush;
 		return false;
 	      }
@@ -81,7 +87,13 @@ namespace oln {
 	return true;
       }
 
-      inline bool 
+      /*!
+      ** \brief Write a neighborhood to a file.
+      ** \arg input The neighborhood to write.
+      ** \arg name The name of the file.
+      ** \return True if successful.
+      */
+      inline bool
       write(const neighborhood2d& input, const std::string& name)
       {
 	image2d<ntg::bin> im(input.delta()*2+1, input.delta()*2+1);
@@ -91,7 +103,7 @@ namespace oln {
 	  im[point2d(input.delta(),input.delta()) + input.dp(i)] = true;
 	if (!write(im, name))
 	  return false;
-	return true;	
+	return true;
       }
 
     } // end of namespace internal
