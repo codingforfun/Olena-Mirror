@@ -142,6 +142,7 @@ namespace oln {
 	desallocate_3d_data_(array2_, array_, size_);
       }
 
+    public:
       // borders
 
       void border_reallocate_and_copy_(coord new_border, bool
@@ -152,10 +153,9 @@ namespace oln {
 	T*** array = 0;
 	// first allocate
 
-	allocate_data_(len_(image3d_size(size_.nslices(), size_.nrows(),
-					 size_.ncols(), new_border)),
-					 buffer);
-	pretreat_3d_data(buffer, array2, array, image3d_size(size_.nslices(), size_.nrows(),
+	allocate_data_(buffer, len_(image3d_size(size_.nslices(), size_.nrows(),
+					 size_.ncols(), new_border)));
+	pretreat_3d_data_(buffer, array2, array, image3d_size(size_.nslices(), size_.nrows(),
 							     size_.ncols(), new_border));
 	// move data
 	coord border = size_.border();
@@ -174,7 +174,7 @@ namespace oln {
 		   src_ncols * sizeof(T));
 
 	// then replace
-	desallocate_data_(buffer_, size_);
+	desallocate_data_(buffer_);
 	desallocate_3d_data_(array2_, array_, size_);
 	size_.border() = new_border;
 	buffer_ = buffer;

@@ -136,7 +136,7 @@ namespace oln {
 
       void border_assign(value_type val)
       {
-	to_exact(this)->border_assign_();
+	to_exact(this)->border_assign_(val);
       }
 
     private:

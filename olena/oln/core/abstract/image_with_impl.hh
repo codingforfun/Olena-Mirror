@@ -158,7 +158,7 @@ namespace oln {
 	if (border() >= min_border)
 	  return;			// Don't shrink.
 	
-	impl()->border_set_width(min_border, copy_border);
+	border_set_width(min_border, copy_border);
       }
 
       void border_adapt_copy(coord min_border)
@@ -171,10 +171,10 @@ namespace oln {
       void border_adapt_mirror(coord min_border)
       {
 	border_adapt_width(min_border);
-	impl()->border_mirror(input);
+	impl()->border_mirror();
       }
 
-      void adapt_border_assign(coord min_border, value_type val)
+      void border_adapt_assign(coord min_border, value_type val)
       {
 	border_adapt_width(min_border);
 	impl()->border_assign(val);

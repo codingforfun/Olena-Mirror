@@ -126,21 +126,19 @@ namespace oln {
 	desallocate_2d_data_(array_, size_); 
       }
 
+    public:
       // borders
 
       void border_reallocate_and_copy_(coord new_border, bool
 				      copy_border)
       {
-	coord ncols_eff = size_.ncols() + 2 * new_border;
-	coord nrows_eff = size_.nrows() + 2 * new_border;
-
 	T* buffer = 0;
 	T** array = 0;
-
 	// first allocate
 	allocate_data_(buffer, len_(image2d_size(size_.nrows(), size_.ncols(), new_border)));
-	pretreat_2d_data_(buffer, array, image2d_size(size_.ncols(),
-						      size_.nrows(), new_border));
+	std::cout << len_(image2d_size(size_.nrows(), size_.ncols(), new_border)) << std::endl;
+	pretreat_2d_data_(buffer, array, image2d_size(size_.nrows(),
+						      size_.ncols(), new_border));
 	// move data
 	coord border = size_.border();
 	if (border > new_border)
@@ -155,10 +153,8 @@ namespace oln {
 		 src_ncols * sizeof(T));
 
 	// then replace
-	desallocate_data_(buffer_, len_(size_));
+	desallocate_data_(buffer_);
 	desallocate_2d_data_(array_, size_); 
-	
-
 	size_.border() = new_border;
 	buffer_ = buffer;
 	array_ = array;
@@ -179,8 +175,8 @@ namespace oln {
 	for (coord i = - size_.border(); i <= imax + size_.border(); ++i)
 	  for (coord j = - size_.border(); j; ++j)
 	    {
-	      at_(i, j) = at_(i, 0);
-	      at_(i, jmax - j) = at_(i, jmax);
+	      at_(i, j) = at_(i, 0); 
+	      at_(i, jmax - j) = at_(i, jmax );
 	    }
       }
 
@@ -193,14 +189,14 @@ namespace oln {
 	for (coord i = - size_.border(); i; ++i)
 	  for (coord j = 0; j <= jmax; ++j)
 	    {
-	      at_(i, j) = at_(- i, j);
+	      at_(i, j) = at_(-i, j);
 	      at_(imax - i, j) = at_(imax + i, j);
 	    }
 	// left & right
 	for (coord i = - size_.border(); i <= imax + size_.border(); ++i)
 	  for (coord j = - size_.border(); j; ++j)
 	    {
-	      at_(i, j) = at_(- i, 0);
+	      at_(i, j) = at_(i, -j);
 	      at_(i, jmax - j) = at_(i, jmax + j);
 	    }
       }

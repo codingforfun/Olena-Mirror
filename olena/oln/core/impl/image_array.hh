@@ -44,7 +44,7 @@ namespace oln {
   }
   
   template<class T>
-  void desallocate_data_(T*& buffer, size_t s)
+  void desallocate_data_(T*& buffer)
   {
     precondition(buffer != 0);
     delete[] buffer;
@@ -99,7 +99,7 @@ namespace oln {
     protected:
       ~image_array()
       {
-	desallocate_data_(buffer_, len(size_));
+	desallocate_data_(buffer_);
       }
     
       T* buffer_;

@@ -94,9 +94,7 @@ namespace oln {
 	return size_t(ncols_eff);
       }
 
-    protected:
       // borders
-
       void border_reallocate_and_copy_(coord new_border, bool
 				      copy_border)
       {
@@ -109,14 +107,14 @@ namespace oln {
 	  border = new_border;
 	coord src_min_col = copy_border ? -border : 0;
 	coord src_ncols = size_.ncols() + (copy_border ? (border * 2) : 0);
-	memcpy(buffer, &at(point_type(src_min_col)),
+	memcpy(buffer + new_border, &at_(src_min_col),
 	       src_ncols * sizeof(T));
 
 	// then replace
 	size_.border() = new_border;
 	pretreat_1d_data_(buffer, buffer__,
 			  image1d_size(size_.ncols(), new_border));
-	desallocate_data_(buffer_, len_(size_));
+	desallocate_data_(buffer_);
 	buffer_ = buffer;
 	
       }
@@ -147,7 +145,7 @@ namespace oln {
             at_(size_.ncols() - j - 1) = val;
           }
       }
-
+    protected:
 
     private:
       T* buffer__;

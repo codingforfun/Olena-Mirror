@@ -49,13 +49,18 @@ namespace oln {
       return coord_[n];
     }
 
-   coord& nth(unsigned n)
+    coord& nth(unsigned n)
     {
       assertion(n < dim);
       return coord_[n];
     }
 
     coord border() const
+    {
+      return border_;
+    }
+
+    coord& border()
     {
       return border_;
     }
