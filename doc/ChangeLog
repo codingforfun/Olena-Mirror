@@ -1,3 +1,8 @@
+2003-08-20  Astrid Wang <astrid@lrde.epita.fr>
+
+	* dev/abstract.texi (Abstract): Typo.
+	* dev/biblio.texi (Bibliography): Typo.
+
 2003-08-11  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ref/Makefile.am (CLEANFILES): Don't remove dvi files.
@@ -8,7 +13,7 @@
 
 2003-08-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* dev/thanks.texi: Update.	
+	* dev/thanks.texi: Update.
 	* dev/srctree.texi: Likewise.
 
 	* dev/oln-dev.texi: Comment out design.texi.
@@ -24,13 +29,13 @@
 2003-08-01  David Lesage  <david@lrde.epita.fr>
 
 	* demo/image.cc: Fix. Add some FIXME waiting for binary_image.
-	
+
 2003-08-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* demo/test-reconstruction.cc: Move into
 	top_srcdir/olena/tests/morpho/tests/test-reconstruction.
 	* demo/Makefile.am: Adjust.
-	
+
 2003-07-31  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* demo/Makefile.am: Fix compilation flags.
@@ -59,8 +64,8 @@
 	* ref/ref-types.tex: Rename as ...
 	* ref/integre-ref.tex: ... this.
 	* ref/integre-ref.tex: Update.
-	
-	* ref/oln-ref.tex: Minor changes.	
+
+	* ref/oln-ref.tex: Minor changes.
 
 	* ref/Makefile.am: Fix html generation.
 
@@ -73,7 +78,7 @@
 
 	* demo/convol-gaussian.cc, demo/tour.cc,
 	ref/ref-types.tex: Rename sfloat and dfloat.
-	
+
 2003-04-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* dev/oln-dev.texi: Include upgrading.texi.
@@ -81,7 +86,7 @@
 	* dev/upgrading.texi: New file.
 
 	* dev/thanks.texi, dev/srctree.texi: Update.
-	
+
 	* ref/ref-types.tex: Fix typos.
 
 2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
@@ -93,7 +98,7 @@
 	* ref/processing.tpl: Fix namespaces.
 
 2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* Merge from cleanup:
 
 	2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
@@ -120,11 +125,11 @@
 
 	* dev/Makefile.am (oln_dev_TEXINFOS): Add missing design.texi.
 	* demo/tour.cc: Fix typo.
-	
+
 2003-02-12  Raphaël Poss  <raph@lrde.epita.fr>
 
 	(Changes from 0.7)
-	
+
 	* dev/oln-dev.texi: Tweak copyright holder name.
 
 	* ref/Makefile.am (docdir): Minor fix.
@@ -206,9 +211,9 @@
 	demo/morpholena-hit-miss.cc (morpholena_hit_or_miss),
 	demo/morpholena-hats.cc,
 	demo/morpholena-grad.cc (morpholena_grad),
-	demo/morpholena-base.cc (morpholena_base), 
+	demo/morpholena-base.cc (morpholena_base),
 	demo/morpholena-wshed.cc (morpholena_watershed): Fix IMGDIR.
-	
+
 
 2003-01-30  Raphaël Poss  <raph@lrde.epita.fr>
 
@@ -255,12 +260,12 @@
 
 	* tpl/processing.tpl: Move to ...
 	* ref/processing.tpl: ... here.
-	
+
 	* ref/Makefile.am (EXTRA_DIST): Distribute processing.tpl. Do not
 	mention `oln-dev.texi' any more. Fix path to processing.tpl. Do
 	not ship oln-ref.ps in the distribution, since dvi and pdf
 	versions are already distributed.
-	
+
 2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* demo/morpholena.cc,
@@ -270,7 +275,7 @@
 
 	* demo/convol-gaussian.cc: Rename from ...
 	* demo/morpholena-gaussian.cc: ... this file.
-	
+
 	* demo/morpholena-opening-closing.cc,
 	demo/morpholena-fast-hats.cc,
 	demo/morpholena-minima-imp.cc: Remove.

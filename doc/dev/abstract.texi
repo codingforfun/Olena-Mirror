@@ -1,11 +1,11 @@
 @node Abstract
 @chapter Abstract
 
-This is the nineth public release of Olena, a generic image
+This is the ninth public release of Olena, a generic image
 processing library in C++.
 
 @ifplaintext
-Please see the files BUILD and INSTALL for information about building
+Please read the files BUILD and INSTALL for information about building
 and installing Olena.
 @end ifplaintext
 

@@ -1,7 +1,7 @@
 @node Bibliography
 @section Bibliography
 
-Further information about Olena, can be found into the following
+Further information about Olena can be found into the following
 related papers:
 
 @itemize @bullet
@@ -10,7 +10,7 @@ related papers:
 Jean-François Mangin.  @cite{Vers une réutilisabilité totale des
 algorithmes de traitement d'images}.  In the Proceedings of the 17th
 Symposium GRETSI on Signal and Image Processing, vol. 2, pages 331-334,
-Vannes, France, September 1999.  In French (available in english as
+Vannes, France, September 1999.  In French (available in English as
 Technical Report 9902: @cite{Towards a Total Reusability of Image
 Processing Algorithms}).
 
