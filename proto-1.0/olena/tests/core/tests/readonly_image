@@ -1,0 +1,60 @@
+#include <iostream>
+
+#include <ntg/real/int_u8.hh>
+#include <oln/basics2d.hh>
+
+#include "check.hh"
+#include "data.hh"
+
+namespace oln {
+
+  struct dummy_image;
+
+  template <>
+  struct category_type< dummy_image > { typedef cat::image ret; };
+
+  template <>
+  struct props <cat::image, dummy_image> : 
+         public default_props < cat::image >
+  {
+    typedef size2d size_type;
+    typedef point2d point_type;
+    typedef ntg::int_u8 value_type;
+
+    typedef mlc_encoding_type_(value_type) value_storage_type;
+    typedef array2d<value_storage_type> value_container_type;
+
+    typedef tag::readonly constness_tag;
+    typedef tag::dimension2 dimension_tag;
+    typedef mlc::no_type delegated_type;
+  };
+
+  struct dummy_image : public abstract::image_with_data< dummy_image >
+  {
+
+    typedef abstract::image_with_data< dummy_image > super_type;
+
+    dummy_image()
+    {
+      this->exact_ptr = this;
+    }
+
+    dummy_image(coord_t nrows, coord_t ncols) :
+      super_type(size2d(nrows, ncols))
+    {
+      this->exact_ptr = this;
+    }
+
+  };
+
+} // end of namespace test
+
+ 
+ 
+bool check()
+{
+  oln::dummy_image ima(3, 3);
+  // COMPFAIL
+  ima[oln::point2d(0,0)] = 42;
+  return false;
+}

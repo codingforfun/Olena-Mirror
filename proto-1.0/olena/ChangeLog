@@ -1,5 +1,10 @@
 2005-01-21  Simon Odou  <simon@lrde.epita.fr>
 
+	* tests/core/tests/readonly_image: New.
+	* tests/core/tests/readwrite_image: New.
+
+2005-01-21  Simon Odou  <simon@lrde.epita.fr>
+
 	* oln/core/tags.hh: The abstract entry point is a big switch which
           must now inherits an image dimension.
 	* oln/fancy/print.hh: Use abstraction for image with dimension 
