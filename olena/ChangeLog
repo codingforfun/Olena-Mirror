@@ -1,5 +1,21 @@
 2004-03-23  Giovanni Palma  <giovanni@lrde.epita.fr>
 
+	* tests/convol/tests/md5_convol_fast_gaussian_hh0: Add file.
+	* tests/convol/tests/md5_convol_fast_gaussian_hh1: Add file.
+	* tests/convol/tests/md5_convol_fast_gaussian_hh2: Add file.
+	* tests/convol/tests/md5_convol_fast_gaussian_hh3: Add file.
+	* tests/convol/tests/md5_convol_fast_gaussian_hh4: Add file.
+	* tests/convol/tests/md5_convol_fast_gaussian_hh5: Add file.
+
+	* tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh0: Remove file.
+	* tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh1: Remove file.
+	* tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh2: Remove file.
+	* tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh3: Remove file.
+	* tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh4: Remove file.
+	* tests/convol/tests/out_olena_oln_convol_fast_gaussian_hh5: Remove file.
+
+2004-03-23  Giovanni Palma  <giovanni@lrde.epita.fr>
+
 	* tests/core/tests/md5_apply: Add file.
 
 2004-03-23  Giovanni Palma  <giovanni@lrde.epita.fr>
