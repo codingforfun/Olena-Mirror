@@ -1,31 +1,25 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 193)
-(Parent-Version oln 10 192)
-(Version-Log "Index: ChangeLog
-from  Simon Odou  <simon@lrde.epita.fr>
-
-        * config/oln.m4: Set LDFLAGS to compile code examples.
-Index: doc/ChangeLog
-from  Simon Odou  <simon@lrde.epita.fr>
-        * ref/out/exdoc.config.in: Use LDFLAGS instead of libs.
-Index: integre/ChangeLog
-from  Simon Odou  <simon@lrde.epita.fr>
-
-        * ntg/core/macros.hh: Add value accessors (sup() and inf()).
-        * ntg/utils/cast.hh: Fix a bug in cast::bound().
-Index: olena/ChangeLog
-from  Simon Odou  <simon@lrde.epita.fr>
-        * oln/convol/fast_convolution.hh: Clean code.
-        * oln/convol/slow_gaussian.hxx: Fix too generic parameter.
-        * oln/convol/slow_gaussian.hh: Fix delta computation.
-        * oln/convol/fast_gaussian.hxx: Use cast::bound instead of cast::force.
-        * oln/convol/slow_convolution.hh: Clean code.
+(Project-Version oln 10 194)
+(Parent-Version oln 10 193)
+(Version-Log "2004-06-15  Damien Thivolle  <damien@lrde.epita.fr>
+	* oln/makefile.src: Add new files to the distribution.
+	* oln/transforms/shapelets.hh: Small Changes.
+	* oln/morpher/func_morpher.hh: Add file, image can now be seen through
+	a functor.
+	* oln/core/fpoint2d.hh: Add file. Contain floating point
+	implementation.
+	* oln/core/fdpoint2d.hh: Add file. Contain floating dpoint
+	implementation.
+	* oln/geom/translate.hh: Add file. Implementation of image translation
+	using floating dpoint.
+	* oln/geom/rotate.hh: Add file. Implementation of image rotation using
+	floating point.
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 14 Jun 2004 17:26:55 +0200")
-(Checkin-Login odou_s)
+(Checkin-Time "Tue, 15 Jun 2004 19:50:21 +0200")
+(Checkin-Login thivol_d)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -131,7 +125,7 @@ from  Simon Odou  <simon@lrde.epita.fr>
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.14 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.46 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.42 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.10 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.11 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.13 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.39 600))
 
@@ -1452,7 +1446,7 @@ from  Simon Odou  <simon@lrde.epita.fr>
   (olena/tests/morpho/tests/gradient (oln/r/1_gradient 1.2 600))
   (integre/ntg/makefile.src (oln/r/2_makefile.s 1.1 600))
   (metalic/mlc/makefile.src (oln/r/3_makefile.s 1.1 600))
-  (olena/oln/makefile.src (oln/r/4_makefile.s 1.3 600))
+  (olena/oln/makefile.src (oln/r/4_makefile.s 1.4 600))
 
   (olena/oln/convol/slow_gaussian.hh (oln/r/7_slow_gauss 1.4 600))
   (olena/oln/convol/slow_gaussian.hxx (oln/r/8_slow_gauss 1.4 600))
@@ -1464,7 +1458,7 @@ from  Simon Odou  <simon@lrde.epita.fr>
 ;; Files added by populate at Sun, 06 Jun 2004 23:11:34 +0200,
 ;; to version 10.187(w), by thivol_d:
 
-  (olena/oln/transforms/shapelets.hh (oln/r/10_shapelets. 1.2 600))
+  (olena/oln/transforms/shapelets.hh (oln/r/10_shapelets. 1.3 600))
 
 ;; Files added by populate at Sun, 13 Jun 2004 13:18:59 +0200,
 ;; to version 10.190(w), by van-vl_n:
@@ -1480,8 +1474,23 @@ from  Simon Odou  <simon@lrde.epita.fr>
 ;; to version 10.191(w), by simon:
 
   (olena/tests/convol/tests/fast_convol (oln/r/13_fast_convo 1.1 600))
+
+;; Files added by populate at Tue, 15 Jun 2004 19:48:03 +0200,
+;; to version 10.193(w), by thivol_d:
+
+  (olena/oln/morpher/func_morpher.hh (oln/r/14_func_morph 1.1 600))
+
+;; Files added by populate at Tue, 15 Jun 2004 19:48:10 +0200,
+;; to version 10.193(w), by thivol_d:
+
+  (olena/oln/core/fpoint2d.hh (oln/r/15_fpoint2d.h 1.1 600))
+  (olena/oln/core/fdpoint2d.hh (oln/r/16_fdpoint2d. 1.1 600))
+
+;; Files added by populate at Tue, 15 Jun 2004 19:48:12 +0200,
+;; to version 10.193(w), by thivol_d:
+
+  (olena/oln/geom/translate.hh (oln/s/6_translate. 1.1 600))
+  (olena/oln/geom/rotate.hh (oln/u/14_rotate.hh 1.1 600))
 )
-(Merge-Parents
-  (10.192 complete)
-)
+(Merge-Parents)
 (New-Merge-Parents)

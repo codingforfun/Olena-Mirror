@@ -1,3 +1,18 @@
+2004-06-15  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* oln/makefile.src: Add new files to the distribution.
+	* oln/transforms/shapelets.hh: Small Changes.
+	* oln/morpher/func_morpher.hh: Add file, image can now be seen through
+	a functor.
+	* oln/core/fpoint2d.hh: Add file. Contain floating point
+	implementation.
+	* oln/core/fdpoint2d.hh: Add file. Contain floating dpoint
+	implementation.
+	* oln/geom/translate.hh: Add file. Implementation of image translation
+	using floating dpoint.
+	* oln/geom/rotate.hh: Add file. Implementation of image rotation using
+	floating point.
+
 2004-06-14  Simon Odou  <simon@lrde.epita.fr>
 
 	* oln/convol/fast_convolution.hh: Clean code.
@@ -36,7 +51,7 @@
 	mu. Add radius_factor.
 	* olena/oln/morpho/gradient.inc: Fix doc.
 
-2004-07-06  Damien Thivolle  <damien@lrde.epita.fr>
+2004-06-07  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* oln/transforms/shapelets.hh: Change functions to functors,
 	bug fixes.

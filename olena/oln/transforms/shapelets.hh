@@ -18,17 +18,21 @@ namespace oln
     {
       T operator()(unsigned n, T x)
       {
+
 	if (n == 0)
 	  return 1;
 	if (n == 1)
 	  return 2. * x;
-	return 2. * x * (*this)(n - 1, x) - 2. * double(n - 1) * (*this)(n - 2, x);
+	return 2. * x * (*this)(n - 1, x) - 2. * T(n - 1) * (*this)(n - 2, x);
       }
     };
 
     template <class T>
     struct fact : public std::unary_function<T, T>
     {
+
+
+
       T operator() (T n)
       {
 	precondition(n >= 0);
@@ -49,7 +53,7 @@ namespace oln
       T operator()(int n, T x)
       {
 	assert(n >= 0);
-	const double c = sqrt(pow(2.0, n) * sqrt(M_PI) * T(fact<int>()(n)));
+	const double c = sqrt(pow(2.0, n) * sqrt(M_PI) * fact<T>()(n));
 
 	return hermite<T>()(n, x) * exp(x * x / -2.0) / c;
       }
@@ -108,9 +112,11 @@ namespace oln
 	    for_all(it)
 	      {
 		s += (ima[it] - ntg_max_val(oln_value_type(I)) / 2) *
-		  func(k, l, double(it.row() - row), double(it.col() - col), b);
+		    func(k, l, double(it.row() - row), double(it.col() - col), b);
 	      }
 	    res[k * n + l] = s;
+	    //	    std::cout << k << " - " << l << " = " << s << std::endl;
+
 	  }
       return res;
     }
@@ -136,9 +142,15 @@ namespace oln
       for (int k = 0; k < m; k++)
 	for (int l = 0; l < n; l++)
 	  // Add the value at the point
-	  for_all(it)
-	    resf[it] += vec[k * n + l] *
-	    shapelets_basis<2, double>()(k, l, double(it.row() - nrows / 2), double(it.col() - ncols / 2), b);
+	  {
+	    if (vec[k * n + l] * vec[k * n + l] > 40000)
+	      {
+		for_all(it)
+		  resf[it] += vec[k * n + l] *
+		  shapelets_basis<2, double>()(k, l, double(it.row() - nrows / 2), double(it.col() - ncols / 2), b);
+		//std::cout << k << " - " << l << std::endl;
+	      }
+	  }
 
       image2d<D> res(oln::image2d_size(nrows, ncols, 0));
 
