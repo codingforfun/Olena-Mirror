@@ -1,14 +1,23 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 162)
-(Parent-Version oln 10 161)
+(Project-Version oln 10 163)
+(Parent-Version oln 10 162)
 (Version-Log "2004-04-14  Damien Thivolle  <damien@lrde.epita.fr>
-        * tools/swilena/ruby/tests/Makefile.am: Add comments.
-        * tools/swilena/python/tests/Makefile.am: Likewise.
+        * config/oln.m4: Correct the message that appears when doxygen is not
+        enough up to date.
+        * swilena/python/tests/Makefile.am: Readd tests for swilena.
+        * swilena/ruby/Makefile.am: Likewise.
+        * swilena/ruby/tests/Makefile.am: Likewise.
+        * swilena/python/Makefile.am: Likewise.
+        * swilena/python/tests/morpho.py: Fix.
+        * swilena/python/swilena_all1d.py: Adjust according to the split of
+        swilena_morpho1d.
+        * swilena/python/swilena_all2d.py: Likewise for swilena_morpho2d.
+        * swilena/python/swilena_all3d.py: Likewise for swilena_morpho3d.
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 14 Apr 2004 17:41:51 +0200")
+(Checkin-Time "Wed, 14 Apr 2004 20:42:25 +0200")
 (Checkin-Login thivol_d)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -111,13 +120,13 @@
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.6 600))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.7 600))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.3 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.42 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.40 600))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.87 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 600))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.31 600))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.32 600))
 
   (olena/ChangeLog.0 (oln/6_ChangeLog 1.50.1.98.1.5 600))
   (doc/ChangeLog.0 (oln/e/1_ChangeLog 1.31 600))
@@ -301,7 +310,7 @@
   (olena/oln/level/lut.hh (oln/29_lut.hh 1.10 600))
   (olena/oln/level/set_level.hh (oln/p/1_set_level. 1.11 600))
   (olena/oln/level/threshold.hh (oln/f/15_threshold. 1.14 600))
-  (config/oln.m4 (oln/j/15_oln.m4 1.38.1.4 600))
+  (config/oln.m4 (oln/j/15_oln.m4 1.38.1.5 600))
 
   (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.15 600))
   (metalic/mlc/array/1d.hh (oln/f/23_array1d.hh 1.12 600))
@@ -1036,10 +1045,10 @@
 ;; Files added by populate at Sun, 21 Sep 2003 22:59:15 +0200,
 ;; to version 10.19(w), by nes:
 
-  (tools/swilena/python/tests/Makefile.am (oln/v/15_Makefile.a 1.3 600))
+  (tools/swilena/python/tests/Makefile.am (oln/v/15_Makefile.a 1.4 600))
   (tools/swilena/python/tests/simple1.py (oln/v/16_simple1.py 1.4 700))
-  (tools/swilena/ruby/Makefile.am (oln/v/17_Makefile.a 1.5 600))
-  (tools/swilena/ruby/tests/Makefile.am (oln/v/18_Makefile.a 1.2 600))
+  (tools/swilena/ruby/Makefile.am (oln/v/17_Makefile.a 1.6 600))
+  (tools/swilena/ruby/tests/Makefile.am (oln/v/18_Makefile.a 1.3 600))
   (tools/swilena/ruby/tests/simple1.rb (oln/v/19_simple1.rb 1.4 700))
 
 ;; Files added by populate at Mon, 22 Sep 2003 00:03:13 +0200,
@@ -1106,7 +1115,7 @@
 ;; Files added by populate at Mon, 10 Nov 2003 11:23:59 +0100,
 ;; to version 10.39(w), by burrus_n:
 
-  (tools/swilena/python/tests/morpho.py (oln/v/47_morpho.py 1.1 700))
+  (tools/swilena/python/tests/morpho.py (oln/v/47_morpho.py 1.2 700))
   (tools/swilena/meta/swilena_arith.i (oln/v/48_swilena_ar 1.1 600))
   (tools/swilena/meta/swilena_conversions.i (oln/v/49_swilena_co 1.1 600))
   (tools/swilena/generate_conversions_instantiations.py (oln/v/50_generate_c 1.1 700))
@@ -1121,10 +1130,10 @@
 ;; Files added by populate at Mon, 10 Nov 2003 14:10:01 +0100,
 ;; to version 10.40(w), by burrus_n:
 
-  (tools/swilena/python/Makefile.am (oln/w/2_Makefile.a 1.3 600))
-  (tools/swilena/python/swilena_all1d.py (oln/w/3_swilena_al 1.1 600))
-  (tools/swilena/python/swilena_all2d.py (oln/w/4_swilena_al 1.1 600))
-  (tools/swilena/python/swilena_all3d.py (oln/w/5_swilena_al 1.1 600))
+  (tools/swilena/python/Makefile.am (oln/w/2_Makefile.a 1.4 600))
+  (tools/swilena/python/swilena_all1d.py (oln/w/3_swilena_al 1.2 600))
+  (tools/swilena/python/swilena_all2d.py (oln/w/4_swilena_al 1.2 600))
+  (tools/swilena/python/swilena_all3d.py (oln/w/5_swilena_al 1.2 600))
 
 ;; Files added by populate at Wed, 26 Nov 2003 11:35:29 +0100,
 ;; to version 10.41(w), by burrus_n:

@@ -8,5 +8,5 @@ TESTS_ENVIRONMENT = \
 	IMGDIR="$(top_srcdir)/olena/img"
 
 
-## Remove comments when it works
-## TESTS = arith.py conversions.py simple1.py morpho.py
+
+TESTS = arith.py conversions.py simple1.py morpho.py

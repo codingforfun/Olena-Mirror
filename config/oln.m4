@@ -354,7 +354,7 @@ AC_DEFUN([AC_CHECK_DOXYGEN_VERSION],
                         ac_cv_doxygen_version=old
                    fi])
   if [ [ "$ac_cv_doxygen_version" = "old" ] ] ; then
-	AC_MSG_ERROR([Doxygen 1.3.4 or newer is required])
+	AC_MSG_ERROR([Doxygen 1.3.4 or newer is required, run ./configure with --without-doc to disable the doc build])
   fi
 ])
 

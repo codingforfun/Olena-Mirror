@@ -8,5 +8,4 @@ TESTS_ENVIRONMENT = \
 	IMGDIR="$(top_srcdir)/olena/img"
 
 
-## Remove comments when it works.
-## TESTS = simple1.rb
+TESTS = simple1.rb

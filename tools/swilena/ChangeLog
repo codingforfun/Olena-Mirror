@@ -1,5 +1,17 @@
 2004-04-14  Damien Thivolle  <damien@lrde.epita.fr>
 
+	* swilena/python/tests/Makefile.am: Readd tests for swilena.
+	* swilena/ruby/Makefile.am: Likewise.
+	* swilena/ruby/tests/Makefile.am: Likewise.
+	* swilena/python/Makefile.am: Likewise.
+	* swilena/python/tests/morpho.py: Fix.
+	* swilena/python/swilena_all1d.py: Adjust according to the split of
+	swilena_morpho1d.
+	* swilena/python/swilena_all2d.py: Likewise for swilena_morpho2d.
+	* swilena/python/swilena_all3d.py: Likewise for swilena_morpho3d.
+
+2004-04-14  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* tools/swilena/ruby/tests/Makefile.am: Add comments.
 	* tools/swilena/python/tests/Makefile.am: Likewise.
 
