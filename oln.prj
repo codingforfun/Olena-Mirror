@@ -1,22 +1,12 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5_reconf 13)
-(Parent-Version oln 0_5_reconf 12)
-(Version-Log "Index: ChangeLog
-from  Raphael Poss  <raph@sandrock>
-
-   * FAQ: add.
-
-Index: src/tests/ChangeLog
-from  Raphael Poss  <raph@sandrock>
-
-   * types/runtests (rundir): add $CPPFLAGS to compilation flags and
-   cross fingers.
-
+(Project-Version oln 0_5_reconf 14)
+(Parent-Version oln 0_5_reconf 13)
+(Version-Log "add changes from 0_5.102
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 05 Dec 2002 18:06:28 +0100")
+(Checkin-Time "Thu, 05 Dec 2002 18:20:33 +0100")
 (Checkin-Login raph)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -140,7 +130,7 @@ from  Raphael Poss  <raph@sandrock>
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.26 660))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.105 660))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.98.1.2 660))
   (configure.ac (oln/3_configure. 1.32 660))
   (configure (oln/e/7_configure 1.41 770))
   (README (oln/1_README 1.5 660))
@@ -682,10 +672,10 @@ from  Raphael Poss  <raph@sandrock>
 ;; Files added by populate at Fri, 08 Nov 2002 18:04:09 +0100,
 ;; to version 0_5.74(w), by chojin:
 
-  (src/utilities/generate_morpho.sh (oln/i/30_generate_m 1.5 770))
+  (src/utilities/generate_morpho.sh (oln/i/30_generate_m 1.3.1.2 770))
   (src/utilities/morpho/Makefile.in (oln/i/31_Makefile.i 1.9 664))
   (src/utilities/morpho/Makefile.am (oln/i/32_Makefile.a 1.4 660))
-  (src/utilities/morpho/morpho_template.cc (oln/i/33_morpho_tem 1.4 660))
+  (src/utilities/morpho/morpho_template.cc (oln/i/33_morpho_tem 1.5 660))
 
 ;; Files deleted by depopulate at Wed, 13 Nov 2002 10:20:17 +0100,
 ;; from version 0_5.77(w), by ender:
@@ -851,6 +841,12 @@ from  Raphael Poss  <raph@sandrock>
   (FAQ (oln/j/31_FAQ 1.1 664))
 )
 (Merge-Parents
-  (0_5_reconf.12 complete)
+  (0_5.102 complete
+    (ChangeLog ChangeLog ChangeLog m) (() oln/config/config.hin oln/config/config.hin n)
+    (() oln/config/README oln/config/README n) (() tests/meta tests/meta n)
+    (() tests/convol tests/convol n) (() tools/ChangeLog tools/ChangeLog n)
+    (() tools/mdate-sh tools/mdate-sh n) (() tools/scandefs.pl tools/scandefs.pl n)
+    (() tools/texinfo.tex tools/texinfo.tex n) (src/utilities/generate_morpho.sh utilities/generate_morpho.sh utilities/generate_morpho.sh m)
+    (src/utilities/morpho/morpho_template.cc utilities/morpho/morpho_template.cc utilities/morpho/morpho_template.cc r) (() tests/transforms/output tests/transforms/output n))
 )
 (New-Merge-Parents)

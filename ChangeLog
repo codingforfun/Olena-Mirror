@@ -63,6 +63,11 @@
 	* oln/Makefile.am: cleanup. Now pconf.hh only contains pertinent
 	definitions, no more compile-time header generation.
 	
+2002-12-04  Quoc Peyrot  <chojin@lrde.epita.fr>
+
+	* utilities/generate_morpho.sh(usage): typo in generated files.
+	* utilities/morpho/morpho_template.cc: modify accordingly (generated).
+
 2002-12-03  Quoc Peyrot  <chojin@lrde.epita.fr>
 
 	* utilities/generate_morpho.sh: add a lot of binary generation.

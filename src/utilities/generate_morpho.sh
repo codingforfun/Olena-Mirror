@@ -1,7 +1,7 @@
 #!/bin/sh
 # generate_toolbox.sh
 #
-# $Id: generate_morpho.sh 1.5 Thu, 05 Dec 2002 17:25:05 +0100 raph $
+# $Id: generate_morpho.sh 1.3.1.2 Thu, 05 Dec 2002 18:20:33 +0100 raph $
 
 # Global variables
 DESTDIR=morpho
@@ -61,7 +61,7 @@ void usage(const char * progname)
   std::cerr << "filename_out                  : destination file" << std::endl;
   std::cerr << std::endl;
   std::cerr << "example: " << progname
-            << " -&w my_win.pbm"
+            << " -w my_win.pbm"
             << " lena.pgm lena_out.pgm"
             << std::endl;
   exit(1);
