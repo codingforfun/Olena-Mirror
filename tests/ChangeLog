@@ -1,3 +1,7 @@
+2002-09-17  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* types/tests/vec7: New file.
+
 2002-09-16  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* types/tests/vec1, types/tests/vec2, types/tests/vec3,

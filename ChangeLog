@@ -1,3 +1,8 @@
+2002-09-17  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* oln/types/optraits_vec.hh: Define scalar * vec using
+	vec * scalar.  Define vec * vec as a dot-product.
+
 2002-09-17  Akim Demaille  <akim@epita.fr>
 
 	* oln/core/type.hh: Include oln/config/system.hh before `string'.
@@ -7,8 +12,8 @@
 2002-09-17  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/types/int_s.hh, oln/types/interval.hh, oln/types/cycle.hh,
-	oln/types/optraits_cycle.hh, oln/types/typetraits_builtins_float.hh : Fix 
-	includes.
+	oln/types/optraits_cycle.hh, oln/types/typetraits_builtins_float.hh: 
+	Fix includes.
 	* oln/types/optraits_vec.hh: Fix typo, fix operators traits.
 
 2002-09-16  Alexandre Duret-Lutz  <duret_g@epita.fr>
