@@ -1,26 +1,12 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 9 15)
-(Parent-Version oln 9 14)
-(Version-Log "Index: integre/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-        * tests/types/tests/char1: New test.
-        * ntg/real/typetraits_builtin_int.hh,
-        ntg/real/optraits_builtin_int.hh: Support char builtin
-        type. \"signed char\" is not equivalent to \"char\".
-
-Index: olena/ChangeLog
-from  Nicolas Burrus  <nes@lrde.epita.fr>
-
-        * tests/core/image_print.sh: New test.
-        * tests/core/tests/print_image: Remove.
-
-        * tests/core/Makefile.am: Adjust.
-
+(Project-Version oln 9 16)
+(Parent-Version oln 9 15)
+(Version-Log "Synchronize ChangeLog.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sat, 12 Jul 2003 20:16:01 +0200")
+(Checkin-Time "Sat, 12 Jul 2003 20:20:19 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -112,7 +98,7 @@ from  Nicolas Burrus  <nes@lrde.epita.fr>
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.5 640))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.36 640))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.37 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.12 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.21 640))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.12 640))

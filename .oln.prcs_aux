@@ -567,7 +567,7 @@
 (integre/tests/types/tests/int6d 70 1030375252 g/43_int6d 1.1)
 (olena/oln/morpho/extrema.hxx 4649 1052057497 j/4_extrema.hx 1.5)
 (metalic/tests/array/gen_test_utils/errors.cc 5028 1026208207 f/33_errors.cc 1.1)
-(doc/ChangeLog 9256 1054566645 o/31_ChangeLog 1.36)
+(doc/ChangeLog 9392 1058034019 o/31_ChangeLog 1.37)
 (tools/swilena/meta/swilena_imagesize.i 1223 1052196974 s/35_swilena_im 1.1)
 (tools/swilena/meta/swilena_exception.i 557 1052196974 s/37_swilena_ex 1.1)
 (olena/oln/morpho/thickening.hh 1721 1046369269 e/29_thickening 1.7)
