@@ -1,3 +1,11 @@
+2005-04-06  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* ntg/real/int_s.hh: Conform to mlc.
+	* ntg/real/int_u.hh: Likewise.
+	* ntg/real/behavior.hh: Likewise.
+	* ntg/core/macros.hh: Likewise.
+	* tests/types/tests/ntg_compare_nb_comp: Likewise.
+
 2005-04-05  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Conform to mlc.

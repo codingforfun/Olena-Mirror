@@ -97,7 +97,7 @@ namespace ntg {
 
       typedef self					base_type;
       typedef typename C_for_int_u<nbits>::type		storage_type;
-      typedef int_s<mlc::on<unsigned>::saturateN<nbits+1, 32>::ret,
+      typedef int_s<mlc::on<unsigned>::saturateN<nbits+1, 32>::val,
 		    behavior>				signed_type;
       typedef self					unsigned_type;
       // FIXME: calculate it more precisely
@@ -279,8 +279,8 @@ namespace ntg {
     struct operator_traits<operator_plus, int_u<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true,
-	     need_check = (mlc::on<unsigned>::max<nbits, mbits>::ret >= 32) };
-      typedef int_u<mlc::on<unsigned>::maxN<nbits + 1, mbits + 1, 32>::ret,
+	     need_check = (mlc::on<unsigned>::max<nbits, mbits>::val >= 32) };
+      typedef int_u<mlc::on<unsigned>::maxN<nbits + 1, mbits + 1, 32>::val,
 		    typename deduce_op_behavior<B1, B2>::ret> ret;
       typedef int_u<nbits,
 		    typename ret_behavior_if<need_check, ret>::ret> impl;
@@ -296,8 +296,8 @@ namespace ntg {
     struct operator_traits<operator_minus, int_u<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true,
-	     need_check = (mlc::on<unsigned>::max<nbits, mbits>::ret >= 32) };
-      typedef int_s<mlc::on<unsigned>::maxN<nbits+1, mbits+1, 32>::ret,
+	     need_check = (mlc::on<unsigned>::max<nbits, mbits>::val >= 32) };
+      typedef int_s<mlc::on<unsigned>::maxN<nbits+1, mbits+1, 32>::val,
 		    typename deduce_op_behavior<B1, B2>::ret> ret;
       typedef int_u<nbits,
 		    typename ret_behavior_if<need_check, ret>::ret> impl;
@@ -324,7 +324,7 @@ namespace ntg {
     struct operator_traits<operator_times, int_u<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true, need_check = (nbits + mbits > 32) };
-      typedef int_u<mlc::on<unsigned>::saturateN<nbits + mbits, 32>::ret,
+      typedef int_u<mlc::on<unsigned>::saturateN<nbits + mbits, 32>::val,
 	typename deduce_op_behavior<B1, B2>::ret> ret;
       typedef int_u<nbits,
 		    typename ret_behavior_if<need_check, ret>::ret> impl;
@@ -368,7 +368,7 @@ namespace ntg {
     struct operator_traits<operator_min, int_u<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_u<mlc::on<unsigned>::min<nbits, mbits>::ret,
+      typedef int_u<mlc::on<unsigned>::min<nbits, mbits>::val,
 		    typename deduce_op_behavior<B1, B2>::ret> ret;
       typedef int_u<nbits, force> impl;
     };
@@ -384,7 +384,7 @@ namespace ntg {
     struct operator_traits<operator_max, int_u<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_u<mlc::on<unsigned>::max<nbits, mbits>::ret,
+      typedef int_u<mlc::on<unsigned>::max<nbits, mbits>::val,
 		    typename deduce_op_behavior<B1, B2>::ret> ret;
       typedef int_u<nbits, force> impl;
     };
@@ -401,7 +401,7 @@ namespace ntg {
     {
       enum { commutative = true };
       // FIXME: why unsafe? I think there is a reason.
-      typedef int_u<mlc::on<unsigned>::maxN<nbits, mbits, 32>::ret, unsafe> ret;
+      typedef int_u<mlc::on<unsigned>::maxN<nbits, mbits, 32>::val, unsafe> ret;
       typedef int_u<nbits, force> impl;
     };
 
