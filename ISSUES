@@ -37,7 +37,6 @@ i.e. it compiles *and* runs a set of test programs.)  The machine is a
    3.0.3     37m24s
    3.1       30m30s
 
-
 Speaking about compilers, the following points are likely to cause
 trouble when trying to port Olena to another build environment.
 

@@ -1,3 +1,9 @@
+2003-01-15  Geoffroy Fouquier  <Geoffroy.Fouquier@lrde.epita.fr>
+
+	* configure.ac: bump version to 0.6.
+	* NEWS, README: Update for next release.
+	* tests/arith/Makefile.in: New file.
+
 2003-01-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* configure.ac: add arith directory.
@@ -6,7 +12,7 @@
 	* oln/arith/ops.hh: replace std::min and std::min by min and max.
 	* oln/core/apply.hh: add workaround for g++-2.95 bug.
 	* oln/types/optraits_bin.hh: add min and max traits.
-	
+
 2003-01-07  Quoc Peyrot  <chojin@lrde.epita.fr>
 
 	* Makefile.am (SUBDIRS): change @UTILITIES@ to $(UTILITIES).

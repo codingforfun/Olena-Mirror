@@ -1,13 +1,15 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_6_stable 9)
-(Parent-Version oln 0_6_stable 8)
-(Version-Log "* arith/tests/min1: fix.
-")
+(Project-Version oln 0_6_stable 10)
+(Parent-Version oln 0_6_stable 9)
+(Version-Log "
+	* configure.ac: bump version to 0.6.
+	* NEWS, README: Update for next release
+	* tests/arith/Makefile.in: New file.")
 (New-Version-Log "")
-(Checkin-Time "Wed, 08 Jan 2003 13:36:11 +0100")
-(Checkin-Login burrus_n)
+(Checkin-Time "Wed, 15 Jan 2003 17:19:44 +0100")
+(Checkin-Login djo)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
 ;; diff-ignore Makefile\.in$
@@ -114,15 +116,15 @@
                   "utilities/oln-mosaic-u16$"))
 (Project-Keywords)
 (Files
-  (aclocal.m4 (oln/e/8_aclocal.m4 1.25.1.1.1.1 640))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.98.1.1.1.8 640))
-  (configure.ac (oln/3_configure. 1.29.1.1 640))
-  (configure (oln/e/7_configure 1.38.1.4 750))
-  (README (oln/1_README 1.4 640))
-  (ISSUES (oln/d/47_ISSUES 1.3.1.1 640))
+  (aclocal.m4 (oln/e/8_aclocal.m4 1.25.1.1.1.2 644))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.98.1.1.1.9 640))
+  (configure.ac (oln/3_configure. 1.29.1.2 640))
+  (configure (oln/e/7_configure 1.38.1.5 750))
+  (README (oln/1_README 1.4.1.1 640))
+  (ISSUES (oln/d/47_ISSUES 1.3.1.2 640))
   (Makefile.am (oln/2_Makefile.a 1.14.1.1 640))
   (Makefile.in (oln/e/9_Makefile.i 1.39.1.4 640))
-  (NEWS (oln/0_NEWS 1.7 640))
+  (NEWS (oln/0_NEWS 1.7.1.1 640))
 
   (demo/image.cc (oln/d/46_image.cc 1.2 640))
   (demo/Makefile.am (oln/d/44_Makefile.a 1.5 640))
@@ -132,10 +134,10 @@
   (demo/tour.cc (oln/d/45_tour.cc 1.5 640))
 
 
-  (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.10 640))
-  (doc/ChangeLog (oln/e/1_ChangeLog 1.26 640))
-  (doc/configure.ac (oln/e/2_configure. 1.7 640))
-  (doc/configure (oln/e/3_configure 1.12 750))
+  (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.10.1.1 644))
+  (doc/ChangeLog (oln/e/1_ChangeLog 1.26.1.1 640))
+  (doc/configure.ac (oln/e/2_configure. 1.7.1.1 640))
+  (doc/configure (oln/e/3_configure 1.12.1.1 750))
   (doc/doc/bin () :directory)
   (doc/doc/html () :directory)
   (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.16 640))
@@ -761,6 +763,11 @@
 ;; to version 0_6_stable.6(w), by burrus_n:
 
   (tests/arith/tests/min1 (oln/o/50_min1 1.2 640))
+
+;; Files added by populate at Wed, 15 Jan 2003 17:19:29 +0100,
+;; to version 0_6_stable.9(w), by djo:
+
+  (tests/arith/Makefile.in (oln/p/4_Makefile.i 1.1 644))
 )
 (Merge-Parents)
 (New-Merge-Parents)

@@ -1,7 +1,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.54])
-AC_INIT([olena-doc], [0.5], [olena-bugs@lrde.epita.fr])
+AC_INIT([olena-doc], [0.6], [olena-bugs@lrde.epita.fr])
 AC_CONFIG_SRCDIR([ChangeLog])
 AC_CONFIG_AUX_DIR([../tools])
 AM_INIT_AUTOMAKE([1.7.1 no-define foreign dist-bzip2])

@@ -1,8 +1,12 @@
+2003-01-15  Geoffroy Fouquier  <Geoffroy.Fouquier@lrde.epita.fr>
+
+	* doc/configure.ac: Bump version to 0.6.
+
 2002-11-27  Raphael Poss  <raph@lrde.epita.fr>
 
 	* doc/Makefile.am (info_TEXINFOS): add for oln-dev.texi.
 	(CLEANFILES): add *.tmp, generated when compiling texinfo files.
-	* doc/oln-dev.texi: add. 
+	* doc/oln-dev.texi: add.
 
 2002-11-15  Akim Demaille  <akim@epita.fr>
 
