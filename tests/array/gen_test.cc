@@ -1,11 +1,14 @@
+#include "config.h"
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <cstdio>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include "gen_test_utils/errors.hh"
+#include "srcdir.hh"
 
 using namespace std;
 
@@ -27,7 +30,7 @@ static const struct howto
   {
     {
       // 1D
-      
+
       { 1, one_center,	no_lbreak,		no_pbreak,	normal_end      ,
 	"one_center,	no_lbreak,		no_pbreak,	normal_end"     },
       { 1, if_center,	no_lbreak,		no_pbreak,	normal_end      ,
@@ -52,7 +55,7 @@ static const struct howto
     },
     {
       // 2D
-      
+
       { 1, one_center,	one_lbreak,		no_pbreak,	normal_end      ,
 	"one_center,	one_lbreak,		no_pbreak,	normal_end"     },
       { 1, if_center,	one_lbreak,		no_pbreak,	normal_end      ,
@@ -83,7 +86,7 @@ static const struct howto
     },
     {
       // 3D
-     
+
       { 1, one_center,	one_lbreak,		one_pbreak,	normal_end      ,
 	"one_center,	one_lbreak,		one_pbreak,	normal_end"     },
       { 1, if_center,	one_lbreak,		one_pbreak,	normal_end      ,
@@ -120,12 +123,12 @@ static const struct howto
 
 
 
-static void     copyfile(char*          src,
+static void     copyfile(const string&  src,
                          ofstream&      dest)
 {
-  ifstream      ifs(src, ios::in);
+  ifstream      ifs(src.c_str(), ios::in);
   string        buffer;
-  
+
   while (!ifs.eof())
     {
       getline(ifs, buffer);
@@ -139,16 +142,16 @@ static void             write_prelude(ofstream&         ofs,
 {
   ofs.open(filename, ios::out);
   ofs << "// -*-C++-*-" << endl
-      << "// This temporary file was generated for testing purpose only." 
+      << "// This temporary file was generated for testing purpose only."
       << endl
       << "// It's part of Olena, the static generic image processing library."
       << endl << endl;
-  
-  copyfile("gen_test_utils/prelude", ofs);
+
+  copyfile(srcdir + "gen_test_utils/prelude", ofs);
 }
 
 
-static void             write_postlude_and_test(ofstream&               ofs,
+static bool             write_postlude_and_test(ofstream&               ofs,
                                                 char*                   filename,
                                                 int                     dimension,
                                                 howto                   h,
@@ -157,21 +160,24 @@ static void             write_postlude_and_test(ofstream&               ofs,
                                                 ofstream&               fail_log,
                                                 const stringstream&     decl)
 {
-  copyfile("gen_test_utils/postlude", ofs);
+  copyfile(srcdir + "gen_test_utils/postlude", ofs);
   ofs.close();
-  
+
   pid_t pid;
   int   fd[2];
   pipe(fd);
-  
+  bool fail = false;
+
   if ((pid = fork()) != -1)
     if (!pid)
       {
         dup2(fd[1],2);
         close(fd[0]);
         close(fd[1]);
-	execlp("g++-3.0", "g++-3.0", "-I../../src", "-I../check", "-L../check", 
-	       "-lcheck", filename, NULL);
+	execlp(CXX, CXX,
+	       Isrcdir("../../src").c_str(), Isrcdir("../check").c_str(),
+	       "-L../check", "-lcheck",
+	       filename, NULL);
       }
     else
       {
@@ -179,9 +185,8 @@ static void             write_postlude_and_test(ofstream&               ofs,
         stringstream header;
         header << endl << "=== Compiling : [" << dimension << "D]\t"
                << h.verbose << endl
-               << "=== Expected  :  " << (ok ? ":^)" : ":~(") << endl
+	       << "=== Expected  :  " << (ok ? "PASS" : "FAIL") << endl
 	       << endl ;
-	cout << header.str() << endl;
 
 	stringstream	compile_mesg;
 	char		buffer[32];
@@ -199,7 +204,7 @@ static void             write_postlude_and_test(ofstream&               ofs,
 			<< endl << compile_mesg.str() << endl <<
 	      "==========================================================================="
 			<< endl;
-	    cout << "=> Yep !" << endl << endl;
+	    cerr << (ok ? "PASS" : "XFAIL");
 	  }
 	else
 	  {
@@ -207,10 +212,13 @@ static void             write_postlude_and_test(ofstream&               ofs,
 		     << endl <<
 	      "==========================================================================="
 		     << endl;
-	    cout << "=> Tu sors." << endl << endl;
+	    cerr << (ok ? "FAIL" : "XPASS");
+	    fail = true;
 	  }
 	close(fd[0]);
+	cerr << ": [" << dimension << "D]\t" << h.verbose << endl;
       }
+  return fail;
 }
 
 
@@ -224,7 +232,7 @@ static int		fill_array(ostream&	ofs,
   for (int i = dimension - 1; 0 <= i; --i)
     cur_dim[i] = geometry[i];
   ++cur_dim[dimension - 1];
-  
+
   bool		finished = false;
   int		position = 0;
   int		ok = h.ok;
@@ -238,7 +246,7 @@ static int		fill_array(ostream&	ofs,
 	  cur_dim[d] = geometry[d];
 	  ofs << endl << "\t\t";
 	}
-      
+
       ok &= h.element(ofs, dimension, geometry, position);
       ok &= h.lbreak(ofs, dimension, geometry, position);
       ok &= h.pbreak(ofs, dimension, geometry, position);
@@ -252,7 +260,7 @@ static int		fill_array(ostream&	ofs,
 }
 
 
-static void		write_file(string	filename,
+static bool		write_file(string	filename,
 				   int		dimension,
 				   int*		geometry,
 				   howto	h,
@@ -280,22 +288,22 @@ static void		write_file(string	filename,
   decl << " >, int > foo = (ints_" << dimension << "d = " << endl << "\t\t";
   int ok;
   ok = fill_array(decl, dimension, geometry, h);
-  
+
   ofs << decl.str();
-  write_postlude_and_test(ofs, const_cast<char *>(filename.c_str()),
-			  dimension, h, ok, success_log, fail_log, decl);
+  return write_postlude_and_test(ofs, const_cast<char *>(filename.c_str()),
+				 dimension, h, ok, success_log, fail_log,
+				 decl);
 }
 
 
-int		main()
+bool		check()
 {
-  char		filename_beg[] = "gentest_arrayXXXXXX";
-  int		fd = mkstemp(filename_beg); close(fd); remove(filename_beg);
-  string	filename = string(filename_beg) + ".cc";
+  string        filename = "gentest_array.cc";
 
   ofstream	success_log("success.log", ios::out);
   ofstream	fail_log("fail.log", ios::out);
 
+  bool fail = false;;
 
   for (int dimension = MIN_DIMENSION; dimension <= MAX_DIMENSION; ++dimension)
     {
@@ -316,10 +324,11 @@ int		main()
 	  for (int i = dimension - 1; i >= 0; --i)
 	    if (current_geometry[i] > 0)
 	      finished = false;
-	  
+
 	  for (int i = 0; methods[dimension - 1][i].element != 0; ++i)
-	    write_file(filename, dimension, current_geometry, methods[dimension - 1][i],
-		       success_log, fail_log);
+	    fail |= write_file(filename, dimension, current_geometry,
+			       methods[dimension - 1][i],
+			       success_log, fail_log);
 	}
       free(current_geometry);
     }
@@ -327,4 +336,5 @@ int		main()
   fail_log.close();
   remove(filename.c_str());
   remove("./a.out");
+  return fail;
 }

@@ -1,4 +1,6 @@
 # -*- Makefile -*-
 
-AM_CXXFLAGS = -Wall -W -ftemplate-depth-50 -ansi -pedantic
+# Don't use -ansi because it prevents us from using functions
+# like `remove' or `mkstemp' with g++-2.95.x.
+AM_CXXFLAGS = -Wall -W -ftemplate-depth-50 -pedantic
 AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/tests/check

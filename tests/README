@@ -103,7 +103,7 @@ result of check().
 **** std::cout
 
 When writing your test, think about the people who will have to debug
-it, should it ever fail.  Document it while you still now what it
+it, should it ever fail.  Document it while you still know what it
 checks and how it does it.
 
 It's a good idea to display some tracing, or important values on

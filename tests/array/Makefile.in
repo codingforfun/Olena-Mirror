@@ -82,43 +82,61 @@ am__include = @am__include@
 am__quote = @am__quote@
 install_sh = @install_sh@
 
-#  -ansi
+# Don't use -ansi because it prevents us from using functions
+# like `remove' or `mkstemp' with g++-2.95.x.
 AM_CXXFLAGS = -Wall -W -ftemplate-depth-50 -pedantic
 AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/tests/check
 
 LDADD = $(top_builddir)/tests/check/libcheck.a
 TESTS = $(check_PROGRAMS)
 
-check_PROGRAMS = \
-  edoc \
-  extrkiller \
-  reconstruction
+check_PROGRAMS = test_array1d test_array2d test_array3d gen_test
 
+test_array1d_SOURCES = test_array1d.cc
 
-edoc_SOURCES = edoc.cc
-extrkiller_SOURCES = extrkiller.cc
-reconstruction_SOURCES = reconstruction.cc
-subdir = tests/morpho
+test_array2d_SOURCES = test_array2d.cc
+
+test_array3d_SOURCES = test_array3d.cc
+
+gen_test_SOURCES = gen_test.cc
+gen_test_LDADD = $(LDADD) gen_test_utils/liberrors.a
+
+check_LIBRARIES = gen_test_utils/liberrors.a
+gen_test_utils_liberrors_a_SOURCES = gen_test_utils/errors.cc gen_test_utils/errors.hh
+
+EXTRA_DIST = gen_test_utils/prelude gen_test_utils/postlude
+CLEANFILES = fail.log success.log a.out gentest_array.cc
+subdir = tests/array
 mkinstalldirs = $(SHELL) $(top_srcdir)/tools/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/src/config/config.h
 CONFIG_CLEAN_FILES =
-check_PROGRAMS = edoc$(EXEEXT) extrkiller$(EXEEXT) \
-	reconstruction$(EXEEXT)
-am_edoc_OBJECTS = edoc.$(OBJEXT)
-edoc_OBJECTS = $(am_edoc_OBJECTS)
-edoc_LDADD = $(LDADD)
-edoc_DEPENDENCIES = $(top_builddir)/tests/check/libcheck.a
-edoc_LDFLAGS =
-am_extrkiller_OBJECTS = extrkiller.$(OBJEXT)
-extrkiller_OBJECTS = $(am_extrkiller_OBJECTS)
-extrkiller_LDADD = $(LDADD)
-extrkiller_DEPENDENCIES = $(top_builddir)/tests/check/libcheck.a
-extrkiller_LDFLAGS =
-am_reconstruction_OBJECTS = reconstruction.$(OBJEXT)
-reconstruction_OBJECTS = $(am_reconstruction_OBJECTS)
-reconstruction_LDADD = $(LDADD)
-reconstruction_DEPENDENCIES = $(top_builddir)/tests/check/libcheck.a
-reconstruction_LDFLAGS =
+gen_test_utils_liberrors_a_AR = $(AR) cru
+gen_test_utils_liberrors_a_LIBADD =
+am_gen_test_utils_liberrors_a_OBJECTS = errors.$(OBJEXT)
+gen_test_utils_liberrors_a_OBJECTS = \
+	$(am_gen_test_utils_liberrors_a_OBJECTS)
+check_PROGRAMS = test_array1d$(EXEEXT) test_array2d$(EXEEXT) \
+	test_array3d$(EXEEXT) gen_test$(EXEEXT)
+am_gen_test_OBJECTS = gen_test.$(OBJEXT)
+gen_test_OBJECTS = $(am_gen_test_OBJECTS)
+gen_test_DEPENDENCIES = $(top_builddir)/tests/check/libcheck.a \
+	gen_test_utils/liberrors.a
+gen_test_LDFLAGS =
+am_test_array1d_OBJECTS = test_array1d.$(OBJEXT)
+test_array1d_OBJECTS = $(am_test_array1d_OBJECTS)
+test_array1d_LDADD = $(LDADD)
+test_array1d_DEPENDENCIES = $(top_builddir)/tests/check/libcheck.a
+test_array1d_LDFLAGS =
+am_test_array2d_OBJECTS = test_array2d.$(OBJEXT)
+test_array2d_OBJECTS = $(am_test_array2d_OBJECTS)
+test_array2d_LDADD = $(LDADD)
+test_array2d_DEPENDENCIES = $(top_builddir)/tests/check/libcheck.a
+test_array2d_LDFLAGS =
+am_test_array3d_OBJECTS = test_array3d.$(OBJEXT)
+test_array3d_OBJECTS = $(am_test_array3d_OBJECTS)
+test_array3d_LDADD = $(LDADD)
+test_array3d_DEPENDENCIES = $(top_builddir)/tests/check/libcheck.a
+test_array3d_LDFLAGS =
 
 DEFS = @DEFS@
 DEFAULT_INCLUDES =  -I. -I$(srcdir) -I$(top_builddir)/src/config
@@ -127,18 +145,26 @@ LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
 depcomp = $(SHELL) $(top_srcdir)/tools/depcomp
 am__depfiles_maybe = depfiles
-@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/edoc.Po ./$(DEPDIR)/extrkiller.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/reconstruction.Po
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/errors.Po ./$(DEPDIR)/gen_test.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/test_array1d.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/test_array2d.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/test_array3d.Po
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 	-o $@
 CXXFLAGS = @CXXFLAGS@
-DIST_SOURCES = $(edoc_SOURCES) $(extrkiller_SOURCES) \
-	$(reconstruction_SOURCES)
+CFLAGS = @CFLAGS@
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+CCLD = $(CC)
+LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+DIST_SOURCES = $(gen_test_utils_liberrors_a_SOURCES) $(gen_test_SOURCES) \
+	$(test_array1d_SOURCES) $(test_array2d_SOURCES) \
+	$(test_array3d_SOURCES)
 DIST_COMMON = Makefile.am Makefile.in
-SOURCES = $(edoc_SOURCES) $(extrkiller_SOURCES) $(reconstruction_SOURCES)
+SOURCES = $(gen_test_utils_liberrors_a_SOURCES) $(gen_test_SOURCES) $(test_array1d_SOURCES) $(test_array2d_SOURCES) $(test_array3d_SOURCES)
 
 all: all-am
 
@@ -146,31 +172,50 @@ all: all-am
 .SUFFIXES: .cc .o .obj
 $(srcdir)/Makefile.in:  Makefile.am $(top_srcdir)/tests/check/Makefile.check $(top_srcdir)/tests/check/Makefile.flags $(top_srcdir)/configure.ac $(ACLOCAL_M4)
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  tests/morpho/Makefile
+	  $(AUTOMAKE) --gnu  tests/array/Makefile
 Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
 
+AR = ar
+
+clean-checkLIBRARIES:
+	-test -z "$(check_LIBRARIES)" || rm -f $(check_LIBRARIES)
+errors.$(OBJEXT): gen_test_utils/errors.cc
+gen_test_utils/.dirstamp:
+	@$(mkinstalldirs) gen_test_utils
+	@: > gen_test_utils/.dirstamp
+gen_test_utils/liberrors.a: $(gen_test_utils_liberrors_a_OBJECTS) $(gen_test_utils_liberrors_a_DEPENDENCIES) gen_test_utils/.dirstamp
+	-rm -f gen_test_utils/liberrors.a
+	$(gen_test_utils_liberrors_a_AR) gen_test_utils/liberrors.a $(gen_test_utils_liberrors_a_OBJECTS) $(gen_test_utils_liberrors_a_LIBADD)
+	$(RANLIB) gen_test_utils/liberrors.a
+
 clean-checkPROGRAMS:
 	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
-edoc$(EXEEXT): $(edoc_OBJECTS) $(edoc_DEPENDENCIES) 
-	@rm -f edoc$(EXEEXT)
-	$(CXXLINK) $(edoc_LDFLAGS) $(edoc_OBJECTS) $(edoc_LDADD) $(LIBS)
-extrkiller$(EXEEXT): $(extrkiller_OBJECTS) $(extrkiller_DEPENDENCIES) 
-	@rm -f extrkiller$(EXEEXT)
-	$(CXXLINK) $(extrkiller_LDFLAGS) $(extrkiller_OBJECTS) $(extrkiller_LDADD) $(LIBS)
-reconstruction$(EXEEXT): $(reconstruction_OBJECTS) $(reconstruction_DEPENDENCIES) 
-	@rm -f reconstruction$(EXEEXT)
-	$(CXXLINK) $(reconstruction_LDFLAGS) $(reconstruction_OBJECTS) $(reconstruction_LDADD) $(LIBS)
+gen_test$(EXEEXT): $(gen_test_OBJECTS) $(gen_test_DEPENDENCIES) 
+	@rm -f gen_test$(EXEEXT)
+	$(CXXLINK) $(gen_test_LDFLAGS) $(gen_test_OBJECTS) $(gen_test_LDADD) $(LIBS)
+test_array1d$(EXEEXT): $(test_array1d_OBJECTS) $(test_array1d_DEPENDENCIES) 
+	@rm -f test_array1d$(EXEEXT)
+	$(CXXLINK) $(test_array1d_LDFLAGS) $(test_array1d_OBJECTS) $(test_array1d_LDADD) $(LIBS)
+test_array2d$(EXEEXT): $(test_array2d_OBJECTS) $(test_array2d_DEPENDENCIES) 
+	@rm -f test_array2d$(EXEEXT)
+	$(CXXLINK) $(test_array2d_LDFLAGS) $(test_array2d_OBJECTS) $(test_array2d_LDADD) $(LIBS)
+test_array3d$(EXEEXT): $(test_array3d_OBJECTS) $(test_array3d_DEPENDENCIES) 
+	@rm -f test_array3d$(EXEEXT)
+	$(CXXLINK) $(test_array3d_LDFLAGS) $(test_array3d_OBJECTS) $(test_array3d_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT) core *.core
 
 distclean-compile:
 	-rm -f *.tab.c
+	-rm -f gen_test_utils/.dirstamp
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/edoc.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/extrkiller.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reconstruction.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/errors.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gen_test.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_array1d.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_array2d.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_array3d.Po@am__quote@
 
 distclean-depend:
 	-rm -rf ./$(DEPDIR)
@@ -186,6 +231,18 @@ distclean-depend:
 @AMDEP_TRUE@	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@	$(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 	$(CXXCOMPILE) -c -o $@ `cygpath -w $<`
+
+errors.o: gen_test_utils/errors.cc
+@AMDEP_TRUE@	source='gen_test_utils/errors.cc' object='errors.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/errors.Po' tmpdepfile='$(DEPDIR)/errors.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o errors.o `test -f 'gen_test_utils/errors.cc' || echo '$(srcdir)/'`gen_test_utils/errors.cc
+
+errors.obj: gen_test_utils/errors.cc
+@AMDEP_TRUE@	source='gen_test_utils/errors.cc' object='errors.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/errors.Po' tmpdepfile='$(DEPDIR)/errors.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o errors.obj `cygpath -w gen_test_utils/errors.cc`
 CXXDEPMODE = @CXXDEPMODE@
 uninstall-info-am:
 
@@ -285,6 +342,7 @@ top_distdir = ../..
 distdir = $(top_distdir)/$(PACKAGE)-$(VERSION)
 
 distdir: $(DISTFILES)
+	$(mkinstalldirs) $(distdir)/gen_test_utils
 	@list='$(DISTFILES)'; for file in $$list; do \
 	  if test -f $$file || test -d $$file; then d=.; else d=$(srcdir); fi; \
 	  dir=`echo "$$file" | sed -e 's,/[^/]*$$,,'`; \
@@ -306,7 +364,7 @@ distdir: $(DISTFILES)
 	  fi; \
 	done
 check-am: all-am
-	$(MAKE) $(AM_MAKEFLAGS) $(check_PROGRAMS)
+	$(MAKE) $(AM_MAKEFLAGS) $(check_LIBRARIES) $(check_PROGRAMS)
 	$(MAKE) $(AM_MAKEFLAGS) check-TESTS
 check: check-am
 all-am: Makefile
@@ -330,6 +388,7 @@ install-strip:
 mostlyclean-generic:
 
 clean-generic:
+	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 
 distclean-generic:
 	-rm -f Makefile $(CONFIG_CLEAN_FILES)
@@ -339,7 +398,8 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-checkPROGRAMS clean-generic mostlyclean-am
+clean-am: clean-checkLIBRARIES clean-checkPROGRAMS clean-generic \
+	mostlyclean-am
 
 distclean: distclean-am
 
@@ -375,15 +435,15 @@ mostlyclean-am: mostlyclean-compile mostlyclean-generic
 uninstall-am: uninstall-info-am
 
 .PHONY: GTAGS all all-am check check-TESTS check-am clean \
-	clean-checkPROGRAMS clean-generic distclean distclean-compile \
-	distclean-depend distclean-generic distclean-tags distdir dvi \
-	dvi-am info info-am install install-am install-data \
-	install-data-am install-exec install-exec-am install-info \
-	install-info-am install-man install-strip installcheck \
-	installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic tags uninstall uninstall-am \
-	uninstall-info-am
+	clean-checkLIBRARIES clean-checkPROGRAMS clean-generic \
+	distclean distclean-compile distclean-depend distclean-generic \
+	distclean-tags distdir dvi dvi-am info info-am install \
+	install-am install-data install-data-am install-exec \
+	install-exec-am install-info install-info-am install-man \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic tags uninstall \
+	uninstall-am uninstall-info-am
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

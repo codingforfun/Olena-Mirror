@@ -14,3 +14,10 @@ srcdir_setup ()
   else
     srcdir = std::string(s) + "/";
 }
+
+
+// Returns `-I${srcdir}ARG'.
+std::string Isrcdir (const std::string& arg)
+{
+  return string("-I") + srcdir + arg;
+}

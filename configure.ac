@@ -38,6 +38,7 @@ fi
 AC_SUBST([ZLIB_CFLAGS])
 AC_SUBST([ZLIB_LDFLAGS])
 
+AC_DEFINE_UNQUOTED([CXX], ["$CXX"], [The C++ compiler])
 
 AC_CONFIG_FILES([
   Makefile
@@ -45,7 +46,6 @@ AC_CONFIG_FILES([
   demo/Makefile
   tests/Makefile
   tests/array/Makefile
-  tests/array/gen_test_utils/Makefile
   tests/check/Makefile
   tests/convert/Makefile
   tests/io/Makefile
