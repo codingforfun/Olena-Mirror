@@ -1,0 +1,5 @@
+range<int_u8, bounded_u<10, 13>, strict> u = 10;
+u = 11;
+u = 12;
+u = 13;
+return u != 13;

@@ -1,0 +1,3 @@
+range<int_u8, bounded_u<10, 13>, saturate> u = 11;
+u += u;
+return u != 13;

@@ -43,16 +43,16 @@ namespace oln {
   template <signed i_min, signed i_max> class		bounded_s;
 
   // scalar types
-  template<unsigned nbits, class behaviour> class		int_u;
-  template<unsigned nbits, class behaviour> class		int_s;
-  template<class T, class interval, class behaviour> class	range;
-  template<class T, class interval> class			cycle;
+  template<unsigned nbits, class behaviour = strict>	class int_u;
+  template<unsigned nbits, class behaviour = strict>	class int_s;
+  template<class T, class interval, class behaviour = strict> class range;
+  template<class T, class interval> class		cycle;
   // floats
-  typedef float							sfloat;
-  typedef double						dfloat;
+  typedef float						sfloat;
+  typedef double					dfloat;
 
   // enumerated types
-  class bin; 
+  class bin;
 
 
   // int_u
@@ -91,7 +91,7 @@ namespace oln {
 
 //
 //  namespace types
-//  
+//
 //  If you want to access types without oln:: prefix, please declare ;
 //  "using namespace types;" and not "using namespace oln;" to avoid
 //  global operators conflicts.

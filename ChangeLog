@@ -1,3 +1,8 @@
+2002-09-10  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* oln/types/predecls.hh (int_u, int_s, range): Set default
+	behaviour to `strict'.
+
 2002-09-03  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* oln/config/system.hh: Typos.

@@ -1,17 +1,23 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 33)
-(Parent-Version oln 0_5 32)
-(Version-Log "2002-09-10  Alexandre Duret-Lutz  <duret_g@epita.fr>
+(Project-Version oln 0_5 34)
+(Parent-Version oln 0_5 33)
+(Version-Log "Index: ChangeLog
+from  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-	* doc/ref-types.tex (range, cycle): Adjust to reflect present (and
-	future).  Document bounded_u, bounded_s, range_u, range_s,
-	cycle_u, and cycle_s.
-	(typetraits<T>::integer_type): Adjust too.
+	* oln/types/predecls.hh (int_u, int_s, range): Set default
+	behaviour to `strict'.
+
+Index: tests/ChangeLog
+from  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* types/tests/range3d, types/tests/range3c, types/tests/range3,
+	types/tests/range3b, types/tests/range2, types/tests/range1,
+	types/tests/int4b, types/tests/range2b: New files.
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 10 Sep 2002 15:23:22 +0200")
+(Checkin-Time "Tue, 10 Sep 2002 16:42:40 +0200")
 (Checkin-Login duret_g)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -79,7 +85,7 @@
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.19 640))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.38 600))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.39 600))
   (configure.ac (oln/3_configure. 1.20 600))
   (configure (oln/e/7_configure 1.24 700))
   (README (oln/1_README 1.4 600))
@@ -343,7 +349,7 @@
   (tests/array/test_array1d.cc (oln/f/26_test_array 1.2 644))
   (tests/array/test_array2d.cc (oln/f/25_test_array 1.2 644))
   (tests/array/test_array3d.cc (oln/f/24_test_array 1.2 644))
-  (tests/ChangeLog (oln/e/30_ChangeLog 1.23 600))
+  (tests/ChangeLog (oln/e/30_ChangeLog 1.24 600))
   (tests/check/check.hh (oln/e/40_check.hh 1.2 600))
   (tests/check/data.cc (oln/f/5_data.cc 1.2 600))
   (tests/check/data.hh (oln/f/6_data.hh 1.1 600))
@@ -424,7 +430,7 @@
   (oln/types/to_oln.hh (oln/g/7_to_oln.hh 1.1 640))
   (oln/types/rec_value.hh (oln/g/8_rec_value. 1.2 640))
   (oln/types/range.hh (oln/g/9_range.hh 1.1 640))
-  (oln/types/predecls.hh (oln/g/10_predecls.h 1.2 640))
+  (oln/types/predecls.hh (oln/g/10_predecls.h 1.3 640))
   (oln/types/optraits_scalar_defs.hh (oln/g/11_optraits_s 1.1 640))
   (oln/types/optraits_scalar.hh (oln/g/12_optraits_s 1.2 640))
   (oln/types/optraits_range.hh (oln/g/13_optraits_r 1.1 640))
@@ -523,6 +529,18 @@
   (tests/types/tests/optrait1b (oln/h/26_optrait1b 1.1 644))
   (tests/types/tests/optrait2b (oln/h/27_optrait2b 1.1 644))
   (tests/types/tests/optrait2a (oln/h/28_optrait2a 1.1 644))
+
+;; Files added by populate at Tue, 10 Sep 2002 16:31:47 +0200,
+;; to version 0_5.33(w), by duret_g:
+
+  (tests/types/tests/range3d (oln/h/29_range3d 1.1 644))
+  (tests/types/tests/range3c (oln/h/30_range3c 1.1 644))
+  (tests/types/tests/range3 (oln/h/31_range3 1.1 644))
+  (tests/types/tests/range3b (oln/h/32_range3b 1.1 644))
+  (tests/types/tests/range2 (oln/h/33_range2 1.1 644))
+  (tests/types/tests/range1 (oln/h/34_range1 1.1 644))
+  (tests/types/tests/int4b (oln/h/35_int4b 1.1 644))
+  (tests/types/tests/range2b (oln/h/36_range2b 1.1 644))
 )
 (Merge-Parents)
 (New-Merge-Parents)
