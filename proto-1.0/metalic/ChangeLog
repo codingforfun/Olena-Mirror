@@ -1,3 +1,7 @@
+2005-01-21  Simon Odou  <simon@lrde.epita.fr>
+
+	* mlc/traits.hh: Add `mlc_encoding_type_' macro.
+
 2005-01-21  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* ChangeLog: New.

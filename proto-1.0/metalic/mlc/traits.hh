@@ -14,6 +14,7 @@ namespace mlc {
 
 
 # define mlc_encoding_type(T) typename mlc::traits<T>::encoding_type
+# define mlc_encoding_type_(T) mlc::traits<T>::encoding_type
 
 
 
