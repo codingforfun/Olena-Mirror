@@ -30,108 +30,52 @@
 # define OLENA_CONVOL_CONVOLUTION_HH__
 
 # include <oln/basics.hh>
+# include <oln/basics2d.hh>
 # include <oln/core/point.hh>
 # include <oln/types/all.hh>
+# include <oln/meta/cmp.hh>
 # include <oln/meta/array.hh>
 
-# include <oln/core/w_window2d.hh> // FIXME: change to w_window once
-                                   // the fixmes below are fixed.
+# include <oln/core/w_window.hh>
 
 namespace oln {
 
   namespace convol {
 
-    namespace output {
-
-      // FIXME: Shouldn't be there.
-
-      template<class T_in, class T_win>
-      struct output_traits;
-
-      template<unsigned nbits, class bhv>
-      struct output_traits<int_u<nbits, bhv>,  int> {
-	// FIXME: nbits+2 isn't always enough, refering to convolution tests
-	// ==> should be calculated precisely
-	typedef int_s<nbits+2, bhv> ret;
-      };
-
-      template<unsigned nbits, class bhv>
-      struct output_traits<int_u<nbits, bhv>,  float> {
-	typedef sfloat ret;
-      };
-
-      template<unsigned nbits, class bhv>
-      struct output_traits<int_s<nbits, bhv>,  int> {
-	// FIXME: nbits+2 isn't always enough, refering to convolution tests
-	// ==> should be calculated precisely
-	typedef int_s<nbits+2, bhv> ret;
-      };
-
-      template<unsigned nbits, class bhv>
-      struct output_traits<int_s<nbits, bhv>,  float> {
-	typedef sfloat ret;
-      };
-
-      struct output_traits<sfloat, int> {
-	typedef sfloat ret;
-      };
-
-      struct output_traits<sfloat, float> {
-	typedef sfloat ret;
-      };
-
-      struct output_traits<dfloat, int> {
-	typedef dfloat ret;
-      };
-
-      struct output_traits<dfloat, float> {
-	typedef dfloat ret;
-      };
-
-    } // end namespace output
-
     namespace slow {
 
-      template<class _T_in, class _T_win>
-      typename 
-      mute <_T_in, 
-	    typename output::output_traits< Value(_T_in), 
-                                            Weight(_T_win) >::ret 
-           >::ret
-      convolve(const image < _T_in >& _input, 
-	       const w_window< _T_win >& _win)
+      //FIXME : we must always specify DestValue.
+      template<class DestValue, class _I, class _Win> 
+      typename mute<_I, DestValue>::ret
+      convolve(const image < _I >& _input, 
+	       const w_window< _Win >& _win)
       {
-	Exact_cref(T_in,input);
-	Exact_cref(T_win,win);
-	typedef typename 
-	  output::output_traits<typename T_in::value, 
-	                        typename T_win::weight>::ret output_value;
-	typedef typename mute < T_in, output_value>::ret T_out;
+	Exact_cref(I, input);
+	Exact_cref(Win, win);
+	meta::eq<I::dim, Win::dim>::ensure();
 
-	T_out output(input.size());
+	typename mute<_I, DestValue>::ret output(input.size());
 	border::adapt_copy(input, win.delta());
-	typename T_in::iter p(input);
-	
-	for (p = begin; p != end; ++p)
+	Iter(I) p_im(input);
+	for_all(p_im)
 	  {
-	    typename 
-	      typetraits<typename T_in::value>::signed_cumul_type sum = 0;
+	    DestValue sum = 0;
 	    for (unsigned i = 0; i < win.card(); ++i)
-	      sum += win.w(i) * input[p + win.dp(i)];
-	    output[p] = sum;
+	      sum += static_cast<DestValue> (win.w(i)) * 
+		     static_cast<DestValue> (input[p_im - win.dp(i)]);
+	    output[p_im] = sum;
 	  }
+	
 	return output;
       }
 
-      // FIXME: What about 1D and 3D ??
-      template<class _T_in, class Info, class _T_arr>
-      typename mute <_T_in, 
-		     typename output::output_traits< Value(_T_in), 
-						     _T_arr>::ret >::ret
-      convolve(const image < _T_in >& _input, 
-	       const meta::array2d< Info, _T_arr >& _arr)
+      //FIXME: don't use array1d, ..., arraynd.
+      template<class DestValue, class _I, class Info, class _Win> 
+      typename mute<_I, DestValue>::ret
+      convolve(const image < _I >& _input, 
+	       const meta::array2d<Info, _Win >& _arr)
       {
-	return convolve(_input, static_cast< w_window2d<_T_arr> >(_arr));
+	return convolve<DestValue>(_input, static_cast< w_window2d<_Win> >(_arr));
 	// FIXME: Should be w_window<_T_arr>.  Adjust #include once done.
       }
 
@@ -140,5 +84,5 @@ namespace oln {
   } // end namespace convol
 
 } // end namespace oln
-
+  
 #endif // OLENA_CONVOL_CONVOLUTION_HH__

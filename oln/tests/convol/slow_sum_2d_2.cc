@@ -41,7 +41,7 @@ check(void)
   // Second way to do it, using meta-arrays.
   //
 
-  ret = convol::slow::convolve(img, (ints_2d =
+  ret = convol::slow::convolve<int_s< 10 > >(img, (ints_2d =
 				     1, 1, 1, lbrk,
 				     1, x(1), 1,
 				     1, 1, 1, end));
@@ -49,7 +49,7 @@ check(void)
   cout << "=== Result image (by convolve(array2d)) ===" << endl << endl
        << ret << endl;
 
-  image2d< int_u8 > res_img = load(srcdir + "sum_on_random.pgm");
+  image2d< int_u8 > res_img = load(srcdir + "/sum_on_random.pgm");
   if (level::is_equal(ret, res_img))
     OK_OR_FAIL;
 

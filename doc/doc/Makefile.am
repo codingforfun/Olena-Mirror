@@ -27,11 +27,12 @@ html/oln-ref.html: $(tex_TEX) $(oln_ref_TEX)
 	$(HEVEA) -o html/oln-ref.html `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
 	$(HEVEA) -o html/oln-ref.html `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
 
-olnsrc = $(OLN_SOURCE_DIR)
+olnsrc = $(OLN_INCLUDE_DIR)/oln
 
-COMMONGETDEFSFLAGS =  --agarg=-DCXXCOMPILE="$(CXX) -I$(OLN_INCLUDEDIR) $(CXXFLAGS)" \
+# Bogus C++ entry to provoke the definition of CXXCOMPILE
+COMMONGETDEFSFLAGS =  --agarg=-DCXXCOMPILE="@CXX@ -I$(top_srcdir) -DHAVE_CONFIG_H @CPPFLAGS@ @OLN_CPPFLAGS@ @CXXFLAGS@ @OLN_CXXFLAGS@" \
 	              --agarg=--templ-dirs=$(top_srcdir)/tpl \
-	              --agarg=-DIMGDIR=$(top_srcdir)/img
+	              --agarg=-DIMGDIR=$(OLN_IMG_DIR)
 PROCESSINGGETDEFSFLAGS = \
   --subblock=tpl=type,name,doc \
   --subblock=arg=type,name,mode,doc \

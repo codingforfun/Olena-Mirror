@@ -1,7 +1,7 @@
 include $(top_srcdir)/check/Makefile.check
 
 LDADD += $(ZLIB_LDFLAGS)
-AM_CFLAGS = $(ZLIB_CFLAGS)
+AM_CXXFLAGS += $(ZLIB_CXXFLAGS)
 
 check_PROGRAMS = 2d se_pass se_fail pretty
 2d_SOURCES = 2d.cc loadsave.hh

@@ -2,5 +2,5 @@
 
 # Don't use -ansi because it prevents us from using functions
 # like `remove' or `mkstemp' with g++-2.95.x.
-AM_CXXFLAGS = -Wall -W -pedantic
-AM_CPPFLAGS = -I$(OLN_INCLUDEDIR) -I$(top_srcdir)/tests/check
+AM_CXXFLAGS = $(OLN_CXXFLAGS) -Wall -W -pedantic
+AM_CPPFLAGS = $(OLN_CPPFLAGS) -DRDATADIR=\"$(OLN_IMG_DIR)\" -DWDATADIR=\"$(top_builddir)/../img\" -I$(top_srcdir)/check

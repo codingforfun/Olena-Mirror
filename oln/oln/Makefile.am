@@ -134,7 +134,6 @@ nobase_pkginclude_HEADERS =			\
   level/cc.hh					\
   level/compare.hh				\
   level/connected.hh				\
-  level/extrema_killer.hh			\
   level/fill.hh					\
   level/invert.hh				\
   level/lut.hh					\
@@ -161,6 +160,7 @@ nobase_pkginclude_HEADERS =			\
   morpho/erosion.hh				\
   morpho/extrema.hh				\
   morpho/extrema.hxx				\
+  morpho/extrema_killer.hh			\
   morpho/fast_morpho.hh				\
   morpho/fast_morpho.hxx			\
   morpho/geodesic_dilation.hh			\

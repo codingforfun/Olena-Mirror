@@ -10,14 +10,14 @@ srcdir_setup ()
 
   if (s == 0)
     // Assume we are run from the current directory.
-    srcdir = "./";
+    srcdir = ".";
   else
-    srcdir = std::string(s) + "/";
+    srcdir = std::string(s);
 }
 
 
-// Returns `-I${srcdir}ARG'.
+// Returns `-I${srcdir}/ARG'.
 std::string Isrcdir (const std::string& arg)
 {
-  return std::string("-I") + srcdir + arg;
+  return std::string("-I") + srcdir + '/' + arg;
 }

@@ -19,7 +19,7 @@ using namespace oln;
 
 int main()
 {
-  image2d<int_u8> lena = load("../img/lena.pgm");
+  image2d<int_u8> lena = load(IMGDIR2 "/lena.pgm");
 
   save(morpho::erosion(lena,  win_c8p()), "lena-ero.pgm");
   save(morpho::dilation(lena, win_c8p()), "lena-dil.pgm");
@@ -102,12 +102,12 @@ int main()
   save(convol::fast::gaussian_second_derivative(lena, dfloat(0.50f)),
        "lena-gd2.pgm");
 
-  window2d face_se = load("../img/face_se.pbm");
+  window2d face_se = load(IMGDIR "/face_se.pbm");
   save(morpho::fast::opening(lena,  face_se), "lena-ope-f-face.pgm");
 
   {
     // extrema
-    image2d<bin> minima_map = load("../img/map.pbm");
+    image2d<bin> minima_map = load(IMGDIR "/map.pbm");
     save(morpho::sure::minima_imposition(lena, minima_map, neighb_c4()),
 	 "minima_imposition_sure.pgm");
     save(morpho::sequential::minima_imposition(lena, minima_map, neighb_c4()),

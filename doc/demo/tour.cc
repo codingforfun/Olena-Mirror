@@ -324,7 +324,7 @@ main (void)
   // of pnm format supported (1,2,3,4,5,6) is dependent on
   // the type of the image you load/save.  The extension
   // is also used to guess the format to use.
-  image2d<int_u8> lena = load("../img/lena.pgm");
+  image2d<int_u8> lena = load(IMGDIR2 "/lena.pgm");
   std::cout << "watershedling lena..." << std::endl;
   save(morpho::watershed_seg<int_u8>(lena, neighb_c4()), "output.pgm");
 

@@ -9,9 +9,6 @@
 
 #include "check.hh"
 
-#define OUTPUT_DIR  "output/"
-#define OUTPUT_NAME "output"
-
 #define OK_OR_FAIL				\
       std::cout << "OK" << std::endl;		\
     else					\
@@ -69,9 +66,7 @@ check()
   image2d<int_u8> im3 =
     wave2d.transform_inv<int_u8>();
 
-  system("mkdir -p " OUTPUT_DIR);
-
-  io::save(im3, OUTPUT_DIR OUTPUT_NAME "_dwt_copy.pgm");
+  io::save(im3, "dwt_copy.pgm");
 
   std::cout << "Test: Image2D == F-1(F(Image2D)) ... " << std::flush;
   if (level::is_equal(im1, im3))
@@ -82,14 +77,14 @@ check()
   for_all(it2)
     out[it2] = im2[it2];
   
-  io::save(out, OUTPUT_DIR OUTPUT_NAME "_dwt_trans_std.pgm");
+  io::save(out, "dwt_trans_std.pgm");
 
   im2 = wave2d.transform(dwt_non_std, true, 4);
 
   for_all(it2)
     out[it2] = im2[it2];
   
-  io::save(out, OUTPUT_DIR OUTPUT_NAME "_dwt_trans_non_std.pgm");
+  io::save(out, "dwt_trans_non_std.pgm");
 
   im2 = wave2d.transform(dwt_non_std, false, 3);
   for_all(it2)
@@ -99,7 +94,7 @@ check()
 
   out = wave2d.transform_inv<int_u<8, saturate> >();
     
-  io::save(out, OUTPUT_DIR OUTPUT_NAME "_dwt_compressed.pgm");
+  io::save(out, "dwt_compressed.pgm");
 
   // 3D tests
 

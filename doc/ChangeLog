@@ -1,3 +1,17 @@
+2002-12-30  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* Makefile.am (CONFIGURE_DEPENDENCIES): fix.
+
+	* doc/Makefile.am (COMMONGETDEFSFLAGS): new way to get autoconf'ed
+	values.
+	* configure.ac: cleanup.
+
+2002-12-12  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* demo/Makefile.am (check_PROGRAMS): Now use OLN_CPPFLAGS and OLN_CXXFLAGS.
+	* doc/Makefile.am (COMMONGETDEFSFLAGS): Likewise. Use OLN_IMG_DIR
+	and DEFS, too.
+
 2002-12-11  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* configure.ac: Building the manuals and the demo programs are now

@@ -1,3 +1,17 @@
+2002-12-30  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* FAQ: update.
+	* bootstrap.sh: update.
+
+	* oln-version.m4: bump version to 0.7.
+	* THANKS: update.
+
+	* Makefile.am (CONFIGURE_DEPENDENCIES): add.
+
+2002-12-29  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* cleanup.sh: Remove occurences of `Makefile' also.
+
 2002-12-11  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* configure.ac: Make the doc/ and tools/ subdirectories optional.

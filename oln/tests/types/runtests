@@ -28,7 +28,7 @@ fi
 
 for test; do
   # We want only the basename of $test.
-  test=`expr "/$test" : '.*/\([^/]*\)'`
+  test=`basename "$test"`
   fail=0
   dir=$rundir/$test
   input=$indir/$test

@@ -6,9 +6,6 @@
 
 #include "check.hh"
 
-#define OUTPUT_DIR  "output/"
-#define OUTPUT_NAME "output"
-
 #define OK_OR_FAIL				\
       std::cout << "OK" << std::endl;		\
     else					\
@@ -35,8 +32,7 @@ check()
 
   image2d<int_u8> im3 = fourier.transform_inv();
 
-  system("mkdir -p " OUTPUT_DIR);
-  io::save(im3, OUTPUT_DIR OUTPUT_NAME "_fft_copy.pgm");
+  io::save(im3, "fft_copy.pgm");
 
   std::cout << "Test: Image == F-1(F(Image)) ... " << std::flush;
   if (level::is_equal(im1, im3))
@@ -44,11 +40,11 @@ check()
 
   image2d<int_u8> out = fourier.transformed_image_clipped_magn(0.01);
 
-  io::save(out, OUTPUT_DIR OUTPUT_NAME "_fft_trans_clipped.pgm");
+  io::save(out, "fft_trans_clipped.pgm");
 
   out = fourier.transformed_image_log_magn<int_u8>(1, 100);
 
-  io::save(out, OUTPUT_DIR OUTPUT_NAME "_fft_trans_log.pgm");
+  io::save(out, "fft_trans_log.pgm");
   
   for (int row = 40; row < im2.nrows() - 40; ++row)
     for (int col = 0; col < im2.ncols(); ++col)
@@ -60,7 +56,7 @@ check()
  
   out = fourier.transform_inv();
 
-  io::save(out, OUTPUT_DIR OUTPUT_NAME "_fft_low_pass.pgm");
+  io::save(out, "fft_low_pass.pgm");
 
   return fail;
 

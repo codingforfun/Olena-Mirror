@@ -10,13 +10,13 @@ set -e
 
 rm -f failures
 
-find $abs_top_srcdir/oln -name "${1-*}.hh" \
+find "$OLN_INCLUDE_DIR/oln" -name "${1-*}.hh" \
                     -a ! -path '*/old/*' \
                     -a ! -path '*/obsolete/*' -type f -print |
 while read file; do
-   name=`expr $file : "$abs_top_srcdir/\(.*\)"`
+   name=`expr $file : "$OLN_INCLUDE_DIR/\(.*\)"`
    echo "#include <$name>" > incltest.cc
-   if $CXX $CXXFLAGS incltest.cc -c -O0 -o /dev/null; then
+   if $CXX $CPPFLAGS $CXXFLAGS -c incltest.cc; then
       echo "  PASS: $name"
    else
       echo "  FAIL: $name"

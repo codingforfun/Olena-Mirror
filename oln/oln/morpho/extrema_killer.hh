@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_LEVEL_EXTREMA_KILLER_HH
-# define OLENA_LEVEL_EXTREMA_KILLER_HH
+#ifndef OLENA_MORPHO_EXTREMA_KILLER_HH
+# define OLENA_MORPHO_EXTREMA_KILLER_HH
 
 #include <oln/config/system.hh>
 #include <oln/basics2d.hh>
@@ -46,7 +46,7 @@
 
 namespace oln {
 
-  namespace level {
+  namespace morpho {
 
     template<class _I, class _N>
     typename mute<_I, bin>::ret
@@ -85,7 +85,7 @@ namespace oln {
     // SURE VERSIONS
 
     /*=processing sure_maxima_killer
-     * ns: level
+     * ns: morpho
      * what: Maxima killer.
      * arg: const image<I1>&, marker, IN, marker image
      * arg: const unsigned int area, area, IN, area
@@ -95,10 +95,10 @@ namespace oln {
      * level sets of \var{input} using \var{se} as structual element. The implementation
      * uses the threshold superposition principle; so it is very slow ! it works only for
      * int_u8 images.
-     * see: level::fast_maxima_killer
+     * see: morpho::fast_maxima_killer
      * ex:
      * $ image2d<int_u8> light = load("light.pgm");
-     * $ save(level::sure_maxima_killer(light, 20, win_c8p()), "out.pgm");
+     * $ save(morpho::sure_maxima_killer(light, 20, win_c8p()), "out.pgm");
      * exi: light.pgm
      * exo: out.pgm
      * wontcompile: fixme
@@ -142,7 +142,7 @@ namespace oln {
 
 
     /*=processing sure_minima_killer
-     * ns: level
+     * ns: morpho
      * what: Minima killer.
      * arg: const image<I1>&, marker, IN, marker image
      * arg: const unsigned int area, area, IN, area
@@ -152,10 +152,10 @@ namespace oln {
      * level sets of \var{input} using \var{se} as structual element. The implementation
      * uses the threshold superposition principle; so it is very slow ! it works only for
      * int_u8 images.
-     * see: level::fast_maxima_killer
+     * see: morpho::fast_maxima_killer
      * ex:
      * $ image2d<int_u8> light = load("light.pgm");
-     * $ save(level::sure_minima_killer(light, 20, win_c8p()), "out.pgm");
+     * $ save(morpho::sure_minima_killer(light, 20, win_c8p()), "out.pgm");
      * exi: light.pgm
      * exo: out.pgm
      * wontcompile: fixme
@@ -259,7 +259,7 @@ namespace oln {
 
 
     /*=processing fast_minima_killer
-     * ns: level
+     * ns: morpho
      * what: Minima killer.
      * arg: const image<I1>&, marker, IN, marker image
      * arg: const unsigned int area, area, IN, area
@@ -269,10 +269,10 @@ namespace oln {
      * level sets of \var{input} using \var{Ng} as neighboorhood. The implementation
      * is based on stak. Guichard and Morel, Image iterative smoothing and PDE's.
      * Book in preparation. p 265.
-     * see: level::sure_minima_killer
+     * see: morpho::sure_minima_killer
      * ex:
      * $ image2d<int_u8> light = load("light.pgm");
-     * $ save(level::fast_minima_killer(light, 20, win_c8p()), "out.pgm");
+     * $ save(morpho::fast_minima_killer(light, 20, win_c8p()), "out.pgm");
      * exi: light.pgm
      * exo: out.pgm
      * wontcompile: fixme
@@ -366,7 +366,7 @@ namespace oln {
     }
 
     /*=processing fast_maxima_killer
-     * ns: level
+     * ns: morpho
      * what: Maxima killer.
      * arg: const image<I1>&, marker, IN, marker image
      * arg: const unsigned int area, area, IN, area
@@ -375,10 +375,10 @@ namespace oln {
      * doc: It removes the small (in area) connected components of the upper
      * level sets of \var{input} using \var{Ng} as neighboorhood. The implementation
      * is based on stak. Guichard and Morel, Image iterative smoothing and PDE's. Book in preparation. p 265.
-     * see: level::sure_maxima_killer
+     * see: morpho::sure_maxima_killer
      * ex:
      * $ image2d<int_u8> light = load("light.pgm");
-     * $ save(level::fast_maxima_killer(light, 20, win_c8p()), "out.pgm");
+     * $ save(morpho::fast_maxima_killer(light, 20, win_c8p()), "out.pgm");
      * exi: light.pgm
      * exo: out.pgm
      * wontcompile: fixme

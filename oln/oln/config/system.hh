@@ -28,35 +28,19 @@
 #ifndef OLENA_CONFIG_SYSTEM_HH
 # define OLENA_CONFIG_SYSTEM_HH
 
-/* The GNU libc will not declare round, roundf, etc. unless this is set...  */
-# define _ISOC99_SOURCE 1
-
 # ifdef HAVE_CONFIG_H
 # include <config.h>
 # endif 
+
+# if HAVE_LIMITS
+#  include <limits>
+# endif
+
 # include <oln/config/pconf.hh>
 # include <cmath>
 
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846264338327
-# endif
-
-# if HAVE_LIMITS
-#  include <limits>
-#  define OLN_FLOAT_INFINITY (std::numeric_limits<float>::infinity())
-#  define OLN_DOUBLE_INFINITY (std::numeric_limits<double>::infinity())
-# else
-#  include <math.h>
-#  ifdef HUGE_VAL
-#   ifdef HUGE_VALF
-#    define OLN_FLOAT_INFINITY HUGE_VALF
-#   else
-#    define OLN_FLOAT_INFINITY ((float)HUGE_VAL)
-#   endif
-#   define OLN_DOUBLE_INFINITY HUGE_VAL
-#  else
-#   error Do not know how to define infinity on this host.
-#  endif
 # endif
 
 /* The STL used by g++ versions < 3 have namespaces disabled,

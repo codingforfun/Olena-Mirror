@@ -1,11 +1,12 @@
 #include <oln/config/system.hh>
 #include <oln/basics2d.hh>
-#include <oln/level/extrema_killer.hh>
+#include <oln/morpho/extrema_killer.hh>
 
 #include "check.hh"
 
 using namespace oln;
 using namespace oln::level;
+using namespace oln::morpho;
 
 #define OK_OR_FAIL				\
       std::cout << "OK" << std::endl;		\

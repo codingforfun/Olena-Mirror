@@ -1,7 +1,7 @@
 ## Process this file with Automake to produce Makefile.in -*-Makefile-*-
 
-AM_CPPFLAGS = -I$(OLN_INCLUDEDIR)
-AM_CXXFLAGS = -Wall -W -ansi -pedantic
+AM_CPPFLAGS = $(OLN_CPPFLAGS) -DIMGDIR=\"$(OLN_IMG_DIR)\" -DIMGDIR2=\"$(OLN_IMG_AUX_DIR)\"
+AM_CXXFLAGS = -Wall -W -ansi -pedantic $(OLN_CXXFLAGS)
 
 # We used to declare these programs as `noinst_PROGRAMS', however
 # building them on each run of `make' turned to
@@ -11,6 +11,7 @@ AM_CXXFLAGS = -Wall -W -ansi -pedantic
 #      the other directories).
 # So for now we'll just build these programs on `make check' and `make demo'.
 check_PROGRAMS = tour morpholena test-reconstruction
+
 .PHONY: demo
 demo: $(check_PROGRAMS)
 
