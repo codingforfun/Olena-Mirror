@@ -52,7 +52,7 @@ namespace oln {
     public:
       typedef Inferior inferior;
       typedef _window< Dim, _neighborhood< Dim, Inferior >,
-		       neighborhood > super;
+		       oln::neighborhood > super;
 
       _neighborhood() : super() {}
       _neighborhood(unsigned size) : super(size) {}

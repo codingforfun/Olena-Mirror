@@ -39,7 +39,7 @@ namespace oln {
   // generate (generator)
 
   template<class AdaptableGen, class I> inline
-  typename image_for_dim<(typename type::exact<I>::ret)::dim>::with_type<typename AdaptableGen::result_type>::ret
+  typename image_for_dim<type::wrap<typename type::exact<I>::ret>::dim>::with_type<typename AdaptableGen::result_type>::ret
   generate(AdaptableGen f, const image_size<I>& size)
   {
     typename image_for_dim<(typename type::exact<I>::ret)::dim>::with_type<typename AdaptableGen::result_type>::ret output(to_exact(size));

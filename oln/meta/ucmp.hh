@@ -41,24 +41,21 @@ namespace oln {
       // less
 
       template<unsigned N, unsigned M>
-      struct less { typedef typename less<N-1,M-1>::ret_t ret_t; };
-
-      template<unsigned N> struct less<N,0> { typedef false_t ret_t; };
-      template<unsigned N> struct less<N,N> { typedef false_t ret_t; };
-      template<unsigned M> struct less<0,M> { typedef true_t  ret_t; };
-      template<>           struct less<0,0> { typedef false_t ret_t; };
+      struct less
+      { typedef typename meta::if_<(N < M), true_t, false_t>::ret_t ret_t; };
 
       // lesseq
 
-      template<unsigned N, unsigned M>
-      struct lesseq { typedef typename less<N,M>::ret_t ret_t; };
-
-      template<unsigned N> struct lesseq<N,N> { typedef true_t ret_t; };
+      template<unsigned N, unsigned M> 
+      struct lesseq
+      { typedef typename meta::if_<(N <= M), true_t, false_t>::ret_t ret_t; };
 
       // eq
 
-      template<unsigned N, unsigned M> struct eq { typedef false_t ret_t; };
-      template<unsigned N> struct eq<N,N> { typedef true_t ret_t; };
+      template<unsigned N, unsigned M> 
+      struct eq
+      { typedef typename meta::if_<(N == M), true_t, false_t>::ret_t ret_t; };
+
 
       // value
 

@@ -106,28 +106,28 @@ namespace oln {
       };
       template<class Tsrc>
       struct _round<float, rec_float<Tsrc> > {
-	static const float doit(const rec_float<Tsrc>& val)
+	static float doit(const rec_float<Tsrc>& val)
 	{
 	  return val.self();
 	}
       };
       template<class Tsrc>
       struct _round<double, rec_float<Tsrc> > {
-	static const double doit(const rec_float<Tsrc>& val)
+	static double doit(const rec_float<Tsrc>& val)
 	{
 	  return val.self();
 	}
       };
       template<>
       struct _round<float, double> {
-	static const float doit(const double& val)
+	static float doit(const double& val)
 	{
 	  return val;
 	}
       };
       template<>
       struct _round<double, float> {
-	static const double doit(const float& val)
+	static double doit(const float& val)
 	{
 	  return val;
 	}

@@ -150,7 +150,8 @@ namespace oln {
 	static bool knows_ext(const std::string& ext)
 	{ return ext == "pppm"; }
 
-	static bool read(std::istream& in, image3d<int_u<N> >& im)
+	static bool read(std::istream& in, 
+			 image3d< color<3, 8, color_system > >& im)
 	{
 	  coord mrows, mcols;
 	  if (!pnm_read_header3d(in, im, '3', mrows, mcols))
@@ -213,7 +214,8 @@ namespace oln {
 	static bool knows_ext(const std::string& ext)
 	{ return ext == "ppm"; }
 
-	static bool read(std::istream& in, image3d<int_u<N> >& im)
+	static bool read(std::istream& in, 
+			 image3d< color<3, 8, color_system> >& im)
 	{
 	  coord mrows, mcols;
 	  if (!pnm_read_header3d(in, im, '6', mrows, mcols))
