@@ -1,5 +1,12 @@
 2003-07-25  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
+	* tests/level/threshold.cc, tests/level/set_level.cc,
+	tests/level/invert.cc, tests/level/connected.cc,
+	tests/level/compare.cc, tests/level/cc.cc, tests/level/Makefile.am
+	: Add tests for level directory.
+
+2003-07-25  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
+
 	* tests/topo/test-inter-pixel.cc, tests/topo/test-cmap.cc, : Fix tests suite.
 
 	* oln/basics2d.hh: Uncomment io files includes.
