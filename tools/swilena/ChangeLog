@@ -1,3 +1,9 @@
+2004-04-19  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* swilena/python/tests/Makefile.am: Factor code for `TESTS' variable
+	declaration.
+	* swilena/python/tests/Makefile.am: Add new line at end of file.
+
 2004-04-15  Niels Van Vliet  <niels@lrde.epita.fr>
 
 	* tools/swilena/meta/Makefile.am: Add swilena_ntg_macros.i to

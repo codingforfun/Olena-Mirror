@@ -7,7 +7,6 @@ TESTS_ENVIRONMENT = \
 	SWILENA_PATH=".." \
 	IMGDIR="$(top_srcdir)/olena/img"
 
-
 TESTS = simple1.rb
 
 dist_noinst_DATA = simple1.rb

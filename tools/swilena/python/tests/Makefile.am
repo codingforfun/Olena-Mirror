@@ -9,8 +9,4 @@ TESTS_ENVIRONMENT = \
 	PYTHONPATH="$(PYTHONPATH):..:$(srcdir)/.." \
 	IMGDIR="$(top_srcdir)/olena/img"
 
-
-
-TESTS = arith.py conversions.py simple1.py morpho.py
-
-
+TESTS = $(dist_noinst_DATA)
