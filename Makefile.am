@@ -2,4 +2,4 @@
 
 AUTOMAKE_OPTIONS = foreign dist-bzip2 1.5a
 SUBDIRS = src demo
-EXTRA_DIST = img/lena.pgm
+EXTRA_DIST = img/lena.pgm ISSUES

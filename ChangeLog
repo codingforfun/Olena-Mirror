@@ -1,3 +1,9 @@
+2002-01-12  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* README: Update in prevision for 0.3.
+	* ISSUES: New file.
+	* Makefile (EXTRA_DIST): Add ISSUES.
+
 2001-12-28  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* src/value/cast.hh (_round): Cast the rounded value to

@@ -1,11 +1,17 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_2 1)
-(Parent-Version -*- -*- -*-)
-(Version-Log "Initial PRCS checkin from my CVS tree.")
+(Project-Version oln 0_2 2)
+(Parent-Version oln 0_2 1)
+(Version-Log "2002-01-12  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* README: Update in prevision for 0.3.
+	* ISSUES: New file.
+	* Makefile (EXTRA_DIST): Add ISSUES.
+
+")
 (New-Version-Log "")
-(Checkin-Time "Mon, 31 Dec 2001 19:37:05 +0100")
+(Checkin-Time "Sat, 12 Jan 2002 16:20:24 +0100")
 (Checkin-Login adl)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
@@ -45,12 +51,12 @@
 ;; to version 0_2.0(w), by adl:
 
   (NEWS (oln/0_NEWS 1.1 644))
-  (README (oln/1_README 1.1 644))
-  (Makefile.am (oln/2_Makefile.a 1.1 644))
+  (README (oln/1_README 1.2 644))
+  (Makefile.am (oln/2_Makefile.a 1.2 644))
   (configure.ac (oln/3_configure. 1.1 644))
   (THANKS (oln/4_THANKS 1.1 644))
   (img/lena.pgm (oln/5_lena.pgm 1.1 640) :no-keywords)
-  (ChangeLog (oln/6_ChangeLog 1.1 644))
+  (ChangeLog (oln/6_ChangeLog 1.2 644))
   (src/config/system.hh (oln/7_system.hh 1.1 644))
   (src/utils/timer.hh (oln/8_timer.hh 1.1 644))
   (src/utils/stat.hh (oln/9_stat.hh 1.1 644))
@@ -248,6 +254,11 @@
   (demo/tour.cc (oln/d/45_tour.cc 1.1 644))
   (demo/image.cc (oln/d/46_image.cc 1.1 644))
   (tools () :directory)
+
+;; Files added by populate at Sat, 12 Jan 2002 16:18:21 +0100,
+;; to version 0_2.1(w), by adl:
+
+  (ISSUES (oln/d/47_ISSUES 1.1 644))
 )
 (Merge-Parents)
 (New-Merge-Parents)

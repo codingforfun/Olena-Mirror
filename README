@@ -1,4 +1,4 @@
-This is the second public release of Olena, a generic image processing
+This is the third public release of Olena, a generic image processing
 library in C++.
 
 This release accompanies the following article
@@ -14,15 +14,21 @@ Laboratory (www.lrde.epita.fr) since 1997.  We did numerous prototypes
 and throw-away experiments before settling into the kind of
 programming paradigm which is finally here.
 
-This version of Olena has been built in a few weeks (i.e., in a
-hurry).  Most of the operators have been translated from the sources
-of Milena, an image processing library which works only on 2D images
-(Milena stands for "mini-Olena") and which is not publicly available.
+This version of Olena is quite young.  In fact most of the operators
+have been translated from the sources of Milena, an image processing
+library which works only on 2D images (Milena stands for "mini-Olena")
+and which is not publicly available.
 
 Therefore this code is still experimental and not very polished.
-Especially there is no documentation, sorry.  The file demo/tour.cc
-attempts to introduce you to the basics of Olena.  For the rest, we're
-afraid you will have to dig the code.
+The file named ISSUE, in the root directory of the distribution,
+contains a list of known issues about Olena.
+
+We haven't written a real documentation yet.  In the doc/ directory
+you will find the start of a reference manual which presently
+documents only the morphological operators.  In the demo/ directory
+lie a few sample programs.  The file demo/tour.cc attempts to
+introduce you to the basics of Olena.  For the rest, we're afraid you
+will have to dig the code or e-mail us.
 
 Please direct any question or comments to <olena@lrde.epita.fr>,
 or <olena-bugs@lrde.epita.fr>.
