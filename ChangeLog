@@ -22,8 +22,10 @@
 
 2004-04-13  Damien Thivolle  <damien@lrde.epita.fr>
 
-	* configure.ac: Check for doxygen version. Use `$SWIG' instead of `swig'
-	* config/oln.m4: Add macro to check for doxygen version.
+	* configure.ac: Check for doxygen version. Use `$SWIG' instead of
+	`swig'
+	* config/oln.m4: Add macro to check for doxygen version. Change
+	swig to $SWIG.
 
 2004-04-11  Damien Thivolle  <damien@lrde.epita.fr>
 

@@ -1,3 +1,7 @@
+2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* tests/*/tests/* (168 files): Add copyright.
+
 2004-04-15  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* tests/check/Makefile.flags: Reorder flags.
@@ -20,7 +24,8 @@
 2004-04-14  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* olena/tests/morpho/tests/md5_morpho_reconstruction_hh5: Fix to make
-	compile with ICC.
+	compile with ICC. More details are available here:
+	http://www.lrde.epita.fr/cgi-bin/twiki/view/Projects/OlenaConstImages
 	* olena/tests/morpho/tests/md5_morpho_reconstruction_hh4: Likewise.
 	* olena/tests/morpho/tests/md5_morpho_reconstruction_hh3: Likewise.
 	* olena/tests/morpho/tests/md5_morpho_reconstruction_hh2: Likewise.

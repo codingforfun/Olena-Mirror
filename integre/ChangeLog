@@ -1,3 +1,7 @@
+2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* tests/*/tests/* (82 files): Add copyright.
+
 2004-04-13  Niels Van Vliet  <niels@lrde.epita.fr>
 
 	* ntg/real/optraits_builtin_int.hh: Add white space after variables
