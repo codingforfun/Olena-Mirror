@@ -72,7 +72,7 @@ namespace oln
     template <class P>
     static store_type check(const P& rhs)
     { 
-      typename internal::to_oln<P>::ret tmp = rhs % (max() - min() + 1);
+      typename internal::to_oln<P>::ret tmp = rhs % (max() - min());
 
       if (tmp < min())
 	return max() - min() + tmp;

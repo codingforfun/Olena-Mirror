@@ -1,3 +1,7 @@
+2002-08-26  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/types/optraits_cycle.hh: Fix cycle problem.
+
 2002-08-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
         * oln/Makefile.am: Add oln/meta/type.hh.
