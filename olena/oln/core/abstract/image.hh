@@ -68,6 +68,7 @@ namespace oln {
       typedef image<Exact> self_type;
       typedef Exact exact_type;
 
+      enum { dim = image_traits<Exact>::dim };
 
       const value_type& operator[](const point_type& p) const
       {
@@ -110,8 +111,6 @@ namespace oln {
       {
 	return to_exact(this)->assign(to_exact(rhs));
       }
-
-     
 
       static std::string name()
       {

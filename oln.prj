@@ -1,16 +1,16 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 18)
-(Parent-Version oln 2003paradigm 16)
-(Version-Log "Index: ChangeLog
+(Project-Version oln 2003paradigm 19)
+(Parent-Version oln 2003paradigm 18)
+(Version-Log "Index: olena/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-        * config/oln.m4: Fix compilation flags overriding.
+        * oln/core/abstract/image.hh: Add dim.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 23 Jul 2003 16:19:09 +0200")
+(Checkin-Time "Wed, 23 Jul 2003 17:46:12 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -99,7 +99,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.7 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.4 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.5 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.36 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.10 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.4 640))
@@ -874,7 +874,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 ;; Files added by populate at Wed, 16 Jul 2003 16:58:47 +0200,
 ;; to version 2003paradigm.7(w), by burrus_n:
 
-  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.5 640))
+  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.6 640))
   (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.5 640))
   (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.7 640))
   (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.2 640))
@@ -926,15 +926,5 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (olena/tests/core/tests/ref (oln/t/37_ref 1.2 640))
 )
-(Merge-Parents
-  (2003paradigm.17 complete
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (olena/oln/core/bkd_iter1d.hh olena/oln/core/bkd_iter1d.hh olena/oln/core/bkd_iter1d.hh r)
-    (olena/oln/core/bkd_iter2d.hh olena/oln/core/bkd_iter2d.hh olena/oln/core/bkd_iter2d.hh r) (olena/oln/core/bkd_iter3d.hh olena/oln/core/bkd_iter3d.hh olena/oln/core/bkd_iter3d.hh r)
-    (olena/oln/core/image1d.hh olena/oln/core/image1d.hh olena/oln/core/image1d.hh r) (olena/oln/core/image2d.hh olena/oln/core/image2d.hh olena/oln/core/image2d.hh r)
-    (olena/oln/core/image3d.hh olena/oln/core/image3d.hh olena/oln/core/image3d.hh r) (olena/oln/core/image.hh olena/oln/core/image.hh olena/oln/core/image.hh r)
-    (olena/oln/core/iter.hh olena/oln/core/iter.hh olena/oln/core/iter.hh r) (olena/oln/core/neighborhood.hh olena/oln/core/neighborhood.hh olena/oln/core/neighborhood.hh r)
-    (olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh m) (olena/oln/core/abstract/image_with_dim.hh olena/oln/core/abstract/image_with_dim.hh olena/oln/core/abstract/image_with_dim.hh m)
-    (olena/oln/core/abstract/image_with_impl.hh olena/oln/core/abstract/image_with_impl.hh olena/oln/core/abstract/image_with_impl.hh m) (olena/oln/core/abstract/image_with_type.hh olena/oln/core/abstract/image_with_type.hh olena/oln/core/abstract/image_with_type.hh r)
-    (olena/oln/core/impl/image_array2d.hh olena/oln/core/impl/image_array2d.hh olena/oln/core/impl/image_array2d.hh r) (olena/tests/core/tests/ref olena/tests/core/tests/ref olena/tests/core/tests/ref r))
-)
+(Merge-Parents)
 (New-Merge-Parents)
