@@ -1,8 +1,14 @@
+2002-06-27  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* ISSUES: Don't mention hash_map.
+
 2002-06-27  jean-sebastien mouret  <js@lrde.epita.fr>
 
 	* src/io/base.hh: Added inline to allow separate compilation.
-	* src/core/window{1,2,3}d.hh: Likewise.
-	* src/core/neighborhood{1,2,3}d.hh: Likewise.
+	* src/core/window1d.hh, src/core/window2d.hh,
+	src/core/window3d.hh: Likewise.
+	* src/core/neighborhood1d.hh, src/core/neighborhood2d.hh,
+	src/core/neighborhood3d.hh: Likewise.
 
 2002-06-27  Alexandre Duret-Lutz  <duret_g@epita.fr>
 

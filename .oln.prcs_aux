@@ -2,7 +2,7 @@
 ;; REALLY bad things.
 (Created-By-Prcs-Version 1 3 3)
 (src/core/regular_image.hh 2110 1009823825 c/23_regular_im 1.1)
-(ISSUES 3602 1010848824 d/47_ISSUES 1.1)
+(ISSUES 3508 1025187338 d/47_ISSUES 1.2)
 (src/value/color.hh 7092 1019569227 b/31_color.hh 1.3)
 (src/convert/nrgbhsv.hh 4080 1018448435 11_nrgbhsv.hh 1.2)
 (src/convol/fast_gaussian.hh 2963 1009823825 26_fast_gauss 1.1)
@@ -45,7 +45,7 @@
 (demo/Makefile.in 10021 1025163201 e/16_Makefile.i 1.9)
 (src/value/rec_int.hh 3500 1009823825 b/37_rec_int.hh 1.1)
 (tests/check/Makefile.in 9108 1025163201 e/39_Makefile.i 1.7)
-(ChangeLog 53514 1025186723 6_ChangeLog 1.48)
+(ChangeLog 53694 1025187338 6_ChangeLog 1.49)
 (tools/missing 10280 1015511973 e/13_missing 1.2)
 (src/core/dpoint1d.hh 2470 1009823825 d/27_dpoint1d.h 1.1)
 (src/math/macros.hh 3503 1009823825 b/21_macros.hh 1.1)

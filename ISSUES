@@ -30,9 +30,6 @@ different compilations flags.
 Speaking about compilers, the following points are likely to cause
 trouble when trying to port Olena to another build environment.
 
-- Some non-standard STL classes are used.
-  For instance std::hash_map<> in src/level/lut.hh
-
 - The cast::round function use C99's round() and roundf() function.
   The GNU libc doesn't declare these functions by default, one
   has to explicitly define _ISOC99_SOURCE before including a
