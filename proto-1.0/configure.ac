@@ -39,7 +39,10 @@ AC_CONFIG_FILES([Makefile
                  metalic/mlc/Makefile
 		 olena/Makefile
 		 olena/oln/Makefile
-		 olena/oln/config/pconf.hh:olena/oln/config/pconf-hh.in])
+		 olena/oln/config/pconf.hh:olena/oln/config/pconf-hh.in
+                 doc/ref/out/exdoc.config:doc/ref/out/exdoc.config.in
+                 doc/ref/exdoc.mk:doc/ref/exdoc.mk.in
+                 doc/ref/doxygen.config:doc/ref/doxygen.config.in])
 
 
 ### Olena components.
@@ -191,10 +194,9 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
 
   AC_ARG_WITH([doc],
  	      [Doxygen is needed to build the doc],
-	      [],
 	      [AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
-	       AC_CHECK_DOXYGEN_VERSION
-	     ])
+	       AC_CHECK_DOXYGEN_VERSION],
+              [])
 
 ## if test -z "$DOXYGEN"; then
 ##   AC_MSG_WARN([`doxygen' not found -- `doxygen' must be installed to generate the documentation])
@@ -214,12 +216,12 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
 
 ### The reference manuals directory is a component.
 
-    OLN_NON_COMPONENT([doc/ref],
+    OLN_COMPONENT([doc/ref],
 	          [doc-ref],
 	          [oln_cv_build_ref],
 	          [the Olena reference manuals],
 	          [OLN_DOC],
-		  [doc/ref/Makefile],
+                  [doc/ref/Makefile],
     [dnl Configuration for the manuals directory.
 
      AC_ARG_VAR([TAR], [the tape archiver program])
