@@ -1,27 +1,12 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 8 29)
-(Parent-Version oln 8 28)
-(Version-Log "Index: ChangeLog
-from  Jean-Sébastien Mouret  <js@lrde.epita.fr>
-
-        * configure.ac: Check for pnmdepth.
-
-Index: olena/ChangeLog
-from  Jean-Sébastien Mouret  <js@lrde.epita.fr>
-
-        * oln/io/pnm_read.hxx: Change image2d<int_u8> readers to
-        image2d<int_u<N>>.
-        * oln/io/pnm_read_common.hxx (readmany_plain): Read many plain
-        int_u<N> instead of int_u8.
-
-        * tests/io/2d.cc (check): Add test for image2d<int_u16>.
-        * img/Makefile.am: Generate lena16b.pgm and lena16b.ppgm.
-
+(Project-Version oln 8 30)
+(Parent-Version oln 8 29)
+(Version-Log "previous checkin tail.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sun, 06 Apr 2003 01:04:56 +0200")
+(Checkin-Time "Sun, 06 Apr 2003 01:15:15 +0200")
 (Checkin-Login js)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -142,7 +127,7 @@ from  Jean-Sébastien Mouret  <js@lrde.epita.fr>
   (olena/img/lena256.pgm (oln/n/14_lena256.pg 1.1 600) :no-keywords)
   (olena/img/lena_dark.pgm (oln/n/13_lena_dark. 1.1 600) :no-keywords)
   (olena/img/lena.ppm (oln/n/10_lena.ppm 1.1 600) :no-keywords)
-  (olena/img/Makefile.am (oln/o/34_Makefile.a 1.3 600) :no-keywords)
+  (olena/img/Makefile.am (oln/o/34_Makefile.a 1.4 600) :no-keywords)
   ; (oln/img/Makefile.in ())
   (olena/img/map.pbm (oln/n/12_map.pbm 1.1 600) :no-keywords)
   (olena/img/neighbor9.pbm (oln/n/8_neighbor9. 1.1 600) :no-keywords)

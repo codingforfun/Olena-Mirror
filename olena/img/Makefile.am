@@ -85,6 +85,6 @@ mm.gz:
 $(srcdir)/lena128.pgm: lena.pgm
 	$(IMAGEMAGICK_CONVERT) -scale 25% `test -f '$<' || echo '$(srcdir)/'`$< $@
 
-$(srcdir)/lena16.pgm: lena.pgm
+$(srcdir)/lena16b.pgm: lena.pgm
 	$(PNMDEPTH) 65535 `test -f '$<' || echo '$(srcdir)/'`$< > $@
 
