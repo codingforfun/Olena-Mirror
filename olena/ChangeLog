@@ -1,3 +1,9 @@
+2003-12-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/core/Makefile.am: Put fftw libraries in LDADD instead of
+	LDFLAGS.
+	* tests/transforms/Makefile.am: Likewise.
+
 2003-11-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/Makefile.am: Include convert/cast.hh.
