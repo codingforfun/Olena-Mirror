@@ -38,45 +38,6 @@ namespace oln {
 
     template <class SrcType, unsigned N, class Exact = mlc::final>
     struct subq_morpher;
-  } // end of namespace morpher
-
-  /*! Retrieve types and dimension of the subq_morpher.
-  **
-  ** \param SrcType Input type decorated.
-  **
-  ** \param N The new number of bits by component.
-  **
-  ** \param Exact The exact type of the morpher.
-  */
-  template <class SrcType, unsigned N, class Exact>
-  struct image_id<oln::morpher::subq_morpher<SrcType, N, Exact> >
-  {
-    enum {dim = SrcType::dim};
-    /*! <The image dimension. */
-    typedef oln_impl_type(SrcType) impl_type;
-    /*! <The underlying implementation.*/
-    typedef typename ntg::color<3, N, ntg::rgb_traits> value_type;
-    /*! <The modified value type.*/
-    typedef typename mlc::exact_vt<oln::morpher::subq_morpher<SrcType, N, Exact>,
-				    Exact>::ret exact_type;
-  };
-
-  /*! Specialized version for subq_morpher.
-  **
-  ** \param SrcType Input type decorated.
-  **
-  ** \param N The new number of bits by components.
-  **
-  ** \param Exact The exact type of the morpher.
-  */
-  template <class SrcType, unsigned N, class Exact>
-  struct image_traits <oln::morpher::subq_morpher<SrcType, N, Exact> > :
-    public image_traits<abstract::image_with_impl<oln_impl_type(SrcType),
-						  oln::morpher::subq_morpher<SrcType, N, Exact> > >
-  {
-  };
-
-  namespace morpher {
 
 
     /*! Change the color depth of \a T.
@@ -111,6 +72,50 @@ namespace oln {
 
 
 
+  } // end of namespace morpher
+
+  /*! Retrieve types and dimension of the subq_morpher.
+  **
+  ** \param SrcType Input type decorated.
+  **
+  ** \param N The new number of bits by component.
+  **
+  ** \param Exact The exact type of the morpher.
+  */
+  template <class SrcType, unsigned N, class Exact>
+  struct image_id<oln::morpher::subq_morpher<SrcType, N, Exact> >
+  {
+    enum {dim = SrcType::dim};
+    /*! <The image dimension. */
+    typedef oln_impl_type(SrcType) impl_type;
+    /*! <The underlying implementation.*/
+    typedef typename oln::morpher::color_mute<oln_value_type(SrcType), N>::ret value_type;
+    /*! <The modified value type.*/
+    typedef typename mlc::exact_vt<oln::morpher::subq_morpher<SrcType, N, Exact>,
+				    Exact>::ret exact_type;
+
+    typedef oln_point_type(SrcType) point_type;
+  };
+
+  /*! Specialized version for subq_morpher.
+  **
+  ** \param SrcType Input type decorated.
+  **
+  ** \param N The new number of bits by components.
+  **
+  ** \param Exact The exact type of the morpher.
+  */
+  template <class SrcType, unsigned N, class Exact>
+  struct image_traits <oln::morpher::subq_morpher<SrcType, N, Exact> > :
+    public image_traits<oln::morpher::abstract::generic_morpher<SrcType,
+								typename image_id<oln::morpher::subq_morpher<SrcType, N, Exact> >::exact_type> >
+  {
+  };
+
+  namespace morpher {
+
+
+
     /*! \brief Sub quantify an image.
     **
     ** By using this class, an image can be viewed
@@ -126,36 +131,22 @@ namespace oln {
     */
     template <class SrcType, unsigned N, class Exact>
     struct subq_morpher:
-      public abstract::generic_morpher<
-      typename oln::mute<SrcType,
-			 typename color_mute<oln_value_type(SrcType),
-					     N>::ret>::ret ,
-      SrcType,
-      typename oln::image_id<subq_morpher<SrcType, N, Exact> >::exact_type>
+      public abstract::generic_morpher<SrcType,
+				       typename oln::image_id<subq_morpher<SrcType, N, Exact> >::exact_type>
     {
-
-      /// The upper class.
-      typedef abstract::generic_morpher<
-	typename oln::mute<SrcType,
-	typename color_mute<oln_value_type(SrcType),
-	N>::ret>::ret,
-	SrcType,
-	typename oln::image_id<subq_morpher<SrcType, N, Exact> >::exact_type> super_type;
 
       /// The exact type of \a this. This class can be derived.
       typedef typename oln::image_id<subq_morpher<SrcType, N, Exact> >::exact_type exact_type;
 
-      /// The type of the resulting image.
-      typedef typename oln::mute<SrcType,
-	typename color_mute<oln_value_type(SrcType),
-	N>::ret>::ret DestType;
 
-      typedef subq_morpher<SrcType, N, Exact> self_type;
+      /// The upper class.
+      typedef abstract::generic_morpher<SrcType,
+					exact_type> super_type;
 
       /// The value point of the resulting image.
-      typedef typename color_mute<oln_value_type(SrcType), N>::ret value_type;
-      typedef oln_point_type(SrcType) point_type;
-      typedef oln_impl_type(SrcType) impl_type;
+      typedef typename image_id<exact_type>::value_type value_type;
+      typedef typename image_id<exact_type>::point_type point_type;
+      typedef typename image_id<exact_type>::impl_type impl_type;
       enum { nbcomps = color_mute<oln_value_type(SrcType), N>::nbcomps };
 
       /// Construct the morpher with an image.

@@ -64,7 +64,11 @@ namespace oln {
     /*! <Retrieve the exact type of the image. It depends on
     ** the value of Exact.
     */
+
+    typedef oln_point_type(I) point_type;
+    typedef oln_iter_type(I) iter_type;
   };
+
 
   /*! \brief Specialized version for color_morpher.
   **
@@ -72,11 +76,12 @@ namespace oln {
   **
   ** \param Exact The exact type of the object.
   */
-  template <class I, class Exact>
-  struct image_traits <morpher::color_morpher<I, Exact> > :
-    public image_traits<abstract::image_with_impl<oln_impl_type(I),
-						  morpher::color_morpher<I, Exact> > >
+  template <class SrcType, class Exact>
+  struct image_traits <morpher::color_morpher<SrcType, Exact> > :
+    public image_traits<morpher::abstract::generic_morpher<SrcType,
+							   typename image_id<morpher::color_morpher<SrcType, Exact> >::exact_type> >
   {
+
   };
 
   namespace morpher {
@@ -90,8 +95,9 @@ namespace oln {
     **
     ** \param Exact Exact type
     */
-    template <class DestType, class SrcType, class Exact>
-    class super_color_morpher : public abstract::generic_morpher<DestType, SrcType, Exact>
+    template <class SrcType, class Exact>
+    class super_color_morpher :
+      public abstract::generic_morpher<SrcType, Exact>
     {
     protected:
 
@@ -123,8 +129,8 @@ namespace oln {
       {}
 
     public:
-      typedef abstract::generic_morpher<DestType, SrcType, Exact> super_type;
-      typedef oln_impl_type(SrcType) impl_type;
+      typedef abstract::generic_morpher<SrcType, Exact> super_type;
+      typedef typename image_id<Exact>::impl_type impl_type;
 
       /// Return the number of the image component to retrieve.
       unsigned
@@ -146,6 +152,8 @@ namespace oln {
       {
 	return ima_.impl();
       }
+
+
 
       static std::string
       name()
@@ -169,29 +177,21 @@ namespace oln {
     */
     template <class SrcType, class Exact>
     struct color_morpher :
-      public super_color_morpher<typename oln::mute<oln_exact_type(SrcType),
-						    ntg_comp_type(oln_value_type(SrcType))>::ret,
-				 SrcType,
-				 typename image_id<color_morpher<SrcType, Exact> >::exact_type >
+      public super_color_morpher<SrcType,
+				 typename image_id<color_morpher<SrcType, Exact> >::exact_type>
     {
       /// The type of the object instantiated. color_morpher can be derived.
       typedef typename image_id<color_morpher<SrcType, Exact> >::exact_type exact_type;
 
-      /// The image will be viewed as a Destype image.
-      typedef typename oln::mute<oln_exact_type(SrcType),
-	ntg_comp_type(oln_value_type(SrcType))>::ret DestType;
 
       typedef color_morpher<SrcType, Exact> self_type;
-      typedef oln_iter_type(SrcType) iter_type;
+      typedef typename image_id<exact_type>::iter_type iter_type;
       /*! <Type of the class iterator.*/
-      typedef oln_point_type(SrcType) point_type;
+      typedef typename image_id<exact_type>::point_type point_type;
       /*! <Type of the class point.*/
-      typedef ntg_comp_type(oln_value_type(SrcType)) value_type;
+      typedef typename image_id<exact_type>::value_type value_type;
       /*! <The value type of the decorated image.*/
-      typedef super_color_morpher<typename oln::mute<oln_exact_type(SrcType),
-	ntg_comp_type(oln_value_type(SrcType))>::ret,
-	SrcType,
-	typename image_id<color_morpher<SrcType, Exact> >::exact_type > super_type;
+      typedef super_color_morpher<SrcType, exact_type> super_type;
       /*! <The upper class. */
 
       /// Construct the color_morpher with an image \a ima and a component \a n.
@@ -264,25 +264,21 @@ namespace oln {
     */
     template <class SrcType, class Exact>
     struct color_morpher<const SrcType, Exact> :
-      public super_color_morpher<typename oln::mute<oln_exact_type(SrcType),
-						    ntg_comp_type(oln_value_type(SrcType))>::ret,
-				 SrcType,
-				 typename image_id<color_morpher<const SrcType, Exact> >::exact_type>
+      public super_color_morpher<const SrcType,
+				 typename image_id<color_morpher<const SrcType,
+								 Exact> >::exact_type>
     {
       /// The type of the object instantiated. color_morpher can be derived.
-      typedef typename image_id<color_morpher<SrcType, Exact> >::exact_type exact_type;
+      typedef typename image_id<color_morpher<const SrcType, Exact> >::exact_type exact_type;
 
-      typedef oln_point_type(SrcType) point_type;
+      typedef typename image_id<exact_type>::point_type point_type;
       /*! <The type of the class point.*/
-      typedef oln_iter_type(SrcType) iter_type;
+      typedef typename image_id<exact_type>::iter_type iter_type;
       /*! <The type of the class iterator.*/
-      typedef ntg_comp_type(oln_value_type(SrcType)) value_type;
+      typedef typename image_id<exact_type>::value_type value_type;
       /*! <The value of the decorated image.*/
 
-      typedef super_color_morpher<typename oln::mute<oln_exact_type(SrcType),
-	ntg_comp_type(oln_value_type(SrcType))>::ret,
-	SrcType,
-	typename image_id<color_morpher<const SrcType, Exact> >::exact_type> super_type;
+      typedef super_color_morpher<const SrcType, exact_type> super_type;
       /*! <The upper class.*/
 
       /// Construct the color_morpher with an image \a ima and a component \a n.

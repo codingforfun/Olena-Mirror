@@ -33,7 +33,7 @@ dist-local:
 	rm -f img/*
 
 MAINTAINERCLEANFILES = $(dist_noinst_DATA) \
-	./html/* ./img/* $(OUT_DIR)/*
+	./html/* ./img/* ./$(OUT_DIR)/*
 
 # ###
 # ### What gets installed.
@@ -44,10 +44,11 @@ docdir = $(datadir)/doc/@PACKAGE_TARNAME@
 install-data-hook:
 	$(mkinstalldirs) $(DESTDIR)$(docdir)
 	@ for p in $(dist_noinst_DATA); do \
+	  p1=`basename "$$p"`; \
 	  if test -f $$p; then d=.; else d=$(srcdir); fi; \
 	  if test -f $$d/$$p; then \
 	    echo " $(INSTALL_DATA) $$d/$$p $(DESTDIR)$(docdir)/$$p"; \
-	    $(INSTALL_DATA) $$d/$$p $(DESTDIR)$(docdir)/$$p; \
+	    $(INSTALL_DATA) $$d/$$p $(DESTDIR)$(docdir)/$$p1; \
 	  else : ; fi; \
           done
 

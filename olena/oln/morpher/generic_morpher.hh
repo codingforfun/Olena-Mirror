@@ -36,6 +36,7 @@
 # include <oln/basics2d.hh>
 # include <oln/basics3d.hh>
 
+
 namespace oln {
 
   /// Contain all the morpher relative declarations and functions.
@@ -46,36 +47,23 @@ namespace oln {
 
     namespace abstract {
 
-      /*! Traits for conditionnal inheritance used by the \a generic_morpher
-      **
-      ** It changes the exact type of the image in the input (the exact
-      ** type becomes the concrete morpher).
-      **
-      ** \see oln::morpher::generic_morpher
-      */
-      template <class T, class Exact>
-      struct gm_inherit;
+      template <class SrcType, class Exact>
+      class generic_morpher;
 
-      /// Return \a image1d with an \a exact_type of \a Exact.
-      template <class T, class Exact>
-      struct gm_inherit<oln::image1d<T>, Exact >
-      {
-	typedef oln::image1d<T, Exact> ret;
-      };
+    }
+  }
 
-      /// Return \a image2d with an \a exact_type of \a Exact.
-      template <class T, class Exact>
-      struct gm_inherit<oln::image2d<T>, Exact >
-      {
-	typedef oln::image2d<T, Exact> ret;
-      };
+  template <class Exact, class SrcType>
+  struct image_traits<morpher::abstract::generic_morpher<SrcType, Exact> >:
+    public image_traits<abstract::image_with_impl<typename image_id<Exact>::impl_type,
+						  typename image_id<Exact>::exact_type> >
+  {
 
-      /// Return \a image3d with an \a exact_type of \a Exact.
-      template <class T, class Exact>
-      struct gm_inherit<oln::image3d<T>, Exact >
-      {
-	typedef oln::image3d<T, Exact> ret;
-      };
+  };
+
+  namespace morpher {
+
+    namespace abstract {
 
       /*! The Abstract morpher class.
       **
@@ -89,10 +77,10 @@ namespace oln {
       ** \param Exact Exact type
       */
 
-      template <class DestType, class SrcType, class Exact>
-      class generic_morpher : public gm_inherit<
-	DestType,
-	Exact>::ret
+      template <class SrcType, class Exact>
+      class generic_morpher :
+	public oln::abstract::image_with_impl<typename image_id<Exact>::impl_type,
+					      typename image_id<Exact>::exact_type>
       {
       protected:
 
@@ -110,27 +98,31 @@ namespace oln {
       public:
 
 	/// The self type.
-	typedef generic_morpher<DestType, SrcType, Exact> self_type;
+	typedef generic_morpher<SrcType, Exact> self_type;
 
 	/// The exact type of the morpher.
 	typedef Exact exact_type;
 	/// The morpher point type.
-	typedef oln_point_type(DestType) point_type;
-	/// The morpher dpoint type.
-	typedef oln_dpoint_type(DestType) dpoint_type;
-	/// The morpher iterator type.
-	typedef oln_iter_type(DestType) iter_type;
+	typedef typename image_traits<exact_type>::point_type point_type;
+ 	/// The morpher dpoint type.
+	typedef typename image_traits<exact_type>::dpoint_type dpoint_type;
+ 	/// The morpher iterator type.
+	typedef typename image_traits<exact_type>::iter_type iter_type;
 	/// The morpher forward iterator type.
-	typedef oln_fwd_iter_type(DestType) fwd_iter_type;
+	typedef typename image_traits<exact_type>::fwd_iter_type fwd_iter_type;
 	/// The morpher backward iterator type.
-	typedef oln_bkd_iter_type(DestType) bkd_iter_type;
-	/// The morpher value type.
-	typedef oln_value_type(DestType) value_type;
+	typedef typename image_traits<exact_type>::bkd_iter_type bkd_iter_type;
+ 	/// The morpher value type.
+	typedef typename image_traits<exact_type>::value_type value_type;
 	/// The morpher size type.
-	typedef oln_size_type(DestType) size_type;
-	/// The morpher underlying implementation.
-	typedef oln_impl_type(DestType) impl_type;
+	typedef typename image_traits<exact_type>::size_type size_type;
+ 	/// The morpher underlying implementation.
+	typedef typename image_traits<exact_type>::impl_type impl_type;
 
+	typedef oln::image<image_traits<exact_type>::dim,
+			   value_type,
+			   impl_type,
+			   mlc::final> DestType;
 
 	/// Type of the decorated image.
 	typedef SrcType src_self_type;
@@ -155,25 +147,16 @@ namespace oln {
 	typedef oln_exact_type(SrcType) src_exact_type;
 
 	/// The upper class.
-	typedef typename gm_inherit<DestType, Exact>::ret super_type;
+	typedef oln::abstract::image_with_impl<impl_type,
+					       exact_type>
+	super_type;
+
 
 	/// Return the decorated image.
 	const SrcType&
 	get_ima() const
 	{
 	  return ima_;
-	}
-
-	/// Instantiate and return the image that the morpher simulates.
-	DestType*
-	unmorph() const
-	{
-	  DestType*			im = new DestType(to_exact(*this).size());
-	  oln_iter_type(DestType)	it(*im);
-
-	  for_all(it)
-	    (*im)[it] = to_exact(*this).operator[](it);
-	  return im;
 	}
 
 	/*! Default implementation of at.
