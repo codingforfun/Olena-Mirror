@@ -6,6 +6,10 @@
 #include <oln/utils/md5.hh>
 #include "data.hh"
 #include "check.hh"
+
+// There is a problem with the way of testing this algorithm.  Md5
+// will not return the same result since nagao result may differ a
+// little bit depending on the machine used (float).
 int main()
 {
   bool fail (false);
@@ -27,7 +31,10 @@ int main()
 
    fail = fail | (oln::utils::md5(ng) != oln::utils::key(data_key_g));
    if (!fail)
-     std::cout << "OK" << std::endl;
+     {
+       std::cout << "OK" << std::endl;
+       return true; // XFAIL
+     }
    else
     {
       std::cout << "FAIL" << std::endl;

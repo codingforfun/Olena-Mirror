@@ -1,5 +1,9 @@
 2004-04-13  Giovanni Palma  <giovanni@lrde.epita.fr>
 
+	* tests/convol/tests/nagao: Disable test.
+
+2004-04-13  Giovanni Palma  <giovanni@lrde.epita.fr>
+
 	* tests/convol/tests/md5_convol_fast_gaussian_hh3: Correct the
 	test to make it success on mac.
 
