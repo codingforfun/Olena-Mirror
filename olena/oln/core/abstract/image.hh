@@ -39,6 +39,9 @@ namespace oln {
 
   } // end of namespace abstract
 
+  template<class E>
+  struct image_id;
+
   template<class Ima>
   struct image_traits;
 

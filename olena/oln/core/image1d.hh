@@ -30,8 +30,8 @@
 
 # include <oln/core/impl/image_array1d.hh>
 // # include <oln/io/readable.hh>
-// # include <oln/core/image.hh>
-# include <oln/core/abstract/image_with_impl.hh>
+# include <oln/core/image.hh>
+// # include <oln/core/abstract/image_with_impl.hh>
 # include <iostream>
 # include <stdlib.h>
 
@@ -41,7 +41,20 @@ namespace oln {
   class image1d; // fwd_decl
 
   template<class T, class E>
-  struct image_traits<image1d<T, E> > : public image_traits<abstract::image_with_impl<1, T, oln::impl::image_array1d<T, typename mlc::exact_vt<image1d<T, E>, E>::ret>, typename mlc::exact_vt<image1d<T, E>, E>::ret> >
+  struct image_id<image1d<T, E> >
+  {
+    enum{dim = 1};
+    typedef T value_type;
+    typedef typename mlc::exact_vt<image1d<T, E>, E>::ret exact_type;
+    typedef impl::image_array1d<T, exact_type> impl_type;
+  };
+
+  template<class T, class E>
+  struct image_traits<image1d<T, E> >: 
+    public image_traits<image<image_id<image1d<T, E> >::dim, 
+			      typename image_id<image1d<T, E> >::value_type, 
+			      typename image_id<image1d<T, E> >::impl_type, 
+			      typename image_id<image1d<T, E> >::exact_type> >
   {
 
   };
@@ -50,14 +63,22 @@ namespace oln {
   // images with data ---conversely to proxy images
 
   template<class T, class E>
-  class image1d : public abstract::image_with_impl<1, T, oln::impl::image_array1d<T, typename mlc::exact_vt<image1d<T, E>, E>::ret>, typename mlc::exact_vt<image1d<T, E>, E>::ret>
+  class image1d: 
+    public image<image_id<image1d<T, E> >::dim, 
+		 typename image_id<image1d<T, E> >::value_type, 
+		 typename image_id<image1d<T, E> >::impl_type, 
+		 typename image_id<image1d<T, E> >::exact_type>
   {
   public:
 
     typedef image1d<T, E> self_type;
-    typedef typename mlc::exact_vt<image1d<T, E>, E>::ret exact_type; 
-    typedef oln::impl::image_array1d<T, exact_type> impl_type;
-    typedef oln::abstract::image_with_impl<1, T, impl_type, exact_type> super_type;
+    typedef typename image_id<image1d<T, E> >::value_type value_type;
+    typedef typename image_id<image1d<T, E> >::exact_type exact_type; 
+    typedef typename image_id<image1d<T, E> >::impl_type impl_type;
+    typedef image<image_id<image1d<T, E> >::dim, 
+		  value_type, 
+		  impl_type, 
+		  exact_type> super_type;
  
     image1d() :
       super_type()

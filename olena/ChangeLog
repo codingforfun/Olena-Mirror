@@ -1,3 +1,19 @@
+2003-07-21  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/image1d.hh,
+	oln/core/image2d.hh,
+	oln/core/image3d.hh: Modify inheritance. Add image_id
+	structure.
+
+	* oln/core/image.hh: Add image_id structure.
+
+	* oln/core/abstract/image.hh: Declare image_id structure.
+
+	* oln/core/abstract/image_with_impl.hh: Suppress Dim and Impl
+	parameters. Move ostream operators...
+	
+	* oln/core/abstract/image_with_dim.hh: ...here.
+
 2003-07-18  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/border1d.hh, oln/core/border2d.hh,
@@ -37,7 +53,7 @@
 	
 	* tests/core/tests/image1: New test.
 	
-2003-02-25  David Lesage  <david@lrde.epita.fr>
+2003-07-16  David Lesage  <david@lrde.epita.fr>
 
 	Major changes, redesign the image hierarchy.
 

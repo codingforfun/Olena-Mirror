@@ -374,4 +374,60 @@ namespace oln {
   } // end of namespace abstract
 } // end of namespace oln
 
+
+
+template<class Exact> inline std::ostream&
+operator<<(std::ostream& o, const oln::abstract::image_with_dim<1, Exact>& ima)
+{
+  if (to_exact(ima).impl() == 0)
+    return o << "null";
+  for (oln::coord col = 0; col < ima.ncols(); ++col)
+    o << ima(col) << ' ';
+  o << std::endl;
+  return o;
+}
+
+template<class Exact> inline std::ostream&
+operator<<(std::ostream& o, const oln::abstract::image_with_dim<2, Exact>& ima)
+{
+  typedef typename oln::image_id<Exact>::value_type value_type;
+  if (to_exact(ima).impl() == 0)
+    return o << "null";
+
+  for (oln::coord row = 0; row < ima.nrows(); ++row)
+    {
+      for (oln::coord col = 0; col < ima.ncols(); ++col)
+	{
+	  o.width(ntg_max_print_width(value_type));
+	  o << ima(row,col) << ' ';
+	}
+      o << std::endl;
+    }
+  return o;
+}
+
+template<class Exact> inline std::ostream&
+operator<<(std::ostream& o, const oln::abstract::image_with_dim<3, Exact>& ima)
+{
+  typedef typename oln::image_id<Exact>::value_type value_type;
+
+  if (to_exact(ima).impl() == 0)
+    return o << "null";
+  for (oln::coord slice = 0; slice < ima.nslices(); ++slice) {
+    o << "### " << slice << std::endl;
+    for (oln::coord row = 0; row < ima.nrows(); ++row) {
+      for (oln::coord col = 0; col < ima.ncols(); ++col)
+	{
+	  o.width(ntg_max_print_width(value_type));
+	  o << ima(slice, row, col) << ' ';
+	}
+      o << std::endl;
+    }
+  }
+  return o;
+}
+
+
+
+
 #endif // ! OLENA_CORE_ABSTRACT_IMAGE_WITH_DIM_HH

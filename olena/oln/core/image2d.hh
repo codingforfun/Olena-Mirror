@@ -30,8 +30,8 @@
 
 # include <oln/core/impl/image_array2d.hh>
 // # include <oln/io/readable.hh>
-// # include <oln/core/image.hh>
-# include <oln/core/abstract/image_with_impl.hh>
+# include <oln/core/image.hh>
+// # include <oln/core/abstract/image_with_impl.hh>
 
 # include <iostream>
 # include <stdlib.h>
@@ -42,22 +42,42 @@ namespace oln {
   class image2d; // fwd_decl
 
   template<class T, class E>
-  struct image_traits<image2d<T, E> > 
-    : public image_traits<abstract::image_with_impl<2, T, impl::image_array2d<T, typename mlc::exact_vt<image2d<T, E>, E>::ret>, typename mlc::exact_vt<image2d<T, E>, E>::ret> >
+  struct image_id<image2d<T, E> >
+  {
+    enum{dim = 2};
+    typedef T value_type;
+    typedef typename mlc::exact_vt<image2d<T, E>, E>::ret exact_type;
+    typedef impl::image_array2d<T, exact_type> impl_type;
+  };
+
+  template<class T, class E>
+  struct image_traits<image2d<T, E> >: 
+    public image_traits<image<image_id<image2d<T, E> >::dim, 
+			      typename image_id<image2d<T, E> >::value_type, 
+			      typename image_id<image2d<T, E> >::impl_type, 
+			      typename image_id<image2d<T, E> >::exact_type> >
   {};
 
   // client can use image2d; instances are real images, that is,
   // images with data ---conversely to proxy images
 
   template<class T, class E>
-  class image2d : public abstract::image_with_impl<2, T, oln::impl::image_array2d<T, typename mlc::exact_vt<image2d<T, E>, E>::ret>, typename mlc::exact_vt<image2d<T, E>, E>::ret>
+  class image2d: 
+    public image<image_id<image2d<T, E> >::dim, 
+		 typename image_id<image2d<T, E> >::value_type, 
+		 typename image_id<image2d<T, E> >::impl_type, 
+		 typename image_id<image2d<T, E> >::exact_type>
   {
   public:
 
     typedef image2d<T, E> self_type;
-    typedef typename mlc::exact_vt<image2d<T, E>, E>::ret exact_type;
-    typedef oln::impl::image_array2d<T, exact_type> impl_type;
-    typedef oln::abstract::image_with_impl<2, T, impl_type, exact_type> super_type;  
+    typedef typename image_id<image2d<T, E> >::value_type value_type;
+    typedef typename image_id<image2d<T, E> >::exact_type exact_type;
+    typedef typename image_id<image2d<T, E> >::impl_type impl_type;
+    typedef oln::image<image_id<image2d<T, E> >::dim, 
+		       value_type, 
+		       impl_type, 
+		       exact_type> super_type;  
 
     image2d() :
       super_type()
@@ -80,27 +100,27 @@ namespace oln {
     {}
 
     // self& operator=(self rhs) // shallow assignment
-//     {
-//       this->super::operator=(rhs);
-//       return *this;
-//     }
+    //     {
+    //       this->super::operator=(rhs);
+    //       return *this;
+    //     }
 
-//     // io
-//     image2d(const io::internal::anything& r) : super()
-//     {
-//       r.assign(*this);
-//     }
-//     image2d& operator=(const io::internal::anything& r)
-//     {
-//       return r.assign(*this);
-//     }
+    //     // io
+    //     image2d(const io::internal::anything& r) : super()
+    //     {
+    //       r.assign(*this);
+    //     }
+    //     image2d& operator=(const io::internal::anything& r)
+    //     {
+    //       return r.assign(*this);
+    //     }
 
-//     self clone() const // deep copy
-//     {
-//       self output(nrows(), ncols(), this->border());
-//       _clone_to(output.data());
-//       return output;
-//     }
+    //     self clone() const // deep copy
+    //     {
+    //       self output(nrows(), ncols(), this->border());
+    //       _clone_to(output.data());
+    //       return output;
+    //     }
 
     static std::string name()
     {
@@ -120,7 +140,7 @@ namespace oln {
   };
 
 
-//   _ImageForDim(2, image2d)
+  //   _ImageForDim(2, image2d)
 
 } // end of oln
 

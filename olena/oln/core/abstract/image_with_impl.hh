@@ -36,13 +36,14 @@ namespace oln {
 
   namespace abstract {
 
-    template<unsigned Dim, class T, class Impl, class Exact>
+    template<class Impl, class Exact>
     class image_with_impl; // fwd_decl
 
   } // end of namespace abstract
 
-    template<unsigned Dim, class T, class Impl, class Exact>
-    struct image_traits<abstract::image_with_impl<Dim, T, Impl, Exact> >: public image_traits<abstract::image_with_dim<Dim, Exact> >, public image_traits<abstract::image_with_type<T, Exact> >
+    template<class Impl, class Exact>
+    struct image_traits<abstract::image_with_impl<Impl, Exact> >: 
+    public image_traits<abstract::image_with_dim<image_id<Exact>::dim, Exact> >, public image_traits<abstract::image_with_type<typename image_id<Exact>::value_type, Exact> >
     {
       typedef Impl impl_type;
     };
@@ -50,8 +51,10 @@ namespace oln {
 
   namespace abstract {
 
-    template<unsigned Dim, class T, class Impl, class Exact>
-    class image_with_impl: public image_with_dim<Dim, Exact>, public image_with_type<T, Exact>
+    template<class Impl, class Exact>
+    class image_with_impl: 
+      public image_with_dim<image_id<Exact>::dim, Exact>, 
+      public image_with_type<typename image_id<Exact>::value_type, Exact>
     {
     public:
       typedef typename image_traits<Exact>::point_type point_type;
@@ -62,10 +65,10 @@ namespace oln {
       typedef typename image_traits<Exact>::size_type size_type;
       typedef typename image_traits<Exact>::impl_type impl_type;
       
-      typedef image_with_impl<Dim, T, Impl, Exact> self_type;
+      typedef image_with_impl<Impl, Exact> self_type;
       typedef Exact exact_type;
-      typedef image_with_dim<Dim, Exact> super_image_with_dim;
-      typedef image_with_type<T, Exact> super_image_with_type;
+      typedef image_with_dim<image_id<Exact>::dim, Exact> super_image_with_dim;
+      typedef image_with_type<typename image_id<Exact>::value_type, Exact> super_image_with_type;
 
       const value_type& at(const point_type& p) const
       {
@@ -127,7 +130,6 @@ namespace oln {
       {
 	return
 	  std::string("abstract::image_with_impl<")
-	  + Dim + ", "
 	  + Impl::name() + ", "
 	  + Exact::name() + ">";
       }
@@ -194,56 +196,5 @@ namespace oln {
 
   } // end of namespace abstract
 } // end of namespace oln
-
-template<class T, class Impl, class Exact> inline std::ostream&
-operator<<(std::ostream& o, const oln::abstract::image_with_impl<1, T, Impl, Exact>& ima)
-{
-  if (ima.impl() == 0)
-    return o << "null";
-  for (oln::coord col = 0; col < ima.ncols(); ++col)
-    o << ima(col) << ' ';
-  o << std::endl;
-  return o;
-}
-
-template<class T, class Impl, class Exact> inline std::ostream&
-operator<<(std::ostream& o, const oln::abstract::image_with_impl<2, T, Impl, Exact>& ima)
-{
-  typedef typename oln::image_traits<oln::abstract::image_with_impl<2, T, Impl, Exact> >::value_type value_type;
-  if (ima.impl() == 0)
-    return o << "null";
-
-  for (oln::coord row = 0; row < ima.nrows(); ++row)
-    {
-      for (oln::coord col = 0; col < ima.ncols(); ++col)
-	{
-	  o.width(ntg_max_print_width(value_type));
-	  o << ima(row,col) << ' ';
-	}
-      o << std::endl;
-    }
-  return o;
-}
-
-template<class T, class Impl, class Exact> inline std::ostream&
-operator<<(std::ostream& o, const oln::abstract::image_with_impl<3, T,  Impl, Exact>& ima)
-{
-  typedef typename oln::image_traits<oln::abstract::image_with_impl<3, T, Impl, Exact> >::value_type value_type;
-
-  if (ima.impl() == 0)
-    return o << "null";
-  for (oln::coord slice = 0; slice < ima.nslices(); ++slice) {
-    o << "### " << slice << std::endl;
-    for (oln::coord row = 0; row < ima.nrows(); ++row) {
-      for (oln::coord col = 0; col < ima.ncols(); ++col)
-	{
-	  o.width(ntg_max_print_width(value_type));
-	  o << ima(slice, row, col) << ' ';
-	}
-      o << std::endl;
-    }
-  }
-  return o;
-}
 
 #endif // ! OLENA_CORE_ABSTRACT_IMAGE_WITH_IMPL_HH
