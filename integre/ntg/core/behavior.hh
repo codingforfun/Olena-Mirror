@@ -335,7 +335,7 @@ namespace ntg
 	ntg_type(P) tmp = cycle_op::exec(std::abs(ntg_signed_cast(rhs)),
 					 ntg_max_val(T) - ntg_min_val(T));
 
-	if (rhs < 0)
+	if (to_ntg(rhs) < 0)
 	  tmp = -tmp;
 
 	if (tmp < ntg_min_val(T))

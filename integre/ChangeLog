@@ -1,3 +1,9 @@
+2003-06-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/core/behavior.hh: Fix bug BuiltinToCycleAssignment.
+
+	* tests/types/int_sc5: New test.
+	
 2003-05-15  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/utils/tests/debug1: Fix warning.
