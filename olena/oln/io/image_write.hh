@@ -31,6 +31,7 @@
 # include <oln/config/system.hh>
 # include <oln/core/abstract/image_with_dim.hh>
 # include <oln/core/image2d.hh>
+# include <oln/core/image1d.hh>
 
 # include <oln/io/image_base.hh>
 # include <oln/io/pnm_write.hh>

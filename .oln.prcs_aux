@@ -82,7 +82,7 @@
 (integre/ntg/int.hh 1714 1052854365 s/0_int.hh 1.3)
 (metalic/tests/check/compile.hh 343 1043267165 p/35_compile.hh 1.1)
 (doc/demo/morpholena-ops.cc 537 1047049040 p/11_morpholena 1.3)
-(olena/oln/io/image_write.hh 4457 1059755333 t/42_image_writ 1.4)
+(olena/oln/io/image_write.hh 4489 1059755413 t/42_image_writ 1.5)
 (integre/ntg/Makefile.am 1475 1052854365 q/36_Makefile.a 1.8)
 (integre/ntg/utils/cast.hh 5833 1059583756 i/26_cast.hh 1.3.1.8)
 (integre/tests/types/tests/unsafe1 50 1030375252 h/2_unsafe1 1.1)
