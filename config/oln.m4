@@ -319,6 +319,29 @@ AC_DEFUN([AC_CXX_NUMERIC_LIMITS],
   AC_LANG_POP([C++])
 ])
 
+# Recent versions of SWIG use -nountime instead of -c
+
+AC_DEFUN([AC_CHECK_SWIG_FLAGS],
+[dnl
+  AC_CACHE_CHECK([for SWIG supports for -noruntime],
+                  [ac_cv_swig_flags],
+                  [if swig -help 2>&1 | grep -- "-noruntime" > /dev/null 2>&1; then
+			ac_cv_swig_flags=recent
+                      else
+                        ac_cv_swig_flags=old
+                   fi])
+   case "$ac_cv_swig_flags" in
+     recent)
+	SWIG_FLAGS="-noruntime"
+	;;
+     old)
+	SWIG_FLAGS="-c"
+      	;;
+   esac
+
+   AC_SUBST([SWIG_FLAGS])
+])
+
 # AC_CXX_CHECK_MATH([FUNCTION], [MACRO_NAME], [TEST])
 
 # Checks for the availability of a particular math function

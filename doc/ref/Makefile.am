@@ -1,6 +1,10 @@
 # ###
 # ### General definitions
 # ###
+include $(top_srcdir)/olena/oln/makefile.src
+include $(top_srcdir)/metalic/mlc/makefile.src
+include $(top_srcdir)/integre/ntg/makefile.src
+
 EXTRA_DIST = out/exdoc.config.in
 olnsrc = $(top_srcdir)/olena/oln
 DOXYGEN = doxygen
@@ -9,22 +13,27 @@ OUT_DIR = "out"
 IMG_CONV = $(srcdir)/img_conv.pl
 CLEANFILES = html.tar.gz \
 	oln-ref.pdf
-
+HDRS_DEP = $(NTG_DEP)
+HDRS_DEP += $(MLC_DEP)
+HDRS_DEP += $(OLN_DEP)
+VPATH += $(top_srcdir)/olena/oln:$(top_srcdir)/integre/ntg:$(top_srcdir)/metalic/mlc:$(top_builddir)/olena/oln
 
 doc: html.tar.gz oln-ref.pdf
 
-doxy:
-	$(EXDOC) --config=$(OUT_DIR)/exdoc.config  --output-dir=$(OUT_DIR) --input-dir=$(top_srcdir)
+html.tar.gz: $(HDRS_DEP)
 	mkdir -p img
+	$(EXDOC) --config=$(OUT_DIR)/exdoc.config  --output-dir=$(OUT_DIR) --input-dir=$(top_srcdir)/olena
+	cd $(OUT_DIR) && $(MAKE) -f makefile
+	$(EXDOC) --config=$(OUT_DIR)/exdoc.config  --output-dir=$(OUT_DIR) --input-dir=$(top_srcdir)/integre
+	cd $(OUT_DIR) && $(MAKE) -f makefile
+	$(EXDOC) --config=$(OUT_DIR)/exdoc.config  --output-dir=$(OUT_DIR) --input-dir=$(top_srcdir)/metalic
 	cd $(OUT_DIR) && $(MAKE) -f makefile
 	$(IMG_CONV) $(top_srcdir)/olena/img img preserve
 	$(IMG_CONV) img img nopreserve
 	$(DOXYGEN) doxygen.config
-
-html.tar.gz: doxy
 	$(TAR) -czf $@ html
 
-oln-ref.pdf: doxy
+oln-ref.pdf: html.tar.gz
 	make -C ./latex || echo "Discarding problems..." # FIXME: Find a better way to use large graph with pdflatex.
 	cp latex/refman.pdf ./$@
 
@@ -63,4 +72,7 @@ uninstall-hook:
 	  echo " rm -f $(DESTDIR)$(docdir)/$$p1"; \
 	  rm -f $(DESTDIR)$(docdir)/$$p1; \
 	done
+
+
+
 

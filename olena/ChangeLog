@@ -1,3 +1,9 @@
+2004-04-13  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* oln/makefile.src: Add file.
+
+	* oln/Makefile.am: Move source listing into 'makefile.src'.
+
 2004-04-12  Niels Van Vliet  <niels@lrde.epita.fr>
 
 	* olena/oln/core/abstract/image.hh: Fix macro oln_concrete_type.

@@ -1,3 +1,9 @@
+2004-04-13  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* ntg/Makefile.am: Move source listing into 'makefile.src'.
+
+	* ntg/makefile.src: Add file.
+
 2004-03-30  Niels Van Vliet  <niels@lrde.epita.fr>
 	* integre/ntg/core/pred_succ.hh: Add default_less.
 	* integre/ntg/color/color.hh: Add default_less specialization.

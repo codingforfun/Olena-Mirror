@@ -1,11 +1,9 @@
-## Process this file with Automake to produce Makefile.in -*- Makefile -*-
+##
+## List of headers in integre
+## Include this file to have access to their name.
+##
 
-EXTRA_DIST = makefile.src
-
-include $(srcdir)/makefile.src
-
-ntgdir = $(includedir)/ntg
-nobase_ntg_HEADERS =				\
+NTG_DEP =					\
   all.hh					\
   basics.hh					\
   bin.hh					\
