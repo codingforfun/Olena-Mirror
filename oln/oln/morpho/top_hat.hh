@@ -35,9 +35,9 @@
 
 namespace oln {
   namespace morpho {
-#   include <oln/morpho/top_hat.inc>
+# include <oln/morpho/top_hat.inc>
     namespace fast {
-#     include <oln/morpho/top_hat.inc>
+# include <oln/morpho/top_hat.inc>
     }
   }
 }

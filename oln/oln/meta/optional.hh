@@ -59,7 +59,7 @@ namespace oln {
   // foo(1);         // T = none
   // foo(1, 2);      // T = int
   // foo(1, "bar");  // T = char *
-#define Optional(T, v)  ((Option<T> v) = none())
+# define Optional(T, v)  ((Option<T> v) = none())
 
   // Depending on the presence of optional argument, we have different
   // specialization of the algorithm. Here are several helper classes
@@ -85,7 +85,7 @@ namespace oln {
     {}
   };
 
-#define DoNothingWhenNone(Behaviour) \
+# define DoNothingWhenNone(Behaviour) \
   template <>					\
   struct optional_behaviour<Behaviour, none>  	\
   {						\

@@ -76,7 +76,7 @@ GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, bool);
 //
 /////////////////////////////////////////////////////
 
-#define GLOBAL_ARITH_OP_BUILTIN(Op, Name, Builtin)			\
+# define GLOBAL_ARITH_OP_BUILTIN(Op, Name, Builtin)			\
 template <class T2>							\
 inline typename								\
 internal::deduce_from_traits<internal::operator_##Name##_traits, 	\
@@ -101,7 +101,7 @@ Op(Builtin lhs, const rec_value<T2>& rhs)				\
 //
 ////////////////////////////////////////////////////////////////////////
 
-#define GLOBAL_ARITH_OP(Op, Name)						\
+# define GLOBAL_ARITH_OP(Op, Name)						\
 template <class T1, class T2>							\
 inline typename									\
 internal::deduce_from_traits<internal::operator_##Name##_traits, T1, T2>::ret	\

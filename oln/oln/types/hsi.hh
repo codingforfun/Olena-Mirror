@@ -28,7 +28,7 @@
 #ifndef OLENA_VALUE_HSI_HH
 # define OLENA_VALUE_HSI_HH
 
-#include <oln/types/color.hh>
+# include <oln/types/color.hh>
 
 namespace oln {
 

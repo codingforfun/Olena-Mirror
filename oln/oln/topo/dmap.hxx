@@ -120,7 +120,7 @@ namespace oln {
     // in two and three dimensions, Pattern Recognition Letters 12 (1991) 671-682
 
     // unbiased minimal mean square error for integer local distances (Table 5)
-#define CHAMFER2(Name, I, J, D, E) \
+# define CHAMFER2(Name, I, J, D, E) \
     inline const chamfer<int>& Name##_##I##_##J()		\
      { 								\
        static const chamfer<int> tmp =                          \
@@ -128,7 +128,7 @@ namespace oln {
        return tmp;						\
      }
 
-#define CHAMFER3(Name, I, J, K, D, E)				\
+# define CHAMFER3(Name, I, J, K, D, E)				\
     inline const chamfer<int>& Name##_##I##_##J##_##K()	\
     {								\
       static const chamfer<int> tmp =				\
@@ -187,8 +187,8 @@ namespace oln {
       return mk_chamfer_5x5(1/coef, sqrt(2.f)/coef, sqrt(5.f)/coef);
     }
 
-#undef CHAMFER2
-#undef CHAMFER3
+# undef CHAMFER2
+# undef CHAMFER3
 
 
     template <class T, class T2>

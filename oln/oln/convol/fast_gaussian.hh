@@ -28,9 +28,9 @@
 #ifndef OLENA_CONVOL_FAST_GAUSSIAN_FILTER_HH__
 # define OLENA_CONVOL_FAST_GAUSSIAN_FILTER_HH__
 
-#include <oln/basics.hh>
-#include <oln/convert/basics.hh>
-#include <oln/types/predecls.hh>
+# include <oln/basics.hh>
+# include <oln/convert/basics.hh>
+# include <oln/types/predecls.hh>
 
 //
 // Gaussian filter implementation from
@@ -79,6 +79,6 @@ namespace oln {
   }
 }
 
-#include <oln/convol/fast_gaussian.hxx>
+# include <oln/convol/fast_gaussian.hxx>
 
 #endif // OLENA_CONVOL_FAST_GAUSSIAN_FILTER_HH__

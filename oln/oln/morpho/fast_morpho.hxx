@@ -34,7 +34,7 @@
 // structuring elements". Pattern Recognition Letters,
 // 17(14):1451-1460, 1996.
 
-#include <oln/utils/histogram.hh>
+# include <oln/utils/histogram.hh>
 
 namespace oln {
   namespace morpho {

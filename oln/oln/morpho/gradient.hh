@@ -36,9 +36,9 @@
 
 namespace oln {
   namespace morpho {
-#   include <oln/morpho/gradient.inc>
+# include <oln/morpho/gradient.inc>
     namespace fast {
-#     include <oln/morpho/gradient.inc>
+# include <oln/morpho/gradient.inc>
     }
   }
 }

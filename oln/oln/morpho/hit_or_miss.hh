@@ -38,9 +38,9 @@
 
 namespace oln {
   namespace morpho {
-#   include <oln/morpho/hit_or_miss.inc>
+# include <oln/morpho/hit_or_miss.inc>
     namespace fast {
-#     include <oln/morpho/hit_or_miss.inc>
+# include <oln/morpho/hit_or_miss.inc>
     }
   }
 }

@@ -81,7 +81,7 @@ namespace oln {
     }
 
     // plus_abs
-#if 0
+# if 0
     // FIXME: Move this to arith/ops.hh
     // Express f_plus_abs in term of plus_abs, and leave plus_abs here.
 
@@ -127,7 +127,7 @@ namespace oln {
       return f(val);
     }
 
-#endif
+# endif
 
   } // end of math
 

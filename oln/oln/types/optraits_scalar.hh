@@ -28,7 +28,7 @@
 #ifndef OLENA_VALUE_OPTRAITS_SCALAR_HH_
 # define OLENA_VALUE_OPTRAITS_SCALAR_HH_
 
-#include <typeinfo>
+# include <typeinfo>
 
 # include <oln/meta/type.hh>
 

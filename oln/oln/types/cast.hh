@@ -99,7 +99,7 @@ namespace oln {
 	  return (typename typetraits<Tdest>::storage_type) round(val);
 	}
       };
-#if 0 // useless as sfloat == float alias
+# if 0 // useless as sfloat == float alias
       template<class Tdest>
       struct _round<Tdest, float> {
 	static const Tdest doit(const float& val)
@@ -112,7 +112,7 @@ namespace oln {
 	  return (typename typetraits<Tdest>::storage_type) roundf(val);
 	}
       };
-#endif
+# endif
       template<class Tdest, class Tsrc>
       struct _round<rec_float<Tdest>, rec_float<Tsrc> > {
 	static const Tdest doit(const rec_float<Tsrc>& val)

@@ -26,10 +26,10 @@
 // Public License.
 
 #ifndef	OLENA_CORE_DPOINT1D_HXX
-#define OLENA_CORE_DPOINT1D_HXX
+# define OLENA_CORE_DPOINT1D_HXX
 
-#include <oln/core/point1d.hh>
-#include <iostream>
+# include <oln/core/point1d.hh>
+# include <iostream>
 
 namespace oln {
 

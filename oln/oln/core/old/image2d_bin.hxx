@@ -26,12 +26,12 @@
 // Public License.
 
 #ifndef OLENA_CORE_IMAGE2D_BIN_HXX
-#define OLENA_CORE_IMAGE2D_BIN_HXX
+# define OLENA_CORE_IMAGE2D_BIN_HXX
 
-#include <oln/core/internal/image2d_data.hh>
-#include <oln/value/bin.hh>
-#include <oln/core/contract.hh>
-#include <oln/core/point2d.hh>
+# include <oln/core/internal/image2d_data.hh>
+# include <oln/value/bin.hh>
+# include <oln/core/contract.hh>
+# include <oln/core/point2d.hh>
 
 
 namespace oln {

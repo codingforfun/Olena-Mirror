@@ -132,6 +132,6 @@ namespace oln {
 
 } // end of oln
 
-#include <oln/morpho/watershed.hxx>
+# include <oln/morpho/watershed.hxx>
 
 #endif // ! OLENA_MORPHO_WATERSHED_HH

@@ -36,9 +36,9 @@
 
 namespace oln {
   namespace morpho {
-#   include <oln/morpho/laplacian.inc>
+# include <oln/morpho/laplacian.inc>
     namespace fast {
-#     include <oln/morpho/laplacian.inc>
+# include <oln/morpho/laplacian.inc>
     }
   }
 }

@@ -78,6 +78,6 @@ namespace oln {
 inline std::ostream&
 operator<<(std::ostream& o, const oln::dpoint1d& p);
 
-#include <oln/core/dpoint1d.hxx>
+# include <oln/core/dpoint1d.hxx>
 
 #endif // ! OLENA_CORE_DPOINT1D_HH

@@ -1,10 +1,10 @@
 #ifndef SWILENA_TYPEDEFS_HH
-#define SWILENA_TYPEDEFS_HH
-#include <oln/types/all.hh>
-#include <oln/basics1d.hh>
-#include <oln/basics2d.hh>
-#include <oln/basics3d.hh>
-#include <oln/utils/copy.hh>
+# define SWILENA_TYPEDEFS_HH
+# include <oln/types/all.hh>
+# include <oln/basics1d.hh>
+# include <oln/basics2d.hh>
+# include <oln/basics3d.hh>
+# include <oln/utils/copy.hh>
   typedef oln::image1d<oln:: bin > image1d_bin;
   typedef oln::image1d<oln:: int_u8 > image1d_u8;
   typedef oln::image1d<oln:: int_u16 > image1d_u16;

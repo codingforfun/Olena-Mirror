@@ -175,15 +175,15 @@ namespace oln {
 
       void precondition_hold_large(coord slice, coord row, coord col) const
       {
-#ifndef NDEBUG
+# ifndef NDEBUG
 	if (! hold_large(slice, row, col))
 	  std::cerr << "image3d overflow at ("
 		    << slice << ","  << row << "," << col << ")" << std::endl;
-#else
+# else
 	(void) slice;
 	(void) row;
 	(void) col;
-#endif
+# endif
       }
 
       // Although this is a "const" accessor, it really needs

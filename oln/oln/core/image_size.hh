@@ -47,7 +47,7 @@ namespace oln {
   template< unsigned Dim >
   struct image_size_for_dim {};
 
-#define _ImageSizeForDim(DIM, TYPE)		\
+# define _ImageSizeForDim(DIM, TYPE)		\
   template<>					\
   struct image_size_for_dim<DIM> {		\
     typedef TYPE ret;				\

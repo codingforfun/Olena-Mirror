@@ -26,7 +26,7 @@
 // Public License.
 
 #ifndef OLENA_CORE_INTERNAL_FAKE_HH
-#define OLENA_CORE_INTERNAL_FAKE_HH
+# define OLENA_CORE_INTERNAL_FAKE_HH
 
 // Add the following line
 //   friend class internal::_fake;

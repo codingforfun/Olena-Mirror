@@ -28,20 +28,20 @@
 #ifndef OLENA_MORPHO_EXTREMA_KILLER_HH
 # define OLENA_MORPHO_EXTREMA_KILLER_HH
 
-#include <oln/config/system.hh>
-#include <oln/basics2d.hh>
-#include <oln/types/all.hh>
-#include <oln/morpho/extrema.hh>
-#include <oln/arith/ops.hh>
-#include <oln/morpho/watershed.hh>
+# include <oln/config/system.hh>
+# include <oln/basics2d.hh>
+# include <oln/types/all.hh>
+# include <oln/morpho/extrema.hh>
+# include <oln/arith/ops.hh>
+# include <oln/morpho/watershed.hh>
 
-#include <oln/level/connected.hh>
-#include <oln/level/lut.hh>
+# include <oln/level/connected.hh>
+# include <oln/level/lut.hh>
 
-#include <oln/level/fill.hh>
+# include <oln/level/fill.hh>
 
-#include <set>
-#include <algorithm>
+# include <set>
+# include <algorithm>
 
 
 namespace oln {

@@ -34,9 +34,9 @@
 
 namespace oln {
   namespace morpho {
-#   include <oln/morpho/opening.inc>
+# include <oln/morpho/opening.inc>
     namespace fast {
-#     include <oln/morpho/opening.inc>
+# include <oln/morpho/opening.inc>
     }
   }
 }

@@ -36,9 +36,9 @@
 
 namespace oln {
   namespace morpho {
-#   include <oln/morpho/thickening.inc>
+# include <oln/morpho/thickening.inc>
     namespace fast {
-#     include <oln/morpho/thickening.inc>
+# include <oln/morpho/thickening.inc>
     }
   }
 }

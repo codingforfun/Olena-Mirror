@@ -106,7 +106,7 @@ namespace oln {
 
 
 
-#include <oln/core/image2d_bin.hxx>
+# include <oln/core/image2d_bin.hxx>
 
 
 #endif // ! OLENA_CORE_IMAGE2D_BIN_HH

@@ -79,6 +79,6 @@ namespace oln {
 inline std::ostream&
 operator<<(std::ostream& o, const oln::dpoint3d& p);
 
-#include <oln/core/dpoint3d.hxx>
+# include <oln/core/dpoint3d.hxx>
 
 #endif // ! OLENA_CORE_DPOINT3D_HH

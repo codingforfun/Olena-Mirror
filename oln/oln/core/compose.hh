@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_COMPOSE_HH
 # define OLENA_CORE_COMPOSE_HH
 
-#include <functional>
+# include <functional>
 
 namespace oln {
 

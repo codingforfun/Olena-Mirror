@@ -28,8 +28,8 @@
 #ifndef OLENA_META_ARRAY_HH
 # define OLENA_META_ARRAY_HH
 
-#include <oln/meta/array1d.hh>
-#include <oln/meta/array2d.hh>
-#include <oln/meta/array3d.hh>
+# include <oln/meta/array1d.hh>
+# include <oln/meta/array2d.hh>
+# include <oln/meta/array3d.hh>
 
 #endif // ! OLENA_META_ARRAY_HH

@@ -72,7 +72,7 @@ Exact(DPointable)::dpoint
 
   template<unsigned DIM>  struct image_for_dim {};
 
-#define _ImageForDim(DIM, TYPE)                 \
+# define _ImageForDim(DIM, TYPE)                 \
   template<>                                    \
   struct image_for_dim<DIM> {                   \
     template<class T>                           \

@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_CONTRACT_HH
 # define OLENA_CORE_CONTRACT_HH
 
-#  include <oln/config/system.hh>
+# include <oln/config/system.hh>
 
 # ifdef NDEBUG
 
@@ -46,60 +46,60 @@
 
 namespace oln {
 
-#    ifndef OLN_EXCEPTIONS
+#  ifndef OLN_EXCEPTIONS
 
 inline void __FailedCondition( const char* condType,
                                const char* condText,
                                const char* fileName
-#  ifndef RUNNING_TESTS
+#   ifndef RUNNING_TESTS
                                ,int fileLine
-#  endif
+#   endif
 			       )
 {
   // put a breakpoint _here_ at debug-time
   std::cerr << fileName << ':'
-#  ifndef RUNNING_TESTS
+#   ifndef RUNNING_TESTS
             << fileLine
-#  endif
+#   endif
 	    << ": "
             << condType << " `"
             << condText << "' failed." << std::endl;
-#  ifndef RUNNING_TESTS
+#   ifndef RUNNING_TESTS
   abort();
-#  else
+#   else
   exit(1);
-#  endif
+#   endif
 }
 
-#     else // OLN_EXCEPTIONS
+#  else // OLN_EXCEPTIONS
 
  inline void __FailedCondition( const char* condType,
                                const char* condText,
                                const char* fileName 
-#  ifndef RUNNING_TESTS
+#   ifndef RUNNING_TESTS
                                ,int fileLine
-#  endif
+#   endif
 )
 {
   // put a breakpoint _here_ at debug-time
   std::ostringstream err;
 
   err << fileName << ':'
-#  ifndef RUNNING_TESTS
+#   ifndef RUNNING_TESTS
             << fileLine
-#  endif
+#   endif
 	    << ": "
             << condType << " `"
             << condText << "' failed.";
-#  ifndef RUNNING_TESTS
+#   ifndef RUNNING_TESTS
   throw std::runtime_error(err.str());
-#  else
+#   else
   std::cerr << err.str();
   exit(1);
-#  endif
+#   endif
 }
 
-#     endif // OLN_EXCEPTIONS
+#  endif // OLN_EXCEPTIONS
 
 } // end of oln
 

@@ -36,7 +36,7 @@ namespace oln {
     For instance `oln::typeadj<const int>::mutable_ref' equals `int &'.
   */
 
-#define _OLN_TYPEADJ_DEFS			\
+# define _OLN_TYPEADJ_DEFS			\
   {						\
     typedef T mutable_val;			\
     typedef const T const_val;			\

@@ -26,12 +26,12 @@
 // Public License.
 
 #ifndef OLENA_IO_GZ_STREAM_HH
-#define OLENA_IO_GZ_STREAM_HH
+# define OLENA_IO_GZ_STREAM_HH
 
-#include <oln/basics.hh>
-#include <fstream>
-#include <string>
-#include <zlib.h>
+# include <oln/basics.hh>
+# include <fstream>
+# include <string>
+# include <zlib.h>
 
 namespace oln {
 

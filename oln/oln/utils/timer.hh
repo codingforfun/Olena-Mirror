@@ -26,10 +26,10 @@
 // Public License.
 
 #ifndef OLENA_MISC_TIMER_HH
-#define OLENA_MISC_TIMER_HH
+# define OLENA_MISC_TIMER_HH
 
-#include <oln/core/contract.hh>
-#include <time.h>
+# include <oln/core/contract.hh>
+# include <time.h>
 
 namespace oln {
   namespace misc {

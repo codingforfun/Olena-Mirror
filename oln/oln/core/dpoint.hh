@@ -48,7 +48,7 @@ namespace oln {
   template< unsigned Dim >
   struct dpoint_for_dim {};
 
-#define _DPointForDim(DIM, TYPE)		\
+# define _DPointForDim(DIM, TYPE)		\
   template<>					\
   struct dpoint_for_dim<DIM> {			\
     typedef TYPE ret;				\

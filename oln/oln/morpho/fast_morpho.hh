@@ -41,6 +41,6 @@ namespace oln {
   } // end of morpho
 } // end of oln
 
-#include <oln/morpho/fast_morpho.hxx>
+# include <oln/morpho/fast_morpho.hxx>
 
 #endif // ! OLENA_MORPHO_FAST_MORPHO_HH

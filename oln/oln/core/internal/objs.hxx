@@ -26,7 +26,7 @@
 // Public License.
 
 #ifndef OLENA_CORE_INTERNAL_OBJS_HXX
-#define OLENA_CORE_INTERNAL_OBJS_HXX
+# define OLENA_CORE_INTERNAL_OBJS_HXX
 
 
 namespace oln {

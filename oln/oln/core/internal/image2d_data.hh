@@ -151,14 +151,14 @@ namespace oln {
 
       void precondition_hold_large(coord row, coord col) const
       {
-#ifndef NDEBUG
+# ifndef NDEBUG
 	if (! hold_large(row, col))
 	  std::cerr << "image2d overflow at ("
 		    << row << "," << col << ")" << std::endl;
-#else
+# else
 	(void) row;
 	(void) col;
-#endif
+# endif
       }
 
       // Although this is a "const" accessor, it really needs

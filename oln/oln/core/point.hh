@@ -51,7 +51,7 @@ namespace oln {
   template< unsigned Dim >
   struct point_for_dim {};
 
-#define _PointForDim(DIM, TYPE)			\
+# define _PointForDim(DIM, TYPE)			\
   template<>					\
   struct point_for_dim<DIM> {			\
     typedef TYPE ret;				\

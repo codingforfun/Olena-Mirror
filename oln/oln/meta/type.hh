@@ -187,4 +187,4 @@ struct id_ { typedef T ret; };
 
 # define is_a(T, U) type::wrap<typename type::internal::_is_a< id_of_typeform(U) >::check<T, U> >
 
-# endif // ndef OLENA_META_TYPE_HH
+#endif // ndef OLENA_META_TYPE_HH
