@@ -1,3 +1,8 @@
+2003-11-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* generate_morpho_instantiations.py: Minor update. Add opening and
+	closing algorithms.
+
 2003-10-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
  	* meta/swilena_ntg.i: Use builtin value type when possible. Define

@@ -1,14 +1,16 @@
 #!/usr/bin/env python
 
+import sys
+
 files = []
 
 def close_files():
     for file in files:
 	file.close()
 
-def open_files():
+def open_files(path):
     for dim in range(1, 4):
-	files.append(open("swilena_morpho%(dim)sd.i" % vars(), 'w'))
+	files.append(open(path + "/swilena_morpho%(dim)sd.i" % vars(), 'w'))
 
 def write_headers():
     for dim in range(1, 4):
@@ -18,10 +20,13 @@ def write_headers():
 %%module swilena_morpho%(dim)sd
 
 %%include swilena_exception.i
+
+%%include swilena_ntg_macros.i
+%%import swilena_ntg.i
+
 %%include swilena_morpho.i
 
 %%import swilena_image%(dim)sd.i
-%%import swilena_ntg.i
 
 """ % vars())
 
@@ -53,6 +58,12 @@ def write_algorithms():
 		
 		instantiate(dim, "dilation", img_type, img_type, win_type)
 		instantiate(dim, "fast_dilation", img_type, img_type, win_type)
+
+		instantiate(dim, "opening", img_type, img_type, win_type)
+		instantiate(dim, "fast_opening", img_type, img_type, win_type)
+
+		instantiate(dim, "closing", img_type, img_type, win_type)
+		instantiate(dim, "fast_closing", img_type, img_type, win_type)
 		
 		instantiate(dim, "thickening", img_type, img_type, win_type, win_type)
 		instantiate(dim, "fast_thickening", img_type, img_type, win_type, win_type)
@@ -143,7 +154,12 @@ def write_algorithms():
 	    # instantiate(dim, "fast_minima_killer", img_type, neighb_type)
 
 def main():
-    open_files()
+    if len(sys.argv) != 2:
+	sys.stderr.write ("Usage: generate_morpho_instanciations.py path\n")
+	sys.exit (1)
+    else:
+	path = sys.argv[1]
+    open_files(path)
     write_headers()
     write_algorithms()
     close_files()
