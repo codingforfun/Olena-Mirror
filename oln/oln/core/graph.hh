@@ -106,6 +106,12 @@ namespace oln {
     // Remove an edge. The coherence maintenance of the graph is
     // implementation-dependent because of algorithmic issues.
     void		del_edge(hedge_t e);
+    // Return the "first" node of an edge using the iterator over edge
+    // data.
+    hnode_t		from(edges_set_const_iterator) const;
+    // Return the "first" node of an edge using the iterator over edge
+    // data.
+    hnode_t		to(edges_set_const_iterator) const;
     // Return the "first" node of an edge. The graph is not directed,
     // "from" is just a mnenomic name. (FIXME: node1 or first ?)
     hnode_t		from(hedge_t e1) const;

@@ -43,6 +43,9 @@ namespace oln {
     heavy_graph(unsigned i, unsigned j) :
       internal::heavy_graph<NodeValue, EdgeValue>(i, j)
     {}
+
+    heavy_graph()
+    {}
   };
 
 } // end of oln.

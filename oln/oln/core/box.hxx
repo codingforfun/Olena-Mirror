@@ -96,12 +96,24 @@ namespace oln {
 	add(b.top());
 	add(b.bottom());
 	card_ += b.card();
-	box_card_++;
 	not_consistent_ = true;
-	for (unsigned i = 0; i < b.dim(); ++i)
+	if (b.box_card_ == 0)
 	  {
-	    inner_boxes_mean_dim_[i] += b.width();
-	    mass_[i] += b.mass_[i];
+	    for (unsigned i = 0; i < b.dim(); ++i)
+	      {
+		inner_boxes_mean_dim_[i] += b.dimension_.nth(i);
+		mass_[i] += b.mass_[i];
+	      }
+	    ++box_card_;
+	  }
+	else
+	  {
+	    for (unsigned i = 0; i < b.dim(); ++i)
+	      {
+		inner_boxes_mean_dim_[i] += b.inner_boxes_mean_dim_[i];
+		mass_[i] += b.mass_[i];
+	      }
+	    box_card_ += b.box_card_;
 	  }
       }
   }

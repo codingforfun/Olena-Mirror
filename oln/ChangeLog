@@ -1,3 +1,14 @@
+2003-01-27  Yann Régis-Gianas  <yann@lrde.epita.fr>
+
+	* oln/core/box.hxx (add(box)): Fix a bug.
+	* oln/basics_graph.hh: Add a default constructor to heavy_graph.
+	* oln/core/graph.hh (from, to): New overloading.
+	* oln/core/graph.hxx: Implement it.
+	* oln/core/internal/graph_impl.hh: Declare new overloading.
+	* oln/core/internal/graph_impl.hxx: 
+		- Fix a warning ;
+		- Implement new overloading for 'from' and 'to'.
+
 2003-01-22  Yann Régis-Gianas  <yann@lrde.epita.fr>
 
 	* oln/Makefile.am: Distribute graph_impl.h[h,xx] and graph.h[h,xx]

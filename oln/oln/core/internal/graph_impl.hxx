@@ -63,9 +63,9 @@ namespace oln {
     edge_decorator<EdgeValue>::edge_decorator(hnode_t h1,
 					      hnode_t h2, 
 					      const EdgeValue& v) :
+      EdgeValue(v),
       from_(h1),
-      to_(h2),
-      EdgeValue(v)
+      to_(h2)
     {}
 
     template <class EdgeValue>
@@ -104,7 +104,12 @@ namespace oln {
     node_decorator<NodeValue>::node_decorator(const NodeValue& n) :
       NodeValue(n)
     {}
-    
+
+    template <class NodeValue, class EdgeValue>
+    heavy_graph<NodeValue, EdgeValue>::heavy_graph()
+    {
+    }
+
     template <class NodeValue, class EdgeValue>
     heavy_graph<NodeValue, EdgeValue>::heavy_graph
     (unsigned initial_number_of_node, 
@@ -120,11 +125,6 @@ namespace oln {
     {
       precondition(hold(n));
       return nodes_[n].edges;
-    }
-
-    template <class NodeValue, class EdgeValue>
-    heavy_graph<NodeValue, EdgeValue>::heavy_graph()
-    {
     }
 
     template <class NodeValue, class EdgeValue>
@@ -184,7 +184,8 @@ namespace oln {
 	}
       hnode_t n = removed_nodes_.front();
       removed_nodes_.pop_front();
-      assertion(n < nodes_.size());
+      nodes_[n].edges.clear();
+      assertion(n < int(nodes_.size()));
       nodes_[n] = t;
       return n;
     }
@@ -193,8 +194,9 @@ namespace oln {
     void			
     heavy_graph<NodeValue, EdgeValue>::del_node(hnode_t n)
     {
-      precondition(hold(n));
-      const node_value_t& v = nodes_[n];
+      if (!hold(n))
+	return;
+      const decorated_node_value_t& v = nodes_[n];
       for (typename edges_of_node_set_t::const_iterator e = v.edges.begin();
 	   e != v.edges.end();
 	   ++e)
@@ -218,7 +220,7 @@ namespace oln {
 	{
 	  e = removed_edges_.front();
 	  removed_edges_.pop_front();
-	  assertion(e < edges_.size());
+	  assertion(e < int(edges_.size()));
 	  edges_[e].from() = h1;
 	  edges_[e].to() = h2;
 	}
@@ -231,10 +233,12 @@ namespace oln {
     void			
     heavy_graph<NodeValue, EdgeValue>::del_edge(hedge_t e)
     {
+      if (!hold(e))
+	return;
       precondition(hold(e));
-      const edge_value_t& ev = edges_[e];
-      ev->from.edges.remove(n);
-      ev->to.edges.remove(n);
+      // const decorated_edge_value_t& ev = edges_[e];
+      //      nodes_[ev.from()].edges.remove(e);
+      // nodes_[ev.to()].edges.remove(e);
       removed_edges_.push_front(e);
     }
 
@@ -252,6 +256,22 @@ namespace oln {
     {
       precondition(hold(e2));
       return edges_[e2].to();
+    }
+
+    template <class NodeValue, class EdgeValue>
+    typename heavy_graph<NodeValue, EdgeValue>::hnode_t			
+    heavy_graph<NodeValue, EdgeValue>::from(edges_set_const_iterator e1) const
+    {
+      precondition(hold(hedge_of(e1)));
+      return e1->from();
+    }
+
+    template <class NodeValue, class EdgeValue>
+    typename heavy_graph<NodeValue, EdgeValue>::hnode_t			
+    heavy_graph<NodeValue, EdgeValue>::to(edges_set_const_iterator e2) const
+    {
+      precondition(hold(hedge_of(e2)));
+      return e2->to();
     }
 
     template <class NodeValue, class EdgeValue>
@@ -293,7 +313,7 @@ namespace oln {
       return 
 	((std::find(removed_nodes_.begin(), removed_nodes_.end(), n) 
 	 == removed_nodes_.end())
-	&& (n < nodes_.size()));
+	&& (n < int(nodes_.size())));
     }
 
     template <class NodeValue, class EdgeValue>
@@ -303,7 +323,7 @@ namespace oln {
       return 
 	((std::find(removed_edges_.begin(), removed_edges_.end(), n) 
 	 == removed_edges_.end())
-	&& (n < edges_.size()));
+	&& (n < int(edges_.size())));
     }
 
     template <class NodeValue, class EdgeValue>

@@ -116,6 +116,18 @@ namespace oln {
   }
 
   template <class U>
+  typename graph<U>::hnode_t  graph<U>::from(edges_set_const_iterator e1) const
+  {
+    return self().from(e1);
+  }
+
+  template <class U>
+  typename graph<U>::hnode_t  graph<U>::to(edges_set_const_iterator e2) const
+  {
+    return self().to(e1);
+  }
+
+  template <class U>
   typename graph<U>::hnode_t  graph<U>::from(hedge_t e1) const
   {
     return self().from(e1);

@@ -106,6 +106,7 @@ namespace oln {
       heavy_graph(unsigned initial_number_of_node,
 		  unsigned number_of_edge_initially_allocated);
       heavy_graph();
+
       // "virtual" methods from the abstract class "graph".
       const nodes_set_t&	nodes() const;
       const edges_set_t&	edges() const;
@@ -113,13 +114,15 @@ namespace oln {
       edges_set_t&		edges();
       hnode_t			hnode_of(nodes_set_const_iterator) const;
       hedge_t			hedge_of(edges_set_const_iterator) const;
-      hnode_t			add_node(const node_value_t& t);
+      hnode_t			add_node(const node_value_t& t = node_value_t());
       void			del_node(hnode_t n);
       hedge_t			add_edge(hnode_t h1, hnode_t h2, 
 					 const edge_value_t& v = edge_value_t());
       void			del_edge(hedge_t e);
       hnode_t			from(hedge_t e1) const;
       hnode_t			to(hedge_t e2) const;
+      hnode_t			from(edges_set_const_iterator e1) const;
+      hnode_t			to(edges_set_const_iterator e2) const;
       const edges_of_node_set_t&edges_of(hnode_t n) const;
       node_value_t&		operator[](hnode_t n);
       const node_value_t&	operator[](hnode_t n) const;
