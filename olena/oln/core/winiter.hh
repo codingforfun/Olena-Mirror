@@ -28,6 +28,7 @@
 #ifndef OLENA_CORE_WINITER_HH
 # define OLENA_CORE_WINITER_HH
 
+# include <oln/core/abstract/window.hh>
 # include <mlc/objs.hh>
 # include <string>
 
@@ -36,39 +37,39 @@ namespace oln {
   template< class Win >
   struct winiter {
 
-    winiter(const Win& win) : _win(win), _pos(0) {}
+    winiter(const abstract::window<Win>& win) : win_(to_exact(win)), pos_(0) {}
 
     mlc::_begin
     operator=(mlc::_begin)
     {
-      _pos = 0;
+      pos_ = 0;
       return begin;
     }
 
     mlc::_end
     operator=(mlc::_end)
     {
-      _pos = _win.card();
+      pos_ = win_.card();
       return end;
     }
 
     bool
     operator==(mlc::_end) const
     {
-      return _pos == _win.card();
+      return pos_ == win_.card();
     }
 
     bool
     operator!=(mlc::_end) const
     {
-      return _pos != _win.card();
+      return pos_ != win_.card();
     }
 
     winiter&
     operator++()
     {
       precondition(*this != end);
-      ++_pos;
+      ++pos_;
       return *this;
     }
 
@@ -84,7 +85,7 @@ namespace oln {
     operator typename Win::dpoint() const
     {
       precondition(*this != end);
-      return _win.dp(_pos);
+      return win_.dp(pos_);
     }
 
     // it's convenient to type `it.cur()' instead of `(dpoint)it' when
@@ -100,8 +101,8 @@ namespace oln {
     }
 
   private:
-    const Win &_win;
-    unsigned _pos;
+    const Win &win_;
+    unsigned pos_;
   };
 
 } // oln

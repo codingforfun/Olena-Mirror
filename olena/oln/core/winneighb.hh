@@ -30,10 +30,16 @@
 
 # include <mlc/objs.hh>
 # include <oln/core/image.hh>
+# include <oln/core/abstract/window.hh>
 # include <string>
 
 namespace oln
 {
+  namespace abstract 
+  {
+    template<class Exact>
+    struct window; // fwd_decl
+  } // end of abstract
 
   template< class Win >
   struct winneighb {
@@ -41,48 +47,48 @@ namespace oln
     typedef DPoint(Win) dpoint;
 
     template< class T >
-    winneighb(const Win& win, const T& anchor) :
-      _win(win), _pos(0), _anchor(anchor.point_ref()) {}
+    winneighb(const abstract::window<Win>& win, const T& anchor) :
+      win_(to_exact(win)), pos_(0), anchor_(anchor.point_ref()) {}
 
     const point& point_ref() const
     {
-      return _cur;
+      return cur_;
     }
 
     mlc::_begin
     operator=(mlc::_begin)
     {
-      _pos = 0;
-      _cur = _anchor + _win.dp(_pos);
+      pos_ = 0;
+      cur_ = anchor_ + win_.dp(pos_);
       return begin;
     }
 
     mlc::_end
     operator=(mlc::_end)
     {
-      _pos = _win.card();
+      pos_ = win_.card();
       return end;
     }
 
     bool
     operator==(mlc::_end) const
     {
-      return _pos == _win.card();
+      return pos_ == win_.card();
     }
 
     bool
     operator!=(mlc::_end) const
     {
-      return _pos != _win.card();
+      return pos_ != win_.card();
     }
 
     winneighb&
     operator++()
     {
       precondition(*this != end);
-      ++_pos;
+      ++pos_;
       if (*this != end)
-	_cur = _anchor + _win.dp(_pos);
+	cur_ = anchor_ + win_.dp(pos_);
       return *this;
     }
 
@@ -98,7 +104,7 @@ namespace oln
     operator point() const
     {
       precondition(*this != end);
-      return _cur;
+      return cur_;
     }
 
     // it's convenient to type `it.cur()' instead of `(point)it' when
@@ -114,10 +120,10 @@ namespace oln
     }
 
   private:
-    const Win &_win;
-    unsigned _pos;
-    const point &_anchor;
-    point _cur;
+    const Win &win_;
+    unsigned pos_;
+    const point &anchor_;
+    point cur_;
   };
 
 # define Neighb(Neighbable)			\

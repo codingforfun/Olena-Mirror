@@ -1,5 +1,12 @@
 2003-07-28  David Lesage  <david@lrde.epita.fr>
 
+	* oln/core/winiter.hh, oln/core/winneighb.hh: Adapt constructor.
+
+	* tests/arith/tests/min1: Fix.
+
+
+2003-07-28  David Lesage  <david@lrde.epita.fr>
+
 	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
 	oln/core/bkd_iter3d.hh, oln/core/fwd_iter1d.hh,
 	oln/core/fwd_iter2d.hh, oln/core/fwd_iter3d.hh: Add typedefs.
