@@ -1,11 +1,11 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 5)
-(Parent-Version oln 0_5 4)
+(Project-Version oln 0_5 6)
+(Parent-Version oln 0_5 5)
 (Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Mon, 29 Jul 2002 16:23:12 +0200")
+(Checkin-Time "Mon, 29 Jul 2002 16:34:21 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -72,7 +72,7 @@
                   "^#"))
 (Project-Keywords)
 (Files
-  (aclocal.m4 (oln/e/8_aclocal.m4 1.16 640))
+  (aclocal.m4 (oln/e/8_aclocal.m4 1.17 640))
   (ChangeLog (oln/6_ChangeLog 1.50.1.20 600))
   (configure.ac (oln/3_configure. 1.18 600))
   (configure (oln/e/7_configure 1.22 700))
@@ -248,7 +248,7 @@
   (oln/level/lut.hh (oln/29_lut.hh 1.6 600))
   (oln/level/threshold.hh (oln/f/15_threshold. 1.3 600))
   (oln/Makefile.am (oln/27_Makefile.a 1.18 600))
-  (oln/Makefile.in (oln/e/17_Makefile.i 1.23 640))
+  (oln/Makefile.in (oln/e/17_Makefile.i 1.24 640))
   (oln/math/macros.hh (oln/b/21_macros.hh 1.3 600))
   (oln/meta/array1d.hh (oln/f/23_array1d.hh 1.2 640))
   (oln/meta/array1d.hxx (oln/f/22_array1d.hx 1.2 640))
@@ -414,7 +414,7 @@
   (oln/types/typetraits_builtins_int.hh (oln/g/3_typetraits 1.1 640))
   (oln/types/typetraits_builtins_float.hh (oln/g/4_typetraits 1.1 640))
   (oln/types/typetraits.hh (oln/g/5_typetraits 1.1 640))
-  (oln/types/type.hh (oln/g/6_type.hh 1.1 640))
+  (oln/types/type.hh (oln/g/6_type.hh 1.2 640))
   (oln/types/to_oln.hh (oln/g/7_to_oln.hh 1.1 640))
   (oln/types/rec_value.hh (oln/g/8_rec_value. 1.1 640))
   (oln/types/range.hh (oln/g/9_range.hh 1.1 640))
@@ -449,7 +449,7 @@
 ;; Files added by populate at Mon, 29 Jul 2002 16:23:03 +0200,
 ;; to version 0_5.4(w), by burrus_n:
 
-  (oln/meta/type.hh (oln/g/33_type.hh 1.1 600))
+  (oln/meta/type.hh (oln/g/33_type.hh 1.2 600))
 )
 (Merge-Parents)
 (New-Merge-Parents)

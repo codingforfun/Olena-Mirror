@@ -288,7 +288,37 @@ nobase_oln_HEADERS = \
   value/vec.hh					\
   value/xyz.hh					\
   value/yiq.hh					\
-  value/yuv.hh
+  value/yuv.hh					\
+  types/all.hh					\
+  types/behaviour.hh				\
+  types/bin.hh					\
+  types/builtins_properties.hh			\
+  types/cycle.hh				\
+  types/global_ops.hh				\
+  types/global_ops_defs.hh			\
+  types/global_ops_traits.hh			\
+  types/int_s.hh				\
+  types/int_u.hh				\
+  types/interval.hh				\
+  types/optraits.hh				\
+  types/optraits_bin.hh				\
+  types/optraits_builtins_float.hh		\
+  types/optraits_builtins_int.hh		\
+  types/optraits_builtins_int_defs.hh		\
+  types/optraits_cycle.hh			\
+  types/optraits_int_s.hh			\
+  types/optraits_int_u.hh			\
+  types/optraits_range.hh			\
+  types/optraits_scalar.hh			\
+  types/optraits_scalar_defs.hh			\
+  types/predecls.hh				\
+  types/range.hh				\
+  types/rec_value.hh				\
+  types/to_oln.hh				\
+  types/type.hh					\
+  types/typetraits.hh				\
+  types/typetraits_builtins_float.hh		\
+  types/typetraits_builtins_int.hh
 
 
 EXTRA_DIST = config/extrconf.sh
@@ -392,7 +422,7 @@ top_distdir = ..
 distdir = $(top_distdir)/$(PACKAGE)-$(VERSION)
 
 distdir: $(DISTFILES)
-	$(mkinstalldirs) $(distdir)/arith $(distdir)/arith/internal $(distdir)/config $(distdir)/convert $(distdir)/convol $(distdir)/core $(distdir)/core/internal $(distdir)/io $(distdir)/level $(distdir)/math $(distdir)/meta $(distdir)/morpho $(distdir)/utils $(distdir)/value
+	$(mkinstalldirs) $(distdir)/arith $(distdir)/arith/internal $(distdir)/config $(distdir)/convert $(distdir)/convol $(distdir)/core $(distdir)/core/internal $(distdir)/io $(distdir)/level $(distdir)/math $(distdir)/meta $(distdir)/morpho $(distdir)/types $(distdir)/utils $(distdir)/value
 	@list='$(DISTFILES)'; for file in $$list; do \
 	  if test -f $$file || test -d $$file; then d=.; else d=$(srcdir); fi; \
 	  dir=`echo "$$file" | sed -e 's,/[^/]*$$,,'`; \

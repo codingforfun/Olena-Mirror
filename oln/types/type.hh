@@ -28,46 +28,43 @@
 #ifndef OLENA_VALUE_TYPE_HH
 # define OLENA_VALUE_TYPE_HH
 
-namespace oln {
-  namespace type {
+namespace type {
 
-    // Static hierarchy tool
-    template <class Self>
-    class any
-    {
-    public:
-      Self& self() { return static_cast<Self&>(*this); }
-      const Self& self() const { return static_cast<const Self&>(*this); }
-    };
+  // Static hierarchy tool
+  template <class Self>
+  class any
+  {
+  public:
+    Self& self() { return static_cast<Self&>(*this); }
+    const Self& self() const { return static_cast<const Self&>(*this); }
+  };
 
-    // classes used to disambiguate overloading
+  // classes used to disambiguate overloading
 
-    template <class T>
-    class any_class
-    {
-    public:
-      any_class(T& t) : _target(t) {}
+  template <class T>
+  class any_class
+  {
+  public:
+    any_class(T& t) : _target(t) {}
 
-      T& self() { return _target; }
+    T& self() { return _target; }
 
-    private:
-      T& _target;
-    };
+  private:
+    T& _target;
+  };
 
-    template <class T>
-    class any_const_class
-    {
-    public:
-      any_const_class(const T& t) : _target(t) {}
+  template <class T>
+  class any_const_class
+  {
+  public:
+    any_const_class(const T& t) : _target(t) {}
       
-      const T& self() const { return _target; }
+    const T& self() const { return _target; }
 
-    private:
-      const T& _target;
-    };
+  private:
+    const T& _target;
+  };
 
-  } // end of namespace type
-} // end of namespace oln
-
+} // end of namespace type
 
 #endif // ndef OLENA_VALUE_TYPE_HH
