@@ -1,13 +1,14 @@
-noinst_PROGRAMS = _swilena.so _swilena2d.so _swilena1d.so _swilena3d.so \
+pyexec_PROGRAMS = _swilena.so _swilena2d.so _swilena1d.so _swilena3d.so \
 	_swilena2d_convert.so _swilena1d_convert.so _swilena3d_convert.so \
 	_swilena2d_morpho.so _swilena1d_morpho.so _swilena3d_morpho.so
 
-dist_noinst_DATA = swilena.py swilena2d.py swilena3d.py swilena1d.py \
+python_PYTHON = swilena.py swilena2d.py swilena3d.py swilena1d.py \
 	swilena2d_convert.py swilena1d_convert.py swilena3d_convert.py \
 	swilena2d_morpho.py swilena1d_morpho.py swilena3d_morpho.py
 
-INCLUDES = -I/usr/include/python2.2 -I$(top_srcdir)/src -I$(OLN)
-AM_CXXFLAGS = -DOLN_EXCEPTIONS
+INCLUDES = -I/usr/include/python2.2 -I$(srcdir)/../src
+AM_CPPFLAGS = -DOLN_EXCEPTIONS 
+AM_CXXFLAGS = $(CXXFLAGS_OPTIMIZE)
 
 _swilena_so_SOURCES = swilena_wrap.cxx
 _swilena_so_LDFLAGS = -shared -lswigpy
@@ -52,7 +53,5 @@ BUILT_SOURCES = \
 	swilena2d_morpho.py \
 	swilena3d_morpho.py
 
-%_wrap.cxx %.py: $(top_srcdir)/src/%.i
-	swig -c -c++ -python -I$(top_srcdir)/src -o $*_wrap.cxx $<
-
-
+%_wrap.cxx %.py: $(srcdir)/../src/%.i
+	$(SWIG) -c -c++ -python -I$(srcdir)/../src -o $*_wrap.cxx $(srcdir)/../src/$*.i

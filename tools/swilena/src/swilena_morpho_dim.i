@@ -80,18 +80,18 @@ MakeWS(Dim, Type);
 %enddef
 
 %define MakeMorphoDim(Dim)
-  MakeMorpho(Dim, int_u8);
+MakeMorpho(Dim, int_u8);
 MakeMorpho(Dim, int_u16);
 MakeMorpho(Dim, int_u32);
-MakeMorpho(Dim, int_u8s);
-MakeMorpho(Dim, int_u16s);
-MakeMorpho(Dim, int_u32s);
+//MakeMorpho(Dim, int_u8s);
+//MakeMorpho(Dim, int_u16s);
+//MakeMorpho(Dim, int_u32s);
 MakeMorpho(Dim, int_s8);
 MakeMorpho(Dim, int_s16);
 MakeMorpho(Dim, int_s32);
-MakeMorpho(Dim, int_s8s);
-MakeMorpho(Dim, int_s16s);
-MakeMorpho(Dim, int_s32s);
+//MakeMorpho(Dim, int_s8s);
+//MakeMorpho(Dim, int_s16s);
+//MakeMorpho(Dim, int_s32s);
 %enddef
 
 %define Float_MakeMorphoDim(Dim)

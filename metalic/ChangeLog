@@ -1,0 +1,168 @@
+2003-03-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Makefile.am: Adjust.
+
+2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/Makefile.am: Adjust with components.
+
+2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* tests/check/Makefile.am: Remove useless flags.
+
+2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* mlc/typeadj.hh: Update namespaces and header guards.
+
+	* mlc/array/1d.hh, mlc/array/1d.hxx,
+	mlc/array/2d.hh, mlc/array/2d.hxx, mlc/array/3d.hh,
+	mlc/array/3d.hxx, mlc/array/all.hh, mlc/array/nd.hh,
+	mlc/array/objs.hh, mlc/bool.hh, mlc/cmp.hh, mlc/contract.hh,
+	mlc/is_a.hh, mlc/loop.hh, mlc/math.hh, mlc/objs.hh,
+	mlc/optional.hh, mlc/type.hh,
+	tests/array/gen_test_utils/prelude,
+	tests/array/test_array1d.cc, tests/array/test_array2d.cc,
+	tests/array/test_array3d.cc, tests/main/tests/ensure1,
+	tests/main/tests/ensure2, tests/main/tests/ensure3,
+	tests/main/tests/is_a1, tests/main/tests/pow2sup1,
+	tests/main/tests/pow2sup2: Update namespaces. Update header
+	guards.
+
+2003-03-05  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/main: New directory.
+	* tests/main/Makefile.am, tests/main/runtests: New files.
+
+	* tests/Makefile.am: Adapt consequetly.	
+
+	* tests/check/defs.in: New file.
+	
+	* tests/main/tests/ensure1, tests/main/tests/ensure2,
+	tests/main/tests/ensure3, tests/main/tests/is_a1,
+	tests/main/tests/pow2sup1, tests/main/tests/pow2sup2: New tests.
+	
+2003-03-05  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* mlc/is_a.hh: Add is_a_ macro.
+
+2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* mlc/bool.hh: Move undefined type ...
+	* mlc/type.hh: ... here.
+
+2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* mlc/bool.hh: Improve if_.	
+
+	* mlc/math.hh: Do not use ucmp.
+
+	* mlc/ufuncs.hh: Rename as ...
+	* mlc/math.hh: ... this.
+
+	* mlc/Makefile.am: Adapt consequently.
+	
+	* mlc/ucmp.hh: Remove.
+
+	* mlc/array/1d.hxx, mlc/array/2d.hxx, mlc/array/3d.hxx: Simplify.
+
+	* tests/array/gen_test_utils/prelude: Fix includes.
+
+	* mlc/config/system.hh: Fix header guard.
+
+	* tests/check/Makefile.flags: Remove useless reference to Olena
+	headers path.
+
+2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* mlc/objs.hh: Move array related code ...
+	* mlc/array/objs.hh: ... here.
+
+	* mlc/array1d.hh: Rename as ...
+	* mlc/array/1d.hh: ... this.
+
+	* mlc/array2d.hh: Rename as ...
+	* mlc/array/2d.hh: ... this.
+
+	* mlc/array3d.hh: Rename as ...
+	* mlc/array/3d.hh: ... this.
+
+	* mlc/arraynd.hh: Rename as ...
+	* mlc/array/nd.hh: ... this.
+
+	* mlc/array.hh: Rename as ...
+	* mlc/array/all.hh: ... this.
+
+	* mlc/array/1d.hh, mlc/array/1d.hh, mlc/array/2d.hh,
+	mlc/array/3d.hh, mlc/array/all.hh: Update includes.
+
+	* mlc/config/system.hh: New file.  
+
+	* mlc/Makefile.am: Adjust consequently.
+	
+	* mlc/contract.hh, mlc/type.hh: Use mlc/config/system.hh instead of
+	oln/config/system.hh.
+
+2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* mlc/array1d.hh, mlc/array2d.hh, mlc/array3d.hh: Update
+          includes.
+
+	* mlc/is_a.hh: Likewise.
+
+	* Makefile.am: Update.
+
+2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* mlc/logic.hh: Remove.
+	
+	* mlc/basics.hh: Rename as ...
+	* mlc/bool.hh: ... this.
+	
+	* mlc/type.hh: Rename as ...
+	* mlc/is_a.hh: ... this.
+
+	* mlc/control.hh: Rename as ...
+	* mlc/loop.hh: ... this.
+
+	* mlc/is_a.hh, mlc/ufuncs.hh: Update includes consequently.
+
+2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/array/gen_test.cc (write_postlude_and_test): Adapt to new
+	oln location.
+
+2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/check/defs.in: Remove.
+
+2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/Makefile.am: Add check directory.
+
+	* tests/array/Makefile.am: Adapt to new tests location.
+	
+	* tests/array/gen_test.cc (write_postlude_and_test): Remove
+	useless paths.
+	
+	* tests/check/check.hh, tests/check/Makefile.am,
+	tests/check/Makefile.check, tests/check/Makefile.flags: Adapt to
+	tests split.
+
+2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/array/gen_test.cc (write_postlude_and_test): Temporarily
+	fix includes.
+
+2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* mlc/Makefile.am: New file.
+
+	* Makefile.am: Update accordingly. (SUBDIRS): Minor tweak.
+
+2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* Makefile.am,
+	tests/Makefile.am,
+	tests/array/Makefile.am: New files.
+	
+	* ChangeLog: New file.

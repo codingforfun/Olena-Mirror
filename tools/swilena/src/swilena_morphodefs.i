@@ -188,11 +188,11 @@ R Name(T1 x, T2 y, T3 z, T4 t)
 `----------------------------*/
 
 %define MorphoGeodesicDilation(Img1, Img2, N)
-     MorphoF2(simple_geodesic_dilation, Img1, const Img1&, const Img2&, const N&);
+     MorphoFunc2(sure_geodesic_dilation, sure::geodesic_dilation, Img1, const Img1&, const Img2&, const N&);
      MorphoF2(geodesic_dilation, Img1, const Img1&, const Img2&, const N&);
 %enddef
 %define MorphoGeodesicErosion(Img1, Img2, N)
-     MorphoF2(simple_geodesic_erosion, Img1, const Img1&, const Img2&, const N&);
+     MorphoFunc2(sure_geodesic_erosion, sure::geodesic_dilation, Img1, const Img1&, const Img2&, const N&);
      MorphoF2(geodesic_erosion, Img1, const Img1&, const Img2&, const N&);
 %enddef
 
@@ -201,26 +201,26 @@ R Name(T1 x, T2 y, T3 z, T4 t)
 `---------------*/
 
 %define MorphoReconstructionDilation(P, Img1, Img2, N, W)
-     MorphoF2(sure_geodesic_reconstruction_dilation, 
+     MorphoFunc2(sure_geodesic_reconstruction_dilation, sure::geodesic_reconstruction_dilation,
 	      Img1, const Img1&, const Img2&, const N&);
-     MorphoF2(sequential_geodesic_reconstruction_dilation,
+     MorphoFunc2(sequential_geodesic_reconstruction_dilation, sequential::geodesic_reconstruction_dilation,
 	      Img1, const Img1&, const Img2&, const N&);
-     MorphoF2(vincent_sequential_geodesic_reconstruction_dilation,
+//     MorphoF2(vincent_sequential_geodesic_reconstruction_dilation,
+//	      Img1, const Img1&, const Img2&, const N&);
+     MorphoFunc2(hybrid_geodesic_reconstruction_dilation, hybrid::geodesic_reconstruction_dilation,
 	      Img1, const Img1&, const Img2&, const N&);
-     MorphoF2(hybrid_geodesic_reconstruction_dilation,
-	      Img1, const Img1&, const Img2&, const N&);
-     MorphoF3(exist_init_dilation,
-	      bool, const P&, const Img1&, const Img2&, const W&);
+//     MorphoF3(exist_init_dilation,
+//	      bool, const P&, const Img1&, const Img2&, const W&);
 %enddef
 %define MorphoReconstructionErosion(P, Img1, Img2, N, W)
-     MorphoF2(sure_geodesic_reconstruction_erosion, 
+     MorphoFunc2(sure_geodesic_reconstruction_erosion, sure::geodesic_reconstruction_erosion,
 	      Img1, const Img1&, const Img2&, const N&);
-     MorphoF2(sequential_geodesic_reconstruction_erosion,
+     MorphoFunc2(sequential_geodesic_reconstruction_erosion, sequential::geodesic_reconstruction_erosion,
 	      Img1, const Img1&, const Img2&, const N&);
-     MorphoF2(hybrid_geodesic_reconstruction_erosion,
-	      Img1, const Img1&, const Img2&, const N&);
-     MorphoF3(exist_init_erosion,
-	      bool, const P&, const Img1&, const Img2&, const W&);
+     MorphoFunc2(hybrid_geodesic_reconstruction_erosion, hybrid::geodesic_reconstruction_erosion,
+	      Img1, const Img1&, const Img2&, const N&)
+//     MorphoF3(exist_init_erosion,
+//	      bool, const P&, const Img1&, const Img2&, const W&);
 %enddef
 
 

@@ -1,0 +1,30 @@
+@node Design considerations
+@chapter Design considerations
+
+@unnumberedsec About the data types
+
+The old @file{value/} hierarchy has been rewritten into @file{types/}. This
+directory contains classes used to represent the data types.  These
+classes had several problems, especially with builtin types and type
+conversions. The name and overall behavior remain the same, but you
+should expect some incompatibility if you use some internal stuff.  In
+particular, any code using type attributes (like @code{T::max()}) is
+invalidated.
+
+The aforementioned @code{image} / @code{iterator} / @code{window} /
+@code{point} /... hierarchies will themselves be adjusted using
+Thierry's evil secret plan.  The result should make the exact types
+downcasts superfluous in a few cases, and will allow this classes to be
+decorated (much rejoicing coming with this).  This change shouldn't
+break the user interface, it will just make it easier.
+
+Presently it is difficult to specialize a processing for a given value
+type when the processing takes the aggregate type as parameter.  See the
+definitions of @code{min()} and @code{max()} in
+@file{src/morpho/stat.hh} for an example.  This should eventually be
+fixed by adding new "concept" classes on top of the image hierarchy
+(something like @code{image_bin<*>}, @code{image_not_bin<*>},
+@code{image_color<*>}, @code{image_not_color<*>}, etc...) and specialize
+the processing using these types.  This still won't solve the problem
+@emph{generally}, but at least it addresses the common needs.
+

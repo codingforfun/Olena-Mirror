@@ -1,0 +1,9 @@
+#include <mlc/bool.hh>
+
+using namespace mlc;
+
+int main()
+{
+  typedef is_true<2 == 2>::ensure_t foo_t;
+  is_true<2 == 2>::ensure();
+}

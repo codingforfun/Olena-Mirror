@@ -1,3 +1,219 @@
+2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* demo/Makefile.am: Remove useless flags.
+
+2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ref/processing.tpl: Fix namespaces.
+
+2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* Merge from cleanup:
+
+	2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* demo/convol-gaussian.cc, demo/image.cc,
+	demo/morpholena-base.cc, demo/morpholena-grad.cc,
+	demo/morpholena-hats.cc, demo/morpholena-hit-miss.cc,
+	demo/morpholena-minima.cc, demo/morpholena-ops.cc,
+	demo/morpholena-wshed-beucher.cc, demo/morpholena-wshed.cc,
+	demo/test-reconstruction.cc, demo/tour.cc: Update namespaces.
+
+	2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* demo/Makefile.am, ref/Makefile.am: Adapt to new oln location.
+
+	* dev/srctree.texi: Update.
+
+	2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* demo/tour.cc: Replace <oln/types/ by ntg/.
+	* dev/srctree.texi: Remove reference to oln/types.
+
+2003-02-18  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* dev/Makefile.am (oln_dev_TEXINFOS): Add missing design.texi.
+	* demo/tour.cc: Fix typo.
+	
+2003-02-12  Raphaël Poss  <raph@lrde.epita.fr>
+
+	(Changes from 0.7)
+	
+	* dev/oln-dev.texi: Tweak copyright holder name.
+
+	* ref/Makefile.am (docdir): Minor fix.
+	* dev/Makefile.am (docdir): Minor fix.
+
+	* ref/oln-ref.tex: Update.
+
+2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* dev/abstract.texi (Abstract): Bump version.
+	* dev/build.texi (Configuration): Likewise.
+
+2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* dev/faq.texi (Frequently Asked Questions): Use cleaner layout
+	for Troubleshooting.
+
+2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* dev/design.texi (Design considerations): Minor fix.
+
+	* dev/build.texi, dev/oln-dev.texi (Olena fast installation
+	guide): Add new section `Required software'.
+
+	* dev/conf.texi, dev/faq.texi, dev/design.texi: Minor fixes.
+
+	* dev/build.texi: Minor fixes. (Using CXXFLAGS to solve
+	compilation problems): Mention using -pipe in CXXFLAGS.
+
+	* dev/abstract.texi (Abstract): Add URL to Olena.
+	(Abstract): Do not mention `ISSUES' any more.
+
+	* dev/oln-dev.texi (Top): Re-order chapters.
+
+2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* dev/build.texi (Configuration): Add note about setting CXXFLAGS.
+
+	* dev/faq.texi (Frequently Asked Questions): Add FAQ about the
+	initial value of CXXFLAGS.
+
+2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* dev/oln-dev.texi (Olena fast installation guide): Include
+	`design.texi'.
+
+	* dev/design.texi (Design considerations): New file. Contents from
+	ISSUES.
+
+	* dev/build.texi (Compiler notes): Add section.
+
+	* dev/faq.texi (Frequently Asked Questions): Add FAQ about I/O on
+	big-endian hosts.
+
+2003-02-09  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* demo/Makefile.am (AM_CXXFLAGS): Cleanup optimization flags
+	specification.
+
+2003-02-08  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* dev/Makefile.am (docdir, install-data-hook, uninstall-hook):
+	Install the documentation. Do not compile the Postscript version
+	by default.
+
+	* ref/Makefile.am (filelists.make): Import file lists
+	instead of using $(shell fgrep ...). Install the documentation.
+	* ref/gen_filelists.sh: New file.
+
+	* demo/Makefile.am (AM_CPPFLAGS): Adjust IMGDIR specification.
+	(CLEANFILES): Clean generated images.
+
+	* demo/convol-gaussian.cc (main),
+	demo/test-reconstruction.cc (main),
+	demo/tour.cc (main),
+	demo/morpholena-wshed-beucher.cc (morpholena_watershed_beucher),
+	demo/morpholena-ops.cc (morpholena_thin_thick),
+	demo/morpholena-minima.cc,
+	demo/morpholena-hit-miss.cc (morpholena_hit_or_miss),
+	demo/morpholena-hats.cc,
+	demo/morpholena-grad.cc (morpholena_grad),
+	demo/morpholena-base.cc (morpholena_base), 
+	demo/morpholena-wshed.cc (morpholena_watershed): Fix IMGDIR.
+	
+
+2003-01-30  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* dev/srctree.texi: Merge other srctree files.
+
+	* dev/srctree-oln.texi, dev/srctree-headers.texi,
+	dev/srctree-testsuite.texi, dev/srctree-conf.texi,
+	dev/srctree-ac.texi, dev/srctree-tools.texi, dev/srctree-doc.texi:
+	Remove files.
+
+
+2003-01-25  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* dev/abstract.texi (Abstract): Fix path to ISSUES.
+	* dev/install.texi: Typo.
+	* dev/oln-dev.texi: Reference the other sections. Start updating
+	for 0.7.
+
+	* dev/srctree.texi,
+	dev/srctree-oln.texi,
+	dev/srctree-headers.texi,
+	dev/srctree-testsuite.texi,
+	dev/srctree-conf.texi,
+	dev/srctree-ac.texi,
+	dev/srctree-tools.texi,
+	dev/srctree-doc.texi: Add.
+
+	* dev/Makefile.am (oln_dev_TEXINFOS): Modify accordingly.
+
+2003-01-24  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* dev/faq.texi, dev/install.texi, dev/build.texi,
+	dev/abstract.texi, dev/thanks.texi, dev/biblio.texi: Add.
+
+	* dev/build.texi (Configuration): Use @command for command names.
+
+	* dev/Makefile.am (oln_dev_TEXINFOS): Add.
+
+2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* ref/oln-dev.texi: Move to ...
+	* dev/oln-dev.texi: ... here.
+	* dev/Makefile.am: Add.
+
+	* tpl/processing.tpl: Move to ...
+	* ref/processing.tpl: ... here.
+	
+	* ref/Makefile.am (EXTRA_DIST): Distribute processing.tpl. Do not
+	mention `oln-dev.texi' any more. Fix path to processing.tpl. Do
+	not ship oln-ref.ps in the distribution, since dvi and pdf
+	versions are already distributed.
+	
+2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* demo/morpholena.cc,
+	demo/morpholena-base.cc,
+	demo/morpholena-minima.cc,
+	demo/morpholena-hats.cc: Rearrange code.
+
+	* demo/convol-gaussian.cc: Rename from ...
+	* demo/morpholena-gaussian.cc: ... this file.
+	
+	* demo/morpholena-opening-closing.cc,
+	demo/morpholena-fast-hats.cc,
+	demo/morpholena-minima-imp.cc: Remove.
+
+	* demo/Makefile.am (morpholena_SOURCES, convol_gaussian_SOURCES):
+	Modify accordingly.
+
+2003-01-22  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* doc/Makefile.am (COMMONGETDEFSFLAGS): Fix path to autogen
+	template.
+
+	* demo/Makefile.am (INCLUDES): Add, since OLN_CPPFLAGS do not set
+	-I for Olena headers any more. (AM_CPPFLAGS): Fix path to Olena
+	sample images.
+	* doc/Makefile.am (INCLUDES): Likewise.
+	(MAINTAINERCLEANFILES): Minor fix.
+	(EXTRA_DIST, dist-local): Fix distribution list.
+
+	* Makefile.am: Remove ACLOCAL_AMFLAGS and
+	CONFIGURE_DEPENDENCIES. Users that modify oln.m4 should run
+	boostrap.sh explicitely.
+
+	* configure.ac: Remove. All configuration moved to top-level
+	configure.ac.
+
+	* tpl/processing.tpl: use $CONVERT and $EPSTOPDF instead of bare
+	command names.
+
 2003-01-19  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* doc/Makefile.am (olnsrc): Do not use OLN_INCLUDE_DIR any more.
@@ -22,8 +238,6 @@
 
 	* configure.ac: Adjust Olena source path. Use AC_CXX_FLAGS instead
 	of AC_WITH_CXX_WARNINGS. Use AC_CONFIG_FILES again.
-
-2003-01-09  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* Makefile.am: Comment. Correct @OLN_DOC_SUBDIRS@ to $(OLN_DOC_SUBDIRS).
 

@@ -7,7 +7,6 @@ void morpholena_hit_or_miss();
 void morpholena_thin_thick();
 void morpholena_watershed();
 void morpholena_watershed_beucher();
-void morpholena_fast_gaussian();
 void morpholena_minima_imp();
 void morpholena_minima();
 
@@ -22,7 +21,6 @@ int main()
   morpholena_thin_thick();
   morpholena_watershed();
   morpholena_watershed_beucher();
-  morpholena_fast_gaussian();
   morpholena_minima_imp();
   morpholena_minima();
 }

@@ -1,0 +1,9 @@
+#include <mlc/math.hh>
+
+using namespace mlc;
+
+int main()
+{
+  const int i = pow2sup<33>::value; // COMPFAIL
+  return i;
+}

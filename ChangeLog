@@ -1,3 +1,240 @@
+2003-03-23  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Fix a bug with metalic/tests.
+
+2003-03-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Don't go into metalic/tests when
+	--without-mlc-testsuite was specified.
+
+2003-03-19  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
+
+	* configure.ac: Add test entry for topo.
+
+2003-03-14  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: New collections.
+
+2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Update components.
+	* config/oln-local.m4: Add macros for metalic and integre.
+	* config/oln.m4: Minor fix.
+
+2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* config/oln.m4: Add new macros. Simplify flags.
+	* configure.ac, Makefile.am, bootstrap.sh: Adapt to m4 changes.
+
+2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Merge from cleanup:
+
+	2003-03-05  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Update.
+
+	2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Update.
+
+	2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Change the tarball name.
+
+	* oln: Rename into olena.
+
+	* bootstrap.sh, cleanup.sh, configure.ac, Makefile.am: Adapt
+	consequently.
+
+	2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Adapt to types tests move.
+
+	2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* lib/check/Makefile.am, lib/check/Makefile.check,
+	lib/check/Makefile.flags, lib/check/defs.in, lib/check/compile.cc,
+	lib/check/compile.hh, lib/check/check.hh, lib/check/main.cc,
+	lib/check/srcdir.cc, lib/check/srcdir.hh, lib/check/verbose.cc,
+	lib/check/verbose.hh: Move to metalic/tests/check.
+
+	* lib/check/data.cc, lib/check/data.hh: Move to oln/tests/check.
+
+	* configure.ac, Makefile.am: Adapt to new tests location.
+
+	2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac, Makefile.am: Tweak for finding Intègre headers.
+
+	2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* configure.ac: AC_CONFIG_FILES for metalic/mlc/Makefile.am.
+	Create missing links if needed.
+
+	2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* configure.ac: Tweak for finding Metalic headers.
+
+	2003-02-27  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* doc/demo/Makefile.am, doc/ref/Makefile.am, oln/config/oln.m4,
+	oln/tests/check/Makefile.am, oln/tests/check/Makefile.flags,
+	oln/tests/check/defs.in, tools/swilena/python/Makefile.am,
+	tools/utilities/Makefile.am, tools/utilities/morpho/Makefile.am,
+	oln/conf/configure.ac, oln/conf/oln-config.shin,
+	oln/oln/config/math.hh, doc/dev/faq.texi, doc/dev/conf.texi: Get
+	rid of OLN_CPPFLAGS and OLN_CXXFLAGS. Update accordingly. Rename
+	some m4 macros not specific to Olena.
+
+2003-02-21  Akim Demaille  <akim@epita.fr>
+
+	* Makefile.am (INFOTOTEXT): Add --no-validate.
+	* doc/dev/biblio.texi, doc/dev/thanks.texi, doc/dev/faq.texi
+	* doc/dev/abstract.texi, doc/dev/build.texi, doc/dev/install.texi:
+	Remove useless "ifnotplaintext".
+
+2003-02-18  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* configure.ac (REGEN_MANPAGES): rename from HAVE_HELP2MAN.
+
+	* configure.ac, Makefile.am: Do not generate text documentation if
+	documentation sources are not present. Use dependencies for text
+	documentation again.
+
+	* configure.ac: Import Swilena in the build process (use
+	--without-swilena to disable it)
+
+2003-02-17  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* configure.ac: Regenerate manpages even if help2man is not found
+	since `missing' handles this correctly.
+
+	* NEWS: Correct release year.
+
+2003-02-16  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Fix manpages regeneration tests.
+
+2003-02-12  Raphaël Poss  <raph@lrde.epita.fr>
+
+	(Changes from 0.7)
+
+	* configure.ac: More verbose help. Better version support. Allow
+	disabling manpages regeneration.
+
+2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* NEWS: Bump version.
+
+2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* Makefile.am: do not mention ISSUES any more.
+
+2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* configure.ac: Warn when CXXFLAGS has unpleasant values.
+
+2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* ISSUES: Remove file. Contents moved to `doc/dev/build.texi' and
+	`doc/dev/design.texi'.
+
+2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* configure.ac: Bump Autotools requirements.
+
+2003-02-09  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* configure.ac: Use AC_CHECK_PROGS instead of DOC_CHECK_PROG again
+	since failure to find the requested programs do not cause
+	documentation builds to fail any more.
+	* oln/config/oln-local.m4: Remove definition of DOC_CHECK_PROG.
+
+	* Makefile.am (README, BUILD, INSTALL, THANKS, FAQ): Remove
+	dependencies, so that there is no error when the documentation is
+	excluded.
+
+2003-02-06  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ISSUES: Update.
+
+2003-02-03  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* configure.ac: Check for `dvips' and `texi2dvi' for the doc/dev
+	component.
+
+2003-01-29  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Makefile.am: Add ISSUES to EXTRA_DIST.
+
+2003-01-24  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* ISSUES: rename from `oln/ISSUES'.
+
+	* FAQ: Auto-generate from `oln/dev/faq.texi'.
+	* Makefile.am: Modify accordingly. Simplify rules.
+
+2003-01-24  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* THANKS: Auto-generate from `oln/dev/thanks.texi'.
+	* README: Auto-generate from `oln/dev/abstract.texi' and
+	`oln/dev/biblio.texi'.
+	* BUILD: Auto-generate from `oln/dev/build.texi'.
+	* INSTALL: Auto-generate from `oln/dev/install.texi'.
+	* Makefile.am: Modify accordingly.
+
+2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* configure.ac: Add new doc-dev component. Rename
+	`--without-manuals' to `--without-doc-ref'.
+	* BUILD: Update accordingly.
+
+2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* configure.ac: Arrange to fit 80 columns better.
+
+2003-01-23  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* configure.ac: Move auxiliary macro definitions to ...
+	* oln/config/oln-local.m4: ... this new file ...
+	* oln/Makefile.am: ... and distribute it.
+
+	* bootstrap.sh: Fix aclocal invocation to find oln.m4 again.
+
+2003-01-22  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* configure.ac: Propagate the location of the distribution to
+	subdirectories. Merge configuration code from subdirectories.
+	Leverage Autoconf/Automake version requirements to meet the
+	availability of these tools on MacOSX and Cygwin.
+
+2003-01-22  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* bootstrap.sh: Minor fix.
+
+	* oln-version.m4, component.m4: Remove (merged with oln/oln.m4).
+	* Makefile.am: Simplify accordingly.
+
+2003-01-21  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* component.m4 (OLN_COMPONENT): Test for `Makefile.in' in
+	directories instead of the directory existence itself, to prevent
+	problems due to empty directories.
+
+	* oln/Makefile.am, tools/Makefile.am (maintainer-check): Move
+	indentation checker away to ...
+	* Makefile.am: ... here.
+
+2003-01-20  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* NEWS: Mention changes in 0.6. Update changes for 0.7.
+
+	* bootstrap.sh: Recurse autoconf into oln/conf.
+
+	* configure.ac: Add comments.
+	* component.m4 (OLN_COLLECTION): Comment exhaustively.
+
 2003-01-19  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* INSTALL (install): Mention installation of sample images.
@@ -6,24 +243,10 @@
 
 	* README: Fix indentation.
 	* component.m4 (OLN_COMPONENT, OLN_COLLECTION): Simplify.
-
-2003-01-15  Raphaël Poss  <raph@lrde.epita.fr>
-
-	* cleanup.sh: Add `pconf.hh' as a candidate to deletion.
-
-2003-01-12  Raphaël Poss  <raph@lrde.epita.fr>
-
+	* cleanup.sh: Simplify. Add `pconf.hh' as a candidate to deletion.
 	* configure.ac: Rename package to "olena-meta".
-
-2003-01-09  Raphaël Poss  <raph@lrde.epita.fr>
-
-	* cleanup.sh: Simplify.
-
 	* Makefile.am (EXTRA_DIST): Add component.m4.  Add
 	comments.
-
-2003-01-07  Raphaël Poss  <raph@lrde.epita.fr>
-
 	* bootstrap.sh: Call generate_morpho.sh during boostrap.
 
 2003-01-16  Akim Demaille  <akim@epita.fr>

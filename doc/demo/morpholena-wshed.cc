@@ -2,10 +2,11 @@
 #include <oln/morpho/watershed.hh>
 
 using namespace oln;
+using namespace ntg;
 
 void morpholena_watershed()
 {
-  image2d<int_u8> lena = load(IMGDIR2 "/lena.pgm");
+  image2d<int_u8> lena = load(IMGDIR "/lena.pgm");
 
   neighborhood2d n = neighb_c4 ();
   save(morpho::watershed_seg<int_u8>(lena, n), "lena-wss.pgm");

@@ -1,8 +1,36 @@
-2002-11-27  Raphael Poss  <raph@sandrock>
+2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* python/Makefile.am: Remove useless flags.
+
+2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Merge from cleanup:
+
+	2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* swilena/configure.ac: Adapt to new oln location.
+
+	2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* swilena/python/typedefs.hh, swilena/src/swilena_dim.i,
+	swilena/src/swilena_types.i: Replace <oln/types by <ntg/.
+
+2003-02-18  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* python/Makefile.am: Adapt to new configuration system.
+	* src/Makefile.am: Likewise.
+	* Makefile: Likewise.
+
+	* src/swilena_morphodefs.i: Adapt to new naming convention.
+
+	* src/swilena_morpho_dim.i: Instanciate less templates, so that
+	compilation with GCC 3.2 does not abort with OOM errors.
+
+2002-11-27  Raphael Poss  <raph@lrde.epita.fr>
 
 	* doc/swilena.texi: add more documentation about SWIG.
 
-2002-11-15  Elrond  <elrond@imladris.lrde.epita.fr>
+2002-11-15  Elrond  <raph@lrde.epita.fr>
 
 	* TODO: add.
 
@@ -15,8 +43,6 @@
 	* configure.ac: remove java/Makefile from CONFIG_FILES.
 	reference doc/Makefile.am.
 
-2002-11-15  Elrond  <elrond@imladris.lrde.epita.fr>
+2002-11-15  Elrond  <raph@lrde.epita.fr>
 
 	* Initial check-in.
-
-

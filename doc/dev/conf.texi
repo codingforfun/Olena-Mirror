@@ -1,0 +1,405 @@
+@node The Olena configuration system
+@chapter The Olena configuration system
+
+Olena was developed in pure C++ (it does not depend on nonstandard
+libraries), and a large amount of work was done so that it can be
+compiled with any ISO C++ compliant compiler.  Therefore, if all things
+were perfect, Olena headers could be used as-is, with no configuration
+required.
+
+However, two facts darken the picture:
+
+@enumerate
+@item Olena uses few but some C99 functions, while ISO C++ was standardized in 1998.
+@item C++ compilers are not born equal, and few of them are really ISO C++ compliant.
+@end enumerate
+
+As a consequence, to ensure that Olena works properly, several known
+compiler and language ``bugs'' or ``misfeatures'' must be checked, in
+order to enable workarounds. These checks and the available workarounds
+are described in the following sections.
+
+The reason why the workarounds are not all enabled by default, so that
+checks would be unnecessary, is that they are inelegant and might break
+some compiler optimizations on systems where they are unneeded.
+
+@menu
+* Known and handled issues::    
+* Important variables::         
+@end menu
+
+@c ************************************************************************
+@node Known and handled issues
+@section Known and handled issues
+
+@menu
+* Template recursion support::  
+* Numeric limits::              
+* C math functions::            
+* Using the FFTW library::      
+* Using the Zlib library::      
+* Using exceptions::            
+@end menu
+
+@c ************************************************************************
+@node Template recursion support
+@subsection Template recursion support
+
+@cindex @option{-ftemplate-depth}
+@cindex template recursion
+
+The ISO C++ standard specifies that compliant compiler must support a
+recursion depth of @emph{at least} 17 levels. Some code pieces in Olena
+need at least 50. Most compilers happen to support recursion upto many
+more levels, however it is not guaranteed.
+
+In particular, GCC 2.95 is known to need the flag
+@option{-ftemplate-depth-xxx} to support extra levels of recursion.
+
+@unnumberedsubsubsec Check and workaround in @file{oln.m4}
+
+@cindex @code{AC_CXX_TEMPLATE_DEPTH}
+
+The provided Autoconf macro @code{AC_CXX_TEMPLATE_DEPTH} takes an optional
+numeric argument N (default value 50) and works as follows:
+
+@enumerate
+@item 
+attempt to compile a program using recursion depth N;
+@item 
+if it works, stop the check, no workaround required.
+@item 
+add @option{-ftemplate-depth-N} to @env{CXXFLAGS}, and try again;
+@item
+@cindex @env{CXXFLAGS}
+if it works, add @option{-ftemplate-depth-N} to @env{CXXFLAGS}, then
+stop.
+@item
+if it does not work, warn the user.
+@end enumerate
+
+@strong{Rationale for the check:}
+
+@cindex @env{CXXFLAGS}
+
+@option{-ftemplate-depth} is not supported by newer versions of GCC and
+probably other compilers, and thus cannot be added to @env{CXXFLAGS}
+always.
+
+On the other hand, several compilers, if not GNU, support GCC options :
+exotic yet unknown compilers might have the same problem as GCC 2.95 and
+require the same option.
+
+@unnumberedsubsubsec Tested configurations
+
+Among ICC, Comeau C++, GCC 3.x and GCC 2.95, none but the latter need
+extra flags to support deep template recursion. For GCC 2.95,
+@option{-ftemplate-depth-N}, with N sufficiently large, fixes the
+problem.
+
+@c ************************************************************************
+@node Numeric limits
+@subsection Numeric limits
+
+@cindex @code{std::numeric_limits}
+
+ISO C++ specifies that the standard library must provide the class
+template @code{std::numeric_limits} and its specializations in header
+@file{limits}.  Olena uses this class to retrieve infinity values for
+the C++ types @code{float} and @code{double}.  However, it is not
+available in all implementations of the C++ standard library.
+
+@cindex @code{HUGE_VAL}
+
+A substitute is known: the C89 constant @code{HUGE_VAL} and C99
+@code{HUGE_VALF}, defined in @file{cmath}. However, they are not
+satisfying because they are do not really represent infinity.
+
+Therefore, the Olena header @file{oln/config/math.hh} works as follows:
+
+@cindex @code{USE_C_LIMITS}
+
+@enumerate
+@item
+if the macro @code{USE_C_LIMITS} is not defined, use
+@code{std::numeric_limits}.
+@item
+if the macro @code{USE_C_LIMITS} is defined, then:
+@enumerate a
+@item
+include @file{cmath};
+@item
+if @code{HUGE_VAL} is not defined, abort with an error (``Cannot define
+infinity in this configuration'').
+@item
+if it is, use it as the infinity value for type @code{double};
+@item
+if @code{HUGE_VALF} is defined, use it as the infinity value for type
+@code{float};
+@item
+if it is not, use @code{HUGE_VAL} casted to @code{float} instead.
+@end enumerate
+@end enumerate
+
+@unnumberedsubsubsec Check and workaround in @file{oln.m4}
+
+@cindex @code{AC_CXX_NUMERIC_LIMITS}
+
+The provided Autoconf macro @code{AC_CXX_NUMERIC_LIMITS} works as follows:
+
+@cindex @code{USE_C_LIMITS}
+@cindex @env{CPPFLAGS}
+
+@enumerate
+@item
+attemt to compile a program using @code{std::numeric_limits};
+@item
+if it works, do nothing.
+@item
+if it does not, add @option{-DUSE_C_LIMITS} to @env{CPPFLAGS}.
+@end enumerate
+
+@c ************************************************************************
+@node C math functions
+@subsection C math functions
+
+Olena uses functions from the C89 and C99 math libraries. However, most
+C++ environments only know about C89 math functions, since the C++
+standard predates C99. It noticeably happens, on several known
+architectures, that some C99 functions are not available directly, or
+indirectly, from C++ code.
+
+A kludge is known, and several workarounds are available:
+
+@itemize @minus
+@item
+When using the GNU C library and headers on a GNU system, it is
+sufficient to define the @env{_ISOC99_SOURCE} macro to make C99 math
+available from C++.
+@item
+Replacements for (as of 0.7) @code{sqrtf}, @code{floorf}, @code{round}
+or @code{roundf} can be enabled by defining macros of the form
+@env{NEED_xxx}, where xxx is the function name.
+@end itemize
+
+@unnumberedsubsubsec Check and workaround in @file{oln.m4}
+
+@cindex @code{OLN_FLOAT_MATH}
+@cindex @code{AC_CXX_CHECK_MATH}
+
+The provided Autoconf macro @code{OLN_FLOAT_MATH} invokes @code{AC_CXX_CHECK_MATH}
+successively for @code{sqrtf}, @code{floorf}, @code{round} and @code{roundf}. 
+
+@code{AC_CXX_CHECK_MATH} takes the name of the function to test and works as follows:
+
+@enumerate
+@item
+try to compile and link a program using the function;
+@item
+if it works, do nothing.
+@item
+else, try again to compile the program with @option{-D_ISOC99_SOURCE=1};
+@item
+if it works, add @option{-D_ISOC99_SOURCE=1} to @env{CPPFLAGS}.
+@item
+if it does not work, add @option{-DNEED_function} to @env{CPPFLAGS}.
+@end enumerate
+
+
+@c ************************************************************************
+@node Using the FFTW library
+@subsection Using the FFTW library
+
+@cindex @env{HAVE_FFTW}
+
+The implementation of the FFT transform in Olena requires the FFTW
+library (@url{http://www.fftw.org/}). Because this library might
+be unavailable, it is only used if the macro @env{HAVE_FFTW} is
+defined to nonzero, and the correct include path is given to the 
+compiler.
+
+@unnumberedsubsubsec Check in @file{oln.m4}
+
+@cindex @code{AC_WITH_CXX_FFTW}
+
+The provided Autoconf macro @code{AC_WITH_CXX_FFTW} works as follows:
+
+@enumerate
+@item
+if the user didn't provide the flag @option{--with-fftw}, do nothing.
+@item
+if the user provided a prefix directory with @option{--with-fftw=dir},
+add @option{-Idir} and @option{-Ldir} to @env{FFTW_CXXFLAGS} and
+@env{FFTW_LDFLAGS}, resp.
+
+@cindex @env{FFTW_CXXFLAGS}
+@cindex @env{FFTW_LDFLAGS}
+
+@item
+attempt to compile a program that uses a function from the FFTW library,
+using the C++ compiler with @env{FFTW_CXXFLAGS} and @env{FFTW_LDFLAGS};
+@item
+if it works, @code{AC_DEFINE} @env{HAVE_FFTW} to 1.
+@end enumerate
+
+@strong{Rationale for using the C++ compiler} (instead of the C
+compiler): the FFTW library is a C library and there are systems where
+C++ programs cannot link with any C library without options. This ckeck
+ensures that faulty link configurations fail early.
+
+@c ************************************************************************
+@node Using the Zlib library
+@subsection Using the Zlib library
+
+@cindex @env{HAVE_ZLIB}
+
+The implementation of the I/O operators in Olena can make use of the
+Zlib library fo save or load images from gzipped files. Because this
+library might be unavailable, it is only used if the macro
+@env{HAVE_ZLIB} is defined to nonzero, and the correct include path is
+given to the compiler.
+
+@unnumberedsubsubsec Check in @file{oln.m4}
+
+@cindex @code{AC_WITH_CXX_ZLIB}
+
+The provided Autoconf macro @code{AC_WITH_CXX_ZLIB} works as follows:
+
+@enumerate
+@item
+if the user didn't provide the flag @option{--with-zlib}, do nothing.
+@item
+if the user provided a prefix directory with @option{--with-zlib=dir},
+add @option{-Idir} and @option{-Ldir} to @env{ZLIB_CXXFLAGS} and
+@env{ZLIB_LDFLAGS}, resp.
+
+@cindex @env{ZLIB_CXXFLAGS}
+@cindex @env{ZLIB_LDFLAGS}
+
+@item
+attempt to compile a program that uses a function from the Zlib library,
+using the C++ compiler with @env{ZLIB_CXXFLAGS} and @env{ZLIB_LDFLAGS};
+@item
+if it works, @code{AC_DEFINE} @env{HAVE_ZLIB} to 1.
+@end enumerate
+
+@strong{Rationale for using the C++ compiler:} @xref{Using the FFTW library}.
+
+@c ************************************************************************
+@node Using exceptions
+@subsection Using exceptions
+
+Olena code self-checks using preconditions and postconditions, in
+addition to static checks pertaining to the type system. By default, the
+C/C++ function @code{assert} is used for these checks.
+
+However, failure in a condition checked by @code{assert} causes the
+program to abort, with no possible error recovery. When using Olena from
+a dynamic, interpreted language where the user is likely to call Olena
+functions with incorrect arguments, this ``feature'' becomes a nuisance.
+
+@cindex @env{OLN_EXCEPTIONS}
+
+For this purpose, when the @env{OLN_EXCEPTIONS} macro is defined,
+exceptions are thrown instead. However, this option cannot be used if
+the compiler does not support proper exception handling.
+
+@unnumberedsubsubsec Checks in @file{oln.m4}
+
+@cindex @code{OLN_ENABLE_EXCEPTIONS}
+
+The provided Autoconf macro @code{OLN_ENABLE_EXCEPTIONS} takes an optional
+boolean argument (default value yes) and works as follows:
+
+@enumerate
+@item
+if the user does not give the @option{--enable-oln-exceptions} flag to 
+@command{configure}, @emph{and} the argument to @code{OLN_ENABLE_EXCEPTIONS} is
+set to ``no'', do nothing.
+@item
+check for the availability of exceptions with @code{AC_CXX_EXCEPTIONS} (described below);
+@item
+if exceptions are available, add @option{-DOLN_EXCEPTIONS} to @env{CPPFLAGS}.
+@end enumerate
+
+@cindex @code{AC_CXX_EXCEPTIONS}
+
+The provided Autoconf macro @code{AC_CXX_EXCEPTIONS} works as follows:
+
+@enumerate
+@item
+try to compile a program that throws and catches an exception;
+@item
+if it does not compile, fail the test.
+@end enumerate
+
+
+@c ************************************************************************
+@node Important variables
+@section Important variables
+
+Programs using Olena with the provided @file{oln.m4} have to take
+the following @file{Makefile} variables into consideration:
+
+@table @env
+@item CPPFLAGS
+C++ preprocessor flags specific to Olena. @xref{Values for CPPFLAGS}.
+
+@item CXXFLAGS
+C++ compiler flags specific to Olena. @xref{Values for CXXFLAGS}.
+
+@item FFTW_CXXFLAGS
+C++ compiler flags to use the FFTW library. @xref{Using the FFTW library}.
+
+@item FFTW_LDFLAGS
+C++ linker flags to use the FFTW library. @xref{Using the FFTW library}.
+
+@item ZLIB_CXXFLAGS
+C++ compiler flags to use the Zlib library. @xref{Using the Zlib library}.
+
+@item ZLIB_LDFLAGS
+C++ linker flags to user the Zlib library. @xref{Using the Zlib library}.
+
+@end table
+
+@menu
+* Values for CPPFLAGS::     
+* Values for CXXFLAGS::     
+@end menu
+
+@c ************************************************************************
+@node Values for CPPFLAGS
+@subsection Values for @env{CPPFLAGS}
+
+@cindex @env{CPPFLAGS}
+
+@table @option
+@item -DUSE_C_LIMITS
+@xref{Numeric limits}.
+
+@item -DHAVE_FFTW=1
+@xref{Using the FFTW library}.
+
+@item -DHAVE_ZLIB=1
+@xref{Using the Zlib library}.
+
+@item -DOLN_EXCEPTIONS
+@xref{Using exceptions}.
+
+@end table
+
+@c ************************************************************************
+@node Values for CXXFLAGS
+@subsection Values for @env{CXXFLAGS}
+
+@cindex @env{CXXFLAGS}
+
+@table @option
+@item -ftemplate-depth
+@xref{Template recursion support}.
+
+@end table
+
+
+
+

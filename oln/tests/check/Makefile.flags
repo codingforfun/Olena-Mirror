@@ -1,5 +1,0 @@
-# -*- Makefile -*-
-
-AM_CXXFLAGS = $(OLN_CXXFLAGS) $(CXXFLAGS_STRICT_ERRORS)
-AM_CPPFLAGS = $(OLN_CPPFLAGS) -I$(top_srcdir)/tests/check
-

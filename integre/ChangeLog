@@ -1,0 +1,94 @@
+2003-03-14  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Makefile.am: Adjust.
+
+2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/Makefile.am: Adjust with components.
+
+2003-03-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/config/math.hh: Remove namespace.
+
+2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/all.hh, ntg/behaviour.hh, ntg/bin.hh,
+	ntg/builtins_properties.hh, ntg/cast.hh, ntg/color.hh,
+	ntg/cplx.hh, ntg/cplx_representation.hh, ntg/cycle.hh,
+	ntg/debug.hh, ntg/global_ops.hh, ntg/global_ops_defs.hh,
+	ntg/global_ops_traits.hh, ntg/hsi.hh, ntg/hsl.hh, ntg/hsv.hh,
+	ntg/int_s.hh, ntg/int_u.hh, ntg/interval.hh, ntg/nrgb.hh,
+	ntg/optraits.hh, ntg/optraits_bin.hh,
+	ntg/optraits_builtins.hh, ntg/optraits_builtins_bool.hh,
+	ntg/optraits_builtins_float.hh, ntg/optraits_builtins_int.hh,
+	ntg/optraits_cplx.hh, ntg/optraits_cycle.hh,
+	ntg/optraits_int_s.hh, ntg/optraits_int_u.hh,
+	ntg/optraits_range.hh, ntg/optraits_scalar.hh,
+	ntg/optraits_scalar_defs.hh, ntg/optraits_vec.hh,
+	ntg/predecls.hh, ntg/range.hh, ntg/rec_value.hh, ntg/rgb.hh,
+	ntg/to_oln.hh, ntg/type.hh, ntg/typetraits.hh,
+	ntg/typetraits_builtins.hh, ntg/typetraits_builtins_bool.hh,
+	ntg/typetraits_builtins_float.hh,
+	ntg/typetraits_builtins_int.hh, ntg/vec.hh, ntg/xyz.hh,
+	ntg/yiq.hh, ntg/yuv.hh, tests/types/runtests,
+	tests/types/tests/optrait1a, tests/types/tests/optrait2a,
+	tests/types/tests/optrait3: Update namespaces. Update header
+	guards.
+
+2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/builtins_properties.hh: Update includes.
+
+	* ntg/Makefile.am (nobase_ntg_HEADERS): Update.
+
+	* ntg/config/math.hh: Fix header guard.
+
+	* tests/types/Makefile.am (check-local): Remove useless Olena
+	headers path.
+
+	* ntg/all.hh, ntg/color.hh, ntg/cplx.hh, ntg/debug.hh,
+	ntg/int_s.hh, ntg/int_u.hh, interval.hh, ntg/optraits.hh,
+	ntg/optraits_builtins_float.hh, optraits_builtins_int.hh,
+	ntg/optraits_cycle.hh, optraits_int_s.hh,
+	ntg/optraits_int_u.hh: Update includes.
+
+	* ntg/config/system.hh: New file.
+
+	* ntg/Makefile.am: Adjust consequently.
+	
+2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* ntg/vec.hh: Update includes.
+
+2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/behaviour.hh, ntg/bin.hh, ntg/global_ops.hh: Update
+	includes.
+
+	* ntg/predecls.hh, ntg/vec.hh: Likewise.
+
+2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* integre/ntg/behaviour.hh, integre/ntg/global_ops_traits.hh,
+	integre/ntg/optraits_cplx.hh, integre/ntg/optraits_int_s.hh,
+	integre/ntg/optraits_vec.hh: Update includes.
+
+	* integre/ntg/cycle.hh, integre/ntg/global_ops.hh,
+	integre/ntg/optraits_cplx.hh, integre/ntg/optraits_cycle.hh,
+	integre/ntg/optraits_int_s.hh, integre/ntg/range.hh,
+	integre/ntg/behaviour.hh, integre/ntg/cplx.hh,
+	integre/ntg/optraits_scalar.hh, integre/ntg/optraits_vec.hh:
+	Likewise.
+
+
+2003-03-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/Makefile.am: Add check/defs.in into EXTRA_DIST.
+
+2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/Makefile.am, tests/check/defs.in: New files.
+
+2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Makefile.am, ntg/Makefile.am: New files.

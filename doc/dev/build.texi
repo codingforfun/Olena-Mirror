@@ -1,0 +1,307 @@
+@ifplaintext
+@sp 1
+
+This file contains information about the build process of Olena.
+Please read the @file{README} file for general information about Olena.
+@end ifplaintext
+
+@node Required software
+@section Required software
+
+Here is a non-exhaustive list of required software
+required to build Olena successfully.
+
+@itemize @bullet
+@item
+to compile the user tools:
+@itemize @minus
+@item
+a POSIX shell, like Bash
+@item
+a decent C++ compiler, like GNU C++
+@item
+a @command{make} utility, like GNU or BSD @command{make}
+@end itemize
+@item
+to compile the documentation:
+@itemize @minus
+@item
+a LaTeX distribution
+@item
+the @samp{listings} @TeX{} package
+@item
+the utility @command{convert} from ImageMagick
+@item
+GNU Autogen
+@item
+@command{hevea}, a @TeX{} to HTML conversion tool
+@item
+the @command{texinfo} utilities from GNU
+@end itemize
+@item
+to develop @emph{in} Olena:
+@itemize @minus
+@item
+GNU Autotools (Autoconf 2.54, Automake 1.7)
+@end itemize
+@end itemize
+
+@node Configuration
+@section Configuration
+
+In order to prepare the build process, you need to configure the
+source tree.
+
+Assuming your Olena distribution is uncompressed in directory
+@file{oln-0.8}, follow these steps:
+
+@example
+$ @kbd{mkdir ../build}
+$ @kbd{cd ../build && ../oln-0.8/configure CXXFLAGS=''}
+@end example
+
+@strong{Note:} take care to set @env{CXXFLAGS} always when running
+@command{configure}, for the default value computed by
+@command{configure} may yield to compilation issues (conflicts between
+optimization and debugging).
+
+The build process can be altered by a number of options you can pass
+to the @command{configure} script. The following sections describe them.
+
+Additionally, if you are an Olena maintainer (a person who runs
+@command{make distcheck}), @emph{prefer setting @env{CXXFLAGS} as an
+environment variable}: the flags given on the commandline to
+@command{configure} are not propagated to recursive runs by
+@command{make distcheck}.
+
+@subsection Installation path
+
+By default, Olena is installed in the standard ``local'' directory
+of your system. This is usually @file{/usr/local} under Unix.
+
+You can change this path with the following flag:
+
+@example
+ --prefix=<installation prefix>
+@end example
+
+@subsection Compiler selection and compilation flags
+
+By default, @command{configure} will try to use the first C++ compiler
+it encounters on your system. If @env{CXX} is not set, it will look, in order, for:
+
+@itemize @minus
+@item the value of the @env{CCC} environment variable,
+@item the GNU C++ compiler (@command{g++}),
+@item the @command{c++} or @command{gpp} commands on your system,
+@item @command{aCC}, the HP-UX standard C++ compiler,
+@item the @command{CC}, @command{cxx}, @command{cc++} or @command{cl} commands on your system,
+@item KAI's C++ compiler (@command{KCC}),
+@item @command{RCC}, @command{xlC_r} or @command{xlC}.
+@end itemize
+
+You can override the detection system by passing your favourite compiler
+name to @command{configure}, as follows:
+
+@example
+$ @kbd{.../configure CXX=<your-favorite-C++-compiler>}
+@end example
+
+As an alternative, you can also set the environment variable @samp{CXX}.
+
+@sp 2
+
+For most compilers, @command{configure} will select debugging and
+minimal optimization (@option{-g -O2} with g++), which is wrong. You
+should override the default C++ flags by giving @command{configure} your
+selection of flags:
+
+@example
+$ @kbd{.../configure CXXFLAGS="<your-favorite-flags>"}
+@end example
+
+This is especially useful to solve a number of problems, described
+in the following section.
+
+@node Using CXXFLAGS to solve compilation problems
+@section Using @env{CXXFLAGS} to solve compilation problems
+
+
+@subsection Olena needs C99
+
+While Olena is written in C++, it uses a number of features (math
+functions) from ISO C99. However most C++ compilers do not enable these
+features by default.  If your compilation fails with (e.g.) undefined
+references to @code{roundf}, but you know what flags can activate these
+functions, add them to @env{CXXFLAGS}.
+
+In case your system does not provide some math functions necessary
+for Olena, you can force the use of a local, overloaded, implementation,
+by using macros of the form @option{-DOLN_NEED_xxx}, where @option{xxx}
+stands for the name of the missing function, in uppercase.
+For example, on Darwin (MacOS X), the flag @option{-DOLN_NEED_SQRTF} is
+needed (but @command{configure} should add it anyway).
+
+@subsection  Olena needs deep template recursion
+
+The C++ design patterns used in Olena use deep template nesting and
+recursion. However, the C++ standard specifies that C++ compiler need
+only handle template recursion upto 19 levels, which is insufficient for
+Olena. This is a problem for GCC 2.95 and probably other compilers.
+
+Hopefully, @command{configure} tries to fix this automatically by adding
+@option{-ftemplate-depth-NN} when necessary, but other compilers than
+GCC may need other flags. If you know these flags, add them to
+@env{CXXFLAGS}.
+
+@subsection Debugging flags make Olena slow
+
+Because Olena depends on C++ optimizations to provide the best
+performance, and enabling debugging flags often disable optimizations,
+you are advised to override the @env{CXXFLAGS_OPTIMIZE} with any options
+that gives the best optimization/conformance tradeoff.  However, note
+that passing @option{-DNDEBUG} disable many sanity checks, while
+providing only a poor performance improvement.
+
+@subsection Speeding up the compilation
+
+When using GCC, by default separate phases of the compilation of each
+file are run sequentially (compilation then assembly). Using
+@option{-pipe} in @env{CXXFLAGS} allows GCC to fork processes and run
+compilation phases in parallel, which brings a compilation speedup on
+multiprocessor machines or machines with slow storage access (when using
+@option{-pipe}, no intermediary data is saved).
+
+@node Speeding up the configuration process
+@section Speeding up the configuration process
+
+@command{configure} can manage a cache of autodetected features and
+values. This cache speeds up @command{configure} runs and can be
+activated with the @option{-C} option.
+
+@emph{NOTE}: the effects of many of the flags passed to
+@command{configure} are stored in the cache. If you decide to re-run
+@command{configure} with other flags, delete the @file{config.cache}
+file first.
+
+@node Optional Features
+@section Optional Features
+
+@subsection Using external libraries
+
+Several parts of Olena can make use of the Zlib compression library (in
+Olena I/O) and the FFTW fast Fourier transforms library (in Olena fft
+transforms).
+
+By default, @command{configure} will try to autodetect their
+presence. However, if your version of any of these libraries is located
+in a non-standard path, you should specify it as follows:
+
+@example
+ --with-fftw=<path-to-libfftw>
+ --with-zlib=<path-to-zlib>
+@end example
+
+Additionally, if for a reason or another you need to prevent Olena
+from using any of these libraries, you can disable their use
+with the following flags:
+
+@example
+  --without-fftw
+  --without-zlib
+@end example
+
+@subsection Elidable components
+
+Several build targets can be disabled, in case you are only interested
+in ``parts'' of the full Olena distribution.
+
+The elidable parts are so-called @dfn{components}, and you can
+obtain a list of them by running:
+
+@example
+$ @kbd{.../configure --help}
+@end example
+
+@node Building
+@section Building
+
+Once your build directory is @command{configure}d, you can run
+
+@example
+$ @kbd{make}
+@end example
+
+to recursively build all selected components.
+
+@sp 1
+
+Additionnally, you can build and run the testsuite and demonstration
+programs with:
+
+@example
+$ @kbd{make check}
+@end example
+
+However, this process is very time- and memory- consuming. It takes up
+to 25mn and 250-300Mb of virtual memory on a Debian GNU/Linux 2.54GHz
+bi-Xeon machine.
+
+@ifplaintext
+@sp 2
+
+You can now proceed after reading the @file{INSTALL} file.
+@end ifplaintext
+
+@node Compiler notes
+@section Compiler notes
+
+Olena has been tested on the following configurations :
+
+@multitable @columnfractions .33 .66
+@item @strong{System} @tab @strong{Compiler}
+@item Linux @tab g++ 3.0 and 3.2
+@item Linux @tab icc (Intel's C++ Compiler) v7
+@item MacOS X @tab g++ 3.1
+@item NetBSD 1.6 @tab g++ 3.2
+@item Cygwin @tab g++ 3.2
+@end multitable
+
+Olena used to be compatible with g++ 2.95 for performance
+reasons. With g++ 3.2, this constraint is becoming obsolete.
+Moreover, it has many annoying issues, here are the two more
+important ones:
+
+@itemize @minus
+@item
+g++ 2.95 rejects valid expressions, often implying ugly workarounds;
+@item
+under various circumstances, optimizations sometimes generates invalid
+code, especially with intensive inlining.
+@end itemize
+
+Actually Olena yet compiles with g++ 2.95, but some wrong code might
+be generated with data types.
+
+Compilation time may have important differences between compilers, the
+following benchmark gives an idea of the time needed to complete a
+@command{make check}. The tests have been run on a Bi-Xeon 2.4Ghz machine.
+
+@multitable @columnfractions .5 .5
+@item @strong{Compiler} @tab @strong{Time}
+@item  g++-2.95 @tab 16m42s
+@item  g++-3.0 @tab 23m20s
+@item  g++-3.2 @tab 20m03s
+@item  icc-7 @tab 12m52s
+@end multitable
+
+These tests include compilation and running time, the following ones
+just show the runtime benchmarks for the @file{extrkiller} test:
+
+@multitable @columnfractions .25 .5 .25
+@item @strong{Compiler} @tab @strong{Options} @tab @strong{Time}
+@item g++-2.95 @tab @option{-O3 -finline-limit-1500} @tab 3m14s
+@item g++-3.0 @tab @option{-O3 -finline-limit-1500} @tab 2m08s
+@item g++-3.2 @tab @option{-O3 -finline-limit-1500} @tab 1m50s
+@item icc-7   @tab @option{-O3} @tab 5m41s
+@end multitable

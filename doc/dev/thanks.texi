@@ -1,0 +1,127 @@
+@documentencoding ISO-8859-1
+
+@node Aknowledgements
+@section Aknowledgements
+
+The following people contributed to Olena, maybe indirectly through
+one of the numerous prototypes Olena has uprisen from.  Olena would
+not be what it is today without their work.
+
+@table @sc
+@item Thierry G@'eraud
+@itemize @minus
+@item for managing the project in the first place,
+@item for his work on the type system,
+@item for his numerous hours spent thinking about Olena.
+@end itemize
+
+@item Alexandre Duret-Lutz
+@itemize @minus
+@item for maintaining the source tree for several years,
+@item for his work on the type system,
+@item for his work on the test system,
+@item for his numerous hours spent on Olena to make it better.
+@end itemize
+
+@item Akim Demaille
+for his help with the configuration system
+
+
+@item Anthony Pinagot
+@itemize @minus
+@item for his work on Olena I/O,
+@item for his work on statistical operators,
+@item for his study on the FFT.
+@end itemize
+
+@item Astrid Wang
+for her work on static arrays
+
+@item David Lesage
+for his work on the type system
+
+@item Dimitri Papadopoulos-Orfanos
+for his work on the type system
+
+@item Emmanuel Turquin
+for implementing transforms
+
+@item Heru Xue
+for his work on the color system
+
+@item Ignacy Gawedzki
+for his work on the color system
+
+@item Jean Chalard
+@itemize @minus
+@item for his work on colors,
+@item for implementing vectors and matrices,
+@item for implementing Olena iterators,
+@item for his study of wavelets.
+@end itemize
+
+@item Jean-S@'ebastien Mouret
+@itemize @minus
+@item for his work on image I/O,
+@item for his work on the source tree and configuration system,
+@item for his work on fast morphological operators.
+@end itemize
+
+@item J@'er@^ome Darbon
+for his work on image morphology and Olena morpho
+
+@item Ludovic Perrine
+for his study of fuzzy types
+
+@item Micha@"el Strauss
+@itemize @minus
+@item for his work on image morphology,
+@item for his work on the watershed algorithms,
+@item for his work on Olena I/O.
+@end itemize
+
+@item Nicolas Burrus
+for his work on data types and the new (0.6) data type system
+
+@item Pierre-Yves Strub
+@itemize @minus
+@item for his work on Olena morpho,
+@item for his work on the source tree and configuration system,
+@item for his work on the type system.
+@end itemize
+
+@item Qu@^oc Peyrot
+for his work on the watershed algorithm
+
+@item Renaud Fran@,cois
+for his bibliographic research
+
+@item R@'emi Coupet
+@itemize @minus
+@item for his work on Olena morpho,
+@item for his work on data types (pre-0.6),
+@item for his work on the Olena core,
+@item for his bibliographic research.
+@end itemize
+
+@item Yann R@'egis-Gianas
+@itemize @minus
+@item for his work on the type system,
+@item for his numerous contributions to various parts of Olena.
+@end itemize
+
+@item Yoann Fabre
+for his work on the type system
+
+@item Rapha@"el Poss
+for his work on the source tree and configuration system
+
+@item Vincent Berruchon
+
+@end table
+
+@sp 2
+
+In addition, we would like to thank EPITA  and its user groups EpX and
+Prologin for giving us access to Solaris, FreeBSD, NetBSD, OpenBSD and
+CygWin machines.

@@ -1,0 +1,131 @@
+#! /bin/sh
+
+progname=`basename "$0"`
+OLN_BUGS="@PACKAGE_BUGREPORT@"
+OLN_VERSION="@PACKAGE_VERSION@"
+CXX="@CXX@"
+CPPFLAGS="@CPPFLAGS@"
+CXXFLAGS="@CXXFLAGS@"
+CXXFLAGS_STRICT="@CXXFLAGS_STRICT@"
+CXXFLAGS_OPTIMIZE="@CXXFLAGS_OPTIMIZE@"
+CXXFLAGS_STRICT_ERRORS="@CXXFLAGS_STRICT_ERRORS@"
+LDFLAGS="@LDFLAGS@"
+LIBS="@LIBS@"
+
+get_cxxflags() {
+  cxxflags="$CPPFLAGS $CXXFLAGS"
+  if [ x$strict = xyes ]; then
+     cxxflags="$cxxflags $CXXFLAGS_STRICT"
+  elif [ x$strict = xerrors ]; then
+     cxxflags="$cxxflags $CXXFLAGS_STRICT_ERRORS"
+  fi
+  if [ x$optimize = xyes ]; then
+     cxxflags="$cxxflags $CXXFLAGS_OPTIMIZE"
+  fi
+}
+
+print_env_vars() {
+  if [ x$sh_style = xcsh ]; then
+    echo "setenv CXX \"$CXX\""
+    echo "setenv CXXFLAGS \"$cxxflags\""
+    echo "setenv LDCXXFLAGS \"$LDCXXFLAGS $LIBS\""
+  else
+    echo "CXX=\"$CXX\"; export CXX"
+    echo "CXXFLAGS=\"$CXXFLAGS\"; export CXXFLAGS"
+    echo "LDFLAGS=\"$LDFLAGS $LIBS\"; export LDFLAGS"
+  fi
+}
+
+usage() {
+  cat <<EOF
+$progname displays compilation flags for programs using Olena $OLN_VERSION.
+
+Usage: $0 [OPTIONS]
+
+  -v, --version       print Olena version
+
+  -e, --env           print commands to set environment variables
+  -C, --csh           for --env: use csh-style syntax
+
+  -c, --cxx           print the supported compiler name 
+  -X, --cxxflags     print compilation flags for the supported compiler
+  -L, --ldflags      print linker flags for the supported compiler
+
+  -O, --optimize      add options for extra optimization
+  -W, --strict        add options for extra warnings
+  -x, --strict-errors add options for conformance enforcement
+
+This version of $0 was configured for the following compiler and
+compiler flags:
+  $CXX $CXXFLAGS
+
+Report bugs to $OLN_BUGS.
+EOF
+  exit $1
+}
+
+if [ "x$1" = x ]; then
+  usage 1 1>&2
+fi
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+  -*=*) optarg=`echo "$1" | sed 's/[-_a-zA-Z0-9]*=//'` ;;
+  *) optarg= ;;
+  esac
+
+  case "$1" in
+    -h | --help)
+       usage 0
+       ;;
+    -v | --version)
+       echo "$progname for Olena $OLN_VERSION"
+       ;;
+    -c | --cxx)
+       print_cxx=yes
+       ;;
+    -e | --env)
+       print_env=yes
+       ;;
+    -C | --csh)
+       sh_style=csh
+       ;;
+    -W | --strict)
+       strict=yes
+       ;;
+    -x | --strict-errors)
+       strict=errors
+       ;;
+    -X | --cxxflags)
+       print_cxxflags=yes
+       ;;
+    -L | --ldflags)
+       print_ldflags=yes 
+       ;;
+    -O | --optimize)
+       optimize=yes
+       ;;       
+    *)
+       usage 1 1>&2
+       ;;
+  esac
+  shift
+done
+
+get_cxxflags
+if [ x$print_env = xyes ]; then
+   print_env_vars
+fi
+if [ x$print_cxx = xyes ]; then
+   echo -n "$CXX"
+fi
+if [ x$print_cxxflags = xyes ]; then
+   echo -n "$cxxflags"
+fi
+if [ x$print_ldflags = xyes ]; then
+   echo -n "$LDFLAGS $LIBS"
+fi
+echo
+
+exit 0
+

@@ -5,10 +5,11 @@
 #include <oln/morpho/gradient.hh>
 
 using namespace oln;
+using namespace ntg;
 
 void morpholena_watershed_beucher()
 {
-  image2d<int_u8> lena = load(IMGDIR2 "/lena.pgm");
+  image2d<int_u8> lena = load(IMGDIR "/lena.pgm");
 
   image2d<int_u8> markers(lena.size());
   level::fill(markers, 0);

@@ -1,0 +1,389 @@
+@node The Olena source tree
+@chapter The Olena source tree
+
+The Olena source tree is divided into several distrinct components:
+
+@table @file
+@item top source directory
+The base directory for Olena sources. It contains Autoconf/Automake
+definitions that allow to run, recursively, the following toplevel
+operations:
+
+@itemize @minus
+@item
+creating initial configuration files and command-line utilities
+(@command{make all});
+@item
+running the testsuite and building the demonstration programs
+(@command{make check});
+@item
+installing Olena to the system (@command{make install});
+@end itemize
+
+@item olena/
+The Olena sources and testsuite.
+
+@item doc/
+The documentation and demonstration programs.
+
+@item tools/
+The user programs. This directory and its sub-directories contain
+auto-generated sources that yield a set of user programs and commands
+exhibing several Olena features.
+
+@end table
+
+You can find in the following sections a more detailed description of
+the contents of each directory.
+
+@menu
+* Library files::               
+* User tools source tree::      
+* Documentation source tree::   
+@end menu
+
+@cindex @file{bootstrap.sh}
+The generation of @command{configure} from @file{configure.ac} is led by
+the toplevel script @command{bootstrap.sh}.
+
+@node Library files
+@section Library files: @file{olena/}
+
+@cindex @file{olena/}
+
+This directory contains the main Olena sources, the testsuite and
+some additional programs.
+
+Here are the subdirectories:
+
+@menu
+* Olena headers::               
+* Testsuite files::             
+* Autoconf helpers::            
+* User configuration tools::    
+@end menu
+
+@node Olena headers
+@subsection Olena headers: @file{olena/oln/}
+
+@cindex @file{oln/}
+
+This directory contains the Olena library strictly speaking, that is,
+the C++ header files.
+
+@table @file
+@item oln/config/
+@cindex @file{system.hh}
+@cindex @file{pconf.hh}
+@cindex @file{math.hh}
+Olena global configuration definitions, reachable by including
+@file{oln/config/system.hh}. This directory also provides replacements
+for missing math functions in @file{math.hh}.
+
+@item oln/meta/
+C++ meta-programming utilities. Here is a non-exhaustive list of components:
+@itemize @minus
+@item
+@cindex @file{array*.hh}
+static arrays (@file{array*.hh});
+@item
+@cindex @file{cmp.hh}
+@cindex @file{ucmp.hh}
+static comparisons (@file{cmp.hh} and @file{ucmp.hh});
+@item
+@cindex @file{control.hh}
+static control structures (@file{control.hh});
+@item
+@cindex @file{logic.hh}
+static logical operators (@file{logic.hh});
+@item
+@cindex @file{ufuncs.hh}
+static miscellaneous intefer functions (@file{ufuncs.hh});
+@item
+@cindex @file{types.hh}
+pervasives controlling static hierarchies (@file{types.hh}).
+@end itemize
+@item oln/core/
+Definitions for image types and various other Olena data types. This directory
+contains definitions for:
+@itemize @minus
+@item
+image types;
+@item
+structural element types (windows, neighborhoods);
+@item
+iterators;
+@item
+points;
+@item
+borders.
+@end itemize
+
+@item oln/transforms/
+Transformation operators  over images.  Includes Fast Fourier Transforms
+(FFT) and Discreet Wavelets Transforms (DWT).
+
+@item oln/morpho/
+Morphological operators.
+
+@item oln/level/
+Level processing operators.
+
+@item oln/convol/
+Convolution operators.
+
+@item oln/arith/
+Arithmetical operators (over images). Covers both arithmetical, conversion and
+logical operators.
+
+@item oln/convert/
+Value types conversion functions.
+
+@item oln/io/
+Input/Output operators for several Olena data types.
+
+@item oln/utils/
+Utility operators.
+
+@item oln/math/
+Utility mathematical functions.
+
+@end table
+
+In addition to these categories, four multi-purpose headers are provided in
+@file{oln/}:
+
+@table @file
+@cindex @file{basics.hh}
+@item basics.hh
+Recursively includes all @emph{base types} definitions from @file{oln/core/}.
+
+@cindex @file{basics1d.hh}
+@item basics1d.hh
+Recursively includes all definitions from @file{oln/core/} that allow handling of
+1D images.
+
+@cindex @file{basics2d.hh}
+@item basics2d.hh
+Likewise, for 2D images.
+
+@cindex @file{basics3d.hh}
+@item basics3d.hh
+Likewise, for 3D images.
+@end table
+
+@node Testsuite files
+@subsection Testsuite files: @file{olena/tests/}
+
+This directory contains most of the Olena testsuite. It contains
+one directory per test category, in addition to a library directory.
+
+The directories are:
+
+@table @file
+@cindex @file{tests/arith/}
+@item arith/
+Tests pertaining to types arithmetics.
+
+@cindex @file{tests/convert/}
+@item convert/
+Tests pertaining to image value conversions (color-color, color-b/w, etc...).
+
+@cindex @file{tests/convol/}
+@item convol/
+Tests pertaining to convolution operators.
+
+@cindex @file{tests/io/}
+@item io/
+Tests pertaining to image I/O.
+
+@cindex @file{tests/morpho/}
+@item morpho/
+Tests pertaining to morphological operators.
+
+@cindex @file{tests/sanity/}
+@item sanity/
+Tests that check that each Olena header can be separately included in
+C++ programs.
+
+@cindex @file{tests/transforms/}
+@item transforms/
+Tests pertaining to image transformations (FFT, DWT, ...).
+
+@cindex @file{tests/check/}
+@item check/
+Library containing several utilities used multiple times in other
+test directories.
+
+@end table
+
+@node Autoconf helpers
+@subsection Autoconf helpers: @file{olena/config/}
+
+In @file{olena/config/} can be found several files automatically
+generated by the Autoconf command @command{autoreconf} (with
+the exception of @file{oln.m4} and @file{oln-local.m4} presented
+separately).
+
+@table @file
+@cindex @file{depcomp}
+@item depcomp
+Compute dependencies from files.
+
+@cindex @file{install-sh}
+@item install-sh
+Installs a file to its final location.
+
+@cindex @file{missing}
+@item missing
+Presents the user with an intelligible error message if a tool
+is missing to the build process.
+
+@cindex @file{mkinstalldirs}
+@item mkinstalldirs
+Creates the installation directories.
+
+@cindex @file{mdate-sh}
+@item mdate-sh
+Computes the last modification date from a file (used in @file{doc/dev/}
+to create @file{version.texi}).
+
+@cindex @file{texinfo.tex}
+@item texinfo.tex
+Texinfo definitions for the documentation. 
+
+@cindex @file{oln.m4}
+@item oln.m4
+M4 file containing general-use macro definitions for use by the Olena
+distribution and user projects. 
+
+@cindex @file{oln-local.m4}
+@item oln-local.m4
+M4 file containing macro definitions for the @file{configure.ac} included
+in the distribution of Olena. 
+
+@end table 
+
+@node User configuration tools
+@subsection User configuration tools: @file{olena/conf/}
+
+This directory contains the files used to create the utility scripts of the
+form @command{oln-config.sh}, which retain compiler-specific flags for later
+invocation by Olena users.
+
+The files are:
+
+@table @file
+@cindex @file{oln-config.shin}
+@cindex @file{oln-config.sh}
+@item oln-config.shin
+Template script used by the accompanying @command{configure} to generate
+the final utilities.
+
+@cindex @file{gen-scripts.sh}
+@item gen-scripts.sh
+A script that calls @command{configure} repeatedly to generate various
+versions of @command{oln-config.sh}.
+
+@cindex @file{compilers.def}
+@item compilers.def
+Compiler list for use by @command{gen-scripts.sh}.
+
+@cindex @file{configure.ac}
+@item configure.ac
+Lightweight Autoconf source file, leading to the utility @command{configure} used
+by @command{gen-scripts.sh}.
+
+@end table
+
+@cindex @file{bootstrap.sh}
+The creation of @command{configure} from @file{configure.ac} in this directory is
+led by the toplevel @command{bootstrap.sh}.
+
+
+@node User tools source tree
+@section User tools source tree: @file{tools/}
+
+@cindex @file{tools/}
+
+In this directory are stored the sources for run-time, user-level utilities.
+
+The subdirectories are:
+
+@table @file
+@cindex @file{tools/utilities/}
+@item utilities/
+Automatically-generated sources for commandline utilities. Generated programs
+allow the use of Olena functions from shell scripts.
+
+@cindex @file{tools/swilena/}
+@item swilena/
+SWIG (@url{http://www.swig.org/}) wrappers for Olena, to allow the use of Olena
+functions from scripting languages like Python and Perl.
+This is @emph{EXPERIMENTAL} work.
+
+@end table
+
+@node Documentation source tree
+@section Documentation source tree: @file{doc/}
+
+@cindex @file{doc/}
+
+This directory contains all files needed to build the documentation,
+except headers files from @file{oln/}, which contain comments used in
+the documentation build process.
+
+Here is a list of the most important files:
+
+@table @file
+@cindex @file{doc/dev/}
+@cindex @file{oln-dev.texi}
+@item doc/dev/
+A directory containing Texinfo sources for the Olena Developer's Handbook.
+
+@cindex @file{doc/ref/}
+@cindex @file{oln-ref.tex}
+@item doc/ref/
+A directory containing TeX sources and definitions to build the Reference
+Manual. It noticeably contains:
+
+@table @file
+@item oln-ref.tex
+The master TeX file for the Reference Manual.
+
+@cindex @file{ref-types.tex}
+@item ref-types.tex
+Handwritten documentation about Olena value types, included in the
+Reference Manual.
+
+@cindex @file{ref-morpho.tex}
+@item ref-morpho.tex
+@cindex @file{ref-level.tex}
+@item ref-level.tex
+@cindex @file{processing.tpl}
+TeX sources describing Olena components. They are auto-generated by
+AutoGen from Olena C++ header files@footnote{more precisely, from C++
+comments}, using definitions in @file{processing.tpl}.
+
+@cindex @file{Makefile.am}
+@item Makefile.am
+Automake definitions that control the build process, which (as of 0.7)
+depends on GNU Make.
+
+@item bin/
+Auto-generated programs that create the pictures included in the
+Reference Manual.
+
+@item html/
+The HTML version of the Reference Manual.
+
+@item processing.tpl
+AutoGen parameters for generating parts of the Reference Manual.
+@end table
+@end table
+
+@cindex @file{texinfo.tex}
+Running @command{make all} in the @file{doc/} toplevel subdirectory
+generates the Reference Manual and the Developer's Handbook. To achieve
+this goal, it uses the Olena headers it can find in @file{../olena} and
+the Texinfo source @file{../olena/config/texinfo.tex}.

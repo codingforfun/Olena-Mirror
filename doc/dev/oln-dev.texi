@@ -1,0 +1,116 @@
+ \input texinfo @c -*- texinfo -*-
+@c %**start of header
+@setfilename oln-dev.info
+@settitle Olena: a Developer's Handbook
+@include version.texi
+
+@documentlanguage en
+@documentencoding ISO-8859-1
+@finalout
+@afourlatex
+@copying
+
+This document is intended to describe the Olena source tree layout and
+how to use Olena from another software project.
+
+Copyright @copyright{} 2002,2003 @strong{Laboratoire de Recherche et D\'eveloppement de l'EPITA}
+
+@end copying
+
+@titlepage
+@title Olena: a Developer's Handbook
+@subtitle Last updated @value{UPDATED}, for Olena @value{VERSION}
+@author Rapha@"el Poss
+@end titlepage
+
+@iftex
+@setcontentsaftertitlepage
+@end iftex
+@ifnottex
+@node Top
+@top Olena handbook for developers
+@end ifnottex
+
+@menu
+* Abstract::
+* Olena fast installation guide::
+* The Olena configuration system::
+* Using Olena from another project::
+* The Olena source tree::
+* Frequently Asked Questions::
+* Design considerations::
+* Credits::
+* Index and Table of contents::
+@end menu
+
+@c ************************************************************************
+@c Chapter `Abstract'
+
+@include abstract.texi
+
+@c ************************************************************************
+@node Olena fast installation guide
+@chapter Olena fast installation guide
+
+@menu
+* Required software::
+* Configuration::
+* Using CXXFLAGS to solve compilation problems::
+* Speeding up the configuration process::
+* Optional Features::
+* Building::
+* Compiler notes::
+* Installing::
+@end menu
+
+@include build.texi
+@include install.texi
+
+@c ************************************************************************
+@c Chapter The Olena configuration system
+
+@include conf.texi
+
+@c ************************************************************************
+@node Using Olena from another project
+@chapter Using Olena from another project
+
+@c FIXME
+
+@c ************************************************************************
+@c Chapter The Olena source tree
+
+@include srctree.texi
+
+@c ************************************************************************
+@c Chapter `FAQ'
+
+@include faq.texi
+
+@c ************************************************************************
+@c Chapter Design considerations
+
+@include design.texi
+
+@c ************************************************************************
+@node Credits
+@chapter Credits
+
+@menu
+* Aknowledgements::
+* Bibliography::
+@end menu
+
+@include thanks.texi
+@include biblio.texi
+
+@c ************************************************************************
+@node Index and Table of contents
+@unnumbered Index and Table of contents
+
+@printindex cp
+
+@contents
+
+
+@bye

@@ -1,3 +1,105 @@
+2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* utilities/Makefile.am: Remove useless flags.
+
+2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Merge from cleanup:
+
+	2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* utilities/mosaic.cc: Update namespaces.
+
+	2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* utilities/configure.ac: Adapt to new oln location.
+
+	2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* utilities/morpho/morpho_template.cc,
+	utilities/morpho/morpho_template_extrema.cc,
+	utilities/morpho/morpho_template_gaussian.cc,
+	utilities/morpho/morpho_template_watershed.cc,
+	utilities/morpho/morpho_template_with_functor.cc,
+	utilities/morpho/morpho_template_with_neighb.cc,
+	utilities/morpho/morpho_template_with_twowin.cc,
+	utilities/mosaic.cc: Replace <oln/types by <ntg/.
+
+2003-02-18  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* utilities/Makefile.am: Cleanup manpages generation.
+	* utilities/morpho/generate_morpho.sh: Likewise.
+
+2003-02-17  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* utilities/Makefile.am: Fix help2man invocation.
+	* utilities/morpho/generate_morpho.sh: Likewise.
+
+2003-02-12  Raphaël Poss  <raph@lrde.epita.fr>
+
+	(Changes from 0.7)
+	
+	* utilities/Makefile.am: Auto-generate manpages. Fix small
+	dependency problem.
+	* utilities/morpho/Makefile.am: Likewise.
+
+	* utilities/morpho/generate_morpho.sh: Add copyright information.
+
+	* utilities/mosaic.cc: Add copyright information. Modify to use
+	with help2man.
+	* utilities/morpho/morpho_template.cc,
+	utilities/morpho/morpho_template_extrema.cc,
+	utilities/morpho/morpho_template_gaussian.cc,
+	utilities/morpho/morpho_template_watershed.cc,
+	utilities/morpho/morpho_template_with_twowin.cc, 
+	utilities/morpho/morpho_template_with_neighb.cc, 
+	utilities/morpho/morpho_template_with_functor.cc: Likewise.
+
+
+2003-02-07  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* utilities/morpho/Makefile.am (MAINTAINERCLEANFILES): Add. Fix
+	generate_morpho.sh invocation.
+
+	* utilities/morpho/generate_morpho.sh: Use sed instead of variable
+	special substitution to accomodate the default shell on Cygwin.
+
+2003-01-22  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* utilities/Makefile.am (INCLUDES): Add path to Olena, since -I
+	flags are not added any more to OLN_CPPFLAGS.
+	* utilities/morpho/Makefile.am: Likewise.
+
+	* Makefile.am: Remove ACLOCAL_AMFLAGS and
+	CONFIGURE_DEPENDENCIES. Users that modify oln.m4 should run
+	bootstrap.sh explicitely.
+
+	* configure.ac: Remove. All configuration moved to top-level
+	`configure.ac'.
+
+2003-01-21  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* utilities/morpho/morpho_template.cc: Include getopt.hh instead
+	of getopt.h, to prevent type errors due to bad prototyping
+	behavior of getopt.h.
+	* utilities/morpho/morpho_template_extrema.cc,
+	utilities/morpho/morpho_template_gaussian.cc,
+	utilities/morpho/morpho_template_watershed.cc,
+	utilities/morpho/morpho_template_with_functor.cc,
+	utilities/morpho/morpho_template_with_neighb.cc,
+	utilities/morpho/morpho_template_with_twowin.cc,
+	utilities/mosaic.cc: Likewise.
+
+	* utilities/Makefile.am (INCLUDES, LDADD): Link with
+	libolntools.a, which now provides, if necessary, getopt_long.
+	* utilities/morpho/Makefile.am: Likewise.
+	
+	* configure.ac: Check for C compiler and ranlib, to help building
+	lib/libolntools.a.
+	* lib/Makefile.am, lib/getopt.h, lib/getopt1.c lib/getopt.c,
+	lib/getopt.hh, lib/gettext.h: Add.
+	* Makefile.am (SUBDIRS): Mention `lib'.
+
 2003-01-19  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* utilities/Makefile.am (AM_CXXFLAGS): Use $(CXXFLAGS_STRICT) and

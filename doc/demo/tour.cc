@@ -10,7 +10,7 @@
 //#include <oln/basics3d.hh>
 
 // Let's include all types, for simplicity.
-#include <oln/types/all.hh>
+#include <ntg/all.hh>
 
 // Some algorithms...
 #include <oln/morpho/erosion.hh>
@@ -35,10 +35,15 @@
 // Olena is organized in a namespace hierarchy.  Every thing is
 // declared by Olena under the 'oln::' namespace, and possibly un a
 // sub namespace such as 'oln::arith::' (arithmetic operations on
-// images), 'oln::morho::' (morphological operations), etc.
+// images), 'oln::morpho::' (morphological operations), etc.
 // For the sake of simplicity, we will neglect the 'oln::' prefix
 // in this file.
 using namespace oln;
+
+// Data types are defined in the Intègre library, so they are
+// in the ntg namespace.
+// In this file, we will neglect the 'ntg::' prefix.
+using namespace ntg;
 
 int
 main (void)
@@ -324,7 +329,7 @@ main (void)
   // of pnm format supported (1,2,3,4,5,6) is dependent on
   // the type of the image you load/save.  The extension
   // is also used to guess the format to use.
-  image2d<int_u8> lena = load(IMGDIR2 "/lena.pgm");
+  image2d<int_u8> lena = load(IMGDIR "/lena.pgm");
   std::cout << "watershedling lena..." << std::endl;
   save(morpho::watershed_seg<int_u8>(lena, neighb_c4()), "output.pgm");
 

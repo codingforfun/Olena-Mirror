@@ -2,10 +2,11 @@
 #include <oln/morpho/gradient.hh>
 
 using namespace oln;
+using namespace ntg;
 
 void morpholena_grad()
 {
-  image2d<int_u8> lena = load(IMGDIR2 "/lena.pgm");
+  image2d<int_u8> lena = load(IMGDIR "/lena.pgm");
 
   save(morpho::beucher_gradient(lena, win_c8p()), "lena-beg.pgm");
   save(morpho::internal_gradient(lena, win_c8p()), "lena-ing.pgm");

@@ -1,24 +1,40 @@
-Olena 0.7	December 11, 2002
+Olena 0.8	April 1st, 2003
 
+	* ...
+
+Olena 0.7	February 10, 2003
+
+	* Manual pages for the command-line utilities.
 	* New, saner, source tree layout.
 	* Each `part' of the source tree can be excluded from the
 	  build process with configuration flags.
 	* New `oln.m4' file for use by autoconf'ed user projects.
 	* Major documentation updates.
+	* New `oln-config.sh' scripts for user Makefiles.
+	* Olena now works on MacOS X, NetBSD, FreeBSD and cygwin.
 
-Olena 0.5	July 25, 2002
+Olena 0.6       January 15, 2003
 
-	* Documentation in LaTeX (instead of Texinfo).
-	* Support reading/writing gziped images
-	  (include <oln/io/gz.hh> and link with libz).
-	* Complete rewrite of the static arrays
-	  (meta::array1d, meta::array2d, meta::array3d).
-	* Preliminary implementation of convolutions
-	  (oln::convol::convolve)
-	* All headers should now be referenced with the `oln/' prefix,
-	  as in `#include <oln/basics2d.hh>'.
-	* New conversion operator: convert::stretch.
-	* Many bug fixes.
+        * Complete rewriting of data types.
+        * Command line utilities.
+        * Fully implementation of convolutions
+        * Fast Fourier Transform (FFT)
+        * Discrete Wavelet Transform (Daubechie's wavelet) (DWT)
+        * Many bug fixes.
+
+Olena 0.5       July 25, 2002
+
+        * Documentation in LaTeX (instead of Texinfo).
+        * Support reading/writing gziped images
+          (include <oln/io/gz.hh> and link with libz).
+        * Complete rewrite of the static arrays
+          (meta::array1d, meta::array2d, meta::array3d).
+        * Preliminary implementation of convolutions
+          (oln::convol::convolve)
+        * All headers should now be referenced with the `oln/' prefix,
+          as in `#include <oln/basics2d.hh>'.
+        * New conversion operator: convert::stretch.
+        * Many bug fixes.
 
 Olena 0.4.1	April 25, 2002
 
