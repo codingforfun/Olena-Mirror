@@ -28,7 +28,7 @@
 #ifndef OLENA_ARITH_INTERNAL_OPDECLS_HH
 # define OLENA_ARITH_INTERNAL_OPDECLS_HH
 
-/*! \file opdecls.hh
+/*! \file  olena/oln/arith/internal/opdecls.hh
 **
 ** Operations are defined between two images and between one image and
 **  one constant value (with the cst suffix).

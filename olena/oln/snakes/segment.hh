@@ -39,7 +39,7 @@ namespace oln {
 
     /*! A segment is a list of node.
     **
-    ** \attention FIXME: Do not work due to the function node::energy.
+    ** \todo FIXME: Do not work due to the function node::energy.
     */
     template <class I>
     class segment

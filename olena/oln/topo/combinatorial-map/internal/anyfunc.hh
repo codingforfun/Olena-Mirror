@@ -42,7 +42,7 @@ namespace oln {
 
 	/*! any
 	**
-	** \deprecated FIXME: totally obsolete.
+	** \todo FIXME: totally obsolete.
 	*/
 	template <class Inf>
 	class any
@@ -55,7 +55,7 @@ namespace oln {
 	/*! Function stored in a vector.
 	**
 	**
-	** \warning FIXME: It has nothing to do there.
+	** \todo FIXME: It has nothing to do there.
 	*/
 	template <class U, class V, class Inf>
 	class anyfunc : public any<Inf>

@@ -1,4 +1,40 @@
 2004-03-14  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/arith/internal/opdecls.hh: Changed doxygen commands
+	"\{''|attention|warning|bug|note} FIXME" to "\todo FIXME", "\ref" to
+	"REF: ", "\file *.hh" to "\file oln/full/path/*.hh".
+	* olena/oln/convert/bound.hh: Likewise.
+	* olena/oln/convert/nrgbxyz.hh: Likewise.
+	* olena/oln/convert/rgbnrgb.hh: Likewise.
+	* olena/oln/convert/rgbxyz.hh: Likewise.
+	* olena/oln/convol/fast_gaussian.hxx: Likewise.
+	* olena/oln/level/cc.hh: Likewise.
+	* olena/oln/level/connected.hh: Likewise.
+	* olena/oln/level/invert.hh: Likewise.
+	* olena/oln/math/macros.hh: Likewise.
+	* olena/oln/morpho/extrema.hxx: Likewise.
+	* olena/oln/topo/dmap.hh: Likewise.
+	* olena/oln/topo/dmap.hh: Likewise.
+	* olena/oln/utils/copy.hh: Likewise.
+	* olena/oln/utils/histogram.hh: Likewise.
+	* olena/oln/morpho/attribute_union_find.hh: Likewise.
+	* olena/oln/topo/tarjan/union.hh: Likewise.
+	* olena/oln/topo/inter-pixel/inter-pixel.hh: Likewise.
+	* olena/oln/topo/tarjan/flat-zone.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/cmap.hh: Likewise.
+	* olena/oln/topo/inter-pixel/fwd-dir-iter.hh: Likewise.
+	* olena/oln/topo/inter-pixel/bkd-dir-iter.hh: Likewise.
+	* olena/oln/topo/inter-pixel/internal/dir.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/internal/anyfunc.hh: Likewise.
+	* olena/oln/convert/rgbhsv.hh: Likewise.
+	* olena/oln/convert/rgbhsl.hh: Likewise.
+	* olena/oln/convert/rgbhsi.hh: Likewise.
+	* olena/oln/convert/rgbyuv.hh: Likewise.
+	* olena/oln/convert/rgbyiq.hh: Likewise.
+	* olena/oln/snakes/snakes_base.hh: Likewise.
+	* olena/oln/snakes/node.hh: Likewise.
+	* olena/oln/snakes/segment.hh: Likewise.
+
+2004-03-14  Niels Van Vliet  <niels@lrde.epita.fr>
 	* olena/oln/topo/dmap.hh: Correct comments.
 	* olena/oln/topo/tarjan/flat-zone.hh: Likewise.
 

@@ -43,7 +43,7 @@ namespace oln {
 
       /*! Tarjan set.
       **
-      ** \attention FIXME: a similar class is defined in
+      ** \todo FIXME: a similar class is defined in
       ** oln/morpho/attribute_union_find.hh (oln::morpho::tarjan::tarjan_set).
       ** The one in morpho is more general. I think that this class should
       ** be removed.

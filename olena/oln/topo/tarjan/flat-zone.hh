@@ -57,11 +57,11 @@ namespace oln {
       **        IMG_OUT "oln_topo_flat_zone.pgm");
       **  }
       ** \endcode
-      ** \image html test-cmap_pgm.png width=6cm
-      ** \image latex test-cmap_pgm.png width=6cm
+      ** \image html test-cmap_pgm.png "input image" width=6cm
+      ** \image latex test-cmap_pgm.png "input image" width=6cm
       ** =>
-      ** \image html oln_topo_flat_zone.png width=6cm
-      ** \image latex oln_topo_flat_zone.png width=6cm
+      ** \image html oln_topo_flat_zone.png "output image" width=6cm
+      ** \image latex oln_topo_flat_zone.png "output image" width=6cm
       */
       template <class I>
       struct flat_zone

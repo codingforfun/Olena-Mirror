@@ -38,7 +38,7 @@ namespace oln {
   namespace snakes {
     /*! Snake algorithm.
     **
-    ** \attention FIXME: Do not work due to the function node::energy.
+    ** \todo FIXME: Do not work due to the function node::energy.
     ** \todo FIXME: Add doc & test.
     */
     template <class algorithm>
@@ -64,7 +64,7 @@ namespace oln {
       ntg::float_s
       energy(void) const;
       ///< Return the snake energy. This is not algorithm-dependant.
-      ///< \attention FIXME: Do not work due to the function node::energy
+      ///< \todo FIXME: Do not work due to the function node::energy
 
     public:
       int

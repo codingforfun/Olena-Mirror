@@ -37,9 +37,9 @@
 # include <algorithm>
 # include <iterator>
 
-/*! \file cmap.hh
+/*! \file  olena/oln/topo/combinatorial-map/cmap.hh
 **
-** \attention FIXME: There is some problems in the directory topo/combinatorial-map/,
+** \todo FIXME: There is some problems in the directory topo/combinatorial-map/,
 ** such as non static functions, or the redefinition of the class any.\n
 ** FIXME: The documentation is not good enough.\n
 ** FIXME: Real test are missing.
@@ -54,7 +54,7 @@ namespace oln {
 
       /*! Combinatorial map.
       **
-      ** \ref Braquelaire, J. P. and Brun, L. Image Segmentation with
+      ** REF: Braquelaire, J. P. and Brun, L. Image Segmentation with
       ** Topological Maps and Inter-pixel Representation}, Journal of
       ** Visual Communication and Image representation, 1998, vol. 9
       */

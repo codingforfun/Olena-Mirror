@@ -37,7 +37,7 @@ namespace oln {
 
     /*! Like convert::force, but with saturation.
     **
-    ** \note FIXME: is this really useful with new types ?
+    ** \todo FIXME: is this really useful with new types ?
     */
     template<class Output, class Exact = mlc::final>
     struct bound : public abstract::conversion_to_type< Output, typename mlc::exact_vt<bound<Output, Exact>, Exact>::ret >

@@ -1,14 +1,47 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 87)
-(Parent-Version oln 10 86)
+(Project-Version oln 10 88)
+(Parent-Version oln 10 87)
 (Version-Log "2004-03-14  Niels Van Vliet  <niels@lrde.epita.fr>
-        * olena/oln/topo/dmap.hh: Correct comments.
-        * olena/oln/topo/tarjan/flat-zone.hh: Likewise.
+	* olena/oln/arith/internal/opdecls.hh: Changed doxygen commands
+	\"\\{''|attention|warning|bug|note} FIXME\" to \"\\todo FIXME\", \"\\ref\" to
+	\"REF: \", \"\\file *.hh\" to \"\\file oln/full/path/*.hh\".
+	* olena/oln/convert/bound.hh: Likewise.
+	* olena/oln/convert/nrgbxyz.hh: Likewise.
+	* olena/oln/convert/rgbnrgb.hh: Likewise.
+	* olena/oln/convert/rgbxyz.hh: Likewise.
+	* olena/oln/convol/fast_gaussian.hxx: Likewise.
+	* olena/oln/level/cc.hh: Likewise.
+	* olena/oln/level/connected.hh: Likewise.
+	* olena/oln/level/invert.hh: Likewise.
+	* olena/oln/math/macros.hh: Likewise.
+
+	* olena/oln/morpho/extrema.hxx: Likewise.
+	* olena/oln/topo/dmap.hh: Likewise.
+	* olena/oln/topo/dmap.hh: Likewise.
+	* olena/oln/utils/copy.hh: Likewise.
+	* olena/oln/utils/histogram.hh: Likewise.
+	* olena/oln/morpho/attribute_union_find.hh: Likewise.
+	* olena/oln/topo/tarjan/union.hh: Likewise.
+	* olena/oln/topo/inter-pixel/inter-pixel.hh: Likewise.
+	* olena/oln/topo/tarjan/flat-zone.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/cmap.hh: Likewise.
+	* olena/oln/topo/inter-pixel/fwd-dir-iter.hh: Likewise.
+	* olena/oln/topo/inter-pixel/bkd-dir-iter.hh: Likewise.
+	* olena/oln/topo/inter-pixel/internal/dir.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/internal/anyfunc.hh: Likewise.
+	* olena/oln/convert/rgbhsv.hh: Likewise.
+	* olena/oln/convert/rgbhsl.hh: Likewise.
+	* olena/oln/convert/rgbhsi.hh: Likewise.
+	* olena/oln/convert/rgbyuv.hh: Likewise.
+	* olena/oln/convert/rgbyiq.hh: Likewise.
+	* olena/oln/snakes/snakes_base.hh: Likewise.
+	* olena/oln/snakes/node.hh: Likewise.
+	* olena/oln/snakes/segment.hh: Likewise.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sun, 14 Mar 2004 22:48:21 +0100")
+(Checkin-Time "Mon, 15 Mar 2004 15:32:27 +0100")
 (Checkin-Login van-vl_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -115,7 +148,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.7 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.35 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.29 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.30 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 640))
 
@@ -161,7 +194,7 @@
   (olena/img/se.pbm (oln/n/6_se.pbm 1.1 640) :no-keywords)
 
   (olena/Makefile.am (oln/2_Makefile.a 1.30.1.1.1.2.1.10 640))
-  (olena/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.16 640))
+  (olena/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.17 640))
   (olena/oln/arith/logic.hh (oln/b/24_logic.hh 1.6.1.4 640))
   (olena/oln/arith/ops.hh (oln/b/23_ops.hh 1.5.1.2.1.9 640))
   (olena/oln/basics1d.hh (oln/d/41_basics1d.h 1.5 640))
@@ -172,7 +205,7 @@
 
   (olena/oln/config/system.hh (oln/7_system.hh 1.17 640))
   (olena/oln/convert/basics.hh (oln/23_basics.hh 1.7 640))
-  (olena/oln/convert/bound.hh (oln/22_bound.hh 1.11 640))
+  (olena/oln/convert/bound.hh (oln/22_bound.hh 1.12 640))
   (olena/oln/convert/abstract/colorconv.hh (oln/18_colorconv. 1.11 640))
   (olena/oln/convert/conversion.hh (oln/21_conversion 1.17 640))
   (olena/oln/convert/conversion_ng_se.hh (oln/e/24_conversion 1.12 640))
@@ -180,16 +213,16 @@
   
   
   
-  (olena/oln/convert/nrgbxyz.hh (oln/16_nrgbxyz.hh 1.14 640))
+  (olena/oln/convert/nrgbxyz.hh (oln/16_nrgbxyz.hh 1.15 640))
   
   
-  (olena/oln/convert/rgbnrgb.hh (oln/17_rgbnrgb.hh 1.12 640))
-  (olena/oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.13 640))
+  (olena/oln/convert/rgbnrgb.hh (oln/17_rgbnrgb.hh 1.13 640))
+  (olena/oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.14 640))
   (olena/oln/convert/stretch.hh (oln/f/51_stretch.hh 1.17 640))
   (olena/oln/convol/convolution.hh (oln/f/39_convolutio 1.4.1.4.1.6.1.2 640))
   (olena/oln/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.5.1.7 640))
   (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.6.1.5 640))
-  (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.8.1.7 640))
+  (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.8.1.8 640))
   (olena/oln/core/accum.hh (oln/d/40_accum.hh 1.5 600))
   (olena/oln/core/apply.hh (oln/d/39_apply.hh 1.15 640))
   (olena/oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.17 640))
@@ -293,17 +326,17 @@
   (olena/oln/io/se.hh (oln/i/45_se.hh 1.4 640))
   (olena/oln/io/se_neighborhood.hh (oln/i/47_se_neighbo 1.13 640))
   (olena/oln/io/se_window.hh (oln/i/46_se_window. 1.14 640))
-  (olena/oln/level/cc.hh (oln/e/20_cc.hh 1.11.1.12 640))
+  (olena/oln/level/cc.hh (oln/e/20_cc.hh 1.11.1.13 640))
   (olena/oln/level/compare.hh (oln/31_compare.hh 1.9 640))
-  (olena/oln/level/connected.hh (oln/30_connected. 1.9.1.12 640))
+  (olena/oln/level/connected.hh (oln/30_connected. 1.9.1.13 640))
   (olena/oln/level/fill.hh (oln/32_fill.hh 1.10 640))
-  (olena/oln/level/invert.hh (oln/33_invert.hh 1.5.2.2.1.11 640))
+  (olena/oln/level/invert.hh (oln/33_invert.hh 1.5.2.2.1.12 640))
   (olena/oln/level/lut.hh (oln/29_lut.hh 1.10 640))
   (olena/oln/level/set_level.hh (oln/p/1_set_level. 1.11 640))
   (olena/oln/level/threshold.hh (oln/f/15_threshold. 1.14 640))
   (config/oln.m4 (oln/j/15_oln.m4 1.36 640))
 
-  (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.12 640))
+  (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.13 640))
   (metalic/mlc/array/1d.hh (oln/f/23_array1d.hh 1.11 640))
   (metalic/mlc/array/1d.hxx (oln/f/22_array1d.hx 1.10 640))
   (metalic/mlc/array/2d.hh (oln/f/21_array2d.hh 1.11 640))
@@ -325,7 +358,7 @@
   (olena/oln/morpho/dilation.hh (oln/b/5_dilation.h 1.18 640))
   (olena/oln/morpho/erosion.hh (oln/b/4_erosion.hh 1.20 640))
   (olena/oln/morpho/extrema.hh (oln/38_extrema.hh 1.13 640))
-  (olena/oln/morpho/extrema.hxx (oln/j/4_extrema.hx 1.14 640))
+  (olena/oln/morpho/extrema.hxx (oln/j/4_extrema.hx 1.15 640))
   (olena/oln/morpho/extrema_killer.hh (oln/e/19_extrema_ki 1.7.1.4.1.13 640))
   (olena/oln/morpho/fast_morpho.hh (oln/46_fast_morph 1.9 640))
   (olena/oln/morpho/fast_morpho.hxx (oln/45_fast_morph 1.20 640))
@@ -351,7 +384,7 @@
   (olena/oln/morpho/top_hat.inc (oln/39_top_hat.in 1.15 640))
   (olena/oln/morpho/watershed.hh (oln/48_watershed. 1.13 640))
   (olena/oln/morpho/watershed.hxx (oln/47_watershed. 1.9.1.5.1.6 640))
-  (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.9 640))
+  (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.10 640))
   (olena/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.7.1.9 640))
   (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.10 640))
   (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.8 640))
@@ -400,8 +433,8 @@
   (integre/ntg/color/xyz.hh (oln/i/24_xyz.hh 1.3.1.7 640))
   (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.7 640))
   (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.7 640))
-  (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.8 640))
-  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.7 640))
+  (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.9 640))
+  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.8 640))
   (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.10 640))
   (olena/oln/utils/timer.hh (oln/8_timer.hh 1.9 640))
   (olena/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.5.1.1 640))
@@ -767,7 +800,7 @@
 ;; to version 8.9(w), by jerome:
 
   (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.21 640))
-  (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.17 640))
+  (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.18 640))
 
   (olena/tests/convol () :directory)
   (metalic/config (../config) :symlink)
@@ -813,10 +846,10 @@
   
   
   
-  (olena/oln/topo/tarjan/union.hh (oln/r/33_union.hh 1.9 640))
-  (olena/oln/topo/inter-pixel/inter-pixel.hh (oln/r/34_inter-pixe 1.14 640))
-  (olena/oln/topo/tarjan/flat-zone.hh (oln/r/35_flat-zone. 1.11 640))
-  (olena/oln/topo/combinatorial-map/cmap.hh (oln/r/36_cmap.hh 1.12 640))
+  (olena/oln/topo/tarjan/union.hh (oln/r/33_union.hh 1.10 640))
+  (olena/oln/topo/inter-pixel/inter-pixel.hh (oln/r/34_inter-pixe 1.15 640))
+  (olena/oln/topo/tarjan/flat-zone.hh (oln/r/35_flat-zone. 1.12 640))
+  (olena/oln/topo/combinatorial-map/cmap.hh (oln/r/36_cmap.hh 1.13 640))
 
 ;; Files added by populate at Thu, 20 Mar 2003 18:06:35 +0100,
 ;; to version 8.22(w), by sylvain:
@@ -830,11 +863,11 @@
 ;; to version 8.26(w), by sylvain:
 
   (olena/oln/topo/combinatorial-map/internal/zeta.hh (oln/r/43_zeta.hh 1.4 640))
-  (olena/oln/topo/inter-pixel/fwd-dir-iter.hh (oln/r/44_fwd-dir-it 1.5 640))
-  (olena/oln/topo/inter-pixel/bkd-dir-iter.hh (oln/r/45_bkd-dir-it 1.5 640))
+  (olena/oln/topo/inter-pixel/fwd-dir-iter.hh (oln/r/44_fwd-dir-it 1.6 640))
+  (olena/oln/topo/inter-pixel/bkd-dir-iter.hh (oln/r/45_bkd-dir-it 1.6 640))
   (olena/oln/topo/inter-pixel/node.hh (oln/r/46_node.hh 1.6 640))
   (olena/oln/topo/inter-pixel/internal/dir-iter.hh (oln/r/47_dir-iter.h 1.6 640))
-  (olena/oln/topo/inter-pixel/internal/dir.hh (oln/r/48_dir.hh 1.3 640))
+  (olena/oln/topo/inter-pixel/internal/dir.hh (oln/r/48_dir.hh 1.4 640))
   
 
 ;; Files added by populate at Wed, 09 Apr 2003 22:18:27 +0200,
@@ -1015,7 +1048,7 @@
   (olena/tests/core/tests/label_images (oln/v/0_label_imag 1.1 600))
   (olena/oln/topo/combinatorial-map/internal/allfunc.hh (oln/v/1_allfunc.hh 1.2 600))
   (olena/oln/topo/combinatorial-map/internal/alpha.hh (oln/v/2_alpha.hh 1.3 600))
-  (olena/oln/topo/combinatorial-map/internal/anyfunc.hh (oln/v/3_anyfunc.hh 1.3 600))
+  (olena/oln/topo/combinatorial-map/internal/anyfunc.hh (oln/v/3_anyfunc.hh 1.4 600))
   (olena/oln/topo/combinatorial-map/internal/beta.hh (oln/v/5_beta.hh 1.3 600))
   (olena/oln/topo/combinatorial-map/internal/lambda.hh (oln/v/6_lambda.hh 1.3 600))
   (olena/oln/topo/combinatorial-map/internal/level.hh (oln/v/7_level.hh 1.3 600))
@@ -1154,23 +1187,23 @@
 ;; Files added by populate at Thu, 22 Jan 2004 21:09:49 +0100,
 ;; to version 10.48(w), by palma_g:
 
-  (olena/oln/convert/rgbhsv.hh (oln/j/35_rgbhsv.hh 1.2 644))
-  (olena/oln/convert/rgbhsl.hh (oln/j/36_rgbhsl.hh 1.3 644))
-  (olena/oln/convert/rgbhsi.hh (oln/j/37_rgbhsi.hh 1.2 644))
-  (olena/oln/convert/rgbyuv.hh (oln/j/38_rgbyuv.hh 1.2 644))
-  (olena/oln/convert/rgbyiq.hh (oln/j/39_rgbyiq.hh 1.2 644))
+  (olena/oln/convert/rgbhsv.hh (oln/j/35_rgbhsv.hh 1.3 644))
+  (olena/oln/convert/rgbhsl.hh (oln/j/36_rgbhsl.hh 1.4 644))
+  (olena/oln/convert/rgbhsi.hh (oln/j/37_rgbhsi.hh 1.3 644))
+  (olena/oln/convert/rgbyuv.hh (oln/j/38_rgbyuv.hh 1.3 644))
+  (olena/oln/convert/rgbyiq.hh (oln/j/39_rgbyiq.hh 1.3 644))
 
 
   (olena/oln/snakes/snakes_base.hxx (oln/f/11_snakes_bas 1.1 644))
-  (olena/oln/snakes/snakes_base.hh (oln/f/50_snakes_bas 1.2 644))
+  (olena/oln/snakes/snakes_base.hh (oln/f/50_snakes_bas 1.3 644))
   (olena/oln/snakes/energies.hxx (oln/j/21_energies.h 1.1 644))
   (olena/oln/snakes/energies.hh (oln/j/22_energies.h 1.2 644))
   (olena/oln/snakes/segment.hxx (oln/j/23_segment.hx 1.1 644))
   (olena/oln/snakes/greedy.hxx (oln/j/24_greedy.hxx 1.1 644))
   (olena/oln/snakes/greedy.hh (oln/j/25_greedy.hh 1.2 644))
-  (olena/oln/snakes/node.hh (oln/j/32_node.hh 1.2 644))
+  (olena/oln/snakes/node.hh (oln/j/32_node.hh 1.3 644))
   (olena/oln/snakes/node.hxx (oln/j/33_node.hxx 1.1 644))
-  (olena/oln/snakes/segment.hh (oln/j/34_segment.hh 1.2 644))
+  (olena/oln/snakes/segment.hh (oln/j/34_segment.hh 1.3 644))
 ;; Files added by populate at Fri, 30 Jan 2004 10:19:55 +0100,
 ;; to version 10.56(w), by palma_g:
 
@@ -1227,5 +1260,7 @@
 
   ; (doc/ref/html () :directory)
 )
-(Merge-Parents)
+(Merge-Parents
+  (10.87 complete)
+)
 (New-Merge-Parents)

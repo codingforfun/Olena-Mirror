@@ -48,7 +48,7 @@ namespace oln {
     ** It removes the small (in area) connected components of the upper
     ** level sets of \var{input} using \var{se} as structural element.
     **
-    ** \ref The implementation comes from Cocquerez et Philipp, Analyse
+    ** REF: The implementation comes from Cocquerez et Philipp, Analyse
     ** d'images, filtrages et segmentations p.62.
     **
     ** \see level::frontp_connected_component

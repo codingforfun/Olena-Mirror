@@ -41,9 +41,9 @@
 # include <cstdlib>
 # include <sstream>
 
-/*! \file rgbhsl.hh
+/*! \file  olena/oln/convert/rgbhsl.hh
 **
-** \ref The formulas used here come from ``Color space conversion''; Paul
+** REF: The formulas used here come from ``Color space conversion''; Paul
 ** Bourke.
 */
 namespace oln {

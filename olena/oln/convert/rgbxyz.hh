@@ -37,9 +37,9 @@
 
 # include <sstream>
 
-/*! \file rgbxyz.hh
+/*! \file  olena/oln/convert/rgbxyz.hh
 **
-** \ref The formulas used here come from ``Digital Image Processing
+** REF: The formulas used here come from ``Digital Image Processing
 ** Algorithms and Applications'', I. Pitas; Wiley-Interscience.
 */
 

@@ -37,9 +37,9 @@
 
 # include <sstream>
 
-/*!\file rgbyuv.hh
+/*!\file  olena/oln/convert/rgbyuv.hh
 **
-** \ref The formulas used here come from ``Colour Space Conversions'',
+** REF: The formulas used here come from ``Colour Space Conversions'',
 ** IAdrian Ford and Alan Roberts; August 11,1998.
 */
 namespace oln {
