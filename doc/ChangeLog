@@ -1,3 +1,7 @@
+2003-07-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ref/Makefile.am: Fix compilation flags.
+
 2003-07-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ref/oln-ref.tex, ref/integre-ref.tex: Update.

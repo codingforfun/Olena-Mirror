@@ -1,5 +1,29 @@
+2003-07-28  Reda Dehak  <reda@lrde.epita.fr>
+
+	* oln/convert/nrgbhsi.hh: Rename nrgb_to_hsi functor as f_nrgb_to_hsi,
+	Add nrgb_to_hsi function, fix bug in the conversion algorithm.
+
+	* oln/convert/nrgbhsl, oln/convert/nrgbxyz, oln/convert/nrgbyiq.h, 
+	rgbnrgb.hh, oln/convert/rgbxyz.hh: Likewise.
+
+	* tests/convert/convcomp.cc: Adjust according to previous changes.
+
+	* tests/convert/conv.cc, tests/convert/conv.hh: new test.
+
+	* tests/convert/Makefile.am: Add new tests.
+
+
 2003-07-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* oln/io/stream_wrapper.hh: Fix compilation when zlib is not
+	available.
+	
+	* tests/check/Makefile.flags: Add zlib to compilation flags.
+	* tests/core/Makefile.am, tests/arith/Makefile.am,
+	tests/io/Makefile.am: Fix flags.
+
+2003-07-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* oln/io/pnm_write.hh, oln/io/se_neighborhood.hh,
 	oln/io/se_window.hh, oln/io/image_write.hh, oln/io/image_read.hh:
 	Disable output on std::clog.

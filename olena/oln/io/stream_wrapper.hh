@@ -49,10 +49,7 @@ namespace oln {
 		       StreamAny  = 2 };
     
       template< stream_id W >
-      struct stream_wrapper;
-
-      template <>
-      struct stream_wrapper<StreamNone>
+      struct stream_wrapper
       {
 	static const std::string& name()
 	{ static const std::string _name("-"); return _name; }

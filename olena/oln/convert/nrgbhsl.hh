@@ -51,9 +51,9 @@ namespace oln {
 
   namespace convert {
 
-    struct nrgb_to_hsl
+    struct f_nrgb_to_hsl
       : public color_conversion<3, nrgb_traits,
-				3, hsl_traits, nrgb_to_hsl>
+				3, hsl_traits, f_nrgb_to_hsl>
     {
       template <unsigned qbits>
       color<3, qbits, hsl_traits>
@@ -67,41 +67,50 @@ namespace oln {
 	float diff = max_in-min_in;
 
 	out[hsl_L] = (max_in + min_in) / 2;
-	if (std::abs(diff) <= 0.0000001) {
+	if (std::abs(diff) <= FLT_EPSILON){
 	  out[hsl_S] = 0;
-	  out[hsl_H] = -1;
-	} else if (out[hsl_L] < 0.5)
-	  out[hsl_S] = diff / (max_in + min_in);
-	else
-	  out[hsl_S] = diff / (2 - max_in - min_in);
+	  out[hsl_H] = 0; // undefined
+	} 
+	else {
+	  if (out[hsl_L] <= 0.5)
+	    out[hsl_S] = diff / (max_in + min_in);
+	  else
+	    out[hsl_S] = diff / (2 - max_in - min_in);
 
-	// FIXME: what if diff is 0 ?
-	precondition(diff != 0);
 
-	float r_dist = (max_in - in[nrgb_R]) / diff;
-	float g_dist = (max_in - in[nrgb_G]) / diff;
-	float b_dist = (max_in - in[nrgb_B]) / diff;
+	  float r_dist = (max_in - in[nrgb_R]) / diff;
+	  float g_dist = (max_in - in[nrgb_G]) / diff;
+	  float b_dist = (max_in - in[nrgb_B]) / diff;
 
-	if (in[nrgb_R] = max_in)
-	  out[hsl_H] = b_dist-g_dist;
-	else if(in[nrgb_G] = max_in)
-	  out[hsl_H] = 2 + r_dist - b_dist;
-	else if(in[nrgb_B] = max_in)
-	  out[hsl_H] = 4 + g_dist - r_dist;
+	  if (in[nrgb_R] == max_in)
+	    out[hsl_H] = b_dist - g_dist;
+	  else if(in[nrgb_G] == max_in)
+	    out[hsl_H] = 2 + r_dist - b_dist;
+	  else if(in[nrgb_B] == max_in)
+	    out[hsl_H] = 4 + g_dist - r_dist;
 
-	out[hsl_H] *= 60;
-	if(out[hsl_H] < 0)
-	  out[hsl_H] += 360;
+	  out[hsl_H] *= 60;
+	  if(out[hsl_H] < 0)
+	    out[hsl_H] += 360;
+	}
 	return out;
       }
 
-      static std::string name() { return "nrgb_to_hsl"; }
+      static std::string name() { return "f_nrgb_to_hsl"; }
     };
+
+    template <unsigned qbits>
+    color<3, qbits, hsl_traits>
+    nrgb_to_hsl(const color<3, qbits, nrgb_traits>& v)
+    {
+      f_nrgb_to_hsl f;
+      return f(v);
+    }
 
     namespace internal {
       float RGB(float q1, float q2, float hue)
       {
-	if (hue > 360)
+	if (hue >= 360)
 	  hue -= 360;
 	if (hue < 0)
 	  hue += 360;
@@ -116,9 +125,9 @@ namespace oln {
       }
     }
 
- struct hsl_to_nrgb
+ struct f_hsl_to_nrgb
       : public color_conversion<3, hsl_traits,
-				3, nrgb_traits, hsl_to_nrgb>
+				3, nrgb_traits, f_hsl_to_nrgb>
     {
       template <unsigned qbits>
       color<3, qbits, nrgb_traits>
@@ -128,12 +137,12 @@ namespace oln {
 	vec<3, float> out;
 	float p2;
 
-	if(in[hsl_L] <= 0.5)
-	  p2 = in[hsl_L] * (1+in[hsl_S]);
-	else
-	  p2 = in[hsl_L] + in[hsl_S] - (in[hsl_L] * in[hsl_S]);
+ 	if(in[hsl_L] < 0.5)
+ 	  p2 = in[hsl_L] * (1+in[hsl_S]);
+ 	else
+ 	  p2 = in[hsl_L] + in[hsl_S] - (in[hsl_L] * in[hsl_S]);
 
-	float p1 = 2 * in[hsl_L] - p2;
+ 	float p1 = 2 * in[hsl_L] - p2;
 
 	if(in[hsl_S] == 0)
 	  out[nrgb_R] = out[nrgb_G] = out[nrgb_B] = in[hsl_L];
@@ -147,8 +156,16 @@ namespace oln {
 	return out;
       }
 
-      static std::string name() { return "hsl_to_nrgb"; }
+      static std::string name() { return "f_hsl_to_nrgb"; }
     };
+
+    template <unsigned qbits>
+    color<3, qbits, nrgb_traits>
+    hsl_to_nrgb(const color<3, qbits, hsl_traits>& v)
+    {
+      f_hsl_to_nrgb f;
+      return f(v);
+    }
 
   } // convert
 } // oln

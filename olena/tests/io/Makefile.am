@@ -2,10 +2,6 @@
 
 include ../check/Makefile.check
 
-# Tests in this directory make use of Zlib if present.
-LDADD += $(ZLIB_LDFLAGS)
-AM_CXXFLAGS += $(ZLIB_CXXFLAGS)
-
 check_PROGRAMS = 2d se_pass se_fail pretty
 2d_SOURCES = 2d.cc loadsave.hh
 se_pass_SOURCES = se_pass.cc loadsave.hh

@@ -1,14 +1,23 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 44)
-(Parent-Version oln 2003paradigm 43)
-(Version-Log "        * oln/io/pnm_write.hh, oln/io/se_neighborhood.hh,
-        oln/io/se_window.hh, oln/io/image_write.hh, oln/io/image_read.hh:
-        Disable output on std::clog.
+(Project-Version oln 2003paradigm 46)
+(Parent-Version oln 2003paradigm 44)
+(Version-Log "       * oln/io/stream_wrapper.hh: Fix compilation when zlib is not
+        available.
+
+        * tests/check/Makefile.flags: Add zlib to compilation flags.
+        * tests/core/Makefile.am, tests/arith/Makefile.am,
+        tests/io/Makefile.am: Fix flags.
+
+Index: doc/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+        * ref/Makefile.am: Fix compilation flags.
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 28 Jul 2003 16:57:19 +0200")
+(Checkin-Time "Mon, 28 Jul 2003 17:56:05 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -98,10 +107,10 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.8 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.28 640))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.16 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.30 640))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.17 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.23 640))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.37 640))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.10 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.4 640))
 
@@ -123,7 +132,7 @@
   (doc/demo/tour.cc (oln/d/45_tour.cc 1.12 640))
   (doc/ref/bin () :directory)
   (doc/ref/html () :directory)
-  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.6 640))
+  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.7 640))
   (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.6.1.2 640))
   (doc/ref/oln-ref.tex (oln/f/14_oln-ref.te 1.3.1.3 640))
   (doc/ref/integre-ref.tex (oln/g/34_ref-types. 1.10 640))
@@ -164,14 +173,14 @@
   (olena/oln/convert/conversion.hh (oln/21_conversion 1.11 640))
   (olena/oln/convert/conversion_ng_se.hh (oln/e/24_conversion 1.6 640))
   (olena/oln/convert/force.hh (oln/20_force.hh 1.8 640))
-  (olena/oln/convert/nrgbhsi.hh (oln/15_nrgbhsi.hh 1.9 640))
-  (olena/oln/convert/nrgbhsl.hh (oln/12_nrgbhsl.hh 1.13 640))
-  (olena/oln/convert/nrgbhsv.hh (oln/11_nrgbhsv.hh 1.11 640))
-  (olena/oln/convert/nrgbxyz.hh (oln/16_nrgbxyz.hh 1.8 640))
-  (olena/oln/convert/nrgbyiq.hh (oln/14_nrgbyiq.hh 1.8 640))
-  (olena/oln/convert/nrgbyuv.hh (oln/13_nrgbyuv.hh 1.8 640))
-  (olena/oln/convert/rgbnrgb.hh (oln/17_rgbnrgb.hh 1.8 640))
-  (olena/oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.8 640))
+  (olena/oln/convert/nrgbhsi.hh (oln/15_nrgbhsi.hh 1.10 640))
+  (olena/oln/convert/nrgbhsl.hh (oln/12_nrgbhsl.hh 1.14 640))
+  (olena/oln/convert/nrgbhsv.hh (oln/11_nrgbhsv.hh 1.12 640))
+  (olena/oln/convert/nrgbxyz.hh (oln/16_nrgbxyz.hh 1.9 640))
+  (olena/oln/convert/nrgbyiq.hh (oln/14_nrgbyiq.hh 1.9 640))
+  (olena/oln/convert/nrgbyuv.hh (oln/13_nrgbyuv.hh 1.9 640))
+  (olena/oln/convert/rgbnrgb.hh (oln/17_rgbnrgb.hh 1.9 640))
+  (olena/oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.9 640))
   (olena/oln/convert/stretch.hh (oln/f/51_stretch.hh 1.9 640))
   (olena/oln/convol/convolution.hh (oln/f/39_convolutio 1.4.1.4.1.3 640))
   (olena/oln/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.5.1.4 640))
@@ -355,7 +364,7 @@
   (integre/ntg/core/internal/global_ops_defs.hh (oln/g/26_global_ops 1.15 640))
   (integre/ntg/core/internal/global_ops.hh (oln/g/27_global_ops 1.11.1.12 640))
   (integre/ntg/core/internal/global_ops_traits.hh (oln/g/25_global_ops 1.7.1.8 640))
-  (integre/ntg/color/hsi.hh (oln/i/20_hsi.hh 1.3.1.4 640))
+  (integre/ntg/color/hsi.hh (oln/i/20_hsi.hh 1.3.1.5 640))
   (integre/ntg/color/hsl.hh (oln/i/21_hsl.hh 1.3.1.4 640))
   (integre/ntg/color/hsv.hh (oln/i/22_hsv.hh 1.3.1.4 640))
   (integre/ntg/core/interval.hh (oln/g/22_interval.h 1.6.1.8 640))
@@ -389,14 +398,14 @@
   (integre/ntg/real/typetraits_builtin_int.hh (oln/g/3_typetraits 1.7.1.10 640))
   
   (integre/ntg/vec.hh (oln/t/10_vec.hh 1.1 640))
-  (integre/ntg/color/xyz.hh (oln/i/24_xyz.hh 1.3.1.4 640))
-  (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.4 640))
-  (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.4 640))
+  (integre/ntg/color/xyz.hh (oln/i/24_xyz.hh 1.3.1.5 640))
+  (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.5 640))
+  (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.5 640))
   (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.5 640))
   (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.6 640))
   (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.6 640))
   (olena/oln/utils/timer.hh (oln/8_timer.hh 1.5 640))
-  (olena/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.4 640))
+  (olena/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.5 640))
   (olena/tests/arith/runtests (oln/o/45_runtests 1.8.1.1 750))
   (olena/tests/arith/tests/min1 (oln/o/44_min1 1.1.1.7 640))
   (metalic/tests/check/check.hh (oln/e/40_check.hh 1.4 640))
@@ -411,9 +420,9 @@
   (metalic/tests/check/verbose.cc (oln/e/41_verbose.cc 1.3 640))
   (metalic/tests/check/verbose.hh (oln/e/42_verbose.hh 1.3 640))
 
-  (olena/tests/convert/convcomp.cc (oln/f/3_convcomp.c 1.7 640))
-  (olena/tests/convert/convcomp.hh (oln/f/1_convcomp.h 1.7 640))
-  (olena/tests/convert/Makefile.am (oln/f/0_Makefile.a 1.10 640))
+  (olena/tests/convert/convcomp.cc (oln/f/3_convcomp.c 1.8 640))
+  (olena/tests/convert/convcomp.hh (oln/f/1_convcomp.h 1.8 640))
+  (olena/tests/convert/Makefile.am (oln/f/0_Makefile.a 1.11 640))
   
   (olena/tests/convol/Makefile.am (oln/f/38_Makefile.a 1.11 640))
   (olena/tests/convol/slow_sum_2d_1.cc (oln/f/41_slow_sum_2 1.2.1.4 640))
@@ -423,7 +432,7 @@
   
   (olena/tests/io/2d.cc (oln/e/47_2d.cc 1.7.1.5 640))
   (olena/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.7.1.7 640))
-  (olena/tests/io/Makefile.am (oln/e/49_Makefile.a 1.15 640))
+  (olena/tests/io/Makefile.am (oln/e/49_Makefile.a 1.16 640))
   (olena/tests/io/pretty.cc (oln/i/42_pretty.cc 1.2 640))
   (olena/tests/io/se_fail.cc (oln/i/43_se_fail.cc 1.3 640))
   (olena/tests/io/se_pass.cc (oln/i/44_se_pass.cc 1.2 640))
@@ -771,7 +780,7 @@
   (integre/ntg/Makefile.am (oln/q/36_Makefile.a 1.8 640))
   (olena/tests/check/defs.in (oln/q/37_defs.in 1.1 640))
   (olena/tests/check/Makefile.am (oln/q/38_Makefile.a 1.3 640))
-  (olena/tests/check/Makefile.flags (oln/q/39_Makefile.f 1.3 640))
+  (olena/tests/check/Makefile.flags (oln/q/39_Makefile.f 1.4 640))
   (olena/tests/check/Makefile.check (oln/q/40_Makefile.c 1.3 640))
   (integre/tests/Makefile.am (oln/q/41_Makefile.a 1.3 640))
   (integre/tests/check/defs.in (oln/q/42_defs.in 1.1 640))
@@ -818,7 +827,7 @@
   (integre/tests/types/tests/builtin1 (oln/s/7_builtin1 1.1 640))
   (olena/tests/core/tests/w_window (oln/s/8_w_window 1.1 640))
   (olena/tests/core/runtests (oln/s/9_runtests 1.3 750))
-  (olena/tests/core/Makefile.am (oln/s/10_Makefile.a 1.4 640))
+  (olena/tests/core/Makefile.am (oln/s/10_Makefile.a 1.5 640))
   (integre/tests/types/tests/int_u5c (oln/s/11_int_u5c 1.1 640))
   (tools/swilena/expand.sh (oln/s/25_expand.sh 1.3 750))
   (tools/swilena/meta/Makefile.am (oln/s/26_Makefile.a 1.1 640))
@@ -928,7 +937,7 @@
   (olena/oln/io/pnm_common.hh (oln/t/40_pnm_common 1.2 600))
   (olena/oln/io/image_base.hh (oln/t/41_image_base 1.2 600))
   (olena/oln/io/image_write.hh (oln/t/42_image_writ 1.3 600))
-  (olena/oln/io/stream_wrapper.hh (oln/t/43_stream_wra 1.4 600))
+  (olena/oln/io/stream_wrapper.hh (oln/t/43_stream_wra 1.5 600))
   (olena/oln/io/utils.hh (oln/t/44_utils.hh 1.2 600))
   (olena/oln/io/image_read.hh (oln/t/45_image_read 1.3 600))
 ;; Files added by populate at Sat, 26 Jul 2003 15:39:29 +0200,
@@ -1033,6 +1042,22 @@
 ;; from version 2003paradigm.41(w), by nes:
 
   ; (olena/oln/io/pnm.hh ())
+
+
+  (olena/tests/convert/conv.cc (oln/u/12_conv.cc 1.1 640))
+  (olena/tests/convert/conv.hh (oln/u/13_conv.hh 1.1 640)))
+(Merge-Parents
+  (2003paradigm.45 complete
+    (olena/ChangeLog olena/ChangeLog olena/ChangeLog m) (integre/ChangeLog integre/ChangeLog integre/ChangeLog r)
+    (olena/oln/convert/nrgbhsi.hh olena/oln/convert/nrgbhsi.hh olena/oln/convert/nrgbhsi.hh r) (olena/oln/convert/nrgbhsl.hh olena/oln/convert/nrgbhsl.hh olena/oln/convert/nrgbhsl.hh r)
+    (olena/oln/convert/nrgbhsv.hh olena/oln/convert/nrgbhsv.hh olena/oln/convert/nrgbhsv.hh r) (olena/oln/convert/nrgbxyz.hh olena/oln/convert/nrgbxyz.hh olena/oln/convert/nrgbxyz.hh r)
+    (olena/oln/convert/nrgbyiq.hh olena/oln/convert/nrgbyiq.hh olena/oln/convert/nrgbyiq.hh r) (olena/oln/convert/nrgbyuv.hh olena/oln/convert/nrgbyuv.hh olena/oln/convert/nrgbyuv.hh r)
+    (olena/oln/convert/rgbnrgb.hh olena/oln/convert/rgbnrgb.hh olena/oln/convert/rgbnrgb.hh r) (olena/oln/convert/rgbxyz.hh olena/oln/convert/rgbxyz.hh olena/oln/convert/rgbxyz.hh r)
+    (integre/ntg/color/hsi.hh integre/ntg/color/hsi.hh integre/ntg/color/hsi.hh r) (integre/ntg/color/xyz.hh integre/ntg/color/xyz.hh integre/ntg/color/xyz.hh r)
+    (integre/ntg/color/yiq.hh integre/ntg/color/yiq.hh integre/ntg/color/yiq.hh r) (integre/ntg/color/yuv.hh integre/ntg/color/yuv.hh integre/ntg/color/yuv.hh r)
+    (olena/tests/convert/convcomp.cc olena/tests/convert/convcomp.cc olena/tests/convert/convcomp.cc r) (olena/tests/convert/convcomp.hh olena/tests/convert/convcomp.hh olena/tests/convert/convcomp.hh r)
+    (olena/tests/convert/Makefile.am olena/tests/convert/Makefile.am olena/tests/convert/Makefile.am r) (() () olena/tests/convert/conv.cc a)
+    (() () olena/tests/convert/conv.hh a) 
+  )
 )
-(Merge-Parents)
 (New-Merge-Parents)
