@@ -1,3 +1,17 @@
+2004-03-08  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* ref/out/exdoc.config.in: Move exdoc.config.in to out.
+	* ref/Makefile.am: Romove useless comments.
+
+2004-02-24  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* ref/img_conv.pl: Add script for image conversion.
+	* ref/exdoc.mk.in: Add exdoc config file.
+	* ref/exdoc.config.in: Likewise.
+	* ref/doxygen.config.in: Add doxygen config file.
+	* ref/exdoc.pl: Add script to extract code from comments.
+	* ref/Makefile.am: Make Makefile use new doc tools.
+
 2004-01-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ref/integre-ref.tex: Update.
@@ -7,7 +21,7 @@
 2003-12-08  David Lesage  <david@lrde.epita.fr>
 
 	Add Dia UML hierarchies.
-	
+
 	* hierarchies/,
 	* hierarchies/structelt.dia,
 	* hierarchies/point.dia,

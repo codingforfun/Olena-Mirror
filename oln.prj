@@ -1,686 +1,1255 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 67)
-(Parent-Version oln 10 64)
-(Version-Log "Index: olena/ChangeLog
-from  Giovanni Palma  <giovanni@lrde.epita.fr>
-
-	* tests/morpho/tests/attribute: Fix function call problems.
-	* tests/morpho/tests/attr_op_cl: Add attribute opening/closing
-	tests.
-	* oln/morpho/attribute_closing_opening_map.hh: Add slow
-	namespace. Correct type problems.
-	* oln/morpho/attribute_closing_opening_map.hxx: Likewise.
-	* oln/morpho/attributes.hh: Fix bugs.
-	* oln/morpho/attribute_union_find.hh: Add fast namespace.
-	* oln/morpho/attribute_closing_opening.hh: Likewise.
-
+(Project-Version oln 10 69)
+(Parent-Version oln 10 67)
+(Version-Log "Index: configure.ac
+--- configure.ac Tue, 24 Feb 2004 16:33:38 +0100 palma_g (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.14 640)
++++ configure.ac Thu, 04 Mar 2004 17:48:40 +0100 palma_g (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.14 640)
+@@ -237,9 +237,7 @@
+ AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
+ ## if test -z \"$DOXYGEN\"; then
+ ##   AC_MSG_WARN([`doxygen' not found -- `doxygen' must be installed to generate the documentation])
+-AC_CONFIG_FILES([doc/ref/doxygen.config
+-		 doc/ref/exdoc.config
+-		 doc/ref/exdoc.mk])
++
+ ## fi
+ 
+ ### The documentation tree is both a component...
+@@ -260,7 +258,10 @@
+ 	          [oln_cv_build_ref],
+ 	          [the Olena reference manuals],
+ 	          [OLN_DOC],
+-		  [doc/ref/Makefile],
++		  [doc/ref/Makefile
++                   doc/ref/doxygen.config
++                   doc/ref/out/exdoc.config
++		   doc/ref/exdoc.mk],
+     [dnl Configuration for the manuals directory.
+ 
+      AC_ARG_VAR([TAR], [the tape archiver program])
+@@ -280,6 +281,8 @@
+ 
+     ], [ref])dnl End of OLN_COMPONENT([doc/ref])
+ 
++
++
+ ### The development manuals directory is a component.
+ 
+     OLN_COMPONENT([doc/dev],
+Index: doc/ref/Makefile.am
+--- doc/ref/Makefile.am Tue, 24 Feb 2004 16:33:38 +0100 palma_g (oln/d/51_Makefile.a 1.27.1.9 640)
++++ doc/ref/Makefile.am Thu, 04 Mar 2004 18:39:41 +0100 palma_g (oln/d/51_Makefile.a 1.27.1.9 640)
+@@ -1,139 +1,38 @@
+ # ###
+ # ### General definitions
+ # ###
+-
+-# TEXI2PDF = $(TEXI2DVI) --pdf
+-# TEXI2PDF_FLAGS = --batch -I $(srcdir)/graphics
+-
+-# TEXI2DVI_FLAGS = --batch -I $(srcdir)/graphics
+-
+ olnsrc = $(top_srcdir)/olena/oln
+-
+-# include $(srcdir)/filelists.make
+-
+-# $(srcdir)/filelists.make: $(srcdir)/gen_filelists.sh
+-# 	$(SHELL) $@ $(olnsrc)
+-
+-# $(srcdir)/Makefile.in: $(srcdir)/filelists.make
+-
+-# ###
+-# ### Auto-generation of TeX files.
+-# ###
+-
+-# AM_LDFLAGS = $(LDFLAGS) $(ZLIB_LDFLAGS)
+-# AM_CXXFLAGS = $(CXXFLAGS) $(ZLIB_CXXFLAGS)
+-
+-# INCLUDES = -I$(top_srcdir)/olena -I$(top_builddir)/olena
+-# COMMONGETDEFSFLAGS =  --agarg=-DCXXCOMPILE=\"$(CXX) -I$(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(CPPFLAGS) $(AM_CXXFLAGS) $(AM_LDFLAGS)\" \\
+-# 		      --agarg=-DEPSTOPDF=\"$(EPSTOPDF)\" \\
+-# 		      --agarg=-DCONVERT=\"$(IMAGEMAGICK_CONVERT)\" \\
+-# 	              --agarg=--templ-dirs=$(srcdir) \\
+-# 	              --agarg=-DIMGDIR=$(top_srcdir)/olena/img
+-# PROCESSINGGETDEFSFLAGS = \\
+-#   --subblock=tpl=type,name,doc \\
+-#   --subblock=arg=type,name,mode,doc \\
+-#   --listattr=exh \\
+-#   --listattr=ns \\
+-#   --template $(srcdir)/processing.tpl \\
+-#   --srcfile
+-
+-# ref-morpho.tex: $(morpho_files) $(srcdir)/processing.tpl
+-# 	$(GETDEFS) $(COMMONGETDEFSFLAGS) $(PROCESSINGGETDEFSFLAGS) \\
+-# 	  $(GETDEFSFLAGS) --base-name=ref-morpho $(morpho_files)
+-
+-# ref-level.tex: $(level_files) $(srcdir)/processing.tpl
+-# 	$(GETDEFS) $(COMMONGETDEFSFLAGS) $(PROCESSINGGETDEFSFLAGS) \\
+-# 	  $(GETDEFSFLAGS) --base-name=ref-level $(level_files)
+-
+-# ###
+-# ### Rules to build the manuals.
+-# ###
+-
+-# tex_TEX = oln-ref.tex
+-
+-# built_oln_ref_TEX = ref-morpho.tex ref-level.tex
+-# oln_ref_TEX = $(built_oln_ref_TEX) integre-ref.tex
+-
+-# oln-ref.dvi: $(tex_TEX) $(oln_ref_TEX) $(graphics_DIA)
+-# 	$(TEXI2DVI) $(TEXI2DVI_FLAGS) \\
+-# 	  `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
+-
+ DOXYGEN = doxygen
+ EXDOC = $(srcdir)/exdoc.pl
+ OUT_DIR = \"out\"
+ IMG_CONV = $(srcdir)/img_conv.pl
+-code:
+-	$(EXDOC) --config=exdoc.config  --output-dir=$(OUT_DIR) --input-dir=$(top_srcdir)
+ 
+-execute: code
++
++
++doc: html.tar.gz oln-ref.pdf
++
++html: exdoc.config
++	$(EXDOC) --config=$(OUT_DIR)/exdoc.config  --output-dir=$(OUT_DIR) --input-dir=$(top_srcdir)
+ 	mkdir -p img
+ 	cd $(OUT_DIR) && make -f makefile
+-
+-images: execute
+ 	$(IMG_CONV) $(top_srcdir)/olena/img img
+ 	$(IMG_CONV) img img
+-
+-doxygen: images
+ 	$(DOXYGEN) doxygen.config
+ 
+-html: doxygen
+-
+-
+-doc: html pdf
+-
+-
+-oln-ref.pdf: doxygen
+-	cd latex && make && cp refman.pdf ../$@
+-
+-
+-# oln-ref.pdf: $(tex_TEX) $(oln_ref_TEX) $(graphics_DIA)
+-# 	$(TEXI2PDF) $(TEXI2PDF_FLAGS) \\
+-# 	  `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
+-
+-# # This rule is not activated by default since the generated files cannot
+-# # be easily distributed (automake barks loudly when the filenames are
+-# # not known at the time Makefile.in is generated)
+-
+-# # FIXME: uncomment when ready
+-# # cp $(srcdir)/graphics/*-html.png html/
+-
+-# html.tar.gz: $(tex_TEX) $(oln_ref_TEX) $(graphics_DIA)
+-# 	$(HEVEA) -fix -o html/oln-ref.html -I $(srcdir) -I $(srcdir)/graphics `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
+-# 	cd html && $(HACHA) -tocbis -o index.html oln-ref.html; cd ..
+-# 	$(TAR) -czf $@ html
+-
+-html.tar.gz: html
++html.tar.gz:
+ 	$(TAR) -czf $@ html
+ 
+-# ###
+-# ### What gets distributed.
+-# ###
+-
+-dist_noinst_DATA = oln-ref.pdf html.tar.gz
+-
+-# EXTRA_DIST = $(tex_TEX) $(oln_ref_TEX) \\
+-# 	processing.tpl filelists.make gen_filelists.sh
++oln-ref.pdf: html
++	cd latex && make && cp refman.pdf ../$@
+ 
+-# bin.tar.gz: oln-ref.pdf oln-ref.dvi
+-# 	$(TAR) -czf $@ `test -f bin/lena256.pdf || echo '$(srcdir)/'`bin
++dist_noinst_DATA = oln-ref.pdf html.tar.gz $(srcdir)/exdoc.pl $(srcdir)/img_conv.pl
+ 
+-# ###
+-# ### What gets cleaned.
+-# ###
+-# dist-local:
+-# 	rm -f bin/*a.out$(EXEEXT)
+ dist-local:
+ 	rm -f img/*
+ 
+-# MAINTAINERCLEANFILES = $(built_oln_ref_TEX) $(dist_noinst_DATA) \\
+-# 	$(srcdir)/html/* $(srcdir)/bin/* \\
+-# 	$(srcdir)/filelists.make
+-
+ MAINTAINERCLEANFILES = $(dist_noinst_DATA) \\
+ 	./html/* ./img/* $(OUT_DIR)/*
+ 
+-# CLEANFILES = = *.tmp *.aux *.bbl *blg *.lot *.log *.out *.toc
+-
+ # ###
+ # ### What gets installed.
+ # ###
+Index: NEWS
+--- NEWS Tue, 24 Feb 2004 16:33:38 +0100 palma_g (oln/0_NEWS 1.20 640)
++++ NEWS Mon, 08 Mar 2004 07:55:58 +0100 palma_g (oln/0_NEWS 1.20 640)
+@@ -10,12 +10,11 @@
+ 	  you can include it in the comments with the \\image command,
+  	  using the same name you used to produce it, but with the png
+ 	  extension. To make sure your image will not overwrite
+-	  another existing one, you should name it with taking care of
+-	  the name of the file you are writing in: e.g. if you comment the
+-	  file oln/core/behavior.hh, an image should be named
+-	  oln_core_behavior_hh_whatever_you_want.ppm It can be added that
+-	  two macros are provided to make abstraction of input and
+-	  output direcectories, they are named IMG_IN and IMG_OUT.
++	  another existing one, you should name it taking care of
++	  the namespace you are using: e.g. if you comment the function
++	  oln::boo::bar::fun, an image should be named oln_foo_bar_fun.ppm
++	  It can be added that two macros are provided to make abstraction
++	  of input and output directories, they are named IMG_IN and IMG_OUT.
+ 
+ 	* Border behavior can be controlled with the behavior hierarchy.
+ 	  If an algorithm support it, you can choose the way the image
 Index: olena/oln/morpho/attribute_closing_opening.hh
---- olena/oln/morpho/attribute_closing_opening.hh Tue, 10 Feb 2004 17:32:17 +0100 palma_g (oln/q/49_attribute_ 1.13 640)
-+++ olena/oln/morpho/attribute_closing_opening.hh Mon, 16 Feb 2004 08:38:59 +0100 palma_g (oln/q/49_attribute_ 1.13 640)
-@@ -32,8 +32,8 @@
+--- olena/oln/morpho/attribute_closing_opening.hh Tue, 24 Feb 2004 16:33:38 +0100 palma_g (oln/q/49_attribute_ 1.15 640)
++++ olena/oln/morpho/attribute_closing_opening.hh Mon, 08 Mar 2004 07:45:26 +0100 palma_g (oln/q/49_attribute_ 1.15 640)
+@@ -1,4 +1,4 @@
+-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
++// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
+ //
+ // This file is part of the Olena Library.  This library is free
+ // software; you can redistribute it and/or modify it under the terms
+@@ -51,37 +51,15 @@
+ 	*/
+ 	namespace internal {
  
- namespace oln {
-   namespace morpho {
-+    namespace fast {
-     namespace tarjan {
+-	  /*!
+-	  ** \\brief perform an attribute closing
+-	  **
+-	  ** FIXME: ONLY A TEST
+-	  ** \\code
+-	  ** #include <oln/basics2d.hh>
+-	  ** #include <oln/morpho/attribute_closing_opening.hh>
+-	  ** #include <oln/level/compare.hh>
+-	  ** #include <ntg/all.hh>
+-	  ** #include <iostream>
+-	  ** int main()
+-	  ** {
+-	  **   typedef oln::image2d<ntg::int_u8>	im_type;
+-	  **
+-	  **   im_type im1(oln::load(IMG_IN \"lena256.pgm\"));
+-	  **   im1 = oln::morpho::fast::area_closing(im1, oln::neighb_c4(), 200);
+-	  **   oln::save(im1, IMG_OUT \"olena_attribute_closing_opening_hh_attr_clo.ppm\");
+-	  **   return  0;
+-	  ** }
+-	  ** \\endcode
+-	  ** \\image html lena256.png \\image latex lena256.png => \\image html olena_attribute_closing_opening_hh_attr_clo.png \\image latex olena_attribute_closing_opening_hh_attr_clo.png
+-	  **
+-	  */
+ 	  template<class I, class N, class A>
+ 	  oln_concrete_type(I)
+ 	    attr_closing_(const abstract::non_vectorial_image<I>& input,
+ 			  const abstract::neighborhood<N>& Ng,
+-			  const attr_lambda_type(A) &lambda)
++			  const attr_lambda_type(A) &lambda,
++			  const attr_env_type(A) &env = attr_env_type(A)())
+ 	  {
+ 	    typedef tarjan::tarjan_set<oln_concrete_type(I), A > tarjan_set_type;
+-	    tarjan_set_type attr_closing(input.exact(), attr_env_type(A)());
++	    tarjan_set_type attr_closing(input.exact(), env);
+ 	    return attr_closing.template get_comptute<true>(lambda, Ng);
+ 	  }
+ 
+@@ -90,10 +68,11 @@
+ 	  oln_concrete_type(I)
+ 	    attr_opening_(const abstract::non_vectorial_image<I>& input,
+ 			  const abstract::neighborhood<N>& Ng,
+-			  const attr_lambda_type(A) &lambda)
++			  const attr_lambda_type(A) &lambda,
++			  const attr_env_type(A) &env = attr_env_type(A)())
+ 	  {
+ 	    typedef tarjan::tarjan_set<oln_concrete_type(I), A > tarjan_set_type;
+-	    tarjan_set_type attr_opening(input.exact(), attr_env_type(A)());
++	    tarjan_set_type attr_opening(input.exact(), env);
+ 	    return attr_opening.template get_comptute<false>(lambda, Ng);
+ 	  }
+ 
+@@ -142,62 +121,185 @@
+ 	return tarjan::internal::attr_closing_<I, N, T##_type<I> >(input, Ng, lambda); \\
+       }
+ 
+-      /*=processing area_closing
+-       * ns: morpho
+-       * what: Area closing
+-       * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
+-       * arg: const abstract::neighborhood<N>&, se, IN, neighborhood to consider
+-       * arg: unsigned int, area, IN, area
+-       * ret:oln_concrete_type(I)
+-       * doc:
+-       * Compute an area closing using union/find algorithm.
+-       * See A. Meijster and M. Wilkinson. A Comparison of Algorithms For Connected
+-       * Set Openings and Closings. PAMI 24(2), p484--494
+-       * see: morpho::simple_geodesic_dilation
+-       * ex:
+-       * $ image2d<int_u8> im = load(\"lena256.pgm\");
+-       * $ save(morpho::tarjan::area_closing(im, neighb_c4(),500), \"out.pgm\");
+-       * exi: lena256.pgm
+-       * exo: out.pgm
+-       =*/
+-      xxx_closing_decl(area);
 -
-       namespace internal {
- 
- 	// attribute closing
-@@ -43,7 +43,6 @@
- 			const abstract::neighborhood<N>& Ng,
- 			const attr_lambda_type(A) &lambda)
- 	{
--	  typedef N	toto;
- 	  typedef tarjan::tarjan_set<oln_concrete_type(I), A > tarjan_set_type;
- 	  tarjan_set_type attr_closing(input.exact(), attr_env_type(A)());
- 	  return attr_closing.template get_comptute<true>(lambda, Ng);
-@@ -62,7 +61,7 @@
- 	}
- 
-       } // !internal
--
-+    } // !tarjan
- // macro for some attribute opening/closing declarations
- # define xxx_opening_decl(T) \\
-       template<class I, class N> \\
-@@ -71,7 +70,7 @@
- 		       const abstract::neighborhood<N>& Ng, \\
- 		       const attr_lambda_type(T##_type<unsigned>) &lambda) \\
-       { \\
--	return internal::attr_opening_<I, N, T##_type<unsigned> >(input, Ng, lambda); \\
-+	return tarjan::internal::attr_opening_<I, N, T##_type<unsigned> >(input, Ng, lambda); \\
-       }
- 
- # define xxx_closing_decl(T) \\
-@@ -81,7 +80,7 @@
- 		       const abstract::neighborhood<N>& Ng, \\
- 		       const attr_lambda_type(T##_type<unsigned>) &lambda) \\
-       { \\
--	return internal::attr_closing_<I, N, T##_type<unsigned> >(input, Ng, lambda); \\
-+	return tarjan::internal::attr_closing_<I, N, T##_type<unsigned> >(input, Ng, lambda); \\
-       }
- 
- 
-@@ -93,7 +92,7 @@
- 		       const abstract::neighborhood<N>& Ng, \\
- 		       const attr_lambda_type(T##_type<I>) &lambda) \\
-       { \\
--	return internal::attr_opening_<I, N, T##_type<I> >(input, Ng, lambda); \\
-+	return tarjan::internal::attr_opening_<I, N, T##_type<I> >(input, Ng, lambda); \\
-       }
- 
- # define xxx_closing_im_decl(T) \\
-@@ -103,7 +102,7 @@
- 		       const abstract::neighborhood<N>& Ng, \\
- 		       const attr_lambda_type(T##_type<I>) &lambda) \\
-       { \\
--	return internal::attr_closing_<I, N, T##_type<I> >(input, Ng, lambda); \\
-+	return tarjan::internal::attr_closing_<I, N, T##_type<I> >(input, Ng, lambda); \\
-       }
- 
-       /*=processing area_closing
-@@ -124,7 +123,7 @@
-        * exi: lena256.pgm
-        * exo: out.pgm
-        =*/
--      xxx_closing_decl(area)
-+      xxx_closing_decl(area);
- 
-       /*=processing area_opening
-        * ns: morpho
-@@ -144,27 +143,27 @@
-        * exi: lena256.pgm
-        * exo: out.pgm
-        =*/
--	xxx_opening_decl(area)
--
--	xxx_opening_decl(volume)
--	xxx_closing_decl(volume)
--	xxx_opening_decl(height)
--	xxx_closing_decl(height)
--	xxx_opening_decl(maxvalue)
--	xxx_closing_decl(maxvalue)
--	xxx_opening_decl(minvalue)
--	xxx_closing_decl(minvalue)
--	xxx_opening_im_decl(disk)
--	xxx_closing_im_decl(disk)
--	xxx_opening_im_decl(dist)
--	xxx_closing_im_decl(dist)
--	xxx_closing_im_decl(square)
--	xxx_opening_im_decl(square)
--	xxx_closing_im_decl(rectangle)
--	xxx_opening_im_decl(rectangle)
-+      xxx_opening_decl(area);
- 
--    }
--  }
--}
-+      xxx_opening_decl(volume);
-+      xxx_closing_decl(volume);
-+      xxx_opening_decl(height);
-+      xxx_closing_decl(height);
-+      xxx_opening_decl(maxvalue);
-+      xxx_closing_decl(maxvalue);
-+      xxx_opening_decl(minvalue);
-+      xxx_closing_decl(minvalue);
-+      xxx_opening_im_decl(disk);
-+      xxx_closing_im_decl(disk);
-+      xxx_opening_im_decl(dist);
-+      xxx_closing_im_decl(dist);
-+      xxx_closing_im_decl(square);
-+      xxx_opening_im_decl(square);
-+      xxx_closing_im_decl(rectangle);
-+      xxx_opening_im_decl(rectangle);
+-      /*=processing area_opening
+-       * ns: morpho
+-       * what: Area opening
+-       * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
+-       * arg: const abstract::neighborhood<N>&, se, IN, neighborhood to consider
+-       * arg: unsigned int, area, IN, area
+-       * ret:oln_concrete_type(I)
+-       * doc:
+-       * Compute an area opening using union/find algorithm.
+-       * See A. Meijster and M. Wilkinson. A Comparison of Algorithms For Connected
+-       * Set Openings and Closings. PAMI 24(2), p484--494
+-       * see: morpho::simple_geodesic_dilation
+-       * ex:
+-       * $ image2d<int_u8> im = load(\"lena256.pgm\");
+-       * $ save(morpho::tarjan::area_opening(im, neighb_c4(),500), \"out.pgm\");
+-       * exi: lena256.pgm
+-       * exo: out.pgm
+-       =*/
+-      xxx_opening_decl(area);
++      /*!
++      ** \\brief Perform a cardinal closing.
++      **
++      ** \\code
++      ** #include <oln/basics2d.hh>
++      ** #include <oln/morpho/attribute_closing_opening.hh>
++      ** #include <oln/level/compare.hh>
++      ** #include <ntg/all.hh>
++      ** #include <iostream>
++      ** int main()
++      ** {
++      **   typedef oln::image2d<ntg::int_u8>	im_type;
++      **
++      **   im_type im1(oln::load(IMG_IN \"lena256.pgm\"));
++      **   im1 = oln::morpho::fast::card_closing(im1, oln::neighb_c4(), 200);
++      **   oln::save(im1, IMG_OUT \"oln_morpho_fast_card_closing.ppm\");
++      **   return  0;
++      ** }
++      ** \\endcode
++      ** \\image html lena256.png
++      ** \\image latex lena256.png
++      ** =>
++      ** \\image html oln_morpho_fast_card_closing.png
++      ** \\image latex oln_morpho_fast_card_closing.png
++      **
++      */
++      xxx_closing_decl(card);
 +
-+    } // !fast
-+  } // !morpho
-+} // !oln
++      /*!
++      ** \\brief Perform a cardinal opening.
++      **
++      ** \\code
++      ** #include <oln/basics2d.hh>
++      ** #include <oln/morpho/attribute_closing_opening.hh>
++      ** #include <oln/level/compare.hh>
++      ** #include <ntg/all.hh>
++      ** #include <iostream>
++      ** int main()
++      ** {
++      **   typedef oln::image2d<ntg::int_u8>	im_type;
++      **
++      **   im_type im1(oln::load(IMG_IN \"lena256.pgm\"));
++      **   im1 = oln::morpho::fast::card_opening(im1, oln::neighb_c4(), 200);
++      **   oln::save(im1, IMG_OUT \"oln_morpho_fast_card_opening.ppm\");
++      **   return  0;
++      ** }
++      ** \\endcode
++      ** \\image html lena256.png
++      ** \\image latex lena256.png
++      ** =>
++      ** \\image html oln_morpho_fast_card_opening.png
++      ** \\image latex oln_morpho_fast_card_opening.png
++      **
++      */
++      xxx_opening_decl(card);
++
++      /*!
++      ** \\brief Perform an integral closing.
++      **
++      ** \\code
++      ** #include <oln/basics2d.hh>
++      ** #include <oln/morpho/attribute_closing_opening.hh>
++      ** #include <oln/level/compare.hh>
++      ** #include <ntg/all.hh>
++      ** #include <iostream>
++      ** int main()
++      ** {
++      **   typedef oln::image2d<ntg::int_u8>	im_type;
++      **
++      **   im_type im1(oln::load(IMG_IN \"lena256.pgm\"));
++      **   im1 = oln::morpho::fast::integral_closing(im1, oln::neighb_c4(), 200);
++      **   oln::save(im1, IMG_OUT \"olena_attribute_closing_opening_hh_integral_clo.ppm\");
++      **   return  0;
++      ** }
++      ** \\endcode
++      ** \\image html lena256.png
++      ** \\image latex lena256.png
++      ** =>
++      ** \\image html olena_attribute_closing_opening_hh_integral_clo.png
++      ** \\image latex olena_attribute_closing_opening_hh_integral_clo.png
++      **
++      */
++      xxx_closing_decl(integral);
++
++      /*!
++      ** \\brief Perform an integral opening.
++      **
++      ** \\code
++      ** #include <oln/basics2d.hh>
++      ** #include <oln/morpho/attribute_closing_opening.hh>
++      ** #include <oln/level/compare.hh>
++      ** #include <ntg/all.hh>
++      ** #include <iostream>
++      ** int main()
++      ** {
++      **   typedef oln::image2d<ntg::int_u8>	im_type;
++      **
++      **   im_type im1(oln::load(IMG_IN \"lena256.pgm\"));
++      **   im1 = oln::morpho::fast::integral_opening(im1, oln::neighb_c4(), 200);
++      **   oln::save(im1, IMG_OUT \"olena_attribute_closing_opening_hh_integral_op.ppm\");
++      **   return  0;
++      ** }
++      ** \\endcode
++      ** \\image html lena256.png
++      ** \\image latex lena256.png
++      ** =>
++      ** \\image html olena_attribute_closing_opening_hh_integral_op.png
++      ** \\image latex olena_attribute_closing_opening_hh_integral_op.png
++      **
++      */
++      xxx_opening_decl(integral);
  
- #endif
+-      xxx_opening_decl(volume);
+-      xxx_closing_decl(volume);
++      /*!
++      ** \\brief Perform a height closing.
++      **
++      ** \\code
++      ** #include <oln/basics2d.hh>
++      ** #include <oln/morpho/attribute_closing_opening.hh>
++      ** #include <oln/level/compare.hh>
++      ** #include <ntg/all.hh>
++      ** #include <iostream>
++      ** int main()
++      ** {
++      **   typedef oln::image2d<ntg::int_u8>	im_type;
++      **
++      **   im_type im1(oln::load(IMG_IN \"lena256.pgm\"));
++      **   im1 = oln::morpho::fast::height_opening(im1, oln::neighb_c4(), 5);
++      **   oln::save(im1, IMG_OUT \"olena_attribute_closing_opening_hh_height_op.ppm\");
++      **   return  0;
++      ** }
++      ** \\endcode
++      ** \\image html lena256.png
++      ** \\image latex lena256.png
++      ** =>
++      ** \\image html olena_attribute_closing_opening_hh_height_op.png
++      ** \\image latex olena_attribute_closing_opening_hh_height_op.png
++      **
++      */
+       xxx_opening_decl(height);
++
++      /*!
++      ** \\brief Perform a height closing.
++      **
++      ** \\code
++      ** #include <oln/basics2d.hh>
++      ** #include <oln/morpho/attribute_closing_opening.hh>
++      ** #include <oln/level/compare.hh>
++      ** #include <ntg/all.hh>
++      ** #include <iostream>
++      ** int main()
++      ** {
++      **   typedef oln::image2d<ntg::int_u8>	im_type;
++      **
++      **   im_type im1(oln::load(IMG_IN \"lena256.pgm\"));
++      **   im1 = oln::morpho::fast::height_closing(im1, oln::neighb_c4(), 5);
++      **   oln::save(im1, IMG_OUT \"olena_attribute_closing_opening_hh_height_clo.ppm\");
++      **   return  0;
++      ** }
++      ** \\endcode
++      ** \\image html lena256.png
++      ** \\image latex lena256.png
++      ** =>
++      ** \\image html olena_attribute_closing_opening_hh_height_clo.png
++      ** \\image latex olena_attribute_closing_opening_hh_height_clo.png
++      **
++      */
+       xxx_closing_decl(height);
+       xxx_opening_decl(maxvalue);
+       xxx_closing_decl(maxvalue);
+       xxx_opening_decl(minvalue);
+       xxx_closing_decl(minvalue);
+-      xxx_opening_im_decl(disk);
+-      xxx_closing_im_decl(disk);
++      xxx_opening_im_decl(ball);
++      xxx_closing_im_decl(ball);
+       xxx_opening_im_decl(dist);
+       xxx_closing_im_decl(dist);
+-      xxx_closing_im_decl(square);
+-      xxx_opening_im_decl(square);
+-      xxx_closing_im_decl(rectangle);
+-      xxx_opening_im_decl(rectangle);
++      xxx_closing_im_decl(cube);
++      xxx_opening_im_decl(cube);
++      xxx_closing_im_decl(box);
++      xxx_opening_im_decl(box);
+ 
+     } // !fast
+   } // !morpho
 Index: olena/oln/morpho/attribute_union_find.hh
---- olena/oln/morpho/attribute_union_find.hh Tue, 10 Feb 2004 17:32:17 +0100 palma_g (oln/q/50_attribute_ 1.11 640)
-+++ olena/oln/morpho/attribute_union_find.hh Thu, 12 Feb 2004 14:14:57 +0100 palma_g (oln/q/50_attribute_ 1.11 640)
-@@ -38,6 +38,7 @@
+--- olena/oln/morpho/attribute_union_find.hh Mon, 16 Feb 2004 19:06:24 +0100 palma_g (oln/q/50_attribute_ 1.12 640)
++++ olena/oln/morpho/attribute_union_find.hh Wed, 03 Mar 2004 15:15:37 +0100 palma_g (oln/q/50_attribute_ 1.12 640)
+@@ -1,4 +1,4 @@
+-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
++// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
+ //
+ // This file is part of the Olena Library.  This library is free
+ // software; you can redistribute it and/or modify it under the terms
+@@ -74,7 +74,7 @@
  
- namespace oln {
-   namespace morpho {
-+    namespace fast {
-     namespace tarjan {
+ 	};
  
-       template< class T>
-@@ -231,7 +232,8 @@
- 	const lambda_type *lambda_;
- 	const env_type	env_;
-       };
--    }
--  }
--}
-+      } // !tarjan
-+    } // !fast
-+  } // !morph
-+} // !oln
- #endif
+-	template<class T, class ATTRIBUTE, class Env = NullEnv>
++	template<class T, class ATTRIBUTE, class Env = attr_env_type(ATTRIBUTE)>
+ 	struct tarjan_set
+ 	{
+ 	  typedef oln_point_type(T) point_type;
+Index: olena/oln/Makefile.am
+--- olena/oln/Makefile.am Mon, 02 Feb 2004 10:57:28 +0100 van-vl_n (oln/q/47_Makefile.a 1.3.1.1.1.6.1.7.1.1 640)
++++ olena/oln/Makefile.am Wed, 25 Feb 2004 14:30:17 +0100 palma_g (oln/q/47_Makefile.a 1.3.1.1.1.6.1.7.1.1 640)
+@@ -39,6 +39,7 @@
+   convol/fast_gaussian.hxx			\\
+   convol/fast_gaussian_coefficient.hh		\\
+   core/abstract/binary_image.hh			\\
++  core/abstract/behavior.hh			\\
+   core/abstract/dpoint.hh			\\
+   core/abstract/image.hh			\\
+   core/abstract/image_size.hh			\\
+@@ -59,6 +60,7 @@
+   core/abstract/window.hh			\\
+   core/abstract/window_base.hh			\\
+   core/abstract/windownd.hh			\\
++  core/behavior.hh				\\
+   core/accum.hh					\\
+   core/apply.hh					\\
+   core/box.hh					\\
+@@ -145,6 +147,9 @@
+   level/threshold.hh				\\
+   math/macros.hh				\\
+   morpho/attribute_closing_opening.hh		\\
++  morpho/attribute_closing_opening_map.hxx	\\
++  morpho/attribute_closing_opening_map.hh	\\
++  morpho/attributes.hh				\\
+   morpho/attribute_union_find.hh		\\
+   morpho/closing.hh				\\
+   morpho/closing.inc				\\
+@@ -202,4 +207,5 @@
+   utils/copy.hh					\\
+   utils/histogram.hh				\\
+   utils/stat.hh					\\
++  utils/special_points.hh			\\
+   utils/timer.hh
 Index: olena/oln/morpho/attributes.hh
---- olena/oln/morpho/attributes.hh Tue, 10 Feb 2004 15:35:04 +0100 palma_g (oln/j/45_attributes 1.3 644)
-+++ olena/oln/morpho/attributes.hh Mon, 16 Feb 2004 18:57:01 +0100 palma_g (oln/j/45_attributes 1.3 644)
-@@ -31,9 +31,9 @@
- # include <vector>
+--- olena/oln/morpho/attributes.hh Mon, 16 Feb 2004 19:06:24 +0100 palma_g (oln/j/45_attributes 1.4 644)
++++ olena/oln/morpho/attributes.hh Thu, 04 Mar 2004 19:14:44 +0100 palma_g (oln/j/45_attributes 1.4 644)
+@@ -1,4 +1,4 @@
+-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
++// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
+ //
+ // This file is part of the Olena Library.  This library is free
+ // software; you can redistribute it and/or modify it under the terms
+@@ -35,7 +35,12 @@
+ # define attr_env_type(T)	typename oln::morpho::attr_traits<T>::env_type
+ # define attr_value_type(T)	typename oln::morpho::attr_traits<T>::value_type
  
- // attribute dedicated macros
--# define attr_lambda_type(T)	typename attr_traits<T>::lambda_type
--# define attr_env_type(T)	typename attr_traits<T>::env_type
--# define attr_value_type(T)	typename attr_traits<T>::value_type
-+# define attr_lambda_type(T)	typename oln::morpho::attr_traits<T>::lambda_type
-+# define attr_env_type(T)	typename oln::morpho::attr_traits<T>::env_type
-+# define attr_value_type(T)	typename oln::morpho::attr_traits<T>::value_type
- 
- # define attr_type_decl(slef_type) \\
+-# define attr_type_decl(slef_type) \\
++# define attr_lambda_type_(T)	 oln::morpho::attr_traits<T>::lambda_type
++# define attr_env_type_(T)	 oln::morpho::attr_traits<T>::env_type
++# define attr_value_type_(T)	 oln::morpho::attr_traits<T>::value_type
++
++
++# define attr_type_decl(self_type) \\
        typedef mlc_exact_vt_type(self_type, Exact)	exact_type; \\
-@@ -43,7 +43,6 @@
+       typedef attr_value_type(exact_type)		value_type; \\
+       typedef attr_env_type(exact_type)			env_type; \\
+@@ -59,50 +64,119 @@
+       {
+       };
  
- namespace oln {
-   namespace morpho {
--    namespace tarjan {
-       namespace tools {
- 	// should be moved elsewhere
- 	template <class T>
-@@ -51,8 +50,8 @@
- 	{
- 	  return v1 > v2 ? v1 - v2 : v2 - v1;
- 	}
-+      } // !tools
+-      // this env is an empty one
++    /*!
++    ** \\brief Useless environment.
++    **
++    ** This environment is an empty one.
++    */
+       struct NullEnv: public env<NullEnv>
+       {
+       };
  
--      }
-       // environment herarchy
-       // not used yet
++    /*!
++    ** \\brief Environment containing image.
++    **
++    ** Used for image substitution in other_image attribute.
++    */
++    template <class I>
++    struct OtherImageEnv: public env<OtherImageEnv<I> >
++    {
++      typedef abstract::image<I>	im_type;
++
++      OtherImageEnv(const abstract::image<I> &im): im_(im)
++      {};
++
++      const im_type	&getImage() const
++      {
++	return im_;
++      }
++
++    protected:
++      const im_type	&im_;
++    };
+ 
+       // the traits fwd declaration
+       template <class T>
+       struct attr_traits;
+ 
++    /*!
++    ** \\brief Change the exact type of an attribute.
++    **
++    ** BE CAREFUL,  when you use specialization of  this traits, you
++    ** say change_exact<In, Exact>::ret IS A In.
++    ** Check this to avoid modeling problems.
++    */
++    template <class In, class Exact>
++    struct change_exact;
++
+ 
+       // the attributes hierarchy
+ 
+       /*------------*
+ 	| attribute |
+ 	*-----------*/
++    /*!
++    ** \\brief Attribute abstract class
++    **
++    ** Top of the attribute hierarchy.
++    */
        template <class Exact>
-@@ -265,7 +264,10 @@
+       class attribute: public mlc_hierarchy::any<Exact>
+       {
+       public:
+- 	typedef attribute<Exact>	self_type;
++      typedef attribute<Exact>	self_type; /*< Self type of the class.*/
+ 	attr_type_decl(self_type);
+ 
++      /*!
++      ** \\brief += operator
++      **
++      ** This is a static dispatcher for the += operator.
++      ** This method is abstract.
++      */
+ 	void operator+=(const exact_type &rhs)
+ 	{
+ 	  mlc_dispatch(pe)(rhs);
+ 	};
+ 
++      /*!
++      ** \\brief >= operator
++      **
++      ** This is a static dispatcher for the >= operator.
++      */
+ 	bool operator>=(const lambda_type &lambda) const
+ 	{
+ 	  mlc_dispatch(ge)(lambda);
+ 	};
+ 
++      /*!
++      ** \\brief < operator
++      **
++      ** This is a static dispatcher for the < operator.
++      ** This method is abstract.
++      */
+ 	bool operator<(const lambda_type &lambda) const
+ 	{
+ 	  mlc_dispatch(less)(lambda);
+ 	};
+ 
++      /*!
++      ** \\brief != operator
++      **
++      ** This is a static dispatcher for the != operator.
++      ** This method is abstract.
++      */
+ 	bool operator!=(const lambda_type &lambda) const
+ 	{
+ 	  mlc_dispatch(ne)(lambda);
+ 	};
+ 
+-	// impl
++      /*!
++      ** \\brief >= operator implementation.
++      **
++      ** This is an implementation  of the >= operator.  override this
++      ** method to provide a new implementation of this operator.
++      ** This method SHOULDN'T be called.
++      */
+ 	bool ge_impl(const lambda_type &lambda) const
+ 	{
+ 	  return !(*this < lambda);
+@@ -114,34 +188,34 @@
+       };
+ 
+       /*-----------*
+-	|   area    |
++	|   card    |
+ 	*-----------*/
+ 
+       template <class T = unsigned, class Exact = mlc::final>
+-      class area_type:
+-	public attribute<mlc_2_exact_vt_type(area_type, T, Exact)>
++      class card_type:
++	public attribute<mlc_2_exact_vt_type(card_type, T, Exact)>
+       {
+       public:
+-	typedef area_type<T, Exact>			self_type;
++	typedef card_type<T, Exact>			self_type;
+ 	attr_type_decl(self_type);
+ 
+-	area_type()
++	card_type()
  	  {
  	  };
  
--	height_type(const lambda_type &lambda): value_(lambda)
-+	height_type(const lambda_type &lambda):
-+	  value_(lambda),
-+	  min_(ntg_zero_val(value_type)),
-+	  max_(lambda)
+-	area_type(const lambda_type &lambda): value_(lambda)
++	card_type(const lambda_type &lambda): value_(lambda)
  	  {
  	  };
  
-@@ -273,25 +275,38 @@
- 	  height_type(const abstract::image<I> &input,
+ 	template <class I>
+-	  area_type(const abstract::image<I>&,
++	  card_type(const abstract::image<I>&,
+ 		    const oln_point_type(I)&,
+ 		    const env_type&):
+ 	  value_(1)
+ 	  {
+ 	  };
+ 
+-	void pe_impl(const area_type &rhs)
++	void pe_impl(const self_type &rhs)
+ 	  {
+ 	    value_ += rhs.value_;
+ 	  };
+@@ -164,29 +238,29 @@
+ 
+ 
+       /*-----------*
+-	|  volume   |
++	|  integral   |
+ 	*-----------*/
+ 
+       template <class T = unsigned, class Exact = mlc::final>
+-      class volume_type:
+-	public attribute<mlc_2_exact_vt_type(volume_type, T, Exact)>
++      class integral_type:
++	public attribute<mlc_2_exact_vt_type(integral_type, T, Exact)>
+       {
+       public:
+-	typedef volume_type<T, Exact>			self_type;
++	typedef integral_type<T, Exact>			self_type;
+ 	attr_type_decl(self_type);
+ 
+ 	// Ctors
+-	volume_type()
++	integral_type()
+ 	  {
+ 	  };
+ 
+ 
+-	volume_type(const lambda_type &lambda): value_(lambda)
++	integral_type(const lambda_type &lambda): value_(lambda)
+ 	  {
+ 	  };
+ 
+ 	template <class I>
+-	  volume_type(const abstract::image<I> &input,
++	  integral_type(const abstract::image<I> &input,
  		      const oln_point_type(I) &p,
- 		      const env_type&):
--	  reflevel_(input[p]),
--	  value_(ntg_zero_val(value_type))
-+	  value_(ntg_zero_val(value_type)),
-+	  min_(input[p]),
-+	  max_(input[p])
+ 		      const env_type &) :
+ 	  reflevel_(input[p]),
+@@ -194,6 +268,16 @@
+ 	  value_(1)
  	  {
  	  };
- 
--	const value_type &getReflevel() const
-+
-+	const value_type &getMin() const
- 	  {
--	    mlc_dispatch(getReflevel)();
-+	    mlc_dispatch(getMin)();
- 	  };
- 
-+	const value_type &getMax() const
++	/*
++	template <class I>
++	  integral_type(const abstract::image<I> &input,
++			const oln_point_type(I) &p
++			):
++	  reflevel_(input[p]),
++	  area_(1),
++	  value_(1)
 +	  {
-+	    mlc_dispatch(getMax)();
-+	  };
- 	// impl part
--	const value_type &getReflevel_impl() const
-+	const value_type &getMin_impl() const
++	  };*/
+ 	// interface part
+ 	const value_type &getValue() const
  	  {
--	    return reflevel_;
-+	    return min_;
-+	  };
-+
-+	const value_type &getMax_impl() const
-+	  {
-+	    return max_;
+@@ -226,7 +310,7 @@
+ 	    return area_;
  	  };
  
- 	void pe_impl(const height_type &rhs)
+-	void pe_impl(const volume_type &rhs)
++	void pe_impl(const self_type &rhs)
  	  {
--	    value_ = tools::diffabs(reflevel_, rhs.getReflevel());
-+	    min_ = ntg::min(min_, rhs.getMin());
-+	    max_ = ntg::max(max_, rhs.getMax());
-+	    value_ = max_ - min_;
- 	  };
- 
- 	bool less_impl(const lambda_type &lambda) const
-@@ -305,8 +320,9 @@
- 	  };
- 
-       protected:
--	value_type reflevel_;
+ 	    value_ += rhs.getValue() + area_ * tools::diffabs(reflevel_, rhs.getReflevel());
+ 	    area_ += rhs.getArea();
+@@ -248,6 +332,61 @@
  	value_type value_;
-+	value_type	min_;
-+	value_type	max_;
-     };
+       };
+ 
++    /*-------------------*
++      | other image_type |
++      ------------------*/
++    /*!
++    ** \\class other_image
++    **
++    ** \\brief Metaclass used to change attribute behavior.
++    **
++    ** This class do the same job  the its Dad parameter, but force it
++    ** to work on other data.
++    */
++    template <class Dad, class I, class Exact = mlc::final>
++    class other_image:
++      public change_exact<Dad, typename mlc::exact_vt<other_image<Dad, I, Exact>, Exact>::ret >::ret
++    {
++    public:
++      typedef other_image<Dad, I,  Exact>						self_type; /*< Self type of the class.*/
++      typedef typename abstract::image<mlc_exact_type(I)>				im_type; /*< Type of substituted image.*/
++      attr_type_decl(self_type);
++      typedef typename change_exact<Dad,
++				    typename mlc::exact_vt<other_image<Dad, I, Exact>,
++							   Exact>::ret >::ret		super_type; /*< Mother class type.*/
++
++      /*!
++      ** \\brief Constructor.
++      **
++      ** Dispatch to Dad constructor.
++      */
++      other_image(): super_type()
++      {
++      };
++
++      /*!
++      ** \\brief lambda_type Constructor.
++      **
++      ** Dispatch to Dad constructor.
++      */
++      other_image(const lambda_type &lambda): super_type(lambda)
++      {
++      };
++
++      /*!
++      ** \\brief Image Constructor.
++      **
++      ** Dispatch to Dad constructor but substitute image argument with
++      ** the image contained in the environment.
++      */
++      template <typename IM>
++      other_image(const abstract::image<IM> &,
++		  const oln_point_type(I) &p,
++		  const env_type & e): super_type(e.getImage(), p, e)
++      {
++      };
++    };
++
+       /*-----------*
+ 	|  height   |
+ 	*-----------*/
+@@ -443,15 +582,15 @@
  
  
-@@ -413,7 +429,7 @@
+       /*-----------*
+-	|   disk    |
++	|   ball    |
+ 	*-----------*/
  
-       bool less_impl(const lambda_type &lambda) const
+       template <class I, class Exact = mlc::final>
+-      class disk_type:
+-	public attribute<mlc_2_exact_vt_type(disk_type, I, Exact)>
++      class ball_type:
++	public attribute<mlc_2_exact_vt_type(ball_type, I, Exact)>
+       {
+       public:
+-	typedef disk_type<I, Exact>			self_type;
++	typedef ball_type<I, Exact>			self_type;
+ 	attr_type_decl(self_type);
+ 	typedef abstract::image<mlc_exact_type(I)>	im_type;
+ 	typedef oln_point_type(im_type)			point_type;
+@@ -459,15 +598,16 @@
+ 	typedef std::vector<point_type>			pts_type;
+ 	typedef typename pts_type::const_iterator	cst_iter_type;
+ 
+-	disk_type()
++	ball_type()
  	{
--	  return value_ < lambda;
-+	  return value_ > lambda;
  	};
  
-       bool ne_impl(const lambda_type &lambda) const
-@@ -452,17 +468,27 @@
+-	disk_type(const lambda_type &lambda): value_(lambda), pts_()
++	ball_type(const lambda_type &lambda): value_(lambda), pts_()
+ 	  {
  	  };
  
- 	disk_type(const im_type&, const point_type &p, const env_type &) :
--	  value_(1), pts_()
-+	  value_(ntg_zero_val(value_type)), pts_()
+-	disk_type(const im_type&, const point_type &p, const env_type &) :
 +
- 	{
- 	  pts_.push_back(p);
- 	};
++	ball_type(const im_type&, const point_type &p, const env_type &) :
+ 	  value_(ntg_zero_val(value_type)), pts_()
  
-+	const value_type &getValue() const
-+	  {
-+	    mlc_dispatch(getValue)();
-+	  };
+ 	  {
+@@ -479,6 +619,7 @@
+ 	    mlc_dispatch(getValue)();
+ 	  };
+ 
 +
  	const pts_type &getPts() const
  	  {
  	    mlc_dispatch(getPts)();
+@@ -495,7 +636,7 @@
+ 	    return pts_;
  	  };
  
- 	// impl
-+	const value_type &getValue_impl() const
-+	  {
-+	    return value_;
-+	  };
- 
- 	const pts_type &getPts_impl() const
+-	void pe_impl(const disk_type &rhs)
++	void pe_impl(const ball_type &rhs)
  	  {
-@@ -471,7 +497,10 @@
+ 	    value_type	last = value_;
+ 	    std::copy(rhs.getPts().begin(),
+@@ -618,15 +759,15 @@
  
- 	void pe_impl(const disk_type &rhs)
- 	{
--	  std::copy(rhs.getPts().begin(), rhs.getPts().end(), std::back_inserter(pts_));
-+	    value_type	last = value_;
-+	    std::copy(rhs.getPts().begin(),
-+		      rhs.getPts().end(),
-+		      std::back_inserter(pts_));
- 	  value_ = ntg_zero_val(value_type);
- 	  for (cst_iter_type p1 = pts_.begin(); p1 != pts_.end(); ++p1)
- 	    for (cst_iter_type p2 = pts_.begin(); p2 != pts_.end(); ++p2)
-@@ -484,6 +513,8 @@
- 		  value_ = d;
+ 
+       /*-----------*
+-	|  square   |
++	|  cube   |
+ 	*-----------*/
+ 
+       template <class I, class Exact = mlc::final>
+-      class square_type:
+-	public attribute<mlc_2_exact_vt_type(square_type, I, Exact)>
++      class cube_type:
++	public attribute<mlc_2_exact_vt_type(cube_type, I, Exact)>
+       {
+       public:
+-	typedef square_type<I, Exact>			self_type;
++	typedef cube_type<I, Exact>			self_type;
+ 	attr_type_decl(self_type);
+ 	typedef abstract::image<mlc_exact_type(I)>	im_type;
+ 	typedef oln_point_type(im_type)			point_type;
+@@ -634,11 +775,11 @@
+ 
+ 	enum {dim = point_traits<point_type>::dim};
+ 
+-	square_type()
++	cube_type()
+ 	  {
+ 	  }
+ 
+-	square_type(const lambda_type &lambda):
++	cube_type(const lambda_type &lambda):
+ 	  mins_(dim),
+ 	  maxs_(dim),
+ 	  value_(lambda)
+@@ -650,7 +791,7 @@
  	      }
- 	  value_ /= 2;
-+	    value_ = ntg::max(value_, last);
-+	    value_ = ntg::max(value_, rhs.getValue());
- 	};
+ 	  };
  
- 	bool less_impl(const lambda_type &lambda) const
-@@ -530,6 +561,11 @@
+-	square_type(const im_type&,
++	cube_type(const im_type&,
+ 		    const point_type &p,
+ 		    const env_type &):
+ 	  mins_(dim), maxs_(dim), value_(ntg_zero_val(value_type))
+@@ -682,7 +823,7 @@
+ 	    return maxs_[i];
+ 	  };
+ 
+-	void pe_impl(const square_type &rhs)
++	void pe_impl(const cube_type &rhs)
  	{
- 	};
+ 	  for (int i = 0; i < dim; ++i)
+ 	    {
+@@ -713,22 +854,22 @@
  
-+	const value_type &getValue() const
-+	  {
-+	    mlc_dispatch(getValue)();
-+	  };
-+
- 	dist_type(const lambda_type lambda): value_(lambda)
+ 
+ 
+-      /*-----------*
+-	| rectangle |
+-	*-----------*/
++      /*------*
++	| box |
++	*-----*/
+       template <class I, class Exact = mlc::final>
+-      class rectangle_type:
+-	public attribute<mlc_2_exact_vt_type(rectangle_type, I, Exact)>
++      class box_type:
++	public attribute<mlc_2_exact_vt_type(box_type, I, Exact)>
+       {
+       public:
+-	typedef rectangle_type<I, Exact>		self_type;
++	typedef box_type<I, Exact>		self_type;
+ 	attr_type_decl(self_type);
+ 	typedef abstract::image<mlc_exact_type(I)>	im_type;
+ 	typedef oln_point_type(im_type)			point_type;
+ 	typedef oln_dpoint_type(im_type)		dpoint_type;
+ 	enum {dim = point_traits<point_type>::dim };
+ 
+-	rectangle_type(const lambda_type &lambda): maxs_(dim), mins_(dim)
++	box_type(const lambda_type &lambda): maxs_(dim), mins_(dim)
  	  {
- 	  };
-@@ -545,14 +581,22 @@
- 	    return center_;
+ 	    for (int i = 0; i < dim; ++i)
+ 	      {
+@@ -737,11 +878,11 @@
+ 	      }
  	  };
  
-+	const value_type &getValue_impl() const
-+	  {
-+	    return value_;
-+	  };
-+
- 	void pe_impl(const dist_type &rhs)
+-	rectangle_type()
++	box_type()
  	{
-+	  value_type	last = value_;
- 	  dpoint_type	p = center_ - rhs.getCenter();
+ 	}
  
- 	  value_ = ntg_zero_val(value_type);
- 	  for (int i = 0; i < point_traits<point_type>::dim; ++i)
- 	    value_ += p.nth(i) * p.nth(i);
- 	  value_ = sqrt(value_);
-+	  value_ = ntg::max(value_, last);
-+	  value_ = ntg::max(value_, rhs.getValue());
- 	};
+-	rectangle_type(const im_type&, const point_type &p, const env_type &): maxs_(dim), mins_(dim)
++	box_type(const im_type&, const point_type &p, const env_type &): maxs_(dim), mins_(dim)
+ 	{
+ 	  for (int i = 0; i < dim; ++i)
+ 	    mins_[i] = maxs_[i] = p.nth(i);
+@@ -770,7 +911,7 @@
+ 	    return maxs_[i];
+ 	  };
  
- 	bool less_impl(const lambda_type &lambda) const
-@@ -841,9 +885,8 @@
+-	void pe_impl(const rectangle_type &rhs)
++	void pe_impl(const box_type &rhs)
+ 	{
+ 	  for (int i = 0; i < dim; ++i)
+ 	    {
+@@ -805,16 +946,16 @@
+ 	\\------------------------*/
+ 
+ 
+-      // volume traits
++      // integral traits
+       template <class T, class Exact>
+-      struct attr_traits<volume_type<T, Exact> >
++      struct attr_traits<integral_type<T, Exact> >
+       {
+ 	typedef T		value_type;
+ 	typedef value_type	lambda_type;
+ 	typedef NullEnv		env_type;
+       };
+ 
+-      // volume traits
++      // height traits
+       template <class T, class Exact>
+       struct attr_traits<height_type<T, Exact> >
+       {
+@@ -823,9 +964,9 @@
+ 	typedef NullEnv		env_type;
+       };
+ 
+-      // area traits
++      // card traits
+       template <class T, class Exact>
+-      struct attr_traits<area_type<T, Exact> >
++      struct attr_traits<card_type<T, Exact> >
+       {
+ 	typedef T		value_type;
+ 	typedef value_type	lambda_type;
+@@ -850,9 +991,9 @@
+ 	typedef NullEnv		env_type;
+       };
+ 
+-      // disk traits
++      // ball traits
+       template <class I, class Exact>
+-      struct attr_traits<disk_type<I, Exact> >
++      struct attr_traits<ball_type<I, Exact> >
+       {
+ 	typedef unsigned	value_type;
+ 	typedef value_type	lambda_type;
+@@ -868,23 +1009,48 @@
+ 	typedef NullEnv		env_type;
+       };
+ 
+-      // square traits
++      // cube traits
+       template <class I, class Exact>
+-      struct attr_traits<square_type<I, Exact> >
++      struct attr_traits<cube_type<I, Exact> >
+       {
+ 	typedef unsigned	value_type;
+ 	typedef value_type	lambda_type;
+ 	typedef NullEnv		env_type;
+       };
+ 
+-      // rectangle traits
++      // box traits
+       template <class I, class Exact>
+-      struct attr_traits<rectangle_type<I, Exact> >
++      struct attr_traits<box_type<I, Exact> >
+       {
+ 	typedef unsigned					value_type;
  	typedef ntg::vec<I::dim, value_type, mlc::final>	lambda_type;
  	typedef NullEnv						env_type;
        };
--    }
--  }
--}
-+  } // !morpho
-+} //!oln
- 
- /*-----------*
-   |  diamond  |
-Index: olena/oln/morpho/attribute_closing_opening_map.hxx
---- olena/oln/morpho/attribute_closing_opening_map.hxx Tue, 10 Feb 2004 19:49:03 +0100 van-vl_n (oln/j/48_attribute_ 1.1 644)
-+++ olena/oln/morpho/attribute_closing_opening_map.hxx Thu, 12 Feb 2004 14:05:43 +0100 palma_g (oln/j/48_attribute_ 1.1 644)
-@@ -30,6 +30,8 @@
- {
-   namespace morpho
-   {
-+    namespace slow
++
++      // other_image traits
++      template <class Dad, class I, class Exact>
++      struct attr_traits<other_image<Dad, I, Exact> >
++      {
++	//typedef typename change_exact<Dad, other_image<Dad, I, Exact> >::ret	super_type;
++	typedef typename change_exact<Dad,
++				      typename mlc::exact_vt<other_image<Dad, I, Exact>,
++							     Exact>::ret>::ret		super_type;
++	typedef attr_value_type(super_type)						value_type;
++	typedef attr_lambda_type(super_type)						lambda_type;
++	typedef OtherImageEnv<I>							env_type;
++      };
++    // traits for other_image derivation
++
++    /*!
++    ** \\brief Change the exact type of an attribute.
++    **
++    ** Traits to change integral_type exact type.
++    */
++    template <class NewExact, class OldExact, class T>
++    struct change_exact<integral_type<T, OldExact>, NewExact>
 +    {
-     template <class I, class D, class Env>
-     template <class N>
-     f_tarjan_map<I, D, Env>::f_tarjan_map(bool is_closing,
-@@ -189,6 +191,7 @@
- 	      }
- 	}
-     }
-+    } // end of namespace slow
-   } // end of namespace morpho
- } // end of namespace oln
++      typedef integral_type<T, NewExact>	ret;
++    };
+   } // !morpho
+ } //!oln
  
 Index: olena/oln/morpho/attribute_closing_opening_map.hh
---- olena/oln/morpho/attribute_closing_opening_map.hh Tue, 10 Feb 2004 19:49:03 +0100 van-vl_n (oln/j/49_attribute_ 1.1 600)
-+++ olena/oln/morpho/attribute_closing_opening_map.hh Mon, 16 Feb 2004 08:39:58 +0100 palma_g (oln/j/49_attribute_ 1.1 600)
-@@ -33,6 +33,7 @@
- # include <ntg/int.hh>
- # include <oln/utils/histogram.hh>
- # include <oln/utils/special_points.hh>
-+# include <oln/morpho/attributes.hh>
- 
- # include <iterator>
- # include <vector>
-@@ -45,14 +46,15 @@
- {
-   namespace morpho
-   {
--
-+    namespace slow
-+    {
-     /*! Attribute closing using map. Smaller memory usage, but
-      *  slower computation than the attribute_closing_opening
-      *
-      * See \"Fast morphological attribute operations using Tarjan's union-find
-      * algorithm\" by Michael H. F. Wilkinson and Jos B. T. M. Roerdink
-      */
--    template <class I, class D, class Env = morpho::tarjan::NullEnv>
-+      template <class I, class D, class Env = morpho::NullEnv>
-     struct f_tarjan_map
-     {
-     public:
-@@ -63,7 +65,7 @@
-       typedef oln_value_type(input_type) value_type;
-       typedef typename mute<input_type, point_type>::ret parent_type;
-       typedef typename mute<input_type, bool>::ret is_proc_type;
--      typedef typename D::lambda_type lambda_type;
-+	typedef attr_lambda_type(D)			lambda_type;
- 
-       // e.g.,
-       // when I is image2d<int_u8> and D is area_type, we've got:
-@@ -82,8 +84,7 @@
- 		   const lambda_type& lambda,
- 		   const Env & env = Env());
- 
--      template<typename DestValue>
--      typename mute<I, DestValue>::ret
-+	oln_concrete_type(I)
-       res()
-       {
- 	return output;
-@@ -128,21 +129,92 @@
-      * See \"Fast morphological attribute operations using Tarjan's union-find
-      * algorithm\" by Michael H. F. Wilkinson and Jos B. T. M. Roerdink
-      */
--    template <typename DestValue, class I, class D, class Env, class N>
--    typename mute<I, DestValue>::ret
-+      template <class D, class I, class N>
-+      oln_concrete_type(I)
-     tarjan_map(bool is_closing,
- 	       const abstract::image<I>& input,
- 	       const abstract::neighborhood<N>& ng,
--	       const typename D::lambda_type& lambda,
--	       const Env & env = Env())
-+		   const attr_lambda_type(D)& lambda,
-+		   const attr_env_type(D)& env/* = Env()*/)
-     {
--      oln::morpho::f_tarjan_map<I, D, Env > t(is_closing,
-+	oln::morpho::slow::f_tarjan_map<I, D, attr_env_type(D) > t(is_closing,
- 					      input,
- 					      ng,
- 					      lambda,
- 					      env);
--      return t. template res<DestValue>();
-+	return t.res();
-+      }
-+
-+      /*! Some macro to declare friendly function for different attributes
-+       * opening/closing
-+       */
-+# define xxx_opening_map_decl(T)						\\
-+template <class I, class N>							\\
-+oln_concrete_type(I)								\\
-+T##_opening(const abstract::image<I>& input,					\\
-+	    const abstract::neighborhood<N>& ng,				\\
-+	    const attr_lambda_type(T##_type<>)& lambda)				\\
-+    {										\\
-+      return tarjan_map<T##_type<>, I, N>(false, input, ng, lambda,		\\
-+						    attr_env_type(T##_type<>)()); \\
-+    }
-+
-+      // same but attribute take care of the image type
-+# define xxx_opening_im_map_decl(T)						\\
-+template <class I, class N>							\\
-+oln_concrete_type(I)								\\
-+T##_opening(const abstract::image<I>& input,					\\
-+	    const abstract::neighborhood<N>& ng,				\\
-+	    const attr_lambda_type(T##_type<I>)& lambda)			\\
-+    {										\\
-+      return tarjan_map<T##_type<I>, I, N>(false, input, ng, lambda,		\\
-+						    attr_env_type(T##_type<I>)()); \\
+--- olena/oln/morpho/attribute_closing_opening_map.hh Mon, 16 Feb 2004 19:06:24 +0100 palma_g (oln/j/49_attribute_ 1.2 600)
++++ olena/oln/morpho/attribute_closing_opening_map.hh Wed, 03 Mar 2004 11:48:52 +0100 palma_g (oln/j/49_attribute_ 1.2 600)
+@@ -194,24 +194,24 @@
+       return tarjan_map<T##_type<I>, I, N>(true, input, ng, lambda, attr_env_type(T##_type<I>)()); \\
      }
-+
-+      //return input;
-+      //      return tarjan_map<T##_type, I, N>(false, input, ng, lambda, attr_env_type(T##_type<>)());
-+# define xxx_closing_map_decl(T)						\\
-+template <class I, class N>							\\
-+oln_concrete_type(I)								\\
-+T##_closing(const abstract::image<I>& input,					\\
-+	    const abstract::neighborhood<N>& ng,				\\
-+	    const attr_lambda_type(T##_type<>)& lambda)				\\
-+    {										\\
-+      return tarjan_map<T##_type<>, I, N>(true, input, ng, lambda, attr_env_type(T##_type<>)()); \\
-+    }
-+
-+      // same but attribute take care of the image type
-+# define xxx_closing_im_map_decl(T)						\\
-+template <class I, class N>							\\
-+oln_concrete_type(I)								\\
-+T##_closing(const abstract::image<I>& input,					\\
-+	    const abstract::neighborhood<N>& ng,				\\
-+	    const attr_lambda_type(T##_type<I>)& lambda)				\\
-+    {										\\
-+      return tarjan_map<T##_type<I>, I, N>(true, input, ng, lambda, attr_env_type(T##_type<I>)()); \\
-+    }
-+
-+      xxx_opening_map_decl(area);
-+      xxx_closing_map_decl(area);
-+      xxx_opening_map_decl(volume);
-+      xxx_closing_map_decl(volume);
-+      xxx_opening_map_decl(height);
-+      xxx_closing_map_decl(height);
-+      xxx_opening_map_decl(maxvalue);
-+      xxx_closing_map_decl(maxvalue);
-+      xxx_opening_map_decl(minvalue);
-+      xxx_closing_map_decl(minvalue);
-+      xxx_opening_im_map_decl(disk);
-+      xxx_closing_im_map_decl(disk);
-+      xxx_opening_im_map_decl(dist);
-+      xxx_closing_im_map_decl(dist);
-+      xxx_closing_im_map_decl(square);
-+      xxx_opening_im_map_decl(square);
-+      xxx_closing_im_map_decl(rectangle);
-+      xxx_opening_im_map_decl(rectangle);
-+
-+
-+    } // end of namespace slow
-   } // end of namespace morpho
- } // end of namespace oln
  
-Index: olena/tests/morpho/tests/attribute
---- olena/tests/morpho/tests/attribute Tue, 10 Feb 2004 19:49:03 +0100 van-vl_n (oln/j/51_attribute 1.1 644)
-+++ olena/tests/morpho/tests/attribute Mon, 16 Feb 2004 08:40:49 +0100 palma_g (oln/j/51_attribute 1.1 644)
-@@ -28,10 +28,10 @@
-   bool fail(false);
+-      xxx_opening_map_decl(area);
+-      xxx_closing_map_decl(area);
+-      xxx_opening_map_decl(volume);
+-      xxx_closing_map_decl(volume);
++      xxx_opening_map_decl(card);
++      xxx_closing_map_decl(card);
++      xxx_opening_map_decl(integral);
++      xxx_closing_map_decl(integral);
+       xxx_opening_map_decl(height);
+       xxx_closing_map_decl(height);
+       xxx_opening_map_decl(maxvalue);
+       xxx_closing_map_decl(maxvalue);
+       xxx_opening_map_decl(minvalue);
+       xxx_closing_map_decl(minvalue);
+-      xxx_opening_im_map_decl(disk);
+-      xxx_closing_im_map_decl(disk);
++      xxx_opening_im_map_decl(ball);
++      xxx_closing_im_map_decl(ball);
+       xxx_opening_im_map_decl(dist);
+       xxx_closing_im_map_decl(dist);
+-      xxx_closing_im_map_decl(square);
+-      xxx_opening_im_map_decl(square);
+-      xxx_closing_im_map_decl(rectangle);
+-      xxx_opening_im_map_decl(rectangle);
++      xxx_closing_im_map_decl(cube);
++      xxx_opening_im_map_decl(cube);
++      xxx_closing_im_map_decl(box);
++      xxx_opening_im_map_decl(box);
  
-   typedef image2d<int_u8> img_type;
--  typedef oln::morpho::tarjan::area_type<unsigned> area_type;
-+  typedef oln::morpho::area_type<unsigned> area_type;
-   const area_type::lambda_type area = 100;
-   const neighborhood2d nb = neighb_c8();
--  const oln::morpho::tarjan::NullEnv env;
-+  //  const oln::morpho::NullEnv env;
  
-   img_type lena = load(rdata(\"lena.pgm\"));
-   img_type lena_sure_closing = oln::morpho::sure_minima_killer(lena, area, nb);
-@@ -41,9 +41,10 @@
-   img_type lena_tst_closing;
+     } // end of namespace slow
+Index: olena/tests/morpho/tests/attr_op_cl
+--- olena/tests/morpho/tests/attr_op_cl Mon, 16 Feb 2004 19:06:24 +0100 palma_g (oln/k/0_attr_op_cl 1.1 644)
++++ olena/tests/morpho/tests/attr_op_cl Wed, 03 Mar 2004 11:49:43 +0100 palma_g (oln/k/0_attr_op_cl 1.1 644)
+@@ -37,6 +37,8 @@
+     if (!fail) \\
+       OK_OR_FAIL \\
+   } \\
++  last_fail = last_fail || fail; \\
++  fail = false; \\
+   { \\
+     image2d<T> im2 = oln::morpho::slow::A##_closing(im, neighb_c4(), lambda); \\
+     image2d<T> im1 = oln::morpho::fast::A##_closing(im, neighb_c4(), lambda); \\
+@@ -59,19 +61,19 @@
+ {
+   bool fail = false;
  
-   std::cerr << \"testing tarjan_map...\" << std::endl;
--  lena_tst_closing = morpho::tarjan_map<ntg::int_u8,img_type,area_type>(true, lena,  nb, area, env);
--  lena_tst_opening= morpho::tarjan_map<ntg::int_u8,img_type,area_type>(false, lena,  nb, area, env);
--
-+//   lena_tst_closing = morpho::slow::tarjan_map<area_type,ntg::int_u8,img_type>(true, lena,  nb, area, env);
-+//   lena_tst_opening= morpho::slow::tarjan_map<area_type,ntg::int_u8,img_type>(false, lena,  nb, area, env);
-+  lena_tst_closing = morpho::slow::area_closing(lena, nb, area);
-+  lena_tst_opening = morpho::slow::area_opening(lena, nb, area);
+-  image2d<int_u8> lena(rdata(\"lena256.pgm\"));
++  image2d<int_u8> lena(rdata(\"lena.pgm\"));
+   std::cout << std::endl;
+-  test_op_cl(int_u8, area, lena, 200)
+-  test_op_cl(int_u8, volume, lena, 200)
+-  test_op_cl(int_u8, height, lena, 4)
+-  test_op_cl(int_u8, maxvalue, lena, 100)
+-  test_op_cl(int_u8, minvalue, lena, 100)
+-  test_op_cl(int_u8, dist, lena, 100)
+-  test_op_cl(int_u8, disk, lena, 100)
+-  test_op_cl(int_u8, square, lena, 50)
++  test_op_cl(int_u8, card, lena, 200);
++  test_op_cl(int_u8, integral, lena, 200);
++  test_op_cl(int_u8, height, lena, 4);
++  test_op_cl(int_u8, maxvalue, lena, 100);
++  test_op_cl(int_u8, minvalue, lena, 100);
++  test_op_cl(int_u8, dist, lena, 100);
++  test_op_cl(int_u8, ball, lena, 100);
++  test_op_cl(int_u8, cube, lena, 50);
  
-   fail = fail ||
-     !level::is_equal(lena_sure_closing, lena_tst_closing)||
-@@ -59,8 +60,8 @@
-   std::cerr << \"fail:\" << fail << std::endl;
+   ntg::vec<2, unsigned, mlc::final>	lambda;
+-  test_op_cl(int_u8, rectangle, lena, lambda)
++  test_op_cl(int_u8, box, lena, lambda);
  
-   std::cerr << \"testing area_closin and area_opeing...\" << std::endl;
--  lena_tst_closing = morpho::tarjan::area_closing(lena, nb, area);
--  lena_tst_opening = morpho::tarjan::area_opening(lena, nb, area);
-+  lena_tst_closing = morpho::fast::area_closing(lena, nb, area);
-+  lena_tst_opening = morpho::fast::area_opening(lena, nb, area);
-   fail = fail ||
-     !level::is_equal(lena_sure_closing, lena_tst_closing)||
-     !level::is_equal(lena_sure_opening, lena_tst_opening);
-@@ -70,12 +71,13 @@
    return fail;
  }
- 
--
- bool
- check_attribute()
- {
-+  bool fail = false;
-+
-   //FIXME attributes should be checked
--  return false;
-+  return fail;
- }
- 
- 
-Index: olena/tests/morpho/tests/attr_op_cl
---- olena/tests/morpho/tests/attr_op_cl Mon, 16 Feb 2004 19:05:52 +0100 palma_g ()
-+++ olena/tests/morpho/tests/attr_op_cl Mon, 16 Feb 2004 18:48:30 +0100 palma_g (oln/k/0_attr_op_cl  644)
-@@ -0,0 +1,77 @@
-+//								    -*- c++ -*-
-+
-+#include <oln/basics2d.hh>
-+#include <oln/morpho/attribute_closing_opening.hh>
-+#include <oln/morpho/attribute_closing_opening_map.hh>
-+#include <oln/level/compare.hh>
-+#include <ntg/all.hh>
-+
-+#include \"check.hh\"
-+#include \"data.hh\"
-+
-+using namespace oln;
-+using namespace ntg;
-+
-+#define OK_OR_FAIL				\\
-+      std::cout << \"OK\" << std::endl;		\\
-+    else					\\
-+      {						\\
-+	std::cout << \"FAIL\" << std::endl;	\\
-+	fail = true;				\\
-+      }
-+
-+# define test_op_cl(T, A, im, lambda) \\
-+{ \\
-+  bool	last_fail = fail; \\
-+  fail = false; \\
-+  { \\
-+    image2d<T> im2 = oln::morpho::slow::A##_opening(im, neighb_c4(), lambda); \\
-+    image2d<T> im1 = oln::morpho::fast::A##_opening(im, neighb_c4(), lambda); \\
-+    image2d<T>::iter_type	it(lena); \\
-+    std::cout << #A << \" opening: \"; \\
-+    for_all(it) \\
-+      { \\
-+	if (im1[it] != im2[it]) \\
-+          fail = true; \\
-+      } \\
-+    if (!fail) \\
-+      OK_OR_FAIL \\
-+  } \\
-+  { \\
-+    image2d<T> im2 = oln::morpho::slow::A##_closing(im, neighb_c4(), lambda); \\
-+    image2d<T> im1 = oln::morpho::fast::A##_closing(im, neighb_c4(), lambda); \\
-+    image2d<T>::iter_type	it(lena); \\
-+    std::cout << #A <<\" closing: \"; \\
-+    for_all(it) \\
-+      { \\
-+	if (im1[it] != im2[it]) \\
-+          fail = true; \\
-+      } \\
-+    if (!fail) \\
-+      OK_OR_FAIL \\
-+  } \\
-+ fail = last_fail || fail; \\
-+}
-+
-+
-+bool
-+check()
-+{
-+  bool fail = false;
-+
-+  image2d<int_u8> lena(rdata(\"lena256.pgm\"));
-+  std::cout << std::endl;
-+  test_op_cl(int_u8, area, lena, 200)
-+  test_op_cl(int_u8, volume, lena, 200)
-+  test_op_cl(int_u8, height, lena, 4)
-+  test_op_cl(int_u8, maxvalue, lena, 100)
-+  test_op_cl(int_u8, minvalue, lena, 100)
-+  test_op_cl(int_u8, dist, lena, 100)
-+  test_op_cl(int_u8, disk, lena, 100)
-+  test_op_cl(int_u8, square, lena, 50)
-+
-+  ntg::vec<2, unsigned, mlc::final>	lambda;
-+  test_op_cl(int_u8, rectangle, lena, lambda)
-+
-+  return fail;
-+}
-
+Index: doc/ref/out/exdoc.config.in
+--- doc/ref/out/exdoc.config.in Mon, 08 Mar 2004 07:58:01 +0100 palma_g ()
++++ doc/ref/out/exdoc.config.in Wed, 25 Feb 2004 14:35:00 +0100 palma_g (oln/k/7_exdoc.conf  644)
+@@ -0,0 +1,12 @@
++[ENTRY]
++  COMMAND_PREFIX = \\\\	# In Doxygen, commands begin with a `\\'
++  TAG_OPEN = code
++  TAG_CLOSE = endcode
++  CAPTIONS = cxx	# We want to run cxx on the extracted files (see line below)
++  ALIAS cxx = @CXX@	# Here, cxx means g++ but you can choose other compilers
++  OPTIONS = @CXXFLAGS@ -I@top_srcdir@/integre  -I@top_srcdir@/olena  -I@top_srcdir@/metalic $1 -o $2 -DIMG_OUT=\\\"../img/\\\" -DIMG_IN=\\\"@top_srcdir@/olena/img/\\\"		# tell how to use the soft, i.e. where to put input and output arguments (default if not overriden) ($1: input, $2: output) FIXME: $* should have explicit name, chek flags
++  OUT = out		# FIXME: should be obsolete
++  EXT = cc		# Extension of generated file
++  STD_OUT_EXT = std	# Extension of generated file standard output
++  ERR_OUT_EXT = err	# Extension of generated file error output
++  COMMENT_STYLE	= \\*\\*	# begining of comment line
+Index: doc/ref/exdoc.config.in
+--- doc/ref/exdoc.config.in Tue, 24 Feb 2004 16:33:38 +0100 palma_g (oln/k/5_exdoc.conf 1.1 644)
++++ doc/ref/exdoc.config.in Mon, 08 Mar 2004 07:58:01 +0100 palma_g ()
+@@ -1,12 +0,0 @@
+-[ENTRY]
+-  COMMAND_PREFIX = \\\\	# In Doxygen, commands begin with a `\\'
+-  TAG_OPEN = code
+-  TAG_CLOSE = endcode
+-  CAPTIONS = cxx	# We want to run cxx on the extracted files (see line below)
+-  ALIAS cxx = @CXX@	# Here, cxx means g++ but you can choose other compilers
+-  OPTIONS = @CXXFLAGS@ -I@top_srcdir@/integre  -I@top_srcdir@/olena  -I@top_srcdir@/metalic $1 -o $2 -DIMG_OUT=\\\"../img/\\\" -DIMG_IN=\\\"@top_srcdir@/olena/img/\\\"		# tell how to use the soft, i.e. where to put input and output arguments (default if not overriden) ($1: input, $2: output) FIXME: $* should have explicit name, chek flags
+-  OUT = out		# FIXME: should be obsolete
+-  EXT = cc		# Extension of generated file
+-  STD_OUT_EXT = std	# Extension of generated file standard output
+-  ERR_OUT_EXT = err	# Extension of generated file error output
+-  COMMENT_STYLE	= \\*\\*	# begining of comment line
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 16 Feb 2004 19:06:24 +0100")
+(Checkin-Time "Mon, 08 Mar 2004 08:12:15 +0100")
 (Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -783,11 +1352,11 @@ Index: olena/tests/morpho/tests/attr_op_cl
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.13 640))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.2 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.15 640))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.4 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.35 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.10 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.12 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 640))
 
@@ -799,7 +1368,7 @@ Index: olena/tests/morpho/tests/attr_op_cl
 
   (cleanup.sh (oln/o/29_cleanup.sh 1.5 750))
 
-  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.13 640))
+  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.15 640))
 
   (doc/demo/image.cc (oln/d/46_image.cc 1.8 640))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.16.1.2 640))
@@ -808,7 +1377,7 @@ Index: olena/tests/morpho/tests/attr_op_cl
   (doc/demo/tour.cc (oln/d/45_tour.cc 1.13 640))
   (doc/ref/bin () :directory)
   (doc/ref/html () :directory)
-  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.8 640))
+  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.10 640))
   (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.6.1.5 640))
   (doc/ref/oln-ref.tex (oln/f/14_oln-ref.te 1.3.1.3 640))
   (doc/ref/integre-ref.tex (oln/g/34_ref-types. 1.12 640))
@@ -816,7 +1385,7 @@ Index: olena/tests/morpho/tests/attr_op_cl
   (doc/ref/processing.tpl (oln/d/48_processing 1.16 640))
 
   (Makefile.am (oln/n/32_Makefile.a 1.17.1.2.1.7 640))
-  (NEWS (oln/0_NEWS 1.19 640))
+  (NEWS (oln/0_NEWS 1.21 640))
 
   (olena/img/face_se.pbm (oln/n/17_face_se.pb 1.1 640) :no-keywords)
   (olena/img/lena256.pgm (oln/n/14_lena256.pg 1.1 640) :no-keywords)
@@ -1438,8 +2007,8 @@ Index: olena/tests/morpho/tests/attr_op_cl
 ;; Files added by populate at Tue, 04 Mar 2003 19:30:28 +0100,
 ;; to version 8.9(w), by jerome:
 
-  (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.14 640))
-  (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.12 640))
+  (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.16 640))
+  (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.13 640))
 
   (olena/tests/convol () :directory)
   (metalic/config (../config) :symlink)
@@ -1464,7 +2033,7 @@ Index: olena/tests/morpho/tests/attr_op_cl
   (integre/tests/check/defs.in (oln/q/42_defs.in 1.1 640))
   (metalic/mlc/array/objs.hh (oln/q/45_objs.hh 1.3 640))
   (metalic/mlc/config/system.hh (oln/q/46_system.hh 1.2 640))
-  (olena/oln/Makefile.am (oln/q/47_Makefile.a 1.3.1.1.1.6.1.7.1.1 640))
+  (olena/oln/Makefile.am (oln/q/47_Makefile.a 1.3.1.1.1.6.1.7.1.2 640))
   (integre/ntg/config/system.hh (oln/q/48_system.hh 1.2 640))
   (metalic/tests/main/tests/is_a1 (oln/r/17_is_a1 1.3 640))
   (metalic/tests/main/tests/ensure3 (oln/r/18_ensure3 1.3 640))
@@ -1856,34 +2425,53 @@ Index: olena/tests/morpho/tests/attr_op_cl
 ;; Files added by populate at Fri, 06 Feb 2004 16:00:19 +0100,
 ;; to version 10.57(w), by palma_g:
 
-  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.4 644))
+  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.5 644))
 
 ;; Files added by populate at Tue, 10 Feb 2004 15:26:15 +0100,
 ;; to version 10.62(w), by palma_g:
 
-  (olena/oln/core/abstract/behavior.hh (oln/j/46_behavior.h 1.1 644))
+  (olena/oln/core/abstract/behavior.hh (oln/j/46_behavior.h 1.2 644))
 
 ;; Files added by populate at Tue, 10 Feb 2004 15:26:20 +0100,
 ;; to version 10.62(w), by palma_g:
 
-  (olena/oln/core/behavior.hh (oln/j/47_behavior.h 1.1 644))
+  (olena/oln/core/behavior.hh (oln/j/47_behavior.h 1.2 644))
 
 
   (olena/oln/morpho/attribute_closing_opening_map.hxx (oln/j/48_attribute_ 1.2 644))
-  (olena/oln/morpho/attribute_closing_opening_map.hh (oln/j/49_attribute_ 1.2 600))
+  (olena/oln/morpho/attribute_closing_opening_map.hh (oln/j/49_attribute_ 1.3 600))
   (olena/oln/utils/special_points.hh (oln/j/50_special_po 1.1 644))
   (olena/tests/morpho/tests/attribute (oln/j/51_attribute 1.2 644))
 ;; Files added by populate at Mon, 16 Feb 2004 18:59:27 +0100,
 ;; to version 10.64(w), by palma_g:
 
-  (olena/tests/morpho/tests/attr_op_cl (oln/k/0_attr_op_cl 1.1 644))
+  (olena/tests/morpho/tests/attr_op_cl (oln/k/0_attr_op_cl 1.2 644))
+
+
+  (doc/ref/exdoc.pl (oln/v/26_exdoc.pl 1.3 755))
+  (doc/ref/doxygen.config.in (oln/v/29_doxygen.co 1.2 644))
+  (doc/ref/exdoc.mk.in (oln/k/4_exdoc.mk.i 1.1 644))
+  
+  (doc/ref/img_conv.pl (oln/k/6_img_conv.p 1.1 700))
+;; Files deleted by depopulate at Wed, 25 Feb 2004 16:41:09 +0100,
+;; from version 10.67(w), by palma_g:
+
+  ; (doc/ref/exdoc.config.in ())
+
+;; Files added by populate at Wed, 25 Feb 2004 16:41:16 +0100,
+;; to version 10.67(w), by palma_g:
+
+  (doc/ref/out/exdoc.config.in (oln/k/7_exdoc.conf 1.1 644))
 )
 (Merge-Parents
-  (10.64 complete)
-  (10.66 complete
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (olena/oln/core/abstract/neighborhood.hh olena/oln/core/abstract/neighborhood.hh olena/oln/core/abstract/neighborhood.hh r)
-    (olena/oln/utils/histogram.hh olena/oln/utils/histogram.hh olena/oln/utils/histogram.hh r) (olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh r)
-    (() () olena/oln/morpho/attribute_closing_opening_map.hxx a) (() () olena/oln/morpho/attribute_closing_opening_map.hh a)
-    (() () olena/oln/utils/special_points.hh a) (() () olena/tests/morpho/tests/attribute a))
+  (10.67 complete)
+  (10.68 complete
+    (ChangeLog ChangeLog ChangeLog r) (doc/ChangeLog doc/ChangeLog doc/ChangeLog r)
+    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (configure.ac configure.ac configure.ac r)
+    (doc/ref/Makefile.am doc/ref/Makefile.am doc/ref/Makefile.am r) (NEWS NEWS NEWS r)
+    (olena/oln/morpho/attribute_closing_opening.hh olena/oln/morpho/attribute_closing_opening.hh olena/oln/morpho/attribute_closing_opening.hh r) (olena/oln/core/abstract/behavior.hh olena/oln/core/abstract/behavior.hh olena/oln/core/abstract/behavior.hh r)
+    (olena/oln/core/behavior.hh olena/oln/core/behavior.hh olena/oln/core/behavior.hh r) (() () doc/ref/exdoc.pl a)
+    (() () doc/ref/doxygen.config.in a) (() () doc/ref/exdoc.mk.in a)
+    (() () doc/ref/exdoc.config.in a) (() () doc/ref/img_conv.pl a))
 )
 (New-Merge-Parents)

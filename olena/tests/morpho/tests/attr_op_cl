@@ -37,6 +37,8 @@ using namespace ntg;
     if (!fail) \
       OK_OR_FAIL \
   } \
+  last_fail = last_fail || fail; \
+  fail = false; \
   { \
     image2d<T> im2 = oln::morpho::slow::A##_closing(im, neighb_c4(), lambda); \
     image2d<T> im1 = oln::morpho::fast::A##_closing(im, neighb_c4(), lambda); \
@@ -59,19 +61,19 @@ check()
 {
   bool fail = false;
 
-  image2d<int_u8> lena(rdata("lena256.pgm"));
+  image2d<int_u8> lena(rdata("lena.pgm"));
   std::cout << std::endl;
-  test_op_cl(int_u8, area, lena, 200)
-  test_op_cl(int_u8, volume, lena, 200)
-  test_op_cl(int_u8, height, lena, 4)
-  test_op_cl(int_u8, maxvalue, lena, 100)
-  test_op_cl(int_u8, minvalue, lena, 100)
-  test_op_cl(int_u8, dist, lena, 100)
-  test_op_cl(int_u8, disk, lena, 100)
-  test_op_cl(int_u8, square, lena, 50)
+  test_op_cl(int_u8, card, lena, 200);
+  test_op_cl(int_u8, integral, lena, 200);
+  test_op_cl(int_u8, height, lena, 4);
+  test_op_cl(int_u8, maxvalue, lena, 100);
+  test_op_cl(int_u8, minvalue, lena, 100);
+  test_op_cl(int_u8, dist, lena, 100);
+  test_op_cl(int_u8, ball, lena, 100);
+  test_op_cl(int_u8, cube, lena, 50);
 
   ntg::vec<2, unsigned, mlc::final>	lambda;
-  test_op_cl(int_u8, rectangle, lena, lambda)
+  test_op_cl(int_u8, box, lena, lambda);
 
   return fail;
 }

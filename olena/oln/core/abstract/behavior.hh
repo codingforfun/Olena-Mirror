@@ -31,27 +31,47 @@
 # include <oln/core/abstract/image.hh>
 # include <oln/core/coord.hh>
 
+/*! \namespace oln
+** \brief oln namespace
+*/
 namespace oln {
-    namespace abstract {
-      // behavior hierarchy
-      //the aim of this one is to describe how an algorithm should work
-      //on borders
-      template <class Exact>
-      class behavior: public mlc_hierarchy::any<Exact>
-      {
-      public:
-	typedef behavior<Exact>				self_type;
-	typedef mlc_exact_vt_type(self_type, Exact)	exact_type;
+  /*! \namespace abstract
+  ** \brief abstract namespace
+  */
+  namespace abstract {
 
-	template <class I>
-	void adapt_border(oln::abstract::image<I> &im, coord border_size) const
-	{
-	  mlc_dispatch(adapt_border)(im, border_size);
-	};
-      protected:
-	behavior() {};
+    /*! \class behavior
+    ** behavior hierarchy
+    **
+    ** the aim of this one is to describe how an algorithm should work
+    ** on borders
+    */
+    template <class Exact>
+    class behavior: public mlc_hierarchy::any<Exact>
+    {
+    public:
+      typedef behavior<Exact>				self_type; /*!< the self type*/
+      typedef mlc_exact_vt_type(self_type, Exact)	exact_type; /*!< the exact type*/
+
+      /*!
+      ** \brief Adapt the border of an image
+      **
+      ** Adapt the border of an image regarding the kind of behavior wanted.
+      */
+      template <class I>
+      void adapt_border(oln::abstract::image<I> &im, coord border_size) const
+      {
+	mlc_dispatch(adapt_border)(im, border_size);
       };
-    } // !abstract
+    protected:
+      /*!
+      ** \brief CTor
+      **
+      ** Do nothing, used only by sub-classes
+      */
+      behavior() {};
+    };
+  } // !abstract
 }
 
 #endif // !OLENA_CORE_ABSTRACT_BEHAVIOR_HH

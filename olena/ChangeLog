@@ -1,3 +1,19 @@
+2004-03-08  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* tests/morpho/tests/attr_op_cl: Change tests to make them taking
+	care of new attribute names.
+	* oln/morpho/attribute_closing_opening_map.hh: Change some function names.
+	* oln/morpho/attributes.hh: Rename some attributes. Add new ones.
+	* oln/Makefile.am: Add file references.
+	* oln/morpho/attribute_union_find.hh: Remove old attribute class.
+	* oln/morpho/attribute_closing_opening.hh: Add comments.
+
+2004-02-24  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* oln/morpho/attribute_closing_opening.hh: Add comments.
+	* oln/core/abstract/behavior.hh: Likewise.
+	* oln/core/behavior.hh: Likewise.
+
 2004-02-16  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* tests/morpho/tests/attribute: Fix function call problems.

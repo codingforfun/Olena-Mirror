@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,39 +30,55 @@
 
 #include <oln/morpho/attribute_union_find.hh>
 
+/*! \namespace oln
+** \brief oln namespace
+*/
 namespace oln {
+  /*! \namespace oln::morpho
+  ** \brief oln::morpho namespace
+  */
   namespace morpho {
+    /*! \namespace oln::morpho::fast
+    ** \brief oln::morpho::fast namespace
+    */
     namespace fast {
+      /*! \namespace oln::morpho::fast::tarjan
+      ** \brief oln::morpho::fast::tarjan namespace
+      */
       namespace tarjan {
+	/*! \namespace oln::morpho::fast::tarjan::internal
+	** \brief oln::morpho::fast::tarjan::internal namespace
+	*/
 	namespace internal {
 
-	// attribute closing
-	template<class I, class N, class A>
-	oln_concrete_type(I)
-	  attr_closing_(const abstract::non_vectorial_image<I>& input,
-			const abstract::neighborhood<N>& Ng,
-			const attr_lambda_type(A) &lambda)
-	{
-	  typedef tarjan::tarjan_set<oln_concrete_type(I), A > tarjan_set_type;
-	  tarjan_set_type attr_closing(input.exact(), attr_env_type(A)());
-	  return attr_closing.template get_comptute<true>(lambda, Ng);
-	}
+	  template<class I, class N, class A>
+	  oln_concrete_type(I)
+	    attr_closing_(const abstract::non_vectorial_image<I>& input,
+			  const abstract::neighborhood<N>& Ng,
+			  const attr_lambda_type(A) &lambda,
+			  const attr_env_type(A) &env = attr_env_type(A)())
+	  {
+	    typedef tarjan::tarjan_set<oln_concrete_type(I), A > tarjan_set_type;
+	    tarjan_set_type attr_closing(input.exact(), env);
+	    return attr_closing.template get_comptute<true>(lambda, Ng);
+	  }
 
-	// attribute opening
-	template<class I, class N, class A>
-	oln_concrete_type(I)
-	  attr_opening_(const abstract::non_vectorial_image<I>& input,
-			const abstract::neighborhood<N>& Ng,
-			const attr_lambda_type(A) &lambda)
-	{
-	  typedef tarjan::tarjan_set<oln_concrete_type(I), A > tarjan_set_type;
-	  tarjan_set_type attr_opening(input.exact(), attr_env_type(A)());
-	  return attr_opening.template get_comptute<false>(lambda, Ng);
-	}
+	  // attribute opening
+	  template<class I, class N, class A>
+	  oln_concrete_type(I)
+	    attr_opening_(const abstract::non_vectorial_image<I>& input,
+			  const abstract::neighborhood<N>& Ng,
+			  const attr_lambda_type(A) &lambda,
+			  const attr_env_type(A) &env = attr_env_type(A)())
+	  {
+	    typedef tarjan::tarjan_set<oln_concrete_type(I), A > tarjan_set_type;
+	    tarjan_set_type attr_opening(input.exact(), env);
+	    return attr_opening.template get_comptute<false>(lambda, Ng);
+	  }
 
-      } // !internal
-    } // !tarjan
-// macro for some attribute opening/closing declarations
+	} // !internal
+      } // !tarjan
+      // macro for some attribute opening/closing declarations
 # define xxx_opening_decl(T) \
       template<class I, class N> \
       oln_concrete_type(I) \
@@ -105,62 +121,185 @@ namespace oln {
 	return tarjan::internal::attr_closing_<I, N, T##_type<I> >(input, Ng, lambda); \
       }
 
-      /*=processing area_closing
-       * ns: morpho
-       * what: Area closing
-       * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
-       * arg: const abstract::neighborhood<N>&, se, IN, neighborhood to consider
-       * arg: unsigned int, area, IN, area
-       * ret:oln_concrete_type(I)
-       * doc:
-       * Compute an area closing using union/find algorithm.
-       * See A. Meijster and M. Wilkinson. A Comparison of Algorithms For Connected
-       * Set Openings and Closings. PAMI 24(2), p484--494
-       * see: morpho::simple_geodesic_dilation
-       * ex:
-       * $ image2d<int_u8> im = load("lena256.pgm");
-       * $ save(morpho::tarjan::area_closing(im, neighb_c4(),500), "out.pgm");
-       * exi: lena256.pgm
-       * exo: out.pgm
-       =*/
-      xxx_closing_decl(area);
+      /*!
+      ** \brief Perform a cardinal closing.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/attribute_closing_opening.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** #include <iostream>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type im1(oln::load(IMG_IN "lena256.pgm"));
+      **   im1 = oln::morpho::fast::card_closing(im1, oln::neighb_c4(), 200);
+      **   oln::save(im1, IMG_OUT "oln_morpho_fast_card_closing.ppm");
+      **   return  0;
+      ** }
+      ** \endcode
+      ** \image html lena256.png
+      ** \image latex lena256.png
+      ** =>
+      ** \image html oln_morpho_fast_card_closing.png
+      ** \image latex oln_morpho_fast_card_closing.png
+      **
+      */
+      xxx_closing_decl(card);
 
-      /*=processing area_opening
-       * ns: morpho
-       * what: Area opening
-       * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
-       * arg: const abstract::neighborhood<N>&, se, IN, neighborhood to consider
-       * arg: unsigned int, area, IN, area
-       * ret:oln_concrete_type(I)
-       * doc:
-       * Compute an area opening using union/find algorithm.
-       * See A. Meijster and M. Wilkinson. A Comparison of Algorithms For Connected
-       * Set Openings and Closings. PAMI 24(2), p484--494
-       * see: morpho::simple_geodesic_dilation
-       * ex:
-       * $ image2d<int_u8> im = load("lena256.pgm");
-       * $ save(morpho::tarjan::area_opening(im, neighb_c4(),500), "out.pgm");
-       * exi: lena256.pgm
-       * exo: out.pgm
-       =*/
-      xxx_opening_decl(area);
+      /*!
+      ** \brief Perform a cardinal opening.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/attribute_closing_opening.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** #include <iostream>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type im1(oln::load(IMG_IN "lena256.pgm"));
+      **   im1 = oln::morpho::fast::card_opening(im1, oln::neighb_c4(), 200);
+      **   oln::save(im1, IMG_OUT "oln_morpho_fast_card_opening.ppm");
+      **   return  0;
+      ** }
+      ** \endcode
+      ** \image html lena256.png
+      ** \image latex lena256.png
+      ** =>
+      ** \image html oln_morpho_fast_card_opening.png
+      ** \image latex oln_morpho_fast_card_opening.png
+      **
+      */
+      xxx_opening_decl(card);
 
-      xxx_opening_decl(volume);
-      xxx_closing_decl(volume);
+      /*!
+      ** \brief Perform an integral closing.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/attribute_closing_opening.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** #include <iostream>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type im1(oln::load(IMG_IN "lena256.pgm"));
+      **   im1 = oln::morpho::fast::integral_closing(im1, oln::neighb_c4(), 200);
+      **   oln::save(im1, IMG_OUT "olena_attribute_closing_opening_hh_integral_clo.ppm");
+      **   return  0;
+      ** }
+      ** \endcode
+      ** \image html lena256.png
+      ** \image latex lena256.png
+      ** =>
+      ** \image html olena_attribute_closing_opening_hh_integral_clo.png
+      ** \image latex olena_attribute_closing_opening_hh_integral_clo.png
+      **
+      */
+      xxx_closing_decl(integral);
+
+      /*!
+      ** \brief Perform an integral opening.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/attribute_closing_opening.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** #include <iostream>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type im1(oln::load(IMG_IN "lena256.pgm"));
+      **   im1 = oln::morpho::fast::integral_opening(im1, oln::neighb_c4(), 200);
+      **   oln::save(im1, IMG_OUT "olena_attribute_closing_opening_hh_integral_op.ppm");
+      **   return  0;
+      ** }
+      ** \endcode
+      ** \image html lena256.png
+      ** \image latex lena256.png
+      ** =>
+      ** \image html olena_attribute_closing_opening_hh_integral_op.png
+      ** \image latex olena_attribute_closing_opening_hh_integral_op.png
+      **
+      */
+      xxx_opening_decl(integral);
+
+      /*!
+      ** \brief Perform a height closing.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/attribute_closing_opening.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** #include <iostream>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type im1(oln::load(IMG_IN "lena256.pgm"));
+      **   im1 = oln::morpho::fast::height_opening(im1, oln::neighb_c4(), 5);
+      **   oln::save(im1, IMG_OUT "olena_attribute_closing_opening_hh_height_op.ppm");
+      **   return  0;
+      ** }
+      ** \endcode
+      ** \image html lena256.png
+      ** \image latex lena256.png
+      ** =>
+      ** \image html olena_attribute_closing_opening_hh_height_op.png
+      ** \image latex olena_attribute_closing_opening_hh_height_op.png
+      **
+      */
       xxx_opening_decl(height);
+
+      /*!
+      ** \brief Perform a height closing.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/attribute_closing_opening.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** #include <iostream>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type im1(oln::load(IMG_IN "lena256.pgm"));
+      **   im1 = oln::morpho::fast::height_closing(im1, oln::neighb_c4(), 5);
+      **   oln::save(im1, IMG_OUT "olena_attribute_closing_opening_hh_height_clo.ppm");
+      **   return  0;
+      ** }
+      ** \endcode
+      ** \image html lena256.png
+      ** \image latex lena256.png
+      ** =>
+      ** \image html olena_attribute_closing_opening_hh_height_clo.png
+      ** \image latex olena_attribute_closing_opening_hh_height_clo.png
+      **
+      */
       xxx_closing_decl(height);
       xxx_opening_decl(maxvalue);
       xxx_closing_decl(maxvalue);
       xxx_opening_decl(minvalue);
       xxx_closing_decl(minvalue);
-      xxx_opening_im_decl(disk);
-      xxx_closing_im_decl(disk);
+      xxx_opening_im_decl(ball);
+      xxx_closing_im_decl(ball);
       xxx_opening_im_decl(dist);
       xxx_closing_im_decl(dist);
-      xxx_closing_im_decl(square);
-      xxx_opening_im_decl(square);
-      xxx_closing_im_decl(rectangle);
-      xxx_opening_im_decl(rectangle);
+      xxx_closing_im_decl(cube);
+      xxx_opening_im_decl(cube);
+      xxx_closing_im_decl(box);
+      xxx_opening_im_decl(box);
 
     } // !fast
   } // !morpho

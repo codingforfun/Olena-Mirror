@@ -194,24 +194,24 @@ T##_closing(const abstract::image<I>& input,					\
       return tarjan_map<T##_type<I>, I, N>(true, input, ng, lambda, attr_env_type(T##_type<I>)()); \
     }
 
-      xxx_opening_map_decl(area);
-      xxx_closing_map_decl(area);
-      xxx_opening_map_decl(volume);
-      xxx_closing_map_decl(volume);
+      xxx_opening_map_decl(card);
+      xxx_closing_map_decl(card);
+      xxx_opening_map_decl(integral);
+      xxx_closing_map_decl(integral);
       xxx_opening_map_decl(height);
       xxx_closing_map_decl(height);
       xxx_opening_map_decl(maxvalue);
       xxx_closing_map_decl(maxvalue);
       xxx_opening_map_decl(minvalue);
       xxx_closing_map_decl(minvalue);
-      xxx_opening_im_map_decl(disk);
-      xxx_closing_im_map_decl(disk);
+      xxx_opening_im_map_decl(ball);
+      xxx_closing_im_map_decl(ball);
       xxx_opening_im_map_decl(dist);
       xxx_closing_im_map_decl(dist);
-      xxx_closing_im_map_decl(square);
-      xxx_opening_im_map_decl(square);
-      xxx_closing_im_map_decl(rectangle);
-      xxx_opening_im_map_decl(rectangle);
+      xxx_closing_im_map_decl(cube);
+      xxx_opening_im_map_decl(cube);
+      xxx_closing_im_map_decl(box);
+      xxx_opening_im_map_decl(box);
 
 
     } // end of namespace slow

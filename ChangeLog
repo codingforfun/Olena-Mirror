@@ -1,3 +1,13 @@
+2004-03-08  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* NEWS: Correct explanations on how to write some doc.
+	* configure.ac: Work on doc configuration.
+
+2004-02-24  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* NEWS: Describe new way to document.
+	* configure.ac: Add configuration files for doc.
+
 2004-02-10  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* NEWS: Describe behavior hierarchy.

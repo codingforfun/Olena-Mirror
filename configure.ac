@@ -231,6 +231,15 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
 ### Stuff pertaining to the documentation
 ###
 
+### The reference manual uses Doxygen
+### FIXME: could be much better.
+
+AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
+## if test -z "$DOXYGEN"; then
+##   AC_MSG_WARN([`doxygen' not found -- `doxygen' must be installed to generate the documentation])
+
+## fi
+
 ### The documentation tree is both a component...
 
   OLN_COMPONENT([doc],
@@ -249,7 +258,10 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
 	          [oln_cv_build_ref],
 	          [the Olena reference manuals],
 	          [OLN_DOC],
-		  [doc/ref/Makefile],
+		  [doc/ref/Makefile
+                   doc/ref/doxygen.config
+                   doc/ref/out/exdoc.config
+		   doc/ref/exdoc.mk],
     [dnl Configuration for the manuals directory.
 
      AC_ARG_VAR([TAR], [the tape archiver program])
@@ -267,7 +279,9 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
      AC_ARG_VAR([EPSTOPDF], [program to convert Encapsulated Postscript images to PDF])
      AC_CHECK_PROGS([EPSTOPDF], [epstopdf], [$am_aux_dir/missing epstopdf])
 
-    ], [ref])dnl End of OLN_COMPONENT([doc/ref])
+   ], [ref])dnl End of OLN_COMPONENT([doc/ref])
+
+
 
 ### The development manuals directory is a component.
 
@@ -350,7 +364,7 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
 
       AC_CHECK_SWIG13 dnl definition in oln-local.m4
 
-     # We cannot enable swilena without swig because we need the dynamic 
+     # We cannot enable swilena without swig because we need the dynamic
      # library (swig{py,rb}).
      if test "x$oln_cv_recent_swig" != "xyes"; then
        AC_MSG_ERROR([You need swig >= 1.3 to compile swilena. You can disable swilena by specifying --without-swilena to configure.])
@@ -373,10 +387,10 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
 	 save_CPPFLAGS=$CPPFLAGS
 
 	 AC_ARG_VAR([PYTHON_CPPFLAGS], [Path to Python.h])
-	 AC_ARG_WITH([python-includedir], [Include path for Python.h], 
+	 AC_ARG_WITH([python-includedir], [Include path for Python.h],
 	             [PYTHON_CPPFLAGS="-I $withval"],
                      [PYTHON_CPPFLAGS="-I/usr/include/python$PYTHON_VERSION"])
-	
+
 	 CPPFLAGS="$CPPFLAGS $PYTHON_CPPFLAGS"
          AC_CHECK_HEADERS([Python.h],,
 	                  AC_MSG_ERROR(
@@ -399,10 +413,10 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
          fi
 
 	 AC_ARG_VAR([RUBY_CPPFLAGS], [Path to ruby.h])
-	 AC_ARG_WITH([ruby-includedir], [Include path for ruby.h], 
+	 AC_ARG_WITH([ruby-includedir], [Include path for ruby.h],
 	             [RUBY_CPPFLAGS="-I$withval"],
                      [RUBY_CPPFLAGS="-I/usr/lib/ruby/1.6/i386-linux"])
-	
+
 	 CPPFLAGS="$CPPFLAGS $RUBY_CPPFLAGS"
          AC_CHECK_HEADERS([ruby.h],,
 	                  AC_MSG_ERROR(

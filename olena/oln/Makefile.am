@@ -39,6 +39,7 @@ nobase_oln_HEADERS =				\
   convol/fast_gaussian.hxx			\
   convol/fast_gaussian_coefficient.hh		\
   core/abstract/binary_image.hh			\
+  core/abstract/behavior.hh			\
   core/abstract/dpoint.hh			\
   core/abstract/image.hh			\
   core/abstract/image_size.hh			\
@@ -59,6 +60,7 @@ nobase_oln_HEADERS =				\
   core/abstract/window.hh			\
   core/abstract/window_base.hh			\
   core/abstract/windownd.hh			\
+  core/behavior.hh				\
   core/accum.hh					\
   core/apply.hh					\
   core/box.hh					\
@@ -145,6 +147,9 @@ nobase_oln_HEADERS =				\
   level/threshold.hh				\
   math/macros.hh				\
   morpho/attribute_closing_opening.hh		\
+  morpho/attribute_closing_opening_map.hxx	\
+  morpho/attribute_closing_opening_map.hh	\
+  morpho/attributes.hh				\
   morpho/attribute_union_find.hh		\
   morpho/closing.hh				\
   morpho/closing.inc				\
@@ -202,4 +207,5 @@ nobase_oln_HEADERS =				\
   utils/copy.hh					\
   utils/histogram.hh				\
   utils/stat.hh					\
+  utils/special_points.hh			\
   utils/timer.hh

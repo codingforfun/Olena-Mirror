@@ -31,6 +31,10 @@
 # include <mlc/type.hh>
 
 namespace oln {
+  /*! \class mirror_behavior
+  **
+  ** make the border be a mirror of the image
+  */
   // mirror the image content into the border
   template <class Exact = mlc::final>
   class mirror_behavior:

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -41,40 +41,7 @@ namespace oln {
     namespace fast {
       namespace tarjan {
 
-	template< class T>
-	struct T_attribute
-	{
-	  T_attribute():value(1){}
-
-	  T_attribute( const T v):value(v){}
-
-
-	  T_attribute(const T_attribute& rhs){ value = rhs.value;}
-
-	  T_attribute
-	  operator+(const T_attribute & rhs) const
-	  {
-	    return T_attribute(value + rhs.value);
-	  }
-
-	  T_attribute&
-	  operator=(const T_attribute & rhs)
-	  {
-	    value = rhs.value;
-	    return *this;
-	  }
-
-	  const bool
-	  operator<(const T_attribute & rhs) const
-	  {
-	    return value < rhs.value;
-	  }
-
-	  T value;
-
-	};
-
-	template<class T, class ATTRIBUTE, class Env = NullEnv>
+	template<class T, class ATTRIBUTE, class Env = attr_env_type(ATTRIBUTE)>
 	struct tarjan_set
 	{
 	  typedef oln_point_type(T) point_type;
