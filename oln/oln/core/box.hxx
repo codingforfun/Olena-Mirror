@@ -51,6 +51,42 @@ namespace oln {
 	inner_boxes_mean_dim_[i] = inner[i];
 	mass_[i] = mass[i];
       }
+    not_consistent_ = true;
+    this->make_consistent();
+  }
+
+  template <class PointType>
+  box<PointType>::box(const box<PointType>& other) :
+    top_(other.top_),
+    bottom_(other.bottom_),
+    card_(other.card_),
+    box_card_(other.box_card_)
+  {
+    for (unsigned i = 0; i < d; ++i)
+      {
+	inner_boxes_mean_dim_[i] = other.inner_boxes_mean_dim_[i];
+	mass_[i] = other.mass_[i];
+      }
+    not_consistent_ = true;
+    this->make_consistent();    
+  }
+  
+  template <class PointType>
+  box<PointType>&
+  box<PointType>::operator=(const box<PointType>& other) 
+  {
+    top_ = other.top_;
+    bottom_ = other.bottom_;
+    card_ = other.card_;
+    box_card_ = other.box_card_;
+    for (unsigned i = 0; i < d; ++i)
+      {
+	inner_boxes_mean_dim_[i] = other.inner_boxes_mean_dim_[i];
+	mass_[i] = other.mass_[i];
+      }
+    not_consistent_ = true;
+    this->make_consistent();    
+    return *this;
   }
 
   template <class PointType>
@@ -67,6 +103,8 @@ namespace oln {
 	mass_[i] = 0;
 	inner_boxes_mean_dim_[i] = 0;
       }
+    not_consistent_ = false;
+    this->make_consistent();
   }
 
   template <class PointType>
@@ -128,8 +166,8 @@ namespace oln {
   bool box<PointType>::overlay(unsigned dim, const box<PointType>& b) const
   {
     return 
-      ((top().nth(dim) > b.bottom().nth(dim))
-       && (bottom().nth(dim) < b.top().nth(dim)));
+      ((top().nth(dim) >= b.bottom().nth(dim))
+       && (bottom().nth(dim) <= b.top().nth(dim)));
   }
 
   template <class PointType>
@@ -202,6 +240,12 @@ namespace oln {
   unsigned box<PointType>::width() const
   {
     return dimension_.nth(1);
+  }
+
+  template <class PointType>
+  unsigned box<PointType>::dimension(unsigned i) const
+  {
+    return dimension_.nth(i);
   }
 
   template <class PointType>

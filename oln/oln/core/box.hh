@@ -49,6 +49,8 @@ namespace oln {
 	unsigned	box_card,
 	const float*	inner,
 	const float*	mass);
+    box(const box& other);
+    box& operator=(const box& other);
     unsigned    dim() const;
     void	add(point p);
     void	add(const box<PointType>& p);
@@ -64,6 +66,7 @@ namespace oln {
     point	bottom() const;
     unsigned	width() const;
     unsigned	height() const;
+    unsigned    dimension(unsigned dim) const;
     unsigned	integrale() const;
     float	inner_boxes_mean_dim(unsigned i) const;
     unsigned	volume() const;

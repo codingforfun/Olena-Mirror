@@ -1,3 +1,15 @@
+2003-02-03  Yann Régis-Gianas  <yann@lrde.epita.fr>
+
+	* oln/core/box.hh: 
+		- (operator=, copy ctor): New.
+		- (dimension): New.
+	* oln/core/box.hxx: 
+		- Implement them,
+		- (overlay): Make less non-strict.
+	* oln/core/graph.hh (edge_of), (linked): New.
+	* oln/core/graph.hxx: Implement them.	
+	* oln/core/internal/graph_impl.hxx: Add postcondition.
+
 2003-01-27  Yann Régis-Gianas  <yann@lrde.epita.fr>
 
 	* oln/core/box.hxx (add(box)): Fix a bug.

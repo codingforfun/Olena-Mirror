@@ -117,6 +117,11 @@ namespace oln {
     hnode_t		from(hedge_t e1) const;
     // Return the "second" node of an edge. (See "from").
     hnode_t		to(hedge_t e2) const;
+    // Return an edge between n1 and n2, if such an edge already
+    // exists, return its handler.
+    hedge_t		edge_of(hnode_t from, hnode_t to);
+    // Return true if there exists an edge between from and to.
+    bool		linked(hnode_t from, hnode_t to);
     // Set of edges that are linked to a node.
     edges_of_node_set_t edges_of(hnode_t n) const;
     // Node value accessor (mutable version).

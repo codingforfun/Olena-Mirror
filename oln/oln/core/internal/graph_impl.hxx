@@ -184,9 +184,10 @@ namespace oln {
 	}
       hnode_t n = removed_nodes_.front();
       removed_nodes_.pop_front();
-      nodes_[n].edges.clear();
       assertion(n < int(nodes_.size()));
       nodes_[n] = t;
+      nodes_[n].edges.clear();
+      postcondition(hold(n));
       return n;
     }
 
@@ -197,11 +198,13 @@ namespace oln {
       if (!hold(n))
 	return;
       const decorated_node_value_t& v = nodes_[n];
-      for (typename edges_of_node_set_t::const_iterator e = v.edges.begin();
-	   e != v.edges.end();
+      edges_of_node_set_t tmp = v.edges;
+      for (typename edges_of_node_set_t::const_iterator e = tmp.begin();
+	   e != tmp.end();
 	   ++e)
 	this->del_edge(*e);
       removed_nodes_.push_front(n);
+      postcondition(! hold(n));
     }
 
     template <class NodeValue, class EdgeValue>
@@ -226,6 +229,7 @@ namespace oln {
 	}
       nodes_[h1].edges.push_back(e);
       nodes_[h2].edges.push_back(e);
+      postcondition(hold(e));
       return e;
     }
 
@@ -236,10 +240,11 @@ namespace oln {
       if (!hold(e))
 	return;
       precondition(hold(e));
-      // const decorated_edge_value_t& ev = edges_[e];
-      //      nodes_[ev.from()].edges.remove(e);
-      // nodes_[ev.to()].edges.remove(e);
+      const decorated_edge_value_t& ev = edges_[e];
+      nodes_[ev.from()].edges.remove(e);
+      nodes_[ev.to()].edges.remove(e);
       removed_edges_.push_front(e);
+      postcondition(! hold(e));
     }
 
     template <class NodeValue, class EdgeValue>
@@ -310,20 +315,43 @@ namespace oln {
     bool			
     heavy_graph<NodeValue, EdgeValue>::hold(hnode_t n) const
     {
-      return 
+      bool ret =  
 	((std::find(removed_nodes_.begin(), removed_nodes_.end(), n) 
 	 == removed_nodes_.end())
 	&& (n < int(nodes_.size())));
+      if (ret == false)
+	{
+	  for (int i = 0; i < edges_.size(); ++i)
+	    if (std::find(removed_edges_.begin(), removed_edges_.end(), 
+			  hedge_t(i)) 
+		 == removed_edges_.end())
+	      postcondition (((edges_[i].from() != n) &&
+			      (edges_[i].to() != n)));
+		
+	}
+      return ret;
     }
 
     template <class NodeValue, class EdgeValue>
     bool			
     heavy_graph<NodeValue, EdgeValue>::hold(hedge_t n) const
     {
-      return 
+      bool ret =  
 	((std::find(removed_edges_.begin(), removed_edges_.end(), n) 
 	 == removed_edges_.end())
 	&& (n < int(edges_.size())));
+      if (ret == false)
+	{
+	  for (int i = 0; i < nodes_.size(); ++i)
+	    if (std::find(removed_nodes_.begin(), removed_nodes_.end(), 
+			  hnode_t(i)) 
+	     == removed_nodes_.end())
+	      postcondition(std::find(nodes_[i].edges.begin(), 
+				      nodes_[i].edges.end(),
+				      n) ==
+			    nodes_[i].edges.end());
+	}
+      return ret;
     }
 
     template <class NodeValue, class EdgeValue>

@@ -110,6 +110,29 @@ namespace oln {
   }
 
   template <class U>
+  typename graph<U>::hedge_t graph<U>::edge_of(hnode_t from, hnode_t to)
+  {
+    const edges_of_node_set_t& edges = self().edges_of(from);
+    for (typename edges_of_node_set_t::const_iterator e = edges.begin();
+	 e != edges.end(); ++e)
+      if ((self().to(*e) == to) || (self().from(*e) == to))
+	return *e;
+    return self().add_edge(from, to);
+  }
+
+  template <class U>
+  bool
+  graph<U>::linked(hnode_t from, hnode_t to)
+  {
+    const edges_of_node_set_t& edges = self().edges_of(from);
+    for (typename edges_of_node_set_t::const_iterator e = edges.begin();
+	 e != edges.end(); ++e)
+      if ((self().to(*e) == to) || (self().from(*e) == to))
+	return true;
+    return false;
+  }
+
+  template <class U>
   void	   graph<U>::del_edge(hedge_t e)
   {
     return self().del_edge(e);
