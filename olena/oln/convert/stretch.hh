@@ -40,7 +40,7 @@ namespace oln {
 
     template<class Output, class Exact = mlc::final>
     struct stretch 
-      : public abstract::conversion_to_type<Output, typename mlc::exact_vt<force<Output, Exact>, Exact>::ret >
+      : public abstract::conversion_to_type<Output, typename mlc::exact_vt<stretch<Output, Exact>, Exact>::ret >
     {  
       template< class Input >
       Output doit(const Input& v) const {

@@ -44,6 +44,8 @@
 
 namespace oln {
   
+  using namespace ntg;
+
   namespace convert {
 
     template <unsigned inbits, unsigned outbits>

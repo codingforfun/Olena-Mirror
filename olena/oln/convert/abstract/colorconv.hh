@@ -45,8 +45,8 @@ namespace oln {
 		template<unsigned> class ocolor,
 		class Exact = mlc::final >
       struct color_conversion : 
-	public abstract::conversion_from_type_to_type< color<icomps, iqbits, icolor>, 
-						       color<ocomps, oqbits, ocolor>, 
+	public abstract::conversion_from_type_to_type< ntg::color<icomps, iqbits, icolor>, 
+						       ntg::color<ocomps, oqbits, ocolor>, 
 						       typename mlc::exact_vt<color_conversion<icomps, iqbits, icolor, ocomps, oqbits, ocolor, Exact>, Exact>::ret >
       {
       };

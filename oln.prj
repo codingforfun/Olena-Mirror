@@ -1,11 +1,11 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 76)
-(Parent-Version oln 2003paradigm 75)
+(Project-Version oln 2003paradigm 77)
+(Parent-Version oln 2003paradigm 76)
 (Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Thu, 31 Jul 2003 17:05:02 +0200")
+(Checkin-Time "Thu, 31 Jul 2003 17:33:04 +0200")
 (Checkin-Login reda)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -95,7 +95,7 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.9 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.57 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.58 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.11 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.6 640))
@@ -155,7 +155,7 @@
   (olena/oln/config/system.hh (oln/7_system.hh 1.17 640))
   (olena/oln/convert/basics.hh (oln/23_basics.hh 1.5 640))
   (olena/oln/convert/bound.hh (oln/22_bound.hh 1.9 640))
-  (olena/oln/convert/abstract/colorconv.hh (oln/18_colorconv. 1.9 640))
+  (olena/oln/convert/abstract/colorconv.hh (oln/18_colorconv. 1.10 640))
   (olena/oln/convert/conversion.hh (oln/21_conversion 1.14 644))
   (olena/oln/convert/conversion_ng_se.hh (oln/e/24_conversion 1.8 640))
   (olena/oln/convert/force.hh (oln/20_force.hh 1.10 640))
@@ -164,10 +164,10 @@
   (olena/oln/convert/nrgbhsv.hh (oln/11_nrgbhsv.hh 1.13 640))
   (olena/oln/convert/nrgbxyz.hh (oln/16_nrgbxyz.hh 1.10 640))
   (olena/oln/convert/nrgbyiq.hh (oln/14_nrgbyiq.hh 1.10 640))
-  (olena/oln/convert/nrgbyuv.hh (oln/13_nrgbyuv.hh 1.10 640))
+  (olena/oln/convert/nrgbyuv.hh (oln/13_nrgbyuv.hh 1.11 640))
   (olena/oln/convert/rgbnrgb.hh (oln/17_rgbnrgb.hh 1.10 640))
   (olena/oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.10 640))
-  (olena/oln/convert/stretch.hh (oln/f/51_stretch.hh 1.11 640))
+  (olena/oln/convert/stretch.hh (oln/f/51_stretch.hh 1.12 640))
   (olena/oln/convol/convolution.hh (oln/f/39_convolutio 1.4.1.4.1.4 640))
   (olena/oln/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.5.1.4 640))
   (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.5 640))
