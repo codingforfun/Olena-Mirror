@@ -115,6 +115,7 @@ namespace oln {
     ** \arg arr The array of elements.
     ** \todo FIXME: this constructor is not in w_window1d.hh nor w_window3d.hh.
     ** Is it really useful ?
+    ** This constructor is used to build a chamfer distance.
     */
     template<class I, class T2>
     w_window2d(const mlc::array2d<I, T2 >& arr) :

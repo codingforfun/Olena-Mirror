@@ -375,7 +375,6 @@ top_hat_contrast_op(const convert::abstract::conversion<C, B>& c,
 ** \image html oln_morpho_fast_top_hat_contrast_op_overload.png
 ** \image latex oln_morpho_fast_top_hat_contrast_op_overload.png
 **
-** \todo FIXME: Seems not to work with convert::force converter.
 */
 template<class I, class E>
 oln_concrete_type(I)

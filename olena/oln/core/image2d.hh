@@ -46,7 +46,7 @@ namespace oln {
 
   /*! \class image_id<image2d<T, Exact> >
   **
-  ** Helper class used by image_traits to retrieve 
+  ** Helper class used by image_traits to retrieve
   ** the typedef associated to an image.
   */
 
@@ -64,7 +64,7 @@ namespace oln {
   ** Helper class usefull to retrieve all the type
   ** relative to an image.
   */
-  
+
   template<class T, class Exact>
   struct image_traits<image2d<T, Exact> >:
     public image_traits<image<image_id<image2d<T, Exact> >::dim,
@@ -80,9 +80,9 @@ namespace oln {
   **
   ** To instantiate an image2d with oln::rgb_8 as value_type,
   ** one can write:\n
-  ** oln::image2d<ntg::rgb_8> t = load("img.ppm"); 
+  ** oln::image2d<ntg::rgb_8> t = load("img.ppm");
   */
-  
+
   template<class T, class Exact>
   class image2d:
     public image<image_id<image2d<T, Exact> >::dim,
@@ -104,17 +104,17 @@ namespace oln {
 
     friend class abstract::image<exact_type>;
 
-    
+
     image2d() :
       super_type()
     {
       mlc_init_static_hierarchy(Exact);
     }
 
-    
+
     /*! \brief Allocate memory to contain
     ** an image2d with \a ncols column and
-    ** \a nrows rows plus a border width 
+    ** \a nrows rows plus a border width
     ** equal to 2 by default.
     */
 
@@ -123,11 +123,11 @@ namespace oln {
     {
       mlc_init_static_hierarchy(Exact);
     }
-    
+
     /*! \brief Allocate memory to contain an
     ** image2d with a size equal to \a size.
     */
-        
+
     image2d(const image2d_size& size) :
       super_type(new impl_type(size))
     {
@@ -135,13 +135,13 @@ namespace oln {
     }
 
     /*! \brief Build a new image2d by performing
-    ** a shallow copy of \a rhs, the points are 
+    ** a shallow copy of \a rhs, the points are
     ** not duplicated, but shared between \a rhs
     ** and the new image.
     **
     ** \see abstract::image::clone()
     */
-    
+
     image2d(self_type& rhs) : // shallow copy
       super_type(rhs)
     {
@@ -149,13 +149,13 @@ namespace oln {
     }
 
     // io
-    /*! \brief Perform a shallow copy from \a r to 
+    /*! \brief Perform a shallow copy from \a r to
     ** the new image, the points are not duplicated,
     ** but shared between the two images.
     **
     ** \see abstract::image::clone()
     */
-    
+
     image2d(const io::internal::anything& r)
       : super_type()
     {
@@ -169,7 +169,7 @@ namespace oln {
     **
     ** \see abstract::image::clone()
     */
-    
+
     image2d&
     operator=(const io::internal::anything& r)
     {
@@ -182,7 +182,7 @@ namespace oln {
     **
     ** \see abstract::image::clone()
     */
-    
+
     exact_type&
     operator=(self_type rhs)
     {
@@ -199,7 +199,7 @@ namespace oln {
     }
 
     /// Define ret equal to image2d<U>.
-    
+
     template<class U>
     struct mute
     {
@@ -209,26 +209,18 @@ namespace oln {
     image2d(const self_type& rhs); // w/o impl
 
   protected:
-    
-    /*! \brief Return a deep copy of the current image.
-    **
-    ** \warning It may be really dangerous to instantiate a self_type
-    ** and not an exact_type if Exact != mlc::final.
-    **
-    ** \todo FIXME: It may be really dangerous to instantiate a self_type
-    ** and not an exact_type is Exact != mlc::final.
-    */
-    
-    self_type
-    clone_() const // deep copy
+
+    /// Return a deep copy of the current image.
+    exact_type
+    clone_() const
     {
-      self_type output(this->nrows(), this->ncols(), this->border());
+      exact_type output(this->nrows(), this->ncols(), this->border());
       clone_to(output.impl());
       return output;
     }
 
   };
-  
+
   /*! \class dim_traits<2, T, Exact>
   **
   ** Define img_type equal to image2d<T, Exact>.

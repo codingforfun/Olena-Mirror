@@ -1,3 +1,13 @@
+2004-04-02  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/core/image1d.hh: Return exact_type in clone_.
+	* olena/oln/core/image2d.hh: Likewise.
+	* olena/oln/core/image3d.hh: Likewise.
+	* olena/oln/core/neighborhood2d.hh: Remove a FIXME. Remove operator=.
+	* olena/oln/core/window2d.hh: Likewise.
+	* olena/oln/core/w_window2d.hh: Add comments.
+	* olena/oln/level/cc.hh: Remove headers.
+	* olena/oln/morpho/top_hat.inc: Remove a FIXME.
+
 2004-03-31  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* oln/convert/stretch.hh: Add header inclusion.
@@ -15,10 +25,10 @@
 	* olena/oln/morpher/color_morpher.hh: Likewise.
 	* olena/tests/morpher/tests/compose_morph: New file, contains
 	morpher composition tests.
-	* olena/tests/morpher/tests/sq_morph: New file, contains sub quantifying
-	morpher tests.
-	* olena/tests/morpher/tests/color_morph: New file, contains color morpher
-	tests.
+	* olena/tests/morpher/tests/sq_morph: New file, contains sub
+	quantifying morpher tests.
+	* olena/tests/morpher/tests/color_morph: New file, contains color
+	morpher	tests.
 	* olena/tests/morpher/tests/sq_morph_8: Remove file.
 	* olena/tests/morpher/tests/sq_morph_7: Likewise.
 	* olena/tests/morpher/tests/sq_morph_6: Likewise.
