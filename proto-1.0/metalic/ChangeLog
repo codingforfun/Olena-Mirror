@@ -1,3 +1,7 @@
+2005-04-06  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* mlc/int.hh: New file.
+
 2005-04-06  Roland Levillain  <roland@lrde.epita.fr>
 
 	Introduce Metalic abstractions for unary and binary functions.
