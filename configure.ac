@@ -44,7 +44,11 @@ OLN_COLLECTION([OLN_TOP],
 
 ### The testsuite is a component.
 
-    OLN_COMPONENT([oln/tests], [testsuite], [oln_cv_build_tests], [the testsuite], [OLN_SRC], 
+    OLN_COMPONENT([oln/tests], 
+		  [testsuite], 
+		  [oln_cv_build_tests], 
+		  [the testsuite], 
+		  [OLN_SRC], 
 	          [oln/tests/Makefile
                    oln/tests/check/defs
 	           oln/tests/check/Makefile],
@@ -85,14 +89,22 @@ OLN_COLLECTION([OLN_TOP],
 
 ### The documentation tree is both a component...
 
-  OLN_COMPONENT([doc], [doc], [oln_cv_build_doc], [the documentation], [OLN_TOP],
+  OLN_COMPONENT([doc], 
+	        [doc], 
+	        [oln_cv_build_doc], 
+	        [the documentation], 
+	        [OLN_TOP],
 	        [doc/Makefile],
   [OLN_COLLECTION([OLN_DOC], dnl ... and a collection.
   [dnl
 
 ### The manuals directory is a component.
 
-    OLN_COMPONENT([doc/doc], [manuals], [oln_cv_build_ref], [the Olena manuals], [OLN_DOC], 
+    OLN_COMPONENT([doc/doc], 
+	          [manuals], 
+	          [oln_cv_build_ref], 
+	          [the Olena manuals], 
+	          [OLN_DOC], 
 		  [doc/doc/Makefile],
     [dnl Configuration for the manuals directory.
 
@@ -108,7 +120,11 @@ OLN_COLLECTION([OLN_TOP],
 
 ### The demonstration programs are a component.
 
-    OLN_COMPONENT([doc/demo], [demo], [oln_cv_build_demo], [the demonstration programs], [OLN_DOC], 
+    OLN_COMPONENT([doc/demo], 
+	          [demo], 
+	          [oln_cv_build_demo], 
+	          [the demonstration programs], 
+	          [OLN_DOC], 
 	          [doc/demo/Makefile],
                   [], [demo])
 
@@ -120,19 +136,31 @@ OLN_COLLECTION([OLN_TOP],
 ###
 
 ### The tools tree is both a component...
-  OLN_COMPONENT([tools], [tools], [oln_cv_build_tools], [the run-time tools], [OLN_TOP], 
+  OLN_COMPONENT([tools], 
+	        [tools], 
+	        [oln_cv_build_tools], 
+	        [the run-time tools], 
+	        [OLN_TOP], 
                 [tools/Makefile tools/lib/Makefile],
   [OLN_COLLECTION([OLN_TOOLS],dnl ... and a collection.
   [dnl 
 
 ### The utilities tree is both a component...
-    OLN_COMPONENT([tools/utilities], [utilities], [oln_cv_build_utilities], [the command-line utilities], [OLN_TOOLS], 
+    OLN_COMPONENT([tools/utilities], 
+	          [utilities], 
+	          [oln_cv_build_utilities], 
+	          [the command-line utilities], 
+	          [OLN_TOOLS], 
                   [tools/utilities/Makefile],
     [OLN_COLLECTION([OLN_UTILITIES], dnl ... and a collection.
     [dnl
 
 ### The morpho utilities are a component.
-      OLN_COMPONENT([tools/utilities/morpho], [morpho-utilities], [oln_cv_build_morpho_utils], [the morpho utilities], [OLN_UTILITIES], 
+      OLN_COMPONENT([tools/utilities/morpho], 
+	            [morpho-utilities], 
+	            [oln_cv_build_morpho_utils], 
+	            [the morpho utilities], 
+	            [OLN_UTILITIES], 
 	            [tools/utilities/morpho/Makefile], 
                     [], [morpho])
 
