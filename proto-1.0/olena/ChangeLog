@@ -1,5 +1,10 @@
 2005-03-19  Damien Thivolle  <damien@lrde.epita.fr>
 
+	* Makefile.am: Add `img' to the subdirectories list.
+	* img/Makefile.am: Declare images to distribute.
+
+2005-03-19  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* tests/level: New.
 	* tests/level/tests: New.
 	* tests/level/tests/compare: New.
