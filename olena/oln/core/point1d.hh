@@ -58,8 +58,6 @@ namespace oln {
     point1d();
 
     point1d(coord col);
-
-    const point1d& point_ref() const;
     
     coord col() const;
     

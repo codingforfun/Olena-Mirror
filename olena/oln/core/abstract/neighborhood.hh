@@ -29,6 +29,7 @@
 # define OLENA_CORE_ABSTRACT_NEIGHBORHOOD_HH
 
 # include <mlc/type.hh>
+# include <oln/core/abstract/dpoint.hh>
 
 namespace oln 
 {
@@ -42,7 +43,7 @@ namespace oln
   template<class Exact>
   struct struct_elt_traits<abstract::neighborhood<Exact> > 
   {
-
+    typedef abstract::neighborhood<Exact> abstract_type;
   };
 
   namespace abstract 
@@ -58,6 +59,7 @@ namespace oln
       typedef typename struct_elt_traits<Exact>::win_type win_type;
       
       typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
+      typedef typename struct_elt_traits<Exact>::abstract_type abstract_type;
       enum { dim = struct_elt_traits<Exact>::dim };
  
       static std::string name()
@@ -65,9 +67,9 @@ namespace oln
 	return std::string("neighborhood<") + Exact::name() + ">";
       }
       
-      bool has(const dpoint_type& dp) const
+      bool has(const abstract::dpoint<dpoint_type>& dp) const
       {
-	return to_exact(this)->has_(dp);
+	return to_exact(this)->has_(to_exact(dp));
       }
       
       unsigned card() const
@@ -100,10 +102,10 @@ namespace oln
 	return to_exact(this)->at(i);
       }
 
-      exact_type& add(const dpoint_type& dp)
+      exact_type& add(const abstract::dpoint<dpoint_type>& dp)
       {
-	to_exact(this)->add_(dp);
-	return to_exact(this)->add_(-dp);
+	to_exact(this)->add_(to_exact(dp));
+	return to_exact(this)->add_(-to_exact(dp));
       }
       // obsolete
       exact_type operator-() const

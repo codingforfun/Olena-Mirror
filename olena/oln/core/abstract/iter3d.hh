@@ -100,6 +100,8 @@ namespace oln {
       const coord nrows_;
       const coord ncols_;
 
+      iter3d() : super_type(), nslices_(0), nrows_(0), ncols_(0) {}
+
       iter3d(const image3d_size& size) :
 	super_type(),
 	nslices_(size.nslices()),

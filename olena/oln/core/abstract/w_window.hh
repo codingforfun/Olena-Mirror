@@ -28,7 +28,8 @@
 #ifndef OLENA_CORE_ABSTRACT_W_WINDOW_HH
 # define OLENA_CORE_ABSTRACT_W_WINDOW_HH
 
-# include <oln/core/abstract/structelt.hh>
+# include <oln/core/abstract/struct_elt.hh>
+# include <oln/core/abstract/dpoint.hh>
 
 namespace oln 
 {
@@ -65,14 +66,14 @@ namespace oln
 	return std::string("w_window<") + Exact::name() + ">";
       }
 
-      exact_type& add(const dpoint_type& dp, const weight_type& w)
+      exact_type& add(const abstract::dpoint<dpoint_type>& dp, const weight_type& w)
       {
-	return to_exact(this)->add_(dp, w);
+	return to_exact(this)->add_(to_exact(dp), w);
       }
 
-      const weight_type& set(const dpoint_type& dp, const weight_type& weight)
+      const weight_type& set(const abstract::dpoint<dpoint_type>& dp, const weight_type& weight)
       {
-	return to_exact(this)->set_(dp, weight);
+	return to_exact(this)->set_(to_exact(dp), weight);
       }
 
     protected:

@@ -48,12 +48,6 @@ namespace oln {
     nth(1) = col;
   }
 
-  inline const point2d&
-  point2d::point_ref() const
-  {
-    return *this;
-  }
-
   inline coord
   point2d::row() const
   {

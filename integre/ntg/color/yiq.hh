@@ -42,8 +42,17 @@ namespace ntg
 
   template<unsigned icomp> struct yiq_traits;
   template<> struct yiq_traits<yiq_Y> : public interval<0,1> {};
-  template<> struct yiq_traits<yiq_I> : public interval<0,1> {};
-  template<> struct yiq_traits<yiq_Q> : public interval<0,1> {};
+  template<> struct yiq_traits<yiq_I> 
+  {
+    static const float lower_bound = -.6;
+    static const float upper_bound = .6;
+  };
+
+  template<> struct yiq_traits<yiq_Q> 
+  {
+    static const float lower_bound = -.6;
+    static const float upper_bound = .6;
+  };
 
   typedef color<3,8,yiq_traits>  yiq_8;
   typedef color<3,16,yiq_traits> yiq_16;

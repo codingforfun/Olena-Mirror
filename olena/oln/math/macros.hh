@@ -40,6 +40,10 @@ namespace oln {
     // FIXME: I'm not proud of the code below
     // I think it could be better...
 
+    // FIXME: this code sounds really odd. Why does the operator()
+    // take value<Self> instead of Self directly ?
+
+    // FIXME: Self should be renamed into Exact.
 
     // abs
 
@@ -131,6 +135,5 @@ namespace oln {
   } // end of math
 
 } // end of oln
-
 
 #endif // ! OLENA_MATH_MACROS_HH

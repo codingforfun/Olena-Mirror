@@ -57,8 +57,6 @@ namespace oln {
 
     point2d(coord row, coord col);
 
-    const point2d& point_ref() const;
-
     coord row() const;
 
     coord& row();

@@ -41,6 +41,9 @@ namespace oln
   namespace abstract {
     template<class Exact>
     struct point;
+
+    template<class Exact>
+    struct dpoint;
   } // end of abstract 
 
   template<class Exact>
@@ -63,6 +66,11 @@ namespace oln
       typedef typename point_traits<Exact>::dpoint_type dpoint_type;
       enum { dim = point_traits<Exact>::dim };
       
+      const exact_type& point_ref() const
+      {
+	return to_exact(*this);
+      }
+
       coord nth(const unsigned dim) const
       {
 	return coord_[dim];
@@ -73,14 +81,14 @@ namespace oln
 	return coord_[dim];
       }
       
-      exact_type& operator+=(const dpoint_type& dp)
+      exact_type& operator+=(const abstract::dpoint<dpoint_type>& dp)
       {
-	return to_exact(this)->plus_assign_dp(dp);
+	return to_exact(this)->plus_assign_dp(to_exact(dp));
       }
 
-      exact_type& operator-=(const dpoint_type& dp)
+      exact_type& operator-=(const abstract::dpoint<dpoint_type>& dp)
       {
-	return to_exact(this)->minus_assign_dp(dp);
+	return to_exact(this)->minus_assign_dp(to_exact(dp));
       }
 
       dpoint_type operator-(const self_type& p) const
@@ -88,12 +96,12 @@ namespace oln
 	return to_exact(this)->minus_p(to_exact(p));
       }
 
-      exact_type operator+(const dpoint_type& dp) const
+      exact_type operator+(const abstract::dpoint<dpoint_type>& dp) const
       {
 	return to_exact(this)->plus_dp(to_exact(dp));
       }
 
-      exact_type operator-(const dpoint_type& dp) const
+      exact_type operator-(const abstract::dpoint<dpoint_type>& dp) const
       {
 	return to_exact(this)->minus_dp(to_exact(dp));
       }

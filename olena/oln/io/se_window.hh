@@ -25,16 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_SE_WINDOW_HXX_
-# define OLENA_IO_SE_WINDOW_HXX_
+#ifndef OLENA_IO_SE_WINDOW_HH_
+# define OLENA_IO_SE_WINDOW_HH_
 
 # include <oln/core/image2d.hh>
 # include <oln/core/window2d.hh>
 # include <oln/core/macros.hh>
 
-# include <oln/io/pnm.hh>
-# include <oln/io/image_read.hh>
-# include <oln/io/image_write.hh>
+# include <oln/io/image.hh>
 
 namespace oln {
 
@@ -49,9 +47,9 @@ namespace oln {
 	  return false;
 	if (!(im.ncols() % 2) || !(im.nrows() % 2))
 	  {
-	    std::clog << "[both image dimensions have to be odd for a"
-		      << "window2d]"
-		      << std::flush;
+	    // std::clog << "[both image dimensions have to be odd for a"
+	    //	      << "window2d]"
+	    //	      << std::flush;
 	    return false;
 	  }
 	image2d<ntg::bin>::fwd_iter_type it(im);
@@ -75,115 +73,8 @@ namespace oln {
 	return true;
       }
 
-#if 0
-
-      template<>
-      struct reader<ReadPnmPlain, window2d >
-      {
-	static const std::string& name()
-	{ static const std::string _name("win2d/P1"); return _name; }
-
-	static bool knows_ext(const std::string& ext)
-	{ return ext == "ppbm"; }
-
-	static bool read(std::istream& in, window2d& win)
-	{
-	  image2d<bin> im;
-	  if (!reader<ReadPnmPlain, image2d<bin> >::read(in, im))
-	    return false;
-	  if (!(im.ncols() % 2) || !(im.nrows() % 2))
-	    {
-	      std::clog << "[both image dimensions have to be odd for a window2d]" << std::flush;
-	      return false;
-	    }
-	  image2d<bin>::iter it(im);
-	  window2d w;
-	  for_all (it)
-	    if (im[it])
-	      w.add(dpoint2d(it) - dpoint2d(im.nrows()/2, im.ncols()/2));
-	  win = w;
-	  return true;
-	}
-      };
-
-      template<>
-      struct reader<ReadPnmRaw, window2d >
-      {
-	static const std::string& name()
-	{ static const std::string _name("win2d/P4"); return _name;	}
-
-	static bool knows_ext(const std::string& ext)
-	{ return ext == "pbm"; }
-
-	static bool read(std::istream& in, window2d& win)
-	{
-	  image2d<bin> im;
-	  if (!reader<ReadPnmRaw, image2d<bin> >::read(in, im))
-	    return false;
-	  if (!(im.ncols() % 2) || !(im.nrows() % 2))
-	    {
-	      std::clog << "[both image dimensions have to be odd for a "
-			<< "window2d]" << std::flush;
-	      return false;
-	    }
-	  image2d<bin>::iter it(im);
-	  window2d w;
-	  for_all (it)
-	    if (im[it])
-	      w.add(dpoint2d(it) - dpoint2d(im.nrows()/2, im.ncols()/2));
-	  win = w;
-	  return true;
-	}
-      };
-
-      template<>
-      struct writer<WritePnmPlain, window2d >
-      {
-	static const std::string& name()
-	{ static const std::string _name("win2d/P1"); return _name; }
-
-	static bool knows_ext(const std::string& ext)
-	{ return ext == "ppbm"; }
-
-	static bool write(std::ostream& out, const window2d& win)
-	{
-	  image2d<bin> im(win.delta()*2+1,win.delta()*2+1);
-	  image2d<bin>::iter it(im);
-	  for_all (it) im[it] = false;
-	  for (unsigned i = 0; i < win.card(); ++i)
-	    im[point2d(win.delta(),win.delta()) + win.dp(i)] = true;
-	  if (!writer<WritePnmPlain, image2d<bin> >::write(out, im))
-	    return false;
-	  return true;
-	}
-      };
-
-      template<>
-      struct writer<WritePnmRaw, window2d >
-      {
-	static const std::string& name()
-	{ static const std::string _name("win2d/P4"); return _name; }
-
-	static bool knows_ext(const std::string& ext)
-	{ return ext == "pbm"; }
-
-	static bool write(std::ostream& out, const window2d& win)
-	{
-	  image2d<bin> im(win.delta()*2+1,win.delta()*2+1);
-	  image2d<bin>::iter it(im);
-	  for_all (it) im[it] = false;
-	  for (unsigned i = 0; i < win.card(); ++i)
-	    im[point2d(win.delta(),win.delta()) + win.dp(i)] = true;
-	  if (!writer<WritePnmRaw, image2d<bin> >::write(out, im))
-	    return false;
-	  return true;
-	}
-      };
-
-#endif
-
     } // internal
   } // io
 } // oln
 
-#endif // OLENA_IO_SE_WINDOW_HXX_
+#endif // OLENA_IO_SE_WINDOW_HH_

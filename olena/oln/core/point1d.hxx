@@ -45,12 +45,6 @@ namespace oln {
     nth(0) = col;
   }
 
-  inline const point1d&
-  point1d::point_ref() const
-  {
-    return *this;
-  }
-
   inline coord
   point1d::col() const
   {

@@ -92,6 +92,8 @@ namespace oln {
       const coord nrows_;
       const coord ncols_;
 
+      iter2d() : super_type(), nrows_(0), ncols_(0) {}
+
       iter2d(const image2d_size& size) :
 	super_type(), 
 	nrows_(size.nrows()),

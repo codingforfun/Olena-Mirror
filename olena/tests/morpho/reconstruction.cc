@@ -6,7 +6,7 @@
 #include <oln/morpho/reconstruction.hh>
 #include <oln/morpho/extrema.hh>
 #include <oln/level/fill.hh>
-
+#include <ntg/all.hh>
 #include "check.hh"
 #include "data.hh"
 

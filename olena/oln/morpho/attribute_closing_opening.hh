@@ -53,13 +53,11 @@ namespace oln {
        * exi: lena256.pgm
        * exo: out.pgm
        =*/
-      template<class I_, class N_>
-      Concrete(I_) area_closing(const image<I_>& _input,
-				const neighborhood<N_>& _Ng,
-				const unsigned int area)
+      template<class I, class N>
+      Concrete(I) area_closing(const image<I>& input,
+			       const neighborhood<N>& Ng,
+			       const unsigned int area)
       {
-	Exact_cref(I, input);
-        Exact_cref(N, Ng);
 	typedef T_attribute<unsigned int> area_t;
 
 	typedef tarjan::tarjan_set<Concrete(I_), area_t > tarjan_set_t;
@@ -86,13 +84,11 @@ namespace oln {
        * exi: lena256.pgm
        * exo: out.pgm
        =*/
-      template<class I_, class N_>
-      Concrete(I_) area_opening(const image<I_>& _input,
-				const neighborhood<N_>& _Ng,
-				const unsigned int area)
+      template<class I, class N>
+      Concrete(I) area_opening(const image<I>& input,
+			       const neighborhood<N>& Ng,
+			       const unsigned int area)
       {
-	Exact_cref(I, input);
-        Exact_cref(N, Ng);
 	typedef T_attribute<unsigned int> area_t;
 
 	typedef tarjan::tarjan_set<Concrete(I_), T_attribute<unsigned int> > tarjan_set_t;

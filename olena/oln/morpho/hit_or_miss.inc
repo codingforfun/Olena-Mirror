@@ -60,16 +60,13 @@
  * exi: object.pbm
  * exo: out.pgm
 =*/
-template<class C, class I_, class E1_, class E2_>
-typename mute<I_, typename convoutput<C, Value(I_)>::ret>::ret
+template<class C, class I, class E1, class E2>
+typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 hit_or_miss(const conversion<C>& c,
-	    const image<I_>& _input,
-	    const struct_elt<E1_>& _se1,
-	    const struct_elt<E2_>& _se2)
+	    const image<I>& input,
+	    const struct_elt<E1>& se1,
+	    const struct_elt<E2>& se2)
 {
-  Exact_cref(I, input);
-  Exact_cref(E1, se1);
-  Exact_cref(E2, se2);
   mlc::eq<I::dim, E1::dim>::ensure();
   mlc::eq<E1::dim, E2::dim>::ensure();
 
@@ -137,15 +134,11 @@ Concrete(I) hit_or_miss(const image<I>& input,
  * exi: object.pbm
  * exo: out.pbm
 =*/
-template<class I_, class E1_, class E2_>
-Concrete(I_) hit_or_miss_opening(const image<I_>& _input,
-				 const struct_elt<E1_>& _se1,
-				 const struct_elt<E2_>& _se2)
+template<class I, class E1, class E2>
+Concrete(I) hit_or_miss_opening(const image<I>& input,
+				const struct_elt<E1>& se1,
+				const struct_elt<E2>& se2)
 {
-  Exact_cref(I, input);
-  Exact_cref(E1, se1);
-  Exact_cref(E2, se2);
-
   precondition(inter(se1, se2).card() == 0);
   return dilation(hit_or_miss(input, se1, se2), -se1);
 }
@@ -229,14 +222,11 @@ Concrete(I) hit_or_miss_opening_bg(const image<I>& input,
  * exi: object.pbm
  * exo: out.pbm
 =*/
-template<class I, class E1_, class E2_>
+template<class I, class E1, class E2>
 Concrete(I) hit_or_miss_closing(const image<I>& input,
-				const struct_elt<E1_>& _se1,
-				const struct_elt<E2_>& _se2)
+				const struct_elt<E1>& se1,
+				const struct_elt<E2>& se2)
 {
-  Exact_cref(E1, se1);
-  Exact_cref(E2, se2);
-
   precondition(inter(se1, se2).card() == 0);
   return level::invert(hit_or_miss_opening(level::invert(input),
 					   se1, se2));

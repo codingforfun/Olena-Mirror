@@ -28,6 +28,8 @@
 #ifndef OLENA_CORE_ABSTRACT_ITER_HH
 # define OLENA_CORE_ABSTRACT_ITER_HH
 
+# include <oln/core/abstract/point.hh>
+# include <oln/core/abstract/dpoint.hh>
 # include <mlc/type.hh>
 # include <mlc/objs.hh>
 
@@ -71,26 +73,26 @@ namespace oln
 	return p_;
       }
 
-      bool operator==(const point_type& p) const
+      bool operator==(const abstract::point<point_type>& p) const
       {
-	return p_ == p;
+	return p_ == to_exact(p);
       }
 
-      bool operator!=(const point_type& p) const
+      bool operator!=(const abstract::point<point_type>& p) const
       {
-	return p_ != p;
+	return p_ != to_exact(p);
       }
 
-      point_type operator+(const dpoint_type& dp) const
+      point_type operator+(const abstract::dpoint<dpoint_type>& dp) const
       {
 	precondition(*this != end);
-	return p_ + dp;
+	return p_ + to_exact(dp);
       }
 
-      point_type operator-(const dpoint_type& dp) const
+      point_type operator-(const abstract::dpoint<dpoint_type>& dp) const
       {
 	precondition(*this != end);
-	return p_ - dp;
+	return p_ - to_exact(dp);
       }
 
       operator point_type() const

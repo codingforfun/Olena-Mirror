@@ -1,3 +1,13 @@
+2003-07-28  Reda Dehak  <reda@lrde.epita.fr>
+
+	* ntg/color/hsi.hh, ntg/color/xyz.hh, ntg/color/yiq.hh, 
+	ntg/color/yuv.hh: Fix upper and lower bound of color channel. 
+
+2003-07-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/types/runtests, tests/utils/runtests: Don't test temporary
+	files.
+
 2003-07-26  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/core/internal/global_ops_defs.hh, ntg/real/int_s.hh,

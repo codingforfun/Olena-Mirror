@@ -36,39 +36,39 @@ namespace oln {
   template< class Win >
   struct winiter {
 
-    winiter(const Win& win) : _win(win), _pos(0) {}
+    winiter(const typename Win::abstract_type& win) : win_(to_exact(win)), pos_(0) {}
 
     mlc::_begin
     operator=(mlc::_begin)
     {
-      _pos = 0;
+      pos_ = 0;
       return begin;
     }
 
     mlc::_end
     operator=(mlc::_end)
     {
-      _pos = _win.card();
+      pos_ = win_.card();
       return end;
     }
 
     bool
     operator==(mlc::_end) const
     {
-      return _pos == _win.card();
+      return pos_ == win_.card();
     }
 
     bool
     operator!=(mlc::_end) const
     {
-      return _pos != _win.card();
+      return pos_ != win_.card();
     }
 
     winiter&
     operator++()
     {
       precondition(*this != end);
-      ++_pos;
+      ++pos_;
       return *this;
     }
 
@@ -81,15 +81,15 @@ namespace oln {
       return i;
     }
 
-    operator typename Win::dpoint() const
+    operator typename Win::dpoint_type() const
     {
       precondition(*this != end);
-      return _win.dp(_pos);
+      return win_.dp(pos_);
     }
 
     // it's convenient to type `it.cur()' instead of `(dpoint)it' when
     // necessary.
-    typename Win::dpoint cur() const
+    typename Win::dpoint_type cur() const
     {
       return *this;
     }
@@ -100,8 +100,8 @@ namespace oln {
     }
 
   private:
-    const Win &_win;
-    unsigned _pos;
+    const Win &win_;
+    unsigned pos_;
   };
 
 } // oln

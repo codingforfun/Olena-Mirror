@@ -58,8 +58,6 @@ namespace oln {
 
     point3d(coord slice, coord row, coord col);
 
-    const point3d& point_ref() const;
-
     coord slice() const;
 
     coord& slice();
