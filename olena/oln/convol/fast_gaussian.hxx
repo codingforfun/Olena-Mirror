@@ -38,10 +38,7 @@
 namespace oln {
   namespace convol {
     namespace fast {
-      /*!
-      ** \brief oln::convol::fast::internal namespace.
-      **
-      ** You can find here function used for fast algorithms.
+      /*! \brief Internal purpose only.
       */
       namespace internal {
 

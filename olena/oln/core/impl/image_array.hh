@@ -36,15 +36,15 @@
 # include <ntg/all.hh>
 
 namespace oln {
-  
+
   /*! \brief Allocate an array of \a s elements of \a T
   ** type.
   **
   ** \pre s > 0
   */
-  
+
   template<class T>
-  void 
+  void
   allocate_data_(T*& buffer, size_t s)
   {
     precondition(s > 0);
@@ -52,12 +52,12 @@ namespace oln {
   }
 
   /*! \brief Free memory pointed to by buffer, then set buffer to 0.
-  ** 
+  **
   ** \pre buffer != 0
   */
 
   template<class T>
-  void 
+  void
   desallocate_data_(T*& buffer)
   {
     precondition(buffer != 0);
@@ -69,31 +69,28 @@ namespace oln {
     template<class T, class Exact>
     class image_array;
   } // end of impl
-  
-  
+
+
   /*! \class impl_traits<impl::image_array<T, Exact> >
   **
   ** The specialized version for impl::image_array<T, Exact>
   */
-  
+
   template<class T, class Exact>
   struct impl_traits<impl::image_array<T, Exact> >: public impl_traits<impl::image_impl<Exact> >
   {
 
   };
 
-  /*! \namespace impl
-  **
-  ** \brief impl namespace.
+  /*! \brief Representation of the image in memory.
   */
-  
   namespace impl {
-    
+
     /*! \class image_array
     **
     ** Array implementation of image data.
     */
-    
+
     template<class T, class Exact>
     class image_array: public image_impl<Exact>
     {
@@ -113,12 +110,12 @@ namespace oln {
 
       friend class image_impl<Exact>;
 
-      /*! \brief Constructor that allocates \a buffer_ to be 
+      /*! \brief Constructor that allocates \a buffer_ to be
       ** an array of \a s \a value_type.
       **
       ** \pre s > 0
       */
-      
+
       image_array(const size_type& s): super_type(s), buffer_(0)
       {
 	allocate_data_(buffer_, len(s));
@@ -126,7 +123,7 @@ namespace oln {
 
       image_array(const self_type&);     // cpy ctor  w/o impl
 
-      void 
+      void
       operator=(const self_type&); // assign op w/o impl
 
       /*! \brief Return a constant pointer to the data array.
@@ -134,7 +131,7 @@ namespace oln {
       ** \invariant buffer_ != 0
       */
 
-      const T* 
+      const T*
       buffer() const
       {
 	invariant(buffer_ != 0);
@@ -145,23 +142,23 @@ namespace oln {
       **
       ** \invariant buffer_ != 0
       */
-      
-      T* 
+
+      T*
       buffer()
       {
 	invariant(buffer_ != 0);
 	return buffer_;
       }
-      
+
       /// Return the length of the data array.
-      size_t 
+      size_t
       len() const
       {
 	return len(this->size());
       }
 
       /// Return the length of the data array.
-      size_t 
+      size_t
       len(const size_type& s) const
       {
 	return this->exact().len_(s);
@@ -169,7 +166,7 @@ namespace oln {
 
     protected:
 
-      
+
       ~image_array()
       {
 	desallocate_data_(buffer_);
@@ -182,8 +179,8 @@ namespace oln {
       **
       ** \pre output_data->len() == len()
       */
-      
-      void 
+
+      void
       clone_to_(exact_type* output_data) const
       {
 	precondition(output_data != 0);

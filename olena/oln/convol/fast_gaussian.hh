@@ -41,10 +41,10 @@
 namespace oln {
   namespace convol {
     /*!
-    ** \brief oln::convol::fast namespace.
+    ** \brief Implementation of algorithms for large structuring elements.
     **
     ** The algorithms you can find here are fast. This mean these ones
-    ** are evolved versions.
+    ** are evolved versions for large structuring elements.
     */
     namespace fast {
 

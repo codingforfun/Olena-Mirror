@@ -32,8 +32,7 @@
 
 namespace oln {
 
-  /*! \namespace oln::snakes
-  ** Namespace snakes.
+  /*! \brief oln::snakes::snake implementation.
   */
   namespace snakes {
     /*! Snake algorithm.

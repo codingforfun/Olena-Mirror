@@ -37,7 +37,8 @@
 
 namespace oln {
   /*!
-  ** \brief Namespace for conversion (for example cast, color, or neighborhood to window).
+  ** \brief Conversion implementation (for example cast, color, or
+  ** neighborhood to window).
   */
   namespace convert {
 
@@ -56,7 +57,7 @@ namespace oln {
       typedef typename abstract::conversion<ConvType, Base>::template output<InputType>::ret ret;
     };
 
-    /// namespace internal, should not be used by end user.
+    /// \brief Internal purpose only.
     namespace internal {
       /*! Compose a conversion C and an adaptable unary function UF,
       ** producing an adaptable unary function.

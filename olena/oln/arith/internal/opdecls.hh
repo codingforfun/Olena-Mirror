@@ -33,12 +33,10 @@
 ** Operations are defined between two images and between one image and
 **  one constant value (with the cst suffix).
 ** The two main components are:
-** \n
-** 1) Define functors for each operations, taking two values and
+** -# Define functors for each operations, taking two values and
 **   returning the result.
-**\n
-**  2) Define front-end functions applying a functor on the whole image.
-**  3 versions are defined, leaving the possibility to specify the
+** -# Define front-end functions applying a functor on the whole image.
+** -# Versions are defined, leaving the possibility to specify the
 **   return type automatically, manually or using a conversion (from
 **   convert).
 **

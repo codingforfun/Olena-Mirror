@@ -1,97 +1,36 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 90)
-(Parent-Version oln 10 89)
-(Version-Log "Index: olena/ChangeLog
-from  Giovanni Palma  <giovanni@lrde.epita.fr>
-
-	* tests/morpho/tests/attribute: Correct function name problems.
-	* tests/morpho/tests/area: Likewise.
-
-Index: olena/tests/morpho/tests/area
---- olena/tests/morpho/tests/area Fri, 06 Feb 2004 15:26:24 +0100 van-vl_n (oln/j/44_area 1.1 644)
-+++ olena/tests/morpho/tests/area Mon, 15 Mar 2004 16:59:27 +0100 palma_g (oln/j/44_area 1.1 644)
-@@ -41,7 +41,7 @@
-   im(10) =     0;
- 
-   image1d<int_u8> im2 =
--    morpho::tarjan::area_opening(im, neighb_c2(), 2);
-+    morpho::fast::card_opening(im, neighb_c2(), 2);
- 
-   fail = fail ||
-     im2(0) !=      0 ||
-@@ -57,7 +57,7 @@
-     im2(10)!=      0;
- 
-   image1d<int_u8> im3 =
--    morpho::tarjan::area_opening(im, neighb_c2(), 3);
-+    morpho::fast::card_opening(im, neighb_c2(), 3);
-   fail = fail ||
-     im3(0) !=      0 ||
-     im3(1) !=      0 ||
-@@ -72,7 +72,7 @@
-     im3(10)!=      0;
- 
-   image1d<int_u8> im4 =
--    morpho::tarjan::area_opening(im, neighb_c2(), 4);
-+    morpho::fast::card_opening(im, neighb_c2(), 4);
-   fail = fail ||
-     im4(0) !=      0 ||
-     im4(1) !=      0 ||
-@@ -111,7 +111,7 @@
-   im(10) =     -4;
- 
-   image1d<int_s<3> > im2 =
--    morpho::tarjan::area_opening(im, neighb_c2(), 2);
-+    morpho::fast::card_opening(im, neighb_c2(), 2);
- 
-   fail = fail ||
-     im2(0) !=       -4 ||
-@@ -127,7 +127,7 @@
-     im2(10)!=      -4;
- 
-   image1d<int_s<3> > im3 =
--    morpho::tarjan::area_opening(im, neighb_c2(), 3);
-+    morpho::fast::card_opening(im, neighb_c2(), 3);
-   fail = fail ||
-     im3(0) !=      -4 ||
-     im3(1) !=      -4 ||
-@@ -142,7 +142,7 @@
-     im3(10)!=      -4;
- 
-   image1d<int_s<3> > im4 =
--    morpho::tarjan::area_opening(im, neighb_c2(), 4);
-+    morpho::fast::card_opening(im, neighb_c2(), 4);
-   fail = fail ||
-     im4(0) !=      -4 ||
-     im4(1) !=      -4 ||
-@@ -165,7 +165,7 @@
-   bool fail(false);
- 
-  image2d<int_u8> lena = load(rdata(\"lena.pgm\"));
-- image2d<int_u8> lena5 = morpho::tarjan::area_closing(lena, neighb_c8(), 100);
-+ image2d<int_u8> lena5 = morpho::fast::card_closing(lena, neighb_c8(), 100);
- 
-  unsigned l = 0;
-  image2d<int_u8>::iter_type it_l(lena5);
-Index: olena/tests/morpho/tests/attribute
---- olena/tests/morpho/tests/attribute Wed, 10 Mar 2004 16:20:23 +0100 palma_g (oln/j/51_attribute 1.3 644)
-+++ olena/tests/morpho/tests/attribute Mon, 15 Mar 2004 17:04:59 +0100 palma_g (oln/j/51_attribute 1.3 644)
-@@ -28,7 +28,7 @@
-   bool fail(false);
- 
-   typedef image2d<int_u8> img_type;
--  typedef oln::morpho::cart_type<unsigned> area_type;
-+  typedef oln::morpho::card_type<unsigned> area_type;
-   const area_type::lambda_type area = 100;
-   const neighborhood2d nb = neighb_c8();
-   //  const oln::morpho::NullEnv env;
-
+(Project-Version oln 10 91)
+(Parent-Version oln 10 90)
+(Version-Log "2004-03-15  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/arith/internal/opdecls.hh: Clean doc.
+	* olena/oln/arith/ops.hh: Likewise.
+	* olena/oln/convert/conversion.hh: Likewise.
+	* olena/oln/convol/convolution.hh: Likewise.
+	* olena/oln/convol/fast_gaussian.hh: Likewise.
+	* olena/oln/convol/fast_gaussian.hxx: Likewise.
+	* olena/oln/core/abstract/dpoint.hh: Likewise.
+	* olena/oln/core/abstract/iter.hh: Likewise.
+	* olena/oln/level/cc.hh: Likewise.
+	* olena/oln/math/macros.hh: Likewise.
+	* olena/oln/morpho/extrema.hh: Likewise.
+	* olena/oln/morpho/extrema.hxx: Likewise.
+	* olena/oln/morpho/fast_morpho.hxx: Likewise.
+	* olena/oln/topo/dmap.hh: Likewise.
+	* olena/oln/utils/histogram.hh: Likewise.
+	* olena/oln/topo/tarjan/union.hh: Likewise.
+	* olena/oln/topo/inter-pixel/internal/dir.hh: Likewise.
+	* olena/oln/core/abstract/image.hh: Likewise.
+	* olena/oln/core/impl/image_array.hh: Likewise.
+	* olena/oln/convert/abstract/conversion.hh: Likewise.
+	* olena/oln/snakes/snakes_base.hh: Likewise.
+	* olena/oln/morpho/attributes.hh: Likewise.
+	* olena/oln/morpho/attribute_closing_opening_map.hh: Likewise.
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 15 Mar 2004 17:17:49 +0100")
-(Checkin-Login palma_g)
+(Checkin-Time "Mon, 15 Mar 2004 17:40:54 +0100")
+(Checkin-Login van-vl_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -194,15 +133,15 @@ Index: olena/tests/morpho/tests/attribute
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.15 640))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.8 640))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.8 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.35 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.31 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.32 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 640))
 
   (olena/ChangeLog.0 (oln/6_ChangeLog 1.50.1.98.1.5 640))
-  (doc/ChangeLog.0 (oln/e/1_ChangeLog 1.31 640))
+  (doc/ChangeLog.0 (oln/e/1_ChangeLog 1.31 600))
   (attic/tests-ChangeLog (oln/e/30_ChangeLog 1.52 640))
 
   (bootstrap.sh (oln/j/16_bootstrap. 1.11 750))
@@ -211,19 +150,19 @@ Index: olena/tests/morpho/tests/attribute
 
   (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.15 640))
 
-  (doc/demo/image.cc (oln/d/46_image.cc 1.8 640))
-  (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.16.1.2 640))
-  (doc/demo/morpholena.cc (oln/d/43_morpholena 1.11 640))
+  (doc/demo/image.cc (oln/d/46_image.cc 1.8 600))
+  (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.16.1.2 600))
+  (doc/demo/morpholena.cc (oln/d/43_morpholena 1.11 600))
   (olena/tests/morpho/tests/test-reconstruction (oln/e/22_test-recon 1.7.1.3.1.2 640))
-  (doc/demo/tour.cc (oln/d/45_tour.cc 1.13 640))
+  (doc/demo/tour.cc (oln/d/45_tour.cc 1.13 600))
   (doc/ref/bin () :directory)
   
-  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.14 640))
-  (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.6.1.5 640))
-  (doc/ref/oln-ref.tex (oln/f/14_oln-ref.te 1.3.1.3 640))
-  (doc/ref/integre-ref.tex (oln/g/34_ref-types. 1.12 640))
-  (doc/Makefile.am (oln/e/0_Makefile.a 1.14 640))
-  (doc/ref/processing.tpl (oln/d/48_processing 1.16 640))
+  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.14 600))
+  (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.6.1.5 600))
+  (doc/ref/oln-ref.tex (oln/f/14_oln-ref.te 1.3.1.3 600))
+  (doc/ref/integre-ref.tex (oln/g/34_ref-types. 1.12 600))
+  (doc/Makefile.am (oln/e/0_Makefile.a 1.14 600))
+  (doc/ref/processing.tpl (oln/d/48_processing 1.16 600))
 
   (Makefile.am (oln/n/32_Makefile.a 1.17.1.2.1.7 640))
   (NEWS (oln/0_NEWS 1.21 640))
@@ -243,9 +182,9 @@ Index: olena/tests/morpho/tests/attribute
   (olena/img/se.pbm (oln/n/6_se.pbm 1.1 640) :no-keywords)
 
   (olena/Makefile.am (oln/2_Makefile.a 1.30.1.1.1.2.1.10 640))
-  (olena/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.17 640))
+  (olena/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.18 640))
   (olena/oln/arith/logic.hh (oln/b/24_logic.hh 1.6.1.4 640))
-  (olena/oln/arith/ops.hh (oln/b/23_ops.hh 1.5.1.2.1.9 640))
+  (olena/oln/arith/ops.hh (oln/b/23_ops.hh 1.5.1.2.1.10 640))
   (olena/oln/basics1d.hh (oln/d/41_basics1d.h 1.5 640))
   (olena/oln/basics2d.hh (oln/b/7_basics2d.h 1.6 640))
   (olena/oln/basics3d.hh (oln/28_basics3d.h 1.4 640))
@@ -256,7 +195,7 @@ Index: olena/tests/morpho/tests/attribute
   (olena/oln/convert/basics.hh (oln/23_basics.hh 1.7 640))
   (olena/oln/convert/bound.hh (oln/22_bound.hh 1.12 640))
   (olena/oln/convert/abstract/colorconv.hh (oln/18_colorconv. 1.11 640))
-  (olena/oln/convert/conversion.hh (oln/21_conversion 1.17 640))
+  (olena/oln/convert/conversion.hh (oln/21_conversion 1.18 640))
   (olena/oln/convert/conversion_ng_se.hh (oln/e/24_conversion 1.12 640))
   (olena/oln/convert/force.hh (oln/20_force.hh 1.13 640))
   
@@ -268,11 +207,11 @@ Index: olena/tests/morpho/tests/attribute
   (olena/oln/convert/rgbnrgb.hh (oln/17_rgbnrgb.hh 1.13 640))
   (olena/oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.14 640))
   (olena/oln/convert/stretch.hh (oln/f/51_stretch.hh 1.17 640))
-  (olena/oln/convol/convolution.hh (oln/f/39_convolutio 1.4.1.4.1.6.1.2 640))
+  (olena/oln/convol/convolution.hh (oln/f/39_convolutio 1.4.1.4.1.6.1.3 640))
   (olena/oln/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.5.1.7 640))
-  (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.6.1.5 640))
-  (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.8.1.8 640))
-  (olena/oln/core/accum.hh (oln/d/40_accum.hh 1.5 640))
+  (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.6.1.6 640))
+  (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.8.1.9 640))
+  (olena/oln/core/accum.hh (oln/d/40_accum.hh 1.5 600))
   (olena/oln/core/apply.hh (oln/d/39_apply.hh 1.15 640))
   (olena/oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.17 640))
   (olena/oln/core/bkd_iter2d.hh (oln/d/37_bkd_iter2d 1.17 640))
@@ -283,29 +222,29 @@ Index: olena/tests/morpho/tests/attribute
   
   (olena/oln/core/box.hh (oln/o/51_box.hh 1.3.1.3 640))
   (olena/oln/core/box.hxx (oln/p/0_box.hxx 1.4.1.1.1.5 640))
-  (olena/oln/core/compose.hh (oln/c/22_compose.hh 1.6 640))
+  (olena/oln/core/compose.hh (oln/c/22_compose.hh 1.6 600))
   (metalic/mlc/contract.hh (oln/d/31_contract.h 1.10 640))
-  (olena/oln/core/coord.hh (oln/d/29_coord.hh 1.4 640))
-  (olena/oln/core/dpoint1d.hh (oln/d/27_dpoint1d.h 1.14 640))
+  (olena/oln/core/coord.hh (oln/d/29_coord.hh 1.4 600))
+  (olena/oln/core/dpoint1d.hh (oln/d/27_dpoint1d.h 1.14 600))
   (olena/oln/core/dpoint1d.hxx (oln/d/26_dpoint1d.h 1.8 640))
-  (olena/oln/core/dpoint2d.hh (oln/d/25_dpoint2d.h 1.13 640))
+  (olena/oln/core/dpoint2d.hh (oln/d/25_dpoint2d.h 1.13 600))
   (olena/oln/core/dpoint2d.hxx (oln/d/24_dpoint2d.h 1.6 640))
-  (olena/oln/core/dpoint3d.hh (oln/d/23_dpoint3d.h 1.13 640))
+  (olena/oln/core/dpoint3d.hh (oln/d/23_dpoint3d.h 1.13 600))
   (olena/oln/core/dpoint3d.hxx (oln/d/22_dpoint3d.h 1.6 640))
-  (olena/oln/core/abstract/dpoint.hh (oln/d/28_dpoint.hh 1.19 640))
+  (olena/oln/core/abstract/dpoint.hh (oln/d/28_dpoint.hh 1.20 640))
   
-  (olena/oln/core/fold.hh (oln/c/7_fold.hh 1.14 640))
+  (olena/oln/core/fold.hh (oln/c/7_fold.hh 1.14 600))
   (olena/oln/core/fwd_iter1d.hh (oln/d/21_fwd_iter1d 1.14 640))
   (olena/oln/core/fwd_iter2d.hh (oln/d/20_fwd_iter2d 1.14 640))
   (olena/oln/core/fwd_iter3d.hh (oln/d/19_fwd_iter3d 1.14 640))
   (olena/oln/core/generate.hh (oln/f/12_generate.h 1.18 640))
-  (olena/oln/core/image1d.hh (oln/c/47_image1d.hh 1.28.1.2 640))
-  (olena/oln/core/image1d_size.hh (oln/c/46_image1d_si 1.11 640))
-  (olena/oln/core/image2d.hh (oln/c/45_image2d.hh 1.30.1.2 640))
-  (olena/oln/core/image2d_size.hh (oln/c/44_image2d_si 1.11 640))
-  (olena/oln/core/image3d.hh (oln/c/43_image3d.hh 1.27.1.2 640))
-  (olena/oln/core/image3d_size.hh (oln/c/42_image3d_si 1.11 640))
-  (olena/oln/core/image.hh (oln/d/18_image.hh 1.20.2.2 640))
+  (olena/oln/core/image1d.hh (oln/c/47_image1d.hh 1.28.1.2 600))
+  (olena/oln/core/image1d_size.hh (oln/c/46_image1d_si 1.11 600))
+  (olena/oln/core/image2d.hh (oln/c/45_image2d.hh 1.30.1.2 600))
+  (olena/oln/core/image2d_size.hh (oln/c/44_image2d_si 1.11 600))
+  (olena/oln/core/image3d.hh (oln/c/43_image3d.hh 1.27.1.2 600))
+  (olena/oln/core/image3d_size.hh (oln/c/42_image3d_si 1.11 600))
+  (olena/oln/core/image.hh (oln/d/18_image.hh 1.20.2.2 600))
   
   (olena/oln/core/abstract/image_size.hh (oln/c/41_image_size 1.11 640))
   (olena/oln/core/internal/fake.hh (oln/d/17_fake.hh 1.3 640))
@@ -326,25 +265,25 @@ Index: olena/tests/morpho/tests/attribute
   
   
   
-  (olena/oln/core/abstract/iter.hh (oln/c/40_iter.hh 1.19 640))
+  (olena/oln/core/abstract/iter.hh (oln/c/40_iter.hh 1.20 640))
   (olena/oln/core/macros.hh (oln/c/39_macros.hh 1.5 640))
   (olena/oln/core/neighborhood1d.hh (oln/c/37_neighborho 1.16 640))
   (olena/oln/core/neighborhood2d.hh (oln/c/36_neighborho 1.17 640))
   (olena/oln/core/neighborhood3d.hh (oln/c/35_neighborho 1.16 640))
   (olena/oln/core/abstract/neighborhood.hh (oln/c/38_neighborho 1.20 640))
   (metalic/mlc/objs.hh (oln/c/34_objs.hh 1.7 640))
-  (olena/oln/core/point1d.hh (oln/c/32_point1d.hh 1.15 640))
+  (olena/oln/core/point1d.hh (oln/c/32_point1d.hh 1.15 600))
   (olena/oln/core/point1d.hxx (oln/c/31_point1d.hx 1.6 640))
-  (olena/oln/core/point2d.hh (oln/c/30_point2d.hh 1.13 640))
+  (olena/oln/core/point2d.hh (oln/c/30_point2d.hh 1.13 600))
   (olena/oln/core/point2d.hxx (oln/c/29_point2d.hx 1.6 640))
-  (olena/oln/core/point3d.hh (oln/c/28_point3d.hh 1.15 640))
+  (olena/oln/core/point3d.hh (oln/c/28_point3d.hh 1.15 600))
   (olena/oln/core/point3d.hxx (oln/c/27_point3d.hx 1.5 640))
   (olena/oln/core/abstract/point.hh (oln/c/33_point.hh 1.16 640))
   
   (olena/oln/core/abstract/binary_image.hh (oln/c/24_pred_image 1.6 640))
   
   (olena/oln/core/abstract/struct_elt.hh (oln/c/25_structelt. 1.21 640))
-  (olena/oln/core/traverse.hh (oln/d/30_traverse.h 1.12 640))
+  (olena/oln/core/traverse.hh (oln/d/30_traverse.h 1.12 600))
   (metalic/mlc/typeadj.hh (oln/e/25_typeadj.hh 1.6 640))
   (metalic/mlc/type.hh (oln/c/21_type.hh 1.28 640))
   (olena/oln/core/window1d.hh (oln/c/15_window1d.h 1.16 640))
@@ -375,7 +314,7 @@ Index: olena/tests/morpho/tests/attribute
   (olena/oln/io/se.hh (oln/i/45_se.hh 1.4 640))
   (olena/oln/io/se_neighborhood.hh (oln/i/47_se_neighbo 1.13 640))
   (olena/oln/io/se_window.hh (oln/i/46_se_window. 1.14 640))
-  (olena/oln/level/cc.hh (oln/e/20_cc.hh 1.11.1.13 640))
+  (olena/oln/level/cc.hh (oln/e/20_cc.hh 1.11.1.14 640))
   (olena/oln/level/compare.hh (oln/31_compare.hh 1.9 640))
   (olena/oln/level/connected.hh (oln/30_connected. 1.9.1.13 640))
   (olena/oln/level/fill.hh (oln/32_fill.hh 1.10 640))
@@ -385,7 +324,7 @@ Index: olena/tests/morpho/tests/attribute
   (olena/oln/level/threshold.hh (oln/f/15_threshold. 1.14 640))
   (config/oln.m4 (oln/j/15_oln.m4 1.36 640))
 
-  (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.13 640))
+  (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.14 640))
   (metalic/mlc/array/1d.hh (oln/f/23_array1d.hh 1.11 640))
   (metalic/mlc/array/1d.hxx (oln/f/22_array1d.hx 1.10 640))
   (metalic/mlc/array/2d.hh (oln/f/21_array2d.hh 1.11 640))
@@ -406,11 +345,11 @@ Index: olena/tests/morpho/tests/attribute
   (olena/oln/morpho/closing.inc (oln/44_closing.in 1.17 640))
   (olena/oln/morpho/dilation.hh (oln/b/5_dilation.h 1.18 640))
   (olena/oln/morpho/erosion.hh (oln/b/4_erosion.hh 1.20 640))
-  (olena/oln/morpho/extrema.hh (oln/38_extrema.hh 1.13 640))
-  (olena/oln/morpho/extrema.hxx (oln/j/4_extrema.hx 1.15 640))
+  (olena/oln/morpho/extrema.hh (oln/38_extrema.hh 1.14 640))
+  (olena/oln/morpho/extrema.hxx (oln/j/4_extrema.hx 1.16 640))
   (olena/oln/morpho/extrema_killer.hh (oln/e/19_extrema_ki 1.7.1.4.1.13 640))
   (olena/oln/morpho/fast_morpho.hh (oln/46_fast_morph 1.9 640))
-  (olena/oln/morpho/fast_morpho.hxx (oln/45_fast_morph 1.20 640))
+  (olena/oln/morpho/fast_morpho.hxx (oln/45_fast_morph 1.21 640))
   (olena/oln/morpho/geodesic_dilation.hh (oln/37_geodesic_d 1.11.1.12 640))
   (olena/oln/morpho/geodesic_erosion.hh (oln/36_geodesic_e 1.19 640))
   (olena/oln/morpho/gradient.hh (oln/b/3_gradient.h 1.6 640))
@@ -433,7 +372,7 @@ Index: olena/tests/morpho/tests/attribute
   (olena/oln/morpho/top_hat.inc (oln/39_top_hat.in 1.15 640))
   (olena/oln/morpho/watershed.hh (oln/48_watershed. 1.13 640))
   (olena/oln/morpho/watershed.hxx (oln/47_watershed. 1.9.1.5.1.6 640))
-  (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.10 640))
+  (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.11 640))
   (olena/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.7.1.9 640))
   (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.10 640))
   (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.8 640))
@@ -483,7 +422,7 @@ Index: olena/tests/morpho/tests/attribute
   (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.7 640))
   (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.7 640))
   (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.9 640))
-  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.8 640))
+  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.9 640))
   (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.10 640))
   (olena/oln/utils/timer.hh (oln/8_timer.hh 1.9 640))
   (olena/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.5.1.1 640))
@@ -683,17 +622,17 @@ Index: olena/tests/morpho/tests/attribute
 ;; Files added by populate at Sun, 19 Jan 2003 21:48:10 +0100,
 ;; to version 7.25(w), by raph:
 
-  (doc/demo/morpholena-wshed.cc (oln/p/5_morpholena 1.3 640))
-  (doc/demo/morpholena-base.cc (oln/p/6_morpholena 1.4 640))
-  (doc/demo/morpholena-grad.cc (oln/p/7_morpholena 1.3 640))
-  (doc/demo/morpholena-hats.cc (oln/p/8_morpholena 1.4 640))
+  (doc/demo/morpholena-wshed.cc (oln/p/5_morpholena 1.3 600))
+  (doc/demo/morpholena-base.cc (oln/p/6_morpholena 1.4 600))
+  (doc/demo/morpholena-grad.cc (oln/p/7_morpholena 1.3 600))
+  (doc/demo/morpholena-hats.cc (oln/p/8_morpholena 1.4 600))
 
-  (doc/demo/morpholena-hit-miss.cc (oln/p/10_morpholena 1.3 640))
-  (doc/demo/morpholena-ops.cc (oln/p/11_morpholena 1.3 640))
-  (doc/demo/morpholena-minima.cc (oln/p/12_morpholena 1.4 640))
+  (doc/demo/morpholena-hit-miss.cc (oln/p/10_morpholena 1.3 600))
+  (doc/demo/morpholena-ops.cc (oln/p/11_morpholena 1.3 600))
+  (doc/demo/morpholena-minima.cc (oln/p/12_morpholena 1.4 600))
 
-  (doc/demo/convol-gaussian.cc (oln/p/14_morpholena 1.7 640))
-  (doc/demo/morpholena-wshed-beucher.cc (oln/p/15_morpholena 1.3 640))
+  (doc/demo/convol-gaussian.cc (oln/p/14_morpholena 1.7 600))
+  (doc/demo/morpholena-wshed-beucher.cc (oln/p/15_morpholena 1.3 600))
 
 
 ;; Files added by populate at Sun, 19 Jan 2003 21:48:32 +0100,
@@ -797,7 +736,7 @@ Index: olena/tests/morpho/tests/attribute
 ;; Files added by populate at Thu, 23 Jan 2003 15:43:23 +0100,
 ;; to version 7.39(w), by raph:
 
-  (doc/dev/Makefile.am (oln/p/38_Makefile.a 1.6.1.4 640))
+  (doc/dev/Makefile.am (oln/p/38_Makefile.a 1.6.1.4 600))
 
 ;; Files deleted by depopulate at Fri, 24 Jan 2003 10:54:23 +0100,
 ;; from version 7.40(w), by raph:
@@ -807,9 +746,9 @@ Index: olena/tests/morpho/tests/attribute
 ;; Files added by populate at Fri, 24 Jan 2003 11:03:53 +0100,
 ;; to version 7.40(w), by raph:
 
-  (doc/dev/biblio.texi (oln/p/39_biblio.tex 1.4 640))
-  (doc/dev/thanks.texi (oln/p/40_thanks.tex 1.6 640))
-  (doc/dev/abstract.texi (oln/p/41_abstract.t 1.7.1.2 640))
+  (doc/dev/biblio.texi (oln/p/39_biblio.tex 1.4 600))
+  (doc/dev/thanks.texi (oln/p/40_thanks.tex 1.6 600))
+  (doc/dev/abstract.texi (oln/p/41_abstract.t 1.7.1.2 600))
 
 ;; Files deleted by depopulate at Fri, 24 Jan 2003 11:04:25 +0100,
 ;; from version 7.40(w), by raph:
@@ -819,36 +758,36 @@ Index: olena/tests/morpho/tests/attribute
 ;; Files added by populate at Fri, 24 Jan 2003 14:34:30 +0100,
 ;; to version 7.40(w), by raph:
 
-  (doc/dev/build.texi (oln/p/42_build.texi 1.11 640))
+  (doc/dev/build.texi (oln/p/42_build.texi 1.11 600))
 
 ;; Files added by populate at Fri, 24 Jan 2003 14:34:47 +0100,
 ;; to version 7.40(w), by raph:
 
-  (doc/dev/install.texi (oln/p/43_install.te 1.3 640))
+  (doc/dev/install.texi (oln/p/43_install.te 1.3 600))
 
-  (doc/dev/faq.texi (oln/p/44_faq.texi 1.10 640))
+  (doc/dev/faq.texi (oln/p/44_faq.texi 1.10 600))
 
 ;; Files added by populate at Sat, 25 Jan 2003 19:02:34 +0100,
 ;; to version 7.45(w), by raph:
 
-  (doc/dev/srctree.texi (oln/p/45_srctree.te 1.6 640))
-  (doc/dev/conf.texi (oln/q/2_conf.texi 1.4 640))
+  (doc/dev/srctree.texi (oln/p/45_srctree.te 1.6 600))
+  (doc/dev/conf.texi (oln/q/2_conf.texi 1.4 600))
 
 ;; Files added by populate at Sat, 08 Feb 2003 13:38:09 +0100,
 ;; to version 7.48(w), by raph:
 
-  (doc/ref/gen_filelists.sh (oln/q/4_gen_fileli 1.1 640))
+  (doc/ref/gen_filelists.sh (oln/q/4_gen_fileli 1.1 600))
 
 ;; Files added by populate at Mon, 10 Feb 2003 09:36:58 +0100,
 ;; to version 7.52(w), by raph:
 
-  (doc/dev/design.texi (oln/q/5_design.tex 1.3 640))
+  (doc/dev/design.texi (oln/q/5_design.tex 1.3 600))
 
 
 ;; Files added by populate at Tue, 04 Mar 2003 19:30:28 +0100,
 ;; to version 8.9(w), by jerome:
 
-  (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.21 640))
+  (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.22 640))
   (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.18 640))
 
   (olena/tests/convol () :directory)
@@ -895,7 +834,7 @@ Index: olena/tests/morpho/tests/attribute
   
   
   
-  (olena/oln/topo/tarjan/union.hh (oln/r/33_union.hh 1.10 640))
+  (olena/oln/topo/tarjan/union.hh (oln/r/33_union.hh 1.11 640))
   (olena/oln/topo/inter-pixel/inter-pixel.hh (oln/r/34_inter-pixe 1.15 640))
   (olena/oln/topo/tarjan/flat-zone.hh (oln/r/35_flat-zone. 1.12 640))
   (olena/oln/topo/combinatorial-map/cmap.hh (oln/r/36_cmap.hh 1.13 640))
@@ -914,15 +853,15 @@ Index: olena/tests/morpho/tests/attribute
   (olena/oln/topo/combinatorial-map/internal/zeta.hh (oln/r/43_zeta.hh 1.4 640))
   (olena/oln/topo/inter-pixel/fwd-dir-iter.hh (oln/r/44_fwd-dir-it 1.6 640))
   (olena/oln/topo/inter-pixel/bkd-dir-iter.hh (oln/r/45_bkd-dir-it 1.6 640))
-  (olena/oln/topo/inter-pixel/node.hh (oln/r/46_node.hh 1.6 640))
+  (olena/oln/topo/inter-pixel/node.hh (oln/r/46_node.hh 1.7 640))
   (olena/oln/topo/inter-pixel/internal/dir-iter.hh (oln/r/47_dir-iter.h 1.6 640))
-  (olena/oln/topo/inter-pixel/internal/dir.hh (oln/r/48_dir.hh 1.4 640))
+  (olena/oln/topo/inter-pixel/internal/dir.hh (oln/r/48_dir.hh 1.5 640))
   
 
 ;; Files added by populate at Wed, 09 Apr 2003 22:18:27 +0200,
 ;; to version 8.31(w), by nes:
 
-  (doc/dev/upgrading.texi (oln/r/50_upgrading. 1.3 640))
+  (doc/dev/upgrading.texi (oln/r/50_upgrading. 1.3 600))
 
 
   (integre/tests/types/tests/builtin1 (oln/s/7_builtin1 1.1 640))
@@ -1023,16 +962,16 @@ Index: olena/tests/morpho/tests/attribute
   (olena/tests/core/image_print.sh (oln/t/24_image_prin 1.2 640))
 
 
-  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.25 640))
+  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.26 600))
   (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.21 600))
   (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.14.1.9 640))
   (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.12 640))
-  (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.18 640))
-  (olena/oln/core/impl/image_array.hh (oln/t/30_image_arra 1.15 640))
+  (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.18 600))
+  (olena/oln/core/impl/image_array.hh (oln/t/30_image_arra 1.16 600))
   (olena/tests/core/tests/image1 (oln/t/31_image1 1.4 640))
-  (olena/oln/core/impl/image_array3d.hh (oln/t/32_image_arra 1.11 640))
-  (olena/oln/core/impl/image_array2d.hh (oln/t/33_image_arra 1.12 640))
-  (olena/oln/core/impl/image_array1d.hh (oln/t/34_image_arra 1.13 640))
+  (olena/oln/core/impl/image_array3d.hh (oln/t/32_image_arra 1.11 600))
+  (olena/oln/core/impl/image_array2d.hh (oln/t/33_image_arra 1.12 600))
+  (olena/oln/core/impl/image_array1d.hh (oln/t/34_image_arra 1.13 600))
   (olena/tests/core/tests/borders (oln/t/35_borders 1.3 640))
   (olena/tests/core/tests/clone (oln/t/36_clone 1.1 640))
   (olena/tests/core/tests/ref (oln/t/37_ref 1.3 640))
@@ -1073,7 +1012,7 @@ Index: olena/tests/morpho/tests/attribute
   (olena/tests/utils/tests/stat (oln/u/28_stat.cc 1.2 600))
   (olena/tests/utils/tests/timer (oln/u/29_timer.cc 1.4 600))
   (olena/tests/topo/tests/tarjan (oln/u/30_test-tarja 1.1 600))
-  (olena/oln/convert/abstract/conversion.hh (oln/u/31_conversion 1.5 640))
+  (olena/oln/convert/abstract/conversion.hh (oln/u/31_conversion 1.6 640))
   (olena/tests/check/Makefile.runtests (oln/u/32_Makefile.r 1.2 600))
   (contrib/runtests (oln/u/33_runtests 1.4 700))
   (metalic/tests/check/Makefile.runtests (oln/u/34_Makefile.r 1.1 600))
@@ -1216,13 +1155,13 @@ Index: olena/tests/morpho/tests/attribute
 ;; Files added by populate at Mon, 08 Dec 2003 10:54:08 +0100,
 ;; to version 10.45(w), by david:
 
-  (doc/hierarchies/structelt.dia (oln/w/7_structelt. 1.1 640) :no-keywords)
-  (doc/hierarchies/point.dia (oln/w/8_point.dia 1.1 640) :no-keywords)
-  (doc/hierarchies/new_olena_model.dia (oln/w/9_new_olena_ 1.1 640) :no-keywords)
-  (doc/hierarchies/misc.dia (oln/w/10_misc.dia 1.1 640) :no-keywords)
-  (doc/hierarchies/labels.dia (oln/w/11_labels.dia 1.1 640) :no-keywords)
-  (doc/hierarchies/iter.dia (oln/w/12_iter.dia 1.1 640) :no-keywords)
-  (doc/hierarchies/implementation.dia (oln/w/13_implementa 1.1 640))
+  (doc/hierarchies/structelt.dia (oln/w/7_structelt. 1.1 600) :no-keywords)
+  (doc/hierarchies/point.dia (oln/w/8_point.dia 1.1 600) :no-keywords)
+  (doc/hierarchies/new_olena_model.dia (oln/w/9_new_olena_ 1.1 600) :no-keywords)
+  (doc/hierarchies/misc.dia (oln/w/10_misc.dia 1.1 600) :no-keywords)
+  (doc/hierarchies/labels.dia (oln/w/11_labels.dia 1.1 600) :no-keywords)
+  (doc/hierarchies/iter.dia (oln/w/12_iter.dia 1.1 600) :no-keywords)
+  (doc/hierarchies/implementation.dia (oln/w/13_implementa 1.1 600))
 
 ;; Files deleted by depopulate at Thu, 22 Jan 2004 21:08:59 +0100,
 ;; from version 10.48(w), by palma_g:
@@ -1244,7 +1183,7 @@ Index: olena/tests/morpho/tests/attribute
 
 
   (olena/oln/snakes/snakes_base.hxx (oln/f/11_snakes_bas 1.1 644))
-  (olena/oln/snakes/snakes_base.hh (oln/f/50_snakes_bas 1.3 644))
+  (olena/oln/snakes/snakes_base.hh (oln/f/50_snakes_bas 1.4 644))
   (olena/oln/snakes/energies.hxx (oln/j/21_energies.h 1.1 644))
   (olena/oln/snakes/energies.hh (oln/j/22_energies.h 1.2 644))
   (olena/oln/snakes/segment.hxx (oln/j/23_segment.hx 1.1 644))
@@ -1266,7 +1205,7 @@ Index: olena/tests/morpho/tests/attribute
 ;; Files added by populate at Fri, 06 Feb 2004 16:00:19 +0100,
 ;; to version 10.57(w), by palma_g:
 
-  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.8 644))
+  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.9 644))
 
 ;; Files added by populate at Tue, 10 Feb 2004 15:26:15 +0100,
 ;; to version 10.62(w), by palma_g:
@@ -1276,11 +1215,11 @@ Index: olena/tests/morpho/tests/attribute
 ;; Files added by populate at Tue, 10 Feb 2004 15:26:20 +0100,
 ;; to version 10.62(w), by palma_g:
 
-  (olena/oln/core/behavior.hh (oln/j/47_behavior.h 1.3 644))
+  (olena/oln/core/behavior.hh (oln/j/47_behavior.h 1.3 600))
 
 
   (olena/oln/morpho/attribute_closing_opening_map.hxx (oln/j/48_attribute_ 1.2 644))
-  (olena/oln/morpho/attribute_closing_opening_map.hh (oln/j/49_attribute_ 1.7 600))
+  (olena/oln/morpho/attribute_closing_opening_map.hh (oln/j/49_attribute_ 1.8 600))
   (olena/oln/utils/special_points.hh (oln/j/50_special_po 1.3 644))
   (olena/tests/morpho/tests/attribute (oln/j/51_attribute 1.4 644))
 ;; Files added by populate at Mon, 16 Feb 2004 18:59:27 +0100,
@@ -1289,9 +1228,9 @@ Index: olena/tests/morpho/tests/attribute
   (olena/tests/morpho/tests/attr_op_cl (oln/k/0_attr_op_cl 1.3 644))
 
 
-  (doc/ref/exdoc.pl (oln/v/26_exdoc.pl 1.4 755))
-  (doc/ref/doxygen.config.in (oln/v/29_doxygen.co 1.3 644))
-  (doc/ref/exdoc.mk.in (oln/k/4_exdoc.mk.i 1.1 644))
+  (doc/ref/exdoc.pl (oln/v/26_exdoc.pl 1.4 700))
+  (doc/ref/doxygen.config.in (oln/v/29_doxygen.co 1.3 600))
+  (doc/ref/exdoc.mk.in (oln/k/4_exdoc.mk.i 1.1 600))
   
   (doc/ref/img_conv.pl (oln/k/6_img_conv.p 1.3 700))
 ;; Files deleted by depopulate at Wed, 25 Feb 2004 16:41:09 +0100,
@@ -1302,7 +1241,7 @@ Index: olena/tests/morpho/tests/attribute
 ;; Files added by populate at Wed, 25 Feb 2004 16:41:16 +0100,
 ;; to version 10.67(w), by palma_g:
 
-  (doc/ref/out/exdoc.config.in (oln/k/7_exdoc.conf 1.2 644))
+  (doc/ref/out/exdoc.config.in (oln/k/7_exdoc.conf 1.2 600))
 
 ;; Files deleted by depopulate at Tue, 09 Mar 2004 10:41:51 +0100,
 ;; from version 10.70(w), by palma_g:
@@ -1310,6 +1249,6 @@ Index: olena/tests/morpho/tests/attribute
   ; (doc/ref/html () :directory)
 )
 (Merge-Parents
-  (10.89 complete)
+  (10.90 complete)
 )
 (New-Merge-Parents)

@@ -35,7 +35,7 @@
 namespace oln {
 
   namespace topo {
-    /// Namespace Tarjan
+    /// \brief FIXME: depreciated, use oln::morpho::tarjan
     namespace tarjan {
 
       struct empty_class

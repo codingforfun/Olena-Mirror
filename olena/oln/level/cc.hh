@@ -49,8 +49,7 @@
 # include <mlc/is_a.hh>
 namespace oln {
 
-  /*! \namespace oln::level
-  ** \brief level namespace.
+  /*! \brief Level algorithm implementation.
   */
   namespace level {
 

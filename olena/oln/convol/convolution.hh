@@ -37,18 +37,11 @@
 
 namespace oln {
 
-  /*!
-  ** \brief convolution namespace.
-  **
-  ** Set of algorithms related to convolution.
+  /*!  \brief Algorithms related to convolution.
   */
   namespace convol {
 
-    /*!
-    ** \brief oln::convol::slow namespace.
-    **
-    ** The algorithms you can find here are slow.  This mean there are
-    ** only basic applications of the definitions.
+    /*! \brief Convolution algorithms.
     */
     namespace slow {
 

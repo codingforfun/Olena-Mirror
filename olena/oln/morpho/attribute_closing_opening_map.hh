@@ -46,11 +46,8 @@ namespace oln
 {
   namespace morpho
   {
-    /*!
-    ** \brief oln::morpho::slow namespace
-    **
-    ** In this namespace you will find algorithm slower than those you
-    ** can find in oln::morpho::fast, but with less memory needs.
+    /*! \brief Algorithm that are slow (but need less memory), or that are slow
+    ** if it is used with a large structuring element.
     */
     namespace slow
     {

@@ -44,7 +44,7 @@
 
 namespace oln {
 
-  /// Namespce topo.
+  /// \brief Topological algorithms.
   namespace topo {
     /*! Chamfer mask.
     **
