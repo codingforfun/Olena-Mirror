@@ -104,7 +104,8 @@ namespace oln {
       // Update HIST by adding elements from _SE_ADD, and removing
       // those from _SE_REM.
       template<class I, class E1, class E2, class H>
-      inline void
+      // inline 
+      void
       hist_update(H& hist,
 		  const abstract::image<I>& input,
 		  const Point(I)& p,
@@ -308,7 +309,7 @@ namespace oln {
 
       internal::fast_morpho_inner<1, E::dim, const I,
 	const typename I::size_type, H<Value(I),unsigned>,
-	const E, Point(I), Concrete(I)>::doit(to_exact(input), size, hist,
+	const E, Point(I), Concrete(I)>::doit(input.exact(), size, hist,
 					      se_add, se_rem,
 					      se_add_back, se_rem_back,
 					      p, output, dims);

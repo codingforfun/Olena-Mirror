@@ -109,7 +109,7 @@ namespace oln {
 		 const abstract::struct_elt<E>& se)
     {
       mlc::eq<I::dim, E::dim>::ensure();
-      return internal::_stat<I, E>::max(to_exact(input), p, to_exact(se));
+      return internal::_stat<I, E>::max(input.exact(), p, se.exact());
     }
 
     template<class I, class E>
@@ -119,7 +119,7 @@ namespace oln {
 		 const abstract::struct_elt<E>& se)
     {
       mlc::eq<I::dim, E::dim>::ensure();
-      return internal::_stat<I, E>::min(to_exact(input), p, to_exact(se));
+      return internal::_stat<I, E>::min(input.exact(), p, se.exact());
     }
 
   } // morpho

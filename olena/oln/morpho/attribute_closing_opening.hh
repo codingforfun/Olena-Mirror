@@ -61,7 +61,7 @@ namespace oln {
 	typedef T_attribute<unsigned int> area_t;
 
 	typedef tarjan::tarjan_set<Concrete(I), area_t > tarjan_set_t;
-	tarjan_set_t area_closing(to_exact(input));
+	tarjan_set_t area_closing(input.exact());
 	return area_closing.get_comptute(area_t(area) , Ng, true);
       }
 
@@ -92,7 +92,7 @@ namespace oln {
 	typedef T_attribute<unsigned int> area_t;
 
 	typedef tarjan::tarjan_set<Concrete(I), T_attribute<unsigned int> > tarjan_set_t;
-	tarjan_set_t area_closing(to_exact(input));
+	tarjan_set_t area_closing(input.exact());
 	return area_closing.get_comptute(area_t(area) , Ng, false);
       }
 

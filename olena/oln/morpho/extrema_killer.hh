@@ -199,7 +199,7 @@ namespace oln {
     // FAST VERSIONS
 
     template<class P, class I, class N>
-    inline
+    //    inline
     static
     bool is_a_strict_minimum(const abstract::point<P>& p,
 			     const abstract::image<I>& input,
@@ -223,7 +223,7 @@ namespace oln {
 
 
     template<class P, class I, class N>
-    inline
+    // inline
     static
     bool is_a_strict_maximum(const abstract::point<P>& p,
 			     const abstract::image<I>& input,

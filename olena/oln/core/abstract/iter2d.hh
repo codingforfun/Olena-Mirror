@@ -101,7 +101,7 @@ namespace oln {
       {
 	precondition(size.nrows() > 0 &&
 		     size.ncols() > 0);
-	to_exact(this)->goto_begin_();
+	exact().goto_begin_();
       }
     };
 

@@ -1,3 +1,7 @@
+2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* mlc/contract.hh: Use assert to save compilation time.
+
 2003-07-29  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* mlc/type.hh: Use static_cast instead of reinterpret_cast as

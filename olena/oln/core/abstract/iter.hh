@@ -75,29 +75,29 @@ namespace oln
 
       bool operator==(const abstract::point<point_type>& p) const
       {
-	return p_ == to_exact(p);
+	return p_ == p.exact();
       }
 
       bool operator!=(const abstract::point<point_type>& p) const
       {
-	return p_ != to_exact(p);
+	return p_ != p.exact();
       }
 
       point_type operator+(const abstract::dpoint<dpoint_type>& dp) const
       {
 	precondition(*this != end);
-	return p_ + to_exact(dp);
+	return p_ + dp.exact();
       }
 
       point_type operator-(const abstract::dpoint<dpoint_type>& dp) const
       {
 	precondition(*this != end);
-	return p_ - to_exact(dp);
+	return p_ - dp.exact();
       }
 
       operator point_type() const
       {
-	return to_exact(this)->to_point();
+	return exact().to_point();
       }
 
       // it's convenient to type `it.cur()' instead of `(point)it' when
@@ -116,25 +116,25 @@ namespace oln
 
       mlc::_begin operator=(mlc::_begin b)
       {
-	to_exact(this)->goto_begin_();
+	exact().goto_begin_();
 	return b;
       }
 
       mlc::_end operator=(mlc::_end e)
       {
-	to_exact(this)->goto_end_();
+	exact().goto_end_();
 	return e;
       }
 
       bool operator==(mlc::_end) const
       {
-	return to_exact(this)->is_at_end_();
+	return exact().is_at_end_();
       }
 
       void operator++()
       {
 	precondition(*this != end);
-	to_exact(this)->goto_next_();
+	exact().goto_next_();
       }
 
 //       typename mlc::exact<self>::ret operator++(int)

@@ -1,5 +1,54 @@
 2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* oln/core/abstract/dpoint.hh: Change to_exact() calls into
+	exact() calls to save compile time.
+	* oln/core/generate.hh: Likewise.
+	* oln/core/image1d.hh: Likewise.
+	* oln/core/image2d.hh: Likewise.
+	* oln/core/image3d.hh: Likewise.
+	* oln/core/abstract/iter1d.hh: Likewise.
+	* oln/core/abstract/iter2d.hh: Likewise.
+	* oln/core/abstract/iter3d.hh: Likewise.
+	* oln/core/abstract/iter.hh: Likewise.
+	* oln/core/neighborhood1d.hh: Likewise.
+	* oln/core/neighborhood2d.hh: Likewise.
+	* oln/core/neighborhood3d.hh: Likewise.
+	* oln/core/abstract/neighborhood.hh: Likewise.
+	* oln/core/point1d.hxx: Likewise.
+	* oln/core/abstract/point.hh: Likewise.
+	* oln/core/abstract/struct_elt.hh: Likewise.
+	* oln/core/window1d.hh: Likewise.
+	* oln/core/window2d.hh: Likewise.
+	* oln/core/window3d.hh: Likewise.
+	* oln/core/abstract/window.hh: Likewise.
+	* oln/core/winiter.hh: Likewise.
+	* oln/core/winneighb.hh: Likewise.
+	* oln/core/w_window1d.hh: Likewise.
+	* oln/core/w_window2d.hh: Likewise.
+	* oln/core/w_window3d.hh: Likewise.
+	* oln/core/abstract/w_window.hh: Likewise.
+	* oln/level/fill.hh: Likewise.
+	* oln/morpho/extrema_killer.hh: Likewise.
+	* oln/morpho/fast_morpho.hxx: Likewise.
+	* oln/morpho/stat.hh: Likewise.
+	* tests/morpho/extrkiller.cc: Likewise.
+	* oln/morpho/attribute_closing_opening.hh: Likewise.
+	* oln/Makefile.am: Likewise.
+	* oln/core/abstract/image.hh: Likewise.
+	* oln/core/abstract/image_with_dim.hh: Likewise.
+	* oln/core/abstract/image_with_impl.hh: Likewise.
+	* oln/core/abstract/image_with_type.hh: Likewise.
+	* oln/core/impl/image_impl.hh: Likewise.
+	* oln/core/impl/image_array.hh: Likewise.
+	* oln/core/abstract/window_base.hh: Likewise.
+	* oln/core/abstract/windownd.hh: Likewise.
+	* oln/core/abstract/w_windownd.hh: Likewise.
+	* oln/core/abstract/neighborhoodnd.hh: Likewise.
+
+2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* oln/Makefile.am: Remove pnm.hh
+	
 	* oln/io/se_neighborhood.hh: Fix bug with binary images.
 	* oln/io/se_window.hh: Likewise.
 	* oln/io/pnm_read_data.hh: Likewise.
