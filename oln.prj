@@ -1,19 +1,29 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 8 31)
-(Parent-Version oln 8 28)
-(Version-Log "Index: olena/ChangeLog
+(Project-Version oln 8 32)
+(Parent-Version oln 8 31)
+(Version-Log "Index: ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-        * tests/io/Makefile.am: Add lena16b.pgm and lena16b.ppgm to
-        cleanfiles.
+	* Makefile.am: Generate UPGRADING.
 
-        * img/Makefile.am: Add test-cmap.pgm.
+	* NEWS: Update.
+
+Index: doc/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* dev/oln-dev.texi: Include upgrading.texi.
+	* Makefile.am: Adjust consequently.
+	* dev/upgrading.texi: New file.
+
+	* dev/thanks.texi, dev/srctree.texi: Update.
+
+	* ref/ref-types.tex: Fix typos.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 07 Apr 2003 20:17:36 +0200")
+(Checkin-Time "Wed, 09 Apr 2003 22:31:55 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -95,8 +105,8 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.14 640))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.30 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.15 640))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.31 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.15 640))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36 640))
@@ -121,14 +131,14 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (doc/ref/bin () :directory)
   (doc/ref/html () :directory)
   (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.3 640))
-  (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.6.1.1 640))
+  (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.6.1.2 640))
   (doc/ref/oln-ref.tex (oln/f/14_oln-ref.te 1.3.1.1 640))
-  (doc/ref/ref-types.tex (oln/g/34_ref-types. 1.5 640))
+  (doc/ref/ref-types.tex (oln/g/34_ref-types. 1.6 640))
   (doc/Makefile.am (oln/e/0_Makefile.a 1.14 640))
   (doc/ref/processing.tpl (oln/d/48_processing 1.16 640))
 
-  (Makefile.am (oln/n/32_Makefile.a 1.17.1.2.1.4 640))
-  (NEWS (oln/0_NEWS 1.13 640))
+  (Makefile.am (oln/n/32_Makefile.a 1.17.1.2.1.5 640))
+  (NEWS (oln/0_NEWS 1.14 640))
 
   (olena/img/face_se.pbm (oln/n/17_face_se.pb 1.1 640) :no-keywords)
   (olena/img/lena256.pgm (oln/n/14_lena256.pg 1.1 640) :no-keywords)
@@ -702,7 +712,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 ;; Files added by populate at Thu, 23 Jan 2003 15:43:23 +0100,
 ;; to version 7.39(w), by raph:
 
-  (doc/dev/Makefile.am (oln/p/38_Makefile.a 1.6.1.2 640))
+  (doc/dev/Makefile.am (oln/p/38_Makefile.a 1.6.1.3 640))
 
 ;; Files deleted by depopulate at Fri, 24 Jan 2003 10:54:23 +0100,
 ;; from version 7.40(w), by raph:
@@ -713,8 +723,8 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 ;; to version 7.40(w), by raph:
 
   (doc/dev/biblio.texi (oln/p/39_biblio.tex 1.3 640))
-  (doc/dev/thanks.texi (oln/p/40_thanks.tex 1.3 640))
-  (doc/dev/abstract.texi (oln/p/41_abstract.t 1.5 640))
+  (doc/dev/thanks.texi (oln/p/40_thanks.tex 1.4 640))
+  (doc/dev/abstract.texi (oln/p/41_abstract.t 1.6 640))
 
 ;; Files deleted by depopulate at Fri, 24 Jan 2003 11:04:25 +0100,
 ;; from version 7.40(w), by raph:
@@ -736,8 +746,8 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 ;; Files added by populate at Sat, 25 Jan 2003 19:02:34 +0100,
 ;; to version 7.45(w), by raph:
 
-  (doc/dev/srctree.texi (oln/p/45_srctree.te 1.4 640))
-  (doc/dev/conf.texi (oln/q/2_conf.texi 1.3 640))
+  (doc/dev/srctree.texi (oln/p/45_srctree.te 1.5 640))
+  (doc/dev/conf.texi (oln/q/2_conf.texi 1.4 640))
 
 ;; Files added by populate at Sat, 08 Feb 2003 13:38:09 +0100,
 ;; to version 7.48(w), by raph:
@@ -823,13 +833,13 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/topo/inter-pixel/internal/dir-iter.hh (oln/r/47_dir-iter.h 1.1 600))
   (olena/oln/topo/inter-pixel/internal/dir.hh (oln/r/48_dir.hh 1.1 600))
   (olena/oln/topo/inter-pixel/internal/dir.hxx (oln/r/49_dir.hxx 1.1 600))
+
+;; Files added by populate at Wed, 09 Apr 2003 22:18:27 +0200,
+;; to version 8.31(w), by nes:
+
+  (doc/dev/upgrading.texi (oln/r/50_upgrading. 1.1 600))
 )
 (Merge-Parents
-  (8.30 complete
-    (ChangeLog ChangeLog ChangeLog r) (olena/ChangeLog olena/ChangeLog olena/ChangeLog m)
-    (configure.ac configure.ac configure.ac r) (olena/img/Makefile.am olena/img/Makefile.am olena/img/Makefile.am m)
-    (olena/oln/io/pnm_read_common.hxx olena/oln/io/pnm_read_common.hxx olena/oln/io/pnm_read_common.hxx r) (olena/oln/io/pnm_read.hxx olena/oln/io/pnm_read.hxx olena/oln/io/pnm_read.hxx r)
-    (olena/tests/io/2d.cc olena/tests/io/2d.cc olena/tests/io/2d.cc r) 
-  )
+  (8.31 complete)
 )
 (New-Merge-Parents)

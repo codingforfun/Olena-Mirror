@@ -1,6 +1,17 @@
-Olena 0.8	April 1st, 2003
+Olena 0.8	April 10st, 2003
 
-	* ...
+	IMPORTANT NOTE: This version is not compatible with older
+	versions of Olena. The project has been split into three part,
+	so many header files have moved and new namespaces have been
+	created. Please read the UPGRADING file for more informations.
+	
+	* Many source code cleanups.
+	* The source code has been split into 3 parts: image 
+	  processing (olena/), data types (integre/) and meta-programming
+	  tools (metalic/).
+	* First part of the new static hierarchy paradigm implementation.
+	* Support for combinatorial maps.
+	* Many bug fixes.
 
 Olena 0.7	February 10, 2003
 

@@ -399,7 +399,3 @@ C++ linker flags to user the Zlib library. @xref{Using the Zlib library}.
 @xref{Template recursion support}.
 
 @end table
-
-
-
-

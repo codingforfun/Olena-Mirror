@@ -1,3 +1,9 @@
+2003-04-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Makefile.am: Generate UPGRADING.
+
+	* NEWS: Update.
+
 2003-04-06  Jean-Sébastien Mouret  <js@lrde.epita.fr>
 
 	* configure.ac: Check for pnmdepth.
