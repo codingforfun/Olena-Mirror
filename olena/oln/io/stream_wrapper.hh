@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_STREAM_WRAPPER_HH_
-# define OLENA_IO_STREAM_WRAPPER_HH_
+#ifndef OLENA_IO_STREAM_WRAPPER_HH
+# define OLENA_IO_STREAM_WRAPPER_HH
 
 # include <oln/config/system.hh>
 
@@ -51,15 +51,34 @@ namespace oln {
       template< stream_id W >
       struct stream_wrapper
       {
-	static const std::string& name()
-	{ static const std::string _name("-"); return _name; }
+	static const std::string&
+	name()
+	{ 
+	  static const std::string name_("-"); 
+	  return name_; 
+	}
       
-	static bool knows_ext(const std::string&) { return false; }
+	static bool 
+	knows_ext(const std::string&) 
+	{ 
+	  return false; 
+	}
       
-	static std::istream* wrap_in(std::string&) { return 0; }
-	static std::ostream* wrap_out(std::string&) { return 0; }
+	static std::istream* 
+	wrap_in(std::string&) 
+	{ 
+	  return 0; 
+	}
+
+	static std::ostream* 
+	wrap_out(std::string&) 
+	{ 
+	  return 0; 
+	}
       
-	static void find(std::list<std::string>&, const std::string&) {}
+	static void 
+	find(std::list<std::string>&, const std::string&) 
+	{}
       };
 
       /*---------------------------.
@@ -71,7 +90,8 @@ namespace oln {
       template <stream_id W>
       struct stream_wrappers_find_files
       {
-	static void doit(std::list<std::string>& names, const std::string& name)
+	static void 
+	doit(std::list<std::string>& names, const std::string& name)
 	{
 	  stream_wrapper<W>::find(names, name);
 	  return stream_wrappers_find_files<stream_id(unsigned(W)-1)>
@@ -84,7 +104,9 @@ namespace oln {
       template <>
       struct stream_wrappers_find_files<StreamNone>
       {
-	static void doit(std::list<std::string>&, const std::string&) {}
+	static void 
+	doit(std::list<std::string>&, const std::string&) 
+	{}
       };
 
       /*-----------------------.
@@ -97,9 +119,8 @@ namespace oln {
       template<stream_id W, typename T, class Reader>
       struct try_stream_wrappers_in
       {
-	static bool by_extension(T& output, 
-				 const std::string& name, 
-				 const std::string& ext)
+	static bool 
+	by_extension(T& output, const std::string& name, const std::string& ext)
 	{
 	  if (stream_wrapper<W>::knows_ext(ext))
 	    {
@@ -119,7 +140,8 @@ namespace oln {
 
 	// FIXME: it sounds strange to read wrapped file without
 	// matching its extension.
-	static bool by_data(T& output, const std::string& name)
+	static bool 
+	by_data(T& output, const std::string& name)
 	{
 	  std::string wrapped_name = name;
 	  if (std::istream* in = stream_wrapper<W>::wrap_in(wrapped_name))
@@ -140,10 +162,17 @@ namespace oln {
       template< typename T, class Reader >
       struct try_stream_wrappers_in<StreamNone, T, Reader>
       {
-	static bool by_extension(T&, const std::string&, const std::string&)
-	{ return false; }
+	static bool 
+	by_extension(T&, const std::string&, const std::string&)
+	{ 
+	  return false; 
+	}
 
-	static bool by_data(T&, const std::string&) { return false; }
+	static bool 
+	by_data(T&, const std::string&) 
+	{ 
+	  return false; 
+	}
       };
 
       /*------------------------.
@@ -156,9 +185,10 @@ namespace oln {
       template<stream_id W, typename T, class Writer>
       struct try_stream_wrappers_out
       {
-	static bool by_extension(const T& input, 
-				 const std::string& name, 
-				 const std::string& ext)
+	static bool 
+	by_extension(const T& input, 
+		     const std::string& name, 
+		     const std::string& ext)
 	{
 	  if (stream_wrapper<W>::knows_ext(ext))
 	    {
@@ -183,16 +213,17 @@ namespace oln {
       template< typename T, class Reader >
       struct try_stream_wrappers_out<StreamNone, T, Reader>
       {
-	static bool by_extension(const T&, 
-				 const std::string&, 
-				 const std::string&) 
-	{ return false; }
+	static bool 
+	by_extension(const T&, const std::string&, const std::string&) 
+	{ 
+	  return false; 
+	}
       };
 
-    } // end of internal
+    } // end of namespace internal
 
-  } // end of io
+  } // end of namespace io
 
-} // end of oln
+} // end of namespace oln
 
-#endif // ! OLENA_IO_STREAM_WRAPPER_HH_
+#endif // ! OLENA_IO_STREAM_WRAPPER_HH

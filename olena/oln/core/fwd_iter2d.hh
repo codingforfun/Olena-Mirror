@@ -48,6 +48,7 @@ namespace oln {
   template<class Exact>
   class fwd_iter2d : public abstract::iter2d<typename mlc::exact_vt<fwd_iter2d<Exact>, Exact>::ret>
   {
+
   public:
 
     typedef typename mlc::exact_vt<fwd_iter2d<Exact>, Exact>::ret exact_type;
@@ -64,31 +65,43 @@ namespace oln {
     template<class Image>
     fwd_iter2d(const Image& ima) :
       super_type(ima.size())
-    {
+    {}
+
+    template<class U> 
+    U 
+    operator=(U u) 
+    { 
+      return super_iter_type::operator=(u); 
     }
 
-    template<class U> U operator=(U u) { return super_iter_type::operator=(u); }
-
-    static std::string name() { return "fwd_iter2d<" + Exact::name() + ">"; }
+    static std::string 
+    name() 
+    { 
+      return "fwd_iter2d<" + Exact::name() + ">"; 
+    }
 
   protected:
 
-    void goto_begin_()
+    void 
+    goto_begin_()
     {
       this->p_.row() = this->p_.col() = 0;
     }
 
-    void _goto_end()
+    void 
+    goto_end_()
     {
       this->p_.row() = this->nrows_;
     }
 
-    bool is_at_end_() const
+    bool 
+    is_at_end_() const
     {
       return this->p_.row() == this->nrows_;
     }
 
-    void goto_next_()
+    void 
+    goto_next_()
     {
       ++this->p_.col();
       if (this->p_.col() < this->ncols_)

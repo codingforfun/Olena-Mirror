@@ -65,30 +65,41 @@ namespace oln {
     
     friend class abstract::window_base<abstract::neighborhood<neighborhood1d>, neighborhood1d>;
 
-    neighborhood1d& add(const dpoint_type& dp)
+    neighborhood1d& 
+    add(const dpoint_type& dp)
     {
       this->exact().add_(dp);
       return this->exact().add_(-dp);
     }
 
-    neighborhood1d& add(coord col)
+    neighborhood1d& 
+    add(coord col)
     {
       return this->add(dpoint_type(col));
     }
 
-    neighborhood1d() : super_type() {}
-    neighborhood1d(unsigned size) : super_type(size) {}
+    neighborhood1d() : super_type() 
+    {}
+    
+    neighborhood1d(unsigned size) : super_type(size) 
+    {}
+    
     neighborhood1d(unsigned n, const coord crd[]) : super_type()
     {
       for (unsigned i = 0; i < n; ++i)
 	add(dpoint_type(crd[i]));
     }
 
-    static std::string name() { return std::string("neighborhood1d"); }
+    static std::string 
+    name() 
+    { 
+      return std::string("neighborhood1d"); 
+    }
 
   protected:
 
-    coord delta_update_(const dpoint_type& dp)
+    coord 
+    delta_update_(const dpoint_type& dp)
     {
       delta_(abs(dp.col()));
       return delta_;
@@ -99,16 +110,16 @@ namespace oln {
 
   // std neighb
 
-  inline const
-  neighborhood1d& neighb_c2()
+  inline const neighborhood1d& 
+  neighb_c2()
   {
     static const coord crd[] = {  1 };
     static const neighborhood1d neighb(1, crd);
     return neighb;
   }
 
-  inline
-  neighborhood1d mk_neighb_segment(unsigned width)
+  inline neighborhood1d 
+  mk_neighb_segment(unsigned width)
   {
     precondition(width>= 3 && (width % 2) == 1);
     neighborhood1d neighb(width);
@@ -118,8 +129,8 @@ namespace oln {
     return neighb;
   }
 
-  inline
-  window1d mk_win_from_neighb(const neighborhood1d& n)
+  inline window1d 
+  mk_win_from_neighb(const neighborhood1d& n)
   {
     window1d win(n.card());
     for (unsigned i = 0; i < n.card(); ++i)

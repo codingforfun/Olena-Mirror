@@ -31,9 +31,11 @@
 template <class T>
 struct max_accumulator
 {
-  max_accumulator (T t) : acc_(t) {}
+  max_accumulator (T t) : acc_(t) 
+  {}
 
-  void operator()(T t)
+  void 
+  operator()(T t)
   {
     if (t > acc_)
       acc_ = t;
@@ -45,7 +47,9 @@ struct max_accumulator
   }
 
 private:
+  
   T acc_;
+
 };
 
 #endif // OLENA_CORE_ACCUM_HH

@@ -42,32 +42,32 @@ namespace mlc
   namespace internal
   {
 
-    class _lbrk  {};
-    class _pbrk  {};
+    class lbrk_  {};
+    class pbrk_  {};
     
     template<class T>
-    struct _x {
-      _x(T val) : ue(val) {}
+    struct x_ {
+      x_(T val) : ue(val) {}
       T ue;
     };
-    template<> struct _x<void> {};
-    template<> struct _x<_lbrk>;
-    template<> struct _x<_end>;
+    template<> struct x_<void> {};
+    template<> struct x_<lbrk_>;
+    template<> struct x_<end_type>;
     
   } // end of internal
 
   // cross means origin
 
   template<class T> inline
-  internal::_x<T>
-  x(T val) { return internal::_x<T>(val); }
+  internal::x_<T>
+  x(T val) { return internal::x_<T>(val); }
 
   inline
-  internal::_x<void>
-  x() { return internal::_x<void>(); }
+  internal::x_<void>
+  x() { return internal::x_<void>(); }
 
-  static const internal::_lbrk  lbrk  = internal::_lbrk();
-  static const internal::_pbrk  pbrk  = internal::_pbrk();
+  static const internal::lbrk_  lbrk  = internal::lbrk_();
+  static const internal::pbrk_  pbrk  = internal::pbrk_();
 
 } // end of mlc
 

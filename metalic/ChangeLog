@@ -1,5 +1,33 @@
+2003-08-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+        * mlc/contract.hh: Fix coding style.
+        * mlc/objs.hh: Likewise.
+        * mlc/typeadj.hh: Likewise.
+        * mlc/type.hh: Likewise.
+        * mlc/array/1d.hh: Likewise.
+        * mlc/array/1d.hxx: Likewise.
+        * mlc/array/2d.hh: Likewise.
+        * mlc/array/2d.hxx: Likewise.
+        * mlc/array/3d.hh: Likewise.
+        * mlc/array/3d.hxx: Likewise.
+        * mlc/array/nd.hh: Likewise.
+        * mlc/bool.hh: Likewise.
+        * mlc/cmp.hh: Likewise.
+        * mlc/optional.hh: Likewise.
+        * mlc/is_a.hh: Likewise.
+        * mlc/math.hh: Likewise.
+        * mlc/array/objs.hh: Likewise.
+        * tests/main/tests/ensure3: Likewise.
+        * tests/main/tests/ensure2: Likewise.
+
 2003-08-06  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* mlc/type.hh: Remove dead, useless or obsolete code.
+
+	* mlc/optional.hh: Disable non tested code.
+
+2003-08-06  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* mlc/type.hh: Fix coding style.
 
 2003-08-06  Nicolas Burrus  <burrus_n@lrde.epita.fr>

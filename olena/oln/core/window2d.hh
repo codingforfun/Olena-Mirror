@@ -53,7 +53,9 @@ namespace oln {
 
   class window2d : public abstract::windownd< window2d >
   {
+
   public:
+
     typedef abstract::windownd<window2d > super_type;
     typedef window2d self_type;
 
@@ -65,19 +67,25 @@ namespace oln {
 
     friend class abstract::window_base<abstract::window<window2d>, window2d>;
 
-    window2d& add(const dpoint_type& dp)
+    window2d& 
+    add(const dpoint_type& dp)
     {
       return this->exact().add_(dp);
     }
 
-    window2d& add(coord row, coord col)
+    window2d& 
+    add(coord row, coord col)
     {
       dpoint_type dp(row, col);
       return add(dp);
     }
 
-    window2d() : super_type() {}
-    window2d(unsigned size) : super_type(size) {}
+    window2d() : super_type() 
+    {}
+    
+    window2d(unsigned size) : super_type(size) 
+    {}
+
     window2d(unsigned n, const coord crd[]) : super_type(n)
     {
       for (unsigned i = 0; i < 2 * n; i += 2)
@@ -90,15 +98,22 @@ namespace oln {
       r.assign(*this);
     }
 
-    window2d& operator=(const io::internal::anything& r)
+    window2d& 
+    operator=(const io::internal::anything& r)
     {
       return r.assign(*this);
     }
 
-    static std::string name() { return std::string("window2d"); }
+    static std::string 
+    name() 
+    { 
+      return std::string("window2d"); 
+    }
 
   protected:
-    coord delta_update_(const dpoint_type& dp)
+    
+    coord 
+    delta_update_(const dpoint_type& dp)
     {
       delta_(abs(dp.row()));
       delta_(abs(dp.col()));

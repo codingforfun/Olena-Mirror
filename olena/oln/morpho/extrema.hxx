@@ -31,7 +31,7 @@ namespace internal {
   typename mute<I, DestType>::ret
   create_minima_image_from_bin_(const abstract::non_vectorial_image<I>& input)
   {
-   oln_iter_type(I) p(input);
+    oln_iter_type(I) p(input);
     typename mute<I, DestType>::ret output(input.size());
     for_all (p)
       // FIXME: min() and max() should be inf() and sup()
@@ -48,7 +48,7 @@ namespace internal {
   typename mute<I, ntg::bin>::ret
   ima_to_bin_(const abstract::non_vectorial_image<I>& input)
   {
-   oln_iter_type(I) p(input);
+    oln_iter_type(I) p(input);
     typename mute<I, ntg::bin>::ret output(input.size());
     for_all (p)
       output[p] = (input[p] ? true : false);
@@ -84,14 +84,15 @@ namespace internal {
  * exo: out.pgm
  =*/
 template<class I, class I2, class N>
-oln_concrete_type(I) minima_imposition(const abstract::non_vectorial_image<I>& input,
-			      const abstract::non_vectorial_image<I2>& minima_map,
-			      const abstract::neighborhood<N>& Ng)
+oln_concrete_type(I) 
+  minima_imposition(const abstract::non_vectorial_image<I>& input,
+		    const abstract::non_vectorial_image<I2>& minima_map,
+		    const abstract::neighborhood<N>& Ng)
 {
   mlc::eq<I::dim, I2::dim>::ensure();
   mlc::eq<I::dim, N::dim>::ensure();
   precondition(input.size() == minima_map.size());
- oln_concrete_type(I) mm =
+  oln_concrete_type(I) mm =
     internal::create_minima_image_from_bin_<oln_value_type(I)>(minima_map);
   return geodesic_reconstruction_erosion(mm,
 					 arith::min(arith::plus_cst(input,oln_value_type(I)(1)),
@@ -123,8 +124,9 @@ oln_concrete_type(I) minima_imposition(const abstract::non_vectorial_image<I>& i
  * exo: out.pgm
  =*/
 template<class I, class N>
-typename mute<I, ntg::bin>::ret regional_minima(const abstract::non_vectorial_image<I>& input,
-						const abstract::neighborhood<N>& Ng)
+typename mute<I, ntg::bin>::ret 
+regional_minima(const abstract::non_vectorial_image<I>& input,
+		const abstract::neighborhood<N>& Ng)
 {
   mlc::eq<I::dim, N::dim>::ensure();
   return

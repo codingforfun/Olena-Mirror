@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,14 +31,16 @@
 # include <oln/basics.hh>
 
 namespace oln {
+
   namespace level {
 
     template<class I1, class I2> inline
-    bool is_greater_or_equal(const abstract::image<I1>& input1,
-			     const abstract::image<I2>& input2)
+    bool 
+    is_greater_or_equal(const abstract::image<I1>& input1,
+			const abstract::image<I2>& input2)
     {
       precondition(input1.size() == input2.size());
-     oln_iter_type(I1) p(input1);
+      oln_iter_type(I1) p(input1);
       for_all (p)
 	if (!(input1[p] >= input2[p]))
 	  return false;
@@ -46,11 +48,12 @@ namespace oln {
     }
 
     template<class I1, class I2> inline
-    bool is_greater(const abstract::image<I1>& input1,
-		    const abstract::image<I2>& input2)
+    bool 
+    is_greater(const abstract::image<I1>& input1,
+	       const abstract::image<I2>& input2)
     {
       precondition(input1.size() == input2.size());
-     oln_iter_type(I1) p(input1);
+      oln_iter_type(I1) p(input1);
       for_all (p)
 	if (!(input1[p] > input2[p]))
 	  return false;
@@ -58,11 +61,12 @@ namespace oln {
     }
 
     template<class I1, class I2> inline
-    bool is_lower_or_equal(const abstract::image<I1>& input1,
-			   const abstract::image<I2>& input2)
+    bool 
+    is_lower_or_equal(const abstract::image<I1>& input1,
+		      const abstract::image<I2>& input2)
     {
       precondition(input1.size() == input2.size());
-     oln_iter_type(I1) p(input1);
+      oln_iter_type(I1) p(input1);
       for_all (p)
 	if (!(input1[p] <= input2[p]))
 	  return false;
@@ -70,11 +74,12 @@ namespace oln {
     }
 
     template<class I1, class I2> inline
-    bool is_lower(const abstract::image<I1>& input1,
-		  const abstract::image<I2>& input2)
+    bool 
+    is_lower(const abstract::image<I1>& input1,
+	     const abstract::image<I2>& input2)
     {
       precondition(input1.size() == input2.size());
-     oln_iter_type(I1) p(input1);
+      oln_iter_type(I1) p(input1);
       for_all (p)
 	if (!(input1[p] < input2[p]))
 	  return false;
@@ -82,18 +87,20 @@ namespace oln {
     }
 
     template<class I1, class I2> inline
-    bool is_equal(const abstract::image<I1>& input1,
-		  const abstract::image<I2>& input2)
+    bool 
+    is_equal(const abstract::image<I1>& input1,
+	     const abstract::image<I2>& input2)
     {
       precondition(input1.size() == input2.size());
-     oln_iter_type(I1) p(input1);
+      oln_iter_type(I1) p(input1);
       for_all (p)
 	if (!(input1[p] == input2[p]))
 	  return false;
       return true;
     }
 
-  } // end of level
-} // end of oln
+  } // end of namespace level
 
-#endif // OLENA_LEVEL_COMPARE_HH
+} // end of namespace oln
+
+#endif // ! OLENA_LEVEL_COMPARE_HH

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_UTILS_HH_
-# define OLENA_IO_UTILS_HH_
+#ifndef OLENA_IO_UTILS_HH
+# define OLENA_IO_UTILS_HH
 
 # include <oln/config/system.hh>
 
@@ -40,7 +40,8 @@ namespace oln {
 
       struct utils
       {
-	static std::string extension(const std::string& name)
+	static std::string
+	extension(const std::string& name)
 	{
 	  std::string ext;
 	  int pos = name.rfind('.');
@@ -54,10 +55,10 @@ namespace oln {
 	}
       };
 
-    } // end of internal
+    } // end of namespace internal
 
-  } // end of io
+  } // end of namespace io
 
-} // end of oln
+} // end of namespace oln
 
-#endif // ! OLENA_IO_UTILS_HH_
+#endif // ! OLENA_IO_UTILS_HH

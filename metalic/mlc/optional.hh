@@ -28,6 +28,11 @@
 #ifndef METALIC_OPTIONAL_HH
 # define METALIC_OPTIONAL_HH
 
+// FIXME: this code is neither tested or used anywhere. Should stay
+// disabled until at least one test is written. -- Nicolas Burrus
+
+# if 0
+
 namespace mlc 
 {
 
@@ -108,5 +113,7 @@ namespace mlc
 
 
 } // end of mlc
+
+# endif
 
 #endif // METALIC_OPTIONAL_HH

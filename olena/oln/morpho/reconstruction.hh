@@ -65,7 +65,7 @@ namespace oln {
        * wontcompile: fixme
        =*/
       template<class I1, class I2, class N>
-     oln_concrete_type(I1)
+      oln_concrete_type(I1)
 	geodesic_reconstruction_dilation(const abstract::non_vectorial_image<I1> & marker,
 					 const abstract::non_vectorial_image<I2> & mask,
 					 const abstract::neighborhood<N>& Ng)
@@ -74,11 +74,11 @@ namespace oln {
 	mlc::eq<I1::dim, N::dim>::ensure();
 	precondition(marker.size() == mask.size());
 	precondition(level::is_greater_or_equal(mask, marker));
-oln_concrete_type(I1) output = marker.clone();
+	oln_concrete_type(I1) output = marker.clone();
 	bool non_stability = true;
 	while (non_stability)
 	  {
-	   oln_concrete_type(I1) work = geodesic_dilation(output, mask, Ng);
+	    oln_concrete_type(I1) work = geodesic_dilation(output, mask, Ng);
 	    non_stability = !(level::is_equal(work, output));
 	    output = work;
 	  }
@@ -113,7 +113,7 @@ oln_concrete_type(I1) output = marker.clone();
        * wontcompile: fixme
        =*/
       template<class I1, class I2, class N>
-     oln_concrete_type(I1)
+      oln_concrete_type(I1)
 	geodesic_reconstruction_dilation(const abstract::non_vectorial_image<I1> & marker,
 					 const abstract::non_vectorial_image<I2> & mask,
 					 const abstract::neighborhood<N>& Ng)
@@ -122,19 +122,19 @@ oln_concrete_type(I1) output = marker.clone();
 	mlc::eq<I1::dim, N::dim>::ensure();
 	precondition(marker.size() == mask.size());
 	precondition(level::is_greater_or_equal(mask, marker));
-
+	
 	// Conversion of neighborhood into a SE.
 	typedef typename abstract::neighborhood<N>::win_type E;
 	E se_plus = get_plus_se_p(convert::ng_to_cse(Ng));
 	E se_minus = get_minus_se_p(convert::ng_to_cse(Ng));
-
-oln_concrete_type(I1) output = marker.clone();
+	
+	oln_concrete_type(I1) output = marker.clone();
 	bool non_stability = true;
 	typename I1::fwd_iter_type fwd_p(output);
 	typename I1::bkd_iter_type bkd_p(output);
 	while (non_stability)
 	  {
-	   oln_concrete_type(I1) work = output.clone();
+	    oln_concrete_type(I1) work = output.clone();
 	    work.border_adapt_copy(Ng.delta());
 	    for_all (fwd_p)
 	      work[fwd_p] = min(morpho::max(work, fwd_p, se_plus), mask[fwd_p]);
@@ -146,24 +146,24 @@ oln_concrete_type(I1) output = marker.clone();
 	return output;
       }
     }// sequential
-
+    
 
     namespace hybrid {
 
       namespace internal {
 
 	template<class P, class I1, class I2, class E> inline
-	static
-	bool exist_init_dilation(const abstract::point<P>& p,
-				 const abstract::non_vectorial_image<I1>& marker,
-				 const abstract::non_vectorial_image<I2>& mask,
-				 const abstract::struct_elt<E>& se)
+	static bool 
+	exist_init_dilation(const abstract::point<P>& p,
+			    const abstract::non_vectorial_image<I1>& marker,
+			    const abstract::non_vectorial_image<I2>& mask,
+			    const abstract::struct_elt<E>& se)
 	{
 	  mlc::eq<I1::dim, I2::dim>::ensure();
 	  mlc::eq<I1::dim, E::dim>::ensure();
 	  mlc::eq<I1::dim, P::dim>::ensure();
-
-	  Neighb(E) q(se, p);
+	  
+	  oln_neighb_type(E) q(se, p);
 	  for_all (q)
 	    if (marker.hold(q) && (marker[q] < marker[p]) && (marker[q] < mask[q]))
 	      return true;
@@ -197,7 +197,7 @@ oln_concrete_type(I1) output = marker.clone();
        * wontcompile: fixme
        =*/
       template<class I1, class I2, class N>
-     oln_concrete_type(I1)
+      oln_concrete_type(I1)
 	geodesic_reconstruction_dilation(const abstract::non_vectorial_image<I1> & marker,
 					 const abstract::non_vectorial_image<I2> & mask,
 					 const abstract::neighborhood<N>& Ng)
@@ -208,7 +208,7 @@ oln_concrete_type(I1) output = marker.clone();
 	precondition(marker.size() == mask.size());
 	precondition(level::is_greater_or_equal(mask, marker));
 
-oln_concrete_type(I1) output = marker.clone();
+	oln_concrete_type(I1) output = marker.clone();
 	output.border_adapt_copy(Ng.delta());
 	{
 	  typedef typename abstract::neighborhood<N>::win_type E;
@@ -231,9 +231,9 @@ oln_concrete_type(I1) output = marker.clone();
 	  // Propagation Step
 	  while (!fifo.empty())
 	    {
-	     oln_point_type(I1) p = fifo.front();
+	      oln_point_type(I1) p = fifo.front();
 	      fifo.pop();
-	      Neighb(N) q(Ng, p);
+	      oln_neighb_type(N) q(Ng, p);
 	      for_all (q) if (output.hold(q))
 		{
 		  if ((output[q] < output[p]) && (mask[q] != output[q]))
@@ -274,7 +274,7 @@ oln_concrete_type(I1) output = marker.clone();
        * wontcompile: fixme
        =*/
       template<class I1, class I2, class N>
-     oln_concrete_type(I1)
+      oln_concrete_type(I1)
 	geodesic_reconstruction_erosion(const abstract::non_vectorial_image<I1> & marker,
 					const abstract::non_vectorial_image<I2> & mask,
 					const abstract::neighborhood<N>& Ng)
@@ -283,11 +283,11 @@ oln_concrete_type(I1) output = marker.clone();
 	mlc::eq<I1::dim, N::dim>::ensure();
 	precondition(marker.size() == mask.size());
 	precondition(level::is_greater_or_equal(marker, mask));
-oln_concrete_type(I1) output = marker.clone();
+	oln_concrete_type(I1) output = marker.clone();
 	bool non_stability = true;
 	while (non_stability)
 	  {
-	   oln_concrete_type(I1) work = geodesic_erosion(output, mask, Ng);
+	    oln_concrete_type(I1) work = geodesic_erosion(output, mask, Ng);
 	    non_stability = !(level::is_equal(work, output));
 	    output = work;
 	  }
@@ -322,7 +322,7 @@ oln_concrete_type(I1) output = marker.clone();
        * wontcompile: fixme
        =*/
       template<class I1, class I2, class N>
-     oln_concrete_type(I1)
+      oln_concrete_type(I1)
 	geodesic_reconstruction_erosion(const abstract::non_vectorial_image<I1>& marker,
 					const abstract::non_vectorial_image<I2>& mask,
 					const abstract::neighborhood<N>& Ng)
@@ -335,14 +335,14 @@ oln_concrete_type(I1) output = marker.clone();
 	typedef typename abstract::neighborhood<N>::win_type E;
 	E se_plus = get_plus_se_p(convert::ng_to_cse(Ng));
 	E se_minus = get_minus_se_p(convert::ng_to_cse(Ng));
-oln_concrete_type(I1) output = marker.clone();
+	oln_concrete_type(I1) output = marker.clone();
 
 	bool non_stability = true;
 	typename I1::fwd_iter_type fwd_p(output);
 	typename I1::bkd_iter_type bkd_p(output);
 	while (non_stability)
 	  {
-	   oln_concrete_type(I1) work = output.clone();
+	    oln_concrete_type(I1) work = output.clone();
 	    work.border_adapt_copy(Ng.delta());
 	    for_all (fwd_p)
 	      work[fwd_p] = max(morpho::min(work, fwd_p, se_plus), mask[fwd_p]);
@@ -359,17 +359,17 @@ oln_concrete_type(I1) output = marker.clone();
     namespace hybrid {
       namespace internal {
 	template<class P, class I1, class I2, class E> inline
-	static
-	bool exist_init_erosion(const abstract::point<P>& p,
-				const abstract::non_vectorial_image<I1>& marker,
-				const abstract::non_vectorial_image<I2>& mask,
-				const abstract::struct_elt<E>& se)
+	static bool 
+	exist_init_erosion(const abstract::point<P>& p,
+			   const abstract::non_vectorial_image<I1>& marker,
+			   const abstract::non_vectorial_image<I2>& mask,
+			   const abstract::struct_elt<E>& se)
 	{
 	  mlc::eq<I1::dim, I2::dim>::ensure();
 	  mlc::eq<I1::dim, E::dim>::ensure();
 	  mlc::eq<I1::dim, P::dim>::ensure();
 
-	  Neighb(E) q(se, p);
+	  oln_neighb_type(E) q(se, p);
 	  for_all (q)
 	    if (marker.hold(q) && (marker[q] > marker[p]) && (marker[q] > mask[q]))
 	      return true;
@@ -403,7 +403,7 @@ oln_concrete_type(I1) output = marker.clone();
        =*/
 
       template<class I1, class I2, class N>
-     oln_concrete_type(I1)
+      oln_concrete_type(I1)
 	geodesic_reconstruction_erosion(const abstract::non_vectorial_image<I1> & marker,
 					const abstract::non_vectorial_image<I2> & mask,
 					const abstract::neighborhood<N>& Ng)
@@ -414,7 +414,7 @@ oln_concrete_type(I1) output = marker.clone();
 	precondition(marker.size() == mask.size());
 	precondition(level::is_greater_or_equal(marker, mask));
 
-oln_concrete_type(I1) output = marker.clone();
+	oln_concrete_type(I1) output = marker.clone();
 	output.border_adapt_copy(Ng.delta());
 	{
 	  typedef typename abstract::neighborhood<N>::win_type E;
@@ -437,9 +437,9 @@ oln_concrete_type(I1) output = marker.clone();
 	  //  	 Propagation Step
 	  while (!fifo.empty())
 	    {
-	     oln_point_type(I1) p = fifo.front();
+	      oln_point_type(I1) p = fifo.front();
 	      fifo.pop();
-	      Neighb(N) q(Ng, p);
+	      oln_neighb_type(N) q(Ng, p);
 	      for_all (q) if (output.hold(q))
 		{
 		  if ((output[q] > output[p]) && (mask[q] != output[q]))

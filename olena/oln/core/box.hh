@@ -43,27 +43,69 @@ namespace oln {
     enum { d = point_type::dim };
     
     box();
-    unsigned    dim() const;
-    void	add(point_type p);
-    void	add(const box<PointType>& p);
-    bool	overlay(unsigned dim, const box<PointType>& p) const;
-    void	make_consistent();
-    point_type	mass_center();
-    point_type	box_center();
-    point_type	mass_center() const;
-    point_type	box_center() const;
-    point_type	top() const;
-    unsigned	card() const;
-    unsigned	inner_boxes_card() const;
-    point_type	bottom() const;
-    unsigned	width() const;
-    unsigned	height() const;
-    unsigned	integrale() const;
-    float	inner_boxes_mean_dim(unsigned i) const;
-    unsigned	volume() const;
-    unsigned	area() const;
-    float	density() const;
-    float	square_ratio() const;
+
+    unsigned    
+    dim() const;
+    
+    void	
+    add(point_type p);
+    
+    void	
+    add(const box<PointType>& p);
+    
+    bool	
+    overlay(unsigned dim, const box<PointType>& p) const;
+    
+    void	
+    make_consistent();
+    
+    point_type	
+    mass_center();
+    
+    point_type	
+    box_center();
+    
+    point_type	
+    mass_center() const;
+    
+    point_type	
+    box_center() const;
+    
+    point_type	
+    top() const;
+    
+    unsigned	
+    card() const;
+    
+    unsigned	
+    inner_boxes_card() const;
+    
+    point_type	
+    bottom() const;
+    
+    unsigned	
+    width() const;
+    
+    unsigned	
+    height() const;
+    
+    unsigned	
+    integrale() const;
+    
+    float	
+    inner_boxes_mean_dim(unsigned i) const;
+    
+    unsigned	
+    volume() const;
+    
+    unsigned	
+    area() const;
+    
+    float	
+    density() const;
+    
+    float	
+    square_ratio() const;
     
   private:
     bool	not_consistent_;

@@ -26,7 +26,7 @@ compare_images(F& functor, Dist distance,
 	       const abstract::image<I1>& im1, const abstract::image<I2>& im2)
 {
   precondition(im1.size() == im2.size());
- oln_iter_type(I1) p(im1);
+  oln_iter_type(I1) p(im1);
   for_all(p)
     functor(distance(im1[p], im2[p]));
   return functor;

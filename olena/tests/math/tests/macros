@@ -1,3 +1,4 @@
+//								    -*- c++ -*-
 #include <ntg/int.hh>
 #include <oln/math/macros.hh>
 

@@ -25,8 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_LEVEL_CC_HH	// connected components
+#ifndef OLENA_LEVEL_CC_HH
 # define OLENA_LEVEL_CC_HH
+
+/*
+  Connected components.
+*/
 
 # include <oln/basics.hh>
 // FIXME: really need all ?
@@ -41,6 +45,7 @@
 # include <vector>
 
 namespace oln {
+
   namespace level {
 
     // optional behavior for this algorithm.
@@ -81,13 +86,14 @@ namespace oln {
       typename mute<I, DestType>::ret output(input.size());
       level::fill(output, 0);
 
-      typedef std::set<oln_point_type(I), oln::internal::default_less<oln_point_type(I) > >
-	points_set;
+      typedef std::set<oln_point_type(I), 
+	               oln::internal::default_less<oln_point_type(I) > >
+	      points_set;
 
       I is_processed(input.size());
       level::fill(is_processed, false);
       DestType cur_label = 1;
-     oln_iter_type(I) p(input);
+      oln_iter_type(I) p(input);
       for_all(p) if ((input[p] == true)&& (is_processed[p] == false))
 	{
 	  //propagation front
@@ -105,7 +111,7 @@ namespace oln {
 		   ++i)
 		{
 		  component.insert(*i);
-		  Neighb(E) p_prime(se, *i);
+		  oln_neighb_type(E) p_prime(se, *i);
 		  for_all (p_prime) if(input.hold(p_prime) &&
 				       (input[p_prime] == true))
 		    next.insert(p_prime.cur());
@@ -142,12 +148,12 @@ namespace oln {
     template <class I>
     typename mute<I, ntg::bin>::ret
     extract_i_cc(const abstract::image<I>& input,
-		oln_value_type(I) i)
+		 oln_value_type(I) i)
     {
-
+      
       typename mute<I, ntg::bin>::ret output(input.size());
       level::fill(output, false);
-     oln_iter_type(I) p(input);
+      oln_iter_type(I) p(input);
       for_all(p)
 	if (input[p] == i)
 	  output[p] = true;
@@ -155,13 +161,13 @@ namespace oln {
     }
 
     template <class I>
-   oln_value_type(I) get_n_cc(const abstract::image<I>& input)
+    oln_value_type(I) get_n_cc(const abstract::image<I>& input)
     {
       return  fold(arith::f_max<oln_value_type(I)>(), input);
     }
+    
+  } // end of namespace level
+  
+} // end of namespace oln
 
-  } // end of level.
-
-} // end of oln.
-
-#endif
+#endif // ! OLENA_LEVEL_CC_HH

@@ -35,7 +35,8 @@
 namespace oln {
 
   template<class T>
-  void pretreat_1d_data_(T*& buffer, T*& buffer_, const image1d_size& s)
+  void 
+  pretreat_1d_data_(T*& buffer, T*& buffer_, const image1d_size& s)
   {
     precondition(s.ncols() > 0 && s.border() >= 0);
     buffer_ = buffer + s.border(); 
@@ -62,6 +63,7 @@ namespace oln {
     class image_array1d :
       public image_array<T, image_array1d<T> >
     {
+
     public:
 
       typedef image_array1d<T> self_type;
@@ -86,40 +88,46 @@ namespace oln {
 
     protected:
 
-      bool hold_(const point_type& p) const
+      bool 
+      hold_(const point_type& p) const
       {
 	return
 	  p.col() >= 0 &&
 	  p.col() < this->size_.ncols();
       }
 
-      bool hold_large_(const point_type& p) const
+      bool 
+      hold_large_(const point_type& p) const
       {
 	return
 	  p.col() >= - this->size_.border() &&
 	  p.col() < this->size_.ncols() + this->size_.border();
       }
 
-      value_type& at_(const point_type& p)
+      value_type& 
+      at_(const point_type& p)
       {
 	return at_(p.col());
       }
 
-      value_type& at_(coord col)
+      value_type& 
+      at_(coord col)
       {
 	invariant(this->buffer_ != 0);
 	precondition_hold_large(point_type(col));
 	return buffer__[col];
       }
 
-      size_t len_(const size_type& s) const
+      size_t 
+      len_(const size_type& s) const
       {
 	coord ncols_eff = s.ncols() + 2 * s.border();
 	return size_t(ncols_eff);
       }
 
       // borders
-      void border_reallocate_and_copy_(coord new_border, bool copy_border) 
+      void 
+      border_reallocate_and_copy_(coord new_border, bool copy_border) 
       {
 	T* buffer = 0;
 	// first allocate
@@ -142,7 +150,8 @@ namespace oln {
 	
       }
             
-      void border_replicate_(void) 
+      void 
+      border_replicate_(void) 
       {
 	for (coord j = - this->size_.border(); j; ++j)
 	  {
@@ -151,7 +160,8 @@ namespace oln {
 	  }
       }
 
-      void border_mirror_(void)
+      void 
+      border_mirror_(void)
       {
 	for (coord j = - this->size_.border(); j; ++j)
 	  {
@@ -160,7 +170,8 @@ namespace oln {
 	  }
       }
 
-      void border_assign_(value_type val) 
+      void 
+      border_assign_(value_type val) 
       {
 	for (coord j = - this->size_.border(); j; ++j)
           {
@@ -170,7 +181,9 @@ namespace oln {
       }
 
     private:
+
       T* buffer__;
+
     };
 
   } // end of namespace impl

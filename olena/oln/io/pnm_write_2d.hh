@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_PNM_WRITE_2D_HH_
-# define OLENA_IO_PNM_WRITE_2D_HH_
+#ifndef OLENA_IO_PNM_WRITE_2D_HH
+# define OLENA_IO_PNM_WRITE_2D_HH
 
 # include <ntg/basics.hh>
 # include <oln/core/traverse.hh>
@@ -46,9 +46,8 @@ namespace oln {
       `------------------*/
 
       // FIXME: should be in a .cc file ?
-      static bool pnm_write_header2d(std::ostream& s, 
-				     char type, 
-				     const pnm2d_info& info)
+      static bool 
+      pnm_write_header2d(std::ostream& s, char type, const pnm2d_info& info)
       {
 	s.put('P'); s.put(type); s.put('\n');
 	s << "# Creator: OLENA / Epita-LRDE" << std::endl
@@ -68,20 +67,23 @@ namespace oln {
       {
 	static const char pnm_id = (W == WritePnmPlain) ? '1' : '4';
 
-	static std::string name()
+	static std::string
+	name()
 	{ 
-	  static const std::string _name("pnm/P");
-	  return _name + pnm_id;
+	  static const std::string name_("pnm/P");
+	  return name_ + pnm_id;
 	}
 	
-	static bool knows_ext(const std::string& ext)
+	static bool
+	knows_ext(const std::string& ext)
 	{ 
 	  if (W == WritePnmPlain)
 	    return (ext == "ppbm") || (ext == "pbm");
 	  return ext == "pbm";
 	}
 
-	static bool write(std::ostream& out, const I& im)
+	static bool
+	write(std::ostream& out, const I& im)
 	{
 	  pnm2d_info info;
 	  info.cols = im.ncols();
@@ -106,20 +108,23 @@ namespace oln {
       {
 	static const char pnm_id = (W == WritePnmPlain) ? '2' : '5';
 
-	static std::string name()
+	static std::string
+	name()
 	{ 
-	  static const std::string _name("pnm/P");	  
-	  return _name + pnm_id;
+	  static const std::string name_("pnm/P");	  
+	  return name_ + pnm_id;
 	}
 
-	static bool knows_ext(const std::string& ext)
+	static bool
+	knows_ext(const std::string& ext)
 	{ 
 	  if (W == WritePnmPlain)
 	    return (ext == "ppgm") || (ext == "pgm");
 	  return ext == "pgm";
 	}
 
-	static bool write(std::ostream& out, const I& im)
+	static bool
+	write(std::ostream& out, const I& im)
 	{
 	  if (ntg_max_val(oln_value_type(I)) > ntg::to_ntg(65535U))
 	    return false;
@@ -149,20 +154,23 @@ namespace oln {
       {
 	static const char pnm_id = (W == WritePnmPlain) ? '3' : '6';
 
-	static std::string name()
+	static std::string
+	name()
 	{ 
-	  static const std::string _name("pnm/P");
-	  return _name + pnm_id;
+	  static const std::string name_("pnm/P");
+	  return name_ + pnm_id;
 	}
 
-	static bool knows_ext(const std::string& ext)
+	static bool
+	knows_ext(const std::string& ext)
 	{ 
 	  if (W == WritePnmPlain)
 	    return (ext == "pppm") || (ext == "ppm");
 	  return ext == "ppm";
 	}
 
-	static bool write(std::ostream& out, const I& im)
+	static bool
+	write(std::ostream& out, const I& im)
 	{
 	  typedef ntg_comp_type(oln_value_type(I)) comp_type;
 	  
@@ -189,10 +197,10 @@ namespace oln {
 	}
       };
 
-    } // internal
+    } // end of namespace internal
 
-  } // io
+  } // end of namespace io
 
-} // oln
+} // end of namespace oln
 
-#endif // ! OLENA_IO_PNM_WRITE_2D_HH_
+#endif // ! OLENA_IO_PNM_WRITE_2D_HH

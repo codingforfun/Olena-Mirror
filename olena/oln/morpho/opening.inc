@@ -45,9 +45,10 @@
  * exo: out.pbm
 =*/
 template<class I, class E>
-oln_concrete_type(I) opening(const abstract::non_vectorial_image<I>& input, 
-		    const abstract::struct_elt<E>& se)
+oln_concrete_type(I) 
+opening(const abstract::non_vectorial_image<I>& input, 
+	  const abstract::struct_elt<E>& se)
 {
   //  mlc::eq< I::dim, E::dim >::ensure();
-  return dilation(erosion(input, se), -to_exact(se));
+  return dilation(erosion(input, se), -(se.exact()));
 }

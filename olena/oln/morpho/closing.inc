@@ -1,5 +1,5 @@
 // -*- c++ -*-
-// Copyright (C) 2001  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -45,8 +45,9 @@
  * exo: out.pbm
  =*/
 template<class I, class E>
-oln_concrete_type(I) closing(const abstract::non_vectorial_image<I>& input,
-		    const abstract::struct_elt<E>& se)
+oln_concrete_type(I) 
+  closing(const abstract::non_vectorial_image<I>& input,
+	  const abstract::struct_elt<E>& se)
 {
-  return erosion(dilation(input, se), -to_exact(se));
+  return erosion(dilation(input, se), -(se.exact()));
 }

@@ -31,18 +31,21 @@
 # include <oln/basics.hh>
 
 namespace oln {
+  
   namespace level {
-
+    
     template <class I>
-   oln_concrete_type(I) fill(abstract::image<I>& im, const oln_value_type(I)& val)
+    oln_concrete_type(I)
+    fill(abstract::image<I>& im, const oln_value_type(I)& val)
     {
-     oln_iter_type(I) p(im);
+      oln_iter_type(I) p(im);
       for_all(p)
 	im[p] = val;
       return im.exact();
     }
 
-  } // level
-} // oln
+  } // end of namespace level
 
-#endif // OLENA_LEVEL_FILL_HH
+} // end of namespace oln
+
+#endif // ! OLENA_LEVEL_FILL_HH

@@ -54,15 +54,16 @@ namespace oln {
        * exo: out.pgm
        =*/
       template<class I, class N>
-     oln_concrete_type(I) area_closing(const abstract::non_vectorial_image<I>& input,
-			       const abstract::neighborhood<N>& Ng,
-			       const unsigned int area)
+      oln_concrete_type(I) 
+	area_closing(const abstract::non_vectorial_image<I>& input,
+		     const abstract::neighborhood<N>& Ng,
+		     const unsigned int area)
       {
-	typedef T_attribute<unsigned int> area_t;
+	typedef T_attribute<unsigned int> area_type;
 
-	typedef tarjan::tarjan_set<oln_concrete_type(I), area_t > tarjan_set_t;
-	tarjan_set_t area_closing(input.exact());
-	return area_closing.get_comptute(area_t(area) , Ng, true);
+	typedef tarjan::tarjan_set<oln_concrete_type(I), area_type > tarjan_set_type;
+	tarjan_set_type area_closing(input.exact());
+	return area_closing.get_comptute(area_type(area) , Ng, true);
       }
 
 
@@ -85,17 +86,17 @@ namespace oln {
        * exo: out.pgm
        =*/
       template<class I, class N>
-     oln_concrete_type(I) area_opening(const abstract::non_vectorial_image<I>& input,
-			       const abstract::neighborhood<N>& Ng,
-			       const unsigned int area)
+      oln_concrete_type(I) 
+	area_opening(const abstract::non_vectorial_image<I>& input,
+		     const abstract::neighborhood<N>& Ng,
+		     const unsigned int area)
       {
-	typedef T_attribute<unsigned int> area_t;
+	typedef T_attribute<unsigned int> area_type;
 
-	typedef tarjan::tarjan_set<oln_concrete_type(I), T_attribute<unsigned int> > tarjan_set_t;
-	tarjan_set_t area_closing(input.exact());
-	return area_closing.get_comptute(area_t(area) , Ng, false);
+	typedef tarjan::tarjan_set<oln_concrete_type(I), T_attribute<unsigned int> > tarjan_set_type;
+	tarjan_set_type area_closing(input.exact());
+	return area_closing.get_comptute(area_type(area) , Ng, false);
       }
-
 
     }
   }

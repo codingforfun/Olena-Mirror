@@ -55,5 +55,4 @@
 # include <oln/core/compose.hh>
 # include <oln/core/generate.hh>
 
-
 #endif // ! OLENA_BASICS_HH

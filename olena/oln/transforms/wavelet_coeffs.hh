@@ -28,6 +28,9 @@
 #ifndef OLENA_TRANSFORMS_WAVELET_COEFFS_HH
 # define OLENA_TRANSFORMS_WAVELET_COEFFS_HH
 
+// FIXME: this file has not been adjusted to the coding style since it
+// will be completely rewritten in next release.
+
 # include <ntg/basics.hh>
 # include <ntg/float.hh>
 # include <oln/transforms/dwt.hh>

@@ -80,22 +80,26 @@ namespace oln {
 	impl_->ref();
       }
 
-      exact_type& operator=(self_type rhs)
+      exact_type& 
+      operator=(self_type rhs)
       {
 	return this->exact().assign(rhs.exact());
       }
 
-      const impl_type* impl() const
+      const impl_type* 
+      impl() const
       {
 	return impl_;
       }
 
-      impl_type* impl()
+      impl_type* 
+      impl()
       {
 	return impl_;
       }
 
-      static std::string name()
+      static std::string 
+      name()
       {
 	return
 	  std::string("abstract::image_with_impl<")
@@ -103,13 +107,15 @@ namespace oln {
 	  + Exact::name() + ">";
       }
 
-      void clone_to(impl_type* output_data) const
+      void 
+      clone_to(impl_type* output_data) const
       {
 	assertion(impl_ != 0);
 	impl()->clone_to(output_data);
       }
 
-      void clear()
+      void 
+      clear()
       {
 	if (impl_ != 0)
 	  {
@@ -119,17 +125,21 @@ namespace oln {
       }
 
     protected:
-      const value_type& at(const point_type& p) const
+
+      const value_type& 
+      at(const point_type& p) const
       {
 	return impl_->at(p);
       }
       
-      value_type& at(const point_type& p)
+      value_type& 
+      at(const point_type& p)
       {
 	return impl_->at(p);
       }
 
-      exact_type& assign(exact_type rhs) // shallow assignment
+      exact_type& 
+      assign(exact_type rhs) // shallow assignment
       {
 	assertion(rhs.impl() != 0);
 	if ( &rhs == this )
@@ -157,8 +167,10 @@ namespace oln {
       }
       
     private:
+
       impl_type* impl_;
       image_with_impl(const self_type& rhs); // w/o impl
+
     };
 
   } // end of namespace abstract

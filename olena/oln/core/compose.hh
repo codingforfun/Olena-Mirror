@@ -42,14 +42,18 @@ namespace oln {
       typedef compose_uu_ self_type;
 
       typename self_type::result_type
-      operator()(typename self_type::argument_type arg) const {
+      operator()(typename self_type::argument_type arg) const 
+      {
 	return f1_(f2_(arg));
       }
 
       compose_uu_(const F1& f1, const F2& f2) : f1_(f1), f2_(f2) {}
-      private:
+      
+    private:
+      
       const F1 f1_;
       const F2 f2_;
+    
     };
 
     template< class F1, class F2 >
@@ -62,14 +66,18 @@ namespace oln {
 
       typename self_type::result_type
       operator()(typename self_type::first_argument_type arg1,
-		 typename self_type::second_argument_type arg2) const {
+		 typename self_type::second_argument_type arg2) const 
+      {
 	return f1_(f2_(arg1, arg2));
       }
 
       compose_ub_(const F1& f1, const F2& f2) : f1_(f1), f2_(f2) {}
-      private:
+      
+    private:
+    
       const F1 f1_;
       const F2 f2_;
+    
     };
 
     template< class F1, class F2 >
@@ -82,14 +90,18 @@ namespace oln {
 
       typename self_type::result_type
       operator()(typename self_type::first_argument_type arg1,
-		 typename self_type::second_argument_type arg2) const {
+		 typename self_type::second_argument_type arg2) const 
+      {
 	return f1_(f2_(arg1), f2_(arg2));
       }
 
       compose_bu_(const F1& f1, const F2& f2) : f1_(f1), f2_(f2) {}
-      private:
+
+    private:
+    
       const F1 f1_;
       const F2 f2_;
+    
     };
 
   }
@@ -120,7 +132,8 @@ namespace oln {
   template<class T>
   struct f_identity : std::unary_function<T, T>
   {
-    T operator()(T t) const
+    T 
+    operator()(T t) const
     {
       return t;
     }

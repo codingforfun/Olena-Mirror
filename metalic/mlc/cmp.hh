@@ -33,6 +33,24 @@
 namespace mlc 
 {
 
+  /*-----------------.
+  | Type comparisons |
+  `-----------------*/
+
+  template <class T, class U>
+  struct type_eq : returns_bool_<false> {};
+
+  template <class T>
+  struct type_eq<T, T> : returns_bool_<true> {};
+
+
+  /*-------------------.
+  | Values comparisons |
+  `-------------------*/
+
+  // These struct are quite handy since constructions like
+  // is_true<a < b>::ensure() cannot be parsed.
+
   template<int i, int j>
   struct less
   {
@@ -69,7 +87,7 @@ namespace mlc
   };
 
   template<int i, int j>
-  struct geq
+  struct greatereq
   {
     enum { ret = (i >= j) };
     static void ensure() { is_true<ret>::ensure(); };
@@ -101,6 +119,6 @@ namespace mlc
     enum { ret = (i > N ? N : i) };
   };
 
-} // end of mlc
+} // end of namespace mlc
 
 #endif // ! METALIC_CMP_HH

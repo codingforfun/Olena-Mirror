@@ -53,6 +53,7 @@ namespace oln {
 
   class window3d : public abstract::windownd< window3d >
   {
+
   public:
 
     typedef abstract::windownd< window3d > super_type;
@@ -75,25 +76,35 @@ namespace oln {
       return this->add(dpoint_type(slice, row, col));
     }
 
-    window3d() : super_type() {}
-    window3d(unsigned size) : super_type(size) {}
+    window3d() : super_type() 
+    {}
+
+    window3d(unsigned size) : super_type(size) 
+    {}
+    
     window3d(unsigned n, const coord crd[]) : super_type(n)
     {
       for (unsigned i = 0; i < 3 * n; i += 3)
 	add(dpoint_type(crd[i], crd[i+1], crd[i+2]));
     }
 
-    static std::string name() { return std::string("window3d"); }
+    static std::string 
+    name() 
+    { 
+      return std::string("window3d"); 
+    }
 
   protected:
 
-    coord delta_update_(const dpoint_type& dp)
+    coord 
+    delta_update_(const dpoint_type& dp)
     {
       delta_(abs(dp.slice()));
       delta_(abs(dp.row()));
       delta_(abs(dp.col()));
       return delta_;
     }
+
   };
 
   // std win

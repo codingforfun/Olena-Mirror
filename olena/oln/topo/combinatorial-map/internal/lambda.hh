@@ -43,31 +43,41 @@ namespace oln {
 	class lambda : public anyfunc<U, V, lambda<U, V> >
 	{
 	public:
-	  static std::string name() { return "lambda"; }
-
-	  void _resize(unsigned n)
-	  {
-	    _f.resize(n+1);
+	  static std::string
+	  name() 
+	  { 
+	    return "lambda";
 	  }
 
-	  void _assign(const U & i, const V & e)
+	  // FIXME: why these methods are public? I think we should
+	  // use the friend class trick like in oln/core/.
+
+	  void
+	  resize_(unsigned n)
 	  {
-	    _f[i] = e;
+	    f_.resize(n+1);
 	  }
 
-	  void erase(const U & i)
+	  void
+	  assign_(const U & i, const V & e)
 	  {
-	    _f[i] = 0;
-	    _f[alpha<U>::result(i)] = 0;
+	    f_[i] = e;
+	  }
+
+	  void
+	  erase(const U & i)
+	  {
+	    f_[i] = 0;
+	    f_[alpha<U>::result(i)] = 0;
 	  }
 	};
 
-      } // end internal
+      } // end of namespace internal
 
-    } // end combinatorial_map
+    } // end of namespace combinatorial_map
 
-  } // end topo
+  } // end of namespace topo
 
-} // end oln
+} // end of namespace oln
 
 #endif // ! OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_LAMBDA_HH

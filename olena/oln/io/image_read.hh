@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_IMAGE_READ_HH_
-# define OLENA_IO_IMAGE_READ_HH_
+#ifndef OLENA_IO_IMAGE_READ_HH
+# define OLENA_IO_IMAGE_READ_HH
 
 # include <mlc/bool.hh>
 
@@ -60,8 +60,8 @@ namespace oln {
       struct try_readers
       {
 	// Try to deduce the file format from the extension
-	static bool by_extension(T& output, std::istream& in, 
-				 const std::string& ext)
+	static bool 
+	by_extension(T& output, std::istream& in, const std::string& ext)
 	{
 	  if (image_reader<R,T>::knows_ext(ext))
 	    if (image_reader<R,T>::read(in, output))
@@ -72,7 +72,8 @@ namespace oln {
 	}
 
 	// Try to match the file format referring to the data only
-	static bool by_data(T& output, std::istream& in)
+	static bool
+	by_data(T& output, std::istream& in)
 	{
 	  if (image_reader<R,T>::read(in, output))
 	    return true;
@@ -86,9 +87,17 @@ namespace oln {
       template< typename T >
       struct try_readers<ReadNone, T>
       {
-	static bool by_extension(T&, std::istream&, const std::string&) 
-	{ return false; }
-	static bool by_data(T&, std::istream&) { return false; }
+	static bool 
+	by_extension(T&, std::istream&, const std::string&) 
+	{ 
+	  return false; 
+	}
+	
+	static bool
+	by_data(T&, std::istream&) 
+	{ 
+	  return false; 
+	}
       };
 
       /*----------------------.
@@ -100,7 +109,8 @@ namespace oln {
       struct readers_trier
       {
 	template <class T>
-	static bool doit(T& output, std::istream& in, const std::string ext)
+	static bool 
+	doit(T& output, std::istream& in, const std::string ext)
 	{	  
 	  bool result = try_readers<ReadAny,T>::by_extension(output, in, ext);
 	  if (!result)
@@ -176,10 +186,10 @@ namespace oln {
 	return true;
       }
 
-    } // end of internal
+    } // end of namespace internal
     
-  } // end of io
+  } // end of namespace io
   
-} // end of oln
+} // end of namespace oln
 
-#endif // ! OLENA_IO_IMAGE_READ_HH_
+#endif // ! OLENA_IO_IMAGE_READ_HH

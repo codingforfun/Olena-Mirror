@@ -4,5 +4,5 @@ using namespace mlc;
 
 int main()
 {
-  typedef is_true<2 == 3>::ensure_t foo_t; // COMPFAIL
+  typedef is_true<2 == 3>::ensure_type foo_type; // COMPFAIL
 }

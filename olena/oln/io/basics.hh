@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_BASICS_HH_
-# define OLENA_IO_BASICS_HH_
+#ifndef OLENA_IO_BASICS_HH
+# define OLENA_IO_BASICS_HH
 
 # include <oln/config/system.hh>
 
@@ -39,4 +39,4 @@
 # include <oln/io/image.hh>
 # include <oln/io/se.hh>
 
-#endif // OLENA_IO_BASICS_HH_
+#endif // OLENA_IO_BASICS_HH

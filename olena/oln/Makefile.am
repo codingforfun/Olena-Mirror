@@ -176,15 +176,12 @@ nobase_oln_HEADERS =				\
   morpho/watershed.hh				\
   morpho/watershed.hxx				\
   topo/combinatorial-map/cmap.hh		\
-  topo/combinatorial-map/cmap.hxx		\
   topo/combinatorial-map/internal/allfunc.hh	\
   topo/combinatorial-map/internal/alpha.hh	\
   topo/combinatorial-map/internal/anyfunc.hh	\
-  topo/combinatorial-map/internal/anyfunc.hxx	\
   topo/combinatorial-map/internal/beta.hh	\
   topo/combinatorial-map/internal/lambda.hh	\
   topo/combinatorial-map/internal/level.hh	\
-  topo/combinatorial-map/internal/level.hxx	\
   topo/combinatorial-map/internal/sigma.hh	\
   topo/combinatorial-map/internal/zeta.hh	\
   topo/dmap.hh					\
@@ -192,11 +189,9 @@ nobase_oln_HEADERS =				\
   topo/inter-pixel/bkd-dir-iter.hh		\
   topo/inter-pixel/fwd-dir-iter.hh		\
   topo/inter-pixel/inter-pixel.hh		\
-  topo/inter-pixel/inter-pixel.hxx		\
   topo/inter-pixel/node.hh			\
   topo/inter-pixel/internal/dir-iter.hh		\
   topo/inter-pixel/internal/dir.hh		\
-  topo/inter-pixel/internal/dir.hxx		\
   topo/tarjan/flat-zone.hh			\
   topo/tarjan/union.hh				\
   transforms/fft.hh				\

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_READABLE_HH_
-# define OLENA_IO_READABLE_HH_
+#ifndef OLENA_IO_READABLE_HH
+# define OLENA_IO_READABLE_HH
 
 # include <oln/config/system.hh>
 
@@ -40,31 +40,33 @@ namespace oln {
     namespace internal {
       
       template<typename T>
-      bool read_any(T& output, const std::string& name);
+      bool
+      read_any(T& output, const std::string& name);
       
       class anything
       {
       public:
-	anything(const std::string& str) : _str(str) {}
+	anything(const std::string& str) : str_(str) {}
 	
-	anything(const char* c) : _str(c) {}
+	anything(const char* c) : str_(c) {}
 	
 	template< typename T >
-	T& assign(T& output) const
+	T&
+	assign(T& output) const
 	{
-	  read_any(output, _str);
+	  read_any(output, str_);
 	  // FIXME: call output.clear()?
 	  return output;
 	}
 	
       private:
-	std::string _str;
+	std::string str_;
       };
 
-    } // end of internal
+    } // end of namespace internal
 
-  } // end of io
+  } // end of namespace io
 
-} // end of oln
+} // end of namespace oln
 
-#endif // ! OLENA_IO_READABLE_HH_
+#endif // ! OLENA_IO_READABLE_HH

@@ -25,11 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_IMAGE_HH_
-# define OLENA_IO_IMAGE_HH_
+#ifndef OLENA_IO_IMAGE_HH
+# define OLENA_IO_IMAGE_HH
 
 # include <oln/io/basics.hh>
 # include <oln/io/image_read.hh>
 # include <oln/io/image_write.hh>
 
-#endif // OLENA_IO_IMAGE_HH_
+#endif // OLENA_IO_IMAGE_HH

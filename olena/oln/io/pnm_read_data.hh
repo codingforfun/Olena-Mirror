@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_PNM_READ_DATA_HH_
-# define OLENA_IO_PNM_READ_DATA_HH_
+#ifndef OLENA_IO_PNM_READ_DATA_HH
+# define OLENA_IO_PNM_READ_DATA_HH
 
 # include <oln/core/image.hh>
 # include <oln/io/image_base.hh>
@@ -38,8 +38,7 @@ namespace oln {
 
   namespace io {
 
-    namespace internal 
-    {
+    namespace internal {
 
       template<pnm_type V, reader_id R>
       struct pnm_read_data
@@ -47,7 +46,9 @@ namespace oln {
 	template <class I>
 	static bool
 	read(std::istream&, I&, const pnm2d_info&)
-	{ return false; }
+	{ 
+	  return false; 
+	}
       }; 
 
       /*---------------------.
@@ -60,22 +61,22 @@ namespace oln {
 	template <class I>
 	static bool
 	read(std::istream& in, I& output, const pnm2d_info&)
-	  {
-	    // FIXME: implement an iterator over data
-	   oln_iter_type(I) it (output);
-	    
-	    for (it = begin; it != end; ++it)
-	      {
-		unsigned char c;
-		do
-		  {
-		    c = in.get();
-		  }
-		while ((c != '0') && (c != '1'));
-		output[it] = (c == '0');
-	      }
-	    return true;
-	  }
+	{
+	  // FIXME: implement an iterator over data
+	  oln_iter_type(I) it (output);
+	  
+	  for (it = begin; it != end; ++it)
+	    {
+	      unsigned char c;
+	      do
+		{
+		  c = in.get();
+		}
+	      while ((c != '0') && (c != '1'));
+	      output[it] = (c == '0');
+	    }
+	  return true;
+	}
       };
 
       template <>
@@ -84,27 +85,27 @@ namespace oln {
 	template <class I>
 	static bool
 	read(std::istream& in, I& output, const pnm2d_info& info)
-	  {
-	   oln_iter_type(I) it(output);
-	    
-	    coord cols = 0;
-	    unsigned bits = 0;
-	    unsigned char c = 0;
-	    
-	    for (it = begin; it != end; ++it)
-	      {
-		if (bits == 0)
-		  {
-		    c = in.get();
-		    bits = 8;
-		  }
-		bool b = (c & (1 << --bits)) ? false : true;
-		output[it] = b;
-		if (++cols >= info.cols)
-		  c = cols = bits = 0;
-	      }
-	    return true;
-	  }
+	{
+	  oln_iter_type(I) it(output);
+	  
+	  coord cols = 0;
+	  unsigned bits = 0;
+	  unsigned char c = 0;
+	  
+	  for (it = begin; it != end; ++it)
+	    {
+	      if (bits == 0)
+		{
+		  c = in.get();
+		  bits = 8;
+		}
+	      bool b = (c & (1 << --bits)) ? false : true;
+	      output[it] = b;
+	      if (++cols >= info.cols)
+		c = cols = bits = 0;
+	    }
+	  return true;
+	}
       };
 
       /*----------------------.
@@ -117,47 +118,47 @@ namespace oln {
 	template <class I>
 	static bool
 	read(std::istream& in, I& output, const pnm2d_info&)
-	  {
-	    // FIXME: implement an iterator over data
-	   oln_iter_type(I) it (output);
-	    
-	    int c;
-	    for (it = begin; it != end; ++it)
-	      {
-		in >> c;
-		output[it] = c;
-	      }
-	    return true;
-	  }
+	{
+	  // FIXME: implement an iterator over data
+	  oln_iter_type(I) it (output);
+	  
+	  int c;
+	  for (it = begin; it != end; ++it)
+	    {
+	      in >> c;
+	      output[it] = c;
+	    }
+	  return true;
+	}
       };
-
+      
       template <>
       struct pnm_read_data<PnmInteger, ReadPnmRaw>
       {
 	template <class I>
 	static bool
 	read(std::istream& in, I& output, const pnm2d_info& info)
-	  {
-	    // FIXME: implement an iterator over data
-	   oln_iter_type(I) it (output);
- 
-	    for (it = begin; it != end; ++it)
-	      {
-		if (info.max_val <= 255)
-		  {
-		    unsigned char c;
-		    in.read((char*) &c, 1);
-		    output[it] = c;
-		  }
-		else
-		  {
-		    unsigned short i;
-		    in.read((char*) &i, 2);
-		    output[it] = i;
-		  }
-	      }
-	    return true;
-	  }
+	{
+	  // FIXME: implement an iterator over data
+	  oln_iter_type(I) it (output);
+	  
+	  for (it = begin; it != end; ++it)
+	    {
+	      if (info.max_val <= 255)
+		{
+		  unsigned char c;
+		  in.read((char*) &c, 1);
+		  output[it] = c;
+		}
+	      else
+		{
+		  unsigned short i;
+		  in.read((char*) &i, 2);
+		  output[it] = i;
+		}
+	    }
+	  return true;
+	}
       };
 
       /*------------------------.
@@ -172,7 +173,7 @@ namespace oln {
 	read(std::istream& in, I& output, const pnm2d_info&)
 	{
 	  // FIXME: implement an iterator over data
-	 oln_iter_type(I) it (output);
+	  oln_iter_type(I) it (output);
 	  
 	  for (it = begin; it != end; ++it)
 	    {
@@ -192,38 +193,37 @@ namespace oln {
 	static bool
 	read(std::istream& in, I& output, const pnm2d_info& info)
 	{
-	    // FIXME: implement an iterator over data
-	   oln_iter_type(I) it (output);
- 
-	    for (it = begin; it != end; ++it)
-	      {
-		if (info.max_val <= 255)
-		  {
-		    unsigned char c[3];
-		    in.read((char*) c, 3);
-		    output[it][0] = c[0];
-		    output[it][1] = c[1];
-		    output[it][2] = c[2];
-		  }
-		else
-		  {
-		    precondition(sizeof(unsigned short) == 2);
-		    unsigned short i[3];
-		    in.read((char*) i, 3 * sizeof(unsigned short));
-		    output[it][0] = i[0];
-		    output[it][1] = i[1];
-		    output[it][2] = i[2];
-		  }
-	      }
-	    return true;
+	  // FIXME: implement an iterator over data
+	  oln_iter_type(I) it (output);
+	  
+	  for (it = begin; it != end; ++it)
+	    {
+	      if (info.max_val <= 255)
+		{
+		  unsigned char c[3];
+		  in.read((char*) c, 3);
+		  output[it][0] = c[0];
+		  output[it][1] = c[1];
+		  output[it][2] = c[2];
+		}
+	      else
+		{
+		  precondition(sizeof(unsigned short) == 2);
+		  unsigned short i[3];
+		  in.read((char*) i, 3 * sizeof(unsigned short));
+		  output[it][0] = i[0];
+		  output[it][1] = i[1];
+		  output[it][2] = i[2];
+		}
+	    }
+	  return true;
 	}
-      };
+      };      
 
-
-    } // end of pnm
+    } // end of namespace internal
     
-  } // end of io
+  } // end of namespace io
   
-} // end of oln
+} // end of namespace oln
 
-#endif // ! OLENA_IO_PNM_READ_DATA_HH_
+#endif // ! OLENA_IO_PNM_READ_DATA_HH

@@ -57,14 +57,16 @@ namespace oln
 
       friend class neighborhood<exact_type>;
 
-      static std::string name()
+      static std::string 
+      name()
       {
 	return std::string("neighborhoodnd<") + Exact::name() + ">" ;
       }
 
     protected:
 
-      exact_type& add_(const dpoint_type& dp)
+      exact_type& 
+      add_(const dpoint_type& dp)
       {
 	precondition( !dp.is_centered() );	
 	this->centered_ = true;
@@ -74,12 +76,11 @@ namespace oln
 	return this->exact();
       }
 
-      neighborhoodnd() : super_type() {}
+      neighborhoodnd() : super_type() 
+      {}
       
       neighborhoodnd(unsigned size) : super_type(size)
-      {
-	
-      }
+      {}
       
     };
   } // end of abstract

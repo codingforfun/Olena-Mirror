@@ -37,6 +37,8 @@ namespace mlc
     For instance `oln::typeadj<const int>::mutable_ref' equals `int &'.
   */
 
+  // FIXME: this should be tested somewhere in mlc.
+
   template < class T > struct typeadj             
   {						
     typedef T mutable_val;			
@@ -69,6 +71,6 @@ namespace mlc
     typedef const T& const_ref;			
   };
 
-} // end of mlc
+} // end of namespace mlc
 
-#endif /* METALIC_TYPEADJ_HH */
+#endif // ! METALIC_TYPEADJ_HH

@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_SE_HH_
-# define OLENA_IO_SE_HH_
+#ifndef OLENA_IO_SE_HH
+# define OLENA_IO_SE_HH
 
 # include <oln/io/se_window.hh>
 # include <oln/io/se_neighborhood.hh>
 
-#endif // OLENA_IO_SE_HH_
+#endif // OLENA_IO_SE_HH

@@ -42,27 +42,33 @@ namespace oln {
 	class beta : public anyfunc<U, V, beta<U, V> >
 	{
 	public:
-	  static std::string name() { return "beta"; }
+	  static std::string
+	  name() 
+	  { 
+	    return "beta";
+	  }
 
 	  beta(unsigned n) : anyfunc< U, V, beta<U, V> >(n) {}
 
-	  void _assign(const U & i, const V & e)
+	  void 
+	  assign_(const U & i, const V & e)
 	  {
-	    _f[i] = e;
+	    f_[i] = e;
 	  }
 
-	  void _erase(const U & i)
+	  void
+	  erase_(const U & i)
 	  {
-	    _f[i] = 0;
+	    f_[i] = 0;
 	  }
 	};
 
-      } // end internal
-
-    } // end combinatorial_map
-
-  } // end topo
-
-} // end oln
+      } // end of namespace internal
+      
+    } // end of namespace combinatorial_map
+    
+  } // end of namespace topo
+  
+} // end of namespace oln
 
 #endif // ! OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_BETA_HH

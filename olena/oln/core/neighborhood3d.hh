@@ -66,30 +66,41 @@ namespace oln {
 
     friend class abstract::window_base<abstract::neighborhood<neighborhood3d>, neighborhood3d>;
 
-    neighborhood3d& add(const dpoint_type& dp)
+    neighborhood3d& 
+    add(const dpoint_type& dp)
     {
       this->exact().add_(dp);
       return this->exact().add_(-dp);
     }
 
-    neighborhood3d& add(coord slice, coord row, coord col)
+    neighborhood3d& 
+    add(coord slice, coord row, coord col)
     {
       return this->add(dpoint3d(slice, row, col));
     }
 
-    neighborhood3d() : super_type() {}
-    neighborhood3d(unsigned size) : super_type(size) {}
+    neighborhood3d() : super_type() 
+    {}
+
+    neighborhood3d(unsigned size) : super_type(size) 
+    {}
+
     neighborhood3d(unsigned n, const coord crd[]) : super_type()    
     {
       for (unsigned i = 0; i < 3 * n; i += 3)
 	add(dpoint_type(crd[i], crd[i+1], crd[i+2]));
     }
 
-    static std::string name() { return std::string("neighborhood3d"); }
+    static std::string 
+    name() 
+    { 
+      return std::string("neighborhood3d"); 
+    }
 
   protected:
 
-    coord delta_update_(const dpoint_type& dp)
+    coord 
+    delta_update_(const dpoint_type& dp)
     {
       delta_(abs(dp.slice()));
       delta_(abs(dp.row()));
@@ -172,8 +183,8 @@ namespace oln {
     return mk_neighb_block(width, width, width);
   }
 
-  inline
-  window3d mk_win_from_neighb(const neighborhood3d& n)
+  inline window3d 
+  mk_win_from_neighb(const neighborhood3d& n)
   {
     window3d win(n.card());
     for (unsigned i = 0; i < n.card(); ++i)

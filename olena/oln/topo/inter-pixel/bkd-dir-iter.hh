@@ -38,51 +38,60 @@ namespace oln {
 
     namespace inter_pixel {
       template<unsigned Dim, class Exact = mlc::final>
-      class bkd_dir_iter;
+      class bkd_dir_iter; // fwd_decl
     }
 
   }
 
   template<unsigned Dim, class Exact>
-  struct iter_traits<topo::inter_pixel::bkd_dir_iter<Dim, Exact> >: public
-  iter_traits<topo::inter_pixel::internal::_dir_iter<Dim, typename
-  mlc::exact_vt<topo::inter_pixel::bkd_dir_iter<Dim, Exact>, Exact>::ret> >
-  {
-
-  };
+  struct iter_traits<topo::inter_pixel::bkd_dir_iter<Dim, Exact> >
+    : public iter_traits<topo::inter_pixel::internal::dir_iter_<Dim, typename
+      mlc::exact_vt<topo::inter_pixel::bkd_dir_iter<Dim, Exact>, Exact>::ret> >
+  {};
 
   namespace topo {
 
     namespace inter_pixel {
 
       template<unsigned Dim, class Exact>
-      class bkd_dir_iter : public internal::_dir_iter<Dim, typename mlc::exact_vt<bkd_dir_iter<Dim, Exact>, Exact>::ret>
+      class bkd_dir_iter 
+	: public internal::dir_iter_<Dim, typename mlc::exact_vt<bkd_dir_iter<Dim, Exact>, Exact>::ret>
       {
       private:
-	typedef internal::_dir_iter<Dim, typename mlc::exact_vt<bkd_dir_iter<Dim, Exact>, Exact>::ret> super;
-	typedef typename super::dir_t dir_t;
+	typedef internal::dir_iter_<Dim, typename mlc::exact_vt<bkd_dir_iter<Dim, Exact>, Exact>::ret> super;
+	typedef typename super::dir_type dir_type;
 
       public:
-	bkd_dir_iter() : super(), _begin(internal::dir_traits<Dim>::last()) {}
-	bkd_dir_iter(dir_t i) : super(i), _begin(i) {}
+	bkd_dir_iter() : super(), begin_(internal::dir_traits<Dim>::last()) {}
+	bkd_dir_iter(dir_type i) : super(i), begin_(i) {}
 
-	template<class U> U operator=(U u) { return super::operator=(u); }
+	template<class U> 
+	U
+	operator=(U u) { return super::operator=(u); }
 
-	dir_t next() { return internal::dir_traits<Dim>::prev(this->_cur); }
+	dir_type
+	next()
+	{ 
+	  return internal::dir_traits<Dim>::prev(this->cur_); 
+	}
 
-	dir_t begin() { return _begin; }
+	dir_type
+	begin()
+	{
+	  return begin_;
+	}
 
       private:
-	dir_t _begin;
+	dir_type begin_;
       };
 
-# define BkdDirIter(ImgType)		\
-bkd_dir_iter< ImgType::dim >
+# define oln_bkd_dir_iter_type(ImgType)		\
+oln::topo::inter_pixel::bkd_dir_iter< ImgType::dim >
 
-    } // end inter_pixel
+    } // end of namespace inter_pixel
 
-  } // end topo
+  } // end of namespace topo
 
-} // end oln
+} // end of namespace oln
 
-#endif // !OLENA_TOPO_INTER_PIXEL_BKD_DIR_ITER_HH
+#endif // ! OLENA_TOPO_INTER_PIXEL_BKD_DIR_ITER_HH

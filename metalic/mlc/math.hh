@@ -38,19 +38,19 @@ namespace mlc
 
     // Helper structs for pow2sup below.
 
-    template<unsigned N> struct is_pow2 { typedef false_t ret_t; };
-    template<> struct is_pow2<8>  { typedef true_t ret_t; };
-    template<> struct is_pow2<16> { typedef true_t ret_t; };
-    template<> struct is_pow2<32> { typedef true_t ret_t; };
-    template<> struct is_pow2<64> { typedef true_t ret_t; };
+    template<unsigned N> struct is_pow2 { typedef false_type ret; };
+    template<> struct is_pow2<8>  { typedef true_type ret; };
+    template<> struct is_pow2<16> { typedef true_type ret; };
+    template<> struct is_pow2<32> { typedef true_type ret; };
+    template<> struct is_pow2<64> { typedef true_type ret; };
 
     template<unsigned N, class> struct find_pow2sup;
-    template<unsigned N> struct find_pow2sup<N,true_t> {
+    template<unsigned N> struct find_pow2sup<N,true_type> {
       enum { value = N };
     };
-    template<unsigned N> struct find_pow2sup<N,false_t> {
+    template<unsigned N> struct find_pow2sup<N,false_type> {
       enum { value = find_pow2sup< N+1,
-	     typename is_pow2<N+1>::ret_t >::value };
+	     typename is_pow2<N+1>::ret >::value };
     };
 
   } // end of internal
@@ -62,10 +62,10 @@ namespace mlc
     enum {
       value =
       internal::find_pow2sup< N,
-      typename internal::is_pow2<N>::ret_t >::value
+      typename internal::is_pow2<N>::ret >::value
     };
   private:
-    typedef typename is_true<N < 32>::ensure_t precondition_t;
+    typedef typename is_true<N < 32>::ensure_type precondition_type;
   };
 
   // Various tests on N (actually, we tests only oddness.)
@@ -73,10 +73,10 @@ namespace mlc
   template<unsigned N>
   class utest {
   public:
-    typedef typename is_true<N/2 == (N+1)/2>::ensure_t is_odd_t;
-    static void ensure_odd()   { is_odd_t::is_true(); }
+    typedef typename is_true<N/2 == (N+1)/2>::ensure_type is_odd_type;
+    static void ensure_odd()   { is_odd_type::is_true(); }
   };
 
-} // end of mlc
+} // end of namespace mlc
 
 #endif  // METALIC_MATH_HH

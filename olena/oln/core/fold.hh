@@ -47,7 +47,7 @@ namespace oln {
        const abstract::image<I>& input)
   {
     // FIXME: ensure that first_argument_type == result_type.
-   oln_iter_type(I) p(input);
+    oln_iter_type(I) p(input);
     for_all(p)
       val = f(val, input[p]);
     return val;
@@ -60,7 +60,7 @@ namespace oln {
   fold(AdaptableBinaryFun f, const abstract::image<I>& input)
   {
     // FIXME: ensure that first_argument_type == result_type.
-   oln_iter_type(I) p(input);
+    oln_iter_type(I) p(input);
     p = begin;
     // f could return a reference or a const, so make sure VAL is assignable.
     typename mlc::typeadj<

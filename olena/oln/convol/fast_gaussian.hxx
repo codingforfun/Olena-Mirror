@@ -45,12 +45,13 @@ namespace oln {
 	// defined by two points (START and FINISH) and a displacement
 	// dpoint (D).
 	template <class WorkType, class FloatType, class I>
-	void recursivefilter_(I& image,
-			      const RecursiveFilterCoef_<FloatType>& c,
-			      const oln_point_type(I)& start,
-			      const oln_point_type(I)& finish,
-			      coord len,
-			      const oln_dpoint_type(I)& d)
+	void 
+	recursivefilter_(I& image,
+			 const recursivefilter_coef_<FloatType>& c,
+			 const oln_point_type(I)& start,
+			 const oln_point_type(I)& finish,
+			 coord len,
+			 const oln_dpoint_type(I)& d)
 	{
 	  std::vector<WorkType>	tmp1(len);
 	  std::vector<WorkType>	tmp2(len);
@@ -86,7 +87,7 @@ namespace oln {
 	    - c.d[3]*tmp1[0];
 
 
-	 oln_point_type(I) current(start + d + d + d + d);
+	  oln_point_type(I) current(start + d + d + d + d);
 	  for (coord i = 4; i < len; ++i)
 	    {
 	      tmp1[i] =
@@ -158,10 +159,10 @@ namespace oln {
 
 	    // Apply on columns.
 	    recursivefilter_<float>(img, coef,
-				   oln_point_type(I)(0),
-				   oln_point_type(I)(img.ncols() - 1),
+				    oln_point_type(I)(0),
+				    oln_point_type(I)(img.ncols() - 1),
 				    img.ncols(),
-				   oln_dpoint_type(I)(1));
+				    oln_dpoint_type(I)(1));
 	  }
 	};
 
@@ -178,18 +179,18 @@ namespace oln {
 	    // Apply on rows.
 	    for (coord j = 0; j < img.ncols(); ++j)
 	      recursivefilter_<float>(img, coef,
-				     oln_point_type(I)(0, j),
-				     oln_point_type(I)(img.nrows() - 1, j),
+				      oln_point_type(I)(0, j),
+				      oln_point_type(I)(img.nrows() - 1, j),
 				      img.nrows(),
-				     oln_dpoint_type(I)(1, 0));
+				      oln_dpoint_type(I)(1, 0));
 
 	    // Apply on columns.
 	    for (coord i = 0; i < img.nrows(); ++i)
 	      recursivefilter_<float>(img, coef,
-				     oln_point_type(I)(i, 0),
-				     oln_point_type(I)(i, img.ncols() - 1),
+				      oln_point_type(I)(i, 0),
+				      oln_point_type(I)(i, img.ncols() - 1),
 				      img.ncols(),
-				     oln_dpoint_type(I)(0, 1));
+				      oln_dpoint_type(I)(0, 1));
 	  }
 	};
 
@@ -205,28 +206,28 @@ namespace oln {
 	    for (coord j = 0; j < img.nrows(); ++j)
 	      for (coord k = 0; k < img.ncols(); ++k)
 		recursivefilter_<float>(img, coef,
-				oln_point_type(I)(0, j, k),
-				oln_point_type(I)(img.nslices() - 1, j, k),
+					oln_point_type(I)(0, j, k),
+					oln_point_type(I)(img.nslices() - 1, j, k),
 					img.ncols(),
-				oln_dpoint_type(I)(1, 0, 0));
+					oln_dpoint_type(I)(1, 0, 0));
 
 	    // Apply on rows.
 	    for (coord i = 0; i < img.nslices(); ++i)
 	      for (coord k = 0; k < img.ncols(); ++k)
 		recursivefilter_<float>(img, coef,
-				oln_point_type(I)(i, 0, k),
-				oln_point_type(I)(i, img.nrows() - 1, k),
+					oln_point_type(I)(i, 0, k),
+					oln_point_type(I)(i, img.nrows() - 1, k),
 					img.nrows(),
-				oln_dpoint_type(I)(0, 1, 0));
+					oln_dpoint_type(I)(0, 1, 0));
 
 	    // Apply on columns.
 	    for (coord i = 0; i < img.nslices(); ++i)
 	      for (coord j = 0; j < img.nrows(); ++j)
 		recursivefilter_<float>(img, coef,
-				oln_point_type(I)(i, j, 0),
-				oln_point_type(I)(i, j, img.ncols() - 1),
+					oln_point_type(I)(i, j, 0),
+					oln_point_type(I)(i, j, img.ncols() - 1),
 					img.ncols(),
-				oln_dpoint_type(I)(0, 0, 1));
+					oln_dpoint_type(I)(0, 0, 1));
 	  }
 	};
 
@@ -238,7 +239,7 @@ namespace oln {
 	{
 	  typename mute<I, ntg::float_s>::ret work_img(in.size());
 
-	 oln_iter_type(I) it(in);
+	  oln_iter_type(I) it(in);
 	  for_all(it)
 	    work_img[it] = ntg::cast::force<ntg::float_s>(in[it]);
 
@@ -262,13 +263,13 @@ namespace oln {
       gaussian(const convert::abstract::conversion<C,B>& c,
 	       const abstract::image<I>& in, ntg::float_s sigma)
       {
-	internal::RecursiveFilterCoef_<float>
+	internal::recursivefilter_coef_<float>
 	  coef(1.68f, 3.735f,
 	       1.783f, 1.723f,
 	       -0.6803f, -0.2598f,
 	       0.6318f, 1.997f,
 	       sigma,
-	       internal::RecursiveFilterCoef_<float>::DericheGaussian);
+	       internal::recursivefilter_coef_<float>::DericheGaussian);
 
 	return internal::gaussian_common_(c, in, coef);
       }
@@ -278,13 +279,13 @@ namespace oln {
       gaussian_derivative(const convert::abstract::conversion<C,B>& c,
 			  const abstract::image<I>& in, ntg::float_s sigma)
       {
-	internal::RecursiveFilterCoef_<float>
+	internal::recursivefilter_coef_<float>
 	  coef(-0.6472f, -4.531f,
 	       1.527f, 1.516f,
 	       0.6494f, 0.9557f,
 	       0.6719f, 2.072f,
 	       sigma,
-	       internal::RecursiveFilterCoef_<float>
+	       internal::recursivefilter_coef_<float>
 	       ::DericheGaussianFirstDerivative);
 
 	return internal::gaussian_common_(c, in, coef);
@@ -295,13 +296,13 @@ namespace oln {
       gaussian_second_derivative(const convert::abstract::conversion<C,B>& c,
 				 const abstract::image<I>& in, ntg::float_s sigma)
       {
-	internal::RecursiveFilterCoef_<float>
+	internal::recursivefilter_coef_<float>
 	  coef(-1.331f, 3.661f,
 	       1.24f, 1.314f,
 	       0.3225f, -1.738f,
 	       0.748f, 2.166f,
 	       sigma,
-	       internal::RecursiveFilterCoef_<float>
+	       internal::recursivefilter_coef_<float>
 	       ::DericheGaussianSecondDerivative);
 
 	return internal::gaussian_common_(c, in, coef);

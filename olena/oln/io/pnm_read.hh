@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_PNM_READ_HH_
-# define OLENA_IO_PNM_READ_HH_
+#ifndef OLENA_IO_PNM_READ_HH
+# define OLENA_IO_PNM_READ_HH
 
 # include <mlc/bool.hh>
 
@@ -49,14 +49,23 @@ namespace oln {
       template <reader_id R, unsigned Dim, pnm_type V, class I>
       struct pnm_reader
       {
-	static std::string name()
-	{ return "-"; }
+	static std::string 
+	name()
+	{ 
+	  return "-"; 
+	}
 	
-	static bool knows_ext(const std::string&)
-	{ return false; }
+	static bool
+	knows_ext(const std::string&)
+	{ 
+	  return false; 
+	}
 	
-	static bool read(std::istream&, I&)
-	{ return false; }
+	static bool 
+	read(std::istream&, I&)
+	{ 
+	  return false; 
+	}
       };
 
       /*---------------.
@@ -73,11 +82,10 @@ namespace oln {
 	: public pnm_reader<ReadPnmRaw, I::dim, get_pnm_type<I>::ret, I>
       {};
 
-    } // end of internal
+    } // end of namespace internal
 
-  } // end of io
+  } // end of namespace io
 
-} // end of oln
+} // end of namespace oln
 
-
-#endif // ! OLENA_IO_PNM_READ_HH_
+#endif // ! OLENA_IO_PNM_READ_HH

@@ -39,15 +39,19 @@ namespace oln {
 	template <class U>
 	struct alpha
 	{
-	  static U result(const U & d) { return d + ((d & 1) << 1) - 1; }
+	  static U
+	  result(const U & d)
+	  {
+	    return d + ((d & 1) << 1) - 1; 
+	  }
 	};
 
-      } // end internal
+      } // end of namespace internal
 
-    } // end combinatorial_map
+    } // end of namespace combinatorial_map
 
-  } // end topo
+  } // end of namespace topo
 
-} // end oln
+} // end of namespace oln
 
 #endif // ! OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_ALPHA_HH

@@ -48,7 +48,7 @@ namespace oln {
   {
     typename mute<I, typename AdaptableUnaryFun::result_type>::ret
       output(input.size());
-   oln_iter_type(I) p(input);
+    oln_iter_type(I) p(input);
     for_all(p) output[p] = f(input[p]);
     return output;
   }
@@ -93,7 +93,7 @@ namespace oln {
     precondition(input1.size() == input2.size());
     typename mute<I1, typename AdaptableBinaryFun::result_type>::ret
       output(input1.size());
-   oln_iter_type(I1) p(input1);
+    oln_iter_type(I1) p(input1);
     for_all(p) output[p] = f(input1[p], input2[p]);
     return output;
   }
@@ -145,7 +145,7 @@ namespace oln {
   template<class UnaryFun, class I> inline
   abstract::image<I>& apply_self(UnaryFun f, abstract::image<I>& input)
   {
-   oln_iter_type(I) p(input);
+    oln_iter_type(I) p(input);
     for_all(p) input[p] = f(input[p]);
     return input;
   }
@@ -180,7 +180,7 @@ namespace oln {
 			  abstract::image<I1>& input1, const abstract::image<I2>& input2)
   {
     precondition(input1.size() == input2.size());
-   oln_iter_type(I1) p(input1);
+    oln_iter_type(I1) p(input1);
     for_all(p) input1[p] = f(input1[p], input2[p]);
     return input1;
   }

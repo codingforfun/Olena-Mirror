@@ -51,13 +51,13 @@ namespace oln {
       namespace internal {
 
 	template < class FloatT >
-	struct RecursiveFilterCoef_
+	struct recursivefilter_coef_
 	{
 	  enum FilterType { DericheGaussian,
 			    DericheGaussianFirstDerivative,
 			    DericheGaussianSecondDerivative };
 
-	  RecursiveFilterCoef_(FloatT a0, FloatT a1,
+	  recursivefilter_coef_(FloatT a0, FloatT a1,
 			       FloatT b0, FloatT b1,
 			       FloatT c0, FloatT c1,
 			       FloatT w0, FloatT w1,
@@ -69,8 +69,8 @@ namespace oln {
 	/* Define out of the struct so the compiler don't even attempt
 	   to inline this.  */
 	template < class FloatT >
-	RecursiveFilterCoef_<FloatT>
-	::RecursiveFilterCoef_(FloatT a0, FloatT a1,
+	recursivefilter_coef_<FloatT>
+	::recursivefilter_coef_(FloatT a0, FloatT a1,
 			       FloatT b0, FloatT b1,
 			       FloatT c0, FloatT c1,
 			       FloatT w0, FloatT w1,

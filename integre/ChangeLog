@@ -1,3 +1,9 @@
+2003-08-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+       * ntg/core/behavior.hh: Fix coding style.
+       * ntg/core/internal/global_ops_traits.hh: Likewise.
+       * ntg/vect/vec.hh: Likewise.
+
 2003-08-05  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/core/type.hh: Remove deprecated self() method.

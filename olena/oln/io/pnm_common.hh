@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_PNM_COMMON_HH_
-# define OLENA_IO_PNM_COMMON_HH_
+#ifndef OLENA_IO_PNM_COMMON_HH
+# define OLENA_IO_PNM_COMMON_HH
 
 # include <mlc/bool.hh>
 
@@ -64,7 +64,8 @@ namespace oln {
       };
 
       // Return the pnm type associated to an image type
-
+      // FIXME: this could be done by using labels images
+      // eg: read(binary_image_with_dim<2>& ima) { // ... }
       template <class I>
       struct get_pnm_type
       {
@@ -80,15 +81,15 @@ namespace oln {
 
 	  mlc::bool_case_<true,
 			  get_it<PnmInvalid>
-	> > > > >::ret_t tmp_type;
+	> > > > >::ret tmp_type;
 
 	static const pnm_type ret = tmp_type::ret;
       };
 
-    } // end of internal
+    } // end of namespace internal
 
-  } // end of io
+  } // end of namespace io
 
-} // end of oln
+} // end of namespace oln
 
-#endif // ! OLENA_IO_PNM_COMMON_HH_
+#endif // ! OLENA_IO_PNM_COMMON_HH

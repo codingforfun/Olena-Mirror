@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_IMAGE_WRITE_HH_
-# define OLENA_IO_IMAGE_WRITE_HH_
+#ifndef OLENA_IO_IMAGE_WRITE_HH
+# define OLENA_IO_IMAGE_WRITE_HH
 
 # include <mlc/bool.hh>
 
@@ -60,8 +60,8 @@ namespace oln {
       struct try_writers
       {
 	// Try to deduce the file format from the extension
-	static bool by_extension(const T& input, std::ostream& out, 
-				 const std::string& ext)
+	static bool 
+	by_extension(const T& input, std::ostream& out, const std::string& ext)
 	{
 	  if (image_writer<W,T>::knows_ext(ext))
 	    if (image_writer<W,T>::write(out, input))
@@ -71,9 +71,8 @@ namespace oln {
 	}
 
 	// Try to match the file format referring to the data only
-	static bool by_data(const T& input, 
-			    std::ostream& out, 
-			    const std::string& ext)
+	static bool 
+	by_data(const T& input, std::ostream& out, const std::string& ext)
 	{
 	  if (image_writer<W,T>::write(out, input))
 	    {
@@ -83,7 +82,7 @@ namespace oln {
 	      return true;
 	    }
 	  return try_writers<writer_id(unsigned(W)-1), T>
-                   ::by_data(input, out, ext);
+	           ::by_data(input, out, ext);
 	}
       };
 
@@ -92,11 +91,17 @@ namespace oln {
       template< typename T >
       struct try_writers<WriteNone, T>
       {
-	static bool by_extension(const T&, std::ostream&, const std::string&) 
-	{ return false; }
+	static bool 
+	by_extension(const T&, std::ostream&, const std::string&) 
+	{ 
+	  return false; 
+	}
 
-	static bool by_data(const T&, std::ostream&, const std::string&) 
-	{ return false; }
+	static bool 
+	by_data(const T&, std::ostream&, const std::string&) 
+	{ 
+	  return false; 
+	}
       };
 
       /*----------------------.
@@ -108,9 +113,8 @@ namespace oln {
       struct writers_trier
       {
 	template <class T>
-	static bool doit(const T& input, 
-			 std::ostream& out, 
-			 const std::string ext)
+	static bool
+	doit(const T& input, std::ostream& out, const std::string ext)
 	{	  
 	  bool result = try_writers<WriteAny,T>::by_extension(input, out, ext);
 	  if (!result)
@@ -148,7 +152,7 @@ namespace oln {
 	    const std::string& name)
       {
 	image2d<oln_value_type(E)> tmp(1, input.ncols());
-oln_iter_type(image1d<oln_value_type(E) > ) it(input);
+	oln_iter_type(image1d<oln_value_type(E) > ) it(input);
 	for_all(it)
 	  tmp(0, it.col()) = input[it];
 	if (!write(tmp, name))
@@ -156,10 +160,10 @@ oln_iter_type(image1d<oln_value_type(E) > ) it(input);
 	return true;
       }
 
-    } // end of internal
+    } // end of namespace internal
     
-  } // end of io
+  } // end of namespace io
   
-} // end of oln
+} // end of namespace oln
 
-#endif // ! OLENA_IO_IMAGE_WRITE_HH_
+#endif // ! OLENA_IO_IMAGE_WRITE_HH

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_PNM_READ_2D_HH_
-# define OLENA_IO_PNM_READ_2D_HH_
+#ifndef OLENA_IO_PNM_READ_2D_HH
+# define OLENA_IO_PNM_READ_2D_HH
 
 # include <ntg/bin.hh>
 # include <oln/io/pnm_read.hh>
@@ -44,9 +44,8 @@ namespace oln {
       `------------------*/
 
       // FIXME: should be in a .cc file ?
-      static bool pnm_read_header2d(std::istream& s, 
-				    char type, 
-				    pnm2d_info& info)
+      static bool 
+      pnm_read_header2d(std::istream& s, char type, pnm2d_info& info)
       {
 	// check magic
 	if (s.get() != 'P' ) return false;
@@ -86,20 +85,23 @@ namespace oln {
       {
 	static const char pnm_id = (R == ReadPnmPlain) ? '1' : '4';
 
-	static std::string name()
+	static std::string
+	name()
 	{ 
-	  static const std::string _name("pnm/P");
-	  return _name + pnm_id;
+	  static const std::string name_("pnm/P");
+	  return name_ + pnm_id;
 	}
 
-	static bool knows_ext(const std::string& ext)
+	static bool
+	knows_ext(const std::string& ext)
 	{ 
 	  if (R == ReadPnmPlain)
 	    return (ext == "ppbm") || (ext == "pbm");
 	  return ext == "pbm";
 	}
 
-	static bool read(std::istream& in, I& im)
+	static bool
+	read(std::istream& in, I& im)
 	{
 	  pnm2d_info info;
 	  if (!pnm_read_header2d(in, pnm_id, info))
@@ -121,20 +123,23 @@ namespace oln {
       {
 	static const char pnm_id = (R == ReadPnmPlain) ? '2' : '5';
 
-	static std::string name()
+	static std::string
+	name()
 	{ 
-	  static const std::string _name("pnm/P");
-	  return _name + pnm_id;
+	  static const std::string name_("pnm/P");
+	  return name_ + pnm_id;
 	}
 
-	static bool knows_ext(const std::string& ext)
+	static bool
+	knows_ext(const std::string& ext)
 	{ 
 	  if (R == ReadPnmPlain)
 	    return (ext == "ppgm") || (ext == "pgm");
 	  return ext == "pgm";
 	}
 
-	static bool read(std::istream& in, I& im)
+	static bool
+	read(std::istream& in, I& im)
 	{
 	  pnm2d_info info;
 	  
@@ -161,20 +166,23 @@ namespace oln {
       {
 	static const char pnm_id = (R == ReadPnmPlain) ? '3' : '6';
 
-	static std::string name()
+	static std::string
+	name()
 	{ 
-	  static const std::string _name("pnm/P");
-	  return _name + pnm_id;
+	  static const std::string name_("pnm/P");
+	  return name_ + pnm_id;
 	}
 
-	static bool knows_ext(const std::string& ext)
+	static bool
+	knows_ext(const std::string& ext)
 	{ 
 	  if (R == ReadPnmPlain)
 	    return (ext == "pppm") || (ext == "ppm");
 	  return ext == "ppm";
 	}
 
-	static bool read(std::istream& in, I& im)
+	static bool
+	read(std::istream& in, I& im)
 	{
 	  pnm2d_info info;
 
@@ -200,11 +208,10 @@ namespace oln {
 	}
       };
 
-    } // end of internal
+    } // end of namespace internal
 
-  } // end of io
+  } // end of namespace io
 
-} // end of oln
+} // end of namespace oln
 
-
-#endif // ! OLENA_IO_PNM_READ_2D_HH_
+#endif // ! OLENA_IO_PNM_READ_2D_HH

@@ -63,73 +63,85 @@ namespace oln
       typedef typename struct_elt_traits<Exact>::abstract_type abstract_type;
       enum { dim = struct_elt_traits<Exact>::dim };
  
-      static std::string name()
+      static std::string 
+      name()
       {
 	return std::string("neighborhood<") + Exact::name() + ">";
       }
       
-      bool has(const abstract::dpoint<dpoint_type>& dp) const
+      bool 
+      has(const abstract::dpoint<dpoint_type>& dp) const
       {
 	return this->exact().has_(dp.exact());
       }
       
-      unsigned card() const
+      unsigned 
+      card() const
       {
 	return this->exact().card_();
       }
       
-      bool is_centered() const
+      bool 
+      is_centered() const
       {
 	return this->exact().is_centered_();
       }
       
-      const dpoint_type dp(unsigned i) const
+      const dpoint_type 
+      dp(unsigned i) const
       {
 	return this->exact()[i];
       }
 
-      bool operator==(const self_type& win) const
+      bool 
+      operator==(const self_type& win) const
       {
 	return this->exact().is_equal(win.exact());
       }
 
-      coord delta() const
+      coord 
+      delta() const
       {
 	return this->exact().get_delta();
       }
 
-      const dpoint_type operator[](unsigned i) const
+      const dpoint_type 
+      operator[](unsigned i) const
       {
 	return this->exact().at(i);
       }
 
-      exact_type& add(const abstract::dpoint<dpoint_type>& dp)
+      exact_type& 
+      add(const abstract::dpoint<dpoint_type>& dp)
       {
 	this->exact().add_(dp.exact());
 	return this->exact().add_(-dp.exact());
       }
       // obsolete
-      exact_type operator-() const
+      exact_type 
+      operator-() const
       {
 	return this->exact();
       }
 
     protected:
       
-      void sym()
+      void 
+      sym()
       {
 	this->exact().sym_();
       }
 
-      neighborhood() {}
+      neighborhood() 
+      {}
     };
    
   } // end of abstract  
 
     template<class E>
-    inline 
-    E inter(const abstract::neighborhood<E> &lhs, 
-	    const abstract::neighborhood<E> &rhs)
+    inline E 
+    inter(const abstract::neighborhood<E> &lhs, 
+	  const abstract::neighborhood<E> &rhs)
     {
       E neighb;
       for (unsigned j = 0; j < rhs.card(); ++j)
@@ -137,11 +149,11 @@ namespace oln
 	  neighb.add(rhs.dp(j));
       return neighb;
     }
-    
+  
     template<class E>
-    inline
-    E uni(const abstract::neighborhood<E> &lhs, 
-	  const abstract::neighborhood<E> &rhs)
+    inline E 
+    uni(const abstract::neighborhood<E> &lhs, 
+	const abstract::neighborhood<E> &rhs)
     {
       E neighb;
       for (unsigned j = 0; j < rhs.card(); ++j)
@@ -154,8 +166,8 @@ namespace oln
     }
 
   template<class E>
-  inline
-  typename struct_elt_traits<E>::win_type mk_win_from_neighb(const abstract::neighborhood<E>& n)
+  inline typename struct_elt_traits<E>::win_type 
+  mk_win_from_neighb(const abstract::neighborhood<E>& n)
   {
     typename struct_elt_traits<E>::win_type win(n.card());
     for (unsigned i = 0; i < n.card(); ++i)

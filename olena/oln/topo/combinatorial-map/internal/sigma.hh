@@ -47,44 +47,51 @@ namespace oln {
 	class sigma : public anyfunc< U, U, sigma<U> >
 	{
 	public:
-	  static std::string name() { return "sigma"; }
-
-	  void _resize(unsigned n)
+	  static std::string
+	  name()
 	  {
-	    _f.resize(n+1);
-	    _f_1.resize(n+1);
+	    return "sigma";
 	  }
 
-	  void _assign(const U & i, const U & e)
+	  void
+	  resize_(unsigned n)
 	  {
-	    assertion(e < _f_1.size());
-
-	    _f[i] = e;
-	    _f_1[e] = i;
+	    f_.resize(n+1);
+	    f_1_.resize(n+1);
 	  }
 
-	  void _erase(const U & d)
+	  void
+	  assign_(const U & i, const U & e)
 	  {
-	    _f[_f_1[d]] = _f[d];
-	    _f_1[_f[d]] = _f_1[d];
-	    _f[d] = _f_1[d] = 0;
+	    assertion(e < f_1_.size());
+
+	    f_[i] = e;
+	    f_1_[e] = i;
+	  }
+
+	  void
+	  erase_(const U & d)
+	  {
+	    f_[f_1_[d]] = f_[d];
+	    f_1_[f_[d]] = f_1_[d];
+	    f_[d] = f_1_[d] = 0;
 
 	    unsigned d_ = alpha<U>::result(d);
-	    _f[_f_1[d_]] = _f[d_];
-	    _f_1[_f[d_]] = _f_1[d_];
-	    _f[d_] = _f_1[d_] = 0;
+	    f_[f_1_[d_]] = f_[d_];
+	    f_1_[f_[d_]] = f_1_[d_];
+	    f_[d_] = f_1_[d_] = 0;
 	  }
 
 	private:
-	  std::vector<U> _f_1;
+	  std::vector<U> f_1_;
 	};
 
-      } // end internal
+      } // end of namespace internal
 
-    } // end combinatorial_map
+    } // end of namespace combinatorial_map
 
-  } // end topo
+  } // end of namespace topo
 
-} // end oln
+} // end of namespace oln
 
 #endif // ! OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_SIGMA_HH

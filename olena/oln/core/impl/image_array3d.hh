@@ -35,8 +35,9 @@
 namespace oln {
 
   template<class T>
-  void pretreat_3d_data_(T*& buffer, T**& array2, T***& array,
-			 const image3d_size& s)
+  void 
+  pretreat_3d_data_(T*& buffer, T**& array2, T***& array,
+		    const image3d_size& s)
   {
     precondition(s.nslices() > 0
 		 && s.nrows() > 0
@@ -64,8 +65,9 @@ namespace oln {
   }
 
   template<class T>
-  void desallocate_3d_data_(T**& array2, T***& array, const
-			    image3d_size& s)
+  void 
+  desallocate_3d_data_(T**& array2, T***& array, const
+		       image3d_size& s)
   {
     delete[] array2;
     array2 = 0;  // security
@@ -96,7 +98,9 @@ namespace oln {
     class image_array3d :
       public image_array<T, image_array3d<T> >
     {
+
     public:
+
       typedef image_array3d<T> self_type;
       typedef image_array3d<T> exact_type;
 
@@ -122,7 +126,8 @@ namespace oln {
 
     protected:
 
-      bool hold_(const point_type& p) const
+      bool 
+      hold_(const point_type& p) const
       {
 	return (p.slice() >= 0
 		&& p.slice() < this->size_.nslices()
@@ -132,7 +137,8 @@ namespace oln {
 		&& p.col() < this->size_.ncols());
       }
 
-      bool hold_large_(const point_type& p) const
+      bool 
+      hold_large_(const point_type& p) const
       {
 	return (p.slice() >= -this->size_.border()
 		&& p.slice() < this->size_.nslices() + this->size_.border()
@@ -142,20 +148,23 @@ namespace oln {
 		&& p.col() < this->size_.ncols() + this->size_.border());
       }
 
-      value_type& at_(const point_type& p)
+      value_type& 
+      at_(const point_type& p)
       {
 	
 	return at_(p.slice(), p.row(), p.col());
       }
 
-      value_type& at_(coord slice, coord row, coord col)
+      value_type& 
+      at_(coord slice, coord row, coord col)
       {
 	invariant(this->buffer_ != 0);
 	precondition_hold_large(point_type(slice, row, col));
 	return array_[slice][row][col];
       }
       
-      size_t len_(const size_type& s) const
+      size_t 
+      len_(const size_type& s) const
       {
 	coord nslices_eff = s.nslices() + 2 * s.border();
 	coord ncols_eff = s.ncols() + 2 * s.border();
@@ -165,8 +174,9 @@ namespace oln {
 
       // borders
 
-      void border_reallocate_and_copy_(coord new_border, bool
-				      copy_border) 
+      void 
+      border_reallocate_and_copy_(coord new_border, bool
+				  copy_border) 
       {
 	T* buffer = 0;
 	T** array2 = 0;
@@ -202,7 +212,8 @@ namespace oln {
 	array_ = array;
       }
             
-      void border_replicate_(void) 
+      void 
+      border_replicate_(void) 
       {
 	const coord imax = this->size_.nslices() - 1;
 	const coord jmax = this->size_.nrows() - 1;
@@ -233,7 +244,8 @@ namespace oln {
 	      }
       }
 
-      void border_mirror_(void) 
+      void 
+      border_mirror_(void) 
       {
 	const coord imax = this->size_.nslices() - 1;
 	const coord jmax = this->size_.nrows() - 1;
@@ -264,7 +276,8 @@ namespace oln {
 	      }
       }
 
-      void border_assign_(value_type val) 
+      void 
+      border_assign_(value_type val) 
       {
 	const coord imax = this->size_.nslices() - 1;
         const coord jmax = this->size_.nrows() - 1;
@@ -295,11 +308,11 @@ namespace oln {
               }
       }
 
-
-
     private:
+
       T** array2_;
       T*** array_;
+
     };
 
   } // end of namespace impl

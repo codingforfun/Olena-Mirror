@@ -48,7 +48,9 @@ namespace oln {
 
   class dpoint2d : public abstract::dpoint< dpoint2d >
   {
+
   public:
+
     typedef abstract::dpoint< dpoint2d > super_type;
 
     friend class super_type;
@@ -59,27 +61,40 @@ namespace oln {
 
     explicit dpoint2d(const point2d& p);
 
-    coord row() const;
+    coord 
+    row() const;
 
-    coord& row();
+    coord& 
+    row();
 
-    coord col() const;
+    coord 
+    col() const;
 
-    coord& col();
+    coord& 
+    col();
 
-    static std::string name() { return "dpoint2d"; }
+    static std::string 
+    name() 
+    { 
+      return "dpoint2d"; 
+    }
 
   protected:
 
-    dpoint2d plus_dp(const dpoint2d& dp) const;
+    dpoint2d 
+    plus_dp(const dpoint2d& dp) const;
 
-    dpoint2d minus() const;
+    dpoint2d 
+    minus() const;
 
-    dpoint2d minus_dp(const dpoint2d& dp) const;
+    dpoint2d 
+    minus_dp(const dpoint2d& dp) const;
 
-    dpoint2d& plus_assign_dp(const dpoint2d& dp);
+    dpoint2d& 
+    plus_assign_dp(const dpoint2d& dp);
 
-    dpoint2d& minus_assign_dp(const dpoint2d& dp);
+    dpoint2d& 
+    minus_assign_dp(const dpoint2d& dp);
 
   };
 

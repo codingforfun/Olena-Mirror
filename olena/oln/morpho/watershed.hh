@@ -62,7 +62,7 @@ namespace oln {
     template<class DestValue, class I, class N>
     typename mute<I, DestValue>::ret
     watershed_seg(const abstract::non_vectorial_image<I>& im_i, const abstract::neighborhood<N>& Ng);
-
+    
     /*=processing watershed_con
      * what: Connected Watershed.
      * ns: morpho
@@ -123,7 +123,7 @@ namespace oln {
      *   presented by D'Ornellas et al. (FIXME: ref?)
     =*/
     template<class I1, class I2, class N>
-   oln_concrete_type(I2)&
+    oln_concrete_type(I2)&
     watershed_seg_or(const abstract::non_vectorial_image<I1>& D,
 		     abstract::non_vectorial_image<I2>& M,
 		     const abstract::neighborhood<N>& Ng);

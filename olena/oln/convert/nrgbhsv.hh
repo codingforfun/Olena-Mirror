@@ -89,7 +89,8 @@ namespace oln {
 	return out;
       }
 
-      static std::string name()
+      static std::string 
+      name()
       { 
 	std::ostringstream s;
 	s << "f_nrgb_to_hsv<" << inbits << ", " << outbits << '>'; 
@@ -164,7 +165,8 @@ namespace oln {
 	return out;
       }
 
-      static std::string name() 
+      static std::string 
+      name() 
       { 
 	std::ostringstream s;
 	s << "f_hsv_to_nrgb<" << inbits << ", " << outbits << '>'; 

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_IMAGE_BASE_HH_
-# define OLENA_IO_IMAGE_BASE_HH_
+#ifndef OLENA_IO_IMAGE_BASE_HH
+# define OLENA_IO_IMAGE_BASE_HH
 
 # include <oln/config/system.hh>
 
@@ -54,14 +54,24 @@ namespace oln {
       template<reader_id F, class I>
       struct image_reader
       {
-	static const std::string& name()
-	{ static const std::string _name("-"); return _name; }
+	static const std::string& 
+	name()
+	{ 
+	  static const std::string name_("-"); 
+	  return name_; 
+	}
 
-	static bool knows_ext(const std::string&)
-	{ return false; }
+	static bool 
+	knows_ext(const std::string&)
+	{ 
+	  return false; 
+	}
 
-	static bool read(std::istream&, I&)
-	{ return false; }
+	static bool 
+	read(std::istream&, I&)
+	{ 
+	  return false; 
+	}
       };
 
       /*---------------------.
@@ -79,20 +89,30 @@ namespace oln {
       template<writer_id F, class I>
       struct image_writer
       {
-	static const std::string& name()
-	{ static const std::string _name("-"); return _name; }
+	static const std::string& 
+	name()
+	{
+	  static const std::string name_("-"); 
+	  return name_; 
+	}
 
-	static bool knows_ext(const std::string&)
-	{ return false; }
+	static bool 
+	knows_ext(const std::string&)
+	{ 
+	  return false; 
+	}
 
-	static bool write(std::ostream&, const I&)
-	{ return false; }
+	static bool 
+	write(std::ostream&, const I&)
+	{ 
+	  return false; 
+	}
       };      
 
-    } // end of internal
+    } // end of namespace internal
     
-  } // end of io
+  } // end of namespace io
   
-} // end of oln
+} // end of namespace oln
 
-#endif // ! OLENA_IO_IMAGE_BASE_HH_
+#endif // ! OLENA_IO_IMAGE_BASE_HH

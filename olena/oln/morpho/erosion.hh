@@ -66,14 +66,15 @@ namespace oln {
      * exo: out.pbm
     =*/
     template<class I, class E>
-   oln_concrete_type(I) erosion(const abstract::non_vectorial_image<I>& input, 
-			const abstract::struct_elt<E>& se)
+    oln_concrete_type(I) 
+      erosion(const abstract::non_vectorial_image<I>& input, 
+	      const abstract::struct_elt<E>& se)
     {
       mlc::eq<I::dim, E::dim>::ensure();
-     oln_concrete_type(I) output(input.size());
+      oln_concrete_type(I) output(input.size());
       se.delta();
       input.border_adapt_copy(se.delta());
-     oln_iter_type(I) p(input);
+      oln_iter_type(I) p(input);
       for_all (p)
 	output[p] = morpho::min(input, p, se);
       return output;
@@ -93,16 +94,17 @@ namespace oln {
     =*/
 
     template<class I, class E>
-   oln_concrete_type(I) n_erosion(const abstract::non_vectorial_image<I> & input,
-			  const abstract::struct_elt<E>& se,
-			  unsigned n)
+    oln_concrete_type(I) 
+      n_erosion(const abstract::non_vectorial_image<I> & input,
+		const abstract::struct_elt<E>& se,
+		unsigned n)
     {
       //mlc::eq<I::dim, E::dim>::ensure();
       precondition(n > 0);
-     oln_concrete_type(I) output = input.clone();
+      oln_concrete_type(I) output = input.clone();
       for (unsigned i = 0; i < n; ++i)
 	{
-	 oln_concrete_type(I) work = erosion(output, se);
+	  oln_concrete_type(I) work = erosion(output, se);
 	  output = work;
  	}
       return output;
@@ -110,8 +112,9 @@ namespace oln {
 
     namespace fast {
       template<class I, class E>
-     oln_concrete_type(I) erosion(const abstract::non_vectorial_image<I>& input, 
-			  const abstract::struct_elt<E>& se)
+      oln_concrete_type(I) 
+	erosion(const abstract::non_vectorial_image<I>& input, 
+		const abstract::struct_elt<E>& se)
       {
         return fast_morpho<I, E, utils::histogram_min>(input, se);
       }

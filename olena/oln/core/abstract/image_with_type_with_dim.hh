@@ -39,7 +39,7 @@
 // determine the parent class of Name##_with_dim and is suffixed with
 // _with_dim.
 
-# define LABEL_IMAGE_(Name, Super)				\
+# define oln_label_image_(Name, Super)				\
   template <class Exact>					\
   class Name							\
     : virtual public Super<Exact>				\
@@ -48,12 +48,14 @@
     typedef Name<Exact> self_type;				\
     typedef Exact exact_type;					\
 								\
-    exact_type& operator=(self_type rhs)			\
+    exact_type&							\
+    operator=(self_type rhs)					\
     {								\
       return this->exact().assign(rhs.exact());			\
     }								\
 								\
-    static std::string name()					\
+    static std::string				      		\
+    name()							\
     {								\
       return							\
 	std::string(#Name "<")					\
@@ -70,12 +72,14 @@
     typedef Name##_with_dim<Dim, Exact> self_type;		\
     typedef Exact exact_type;					\
 								\
-    exact_type& operator=(self_type rhs)			\
+    exact_type& 						\
+    operator=(self_type rhs)				       	\
     {								\
       return this->exact().assign(rhs.exact());			\
     }								\
 								\
-    static std::string name()					\
+    static std::string						\
+    name()							\
     {								\
       std::ostringstream s;					\
       s << #Name "_with_dim<"					\
@@ -107,12 +111,14 @@ namespace oln {
       typedef data_type_image<Exact> self_type;
       typedef Exact exact_type;
 
-      exact_type& operator=(self_type rhs)
+      exact_type& 
+      operator=(self_type rhs)
       {
 	return this->exact().assign(rhs.exact());
       }
 
-      static std::string name()
+      static std::string 
+      name()
       {
 	return
 	  std::string("abstract::data_type_image<")
@@ -130,12 +136,14 @@ namespace oln {
       typedef data_type_image<Exact> self_type;
       typedef Exact exact_type;
 
-      exact_type& operator=(self_type rhs)
+      exact_type& 
+      operator=(self_type rhs)
       {
 	return this->exact().assign(rhs.exact());
       }
 
-      static std::string name()
+      static std::string 
+      name()
       {
 	return
 	  std::string("abstract::data_type_image<")
@@ -143,16 +151,17 @@ namespace oln {
       }
     };
 
-    LABEL_IMAGE_(vectorial_image, data_type_image);
-    LABEL_IMAGE_(non_vectorial_image, data_type_image);
-    LABEL_IMAGE_(binary_image, non_vectorial_image);
-    LABEL_IMAGE_(integer_image, non_vectorial_image);
-    LABEL_IMAGE_(decimal_image, non_vectorial_image);
+    oln_label_image_(vectorial_image, data_type_image);
+    oln_label_image_(non_vectorial_image, data_type_image);
+    oln_label_image_(binary_image, non_vectorial_image);
+    oln_label_image_(integer_image, non_vectorial_image);
+    oln_label_image_(decimal_image, non_vectorial_image);
 
     template<class Exact>
     struct image_with_type_with_dim_switch
     {
       enum { Dim = image_id<Exact>::dim };
+
       typedef typename image_id<Exact>::value_type T;
 
       typedef typename mlc::bool_switch_<
@@ -175,7 +184,7 @@ namespace oln {
         mlc::bool_case_<true,
 	      	        data_type_image<Exact> >
 
-      > > > > > >::ret_t ret;
+      > > > > > >::ret ret;
     };
 
   } // end of namespace abstract

@@ -36,6 +36,9 @@
 # include <ntg/utils/cast.hh>
 # include <mlc/array/1d.hh>
 
+// FIXME: this file has not been adjusted to the coding style since it
+// will be completely rewritten in next release.
+
 namespace oln {
 
   namespace transforms {
@@ -110,7 +113,7 @@ namespace oln {
       }
 
       mlc::array1d< mlc::array1d_info<N>, value_t>	h;
-      mlc::internal::_array1d_start<value_t>		wc_start;
+      mlc::internal::array1d_start_<value_t>		wc_start;
 
     private:
 

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_GZ_HH_
-# define OLENA_IO_GZ_HH_
+#ifndef OLENA_IO_GZ_HH
+# define OLENA_IO_GZ_HH
 
 # include <oln/io/stream_wrapper.hh>
 # include <oln/io/gz_stream.hh>
@@ -40,20 +40,29 @@ namespace oln {
       template<>
       struct stream_wrapper<StreamGz>
       {
-	static const std::string& name()
-	{ static const std::string _name("gz:"); return _name; }
+	static const std::string& 
+	name()
+	{ 
+	  static const std::string name_("gz:"); 
+	  return name_; 
+	}
 
-	static bool knows_ext(const std::string& ext)
-	{ return ext == "gz" || ext == "z"; }
+	static bool 
+	knows_ext(const std::string& ext)
+	{ 
+	  return ext == "gz" || ext == "z"; 
+	}
 
-	static void adjust_name(std::string& name)
+	static void 
+	adjust_name(std::string& name)
 	{
 	  std::string ext = utils::extension(name);
 	  if (knows_ext(ext))
 	    name.erase(name.rfind('.'));
 	}
 
-	static std::istream* wrap_in(std::string& name)
+	static std::istream* 
+	wrap_in(std::string& name)
 	{
 	  gz::zifstream* in = new gz::zifstream(name.c_str());
 	  if (!in->fail())
@@ -65,7 +74,8 @@ namespace oln {
 	  return 0;
 	}
 
-	static std::ostream* wrap_out(std::string& name)
+	static std::ostream* 
+	wrap_out(std::string& name)
 	{
 	  gz::zofstream* out = new gz::zofstream(name.c_str());
 	  if (!out->fail())
@@ -77,14 +87,15 @@ namespace oln {
 	  return 0;
 	}
 
-  	static void find(std::list<std::string>&, const std::string&) {}
+  	static void 
+	find(std::list<std::string>&, const std::string&) 
+	{}
       };
 
-    } // internal
+    } // end of namespace internal
 
-  } // io
+  } // end of namespace io
 
-} // oln
+} // end of namespace oln
 
-
-#endif // OLENA_IO_GZ_HH_
+#endif // ! OLENA_IO_GZ_HH

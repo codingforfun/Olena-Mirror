@@ -72,14 +72,14 @@ namespace oln {
       DestType k = 1;
 
       fill(output, 0);
-     oln_iter_type(I) p(input);
+      oln_iter_type(I) p(input);
       for_all(p)
 	{
 	  if (input[p] == true)
 	    {
 	      typedef typename abstract::neighborhood<N>::win_type E;
 	      E se_plus = morpho::get_plus_se_only(convert::ng_to_se(Ng));
-	      Neighb(E) p_prime(se_plus, p);
+	      oln_neighb_type(E) p_prime(se_plus, p);
 	      bool all_zero = true;
 	      for_all(p_prime)
 		if (input.hold(p_prime) && input[p_prime])
@@ -150,9 +150,9 @@ namespace oln {
 	output[p] = T(output[p]);
       return output;
     }
+    
+  } // end of namespace level
+  
+} // end of namespace oln
 
-  } // level
-} // oln
-
-
-#endif // OLENA_LEVEL_CONNECTED_HH
+#endif // ! OLENA_LEVEL_CONNECTED_HH

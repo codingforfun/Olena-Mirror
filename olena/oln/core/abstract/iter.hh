@@ -67,28 +67,33 @@ namespace oln
       typedef typename iter_traits<Exact>::dpoint_type dpoint_type;
 
 
-      const point_type& point_ref() const
+      const point_type& 
+      point_ref() const
       {
 	return p_;
       }
 
-      bool operator==(const abstract::point<point_type>& p) const
+      bool 
+      operator==(const abstract::point<point_type>& p) const
       {
 	return p_ == p.exact();
       }
 
-      bool operator!=(const abstract::point<point_type>& p) const
+      bool 
+      operator!=(const abstract::point<point_type>& p) const
       {
 	return p_ != p.exact();
       }
 
-      point_type operator+(const abstract::dpoint<dpoint_type>& dp) const
+      point_type 
+      operator+(const abstract::dpoint<dpoint_type>& dp) const
       {
 	precondition(*this != end);
 	return p_ + dp.exact();
       }
 
-      point_type operator-(const abstract::dpoint<dpoint_type>& dp) const
+      point_type 
+      operator-(const abstract::dpoint<dpoint_type>& dp) const
       {
 	precondition(*this != end);
 	return p_ - dp.exact();
@@ -101,7 +106,8 @@ namespace oln
 
       // it's convenient to type `it.cur()' instead of `(point)it' when
       // necessary.
-      point_type cur() const
+      point_type 
+      cur() const
       {
 	return *this;
       }
@@ -113,24 +119,28 @@ namespace oln
       //   bool _is_at_end() const;
       //   void _goto_next();
 
-      mlc::_begin operator=(mlc::_begin b)
+      mlc::begin_type
+      operator=(mlc::begin_type b)
       {
 	this->exact().goto_begin_();
 	return b;
       }
 
-      mlc::_end operator=(mlc::_end e)
+      mlc::end_type
+      operator=(mlc::end_type e)
       {
 	this->exact().goto_end_();
 	return e;
       }
 
-      bool operator==(mlc::_end) const
+      bool
+      operator==(mlc::end_type) const
       {
 	return this->exact().is_at_end_();
       }
 
-      void operator++()
+      void 
+      operator++()
       {
 	precondition(*this != end);
 	this->exact().goto_next_();
@@ -146,18 +156,25 @@ namespace oln
 
       // deduced methods:
 
-      bool operator!=(mlc::_end e) const
+      bool
+      operator!=(mlc::end_type e) const
       {
 	return ! this->operator==(e);
       }
 
 
-      static std::string name() { return std::string("iter<") +
-				    Exact::name() + ">"; }
+      static std::string 
+      name() 
+      { 
+	return std::string("iter<") +
+	  Exact::name() + ">"; 
+      }
+
     protected:
       point_type p_;
 
-      iter() {}
+      iter() 
+      {}
     };
         
   } // end of abstract

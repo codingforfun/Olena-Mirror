@@ -1,5 +1,5 @@
 // -*- c++ -*-
-// Copyright (C) 2001  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -71,7 +71,7 @@ hit_or_miss(const convert::abstract::conversion<C, B>& c,
   mlc::eq<E1::dim, E2::dim>::ensure();
 
   // FIXME: call inter on w_windows destroys weights
-  precondition(inter(to_exact(se1), to_exact(se2)).card() == 0);
+  precondition(inter(se1.exact(), se2.exact()).card() == 0);
   // FIXME: max(coord, coord) does not exist.
   input.border_adapt_copy((se1.delta() > se2.delta()) ?
 			  se1.delta() : se2.delta());
@@ -89,9 +89,10 @@ hit_or_miss(const convert::abstract::conversion<C, B>& c,
  * ret:oln_concrete_type(I)
 =*/
 template<class I, class E1, class E2>
-oln_concrete_type(I) hit_or_miss(const abstract::non_vectorial_image<I>& input,
-			const abstract::struct_elt<E1>& se1,
-			const abstract::struct_elt<E2>& se2)
+oln_concrete_type(I) 
+  hit_or_miss(const abstract::non_vectorial_image<I>& input,
+	      const abstract::struct_elt<E1>& se1,
+	      const abstract::struct_elt<E2>& se2)
 {
   return hit_or_miss(convert::force<oln_value_type(I)>(), input, se1, se2);
 }
@@ -134,12 +135,13 @@ oln_concrete_type(I) hit_or_miss(const abstract::non_vectorial_image<I>& input,
  * exo: out.pbm
 =*/
 template<class I, class E1, class E2>
-oln_concrete_type(I) hit_or_miss_opening(const abstract::non_vectorial_image<I>& input,
-				const abstract::struct_elt<E1>& se1,
-				const abstract::struct_elt<E2>& se2)
+oln_concrete_type(I) 
+  hit_or_miss_opening(const abstract::non_vectorial_image<I>& input,
+		      const abstract::struct_elt<E1>& se1,
+		      const abstract::struct_elt<E2>& se2)
 {
   // FIXME: call inter on w_windows destroys weights
-  precondition(inter(to_exact(se1), to_exact(se2)).card() == 0);
+  precondition(inter(se1.exact(), se2.exact()).card() == 0);
   return dilation(hit_or_miss(input, se1, se2), -se1);
 }
 
@@ -176,9 +178,10 @@ oln_concrete_type(I) hit_or_miss_opening(const abstract::non_vectorial_image<I>&
  * exo: out.pbm
 =*/
 template<class I, class E1, class E2>
-oln_concrete_type(I) hit_or_miss_opening_bg(const abstract::non_vectorial_image<I>& input,
-				   const abstract::struct_elt<E1>& se1,
-				   const abstract::struct_elt<E2>& se2)
+oln_concrete_type(I) 
+  hit_or_miss_opening_bg(const abstract::non_vectorial_image<I>& input,
+			 const abstract::struct_elt<E1>& se1,
+			 const abstract::struct_elt<E2>& se2)
 {
   return hit_or_miss_opening(input, se2, se1);
 }
@@ -223,12 +226,13 @@ oln_concrete_type(I) hit_or_miss_opening_bg(const abstract::non_vectorial_image<
  * exo: out.pbm
 =*/
 template<class I, class E1, class E2>
-oln_concrete_type(I) hit_or_miss_closing(const abstract::non_vectorial_image<I>& input,
-				const abstract::struct_elt<E1>& se1,
-				const abstract::struct_elt<E2>& se2)
+oln_concrete_type(I) 
+  hit_or_miss_closing(const abstract::non_vectorial_image<I>& input,
+		      const abstract::struct_elt<E1>& se1,
+		      const abstract::struct_elt<E2>& se2)
 {
   // FIXME: call inter on struct elts, even if w_windows do not provide it
-  precondition(inter(to_exact(se1), to_exact(se2)).card() == 0);
+  precondition(inter(se1.exact(), se2.exact()).card() == 0);
   return level::invert(hit_or_miss_opening(level::invert(input),
 					   se1, se2));
 }
@@ -267,9 +271,10 @@ oln_concrete_type(I) hit_or_miss_closing(const abstract::non_vectorial_image<I>&
  * exo: out.pbm
 =*/
 template<class I, class E1, class E2>
-oln_concrete_type(I) hit_or_miss_closing_bg(const abstract::non_vectorial_image<I>& input,
-				   const abstract::struct_elt<E1>& se1,
-				   const abstract::struct_elt<E2>& se2)
+oln_concrete_type(I) 
+hit_or_miss_closing_bg(const abstract::non_vectorial_image<I>& input,
+		       const abstract::struct_elt<E1>& se1,
+		       const abstract::struct_elt<E2>& se2)
 {
   return hit_or_miss_closing(input, se2, se1);
 }

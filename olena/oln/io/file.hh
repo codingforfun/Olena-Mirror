@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_FILE_HH_
-# define OLENA_IO_FILE_HH_
+#ifndef OLENA_IO_FILE_HH
+# define OLENA_IO_FILE_HH
 
 # include <oln/io/stream_wrapper.hh>
 
@@ -43,13 +43,20 @@ namespace oln {
       template<>
       struct stream_wrapper<StreamFile>
       {
-	static const std::string& name()
-	{ static const std::string _name("file:"); return _name; }
+	static const std::string& 
+	name()
+	{ 
+	  static const std::string name_("file:"); return name_; 
+	}
 
-	static bool knows_ext(const std::string&)
-	{ return true; } // knows all extensions
+	static bool 
+	knows_ext(const std::string&) // knows all extensions
+	{ 
+	  return true; 
+	}
 
-	static std::istream* wrap_in(std::string& name)
+	static std::istream* 
+	wrap_in(std::string& name)
 	{
 	  std::ifstream* in = new std::ifstream(name.c_str());
 	  if (!in->fail())
@@ -58,7 +65,8 @@ namespace oln {
 	  return 0;
 	}
 
-	static std::ostream* wrap_out(std::string& name)
+	static std::ostream* 
+	wrap_out(std::string& name)
 	{
 	  std::ofstream* out = new std::ofstream(name.c_str());
 	  if (!out->fail())
@@ -67,7 +75,8 @@ namespace oln {
 	  return 0;
 	}
 
-  	static void find(std::list<std::string>& names, const std::string& name)
+  	static void 
+	find(std::list<std::string>& names, const std::string& name)
 	{
 	  // extract dir/base from name
 	  int pos = name.rfind('/');
@@ -91,11 +100,11 @@ namespace oln {
 
       };
 
-    } // end of internal
+    } // end of namespace internal
 
-  } // end of io
+  } // end of namespace io
 
-} // end of oln
+} // end of namespace oln
 
 
-#endif // OLENA_IO_FILE_HH_
+#endif // OLENA_IO_FILE_HH

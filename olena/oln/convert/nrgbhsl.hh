@@ -97,7 +97,8 @@ namespace oln {
 	return out;
       }
 
-      static std::string name() 
+      static std::string 
+      name() 
       { 
 	std::ostringstream s;
 	s << "f_nrgb_to_hsl<" << inbits << ", " << outbits << '>'; 
@@ -114,7 +115,8 @@ namespace oln {
     }
 
     namespace internal {
-      float RGB(float q1, float q2, float hue)
+      float 
+      RGB(float q1, float q2, float hue)
       {
 	if (hue >= 360)
 	  hue -= 360;
@@ -162,7 +164,8 @@ namespace oln {
 	return out;
       }
 
-      static std::string name() 
+      static std::string 
+      name() 
       { 
 	std::ostringstream s;
 	s << "f_hsl_to_nrgb<" << inbits << ", " << outbits << '>'; 

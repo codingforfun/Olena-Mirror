@@ -59,26 +59,30 @@ namespace oln
       typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
       friend class struct_elt<exact_type>;
 
-      static std::string name()
+      static std::string 
+      name()
       {
 	return std::string("window<") + Exact::name() + ">";
       }
 
     protected:
 
-      exact_type& add_dp(const abstract::dpoint<dpoint_type>& dp)
+      exact_type& 
+      add_dp(const abstract::dpoint<dpoint_type>& dp)
       {
 	return this->exact().add_(dp.exact());
       }
 
-      window() : super_type() {}
+      window() : super_type() 
+      {}
+
     };
 
   } // end of abstract
 
   template<class E>
-  inline
-  E inter(const abstract::window<E>& lhs, const abstract::window<E>& rhs)
+  inline E 
+  inter(const abstract::window<E>& lhs, const abstract::window<E>& rhs)
   {
     E win;
     for (unsigned i = 0; i < lhs.card(); ++i)
@@ -91,8 +95,8 @@ namespace oln
   }
 
   template<class E>
-  inline
-  E uni(const abstract::window<E>& lhs, const abstract::window<E>& rhs)
+  inline E 
+  uni(const abstract::window<E>& lhs, const abstract::window<E>& rhs)
   {
     E win;
     for (unsigned i = 0; i < lhs.card(); ++i)

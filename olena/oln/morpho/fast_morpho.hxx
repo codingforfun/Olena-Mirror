@@ -55,14 +55,14 @@ namespace oln {
 	mlc_is_a(E2, abstract::struct_elt)::ensure();
 	mlc_is_a(E3, abstract::struct_elt)::ensure();
 	const unsigned dim = E1::dim;
-
+	
 	// back[n] allows to move backward on coordinate `n'.
-oln_dpoint_type(E1) back[dim];
+	oln_dpoint_type(E1) back[dim];
 	for (unsigned n = 0; n < dim; ++n)
 	  back[n].nth(n) = -1;
-
-oln_iter_type(E1) dp(se);
-oln_iter_type(E1) dp_prime(se);
+	
+	oln_iter_type(E1) dp(se);
+	oln_iter_type(E1) dp_prime(se);
 
 	for_all(dp)
 	  {
@@ -114,12 +114,12 @@ oln_iter_type(E1) dp_prime(se);
 		  const abstract::struct_elt<E2>& se_add)
       {
 	{
-	 oln_iter_type(E1) dp(se_rem);
+	  oln_iter_type(E1) dp(se_rem);
 	  for_all(dp)
 	    --hist[input[p + dp]];
 	}
 	{
-	 oln_iter_type(E2) dp(se_add);
+	  oln_iter_type(E2) dp(se_add);
 	  for_all(dp)
 	    ++hist[input[p + dp]];
 	}
@@ -252,17 +252,17 @@ oln_iter_type(E1) dp_prime(se);
     protected:
       abstract::struct_elt<E>* se_;
     };
-
-
+    
+    
     template<class I, class E, template<typename, typename> class H>
-   oln_concrete_type(I)
-    fast_morpho(const abstract::non_vectorial_image<I>& input,
-		const abstract::struct_elt<E>& se)
+    oln_concrete_type(I)
+      fast_morpho(const abstract::non_vectorial_image<I>& input,
+		  const abstract::struct_elt<E>& se)
     {
       enum { dim = E::dim };
 
       // prepare output
-     oln_concrete_type(I) output(input.size());
+      oln_concrete_type(I) output(input.size());
       input.border_adapt_copy(se.delta());
 
       // compute delta structuring elements for forward movements
@@ -276,7 +276,7 @@ oln_iter_type(E1) dp_prime(se);
       for (unsigned n = 0; n < dim; ++n)
 	for (unsigned i = 0; i < se_add[n].card(); ++i)
 	{
-	 oln_dpoint_type(I) dp = se_add[n].dp(i);
+	  oln_dpoint_type(I) dp = se_add[n].dp(i);
 	  dp.nth(n) += 1;
 	  se_rem_back[n].add(dp);
 
@@ -296,8 +296,8 @@ oln_iter_type(E1) dp_prime(se);
 
       // Initialize the histogram with the values around the first point.
       H<oln_value_type(I),unsigned> hist;
-     oln_point_type(I) p;
-
+      oln_point_type(I) p;
+     
       //     oln_iter_type(E) dp(se);
       typename E::iter_type	dp(se);
       for_all(dp)
@@ -311,9 +311,9 @@ oln_iter_type(E1) dp_prime(se);
       internal::fast_morpho_inner<1, E::dim, const I,
 	const typename I::size_type, H<oln_value_type(I),unsigned>,
 	const E,oln_point_type(I),oln_concrete_type(I)>::doit(input.exact(), size, hist,
-					      se_add, se_rem,
-					      se_add_back, se_rem_back,
-					      p, output, dims);
+							      se_add, se_rem,
+							      se_add_back, se_rem_back,
+							      p, output, dims);
       return output;
     }
 

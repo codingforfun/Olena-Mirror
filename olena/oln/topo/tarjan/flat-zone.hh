@@ -39,45 +39,45 @@ namespace oln {
 
     namespace tarjan {
 
-      //
-      //  Class flat_zone<I>
-      //
-      //////////////////////////////////
+      /*----------.
+      | flat_zone |
+      `----------*/
 
       template <class I>
       struct flat_zone
       {
-	typedef oln_point_type(I) point_t;
-	typedef oln_value_type(I)  data_t;
-	typedef oln_concrete_type(I) image_t;
+	typedef oln_point_type(I) point_type;
+	typedef oln_value_type(I)  data_type;
+	typedef oln_concrete_type(I) image_type;
 
-	typedef tarjan::tarjan_set<image_t, tarjan::EMPTY_CLASS> tarjan_cc;
+	typedef tarjan::tarjan_set<image_type, tarjan::empty_class> tarjan_cc;
 
-	const image_t &input;
+	const image_type &input;
 	tarjan_cc cc;
 	image2d<unsigned> label;
 
-	std::vector<point_t> look_up_table;
+	std::vector<point_type> look_up_table;
 
 	image2d< std::vector<oln::point2d> > ima_region;
 
-	unsigned _nlabels;
+	unsigned nlabels_;
 
-	flat_zone(const image_t& _input) : input(_input), cc(_input),
-					   label(_input.size()),
-					   ima_region(_input.size()),
-					   _nlabels(0)
+	flat_zone(const image_type& input_) : input(input_), cc(input_),
+					      label(input_.size()),
+					      ima_region(input_.size()),
+					      nlabels_(0)
 	{
 	  doit();
 	}
 
-	void doit()
+	void
+	doit()
 	{
-	  // COMPUTE CC MAP
+	  // Compute cc map
 	  {
 	    window2d c4;
 	    c4.add(0,1).add(1,0);
-	    typename image_t::bkd_iter_type p(input);
+	    typename image_type::bkd_iter_type p(input);
 	    for_all(p)
 	      {
 		cc.make_set(p);
@@ -86,67 +86,67 @@ namespace oln {
 		  if (input[p] == input[p_prime])
 		    cc.uni(p_prime.cur(), p);
 	      }
-
-	    cc.make_set(point_t(input.nrows(), input.ncols()));
+	    
+	    cc.make_set(point_type(input.nrows(), input.ncols()));
 
 	    // bottom-right corner -> bottom-left corner
 	    for (int j = input.ncols() - 1; j >= 0; --j)
 	      {
-		cc.make_set(point_t(input.nrows(), j));
-		cc.uni(point_t(input.nrows(), j + 1), point_t(input.nrows(), j));
+		cc.make_set(point_type(input.nrows(), j));
+		cc.uni(point_type(input.nrows(), j + 1), point_type(input.nrows(), j));
 	      }
 
 	    // bottom-right corner -> top-right corner
 	    for (int i = input.nrows() - 1; i >= 0; --i)
 	      {
-		cc.make_set(point_t(i, input.ncols()));
-		cc.uni(point_t(i + 1, input.ncols()), point_t(i, input.ncols()));
+		cc.make_set(point_type(i, input.ncols()));
+		cc.uni(point_type(i + 1, input.ncols()), point_type(i, input.ncols()));
 	      }
 
 	    // top-right corner -> top-left corner - 1
 	    for (int j = input.ncols() - 1; j > 0; --j)
 	      {
-		cc.make_set(point_t(-1, j));
-		cc.uni(point_t(-1, j + 1), point_t(-1, j));
+		cc.make_set(point_type(-1, j));
+		cc.uni(point_type(-1, j + 1), point_type(-1, j));
 	      }
 
 	    // bottom-left corner -> top-left corner - 1
 	    for (int i = input.nrows() - 1; i > 0; --i)
 	      {
-		cc.make_set(point_t(i, -1));
-		cc.uni(point_t(i + 1, -1), point_t(i, -1));
+		cc.make_set(point_type(i, -1));
+		cc.uni(point_type(i + 1, -1), point_type(i, -1));
 	      }
 
-	    cc.make_set(point_t(-1, -1));
+	    cc.make_set(point_type(-1, -1));
 
-	    cc.uni(point_t(-1, 0), point_t(-1, -1));
-	    cc.uni(point_t(0, -1), point_t(-1, -1));
+	    cc.uni(point_type(-1, 0), point_type(-1, -1));
+	    cc.uni(point_type(0, -1), point_type(-1, -1));
 	  }
 
-	  // COMPUTE LABEL MAP
+	  // Compute label map
 	  {
-	    typename image_t::fwd_iter_type p(input);
+	    typename image_type::fwd_iter_type p(input);
 
 	    // Push_back because no label = 0;
-	    look_up_table.push_back(point_t());
-
-	    label.border_adapt_assign(1, ++_nlabels);
-
-	    look_up_table.push_back(cc.find_root(point_t(-1, -1)));
-
+	    look_up_table.push_back(point_type());
+	    
+	    label.border_adapt_assign(1, ++nlabels_);
+	    
+	    look_up_table.push_back(cc.find_root(point_type(-1, -1)));
+	    
 	    for_all(p)
 	      {
 		if (cc.is_root(p))
 		  {
-		    label[p] = ++_nlabels;
+		    label[p] = ++nlabels_;
 		    look_up_table.push_back(p);
 		  }
 		else
 		  label[p] = label[cc.parent[p]];
 	      }
-
+	    
 	    {
-	      typename image_t::fwd_iter_type p(input);
+	      typename image_type::fwd_iter_type p(input);
 	      for_all(p)
 		{
 		  if (cc.is_root(p))
@@ -155,36 +155,40 @@ namespace oln {
 		    ima_region[cc.parent[p]].push_back(p);
 		}
 	    }
-
+	    
 	  }
 	}
 
-	const unsigned get_label(const point_t & p) const
+	const unsigned
+	get_label(const point_type & p) const
 	{
 	  return label[p];
 	}
 
-	const point_t & get_root(unsigned l) const
+	const point_type&
+	get_root(unsigned l) const
 	{
 	  return look_up_table[l];
 	}
 
-	const unsigned nlabels() const
+	const unsigned
+	nlabels() const
 	{
-	  return _nlabels;
+	  return nlabels_;
 	}
 
-	void merge(const int l1, const int l2)
+	void
+	merge(const int l1, const int l2)
 	{
-	  point_t root_l1 = look_up_table[l1];
-	  point_t root_l2 = look_up_table[l2];
+	  point_type root_l1 = look_up_table[l1];
+	  point_type root_l2 = look_up_table[l2];
 	  assertion(cc.is_root(root_l1));
 	  assertion(cc.is_root(root_l2));
 	  // merge
 	  cc.uni(root_l2, root_l1);
 	  // update our tables
 	  look_up_table[l2] = root_l1;
-	  for (typename std::vector<point_t>::iterator
+	  for (typename std::vector<point_type>::iterator
 		 i = ima_region[root_l2].begin();
 	       i != ima_region[root_l2].end(); ++i)
             label[*i] = l1;
@@ -193,16 +197,15 @@ namespace oln {
 				     ima_region[root_l1].end());
 	  ima_region[root_l2].clear();
 
-	  --_nlabels;
+	  --nlabels_;
 	}
 
-      }; // end class
+      };
 
-    } // end tarjan
+    } // end of namespace tarjan
 
-  } // end topo
+  } // end of namespace topo
 
-} // end oln
+} // end of namespace oln
 
-
-#endif // !OLENA_TOPO_TARJAN_FLAT_ZONE_HH
+#endif // ! OLENA_TOPO_TARJAN_FLAT_ZONE_HH

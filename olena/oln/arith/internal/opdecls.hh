@@ -34,16 +34,16 @@
 
 /* For binary operators that takes rev_values<T> arguments
    and define ntg::internal::operator_##OPNAME##_traits.  */
-# define _OLN_ARITH_DECLARE_BINRECVAL_FUNCTOR(OPNAME, OPCODE)		\
+# define oln_arith_declare_binrecval_functor_(OPNAME, OPCODE)		\
     template<class T1, class T2 = T1>					\
     struct f_##OPNAME : std::binary_function<const ntg::value<T1>&,	\
       const ntg::value<T2>&,						\
       ntg_return_type(OPNAME, T1, T2) >					\
     {									\
-      typedef f_##OPNAME self;						\
-      typename self::result_type					\
-      operator()(typename self::first_argument_type val1,		\
-                 typename self::second_argument_type val2) const	\
+      typedef f_##OPNAME self_type;					\
+      typename self_type::result_type					\
+      operator()(typename self_type::first_argument_type val1,		\
+                 typename self_type::second_argument_type val2) const	\
       {									\
 	return OPCODE;							\
       }									\
@@ -51,31 +51,31 @@
 
 /* For binary operators that takes rev_values<T> arguments			\
    and define ntg::internal::operator_##OPNAME##_traits.  */			\
-# define _OLN_ARITH_DECLARE_BINRECVALCST_FUNCTOR(OPNAME, OPCODE_CST)		\
+# define oln_arith_declare_binrecvalcst_functor_(OPNAME, OPCODE_CST)		\
     template<class T1, class T2 = T1>						\
     struct f_##OPNAME##_cst : std::unary_function<const ntg::value<T1>&,	\
       ntg_return_type(OPNAME, T1, T2) >						\
     {										\
-      typedef f_##OPNAME##_cst self;						\
-      f_##OPNAME##_cst(T2 cst) : _cst(cst) {}					\
+      typedef f_##OPNAME##_cst self_type;						\
+      f_##OPNAME##_cst(T2 cst) : cst_(cst) {}					\
 										\
-      typename self::result_type						\
-      operator()(typename self::argument_type val) const			\
+      typename self_type::result_type						\
+      operator()(typename self_type::argument_type val) const			\
       {										\
 	return OPCODE_CST;							\
       }										\
     private:									\
-      T2 _cst;									\
+      T2 cst_;									\
     } /* no ; */
 
 /* Both the above. */
-# define _OLN_ARITH_DECLARE_BINRECVAL_FUNCTORS(OPNAME, OPCODE, OPCODE_CST) \
-    _OLN_ARITH_DECLARE_BINRECVAL_FUNCTOR(OPNAME, OPCODE);	   \
-    _OLN_ARITH_DECLARE_BINRECVALCST_FUNCTOR(OPNAME, OPCODE_CST)
+# define oln_arith_declare_binrecval_functors_(OPNAME, OPCODE, OPCODE_CST) \
+    oln_arith_declare_binrecval_functor_(OPNAME, OPCODE);	   \
+    oln_arith_declare_binrecvalcst_functor_(OPNAME, OPCODE_CST)
 
 
 /* For binary functions that work on a single known datatype.  */
-# define _OLN_ARITH_DECLARE_BINFIXEDTYPE_FUNCTOR(OPNAME, OPCODE, TYPE)	      \
+# define oln_arith_declare_binfixedtype_functor_(OPNAME, OPCODE, TYPE)	      \
     struct f_##OPNAME : std::binary_function< const TYPE&, const TYPE&, TYPE> \
     {									      \
       const result_type							      \
@@ -87,10 +87,10 @@
     } /* no ; */
 
 /* For binary functions that work on a single known datatype.  */
-# define _OLN_ARITH_DECLARE_BINFIXEDTYPECST_FUNCTOR(OPNAME, OPCODE_CST, TYPE) \
+# define oln_arith_declare_binfixedtypecst_functor_(OPNAME, OPCODE_CST, TYPE) \
     struct f_##OPNAME##_cst: std::unary_function<const TYPE, TYPE>	     \
     {									     \
-      f_##OPNAME##_cst(TYPE cst) : _cst(cst) {}				     \
+      f_##OPNAME##_cst(TYPE cst) : cst_(cst) {}				     \
 									     \
       const result_type							     \
       operator()(argument_type val) const				     \
@@ -98,15 +98,15 @@
 	return OPCODE_CST;						     \
       }									     \
     private:								     \
-      TYPE _cst;							     \
+      TYPE cst_;							     \
     } /* no ; */
 
 /* Both the above.  */
-# define _OLN_ARITH_DECLARE_BINFIXEDTYPE_FUNCTORS(NAME, TYPE, CODE, CODE_CST) \
-    _OLN_ARITH_DECLARE_BINFIXEDTYPE_FUNCTOR(NAME, CODE, TYPE);		     \
-    _OLN_ARITH_DECLARE_BINFIXEDTYPECST_FUNCTOR(NAME, CODE_CST, TYPE)
+# define oln_arith_declare_binfixedtype_functors_(NAME, TYPE, CODE, CODE_CST) \
+    oln_arith_declare_binfixedtype_functor_(NAME, CODE, TYPE);		     \
+    oln_arith_declare_binfixedtypecst_functor_(NAME, CODE_CST, TYPE)
 
-# define _OLN_ARITH_DECLARE_BINOP_PROCS(OPNAME)				   \
+# define oln_arith_declare_binop_procs_(OPNAME)				   \
     /* Standard application of OPNAME */				   \
     template<class I1, class I2> inline					   \
     typename mute<I1,							   \
@@ -132,7 +132,7 @@
 		    input1, input2);					   \
     }
 
-# define _OLN_ARITH_DECLARE_BINOPCST_PROCS(OPNAME)			  \
+# define oln_arith_declare_binopcst_procs_(OPNAME)			  \
     /* Apply OPNAME with a constant as second operand.  */		  \
     template<class I, class T> inline					  \
     typename mute<I,							  \
@@ -154,14 +154,14 @@
 		   input);						  \
     }
 
-# define _OLN_ARITH_DECLARE_ALL_BINOP_PROCS(OPNAME)	\
-    _OLN_ARITH_DECLARE_BINOP_PROCS(OPNAME)		\
-    _OLN_ARITH_DECLARE_BINOPCST_PROCS(OPNAME)
+# define oln_arith_declare_all_binop_procs_(OPNAME)	\
+    oln_arith_declare_binop_procs_(OPNAME)		\
+    oln_arith_declare_binopcst_procs_(OPNAME)
 
 
-/* Same as _OLN_ARITH_DECLARE_BINOP_PROCS, for functor parametred by
+/* Same as oln_arith_declare_binop_procs_, for functor parametred by
    a single type.  */
-# define _OLN_ARITH_DECLARE_SEMIGENERIC_BINOP_PROCS(OPNAME)		\
+# define oln_arith_declare_semigeneric_binop_procs_(OPNAME)		\
     /* Standard application of OPNAME */				\
     template<class I1, class I2> inline					\
     typename mute<I1,							\
@@ -183,9 +183,9 @@
 		    input1, input2);					\
     }
 
-/* Same as _OLN_ARITH_DECLARE_NONGENERICBINOP_PROCS but for non tempalte
+/* Same as oln_arith_declare_nongenericbinop_procs_ but for non template
    functors.  */
-# define _OLN_ARITH_DECLARE_NONGENERICBINOP_PROCS(OPNAME)		  \
+# define oln_arith_declare_nongenericbinop_procs_(OPNAME)		  \
     /* Standard application of OPNAME */				  \
     template<class I1, class I2> inline					  \
     typename mute<I1, typename f_##OPNAME::result_type>::ret		  \
@@ -205,9 +205,9 @@
 		    input1, input2);					  \
     }
 
-/* Same as _OLN_ARITH_DECLARE_NONGENERICBINOPCST_PROCS but for non
-   tempalte functors.  */
-# define _OLN_ARITH_DECLARE_NONGENERICBINOPCST_PROCS(OPNAME)		    \
+/* Same as oln_arith_declare_nongenericbinopcst_procs_ but for non
+   template functors.  */
+# define oln_arith_declare_nongenericbinopcst_procs_(OPNAME)		    \
     /* Apply OPNAME with a constant as second operand.  */		    \
     template<class I, class T> inline					    \
     typename mute<I, typename f_##OPNAME##_cst::result_type>::ret	    \
@@ -227,11 +227,11 @@
 		   input);						    \
     }
 
-/* Same as _OLN_ARITH_DECLARE_ALL_NONGENERICBINOP_PROCS but for non
-   tempalte functors.  */
-# define _OLN_ARITH_DECLARE_ALL_NONGENERICBINOP_PROCS(OPNAME)	\
-    _OLN_ARITH_DECLARE_NONGENERICBINOP_PROCS(OPNAME)		\
-    _OLN_ARITH_DECLARE_NONGENERICBINOPCST_PROCS(OPNAME)
+/* Same as oln_arith_declare_all_nongenericbinop_procs_ but for non
+   template functors.  */
+# define oln_arith_declare_all_nongenericbinop_procs_(OPNAME)	\
+    oln_arith_declare_nongenericbinop_procs_(OPNAME)		\
+    oln_arith_declare_nongenericbinopcst_procs_(OPNAME)
 
 
 /*------------------.
@@ -239,7 +239,7 @@
 `------------------*/
 
 /* For binary functions that work on a single known datatype.  */
-# define _OLN_ARITH_DECLARE_UNFIXEDTYPE_FUNCTOR(OPNAME, TYPE, OPCODE)	\
+# define oln_arith_declare_unfixedtype_functor_(OPNAME, TYPE, OPCODE)	\
     struct f_##OPNAME : std::unary_function< const TYPE&, TYPE>		\
     {									\
       const result_type operator()(argument_type val) const		\
@@ -248,7 +248,7 @@
       }									\
     } /* no ; */
 
-# define _OLN_ARITH_DECLARE_NONGENERICUNOP_PROCS(OPNAME)		  \
+# define oln_arith_declare_nongenericunop_procs_(OPNAME)		  \
     /* Standard application of OPNAME */				  \
     template<class I> inline						  \
     typename mute<I, typename f_##OPNAME::result_type>::ret		  \
@@ -266,7 +266,7 @@
       return apply(convert::compconv2(conv, f_##OPNAME()), input1);	  \
     }
 
-# define _OLN_ARITH_DECLARE_UNOP_PROCS(OPNAME)				      \
+# define oln_arith_declare_unop_procs_(OPNAME)				      \
     /* Standard application of OPNAME */				      \
     template<class I> inline						      \
     typename mute<I, typename f_##OPNAME<oln_value_type(I)>::result_type>::ret	      \

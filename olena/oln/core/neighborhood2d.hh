@@ -67,19 +67,25 @@ namespace oln {
 
     friend class abstract::window_base<abstract::neighborhood<neighborhood2d>, neighborhood2d>;
 
-    neighborhood2d& add(const dpoint_type& dp)
+    neighborhood2d& 
+    add(const dpoint_type& dp)
     {
       this->exact().add_(dp);
       return this->exact().add_(-dp);
     }
 
-    neighborhood2d& add(coord row, coord col)
+    neighborhood2d& 
+    add(coord row, coord col)
     {
       return this->add(dpoint_type(row, col));
     }
 
-    neighborhood2d() : super_type() {}
-    neighborhood2d(unsigned size) : super_type(size) {}
+    neighborhood2d() : super_type() 
+    {}
+
+    neighborhood2d(unsigned size) : super_type(size) 
+    {}
+    
     neighborhood2d(unsigned n, const coord crd[]) : super_type(n)
     {
       for (unsigned i = 0; i < 2 * n; i += 2)
@@ -91,16 +97,23 @@ namespace oln {
     {
       r.assign(*this);
     }
-    neighborhood2d& operator=(const io::internal::anything& r)
+
+    neighborhood2d& 
+    operator=(const io::internal::anything& r)
     {
       return r.assign(*this);
     }
 
-    static std::string name() { return std::string("neighborhood2d"); }
+    static std::string 
+    name() 
+    { 
+      return std::string("neighborhood2d"); 
+    }
 
   protected:
 
-    coord delta_update_(const dpoint_type& dp)
+    coord 
+    delta_update_(const dpoint_type& dp)
     {
       delta_(abs(dp.row()));
       delta_(abs(dp.col()));
@@ -148,8 +161,8 @@ namespace oln {
     return mk_neighb_rectangle(width, width);
   }
 
-  inline
-  window2d mk_win_from_neighb(const neighborhood2d& n)
+  inline window2d 
+  mk_win_from_neighb(const neighborhood2d& n)
   {
     window2d win(n.card());
     for (unsigned i = 0; i < n.card(); ++i)

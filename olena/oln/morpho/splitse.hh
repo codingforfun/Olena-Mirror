@@ -34,9 +34,10 @@ namespace oln {
   namespace morpho {
 
     template<class E>
-   mlc_exact_type(E) get_plus_se_only(const abstract::struct_elt<E>& se)
+    mlc_exact_type(E) 
+      get_plus_se_only(const abstract::struct_elt<E>& se)
     {
-     oln_iter_type(E) dp(se);
+      oln_iter_type(E) dp(se);
       E out;
 
       for_all (dp)
@@ -54,11 +55,12 @@ namespace oln {
     }
 
     template<class E>
-   mlc_exact_type(E) get_plus_se_p(const abstract::struct_elt<E>& se)
+    mlc_exact_type(E) 
+      get_plus_se_p(const abstract::struct_elt<E>& se)
     {
-     oln_iter_type(E) dp(se);
+      oln_iter_type(E) dp(se);
       E out;
-
+      
       for_all (dp)
 	{
 	  unsigned n;
@@ -77,9 +79,10 @@ namespace oln {
     }
 
     template<class E>
-   mlc_exact_type(E) get_minus_se_only(const abstract::struct_elt<E>& se)
+    mlc_exact_type(E) 
+      get_minus_se_only(const abstract::struct_elt<E>& se)
     {
-     oln_iter_type(E) dp(se);
+      oln_iter_type(E) dp(se);
       E out;
 
       for_all (dp)
@@ -97,9 +100,10 @@ namespace oln {
     }
 
     template<class E>
-   mlc_exact_type(E) get_minus_se_p(const abstract::struct_elt<E>& se)
+    mlc_exact_type(E) 
+      get_minus_se_p(const abstract::struct_elt<E>& se)
     {
-     oln_iter_type(E) dp(se);
+      oln_iter_type(E) dp(se);
       E out;
 
       for_all (dp)

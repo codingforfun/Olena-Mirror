@@ -28,6 +28,9 @@
 #ifndef OLENA_TRANSFORMS_FFT_HH
 # define OLENA_TRANSFORMS_FFT_HH
 
+// FIXME: this file has not been adjusted to the coding style since it
+// will be completely rewritten in next release.
+
 # include <oln/config/system.hh>
 
 # ifdef HAVE_FFTW

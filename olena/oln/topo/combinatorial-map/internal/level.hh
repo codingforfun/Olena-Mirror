@@ -51,16 +51,16 @@ namespace oln {
 	class level
 	{
 	public:
-	  level(unsigned n) : _tree(n+1)
+	  level(unsigned n) : tree_(n+1)
 	  {
 	    assertion(n);
 	  }
 
 	  U father(const U & child) const
 	  {
-	    assertion(child < _tree.size());
+	    assertion(child < tree_.size());
 
-	    return _tree[child].father;
+	    return tree_[child].father;
 	  }
 
 	  U children(const U & father) const
@@ -68,24 +68,24 @@ namespace oln {
 	    static unsigned f = 0;
 	    static unsigned last = 0;
 
-	    assertion(father < _tree.size());
+	    assertion(father < tree_.size());
 
 	    if (f != father)
 	      {
 		f = father;
-		last = _tree[f].fchild;
+		last = tree_[f].fchild;
 	      }
 	    else
-	      last = (!last || _tree[last].rb == _tree[f].fchild) ?
-		0 : _tree[last].rb;
+	      last = (!last || tree_[last].rb == tree_[f].fchild) ?
+		0 : tree_[last].rb;
 
 	    return last;
 	  }
 
 	  void insert(const U & father, const U & child)
 	  {
-	    node<U> & f = _tree[father];
-	    node<U> & c = _tree[child];
+	    node<U> & f = tree_[father];
+	    node<U> & c = tree_[child];
 
 	    if (!f.lb)
 	      f.lb = f.rb = father;
@@ -94,11 +94,11 @@ namespace oln {
 
 	    if (fchild)
 	      {
-		unsigned tail = _tree[fchild].lb;
+		unsigned tail = tree_[fchild].lb;
 
-		_tree[tail].rb = child;
+		tree_[tail].rb = child;
 		c.lb = tail;
-		_tree[fchild].lb = child;
+		tree_[fchild].lb = child;
 		c.rb = fchild;
 	      }
 	    else
@@ -109,12 +109,12 @@ namespace oln {
 
 	  void merge(const U & l1, const U & l2)
 	  {
-	    node<U> & a = _tree[l1];
-	    node<U> & b = _tree[l2];
+	    node<U> & a = tree_[l1];
+	    node<U> & b = tree_[l2];
 
 	    // assert l2 is not the first child of its father
-	    if (_tree[b.father].fchild == l2)
-	      _tree[b.father].fchild = (l2 != b.rb) ? b.rb : 0;
+	    if (tree_[b.father].fchild == l2)
+	      tree_[b.father].fchild = (l2 != b.rb) ? b.rb : 0;
 
 	    // append l2' children to l1 ones
 	    if (b.fchild)
@@ -122,23 +122,23 @@ namespace oln {
 		// FIXME: find a way to get this constant time
 		unsigned l = 0;
 		while ((l = children(l2)))
-		  _tree[l].father = l1;
+		  tree_[l].father = l1;
 
 		if (a.fchild)
 		  {
-		    _tree[_tree[a.fchild].lb].rb = b.fchild;
-		    _tree[b.fchild].lb = _tree[a.fchild].lb;
+		    tree_[tree_[a.fchild].lb].rb = b.fchild;
+		    tree_[b.fchild].lb = tree_[a.fchild].lb;
 
-		    _tree[a.fchild].lb = _tree[b.fchild].lb;
-		    _tree[b.fchild].rb = a.fchild;
+		    tree_[a.fchild].lb = tree_[b.fchild].lb;
+		    tree_[b.fchild].rb = a.fchild;
 		  }
 		else
 		  a.fchild = b.fchild;
 	      }
 
 	    // pop up l2 from the list child
-	    _tree[b.rb].lb = b.lb;
-	    _tree[b.lb].rb = b.rb;
+	    tree_[b.rb].lb = b.lb;
+	    tree_[b.lb].rb = b.rb;
 
 	    b.fchild = b.lb = b.rb = b.father = 0;
 	  }
@@ -146,12 +146,12 @@ namespace oln {
 	public:
 	  std::ostream & print(std::ostream & ostr) const
 	  {
-	    for (unsigned i = 1; i < _tree.size(); ++i)
+	    for (unsigned i = 1; i < tree_.size(); ++i)
 	      ostr << "father(" << i << ") = " << father(i) << std::endl;
 
 	    ostr << std::endl;
 
-	    for (unsigned i = 1; i < _tree.size(); ++i)
+	    for (unsigned i = 1; i < tree_.size(); ++i)
 	      {
 		ostr << "children(" << i << ") = ";
 
@@ -172,22 +172,23 @@ namespace oln {
 	  }
 
 	private:
-	  std::vector< node<U> > _tree;
+	  std::vector< node<U> > tree_;
 	};
 
-      } // end internal
+      } // end of namespace internal
 
-    } // end combinatorial_map
+    } // end of namespace combinatorial_map
 
-  } // end topo
+  } // end of namespace topo
 
-} // end oln
+} // end of namespace oln
 
 template<class U>
 inline std::ostream &
 operator<<(std::ostream & ostr,
-	   const oln::topo::combinatorial_map::internal::level<U> & l);
+	   const oln::topo::combinatorial_map::internal::level<U> & l)
+{
+  return l.print(ostr);
+}
 
-# include <oln/topo/combinatorial-map/internal/level.hxx>
-
-#endif // OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_LEVEL_HH
+#endif // ! OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_LEVEL_HH

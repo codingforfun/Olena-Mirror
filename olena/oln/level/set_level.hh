@@ -36,10 +36,11 @@ namespace oln {
   namespace level {
 
     template <class I>
-    void set_level(abstract::image_with_dim<2,I>& inout,
-		   const oln_point_type(I)&  p1,
-		   const oln_point_type(I)&  p2,
-		   oln_value_type(I)         level)
+    void 
+    set_level(abstract::image_with_dim<2,I>& inout,
+	      const oln_point_type(I)& p1,
+	      const oln_point_type(I)& p2,
+	      oln_value_type(I) level)
     {
       int iRow1 = p1.row();
       int iCol1 = p1.col();
@@ -90,9 +91,10 @@ namespace oln {
 
 
     template <class I, class BoxType>
-    void set_level(abstract::image_with_dim<2,I>&   inout,
- 		   BoxType&              box,
- 		   const oln_value_type(I)&       level)
+    void 
+    set_level(abstract::image_with_dim<2,I>& inout,
+	      BoxType& box,
+	      const oln_value_type(I)& level)
     {
       if (box.card() != 0)
 	{
@@ -105,8 +107,8 @@ namespace oln {
 	}
     }
 
-  } // end of level.
+  } // end of namespace level
 
-} // end of oln.
+} // end of namespace oln
 
-#endif // OLENA_LEVEL_SET_LEVEL_HH
+#endif // ! OLENA_LEVEL_SET_LEVEL_HH

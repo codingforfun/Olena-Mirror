@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_SE_WINDOW_HH_
-# define OLENA_IO_SE_WINDOW_HH_
+#ifndef OLENA_IO_SE_WINDOW_HH
+# define OLENA_IO_SE_WINDOW_HH
 
 # include <mlc/type.hh>
 
@@ -53,7 +53,8 @@ namespace oln {
       `----------------*/
 
       // FIXME: put it in a .cc file ?
-      inline bool read(window1d& output, const std::string& name)
+      inline bool
+      read(window1d& output, const std::string& name)
       {
 	image1d<ntg::bin> im;
 	if (!read(im, name))
@@ -74,7 +75,8 @@ namespace oln {
       `----------------*/
       
       // FIXME: put it in a .cc file ?
-      inline bool read(window2d& output, const std::string& name)
+      inline bool
+      read(window2d& output, const std::string& name)
       {
 	image2d<ntg::bin> im;
 	if (!read(im, name))
@@ -100,7 +102,8 @@ namespace oln {
       `----------------*/
       
       // FIXME: put it in a .cc file ?
-      inline bool read(window3d& output, const std::string& name)
+      inline bool
+      read(window3d& output, const std::string& name)
       {
 	image3d<ntg::bin> im;
 	if (!read(im, name))
@@ -123,7 +126,8 @@ namespace oln {
       `-----------------*/
 
       // FIXME: put it in a .cc file ?
-      inline bool write(const window1d& input, const std::string& name)
+      inline bool
+      write(const window1d& input, const std::string& name)
       {
 	image1d<ntg::bin> im(input.delta()*2+1);
 	image1d<ntg::bin>::iter_type it(im);
@@ -140,7 +144,8 @@ namespace oln {
       `-----------------*/
 
       // FIXME: put it in a .cc file ?
-      inline bool write(const window2d& input, const std::string& name)
+      inline bool
+      write(const window2d& input, const std::string& name)
       {
 	image2d<ntg::bin> im(input.delta()*2+1, input.delta()*2+1);
 	image2d<ntg::bin>::fwd_iter_type it(im);
@@ -157,7 +162,8 @@ namespace oln {
       `-----------------*/
 
       // FIXME: put it in a .cc file ?
-      inline bool write(const window3d& input, const std::string& name)
+      inline bool
+      write(const window3d& input, const std::string& name)
       {
 	image3d<ntg::bin> im(input.delta()*2+1, 
 			     input.delta()*2+1, 
@@ -172,10 +178,10 @@ namespace oln {
 	return true;
       }
 
-    } // internal
+    } // end of namespace internal
 
-  } // io
+  } // end of namespace io
 
-} // oln
+} // end of namespace oln
 
-#endif // OLENA_IO_SE_WINDOW_HH_
+#endif // ! OLENA_IO_SE_WINDOW_HH

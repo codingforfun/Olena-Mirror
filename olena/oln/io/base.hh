@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_BASE_HH_
-# define OLENA_IO_BASE_HH_
+#ifndef OLENA_IO_BASE_HH
+# define OLENA_IO_BASE_HH
 
 # include <oln/io/image_read.hh>
 # include <oln/io/image_write.hh>
@@ -41,13 +41,15 @@ namespace oln {
     namespace internal {
 
       template<typename T>
-      bool read_any(T& output, const std::string& name)
+      bool 
+      read_any(T& output, const std::string& name)
       {
 	return read(output, name);
       }
 
       template<typename T>
-      bool write_any(const T& input, const std::string& name)
+      bool 
+      write_any(const T& input, const std::string& name)
       {
 	return write(input, name);
       }
@@ -57,25 +59,32 @@ namespace oln {
     // aliases
     
     inline
-    internal::anything load(const std::string& name)
-    { return internal::anything(name); }
+    internal::anything 
+    load(const std::string& name)
+    { 
+      return internal::anything(name); 
+    }
 
     template<class T>
-    bool load(T& output, std::string name)
-    { return internal::read_any(output, name); }
+    bool 
+    load(T& output, std::string name)
+    { 
+      return internal::read_any(output, name); 
+    }
 
     template< typename T >
-    bool save(const T& input, const std::string& name)
+    bool 
+    save(const T& input, const std::string& name)
     { 
       return internal::write_any(input, name);
     }
 
-  } // end of io
+  } // end of namespace io
 
   // Export load & save into namespace oln:: for convenience.
   using io::load;
   using io::save;
 
-} // end of oln
+} // end of namespace oln
 
-#endif // OLENA_IO_BASE_HH_
+#endif // OLENA_IO_BASE_HH

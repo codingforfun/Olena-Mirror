@@ -44,6 +44,7 @@ namespace oln {
 
   struct image3d_size : public abstract::image_size<image3d_size >
   {
+
   public:
 
     image3d_size(coord nslices, coord nrows, coord ncols, coord border)
@@ -54,43 +55,54 @@ namespace oln {
       border_ = border;
     }
 
-    coord nslices() const
+    coord 
+    nslices() const
     {
       invariant(nth(0) > 0);
       return nth(0);
     }
 
-    coord& nslices() 
+    coord& 
+    nslices() 
     {
       invariant(nth(0) > 0);
       return nth(0);
     }
 
-    coord nrows() const
+    coord
+    nrows() const
     {
       invariant(nth(1) > 0);
       return nth(1);
     }
 
-    coord& nrows() 
+    coord& 
+    nrows() 
     {
       invariant(nth(1) > 0);
       return nth(1);
     }
 
-    coord ncols() const
+    coord 
+    ncols() const
     {
       invariant(nth(2) > 0);
       return nth(2);
     }
 
-    coord& ncols() 
+    coord& 
+    ncols() 
     {
       invariant(nth(2) > 0);
       return nth(2);
     }
 
-    static std::string name() { return "image3d_size"; }
+    static std::string 
+    name() 
+    { 
+      return "image3d_size"; 
+    }
+
   };
 
 } // end of oln

@@ -52,44 +52,57 @@ namespace oln {
 
   class window1d : public abstract::windownd< window1d >
   {
+
   public:
+
     typedef abstract::windownd< window1d > super_type;
     typedef window1d self_type;
 
     typedef struct_elt_traits< self_type >::iter_type   iter_type;
-    typedef struct_elt_traits< self_type >::neighb_type
-    neighb_type;
+    typedef struct_elt_traits< self_type >::neighb_type neighb_type;
     typedef struct_elt_traits< self_type >::dpoint_type dpoint_type;
 
     friend class abstract::window_base<abstract::window<window1d>, window1d>;
 
-    window1d& add(const dpoint_type& dp)
+    window1d& 
+    add(const dpoint_type& dp)
     {
       return this->exact().add_(dp);
     }
 
-    window1d& add(coord col)
+    window1d& 
+    add(coord col)
     {
       return this->add(dpoint_type(col));
     }
 
-    window1d() : super_type() {}
-    window1d(unsigned size) : super_type(size) {}
+    window1d() : super_type() 
+    {}
+
+    window1d(unsigned size) : super_type(size) 
+    {}
+
     window1d(unsigned n, const coord crd[]) : super_type(n)
     {
       for (unsigned i = 0; i < n; ++i)
 	add(dpoint_type(crd[i]));
     }
 
-    static std::string name() { return std::string("window1d"); }
+    static std::string 
+    name() 
+    { 
+      return std::string("window1d"); 
+    }
 
   protected:
 
-    coord delta_update_(const dpoint_type& dp)
+    coord 
+    delta_update_(const dpoint_type& dp)
     {
       delta_(abs(dp.col()));
       return delta_;
     }
+
   };
 
   // std win

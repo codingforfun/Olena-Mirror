@@ -43,7 +43,9 @@ namespace oln {
     {
  
       template< class Input >
-      Output doit(const Input& v) const {
+      Output 
+      doit(const Input& v) const 
+      {
 	return ntg::cast::bound<Output>(v);
       }
 

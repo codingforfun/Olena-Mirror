@@ -29,6 +29,7 @@
 # define OLENA_IO_GZ_STREAM_HH
 
 # include <oln/config/system.hh>
+
 # include <cassert>
 # include <fstream>
 # include <string>
@@ -57,11 +58,12 @@ namespace oln {
 	  sync();
 	  delete[] inbuf;
 	  delete[] outbuf;
-	  if ( own_file_descriptor )
+	  if (own_file_descriptor)
 	    close();
 	}
 
-	zfilebuf *open( const char *name, int io_mode )
+	zfilebuf*
+	open(const char *name, int io_mode)
 	{
 	  if (is_open())
 	    return 0;
@@ -71,13 +73,13 @@ namespace oln {
 	  memset(char_mode,'\0',10);
 	  p = char_mode;
 
-	  if ( io_mode & std::ios::in )
+	  if (io_mode & std::ios::in)
 	    {
 	      mode = std::ios::in;
 	      *p++ = 'r';
 	    }
 	  else
-	    if ( io_mode & std::ios::app )
+	    if (io_mode & std::ios::app)
 	      {
 		mode = std::ios::app;
 		*p++ = 'a';
@@ -87,27 +89,28 @@ namespace oln {
 		mode = std::ios::out;
 		*p++ = 'w';
 	      }
-	  if ( io_mode & std::ios::binary )
+	  if (io_mode & std::ios::binary)
 	    {
 	      mode |= std::ios::binary;
 	      *p++ = 'b';
 	    }
 
 	  // Hard code the compression level
-	  if ( io_mode & (std::ios::out|std::ios::app ))
+	  if (io_mode & (std::ios::out|std::ios::app))
 	    *p++ = '9';
 
-	  if ( (file = gzopen(name, char_mode)) == 0 )
+	  if ((file = gzopen(name, char_mode)) == 0)
 	    return 0;
 
-	  _name = name;
+	  name_ = name;
 	  own_file_descriptor = 1;
 	  return this;
 	}
 
-	zfilebuf *attach( int file_descriptor, int io_mode )
+	zfilebuf*
+	attach(int file_descriptor, int io_mode)
 	{
-	  if ( is_open() )
+	  if (is_open())
 	    return 0;
 
 	  char char_mode[10];
@@ -115,13 +118,13 @@ namespace oln {
 	  memset(char_mode,'\0',10);
 	  p = char_mode;
 
-	  if ( io_mode & std::ios::in )
+	  if (io_mode & std::ios::in)
 	    {
 	      mode = std::ios::in;
 	      *p++ = 'r';
 	    }
 	  else
-	    if ( io_mode & std::ios::app )
+	    if (io_mode & std::ios::app)
 	      {
 		mode = std::ios::app;
 		*p++ = 'a';
@@ -132,24 +135,25 @@ namespace oln {
 		*p++ = 'w';
 	      }
 
-	  if ( io_mode & std::ios::binary )
+	  if (io_mode & std::ios::binary)
 	    {
 	      mode |= std::ios::binary;
 	      *p++ = 'b';
 	    }
 
 	  // Hard code the compression level
-	  if ( io_mode & (std::ios::out|std::ios::app ))
+	  if (io_mode & (std::ios::out|std::ios::app))
 	    *p++ = '9';
 
-	  if ( (file = gzdopen(file_descriptor, char_mode)) == 0 )
+	  if ((file = gzdopen(file_descriptor, char_mode)) == 0)
 	    return 0;
 
 	  own_file_descriptor = 0;
 	  return this;
 	}
 
-	zfilebuf *close()
+	zfilebuf*
+	close()
 	{
 	  if (is_open())
 	    {
@@ -160,35 +164,40 @@ namespace oln {
 	  return this;
 	}
 
-	int setcompressionlevel( short comp_level )
+	int 
+	setcompressionlevel(short comp_level)
 	{
 	  return gzsetparams(file, comp_level, -2);
 	}
 
-	int setcompressionstrategy( short comp_strategy )
+	int 
+	setcompressionstrategy(short comp_strategy)
 	{
 	  return gzsetparams(file, -2, comp_strategy);
 	}
 
-	inline int is_open() const { return (file != 0); }
+	inline int 
+	is_open() const 
+	{ return (file != 0); }
 
-	virtual std::streampos seekoff(std::streamoff off,
-				       std::ios::seekdir dir,
-				       int)// which)
+	virtual std::streampos 
+	seekoff(std::streamoff off, std::ios::seekdir dir, int) // which)
 	{
 	  return std::streampos(gzseek(file, off, dir));
 	}
 
-	virtual int sync()
+	virtual int 
+	sync()
 	{
-	  if ( !is_open() )
+	  if (!is_open())
 	    return EOF;
 	  return flushbuf();
 	}
 
       protected:
 
-	virtual int underflow()
+	virtual int 
+	underflow()
 	{
 	  // If the file hasn't been opened for reading, error.
 	  if (!is_open() || !(mode & std::ios::in))
@@ -209,9 +218,10 @@ namespace oln {
 	  return (unsigned char) *gptr();
 	}
 
-	virtual int overflow( int c = EOF )
+	virtual int 
+	overflow(int c = EOF)
 	{
-	  if ( !is_open() || !(mode & std::ios::out) )
+	  if (!is_open() || !(mode & std::ios::out))
 	    return EOF;
 
 	  assert (pbase());
@@ -232,12 +242,13 @@ namespace oln {
 	gzFile file;
 	short mode;
 	short own_file_descriptor;
-	std::string _name;
+	std::string name_;
 	char *inbuf;
 	char *outbuf;
 	static const int lenbuf = 16 * 1024;
 
-	int flushbuf()
+	int 
+	flushbuf()
 	{
 	  int n = pptr() - outbuf;
 
@@ -251,7 +262,8 @@ namespace oln {
 	  return 0;
 	}
 
-	int fillbuf()
+	int 
+	fillbuf()
 	{
 	  int t = gzread(file, inbuf, lenbuf);
 	  if (t <= 0) return EOF;
@@ -265,68 +277,71 @@ namespace oln {
       {
 	friend class zifstream;
 	friend class zofstream;
-	friend zofstream &setcompressionlevel( zofstream &, int );
-	friend zofstream &setcompressionstrategy( zofstream &, int );
+	friend zofstream &setcompressionlevel(zofstream &, int);
+	friend zofstream &setcompressionstrategy(zofstream &, int);
 
       public:
 	virtual ~zfilestream_common() {}
 
-	void attach( int fd, int io_mode )
+	void 
+	attach(int fd, int io_mode)
 	{
-	  if ( !buffer.attach( fd, io_mode) )
-	    clear( std::ios::failbit | std::ios::badbit );
+	  if (!buffer.attach(fd, io_mode))
+	    clear(std::ios::failbit | std::ios::badbit);
 	  else
 	    clear();
 	}
 
-	void open( const char *name, int io_mode )
+	void 
+	open(const char *name, int io_mode)
 	{
-	  if ( !buffer.open( name, io_mode ) )
-	    clear( std::ios::failbit | std::ios::badbit );
+	  if (!buffer.open(name, io_mode))
+	    clear(std::ios::failbit | std::ios::badbit);
 	  else
 	    clear();
 	}
 
-	void close()
+	void 
+	close()
 	{
-	  if ( !buffer.close() )
-	    clear( std::ios::failbit | std::ios::badbit );
+	  if (!buffer.close())
+	    clear(std::ios::failbit | std::ios::badbit);
 	}
 
       protected:
-	zfilestream_common() :  std::ios( zfilestream_common::rdbuf() )
+	zfilestream_common() :  std::ios(zfilestream_common::rdbuf())
 	{ }
 
 
       private:
-	zfilebuf *rdbuf()
+	zfilebuf*
+	rdbuf()
 	{
 	  return &buffer;
 	}
 
 	zfilebuf buffer;
-
       };
 
       class zifstream : public zfilestream_common, public std::istream
       {
       public:
 
-	zifstream() : std::istream( zfilestream_common::rdbuf() )
+	zifstream() : std::istream(zfilestream_common::rdbuf())
 	{
-	  clear( std::ios::badbit );
+	  clear(std::ios::badbit);
 	}
 
-	zifstream( const char *name, int io_mode = std::ios::in ) :
-	  std::istream( zfilestream_common::rdbuf() )
+	zifstream(const char *name, int io_mode = std::ios::in) :
+	  std::istream(zfilestream_common::rdbuf())
 	{
-	  zfilestream_common::open( name, io_mode );
+	  zfilestream_common::open(name, io_mode);
 	}
 
-	zifstream( int fd, int io_mode = std::ios::in ) :
-	  std::istream( zfilestream_common::rdbuf() )
+	zifstream(int fd, int io_mode = std::ios::in) :
+	  std::istream(zfilestream_common::rdbuf())
 	{
-	  zfilestream_common::attach( fd, io_mode );
+	  zfilestream_common::attach(fd, io_mode);
 	}
 
 	virtual ~zifstream() {}
@@ -336,21 +351,21 @@ namespace oln {
 
       public:
 
-	zofstream() : std::ostream( zfilestream_common::rdbuf() )
+	zofstream() : std::ostream(zfilestream_common::rdbuf())
 	{
-	  clear( std::ios::badbit );
+	  clear(std::ios::badbit);
 	}
 
-	zofstream( const char *name, int io_mode = std::ios::out ) :
-	  std::ostream( zfilestream_common::rdbuf() )
+	zofstream(const char *name, int io_mode = std::ios::out) :
+	  std::ostream(zfilestream_common::rdbuf())
 	{
-	  zfilestream_common::open( name, io_mode );
+	  zfilestream_common::open(name, io_mode);
 	}
 
-	zofstream( int fd, int io_mode = std::ios::out ) :
-	  std::ostream( zfilestream_common::rdbuf() )
+	zofstream(int fd, int io_mode = std::ios::out) :
+	  std::ostream(zfilestream_common::rdbuf())
 	{
-	  zfilestream_common::attach( fd, io_mode );
+	  zfilestream_common::attach(fd, io_mode);
 	}
 
 	virtual ~zofstream() {}
@@ -362,7 +377,8 @@ namespace oln {
       class zomanip;     
 
       template <class T>
-      zofstream &operator<<(zofstream &s, const zomanip<T> &m) {
+      zofstream&
+      operator<<(zofstream &s, const zomanip<T> &m) {
 	return (*m.func)(s, m.val);
       }
 
@@ -376,31 +392,36 @@ namespace oln {
 	T val;
       };
 
-      inline zofstream &setcompressionlevel( zofstream &s, int l ) {
+      inline zofstream&
+      setcompressionlevel(zofstream &s, int l) {
 	(s.rdbuf())->setcompressionlevel(l);
 	return s;
       }
 
-      inline zofstream &setcompressionstrategy( zofstream &s, int l ) {
+      inline zofstream&
+      setcompressionstrategy(zofstream &s, int l)
+      {
 	(s.rdbuf())->setcompressionstrategy(l);
 	return s;
       }
 
-      inline zomanip<int> setcompressionlevel(int l)
+      inline zomanip<int>
+      setcompressionlevel(int l)
       {
 	return zomanip<int>(&setcompressionlevel,l);
       }
 
-      inline zomanip<int> setcompressionstrategy(int l)
+      inline zomanip<int>
+      setcompressionstrategy(int l)
       {
 	return zomanip<int>(&setcompressionstrategy,l);
       }
 
-    } // gz
+    } // end of namespace gz
 
-  } // io
+  } // end of namespace io
 
-} // oln
+} // end of namespace oln
 
 
 #endif // OLENA_IO_GZ_STREAM_HH

@@ -40,32 +40,32 @@
 namespace oln {
   namespace arith {
 
-    _OLN_ARITH_DECLARE_BINRECVAL_FUNCTORS(plus,
+    oln_arith_declare_binrecval_functors_(plus,
 					  val1.exact() + val2.exact(),
-					  val.exact() + _cst);
+					  val.exact() + cst_);
     // need a cast for the case int_u - int_u
-    _OLN_ARITH_DECLARE_BINRECVAL_FUNCTORS(minus,
+    oln_arith_declare_binrecval_functors_(minus,
 					  val1.exact() - val2.exact(),
-					  val.exact() - _cst);
-    _OLN_ARITH_DECLARE_BINRECVAL_FUNCTORS(times,
+					  val.exact() - cst_);
+    oln_arith_declare_binrecval_functors_(times,
 					  val1.exact() * val2.exact(),
-					  val.exact() * _cst);
-    _OLN_ARITH_DECLARE_BINRECVAL_FUNCTORS(div,
+					  val.exact() * cst_);
+    oln_arith_declare_binrecval_functors_(div,
 					  val1.exact() / val2.exact(),
-					  val.exact() / _cst);
-    _OLN_ARITH_DECLARE_BINRECVAL_FUNCTORS(min,
+					  val.exact() / cst_);
+    oln_arith_declare_binrecval_functors_(min,
 					  min(val1.exact(), val2.exact()),
-					  min(val.exact(), _cst));
-    _OLN_ARITH_DECLARE_BINRECVAL_FUNCTORS(max,
+					  min(val.exact(), cst_));
+    oln_arith_declare_binrecval_functors_(max,
 					  max(val1.exact(), val2.exact()),
-					  max(val.exact(), _cst));
+					  max(val.exact(), cst_));
 
-    _OLN_ARITH_DECLARE_ALL_BINOP_PROCS(plus)
-    _OLN_ARITH_DECLARE_ALL_BINOP_PROCS(minus)
-    _OLN_ARITH_DECLARE_ALL_BINOP_PROCS(times)
-    _OLN_ARITH_DECLARE_ALL_BINOP_PROCS(div)
-    _OLN_ARITH_DECLARE_ALL_BINOP_PROCS(min)
-    _OLN_ARITH_DECLARE_ALL_BINOP_PROCS(max)
+    oln_arith_declare_all_binop_procs_(plus)
+    oln_arith_declare_all_binop_procs_(minus)
+    oln_arith_declare_all_binop_procs_(times)
+    oln_arith_declare_all_binop_procs_(div)
+    oln_arith_declare_all_binop_procs_(min)
+    oln_arith_declare_all_binop_procs_(max)
 
   } // end of arith
 

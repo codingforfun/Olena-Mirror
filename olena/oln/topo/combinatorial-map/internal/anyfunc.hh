@@ -53,57 +53,58 @@ namespace oln {
 	class anyfunc : public any<Inf>
 	{
 	protected:
-	  anyfunc() : _f(1) {}
-	  anyfunc(unsigned n) : _f(n+1) { assertion(n); }
+	  anyfunc() : f_(1) {}
+	  anyfunc(unsigned n) : f_(n+1) { assertion(n); }
 
 	public:
 	  V operator()(const U & e) const
 	  {
-	    assertion(e < _f.size());
-	    return _f[e];
+	    assertion(e < f_.size());
+	    return f_[e];
 	  }
 
 	  void resize(unsigned n)
 	  {
-	    self()._resize(n);
+	    self().resize_(n);
 	  }
 
 	  void assign(const U & i, const V & e)
 	  {
-	    assertion(i < _f.size());
-	    self()._assign(i, e);
+	    assertion(i < f_.size());
+	    self().assign_(i, e);
 	  }
 
 	  void erase(const U & i)
 	  {
-	    assertion(i < _f.size());
-	    self()._erase(i);
+	    assertion(i < f_.size());
+	    self().erase_(i);
 	  }
 
 	  std::ostream & print(std::ostream & ostr) const
 	  {
-	    for (unsigned i = 1; i < _f.size(); ++i)
-	      ostr << self().name() << "(" << i << ") = " << _f[i] << std::endl;
+	    for (unsigned i = 1; i < f_.size(); ++i)
+	      ostr << self().name() << "(" << i << ") = " << f_[i] << std::endl;
 	    return ostr;
 	  }
 
 	protected:
-	  std::vector<V> _f;
+	  std::vector<V> f_;
 	};
 
-      } // end internal
+      } // end of namespace internal
 
-    } // end combinatorial_map
+    } // end of namespace combinatorial_map
 
-  } // end topo
+  } // end of namespace topo
 
-} // end oln
+} // end of namespace oln
 
 template <class U, class V, class Inf>
 inline std::ostream &
 operator<<(std::ostream & ostr,
-	   const oln::topo::combinatorial_map::internal::anyfunc<U,V,Inf> & f);
+	   const oln::topo::combinatorial_map::internal::anyfunc<U,V,Inf> & f)
+{
+  return f.exact().print(ostr);
+}
 
-# include <oln/topo/combinatorial-map/internal/anyfunc.hxx>
-
-#endif // !OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_ANYFUNC_HH
+#endif // ! OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_ANYFUNC_HH

@@ -33,4 +33,4 @@
 # include <oln/topo/combinatorial-map/internal/lambda.hh>
 # include <oln/topo/combinatorial-map/internal/beta.hh>
 
-#endif // !OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_ALLFUNC_HH
+#endif // ! OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_ALLFUNC_HH

@@ -38,41 +38,43 @@ namespace oln
 
   template< class Win >
   struct winneighb {
+
     typedef oln_point_type(Win) point;
     typedef oln_dpoint_type(Win) dpoint;
 
     template< class T >
     winneighb(const typename Win::abstract_type& win, const T& anchor) :
-      win_(win.exact()), pos_(0), anchor_(anchor.point_ref()) {}
+      win_(win.exact()), pos_(0), anchor_(anchor.point_ref()) 
+    {}
 
     const point& point_ref() const
     {
       return cur_;
     }
 
-    mlc::_begin
-    operator=(mlc::_begin)
+    mlc::begin_type
+    operator=(mlc::begin_type)
     {
       pos_ = 0;
       cur_ = anchor_ + win_.dp(pos_);
       return begin;
     }
 
-    mlc::_end
-    operator=(mlc::_end)
+    mlc::end_type
+    operator=(mlc::end_type)
     {
       pos_ = win_.card();
       return end;
     }
 
     bool
-    operator==(mlc::_end) const
+    operator==(mlc::end_type) const
     {
       return pos_ == win_.card();
     }
 
     bool
-    operator!=(mlc::_end) const
+    operator!=(mlc::end_type) const
     {
       return pos_ != win_.card();
     }
@@ -104,26 +106,26 @@ namespace oln
 
     // it's convenient to type `it.cur()' instead of `(point)it' when
     // necessary.
-    point cur() const
+    point 
+    cur() const
     {
       return *this;
     }
 
-    static std::string name()
+    static std::string 
+    name()
     {
       return std::string("winneighb<") + Win::name() + ">";
     }
 
   private:
+
     const Win &win_;
     unsigned pos_;
-    const point &anchor_;
+    const point& anchor_;
     point cur_;
+
   };
-
-# define Neighb(Neighbable)			\
-typename Neighbable::neighb_type
-
 
 } // end of oln
 

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_PNM_WRITE_HH_
-# define OLENA_IO_PNM_WRITE_HH_
+#ifndef OLENA_IO_PNM_WRITE_HH
+# define OLENA_IO_PNM_WRITE_HH
 
 # include <oln/io/image_base.hh>
 # include <oln/io/pnm_common.hh>
@@ -44,14 +44,23 @@ namespace oln {
       template <writer_id W, unsigned Dim, pnm_type V, class I>
       struct pnm_writer
       {
-	static std::string name()
-	{ return "-"; }
+	static std::string 
+	name()
+	{ 
+	  return "-"; 
+	}
 	
-	static bool knows_ext(const std::string&)
-	{ return false; }
+	static bool 
+	knows_ext(const std::string&)
+	{ 
+	  return false; 
+	}
 	
-	static bool write(std::ostream&, const I&)
-	{ return false; }
+	static bool 
+	write(std::ostream&, const I&)
+	{ 
+	  return false;
+	}
       };
 
       /*-----------------.
@@ -68,11 +77,11 @@ namespace oln {
 	: public pnm_writer<WritePnmRaw, I::dim, get_pnm_type<I>::ret, I>
       {};
       
-    } // internal
+    } // end of namespace internal
 
-  } // io
+  } // end of namespace io
 
-} // oln
+} // end of namespace oln
 
 
-#endif // OLENA_IO_PNM_WRITE_HH_
+#endif // OLENA_IO_PNM_WRITE_HH

@@ -91,7 +91,8 @@ namespace oln {
 	};      
 	
 	template <class T>
-	typename output<T>::ret operator()(const T& in) const
+	typename output<T>::ret 
+	operator()(const T& in) const
 	{
 	  return this->exact().doit(in);
 	}
@@ -114,7 +115,8 @@ namespace oln {
 	
 	typedef Result_Type result_type;	
 
-	static std::string name()
+	static std::string 
+	name()
 	{
 	  // FIXME: Exact is not an integre type !
 	  return std::string("conversion_to_type<")
@@ -142,7 +144,9 @@ namespace oln {
 	
 	typedef Argument_Type argument_type;
 	
-	static std::string name() {
+	static std::string 
+	name() 
+	{
 	  // FIXME: Exact is not an integre type !
 	  return std::string("conversion_from_type_to_type<")
 	    + ntg_name(Argument_Type) + ", "

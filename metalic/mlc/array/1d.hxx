@@ -39,42 +39,42 @@ namespace mlc
   ////////////////////////////////////////
     
 
-  // _card	-> total number of elements (1-indexed)
+  // card_	-> total number of elements (1-indexed)
 
-  // _center	-> position of the central element (0-indexed)
+  // center_	-> position of the central element (0-indexed)
   //		   domain : [ 0, card [
 
-  // _i	-> number of elements that have been eaten yet (0-indexed)
+  // i_	-> number of elements that have been eaten yet (0-indexed)
   //		   domain : [ 0, card ] -> watch out !!
 
 
-  template < unsigned _card, unsigned _center = _card / 2, unsigned _i = _card>
+  template < unsigned card_, unsigned center_ = card_ / 2, unsigned i_ = card_>
   struct array1d_info
   {
     enum {
-      card = _card,
-      center = _center,
-      i = _i,
+      card = card_,
+      center = center_,
+      i = i_,
       well_formed = true,
-      get_real_center = _center
+      get_real_center = center_
     };
 
-    typedef array1d_info< _card, _center, i + 1 > next_elt;
+    typedef array1d_info< card_, center_, i + 1 > next_elt;
 
   };
     
-  template < unsigned _card, unsigned _i >
-  struct array1d_info <_card, internal::_unknown, _i >
+  template < unsigned card_, unsigned i_ >
+  struct array1d_info <card_, internal::unknown_, i_ >
   {
     enum {
-      card = _card,
-      center = internal::_unknown,
-      i = _i,
+      card = card_,
+      center = internal::unknown_,
+      i = i_,
       well_formed = true,
-      get_real_center = _i / 2
+      get_real_center = i_ / 2
     };
 
-    typedef array1d_info< _card, internal::_unknown, i + 1 > next_elt;
+    typedef array1d_info< card_, internal::unknown_, i + 1 > next_elt;
 
   };
 
@@ -88,7 +88,7 @@ namespace mlc
     // fwd decl
 
     template<class T, class Info>
-    struct _array1d_elt;
+    struct array1d_elt_;
 
     // for error messages
 
@@ -97,41 +97,41 @@ namespace mlc
 
 
     //
-    //  mlc::internal::_array1d_start decl
+    //  mlc::internal::array1d_start_ decl
     //
     ////////////////////////////////////////
 
     template<class T>
-    struct _array1d_start {
+    struct array1d_start_ {
 
-      _array1d_elt< T, array1d_info< _unknown, _unknown, 1 > > operator=(T val);
-      _array1d_elt< T, array1d_info< _unknown, 0, 1 > > operator=(_x<T> val);
-      _array1d_elt< T, array1d_info< _unknown, 0, 1 > > operator=(_x<void> val);
+      array1d_elt_< T, array1d_info< unknown_, unknown_, 1 > > operator=(T val);
+      array1d_elt_< T, array1d_info< unknown_, 0, 1 > > operator=(x_<T> val);
+      array1d_elt_< T, array1d_info< unknown_, 0, 1 > > operator=(x_<void> val);
 
-      T ptr[_max_card]; // could be static
+      T ptr[max_card_]; // could be static
     };
 
 
 
     //
-    //  mlc::internal::_array1d_elt
+    //  mlc::internal::array1d_elt_
     //
     ////////////////////////////////////////
 
     template<class T, class Info>
-    struct _array1d_elt
+    struct array1d_elt_
     {
-      typedef _array1d_elt<T, typename Info::next_elt> _next_elt_t;
+      typedef array1d_elt_<T, typename Info::next_elt> next_elt_t_;
 
-      typedef _array1d_elt< T, array1d_info< Info::card, Info::i, Info::i + 1> > _eat_center_t;
+      typedef array1d_elt_< T, array1d_info< Info::card, Info::i, Info::i + 1> > eat_center_t_;
 
-      typedef array1d< array1d_info< Info::i, Info::get_real_center, Info::i > , T> _array1d_t;
+      typedef array1d< array1d_info< Info::i, Info::get_real_center, Info::i > , T> array1d_t_;
 
     public:
 	
       // Constructor
 
-      _array1d_elt(T* ptr, _array1d_start<T>* arr) : ptr(ptr), arr(arr)
+      array1d_elt_(T* ptr, array1d_start_<T>* arr) : ptr(ptr), arr(arr)
       {
       }
 
@@ -144,44 +144,44 @@ namespace mlc
 
       // elt, elt
 
-      _next_elt_t operator,(T val)
+      next_elt_t_ operator,(T val)
       {
-	is_true<Info::card == _unknown>::ensure();
+	is_true<Info::card == unknown_>::ensure();
 	*ptr = val;
-	return _next_elt_t(ptr + 1, arr);
+	return next_elt_t_(ptr + 1, arr);
       }
 
 
       // elt, x(elt)		-> center
 
-      _eat_center_t operator,(_x<T> val)
+      eat_center_t_ operator,(x_<T> val)
       {
-	is_true<Info::center == _unknown>::ensure();
+	is_true<Info::center == unknown_>::ensure();
 	*ptr = val.ue; // FIXME : give a *name* to this variable !!
-	return _eat_center_t(ptr+1, arr);
+	return eat_center_t_(ptr+1, arr);
       }
 
 
       // elt, x()		-> center
 
-      _eat_center_t operator,(_x<void>)
+      eat_center_t_ operator,(x_<void>)
       {
-	is_true<Info::center == _unknown>::ensure();
+	is_true<Info::center == unknown_>::ensure();
 	*ptr = T(0);
-	return _eat_center_t(ptr+1, arr);
+	return eat_center_t_(ptr+1, arr);
       }
 
 
       // elt, end
 	
-      _array1d_t operator,(_end)
+      array1d_t_ operator,(end_type)
       {
 	// array is well-formed :
 	is_true<Info::well_formed>::ensure();
 	// centering is automatic or user-defined :
 	// (commented out to allow automatic centering on even sized arrays)
-	// mlc::logical_or< mlc::eq< Info::i % 2, 1 >::ret, mlc::neq< Info::center, _unknown >::ret >::ensure();
-	return _array1d_t(arr->ptr);
+	// mlc::logical_or< mlc::eq< Info::i % 2, 1 >::ret, mlc::neq< Info::center, unknown_ >::ret >::ensure();
+	return array1d_t_(arr->ptr);
       }
 	
 
@@ -194,40 +194,40 @@ namespace mlc
       here_a_value_is_not_of_type_<T> operator,(U u) const;
 
       T* ptr;
-      _array1d_start<T>* arr;
+      array1d_start_<T>* arr;
     };
 
 
 
     //
-    //  mlc::internal::_array1d_start  impl
+    //  mlc::internal::array1d_start_  impl
     //
     ////////////////////////////////////////
 
     template<class T> inline 
-    _array1d_elt< T, array1d_info< _unknown, _unknown, 1 > >
-    _array1d_start<T>::operator=(T val)
+    array1d_elt_< T, array1d_info< unknown_, unknown_, 1 > >
+    array1d_start_<T>::operator=(T val)
     {
       ptr[0] = val;
-      return _array1d_elt< T, array1d_info< _unknown, _unknown, 1 > >(ptr+1, this);
+      return array1d_elt_< T, array1d_info< unknown_, unknown_, 1 > >(ptr+1, this);
     }
 
     template<class T> inline 
-    _array1d_elt< T, array1d_info< _unknown, 0, 1 > >
-    _array1d_start<T>::operator=(_x<T> val)
+    array1d_elt_< T, array1d_info< unknown_, 0, 1 > >
+    array1d_start_<T>::operator=(x_<T> val)
     {
       ptr[0] = val.ue;
       // center <- 0
-      return _array1d_elt< T, array1d_info< _unknown, 0, 1 > >(ptr+1, this);
+      return array1d_elt_< T, array1d_info< unknown_, 0, 1 > >(ptr+1, this);
     }
 
     template<class T> inline 
-    _array1d_elt< T, array1d_info< _unknown, 0, 1 > >
-    _array1d_start<T>::operator=(_x<void> val)
+    array1d_elt_< T, array1d_info< unknown_, 0, 1 > >
+    array1d_start_<T>::operator=(x_<void> val)
     {
       ptr[0] = T(0);
       // center <- 0
-      return _array1d_elt< T, array1d_info< _unknown, 0, 1 > >(ptr+1,this);
+      return array1d_elt_< T, array1d_info< unknown_, 0, 1 > >(ptr+1,this);
     }
 
   } // end of internal

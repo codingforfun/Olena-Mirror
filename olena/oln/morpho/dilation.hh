@@ -74,13 +74,15 @@ namespace oln {
      * exo: out.pbm
     =*/
     template<class I, class E>
-   oln_concrete_type(I) dilation(const abstract::non_vectorial_image<I> &input, const abstract::struct_elt<E>& se)
+    oln_concrete_type(I) 
+      dilation(const abstract::non_vectorial_image<I> &input, 
+	       const abstract::struct_elt<E>& se)
     {
       mlc::eq<I::dim, E::dim>::ensure();
 
-     oln_concrete_type(I) output(input.size());
+      oln_concrete_type(I) output(input.size());
       input.border_adapt_copy(se.delta());
-     oln_iter_type(I) p(input);
+      oln_iter_type(I) p(input);
 
       for_all (p)
 	output[p] = morpho::max(input, p, se);
@@ -100,12 +102,13 @@ namespace oln {
      * see: morpho::n_erosion
     =*/
     template<class I, class E>
-   oln_concrete_type(I) n_dilation(const abstract::non_vectorial_image<I> & input,
-			   const abstract::struct_elt<E>& se,
-			   unsigned n)
+    oln_concrete_type(I) 
+      n_dilation(const abstract::non_vectorial_image<I> & input,
+		 const abstract::struct_elt<E>& se,
+		 unsigned n)
     {
       precondition(n > 0);
-     oln_concrete_type(I) output = input.clone();
+      oln_concrete_type(I) output = input.clone();
       for (unsigned i = 0; i < n; ++i)
 	{
 	 oln_concrete_type(I) work = dilation(output, se);
@@ -116,7 +119,9 @@ namespace oln {
 
     namespace fast {
       template<class I, class E>
-     oln_concrete_type(I) dilation(const abstract::non_vectorial_image<I>& input, const abstract::struct_elt<E>& se)
+      oln_concrete_type(I) 
+	dilation(const abstract::non_vectorial_image<I>& input, 
+		 const abstract::struct_elt<E>& se)
       {
 	return fast_morpho<I, E, utils::histogram_max>(input, se);
       }

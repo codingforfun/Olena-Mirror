@@ -59,29 +59,43 @@ namespace oln {
 
     point2d(coord row, coord col);
 
-    coord row() const;
+    coord 
+    row() const;
 
-    coord& row();
+    coord& 
+    row();
 
-    coord col() const;
+    coord 
+    col() const;
 
-    coord& col();
+    coord& 
+    col();
 
-    static std::string name() { return "point2d"; }
+    static std::string 
+    name() 
+    { 
+      return "point2d"; 
+    }
 
   protected:
 
-    point2d plus_dp(const dpoint2d& dp) const;
+    point2d 
+    plus_dp(const dpoint2d& dp) const;
 
-    point2d minus_dp(const dpoint2d& dp) const;
+    point2d 
+    minus_dp(const dpoint2d& dp) const;
 
-    point2d& plus_assign_dp(const dpoint2d& dp);
+    point2d& 
+    plus_assign_dp(const dpoint2d& dp);
 
-    point2d& minus_assign_dp(const dpoint2d& dp);
+    point2d& 
+    minus_assign_dp(const dpoint2d& dp);
 
-    dpoint2d minus_p(const point2d& p) const;
+    dpoint2d 
+    minus_p(const point2d& p) const;
 
-    point2d minus() const;
+    point2d 
+    minus() const;
 
   };
 

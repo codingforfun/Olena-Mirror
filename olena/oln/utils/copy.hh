@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_MISC_COPY_HH
-# define OLENA_MISC_COPY_HH
+#ifndef OLENA_UTILS_COPY_HH
+# define OLENA_UTILS_COPY_HH
 
 // This file contains implementations of image's copy constructors
 //
@@ -38,27 +38,17 @@
 // a detailed problem description can be found on:
 // http://www.lrde.epita.fr/cgi-bin/twiki/view/Projects/OlenaConstImages
 
-# include <ntg/bin.hh>
-
 namespace oln {
 
-  using ntg::bin;
-
 # define OLENA_UTILS_IMAGE_DEEP_COPY		\
-  if (rhs._has_data())				\
-    *this = rhs.clone()  
-  
+  mlc_init_static_hierarchy(Exact);		\
+  if (rhs.has_impl_())				\
+    *this = rhs.clone()
 
 # ifdef OLENA_CORE_IMAGE1D_HH
 
 template<class T, class Exact>
-image1d<T,Exact>::image1d(const self& rhs)
-{
-  OLENA_UTILS_IMAGE_DEEP_COPY;
-}
-
-template<class Exact>
-image1d<bin,Exact>::image1d(const self& rhs)
+image1d<T,Exact>::image1d(const self_type& rhs)
 {
   OLENA_UTILS_IMAGE_DEEP_COPY;
 }
@@ -69,13 +59,7 @@ image1d<bin,Exact>::image1d(const self& rhs)
 # ifdef OLENA_CORE_IMAGE2D_HH
 
 template<class T, class Exact>
-image2d<T,Exact>::image2d(const self& rhs)
-{
-  OLENA_UTILS_IMAGE_DEEP_COPY;
-}
-
-template<class Exact>
-image2d<bin,Exact>::image2d(const self& rhs)
+image2d<T,Exact>::image2d(const self_type& rhs)
 {
   OLENA_UTILS_IMAGE_DEEP_COPY;
 }
@@ -86,20 +70,13 @@ image2d<bin,Exact>::image2d(const self& rhs)
 # ifdef OLENA_CORE_IMAGE3D_HH
 
 template<class T, class Exact>
-image3d<T,Exact>::image3d(const self& rhs)
-{
-  OLENA_UTILS_IMAGE_DEEP_COPY;
-}
-
-template<class Exact>
-image3d<bin,Exact>::image3d(const self& rhs)
+image3d<T,Exact>::image3d(const self_type& rhs)
 {
   OLENA_UTILS_IMAGE_DEEP_COPY;
 }
 
 # endif
 
+} // end of namespace oln
 
-} // oln
-
-#endif // OLENA_MISC_COPY_HH
+#endif // ! OLENA_UTILS_COPY_HH

@@ -28,14 +28,12 @@
 #ifndef METALIC_IS_A_HH
 # define METALIC_IS_A_HH
 
-
 # include <mlc/type.hh>
 # include <mlc/bool.hh>
 
-
 // private macro so do _not_ use it
-# define _is_a__check_result \
-sizeof(helper<T,U>::check( (T*) helper<T,U>::makeT() )) == sizeof(mlc::internal::_yes)
+# define is_a__check_result_ \
+sizeof(helper<T,U>::check( (T*) helper<T,U>::makeT() )) == sizeof(mlc::internal::yes_)
 
 
 namespace mlc 
@@ -51,16 +49,14 @@ namespace mlc
     //  typename in <foo<T>::ret::dim>, 
     //  write <wrap<typename foo<T>::ret>::dim instead.
     //
-    ///////////////////////////////////////////////////////////////////////
     
     template <class T> struct wrap : public T {};
 
   } // internal
 
-  //
-  //  is_a 
-  //
-  /////////
+  /*-----.
+  | is_a |
+  `-----*/
 
   // FIXME: form is a namespace to avoid g++-3.2 bug with template function
   // overloading in class.
@@ -68,26 +64,28 @@ namespace mlc
   namespace form
   {
     enum {
-      _class_                          = 1,
-      _template_l_class_g_class_       = 2,
-      _template_l_class_class_g_class_ = 3
-      //      _template_l_unsigned_class_g_class_    = 4
+      class_                          = 1,
+      template_l_class_g_class_       = 2,
+      template_l_class_class_g_class_ = 3
+      //      template_l_unsigned_class_g_class_    = 4
       // ...
     };
   
-    template<unsigned id> struct desc { char _dummy[id]; };
+    template<unsigned id>
+    struct desc
+    { char dummy[id]; };
 
     template<class T>
-    static desc< _class_ > get();
+    static desc< class_ > get();
 
     template<template<class> class T>
-    static desc< _template_l_class_g_class_ > get();
+    static desc< template_l_class_g_class_ > get();
 
     template<template<class,class> class T>
-    static desc< _template_l_class_class_g_class_ > get();
+    static desc< template_l_class_class_g_class_ > get();
 
     // template<template<unsigned,class> class T>
-    // static desc < _template_l_unsigned_class_g_class_ > get();
+    // static desc < template_l_unsigned_class_g_class_ > get();
 
     // ...
   }
@@ -95,83 +93,82 @@ namespace mlc
   namespace internal
   {
     
-    typedef char _yes;
-    struct _no { char dummy[2]; };
+    typedef char yes_;
+    struct no_ { char dummy[2]; };
 
 
-    // dev note : below, _is_a<T,id> is a better factorization
+    // dev note : below, is_a_<T,id> is a better factorization
     //            but g++ 2.95.4 has some trouble with it
 
     template<unsigned id>
-    struct _is_a;
+    struct is_a_;
 
     // _class_
     
   
     template<>
-    struct _is_a< form::_class_ >
+    struct is_a_< form::class_ >
     {
-      typedef _is_a< form::_class_ > self;
+      typedef is_a_< form::class_ > self;
 
       template<class T, class U>
       struct helper
       {
-	static _yes check(U*);
-	static _no  check(...);
+	static yes_ check(U*);
+	static no_  check(...);
 	static T* makeT();
       };
       
       template<class T, class U>
       struct check
-	: public mlc::returns_bool_<( _is_a__check_result )>
+	: public mlc::returns_bool_<( is_a__check_result_ )>
       {
       };
     };
     
-    // _template_l_class_g_class_
+    // template_l_class_g_class_
 
     template<>
-    struct _is_a< form::_template_l_class_g_class_ >
+    struct is_a_< form::template_l_class_g_class_ >
     {
-      typedef _is_a< form::_template_l_class_g_class_ > self;
+      typedef is_a_< form::template_l_class_g_class_ > self;
 
       template<class T, template<class> class U>
       struct helper
       {
 	template<class V>
-	static _yes check(U<V>*);
-	static _no  check(...);
+	static yes_ check(U<V>*);
+	static no_  check(...);
 	static T* makeT();
       };
 
       template<class T, template<class> class U>
       struct check
-	: public mlc::returns_bool_<( _is_a__check_result )>
+	: public mlc::returns_bool_<( is_a__check_result_ )>
       {
       };
     };
 
-    // _template_l_class_class_g_class_
+    // templatee_l_class_class_g_class_
 
     template<>
-    struct _is_a< form::_template_l_class_class_g_class_ >
+    struct is_a_< form::template_l_class_class_g_class_ >
     {
-      typedef _is_a< form::_template_l_class_class_g_class_ > self;
+      typedef is_a_< form::template_l_class_class_g_class_ > self;
 
       template<class T, template<class,class> class U>
       struct helper
       {
 	template<class V, class W>
-	static _yes check(U<V,W>*);
-	static _no  check(...);
+	static yes_ check(U<V,W>*);
+	static no_  check(...);
 	static T* makeT();
       };
 
       template<class T, template<class,class> class U>
       struct check
-	: public mlc::returns_bool_<( _is_a__check_result )>
-      {
-      };
+	: public mlc::returns_bool_<( is_a__check_result_ )>
+      {};
     };
 
   } // end of internal
@@ -179,7 +176,7 @@ namespace mlc
 } // end of mlc
 
 // private macros: do _not_ use them
-# define is_a__2nd_is_meta(T,U) mlc::internal::_is_a< id_of_typeform(U) >::check<T, U>
+# define is_a__2nd_is_meta(T,U) mlc::internal::is_a_< id_of_typeform(U) >::check<T, U>
 
 // client macros
 
@@ -188,9 +185,8 @@ namespace mlc
 template <class T>
 struct id_ { typedef T ret; };
 
-
 // FIXME: can we get rid of mlc::wrap ?
-# define mlc_is_a(T, U) mlc::internal::wrap<typename mlc::internal::_is_a< id_of_typeform(U) >::check<T, U> >
-# define mlc_is_a_(T, U) mlc::internal::wrap<mlc::internal::_is_a< id_of_typeform(U) >::check<T, U> >
+# define mlc_is_a(T, U) mlc::internal::wrap<typename mlc::internal::is_a_< id_of_typeform(U) >::check<T, U> >
+# define mlc_is_a_(T, U) mlc::internal::wrap<mlc::internal::is_a_< id_of_typeform(U) >::check<T, U> >
 
 #endif // ndef METALIC_IS_A_HH

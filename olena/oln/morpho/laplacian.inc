@@ -65,7 +65,8 @@ laplacian(const convert::abstract::conversion<C, B>& c,
 =*/
 template<class I, class E>
 typename mute<I,oln_value_type(I)::slarger_t>::ret
-laplacian(const abstract::non_vectorial_image<I>& input, const abstract::struct_elt<E>& se)
+laplacian(const abstract::non_vectorial_image<I>& input, 
+	  const abstract::struct_elt<E>& se)
 {
   return laplacian(convert::force<oln_value_type(I)::slarger_t>(), input, se);
 }

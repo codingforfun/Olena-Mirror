@@ -39,41 +39,43 @@ namespace oln {
 
 
   template<class I, class F>
-  const F& traverse(F& f, const abstract::image<I>& input)
+  const F& 
+  traverse(F& f, const abstract::image<I>& input)
   {
-   oln_iter_type(I) p(input);
+    oln_iter_type(I) p(input);
     for_all(p) f(input[p]);
     return f;
   }
 
-  template<class F,
-	   class I> inline
-  const F traverse(const abstract::image<I>& input)
+  template<class F, class I> 
+  inline const F 
+  traverse(const abstract::image<I>& input)
   {
     F f;
     return traverse(f, input);
   }
 
-  template<template<class> class F,
-	   class I> inline
-  const F<oln_value_type(I)> traverse(const abstract::image<I>& input)
+  template<template<class> class F, class I> 
+  inline const F<oln_value_type(I)> 
+  traverse(const abstract::image<I>& input)
   {
     F<oln_value_type(I)> f;
     return traverse(f, input);
   }
 
-  template<template<class,class> class F,
-	   class I2, class I> inline
-  const F<oln_value_type(I),I2> traverse(const abstract::image<I>& input)
+  template<template<class, class> class F, class I2, class I> 
+  inline const F<oln_value_type(I), I2> 
+  traverse(const abstract::image<I>& input)
   {
-    F<oln_value_type(I),I2> f;
+    F<oln_value_type(I), I2> f;
     return traverse(f, input);
   }
 
   template<template<class,class> class F,
            template<class> class F2,
-           class I> inline
-  const F<oln_value_type(I), F2<oln_value_type(I)> > traverse(const abstract::image<I>& input)
+           class I> 
+  inline const F<oln_value_type(I), F2<oln_value_type(I)> > 
+  traverse(const abstract::image<I>& input)
   {
     F<oln_value_type(I), F2<oln_value_type(I)> > f;
     traverse(f, input);
@@ -85,28 +87,31 @@ namespace oln {
 
 
   template<class I1, class I2, class F>
-  const F& traverse2(F& f,
-		    const abstract::image<I1>& input1, const abstract::image<I2>& input2)
+  const F& 
+  traverse2(F& f,
+	    const abstract::image<I1>& input1, 
+	    const abstract::image<I2>& input2)
   {
     precondition(input1.size() == input2.size());
-   oln_iter_type(I1) p(input1);
+    oln_iter_type(I1) p(input1);
     for_all(p) f(input1[p], input2[p]);
     return f;
   }
 
-  template<template<class> class F,
-           class I> inline
-  const F<oln_value_type(I)> traverse2(const abstract::image<I>& input1, const abstract::image<I>& input2)
+  template<template<class> class F, class I> 
+  inline const F<oln_value_type(I)> 
+  traverse2(const abstract::image<I>& input1, const abstract::image<I>& input2)
   {
     F<oln_value_type(I)> f;
     return traverse2(f, input1, input2);
   }
 
-  template<template<class,class> class F,
-           class I1, class I2> inline
-  const F<oln_value_type(I1),oln_value_type(I2)> traverse2(const abstract::image<I1>& input1, const abstract::image<I2>& input2)
+  template<template<class,class> class F, class I1, class I2> 
+  inline const F<oln_value_type(I1), oln_value_type(I2)> 
+  traverse2(const abstract::image<I1>& input1, 
+	    const abstract::image<I2>& input2)
   {
-    F<oln_value_type(I1),oln_value_type(I2)> f;
+    F<oln_value_type(I1), oln_value_type(I2)> f;
     return traverse2(f, input1, input2);
   }
 

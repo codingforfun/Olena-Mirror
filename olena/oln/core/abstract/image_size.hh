@@ -61,30 +61,35 @@ namespace oln {
       
       enum { dim = image_size_traits<Exact>::dim };
       
-      coord nth(unsigned n) const
+      coord 
+      nth(unsigned n) const
       {
 	assertion(n < dim);
 	return coord_[n];
       }
       
-      coord& nth(unsigned n)
+      coord& 
+      nth(unsigned n)
       {
 	assertion(n < dim);
 	return coord_[n];
       }
       
-      coord border() const
+      coord 
+      border() const
       {
 	return border_;
       }
       
-      coord& border()
+      coord& 
+      border()
       {
 	return border_;
       }
 
       template< class S >
-      bool operator==(const image_size<S>& size) const
+      bool 
+      operator==(const image_size<S>& size) const
       {
 	for (unsigned i = 0; i < dim; ++i)
 	  if (coord_[i] != size.coord_[i])
@@ -93,7 +98,8 @@ namespace oln {
       }
       
       template< class S >
-      bool operator!=(const image_size<S>& size) const
+      bool 
+      operator!=(const image_size<S>& size) const
       {
 	for (unsigned i = 0; i < dim; ++i)
 	  if (coord_[i] != size.coord_[i])
@@ -102,15 +108,24 @@ namespace oln {
       }
       
 
-      static std::string name() { return std::string("image_size<") +
-				    Exact::name() + ">"; }
+      static std::string 
+      name() 
+      { 
+	return std::string("image_size<") +
+	  Exact::name() + ">"; 
+      }
 
     protected:
-      image_size() {}
+      
+      image_size() 
+      {}
 
       coord border_;
+
     private:
+
       coord coord_[dim];
+
     };
     
   } // end of abstract

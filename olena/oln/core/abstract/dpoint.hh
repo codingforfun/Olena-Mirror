@@ -66,42 +66,50 @@ namespace oln {
 	  nth(i) = p.exact().nth(i);
       }
       
-      coord nth(const unsigned d) const
+      coord 
+      nth(const unsigned d) const
       {
 	return coord_[d];
       }
       
-      coord& nth(const unsigned d)
+      coord& 
+      nth(const unsigned d)
       {
 	return coord_[d];
       }
 
-      exact_type operator-() const
+      exact_type 
+      operator-() const
       {
 	return this->exact().minus();
       }
 
-      exact_type& operator+=(const self_type& dp)
+      exact_type& 
+      operator+=(const self_type& dp)
       {
 	return this->exact().plus_assign_dp(dp.exact());
       }
 
-      exact_type& operator-=(const self_type& dp)
+      exact_type& 
+      operator-=(const self_type& dp)
       {
 	return this->exact().minus_assign_dp(dp.exact());
       }
 
-      exact_type operator+(const self_type& dp) const
+      exact_type 
+      operator+(const self_type& dp) const
       {
 	return this->exact().plus_dp(dp.exact());
       }
 
-      exact_type operator-(const self_type& dp) const
+      exact_type 
+      operator-(const self_type& dp) const
       {
 	return this->exact().minus_dp(dp.exact());
       }
 
-      bool operator==(const self_type& dp) const
+      bool 
+      operator==(const self_type& dp) const
       {
 	for (unsigned i = 0; i < dim; ++i)
 	  if (dp.nth(i) != nth(i))
@@ -109,7 +117,8 @@ namespace oln {
 	return true;
       }
       
-      bool operator!=(const self_type& dp) const
+      bool 
+      operator!=(const self_type& dp) const
       {
 	for (unsigned i = 0; i < dim; ++i)
 	  if (dp.nth(i) != nth(i))
@@ -117,7 +126,8 @@ namespace oln {
 	return false;
       }
       
-      bool is_centered(void) const
+      bool 
+      is_centered(void) const
       {
 	for (unsigned i = 0; i < dim; ++i)
 	  if (nth(i) != 0)
@@ -125,11 +135,20 @@ namespace oln {
 	return true;
       }
 
-      static std::string name() { return std::string("dpoint<") +
-				    Exact::name() + ">"; }
+      static std::string 
+      name() 
+      { 
+	return std::string("dpoint<") +
+	  Exact::name() + ">"; 
+      }
+
     protected:
-      dpoint() {}
+
+      dpoint() 
+      {}
+
     private:
+
       coord coord_[dim];
     };
     

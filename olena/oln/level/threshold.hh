@@ -40,21 +40,23 @@ namespace oln {
     class threshold : public std::unary_function<const Input&, Output>
     {
     public:
-
-
       threshold(const Input& threshold,
 		const Output& min = ntg_min_val(Output),
 		const Output& max = ntg_min_val(Output)) :
         m_threshold(threshold), m_min(min), m_max(max)
-      { }
+      {}
 
-      Output operator() (const Input& v) const {
+      Output
+      operator() (const Input& v) const 
+      {
         if (v >= m_threshold)
           return m_max;
         return m_min;
       }
 
-      static std::string name() {
+      static std::string
+      name() 
+      {
 	return std::string("threshold<")
 	  + ntg_name(Output) + ", "
 	  + ntg_name(Input) + ", "
@@ -67,7 +69,8 @@ namespace oln {
       const Output m_max;
     };
 
-  } // convert
-} // oln
+  } // end of namespace convert
 
-#endif // OLENA_LEVEL_THRESHOLD_HH
+} // end of namespace oln
+
+#endif // ! OLENA_LEVEL_THRESHOLD_HH

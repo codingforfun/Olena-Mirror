@@ -62,8 +62,9 @@ white_top_hat(const convert::abstract::conversion<C, B>& c,
  * ret:oln_concrete_type(I)
 =*/
 template<class I, class E>
-oln_concrete_type(I) white_top_hat(const abstract::non_vectorial_image<I>& input,
-			  const abstract::struct_elt<E>& se)
+oln_concrete_type(I) 
+  white_top_hat(const abstract::non_vectorial_image<I>& input,
+		const abstract::struct_elt<E>& se)
 {
   return white_top_hat(convert::force<oln_value_type(I)>(), input, se);
 }
@@ -106,8 +107,9 @@ black_top_hat(const convert::abstract::conversion<C, B>& c,
  * ret: typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
 =*/
 template<class I, class E>
-oln_concrete_type(I) black_top_hat(const abstract::non_vectorial_image<I>& input,
-			  const abstract::struct_elt<E>& se)
+oln_concrete_type(I) 
+  black_top_hat(const abstract::non_vectorial_image<I>& input,
+		const abstract::struct_elt<E>& se)
 {
   return black_top_hat(convert::force<oln_value_type(I)>(), input, se);
 }
@@ -154,8 +156,9 @@ self_complementary_top_hat(const convert::abstract::conversion<C, B>& c,
  * ret: typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
 =*/
 template<class I, class E>
-oln_concrete_type(I) self_complementary_top_hat(const abstract::non_vectorial_image<I>& input,
-				       const abstract::struct_elt<E>& se)
+oln_concrete_type(I) 
+self_complementary_top_hat(const abstract::non_vectorial_image<I>& input,
+			   const abstract::struct_elt<E>& se)
 {
   return self_complementary_top_hat(convert::force<oln_value_type(I)>(), input, se);
 }
@@ -205,8 +208,9 @@ top_hat_contrast_op(const convert::abstract::conversion<C, B>& c,
  * ret: typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
 =*/
 template<class I, class E>
-oln_concrete_type(I) top_hat_contrast_op(const abstract::non_vectorial_image<I>& input,
-				const abstract::struct_elt<E>& se)
+oln_concrete_type(I) 
+top_hat_contrast_op(const abstract::non_vectorial_image<I>& input,
+		    const abstract::struct_elt<E>& se)
 {
   return top_hat_contrast_op(convert::force<oln_value_type(I)>(), input, se);
 }

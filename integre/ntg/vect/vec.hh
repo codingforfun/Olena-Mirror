@@ -115,7 +115,7 @@ namespace ntg {
 
   template <unsigned N, class T, class E>
   class vec : 
-    public vect_value<typename mlc::select_self<vec<N, T, mlc::final>, E>::ret>
+    public vect_value<typename mlc::exact_vt<vec<N, T, mlc::final>, E>::ret>
   {
   public :
 

@@ -41,86 +41,89 @@ namespace oln {
 
     namespace inter_pixel {
 
-# define InterPixel(ImgType)			\
-typename mute< ImgType, Node(ImgType) >::ret
+# define oln_interpixel_type(ImgType)		\
+typename oln::mute< ImgType, oln_node_type(ImgType) >::ret
 
       template <class I>
       class interpixel
       {
       public:
-	typedef oln_dpoint_type(I)	dpoint_t;
-	typedef oln_point_type(I)	point_t;
-	typedef Node(I)		node_t;
-	typedef FwdDirIter(I)	fwd_dir_iter_t;
-	typedef BkdDirIter(I)	bck_dir_iter_t;
-	typedef Dir(I)		dir_t;
-	typedef DirTraits(I)	dir_traits_t;
-	typedef Head(I)		head_t;
-	typedef InterPixel(I)	inter_pixel_t;
+	typedef oln_dpoint_type(I)		dpoint_type;
+	typedef oln_point_type(I)		point_type;
+	typedef oln_node_type(I)		node_type;
+	typedef oln_fwd_dir_iter_type(I)	fwd_dir_iter_type;
+	typedef oln_bkd_dir_iter_type(I)	bkd_dir_iter_type;
+	typedef oln_dir_type(I)			dir_type;
+	typedef oln_dir_traits_type(I)		dir_traits_type;
+	typedef oln_head_type(I)		head_type;
+	typedef oln_interpixel_type(I)		inter_pixel_type;
 
       public:
 	interpixel(const I & img) :
-	  _data(img.nrows() + 1, img.ncols() + 1)
+	  data_(img.nrows() + 1, img.ncols() + 1)
 	{
 	  // FIXME: assume there is no boundary pixel with a max value.
 	  // pearhaps we should clone img with a higher type.
 	  img.border_adapt_assign(1, ntg_max_val(oln_value_type(I)));
 
-	 oln_iter_type(inter_pixel_t) p(_data);
-	  fwd_dir_iter_t it;
-
+	  oln_iter_type(inter_pixel_type) p(data_);
+	  fwd_dir_iter_type it;
+	  
 	  for_all(p)
 	    {
 	      for_all(it)
-		if (img[p + _neighb[it]] != img[p + _neighb[it.next()]])
-		  _data[p].set(it);
+		if (img[p + neighb_[it]] != img[p + neighb_[it.next()]])
+		  data_[p].set(it);
 	    }
 	}
 
-	const node_t & operator[](const point_t & p) const
+	const node_type&
+	operator[](const point_type & p) const
 	{
-	  return _data[p];
+	  return data_[p];
 	}
 
-	head_t folw(const head_t & in) const
+	head_type
+	folw(const head_type& in) const
 	{
-	  precondition(_data[in.first].get(in.second) == true);
+	  precondition(data_[in.first].get(in.second) == true);
 
-	  head_t out = in;
+	  head_type out = in;
 
 	  do
 	    {
-	      out.first += _inter_neighb[out.second];
+	      out.first += inter_neighb_[out.second];
 
-	      if (out.first == in.first || _data[out.first].rank() > 2)
+	      if (out.first == in.first || data_[out.first].rank() > 2)
 		{
-		  out.second = dir_traits_t::opposite(out.second);
+		  out.second = dir_traits_type::opposite(out.second);
 		  break;
 		}
 
-	      dir_t next = dir_traits_t::next(out.second);
-	      dir_t prev = dir_traits_t::prev(out.second);
+	      dir_type next = dir_traits_type::next(out.second);
+	      dir_type prev = dir_traits_type::prev(out.second);
 
-	      out.second = _data[out.first].get(next) ? next :
-		_data[out.first].get(prev) ? prev : out.second;
+	      out.second = data_[out.first].get(next) ? next :
+		data_[out.first].get(prev) ? prev : out.second;
 	    }
 	  while (out.first != in.first);
 
 	  return out;
 	}
 
-	std::ostream & print(std::ostream & ostr) const
+	std::ostream&
+	print(std::ostream & ostr) const
 	{
-	 oln_iter_type(inter_pixel_t) p(_data);
-
+	  oln_iter_type(inter_pixel_type) p(data_);
+	  
 	  for_all(p)
-	    if (_data[p].rank() > 2)
+	    if (data_[p].rank() > 2)
 	      {
 		ostr << p << ":";
 
-		fwd_dir_iter_t it;
+		fwd_dir_iter_type it;
 		for_all(it)
-		  if (_data[p].get(it))
+		  if (data_[p].get(it))
 		    ostr << " " << it;
 
 		ostr << std::endl;
@@ -130,20 +133,37 @@ typename mute< ImgType, Node(ImgType) >::ret
 	}
 
       private:
-	inter_pixel_t	_data;
-
+	inter_pixel_type	data_;
+	
       public:
-	static const dpoint_t _neighb[4];
-	static const dpoint_t _inter_neighb[4];
+	static const dpoint_type neighb_[4];
+	static const dpoint_type inter_neighb_[4];
       };
 
+    } // end of namespace inter_pixel
+    
+  } // end of namespace topo
 
-    } // end inter_pixel
+} // end of namespace oln
 
-  } // end topo
+template <class I>
+inline std::ostream & operator<<(std::ostream & ostr,
+				 const oln::topo::inter_pixel::interpixel<I> & ip)
+{
+  return ip.print(ostr);
+}
 
-} // end oln
+template <class I>
+const oln_dpoint_type(I)
+  oln::topo::inter_pixel::interpixel<I>::neighb_[4] = {oln_dpoint_type(I)(0,0),
+						       oln_dpoint_type(I)(-1,0),
+						       oln_dpoint_type(I)(-1,-1),
+						       oln_dpoint_type(I)(0,-1)};
+template <class I>
+const oln_dpoint_type(I) 
+  oln::topo::inter_pixel::interpixel<I>::inter_neighb_[4] = {oln_dpoint_type(I)(0,1),
+							     oln_dpoint_type(I)(-1,0),
+							     oln_dpoint_type(I)(0,-1),
+							     oln_dpoint_type(I)(1,0)};
 
-# include <oln/topo/inter-pixel/inter-pixel.hxx>
-
-#endif // !OLENA_TOPO_INTER_PIXEL_INTER_PIXEL_HH
+#endif // ! OLENA_TOPO_INTER_PIXEL_INTER_PIXEL_HH

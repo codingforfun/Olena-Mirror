@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +28,13 @@
 #ifndef OLENA_TOPO_DMAP_HH
 # define OLENA_TOPO_DMAP_HH
 
-# include <math.h>
-# include <utility>
-
+# include <ntg/bin.hh>
 # include <oln/basics2d.hh>
 # include <oln/core/w_window2d.hh>
+
+// FIXME: math.h should be included by ntg/config/system.hh
+// # include <math.h>
+# include <utility>
 
 namespace oln {
 
@@ -45,7 +47,8 @@ namespace oln {
 	      const w_window2d<T>& bkd,
 	      float coef);
 
-      coord delta() const;
+      coord
+      delta() const;
 
       const w_window2d<T> fwd;
       const w_window2d<T> bkd;
@@ -53,16 +56,20 @@ namespace oln {
     };
 
     template<int d10, int d11> inline
-    const chamfer<int>& mk_chamfer_3x3(float coef = 1.f);
+    const chamfer<int>&
+    mk_chamfer_3x3(float coef = 1.f);
 
     inline 
-    const chamfer<float>& mk_chamfer_3x3(float d10, float d11);
+    const chamfer<float>&
+    mk_chamfer_3x3(float d10, float d11);
 
     template<int d10, int d11, int d21> inline
-    const chamfer<int>& mk_chamfer_5x5(float coef = 1.f);
+    const chamfer<int>&
+    mk_chamfer_5x5(float coef = 1.f);
 
     inline
-    const chamfer<float>& mk_chamfer_5x5(float d10, float d11, float d21);
+    const chamfer<float>&
+    mk_chamfer_5x5(float d10, float d11, float d21);
 
     // REF: B.J.H. Verwer, Local distances for distance transformations
     // in two and three dimensions, Pattern Recognition Letters 12 (1991) 671-682
@@ -101,23 +108,29 @@ namespace oln {
     public:
       typedef image2d<ntg::bin>::point_type point_type;
 
-      dmap(const image2d_size& size,
-	   const chamfer<T2>& ch);
+      dmap(const image2d_size& size, const chamfer<T2>& ch);
 
       template <class V>
-      void compute(const image2d<V>& input, float infty = 0.f);
+      void
+      compute(const image2d<V>& input, float infty = 0.f);
 
       template <class V>
-      void compute(const image2d<V>&   input, 
-		   image2d<point2d>&     nearest_point_map, 
-		   float                 infty = 0.f);
+      void
+      compute(const image2d<V>&	input, 
+	      image2d<point2d>& nearest_point_map, 
+	      float             infty = 0.f);
 
-      const image2d<T>& imap() const;
-      image2d<float> to_image() const;
+      const image2d<T>&
+      imap() const;
 
-      const T& operator[](const point_type& p) const;
+      image2d<float>
+      to_image() const;
 
-      const T& operator()(coord row, coord col) const;
+      const T&
+      operator[](const point_type& p) const;
+
+      const T&
+      operator()(coord row, coord col) const;
 
     private:
       image2d<T>	imap_;
@@ -129,9 +142,9 @@ namespace oln {
     template <class I>
     image2d<float> exact_dmap(const abstract::image<I>& input);
 
-  } // end of topo.
+  } // end of namespace topo
 
-} // end of oln.
+} // end of namespace oln
 
 # include <oln/topo/dmap.hxx>
 

@@ -40,12 +40,12 @@
 namespace mlc
 {
 
-  template<class _Info, class T_>
+  template<class Info_, class T_>
   struct array2d
   {
     typedef array2d self;
     typedef T_ T;
-    typedef _Info Info;
+    typedef Info_ Info;
 
     //
     // Constructors
@@ -57,24 +57,24 @@ namespace mlc
 
     array2d(T* ptr)
     {
-      less< 0, _Info::nrows >::ensure();
-      less< 0, _Info::ncols >::ensure();
-      less< _Info::card, internal::_max_card >::ensure();
-      for (unsigned i = 0; i < _Info::card; ++i)
-	_buffer[i] = *ptr++;
+      less< 0, Info_::nrows >::ensure();
+      less< 0, Info_::ncols >::ensure();
+      less< Info_::card, internal::max_card_ >::ensure();
+      for (unsigned i = 0; i < Info_::card; ++i)
+	buffer_[i] = *ptr++;
     }
 
     // Copy
 
     array2d(const self& rhs)
     {
-      for (unsigned i = 0; i < _Info::card; ++i)
-	_buffer[i] = rhs[i];
+      for (unsigned i = 0; i < Info_::card; ++i)
+	buffer_[i] = rhs[i];
     }
     self& operator=(const self& rhs)
     {
-      for (unsigned i = 0; i < _Info::card; ++i)
-	_buffer[i] = rhs[i];
+      for (unsigned i = 0; i < Info_::card; ++i)
+	buffer_[i] = rhs[i];
       return *this;
     }
 
@@ -82,7 +82,7 @@ namespace mlc
     // Operations on array
     //
 
-    typedef array2d<_Info, float> to_float; // FIXME : argh
+    typedef array2d<Info_, float> to_float; // FIXME : argh
 
     // Normalize (absolute values -> relative values)
 
@@ -92,13 +92,13 @@ namespace mlc
       float sum = 0.f; // FIXME: float only?
       const float epsilon = 0.01f; // FIXME : epsilon should be global
       unsigned i;
-      for (i = 0; i < _Info::card; ++i)
-	sum += this->_buffer[i];
-      for (i = 0; i < _Info::card; ++i)
-	tmp[i] = this->_buffer[i] / sum;
+      for (i = 0; i < Info_::card; ++i)
+	sum += this->buffer_[i];
+      for (i = 0; i < Info_::card; ++i)
+	tmp[i] = this->buffer_[i] / sum;
       // security
       sum = 0.f;
-      for (i = 0; i < _Info::card; ++i)
+      for (i = 0; i < Info_::card; ++i)
 	sum += tmp[i];
       postcondition(std::abs(sum - 1) <= epsilon);
       return tmp;
@@ -106,17 +106,17 @@ namespace mlc
 
     // Central symmetry
 
-    array2d<array2d_info<_Info::nrows,
-			 _Info::ncols,
-			 _Info::card - _Info::center - 1,
-			 _Info::i>, T>
+    array2d<array2d_info<Info_::nrows,
+			 Info_::ncols,
+			 Info_::card - Info_::center - 1,
+			 Info_::i>, T>
     operator-() const
     {
-      enum { new_center =  _Info::card - _Info::center - 1 };
-      array2d<array2d_info< _Info::nrows, _Info::ncols, new_center, _Info::i>,T> tmp;
+      enum { new_center =  Info_::card - Info_::center - 1 };
+      array2d<array2d_info< Info_::nrows, Info_::ncols, new_center, Info_::i>,T> tmp;
 
-      for (unsigned i = 0; i < _Info::card; ++i)
-	tmp[_Info::card - i - 1] = this->operator[](i);
+      for (unsigned i = 0; i < Info_::card; ++i)
+	tmp[Info_::card - i - 1] = this->operator[](i);
       return tmp;
     }
 
@@ -124,17 +124,17 @@ namespace mlc
     // Transpose
 
     typedef array2d<array2d_info<
-      _Info::ncols,
-      _Info::nrows,
-      (_Info::center * _Info::nrows + _Info::center / _Info::ncols) % _Info::card,
-      _Info::i
+      Info_::ncols,
+      Info_::nrows,
+      (Info_::center * Info_::nrows + Info_::center / Info_::ncols) % Info_::card,
+      Info_::i
       >, T> transposed_array_t;
 
     transposed_array_t transpose() const
     {
       transposed_array_t tmp;
       for (int i = 0; i < Info::card; ++i)
-	tmp[i] = this->operator[]((i * _Info::ncols + i / _Info::nrows) % _Info::card);
+	tmp[i] = this->operator[]((i * Info_::ncols + i / Info_::nrows) % Info_::card);
       return tmp;
     }
 
@@ -144,71 +144,71 @@ namespace mlc
 
     unsigned size() const
     {
-      return _Info::card;
+      return Info_::card;
     }
 
     const T* buffer() const
     {
-      return _buffer;
+      return buffer_;
     }
 
     // dynamic accessors:
 
     T operator[](unsigned i) const	// Absolute position
     {
-      precondition(i < _Info::card);
-      return *(_buffer + i);
+      precondition(i < Info_::card);
+      return *(buffer_ + i);
     }
     T& operator[](unsigned i)
     {
-      precondition(i < _Info::card);
-      return *(_buffer + i);
+      precondition(i < Info_::card);
+      return *(buffer_ + i);
     }
 
 
     T operator()(int row, int col) const		// Relative position
     {
-      precondition(-_Info::center_row <= row);
-      precondition(row <= _Info::nrows - _Info::center_row - 1);
-      precondition(-_Info::center_col <= col);
-      precondition(col <= _Info::ncols - _Info::center_col - 1);
+      precondition(-Info_::center_row <= row);
+      precondition(row <= Info_::nrows - Info_::center_row - 1);
+      precondition(-Info_::center_col <= col);
+      precondition(col <= Info_::ncols - Info_::center_col - 1);
 
-      return *(_buffer + _Info::center + (row * _Info::ncols) + col);
+      return *(buffer_ + Info_::center + (row * Info_::ncols) + col);
     }
     T& operator()(int row, int col)
     {
-      precondition(-_Info::center_row <= row);
-      precondition(row <= _Info::nrows - _Info::center_row - 1);
-      precondition(-_Info::center_col <= col);
-      precondition(col <= _Info::ncols - _Info::center_col - 1);
+      precondition(-Info_::center_row <= row);
+      precondition(row <= Info_::nrows - Info_::center_row - 1);
+      precondition(-Info_::center_col <= col);
+      precondition(col <= Info_::ncols - Info_::center_col - 1);
 
-      return *(_buffer + _Info::center + (row * _Info::ncols) + col);
+      return *(buffer_ + Info_::center + (row * Info_::ncols) + col);
     }
 
 
     // do not use these methods...
 
     template<unsigned i>
-    T _get_at() const {
-      lesseq<i, _Info::card>::ensure();
-      return *(_buffer + i);
+    T get_at_() const {
+      lesseq<i, Info_::card>::ensure();
+      return *(buffer_ + i);
     }
 
     template<int nrow, int ncol>
-    T _get() const {
-      lesseq< -_Info::center_row, nrow >::ensure();
-      lesseq< nrow, _Info::nrows - _Info::center_row - 1 >::ensure();
-      lesseq< -_Info::center_col, ncol >::ensure();
-      lesseq< ncol, _Info::ncols - _Info::center_col - 1 >::ensure();
+    T get_() const {
+      lesseq< -Info_::center_row, nrow >::ensure();
+      lesseq< nrow, Info_::nrows - Info_::center_row - 1 >::ensure();
+      lesseq< -Info_::center_col, ncol >::ensure();
+      lesseq< ncol, Info_::ncols - Info_::center_col - 1 >::ensure();
 
-      // FIXME: return *(_buffer + _Info::center + (row * _Info::ncols) + col);
-      return *(_buffer + _Info::center + (nrow * _Info::ncols) + ncol);
+      // FIXME: return *(buffer_ + Info_::center + (row * Info_::ncols) + col);
+      return *(buffer_ + Info_::center + (nrow * Info_::ncols) + ncol);
     }
 
 
   protected:
 
-    T _buffer[internal::_max_card];
+    T buffer_[internal::max_card_];
   };
 
 
@@ -217,19 +217,19 @@ namespace mlc
   template<unsigned i, class Info, class T> inline
   T get_at(const array2d<Info, T>& arr)
   {
-    return arr.template _get_at<i>();
+    return arr.template get_at_<i>();
   }
 
   template<int row, int col, class Info, class T> inline
   T get(const array2d<Info, T>& arr)
   {
-    return arr.template _get<row, col>();
+    return arr.template get_<row, col>();
   }
 
   // starter objects
 
-  static internal::_array2d_start<int>   ints_2d   = internal::_array2d_start<int>();
-  static internal::_array2d_start<float> floats_2d = internal::_array2d_start<float>();
+  static internal::array2d_start_<int>   ints_2d   = internal::array2d_start_<int>();
+  static internal::array2d_start_<float> floats_2d = internal::array2d_start_<float>();
 
   template<class Info, class T>
   std::ostream& operator<<(std::ostream& ostr, const array2d<Info, T>& rhs)

@@ -34,10 +34,10 @@
 namespace oln {
   namespace morpho {
     template<class I, class E> inline
-   oln_concrete_type(I)
-    fast_morpho(const abstract::non_vectorial_image<I>& input,
-		const abstract::struct_elt<E>& se,
-	oln_value_type(I)(*func) (const utils::histogram<oln_value_type(I)>&));
+    oln_concrete_type(I)
+      fast_morpho(const abstract::non_vectorial_image<I>& input,
+		  const abstract::struct_elt<E>& se,
+		  oln_value_type(I)(*func) (const utils::histogram<oln_value_type(I)>&));
   } // end of morpho
 } // end of oln
 

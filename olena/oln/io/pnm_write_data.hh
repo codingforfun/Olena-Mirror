@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_PNM_WRITE_DATA_HH_
-# define OLENA_IO_PNM_WRITE_DATA_HH_
+#ifndef OLENA_IO_PNM_WRITE_DATA_HH
+# define OLENA_IO_PNM_WRITE_DATA_HH
 
 # include <oln/core/image.hh>
 # include <oln/io/image_base.hh>
@@ -46,7 +46,9 @@ namespace oln {
 	template <class I>
 	static bool
 	write(std::ostream&, const I&, const pnm2d_info&)
-	{ return false; }
+	{ 
+	  return false; 
+	}
       };
 
       /*----------------------.
@@ -61,7 +63,7 @@ namespace oln {
 	write(std::ostream& out, const I& input, const pnm2d_info&)
 	{
 	  // FIXME: implement an iterator over data
-	 oln_iter_type(I) it(input);
+	  oln_iter_type(I) it(input);
 	  
 	  unsigned stride = 0;
 	  for (it = begin; it != end; ++it)
@@ -88,8 +90,8 @@ namespace oln {
 	write(std::ostream& out, const I& input, const pnm2d_info& info)
 	{
 	  // FIXME: implement an iterator over data
-	 oln_iter_type(I) it(input);
-
+	  oln_iter_type(I) it(input);
+	  
 	  coord cols = 0;
 	  unsigned char c = 0;
 	  coord stride = 0;
@@ -127,7 +129,7 @@ namespace oln {
 	write(std::ostream& out, const I& input, const pnm2d_info&)
 	{
 	  // FIXME: implement an iterator over data
-	 oln_iter_type(I) it(input);
+	  oln_iter_type(I) it(input);
 	  
 	  int stride = 0;
 	  for (it = begin; it != end; ++it)
@@ -154,7 +156,7 @@ namespace oln {
 	write(std::ostream& out, const I& input, const pnm2d_info& info)
 	{
 	  // FIXME: implement an iterator over data
-	 oln_iter_type(I) it (input);
+	  oln_iter_type(I) it (input);
 	  
 	  for (it = begin; it != end; ++it)
 	    {
@@ -215,7 +217,7 @@ namespace oln {
 	write(std::ostream& out, const I& input, const pnm2d_info& info)
 	{
 	  // FIXME: implement an iterator over data
-	 oln_iter_type(I) it (input);
+	  oln_iter_type(I) it (input);
 	  
 	  for (it = begin; it != end; ++it)
 	    {
@@ -241,10 +243,10 @@ namespace oln {
 	}
       }; 
       
-    } // end of internal
+    } // end of namespace internal
     
-  } // end of io
+  } // end of namespace io
   
-} // end of oln
+} // end of namespace oln
 
-#endif // ! OLENA_IO_PNM_WRITE_DATA_HH_
+#endif // ! OLENA_IO_PNM_WRITE_DATA_HH

@@ -28,6 +28,10 @@
 #ifndef OLENA_TOPO_INTER_PIXEL_INTERNAL_DIR_HH
 # define OLENA_TOPO_INTER_PIXEL_INTERNAL_DIR_HH
 
+# include <oln/config/system.hh>
+
+# include <iostream>
+
 namespace oln {
 
   namespace topo {
@@ -38,47 +42,72 @@ namespace oln {
 
 	template<unsigned Dim>
 	struct dir_traits
-	{
-	};
+	{};
 
 	template<>
 	struct dir_traits<2>
 	{
 	  typedef enum dir { east, north, west, south } ret;
 
-	  static ret first() { return east; }
-	  static ret last() { return south; }
+	  static ret
+	  first()
+	  { 
+	    return east; 
+	  }
 
-	  static ret prev(ret i)
+	  static ret
+	  last()
+	  { 
+	    return south; 
+	  }
+
+	  static ret
+	  prev(ret i)
 	  {
 	    return i == first() ? last() : ret(i - 1);
 	  }
-	  static ret next(ret i)
+
+	  static ret
+	  next(ret i)
 	  {
 	    return i == last() ? first() : ret(i + 1);
 	  }
 
 	  // FIXME: no modulus
-	  static ret opposite(ret i)
+	  static ret
+	  opposite(ret i)
 	  {
 	    return ret((i + 2) % 4);
 	  }
 	};
 
-# define DirTraits(ImgType)			\
-dir_traits< ImgType::dim >
+# define oln_dir_traits_type(ImgType)				\
+oln::topo::inter_pixel::internal::dir_traits< ImgType::dim >
 
-# define Dir(ImgType)				\
-typename dir_traits< ImgType::dim >::ret
+# define oln_dir_type(ImgType)			\
+typename oln_dir_traits_type(ImgType)::ret
 
-      } // end internal
+      } // end of namespace internal
 
-    } // end inter_pixel
+    } // end of namespace inter_pixel
 
-  } // end topo
+  } // end of namespace topo
 
-} // end oln
+} // end of namespace oln
 
-# include <oln/topo/inter-pixel/internal/dir.hxx>
+std::ostream & operator<<(std::ostream& o, 
+			  oln::topo::inter_pixel::internal::dir_traits<2>::ret i)
+{
+  typedef oln::topo::inter_pixel::internal::dir_traits<2> traits;
+
+  switch (i)
+    {
+    case traits::east: return o << "east";
+    case traits::north: return o << "north";
+    case traits::west: return o << "west";
+    case traits::south: return o << "south";
+    default: return o;
+    }
+}
 
 #endif // !OLENA_TOPO_INTER_PIXEL_INTERNAL_DIR_HH

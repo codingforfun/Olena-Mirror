@@ -64,7 +64,9 @@ namespace oln {
     public abstract::image_with_impl<typename image_id<image<Dim, T, Impl, Exact> >::impl_type,
 				     typename image_id<image<Dim, T, Impl, Exact> >::exact_type>
   {
+
   public:
+
     typedef typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret exact_type;
     typedef typename image_traits<exact_type>::point_type point_type;
     typedef typename image_traits<exact_type>::dpoint_type dpoint_type;
@@ -79,7 +81,6 @@ namespace oln {
     typedef typename abstract::image_with_impl<Impl,
 					       exact_type> super_type;
 
-
     image() : super_type() 
     {
       mlc_init_static_hierarchy(Exact);
@@ -90,7 +91,8 @@ namespace oln {
       mlc_init_static_hierarchy(Exact);
     }
 
-    static std::string name()
+    static std::string 
+    name()
     {
       std::ostringstream s;
       s << "image<" << Dim << ", " << ntg_name(T) << ", " << Impl::name() 

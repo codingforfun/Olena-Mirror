@@ -25,10 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_PNM_READ_3D_HH_
-# define OLENA_IO_PNM_READ_3D_HH_
+#ifndef OLENA_IO_PNM_READ_3D_HH
+# define OLENA_IO_PNM_READ_3D_HH
 
 # include <ntg/bin.hh>
+
 # include <oln/core/image2d.hh>
 # include <oln/io/pnm_read_2d.hh>
 
@@ -53,20 +54,24 @@ namespace oln {
       template <pnm_type P, class I>
       struct pnm_reader<ReadPnmRaw, 3, P, I>
       {
-	typedef pnm_reader<ReadPnmRaw, 2, P, image2d<oln_value_type(I)> > reader_2d;
+	typedef pnm_reader<ReadPnmRaw, 2, P, image2d<oln_value_type(I)> > 
+	        reader_2d;
 	typedef image2d<oln_value_type(I)> image2d_type;
 
-	static std::string name()
+	static std::string 
+	name()
 	{ 
 	  return reader_2d::name();
 	}
 
-	static bool knows_ext(const std::string& ext)
+	static bool 
+	knows_ext(const std::string& ext)
 	{ 
 	  return reader_2d::knows_ext(ext);
 	}
 
-	static bool read(std::istream& in, I& im)
+	static bool 
+	read(std::istream& in, I& im)
 	{
 	  typedef typename std::list<image2d_type*>::iterator iterator_type;
 	  std::list<image2d_type*> image2d_list;
@@ -121,18 +126,18 @@ namespace oln {
 	       it != image2d_list.end();
 	       ++it, ++slice)
 	    {
-	     oln_iter_type(image2d_type) p(*(*it));
+	      oln_iter_type(image2d_type) p(*(*it));
 	      for_all(p)
 		output(slice, p.row(), p.col()) = (*(*it))[p];
 	    }
 	}
       };
 
-    } // end of internal
+    } // end of namespace internal
 
-  } // end of io
+  } // end of namespace io
 
-} // end of oln
+} // end of namespace oln
 
 
-#endif // ! OLENA_IO_PNM_READ_3D_HH_
+#endif // ! OLENA_IO_PNM_READ_3D_HH

@@ -40,8 +40,9 @@ namespace oln {
       namespace internal_tarjan_ {
 
 	template <class P, class V>
-	bool vec_sort_max(const std::pair<P, V>& l,
-			  const std::pair<P, V>& r)
+	bool 
+	vec_sort_max(const std::pair<P, V>& l,
+		     const std::pair<P, V>& r)
 	{
 	  if (r.second != l.second)
 	    return r.second < l.second;
@@ -56,8 +57,9 @@ namespace oln {
 
 
 	template <class P, class V>
-	bool vec_sort_min(const std::pair<P, V>& l,
-			  const std::pair<P, V>& r)
+	bool 
+	vec_sort_min(const std::pair<P, V>& l,
+		     const std::pair<P, V>& r)
 	{
 	  if (r.second != l.second)
 	    return r.second > l.second;
@@ -89,43 +91,48 @@ namespace oln {
 
 	T_attribute(const T_attribute& rhs){ value = rhs.value;}
 
-	T_attribute operator+(const T_attribute & rhs) const
+	T_attribute 
+	operator+(const T_attribute & rhs) const
 	{
 	  return T_attribute(value + rhs.value);
 	}
 
-	T_attribute & operator=(const T_attribute & rhs)
+	T_attribute& 
+	operator=(const T_attribute & rhs)
 	{
 	  value = rhs.value;
 	  return *this;
 	}
 
-	const bool operator<(const T_attribute & rhs) const
+	const bool 
+	operator<(const T_attribute & rhs) const
 	{
 	  return value < rhs.value;
 	}
 
 	T value;
-      };
 
+      };
 
       template<class T, class ATTRIBUTE>
       struct tarjan_set
       {
-	typedef oln_point_type(T) point_t;
-	typedef oln_value_type(T) data_t;
-	typedef oln_concrete_type(T) image_t;
+	typedef oln_point_type(T) point_type;
+	typedef oln_value_type(T) data_type;
+	typedef oln_concrete_type(T) image_type;
 
 
 	// ACTIVE and INACTIVE are defined with a hook to be static
 	// and initialized ionly once.
-	static const point_t & ACTIVE()
+	static const point_type& 
+	ACTIVE()
 	{
-	  static struct foo_def{
-	    point_t elt;
+	  static struct foo_def
+	  {
+	    point_type elt;
 	    foo_def()
 	    {
-	      const unsigned dim = point_t::dim;
+	      const unsigned dim = point_type::dim;
 	      for (unsigned i = 0; i < dim; ++i )
 		elt.nth(i) = -1;
 	    }
@@ -134,12 +141,14 @@ namespace oln {
 	  return tmp.elt;
 	}
 
-	static const point_t &INACTIVE()
+	static const point_type&
+	INACTIVE()
 	{
-	  static struct foo_def{
-	    point_t elt;
+	  static struct foo_def
+	  {
+	    point_type elt;
 	    foo_def() {
-	      const unsigned dim = point_t::dim;
+	      const unsigned dim = point_type::dim;
 	      for (unsigned i = 0; i < dim; ++i )
 		elt.nth(i) = -2;
 	    }
@@ -148,26 +157,23 @@ namespace oln {
 	  return tmp.elt;
 	}
 
-
-
-
-	tarjan_set(const image_t& ima) : input_(ima),
+	tarjan_set(const image_type& ima) : input_(ima),
 					 parent_(ima.size()),
 					 aux_data_(ima.size())
 	{
 	  level::fill(parent_, INACTIVE());
 	}
 
-	void make_set(const point_t& x)
+	void 
+	make_set(const point_type& x)
 	{
 	  precondition(parent_[x] == INACTIVE());
 	  parent_[x] = ACTIVE();
 	  aux_data_[x] = 1;
 	}
 
-
-
-	point_t find_root(const point_t& x)
+	point_type 
+	find_root(const point_type& x)
 	{
 	  if ((parent_[x] != ACTIVE()) && (parent_[x] != INACTIVE()))
 	    {
@@ -178,16 +184,18 @@ namespace oln {
 	    return x;
 	}
 
-	bool criterion(const point_t& x, const point_t& y)
+	bool 
+	criterion(const point_type& x, const point_type& y)
 	{
 	  precondition((parent_[x] == ACTIVE()) || (parent_[x] == INACTIVE()));
 	  precondition((parent_[y] == ACTIVE()) || (parent_[y] == INACTIVE()));
 	  return ( (input_[x] == input_[y]) || (aux_data_[x] < lambda_));
 	}
 
-	void uni(const point_t& n, const point_t& p)
+	void 
+	uni(const point_type& n, const point_type& p)
 	{
-	  point_t r = find_root(n);
+	  point_type r = find_root(n);
 	  if (r != p)
 	    if (criterion(r,p))
 	      {
@@ -200,29 +208,29 @@ namespace oln {
 	      }
 	}
 
-
 	// bool closing = true -> a closing is performed,
 	// an opening otherwise.
 	template<class N>
-	image_t get_comptute(const ATTRIBUTE & lambda,
-			     const abstract::neighborhood<N>& Ng,
-			     const bool closing)
+	image_type 
+	get_comptute(const ATTRIBUTE & lambda,
+		     const abstract::neighborhood<N>& Ng,
+		     const bool closing)
 	{
-	  typedef std::pair<point_t, data_t> pixel_t;
+	  typedef std::pair<point_type, data_type> pixel_type;
 	  lambda_ = lambda;
 
-	  std::vector<pixel_t> I;
+	  std::vector<pixel_type> I;
 	  I.reserve(input_.npoints());
 
 	  {
 	    // sort pixels with respect to their level and scanning order
 	   oln_iter_type(T) p(input_);
 	    for_all(p)
-	      I.push_back(pixel_t(p.cur(), input_[p]));
+	      I.push_back(pixel_type(p.cur(), input_[p]));
 	    if (closing)
-	      sort(I.begin(), I.end(), internal_tarjan_::vec_sort_min<point_t, data_t> );
+	      sort(I.begin(), I.end(), internal_tarjan_::vec_sort_min<point_type, data_type> );
 	    else
-	      sort(I.begin(), I.end(), internal_tarjan_::vec_sort_max<point_t, data_t> );
+	      sort(I.begin(), I.end(), internal_tarjan_::vec_sort_max<point_type, data_type> );
 	  }
 
 	  // Image to know which pixels have been processed
@@ -232,19 +240,19 @@ namespace oln {
 	  // We are ready to perform stuff
 	  for (unsigned int p = 0; p < I.size(); ++p)
 	    {
-	      point_t p_p = I[p].first;
+	      point_type p_p = I[p].first;
 	      make_set(p_p);
 	      is_proc[p_p] = true;
-	      Neighb(N) Q_prime(Ng, p_p);
+	      oln_neighb_type(N) Q_prime(Ng, p_p);
 	      for_all (Q_prime) if (input_.hold(Q_prime)) if (is_proc[Q_prime] == true)
 		uni(Q_prime.cur(), p_p);
 	    }
 
 	  // Resolving phase
-	  image_t output(input_.size());
+	  image_type output(input_.size());
 	  for (int p = I.size() - 1; p >= 0; --p)
 	    {
-	      point_t p_p = I[p].first;
+	      point_type p_p = I[p].first;
 	      if ((parent_[p_p] == ACTIVE()) ||  (parent_[p_p] == INACTIVE()))
 		output[p_p] = I[p].second;
 	      else
@@ -256,8 +264,8 @@ namespace oln {
 	  return output;
 	}
 
-	const image_t & input_;
-	typename mute<T, point_t>::ret parent_;
+	const image_type & input_;
+	typename mute<T, point_type>::ret parent_;
 	typename mute<T, ATTRIBUTE>::ret aux_data_;
 	ATTRIBUTE lambda_;
 

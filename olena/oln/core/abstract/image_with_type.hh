@@ -60,12 +60,14 @@ namespace oln {
       typedef image_with_type<T, Exact> self_type;
       typedef Exact exact_type;
 
-      exact_type& operator=(self_type rhs)
+      exact_type& 
+      operator=(self_type rhs)
       {
 	return this->exact().assign(rhs.exact());
       }
 
-      static std::string name()
+      static std::string 
+      name()
       {
 	return
 	  std::string("abstract::image_with_type<")

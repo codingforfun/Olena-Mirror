@@ -189,8 +189,8 @@ namespace ntg {
 		mlc::if_<can_invert,
 			 get_order_inv<T1, T2>,
 			 meta_undefined_traits<undefined_traits>
-                        >::ret_t
-              >::ret_t deduced_type;
+                        >::ret
+              >::ret deduced_type;
 
       typedef typename deduced_type::traits_lhs_type traits_lhs_type;
       typedef typename deduced_type::traits_rhs_type traits_rhs_type;

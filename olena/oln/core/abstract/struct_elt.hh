@@ -60,7 +60,8 @@ namespace oln {
       typedef struct_elt<Exact> self_type;
       typedef typename struct_elt_traits<Exact>::abstract_type abstract_type;
 
-      static std::string name()
+      static std::string 
+      name()
       {
 	return std::string("struct_elt<") + Exact::name() + ">";
       }
@@ -69,49 +70,58 @@ namespace oln {
       typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
       typedef Exact exact_type;
 
-      bool has(const abstract::dpoint<dpoint_type>& dp) const
+      bool 
+      has(const abstract::dpoint<dpoint_type>& dp) const
       {
 	return this->exact().has_(dp.exact());
       }
 
-      unsigned card() const
+      unsigned 
+      card() const
       {
 	return this->exact().card_();
       }
 
-      bool is_centered() const
+      bool 
+      is_centered() const
       {
 	return this->exact().is_centered_();
       }
 
       // FIXME: here for convenience (see morpho algorithms),
       // work with w_windows (associate a default weight set to 1)
-      exact_type& add(const abstract::dpoint<dpoint_type>& dp)
+      exact_type& 
+      add(const abstract::dpoint<dpoint_type>& dp)
       {
 	return this->exact().add_dp(dp);
       }
 
-      dpoint_type dp(unsigned i) const
+      dpoint_type 
+      dp(unsigned i) const
       {
 	return this->exact().at(i);
       }
 
-      bool operator==(const self_type& win) const
+      bool 
+      operator==(const self_type& win) const
       {
 	return this->exact().is_equal(win.exact());
       }
 
-      coord delta() const
+      coord 
+      delta() const
       {
 	return this->exact().get_delta();
       }
 
-      const dpoint_type operator[](unsigned i) const
+      const dpoint_type 
+      operator[](unsigned i) const
       {
 	return this->exact().at(i);
       }
 
-      exact_type operator-() const
+      exact_type 
+      operator-() const
       {
 	exact_type win(this->exact());
 	win.sym();
@@ -120,12 +130,15 @@ namespace oln {
 
     protected:
 
-      void sym()
+      void 
+      sym()
       {
 	return this->exact().sym_();
       }
 
-      struct_elt() {}
+      struct_elt() 
+      {}
+    
     };
   } // end of abstract
 

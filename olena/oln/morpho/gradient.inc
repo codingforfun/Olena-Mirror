@@ -66,8 +66,9 @@ beucher_gradient(const convert::abstract::conversion<C, B>& c,
  * ret:oln_concrete_type(I)
 =*/
 template<class I, class E>
-oln_concrete_type(I) beucher_gradient(const abstract::non_vectorial_image<I>& input,
-			     const abstract::struct_elt<E>& se)
+oln_concrete_type(I) 
+  beucher_gradient(const abstract::non_vectorial_image<I>& input,
+		   const abstract::struct_elt<E>& se)
 {
   return beucher_gradient(convert::force<oln_value_type(I)>(), input, se);
 }
@@ -109,8 +110,9 @@ internal_gradient(const convert::abstract::conversion<C, B>& c,
  * ret:oln_concrete_type(I)
 =*/
 template<class I, class E>
-oln_concrete_type(I) internal_gradient(const abstract::non_vectorial_image<I>& input, const
-			      abstract::struct_elt<E>& se)
+oln_concrete_type(I) 
+  internal_gradient(const abstract::non_vectorial_image<I>& input, const
+		    abstract::struct_elt<E>& se)
 {
   return internal_gradient(convert::force<oln_value_type(I)>(), input, se);
 }
@@ -153,8 +155,9 @@ external_gradient(const convert::abstract::conversion<C, B>& c,
  * ret:oln_concrete_type(I)
 =*/
 template<class I, class E>
-oln_concrete_type(I) external_gradient(const abstract::non_vectorial_image<I>& input,
-			      const abstract::struct_elt<E>& se)
+oln_concrete_type(I) 
+  external_gradient(const abstract::non_vectorial_image<I>& input,
+		    const abstract::struct_elt<E>& se)
 {
   return external_gradient(convert::force<oln_value_type(I)>(), input, se);
 }
