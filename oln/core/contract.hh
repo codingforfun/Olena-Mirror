@@ -41,8 +41,12 @@
 
 #  include <iostream>
 #  include <cstdlib>
+#  include <sstream>
+#  include <stdexcept>
 
 namespace oln {
+
+#    ifndef OLN_EXCEPTIONS
 
 inline void __FailedCondition( const char* condType,
                                const char* condText,
@@ -66,6 +70,36 @@ inline void __FailedCondition( const char* condType,
   exit(1);
 #  endif
 }
+
+#     else // OLN_EXCEPTIONS
+
+ inline void __FailedCondition( const char* condType,
+                               const char* condText,
+                               const char* fileName 
+#  ifndef RUNNING_TESTS
+                               ,int fileLine
+#  endif
+)
+{
+  // put a breakpoint _here_ at debug-time
+  std::ostringstream err;
+
+  err << fileName << ':'
+#  ifndef RUNNING_TESTS
+            << fileLine
+#  endif
+	    << ": "
+            << condType << " `"
+            << condText << "' failed.";
+#  ifndef RUNNING_TESTS
+  throw std::runtime_error(err.str());
+#  else
+  std::cerr << err.str();
+  exit(1);
+#  endif
+}
+
+#     endif // OLN_EXCEPTIONS
 
 } // end of oln
 

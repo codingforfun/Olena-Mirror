@@ -1,3 +1,9 @@
+2002-11-27  Raphael Poss  <raph@lrde.epita.fr>
+
+	* oln/core/contract.hh (OLN_EXCEPTIONS): report errors by means of
+	throwing  std::runtime_error()   instead  of  aborting,  when  the
+	OLN_EXCEPTIONS macro is defined.
+ 
 2002-11-19  Jean-Sébastien Mouret  <js@lrde.epita.fr>
 
 	* Makefile.am (EXTRA_DIST): Remove documentation dependency.
@@ -15,7 +21,7 @@
 	* oln/core/window2d.hh: Likewise.
 
 	* oln/io/pnm_write.hxx, oln/io/pnm_read.hxx: Bug fix.
-	Tiny binary images in raw pbm format was not correctly
+	Tiny binary images in raw pbm format were not correctly
 	read nor written.
 
 	* demo/morpholena.cc (main): Add window2d loading example.
