@@ -56,7 +56,6 @@ bool check()
   oln::dummy_image ima;
   int p;
 
-// COMPFAIL
   ima[p] = 51;
   std::cout << ima[p] << std::endl;
 
