@@ -3,6 +3,7 @@
 #include <oln/morpho/thickening.hh>
 
 using namespace oln;
+using namespace ntg;
 
 void morpholena_thin_thick()
 {

@@ -2,16 +2,21 @@
 
 AC_PREREQ([2.54])
 
-AC_INIT([Olena], OLN_VERSION, OLN_CONTACT, [oln])
-AC_CONFIG_AUX_DIR([oln/config])
-AC_CONFIG_SRCDIR([oln/config/oln.m4])
+AC_INIT([Olena], OLN_VERSION, OLN_CONTACT, [olena])
+AC_CONFIG_AUX_DIR([olena/config])
+AC_CONFIG_SRCDIR([olena/config/oln.m4])
 AM_INIT_AUTOMAKE([1.7 no-define foreign dist-bzip2])
 AC_CONFIG_HEADERS([config.h:config.hin])
 
 # Use included Olena version.
-OLN_PATH_LOCAL([oln])
+OLN_PATH_LOCAL([olena])
 AC_WITH_OLN
-	
+# Import local version of Metalic.
+CPPFLAGS="-I\$(top_srcdir)/metalic $CPPFLAGS"
+
+# Import local version of Integre.
+CPPFLAGS="-I\$(top_srcdir)/integre $CPPFLAGS"
+
 # Some library archives are used. Some C code used.
 AC_PROG_RANLIB
 AC_PROG_CC
@@ -24,9 +29,22 @@ AC_WITH_CXX_FFTW
 AC_CXX_FLAGS
 
 AC_CONFIG_FILES([Makefile
-                 oln/Makefile 
-		 oln/img/Makefile 
-		 oln/oln/config/pconf.hh:oln/oln/config/pconf-hh.in])
+		 integre/Makefile
+		 integre/ntg/Makefile
+		 integre/tests/Makefile
+		 integre/tests/check/defs
+		 integre/tests/types/Makefile
+                 metalic/Makefile
+                 metalic/mlc/Makefile
+                 metalic/tests/Makefile
+                 metalic/tests/array/Makefile
+                 metalic/tests/check/Makefile
+		 metalic/tests/check/defs
+                 metalic/tests/main/Makefile
+		 olena/Makefile
+		 olena/img/Makefile
+		 olena/oln/Makefile
+		 olena/oln/config/pconf.hh:olena/oln/config/pconf-hh.in])
 
 ### Olena components.
 
@@ -84,14 +102,14 @@ OLN_COLLECTION([OLN_TOP],
 
 ### The testsuite is a component.
 
-    OLN_COMPONENT([oln/tests], 
+    OLN_COMPONENT([olena/tests], 
 		  [testsuite], 
 		  [oln_cv_build_tests], 
 		  [the testsuite], 
 		  [OLN_SRC], 
-	          [oln/tests/Makefile
-                   oln/tests/check/defs
-	           oln/tests/check/Makefile],
+	          [olena/tests/Makefile
+		   olena/tests/check/Makefile
+		   olena/tests/check/defs],
     [dnl Configuration for the testsuite
 
       OLN_TESTS_SUBDIRS=""
@@ -100,7 +118,7 @@ OLN_COLLECTION([OLN_TOP],
                      [oln_cv_tests_selection],
                      [AC_ARG_WITH([tests],
     	                          [AC_HELP_STRING([--with-tests=<list>],
-                                                  [none,all,convert,convol,io,meta,morpho,sanity,transforms,types])],
+                                                  [none,all,convert,convol,io,morpho,sanity,transforms])],
                                   [oln_cv_tests_selection=$withval],
                                   [oln_cv_tests_selection=all])dnl
                      ])dnl
@@ -111,15 +129,13 @@ OLN_COLLECTION([OLN_TOP],
       OLN_TESTS([convert])
       OLN_TESTS([convol])
       OLN_TESTS([io])
-      OLN_TESTS([meta])
       OLN_TESTS([morpho])
       OLN_TESTS([sanity])
       OLN_TESTS([transforms])
-      OLN_TESTS([types])
 
       AC_SUBST([OLN_TESTS_SUBDIRS])
 
-    ], [tests])dnl End of OLN_COMPONENT([oln/tests])
+    ], [tests])dnl End of OLN_COMPONENT([olena/tests])
 
   ])dnl End of OLN_COLLECTION([OLN_SRC])
 

@@ -1,3 +1,23 @@
+2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* demo/convol-gaussian.cc, demo/image.cc,
+	demo/morpholena-base.cc, demo/morpholena-grad.cc,
+	demo/morpholena-hats.cc, demo/morpholena-hit-miss.cc,
+	demo/morpholena-minima.cc, demo/morpholena-ops.cc,
+	demo/morpholena-wshed-beucher.cc, demo/morpholena-wshed.cc,
+	demo/test-reconstruction.cc, demo/tour.cc: Update namespaces.
+
+2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* demo/Makefile.am, ref/Makefile.am: Adapt to new oln location.
+
+	* dev/srctree.texi: Update.
+
+2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* demo/tour.cc: Replace <oln/types/ by ntg/.
+	* dev/srctree.texi: Remove reference to oln/types.
+
 2003-02-18  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* dev/Makefile.am (oln_dev_TEXINFOS): Add missing design.texi.

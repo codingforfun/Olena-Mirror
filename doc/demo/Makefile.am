@@ -1,8 +1,8 @@
 ## Process this file with Automake to produce Makefile.in -*-Makefile-*-
 
 INCLUDES = -I$(OLN_LOCAL_SRC) -I$(OLN_LOCAL_BUILD)
-AM_CPPFLAGS = $(OLN_CPPFLAGS) -DIMGDIR=\"$(top_srcdir)/oln/img\"
-AM_CXXFLAGS = $(OLN_CXXFLAGS) $(CXXFLAGS_STRICT) $(CXXFLAGS_OPTIMIZE)
+AM_CPPFLAGS = -DIMGDIR=\"$(top_srcdir)/olena/img\"
+AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_OPTIMIZE)
 
 # We used to declare these programs as `noinst_PROGRAMS', however
 # building them on each run of `make' turned to

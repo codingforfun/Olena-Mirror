@@ -43,12 +43,12 @@ can be used:
 @table @code
 @item AC_WITH_OLN
 Checks compiler features and AC_SUBST the variables @env{OLN_CPPFLAGS}
-and @env{OLN_CXXFLAGS}.
+and @env{CXXFLAGS}.
 
 @item OLN_ENABLE_EXCEPTIONS
 Enable the raise of C++ exceptions instead of aborting on errors. This
 breaks some optimizations, so do not use unless required. Updates
-@env{OLN_CPPFLAGS}.
+@env{CPPFLAGS}.
 
 @end table
 
@@ -71,7 +71,7 @@ flag to see what data is available.
 
 @cindex link failures
 @cindex @code{roundf}, missing
-@cindex @code{OLN_NEED_ROUNDF}
+@cindex @code{NEED_ROUNDF}
 @cindex @env{CXXFLAGS}
 
 @table @strong
@@ -84,7 +84,7 @@ Your standard library headers declare @code{roundf} but it is
 not actually defined.
 
 @item Solution
-Add @option{-DOLN_NEED_ROUNDF} to your
+Add @option{-DNEED_ROUNDF} to your
 @env{CXXFLAGS}.
 @end table
 
@@ -132,7 +132,7 @@ Include @file{oln/basics2d.hh} instead, and use
 
 @cindex infinity
 @cindex @code{std::numeric_limits}
-@cindex @code{OLN_USE_C_LIMITS}
+@cindex @code{USE_C_LIMITS}
 
 @table @strong
 @item Problem
@@ -143,7 +143,7 @@ Compilation fails at points where @code{OLN_FLOAT_INFINITY} or
 Your C++ standard library is broken.
 
 @item Solution
-As a workaround, add @option{-DOLN_USE_C_LIMITS} to
+As a workaround, add @option{-DUSE_C_LIMITS} to
 your @env{CXXFLAGS}.
 
 @end table

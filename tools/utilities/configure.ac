@@ -13,7 +13,7 @@ AC_CONFIG_HEADERS([config.h:config.hin])
 AC_CONFIG_FILES([Makefile])
 
 oln_dir=no
-if test -r $srcdir/../oln/config/pconf.hh; then
+if test -r $srcdir/../olena/oln/config/pconf.hh; then
   oln_dir=..
 fi
 AM_PATH_OLN([$oln_dir])

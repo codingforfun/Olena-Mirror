@@ -1,0 +1,4 @@
+# -*- Makefile -*-
+
+AM_CXXFLAGS = $(CXXFLAGS_OPTIMIZE) $(CXXFLAGS_STRICT_ERRORS)
+AM_CPPFLAGS = -I$(top_srcdir)/metalic/tests/check

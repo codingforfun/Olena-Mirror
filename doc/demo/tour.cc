@@ -10,7 +10,7 @@
 //#include <oln/basics3d.hh>
 
 // Let's include all types, for simplicity.
-#include <oln/types/all.hh>
+#include <ntg/all.hh>
 
 // Some algorithms...
 #include <oln/morpho/erosion.hh>
@@ -39,6 +39,11 @@
 // For the sake of simplicity, we will neglect the 'oln::' prefix
 // in this file.
 using namespace oln;
+
+// Data types are defined in the Intègre library, so they are
+// in the ntg namespace.
+// In this file, we will neglect the 'ntg::' prefix.
+using namespace ntg;
 
 int
 main (void)

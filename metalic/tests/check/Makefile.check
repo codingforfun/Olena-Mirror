@@ -1,0 +1,5 @@
+# -*- Makefile -*-
+
+include ../check/Makefile.flags
+LDADD = ../check/libcheck.a
+TESTS = $(check_PROGRAMS)

@@ -4,6 +4,7 @@
 #include <oln/morpho/top_hat.hh>
 
 using namespace oln;
+using namespace ntg;
 
 void morpholena_opening_closing()
 {

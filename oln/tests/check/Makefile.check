@@ -1,5 +1,0 @@
-# -*- Makefile -*-
-
-include $(top_srcdir)/oln/tests/check/Makefile.flags
-LDADD = $(top_builddir)/oln/tests/check/libcheck.a
-TESTS = $(check_PROGRAMS)
