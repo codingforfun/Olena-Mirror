@@ -146,12 +146,13 @@ def write_algorithms():
                     instantiate(idx, "hybrid_regional_minima", bin_img_type, img_type, neighb_type)
 
                     # Extrema killers
-                    instantiate(idx, "fast_maxima_killer", img_type, neighb_type)
-                    instantiate(idx, "fast_minima_killer", img_type, neighb_type)
-                    # FIXME: This should work with other types.
-                    if type == "ntg_int_u8":
-                        instantiate(idx, "sure_maxima_killer", img_type, neighb_type)
-                        instantiate(idx, "sure_minima_killer", img_type, neighb_type)
+                    if dim == 2:
+                        instantiate(idx, "fast_maxima_killer", img_type, neighb_type)
+                        instantiate(idx, "fast_minima_killer", img_type, neighb_type)
+                        # FIXME: This should work with other types.
+                        if type == "ntg_int_u8":
+                            instantiate(idx, "sure_maxima_killer", img_type, neighb_type)
+                            instantiate(idx, "sure_minima_killer", img_type, neighb_type)
 
                 #FIXME: Does not work due to the return type:
                 #instantiate(idx, "watershed_seg_or", img_type, img_type, img_ret_type, neighb_type)

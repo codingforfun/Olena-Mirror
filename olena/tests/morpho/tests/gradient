@@ -1,0 +1,39 @@
+//								    -*- c++ -*-
+
+#include <oln/basics2d.hh>
+#include <oln/morpho/gradient.hh>
+#include <oln/level/compare.hh>
+#include <ntg/all.hh>
+#include "check.hh"
+#include "data.hh"
+
+
+#define OK_OR_FAIL				\
+      std::cout << "OK" << std::endl;		\
+    else					\
+      {						\
+	std::cout << "FAIL" << std::endl;	\
+	fail = true;				\
+      }
+
+template<class I>
+bool are_not_eq(const oln::abstract::non_vectorial_image_with_dim<2, I> &im)
+{
+  return
+    !oln::level::is_equal(oln::morpho::fast::beucher_gradient(im,
+							      oln::win_c8p()),
+			  oln::morpho::beucher_gradient(im, oln::win_c8p()));
+}
+
+
+bool
+check()
+{
+  bool fail = false;
+
+  oln::image2d<ntg::int_u8> im8(oln::load(rdata("lena256.pgm")));
+  if (are_not_eq(im8) == false)
+    OK_OR_FAIL;
+
+  return fail;
+}

@@ -1,17 +1,19 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 145)
-(Parent-Version oln 10 144)
-(Version-Log "2004-04-12  Damien Thivolle  <damien@lrde.epita.fr>
-	* swilena/expand.sh: Add `CLEANFILES' variables to
-	python/makefile.swig.
-	* swilena/ruby/Makefile.am: Add `clean-local' rule.
-	* swilena/src/Makefile.am: Add `distclean-local' rule.
+(Project-Version oln 10 146)
+(Parent-Version oln 10 145)
+(Version-Log "2004-04-12  Niels Van Vliet  <niels@lrde.epita.fr>
+	* tools/swilena/generate_morpho_instantiations.py: Remove
+	maxima_killer minima_killer from swilena_morpho1d_* and
+	swilena_morpho3d_*.
+2004-04-12  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/core/abstract/image.hh: Fix macro oln_concrete_type.
+	* olena/tests/morpho/tests/gradient: New.
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 12 Apr 2004 01:16:17 +0200")
-(Checkin-Login thivol_d)
+(Checkin-Time "Mon, 12 Apr 2004 12:56:30 +0200")
+(Checkin-Login van-vl_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -117,9 +119,9 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.1 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.40 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.77 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.78 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 600))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.26 600))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.27 600))
 
   (olena/ChangeLog.0 (oln/6_ChangeLog 1.50.1.98.1.5 600))
   (doc/ChangeLog.0 (oln/e/1_ChangeLog 1.31 600))
@@ -943,7 +945,7 @@
   (olena/tests/core/image_print.sh (oln/t/24_image_prin 1.2 600))
 
 
-  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.30 600))
+  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.31 600))
   (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.22 600))
   (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.14.1.11 600))
   (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.12 600))
@@ -1060,7 +1062,7 @@
 ;; Files added by populate at Sat, 27 Sep 2003 18:32:26 +0200,
 ;; to version 10.24(w), by burrus_n:
 
-  (tools/swilena/generate_morpho_instantiations.py (oln/v/24_generate_m 1.7 700))
+  (tools/swilena/generate_morpho_instantiations.py (oln/v/24_generate_m 1.8 700))
 
 ;; Files deleted by populate at Sat, 27 Sep 2003 18:33:27 +0200,
 ;; from version 10.24(w), by nes:
@@ -1444,6 +1446,11 @@
 ;; to version 10.134(w), by odou_s:
 
   (olena/tests/morpher/tests/slicing (oln/q/44_slicing 1.1 600))
+
+;; Files added by populate at Mon, 12 Apr 2004 12:53:04 +0200,
+;; to version 10.145(w), by van-vl_n:
+
+  (olena/tests/morpho/tests/gradient (oln/r/1_gradient 1.1 600))
 )
 (Merge-Parents)
 (New-Merge-Parents)
