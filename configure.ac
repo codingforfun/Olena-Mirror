@@ -46,11 +46,11 @@ AC_CONFIG_FILES([
   demo/Makefile
   tests/defs
   tests/Makefile
-  tests/array/Makefile
   tests/check/Makefile
   tests/convert/Makefile
   tests/convol/Makefile
   tests/io/Makefile
+  tests/meta/Makefile
   tests/morpho/Makefile
   tests/sanity/Makefile
   tests/types/Makefile

@@ -2,10 +2,10 @@
 # Process the check directory next, because it contains functions
 # needed by other directories.
 SUBDIRS = . check \
-  array \
   convert \
   convol \
   io \
+  meta \
   morpho \
   sanity \
   types

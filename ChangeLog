@@ -1,5 +1,10 @@
 2002-09-10  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
+	* configure.ac: Rename tests/array/Makefile as
+	tests/meta/Makefile.
+
+2002-09-10  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
 	* oln/types/optraits_builtins_float.hh: Include oln/config/system.hh.
 
 2002-09-10  Alexandre Duret-Lutz  <duret_g@epita.fr>

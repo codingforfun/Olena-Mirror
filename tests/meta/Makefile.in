@@ -106,7 +106,7 @@ gen_test_utils_liberrors_a_SOURCES = gen_test_utils/errors.cc gen_test_utils/err
 
 EXTRA_DIST = gen_test_utils/prelude gen_test_utils/postlude
 CLEANFILES = fail.log success.log a.out gentest_array.cc
-subdir = tests/array
+subdir = tests/meta
 mkinstalldirs = $(SHELL) $(top_srcdir)/tools/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/oln/config/config.h
 CONFIG_CLEAN_FILES =
@@ -172,7 +172,7 @@ all: all-am
 .SUFFIXES: .cc .o .obj
 $(srcdir)/Makefile.in:  Makefile.am $(top_srcdir)/tests/check/Makefile.check $(top_srcdir)/tests/check/Makefile.flags $(top_srcdir)/configure.ac $(ACLOCAL_M4)
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  tests/array/Makefile
+	  $(AUTOMAKE) --gnu  tests/meta/Makefile
 Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
 
