@@ -75,7 +75,7 @@ namespace oln {
     typename mute<_I, DestType>::ret
     frontp_connected_component(const image<_I>& _input,
 			       const neighborhood<_E>& _se, 
-			       unsigned& nb)
+			       unsigned& nb_label)
     {
       // FIXME: ensure the Value(I) is bin.
       Exact_cref(I, input);
@@ -126,7 +126,7 @@ namespace oln {
 	      output[*i] = cur_label;
 	      is_processed[*i] = true;
 	    }
-	  cur_label;
+	  cur_label++;
 	}
       nb_label = cur_label;
       return output;

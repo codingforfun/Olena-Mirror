@@ -1,16 +1,23 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 7 5)
-(Parent-Version oln 7 4)
+(Project-Version oln 7 6)
+(Parent-Version oln 7 5)
 (Version-Log "
 2003-01-09  Yann Régis-Gianas  <yann@lrde.epita.fr>
 
-	* oln/oln/level/cc.hh: do not use optional.hh stuff anymore.
-	* oln/oln/meta/optional.hh: fix a bug.
+	* oln/oln/level/cc.hh: fix a bug.
+	* oln/oln/Makefile.am: distribute box.hh, box.hxx and set_level.hh
+	* oln/oln/types/int_u.hh: fix include bug.
+	* oln/oln/types/int_s.hh: idem.
+	* oln/oln/types/color.hh: add a 3 components constructor.
+	* oln/oln/types/nrgb.hh: add classic rgb color.
+	* oln/oln/core/box.hh: new.
+	* oln/oln/core/box.hxx: likewise.
+	* oln/oln/level/set_level.hh: new.
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 09 Jan 2003 15:52:30 +0100")
+(Checkin-Time "Thu, 09 Jan 2003 17:34:58 +0100")
 (Checkin-Login yann)
 ;; diff-ignore configure$
 ;; diff-ignore aclocal\.m4$
@@ -106,7 +113,7 @@
 (Files
   
   (ChangeLog (oln/o/33_ChangeLog 1.5 600))
-  (oln/ChangeLog (oln/o/30_ChangeLog 1.9 600))
+  (oln/ChangeLog (oln/o/30_ChangeLog 1.10 600))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.3 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.3 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.1 600))
@@ -270,7 +277,7 @@
   (oln/oln/io/pnm_write_common.hxx (oln/b/8_pnm_write_ 1.7 600))
   (oln/oln/io/pnm_write.hxx (oln/b/15_pnm_write. 1.7 600))
   (oln/oln/io/readable.hh (oln/b/13_readable.h 1.5 600))
-  (oln/oln/level/cc.hh (oln/e/20_cc.hh 1.7 600))
+  (oln/oln/level/cc.hh (oln/e/20_cc.hh 1.8 600))
   (oln/oln/level/compare.hh (oln/31_compare.hh 1.2 600))
   (oln/oln/level/connected.hh (oln/30_connected. 1.7 600))
   (oln/oln/morpho/extrema_killer.hh (oln/e/19_extrema_ki 1.7.1.1 600))
@@ -278,7 +285,7 @@
   (oln/oln/level/invert.hh (oln/33_invert.hh 1.4 600))
   (oln/oln/level/lut.hh (oln/29_lut.hh 1.6 600))
   (oln/oln/level/threshold.hh (oln/f/15_threshold. 1.4 600))
-  (oln/oln/Makefile.am (oln/27_Makefile.a 1.33 600))
+  (oln/oln/Makefile.am (oln/27_Makefile.a 1.34 600))
   
   (oln/oln/math/macros.hh (oln/b/21_macros.hh 1.4 600))
   (oln/oln/meta/array1d.hh (oln/f/23_array1d.hh 1.2 600))
@@ -422,8 +429,8 @@
   (oln/oln/types/optraits_bin.hh (oln/g/20_optraits_b 1.7 600))
   (oln/oln/types/optraits.hh (oln/g/21_optraits.h 1.4 600))
   (oln/oln/types/interval.hh (oln/g/22_interval.h 1.5 600))
-  (oln/oln/types/int_u.hh (oln/g/23_int_u.hh 1.13 600))
-  (oln/oln/types/int_s.hh (oln/g/24_int_s.hh 1.11 600))
+  (oln/oln/types/int_u.hh (oln/g/23_int_u.hh 1.14 600))
+  (oln/oln/types/int_s.hh (oln/g/24_int_s.hh 1.12 600))
   (oln/oln/types/global_ops_traits.hh (oln/g/25_global_ops 1.4 600))
   (oln/oln/types/global_ops_defs.hh (oln/g/26_global_ops 1.3 600))
   (oln/oln/types/global_ops.hh (oln/g/27_global_ops 1.7 600))
@@ -607,9 +614,9 @@
 ;; Files added by populate at Mon, 30 Sep 2002 11:27:53 +0200,
 ;; to version 0_5.68(w), by nes:
 
-  (oln/oln/types/color.hh (oln/i/17_color.hh 1.3 600))
+  (oln/oln/types/color.hh (oln/i/17_color.hh 1.4 600))
   (oln/oln/types/rgb.hh (oln/i/18_rgb.hh 1.1 600))
-  (oln/oln/types/nrgb.hh (oln/i/19_nrgb.hh 1.1 600))
+  (oln/oln/types/nrgb.hh (oln/i/19_nrgb.hh 1.2 600))
   (oln/oln/types/hsi.hh (oln/i/20_hsi.hh 1.1 600))
   (oln/oln/types/hsl.hh (oln/i/21_hsl.hh 1.1 600))
   (oln/oln/types/hsv.hh (oln/i/22_hsv.hh 1.1 600))
@@ -906,6 +913,21 @@
 ;; to version 7.3(w), by burrus_n:
 
   (oln/tests/types/tests/bin3 (oln/o/46_bin3 1.1 600))
+
+;; Files added by populate at Thu, 09 Jan 2003 17:29:45 +0100,
+;; to version 7.5(w), by yann:
+
+  (oln/oln/core/box.hh (oln/o/51_box.hh 1.1 600))
+
+;; Files added by populate at Thu, 09 Jan 2003 17:29:47 +0100,
+;; to version 7.5(w), by yann:
+
+  (oln/oln/core/box.hxx (oln/p/0_box.hxx 1.1 600))
+
+;; Files added by populate at Thu, 09 Jan 2003 17:30:57 +0100,
+;; to version 7.5(w), by yann:
+
+  (oln/oln/level/set_level.hh (oln/p/1_set_level. 1.1 600))
 )
 (Merge-Parents)
 (New-Merge-Parents)

@@ -29,6 +29,7 @@
 # define OLENA_VALUE_COLOR_HH
 
 # include <oln/config/system.hh>
+# include <oln/meta/cmp.hh>
 # include <oln/types/rec_value.hh>
 # include <oln/types/predecls.hh>
 # include <oln/types/vec.hh>
@@ -161,6 +162,14 @@ namespace oln {
       color(const float_vec_type& vec)
       {
 	internal::_from_float<0,ncomps,qbits,color_system>::doit(vec,_value);
+      }
+
+      color(const comp_type& c1, const comp_type& c2, const comp_type& c3)
+      {
+	meta::eq<ncomps, 3>::ensure();
+	_value[0] = c1;
+	_value[1] = c2;
+	_value[2] = c3;
       }
 
       comp_type&       operator[](unsigned i)	    { return _value[i]; }

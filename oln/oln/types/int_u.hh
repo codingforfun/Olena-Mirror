@@ -34,6 +34,8 @@
 # include <oln/types/rec_value.hh>
 # include <oln/types/behaviour.hh>
 # include <oln/types/optraits.hh>
+# include <oln/types/optraits_int_u.hh>
+# include <oln/types/int_s.hh>
 # include <oln/types/typetraits.hh>
 # include <oln/types/builtins_properties.hh>
 

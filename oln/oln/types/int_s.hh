@@ -35,6 +35,7 @@
 # include <oln/types/rec_value.hh>
 # include <oln/types/behaviour.hh>
 # include <oln/types/optraits.hh>
+# include <oln/types/optraits_int_s.hh>
 # include <oln/types/typetraits.hh>
 
 // Macros //

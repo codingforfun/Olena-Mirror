@@ -32,6 +32,8 @@ nobase_pkginclude_HEADERS =			\
   convol/fast_gaussian_coefficient.hh		\
   core/accum.hh					\
   core/apply.hh					\
+  core/box.hh					\
+  core/box.hxx					\
   core/bkd_iter1d.hh				\
   core/bkd_iter2d.hh				\
   core/bkd_iter3d.hh				\
@@ -137,6 +139,7 @@ nobase_pkginclude_HEADERS =			\
   level/fill.hh					\
   level/invert.hh				\
   level/lut.hh					\
+  level/set_level.hh				\
   level/threshold.hh				\
   math/macros.hh				\
   meta/array.hh					\
