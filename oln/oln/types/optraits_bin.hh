@@ -87,14 +87,14 @@ namespace oln
     static bin logical_and(const bin& lhs, const bin& rhs)
     {
       bin tmp(lhs);
-      tmp |= rhs;
+      tmp &= rhs;
       return tmp;
     }
 
     static bin logical_xor(const bin& lhs, const bin& rhs)
     {
       bin tmp(lhs);
-      tmp |= rhs;
+      tmp ^= rhs;
       return tmp;
     }
 

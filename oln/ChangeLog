@@ -1,3 +1,11 @@
+2003-01-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/types/optraits_bin.hh: fix logical "and" and "xor" 
+	operators.
+
+	* oln/tests/types/tests/bin2: fix comparisons.
+	* oln/tests/types/tests/bin3: new test.
+
 2003-01-07  Nicolas Burrus  <nes@lrde.epita.fr>
 
 	* oln/morpho/geodesic_dilation.hh: use arith::min instead of
