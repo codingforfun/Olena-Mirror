@@ -1,5 +1,9 @@
 2003-07-30  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
+	* tests/topo/Makefile.am: Adjust.
+
+2003-07-30  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
+
 	* tests/topo/test.sh, tests/topo/test-cmap.ref,
 	tests/topo/test-inter-pixel.ref: Delete files.
 
