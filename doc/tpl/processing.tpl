@@ -1,4 +1,17 @@
 [~ AutoGen5 template texi ~]
+[~ DEFINE PRINTPROTOTYPE
+~]@w{[~ ret ~]}[~ (if (> (string-length (get "ret")) 18) "@*" "") ~] @b{@w{[~ (cq-name) ~][~
+  IF (exist? "tpl") ~]<[~
+    FOR tpl ", " ~]@w{[~ type ~] [~ name ~]}[~
+    ENDFOR tpl ~]>[~
+  ENDIF tpl ~]}} ([~
+      FOR arg ", " ~][~
+        (let* ((type (get "type"))
+               (var  (get "name")))
+           (string-append "@w{" (texinfo-type-format type) "@var{" var "}}"))
+ ~][~ ENDFOR arg ~]);[~ ENDDEF ~]
+[~ DEFINE PRINTPROTOTYPES ~][~ FOR ns ~][~ PRINTPROTOTYPE ~]
+[~ ENDFOR ns ~][~ ENDDEF ~]
 [~ (use-modules (ice-9 regex))
    (define (psystem . t)
       (let ((cmd (apply string-append t)))
@@ -61,16 +74,9 @@
 
 @t{#include "}@i{[~(header)~]}@t{"}
 @flushleft
-@w{[~ ret ~]}[~ (if (> (string-length (get "ret")) 18) "@*" "") ~] @b{@w{[~ (cq-name) ~][~
-  IF (exist? "tpl") ~]<[~
-    FOR tpl ", " ~]@w{[~ type ~] [~ name ~]}[~
-    ENDFOR tpl ~]>[~
-  ENDIF tpl ~]}} ([~
-      FOR arg ", " ~][~
-        (let* ((type (get "type"))
-               (var  (get "name")))
-           (string-append "@w{" (texinfo-type-format type) "@var{" var "}}"))
- ~][~ ENDFOR arg ~])
+[~ PRINTPROTOTYPES ~][~ (define processing.name (get "name"))
+~][~ FOR processingoverload ~][~ IF (equal? processing.name (get "name"))
+~][~ PRINTPROTOTYPES ~][~ ENDIF ~][~ ENDFOR processing ~]
 @findex [~ name ~]
 @end flushleft
 
@@ -100,6 +106,10 @@
 [~ (out-push-new "example.cc") ~]
 #include "basics2d.hh"
 #include "[~(header)~]"
+[~ FOR exh ~]
+#include "[~ exh ~]"
+[~ ENDFOR exh ~]
+
 using namespace oln;
 int main()
 {
@@ -114,7 +124,7 @@ int main()
   (if (> (system (string-append "test -f " exoname ".pdf")) 0)
      (begin
        (psystem "test -f " binname " ||\n"
-		"g++ -Wall -W -I ../../src -O2 example.cc -o " binname)
+		"g++ -Wall -W -I ../../src -O2 -ftemplate-depth-50 example.cc -o " binname)
        (if (exist? ".exi")
 	  (psystem "ln -sf ../img/" (get "exi")))
        (if (exist? ".exo")

@@ -1,3 +1,11 @@
+2002-01-14  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* doc/Makefile.am (PROCESSINGGETDEFSFLAGS): Add flags for exh and
+	ns .
+	* img/lena256.pgm: New file.
+	* tpl/processing.tpl: Rework to allow multiple namespace
+	specifications, handle processingoverload and exh.
+
 2002-01-13  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* doc/Makefile.am (oln-ref_toc.html): Output doc in

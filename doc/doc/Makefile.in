@@ -92,6 +92,8 @@ COMMONGETDEFSFLAGS = --agarg=--templ-dirs=../tpl
 PROCESSINGGETDEFSFLAGS = \
   --subblock=tpl=type,name,doc \
   --subblock=arg=type,name,mode,doc \
+  --listattr=exh \
+  --listattr=ns \
   --template ../tpl/processing.tpl \
   --srcfile
 

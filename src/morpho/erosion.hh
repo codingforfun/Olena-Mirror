@@ -37,7 +37,7 @@ namespace oln {
   namespace morpho {
 
     /*=processing erosion
-     * ns: morpho
+     * ns: morpho, morpho::fast
      * what: Morphological erosion.
      * arg: const image<I>&, input, IN, input image
      * arg: const struct_elt<E>&, se, IN, structural element
@@ -49,8 +49,14 @@ namespace oln {
      *   On grey-scale images, each point is replaced by the minimum value
      *   of its neighbors, as indicated by @var{se}.  On binary images,
      *   a logical @code{and} is performed between neighbors.
+     *   The @code{morpho::fast} version of this function use a different
+     *   algorithm: an
+     *
+     *   histogram of the value of the neighborhood indicated by
+     *   @var{se} is updated while iterating over all point of the
+     *   image.  Doing so is more efficient  when the
+     *   structural element is large.
      * see: morpho::n_erosion
-     * see: morpho::fast::erosion
      * see: morpho::dilation
      * ex:
      * $ image2d<bin> im = load("object.pbm");
@@ -102,25 +108,6 @@ namespace oln {
     }
 
     namespace fast {
-      /*=processing erosion
-       * ns: morpho::fast
-       * what: Morphological erosion.
-       * arg: const image<I>&, input, IN, input image
-       * arg: const struct_elt<E>&, se, IN, structural element
-       * ret: Concrete(I)
-       * doc:
-       *   Compute the morphological erosion of @var{input} using @var{se}
-       *   as structural element.
-       *
-       *   This produces exactly the same result as
-       *   @code{morpho::erosion}, using a different algorithm: an
-       *   histogram of the value of the neighborhood indicated by
-       *   @var{se} is updated while iterating over all point of the
-       *   image.  Doing so is more efficient  when the
-       *   structural element is large.
-       * see: morpho::erosion
-       * see: morpho::fast::dilation
-       =*/
       template<class I, class E> inline
       Concrete(I) erosion(const image<I>& input, const struct_elt<E>& se)
       {

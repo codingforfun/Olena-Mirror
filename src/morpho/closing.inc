@@ -27,7 +27,7 @@
 // Public License.
 
 /*=processing closing
- * ns: morpho
+ * ns: morpho, morpho::fast
  * what: Morphological closing.
  * arg: const image<I>&, input, IN, input image
  * arg: const struct_elt<E>&, se, IN, structural element
@@ -43,24 +43,6 @@
  * $ save(morpho::closing(im, win_c8p()), "out.pbm");
  * exi: object.pbm
  * exo: out.pbm
-=*/
-/*=processing closing
- * ns: morpho::fast
- * what: Morphological closing.
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se, IN, structural element
- * ret: Concrete(I)
- * doc:
- *   Compute the morphological closing of @var{input} using @var{se}
- *   as structural element.
- *
- *   This produces exactly the same result as
- *   @code{morpho::closing}, using a different algorithm which
- *   is more efficient when the structural element is large.
- * see: morpho::closing
- * see: morpho::fast::erosion
- * see: morpho::fast::dilation
- * see: morpho::fast::opening
 =*/
 template<class I, class E> inline
 Concrete(I) closing(const image<I>& input, const struct_elt<E>& se)

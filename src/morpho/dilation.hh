@@ -37,7 +37,7 @@ namespace oln {
   namespace morpho {
 
     /*=processing dilation
-     * ns: morpho
+     * ns: morpho, morpho::fast
      * what: Morphological dilation.
      * arg: const image<I>&, input, IN, input image
      * arg: const struct_elt<E>&, se, IN, structural element
@@ -49,8 +49,14 @@ namespace oln {
      *   On grey-scale images, each point is replaced by the maximum value
      *   of its neighbors, as indicated by @var{se}.  On binary images,
      *   a logical @code{or} is performed between neighbors.
+     *
+     *   The @code{morpho::fast} version of this function use a different
+     *   algorithm: an
+     *   histogram of the value of the neighborhood indicated by
+     *   @var{se} is updated while iterating over all point of the
+     *   image.  Doing so is more efficient  when the
+     *   structural element is large.
      * see: morpho::n_dilation
-     * see: morpho::fast::dilation
      * see: morpho::erosion
      * ex:
      * $ image2d<bin> im = load("object.pbm");
@@ -102,25 +108,6 @@ namespace oln {
     }
 
     namespace fast {
-      /*=processing dilation
-       * ns: morpho::fast
-       * what: Morphological dilation.
-       * arg: const image<I>&, input, IN, input image
-       * arg: const struct_elt<E>&, se, IN, structural element
-       * ret: Concrete(I)
-       * doc:
-       *   Compute the morphological dilation of @var{input} using @var{se}
-       *   as structural element.
-       *
-       *   This produces exactly the same result as
-       *   @code{morpho::dilation}, using a different algorithm: an
-       *   histogram of the value of the neighborhood indicated by
-       *   @var{se} is updated while iterating over all point of the
-       *   image.  Doing so is more efficient  when the
-       *   structural element is large.
-       * see: morpho::dilation
-       * see: morpho::fast::erosion
-       =*/
       template<class I, class E> inline
       Concrete(I) dilation(const image<I>& input, const struct_elt<E>& se)
       {

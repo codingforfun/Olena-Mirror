@@ -26,20 +26,46 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-//
-//  hit-or-miss transform
-//
-///////////////////////////////////
-
 // extended to every data types ;
 // note that results depend on the type of image data when it is not bin.
 // you MUST be aware of it.
 
+/*=processing hit_or_miss
+ * ns: morpho, morpho::fast
+ * what: Hit_or_Miss Transform.
+ * arg: const conversion<C>&, c, IN, conversion object
+ * arg: const image<I>&, input, IN, input image
+ * arg: const struct_elt<E>&, se1, IN, structural element
+ * arg: const struct_elt<E>&, se2, IN, structural element
+ * ret: typename mute<_I, typename convoutput<C, Value(_I)>::ret>::ret
+ * doc:
+ * Compute the hit_or_miss transform of @var{input} by the composite structural
+ * element (@var{se1}, @var{se2}). Soille p.131.
+ *
+ * By definition @var{se1} and @var{se2} must have the same origin, and need to
+ * be disjoint. This algorithm has been extended to every data types
+ * (althought it is not increasing).  Beware the result depends upon the
+ * image data type if it is not bin.
+ * ex:
+ * $ image2d<bin> im = load("object.pbm");
+ * $ window2d mywin;
+ * $ mywin
+ * $  .add(-3,-2).add(-3,-1).add(-3,0).add(-3,1).add(-3,2)
+ * $  .add(-2,-1).add(-2,0).add(-2,1)
+ * $  .add(-1,0);
+ * $ window2d mywin2 = - mywin;
+ * $ save(morpho::fast::hit_or_miss(convert::bound<int_u8>(),
+ * $                                im, mywin, mywin2), "out.pgm");
+ * exh: convert/bound.hh
+ * exi: object.pbm
+ * exo: out.pgm
+=*/
 template<class C, class _I, class _E1, class _E2> inline
-Concrete(_I) hit_or_miss(const conversion<C>& c,
-			 const image<_I>& _input,
-			 const struct_elt<_E1>& _se1,
-			 const struct_elt<_E2>& _se2)
+typename mute<_I, typename convoutput<C, Value(_I)>::ret>::ret
+hit_or_miss(const conversion<C>& c,
+	    const image<_I>& _input,
+	    const struct_elt<_E1>& _se1,
+	    const struct_elt<_E2>& _se2)
 {
   Exact_cref(I, input);
   Exact_cref(E1, se1);
@@ -55,6 +81,13 @@ Concrete(_I) hit_or_miss(const conversion<C>& c,
 		     erosion(level::invert(input), se2));
 }
 
+/*=processingoverload hit_or_miss
+ * ns: morpho, morpho::fast
+ * arg: const image<I>&, input, IN, input image
+ * arg: const struct_elt<E>&, se1, IN, structural element
+ * arg: const struct_elt<E>&, se2, IN, structural element
+ * ret: Concrete(I)
+=*/
 template<class I, class E1, class E2> inline
 Concrete(I) hit_or_miss(const image<I>& input,
 			const struct_elt<E1>& se1,
@@ -69,6 +102,37 @@ Concrete(I) hit_or_miss(const image<I>& input,
 //
 ///////////////////////////////////
 
+/*=processing hit_or_miss_opening
+ * ns: morpho, morpho::fast
+ * what: Hit_or_Miss opening.
+ * arg: const image<I>&, input, IN, input image
+ * arg: const struct_elt<E>&, se1, IN, structural element
+ * arg: const struct_elt<E>&, se2, IN, structural element
+ * ret: Concrete(I)
+ * doc:
+ *   Compute the hit_or_miss opening of @var{input} by the composite structural
+ * element (@var{se1}, @var{se2}). Soille p.134.
+ *
+ * By definition @var{se1} and @var{se2} must have the same origin, and need to
+ * be disjoint. This algorithm has been extended to every data types
+ * (althought it is not increasing).  Beware the result depends upon the
+ * image data type if it is not bin.
+ * see: morpho::hit_or_miss
+ * see: morpho::hit_or_miss_closing
+ * see: morpho::hit_or_miss_closing_bg
+ * see: morpho::hit_or_miss_opening_bg
+ * ex:
+ * $ image2d<bin> im = load("object.pbm");
+ *  window2d mywin;
+ *  mywin
+ *   .add(-3,-2).add(-3,-1).add(-3,0).add(-3,1).add(-3,2)
+ *   .add(-2,-1).add(-2,0).add(-2,1)
+ *   .add(-1,0);
+ * window2d mywin2 = - mywin;
+ * $ save(morpho::hit_or_miss_opening(im, mywin, mywin2), "out.pbm");
+ * exi: object.pbm
+ * exo: out.pbm
+=*/
 template<class _I, class _E1, class _E2> inline
 Concrete(_I) hit_or_miss_opening(const image<_I>& _input,
 				 const struct_elt<_E1>& _se1,
@@ -82,6 +146,38 @@ Concrete(_I) hit_or_miss_opening(const image<_I>& _input,
   return dilation(hit_or_miss(input, se1, se2), -se1);
 }
 
+/*=processing hit_or_miss_opening_bg
+ * ns: morpho, morpho::fast
+ * what: Hit_or_Miss opening of background.
+ * arg: const image<I>&, input, IN, input image
+ * arg: const struct_elt<E>&, se1, IN, structural element
+ * arg: const struct_elt<E>&, se2, IN, structural element
+ * ret: Concrete(I)
+ * doc:
+ *  Compute the hit_or_miss opening of the background of
+ * @var{input} by the composite structural
+ * element (@var{se1}, @var{se2}). Soille p.135.
+ *
+ * By definition @var{se1} and @var{se2} must have the same origin, and need to
+ * be disjoint. This algorithm has been extended to every data types
+ * (althought it is not increasing).  Beware the result depends upon the
+ * image data type if it is not bin.
+ * see: morpho::hit_or_miss
+ * see: morpho::hit_or_miss_closing
+ * see: morpho::hit_or_miss_closing_bg
+ * see: morpho::hit_or_miss_opening
+ * ex:
+ * $ image2d<bin> im = load("object.pbm");
+ *  window2d mywin;
+ *  mywin
+ *   .add(-3,-2).add(-3,-1).add(-3,0).add(-3,1).add(-3,2)
+ *   .add(-2,-1).add(-2,0).add(-2,1)
+ *   .add(-1,0);
+ * window2d mywin2 = - mywin;
+ * $ save(morpho::hit_or_miss_opening_bg(im, mywin, mywin2), "out.pbm");
+ * exi: object.pbm
+ * exo: out.pbm
+=*/
 template<class I, class E1, class E2> inline
 Concrete(I) hit_or_miss_opening_bg(const image<I>& input,
 				   const struct_elt<E1>& se1,
@@ -96,6 +192,39 @@ Concrete(I) hit_or_miss_opening_bg(const image<I>& input,
 //
 ///////////////////////////////////
 
+/*=processing hit_or_miss_closing
+ * ns: morpho, morpho::fast
+ * what: Hit_or_Miss closing.
+ * arg: const image<I>&, input, IN, input image
+ * arg: const struct_elt<E>&, se1, IN, structural element
+ * arg: const struct_elt<E>&, se2, IN, structural element
+ * ret: Concrete(I)
+ * doc:
+ *   Compute the hit_or_miss closing of @var{input} by the composite structural
+ * element (@var{se1}, @var{se2}). This is the dual transformation of hit-or-miss opening
+ *  with respect to
+ * set complementation. Soille p.135.
+ *
+ * By definition @var{se1} and @var{se2} must have the same origin, and need to
+ * be disjoint. This algorithm has been extended to every data types
+ * (althought it is not increasing).  Beware the result depends upon the
+ * image data type if it is not bin.
+ * see: morpho::hit_or_miss
+ * see: morpho::hit_or_miss_closing_bg
+ * see: morpho::hit_or_miss_opening
+ * see: morpho::hit_or_miss_opening_bg
+ * ex:
+ * $ image2d<bin> im = load("object.pbm");
+ *  window2d mywin;
+ *  mywin
+ *   .add(-3,-2).add(-3,-1).add(-3,0).add(-3,1).add(-3,2)
+ *   .add(-2,-1).add(-2,0).add(-2,1)
+ *   .add(-1,0);
+ * window2d mywin2 = - mywin;
+ * $ save(morpho::hit_or_miss_closing(im, mywin, mywin2), "out.pbm");
+ * exi: object.pbm
+ * exo: out.pbm
+=*/
 template<class I, class _E1, class _E2> inline
 Concrete(I) hit_or_miss_closing(const image<I>& input,
 				const struct_elt<_E1>& _se1,
@@ -109,6 +238,39 @@ Concrete(I) hit_or_miss_closing(const image<I>& input,
 					   se1, se2));
 }
 
+/*=processing hit_or_miss_closing_bg
+ * ns: morpho, morpho::fast
+ * what: Hit_or_Miss closing of background.
+ * arg: const image<I>&, input, IN, input image
+ * arg: const struct_elt<E>&, se1, IN, structural element
+ * arg: const struct_elt<E>&, se2, IN, structural element
+ * ret: Concrete(I)
+ * doc:
+ * Compute the hit_or_miss closing of the background of @var{input} by the composite structural
+ * element (@var{se1}, @var{se2}). This is the dual transformation of hit-or-miss opening
+ *  with respect to
+ * set complementation. Soille p.135.
+ *
+ * By definition @var{se1} and @var{se2} must have the same origin, and need to
+ * be disjoint. This algorithm has been extended to every data types
+ * (althought it is not increasing).  Beware the result depends upon the
+ * image data type if it is not bin.
+ * see: morpho::hit_or_miss
+ * see: morpho::hit_or_miss_closing
+ * see: morpho::hit_or_miss_opening
+ * see: morpho::hit_or_miss_opening_bg
+ * ex:
+ * $ image2d<bin> im = load("object.pbm");
+ *  window2d mywin;
+ *  mywin
+ *   .add(-3,-2).add(-3,-1).add(-3,0).add(-3,1).add(-3,2)
+ *   .add(-2,-1).add(-2,0).add(-2,1)
+ *   .add(-1,0);
+ * window2d mywin2 = - mywin;
+ * $ save(morpho::hit_or_miss_closing_bg(im, mywin, mywin2), "out.pbm");
+ * exi: object.pbm
+ * exo: out.pbm
+=*/
 template<class I, class E1, class E2> inline
 Concrete(I) hit_or_miss_closing_bg(const image<I>& input,
 				   const struct_elt<E1>& se1,

@@ -27,7 +27,7 @@
 // Public License.
 
 /*=processing opening
- * ns: morpho
+ * ns: morpho, morpho::fast
  * what: Morphological opening.
  * arg: const image<I>&, input, IN, input image
  * arg: const struct_elt<E>&, se, IN, structural element
@@ -43,24 +43,6 @@
  * $ save(morpho::opening(im, win_c8p()), "out.pbm");
  * exi: object.pbm
  * exo: out.pbm
-=*/
-/*=processing opening
- * ns: morpho::fast
- * what: Morphological opening.
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se, IN, structural element
- * ret: Concrete(I)
- * doc:
- *   Compute the morphological opening of @var{input} using @var{se}
- *   as structural element.
- *
- *   This produces exactly the same result as
- *   @code{morpho::opening}, using a different algorithm which
- *   is more efficient when the structural element is large.
- * see: morpho::opening
- * see: morpho::fast::erosion
- * see: morpho::fast::dilation
- * see: morpho::fast::closing
 =*/
 template<class I, class E> inline
 Concrete(I) opening(const image<I>& input, const struct_elt<E>& se)

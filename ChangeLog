@@ -1,3 +1,12 @@
+2002-01-14  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/morpho/opening.inc, src/morpho/closing.inc,
+	src/morpho/dilation.hh, src/morpho/erosion.hh: Update
+	documentation.
+	* src/morpho/hit_or_miss.inc, src/morpho/gradient.inc: Merge in
+	Jerome's doc.
+	* Makefile.am (EXTRA_DIST): Add oln-ref.info.
+
 2002-01-13  Jerome Darbon  <darbon_j@epita.fr>
 
 	* src/level/extrema_killer.hh, src/level/cc.hh: New files.
