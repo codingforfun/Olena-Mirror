@@ -41,14 +41,14 @@ namespace oln {
     // binary operators
 
     _OLN_ARITH_DECLARE_BINFIXEDTYPE_FUNCTORS(logic_and, bin,
-					     val1 & val2,
-					     val & _cst);
+					     val1 && val2,
+					     val && _cst);
     _OLN_ARITH_DECLARE_BINFIXEDTYPE_FUNCTORS(logic_or, bin,
-					     val1 | val2,
-					     val | _cst);
+					     val1 || val2,
+					     val || _cst);
     _OLN_ARITH_DECLARE_BINFIXEDTYPE_FUNCTORS(logic_and_not, bin,
-					     val1 & ! val2,
-					     val & ! _cst);
+					     val1 && ! val2,
+					     val && ! _cst);
 
     _OLN_ARITH_DECLARE_ALL_NONGENERICBINOP_PROCS(logic_and);
     _OLN_ARITH_DECLARE_ALL_NONGENERICBINOP_PROCS(logic_or);

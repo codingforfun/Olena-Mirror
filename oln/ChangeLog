@@ -1,3 +1,7 @@
+2003-01-06  Yann Régis-Gianas  <yann@lrde.epita.fr>
+
+	* oln/oln/arith/logic.hh: bug fixed in 'logical and'.
+
 2003-01-05  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* oln.m4 (AC_WITH_CXX_WARNINGS): new macro.
