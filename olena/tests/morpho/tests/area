@@ -41,7 +41,7 @@ check_opening1d()
   im(10) =     0;
 
   image1d<int_u8> im2 =
-    morpho::tarjan::area_opening(im, neighb_c2(), 2);
+    morpho::fast::card_opening(im, neighb_c2(), 2);
 
   fail = fail ||
     im2(0) !=      0 ||
@@ -57,7 +57,7 @@ check_opening1d()
     im2(10)!=      0;
 
   image1d<int_u8> im3 =
-    morpho::tarjan::area_opening(im, neighb_c2(), 3);
+    morpho::fast::card_opening(im, neighb_c2(), 3);
   fail = fail ||
     im3(0) !=      0 ||
     im3(1) !=      0 ||
@@ -72,7 +72,7 @@ check_opening1d()
     im3(10)!=      0;
 
   image1d<int_u8> im4 =
-    morpho::tarjan::area_opening(im, neighb_c2(), 4);
+    morpho::fast::card_opening(im, neighb_c2(), 4);
   fail = fail ||
     im4(0) !=      0 ||
     im4(1) !=      0 ||
@@ -111,7 +111,7 @@ check_opening1d_s()
   im(10) =     -4;
 
   image1d<int_s<3> > im2 =
-    morpho::tarjan::area_opening(im, neighb_c2(), 2);
+    morpho::fast::card_opening(im, neighb_c2(), 2);
 
   fail = fail ||
     im2(0) !=       -4 ||
@@ -127,7 +127,7 @@ check_opening1d_s()
     im2(10)!=      -4;
 
   image1d<int_s<3> > im3 =
-    morpho::tarjan::area_opening(im, neighb_c2(), 3);
+    morpho::fast::card_opening(im, neighb_c2(), 3);
   fail = fail ||
     im3(0) !=      -4 ||
     im3(1) !=      -4 ||
@@ -142,7 +142,7 @@ check_opening1d_s()
     im3(10)!=      -4;
 
   image1d<int_s<3> > im4 =
-    morpho::tarjan::area_opening(im, neighb_c2(), 4);
+    morpho::fast::card_opening(im, neighb_c2(), 4);
   fail = fail ||
     im4(0) !=      -4 ||
     im4(1) !=      -4 ||
@@ -165,7 +165,7 @@ check_lena()
   bool fail(false);
 
  image2d<int_u8> lena = load(rdata("lena.pgm"));
- image2d<int_u8> lena5 = morpho::tarjan::area_closing(lena, neighb_c8(), 100);
+ image2d<int_u8> lena5 = morpho::fast::card_closing(lena, neighb_c8(), 100);
 
  unsigned l = 0;
  image2d<int_u8>::iter_type it_l(lena5);

@@ -1,59 +1,96 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 89)
-(Parent-Version oln 10 85)
-(Version-Log "
-prcs: Producing diffs from 10.88 to 10.85(w).
-Index: doc/ChangeLog
+(Project-Version oln 10 90)
+(Parent-Version oln 10 89)
+(Version-Log "Index: olena/ChangeLog
 from  Giovanni Palma  <giovanni@lrde.epita.fr>
 
-        * ref/doxygen.config.in: Change some flags.
-        * ref/Makefile.am: Correct pdf generation.
+	* tests/morpho/tests/attribute: Correct function name problems.
+	* tests/morpho/tests/area: Likewise.
 
-Index: doc/ref/Makefile.am
---- doc/ref/Makefile.am Sun, 14 Mar 2004 18:21:09 +0100 palma_g (oln/d/51_Makefile.a 1.27.1.13 600)
-+++ doc/ref/Makefile.am Mon, 15 Mar 2004 16:42:54 +0100 palma_g (oln/d/51_Makefile.a 1.27.1.13 640)
-@@ -24,7 +24,8 @@
-        $(TAR) -czf $@ html
+Index: olena/tests/morpho/tests/area
+--- olena/tests/morpho/tests/area Fri, 06 Feb 2004 15:26:24 +0100 van-vl_n (oln/j/44_area 1.1 644)
++++ olena/tests/morpho/tests/area Mon, 15 Mar 2004 16:59:27 +0100 palma_g (oln/j/44_area 1.1 644)
+@@ -41,7 +41,7 @@
+   im(10) =     0;
  
- oln-ref.pdf: doxy
--       cd latex && make && cp refman.pdf ../$@
-+       make -C ./latex || echo \"Discarding problems...\" # FIXME: Find a better way to use large graph with pdflatex.
-+       cp latex/refman.pdf ./$@
+   image1d<int_u8> im2 =
+-    morpho::tarjan::area_opening(im, neighb_c2(), 2);
++    morpho::fast::card_opening(im, neighb_c2(), 2);
  
- dist_noinst_DATA = oln-ref.pdf html.tar.gz $(srcdir)/exdoc.pl $(srcdir)/img_conv.pl
+   fail = fail ||
+     im2(0) !=      0 ||
+@@ -57,7 +57,7 @@
+     im2(10)!=      0;
  
-Index: doc/ref/doxygen.config.in
---- doc/ref/doxygen.config.in Tue, 24 Feb 2004 16:33:38 +0100 palma_g (oln/v/29_doxygen.co 1.2 600)
-+++ doc/ref/doxygen.config.in Mon, 15 Mar 2004 16:33:16 +0100 palma_g (oln/v/29_doxygen.co 1.2 644)
-@@ -122,7 +122,7 @@
- LATEX_HEADER           =
- PDF_HYPERLINKS         = YES
- USE_PDFLATEX           = YES
--LATEX_BATCHMODE        = NO
-+LATEX_BATCHMODE        = YES
- LATEX_HIDE_INDICES     = NO
- #---------------------------------------------------------------------------
- # configuration options related to the RTF output
-@@ -184,7 +184,7 @@
- # Configuration options related to the dot tool
- #---------------------------------------------------------------------------
- CLASS_DIAGRAMS         = YES
--HIDE_UNDOC_RELATIONS   = YES
-+HIDE_UNDOC_RELATIONS   = NO
- HAVE_DOT               = YES
- CLASS_GRAPH            = YES
- COLLABORATION_GRAPH    = YES
-@@ -211,4 +211,3 @@
- DOC_URL                =
- DOC_ABSPATH            =
- BIN_ABSPATH            = /usr/local/bin/
--EXT_DOC_PATHS          =
+   image1d<int_u8> im3 =
+-    morpho::tarjan::area_opening(im, neighb_c2(), 3);
++    morpho::fast::card_opening(im, neighb_c2(), 3);
+   fail = fail ||
+     im3(0) !=      0 ||
+     im3(1) !=      0 ||
+@@ -72,7 +72,7 @@
+     im3(10)!=      0;
+ 
+   image1d<int_u8> im4 =
+-    morpho::tarjan::area_opening(im, neighb_c2(), 4);
++    morpho::fast::card_opening(im, neighb_c2(), 4);
+   fail = fail ||
+     im4(0) !=      0 ||
+     im4(1) !=      0 ||
+@@ -111,7 +111,7 @@
+   im(10) =     -4;
+ 
+   image1d<int_s<3> > im2 =
+-    morpho::tarjan::area_opening(im, neighb_c2(), 2);
++    morpho::fast::card_opening(im, neighb_c2(), 2);
+ 
+   fail = fail ||
+     im2(0) !=       -4 ||
+@@ -127,7 +127,7 @@
+     im2(10)!=      -4;
+ 
+   image1d<int_s<3> > im3 =
+-    morpho::tarjan::area_opening(im, neighb_c2(), 3);
++    morpho::fast::card_opening(im, neighb_c2(), 3);
+   fail = fail ||
+     im3(0) !=      -4 ||
+     im3(1) !=      -4 ||
+@@ -142,7 +142,7 @@
+     im3(10)!=      -4;
+ 
+   image1d<int_s<3> > im4 =
+-    morpho::tarjan::area_opening(im, neighb_c2(), 4);
++    morpho::fast::card_opening(im, neighb_c2(), 4);
+   fail = fail ||
+     im4(0) !=      -4 ||
+     im4(1) !=      -4 ||
+@@ -165,7 +165,7 @@
+   bool fail(false);
+ 
+  image2d<int_u8> lena = load(rdata(\"lena.pgm\"));
+- image2d<int_u8> lena5 = morpho::tarjan::area_closing(lena, neighb_c8(), 100);
++ image2d<int_u8> lena5 = morpho::fast::card_closing(lena, neighb_c8(), 100);
+ 
+  unsigned l = 0;
+  image2d<int_u8>::iter_type it_l(lena5);
+Index: olena/tests/morpho/tests/attribute
+--- olena/tests/morpho/tests/attribute Wed, 10 Mar 2004 16:20:23 +0100 palma_g (oln/j/51_attribute 1.3 644)
++++ olena/tests/morpho/tests/attribute Mon, 15 Mar 2004 17:04:59 +0100 palma_g (oln/j/51_attribute 1.3 644)
+@@ -28,7 +28,7 @@
+   bool fail(false);
+ 
+   typedef image2d<int_u8> img_type;
+-  typedef oln::morpho::cart_type<unsigned> area_type;
++  typedef oln::morpho::card_type<unsigned> area_type;
+   const area_type::lambda_type area = 100;
+   const neighborhood2d nb = neighb_c8();
+   //  const oln::morpho::NullEnv env;
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 15 Mar 2004 16:47:03 +0100")
+(Checkin-Time "Mon, 15 Mar 2004 17:17:49 +0100")
 (Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -160,7 +197,7 @@ Index: doc/ref/doxygen.config.in
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.8 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.35 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.30 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.31 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 640))
 
@@ -1225,7 +1262,7 @@ Index: doc/ref/doxygen.config.in
 
   (olena/oln/convert/value_to_point.hh (oln/j/43_value_to_p 1.3 644))
 
-  (olena/tests/morpho/tests/area (oln/j/44_area 1.1 644))
+  (olena/tests/morpho/tests/area (oln/j/44_area 1.2 644))
 ;; Files added by populate at Fri, 06 Feb 2004 16:00:19 +0100,
 ;; to version 10.57(w), by palma_g:
 
@@ -1245,7 +1282,7 @@ Index: doc/ref/doxygen.config.in
   (olena/oln/morpho/attribute_closing_opening_map.hxx (oln/j/48_attribute_ 1.2 644))
   (olena/oln/morpho/attribute_closing_opening_map.hh (oln/j/49_attribute_ 1.7 600))
   (olena/oln/utils/special_points.hh (oln/j/50_special_po 1.3 644))
-  (olena/tests/morpho/tests/attribute (oln/j/51_attribute 1.3 644))
+  (olena/tests/morpho/tests/attribute (oln/j/51_attribute 1.4 644))
 ;; Files added by populate at Mon, 16 Feb 2004 18:59:27 +0100,
 ;; to version 10.64(w), by palma_g:
 
@@ -1273,33 +1310,6 @@ Index: doc/ref/doxygen.config.in
   ; (doc/ref/html () :directory)
 )
 (Merge-Parents
-  (10.85 complete)
-  (10.87 complete
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (olena/oln/convert/nrgbxyz.hh olena/oln/convert/nrgbxyz.hh olena/oln/convert/nrgbxyz.hh r)
-    (olena/oln/convert/stretch.hh olena/oln/convert/stretch.hh olena/oln/convert/stretch.hh r) (olena/oln/level/cc.hh olena/oln/level/cc.hh olena/oln/level/cc.hh r)
-    (olena/oln/morpho/gradient.inc olena/oln/morpho/gradient.inc olena/oln/morpho/gradient.inc r) (olena/oln/topo/dmap.hh olena/oln/topo/dmap.hh olena/oln/topo/dmap.hh r)
-    (olena/oln/morpho/attribute_closing_opening.hh olena/oln/morpho/attribute_closing_opening.hh olena/oln/morpho/attribute_closing_opening.hh r) (olena/oln/morpho/attribute_union_find.hh olena/oln/morpho/attribute_union_find.hh olena/oln/morpho/attribute_union_find.hh r)
-    (olena/oln/topo/inter-pixel/inter-pixel.hh olena/oln/topo/inter-pixel/inter-pixel.hh olena/oln/topo/inter-pixel/inter-pixel.hh r) (olena/oln/topo/tarjan/flat-zone.hh olena/oln/topo/tarjan/flat-zone.hh olena/oln/topo/tarjan/flat-zone.hh r)
-    (olena/oln/topo/inter-pixel/node.hh olena/oln/topo/inter-pixel/node.hh olena/oln/topo/inter-pixel/node.hh r) (olena/oln/core/abstract/image_with_dim.hh olena/oln/core/abstract/image_with_dim.hh olena/oln/core/abstract/image_with_dim.hh r)
-    (olena/oln/core/impl/image_impl.hh olena/oln/core/impl/image_impl.hh olena/oln/core/impl/image_impl.hh r) (olena/oln/morpho/attributes.hh olena/oln/morpho/attributes.hh olena/oln/morpho/attributes.hh r)
-    (olena/oln/utils/special_points.hh olena/oln/utils/special_points.hh olena/oln/utils/special_points.hh r) 
-  )
-  (10.88 complete
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (olena/oln/arith/internal/opdecls.hh olena/oln/arith/internal/opdecls.hh olena/oln/arith/internal/opdecls.hh r)
-    (olena/oln/convert/bound.hh olena/oln/convert/bound.hh olena/oln/convert/bound.hh r) (olena/oln/convert/nrgbxyz.hh olena/oln/convert/nrgbxyz.hh olena/oln/convert/nrgbxyz.hh r)
-    (olena/oln/convert/rgbnrgb.hh olena/oln/convert/rgbnrgb.hh olena/oln/convert/rgbnrgb.hh r) (olena/oln/convert/rgbxyz.hh olena/oln/convert/rgbxyz.hh olena/oln/convert/rgbxyz.hh r)
-    (olena/oln/convol/fast_gaussian.hxx olena/oln/convol/fast_gaussian.hxx olena/oln/convol/fast_gaussian.hxx r) (olena/oln/level/cc.hh olena/oln/level/cc.hh olena/oln/level/cc.hh r)
-    (olena/oln/level/connected.hh olena/oln/level/connected.hh olena/oln/level/connected.hh r) (olena/oln/level/invert.hh olena/oln/level/invert.hh olena/oln/level/invert.hh r)
-    (olena/oln/math/macros.hh olena/oln/math/macros.hh olena/oln/math/macros.hh r) (olena/oln/morpho/extrema.hxx olena/oln/morpho/extrema.hxx olena/oln/morpho/extrema.hxx r)
-    (olena/oln/topo/dmap.hh olena/oln/topo/dmap.hh olena/oln/topo/dmap.hh r) (olena/oln/utils/copy.hh olena/oln/utils/copy.hh olena/oln/utils/copy.hh r)
-    (olena/oln/utils/histogram.hh olena/oln/utils/histogram.hh olena/oln/utils/histogram.hh r) (olena/oln/morpho/attribute_union_find.hh olena/oln/morpho/attribute_union_find.hh olena/oln/morpho/attribute_union_find.hh r)
-    (olena/oln/topo/tarjan/union.hh olena/oln/topo/tarjan/union.hh olena/oln/topo/tarjan/union.hh r) (olena/oln/topo/inter-pixel/inter-pixel.hh olena/oln/topo/inter-pixel/inter-pixel.hh olena/oln/topo/inter-pixel/inter-pixel.hh r)
-    (olena/oln/topo/tarjan/flat-zone.hh olena/oln/topo/tarjan/flat-zone.hh olena/oln/topo/tarjan/flat-zone.hh r) (olena/oln/topo/combinatorial-map/cmap.hh olena/oln/topo/combinatorial-map/cmap.hh olena/oln/topo/combinatorial-map/cmap.hh r)
-    (olena/oln/topo/inter-pixel/fwd-dir-iter.hh olena/oln/topo/inter-pixel/fwd-dir-iter.hh olena/oln/topo/inter-pixel/fwd-dir-iter.hh r) (olena/oln/topo/inter-pixel/bkd-dir-iter.hh olena/oln/topo/inter-pixel/bkd-dir-iter.hh olena/oln/topo/inter-pixel/bkd-dir-iter.hh r)
-    (olena/oln/topo/inter-pixel/internal/dir.hh olena/oln/topo/inter-pixel/internal/dir.hh olena/oln/topo/inter-pixel/internal/dir.hh r) (olena/oln/topo/combinatorial-map/internal/anyfunc.hh olena/oln/topo/combinatorial-map/internal/anyfunc.hh olena/oln/topo/combinatorial-map/internal/anyfunc.hh r)
-    (olena/oln/convert/rgbhsv.hh olena/oln/convert/rgbhsv.hh olena/oln/convert/rgbhsv.hh r) (olena/oln/convert/rgbhsl.hh olena/oln/convert/rgbhsl.hh olena/oln/convert/rgbhsl.hh r)
-    (olena/oln/convert/rgbhsi.hh olena/oln/convert/rgbhsi.hh olena/oln/convert/rgbhsi.hh r) (olena/oln/convert/rgbyuv.hh olena/oln/convert/rgbyuv.hh olena/oln/convert/rgbyuv.hh r)
-    (olena/oln/convert/rgbyiq.hh olena/oln/convert/rgbyiq.hh olena/oln/convert/rgbyiq.hh r) (olena/oln/snakes/snakes_base.hh olena/oln/snakes/snakes_base.hh olena/oln/snakes/snakes_base.hh r)
-    (olena/oln/snakes/node.hh olena/oln/snakes/node.hh olena/oln/snakes/node.hh r) (olena/oln/snakes/segment.hh olena/oln/snakes/segment.hh olena/oln/snakes/segment.hh r))
+  (10.89 complete)
 )
 (New-Merge-Parents)

@@ -1,3 +1,8 @@
+2004-03-15  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* tests/morpho/tests/attribute: Correct function name problems.
+	* tests/morpho/tests/area: Likewise.
+
 2004-03-14  Niels Van Vliet  <niels@lrde.epita.fr>
 	* olena/oln/arith/internal/opdecls.hh: Changed doxygen commands
 	"\{''|attention|warning|bug|note} FIXME" to "\todo FIXME", "\ref" to

@@ -28,7 +28,7 @@ check_algo()
   bool fail(false);
 
   typedef image2d<int_u8> img_type;
-  typedef oln::morpho::cart_type<unsigned> area_type;
+  typedef oln::morpho::card_type<unsigned> area_type;
   const area_type::lambda_type area = 100;
   const neighborhood2d nb = neighb_c8();
   //  const oln::morpho::NullEnv env;
