@@ -26,21 +26,21 @@ OLN_DEP =					\
   core/abstract/data_storage.hh			\
   core/abstract/image.hh			\
   core/abstract/image_constness.hh		\
+  core/abstract/image_identity.hh		\
   core/abstract/image_with_data.hh		\
   core/abstract/images.hh			\
   core/abstract/internal/image_impl.hh		\
-  core/abstract/morpher.hh			\
   core/abstract/piter.hh			\
   core/abstract/point.hh			\
   core/abstract/size.hh				\
   core/cats.hh					\
   core/coord.hh					\
   core/macros.hh				\
-  core/id_morpher.hh				\
   core/props.hh					\
   core/tags.hh					\
   core/value_box.hh				\
   fancy/iota.hh					\
-  fancy/print.hh
-
-
+  fancy/print.hh				\
+  io/read_image.hh				\
+  io/read_image_2d_pnm.hh			\
+  io/utils.hh
