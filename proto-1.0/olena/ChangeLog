@@ -1,3 +1,10 @@
+2005-03-19  Simon Odou  <simon@lrde.epita.fr>
+
+	* tests/core/tests/window2d: New.
+	* oln/core/abstract/struct_elt.hh: New.
+	* oln/core/2d/window2d.hh: New.
+	* oln/core/properties.hh: Add `struct_elt' category.
+
 2005-03-19  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* oln/io/utils.hh: Add a traits for g++-3.3.

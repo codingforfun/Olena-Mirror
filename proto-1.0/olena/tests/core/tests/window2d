@@ -1,0 +1,17 @@
+#include <oln/core/2d/window2d.hh>
+
+#include <ntg/all.hh>
+
+#include <cassert>
+
+using namespace oln;
+using namespace ntg;
+
+int main()
+{
+  window2d w1;
+  w1.add(dpoint2d(0, 5));
+  w1.add(dpoint2d(0, 5));
+  window2d w2 = win_c8p();
+  return 0;
+}
