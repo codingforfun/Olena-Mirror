@@ -47,7 +47,7 @@ namespace oln {
   template<class Exact>
   struct struct_elt_traits<abstract::struct_elt<Exact> >
   {
-    typedef abstract::struct_elt<Exact> abstract_type; 
+    typedef abstract::struct_elt<Exact> abstract_type;
   };
 
   namespace abstract {
@@ -55,7 +55,7 @@ namespace oln {
     template<class Exact>
     struct struct_elt : public mlc::any< Exact >
     {
-      enum { dim = struct_elt_traits<Exact>::dim };      
+      enum { dim = struct_elt_traits<Exact>::dim };
 
       typedef struct_elt<Exact> self_type;
       typedef typename struct_elt_traits<Exact>::abstract_type abstract_type;
@@ -64,27 +64,28 @@ namespace oln {
       {
 	return std::string("struct_elt<") + Exact::name() + ">";
       }
-      
+
       typedef typename struct_elt_traits<Exact>::point_type point_type;
       typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
       typedef Exact exact_type;
-      
+
       bool has(const abstract::dpoint<dpoint_type>& dp) const
       {
 	return to_exact(this)->has_(to_exact(dp));
       }
-      
+
       unsigned card() const
       {
 	return to_exact(this)->card_();
       }
-      
+
       bool is_centered() const
       {
 	return to_exact(this)->is_centered_();
       }
-      
-      // FIXME: only here for convenience (see morpho algorithms), should not work with w_windows
+
+      // FIXME: only here for convenience (see morpho algorithms),
+      // should not work with w_windows
       exact_type& add(const abstract::dpoint<dpoint_type>& dp)
       {
 	return to_exact(this)->add_dp(dp);
@@ -118,17 +119,16 @@ namespace oln {
       }
 
     protected:
-      
+
       void sym()
       {
 	return to_exact(this)->sym_();
       }
 
       struct_elt() {}
-
     };
   } // end of abstract
-  
+
 } // end of oln
 
 #endif // ! OLENA_CORE_STRUCT_ELT_HH

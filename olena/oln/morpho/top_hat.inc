@@ -48,7 +48,8 @@
 template<class C, class I, class E>
 typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 white_top_hat(const conversion<C>& c,
-	      const image<I>& input, const struct_elt<E>& se)
+	      const abstract::image<I>& input,
+	      const abstract::struct_elt<E>& se)
 {
   return arith::minus(c, input, opening(input, se));
 }
@@ -61,7 +62,8 @@ white_top_hat(const conversion<C>& c,
  * ret: Concrete(I)
 =*/
 template<class I, class E>
-Concrete(I) white_top_hat(const image<I>& input, const struct_elt<E>& se)
+Concrete(I) white_top_hat(const abstract::image<I>& input,
+			  const abstract::struct_elt<E>& se)
 {
   return white_top_hat(convert::force<Value(I)>(), input, se);
 }
@@ -89,7 +91,8 @@ Concrete(I) white_top_hat(const image<I>& input, const struct_elt<E>& se)
 template<class C, class I, class E>
 typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 black_top_hat(const conversion<C>& c,
-	      const image<I>& input, const struct_elt<E>& se)
+	      const abstract::image<I>& input,
+	      const abstract::struct_elt<E>& se)
 {
   return arith::minus(c, closing(input, se), input);
 }
@@ -103,7 +106,8 @@ black_top_hat(const conversion<C>& c,
  * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 =*/
 template<class I, class E>
-Concrete(I) black_top_hat(const image<I>& input, const struct_elt<E>& se)
+Concrete(I) black_top_hat(const abstract::image<I>& input,
+			  const abstract::struct_elt<E>& se)
 {
   return black_top_hat(convert::force<Value(I)>(), input, se);
 }
@@ -136,7 +140,8 @@ Concrete(I) black_top_hat(const image<I>& input, const struct_elt<E>& se)
 template<class C, class I, class E>
 typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 self_complementary_top_hat(const conversion<C>& c,
-			   const image<I>& input, const struct_elt<E>& se)
+			   const abstract::image<I>& input,
+			   const abstract::struct_elt<E>& se)
 {
   return arith::minus(c, closing(input, se), opening(input, se));
 }
@@ -149,8 +154,8 @@ self_complementary_top_hat(const conversion<C>& c,
  * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 =*/
 template<class I, class E>
-Concrete(I) self_complementary_top_hat(const image<I>& input,
-				       const struct_elt<E>& se)
+Concrete(I) self_complementary_top_hat(const abstract::image<I>& input,
+				       const abstract::struct_elt<E>& se)
 {
   return self_complementary_top_hat(convert::force<Value(I)>(), input, se);
 }
@@ -183,7 +188,8 @@ Concrete(I) self_complementary_top_hat(const image<I>& input,
 template<class C, class I, class E>
 typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 top_hat_contrast_op(const conversion<C>& c,
-		    const image<I>& input, const struct_elt<E>& se)
+		    const abstract::image<I>& input,
+		    const abstract::struct_elt<E>& se)
 {
   return arith::plus(c,
 		     input,
@@ -199,8 +205,8 @@ top_hat_contrast_op(const conversion<C>& c,
  * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 =*/
 template<class I, class E>
-Concrete(I) top_hat_contrast_op(const image<I>& input,
-				const struct_elt<E>& se)
+Concrete(I) top_hat_contrast_op(const abstract::image<I>& input,
+				const abstract::struct_elt<E>& se)
 {
   return top_hat_contrast_op(convert::force<Value(I)>(), input, se);
 }

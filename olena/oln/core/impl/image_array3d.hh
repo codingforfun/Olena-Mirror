@@ -92,27 +92,27 @@ namespace oln {
 
       image_array3d(const size_type& s): super_type(s) 
       {
-	pretreat_3d_data_(buffer_, array2_, array_, s);
+	pretreat_3d_data_(this->buffer_, array2_, array_, s);
       }
 
       bool hold_(const oln::point3d& p) const
       {
-	return (p.slice >= 0
-		&& p.slice < size_.nslices()
+	return (p.slice() >= 0
+		&& p.slice() < this->size_.nslices()
 		&& p.row() >= 0
-		&& p.row() < size_.nrows()
+		&& p.row() < this->size_.nrows()
 		&& p.col() >= 0
-		&& p.col() < size_.ncols());
+		&& p.col() < this->size_.ncols());
       }
 
       bool hold_large_(const oln::point3d& p) const
       {
-	return (p.slice() >= -size_.border()
-		&& p.slice() < size_.nslices() + size_.border()
-		&& p.row() >= - size_.border()
-		&& p.row() < size_.nrows() + size_.border()
-		&& p.col() >= - size_.border()
-		&& p.col() < size_.ncols() + size_.border());
+	return (p.slice() >= -this->size_.border()
+		&& p.slice() < this->size_.nslices() + this->size_.border()
+		&& p.row() >= - this->size_.border()
+		&& p.row() < this->size_.nrows() + this->size_.border()
+		&& p.col() >= - this->size_.border()
+		&& p.col() < this->size_.ncols() + this->size_.border());
       }
 
       value_type& at_(const oln::point3d& p)
@@ -123,7 +123,7 @@ namespace oln {
 
       value_type& at_(coord slice, coord row, coord col)
       {
-	invariant(buffer_ != 0);
+	invariant(this->buffer_ != 0);
 	precondition_hold_large(point_type(slice, row, col));
 	return array_[slice][row][col];
       }
@@ -138,7 +138,7 @@ namespace oln {
 
       ~image_array3d()
       {
-	desallocate_3d_data_(array2_, array_, size_);
+	desallocate_3d_data_(array2_, array_, this->size_);
       }
 
     protected:
@@ -154,20 +154,20 @@ namespace oln {
 	T*** array = 0;
 	// first allocate
 
-	allocate_data_(buffer, len_(image3d_size(size_.nslices(), size_.nrows(),
-					 size_.ncols(), new_border)));
-	pretreat_3d_data_(buffer, array2, array, image3d_size(size_.nslices(), size_.nrows(),
-							     size_.ncols(), new_border));
+	allocate_data_(buffer, len_(image3d_size(this->size_.nslices(), this->size_.nrows(),
+					 this->size_.ncols(), new_border)));
+	pretreat_3d_data_(buffer, array2, array, image3d_size(this->size_.nslices(), this->size_.nrows(),
+							     this->size_.ncols(), new_border));
 	// move data
-	coord border = size_.border();
+	coord border = this->size_.border();
 	if (border > new_border)
 	  border = new_border;
 	coord src_min_slice = copy_border ? -border : 0;
-	coord src_max_slice = size_.nslices() + (copy_border ? border : 0);
+	coord src_max_slice = this->size_.nslices() + (copy_border ? border : 0);
 	coord src_min_row = copy_border ? -border : 0;
-	coord src_max_row = size_.nrows() + (copy_border ? border : 0);
+	coord src_max_row = this->size_.nrows() + (copy_border ? border : 0);
 	coord src_min_col = copy_border ? -border : 0;
-	coord src_ncols = size_.ncols() + (copy_border ? (border * 2) : 0);
+	coord src_ncols = this->size_.ncols() + (copy_border ? (border * 2) : 0);
 	for (coord slice = src_min_slice; slice < src_max_slice; ++slice)
 	  for (coord row = src_min_row; row < src_max_row; ++row)
 	    memcpy(array[slice][row],
@@ -175,21 +175,21 @@ namespace oln {
 		   src_ncols * sizeof(T));
 
 	// then replace
-	desallocate_data_(buffer_);
-	desallocate_3d_data_(array2_, array_, size_);
-	size_.border() = new_border;
-	buffer_ = buffer;
+	desallocate_data_(this->buffer_);
+	desallocate_3d_data_(array2_, array_, this->size_);
+	this->size_.border() = new_border;
+	this->buffer_ = buffer;
 	array2_ = array2;
 	array_ = array;
       }
             
       void border_replicate_(void) 
       {
-	const coord imax = size_.nslices() - 1;
-	const coord jmax = size_.nrows() - 1;
-	const coord kmax = size_.ncols() - 1;
+	const coord imax = this->size_.nslices() - 1;
+	const coord jmax = this->size_.nrows() - 1;
+	const coord kmax = this->size_.ncols() - 1;
 	// front & rear
-	for (coord i = - size_.border(); i; ++i)
+	for (coord i = - this->size_.border(); i; ++i)
 	  for (coord j = 0; j <= jmax; ++j)
 	    for (coord k = 0; k <= kmax; ++k)
 	      {
@@ -197,17 +197,17 @@ namespace oln {
 		at_(imax - i, j, k) = at_(imax, j, k);
 	      }
 	// top & bottom
-	for (coord i = - size_.border(); i <= imax + size_.border(); ++i)
-	  for (coord j = - size_.border(); j; ++j)
+	for (coord i = - this->size_.border(); i <= imax + this->size_.border(); ++i)
+	  for (coord j = - this->size_.border(); j; ++j)
 	    for (coord k = 0; k <= kmax; ++k)
 	      {
 		at_(i, j, k)        = at_(i, 0, k);
 		at_(i, jmax - j, k) = at_(i, jmax, k);
 	      }
 	// left & right
-	for (coord i = - size_.border(); i <= imax + size_.border(); ++i)
-	  for (coord j = - size_.border(); j <= jmax + size_.border(); ++j)
-	    for (coord k = - size_.border(); k; ++k)
+	for (coord i = - this->size_.border(); i <= imax + this->size_.border(); ++i)
+	  for (coord j = - this->size_.border(); j <= jmax + this->size_.border(); ++j)
+	    for (coord k = - this->size_.border(); k; ++k)
 	      {
 		at_(i, j, k)        = at_(i, j, 0);
 		at_(i, j, kmax - k) = at_(i, j, kmax);
@@ -216,11 +216,11 @@ namespace oln {
 
       void border_mirror_(void) 
       {
-	const coord imax = size_.nslices() - 1;
-	const coord jmax = size_.nrows() - 1;
-	const coord kmax = size_.ncols() - 1;
+	const coord imax = this->size_.nslices() - 1;
+	const coord jmax = this->size_.nrows() - 1;
+	const coord kmax = this->size_.ncols() - 1;
 	// front & rear
-	for (coord i = - size_.border(); i; ++i)
+	for (coord i = - this->size_.border(); i; ++i)
 	  for (coord j = 0; j <= jmax; ++j)
 	    for (coord k = 0; k <= kmax; ++k)
 	      {
@@ -228,17 +228,17 @@ namespace oln {
 		at_(imax - i, j, k) = at_(imax + i, j, k);
 	      }
 	// top & bottom
-	for (coord i = - size_.border(); i <= imax + size_.border(); ++i)
-	  for (coord j = - size_.border(); j; ++j)
+	for (coord i = - this->size_.border(); i <= imax + this->size_.border(); ++i)
+	  for (coord j = - this->size_.border(); j; ++j)
 	    for (coord k = 0; k <= kmax; ++k)
 	      {
 		at_(i, j, k)        = at_(i, - j, k);
 		at_(i, jmax - j, k) = at_(i, jmax + j, k);
 	      }
 	// left & right
-	for (coord i = - size_.border(); i <= imax + size_.border(); ++i)
-	  for (coord j = - size_.border(); j <= jmax + size_.border(); ++j)
-	    for (coord k = - size_.border(); k; ++k)
+	for (coord i = - this->size_.border(); i <= imax + this->size_.border(); ++i)
+	  for (coord j = - this->size_.border(); j <= jmax + this->size_.border(); ++j)
+	    for (coord k = - this->size_.border(); k; ++k)
 	      {
 		at_(i, j, k)        = at_(i, j, - k);
 		at_(i, j, kmax - k) = at_(i, j, kmax + k);
@@ -247,11 +247,11 @@ namespace oln {
 
       void border_assign_(value_type val) 
       {
-	const coord imax = size_.nslices() - 1;
-        const coord jmax = size_.nrows() - 1;
-        const coord kmax = size_.ncols() - 1;
+	const coord imax = this->size_.nslices() - 1;
+        const coord jmax = this->size_.nrows() - 1;
+        const coord kmax = this->size_.ncols() - 1;
         // front & rear
-        for (coord i = - size_.border(); i; ++i)
+        for (coord i = - this->size_.border(); i; ++i)
           for (coord j = 0; j <= jmax; ++j)
             for (coord k = 0; k <= kmax; ++k)
               {
@@ -259,17 +259,17 @@ namespace oln {
                 at_(imax - i, j, k) = val;
               }
         // top & bottom
-        for (coord i = - size_.border(); i <= imax + size_.border(); ++i)
-          for (coord j = - size_.border(); j; ++j)
+        for (coord i = - this->size_.border(); i <= imax + this->size_.border(); ++i)
+          for (coord j = - this->size_.border(); j; ++j)
             for (coord k = 0; k <= kmax; ++k)
               {
                 at_(i, j, k)        = val;
                 at_(i, jmax - j, k) = val;
               }
         // left & right
-        for (coord i = - size_.border(); i <= imax + size_.border(); ++i)
-          for (coord j = - size_.border(); j <= jmax + size_.border(); ++j)
-            for (coord k = - size_.border(); k; ++k)
+        for (coord i = - this->size_.border(); i <= imax + this->size_.border(); ++i)
+          for (coord j = - this->size_.border(); j <= jmax + this->size_.border(); ++j)
+            for (coord k = - this->size_.border(); k; ++k)
               {
                 at_(i, j, k)        = val;
                 at_(i, j, kmax - k) = val;

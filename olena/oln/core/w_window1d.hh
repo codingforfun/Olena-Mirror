@@ -75,7 +75,7 @@ namespace oln {
     coord delta_update_(const dpoint_type& dp)
     {
       delta_(abs(dp.col()));
-      return delta_;
+      return this->delta_;
     }
 
     w_window1d<T>& add(const dpoint_type& dp, const weight_type& w)

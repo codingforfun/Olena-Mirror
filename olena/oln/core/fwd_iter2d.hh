@@ -69,26 +69,26 @@ namespace oln {
 
     void goto_begin_()
     {
-      p_.row() = p_.col() = 0;
+      this->p_.row() = this->p_.col() = 0;
     }
 
     void _goto_end()
     {
-      p_.row() = nrows_;
+      this->p_.row() = this->nrows_;
     }
 
     bool is_at_end_() const
     {
-      return p_.row() == nrows_;
+      return this->p_.row() == this->nrows_;
     }
 
     void goto_next_()
     {
-      ++p_.col();
-      if (p_.col() < ncols_)
+      ++this->p_.col();
+      if (this->p_.col() < this->ncols_)
 	return;
-      p_.col() = 0;
-      ++p_.row();
+      this->p_.col() = 0;
+      ++this->p_.row();
     }
 
     static std::string name() { return "fwd_iter2d<" + Exact::name() + ">"; }

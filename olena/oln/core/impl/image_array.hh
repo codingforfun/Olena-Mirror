@@ -33,6 +33,7 @@
 # include <oln/core/coord.hh>
 # include <oln/core/impl/image_impl.hh>
 # include <iostream>
+# include <ntg/all.hh>
 
 namespace oln {
 
@@ -42,7 +43,7 @@ namespace oln {
     precondition(s > 0);
     buffer = new T[s];
   }
-  
+
   template<class T>
   void desallocate_data_(T*& buffer)
   {
@@ -102,10 +103,10 @@ namespace oln {
 
       size_t len() const
       {
-	return len(size());
+	return len(this->size());
       }
 
-      size_t len(const size_type& s) const 
+      size_t len(const size_type& s) const
       {
 	return to_exact(*this).len_(s);
       }
@@ -116,9 +117,9 @@ namespace oln {
       }
 
     protected:
-      T* buffer_;     
+      T* buffer_;
     };
-    
+
   } // end of namespace impl
 
 } // end of namespace oln

@@ -69,30 +69,30 @@ namespace oln {
 
     void goto_begin_()
     {
-      p_.slice() = p_.row() = p_.col() = 0;
+      this->p_.slice() = this->p_.row() = this->p_.col() = 0;
     }
 
     void goto_end_()
     {
-      p_.slice() = nslices_;
+      this->p_.slice() = this->nslices_;
     }
 
     bool is_at_end_() const
     {
-      return p_.slice() == nslices_;
+      return this->p_.slice() == this->nslices_;
     }
 
     void goto_next_()
     {
-      ++p_.col();
-      if (p_.col() < ncols_)
+      ++this->p_.col();
+      if (this->p_.col() < this->ncols_)
 	return;
-      p_.col() = 0;
-      ++p_.row();
-      if (p_.row() < nrows_)
+      this->p_.col() = 0;
+      ++this->p_.row();
+      if (this->p_.row() < this->nrows_)
 	return;;
-      p_.row() = 0;
-      ++p_.slice();
+      this->p_.row() = 0;
+      ++this->p_.slice();
     }
 
     static std::string name() { return "fwd_iter3d<" + Exact::name() + ">"; }

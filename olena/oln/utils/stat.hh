@@ -95,7 +95,7 @@ namespace oln {
 
       void operator()(const T& val)
       {
-	if (! valued()) {
+	if (! this->valued()) {
 	  _sum1 = ntg_zero_val(C);
 	  _sum2 = ntg_zero_val(C);
 	} else {
@@ -107,14 +107,14 @@ namespace oln {
 
       const C mean() const
       {
-        assertion(valued());
-        return _sum1 / C(count());
+        assertion(this->valued());
+        return _sum1 / C(this->count());
       }
 
       const C variance() const
       {
-        assertion(valued());
-        return _sum2 / C(count()) - mean() * mean();
+        assertion(this->valued());
+        return _sum2 / C(this->count()) - mean() * mean();
       }
 
       protected:

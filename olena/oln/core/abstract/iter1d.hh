@@ -66,14 +66,14 @@ namespace oln {
       point1d to_point() const
       {
 	precondition(*this != end);
-	invariant(p_.col() >= 0 &&
-		  p_.col() < ncols_);
-	return p_;
+	invariant(this->p_.col() >= 0 &&
+		  this->p_.col() < ncols_);
+	return this->p_;
       }
 
       coord col() const
       {
-	return p_.col();
+	return this->p_.col();
       }
 
       static std::string name() { return std::string("_iter1d<") + Exact::name() + ">"; }

@@ -63,9 +63,9 @@ namespace oln
       exact_type& add_(const dpoint_type& dp)
       {
 	if (dp.is_centered())
-	  centered_ = true;
+	  this->centered_ = true;
 	if (!(has_(dp)))
-	  dp_.push_back(dp);
+	  this->dp_.push_back(dp);
 	this->delta_update(dp);
 	return to_exact(*this);
       }

@@ -63,19 +63,19 @@
 template<class C, class I, class E1, class E2>
 typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 hit_or_miss(const conversion<C>& c,
-	    const image<I>& input,
-	    const struct_elt<E1>& se1,
-	    const struct_elt<E2>& se2)
+	    const abstract::image<I>& input,
+	    const abstract::struct_elt<E1>& se1,
+	    const abstract::struct_elt<E2>& se2)
 {
   mlc::eq<I::dim, E1::dim>::ensure();
   mlc::eq<E1::dim, E2::dim>::ensure();
 
-  precondition(inter(se1, se2).card() == 0);
+  // FIXME: call inter on struct elts, even if w_windows do not provide it
+  precondition(inter(to_exact(se1), to_exact(se2)).card() == 0);
   // FIXME: max(coord, coord) does not exist.
   //  border::adapt_copy(input, min(se1.delta() , se2.delta()));
-  border::adapt_copy(input,
-		     (se1.delta() > se2.delta()) ?
- 		     se1.delta() : se2.delta());
+  input.border_adapt_copy((se1.delta() > se2.delta()) ?
+			  se1.delta() : se2.delta());
 
   return arith::min(c,
 		    erosion(input, se1),
@@ -90,9 +90,9 @@ hit_or_miss(const conversion<C>& c,
  * ret: Concrete(I)
 =*/
 template<class I, class E1, class E2>
-Concrete(I) hit_or_miss(const image<I>& input,
-			const struct_elt<E1>& se1,
-			const struct_elt<E2>& se2)
+Concrete(I) hit_or_miss(const abstract::image<I>& input,
+			const abstract::struct_elt<E1>& se1,
+			const abstract::struct_elt<E2>& se2)
 {
   return hit_or_miss(convert::force<Value(I)>(), input, se1, se2);
 }
@@ -135,11 +135,12 @@ Concrete(I) hit_or_miss(const image<I>& input,
  * exo: out.pbm
 =*/
 template<class I, class E1, class E2>
-Concrete(I) hit_or_miss_opening(const image<I>& input,
-				const struct_elt<E1>& se1,
-				const struct_elt<E2>& se2)
+Concrete(I) hit_or_miss_opening(const abstract::image<I>& input,
+				const abstract::struct_elt<E1>& se1,
+				const abstract::struct_elt<E2>& se2)
 {
-  precondition(inter(se1, se2).card() == 0);
+  // FIXME: call inter on struct elts, even if w_windows do not provide it
+  precondition(inter(to_exact(se1), to_exact(se2)).card() == 0);
   return dilation(hit_or_miss(input, se1, se2), -se1);
 }
 
@@ -176,9 +177,9 @@ Concrete(I) hit_or_miss_opening(const image<I>& input,
  * exo: out.pbm
 =*/
 template<class I, class E1, class E2>
-Concrete(I) hit_or_miss_opening_bg(const image<I>& input,
-				   const struct_elt<E1>& se1,
-				   const struct_elt<E2>& se2)
+Concrete(I) hit_or_miss_opening_bg(const abstract::image<I>& input,
+				   const abstract::struct_elt<E1>& se1,
+				   const abstract::struct_elt<E2>& se2)
 {
   return hit_or_miss_opening(input, se2, se1);
 }
@@ -223,11 +224,12 @@ Concrete(I) hit_or_miss_opening_bg(const image<I>& input,
  * exo: out.pbm
 =*/
 template<class I, class E1, class E2>
-Concrete(I) hit_or_miss_closing(const image<I>& input,
-				const struct_elt<E1>& se1,
-				const struct_elt<E2>& se2)
+Concrete(I) hit_or_miss_closing(const abstract::image<I>& input,
+				const abstract::struct_elt<E1>& se1,
+				const abstract::struct_elt<E2>& se2)
 {
-  precondition(inter(se1, se2).card() == 0);
+  // FIXME: call inter on struct elts, even if w_windows do not provide it
+  precondition(inter(to_exact(se1), to_exact(se2)).card() == 0);
   return level::invert(hit_or_miss_opening(level::invert(input),
 					   se1, se2));
 }
@@ -266,9 +268,9 @@ Concrete(I) hit_or_miss_closing(const image<I>& input,
  * exo: out.pbm
 =*/
 template<class I, class E1, class E2>
-Concrete(I) hit_or_miss_closing_bg(const image<I>& input,
-				   const struct_elt<E1>& se1,
-				   const struct_elt<E2>& se2)
+Concrete(I) hit_or_miss_closing_bg(const abstract::image<I>& input,
+				   const abstract::struct_elt<E1>& se1,
+				   const abstract::struct_elt<E2>& se2)
 {
   return hit_or_miss_closing(input, se2, se1);
 }

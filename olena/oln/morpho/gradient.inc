@@ -50,7 +50,8 @@
 template<class C, class I, class E>
 typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 beucher_gradient(const conversion<C>& c,
-		 const image<I>& input, const struct_elt<E>& se)
+		 const abstract::image<I>& input,
+		 const abstract::struct_elt<E>& se)
 {
   return arith::minus(c, dilation(input, se), erosion(input, se));
 }
@@ -64,8 +65,8 @@ beucher_gradient(const conversion<C>& c,
  * ret: Concrete(I)
 =*/
 template<class I, class E>
-Concrete(I) beucher_gradient(const image<I>& input,
-			     const struct_elt<E>& se)
+Concrete(I) beucher_gradient(const abstract::image<I>& input,
+			     const abstract::struct_elt<E>& se)
 {
   return beucher_gradient(convert::force<Value(I)>(), input, se);
 }
@@ -93,7 +94,8 @@ Concrete(I) beucher_gradient(const image<I>& input,
 template<class C, class I, class E>
 typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 internal_gradient(const conversion<C>& c,
-		  const image<I>& input, const struct_elt<E>& se)
+		  const abstract::image<I>& input,
+		  const abstract::struct_elt<E>& se)
 {
   return arith::minus(c, input, erosion(input, se));
 }
@@ -106,8 +108,8 @@ internal_gradient(const conversion<C>& c,
  * ret: Concrete(I)
 =*/
 template<class I, class E>
-Concrete(I) internal_gradient(const image<I>& input, const
-			      struct_elt<E>& se)
+Concrete(I) internal_gradient(const abstract::image<I>& input, const
+			      abstract::struct_elt<E>& se)
 {
   return internal_gradient(convert::force<Value(I)>(), input, se);
 }
@@ -135,7 +137,8 @@ Concrete(I) internal_gradient(const image<I>& input, const
 template<class C, class I, class E>
 typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 external_gradient(const conversion<C>& c,
-		  const image<I>& input, const struct_elt<E>& se)
+		  const abstract::image<I>& input,
+		  const abstract::struct_elt<E>& se)
 {
   return arith::minus(c, dilation(input, se), input);
 }
@@ -149,8 +152,8 @@ external_gradient(const conversion<C>& c,
  * ret: Concrete(I)
 =*/
 template<class I, class E>
-Concrete(I) external_gradient(const image<I>& input,
-			      const struct_elt<E>& se)
+Concrete(I) external_gradient(const abstract::image<I>& input,
+			      const abstract::struct_elt<E>& se)
 {
   return external_gradient(convert::force<Value(I)>(), input, se);
 }

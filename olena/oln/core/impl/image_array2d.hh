@@ -78,25 +78,25 @@ namespace oln {
 
       image_array2d(const size_type& s): super_type(s) 
       {
-	pretreat_2d_data_(buffer_, array_, s);
+	pretreat_2d_data_(this->buffer_, array_, s);
       }
 
       bool hold_(const oln::point2d& p) const
       {
 	return
 	  p.row() >= 0 &&
-	  p.row() < size_.nrows() &&
+	  p.row() < this->size_.nrows() &&
 	  p.col() >= 0 &&
-	  p.col() < size_.ncols();
+	  p.col() < this->size_.ncols();
       }
 
       bool hold_large_(const oln::point2d& p) const
       {
 	return
-	  p.row() >= - size_.border() &&
-	  p.row() < size_.nrows() + size_.border() &&
-	  p.col() >= - size_.border() &&
-	  p.col() < size_.ncols() + size_.border();
+	  p.row() >= - this->size_.border() &&
+	  p.row() < this->size_.nrows() + this->size_.border() &&
+	  p.col() >= - this->size_.border() &&
+	  p.col() < this->size_.ncols() + this->size_.border();
       }
 
       value_type& at_(const oln::point2d& p)
@@ -106,7 +106,7 @@ namespace oln {
 
       value_type& at_(coord row, coord col)
       {
-	invariant(buffer_ != 0);
+	invariant(this->buffer_ != 0);
 	precondition_hold_large(point_type(row, col));
 	return array_[row][col];
       }
@@ -120,7 +120,7 @@ namespace oln {
 
       ~image_array2d() 
       {
-	desallocate_2d_data_(array_, size_); 
+	desallocate_2d_data_(array_, this->size_); 
       }
 
     protected:
@@ -134,45 +134,45 @@ namespace oln {
 	T* buffer = 0;
 	T** array = 0;
 	// first allocate
-	allocate_data_(buffer, len_(image2d_size(size_.nrows(), size_.ncols(), new_border)));
+	allocate_data_(buffer, len_(image2d_size(this->size_.nrows(), this->size_.ncols(), new_border)));
 	
-	pretreat_2d_data_(buffer, array, image2d_size(size_.nrows(),
-						      size_.ncols(), new_border));
+	pretreat_2d_data_(buffer, array, image2d_size(this->size_.nrows(),
+						      this->size_.ncols(), new_border));
 	// move data
-	coord border = size_.border();
+	coord border = this->size_.border();
 	if (border > new_border)
 	  border = new_border;
 	coord src_min_row = copy_border ? -border : 0;
-	coord src_max_row = size_.nrows() + (copy_border ? border : 0);
+	coord src_max_row = this->size_.nrows() + (copy_border ? border : 0);
 	coord src_min_col = copy_border ? -border : 0;
-	coord src_ncols = size_.ncols() + (copy_border ? (border * 2) : 0);
+	coord src_ncols = this->size_.ncols() + (copy_border ? (border * 2) : 0);
 	for (coord row = src_min_row; row < src_max_row; ++row)
 	  memcpy(array[row],
 		 &at_(row, src_min_col),
 		 src_ncols * sizeof(T));
 
 	// then replace
-	desallocate_data_(buffer_);
-	desallocate_2d_data_(array_, size_); 
-	size_.border() = new_border;
-	buffer_ = buffer;
+	desallocate_data_(this->buffer_);
+	desallocate_2d_data_(array_, this->size_); 
+	this->size_.border() = new_border;
+	this->buffer_ = buffer;
 	array_ = array;
       }
             
       void border_replicate_(void)
       {
-	const coord imax = size_.nrows() - 1;
-	const coord jmax = size_.ncols() - 1;
+	const coord imax = this->size_.nrows() - 1;
+	const coord jmax = this->size_.ncols() - 1;
 	// top & bottom
-	for (coord i = - size_.border(); i; ++i)
+	for (coord i = - this->size_.border(); i; ++i)
 	  for (coord j = 0; j <= jmax; ++j)
 	    {
 	      at_(i, j) = at_(0, j);
 	      at_(imax - i, j) = at_(imax, j);
 	    }
 	// left & right
-	for (coord i = - size_.border(); i <= imax + size_.border(); ++i)
-	  for (coord j = - size_.border(); j; ++j)
+	for (coord i = - this->size_.border(); i <= imax + this->size_.border(); ++i)
+	  for (coord j = - this->size_.border(); j; ++j)
 	    {
 	      at_(i, j) = at_(i, 0); 
 	      at_(i, jmax - j) = at_(i, jmax );
@@ -182,18 +182,18 @@ namespace oln {
       void border_mirror_(void) 
       {
 	// top & bottom
-	const coord imax = size_.nrows() - 1;
-	const coord jmax = size_.ncols() - 1;
+	const coord imax = this->size_.nrows() - 1;
+	const coord jmax = this->size_.ncols() - 1;
 
-	for (coord i = - size_.border(); i; ++i)
+	for (coord i = - this->size_.border(); i; ++i)
 	  for (coord j = 0; j <= jmax; ++j)
 	    {
 	      at_(i, j) = at_(-i, j);
 	      at_(imax - i, j) = at_(imax + i, j);
 	    }
 	// left & right
-	for (coord i = - size_.border(); i <= imax + size_.border(); ++i)
-	  for (coord j = - size_.border(); j; ++j)
+	for (coord i = - this->size_.border(); i <= imax + this->size_.border(); ++i)
+	  for (coord j = - this->size_.border(); j; ++j)
 	    {
 	      at_(i, j) = at_(i, -j);
 	      at_(i, jmax - j) = at_(i, jmax + j);
@@ -203,18 +203,18 @@ namespace oln {
       void border_assign_(value_type val) 
       {
 	// top & bottom
-        const coord imax = size_.nrows() - 1;
-        const coord jmax = size_.ncols() - 1;
+        const coord imax = this->size_.nrows() - 1;
+        const coord jmax = this->size_.ncols() - 1;
 
-        for (coord i = - size_.border(); i; ++i)
+        for (coord i = - this->size_.border(); i; ++i)
           for (coord j = 0; j <= jmax; ++j)
             {
               at_(i, j) = val;
               at_(imax - i, j) = val;
             }
         // left & right
-        for (coord i = - size_.border(); i <= imax + size_.border(); ++i)
-          for (coord j = - size_.border(); j; ++j)
+        for (coord i = - this->size_.border(); i <= imax + this->size_.border(); ++i)
+          for (coord j = - this->size_.border(); j; ++j)
             {
               at_(i, j) = val;
               at_(i, jmax - j) = val;
@@ -230,5 +230,3 @@ namespace oln {
 } // end of namespace oln
 
 #endif // ! OLENA_CORE_IMPL_IMAGE_ARRAY2D_HH
-
-

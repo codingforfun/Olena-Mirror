@@ -1,4 +1,55 @@
-2003-07-28  David Lesage  <daivd@lrde.epita.fr>
+2003-07-29  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/accum.hh, oln/core/compose.hh: Adapt coding style.
+	
+2003-07-29  Giovanni Palma  <giovanni.palma@lrde.epita.fr>
+
+	* doc/ref/integre-ref.tex: Remove includeimage.
+
+	* oln/morpho/gradient.inc,
+	oln/morpho/laplacian.inc,
+	oln/morpho/top_hat.inc,
+	oln/morpho/attribute_union_find.hh: Add some "abstract".
+
+	* oln/morpho/hit_or_miss.inc: Add some "abstract".
+	Add to_exact to "inter" calls.
+
+	* oln/morpho/attribute_closing_opening.hh: Add some "abstract".
+	Add to_exact to "tarjan" calls.
+
+	* oln/morpho/attribute_union_find.hh
+
+	* oln/core/impl/image_array.hh: Add ntg/all.hh include.
+
+2003-07-29  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
+	oln/core/bkd_iter3d.hh, oln/core/fwd_iter1d.hh,
+	oln/core/fwd_iter2d.hh, oln/core/fwd_iter3d.hh,
+	oln/core/image1d.hh, oln/core/image2d.hh, oln/core/image3d.hh,
+	oln/core/image.hh, oln/core/abstract/iter1d.hh,
+	oln/core/abstract/iter2d.hh, oln/core/abstract/iter3d.hh,
+	oln/core/window1d.hh, oln/core/window2d.hh,
+	oln/core/window3d.hh, oln/core/winneighb.hh,
+	oln/core/w_window1d.hh, oln/core/w_window2d.hh,
+	oln/core/w_window3d.hh, oln/utils/stat.hh,
+	oln/core/abstract/image_with_dim.hh,
+	oln/core/impl/image_array.hh, oln/core/impl/image_array3d.hh,
+	oln/core/impl/image_array2d.hh,
+	oln/core/impl/image_array1d.hh,
+	oln/core/abstract/window_base.hh,
+	oln/core/abstract/windownd.hh,
+	oln/core/abstract/w_windownd.hh,
+	oln/core/abstract/neighborhoodnd.hh: Fix problems raised by
+	g++-3.4.
+
+	* tests/core/tests/image1: Test size accessors.
+
+2003-07-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/morpho/fast_morpho.hxx: Minor update.
+
+2003-07-28  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/abstract/struct_elt.hh: Remove copy constructor for -W
 	compliance.
@@ -9,10 +60,10 @@
 
 	* oln/core/abstract/struct_elt.hh: Fix operator-(). Fix copy
 	constructor.
-	
+
 	* oln/morpho/fast_morpho.hxx: Fix.
 
-	* oln/core/impl/image_impl.hh, 
+	* oln/core/impl/image_impl.hh,
 	oln/core/impl/image_array.hh,
 	oln/core/impl/image_array3d.hh,
 	oln/core/impl/image_array2d.hh,
@@ -29,7 +80,7 @@
 	* oln/convert/nrgbhsi.hh: Rename nrgb_to_hsi functor as f_nrgb_to_hsi,
 	Add nrgb_to_hsi function, fix bug in the conversion algorithm.
 
-	* oln/convert/nrgbhsl, oln/convert/nrgbxyz, oln/convert/nrgbyiq.h, 
+	* oln/convert/nrgbhsl, oln/convert/nrgbxyz, oln/convert/nrgbyiq.h,
 	rgbnrgb.hh, oln/convert/rgbxyz.hh: Likewise.
 
 	* tests/convert/convcomp.cc: Adjust according to previous changes.
@@ -43,13 +94,13 @@
 
 	* oln/io/stream_wrapper.hh: Fix compilation when zlib is not
 	available.
-	
+
 	* tests/check/Makefile.flags: Add zlib to compilation flags.
 	* tests/core/Makefile.am, tests/arith/Makefile.am,
 	tests/io/Makefile.am: Fix flags.
 
 2003-07-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* oln/io/pnm_write.hh, oln/io/se_neighborhood.hh,
 	oln/io/se_window.hh, oln/io/image_write.hh, oln/io/image_read.hh:
 	Disable output on std::clog.
@@ -100,7 +151,7 @@
 	* oln/basics2d.hh: Fix includes.
 
 2003-07-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* tests/arith/runtests, tests/core/runtests: Don't check temporary
 	files.
 
