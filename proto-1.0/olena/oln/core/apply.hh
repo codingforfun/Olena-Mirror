@@ -34,6 +34,10 @@
 
 namespace oln {
 
+  /*--------.
+  | Unary.  |
+  `--------*/
+
   // fwd decl
   namespace impl {
     template <typename AdaptableUnaryFun, typename I> struct apply_type;
@@ -67,12 +71,12 @@ namespace oln {
         ch_value_type<I, typename AdaptableUnaryFun::result_type>::ret
         output_type;
 
-      const AdaptableUnaryFun& f_;
+      AdaptableUnaryFun f_;
       box<const I> input_;
 
-      apply_type(const AdaptableUnaryFun& f, const abstract::image<I>& input) :
-	f_ (f),
-	input_ (input.exact ())
+      apply_type(AdaptableUnaryFun f, const abstract::image<I>& input) :
+	f_(f),
+	input_(input.exact())
       {
       }
 
@@ -88,15 +92,48 @@ namespace oln {
 
   } // end of namespace impl
 
+
+  /*! \brief Standard unary \a apply procedure.
+  **
+  ** Apply a function \a f to each element of \a input, the function
+  ** is passed as a type and is instantiated.
+  */
   template <class AdaptableUnaryFun, typename I>
   impl::apply_type<AdaptableUnaryFun, I>
-  apply (const AdaptableUnaryFun& f, const abstract::image<I>& input)
+  apply(AdaptableUnaryFun f, const abstract::image<I>& input)
   {
-    impl::apply_type<AdaptableUnaryFun, I> tmp (f, input);
-    tmp.run ();
+    impl::apply_type<AdaptableUnaryFun, I> tmp(f, input);
+    tmp.run();
     return tmp;
   }
-  
+
+  /*! \brief Standard unary \a apply procedure.
+  **
+  ** Apply a function \a f to each element of \a input, the function
+  ** is passed as a type and is instantiated.
+  */
+  template<class AdaptableUnaryFun, class I>
+  impl::apply_type<AdaptableUnaryFun, I>
+  apply(const abstract::image<I>& input)
+  {
+    return apply(AdaptableUnaryFun(), input);
+  }
+
+  /*! \brief Standard unary \a apply procedure.
+  **
+  ** Apply function \a f to each element of \a input, the function is
+  ** passed as a type and is instantiated.  For template functions
+  ** passed as template-id, one need to instantiate the function for
+  ** the type of the abstract::image.
+  */
+  template<template<class> class AdaptableUnaryFun, class I>
+  typename impl::apply_type<AdaptableUnaryFun<oln_type_of(I, value)>, I>
+  apply(const abstract::image<I>& input)
+  {
+    AdaptableUnaryFun<oln_type_of(I, value)> tmp;
+    return apply(tmp, input);
+  }
+
 } // end of namespace oln
 
 #endif // ! OLENA_CORE_APPLY_HH

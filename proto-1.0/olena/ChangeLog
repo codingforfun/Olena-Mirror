@@ -1,3 +1,13 @@
+2005-04-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	More oln::apply (for Adaptable Unary Functions).
+
+	* oln/core/apply.hh: Pass the Adaptable Unary Functions by value
+	(copy), not by (const) reference.
+	(apply (AdaptableUnaryFun, const abstract::image<I>&)):	Document.
+	(apply (const abstract::image<I>&)): New functions.
+	* tests/core/tests/apply: Test them.
+
 2005-04-04  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* oln/core/pw/abstract/binary_function.hh: Likewise.
