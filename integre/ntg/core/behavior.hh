@@ -131,7 +131,7 @@ namespace ntg
       // (eg. int_u<32>), the tests should be performed only in those
       // cases!
 
-      // FIXME: check that conditions leading to empty code when
+      // FIXME: check that conditions lead to empty code when
       // -DNDEBUG is defined does not have any runtime cost.
 
       template <class T1, class T2>
