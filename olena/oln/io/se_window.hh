@@ -42,7 +42,7 @@ namespace oln {
     
     namespace internal {
       
-      bool read(window2d& output, const std::string& name)
+      static bool read(window2d& output, const std::string& name)
       {
 	image2d<ntg::bin> im;
 	if (!read(im, name))
@@ -63,7 +63,7 @@ namespace oln {
 	return true;
       }
 
-      bool write(const window2d& input, const std::string& name)
+      static bool write(const window2d& input, const std::string& name)
       {
 	image2d<ntg::bin> im(input.delta()*2+1, input.delta()*2+1);
 	image2d<ntg::bin>::fwd_iter_type it(im);

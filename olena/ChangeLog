@@ -1,5 +1,40 @@
 2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* oln/io/pnm_write_data.hh: Fix includes.
+
+2003-07-30  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
+
+	* tests/topo/Makefile.am: Adjust.
+
+2003-07-30  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
+
+	* tests/topo/test.sh, tests/topo/test-cmap.ref,
+	tests/topo/test-inter-pixel.ref: Delete files.
+
+	* tests/topo/Makefile.am: Adjust.
+
+	* tests/topo/test-dmap.cc: Add new test.
+
+	* tests/topo/test-inter-pixel.cc, tests/topo/test-cmap.cc,
+	oln/topo/dmap.hxx: Fix bugs.
+
+2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/io/se_neighborhood.hh: Make read and write functions static.
+	* oln/io/se_window.hh: Likewise.
+	* oln/io/pnm_read.hh: Make pnm_read_header2d static.
+	* oln/io/pnm_write.hh: Make pnm_write_header2d static.
+
+	* tests/core/multiple_sources_1.cc,
+	tests/core/multiple_sources_2.cc: New test.
+	* tests/core/Makefile.am: Adjust.
+	
+	* oln/io/pnm3d.hh: Disable until complete rewrite.
+	* oln/io/pnm_read3d.hxx: Likewise.
+	* oln/io/pnm_write3d.hxx: Likewise.
+
+2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* oln/core/abstract/dpoint.hh: Change to_exact() calls into
 	exact() calls to save compile time.
 	* oln/core/generate.hh: Likewise.
@@ -46,9 +81,9 @@
 	* oln/core/abstract/neighborhoodnd.hh: Likewise.
 
 2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* oln/Makefile.am: Remove pnm.hh
-	
+
 	* oln/io/se_neighborhood.hh: Fix bug with binary images.
 	* oln/io/se_window.hh: Likewise.
 	* oln/io/pnm_read_data.hh: Likewise.
@@ -57,40 +92,40 @@
 	* img/Makefile.am: Add black.pbm and white.pbm.
 	* tests/io/bin.cc: New test.
 	* tests/io/Makefile.am: Adjust.
-	
+
 2003-07-30  Reda Dehak  <reda@lrde.epita.fr>
 
 	* oln/core/box.hh,
-	oln/core/box.hxx: Fix typedefs. 
+	oln/core/box.hxx: Fix typedefs.
 
 	* oln/level/cc.hh, oln/level/compare.hh,
 	oln/level/connected.hh, oln/level/lut.hh,
-	oln/level/set_level.hh: Remove some Exact_cref.	
+	oln/level/set_level.hh: Remove some Exact_cref.
 
 2003-07-30  David Lesage  <david@lrde.epita.fr>
 
-	* oln/core/apply.hh, 
+	* oln/core/apply.hh,
 	oln/core/abstract/dpoint.hh,
-	oln/core/fold.hh, 
+	oln/core/fold.hh,
 	oln/core/image1d.hh,
-	oln/core/image2d.hh, 
+	oln/core/image2d.hh,
 	oln/core/image3d.hh,
-	oln/core/image.hh, 
+	oln/core/image.hh,
 	oln/core/abstract/iter1d.hh,
-	oln/core/abstract/iter2d.hh, 
+	oln/core/abstract/iter2d.hh,
 	oln/core/abstract/iter3d.hh,
-	oln/core/abstract/neighborhood.hh, 
+	oln/core/abstract/neighborhood.hh,
 	oln/io/se_neighborhood.hh,
-	oln/io/se_window.hh, 
+	oln/io/se_window.hh,
 	oln/core/abstract/image.hh,
 	oln/core/abstract/image_with_impl.hh,
 	oln/core/impl/image_array3d.hh,
-	oln/core/impl/image_array2d.hh, 
+	oln/core/impl/image_array2d.hh,
 	oln/core/impl/image_array1d.hh: Fix includes for sanity check.
 
 	* oln/topo/dmap.hh, oln/topo/dmap.hxx: Fix typedefs and coding
 	style. Remove some Exact_cref.
-	
+
 2003-07-29  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/convert/conversion.hh: Fix compilation with g++-3.4.
@@ -107,7 +142,7 @@
 	* oln/core/image.hh: Likewise.
 
 2003-07-29  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* oln/core/abstract/iter1d.hh, oln/core/abstract/iter2d.hh,
 	oln/core/abstract/iter3d.hh: Remove virtual inheritance.
 
@@ -115,21 +150,21 @@
 
 2003-07-29  David Lesage  <david@lrde.epita.fr>
 
-	* oln/convol/fast_gaussian.hxx, 
-	oln/core/dpoint3d.hh, 
+	* oln/convol/fast_gaussian.hxx,
+	oln/core/dpoint3d.hh,
 	oln/core/abstract/dpoint.hh,
 	oln/core/abstract/neighborhood.hh,
 	oln/morpho/closing.inc,
 	oln/morpho/thickening.inc,
 	oln/morpho/thinning.inc,
-	oln/core/abstract/image_with_dim.hh, 
-	oln/core/impl/image_impl.hh, 
+	oln/core/abstract/image_with_dim.hh,
+	oln/core/impl/image_impl.hh,
 	oln/core/impl/image_array1d.hh: Fix includes and various bugs.
 
 2003-07-29  Reda Dehak  <reda@lrde.epita.fr>
 
 	* oln/convol/convolution.hh, oln/convol/fast_gaussian.hh,
-	oln/convol/fast_gaussian.hxx, oln/transforms/dwt.hh, 
+	oln/convol/fast_gaussian.hxx, oln/transforms/dwt.hh,
 	oln/transforms/fft.hh: Adapt to new paradigm.
 
 	* tests/transforms/Makefile.am: Replace = by += in AM_LDFLAGS and
@@ -142,7 +177,7 @@
 2003-07-29  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/accum.hh, oln/core/compose.hh: Adapt coding style.
-	
+
 2003-07-29  Giovanni Palma  <giovanni.palma@lrde.epita.fr>
 
 	* doc/ref/integre-ref.tex: Remove includeimage.
@@ -568,7 +603,8 @@
 
 2003-07-25  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
-	* tests/topo/test-inter-pixel.cc, tests/topo/test-cmap.cc, : Fix tests suite.
+	* tests/topo/test-inter-pixel.cc, tests/topo/test-cmap.cc, : Fix
+	tests suite.
 
 	* oln/basics2d.hh: Uncomment io files includes.
 

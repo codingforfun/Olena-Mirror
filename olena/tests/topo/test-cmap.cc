@@ -13,6 +13,14 @@ using namespace tarjan;
 using namespace inter_pixel;
 using namespace combinatorial_map;
 
+#define OK_OR_FAIL				\
+      std::cout << "OK" << std::endl;		\
+    else					\
+      {						\
+	std::cout << "FAIL" << std::endl;	\
+	fail = true;				\
+      }
+
 bool
 check()
 {
@@ -30,11 +38,9 @@ check()
   flat_zone<input_t> cc(src);
   std::cerr << "OK" << std::endl;
 
-  std::cerr << "building cmap... ";
+  std::cerr << "building cmap...";
   cmap<input_t> cm(src, ip, cc);
   std::cerr << "OK" << std::endl;
-
-  std::cerr << cm << std::endl;
 
   return fail;
 }

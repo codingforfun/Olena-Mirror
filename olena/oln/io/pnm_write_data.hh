@@ -29,6 +29,7 @@
 # define OLENA_IO_PNM_WRITE_DATA_HH_
 
 # include <oln/core/image.hh>
+# include <oln/io/image_base.hh>
 # include <oln/io/pnm_common.hh>
 
 # include <iostream>

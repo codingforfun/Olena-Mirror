@@ -1,6 +1,6 @@
 #include <ntg/int.hh>
 #include <oln/basics2d.hh>
-#include <oln/topo/inter-pixel/inter-pixel.hh>
+#include <oln/topo/dmap.hh>
 
 #include <iostream>
 
@@ -9,7 +9,7 @@
 
 using namespace oln;
 using namespace ntg;
-using namespace topo::inter_pixel;
+using namespace topo;
 
 #define OK_OR_FAIL				\
       std::cout << "OK" << std::endl;		\
@@ -24,11 +24,13 @@ check()
 {
   bool fail = false;
 
-  image2d<int_u8> src = load(rdata("test-cmap"));
+  chamfer<int> ch = cityblock();
 
-  std::cerr << "building inter-pixel representation...";
-  interpixel< image2d<int_u8> > ip(src);
-  std::cerr << "OK" << std::endl;
+  image2d<int_u8> src = load(rdata("lena256.pgm"));
+
+  dmap<int_u8, int> d(src.size(), ch);
+
+  d.compute(src);
 
   return fail;
 }
