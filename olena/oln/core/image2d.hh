@@ -86,29 +86,35 @@ namespace oln {
 
     image2d() : 
       super_type((impl_type*) 0)
-    {}
+    {
+      mlc_init_static_hierarchy(Exact);
+    }
 
     image2d(coord nrows, coord ncols, coord border = 2) : 
       super_type(new impl_type(image2d_size(nrows, ncols, border)))
     {
+      mlc_init_static_hierarchy(Exact);
       super_type::impl()->ref();
     }
 
     image2d(const image2d_size& size) : 
       super_type(new impl_type(size))
     {
+      mlc_init_static_hierarchy(Exact);
       super_type::impl()->ref();
     }
 
     image2d(self_type& rhs) : // shallow copy
       super_type(rhs)
     {
+      mlc_init_static_hierarchy(Exact);
     }
 
     // io
     image2d(const io::internal::anything& r) 
       : super_type((impl_type*) 0)
     {
+      mlc_init_static_hierarchy(Exact);
       r.assign(*this);
     }
 

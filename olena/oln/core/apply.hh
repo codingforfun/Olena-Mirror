@@ -174,7 +174,7 @@ namespace oln {
   | self binary |
   `------------*/
 
-  /* Main apply2_self() function.  See also the comment for apply_self().  */
+  /* Main apply2_exact() function.  See also the comment for apply_self().  */
   template<class UnaryFun, class I1, class I2>
   abstract::image<I1>& apply2_self(UnaryFun f,
 			  abstract::image<I1>& input1, const abstract::image<I2>& input2)

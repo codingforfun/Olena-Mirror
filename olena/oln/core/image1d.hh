@@ -88,23 +88,27 @@ namespace oln {
 
     image1d() : 
       super_type((impl_type*) 0)
-    {}
+    {
+      mlc_init_static_hierarchy(Exact);
+    }
 
     image1d(coord ncols, coord border = 2) : 
       super_type(new impl_type(image1d_size(ncols, border)))
     {
+      mlc_init_static_hierarchy(Exact);
       super_type::impl()->ref();
     }
 
     image1d(const image1d_size& size) : 
       super_type(new impl_type(size))
     {
+      mlc_init_static_hierarchy(Exact);
       super_type::impl()->ref(); 
     }
 
     image1d(self_type& rhs) : // shallow copy
       super_type(rhs)
-    {}
+    { mlc_init_static_hierarchy(Exact); }
 
     exact_type& operator=(self_type rhs)
     {
@@ -115,6 +119,7 @@ namespace oln {
     image1d(const io::internal::anything& r) 
       : super_type((impl_type*) 0)
     {
+      mlc_init_static_hierarchy(Exact);
       r.assign(*this);
     }
 

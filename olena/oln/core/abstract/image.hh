@@ -58,7 +58,7 @@ namespace oln {
   namespace abstract {
 
     template <class Exact>
-    class image : public mlc_hierarchy::any<Exact>
+    class image : public mlc_hierarchy::any_with_diamond<Exact>
     {
     public:
       typedef typename image_traits<Exact>::point_type point_type;

@@ -94,7 +94,7 @@ namespace oln {
 
       const output_t operator()(const Self& val1, const Self& val2) const
       {
-	return math::abs(val1.self()) + math::abs(val2.self());
+	return math::abs(val1.exact()) + math::abs(val2.exact());
       }
     };
 
@@ -113,8 +113,8 @@ namespace oln {
       const output_t operator()(const Self& val1,
 				const Self& val2) const
       {
-	return ntg::cast::force<T_out>(math::abs(val1.self())
-				  + math::abs(val2.self()));
+	return ntg::cast::force<T_out>(math::abs(val1.exact())
+				  + math::abs(val2.exact()));
       }
     };
 

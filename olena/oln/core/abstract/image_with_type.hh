@@ -29,91 +29,22 @@
 #ifndef OLENA_CORE_ABSTRACT_IMAGE_WITH_TYPE_HH
 # define OLENA_CORE_ABSTRACT_IMAGE_WITH_TYPE_HH
 
-# include <mlc/bool.hh>
-# include <ntg/basics.hh>
-# include <oln/core/abstract/image_with_dim.hh>
+# include <oln/core/abstract/image.hh>
+
 # include <string>
-# include <sstream>
-
-// Define a type label image This macro create two classes,
-// Name<Exact> and Name##_with_dim<N, Exact>.  Super is used to
-// determine the parent class of Name##_with_dim and is suffixed with
-// _with_dim.
-
-# define LABEL_IMAGE_(Name, Super)				\
-  template <class Exact>					\
-  class Name							\
-    : public Super##_with_dim<image_id<Exact>::dim, Exact>	\
-  {								\
-  public:							\
-    typedef Name<Exact> self_type;				\
-    typedef Exact exact_type;					\
-								\
-    exact_type& operator=(self_type rhs)			\
-    {								\
-      return this->exact().assign(rhs.exact());			\
-    }								\
-								\
-    static std::string name()					\
-    {								\
-      return							\
-	std::string(#Name "<")					\
-	+ Exact::name() + ">";					\
-    }								\
-  };								\
-								\
-  template <unsigned Dim, class Exact>				\
-  class Name##_with_dim						\
-    : public Name<Exact>					\
-  {								\
-  public:							\
-    typedef Name##_with_dim<Dim, Exact> self_type;		\
-    typedef Exact exact_type;					\
-								\
-    exact_type& operator=(self_type rhs)			\
-    {								\
-      return this->exact().assign(rhs.exact());			\
-    }								\
-								\
-    static std::string name()					\
-    {								\
-      std::ostringstream s;					\
-      s << #Name "_with_dim<"					\
-	<< Dim << ", "						\
-	<< Exact::name() << ">";				\
-      return s.str();						\
-    }								\
-  }
 
 namespace oln {
 
   namespace abstract {
-
-    // The label images here were defined because they appeared to be
-    // quite handy. They are different than using image_with_type<T>,
-    // because it handle categories of types, not only one.
-
-    // With each label image, another label_with_dim<Dim, Exact> class
-    // is defined.
-
-    LABEL_IMAGE_(vectorial_image, image);
-    LABEL_IMAGE_(non_vectorial_image, image);
-    LABEL_IMAGE_(binary_image, non_vectorial_image);
-    LABEL_IMAGE_(integer_image, non_vectorial_image);
-    LABEL_IMAGE_(decimal_image, non_vectorial_image);
-
-  }
-
-  namespace abstract {
-  
+    
     template<class T, class Exact>
     class image_with_type;
-
+    
   } // end of namespace abstract
-
+  
   template <class T, class Exact>
   struct image_traits<abstract::image_with_type<T, Exact> >
-    : public image_traits<abstract::image_with_dim<image_id<Exact>::dim, Exact> >
+    : public image_traits<abstract::image<Exact> >
   {
     typedef T value_type;
   };
@@ -121,39 +52,11 @@ namespace oln {
   namespace abstract {
 
     template<class T, class Exact>
-    struct type_switch
-    {
-      enum { Dim = image_id<Exact>::dim };
-
-      typedef typename mlc::bool_switch_<
-
-        mlc::bool_case_<ntg_is_a(T, ntg::binary)::ret,
-			binary_image_with_dim<Dim, Exact>,
-
-        mlc::bool_case_<ntg_is_a(T, ntg::integer)::ret,
-			integer_image_with_dim<Dim, Exact>,
-
-        mlc::bool_case_<ntg_is_a(T, ntg::decimal)::ret,
-			decimal_image_with_dim<Dim, Exact>,
-
-        mlc::bool_case_<ntg_is_a(T, ntg::vectorial)::ret,
-			vectorial_image_with_dim<Dim, Exact>,
-
-        mlc::bool_case_<ntg_is_a(T, ntg::non_vectorial)::ret,
-			non_vectorial_image_with_dim<Dim, Exact>,
-			
-        mlc::bool_case_<true,
-	      	        image_with_dim<image_id<Exact>::dim, Exact>
-
-      > > > > > > >::ret_t ret;
-    };
-
-    template<class T, class Exact>
-    class image_with_type: public type_switch<T, Exact>::ret
+    class image_with_type: virtual public image<Exact>
     {
     public:
 
-      typedef typename type_switch<T, Exact>::ret super_type;
+      typedef image<Exact> super_type;
       typedef image_with_type<T, Exact> self_type;
       typedef Exact exact_type;
 
@@ -176,6 +79,7 @@ namespace oln {
     };
 
   } // end of namespace abstract
+
 } // end of namespace oln
 
 #endif // ! OLENA_CORE_ABSTRACT_IMAGE_WITH_TYPE_HH

@@ -4,7 +4,7 @@ include ../check/Makefile.runtests
 
 noinst_HEADERS = loadsave.hh
 
-CLEANFILES =					\
+CLEANFILES +=					\
   black-test.pbm white-test.pbm			\
   lena						\
   lena.ppm lena.pgm lena.pbm			\

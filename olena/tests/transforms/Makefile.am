@@ -3,7 +3,7 @@ include ../check/Makefile.runtests
 LDFLAGS_RUNTESTS += $(FFTW_LDFLAGS)
 CXXFLAGS_RUNTESTS += $(FFTW_CFLAGS)
 
-CLEANFILES = fft_trans_clipped.pgm \
+CLEANFILES += fft_trans_clipped.pgm \
 	fft_trans_log.pgm \
 	fft_low_pass.pgm \
 	fft_copy.pgm \

@@ -61,7 +61,7 @@
 template <class T2> inline				\
 Builtin&						\
 Op(Builtin& lhs, const value<T2>& rhs)			\
-{ return optraits<Builtin>::Name(lhs, rhs.self()); }
+{ return optraits<Builtin>::Name(lhs, rhs.exact()); }
 
 /*-----------------------------------------------.
 | Global assignements for ntg_types and builtins |
@@ -89,7 +89,7 @@ GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, bool)
 template <class T1, class T2> inline		\
 T1&						\
 Op(value<T1>& lhs, const T2& rhs)		\
-{ return optraits<T1>::Name(lhs.self(), rhs); }
+{ return optraits<T1>::Name(lhs.exact(), rhs); }
 
 /*---------------------.
 | ARITHMETIC OPERATORS |
@@ -111,7 +111,7 @@ Op(Builtin lhs, const value<T2>& rhs)					\
   typedef typename deduced_type::rhs_type rhs_type;			\
 									\
   return optraits<impl>::Name(static_cast<lhs_type>(lhs),		\
-	    	              static_cast<rhs_type>(rhs.self()));	\
+	    	              static_cast<rhs_type>(rhs.exact()));	\
 }
 
 /*------------------------------------------------------------.
@@ -146,7 +146,7 @@ Op(const value<T1>& lhs, const T2& rhs)					\
   typedef typename deduced_type::lhs_type lhs_type;			\
   typedef typename deduced_type::rhs_type rhs_type;			\
 									\
-  return optraits<impl>::Name(static_cast<lhs_type>(lhs.self()),	\
+  return optraits<impl>::Name(static_cast<lhs_type>(lhs.exact()),	\
 			      static_cast<rhs_type>(rhs));		\
 }									\
 									\
@@ -183,7 +183,7 @@ Op(const Builtin& lhs, const value<T2>& rhs)				\
   typedef typename deduced_type::rhs_type rhs_type;			\
 									\
   return optraits<impl>::Name(static_cast<lhs_type>(lhs),		\
-			      static_cast<rhs_type>(rhs.self()));	\
+			      static_cast<rhs_type>(rhs.exact()));	\
 }
 
 /*----------------------------------------------------.
@@ -201,7 +201,7 @@ Op(const value<T1>& lhs, const T2& rhs)					\
   typedef typename deduced_type::lhs_type lhs_type;			\
   typedef typename deduced_type::rhs_type rhs_type;			\
 									\
-  return optraits<impl>::Name(static_cast<lhs_type>(lhs.self()),	\
+  return optraits<impl>::Name(static_cast<lhs_type>(lhs.exact()),	\
 			      static_cast<rhs_type>(rhs));		\
 }									\
 									\
@@ -237,7 +237,7 @@ Op(const Builtin& lhs, const value<T2>& rhs)				\
   typedef typename deduced_type::rhs_type rhs_type;			\
 									\
   return optraits<impl>::Name(static_cast<lhs_type>(lhs),		\
-			      static_cast<rhs_type>(rhs.self()));	\
+			      static_cast<rhs_type>(rhs.exact()));	\
 }
 
 /*------------------------------------------------------------.
@@ -255,7 +255,7 @@ Op(const value<T1>& lhs, const T2& rhs)				\
   typedef typename deduced_type::lhs_type lhs_type;		\
   typedef typename deduced_type::rhs_type rhs_type;		\
 								\
- return optraits<impl>::Name(static_cast<lhs_type>(lhs.self()),	\
+ return optraits<impl>::Name(static_cast<lhs_type>(lhs.exact()),	\
 			      static_cast<rhs_type>(rhs));	\
 }								\
 								\

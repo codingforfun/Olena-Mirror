@@ -41,24 +41,24 @@ namespace oln {
   namespace arith {
 
     _OLN_ARITH_DECLARE_BINRECVAL_FUNCTORS(plus,
-					  val1.self() + val2.self(),
-					  val.self() + _cst);
+					  val1.exact() + val2.exact(),
+					  val.exact() + _cst);
     // need a cast for the case int_u - int_u
     _OLN_ARITH_DECLARE_BINRECVAL_FUNCTORS(minus,
-					  val1.self() - val2.self(),
-					  val.self() - _cst);
+					  val1.exact() - val2.exact(),
+					  val.exact() - _cst);
     _OLN_ARITH_DECLARE_BINRECVAL_FUNCTORS(times,
-					  val1.self() * val2.self(),
-					  val.self() * _cst);
+					  val1.exact() * val2.exact(),
+					  val.exact() * _cst);
     _OLN_ARITH_DECLARE_BINRECVAL_FUNCTORS(div,
-					  val1.self() / val2.self(),
-					  val.self() / _cst);
+					  val1.exact() / val2.exact(),
+					  val.exact() / _cst);
     _OLN_ARITH_DECLARE_BINRECVAL_FUNCTORS(min,
-					  min(val1.self(), val2.self()),
-					  min(val.self(), _cst));
+					  min(val1.exact(), val2.exact()),
+					  min(val.exact(), _cst));
     _OLN_ARITH_DECLARE_BINRECVAL_FUNCTORS(max,
-					  max(val1.self(), val2.self()),
-					  max(val.self(), _cst));
+					  max(val1.exact(), val2.exact()),
+					  max(val.exact(), _cst));
 
     _OLN_ARITH_DECLARE_ALL_BINOP_PROCS(plus)
     _OLN_ARITH_DECLARE_ALL_BINOP_PROCS(minus)

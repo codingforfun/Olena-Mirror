@@ -109,7 +109,7 @@ namespace oln {
 
     // one-dimensional specialization
     template <class Exact>
-    class image_with_dim<1, Exact>: public image<Exact>
+    class image_with_dim<1, Exact>: virtual public image<Exact>
     {
     public:
       typedef typename image_traits<Exact>::point_type point_type;
@@ -177,7 +177,7 @@ namespace oln {
 
     // bi-dimensional specialization
     template <class Exact>
-    class image_with_dim<2, Exact>: public image<Exact>
+    class image_with_dim<2, Exact>: virtual public image<Exact>
     {
     public:
       typedef typename image_traits<Exact>::point_type point_type;
@@ -250,7 +250,7 @@ namespace oln {
 
     // tri-dimensional specialization
     template <class Exact>
-    class image_with_dim<3, Exact>: public image<Exact>
+    class image_with_dim<3, Exact>: virtual public image<Exact>
     {
     public:
       typedef typename image_traits<Exact>::point_type point_type;

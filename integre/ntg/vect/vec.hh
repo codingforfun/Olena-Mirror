@@ -288,7 +288,7 @@ namespace ntg {
 	ntg_is_a(T1, ntg::vectorial)::ensure();
 	ntg_is_a(T2, ntg::real)::ensure();
 	typedef ntg_return_type(times, T1, T2) return_type;
-	return_type result(lhs.self());
+	return_type result(lhs.exact());
 	result *= rhs;
 	return result;
       }

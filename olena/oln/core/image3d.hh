@@ -86,28 +86,35 @@ namespace oln {
 
     image3d() :
       super_type((impl_type*) 0)
-    {}
+    {
+      mlc_init_static_hierarchy(Exact);
+    }
 
     image3d(coord nslices, coord nrows, coord ncols, coord border = 2) :
       super_type(new impl_type(image3d_size(nslices, nrows, ncols, border)))
     {
+      mlc_init_static_hierarchy(Exact);
       super_type::impl()->ref();
     }
 
     image3d(const image3d_size& size) :
       super_type(new impl_type(size))
     {
+      mlc_init_static_hierarchy(Exact);
       super_type::impl()->ref(); 
     }
 
     // shallow copy
     image3d(self_type& rhs) :
       super_type(rhs)
-    {}
+    {
+      mlc_init_static_hierarchy(Exact);
+    }
 
     // io
     image3d(const io::internal::anything& r) : super_type((impl_type*) 0)
     {
+      mlc_init_static_hierarchy(Exact);
       r.assign(*this);
     }
     image3d& operator=(const io::internal::anything& r)

@@ -19,6 +19,8 @@ check-runtests:
 distclean-runtests:
 	rm -rf runs
 
+CLEANFILES = test.core
+
 # Default rules, one may want to override these and call
 # check-runtests and distclean-runtests manually
 

@@ -1,22 +1,51 @@
+2003-08-05  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/core/abstract/image.hh: Inherit from any_with_diamond.
+	* oln/core/image1d.hh: Adjust consequently.
+	* oln/core/image2d.hh: Likewise.
+	* oln/core/image3d.hh: Likewise.
+
+	* oln/core/abstract/image_with_type.hh: Move label images to...
+	* oln/core/abstract/image_with_type_with_dim.hh: ... this. New.
+	* oln/core/abstract/image_with_dim.hh: Adjust inheritance.
+	* oln/core/abstract/image_with_impl.hh: Likewise.
+
+2003-08-05  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/check/Makefile.runtests: Add default CLEANFILES.
+	* tests/convol/Makefile.am: Adjust consequently.
+	* tests/io/Makefile.am: Likewise.
+	* tests/level/Makefile.am: Likewise.
+	* tests/transforms/Makefile.am: Likewise.
+	
+	* oln/Makefile.am: Fix modified files in topo/.
+	
+2003-08-05  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/arith/ops.hh: Don't use deprecated self() method.
+	* oln/math/macros.hh: Likewise.
+	* oln/topo/combinatorial-map/internal/cmap-functor.hh: Likewise.
+	* oln/topo/combinatorial-map/internal/cmap-functor.hxx: Likewise.
+
 2003-08-05  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
-	* olena/oln/topo/combinatorial-map/cmap.hh,
-	olena/oln/topo/combinatorial-map/cmap.hxx: Adjust files. New
+	* oln/topo/combinatorial-map/cmap.hh,
+	oln/topo/combinatorial-map/cmap.hxx: Adjust files. New
 	version of combinatorial maps.
 
-	* olena/oln/topo/combinatorial-map/internal/zeta.hh,
-	olena/oln/topo/combinatorial-map/internal/allfunc.hh,
-	olena/oln/topo/combinatorial-map/internal/alpha.hh,
-	olena/oln/topo/combinatorial-map/internal/anyfunc.hh,
-	olena/oln/topo/combinatorial-map/internal/anyfunc.hxx,
-	olena/oln/topo/combinatorial-map/internal/beta.hh,
-	olena/oln/topo/combinatorial-map/internal/lambda.hh,
-	olena/oln/topo/combinatorial-map/internal/level.hh,
-	olena/oln/topo/combinatorial-map/internal/level.hxx,
-	olena/oln/topo/combinatorial-map/internal/sigma.hh: New files.
+	* oln/topo/combinatorial-map/internal/zeta.hh,
+	oln/topo/combinatorial-map/internal/allfunc.hh,
+	oln/topo/combinatorial-map/internal/alpha.hh,
+	oln/topo/combinatorial-map/internal/anyfunc.hh,
+	oln/topo/combinatorial-map/internal/anyfunc.hxx,
+	oln/topo/combinatorial-map/internal/beta.hh,
+	oln/topo/combinatorial-map/internal/lambda.hh,
+	oln/topo/combinatorial-map/internal/level.hh,
+	oln/topo/combinatorial-map/internal/level.hxx,
+	oln/topo/combinatorial-map/internal/sigma.hh: New files.
 
-	* olena/oln/topo/combinatorial-map/internal/cmap-functor.hh,
-	olena/oln/topo/combinatorial-map/internal/cmap-functor.hxx: Remove
+	* oln/topo/combinatorial-map/internal/cmap-functor.hh,
+	oln/topo/combinatorial-map/internal/cmap-functor.hxx: Remove
 	files.
 
 2003-08-04  David Lesage  <david@lrde.epita.fr>
@@ -362,18 +391,18 @@
 
 2003-07-31  Reda Dehak  <reda@lrde.epita.fr>
 
-	* olena/oln/convert/abstract/colorconv.hh,
-	olena/oln/convert/nrgbyuv.hh,
-	olena/oln/convert/stretch.hh: Minor update.
+	* oln/convert/abstract/colorconv.hh,
+	oln/convert/nrgbyuv.hh,
+	oln/convert/stretch.hh: Minor update.
 
 2003-07-31  Reda Dehak  <reda@lrde.epita.fr>
 
-	* olena/oln/arith/internal/opdecls.hh,
-	olena/oln/convert/conversion.hh,
-	olena/oln/convert/conversion_ng_se.hh: Fix namespaces.
+	* oln/arith/internal/opdecls.hh,
+	oln/convert/conversion.hh,
+	oln/convert/conversion_ng_se.hh: Fix namespaces.
 
-	* olena/oln/convert/force.hh,
-	olena/oln/convert/stretch.hh: Minor update.
+	* oln/convert/force.hh,
+	oln/convert/stretch.hh: Minor update.
 
 
 2003-07-31  Reda Dehak  <reda@lrde.epita.fr>
@@ -432,23 +461,23 @@
 
 2003-07-31  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
-	* olena/tests/level/invert.cc: Fix IO bug.
+	* tests/level/invert.cc: Fix IO bug.
 
 2003-07-31  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
-	* olena/tests/level/connected.cc: Fix return value.
+	* tests/level/connected.cc: Fix return value.
 
 2003-07-31  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
-	* olena/oln/topo/dmap.hxx,
-	olena/oln/topo/inter-pixel/internal/dir-iter.hh: Fix bugs.
+	* oln/topo/dmap.hxx,
+	oln/topo/inter-pixel/internal/dir-iter.hh: Fix bugs.
 
-	* olena/tests/topo/test-tarjan.cc: New test.
+	* tests/topo/test-tarjan.cc: New test.
 
-	* olena/tests/topo/Makefile.am: Adjust.
+	* tests/topo/Makefile.am: Adjust.
 
-	* olena/tests/topo/test-inter-pixel.cc,
-	olena/tests/topo/test-cmap.cc, olena/tests/topo/test-dmap.cc:
+	* tests/topo/test-inter-pixel.cc,
+	tests/topo/test-cmap.cc, tests/topo/test-dmap.cc:
 	Change outer stream cerr to cout.
 
 2003-07-30  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
@@ -1366,9 +1395,9 @@
 	* oln/topo/inter-pixel/inter-pixel.hxx,
 	oln/topo/inter-pixel/inter-pixel.hh,
 	oln/topo/combinatorial-map/cmap.hxx, oln/topo/tarjan/union.hh,
-	olena/oln/topo/tarjan/flat-zone.hh,
-	olena/oln/topo/combinatorial-map/cmap.hh,
-	olena/oln/topo/inter-pixel/node.hh: Fix MacOSX complilation bug.
+	oln/topo/tarjan/flat-zone.hh,
+	oln/topo/combinatorial-map/cmap.hh,
+	oln/topo/inter-pixel/node.hh: Fix MacOSX complilation bug.
 
 2003-06-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
@@ -1576,9 +1605,9 @@
 	* tests/topo/test.sh: Add new file.
 
 	* oln/topo/cmap-functor.hh, oln/topo/cmap-functor.hxx,
-	olena/oln/topo/inter-pixel.hxx, olena/oln/topo/cmap.hxx,
-	olena/oln/topo/union.hh, olena/oln/topo/inter-pixel.hh,
-	olena/oln/topo/flat-zone.hh, olena/oln/topo/cmap.hh:
+	oln/topo/inter-pixel.hxx, oln/topo/cmap.hxx,
+	oln/topo/union.hh, oln/topo/inter-pixel.hh,
+	oln/topo/flat-zone.hh, oln/topo/cmap.hh:
 	Modify guards lines, fix namespaces and comments.
 
 	* tests/topo/test-cmap.cc, tests/topo/test-inter-pixel.cc: Adjust.

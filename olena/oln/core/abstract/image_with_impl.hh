@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_ABSTRACT_IMAGE_WITH_IMPL_HH
 # define OLENA_CORE_ABSTRACT_IMAGE_WITH_IMPL_HH
 
-# include <oln/core/abstract/image_with_type.hh>
+# include <oln/core/abstract/image_with_type_with_dim.hh>
 # include <oln/core/impl/image_impl.hh>
 
 namespace oln {
@@ -41,18 +41,18 @@ namespace oln {
   } // end of namespace abstract
 
     template<class Impl, class Exact>
-    struct image_traits<abstract::image_with_impl<Impl, Exact> > 
-      : public image_traits<abstract::image_with_type<typename image_id<Exact>::value_type, Exact> >
+    struct image_traits<abstract::image_with_impl<Impl, Exact> > : 
+    public image_traits<typename abstract::image_with_dim<image_id<Exact>::dim, Exact> >,
+    public image_traits<typename abstract::image_with_type<typename image_id<Exact>::value_type, Exact> >
     {
       typedef Impl impl_type;
     };
-
 
   namespace abstract {
 
     template<class Impl, class Exact>
     class image_with_impl: 
-      public image_with_type<typename image_id<Exact>::value_type, Exact>
+      public abstract::image_with_type_with_dim_switch<Exact>::ret
     {
     public:
       typedef typename image_traits<Exact>::point_type point_type;

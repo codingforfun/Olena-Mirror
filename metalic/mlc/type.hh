@@ -29,8 +29,10 @@
 # define METALIC_TYPE_HH
 
 # include <mlc/config/system.hh>
+# include <mlc/bool.hh>
 
 # include <string>
+# include <cassert>
 
 //  FIXME: Move static hiearchy tools into a dedicated header ?
 
@@ -38,25 +40,48 @@ namespace mlc_hierarchy
 {
 
   template<class E>
-  class any 
+  class any_with_diamond
   {
   public:
     typedef E exact_type;
     
-    // these reinterpret_casts allow for diamond hierarchies
-    // whereas *static_cast<const E*>(this) is forbidden
-    // in such cases; if a bug occurs because of one of these
-    // casts, please submit a bug report!
+    E& exact()       { assert(exact_this != 0); return *exact_this; }
+    const E& exact() const { assert(exact_this != 0); return *exact_this; }
+   
+    static std::string name() 
+    { 
+      return std::string("any_with_diamond<") + E::name() + ">"; 
+    }
+
+  protected:
+    any_with_diamond() 
+    {
+      exact_this = 0;
+    }
+
+  protected:
+    // This stores the actual value of the exact type pointer. This
+    // enables diamond hierarchies, as static_cast cannot perform it
+    // and reinterpret_cast or (Exact*)(void*) cast are unsafe and
+    // compiler dependent.  This member should be initialized by every
+    // concrete classes, using the mlc_init_static_hierarchy macro.
+    E* exact_this;
+  };
+
+  // Warning, this class does not allow diamond hierarchies, consider
+  // any_with_diamond if you really need it.
+
+  template<class E>
+  class any
+  {
+  public:
+    typedef E exact_type;
     
     E& exact()       { return static_cast<E&>(*this); }
     const E& exact() const { return static_cast<const E&>(*this); }
-    
-    // self() is only for bwd compatibility purpose
-    // please now use exact() instead of self()
-    inline       E& self();
-    inline const E& self() const;
-    
+   
     static std::string name() { return std::string("any<") + E::name() + ">"; }
+
   protected:
     any() {}
   };
@@ -93,47 +118,32 @@ namespace mlc
     top() {}
   };
 
-  class bottom 
-  {
-  public:
-    static std::string name() { return "bot"; }
-  private:
-    bottom();
-  };
+  /*----------------.
+  | Type comparison |
+  `----------------*/
   
+  template <class T, class U>
+  struct type_eq : returns_bool_<false> {};
+
+  template <class T>
+  struct type_eq<T, T> : returns_bool_<true> {};
+
   //
   //  Helper for static hierarchies: 
   //  FIXME : should not be necessary 
   //
   ////////////////////////////////////
 
-  // if Self is mlc::bottom return T else return Self
+  // if Self is mlc::final return T else return Self
 
   template <class T, class Self>
   struct select_self
   { typedef Self ret; };
   
-  // FIXME: kept for compatibility.
-  template <class T>
-  struct select_self<T, bottom>
-  { typedef T ret; };
-  
   template <class T>
   struct select_self<T, final>
   { typedef T ret; };
   
-  //
-  //  inferior traits
-  //  FIXME : erase ?
-  //
-  ///////////////////////////////
-
-  // template<class C>
-  // struct inferior
-  // {
-  // typedef typename C::inferior ret;
-  // };
-
   //
   //  exact traits
   //
@@ -273,16 +283,17 @@ to_exact(const T* ptr)
   return &ptr->exact();
 }
 
-//
-//  code below is only for bwd compatibility purpose
-//
-//////////////////////////////////////////////////////
+/*------------.
+| Misc macros |
+`------------*/
 
-template<class E> inline E& mlc_hierarchy::any<E>::self()
-{ return static_cast<E&>(*this); }
+# define mlc_init_static_hierarchy(Exact)	\
+if (mlc::type_eq<Exact, mlc::final>::ret)	\
+  this->exact_this = this
 
-template<class E> inline const E& mlc_hierarchy::any<E>::self() const 
-{ return static_cast<E&>(*this); }
+/*-------------------------.
+| bwd compatibility macros |
+`-------------------------*/
 
 # define Exact(Type) \
 typename mlc::exact< Type >::ret
