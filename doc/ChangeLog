@@ -1,5 +1,10 @@
 2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
 
+	* dev/abstract.texi (Abstract): Bump version.
+	* dev/build.texi (Configuration): Likewise.
+
+2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
+
 	* dev/faq.texi (Frequently Asked Questions): Use cleaner layout
 	for Troubleshooting.
 

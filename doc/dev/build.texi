@@ -63,11 +63,11 @@ In order to prepare the build process, you need to configure the
 source tree.
 
 Assuming your Olena distribution is uncompressed in directory
-@file{oln-0.7}, follow these steps:
+@file{oln-0.8}, follow these steps:
 
 @example
 $ @kbd{mkdir ../build}
-$ @kbd{cd ../build && ../oln-0.7/configure CXXFLAGS=''}
+$ @kbd{cd ../build && ../oln-0.8/configure CXXFLAGS=''}
 @end example
 
 @strong{Note:} take care to set @env{CXXFLAGS} always when running

@@ -6,7 +6,7 @@
 @chapter Abstract
 @end ifplaintext
 
-This is the seventh public release of Olena, a generic image
+This is the eighth public release of Olena, a generic image
 processing library in C++.
 
 @ifplaintext
