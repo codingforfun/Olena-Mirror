@@ -33,7 +33,7 @@
 
 # include <ntg/color/nrgb.hh>
 # include <ntg/color/hsl.hh>
-# include <ntg/core/typetraits_builtins.hh>
+# include <ntg/basics.hh>
 # include <cstdlib>
 
 /*------------------------------------------------------------------.

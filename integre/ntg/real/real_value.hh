@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_ENUM_ENUMERATED_HH
-# define NTG_ENUM_ENUMERATED_HH
+#ifndef NTG_REAL_REAL_VALUE_HH
+# define NTG_REAL_REAL_VALUE_HH
 
 # include <ntg/core/value.hh>
 
@@ -34,14 +34,29 @@ namespace ntg
 {
 
   /*-----------.
-  | enumerated |
+  | real_value |
   `-----------*/
-  //! Enumerated types abstract class.
 
-  template <class E>
-  class enumerated : public value<E>
+  template <class E> 
+  class real_value : public value<E>
   {};
 
-}
+  /*----------.
+  | int_value |
+  `----------*/
+  
+  template <class E> 
+  class int_value : public real_value<E>
+  {};
 
-#endif // !NTG_ENUM_ENUMERATED_HH
+  /*------------.
+  | float_value |
+  `------------*/
+
+  template <class E>
+  class float_value : public real_value<E>
+  {};
+
+} // end of ntg.
+
+#endif // !NTG_REAL_REAL_VALUE_HH

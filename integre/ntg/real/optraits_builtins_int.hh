@@ -48,8 +48,9 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-namespace ntg
-{
+namespace ntg {
+
+  namespace internal {
 
   OPTRAITS_BUILTIN_INT_U(unsigned long,  ULONG_MAX);
   OPTRAITS_BUILTIN_INT_U(unsigned int,   UINT_MAX);
@@ -61,6 +62,8 @@ namespace ntg
   OPTRAITS_BUILTIN_INT_S(signed short, SHRT_MIN, SHRT_MAX);
   OPTRAITS_BUILTIN_INT_S(signed char,  CHAR_MIN, CHAR_MAX);
 
-} // end of ntg
+  } // end of internal.
+
+} // end of ntg.
 
 #endif // ndef OPTRAITS_BUILTINS_INT_HH

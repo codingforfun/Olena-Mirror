@@ -31,15 +31,14 @@
 # include <mlc/contract.hh>
 # include <mlc/is_a.hh>
 
-# include <ntg/utils/to_oln.hh>
 # include <ntg/core/value.hh>
 # include <ntg/core/macros.hh>
-# include <ntg/core/global_ops_traits.hh>
-# include <ntg/core/optraits_builtins.hh>
-# include <ntg/core/typetraits_builtins.hh>
+# include <ntg/core/internal/global_ops_traits.hh>
+# include <ntg/core/internal/optraits_builtins.hh>
+# include <ntg/core/internal/typetraits_builtins.hh>
 
 // macros defs
-# include <ntg/core/global_ops_defs.hh>
+# include <ntg/core/internal/global_ops_defs.hh>
 
 //
 //  Global ops

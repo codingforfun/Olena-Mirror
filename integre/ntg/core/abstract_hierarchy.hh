@@ -25,38 +25,26 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_REAL_REAL_HH
-# define NTG_REAL_REAL_HH
-
-# include <ntg/core/value.hh>
+#ifndef NTG_CORE_ABSTRACT_HIERARCHY_HH
+# define NTG_CORE_ABSTRACT_HIERARCHY_HH
 
 namespace ntg
 {
 
-  /*-----.
-  | real |
-  `-----*/
+  class data_type {};
 
-  template <class E> 
-  class real : public value<E> 
-  {};
+  class real : public data_type {};
 
-  /*--------.
-  | integer |
-  `--------*/
-  
-  template <class E> 
-  class integer : public real<E> 
-  {};
+  class integer : public real {};
+  class unsigned_integer : public integer {};
+  class signed_integer : public integer {};
 
-  /*--------.
-  | decimal |
-  `--------*/
+  class decimal : public real {};
 
-  template <class E>
-  class decimal : public real<E>
-  {};
+  class enumerated : public data_type {};
+
+  class vectorial : public data_type {};
 
 } // end of ntg.
 
-#endif // !NTG_REAL_REAL_HH
+#endif // ndef NTG_CORE_ABSTRACT_HIERARCHY_HH

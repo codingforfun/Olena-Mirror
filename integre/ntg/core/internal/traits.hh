@@ -25,38 +25,65 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_OPTRAITS_HH
-# define NTG_OPTRAITS_HH
+#ifndef NTG_CORE_TRAITS_HH
+# define NTG_CORE_TRAITS_HH
 
-# include <ntg/config/system.hh>
+namespace ntg {
 
-# include <string>
+  namespace internal {
 
-namespace ntg
-{
+    /*-----------.
+    | typetraits |
+    `-----------*/
+    //! Associates types to types.
+    /*!  
+      Not defined by default, as accessing to undefined properties
+      does not make sense. Specialize it for every types.
 
-  // top of hierarchy
-  template <class T>
-  class optraits_top
-  {
-  public:
+      Please note that typetraits only associates types, and not
+      methods. This is necessary to handle mutual instanciation
+      problems, as optraits usually needs typetraits to be
+      instanciated.
+    */
+    
+    template <class T>
+    class typetraits;
+    
+    /*---------.
+    | optraits |
+    `---------*/
+    //! Associates functions to types.
+    /*!  
+      Not defined by default, it has to be specialized for every
+      types.
+    */
+
+    // FIXME: remove these useless classes.
+    
+    // top of hierarchy
+    template <class T>
+    class optraits_top
+    {
+    public:
+      // default impl
+      static std::string name() { return T::name(); }
+    };
+
+    // enumerated types
+    template <class T>
+    class optraits_enum : public optraits_top<T> {};
+
+    // vectorial types
+    template <class T>
+    class optraits_vector : public optraits_top<T> {};
+
     // default impl
-    static std::string name() { return T::name(); }
-  };
+    template <class T>
+    struct optraits : public optraits_top<T>
+    {};
 
-  // enumerated types
-  template <class T>
-  class optraits_enum : public optraits_top<T> {};
+  } // end of internal.
 
-  // vectorial types
-  template <class T>
-  class optraits_vector : public optraits_top<T> {};
+} // end of ntg.
 
-  // default impl
-  template <class T>
-  struct optraits : public optraits_top<T>
-  {};
-
-} // end of ntg
-
-#endif // ndef NTG_OPTRAITS_HH
+#endif // ndef NTG_CORE_TRAITS_HH

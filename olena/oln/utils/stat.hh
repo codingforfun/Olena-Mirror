@@ -30,7 +30,7 @@
 
 # include <oln/basics.hh>
 # include <ntg/core/predecls.hh>
-# include <ntg/core/optraits.hh>
+# include <ntg/basics.hh>
 
 namespace oln {
 
@@ -96,8 +96,8 @@ namespace oln {
       void operator()(const T& val)
       {
 	if (! valued()) {
-	  _sum1 = ntg::optraits<C>::zero();
-	  _sum2 = ntg::optraits<C>::zero();
+	  _sum1 = ntg_zero_val(C);
+	  _sum2 = ntg_zero_val(C);
 	} else {
 	  _sum1 += val;
 	  _sum2 += C(val) * val;

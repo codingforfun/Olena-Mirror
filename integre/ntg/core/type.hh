@@ -38,6 +38,8 @@ namespace ntg
   class any
   {
   public:
+    typedef E exact_type;
+    
     E& exact() { return static_cast<E&>(*this); }
     const E& exact() const { return static_cast<const E&>(*this); }
 

@@ -35,7 +35,7 @@
 #  include <fftw.h>
 #  include <rfftw.h>
 
-#  include <ntg/core/optraits.hh>
+#  include <ntg/basics.hh>
 #  include <ntg/all.hh>
 #  include <oln/basics2d.hh>
 
@@ -52,7 +52,7 @@ namespace oln {
     template <class T>
     struct fft_trait
     {
-      void ensure() { is_a(optraits<T>, optraits_scalar)::ensure(); }
+      void ensure() { ntg_is_a(T, ntg::real)::ensure(); }
 
       static const fft_dispatch		which = fft_real;
       typedef fftw_real			fftw_input;
@@ -88,7 +88,7 @@ namespace oln {
       template <class T1>
       image2d<T1> transformed_image_magn(bool ordered = true) const
       {
-	is_a(optraits<T1>, optraits_scalar)::ensure();
+	ntg_is_a(T1, ntg::real)::ensure();
 
 	image2d<T1> new_im(trans_im.size());
 
@@ -118,7 +118,7 @@ namespace oln {
       image2d<T1> transformed_image_clipped_magn(const float_d clip,
 						 bool ordered = true) const
       {
-	is_a(optraits<T1>, optraits_scalar)::ensure();
+	ntg_is_a(T1, ntg::real)::ensure();
 
 	image2d<T1> new_im(trans_im.size());
 	range<float_d, bounded_u<0, 1>, saturate> c(clip);
@@ -136,10 +136,10 @@ namespace oln {
 		if (trans_im((row + trans_im.nrows() / 2) % trans_im.nrows(),
 			     (col + trans_im.ncols() / 2) %
 			     trans_im.ncols()).magn() >= max * c)
-		  new_im(row, col) = optraits<T>::max();
+		  new_im(row, col) = ntg_max_val(T);
 		else
 		  new_im(row, col) =
-		    optraits<T>::max() *
+		    ntg_max_val(T) *
 		    trans_im((row + trans_im.nrows() / 2) % trans_im.nrows(),
 			     (col + trans_im.ncols() / 2) %
 			     trans_im.ncols()).magn() / (max * c);
@@ -148,9 +148,9 @@ namespace oln {
 	  for_all(it)
 	      {
 		if (trans_im[it].magn() >= max * c)
-		  new_im[it] = optraits<T>::max();
+		  new_im[it] = ntg_max_val(T);
 		else 
-		  new_im[it] = optraits<T>::max() *
+		  new_im[it] = ntg_max_val(T) *
 		    trans_im[it].magn() / (max * c);
 	      }
       
@@ -184,7 +184,7 @@ namespace oln {
 					     saturate> b,
 					     bool ordered = true) const
       {
-	is_a(optraits<T1>, optraits_scalar)::ensure();
+	ntg_is_a(T1, ntg::real)::ensure();
 
 	image2d<T1> new_im(trans_im.size());
 	float_d max = 0;
@@ -202,11 +202,11 @@ namespace oln {
 				     trans_im.nrows(),
 				     (col + trans_im.ncols() / 2) %
 				     trans_im.ncols()).magn()) /
-		log(a + b * max) * optraits<T>::max();
+		log(a + b * max) * ntg_max_val(T);
 	else
 	  for_all(it)
 	    new_im[it] = log(a + b * trans_im[it].magn()) /
-	    log(a + b * max) * optraits<T>::max();
+	    log(a + b * max) * ntg_max_val(T);
 
 	return new_im;
       }
@@ -314,7 +314,7 @@ namespace oln {
       template <class T1>
       image2d<T1> transform_inv()
       {
-	is_a(optraits<T1>, optraits_scalar)::ensure();
+	ntg_is_a(T1, ntg::real)::ensure();
 
 	for (int row = 0; row < trans_im.nrows(); ++row)
 	  for (int col = 0; col <= trans_im.ncols() / 2; ++col)
@@ -331,11 +331,11 @@ namespace oln {
 	for (int row = 0; row < trans_im.nrows(); ++row)
 	  for (int col = 0; col < trans_im.ncols(); ++col)
 	    {
-	      new_im(row, col) = (in[i] >= optraits<T1>::inf() ?
-				  (in[i] <= optraits<T1>::sup() ?
+	      new_im(row, col) = (in[i] >= ntg_inf_val(T1) ?
+				  (in[i] <= ntg_sup_val(T1) ?
 				   in [i] :
-				   optraits<T1>::sup()) :
-				  optraits<T1>::inf());
+				   ntg_sup_val(T1)) :
+				  ntg_inf_val(T1));
 	      ++i;
 	    }
 	return new_im;

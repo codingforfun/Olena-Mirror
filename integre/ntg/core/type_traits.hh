@@ -25,45 +25,39 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CONVERT_STRETCH_HH
-# define OLENA_CONVERT_STRETCH_HH
+#ifndef NTG_CORE_TYPE_TRAITS_HH
+# define NTG_CORE_TYPE_TRAITS_HH
 
 # include <mlc/type.hh>
 
-# include <ntg/basics.hh>
+# include <ntg/core/internal/traits.hh>
 
-# include <oln/convert/conversion.hh>
-# include <oln/convert/force.hh>
+namespace ntg
+{
 
-namespace oln {
-  
-  namespace convert {
+  /*------------.
+  | type_traits |
+  `------------*/
+  //! Associates properties and methods to types.
+  /*!  
+    type_traits gives a variable set of properties, depending on
+    the type considered. For example, type_traits<int_u8> can give
+    larger_type, max(), ...
 
-    template<class Output, class Exact = mlc::final>
-    struct stretch : public conversion_to_type<Output, typename mlc::exact_vt<force<Output, Exact>, Exact>::ret >
-    {
-  
-      template< class Input >
-      Output operator() (const Input& v) const {
+    It refers to the exact type, this means type_traits<any<int_u8> >
+    will give the same results than type_traits<int_u8>.
 
-	return Output(cast::rbound<Output, float>
-		      (
-		       double(v - ntg_min_val(Input))
-		       / double(ntg_max_val(Input) - ntg_min_val(Input))
-		       * (ntg_max_val(Output) - ntg_min_val(Output))
-		       + ntg_min_val(Output))
-		      );
-      }
-      
-      static std::string name() {
-        return std::string("stretch<") + typename_of<Output>() + ", "
-          + typename_of<Exact>() + ">";
-      }
-    };
+    Traits can be defined for builtin values, so that type_traits<int>
+    works, this is the main advantage on T::xxx approach to define
+    properties.
+  */
 
+  template <class T>
+  class type_traits : 
+    public internal::optraits<T>, 
+    public internal::typetraits<T>
+  {};
+    
+} // end of ntg.
 
-  } // end of convert.
-
-} // end of oln.
-
-#endif // OLENA_CONVERT_STRETCH_HH
+#endif // ndef NTG_CORE_TYPE_TRAITS_HH

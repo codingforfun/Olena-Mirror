@@ -29,11 +29,12 @@
 # define OLENA_ARITH_OPS_HH
 
 # include <oln/basics.hh>
-# include <oln/math/macros.hh>
 # include <oln/arith/internal/opdecls.hh>
-# include <ntg/core/global_ops_traits.hh>
-# include <ntg/core/typetraits_builtins.hh>
 # include <oln/convert/basics.hh>
+# include <oln/math/macros.hh>
+
+# include <ntg/basics.hh>
+
 # include <functional>
 
 namespace oln {

@@ -30,11 +30,12 @@
 
 # include <ntg/config/system.hh>
 
+# include <ntg/basics.hh>
+
 # include <ntg/core/type.hh>
 # include <ntg/core/predecls.hh>
 
-# include <ntg/core/builtins_properties.hh>
-# include <ntg/utils/to_oln.hh>
+# include <ntg/core/internal/builtins_properties.hh>
 
 # include <ntg/core/behavior.hh>
 # include <ntg/core/interval.hh>
@@ -57,11 +58,11 @@
 # include <ntg/color/yiq.hh>
 # include <ntg/color/yuv.hh>
 
-# include <ntg/core/typetraits_builtins.hh>
-# include <ntg/core/optraits_builtins.hh>
+# include <ntg/core/internal/typetraits_builtins.hh>
+# include <ntg/core/internal/optraits_builtins.hh>
 
-# include <ntg/core/global_ops_traits.hh>
-# include <ntg/core/global_ops.hh>
+# include <ntg/core/internal/global_ops_traits.hh>
+# include <ntg/core/internal/global_ops.hh>
 
 # include <ntg/utils/cast.hh>
 

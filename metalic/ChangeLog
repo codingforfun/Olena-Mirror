@@ -1,3 +1,7 @@
+2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* mlc/type.hh: Rename Exact macro.
+
 2003-03-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* Makefile.am: Adjust.

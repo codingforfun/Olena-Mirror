@@ -37,14 +37,14 @@
   template <class T1, class T2> inline							\
   static T1& Name(T1& lhs, const T2& rhs)						\
   {											\
-    is_a(optraits<T1>, ntg::optraits_scalar)::ensure();					\
-    is_a(optraits<T2>, ntg::optraits_scalar)::ensure();					\
+    ntg_is_a(T1, ntg::real)::ensure();							\
+    ntg_is_a(T2, ntg::real)::ensure();							\
 											\
     return Name##_impl<T1,T2>(lhs, rhs);						\
   }											\
 											\
   template <class T1, class T2> inline							\
-  static T1& Name##_impl(real<T1>& lhs, const real<T2>& rhs)		\
+  static T1& Name##_impl(ntg::real_value<T1>& lhs, const ntg::real_value<T2>& rhs)	\
   {											\
     typedef typename typetraits<T1>::behaviour_type behaviour_type;			\
     lhs.self() = behaviour_type::check_##Name(lhs.self().val(), rhs.self().val());	\
@@ -52,7 +52,7 @@
   }											\
 											\
   template <class T1, class T2> inline							\
-  static T1& Name##_impl(real<T1>& lhs, const ntg::any_const_class<T2> rhs)	\
+  static T1& Name##_impl(ntg::real_value<T1>& lhs, const ntg::any_const_class<T2> rhs)	\
   {											\
     typedef typename typetraits<T1>::behaviour_type behaviour_type;			\
     lhs.self() = behaviour_type::check_##Name(lhs.self().val(), rhs.self());		\
@@ -60,7 +60,7 @@
   }											\
 											\
   template <class T1, class T2> inline							\
-  static T1& Name##_impl(ntg::any_class<T1> lhs, const real<T2>& rhs)		\
+  static T1& Name##_impl(ntg::any_class<T1> lhs, const ntg::real_value<T2>& rhs)	\
   {											\
     typedef typename typetraits<T1>::behaviour_type behaviour_type;			\
     lhs.self() = behaviour_type::check_##Name(lhs.self(), rhs.self().val());		\
@@ -73,8 +73,8 @@
   internal::deduce_from_traits<internal::operator_##Name##_traits, T1, T2>::ret	\
   Name(const T1& lhs, const T2& rhs)						\
   {										\
-    is_a(optraits<T1>, ntg::optraits_scalar)::ensure();				\
-    is_a(optraits<T2>, ntg::optraits_scalar)::ensure();				\
+    ntg_is_a(T1, ntg::real)::ensure();						\
+    ntg_is_a(T2, ntg::real)::ensure();						\
 										\
     typedef typename								\
       internal::deduce_from_traits<internal::operator_##Name##_traits,		\
@@ -85,30 +85,31 @@
   }
 
 
-# define CMP_SCALAR_OPERATOR(Name, Op)							\
-  template <class T1, class T2> inline							\
-  static bool Name (const T1& lhs, const T2& rhs)					\
-  {											\
-    is_a(optraits<T1>, ntg::optraits_scalar)::ensure();					\
-    is_a(optraits<T2>, ntg::optraits_scalar)::ensure();					\
-											\
-    typedef typename									\
-      internal::deduce_from_traits<internal::operator_cmp_traits,			\
-      T1, T2>::ret tmp_type;								\
-											\
-    return Name##_impl<tmp_type>(static_cast<tmp_type>(lhs),				\
-				 static_cast<tmp_type>(rhs));				\
-  }											\
-											\
-  template <class T> inline 								\
-  static bool Name##_impl(const real<T>& lhs, const real<T>& rhs)		\
-  { return lhs.self().val() Op rhs.self().val(); }					\
-											\
-  template <class T> inline 								\
-  static bool										\
-  Name##_impl(const ntg::any_const_class<T> lhs, const ntg::any_const_class<T> rhs)	\
+# define CMP_SCALAR_OPERATOR(Name, Op)					\
+  template <class T1, class T2> inline					\
+  static bool Name (const T1& lhs, const T2& rhs)			\
+  {									\
+    ntg_is_a(T1, ntg::real)::ensure();					\
+    ntg_is_a(T2, ntg::real)::ensure();					\
+									\
+    typedef typename							\
+      internal::deduce_from_traits<internal::operator_cmp_traits,	\
+      T1, T2>::ret tmp_type;						\
+									\
+    return Name##_impl<tmp_type>(static_cast<tmp_type>(lhs),		\
+				 static_cast<tmp_type>(rhs));		\
+  }									\
+									\
+  template <class T> inline						\
+  static bool Name##_impl(const ntg::real_value<T>& lhs, 		\
+			  const ntg::real_value<T>& rhs)		\
+  { return lhs.self().val() Op rhs.self().val(); }			\
+									\
+  template <class T> inline						\
+  static bool								\
+  Name##_impl(const ntg::any_const_class<T> lhs,			\
+	      const ntg::any_const_class<T> rhs)			\
   { return lhs.self() Op rhs.self(); }
-
 
 
 //
@@ -121,28 +122,28 @@
   template <class T1, class T2> inline						\
   static T1& Name(T1& lhs, const T2& rhs)					\
   {										\
-    is_a(optraits<T1>, ntg::optraits_int)::ensure();				\
-    is_a(optraits<T2>, ntg::optraits_int)::ensure();				\
+    ntg_is_a(T1, ntg::integer)::ensure();					\
+    ntg_is_a(T2, ntg::integer)::ensure();					\
 										\
     return Name##_impl<T1,T2>(lhs, rhs);					\
   }										\
 										\
   template <class T1, class T2> inline						\
-  static T1& Name##_impl(integer<T1>& lhs, const integer<T2>& rhs)		\
+  static T1& Name##_impl(int_value<T1>& lhs, const int_value<T2>& rhs)		\
   {										\
-    lhs.self() = lhs.self().val() Op rhs.self().val();			\
+    lhs.self() = lhs.self().val() Op rhs.self().val();				\
     return lhs.self();								\
   }										\
 										\
   template <class T1, class T2> inline						\
-  static T1& Name##_impl(integer<T1>& lhs, const ntg::any_const_class<T2>& rhs) \
+  static T1& Name##_impl(int_value<T1>& lhs, const ntg::any_const_class<T2>& rhs) \
   {										\
     lhs.self() = lhs.self().val() Op rhs.self();				\
     return lhs.self();								\
   }										\
 										\
   template <class T1, class T2> inline						\
-  static T1& Name##_impl(ntg::any_class<T1>& lhs, const integer<T2>& rhs)	\
+  static T1& Name##_impl(ntg::any_class<T1>& lhs, const int_value<T2>& rhs)	\
   {										\
     lhs.self() = lhs.self() Op rhs.self().val();				\
     return lhs.self();								\
@@ -154,8 +155,8 @@
   internal::deduce_from_traits<internal::operator_##Name##_traits, T1, T2>::ret	\
   Name(const T1& lhs, const T2& rhs)						\
   {										\
-    is_a(optraits<T1>, ntg::optraits_int)::ensure();				\
-    is_a(optraits<T2>, ntg::optraits_int)::ensure();				\
+    ntg_is_a(T1, integer)::ensure();						\
+    ntg_is_a(T2, integer)::ensure();						\
 										\
     typedef typename								\
       internal::deduce_from_traits<internal::operator_##Name##_traits,		\
@@ -164,7 +165,5 @@
     result Op rhs;								\
     return result;								\
   }
-
-
 
 #endif // ndef NTG_OPTRAITS_SCALAR_DEFS_HH

@@ -28,18 +28,21 @@
 #ifndef NTG_OPTRAITS_BUILTINS_BIN_HH
 # define NTG_OPTRAITS_BUILTINS_BIN_HH
 
-# include <ntg/core/optraits.hh>
+# include <ntg/core/type_traits.hh>
 
-namespace ntg
-{
+namespace ntg {
 
-  template<>
-  struct optraits<bool>
-  {
-    static bool min() { return 0; }
-    static bool max() { return 1; }
-  };
+  namespace internal {
 
-} // end of ntg
+    template<>
+    struct optraits<bool>
+    {
+      static bool min() { return 0; }
+      static bool max() { return 1; }
+    };
+    
+  } // end of internal.
+
+} // end of ntg.
 
 #endif // ndef NTG_OPTRAITS_BUILTINS_BIN_HH

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -40,10 +40,10 @@ namespace oln {
     /* GCC's optimizer is smart enough to compute these values at compile
        time and really use them as constants.  That's great.  */
 # define _OLN_MORPHO_DECLARE_SOILLE_WATERSHED_CONSTS(DestValue)				\
-    const DestValue mask    = ntg::cast::force<DestValue>(ntg::optraits<DestValue>::max() - 2);	\
-    const DestValue wshed   = ntg::optraits<DestValue>::max();				\
-    const DestValue init    = ntg::cast::force<DestValue>(ntg::optraits<DestValue>::max() - 1);	\
-    const DestValue inqueue = ntg::cast::force<DestValue>(ntg::optraits<DestValue>::max() - 3);	\
+    const DestValue mask    = ntg::cast::force<DestValue>(ntg_max_val(DestValue) - 2);	\
+    const DestValue wshed   = ntg_max_val(DestValue);					\
+    const DestValue init    = ntg::cast::force<DestValue>(ntg_max_val(DestValue) - 1);	\
+    const DestValue inqueue = ntg::cast::force<DestValue>(ntg_max_val(DestValue) - 3);	\
     const DestValue maxlevel = ntg::cast::force<DestValue>(inqueue - 1) /* no ; */
 
     namespace internal {
@@ -163,7 +163,7 @@ namespace oln {
 	result_type im_o(im_i.size());
 	level::fill(im_o, init);
 	std::queue< Point(I) > fifo;
-	DestValue current_label = ntg::optraits<DestValue>::min();
+	DestValue current_label = ntg_min_val(DestValue);
 
 	// Sort the pixels of im_i in the increasing order of their grey
 	// values.
@@ -238,7 +238,7 @@ namespace oln {
 		       value.  FIXME: We should have a mean to tell
 		       the caller that such 'wrapping' occured.  */
 		    if (current_label > maxlevel)
-		      current_label = ntg::optraits<DestValue>::min();
+		      current_label = ntg_min_val(DestValue);
 
 		    fifo.push(p);
 		    im_o[p] = current_label;
@@ -309,8 +309,8 @@ namespace oln {
       Exact_cref(N, Ng);
 
       typedef Value(I2) Values;
-      const Value(I2) wshed   = ntg::optraits<Values>::max();
-      const Value(I2) unknown = ntg::optraits<Values>::min();
+      const Value(I2) wshed   = ntg_max_val(Values);
+      const Value(I2) unknown = ntg_min_val(Values);
 
       typedef std::pair<Point(I1), Value(I1)> queue_elt;
       std::priority_queue< queue_elt, std::vector< queue_elt >,

@@ -33,7 +33,7 @@
 
 // --
 
-# include <ntg/core/typetraits.hh>
+# include <ntg/core/type_traits.hh>
 
 namespace ntg {
 
@@ -93,7 +93,9 @@ namespace ntg {
   template <class E>
   class value : public any_ntg<E>
   {
-    typedef ntg_storage_type(E) storage_type;
+    // note: here it is not possible to use ntg::type_traits,
+    // because of recursive instanciation problems.
+    typedef typename internal::typetraits<E>::storage_type storage_type;
 
   public:
     // Hooks

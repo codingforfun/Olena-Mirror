@@ -32,51 +32,48 @@
 
 # include <mlc/is_a.hh>
 
-# include <ntg/core/behavior.hh>
-# include <ntg/core/global_ops.hh>
-# include <ntg/core/global_ops_traits.hh>
+# include <ntg/basics.hh>
 # include <ntg/core/interval.hh>
-# include <ntg/core/optraits.hh>
-# include <ntg/core/predecls.hh>
-# include <ntg/core/value.hh>
-# include <ntg/core/typetraits.hh>
-# include <ntg/utils/to_oln.hh>
 
 # include <string>
 # include <sstream>
 
-namespace ntg
-{
+namespace ntg {
 
-  //
-  //  Typetraits
-  //
-  ///////////////
+  namespace internal {
 
-  template <class T, class interval>
-  struct typetraits<cycle<T, interval> >
-  {
-    typedef cycle<T, interval> self;
-    typedef optraits<self> optraits;
-    typedef cycle_behaviour::get<self> behaviour_type;
+    //
+    //  Typetraits
+    //
+    ///////////////
 
-    typedef typename typetraits<T>::base_type		base_type;
-    typedef T						storage_type;
-    typedef typename typetraits<T>::signed_type		signed_type;
-    typedef typename typetraits<T>::unsigned_type	unsigned_type;
-    typedef self					cumul_type;
-    typedef self					largest_type;
-    typedef self					signed_largest_type;
-    typedef self					signed_cumul_type;
-    typedef self					unsigned_largest_type;
-    typedef self					unsigned_cumul_type;
-    typedef typename typetraits<T>::integer_type	integer_type;
+    template <class T, class interval>
+    struct typetraits<cycle<T, interval> >
+    {
+      typedef cycle<T, interval> self;
+      typedef typename typetraits<T>::abstract_type abstract_type;
+      typedef self ntg_type;
+      typedef optraits<self> optraits;
+      typedef cycle_behaviour::get<self> behaviour_type;
+
+      typedef typename typetraits<T>::base_type		base_type;
+      typedef T						storage_type;
+      typedef typename typetraits<T>::signed_type	signed_type;
+      typedef typename typetraits<T>::unsigned_type	unsigned_type;
+      typedef self					cumul_type;
+      typedef self					largest_type;
+      typedef self					signed_largest_type;
+      typedef self					signed_cumul_type;
+      typedef self					unsigned_largest_type;
+      typedef self					unsigned_cumul_type;
+      typedef typename typetraits<T>::integer_type	integer_type;
 
 
-    // internal type used for binary operations traits
-    typedef typename typetraits<T>::base_type op_traits;
-  };
+      // internal type used for binary operations traits
+      typedef typename typetraits<T>::base_type op_traits;
+    };
 
+  } // end of internal.
 
   //
   //  Class cycle<DecoratedType, class interval>
@@ -94,16 +91,17 @@ namespace ntg
 
   template <class T,
 	    class interval>
-  class cycle : public real<cycle<T, interval> >
+  class cycle : public real_value<cycle<T, interval> >
   {
   public:
     typedef cycle<T, interval> self;
 
   private:
     // shortcuts
-    typedef typename typetraits<self>::optraits optraits_type;
-    typedef typename typetraits<self>::base_type base_type;
-    typedef typename typetraits<base_type>::storage_type base_storage_type;
+    typedef typename internal::typetraits<self>::optraits optraits_type;
+    typedef ntg_base_type(self) base_type;
+    //    typedef ntg_storage_type(base_type) base_storage_type;
+    typedef typename type_traits<base_type>::storage_type base_storage_type;
 
   public:
     cycle () { val_ = 0; }
@@ -111,7 +109,7 @@ namespace ntg
     template <class U>
     cycle (const U& u)
     {
-      is_a(optraits<U>, optraits_scalar)::ensure();
+      ntg_is_a(U, real)::ensure();
       val_ = optraits_type::check(u);
     }
     template <class U>
@@ -130,56 +128,60 @@ namespace ntg
   operator<<(std::ostream& stream, const cycle<T, interval>& rhs)
   {
     // Cast useful for cycle<unsigned char, ...>
-    stream << (typename typetraits<T>::largest_type)(rhs.val());
+    stream << (ntg_largest_type(T))(rhs.val());
     return stream;
   }
 
-  template<class T,
-	   class interval>
-  struct optraits<cycle<T, interval> > : public optraits<T>
-  {
-  public:
-    typedef cycle<T, interval> self;
+  namespace internal {
+
+    template<class T,
+	     class interval>
+    struct optraits<cycle<T, interval> > : public optraits<T>
+    {
+    public:
+      typedef cycle<T, interval> self;
     
-  private:
-    typedef typename typetraits<self>::storage_type storage_type;
-    typedef typename interval::storage_type interval_type;
-    typedef typename typetraits<self>::behaviour_type behaviour_type;
+    private:
+      typedef typename typetraits<self>::storage_type storage_type_;
+      typedef typename interval::storage_type interval_type_;
+      typedef typename typetraits<self>::behaviour_type behaviour_type_;
 
-  public:
-    //
-    //  Properties
-    //
-    ////
+    public:
+      //
+      //  Properties
+      //
+      ////
 
-    static interval_type min()
-    { return interval::min(); }
+      static interval_type_ min()
+      { return interval::min(); }
 
-    static interval_type max()
-    { return interval::max(); }
+      static interval_type_ max()
+      { return interval::max(); }
 
-    static interval_type inf()
-    { return interval::inf(); }
+      static interval_type_ inf()
+      { return interval::inf(); }
 
-    static interval_type sup()
-    { return interval::sup(); }
+      static interval_type_ sup()
+      { return interval::sup(); }
 
 
-    // behaviour's check
+      // behaviour's check
 
-    template <class P>
-    static storage_type check(const P& rhs)
-    { return behaviour_type::apply(rhs); }
+      template <class P>
+      static storage_type_ check(const P& rhs)
+      { return behaviour_type_::apply(rhs); }
 
-    // debug
-    static std::string name() {
-      std::ostringstream out;
-      out << "cycle<" << optraits<T>::name() << ", " 
-	  << interval::name() << ">"<< std::ends;
-      return out.str();
-    }
-  };
+      // debug
+      static std::string name() {
+	std::ostringstream out;
+	out << "cycle<" << optraits<T>::name() << ", " 
+	    << interval::name() << ">"<< std::ends;
+	return out.str();
+      }
+    };
 
-} // end of ntg
+  } // end of internal.
+
+} // end of ntg.
 
 #endif // ndef NTG_CYCLE_HH

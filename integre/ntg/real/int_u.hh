@@ -29,18 +29,18 @@
 # define NTG_REAL_INT_U_HH
 
 # include <ntg/config/system.hh>
-# include <ntg/real/real.hh>
+# include <ntg/real/real_value.hh>
 
 # include <mlc/cmp.hh>
 
 // --
 
 # include <ntg/core/behavior.hh>
-# include <ntg/core/builtins_properties.hh>
-# include <ntg/core/global_ops.hh>
-# include <ntg/core/optraits.hh>
+# include <ntg/core/internal/builtins_properties.hh>
+# include <ntg/core/internal/global_ops.hh>
+# include <ntg/core/type_traits.hh>
 # include <ntg/core/predecls.hh>
-# include <ntg/core/typetraits.hh>
+# include <ntg/core/type_traits.hh>
 # include <ntg/real/optraits_scalar.hh>
 
 # include <string>
@@ -61,40 +61,44 @@ self& operator=(const Builtin rhs)	        \
 
 // --- //
 
-namespace ntg
-{
+namespace ntg {
 
-  //
-  //  Typetraits
-  //
-  ///////////////
+  namespace internal {
 
-  template <unsigned nbits, class behaviour>
-  struct typetraits<int_u<nbits, behaviour> >
-  {
-    typedef int_u<nbits, behaviour>		self;
-    typedef optraits<self>			optraits;
-    typedef typename behaviour::get<self>	behaviour_type;
+    //
+    //  Typetraits
+    //
+    ///////////////
 
-    typedef self					base_type;
-    typedef typename C_for_int_u<nbits>::type		storage_type;
-    typedef int_s<mlc::saturateN<nbits+1, 32>::ret, 
-		  behaviour>				signed_type;
-    typedef self					unsigned_type;
-    // FIXME: calculate it more precisely
-    typedef int_u<32, behaviour>			cumul_type;
-    typedef int_u<32, behaviour>			largest_type;
-    typedef int_s<32, behaviour>			signed_largest_type;
-    typedef int_s<32, behaviour>			signed_cumul_type;
-    typedef int_u<32, behaviour>			unsigned_largest_type;
-    typedef int_u<32, behaviour>			unsigned_cumul_type;
-    typedef unsigned int				integer_type;
+    template <unsigned nbits, class behaviour>
+    struct typetraits<int_u<nbits, behaviour> >
+    {
+      typedef int_u<nbits, behaviour>		self;
+      typedef signed_integer			abstract_type;
+      typedef self				ntg_type;
+      typedef optraits<self>			optraits;
+      typedef typename behaviour::get<self>	behaviour_type;
+      
+      typedef self					base_type;
+      typedef typename C_for_int_u<nbits>::type		storage_type;
+      typedef int_s<mlc::saturateN<nbits+1, 32>::ret, 
+		    behaviour>				signed_type;
+      typedef self					unsigned_type;
+      // FIXME: calculate it more precisely
+      typedef int_u<32, behaviour>			cumul_type;
+      typedef int_u<32, behaviour>			largest_type;
+      typedef int_s<32, behaviour>			signed_largest_type;
+      typedef int_s<32, behaviour>			signed_cumul_type;
+      typedef int_u<32, behaviour>			unsigned_largest_type;
+      typedef int_u<32, behaviour>			unsigned_cumul_type;
+      typedef unsigned int				integer_type;
 
 
-    // internal use, useful for decorators
-    typedef self op_traits;
-  };
+      // internal use, useful for decorators
+      typedef self op_traits;
+    };
 
+  } // end of internal.
 
   //
   //  Class int_u<Nbits, Behaviour>
@@ -102,13 +106,13 @@ namespace ntg
   //////////////////////////////////
 
   template <unsigned nbits, class behaviour>
-  class int_u : public integer<int_u<nbits, behaviour> >
+  class int_u : public int_value<int_u<nbits, behaviour> >
   {
     typedef int_u<nbits, behaviour> self;
-    typedef typename typetraits<self>::storage_type storage_type;
+    typedef ntgi_storage_type(self) storage_type;
     // dev note : should be directly optraits<self_t>, but with g++ this
     // breaks inheritance in optraits herarchy ...
-    typedef typename typetraits<self>::optraits optraits_type;
+    typedef typename internal::typetraits<self>::optraits optraits_type;
 
   public:
     int_u () { val_ = 0; }
@@ -166,12 +170,12 @@ namespace ntg
     }
 
     template <class T>
-    int_u (const real<T>& rhs)
+    int_u (const real_value<T>& rhs)
     {
       val_ = optraits_type::check(rhs.val());
     }
     template <class T>
-    self& operator=(const real<T>& rhs)
+    self& operator=(const real_value<T>& rhs)
     {
       val_ = optraits_type::check(rhs.val());
       return *this;
@@ -193,45 +197,45 @@ namespace ntg
     return stream;
   }
 
-  //
-  //  optraits for int_u
-  //
-  /////////////////////////////////////////////////////
-
-  template <unsigned nbits, class behaviour>
-  struct optraits<int_u<nbits, behaviour> > :
-    public optraits_int_u<int_u<nbits, behaviour> >
-  {
-  private:
-    // shortcuts
-    typedef int_u<nbits, behaviour> self;
-    typedef typename typetraits<self>::storage_type storage_type;
-    typedef typename behaviour::get<self> behaviour_type;
-
-  public:
-    // behaviour's check
-    template <class P>
-    static storage_type check(const P& rhs)
-    { return behaviour_type::apply(rhs); }
-
-    //
-    // Properties
-    //
-
-    static storage_type max()
-    { return C_for_int_u<nbits>::max(); }
-
-    // debug
-    static std::string name() {
-      std::ostringstream out;
-      out << "int_u<" << int(nbits) << ", " << behaviour::name() << ">"
-	  << std::ends;
-      return out.str();
-    }
-  };
-
   namespace internal
   {
+
+    //
+    //  optraits for int_u
+    //
+    /////////////////////////////////////////////////////
+
+    template <unsigned nbits, class behaviour>
+    struct optraits<int_u<nbits, behaviour> > :
+      public optraits_int_u<int_u<nbits, behaviour> >
+    {
+    private:
+      // shortcuts
+      typedef int_u<nbits, behaviour> self;
+      typedef typename typetraits<self>::storage_type storage_type_;
+      typedef typename behaviour::get<self> behaviour_type_;
+
+    public:
+      // behaviour's check
+      template <class P>
+      static storage_type_ check(const P& rhs)
+      { return behaviour_type_::apply(rhs); }
+
+      //
+      // Properties
+      //
+
+      static storage_type_ max()
+      { return C_for_int_u<nbits>::max(); }
+
+      // debug
+      static std::string name() {
+	std::ostringstream out;
+	out << "int_u<" << int(nbits) << ", " << behaviour::name() << ">"
+	    << std::ends;
+	return out.str();
+      }
+    };
 
     //
     // Operators traits

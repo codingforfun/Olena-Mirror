@@ -1,4 +1,4 @@
-// Copyright (C) 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,57 +28,62 @@
 #ifndef NTG_TYPETRAITS_BUILTINS_FLOAT_HH
 # define NTG_TYPETRAITS_BUILTINS_FLOAT_HH
 
-# include <ntg/core/typetraits.hh>
-# include <ntg/core/optraits.hh>
-# include <ntg/core/behavior.hh>
+# include <ntg/core/internal/traits.hh>
 
-namespace ntg
-{
+namespace ntg {
 
-  template <>
-  struct typetraits<float>
-  {
-    typedef float self;
-    typedef optraits<self> optraits;
-    typedef unsafe::get<self> behaviour_type;
+  namespace internal {
 
-    typedef self base_type;
-    typedef self storage_type;
-    typedef self signed_type;
-    typedef self unsigned_type;
-    typedef self cumul_type;
-    typedef self largest_type;
-    typedef self signed_largest_type;
-    typedef self signed_cumul_type;
-    typedef self unsigned_largest_type;
-    typedef self unsigned_cumul_type;
-    typedef self integer_type;
+    template <>
+    struct typetraits<float>
+    {
+      typedef float self;
+      typedef decimal abstract_type;
+      typedef self ntg_type;
+      typedef optraits<self> optraits;
+      typedef unsafe::get<self> behaviour_type;
 
-    typedef self op_traits;
-  };
+      typedef self base_type;
+      typedef self storage_type;
+      typedef self signed_type;
+      typedef self unsigned_type;
+      typedef self cumul_type;
+      typedef self largest_type;
+      typedef self signed_largest_type;
+      typedef self signed_cumul_type;
+      typedef self unsigned_largest_type;
+      typedef self unsigned_cumul_type;
+      typedef self integer_type;
 
-  template <>
-  struct typetraits<double>
-  {
-    typedef double self;
-    typedef optraits<self> optraits;
-    typedef unsafe::get<self> behaviour_type;
+      typedef self op_traits;
+    };
 
-    typedef self base_type;
-    typedef self storage_type;
-    typedef self signed_type;
-    typedef self unsigned_type;
-    typedef self cumul_type;
-    typedef self largest_type;
-    typedef self signed_largest_type;
-    typedef self signed_cumul_type;
-    typedef self unsigned_largest_type;
-    typedef self unsigned_cumul_type;
-    typedef self integer_type;
+    template <>
+    struct typetraits<double>
+    {
+      typedef double self;
+      typedef decimal abstract_type;
+      typedef self ntg_type;
+      typedef optraits<self> optraits;
+      typedef unsafe::get<self> behaviour_type;
 
-    typedef self op_traits;
-  };
+      typedef self base_type;
+      typedef self storage_type;
+      typedef self signed_type;
+      typedef self unsigned_type;
+      typedef self cumul_type;
+      typedef self largest_type;
+      typedef self signed_largest_type;
+      typedef self signed_cumul_type;
+      typedef self unsigned_largest_type;
+      typedef self unsigned_cumul_type;
+      typedef self integer_type;
 
-} // end of ntg
+      typedef self op_traits;
+    };
+
+  } // end of internal.
+
+} // end of ntg.
 
 #endif // ndef NTG_TYPETRAITS_BUILTINS_FLOAT_HH

@@ -474,8 +474,8 @@ AC_DEFUN([AC_CXX_FLAGS],
      Intel)
       _CXXFLAGS_OPTIMIZE="-O3"
       _CXXFLAGS_DEBUG="-g"
-      _CXXFLAGS_STRICT="-w1 -Wall"
-      _CXXFLAGS_STRICT_ERRORS="-w1 -Wall"
+      _CXXFLAGS_STRICT="-w1"
+      _CXXFLAGS_STRICT_ERRORS="-w1"
       ;;
    esac
 

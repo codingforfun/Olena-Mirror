@@ -37,7 +37,6 @@
 namespace oln {
 
   using ntg::bin;
-  using ntg::optraits;
 
   // client can use image1d; instances are real images, that is,
   // images with data ---conversely to proxy images
@@ -147,7 +146,7 @@ namespace oln {
     {
       return
 	std::string("image1d<")
-	+ optraits<bin>::name() + ","
+	+ ntg_name(bin) + ","
 	+ Exact::name() + ">";
     }
 

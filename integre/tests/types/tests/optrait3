@@ -1,7 +1,7 @@
-float_s s1 = optraits<float_s>::sup();
-float_d d1 = optraits<float_d>::sup();
-float_s s2 = optraits<float_s>::inf();
-float_d d2 = optraits<float_d>::inf();
+float_s s1 = ntg_sup_val(float_s);
+float_d d1 = ntg_sup_val(float_d);
+float_s s2 = ntg_inf_val(float_s);
+float_d d2 = ntg_inf_val(float_d);
 return s1 != OLN_FLOAT_INFINITY
     || d1 != OLN_DOUBLE_INFINITY
     || s2 != - OLN_FLOAT_INFINITY

@@ -30,8 +30,7 @@
 
 # include <mlc/bool.hh>
 
-# include <ntg/utils/to_oln.hh>
-# include <ntg/core/typetraits.hh>
+# include <ntg/core/type_traits.hh>
 
 //
 //  Operators traits : give return type, etc ..
@@ -167,8 +166,9 @@ namespace ntg
     //
     //  1) Check if traits<T1, T2> is ok
     //  2) Check if traits<T2, T1> ok AND traits<T2, T1>::commutative is true
-    //  3) Check if traits<to_oln<T1>, to_oln<T2> > ok
-    //  4) Check if traits<to_oln<T2>, to_oln<T1> > ok AND commutative is true
+    //  3) Check if traits<ntg_type(T1), ntg_type(T2) > ok
+    //  4) Check if traits<ntg_type(T2), ntg_type(T1) > ok AND commutative 
+    //     is true
     //
     //////////////////////////////////////////////////////////////////////////
 
@@ -218,8 +218,8 @@ namespace ntg
       typedef typename typetraits<T1>::op_traits T1_op;
       typedef typename typetraits<T2>::op_traits T2_op;
 
-      typedef typename internal::to_oln<T1_op>::ret T1_oln;
-      typedef typename internal::to_oln<T2_op>::ret T2_oln;
+      typedef ntg_type(T1_op) T1_oln;
+      typedef ntg_type(T2_op) T2_oln;
 
       typedef typename
       mlc::if_<is_defined<typename traits<T1_op, T2_op>::ret>::ret,

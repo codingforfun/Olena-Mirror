@@ -33,7 +33,7 @@
 
 # include <ntg/color/nrgb.hh>
 # include <ntg/color/yuv.hh>
-# include <ntg/core/typetraits_builtins.hh>
+# include <ntg/basics.hh>
 
 /*---------------------------------------------------------------.
 | The formulas used here come from ``Colour Space Conversions'', |

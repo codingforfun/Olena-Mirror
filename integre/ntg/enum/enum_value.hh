@@ -25,21 +25,22 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_TYPETRAITS_HH
-# define NTG_TYPETRAITS_HH
+#ifndef NTG_ENUM_ENUM_VALUE_HH
+# define NTG_ENUM_ENUM_VALUE_HH
+
+# include <ntg/core/value.hh>
 
 namespace ntg
 {
 
-  // FIXME: already defined in metalic
-  struct undefined;
+  /*-----------.
+  | enum_value |
+  `-----------*/
 
-  template <class T>
-  struct typetraits
-  {
-    typedef undefined op_traits;
-  };
+  template <class E>
+  class enum_value : public value<E>
+  {};
 
-} // end of ntg
+}
 
-#endif // ndef NTG_TYPETRAITS_HH
+#endif // !NTG_ENUM_ENUM_VALUE_HH

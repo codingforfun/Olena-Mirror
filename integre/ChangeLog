@@ -1,3 +1,61 @@
+2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/utils/to_oln.hh: Remove file.
+	* ntg/utils/cast.hh: Add to_ntg.
+
+	* ntg/core/builtins_properties.hh: Move ...
+	* ntg/core/internal/builtins_properties.hh: ... here.
+	* ntg/core/optraits_builtins.hh: Move ...
+	* ntg/core/internal/optraits_builtins.hh: ... here.
+	* ntg/core/typetraits_builtins.hh: Move ...
+	* ntg/core/internal/typetraits_builtins.hh: ... here.	
+	* ntg/core/global_ops.hh: Move ...
+	* ntg/core/internal/global_ops.hh: ... here.
+	* ntg/core/global_ops_traits.hh: Move ...
+	* ntg/core/internal/global_ops_traits.hh: ... here.
+
+	* ntg/basics.hh: New file.
+	* ntg/core/abstract_hierarchy.hh: New file.
+	* ntg/core/internal/macros.hh: New file.
+	* ntg/core/type_traits.hh: New file.
+
+	* ntg/core/macros.hh: New macros.
+
+	* ntg/core/type.hh: Minor update.
+	
+	* ntg/core/optraits.hh, ntg/core/typetraits.hh: Merge into ...
+	* ntg/core/internal/traits.hh: ... this.
+	* ntg/core/traits.hh: Move optraits into namespace internal.
+
+	* ntg/real/real.hh: Rename as ...
+	* ntg/real/real_value.hh: ... this.
+	* ntg/vect/vectorial.hh: Rename as ...
+	* ntg/vect/vect_value.hh: ... this.
+	* ntg/enum/enumerated.hh: Rename as ...
+	* ntg/enum/enum_value.hh: ... this.
+	
+	* ntg/Makefile.am: Adjust accordingly.
+	* ntg/all.hh: Likewise.
+	
+	* ntg/core/behavior.hh, ntg/enum/bin.hh, ntg/color/color.hh,
+	ntg/vect/cplx.hh, ntg/real/cycle.hh, ntg/utils/debug.hh,
+	ntg/core/internal/global_ops.hh,
+	ntg/core/internal/global_ops_traits.hh, ntg/core/interval.hh,
+	ntg/real/int_s.hh, ntg/real/int_u.hh,
+	ntg/enum/optraits_builtins_bool.hh,
+	ntg/real/optraits_builtins_float.hh,
+	ntg/real/optraits_builtins_int.hh,
+	ntg/real/optraits_scalar_defs.hh, ntg/real/optraits_scalar.hh,
+	ntg/real/range.hh, ntg/core/value.hh,
+	ntg/enum/typetraits_builtins_bool.hh,
+	ntg/real/typetraits_builtins_float.hh,
+	ntg/real/typetraits_builtins_int.hh, ntg/vect/vec.hh: Modify
+	accordingly.
+
+	* tests/types/tests/optrait1a, tests/types/tests/optrait1b,
+	tests/types/tests/optrait2a, tests/types/tests/optrait2b,
+	tests/types/tests/optrait3: Modify accordingly.
+	
 2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/core/macros.hh: New file.

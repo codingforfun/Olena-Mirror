@@ -28,22 +28,38 @@
 #ifndef NTG_CAST_HH
 # define NTG_CAST_HH
 
+# include <ntg/core/macros.hh>
+# include <ntg/core/internal/optraits_builtins.hh>
+# include <ntg/core/type_traits.hh>
+# include <ntg/core/internal/typetraits_builtins.hh>
 # include <ntg/core/value.hh>
-# include <ntg/core/typetraits.hh>
-# include <ntg/core/typetraits_builtins.hh>
-# include <ntg/core/optraits.hh>
-# include <ntg/core/optraits_builtins.hh>
 
-namespace ntg 
-{
+// FIXME: this file is completely broken, taking float_value as
+// parameter does not make sense.
 
-  namespace cast 
+# define TO_NTG_CAST(Dest)				\
+  template<class T>					\
+  inline ntg_##Dest##_type(T) to_##Dest##_ntg(T val)	\
+  {							\
+    return static_cast<ntg_##Dest##_type(T)>(val);	\
+  }
+
+namespace ntg {
+
+  template<class T>
+  inline ntg_type(T) to_ntg(T val)
   {
+    return static_cast<ntg_type(T)>(val);
+  }
+  
+  TO_NTG_CAST(signed);
+
+  namespace cast {    
 
     template<class Tdest, class Tsrc> inline
     const Tdest force(const Tsrc& val)
     {
-      Tdest tmp(static_cast<typename typetraits<Tdest>::storage_type>(val));
+      Tdest tmp(static_cast<ntg_storage_type(Tdest)>(val));
       return tmp;
     }
 
@@ -51,12 +67,12 @@ namespace ntg
     template<class Tdest, class Tsrc> inline
     const Tdest bound(const Tsrc& val)
     {
-      if (optraits<Tsrc>::max() > optraits<Tdest>::max())
-	if (val > Tsrc(optraits<Tdest>::max()))
-	  return optraits<Tdest>::max();
-      if (optraits<Tsrc>::min() < optraits<Tdest>::min())
-	if (val < Tsrc(optraits<Tdest>::min()))
-	  return optraits<Tdest>::min();
+      if (ntg_max_val(Tsrc) > ntg_max_val(Tdest))
+	if (val > Tsrc(ntg_max_val(Tdest)))
+	  return ntg_max_val(Tdest);
+      if (ntg_min_val(Tsrc) < ntg_min_val(Tdest))
+	if (val < Tsrc(ntg_min_val(Tdest)))
+	  return ntg_min_val(Tdest);
       return cast::force<Tdest>(val);
     }
 
@@ -67,15 +83,15 @@ namespace ntg
 	// This cast does only work on float input.
       };
       template<class Tdest, class Tsrc>
-      struct _round<Tdest, decimal<Tsrc> > {
-	static const Tdest doit(const decimal<Tsrc>& val)
+      struct _round<Tdest, float_value<Tsrc> > {
+	static const Tdest doit(const float_value<Tsrc>& val)
 	{
 	  // FIXME: update comments
 
 	  // KLUDGE: Cast the rounded value to Tdest::value_t before
 	  // returning it as Tdest. Otherwise g++-3.0 complains there
 	  // is no Tdest constructor taking a float argument.
-	  return (typename typetraits<Tdest>::storage_type) round(val.self());
+	  return (ntg_storage_type(Tdest)) round(val.self());
 	}
       };
       template<class Tdest>
@@ -87,7 +103,7 @@ namespace ntg
 	  // KLUDGE: Cast the rounded value to Tdest::value_t before
 	  // returning it as Tdest. Otherwise g++-3.0 complains there
 	  // is no Tdest constructor taking a float argument.
-	  return (typename typetraits<Tdest>::storage_type) roundf(val);
+	  return (ntg_storage_type(Tdest)) roundf(val);
 	}
       };
       template<class Tdest>
@@ -99,7 +115,7 @@ namespace ntg
 	  // KLUDGE: Cast the rounded value to Tdest::value_t before
 	  // returning it as Tdest. Otherwise g++-3.0 complains there
 	  // is no Tdest constructor taking a float argument.
-	  return (typename typetraits<Tdest>::storage_type) round(val);
+	  return (ntg_storage_type(Tdest)) round(val);
 	}
       };
 # if 0 // useless as float_s == float alias
@@ -112,27 +128,27 @@ namespace ntg
 	  // KLUDGE: Cast the rounded value to Tdest::value_t before
 	  // returning it as Tdest. Otherwise g++-3.0 complains there
 	  // is no Tdest constructor taking a float argument.
-	  return (typename typetraits<Tdest>::storage_type) roundf(val);
+	  return (ntg_storage_type(Tdest)) roundf(val);
 	}
       };
 # endif
       template<class Tdest, class Tsrc>
-      struct _round<decimal<Tdest>, decimal<Tsrc> > {
-	static const Tdest doit(const decimal<Tsrc>& val)
+      struct _round<float_value<Tdest>, float_value<Tsrc> > {
+	static const Tdest doit(const float_value<Tsrc>& val)
 	{
 	  return val.self();
 	}
       };
       template<class Tsrc>
-      struct _round<float, decimal<Tsrc> > {
-	static float doit(const decimal<Tsrc>& val)
+      struct _round<float, float_value<Tsrc> > {
+	static float doit(const float_value<Tsrc>& val)
 	{
 	  return val.self();
 	}
       };
       template<class Tsrc>
-      struct _round<double, decimal<Tsrc> > {
-	static double doit(const decimal<Tsrc>& val)
+      struct _round<double, float_value<Tsrc> > {
+	static double doit(const float_value<Tsrc>& val)
 	{
 	  return val.self();
 	}
@@ -162,14 +178,15 @@ namespace ntg
     template<class Tdest, class Tsrc> inline
     const Tdest rbound(const Tsrc& val)
     {
-      if (val > Tsrc(optraits<Tdest>::max()))
-	return optraits<Tdest>::max();
-      if (val < Tsrc(optraits<Tdest>::min()))
-	return optraits<Tdest>::min();
+      if (val > Tsrc(ntg_max_val(Tdest)))
+	return ntg_max_val(Tdest);
+      if (val < Tsrc(ntg_min_val(Tdest)))
+	return ntg_min_val(Tdest);
       return cast::round<Tdest>(val);
     }
 
-  } // end of cast
-} // end of ntg
+  } // end of cast.
+
+} // end of ntg.
 
 #endif // NTG_CAST_HH

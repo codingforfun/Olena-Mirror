@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,15 +28,15 @@
 #ifndef OLENA_LEVEL_CONNECTED_HH
 # define OLENA_LEVEL_CONNECTED_HH
 
-# include <ntg/core/optraits.hh>
+# include <ntg/basics.hh>
 # include <oln/level/lut.hh>
 # include <oln/level/fill.hh>
 # include <oln/morpho/splitse.hh>
 # include <oln/convert/conversion_ng_se.hh>
 
 namespace oln {
-  namespace level {
 
+  namespace level {
 
     /*=processing connected_component
      * ns: level
@@ -117,7 +117,7 @@ namespace oln {
 		    output[p] = cl;
 		  else
 		    {
-		      DestType min = ntg::optraits<DestType>::max();
+		      DestType min = ntg_max_val(DestType);
 		      for_all(p_prime)
 			if (output.hold(p_prime))
 			  if (output[p_prime] && T(output[p_prime]) < min)

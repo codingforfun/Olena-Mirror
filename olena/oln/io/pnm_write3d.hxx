@@ -31,10 +31,11 @@
 # include <oln/io/pnm_write_common.hxx>
 
 namespace oln {
-
-  using namespace ntg;
-
   namespace io {
+
+    using ntg::int_u;
+    using ntg::color;
+
     namespace internal {
 
       using oln::internal::image3d_data;
@@ -73,7 +74,7 @@ namespace oln {
 	  << ' ' << mcols << ' ' << mrows << std:: endl
 	  << im.ncols() * mcols << ' ' << im.nrows() * mrows << std::endl;
 	if (type != '1' && type != '4')
-	  s << optraits<U>::max() << std::endl;
+	  s << ntg_max_val(U) << std::endl;
 	return true;
       }
 

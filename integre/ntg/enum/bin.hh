@@ -28,57 +28,53 @@
 #ifndef NTG_ENUM_BIN_HH
 # define NTG_ENUM_BIN_HH
 
+# include <ntg/basics.hh>
+# include <ntg/enum/enum_value.hh>
+
 # include <mlc/contract.hh>
-
-# include <ntg/enum/enumerated.hh>
-
-// --
-
-# include <ntg/core/global_ops.hh>
-# include <ntg/core/value.hh>
-# include <ntg/core/typetraits.hh>
-# include <ntg/core/optraits.hh>
-# include <ntg/core/predecls.hh>
 
 # include <string>
 
-namespace ntg
-{
+namespace ntg {
 
-  //
-  //  Typetraits
-  //
-  ///////////////
+  namespace internal {
 
-  template <>
-  struct typetraits<bin>
-  {
-    typedef bin				self;
-    typedef optraits<self>		optraits;
+    //
+    //  Typetraits
+    //
+    ///////////////
 
-    typedef self			base_type;
-    typedef bool			storage_type;
-    typedef bin				signed_type;
-    typedef bin				unsigned_type;
-    typedef bin				cumul_type;
-    typedef bin				largest_type;
-    typedef bin				signed_largest_type;
-    typedef bin				signed_cumul_type;
-    typedef bin				unsigned_largest_type;
-    typedef bin				unsigned_cumul_type;
-    typedef unsigned int		integer_type;
+    template <>
+    struct typetraits<bin>
+    {
+      typedef enumerated		abstract_type;
+      typedef bin			self;
+      typedef self			ntg_type;
+      typedef optraits<self>		optraits;
 
-    typedef self op_traits;
-  };
+      typedef self			base_type;
+      typedef bool			storage_type;
+      typedef bin			signed_type;
+      typedef bin			unsigned_type;
+      typedef bin			cumul_type;
+      typedef bin			largest_type;
+      typedef bin			signed_largest_type;
+      typedef bin			signed_cumul_type;
+      typedef bin			unsigned_largest_type;
+      typedef bin			unsigned_cumul_type;
+      typedef unsigned int		integer_type;
 
+      typedef self op_traits;
+    };
+
+  } // end of internal.
 
   //
   //  Class bin
   //
   //////////////
 
-
-  class bin : public enumerated<bin>
+  class bin : public enum_value<bin>
   {
   public:
     bin () { val_ = 0; }
@@ -100,13 +96,13 @@ namespace ntg
     }
 
     template <class T>
-    bin (const real<T>& val)
+    bin (const real_value<T>& val)
     {
       precondition (val < 2);
       val_ = val;
     }
     template <class T>
-    bin& operator=(const real<T>& val)
+    bin& operator=(const real_value<T>& val)
     {
       precondition (val < 2);
       val_ = val;
@@ -122,87 +118,87 @@ namespace ntg
     stream << (unsigned int) rhs.val();
     return stream;
   }
+
+  namespace internal {
   
-  //
-  //  optraits for bin
-  //
-  /////////////////////
+    //
+    //  optraits for bin
+    //
+    /////////////////////
   
-  template <>
-  struct optraits<bin> : public optraits_enum<bin>
-  {
-    typedef typetraits<bin>::storage_type storage_type;
-
-    static storage_type zero() { return 0; }
-    static storage_type unit() { return 1; }
-    static storage_type min()  { return 0; }
-    static storage_type max()  { return 1; }
-    static storage_type inf()  { return min(); }
-    static storage_type sup()  { return max(); }
-
-    // logical assignement operators
-
-    static bin& logical_or_equal(bin& lhs, const bin& rhs)
+    template <>
+    struct optraits<bin> : public optraits_enum<bin>
     {
-      lhs = lhs.val() | rhs.val();
-      return lhs;
-    }
+    private:
+      typedef typetraits<bin>::storage_type storage_type_;
 
-    static bin& logical_and_equal(bin& lhs, const bin& rhs)
-    {
-      lhs = lhs.val() & rhs.val();
-      return lhs;
-    }
+    public:
+      static storage_type_ zero() { return 0; }
+      static storage_type_ unit() { return 1; }
+      static storage_type_ min()  { return 0; }
+      static storage_type_ max()  { return 1; }
+      static storage_type_ inf()  { return min(); }
+      static storage_type_ sup()  { return max(); }
 
-    static bin& logical_xor_equal(bin& lhs, const bin& rhs)
-    {
-      lhs = lhs.val() ^ rhs.val();
-      return lhs;
-    }
+      // logical assignement operators
 
-    // logical binary ops
+      static bin& logical_or_equal(bin& lhs, const bin& rhs)
+      {
+	lhs = lhs.val() | rhs.val();
+	return lhs;
+      }
 
-    static bin logical_or(const bin& lhs, const bin& rhs)
-    {
-      bin tmp(lhs);
-      tmp |= rhs;
-      return tmp;
-    }
+      static bin& logical_and_equal(bin& lhs, const bin& rhs)
+      {
+	lhs = lhs.val() & rhs.val();
+	return lhs;
+      }
 
-    static bin logical_and(const bin& lhs, const bin& rhs)
-    {
-      bin tmp(lhs);
-      tmp &= rhs;
-      return tmp;
-    }
+      static bin& logical_xor_equal(bin& lhs, const bin& rhs)
+      {
+	lhs = lhs.val() ^ rhs.val();
+	return lhs;
+      }
 
-    static bin logical_xor(const bin& lhs, const bin& rhs)
-    {
-      bin tmp(lhs);
-      tmp ^= rhs;
-      return tmp;
-    }
+      // logical binary ops
 
+      static bin logical_or(const bin& lhs, const bin& rhs)
+      {
+	bin tmp(lhs);
+	tmp |= rhs;
+	return tmp;
+      }
 
-    // comparisons
+      static bin logical_and(const bin& lhs, const bin& rhs)
+      {
+	bin tmp(lhs);
+	tmp &= rhs;
+	return tmp;
+      }
 
-    static bool cmp_lt(const bin& lhs, const bin& rhs)
-    {
-      return lhs.val() < rhs.val();
-    }
-
-    static bool cmp_eq(const bin& lhs, const bin& rhs)
-    {
-      return lhs.val() == rhs.val();
-    }
-
-    // debug
-    static std::string name() { return "bin"; }
-  };
+      static bin logical_xor(const bin& lhs, const bin& rhs)
+      {
+	bin tmp(lhs);
+	tmp ^= rhs;
+	return tmp;
+      }
 
 
-  namespace internal
-  {
+      // comparisons
+
+      static bool cmp_lt(const bin& lhs, const bin& rhs)
+      {
+	return lhs.val() < rhs.val();
+      }
+
+      static bool cmp_eq(const bin& lhs, const bin& rhs)
+      {
+	return lhs.val() == rhs.val();
+      }
+
+      // debug
+      static std::string name() { return "bin"; }
+    };
 
     //
     //
@@ -258,8 +254,8 @@ namespace ntg
       typedef bin impl;
     };
 
-  } // end of internal
+  } // end of internal.
 
-} // end of ntg
+} // end of ntg.
 
 #endif // ndef NTG_ENUM_BIN_HH

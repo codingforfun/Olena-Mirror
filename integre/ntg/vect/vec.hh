@@ -31,14 +31,14 @@
 # include <mlc/array/all.hh>
 # include <mlc/type.hh>
 
-# include <ntg/vect/vectorial.hh>
+# include <ntg/vect/vect_value.hh>
 
 // --
 
-# include <ntg/core/global_ops.hh>
-# include <ntg/core/optraits.hh>
+# include <ntg/core/internal/global_ops.hh>
+# include <ntg/core/type_traits.hh>
 # include <ntg/core/predecls.hh>
-# include <ntg/core/typetraits.hh>
+# include <ntg/core/type_traits.hh>
 
 // FIXME: move these macros and document them.
 
@@ -46,8 +46,8 @@
 template <class T1, class T2> inline			\
 static T1& Name(T1& lhs, const T2& rhs)			\
 {							\
-  is_a(optraits<T1>, ntg::optraits_vector)::ensure();	\
-  is_a(optraits<T2>, ntg::optraits_vector)::ensure();	\
+  ntg_is_a(T1, ntg::vectorial)::ensure();	\
+  ntg_is_a(T2, ntg::vectorial)::ensure();	\
   precondition(lhs.size() == rhs.size());		\
   unsigned s = lhs.size();				\
   for (unsigned i = 0; i < s; ++i)			\
@@ -59,8 +59,8 @@ static T1& Name(T1& lhs, const T2& rhs)			\
 template <class T1, class T2> inline			\
 static T1& Name(T1& lhs, const T2& rhs)			\
 {							\
-  is_a(optraits<T1>, ntg::optraits_vector)::ensure();	\
-  is_a(optraits<T2>, ntg::optraits_scalar)::ensure();	\
+  ntg_is_a(T1, ntg::vectorial)::ensure();	\
+  ntg_is_a(T2, ntg::real)::ensure();	\
   unsigned s = lhs.size();				\
   for (unsigned i = 0; i < s; ++i)			\
     lhs[i] Op rhs;					\
@@ -74,8 +74,8 @@ internal::deduce_from_traits<internal::operator_##Name##_traits, 	\
                              T1, T2>::ret   				\
 Name(const T1& lhs, const T2& rhs)					\
 {									\
-  is_a(optraits<T1>, ntg::optraits_vector)::ensure();			\
-  is_a(optraits<T2>, ntg::optraits_vector)::ensure();			\
+  ntg_is_a(T1, ntg::vectorial)::ensure();			\
+  ntg_is_a(T2, ntg::vectorial)::ensure();			\
   typedef typename                          				\
     internal::deduce_from_traits<internal::operator_##Name##_traits,   	\
     T1, T2>::ret return_type; 						\
@@ -84,31 +84,36 @@ Name(const T1& lhs, const T2& rhs)					\
   return result;							\
 }
 
-namespace ntg
-{
+namespace ntg {
 
-  template <unsigned N, class T, class Self>
-  struct typetraits<vec<N, T, Self> >
-  {
-    typedef vec<N, T, Self> self;
-    typedef optraits<self> optraits;
+  namespace internal {
 
-    typedef typename typetraits<T>::base_type  base_type[N];
-    typedef T storage_type[N];
-    typedef typename typetraits<T>::cumul_type cumul_type[N];
+    template <unsigned N, class T, class Self>
+    struct typetraits<vec<N, T, Self> >
+    {
+      typedef vec<N, T, Self> self;
+      typedef vectorial abstract_type;
+      typedef self ntg_type;
+      typedef optraits<self> optraits;
 
-    typedef self op_traits;
-  };
+      typedef typename typetraits<T>::base_type  base_type[N];
+      typedef T storage_type[N];
+      typedef typename typetraits<T>::cumul_type cumul_type[N];
+
+      typedef self op_traits;
+    };
+
+  } // end of internal.
 
   template <unsigned N, class T, class Self>
   class vec : 
-    public vectorial<typename mlc::select_self<vec<N, T, mlc::bottom>, Self>::ret>
+    public vect_value<typename mlc::select_self<vec<N, T, mlc::bottom>, Self>::ret>
   {
   public :
 
     vec()
     {
-      _fill (optraits<T>::zero());
+      _fill (ntg_zero_val(T));
     }
 
     /* A vector can be built from a 1xM array.  */
@@ -164,155 +169,154 @@ namespace ntg
     return ostr;
   }
 
-  //
-  //  optraits for vec<N,T>
-  //
-  /////////////////////////
-
-  template <unsigned N, class T, class Self>
-  class optraits<vec<N, T, Self> >: public optraits_vector<vec<N, T, Self> >
-  {
-    typedef vec<N, T, Self> self;
-    typedef typename typetraits<self>::storage_type storage_type;
-  public:
-
-    static self zero ()
-    {
-      // A vectorial type MUST return a zero initialized value.
-      return self();
-    }
-
-    // debug
-    static std::string name() {
-      std::ostringstream out;
-      out << "vec<" << N << ", " << optraits<T>::name() << ">"<< std::ends;
-      return out.str();
-    }
-
-    // No unit() for vector.
-    // static storage_type unit ();
-
-    ASSIGN_VECTOR_VECTOR_OPERATOR(plus_equal,  +=);
-    ASSIGN_VECTOR_VECTOR_OPERATOR(minus_equal, -=);
-    ASSIGN_VECTOR_SCALAR_OPERATOR(times_equal, *=);
-    ASSIGN_VECTOR_SCALAR_OPERATOR(div_equal,   /=);
-    ASSIGN_VECTOR_SCALAR_OPERATOR(mod_equal,   %=);
-
-    ARITH_VECTOR_VECTOR_OPERATOR(plus, +=);
-    ARITH_VECTOR_VECTOR_OPERATOR(minus, -=);
-
-    // division
-
-    template <class T1, class T2>
-    inline static typename
-    internal::deduce_from_traits<internal::operator_div_traits,
-				 T1, T2>::ret
-    div(const T1& lhs, const T2& rhs)
-    {
-      is_a(optraits<T1>, ntg::optraits_vector)::ensure();
-      is_a(optraits<T2>, ntg::optraits_scalar)::ensure();
-      typedef typename
-	internal::deduce_from_traits<internal::operator_div_traits,
-	T1, T2>::ret return_type;
-      return_type result(lhs);
-      result /= rhs;
-      return result;
-    }
-
-    // modulo
-
-    template <class T1, class T2>
-    inline static typename
-    internal::deduce_from_traits<internal::operator_mod_traits,
-				 T1, T2>::ret
-    mod(const T1& lhs, const T2& rhs)
-    {
-      is_a(optraits<T1>, ntg::optraits_vector)::ensure();
-      is_a(optraits<T2>, ntg::optraits_scalar)::ensure();
-      typedef typename
-	internal::deduce_from_traits<internal::operator_mod_traits,
-	T1, T2>::ret return_type;
-      return_type result(lhs);
-      result %= rhs;
-      return result;
-    }
-
-    // multiplication
-
-    // dot-product
-    template <unsigned M, class T1, class T2>
-    inline static typename
-    internal::deduce_from_traits<internal::operator_times_traits,
-				 vec<M, T1>, vec<M, T2> >::ret
-    times(const vec<M, T1>& lhs, const vec<M, T2>& rhs)
-    {
-      typedef vec<M, T1> vec1;
-      typedef vec<M, T2> vec2;
-      is_a(optraits<vec1>, ntg::optraits_vector)::ensure();
-      is_a(optraits<vec2>, ntg::optraits_vector)::ensure();
-      typedef typename
-	internal::deduce_from_traits<internal::operator_times_traits,
-	vec<M, T1>, vec<M, T2> >::ret return_type;
-      precondition(lhs.size() == rhs.size());
-
-      return_type result = optraits<return_type>::zero();
-      unsigned s = lhs.size();
-      for (unsigned i = 0; i < s; ++i)
-	result += lhs[i] * rhs[i];
-
-      return result;
-    }
-
-    // vector * scalar
-    template <class T1, class T2>
-    inline static typename
-    internal::deduce_from_traits<internal::operator_times_traits,
-				 T1, T2>::ret
-    times(const vectorial<T1>& lhs, const T2& rhs)
-    {
-      is_a(optraits<T1>, ntg::optraits_vector)::ensure();
-      is_a(optraits<T2>, ntg::optraits_scalar)::ensure();
-      typedef typename
-	internal::deduce_from_traits<internal::operator_times_traits,
-	T1, T2>::ret return_type;
-      return_type result(lhs.self());
-      result *= rhs;
-      return result;
-    }
-
-    // scalar * vector
-    template <class T1, class T2>
-    inline static typename
-    internal::deduce_from_traits<internal::operator_times_traits,
-				 T1, T2>::ret
-    times(const T1& lhs, const vectorial<T2>& rhs)
-    {
-      return times(rhs, lhs);
-    }
-
-
-    template <class T1, class T2>
-    inline static bool cmp_eq (const T1& lhs, const T2& rhs)
-    {
-      is_a(optraits<T1>, ntg::optraits_vector)::ensure();
-      is_a(optraits<T2>, ntg::optraits_vector)::ensure();
-      precondition(lhs.size() == rhs.size());
-
-      typedef typename
-	internal::deduce_from_traits<internal::operator_cmp_traits,
-	T1, T2>::ret tmp_type;
-
-      unsigned s = lhs.size();
-      for (unsigned i = 0; i < s; ++i)
-	if (lhs[i] != rhs[i])
-	  return false;
-      return true;
-    }
-  };
-
-
   namespace internal
   {
+
+    //
+    //  optraits for vec<N,T>
+    //
+    /////////////////////////
+
+    template <unsigned N, class T, class Self>
+    class optraits<vec<N, T, Self> >: public optraits_vector<vec<N, T, Self> >
+    {
+      typedef vec<N, T, Self> self;
+      typedef typename typetraits<self>::storage_type storage_type_;
+    public:
+
+      static self zero ()
+      {
+	// A vectorial type MUST return a zero initialized value.
+	return self();
+      }
+
+      // debug
+      static std::string name() {
+	std::ostringstream out;
+	out << "vec<" << N << ", " << optraits<T>::name() << ">"<< std::ends;
+	return out.str();
+      }
+
+      // No unit() for vector.
+      // static storage_type_ unit ();
+
+      ASSIGN_VECTOR_VECTOR_OPERATOR(plus_equal,  +=);
+      ASSIGN_VECTOR_VECTOR_OPERATOR(minus_equal, -=);
+      ASSIGN_VECTOR_SCALAR_OPERATOR(times_equal, *=);
+      ASSIGN_VECTOR_SCALAR_OPERATOR(div_equal,   /=);
+      ASSIGN_VECTOR_SCALAR_OPERATOR(mod_equal,   %=);
+
+      ARITH_VECTOR_VECTOR_OPERATOR(plus, +=);
+      ARITH_VECTOR_VECTOR_OPERATOR(minus, -=);
+
+      // division
+
+      template <class T1, class T2>
+      inline static typename
+      internal::deduce_from_traits<internal::operator_div_traits,
+				   T1, T2>::ret
+      div(const T1& lhs, const T2& rhs)
+      {
+	ntg_is_a(T1, ntg::vectorial)::ensure();
+	ntg_is_a(T2, ntg::real)::ensure();
+	typedef typename
+	  internal::deduce_from_traits<internal::operator_div_traits,
+	  T1, T2>::ret return_type;
+	return_type result(lhs);
+	result /= rhs;
+	return result;
+      }
+
+      // modulo
+
+      template <class T1, class T2>
+      inline static typename
+      internal::deduce_from_traits<internal::operator_mod_traits,
+				   T1, T2>::ret
+      mod(const T1& lhs, const T2& rhs)
+      {
+	ntg_is_a(T1, ntg::vectorial)::ensure();
+	ntg_is_a(T2, ntg::real)::ensure();
+	typedef typename
+	  internal::deduce_from_traits<internal::operator_mod_traits,
+	  T1, T2>::ret return_type;
+	return_type result(lhs);
+	result %= rhs;
+	return result;
+      }
+
+      // multiplication
+
+      // dot-product
+      template <unsigned M, class T1, class T2>
+      inline static typename
+      internal::deduce_from_traits<internal::operator_times_traits,
+				   vec<M, T1>, vec<M, T2> >::ret
+      times(const vec<M, T1>& lhs, const vec<M, T2>& rhs)
+      {
+	typedef vec<M, T1> vec1;
+	typedef vec<M, T2> vec2;
+	ntg_is_a(vec1, ntg::vectorial)::ensure();
+	ntg_is_a(vec2, ntg::vectorial)::ensure();
+	typedef typename
+	  internal::deduce_from_traits<internal::operator_times_traits,
+	  vec<M, T1>, vec<M, T2> >::ret return_type;
+	precondition(lhs.size() == rhs.size());
+
+	return_type result = optraits<return_type>::zero();
+	unsigned s = lhs.size();
+	for (unsigned i = 0; i < s; ++i)
+	  result += lhs[i] * rhs[i];
+
+	return result;
+      }
+
+      // vector * scalar
+      template <class T1, class T2>
+      inline static typename
+      internal::deduce_from_traits<internal::operator_times_traits,
+				   T1, T2>::ret
+      times(const vect_value<T1>& lhs, const T2& rhs)
+      {
+	ntg_is_a(T1, ntg::vectorial)::ensure();
+	ntg_is_a(T2, ntg::real)::ensure();
+	typedef typename
+	  internal::deduce_from_traits<internal::operator_times_traits,
+	  T1, T2>::ret return_type;
+	return_type result(lhs.self());
+	result *= rhs;
+	return result;
+      }
+
+      // scalar * vector
+      template <class T1, class T2>
+      inline static typename
+      internal::deduce_from_traits<internal::operator_times_traits,
+				   T1, T2>::ret
+      times(const T1& lhs, const vect_value<T2>& rhs)
+      {
+	return times(rhs, lhs);
+      }
+
+
+      template <class T1, class T2>
+      inline static bool cmp_eq (const T1& lhs, const T2& rhs)
+      {
+	ntg_is_a(T1, ntg::vectorial)::ensure();
+	ntg_is_a(T2, ntg::vectorial)::ensure();
+	precondition(lhs.size() == rhs.size());
+
+	typedef typename
+	  internal::deduce_from_traits<internal::operator_cmp_traits,
+	  T1, T2>::ret tmp_type;
+
+	unsigned s = lhs.size();
+	for (unsigned i = 0; i < s; ++i)
+	  if (lhs[i] != rhs[i])
+	    return false;
+	return true;
+      }
+    };
 
     //
     // Operators traits
@@ -416,8 +420,8 @@ namespace ntg
       typedef vec<N, T1> impl;
     };
 
-  } // end of internal
+  } // end of internal.
 
-} // end of ntg
+} // end of ntg.
 
 #endif // ! NTG_VECT_VEC_HH

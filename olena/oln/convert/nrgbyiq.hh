@@ -33,7 +33,7 @@
 
 # include <ntg/color/nrgb.hh>
 # include <ntg/color/yiq.hh>
-# include <ntg/core/typetraits_builtins.hh>
+# include <ntg/basics.hh>
 
 /*--------------------------------------------------------------.
 | The formulas used here come from ``Digital Image Processing   |

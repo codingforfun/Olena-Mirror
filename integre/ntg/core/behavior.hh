@@ -33,11 +33,12 @@
 # include <mlc/is_a.hh>
 
 # include <ntg/core/macros.hh>
+# include <ntg/core/internal/macros.hh>
 # include <ntg/core/value.hh>
-# include <ntg/core/optraits.hh>
+# include <ntg/core/type_traits.hh>
 # include <ntg/real/optraits_scalar.hh>
-# include <ntg/core/typetraits.hh>
-# include <ntg/utils/to_oln.hh>
+# include <ntg/real/real_value.hh>
+# include <ntg/core/type_traits.hh>
 
 # include <ntg/utils/debug.hh>
 
@@ -68,7 +69,7 @@ namespace ntg
     template <class T>
     struct get
     {
-      typedef ntg_storage_type(T) storage_type;
+      typedef ntgi_storage_type(T) storage_type;
 
       template <class T1, class T2>
       static T check_plus_equal (T1 lhs, T2 rhs)
@@ -103,16 +104,16 @@ namespace ntg
     template <class T>
     struct get
     {
-      typedef ntg_storage_type(T) storage_type;    
+      typedef ntgi_storage_type(T) storage_type;    
 
       template <class T1, class T2>
       static T check_plus_equal (T1 lhs, T2 rhs)
       {
 	T ret = lhs + rhs;
 	if (rhs > 0)
-	  postcondition(TO_OLN_CAST(T, ret) > lhs);
+	  postcondition(ntg_cast(ret) > lhs);
 	else
-	  postcondition(TO_OLN_CAST(T, ret) <= lhs);
+	  postcondition(ntg_cast(ret) <= lhs);
 	return ret;
       }
 
@@ -121,9 +122,9 @@ namespace ntg
       {
 	T ret = lhs - rhs;
 	if (rhs > 0)
-	  postcondition(TO_OLN_CAST(T, ret) < lhs);
+	  postcondition(ntg_cast(ret) < lhs);
 	else
-	  postcondition(TO_OLN_CAST(T, ret) >= lhs);
+	  postcondition(ntg_cast(ret) >= lhs);
 	return ret;
       }
 
@@ -144,8 +145,8 @@ namespace ntg
       template <class P>
       static storage_type apply (const P& p)
       {
-	precondition(TO_OLN_CAST (P, p) <= optraits<T>::max());
-	precondition(TO_OLN_CAST (P, p) >= optraits<T>::min());
+	precondition(ntg_cast(p) <= ntg_max_val(T));
+	precondition(ntg_cast(p) >= ntg_min_val(T));
 
 	return static_cast<storage_type>(p);
       }
@@ -163,7 +164,7 @@ namespace ntg
     template <class T>
     struct get
     {
-      typedef ntg_storage_type(T) storage_type;
+      typedef ntgi_storage_type(T) storage_type;
 
       template <class T1, class T2>
       static T check_plus_equal (T1 lhs, T2 rhs)
@@ -171,11 +172,11 @@ namespace ntg
 	T ret = lhs + rhs;
 	if (rhs > 0)
 	  {
-	    if (TO_OLN_CAST(T, ret) <= lhs)
-	      ret = optraits<T>::max();
+	    if (ntg_cast(ret) <= lhs)
+	      ret = ntg_max_val(T);
 	  }
-	else if (TO_OLN_CAST(T, ret) > lhs)
-	  ret = optraits<T>::min();
+	else if (ntg_cast(ret) > lhs)
+	  ret = ntg_min_val(T);
 	return ret;
       }
 
@@ -185,11 +186,11 @@ namespace ntg
 	T ret = lhs - rhs;
 	if (rhs > 0)
 	  {
-	    if (TO_OLN_CAST(T, ret) > lhs)
-	      ret = optraits<T>::min();
+	    if (ntg_cast(ret) > lhs)
+	      ret = ntg_min_val(T);
 	  }
-	else if (rhs != 0 && TO_OLN_CAST(T, ret) <= lhs)
-	  ret = optraits<T>::max();
+	else if (rhs != 0 && ntg_cast(ret) <= lhs)
+	  ret = ntg_max_val(T);
 	return ret;
       }
 
@@ -202,9 +203,9 @@ namespace ntg
 	  {
 	    // if lhs and rhs signs are equal, we wanted to grow
 	    if ((lhs > 0 && rhs > 0) || (-lhs > 0 && -rhs > 0))
-	      ret = optraits<T>::max();
+	      ret = ntg_max_val(T);
 	    else
-	      ret = optraits<T>::min();
+	      ret = ntg_min_val(T);
 	  }
 	return ret;
       }
@@ -216,13 +217,11 @@ namespace ntg
       template <class P>
       static storage_type apply (const P& p)
       {
-	typedef typename internal::to_oln<P>::ret p_oln_type;
+	if (ntg_cast(p) > ntg_max_val(T))
+	  return ntg_max_val(T);
 
-	if (static_cast<p_oln_type>(p) > optraits<T>::max())
-	  return optraits<T>::max();
-
-	if (static_cast<p_oln_type>(p) < optraits<T>::min())
-	  return optraits<T>::min();
+	if (ntg_cast(p) < ntg_min_val(T))
+	  return ntg_min_val(T);
 
 	return static_cast<storage_type>(p);
       }
@@ -241,7 +240,7 @@ namespace ntg
     template <class T>
     struct get
     {
-      typedef ntg_storage_type(T) storage_type;
+      typedef ntgi_storage_type(T) storage_type;
 
       // FIXME: calculate real values
 
@@ -280,20 +279,19 @@ namespace ntg
       template <class P>
       static storage_type apply (const P& rhs)
       {
-	typedef typename mlc::if_<is_a(optraits<P>, optraits_float)::ret,
+	typedef typename mlc::if_<ntg_is_a(P, decimal)::ret,
 	  cycle_fmod,
 	  cycle_mod>::ret_t cycle_op;
 
-	typename internal::to_oln<P>::ret
-	  tmp = cycle_op::exec(std::abs(SIGNED_CAST(P, rhs)),
-			       optraits<T>::max() - optraits<T>::min());
+	ntg_type(P) tmp = cycle_op::exec(std::abs(ntg_signed_cast(rhs)),
+					 ntg_max_val(T) - ntg_min_val(T));
 
 	if (rhs < 0) tmp = -tmp;
 
-	if (tmp < optraits<T>::min())
-	  return optraits<T>::max() - optraits<T>::min() + tmp;
-	else if (tmp >= optraits<T>::max())
-	  return optraits<T>::min() - optraits<T>::max() + tmp;
+	if (tmp < ntg_min_val(T))
+	  return ntg_max_val(T) - ntg_min_val(T) + tmp;
+	else if (tmp >= ntg_max_val(T))
+	  return ntg_min_val(T) - ntg_max_val(T) + tmp;
 
 	return tmp;
       }
@@ -313,8 +311,8 @@ namespace ntg
     struct deduce_op_behaviour<B, B>
     { typedef B ret; };
 
-  }
+  } // end of internal.
 
-} // end of ntg
+} // end of ntg.
 
 #endif // ndef NTG_BEHAVIOUR_HH

@@ -33,51 +33,49 @@
 # include <mlc/cmp.hh>
 # include <mlc/is_a.hh>
 
+# include <ntg/basics.hh>
 # include <ntg/vect/cplx_representation.hh>
-# include <ntg/core/global_ops.hh>
-# include <ntg/core/optraits.hh>
-# include <ntg/core/typetraits.hh>
 # include <ntg/vect/vec.hh>
 
 // FIXME: move these macros elsewhere and document them.
 
 // Assignement operators macros
 
-# define ASSIGN_CPLX_SCALAR_OPERATOR_SINGLE(Rep, Name, Op)			\
-template <class T1, class T2> inline						\
-static cplx<Rep, T1>& Name(cplx<Rep, T1>& lhs, const T2& rhs)			\
-{										\
-  is_a(optraits<T2>, ntg::optraits_scalar)::ensure();				\
-  lhs.first() Op rhs;								\
-  return lhs;									\
+# define ASSIGN_CPLX_SCALAR_OPERATOR_SINGLE(Rep, Name, Op)	\
+template <class T1, class T2> inline				\
+static cplx<Rep, T1>& Name(cplx<Rep, T1>& lhs, const T2& rhs)	\
+{								\
+  ntg_is_a(T2, real)::ensure();					\
+  lhs.first() Op rhs;						\
+  return lhs;							\
 }
 
-# define ASSIGN_CPLX_SCALAR_OPERATOR_BOTH(Rep, Name, Op)			\
-template <class T1, class T2> inline						\
-static cplx<Rep, T1>& Name(cplx<Rep, T1>& lhs, const T2& rhs)			\
-{										\
-  is_a(optraits<T2>, ntg::optraits_scalar)::ensure();				\
-  lhs.first() Op rhs;								\
-  lhs.second() Op rhs;								\
-  return lhs;									\
+# define ASSIGN_CPLX_SCALAR_OPERATOR_BOTH(Rep, Name, Op)	\
+template <class T1, class T2> inline				\
+static cplx<Rep, T1>& Name(cplx<Rep, T1>& lhs, const T2& rhs)	\
+{								\
+  ntg_is_a(T2, real)::ensure();					\
+  lhs.first() Op rhs;						\
+  lhs.second() Op rhs;						\
+  return lhs;							\
 }
 
-# define ASSIGN_CPLX_POLAR_SCALAR_OPERATOR(Name, Op)				\
-template <class T1, class T2> inline						\
-static cplx<polar, T1>& Name(cplx<polar, T1>& lhs, const T2& rhs)		\
-{										\
-  is_a(optraits<T2>, ntg::optraits_scalar)::ensure();				\
-  cplx<rect, float_d> tmp(lhs);							\
-  tmp.real() Op rhs;								\
-  lhs = tmp;									\
-  return lhs;									\
+# define ASSIGN_CPLX_POLAR_SCALAR_OPERATOR(Name, Op)			\
+template <class T1, class T2> inline					\
+static cplx<polar, T1>& Name(cplx<polar, T1>& lhs, const T2& rhs)	\
+{									\
+  ntg_is_a(T2, real)::ensure();						\
+  cplx<rect, float_d> tmp(lhs);						\
+  tmp.real() Op rhs;							\
+  lhs = tmp;								\
+  return lhs;								\
 }
 
 # define ASSIGN_CPLX_RECT_CPLX_OPERATOR_MULT(Name, Op1, Op2)			\
 template <class T1, cplx_representation R2, class T2> inline			\
 static cplx<rect, T1>& Name(cplx<rect, T1>& lhs, const cplx<R2, T2>& rhs)	\
 {										\
-  cplx<polar, float_d> tmp(lhs);							\
+  cplx<polar, float_d> tmp(lhs);						\
   tmp.magn() Op1 (float_d)rhs.magn();						\
   tmp.angle() Op2 (float_d)rhs.angle();						\
   lhs = tmp;									\
@@ -139,20 +137,20 @@ Name(const cplx<Rep1, T1>& lhs, const cplx<Rep2, T2>& rhs)					\
   return result;										\
 }
 
-# define ARITH_CPLX_SCALAR_OPERATOR(Rep, Name, Op)						\
-template <class T1, class T2>									\
-inline static											\
-cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits,		\
-                             T1, T2>::ret>							\
-Name(const cplx<Rep, T1>& lhs, const T2& rhs)							\
-{												\
-  is_a(optraits<T2>, ntg::optraits_scalar)::ensure();						\
-  typedef											\
-    cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits,		\
-    T1, T2>::ret> return_type;									\
-  return_type result(lhs);									\
-  result Op rhs;										\
-  return result;										\
+# define ARITH_CPLX_SCALAR_OPERATOR(Rep, Name, Op)					\
+template <class T1, class T2>								\
+inline static										\
+cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits,	\
+                             T1, T2>::ret>						\
+Name(const cplx<Rep, T1>& lhs, const T2& rhs)						\
+{											\
+  ntg_is_a(T2, real)::ensure();								\
+  typedef										\
+    cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits,	\
+    T1, T2>::ret> return_type;								\
+  return_type result(lhs);								\
+  result Op rhs;									\
+  return result;									\
 }
 
 # define ARITH_CPLX_SCALAR_OPERATOR_COMMUTE(Rep, Name, Op)					\
@@ -200,21 +198,26 @@ Name(const vec<2, T1>& lhs, const cplx<Rep, T2>& rhs)						\
   return Name(rhs, lhs).invert();								\
 }
 
-namespace ntg
-{
+namespace ntg {
 
-  template <cplx_representation R, class T>
-  struct typetraits<cplx<R, T> >
-  {
-    typedef cplx<R, T> self;
-    typedef optraits<self> optraits;
+  namespace internal {
 
-    typedef typename typetraits<T>::base_type  base_type[2];
-    typedef T storage_type[2];
-    typedef typename typetraits<T>::cumul_type cumul_type[2];
+    template <cplx_representation R, class T>
+    struct typetraits<cplx<R, T> >
+    {
+      typedef cplx<R, T> self;
+      typedef vectorial abstract_type;
+      typedef self ntg_type;
+      typedef optraits<self> optraits;
 
-    typedef self op_traits;
-  };
+      typedef typename typetraits<T>::base_type  base_type[2];
+      typedef T storage_type[2];
+      typedef typename typetraits<T>::cumul_type cumul_type[2];
+
+      typedef self op_traits;
+    };
+
+  } // end of internal.
 
   //
   // Non-specialized cplx class (declared in predecls.hh) :
@@ -277,7 +280,7 @@ namespace ntg
 
     ~cplx()
     {
-      is_a(optraits<T>, optraits_scalar)::ensure();
+      ntg_is_a(T, ntg::real)::ensure();
     }
 
     // accessors
@@ -329,7 +332,7 @@ namespace ntg
   //////////////////////////////////////
 
   template <class T>
-  class cplx<polar, T> : public vectorial<cplx<polar, T> >
+  class cplx<polar, T> : public vect_value<cplx<polar, T> >
   {
   public:
 
@@ -364,7 +367,7 @@ namespace ntg
 
     ~cplx()
     {
-      is_a(optraits<T>, optraits_scalar)::ensure();
+      ntg_is_a(T, ntg::real)::ensure();
     }
 
     // accessors
@@ -426,152 +429,152 @@ namespace ntg
 		<< rhs.angle() << "i)";
   }
 
-  //
-  //  optraits for cplx<rect, T>
-  //
-  //////////////////////////////////////
-  
-  template <class T>
-  class optraits<cplx<rect, T> >: public optraits<vec<2, T> >
-  {
-    typedef cplx<rect, T> self;
-    typedef typename typetraits<self>::storage_type storage_type;
-    
-  public:
-    
-    static self zero ()
-    {
-      return self();
-    }
-    
-    static self unit ()
-    {
-      return self(1);
-    }
-    
-    // debug
-    static std::string name() {
-      std::ostringstream out;
-      out << "cplx<rect, " <<  optraits<T>::name() << ">" << std::ends;
-      return out.str();
-    }
-
-    ASSIGN_CPLX_SCALAR_OPERATOR_SINGLE(rect, plus_equal, +=);
-    ASSIGN_CPLX_SCALAR_OPERATOR_SINGLE(rect, minus_equal, -=);
-    ASSIGN_CPLX_SCALAR_OPERATOR_BOTH(rect, times_equal, *=);
-    ASSIGN_CPLX_SCALAR_OPERATOR_BOTH(rect, div_equal, /=);
-    
-    ASSIGN_CPLX_RECT_CPLX_OPERATOR_ADD(plus_equal, +=, +=);
-    ASSIGN_CPLX_RECT_CPLX_OPERATOR_ADD(minus_equal, -=, -=);
-    ASSIGN_CPLX_RECT_CPLX_OPERATOR_MULT(times_equal, *=, +=);
-    ASSIGN_CPLX_RECT_CPLX_OPERATOR_MULT(div_equal, /=, -=);
-
-    ASSIGN_CPLX_VECTOR_OPERATOR(rect, plus_equal, +=);
-    ASSIGN_CPLX_VECTOR_OPERATOR(rect, minus_equal, -=);
-
-    ARITH_CPLX_SCALAR_OPERATOR(rect, plus, +=);
-    ARITH_CPLX_SCALAR_OPERATOR_COMMUTE(rect, plus, +=);
-    ARITH_CPLX_SCALAR_OPERATOR(rect, minus, -=);
-    ARITH_CPLX_SCALAR_OPERATOR(rect, times, *=);
-    ARITH_CPLX_SCALAR_OPERATOR_COMMUTE(rect, times, *=);
-    ARITH_CPLX_SCALAR_OPERATOR(rect, div, /=);
-
-    ARITH_CPLX_CPLX_OPERATOR(rect, rect, plus, +=);
-    ARITH_CPLX_CPLX_OPERATOR(rect, rect, minus, -=);
-    ARITH_CPLX_CPLX_OPERATOR(rect, rect, times, *=);
-    ARITH_CPLX_CPLX_OPERATOR(rect, rect, div, /=);
-
-    ARITH_CPLX_CPLX_OPERATOR(rect, polar, plus, +=);
-    ARITH_CPLX_CPLX_OPERATOR(rect, polar, minus, -=);
-    ARITH_CPLX_CPLX_OPERATOR(rect, polar, times, *=);
-    ARITH_CPLX_CPLX_OPERATOR(rect, polar, div, /=);
-
-    ARITH_CPLX_VECTOR_OPERATOR(rect, plus, +=);
-    ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_PLUS(rect, plus, +=);
-    ARITH_CPLX_VECTOR_OPERATOR(rect, minus, -=);
-    ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_MINUS(rect, minus, -=);
-
-    template <class T1, cplx_representation R2, class T2>
-    inline static bool cmp_eq (const cplx<rect, T1>& lhs,
-			       const cplx<R2, T2>& rhs)
-    {
-      if (lhs.real() != rhs.real() || lhs.imag() != rhs.imag())
-	return false;
-      return true;
-    }
-
-  };
-
-  //
-  //  optraits for cplx<polar, T>
-  //
-  ////////////////////////////////////
-
-  template <class T>
-  class optraits<cplx<polar, T> >: public optraits_top<cplx<polar, T> >
-  {
-    typedef cplx<polar, T> self;
-    typedef typename typetraits<self>::storage_type storage_type;
-    
-  public:
-    
-    static self zero ()
-    {
-      return self();
-    }
-    
-    static self unit ()
-    {
-      return self(1);
-    }
-    
-    // debug
-    static std::string name() {
-      std::ostringstream out;
-      out << "cplx<polar, " <<  optraits<T>::name() << ">" << std::ends;
-      return out.str();
-    }
-
-    ASSIGN_CPLX_POLAR_SCALAR_OPERATOR(plus_equal, +=);
-    ASSIGN_CPLX_POLAR_SCALAR_OPERATOR(minus_equal, -=);
-    ASSIGN_CPLX_SCALAR_OPERATOR_SINGLE(polar, times_equal, *=);
-    ASSIGN_CPLX_SCALAR_OPERATOR_SINGLE(polar, div_equal, /=);
-
-    ASSIGN_CPLX_POLAR_CPLX_OPERATOR_ADD(plus_equal, +=);
-    ASSIGN_CPLX_POLAR_CPLX_OPERATOR_ADD(minus_equal, -=);
-    ASSIGN_CPLX_POLAR_CPLX_OPERATOR_MULT(times_equal, *=, +=);
-    ASSIGN_CPLX_POLAR_CPLX_OPERATOR_MULT(div_equal, /=, -=);
-
-    ARITH_CPLX_SCALAR_OPERATOR(polar, plus, +=);
-    ARITH_CPLX_SCALAR_OPERATOR_COMMUTE(polar, plus, +=);
-    ARITH_CPLX_SCALAR_OPERATOR(polar, minus, -=);
-    ARITH_CPLX_SCALAR_OPERATOR(polar, times, *=);
-    ARITH_CPLX_SCALAR_OPERATOR_COMMUTE(polar, times, *=);
-    ARITH_CPLX_SCALAR_OPERATOR(polar, div, /=);
-
-    ARITH_CPLX_CPLX_OPERATOR(polar, polar, plus, +=);
-    ARITH_CPLX_CPLX_OPERATOR(polar, polar, minus, -=);
-    ARITH_CPLX_CPLX_OPERATOR(polar, polar, times, *=);
-    ARITH_CPLX_CPLX_OPERATOR(polar, polar, div, /=);
-
-    ARITH_CPLX_CPLX_OPERATOR(polar, rect, plus, +=);
-    ARITH_CPLX_CPLX_OPERATOR(polar, rect, minus, -=);
-    ARITH_CPLX_CPLX_OPERATOR(polar, rect, times, *=);
-    ARITH_CPLX_CPLX_OPERATOR(polar, rect, div, /=);
-
-    template <class T1, cplx_representation R2, class T2>
-    inline static bool cmp_eq (const cplx<polar, T1>& lhs,
-			       const cplx<R2, T2>& rhs)
-    {
-      if (lhs.magn() != rhs.magn() || lhs.angle() != rhs.angle())
-	return false;
-      return true;
-    }
-
-  };
-
   namespace internal 
   {
+
+    //
+    //  optraits for cplx<rect, T>
+    //
+    //////////////////////////////////////
+  
+    template <class T>
+    class optraits<cplx<rect, T> >: public optraits<vec<2, T> >
+    {
+      typedef cplx<rect, T> self;
+      typedef typename typetraits<self>::storage_type storage_type_;
+    
+    public:
+    
+      static self zero ()
+      {
+	return self();
+      }
+    
+      static self unit ()
+      {
+	return self(1);
+      }
+    
+      // debug
+      static std::string name() {
+	std::ostringstream out;
+	out << "cplx<rect, " <<  optraits<T>::name() << ">" << std::ends;
+	return out.str();
+      }
+
+      ASSIGN_CPLX_SCALAR_OPERATOR_SINGLE(rect, plus_equal, +=);
+      ASSIGN_CPLX_SCALAR_OPERATOR_SINGLE(rect, minus_equal, -=);
+      ASSIGN_CPLX_SCALAR_OPERATOR_BOTH(rect, times_equal, *=);
+      ASSIGN_CPLX_SCALAR_OPERATOR_BOTH(rect, div_equal, /=);
+    
+      ASSIGN_CPLX_RECT_CPLX_OPERATOR_ADD(plus_equal, +=, +=);
+      ASSIGN_CPLX_RECT_CPLX_OPERATOR_ADD(minus_equal, -=, -=);
+      ASSIGN_CPLX_RECT_CPLX_OPERATOR_MULT(times_equal, *=, +=);
+      ASSIGN_CPLX_RECT_CPLX_OPERATOR_MULT(div_equal, /=, -=);
+
+      ASSIGN_CPLX_VECTOR_OPERATOR(rect, plus_equal, +=);
+      ASSIGN_CPLX_VECTOR_OPERATOR(rect, minus_equal, -=);
+
+      ARITH_CPLX_SCALAR_OPERATOR(rect, plus, +=);
+      ARITH_CPLX_SCALAR_OPERATOR_COMMUTE(rect, plus, +=);
+      ARITH_CPLX_SCALAR_OPERATOR(rect, minus, -=);
+      ARITH_CPLX_SCALAR_OPERATOR(rect, times, *=);
+      ARITH_CPLX_SCALAR_OPERATOR_COMMUTE(rect, times, *=);
+      ARITH_CPLX_SCALAR_OPERATOR(rect, div, /=);
+
+      ARITH_CPLX_CPLX_OPERATOR(rect, rect, plus, +=);
+      ARITH_CPLX_CPLX_OPERATOR(rect, rect, minus, -=);
+      ARITH_CPLX_CPLX_OPERATOR(rect, rect, times, *=);
+      ARITH_CPLX_CPLX_OPERATOR(rect, rect, div, /=);
+
+      ARITH_CPLX_CPLX_OPERATOR(rect, polar, plus, +=);
+      ARITH_CPLX_CPLX_OPERATOR(rect, polar, minus, -=);
+      ARITH_CPLX_CPLX_OPERATOR(rect, polar, times, *=);
+      ARITH_CPLX_CPLX_OPERATOR(rect, polar, div, /=);
+
+      ARITH_CPLX_VECTOR_OPERATOR(rect, plus, +=);
+      ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_PLUS(rect, plus, +=);
+      ARITH_CPLX_VECTOR_OPERATOR(rect, minus, -=);
+      ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_MINUS(rect, minus, -=);
+
+      template <class T1, cplx_representation R2, class T2>
+      inline static bool cmp_eq (const cplx<rect, T1>& lhs,
+				 const cplx<R2, T2>& rhs)
+      {
+	if (lhs.real() != rhs.real() || lhs.imag() != rhs.imag())
+	  return false;
+	return true;
+      }
+
+    };
+
+    //
+    //  optraits for cplx<polar, T>
+    //
+    ////////////////////////////////////
+
+    template <class T>
+    class optraits<cplx<polar, T> >: public optraits_top<cplx<polar, T> >
+    {
+      typedef cplx<polar, T> self;
+      typedef typename typetraits<self>::storage_type storage_type_;
+    
+    public:
+    
+      static self zero ()
+      {
+	return self();
+      }
+    
+      static self unit ()
+      {
+	return self(1);
+      }
+    
+      // debug
+      static std::string name() {
+	std::ostringstream out;
+	out << "cplx<polar, " <<  optraits<T>::name() << ">" << std::ends;
+	return out.str();
+      }
+
+      ASSIGN_CPLX_POLAR_SCALAR_OPERATOR(plus_equal, +=);
+      ASSIGN_CPLX_POLAR_SCALAR_OPERATOR(minus_equal, -=);
+      ASSIGN_CPLX_SCALAR_OPERATOR_SINGLE(polar, times_equal, *=);
+      ASSIGN_CPLX_SCALAR_OPERATOR_SINGLE(polar, div_equal, /=);
+
+      ASSIGN_CPLX_POLAR_CPLX_OPERATOR_ADD(plus_equal, +=);
+      ASSIGN_CPLX_POLAR_CPLX_OPERATOR_ADD(minus_equal, -=);
+      ASSIGN_CPLX_POLAR_CPLX_OPERATOR_MULT(times_equal, *=, +=);
+      ASSIGN_CPLX_POLAR_CPLX_OPERATOR_MULT(div_equal, /=, -=);
+
+      ARITH_CPLX_SCALAR_OPERATOR(polar, plus, +=);
+      ARITH_CPLX_SCALAR_OPERATOR_COMMUTE(polar, plus, +=);
+      ARITH_CPLX_SCALAR_OPERATOR(polar, minus, -=);
+      ARITH_CPLX_SCALAR_OPERATOR(polar, times, *=);
+      ARITH_CPLX_SCALAR_OPERATOR_COMMUTE(polar, times, *=);
+      ARITH_CPLX_SCALAR_OPERATOR(polar, div, /=);
+
+      ARITH_CPLX_CPLX_OPERATOR(polar, polar, plus, +=);
+      ARITH_CPLX_CPLX_OPERATOR(polar, polar, minus, -=);
+      ARITH_CPLX_CPLX_OPERATOR(polar, polar, times, *=);
+      ARITH_CPLX_CPLX_OPERATOR(polar, polar, div, /=);
+
+      ARITH_CPLX_CPLX_OPERATOR(polar, rect, plus, +=);
+      ARITH_CPLX_CPLX_OPERATOR(polar, rect, minus, -=);
+      ARITH_CPLX_CPLX_OPERATOR(polar, rect, times, *=);
+      ARITH_CPLX_CPLX_OPERATOR(polar, rect, div, /=);
+
+      template <class T1, cplx_representation R2, class T2>
+      inline static bool cmp_eq (const cplx<polar, T1>& lhs,
+				 const cplx<R2, T2>& rhs)
+      {
+	if (lhs.magn() != rhs.magn() || lhs.angle() != rhs.angle())
+	  return false;
+	return true;
+      }
+
+    };
     
     // Operators traits macros
 
@@ -628,8 +631,8 @@ namespace ntg
       typedef cplx<R1, T1> impl;
     };
 
-  } // end of internal
+  } // end of internal.
 
-} // end of ntg
+} // end of ntg.
 
 #endif // ! NTG_CPLX_HH

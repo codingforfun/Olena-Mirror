@@ -32,116 +32,117 @@
 
 # include <mlc/is_a.hh>
 
-# include <ntg/real/real.hh>
+# include <ntg/real/real_value.hh>
+# include <ntg/core/type_traits.hh>
+# include <ntg/core/abstract_hierarchy.hh>
 
 // --
 
-# include <ntg/core/optraits.hh>
-# include <ntg/core/global_ops_traits.hh>
-# include <ntg/core/typetraits.hh>
+# include <ntg/core/internal/global_ops_traits.hh>
+# include <ntg/core/type_traits.hh>
+# include <ntg/core/macros.hh>
 
 // macros definitions
 # include <ntg/real/optraits_scalar_defs.hh>
 
-// FIXME: nothing to do here !
-// useful cast macros.
-# define SIGNED_CAST(T, Val) \
-  (static_cast<typename typetraits<T>::signed_type>(Val))
+namespace ntg {
 
-namespace ntg
-{
-
-  //
-  //  class optraits_scalar : implement common operators for scalars
-  //
-  ///////////////////////////////////////////////////////////////////
-
-  template <class Self>
-  class optraits_scalar : public optraits_top<Self>
-  {
-    typedef typename typetraits<Self>::storage_type storage_type;
-
-  public:
-    static storage_type zero () { return 0; }
-    static storage_type unit () { return 1; }
-    static storage_type default_val() { return zero(); }
+  namespace internal {
 
     //
-    // dev note : the goal in those default operators is to check the kind
-    // of operands (value or not), and then call the good function.
+    //  class optraits_scalar : implement common operators for scalars
     //
-    // ASSIGN_SCALAR_OPERATOR includes default check_xxx_equal functions
+    ///////////////////////////////////////////////////////////////////
+
+    template <class Self>
+    class optraits_scalar : public optraits_top<Self>
+    {
+    private:
+      typedef typename typetraits<Self>::storage_type storage_type_;
+
+    public:
+      static storage_type_ zero () { return 0; }
+      static storage_type_ unit () { return 1; }
+      static storage_type_ default_val() { return zero(); }
+
+      //
+      // dev note : the goal in those default operators is to check the kind
+      // of operands (value or not), and then call the good function.
+      //
+      // ASSIGN_SCALAR_OPERATOR includes default check_xxx_equal functions
+      //
+
+      ASSIGN_SCALAR_OPERATOR(plus_equal,  +);
+      ASSIGN_SCALAR_OPERATOR(minus_equal, -);
+      ASSIGN_SCALAR_OPERATOR(times_equal, *);
+      ASSIGN_SCALAR_OPERATOR(div_equal,   /);
+
+      ARITH_SCALAR_OPERATOR(plus,  +=);
+      ARITH_SCALAR_OPERATOR(minus, -=);
+      ARITH_SCALAR_OPERATOR(times, *=);
+      ARITH_SCALAR_OPERATOR(div,   /=);
+
+      CMP_SCALAR_OPERATOR(cmp_eq, ==);
+      CMP_SCALAR_OPERATOR(cmp_lt, <);
+    };
+
+
     //
+    //  optraits_float
+    //
+    ///////////////////
 
-    ASSIGN_SCALAR_OPERATOR(plus_equal,  +);
-    ASSIGN_SCALAR_OPERATOR(minus_equal, -);
-    ASSIGN_SCALAR_OPERATOR(times_equal, *);
-    ASSIGN_SCALAR_OPERATOR(div_equal,   /);
-
-    ARITH_SCALAR_OPERATOR(plus,  +=);
-    ARITH_SCALAR_OPERATOR(minus, -=);
-    ARITH_SCALAR_OPERATOR(times, *=);
-    ARITH_SCALAR_OPERATOR(div,   /=);
-
-    CMP_SCALAR_OPERATOR(cmp_eq, ==);
-    CMP_SCALAR_OPERATOR(cmp_lt, <);
-  };
+    template <class Self>
+    class optraits_float : public optraits_scalar<Self>
+    {};
 
 
-  //
-  //  optraits_float
-  //
-  ///////////////////
+    //
+    //  optraits_int
+    //
+    /////////////////
 
-  template <class Self>
-  class optraits_float : public optraits_scalar<Self>
-  {};
+    template <class Self>
+    class optraits_int : public optraits_scalar<Self>
+    {
+      typedef typename typetraits<Self>::storage_type storage_type_;
 
+    public:
+      static storage_type_ inf () { return optraits<Self>::min(); }
+      static storage_type_ sup () { return optraits<Self>::max(); }
 
-  //
-  //  optraits_int
-  //
-  /////////////////
-
-  template <class Self>
-  class optraits_int : public optraits_scalar<Self>
-  {
-    typedef typename typetraits<Self>::storage_type storage_type;
-
-  public:
-    static storage_type inf () { return optraits<Self>::min(); }
-    static storage_type sup () { return optraits<Self>::max(); }
-
-    ASSIGN_INT_OPERATOR(mod_equal,  %);
-    ARITH_INT_OPERATOR(mod,  %=);
-  };
+      ASSIGN_INT_OPERATOR(mod_equal,  %);
+      ARITH_INT_OPERATOR(mod,  %=);
+    };
 
 
-  //
-  //  optraits_int_u
-  //
-  ///////////////////
+    //
+    //  optraits_int_u
+    //
+    ///////////////////
 
-  template <class Self>
-  class optraits_int_u : public optraits_int<Self>
-  {
-  private:
-    typedef typename typetraits<Self>::storage_type storage_type;
+    template <class Self>
+    class optraits_int_u : public optraits_int<Self>
+    {
+    private:
+      typedef typename typetraits<Self>::storage_type storage_type_;
 
-  public:
-    static storage_type min () { return 0; }
-  };
+    public:
+      static storage_type_ min () { return 0; }
+    };
 
 
-  //
-  //  optraits_int_s
-  //
-  ///////////////////
+    //
+    //  optraits_int_s
+    //
+    ///////////////////
 
-  template <class Self>
-  class optraits_int_s : public optraits_int<Self>
-  {};
+    template <class Self>
+    class optraits_int_s : public optraits_int<Self>
+    {};
 
-} // namespace ntg
+  } // end of internal.
+
+} // end of ntg.
 
 #endif // ndef NTG_OPTRAITS_SCALAR_HH_

@@ -43,7 +43,7 @@ loadsave(const string& name, const string& savename)
 
   T im, im2;
 
-  cout << ntg::typename_of<T>() << endl;
+  cout << T::name() << endl;
   cout << "  load(" << name << ")" << flush;
   if (! io::load(im, name))
     {

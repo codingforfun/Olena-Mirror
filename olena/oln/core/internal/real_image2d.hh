@@ -159,7 +159,7 @@ operator<<(std::ostream& o, const oln::internal::_real_image2d<T,I>& ima)
     {
       for (oln::coord col = 0; col < ima.ncols(); ++col)
 	{
-	  o.width(unsigned(log10(double(ntg::optraits<T>::max()))+2));
+	  o.width(unsigned(log10(double(ntg_max_val(T)))+2));
 	  o << ima(row,col) << ' ';
 	}
       o << std::endl;

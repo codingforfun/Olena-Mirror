@@ -28,7 +28,7 @@
 #ifndef OLENA_IO_PNM_WRITE_HXX_
 # define OLENA_IO_PNM_WRITE_HXX_
 
-# include <ntg/core/optraits.hh>
+# include <ntg/basics.hh>
 # include <oln/io/pnm_write_common.hxx>
 
 namespace oln {
@@ -47,7 +47,7 @@ namespace oln {
 	s << "# Creator: OLENA / Epita-LRDE" << std::endl
 	  << im.ncols() << ' ' << im.nrows() << std::endl;
 	if (type != '1' && type != '4')
-	  s << (unsigned) optraits<U>::max() << std::endl;
+	  s << (unsigned) ntg_max_val(U) << std::endl;
 	return true;
       }
 

@@ -32,37 +32,35 @@
 
 # include <mlc/cmp.hh>
 
-# include <ntg/core/builtins_properties.hh>
-# include <ntg/core/global_ops_traits.hh>
+# include <ntg/core/internal/builtins_properties.hh>
+# include <ntg/core/internal/global_ops_traits.hh>
 # include <ntg/real/optraits_scalar.hh>
 # include <ntg/real/typetraits_builtins_float.hh>
 
-namespace ntg
-{
+namespace ntg {
 
-  //
-  //  float
-  //
-  //////////
+  namespace internal {
 
-  template <>
-  struct optraits<float> : public optraits_float<float>
-  {
-  private:
-    // shortcuts
-    typedef float self;
-    typedef typetraits<self>::storage_type storage_type;
+    //
+    //  float
+    //
+    //////////
 
-  public:
-    // Don't define min() and max() for float and double.
-    // This is error-prone because max()-1 == max().
-    // Furthermore max()-min() can't be computed.
-    static storage_type sup() { return OLN_FLOAT_INFINITY; }
-    static storage_type inf() { return - sup (); }
-  };
+    template <>
+    struct optraits<float> : public optraits_float<float>
+    {
+    private:
+      // shortcuts
+      typedef float self;
+      typedef typetraits<self>::storage_type storage_type_;
 
-  namespace internal
-  {
+    public:
+      // Don't define min() and max() for float and double.
+      // This is error-prone because max()-1 == max().
+      // Furthermore max()-min() can't be computed.
+      static storage_type_ sup() { return OLN_FLOAT_INFINITY; }
+      static storage_type_ inf() { return - sup (); }
+    };
 
     struct all_float_traits
     {
@@ -168,32 +166,26 @@ namespace ntg
     template <>
     struct operator_cmp_traits<float, float> : all_float_traits {};
 
-  } // end of internal
+    //
+    //  double
+    //
+    ///////////
 
+    template <>
+    struct optraits<double> : public optraits_float<double>
+    {
+    private:
+      // shortcuts
+      typedef double self;
+      typedef typetraits<self>::storage_type storage_type_;
 
-  //
-  //  double
-  //
-  ///////////
-
-  template <>
-  struct optraits<double> : public optraits_float<double>
-  {
-  private:
-    // shortcuts
-    typedef double self;
-    typedef typetraits<self>::storage_type storage_type;
-
-  public:
-    // Don't define min() and max() for float and double.
-    // This is error-prone because max()-1 == max().
-    // Furthermore max()-min() can't be computed.
-    static storage_type sup() { return OLN_DOUBLE_INFINITY; }
-    static storage_type inf() { return - sup (); }
-  };
-
-  namespace internal
-  {
+    public:
+      // Don't define min() and max() for float and double.
+      // This is error-prone because max()-1 == max().
+      // Furthermore max()-min() can't be computed.
+      static storage_type_ sup() { return OLN_DOUBLE_INFINITY; }
+      static storage_type_ inf() { return - sup (); }
+    };
 
     struct all_double_traits
     {
@@ -316,9 +308,8 @@ namespace ntg
     template <>
     struct operator_cmp_traits<double, float> : all_double_traits {};
 
+  } // end of internal.
 
-  } // end of internal
-
-} // end of ntg
+} // end of ntg.
 
 #endif // ndef NTG_OPTRAITS_BUILTINS_FLOAT_HH

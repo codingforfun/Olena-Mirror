@@ -32,35 +32,29 @@
 
 # include <mlc/cmp.hh>
 
-# include <ntg/core/behavior.hh>
+# include <ntg/basics.hh>
 # include <ntg/utils/cast.hh>
-# include <ntg/core/global_ops.hh>
 # include <ntg/real/int_u.hh>
-# include <ntg/core/predecls.hh>
-# include <ntg/core/value.hh>
-# include <ntg/core/typetraits.hh>
 # include <ntg/vect/vec.hh>
 
 # include <iostream>
 # include <sstream>
 # include <string>
 
+namespace ntg {
 
-namespace ntg
-{
+  namespace internal {
 
-  template <unsigned ncomps, unsigned qbits, template <unsigned>
-  class color_system>
-  struct typetraits<color<ncomps, qbits, color_system> >
-  {
-    typedef color<ncomps, qbits, color_system>	self;
-    typedef self				base_type;
-    typedef vec<ncomps, int_u<qbits> >		storage_type;
-  };
+    template <unsigned ncomps, unsigned qbits, template <unsigned>
+    class color_system>
+    struct typetraits<color<ncomps, qbits, color_system> >
+    {
+      typedef data_type					abstract_type;
+      typedef color<ncomps, qbits, color_system>	self;
+      typedef self					base_type;
+      typedef vec<ncomps, int_u<qbits> >		storage_type;
+    };
   
-  namespace internal
-  {
-
     // Helper struct to convert vec<N,T> to vec<N,float>,
     // taking color_system into account.
     template <unsigned n, unsigned ncomps, unsigned qbits, template <unsigned>
@@ -142,7 +136,7 @@ namespace ntg
       }
     };
 
-  } // end of internal
+  } // end of internal.
 
 
   template <unsigned ncomps, unsigned qbits, template <unsigned>
@@ -216,6 +210,6 @@ namespace ntg
     return o;
   }
 
-} // end of ntg
+} // end of ntg.
 
 #endif // NTG_COLOR_HH

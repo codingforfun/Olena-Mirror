@@ -31,7 +31,7 @@
 # include <oln/config/system.hh>
 # include <oln/basics.hh>
 
-# include <ntg/core/optraits.hh>
+# include <ntg/basics.hh>
 # include <ntg/utils/cast.hh>
 # include <mlc/array/1d.hh>
 
@@ -369,7 +369,7 @@ namespace oln {
 
       dwt(const original_im_t& im) : original_im(im)
       {
-	is_a(optraits<original_im_value_t>, optraits_scalar)::ensure();
+	ntg_is_a(original_im_value_t, ntg::real)::ensure();
 
 	im_size = im.size().nth(0);
 	assertion(im_size >= coeffs.size());
@@ -456,19 +456,18 @@ namespace oln {
       template <class T1>
       typename mute<I_, T1>::ret transform_inv(unsigned l = 0)
       {
-	is_a(optraits<T1>, optraits_scalar)::ensure();
+	ntg_is_a(T1, ntg::real)::ensure();
 
 	trans_im_t tmp_im = transform_inv(l);
 	typename mute<I_, T1>::ret new_im(tmp_im.size());
 
 	Iter(trans_im_t) it(tmp_im);
 	for_all(it)
-	  new_im[it] = (tmp_im[it] >= optraits<T1>::inf() ?
-			(tmp_im[it] <= optraits<T1>::sup() ?
+	  new_im[it] = (tmp_im[it] >= ntg_inf_val(T1) ?
+			(tmp_im[it] <= ntg_sup_val(T1) ?
 			 tmp_im [it] :
-			 optraits<T1>::sup()) :
-			optraits<T1>::inf());
-
+			 ntg_sup_val(T1)) :
+			ntg_inf_val(T1));
 	return new_im;
       }
 

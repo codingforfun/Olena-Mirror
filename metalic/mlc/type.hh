@@ -217,9 +217,8 @@ namespace mlc
 //
 ///////////////////////////////
 
-# define Exact(Type) \
-typename mlc::exact<Type>::ret
-#define Exact_(Type) mlc::exact<Type>::ret
+# define mlc_exact_type(T) typename mlc::exact<T>::ret
+# define mlc_exact_type_(T) mlc::exact<T>::ret
 
 //
 //  find exact : FIXME: variadic macros !!!
@@ -237,28 +236,28 @@ typename mlc::exact<Type>::ret
 ///////////////////////////////
 
 template<class T> inline
-Exact(T)&
+mlc_exact_type(T)&
 to_exact(T& ref)
 {
   return ref.exact();
 }
 
 template<class T> inline
-const Exact(T)&
+const mlc_exact_type(T)&
 to_exact(const T& ref)
 {
   return ref.exact();
 }
 
 template<class T> inline
-Exact(T)*
+mlc_exact_type(T)*
 to_exact(T* ptr)
 {
   return &ptr->exact();
 }
 
 template<class T> inline
-const Exact(T)*
+const mlc_exact_type(T)*
 to_exact(const T* ptr)
 {
   return &ptr->exact();
@@ -272,6 +271,10 @@ to_exact(const T* ptr)
 template<class E> inline E& mlc::any<E>::self(){ return reinterpret_cast<E&>(*this); }
 
 template<class E> inline const E& mlc::any<E>::self() const { return reinterpret_cast<E&>(*this); }
+
+# define Exact(Type) \
+typename mlc::exact<Type>::ret
+#define Exact_(Type) mlc::exact<Type>::ret
 
 # define Exact_ptr(Type, Var)			\
 typedef Exact(Type##_) Type;			\

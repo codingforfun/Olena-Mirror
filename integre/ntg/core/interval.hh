@@ -29,7 +29,7 @@
 # define NTG_INTERVAL_HH
 
 # include <ntg/config/system.hh>
-# include <ntg/core/optraits.hh>
+# include <ntg/core/type_traits.hh>
 
 # include <string>
 # include <sstream>
@@ -51,7 +51,7 @@ namespace ntg
     static std::string name()
     {
       std::ostringstream out;
-      out << "bounded<" << optraits<T>::name() << ", " << i_min 
+      out << "bounded<" << type_traits<T>::name() << ", " << i_min 
 	  << ", " << i_max << ">"<< std::ends;
       return out.str();
     }

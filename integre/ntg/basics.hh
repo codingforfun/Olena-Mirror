@@ -25,45 +25,23 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CONVERT_STRETCH_HH
-# define OLENA_CONVERT_STRETCH_HH
+#ifndef NTG_BASICS_HH
+# define NTG_BASICS_HH
 
-# include <mlc/type.hh>
+/*!
+  Utility header that regroup basic common headers every file
+  should need.
+*/
 
-# include <ntg/basics.hh>
+# include <ntg/core/abstract_hierarchy.hh>
+# include <ntg/core/behavior.hh>
+# include <ntg/core/internal/global_ops.hh>
+# include <ntg/core/macros.hh>
+# include <ntg/core/predecls.hh>
+# include <ntg/core/type.hh>
+# include <ntg/core/internal/typetraits_builtins.hh>
+# include <ntg/core/value.hh>
 
-# include <oln/convert/conversion.hh>
-# include <oln/convert/force.hh>
+# include <ntg/utils/cast.hh>
 
-namespace oln {
-  
-  namespace convert {
-
-    template<class Output, class Exact = mlc::final>
-    struct stretch : public conversion_to_type<Output, typename mlc::exact_vt<force<Output, Exact>, Exact>::ret >
-    {
-  
-      template< class Input >
-      Output operator() (const Input& v) const {
-
-	return Output(cast::rbound<Output, float>
-		      (
-		       double(v - ntg_min_val(Input))
-		       / double(ntg_max_val(Input) - ntg_min_val(Input))
-		       * (ntg_max_val(Output) - ntg_min_val(Output))
-		       + ntg_min_val(Output))
-		      );
-      }
-      
-      static std::string name() {
-        return std::string("stretch<") + typename_of<Output>() + ", "
-          + typename_of<Exact>() + ">";
-      }
-    };
-
-
-  } // end of convert.
-
-} // end of oln.
-
-#endif // OLENA_CONVERT_STRETCH_HH
+#endif // ndef NTG_BASICS_HH

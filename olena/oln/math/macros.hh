@@ -50,7 +50,7 @@ namespace oln {
       typedef Self output_t;
       const Self operator()(const ntg::value<Self>& val) const
       {
-	return val.val() * val.val();
+	return val * val;
       }
     };
 
@@ -69,7 +69,7 @@ namespace oln {
       typedef Self output_t;
       const Self operator()(const ntg::value<Self>& val) const
       {
-	return ::abs(val.val());
+	return ::abs(val);
       }
     };
 

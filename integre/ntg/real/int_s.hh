@@ -34,16 +34,8 @@
 # include <mlc/is_a.hh>
 # include <mlc/cmp.hh>
 
-# include <ntg/core/behavior.hh>
-# include <ntg/core/builtins_properties.hh>
-# include <ntg/core/global_ops.hh>
-# include <ntg/core/global_ops_traits.hh>
-# include <ntg/core/optraits.hh>
-# include <ntg/core/predecls.hh>
-# include <ntg/core/value.hh>
-# include <ntg/core/typetraits.hh>
+# include <ntg/basics.hh>
 # include <ntg/real/optraits_scalar.hh>
-# include <ntg/utils/to_oln.hh>
 
 # include <string>
 # include <sstream>
@@ -65,38 +57,42 @@ self& operator=(const Builtin rhs)	        \
 
 // --- //
 
-namespace ntg
-{
+namespace ntg {
 
-  //
-  //  Typetraits
-  //
-  ///////////////
+  namespace internal {
 
-  template <unsigned nbits, class behaviour>
-  struct typetraits<int_s<nbits, behaviour> >
-  {
-    typedef int_s<nbits, behaviour>		self;
-    typedef optraits<self>			optraits;
-    typedef typename behaviour::get<self>	behaviour_type;
+    //
+    //  Typetraits
+    //
+    ///////////////
 
-    typedef self				base_type;
-    typedef typename C_for_int_s<nbits>::type	storage_type;
-    typedef self				signed_type;
-    typedef int_u<nbits-1, behaviour>		unsigned_type;
-    // FIXME: calculate it more precisely
-    typedef int_s<32, behaviour>		cumul_type;
-    typedef int_s<32, behaviour>		largest_type;
-    typedef int_s<32, behaviour>		signed_largest_type;
-    typedef int_s<32, behaviour>		signed_cumul_type;
-    typedef int_u<32, behaviour>		unsigned_largest_type;
-    typedef int_u<32, behaviour>		unsigned_cumul_type;
-    typedef signed int				integer_type;
+    template <unsigned nbits, class behaviour>
+    struct typetraits<int_s<nbits, behaviour> >
+    {
+      typedef int_s<nbits, behaviour>		self;
+      typedef unsigned_integer			abstract_type;
+      typedef self				ntg_type;
+      typedef optraits<self>			optraits;
+      typedef typename behaviour::get<self>	behaviour_type;
 
-    // internal use, useful for decorators
-    typedef self op_traits;
-  };
+      typedef self				base_type;
+      typedef typename C_for_int_s<nbits>::type	storage_type;
+      typedef self				signed_type;
+      typedef int_u<nbits-1, behaviour>		unsigned_type;
+      // FIXME: calculate it more precisely
+      typedef int_s<32, behaviour>		cumul_type;
+      typedef int_s<32, behaviour>		largest_type;
+      typedef int_s<32, behaviour>		signed_largest_type;
+      typedef int_s<32, behaviour>		signed_cumul_type;
+      typedef int_u<32, behaviour>		unsigned_largest_type;
+      typedef int_u<32, behaviour>		unsigned_cumul_type;
+      typedef signed int				integer_type;
 
+      // internal use, useful for decorators
+      typedef self op_traits;
+    };
+
+  } // end of internal.
 
   //
   //  Class int_s<Nbits, Behaviour>
@@ -105,11 +101,11 @@ namespace ntg
 
 
   template <unsigned nbits, class behaviour>
-  class int_s : public integer<int_s<nbits, behaviour> >
+  class int_s : public int_value<int_s<nbits, behaviour> >
   {
     typedef int_s<nbits, behaviour> self;
-    typedef typename typetraits<self>::storage_type storage_type;
-    typedef typename typetraits<self>::optraits optraits_type;
+    typedef ntgi_storage_type(self) storage_type;
+    typedef typename internal::typetraits<self>::optraits optraits_type;
 
   public:
 
@@ -148,12 +144,12 @@ namespace ntg
     }
 
     template <class T>
-    int_s (const real<T>& rhs)
+    int_s (const real_value<T>& rhs)
     {
       val_ = optraits_type::check(rhs.val());
     }
     template <class T>
-    self& operator=(const real<T>& rhs)
+    self& operator=(const real_value<T>& rhs)
     {
       val_ = optraits_type::check(rhs.val());
       return *this;
@@ -194,122 +190,122 @@ namespace ntg
     return stream;
   }
 
-  //
-  //  optraits for int_s
-  //
-  //  Implement interactions with int_u
-  //
-  //////////////////////////////////////
-  
-  template <unsigned nbits, class behaviour>
-  struct optraits<int_s<nbits, behaviour> > :
-    public optraits_int_s<int_s<nbits, behaviour> >
-  {
-  public:
-    typedef int_s<nbits, behaviour> self;
-
-  private:
-    // shortcuts
-    typedef typename typetraits<self>::base_type base_type;
-    typedef typename typetraits<self>::storage_type storage_type;
-    typedef typename behaviour::get<self> behaviour_type;
-
-  public:
-    // behaviour's check
-
-    template <class P>
-    static storage_type check(const P& rhs)
-    { return behaviour_type::apply(rhs); }
-
-    //
-    //  Properties
-    //
-    ////
-
-    static storage_type max()
-    { return C_for_int_s<nbits>::max(); }
-
-    static storage_type min()
-    { return C_for_int_s<nbits>::min(); }
-
-    //
-    //
-    //  Comparison operators
-    //
-    //  As int_x32 cannot grow, there is a problem with comparisons when a
-    //  int_u32 is present, as we cannot convert it to a signed type safely.
-    //
-    ////////////////////////////////////////////////////////////////////////
-
-    //
-    // cmp_eq
-    //
-
-    // int_sN == int_u32; int_u32 == int_sN
-
-    template <class B2>
-    static bool
-    cmp_eq(const self& lhs, const int_u<32, B2>& rhs)
-    {
-      if (lhs.val() < 0)
-	return false;
-
-      return static_cast<int_u<32, B2> >(lhs).val() == rhs.val();
-    }
-    template <class B1>
-    static bool cmp_eq(const int_u<32, B1>& lhs, const self& rhs)
-    { return cmp_eq(rhs, lhs); }
-
-    // <T1> == <T2>
-
-    template <class T1, class T2>
-    static bool
-    cmp_eq(const T1& lhs, const T2& rhs)
-    { return optraits_scalar<self>::cmp_eq(lhs, rhs); }
-
-
-    //
-    // cmp_lt
-    //
-
-    // int_sN < int_u32; int_u32 < int_sN
-
-    template <class B2>
-    static bool
-    cmp_lt(const self& lhs, const int_u<32, B2>& rhs)
-    {
-      if (lhs.val() < 0)
-	return true;
-
-      return static_cast<int_u<32, B2> >(lhs).val() < rhs.val();
-    }
-    template <class B1>
-    static bool cmp_lt(const int_u<32, B1>& lhs, const self& rhs)
-    {
-      if (rhs.val() < 0)
-	return false;
-
-      return lhs.val() < static_cast<int_u<32, B1> >(rhs.val());
-    }
-
-    // <T1> < <T2>
-
-    template <class T1, class T2>
-    static bool
-    cmp_lt(const T1& lhs, const T2& rhs)
-    { return optraits_scalar<self>::cmp_lt(lhs, rhs); }
-
-    // debug
-    static std::string name() {
-      std::ostringstream out;
-      out << "int_s<" << int(nbits) << ", " << behaviour::name() << ">"<< std::ends;
-      return out.str();
-    }
-  };
-
-
   namespace internal
   {
+
+    //
+    //  optraits for int_s
+    //
+    //  Implement interactions with int_u
+    //
+    //////////////////////////////////////
+  
+    template <unsigned nbits, class behaviour>
+    struct optraits<int_s<nbits, behaviour> > :
+      public optraits_int_s<int_s<nbits, behaviour> >
+    {
+    public:
+      typedef int_s<nbits, behaviour> self;
+
+    private:
+      // shortcuts
+      typedef typename typetraits<self>::base_type base_type_;
+      typedef typename typetraits<self>::storage_type storage_type_;
+      typedef typename behaviour::get<self> behaviour_type_;
+
+    public:
+      // behaviour's check
+
+      template <class P>
+      static storage_type_ check(const P& rhs)
+      { return behaviour_type_::apply(rhs); }
+
+      //
+      //  Properties
+      //
+      ////
+
+      static storage_type_ max()
+      { return C_for_int_s<nbits>::max(); }
+
+      static storage_type_ min()
+      { return C_for_int_s<nbits>::min(); }
+
+      //
+      //
+      //  Comparison operators
+      //
+      //  As int_x32 cannot grow, there is a problem with comparisons when a
+      //  int_u32 is present, as we cannot convert it to a signed type safely.
+      //
+      ////////////////////////////////////////////////////////////////////////
+
+      //
+      // cmp_eq
+      //
+
+      // int_sN == int_u32; int_u32 == int_sN
+
+      template <class B2>
+      static bool
+      cmp_eq(const self& lhs, const int_u<32, B2>& rhs)
+      {
+	if (lhs.val() < 0)
+	  return false;
+
+	return static_cast<int_u<32, B2> >(lhs).val() == rhs.val();
+      }
+      template <class B1>
+      static bool cmp_eq(const int_u<32, B1>& lhs, const self& rhs)
+      { return cmp_eq(rhs, lhs); }
+
+      // <T1> == <T2>
+
+      template <class T1, class T2>
+      static bool
+      cmp_eq(const T1& lhs, const T2& rhs)
+      { return optraits_scalar<self>::cmp_eq(lhs, rhs); }
+
+
+      //
+      // cmp_lt
+      //
+
+      // int_sN < int_u32; int_u32 < int_sN
+
+      template <class B2>
+      static bool
+      cmp_lt(const self& lhs, const int_u<32, B2>& rhs)
+      {
+	if (lhs.val() < 0)
+	  return true;
+
+	return static_cast<int_u<32, B2> >(lhs).val() < rhs.val();
+      }
+      template <class B1>
+      static bool cmp_lt(const int_u<32, B1>& lhs, const self& rhs)
+      {
+	if (rhs.val() < 0)
+	  return false;
+
+	return lhs.val() < static_cast<int_u<32, B1> >(rhs.val());
+      }
+
+      // <T1> < <T2>
+
+      template <class T1, class T2>
+      static bool
+      cmp_lt(const T1& lhs, const T2& rhs)
+      { return optraits_scalar<self>::cmp_lt(lhs, rhs); }
+
+      // debug
+      static std::string name() {
+	std::ostringstream out;
+	out << "int_s<" << int(nbits) << ", " << behaviour::name() << ">"<< std::ends;
+	return out.str();
+      }
+    };
+
 
     //
     // Operators traits
@@ -523,8 +519,8 @@ namespace ntg
       typedef int_s<nbits, B1> impl;
     };
 
-  } // end of internal
+  } // end of internal.
 
-} // end of ntg
+} // end of ntg.
 
 #endif // ndef NTG_INT_S_HH

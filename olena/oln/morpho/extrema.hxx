@@ -39,8 +39,8 @@ namespace internal {
       // once these functions exist.  Otherwise it doesn't
       // work on float.
       output[p] = (input[p] ?
-		   ntg::optraits<DestType>::min() :
-		   ntg::optraits<DestType>::max());
+		   ntg_min_val(DestType) :
+		   ntg_max_val(DestType));
     return output;
   }
 

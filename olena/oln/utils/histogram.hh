@@ -29,7 +29,8 @@
 # define OLENA_UTILS_HISTOGRAM_HH
 
 # include <oln/basics.hh>
-# include <ntg/core/optraits.hh>
+# include <ntg/basics.hh>
+
 # include <vector>
 
 namespace oln {
@@ -53,9 +54,9 @@ namespace oln {
 
       histogram() : _values(0)
       {
-	unsigned size = unsigned(ntg::optraits<T>::max()
-				 - ntg::optraits<T>::min()
-				 + ntg::optraits<T>::unit());
+	unsigned size = unsigned(ntg_max_val(T)
+				 - ntg_min_val(T)
+				 + ntg_unit_val(T));
 	_values = new U[size];
 	for (unsigned i = 0; i < size; ++i)
 	  _values[i] = 0;
@@ -72,7 +73,7 @@ namespace oln {
 
       U& operator[](const T& i)
       {
-	return _values[unsigned(i.val() - ntg::optraits<T>::min())];
+	return _values[unsigned(i.val() - ntg_min_val(T))];
       }
 
       friend T min<T, U>(const histogram<T, U>& hist);
@@ -96,10 +97,10 @@ namespace oln {
     T min(const histogram<T, U>& hist)
     {
       unsigned i;
-      for (i = 0; i < unsigned(ntg::optraits<T>::max() - ntg::optraits<T>::min()); ++i)
+      for (i = 0; i < unsigned(ntg_max_val(T) - ntg_min_val(T)); ++i)
 	if (hist._values[i] > 0)
 	  break;
-      return T(ntg::optraits<T>::min() + i);
+      return T(ntg_min_val(T) + i);
     }
 
 
@@ -108,10 +109,10 @@ namespace oln {
     T max(const histogram<T, U>& hist)
     {
       unsigned i;
-      for (i = unsigned(ntg::optraits<T>::max() - ntg::optraits<T>::min()); i > 0; --i)
+      for (i = unsigned(ntg_max_val(T) - ntg_min_val(T)); i > 0; --i)
 	if (hist._values[i] > 0)
 	  break;
-      return T(ntg::optraits<T>::min() + i);
+      return T(ntg_min_val(T) + i);
     }
 
 
@@ -151,11 +152,11 @@ namespace oln {
 
       histogram_minmax() :
 	histogram<T,U>(),
-	_min(0), _max(unsigned(ntg::optraits<T>::max() - ntg::optraits<T>::min())) {}
+	_min(0), _max(unsigned(ntg_max_val(T) - ntg_min_val(T))) {}
 
       U& operator[](const T& i)
       {
-	unsigned idx = unsigned(i.val() - ntg::optraits<T>::min());
+	unsigned idx = unsigned(i.val() - ntg_min_val(T));
 	adjust(idx);
 	return _values[idx];
       }
@@ -163,11 +164,11 @@ namespace oln {
       U min()
       {
 	unsigned i;
-	for (i = _min; i < unsigned(ntg::optraits<T>::max() - ntg::optraits<T>::min()); ++i)
+	for (i = _min; i < unsigned(ntg_max_val(T) - ntg_min_val(T)); ++i)
 	  if (_values[i] > 0)
 	    break;
 	_min = i;
-	return T(ntg::optraits<T>::min() + i);
+	return T(ntg_min_val(T) + i);
       }
 
       T max()
@@ -177,7 +178,7 @@ namespace oln {
 	  if (_values[i] > 0)
 	    break;
 	_max = i;
-	return T(ntg::optraits<T>::min() + i);
+	return T(ntg_min_val(T) + i);
       }
 
     protected:
@@ -200,7 +201,7 @@ namespace oln {
 
       U& operator[](const T& i)
       {
-	unsigned idx = unsigned(i.val() - ntg::optraits<T>::min());
+	unsigned idx = unsigned(i.val() - ntg_min_val(T));
 	adjust(idx);
 	return _values[idx];
       }
@@ -208,11 +209,11 @@ namespace oln {
       U min()
       {
 	unsigned i;
-	for (i = _min; i < unsigned(ntg::optraits<T>::max() - ntg::optraits<T>::min()); ++i)
+	for (i = _min; i < unsigned(ntg_max_val(T) - ntg_min_val(T)); ++i)
 	  if (_values[i] > 0)
 	    break;
 	_min = i;
-	return T(ntg::optraits<T>::min() + i);
+	return T(ntg_min_val(T) + i);
       }
 
       T res()
@@ -237,11 +238,11 @@ namespace oln {
     public:
 
       histogram_max() :
-	histogram<T,U>(),_max(unsigned(ntg::optraits<T>::max() - ntg::optraits<T>::min())) {}
+	histogram<T,U>(),_max(unsigned(ntg_max_val(T) - ntg_min_val(T))) {}
 
       U& operator[](const T& i)
       {
-	unsigned idx = unsigned(unsigned(i) - unsigned(ntg::optraits<T>::min()));
+	unsigned idx = unsigned(unsigned(i) - unsigned(ntg_min_val(T)));
 	adjust(idx);
 	return _values[idx];
       }
@@ -253,7 +254,7 @@ namespace oln {
 	  if (_values[i] > 0)
 	    break;
 	_max = i;
-	return T(ntg::optraits<T>::min() + i);
+	return T(ntg_min_val(T) + i);
       }
 
       T res()
@@ -309,9 +310,9 @@ namespace oln {
       // with the histogram we can know the number of each color and
       // then calculate an array of pointer for quick access to each
       // value of the image
-      std::vector< Point(I)* > ptr(ntg::optraits<val>::max() + 1);
+      std::vector< Point(I)* > ptr(ntg_max_val(val) + 1);
       ptr[0] = &(v[0]);
-      for (int i = ntg::optraits<val>::min() + 1; i <= ntg::optraits<val>::max(); i++)
+      for (int i = ntg_max_val(val) + 1; i <= ntg_max_val(val); i++)
 	ptr[unsigned(i)] = ptr[unsigned(i - 1)] + histo[i - 1];
 
       // Now iterate on the image to sort point in the order of their

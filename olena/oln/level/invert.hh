@@ -67,7 +67,7 @@ namespace oln {
 
       template<class V> static
       const V doit(const rec_int_u<V>& val) {
-	return optraits<V>::max() - val.val();
+	return ntg_max_val(V) - val;
       }
 
       static

@@ -235,7 +235,7 @@ namespace oln {
       {
 	typename image2d<V>::iter p(input);
 	for (p = begin; p != end; ++p)
-	  if (input[p] != ntg::optraits<T>::zero())
+	  if (input[p] != ntg_zero_val(T))
 	    {
 	      _imap[p] = T(0);
 	      nearest_point_map[p] = p;

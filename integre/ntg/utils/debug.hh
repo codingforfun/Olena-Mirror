@@ -29,7 +29,7 @@
 # define NTG_DEBUG_HH
 
 # include <ntg/config/system.hh>
-# include <ntg/core/optraits.hh>
+# include <ntg/basics.hh>
 
 # include <string>
 
@@ -42,7 +42,7 @@ namespace ntg
   /////////////////////////////////
 
   template<class T> inline
-  std::string typename_of_var(const T&) { return optraits<T>::name(); }
+  std::string typename_of_var(const T&) { return type_traits<T>::name(); }
 
   //
   //  typename_of<T>()
@@ -50,7 +50,7 @@ namespace ntg
   /////////////////////////////////
 
   template<class T> inline
-  std::string typename_of() { return optraits<T>::name(); }
+  std::string typename_of() { return type_traits<T>::name(); }
 
 }
 

@@ -3,13 +3,8 @@
 ntgdir = $(includedir)/ntg
 nobase_ntg_HEADERS =				\
   all.hh					\
+  basics.hh					\
   bin.hh					\
-  cplx.hh					\
-  cycle.hh					\
-  float.hh					\
-  int.hh					\
-  range.hh					\
-  vec.hh					\
   color/color.hh				\
   color/hsi.hh					\
   color/hsl.hh					\
@@ -21,22 +16,31 @@ nobase_ntg_HEADERS =				\
   color/yuv.hh					\
   config/math.hh				\
   config/system.hh				\
+  core/abstract_hierarchy.hh			\
   core/behavior.hh				\
-  core/builtins_properties.hh			\
-  core/global_ops.hh				\
-  core/global_ops_defs.hh			\
-  core/global_ops_traits.hh			\
+  core/internal/builtins_properties.hh		\
+  core/internal/global_ops.hh			\
+  core/internal/global_ops_defs.hh		\
+  core/internal/global_ops_traits.hh		\
+  core/internal/macros.hh			\
+  core/internal/optraits_builtins.hh		\
+  core/internal/traits.hh			\
+  core/internal/typetraits_builtins.hh		\
   core/interval.hh				\
-  core/optraits.hh				\
-  core/optraits_builtins.hh			\
+  core/macros.hh				\
   core/predecls.hh				\
-  core/rec_value.hh				\
   core/type.hh					\
-  core/typetraits.hh				\
-  core/typetraits_builtins.hh			\
+  core/type_traits.hh				\
+  core/value.hh					\
+  cplx.hh					\
+  cycle.hh					\
   enum/bin.hh					\
+  enum/enum_value.hh				\
   enum/optraits_builtins_bool.hh		\
   enum/typetraits_builtins_bool.hh		\
+  float.hh					\
+  int.hh					\
+  range.hh					\
   real/cycle.hh					\
   real/int_s.hh					\
   real/int_u.hh					\
@@ -46,11 +50,13 @@ nobase_ntg_HEADERS =				\
   real/optraits_scalar.hh			\
   real/optraits_scalar_defs.hh			\
   real/range.hh					\
+  real/real_value.hh				\
   real/typetraits_builtins_float.hh		\
   real/typetraits_builtins_int.hh		\
   utils/cast.hh					\
   utils/debug.hh				\
-  utils/to_oln.hh				\
+  vec.hh					\
   vect/cplx.hh					\
   vect/cplx_representation.hh			\
-  vect/vec.hh
+  vect/vec.hh					\
+  vect/vect_value.hh

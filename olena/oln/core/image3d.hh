@@ -38,11 +38,9 @@
 namespace oln {
 
   using ntg::bin;
-  using ntg::optraits;
 
   // client can use image3d; instances are real images, that is,
   // images with data ---conversely to proxy images
-
 
   template<class T, class Exact = mlc::final>
   class image3d : public internal::_real_image3d< T, typename mlc::exact_vt<image3d<T, Exact>, Exact>::ret>
@@ -170,7 +168,7 @@ namespace oln {
     {
       return
 	std::string("image3d<")
-	+ optraits<bin>::name() + ","
+	+ ntg_name(bin) + ","
 	+ Exact::name() + ">";
     }
 

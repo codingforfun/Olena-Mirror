@@ -25,40 +25,22 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_TO_OLN_HH
-# define NTG_TO_OLN_HH
+#ifndef NTG_VECT_VECT_VALUE_HH
+# define NTG_VECT_VECT_VALUE_HH
 
-# include <ntg/core/predecls.hh>
-
-// FIXME: rename, oln has nothing to do here !
-
-# define TO_OLN_CAST(T, Val) \
-  (static_cast<typename ntg::internal::to_oln<T>::ret>(Val))
+# include <ntg/core/value.hh>
 
 namespace ntg
 {
 
-  namespace internal
-  {
+  /*-----------.
+  | vect_value |
+  `-----------*/
 
-    template<class T> struct to_oln { typedef T ret; };
+  template <class E>
+  class vect_value : public value<E>
+  {};
 
-    // C built-in type  ->  oln type
+}
 
-    template<> struct to_oln<bool>           { typedef bin ret; };
-
-    template<> struct to_oln<unsigned char>  { typedef int_u8u  ret; };
-    template<> struct to_oln<  signed char>  { typedef int_s8u  ret; };
-    template<> struct to_oln<unsigned short> { typedef int_u16u ret; };
-    template<> struct to_oln<  signed short> { typedef int_s16u ret; };
-    template<> struct to_oln<unsigned long>  { typedef int_u32u ret; };
-    template<> struct to_oln<  signed long>  { typedef int_s32u ret; };
-
-    template<> struct to_oln<unsigned int>   { typedef int_u32u  ret; };
-    template<> struct to_oln<  signed int>   { typedef int_s32u  ret; };
-
-  } // end of internal
-
-} // end of ntg
-
-#endif // ! NTG_TO_OLN_HH
+#endif // !NTG_VECT_VECT_VALUE_HH

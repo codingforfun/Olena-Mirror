@@ -25,23 +25,23 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_VECT_VECTORIAL_HH
-# define NTG_VECT_VECTORIAL_HH
+#ifndef NTG_CORE_INTERNAL_MACROS_HH
+# define NTG_CORE_INTERNAL_MACROS_HH
 
-# include <ntg/core/value.hh>
+/*!
+  All internal macros starts have an ntgi prefix.
+*/
 
-namespace ntg
-{
+/*----------------.
+| types accessors |
+`----------------*/
 
-  /*----------.
-  | vectorial |
-  `----------*/
-  //! Vectorial types abstract class.
+/*! 
+  In come internal code, it is not always possible to use
+  type_traits<T>, especially within the code of the T class itself.
+  That's why ntgi_* macros exists.
+*/
 
-  template <class E>
-  class vectorial : public value<E>
-  {};
+# define ntgi_storage_type(T) typename ntg::internal::typetraits<T>::storage_type
 
-}
-
-#endif // !NTG_VECT_VECTORIAL_HH
+#endif // ndef NTG_CORE_INTERNAL_MACROS_HH
