@@ -36,6 +36,7 @@
 namespace oln {
 
   class window2d; // forward declaration
+  class fwd_witer2d;
 
   // category
   template <>
@@ -54,6 +55,7 @@ namespace oln {
   {
     typedef dpoint2d    dpoint_type;
     typedef size2d      size_type;
+    typedef fwd_witer2d fwd_witer_type;
   };
 
   class window2d : public abstract::struct_elt<window2d>

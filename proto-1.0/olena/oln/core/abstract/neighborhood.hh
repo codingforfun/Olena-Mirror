@@ -100,7 +100,7 @@ namespace oln {
       }
 
       bool
-      has(const abstract::dpoint<dpoint_type>& dp) const
+      has(const dpoint_type& dp) const
       {
 	return this->exact().impl_has(dp.exact());
       }

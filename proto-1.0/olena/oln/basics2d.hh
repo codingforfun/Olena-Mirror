@@ -35,6 +35,7 @@
 # include <oln/core/2d/size2d.hh>
 # include <oln/core/2d/point2d.hh>
 # include <oln/core/2d/image2d.hh>
+# include <oln/core/2d/fwd_witer2d.hh>
 # include <oln/core/2d/window2d.hh>
 # include <oln/core/2d/neighborhood2d.hh>
 

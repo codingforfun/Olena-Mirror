@@ -1,3 +1,15 @@
+2005-03-20  Simon Odou  <simon@lrde.epita.fr>
+
+	* tests/core/tests/fwd_witer2d: New. Test for forward window
+        iterator in 2d.
+	* oln/makefile.src: Add new headers.
+	* oln/core/abstract/struct_elt.hh: Fix a bad prototype.
+	* oln/core/abstract/neighborhood.hh: Likewise.
+	* oln/core/abstract/witer.hh: New. Add window iterator.
+	* oln/core/2d/window2d.hh: Add `fwd_witer' property..
+	* oln/core/properties.hh: Likewise.
+	* oln/basics2d.hh: Add new headers.
+
 2005-03-20  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* tests/utils: New.

@@ -1,0 +1,25 @@
+#include <oln/core/2d/fwd_witer2d.hh>
+#include <oln/core/abstract/piter.hh>
+
+#include <ntg/all.hh>
+
+#include <cassert>
+
+using namespace oln;
+using namespace ntg;
+
+template <typename E>
+bool foo(const E& w)
+{
+  oln_type_of(E, fwd_witer) i(w);
+  unsigned cpt = 0;
+  for_all(i)
+    ++cpt;
+  return not (cpt == w.card());
+}
+
+int main()
+{
+  window2d w = win_c8p();
+  return foo(w);
+}

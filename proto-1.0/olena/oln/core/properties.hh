@@ -46,6 +46,7 @@ namespace oln
     struct point;
     struct size;
     struct piter;
+    struct witer;
     struct niter;
     // FIXME: ...
   }
@@ -60,9 +61,11 @@ namespace oln
     struct dpoint_type;
     struct fwd_piter_type;
     struct bkd_piter_type;
+    struct fwd_witer_type;
     struct iter_type;
     struct delegated_type;
     struct size_type;
+    struct se_type;
 
     struct image_constness_type;
     struct image_dimension_type;

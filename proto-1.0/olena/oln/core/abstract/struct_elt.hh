@@ -60,12 +60,14 @@ namespace oln {
 
     mlc_decl_prop(category::struct_elt, dpoint_type);
     mlc_decl_prop(category::struct_elt, size_type);
+    mlc_decl_prop(category::struct_elt, fwd_witer_type);
 
     static void echo(std::ostream& ostr)
     {
       ostr << "props_of( category::struct_elt, "
 	   << typeid(type).name() << ") = {"
 	   << "  size_type = " << typeid(size_type).name() << "," << std::endl
+	   << "  fwd_witer_type = " << typeid(fwd_witer_type).name() << "," << std::endl
 	   << "  dpoint_type = " << typeid(dpoint_type).name() << "  }" << std::endl;
     }
  
@@ -73,6 +75,7 @@ namespace oln {
 
   mlc_register_prop(category::struct_elt, dpoint_type);
   mlc_register_prop(category::struct_elt, size_type);
+  mlc_register_prop(category::struct_elt, fwd_witer_type);
 
 
   namespace abstract {
@@ -100,7 +103,7 @@ namespace oln {
       }
 
       bool
-      has(const abstract::dpoint<dpoint_type>& dp) const
+      has(const dpoint_type& dp) const
       {
 	return this->exact().impl_has(dp.exact());
       }
