@@ -40,7 +40,8 @@ namespace oln {
   iter_traits<abstract::iter1d<typename
   mlc::exact_vt<fwd_iter1d<Exact>, Exact>::ret> >
   {
-
+    typedef point1d point_type;
+    typedef dpoint1d dpoint_type;
   };
 
   template<class Exact>

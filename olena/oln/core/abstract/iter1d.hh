@@ -81,6 +81,8 @@ namespace oln {
     protected:
       const coord ncols_;
 
+      iter1d() : super_type(), ncols_(0) {}
+
       iter1d(const image1d_size& size) :
 	super_type(), ncols_(size.ncols())
       {

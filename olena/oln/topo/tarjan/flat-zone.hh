@@ -81,7 +81,7 @@ namespace oln {
 	    for_all(p)
 	      {
 		cc.make_set(p);
-		window2d::neighb p_prime(c4, p);
+		window2d::neighb_type p_prime(c4, p);
 		for_all (p_prime) if (input.hold(p_prime))
 		  if (input[p] == input[p_prime])
 		    cc.uni(p_prime.cur(), p);

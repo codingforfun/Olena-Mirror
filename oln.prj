@@ -1,26 +1,27 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 33)
-(Parent-Version oln 2003paradigm 31)
+(Project-Version oln 2003paradigm 34)
+(Parent-Version oln 2003paradigm 33)
 (Version-Log "2003-07-28  David Lesage  <david@lrde.epita.fr>
 
-	* oln/core/abstract/dpoint.hh: Implement the interface.
+	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
+	oln/core/bkd_iter3d.hh, oln/core/fwd_iter1d.hh,
+	oln/core/fwd_iter2d.hh, oln/core/fwd_iter3d.hh: Add typedefs.
 
-	* oln/core/dpoint1d.hh, oln/core/dpoint1d.hxx,
-	oln/core/dpoint2d.hh, oln/core/dpoint2d.hxx,
-	oln/core/dpoint3d.hh, oln/core/dpoint3d.hxx: Rename member
-	functions.
+	* oln/core/abstract/iter1d.hh,
+	oln/core/abstract/iter2d.hh, 
+	oln/core/abstract/iter3d.hh: Add default constructor.
 
-	* oln/core/abstract/point.hh: Implement the interface.
+	* oln/topo/inter-pixel/fwd-dir-iter.hh,
+	oln/topo/inter-pixel/bkd-dir-iter.hh,
+	oln/topo/inter-pixel/internal/dir-iter.hh: Adapt to get it working
+	with the new hierarchy of iterators.
 
-	* oln/core/point1d.hh, oln/core/point1d.hxx,
-	oln/core/point2d.hh, oln/core/point2d.hxx,
-	oln/core/point3d.hh, oln/core/point3d.hxx: Rename member
-	functions..
+	* oln/topo/tarjan/flat-zone.hh: Adapt..
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 28 Jul 2003 09:21:59 +0200")
+(Checkin-Time "Mon, 28 Jul 2003 12:15:14 +0200")
 (Checkin-Login david)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -110,7 +111,7 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.8 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.17 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.18 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.37 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.10 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.4 640))
@@ -189,9 +190,9 @@
   (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.5 640))
   (olena/oln/core/accum.hh (oln/d/40_accum.hh 1.2 640))
   (olena/oln/core/apply.hh (oln/d/39_apply.hh 1.10 640))
-  (olena/oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.12 640))
-  (olena/oln/core/bkd_iter2d.hh (oln/d/37_bkd_iter2d 1.12 640))
-  (olena/oln/core/bkd_iter3d.hh (oln/d/36_bkd_iter3d 1.12 640))
+  (olena/oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.13 640))
+  (olena/oln/core/bkd_iter2d.hh (oln/d/37_bkd_iter2d 1.13 640))
+  (olena/oln/core/bkd_iter3d.hh (oln/d/36_bkd_iter3d 1.13 640))
   
   
   
@@ -210,9 +211,9 @@
   (olena/oln/core/abstract/dpoint.hh (oln/d/28_dpoint.hh 1.8 640))
   
   (olena/oln/core/fold.hh (oln/c/7_fold.hh 1.10 640))
-  (olena/oln/core/fwd_iter1d.hh (oln/d/21_fwd_iter1d 1.9 640))
-  (olena/oln/core/fwd_iter2d.hh (oln/d/20_fwd_iter2d 1.9 640))
-  (olena/oln/core/fwd_iter3d.hh (oln/d/19_fwd_iter3d 1.9 640))
+  (olena/oln/core/fwd_iter1d.hh (oln/d/21_fwd_iter1d 1.10 640))
+  (olena/oln/core/fwd_iter2d.hh (oln/d/20_fwd_iter2d 1.10 640))
+  (olena/oln/core/fwd_iter3d.hh (oln/d/19_fwd_iter3d 1.10 640))
   (olena/oln/core/generate.hh (oln/f/12_generate.h 1.15 640))
   (olena/oln/core/image1d.hh (oln/c/47_image1d.hh 1.16 640))
   (olena/oln/core/image1d_size.hh (oln/c/46_image1d_si 1.9 640))
@@ -230,9 +231,9 @@
   
   
   
-  (olena/oln/core/abstract/iter1d.hh (oln/d/10_iter1d.hh 1.7 640))
-  (olena/oln/core/abstract/iter2d.hh (oln/d/9_iter2d.hh 1.7 640))
-  (olena/oln/core/abstract/iter3d.hh (oln/d/8_iter3d.hh 1.7 640))
+  (olena/oln/core/abstract/iter1d.hh (oln/d/10_iter1d.hh 1.8 640))
+  (olena/oln/core/abstract/iter2d.hh (oln/d/9_iter2d.hh 1.8 640))
+  (olena/oln/core/abstract/iter3d.hh (oln/d/8_iter3d.hh 1.8 640))
     
   
   
@@ -814,17 +815,17 @@
   (olena/oln/topo/combinatorial-map/cmap.hxx (oln/r/32_cmap.hxx 1.4 640))
   (olena/oln/topo/tarjan/union.hh (oln/r/33_union.hh 1.4 640))
   (olena/oln/topo/inter-pixel/inter-pixel.hh (oln/r/34_inter-pixe 1.9 640))
-  (olena/oln/topo/tarjan/flat-zone.hh (oln/r/35_flat-zone. 1.5 640))
+  (olena/oln/topo/tarjan/flat-zone.hh (oln/r/35_flat-zone. 1.6 640))
   (olena/oln/topo/combinatorial-map/cmap.hh (oln/r/36_cmap.hh 1.5 640))
   (olena/tests/topo/test.sh (oln/r/37_test.sh 1.2 750))
   (olena/tests/topo/test-cmap.ref (oln/r/38_test-cmap. 1.2 640))
   (olena/tests/topo/test-inter-pixel.ref (oln/r/39_test-inter 1.2 640))
   (olena/img/test-cmap.pgm (oln/r/40_test-cmap. 1.1 640) :no-keywords)
   (olena/oln/topo/combinatorial-map/internal/zeta.hh (oln/r/43_zeta.hh 1.1 640))
-  (olena/oln/topo/inter-pixel/fwd-dir-iter.hh (oln/r/44_fwd-dir-it 1.1 640))
-  (olena/oln/topo/inter-pixel/bkd-dir-iter.hh (oln/r/45_bkd-dir-it 1.1 640))
+  (olena/oln/topo/inter-pixel/fwd-dir-iter.hh (oln/r/44_fwd-dir-it 1.2 640))
+  (olena/oln/topo/inter-pixel/bkd-dir-iter.hh (oln/r/45_bkd-dir-it 1.2 640))
   (olena/oln/topo/inter-pixel/node.hh (oln/r/46_node.hh 1.2 640))
-  (olena/oln/topo/inter-pixel/internal/dir-iter.hh (oln/r/47_dir-iter.h 1.1 640))
+  (olena/oln/topo/inter-pixel/internal/dir-iter.hh (oln/r/47_dir-iter.h 1.2 640))
   (olena/oln/topo/inter-pixel/internal/dir.hh (oln/r/48_dir.hh 1.1 640))
   (olena/oln/topo/inter-pixel/internal/dir.hxx (oln/r/49_dir.hxx 1.2 640))
   (doc/dev/upgrading.texi (oln/r/50_upgrading. 1.1 640))
@@ -1037,10 +1038,5 @@
   (integre/tests/types/tests/int_u7 (oln/u/8_int_u7 1.1 640))
   (olena/oln/io/pnm_read_data.hh (oln/u/9_pnm_read_d 1.1 640))
   (olena/oln/io/pnm_write_data.hh (oln/u/10_pnm_write_ 1.1 640)))
-(Merge-Parents
-  (2003paradigm.32 complete
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (olena/tests/io/2d.cc olena/tests/io/2d.cc olena/tests/io/2d.cc r)
-    (olena/oln/io/stream_wrapper.hh olena/oln/io/stream_wrapper.hh olena/oln/io/stream_wrapper.hh r) 
-  )
-)
+(Merge-Parents)
 (New-Merge-Parents)

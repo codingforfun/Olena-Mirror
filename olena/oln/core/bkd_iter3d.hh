@@ -41,7 +41,8 @@ namespace oln {
   iter_traits<abstract::iter3d<typename
   mlc::exact_vt<bkd_iter3d<Exact>, Exact>::ret> >
   {
-
+    typedef point3d point_type;
+    typedef dpoint3d dpoint_type;
   };
 
   template<class Exact>

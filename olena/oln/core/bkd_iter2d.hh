@@ -41,7 +41,8 @@ namespace oln {
   iter_traits<abstract::iter2d<typename
   mlc::exact_vt<bkd_iter2d<Exact>, Exact>::ret> >
   {
-
+    typedef point2d point_type;
+    typedef dpoint2d dpoint_type;
   };
 
 
