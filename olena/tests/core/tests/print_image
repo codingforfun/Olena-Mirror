@@ -22,6 +22,7 @@ int main()
   image1d<rgb_8> ima1d_rgb (3);
 
   image2d<int_u8> ima2d_int (3, 5);
+  image2d<bin> ima2d_bin (3, 5);
   image2d<float> ima2d_float (3, 5);
   image2d<range<int_u8, bounded_u<0, 155>, strict> > ima2d_range (3, 5);
   image2d<rgb_8> ima2d_rgb (3, 5);
@@ -29,6 +30,8 @@ int main()
 
   ima2d_int(0, 0) = 253;
   ima2d_int(0, 1) = 155;
+  ima2d_bin(0, 0) = 0;
+  ima2d_bin(0, 1) = 1;
   ima2d_range(0, 0) = 123;
   ima2d_range(0, 1) = 115;
   ima2d_rgb(0, 0) = rgb_8(112, 255, 128);

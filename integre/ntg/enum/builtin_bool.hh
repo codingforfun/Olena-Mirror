@@ -68,8 +68,14 @@ namespace ntg {
     template<>
     struct optraits<bool>
     {
-      static bool min() { return 0; }
-      static bool max() { return 1; }
+      static bool min()  { return 0; }
+      static bool max()  { return 1; }
+      static bool zero() { return 0; }
+      static bool unit() { return 1; }
+      static bool inf()  { return min(); }
+      static bool sup()  { return max(); }
+
+      static unsigned max_print_width () { return 1U; }
     };
     
   } // end of internal.

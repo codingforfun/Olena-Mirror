@@ -3,6 +3,9 @@
 ###
 
 TEXI2PDF = $(TEXI2DVI) --pdf
+TEXI2PDF_FLAGS = --batch -I $(srcdir)/graphics
+
+TEXI2DVI_FLAGS = --batch -I $(srcdir)/graphics
 
 olnsrc = $(top_srcdir)/olena/oln
 
@@ -48,19 +51,22 @@ tex_TEX = oln-ref.tex
 built_oln_ref_TEX = ref-morpho.tex ref-level.tex
 oln_ref_TEX = $(built_oln_ref_TEX) integre-ref.tex
 
-oln-ref.dvi: $(tex_TEX) $(oln_ref_TEX)
-	$(TEXI2DVI) `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
+oln-ref.dvi: $(tex_TEX) $(oln_ref_TEX) $(graphics_DIA)
+	$(TEXI2DVI) $(TEXI2DVI_FLAGS) \
+	  `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
 
-oln-ref.pdf: $(tex_TEX) $(oln_ref_TEX)
-	$(TEXI2PDF) `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
+oln-ref.pdf: $(tex_TEX) $(oln_ref_TEX) $(graphics_DIA)
+	$(TEXI2PDF) $(TEXI2PDF_FLAGS) \
+	  `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
 
 # This rule is not activated by default since the generated files cannot
 # be easily distributed (automake barks loudly when the filenames are
 # not known at the time Makefile.in is generated)
 
-html.tar.gz: $(tex_TEX) $(oln_ref_TEX)
-	$(HEVEA) -o html/oln-ref.html -I $(srcdir) `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
-	$(HEVEA) -o html/oln-ref.html -I $(srcdir) `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
+html.tar.gz: $(tex_TEX) $(oln_ref_TEX) $(graphics_DIA)
+	$(HEVEA) -fix -o html/oln-ref.html -I $(srcdir) -I $(srcdir)/graphics `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
+	cd html && $(HACHA) -tocbis -o index.html oln-ref.html; cd ..
+	cp $(srcdir)/graphics/*-html.png html/
 	$(TAR) -czf $@ html
 
 ###
@@ -70,7 +76,7 @@ html.tar.gz: $(tex_TEX) $(oln_ref_TEX)
 dist_noinst_DATA = oln-ref.pdf oln-ref.dvi bin.tar.gz html.tar.gz
 
 EXTRA_DIST = $(tex_TEX) $(oln_ref_TEX) \
-	processing.tpl filelists.make gen_filelists.sh
+	processing.tpl filelists.make gen_filelists.sh graphics
 
 bin.tar.gz: oln-ref.pdf oln-ref.dvi
 	$(TAR) -czf $@ `test -f bin/lena256.pdf || echo '$(srcdir)/'`bin

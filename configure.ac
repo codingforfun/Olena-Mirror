@@ -255,6 +255,8 @@ OLN_COLLECTION([OLN_TOP],
      AC_CHECK_PROGS([GETDEFS], [getdefs], [$am_aux_dir/missing getdefs])
      AC_ARG_VAR([HEVEA], [program to make HTML pages from TeX])
      AC_CHECK_PROGS([HEVEA], [hevea], [$am_aux_dir/missing hevea])
+     AC_ARG_VAR([HACHA], [program to make split HTML pages from TeX])
+     AC_CHECK_PROGS([HACHA], [hacha], [$am_aux_dir/missing hacha])
      AC_ARG_VAR([EPSTOPDF], [program to convert Encapsulated Postscript images to PDF])
      AC_CHECK_PROGS([EPSTOPDF], [epstopdf], [$am_aux_dir/missing epstopdf])
 

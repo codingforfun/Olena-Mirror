@@ -1,548 +1,382 @@
+\section{Global overview}
 
-This section describes the basic types available with \integre. By
-\emph{basic types} we roughly mean any type that can be used to store
-a value, such as \code{int}, \code{float}, etc.  This also includes
-composite types like complexes, vectors, and colors.
+\subsection{What is {\integre} ?}
 
-%% For completeness we will discuss matrices too, although these are not
-%% deemed basic they are relevant to the description of vectors.
+{\integre} is a safe and efficient data types library, designed for
+generic algorithm writing. Even if it is now independent from Olena,
+it was initially developed to provide value types for images'
+pixels. {\integre} implements basics types such as integers, floats,
+complexes, vectors but also more evolved types such as range (in the
+same spirit than Ada) or cycle.
 
-Other types not discussed here, but worth to mention, includes
-images and iterators.  These will be described in a separate section.
+By safe we wean that all operations (arithmetic, assignments, etc.)
+are checked. If there is an overflow, the user is noticed, at compile
+time if possible, at runtime otherwise.
 
-\subsection{Hierarchy of types}
+By efficient we mean that using {\integre} additional checks and
+features should not decrease too much the overall performances. This
+is why {\integre} relies intensively on template code and meta
+programming.
 
-Here is a list of basic types supported by \integre.  Although it is
-presented hiarchically, this does not means that these types are
-implemented hierarchically in the C++ code.
+\subsection{Interactions with builtin types}
 
-\begin{list}{--}{}
-\item Real types
-  \begin{list}{--}{}
-  \item Integers
-    \begin{list}{--}{}
-    \item Signed
-      \begin{list}{--}{}
-      \item C built-in types:
-        \begin{list}{--}{}
-        \item \code{signed long}
-        \item \code{signed int}
-        \item \code{signed short}
-        \item \code{signed char}
-        \end{list}
-      \item \integre type: \code{int_s<BITS, BEHAVIOR>}
-      \end{list}
-    \item Unsigned
-      \begin{list}{--}{}
-      \item C built-in types
-        \begin{list}{--}{}
-        \item \code{unsigned long}
-        \item \code{unsigned int}
-        \item \code{unsigned short}
-        \item \code{unsigned char}
-        \end{list}
-      \item \integre types: \code{int_u<BITS, BEHAVIOR>}
-      \end{list}
-    \end{list}
-  \item Decimal
-    \begin{list}{--}{}
-    \item C built-in types
-      \begin{list}{--}{}
-        \item \code{float}
-        \item \code{double}
-      \end{list}
-    \item \integre types
-      \begin{list}{--}{}
-        \item \code{float_s}
-        \item \code{float_d}
-      \end{list}
-    \end{list}
-  \end{list}
-\item Enumerated types
-  \begin{list}{--}{}
-  \item C built-in type: \code{bool}
-  \item \integre type: \code{bin}
-  \end{list}
-\item Vectorial types
-  \begin{list}{--}{}
-  \item \integre type: \code{cplx<R, T>}
-    \begin{list}{--}{}
-    \item \code{cplx<rect, T>}: complex with $a+ib$ representation
-    \item \code{cplx<polar, T>}: complex with $r\exp{i\theta}$ representation
-    \end{list}
-  \item \code{vec<N, T>}
-  \item \code{colors}
-  \end{list}
-\end{list}
+{\integre} is designed to simplify generic algorithms writing (generic
+in the sense of data type). But sometimes, one may want to use builtin
+type too in its algorithms, such as \code{int} for example. {\integre}
+provides commodities to accept both {\integre}'s types and builtin or
+external types.
 
-\subsection{Real types}
+\subsection{Generic algorithms support}
 
-All types listed under \emph{scalar types} in the above enumeration,
-can be used together with most common arithmetic operations ($+$, $=$,
-$<$, ...).  However Olena's type do not behave exactly like the
-the built-in types.  We believe it's safer To
-use Olena's type instead of the built-in types.
+Suppose you want to implement a sum which works on several data types:
 
-\subsection{\code{int_u<N, BEHAVIOR=strict>}}
-
-This template can be used to define unsigned integers of various size
-and behaviors.
-
-\code{N} is the number of bits used to store the
-integer.  So \code{int_u<7>} can hold values from the range $0..127$.
-
-\code{BEHAVIOR} must be one of \code{strict}, % \code{cycle},
-\code{saturate}, or \code{unsafe}, this describe how the integer will
-behave on overflows (and underflows).
-
-\begin{description}
-
-\item[\code{strict}]
-
-This is the default.  An overflow triggers an assertion which halts
-the program.
-
-Checking for overflow incurs some run-time overhead, but this is
-dissabled entirely when compiling with \texttt{-DNDEBUG} once the
-program is debugged.  (\code{strict} and \code{unsafe} are identical
-when \code{-DNDEBUG} is used.)
-
-%% \item[\code{cycle}]
-%%
-%% This is the behavior of modular integers.
-%% \code{int_u<8,cycle> i = 256;} will define \code{i} with the value
-%% of \code{0}.
-%%
-%% Note that this wrap-around is the behavior of the C built-in types.
-%% (Compare \code{unsigned char i = 256;}.)
-%%
-%% This overflow checking has no run-time overhead when the type can be
-%% mapped to a built-in types; typically when \code{N} is 8, 16, or 32.
-%% For other values of \code{N}, you get the overhead of a bitwise
-%% \code{and} (like if you did it manually).
-%%
-%% Using the \code{range} template described later, you can get cycling
-%% types on an arbitrarily defined range.  In this case, the overhead
-%% incured is that of a division (a modulo, actually).
-
-\item[\code{saturate}]
-
-These are bounded types, the bounds of which cannot be escaped.
-Assigning a value larger (resp. smaller) than the maximum
-(resp. minimum) of the type, is like assigning this maximum
-(resp. minimum).
+% FIXME: does this compile ?
 
 \begin{lstlisting}{}
-int_u<7,saturate> i = 130; // i equals 127
-i += 10;                   // i still equals 127
-i -= 10;                   // i equals 117
-\end{lstlisting}
 
-This behavior is useful for tasks like histogram construction where a
-value is always increased but should never overflow.
-
-Using the \code{saturate} behavior always incurs some overhead.
-(The same overhead you would get by checking the overflow manually.)
-
-\item[\code{unsafe}]
-This is the behavior of the underlying built-in type: no overflow
-checking.  (This is mainly used internally, to declare the temporary
-variables used by all the other behaviors.)
-
-\end{description}
-
-Note that overflow checking matters only with operations that
-\emph{modify} the current variable (assignments, construction, self
-operators like \code{+=}, \code{-=}, \code{*=}. etc.), not with
-operation returning new variables (like \code{+}, \code{*}, etc.).
-
-If possible, operators that return new variables will extend the type
-of the operand.  For instance when you add two \code{int_u<8>}
-variables, the \code{+} operator returns an \code{int_u<9>} temporary
-variable.  This ensures that there is no overflow.  If you then assign
-this temporary variable to a \code{int_u<8>} variable, overflow
-checking occurs.
-
-\begin{lstlisting}{}
-int_u<8> i = 200;
-int_u<8> j = 100;
-int_u<9> k = i + j;  // ok, no overflow
-int_u<8> l = i + j;  // assertion triggered
-                     // in the constructor of l
-\end{lstlisting}
-
-\floatstyle{boxed}
-\newfloat{FormerAssignCheck}{H}{lop}
-\begin{FormerAssignCheck}
-In former versions of Olena, we used to disallow any assignment from
-\url{int_u<N>} to \url{int_u<M>} where \code{N>M}.  The
-\code{l = i + j;} line in the previous example would simply not
-compile.
-
-This restriction has been removed because it turned out to be very
-annoying.  The programmer had to write
-\code{l = cast::force< int_u<8> >(i + j);} or
-\code{l = cast::bound< int_u<8> >(i + j);} whenever he knew there would
-be no overflow.  One other work around was to bypass the temporary
-variable creation with \code{l = i; l += j;}.
-
-There are two common places where this rule was found really annoying.
-One is the definition of constants.
-\begin{lstlisting}{}
-const T init    = cast::force<T>(optraits<T>::min() + 1);
-const T inqueue = cast::force<T>(optraits<T>::min() + 2);
-\end{lstlisting}
-
-The second is the computation of an average.  Althought the sum is
-made in a larger type, we \emph{know} that the final result will fit
-in the orgiginal type.
-\begin{lstlisting}{}
-template <class T>
-T average(const list<T>& l)
+template <class DataType>
+ResultType Sum(DataType vals[10])
 {
-   optraits<T>::larger_type sum = optraits<T>::larger_type::zero();
-   for (list<T>::iterator i = l.begin(); i != l.end(); ++i)
-      sum += *i;
-   return cast::force<T>(sun / l.size());
+  ResultType s = zero_for_ResultType();
+  for (unsigned i = 0; i < 10; ++i)
+    s += vals[i];
+  return s;
 }
-\end{lstlisting}
-\end{FormerAssignCheck}
 
-Saying that overflow checking occurs only during assignments because
-overflow during operations is impossible (since the type is extended
-as appropriate), would not the exact truth.
-
-The type cannot always be extended during operations.  Summing two
-\code{int_u<31>} variables will return a \code{int_u<32>} temporary
-variable, extending the type; however summing two \code{int_u<32>}
-variables will yield another \code{int_u<32>} variable (on 32bits
-hosts) because no larger type is available.
-
-Because of this, overflow checking has to occur during operations too.
-This means that the behavior of the temporary variables is important.
-The choice is based on the behavior of the operands.
-
-\begin{tabular}{c|c|c}
-operand & operand & result \\
-\hline
-\hline
-\code{strict} & \code{strict} & \code{strict} \\
-\code{saturate} & \code{saturate} & \code{saturate} \\
-\code{unsafe} & \code{unsafe} & \code{unsafe} \\
-\code{strict} & \code{unsafe} & \code{strict} \\
-\code{strict} & \code{saturate} & \code{strict} \\
-\code{unsafe} & \code{saturate} & \code{saturate} \\
-\end{tabular}
-
-Another way to present this is to say that behaviors have been ordered
-as follow \code{unsafe < saturate < strict}, and that when there is a
-choice between two behaviors, we always choose the greater.
-
-Please bear in mind that the behavior chosen for temporary variable
-only rarely matters because the type is usually extended so that
-overflow do not occur.
-
-The following frequently used types are given shorthands.
-\begin{lstlisting}{}
-typedef int_u<8,  strict>       int_u8;
-typedef int_u<16, strict>       int_u16;
-typedef int_u<32, strict>       int_u32;
-typedef int_u<8,  saturate>     int_u8s;
-typedef int_u<16, saturate>     int_u16s;
-typedef int_u<32, saturate>     int_u32s;
 \end{lstlisting}
 
-\subsection{\code{int_s<N, BEHAVIOR=strict>}}
+You know that the sum of ten values will certainly not fit into the
+same data type, so you would like to store the result into a larger
+data type. The same problem stands for the initial value of the
+result, \code{0} is not expressed the same way if we are dealing with
+integers, complexes or vectors.
 
-This template can be used to define signed integers of various size
-and behaviors.  This is can be used exactly like
-\code{int_u<N,BEHAVIOR>}.
+{\integre} provides an handy way to solve these problems:
 
-\emph{Extending the type} will also works during operations between
-unsigned and signed integers.
-
-The following \code{typedef}s are defined.
 \begin{lstlisting}{}
-typedef int_s<8,  strict>       int_s8;
-typedef int_s<16, strict>       int_s16;
-typedef int_s<32, strict>       int_s32;
-typedef int_s<8,  saturate>     int_s8s;
-typedef int_s<16, saturate>     int_s16s;
-typedef int_s<32, saturate>     int_s32s;
+
+template <class DataType>
+ntg_cumul_type(DataType) Sum(DataType vals[10])
+{
+  ntg_cumul_type(DataType) s = ntg_zero_val(DataType);
+  for (unsigned i = 0; i < 10; ++i)
+    s += vals[i];
+  return s;
+}
+
 \end{lstlisting}
 
-\subsection{\code{float_s} and \code{float_d}}
+This algorithm will work with almost all {\integre}'s data types
+supporting arithmetic addition, but also with c++ builtin types.
 
-These are the Olena equivalents of \code{float} and \code{double},
-Contrary to signed and unsigned integer types, there is not
-\emph{extension} during operations.  Multiplying two \code{float_s}
-yields a \code{float_s}.
+You can refer to the following chapters for more informations.
 
-FIXME: so why do we use \code{float} and \code{double}?
+\subsection{Available types}
 
-\subsection{Interactions between scalar types}
+Here is a list of available types, you can refer to the type reference
+section for more details about each type.
 
-The following unary operations are defined for any scalar type, with
-their common semantic:
-\code{+x}, \code{-x}.
+\begin{itemize}
 
-These binary operations can be used with all combinasion of (Olena)
-scalar type, with their common semantic: \code{x+y}, \code{x-y},
-\code{x*y}, \code{x/y}, \code{x+=y}, \code{x-=y}, \code{x*=y},
-\code{x/=y}, \code{x == y}, \code{x < y}, \code{x > y}, \code{x <=
-y}, \code{x >= y}, \code{x != y}.
+  \item Reals
+  \begin{itemize}
+    \item unsigned integer (\ahrefloc{ref-intu}{\code{int_u}})
+    \item signed integer (\ahrefloc{ref-ints}{\code{int_s}})
+    \item float with single precision (\ahrefloc{ref-floats}{\code{float_s}})
+    \item float with double precision (\ahrefloc{ref-floatd}{\code{float_d}})
+  \end{itemize}
 
-Especially, this means that \code{int_u32} is comparable to
-\code{int_s32}.  For instance in
+  \item Enumerated
+  \begin{itemize}
+    \item binary type (\ahrefloc{ref-bin}{\code{bin}})
+  \end{itemize}
+
+  \item Vectorials
+  \begin{itemize}
+    \item Static vectors (\ahrefloc{ref-vec}{\code{vec}})
+    \item Complexes (\ahrefloc{ref-cplx}{\code{cplx}})
+  \end{itemize}
+
+  \item Decorators
+  \begin{itemize}
+    \item Bounding type (\ahrefloc{ref-range}{\code{range}})
+    \item Cycling type (\ahrefloc{ref-cycle}{\code{cycle}})
+  \end{itemize}
+
+\end{itemize}
+
+%%
+
+\section{Using \integre}
+
+\subsection{Compilation}
+
+\integre\ is an active library, and does not provide any object
+file. It only provides headers containing generic types and
+functions. So one just have to add a compilation flag to make the
+compiler find \integre\ headers.
+
+\subsection{Namespace}
+
+All \integre\ public services are in the \code{ntg} namespace.
+
+\subsection{Includes}
+
+Special include files:
+
+\begin{itemize}
+  \item \code{<ntg/all.hh>}: include all \integre\ features.
+
+  \item \code{<ntg/basics.hh>}: include all \integre\ mecanisms, but 
+  does not include any particular \integre\ type.
+\end{itemize}
+
+Other useful include files are mentioned in the documentation of the
+concerned features.
+
+%%
+
+\section{Types properties}
+
+To simplify generic algorithms implementation, we need a way to get
+types properties by a generic way. Traits are defined to do this. As
+they are implemented using traits, it is possible to define properties
+for builtin or external types. So one can get properties for non
+{\integre} native types.
+
+\subsection{Naming scheme and conventions}
+
+Properties associated to types can take two forms: types or values.
+
+\subsection{Properties which are types}
+
+They are suffixed by \code{_type}, for example: \code{larger_type},
+\code{cumul_type}, \code{abstract_type}, etc.
+
+Here is the list of common properties:
+
+\subsubsection{\code{abstract_type}} 
+
+Empty classes representing the kind of the type. This is useful since
+builtin can have associated abstract type. As these classes are
+organized by a hierarchical way, their main interest is
+\ahrefloc{ref-concept-checking}{static concept checking}.
+
+Here are the available abstract types:
+
+\includeimage{abstract-types-hierarchy}{width=0.9\textwidth}
+
+\subsubsection{\code{ntg_type}}
+
+{\integre} provides a good interaction with builtin types, but
+sometimes it is useful to get the {\integre}'s type associated with a
+builtin one (if it exists). For example, \code{ntg_type} for
+\code{unsigned char} is \code{int_u8}.
+
+\subsubsection{\code{base_type}}
+
+When using decorators types, such as \code{range} or \code{cycle}, one
+may needs to know the original undecorated type. \code{base_type}
+represent this type.
+
+\subsubsection{\code{storage_type}}
+
+{\integre}'s types generally use builtin types to store their
+value. For example, \code{int_u8} uses \code{unsigned char} to store
+its actual value. \code{storage_type} represent the type used to store
+values.
+
+\subsection{Properties which are values}
+
+Values properties are implemented by static functions, to ensure a
+compile time evaluation and to avoid any useless memory usage.
+
+\subsubsection{\code{name()}}
+
+Returns a \code{string} with the name of the type. This can be useful
+for debugging purposes.
+
+\subsection{Accessing types properties}
+
+To access to the properties describe above, there is two ways, using
+directly \code{type_traits} or using macros hiding the access.
+
+\subsubsection{\code{type_traits<T>}}
+
+This is the universal way to access properties. For example, use
+\code{type_traits<int_u8>::name()} or 
+\code{type_traits<unsigned char>::abstract_type} to get the name of 
+\code{int_u8} and the \code{abstract_type} representing the builtin 
+type \code{unsigned char}.
+
+Using \code{type_traits} can be rather fastidious (it generally
+requires a \code{typename} keyword), so macros have been defined to
+simplify accesses. You should use \code{type_traits} only when it is
+not possible to use macros (for example when there is a comma in the
+name of the type).
+
+\subsubsection{Macros}
+
+Macros are defined to every possible property. The naming scheme is
+simple: \code{ntg_property_type(Type)} is one wants to access to a
+type property, \code{ntg_property_val} for a value property. Here are
+a few examples: \code{ntg_max_val(int_u8)},
+\code{ntg_abstract_type(float_s)}, etc.
+
+\section{Ensuring programs safety}
+
+\subsection{\aname{ref-concept-checking}{Concept checking}}
+
+One may want to write an algorithm working only on integers, whatever
+its exact type. To accept both builtin types and {\integre} types, he
+has to write something like that:
+
 \begin{lstlisting}{}
-int_u32 i = ...;
-int_s32 j = ...;
-if (i < j)
+
+template <class T>
+void algorithm_on_integer(const T& my_int)
+{
   // ...
+}
+
 \end{lstlisting}
-the code generated for \code{i<j} should be close to
-\code{j >= 0 && i < cast::force<int_u32>(j)}.
 
-\subsection{Decorators for scalar types}
+There is no way to put a constraints on \code{T} since we want to
+accept builtin types. A good solution to ensure program integrity is
+to insert a structucal check using the \code{ntg_is_a(T, U)} macro. It
+checks whether the abstract type of \code{T} is a subclass of U, and
+return a metalic boolean (refer to metalic documentation). 
 
-You can decorate a type to add some constraint or change it's
-behavior.
+So here the user should write:
 
-\subsubsection{\code{range<T, INTERVAL, BEHAVIOR=strict>}}
+\begin{lstlisting}{}
 
-This class, like Ada's \code{range} keyword, adds a constrains on type
-\code{T}.  The constraint is that values should be bounded by
-the interval \code{INTERVAL}.  \code{BEHAVIOR} specifies how overflow
-checking should behave.
+template <class T>
+void algorithm_on_integer(const T& my_int)
+{
+  ntg_is_a(T, integer)::ensure();
+  // ...
+}
 
-Interval should be expressed using the \code{bounded_s<MIN, MAX>} and
-\code{bounded_u<MIN, MAX>} templates, where \code{MIN} and \code{MAX} are
-signed integer in \code{bounded_s} and unsigned integer in
-\code{bounded_u<MIN, MAX>}.\footnote{%%%
-  \code{MIN} and \code{MAX} are always integers (the C++ language does
-not allow floats as template arguments), so to define a \code{float_s}
-between $0$ and $1$, use \code{range<float_s,bounded_u<0,1> >}, not
-\code{range<float_s,bounded_u<0.0,1.0> >}. }%%%
+\end{lstlisting}
 
-%% This changes the \code{min}inimum and \code{max}imum value of a type.
-%% These values are used during overflow checking.
+If \code{ntg_abstract_type(T)} is not an \code{integer}, compilation
+will fail with a clear error message.
 
-\code{range<int_u<8>, bounded_u<10, 25> >} is thus an unsigned integer,
-stored on 8 bits, but restricted to the $[10...25]$ interval.  Because
-\code{strict} is the default behavior, any attempt to escape this
-interval will abort the program.
+\subsection{Overflow checking}
 
+\integre\ is designed to be a safe data types library. It tries to
+make programs safer checking and noticing wrong computations. We want
+to prevent implicit side effects, often really difficult to find
+out. Here is an example with builtin types:
 
-\subsubsection{\code{cycle<T, INTERVAL>}}
+\begin{lstlisting}{}
 
-This class defines a type, the values of which can be built from
-\code{T}, and that cycle over \code{INTERVAL}, where \code{INTERVAL} is
-defined using \code{bounded_u<MIN, MAX>} or \code{bounded_s<MIN,MAX>}
-as in \code{range}.
+  int i = 256;
+  unsigned char foo = i; // foo == 0
 
-For instance \code{typedef cycle<float_s, bounded_u<0, 360> > deg}
-defines a type which is useful to represent angles in degrees.
-\code{deg d = 400.0} will set \code{d} to \code{40.0}.
+\end{lstlisting}
 
-For the purpose of cycling, the upper bound of the range, \code{MAX},
-is excluded.  \code{deg d = 360.0} will set \code{d} to \code{0.0}.
+Another one pointing out arithmetic problems:
 
-Any value implicitly convertible to \code{T} can be involved in an
-arithmetic operation with \code{cycle<T, INTERVAL>}.
+\begin{lstlisting}{}
 
-Any conversion from \code{cycle<T, bounded_x<A, B> >} to
-\code{cycle<T, bounded_y<C, D> >} must be explicit and should
-respect $B - A = D - C$ (i.e., the
-two cycles have equal length).
+  unsigned int i = UINT_MAX;
+  unsigned int j = 5;
+  unsigned long long k = i + j; // k == 4
 
-%% \subsubsection{\code{view_as<T,U>}}
+\end{lstlisting}
+
+These behaviors can be really painful for the programmer, and mostly
+are overflow problems. This is why \integre\ introduces various
+overflow checks for assignments and arithmetic operations.
+
+Sometimes checks have to be dynamic, for example assigning an
+\code{int_u16} into an \code{int_u8} may be valid, depending on the
+value of the \code{int_u16}. This can only be performed at execution
+time, when we know the actual value.
+
+Some checks can be avoided however, for example assigning an
+\code{int_u8} into an \code{int_u16} is always safe. This is the main
+justification of \integre\ strong typed paradigm, we want to avoid a
+maximal quantity of checks at runtime.
+
+\subsubsection{Strong typing and growing types}
+
+To keep a maximal amount of static information about variables
+range of values, arithmetical operations make types growing. For
+example, adding 2 \code{int_u8} returns an \code{int_u9}. Growing
+rules for each type is detailed in the \ahrefloc{sec-ref}{types
+reference section}.
+
+This results in the avoidance of a lot of dynamic checks.
+
+\subsubsection{Disabling dynamic checks}
+
+If you know that your programs works, you can disable dynamic checks
+defining the macro \code{NDEBUG} at compile time.
+
+\subsection{Behaviors}
+
+\integre\ can detect overflow problems. But what should it do when it
+detects one ? Here is the reason to live of behaviors.
+
+\subsubsection{strict}
+
+Stops the program with an error message when a problem is detected.
+
+\subsubsection{saturate}
+
+Bounds toward the \code{max} or the \code{min} value of the type,
+depending on which is the nearest.
+
+Example: \code{int_u<8, saturate> u = 350; // u == 255}.
+
+\subsubsection{cycle}
+
+Assign the value modulo the value range of the type.
+
+Example: \code{int_u<8, saturate> u = 257; // u == 1}.
+
+\subsubsection{unsafe}
+
+Does nothing. Behaves almost the same way than builtin types. You
+should not use this behavior, but it might be useful in a few special
+cases.
+
 %%
-%% \code{view_as<T,U>} declares a variable stored in type \code{T}
-%% but seen as type \code{U}.
+
+% FIXME: document when ready
+% \section{Adding new types}
+
 %%
-%% For instance the following line defines a type which is stored as an
-%% \code{int_u8} in memory, but that will be read and set as
-%% \code{float_s} values between 0 and 1.
-%% \begin{lstlisting}{}
-%% typedef view_as<int_u8, range<float_s, 0, 1> > fuzzy8;
-%% \end{lstlisting}
+
+\section{\aname{sec-ref}{Types reference}}
+
+\subsection{Hierarchy}
+
+\integre\ types are organized hierarchically:
+
+\includeimage{data-hierarchy}{width=0.9\textwidth}
+
+\subsection{\aname{ref-bin}{\code{bin}}}
+
+\subsection{\aname{ref-cplx}{\code{cplx}}}
+
+\subsection{\aname{ref-cycle}{\code{cycle}}}
+
+\subsection{\aname{ref-floatd}{\code{float_d}}}
+
+\subsection{\aname{ref-floats}{\code{float_s}}}
+
+\subsection{\aname{ref-ints}{\code{int_s}}}
+
+\subsection{\aname{ref-intu}{\code{int_u}}}
+
+\subsection{\aname{ref-range}{\code{range}}}
+
+\subsection{\aname{ref-vec}{\code{vec}}}
+
 %%
-%% In other words, \code{view_as} performs a linear transformation to
-%% marshal \code{T} values from the \code{optraits<T>::min()}
-%% ... \code{optraits<T>::max()} range as \code{U} values between
-%% \code{optraits<U>::min()} ... \code{optraits<T>::max()}.
-%%
-%% Note that it is ok to use another \code{view_as} type for \code{U}.
-%% For instance \code{fuzzy16} can be defined as
-%% \begin{lstlisting}{}
-%% typedef view_as<int_u16, fuzzy8> fuzzy16;
-%% \end{lstlisting}
-%% This describe a type whose variables are stored on 16 bits, but
-%% which are seen like \code{fuzzy8}, i.e., a \code{float_s} value between
-%% 0 and 1.  The fact that \code{U} is stored on 8 bits has no influence
-%% on \code{T}.
 
-\section{Enumerated types}
-
-\subsection{\code{bin}}
-
-\code{bin} is a binary type, with two values: \code{0}
-and \code{1}.  This is unlike the built-in \code{bool}, whose
-values are \code{false} and \code{true}.
-
-\subsection{\code{label<T, BEHAVIOR=cycle>}}
-
-FIXME: not sure if we really need this.
-
-FIXME: This documentation is out of date.  We've decided to split
-\code{label} into ordered labels and unordered labels.
-
-\code{label<T, BEHAVIOR=cycle>} is used to label images.
-
-Although it is not strictly correct to define an order on labels,
-we do.  This is useful (FIXME: Ask Jerome for an example).
-
-\subsection{The \code{typetraits<T>} trait}
-
-For each type \code{T} described in the previous section, Olena
-records additional relations in the \code{typetraits<T>} trait.
-
-All the following members of \code{typetraits<T>} are typedefs.
-\begin{description}
-\item[\code{base_type}] The base type for \code{T}, i.e., \code{T} without
-any decoration.  For instance
-\code{typetraits< range<int_u8, bounded_u<10,25>, strict> >::base_type}
-is \code{int_u8}.
-
-Ada programmers will probably recognize the \code{T'Base} attribute.
-
-For a undecorated type \code{T}, \code{typetraits<T>::base_type} is
-\code{T} itself.
-
-\item[\code{storage_type}] The C type used internally for storing the
-value.  E.g., \code{typetraits< int_u<9> >::storage_type} is
-\code{unsigned short}.
-
-%% \item[\code{view}] The type under which the value should be seen.
-%% For example,
-%% \code{typetraits< view_as<int_u8, range<float_s, 0, 1> > >::view}
-%% is \code{range<float_s, 0, 1>}.
-%%
-%% For a undecorated type \code{T}, \code{typetraits<T>::view} is
-%% \code{T} itself.
-%%
-%% Note that the view of \code{fuzzy16} as defined above, i.e,
-%% \code{typetraits< view_as<int_u8, view_as<int_u16, range<float_s, 0, 1> > > >::view}
-%% is still \code{range<float_s, 0, 1>}.
-
-\item[\code{signed_type}]
-The smallest signed type that can contain the values of \code{T}, if possible.
-For instance
-\code{typetraits< int_u8 >::signed_type} is \code{int_s<10>}.
-(\code{int_s<9>} is not large enough to hold the value 256.)
-
-However \code{typetraits< int_u32 >::signed_type} is \code{int_s<32>}.
-
-\item[\code{unsigned_type}]
-The smallest unsigned type that can contain the non negative values of
-\code{T}.
-For instance,
-\code{typetraits< int_s<9> >::unsigned_type} is \code{int_u8}.
-
-\item[\code{cumul_type}]
-A type that can be used to sum up a moderate number of values of type
-\code{T}.  (FIXME: a moderate number?  Come on...  I'm sure we can put
-it in a way which is even more fuzzy.)
-For instance
-\code{typetraits< int_u8 >::cumul_type} is \code{int_u16}.
-
-\item[\code{largest_type}]
-The largest type in the familly of \code{T}.  For instance
-\code{typetraits< int_u8 >::largest_type} is \code{int_u32}.
-
-\item[\code{signed_largest_type}]
-\item[\code{signed_cumul_type}]
-\item[\code{unsigned_largest_type}]
-\item[\code{unsigned_cumul_type}]
-These are short-hands for some combinations of \code{signed_type},
-\code{unsigned_type}, \code{cumul_type} and \code{largest_type}.
-
-\item[\code{integer_type}]
-An \code{int} type of the same sign as \code{T}.
-For instance \code{typetraits< int_u8 >::interger_type} is \code{unsigned
-int}; \code{typetraits< float_s >::interger_type} is \code{signed
-int}.
-
-% FIXME: Is this type needed anymore?
-
-% This type was initially used by the \code{range<T, MIN, MAX, B>} template
-% to define the type of it's arguments: \code{MIN} and \code{MAX} both
-% have type \code{typetraits< T >::interger_type}.  But it isn't allowed
-% to have template types which depend on a previous argument,
-% like in
-%    template < typename T, typetraits< T >::interger_type V > ...
-% (that's why we use the bounded_s and bounded_u classes instead).
-
-\end{description}
-
-\subsection{The \code{optraits<T>} trait}
-
-Olena offers some additionnal supporting function or operators in the
-\code{optraits<T>} trait.  For example, sometimes while developping
-a generic algorithm on type \code{T} we need to need the maximum value
-that this type can take.  The \code{optraits<T>} trait provides
-support to anser this sort of question.  For instance
-\code{optraits<T>::max()} returns the maximum values for type
-\code{T}.
-
-\newfloat{OptraitsVersusInnerTypedef}{H}{lop}
-\begin{OptraitsVersusInnerTypedef}
-The reason why we have to use a separate class and write
-\code{optraits<T>::max()} instead of \code{T::max()} is that
-the latter case cannot work with built-in types.
-
-Besides, using a class distinct from the type itself to hold operators
-and various support functions allows to reuse the support from another
-type by inheritance on the \code{optraits} hierarchy, without implying
-any inheritance on the type hierarchy.
-
-For instance \code{optraits<range<int_u8, 10, 25> >} inherits from
-\code{optraits<int_u8>} and simply redefine a few members like the
-\code{max()} and \code{min()} functions.  However
-\code{range<int_u8, 10, 25>} is not a subclass of \code{int_u8}.
-\end{OptraitsVersusInnerTypedef}
-
-Here are the public \code{optraits<T>} members:
-
-\begin{description}
-\item[\code{min()}]
-  The minimum \emph{reachable} value for type \code{T}, if such minimum value
-  exists (this is not the case for float value, for instance).
-  \code{optraits<T>::min()} is the equivalent of \code{T'First} in Ada.
-\item[\code{max()}]
-  The maximum \emph{reachable} value for type \code{T}, if such maximum value
-  exists (this is not the case for float value, for instance).
-  \code{optraits<T>::max()} is the equivalent of \code{T'Last} in Ada.
-\item[\code{inf()}]
-  The lower bound for type \code{T}.  For discrete types this is the
-  same as \code{min()}, for other types such as floats this can
-  be $-\infty$.
-\item[\code{sup()}]
-  The upper bound for type \code{T}.  For discrete types this is the
-  same as \code{max()}, for other types such as floats this can
-  be $+\infty$.
-\item[\code{unit()}]
-  The unit value for type \code{T}, when it makes sense (it doesn't
-  make any sense for color types such as \code{rgb} for instance).
-\item[\code{zero()}]
-  The unit value for type \code{T}, when it makes sense.
-\item[\code{default()}]
-  The default value for type \code{T}.  This is the value that a
-  default-constructed \code{T} variable should have.  This should
-  be the same as \code{zero()} whenever possible.
-\end{description}
-
-\code{optraits<T>} also contains a number of internal members, used
-during operations.
-
-FIXME: List them.
+\section{FAQ}

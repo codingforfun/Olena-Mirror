@@ -144,6 +144,7 @@ namespace ntg {
       static storage_type_ max()  { return 1; }
       static storage_type_ inf()  { return min(); }
       static storage_type_ sup()  { return max(); }
+      static unsigned max_print_width () { return 1U; }
 
       // logical assignement operators
 
