@@ -45,7 +45,7 @@
 (demo/Makefile.in 9445 1017842981 e/16_Makefile.i 1.6)
 (src/value/rec_int.hh 3500 1009823825 b/37_rec_int.hh 1.1)
 (tests/check/Makefile.in 8900 1017842981 e/39_Makefile.i 1.3)
-(ChangeLog 49213 1017842981 6_ChangeLog 1.29)
+(ChangeLog 49484 1017931718 6_ChangeLog 1.30)
 (tools/missing 10280 1015511973 e/13_missing 1.2)
 (src/core/dpoint1d.hh 2470 1009823825 d/27_dpoint1d.h 1.1)
 (src/math/macros.hh 3503 1009823825 b/21_macros.hh 1.1)

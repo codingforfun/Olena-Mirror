@@ -1,18 +1,12 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_3 24)
-(Parent-Version oln 0_3 23)
-(Version-Log "2002-04-04  Quôc Peyrot  <chojin@lrde.epita.fr>
-
-	* src/core/generate.hh: New file (generator function)
-	* src/core/image.hh (_ImageForDim): New macro
-	* src/core/image1d.hh, src/core/image2d.hh,
-	src/core/image3d.hh: Likewise
-	* src/basics.hh: Include core/generate.hh.
+(Project-Version oln 0_3 25)
+(Parent-Version oln 0_3 24)
+(Version-Log "Update of Changelog
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 04 Apr 2002 16:42:34 +0200")
+(Checkin-Time "Thu, 04 Apr 2002 16:48:38 +0200")
 (Checkin-Login chojin)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
@@ -83,7 +77,7 @@
   (configure.ac (oln/3_configure. 1.5 600))
   (THANKS (oln/4_THANKS 1.1 600))
   (img/lena.pgm (oln/5_lena.pgm 1.1 600) :no-keywords)
-  (ChangeLog (oln/6_ChangeLog 1.29 600))
+  (ChangeLog (oln/6_ChangeLog 1.30 600))
   (src/config/system.hh (oln/7_system.hh 1.2 600))
   (src/utils/timer.hh (oln/8_timer.hh 1.1 600))
   (src/utils/stat.hh (oln/9_stat.hh 1.2 600))
@@ -436,7 +430,5 @@
 
   (src/core/generate.hh (oln/f/12_generate.h 1.1 600))
 )
-(Merge-Parents
-  (0_3.23 complete)
-)
+(Merge-Parents)
 (New-Merge-Parents)
