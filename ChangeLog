@@ -1,3 +1,11 @@
+2002-03-28  Jerome Darbon  <jerome@epita.fr>
+
+	* src/morpho/thinninh.hh: New file.
+	* src/morpho/thinninh.inc: Likewise.
+	* src/morpho/thickening.hh: Likewise.
+	* src/morpho/thickening.inc: Likewise.
+
+
 2002-03-28  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* src/io/pnm_read.hxx (reader): Typo preventing ppgm files from
