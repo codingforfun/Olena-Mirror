@@ -1,3 +1,7 @@
+2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/topo/inter-pixel/inter-pixel.hh: Minor fixes.
+
 2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/core/w_window1d.hh, oln/core/w_window2d.hh,
