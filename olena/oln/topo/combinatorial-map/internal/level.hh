@@ -28,6 +28,8 @@
 #ifndef OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_LEVEL_HH
 # define OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_LEVEL_HH
 
+# include <mlc/contract.hh>
+
 # include <iostream>
 # include <vector>
 
@@ -63,7 +65,7 @@ namespace oln {
 	public:
 	  level(unsigned n) : tree_(n+1)
 	  {
-	    assertion(n);
+	    assertion(n != 0);
 	  }
 
 	  U father(const U & child) const

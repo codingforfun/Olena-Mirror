@@ -25,43 +25,45 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef PIECE_MORPHER_HH
-# define PIECE_MORPHER_HH
+#ifndef BORDER_MORPHER_HH
+# define BORDER_MORPHER_HH
 
 # include <oln/morpher/generic_morpher.hh>
+# include <oln/core/abstract/behavior.hh>
+# include <oln/core/behavior.hh>
 
 namespace oln {
 
   namespace morpher {
 
-    template <class I, class Exact = mlc::final>
-    struct piece_morpher;
-    template <class I, class Exact = mlc::final>
-    struct super_piece_morpher;
+    template <class I, class BehaviorType, class Exact = mlc::final>
+    struct border_morpher;
+    template <class I, class BehaviorType, class Exact = mlc::final>
+    struct super_border_morpher;
 
   } // end of namespace morpher
 
-  /// Informations about the super piece morpher.
-  template <class SrcType, class Exact>
-  struct image_id< morpher::super_piece_morpher<SrcType, Exact> >
+  /// Informations about the super border morpher.
+  template <class SrcType, class BehaviorType, class Exact>
+  struct image_id< morpher::super_border_morpher<SrcType, BehaviorType, Exact> >
   {
     typedef typename mlc::exact_vt<
-      morpher::super_piece_morpher<SrcType, Exact>,
+      morpher::super_border_morpher<SrcType, BehaviorType, Exact>,
       Exact>::ret
     exact_type;
     ///< Retrieve the exact type of the image.
   };
 
-  /// Informations about the piece morpher.
-  template <class SrcType, class Exact>
-  struct image_id< morpher::piece_morpher<SrcType, Exact> >
+  /// Informations about the border morpher.
+  template <class SrcType, class BehaviorType, class Exact>
+  struct image_id< morpher::border_morpher<SrcType, BehaviorType, Exact> >
   {
     enum {dim = SrcType::dim}; ///< The Image dimension.
     typedef oln_impl_type(SrcType) impl_type;
     ///< Underlying implementation.
     typedef oln_value_type(SrcType) value_type;
     ///< The value type of the decorated image.
-    typedef typename mlc::exact_vt<morpher::piece_morpher<SrcType, Exact>,
+    typedef typename mlc::exact_vt<morpher::border_morpher<SrcType, BehaviorType, Exact>,
 				   Exact>::ret exact_type;
     ///< Retrieve the exact type of the image.
     typedef oln_point_type(SrcType) point_type;
@@ -70,15 +72,16 @@ namespace oln {
     typedef oln_iter_type(SrcType) iter_type;
   };
 
-  /// Traits for piece morpher.
-  template <class SrcType, class Exact>
-  struct image_traits < morpher::piece_morpher<SrcType, Exact> >
+  /// Traits for border morpher.
+  template <class SrcType, class BehaviorType, class Exact>
+  struct image_traits < morpher::border_morpher<SrcType, BehaviorType, Exact> >
     : public
   image_traits<
     morpher::abstract::generic_morpher<
       SrcType,
-      typename image_id<morpher::piece_morpher<SrcType,
-					       Exact> >::exact_type
+      typename image_id<morpher::border_morpher<SrcType,
+						BehaviorType,
+						Exact> >::exact_type
     >
   >
   {};
@@ -86,15 +89,15 @@ namespace oln {
 
   namespace morpher {
 
-    /// Abstract piece morpher class used for code factorization.
-    template <class SrcType, class Exact>
-    class super_piece_morpher
+    /// Abstract border morpher class used for code factorization.
+    template <class SrcType, class BehaviorType, class Exact>
+    class super_border_morpher
       : public abstract::generic_morpher<SrcType, Exact>
     {
 
     public:
 
-      typedef super_piece_morpher<SrcType, Exact> self_type;
+      typedef super_border_morpher<SrcType, BehaviorType, Exact> self_type;
       typedef typename image_id<self_type>::exact_type exact_type;
       typedef abstract::generic_morpher<SrcType, Exact> super_type;
 
@@ -106,27 +109,34 @@ namespace oln {
       /*!
       ** \brief Default constructor.
       ** \arg ima will be the image.
-      ** \arg p The reference point.
-      ** \arg s The size of the piece of image.
-      **
-      ** One can not use this constructor to instantiate this class
-      ** since it is protected.
+      ** \arg width The width of the border you want to see.
+      ** \arg be The behavior of the border.
       */
-      super_piece_morpher(const SrcType &ima, const dpoint_type& p,
-			  const size_type& s)
-	: super_type(ima), size_(s), p_(p)
-      {}
+      super_border_morpher(const SrcType &ima,
+			   const coord width,
+			   const BehaviorType& be)
+	: super_type(ima), width(width), be(be)
+      {
+	be.adapt_border(ima, width + this->get_ima().border());
+	for (unsigned i = 0; i < image_id<exact_type>::dim; ++i)
+	{
+	  size_.nth(i) = this->get_ima().size().nth(i) + 2 * width;
+	  dp_.nth(i) = -width;
+	}
+ 	size_.border() = this->get_ima().size().border();
+      }
 
-      const size_type size_; ///< The size of the piece of picture.
-      const dpoint_type p_;
-      ///< The reference point of the piece of picture.
+      const coord width; ///< The width of the border.
+      const BehaviorType be; ///< The behavior of the border.
+      size_type size_;
+      dpoint_type dp_;
 
       /*!
       ** \brief Empty constructor.
       **
       ** Needed by mlc_hierarchy::any_with_diamond.
       */
-      super_piece_morpher()
+      super_border_morpher() : width(0)
       {}
 
     public:
@@ -138,55 +148,71 @@ namespace oln {
 	return size_;
       }
 
-      /// Return the reference point.
+      /// Return the point (-width, -width, ...)
       const dpoint_type
-      ref_point() const
+      get_dp() const
       {
-	return p_;
+	return dp_;
+      }
+
+      /// Return the behavior of the border.
+      const BehaviorType
+      get_behavior() const
+      {
+	return be;
+      }
+
+      /// Return width, the width of the border.
+      const coord
+      get_width() const
+      {
+	return width;
       }
 
       /// Useful to debug.
       static std::string
       name()
       {
-	return "super_piece_morpher<" + super_type::name() + ">";
+	return "super_border_morpher<" + super_type::name() + ">";
       }
 
     };
 
     /*!
-    ** \brief The default piece morpher class.
+    ** \brief The default border morpher class.
     **
-    ** Using this class, a piece of picture is a picture.
+    ** Using this class, a border of picture is a picture.
     **
     ** \see oln::morpher::abstract::generic_morpher
-    ** \see oln::morpher::piece_morph
+    ** \see oln::morpher::border_morph
     */
-    template <class SrcType, class Exact>
-    struct piece_morpher
-      : public super_piece_morpher<
+    template <class SrcType, class BehaviorType, class Exact>
+    struct border_morpher
+      : public super_border_morpher<
           SrcType,
-          typename image_id<piece_morpher<SrcType, Exact> >::exact_type
+          BehaviorType,
+          typename image_id<border_morpher<SrcType, BehaviorType, Exact> >::exact_type
         >
     {
-      typedef piece_morpher<SrcType, Exact> self_type;
+      typedef border_morpher<SrcType, BehaviorType, Exact> self_type;
       typedef typename image_id<self_type>::exact_type exact_type;
-      typedef super_piece_morpher<SrcType, exact_type> super_type;
+      typedef super_border_morpher<SrcType, BehaviorType, exact_type> super_type;
 
       typedef typename image_id<exact_type>::point_type point_type;
       typedef typename image_id<exact_type>::dpoint_type dpoint_type;
       typedef typename image_id<exact_type>::size_type size_type;
       typedef typename image_id<exact_type>::value_type value_type;
 
-      /// Construct the piece morpher with an image \a ima.
-      piece_morpher(const SrcType &ima, const dpoint_type p,
-		    const size_type s)
-	: super_type(ima, p, s)
+      /// Construct the border morpher with an image \a ima.
+      border_morpher(const SrcType &ima,
+		     const coord width,
+		     const BehaviorType& be)
+	: super_type(ima, width, be)
       {}
 
-      /// Construct the piece morpher with another piece morpher.
-      piece_morpher(const self_type& r)
-	: super_type(r.get_ima(), r.ref_point(), r.size())
+      /// Construct the border morpher with another border morpher.
+      border_morpher(const self_type& r)
+	: super_type(r.get_ima(), r.get_width(), r.get_behavior())
       {}
 
       /*!
@@ -194,7 +220,7 @@ namespace oln {
       **
       ** Needed by mlc_hierarchy::any_with_diamond.
       */
-      piece_morpher()
+      border_morpher()
       {}
 
       /*!
@@ -206,7 +232,7 @@ namespace oln {
       at(const point_type& p)
       {
 	return const_cast<value_type &>
-	  ( const_cast<SrcType &>(this->ima_)[p + this->p_] );
+	  ( const_cast<SrcType &>(this->ima_)[p + this->get_dp()] );
       }
 
       /*!
@@ -217,7 +243,7 @@ namespace oln {
       const value_type
       at(const point_type& p) const
       {
-	return this->ima_[p + this->p_];
+	return this->ima_[p + this->get_dp()];
       }
 
       /*! Perform a shallow copy from the decorated image of \a rhs
@@ -247,23 +273,25 @@ namespace oln {
       static std::string
       name()
       {
-	return "piece_morpher<" + super_type::name() + ">";
+	return "border_morpher<" + super_type::name() + ">";
       }
 
     };
 
     /// The specialized version for `const' images.
-    template <class SrcType, class Exact>
-    struct piece_morpher<const SrcType, Exact>
-      : public super_piece_morpher<
+    template <class SrcType, class BehaviorType, class Exact>
+    struct border_morpher<const SrcType, BehaviorType, Exact>
+      : public super_border_morpher<
           const SrcType,
-          typename image_id<piece_morpher<const SrcType,
-					  Exact> >::exact_type
+          BehaviorType,
+          typename image_id<border_morpher<const SrcType,
+					   BehaviorType,
+					   Exact> >::exact_type
         >
     {
-      typedef piece_morpher<const SrcType, Exact> self_type;
+      typedef border_morpher<const SrcType, BehaviorType, Exact> self_type;
       typedef typename image_id<self_type>::exact_type exact_type;
-      typedef super_piece_morpher<const SrcType, exact_type> super_type;
+      typedef super_border_morpher<const SrcType, BehaviorType, exact_type> super_type;
 
       typedef typename image_id<exact_type>::point_type point_type;
       typedef typename image_id<exact_type>::dpoint_type dpoint_type;
@@ -271,19 +299,19 @@ namespace oln {
       typedef typename image_id<exact_type>::value_type value_type;
 
       /*!
-      ** \brief Construct a piece morpher.
+      ** \brief Construct a border morpher.
       ** \arg ima The image.
-      ** \arg p The reference point.
-      ** \arg s The size.
+      ** \arg width Width
       */
-      piece_morpher(const SrcType &ima, const dpoint_type p,
-		    const size_type s)
-	: super_type(ima, p, s)
+      border_morpher(const SrcType &ima,
+		     const coord width,
+		     const BehaviorType& be)
+	: super_type(ima, width, be)
       {}
 
-      /// Construct a piece morpher from another one.
-      piece_morpher(const self_type& r)
-	: super_type(r.get_ima(), r.ref_point(), r.size())
+      /// Construct a border morpher from another one.
+      border_morpher(const self_type& r)
+	: super_type(r.get_ima(), r.get_width(), r.get_behavior())
       {}
 
       /*!
@@ -291,7 +319,7 @@ namespace oln {
       **
       ** Needed by mlc_hierarchy::any_with_diamond.
       */
-      piece_morpher() {}
+      border_morpher() {}
 
       /*!
       ** \brief Return the stored value at the point.
@@ -301,52 +329,51 @@ namespace oln {
       const value_type
       at(const point_type &p) const
       {
-	return this->ima_[p + this->p_];
+	return this->ima_[p + this->get_dp()];
       }
 
       /// Useful to debug.
       static std::string
       name()
       {
-	return "piece_morpher<" + super_type::name() + ">";
+	return "border_morpher<" + super_type::name() + ">";
       }
 
     };
 
 
     /*!
-    ** \brief Instantiate a temporary read-only piece morpher.
+    ** \brief Instantiate a temporary read-only border morpher.
     ** \arg ima The image.
-    ** \arg p The reference's point.
-    ** \arg s The size of the window.
+    ** \arg width The width of the border.
+    ** \arg be The behavior of the border.
     **
-    ** A piece of the image will be viewed.
+    ** A border of the image will be viewed.
     **
     ** \code
-    ** #include <oln/morpher/piece_morpher.hh>
+    ** #include <oln/morpher/border_morpher.hh>
     ** #include <oln/basics2d.hh>
-    ** #include <ntg/all.hh>
     ** int main()
     ** {
     **   oln::image2d<ntg::rgb_8> imc = oln::load(IMG_IN  "lena.ppm");
-    **   oln::save(oln::morpher::piece_morph(imc,
-    **                                       oln::dpoint2d(246, 244),
-    **                                       oln::image2d_size(30, 60,
-    **                                        imc.border())),
-    ** 	    IMG_OUT "oln_morpher_piece_morpher.pgm");
+    **   assert(imc.has_impl());
+    **   oln::save(oln::morpher::border_morph(imc, 100, oln::mirror_bhv()),
+    **             IMG_OUT "oln_morpher_border_morpher.pgm");
     ** }
     ** \endcode
     ** \image html lena_ppm.png
     ** \image latex lena_ppm.png
     ** =>
-    ** \image html oln_morpher_piece_morpher.png
-    ** \image latex oln_morpher_piece_morpher.png
+    ** \image html oln_morpher_border_morpher.png
+    ** \image latex oln_morpher_border_morpher.png
     */
-    template <class I, class PointType, class SizeType>
-    const piece_morpher<I>
-    piece_morph(I &ima, const PointType p, const SizeType s)
+    template <class I, class BehaviorType>
+    const border_morpher<I, BehaviorType>
+    border_morph(I &ima,
+		 const coord width,
+		 const BehaviorType& be)
     {
-      return piece_morpher<I>(ima, p, s);
+      return border_morpher<I, BehaviorType>(ima, width, be);
     }
 
 
@@ -354,4 +381,4 @@ namespace oln {
 
 } // end namespace oln
 
-#endif // !PIECE_MORPHER
+#endif // !BORDER_MORPHER

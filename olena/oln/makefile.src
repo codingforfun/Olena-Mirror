@@ -31,7 +31,8 @@ OLN_DEP =					\
   convert/rgbxyz.hh				\
   convert/stretch.hh				\
   convert/value_to_point.hh			\
-  convol/convolution.hh				\
+  convol/slow_convolution.hh			\
+  convol/fast_convolution.hh			\
   convol/fast_gaussian.hh			\
   convol/fast_gaussian.hxx			\
   convol/fast_gaussian_coefficient.hh		\
@@ -75,7 +76,9 @@ OLN_DEP =					\
   core/dpoint2d.hxx				\
   core/dpoint3d.hh				\
   core/dpoint3d.hxx				\
+  core/fdpoint2d.hh				\
   core/fold.hh					\
+  core/fpoint2d.hh				\
   core/fwd_iter1d.hh				\
   core/fwd_iter2d.hh				\
   core/fwd_iter3d.hh				\
@@ -112,6 +115,8 @@ OLN_DEP =					\
   core/window3d.hh				\
   core/winiter.hh				\
   core/winneighb.hh				\
+  geom/rotate.hh				\
+  geom/translate.hh				\
   io/base.hh					\
   io/basics.hh					\
   io/file.hh					\
@@ -145,7 +150,9 @@ OLN_DEP =					\
   level/set_level.hh				\
   level/threshold.hh				\
   math/macros.hh				\
+  morpher/border_morpher.hh			\
   morpher/color_morpher.hh			\
+  morpher/func_morpher.hh			\
   morpher/generic_morpher.hh			\
   morpher/iter_morpher.hh			\
   morpher/piece_morpher.hh			\
@@ -212,6 +219,7 @@ OLN_DEP =					\
   transforms/fft.hh				\
   transforms/dwt.hh				\
   transforms/wavelet_coeffs.hh			\
+  transforms/shapelets.hh			\
   utils/copy.hh					\
   utils/key.hh					\
   utils/key.hxx					\

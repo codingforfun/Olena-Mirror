@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -38,6 +38,8 @@
 # include <mlc/contract.hh>
 # include <mlc/is_a.hh>
 
+# include <ntg/real/builtin_float.hh>
+# include <ntg/real/optraits_builtin_int.hh>
 # include <ntg/core/internal/global_ops_traits.hh>
 # include <ntg/core/macros.hh>
 # include <ntg/core/value.hh>
@@ -102,7 +104,7 @@ namespace ntg
     /*----------------------.
     | Arithmetic operations |
     `----------------------*/
-			    
+
     GLOBAL_ARITH_OP(operator+, plus)
     GLOBAL_ARITH_OP(operator-, minus)
     GLOBAL_ARITH_OP(operator*, times)
@@ -124,7 +126,7 @@ namespace ntg
     GLOBAL_CMP_OP(operator==, cmp_eq)
 
     template <class T1, class T2> inline
-    bool 
+    bool
     operator!=(const T1& lhs, const T2& rhs)
     { return !(lhs == rhs); }
 
@@ -183,7 +185,7 @@ namespace ntg
     template <class T> inline
     const ntg_signed_type(T)
     operator-(const T& val)
-    {       
+    {
       typedef ntg_signed_type(T) signed_type;
       return static_cast<signed_type>(ntg_zero_val(T)) - val;
     }
@@ -194,7 +196,7 @@ namespace ntg
       val -= ntg_unit_val(T);
       return val;
     }
-    
+
     template<class T> inline
     T operator--(T& val, int)
     {
@@ -216,10 +218,10 @@ namespace ntg
     ntg_return_type(min, T1, T2)
     min (const T1& lhs, const T2& rhs)
     {
-      typedef ntg_return_type(max, T1, T2) result_type;     
+      typedef ntg_return_type(max, T1, T2) result_type;
       return (lhs < rhs) ? result_type(lhs) : result_type(rhs);
     }
-    
+
     template <class T1, class T2> inline
     ntg_return_type(max, T1, T2)
     max (const T1& lhs, const T2& rhs)

@@ -71,7 +71,7 @@ beucher_gradient(const convert::abstract::conversion<C, B>& c,
 **        IMG_OUT "oln_morpho_beucher_gradient.pbm");
 **   return  0;
 ** }
-** \encode
+** \endcode
 **
 ** \image html lena128_pgm.png
 ** \image latex lena128_pgm.png

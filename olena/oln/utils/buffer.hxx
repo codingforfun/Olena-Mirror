@@ -39,7 +39,7 @@ buffer::buffer(): current_bit_(0),
 {
   data_.reserve(length_);
   data_.push_back(ntg_zero_val(value_type));
-};
+}
 
 // add implementation
 template <class E>
@@ -54,7 +54,7 @@ void buffer::add(const E &e, bool count)
       push_back(e_cast & mask, !count);
       mask >>= 1;
     }
-};
+}
 
 // push_back implementation
 inline
@@ -109,7 +109,7 @@ ntg::int_u32 buffer::operator[] (unsigned n) const
   precondition(n < data_.size());
 
   return reorder(data_[n]);
-};
+}
 
 // append padding implementation
 inline
@@ -119,7 +119,7 @@ void buffer::append_padding()
   while (((data_.size() * 32) % 512) != 448)
     push_back(false, true);
   padding_appended_ = true;
-};
+}
 
 // append_length implementation
 inline
@@ -130,14 +130,14 @@ void buffer::append_length()
   add(reorder(len2_), false);
   add(reorder(len1_), false);
   length_appended_ = true;
-};
+}
 
 // size implementation.
 inline
 unsigned buffer::size() const
 {
   return data_.size();
-};
+}
 
 // bit len implementation.
 inline

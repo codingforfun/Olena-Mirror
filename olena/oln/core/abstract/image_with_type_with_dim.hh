@@ -92,10 +92,10 @@
   };
 
 namespace oln {
-  
+
   namespace abstract {
 
-    
+
     // The label images here were defined because they appeared to be
     // quite handy. They are different than using image_with_type<T>,
     // because it handle categories of types, not only one.
@@ -104,13 +104,13 @@ namespace oln {
     // is defined.
     //
     // Proxy towards image_with_type
-    
+
     /*! \class data_type_image
     **
     ** This class is used as a proxy towards image_with_type.
     ** \note This shouldn't be used.
     */
-    
+
     template <class Exact>
     struct data_type_image
       : virtual public image_with_type<typename image_id<Exact>::value_type, Exact>
@@ -121,20 +121,20 @@ namespace oln {
       typedef Exact exact_type;
 
       /*! \brief Perform a shallow copy between \a rhs and the
-      ** current point, the points will not be duplicated but 
+      ** current point, the points will not be duplicated but
       ** shared between the two images.
-      ** 
+      **
       ** \see image::clone()
       */
 
-      
-      exact_type& 
+
+      exact_type&
       operator=(self_type rhs)
       {
 	return this->exact().assign(rhs.exact());
       }
 
-      static std::string 
+      static std::string
       name()
       {
 	return
@@ -142,18 +142,18 @@ namespace oln {
 	  + Exact::name() + ">";
       }
     };
-    
+
     /*! \class data_type_image_with_dim
     **
     **
     ** This class when used in a function declaration,
-    ** force the function to only accept images with a 
+    ** force the function to only accept images with a
     ** dimension equal to \a Dim.
     */
-    
-    
+
+
     template <unsigned Dim, class Exact>
-    struct data_type_image_with_dim : 
+    struct data_type_image_with_dim :
       virtual public data_type_image<Exact>,
       virtual public image_with_dim<Dim, Exact>
     {
@@ -168,14 +168,14 @@ namespace oln {
       **
       ** \see image::clone()
       */
-      
-      exact_type& 
+
+      exact_type&
       operator=(self_type rhs)
       {
 	return this->exact().assign(rhs.exact());
       }
 
-      static std::string 
+      static std::string
       name()
       {
 	return
@@ -187,22 +187,22 @@ namespace oln {
     /*! This class, when used in a function declaration,
     ** forces the function to only accept vectorial images.
     */
-    
-    oln_label_image_(vectorial_image, data_type_image);
-    
+
+    oln_label_image_(vectorial_image, data_type_image)
+
     /*! This class, when used in a function declaration,
     ** forces the function to only accept vectorial images
     ** with a dimension equal to 'Dim'.
     */
-    
+
 
     /*! \class non_vectorial_image
-    ** 
+    **
     ** This class, when used in a function declaration,
     ** forces the function to only accept non vectorial images.
     */
 
-    oln_label_image_(non_vectorial_image, data_type_image);
+    oln_label_image_(non_vectorial_image, data_type_image)
 
     /*! \class non_vectorial_image_with_dim
     **
@@ -210,48 +210,48 @@ namespace oln {
     ** forces the function to only accept non vectorial images.
     ** with a dimension equal to 'Dim'
     */
-    
+
 
     /*! \class binary_image
-    ** 
+    **
     ** This class, when used in a function declaration,
     ** forces the function to only accept binary images.
-    */ 
-    
-    oln_label_image_(binary_image, non_vectorial_image);
-    
+    */
+
+    oln_label_image_(binary_image, non_vectorial_image)
+
     /*! \class binary_image_with_dim
     **
     ** This class, when used in a function declaration,
     ** forces the function to only accept binary images
     ** with a dimension equal to 'Dim'.
     */
-    
+
 
     /*! \class integer_image
-    ** 
+    **
     ** This class, when used in a function declaration,
     ** forces the function to only accept integer images.
-    */ 
+    */
 
-    oln_label_image_(integer_image, non_vectorial_image);
-    
+    oln_label_image_(integer_image, non_vectorial_image)
+
     /*! \class integer_image_with_dim
     **
     ** This class, when used in a function declaration,
     ** forces the function to only accept integer images
     ** with a dimension of 'Dim'.
     */
-    
+
 
     /*! \class decimal_image
-    ** 
+    **
     ** This class, when used in a function declaration,
     ** forces the function to only accept decimal images.
-    */ 
+    */
 
-    oln_label_image_(decimal_image, non_vectorial_image);
-    
+    oln_label_image_(decimal_image, non_vectorial_image)
+
     /*! \class decimal_image_with_dim
     **
     ** This class, when used in a function declaration,
@@ -264,10 +264,10 @@ namespace oln {
     /*! \class image_with_type_with_dim_switch
     **
     ** A metaswitch that return the right type of
-    ** an image regarding its dimension and 
+    ** an image regarding its dimension and
     ** value_type.
     */
-    
+
     template<class Exact>
     struct image_with_type_with_dim_switch
     {
@@ -275,8 +275,8 @@ namespace oln {
 
       typedef typename image_id<Exact>::value_type T;
 
-     
-      
+
+
       typedef typename mlc::bool_switch_<
 
         mlc::bool_case_<ntg_is_a(T, ntg::binary)::ret,
@@ -293,7 +293,7 @@ namespace oln {
 
         mlc::bool_case_<ntg_is_a(T, ntg::non_vectorial)::ret,
 			non_vectorial_image_with_dim<Dim, Exact>,
-			
+
         mlc::bool_case_<true,
 	      	        data_type_image_with_dim<Dim, Exact> >
 

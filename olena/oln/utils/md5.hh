@@ -142,7 +142,7 @@ namespace oln {
       **
       ** F(X,Y,Z) = XY v not(X) Z
       */
-      struct
+      struct F_
       {
 	storage_type operator()(const storage_type &x,
 				const storage_type &y,
@@ -151,14 +151,16 @@ namespace oln {
 	  //      return z ^ (x & (y ^ z));
 	  return x & y | ~x & z;
 	}
-      }				F;
+      };
+
+      F_ F;
 
       /*!
       ** \brief Functor for bit operations.
       **
       ** G(X,Y,Z) = XZ v Y not(Z)
       */
-      struct
+      struct G_
       {
 	storage_type operator()(const storage_type &x,
 				const storage_type &y,
@@ -166,14 +168,16 @@ namespace oln {
 	{
 	  return x & z | y & ~z;
 	}
-      }				G;
+      };
+
+      G_ G;
 
       /*!
       ** \brief Functor for bit operations.
       **
       ** H(X,Y,Z) = X xor Y xor Z
       */
-      struct
+      struct H_
       {
 	storage_type operator()(const storage_type &x,
 				const storage_type &y,
@@ -181,14 +185,16 @@ namespace oln {
 	{
 	  return x ^ y ^ z;
 	}
-      }				H;
+      };
+
+      H_ H;
 
       /*!
       ** \brief Functor for bit operations.
       **
       ** I(X,Y,Z) = Y xor (X v not(Z))
       */
-      struct
+      struct I_
       {
 	storage_type operator()(const storage_type &x,
 				const storage_type &y,
@@ -196,7 +202,10 @@ namespace oln {
 	{
 	  return y ^ (x | ~z);
 	}
-      }				I;
+      };
+
+      I_ I;
+
     };
 
 #include <oln/utils/md5.hxx>

@@ -1,5 +1,4 @@
-//								    -*- c++ -*-
-// Copyright (C) 2004  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -27,56 +26,47 @@
 // Public License.
 
 
-#include <oln/basics2d.hh>
-#include <oln/convol/slow_convolution.hh>
+#ifndef OLENA_GEOM_TRANSLATE_HH
+# define OLENA_GEOM_TRANSLATE_HH
 
-#include <oln/level/compare.hh>
+# include <cmath>
+# include <iostream>
 
-#include <iostream>
-using std::cout;
-using std::endl;
+# include <oln/core/image2d.hh>
+# include <oln/core/fpoint2d.hh>
+# include <oln/core/fdpoint2d.hh>
 
-#include "check.hh"
-#include "data.hh"
+namespace oln {
 
-using namespace oln;
-using namespace mlc;
-using namespace ntg;
+  namespace geom {
 
-#define OK_OR_FAIL				\
-      std::cout << "OK" << std::endl;		\
-    else					\
-      {						\
-	std::cout << "FAIL" << std::endl;	\
-	fail = true;				\
+    template <class T, class F, class Exact>
+    struct translate
+    {
+      typedef oln::image2d<T> im_type;
+
+
+      image2d<T>
+      operator()(const oln::image2d<T>& ima,
+		 const fdpoint2d<F> dp,
+		 fpoint2d_access<T, Exact> interp)
+      {
+	im_type res(ima.size());
+	oln_iter_type(im_type) it(ima);
+
+	for_all(it)
+	{
+	  res[it] = interp(ima, fpoint2d<F>(it.row(), it.col()) - dp);
+	}
+	return res;
       }
-
-
-bool
-check(void)
-{
-  bool fail = false;
-
-  image2d<int_u8> img = load(rdata("random.pgm"));
-  cout << "=== Image ===" << endl << endl << img << endl;
-
-  //
-  // First way to do it, using w_windows.
-  //
-
-  w_window2d<int> w_win = (ints_2d =
-			   1, 1, 1, lbrk,
-			   1, 1, 1,
-			   1, 1, 1, end);
-  cout << "=== Convolution kernel ===" << endl << endl
-       << w_win << endl << endl;
-
-  image2d< int_s< 10 > > ret = convol::slow::convolve< int_s< 10 > >(img, w_win);
-  cout << "=== Result image (by convolve(w_window2d)) ===" << endl << endl
-       << ret << endl;
-  image2d< int_u8 > res_img = load(srcdir + "/sum_on_random.pgm");
-  if (level::is_equal(ret, res_img))
-    OK_OR_FAIL;
-
-  return fail;
+    };
+  }
 }
+
+
+
+
+
+#endif // !OLENA_GEOM_TRANSLATE_HH
+

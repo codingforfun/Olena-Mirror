@@ -60,30 +60,30 @@ namespace oln {
 	  void
 	  resize_(unsigned n)
 	  {
-	    f_.resize(n+1);
-	    f_1_.resize(n+1);
+	    this->f_.resize(n+1);
+	    this->f_1_.resize(n+1);
 	  }
 
 	  void
 	  assign_(const U & i, const U & e)
 	  {
-	    assertion(e < f_1_.size());
+	    assertion(e < this->f_1_.size());
 
-	    f_[i] = e;
-	    f_1_[e] = i;
+	    this->f_[i] = e;
+	    this->f_1_[e] = i;
 	  }
 
 	  void
 	  erase_(const U & d)
 	  {
-	    f_[f_1_[d]] = f_[d];
-	    f_1_[f_[d]] = f_1_[d];
-	    f_[d] = f_1_[d] = 0;
+	    this->f_[this->f_1_[d]] = this->f_[d];
+	    this->f_1_[this->f_[d]] = this->f_1_[d];
+	    this->f_[d] = this->f_1_[d] = 0;
 
 	    unsigned d_ = alpha<U>::result(d);
-	    f_[f_1_[d_]] = f_[d_];
-	    f_1_[f_[d_]] = f_1_[d_];
-	    f_[d_] = f_1_[d_] = 0;
+	    this->f_[this->f_1_[d_]] = this->f_[d_];
+	    this->f_1_[this->f_[d_]] = this->f_1_[d_];
+	    this->f_[d_] = this->f_1_[d_] = 0;
 	  }
 
 	private:

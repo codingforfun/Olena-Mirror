@@ -1,4 +1,4 @@
-//								    -*- c++ -*-
+//                                                                  -*- c++ -*-
 // Copyright (C) 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -26,57 +26,56 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+#include "data.hh"
+#include "check.hh"
 
 #include <oln/basics2d.hh>
-#include <oln/convol/slow_convolution.hh>
-
-#include <oln/level/compare.hh>
-
-#include <iostream>
-using std::cout;
-using std::endl;
-
-#include "check.hh"
-#include "data.hh"
-
+#include <oln/convol/slow_gaussian.hh>
+#include <ntg/int.hh>
+#include <oln/utils/md5.hh>
 using namespace oln;
-using namespace mlc;
 using namespace ntg;
 
-#define OK_OR_FAIL				\
-      std::cout << "OK" << std::endl;		\
-    else					\
-      {						\
-	std::cout << "FAIL" << std::endl;	\
-	fail = true;				\
-      }
-
-
-bool
-check(void)
+int main()
 {
-  bool fail = false;
+  // Image1d
+  {
+    image1d<int_u8> l(4);
+    l(0) = 1;
+    l(1) = 6;
+    l(2) = 64;
+    l(3) = 0;
 
-  image2d<int_u8> img = load(rdata("random.pgm"));
-  cout << "=== Image ===" << endl << endl << img << endl;
+    l = convol::slow::gaussian(l, 0.5, 3);
+    if (l(0) != 2 || l(1) != 12 || l(2) != 51 || l(3) != 7)
+      {
+	std::cout << "FAIL" << std::endl;
+	return true;
+      }
+  }
 
-  //
-  // First way to do it, using w_windows.
-  //
+  // Image2d
+  {
+    oln::utils::key::value_type   data_key[] =
+      {0x95, 0xe3, 0x63, 0xe0, 0xef, 0x21, 0xcd, 0x34, 0xa2,
+       0x15, 0xa3, 0x4e, 0x82, 0x37, 0x40, 0x70};
+    oln::utils::key key(data_key);
 
-  w_window2d<int> w_win = (ints_2d =
-			   1, 1, 1, lbrk,
-			   1, 1, 1,
-			   1, 1, 1, end);
-  cout << "=== Convolution kernel ===" << endl << endl
-       << w_win << endl << endl;
+    image2d<int_u8> lena(rdata("lena.pgm"));
 
-  image2d< int_s< 10 > > ret = convol::slow::convolve< int_s< 10 > >(img, w_win);
-  cout << "=== Result image (by convolve(w_window2d)) ===" << endl << endl
-       << ret << endl;
-  image2d< int_u8 > res_img = load(srcdir + "/sum_on_random.pgm");
-  if (level::is_equal(ret, res_img))
-    OK_OR_FAIL;
+    float_d sigma = 2.5;
+    if (oln::utils::md5(convol::slow::gaussian(lena, sigma, 3)) != key)
+      {
+	std::cout << "FAIL" << std::endl;
+	return true;
+      }
+  }
 
-  return fail;
+  // Image3d. Result not tested.
+  {
+    image3d<int_u8> i(10, 10, 10);
+    convol::slow::gaussian(i, 0.2, 3);
+  }
+
+  std::cout << "OK" << std::endl;
 }

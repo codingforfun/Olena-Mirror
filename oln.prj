@@ -1,203 +1,26 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 187)
-(Parent-Version oln 10 186)
-(Version-Log "Index: olena/ChangeLog
+(Project-Version oln 10 201)
+(Parent-Version oln 10 187)
+(Version-Log ": tools/ChangeLog
 from  Giovanni Palma  <giovanni@lrde.epita.fr>
-	* oln/utils/qsort.hh: Add file.
-	* oln/utils/histogram.hh: Undo wrong fix.
 
-+2004-05-23  Giovanni Palma  <giovanni@lrde.epita.fr>
-+
-+	* oln/morpho/morpho/erosion.hh: Remove useless line.
- 	* oln/morpho/attribute_union_find.hh: Change sort algorithm.
- 	* oln/morpho/attributes.hh: Add volume attribute.
--	* oln/utils/qsort.hh: Add file.
- 
- 2004-05-15  Niels Van Vliet  <niels@lrde.epita.fr>
- 
-Index: olena/oln/utils/histogram.hh
---- olena/oln/utils/histogram.hh Sun, 23 May 2004 12:21:34 +0200 palma_g (oln/10_histogram. 1.6.1.14.1.13 640)
-+++ olena/oln/utils/histogram.hh Sun, 23 May 2004 13:51:52 +0200 palma_g (oln/10_histogram. 1.6.1.14.1.13 640)
-@@ -682,7 +682,7 @@
- 							 ensure_type;
- 
-       // check the size
--      precondition(v.size() == im/*.npoints()*/);
-+      precondition(v.size() == im.npoints());
- 
-       // calculate the histogram of the image
-       utils::histogram<val> histo(im);
-Index: olena/oln/utils/qsort.hh
---- olena/oln/utils/qsort.hh Sun, 23 May 2004 13:54:21 +0200 palma_g ()
-+++ olena/oln/utils/qsort.hh Sun, 23 May 2004 12:09:58 +0200 palma_g (oln/r/9_qsort.hh  644)
-@@ -0,0 +1,161 @@
-+// Copyright (C) 2004  EPITA Research and Development Laboratory
-+//
-+// This file is part of the Olena Library.  This library is free
-+// software; you can redistribute it and/or modify it under the terms
-+// of the GNU General Public License version 2 as published by the
-+// Free Software Foundation.
-+//
-+// This library is distributed in the hope that it will be useful,
-+// but WITHOUT ANY WARRANTY; without even the implied warranty of
-+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-+// General Public License for more details.
-+//
-+// You should have received a copy of the GNU General Public License
-+// along with this library; see the file COPYING.  If not, write to
-+// the Free Software Foundation, 59 Temple Place - Suite 330, Boston,
-+// MA 02111-1307, USA.
-+//
-+// As a special exception, you may use this file as part of a free
-+// software library without restriction.  Specifically, if other files
-+// instantiate templates or use macros or inline functions from this
-+// file, or you compile this file and link it with other files to
-+// produce an executable, this file does not by itself cause the
-+// resulting executable to be covered by the GNU General Public
-+// License.  This exception does not however invalidate any other
-+// reasons why the executable file might be covered by the GNU General
-+// Public License.
-+#ifndef OLN_UTILS_QSORT_HH
-+# define OLN_UTILS_QSORT_HH
-+# include <vector>
-+# include <oln/core/abstract/image.hh>
-+
-+# include <algorithm>
-+# include <iostream>
-+
-+namespace oln
-+{
-+  namespace utils
-+  {
-+    namespace internal
-+    {
-+      /*!
-+      ** \\brief Functor to sort compare 2 points using an image.
-+      **
-+      ** \\param I Exact type of the image.
-+      */
-+      template <typename I>
-+      struct cmp_pt_value
-+      {
-+	typedef oln::abstract::non_vectorial_image<I>	im_type; ///< Type of the image.
-+	typedef oln_point_type(I)			point_type; ///< Type of the considered points.
-+
-+	/*!
-+	** \\brief Constructor.
-+	**
-+	** \\arg im Image to use for comparison.
-+	*/
-+	cmp_pt_value(const im_type &im): im_(im)
-+	{
-+	}
-+
-+	/*!
-+	** \\brief Main method.
-+	**
-+	** \\arg i The first point.
-+	** \\arg j The second point.
-+	** \\return im[i] < im[j]
-+	*/
-+	bool operator()(const point_type &i, const point_type &j)
-+	{
-+	  return im_[j] < im_[i];
-+	}
-+
-+      protected:
-+	const im_type	&im_; ///< Image to use for comparison.
-+      };
-+
-+      /*!
-+      ** \\brief Functor to sort compare 2 points using an image
-+      **
-+      ** \\param I Exact type of the image.
-+      */
-+      template <typename I>
-+      struct cmp_pt_value_inv
-+      {
-+	typedef oln::abstract::non_vectorial_image<I>	im_type; ///< Type of the image.
-+	typedef oln_point_type(I)			point_type; ///< Type of the considered points.
-+
-+	/*!
-+	** \\brief Constructor.
-+	**
-+	** \\arg im Image to use for comparison.
-+	*/
-+	cmp_pt_value_inv(const im_type &im): im_(im)
-+	{
-+	}
-+
-+	/*!
-+	** \\brief Main method.
-+	**
-+	** \\arg i The first point.
-+	** \\arg j The second point.
-+	** \\return im[i] > im[j]
-+	*/
-+	bool operator()(const point_type &i, const point_type &j)
-+	{
-+	  return im_[i] < im_[j];
-+	}
-+
-+      protected:
-+	const im_type	&im_; ///< Image to use for comparison.
-+      };
-+    } // !internal
-+
-+    /*!
-+    ** \\brief Sort points of an image in increasing order.
-+    **
-+    ** \\param I Exact type of the image.
-+    **
-+    ** \\arg im The input image.
-+    ** \\arg v The result.
-+    */
-+    template<class I>
-+    void
-+    qsort(const oln::abstract::non_vectorial_image<I>& im,
-+	  std::vector<oln_point_type(I)> &v)
-+    {
-+      oln_iter_type(I)	it(im);
-+
-+      for_all(it)
-+	v.push_back(oln_point_type(I)(it));
-+      internal::cmp_pt_value<I> c(im);
-+
-+      std::sort(v.begin(), v.end(), c);
-+    }
-+
-+    /*!
-+    ** \\brief Sort points of an image in decreasing order.
-+    **
-+    ** \\param I Exact type of the image.
-+    **
-+    ** \\arg im The input image.
-+    ** \\arg v The result.
-+    */
-+    template<class I>
-+    void
-+    qsort_inv(const oln::abstract::non_vectorial_image<I>& im,
-+	      std::vector<oln_point_type(I)> &v)
-+    {
-+      oln_iter_type(I)	it(im);
-+
-+      for_all(it)
-+	v.push_back(oln_point_type(I)(it));
-+
-+      internal::cmp_pt_value_inv<I> c(im);
-+
-+      std::sort(v.begin(), v.end(), c);
-+    }
-+  } // !utils
-+} // !oln
-+
-+#endif // !QSORT
+	* utilities/convert/Makefile.am: Correct flags.
+
+Index: tools/utilities/convert/Makefile.am
+--- tools/utilities/convert/Makefile.am Mon, 28 Jun 2004 15:53:02 +0200 thivol_d (oln/v/10_Makefile.a 1.2 600)
++++ tools/utilities/convert/Makefile.am Tue, 29 Jun 2004 10:46:02 +0200 palma_g (oln/v/10_Makefile.a 1.2 600)
+@@ -1,4 +1,4 @@
+-AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_OPTIMIZE) -lz
++AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_OPTIMIZE) $(ZLIB_LDFLAGS)
+ INCLUDES = -I$(srcdir)/../../lib
+ LDADD = ../../lib/libolntools.a
+ bin_PROGRAMS = color_space
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Sun, 23 May 2004 13:55:35 +0200")
+(Checkin-Time "Tue, 29 Jun 2004 10:54:13 +0200")
 (Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -300,12 +123,12 @@ Index: olena/oln/utils/qsort.hh
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.11 600))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.12 600))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.45 640))
-  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.42 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.4 640))
-  (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.13 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.16 600))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.15 600))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.47 640))
+  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.43 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.14 640))
+  (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.16 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.39 640))
 
   (olena/ChangeLog.0 (oln/6_ChangeLog 1.50.1.98.1.5 640))
@@ -316,7 +139,7 @@ Index: olena/oln/utils/qsort.hh
 
   (cleanup.sh (oln/o/29_cleanup.sh 1.6 750))
 
-  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.16.1.5 600))
+  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.16.1.7 600))
 
   (doc/demo/image.cc (oln/d/46_image.cc 1.8 640))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.16.1.2 640))
@@ -333,7 +156,7 @@ Index: olena/oln/utils/qsort.hh
   (doc/ref/processing.tpl (oln/d/48_processing 1.16 640))
 
   (Makefile.am (oln/n/32_Makefile.a 1.17.1.2.1.7 640))
-  (NEWS (oln/0_NEWS 1.23 640))
+  (NEWS (oln/0_NEWS 1.24 640))
 
   (olena/img/face_se.pbm (oln/n/17_face_se.pb 1.1 640) :no-keywords)
   (olena/img/lena256.pgm (oln/n/14_lena256.pg 1.1 640) :no-keywords)
@@ -356,7 +179,7 @@ Index: olena/oln/utils/qsort.hh
   (olena/oln/basics1d.hh (oln/d/41_basics1d.h 1.5 640))
   (olena/oln/basics2d.hh (oln/b/7_basics2d.h 1.6 640))
   (olena/oln/basics3d.hh (oln/28_basics3d.h 1.4 640))
-  (olena/oln/basics.hh (oln/d/42_basics.hh 1.13 640))
+  (olena/oln/basics.hh (oln/d/42_basics.hh 1.14 640))
 
 
   (olena/oln/config/system.hh (oln/7_system.hh 1.17 640))
@@ -372,13 +195,13 @@ Index: olena/oln/utils/qsort.hh
   (olena/oln/convert/nrgbxyz.hh (oln/16_nrgbxyz.hh 1.15 640))
   
   
-  (olena/oln/convert/rgbnrgb.hh (oln/17_rgbnrgb.hh 1.13 640))
-  (olena/oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.14 640))
+  (olena/oln/convert/rgbnrgb.hh (oln/17_rgbnrgb.hh 1.14 640))
+  (olena/oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.15 640))
   (olena/oln/convert/stretch.hh (oln/f/51_stretch.hh 1.18 640))
-  (olena/oln/convol/convolution.hh (oln/f/39_convolutio 1.4.1.4.1.6.1.3 640))
+  (olena/oln/convol/slow_convolution.hh (oln/f/39_convolutio 1.4.1.4.1.6.1.5 640))
   (olena/oln/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.5.1.7 640))
   (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.6.1.9 640))
-  (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.8.1.11 640))
+  (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.8.1.12 640))
   (olena/oln/core/accum.hh (oln/d/40_accum.hh 1.5 640))
   (olena/oln/core/apply.hh (oln/d/39_apply.hh 1.16 640))
   (olena/oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.20 640))
@@ -453,7 +276,7 @@ Index: olena/oln/utils/qsort.hh
   (olena/oln/core/abstract/struct_elt.hh (oln/c/25_structelt. 1.24 640))
   (olena/oln/core/traverse.hh (oln/d/30_traverse.h 1.12 640))
   (metalic/mlc/typeadj.hh (oln/e/25_typeadj.hh 1.6 640))
-  (metalic/mlc/type.hh (oln/c/21_type.hh 1.29 640))
+  (metalic/mlc/type.hh (oln/c/21_type.hh 1.30 640))
   (olena/oln/core/window1d.hh (oln/c/15_window1d.h 1.19 640))
   (olena/oln/core/window2d.hh (oln/c/14_window2d.h 1.22 640))
   (olena/oln/core/window3d.hh (oln/c/13_window3d.h 1.20 640))
@@ -490,7 +313,7 @@ Index: olena/oln/utils/qsort.hh
   (olena/oln/level/lut.hh (oln/29_lut.hh 1.10 640))
   (olena/oln/level/set_level.hh (oln/p/1_set_level. 1.11 640))
   (olena/oln/level/threshold.hh (oln/f/15_threshold. 1.14 640))
-  (config/oln.m4 (oln/j/15_oln.m4 1.38.1.5 640))
+  (config/oln.m4 (oln/j/15_oln.m4 1.38.1.8 640))
 
   (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.15 640))
   (metalic/mlc/array/1d.hh (oln/f/23_array1d.hh 1.12 640))
@@ -521,7 +344,7 @@ Index: olena/oln/utils/qsort.hh
   (olena/oln/morpho/geodesic_dilation.hh (oln/37_geodesic_d 1.11.1.13 640))
   (olena/oln/morpho/geodesic_erosion.hh (oln/36_geodesic_e 1.20 640))
   (olena/oln/morpho/gradient.hh (oln/b/3_gradient.h 1.6 640))
-  (olena/oln/morpho/gradient.inc (oln/43_gradient.i 1.16 640))
+  (olena/oln/morpho/gradient.inc (oln/43_gradient.i 1.17 640))
   (olena/oln/morpho/hit_or_miss.hh (oln/b/2_hit_or_mis 1.7 640))
   (olena/oln/morpho/hit_or_miss.inc (oln/42_hit_or_mis 1.23 640))
   (olena/oln/morpho/laplacian.hh (oln/b/1_laplacian. 1.6 640))
@@ -541,25 +364,25 @@ Index: olena/oln/utils/qsort.hh
   (olena/oln/morpho/watershed.hh (oln/48_watershed. 1.15 640))
   (olena/oln/morpho/watershed.hxx (oln/47_watershed. 1.9.1.5.1.7 640))
   (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.11 640))
-  (olena/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.7.1.10 640))
+  (olena/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.7.1.11 640))
   (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.14 640))
-  (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.10 640))
+  (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.11 640))
   (olena/oln/transforms/wavelet_coeffs.hh (oln/i/34_wavelet_co 1.8 640))
   (integre/ntg/all.hh (oln/g/32_all.hh 1.10.1.8 640))
   (integre/ntg/real/behavior.hh (oln/g/31_behaviour. 1.13.1.15.1.2 640))
 
-  (integre/ntg/utils/cast.hh (oln/i/26_cast.hh 1.3.1.13 640))
+  (integre/ntg/utils/cast.hh (oln/i/26_cast.hh 1.3.1.14 640))
   (integre/ntg/vect/cplx_representation.hh (oln/i/3_cplx_repre 1.5 640))
   (integre/ntg/utils/debug.hh (oln/i/8_debug.hh 1.2.1.8 640))
   (integre/ntg/core/internal/global_ops_defs.hh (oln/g/26_global_ops 1.17 640))
-  (integre/ntg/core/internal/global_ops.hh (oln/g/27_global_ops 1.11.1.14 640))
+  (integre/ntg/core/internal/global_ops.hh (oln/g/27_global_ops 1.11.1.15 640))
   (integre/ntg/core/internal/global_ops_traits.hh (oln/g/25_global_ops 1.7.1.10 640))
   (integre/ntg/color/hsi.hh (oln/i/20_hsi.hh 1.3.1.7 640))
   (integre/ntg/color/hsl.hh (oln/i/21_hsl.hh 1.3.1.4 640))
   (integre/ntg/color/hsv.hh (oln/i/22_hsv.hh 1.3.1.5 640))
   (integre/ntg/core/interval.hh (oln/g/22_interval.h 1.6.1.8 640))
-  (integre/ntg/real/int_s.hh (oln/g/24_int_s.hh 1.16.1.16.1.1 640))
-  (integre/ntg/real/int_u.hh (oln/g/23_int_u.hh 1.19.1.16.1.1 640))
+  (integre/ntg/real/int_s.hh (oln/g/24_int_s.hh 1.16.1.16.1.2 640))
+  (integre/ntg/real/int_u.hh (oln/g/23_int_u.hh 1.19.1.16.1.2 640))
   (integre/ntg/color/nrgb.hh (oln/i/19_nrgb.hh 1.5.1.6 640))
 
 
@@ -573,7 +396,7 @@ Index: olena/oln/utils/qsort.hh
 
 
 
-  (integre/ntg/real/optraits_real_defs.hh (oln/g/11_optraits_s 1.14.1.1 640))
+  (integre/ntg/real/optraits_real_defs.hh (oln/g/11_optraits_s 1.14.1.2 640))
   (integre/ntg/real/optraits_real.hh (oln/g/12_optraits_s 1.11.1.8.1.1 640))
 
   (integre/ntg/core/predecls.hh (oln/g/10_predecls.h 1.10.1.3.1.2 640))
@@ -590,7 +413,7 @@ Index: olena/oln/utils/qsort.hh
   (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.7 640))
   (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.7 640))
   (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.9 640))
-  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.14 640))
+  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.15 640))
   (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.10 640))
   (olena/oln/utils/timer.hh (oln/8_timer.hh 1.9 640))
   (olena/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.5.1.1 640))
@@ -612,10 +435,10 @@ Index: olena/oln/utils/qsort.hh
   (olena/tests/convert/convcomp.hh (oln/f/1_convcomp.h 1.10 640))
   (olena/tests/convert/Makefile.am (oln/f/0_Makefile.a 1.14 640))
 
-  (olena/tests/convol/Makefile.am (oln/f/38_Makefile.a 1.13 640))
-  (olena/tests/convol/tests/slow_sum_2d_1 (oln/f/41_slow_sum_2 1.2.1.6 640))
-  (olena/tests/convol/tests/slow_sum_2d_2 (oln/f/40_slow_sum_2 1.2.1.5 640))
-  (olena/tests/convol/tests/sobel_gradient (oln/f/45_sobel_grad 1.3.1.7 640))
+  (olena/tests/convol/Makefile.am (oln/f/38_Makefile.a 1.14 640))
+  (olena/tests/convol/tests/slow_sum_2d_1 (oln/f/41_slow_sum_2 1.2.1.7 640))
+  (olena/tests/convol/tests/slow_sum_2d_2 (oln/f/40_slow_sum_2 1.2.1.6 640))
+  (olena/tests/convol/tests/sobel_gradient (oln/f/45_sobel_grad 1.3.1.8 640))
   (olena/tests/convol/sum_on_random.pgm (oln/f/42_sum_on_ran 1.1 640) :no-keywords)
 
   (olena/tests/io/tests/2d (oln/e/47_2d.cc 1.7.1.8 640))
@@ -955,7 +778,7 @@ Index: olena/oln/utils/qsort.hh
 ;; Files added by populate at Tue, 04 Mar 2003 19:30:28 +0100,
 ;; to version 8.9(w), by jerome:
 
-  (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.23 640))
+  (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.24 640))
   (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.19 640))
 
   (olena/tests/convol () :directory)
@@ -1004,7 +827,7 @@ Index: olena/oln/utils/qsort.hh
   
   (olena/oln/topo/tarjan/union.hh (oln/r/33_union.hh 1.12 640))
   (olena/oln/topo/inter-pixel/inter-pixel.hh (oln/r/34_inter-pixe 1.16 640))
-  (olena/oln/topo/tarjan/flat-zone.hh (oln/r/35_flat-zone. 1.14 640))
+  (olena/oln/topo/tarjan/flat-zone.hh (oln/r/35_flat-zone. 1.15 640))
   (olena/oln/topo/combinatorial-map/cmap.hh (oln/r/36_cmap.hh 1.14 640))
 
 ;; Files added by populate at Thu, 20 Mar 2003 18:06:35 +0100,
@@ -1072,7 +895,7 @@ Index: olena/oln/utils/qsort.hh
   (integre/ntg/core/internal/traits.hh (oln/s/16_traits.hh 1.4.1.2 640))
   (integre/ntg/core/internal/macros.hh (oln/s/17_macros.hh 1.3 640))
   (integre/ntg/core/type_traits.hh (oln/s/18_type_trait 1.3 640))
-  (integre/ntg/core/macros.hh (oln/s/19_macros.hh 1.12 640))
+  (integre/ntg/core/macros.hh (oln/s/19_macros.hh 1.13 640))
   (integre/ntg/core/abstract_hierarchy.hh (oln/s/20_abstract_h 1.2.1.2 640))
   (integre/ntg/basics.hh (oln/s/21_basics.hh 1.3.1.1 640))
   (integre/ntg/vect/vect_value.hh (oln/s/22_vect_value 1.2.1.1 640))
@@ -1132,7 +955,7 @@ Index: olena/oln/utils/qsort.hh
 
   (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.32 640))
   (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.22 600))
-  (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.14.1.11 640))
+  (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.14.1.12 640))
   (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.12 640))
   (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.19 640))
   (olena/oln/core/impl/image_array.hh (oln/t/30_image_arra 1.17 640))
@@ -1176,7 +999,7 @@ Index: olena/oln/utils/qsort.hh
   (olena/tests/core/multiple_sources_2.cc (oln/u/24_multiple_s 1.1 640))
   (olena/tests/core/multiple_sources_1.cc (oln/u/25_multiple_s 1.1 640))
   (olena/tests/utils/Makefile.am (oln/u/26_Makefile.a 1.2 600))
-  (olena/tests/utils/tests/histogram (oln/u/27_histogram. 1.2.1.4 600))
+  (olena/tests/utils/tests/histogram (oln/u/27_histogram. 1.2.1.5 600))
   (olena/tests/utils/tests/stat (oln/u/28_stat.cc 1.3 600))
   (olena/tests/utils/tests/timer (oln/u/29_timer.cc 1.5 600))
   (olena/tests/topo/tests/tarjan (oln/u/30_test-tarja 1.3 600))
@@ -1193,7 +1016,7 @@ Index: olena/oln/utils/qsort.hh
   (olena/tests/core/tests/image_list (oln/u/41_image_list 1.2 600))
   (olena/tests/io/tests/3d (oln/u/42_3d 1.3 600))
   (olena/oln/io/pnm_read_2d.hh (oln/u/43_pnm_read_2 1.5 600))
-  (olena/oln/io/pnm_write_2d.hh (oln/u/44_pnm_write_ 1.6 600))
+  (olena/oln/io/pnm_write_2d.hh (oln/u/44_pnm_write_ 1.7 600))
   (olena/img/lena3d.ppm (oln/u/45_lena3d.ppm 1.1 600))
   (olena/tests/io/tests/se_3d (oln/u/46_se_3d 1.2 600))
   (olena/tests/io/tests/se_1d (oln/u/47_se_1d 1.2 600))
@@ -1204,12 +1027,12 @@ Index: olena/oln/utils/qsort.hh
   (olena/tests/core/tests/label_images (oln/v/0_label_imag 1.1 600))
   (olena/oln/topo/combinatorial-map/internal/allfunc.hh (oln/v/1_allfunc.hh 1.2 600))
   (olena/oln/topo/combinatorial-map/internal/alpha.hh (oln/v/2_alpha.hh 1.3 600))
-  (olena/oln/topo/combinatorial-map/internal/anyfunc.hh (oln/v/3_anyfunc.hh 1.4 600))
-  (olena/oln/topo/combinatorial-map/internal/beta.hh (oln/v/5_beta.hh 1.3 600))
-  (olena/oln/topo/combinatorial-map/internal/lambda.hh (oln/v/6_lambda.hh 1.3 600))
-  (olena/oln/topo/combinatorial-map/internal/level.hh (oln/v/7_level.hh 1.3 600))
-  (olena/oln/topo/combinatorial-map/internal/sigma.hh (oln/v/9_sigma.hh 1.3 600))
-  (olena/oln/core/abstract/image_with_type_with_dim.hh (oln/v/11_image_with 1.5 600))
+  (olena/oln/topo/combinatorial-map/internal/anyfunc.hh (oln/v/3_anyfunc.hh 1.5 600))
+  (olena/oln/topo/combinatorial-map/internal/beta.hh (oln/v/5_beta.hh 1.4 600))
+  (olena/oln/topo/combinatorial-map/internal/lambda.hh (oln/v/6_lambda.hh 1.4 600))
+  (olena/oln/topo/combinatorial-map/internal/level.hh (oln/v/7_level.hh 1.4 600))
+  (olena/oln/topo/combinatorial-map/internal/sigma.hh (oln/v/9_sigma.hh 1.4 600))
+  (olena/oln/core/abstract/image_with_type_with_dim.hh (oln/v/11_image_with 1.6 600))
   (olena/tests/core/tests/image2 (oln/v/12_image2 1.3 600))
   (olena/tests/utils/tests/copy (oln/v/13_copy 1.2 600))
 ;; Files added by populate at Mon, 25 Aug 2003 13:48:55 +0200,
@@ -1343,11 +1166,11 @@ Index: olena/oln/utils/qsort.hh
 ;; Files added by populate at Thu, 22 Jan 2004 21:09:49 +0100,
 ;; to version 10.48(w), by palma_g:
 
-  (olena/oln/convert/rgbhsv.hh (oln/j/35_rgbhsv.hh 1.3 644))
-  (olena/oln/convert/rgbhsl.hh (oln/j/36_rgbhsl.hh 1.5 644))
-  (olena/oln/convert/rgbhsi.hh (oln/j/37_rgbhsi.hh 1.3 644))
-  (olena/oln/convert/rgbyuv.hh (oln/j/38_rgbyuv.hh 1.3 644))
-  (olena/oln/convert/rgbyiq.hh (oln/j/39_rgbyiq.hh 1.3 644))
+  (olena/oln/convert/rgbhsv.hh (oln/j/35_rgbhsv.hh 1.4 644))
+  (olena/oln/convert/rgbhsl.hh (oln/j/36_rgbhsl.hh 1.6 644))
+  (olena/oln/convert/rgbhsi.hh (oln/j/37_rgbhsi.hh 1.4 644))
+  (olena/oln/convert/rgbyuv.hh (oln/j/38_rgbyuv.hh 1.4 644))
+  (olena/oln/convert/rgbyiq.hh (oln/j/39_rgbyiq.hh 1.4 644))
 
 
   (olena/oln/snakes/snakes_base.hxx (oln/f/11_snakes_bas 1.1 644))
@@ -1373,21 +1196,21 @@ Index: olena/oln/utils/qsort.hh
 ;; Files added by populate at Fri, 06 Feb 2004 16:00:19 +0100,
 ;; to version 10.57(w), by palma_g:
 
-  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.13.1.3 644))
+  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.13.1.4 644))
 
 ;; Files added by populate at Tue, 10 Feb 2004 15:26:15 +0100,
 ;; to version 10.62(w), by palma_g:
 
-  (olena/oln/core/abstract/behavior.hh (oln/j/46_behavior.h 1.3 644))
+  (olena/oln/core/abstract/behavior.hh (oln/j/46_behavior.h 1.5 644))
 
 ;; Files added by populate at Tue, 10 Feb 2004 15:26:20 +0100,
 ;; to version 10.62(w), by palma_g:
 
-  (olena/oln/core/behavior.hh (oln/j/47_behavior.h 1.3 644))
+  (olena/oln/core/behavior.hh (oln/j/47_behavior.h 1.6 644))
 
 
   (olena/oln/morpho/attribute_closing_opening_map.hxx (oln/j/48_attribute_ 1.2 644))
-  (olena/oln/morpho/attribute_closing_opening_map.hh (oln/j/49_attribute_ 1.11 600))
+  (olena/oln/morpho/attribute_closing_opening_map.hh (oln/j/49_attribute_ 1.12 600))
   (olena/oln/utils/special_points.hh (oln/j/50_special_po 1.3 644))
   (olena/tests/morpho/tests/attribute (oln/j/51_attribute 1.6 644))
 ;; Files added by populate at Mon, 16 Feb 2004 18:59:27 +0100,
@@ -1409,7 +1232,7 @@ Index: olena/oln/utils/qsort.hh
 ;; Files added by populate at Wed, 25 Feb 2004 16:41:16 +0100,
 ;; to version 10.67(w), by palma_g:
 
-  (doc/ref/out/exdoc.config.in (oln/k/7_exdoc.conf 1.7 644))
+  (doc/ref/out/exdoc.config.in (oln/k/7_exdoc.conf 1.10 644))
 
 ;; Files deleted by depopulate at Tue, 09 Mar 2004 10:41:51 +0100,
 ;; from version 10.70(w), by palma_g:
@@ -1417,16 +1240,16 @@ Index: olena/oln/utils/qsort.hh
   ; (doc/ref/html () :directory)
 
 
-  (integre/ntg/core/pred_succ.hh (oln/k/8_pred_succ. 1.2 644))
+  (integre/ntg/core/pred_succ.hh (oln/k/8_pred_succ. 1.3 644))
 ;; Files added by populate at Fri, 19 Mar 2004 15:49:20 +0100,
 ;; to version 10.97(w), by palma_g:
 
-  (olena/oln/utils/buffer.hxx (oln/k/9_buffer.hxx 1.2 644))
+  (olena/oln/utils/buffer.hxx (oln/k/9_buffer.hxx 1.3 644))
   (olena/oln/utils/buffer.hh (oln/k/10_buffer.hh 1.2 644))
-  (olena/oln/utils/key.hxx (oln/k/11_key.hxx 1.2 644))
+  (olena/oln/utils/key.hxx (oln/k/11_key.hxx 1.3 644))
   (olena/oln/utils/key.hh (oln/k/12_key.hh 1.2 644))
-  (olena/oln/utils/md5.hxx (oln/k/13_md5.hxx 1.3 644))
-  (olena/oln/utils/md5.hh (oln/k/14_md5.hh 1.3 644))
+  (olena/oln/utils/md5.hxx (oln/k/13_md5.hxx 1.4 644))
+  (olena/oln/utils/md5.hh (oln/k/14_md5.hh 1.4 644))
 
 ;; Files added by populate at Fri, 19 Mar 2004 17:25:06 +0100,
 ;; to version 10.99(w), by palma_g:
@@ -1589,8 +1412,8 @@ Index: olena/oln/utils/qsort.hh
   (olena/oln/convol/nagao.hh (oln/m/22_nagao.hh 1.3 600))
   (olena/oln/utils/se_stat.hh (oln/m/23_se_stat.hh 1.2 600))
   (olena/oln/utils/se_stat.hxx (oln/m/24_se_stat.hx 1.2 600))
-  (olena/oln/morpher/subq_morpher.hh (oln/m/25_subq_morph 1.3 600))
-  (olena/oln/morpher/color_morpher.hh (oln/m/26_color_morp 1.4 600))
+  (olena/oln/morpher/subq_morpher.hh (oln/m/25_subq_morph 1.4 600))
+  (olena/oln/morpher/color_morpher.hh (oln/m/26_color_morp 1.5 600))
   (olena/tests/morpher/Makefile.am (oln/m/27_Makefile.a 1.1 600))
   
   
@@ -1604,9 +1427,9 @@ Index: olena/oln/utils/qsort.hh
   
   
   
-  (olena/oln/morpher/piece_morpher.hh (oln/m/40_piece_morp 1.2 600))
+  (olena/oln/morpher/piece_morpher.hh (oln/m/40_piece_morp 1.3 600))
   (olena/oln/morpher/iter_morpher.hh (oln/m/41_iter_morph 1.2 600))
-  (olena/oln/morpher/slicing_morpher.hh (oln/m/42_slicing_mo 1.3 600))
+  (olena/oln/morpher/slicing_morpher.hh (oln/m/42_slicing_mo 1.4 600))
 
   (olena/tests/morpher/tests/compose_morph (oln/m/43_compose_mo 1.2 600))
   (olena/tests/morpher/tests/sq_morph (oln/m/44_sq_morph 1.2 600))
@@ -1614,7 +1437,7 @@ Index: olena/oln/utils/qsort.hh
 ;; Files added by populate at Wed, 31 Mar 2004 19:07:28 +0200,
 ;; to version 10.123(w), by palma_g:
 
-  (olena/oln/topo/tarjan/tarjan_with_attr.hh (oln/m/46_tarjan_wit 1.3 644))
+  (olena/oln/topo/tarjan/tarjan_with_attr.hh (oln/m/46_tarjan_wit 1.4 644))
   (olena/oln/topo/tarjan/tarjan.hh (oln/m/47_tarjan.hh 1.4 644))
 
 
@@ -1625,16 +1448,71 @@ Index: olena/oln/utils/qsort.hh
   (olena/tests/morpho/tests/gradient (oln/r/1_gradient 1.2 600))
   (integre/ntg/makefile.src (oln/r/2_makefile.s 1.1 644))
   (metalic/mlc/makefile.src (oln/r/3_makefile.s 1.1 644))
-  (olena/oln/makefile.src (oln/r/4_makefile.s 1.1 644))
+  (olena/oln/makefile.src (oln/r/4_makefile.s 1.5 644))
 
-  (olena/oln/convol/slow_gaussian.hh (oln/r/7_slow_gauss 1.1 644))
-  (olena/oln/convol/slow_gaussian.hxx (oln/r/8_slow_gauss 1.1 644))
+  (olena/oln/convol/slow_gaussian.hh (oln/r/7_slow_gauss 1.4 644))
+  (olena/oln/convol/slow_gaussian.hxx (oln/r/8_slow_gauss 1.4 644))
 ;; Files added by populate at Sun, 23 May 2004 13:50:56 +0200,
 ;; to version 10.186(w), by palma_g:
 
-  (olena/oln/utils/qsort.hh (oln/r/9_qsort.hh 1.1 644))
-)
+  (olena/oln/utils/qsort.hh (oln/r/9_qsort.hh 1.2 644))
+
+
+  (olena/oln/transforms/shapelets.hh (oln/r/10_shapelets. 1.4 600))
+  (olena/tests/convol/tests/slow_gaussian (oln/r/11_slow_gauss 1.1 600))
+  (olena/oln/convol/fast_convolution.hh (oln/r/12_fast_convo 1.3 600))
+  (olena/tests/convol/tests/fast_convol (oln/r/13_fast_convo 1.2 600))
+  (olena/oln/morpher/func_morpher.hh (oln/r/14_func_morph 1.2 600))
+  (olena/oln/core/fpoint2d.hh (oln/r/15_fpoint2d.h 1.2 600))
+  (olena/oln/core/fdpoint2d.hh (oln/r/16_fdpoint2d. 1.1 600))
+  (olena/oln/geom/translate.hh (oln/s/6_translate. 1.1 600))
+  (olena/oln/geom/rotate.hh (oln/u/14_rotate.hh 1.1 600))
+  (olena/oln/morpher/border_morpher.hh (oln/u/15_border_mor 1.2 600))
+  (olena/tests/morpher/tests/border (oln/u/16_border 1.1 600))
+  (tools/utilities/convert/color_space.cc (oln/u/19_color_spac 1.2 600))
+  (tools/utilities/convert/Makefile.am (oln/v/10_Makefile.a 1.3 600)))
 (Merge-Parents
-  (10.186 complete)
+  (10.187 complete)
+  (10.200 complete
+    (ChangeLog ChangeLog ChangeLog r) (doc/ChangeLog doc/ChangeLog doc/ChangeLog r)
+    (integre/ChangeLog integre/ChangeLog integre/ChangeLog r) (metalic/ChangeLog metalic/ChangeLog metalic/ChangeLog r)
+    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (tools/ChangeLog tools/ChangeLog tools/ChangeLog r)
+    (configure.ac configure.ac configure.ac r) (NEWS NEWS NEWS r)
+    (olena/oln/basics.hh olena/oln/basics.hh olena/oln/basics.hh r) (olena/oln/convert/rgbnrgb.hh olena/oln/convert/rgbnrgb.hh olena/oln/convert/rgbnrgb.hh r)
+    (olena/oln/convert/rgbxyz.hh olena/oln/convert/rgbxyz.hh olena/oln/convert/rgbxyz.hh r) (olena/oln/convol/slow_convolution.hh olena/oln/convol/convolution.hh olena/oln/convol/slow_convolution.hh r)
+    (olena/oln/convol/fast_gaussian.hxx olena/oln/convol/fast_gaussian.hxx olena/oln/convol/fast_gaussian.hxx r) (metalic/mlc/type.hh metalic/mlc/type.hh metalic/mlc/type.hh r)
+    (config/oln.m4 config/oln.m4 config/oln.m4 r) (olena/oln/morpho/gradient.inc olena/oln/morpho/gradient.inc olena/oln/morpho/gradient.inc r)
+    (olena/oln/topo/dmap.hxx olena/oln/topo/dmap.hxx olena/oln/topo/dmap.hxx r) (olena/oln/transforms/fft.hh olena/oln/transforms/fft.hh olena/oln/transforms/fft.hh r)
+    (integre/ntg/utils/cast.hh integre/ntg/utils/cast.hh integre/ntg/utils/cast.hh r) (integre/ntg/core/internal/global_ops.hh integre/ntg/core/internal/global_ops.hh integre/ntg/core/internal/global_ops.hh r)
+    (integre/ntg/real/int_s.hh integre/ntg/real/int_s.hh integre/ntg/real/int_s.hh r) (integre/ntg/real/int_u.hh integre/ntg/real/int_u.hh integre/ntg/real/int_u.hh r)
+    (integre/ntg/real/optraits_real_defs.hh integre/ntg/real/optraits_real_defs.hh integre/ntg/real/optraits_real_defs.hh r) (olena/oln/utils/histogram.hh olena/oln/utils/histogram.hh olena/oln/utils/histogram.hh r)
+    (olena/tests/convol/Makefile.am olena/tests/convol/Makefile.am olena/tests/convol/Makefile.am r) (olena/tests/convol/tests/slow_sum_2d_1 olena/tests/convol/tests/slow_sum_2d_1 olena/tests/convol/tests/slow_sum_2d_1 r)
+    (olena/tests/convol/tests/slow_sum_2d_2 olena/tests/convol/tests/slow_sum_2d_2 olena/tests/convol/tests/slow_sum_2d_2 r) (olena/tests/convol/tests/sobel_gradient olena/tests/convol/tests/sobel_gradient olena/tests/convol/tests/sobel_gradient r)
+    (olena/oln/morpho/attribute_closing_opening.hh olena/oln/morpho/attribute_closing_opening.hh olena/oln/morpho/attribute_closing_opening.hh r) (olena/oln/topo/tarjan/flat-zone.hh olena/oln/topo/tarjan/flat-zone.hh olena/oln/topo/tarjan/flat-zone.hh r)
+    (integre/ntg/core/macros.hh integre/ntg/core/macros.hh integre/ntg/core/macros.hh r) (olena/oln/core/abstract/image_with_impl.hh olena/oln/core/abstract/image_with_impl.hh olena/oln/core/abstract/image_with_impl.hh r)
+    (olena/tests/utils/tests/histogram olena/tests/utils/tests/histogram olena/tests/utils/tests/histogram r) (olena/oln/io/pnm_write_2d.hh olena/oln/io/pnm_write_2d.hh olena/oln/io/pnm_write_2d.hh r)
+    (olena/oln/topo/combinatorial-map/internal/anyfunc.hh olena/oln/topo/combinatorial-map/internal/anyfunc.hh olena/oln/topo/combinatorial-map/internal/anyfunc.hh r) (olena/oln/topo/combinatorial-map/internal/beta.hh olena/oln/topo/combinatorial-map/internal/beta.hh olena/oln/topo/combinatorial-map/internal/beta.hh r)
+    (olena/oln/topo/combinatorial-map/internal/lambda.hh olena/oln/topo/combinatorial-map/internal/lambda.hh olena/oln/topo/combinatorial-map/internal/lambda.hh r) (olena/oln/topo/combinatorial-map/internal/level.hh olena/oln/topo/combinatorial-map/internal/level.hh olena/oln/topo/combinatorial-map/internal/level.hh r)
+    (olena/oln/topo/combinatorial-map/internal/sigma.hh olena/oln/topo/combinatorial-map/internal/sigma.hh olena/oln/topo/combinatorial-map/internal/sigma.hh r) (olena/oln/core/abstract/image_with_type_with_dim.hh olena/oln/core/abstract/image_with_type_with_dim.hh olena/oln/core/abstract/image_with_type_with_dim.hh r)
+    (olena/oln/convert/rgbhsv.hh olena/oln/convert/rgbhsv.hh olena/oln/convert/rgbhsv.hh r) (olena/oln/convert/rgbhsl.hh olena/oln/convert/rgbhsl.hh olena/oln/convert/rgbhsl.hh r)
+    (olena/oln/convert/rgbhsi.hh olena/oln/convert/rgbhsi.hh olena/oln/convert/rgbhsi.hh r) (olena/oln/convert/rgbyuv.hh olena/oln/convert/rgbyuv.hh olena/oln/convert/rgbyuv.hh r)
+    (olena/oln/convert/rgbyiq.hh olena/oln/convert/rgbyiq.hh olena/oln/convert/rgbyiq.hh r) (olena/oln/morpho/attributes.hh olena/oln/morpho/attributes.hh olena/oln/morpho/attributes.hh r)
+    (olena/oln/core/abstract/behavior.hh olena/oln/core/abstract/behavior.hh olena/oln/core/abstract/behavior.hh r) (olena/oln/core/behavior.hh olena/oln/core/behavior.hh olena/oln/core/behavior.hh r)
+    (olena/oln/morpho/attribute_closing_opening_map.hh olena/oln/morpho/attribute_closing_opening_map.hh olena/oln/morpho/attribute_closing_opening_map.hh r) (doc/ref/out/exdoc.config.in doc/ref/out/exdoc.config.in doc/ref/out/exdoc.config.in r)
+    (integre/ntg/core/pred_succ.hh integre/ntg/core/pred_succ.hh integre/ntg/core/pred_succ.hh r) (olena/oln/utils/buffer.hxx olena/oln/utils/buffer.hxx olena/oln/utils/buffer.hxx r)
+    (olena/oln/utils/key.hxx olena/oln/utils/key.hxx olena/oln/utils/key.hxx r) (olena/oln/utils/md5.hxx olena/oln/utils/md5.hxx olena/oln/utils/md5.hxx r)
+    (olena/oln/utils/md5.hh olena/oln/utils/md5.hh olena/oln/utils/md5.hh r) (olena/oln/morpher/subq_morpher.hh olena/oln/morpher/subq_morpher.hh olena/oln/morpher/subq_morpher.hh r)
+    (olena/oln/morpher/color_morpher.hh olena/oln/morpher/color_morpher.hh olena/oln/morpher/color_morpher.hh r) (olena/oln/morpher/piece_morpher.hh olena/oln/morpher/piece_morpher.hh olena/oln/morpher/piece_morpher.hh r)
+    (olena/oln/morpher/slicing_morpher.hh olena/oln/morpher/slicing_morpher.hh olena/oln/morpher/slicing_morpher.hh r) (olena/oln/topo/tarjan/tarjan_with_attr.hh olena/oln/topo/tarjan/tarjan_with_attr.hh olena/oln/topo/tarjan/tarjan_with_attr.hh r)
+    (olena/oln/makefile.src olena/oln/makefile.src olena/oln/makefile.src r) (olena/oln/convol/slow_gaussian.hh olena/oln/convol/slow_gaussian.hh olena/oln/convol/slow_gaussian.hh r)
+    (olena/oln/convol/slow_gaussian.hxx olena/oln/convol/slow_gaussian.hxx olena/oln/convol/slow_gaussian.hxx r) (olena/oln/utils/qsort.hh olena/oln/utils/qsort.hh olena/oln/utils/qsort.hh r)
+    (() () olena/oln/transforms/shapelets.hh a) (() () olena/tests/convol/tests/slow_gaussian a)
+    (() () olena/oln/convol/fast_convolution.hh a) (() () olena/tests/convol/tests/fast_convol a)
+    (() () olena/oln/morpher/func_morpher.hh a) (() () olena/oln/core/fpoint2d.hh a)
+    (() () olena/oln/core/fdpoint2d.hh a) (() () olena/oln/geom/translate.hh a)
+    (() () olena/oln/geom/rotate.hh a) (() () olena/oln/morpher/border_morpher.hh a)
+    (() () olena/tests/morpher/tests/border a) (() () tools/utilities/convert/color_space.cc a)
+    (() () tools/utilities/convert/Makefile.am a) 
+  )
 )
 (New-Merge-Parents)

@@ -30,7 +30,8 @@
 # define SLOW_GAUSSIAN_HH
 # include <oln/core/image.hh>
 # include <ntg/float.hh>
-# include "convolution.hh"
+# include <oln/convol/slow_convolution.hh>
+# include <oln/core/behavior.hh>
 
 namespace oln {
   namespace convol {
@@ -45,32 +46,74 @@ namespace oln {
       {
       };
 
-      /*! Gaussian filter.
+      /*! Slow Gaussian filter.
       **
-      ** \todo FIXME: this class has been done on hurry.
       ** \arg in input image.
       ** \arg sigma sigma.
-      ** \arg mu point corresponding to the center.
+      ** \arg radius_factor the kernel of the convolution is done with a
+      ** kernel null at a distance of sigma * radius_factor.
+      ** \arg behavior Object to know how to work on borders. By default
+      ** mirror is used.
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/convol/slow_gaussian.hh>
+      ** #include <ntg/int.hh>
+      **
+      ** using namespace oln;
+      ** using namespace ntg;
+      **
+      ** int main()
+      ** {
+      **   image2d<int_u8> lena(IMG_IN "lena.pgm");
+      **
+      **   float_d sigma = 2.5;
+      **   lena = convol::slow::gaussian(lena, sigma, 3);
+      **   save(lena, IMG_OUT "oln_convol_slow_gaussian.pgm");
+      ** }
+      ** \endcode
+      ** \image html lena_pgm.png
+      ** \image latex lena_pgm.png
+      ** =>
+      ** \image html oln_convol_slow_gaussian.pgm
+      ** \image latex oln_convol_slow_gaussian.pgm
       */
-      template <class I>
+
+      template <class I, class BE>
       oln_concrete_type(I)
-      gaussian(const oln::abstract::non_vectorial_image<I> & in,
-	       const ntg::float_d sigma,
-	       const oln_point_type(I) & mu = oln_point_type(I)())
+	gaussian(const oln::abstract::non_vectorial_image<I> & in,
+		 const ntg::float_d sigma,
+		 const ntg::float_d radius_factor,
+		 const oln::abstract::behavior<BE> &behavior)
       {
-	static const typename gaussian_kernel<I::dim>::ret k
-	  = gaussian_kernel<I::dim>::kernel_norm(sigma, mu);
-	in.border_adapt_mirror(k.delta());
-	//FIXME: we should use fast convol.
-	//FIXME: This is hugely.
-	typename mute<I, double>::ret im = oln::convol::slow::convolve<double>
-	  (in,
-	   gaussian_kernel<I::dim>::kernel(sigma, mu));
+	const typename gaussian_kernel<I::dim>::ret k
+	  = gaussian_kernel<I::dim>::kernel(sigma, radius_factor);
+
+	// Compute Delta.
+	// \todo FIXME: should be in the image hierarchy.
+	coord delta = 0;
+	for (unsigned i = 0; i < I::dim; i++)
+	  if (in.size().nth(i) > delta)
+	    delta = in.size().nth(i);
+	delta = (delta + 1) / 2;
+	behavior.adapt_border(in, delta);
+
+	typename mute<I, ntg::float_d>::ret im =
+	  oln::convol::slow::convolve<ntg::float_d> (in, k);
 	oln_concrete_type(I) out(in.size());
 	oln_iter_type(I) it(out);
 	for_all(it)
 	  out[it] = oln_value_type(I)(im[it]);
 	return out;
+      }
+
+      //! Gaussian filter, with default borders.
+      template <class I>
+      oln_concrete_type(I)
+	gaussian(const oln::abstract::non_vectorial_image<I> & in,
+		 const ntg::float_d sigma,
+		 const ntg::float_d radius_factor)
+      {
+	return gaussian(in, sigma, radius_factor, mirror_behavior<>());
       }
     }//End namespace slow
   }// End namespace convol

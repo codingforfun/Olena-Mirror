@@ -141,14 +141,14 @@ namespace oln {
       impl_type*
       impl()
       {
-	return ima_.impl();
+	return this->ima_.impl();
       }
 
       /// Return the image implementation.
       const impl_type*
       impl() const
       {
-	return ima_.impl();
+	return this->ima_.impl();
       }
 
 

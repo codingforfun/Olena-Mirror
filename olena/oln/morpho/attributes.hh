@@ -245,7 +245,7 @@ namespace oln {
 		    const env_type&):
 	  value_(ntg_unit_val(value_type))
 	  {
-	  };
+	  }
 
 
 	/*!
@@ -342,7 +342,7 @@ namespace oln {
 		    const oln_point_type(I2) &p,
 		    const env_type &env): super_type(im, p, env)
 	  {
-	  };
+	  }
       };
 
       /*-----------*
@@ -390,7 +390,7 @@ namespace oln {
 	  area_(1),
 	  value_(1)
 	  {
-	  };
+	  }
 
 	// interface part
 	/*!
@@ -552,7 +552,7 @@ namespace oln {
 			const env_type &) :
 	  value_(input[p])
 	  {
-	  };
+	  }
 
 	// interface part
 	/*!
@@ -673,7 +673,7 @@ namespace oln {
 		    const oln_point_type(I) &p,
 		    const env_type & e): super_type(e.getImage(), p, e)
 	{
-	};
+	}
       };
 
       /*----------------------*
@@ -732,7 +732,7 @@ namespace oln {
 	  std::copy(e.getParent()[p].begin(),
 		    e.getParent()[p].end(),
 		    std::back_inserter(points_));
-	};
+	}
 
 	/*!
 	** \brief Accessor to value_.
@@ -893,7 +893,7 @@ namespace oln {
 	  min_(input[p]),
 	  max_(input[p])
 	  {
-	  };
+	  }
 
 	/*!
 	** \brief Accessor to min value.
@@ -1038,7 +1038,7 @@ namespace oln {
 			const env_type &):
 	  value_(input[p])
 	  {
-	  };
+	  }
 
 	/*!
 	** \brief Accessor to value_.
@@ -1154,7 +1154,7 @@ namespace oln {
 			const env_type &) :
 	  value_(input[p])
 	  {
-	  };
+	  }
 
 	/*!
 	** \brief Accessor to value_.

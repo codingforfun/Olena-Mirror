@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,6 +32,7 @@
 # include <ntg/real/optraits_real.hh>
 # include <ntg/real/real_value.hh>
 # include <ntg/bin.hh>
+# include <ntg/real/int_u.hh>
 
 # include <mlc/bool.hh>
 # include <mlc/cmp.hh>
@@ -89,7 +90,7 @@ namespace ntg {
     | typetraits<int_s> |
     `------------------*/
 
-    template <unsigned nbits, class behavior>
+    template <unsigned nbits, typename behavior>
     struct typetraits<int_s<nbits, behavior> >
       : public typetraits<sint_value<int_s<nbits, behavior> > >
     {
@@ -115,7 +116,7 @@ namespace ntg {
       typedef int_u<32, behavior>		unsigned_largest_type;
       typedef int_u<32, behavior>		unsigned_cumul_type;
       typedef signed int			integer_type;
-      
+
       // Particular properties
       enum { size = nbits };
     };
@@ -358,7 +359,7 @@ namespace ntg {
 	     need_check = ((unsigned) mlc::max<nbits, mbits>::ret >= 32) };
       typedef int_s<(unsigned)mlc::maxN<nbits + 1,mbits + 1, 32>::ret,
 		    typename deduce_op_behavior<B1, B2>::ret> ret;
-      typedef int_s<nbits, 
+      typedef int_s<nbits,
 		    typename ret_behavior_if<need_check, ret>::ret> impl;
     };
 
@@ -372,7 +373,7 @@ namespace ntg {
 	     need_check = ((mbits >= 31) || (nbits >= 32)) };
       typedef int_s<(unsigned)mlc::maxN<nbits + 1,mbits + 2, 32>::ret,
 		    typename deduce_op_behavior<B1, B2>::ret> ret;
-      typedef int_s<nbits, 
+      typedef int_s<nbits,
 		    typename ret_behavior_if<need_check, ret>::ret> impl;
     };
 
@@ -390,7 +391,7 @@ namespace ntg {
 	     need_check = ((mbits >= 31) || (nbits >= 31)) };
       typedef int_s<(unsigned)mlc::maxN<nbits + 1, mbits + 1, 32>::ret,
 		    typename deduce_op_behavior<B1, B2>::ret> ret;
-      typedef int_s<nbits, 
+      typedef int_s<nbits,
 		    typename ret_behavior_if<need_check, ret>::ret> impl;
     };
 
@@ -403,7 +404,7 @@ namespace ntg {
 	     need_check = ((mbits >= 31) || (nbits >= 32)) };
       typedef int_s<(unsigned)mlc::maxN<nbits + 1, mbits + 2, 32>::ret,
 		    typename deduce_op_behavior<B1, B2>::ret> ret;
-      typedef int_s<nbits, 
+      typedef int_s<nbits,
 		    typename ret_behavior_if<need_check, ret>::ret> impl;
     };
 
@@ -421,7 +422,7 @@ namespace ntg {
 	     need_check = (mbits + nbits > 32) };
       typedef int_s<(unsigned)mlc::saturateN<nbits + mbits, 32>::ret,
 		    typename deduce_op_behavior<B1, B2>::ret> ret;
-      typedef int_s<nbits, 
+      typedef int_s<nbits,
 		    typename ret_behavior_if<need_check, ret>::ret> impl;
     };
 
@@ -435,7 +436,7 @@ namespace ntg {
 	     need_check = (nbits + mbits + 1 > 32)};
       typedef int_s<(unsigned)mlc::saturateN<nbits + mbits+1, 32>::ret,
 		    typename deduce_op_behavior<B1, B2>::ret> ret;
-      typedef int_s<nbits, 
+      typedef int_s<nbits,
 		    typename ret_behavior_if<need_check, ret>::ret> impl;
     };
 
@@ -461,18 +462,18 @@ namespace ntg {
       enum { commutative = false,
 	     need_check = (mbits >= 32) };
       typedef int_s<nbits, typename deduce_op_behavior<B1, B2>::ret> ret;
-      typedef int_s<nbits, 
+      typedef int_s<nbits,
 		    typename ret_behavior_if<need_check, ret>::ret> impl;
     };
 
     template <unsigned nbits, class B1, unsigned mbits, class B2>
     struct operator_traits<operator_div, int_u<mbits, B2>, int_s<nbits, B1> >
     {
-      enum { commutative = false, 
+      enum { commutative = false,
 	     need_check = (mbits >= 32) };
       typedef int_s<mlc::saturateN<mbits + 1, 32>::ret,
 		    typename deduce_op_behavior<B1, B2>::ret> ret;
-      typedef int_s<nbits, 
+      typedef int_s<nbits,
 		    typename ret_behavior_if<need_check, ret>::ret> impl;
     };
 
@@ -495,11 +496,11 @@ namespace ntg {
     template <unsigned nbits, class B1, unsigned mbits, class B2>
     struct operator_traits<operator_mod, int_s<nbits, B1>, int_u<mbits, B2> >
     {
-      enum { commutative = false, 
+      enum { commutative = false,
 	     need_check = (mbits >= 32) };
       typedef int_s<(unsigned)mlc::saturateN<mbits + 1, 32>::ret,
 		    typename deduce_op_behavior<B1, B2>::ret> ret;
-      typedef int_s<nbits, 
+      typedef int_s<nbits,
 		    typename ret_behavior_if<need_check, ret>::ret> impl;
     };
 
@@ -527,7 +528,7 @@ namespace ntg {
     struct operator_traits<operator_min, int_s<nbits, B1>, int_s<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_s<(unsigned) mlc::min<nbits, mbits>::ret, 
+      typedef int_s<(unsigned) mlc::min<nbits, mbits>::ret,
 		    typename deduce_op_behavior<B1, B2>::ret> ret;
       typedef int_s<nbits, force> impl;
     };
@@ -542,7 +543,7 @@ namespace ntg {
     struct operator_traits<operator_max, int_s<nbits, B1>, int_s<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_s<(unsigned) mlc::max<nbits, mbits>::ret, 
+      typedef int_s<(unsigned) mlc::max<nbits, mbits>::ret,
 		    typename deduce_op_behavior<B1, B2>::ret> ret;
       typedef int_s<nbits, force> impl;
     };

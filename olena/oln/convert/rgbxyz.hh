@@ -74,7 +74,7 @@ namespace oln {
       {
 	std::ostringstream s;
 	s << "f_rgb_to_xyz<" << inbits << ", " << outbits << '>';
-	s.str();
+	return s.str();
       }
     };
 
@@ -120,7 +120,7 @@ namespace oln {
       {
 	std::ostringstream s;
 	s << "f_xyz_to_rgb<" << inbits << ", " << outbits << '>';
-	s.str();
+	return s.str();
       }
     };
 

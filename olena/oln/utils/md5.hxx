@@ -110,7 +110,7 @@ MD5::MD5(buffer b): buffer_(b),
   T.push_back(0xbd3af235); /* 62 */
   T.push_back(0x2ad7d2bb); /* 63 */
   T.push_back(0xeb86d391); /* 64 */
-};
+}
 
 // sav() implementation.
 inline
@@ -226,7 +226,7 @@ void MD5::step()
   b += bb;
   c += cc;
   d += dd;
-};
+}
 
 // sub step implementation.
 template <class Fun>

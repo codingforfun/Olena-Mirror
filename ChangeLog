@@ -1,3 +1,24 @@
+2004-06-28  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* NEWS: Add g++ 3.4 compliance.
+
+2004-06-24  Simon Odou  <simon@lrde.epita.fr>
+
+	* config/oln.m4: set TOOLS_LDFLAGS inside of LDFLAGS.
+	* configure.ac: Export TOOLS_LDFLAGS.
+
+2004-06-23  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* configure.ac: Add convert utilities.
+
+2004-06-14  Simon Odou  <simon@lrde.epita.fr>
+
+	* config/oln.m4: Set LDFLAGS to compile code examples.
+
+2004-06-06  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* config/oln.m4: Add detection of Doxygen 1.3.7
+
 2004-04-15  Niels Van Vliet  <niels@lrde.epita.fr>
 
 	* NEWS: Correct English.

@@ -76,26 +76,26 @@ namespace oln {
 	  /// Resize the domain of f.
 	  void resize(unsigned n)
 	  {
-	    self().resize_(n);
+	    this->self().resize_(n);
 	  }
 	  /// Assign a value \e to f(i).
 	  void assign(const U & i, const V & e)
 	  {
 	    assertion(i < f_.size());
-	    self().assign_(i, e);
+	    this->self().assign_(i, e);
 	  }
 
 	  /// f(i) = 0.
 	  void erase(const U & i)
 	  {
 	    assertion(i < f_.size());
-	    self().erase_(i);
+	    this->self().erase_(i);
 	  }
 	  /// Print the function.
 	  std::ostream & print(std::ostream & ostr) const
 	  {
 	    for (unsigned i = 1; i < f_.size(); ++i)
-	      ostr << self().name() << "(" << i << ") = " << f_[i] << std::endl;
+	      ostr << this->self().name() << "(" << i << ") = " << f_[i] << std::endl;
 	    return ostr;
 	  }
 

@@ -50,7 +50,7 @@ key::value_type &key::operator[](unsigned i)
 {
   precondition(i < 16);
   return data_[i];
-};
+}
 
 // [] operator
 inline
@@ -58,7 +58,7 @@ const key::value_type &key::operator[](unsigned i) const
 {
   precondition(i < 16);
   return data_[i];
-};
+}
 
 // == operator
 inline
