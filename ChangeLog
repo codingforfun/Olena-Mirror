@@ -1,6 +1,6 @@
 2002-08-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* oln/types/predecls.hh: Added namespace types.
+	* oln/types/predecls.hh: Add types namespace.
 
 2002-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
