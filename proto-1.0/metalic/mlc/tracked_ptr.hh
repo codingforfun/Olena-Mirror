@@ -241,6 +241,7 @@ namespace mlc {
     const T*const operator->() const
     {
       invariant(proxy_ != 0);
+      precondition(proxy_->ptr_ != 0);
       return proxy_->ptr_;
     }
 
@@ -251,6 +252,7 @@ namespace mlc {
     T*const operator->()
     {
       invariant(proxy_ != 0);
+      precondition(proxy_->ptr_ != 0);
       return proxy_->ptr_;
     }
 

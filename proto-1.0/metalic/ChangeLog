@@ -1,5 +1,9 @@
 2005-02-08  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	* mlc/tracked_ptr.hh: Add preconditions.
+
+2005-02-08  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	* mlc/tracked_ptr.hh: Rewrite.
 	* mlc/any.hh (operator=, any): New in any<E,dispatch_policy::best_speed>.
 	(compromise): Rename as...
