@@ -1,0 +1,46 @@
+#include <oln/morpher/slicing_morpher.hh>
+#include <oln/basics2d.hh>
+#include <ntg/all.hh>
+
+#include <oln/utils/md5.hh>
+#include "data.hh"
+#include "check.hh"
+
+// Try to read from the morpher.
+template <class E, class F>
+void foo(const oln::abstract::image<E>& src, oln::abstract::image<F>& dst)
+{
+  oln_iter_type(oln::abstract::image<E>) it(src);
+  for_all(it)
+      dst[it] = src[it];
+}
+
+
+int main(int argc, char *argv[])
+{
+  bool fail (false);
+
+  oln::utils::key::value_type data_key[16]
+    = {0xc1, 0x3a, 0x47, 0xb, 0x6f, 0xff, 0xac, 0x97,
+       0xab, 0xa0, 0xf, 0x6c, 0x2a, 0x4a, 0xcb, 0x1};
+
+  oln::image2d<ntg::rgb_8> im = oln::load(rdata("lena.ppm"));
+  const oln::image2d<ntg::rgb_8> im_const = oln::load(rdata("lena.ppm"));
+  oln::image1d<ntg::rgb_8> im_out(im.ncols());
+  oln::image1d<ntg::rgb_8> im_const_out(im_const.ncols());
+
+  foo(oln::morpher::slicing_morph(im, 5), im_out);
+  foo(oln::morpher::slicing_morph(im_const, 5), im_const_out);
+
+  std::cout << oln::utils::md5(im_const_out) << std::endl;
+  fail = fail | (oln::utils::md5(im_out) != oln::utils::md5(im_const_out));
+  fail = fail | (oln::utils::md5(im_const_out) != oln::utils::key(data_key));
+
+  if (!fail)
+    std::cout << "OK" << std::endl;
+  else
+  {
+    std::cout << "FAIL" << std::endl;
+    return true;
+  }
+}

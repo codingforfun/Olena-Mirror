@@ -57,6 +57,8 @@ namespace oln {
     typedef T value_type;
     typedef typename mlc::exact_vt<image2d<T, Exact>, Exact>::ret exact_type;
     typedef impl::image_array2d<T> impl_type;
+    typedef point2d point_type;
+    typedef image2d_size size_type;
   };
 
   /*! \class image_traits<image2d<T, Exact> >

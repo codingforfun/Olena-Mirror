@@ -40,14 +40,14 @@ namespace oln {
   **
   ** The specialized version for image2d_size.
   */
-  
+
   template<>
   struct image_size_traits<image2d_size>
   {
     enum { dim = 2 };
   };
 
-  
+
   /*! \class image2d_size
   **
   ** Size_type for image2d.
@@ -57,16 +57,16 @@ namespace oln {
   {
     /*! \brief Image2d_size constructor.
     **
-    ** \arg nrows The number of rows in 
+    ** \arg nrows The number of rows in
     ** the image is set to \a nrows.
-    ** 
+    **
     ** \arg ncols The number of columns in
     ** the image is set to \a ncols.
     **
     ** \arg border The border width of the image
     ** is set to border.
     */
-    
+
     image2d_size(coord nrows, coord ncols, coord border)
     {
       nth(0) = nrows;
@@ -74,9 +74,12 @@ namespace oln {
       border_ = border;
     }
 
+    image2d_size()
+    {}
+
     /// Return the number of rows in the image.
-    
-    coord 
+
+    coord
     nrows() const
     {
       invariant(nth(0) > 0);
@@ -85,16 +88,16 @@ namespace oln {
 
     /// Return a reference to the number of rows in the image.
 
-    coord& 
-    nrows() 
+    coord&
+    nrows()
     {
       invariant(nth(0) > 0);
       return nth(0);
     }
 
     /// Return the number of columns in the image.
-    
-    coord 
+
+    coord
     ncols() const
     {
       invariant(nth(1) > 0);
@@ -102,18 +105,18 @@ namespace oln {
     }
 
     /// Return a reference to the number of columns in the image.
-    
-    coord& 
-    ncols() 
+
+    coord&
+    ncols()
     {
       invariant(nth(1) > 0);
       return nth(1);
     }
 
-    static std::string 
-    name() 
-    { 
-      return "image2d_size"; 
+    static std::string
+    name()
+    {
+      return "image2d_size";
     }
 
   };

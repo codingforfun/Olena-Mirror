@@ -35,9 +35,9 @@
 namespace oln {
 
    /// Build an image data array with the real data and the border.
-  
+
   template<class T>
-  void 
+  void
   pretreat_3d_data_(T*& buffer, T**& array2, T***& array,
 		    const image3d_size& s)
   {
@@ -52,7 +52,7 @@ namespace oln {
     array2 = new T*[size_t(nslices_eff)
 			* size_t(nrows_eff)];
     T* buf = buffer + s.border();
-    
+
     for (coord slice = 0; slice < nslices_eff; ++slice)
       {
 	T** a2 = array2 + slice * nrows_eff;
@@ -67,9 +67,9 @@ namespace oln {
   }
 
   /// Free the image3d data array.
-  
+
   template<class T>
-  void 
+  void
   desallocate_3d_data_(T**& array2, T***& array, const
 		       image3d_size& s)
   {
@@ -91,7 +91,7 @@ namespace oln {
   ** Specialized version for impl::image_array3d<T>. Retrieve
   ** associated types.
   */
-  
+
   template<class T>
   struct impl_traits<impl::image_array3d<T> >: public impl_traits<impl::image_array<T, impl::image_array3d<T> > >
   {
@@ -107,8 +107,8 @@ namespace oln {
     /*! \class image_array3d
     **
     ** Data array implementation for image3d
-    */ 
-    
+    */
+
     template<class T>
     class image_array3d :
       public image_array<T, image_array3d<T> >
@@ -124,26 +124,29 @@ namespace oln {
       typedef typename impl_traits<exact_type>::size_type size_type;
 
       typedef image_array<T, image_array3d<T> > super_type;
-      
+
 
       friend class image_impl<image_array3d<T> >;
       friend class image_array<T, image_array3d<T> >;
 
-      image_array3d(const size_type& s): super_type(s) 
+      image_array3d(const size_type& s): super_type(s)
       {
 	pretreat_3d_data_(this->buffer_, array2_, array_, s);
       }
 
+      image_array3d() : array_(0) {}
+
       ~image_array3d()
       {
-	desallocate_3d_data_(array2_, array_, this->size_);
+	if (array_)
+	  desallocate_3d_data_(array2_, array_, this->size_);
       }
 
     protected:
-      
+
       /// Return true if \a p belongs to the image.
-      
-      bool 
+
+      bool
       hold_(const point_type& p) const
       {
 	return (p.slice() >= 0
@@ -156,7 +159,7 @@ namespace oln {
 
       /// Return true if \a p belongs to the image or the image border
 
-      bool 
+      bool
       hold_large_(const point_type& p) const
       {
 	return (p.slice() >= -this->size_.border()
@@ -167,28 +170,28 @@ namespace oln {
 		&& p.col() < this->size_.ncols() + this->size_.border());
       }
 
-      /// Return a reference to the value stored at \a p. 
+      /// Return a reference to the value stored at \a p.
 
-      value_type& 
+      value_type&
       at_(const point_type& p)
       {
-	
+
 	return at_(p.slice(), p.row(), p.col());
       }
-      
+
       /// Return a reference to the value stored at \a slice, \a row and \a col.
 
-      value_type& 
+      value_type&
       at_(coord slice, coord row, coord col)
       {
 	invariant(this->buffer_ != 0);
 	precondition_hold_large(point_type(slice, row, col));
 	return array_[slice][row][col];
       }
-      
+
       /// Return the total size of the data array.
-      
-      size_t 
+
+      size_t
       len_(const size_type& s) const
       {
 	coord nslices_eff = s.nslices() + 2 * s.border();
@@ -202,10 +205,10 @@ namespace oln {
       /*! \brief Reallocate the border regarding to the value of \a
       ** new_border.
       */
-      
-      void 
+
+      void
       border_reallocate_and_copy_(coord new_border, bool
-				  copy_border) 
+				  copy_border)
       {
 	T* buffer = 0;
 	T** array2 = 0;
@@ -240,13 +243,13 @@ namespace oln {
 	array2_ = array2;
 	array_ = array;
       }
-      
-      /*! \brief The border points are all set to 
+
+      /*! \brief The border points are all set to
       ** the value of the closest image point.
       */
-      
-      void 
-      border_replicate_(void) 
+
+      void
+      border_replicate_(void)
       {
 	const coord imax = this->size_.nslices() - 1;
 	const coord jmax = this->size_.nrows() - 1;
@@ -280,9 +283,9 @@ namespace oln {
       /*! \brief The border points are set by mirroring
       ** the image edges.
       */
-      
-      void 
-      border_mirror_(void) 
+
+      void
+      border_mirror_(void)
       {
 	const coord imax = this->size_.nslices() - 1;
 	const coord jmax = this->size_.nrows() - 1;
@@ -315,8 +318,8 @@ namespace oln {
 
       /// The border points are set to \a val.
 
-      void 
-      border_assign_(value_type val) 
+      void
+      border_assign_(value_type val)
       {
 	const coord imax = this->size_.nslices() - 1;
         const coord jmax = this->size_.nrows() - 1;

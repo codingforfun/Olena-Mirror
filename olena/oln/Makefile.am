@@ -148,6 +148,9 @@ nobase_oln_HEADERS =				\
   math/macros.hh				\
   morpher/color_morpher.hh			\
   morpher/generic_morpher.hh			\
+  morpher/iter_morpher.hh			\
+  morpher/piece_morpher.hh			\
+  morpher/slicing_morpher.hh			\
   morpher/subq_morpher.hh			\
   morpho/attribute_closing_opening.hh		\
   morpho/attribute_closing_opening_map.hxx	\

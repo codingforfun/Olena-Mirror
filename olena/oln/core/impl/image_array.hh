@@ -121,6 +121,9 @@ namespace oln {
 	allocate_data_(buffer_, len(s));
       }
 
+      image_array() : buffer_(0)
+      {}
+
       image_array(const self_type&);     // cpy ctor  w/o impl
 
       void
@@ -169,7 +172,8 @@ namespace oln {
 
       ~image_array()
       {
-	desallocate_data_(buffer_);
+	if (buffer_)
+	  desallocate_data_(buffer_);
       }
 
       /*! \brief Perform a deep copy of the current data array.

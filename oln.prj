@@ -1,14 +1,34 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 134)
-(Parent-Version oln 10 133)
-(Version-Log "2004-04-03  Damien Thivolle  <damien@lrde.epita.fr>
-	* doc/ref/out/exdoc.config.in: Remove -DNEED_ROUND -DNEED_ROUNDF flags.
+(Project-Version oln 10 135)
+(Parent-Version oln 10 134)
+(Version-Log "	* oln/core/image1d.hh: Add informations to image_id.
+	* oln/core/image2d.hh: Likewise
+        * oln/core/image3d.hh: Likewise
+	* oln/core/impl/image_array1d.hh: Add empty constructor for any_with_diamond.
+	* oln/core/impl/image_array.hh: Likewise.
+	* oln/core/impl/image_array2d.hh: Likewise.
+	* oln/core/impl/image_array3d.hh: Likewise.
+	* oln/core/impl/image_impl.hh: Likewise.
+	* oln/core/abstract/image_size.hh: Likewise.
+	* oln/core/image1d_size.hh: Likewise.
+	* oln/core/image2d_size.hh: Likewise.
+	* oln/core/image3d_size.hh: Likewise.
+	* tests/morpher/tests/piece: New.
+	* tests/morpher/tests/iter: New.
+	* tests/morpher/tests/slicing: New.
+	* oln/core/abstract/image.hh: Size() returns const inside of const &.
+	* oln/morpher/piece_morpher.hh: Adapt to new version of generic morpher.
+	Respect 80 columns.
+	* oln/morpher/slicing_morpher.hh: Likewise.
+	* oln/morpher/iter_morpher.hh: Likewise.
+	Better example for documentation.
+	* oln/Makefile.am: Add files.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sat, 03 Apr 2004 23:17:34 +0200")
-(Checkin-Login thivol_d)
+(Checkin-Time "Sun, 04 Apr 2004 16:48:06 +0200")
+(Checkin-Login odou_s)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -114,7 +134,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.12 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.40 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.73 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.74 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 600))
 
@@ -216,15 +236,15 @@
   (olena/oln/core/fwd_iter2d.hh (oln/d/20_fwd_iter2d 1.17 600))
   (olena/oln/core/fwd_iter3d.hh (oln/d/19_fwd_iter3d 1.17 600))
   (olena/oln/core/generate.hh (oln/f/12_generate.h 1.18 600))
-  (olena/oln/core/image1d.hh (oln/c/47_image1d.hh 1.28.1.3 600))
-  (olena/oln/core/image1d_size.hh (oln/c/46_image1d_si 1.11 600))
-  (olena/oln/core/image2d.hh (oln/c/45_image2d.hh 1.30.1.3 600))
-  (olena/oln/core/image2d_size.hh (oln/c/44_image2d_si 1.11 600))
-  (olena/oln/core/image3d.hh (oln/c/43_image3d.hh 1.27.1.3 600))
-  (olena/oln/core/image3d_size.hh (oln/c/42_image3d_si 1.11 600))
+  (olena/oln/core/image1d.hh (oln/c/47_image1d.hh 1.28.1.4 600))
+  (olena/oln/core/image1d_size.hh (oln/c/46_image1d_si 1.12 600))
+  (olena/oln/core/image2d.hh (oln/c/45_image2d.hh 1.30.1.4 600))
+  (olena/oln/core/image2d_size.hh (oln/c/44_image2d_si 1.12 600))
+  (olena/oln/core/image3d.hh (oln/c/43_image3d.hh 1.27.1.4 600))
+  (olena/oln/core/image3d_size.hh (oln/c/42_image3d_si 1.12 600))
   (olena/oln/core/image.hh (oln/d/18_image.hh 1.20.2.2 600))
   
-  (olena/oln/core/abstract/image_size.hh (oln/c/41_image_size 1.11 600))
+  (olena/oln/core/abstract/image_size.hh (oln/c/41_image_size 1.12 600))
   (olena/oln/core/internal/fake.hh (oln/d/17_fake.hh 1.3 600))
   
   
@@ -791,7 +811,7 @@
   (integre/tests/check/defs.in (oln/q/42_defs.in 1.1 600))
   (metalic/mlc/array/objs.hh (oln/q/45_objs.hh 1.3 600))
   (metalic/mlc/config/system.hh (oln/q/46_system.hh 1.2 600))
-  (olena/oln/Makefile.am (oln/q/47_Makefile.a 1.3.1.1.1.6.1.7.1.5 600))
+  (olena/oln/Makefile.am (oln/q/47_Makefile.a 1.3.1.1.1.6.1.7.1.6 600))
   (integre/ntg/config/system.hh (oln/q/48_system.hh 1.2 600))
   (metalic/tests/main/tests/is_a1 (oln/r/17_is_a1 1.3 600))
   (metalic/tests/main/tests/ensure3 (oln/r/18_ensure3 1.3 600))
@@ -940,16 +960,16 @@
   (olena/tests/core/image_print.sh (oln/t/24_image_prin 1.2 600))
 
 
-  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.29 600))
+  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.30 600))
   (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.22 600))
   (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.14.1.11 600))
   (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.12 600))
-  (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.18 600))
-  (olena/oln/core/impl/image_array.hh (oln/t/30_image_arra 1.16 600))
+  (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.19 600))
+  (olena/oln/core/impl/image_array.hh (oln/t/30_image_arra 1.17 600))
   (olena/tests/core/tests/image1 (oln/t/31_image1 1.4 600))
-  (olena/oln/core/impl/image_array3d.hh (oln/t/32_image_arra 1.11 600))
-  (olena/oln/core/impl/image_array2d.hh (oln/t/33_image_arra 1.13 600))
-  (olena/oln/core/impl/image_array1d.hh (oln/t/34_image_arra 1.13 600))
+  (olena/oln/core/impl/image_array3d.hh (oln/t/32_image_arra 1.12 600))
+  (olena/oln/core/impl/image_array2d.hh (oln/t/33_image_arra 1.14 600))
+  (olena/oln/core/impl/image_array1d.hh (oln/t/34_image_arra 1.14 600))
   (olena/tests/core/tests/borders (oln/t/35_borders 1.3 600))
   (olena/tests/core/tests/clone (oln/t/36_clone 1.1 600))
   (olena/tests/core/tests/ref (oln/t/37_ref 1.3 600))
@@ -1414,9 +1434,9 @@
   
   
   
-  (olena/oln/morpher/piece_morpher.hh (oln/m/40_piece_morp 1.1 600))
-  (olena/oln/morpher/iter_morpher.hh (oln/m/41_iter_morph 1.1 600))
-  (olena/oln/morpher/slicing_morpher.hh (oln/m/42_slicing_mo 1.2 600))
+  (olena/oln/morpher/piece_morpher.hh (oln/m/40_piece_morp 1.2 600))
+  (olena/oln/morpher/iter_morpher.hh (oln/m/41_iter_morph 1.2 600))
+  (olena/oln/morpher/slicing_morpher.hh (oln/m/42_slicing_mo 1.3 600))
 
   (olena/tests/morpher/tests/compose_morph (oln/m/43_compose_mo 1.1 600))
   (olena/tests/morpher/tests/sq_morph (oln/m/44_sq_morph 1.1 600))
@@ -1426,6 +1446,21 @@
 
   (olena/oln/topo/tarjan/tarjan_with_attr.hh (oln/m/46_tarjan_wit 1.3 600))
   (olena/oln/topo/tarjan/tarjan.hh (oln/m/47_tarjan.hh 1.2 600))
+
+;; Files added by populate at Sun, 04 Apr 2004 16:30:53 +0200,
+;; to version 10.134(w), by odou_s:
+
+  (olena/tests/morpher/tests/iter (oln/q/3_iter 1.1 600))
+
+;; Files added by populate at Sun, 04 Apr 2004 16:30:56 +0200,
+;; to version 10.134(w), by odou_s:
+
+  (olena/tests/morpher/tests/piece (oln/q/43_piece 1.1 600))
+
+;; Files added by populate at Sun, 04 Apr 2004 16:30:59 +0200,
+;; to version 10.134(w), by odou_s:
+
+  (olena/tests/morpher/tests/slicing (oln/q/44_slicing 1.1 600))
 )
 (Merge-Parents)
 (New-Merge-Parents)

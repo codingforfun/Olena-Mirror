@@ -45,32 +45,32 @@ namespace oln {
   {
     enum { dim = 3 };
   };
-  
+
   /*! \class image3d_size
   **
   ** Size_type for image3d.
   */
-  
+
   struct image3d_size : public abstract::image_size<image3d_size >
   {
 
   public:
-    
+
     /*! \brief Image2d_size constructor.
     **
     ** \arg nslices The number of slices in
     ** the image is set to \a nslices
     **
-    ** \arg nrows The number of rows in 
+    ** \arg nrows The number of rows in
     ** the image is set to \a nrows.
-    ** 
+    **
     ** \arg ncols The number of columns in
     ** the image is set to \a ncols.
     **
     ** \arg border The border width of the image
     ** is set to border.
     */
-    
+
 
     image3d_size(coord nslices, coord nrows, coord ncols, coord border)
     {
@@ -80,9 +80,12 @@ namespace oln {
       border_ = border;
     }
 
+    image3d_size()
+    {}
+
     /// Return the number of slices in the image.
-    
-    coord 
+
+    coord
     nslices() const
     {
       invariant(nth(0) > 0);
@@ -90,14 +93,14 @@ namespace oln {
     }
 
     /// Return a reference to the number of slices in the image.
-    
-    coord& 
-    nslices() 
+
+    coord&
+    nslices()
     {
       invariant(nth(0) > 0);
       return nth(0);
     }
-    
+
     /// Return the number of rows in the image.
 
     coord
@@ -108,36 +111,36 @@ namespace oln {
     }
 
     /// Return a reference to the number of rows in the image.
-    
-    coord& 
-    nrows() 
+
+    coord&
+    nrows()
     {
       invariant(nth(1) > 0);
       return nth(1);
     }
-    
+
     /// Return the number of columns in the image.
-    
-    coord 
+
+    coord
     ncols() const
     {
       invariant(nth(2) > 0);
       return nth(2);
     }
-    
+
     /// Return a reference to the number of columns in the image.
-    
-    coord& 
-    ncols() 
+
+    coord&
+    ncols()
     {
       invariant(nth(2) > 0);
       return nth(2);
     }
 
-    static std::string 
-    name() 
-    { 
-      return "image3d_size"; 
+    static std::string
+    name()
+    {
+      return "image3d_size";
     }
 
   };

@@ -36,107 +36,160 @@ namespace oln {
 
     template <class I, class Exact = mlc::final>
     struct slicing_morpher;
+    template <class I, class Exact = mlc::final>
+    struct super_slicing_morpher;
 
   } // end of namespace morpher
 
-
-  template <class Image>
-  struct DecDimensionImage
-  {};
-  template <class Type>
-  struct DecDimensionImage< oln::image2d<Type> >
+  /// Informations about the super slicing morpher.
+  template <class SrcType, class Exact>
+  struct image_id< morpher::super_slicing_morpher<SrcType, Exact> >
   {
-    typedef oln::image1d<Type> ret;
+    typedef typename mlc::exact_vt<
+      morpher::super_slicing_morpher<SrcType, Exact>,
+      Exact>::ret
+    exact_type;
+    ///< Retrieve the exact type of the image.
+    enum {dim = SrcType::dim - 1};
+    typedef typename dim_traits<dim,
+				typename image_id<SrcType>::value_type,
+				exact_type
+				>::img_type img_type;
+    typedef typename image_traits<img_type>::size_type size_type;
+    typedef typename image_traits<img_type>::impl_type impl_type;
   };
-  template <class Type>
-  struct DecDimensionImage< oln::image3d<Type> >
+
+  /// Informations about the const super slicing morpher.
+  template <class SrcType, class Exact>
+  struct image_id< morpher::super_slicing_morpher<const SrcType, Exact> >
   {
-    typedef oln::image2d<Type> ret;
+    typedef typename mlc::exact_vt<
+      morpher::super_slicing_morpher<SrcType, Exact>,
+      Exact>::ret
+    exact_type;
+    ///< Retrieve the exact type of the image.
+    enum {dim = SrcType::dim - 1};
+    typedef typename dim_traits<dim,
+				typename image_id<SrcType>::value_type,
+				exact_type
+				>::img_type img_type;
+    typedef typename image_traits<img_type>::size_type size_type;
+    typedef typename image_traits<img_type>::impl_type impl_type;
   };
 
-  /// Inherits identification's informations about the slicing morpher.
-  template <class I, class Exact>
-  struct image_id< morpher::slicing_morpher<I, Exact> >
-    : public image_id<typename DecDimensionImage<I>::ret>
-  {};
+  /// Informations about the slicing morpher.
+  template <class SrcType, class Exact>
+  struct image_id< morpher::slicing_morpher<SrcType, Exact> >
+  {
+    typedef typename mlc::exact_vt<morpher::slicing_morpher<SrcType, Exact>,
+				   Exact>::ret exact_type;
+    ///< Retrieve the exact type of the image.
+    enum {dim = SrcType::dim - 1};
+    typedef typename dim_traits<dim,
+				typename image_id<SrcType>::value_type,
+				exact_type
+				>::img_type img_type;
+    typedef typename image_id<img_type>::value_type value_type;
+    typedef typename image_id<img_type>::point_type point_type;
+    typedef typename image_id<img_type>::size_type size_type;
+    typedef typename image_id<img_type>::impl_type impl_type;
+  };
 
-  /// Inherits identification's informations about the const slicing morpher.
-  template <class I, class Exact>
-  struct image_id< morpher::slicing_morpher<const I, Exact> >
-    : public image_id<typename DecDimensionImage<I>::ret>
-  {};
+  /// Informations about the const slicing morpher.
+  template <class SrcType, class Exact>
+  struct image_id< morpher::slicing_morpher<const SrcType, Exact> >
+  {
+    typedef typename mlc::exact_vt<morpher::slicing_morpher<SrcType, Exact>,
+				   Exact>::ret exact_type;
+    ///< Retrieve the exact type of the image.
+    enum {dim = SrcType::dim - 1};
+    typedef typename dim_traits<dim,
+				typename image_id<SrcType>::value_type,
+				exact_type
+				>::img_type img_type;
+    typedef typename image_id<img_type>::value_type value_type;
+    typedef typename image_traits<img_type>::point_type point_type;
+    typedef typename image_traits<img_type>::size_type size_type;
+    typedef typename image_traits<img_type>::impl_type impl_type;
+  };
 
-  /// Specialized version for slicing morpher.
-  template <class I>
-  struct image_traits< morpher::slicing_morpher<I> > :
-    public image_traits<abstract::image_with_impl<typename DecDimensionImage<I>::ret::impl_type,
-						  morpher::slicing_morpher<I> > >
-  {};
-
-  /// Specialized version for slicing morpher.
-  template <class I>
-  struct image_traits< morpher::slicing_morpher<const I> > :
-    public image_traits<abstract::image_with_impl<typename DecDimensionImage<I>::ret::impl_type,
-						  morpher::slicing_morpher<const I> > >
+  /// Traits for slicing morpher.
+  template <class SrcType, class Exact>
+  struct image_traits< morpher::slicing_morpher<SrcType, Exact> >
+    : public
+  image_traits<
+    morpher::abstract::generic_morpher<
+      SrcType,
+      typename image_id<morpher::slicing_morpher<SrcType,
+						 Exact> >::exact_type
+    >
+  >
   {};
 
   namespace morpher {
 
     /// Return a size of N-1 dimension.
-    oln::image1d_size* image_size_dec(const oln::image2d_size& image_size)
+    oln::image1d_size
+    image_size_dec(const oln::image2d_size& image_size)
     {
-      // We can't use typedef here because image2d_size and image3d_size don't have
-      // the same number of arguments.
-      return new oln::image1d_size(image_size.ncols(), image_size.border());
+      return oln::image1d_size(image_size.ncols(), image_size.border());
     }
 
     /// Return a size of N-1 dimension.
-    oln::image2d_size* image_size_dec(const oln::image3d_size& image_size)
+    oln::image2d_size
+    image_size_dec(const oln::image3d_size& image_size)
     {
-      // We can't use typedef here because image2d_size and image3d_size don't have
-      // the same number of arguments.
-      return new oln::image2d_size(image_size.nrows(), image_size.ncols(), image_size.border());
+      return oln::image2d_size(image_size.nrows(),
+			       image_size.ncols(),
+			       image_size.border());
     }
 
-    /// Abstract piece morpher class used for code factorization.
-    template <class DestType, class SrcType, class Exact>
-    class super_slicing_morpher : public abstract::generic_morpher<DestType, SrcType, Exact>
+    /// Abstract slicing morpher class used for code factorization.
+    template <class SrcType, class Exact>
+    class super_slicing_morpher
+      : public abstract::generic_morpher<SrcType, Exact>
     {
+
     public:
 
-      typedef oln_size_type(DestType) size_type;
-      typedef oln_impl_type(DestType) impl_type;
-      typedef abstract::generic_morpher<DestType, SrcType, Exact> super_type;
+      typedef super_slicing_morpher<SrcType, Exact> self_type;
+      typedef typename image_id<self_type>::exact_type exact_type;
+      typedef abstract::generic_morpher<SrcType, Exact> super_type;
+
+      typedef typename image_id<exact_type>::size_type size_type;
+      typedef typename image_id<exact_type>::impl_type impl_type;
 
       /// Override the size method.
       const size_type&
       size() const
       {
-	return *size_;
+	return size_;
       }
 
       /// Override the impl method.
       const impl_type*
       impl() const
       {
-	return impl_;
+	return &impl_;
       }
 
       /// Override the impl method.
       impl_type*
       impl()
       {
-	return impl_;
+	return &impl_;
       }
 
-      ///< Return the last coordinate' value.
-      coord get_slice() const
+      /// Return the last coordinate' value.
+      coord
+      get_slice() const
       {
 	return slice_;
       }
 
       /// Useful to debug.
-      static std::string name()
+      static std::string
+      name()
       {
 	return "super_slicing_morpher<" + super_type::name() + ">";
       }
@@ -152,62 +205,56 @@ namespace oln {
       ** since it is protected.
       */
       super_slicing_morpher(const SrcType &ima, const coord slice)
-	: super_type(ima), impl_(0), size_(0), slice_(slice)
-      {
-	size_ = image_size_dec(ima_.size());
-	impl_ = new impl_type(*size_);
-      }
-
-      /// Destructor
-      ~super_slicing_morpher()
-      {
-	delete size_;
-	delete impl_;
-      }
+	: super_type(ima), slice_(slice), size_(image_size_dec(ima_.size())), impl_(size_)
+      {}
 
       /*!
       ** \brief Empty constructor.
       **
       ** Needed by mlc_hierarchy::any_with_diamond.
+      ** \todo create empty constructors for impl_, ...
       */
-      super_slicing_morpher() : impl_(0), size_(0), slice_(0)
+      super_slicing_morpher()
       {}
 
-      impl_type *impl_;
-      size_type *size_; ///< The size of the N-1 dimension image.
       coord slice_; ///< The last coordinate.
+      const size_type size_; ///< The size of the N-1 dimension image.
+      impl_type impl_;
 
     };
 
     /*!
-    ** \brief The default piece morpher class.
+    ** \brief The default slicing morpher class.
     **
-    ** Using this class, a piece of picture is a picture.
+    ** Using this class, a slicing of picture is a picture.
     **
     ** \see oln::morpher::abstract::generic_morpher
-    ** \see oln::morpher::piece_morph
+    ** \see oln::morpher::slicing_morph
     */
     template <class SrcType, class Exact>
     struct slicing_morpher
-      : public super_slicing_morpher< typename DecDimensionImage<SrcType>::ret, SrcType, slicing_morpher<SrcType, Exact> >
+      : public super_slicing_morpher<
+          SrcType,
+          typename image_id<slicing_morpher<SrcType, Exact> >::exact_type
+        >
     {
-      typedef typename image_id< slicing_morpher<SrcType, Exact> >::exact_type exact_type;
       typedef slicing_morpher<SrcType, Exact> self_type;
-      typedef typename DecDimensionImage<SrcType>::ret DestType;
-      typedef super_slicing_morpher<DestType, SrcType, slicing_morpher<SrcType, Exact> > super_type;
+      typedef typename image_id<self_type>::exact_type exact_type;
+      typedef super_slicing_morpher<SrcType, exact_type> super_type;
 
-      typedef oln_value_type(DestType) value_type;
-      typedef oln_point_type(DestType) point_type;
+      typedef typename image_id<exact_type>::point_type point_type;
+      typedef typename image_id<exact_type>::img_type img_type;
+      typedef typename image_id<exact_type>::value_type value_type;
 
       /*!
-      ** \brief Construct a piece morpher.
+      ** \brief Construct a slicing morpher.
       ** \arg ima The image.
       ** \arg slice The slice value.
       */
       slicing_morpher(const SrcType &ima, coord slice)
 	: super_type(ima, slice) {}
 
-      /// Construct a piece morpher from another one.
+      /// Construct a slicing morpher from another one.
       slicing_morpher(const self_type& r)
 	: super_type(r.get_ima(), r.get_slice()) {}
 
@@ -223,7 +270,8 @@ namespace oln {
       ** \arg p The point.
       ** \return The stored value.
       */
-      value_type& at(const point_type &p)
+      value_type&
+      at(const point_type &p)
       {
 	typename SrcType::point_type tmp_p(p, slice_);
 	return const_cast<value_type &>(this->ima_)[tmp_p];
@@ -254,35 +302,39 @@ namespace oln {
       ** \brief This operator= assigns rhs to the current image.
       */
       self_type&
-      operator=(DestType& rhs)
+      operator=(self_type& rhs)
       {
 	return this->exact().assign(rhs);
       }
 
       /// Useful to debug.
-      static std::string name()
+      static std::string
+      name()
       {
 	return "slicing_morpher<" + super_type::name() + ">";
       }
 
     };
 
-    /// The specialized version for `const' declared images.
+    /// The specialized version for `const' images.
     template <class SrcType, class Exact>
     struct slicing_morpher<const SrcType, Exact>
-      : public super_slicing_morpher<typename DecDimensionImage<SrcType>::ret, SrcType, slicing_morpher<const SrcType, Exact> >
+      : public super_slicing_morpher<
+          const SrcType,
+          typename image_id<slicing_morpher<const SrcType, Exact> >::exact_type
+        >
     {
-      /// The type of the object instantiated. piece morpher can be derived.
-      typedef typename image_id<slicing_morpher<const SrcType, Exact> >::exact_type exact_type;
-      typedef slicing_morpher<SrcType, Exact> self_type;
-      typedef typename DecDimensionImage<SrcType>::ret DestType;
-      typedef super_slicing_morpher<DestType, SrcType, slicing_morpher<const SrcType, Exact> > super_type;
 
-      typedef oln_value_type(DestType) value_type;
-      typedef oln_point_type(DestType) point_type;
+      typedef slicing_morpher<const SrcType, Exact> self_type;
+      typedef typename image_id<self_type>::exact_type exact_type;
+      typedef super_slicing_morpher<const SrcType, exact_type> super_type;
+
+      typedef typename image_id<exact_type>::point_type point_type;
+      typedef typename image_id<exact_type>::value_type value_type;
+
 
       /*!
-      ** \brief Construct a piece morpher.
+      ** \brief Construct a slicing morpher.
       ** \arg ima The image.
       ** \arg slice The slice value.
       */
@@ -290,7 +342,7 @@ namespace oln {
 	: super_type(ima, slice)
       {}
 
-      /// Construct a piece morpher from another one.
+      /// Construct a slicing morpher from another one.
       slicing_morpher(const self_type& r)
 	: super_type(r.get_ima(), r.get_slice())
       {}
@@ -308,14 +360,16 @@ namespace oln {
       ** \arg p The point.
       ** \return The stored value.
       */
-      const value_type at(const point_type &p) const
+      const value_type
+      at(const point_type &p) const
       {
 	typename SrcType::point_type tmp_p(p, slice_);
 	return this->ima_[tmp_p];
       }
 
       /// Useful to debug.
-      static std::string name()
+      static std::string
+      name()
       {
 	return "slicing_morpher<" + super_type::name() + ">";
       }
@@ -347,7 +401,8 @@ namespace oln {
     ** \image latex oln_morpher_slicing_morpher.png
     */
     template <class I>
-    const slicing_morpher<I> slicing_morph(I &ima, coord slice)
+    const slicing_morpher<I>
+    slicing_morph(I &ima, coord slice)
     {
       return slicing_morpher<I>(ima, slice);
     }

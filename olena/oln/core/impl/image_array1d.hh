@@ -34,15 +34,15 @@
 
 namespace oln {
 
-  
+
   /// Build an image data array with the real data and the border.
 
   template<class T>
-  void 
+  void
   pretreat_1d_data_(T*& buffer, T*& buffer_, const image1d_size& s)
   {
     precondition(s.ncols() > 0 && s.border() >= 0);
-    buffer_ = buffer + s.border(); 
+    buffer_ = buffer + s.border();
   }
 
 
@@ -56,7 +56,7 @@ namespace oln {
   ** Specialized version for impl::image_array1d<T>. Retrieve
   ** associated types.
   */
-  
+
   template<class T>
   struct impl_traits<impl::image_array1d<T> >: public impl_traits<impl::image_array<T, impl::image_array1d<T> > >
   {
@@ -68,7 +68,7 @@ namespace oln {
 
   namespace impl {
 
-    
+
     /*! \class image_array1d
     **
     ** Data array implementation for image1d
@@ -89,7 +89,7 @@ namespace oln {
       typedef typename impl_traits<exact_type>::size_type size_type;
 
       typedef image_array<T, image_array1d<T> > super_type;
-      
+
 
       friend class image_impl<image_array1d<T> >;
       friend class image_array<T, image_array1d<T> >;
@@ -99,13 +99,15 @@ namespace oln {
 	pretreat_1d_data_(this->buffer_, buffer__, s);
       }
 
+      image_array1d() {}
+
       ~image_array1d() {}
 
     protected:
 
       /// Return true if \a p belongs to the image.
-      
-      bool 
+
+      bool
       hold_(const point_type& p) const
       {
 	return
@@ -115,7 +117,7 @@ namespace oln {
 
       /// Return true if \a p belongs to the image or the image border
 
-      bool 
+      bool
       hold_large_(const point_type& p) const
       {
 	return
@@ -123,16 +125,16 @@ namespace oln {
 	  p.col() < this->size_.ncols() + this->size_.border();
       }
 
-      
+
       /// Return a reference to the value stored at \a p.
-      value_type& 
+      value_type&
       at_(const point_type& p)
       {
 	return at_(p.col());
       }
-      
+
       /// Return a reference to the value stored at \a col.
-      value_type& 
+      value_type&
       at_(coord col)
       {
 	invariant(this->buffer_ != 0);
@@ -140,9 +142,9 @@ namespace oln {
 	return buffer__[col];
       }
 
-      
+
       /// Return the total size of the data array.
-      size_t 
+      size_t
       len_(const size_type& s) const
       {
 	coord ncols_eff = s.ncols() + 2 * s.border();
@@ -150,12 +152,12 @@ namespace oln {
       }
 
       // borders
-      
+
       /*! \brief Reallocate the border regarding to the value of \a
       ** new_border.
       */
-      void 
-      border_reallocate_and_copy_(coord new_border, bool copy_border) 
+      void
+      border_reallocate_and_copy_(coord new_border, bool copy_border)
       {
 	T* buffer = 0;
 	// first allocate
@@ -175,16 +177,16 @@ namespace oln {
 			  size_type(this->size_.ncols(), new_border));
 	desallocate_data_(this->buffer_);
 	this->buffer_ = buffer;
-	
+
       }
-            
-      /*! \brief The border points are all set to 
+
+      /*! \brief The border points are all set to
       ** the value of the closest image point.
       */
 
-      
-      void 
-      border_replicate_(void) 
+
+      void
+      border_replicate_(void)
       {
 	for (coord j = - this->size_.border(); j; ++j)
 	  {
@@ -196,8 +198,8 @@ namespace oln {
       /*! \brief The border points are set by mirroring
       ** the image edges.
       */
-      
-      void 
+
+      void
       border_mirror_(void)
       {
 	for (coord j = - this->size_.border(); j; ++j)
@@ -206,11 +208,11 @@ namespace oln {
 	    at_(this->size_.ncols() - j - 1) = at_(this->size_.ncols() + j - 1);
 	  }
       }
-      
+
       /// The border points are set to \a val.
-      
-      void 
-      border_assign_(value_type val) 
+
+      void
+      border_assign_(value_type val)
       {
 	for (coord j = - this->size_.border(); j; ++j)
           {
@@ -222,7 +224,7 @@ namespace oln {
     private:
 
       T* buffer__;
-      
+
     };
 
   } // end of namespace impl

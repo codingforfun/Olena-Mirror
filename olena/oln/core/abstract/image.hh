@@ -178,11 +178,11 @@ namespace oln {
 
       /// Return a reference to the image size.
 
-      const size_type&
+      const size_type
       size() const
       {
 	assertion(has_impl());
-	return this->exact().impl()->size();
+	return this->exact().size();
       }
 
       /// Return the value of the border width.
