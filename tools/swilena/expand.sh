@@ -7,6 +7,7 @@ SWILENA=`cd $1 && pwd`
 
 mkdir -p "$SWILENA/src"
 mkdir -p "$SWILENA/python"
+mkdir -p "$SWILENA/ruby"
 
 MODULES="$MODULES ntg ntg_cplx ntg_int_u ntg_int_s"
 for dim in 1 2 3; do
@@ -40,7 +41,7 @@ EOF
     float_s float_d # rgb_8 rgb_16 rgb_32
     do
     short=`echo $t | sed -e 's,int_,,g;s,_,,g'`
-    echo "make_image(image${dim}d_$short, $dim, ntg::$t)" >> "$SWILENA/src/swilena_image${dim}d.i"
+    echo "make_image(image${dim}d_$short, $dim, ntg_$t)" >> "$SWILENA/src/swilena_image${dim}d.i"
   done
 done
 
@@ -105,6 +106,66 @@ dump_python()
     done
 }
 
+#################### Ruby stuff #######################
+
+header_ruby()
+{
+cat <<EOF
+## Process this file through Automake to produce Makefile.in -*- Makefile -*-
+##
+## Makefile.am for swilena/python
+## NOTE: this file was generated automatically by expand.sh
+##
+
+INCLUDES = \$(RUBY_CPPFLAGS) -I\$(srcdir)/../src
+AM_CPPFLAGS = -DOLN_EXCEPTIONS 
+AM_CXXFLAGS = \$(CXXFLAGS_OPTIMIZE)
+AM_LDFLAGS = -shared -lswigrb \$(ZLIB_LDFLAGS)
+
+rubydir = \$(libdir)/ruby
+
+EOF
+}
+
+dump_ruby()
+{
+    echo -n "ruby_PROGRAMS ="
+    ilist=0
+    for mod in $MODULES; do
+      if [ `expr $ilist % 4` = 0 ]; then
+         echo " \\"; echo -ne "\t"
+      fi
+      echo -n " swilena_$mod.so" 
+      ilist=`expr $ilist + 1`
+    done
+    echo; echo
+    echo -n "ruby_DATA ="
+    ilist=0
+    for mod in $MODULES; do
+      if [ `expr $ilist % 4` = 0 ]; then 
+         echo " \\"; echo -ne "\t" 
+      fi 
+      echo -n " swilena_$mod.rb"
+      ilist=`expr $ilist + 1` 
+    done
+    echo; echo
+    for mod in $MODULES; do
+      echo "swilena_${mod}_so_SOURCES = swilena_${mod}_wrap.cxx"
+    done
+    echo
+    ilist=0
+    for mod in $MODULES; do
+      if [ -r "$SWILENA/src/swilena_${mod}.i" ]; then 
+         sdir=src
+      else
+         sdir=meta
+      fi
+      echo "swilena_${mod}_wrap.cxx swilena_${mod}.rb: \$(srcdir)/../$sdir/swilena_${mod}.i"
+      echo -e "\t\$(SWIG) -c -c++ -ruby -I\$(srcdir)/../src -I\$(srcdir)/../meta \$(CPPFLAGS) -o swilena_${mod}_wrap.cxx \$(srcdir)/../$sdir/swilena_${mod}.i"
+      echo
+    done
+}
+
 ############ Generic stuff ###########
 
 header_src() {
@@ -140,3 +201,5 @@ header_src >"$SWILENA/src/Makefile.am"
 dump_src >>"$SWILENA/src/Makefile.am"
 header_python >"$SWILENA/python/Makefile.am"
 dump_python >>"$SWILENA/python/Makefile.am"
+header_ruby >"$SWILENA/ruby/Makefile.am"
+dump_ruby >>"$SWILENA/ruby/Makefile.am"

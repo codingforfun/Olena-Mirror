@@ -12,6 +12,22 @@
       os << # T1 "," # T2 "@" << self << " = " << (*self);
       return os.str();
     }
+
+#if defined(SWIGPYTHON)
+  const char *__str__() {
+    std::ostringstream os;
+    os << (*self);
+    return os.str().c_str();
+  }
+#endif
+
+#if defined(SWIGRUBY)
+  std::string to_s() {
+    std::ostringstream os;
+    os << (*self);
+    return os.str();
+  }
+#endif
 }
 %enddef
 %define EXTEND_DESCRIBE(T)
@@ -23,6 +39,21 @@
       os << # T "@" << self << " = " << (*self);
       return os.str();
     }
+
+#if defined(SWIGPYTHON)
+  const char *__str__() {
+    std::ostringstream os;
+    os << (*self);
+    return os.str().c_str();
+  }
+#endif
+
+#if defined(SWIGRUBY)
+  std::string to_s() {
+    std::ostringstream os;
+    os << (*self);
+    return os.str();
+  }
+#endif
 }
 %enddef
-

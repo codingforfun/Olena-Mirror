@@ -1,3 +1,7 @@
+2003-09-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Add ruby support.
+
 2003-09-15  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* configure.ac: Improve python headers lookup.

@@ -1,12 +1,28 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 17)
-(Parent-Version oln 10 16)
-(Version-Log "Fix typo.
+(Project-Version oln 10 18)
+(Parent-Version oln 10 17)
+(Version-Log "Index: ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+        * configure.ac: Add ruby support.
+
+Index: tools/swilena/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+        * meta/swilena_ntg.i: Adjust for ruby.
+        * meta/swilena_describe.i: Tweak for ruby.
+
+        * expand.sh: Generate ruby source files.
+
++2003-09-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
++
++       * meta/swilena_describe.i: Add __str__ function for python.
++
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 15 Sep 2003 17:50:05 +0200")
+(Checkin-Time "Sun, 21 Sep 2003 20:25:01 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -27,6 +43,7 @@
                   "\\.out$"
                   "\\.err$"
                   "\\.log$"
+                  "\\.pyc$"
                   "\\.cache$"
                   "\\.status$"
                   "\\.deps/"
@@ -109,13 +126,13 @@
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.7 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.8 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.25 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.35 640))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.28 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.7 640))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.8 640))
 
   (olena/ChangeLog.0 (oln/6_ChangeLog 1.50.1.98.1.5 640))
   (doc/ChangeLog.0 (oln/e/1_ChangeLog 1.31 640))
@@ -125,7 +142,7 @@
 
   (cleanup.sh (oln/o/29_cleanup.sh 1.5 750))
 
-  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.10 640))
+  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.11 640))
 
   (doc/demo/image.cc (oln/d/46_image.cc 1.8 640))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.16.1.2 640))
@@ -849,7 +866,7 @@
 ;; Files added by populate at Tue, 06 May 2003 06:05:19 +0200,
 ;; to version 8.33(w), by raph:
 
-  (tools/swilena/expand.sh (oln/s/25_expand.sh 1.6 750))
+  (tools/swilena/expand.sh (oln/s/25_expand.sh 1.7 750))
 
 ;; Files added by populate at Tue, 06 May 2003 06:05:41 +0200,
 ;; to version 8.33(w), by raph:
@@ -870,7 +887,7 @@
   (tools/swilena/meta/swilena_imagesize.i (oln/s/35_swilena_im 1.2 640))
   (tools/swilena/meta/swilena_image.i (oln/s/36_swilena_im 1.3 640))
   (tools/swilena/meta/swilena_exception.i (oln/s/37_swilena_ex 1.1 640))
-  (tools/swilena/meta/swilena_describe.i (oln/s/38_swilena_de 1.1 640))
+  (tools/swilena/meta/swilena_describe.i (oln/s/38_swilena_de 1.2 640))
   (tools/swilena/meta/swilena_decl.i (oln/s/39_swilena_de 1.1 640))
   (tools/swilena/meta/swilena_core.i (oln/s/40_swilena_co 1.1 640))
 
@@ -1026,5 +1043,7 @@
 
   (olena/conf/README (oln/v/14_README 1.1 640))
 )
-(Merge-Parents)
+(Merge-Parents
+  (10.17 complete)
+)
 (New-Merge-Parents)

@@ -373,10 +373,30 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
 	 CPPFLAGS="$CPPFLAGS $PYTHON_CPPFLAGS"
          AC_CHECK_HEADERS([Python.h],,
 	                  AC_MSG_ERROR(
-			  [You need Python development files to compile the Python interface. Specify --with-python-includedir to set it manually or --without-swilena to disable it.]))
+			  [You need Python development files to compile the Python interface. Specify --with-python-includedir to set it manually or --without-pylena to disable it.]))
 
 	 CPPFLAGS=$save_CPPFLAGS
       ], [python])dnl End of OLN_COMPONENT([tools/swilena/python])
+
+      OLN_COMPONENT([tools/swilena/ruby],
+                    [rblena],
+                    [oln_cv_build_rblena],
+                    [the Ruby interface to Olena],
+                    [OLN_SWILENA],
+                    [tools/swilena/ruby/Makefile],
+      [
+	 AC_ARG_VAR([RUBY_CPPFLAGS], [Path to ruby.h])
+	 AC_ARG_WITH([python-includedir], [Include path for ruby.h], 
+	             [RUBY_CPPFLAGS="-I$withval"],
+                     [RUBY_CPPFLAGS="-I/usr/lib/ruby/1.6/i386-linux"])
+	
+	 CPPFLAGS="$CPPFLAGS $RUBY_CPPFLAGS"
+         AC_CHECK_HEADERS([ruby.h],,
+	                  AC_MSG_ERROR(
+			  [You need Ruby development files to compile the Ruby interface. Specify --with-python-includedir to set it manually or --without-rblena to disable it.]))
+
+	 CPPFLAGS=$save_CPPFLAGS
+      ], [ruby])dnl End of OLN_COMPONENT([tools/swilena/ruby])
 
     ])dnl End of OLN_COLLECTION([OLN_SWILENA])
     ], [swilena])dnl End of OLN_COMPONENT([tools/swilena])
