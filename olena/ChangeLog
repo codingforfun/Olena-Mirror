@@ -1,3 +1,10 @@
+2004-02-05  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* oln/utils/histogram.hh: Inherit from mlc_hierarchy::any.
+	* value_to_point.hh: Inherit from conversion_from_type_to_type.
+	* tests/utils/tests/histogram: Add namespace.
+	* tests/morpho/tests/area: Add file.
+
 2004-02-02  Niels Van Vliet  <niels@lrde.epita.fr>
 
 	* oln/utils/histogram.hh: Add revert sort.

@@ -92,9 +92,9 @@ check_min_max()
   histogram<int_s<4> > his4(is4);
 
   res = res &&
-    min(his4) == -4
+    utils::min(his4) == -4
     &&
-    max(his4) == 3;
+    utils::max(his4) == 3;
 
   histogram_min<int_s<4> > his4_min(is4);
   histogram_max<int_s<4> > his4_max(is4);
@@ -106,14 +106,14 @@ check_min_max()
   his4_minmax[2] = his4_min[2] = his4_max[2] = his4[2] = 42;
 
   res = res &&
-    min(his4) == -5 &&
-    max(his4) == 2 &&
-    min(his4) == min(his4_min) &&
-    min(his4) == min(his4_max) &&
-    min(his4) == min(his4_minmax) &&
-    max(his4) == max(his4_min) &&
-    max(his4) == max(his4_max) &&
-    max(his4) == max(his4_minmax);
+    utils::min(his4) == -5 &&
+    utils::max(his4) == 2 &&
+    utils::min(his4) == utils::min(his4_min) &&
+    utils::min(his4) == utils::min(his4_max) &&
+    utils::min(his4) == utils::min(his4_minmax) &&
+    utils::max(his4) == utils::max(his4_min) &&
+    utils::max(his4) == utils::max(his4_max) &&
+    utils::max(his4) == utils::max(his4_minmax);
   return res;
 };
 

@@ -27,66 +27,62 @@
 
 #ifndef OLENA_VALUE_TO_POINT
 # define OLENA_VALUE_TO_POINT
-# include <oln/core/image1d.hh>
-# include <oln/core/image2d.hh>
-# include <oln/core/image3d.hh>
+# include <oln/core/point1d.hh>
+# include <oln/core/point3d.hh>
 # include <ntg/int.hh>
 # include <ntg/color/color.hh>
+# include <oln/convert/conversion.hh>
 namespace oln {
 
-  template <typename T>
-  struct value_to_point
-  {
-    typedef point1d result_type;
-    typedef T input_type;
-    typedef image1d_size size_type;
+  namespace convert {
 
-    result_type
-    operator()(const input_type &input) const
+    template <typename Argument_type,
+	      class Exact = mlc::final>
+    struct value_to_point:
+      public abstract::conversion_from_type_to_type
+        <Argument_type,
+	 point1d,
+	 typename mlc::exact_vt<value_to_point<Argument_type,
+					       Exact>,
+				Exact>::ret>
     {
-      result_type r(input - ntg_min_val(input_type));
-      return r;
-    }
+    private:
+      typedef typename ntg_is_a(Argument_type, ntg::non_vectorial)::ensure_type ensure_type;
+    public:
+      typedef point1d result_type;
+      typedef Argument_type argument_type;
 
-    size_type
-    size() const
+      template <class input_type>
+      result_type
+      doit(const input_type &input) const
+      {
+	result_type r(input - ntg_min_val(input_type));
+	return r;
+      }
+    };
+
+    template <unsigned Qbits, template <unsigned> class S, class Exact>
+    struct value_to_point<ntg::color<3, Qbits, S>, Exact>:
+      public abstract::conversion_from_type_to_type
+        <typename ntg::color<3, Qbits, S>,
+	 point3d,
+	 typename mlc::exact_vt<value_to_point<typename ntg::color<3, Qbits, S>,
+					       Exact>,
+				Exact>::ret>
     {
-      return size_type(ntg_max_val(input_type) - ntg_min_val(input_type) + 1,
-		       1);
-    }
-  protected:
-    typedef typename ntg_is_a(input_type, ntg::non_vectorial)::ensure_type ensure_type;
-  };
+    public:
+      typedef point3d result_type;
+      typedef typename ntg::color<3, Qbits, S> argument_type;
 
-  //FIXME: the number of components is not a parameter (due to size_type)
-  template <unsigned Qbits,template <unsigned> class S>
-  struct value_to_point<typename ntg::color<3, Qbits, S> >
-  {
-    enum {nbcomps = 3, qbits = Qbits};
-
-    typedef ntg::color<nbcomps, qbits, S> input_type;
-    typedef typename dim_traits<nbcomps, unsigned>::img_type::size_type
-    size_type;
-    typedef typename input_type::comp_type comp_type;
-    typedef point3d result_type;
-
-    result_type
-    operator()(const input_type &input) const
-    {
-      result_type r;
-      for (unsigned i = 0; i < nbcomps; ++i)
-	r.nth(i) = input[i];
-      return r;
-    }
-
-    size_type
-    size() const
-    {
-      return size_type(ntg_max_val(comp_type) - ntg_min_val(comp_type) + 1,
-		       ntg_max_val(comp_type) - ntg_min_val(comp_type) + 1,
-		       ntg_max_val(comp_type) - ntg_min_val(comp_type) + 1,
-		       1);
-    }
-  };
+      result_type
+      operator()(const argument_type &input) const
+      {
+	result_type r;
+	for (unsigned i = 0; i < 3; ++i)
+	  r.nth(i) = input[i];
+	return r;
+      }
+    };
+  }
 }
 #endif
