@@ -41,17 +41,17 @@ By default, @command{configure} will try to use the first C++ compiler
 it encounters on your system. It will look, in order, for:
 
 @itemize @minus
-@item the value of the $CCC environment variable,
-@item the GNU C++ compiler (g++),
-@item the `c++' or `gpp' commands on your system,
-@item aCC, the HP-UX standard C++ compiler,
-@item the `CC', `cxx', `cc++' or `cl' commands on your system,
-@item KAI's C++ compiler (KCC),
-@item RCC, xlC_r or xlC.
+@item the value of the @env{CCC} environment variable,
+@item the GNU C++ compiler (@command{g++}),
+@item the @command{c++} or @command{gpp} commands on your system,
+@item @command{aCC}, the HP-UX standard C++ compiler,
+@item the @command{CC}, @command{cxx}, @command{cc++} or @command{cl} commands on your system,
+@item KAI's C++ compiler (@command{KCC}),
+@item @command{RCC}, @command{xlC_r} or @command{xlC}.
 @end itemize
 
-You can override the detection system by passing your favourite compiler name
-to @command{configure}, as follows:
+You can override the detection system by passing your favourite compiler
+name to @command{configure}, as follows:
 
 @example
 $ @kbd{.../configure CXX=<your-favorite-C++-compiler>}
