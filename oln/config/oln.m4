@@ -434,7 +434,7 @@ AC_DEFUN([AC_CXX_FLAGS],
       ;;
      weakGNU)
       _CXXFLAGS_DEBUG="-g"
-      _CXXFLAGS_OPTIMIZE="-O2 -felide-consructors -funroll-loops"
+      _CXXFLAGS_OPTIMIZE="-O2 -felide-constructors -funroll-loops"
       _CXXFLAGS_STRICT="-W -Wall -pedantic"
       _CXXFLAGS_STRICT_ERRORS="-W -Wall -pedantic -Werror"
       ;;

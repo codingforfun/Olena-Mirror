@@ -6,6 +6,52 @@ Please read the @file{README} file for general information about Olena.
 @end ifplaintext
 
 @ifnotplaintext
+@node Required software
+@section Required software
+@end ifnotplaintext
+@ifplaintext
+@section Required software
+@end ifplaintext
+
+Here is a non-exhaustive list of required software 
+required to build Olena successfully.
+
+@itemize @bullet
+@item 
+to compile the user tools:
+@itemize @minus
+@item
+a POSIX shell, like Bash
+@item
+a decent C++ compiler, like GNU C++
+@item
+a @command{make} utility, like GNU or BSD @command{make}
+@end itemize
+@item
+to compile the documentation:
+@itemize @minus
+@item
+a LaTeX distribution
+@item
+the @samp{listings} @TeX{} package
+@item
+the utility @command{convert} from ImageMagick
+@item
+GNU Autogen
+@item
+@command{hevea}, a @TeX{} to HTML conversion tool
+@item
+the @command{texinfo} utilities from GNU
+@end itemize
+@item
+to develop @emph{in} Olena:
+@itemize @minus
+@item
+GNU Autotools (Autoconf 2.54, Automake 1.7)
+@end itemize
+@end itemize
+
+@ifnotplaintext
 @node Configuration
 @section Configuration
 @end ifnotplaintext

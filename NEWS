@@ -1,4 +1,4 @@
-Olena 0.7	January 31, 2002
+Olena 0.7	February 10, 2002
 
 	* New, saner, source tree layout.
 	* Each `part' of the source tree can be excluded from the
@@ -6,7 +6,7 @@ Olena 0.7	January 31, 2002
 	* New `oln.m4' file for use by autoconf'ed user projects.
 	* Major documentation updates.
 	* New `oln-config.sh' scripts for user Makefiles.
-	* Olena now works on MacOS X, NetBSD and cygwin.
+	* Olena now works on MacOS X, NetBSD, FreeBSD and cygwin.
 
 Olena 0.6       January 15, 2003
 

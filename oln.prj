@@ -1,12 +1,30 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 7 57)
-(Parent-Version oln 7 56)
-(Version-Log "Commit files ^_^
+(Project-Version oln 7 58)
+(Parent-Version oln 7 57)
+(Version-Log "Index: oln/ChangeLog
+from   2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
+   * conf/compilers.def: Do not test for GCC 2 any more.
+
+   * tests/check/defs.in (AC_SHELL): Add variable.  
+   * tests/types/runtests, tests/arith/runtests: Use $AC_SHELL.
+
++2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
++
+        * config/oln.m4 (OLN_WARN_CXXFLAGS): New macro.
+ 
+ 2003-02-09  Raphaël Poss  <raph@lrde.epita.fr>
+Index: doc/ChangeLog
+from   2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
+   * dev/design.texi (Design considerations): Minor fix.
+
+   * dev/build.texi, dev/oln-dev.texi (Olena fast installation
+   guide): Add new section `Required software'.
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 10 Feb 2003 11:02:14 +0100")
+(Checkin-Time "Mon, 10 Feb 2003 15:07:03 +0100")
 (Checkin-Login raph)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -85,8 +103,8 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.29 664))
-  (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.14 664))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.19 664))
+  (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.15 664))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.20 664))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10 664))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.1 664))
 
@@ -109,7 +127,7 @@
   (doc/ref/bin () :directory)
   (doc/ref/html () :directory)
   (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27 660))
-  (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.5 660))
+  (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.6 660))
   (doc/ref/oln-ref.tex (oln/f/14_oln-ref.te 1.3 660))
   (doc/ref/ref-types.tex (oln/g/34_ref-types. 1.5 660))
   (doc/Makefile.am (oln/e/0_Makefile.a 1.14 660))
@@ -117,7 +135,7 @@
   
   (INSTALL (oln/o/39_INSTALL 1.2 664))
   (Makefile.am (oln/n/32_Makefile.a 1.14 664))
-  (NEWS (oln/0_NEWS 1.10 660))
+  (NEWS (oln/0_NEWS 1.11 660))
   
   (oln/img/face_se.pbm (oln/n/17_face_se.pb 1.1 660) :no-keywords)
   (oln/img/lena256.pgm (oln/n/14_lena256.pg 1.1 660))
@@ -274,7 +292,7 @@
   (oln/oln/level/lut.hh (oln/29_lut.hh 1.7 664))
   (oln/oln/level/set_level.hh (oln/p/1_set_level. 1.5 664))
   (oln/oln/level/threshold.hh (oln/f/15_threshold. 1.5 664))
-  (oln/config/oln.m4 (oln/j/15_oln.m4 1.16 664))
+  (oln/config/oln.m4 (oln/j/15_oln.m4 1.17 664))
   (oln/oln/Makefile.am (oln/27_Makefile.a 1.37 600))
   (oln/oln/math/macros.hh (oln/b/21_macros.hh 1.6 664))
   (oln/oln/meta/array1d.hh (oln/f/23_array1d.hh 1.4 664))
@@ -384,7 +402,7 @@
   (oln/oln/utils/stat.hh (oln/9_stat.hh 1.5 664))
   (oln/oln/utils/timer.hh (oln/8_timer.hh 1.4 664))
   (oln/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.2 640))
-  (oln/tests/arith/runtests (oln/o/45_runtests 1.6 750))
+  (oln/tests/arith/runtests (oln/o/45_runtests 1.7 750))
   (oln/tests/arith/tests/min1 (oln/o/44_min1 1.1 640))
   (oln/tests/check/check.hh (oln/e/40_check.hh 1.3 664))
   (oln/tests/check/data.cc (oln/f/5_data.cc 1.8 660))
@@ -407,7 +425,7 @@
   (oln/tests/convol/slow_sum_2d_2.cc (oln/f/40_slow_sum_2 1.2.1.2 660))
   (oln/tests/convol/sobel_gradient.cc (oln/f/45_sobel_grad 1.3.1.2 660))
   (oln/tests/convol/sum_on_random.pgm (oln/f/42_sum_on_ran 1.1 660))
-  (oln/tests/check/defs.in (oln/f/49_defs.in 1.10 660))
+  (oln/tests/check/defs.in (oln/f/49_defs.in 1.11 660))
   (oln/tests/io/2d.cc (oln/e/47_2d.cc 1.5 660))
   (oln/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.7 664))
   (oln/tests/io/Makefile.am (oln/e/49_Makefile.a 1.10 660))
@@ -437,7 +455,7 @@
   (oln/tests/transforms/Makefile.am (oln/i/40_Makefile.a 1.6 660))
 ;;  (oln/tests/transforms/output () :directory)
   (oln/tests/types/Makefile.am (oln/h/5_Makefile.a 1.4 660))
-  (oln/tests/types/runtests (oln/h/3_runtests 1.11 770))
+  (oln/tests/types/runtests (oln/h/3_runtests 1.12 770))
   (oln/tests/types/tests/bin1 (oln/i/28_bin1 1.1 660))
   (oln/tests/types/tests/bin2 (oln/o/42_bin2 1.2 640))
   (oln/tests/types/tests/bin3 (oln/o/46_bin3 1.1 640))
@@ -616,7 +634,7 @@
   (oln/conf/configure.ac (oln/p/23_configure. 1.4 664))
   (oln/conf/gen-scripts.sh (oln/p/24_gen-script 1.3 775))
   (oln/conf/oln-config.shin (oln/p/25_oln-config 1.1 664))
-  (oln/conf/compilers.def (oln/p/26_compilers. 1.1 664))
+  (oln/conf/compilers.def (oln/p/26_compilers. 1.2 664))
 
 ;; Files added by populate at Tue, 21 Jan 2003 00:25:46 +0100,
 ;; to version 7.29(w), by raph:
@@ -713,7 +731,7 @@
 ;; Files added by populate at Fri, 24 Jan 2003 14:34:30 +0100,
 ;; to version 7.40(w), by raph:
 
-  (doc/dev/build.texi (oln/p/42_build.texi 1.6 664))
+  (doc/dev/build.texi (oln/p/42_build.texi 1.7 664))
 
 ;; Files added by populate at Fri, 24 Jan 2003 14:34:47 +0100,
 ;; to version 7.40(w), by raph:
@@ -773,7 +791,7 @@
 ;; Files added by populate at Mon, 10 Feb 2003 09:36:58 +0100,
 ;; to version 7.52(w), by raph:
 
-  (doc/dev/design.texi (oln/q/5_design.tex 1.1 664))
+  (doc/dev/design.texi (oln/q/5_design.tex 1.2 664))
 
 ;; Files deleted by depopulate at Mon, 10 Feb 2003 09:37:07 +0100,
 ;; from version 7.52(w), by raph:

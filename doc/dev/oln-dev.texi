@@ -53,6 +53,7 @@ Copyright @copyright{} 2002,2003 @strong{L.R.D.E.}
 @chapter Olena fast installation guide
 
 @menu
+* Required software::
 * Configuration::
 * Using CXXFLAGS to solve compilation problems::
 * Speeding up the configuration process::

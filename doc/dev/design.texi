@@ -26,5 +26,5 @@ fixed by adding new "concept" classes on top of the image hierarchy
 (something like @code{image_bin<*>}, @code{image_not_bin<*>},
 @code{image_color<*>}, @code{image_not_color<*>}, etc...) and specialize
 the processing using these types.  This still won't solve the problem
-_generally_, but at least it addresses the common needs.
+@emph{generally}, but at least it addresses the common needs.
 

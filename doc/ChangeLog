@@ -1,5 +1,10 @@
 2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
 
+	* dev/design.texi (Design considerations): Minor fix.
+
+	* dev/build.texi, dev/oln-dev.texi (Olena fast installation
+	guide): Add new section `Required software'.
+
 	* dev/conf.texi, dev/faq.texi, dev/design.texi: Minor fixes.
 
 	* dev/build.texi: Minor fixes. (Using CXXFLAGS to solve
