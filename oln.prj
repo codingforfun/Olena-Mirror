@@ -1,36 +1,25 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 8 19)
-(Parent-Version oln 8 18)
+(Project-Version oln 8 20)
+(Parent-Version oln 8 19)
 (Version-Log "Index: ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	* configure.ac: Update components.
-	* config/oln-local.m4: Add macros for metalic and integre.
-	* config/oln.m4: Minor fix.
 
-+2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
- 
-+	* config/oln.m4: Add new macros. Simplify flags.
- 	* configure.ac, Makefile.am, bootstrap.sh: Adapt to m4 changes.
- 
- 2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	* configure.ac: New collections.
+
 Index: integre/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* tests/Makefile.am: Adjust with components.
+	* Makefile.am: Adjust.
 
-Index: metalic/ChangeLog
+Index: olena/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	* tests/Makefile.am: Adjust with components.
 
-+2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-+	
- 	* tests/check/Makefile.am: Remove useless flags.
- 
+	* tests/arith/tests/min1: Remove useless namespace prefixes.
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 12 Mar 2003 18:27:06 +0100")
+(Checkin-Time "Fri, 14 Mar 2003 16:51:27 +0100")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -110,11 +99,11 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.9 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.10 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.30 640))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.11 640))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.14 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.27 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.28 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.7 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.6 640))
 
@@ -126,7 +115,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (cleanup.sh (oln/o/29_cleanup.sh 1.5 750))
 
-  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.9 640))
+  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.10 640))
 
   (doc/demo/image.cc (oln/d/46_image.cc 1.5 640))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.16 640))
@@ -411,7 +400,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/utils/timer.hh (oln/8_timer.hh 1.5 640))
   (olena/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.4 640))
   (olena/tests/arith/runtests (oln/o/45_runtests 1.8 750))
-  (olena/tests/arith/tests/min1 (oln/o/44_min1 1.1.1.3 640))
+  (olena/tests/arith/tests/min1 (oln/o/44_min1 1.1.1.4 640))
   (metalic/tests/check/check.hh (oln/e/40_check.hh 1.4 640))
   (olena/tests/check/data.cc (oln/f/5_data.cc 1.8 640))
   (olena/tests/check/data.hh (oln/f/6_data.hh 1.4 640))
@@ -784,7 +773,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (metalic/mlc/Makefile.am (oln/q/33_Makefile.a 1.7 640))
   (integre () :directory)
   (integre/ntg () :directory)
-  (integre/Makefile.am (oln/q/34_Makefile.a 1.2 640))
+  (integre/Makefile.am (oln/q/34_Makefile.a 1.3 640))
   (integre/ntg/Makefile.am (oln/q/36_Makefile.a 1.2 640))
   (olena/tests/check/defs.in (oln/q/37_defs.in 1.1 600))
   (olena/tests/check/Makefile.am (oln/q/38_Makefile.a 1.2 600))

@@ -1,3 +1,7 @@
+2003-03-14  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/arith/tests/min1: Remove useless namespace prefixes.
+
 2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/check/Makefile.flags, tests/sanity/Makefile.am: Remove

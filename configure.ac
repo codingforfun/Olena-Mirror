@@ -134,6 +134,11 @@ OLN_COLLECTION([OLN_TOP],
 
     ], [tests])dnl End of OLN_COMPONENT([olena/tests])
 
+  ])dnl End of OLN_COLLECTION([OLN_SRC])
+
+  OLN_COLLECTION([NTG_SRC], 
+  [dnl
+
     ##
     ## integre testsuite
     ##
@@ -142,7 +147,7 @@ OLN_COLLECTION([OLN_TOP],
 		  [ntg-testsuite], 
 		  [ntg_cv_build_tests], 
 		  [the integre's testsuite], 
-		  [OLN_SRC], 
+		  [NTG_SRC], 
 	          [
 		   integre/tests/Makefile
 		   integre/tests/check/defs],
@@ -167,6 +172,11 @@ OLN_COLLECTION([OLN_TOP],
 
     ], [tests])dnl End of OLN_COMPONENT([integre/tests])
 
+  ])dnl End of OLN_COLLECTION([NTG_SRC])
+
+  OLN_COLLECTION([MLC_SRC], 
+  [dnl
+
     ##
     ## metalic testsuite
     ##
@@ -175,7 +185,7 @@ OLN_COLLECTION([OLN_TOP],
 		  [mlc-testsuite], 
 		  [mlc_cv_build_tests], 
 		  [the metalic's testsuite], 
-		  [OLN_SRC], 
+		  [MLC_SRC], 
 	          [],
     [dnl Configuration for the testsuite
 
@@ -197,10 +207,13 @@ OLN_COLLECTION([OLN_TOP],
 
       AC_SUBST([MLC_TESTS_SUBDIRS])
 
-    ], [tests])dnl End of OLN_COMPONENT([metalic/tests])
+    ], [])dnl End of OLN_COMPONENT([metalic/tests])
+    # FIXME:
+    # No directory specified here, as we always need to go inside metalic/tests.
+    # Indeed, common testing tools may have to be compiled even if
+    # metalic testsuite was disabled.
 
-  ])dnl End of OLN_COLLECTION([OLN_SRC])
-
+  ])dnl End of OLN_COLLECTION([MLC_SRC])
 
 ###
 ### Stuff pertaining to the documentation
@@ -361,4 +374,3 @@ if test "x$oln_cxxflags_clean" = xno; then
   AC_MSG_NOTICE([* Please read the file `BUILD' before continuing.])
   AC_MSG_NOTICE([*])
 fi
-
