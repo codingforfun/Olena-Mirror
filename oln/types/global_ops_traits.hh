@@ -137,6 +137,13 @@ namespace oln
     //
     //////////////////////////////////////////////////////////////////////////
 
+    //
+    //  Dev note : 
+    //  When using g++ >= 3.1, using deduce_from_traits<operator_xxx_traits, T, U>
+    //  may fail at compile time, using 
+    //  deduce_from_traits<oln::internal::operator_xxx_traits, T, U> should resolve
+    //  the problem.
+    //
   
     template <class T>
     struct is_defined { enum { ret = true }; };

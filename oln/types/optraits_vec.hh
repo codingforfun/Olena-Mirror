@@ -246,8 +246,7 @@ namespace oln
     struct operator_plus_traits<vec<N, T1>, vec<N, T2> >
     {
       enum { commutative = true };
-
-      typedef vec<N, typename deduce_from_traits<operator_plus_traits, T1, T2>::ret> ret;
+      typedef vec<N, typename deduce_from_traits<internal::operator_plus_traits, T1, T2>::ret> ret;
       typedef vec<N, T1> impl;
     };
 
@@ -262,7 +261,7 @@ namespace oln
     struct operator_minus_traits<vec<N, T1>, vec<N, T2> >
     {
       enum { commutative = true };
-      typedef vec<N, typename deduce_from_traits<operator_minus_traits, T1, T2>::ret> ret;
+      typedef vec<N, typename deduce_from_traits<internal::operator_minus_traits, T1, T2>::ret> ret;
       typedef vec<N, T1> impl;
     };
 
@@ -276,7 +275,7 @@ namespace oln
     struct operator_times_traits<vec<N, T1>, T2>
     {
       enum { commutative = true };
-      typedef vec<N, typename deduce_from_traits<operator_times_traits, T1, T2>::ret> ret;
+      typedef vec<N, typename deduce_from_traits<internal::operator_times_traits, T1, T2>::ret> ret;
       typedef vec<N, T1> impl;
     };
 
@@ -286,7 +285,7 @@ namespace oln
     struct operator_times_traits<vec<N, T1>, vec<N, T2> >
     {
       enum { commutative = true };
-      typedef typename deduce_from_traits<operator_times_traits,T1,T2>::ret t;
+      typedef typename deduce_from_traits<internal::operator_times_traits,T1,T2>::ret t;
       typedef typename typetraits<t>::cumul_type ret;
       typedef vec<N, T1> impl;
     };
@@ -301,7 +300,7 @@ namespace oln
     struct operator_div_traits<vec<N, T1>, T2>
     {
       enum { commutative = false };
-      typedef vec<N, typename deduce_from_traits<operator_div_traits, T1, T2>::ret> ret;
+      typedef vec<N, typename deduce_from_traits<internal::operator_div_traits, T1, T2>::ret> ret;
       typedef vec<N, T1> impl;
     };
 
@@ -315,7 +314,7 @@ namespace oln
     struct operator_mod_traits<vec<N, T1>, T2>
     {
       enum { commutative = false };
-      typedef vec<N, typename deduce_from_traits<operator_mod_traits, T1, T2>::ret> ret;
+      typedef vec<N, typename deduce_from_traits<internal::operator_mod_traits, T1, T2>::ret> ret;
       typedef vec<N, T1> impl;
     };
 
@@ -329,7 +328,7 @@ namespace oln
     struct operator_cmp_traits<vec<N, T1>, vec<N, T2> >
     {
       enum { commutative = true };
-      typedef vec<N, typename deduce_from_traits<operator_cmp_traits, T1, T2>::ret> ret;
+      typedef vec<N, typename deduce_from_traits<internal::operator_cmp_traits, T1, T2>::ret> ret;
       typedef vec<N, T1> impl;
     };
 
