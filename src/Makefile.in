@@ -235,6 +235,10 @@ nobase_oln_HEADERS = \
   morpho/reconstruction.hh			\
   morpho/splitse.hh				\
   morpho/stat.hh				\
+  morpho/thinning.hh				\
+  morpho/thinning.inc				\
+  morpho/thickening.hh				\
+  morpho/thickening.inc				\
   morpho/top_hat.hh				\
   morpho/top_hat.inc				\
   morpho/watershed.hh				\

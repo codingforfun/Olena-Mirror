@@ -8,6 +8,8 @@
 #include "morpho/top_hat.hh"
 #include "morpho/hit_or_miss.hh"
 #include "morpho/watershed.hh"
+#include "morpho/thinning.hh"
+#include "morpho/thickening.hh"
 #include "convol/fast_gaussian.hh"
 #include "value/all.hh"
 #include "level/fill.hh"

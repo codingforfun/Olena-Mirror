@@ -1,5 +1,13 @@
 2002-03-28  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
+	* demo/morpholena.cc: Include morpho/thinning.hh and
+	morpho/thickening.hh.
+	* src/Makefile.am (nobase_oln_HEADERS): Add
+	morpho/thinning.hh, morpho/thinning.inc, morpho/thickening.hh,
+	and morpho/thickening.inc.
+
+2002-03-28  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
 	* tests/: New directory.  See tests/ChangeLog.
 	* Makefile.am (SUBDIRS): Add tests.
 	* configure.ac: Run AC_PROG_RANLIB.
@@ -10,8 +18,8 @@
 
 2002-03-28  Jerome Darbon  <jerome@epita.fr>
 
-	* src/morpho/thinninh.hh: New file.
-	* src/morpho/thinninh.inc: Likewise.
+	* src/morpho/thinning.hh: New file.
+	* src/morpho/thinning.inc: Likewise.
 	* src/morpho/thickening.hh: Likewise.
 	* src/morpho/thickening.inc: Likewise.
 
