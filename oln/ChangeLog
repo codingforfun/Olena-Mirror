@@ -1,9 +1,5 @@
 2003-01-18  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* oln/convert/nrgbhsl.hh: Remove std:: prefix before abs() C
-	function, it is not standard.
-	* oln/io/readable.hh: Likewise for exit().
-	* tests/transforms/dwt.cc: Likewise for rand().
 	* oln/io/gz_stream.hh: Replace NULL by 0. Add missing forward
 	declaration.
 	* oln/topo/dmap.hxx: Fix function default parameter redefinition.

@@ -52,7 +52,7 @@ namespace oln {
 	T& assign(T& output) const
 	{
 	  if (!read_any(output, _str))
-            ::exit(EXIT_FAILURE);
+            std::exit(EXIT_FAILURE);
 	  return output;
 	}
 

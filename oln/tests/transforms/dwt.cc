@@ -44,7 +44,7 @@ check()
   image1d<int_u16> vec1(4096);
   image1d<int_u16>::iter it1(vec1);
   for_all(it1)
-    vec1[it1] = ::rand() / 10000000;
+    vec1[it1] = std::rand() / 10000000;
 
   dwt<image1d<int_u16>, daub4_test> wave1d(vec1);
 
@@ -100,7 +100,7 @@ check()
   image3d<int_u32> cube1(64, 64, 64);
   image3d<int_u32>::iter it3(cube1);
   for_all(it3)
-    cube1[it3] = ::rand();
+    cube1[it3] = std::rand();
 
   dwt<image3d<int_u32>, haar> wave3d(cube1);
 
