@@ -1,16 +1,11 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_3 16)
-(Parent-Version oln 0_3 15)
-(Version-Log "        * src/morpho/thinninh.hh: New file.
-        * src/morpho/thinninh.inc: Likewise.
-        * src/morpho/thickening.hh: Likewise.
-        * src/morpho/thickening.inc: Likewise.
-
-")
+(Project-Version oln 0_3 17)
+(Parent-Version oln 0_3 16)
+(Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Thu, 28 Mar 2002 17:05:43 +0100")
+(Checkin-Time "Thu, 28 Mar 2002 17:10:16 +0100")
 (Checkin-Login jerome)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
@@ -260,7 +255,7 @@
   (src/core/accum.hh (oln/d/40_accum.hh 1.1 644))
   (src/basics1d.hh (oln/d/41_basics1d.h 1.1 644))
   (src/basics.hh (oln/d/42_basics.hh 1.2 644))
-  (demo/morpholena.cc (oln/d/43_morpholena 1.1 644))
+  (demo/morpholena.cc (oln/d/43_morpholena 1.2 644))
   (demo/Makefile.am (oln/d/44_Makefile.a 1.2 644))
   (demo/tour.cc (oln/d/45_tour.cc 1.1 644))
   (demo/image.cc (oln/d/46_image.cc 1.1 644))
@@ -345,6 +340,14 @@
 ;; to version 0_3.13(w), by adl:
 
   (src/core/typeadj.hh (oln/e/25_typeadj.hh 1.1 644))
+
+;; Files added by populate at Thu, 28 Mar 2002 17:10:11 +0100,
+;; to version 0_3.16(w), by jerome:
+
+  (src/morpho/thinning.inc (oln/e/26_thinning.i 1.1 644))
+  (src/morpho/thinning.hh (oln/e/27_thinning.h 1.1 644))
+  (src/morpho/thickening.inc (oln/e/28_thickening 1.1 644))
+  (src/morpho/thickening.hh (oln/e/29_thickening 1.1 644))
 )
 (Merge-Parents)
 (New-Merge-Parents)

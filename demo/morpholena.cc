@@ -64,6 +64,10 @@ int main()
   save(morpho::hit_or_miss(lena, mywin, mywin2), "lena-hom.pgm");
   save(morpho::fast::hit_or_miss(lena, mywin, mywin2), "lena-hom-f.pgm");
 
+  save(morpho::fast::thinning(lena, mywin, mywin2), "lena-thin.pgm");
+  save(morpho::fast::thickening(lena, mywin, mywin2), "lena-thick-f.pgm");
+
+
   neighborhood2d n = neighb_c4 ();
   save(morpho::watershed_seg<int_u8>(lena, n), "lena-wss.pgm");
   save(morpho::watershed_con<int_u8>(lena, n), "lena-wsc.pgm");
