@@ -1,20 +1,16 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_4 25)
-(Parent-Version oln 0_4 24)
+(Project-Version oln 0_4 26)
+(Parent-Version oln 0_4 25)
 (Version-Log "2002-07-18  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-	* oln/io/gz_stream.hh (zfilebuf::inbuf, zfilebuf::outbuf,
-	zfilebuf::lenbuf): New member.
-	(zfilebuf::zfilebuf): Allocate inbuf and outbug.
-	(zfilebuf::is_open): Add missing std::.
-	(zfilebuf::underflow, zfilebuf::overflow, zfilebug::fillbuf):
-	Rewrite using inbuf, outbuf, and lenbuf.
+	* tpl/processing.tpl: Adjust to get headers from ../oln/ instead
+	of ../src/.  Display the `oln/' prefix in the documentation.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 18 Jul 2002 14:03:50 +0200")
+(Checkin-Time "Thu, 18 Jul 2002 14:17:05 +0200")
 (Checkin-Login duret_g)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -99,7 +95,7 @@
 
 
   (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.6 600))
-  (doc/ChangeLog (oln/e/1_ChangeLog 1.15 600))
+  (doc/ChangeLog (oln/e/1_ChangeLog 1.16 600))
   (doc/configure.ac (oln/e/2_configure. 1.4 600))
   (doc/configure (oln/e/3_configure 1.8 700))
   (doc/doc/bin () :directory)
@@ -111,7 +107,7 @@
   (doc/img/object.pbm (oln/d/49_object.pbm 1.1 600))
   (doc/Makefile.am (oln/e/0_Makefile.a 1.1 600))
   (doc/Makefile.in (oln/e/5_Makefile.i 1.8 600))
-  (doc/tpl/processing.tpl (oln/d/48_processing 1.8 600))
+  (doc/tpl/processing.tpl (oln/d/48_processing 1.9 600))
 
   (img/lena128.pgm (oln/e/23_lena128.pg 1.1 600))
   (img/lena.pgm (oln/5_lena.pgm 1.1 600) :no-keywords)

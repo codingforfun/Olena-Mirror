@@ -49,7 +49,7 @@
         (sprintf "%s & %s" (if in "\\textsc{in}" "") (if out "\\textsc{out}" ""))))
 
    (define (header)
-     (let* ((s1 (substring (get "srcfile") (string-length "../../src/")))
+     (let* ((s1 (substring (get "srcfile") (string-length "../../doc/")))
 	    ;; strip extra leading slashes
 	    (s2 (regexp-substitute/global #f "^/*([^/].*)$" s1 1))
 	    ;; replace privare extensions (.hxx, .inc) by the public one (.hh)
@@ -83,7 +83,7 @@
 [~ (cn2tex (get "what")) ~]
 [~ ENDIF ~]
 \item[\textsc{Prototype}]~\\
-\texttt{\#include "}\textit{[~(cn2tex (header))~]}\texttt{"}
+\texttt{\#include <oln/}\textit{[~(cn2tex (header))~]}\texttt{>}
 \begin{rawhtml}
 <PRE>
 </PRE>
@@ -118,10 +118,10 @@
 [~ (out-push-new ".example") ~][~ ex ~][~ (out-pop) ~][~
    `sed 's/^\\$//' .example` ~]
 [~ IF (not (exist? "wontcompile")) ~][~ (out-push-new "example.cc") ~]
-#include "basics2d.hh"
-#include "[~(header)~]"
+#include <oln/basics2d.hh>
+#include <oln/[~(header)~]>
 [~ FOR exh ~]
-#include "[~ exh ~]"
+#include <oln/[~ exh ~]>
 [~ ENDFOR exh ~]
 
 using namespace oln;
@@ -150,7 +150,7 @@ int main()
   (if (> (system (string-append "test -f " (pdf b/exoname))) 0)
      (begin
        (psystem "test -f " b/binname " ||\n"
-		"g++ -Wall -W -I ../../src -O2 -ftemplate-depth-50 example.cc -o " b/binname)
+		"g++ -Wall -W -I../.. -O2 -ftemplate-depth-50 example.cc -o " b/binname)
        (if (exist? ".exi")
 	  (psystem "ln -sf ../../img/" exiname " " b/exiname))
        (if (exist? ".exo")
