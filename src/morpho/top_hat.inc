@@ -1,5 +1,5 @@
 // -*- c++ -*-
-// Copyright 2001  EPITA Research and Development Laboratory
+// Copyright 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -27,6 +27,24 @@
 // Public License.
 
 
+
+/*=processing white_top_hat
+ * ns: morpho, morpho::fast
+ * what: White top hat.
+ * arg: const conversion<C>&, c, IN, conversion object
+ * arg: const image<I>&, input, IN, input image
+ * arg: const struct_elt<E>&, se, IN, structural element
+ * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
+ * doc:
+ *   Compute white top hat of @var{input} using @var{se}
+ *   as structural element. Soille p.105.
+ * see: morpho::opening
+ * ex:
+ * $ image2d<int_u8> im = load("lena256.pgm");
+ * $ save(morpho::white_top_hat(im, win_c8p()), "out.pgm");
+ * exi: lena256.pgm
+ * exo: out.pgm
+=*/
 template<class C, class I, class E> inline
 typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 white_top_hat(const conversion<C>& c,
@@ -35,6 +53,13 @@ white_top_hat(const conversion<C>& c,
   return arith::minus(c, input, opening(input, se));
 }
 
+/*=processingoverload white_top_hat
+ * ns: morpho, morpho::fast
+ * what: White top hat.
+ * arg: const image<I>&, input, IN, input image
+ * arg: const struct_elt<E>&, se, IN, structural element
+ * ret: Concrete(I)
+=*/
 template<class I, class E> inline
 Concrete(I) white_top_hat(const image<I>& input, const struct_elt<E>& se)
 {
@@ -44,6 +69,23 @@ Concrete(I) white_top_hat(const image<I>& input, const struct_elt<E>& se)
 
 // black top-hat
 
+/*=processing black_top_hat
+ * ns: morpho, morpho::fast
+ * what: Black top hat.
+ * arg: const conversion<C>&, c, IN, conversion object
+ * arg: const image<I>&, input, IN, input image
+ * arg: const struct_elt<E>&, se, IN, structural element
+ * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
+ * doc:
+ *   Compute black top hat of @var{input} using @var{se}
+ *   as structural element. Soille p.105.
+ * see: morpho::closing
+ * ex:
+ * $ image2d<int_u8> im = load("lena256.pgm");
+ * $ save(morpho::black_top_hat(im, win_c8p()), "out.pgm");
+ * exi: lena256.pgm
+ * exo: out.pgm
+=*/
 template<class C, class I, class E> inline
 typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 black_top_hat(const conversion<C>& c,
@@ -52,6 +94,14 @@ black_top_hat(const conversion<C>& c,
   return arith::minus(c, closing(input, se), input);
 }
 
+
+/*=processingoverload balck_top_hat
+ * ns: morpho, morpho::fast
+ * what: Black top hat.
+ * arg: const image<I>&, input, IN, input image
+ * arg: const struct_elt<E>&, se, IN, structural element
+ * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
+=*/
 template<class I, class E> inline
 Concrete(I) black_top_hat(const image<I>& input, const struct_elt<E>& se)
 {
@@ -63,6 +113,26 @@ Concrete(I) black_top_hat(const image<I>& input, const struct_elt<E>& se)
 //  = white_top_hat + black_top_hat
 //  = (input - opening) + (closing - input)
 //  = closing - opening
+
+/*=processing self_complementary_top_hat
+ * ns: morpho, morpho::fast
+ * what: Self complementary top hat.
+ * arg: const conversion<C>&, c, IN, conversion object
+ * arg: const image<I>&, input, IN, input image
+ * arg: const struct_elt<E>&, se, IN, structural element
+ * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
+ * doc:
+ *   Compute self complementary top hat of @var{input} using @var{se}
+ *   as structural element. Soille p.106.
+ * see: morpho::closing
+ * see: morpho::opening
+ * ex:
+ * $ image2d<int_u8> im = load("lena256.pgm");
+ * $ save(morpho::self_complementary_top_hat(im, win_c8p()), "out.pgm");
+ * exi: lena256.pgm
+ * exo: out.pgm
+=*/
+
 template<class C, class I, class E> inline
 typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 self_complementary_top_hat(const conversion<C>& c,
@@ -71,6 +141,13 @@ self_complementary_top_hat(const conversion<C>& c,
   return arith::minus(c, closing(input, se), opening(input, se));
 }
 
+/*=processingoverload self_complementary_top_hat
+ * ns: morpho, morpho::fast
+ * what: Self complementary top hat.
+ * arg: const image<I>&, input, IN, input image
+ * arg: const struct_elt<E>&, se, IN, structural element
+ * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
+=*/
 template<class I, class E> inline
 Concrete(I) self_complementary_top_hat(const image<I>& input,
 				       const struct_elt<E>& se)
@@ -80,20 +157,47 @@ Concrete(I) self_complementary_top_hat(const image<I>& input,
 
 
 // top-hat contrast operator
+
+/*=processing top_hat_contrast_op
+ * ns: morpho, morpho::fast
+ * what: Top hat contrastor operator.
+ * arg: const conversion<C>&, c, IN, conversion object
+ * arg: const image<I>&, input, IN, input image
+ * arg: const struct_elt<E>&, se, IN, structural element
+ * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
+ * doc:
+ *   Enhance contrast @var{input} by adding the white top hat, then
+ * substracting the black top hat to @var{input}. Top hats are computed using
+ * @var{se} as structural element. Soille p.109.
+ * see: morpho::white_top_hat
+ * see: morpho::black_top_hat
+ * ex:
+ * $ image2d<int_u8> im = load("lena256.pgm");
+ * $ save(morpho::top_hat_contrast_op(convert::bound<int_u8>(),
+ *                                    im, win_c8p()), "out.pgm");
+ * exi: lena256.pgm
+ * exo: out.pgm
+ * exh: convert/bound.hh
+=*/
+
 template<class C, class I, class E> inline
 typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 top_hat_contrast_op(const conversion<C>& c,
 		    const image<I>& input, const struct_elt<E>& se)
 {
-  // FIXME: The original used a conversion for the inner minus
-  // too.  I think it's wrong.  Else the output type needs to be
-  // adapted to reflect the composition of the conversions. -- adl
   return arith::plus(c,
 		     input,
 		     arith::minus(white_top_hat(input, se),
 				  black_top_hat(input, se)));
 }
 
+/*=processingoverload top_hat_contrast_op
+ * ns: morpho, morpho::fast
+ * what: Top hat contrastor operator.
+ * arg: const image<I>&, input, IN, input image
+ * arg: const struct_elt<E>&, se, IN, structural element
+ * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
+=*/
 template<class I, class E> inline
 Concrete(I) top_hat_contrast_op(const image<I>& input,
 				const struct_elt<E>& se)

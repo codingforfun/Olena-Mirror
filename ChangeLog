@@ -1,5 +1,12 @@
 2002-01-14  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
+	* src/morpho/top_hat.inc, src/morpho/reconstruction.hh,
+	src/morpho/geodesic_erosion.hh, src/morpho/geodesic_dilation.hh,
+	src/morpho/extrema.hh, src/morpho/top_hat.inc,
+	src/morpho/laplacian.inc: Update doc.
+
+2002-01-14  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
 	* src/morpho/opening.inc, src/morpho/closing.inc,
 	src/morpho/dilation.hh, src/morpho/erosion.hh: Update
 	documentation.

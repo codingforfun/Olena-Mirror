@@ -103,7 +103,7 @@
 @example
 [~ (out-push-new ".example") ~][~ ex ~][~ (out-pop) ~][~
    `sed 's/^\\$//' .example` ~]
-[~ (out-push-new "example.cc") ~]
+[~ IF (not (exist? "wontcompile")) ~][~ (out-push-new "example.cc") ~]
 #include "basics2d.hh"
 #include "[~(header)~]"
 [~ FOR exh ~]
@@ -145,12 +145,12 @@ int main()
        	    (psystem "convert " exoname " html/" exoname ".png")
        	    (psystem "epstopdf " exoname ".eps > " exoname ".pdf")
 ))))
-~][~ `rm -f .example example.cc` ~]
+~][~ ENDIF ~][~ `rm -f .example example.cc` ~]
 @end example
-@ifnotinfo
+[~ IF (not (exist? "wontcompile")) ~]@ifnotinfo
 @center{[~ IF (exist? ".exi") ~]@image{[~ (begin exiname) ~],30mm,}[~ ENDIF ~] [~
       IF (exist? ".exo") ~]@image{[~ (begin exoname) ~],30mm,}[~ ENDIF ~]}
 @end ifnotinfo
-[~ ENDIF ~]
+[~ENDIF ~][~ ENDIF ~]
 @end table
 [~ ENDIF nodoc ~][~ ENDFOR processing ~]

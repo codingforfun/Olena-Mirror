@@ -54,6 +54,30 @@ namespace oln {
     }
 
     // Minima Imposition
+
+    /*=processing sure_minima_imposition
+     * ns: morpho
+     * what: Minima Imposition.
+     * arg: const image<I1>&, input, IN, input image
+     * arg: const image<I2>&, minima_map, IN, bin image
+     * arg: const struct_elt<E>&, se, IN, structural element
+     * ret: Concrete(_I)
+     * doc:
+     * Impose minima defined by @var{minima_map} on @var{input}
+     * using @var{se}
+     *   as structural element. Soille p.172. @var{minima_map} must
+     * be a bin image (true for a minimum, false for a non minimum).
+     * The algorithm uses
+     * sure_geodesic_reconstruction_erosion.
+     * see: morpho::sure_geodesic_reconstruction_erosion
+     * ex:
+     * $ image2d<int_u8> light = load("light.pgm");
+     * $ image2d<bin> minima = load("minima.pbm");
+     * $ save(morpho::sure_minima_imposition(light, minima, win_c8p()), "out.pgm");
+     * exi: light.pgm minima.pbm
+     * exo: out.pgm
+     * wontcompile: fixme
+     =*/
     template<class _I, class _I2, class _E>
     Concrete(_I) sure_minima_imposition(const image<_I>& _input,
 					const image<_I2>& _minima_map,
@@ -79,6 +103,28 @@ namespace oln {
 						  arith::min(input, mm), se);
     }
 
+    /*=processing sequential_minima_imposition
+     * ns: morpho
+     * what: Minima Imposition.
+     * arg: const image<I1>&, input, IN, input image
+     * arg: const image<I2>&, minima_map, IN, bin image
+     * arg: const struct_elt<E>&, se, IN, structural element
+     * ret: Concrete(_I)
+     * doc:
+     * Impose minima defined by @var{minima_map} on @var{input}
+     * using @var{se}
+     *   as structural element. Soille p.172.  The algorithm uses
+     * sequential_geodesic_reconstruction_erosion. @var{minima_map} must
+     * be a bin image (true for a minimum, false for a non minimum).
+     * see: morpho::sequential_geodesic_reconstruction_erosion
+     * ex:
+     * $ image2d<int_u8> light = load("light.pgm");
+     * $ image2d<bin> minima = load("minima.pbm");
+     * $ save(morpho::sequential_minima_imposition(light, minima, win_c8p()), "out.pgm");
+     * exi: light.pgm minima.pbm
+     * exo: out.pgm
+     * wontcompile: fixme
+     =*/
     template<class _I, class _I2, class _E>
     Concrete(_I) sequential_minima_imposition(const image<_I>& _input,
 					      const image<_I2>& _minima_map,
@@ -95,6 +141,29 @@ namespace oln {
 							se);
     }
 
+    /*=processing hybrid_minima_imposition
+     * ns: morpho
+     * what: Minima Imposition.
+     * arg: const image<I1>&, input, IN, input image
+     * arg: const image<I2>&, minima_map, IN, bin image
+     * arg: const struct_elt<E>&, se, IN, structural element
+     * ret: Concrete(_I)
+     * doc:
+     * Impose minima defined by @var{minima_map} on @var{input}
+     * using @var{se}
+     *   as structural element. Soille p.172.   @var{minima_map} must
+     * be a bin image (true for a minimum, false for a non minimum).
+     * The algorithm uses
+     * hybrid_geodesic_reconstruction_erosion.
+     * see: morpho::hybrid_geodesic_reconstruction_erosion
+     * ex:
+     * $ image2d<int_u8> light = load("light.pgm");
+     * $ image2d<bin> minima = load("minima.pbm");
+     * $ save(morpho::hybrid_minima_imposition(light, minima, win_c8p()), "out.pgm");
+     * exi: light.pgm minima.pbm
+     * exo: out.pgm
+     * wontcompile: fixme
+     =*/
     template<class _I, class _I2, class _E>
     Concrete(_I) hybrid_minima_imposition(const image<_I>& _input,
 					  const image<_I2>& _minima_map,
@@ -114,7 +183,26 @@ namespace oln {
 
     // Regional minima
 
-    template<class _I, class _E>
+
+    /*=processing sure_regional_minima
+     * ns: morpho
+     * what: Regional minima.
+     * arg: const image<I1>&, input, IN, input image
+     * arg: const struct_elt<E>&, se, IN, structural element
+     * ret: Concrete(_I)
+     * doc:
+     * Extract regional minima of @var{input}
+     * using @var{se}
+     *   as structural element. Soille p.169.  The algorithm uses
+     * sure_geodesic_reconstruction_erosion.
+     * see: morpho::sure_geodesic_reconstruction_erosion
+     * ex:
+     * $ image2d<int_u8> light = load("light.pgm");
+     * $ save(morpho::sure_minima_imposition(light, win_c8p()), "out.pgm");
+     * exi: light.pgm
+     * exo: out.pgm
+     * wontcompile: fixme
+     =*/    template<class _I, class _E>
     Concrete(_I) sure_regional_minima(const image<_I>& _input,
 				      const struct_elt<_E>& _se)
     {
@@ -127,6 +215,26 @@ namespace oln {
 		     input);
     }
 
+
+    /*=processing sequential_regional_minima
+     * ns: morpho
+     * what: Regional minima.
+     * arg: const image<I1>&, input, IN, input image
+     * arg: const struct_elt<E>&, se, IN, structural element
+     * ret: Concrete(_I)
+     * doc:
+     * Extract regional minima of @var{input}
+     * using @var{se}
+     *   as structural element. Soille p.169.  The algorithm uses
+     * sequential_geodesic_reconstruction_erosion.
+     * see: morpho::sequential_geodesic_reconstruction_erosion
+     * ex:
+     * $ image2d<int_u8> light = load("light.pgm");
+     * $ save(morpho::sequential_minima_imposition(light, win_c8p()), "out.pgm");
+     * exi: light.pgm
+     * exo: out.pgm
+     * wontcompile: fixme
+     =*/
     template<class _I, class _E>
     Concrete(_I) sequential_regional_minima(const image<_I>& _input,
 					    const struct_elt<_E>& _se)
@@ -140,6 +248,25 @@ namespace oln {
 		     input);
     }
 
+    /*=processing hybrid_regional_minima
+     * ns: morpho
+     * what: Regional minima.
+     * arg: const image<I1>&, input, IN, input image
+     * arg: const struct_elt<E>&, se, IN, structural element
+     * ret: Concrete(_I)
+     * doc:
+     * Extract regional minima of @var{input}
+     * using @var{se}
+     *   as structural element. Soille p.169.  The algorithm uses
+     * hybrid_geodesic_reconstruction_erosion.
+     * see: morpho::hybrid_geodesic_reconstruction_erosion
+     * ex:
+     * $ image2d<int_u8> light = load("light.pgm");
+     * $ save(morpho::hybrid_minima_imposition(light, win_c8p()), "out.pgm");
+     * exi: light.pgm
+     * exo: out.pgm
+     * wontcompile: fixme
+     =*/
     template<class _I, class _E>
     Concrete(_I) hybrid_regional_minima(const image<_I>& _input,
 					const struct_elt<_E>& _se)

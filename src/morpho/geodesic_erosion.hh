@@ -1,4 +1,4 @@
-// Copyright 2001  EPITA Research and Development Laboratory
+// Copyright 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,6 +37,27 @@
 namespace oln {
   namespace morpho {
 
+    /*=processing geodesic_erosion
+     * ns: morpho
+     * what: Geodesic erosion.
+     * arg: const image<I1>&, marker, IN, marker image
+     * arg: const image<I2>&, mask, IN, mask image
+     * arg: const struct_elt<E>&, se, IN, structural element
+     * ret: Concrete(I1)
+     * doc:
+     *  Compute the geodesic erosion of @var{marker} with respect
+     * to the mask @var{mask} image using @var{se}
+     *   as structural element. Soille p.158.
+     * Note marker must be greater or equal than mask.
+     * see: morpho::simple_geodesic_dilation
+     * ex:
+     * $ image2d<int_u8> light = load("light.pgm");
+     * $ image2d<int_u8> dark = load("dark.pgm");
+     * $ save(morpho::geodesic_erosion(light, dark, win_c8p()), "out.pgm");
+     * exi: light.pgm dark.pgm
+     * exo: out.pgm
+     * wontcompile: fixme
+     =*/
     template<class _I1, class _I2, class _E> inline
     Concrete(_I1) geodesic_erosion(const image<_I1> & _marker,
 				   const image<_I2> & _mask,
@@ -50,6 +71,28 @@ namespace oln {
       return arith::max(erosion(marker, se), mask);
     }
 
+    /*=processing simple_geodesic_erosion
+     * ns: morpho
+     * what: Geodesic erosion.
+     * arg: const image<I1>&, marker, IN, marker image
+     * arg: const image<I2>&, mask, IN, mask image
+     * arg: const struct_elt<E>&, se, IN, structural element
+     * ret: Concrete(I1)
+     * doc:
+     *  Compute the geodesic erosion of @var{marker} with respect
+     * to the mask @var{mask} image using @var{se}
+     *   as structural element. Soille p.156. Computation is
+     * performed by hand (i.e without calling dilation).
+     * Note marker must be greater or equal than mask.
+     * see: morpho::simple_geodesic_dilation
+     * ex:
+     * $ image2d<int_u8> light = load("light.pgm");
+     * $ image2d<int_u8> dark = load("dark.pgm");
+     * $ save(morpho::geodesic_erosion(light, dark, win_c8p()), "out.pgm");
+     * exi: light.pgm dark.pgm
+     * exo: out.pgm
+     * wontcompile: fixme
+     =*/
     template<class _I1, class _I2, class _E> inline
     Concrete(_I1) simple_geodesic_erosion(const image<_I1> & _marker,
 					  const image<_I2> & _mask,

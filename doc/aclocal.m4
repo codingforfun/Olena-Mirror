@@ -1,4 +1,4 @@
-# aclocal.m4t generated automatically by aclocal 1.5c -*- Autoconf -*-
+# aclocal.m4 generated automatically by aclocal 1.5c -*- Autoconf -*-
 
 # Copyright 1996, 1997, 1998, 1999, 2000, 2001
 # Free Software Foundation, Inc.
@@ -69,16 +69,15 @@ if test "`cd $srcdir && pwd`" != "`pwd`" &&
   AC_MSG_ERROR([source directory already configured; run "make distclean" there first])
 fi
 
+# Define the identity of the package.
 dnl Distinguish between old-style and new-style calls.
 m4_ifval([$2],
-  [m4_ifval([$3],, [_AM_SET_OPTION([no-define])])],
-  [_AM_SET_OPTIONS([$1])])dnl
-
-# Define the identity of the package.
-AC_SUBST([PACKAGE],
-[m4_ifset([AC_PACKAGE_TARNAME], [AC_PACKAGE_TARNAME], [$1])])dnl
-AC_SUBST([VERSION],
-[m4_ifset([AC_PACKAGE_VERSION], [AC_PACKAGE_VERSION], [$2])])dnl
+[m4_ifval([$3], [_AM_SET_OPTION([no-define])])dnl
+ AC_SUBST([PACKAGE], [$1])dnl
+ AC_SUBST([VERSION], [$2])],
+[_AM_SET_OPTIONS([$1])dnl
+ AC_SUBST([PACKAGE], [AC_PACKAGE_TARNAME])dnl
+ AC_SUBST([VERSION], [AC_PACKAGE_VERSION])])dnl
 
 _AM_IF_OPTION([no-define],,
 [AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE", [Name of package])
@@ -182,7 +181,7 @@ AC_DEFUN([_AM_SET_OPTIONS],
 # -------------------------------------------
 # Execute IF-SET if OPTION is set, IF-NOT-SET otherwise.
 AC_DEFUN([_AM_IF_OPTION],
-[m4_if(_AM_MANGLE_OPTION([$1]), 1, [$2], [$3])])
+[m4_ifset(_AM_MANGLE_OPTION([$1]), [$2], [$3])])
 
 #
 # Check to make sure that the build environment is sane.

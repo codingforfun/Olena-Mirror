@@ -28,17 +28,38 @@
 #ifndef OLENA_MORPHO_RECONSTRUCTION_HH
 # define OLENA_MORPHO_RECONSTRUCTION_HH
 
-# include  <queue>
 # include "basics.hh"
 # include "morpho/stat.hh"
 # include "morpho/geodesic_dilation.hh"
 # include "morpho/splitse.hh"
 # include "level/compare.hh"
 # include "value/ops.hh"
+#include  <queue>
 
 namespace oln {
   namespace morpho {
 
+    /*=processing sure_geodesic_reconstruction_dilation
+     * ns: morpho
+     * what: Geodesic reconstruction by dilation.
+     * arg: const image<I1>&, marker, IN, marker image
+     * arg: const image<I2>&, mask, IN, mask image
+     * arg: const struct_elt<E>&, se, IN, structural element
+     * ret: Concrete(_I1)
+     * doc:
+     *  Compute the reconstruction by dilation of @var{marker} with respect
+     * to the mask @var{mask} image using @var{se}
+     *   as structural element. Soille p.160. This is the simplest algorithm:
+     * iteration is performed until stability.
+     * see: morpho::simple_geodesic_dilation
+     * ex:
+     * $ image2d<int_u8> light = load("light.pgm");
+     * $ image2d<int_u8> dark = load("dark.pgm");
+     * $ save(morpho::sure_geodesic_reconstruction_dilation(light, dark, win_c8p()), "out.pgm");
+     * exi: light.pgm dark.pgm
+     * exo: out.pgm
+     * wontcompile: fixme
+     =*/
     template<class _I1, class _I2, class _E>
     Concrete(_I1)
     sure_geodesic_reconstruction_dilation(const image<_I1> & _marker,
@@ -61,6 +82,30 @@ namespace oln {
     }
 
 
+    /*=processing sequential_geodesic_reconstruction_dilation
+     * ns: morpho
+     * what: Geodesic reconstruction by dilation.
+     * arg: const image<I1>&, marker, IN, marker image
+     * arg: const image<I2>&, mask, IN, mask image
+     * arg: const struct_elt<E>&, se, IN, structural element
+     * ret: Concrete(_I1)
+     * doc:
+     *  Compute the reconstruction by dilation of @var{marker} with respect
+     * to the mask @var{mask} image using @var{se}
+     *   as structural element. Soille p.160. The algorithm used is the
+     * one defined as sequential
+     * in Vincent(1993), Morphological grayscale reconstruction in
+     *  image analysis: applications and efficient algorithms, itip, 2(2),
+     * 176--201.
+     * see: morpho::simple_geodesic_dilation
+     * ex:
+     * $ image2d<int_u8> light = load("light.pgm");
+     * $ image2d<int_u8> dark = load("dark.pgm");
+     * $ save(morpho::sequential_geodesic_reconstruction_dilation(light, dark, win_c8p()), "out.pgm");
+     * exi: light.pgm dark.pgm
+     * exo: out.pgm
+     * wontcompile: fixme
+     =*/
     template<class _I1, class _I2, class _E> inline
     Concrete(_I1)
     sequential_geodesic_reconstruction_dilation(const image<_I1> & _marker,
@@ -114,6 +159,30 @@ namespace oln {
     }
 
 
+    /*=processing hybrid_geodesic_reconstruction_dilation
+     * ns: morpho
+     * what: Geodesic reconstruction by dilation.
+     * arg: const image<I1>&, marker, IN, marker image
+     * arg: const image<I2>&, mask, IN, mask image
+     * arg: const struct_elt<E>&, se, IN, structural element
+     * ret: Concrete(_I1)
+     * doc:
+     *  Compute the reconstruction by dilation of @var{marker} with respect
+     * to the mask @var{mask} image using @var{se}
+     *   as structural element. Soille p.160. The algorithm used is the
+     * one defined as hybrid
+     * in Vincent(1993), Morphological grayscale reconstruction in
+     *  image analysis: applications and efficient algorithms, itip, 2(2),
+     * 176--201.
+     * see: morpho::simple_geodesic_dilation
+     * ex:
+     * $ image2d<int_u8> light = load("light.pgm");
+     * $ image2d<int_u8> dark = load("dark.pgm");
+     * $ save(morpho::hybrid_geodesic_reconstruction_dilation(light, dark, win_c8p()), "out.pgm");
+     * exi: light.pgm dark.pgm
+     * exo: out.pgm
+     * wontcompile: fixme
+     =*/
     template<class _I1, class _I2, class _E> inline
     Concrete(_I1)
     hybrid_geodesic_reconstruction_dilation(const image<_I1> & _marker,
@@ -167,6 +236,28 @@ namespace oln {
 
     //GEODESIC RECONSTRUCTION EROSION
 
+
+    /*=processing sure_geodesic_reconstruction_erosion
+     * ns: morpho
+     * what: Geodesic reconstruction by erosion.
+     * arg: const image<I1>&, marker, IN, marker image
+     * arg: const image<I2>&, mask, IN, mask image
+     * arg: const struct_elt<E>&, se, IN, structural element
+     * ret: Concrete(_I1)
+     * doc:
+     *  Compute the reconstruction by erosion of @var{marker} with respect
+     * to the mask @var{mask} image using @var{se}
+     *   as structural element. Soille p.160. This is the simplest algorithm :
+     * iteration is performed until stability.
+     * see: morpho::simple_geodesic_erosion
+     * ex:
+     * $ image2d<int_u8> light = load("light.pgm");
+     * $ image2d<int_u8> dark = load("dark.pgm");
+     * $ save(morpho::sure_geodesic_reconstruction_erosion(light, dark, win_c8p()), "out.pgm");
+     * exi: light.pgm dark.pgm
+     * exo: out.pgm
+     * wontcompile: fixme
+     =*/
     template<class _I1, class _I2, class _E>
     Concrete(_I1)
     sure_geodesic_reconstruction_erosion(const image<_I1> & _marker,
@@ -188,6 +279,30 @@ namespace oln {
       return output;
     }
 
+    /*=processing sequential_geodesic_reconstruction_erosion
+     * ns: morpho
+     * what: Geodesic reconstruction by erosion.
+     * arg: const image<I1>&, marker, IN, marker image
+     * arg: const image<I2>&, mask, IN, mask image
+     * arg: const struct_elt<E>&, se, IN, structural element
+     * ret: Concrete(_I1)
+     * doc:
+     *  Compute the reconstruction by erosion of @var{marker} with respect
+     * to the mask @var{mask} image using @var{se}
+     *   as structural element. Soille p.160.  The algorithm used is the
+     * one defined as sequential
+     * in Vincent(1993), Morphological grayscale reconstruction in
+     *  image analysis: applications and efficient algorithms, itip, 2(2),
+     * 176--201.
+     * see: morpho::simple_geodesic_erosion
+     * ex:
+     * $ image2d<int_u8> light = load("light.pgm");
+     * $ image2d<int_u8> dark = load("dark.pgm");
+     * $ save(morpho::sequential_geodesic_reconstruction_erosion(light, dark, win_c8p()), "out.pgm");
+     * exi: light.pgm dark.pgm
+     * exo: out.pgm
+     * wontcompile: fixme
+     =*/
     template<class _I1, class _I2, class _E> inline
     Concrete(_I1)
     sequential_geodesic_reconstruction_erosion(const image<_I1>& _marker,
@@ -241,6 +356,30 @@ namespace oln {
     }
 
 
+    /*=processing hybrid_geodesic_reconstruction_erosion
+     * ns: morpho
+     * what: Geodesic reconstruction by erosion.
+     * arg: const image<I1>&, marker, IN, marker image
+     * arg: const image<I2>&, mask, IN, mask image
+     * arg: const struct_elt<E>&, se, IN, structural element
+     * ret: Concrete(_I1)
+     * doc:
+     *  Compute the reconstruction by erosion of @var{marker} with respect
+     * to the mask @var{mask} image using @var{se}
+     *   as structural element. Soille p.160.  The algorithm used is the
+     * one defined as hybrid
+     * in Vincent(1993), Morphological grayscale reconstruction in
+     *  image analysis: applications and efficient algorithms, itip, 2(2),
+     * 176--201.
+     * see: morpho::simple_geodesic_erosion
+     * ex:
+     * $ image2d<int_u8> light = load("light.pgm");
+     * $ image2d<int_u8> dark = load("dark.pgm");
+     * $ save(morpho::sequential_geodesic_reconstruction_erosion(light, dark, win_c8p()), "out.pgm");
+     * exi: light.pgm dark.pgm
+     * exo: out.pgm
+     * wontcompile: fixme
+     =*/
     template<class _I1, class _I2, class _E> inline
     Concrete(_I1)
     hybrid_geodesic_reconstruction_erosion(const image<_I1> & _marker,

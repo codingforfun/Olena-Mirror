@@ -26,6 +26,25 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+/*=processing laplacian
+ * ns: morpho, morpho::fast
+ * what: Laplacian.
+ * arg: const conversion<C>&, c, IN, conversion object
+ * arg: const image<I>&, input, IN, input image
+ * arg: const struct_elt<E>&, se, IN, structural element
+ * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
+ * doc:
+ *   Compute the laplacian of @var{input} using @var{se}
+ *   as structural element.
+ * see: morpho::dilation
+ * see: morpho::erosion
+ * ex:
+ * $ image2d<int_u8> im = load("lena256.pgm");
+ * $ save(morpho::laplacian(convert::bound<int_u8>(), im, win_c8p()), "out.pgm");
+ * exi: lena256.pgm
+ * exo: out.pgm
+ * exh: convert/bound.hh
+=*/
 template<class C, class I, class E> inline
 typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 laplacian(const conversion<C>& c,
@@ -36,6 +55,13 @@ laplacian(const conversion<C>& c,
 		      arith::minus(input, erosion(input, se)));
 }
 
+/*=processingoverload laplacian
+ * ns: morpho, morpho::fast
+ * what: Laplacian.
+ * arg: const image<I>&, input, IN, input image
+ * arg: const struct_elt<E>&, se, IN, structural element
+ * ret: typename mute<I, Value(I)::slarger_t>::ret
+=*/
 template<class I, class E> inline
 typename mute<I, Value(I)::slarger_t>::ret
 laplacian(const image<I>& input, const struct_elt<E>& se)
