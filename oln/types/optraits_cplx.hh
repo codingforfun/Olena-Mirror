@@ -207,7 +207,7 @@ namespace oln
   //////////////////////////////////////
 
   template <class T>
-  class optraits<cplx<rect, T> >: public optraits_vector<cplx<rect, T> >
+  class optraits<cplx<rect, T> >: public optraits<vec<2, T> >
   {
     typedef cplx<rect, T> self;
     typedef typename typetraits<self>::storage_type storage_type;
@@ -224,6 +224,13 @@ namespace oln
       return self(1);
     }
     
+    // debug
+    static std::string name() {
+      std::ostringstream out;
+      out << "cplx<rect, " <<  optraits<T>::name() << ">" << std::ends;
+      return out.str();
+    }
+
     ASSIGN_CPLX_SCALAR_OPERATOR_SINGLE(rect, plus_equal, +=);
     ASSIGN_CPLX_SCALAR_OPERATOR_SINGLE(rect, minus_equal, -=);
     ASSIGN_CPLX_SCALAR_OPERATOR_BOTH(rect, times_equal, *=);
@@ -249,11 +256,19 @@ namespace oln
     ARITH_CPLX_CPLX_OPERATOR(rect, times, *=);
     ARITH_CPLX_CPLX_OPERATOR(rect, div, /=);
 
-    // FIXME :
-    //ARITH_CPLX_VECTOR_OPERATOR(rect, plus, +=);
-    //ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_PLUS(rect, plus, +=);
-    //ARITH_CPLX_VECTOR_OPERATOR(rect, minus, -=);
-    //ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_MINUS(rect, minus, -=);
+    ARITH_CPLX_VECTOR_OPERATOR(rect, plus, +=);
+    ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_PLUS(rect, plus, +=);
+    ARITH_CPLX_VECTOR_OPERATOR(rect, minus, -=);
+    ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_MINUS(rect, minus, -=);
+
+    template <class T1, cplx_representation R2, class T2>
+    inline static bool cmp_eq (const cplx<rect, T1>& lhs,
+			       const cplx<R2, T2>& rhs)
+    {
+      if (lhs.real() != rhs.real() || lhs.imag() != rhs.imag())
+	return false;
+      return true;
+    }
 
   };
 
@@ -280,6 +295,13 @@ namespace oln
       return self(1);
     }
     
+    // debug
+    static std::string name() {
+      std::ostringstream out;
+      out << "cplx<polar, " <<  optraits<T>::name() << ">" << std::ends;
+      return out.str();
+    }
+
     ASSIGN_CPLX_POLAR_SCALAR_OPERATOR(plus_equal, +=);
     ASSIGN_CPLX_POLAR_SCALAR_OPERATOR(minus_equal, -=);
     ASSIGN_CPLX_SCALAR_OPERATOR_SINGLE(polar, times_equal, *=);
@@ -301,6 +323,15 @@ namespace oln
     ARITH_CPLX_CPLX_OPERATOR(polar, minus, -=);
     ARITH_CPLX_CPLX_OPERATOR(polar, times, *=);
     ARITH_CPLX_CPLX_OPERATOR(polar, div, /=);
+
+    template <class T1, cplx_representation R2, class T2>
+    inline static bool cmp_eq (const cplx<polar, T1>& lhs,
+			       const cplx<R2, T2>& rhs)
+    {
+      if (lhs.magn() != rhs.magn() || lhs.angle() != rhs.angle())
+	return false;
+      return true;
+    }
 
   };
 
@@ -326,7 +357,6 @@ namespace oln
       typedef cplx<R1, T1> impl;							\
     }
 
-    // FIXME : Weird pb with this macro : for now, no arithmetic interaction between cplx and vec
 # define CPLX_VECTOR_OPERATORS_TRAITS(Rep, Name, CommuteBool)				\
     template <class T1, class T2>					   		\
     struct operator_##Name##_traits<cplx<Rep, T1>, vec<2, T2> >				\
@@ -351,9 +381,16 @@ namespace oln
     CPLX_CPLX_OPERATORS_TRAITS(times, true);
     CPLX_CPLX_OPERATORS_TRAITS(div, true);
 
-    // FIXME:
-    //CPLX_VECTOR_OPERATORS_TRAITS(rect, plus, true);
-    //CPLX_VECTOR_OPERATORS_TRAITS(rect, minus, true);
+    CPLX_VECTOR_OPERATORS_TRAITS(rect, plus, true);
+    CPLX_VECTOR_OPERATORS_TRAITS(rect, minus, true);
+
+    template<cplx_representation R1, class T1, cplx_representation R2, class T2>
+    struct operator_cmp_traits<cplx<R1, T1>, cplx<R2, T2> >
+    {
+      enum { commutative = true };
+      typedef cplx<R1, typename deduce_from_traits<internal::operator_cmp_traits, T1, T2>::ret> ret;
+      typedef cplx<R1, T1> impl;
+    };
 
   } // end of namespace internal
 

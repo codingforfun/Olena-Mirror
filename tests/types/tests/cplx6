@@ -1,0 +1,7 @@
+cplx<rect, dfloat> rect1(42, 51);
+cplx<rect, dfloat> rect2(rect1);
+cplx<polar, dfloat> polar1(rect1);
+cplx<polar, dfloat> polar2(polar1);
+
+if (rect1 == rect2 && polar1 == polar2)
+  std::cout << "It works!" << std::endl;

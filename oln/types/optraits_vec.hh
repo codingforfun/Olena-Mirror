@@ -106,6 +106,13 @@ namespace oln
       return self();
     }
 
+    // debug
+    static std::string name() {
+      std::ostringstream out;
+      out << "vec<" << N << ", " << optraits<T>::name() << ">"<< std::ends;
+      return out.str();
+    }
+
     // No unit() for vector.
     // static storage_type unit ();
 
