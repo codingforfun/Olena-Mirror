@@ -102,12 +102,6 @@ namespace oln {
       super_type(rhs)
     {}
 
-    // self& operator=(self rhs) // shallow assignment
-//     {
-//       this->super::operator=(rhs);
-//       return *this;
-//     }
-
 //     // io
 //     image3d(const io::internal::anything& r) : super()
 //     {
@@ -118,12 +112,12 @@ namespace oln {
 //       return r.assign(*this);
 //     }
 
-//     self clone() const // deep copy
-//     {
-//       self output(nslices(), nrows(), ncols(), this->border());
-//       _clone_to(output.data());
-//       return output;
-//     }
+    self_type clone() const // deep copy
+    {
+      self_type output(nslices(), nrows(), ncols(), this->border());
+      clone_to(output.impl());
+      return output;
+    }
 
     static std::string name()
     {

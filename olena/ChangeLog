@@ -1,20 +1,28 @@
 2003-07-22  David Lesage  <david@lrde.epita.fr>
 
+	* oln/core/image1d.hh,                              
+	oln/core/image2d.hh,
+	oln/core/image3d.hh: Implement clone() procedures.
+
 	* oln/core/imagend_size.hh: Add write access to border.
 
-	* oln/core/abstract/image_with_impl.hh: Correct bug.
-
-	* oln/core/impl/image_impl.hh: Correct bug.
+	* oln/core/abstract/image_with_impl.hh: Correct bug. Implement
+	clone_to() procedure.
 
 	* oln/core/impl/image_array.hh: Change the signature of the
-	desallocation function.
+	desallocation function. Move len(size()) to...
 
+	* oln/core/impl/image_impl.hh: ...here. Correct bug. Add len()
+	procedure.
+	
 	* oln/core/impl/image_array1d.hh,
 	oln/core/impl/image_array2d.hh
 	oln/core/impl/image_array3d.hh: Correct bugs in the procedures on
 	borders.
 	
-	* tests/core/tests/borders: New file.
+	* tests/core/tests/borders: New.
+
+	* tests/core/tests/clone: New.
 
 2003-07-21  David Lesage  <david@lrde.epita.fr>
 

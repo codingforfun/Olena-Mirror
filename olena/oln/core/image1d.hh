@@ -100,26 +100,20 @@ namespace oln {
       super_type(rhs)
     {}
 
-//     self& operator=(self rhs) // shallow assignment
-//     {
-//       this->super::operator=(rhs);
-//       return *this;
-//     }
+    self_type clone() const // deep copy
+    {
+      self_type output(ncols(), this->border());
+      clone_to(output.impl());
+      return output;
+    }
 
-//     self clone() const // deep copy
-//     {
-//       self output(ncols(), this->border());
-//       _clone_to(output.data());
-//       return output;
-//     }
-
-//     static std::string name()
-//     {
-//       return
-// 	std::string("image1d<")
-// 	+ T::name() + ","
-// 	+ E::name() + ">";
-//     }
+    static std::string name()
+    {
+      return
+	std::string("image1d<")
+	+ T::name() + ","
+	+ E::name() + ">";
+    }
 
     template<class U>
     struct mute

@@ -1,0 +1,37 @@
+//								    -*- c++ -*-
+
+#include <iostream>
+
+#include <oln/basics1d.hh>
+#include <oln/basics2d.hh>
+#include <oln/basics3d.hh>
+
+#include <ntg/all.hh>
+
+int main()
+{
+  oln::image1d<ntg::int_u8> ima1(5);
+  ima1(3) = 77;
+  oln::image1d<ntg::int_u8> ima11 = ima1.clone();
+  std::cout << "Initial image" << std::endl;
+  std::cout << ima1 << std::endl;
+  std::cout << ima11 << std::endl;
+
+  oln::image2d<ntg::int_u8> ima2(2, 4);
+  for (int i = 0; i < 2; i++)
+    for (int j = 0; j < 4; j++)
+      ima2(i, j) = i*4 + j;
+  oln::image2d<ntg::int_u8> ima22 = ima2.clone();
+
+
+  std::cout << "Initial image" << std::endl;
+  std::cout << ima2 << std::endl;
+  std::cout << ima22 << std::endl;
+
+  oln::image3d<ntg::int_u8> ima3(4,2,4);
+  ima3(2,1,2) = 66;
+  oln::image3d<ntg::int_u8> ima33 = ima3.clone();
+  std::cout << "Initial image" << std::endl;
+  std::cout << ima3 << std::endl;
+  std::cout << ima33 << std::endl;
+}

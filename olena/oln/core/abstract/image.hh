@@ -77,7 +77,7 @@ namespace oln {
 	return to_exact(this)->at(p);
       }
 
-      // FIXME: this sux
+      // beware of the "assign" member function
       exact_type& operator=(exact_type rhs)
       {
 	return rhs.assign(to_exact(*this));

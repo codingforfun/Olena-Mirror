@@ -76,11 +76,6 @@ namespace oln {
 	allocate_data_(buffer_, len(s));
       }
 
-      size_t len(const size_type& s) const 
-      {
-	return to_exact(*this).len_(s);
-      }
-
       image_array(const self_type&);     // cpy ctor  w/o impl
       void operator=(const self_type&); // assign op w/o impl
 
@@ -96,6 +91,15 @@ namespace oln {
 	return buffer_;
       }
 
+      void clone_to_(exact_type* output_data) const
+      {
+	precondition(output_data != 0);
+	precondition(output_data->len() == len());
+	memcpy(output_data->buffer(),
+	       buffer_,
+	       len() * sizeof(T));
+      }
+
     protected:
       ~image_array()
       {
@@ -104,11 +108,7 @@ namespace oln {
     
       T* buffer_;
         
-    private:
-      image_array<T, ExactI, E> clone_() const
-      {
-	// FIXME: implement
-      }
+    
      
     };
     

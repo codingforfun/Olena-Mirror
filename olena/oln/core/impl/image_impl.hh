@@ -37,10 +37,6 @@
 
 namespace oln {
 
-  // FIXME: deplacer
-  template<class Ima>
-  struct image_traits;
-
   namespace impl {
 
     template<class ExactI, class Exact>
@@ -101,9 +97,9 @@ namespace oln {
 # endif
       }
 
-      exact_type clone() const
+      void clone_to(exact_type* output_data) const
       {
-	return to_exact(this)->clone_();
+	return to_exact(this)->clone_to_(output_data);
       }
 
       const size_type& size() const
@@ -114,6 +110,16 @@ namespace oln {
       size_type& size()
       {
 	return size_;
+      }
+
+      size_t len() const
+      {
+	return len(size());
+      }
+
+      size_t len(const size_type& s) const 
+      {
+	return to_exact(*this).len_(s);
       }
 
       // borders

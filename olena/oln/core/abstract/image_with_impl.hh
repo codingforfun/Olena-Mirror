@@ -134,9 +134,10 @@ namespace oln {
 	  + Exact::name() + ">";
       }
 
-      self_type clone() const
+      void clone_to(impl_type* output_data) const
       {
-	return impl_.clone();
+	assertion(impl_ != 0);
+	impl()->clone_to(output_data);
       }
 
       // borders
