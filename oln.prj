@@ -1,12 +1,23 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 12)
-(Parent-Version oln 10 11)
-(Version-Log "Minor cleanup.
+(Project-Version oln 10 13)
+(Parent-Version oln 10 12)
+(Version-Log "Index: metalic/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* mlc/type.hh (any_with_diamond): Use a static offset instead of
+	an pointer member to find the exact type instance.	
+	(mlc_init_static_hierarchy): Adjust consequently.
+
+Index: olena/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/core/abstract/image.hh: Uncomment copy constructor.
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 01 Sep 2003 19:55:03 +0200")
+(Checkin-Time "Mon, 01 Sep 2003 20:12:38 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -112,8 +123,8 @@
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.4 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.25 640))
-  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.34 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.26 640))
+  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.35 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.27 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.6 640))
 
@@ -262,7 +273,7 @@
   (olena/oln/core/abstract/struct_elt.hh (oln/c/25_structelt. 1.20 640))
   (olena/oln/core/traverse.hh (oln/d/30_traverse.h 1.11 640))
   (metalic/mlc/typeadj.hh (oln/e/25_typeadj.hh 1.6 640))
-  (metalic/mlc/type.hh (oln/c/21_type.hh 1.25 640))
+  (metalic/mlc/type.hh (oln/c/21_type.hh 1.26 640))
   (olena/oln/core/window1d.hh (oln/c/15_window1d.h 1.15 640))
   (olena/oln/core/window2d.hh (oln/c/14_window2d.h 1.17 640))
   (olena/oln/core/window3d.hh (oln/c/13_window3d.h 1.16 640))
@@ -939,7 +950,7 @@
   (olena/tests/core/image_print.sh (oln/t/24_image_prin 1.2 640))
 
 
-  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.18 640))
+  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.19 640))
   (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.18 640))
   (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.14.1.8 640))
   (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.11 640))
@@ -1024,7 +1035,7 @@
 ;; Files added by populate at Mon, 25 Aug 2003 13:48:55 +0200,
 ;; to version 10.9(w), by raph:
 
-  (olena/conf/README (oln/v/14_README 1.1 644))
+  (olena/conf/README (oln/v/14_README 1.1 640))
 )
 (Merge-Parents)
 (New-Merge-Parents)

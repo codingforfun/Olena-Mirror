@@ -51,28 +51,41 @@ namespace mlc_hierarchy
   public:
     typedef E exact_type;
     
-    E& exact()       { assert(exact_this != 0); return *exact_this; }
-    const E& exact() const { assert(exact_this != 0); return *exact_this; }
+    E& exact()       
+    { 
+      assert(offset_assigned);
+      return *(E*)((char*)this - exact_offset);
+    }
+    const E& exact() const
+    { 
+      assert(offset_assigned);
+      return *(const E*)((const char*)this - exact_offset);
+    }
    
     static std::string name() 
     { 
       return std::string("any_with_diamond<") + E::name() + ">"; 
     }
 
-  protected:
-    any_with_diamond() 
-    {
-      exact_this = 0;
-    }
-
-  protected:
-    // This stores the actual value of the exact type pointer. This
-    // enables diamond hierarchies, as static_cast cannot perform it
-    // and reinterpret_cast or (Exact*)(void*) cast are unsafe and
-    // compiler dependent.  This member should be initialized by every
-    // concrete classes, using the mlc_init_static_hierarchy macro.
-    E* exact_this;
+  public:
+    // This stores the actual value of the offset between the this
+    // pointer and the this pointer of the exact type. This enables
+    // diamond hierarchies, as static_cast cannot perform it and
+    // reinterpret_cast or (Exact*)(void*) cast are unsafe and
+    // compiler dependent. These members should be initialized by
+    // every concrete classes, using the mlc_init_static_hierarchy
+    // macro.
+    static int exact_offset;
+    // This Boolean determines if the exact_offset value has already
+    // been affected.
+    static bool offset_assigned;
   };
+
+  template <class E>
+  int any_with_diamond<E>::exact_offset = 0;
+  
+  template <class E>
+  bool any_with_diamond<E>::offset_assigned = false;
 
   // Warning, this class does not allow diamond hierarchies, consider
   // any_with_diamond if you really need it.
@@ -134,20 +147,27 @@ namespace mlc
   // mlc_init_static_hierarchy.
 
   template <class Exact, class Final>
-  struct assign_exact_this
+  struct assign_exact_offset
   {
-    template <class V>
-    static void doit(V*, Exact**)
+    template <class E>
+    static void doit(const E&)
     {}
   };
 
   template <>
-  struct assign_exact_this<mlc::final, mlc::final>
+  struct assign_exact_offset<mlc::final, mlc::final>
   {
-    template <class U>
-    static void doit(U* src, U** dest)
+    template <class E>
+    static void doit(const E* t)
     {
-      *dest = src;
+      if (!mlc_hierarchy::any_with_diamond<E>::offset_assigned)
+	{
+	  mlc_hierarchy::any_with_diamond<E>::exact_offset = 
+	    (const char*) 
+	    static_cast<const mlc_hierarchy::any_with_diamond<E>*>(t)
+	    - (const char*) t;
+	  mlc_hierarchy::any_with_diamond<E>::offset_assigned = true;
+	}
     }
   };
 
@@ -265,6 +285,6 @@ namespace mlc
 `--------------------------*/
 
 # define mlc_init_static_hierarchy(Exact) \
-mlc::assign_exact_this<Exact, mlc::final>::doit(this, &(this->exact_this))
+mlc::assign_exact_offset<Exact, mlc::final>::doit(this)
 
 #endif // ! METALIC_TYPE_HH

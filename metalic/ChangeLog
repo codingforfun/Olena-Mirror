@@ -1,3 +1,9 @@
+2003-09-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* mlc/type.hh (any_with_diamond): Use a static offset instead of
+	an pointer member to find the exact type instance.	
+	(mlc_init_static_hierarchy): Adjust consequently.
+
 2003-08-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
         * mlc/contract.hh: Fix coding style.

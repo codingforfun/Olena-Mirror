@@ -185,11 +185,11 @@ namespace oln {
       }
 
     protected:
-
-      image() 
+      image()
       {}
-      //image(self_type& rhs) {}
-
+      
+      image(self_type& rhs) 
+      {};
     };
 
   } // end of namespace abstract
