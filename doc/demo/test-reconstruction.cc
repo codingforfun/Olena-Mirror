@@ -1,4 +1,4 @@
-/* FIXME: This is not really a demo.  */
+// FIXME: This is not really a demo.
 
 #include <oln/basics2d.hh>
 
@@ -25,7 +25,7 @@ int main()
   image2d<int_u8> lena = load(IMGDIR "/lena128.pgm");
   image2d<int_u8> lena_open = morpho::opening(lena, win_c4p());
 
-  misc::timer t;
+  utils::timer t;
 
   t.start();
   morpho::sure::geodesic_reconstruction_erosion(lena, lena_open, neighb_c4());

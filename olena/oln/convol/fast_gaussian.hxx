@@ -230,9 +230,9 @@ namespace oln {
 	  }
 	};
 
-	template <class C, class I, class F>
-	typename mute<I, typename convoutput<C,Value(I)>::ret>::ret
-	gaussian_common_(const abstract::conversion<C>& c,
+	template <class C, class B, class I, class F>
+	typename mute<I, typename convoutput<C,B,Value(I)>::ret>::ret
+	gaussian_common_(const convert::abstract::conversion<C,B>& c,
 			 const abstract::image<I>& in,
 			 const F& coef)
 	{
@@ -247,7 +247,7 @@ namespace oln {
 	  /* Convert the result image to the user-requested datatype.
 	     FIXME: We are making an unnecessary copy in case the
 	     user expects a ntg::float_s image.  */
-	  typename mute<I, typename convoutput<C,Value(I)>::ret>::ret
+	  typename mute<I, typename convoutput<C,B,Value(I)>::ret>::ret
 	    out_img(in.size());
 	  for_all(it)
 	    out_img[it] = c(work_img[it]);
@@ -257,9 +257,9 @@ namespace oln {
 
       } // internal
 
-      template <class C, class I>
-      typename mute<I, typename convoutput<C,Value(I)>::ret>::ret
-      gaussian(const conversion<C>& c,
+      template <class C, class B, class I>
+      typename mute<I, typename convoutput<C,B,Value(I)>::ret>::ret
+      gaussian(const convert::abstract::conversion<C,B>& c,
 	       const abstract::image<I>& in, ntg::float_s sigma)
       {
 	internal::RecursiveFilterCoef_<float>
@@ -273,9 +273,9 @@ namespace oln {
 	return internal::gaussian_common_(c, in, coef);
       }
 
-      template <class C, class I>
-      typename mute<I, typename convoutput<C,Value(I)>::ret>::ret
-      gaussian_derivative(const conversion<C>& c,
+      template <class C, class B, class I>
+      typename mute<I, typename convoutput<C,B,Value(I)>::ret>::ret
+      gaussian_derivative(const convert::abstract::conversion<C,B>& c,
 			  const abstract::image<I>& in, ntg::float_s sigma)
       {
 	internal::RecursiveFilterCoef_<float>
@@ -290,9 +290,9 @@ namespace oln {
 	return internal::gaussian_common_(c, in, coef);
       }
 
-      template <class C, class I>
-      typename mute<I, typename convoutput<C,Value(I)>::ret>::ret
-      gaussian_second_derivative(const conversion<C>& c,
+      template <class C, class B, class I>
+      typename mute<I, typename convoutput<C,B,Value(I)>::ret>::ret
+      gaussian_second_derivative(const convert::abstract::conversion<C,B>& c,
 				 const abstract::image<I>& in, ntg::float_s sigma)
       {
 	internal::RecursiveFilterCoef_<float>

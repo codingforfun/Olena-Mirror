@@ -1,7 +1,8 @@
 ## Process this file with Automake to produce Makefile.in -*-Makefile-*-
 
 AM_CPPFLAGS = -DIMGDIR=\"$(top_srcdir)/olena/img\"
-AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_OPTIMIZE)
+AM_CXXFLAGS = $(CXXFLAGS_STRICT_ERRORS) $(CXXFLAGS_OPTIMIZE) $(ZLIB_CXXFLAGS)
+AM_LDFLAGS = $(ZLIB_LDFLAGS)
 
 # We used to declare these programs as `noinst_PROGRAMS', however
 # building them on each run of `make' turned to

@@ -11,17 +11,17 @@ multiple_sources_CXXFLAGS = $(AM_CXXFLAGS) $(FFTW_CFLAGS)
 image-print:
 	TOP_SRCDIR=$(top_srcdir) SRCDIR=$(srcdir) \
 	TOP_BUILDDIR=$(top_builddir) \
-	LDFLAGS="$(AM_LDFLAGS)" \
-	CPPFLAGS="$(AM_CPPFLAGS)" \
-	CXXFLAGS="$(AM_CXXFLAGS)" \
+	LDFLAGS="$(LDFLAGS_RUNTESTS)" \
+	CPPFLAGS="$(CPPFLAGS_RUNTESTS)" \
+	CXXFLAGS="$(CXXFLAGS_RUNTESTS)" \
 	  $(SHELL) $(srcdir)/image_print.sh
 
 other-tests: 
 	TOP_SRCDIR=$(top_srcdir) SRCDIR=$(srcdir) \
 	TOP_BUILDDIR=$(top_builddir) \
-	LDFLAGS="$(AM_LDFLAGS)" \
-	CPPFLAGS="$(AM_CPPFLAGS)" \
-	CXXFLAGS="$(AM_CXXFLAGS)" \
+	LDFLAGS="$(LDFLAGS_RUNTESTS)" \
+	CPPFLAGS="$(CPPFLAGS_RUNTESTS)" \
+	CXXFLAGS="$(CXXFLAGS_RUNTESTS)" \
 	  $(SHELL) $(srcdir)/runtests
 
 check-local: image-print other-tests

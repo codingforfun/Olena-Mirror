@@ -375,7 +375,7 @@ namespace oln {
 		}
 	    }
 	}
-      return Labels;
+      return Labels.exact();
     }
 
   } // morpho

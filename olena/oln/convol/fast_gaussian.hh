@@ -42,21 +42,22 @@ namespace oln {
   namespace convol {
     namespace fast {
 
+      // FIXME: add tests!
+
       template <class C, class B, class I>
-      typename mute<I, typename convoutput<C,Value(I)>::ret>::ret
+      typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
       gaussian(const convert::abstract::conversion<C, B>& input_conv,
 	       const abstract::image<I>& in, ntg::float_s sigma);
 
-      template <class C, class I>
-      typename mute<I, typename convoutput<C,Value(I)>::ret>::ret
+      template <class C, class B, class I>
+      typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
       gaussian_derivative(const convert::abstract::conversion<C, B>& input_conv,
 			  const abstract::image<I>& in, ntg::float_s sigma);
-      template <class C, class I>
-      typename mute<I, typename convoutput<C,Value(I)>::ret>::ret
+      template <class C, class B, class I>
+      typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
       gaussian_second_derivative(const convert::abstract::conversion<C, B>& input_conv,
 				 const abstract::image<I>& in,
 				 ntg::float_s sigma);
-
 
       /* Same functions, with a default conversion.  */
 

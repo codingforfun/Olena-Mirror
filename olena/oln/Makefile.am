@@ -19,7 +19,7 @@ nobase_oln_HEADERS =					\
   convert/basics.hh					\
   convert/bound.hh					\
   convert/abstract/colorconv.hh				\
-  convert/abstract/conversion.hh                        \
+  convert/abstract/conversion.hh			\
   convert/conversion.hh					\
   convert/conversion_ng_se.hh				\
   convert/force.hh					\
@@ -83,7 +83,8 @@ nobase_oln_HEADERS =					\
   core/image2d_size.hh					\
   core/image3d.hh					\
   core/image3d_size.hh					\
-  core/impl/image_impl.hh 				\
+  core/impl/image_impl.hh				\
+  core/impl/image_array.hh				\
   core/impl/image_array1d.hh				\
   core/impl/image_array2d.hh				\
   core/impl/image_array3d.hh				\
@@ -112,7 +113,12 @@ nobase_oln_HEADERS =					\
   io/file.hh						\
   io/gz.hh						\
   io/gz_stream.hh					\
+  io/image.hh						\
+  io/image_base.hh					\
+  io/image_read.hh					\
+  io/image_write.hh					\
   io/pnm3d.hh						\
+  io/pnm_common.hh					\
   io/pnm_read.hh					\
   io/pnm_read3d.hxx					\
   io/pnm_read_data.hh					\
@@ -123,6 +129,8 @@ nobase_oln_HEADERS =					\
   io/se.hh						\
   io/se_neighborhood.hh					\
   io/se_window.hh					\
+  io/stream_wrapper.hh					\
+  io/utils.hh						\
   level/cc.hh						\
   level/compare.hh					\
   level/connected.hh					\
