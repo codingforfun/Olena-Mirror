@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -41,6 +41,12 @@ namespace oln {
   class dpoint1d;
   class point1d;
 
+ 
+  /*! \class point_traits<point1d>
+  **
+  ** The specialized version for point1d.
+  */ 
+  
   template<>
   struct point_traits<point1d> : public point_traits<abstract::point<point1d> >
   {
@@ -48,6 +54,17 @@ namespace oln {
     typedef dpoint1d dpoint_type;
   };
 
+  /*! \class point1d
+  **
+  ** Subclass of abstract::point, declaration of point
+  ** for image1d. To instantiate a point1d on an
+  ** oln::image1d<ntg::rgb_8> for example, use the
+  ** macro oln_point_type.\n
+  ** oln_point_type(oln::image1d<ntg::rgb_8>) p();\n
+  ** or\n
+  ** oln_point_type(oln::image1d<ntg::rgb_8>) p(1);
+  */
+  
   class point1d : public abstract::point<point1d>
   {
   public:
@@ -58,12 +75,18 @@ namespace oln {
     friend class abstract::point<point1d>;
 
     point1d();
-
+    
+    /// The coordinate of the point1d is set to \a col.
+    
     point1d(coord col);
+    
+    /// Return the value of the point1d coordinate.
     
     coord 
     col() const;
     
+    /// Return a reference to the point1d coordinate.
+
     coord& 
     col();
  
@@ -75,28 +98,59 @@ namespace oln {
 
   protected:
 
+    
+    /*! \brief Return a point1d whose coordinate is equal to 
+    ** \a dp coordinate plus the current point1d coordinate.
+    */
+    
     point1d 
     plus_dp(const dpoint1d& dp) const;
   
+    /*! \brief Return a point1d whose coordinate is equal to
+    ** the current point1d coordinate minus \a dp coordinate.
+    */
+    
     point1d 
     minus_dp(const dpoint1d& dp) const;
-
+    
+    /*! \brief Return a reference to the current point1d 
+    ** plus \a dp.
+    */
+    
     point1d& 
     plus_assign_dp(const dpoint1d& dp);
 
+    /*! \brief Return a reference to the current point1d
+    ** minus \a dp.
+    */
+    
     point1d& 
     minus_assign_dp(const dpoint1d& dp);
-
+    
+    /*! \brief Return a dpoint1d whose coordinate is equal
+    ** to the current point1d coordinate minus \a p coordinate.
+    */
+    
     dpoint1d 
     minus_p(const point1d& p) const;
 
+    /*! \brief Return a point1d whose coordinate is equal to 
+    ** the opposite of the current point1d coordinate.
+    */ 
+    
     point1d 
     minus() const;
 
   };
-
+    
   namespace internal
   {
+    
+    /*! \class default_less<point1d>
+    ** 
+    ** The specialized version for point1d.
+    */
+    
     template<>
     struct default_less<point1d> : public default_less<point1d::super_type>
     {
@@ -105,6 +159,8 @@ namespace oln {
 
 
 } // oln
+
+/// Write on an output stream \a o the coordinate of the point1d \a p.
 
 inline std::ostream&
 operator<<(std::ostream& o, const oln::point1d& p);

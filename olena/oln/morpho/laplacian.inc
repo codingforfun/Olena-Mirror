@@ -54,8 +54,8 @@
 ** }
 ** \endcode
 **
-** \image html lena256.png
-** \image latex lena256.png
+** \image html lena256_pgm.png
+** \image latex lena256_pgm.png
 ** =>
 ** \image html oln_morpho_fast_laplacian.png
 ** \image latex oln_morpho_fast_laplacian.png
@@ -96,8 +96,8 @@ laplacian(const convert::abstract::conversion<C, B>& c,
 ** }
 ** \endcode
 **
-** \image html lena256.png
-** \image latex lena256.png
+** \image html lena256_pgm.png
+** \image latex lena256_pgm.png
 ** =>
 ** \image html oln_morpho_fast_laplacian_overload.png
 ** \image latex oln_morpho_fast_laplacian_overload.png

@@ -35,11 +35,18 @@
 
 # include <sstream>
 
+
 namespace oln {
 
   template<unsigned Dim, class T, class Impl, class Exact = mlc::final>
   class image; //fwd_decl
 
+  /*! \class image_id<image<Dim, T, Impl, Exact> >
+  **
+  ** Helper class used by image_traits to retrieve 
+  ** the typedef associated to an image.
+  */
+  
   template<unsigned Dim, class T, class Impl, class Exact>
   struct image_id<image<Dim, T, Impl, Exact> >
   {
@@ -49,33 +56,69 @@ namespace oln {
     typedef typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret exact_type;
   };
 
-  template<class T, unsigned Dim, class Impl, class Exact>
+  /*! \class image_traits<image<Dim, T, Impl, Exact> >
+  **
+  ** Helper class usefull to retrieve all the type
+  ** relative to an image.
+  */
+  
+  template<unsigned Dim, class T, class Impl, class Exact>
   struct image_traits<image<Dim, T, Impl, Exact> >:
     public image_traits<abstract::image_with_impl<typename image_id<image<Dim, T, Impl, Exact> >::impl_type,
 						  typename image_id<image<Dim, T, Impl, Exact> >::exact_type> >
   {
 
   };
-
+  
   // image
-
+  
+  
+  /*! \class image
+  **
+  ** Generic image class, all the classic image class (image with dim = N)
+  ** will derive from it.
+  */
+  
   template<unsigned Dim, class T, class Impl, class Exact>
   class image:
     public abstract::image_with_impl<typename image_id<image<Dim, T, Impl, Exact> >::impl_type,
 				     typename image_id<image<Dim, T, Impl, Exact> >::exact_type>
   {
-
+    
+    
   public:
 
-    typedef typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret exact_type;
-    typedef typename image_traits<exact_type>::point_type point_type;
-    typedef typename image_traits<exact_type>::dpoint_type dpoint_type;
-    typedef typename image_traits<exact_type>::iter_type iter_type;
-    typedef typename image_traits<exact_type>::fwd_iter_type fwd_iter_type;
+    typedef typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret exact_type; 
+    typedef typename image_traits<exact_type>::point_type point_type; 
+    /*!< Prefer the macro oln_point_type(I) to retrieve the point_type of
+    ** an image.
+    **
+    ** \see abstract::point
+    */
+    typedef typename image_traits<exact_type>::dpoint_type dpoint_type; 
+    /*!<  Prefer the macro oln_dpoint_type(I) to retrieve the dpoint_type of 
+    ** an image.
+    ** \see abstract::dpoint
+    **
+    */
+    typedef typename image_traits<exact_type>::iter_type iter_type; 
+    /*!< Prefer the macro oln_iter_type(I) to retrieve the iter_type of
+    ** an image.
+    **
+    ** \see abstract::iter
+    */
+    typedef typename image_traits<exact_type>::fwd_iter_type fwd_iter_type; 
+    /*!< Forward iterator type. */
     typedef typename image_traits<exact_type>::bkd_iter_type bkd_iter_type;
-    typedef typename image_traits<exact_type>::value_type value_type;
+    /*!< Backward iterator type. */
+    typedef typename image_traits<exact_type>::value_type value_type; 
+    /*!< Prefer the macro oln_value_type(I) to retrieve the value_type of
+    ** an image.
+    */
     typedef typename image_traits<exact_type>::size_type size_type;
-    typedef typename image_traits<exact_type>::impl_type impl_type;
+    /*!< Indicate how the image size is handled. */
+    typedef typename image_traits<exact_type>::impl_type impl_type; 
+    /*!< Underlying implementation. */
 
     typedef image<Dim, T, Impl, Exact> self_type;
     typedef typename abstract::image_with_impl<Impl,
@@ -86,6 +129,13 @@ namespace oln {
       mlc_init_static_hierarchy(Exact);
     }
 
+    /*! \brief The new image is a shallow copy of \a rhs.
+    ** The \a rhs points are not duplicated, they are shared by
+    ** the new image.
+    **
+    ** \see oln::abstract::image::clone()
+    */
+    
     image(self_type& rhs): super_type(rhs)
     {
       mlc_init_static_hierarchy(Exact);
@@ -100,11 +150,15 @@ namespace oln {
       return s.str();
     }
 
+    /// The image data pointer is set to \a i.
+
     image(impl_type* i) : super_type(i)
     {
       mlc_init_static_hierarchy(Exact);
     }
 
+    /// Allocate memory according to the \a size value.
+    
     image(const size_type& size) :
       super_type(new impl_type(size))
     {
@@ -113,7 +167,11 @@ namespace oln {
 
   };
 
-  // mute
+  /*! \class mute
+  **
+  ** \a ret is the same type as \a I excepted the value_type 
+  ** which will be \a T.
+  */
 
   template<class I, class T = typename mlc::exact<I>::ret::value_type>
   struct mute
@@ -121,7 +179,14 @@ namespace oln {
     typedef typename mlc::exact<I>::ret::template mute<T>::ret ret;
   };
 
-  //define img_type equals to the image of dim Dim
+  //define img_type equal to the image of dim Dim
+
+  /*! \class dim_traits
+  **
+  ** Define img_type equal to the image of dim \a Dim
+  ** the generic declaration defines nothing this class
+  ** will be specialized for each dimension.
+  */
   template <unsigned Dim, class T, class Exact = mlc::final>
   struct dim_traits
   {

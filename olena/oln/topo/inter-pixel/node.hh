@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,9 +33,15 @@
 namespace oln {
 
   namespace topo {
-
+    /// Namespace for inter pixel,
     namespace inter_pixel {
-
+      /*! Inter pixel node.
+      **
+      ** A node is a junction of edge; the edge are
+      ** represented by the directions.
+      **
+      ** \param I image.
+      */
       template<class I>
       class node
       {
@@ -51,6 +57,7 @@ namespace oln {
 	    data_[i] = false;
 	}
 
+	/// Add an adge (a direction).
 	void
 	set(dir_type i)
 	{
@@ -60,12 +67,13 @@ namespace oln {
 	  data_[i] = true;
 	}
 
+	/// Return true if the direction \i joins the node.
 	bool
-	get(dir_type i) const 
-	{ 
+	get(dir_type i) const
+	{
 	  return data_[i];
 	}
-
+	/// Degree of the node.
 	unsigned
 	rank() const
 	{
@@ -76,10 +84,11 @@ namespace oln {
 	unsigned rank_;
 	bool data_[dim * 2];
       };
-
+/// Type of node of a given image type.
 # define oln_node_type(ImgType)			\
 oln::topo::inter_pixel::node< ImgType >
 
+/// A pair of a point and a direction.
 # define oln_head_type(ImgType)						\
 typename std::pair<oln_point_type(ImgType), oln_dir_type(ImgType) >
 

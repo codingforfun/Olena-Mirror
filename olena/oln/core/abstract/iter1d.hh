@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -42,44 +42,73 @@ namespace oln {
 
   namespace abstract {
     template<class Exact>
-    class iter1d; // fwd_decl
+    class iter1d; // forward declaration
   } // end of abstract
 
+  /*!
+  ** \brief Traits for iter::iter1d.
+  */
   template<class Exact>
   struct iter_traits<abstract::iter1d<Exact> >: public
   iter_traits<abstract::iter<Exact> >
   {
-    enum { dim = 1 };
-    typedef point1d point_type;
-    typedef dpoint1d dpoint_type;
+    enum { dim = 1 }; ///< The dimension of the image traversed.
+    typedef point1d point_type; ///< The type of point of the image.
+    typedef dpoint1d dpoint_type; ///< The type of dpoint of the image.
   };
 
   namespace abstract {
 
+    /*!
+    ** \brief Iterator on image of 1 dimension.
+    **
+    ** Allow iterable object (like image, window, ...) of 1 dimension
+    ** traversing.
+    ** \see iter
+    */
     template<class Exact>
     class iter1d : public iter< Exact >
     {
     public:
 
-      typedef iter<Exact> super_type;
+      typedef iter<Exact> super_type; ///< The exact type of the object.
+
       friend class iter<Exact>;
 
-      coord 
+      /*!
+      ** \brief Get the coordinates of iterator's current point.
+      **
+      ** On this kind of image, all point are on the same line. So
+      ** you are able to get the column number by this way (and never the
+      ** line number).
+      */
+      coord
       col() const
       {
 	return this->p_.col();
       }
 
-      static std::string name() 
-      { 
-	return std::string("_iter1d<") + Exact::name() + ">"; 
+      /*!
+      ** \brief Return his type in a string.
+      ** \return The type in a string.
+      **
+      ** Very useful to debug.
+      */
+      static std::string name()
+      {
+	return std::string("_iter1d<") + Exact::name() + ">";
       }
 
     protected:
 
-      const coord ncols_;
+      const coord ncols_; ///< The number of column of the image you are iterating
 
-      point1d 
+      /*!
+      ** \brief Get the current point viewed by the iterator.
+      ** \return The point (1 dimension) viewed by the iterator.
+      ** \pre Instance != end.
+      */
+      point1d
       to_point() const
       {
 	precondition(*this != end);
@@ -88,9 +117,19 @@ namespace oln {
 	return this->p_;
       }
 
-      iter1d() : super_type(), ncols_(0) 
+      /*!
+      ** \brief Constructor
+      */
+      iter1d() : super_type(), ncols_(0)
       {}
 
+      /*!
+      ** \brief Constructor
+      ** \arg size The size of the image to iterate.
+      ** \pre size.ncols() > 0.
+      **
+      ** Construct an iterator (1d) on an image (1d).
+      */
       iter1d(const image1d_size& size) :
 	super_type(), ncols_(size.ncols())
       {

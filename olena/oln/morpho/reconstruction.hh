@@ -84,8 +84,8 @@ namespace oln {
       ** }
       ** \endcode
       **
-      ** \image html lena128.png
-      ** \image latex lena128.png
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
       ** =>
       ** \image html oln_morpho_sure_geodesic_reconstruction_dilation.png
       ** \image latex oln_morpho_sure_geodesic_reconstruction_dilation.png
@@ -156,8 +156,8 @@ namespace oln {
       ** }
       ** \endcode
       **
-      ** \image html lena128.png
-      ** \image latex lena128.png
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
       ** =>
       ** \image html oln_morpho_sequential_geodesic_reconstruction_dilation.png
       ** \image latex oln_morpho_sequential_geodesic_reconstruction_dilation.png
@@ -272,8 +272,8 @@ namespace oln {
       ** }
       ** \endcode
       **
-      ** \image html lena128.png
-      ** \image latex lena128.png
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
       ** =>
       ** \image html oln_morpho_hybrid_geodesic_reconstruction_dilation.png
       ** \image latex oln_morpho_hybrid_geodesic_reconstruction_dilation.png
@@ -377,8 +377,8 @@ namespace oln {
       ** }
       ** \endcode
       **
-      ** \image html lena128.png
-      ** \image latex lena128.png
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
       ** =>
       ** \image html oln_morpho_sure_geodesic_reconstruction_erosion.png
       ** \image latex oln_morpho_sure_geodesic_reconstruction_erosion.png
@@ -450,8 +450,8 @@ namespace oln {
       ** }
       ** \endcode
       **
-      ** \image html lena128.png
-      ** \image latex lena128.png
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
       ** =>
       ** \image html oln_morpho_sequential_geodesic_reconstruction_erosion.png
       ** \image latex oln_morpho_sequential_geodesic_reconstruction_erosion.png
@@ -562,8 +562,8 @@ namespace oln {
       ** }
       ** \endcode
       **
-      ** \image html lena128.png
-      ** \image latex lena128.png
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
       ** =>
       ** \image html oln_morpho_hybrid_geodesic_reconstruction_erosion.png
       ** \image latex oln_morpho_hybrid_geodesic_reconstruction_erosion.png

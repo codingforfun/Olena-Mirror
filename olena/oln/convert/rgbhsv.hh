@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -40,9 +40,9 @@
 
 # include <sstream>
 
-/*-----------------------------------------------------------------.
-| The formulas used here come from ``Color Conversion Algorithms'' |
-`-----------------------------------------------------------------*/
+/*! \file rgbhsv.hh
+** \ref The formulas used here come from ``Color Conversion Algorithms''
+*/
 
 namespace oln {
 
@@ -50,6 +50,10 @@ namespace oln {
 
   namespace convert {
 
+    /*! Functor for conversion from RGB to HSV.
+    **
+    ** \see f_rgb_to_hsl
+    */
     template<unsigned inbits, unsigned outbits>
     struct f_rgb_to_hsv
       : public abstract::color_conversion<3, inbits, rgb_traits,
@@ -98,6 +102,10 @@ namespace oln {
       }
     };
 
+    /*! Conversion from RGB to HSV.
+    **
+    ** \see f_rgb_to_hsl
+    */
     template <unsigned inbits, unsigned outbits>
     color<3, outbits, hsv_traits>
     rgb_to_hsv(const color<3, inbits, rgb_traits>& v)
@@ -106,6 +114,10 @@ namespace oln {
       return f(v);
     }
 
+    /*! Functor conversion from HSV to RGB.
+    **
+    ** \see f_rgb_to_hsl
+    */
     template<unsigned inbits, unsigned outbits>
     struct f_hsv_to_rgb
       : public abstract::color_conversion<3, inbits, hsv_traits,
@@ -174,6 +186,10 @@ namespace oln {
       }
     };
 
+    /*! Conversion from HSV to RGB.
+    **
+    ** \see f_rgb_to_hsl
+    */
     template <unsigned inbits, unsigned outbits>
     color<3, outbits, rgb_traits>
     hsv_to_rgb(const color<3, inbits, hsv_traits>& v)

@@ -32,15 +32,16 @@
 # include <oln/core/abstract/dpoint.hh>
 # include <oln/core/abstract/struct_elt.hh>
 
-namespace oln
-{
+namespace oln {
 
-  namespace abstract
-  {
+  namespace abstract {
     template<class Exact>
-    struct neighborhood; // fwd_decl
+    struct neighborhood; // forward declaration
   } // end of abstract
 
+  /*!
+  ** \brief Traits for abstract::neighborhood.
+  */
   template<class Exact>
   struct struct_elt_traits<abstract::neighborhood<Exact> >
   {
@@ -50,121 +51,219 @@ namespace oln
   namespace abstract
   {
 
+    /*!
+    **
+    ** \brief Neighborhood.
+    **
+    ** It looks like structuring elements but here, when
+    ** you add an element, you add his opposite (cf mathematical
+    ** definition to know more about).
+    ** This abstract class defines several virtual methods for his
+    ** subclasses. His aim is to deal with a set of deplacement points.
+    **
+    */
     template<class Exact>
     struct neighborhood : public mlc_hierarchy::any<Exact>
     {
-      typedef Exact exact_type;
-      typedef neighborhood<Exact> self_type;
+      typedef Exact exact_type; ///< Set the exact type.
+      typedef neighborhood<Exact> self_type; ///< Set his type.
+
+      /*!
+      ** \brief The associate image's type of iterator.
+      ** \warning Prefer the macros oln_iter_type(Iterable) and
+      ** oln_iter_type_(Iterable) (the same without the 'typename' keyword)
+      */
       typedef typename struct_elt_traits<Exact>::iter_type iter_type;
+
       typedef typename struct_elt_traits<Exact>::neighb_type neighb_type;
+      ///< Set the neighborhood type.
       typedef typename struct_elt_traits<Exact>::win_type win_type;
+      ///< Set the window type.
 
+      /*!
+      ** \brief The associate image's type of dpoint (move point).
+      ** \warning Prefer the macros oln_dpoint_type(Pointable) and
+      ** oln_dpoint_type_(Pointable) (the same without the 'typename' keyword)
+      */
       typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
-      typedef typename struct_elt_traits<Exact>::abstract_type abstract_type;
-      enum { dim = struct_elt_traits<Exact>::dim };
 
+      typedef typename struct_elt_traits<Exact>::abstract_type abstract_type;
+      ///< Set the abstract type.
+
+      enum { dim = struct_elt_traits<Exact>::dim };
+      ///< Set the dim of the points of the neighborhood.
+
+      /*!
+      ** \brief Return his type in a string.
+      ** \return The type in a string.
+      **
+      ** Very useful to debug.
+      */
       static std::string
       name()
       {
 	return std::string("neighborhood<") + Exact::name() + ">";
       }
 
+      /*!
+      ** \brief Test if the set of points contains this one.
+      ** \arg dp a dpoint (deplacement point).
+      ** \return True if the set of points contains this dpoint.
+      */
       bool
       has(const abstract::dpoint<dpoint_type>& dp) const
       {
 	return this->exact().has_(dp.exact());
       }
 
+      /*!
+      ** \brief Get the number of point we get.
+      ** \return The number of point.
+      */
       unsigned
       card() const
       {
 	return this->exact().card_();
       }
 
+      /*!
+      ** \brief Test if the neighborhood is centered.
+      ** \return True if it's centered.
+      **
+      ** Neighborhood are centered when they contains at least one
+      ** element.
+      */
       bool
       is_centered() const
       {
 	return this->exact().is_centered_();
       }
 
+      /*!
+      ** \brief Get the nth element of the neighborhood.
+      ** \arg i The nth.
+      ** \return The nth dpoint.
+      */
       const dpoint_type
       dp(unsigned i) const
       {
 	return this->exact()[i];
       }
 
+      /*!
+      ** \brief Compare two sets of structuring elements.
+      ** \arg win The structuring elements to compare.
+      ** \return True if they are the same.
+      */
       bool
       operator==(const self_type& win) const
       {
 	return this->exact().is_equal(win.exact());
       }
 
+      /*!
+      ** \brief Get the delta of the neighborhood.
+      ** \return Delta.
+      **
+      ** Delta is the biggest element of the neighborhood.
+      */
       coord
       delta() const
       {
 	return this->exact().get_delta();
       }
 
+      /*!
+      ** \brief Get the nth element of the neighborhood.
+      ** \arg i The nth.
+      ** \return The nth dpoint.
+      */
       const dpoint_type
       operator[](unsigned i) const
       {
 	return this->exact().at(i);
       }
 
+      /*!
+      ** \brief Add a point to the neighborhood.
+      ** \arg dp The new point.
+      **
+      ** Add a new member to the neighborhood.
+      */
       exact_type&
       add(const abstract::dpoint<dpoint_type>& dp)
       {
 	this->exact().add_(dp.exact());
 	return this->exact().add_(-dp.exact());
       }
+
+
       // obsolete
-      exact_type
-      operator-() const
-      {
-	return this->exact();
-      }
+//       exact_type
+//       operator-() const
+//       {
+// 	return this->exact();
+//       }
 
     protected:
 
+      /*!
+      ** \brief Set neighborhood to opposite.
+      **
+      ** Each point of neighborhood is assigned to his opposite.
+      **
+      */
       void
       sym()
       {
 	this->exact().sym_();
       }
 
+      /*!
+      ** \brief Do nothing, used only by sub-classes
+      */
       neighborhood()
       {}
     };
 
   } // end of abstract
 
-    template<class E>
-    inline E
-    inter(const abstract::neighborhood<E> &lhs,
-	  const abstract::neighborhood<E> &rhs)
-    {
-      E neighb;
-      for (unsigned j = 0; j < rhs.card(); ++j)
-	if (lhs.has(rhs.dp(j)) && ! neighb.has(rhs.dp(j)))
-	  neighb.add(rhs.dp(j));
-      return neighb;
-    }
-
-    template<class E>
-    inline E
-    uni(const abstract::neighborhood<E> &lhs,
+  /*!
+  ** \brief Compute intersection between two neighborhood
+  */
+  template<class E>
+  inline E
+  inter(const abstract::neighborhood<E> &lhs,
 	const abstract::neighborhood<E> &rhs)
-    {
-      E neighb;
-      for (unsigned j = 0; j < rhs.card(); ++j)
+  {
+    E neighb;
+    for (unsigned j = 0; j < rhs.card(); ++j)
+      if (lhs.has(rhs.dp(j)) && ! neighb.has(rhs.dp(j)))
+	neighb.add(rhs.dp(j));
+    return neighb;
+  }
+
+  /*!
+  ** \brief Compute union between two neighborhood
+  */
+  template<class E>
+  inline E
+  uni(const abstract::neighborhood<E> &lhs,
+      const abstract::neighborhood<E> &rhs)
+  {
+    E neighb;
+    for (unsigned j = 0; j < rhs.card(); ++j)
 	if (! neighb.has(rhs.dp(j)))
 	  neighb.add(rhs.dp(j));
-      for (unsigned j = 0; j < lhs.card(); ++j)
-	if (! neighb.has(lhs.dp(j)))
-	  neighb.add(lhs.dp(j));
+    for (unsigned j = 0; j < lhs.card(); ++j)
+      if (! neighb.has(lhs.dp(j)))
+	neighb.add(lhs.dp(j));
       return neighb;
-    }
+  }
 
+  /*!
+  ** \brief Construct a window from a neighborhood.
+  */
   template<class E>
   inline typename struct_elt_traits<E>::win_type
   mk_win_from_neighb(const abstract::neighborhood<E>& n)

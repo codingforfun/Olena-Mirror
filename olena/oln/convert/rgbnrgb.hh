@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,17 +37,21 @@
 
 # include <sstream>
 
-/*--------------------------------------------------------------.
-| The formulas used here come from ``Digital Image Processing   |
-| Algorithms and Applications'', I. Pitas; Wiley-Interscience.  |
-`--------------------------------------------------------------*/
+/*! \file rgbnrgb.hh
+** \ref The formulas used here come from ``Digital Image Processing
+** Algorithms and Applications'', I. Pitas; Wiley-Interscience.
+*/
 
 namespace oln {
 
   using namespace ntg;
-  
+
   namespace convert {
 
+    /*! Functor for conversion from RGB to N-RGB.
+    **
+    ** \see f_rgb_to_hsl
+    */
     template<unsigned inbits, unsigned outbits>
     struct f_rgb_to_nrgb
       : public abstract::color_conversion<3, inbits, rgb_traits,
@@ -67,15 +71,19 @@ namespace oln {
 	return out;
       }
 
-      static std::string 
-      name() 
-      { 
+      static std::string
+      name()
+      {
 	std::ostringstream s;
-	s << "f_rgb_to_nrgb<" << inbits << ", " << outbits << '>'; 
+	s << "f_rgb_to_nrgb<" << inbits << ", " << outbits << '>';
 	s.str();
-      }    
+      }
     };
 
+    /*! Conversion from RGB to N-RGB.
+    **
+    ** \see f_rgb_to_hsl
+    */
     template <unsigned inbits, unsigned outbits>
     color<3, outbits, nrgb_traits>
     rgb_to_nrgb(const color<3, inbits, rgb_traits>& v)
@@ -85,6 +93,10 @@ namespace oln {
       return f(v);
     }
 
+    /*! Functor for conversion from N-RGB to RGB.
+    **
+    ** \see f_rgb_to_hsl
+    */
     template <unsigned inbits, unsigned outbits>
     struct f_nrgb_to_rgb
       : public abstract::color_conversion<3, inbits, nrgb_traits,
@@ -104,15 +116,19 @@ namespace oln {
 	return out;
       }
 
-      static std::string 
-      name() 
-      { 
+      static std::string
+      name()
+      {
 	std::ostringstream s;
-	s << "f_nrgb_to_rgb<" << inbits << ", " << outbits << '>'; 
+	s << "f_nrgb_to_rgb<" << inbits << ", " << outbits << '>';
 	s.str();
       }
     };
 
+    /*! Conversion from N-RGB to RGB.
+    **
+    ** \see f_rgb_to_hsl
+    */
     template <unsigned inbits, unsigned outbits>
     color<3, outbits, rgb_traits>
     nrgb_to_rgb(const color<3, inbits, nrgb_traits>& v)

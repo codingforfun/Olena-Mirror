@@ -16,8 +16,8 @@ doxy:
 	$(EXDOC) --config=$(OUT_DIR)/exdoc.config  --output-dir=$(OUT_DIR) --input-dir=$(top_srcdir)
 	mkdir -p img
 	cd $(OUT_DIR) && make -f makefile
-	$(IMG_CONV) $(top_srcdir)/olena/img img
-	$(IMG_CONV) img img
+	$(IMG_CONV) $(top_srcdir)/olena/img img preserve
+	$(IMG_CONV) img img nopreserve
 	$(DOXYGEN) doxygen.config
 
 html.tar.gz: doxy

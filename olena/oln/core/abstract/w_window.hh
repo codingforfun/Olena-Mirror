@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,17 +31,17 @@
 # include <oln/core/abstract/struct_elt.hh>
 # include <oln/core/abstract/dpoint.hh>
 
-namespace oln 
-{
+namespace oln {
 
-  namespace abstract 
-  {
-    
+  namespace abstract  {
     template<class Exact>
-    struct w_window; // fwd_decl
-    
+    struct w_window; // forwarding declaration
+
   } // end of abstract
-  
+
+  /*!
+  ** \brief Traits for abstract::w_window.
+  */
   template<class Exact>
   struct struct_elt_traits<abstract::w_window<Exact> > : public
   struct_elt_traits<abstract::struct_elt<Exact> >
@@ -49,41 +49,78 @@ namespace oln
 
   };
 
-  namespace abstract 
+  namespace abstract
   {
 
+    /*!
+    ** \brief Weight Window.
+    **
+    ** A w_window is a set of points associated with a weight. This class
+    ** defines how to deal with.
+    */
     template<class Exact>
     struct w_window : public struct_elt< Exact >
     {
-      typedef Exact exact_type;
-      typedef struct_elt<Exact> super_type;     
+      typedef Exact exact_type; ///< Set the exact type.
+      typedef struct_elt<Exact> super_type; ///< Set the super type.
+
+      /*!
+      ** \brief The associate image's type of dpoint (move point).
+      ** \warning Prefer the macros oln_dpoint_type(Pointable) and
+      ** oln_dpoint_type_(Pointable) (the same without the 'typename' keyword)
+      */
       typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
+
       typedef typename struct_elt_traits<Exact>::weight_type weight_type;
+      ///< Set the type of weight.
       friend class struct_elt<exact_type>;
 
-      static std::string 
+      /*!
+      ** \brief Return his type in a string.
+      ** \return The type in a string.
+      **
+      ** Very useful to debug.
+      */
+      static std::string
       name()
       {
 	return std::string("w_window<") + Exact::name() + ">";
       }
 
-      // FIXME: 
-      // add dpoint with default weight 
-      // (multiplication neutral element)
-      exact_type& 
+      /*!
+      ** \brief Add a point (with weight) to the w_window.
+      **
+      ** Add a new member to the w_window.
+      **
+      ** \todo FIXME: Add dpoint with default weight
+      ** (multiplication neutral element).
+      */
+      exact_type&
       add(const abstract::dpoint<dpoint_type>& dp, const weight_type& w = 1)
       {
 	return this->exact().add_(dp.exact(), w);
       }
 
-      weight_type 
+      /*!
+      ** \brief Get the weight of a point.
+      ** \arg i The nth point.
+      ** \return The weight of the point.
+      */
+      weight_type
       w(unsigned i) const
       {
 	return this->exact().get_weight(i);
       }
 
-      const weight_type& 
-      set(const abstract::dpoint<dpoint_type>& dp, 
+      /*!
+      ** \brief Set the weight of a point if it exists. Otherwise
+      ** create a new entry.
+      ** \arg dp The point.
+      ** \arg weight The weight of the point.
+      ** \return The weight of the point.
+      */
+      const weight_type&
+      set(const abstract::dpoint<dpoint_type>& dp,
 	  const weight_type& weight)
       {
 	return this->exact().set_(dp.exact(), weight);
@@ -91,10 +128,14 @@ namespace oln
 
     protected:
 
-      // FIXME: 
-      // add dpoint with default weight 
-      // (multiplication neutral element)
-      exact_type& 
+      /*!
+      ** \brief Add a new point with a weight of 1.
+      ** \arg dp The point.
+      **
+      ** \todo FIXME: Add dpoint with default weight
+      ** (multiplication neutral element).
+      */
+      exact_type&
       add_dp(const abstract::dpoint<dpoint_type>& dp)
       {
 	return this->add(dp.exact(), 1);
@@ -102,15 +143,22 @@ namespace oln
 
     protected:
 
-      w_window() : super_type() 
+      /*!
+      ** \brief Do nothing, used only by sub-classes
+      */
+      w_window() : super_type()
       {}
 
     };
-    
+
   } // end of abstract
 
+
+  /*!
+  ** \brief Compute intersection between two w_windows
+  */
   template<class E>
-  inline E 
+  inline E
   inter(const abstract::w_window<E>& lhs, const abstract::w_window<E>& rhs)
   {
     E win;
@@ -123,8 +171,11 @@ namespace oln
     return win;
   }
 
+  /*!
+  ** \brief Compute union between two  w_windows
+  */
   template<class E>
-  inline E 
+  inline E
   uni(const abstract::w_window<E>& lhs, const abstract::w_window<E>& rhs)
   {
     E win;

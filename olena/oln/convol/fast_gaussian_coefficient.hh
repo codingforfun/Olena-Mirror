@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -50,6 +50,10 @@ namespace oln {
     namespace fast {
       namespace internal {
 
+	/*!
+	** \brief Data structure for coefficients used for a recursive
+	** filter call.
+	*/
 	template < class FloatT >
 	struct recursivefilter_coef_
 	{
@@ -57,6 +61,9 @@ namespace oln {
 			    DericheGaussianFirstDerivative,
 			    DericheGaussianSecondDerivative };
 
+	  /*!
+	  ** \brief Constructor.
+	  */
 	  recursivefilter_coef_(FloatT a0, FloatT a1,
 			       FloatT b0, FloatT b1,
 			       FloatT c0, FloatT c1,
@@ -66,8 +73,10 @@ namespace oln {
 	  FloatT		sumA, sumC;
 	};
 
-	/* Define out of the struct so the compiler don't even attempt
-	   to inline this.  */
+	/*
+	** Define out of the struct so the compiler don't even attempt
+	** to inline this.
+	*/
 	template < class FloatT >
 	recursivefilter_coef_<FloatT>
 	::recursivefilter_coef_(FloatT a0, FloatT a1,

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,13 +35,13 @@
 namespace oln {
   namespace convert {
 
-    /* Like cast::force, but as a conversion functor.  */
+    /*! Like cast::force, but as a conversion functor.  */
     template<class Output, class Exact = mlc::final>
     struct force : public abstract::conversion_to_type< Output, typename mlc::exact_vt<force<Output, Exact>, Exact>::ret >
     {
       template< class Input >
-      Output 
-      doit(const Input& v) const 
+      Output
+      doit(const Input& v) const
       {
 	return ntg::cast::force<Output>(v);
       }
@@ -55,7 +55,7 @@ namespace oln {
 	  + Exact::name() + ">";
       }
     };
-    
+
   } // convert
 } // oln
 

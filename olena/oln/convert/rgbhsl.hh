@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -41,15 +41,44 @@
 # include <cstdlib>
 # include <sstream>
 
-/*------------------------------------------------------------------.
-| The formulas used here come from ``Color space conversion''; Paul |
-| Bourke.                                                           |
-`------------------------------------------------------------------*/
+/*! \file rgbhsl.hh
+**
+** \ref The formulas used here come from ``Color space conversion''; Paul
+** Bourke.
+*/
 namespace oln {
 
   using namespace ntg;
 
   namespace convert {
+    /*! Functor for conversion from RGB to HSL color space.
+    **
+    ** \note Every conversion should go though the RGB color space.
+    **
+    ** \code
+    ** #include <oln/basics2d.hh>
+    ** #include <oln/convert/rgbhsl.hh>
+    ** #include <ntg/all.hh>
+    **
+    ** int main()
+    ** {
+    **   oln::image2d<ntg::rgb_8> lena_rgb = oln::load(IMG_IN "lena.ppm");
+    **
+    **   oln::image2d<ntg::hsl_8> lena_hsl = apply(oln::convert::f_rgb_to_hsl<8, 8>(), lena_rgb);
+    **   oln::image2d<ntg::hsl_8>::iter_type it(lena_hsl);
+    **   for_all(it)
+    **     lena_hsl[it][ntg::hsl_L] = 127;
+    **
+    **   oln::io::save(apply(oln::convert::f_hsl_to_rgb<8, 8>(), lena_hsl),
+    ** 		IMG_OUT "oln_convert_f_rgb_to_hsl.pgm");
+    ** }
+    ** \endcode
+    ** \image html lena_ppm.png
+    ** \image latex lena_ppm.png
+    ** =>
+    ** \image html oln_convert_f_rgb_to_hsl.png
+    ** \image latex oln_convert_f_rgb_to_hsl.png
+    */
     template<unsigned inbits, unsigned outbits>
     struct f_rgb_to_hsl
       : public abstract::color_conversion<3, inbits, rgb_traits,
@@ -104,6 +133,10 @@ namespace oln {
       }
     };
 
+    /*! Conversion from RGB to HSL color space.
+    **
+    ** \see f_rgb_to_hsl
+    */
     template <unsigned inbits, unsigned outbits>
     color<3, inbits, hsl_traits>
     rgb_to_hsl(const color<3, outbits, rgb_traits>& v)
@@ -131,6 +164,10 @@ namespace oln {
       }
     }
 
+    /*! Functor for conversion from HSL to RGB color space.
+    **
+    ** \see f_rgb_to_hsl
+    */
     template<unsigned inbits, unsigned outbits>
     struct f_hsl_to_rgb
       : public abstract::color_conversion<3, inbits, hsl_traits,
@@ -171,6 +208,10 @@ namespace oln {
       }
     };
 
+    /*! Conversion from HSL to RGB color space.
+    **
+    ** \see f_rgb_to_hsl
+    */
     template<unsigned inbits, unsigned outbits>
     color<3, outbits, rgb_traits>
     hsl_to_rgb(const color<3, inbits, hsl_traits>& v)

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,34 +32,54 @@
 # include <oln/core/winneighb.hh>
 # include <oln/core/abstract/dpoint.hh>
 
-namespace oln 
-{
+namespace oln {
 
-  namespace abstract 
-  {
+  namespace abstract {
     template<class Exact>
-    struct window; // fwd_decl
+    struct window; // forward declaration
   } // end of abstract
 
+  /*!
+  ** Traits for abstract::neighborhood
+  */
   template<class Exact>
   struct struct_elt_traits<abstract::window<Exact> > : public
-  struct_elt_traits<abstract::struct_elt<Exact> >
+  struct_elt_traits< abstract::struct_elt<Exact> >
   {
-    
+
   };
 
-  namespace abstract 
+  namespace abstract
   {
-    
+
+    /*!
+    ** \brief Window.
+    **
+    ** A window is a set of points and this class defines how to deal
+    ** with.
+    */
     template<class Exact>
     struct window : public struct_elt<Exact>
     {
-      typedef struct_elt<Exact> super_type;
-      typedef Exact exact_type;      
+      typedef struct_elt<Exact> super_type; ///< Set super type.
+      typedef Exact exact_type; ///< Set exact type.
+
+      /*!
+      ** \brief The associate image's type of dpoint (move point).
+      ** \warning Prefer the macros oln_dpoint_type(Pointable) and
+      ** oln_dpoint_type_(Pointable) (the same without the 'typename' keyword)
+      */
       typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
+
       friend class struct_elt<exact_type>;
 
-      static std::string 
+      /*!
+      ** \brief Return his type in a string.
+      ** \return The type in a string.
+      **
+      ** Very useful to debug.
+      */
+      static std::string
       name()
       {
 	return std::string("window<") + Exact::name() + ">";
@@ -67,21 +87,32 @@ namespace oln
 
     protected:
 
-      exact_type& 
+      /*!
+      ** \brief Add a point to the window.
+      **
+      ** Add a new member to the window.
+      */
+      exact_type&
       add_dp(const abstract::dpoint<dpoint_type>& dp)
       {
 	return this->exact().add_(dp.exact());
       }
 
-      window() : super_type() 
+      /*!
+      ** \brief Do nothing, used only by sub-classes
+      */
+      window() : super_type()
       {}
 
     };
 
   } // end of abstract
 
+  /*!
+  ** \brief Compute intersection between two windows
+  */
   template<class E>
-  inline E 
+  inline E
   inter(const abstract::window<E>& lhs, const abstract::window<E>& rhs)
   {
     E win;
@@ -94,8 +125,11 @@ namespace oln
     return win;
   }
 
+  /*!
+  ** \brief Compute union between two windows
+  */
   template<class E>
-  inline E 
+  inline E
   uni(const abstract::window<E>& lhs, const abstract::window<E>& rhs)
   {
     E win;

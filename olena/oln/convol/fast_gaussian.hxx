@@ -38,12 +38,32 @@
 namespace oln {
   namespace convol {
     namespace fast {
+      /*!
+      ** \brief oln::convol::fast::internal namespace.
+      **
+      ** You can find here function used for fast algorithms.
+      */
       namespace internal {
 
-	// Recursive filter, works on a line.
-	// FIXME: Until something clever is designed, the line is
-	// defined by two points (START and FINISH) and a displacement
-	// dpoint (D).
+	/*!
+	** \brief Recursive filter.
+	**
+	** Recursive filter, works on a line.
+	** FIXME: Until something clever is designed, the line is
+	** defined by two points (START and FINISH) and a displacement
+	** dpoint (D).
+	**
+	** \param Worktype Type the algorithm work on.
+	** \param FloatType Type of coefficients.
+	** \param I Type of image.
+	**
+	** \arg image Image to process.
+	** \arg c Coefficients.
+	** \arg start Start of the line.
+	** \arg finish End point of the line.
+	** \arg len Length of data to process.
+	** \arg d Displacement dpoint.
+	*/
 	template <class WorkType, class FloatType, class I>
 	void
 	recursivefilter_(I& image,
@@ -143,7 +163,11 @@ namespace oln {
 	    }
 	}
 
-
+	/*!
+	** \brief Compute the gaussian filter.
+	**
+	** Look at specialization for details.
+	*/
 	template<unsigned dim>
 	struct gaussian_ {};
 
@@ -230,6 +254,20 @@ namespace oln {
 	  }
 	};
 
+	/*!
+	** \brief Common  code for filter (derivative,
+	** second derivative, etc.).
+	**
+	** \param C Exact type of the conversion object.
+	** \param B Base type of the conversion object.
+	** \param I Exact type of the image.
+	** \param BE Exact type of the behavior.
+	**
+	** \arg input_conv Converter object.
+	** \arg in Input image.
+	** \arg sigma Value of sigma when computing the gaussian.
+	** \arg behavior Object to know how to work on borders.
+	*/
 	template <class C, class B, class I, class F, class BE>
 	typename mute<I, typename convoutput<C,B,oln_value_type(I)>::ret>::ret
 	gaussian_common_(const convert::abstract::conversion<C,B>& c,

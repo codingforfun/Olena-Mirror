@@ -73,8 +73,8 @@
 **   return  0;
 ** }
 ** \endcode
-** \image html object.png
-** \image latex object.png
+** \image html object_pbm.png
+** \image latex object_pbm.png
 ** =>
 ** \image html oln_morpho_closing.png
 ** \image latex oln_morpho_closing.png

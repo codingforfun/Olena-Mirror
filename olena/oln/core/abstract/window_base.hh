@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,63 +39,108 @@
 # include <vector>
 # include <utility>
 
-namespace oln
-{
-  namespace abstract
-  {
-    template<class Sup, class Exact>
-    struct window_base; // fwd_decl
+namespace oln {
 
+  namespace abstract {
+    template<class Sup, class Exact>
+    struct window_base; // forwarding declaration
   } // end of abstract
 
-  
+  /*!
+  ** \brief Traits for abstract::window_base.
+  */
   template<class Sup, class Exact>
   struct struct_elt_traits<abstract::window_base<Sup, Exact> >: public struct_elt_traits<Sup>
   {
-    
+
   };
 
-
+  /*!
+  ** Used for conditionnal friend in window_base class.
+  */
   template<class Sup>
   struct window_base_friend_traits;
 
+  /*!
+  ** If window_base inherits from neighborhood, then mother is neighborhood.
+  */
   template< class Exact>
-  struct window_base_friend_traits<abstract::neighborhood<Exact> >
+  struct window_base_friend_traits< abstract::neighborhood<Exact> >
   {
     typedef abstract::neighborhood<Exact> ret;
   };
 
+  /*!
+  ** If window_base inherits from window, then mother is struct_elt.
+  */
   template< class Exact>
-  struct window_base_friend_traits<abstract::window<Exact> >
+  struct window_base_friend_traits< abstract::window<Exact> >
   {
     typedef abstract::struct_elt<Exact> ret;
   };
 
+  /*!
+  ** If window_base inherits from w_window, then mother is struct_elt.
+  */
   template< class Exact>
-  struct window_base_friend_traits<abstract::w_window<Exact> >
+  struct window_base_friend_traits< abstract::w_window<Exact> >
   {
     typedef abstract::struct_elt<Exact> ret;
   };
 
   namespace abstract
   {
+
+    /*!
+    ** \brief Window Base.
+    **
+    ** A window is a set of points and this class defines how to deal
+    ** with. This class regroups common things for window, w_window (weight
+    ** window) and neighborhood.
+    ** Here, a set of point is a window or a weigh window or a neighborhood.
+    */
     template<class Sup, class Exact>
     struct window_base: public Sup
     {
       enum { dim = struct_elt_traits<Exact >::dim };
+      ///< Set the dimension of the window (depends of point dimension).
       typedef window_base<Sup, Exact> self_type;
+      ///< Set self type.
+
+      /*!
+      ** \brief The associate image's type of point.
+      ** \warning Prefer the macros oln_point_type(Pointable) and
+      ** oln_point_type_(Pointable) (the same without the 'typename' keyword)
+      */
       typedef typename struct_elt_traits<Exact>::point_type point_type;
+
+      /*!
+      ** \brief The associate image's type of dpoint (move point).
+      ** \warning Prefer the macros oln_dpoint_type(Pointable) and
+      ** oln_dpoint_type_(Pointable) (the same without the 'typename' keyword)
+      */
       typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
+
       typedef Exact exact_type;
+      ///< Set exact type.
       typedef Sup super_type;
- 
-      // FIXME: this has been commented out to satisfy icc and
-      // comeau. I don't know who is right between them and gcc.
+      ///< Set type of class inherited.
+
+      /*!
+      ** \todo FIXME: this has been commented out to satisfy icc and
+      ** comeau. I don't know who is right between them and gcc.
+      */
       friend class struct_elt<Exact>;
       friend class neighborhood<Exact>;
       // friend class window_base_friend_traits<Sup>::ret;
-    
-      static std::string 
+
+      /*!
+      ** \brief Return his type in a string.
+      ** \return The type in a string.
+      **
+      ** Very useful to debug.
+      */
+      static std::string
       name()
       {
 	return std::string("window_base<") + Exact::name() + ">";
@@ -103,25 +148,47 @@ namespace oln
 
     protected:
 
-      bool 
+      /*!
+      ** \brief Test if the set of points contains this one.
+      ** \arg dp a dpoint (deplacement point).
+      ** \return True if the set of points contains this dpoint.
+      */
+      bool
       has_(const dpoint_type& dp) const
       {
 	return std::find(dp_.begin(), dp_.end(), dp) != dp_.end();
       }
 
-      unsigned 
+      /*!
+      ** \brief Get the number of point we get.
+      ** \return The number of point.
+      */
+      unsigned
       card_() const
       {
 	return dp_.size();
       }
 
-      bool 
+      /*!
+      ** \brief Test if the set of points is centered.
+      ** \return True if it's centered.
+      **
+      ** Centered means :
+      **   - at least one element for neighborhood;
+      **   - list of point contains 0 for window.
+      */
+      bool
       is_centered_() const
       {
 	return centered_;
       }
 
-      bool 
+      /*!
+      ** \brief Compare two sets of points.
+      ** \arg win The set of point to compare.
+      ** \return True if they are the same.
+      */
+      bool
       is_equal(const exact_type& win) const
       {
 	for (typename std::vector<dpoint_type>::const_iterator it = dp_.begin(); it != dp_.end(); ++it)
@@ -130,58 +197,100 @@ namespace oln
 	return true;
       }
 
-      coord 
+      /*!
+      ** \brief Get the delta of the set of points.
+      ** \return Delta.
+      **
+      ** Delta is the bigger element of the set of points.
+      */
+      coord
       get_delta() const
       {
 	return delta_;
       }
 
-      coord 
+      /*!
+      ** \brief Update delta.
+      ** \arg dp a deplacement point.
+      ** \return Delta.
+      **
+      ** If the point is the biggest element of the set of points,
+      ** then this point is assigned to delta.
+      */
+      coord
       delta_update(const dpoint_type& dp)
       {
 	return this->exact().delta_update_(dp);
       }
 
-      void 
+      /*!
+      ** \brief Set a set of point to opposite.
+      **
+      ** Each point of the set of point is assigned to his opposite.
+      */
+      void
       sym_()
       {
 	for (unsigned i = 0; i < this->card(); ++i)
 	  dp_[i] = - dp_[i];
       }
 
-      const dpoint_type 
+      /*!
+      ** \brief Get the nth structuring element.
+      ** \arg i The nth.
+      ** \return The nth dpoint.
+      ** \pre i < card().
+      */
+      const dpoint_type
       at(unsigned i) const
       {
 	precondition(i < this->card());
 	return dp_[i];
       }
 
+      /*!
+      ** \brief CTor
+      **
+      ** Used only by sub-classes
+      */
       window_base() : super_type(), dp_(), delta_(0)
       {
 	centered_ = false;
       }
 
+      /*!
+      ** \brief Used only by sub-classes
+      ** \arg size The number of point.
+      **
+      ** Set the number of point this object will get.
+      ** Used only by sub-classes
+      */
       window_base(unsigned size) : super_type(), dp_(), delta_(0)
       {
 	dp_.reserve(size);
 	centered_ = false;
       }
 
-      std::vector<dpoint_type> dp_;
-      max_accumulator<coord> delta_;
-      bool centered_;
+      std::vector<dpoint_type> dp_; ///< The list of point.
+      max_accumulator<coord> delta_; ///< Delta : the maximale point of the list.
+      bool centered_; ///< Is the set of point centered ?
 
-    }; 
-    
-    
+    };
 
 
   } // end of abstract
 } // end of oln
 
-
+/*!
+** \brief Write the coordinates of point on an ostream.
+** \arg o The stream.
+** \arg w The window_base to write
+** \return The ostream
+**
+** Useful for debugging
+*/
 template<class Sup, class Exact>
-std::ostream& 
+std::ostream&
 operator<<(std::ostream& o, const oln::abstract::window_base<Sup, Exact>& w)
 {
   unsigned c = w.card();

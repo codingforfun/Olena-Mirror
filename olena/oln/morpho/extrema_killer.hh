@@ -121,8 +121,8 @@ namespace oln {
     **   return  0;
     ** }
     ** \endcode
-    ** \image html lena128.png
-    ** \image latex lena128.png
+    ** \image html lena128_pgm.png
+    ** \image latex lena128_pgm.png
     ** =>
     ** \image html oln_morpho_sure_maxima_killer.png
     ** \image latex oln_morpho_sure_maxima_killer.png
@@ -194,8 +194,8 @@ namespace oln {
     **   return  0;
     ** }
     ** \endcode
-    ** \image html lena128.png
-    ** \image latex lena128.png
+    ** \image html lena128_pgm.png
+    ** \image latex lena128_pgm.png
     ** =>
     ** \image html oln_morpho_sure_minima_killer.png
     ** \image latex oln_morpho_sure_minima_killer.png
@@ -343,8 +343,8 @@ namespace oln {
     **   return  0;
     ** }
     ** \endcode
-    ** \image html lena128.png
-    ** \image latex lena128.png
+    ** \image html lena128_pgm.png
+    ** \image latex lena128_pgm.png
     ** =>
     ** \image html oln_morpho_fast_minima_killer.png
     ** \image latex oln_morpho_fast_minima_killer.png
@@ -468,8 +468,8 @@ namespace oln {
     **   return  0;
     ** }
     ** \endcode
-    ** \image html lena128.png
-    ** \image latex lena128.png
+    ** \image html lena128_pgm.png
+    ** \image latex lena128_pgm.png
     ** =>
     ** \image html oln_morpho_fast_maxima_killer.png
     ** \image latex oln_morpho_fast_maxima_killer.png

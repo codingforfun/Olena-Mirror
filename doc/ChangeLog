@@ -1,3 +1,10 @@
+2004-03-14  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* ref/img_conv.pl: Make output image name constructed using
+	extension of input image.
+	* ref/exdoc.pl: Correct bug in command compile generation.
+	* ref/Makefile.am: Correct img_conv call.
+
 2004-03-10  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* ref/out/exdoc.config.in: Correct autotools variable problems.

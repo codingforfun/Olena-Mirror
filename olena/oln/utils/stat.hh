@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,6 +35,7 @@ namespace oln {
 
   namespace utils {
 
+    /// Unary function that stores the min and the max.
     template< class T >
     struct f_minmax : std::unary_function< const T&, void >
     {
@@ -61,25 +62,28 @@ namespace oln {
         count_ = 0;
       }
 
-      bool 
+      /// True if a value has been tested.
+      bool
       valued() const
       {
         return count_;
       }
 
+      /// Number of value has been tested.
       size_t
       count() const
       {
         return count_;
       }
 
+      /// Minimum found.
       const T
       min() const
       {
         assertion(valued());
         return min_;
       }
-
+      /// Maximum found.
       const T
       max() const
       {
@@ -93,19 +97,20 @@ namespace oln {
       T max_;
     };
 
+    /// Computes the mean, the variance and store the min, the max.
     template< class T, class C = ntg::float_s >
     struct f_moments : f_minmax<T>
     {
       typedef f_minmax<T> super;
 
-      void 
+      void
       operator()(const T& val)
       {
-	if (! this->valued()) 
+	if (! this->valued())
 	  {
 	    sum1_ = ntg_zero_val(C);
 	    sum2_ = ntg_zero_val(C);
-	  } 
+	  }
 	else
 	  {
 	    sum1_ += val;
@@ -114,13 +119,14 @@ namespace oln {
 	super::operator()(val);
       }
 
-      const C 
+      /// Return the mean value.
+      const C
       mean() const
       {
         assertion(this->valued());
         return sum1_ / C(this->count());
       }
-
+      /// Return the variance.
       const C
       variance() const
       {
@@ -132,7 +138,7 @@ namespace oln {
       C sum1_;
       C sum2_;
     };
-    
+
   } // end of namespace utils
 
 } // end of namespace oln

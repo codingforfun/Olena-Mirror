@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,11 +37,33 @@
 
 namespace oln {
 
+  /*!
+  ** \brief convolution namespace.
+  **
+  ** Set of algorithms related to convolution.
+  */
   namespace convol {
 
+    /*!
+    ** \brief oln::convol::slow namespace.
+    **
+    ** The algorithms you can find here are slow.  This mean there are
+    ** only basic applications of the definitions.
+    */
     namespace slow {
 
-      //FIXME : we must always specify DestValue.
+      /*!
+      ** \brief Perform a convolution of an image and a window.
+      **
+      ** \param DestValue Data type of the output image you want.
+      ** \param I Exact type of the input image.
+      ** \param Win Exact type of the window.
+      **
+      ** \arg input The image to process.
+      ** \arg win The window to convolve with.
+      **
+      ** \todo FIXME: we must always specify DestValue.
+      */
       template<class DestValue, class I, class Win>
       typename mute<I, DestValue>::ret
       convolve(const abstract::image < I >& input,
@@ -54,7 +76,7 @@ namespace oln {
 	oln_iter_type(I) p_im(input);
 	for_all(p_im)
 	  {
-	    DestValue sum = 0;
+	    DestValue sum = ntg_zero_val(DestValue);
 	    for (unsigned i = 0; i < win.card(); ++i)
 	      sum += static_cast<DestValue> (win.w(i)) *
 		     static_cast<DestValue> (input[p_im - win.dp(i)]);
@@ -64,7 +86,19 @@ namespace oln {
 	return output;
       }
 
-      //FIXME: don't use array1d, ..., arraynd.
+      /*!
+      ** \brief Perform a convolution of an image and a window.
+      **
+      ** \param DestValue Data type of the output image you want.
+      ** \param I Exact type of the input image.
+      ** \param Info Informations about the array.
+      ** \param Win Data type of the array.
+      **
+      ** \arg input The image to process.
+      ** \arg arr The array to convolve with.
+      **
+      ** \todo FIXME: don't use array1d, ..., arraynd.
+      */
       template<class DestValue, class I, class Info, class Win>
       typename mute<I, DestValue>::ret
       convolve(const abstract::image < I >& input,

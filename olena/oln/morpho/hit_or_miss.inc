@@ -70,8 +70,8 @@
 ** }
 ** \endcode
 **
-** \image html object.png
-** \image latex object.png
+** \image html object_pbm.png
+** \image latex object_pbm.png
 ** =>
 ** \image html oln_morpho_fast_hit_or_miss.png
 ** \image latex oln_morpho_fast_hit_or_miss.png
@@ -134,8 +134,8 @@ hit_or_miss(const convert::abstract::conversion<C, B>& c,
 ** }
 ** \endcode
 **
-** \image html object.png
-** \image latex object.png
+** \image html object_pbm.png
+** \image latex object_pbm.png
 ** =>
 ** \image html oln_morpho_fast_hit_or_miss_overload.png
 ** \image latex oln_morpho_fast_hit_or_miss_overload.png
@@ -200,8 +200,8 @@ oln_concrete_type(I)
 ** }
 ** \endcode
 **
-** \image html object.png
-** \image latex object.png
+** \image html object_pbm.png
+** \image latex object_pbm.png
 ** =>
 ** \image html oln_morpho_fast_hit_or_miss_opening.png
 ** \image latex oln_morpho_fast_hit_or_miss_opening.png
@@ -262,8 +262,8 @@ oln_concrete_type(I)
 ** }
 ** \endcode
 **
-** \image html object.png
-** \image latex object.png
+** \image html object_pbm.png
+** \image latex object_pbm.png
 ** =>
 ** \image html oln_morpho_fast_hit_or_miss_opening_bg.png
 ** \image latex oln_morpho_fast_hit_or_miss_opening_bg.png
@@ -330,8 +330,8 @@ oln_concrete_type(I)
 ** }
 ** \endcode
 **
-** \image html object.png
-** \image latex object.png
+** \image html object_pbm.png
+** \image latex object_pbm.png
 ** =>
 ** \image html oln_morpho_fast_hit_or_miss_closing.png
 ** \image latex oln_morpho_fast_hit_or_miss_closing.png
@@ -395,8 +395,8 @@ oln_concrete_type(I)
 ** }
 ** \endcode
 **
-** \image html object.png
-** \image latex object.png
+** \image html object_pbm.png
+** \image latex object_pbm.png
 ** =>
 ** \image html oln_morpho_fast_hit_or_miss_closing_bg.png
 ** \image latex oln_morpho_fast_hit_or_miss_closing_bg.png

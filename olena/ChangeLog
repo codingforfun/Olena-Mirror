@@ -1,3 +1,155 @@
+2004-03-14  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* oln/convol/convolution.hh: Add comments.
+	* oln/convol/fast_gaussian_coefficient.hh: Likewise.
+	* oln/convol/fast_gaussian.hh: Likewise.
+	* oln/convol/fast_gaussian.hxx: Likewise.
+
+	* oln/convert/stretch.hh: Correct comments.
+	* oln/convert/rgbhsl.hh: Likewise.
+	* oln/morpho/attribute_closing_opening_map.hh: Likewise.
+	* oln/morpho/watershed.hh: Likewise.
+	* oln/morpho/attribute_closing_opening.hh: Likewise.
+	* oln/morpho/thickening.inc: Likewise.
+	* oln/morpho/top_hat.inc: Likewise.
+	* oln/morpho/thinning.inc: Likewise.
+	* oln/morpho/reconstruction.hh: Likewise.
+	* oln/morpho/opening.inc: Likewise.
+	* oln/morpho/hit_or_miss.inc: Likewise.
+	* oln/morpho/gradient.inc: Likewise.
+	* oln/morpho/extrema.hxx: Likewise.
+	* oln/morpho/geodesic_dilation.hh: Likewise.
+	* oln/morpho/laplacian.inc: Likewise.
+	* oln/morpho/fast_morpho.hxx: Likewise.
+	* oln/morpho/erosion.hh: Likewise.
+	* oln/morpho/extrema_killer.hh: Likewise.
+	* oln/morpho/closing.inc: Likewise.
+	* oln/morpho/dilation.hh: Likewise.
+	* oln/level/threshold.hh: Likewise.
+	* oln/level/cc.hh: Likewise.
+	* oln/level/set_level.hh: Likewise.
+	* oln/core/abstract/iter.hh: Likewise.
+
+2004-03-14  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/core/abstract/iter1d.hh: Fix a bug.
+	* olena/oln/core/abstract/iter2d.hh: Fix a bug.
+	* olena/oln/core/abstract/iter3d.hh: Fix a bug.
+	* olena/oln/morpho/attribute_union_find.hh: Add a FIXME.
+	* olena/oln/topo/dmap.hh: Add comments.
+	* olena/oln/topo/tarjan/union.hh: Likewise.
+	* olena/oln/topo/inter-pixel/inter-pixel.hh: Likewise.
+	* olena/oln/topo/tarjan/flat-zone.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/cmap.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/internal/zeta.hh: Likewise.
+	* olena/oln/topo/inter-pixel/fwd-dir-iter.hh: Likewise.
+	* olena/oln/topo/inter-pixel/bkd-dir-iter.hh: Likewise.
+	* olena/oln/topo/inter-pixel/node.hh: Likewise.
+	* olena/oln/topo/inter-pixel/internal/dir-iter.hh: Likewise.
+	* olena/oln/topo/inter-pixel/internal/dir.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/internal/alpha.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/internal/anyfunc.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/internal/beta.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/internal/lambda.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/internal/level.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/internal/sigma.hh : Likewise.
+
+2004-03-13  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/utils/copy.hh: Add comments.
+	* olena/oln/utils/histogram.hh: Likewise.
+	* olena/oln/utils/stat.hh: Likewise.
+	* olena/oln/utils/timer.hh: Likewise.
+	* olena/oln/utils/special_points.hh: Likewise.
+
+2004-03-13  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/arith/internal/opdecls.hh: Add comments.
+	* olena/oln/arith/logic.hh: Likewise.
+	* olena/oln/arith/ops.hh: Likewise.
+	* olena/oln/math/macros.hh: Likewise.
+	* olena/oln/config/pconf-hh.in: Likewise.
+
+2004-03-13  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/convert/basics.hh: Add comments.
+	* olena/oln/convert/bound.hh: Likewise.
+	* olena/oln/convert/abstract/colorconv.hh: Likewise.
+	* olena/oln/convert/conversion.hh: Likewise.
+	* olena/oln/convert/conversion_ng_se.hh: Likewise.
+	* olena/oln/convert/force.hh: Likewise.
+	* olena/oln/convert/nrgbxyz.hh: Likewise.
+	* olena/oln/convert/rgbnrgb.hh: Likewise.
+	* olena/oln/convert/rgbxyz.hh: Likewise.
+	* olena/oln/convert/abstract/conversion.hh: Likewise.
+	* olena/oln/convert/cast.hh: Likewise.
+	* olena/oln/convert/rgbhsv.hh: Likewise.
+	* olena/oln/convert/rgbhsl.hh: Likewise.
+	* olena/oln/convert/rgbhsi.hh: Likewise.
+	* olena/oln/convert/rgbyuv.hh: Likewise.
+	* olena/oln/convert/rgbyiq.hh: Likewise.
+	* olena/oln/convert/value_to_point.hh: Likewise.
+	* olena/oln/convert/stretch.hh: Fix bug.
+
+2004-03-13  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/convert/stretch.hh: Add stretch_balance. Add comments.
+
+2004-03-12  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* olena/oln/core/accum.hh: Add comments.
+	* olena/oln/core/apply.hh: Likewise.
+	* olena/oln/core/compose.hh: Likewise.
+	* olena/oln/core/coord.hh: Likewise.
+	* olena/oln/core/dpoint1d.hh: Likewise.
+	* olena/oln/core/dpoint2d.hh: Likewise.
+	* olena/oln/core/dpoint3d.hh: Likewise.
+	* olena/oln/core/fold.hh: Likewise.
+	* olena/oln/core/image1d.hh: Likewise.
+	* olena/oln/core/image1d_size.hh: Likewise.
+	* olena/oln/core/image2d.hh: Likewise.
+	* olena/oln/core/image2d_size.hh: Likewise.
+	* olena/oln/core/image3d.hh: Likewise.
+	* olena/oln/core/image3d_size.hh: Likewise.
+	* olena/oln/core/image.hh: Likewise.
+	* olena/oln/core/point1d.hh: Likewise.
+	* olena/oln/core/point2d.hh: Likewise.
+	* olena/oln/core/point3d.hh: Likewise.
+	* olena/oln/core/traverse.hh: Likewise.
+	* olena/oln/core/abstract/image.hh: Correct comments.
+	* olena/oln/core/impl/image_impl.hh: Add comments.
+	* olena/oln/core/impl/image_array.hh: Likewise.
+	* olena/oln/core/impl/image_array3d.hh: Likewise.
+	* olena/oln/core/impl/image_array2d.hh: Likewise.
+	* olena/oln/core/impl/image_array1d.hh: Likewise.
+	* olena/oln/core/behavior.hh: Likewise.
+
+2004-03-12  Simon Odou  <simon@lrde.epita.fr>
+
+	* olena/oln/core/bkd_iter1d.hh: Correct comments.
+	* olena/oln/core/bkd_iter2d.hh: Likewise.
+	* olena/oln/core/bkd_iter3d.hh: Likewise.
+	* olena/oln/core/fwd_iter1d.hh: Likewise.
+	* olena/oln/core/fwd_iter2d.hh: Likewise.
+	* olena/oln/core/fwd_iter3d.hh: Likewise.
+	* olena/oln/core/abstract/iter1d.hh: Likewise.
+	* olena/oln/core/abstract/iter2d.hh: Likewise.
+	* olena/oln/core/abstract/iter3d.hh: Likewise.
+	* olena/oln/core/abstract/iter.hh: Likewise.
+	* olena/oln/core/neighborhood1d.hh: Likewise.
+	* olena/oln/core/neighborhood2d.hh: Likewise.
+	* olena/oln/core/neighborhood3d.hh: Likewise.
+	* olena/oln/core/abstract/neighborhood.hh: Likewise.
+	* olena/oln/core/abstract/struct_elt.hh: Likewise.
+	* olena/oln/core/window1d.hh: Likewise.
+	* olena/oln/core/window2d.hh: Likewise.
+	* olena/oln/core/window3d.hh: Likewise.
+	* olena/oln/core/abstract/window.hh: Likewise.
+	* olena/oln/core/w_window1d.hh: Likewise.
+	* olena/oln/core/w_window2d.hh: Likewise.
+	* olena/oln/core/w_window3d.hh: Likewise.
+	* olena/oln/core/abstract/w_window.hh: Likewise.
+	* olena/oln/core/abstract/image.hh: Likewise.
+	* olena/oln/core/abstract/window_base.hh: Likewise.
+	* olena/oln/core/abstract/windownd.hh: Likewise.
+	* olena/oln/core/abstract/w_windownd.hh: Likewise.
+	* olena/oln/core/abstract/neighborhoodnd.hh: Likewise.
+
 2004-03-12  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* oln/morpho/closing.inc: Correct comments.

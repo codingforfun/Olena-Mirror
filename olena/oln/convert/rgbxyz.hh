@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,10 +37,11 @@
 
 # include <sstream>
 
-/*--------------------------------------------------------------.
-| The formulas used here come from ``Digital Image Processing   |
-| Algorithms and Applications'', I. Pitas; Wiley-Interscience.  |
-`--------------------------------------------------------------*/
+/*! \file rgbxyz.hh
+**
+** \ref The formulas used here come from ``Digital Image Processing
+** Algorithms and Applications'', I. Pitas; Wiley-Interscience.
+*/
 
 namespace oln {
 
@@ -48,6 +49,10 @@ namespace oln {
 
   namespace convert {
 
+    /* Functor for conversion from RGB to XYZ.
+    **
+    ** \see f_rgb_to_hsl
+    */
     template <unsigned inbits, unsigned outbits>
     struct f_rgb_to_xyz
       : public abstract::color_conversion<3, inbits, rgb_traits,
@@ -73,6 +78,11 @@ namespace oln {
       }
     };
 
+
+    /* Conversion from RGB to XYZ.
+    **
+    ** \see f_rgb_to_hsl
+    */
     template <unsigned inbits, unsigned outbits>
     color<3, outbits, xyz_traits>
     rgb_to_xyz(const color<3, inbits, rgb_traits>& v)
@@ -82,6 +92,10 @@ namespace oln {
       return f(v);
     }
 
+    /* Functor for conversion from XYZ to RGB
+    **
+    ** \see f_rgb_to_hsl
+    */
     template <unsigned inbits, unsigned outbits>
     struct f_xyz_to_rgb
       : public abstract::color_conversion<3, inbits, xyz_traits,
@@ -110,6 +124,10 @@ namespace oln {
       }
     };
 
+    /* Functor for conversion from RGB to XYZ.
+    **
+    ** \see f_rgb_to_hsl
+    */
     template <unsigned inbits, unsigned outbits>
     color<3, outbits, rgb_traits>
     xyz_to_rgb(const color<3, outbits, xyz_traits>& v)

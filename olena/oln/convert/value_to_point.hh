@@ -35,7 +35,17 @@
 namespace oln {
 
   namespace convert {
-
+    /*! Convert a value of pixel to a point.
+    **
+    ** For example it transforms an RGB color to a 3D point (ntg::rgb_8 => oln::point3d).
+    ** This function is useful to build the histogram. \n
+    ** Example:
+    ** \verbatim
+    ** f(oln::convert::value_to_point<ntg::rgb_8>()(ntg::rgb_8(1,6,64)));
+    ** // is equivalent to:
+    ** f(oln::point3d(1, 6, 64));
+    ** \endverbatim
+    */
     template <typename Argument_type,
 	      class Exact = mlc::final>
     struct value_to_point:
@@ -47,8 +57,10 @@ namespace oln {
 				Exact>::ret>
     {
     private:
+      /// By default a scalar is expected. If the type is a vector, a specialization should be written.
       typedef typename ntg_is_a(Argument_type, ntg::non_vectorial)::ensure_type ensure_type;
     public:
+      /// By default it return a point1d.
       typedef point1d result_type;
       typedef Argument_type argument_type;
 
@@ -61,6 +73,11 @@ namespace oln {
       }
     };
 
+    /*! Specialization for color of three dimension.
+    **
+    ** \todo It could be generalized to n dimensions if there were a trait that
+    ** give a pointkd for a given dimension k.
+    */
     template <unsigned Qbits, template <unsigned> class S, class Exact>
     struct value_to_point<ntg::color<3, Qbits, S>, Exact>:
       public abstract::conversion_from_type_to_type

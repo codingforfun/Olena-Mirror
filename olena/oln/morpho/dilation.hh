@@ -81,8 +81,8 @@ namespace oln {
     ** }
     ** \endcode
     **
-    ** \image html object.png
-    ** \image latex object.png
+    ** \image html object_pbm.png
+    ** \image latex object_pbm.png
     ** =>
     ** \image html oln_morpho_dilation.png
     ** \image latex oln_morpho_dilation.png
@@ -129,8 +129,8 @@ namespace oln {
     ** }
     ** \endcode
     **
-    ** \image html object.png
-    ** \image latex object.png
+    ** \image html object_pbm.png
+    ** \image latex object_pbm.png
     ** =>
     ** \image html oln_morpho_n_dilation.png
     ** \image latex oln_morpho_n_dilation.png

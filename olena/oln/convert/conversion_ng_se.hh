@@ -1,4 +1,4 @@
-// Copyright (C) 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2002, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -40,7 +40,10 @@
 
 namespace oln {
   namespace convert {
-
+    /*! Convert a neighborhood to a window.
+    **
+    ** \see ng_to_cse
+    */
     template<class N>
     typename oln::abstract::neighborhood<N>::win_type
     ng_to_se(const oln::abstract::neighborhood<N>& Ng)
@@ -52,6 +55,10 @@ namespace oln {
       return output;
     }
 
+    /*! Convert a neighborhood to a window and add the center.
+    **
+    ** \see ng_to_cs
+    */
     template<class N>
     typename oln::abstract::neighborhood<N>::win_type
     ng_to_cse(const oln::abstract::neighborhood<N>& Ng)

@@ -166,8 +166,8 @@ namespace oln {
       **   return  0;
       ** }
       ** \endcode
-      ** \image html lena128.png
-      ** \image latex lena128.png
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
       ** =>
       ** \image html oln_morpho_fast_card_closing.png
       ** \image latex oln_morpho_fast_card_closing.png
@@ -193,8 +193,8 @@ namespace oln {
       **   return  0;
       ** }
       ** \endcode
-      ** \image html lena128.png
-      ** \image latex lena128.png
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
       ** =>
       ** \image html oln_morpho_fast_card_opening.png
       ** \image latex oln_morpho_fast_card_opening.png
@@ -220,8 +220,8 @@ namespace oln {
       **   return  0;
       ** }
       ** \endcode
-      ** \image html lena128.png
-      ** \image latex lena128.png
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
       ** =>
       ** \image html oln_morpho_fast_integral_closing.png
       ** \image latex oln_morpho_fast_integral_closing.png
@@ -247,8 +247,8 @@ namespace oln {
       **   return  0;
       ** }
       ** \endcode
-      ** \image html lena128.png
-      ** \image latex lena128.png
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
       ** =>
       ** \image html oln_morpho_fast_integral_opening.png
       ** \image latex oln_morpho_fast_integral_opening.png
@@ -274,8 +274,8 @@ namespace oln {
       **   return  0;
       ** }
       ** \endcode
-      ** \image html lena128.png
-      ** \image latex lena128.png
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
       ** =>
       ** \image html oln_morpho_fast_height_opening.png
       ** \image latex oln_morpho_fast_height_opening.png
@@ -302,8 +302,8 @@ namespace oln {
       **   return  0;
       ** }
       ** \endcode
-      ** \image html lena128.png
-      ** \image latex lena128.png
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
       ** =>
       ** \image html oln_morpho_fast_height_closing.png
       ** \image latex oln_morpho_fast_height_closing.png
@@ -331,8 +331,8 @@ namespace oln {
       **   return  0;
       ** }
       ** \endcode
-      ** \image html lena128.png
-      ** \image latex lena128.png
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
       ** =>
       ** \image html oln_morpho_fast_maxvalue_closing.png
       ** \image latex oln_morpho_fast_maxvalue_closing.png
@@ -359,8 +359,8 @@ namespace oln {
       **   return  0;
       ** }
       ** \endcode
-      ** \image html lena128.png
-      ** \image latex lena128.png
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
       ** =>
       ** \image html oln_morpho_fast_maxvalue_opening.png
       ** \image latex oln_morpho_fast_maxvalue_opening.png
@@ -387,8 +387,8 @@ namespace oln {
       **   return  0;
       ** }
       ** \endcode
-      ** \image html lena128.png
-      ** \image latex lena128.png
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
       ** =>
       ** \image html oln_morpho_fast_minvalue_opening.png
       ** \image latex oln_morpho_fast_minvalue_opening.png
@@ -415,8 +415,8 @@ namespace oln {
       **   return  0;
       ** }
       ** \endcode
-      ** \image html lena128.png
-      ** \image latex lena128.png
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
       ** =>
       ** \image html oln_morpho_fast_minvalue_closing.png
       ** \image latex oln_morpho_fast_minvalue_closing.png
@@ -443,8 +443,8 @@ namespace oln {
       **   return  0;
       ** }
       ** \endcode
-      ** \image html lena128.png
-      ** \image latex lena128.png
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
       ** =>
       ** \image html oln_morpho_fast_ball_opening.png
       ** \image latex oln_morpho_fast_ball_opening.png
@@ -471,8 +471,8 @@ namespace oln {
       **   return  0;
       ** }
       ** \endcode
-      ** \image html lena128.png
-      ** \image latex lena128.png
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
       ** =>
       ** \image html oln_morpho_fast_ball_closing.png
       ** \image latex oln_morpho_fast_ball_closing.png
@@ -499,8 +499,8 @@ namespace oln {
       **   return  0;
       ** }
       ** \endcode
-      ** \image html lena128.png
-      ** \image latex lena128.png
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
       ** =>
       ** \image html oln_morpho_fast_dist_opening.png
       ** \image latex oln_morpho_fast_dist_opening.png
@@ -527,8 +527,8 @@ namespace oln {
       **   return  0;
       ** }
       ** \endcode
-      ** \image html lena128.png
-      ** \image latex lena128.png
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
       ** =>
       ** \image html oln_morpho_fast_dist_closing.png
       ** \image latex oln_morpho_fast_dist_closing.png
@@ -555,8 +555,8 @@ namespace oln {
       **   return  0;
       ** }
       ** \endcode
-      ** \image html lena128.png
-      ** \image latex lena128.png
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
       ** =>
       ** \image html oln_morpho_fast_cube_closing.png
       ** \image latex oln_morpho_fast_cube_closing.png
@@ -583,8 +583,8 @@ namespace oln {
       **   return  0;
       ** }
       ** \endcode
-      ** \image html lena128.png
-      ** \image latex lena128.png
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
       ** =>
       ** \image html oln_morpho_fast_cube_opening.png
       ** \image latex oln_morpho_fast_cube_opening.png
@@ -612,8 +612,8 @@ namespace oln {
       **   return  0;
       ** }
       ** \endcode
-      ** \image html lena128.png
-      ** \image latex lena128.png
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
       ** =>
       ** \image html oln_morpho_fast_box_closing.png
       ** \image latex oln_morpho_fast_box_closing.png
@@ -641,8 +641,8 @@ namespace oln {
       **   return  0;
       ** }
       ** \endcode
-      ** \image html lena128.png
-      ** \image latex lena128.png
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
       ** =>
       ** \image html oln_morpho_fast_box_opening.png
       ** \image latex oln_morpho_fast_box_opening.png

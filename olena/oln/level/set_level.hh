@@ -72,8 +72,8 @@ namespace oln {
     **   save(in, IMG_OUT "oln_level_set_level.pgm");
     ** }
     ** \endcode
-    ** \image html lena256.png
-    ** \image latex lena256.png
+    ** \image html lena256_pgm.png
+    ** \image latex lena256_pgm.png
     ** =>
     ** \image html oln_level_set_level.png
     ** \image latex oln_level_set_level.png

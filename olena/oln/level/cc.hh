@@ -94,8 +94,8 @@ namespace oln {
     **   std::cout << card << " connected components" << std::endl;
     ** }
     ** \endcode
-    ** \image html face_se.png
-    ** \image latex face_se.png
+    ** \image html face_se_pbm.png
+    ** \image latex face_se_pbm.png
     ** =>
     ** \image html oln_level_frontp_connected_component.png
     ** \image latex oln_level_frontp_connected_component.png

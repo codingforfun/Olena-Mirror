@@ -73,8 +73,8 @@ beucher_gradient(const convert::abstract::conversion<C, B>& c,
 ** }
 ** \encode
 **
-** \image html lena128.png
-** \image latex lena128.png
+** \image html lena128_pgm.png
+** \image latex lena128_pgm.png
 ** =>
 ** \image html oln_morpho_beucher_gradient.png
 ** \image latex oln_morpho_beucher_gradient.png
@@ -140,8 +140,8 @@ internal_gradient(const convert::abstract::conversion<C, B>& c,
 ** }
 ** \encode
 **
-** \image html lena256.png
-** \image latex lena256.png
+** \image html lena256_pgm.png
+** \image latex lena256_pgm.png
 ** =>
 ** \image html oln_morpho_internal_gradient.png
 ** \image latex oln_morpho_internal_gradient.png
@@ -203,8 +203,8 @@ external_gradient(const convert::abstract::conversion<C, B>& c,
 ** }
 ** \encode
 **
-** \image html lena256.png
-** \image latex lena256.png
+** \image html lena256_pgm.png
+** \image latex lena256_pgm.png
 ** =>
 ** \image html oln_morpho_external_gradient.png
 ** \image latex oln_morpho_external_gradient.png

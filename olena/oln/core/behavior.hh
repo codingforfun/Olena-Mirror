@@ -33,7 +33,9 @@
 namespace oln {
   /*! \class mirror_behavior
   **
-  ** make the border be a mirror of the image
+  ** Make the border be a mirror of the image.
+  **
+  ** \see abstract::image_size::border_
   */
   // mirror the image content into the border
   template <class Exact = mlc::final>
@@ -52,6 +54,13 @@ namespace oln {
   };
 
   // set the border to a specific value
+  
+  /*! \class value_behavior
+  **
+  ** Set the border to a specific value.
+  **
+  ** \see abstract::image_size::border_
+  */
   template <class T, class Exact = mlc::final>
   class value_behavior:
     public abstract::behavior<mlc_2_exact_vt_type(value_behavior, T, Exact)>
@@ -65,7 +74,7 @@ namespace oln {
       {
       };
 
-    template <class I>
+      template <class I>
       void adapt_border_impl(abstract::image<I> &im, coord border_size) const
       {
 	im.border_adapt_assign(border_size, ntg::cast::force<oln_value_type(I)>(value_));
@@ -76,6 +85,13 @@ namespace oln {
   };
 
   // replicate the border
+
+  /*! \brief replicate_behavior
+  **
+  ** Replicate the border.
+  **
+  ** \see abstract::image_size::border_
+  */
   template <class Exact = mlc::final>
   class replicate_behavior:
     public abstract::behavior<mlc_exact_vt_type(replicate_behavior<Exact>, Exact)>
@@ -92,17 +108,20 @@ namespace oln {
   };
 
   // tools to call ctors with type inference
+  /// To call Ctors with type inference.
   inline mirror_behavior<> mirror_bhv()
   {
     return mirror_behavior<>();
   }
 
+  /// To call Ctors with type inference.
   template <class T>
   inline value_behavior<T> value_bhv(const T &value)
   {
     return value_behavior<T>(value);
   }
 
+  /// To call Ctors with type inference.
   inline replicate_behavior<> replicate_bhv()
   {
     return replicate_behavior<>();

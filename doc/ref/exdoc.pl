@@ -111,7 +111,10 @@ sub gen_cmd($ $)
   my ($i, $prog) = @_;
   my $cmd = get_alias $i, $config[$i]{"captions"};
   $cmd = "$cmd ".$config[$i]{"options"};
-  return $cmd." && ./$prog > $prog.".$config[$i]{"std_out"}." 2> $prog.".$config[$i]{"err_out"}."\nexit \$?\n";
+  $cmd = $cmd." && ./$prog > $prog.".$config[$i]{"std_out"}." 2> $prog.";
+  $cmd = $cmd.$config[$i]{"err_out"}."\nret=\$?\n";
+  $cmd = $cmd. "if [ \$ret -ne 0 ]\n then\n rm \$2\nfi\nexit \$ret\n";
+  return $cmd;
 }
 
 # Dependencies of KEY as a simple string.

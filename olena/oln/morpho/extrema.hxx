@@ -112,11 +112,11 @@ namespace internal {
 **   return  0;
 ** }
 ** \endcode
-** \image html lena.png
-** \image latex lena.png
+** \image html lena_pgm.png
+** \image latex lena_pgm.png
 ** and
-** \image html map.png
-** \image latex map.png
+** \image html map_pbm.png
+** \image latex map_pbm.png
 ** =>
 ** \image html oln_morpho_sequential_minima_imposition.png
 ** \image latex oln_morpho_sequential_minima_imposition.png
@@ -168,8 +168,8 @@ oln_concrete_type(I)
 **   return  0;
 ** }
 ** \endcode
-** \image html lena.png
-** \image latex lena.png
+** \image html lena_pgm.png
+** \image latex lena_pgm.png
 ** =>
 ** \image html oln_morpho_sequential_regional_minima.png
 ** \image latex oln_morpho_sequential_regional_minima.png

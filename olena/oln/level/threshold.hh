@@ -55,8 +55,8 @@ namespace oln {
     **   save(out, IMG_OUT "oln_level_threshold.ppm");
     ** }
     ** \endcode
-    ** \image html lena256.png
-    ** \image latex lena256.png
+    ** \image html lena256_pgm.png
+    ** \image latex lena256_pgm.png
     ** =>
     ** \image html oln_level_threshold.png
     ** \image latex oln_level_threshold.png

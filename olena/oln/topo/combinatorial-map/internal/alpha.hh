@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,14 +35,18 @@ namespace oln {
     namespace combinatorial_map {
 
       namespace internal {
-
+	/*! Alpha function.
+	**
+	** Returns (d + ((d % 2) * 2 ) - 1).
+	*/
 	template <class U>
 	struct alpha
 	{
+	  /// Returns (d + ((d % 2) * 2 ) - 1).
 	  static U
 	  result(const U & d)
 	  {
-	    return d + ((d & 1) << 1) - 1; 
+	    return d + ((d & 1) << 1) - 1;
 	  }
 	};
 

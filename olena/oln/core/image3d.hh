@@ -43,6 +43,12 @@ namespace oln {
 
   template<class T, class Exact = mlc::final>
   class image3d; // fwd_decl
+  
+  /*! \class image_id<image3d<T, Exact> >
+  **
+  ** Helper class used by image_traits to retrieve 
+  ** the typedef associated to an image.
+  */
 
   template<class T, class Exact>
   struct image_id<image3d<T, Exact> >
@@ -52,7 +58,13 @@ namespace oln {
     typedef typename mlc::exact_vt<image3d<T, Exact>, Exact>::ret exact_type;
     typedef impl::image_array3d<T> impl_type;
   };
-
+  
+  /*! \class image_traits<image3d<T, Exact> >
+  **
+  ** Helper class usefull to retrieve all the type
+  ** relative to an image.
+  */
+  
   template<class T, class Exact>
   struct image_traits<image3d<T, Exact> >:
     public image_traits<image<image_id<image3d<T, Exact> >::dim,
@@ -64,6 +76,13 @@ namespace oln {
   // client can use image3d; instances are real images, that is,
   // images with data ---conversely to proxy images
 
+  /*! \class image3d
+  **
+  ** To instantiate an image3d with oln::rgb_8 as value_type,
+  ** one can write:\n
+  ** oln::image3d<ntg::rgb_8> t;
+  */
+  
   template<class T, class Exact>
   class image3d:
     public image<image_id<image3d<T, Exact> >::dim,
@@ -91,19 +110,37 @@ namespace oln {
       mlc_init_static_hierarchy(Exact);
     }
 
+    /*! \brief Allocate memory to contain
+    ** an image3d with \a ncols column, 
+    ** \a nrows rows, and \a nslices slices
+    ** plus a border width equal to 2 by default.
+    */
+    
     image3d(coord nslices, coord nrows, coord ncols, coord border = 2) :
       super_type(new impl_type(image3d_size(nslices, nrows, ncols, border)))
     {
       mlc_init_static_hierarchy(Exact);
     }
-
+    
+    /*! \brief Allocate memory to contain an
+    ** image3d with a size equal to \a size.
+    */
+    
     image3d(const image3d_size& size) :
       super_type(new impl_type(size))
     {
       mlc_init_static_hierarchy(Exact);
     }
 
-    // shallow copy
+    /*! \brief Build a new image3d by performing
+    ** a shallow copy of \a rhs, the points are 
+    ** not duplicated, but shared between \a rhs
+    ** and the new image.
+    **
+    ** \see abstract::image::clone()
+    */
+    
+
     image3d(self_type& rhs) :
       super_type(rhs)
     {
@@ -111,16 +148,38 @@ namespace oln {
     }
 
     // io
+    /*! \brief Perform a shallow copy from \a r to 
+    ** the new image, the points are not duplicated,
+    ** but shared between the two images.
+    **
+    ** \see abstract::image::clone()
+    */
+    
     image3d(const io::internal::anything& r) : super_type()
     {
       mlc_init_static_hierarchy(Exact);
       r.assign(*this);
     }
+    
+    /*! \brief Perform a shallow copy from \a rhs to
+    ** the current image, the points are ot duplicated,
+    ** but shared between the two images.
+    **
+    ** \see abstract::image::clone()
+    */
+
     image3d&
     operator=(const io::internal::anything& r)
     {
       return r.assign(*this);
     }
+
+    /*! \brief Perform a shallow copy from \a r to
+    ** the current image, the points are not duplicated
+    ** but shared between the two images.
+    **
+    ** \see abstract::image::clone()
+    */
 
     exact_type&
     operator=(self_type rhs)
@@ -137,6 +196,8 @@ namespace oln {
 	+ Exact::name() + ">";
     }
 
+    /// Define ret equal to image3d<U>.
+    
     template<class U>
     struct mute
     {
@@ -147,17 +208,29 @@ namespace oln {
 
   protected:
 
+    /*! \brief Return a deep copy of the current image.
+    **
+    ** \warning It may be really dangerous to instantiate a self_type
+    ** and not an exact_type if Exact != mlc::final.
+    **
+    ** \todo FIXME: It may be really dangerous to instantiate a self_type
+    ** and not an exact_type is Exact != mlc::final.
+    */
+  
     self_type
     clone_() const // deep copy
     {
-      // FIXME: it may be really dangerous to instantiate a self_type
-      // and not an exact_type is Exact != mlc::final.
       self_type output(this->nslices(), this->nrows(), this->ncols(), this->border());
       clone_to(output.impl());
       return output;
     }
 
   };
+
+  /*! \class dim_traits<3, T, Exact>
+  **
+  ** Define img_type equal to image3d<T, Exact>.
+  */
 
   template <class T, class Exact>
   struct dim_traits<3, T, Exact>

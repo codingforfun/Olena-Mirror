@@ -1,5 +1,5 @@
 
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -52,9 +52,9 @@ namespace oln {
   namespace topo {
 
     namespace inter_pixel {
-
+      /// Backward iterator on direction.
       template<unsigned Dim, class Exact>
-      class bkd_dir_iter 
+      class bkd_dir_iter
 	: public internal::dir_iter_<Dim, typename mlc::exact_vt<bkd_dir_iter<Dim, Exact>, Exact>::ret>
       {
       private:
@@ -65,16 +65,22 @@ namespace oln {
 	bkd_dir_iter() : super(), begin_(internal::dir_traits<Dim>::last()) {}
 	bkd_dir_iter(dir_type i) : super(i), begin_(i) {}
 
-	template<class U> 
+	/*! Assignment.
+	**
+	** \bug FIXME: I am not sure that this respect the new paradigm.
+	*/
+	template<class U>
 	U
 	operator=(U u) { return super::operator=(u); }
 
+	/// Next direction.
 	dir_type
 	next()
-	{ 
-	  return internal::dir_traits<Dim>::prev(this->cur_); 
+	{
+	  return internal::dir_traits<Dim>::prev(this->cur_);
 	}
 
+	/// First direction.
 	dir_type
 	begin()
 	{
@@ -85,6 +91,7 @@ namespace oln {
 	dir_type begin_;
       };
 
+/// Type of direction inter pixel backward iterator of an image type \a ImgType.
 # define oln_bkd_dir_iter_type(ImgType)		\
 oln::topo::inter_pixel::bkd_dir_iter< ImgType::dim >
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -38,65 +38,130 @@
 
 namespace oln {
 
-  class window3d; // fwd_decl
+  class window3d; // forward declaration
 
+  /*!
+  ** \brief Traits for window3d.
+  */
   template<>
   struct struct_elt_traits<window3d>: public
   struct_elt_traits<abstract::windownd<window3d> >
   {
-    enum { dim = 3 };
-    typedef point3d point_type;
-    typedef dpoint3d dpoint_type;
-    typedef winiter< window3d > iter_type;
-    typedef winneighb< window3d > neighb_type;
+    enum { dim = 3 }; ///< Dimension.
+    typedef point3d point_type; ///< Type of point.
+    typedef dpoint3d dpoint_type; ///< Type of dpoint.
+    typedef winiter< window3d > iter_type; ///< Type of iterator.
+    typedef winneighb< window3d > neighb_type; ///< Type of neighbor.
   };
 
+  /*!
+  ** \brief Window 3 dimensions.
+  **
+  ** A window is a set of points. This class
+  ** defines how to deal with. These points have 3 dimensions.
+  */
   class window3d : public abstract::windownd< window3d >
   {
 
   public:
 
     typedef abstract::windownd< window3d > super_type;
-    typedef window3d self_type;
+    ///< The super type.
+    typedef window3d self_type; ///< The self type.
 
+    /*!
+    ** \brief The associate image's type of iterator.
+    ** \warning Prefer the macros oln_iter_type(Iterable) and
+    ** oln_iter_type_(Iterable) (the same without the 'typename' keyword)
+    */
     typedef struct_elt_traits< self_type >::iter_type   iter_type;
-    typedef struct_elt_traits< self_type >::neighb_type
-    neighb_type;
+
+    typedef struct_elt_traits< self_type >::neighb_type neighb_type;
+    ///< Type of neighbor.
+
+    /*!
+    ** \brief The associate image's type of dpoint (move point).
+    ** \warning Prefer the macros oln_dpoint_type(Pointable) and
+    ** oln_dpoint_type_(Pointable) (the same without the 'typename' keyword)
+    */
     typedef struct_elt_traits< self_type >::dpoint_type dpoint_type;
 
     friend class abstract::window_base<abstract::window<window3d>, window3d>;
 
+    /*!
+    ** \brief Add a dpoint (move point) to the window.
+    ** \arg dp The new point.
+    **
+    ** Add a new member to the window. This point must be of 3
+    ** dimensions.
+    */
     window3d& add(const dpoint_type& dp)
     {
       return this->exact().add_(dp);
     }
 
+    /*!
+    ** \brief Add a point by coordinates to the window.
+    ** \arg slice The coordinate (slice) of the new point.
+    ** \arg row The coordinate (row) of the new point.
+    ** \arg col The coordinate (col) of the new point.
+    **
+    ** Add a new member by its coordinates to the window.
+    ** The coordinates are only the column number, row number and column
+    ** number because the window has 3 dimensions.
+    */
     window3d& add(coord slice, coord row, coord col)
     {
       return this->add(dpoint_type(slice, row, col));
     }
 
-    window3d() : super_type() 
+    /*!
+    ** \brief Construct a window of 3 dimensions.
+    */
+    window3d() : super_type()
     {}
 
-    window3d(unsigned size) : super_type(size) 
+    /*!
+    ** \brief Construct a window of 3 dimensions.
+    ** \arg size The number of element.
+    */
+    window3d(unsigned size) : super_type(size)
     {}
-    
+
+    /*!
+    ** \brief Construct a window of 3 dimensions from several points.
+    ** \arg n The number of element.
+    ** \arg crd The coordinates of the elements
+    */
     window3d(unsigned n, const coord crd[]) : super_type(n)
     {
       for (unsigned i = 0; i < 3 * n; i += 3)
 	add(dpoint_type(crd[i], crd[i+1], crd[i+2]));
     }
 
-    static std::string 
-    name() 
-    { 
-      return std::string("window3d"); 
+    /*!
+    ** \brief Return his type in a string.
+    ** \return The type in a string.
+    **
+    ** Very useful to debug.
+    */
+    static std::string
+    name()
+    {
+      return std::string("window3d");
     }
 
   protected:
 
-    coord 
+    /*!
+    ** \brief Update delta.
+    ** \arg dp a move point.
+    ** \return Delta.
+    **
+    ** If the point is the biggest element of the window.
+    ** then this point is assigned to delta.
+    */
+    coord
     delta_update_(const dpoint_type& dp)
     {
       delta_(abs(dp.slice()));
@@ -109,6 +174,10 @@ namespace oln {
 
   // std win
 
+  /*!
+  ** \brief Create a window (3 dimensions) of 6 elements.
+  ** \return The new window.
+  */
   inline const window3d&
   win_c6_only()
   {
@@ -122,6 +191,12 @@ namespace oln {
     return win;
   }
 
+  /*!
+  ** \brief Create a window (3 dimensions) of 7 elements.
+  ** \return The new window.
+  **
+  ** It's the same than win_c6_only() plus the 0,0,0 point.
+  */
   inline const window3d&
   win_c6p()
   {
@@ -136,6 +211,10 @@ namespace oln {
     return win;
   }
 
+  /*!
+  ** \brief Create a window (3 dimensions) of 18 elements.
+  ** \return The new window.
+  */
   inline const window3d&
   win_c18_only()
   {
@@ -161,6 +240,12 @@ namespace oln {
     return win;
   }
 
+  /*!
+  ** \brief Create a window (3 dimensions) of 19 elements.
+  ** \return The new window.
+  **
+  ** It's the same than win_c18_only() plus the 0,0,0 point.
+  */
   inline const window3d&
   win_c18p()
   {
@@ -187,6 +272,10 @@ namespace oln {
     return win;
   }
 
+  /*!
+  ** \brief Create a window (3 dimensions) of 26 elements.
+  ** \return The new window.
+  */
   inline const window3d&
   win_c26_only()
   {
@@ -220,6 +309,12 @@ namespace oln {
     return win;
   }
 
+  /*!
+  ** \brief Create a window (3 dimensions) of 27 elements.
+  ** \return The new window.
+  **
+  ** It's the same than win_c26_only() plus the 0,0,0 point.
+  */
   inline const window3d&
   win_c26p()
   {
@@ -256,6 +351,19 @@ namespace oln {
 
   // mk_win's
 
+  /*!
+  ** \brief Create a block window (3 dimension).
+  ** \arg nslices Number of slice.
+  ** \arg nrows Number of row.
+  ** \arg ncols Number of column.
+  ** \return The new window (3d).
+  ** \pre nslices >= 3.
+  ** \pre nslices % 2 == 1.
+  ** \pre nrows >= 3.
+  ** \pre nrows % 2 == 1.
+  ** \pre ncols >= 3.
+  ** \pre ncols % 2 == 1.
+  */
   inline window3d
   mk_win_block(unsigned nslices, unsigned nrows, unsigned ncols)
   {
@@ -273,6 +381,18 @@ namespace oln {
     return win;
   }
 
+  /*!
+  ** \brief Create an ellipsoid window (3 dimension).
+  ** \arg zradius radius Z.
+  ** \arg yradius radius Y.
+  ** \arg xradius radius X.
+  ** \pre zradius > 0
+  ** \pre yradius > 0
+  ** \pre xradius > 0
+  **
+  ** The ellipsoid formula is :
+  ** \f$$\frac{x^2}{xradius^2} + \frac{y^2}{yradius^2} + \frac{z^2}{zradius^2} = 1$\f$
+  */
   inline window3d
   mk_win_ellipsoid(float zradius, float yradius, float xradius)
   {
@@ -308,12 +428,22 @@ namespace oln {
     return win;
   }
 
+  /*!
+  ** \brief Create a cube neighborhood (3 dimension).
+  ** \arg width Number of slice, colunm and row.
+  ** \return The new neighborhood (3d).
+  */
   inline window3d
   mk_win_cube(unsigned width)
   {
     return mk_win_block(width, width, width);
   }
 
+  /*!
+  ** \brief Create a ball neighborhood (3 dimension).
+  ** \arg radius The radius.
+  ** \return The new neighborhood (3d).
+  */
   inline window3d
   mk_win_ball(float radius)
   {

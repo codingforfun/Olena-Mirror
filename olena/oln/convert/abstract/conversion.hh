@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,6 +34,9 @@
 
 namespace oln {
   namespace convert {
+    /*!
+    ** \brief Namespace oln::convert::abstract.
+    */
     namespace abstract {
 
       // fwd_decl
@@ -51,7 +54,11 @@ namespace oln {
       template<class Conv>
       struct conversion_traits;
 
+      /*!
+      ** Namespace oln::convert::abstract::internal, for internal usage only.
+      */
       namespace internal {
+	/// Retrieve the result type of a conversion.
 	template <class Base, class T>
 	struct output {};
 
@@ -69,11 +76,15 @@ namespace oln {
 	  typedef Result_Type ret;
 	};
       }
-      
+
     } // end of namespace abstract
 
     namespace abstract {
-
+      /*! Base class for conversion.
+      **
+      ** \note If you write an class inherited from this one, you
+      ** must write the specialization of the output trait.
+      */
       template<class Exact, class Base>
       struct conversion : public mlc_hierarchy::any< Exact >
       {
@@ -82,25 +93,27 @@ namespace oln {
 	{
 	  return std::string("conversion<") + Exact::name() + ">";
 	}
-	
+
       public:
 	template<class T>
 	struct output
 	{
 	  typedef typename internal::output<Base, T>::ret ret;
-	};      
-	
+	};
+
+	/// Call the conversion written in the exact class.
 	template <class T>
-	typename output<T>::ret 
+	typename output<T>::ret
 	operator()(const T& in) const
 	{
 	  return this->exact().doit(in);
 	}
-	
+
       protected:
 	conversion() {}
       };
-      
+
+      /// Base class for the conversion to a specific type.
       template<class Result_Type, class Exact = mlc::final, class Base = mlc::final>
       struct conversion_to_type :
 	public conversion< typename mlc::exact_vt<conversion_to_type< Result_Type, Exact >, Exact>::ret,
@@ -112,10 +125,10 @@ namespace oln {
 	   because it make the conversion appear almost as Adaptable
 	   Unary Function (it will just lack the argument_type, but
 	   this typedef is not used very much.)  */
-	
-	typedef Result_Type result_type;	
 
-	static std::string 
+	typedef Result_Type result_type;
+
+	static std::string
 	name()
 	{
 	  // FIXME: Exact is not an integre type !
@@ -128,24 +141,22 @@ namespace oln {
 	conversion_to_type() {}
       };
 
-    /* If both input and output types of the conversion are fixed.
-       Inherit from conversion_from_type_to_type<>.  */
-
+      /// Base class if both input and output types of the conversion are fixed.
       template<class Argument_Type, class Result_Type,
 	       class Exact = mlc::final, class Base = mlc::final>
       struct conversion_from_type_to_type:
 	public conversion_to_type< Result_Type,
 				   typename mlc::exact_vt<conversion_from_type_to_type< Argument_Type, Result_Type, Base, Exact>, Exact>::ret,
-				   typename mlc::exact_vt<conversion_from_type_to_type< Argument_Type, Result_Type, Base, Exact>, Base>::ret > 
+				   typename mlc::exact_vt<conversion_from_type_to_type< Argument_Type, Result_Type, Base, Exact>, Base>::ret >
       {
-	
+
 	/* By defining argument_type, and inheriting from result_type,
 	   we comply to the STL concept of Adaptable Unary Function.  */
-	
+
 	typedef Argument_Type argument_type;
-	
-	static std::string 
-	name() 
+
+	static std::string
+	name()
 	{
 	  // FIXME: Exact is not an integre type !
 	  return std::string("conversion_from_type_to_type<")

@@ -37,6 +37,9 @@
 
 namespace oln {
 
+  /*! \namespace abstract
+  ** \brief abstract namespace.
+  */
 
   namespace abstract {
 
@@ -51,20 +54,20 @@ namespace oln {
 
   template<class Ima>
   struct image_traits;
-  
+
   /*! \class image_traits
-  ** 
+  **
   ** A helping structure to find the
   ** exact_type of a given class.
   */
-  
+
   template <class Exact>
   struct image_traits<abstract::image<Exact> >
   {
     typedef Exact exact_type;
   };
 
-  
+
 
   namespace abstract {
 
@@ -73,54 +76,54 @@ namespace oln {
     ** The image class whom derives all
     ** other image classes.
     */
-    
+
     template <class Exact>
     class image : public mlc_hierarchy::any_with_diamond<Exact>
     {
     public:
-      typedef typename image_traits<Exact>::point_type point_type; 
+      typedef typename image_traits<Exact>::point_type point_type;
       /*!< Prefer the macro oln_point_type(I) to retrieve the point_type
       ** of an image.
       **
       ** \see point
       */
-      typedef typename image_traits<Exact>::dpoint_type dpoint_type; 
+      typedef typename image_traits<Exact>::dpoint_type dpoint_type;
       /*!< Prefer the macro oln_dpoint_type(I) to retrieve the dpoint_type
       ** of an image.
       **
       ** \see dpoint
       */
-      typedef typename image_traits<Exact>::iter_type iter_type; 
+      typedef typename image_traits<Exact>::iter_type iter_type;
       /*!< Prefer the macro oln_iter_type(I) to retrieve the iter_type
       ** of an image
       **
       ** \see iter
       */
-      typedef typename image_traits<Exact>::fwd_iter_type fwd_iter_type; 
+      typedef typename image_traits<Exact>::fwd_iter_type fwd_iter_type;
       /*!< Forward iterator type. */
-      typedef typename image_traits<Exact>::bkd_iter_type bkd_iter_type; 
+      typedef typename image_traits<Exact>::bkd_iter_type bkd_iter_type;
       /*!< Backward iterator type. */
-      typedef typename image_traits<Exact>::value_type value_type; 
+      typedef typename image_traits<Exact>::value_type value_type;
       /*!< Prefer the macro oln_value_type(I) to retrieve the value_type
       ** of an image.
       */
-      typedef typename image_traits<Exact>::size_type size_type; 
+      typedef typename image_traits<Exact>::size_type size_type;
       /*!< Indicate how the image size is handled.
       **
       ** \see image_size
       */
-      typedef typename image_traits<Exact>::impl_type impl_type; 
+      typedef typename image_traits<Exact>::impl_type impl_type;
       /*!< Underlying implementation. */
-      typedef image<Exact> self_type; 
-      typedef Exact exact_type; 
+      typedef image<Exact> self_type;
+      typedef Exact exact_type;
 
       enum { dim = image_traits<Exact>::dim };
 
-      
+
       /*! \brief Return a reference to the value stored
       ** at \a p in the current image.
       */
-      
+
       const value_type&
       operator[](const abstract::point<point_type>& p) const
       {
@@ -130,7 +133,7 @@ namespace oln {
       /*! \brief Return the value stored stored at \a p
       ** in the current image.
       */
-      
+
       value_type&
       operator[](const abstract::point<point_type>& p)
       {
@@ -138,7 +141,7 @@ namespace oln {
       }
 
       /*! \brief Indicate if the image can be processed.
-      ** 
+      **
       ** \return True if the image can be processed, false otherwise.
       */
 
@@ -148,18 +151,18 @@ namespace oln {
 	return this->exact().impl() != 0;
       }
 
-      /*! \brief Clone the image, all the points are 
+      /*! \brief Clone the image, all the points are
       ** duplicated.
-      ** 
+      **
       ** \return A real copy of the current image.
       */
-      
+
       exact_type
       clone() const
       {
 	return this->exact().clone_();
       }
-      
+
       /*! \brief Test if the point \a p belong to the image.
       **
       ** \return True if p belong to the image, false otherwise.
@@ -171,7 +174,7 @@ namespace oln {
 	assertion(has_impl());
 	return this->exact().impl()->hold(p.exact());
       }
-      
+
       /// Return a reference to the image size.
 
       const size_type&
@@ -180,19 +183,19 @@ namespace oln {
 	assertion(has_impl());
 	return this->exact().impl()->size();
       }
-      
+
       /// Return the value of the border width.
-      
+
       coord
       border() const
       {
 	return size().border();
       }
-      
+
       /*! \brief Return the total number of points
       ** in the current image.
       */
-      
+
 
       size_t
       npoints() const
@@ -206,7 +209,7 @@ namespace oln {
       **
       ** \see image::clone()
       */
-      
+
       exact_type&
       operator=(self_type rhs)
       {
@@ -223,7 +226,7 @@ namespace oln {
 
       // borders
 
-      
+
       /*! \brief Set the width of the border to perform
       ** operations on the image sides.
       **
@@ -234,7 +237,7 @@ namespace oln {
       ** \pre new_border >= 0
       **
       ** \pre has_impl() == true
-      ** 
+      **
       ** \see image_size::border_
       */
 
@@ -249,10 +252,10 @@ namespace oln {
 	const_cast<impl_type *>(this->exact().impl())->border_reallocate_and_copy(new_border, copy_border);
       }
 
-      /*! \brief Adapt the border if min_border is 
+      /*! \brief Adapt the border if min_border is
       ** less or equal to the current border
       ** value.
-      ** 
+      **
       ** \arg min_border The new value of the border width.
       **
       ** \arg copy_border Its default value is false.
@@ -261,7 +264,7 @@ namespace oln {
       **
       ** \see image_size::border_
       */
-      
+
       void
       border_adapt_width(coord min_border, bool copy_border =
 			 false) const
@@ -280,7 +283,7 @@ namespace oln {
       **
       ** \see image_size::border_
       */
-      
+
       void
       border_adapt_copy(coord min_border) const
       {
@@ -303,7 +306,7 @@ namespace oln {
 	const_cast<impl_type *>(this->exact().impl())->border_mirror();
       }
 
-      /*! \brief The border points value will be equal to 
+      /*! \brief The border points value will be equal to
       ** the \a val parameters.
       **
       ** \arg min_border The new value of the border width.
@@ -321,7 +324,7 @@ namespace oln {
       }
 
     protected:
-      
+
       image()
       {}
 
@@ -351,8 +354,8 @@ mlc_exact_type_(Pointable)::point_type
 
 # define oln_dpoint_type(DPointable)		\
 mlc_exact_type(DPointable)::dpoint_type
-# define oln_dpoint_type_(Pointable)	        \
-mlc_exact_type_(Pointable)::dpoint_type
+# define oln_dpoint_type_(DPointable)	        \
+mlc_exact_type_(DPointable)::dpoint_type
 
 } // end of namespace oln
 

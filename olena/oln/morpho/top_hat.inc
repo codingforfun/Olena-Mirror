@@ -56,8 +56,8 @@
 ** }
 ** \endcode
 **
-** \image html lena256.png
-** \image latex lena256.png
+** \image html lena256_pgm.png
+** \image latex lena256_pgm.png
 ** =>
 ** \image html oln_morpho_fast_white_top_hat.png
 ** \image latex oln_morpho_fast_white_top_hat.png
@@ -98,8 +98,8 @@ white_top_hat(const convert::abstract::conversion<C, B>& c,
 ** }
 ** \endcode
 **
-** \image html lena256.png
-** \image latex lena256.png
+** \image html lena256_pgm.png
+** \image latex lena256_pgm.png
 ** =>
 ** \image html oln_morpho_fast_white_top_hat_overload.png
 ** \image latex oln_morpho_fast_white_top_hat_overload.png
@@ -144,8 +144,8 @@ oln_concrete_type(I)
 ** }
 ** \endcode
 **
-** \image html lena256.png
-** \image latex lena256.png
+** \image html lena256_pgm.png
+** \image latex lena256_pgm.png
 ** =>
 ** \image html oln_morpho_fast_black_top_hat.png
 ** \image latex oln_morpho_fast_black_top_hat.png
@@ -187,8 +187,8 @@ black_top_hat(const convert::abstract::conversion<C, B>& c,
 ** }
 ** \endcode
 **
-** \image html lena256.png
-** \image latex lena256.png
+** \image html lena256_pgm.png
+** \image latex lena256_pgm.png
 ** =>
 ** \image html oln_morpho_fast_black_top_hat_overload.png
 ** \image latex oln_morpho_fast_black_top_hat_overload.png
@@ -237,8 +237,8 @@ oln_concrete_type(I)
 ** }
 ** \endcode
 **
-** \image html lena256.png
-** \image latex lena256.png
+** \image html lena256_pgm.png
+** \image latex lena256_pgm.png
 ** =>
 ** \image html oln_morpho_fast_self_complementary_top_hat.png
 ** \image latex oln_morpho_fast_self_complementary_top_hat.png
@@ -278,8 +278,8 @@ self_complementary_top_hat(const convert::abstract::conversion<C, B>& c,
 ** }
 ** \endcode
 **
-** \image html lena256.png
-** \image latex lena256.png
+** \image html lena256_pgm.png
+** \image latex lena256_pgm.png
 ** =>
 ** \image html oln_morpho_fast_self_complementary_top_hat_overload.png
 ** \image latex oln_morpho_fast_self_complementary_top_hat_overload.png
@@ -326,8 +326,8 @@ self_complementary_top_hat(const abstract::non_vectorial_image<I>& input,
 ** }
 ** \endcode
 **
-** \image html lena256.png
-** \image latex lena256.png
+** \image html lena256_pgm.png
+** \image latex lena256_pgm.png
 ** =>
 ** \image html oln_morpho_fast_top_hat_contrast_op.png
 ** \image latex oln_morpho_fast_top_hat_contrast_op.png
@@ -374,8 +374,8 @@ top_hat_contrast_op(const convert::abstract::conversion<C, B>& c,
 ** }
 ** \endcode
 **
-** \image html lena256.png
-** \image latex lena256.png
+** \image html lena256_pgm.png
+** \image latex lena256_pgm.png
 ** =>
 ** \image html oln_morpho_fast_top_hat_contrast_op_overload.png
 ** \image latex oln_morpho_fast_top_hat_contrast_op_overload.png

@@ -50,8 +50,8 @@ namespace oln {
     **   When there are more  basins than DestValue can hold, wrapping
     **   occurs (i.e., the same label is used for several basin).
     **
-    ** \ref  This is  based  on the  original  algorithm presented  by
-    ** Vincent and Soille. (FIXME: ref?)
+    ** This is  based on the  original algorithm presented  by Vincent
+    ** and Soille. (FIXME: ref?)
     **
     ** \param DestValue Type of the data in output image.
     ** \param I Exact type of the image.
@@ -80,8 +80,8 @@ namespace oln {
     ** }
     ** \endcode
     **
-    ** \image html lena256.png
-    ** \image latex lena256.png
+    ** \image html lena256_pgm.png
+    ** \image latex lena256_pgm.png
     ** =>
     ** \image html oln_morpho_watershed_seg.png
     ** \image latex oln_morpho_watershed_seg.png
@@ -111,7 +111,7 @@ namespace oln {
     ** potentially harmful, because if two connected basins are labeled
     ** with the same value they will appear as one basin.\n
     **
-    ** \ref This is based on the original algorithm
+    **  This is based on the original algorithm
     ** presented by Vincent and Soille, but modified to not output
     ** watersheds.
     **
@@ -142,8 +142,8 @@ namespace oln {
     ** }
     ** \endcode
     **
-    ** \image html lena256.png
-    ** \image latex lena256.png
+    ** \image html lena256_pgm.png
+    ** \image latex lena256_pgm.png
     ** =>
     ** \image html oln_morpho_watershed_con.png
     ** \image latex oln_morpho_watershed_con.png
@@ -166,7 +166,8 @@ namespace oln {
     ** input, fill markers with oln_value_type(I2)::min() (this is the
     ** unknown label) and mark the starting points or regions (usually
     ** these   are   minima  in   levels)   using   a  value   between
-    ** oln_value_type(I2)::min()+1 and oln_value_type(I2)::max()-1.\n
+    ** oln_value_type(I2)::min()  + 1 and  oln_value_type(I2)::max() -
+    ** 1.\n
     **
     ** watershed_seg_or  will  flood  levels  from  these  non-unknown
     ** starting points,  labeling basins using the  value you assigned
@@ -174,7 +175,7 @@ namespace oln {
     ** oln_value_type(I2)::max().   markers  should  not contains  any
     ** oln_value_type(I2)::min() value on output.
     **
-    ** \ref  This is  based  on the  original  algorithm presented  by
+    **   This is  based  on the  original  algorithm presented  by
     ** D'Ornellas et al. (FIXME: ref?)
     **
     ** \param I1 Exact type of the D image.

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,14 +30,16 @@
 
 # include <oln/core/abstract/window_base.hh>
 
-namespace oln 
-{
-  namespace abstract 
-  {
+namespace oln {
+
+  namespace abstract {
     template<class Exact>
-    struct windownd; //fwd_decl
+    struct windownd; // forward declaration
   } // end of abstract
 
+  /*!
+  ** \brief Traits for abstract::windownd.
+  */
   template<class Exact>
   struct struct_elt_traits<abstract::windownd<Exact> >: public
   struct_elt_traits<abstract::window_base<abstract::window<Exact>, Exact> >
@@ -45,19 +47,38 @@ namespace oln
 
   };
 
-  namespace abstract 
-  {
+  namespace abstract {
+
+    /*!
+    ** \brief Window N dimensions.
+    **
+    ** A window is a set of points. This class
+    ** defines how to deal with. These points have N dimensions.
+    */
     template<class Exact>
-    struct windownd: public window_base<window<Exact>, Exact> 
+    struct windownd: public window_base<window<Exact>, Exact>
     {
       typedef window_base<window<Exact>, Exact> super_type;
-      typedef windownd<Exact> self_type;
+      ///< Set the super type.
+      typedef windownd<Exact> self_type; ///< Set the self type.
+      typedef Exact exact_type; ///< Set the exact type.
+
+      /*!
+      ** \brief The associate image's type of dpoint (move point).
+      ** \warning Prefer the macros oln_dpoint_type(Pointable) and
+      ** oln_dpoint_type_(Pointable) (the same without the 'typename' keyword)
+      */
       typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
-      typedef Exact exact_type;
 
       friend class window<exact_type>;
 
-      static std::string 
+      /*!
+      ** \brief Return his type in a string.
+      ** \return The type in a string.
+      **
+      ** Very useful to debug.
+      */
+      static std::string
       name()
       {
 	return std::string("windownd<") + Exact::name() + ">" ;
@@ -65,7 +86,13 @@ namespace oln
 
     protected:
 
-      exact_type& 
+      /*!
+      ** \brief Add a point to the window.
+      ** \arg dp The new point.
+      **
+      ** Add a new member to the window.
+      */
+      exact_type&
       add_(const dpoint_type& dp)
       {
 	if (dp.is_centered())
@@ -76,10 +103,17 @@ namespace oln
 	return this->exact();
       }
 
+      /*!
+      ** \brief Construct a window.
+      */
       windownd() : super_type()
       { }
 
-      windownd(unsigned size) : super_type(size) 
+      /*!
+      ** \brief Construct a w_window of 'size' elements.
+      ** \arg size The number of element to reserve for the window.
+      */
+      windownd(unsigned size) : super_type(size)
       {}
 
     };

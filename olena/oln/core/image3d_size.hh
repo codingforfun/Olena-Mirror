@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -36,16 +36,41 @@ namespace oln {
 
   struct image3d_size;
 
+  /*! \class image_size_traits<image3d_size>
+  **
+  ** The specialized version for image3d_size.
+  */
   template<>
   struct image_size_traits<image3d_size>
   {
     enum { dim = 3 };
   };
-
+  
+  /*! \class image3d_size
+  **
+  ** Size_type for image3d.
+  */
+  
   struct image3d_size : public abstract::image_size<image3d_size >
   {
 
   public:
+    
+    /*! \brief Image2d_size constructor.
+    **
+    ** \arg nslices The number of slices in
+    ** the image is set to \a nslices
+    **
+    ** \arg nrows The number of rows in 
+    ** the image is set to \a nrows.
+    ** 
+    ** \arg ncols The number of columns in
+    ** the image is set to \a ncols.
+    **
+    ** \arg border The border width of the image
+    ** is set to border.
+    */
+    
 
     image3d_size(coord nslices, coord nrows, coord ncols, coord border)
     {
@@ -55,6 +80,8 @@ namespace oln {
       border_ = border;
     }
 
+    /// Return the number of slices in the image.
+    
     coord 
     nslices() const
     {
@@ -62,12 +89,16 @@ namespace oln {
       return nth(0);
     }
 
+    /// Return a reference to the number of slices in the image.
+    
     coord& 
     nslices() 
     {
       invariant(nth(0) > 0);
       return nth(0);
     }
+    
+    /// Return the number of rows in the image.
 
     coord
     nrows() const
@@ -76,20 +107,26 @@ namespace oln {
       return nth(1);
     }
 
+    /// Return a reference to the number of rows in the image.
+    
     coord& 
     nrows() 
     {
       invariant(nth(1) > 0);
       return nth(1);
     }
-
+    
+    /// Return the number of columns in the image.
+    
     coord 
     ncols() const
     {
       invariant(nth(2) > 0);
       return nth(2);
     }
-
+    
+    /// Return a reference to the number of columns in the image.
+    
     coord& 
     ncols() 
     {

@@ -73,8 +73,8 @@ namespace oln {
     ** }
     ** \endcode
     **
-    ** \image html object.png
-    ** \image latex object.png
+    ** \image html object_pbm.png
+    ** \image latex object_pbm.png
     ** =>
     ** \image html oln_morpho_erosion.png
     ** \image latex oln_morpho_erosion.png
@@ -122,8 +122,8 @@ namespace oln {
     ** }
     ** \endcode
     **
-    ** \image html object.png
-    ** \image latex object.png
+    ** \image html object_pbm.png
+    ** \image latex object_pbm.png
     ** =>
     ** \image html oln_morpho_n_erosion.png
     ** \image latex oln_morpho_n_erosion.png
@@ -175,8 +175,8 @@ namespace oln {
       ** }
       ** \endcode
       **
-      ** \image html object.png
-      ** \image latex object.png
+      ** \image html object_pbm.png
+      ** \image latex object_pbm.png
       ** =>
       ** \image html oln_morpho_fast_erosion.png
       ** \image latex oln_morpho_fast_erosion.png

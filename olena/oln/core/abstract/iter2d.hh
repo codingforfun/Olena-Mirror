@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -45,50 +45,84 @@ namespace oln {
     class iter2d; // fwd_decl
   } // end of abstract
 
+  /*!
+  ** \brief Traits for abstract::iter2d.
+  */
   template<class Exact>
   struct iter_traits<abstract::iter2d<Exact> >: public
   iter_traits<abstract::iter<Exact> >
   {
-    enum { dim = 2 };
-    typedef point2d point_type;
-    typedef dpoint2d dpoint_type;
+    enum { dim = 2 }; ///< The dimension of the image traversed.
+    typedef point2d point_type; ///< The type of point of the image.
+    typedef dpoint2d dpoint_type; ///< The type of dpoint of the image.
   };
-
 
   namespace abstract {
 
-
+    /*!
+    ** \brief Iterator on image of 2 dimensions.
+    **
+    ** Allow iterable object (like image, window, ...) of 2 dimensions
+    ** traversing.
+    ** \see iter
+    */
     template<class Exact>
     class iter2d : public iter< Exact >
     {
     public:
 
-      typedef iter<Exact> super_type;
+      typedef iter<Exact> super_type; ///< The exact type of the object.
+
       friend class iter<Exact>;
 
-      coord 
+      /*!
+      ** \brief Get the coordinates (rows) of iterator's current point.
+      ** \return The row number.
+      **
+      ** On this kind of image (i.e. 2 dimensions), you are able to get
+      ** the column number and the row number.
+      */
+      coord
       row() const
       {
 	return this->p_.row();
       }
 
-      coord 
+      /*!
+      ** \brief Get the coordinates (columns) of iterator's current point.
+      ** \return The column number.
+      **
+      ** On this kind of image (i.e. 2 dimensions), you are able to get
+      ** the column number and the row number.
+      */
+      coord
       col() const
       {
 	return this->p_.col();
       }
 
-      static std::string name() 
-      { 
-	return std::string("_iter2d<") + Exact::name() + ">"; 
+      /*!
+      ** \brief Return his type in a string.
+      ** \return The type in a string.
+      **
+      ** Very useful to debug.
+      */
+      static std::string name()
+      {
+	return std::string("_iter2d<") + Exact::name() + ">";
       }
 
     protected:
 
-      const coord nrows_;
-      const coord ncols_;
+      const coord nrows_; ///< The number of rows of the image you are iterating.
+      const coord ncols_; ///< The number of column of the image you are iterating.
 
-      point2d 
+      /*!
+      ** \brief Get the current point viewed by the iterator.
+      ** \return The point (2 dimensions) viewed by the iterator.
+      ** \pre Instance != end.
+      */
+      point2d
       to_point() const
       {
 	precondition(*this != end);
@@ -99,11 +133,20 @@ namespace oln {
 	return this->p_;
       }
 
-      iter2d() : super_type(), nrows_(0), ncols_(0) 
+      /*!
+      ** \brief Constructor
+      */
+      iter2d() : super_type(), nrows_(0), ncols_(0)
       {}
 
+      /*!
+      ** \brief Construct an iterator (2d) on an inamge (2d).
+      ** \arg size The size of the image to iterate.
+      ** \pre size.ncols() > 0.
+      ** \pre size.nrows() > 0.
+      */
       iter2d(const image2d_size& size) :
-	super_type(), 
+	super_type(),
 	nrows_(size.nrows()),
 	ncols_(size.ncols())
       {
