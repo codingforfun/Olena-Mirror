@@ -1,4 +1,8 @@
-2004-04-13  Niels Van Vliet  <niels@lrde.epita.fr>
+2004-04-15  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* dev/thanks.texi: Update thanks.
+
+2004-04-15  Niels Van Vliet  <niels@lrde.epita.fr>
 
 	* doc/ref/Makefile.am: Changed 'make' to '$(MAKE)'
 

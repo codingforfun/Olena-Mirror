@@ -45,7 +45,17 @@ be what it is today without their work.
 @end itemize
 
 @item Astrid Wang
-for her work on static arrays.
+@itemize @minus
+@item for her work on new documentation system,
+@item for her work on static arrays.
+@end itemize
+
+@item Damien Thivolle
+@itemize @minus
+@item for his contributions to document the code,
+@item for his work on generic morphers,
+@item for his work on the configuration system.
+@end itemize
 
 @item David Lesage
 @itemize @minus
@@ -64,7 +74,13 @@ for his work on the type system
 @end itemize
 
 @item Giovanni Palma
+@itemize @minus
+@item for his work on color conversion,
+@item for his work on attribute opening and closing algorithms,
+@item for his work on new documentation system,
+@item for his contributions to document the code,
 @item for his contributions to cleanup the sources.
+@end itemize
 
 @item Heru Xue
 for his work on the color system.
@@ -107,6 +123,14 @@ for his study of fuzzy types.
 @item for his work on the source tree.
 @end itemize
 
+@item Niels van Vliet
+@itemize @minus
+@item for his work on color conversion,
+@item for his work on attribute opening and closing algorithms,
+@item for his contributions to document the code,
+@item for his work on histograms.
+@end itemize
+
 @item Pierre-Yves Strub
 @itemize @minus
 @item for his work on Olena morpho,
@@ -133,6 +157,12 @@ for his work on the watershed algorithm.
 
 @item Renaud Fran@,cois
 for his bibliographic research.
+
+@item Simon Odou
+@itemize @minus
+@item for his contributions to document the code,
+@item for his work on generic morphers.
+@end itemize
 
 @item Sylvain Berlemont
 @itemize @minus

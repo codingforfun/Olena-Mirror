@@ -1,3 +1,8 @@
+2004-04-15  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* tools/swilena/meta/Makefile.am: Add swilena_ntg_macros.i to
+	the dist.
+
 2004-04-14  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* swilena/python/tests/Makefile.am: Add tests to the distribution.
