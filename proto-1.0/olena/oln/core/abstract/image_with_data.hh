@@ -70,6 +70,7 @@ namespace oln {
 
       const oln_size_type(E)& impl_size() const
       {
+	precondition(this->has_data());
 	return this->data_->size();
       }
 
@@ -83,6 +84,7 @@ namespace oln {
 
       unsigned long impl_npoints() const
       {
+	precondition(this->has_data());
 	return this->data_->npoints();
       }
 
@@ -97,6 +99,7 @@ namespace oln {
 
       bool impl_hold(const oln_point_type(E)& p) const
       {
+	precondition(this->has_data());
 	return this->data_->hold(p);
       }
 
@@ -110,6 +113,7 @@ namespace oln {
 
       const oln_value_type(E) impl_get(const oln_point_type(E)& p) const
       {
+	precondition(this->has_data());
 	return this->data_->get(p);
       }
 
@@ -121,6 +125,7 @@ namespace oln {
       template <typename V>
       void impl_set(const oln_point_type(E)& p, const V& v)
       {
+	precondition(this->has_data());
 	this->data_->set(p, v);
       }
 
