@@ -53,8 +53,8 @@ namespace oln {
       template <pnm_type P, class I>
       struct pnm_reader<ReadPnmRaw, 3, P, I>
       {
-	typedef pnm_reader<ReadPnmRaw, 2, P, image2d<Value(I)> > reader_2d;
-	typedef image2d<Value(I)> image2d_type;
+	typedef pnm_reader<ReadPnmRaw, 2, P, image2d<oln_value_type(I)> > reader_2d;
+	typedef image2d<oln_value_type(I)> image2d_type;
 
 	static std::string name()
 	{ 
@@ -121,7 +121,7 @@ namespace oln {
 	       it != image2d_list.end();
 	       ++it, ++slice)
 	    {
-	      Iter(image2d_type) p(*(*it));
+	     oln_iter_type(image2d_type) p(*(*it));
 	      for_all(p)
 		output(slice, p.row(), p.col()) = (*(*it))[p];
 	    }

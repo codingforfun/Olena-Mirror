@@ -48,7 +48,7 @@ namespace oln {
   generate(AdaptableGen f, const image_size<I>& size)
   {
     typename image_for_dim<mlc::exact<I>::ret::dim>::with_type<typename AdaptableGen::result_type>::ret output(size.exact());
-    Iter(typename image_for_dim<mlc::exact<I>::ret::dim>::with_type<typename AdaptableGen::result_type>::ret) p(output);
+   oln_iter_type(typename image_for_dim<mlc::exact<I>::ret::dim>::with_type<typename AdaptableGen::result_type>::ret) p(output);
     for_all(p) output[p] = f();
     return output;
   }
@@ -57,7 +57,7 @@ namespace oln {
   abstract::image<I>
   generate(AdaptableGen f, abstract::image<I>& input)
   {
-    Iter(I) p(input);
+   oln_iter_type(I) p(input);
     for_all(p) input[p] = f();
     return input;
   }

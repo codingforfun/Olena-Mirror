@@ -61,7 +61,7 @@ namespace oln {
 	write(std::ostream& out, const I& input, const pnm2d_info&)
 	{
 	  // FIXME: implement an iterator over data
-	  Iter(I) it(input);
+	 oln_iter_type(I) it(input);
 	  
 	  unsigned stride = 0;
 	  for (it = begin; it != end; ++it)
@@ -88,7 +88,7 @@ namespace oln {
 	write(std::ostream& out, const I& input, const pnm2d_info& info)
 	{
 	  // FIXME: implement an iterator over data
-	  Iter(I) it(input);
+	 oln_iter_type(I) it(input);
 
 	  coord cols = 0;
 	  unsigned char c = 0;
@@ -127,7 +127,7 @@ namespace oln {
 	write(std::ostream& out, const I& input, const pnm2d_info&)
 	{
 	  // FIXME: implement an iterator over data
-	  Iter(I) it(input);
+	 oln_iter_type(I) it(input);
 	  
 	  int stride = 0;
 	  for (it = begin; it != end; ++it)
@@ -154,7 +154,7 @@ namespace oln {
 	write(std::ostream& out, const I& input, const pnm2d_info& info)
 	{
 	  // FIXME: implement an iterator over data
-	  Iter(I) it (input);
+	 oln_iter_type(I) it (input);
 	  
 	  for (it = begin; it != end; ++it)
 	    {
@@ -185,7 +185,7 @@ namespace oln {
 	write(std::ostream& out, const I& input, const pnm2d_info&)
 	{
 	  // FIXME: implement an iterator over data
-	  Iter(I) it(input);
+	 oln_iter_type(I) it(input);
 	  
 	  int stride = 0;
 	  for (it = begin; it != end; ++it)
@@ -215,7 +215,7 @@ namespace oln {
 	write(std::ostream& out, const I& input, const pnm2d_info& info)
 	{
 	  // FIXME: implement an iterator over data
-	  Iter(I) it (input);
+	 oln_iter_type(I) it (input);
 	  
 	  for (it = begin; it != end; ++it)
 	    {

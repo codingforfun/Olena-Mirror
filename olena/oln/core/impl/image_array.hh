@@ -53,24 +53,32 @@ namespace oln {
   }
 
   namespace impl {
+    template<class T, class Exact>
+    class image_array;
+  } // end of impl
 
-    template<class T, class ExactI, class E>
-    class image_array: public image_impl<ExactI, E>
+  template<class T, class Exact>
+  struct impl_traits<impl::image_array<T, Exact> >: public impl_traits<impl::image_impl<Exact> >
+  {
+
+  };
+
+  namespace impl {
+
+    template<class T, class Exact>
+    class image_array: public image_impl<Exact>
     {
     public:
-      typedef typename image_traits<ExactI>::point_type point_type;
-      typedef typename image_traits<ExactI>::iter_type iter_type;
-      typedef typename image_traits<ExactI>::fwd_iter_type fwd_iter_type;
-      typedef typename image_traits<ExactI>::bkd_iter_type bkd_iter_type;
-      typedef typename image_traits<ExactI>::value_type value_type;
-      typedef typename image_traits<ExactI>::size_type size_type;
-      typedef E exact_type;
+      typedef typename impl_traits<Exact>::point_type point_type;
+      typedef typename impl_traits<Exact>::value_type value_type;
+      typedef typename impl_traits<Exact>::size_type size_type;
+      typedef Exact exact_type;
 
 
-      typedef image_impl<ExactI, E > super_type;
-      typedef image_array<T, ExactI, E> self_type;
+      typedef image_impl<Exact> super_type;
+      typedef image_array<T, Exact> self_type;
 
-      enum { dim = image_traits<ExactI>::dim };
+      enum { dim = impl_traits<Exact>::dim };
 
       friend class super_type;
 

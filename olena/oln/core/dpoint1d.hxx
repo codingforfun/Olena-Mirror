@@ -31,8 +31,6 @@
 # include <oln/core/point1d.hh>
 # include <iostream>
 
-// FIXME: why .hxx ?
-
 namespace oln {
 
   inline coord

@@ -34,7 +34,7 @@
  * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
  * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
- * ret: mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
+ * ret: mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
  * doc:
  *   Compute the arithmetic difference between the diltation and
  * the erosion of \var{input}  using \var{se} as structural element. Soille, p67.
@@ -49,7 +49,7 @@
  * exo: out.pgm
 =*/
 template<class C, class B, class I, class E>
-typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
+typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
 beucher_gradient(const convert::abstract::conversion<C, B>& c,
 		 const abstract::non_vectorial_image<I>& input,
 		 const abstract::struct_elt<E>& se)
@@ -63,13 +63,13 @@ beucher_gradient(const convert::abstract::conversion<C, B>& c,
  * what: Morphological Beucher Gradient.
  * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
- * ret: Concrete(I)
+ * ret:oln_concrete_type(I)
 =*/
 template<class I, class E>
-Concrete(I) beucher_gradient(const abstract::non_vectorial_image<I>& input,
+oln_concrete_type(I) beucher_gradient(const abstract::non_vectorial_image<I>& input,
 			     const abstract::struct_elt<E>& se)
 {
-  return beucher_gradient(convert::force<Value(I)>(), input, se);
+  return beucher_gradient(convert::force<oln_value_type(I)>(), input, se);
 }
 
 
@@ -79,7 +79,7 @@ Concrete(I) beucher_gradient(const abstract::non_vectorial_image<I>& input,
  * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
  * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
- * ret: mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
+ * ret: mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
  * doc:
  *   Compute the arithmetic difference between the original image \var{input} and
  * the erosion of \var{input} using \var{se} as structural element. Soille, p67.
@@ -93,7 +93,7 @@ Concrete(I) beucher_gradient(const abstract::non_vectorial_image<I>& input,
  * exo: out.pgm
 =*/
 template<class C, class B, class I, class E>
-typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
+typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
 internal_gradient(const convert::abstract::conversion<C, B>& c,
 		  const abstract::non_vectorial_image<I>& input,
 		  const abstract::struct_elt<E>& se)
@@ -106,13 +106,13 @@ internal_gradient(const convert::abstract::conversion<C, B>& c,
  * what: Morphological Internal Gradient.
  * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
- * ret: Concrete(I)
+ * ret:oln_concrete_type(I)
 =*/
 template<class I, class E>
-Concrete(I) internal_gradient(const abstract::non_vectorial_image<I>& input, const
+oln_concrete_type(I) internal_gradient(const abstract::non_vectorial_image<I>& input, const
 			      abstract::struct_elt<E>& se)
 {
-  return internal_gradient(convert::force<Value(I)>(), input, se);
+  return internal_gradient(convert::force<oln_value_type(I)>(), input, se);
 }
 
 /*=processing external_gradient
@@ -121,7 +121,7 @@ Concrete(I) internal_gradient(const abstract::non_vectorial_image<I>& input, con
  * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
  * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
- * ret: mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
+ * ret: mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
  * doc:
  *   Compute the arithmetic difference between  and the dilatation of
  * \var{input} using \var{se} as structural element, and the original image
@@ -136,7 +136,7 @@ Concrete(I) internal_gradient(const abstract::non_vectorial_image<I>& input, con
  * exo: out.pgm
 =*/
 template<class C, class B, class I, class E>
-typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
+typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
 external_gradient(const convert::abstract::conversion<C, B>& c,
 		  const abstract::non_vectorial_image<I>& input,
 		  const abstract::struct_elt<E>& se)
@@ -150,11 +150,11 @@ external_gradient(const convert::abstract::conversion<C, B>& c,
  * what: Morphological External Gradient.
  * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se, IN, structural element
- * ret: Concrete(I)
+ * ret:oln_concrete_type(I)
 =*/
 template<class I, class E>
-Concrete(I) external_gradient(const abstract::non_vectorial_image<I>& input,
+oln_concrete_type(I) external_gradient(const abstract::non_vectorial_image<I>& input,
 			      const abstract::struct_elt<E>& se)
 {
-  return external_gradient(convert::force<Value(I)>(), input, se);
+  return external_gradient(convert::force<oln_value_type(I)>(), input, se);
 }

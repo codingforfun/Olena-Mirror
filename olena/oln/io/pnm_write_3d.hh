@@ -53,8 +53,8 @@ namespace oln {
       template <pnm_type P, class I>
       struct pnm_writer<WritePnmRaw, 3, P, I>
       {
-	typedef pnm_writer<WritePnmRaw, 2, P, image2d<Value(I)> > writer_2d;
-	typedef image2d<Value(I)> image2d_type;
+	typedef pnm_writer<WritePnmRaw, 2, P, image2d<oln_value_type(I)> > writer_2d;
+	typedef image2d<oln_value_type(I)> image2d_type;
 
 	static std::string name()
 	{ 

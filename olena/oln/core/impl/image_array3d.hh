@@ -74,25 +74,40 @@ namespace oln {
     array = 0;  // security
   }
 
+
+  namespace impl {
+    template<class T>
+    class image_array3d;
+  } // end of impl
+
+  template<class T>
+  struct impl_traits<impl::image_array3d<T> >: public impl_traits<impl::image_array<T, impl::image_array3d<T> > >
+  {
+    enum { dim = 3 };
+    typedef point3d point_type;
+    typedef image3d_size size_type;
+    typedef T value_type;
+  };
+
   namespace impl
   {
     
-    template<class T, class ExactI>
+    template<class T>
     class image_array3d :
-      public image_array<T, ExactI, image_array3d<T, ExactI> >
+      public image_array<T, image_array3d<T> >
     {
     public:
-      typedef typename image_traits<ExactI>::point_type point_type;
-      typedef typename image_traits<ExactI>::iter_type iter_type;
-      typedef typename image_traits<ExactI>::fwd_iter_type fwd_iter_type;
-      typedef typename image_traits<ExactI>::bkd_iter_type bkd_iter_type;
-      typedef typename image_traits<ExactI>::value_type value_type;
-      typedef typename image_traits<ExactI>::size_type size_type;
+      typedef image_array3d<T> self_type;
+      typedef image_array3d<T> exact_type;
 
-      typedef image_array<T, ExactI, image_array3d<T, ExactI> > super_type;
-      typedef image_array3d<T, ExactI> self_type;
+      typedef typename impl_traits<exact_type>::point_type point_type;
+      typedef typename impl_traits<exact_type>::value_type value_type;
+      typedef typename impl_traits<exact_type>::size_type size_type;
 
-      friend class image_impl<ExactI, image_array3d<T, ExactI> >;
+      typedef image_array<T, image_array3d<T> > super_type;
+      
+
+      friend class image_impl<image_array3d<T> >;
       friend class super_type;
 
       image_array3d(const size_type& s): super_type(s) 
@@ -107,7 +122,7 @@ namespace oln {
 
     protected:
 
-      bool hold_(const oln::point3d& p) const
+      bool hold_(const point_type& p) const
       {
 	return (p.slice() >= 0
 		&& p.slice() < this->size_.nslices()
@@ -117,7 +132,7 @@ namespace oln {
 		&& p.col() < this->size_.ncols());
       }
 
-      bool hold_large_(const oln::point3d& p) const
+      bool hold_large_(const point_type& p) const
       {
 	return (p.slice() >= -this->size_.border()
 		&& p.slice() < this->size_.nslices() + this->size_.border()
@@ -127,7 +142,7 @@ namespace oln {
 		&& p.col() < this->size_.ncols() + this->size_.border());
       }
 
-      value_type& at_(const oln::point3d& p)
+      value_type& at_(const point_type& p)
       {
 	
 	return at_(p.slice(), p.row(), p.col());
@@ -140,7 +155,7 @@ namespace oln {
 	return array_[slice][row][col];
       }
       
-      size_t len_(const oln::image3d_size& s) const
+      size_t len_(const size_type& s) const
       {
 	coord nslices_eff = s.nslices() + 2 * s.border();
 	coord ncols_eff = s.ncols() + 2 * s.border();
@@ -158,9 +173,9 @@ namespace oln {
 	T*** array = 0;
 	// first allocate
 
-	allocate_data_(buffer, len_(image3d_size(this->size_.nslices(), this->size_.nrows(),
-					 this->size_.ncols(), new_border)));
-	pretreat_3d_data_(buffer, array2, array, image3d_size(this->size_.nslices(), this->size_.nrows(),
+	allocate_data_(buffer, len_(size_type(this->size_.nslices(), this->size_.nrows(),
+					      this->size_.ncols(), new_border)));
+	pretreat_3d_data_(buffer, array2, array, size_type(this->size_.nslices(), this->size_.nrows(),
 							     this->size_.ncols(), new_border));
 	// move data
 	coord border = this->size_.border();

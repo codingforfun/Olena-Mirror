@@ -64,7 +64,7 @@ namespace oln {
     connected_component(const abstract::image<I>& input,
 			const abstract::neighborhood<N>& Ng)
     {
-      // FIXME: ensure the Value(I) is bin.
+      // FIXME: ensure the oln_value_type(I) is bin.
       mlc::eq<I::dim, N::dim>::ensure();
       mlc::eq<I::dim, 2>::ensure();
       typename mute<I, DestType>::ret output(input.size());
@@ -72,7 +72,7 @@ namespace oln {
       DestType k = 1;
 
       fill(output, 0);
-      Iter(I) p(input);
+     oln_iter_type(I) p(input);
       for_all(p)
 	{
 	  if (input[p] == true)

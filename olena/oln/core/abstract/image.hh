@@ -175,20 +175,20 @@ namespace oln {
 
   } // end of namespace abstract
 
-# define Value(ImgType)				\
-Exact(ImgType)::value_type
+# define oln_value_type(ImgType)		\
+mlc_exact_type(ImgType)::value_type
 
-# define Concrete(ImgType)			\
+# define oln_concrete_type(ImgType)		\
 typename mute<ImgType>::ret
 
-# define Iter(Iterable)				\
-Exact(Iterable)::iter_type
+# define oln_iter_type(Iterable)		\
+mlc_exact_type(Iterable)::iter_type
 
-# define Point(Pointable)			\
-Exact(Pointable)::point_type
+# define oln_point_type(Pointable)		\
+mlc_exact_type(Pointable)::point_type
 
-# define DPoint(DPointable)			\
-Exact(DPointable)::dpoint_type
+# define oln_dpoint_type(DPointable)		\
+mlc_exact_type(DPointable)::dpoint_type
 
 } // end of namespace oln
 

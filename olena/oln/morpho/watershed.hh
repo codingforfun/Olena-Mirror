@@ -99,7 +99,7 @@ namespace oln {
      * arg: const abstract::non_vectorial_image<I1>&, levels, IN, image of levels
      * arg: abstract::non_vectorial_image<I2>&, markers, INOUT, image of markers
      * arg: const abstract::neighborhood<N>&, ng, IN, neighborhood to consider
-     * ret: Concrete(I2)&
+     * ret:oln_concrete_type(I2)&
      * doc:
      *   Compute a segmented watershed for image \var{levels} using
      *   neighborhood \var{ng}, and \var{markers} as starting point for
@@ -108,22 +108,22 @@ namespace oln {
      *   \var{markers} is an image of the same size as \var{levels}
      *   and containing discrete values indicating label associated to
      *   each basin.  On input, fill \var{markers} with
-     *   \code{Value(I2)::min()} (this is the \emph{unknown} label)
+     *   \code{oln_value_type(I2)::min()} (this is the \emph{unknown} label)
      *   and mark the starting points or regions
      *   (usually these are minima in \var{levels}) using a value
-     *   between \code{Value(I2)::min()+1} and \code{Value(I2)::max()-1}.
+     *   between \code{oln_value_type(I2)::min()+1} and \code{oln_value_type(I2)::max()-1}.
      *
      *   \code{watershed_seg_or} will flood \var{levels} from these
      *   non-\emph{unknown} starting points, labeling basins using
      *   the value you assigned to them, and markining watershed lines
-     *   with \code{Value(I2)::max()}.  \var{markers} should not contains
-     *   any \code{Value(I2)::min()} value on output.
+     *   with \code{oln_value_type(I2)::max()}.  \var{markers} should not contains
+     *   any \code{oln_value_type(I2)::min()} value on output.
      * ref:
      *   This is based on the original algorithm
      *   presented by D'Ornellas et al. (FIXME: ref?)
     =*/
     template<class I1, class I2, class N>
-    Concrete(I2)&
+   oln_concrete_type(I2)&
     watershed_seg_or(const abstract::non_vectorial_image<I1>& D,
 		     abstract::non_vectorial_image<I2>& M,
 		     const abstract::neighborhood<N>& Ng);

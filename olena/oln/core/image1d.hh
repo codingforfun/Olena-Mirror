@@ -50,7 +50,7 @@ namespace oln {
     enum{dim = 1};
     typedef T value_type;
     typedef typename mlc::exact_vt<image1d<T, Exact>, Exact>::ret exact_type;
-    typedef impl::image_array1d<T, exact_type> impl_type;
+    typedef impl::image_array1d<T> impl_type;
   };
 
   template<class T, class Exact>
@@ -87,7 +87,7 @@ namespace oln {
     friend class abstract::image<exact_type>;
 
     image1d() : 
-      super_type((impl_type*) 0)
+      super_type()
     {
       mlc_init_static_hierarchy(Exact);
     }
@@ -96,14 +96,12 @@ namespace oln {
       super_type(new impl_type(image1d_size(ncols, border)))
     {
       mlc_init_static_hierarchy(Exact);
-      super_type::impl()->ref();
     }
 
     image1d(const image1d_size& size) : 
       super_type(new impl_type(size))
     {
       mlc_init_static_hierarchy(Exact);
-      super_type::impl()->ref(); 
     }
 
     image1d(self_type& rhs) : // shallow copy
@@ -117,7 +115,7 @@ namespace oln {
 
     // io
     image1d(const io::internal::anything& r) 
-      : super_type((impl_type*) 0)
+      : super_type()
     {
       mlc_init_static_hierarchy(Exact);
       r.assign(*this);

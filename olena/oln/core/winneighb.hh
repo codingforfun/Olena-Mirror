@@ -38,8 +38,8 @@ namespace oln
 
   template< class Win >
   struct winneighb {
-    typedef Point(Win) point;
-    typedef DPoint(Win) dpoint;
+    typedef oln_point_type(Win) point;
+    typedef oln_dpoint_type(Win) dpoint;
 
     template< class T >
     winneighb(const typename Win::abstract_type& win, const T& anchor) :

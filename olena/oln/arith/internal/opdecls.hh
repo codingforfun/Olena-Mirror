@@ -110,25 +110,25 @@
     /* Standard application of OPNAME */				   \
     template<class I1, class I2> inline					   \
     typename mute<I1,							   \
-      typename f_##OPNAME<Value(I1), Value(I2)>::result_type>::ret	   \
+      typename f_##OPNAME<oln_value_type(I1),oln_value_type(I2)>::result_type>::ret	   \
     OPNAME(const abstract::image<I1>& input1, const abstract::image<I2>& input2)   \
     {									   \
       /* KLUGE: Build the functor, don't pass it as a parameter as in	   \
 	   apply2<f_##OPNAME>(input1, input2)				   \
 	 otherwise GCC 2.95.x will ICE.  */				   \
-      return apply2(f_##OPNAME<Value(I1), Value(I2)>(), input1, input2);   \
+      return apply2(f_##OPNAME<oln_value_type(I1),oln_value_type(I2)>(), input1, input2);   \
     }									   \
 									   \
     /* Same as above, plus conversion.  */				   \
     template<class C, class B, class I1, class I2> inline		   \
     typename mute<I1,							   \
       typename convoutput<C, B,						   \
-        typename f_##OPNAME<Value(I1), Value(I2)>::result_type>::ret>::ret \
+        typename f_##OPNAME<oln_value_type(I1),oln_value_type(I2)>::result_type>::ret>::ret \
     OPNAME(const convert::abstract::conversion<C, B>& conv,			   \
 	 const abstract::image<I1>& input1, const abstract::image<I2>& input2)	   \
     {									   \
       return apply2(convert::compconv2(conv,				   \
-				    f_##OPNAME<Value(I1), Value(I2)>()),   \
+				    f_##OPNAME<oln_value_type(I1),oln_value_type(I2)>()),   \
 		    input1, input2);					   \
     }
 
@@ -136,21 +136,21 @@
     /* Apply OPNAME with a constant as second operand.  */		  \
     template<class I, class T> inline					  \
     typename mute<I,							  \
-      typename f_##OPNAME##_cst<Value(I), T>::result_type>::ret		  \
+      typename f_##OPNAME##_cst<oln_value_type(I), T>::result_type>::ret		  \
     OPNAME##_cst(const abstract::image<I>& input, T val)			  \
     {									  \
-      return apply(f_##OPNAME##_cst<Value(I),T>(val), input);		  \
+      return apply(f_##OPNAME##_cst<oln_value_type(I),T>(val), input);		  \
     }									  \
 									  \
     /* Same as above, plus conversion.  */				  \
     template<class C, class B, class I, class T> inline				  \
     typename mute<I,							  \
       typename convoutput<C, B,						  \
-        typename f_##OPNAME##_cst<Value(I), T>::result_type>::ret>::ret	  \
+        typename f_##OPNAME##_cst<oln_value_type(I), T>::result_type>::ret>::ret	  \
     OPNAME##_cst(const convert::abstract::conversion<C, B>& conv, const abstract::image<I>& input, T val) \
     {									  \
       return apply(convert::compconv1(conv,				  \
-				   f_##OPNAME##_cst<Value(I),T>(val)),	  \
+				   f_##OPNAME##_cst<oln_value_type(I),T>(val)),	  \
 		   input);						  \
     }
 
@@ -165,7 +165,7 @@
     /* Standard application of OPNAME */				\
     template<class I1, class I2> inline					\
     typename mute<I1,							\
-      typename f_##OPNAME<Value(I1)>::result_type>::ret			\
+      typename f_##OPNAME<oln_value_type(I1)>::result_type>::ret			\
     OPNAME(const abstract::image<I1>& input1, const abstract::image<I2>& input2) \
     {									\
       return apply2<f_##OPNAME>(input1, input2);			\
@@ -175,11 +175,11 @@
     template<class C, class B, class I1, class I2> inline			\
     typename mute<I1,							\
       typename convoutput<C, B,						\
-        typename f_##OPNAME<Value(I1)>::result_type>::ret>::ret		\
+        typename f_##OPNAME<oln_value_type(I1)>::result_type>::ret>::ret		\
     OPNAME(const convert::abstract::conversion<C, B>& conv,				\
 	 const abstract::image<I1>& input1, const abstract::image<I2>& input2)		\
     {									\
-      return apply2(convert::compconv2(conv, f_##OPNAME<Value(I1)>()),	\
+      return apply2(convert::compconv2(conv, f_##OPNAME<oln_value_type(I1)>()),	\
 		    input1, input2);					\
     }
 
@@ -269,20 +269,20 @@
 # define _OLN_ARITH_DECLARE_UNOP_PROCS(OPNAME)				      \
     /* Standard application of OPNAME */				      \
     template<class I> inline						      \
-    typename mute<I, typename f_##OPNAME<Value(I)>::result_type>::ret	      \
+    typename mute<I, typename f_##OPNAME<oln_value_type(I)>::result_type>::ret	      \
     OPNAME(const abstract::image<I>& input1)					      \
     {									      \
-      return apply(f_##OPNAME<Value(I)>(), input1);			      \
+      return apply(f_##OPNAME<oln_value_type(I)>(), input1);			      \
     }									      \
 									      \
     /* Same as above, plus conversion.  */				      \
     template<class C, class B, class I> inline					      \
     typename mute<I,							      \
       typename convoutput<C, B,						      \
-        typename f_##OPNAME<Value(I)>::result_type>::ret>::ret		      \
+        typename f_##OPNAME<oln_value_type(I)>::result_type>::ret>::ret		      \
     OPNAME(const convert::abstract::conversion<C>& conv, const abstract::image<I>& input1)      \
     {									      \
-      return apply(convert::compconv2(conv, f_##OPNAME<Value(I)>()), input1); \
+      return apply(convert::compconv2(conv, f_##OPNAME<oln_value_type(I)>()), input1); \
     }
 
 

@@ -50,8 +50,8 @@ namespace oln {
       class cmap
       {
       public:
-	typedef DPoint(I)	dpoint_t;
-	typedef Point(I)	point_t;
+	typedefoln_dpoint_type(I)	dpoint_t;
+	typedef oln_point_type(I)	point_t;
 	typedef FwdDirIter(I)	fwd_dir_iter_t;
 	typedef BkdDirIter(I)	bkd_dir_iter_t;
 	typedef Head(I)		head_t;
@@ -227,7 +227,7 @@ namespace oln {
 
 	void _build_functions(const interpixel<I> & ip)
 	{
-	  Iter(zeta_t) it(_zeta);
+	 oln_iter_type(zeta_t) it(_zeta);
 	  fwd_dir_iter_t i;
 
 	  for_all(it)

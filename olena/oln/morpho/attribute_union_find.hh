@@ -112,9 +112,9 @@ namespace oln {
       template<class T, class ATTRIBUTE>
       struct tarjan_set
       {
-	typedef Point(T) point_t;
-	typedef Value(T) data_t;
-	typedef Concrete(T) image_t;
+	typedef oln_point_type(T) point_t;
+	typedef oln_value_type(T) data_t;
+	typedefoln_concrete_type(T) image_t;
 
 
 	// ACTIVE and INACTIVE are defined with a hook to be static
@@ -216,7 +216,7 @@ namespace oln {
 
 	  {
 	    // sort pixels with respect to their level and scanning order
-	    Iter(T) p(input_);
+	   oln_iter_type(T) p(input_);
 	    for_all(p)
 	      I.push_back(pixel_t(p.cur(), input_[p]));
 	    if (closing)

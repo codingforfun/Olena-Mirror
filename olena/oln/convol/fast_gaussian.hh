@@ -45,16 +45,16 @@ namespace oln {
       // FIXME: add tests!
 
       template <class C, class B, class I>
-      typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
+      typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
       gaussian(const convert::abstract::conversion<C, B>& input_conv,
 	       const abstract::image<I>& in, ntg::float_s sigma);
 
       template <class C, class B, class I>
-      typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
+      typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
       gaussian_derivative(const convert::abstract::conversion<C, B>& input_conv,
 			  const abstract::image<I>& in, ntg::float_s sigma);
       template <class C, class B, class I>
-      typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
+      typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
       gaussian_second_derivative(const convert::abstract::conversion<C, B>& input_conv,
 				 const abstract::image<I>& in,
 				 ntg::float_s sigma);
@@ -62,20 +62,20 @@ namespace oln {
       /* Same functions, with a default conversion.  */
 
       template <class I> inline
-      Concrete(I)
+     oln_concrete_type(I)
       gaussian(const abstract::image<I>& in, ntg::float_s sigma)
-      { return gaussian(convert::force<Value(I)>(), in, sigma); }
+      { return gaussian(convert::force<oln_value_type(I)>(), in, sigma); }
 
       template <class I> inline
-      Concrete(I)
+     oln_concrete_type(I)
       gaussian_derivative(const abstract::image<I>& in, ntg::float_s sigma)
-      { return gaussian_derivative(convert::force<Value(I)>(), in, sigma); }
+      { return gaussian_derivative(convert::force<oln_value_type(I)>(), in, sigma); }
 
       template <class I> inline
-      Concrete(I)
+     oln_concrete_type(I)
       gaussian_second_derivative(const abstract::image<I>& in,
 				 ntg::float_s sigma)
-      { return gaussian_second_derivative(convert::force<Value(I)>(),
+      { return gaussian_second_derivative(convert::force<oln_value_type(I)>(),
 					  in, sigma); }
     }
   }

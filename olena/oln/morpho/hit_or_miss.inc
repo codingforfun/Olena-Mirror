@@ -37,7 +37,7 @@
  * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se1, IN, structural element
  * arg: const abstract::struct_elt<E>&, se2, IN, structural element
- * ret: typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
+ * ret: typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
  * doc:
  * Compute the hit_or_miss transform of \var{input} by the composite structural
  * element (\var{se1}, \var{se2}). Soille p.131.
@@ -61,7 +61,7 @@
  * exo: out.pgm
 =*/
 template<class C, class B, class I, class E1, class E2>
-typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
+typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
 hit_or_miss(const convert::abstract::conversion<C, B>& c,
 	    const abstract::non_vectorial_image<I>& input,
 	    const abstract::struct_elt<E1>& se1,
@@ -86,14 +86,14 @@ hit_or_miss(const convert::abstract::conversion<C, B>& c,
  * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se1, IN, structural element
  * arg: const abstract::struct_elt<E>&, se2, IN, structural element
- * ret: Concrete(I)
+ * ret:oln_concrete_type(I)
 =*/
 template<class I, class E1, class E2>
-Concrete(I) hit_or_miss(const abstract::non_vectorial_image<I>& input,
+oln_concrete_type(I) hit_or_miss(const abstract::non_vectorial_image<I>& input,
 			const abstract::struct_elt<E1>& se1,
 			const abstract::struct_elt<E2>& se2)
 {
-  return hit_or_miss(convert::force<Value(I)>(), input, se1, se2);
+  return hit_or_miss(convert::force<oln_value_type(I)>(), input, se1, se2);
 }
 
 
@@ -108,7 +108,7 @@ Concrete(I) hit_or_miss(const abstract::non_vectorial_image<I>& input,
  * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se1, IN, structural element
  * arg: const abstract::struct_elt<E>&, se2, IN, structural element
- * ret: Concrete(I)
+ * ret:oln_concrete_type(I)
  * doc:
  *   Compute the hit_or_miss opening of \var{input} by the composite structural
  * element (\var{se1}, \var{se2}). Soille p.134.
@@ -134,7 +134,7 @@ Concrete(I) hit_or_miss(const abstract::non_vectorial_image<I>& input,
  * exo: out.pbm
 =*/
 template<class I, class E1, class E2>
-Concrete(I) hit_or_miss_opening(const abstract::non_vectorial_image<I>& input,
+oln_concrete_type(I) hit_or_miss_opening(const abstract::non_vectorial_image<I>& input,
 				const abstract::struct_elt<E1>& se1,
 				const abstract::struct_elt<E2>& se2)
 {
@@ -149,7 +149,7 @@ Concrete(I) hit_or_miss_opening(const abstract::non_vectorial_image<I>& input,
  * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se1, IN, structural element
  * arg: const abstract::struct_elt<E>&, se2, IN, structural element
- * ret: Concrete(I)
+ * ret:oln_concrete_type(I)
  * doc:
  *  Compute the hit_or_miss opening of the background of
  * \var{input} by the composite structural
@@ -176,7 +176,7 @@ Concrete(I) hit_or_miss_opening(const abstract::non_vectorial_image<I>& input,
  * exo: out.pbm
 =*/
 template<class I, class E1, class E2>
-Concrete(I) hit_or_miss_opening_bg(const abstract::non_vectorial_image<I>& input,
+oln_concrete_type(I) hit_or_miss_opening_bg(const abstract::non_vectorial_image<I>& input,
 				   const abstract::struct_elt<E1>& se1,
 				   const abstract::struct_elt<E2>& se2)
 {
@@ -195,7 +195,7 @@ Concrete(I) hit_or_miss_opening_bg(const abstract::non_vectorial_image<I>& input
  * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se1, IN, structural element
  * arg: const abstract::struct_elt<E>&, se2, IN, structural element
- * ret: Concrete(I)
+ * ret:oln_concrete_type(I)
  * doc:
  *   Compute the hit_or_miss closing of \var{input} by the composite structural
  * element (\var{se1}, \var{se2}). This is the dual transformation of hit-or-miss opening
@@ -223,7 +223,7 @@ Concrete(I) hit_or_miss_opening_bg(const abstract::non_vectorial_image<I>& input
  * exo: out.pbm
 =*/
 template<class I, class E1, class E2>
-Concrete(I) hit_or_miss_closing(const abstract::non_vectorial_image<I>& input,
+oln_concrete_type(I) hit_or_miss_closing(const abstract::non_vectorial_image<I>& input,
 				const abstract::struct_elt<E1>& se1,
 				const abstract::struct_elt<E2>& se2)
 {
@@ -239,7 +239,7 @@ Concrete(I) hit_or_miss_closing(const abstract::non_vectorial_image<I>& input,
  * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se1, IN, structural element
  * arg: const abstract::struct_elt<E>&, se2, IN, structural element
- * ret: Concrete(I)
+ * ret:oln_concrete_type(I)
  * doc:
  * Compute the hit_or_miss closing of the background of \var{input} by the composite structural
  * element (\var{se1}, \var{se2}). This is the dual transformation of hit-or-miss opening
@@ -267,7 +267,7 @@ Concrete(I) hit_or_miss_closing(const abstract::non_vectorial_image<I>& input,
  * exo: out.pbm
 =*/
 template<class I, class E1, class E2>
-Concrete(I) hit_or_miss_closing_bg(const abstract::non_vectorial_image<I>& input,
+oln_concrete_type(I) hit_or_miss_closing_bg(const abstract::non_vectorial_image<I>& input,
 				   const abstract::struct_elt<E1>& se1,
 				   const abstract::struct_elt<E2>& se2)
 {

@@ -117,14 +117,14 @@ namespace oln {
        because they do not all define result_type.  So we define another
        apply function here, to apply conversions.  */
     template<class C, class B, class I> inline
-    typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
+    typename mute<I, typename convoutput<C, B,oln_value_type(I)>::ret>::ret
     apply(const abstract::conversion<C, B>& conv, const oln::abstract::image<I>& input)
     {
       /* CONV can now be wrapped as an Adaptable Unary Function
 	 because we know the input type.  Composing CONV with the
 	 identity for the input type will cause such wrapping to
 	 happen.  */
-      return apply(compconv1(conv, f_identity<Value(I)>()), input);
+      return apply(compconv1(conv, f_identity<oln_value_type(I)>()), input);
     }
 
   } // convert

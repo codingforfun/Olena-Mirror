@@ -62,7 +62,7 @@ namespace oln {
 	read(std::istream& in, I& output, const pnm2d_info&)
 	  {
 	    // FIXME: implement an iterator over data
-	    Iter(I) it (output);
+	   oln_iter_type(I) it (output);
 	    
 	    for (it = begin; it != end; ++it)
 	      {
@@ -85,7 +85,7 @@ namespace oln {
 	static bool
 	read(std::istream& in, I& output, const pnm2d_info& info)
 	  {
-	    Iter(I) it(output);
+	   oln_iter_type(I) it(output);
 	    
 	    coord cols = 0;
 	    unsigned bits = 0;
@@ -119,7 +119,7 @@ namespace oln {
 	read(std::istream& in, I& output, const pnm2d_info&)
 	  {
 	    // FIXME: implement an iterator over data
-	    Iter(I) it (output);
+	   oln_iter_type(I) it (output);
 	    
 	    int c;
 	    for (it = begin; it != end; ++it)
@@ -139,7 +139,7 @@ namespace oln {
 	read(std::istream& in, I& output, const pnm2d_info& info)
 	  {
 	    // FIXME: implement an iterator over data
-	    Iter(I) it (output);
+	   oln_iter_type(I) it (output);
  
 	    for (it = begin; it != end; ++it)
 	      {
@@ -172,7 +172,7 @@ namespace oln {
 	read(std::istream& in, I& output, const pnm2d_info&)
 	{
 	  // FIXME: implement an iterator over data
-	  Iter(I) it (output);
+	 oln_iter_type(I) it (output);
 	  
 	  for (it = begin; it != end; ++it)
 	    {
@@ -193,7 +193,7 @@ namespace oln {
 	read(std::istream& in, I& output, const pnm2d_info& info)
 	{
 	    // FIXME: implement an iterator over data
-	    Iter(I) it (output);
+	   oln_iter_type(I) it (output);
  
 	    for (it = begin; it != end; ++it)
 	      {

@@ -30,7 +30,7 @@
 
 namespace oln {
 
-  // FIXME: despite of it usefulness, this box classes is not good
+  // FIXME: despite its usefulness, this box class is not good
   // FIXME: since it is not generic.
 
   template <class PointType>

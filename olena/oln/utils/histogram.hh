@@ -84,7 +84,7 @@ namespace oln {
       template <class I>
       void init(const abstract::image<I> &img)
       {
-	Iter(I) p(img);
+oln_iter_type(I) p(img);
 
 	for_all (p)
 	  values_[unsigned(img[p].val())]++;
@@ -295,29 +295,29 @@ namespace oln {
 
 
     template<class I>
-    void distrib_sort(const abstract::image<I>& im, std::vector<Point(I)> &v)
+    void distrib_sort(const abstract::image<I>& im, std::vector<oln_point_type(I)> &v)
     {
-      typedef Value(I) val;
+      typedef oln_value_type(I) val;
 
       // check the size
       precondition(v.size() == unsigned(im.npoints())); //unsigned(im.nrows() * im.ncols()));
 
       // calculate the histogram of the image
-      utils::histogram< Value(I) > histo;
+      utils::histogram<oln_value_type(I) > histo;
       histo.init(im);
 
       // initialize the array of pointer to the point in the result
       // with the histogram we can know the number of each color and
       // then calculate an array of pointer for quick access to each
       // value of the image
-      std::vector< Point(I)* > ptr(ntg_max_val(val) + 1);
+      std::vector<oln_point_type(I)* > ptr(ntg_max_val(val) + 1);
       ptr[0] = &(v[0]);
       for (int i = ntg_min_val(val) + 1; i <= ntg_max_val(val); i++)
 	ptr[unsigned(i)] = ptr[unsigned(i - 1)] + histo[i - 1];
 
       // Now iterate on the image to sort point in the order of their
       // level
-      Iter(I) p(im);
+     oln_iter_type(I) p(im);
       for_all(p)
 	*(ptr[unsigned(im[p].val())]++) = p;
     }

@@ -1,5 +1,87 @@
 2003-08-06  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* oln/arith/internal/opdecls.hh: Fix coding style.
+	* oln/convert/conversion.hh: Likewise.
+	* oln/convert/conversion_ng_se.hh: Likewise.
+	* oln/convol/convolution.hh: Likewise.
+	* oln/convol/fast_gaussian.hh: Likewise.
+	* oln/convol/fast_gaussian.hxx: Likewise.
+	* oln/core/apply.hh: Likewise.
+	* oln/core/fold.hh: Likewise.
+	* oln/core/generate.hh: Likewise.
+	* oln/core/traverse.hh: Likewise.
+	* oln/core/winneighb.hh: Likewise.
+	* oln/io/pnm_read_3d.hh: Likewise.
+	* oln/io/pnm_write_3d.hh: Likewise.
+	* oln/level/cc.hh: Likewise.
+	* oln/level/compare.hh: Likewise.
+	* oln/level/connected.hh: Likewise.
+	* oln/level/fill.hh: Likewise.
+	* oln/level/invert.hh: Likewise.
+	* oln/level/set_level.hh: Likewise.
+	* oln/morpho/closing.inc: Likewise.
+	* oln/morpho/dilation.hh: Likewise.
+	* oln/morpho/erosion.hh: Likewise.
+	* oln/morpho/extrema.hxx: Likewise.
+	* oln/morpho/extrema_killer.hh: Likewise.
+	* oln/morpho/fast_morpho.hh: Likewise.
+	* oln/morpho/fast_morpho.hxx: Likewise.
+	* oln/morpho/geodesic_dilation.hh: Likewise.
+	* oln/morpho/geodesic_erosion.hh: Likewise.
+	* oln/morpho/gradient.inc: Likewise.
+	* oln/morpho/hit_or_miss.inc: Likewise.
+	* oln/morpho/laplacian.inc: Likewise.
+	* oln/morpho/opening.inc: Likewise.
+	* oln/morpho/reconstruction.hh: Likewise.
+	* oln/morpho/splitse.hh: Likewise.
+	* oln/morpho/stat.hh: Likewise.
+	* oln/morpho/thickening.inc: Likewise.
+	* oln/morpho/thinning.inc: Likewise.
+	* oln/morpho/top_hat.inc: Likewise.
+	* oln/morpho/watershed.hh: Likewise.
+	* oln/morpho/watershed.hxx: Likewise.
+	* oln/transforms/dwt.hh: Likewise.
+	* oln/utils/histogram.hh: Likewise.
+	* tests/convert/convcomp.hh: Likewise.
+	* oln/morpho/attribute_closing_opening.hh: Likewise.
+	* oln/morpho/attribute_union_find.hh: Likewise.
+	* oln/topo/inter-pixel/inter-pixel.hxx: Likewise.
+	* oln/topo/tarjan/union.hh: Likewise.
+	* oln/topo/inter-pixel/inter-pixel.hh: Likewise.
+	* oln/topo/tarjan/flat-zone.hh: Likewise.
+	* oln/topo/combinatorial-map/cmap.hh: Likewise.
+	* oln/topo/inter-pixel/node.hh: Likewise.
+	* oln/core/abstract/image.hh: Likewise.
+	* oln/io/pnm_common.hh: Likewise.
+	* oln/io/image_write.hh: Likewise.
+	* oln/io/image_read.hh: Likewise.
+	* oln/io/pnm_read_data.hh: Likewise.
+	* oln/io/pnm_write_data.hh: Likewise.
+	* oln/io/pnm_read_2d.hh: Likewise.
+	* oln/io/pnm_write_2d.hh: Likewise.
+
+2003-08-06  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/impl/image_impl.hh, 
+	oln/core/impl/image_array.hh,
+	oln/core/impl/image_array1d.hh, 
+	oln/core/impl/image_array2d.hh,
+	oln/core/impl/image_array3d.hh: Remove image type
+	parameterization.  
+
+	* oln/core/image1d.hh,
+	oln/core/image2d.hh,
+	oln/core/image3d.hh: Adjust consequently. Move calls to
+	data->ref()...
+	
+	* oln/core/abstract/image_with_impl.hh: ...here.
+
+	* olena/oln/core/image.hh: Fix constructors.
+
+	* tests/core/tests/image2: Adapt and fix.
+	
+2003-08-06  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
 	* oln/core/image.hh: Use exact_type instead of Exact for accessing
 	to traits.
 

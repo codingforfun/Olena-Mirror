@@ -54,14 +54,14 @@ namespace oln {
 	static inline void
 	process (Fifo& fifo, const II&, IO& im_o, const N& Ng)
 	{
-	  typedef Value(IO) DestValue;
+	  typedef oln_value_type(IO) DestValue;
 	  OLN_MORPHO_DECLARE_SOILLE_WATERSHED_CONSTS_(DestValue);
 	  (void) init; /* unused */
 
-	  Point(II) p = fifo.front();
+	 oln_point_type(II) p = fifo.front();
 	  fifo.pop();
 
-	  Iter(N) p_prime(Ng);
+	 oln_iter_type(N) p_prime(Ng);
 
 	  bool flag = false;
 	  for_all (p_prime)
@@ -103,11 +103,11 @@ namespace oln {
 	static inline void
 	process (Fifo& fifo, const II& im_i, IO& im_o, const N& Ng)
 	{
-	  typedef Value(IO) DestValue;
+	  typedef oln_value_type(IO) DestValue;
 	  OLN_MORPHO_DECLARE_SOILLE_WATERSHED_CONSTS_(DestValue);
 	  (void) init; (void) wshed; /* unused */
 
-	  Point(II) p = fifo.front();
+	 oln_point_type(II) p = fifo.front();
 	  fifo.pop();
 
 	  Neighb(N) p_prime(Ng, p);
@@ -118,7 +118,7 @@ namespace oln {
 	      for_all(p_prime)
 		if (im_o.hold(p_prime) && im_o[p_prime] <= maxlevel)
 		  {
-		    Point(II) l = p_prime;
+		   oln_point_type(II) l = p_prime;
 
 		    for_all_remaining(p_prime)
 		      if (im_o.hold(p_prime)
@@ -160,24 +160,24 @@ namespace oln {
 	typedef typename mute<I, DestValue>::ret result_type;
 	result_type im_o(im_i.size());
 	level::fill(im_o, init);
-	std::queue< Point(I) > fifo;
+	std::queue<oln_point_type(I) > fifo;
 	DestValue current_label = ntg_min_val(DestValue);
 
 	// Sort the pixels of im_i in the increasing order of their grey
 	// values.
-	std::vector< std::pair< Point(I), Value(I)> >
+	std::vector< std::pair<oln_point_type(I),oln_value_type(I)> >
 	  histo(im_i.npoints());
 
 	{
-	  Iter(I) p(im_i);
+	 oln_iter_type(I) p(im_i);
 	  unsigned int i = 0;
 	  for_all (p)
-	    histo[i++] = std::pair< Point(I), Value(I)>(p, im_i[p]);
+	    histo[i++] = std::pair<oln_point_type(I),oln_value_type(I)>(p, im_i[p]);
 	  // FIXME: We don't use a distrib_sort for now because that would
 	  // not work with float values.  We should have a specialized
 	  // sorting proc to handle this in the future.
 	  sort(histo.begin(), histo.end(),
-	       watershed_seg_sort_< Point(I), Value(I)>);
+	       watershed_seg_sort_<oln_point_type(I),oln_value_type(I)>);
 	}
 
 	for (unsigned int i = 0; i < histo.size(); )
@@ -185,9 +185,9 @@ namespace oln {
 	  {
 	    unsigned int level_start = i;	// First index for current level.
 
-	    Value(I) h = histo[i].second;
+	   oln_value_type(I) h = histo[i].second;
 
-	    Point(I) p;
+	   oln_point_type(I) p;
 	    while (i < histo.size())
 	      {
 		p = histo[i].first;
@@ -195,7 +195,7 @@ namespace oln {
 		  break;
 
 		im_o[p] = mask;
-		Iter(N) p_prime(Ng);
+	oln_iter_type(N) p_prime(Ng);
 		bool flag_exist = false;
 		for_all (p_prime)
 		  if (im_o.hold(p + p_prime))
@@ -242,9 +242,9 @@ namespace oln {
 		    im_o[p] = current_label;
 		    while (!fifo.empty())
 		      {
-			Point(I) p_prime = fifo.front();
+		oln_point_type(I) p_prime = fifo.front();
 			fifo.pop();
-			Iter(N) p_pprime(Ng);
+		oln_iter_type(N) p_pprime(Ng);
 			for (p_pprime = begin; p_pprime != end; ++ p_pprime)
 			  if (im_o.hold(p_prime + p_pprime)
 			      && im_o[p_prime + p_pprime] == mask)
@@ -288,8 +288,8 @@ namespace oln {
     template <class T>
     struct cmp_queue_elt
     {
-      bool operator()(const std::pair<Point(T), Value(T)>& l,
-		      const std::pair<Point(T), Value(T)>& r) const
+      bool operator()(const std::pair<oln_point_type(T), oln_value_type(T)>& l,
+		      const std::pair<oln_point_type(T), oln_value_type(T)>& r) const
       {
 	return l.second > r.second;
       }
@@ -297,24 +297,24 @@ namespace oln {
 
     // version by D'Ornellas et al.
     template<class I1, class I2, class N> inline
-    Concrete (I2)&
+   oln_concrete_type(I2)&
     watershed_seg_or(const abstract::non_vectorial_image<I1>& In,
 		     abstract::non_vectorial_image<I2>& Labels,
 		     const abstract::neighborhood<N>& Ng)
     {
 
-      typedef Value(I2) Values;
-      const Value(I2) wshed   = ntg_max_val(Values);
-      const Value(I2) unknown = ntg_min_val(Values);
+      typedef oln_value_type(I2) Values;
+      const oln_value_type(I2) wshed   = ntg_max_val(Values);
+      const oln_value_type(I2) unknown = ntg_min_val(Values);
 
-      typedef std::pair<Point(I1), Value(I1)> queue_elt;
+      typedef std::pair<oln_point_type(I1), oln_value_type(I1)> queue_elt;
       std::priority_queue< queue_elt, std::vector< queue_elt >,
 	cmp_queue_elt<I1> > PQ;
 
       // Initialization
       // Enqueue all labeled points which have a unlabeled neighbor.
       {
-	Iter(I2) p(Labels);
+oln_iter_type(I2) p(Labels);
 	Neighb(N) p_prime(Ng, p);
 	for_all(p)
 	  if (Labels[p] != unknown)
@@ -328,7 +328,7 @@ namespace oln {
 
       // Propagation
 
-      Point(I1) p;
+     oln_point_type(I1) p;
       Neighb(N) p_prime(Ng, p);
       Neighb(N) p_second(Ng, p_prime);
       while (! PQ.empty())

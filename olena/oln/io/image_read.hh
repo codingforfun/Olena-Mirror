@@ -164,12 +164,12 @@ namespace oln {
       inline bool
       read(abstract::image_with_dim<1, E>& output, const std::string& name)
       {
-	image2d<Value(E)> tmp;
+	image2d<oln_value_type(E)> tmp;
 	if (!read(tmp, name))
 	  return false;
 	if (tmp.nrows() != 1)
 	  return false;
-	typename image2d<Value(E)>::iter_type it(tmp);
+	typename image2d<oln_value_type(E)>::iter_type it(tmp);
 	output.exact() = E(tmp.ncols());
 	for_all(it)
 	  output(it.col()) = tmp[it];

@@ -48,8 +48,8 @@ typename mute< ImgType, Node(ImgType) >::ret
       class interpixel
       {
       public:
-	typedef DPoint(I)	dpoint_t;
-	typedef Point(I)	point_t;
+	typedefoln_dpoint_type(I)	dpoint_t;
+	typedef oln_point_type(I)	point_t;
 	typedef Node(I)		node_t;
 	typedef FwdDirIter(I)	fwd_dir_iter_t;
 	typedef BkdDirIter(I)	bck_dir_iter_t;
@@ -64,9 +64,9 @@ typename mute< ImgType, Node(ImgType) >::ret
 	{
 	  // FIXME: assume there is no boundary pixel with a max value.
 	  // pearhaps we should clone img with a higher type.
-	  img.border_adapt_assign(1, ntg_max_val(Value(I)));
+	  img.border_adapt_assign(1, ntg_max_val(oln_value_type(I)));
 
-	  Iter(inter_pixel_t) p(_data);
+	 oln_iter_type(inter_pixel_t) p(_data);
 	  fwd_dir_iter_t it;
 
 	  for_all(p)
@@ -111,7 +111,7 @@ typename mute< ImgType, Node(ImgType) >::ret
 
 	std::ostream & print(std::ostream & ostr) const
 	{
-	  Iter(inter_pixel_t) p(_data);
+	 oln_iter_type(inter_pixel_t) p(_data);
 
 	  for_all(p)
 	    if (_data[p].rank() > 2)

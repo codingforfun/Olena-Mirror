@@ -77,17 +77,17 @@ namespace oln {
 			       const abstract::neighborhood<E>& se,
 			       unsigned& nb_label)
     {
-      // FIXME: ensure the Value(I) is ntg::bin.
+      // FIXME: ensure the oln_value_type(I) is ntg::bin.
       typename mute<I, DestType>::ret output(input.size());
       level::fill(output, 0);
 
-      typedef std::set<Point(I), oln::internal::default_less< Point(I) > >
+      typedef std::set<oln_point_type(I), oln::internal::default_less<oln_point_type(I) > >
 	points_set;
 
       I is_processed(input.size());
       level::fill(is_processed, false);
       DestType cur_label = 1;
-      Iter(I) p(input);
+     oln_iter_type(I) p(input);
       for_all(p) if ((input[p] == true)&& (is_processed[p] == false))
 	{
 	  //propagation front
@@ -115,7 +115,7 @@ namespace oln {
 			     component.begin(), component.end(),
 			     inserter(points_to_process,
 				      points_to_process.begin()),
-			     oln::internal::default_less< Point(I) >());
+			     oln::internal::default_less<oln_point_type(I) >());
 	    }
 	  for (typename points_set::const_iterator i = component.begin();
 	       i != component.end();
@@ -142,12 +142,12 @@ namespace oln {
     template <class I>
     typename mute<I, ntg::bin>::ret
     extract_i_cc(const abstract::image<I>& input,
-		 Value(I) i)
+		oln_value_type(I) i)
     {
 
       typename mute<I, ntg::bin>::ret output(input.size());
       level::fill(output, false);
-      Iter(I) p(input);
+     oln_iter_type(I) p(input);
       for_all(p)
 	if (input[p] == i)
 	  output[p] = true;
@@ -155,9 +155,9 @@ namespace oln {
     }
 
     template <class I>
-    Value(I) get_n_cc(const abstract::image<I>& input)
+   oln_value_type(I) get_n_cc(const abstract::image<I>& input)
     {
-      return  fold(arith::f_max<Value(I)>(), input);
+      return  fold(arith::f_max<oln_value_type(I)>(), input);
     }
 
   } // end of level.

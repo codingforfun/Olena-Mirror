@@ -72,7 +72,7 @@ namespace oln {
 node< ImgType >
 
 # define Head(ImgType)					\
-typename std::pair< Point(ImgType), Dir(ImgType) >
+typename std::pair<oln_point_type(ImgType), Dir(ImgType) >
 
     } // end inter_pixel
 

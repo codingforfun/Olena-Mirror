@@ -38,7 +38,7 @@ namespace oln {
 			     const abstract::image<I2>& input2)
     {
       precondition(input1.size() == input2.size());
-      Iter(I1) p(input1);
+     oln_iter_type(I1) p(input1);
       for_all (p)
 	if (!(input1[p] >= input2[p]))
 	  return false;
@@ -50,7 +50,7 @@ namespace oln {
 		    const abstract::image<I2>& input2)
     {
       precondition(input1.size() == input2.size());
-      Iter(I1) p(input1);
+     oln_iter_type(I1) p(input1);
       for_all (p)
 	if (!(input1[p] > input2[p]))
 	  return false;
@@ -62,7 +62,7 @@ namespace oln {
 			   const abstract::image<I2>& input2)
     {
       precondition(input1.size() == input2.size());
-      Iter(I1) p(input1);
+     oln_iter_type(I1) p(input1);
       for_all (p)
 	if (!(input1[p] <= input2[p]))
 	  return false;
@@ -74,7 +74,7 @@ namespace oln {
 		  const abstract::image<I2>& input2)
     {
       precondition(input1.size() == input2.size());
-      Iter(I1) p(input1);
+     oln_iter_type(I1) p(input1);
       for_all (p)
 	if (!(input1[p] < input2[p]))
 	  return false;
@@ -86,7 +86,7 @@ namespace oln {
 		  const abstract::image<I2>& input2)
     {
       precondition(input1.size() == input2.size());
-      Iter(I1) p(input1);
+     oln_iter_type(I1) p(input1);
       for_all (p)
 	if (!(input1[p] == input2[p]))
 	  return false;
