@@ -1,0 +1,26 @@
+//                                                                  -*- c++ -*-
+#include "data.hh"
+#include <oln/utils/md5.hh>
+
+#include "check.hh" 
+#include <oln/basics2d.hh> 
+#include <oln/morpho/erosion.hh> 
+#include <oln/level/compare.hh> 
+#include <ntg/all.hh> 
+ 
+int main() 
+{
+oln::utils::key::value_type   data_key[16] = {0x7c, 0x4f, 0xf, 0xc7, 0x27, 0x1, 0x98, 0x81, 0xfd, 0xb, 0x2e, 0xf6, 0x1c, 0x84, 0xc9, 0x1e};
+
+oln::utils::key		   key(data_key);
+
+   typedef oln::image2d<ntg::bin>	im_type;
+   im_type im1(oln::load(rdata("object.pbm")));
+   if (oln::utils::md5(oln::morpho::fast::erosion(im1, oln::win_c8p())) == key)
+  std::cout << "OK" << std::endl;
+else
+  {
+    std::cout << "FAIL" << std::endl;
+    return true;
+  }
+ }

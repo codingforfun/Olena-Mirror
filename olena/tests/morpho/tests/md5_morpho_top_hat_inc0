@@ -1,0 +1,28 @@
+//                                                                  -*- c++ -*-
+#include "data.hh"
+#include <oln/utils/md5.hh>
+
+#include "check.hh" 
+#include <oln/basics2d.hh> 
+#include <oln/morpho/top_hat.hh> 
+#include <oln/level/compare.hh> 
+#include <ntg/all.hh> 
+ 
+int main() 
+{
+oln::utils::key::value_type   data_key[16] = {0x4c, 0xdb, 0xc2, 0x14, 0x4f, 0x96, 0xaa, 0x59, 0x3, 0x4b, 0x76, 0x3c, 0xb8, 0x3, 0x34, 0x5f};
+
+oln::utils::key		   key(data_key);
+
+   typedef oln::image2d<ntg::
+int_u8>	im_type;
+   im_type	im1(oln::load(rdata("lena256.pgm")));
+   if (oln::utils::md5(oln::morpho::fast::white_top_hat                          (oln::convert::bound<ntg::
+int_u8>(),                           im1,                           oln::win_c8p())) == key)
+  std::cout << "OK" << std::endl;
+else
+  {
+    std::cout << "FAIL" << std::endl;
+    return true;
+  }
+ }

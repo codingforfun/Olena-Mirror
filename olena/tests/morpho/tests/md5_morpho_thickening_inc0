@@ -1,0 +1,28 @@
+//                                                                  -*- c++ -*-
+#include "data.hh"
+#include <oln/utils/md5.hh>
+
+#include "check.hh" 
+#include <oln/basics2d.hh> 
+#include <oln/morpho/thickening.hh> 
+#include <oln/level/compare.hh> 
+#include <ntg/all.hh> 
+ 
+int main() 
+{
+oln::utils::key::value_type   data_key[16] = {0x46, 0x11, 0x5, 0x21, 0x93, 0x3a, 0xd6, 0x15, 0x1e, 0xf0, 0x8a, 0x1, 0xf0, 0x32, 0x27, 0x9e};
+
+oln::utils::key		   key(data_key);
+
+   typedef oln::image2d<ntg::
+int_u8>	im_type;
+   im_type	im1(oln::load(rdata("lena256.pgm")));
+   if (oln::utils::md5(oln::morpho::fast::thickening(im1,                                          oln::win_c8p(),                                          oln::win_c8p())) == key)
+  std::cout << "OK" << std::endl;
+else
+  {
+    std::cout << "FAIL" << std::endl;
+    return true;
+  }
+   return  0;
+ }

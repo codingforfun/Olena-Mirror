@@ -1,0 +1,29 @@
+//                                                                  -*- c++ -*-
+#include "data.hh"
+#include <oln/utils/md5.hh>
+
+#include "check.hh" 
+#include <oln/basics2d.hh> 
+#include <oln/morpho/laplacian.hh> 
+#include <oln/level/compare.hh> 
+#include <ntg/all.hh> 
+ 
+int main() 
+{
+oln::utils::key::value_type   data_key[16] = {0x1b, 0x83, 0x53, 0x90, 0xbf, 0xb6, 0x68, 0xad, 0xb3, 0xae, 0xfa, 0xfc, 0xfc, 0x6a, 0x1e, 0x27};
+
+oln::utils::key		   key(data_key);
+
+   typedef oln::image2d<ntg::
+int_u8>	im_type;
+   im_type	im1(oln::load(rdata("lena256.pgm")));
+   if (oln::utils::md5(oln::morpho::fast::laplacian(oln::convert::bound<ntg::
+int_u8>(),                                          im1,                                          oln::win_c8p())) == key)
+  std::cout << "OK" << std::endl;
+else
+  {
+    std::cout << "FAIL" << std::endl;
+    return true;
+  }
+   return  0;
+ }

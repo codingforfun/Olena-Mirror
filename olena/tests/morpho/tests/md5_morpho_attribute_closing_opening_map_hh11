@@ -1,0 +1,29 @@
+//                                                                  -*- c++ -*-
+#include "data.hh"
+#include <oln/utils/md5.hh>
+
+#include "check.hh" 
+#include <oln/basics2d.hh> 
+#include <oln/morpho/attribute_closing_opening_map.hh> 
+#include <oln/level/compare.hh> 
+#include <ntg/all.hh> 
+#include <iostream> 
+ 
+int main() 
+{
+oln::utils::key::value_type   data_key[16] = {0x8e, 0x3a, 0x61, 0x3f, 0x8e, 0x77, 0xa3, 0x90, 0xd3, 0xdc, 0x6, 0xe9, 0x0, 0x6a, 0xb4, 0x91};
+
+oln::utils::key		   key(data_key);
+
+   typedef oln::image2d<ntg::
+int_u8>	im_type;
+   im_type im1(oln::load(rdata("lena128.pgm")));
+   im1 = oln::morpho::slow::ball_closing(im1, oln::neighb_c4(), 5);
+   if (oln::utils::md5(im1) == key)
+  std::cout << "OK" << std::endl;
+else
+  {
+    std::cout << "FAIL" << std::endl;
+    return true;
+  }
+ }
