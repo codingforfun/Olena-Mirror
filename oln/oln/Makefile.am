@@ -151,6 +151,7 @@ nobase_pkginclude_HEADERS =			\
   meta/cmp.hh					\
   meta/control.hh				\
   meta/logic.hh					\
+  meta/optional.hh                              \
   meta/type.hh					\
   meta/ucmp.hh					\
   meta/ufuncs.hh				\

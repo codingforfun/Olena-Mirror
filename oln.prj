@@ -1,11 +1,18 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_7_reconf 7)
-(Parent-Version oln 0_7_reconf 6)
-(Version-Log "")
+(Project-Version oln 0_7_reconf 8)
+(Parent-Version oln 0_7_reconf 7)
+(Version-Log "in oln:
+2003-01-07  Yann Régis-Gianas  <yann@lrde.epita.fr>
+
+	* oln/oln/meta/optional: new.
+	* oln/oln/level/cc.hh: 
+		add 'update_nb_level' as an optional behaviour.
+		fix some dead code.
+")
 (New-Version-Log "")
-(Checkin-Time "Mon, 06 Jan 2003 17:28:19 +0100")
+(Checkin-Time "Tue, 07 Jan 2003 11:10:39 +0100")
 (Checkin-Login yann)
 ;; diff-ignore configure$
 ;; diff-ignore aclocal\.m4$
@@ -259,7 +266,7 @@
   (oln/oln/io/pnm_write_common.hxx (oln/b/8_pnm_write_ 1.7 600))
   (oln/oln/io/pnm_write.hxx (oln/b/15_pnm_write. 1.7 600))
   (oln/oln/io/readable.hh (oln/b/13_readable.h 1.5 600))
-  (oln/oln/level/cc.hh (oln/e/20_cc.hh 1.5 600))
+  (oln/oln/level/cc.hh (oln/e/20_cc.hh 1.6 600))
   (oln/oln/level/compare.hh (oln/31_compare.hh 1.2 600))
   (oln/oln/level/connected.hh (oln/30_connected. 1.7 600))
   (oln/oln/morpho/extrema_killer.hh (oln/e/19_extrema_ki 1.7.1.1 600))
@@ -267,7 +274,7 @@
   (oln/oln/level/invert.hh (oln/33_invert.hh 1.4 600))
   (oln/oln/level/lut.hh (oln/29_lut.hh 1.6 600))
   (oln/oln/level/threshold.hh (oln/f/15_threshold. 1.4 600))
-  (oln/oln/Makefile.am (oln/27_Makefile.a 1.32 600))
+  (oln/oln/Makefile.am (oln/27_Makefile.a 1.33 600))
   
   (oln/oln/math/macros.hh (oln/b/21_macros.hh 1.4 600))
   (oln/oln/meta/array1d.hh (oln/f/23_array1d.hh 1.2 600))
@@ -789,10 +796,10 @@
 ;; Files added by populate at Wed, 11 Dec 2002 19:29:49 +0100,
 ;; to version 0_7_reconf.2(w), by raph:
 
-  (oln/ChangeLog (oln/o/30_ChangeLog 1.4 600))
+  (oln/ChangeLog (oln/o/30_ChangeLog 1.5 600))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.3 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.3 600))
-  (ChangeLog (oln/o/33_ChangeLog 1.3 600))
+  (ChangeLog (oln/o/33_ChangeLog 1.4 600))
 
 ;; Files deleted by depopulate at Thu, 12 Dec 2002 00:11:27 +0100,
 ;; from version 0_7_reconf.2(w), by raph:
@@ -879,6 +886,11 @@
 ;; to version 0_7_reconf.5(w), by raph:
 
   (component.m4 (oln/o/40_component. 1.1 600))
+
+;; Files added by populate at Tue, 07 Jan 2003 11:04:34 +0100,
+;; to version 0_7_reconf.7(w), by yann:
+
+  (oln/oln/meta/optional.hh (oln/o/41_optional.h 1.1 600))
 )
 (Merge-Parents)
 (New-Merge-Parents)

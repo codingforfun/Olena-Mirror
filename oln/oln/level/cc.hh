@@ -30,6 +30,8 @@
 
 # include <oln/basics.hh>
 // FIXME: really need all ?
+# include <oln/arith/ops.hh>
+# include <oln/meta/optional.hh>
 # include <oln/types/all.hh>
 # include <oln/level/fill.hh>
 # include <oln/level/invert.hh>
@@ -41,30 +43,25 @@
 namespace oln {
   namespace level {
 
-
-    // FIXME: Move elsewhere.
-    template< class T >
-    struct f_max : std::binary_function<T, T, T>
-    {
-      T operator()(T l, T r) const { return max(l, r); }
-    };
-
-
-
+    // optional behaviour for this algorithm.
+    struct update_label;
 
     /*=processing frontp_connected_component
      * ns: level
      * what: Connected Component.
      * arg: const image<I1>&, marker, IN, marker image
      * arg: const neighborhood<E>&, se, IN, neighbourhood
+     * arg: numeric_value&, nb, IN, nb_label (optional)
      * ret: typename mute<I, DestType>::ret
      * doc: It removes the small (in area) connected components of the upper
-     * level sets of \var{input} using \var{se} as structural element. The implementation
+     * level sets of \var{input} using \var{se} as structural element. 
+     * The implementation
      * uses front propagation.
      * see: level::connected_component
      * ex:
      * $ image2d<int_u8> light = load("light.pgm");
-     * $ save(level::frontp_connected_component<int_u16>(light, win_c8p()), "out.pgm");
+     * $ save(level::frontp_connected_component<int_u16>(light, win_c8p()), 
+     * $ "out.pgm");
      * exi: light.pgm
      * exo: out.pgm
      * wontcompile: fixme
@@ -74,10 +71,11 @@ namespace oln {
     // Number the connected components i.e label true. background(i.e
     // label false) has the label 0; in the output
     // FIXME: Should probably be turned into a class.
-    template <class DestType, class _I, class _E>
+    template <class DestType, class _I, class _E, class NbLabel>
     typename mute<_I, DestType>::ret
     frontp_connected_component(const image<_I>& _input,
-			       const neighborhood<_E>& _se)
+			       const neighborhood<_E>& _se, 
+			       NbLabel& nb = none())
     {
       // FIXME: ensure the Value(I) is bin.
       Exact_cref(I, input);
@@ -85,11 +83,11 @@ namespace oln {
       typename mute<_I, DestType>::ret output(input.size());
       level::fill(output, 0);
 
-      typedef std::set<Point(I), oln::internal::default_less< Point(I) > > points_set;
+      typedef std::set<Point(I), oln::internal::default_less< Point(I) > > 
+	points_set;
 
-      typename mute<_I, DestType>::ret is_processed(input.size());
+      I is_processed(input.size());
       level::fill(is_processed, false);
-
       DestType cur_label = 1;
       Iter(I) p(input);
       for_all(p) if ((input[p] == true)&& (is_processed[p] == false))
@@ -103,7 +101,8 @@ namespace oln {
 	    {
 	      //set label and net neighbors
 	      points_set next;
-	      for (typename points_set::const_iterator i = points_to_process.begin();
+	      for (typename points_set::const_iterator i = 
+		     points_to_process.begin();
 		   i != points_to_process.end();
 		   ++i)
 		{
@@ -127,11 +126,11 @@ namespace oln {
 	      output[*i] = cur_label;
 	      is_processed[*i] = true;
 	    }
-	  cur_label += 1;
+	  cur_label;
 	}
+      optional_behaviour<update_label,NbLabel>::do_it(nb, cur_label);
       return output;
     }
-
 
     template <class _I>
     typename mute<_I, bin>::ret
@@ -149,14 +148,28 @@ namespace oln {
       return output;
     }
 
-
     template <class _I>
     Value(_I) get_n_cc(const image<_I>& _input)
     {
       Exact_cref(I, input);
-      return  fold(f_max<Value(I)>(), input);
+      return  fold(arith::f_max<Value(I)>(), input);
     }
 
-  }
-}
+  } // end of level.
+
+  template <class T>
+  struct optional_behaviour<level::update_label, T>
+  {
+    template <class U>
+    static inline 
+    void do_it(T& nb, U new_nb)
+    {
+	nb = new_nb;
+    }
+  };
+  
+  DoNothingWhenNone(level::update_label);
+
+} // end of oln.
+
 #endif
