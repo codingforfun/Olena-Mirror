@@ -1,11 +1,11 @@
 ## Process this file through Automake to produce Makefile.in -*- Makefile -*-
 
 # OLN_TOP_SUBDIRS is set when "configure" is run.
-SUBDIRS = metalic integre oln $(OLN_TOP_SUBDIRS)
+SUBDIRS = metalic integre olena $(OLN_TOP_SUBDIRS)
 
 # "configure.ac" in this directory uses macros in m4 files.
-ACLOCAL_AMFLAGS = -I oln/config
-CONFIGURE_DEPENDENCIES = oln/config/oln.m4
+ACLOCAL_AMFLAGS = -I olena/config
+CONFIGURE_DEPENDENCIES = olena/config/oln.m4
 
 dist_noinst_DATA = README BUILD INSTALL THANKS FAQ
 MAINTAINERCLEANFILES = README BUILD INSTALL THANKS FAQ

@@ -1,21 +1,50 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln cleanup 14)
-(Parent-Version oln cleanup 13)
-(Version-Log "+2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-+	
-+	* tests/arith/tests/min1: Add missing include.
-+
-+	* oln/convert/nrgbhsi.hh: Likewise.
-+	
-+2003-03-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-+
-+	* oln/io/pnm3d.hh: Add missing include.
-+.
+(Project-Version oln cleanup 15)
+(Parent-Version oln cleanup 14)
+(Version-Log "Index: ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Change the tarball name.
+
+	* oln: Rename into olena.
+
+	* bootstrap.sh, cleanup.sh, configure.ac, Makefile.am: Adapt
+	consequently.
+
+Index: metalic/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/array/gen_test.cc (write_postlude_and_test): Adapt to new
+	oln location.
+
+Index: olena/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* config/oln.m4, config/oln-local.m4, tests/check/Makefile.am,
+	tests/check/Makefile.flags, tests/check/Makefile.check: Adapt to
+	new oln location.
+Index: doc/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* demo/Makefile.am, ref/Makefile.am: Adapt to new oln location.
+
+	* dev/srctree.texi: Update.
+
+Index: tools/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* utilities/configure.ac: Adapt to new oln location.
+
+Index: tools/swilena/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* swilena/configure.ac: Adapt to new oln location.
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 03 Mar 2003 18:05:26 +0100")
+(Checkin-Time "Mon, 03 Mar 2003 18:06:54 +0100")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -98,39 +127,39 @@
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.3 640))
-  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.3 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.20.1.4.1.3 640))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.25 640))
-  (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.3 640))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.3 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.4 640))
+  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.4 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.20.1.4.1.4 640))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.26 640))
+  (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.4 640))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.4 640))
 
   (attic/oln-ChangeLog (oln/6_ChangeLog 1.50.1.98.1.5 640))
 
   (attic/doc-ChangeLog (oln/e/1_ChangeLog 1.31 640))
   (attic/tests-ChangeLog (oln/e/30_ChangeLog 1.52 640))
 
-  (bootstrap.sh (oln/j/16_bootstrap. 1.8 750))
+  (bootstrap.sh (oln/j/16_bootstrap. 1.9 750))
 
-  (cleanup.sh (oln/o/29_cleanup.sh 1.4 750))
+  (cleanup.sh (oln/o/29_cleanup.sh 1.5 750))
 
-  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.3 640))
+  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.4 640))
 
   (doc/demo/image.cc (oln/d/46_image.cc 1.3 640))
-  (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.14 640))
+  (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.15 640))
   (doc/demo/morpholena.cc (oln/d/43_morpholena 1.11 640))
   (doc/demo/test-reconstruction.cc (oln/e/22_test-recon 1.7.1.2 640))
   (doc/demo/tour.cc (oln/d/45_tour.cc 1.9 640))
   (doc/ref/bin () :directory)
   (doc/ref/html () :directory)
-  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.2 640))
+  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.3 640))
   (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.6.1.1 640))
   (doc/ref/oln-ref.tex (oln/f/14_oln-ref.te 1.3.1.1 640))
   (doc/ref/ref-types.tex (oln/g/34_ref-types. 1.5 640))
   (doc/Makefile.am (oln/e/0_Makefile.a 1.14 640))
   (doc/ref/processing.tpl (oln/d/48_processing 1.15 640))
 
-  (Makefile.am (oln/n/32_Makefile.a 1.17.1.2.1.2 640))
+  (Makefile.am (oln/n/32_Makefile.a 1.17.1.2.1.3 640))
   (NEWS (oln/0_NEWS 1.13 640))
 
   (olena/img/face_se.pbm (oln/n/17_face_se.pb 1.1 640) :no-keywords)
@@ -267,7 +296,7 @@
   (olena/oln/io/basics.hh (oln/b/12_basics.hh 1.3 640))
   (olena/oln/io/file.hh (oln/b/17_file.hh 1.3 640))
   (olena/oln/io/gz.hh (oln/f/16_gz.hh 1.3 640))
-  (olena/oln/io/gz_stream.hh (oln/f/17_gz_stream. 1.6 640))
+  (olena/oln/io/gz_stream.hh (oln/f/17_gz_stream. 1.7 640))
   (olena/oln/io/pnm3d.hh (oln/b/14_pnm3d.hh 1.4 640))
   (olena/oln/io/pnm.hh (oln/b/19_pnm.hh 1.3 640))
   (olena/oln/io/pnm_read3d.hxx (oln/b/11_pnm_read3d 1.7 640))
@@ -288,7 +317,7 @@
   (olena/oln/level/lut.hh (oln/29_lut.hh 1.7 640))
   (olena/oln/level/set_level.hh (oln/p/1_set_level. 1.5 640))
   (olena/oln/level/threshold.hh (oln/f/15_threshold. 1.5.2.1 640))
-  (olena/config/oln.m4 (oln/j/15_oln.m4 1.22 640))
+  (olena/config/oln.m4 (oln/j/15_oln.m4 1.23 640))
 
   (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.1 640))
   (metalic/mlc/array1d.hh (oln/f/23_array1d.hh 1.5 640))
@@ -428,7 +457,7 @@
   (olena/tests/io/se_fail.cc (oln/i/43_se_fail.cc 1.2 640))
   (olena/tests/io/se_pass.cc (oln/i/44_se_pass.cc 1.2 640))
   (olena/tests/Makefile.am (oln/e/45_Makefile.a 1.20 640))
-  (metalic/tests/array/gen_test.cc (oln/f/34_gen_test.c 1.11.1.2 640))
+  (metalic/tests/array/gen_test.cc (oln/f/34_gen_test.c 1.11.1.3 640))
   (metalic/tests/array/gen_test_utils/errors.cc (oln/f/33_errors.cc 1.1 640))
   (metalic/tests/array/gen_test_utils/errors.hh (oln/f/32_errors.hh 1.1 640))
   (metalic/tests/array/gen_test_utils/postlude (oln/f/31_postlude 1.1 640))
@@ -530,7 +559,7 @@
 
   (tools () :directory)
   (tools/Makefile.am (oln/o/37_Makefile.a 1.6 640))
-  (tools/swilena/configure.ac (oln/o/26_configure. 1.1 640))
+  (tools/swilena/configure.ac (oln/o/26_configure. 1.2 640))
   (tools/swilena/doc/Makefile.am (oln/n/39_Makefile.a 1.2 640))
   (tools/swilena/doc/swilena.texi (oln/n/40_swilena.te 1.1 640))
   (tools/swilena/java/Makefile.am (oln/n/42_Makefile.a 1.1 640))
@@ -573,7 +602,7 @@
   (tools/swilena/src/swilena_w_window.i (oln/o/6_swilena_w_ 1.1 640))
   (tools/swilena/swilena.prj (oln/n/38_swilena.pr 1.1 640))
   (tools/swilena/TODO (oln/n/36_TODO 1.1 640))
-  (tools/utilities/configure.ac (oln/o/27_configure. 1.1 640))
+  (tools/utilities/configure.ac (oln/o/27_configure. 1.2 640))
   (tools/utilities/Makefile.am (oln/g/2_Makefile.a 1.12.1.3 640))
   (tools/utilities/morpho/generate_morpho.sh (oln/i/30_generate_m 1.3.1.5.1.2 750))
   (tools/utilities/morpho/Makefile.am (oln/i/32_Makefile.a 1.9.1.3 640))
@@ -687,7 +716,7 @@
 ;; Files added by populate at Thu, 23 Jan 2003 14:26:31 +0100,
 ;; to version 7.36(w), by raph:
 
-  (olena/config/oln-local.m4 (oln/p/37_oln-local. 1.3 640))
+  (olena/config/oln-local.m4 (oln/p/37_oln-local. 1.4 640))
 
 ;; Files deleted by depopulate at Thu, 23 Jan 2003 14:57:33 +0100,
 ;; from version 7.37(w), by raph:
@@ -737,7 +766,7 @@
 ;; Files added by populate at Sat, 25 Jan 2003 19:02:34 +0100,
 ;; to version 7.45(w), by raph:
 
-  (doc/dev/srctree.texi (oln/p/45_srctree.te 1.3 640))
+  (doc/dev/srctree.texi (oln/p/45_srctree.te 1.4 640))
   (doc/dev/conf.texi (oln/q/2_conf.texi 1.3 640))
 
 ;; Files added by populate at Sat, 08 Feb 2003 13:38:09 +0100,
@@ -795,21 +824,21 @@
 ;; to version cleanup.10(w), by nes:
 
   (integre/Makefile.am (oln/q/34_Makefile.a 1.2 640))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.2 640))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.3 640))
   (integre/ntg/Makefile.am (oln/q/36_Makefile.a 1.1 640))
 
 ;; Files added by populate at Sat, 01 Mar 2003 13:19:17 +0100,
 ;; to version cleanup.10(w), by nes:
 
   (olena/tests/check/defs.in (oln/q/37_defs.in 1.1 600))
-  (olena/tests/check/Makefile.am (oln/q/38_Makefile.a 1.1 600))
-  (olena/tests/check/Makefile.flags (oln/q/39_Makefile.f 1.1 600))
-  (olena/tests/check/Makefile.check (oln/q/40_Makefile.c 1.1 600))
+  (olena/tests/check/Makefile.am (oln/q/38_Makefile.a 1.2 600))
+  (olena/tests/check/Makefile.flags (oln/q/39_Makefile.f 1.2 600))
+  (olena/tests/check/Makefile.check (oln/q/40_Makefile.c 1.2 600))
 
 ;; Files added by populate at Sat, 01 Mar 2003 15:16:03 +0100,
 ;; to version cleanup.12(w), by nes:
 
-  (integre/tests/Makefile.am (oln/q/41_Makefile.a 1.1 600))
+  (integre/tests/Makefile.am (oln/q/41_Makefile.a 1.2 600))
   (integre/tests/check/defs.in (oln/q/42_defs.in 1.1 600))
 )
 (Merge-Parents)

@@ -9,7 +9,7 @@ AC_DEFUN([OLN_TESTS], dnl Auxiliary function for test categories selection
          [AC_CACHE_CHECK([whether to enable tests in `$1'],
                          [oln_cv_tests_$1],
                          [oln_cv_tests_$1=no
-                          if test -d "$srcdir/oln/tests/$1"; then
+                          if test -d "$srcdir/olena/tests/$1"; then
                             case "$oln_cv_tests_selection" in
                               *all* | *$1* )
                                  oln_cv_tests_$1=yes
@@ -18,7 +18,7 @@ AC_DEFUN([OLN_TESTS], dnl Auxiliary function for test categories selection
                           fi])
           if test x$oln_cv_tests_$1 != xno; then
             OLN_TESTS_SUBDIRS="$OLN_TESTS_SUBDIRS $1"
-            AC_CONFIG_FILES([oln/tests/$1/Makefile])
+            AC_CONFIG_FILES([olena/tests/$1/Makefile])
           fi])dnl End of OLN_TESTS
 
 AC_DEFUN([AC_CHECK_SWIG13],

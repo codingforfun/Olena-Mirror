@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,6 +29,7 @@
 # define OLENA_IO_GZ_STREAM_HH
 
 # include <oln/basics.hh>
+# include <cassert>
 # include <fstream>
 # include <string>
 # include <zlib.h>

@@ -180,7 +180,7 @@ write_postlude_and_test (ofstream & ofs,
 	std::string cmdline = compile_cmd(filename, "",
 					  Isrcdir ("../..") + ' '
 					  + Isrcdir ("../check") + ' ' 
-					  + "-I../../../oln -I../../.. "
+					  + "-I../../../olena -I../../.. "
 					  + "-L../check -lcheck " +
 					  cxxflags_strict_errors());
 	int ret = system (cmdline.c_str ());

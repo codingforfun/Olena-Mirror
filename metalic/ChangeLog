@@ -1,3 +1,8 @@
+2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/array/gen_test.cc (write_postlude_and_test): Adapt to new
+	oln location.
+
 2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/check/defs.in: Remove.

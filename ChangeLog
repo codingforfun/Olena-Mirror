@@ -1,3 +1,12 @@
+2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Change the tarball name.
+
+	* oln: Rename into olena.
+
+	* bootstrap.sh, cleanup.sh, configure.ac, Makefile.am: Adapt
+	consequently.
+	
 2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* configure.ac: Adapt to types tests move.

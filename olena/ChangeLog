@@ -1,3 +1,19 @@
+2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* config/oln.m4, config/oln-local.m4, tests/check/Makefile.am,
+	tests/check/Makefile.flags, tests/check/Makefile.check: Adapt to
+	new oln location.
+
+2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* tests/arith/tests/min1: Add missing include.
+
+	* oln/convert/nrgbhsi.hh: Likewise.
+	
+2003-03-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/io/pnm3d.hh: Add missing include.
+
 2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/types: Move into ../integre/tests/.

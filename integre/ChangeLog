@@ -1,3 +1,7 @@
+2003-03-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/Makefile.am: Add check/defs.in into EXTRA_DIST.
+
 2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/Makefile.am, tests/check/defs.in: New files.

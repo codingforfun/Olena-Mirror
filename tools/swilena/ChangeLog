@@ -1,3 +1,7 @@
+2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* swilena/configure.ac: Adapt to new oln location.
+
 2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* swilena/python/typedefs.hh, swilena/src/swilena_dim.i,

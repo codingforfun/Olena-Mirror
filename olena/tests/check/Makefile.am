@@ -2,7 +2,7 @@
 
 include Makefile.flags
 
-AM_CPPFLAGS += -DOLN_IMG_DIR=\"$(top_srcdir)/oln/img\"
+AM_CPPFLAGS += -DOLN_IMG_DIR=\"$(top_srcdir)/olena/img\"
 
 check_LIBRARIES = libolncheck.a
 

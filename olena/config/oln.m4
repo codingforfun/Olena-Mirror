@@ -10,7 +10,7 @@
 
 # User projects can use this macro to point their "configure" to a 
 # nonstandard Olena sources location, by invoking it _before_ using
-# AC_WITH_OLN. See oln/configure.ac or doc/configure.ac in the Olena
+# AC_WITH_OLN. See olena/configure.ac or doc/configure.ac in the Olena
 # distribution for an example.
 
 AC_DEFUN([OLN_PATH_LOCAL],
