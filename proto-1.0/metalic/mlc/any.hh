@@ -1,4 +1,3 @@
-vcs: warn: unknown method cat!
 // Copyright (C) 2001, 2002, 2003, 2004, 2005 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -30,7 +29,7 @@ vcs: warn: unknown method cat!
 #ifndef METALIC_ANY_HH
 # define METALIC_ANY_HH
 
-# include <contract.hh>
+# include <mlc/contract.hh>
 
 
 // abbrev
