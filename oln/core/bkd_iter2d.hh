@@ -43,8 +43,8 @@ namespace oln {
     enum { dim = 2 };
     typedef point2d point;
 
-    template<class T>
-    bkd_iter2d(const image2d<T>& ima) :
+    template<class Image>
+    bkd_iter2d(const Image& ima) :
       super(ima.size())
     {
     }

@@ -1,3 +1,10 @@
+2002-08-27  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh, 
+	oln/core/bkd_iter3d.hh: Change template constructors to harmonize
+	with fwd_iter1d, 2d, 3d constructors.
+	
+
 2002-08-26  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* configure.ac: Output tests/types/Makefile.
