@@ -46,12 +46,16 @@ namespace oln
   template <>
   struct optraits<bin> : public optraits_enum<bin>
   {
-    static bin zero() { return 0; }
-    static bin unit() { return 1; }
-    static bin min()  { return 0; }
-    static bin max()  { return 1; }
-    static bin inf()  { return min(); }
-    static bin sup()  { return max(); }
+    typedef typetraits<bin>::storage_type storage_type;
+
+    // FIXME: should maybe return bin instead of return_type
+    // but it prevents things like (max() - min() + unit())
+    static storage_type zero() { return 0; }
+    static storage_type unit() { return 1; }
+    static storage_type min()  { return 0; }
+    static storage_type max()  { return 1; }
+    static storage_type inf()  { return min(); }
+    static storage_type sup()  { return max(); }
 
     // logical assignement operators
 
@@ -131,8 +135,8 @@ namespace oln
       typedef bin impl;
     };
 
-    template <class T>
-    struct operator_cmp_traits<bin, T>
+    template <>
+    struct operator_cmp_traits<bin, bin>
     {
       enum { commutative = true };
       typedef bin ret;

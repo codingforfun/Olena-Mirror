@@ -35,6 +35,9 @@
 # include <oln/types/rec_value.hh>
 # include <oln/types/global_ops_traits.hh>
 # include <oln/types/optraits.hh>
+# include <oln/types/optraits_builtins_int.hh>
+# include <oln/types/optraits_builtins_float.hh>
+# include <oln/types/optraits_builtins_bool.hh>
 # include <oln/types/typetraits.hh>
 
 // macros defs
@@ -47,6 +50,7 @@
 //
 ///////////////////////////////////////////////////////////////////////
 
+
 namespace oln
 {
 
@@ -56,7 +60,7 @@ namespace oln
     //
     // Arithmetic assignements
     //
-    ///////////////////////////
+    ///////////////////////////    
 
 
     GLOBAL_ASSIGN_OP(operator+=, plus_equal);
@@ -80,7 +84,7 @@ namespace oln
     //  Arithmetic operations
     //
     //////////////////////////
-
+			    
     GLOBAL_ARITH_OP(operator+, plus);
     GLOBAL_ARITH_OP(operator-, minus);
     GLOBAL_ARITH_OP(operator*, times);
@@ -191,6 +195,42 @@ namespace oln
       T tmp(val);
       val -= optraits<T>::unit();
       return tmp;
+    }
+
+
+    //
+    //  Min/Max operators
+    //
+    ///////////////////////
+
+    // min
+    template <class T1, class T2>
+    typename internal::deduce_from_traits<internal::operator_min_traits, 
+					  T1, 
+                                          T2>::ret
+    min (const T1& lhs, const T2& rhs)
+    {
+      typedef typename 
+	internal::deduce_from_traits<internal::operator_max_traits, 
+                                     T1, 
+                                     T2>::ret result_type;
+      
+      return (lhs < rhs) ? result_type(lhs) : result_type(rhs);
+    }
+    
+    // max
+    template <class T1, class T2>
+    typename internal::deduce_from_traits<internal::operator_max_traits, 
+					  T1, 
+                                          T2>::ret
+    max (const T1& lhs, const T2& rhs)
+    {
+      typedef typename 
+	internal::deduce_from_traits<internal::operator_max_traits, 
+                                     T1, 
+                                     T2>::ret result_type;
+      
+      return (lhs > rhs) ? result_type(lhs) : result_type(rhs);
     }
 
   } // type_definitions

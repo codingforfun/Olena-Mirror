@@ -25,28 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_YIQ_HH
-# define OLENA_VALUE_YIQ_HH
+#ifndef OLENA_VALUE_OPTRAITS_BUILTINS_HH
+# define OLENA_VALUE_OPTRAITS_BUILTINS_HH
 
-#include <oln/value/color.hh>
+// shortcut for builtins optraits
 
-namespace oln {
+# include <oln/types/optraits_builtins_int.hh>
+# include <oln/types/optraits_builtins_float.hh>
+# include <oln/types/optraits_builtins_bool.hh>
 
-  enum yiq_comp {
-    yiq_Y = 0,
-    yiq_I = 1,
-    yiq_Q = 2
-  };
-
-  template<unsigned icomp> struct yiq_traits;
-  template<> struct yiq_traits<yiq_Y> : public interval<0,1> {};
-  template<> struct yiq_traits<yiq_I> : public interval<0,1> {};
-  template<> struct yiq_traits<yiq_Q> : public interval<0,1> {};
-
-  typedef color<3,8,yiq_traits>  yiq_8;
-  typedef color<3,16,yiq_traits> yiq_16;
-  typedef color<3,32,yiq_traits> yiq_32;
-
-} // oln
-
-#endif // OLENA_VALUE_YIQ_HH
+#endif // ndef OLENA_VALUE_OPTRAITS_BUILTINS_HH

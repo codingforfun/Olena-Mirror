@@ -10,10 +10,10 @@ struct f_l2_vec3 : public std::binary_function<Input, Input, sfloat>
 {
   sfloat operator()(Input l, Input r) const
   {
-    float v0 = l[0] - r[0];
-    float v1 = l[1] - r[1];
-    float v2 = l[2] - r[2];
-
+    float v0 = (float) l[0] - r[0];
+    float v1 = (float) l[1] - r[1];
+    float v2 = (float) l[2] - r[2];
+    
     return sqrt(v0 * v0 + v1 * v1 + v2 * v2);
   }
 };

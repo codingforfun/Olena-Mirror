@@ -29,7 +29,8 @@
 # define OLENA_LEVEL_CC_HH
 
 # include <oln/basics.hh>
-# include <oln/value/all.hh>
+// FIXME: really need all ?
+# include <oln/types/all.hh>
 # include <oln/level/fill.hh>
 # include <oln/level/invert.hh>
 # include <oln/level/compare.hh>

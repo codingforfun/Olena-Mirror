@@ -28,19 +28,21 @@
 #ifndef OPTRAITS_BUILTINS_DEFS_HH
 # define OPTRAITS_BUILTINS_DEFS_HH
 
-# define OPTRAITS_BUILTIN_INT_U(Name, Max)		\
-  template <>						\
-  struct optraits<Name> : public optraits_int_u<Name>	\
-  { 							\
-    static Name max() { return Max; } 			\
+# define OPTRAITS_BUILTIN_INT_U(Name, Max)			\
+  template <>							\
+  struct optraits<Name> : public optraits_int_u<Name>		\
+  {								\
+    static Name max() { return Max; }				\
+    static std::string name() { return std::string(#Name); }	\
   };
 
-# define OPTRAITS_BUILTIN_INT_S(Name, Min, Max)		\
-  template <>						\
-  struct optraits<Name> : public optraits_int_s<Name>	\
-  { 							\
-    static Name min() { return Min; }			\
-    static Name max() { return Max; } 			\
+# define OPTRAITS_BUILTIN_INT_S(Name, Min, Max)			\
+  template <>							\
+  struct optraits<Name> : public optraits_int_s<Name>		\
+  {								\
+    static Name min() { return Min; }				\
+    static Name max() { return Max; }				\
+    static std::string name() { return std::string(#Name); }	\
   };
 
 #endif // ndef OPTRAITS_BUILTINS_DEFS_HH

@@ -29,7 +29,8 @@
 # define OLENA_UTILS_STAT_HH
 
 # include <oln/basics.hh>
-# include <oln/value/float_p.hh>
+# include <oln/types/predecls.hh>
+# include <oln/types/optraits.hh>
 
 namespace oln {
 
@@ -95,8 +96,8 @@ namespace oln {
       void operator()(const T& val)
       {
 	if (! valued()) {
-	  _sum1 = C::zero();
-	  _sum2 = C::zero();
+	  _sum1 = optraits<C>::zero();
+	  _sum2 = optraits<C>::zero();
 	} else {
 	  _sum1 += val;
 	  _sum2 += C(val) * val;

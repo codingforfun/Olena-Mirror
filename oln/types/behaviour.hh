@@ -39,6 +39,8 @@
 # include <oln/types/typetraits.hh>
 # include <oln/types/to_oln.hh>
 
+# include <oln/types/debug.hh>
+
 # include <string>
 # include <sstream>
 
@@ -129,8 +131,9 @@ namespace oln
       template <class T1, class T2>
       static T check_times_equal (T1 lhs, T2 rhs)
       {		
-	T ret = lhs * rhs;	
-	postcondition ((ret / rhs) == lhs);
+	T ret = lhs * rhs;
+	if (rhs != 0)
+	  postcondition ((ret / rhs) == lhs);
 	return ret;
       }
 

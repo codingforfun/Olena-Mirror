@@ -28,7 +28,11 @@
 #ifndef OLENA_VALUE_CAST_HH
 # define OLENA_VALUE_CAST_HH
 
-# include <oln/value/rec_value.hh>
+# include <oln/types/rec_value.hh>
+# include <oln/types/typetraits.hh>
+# include <oln/types/typetraits_builtins.hh>
+# include <oln/types/optraits.hh>
+# include <oln/types/optraits_builtins.hh>
 
 namespace oln {
   namespace cast {
@@ -36,7 +40,7 @@ namespace oln {
     template<class Tdest, class Tsrc> inline
     const Tdest force(const Tsrc& val)
     {
-      Tdest tmp(static_cast<typename Tdest::real_value_t>(real_value(val)));
+      Tdest tmp(static_cast<typename typetraits<Tdest>::storage_type>(val));
       return tmp;
     }
 
@@ -44,10 +48,12 @@ namespace oln {
     template<class Tdest, class Tsrc> inline
     const Tdest bound(const Tsrc& val)
     {
-      if (val > Tsrc(Tdest::max()))
-	return Tdest::max();
-      if (val < Tsrc(Tdest::min()))
-	return Tdest::min();
+      if (optraits<Tsrc>::max() > optraits<Tdest>::max())
+	if (val > Tsrc(optraits<Tdest>::max()))
+	  return optraits<Tdest>::max();
+      if (optraits<Tsrc>::min() < optraits<Tdest>::min())
+	if (val < Tsrc(optraits<Tdest>::min()))
+	  return optraits<Tdest>::min();
       return cast::force<Tdest>(val);
     }
 
@@ -61,42 +67,52 @@ namespace oln {
       struct _round<Tdest, rec_float<Tsrc> > {
 	static const Tdest doit(const rec_float<Tsrc>& val)
 	{
+	  // FIXME: update comments
+
 	  // KLUDGE: Cast the rounded value to Tdest::value_t before
 	  // returning it as Tdest. Otherwise g++-3.0 complains there
 	  // is no Tdest constructor taking a float argument.
-	  return (typename Tdest::value_t) round(val.self());
+	  return (typename typetraits<Tdest>::storage_type) round(val.self());
 	}
       };
       template<class Tdest>
       struct _round<Tdest, sfloat > {
 	static const Tdest doit(const sfloat& val)
 	{
+	  // FIXME: update comments
+
 	  // KLUDGE: Cast the rounded value to Tdest::value_t before
 	  // returning it as Tdest. Otherwise g++-3.0 complains there
 	  // is no Tdest constructor taking a float argument.
-	  return (typename Tdest::value_t) roundf(val);
+	  return (typename typetraits<Tdest>::storage_type) roundf(val);
 	}
       };
       template<class Tdest>
       struct _round<Tdest, double> {
 	static const Tdest doit(const double& val)
 	{
+	  // FIXME: update comments
+
 	  // KLUDGE: Cast the rounded value to Tdest::value_t before
 	  // returning it as Tdest. Otherwise g++-3.0 complains there
 	  // is no Tdest constructor taking a float argument.
-	  return (typename Tdest::value_t) round(val);
+	  return (typename typetraits<Tdest>::storage_type) round(val);
 	}
       };
+#if 0 // useless as sfloat == float alias
       template<class Tdest>
       struct _round<Tdest, float> {
 	static const Tdest doit(const float& val)
 	{
+	  // FIXME: update comments
+
 	  // KLUDGE: Cast the rounded value to Tdest::value_t before
 	  // returning it as Tdest. Otherwise g++-3.0 complains there
 	  // is no Tdest constructor taking a float argument.
-	  return (typename Tdest::value_t) roundf(val);
+	  return (typename typetraits<Tdest>::storage_type) roundf(val);
 	}
       };
+#endif
       template<class Tdest, class Tsrc>
       struct _round<rec_float<Tdest>, rec_float<Tsrc> > {
 	static const Tdest doit(const rec_float<Tsrc>& val)
@@ -143,10 +159,10 @@ namespace oln {
     template<class Tdest, class Tsrc> inline
     const Tdest rbound(const Tsrc& val)
     {
-      if (val > Tsrc(Tdest::max()))
-	return Tdest::max();
-      if (val < Tsrc(Tdest::min()))
-	return Tdest::min();
+      if (val > Tsrc(optraits<Tdest>::max()))
+	return optraits<Tdest>::max();
+      if (val < Tsrc(optraits<Tdest>::min()))
+	return optraits<Tdest>::min();
       return cast::round<Tdest>(val);
     }
 

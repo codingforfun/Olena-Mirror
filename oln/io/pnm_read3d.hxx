@@ -141,8 +141,6 @@ namespace oln {
 	}
       };
 
-#if 0 // disabled until color ready
-
       template<template <unsigned> class color_system>
       struct reader<ReadPnmPlain, image3d< color<3, 8, color_system> > >
       {
@@ -174,8 +172,6 @@ namespace oln {
 	  return true;
 	}
       };
-
-#endif
 
       // FIXME: Add support for pnm/P4.
 
@@ -209,7 +205,6 @@ namespace oln {
 	}
       };
 
-#if 0 // disabled until colors imported in types
       template<template <unsigned> class color_system>
       struct reader<ReadPnmRaw, image3d< color<3, 8, color_system> > >
       {
@@ -241,8 +236,6 @@ namespace oln {
 	  return true;
 	}
       };
-
-#endif
 
     } // internal
   } // io

@@ -96,7 +96,7 @@ namespace oln {
       struct reader<ReadPnmPlain, image2d<int_u8> >
       {
 	static const std::string& name()
-	{ static const std::string _name("pnm/P2"); return _name;	}
+	{ static const std::string _name("pnm/P2"); return _name; }
 
 	static bool knows_ext(const std::string& ext)
 	{ return ext == "ppgm"; }
@@ -113,8 +113,6 @@ namespace oln {
 	  return true;
 	}
       };
-
-#if 0 // disabled until color imported in types
 
       template<template <unsigned> class color_system>
       struct reader<ReadPnmPlain, image2d< color<3, 8, color_system> > >
@@ -138,8 +136,6 @@ namespace oln {
 	  return true;
 	}
       };
-
-#endif // 0
 
       template<>
       struct reader<ReadPnmRaw, image2d<bin> >
@@ -195,8 +191,6 @@ namespace oln {
 	}
       };
 
-#if 0 // disabled until color imported in types
-
       template<template <unsigned> class color_system>
       struct reader<ReadPnmRaw, image2d< color<3, 8, color_system> > >
       {
@@ -219,8 +213,6 @@ namespace oln {
 	  return true;
 	}
       };
-
-#endif // 0
 
     } // internal
   } // io

@@ -31,6 +31,7 @@
 # include <oln/core/internal/real_image2d.hh>
 # include <oln/core/pred_image.hh>
 # include <oln/types/bin.hh>
+# include <oln/types/optraits_bin.hh>
 # include <oln/io/readable.hh>
 # include <iostream>
 # include <stdlib.h>
@@ -93,7 +94,7 @@ namespace oln {
     {
       return
 	std::string("image2d<")
-	+ T::name() + ","
+	+ optraits<T>::name() + ","
 	+ Inferior::name() + ">";
     }
 
@@ -169,7 +170,7 @@ namespace oln {
     {
       return
 	std::string("image2d<")
-	+ bin::name() + ","
+	+ optraits<bin>::name() + ","
 	+ Inferior::name() + ">";
     }
 

@@ -93,8 +93,6 @@ namespace oln {
 	}
       };
 
-#if 0 // disabled until color imported in types
-
       template<template <unsigned> class color_system>
       struct writer<WritePnmPlain, image2d< color<3, 8, color_system> > >
       {
@@ -117,8 +115,6 @@ namespace oln {
 	  return true;
 	}
       };
-
-#endif
 
       template<>
       struct writer<WritePnmRaw, image2d<bin> >
@@ -181,8 +177,6 @@ namespace oln {
 	}
       };
 
-#if 0 // disabled until color imported in types
-
       template<template <unsigned> class color_system>
       struct writer<WritePnmRaw, image2d< color<3, 8, color_system> > >
       {
@@ -205,8 +199,6 @@ namespace oln {
 	  return true;
 	}
       };
-
-#endif
 
     } // internal
   } // io

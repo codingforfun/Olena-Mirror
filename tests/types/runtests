@@ -74,6 +74,10 @@ EOF
   grep '//.*ABORT' $input >/dev/null && expected=abort
   grep '//.*COMPFAIL' $input >/dev/null && expected=compfail
 
+  # Do we know the test fails ?
+  xfail=no
+  grep '//.*XFAIL' $input >/dev/null && xfail=yes
+
   # Run the test.
   $verb ========== Running $test... >&2
   (cd $dir && ./try $quiet)
@@ -90,8 +94,12 @@ EOF
     *) ;;
   esac
   if test -d $dir; then
-    echo "FAIL: $test $msg" >&2
-    failures=`expr $failures + 1`
+    if test "$xfail" = "no"; then
+      echo "FAIL: $test $msg" >&2
+      failures=`expr $failures + 1`
+    else
+      echo "XFAIL: $test $msg" >&2
+    fi
   else
     echo "PASS: $test" >&2
   fi

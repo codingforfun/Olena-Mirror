@@ -13,8 +13,12 @@
 
 #include <oln/utils/timer.hh>
 
+#include <iostream>
+
 using namespace oln;
 using namespace oln::level;
+using std::cout;
+using std::endl;
 
 int main()
 {

@@ -30,8 +30,10 @@
 # define OLENA_CONVERT_NRGBYUV_HH
 
 # include <oln/convert/colorconv.hh>
-# include <oln/value/nrgb.hh>
-# include <oln/value/yuv.hh>
+
+# include <oln/types/nrgb.hh>
+# include <oln/types/yuv.hh>
+# include <oln/types/typetraits_builtins.hh>
 
 /*---------------------------------------------------------------.
 | The formulas used here come from ``Colour Space Conversions'', |

@@ -28,7 +28,7 @@
 #ifndef OLENA_TRANSFORM_FFT_HH
 # define OLENA_TRANSFORM_FFT_HH
 
-# include <oln/config/pconf.hh>
+# include <oln/config/system.hh>
 
 # ifndef HAVE_FFTW
 #  error You need the fftw library if you want to use the fft class of Olena \

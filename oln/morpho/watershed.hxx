@@ -28,8 +28,9 @@
 #ifndef OLENA_MORPHO_WATERSHED_HXX
 # define OLENA_MORPHO_WATERSHED_HXX
 
+# include <oln/config/system.hh>
+# include <oln/types/all.hh>
 # include <oln/level/fill.hh>
-# include <oln/value/cast.hh>
 # include <queue>
 # include <map>
 
@@ -38,11 +39,11 @@ namespace oln {
 
     /* GCC's optimizer is smart enough to compute these values at compile
        time and really use them as constants.  That's great.  */
-#define _OLN_MORPHO_DECLARE_SOILLE_WATERSHED_CONSTS(DestValue)		    \
-    const DestValue mask    = cast::force<DestValue>(DestValue::max() - 2); \
-    const DestValue wshed   = DestValue::max();				    \
-    const DestValue init    = cast::force<DestValue>(DestValue::max() - 1); \
-    const DestValue inqueue = cast::force<DestValue>(DestValue::max() - 3); \
+#define _OLN_MORPHO_DECLARE_SOILLE_WATERSHED_CONSTS(DestValue)				\
+    const DestValue mask    = cast::force<DestValue>(optraits<DestValue>::max() - 2);	\
+    const DestValue wshed   = optraits<DestValue>::max();				\
+    const DestValue init    = cast::force<DestValue>(optraits<DestValue>::max() - 1);	\
+    const DestValue inqueue = cast::force<DestValue>(optraits<DestValue>::max() - 3);	\
     const DestValue maxlevel = cast::force<DestValue>(inqueue - 1) /* no ; */
 
     namespace internal {
@@ -162,7 +163,7 @@ namespace oln {
 	result_type im_o(im_i.size());
 	level::fill(im_o, init);
 	std::queue< Point(I) > fifo;
-	DestValue current_label = DestValue::min();
+	DestValue current_label = optraits<DestValue>::min();
 
 	// Sort the pixels of im_i in the increasing order of their grey
 	// values.
@@ -237,7 +238,7 @@ namespace oln {
 		       value.  FIXME: We should have a mean to tell
 		       the caller that such 'wrapping' occured.  */
 		    if (current_label > maxlevel)
-		      current_label = DestValue::min();
+		      current_label = optraits<DestValue>::min();
 
 		    fifo.push(p);
 		    im_o[p] = current_label;
@@ -308,8 +309,8 @@ namespace oln {
       Exact_cref(N, Ng);
 
       typedef Value(I2) Values;
-      const Value(I2) wshed   = Values::max();
-      const Value(I2) unknown = Values::min();
+      const Value(I2) wshed   = optraits<Values>::max();
+      const Value(I2) unknown = optraits<Values>::min();
 
       typedef std::pair<Point(I1), Value(I1)> queue_elt;
       std::priority_queue< queue_elt, std::vector< queue_elt >,

@@ -31,7 +31,12 @@
 namespace oln
 {
 
-  template <class T> struct typetraits;
+  struct undefined;
+
+  template <class T> struct typetraits
+  {
+    typedef undefined op_traits;
+  };
 
 } // end of namespace oln
 

@@ -1,3 +1,71 @@
+2002-09-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* demo/Makefile.am: Remove -DNDEBUG by default.
+	* demo/morpholena.cc, demo/tour.cc, oln/arith/internal/opdecls.hh,
+	* demo/test-reconstruction.cc: Fix includes and namespaces.
+	* oln/Makefile.am: Remove old value headers, add new headers.
+	* oln/core/type.hh: Add helper for static_hierarchy : select_self.
+	* oln/io/pnm_read3d.hxx, oln/io/pnm_read_common.hxx, 
+	oln/io/pnm_read.hxx, oln/io/pnm_write3d.hxx, 
+	oln/io/pnm_write_common.hxx, oln/io/pnm_write.hxx: Enable colors.
+	* oln/transform/fft.hh: Fix includes.
+	* oln/types/all.hh: Add colors headers, optraits_builtins.hh, 
+	typetraits_builtins.hh, cast.hh.
+	* oln/types/behaviour.hh: Fix times check problem.
+	* oln/types/bin.hh: Add const to cast operator.
+	* oln/types/cplx.hh: Fix includes, adapt to vec's new prototype.
+	* oln/types/global_ops.hh: Add min and max operators.
+	* oln/types/global_ops_defs.hh: Replace completely generic operators
+	by more adapted ones to prevent C++ namespace resolution problem.
+	* oln/types/global_ops_traits.hh: Add min and max traits.
+	* oln/types/optraits_bin.hh: Change zero,unit,min,max,inf and sup 
+	return types to allow histograms which needs (max() - min() + unit());
+	restrict operator_cmp_traits.
+	* oln/types/optraits_builtins_float.hh: Add min and max traits.
+	* oln/types/optraits_builtins_int.hh: Fix headers.
+	* oln/types/optraits_builtins_int_defs.hh: Add name().
+	* oln/types/optraits_int_u.hh: Add fwd_decl, change minus traits 
+	for (int_u - int_u), add min and max traits.
+	* oln/types/optraits_int_u.hh: Add fwd_decl, add min and max traits.
+	* oln/types/optraits_vec.hh: Adapt to vec's new prototype.
+	* oln/types/predecls.hh: Add colors, adapt to vec's new prototype.
+	* oln/types/typetraits.hh: Add default definition.
+	* oln/types/typetraits_builtins_bool.hh: Fix includes.
+	* oln/types/vec.hh: Change prototype to allow vec to be an intermediate
+	class in the static hierarchy.
+	* utilities/Makefile.am: Remove NDEBUG by default.
+	* oln/types/optraits_builtins.hh, oln/types/typetraits_builtins.hh: 
+	New files.
+	* oln/types/color.hh, oln/types/rgb.hh, oln/types/nrgb.hh, 
+	oln/types/hsi.hh, oln/types/hsl.hh, oln/types/hsv.hh, 
+	oln/types/xyz.hh, oln/types/yiq.hh, oln/types/yuv.hh: New files.
+	* oln/types/cast.hh: New file.
+	* oln/arith/logic.hh, oln/arith/ops.hh, oln/convert/bound.hh, 
+	oln/convert/colorconv.hh, oln/convert/conversion.hh, 
+	oln/convert/force.hh, oln/convert/nrgbhsi.hh, oln/convert/nrgbhsl.hh, 
+	oln/convert/nrgbhsv.hh, oln/convert/nrgbxyz.hh, oln/convert/nrgbyiq.hh,
+	oln/convert/nrgbyuv.hh, oln/convert/rgbnrgb.hh, oln/convert/rgbxyz.hh, 
+	oln/convol/convolution.hh, oln/convol/fast_gaussian_coefficient.hh, 
+	oln/convol/fast_gaussian.hh, oln/convol/fast_gaussian.hxx, 
+	oln/core/dpoint1d.hh, oln/core/image2d.hh, oln/core/imagend_size.hh, 
+	oln/core/point1d.hh, oln/core/point3d.hh, oln/level/cc.hh, 
+	oln/level/connected.hh, oln/level/extrema_killer.hh, 
+	oln/level/invert.hh, oln/level/threshold.hh, oln/math/macros.hh,
+	oln/morpho/extrema.hh, oln/morpho/geodesic_dilation.hh, 
+	oln/morpho/reconstruction.hh, oln/morpho/stat.hh, 
+	oln/morpho/watershed.hxx, oln/utils/stat.hh, tests/io/loadsave.hh, 
+	tests/morpho/edoc.cc, tests/morpho/extrkiller.cc, 
+	oln/convert/stretch.hh: Adapt to new types.
+	* oln/value/all.hh, oln/value/bin.hh, oln/value/built_in.hh, 
+	oln/value/cast.hh, oln/value/color.hh, oln/value/cplx.hh, 
+	oln/value/debug.hh, oln/value/float_p.hh, oln/value/hsi.hh, 
+	oln/value/hsl.hh, oln/value/hsv.hh, oln/value/int_s.hh, 
+	oln/value/int_u.hh, oln/value/nrgb.hh, oln/value/op_traits.hh, 
+	oln/value/ops.hh, oln/value/predefs.hh, oln/value/rec_float.hh, 
+	oln/value/rec_int.hh, oln/value/rec_oln/value.hh, oln/value/rgb.hh, 
+	oln/value/to_oln.hh, oln/value/vec.hh, oln/value/xyz.hh, 
+	oln/value/yiq.hh, oln/value/yuv.hh: Remove files.
+		
 2002-09-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/core/dpointnd.hh, oln/core/image3d.hh, 

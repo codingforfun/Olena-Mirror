@@ -28,6 +28,8 @@
 #ifndef OLENA_VALUE_OPTRAITS_INT_S_HH
 # define OLENA_VALUE_OPTRAITS_INT_S_HH
 
+# include <oln/config/system.hh>
+
 # include <oln/meta/basics.hh>
 # include <oln/meta/type.hh>
 
@@ -46,6 +48,12 @@
 
 namespace oln
 {
+
+  // fwd_decl
+  namespace type_definitions {
+    template <unsigned nbits, class behaviour> class int_s;
+  }
+
   //
   //  optraits for int_s
   //
@@ -318,6 +326,40 @@ namespace oln
       typedef int_s<nbits, B1> impl;
     };
 
+
+    //
+    // Min
+    //
+
+    // MIN(int_s, int_s)
+
+    template<unsigned nbits, class B1, unsigned mbits, class B2>
+    struct operator_min_traits<int_s<nbits, B1>, int_s<mbits, B2> >
+    {
+      enum { commutative = true };
+      typedef int_s<(unsigned) meta::min<nbits, mbits>::ret, 
+		    typename deduce_op_behaviour<B1, B2>::ret> ret;
+      typedef int_s<nbits, B1> impl;
+    };
+
+    // FIXME: define MIN(int_s, int_u) ?
+
+    //
+    // Max
+    //
+
+    // MAX(int_s, int_s)
+
+    template<unsigned nbits, class B1, unsigned mbits, class B2>
+    struct operator_max_traits<int_s<nbits, B1>, int_s<mbits, B2> >
+    {
+      enum { commutative = true };
+      typedef int_s<(unsigned) meta::max<nbits, mbits>::ret, 
+		    typename deduce_op_behaviour<B1, B2>::ret> ret;
+      typedef int_s<nbits, B1> impl;
+    };
+
+    // FIXME: define MAX(int_s, int_u) ?
 
     //
     // Comparison operator

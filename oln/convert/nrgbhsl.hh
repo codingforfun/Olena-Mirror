@@ -30,8 +30,10 @@
 # define OLENA_CONVERT_NRGBHSL_HH
 
 # include <oln/convert/colorconv.hh>
-# include <oln/value/nrgb.hh>
-# include <oln/value/hsl.hh>
+
+# include <oln/types/nrgb.hh>
+# include <oln/types/hsl.hh>
+# include <oln/types/typetraits_builtins.hh>
 # include <cstdlib>
 
 /*------------------------------------------------------------------.

@@ -29,7 +29,7 @@
 # define OLENA_LEVEL_THRESHOLD_HH
 
 # include <oln/basics.hh>
-# include <oln/value/debug.hh>
+# include <oln/types/debug.hh>
 
 namespace oln {
 

@@ -9,8 +9,8 @@
 #include <oln/basics2d.hh>
 //#include <oln/basics3d.hh>
 
-// Let's include all value types, for simplicity.
-#include <oln/value/all.hh>
+// Let's include all types, for simplicity.
+#include <oln/types/all.hh>
 
 // Some algorithms...
 #include <oln/morpho/erosion.hh>
@@ -60,7 +60,8 @@ main (void)
 
   // For instance the max() and min() class methods
   // will return the maximum value of a type.
-  std::cout << "int_u8::max() = " << int_u8::max() << std::endl;
+  std::cout << "optraits<int_u8>::max() = " 
+	    << optraits<int_u8>::max() << std::endl;
 
   // You can combine these values with the standard operators
   // as expected.
@@ -98,7 +99,7 @@ main (void)
   // cannot fit in int_u<16>.
   // If you *know* that the result of (a + b) fits in c, you
   // should cast the value to int_u16 explicitly:
-  int_u16 c = cast::force<int_u16>(a + b);
+  int_u16 c = a + b;
   std::cout << "c = " << c << std::endl;
   // Of course assigning a+b to a variable of type int_u<17> or
   // greater is allowed and doesn't require a cast.
@@ -318,8 +319,7 @@ main (void)
 
 
   // Reading and writing PNM files.
-  // ==============================
-  // You can read image2d from pnm files.  The kind
+  //   // You can read image2d from pnm files.  The kind
   // of pnm format supported (1,2,3,4,5,6) is dependent on
   // the type of the image you load/save.  The extension
   // is also used to guess the format to use.
@@ -329,8 +329,7 @@ main (void)
 
 
   // High order operators.
-  // =====================
-  // Olena offers a set of high order operators than can simplify
+  //   // Olena offers a set of high order operators than can simplify
   // the writing of simple algorithm.
   // For instance `traverse(f, img)' will apply the function `f'
   // to each point of `img'.  Actually, `f' do not need to be a function,

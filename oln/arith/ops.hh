@@ -30,8 +30,9 @@
 
 # include <oln/basics.hh>
 # include <oln/math/macros.hh>
-# include <oln/value/op_traits.hh>
 # include <oln/arith/internal/opdecls.hh>
+# include <oln/types/global_ops_traits.hh>
+# include <oln/types/typetraits_builtins.hh>
 # include <oln/convert/basics.hh>
 # include <functional>
 
@@ -41,6 +42,7 @@ namespace oln {
     _OLN_ARITH_DECLARE_BINRECVAL_FUNCTORS(plus,
 					  val1.self() + val2.self(),
 					  val.self() + _cst);
+    // need a cast for the case int_u - int_u
     _OLN_ARITH_DECLARE_BINRECVAL_FUNCTORS(minus,
 					  val1.self() - val2.self(),
 					  val.self() - _cst);

@@ -102,7 +102,7 @@ namespace oln
 	return *this;
       }
 
-      operator unsigned char() { return _value; }
+      operator unsigned char() const { return _value; }
     };
 
     inline std::ostream&

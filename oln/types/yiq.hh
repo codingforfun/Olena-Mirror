@@ -25,37 +25,28 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_REC_FLOAT_HH
-# define OLENA_VALUE_REC_FLOAT_HH
+#ifndef OLENA_VALUE_YIQ_HH
+# define OLENA_VALUE_YIQ_HH
 
-# include <oln/value/rec_value.hh>
+#include <oln/types/color.hh>
 
+namespace oln {
 
-namespace oln
-{
-
-
-  template<class Self>
-  struct rec_float : public rec_value<Self>
-  {
-  protected:
-    rec_float() {}
+  enum yiq_comp {
+    yiq_Y = 0,
+    yiq_I = 1,
+    yiq_Q = 2
   };
 
+  template<unsigned icomp> struct yiq_traits;
+  template<> struct yiq_traits<yiq_Y> : public interval<0,1> {};
+  template<> struct yiq_traits<yiq_I> : public interval<0,1> {};
+  template<> struct yiq_traits<yiq_Q> : public interval<0,1> {};
 
-  namespace internal {
+  typedef color<3,8,yiq_traits>  yiq_8;
+  typedef color<3,16,yiq_traits> yiq_16;
+  typedef color<3,32,yiq_traits> yiq_32;
 
-    template<class Self>
-    struct self_traits< rec_float<Self> >
-    {
-      typedef Self ret_t;
-      static const Self to_self(const rec_float<Self>& val) { return val.self(); }
-    };
+} // oln
 
-  } // end of internal
-
-
-} // end of oln
-
-
-#endif // ! OLENA_VALUE_REC_FLOAT_HH
+#endif // OLENA_VALUE_YIQ_HH

@@ -28,6 +28,7 @@
 #ifndef OLENA_LEVEL_CONNECTED_HH
 # define OLENA_LEVEL_CONNECTED_HH
 
+# include <oln/types/optraits.hh>
 # include <oln/level/lut.hh>
 # include <oln/level/fill.hh>
 # include <oln/morpho/splitse.hh>
@@ -116,7 +117,7 @@ namespace oln {
 		    output[p] = cl;
 		  else
 		    {
-		      DestType min = DestType::max();
+		      DestType min = optraits<DestType>::max();
 		      for_all(p_prime)
 			if (output.hold(p_prime))
 			  if (output[p_prime] && T(output[p_prime]) < min)

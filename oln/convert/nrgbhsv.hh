@@ -30,8 +30,10 @@
 # define OLENA_CONVERT_NRGBHSV_HH
 
 # include <oln/convert/colorconv.hh>
-# include <oln/value/nrgb.hh>
-# include <oln/value/hsv.hh>
+
+# include <oln/types/nrgb.hh>
+# include <oln/types/hsv.hh>
+# include <oln/types/typetraits_builtins.hh>
 
 /*-----------------------------------------------------------------.
 | The formulas used here come from ``Color Conversion Algorithms'' |

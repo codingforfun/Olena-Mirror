@@ -28,8 +28,9 @@
 #ifndef OLENA_CONVERT_STRETCH_HH
 # define OLENA_CONVERT_STRETCH_HH
 
-# include <oln/value/cast.hh>
 # include <oln/core/type.hh>
+# include <oln/types/optraits.hh>
+# include <oln/types/optraits_builtins.hh>
 # include <oln/convert/conversion.hh>
 # include <oln/convert/force.hh>
 
@@ -45,13 +46,15 @@ namespace oln {
       template< class Input >
       Output operator() (const Input& v) const {
 
-	return Output(cast::rbound<Output, float>(
-						  double(v - Input::min())
-						  / double(Input::max() - Input::min())
-						  * (Output::max() - Output::min())
-						  + Output::min()));
+	return Output(cast::rbound<Output, float>
+		      (
+		       double(v - optraits<Input>::min())
+		       / double(optraits<Input>::max() - optraits<Input>::min())
+		       * (optraits<Output>::max() - optraits<Output>::min())
+		       + optraits<Output>::min())
+		      );
       }
-
+      
       static std::string name() {
         return std::string("stretch<") + typename_of<Output>() + ", "
           + typename_of<Inferior>() + ">";

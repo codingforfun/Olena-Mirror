@@ -187,47 +187,30 @@ nobase_oln_HEADERS =				\
   utils/histogram.hh				\
   utils/stat.hh					\
   utils/timer.hh				\
-  value/all.hh					\
-  value/bin.hh					\
-  value/built_in.hh				\
-  value/cast.hh					\
-  value/color.hh				\
-  value/cplx.hh					\
-  value/debug.hh				\
-  value/float_p.hh				\
-  value/hsi.hh					\
-  value/hsl.hh					\
-  value/hsv.hh					\
-  value/int_s.hh				\
-  value/int_u.hh				\
-  value/nrgb.hh					\
-  value/op_traits.hh				\
-  value/ops.hh					\
-  value/predefs.hh				\
-  value/rec_float.hh				\
-  value/rec_int.hh				\
-  value/rec_value.hh				\
-  value/rgb.hh					\
-  value/to_oln.hh				\
-  value/vec.hh					\
-  value/xyz.hh					\
-  value/yiq.hh					\
-  value/yuv.hh					\
   types/all.hh					\
   types/behaviour.hh				\
   types/bin.hh					\
   types/builtins_properties.hh			\
+  types/cast.hh					\
+  types/color.hh				\
   types/cplx.hh					\
   types/cplx_representation.hh			\
   types/cycle.hh				\
+  types/debug.hh				\
   types/global_ops.hh				\
   types/global_ops_defs.hh			\
   types/global_ops_traits.hh			\
+  types/hsi.hh					\
+  types/hsl.hh					\
+  types/hsv.hh					\
   types/int_s.hh				\
   types/int_u.hh				\
   types/interval.hh				\
+  types/nrgb.hh					\
   types/optraits.hh				\
   types/optraits_bin.hh				\
+  types/optraits_builtins.hh			\
+  types/optraits_builtins_bool.hh		\
   types/optraits_builtins_float.hh		\
   types/optraits_builtins_int.hh		\
   types/optraits_builtins_int_defs.hh		\
@@ -242,12 +225,18 @@ nobase_oln_HEADERS =				\
   types/predecls.hh				\
   types/range.hh				\
   types/rec_value.hh				\
+  types/rgb.hh					\
   types/to_oln.hh				\
   types/type.hh					\
   types/typetraits.hh				\
+  types/typetraits_builtins.hh			\
+  types/typetraits_builtins_bool.hh		\
   types/typetraits_builtins_float.hh		\
   types/typetraits_builtins_int.hh		\
-  types/vec.hh
+  types/vec.hh					\
+  types/xyz.hh					\
+  types/yiq.hh					\
+  types/yuv.hh
 
 
 

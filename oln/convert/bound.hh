@@ -30,10 +30,12 @@
 # define OLENA_CONVERT_BOUND_HH
 
 # include <oln/convert/conversion.hh>
-# include <oln/value/cast.hh>
+# include <oln/types/cast.hh>
 
 namespace oln {
   namespace convert {
+
+    // FIXME: is this really useful with new types ?
 
     /* Like convert::force, but with saturation.  */
     template<class Output, class Inferior = type::bottom>

@@ -28,6 +28,7 @@
 #ifndef OLENA_CORE_POINT3D_HH
 # define OLENA_CORE_POINT3D_HH
 
+# include <oln/types/predecls.hh>
 # include <oln/core/coord.hh>
 # include <oln/core/pointnd.hh>
 # include <iostream>
@@ -37,8 +38,6 @@ namespace oln {
 
   // fwd decl
   class dpoint3d;
-  template <unsigned N, class T> class vec;
-
 
   class point3d : public pointnd< 3, point3d >
   {

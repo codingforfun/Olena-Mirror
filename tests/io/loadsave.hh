@@ -1,6 +1,7 @@
 #include <oln/basics2d.hh>
 #include <oln/level/compare.hh>
-#include <oln/value/nrgb.hh>
+#include <oln/types/nrgb.hh>
+#include <oln/types/debug.hh>
 #if HAVE_ZLIB
 # include <oln/io/gz.hh>
 #endif
@@ -17,7 +18,7 @@ loadsave(const string& name, const string& savename)
 
   T im, im2;
 
-  cout << internal::debug_type< T >::name() << endl;
+  cout << typename_of<T>() << endl;
   cout << "  load(" << name << ")" << flush;
   if (! io::load(im, name))
     {
@@ -42,7 +43,7 @@ loadsave(const string& name, const string& savename)
 	      cout << "FAILED";
 	      fail = true;
 	    }
-	  cout << endl <<"  save(" << savename << ") " << flush;
+	  cout << endl <<"  save(" << savename << ") " << flush;	  
 	  if (! io::save(im, savename))
 	    {
 	      cout << "FAILED";

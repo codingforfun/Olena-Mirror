@@ -50,7 +50,7 @@ namespace oln {
 	unsigned stride = 0;
 	for (; n; --n)
 	  {
-	    out.put((*elt++ == 0) ? '0' : '1');
+	    out.put((*elt++ == true) ? '0' : '1');
 	    if (++stride >= 70)
 	      {
 		out << std::endl;
@@ -78,8 +78,6 @@ namespace oln {
 	out.write((char*)elt, n * sizeof(*elt));
       }
 
-#if 0 // disabled until color imported in types
-
       template<template<unsigned> class color_system>
       inline void
       writemany_plain(std::ostream& out,
@@ -89,7 +87,7 @@ namespace oln {
 	  {
 	    out << (*elt)[0] << ' '
 		<< (*elt)[1] << ' '
-		<< (*elt)[2] << std::endl;
+	        << (*elt)[2] << std::endl;
 	    ++elt;
 	  }
       }
@@ -101,8 +99,6 @@ namespace oln {
       {
 	out.write((char*)elt, n * sizeof(*elt));
       }
-
-#endif // 0
 
     } // internal
   } // io

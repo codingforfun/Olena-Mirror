@@ -31,6 +31,8 @@
 # include <oln/meta/basics.hh>
 # include <oln/meta/type.hh>
 
+# include <oln/types/predecls.hh>
+
 # include <oln/types/builtins_properties.hh>
 # include <oln/types/to_oln.hh>
 
@@ -93,10 +95,10 @@ namespace oln
   //
   //////////////////////////////////////
 
-  template <unsigned N, class T>
-  class optraits<vec<N, T> >: public optraits_vector<vec<N, T> >
+  template <unsigned N, class T, class Self>
+  class optraits<vec<N, T, Self> >: public optraits_vector<vec<N, T, Self> >
   {
-    typedef vec<N, T> self;
+    typedef vec<N, T, Self> self;
     typedef typename typetraits<self>::storage_type storage_type;
   public:
 
@@ -249,8 +251,8 @@ namespace oln
 
     // vec + vec
 
-    template<unsigned N, class T1, class T2>
-    struct operator_plus_traits<vec<N, T1>, vec<N, T2> >
+    template<unsigned N, class T1, class T2, class S1, class S2>
+    struct operator_plus_traits<vec<N, T1, S1>, vec<N, T2, S2> >
     {
       enum { commutative = true };
       typedef vec<N, typename deduce_from_traits<internal::operator_plus_traits, T1, T2>::ret> ret;
@@ -331,8 +333,8 @@ namespace oln
 
     // vec compared with vec
 
-    template<unsigned N, class T1, class T2>
-    struct operator_cmp_traits<vec<N, T1>, vec<N, T2> >
+    template<unsigned N, class T1, class T2, class S1, class S2>
+    struct operator_cmp_traits<vec<N, T1, S1>, vec<N, T2, S2> >
     {
       enum { commutative = true };
       typedef vec<N, typename deduce_from_traits<internal::operator_cmp_traits, T1, T2>::ret> ret;

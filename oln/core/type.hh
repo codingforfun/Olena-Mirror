@@ -63,7 +63,20 @@ namespace type
     any() {}
   };
 
+  //
+  //  Helper for static hierarchies
+  //
+  //////////////////////////////////
 
+  // if Self is type::bottom return T else return Self
+
+  template <class T, class Self>
+  struct select_self
+  { typedef Self ret; };
+  
+  template <class T>
+  struct select_self<T, bottom>
+  { typedef T ret; };
 
   //
   //  inferior traits

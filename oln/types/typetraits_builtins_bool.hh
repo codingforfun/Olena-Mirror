@@ -28,7 +28,9 @@
 #ifndef OLENA_VALUE_TYPETRAITS_BUILTINS_BOOL_HH
 # define OLENA_VALUE_TYPETRAITS_BUILTINS_BOOL_HH
 
+# include <oln/types/optraits.hh>
 # include <oln/types/typetraits.hh>
+# include <oln/types/behaviour.hh>
 
 namespace oln
 {

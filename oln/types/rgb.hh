@@ -25,28 +25,30 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_HSI_HH
-# define OLENA_VALUE_HSI_HH
+#ifndef OLENA_VALUE_RGB_HH
+# define OLENA_VALUE_RGB_HH
 
-#include <oln/value/color.hh>
+#include <oln/types/color.hh>
 
 namespace oln {
+    
+  /* CIE RGB */
 
-  enum hsi_comp {
-    hsi_H = 0,
-    hsi_S = 1,
-    hsi_I = 2
+  enum rgb_comp {
+    rgb_R = 0,
+    rgb_G = 1,
+    rgb_B = 2
   };
 
-  template<unsigned icomp> struct hsi_traits;
-  template<> struct hsi_traits<hsi_H> : public interval<0,360> {};
-  template<> struct hsi_traits<hsi_S> : public interval<0,1> {};
-  template<> struct hsi_traits<hsi_I> : public interval<0,1> {};
+  template<unsigned icomp> struct rgb_traits;
+  template<> struct rgb_traits<rgb_R> : public interval<0,1> {};
+  template<> struct rgb_traits<rgb_G> : public interval<0,1> {};
+  template<> struct rgb_traits<rgb_B> : public interval<0,1> {};
 
-  typedef color<3,8,hsi_traits>  hsi_8;
-  typedef color<3,16,hsi_traits> hsi_16;
-  typedef color<3,32,hsi_traits> hsi_32;
+  typedef color<3,8,rgb_traits>  rgb_8;
+  typedef color<3,16,rgb_traits> rgb_16;
+  typedef color<3,32,rgb_traits> rgb_32;  
 
 } // oln
 
-#endif // OLENA_VALUE_HSI_HH
+#endif // OLENA_VALUE_RGB_HH

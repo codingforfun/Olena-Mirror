@@ -38,8 +38,8 @@
     template<class T1, class T2 = T1>					\
     struct f_##OPNAME : std::binary_function<const rec_value<T1>&,	\
       const rec_value<T2>&,						\
-      typename internal::deduced_from_traits<				\
-        internal::operator_##OPNAME##_traits, T1, T2 >::ret_t >		\
+      typename internal::deduce_from_traits<				\
+        internal::operator_##OPNAME##_traits, T1, T2 >::ret >		\
     {									\
       typedef f_##OPNAME self;						\
       typename self::result_type					\
@@ -55,8 +55,8 @@
 # define _OLN_ARITH_DECLARE_BINRECVALCST_FUNCTOR(OPNAME, OPCODE_CST)	\
     template<class T1, class T2 = T1>					\
     struct f_##OPNAME##_cst : std::unary_function<const rec_value<T1>&,	\
-      typename internal::deduced_from_traits<				\
-        internal::operator_##OPNAME##_traits, T1, T2>::ret_t >		\
+      typename internal::deduce_from_traits<				\
+        internal::operator_##OPNAME##_traits, T1, T2>::ret >		\
     {									\
       typedef f_##OPNAME##_cst self;					\
       f_##OPNAME##_cst(T2 cst) : _cst(cst) {}				\

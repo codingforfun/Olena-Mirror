@@ -28,6 +28,8 @@
 #ifndef OLENA_CORE_DPOINT1D_HH
 # define OLENA_CORE_DPOINT1D_HH
 
+# include <oln/config/system.hh>
+# include <oln/types/predecls.hh>
 # include <oln/core/coord.hh>
 # include <oln/core/dpointnd.hh>
 # include <iostream>
@@ -36,7 +38,6 @@ namespace oln {
 
   // fwd decl
   class point1d;
-  template <unsigned N, class T> class vec;
 
   class dpoint1d : public dpointnd< 1, dpoint1d >
   {

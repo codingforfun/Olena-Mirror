@@ -28,10 +28,12 @@
 #ifndef OLENA_VALUE_CPLX_HH
 # define OLENA_VALUE_CPLX_HH
 
-# include <math.h>
+# include <oln/config/system.hh>
+# include <oln/types/optraits_scalar.hh>
 # include <oln/types/typetraits.hh>
 # include <oln/types/vec.hh>
 # include <oln/meta/cmp.hh>
+# include <oln/meta/type.hh>
 # include <oln/types/cplx_representation.hh>
 
 namespace oln {
@@ -64,7 +66,7 @@ namespace oln {
     //////////////////////////////////////
 
     template <class T>
-    class cplx<rect, T> : public vec<2, T>
+    class cplx<rect, T> : public vec<2, T, cplx<rect, T> >
     {
     public:
 

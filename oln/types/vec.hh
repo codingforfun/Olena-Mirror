@@ -30,14 +30,15 @@
 
 # include <oln/types/rec_value.hh>
 # include <oln/types/typetraits.hh>
+# include <oln/core/type.hh>
 # include <oln/meta/array.hh>
 
 namespace oln {
 
-  template <unsigned N, class T>
-  struct typetraits<vec<N, T> >
+  template <unsigned N, class T, class Self>
+  struct typetraits<vec<N, T, Self> >
   {
-    typedef vec<N, T> self;
+    typedef vec<N, T, Self> self;
     typedef optraits<self> optraits;
 
     typedef typename typetraits<T>::base_type  base_type[N];
@@ -50,8 +51,9 @@ namespace oln {
 
   namespace type_definitions {
 
-    template <unsigned N, class T>
-    class vec : public rec_vector<vec<N,T> >
+    template <unsigned N, class T, class Self>
+    class vec : 
+      public rec_vector<typename type::select_self<vec<N, T, type::bottom>, Self>::ret>
     {
     public :
 
@@ -70,15 +72,15 @@ namespace oln {
 	  _value[i] = arr[i];
       }
 
-      template<class U>
-      vec(const vec<N, U>& v)
+      template<class U, class Self2>
+      vec(const vec<N, U, Self2>& v)
       {
 	for (unsigned i = 0; i < N; ++i)
 	  _value[i] = v[i];
       }
 
-      template<class U>
-      vec<N, T>& operator=(const vec<N, U>& v)
+      template<class U, class Self2>
+      vec<N, T>& operator=(const vec<N, U, Self2>& v)
       {
 	for (unsigned i = 0; i < N; ++i)
 	  _value[i] = v[i];

@@ -1,7 +1,7 @@
 ## Process this file with Automake to produce Makefile.in -*-Makefile-*-
 
 AM_CPPFLAGS = -I$(top_builddir) -I$(top_srcdir)
-AM_CXXFLAGS = -Wall -W -DNDEBUG -ftemplate-depth-50 -ansi -pedantic
+AM_CXXFLAGS = -Wall -W -ftemplate-depth-50 -ansi -pedantic
 
 bin_PROGRAMS = oln-mosaic-u8 oln-mosaic-u16
 

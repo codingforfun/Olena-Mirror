@@ -43,9 +43,7 @@
 # include <oln/types/interval.hh>
 
 # include <oln/types/typetraits.hh>
-# include <oln/types/typetraits_builtins_int.hh>
-# include <oln/types/typetraits_builtins_float.hh>
-# include <oln/types/typetraits_builtins_bool.hh>
+# include <oln/types/typetraits_builtins.hh>
 
 # include <oln/types/optraits.hh>
 
@@ -57,19 +55,28 @@
 # include <oln/types/vec.hh>
 # include <oln/types/cplx.hh>
 
+# include <oln/types/color.hh>
+# include <oln/types/rgb.hh>
+# include <oln/types/nrgb.hh>
+# include <oln/types/hsi.hh>
+# include <oln/types/hsl.hh>
+# include <oln/types/hsv.hh>
+# include <oln/types/xyz.hh>
+# include <oln/types/yiq.hh>
+# include <oln/types/yuv.hh>
 
 # include <oln/types/optraits_int_u.hh>
 # include <oln/types/optraits_int_s.hh>
 # include <oln/types/optraits_range.hh>
 # include <oln/types/optraits_cycle.hh>
-# include <oln/types/optraits_builtins_int.hh>
-# include <oln/types/optraits_builtins_float.hh>
-# include <oln/types/optraits_builtins_bool.hh>
+# include <oln/types/optraits_builtins.hh>
 # include <oln/types/optraits_bin.hh>
 # include <oln/types/optraits_vec.hh>
 # include <oln/types/optraits_cplx.hh>
 
 # include <oln/types/global_ops_traits.hh>
 # include <oln/types/global_ops.hh>
+
+# include <oln/types/cast.hh>
 
 #endif // ndef OLENA_VALUE_ALL_HH

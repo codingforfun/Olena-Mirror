@@ -25,28 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_YUV_HH
-# define OLENA_VALUE_YUV_HH
+#ifndef OLENA_VALUE_HSV_HH
+# define OLENA_VALUE_HSV_HH
 
-#include <oln/value/color.hh>
+#include <oln/types/color.hh>
 
 namespace oln {
 
-  enum yuv_comp {
-    yuv_Y = 0,
-    yuv_U = 1,
-    yuv_V = 2
+  enum hsv_comp {
+    hsv_H = 0,
+    hsv_S = 1,
+    hsv_V = 2
   };
 
-  template<unsigned icomp> struct yuv_traits;
-  template<> struct yuv_traits<yuv_Y> : public interval<0,1> {};
-  template<> struct yuv_traits<yuv_U> : public interval<-1,1> {};
-  template<> struct yuv_traits<yuv_V> : public interval<-1,1> {};
+  template<unsigned icomp> struct hsv_traits;
+  template<> struct hsv_traits<hsv_H> : public interval<0,360> {};
+  template<> struct hsv_traits<hsv_S> : public interval<0,1> {};
+  template<> struct hsv_traits<hsv_V> : public interval<0,1> {};
 
-  typedef color<3,8,yuv_traits>  yuv_8;
-  typedef color<3,16,yuv_traits> yuv_16;
-  typedef color<3,32,yuv_traits> yuv_32;
+
+  typedef color<3,8,hsv_traits>  hsv_8;
+  typedef color<3,16,hsv_traits> hsv_16;
+  typedef color<3,32,hsv_traits> hsv_32;
 
 } // oln
 
-#endif // OLENA_VALUE_YUV_HH
+#endif // OLENA_VALUE_HSV_HH

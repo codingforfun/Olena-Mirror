@@ -28,6 +28,7 @@
 #ifndef OLENA_LEVEL_EXTREMA_KILLER_HH
 # define OLENA_LEVEL_EXTREMA_KILLER_HH
 
+#include <oln/config/system.hh>
 #include <oln/basics2d.hh>
 #include <oln/types/all.hh>
 #include <oln/morpho/extrema.hh>
@@ -312,7 +313,7 @@ namespace oln {
 		{
 		  typedef Value(I) I_type;
 		  Point(I) arg_min = p;
-		  Value(I) min =  I_type::max();
+		  Value(I) min =  optraits<I_type>::max();
 		  for (unsigned i = 0; i < cur_minimum.size(); ++i)
 		    {
 		      Neighb(N) p_prime(Ng, cur_minimum[i]);
@@ -416,7 +417,7 @@ namespace oln {
 		{
 		  typedef Value(I) I_type;
 		  Point(I) arg_max = p;
-		  Value(I) max =  I_type::min();
+		  Value(I) max =  optraits<I_type>::min();
 		  for (unsigned i = 0; i < cur_maximum.size(); ++i)
 		    {
 		      Neighb(N) p_prime(Ng, cur_maximum[i]);

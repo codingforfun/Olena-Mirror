@@ -11,7 +11,7 @@
 #include <oln/morpho/thinning.hh>
 #include <oln/morpho/thickening.hh>
 #include <oln/convol/fast_gaussian.hh>
-#include <oln/value/all.hh>
+#include <oln/types/all.hh>
 #include <oln/level/fill.hh>
 
 using namespace oln;

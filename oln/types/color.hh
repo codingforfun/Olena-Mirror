@@ -28,47 +28,37 @@
 #ifndef OLENA_VALUE_COLOR_HH
 # define OLENA_VALUE_COLOR_HH
 
-# include <oln/value/predefs.hh>
-# include <oln/value/vec.hh>
+# include <oln/config/system.hh>
+# include <oln/types/rec_value.hh>
+# include <oln/types/predecls.hh>
+# include <oln/types/vec.hh>
+# include <oln/types/optraits_vec.hh>
+# include <oln/types/typetraits.hh>
+# include <oln/types/behaviour.hh>
+# include <oln/types/cast.hh>
 
 # include <iostream>
+# include <sstream>
+# include <string>
+
+//
+// FIXME: really adapt to new types system
+// This is just a copy of old color system to assure compatibility
+//
 
 namespace oln {
+  
+  template <unsigned ncomps, unsigned qbits, template <unsigned>
+  class color_system>
+  struct typetraits<color<ncomps, qbits, color_system> >
+  {
+    typedef color<ncomps, qbits, color_system>	self;
+    typedef self				base_type;
+    typedef vec<ncomps, int_u<qbits> >		storage_type;      
+  };
 
-  namespace internal {
-
-    template <unsigned ncomps, unsigned qbits, template <unsigned>
-    class color_system>
-    struct value_traits<color<ncomps, qbits, color_system> >
-    { typedef vec<ncomps, int_u<qbits> > ret_t; };
-
-    template <unsigned ncomps, unsigned qbits, template <unsigned>
-    class color_system>
-    struct real_value_traits<color<ncomps, qbits, color_system> >
-      : public value_traits<vec<ncomps, int_u<qbits> > > {};
-
-    /* FIXME: the following 4 definitions are meaningless for
-       color types.  IMHO rec_value should not require them. -- adl */
-    template <unsigned ncomps, unsigned qbits, template <unsigned>
-    class color_system>
-    struct larger_traits<color<ncomps, qbits, color_system> >
-    { typedef void ret_t;};
-
-    template <unsigned ncomps, unsigned qbits, template <unsigned>
-    class color_system>
-    struct signed_traits<color<ncomps, qbits, color_system> >
-    { typedef void ret_t;};
-
-    template <unsigned ncomps, unsigned qbits, template <unsigned>
-    class color_system>
-    struct unsigned_traits<color<ncomps, qbits, color_system> >
-    { typedef void ret_t;};
-
-    template <unsigned ncomps, unsigned qbits, template <unsigned>
-    class color_system>
-    struct cumul_traits<color<ncomps, qbits, color_system> >
-    { typedef void ret_t;};
-
+  namespace internal
+  {
 
     // Helper struct to convert vec<N,T> to vec<N,float>,
     // taking color_system into account.
@@ -83,10 +73,10 @@ namespace oln {
       static void
       doit (const in_type& in, out_type& out)
       {
-	float in_range = float(T::max()) - float(T::min());
+	float in_range = float(optraits<T>::max()) - float(optraits<T>::min());
 	float out_range = float(color_system<n>::upper_bound)
 	  - float(color_system<n>::lower_bound);
-	out[n] = ((float(in[n]) - float(T::min()))
+	out[n] = ((float(in[n]) - float(optraits<T>::min()))
 		  * out_range / in_range
 		  + float(color_system<n>::lower_bound));
 
@@ -109,21 +99,21 @@ namespace oln {
       }
     };
 
-
     // Helper struct to convert vec<N,float> to vec<N,T>,
     // taking color_system into account.
     template <unsigned n, unsigned ncomps, unsigned qbits, template <unsigned>
     class color_system>
     struct _from_float
     {
-      typedef int_u<qbits> T;
-      typedef vec<ncomps, float >  in_type;
-      typedef vec<ncomps, T >     out_type;
+      typedef int_u<qbits>		T;
+      typedef vec<ncomps, float>	in_type;
+      typedef vec<ncomps, T>		out_type;
 
       static void
       doit (const in_type& in, out_type& out)
       {
-	float out_range = float(T::max()) - float(T::min());
+	float out_range = float(optraits<T>::max()) 
+	  - float(optraits<T>::min());
 	float in_range = float(color_system<n>::upper_bound)
 	  - float(color_system<n>::lower_bound);
 
@@ -131,7 +121,7 @@ namespace oln {
 	  ((in[n] - float(color_system<n>::lower_bound))
 	   * out_range / in_range
 	   + float(color_system<n>::lower_bound));
-
+	
 	// process next componant recursively:
 	_from_float<n + 1, ncomps, qbits, color_system>::doit(in, out);
       }
@@ -154,62 +144,64 @@ namespace oln {
   } // internal
 
 
-
-  template <unsigned ncomps, unsigned qbits, template <unsigned>
-  class color_system>
-  struct color
+  namespace type_definitions
   {
-    template<unsigned icomp>
-    struct lower_bound { enum { ret = color_system<icomp>::lower_bound }; };
-    template<unsigned icomp>
-    struct upper_bound { enum { ret = color_system<icomp>::upper_bound }; };
 
-    typedef int_u<qbits> comp_type;
-    typedef vec<ncomps, comp_type > vec_type;
-    typedef vec<ncomps, float > float_vec_type;
-
-    color(): _value() {};
-    color(const vec_type& vec) : _value(vec) {};
-    color(const float_vec_type& vec) : _value()
+    template <unsigned ncomps, unsigned qbits, template <unsigned>
+    class color_system>
+    struct color : public rec_value<color<ncomps, qbits, color_system> >
     {
-      internal::_from_float<0,ncomps,qbits,color_system>::doit(vec,_value);
-    }
+      template<unsigned icomp>
+      struct lower_bound { enum { ret = color_system<icomp>::lower_bound }; };
+      template<unsigned icomp>
+      struct upper_bound { enum { ret = color_system<icomp>::upper_bound }; };
 
-    comp_type&       operator[](unsigned i)	    { return _value[i]; }
-    const comp_type& operator[](unsigned i) const { return _value[i]; }
+      typedef int_u<qbits> comp_type;
+      typedef vec<ncomps, comp_type > vec_type;
+      typedef vec<ncomps, float > float_vec_type;
 
-    vec_type&       as_vec()       { return _value; }
-    const vec_type& as_vec() const { return _value; }
+      color() {};
+      color(const vec_type& vec) { _value = vec; };
+      color(const float_vec_type& vec)
+      {
+	internal::_from_float<0,ncomps,qbits,color_system>::doit(vec,_value);
+      }
 
-    float_vec_type to_float() const
-    {
-      float_vec_type tmp;
-      internal::_to_float<0,ncomps,qbits,color_system>::doit(_value, tmp);
-      return tmp;
-    }
+      comp_type&       operator[](unsigned i)	    { return _value[i]; }
+      const comp_type  operator[](unsigned i) const { return _value[i]; }
 
-    bool operator==(const color& r) const { return _value == r._value; }
+      vec_type&       as_vec()       { return _value; }
+      const vec_type& as_vec() const { return _value; }
 
-    static string name() {
-      std::ostringstream out;
-      // FIXME: Output color_system somehow.
-      out << "color<" << ncomps << "," << qbits <<  ",...>" << std::ends;
-      return out.str();
-    }
-  protected:
-    vec_type _value;
-  };
+      float_vec_type to_float() const
+      {
+	float_vec_type tmp;
+	internal::_to_float<0,ncomps,qbits,color_system>::doit(_value, tmp);
+	return tmp;
+      }
 
+      bool operator==(const color& r) const { return _value == r._value; }
 
-  // Helper function to complete color_system (by inheritance).
-  template<int lval, int uval>
-  struct interval
-  {
-    enum {
-      lower_bound = lval,
-      upper_bound = uval
+      static std::string name() {
+	std::ostringstream out;
+	// FIXME: Output color_system somehow.
+	out << "color<" << ncomps << "," << qbits <<  ",...>" << std::ends;
+	return out.str();
+      }
     };
-  };
+
+
+    // Helper function to complete color_system (by inheritance).
+    template<int lval, int uval>
+    struct interval
+    {
+      enum {
+	lower_bound = lval,
+	upper_bound = uval
+      };
+    };
+
+  } // type_definitions
 
 } // oln
 

@@ -46,7 +46,9 @@ namespace oln {
 	  // FIXME: min() and max() should be inf() and sup()
 	  // once these functions exist.  Otherwise it doesn't
 	  // work on float.
-	  output[p] = (input[p] ? DestType::min() : DestType::max());
+	  output[p] = (input[p] ? 
+		       optraits<DestType>::min() : 
+		       optraits<DestType>::max());
 	return output;
       }
     }

@@ -28,12 +28,14 @@
 #ifndef OPTRAITS_BUILTINS_INT_HH
 # define OPTRAITS_BUILTINS_INT_HH
 
-# include <limits.h>
+# include <oln/config/system.hh>
 
 # include <oln/types/optraits_scalar.hh>
 # include <oln/types/typetraits_builtins_int.hh>
 
 # include "optraits_builtins_int_defs.hh"
+
+# include <string>
 
 //
 //  optraits for builtins

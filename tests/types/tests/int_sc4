@@ -1,4 +1,5 @@
 typedef cycle<int_u32, bounded_u<0, 65536U * 65536U - 10> > int_u32c;
 int_u32c a = 65536;     // a == 65536
-a *= 65537;		// a == 65446
+a *= 65537;		// a == 65446 // XFAIL: don't know how to calculate 
+				      // modulus when an overflow occurs
 return a != 65546;

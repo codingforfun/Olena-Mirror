@@ -34,7 +34,7 @@
 # include <oln/convert/conversion_ng_se.hh>
 # include <oln/level/compare.hh>
 # include <oln/arith/ops.hh>
-# include <oln/value/ops.hh>
+# include <oln/types/global_ops_traits.hh>
 # include <oln/meta/cmp.hh>
 
 namespace oln {

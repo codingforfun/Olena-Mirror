@@ -28,6 +28,7 @@
 #ifndef OLENA_VALUE_PREDECLS_HH
 # define OLENA_VALUE_PREDECLS_HH
 
+# include <oln/core/type.hh>
 # include <oln/types/cplx_representation.hh>
 
 namespace oln {
@@ -79,7 +80,7 @@ namespace oln {
   // vec
 
   namespace type_definitions {
-    template <unsigned N, class T> class vec;
+    template <unsigned N, class T, class Self = type::bottom> class vec;
   }
   using type_definitions::vec;
 
@@ -92,6 +93,25 @@ namespace oln {
   using type_definitions::cplx;
   using type_definitions::rect;
   using type_definitions::polar;
+
+  //
+  // Colors
+  //
+
+  namespace type_definitions {
+    template <unsigned ncomps, unsigned qbits, template <unsigned>
+    class color_system>
+    struct color;
+
+    template<int lval, int uval>
+    struct interval;
+  }
+  using type_definitions::color;
+  using type_definitions::interval;
+
+  //
+  // Scalar types
+  //
 
   // int_u
 

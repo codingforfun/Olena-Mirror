@@ -124,6 +124,33 @@ namespace oln
     template <>
     struct operator_div_traits<float, float> : all_float_traits {};
 
+    //
+    // min
+    //
+
+    template <unsigned nbits, class B>
+    struct operator_min_traits<float, int_u<nbits, B> > : all_float_traits {};
+
+    template <unsigned nbits, class B>
+    struct operator_min_traits<float, int_s<nbits, B> > : all_float_traits {};
+
+    template <>
+    struct operator_min_traits<float, float> : all_float_traits {};
+
+
+    //
+    // max
+    //
+
+    template <unsigned nbits, class B>
+    struct operator_max_traits<float, int_u<nbits, B> > : all_float_traits {};
+
+    template <unsigned nbits, class B>
+    struct operator_max_traits<float, int_s<nbits, B> > : all_float_traits {};
+
+    template <>
+    struct operator_max_traits<float, float> : all_float_traits {};
+
 
     //
     // Comparison
@@ -237,6 +264,40 @@ namespace oln
     template <>
     struct operator_div_traits<double, float> : all_double_traits {};
 
+    //
+    // min
+    //
+
+    template <unsigned nbits, class B>
+    struct operator_min_traits<double, int_u<nbits, B> > : all_double_traits {};
+
+    template <unsigned nbits, class B>
+    struct operator_min_traits<double, int_s<nbits, B> > : all_double_traits {};
+
+    template <>
+    struct operator_min_traits<double, double> : all_double_traits {};
+
+    template <>
+    struct operator_min_traits<double, float> : all_double_traits {};
+
+
+    //
+    // max
+    //
+
+    template <unsigned nbits, class B>
+    struct operator_max_traits<double, int_u<nbits, B> > : all_double_traits {};
+
+    template <unsigned nbits, class B>
+    struct operator_max_traits<double, int_s<nbits, B> > : all_double_traits {};
+
+    template <>
+    struct operator_max_traits<double, double> : all_double_traits {};
+
+    template <>
+    struct operator_max_traits<double, float> : all_double_traits {};
+
+   
     //
     // Comparison
     //

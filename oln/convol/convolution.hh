@@ -31,7 +31,7 @@
 
 # include <oln/basics.hh>
 # include <oln/core/point.hh>
-# include <oln/value/all.hh>
+# include <oln/types/all.hh>
 # include <oln/meta/array.hh>
 
 # include <oln/core/w_window2d.hh> // FIXME: change to w_window once
@@ -48,34 +48,44 @@ namespace oln {
       template<class T_in, class T_win>
       struct output_traits;
 
-      template<unsigned nbits>
-      struct output_traits<int_u<nbits>,  int> {
-	typedef int_s<nbits+2> ret;
+      template<unsigned nbits, class bhv>
+      struct output_traits<int_u<nbits, bhv>,  int> {
+	// FIXME: nbits+2 isn't always enough, refering to convolution tests
+	// ==> should be calculated precisely
+	typedef int_s<nbits+2, bhv> ret;
       };
 
-      template<unsigned nbits>
-      struct output_traits<int_u<nbits>,  float> {
-	typedef float_p1 ret;
+      template<unsigned nbits, class bhv>
+      struct output_traits<int_u<nbits, bhv>,  float> {
+	typedef sfloat ret;
       };
 
-      template<unsigned nbits>
-      struct output_traits<int_s<nbits>,  int> {
-	typedef int_s<nbits+2> ret;
+      template<unsigned nbits, class bhv>
+      struct output_traits<int_s<nbits, bhv>,  int> {
+	// FIXME: nbits+2 isn't always enough, refering to convolution tests
+	// ==> should be calculated precisely
+	typedef int_s<nbits+2, bhv> ret;
       };
 
-      template<unsigned nbits>
-      struct output_traits<int_s<nbits>,  float> {
-	typedef float_p1 ret;
+      template<unsigned nbits, class bhv>
+      struct output_traits<int_s<nbits, bhv>,  float> {
+	typedef sfloat ret;
       };
 
-      template<unsigned prec>
-      struct output_traits<float_p<prec>, int> {
-	typedef float_p<prec> ret;
+      struct output_traits<sfloat, int> {
+	typedef sfloat ret;
       };
 
-      template<unsigned prec>
-      struct output_traits<float_p<prec>, float> {
-	typedef float_p<prec> ret;
+      struct output_traits<sfloat, float> {
+	typedef sfloat ret;
+      };
+
+      struct output_traits<dfloat, int> {
+	typedef dfloat ret;
+      };
+
+      struct output_traits<dfloat, float> {
+	typedef dfloat ret;
       };
 
     } // end namespace output
@@ -83,31 +93,43 @@ namespace oln {
     namespace slow {
 
       template<class _T_in, class _T_win>
-      typename mute <_T_in, typename output::output_traits< Value(_T_in), Weight(_T_win) >::ret >::ret
-      convolve(const image < _T_in >& _input, const w_window< _T_win >& _win)
+      typename 
+      mute <_T_in, 
+	    typename output::output_traits< Value(_T_in), 
+                                            Weight(_T_win) >::ret 
+           >::ret
+      convolve(const image < _T_in >& _input, 
+	       const w_window< _T_win >& _win)
       {
 	Exact_cref(T_in,input);
 	Exact_cref(T_win,win);
-	typedef typename output::output_traits<typename T_in::value, typename T_win::weight>::ret output_value;
+	typedef typename 
+	  output::output_traits<typename T_in::value, 
+	                        typename T_win::weight>::ret output_value;
 	typedef typename mute < T_in, output_value>::ret T_out;
 
 	T_out output(input.size());
 	border::adapt_copy(input, win.delta());
 	typename T_in::iter p(input);
+	
 	for (p = begin; p != end; ++p)
 	  {
-	    typename internal::cumul_traits<typename T_in::value>::ret_t sum = 0;
+	    typename 
+	      typetraits<typename T_in::value>::signed_cumul_type sum = 0;
 	    for (unsigned i = 0; i < win.card(); ++i)
 	      sum += win.w(i) * input[p + win.dp(i)];
-	    output[p] = cast::force<typename T_out::value>(sum);
+	    output[p] = sum;
 	  }
 	return output;
       }
 
       // FIXME: What about 1D and 3D ??
       template<class _T_in, class Info, class _T_arr>
-      typename mute <_T_in, typename output::output_traits< Value(_T_in), _T_arr>::ret >::ret
-      convolve(const image < _T_in >& _input, const meta::array2d< Info, _T_arr >& _arr)
+      typename mute <_T_in, 
+		     typename output::output_traits< Value(_T_in), 
+						     _T_arr>::ret >::ret
+      convolve(const image < _T_in >& _input, 
+	       const meta::array2d< Info, _T_arr >& _arr)
       {
 	return convolve(_input, static_cast< w_window2d<_T_arr> >(_arr));
 	// FIXME: Should be w_window<_T_arr>.  Adjust #include once done.

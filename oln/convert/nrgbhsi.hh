@@ -30,8 +30,10 @@
 # define OLENA_CONVERT_NRGBHSI_HH
 
 # include <oln/convert/colorconv.hh>
-# include <oln/value/nrgb.hh>
-# include <oln/value/hsi.hh>
+
+# include <oln/types/nrgb.hh>
+# include <oln/types/hsi.hh>
+# include <oln/types/typetraits_builtins.hh>
 
 /*--------------------------------------------------------------.
 | The formulas used here come from ``Digital Image Processing   |

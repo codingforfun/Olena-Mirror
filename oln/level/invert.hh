@@ -29,9 +29,8 @@
 # define OLENA_LEVEL_INVERT_HH
 
 # include <oln/basics.hh>
-# include <oln/value/rec_int.hh>
-# include <oln/value/rec_float.hh>
-# include <oln/value/bin.hh>
+# include <oln/types/rec_value.hh>
+# include <oln/types/bin.hh>
 # include <functional>
 
 namespace oln {
@@ -66,7 +65,7 @@ namespace oln {
 
       template<class V> static
       const V doit(const rec_int_u<V>& val) {
-	return V::max().real_value() - val.real_value();
+	return optraits<V>::max() - val.value();
       }
 
       static

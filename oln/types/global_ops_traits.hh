@@ -138,8 +138,27 @@ namespace oln
       typedef undefined_traits ret;
       typedef undefined_traits impl; 
     };
-    
 
+    // min
+    
+    template <class T, class U>
+    struct operator_min_traits
+    { 
+      enum { commutative = false };
+      typedef undefined_traits ret;
+      typedef undefined_traits impl; 
+    };
+
+    // max
+    
+    template <class T, class U>
+    struct operator_max_traits
+    { 
+      enum { commutative = false };
+      typedef undefined_traits ret;
+      typedef undefined_traits impl;
+    };
+    
 
     //
     //  Traits deducing algorithm

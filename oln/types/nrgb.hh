@@ -25,28 +25,30 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_HSV_HH
-# define OLENA_VALUE_HSV_HH
+#ifndef OLENA_VALUE_NRGB_HH
+# define OLENA_VALUE_NRGB_HH
 
-#include <oln/value/color.hh>
+#include <oln/types/color.hh>
 
 namespace oln {
 
-  enum hsv_comp {
-    hsv_H = 0,
-    hsv_S = 1,
-    hsv_V = 2
+  /* NTSC RGB */
+  
+  enum nrgb_comp {
+    nrgb_R = 0,
+    nrgb_G = 1,
+    nrgb_B = 2
   };
 
-  template<unsigned icomp> struct hsv_traits;
-  template<> struct hsv_traits<hsv_H> : public interval<0,360> {};
-  template<> struct hsv_traits<hsv_S> : public interval<0,1> {};
-  template<> struct hsv_traits<hsv_V> : public interval<0,1> {};
-
-  typedef color<3,8,hsv_traits>  hsv_8;
-  typedef color<3,16,hsv_traits> hsv_16;
-  typedef color<3,32,hsv_traits> hsv_32;
+  template<unsigned icomp> struct nrgb_traits;
+  template<> struct nrgb_traits<nrgb_R> : public interval<0,1> {};
+  template<> struct nrgb_traits<nrgb_G> : public interval<0,1> {};
+  template<> struct nrgb_traits<nrgb_B> : public interval<0,1> {};
+ 
+  typedef color<3,8,nrgb_traits>  nrgb_8;
+  typedef color<3,16,nrgb_traits> nrgb_16;
+  typedef color<3,32,nrgb_traits> nrgb_32;
 
 } // oln
 
-#endif // OLENA_VALUE_HSV_HH
+#endif // OLENA_VALUE_NRGB_HH

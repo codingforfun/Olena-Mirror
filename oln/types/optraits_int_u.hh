@@ -28,6 +28,7 @@
 #ifndef OLENA_VALUE_OPTRAITS_INT_U_HH
 # define OLENA_VALUE_OPTRAITS_INT_U_HH
 
+# include <oln/config/system.hh>
 # include <oln/types/builtins_properties.hh>
 
 # include <oln/types/optraits_scalar.hh>
@@ -43,7 +44,10 @@
 namespace oln
 {
 
-  template <unsigned nbits, class behaviour> class int_u;
+  // fwd_decl
+  namespace type_definitions {
+    template <unsigned nbits, class behaviour> class int_u;
+  }
 
   //
   //  optraits for int_u
@@ -114,8 +118,22 @@ namespace oln
     struct operator_minus_traits<int_u<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_u<nbits, typename deduce_op_behaviour<B1, B2>::ret> ret;
+      typedef int_s<(unsigned) meta::maxN<nbits+1, mbits+1, 32>::ret,
+		    typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_u<nbits, B1> impl;
+    };
+
+    // int_u32 - int_u : we do not convert result to int_s because we
+    // want to access (UINT_MAX - 1)
+
+    // FIXME: this behaviour is quite annoying designing generic algorithms
+
+    template<class B1, unsigned mbits, class B2>
+    struct operator_minus_traits<int_u<32, B1>, int_u<mbits, B2> >
+    {
+      enum { commutative = true };
+      typedef int_u<32, typename deduce_op_behaviour<B1, B2>::ret> ret;
+      typedef int_u<32, B1> impl;
     };
 
     //
@@ -158,6 +176,38 @@ namespace oln
     {
       enum { commutative = false };
       typedef int_u<mbits, typename deduce_op_behaviour<B1, B2>::ret> ret;
+      typedef int_u<nbits, B1> impl;
+    };
+
+
+    //
+    // Min
+    //
+
+    // MIN(int_u, int_u)
+
+    template<unsigned nbits, class B1, unsigned mbits, class B2>
+    struct operator_min_traits<int_u<nbits, B1>, int_u<mbits, B2> >
+    {
+      enum { commutative = true };
+      typedef int_u<(unsigned) meta::min<nbits, mbits>::ret, 
+		    typename deduce_op_behaviour<B1, B2>::ret> ret;
+      typedef int_u<nbits, B1> impl;
+    };
+
+
+    //
+    // Max
+    //
+
+    // MAX(int_u, int_u)
+
+    template<unsigned nbits, class B1, unsigned mbits, class B2>
+    struct operator_max_traits<int_u<nbits, B1>, int_u<mbits, B2> >
+    {
+      enum { commutative = true };
+      typedef int_u<(unsigned) meta::max<nbits, mbits>::ret, 
+		    typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_u<nbits, B1> impl;
     };
 

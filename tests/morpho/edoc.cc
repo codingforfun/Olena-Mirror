@@ -2,6 +2,7 @@
 // Compare the morpho::fast:: and morpho:: versions.
 
 #include <oln/basics2d.hh>
+#include <oln/types/all.hh>
 
 #include <oln/morpho/erosion.hh>
 #include <oln/morpho/dilation.hh>

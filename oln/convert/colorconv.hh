@@ -28,6 +28,7 @@
 #ifndef OLENA_CONVERT_COLORCONV_HH
 # define OLENA_CONVERT_COLORCONV_HH
 
+# include <oln/types/color.hh>
 # include <oln/convert/conversion.hh>
 
 namespace oln {

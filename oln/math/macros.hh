@@ -29,7 +29,9 @@
 # define OLENA_MATH_MACROS_HH
 
 # include <oln/basics.hh>
-# include <oln/value/cast.hh>
+# include <oln/types/rec_value.hh>
+# include <oln/types/global_ops_traits.hh>
+# include <oln/types/cast.hh>
 
 namespace oln {
 
@@ -86,7 +88,9 @@ namespace oln {
     template<class Self>
     struct f_plus_abs
     {
-      typedef typename internal::operator_plus_traits<Self,Self>::ret_t output_t;
+      typedef typename 
+      internal::operator_plus_traits<Self,Self>::ret_t output_t;
+      
       const output_t operator()(const rec_value<Self>& val1,
 				const rec_value<Self>& val2) const
       {
@@ -110,7 +114,8 @@ namespace oln {
       const output_t operator()(const rec_value<Self>& val1,
 				const rec_value<Self>& val2) const
       {
-	return cast::force<T_out>(math::abs(val1.self()) + math::abs(val2.self()));
+	return cast::force<T_out>(math::abs(val1.self()) 
+				  + math::abs(val2.self()));
       }
     };
 

@@ -1,7 +1,7 @@
+#include <oln/types/all.hh>
 #include <oln/basics2d.hh>
 #include <oln/basics3d.hh>
 #include <oln/level/fill.hh>
-#include <oln/types/all.hh>
 
 #include <getopt.h>
 

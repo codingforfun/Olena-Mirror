@@ -34,7 +34,7 @@
 # include <oln/morpho/geodesic_erosion.hh>
 # include <oln/morpho/splitse.hh>
 # include <oln/level/compare.hh>
-# include <oln/value/ops.hh>
+# include <oln/types/global_ops_traits.hh>
 # include <oln/convert/conversion_ng_se.hh>
 # include <queue>
 

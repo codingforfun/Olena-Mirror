@@ -1,0 +1,2 @@
+bin b1 = 1;
+return !(b1 == true);

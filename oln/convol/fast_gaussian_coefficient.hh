@@ -42,7 +42,7 @@
 //// ------------------------------------------------------------ ////
 
 
-# include <oln/value/float_p.hh>
+# include <oln/types/predecls.hh>
 # include <vector>
 
 namespace oln {

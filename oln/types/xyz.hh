@@ -25,28 +25,28 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_HSL_HH
-# define OLENA_VALUE_HSL_HH
+#ifndef OLENA_VALUE_XYZ_HH
+# define OLENA_VALUE_XYZ_HH
 
-#include <oln/value/color.hh>
+#include <oln/types/color.hh>
 
 namespace oln {
 
-  enum hsl_comp {
-    hsl_H = 0,
-    hsl_S = 1,
-    hsl_L = 2
+  enum xyz_comp {
+    xyz_X = 0,
+    xyz_Y = 1,
+    xyz_Z = 2
   };
 
-  template<unsigned icomp> struct hsl_traits;
-  template<> struct hsl_traits<hsl_H> : public interval<0,360> {};
-  template<> struct hsl_traits<hsl_S> : public interval<0,1> {};
-  template<> struct hsl_traits<hsl_L> : public interval<0,1> {};
+  template<unsigned icomp> struct xyz_traits;
+  template<> struct xyz_traits<xyz_X> : public interval<0,1> {};
+  template<> struct xyz_traits<xyz_Y> : public interval<0,1> {};
+  template<> struct xyz_traits<xyz_Z> : public interval<0,1> {};
 
-  typedef color<3,8,hsl_traits>  hsl_8;
-  typedef color<3,16,hsl_traits> hsl_16;
-  typedef color<3,32,hsl_traits> hsl_32;
+  typedef color<3,8,xyz_traits>  xyz_8;
+  typedef color<3,16,xyz_traits> xyz_16;
+  typedef color<3,32,xyz_traits> xyz_32;
 
 } // oln
 
-#endif // OLENA_VALUE_HSL_HH
+#endif // OLENA_VALUE_XYZ_HH
