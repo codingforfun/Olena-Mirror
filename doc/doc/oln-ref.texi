@@ -10,30 +10,15 @@
 @synindex fn cp
 @synindex vr cp
 
-@c Gross hack.  We use double-colon a lot in this manual, because
-@c we describe C++ functions organized into namespace.
-@c
-@c Espcially we want to put `::' in node names.  This is asking for
-@c trouble.  There are several issues:
-@c  - makeinfo will fail to parse in any colon in the node name of
-@c    a menu entry.  This is solved by using `@value{dc}' instead of
-@c    `::' when naming a node.
-@c  - info does not support `::' in a node name, because these
-@c    characters mark the end of an hyperlink.  So when outputing
-@c    info files, we replace `@value{dc}' by a single point `.'.
-@c    In other format, we use a double colon.
-@ifinfo
-@set dc .
-@end ifinfo
-@ifnotinfo
-@set dc ::
-@end ifnotinfo
-
+@dircategory Development
+@direntry
+* Olena: (olena).          A generic C++ image processing library.
+@end direntry
 
 @ifinfo
 This file documents Olena, a generic image processing library.
 
-Copyright 2001  Laboratoire de Recherche et D@'eveloppement de l'@'Epita.
+Copyright 2001, 2002  Laboratoire de Recherche et D@'eveloppement de l'@'Epita.
 
 Permission is granted to make and distribute verbatim
 copies of this manual provided the copyright notice and
@@ -67,7 +52,7 @@ translation approved by the Free Software Foundation.
 
 @page
 @vskip 0pt plus 1filll
-Copyright @copyright{} 2001
+Copyright @copyright{} 2001, 2002
 Laboratoire de Recherche et D@'eveloppement de l'@'Epita.
 
 Permission is granted to make and distribute verbatim
