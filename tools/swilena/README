@@ -1,0 +1,67 @@
+This is swilena, the Simplified Wrappers for Interfacing Olena.
+
+A more detailed documentation can be found in the doc/ subdirectory.
+
+
+BOOSTRAPING
+===========
+
+  The first time you checkout the project, you must run:
+ 
+  autoreconf -f -i
+
+REQUIRED TOOLS
+==============
+
+Compiling Swilena requires the following programs:
+
+* a decent version of the `make' program (BSD and GNU versions known to work).
+* a C++ development environment ready to compile Olena
+* a decent linker
+* a working version of the Unix `grep' program
+* GNU texinfo utilities, if you plan to rebuild the documentation.
+
+* SWIG version 1.3 or later.
+* Python 2.2 development files.
+
+In  addition to  these  tools,  if  you  plan  to extend  Swilena, the
+following programs are also required:
+
+* GNU autoconf and automake.
+
+COMPILING
+=========
+
+In order not to pollute your source tree, first create a directory somewhere in
+your filesystem where the build can actually take place. This
+directory can be anywhere, including in a subdirectory of your sources:
+
+   mkdir build
+
+Then, run the "configure" script from this directory:
+
+   cd build && ../configure OLN=path-to-your-Olena-distribution
+
+Then,  run "make" (append  -s  if you use  GNU  make for less  verbose
+output).
+
+Several options can be passed to the "configure" script. For 
+developers, the most notorious are:
+
+  CXX=name-of-your-decent-c++-compiler
+  CXXFLAGS='-Wall -W -O0 -g'
+  --prefix=...
+
+Note  that using optimization  options    raise the memory and    time
+requirements for the build process to _huge_ values.
+
+
+DISTRIBUTING
+============
+
+  make dist
+
+ (run after Makefiles are created, that is, e.g., after a
+  dry run of "configure")
+
+

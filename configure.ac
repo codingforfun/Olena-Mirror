@@ -1,20 +1,70 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.54])
-AC_INIT([olena], [0.5], [olena-bugs@lrde.epita.fr])
-AC_CONFIG_SRCDIR([ChangeLog])
-AC_CONFIG_AUX_DIR([tools])
-AM_INIT_AUTOMAKE([1.7.1 no-define foreign dist-bzip2])
+
+source oln-version
+
+AC_INIT([$OLN_PNAME], [$OLN_VERSION], [$OLN_CONTACT])
+AC_CONFIG_SRCDIR([oln-version])
+AM_INIT_AUTOMAKE([1.6 no-define foreign dist-bzip2])
 AM_MAINTAINER_MODE
 
-real_includedir=`eval echo $includedir`
-AC_DEFINE_UNQUOTED([OLN_SOURCE_DIR], ["$real_includedir/oln"], [the directory where Olena headers are installed])
-AC_CONFIG_HEADERS(oln/config/pconf.inc:oln/config/pconf-inc.in)
+AC_CONFIG_SUBDIRS([oln])
 
-AC_CONFIG_SUBDIRS([doc src])
+OLN_SUBDIRS=""
+if test -d $srcdir/doc; then
+  AC_ARG_WITH([doc], 
+              AC_HELP_STRING([--without-doc],
+		             [disable building the documentation]),
+              [ac_cv_oln_doc], [ac_cv_oln_doc=yes])
+  AC_CACHE_CHECK([whether to build the documentation],
+                 [ac_cv_oln_doc], [ac_cv_oln_doc=yes])
 
-AC_CONFIG_FILES([
-  Makefile
-  oln/Makefile
-])
+  if test x$ac_cv_oln_doc != xno; then
+     if test -w $srcdir/doc/
+        cp -f $srcdir/oln-version $srcdir/doc/
+     fi
+     OLN_SUBDIRS="$OLN_SUBDIRS doc"
+     AC_CONFIG_SUBDIRS([doc])
+  fi
+fi
+
+if test -d $srcdir/utilities; then
+  AC_ARG_WITH([utilities], 
+              AC_HELP_STRING([--without-utilities],
+		             [disable building the documentation]),
+              [ac_cv_oln_utils], [ac_cv_oln_utils=yes])
+  AC_CACHE_CHECK([whether to build the utilities],
+                 [ac_cv_oln_utils], [ac_cv_oln_utils=yes])
+
+
+  if test x$ac_cv_oln_utils != xno; then
+     if test -w $srcdir/utilities/
+        cp -f $srcdir/oln-version $srcdir/utilities/
+     fi
+     OLN_SUBDIRS="$OLN_SUBDIRS utilities"
+     AC_CONFIG_SUBDIRS([utilities])
+  fi
+fi
+
+if test -d $srcdir/swilena; then
+  AC_ARG_WITH([swilena], 
+              AC_HELP_STRING([--without-swilena],
+		             [disable building Swilena]),
+              [ac_cv_swilena], [ac_cv_swilena=yes])
+  AC_CACHE_CHECK([whether to build the swilena],
+                 [ac_cv_swilena], [ac_cv_swilena=yes])
+
+
+  if test x$ac_cv_swilena != xno; then
+     if test -w $srcdir/swilena/
+        cp -f $srcdir/oln-version $srcdir/swilena/
+     fi
+     OLN_SUBDIRS="$OLN_SUBDIRS swilena"
+     AC_CONFIG_SUBDIRS([swilena])
+  fi
+fi
+
+AC_SUBST([OLN_SUBDIRS]
+AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

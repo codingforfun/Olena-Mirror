@@ -1,39 +1,44 @@
+2002-12-10  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* ChangeLog: Re-do the layout.
+	* configure.ac: Shuffle again.
+
 2002-12-05  Raphael Poss  <raph@lrde.epita.fr>
 
-	* configure.ac: fix so that now olena-doc can be an independant
+	* configure.ac: Fix, so that now olena-doc can be an independant
 	package.
 	
-	* doc/Makefile.am (EXTRA_DIST): include some generated files in
+	* doc/Makefile.am (EXTRA_DIST): Include some generated files in
 	the distribution. Pass CXXCOMPILE to processing.tpl.
-	* tpl/processing.tpl: use CXXCOMPILE instead of a custom
+	* tpl/processing.tpl: Use CXXCOMPILE instead of a custom
 	compilation command. Now processing.tpl is properly autoconf'ed.
 
-	* Makefile.am (ACLOCAL_FLAGS): add.
-	(CONFIGURE_DEPENDENCIES): depend on ../src/oln.m4.
-	(EXTRA_DIST): add.
+	* Makefile.am (ACLOCAL_FLAGS): Add.
+	(CONFIGURE_DEPENDENCIES): Depend on ../src/oln.m4.
+	(EXTRA_DIST): Add.
 
 	
 2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
 
-	* doc/Makefile.am: cleanup.
+	* doc/Makefile.am: Cleanup.
 
 2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
 
-	* doc/Makefile.am: cleanup search path for processing.tpl.
+	* doc/Makefile.am: Cleanup search path for processing.tpl.
 
 2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
 
-	* configure.ac: parametrize generation of documentation. change to
+	* configure.ac: Parametrize generation of documentation. change to
 	use new configuration system.
-	* Makefile.am (SUBDIRS): change.
-	* tpl/processing.tpl: cleanup. Use OLN_INCLUDEDIR.
-	* doc/Makefile.am: cleanup. Use OLN_INCLUDEDIR. add dependency on oln-dev.ps.
+	* Makefile.am (SUBDIRS): Change.
+	* tpl/processing.tpl: Cleanup. Use OLN_INCLUDEDIR.
+	* doc/Makefile.am: Cleanup. Use OLN_INCLUDEDIR. add dependency on oln-dev.ps.
 	
 2002-11-27  Raphael Poss  <raph@lrde.epita.fr>
 
-	* doc/Makefile.am (info_TEXINFOS): add for oln-dev.texi.
-	(CLEANFILES): add *.tmp, generated when compiling texinfo files.
-	* doc/oln-dev.texi: add. 
+	* doc/Makefile.am (info_TEXINFOS): Add for oln-dev.texi.
+	(CLEANFILES): Add *.tmp, generated when compiling texinfo files.
+	* doc/oln-dev.texi: Add. 
 
 2002-11-15  Akim Demaille  <akim@epita.fr>
 

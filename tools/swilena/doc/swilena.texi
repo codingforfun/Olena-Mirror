@@ -1,0 +1,1182 @@
+ \input texinfo @c -*- texinfo -*-
+@c %**start of header
+@setfilename swilena.info
+@settitle Swilena
+
+@documentlanguage en
+@documentencoding ISO-8859-1
+@c @smallbook
+@finalout
+@afourlatex
+@c @setchapternewpage odd
+@copying
+
+This document is intended to describe the Simplified Wrappers for
+Interfacing Olena (Swilena) both in terms of usage and provided
+functionality.
+
+Copyright @copyright{} 2002 @strong{L.R.D.E.}
+
+@end copying
+
+@titlepage
+@title Swilena
+@subtitle Edition @today
+@author Rapha@"el Poss
+@end titlepage
+
+@iftex
+@setcontentsaftertitlepage
+@end iftex
+@ifnottex
+@node Top
+@top Swilena
+@end ifnottex
+This documents is intended to describe Swilena, a simplified set of
+wrappers around the image processing library Olena.
+
+@menu
+* Introduction::
+* Of SWIG and Swilena principles::
+* Python Usage::
+* API Reference::
+* Index and Table of contents::
+@end menu
+
+@node Introduction
+@chapter Introduction
+
+Swilena aims at providing interpreted languages access to the Olena
+image software processing library. In order to reach this goal,
+it relies on SWIG to create interfaces to Olena in different languages.
+
+Swilena is made of three software components:
+
+@itemize @bullet
+@item
+SWIG definition files describing Olena,
+@item
+SWIG definition files describing Swilena components,
+@item
+a source tree able to generate extensions for Python, and hopefully Perl and other languages.
+@end itemize
+
+When compiled for a target interpreted language, the following
+@emph{modules} are created:
+
+@table @strong
+@item swilena
+Contains definitions for pixel types.
+@item swilena1d, swilena2d, swilena3d
+Contain definitions for structural element, neighborhood and image types.
+@item swilena1d_convert, swilena2d_convert, swilena3d_convert
+Contain conversion functions between image types.
+@item swilena1d_morpho, swilena2d_morpho, swilena3d_morpho
+Contain morphological operators over images.
+@item ...
+@end table
+
+The primary target language for Swilena is Python, because Python is
+the best supported back-end for SWIG. However, the SWIG definition files
+of Swilena are not bound to a particular interpreted language: any
+SWIG target language @emph{providing enough expressivity} can be used.
+Indeed, here are the required features from the interpreted language:
+
+@itemize @bullet
+@item
+It must support overloading. O'Caml is therefore excluded.
+@item
+It should support objects. Else all method calls must be transformed
+into function calls, and object destruction must be made explicit.
+@item
+It must support dynamically loaded modules with dependencies between
+them.
+@end itemize
+
+Typically ``ideal'' target languages are Python, Perl5, Tcl, Scheme.
+
+Currently, the source tree only knows about Python, but this should
+be fixed soon.
+
+@unnumberedsubsec Using Swilena for Olena development
+
+Obviously, Swilena provides the developer with a programming framework
+around Olena that has much shorter development cycles: new algorithms
+can be tested in python without waiting for the compilation of test
+C++ sources.
+
+Moreover, because compiling Swilena actually means instanciating Olena
+templates for a nearly complete cartesian product of types, the success
+of the Swilena build process proves Olena's completeness.
+
+@node Of SWIG and Swilena principles
+@chapter Of SWIG and Swilena principles
+
+As already suggested, Swilena and SWIG are closely related. In fact,
+SWIG is a wrapper generator, and Swilena is a set of input files for SWIG,
+bundled in a package providing appropriate @file{Makefile}'s to ease
+their handling.
+
+This sections provides some information about SWIG itself and presents
+the general guidelines that guided Swilena's development.
+
+@menu 
+* Introduction to SWIG::
+* SWIG and C++::
+* Olena and SWIG::
+@end menu
+
+@node Introduction to SWIG
+@section Introduction to SWIG
+
+@emph{The following information is partly taken from the SWIG manual.}
+
+The best way to illustrate SWIG is with a simple example. Consider the
+following C code:
+
+@example
+@cartouche
+/* File : example.c */
+
+double  My_variable  = 3.0;
+
+/* Compute factorial of n */
+int  fact(int n) @{
+        if (n <= 1) return 1;
+        else return n*fact(n-1);
+@}
+
+/* Compute n mod m */
+int my_mod(int n, int m) @{
+        return(n % m);
+@} 
+@end cartouche
+@end example
+
+Suppose that you wanted to access these functions and the global
+variable My_variable from Python. You start by making a SWIG interface file
+as shown below (by convention, these files carry a .i suffix) :
+
+@subsection SWIG interface file
+
+@example 
+@cartouche
+/* File : example.i */
+%module example
+%@{
+/* Put headers and other declarations here */
+%@}
+
+extern double My_variable;
+extern int    fact(int);
+extern int    my_mod(int n, int m);
+@end cartouche
+@end example
+
+The interface file contains ANSI C function prototypes and variable
+declarations. The @code{%module} directive defines the name of the module that
+will be created by SWIG. The @code{%@{,%@}} block provides a location for
+inserting additional code such as C header files or additional C
+declarations.
+
+@subsection The @command{swig} command
+
+SWIG is invoked using the @command{swig} command. We can use this to
+build a Python module (under Linux) as follows :
+
+@example
+unix > @kbd{swig -python example.i}
+unix > @kbd{gcc -c -fPIC example.c example_wrap.c -I/usr/include/python2.2}
+unix > @kbd{gcc -shared example.o example_wrap.o -o _example.so}
+unix > @kbd{python}
+Python 2.2.2 (#4, Oct 15 2002, 04:21:28)
+[GCC 2.95.4 20011002 (Debian prerelease)] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> @kbd{from example import *}
+>>> fact(4)
+24
+>>> @kbd{my_mod(23,7)}
+2
+>>> @kbd{My_variable + 4.5}
+7.5
+>>>
+@end example
+
+The @command{swig} command produced two new files called
+@file{example.py} and @file{example_wrap.c}. The file
+@file{example_wrap.c} should be compiled along with the @file{example.c}
+file. Most operating systems and scripting languages now support dynamic
+loading of modules. In our example, our Python module has been compiled
+into a shared library that can be loaded into Python. When loaded,
+Python can now access the functions and variables declared in the SWIG
+interface. A look at the file @file{example_wrap.c} reveals a hideous
+mess. However, you almost never need to worry about it.
+
+@node SWIG and C++
+@section SWIG and C++
+
+Hopefully for our purpose, SWIG knows about many C++ language features. The following
+sections present SWIG features and their application with Olena.
+
+@menu 
+* A first example::
+* Operators and class extensions::
+* SWIG and C++ templates::
+* SWIG & C++ gotchas::
+@end menu
+
+@node A first example
+@subsection A first example
+
+For instance, it knows about classes: a SWIG description of a 
+class yields the availability of this class in the target interpreted language.
+Here is an example:
+
+@example
+@cartouche
+/* oln_window.i */
+%module oln_window
+%@{
+#include "oln/basics2d.hh"
+%@}
+
+namespace oln
+@{
+  class window2d
+    @{
+        window2d();
+
+        unsigned card() const;
+        int delta() const;
+
+        window2d& add(int, int) ;
+    @};
+
+  const window2d& win_c4p();  
+@}
+@end cartouche
+@end example
+
+This SWIG definition file can be used with Python@footnote{for a Python primer, @xref{Python Usage}} as follows:
+
+@example
+unix > @kbd{swig -c++ -python oln_window.i}
+unix > @kbd{g++ -c -fPIC oln_window_wrap.cxx -I/usr/include/python2.2 -Ipath_to_olena}
+unix > @kbd{g++ -shared oln_window_wrap.o -o _oln_window.so}
+unix > @kbd{python}
+Python 2.2.2 (#4, Oct 15 2002, 04:21:28)
+[GCC 2.95.4 20011002 (Debian prerelease)] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> @kbd{from oln_window import *}
+>>> @kbd{w = window2d()}
+>>> @kbd{w.card()}
+0
+>>> @kbd{w.add(1,1).add(-1,-1)}
+<C window2d instance at _60bd2a08_p_oln__window2d>
+>>> @kbd{w.delta()}
+1
+>>> @kbd{w.card()}
+2
+>>> @kbd{w2 = win_c4p()}
+>>> @kbd{w2.card()}
+5
+@end example
+
+This example exhibits several key points:
+
+@itemize @minus
+@item
+SWIG knows about class constructors and references and treats them trivially.
+@item
+The SWIG description need not follow exactly the strict C++ definition. In the previous example,
+the Olena class @code{window2d} is far more complex than what is expressed in the SWIG declaration;
+however, for a SWIG description to be valid, it only needs to describe a class more @emph{general}
+than the real one.
+@item
+Although it is possible to do so, the SWIG description need not express class inheritance.
+@end itemize
+
+@node Operators and class extensions
+@subsection Operators and class extensions
+
+When the target interpreted language allows overloading arithmetical operators for classes, SWIG
+can propagate this C++ feature. However, if it does not, it is needed to provide an artificial
+ method-like interface to the class operators.
+
+Here is a demonstration: 
+
+@example
+@cartouche
+/* oln_window.i */
+%module oln_window
+%@{
+#include "oln/basics2d.hh"
+#include <sstream>
+%@}
+
+%include std_string.i // for SWIG to know about std::string
+
+namespace oln
+@{
+  class window2d
+    @{
+        window2d();
+        window2d operator-() const;
+
+        // the negation cannot be overload in all interpreted 
+        // languages. Therefore, we create on-the-fly a new
+        // method in class window2d to call operator- : 
+        %extend @{
+           window2d neg() const
+           @{ return -(*self); @}
+        @};
+
+        // Similarly, interpreted languages cannot cope
+        // with C++ iostreams. Therefore, here is a workaround: 
+        %extend @{
+           std::string describe() const
+           @{
+               std::ostringstream s;
+               s << *self;
+               return s.str();
+           @}
+        @};
+    @};
+@}
+@end cartouche
+@end example
+
+The module generated by SWIG can then be used as follows:
+
+@example
+unix > @kbd{python}
+>>> @kbd{from oln_window import *}
+>>> @kbd{w = window2d()}
+>>> @kbd{w.add(1,1).add(0,1).describe()}
+'[(1,1)(0,1)]'
+>>> @kbd{w2 = -w1}
+>>> @kbd{w2.describe()}
+'[(-1,-1)(0,-1)]'
+>>> @kbd{w2.neg().describe()}
+'[(1,1)(0,1)]' 
+>>>
+@end example
+
+Here are the key points exhibited by this example:
+
+@itemize @minus
+@item
+When the interpreted language allows so, SWIG understands C++ operator overloading and treats it trivially.
+@item
+The @code{%extend} SWIG sections allows adding pseudo-methods to interfaced classes. It can be used to provide
+function names to C++ operators for interpreted languages that do no not cope with operator overloading (e.g. Perl).
+@item
+When the description file includes @file{std_string.i}, SWIG knows about the C++ standard type @code{std::string},
+and knows how to convert it to and from the interpreted language's native string type.
+@end itemize
+
+@node SWIG and C++ templates
+@subsection SWIG and C++ templates
+
+In addition to function, variables, structures and classes, SWIG knows about templates. However, because scripting languages
+do not support templates and template instanciation, information must be provided to SWIG to explain
+what template instances must be available to the scripting language.
+
+Here is a demonstration: 
+
+@example
+@cartouche
+/* oln_window.i */
+%module oln_window
+%@{
+#include "oln/basics2d.hh"
+#include <sstream>
+%@}
+
+%include std_string.i // for SWIG to know about std::string
+
+namespace oln
+@{
+  template <typename T>        
+  class w_window2d
+    @{
+        w_window2d();
+
+        window2d& add(int, int, T) ;
+
+        unsigned card() const;
+        T w(unsigned) const;
+
+        %extend @{
+           std::string describe() const
+           @{
+               std::ostringstream s;
+               s << *self;
+               return s.str();
+           @}
+        @};
+    @};
+@}
+
+%template(w_win2d_int) oln::w_window2d<int>;
+%template(w_win2d_float) oln::w_window2d<float>;
+
+@end cartouche
+@end example
+
+This module allows e.g. the following Python session:
+
+@example
+unix > @kbd{python}
+>>> @kbd{from oln_window import *}
+>>> @kbd{w = w_win2d_int()}
+>>> @kbd{w.add(1,1,10).add(0,1,3).describe()}
+'[((1,1),10)((0,1),3)]'
+>>> @kbd{w2 = w_win2d_float()}
+>>> @kbd{w2.add(1,1,10.4).add(0,1,3.14).describe()}
+'[((1,1),10.5)((0,1),3.14)]'
+>>> @kbd{w2.w(1)}
+3.1400001049041748
+>>>
+@end example
+
+Here are the key points exhibited by this example:
+
+@itemize @minus
+@item
+SWIG can only wrap template @emph{instances}. The instanciation must be made explicit.
+@item
+However, when instanciating a template class, all its methods are instanciated at the same time.
+@item
+Template instances must be given a unique identifier
+(e.g. @code{w_win2d_int}), because C++ template instance names
+(e.g. @code{oln::w_window2d<int>}) are not valid scripting type
+identifiers.
+@end itemize
+
+@node SWIG & C++ gotchas
+@subsection SWIG & C++ gotchas 
+
+When using SWIG and C++ sources, the following notes need be taken into consideration.
+
+@itemize @minus
+@item
+SWIG collates all C++ namespaces in the global module namespace. Therefore, beware
+of wrapped function or class names that appear simultaneously in several namespaces with
+different definitions: they are not handled properly by SWIG.
+
+@item
+The C++ parser in SWIG cannot deal with C++ template partial specialization. Therefore,
+C++ tricks such as static hierarchies and virtual types cannot be exposed to SWIG. Consider
+hiding the static inheritance tree and exposing the most derived classes instead.
+
+@item
+Families of similar template functions cannot be instanciated with a single SWIG directive.
+Use SWIG macros and appropriate naming conventions for this purpose:
+
+@example
+@cartouche
+template<typename T>
+void foo(T x);
+
+template<typename T>
+void bar(T x);
+
+%define Instanciate_Templates_For(Type)
+%template (foo_ ## Type) foo<Type >;
+%template (bar_ ## Type) bar<Type >;
+%enddef
+
+Instanciate_Templates_For(int); 
+        // yields foo_int and bar_int
+
+Instanciate_Templates_For(float); 
+        // yields foo_float and bar_float  
+
+@end cartouche
+@end example
+
+@end itemize
+
+@node Olena and SWIG
+@section Olena and SWIG
+
+@node Python Usage
+@chapter Python Usage
+
+@section Starting Python
+
+Start your python interpreter in the usual way:
+
+@example
+~/src/swilena/python % @kbd{python}
+Python 2.2.2 (#4, Oct 15 2002, 04:21:28)
+[GCC 2.95.4 20011002 (Debian prerelease)] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>>
+@end example
+
+The @code{>>>} text is the Python standard prompt, where
+you can enter python statements.
+
+You can also write Python programs as scripts, using the following 
+script template:
+
+@example
+#! /usr/bin/python 
+
+... your program here ...
+@end example
+
+
+@section Python Basics
+
+Python does not have mandatory statement terminators. Statements end at the end
+of the line. However, you can use the semicolon (@samp{;}) as
+a command separator.
+
+@example
+>>> @kbd{print "hello"}
+hello
+>>> @kbd{print "hello"; print "world"}
+hello
+world
+@end example
+
+
+Python data types are the integer (signed), the float (C @samp{double}), and the character string. 
+Constants can be expressed intuitively:
+
+@example
+>>> @kbd{print "hello"; print 123}
+hello
+123
+>>> @kbd{1./3}
+0.33333333333333331
+>>>
+@end example
+
+Assigning variables is also simple:
+
+@example
+>>> @kbd{i=123}
+>>> @kbd{print i}
+123
+>>> @kbd{i+=42}
+>>> @kbd{i}
+165
+>>>
+@end example
+
+There are several forms of loops. The most intuitive are:
+
+@example
+>>> @kbd{k=0}
+>>> @kbd{for i in range(0, 10, 1):}
+...   @kbd{k=k+i}
+...
+>>> @kbd{print k}
+45
+>>> @kbd{k=0;i=0}
+>>> @kbd{while i < 100:}
+...   @kbd{k=k+i}
+...   @kbd{i+=1}
+...
+>>> @kbd{print k}
+45
+>>>
+@end example
+
+@subsection Python Modules
+
+Python is module- and object- oriented. It has a unique scope
+operator (the period, @samp{.}) to access module components and
+object methods and attributes.
+
+Modules must be loaded before their functions can be used:
+
+@example
+>>> @kbd{os.getcwd()} # FAILS
+Traceback (most recent call last):
+  File "<stdin>", line 1, in ?
+NameError: name 'os' is not defined
+
+>>> @kbd{import os} # load the "os" module
+>>> @kbd{os.getcwd()} # OK, access getcwd() in module "os"
+'/home/lrde/stud/raph/src/swilena/python'
+>>>
+@end example
+
+You can import all fields of a module in the global scope,
+to avoid prefixing function calls:
+
+@example
+>>> @kbd{from os import *}
+>>> @kbd{getcwd()} # "os." is not needed anymore
+'/home/lrde/stud/raph/src/swilena/python'
+>>>
+@end example
+
+@subsection Python Objects
+
+By convention, standard Python Classes have names that start with
+a capital. This helps disambiguise class names and module names:
+
+@example
+>>> @kbd{import random}
+>>> @kbd{r=random.Random()} # call constructor for class Random in module random
+@end example
+
+As shown in the previous example, constructors have the name
+of the class, as in C++. Method calls are also very intuitive:
+
+@example
+>>> @kbd{r.randint(10, 20)} # call method "randint" over object r just constructed
+17
+>>> @kbd{r.randint(10, 20)}
+12
+@end example
+
+
+@section Using Swilena
+
+
+@subsection Fooling around
+
+First, start Python and load the Swilena modules for 2D:
+
+@example
+>>> @kbd{from swilena import *}
+>>> @kbd{from swilena2d import *}
+@end example
+
+If everything succeeds, you can start creating images
+and saving them. Here is how to create a random
+images using the standard Python class @samp{Random} and
+Olena:
+
+@example
+>>> @kbd{import random;r=random.Random()}
+>>> @kbd{i=image2d_u8(10, 10)}
+>>> @kbd{for x in range(0, i.ncols(), 1):}
+...  @kbd{for y in range(0, i.nrows(), 1):}
+...   @kbd{i.at(x, y).value(r.randint(0,255))}
+...
+>>>
+@end example
+
+The previous code creates an empty 2D image using 8-bit
+unsigned integers to store pixel values, with a size of 10x10 pixels. It then
+initalizes all pixels in the image using loops.
+
+It is then possible to store this image in a file:
+
+@example
+>>> @kbd{i.save("foo.pgm")}
+1
+>>>
+@end example
+
+The @samp{save} method takes a file name and attemps saving the image with
+the format specified as extension. Intuitively, there is also a @samp{load}
+method:
+
+@example
+>>> @kbd{i.load("lena.pgm")}
+1
+>>> @kbd{i.at(3,3).value()}
+162
+>>>
+@end example
+
+Both @samp{load} and @samp{save} return a boolean set to 1 if the operation
+succeeded, 0 else.
+
+
+As demonstrated in the previous example, Swilena images have methods. However,
+there are not many:
+
+@table @samp
+@item load
+load an image from a file.
+@item save
+save the image to a file.
+@item at
+return a reference to the indicated pixel.
+@item ncols
+return the number of columns in the image. This method is valid for 1D, 2D and 3D images.
+@item nrows
+return the number of rows in the image. This method is only valid for 2D and 3D images.
+@item nslices
+return the number of slices of a 3D image.
+@end table
+
+Also it hasn't been demonstrated yet, the @samp{at} method is polymorphic,
+and accepts a @samp{point} instead of coordinates as a pixel location:
+
+@example
+>>> @kbd{i.at(point2d(3, 3)).value()}
+162
+>>>
+@end example
+
+Algorithms are grouped in corresponding modules. For example,
+morphological operators are grouped in the @samp{*morpho} modules:
+
+@example
+>>> @kbd{import swilena2d_morpho}
+>>> @kbd{i2=swilena2d_morpho.erosion(i, win_c4p())}
+>>> @kbd{i3=swilena2d_morpho.dilation(i, win_c4p())}
+@end example
+
+Here is a convolution:
+
+@example
+>>> @kbd{import swilena2d_convol}
+>>> @kbd{ww=w_win2d_int()}
+>>> @kbd{ww.add(-1,0,2).add(0,1,-2)}
+>>> @kbd{i4=swilena2d_convol.convolve(i, ww)}
+@end example
+
+These function are polymorphic and should work for nearly all
+image types. Refer to the following chapter (@pxref{API Reference})
+for a description of what are valid calls.
+
+@node API Reference
+@chapter API Reference
+
+@menu
+* Pixel Types::
+* Point Types::
+* Image Types::
+* Structural Element Types::
+* Neighborhood Types::
+* Conversion Functions::
+* Morpho Functions::
+@end menu
+
+@node Pixel Types
+@section Pixel Types
+
+@multitable @columnfractions .25 .25 .5
+@item @strong{Swilena Type} @tab @strong{C++ Type} @tab @strong{Description}
+@item @tab @tab
+@item int_u8 @tab oln::int_u8 @tab 8-bit unsigned integer
+@item int_u16 @tab oln::int_u16 @tab 16-bit unsigned integer
+@item int_u32 @tab oln::int_u32 @tab 32-bit unsigned integer
+@item int_s8 @tab oln::int_s8 @tab 8-bit signed integer
+@item int_s16 @tab oln::int_s16 @tab 16-bit signed integer
+@item int_s32 @tab oln::int_s32 @tab 32-bit signed integer
+@item int_u8s @tab oln::int_u8s @tab 8-bit saturated unsigned integer
+@item int_u16s @tab oln::int_u16s @tab 16-bit saturated unsigned integer
+@item int_u32s @tab oln::int_u32s @tab 32-bit saturated unsigned integer
+@item int_s8s @tab oln::int_s8s @tab 8-bit saturated signed integer
+@item int_s16s @tab oln::int_s16s @tab 16-bit saturated signed integer
+@item int_s32s @tab oln::int_s32s @tab 32-bit saturated signed integer
+@item bin @tab oln::bin @tab 1-bit value
+@item sfloat @tab oln::sfloat @tab single precision float
+@item dfloat @tab oln::dfloat @tab double precision float
+@item rgb_8 @tab oln::rgb_8 @tab 3-uple of 8-bit values
+@item rgb_16 @tab oln::rgb_16 @tab 3-uple of 16-bit values
+@item rgb_32 @tab oln::rgb_16 @tab 3-uple of 32-bit values
+@end multitable
+
+All pixel types are represented by classes in Swilena.
+
+All pixel types share the following interface:
+
+@table @code
+@item (default constructor)
+Create a default pixel value, typically 0 (or 0,0,0 for rgb).
+@item (constructor from value)
+Create a pixel with the specified value.
+@item operator==(pixel), equals(pixel)
+Compare the pixel with another.
+@end table
+
+In addition, scalar (integer, floating) pixel types share
+the following interface:
+
+@table @code
+@item value()
+Get the scalar value of the pixel.
+@item value(integer or float)
+Set the value of the pixel.
+@end table
+
+Color (RGB) pixel types share the following interface:
+
+@table @code
+@item r()
+return the red component of the pixel value as an integer.
+@item g()
+same, for green.
+@item b()
+same, for blue.
+@item r(integer value)
+set the red component of the pixel value from an integer.
+@item g(integer value)
+same, for green.
+@item b(integer value)
+same, for blue
+@item color(component)
+return the value of the specified color component (0,1,2) as an integer.
+@item color(component, integer vale)
+set the value of the specified color component (0,1,2) from an integer.
+@end table
+
+The module name for these types is @strong{swilena}.
+
+@node Point Types
+@section Point Types
+
+Here are the @samp{point} and @samp{dpoint} types:
+
+@multitable @columnfractions .5 .5
+@item @strong{Swilena Type} @tab @strong{C++ Type}
+@item point1d @tab oln::point1d
+@item point2d @tab oln::point2d
+@item point3d @tab oln::point3d
+@item dpoint1d @tab oln::dpoint1d
+@item dpoint2d @tab oln::dpoint2d
+@item dpoint3d @tab oln::dpoint3d
+@end multitable
+
+These classes share the following interface:
+
+@table @code
+@item (default constructor)
+Create a point designating the origin of an image.
+@item (constructor with coordinates)
+Create a point designating the specified location.
+@item col(), row(), slice()
+Access the coordinates of the point.
+@item col(unsigned), row(unsigned), slice(unsigned)
+Set the coordinates of the point.
+@end table
+
+``dpoints'' represent distances between points, hence can be
+added to ``points''. 
+
+The module names for these types are @strong{swilena1d}, 
+@strong{swilena2d} and @strong{swilena3d}.
+
+@node Image Types
+@section Image Types
+
+Here are the image types corresponding to pixel data types:
+
+@multitable @columnfractions .3 .4 .3
+@item @strong{Swilena Type} @tab @strong{C++ Type} @tab @strong{Status}
+@item @tab @tab
+@item image1d_bin @tab oln::image1d<oln::bin> @tab ready
+@item image1d_u8 @tab oln::image1d<oln::int_u8> @tab ready
+@item image1d_u16 @tab oln::image1d<oln::int_u16> @tab ready
+@item image1d_u32 @tab oln::image1d<oln::int_u32> @tab ready
+@item image1d_s8 @tab oln::image1d<oln::int_s8> @tab ready
+@item image1d_s16 @tab oln::image1d<oln::int_s16> @tab ready
+@item image1d_s32 @tab oln::image1d<oln::int_s32> @tab ready
+@item image1d_u8s @tab oln::image1d<oln::int_u8s> @tab ready
+@item image1d_u16s @tab oln::image1d<oln::int_u16s> @tab ready
+@item image1d_u32s @tab oln::image1d<oln::int_u32s> @tab ready
+@item image1d_s8s @tab oln::image1d<oln::int_s8s> @tab ready
+@item image1d_s16s @tab oln::image1d<oln::int_s16s> @tab ready
+@item image1d_s32s @tab oln::image1d<oln::int_s32s> @tab ready
+@item image1d_sfloat @tab oln::image1d<oln::sfloat> @tab ready
+@item image1d_dfloat @tab oln::image1d<oln::dfloat> @tab ready
+@item image1d_rgb_8 @tab oln::image1d<oln::rgb_8> @tab ready
+@item image1d_rgb_16 @tab oln::image1d<oln::rgb_16> @tab ready
+@item image1d_rgb_32 @tab oln::image1d<oln::rgb_32> @tab ready
+@item @tab @tab
+@item image2d_bin @tab oln::image2d<oln::bin> @tab ready
+@item image2d_u8 @tab oln::image2d<oln::int_u8> @tab ready
+@item image2d_u16 @tab oln::image2d<oln::int_u16> @tab ready
+@item image2d_u32 @tab oln::image2d<oln::int_u32> @tab ready
+@item image2d_s8 @tab oln::image2d<oln::int_s8> @tab ready
+@item image2d_s16 @tab oln::image2d<oln::int_s16> @tab ready
+@item image2d_s32 @tab oln::image2d<oln::int_s32> @tab ready
+@item image2d_u8s @tab oln::image2d<oln::int_u8s> @tab ready
+@item image2d_u16s @tab oln::image2d<oln::int_u16s> @tab ready
+@item image2d_u32s @tab oln::image2d<oln::int_u32s> @tab ready
+@item image2d_s8s @tab oln::image2d<oln::int_s8s> @tab ready
+@item image2d_s16s @tab oln::image2d<oln::int_s16s> @tab ready
+@item image2d_s32s @tab oln::image2d<oln::int_s32s> @tab ready
+@item image2d_sfloat @tab oln::image2d<oln::sfloat> @tab ready
+@item image2d_dfloat @tab oln::image2d<oln::dfloat> @tab ready
+@item image2d_rgb_8 @tab oln::image2d<oln::rgb_8> @tab ready
+@item image2d_rgb_16 @tab oln::image2d<oln::rgb_16> @tab ready
+@item image2d_rgb_32 @tab oln::image2d<oln::rgb_32> @tab ready
+@item @tab @tab
+@item image3d_bin @tab oln::image3d<oln::bin> @tab ready
+@item image3d_u8 @tab oln::image3d<oln::int_u8> @tab ready
+@item image3d_u16 @tab oln::image3d<oln::int_u16> @tab ready
+@item image3d_u32 @tab oln::image3d<oln::int_u32> @tab ready
+@item image3d_s8 @tab oln::image3d<oln::int_s8> @tab ready
+@item image3d_s16 @tab oln::image3d<oln::int_s16> @tab ready
+@item image3d_s32 @tab oln::image3d<oln::int_s32> @tab ready
+@item image3d_u8s @tab oln::image3d<oln::int_u8s> @tab ready
+@item image3d_u16s @tab oln::image3d<oln::int_u16s> @tab ready
+@item image3d_u32s @tab oln::image3d<oln::int_u32s> @tab ready
+@item image3d_s8s @tab oln::image3d<oln::int_s8s> @tab ready
+@item image3d_s16s @tab oln::image3d<oln::int_s16s> @tab ready
+@item image3d_s32s @tab oln::image3d<oln::int_s32s> @tab ready
+@item image3d_sfloat @tab oln::image3d<oln::sfloat> @tab ready
+@item image3d_dfloat @tab oln::image3d<oln::dfloat> @tab ready
+@item image3d_rgb_8 @tab oln::image3d<oln::rgb_8> @tab not ready
+@item image3d_rgb_16 @tab oln::image3d<oln::rgb_16> @tab not ready
+@item image3d_rgb_32 @tab oln::image3d<oln::rgb_32> @tab not ready
+@end multitable
+
+All image types are classes in Swilena.
+
+All images types share the following interface:
+
+@table @code
+@item (default constructor)
+Create an empty image. After calling this constructor, the image
+does not yet ``exist'' and must be (for example) @samp{load}ed or
+@samp{convert}ed to.
+@item (constructor with dimensions and border)
+Create a blank image with the specified dimensions, and a hidden zone aiming
+to serve as a ``border'' for algorithms.
+@item (constructor with dimensions)
+Create a blank image, using a default border width of 2.
+@item at(point)
+Access the pixel at @samp{point}, which can be of type @samp{point1d}, @samp{point2d} or 
+@samp{point3d}.
+@item at(dimensions)
+Access the pixel at point specified by one, two, or three coordinantes.
+@item ncols(), nrows(), nslices()
+Retrieve the dimensions of the image.
+@item load(filename), save(filename)
+Input/output to files.
+@end table
+
+The module names for these types are @strong{swilena1d}, 
+@strong{swilena2d} and @strong{swilena3d}.
+
+@node Structural Element Types
+@section Structural Element types
+
+Here are the structural elements:
+
+@multitable @columnfractions .5 .5
+@item @strong{Swilena Type} @tab @strong{C++ Type}
+@item window1d @tab oln::window1d
+@item window2d @tab oln::window2d
+@item window3d @tab oln::window3d
+@item w_win1d_int @tab oln::w_window1d<int>
+@item w_win2d_int @tab oln::w_window2d<int>
+@item w_win3d_int @tab oln::w_window3d<int>
+@item w_win1d_float @tab oln::w_window1d<float>
+@item w_win2d_float @tab oln::w_window2d<float>
+@item w_win3d_float @tab oln::w_window3d<float>
+@end multitable
+
+All these types family share the following interface:
+
+@table @code
+@item (default constructor)
+Create an empty window.
+@item (constructor from size)
+Create an empty window with the specified size.
+@item delta()
+Return the magnitude of the window.
+@item unary operator-(), neg()
+Return the symmetric window.
+@item card()
+Return the number of points defined in the window.
+@item dp(i)
+Return the i'nth ``dpoint'' in the window.
+@item has(dpoint)
+Return true if the window contains the specified dpoint. 
+@item describe()
+Return a string describing the structure of the window.
+@end table
+
+In addition, members of the ``window'' family share
+the following interface:
+
+@table @code
+@item add(dpoint), add(coordinates)
+Add the specified relative point to the window.
+@item inter(other window)
+Return the intersection of this window and another.
+@item uni(other window)
+Return the union of this window and another.
+@end table
+
+Also, members of the ``w_win'' (weighted windows) family
+share the following interface:
+
+@table @code
+@item add(dpoint, value), add(coordinates, value)
+Add the specified relative point to the window with weight.
+@item of_win(value, window)
+Create a weighted window from a non-weighted window.
+@item w(i)
+Return the weight of the i'nth ``dpoint'' in the window.
+@end table
+
+Here are the corresponding instantiation functions, which
+have the same name as their C++ counterpart:
+
+@multitable @columnfractions .5 .5
+@item @strong{Swilena Name} @tab @strong{Return Type}
+@item @tab
+@item win_c2_only() @tab window1d
+@item win_c2p() @tab window1d
+@item mk_win_segment(width) @tab window1d
+@item @tab
+@item win_c4_only() @tab window2d
+@item win_c4p() @tab window2d
+@item win_c8_only() @tab window2d
+@item win_c8p() @tab window2d
+@item mk_win_rectangle(nrows,ncols) @tab window2d
+@item mk_win_ellipse(yradius,xradius) @tab window2d
+@item mk_win_square(width) @tab window2d
+@item mk_win_disc(radius) @tab window2d
+@item @tab
+@item win_c6_only() @tab window3d
+@item win_c6p() @tab window3d
+@item win_c18_only() @tab window3d
+@item win_c18p() @tab window3d
+@item win_c26_only() @tab window3d
+@item win_c26p() @tab window3d
+@item mk_win_block(nslices,nrows,ncols) @tab window3d
+@item mk_win_ellipsoid(zradius,yradius,xradius) @tab window3d
+@item mk_win_cube(width) @tab window3d
+@item mk_win_ball(radius) @tab window3d
+@end multitable
+
+See the documentation of Olena for a description of these
+functions.
+
+The module names for these types and functions are @strong{swilena1d}, 
+@strong{swilena2d} and @strong{swilena3d}.
+
+@node Neighborhood Types
+@section Neighborhood Types
+
+Here are the neighborhoods:
+
+@multitable @columnfractions .5 .5
+@item @strong{Swilena Type} @tab @strong{C++ Type}
+@item neighborhood1d @tab oln::neighborhood1d
+@item neighborhood2d @tab oln::neighborhood2d
+@item neighborhood3d @tab oln::neighborhood3d
+@end multitable
+
+Neighborhoods behave like windows in regards to their interface. 
+
+Here are the corresponding instantiation functions, which
+have the same name as their C++ counterpart:
+
+@multitable @columnfractions .5 .5
+@item @strong{Swilena Name} @tab @strong{Return Type}
+@item @tab
+@item neighb_c2() @tab neighborhood1d
+@item mk_neighb_segment(width) @tab neighborhood1d
+@item mk_win_from_neighb(neigh1d) @tab window1d
+@item @tab
+@item neighb_c4() @tab neighborhood2d
+@item mk_neighb_square(width) @tab neighborhood2d
+@item mk_neighb_rectangle(nrows,ncols) @tab neighborhood2d
+@item mk_win_grom_neighb(neigh2d) @tab window2d
+@item @tab
+@item neighb_c6() @tab neighborhood3d
+@item neighb_c18() @tab neighborhood3d
+@item neighb_c26() @tab neighborhood3d
+@item mk_neighb_block(nslices,nrows,ncols) @tab neighborhood3d
+@item mk_neighb_cube(size) @tab neighborhood3d
+@item mk_win_from_neighb(neigh3d) @tab window3d
+@end multitable
+
+The module names for these types and functions are @strong{swilena1d}, 
+@strong{swilena2d} and @strong{swilena3d}.
+
+@node Conversion Functions
+@section Conversion Functions
+
+All image conversions share the same function name @code{convert}.
+This function takes the destination image as first argument,
+and the source image as second argument.
+
+All conversions between images of scalar values are available.
+
+RGB images cannot be converted to and from (yet).
+
+The module names for these functions are @strong{swilena1d_convert}, 
+@strong{swilena2d_convert} and @strong{swilena3d_convert}.
+
+@node Morpho Functions
+@section Morpho Functions
+
+The following morpho functions are available, from their counterpart
+in the C++ namespace @code{oln::morpho}:
+
+@multitable @columnfractions .9
+@item @strong{Swilena}
+@item @strong{}
+@item fast_opening(img, win)
+@item fast_closing(img, win)
+@item fast_dilation(img, win)
+@item fast_erosion(img, win)
+@item fast_beucher_gradient(img, win)
+@item fast_internal_gradient(img, win)
+@item fast_external_gradient(img, win)
+@item fast_white_top_hat(img, win)
+@item fast_black_top_hat(img, win)
+@item fast_self_complementary_top_hat(img, win)
+@item fast_thinning(img, win)
+@item fast_thickening(img, win)
+@item @strong{}
+@item opening(img, win)
+@item closing(img, win)
+@item dilation(img, win)
+@item erosion(img, win)
+@item beucher_gradient(img, win)
+@item internal_gradient(img, win)
+@item external_gradient(img, win)
+@item white_top_hat(img, win)
+@item black_top_hat(img, win)
+@item self_complementary_top_hat(img, win)
+@item thinning(img, win, win)
+@item thickening(img, win, win)
+@item @strong{}
+@item simple_geodesic_dilation(img, img, neighb)
+@item simple_geodesic_erosion(img, img, neighb)
+@item geodesic_dilation(img, img, neighb)
+@item geodesic_erosion(img, img, neighb)
+@item @strong{}
+@item sure_geodesic_reconstruction_dilation(img, img, neighb)
+@item sequential_geodesic_reconstruction_dilation(img, img, neighb)
+@item vincent_sequential_geodesic_reconstruction_dilation(img, img, neighb)
+@item hybrid_geodesic_reconstruction_dilation(img, img, neighb)
+@item exist_init_dilation(point img, img, win)
+@item @strong{}
+@item sure_geodesic_reconstruction_erosion(img, img, neighb)
+@item sequential_geodesic_reconstruction_erosion(img, img, neighb)
+@item hybrid_geodesic_reconstruction_erosion(img, img, neighb)
+@item exist_init_erosion(point img, img, win)
+@item @strong{}
+@item watershed_seg(img_int, img, neighb)
+@item watershed_con(img_int, img, neighb)
+@item watershed_seg_or(img, img_int, neighb)
+@end multitable
+
+FIXME: laplacian and hit_or_miss are missing.
+
+The module names for these functions are @strong{swilena1d_morpho}, 
+@strong{swilena2d_morpho} and @strong{swilena3d_morpho}.
+
+@node Index and Table of contents
+@unnumbered Index and Table of contents
+
+@printindex cp
+
+@contents
+
+
+
+@bye

@@ -1,4 +1,4 @@
-SUBDIRS = @DOC_DIR@
+SUBDIRS = @OLN_DOC_SUBDIRS@
 
 EXTRA_DIST = tpl/processing.tpl \
    img/lena256.pgm  \

@@ -1,6 +1,6 @@
 #! /bin/sh
 
-ACLOCAL="aclocal -I `pwd`/src" 
+ACLOCAL="aclocal -I `pwd`/oln" 
 export ACLOCAL
 autoreconf -v -f -i
 echo

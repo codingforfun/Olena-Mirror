@@ -1,0 +1,22 @@
+2002-11-27  Raphael Poss  <raph@sandrock>
+
+	* doc/swilena.texi: add more documentation about SWIG.
+
+2002-11-15  Elrond  <elrond@imladris.lrde.epita.fr>
+
+	* TODO: add.
+
+	* README: add.
+
+	* doc/Makefile.am: add
+	* src/swilena_morphodefs.i: correct watershed interfaces.  
+	* doc/swilena.texi (API Reference): add some more
+	documentation. Add specific module names.
+	* configure.ac: remove java/Makefile from CONFIG_FILES.
+	reference doc/Makefile.am.
+
+2002-11-15  Elrond  <elrond@imladris.lrde.epita.fr>
+
+	* Initial check-in.
+
+
