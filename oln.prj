@@ -1,15 +1,13 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 8 9)
-(Parent-Version oln 8 8)
-(Version-Log "Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-        * config/oln.m4: Change default flags for icc.
+(Project-Version oln cleanup 1)
+(Parent-Version oln 8 9)
+(Version-Log "Initial checkin
 ")
 (New-Version-Log "")
-(Checkin-Time "Sun, 23 Feb 2003 16:13:26 +0100")
-(Checkin-Login burrus_n)
+(Checkin-Time "Thu, 27 Feb 2003 18:23:17 +0100")
+(Checkin-Login raph)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
 ;; diff-ignore doc/doc/ref-morpho.tex$
