@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_BIN_HH
-# define OLENA_VALUE_BIN_HH
+#ifndef NTG_BIN_HH
+# define NTG_BIN_HH
 
 # include <mlc/contract.hh>
 
@@ -36,7 +36,7 @@
 
 // FIXME: optraits_bin.hh is included at the end of the file.
 
-namespace oln
+namespace ntg
 {
 
   //
@@ -110,7 +110,7 @@ namespace oln
     };
 
     inline std::ostream&
-    operator<<(std::ostream& stream, const oln::bin& rhs)
+    operator<<(std::ostream& stream, const bin& rhs)
     {
       stream << (unsigned int) rhs.value();
       return stream;
@@ -118,9 +118,9 @@ namespace oln
 
   } // type_definitions
 
-} // end of namespace oln
+} // end of ntg
 
 // FIXME: find another solution to allow self contained bin.hh
 # include <ntg/optraits_bin.hh>
 
-#endif // ndef OLENA_VALUE_BIN_HH
+#endif // ndef NTG_BIN_HH

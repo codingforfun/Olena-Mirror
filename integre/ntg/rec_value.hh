@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_REC_VALUE_HH_
-# define OLENA_VALUE_REC_VALUE_HH_
+#ifndef NTG_REC_VALUE_HH_
+# define NTG_REC_VALUE_HH_
 
 # include <ntg/type.hh>
 # include <ntg/predecls.hh>
@@ -34,7 +34,7 @@
 # include <ntg/typetraits.hh>
 # include <ntg/optraits.hh>
 
-namespace oln
+namespace ntg
 {
 
   //
@@ -42,7 +42,7 @@ namespace oln
   //
   ////////////////////////////////////////////
 
-  // NOTE: does not inherit from type::any_type because of g++-2.95
+  // NOTE: does not inherit from ntg::any_type because of g++-2.95
   // memory allocation for empty classes
 
   template <class Self>
@@ -120,6 +120,6 @@ namespace oln
   class rec_vector : public rec_value<Self>
   {};
 
-} // namespace oln
+} // namespace ntg
 
-#endif // ndef OLENA_VALUE_REC_VALUE_HH_
+#endif // ndef NTG_REC_VALUE_HH_

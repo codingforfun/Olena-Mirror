@@ -10,6 +10,7 @@
 #include <oln/morpho/watershed.hh>
 
 using namespace oln;
+using namespace ntg;
 
 struct a_2dpred {
   template<class T>

@@ -2,6 +2,7 @@
 #include <oln/morpho/hit_or_miss.hh>
 
 using namespace oln;
+using namespace ntg;
 
 void morpholena_hit_or_miss()
 {

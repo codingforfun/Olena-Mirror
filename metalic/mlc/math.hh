@@ -25,59 +25,58 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_META_MATH_HH
-# define OLENA_META_MATH_HH
+#ifndef METALIC_MATH_HH
+# define METALIC_MATH_HH
 
 # include <mlc/bool.hh>
 
-namespace oln {
+namespace mlc
+{
 
-  namespace meta {
+  namespace internal 
+  {
 
-    namespace internal {
+    // Helper structs for pow2sup below.
 
-      // Helper structs for pow2sup below.
+    template<unsigned N> struct is_pow2 { typedef false_t ret_t; };
+    template<> struct is_pow2<8>  { typedef true_t ret_t; };
+    template<> struct is_pow2<16> { typedef true_t ret_t; };
+    template<> struct is_pow2<32> { typedef true_t ret_t; };
+    template<> struct is_pow2<64> { typedef true_t ret_t; };
 
-      template<unsigned N> struct is_pow2 { typedef false_t ret_t; };
-      template<> struct is_pow2<8>  { typedef true_t ret_t; };
-      template<> struct is_pow2<16> { typedef true_t ret_t; };
-      template<> struct is_pow2<32> { typedef true_t ret_t; };
-      template<> struct is_pow2<64> { typedef true_t ret_t; };
-
-      template<unsigned N, class> struct find_pow2sup;
-      template<unsigned N> struct find_pow2sup<N,true_t> {
-	enum { value = N };
-      };
-      template<unsigned N> struct find_pow2sup<N,false_t> {
-	enum { value = find_pow2sup< N+1,
-	                             typename is_pow2<N+1>::ret_t >::value };
-      };
-
-    } // internal
-
-    // Smaller power of 2 greater than N.
-
-    template<unsigned N>
-    struct pow2sup {
-      enum {
-	value =
-	  internal::find_pow2sup< N,
-	                          typename internal::is_pow2<N>::ret_t >::value
-      };
-    private:
-      typedef typename is_true<N < 32>::ensure_t precondition_t;
+    template<unsigned N, class> struct find_pow2sup;
+    template<unsigned N> struct find_pow2sup<N,true_t> {
+      enum { value = N };
+    };
+    template<unsigned N> struct find_pow2sup<N,false_t> {
+      enum { value = find_pow2sup< N+1,
+	     typename is_pow2<N+1>::ret_t >::value };
     };
 
-    // Various tests on N (actually, we tests only oddness.)
+  } // end of internal
 
-    template<unsigned N>
-    class utest {
-    public:
-      typedef typename is_true<N/2 == (N+1)/2>::ensure_t is_odd_t;
-      static void ensure_odd()   { is_odd_t::is_true(); }
+  // Smaller power of 2 greater than N.
+
+  template<unsigned N>
+  struct pow2sup {
+    enum {
+      value =
+      internal::find_pow2sup< N,
+      typename internal::is_pow2<N>::ret_t >::value
     };
+  private:
+    typedef typename is_true<N < 32>::ensure_t precondition_t;
+  };
 
-  } // meta
-} // oln
+  // Various tests on N (actually, we tests only oddness.)
 
-#endif  // OLENA_META_MATH_HH
+  template<unsigned N>
+  class utest {
+  public:
+    typedef typename is_true<N/2 == (N+1)/2>::ensure_t is_odd_t;
+    static void ensure_odd()   { is_odd_t::is_true(); }
+  };
+
+} // end of mlc
+
+#endif  // METALIC_MATH_HH

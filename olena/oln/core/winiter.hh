@@ -38,28 +38,28 @@ namespace oln {
 
     winiter(const Win& win) : _win(win), _pos(0) {}
 
-    internal::_begin
-    operator=(internal::_begin)
+    mlc::_begin
+    operator=(mlc::_begin)
     {
       _pos = 0;
       return begin;
     }
 
-    internal::_end
-    operator=(internal::_end)
+    mlc::_end
+    operator=(mlc::_end)
     {
       _pos = _win.card();
       return end;
     }
 
     bool
-    operator==(internal::_end) const
+    operator==(mlc::_end) const
     {
       return _pos == _win.card();
     }
 
     bool
-    operator!=(internal::_end) const
+    operator!=(mlc::_end) const
     {
       return _pos != _win.card();
     }

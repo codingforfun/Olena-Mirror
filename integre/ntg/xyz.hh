@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,12 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_XYZ_HH
-# define OLENA_VALUE_XYZ_HH
+#ifndef NTG_XYZ_HH
+# define NTG_XYZ_HH
 
 # include <ntg/color.hh>
 
-namespace oln {
+namespace ntg
+{
 
   enum xyz_comp {
     xyz_X = 0,
@@ -47,6 +48,6 @@ namespace oln {
   typedef color<3,16,xyz_traits> xyz_16;
   typedef color<3,32,xyz_traits> xyz_32;
 
-} // oln
+} // ntg
 
-#endif // OLENA_VALUE_XYZ_HH
+#endif // NTG_XYZ_HH

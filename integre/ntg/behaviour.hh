@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_BEHAVIOUR_HH
-# define OLENA_VALUE_BEHAVIOUR_HH
+#ifndef NTG_BEHAVIOUR_HH
+# define NTG_BEHAVIOUR_HH
 
 # include <mlc/contract.hh>
 # include <mlc/bool.hh>
@@ -44,7 +44,7 @@
 # include <sstream>
 
 //
-//  Behaviours for data_types int_u, int_s, etc ...
+//  Behaviors for data_types int_u, int_s, etc ...
 //
 //  <WARNING>
 //  Don't forget behaviour are checked on assignements and contruction of
@@ -57,7 +57,7 @@
 // be compatible with icc, so the behaviours must stay class, not
 // template <class>
 
-namespace oln
+namespace ntg
 {
 
   // unsafe : no check performed
@@ -279,7 +279,7 @@ namespace oln
       template <class P>
       static storage_type apply (const P& rhs)
       {
-	typedef typename meta::if_<is_a(optraits<P>, optraits_float)::ret,
+	typedef typename mlc::if_<is_a(optraits<P>, optraits_float)::ret,
 	  cycle_fmod,
 	  cycle_mod>::ret_t cycle_op;
 
@@ -314,6 +314,6 @@ namespace oln
 
   }
 
-} // end of namespace oln
+} // end of ntg
 
-#endif // ndef OLENA_VALUE_BEHAVIOUR_HH
+#endif // ndef NTG_BEHAVIOUR_HH

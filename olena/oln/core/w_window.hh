@@ -32,7 +32,7 @@
 
 namespace oln {
 
-  template<class Inferior = type::bottom>
+  template<class Inferior = mlc::bottom>
   struct w_window : public struct_elt< w_window< Inferior > >
   {
     typedef Inferior inferior;

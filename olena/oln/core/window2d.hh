@@ -41,7 +41,7 @@ namespace oln {
   class window2d : public internal::_window< 2, window2d >
   {
   public:
-    typedef type::bottom inferior;
+    typedef mlc::bottom inferior;
     typedef internal::_window< 2, window2d > super;
     typedef window2d self;
 

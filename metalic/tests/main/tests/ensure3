@@ -1,7 +1,6 @@
 #include <mlc/bool.hh>
 
-using namespace oln;
-using namespace meta;
+using namespace mlc;
 
 int main()
 {

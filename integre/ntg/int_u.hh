@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_INT_U_HH
-# define OLENA_VALUE_INT_U_HH
+#ifndef NTG_INT_U_HH
+# define NTG_INT_U_HH
 
 # include <ntg/config/system.hh>
 # include <mlc/cmp.hh>
@@ -56,7 +56,7 @@ self& operator=(const Builtin rhs)	        \
 
 // --- //
 
-namespace oln
+namespace ntg
 {
 
   //
@@ -73,7 +73,7 @@ namespace oln
 
     typedef self					base_type;
     typedef typename C_for_int_u<nbits>::type		storage_type;
-    typedef int_s<meta::saturateN<nbits+1, 32>::ret, 
+    typedef int_s<mlc::saturateN<nbits+1, 32>::ret, 
 		  behaviour>				signed_type;
     typedef self					unsigned_type;
     // FIXME: calculate it more precisely
@@ -185,16 +185,17 @@ namespace oln
 
     template<unsigned nbits, class behaviour>
     inline std::ostream&
-    operator<<(std::ostream& stream, const oln::int_u<nbits, behaviour>& rhs)
+    operator<<(std::ostream& stream, const int_u<nbits, behaviour>& rhs)
     {
       stream << unsigned(rhs.value());
       return stream;
     }
 
-  } // type_definitions
-} // end of namespace oln
+  } // end of type_definitions
+
+} // end of ntg
 
 // FIXME: find another solution if we want self contained int_u.hh.
 # include <ntg/optraits_int_u.hh>
 
-#endif // ndef OLENA_VALUE_INT_U_HH
+#endif // ndef NTG_INT_U_HH

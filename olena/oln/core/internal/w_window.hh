@@ -40,7 +40,7 @@ namespace oln {
 
   namespace internal {
 
-    template <unsigned Dim, class Weight, class Inferior = type::bottom>
+    template <unsigned Dim, class Weight, class Inferior = mlc::bottom>
     class _w_window : public w_window< _w_window< Dim, Weight, Inferior > >
     {
     public:
@@ -79,8 +79,8 @@ namespace oln {
 
       static std::string name()
       {
-	return std::string("_w_window<") + type::name_of<dpoint>() + "," +
-	  type::name_of<Weight>() + "," + inferior::name() + ">" ;
+	return std::string("_w_window<") + mlc::name_of<dpoint>() + "," +
+	  mlc::name_of<Weight>() + "," + inferior::name() + ">" ;
       }
 
     protected:

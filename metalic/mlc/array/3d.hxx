@@ -25,279 +25,271 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_META_ARRAY3D_HXX
-# define OLENA_META_ARRAY3D_HXX
+#ifndef METALIC_ARRAY_3D_HXX
+# define METALIC_ARRAY_3D_HXX
 
 # include <mlc/array/nd.hh>
 
-namespace oln {
+namespace mlc
+{
 
-  namespace meta {
+  //
+  //  mlc::array3d_info
+  //
+  ////////////////////////////////////////
     
-    //
-    //  meta::array3d_info
-    //
-    ////////////////////////////////////////
-    
 
-    // _nrows	-> total number of rows (1-indexed)
-    // _ncols	-> total number of columns (1-indexed)
-    // _nplanes	-> total number of planes (1-indexed)
+  // _nrows	-> total number of rows (1-indexed)
+  // _ncols	-> total number of columns (1-indexed)
+  // _nplanes	-> total number of planes (1-indexed)
 
-    // _center	-> position of the central element (0-indexed)
-    //		   domain : [ 0, card [
+  // _center	-> position of the central element (0-indexed)
+  //		   domain : [ 0, card [
 
-    // _i	-> number of elements that have been eaten yet (0-indexed)
-    //		   domain : [ 0, card ] -> watch out !!
+  // _i	-> number of elements that have been eaten yet (0-indexed)
+  //		   domain : [ 0, card ] -> watch out !!
 
+  // Center is user-defined
 
-
-    // Center is user-defined
-
-    template < unsigned _nplanes,
-	       unsigned _nrows, 
-	       unsigned _ncols,
-	       unsigned _center = (_ncols * _nrows) * (_nplanes / 2) + _ncols * (_nrows / 2) + (_ncols / 2),
-	       unsigned _i = _nplanes * _nrows * _ncols>
-    struct array3d_info
-    {
-      enum {
-	nplanes = _nplanes,
-	nrows = _nrows,
-	ncols = _ncols,
-	center = _center,
-	center_plane = _center / (_nrows * _ncols),
-	center_row = (_center % (_nrows * _ncols)) / _ncols,
-	center_col = (_center % (_nrows * _ncols)) % _ncols,
-	i = _i,
-	card = _nplanes * _nrows * _ncols,
-	well_formed = (_i % (_ncols * nrows) == 0),
-	get_real_center = _center
-      };
-
-      typedef array3d_info< _nplanes, _nrows, _ncols, _center, i + 1 > next_elt;
-
+  template < unsigned _nplanes,
+	     unsigned _nrows, 
+	     unsigned _ncols,
+	     unsigned _center = (_ncols * _nrows) * (_nplanes / 2) + _ncols * (_nrows / 2) + (_ncols / 2),
+	     unsigned _i = _nplanes * _nrows * _ncols>
+  struct array3d_info
+  {
+    enum {
+      nplanes = _nplanes,
+      nrows = _nrows,
+      ncols = _ncols,
+      center = _center,
+      center_plane = _center / (_nrows * _ncols),
+      center_row = (_center % (_nrows * _ncols)) / _ncols,
+      center_col = (_center % (_nrows * _ncols)) % _ncols,
+      i = _i,
+      card = _nplanes * _nrows * _ncols,
+      well_formed = (_i % (_ncols * nrows) == 0),
+      get_real_center = _center
     };
+
+    typedef array3d_info< _nplanes, _nrows, _ncols, _center, i + 1 > next_elt;
+
+  };
     
-    // Center is defined automatically, if nrows and ncols are both odd
+  // Center is defined automatically, if nrows and ncols are both odd
 
-    template < unsigned _nplanes, unsigned _nrows, unsigned _ncols, unsigned _i >
-    struct array3d_info < _nplanes, _nrows, _ncols, internal::_unknown, _i >
-    {
-      enum {
-	nplanes = _nplanes,
-	nrows = _nrows,
-	ncols = _ncols,
-	center = internal::_unknown,
-	i = _i,
-	card = _nplanes * _nrows * _ncols,
-	well_formed = (_i % (_ncols * _nrows) == 0),
-	get_real_center = _i / 2
-      };
-
-      typedef array3d_info< _nplanes, _nrows, _ncols, internal::_unknown, i + 1 > next_elt;
-
+  template < unsigned _nplanes, unsigned _nrows, unsigned _ncols, unsigned _i >
+  struct array3d_info < _nplanes, _nrows, _ncols, internal::_unknown, _i >
+  {
+    enum {
+      nplanes = _nplanes,
+      nrows = _nrows,
+      ncols = _ncols,
+      center = internal::_unknown,
+      i = _i,
+      card = _nplanes * _nrows * _ncols,
+      well_formed = (_i % (_ncols * _nrows) == 0),
+      get_real_center = _i / 2
     };
+
+    typedef array3d_info< _nplanes, _nrows, _ncols, internal::_unknown, i + 1 > next_elt;
+
+  };
+
+  // fwd decl
+  template<class, class> struct array3d;
+
+  namespace internal 
+  {
 
     // fwd decl
-    template<class, class> struct array3d;
+
+    template<class T, class Info>
+    struct _array3d_elt;
+
+    // for error messages
+
+    template<class U>
+    struct here_a_value_is_not_of_type_;
 
 
-    namespace internal {
+    //
+    //  mlc::internal::_array3d_start decl
+    //
+    ////////////////////////////////////////
 
-      // fwd decl
+    template<class T>
+    struct _array3d_start {
 
-      template<class T, class Info>
-      struct _array3d_elt;
-
-      // for error messages
-
-      template<class U>
-      struct here_a_value_is_not_of_type_;
-
-
-      //
-      //  meta::internal::_array3d_start decl
-      //
-      ////////////////////////////////////////
-
-      template<class T>
-      struct _array3d_start {
-
-	_array3d_elt< T, array3d_info< _unknown, _unknown, _unknown, _unknown, 1 > > 
-	operator=(T val);
+      _array3d_elt< T, array3d_info< _unknown, _unknown, _unknown, _unknown, 1 > > 
+      operator=(T val);
 	
-	_array3d_elt< T, array3d_info< _unknown, _unknown, _unknown, 0, 1 > > 
-	operator=(oln::internal::_x<T> val);
+      _array3d_elt< T, array3d_info< _unknown, _unknown, _unknown, 0, 1 > > 
+      operator=(_x<T> val);
 	
-	_array3d_elt< T, array3d_info< _unknown, _unknown, _unknown, 0, 1 > > 
-	operator=(oln::internal::_x<void> val);
+      _array3d_elt< T, array3d_info< _unknown, _unknown, _unknown, 0, 1 > > 
+      operator=(_x<void> val);
 
-	T ptr[_max_card]; // could be static
-      };
+      T ptr[_max_card]; // could be static
+    };
 
+    //
+    //  mlc::internal::_array3d_elt
+    //
+    ////////////////////////////////////////
 
+    template<class T, class Info>
+    struct _array3d_elt
+    {
+      typedef _array3d_elt< T, typename Info::next_elt >
+      _next_elt_t;
 
-      //
-      //  meta::internal::_array3d_elt
-      //
-      ////////////////////////////////////////
+      typedef _array3d_elt< T, array3d_info< Info::nplanes, Info::nrows, Info::ncols, Info::i, Info::i + 1> >
+      _eat_center_t;
 
-      template<class T, class Info>
-      struct _array3d_elt
+      typedef _array3d_elt< T, array3d_info< Info::nplanes, Info::nrows, Info::i, Info::center, Info::i > >
+      _eat_lbrk_t;
+
+      typedef _array3d_elt< T, array3d_info< Info::nplanes, Info::i / Info::ncols, Info::ncols, Info::center, Info::i > >
+      _eat_pbrk_t;
+
+      typedef array3d< array3d_info< Info::i / (Info::ncols * Info::nrows), Info::nrows, Info::ncols, Info::get_real_center, Info::i > , T>
+      _array3d_t;
+
+    public:
+	
+      // Constructor
+
+      _array3d_elt(T* ptr, _array3d_start<T>* arr) : ptr(ptr), arr(arr)
       {
-	typedef _array3d_elt< T, typename Info::next_elt >
-	_next_elt_t;
+      }
 
-	typedef _array3d_elt< T, array3d_info< Info::nplanes, Info::nrows, Info::ncols, Info::i, Info::i + 1> >
-	_eat_center_t;
 
-	typedef _array3d_elt< T, array3d_info< Info::nplanes, Info::nrows, Info::i, Info::center, Info::i > >
-	_eat_lbrk_t;
+      //
+      // Overloading "operator,"
+      //
 
-	typedef _array3d_elt< T, array3d_info< Info::nplanes, Info::i / Info::ncols, Info::ncols, Info::center, Info::i > >
-	_eat_pbrk_t;
 
-	typedef array3d< array3d_info< Info::i / (Info::ncols * Info::nrows), Info::nrows, Info::ncols, Info::get_real_center, Info::i > , T>
-	_array3d_t;
+      // elt, elt
 
-      public:
+      _next_elt_t operator,(T val)
+      {
+	is_true<Info::nplanes == _unknown>::ensure();
+	*ptr = val;
+	return _next_elt_t(ptr + 1, arr);
+      }
+
+
+      // elt, x(elt)		-> center
+
+      _eat_center_t operator,(_x<T> val)
+      {
+	is_true<Info::center == _unknown>::ensure();
+	*ptr = val.ue; // FIXME : give a *name* to this variable !!
+	return _eat_center_t(ptr + 1, arr);
+      }
+
+
+      // elt, x()		-> center
+
+      _eat_center_t operator,(_x<void>)
+      {
+	is_true<Info::center == _unknown>::ensure();
+	*ptr = T(0);
+	return _eat_center_t(ptr + 1, arr);
+      }
+
+
+      // elt, lbrk
+
+      _eat_lbrk_t operator,(_lbrk)
+      {
+	is_true<Info::ncols == _unknown>::ensure();
+	return _eat_lbrk_t(ptr, arr);
+      }
+
+
+      // elt, pbrk
+      _eat_pbrk_t operator,(_pbrk)
+      {
+	is_true<Info::nplanes == _unknown>::ensure();
+	return _eat_pbrk_t(ptr, arr);
+      }
+
+
+
+      // elt, end
 	
-	// Constructor
-
-	_array3d_elt(T* ptr, _array3d_start<T>* arr) : ptr(ptr), arr(arr)
-	{
-	}
-
-
-	//
-	// Overloading "operator,"
-	//
-
-
-	// elt, elt
-
-	_next_elt_t operator,(T val)
-	{
-	  is_true<Info::nplanes == _unknown>::ensure();
-	  *ptr = val;
-	  return _next_elt_t(ptr + 1, arr);
-	}
-
-
-	// elt, x(elt)		-> center
-
-	_eat_center_t operator,(oln::internal::_x<T> val)
-	{
-	  is_true<Info::center == _unknown>::ensure();
-	  *ptr = val.ue; // FIXME : give a *name* to this variable !!
-	  return _eat_center_t(ptr + 1, arr);
-	}
-
-
-	// elt, x()		-> center
-
-	_eat_center_t operator,(oln::internal::_x<void>)
-	{
-	  is_true<Info::center == _unknown>::ensure();
-	  *ptr = T(0);
-	  return _eat_center_t(ptr + 1, arr);
-	}
-
-
-	// elt, lbrk
-
-	_eat_lbrk_t operator,(oln::internal::_lbrk)
-	{
-	  is_true<Info::ncols == _unknown>::ensure();
-	  return _eat_lbrk_t(ptr, arr);
-	}
-
-
-	// elt, pbrk
-	_eat_pbrk_t operator,(oln::internal::_pbrk)
-	{
-	  is_true<Info::nplanes == _unknown>::ensure();
-	  return _eat_pbrk_t(ptr, arr);
-	}
-
-
-
-	// elt, end
-	
-	_array3d_t operator,(oln::internal::_end)
-	{
-	  enum { nplanes = (Info::i / (Info::ncols * Info::nrows)) };
+      _array3d_t operator,(_end)
+      {
+	enum { nplanes = (Info::i / (Info::ncols * Info::nrows)) };
 	  
-	  // array is well-formed :
-	  is_true<Info::well_formed>::ensure();
-	  // centering is automatic or user-defined :
+	// array is well-formed :
+	is_true<Info::well_formed>::ensure();
+	// centering is automatic or user-defined :
 
-	  is_true<Info::ncols != _unknown>::ensure();
-	  is_true<Info::nrows != _unknown>::ensure();
+	is_true<Info::ncols != _unknown>::ensure();
+	is_true<Info::nrows != _unknown>::ensure();
 
-	  // all of nplanes, nrows and ncols are odd
-	  // or the center is user-defined
+	// all of nplanes, nrows and ncols are odd
+	// or the center is user-defined
 
-	  is_true<	    
-	    (Info::ncols % 2 == 1 && Info::nrows % 2 == 1 && nplanes % 2 == 1)
-	    || (Info::center != _unknown)
+	is_true<	    
+	  (Info::ncols % 2 == 1 && Info::nrows % 2 == 1 && nplanes % 2 == 1)
+	  || (Info::center != _unknown)
 	  >::ensure();
 	  
-	  return _array3d_t(arr->ptr);
-	}
+	return _array3d_t(arr->ptr);
+      }
 	
 
-	// else -> error
+      // else -> error
 
-	template<class U>
-	void operator,(array3d< Info, U >);
+      template<class U>
+      void operator,(array3d< Info, U >);
 
-	template<class U>
-	here_a_value_is_not_of_type_<T> operator,(U u) const;
+      template<class U>
+      here_a_value_is_not_of_type_<T> operator,(U u) const;
 
-	T* ptr;
-	_array3d_start<T>* arr;
-      };
-
-
-      //
-      //  meta::internal::_array3d_start  impl
-      //
-      ////////////////////////////////////////
-
-      template<class T> inline 
-      _array3d_elt< T, array3d_info< _unknown, _unknown, _unknown, _unknown, 1 > >
-      _array3d_start<T>::operator=(T val)
-      {
-	ptr[0] = val;
-	return _array3d_elt< T, array3d_info< _unknown, _unknown, _unknown, _unknown, 1 > >(ptr+1,this);
-      }
-
-      template<class T> inline 
-      _array3d_elt< T, array3d_info< _unknown, _unknown, _unknown, 0, 1 > >
-      _array3d_start<T>::operator=(oln::internal::_x<T> val)
-      {
-	ptr[0] = val.ue;
-	// center <- 0
-	return _array3d_elt< T, array3d_info< _unknown, _unknown, _unknown, 0, 1 > >(ptr+1,this);
-      }
-
-      template<class T> inline 
-      _array3d_elt< T, array3d_info< _unknown, _unknown, _unknown, 0, 1 > >
-      _array3d_start<T>::operator=(oln::internal::_x<void> val)
-      {
-	ptr[0] = T(0);
-	// center <- 0
-	return _array3d_elt< T, array3d_info< _unknown, _unknown, _unknown, 0, 1 > >(ptr+1,this);
-      }
+      T* ptr;
+      _array3d_start<T>* arr;
+    };
 
 
-    } // end of internal
+    //
+    //  mlc::internal::_array3d_start  impl
+    //
+    ////////////////////////////////////////
 
-  } // end of meta
+    template<class T> inline 
+    _array3d_elt< T, array3d_info< _unknown, _unknown, _unknown, _unknown, 1 > >
+    _array3d_start<T>::operator=(T val)
+    {
+      ptr[0] = val;
+      return _array3d_elt< T, array3d_info< _unknown, _unknown, _unknown, _unknown, 1 > >(ptr+1,this);
+    }
 
-} // end of oln
+    template<class T> inline 
+    _array3d_elt< T, array3d_info< _unknown, _unknown, _unknown, 0, 1 > >
+    _array3d_start<T>::operator=(_x<T> val)
+    {
+      ptr[0] = val.ue;
+      // center <- 0
+      return _array3d_elt< T, array3d_info< _unknown, _unknown, _unknown, 0, 1 > >(ptr+1,this);
+    }
+
+    template<class T> inline 
+    _array3d_elt< T, array3d_info< _unknown, _unknown, _unknown, 0, 1 > >
+    _array3d_start<T>::operator=(_x<void> val)
+    {
+      ptr[0] = T(0);
+      // center <- 0
+      return _array3d_elt< T, array3d_info< _unknown, _unknown, _unknown, 0, 1 > >(ptr+1,this);
+    }
+
+  } // end of internal
+
+} // end of mlc
 
 
-#endif // ! OLENA_META_ARRAY3D_HXX
+#endif // ! METALIC_ARRAY_3D_HXX

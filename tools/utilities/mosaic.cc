@@ -33,6 +33,7 @@
 #include "getopt.hh"
 
 using namespace oln;
+using namespace ntg;
 
 #ifndef TYPE
 # define TYPE int_u16

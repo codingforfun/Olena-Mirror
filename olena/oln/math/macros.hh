@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -48,14 +48,14 @@ namespace oln {
     struct f_sqr
     {
       typedef Self output_t;
-      const Self operator()(const rec_value<Self>& val) const
+      const Self operator()(const ntg::rec_value<Self>& val) const
       {
 	return val.real_value() * val.real_value();
       }
     };
 
     template<class Self>
-    const Self sqr(const rec_value<Self>& val)
+    const Self sqr(const ntg::rec_value<Self>& val)
     {
       f_sqr<Self> f;
       return f(val);
@@ -67,14 +67,14 @@ namespace oln {
     struct f_abs
     {
       typedef Self output_t;
-      const Self operator()(const rec_value<Self>& val) const
+      const Self operator()(const ntg::rec_value<Self>& val) const
       {
 	return ::abs(val.real_value());
       }
     };
 
     template<class Self>
-    const Self abs(const rec_value<Self>& val)
+    const Self abs(const ntg::rec_value<Self>& val)
     {
       f_abs<Self> f;
       return f(val);
@@ -91,8 +91,8 @@ namespace oln {
       typedef typename 
       internal::operator_plus_traits<Self,Self>::ret_t output_t;
       
-      const output_t operator()(const rec_value<Self>& val1,
-				const rec_value<Self>& val2) const
+      const output_t operator()(const ntg::rec_value<Self>& val1,
+				const ntg::rec_value<Self>& val2) const
       {
 	return math::abs(val1.self()) + math::abs(val2.self());
       }
@@ -100,8 +100,8 @@ namespace oln {
 
     template<class Self>
     const typename f_plus_abs<Self>::output_t
-    plus_abs(const rec_value<Self>& val1,
-	     const rec_value<Self>& val2)
+    plus_abs(const ntg::rec_value<Self>& val1,
+	     const ntg::rec_value<Self>& val2)
     {
       f_plus_abs<Self> f;
       return f(val);
@@ -111,17 +111,17 @@ namespace oln {
     struct f_plus_abs_to
     {
       typedef T_out output_t;
-      const output_t operator()(const rec_value<Self>& val1,
-				const rec_value<Self>& val2) const
+      const output_t operator()(const ntg::rec_value<Self>& val1,
+				const ntg::rec_value<Self>& val2) const
       {
-	return cast::force<T_out>(math::abs(val1.self()) 
+	return ntg::cast::force<T_out>(math::abs(val1.self()) 
 				  + math::abs(val2.self()));
       }
     };
 
     template<class T_out, class Self>
-    const T_out plus_abs(const rec_value<Self>& val1,
-			 const rec_value<Self>& val2)
+    const T_out plus_abs(const ntg::rec_value<Self>& val1,
+			 const ntg::rec_value<Self>& val2)
     {
       f_plus_abs_to<Self,T_out> f;
       return f(val);

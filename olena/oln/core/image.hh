@@ -36,8 +36,8 @@ namespace oln {
 
   // image
 
-  template<class Inferior = type::bottom>
-  struct image : public type::any< image<Inferior> >
+  template<class Inferior = mlc::bottom>
+  struct image : public mlc::any< image<Inferior> >
   {
     typedef Inferior inferior;
     static std::string name() { return std::string("image<") + Inferior::name() + ">"; }
@@ -48,10 +48,10 @@ namespace oln {
 
   // mute
 
-  template<class I, class T = typename type::exact<I>::ret::value>
+  template<class I, class T = typename mlc::exact<I>::ret::value>
   struct mute
   {
-    typedef typename type::exact<I>::ret::mute<T>::ret ret;
+    typedef typename mlc::exact<I>::ret::mute<T>::ret ret;
   };
 
 

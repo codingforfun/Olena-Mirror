@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -88,7 +88,7 @@ namespace oln {
       T _max;
     };
 
-    template< class T, class C = sfloat >
+    template< class T, class C = ntg::sfloat >
     struct f_moments : f_minmax< T >
     {
       typedef f_minmax< T > super;
@@ -96,8 +96,8 @@ namespace oln {
       void operator()(const T& val)
       {
 	if (! valued()) {
-	  _sum1 = optraits<C>::zero();
-	  _sum2 = optraits<C>::zero();
+	  _sum1 = ntg::optraits<C>::zero();
+	  _sum2 = ntg::optraits<C>::zero();
 	} else {
 	  _sum1 += val;
 	  _sum2 += C(val) * val;

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_OPTRAITS_SCALAR_HH_
-# define OLENA_VALUE_OPTRAITS_SCALAR_HH_
+#ifndef NTG_OPTRAITS_SCALAR_HH_
+# define NTG_OPTRAITS_SCALAR_HH_
 
 # include <typeinfo>
 
@@ -44,7 +44,7 @@
 # define SIGNED_CAST(T, Val) \
   (static_cast<typename typetraits<T>::signed_type>(Val))
 
-namespace oln
+namespace ntg
 {
 
   //
@@ -138,7 +138,6 @@ namespace oln
   class optraits_int_s : public optraits_int<Self>
   {};
 
+} // namespace ntg
 
-} // namespace oln
-
-#endif // ndef OLENA_VALUE_OPTRAITS_SCALAR_HH_
+#endif // ndef NTG_OPTRAITS_SCALAR_HH_

@@ -5,6 +5,7 @@
 #include <iostream>
 
 using namespace oln;
+using namespace ntg;
 
 template< class Input >
 struct f_l2_vec3 : public std::binary_function<Input, Input, sfloat>

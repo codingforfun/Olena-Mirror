@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_CPLX_HH
-# define OLENA_VALUE_CPLX_HH
+#ifndef NTG_CPLX_HH
+# define NTG_CPLX_HH
 
 # include <ntg/config/system.hh>
 
@@ -41,7 +41,8 @@
 
 // FIXME: optraits_cplx.hh is included at the end of the file.
 
-namespace oln {
+namespace ntg
+{
 
   template <type_definitions::cplx_representation R, class T>
   struct typetraits<cplx<R, T> >
@@ -56,7 +57,8 @@ namespace oln {
     typedef self op_traits;
   };
 
-  namespace type_definitions {
+  namespace type_definitions 
+  {
 
     //
     // Non-specialized cplx class (declared in predecls.hh) :
@@ -119,7 +121,7 @@ namespace oln {
 
       ~cplx()
       {
-	is_a(optraits<T>, oln::optraits_scalar)::ensure();
+	is_a(optraits<T>, optraits_scalar)::ensure();
       }
 
       // accessors
@@ -206,7 +208,7 @@ namespace oln {
 
       ~cplx()
       {
-	is_a(optraits<T>, oln::optraits_scalar)::ensure();
+	is_a(optraits<T>, optraits_scalar)::ensure();
       }
 
       // accessors
@@ -252,27 +254,27 @@ namespace oln {
 
     };
 
-  } // end of namespace type_definitions
+  } // end of type_definitions
 
-} // end of oln
+  template<class T>
+  inline
+  std::ostream& operator<<(std::ostream& ostr, const cplx<rect, T>& rhs)
+  {
+    return ostr << rhs.real() << " + "
+		<< rhs.imag() << "i";
+  }
 
-template<class T>
-inline
-std::ostream& operator<<(std::ostream& ostr, const oln::cplx<oln::rect, T>& rhs)
-{
-  return ostr << rhs.real() << " + "
-	      << rhs.imag() << "i";
-}
+  template<class T>
+  inline
+  std::ostream& operator<<(std::ostream& ostr, const cplx<polar, T>& rhs)
+  {
+    return ostr << rhs.magn() << " * exp("
+		<< rhs.angle() << "i)";
+  }
 
-template<class T>
-inline
-std::ostream& operator<<(std::ostream& ostr, const oln::cplx<oln::polar, T>& rhs)
-{
-  return ostr << rhs.magn() << " * exp("
-	      << rhs.angle() << "i)";
-}
+} // end of ntg
 
 // FIXME: find another solution if we want self contained cplx.hh
 # include <ntg/optraits_cplx.hh>
 
-#endif // ! OLENA_VALUE_CPLX_HH
+#endif // ! NTG_CPLX_HH

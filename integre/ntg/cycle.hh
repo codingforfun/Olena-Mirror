@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_CYCLE_HH
-# define OLENA_VALUE_CYCLE_HH
+#ifndef NTG_CYCLE_HH
+# define NTG_CYCLE_HH
 
 # include <mlc/is_a.hh>
 
@@ -39,7 +39,7 @@
 
 // FIXME: optraits_cycle.hh is included at the end of the file.
 
-namespace oln
+namespace ntg
 {
 
   //
@@ -123,7 +123,7 @@ namespace oln
 
     template<class T, class interval>
     inline std::ostream&
-    operator<<(std::ostream& stream, const oln::cycle<T, interval>& rhs)
+    operator<<(std::ostream& stream, const cycle<T, interval>& rhs)
     {
       // Cast useful for cycle<unsigned char, ...>
       stream << (typename typetraits<T>::largest_type)(rhs.value());
@@ -132,9 +132,9 @@ namespace oln
 
   } // type_definitions
 
-} // end of namespace oln
+} // end of ntg
 
 // FIXME: find another solution if we want self contained cycle.hh.
 # include <ntg/optraits_cycle.hh>
 
-#endif // ndef OLENA_VALUE_CYCLE_HH
+#endif // ndef NTG_CYCLE_HH

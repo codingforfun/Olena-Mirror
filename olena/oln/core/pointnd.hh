@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,6 +31,7 @@
 # include <ntg/debug.hh>
 # include <oln/core/coord.hh>
 # include <oln/core/point.hh>
+
 # include <iostream>
 # include <sstream>
 
@@ -40,7 +41,7 @@ namespace oln {
   template< unsigned Dim, class Inferior >
   class dpointnd;
 
-  template< unsigned Dim, class Inferior = type::bottom >
+  template< unsigned Dim, class Inferior = mlc::bottom >
   class pointnd : public point< pointnd< Dim, Inferior > >
   {
   public:
@@ -83,7 +84,7 @@ namespace oln {
     {
       std::ostringstream out;
       out << "pointnd<" << dim << ","
-	  << typename_of<Inferior>() << ">" << std::ends;
+	  << ntg::typename_of<Inferior>() << ">" << std::ends;
       return out.str();
     }
 

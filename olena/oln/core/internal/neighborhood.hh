@@ -35,7 +35,7 @@ namespace oln {
 
   namespace internal {
 
-    template <unsigned Dim, class Inferior = type::bottom>
+    template <unsigned Dim, class Inferior = mlc::bottom>
     class _neighborhood :
       /* The inheritence is quite tricky here.
 

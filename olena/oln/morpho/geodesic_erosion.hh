@@ -68,8 +68,8 @@ namespace oln {
       Exact_cref(I1, marker);
       Exact_cref(I2, mask);
       Exact_cref(N, Ng);
-      meta::eq<I1::dim, I2::dim>::ensure();
-      meta::eq<I1::dim, N::dim>::ensure();
+      mlc::eq<I1::dim, I2::dim>::ensure();
+      mlc::eq<I1::dim, N::dim>::ensure();
       precondition(marker.size() == mask.size());
       precondition(level::is_greater_or_equal(marker, mask));
       return arith::max(erosion(marker, convert::ng_to_cse(Ng)), mask);
@@ -107,8 +107,8 @@ namespace oln {
 	Exact_cref(I1, marker);
 	Exact_cref(I2, mask);
 	Exact_cref(N, Ng);
-	meta::eq<I1::dim, I2::dim>::ensure();
-	meta::eq<I1::dim, N::dim>::ensure();
+	mlc::eq<I1::dim, I2::dim>::ensure();
+	mlc::eq<I1::dim, N::dim>::ensure();
 	precondition(marker.size() == mask.size());
 	precondition(level::is_greater_or_equal(marker, mask));
 

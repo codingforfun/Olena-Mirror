@@ -32,7 +32,7 @@
 
 namespace oln {
 
-  template<class Inferior = type::bottom>
+  template<class Inferior = mlc::bottom>
   class fwd_iter1d : public internal::_iter1d< fwd_iter1d<Inferior> >
   {
   public:

@@ -33,7 +33,7 @@
 
 namespace oln {
 
-  template<class Inferior = type::bottom>
+  template<class Inferior = mlc::bottom>
   class bkd_iter3d : public internal::_iter3d<bkd_iter3d<Inferior> >
   {
   public:

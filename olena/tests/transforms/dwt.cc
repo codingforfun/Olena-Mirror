@@ -1,10 +1,12 @@
-#include <ntg/all.hh>
 #include <oln/basics1d.hh>
 #include <oln/basics2d.hh>
 #include <oln/basics3d.hh>
 #include <oln/level/compare.hh>
 #include <oln/transforms/dwt.hh>
 #include <oln/transforms/wavelet_coeffs.hh>
+
+#include <ntg/all.hh>
+
 #include <cstdlib>
 
 #include "check.hh"
@@ -20,6 +22,7 @@
       }
 
 using namespace oln;
+using namespace ntg;
 using namespace transforms;
 
 Wavelet_coeffs_definition(daub4_test, dfloat, 4)
@@ -72,7 +75,7 @@ check()
   std::cout << "Test: Image2D == F-1(F(Image2D)) ... " << std::flush;
   CHECK (level::is_equal(im1, im3));
 
-  image2d<int_u<8, saturate> > out(im2.size());
+  image2d<ntg::int_u<8, saturate> > out(im2.size());
   image2d<dfloat>::iter it2(im2);
   for_all(it2)
     out[it2] = im2[it2];
@@ -92,7 +95,7 @@ check()
       if (im2[it2] != 0)
 	im2[it2] = 0;
 
-  out = wave2d.transform_inv<int_u<8, saturate> >();
+  out = wave2d.transform_inv<ntg::int_u<8, saturate> >();
 
   io::save(out, "dwt_compressed.pgm");
 

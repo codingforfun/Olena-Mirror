@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,7 +39,7 @@ namespace oln {
   // client can use image1d; instances are real images, that is,
   // images with data ---conversely to proxy images
 
-  template<class T, class Inferior = type::bottom>
+  template<class T, class Inferior = mlc::bottom>
   class image1d : public internal::_real_image1d< T, image1d<T,Inferior> >
   {
   public:
@@ -98,20 +98,21 @@ namespace oln {
 
   // specialization for bin data
 
-  // image1d<bin> is also a pred_image, that is, an image type that
+  // image1d<ntg::bin> is also a pred_image, that is, an image type that
   // can be used as a predicate having the structure of an image
 
 
   template<class Inferior>
-  class image1d<bin,Inferior> : public internal::_real_image1d< bin, image1d<bin,Inferior> >,
-				public pred_image< image1d<bin,Inferior> >
+  class image1d<ntg::bin,Inferior> : 
+    public internal::_real_image1d<ntg::bin, image1d<ntg::bin,Inferior> >,
+		     public pred_image< image1d<ntg::bin,Inferior> >
   {
   public:
 
     typedef Inferior inferior;
-    typedef image1d<bin,Inferior> self;
-    typedef internal::_real_image1d<bin,self> super;
-    typedef pred_image< image1d<bin,Inferior> > super_pred;
+    typedef image1d<ntg::bin,Inferior> self;
+    typedef internal::_real_image1d<ntg::bin,self> super;
+    typedef pred_image< image1d<ntg::bin,Inferior> > super_pred;
 
     image1d() :
       super()
@@ -146,7 +147,7 @@ namespace oln {
     {
       return
 	std::string("image1d<")
-	+ bin::name() + ","
+	+ ntg::optraits<ntg::bin>::name() + ","
 	+ Inferior::name() + ">";
     }
 

@@ -38,7 +38,7 @@
 
 namespace oln {
 
-  template<class T, class Inferior = type::bottom>
+  template<class T, class Inferior = mlc::bottom>
   class w_window1d : public internal::_w_window< 1, T, w_window1d<T> >
   {
     typedef internal::_w_window< 1, T, w_window1d<T> > super;

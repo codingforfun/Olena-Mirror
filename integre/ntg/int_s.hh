@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_INT_S_HH
-# define OLENA_VALUE_INT_S_HH
+#ifndef NTG_INT_S_HH
+# define NTG_INT_S_HH
 
 # include <ntg/config/system.hh>
 
@@ -59,7 +59,7 @@ self& operator=(const Builtin rhs)	        \
 
 // --- //
 
-namespace oln
+namespace ntg
 {
 
   //
@@ -185,16 +185,17 @@ namespace oln
 
     template<unsigned nbits, class behaviour>
     inline std::ostream&
-    operator<<(std::ostream& stream, const oln::int_s<nbits, behaviour>& rhs)
+    operator<<(std::ostream& stream, const int_s<nbits, behaviour>& rhs)
     {
       stream << signed(rhs.value());
       return stream;
     }
 
-  } // type_definitions
-} // end of namespace oln
+  } // end of type_definitions
+
+} // end of ntg
 
 // FIXME: find another solution if we want self contained int_s.hh
 # include <ntg/optraits_int_s.hh>
 
-#endif // ndef OLENA_VALUE_INT_S_HH
+#endif // ndef NTG_INT_S_HH

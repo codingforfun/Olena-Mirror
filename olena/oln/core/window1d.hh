@@ -40,7 +40,7 @@ namespace oln {
   class window1d : public internal::_window< 1, window1d >
   {
   public:
-    typedef type::bottom inferior;
+    typedef mlc::bottom inferior;
     typedef internal::_window< 1, window1d > super;
     typedef window1d self;
 

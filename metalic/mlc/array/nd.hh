@@ -1,4 +1,4 @@
-// Copyright (C) 2001  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,28 +25,26 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_META_ARRAYND_HH
-# define OLENA_META_ARRAYND_HH
+#ifndef METALIC_ARRAY_ND_HH
+# define METALIC_ARRAY_ND_HH
 
 
-namespace oln {
-  
-  namespace meta {
-  
-    namespace internal {
+namespace mlc
+{
+ 
+  namespace internal 
+  {
 
-      //
-      //  meta::internal misc
-      //
-      ////////////////////////////////////////
+    //
+    //  mlc::internal misc
+    //
+    ////////////////////////////////////////
       
-      static const unsigned _max_card = 4096;  // 64 x 64
-      static const unsigned _unknown = _max_card + 1;
+    static const unsigned _max_card = 4096;  // 64 x 64
+    static const unsigned _unknown = _max_card + 1;
       
-    } // end of namespace internal
+  } // end of internal
    
-  } // end of namespace meta
-  
-} // end of namespace oln
+} // end of namespace mlc
 
-#endif // ! OLENA_META_ARRAYND_HH
+#endif // ! METALIC_ARRAY_ND_HH

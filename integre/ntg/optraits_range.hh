@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_OPTRAITS_RANGE_HH
-# define OLENA_VALUE_OPTRAITS_RANGE_HH
+#ifndef NTG_OPTRAITS_RANGE_HH
+# define NTG_OPTRAITS_RANGE_HH
 
 # include <ntg/range.hh>
 # include <ntg/optraits.hh>
@@ -38,7 +38,7 @@
 # include <string>
 # include <sstream>
 
-namespace oln
+namespace ntg
 {
 
   template<class T, class interval, class behaviour>
@@ -94,6 +94,6 @@ namespace oln
   //  check typetraits<range>::op_traits
   //
   
-} // end of namespace oln
+} // end of ntg
 
-#endif // ndef OLENA_VALUE_OPTRAITS_RANGE_HH
+#endif // ndef NTG_OPTRAITS_RANGE_HH

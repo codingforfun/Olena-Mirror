@@ -34,8 +34,8 @@
 namespace oln {
 
 
-  template<class Inferior = type::bottom>
-  struct dpoint : public type::any< dpoint<Inferior> >
+  template<class Inferior = mlc::bottom>
+  struct dpoint : public mlc::any< dpoint<Inferior> >
   {
     typedef Inferior inferior;
     static std::string name() { return std::string("dpoint<") + Inferior::name() + ">"; }

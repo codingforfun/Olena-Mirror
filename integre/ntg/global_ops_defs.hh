@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_OPS_DEFS_HH
-# define OLENA_VALUE_OPS_DEFS_HH
+#ifndef NTG_OPS_DEFS_HH
+# define NTG_OPS_DEFS_HH
 
 //
 //  Macros to factorize global_ops definition
@@ -238,4 +238,4 @@ GLOBAL_CMP_OP_BUILTIN(Op, Name, double);				\
 GLOBAL_CMP_OP_BUILTIN(Op, Name, bool);
 
 
-#endif // ndef OLENA_VALUE_OPS_DEFS_HH
+#endif // ndef NTG_OPS_DEFS_HH

@@ -39,7 +39,7 @@ namespace oln {
       /* Define this specialization sperately to work around a bug
 	 in gcc.  Specializing
 	   conv_output<icomps,icolors,ocomps,ocolors,I>::output<T>
-         for T = color<icomps,Q,colors> (Q generic) does not work.
+         for T = ntg::color<icomps,Q,colors> (Q generic) does not work.
 
 	 See PR/4882.
 	 http://gcc.gnu.org/cgi-bin/gnatsweb.pl?cmd=view&pr=4882&database=gcc
@@ -57,10 +57,10 @@ namespace oln {
 		template<unsigned> class icolor,
 		unsigned ocomps,
 		template<unsigned> class ocolor >
-      struct _color_conversion<color<icomps, qbits, icolor>,
+      struct _color_conversion<ntg::color<icomps, qbits, icolor>,
 			       icomps, icolor, ocomps, ocolor >
       {
-	typedef color<ocomps, qbits, ocolor> ret;
+	typedef ntg::color<ocomps, qbits, ocolor> ret;
       };
 
     }
@@ -69,7 +69,7 @@ namespace oln {
 	      template<unsigned> class icolor,
 	      unsigned ocomps,
 	      template<unsigned> class ocolor,
-	      class Inferior = type::bottom >
+	      class Inferior = mlc::bottom >
     class color_conversion : public conversion< Inferior >
     {
       typedef Inferior inferior;

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,6 +30,8 @@
 
 # include <oln/core/image.hh>
 # include <oln/core/iter.hh>
+# include <oln/io/base.hh>
+
 # include <ntg/typetraits_builtins_int.hh>
 # include <ntg/typetraits_builtins_bool.hh>
 # include <ntg/optraits_bin.hh>
@@ -38,9 +40,11 @@
 # include <ntg/bin.hh>
 # include <ntg/int_s.hh>
 # include <ntg/int_u.hh>
-# include <oln/io/base.hh>
 
 namespace oln {
+
+  using namespace ntg;
+
   namespace io {
     namespace internal {
 

@@ -38,20 +38,20 @@ namespace oln {
     // FIXME: is this really useful with new types ?
 
     /* Like convert::force, but with saturation.  */
-    template<class Output, class Inferior = type::bottom>
+    template<class Output, class Inferior = mlc::bottom>
     struct bound : public conversion_to_type< Output, bound<Output, Inferior> >
     {
       typedef Inferior inferior;
 
       template< class Input >
       Output operator() (const Input& v) const {
-	return cast::bound<Output>(v);
+	return ntg::cast::bound<Output>(v);
       }
 
       static std::string name() {
 	return std::string("bound<")
-	  + typename_of<Output>() + ", "
-	  + typename_of<Inferior>() + ">";
+	  + ntg::typename_of<Output>() + ", "
+	  + ntg::typename_of<Inferior>() + ">";
       }
     };
 

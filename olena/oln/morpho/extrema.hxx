@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,19 +39,19 @@ namespace internal {
       // once these functions exist.  Otherwise it doesn't
       // work on float.
       output[p] = (input[p] ?
-		   optraits<DestType>::min() :
-		   optraits<DestType>::max());
+		   ntg::optraits<DestType>::min() :
+		   ntg::optraits<DestType>::max());
     return output;
   }
 
 
   template <class I_>
-  typename mute<I_, bin>::ret
+  typename mute<I_, ntg::bin>::ret
   _ima_to_bin(const image<I_>& _input)
   {
     Exact_cref(I, input);
     Iter(I) p(input);
-    typename mute<I_, bin>::ret output(input.size());
+    typename mute<I_, ntg::bin>::ret output(input.size());
     for_all (p)
       output[p] = (input[p] ? true : false);
     return output;
@@ -80,7 +80,7 @@ namespace internal {
  * see: morpho::sure_geodesic_reconstruction_erosion
  * ex:
  * $ image2d<int_u8> light = load("lena.pgm");
- * $ image2d<bin> minima = load("map.pbm");
+ * $ image2d<ntg::bin> minima = load("map.pbm");
  * $ save(morpho::sure_minima_imposition(light, minima, neighb_c4()), "out.pgm");
  * exi: lena.pgm map.pbm
  * exo: out.pgm
@@ -93,8 +93,8 @@ Concrete(I_) minima_imposition(const image<I_>& _input,
   Exact_cref(I, input);
   Exact_cref(I2, minima_map);
   Exact_cref(N, Ng);
-  meta::eq<I::dim, I2::dim>::ensure();
-  meta::eq<I::dim, N::dim>::ensure();
+  mlc::eq<I::dim, I2::dim>::ensure();
+  mlc::eq<I::dim, N::dim>::ensure();
   precondition(input.size() == minima_map.size());
   Concrete(I) mm =
     internal::_create_minima_image_from_bin<Value(I)>(minima_map);
@@ -114,7 +114,7 @@ Concrete(I_) minima_imposition(const image<I_>& _input,
  * what: Regional minima.
  * arg: const image<I1>&, input, IN, input image
  * arg: const struct_elt<E>&, se, IN, structural element
- * ret: typename mute<I_, bin>::ret
+ * ret: typename mute<I_, ntg::bin>::ret
  * doc:
  * Extract regional minima of \var{input}
  * using \var{Ng}
@@ -128,12 +128,12 @@ Concrete(I_) minima_imposition(const image<I_>& _input,
  * exo: out.pgm
  =*/
 template<class I_, class N_>
-typename mute<I_, bin>::ret regional_minima(const image<I_>& _input,
+typename mute<I_, ntg::bin>::ret regional_minima(const image<I_>& _input,
 					    const neighborhood<N_>& _Ng)
 {
   Exact_cref(I, input);
   Exact_cref(N, Ng);
-  meta::eq<I::dim, N::dim>::ensure();
+  mlc::eq<I::dim, N::dim>::ensure();
   return
     internal::_ima_to_bin(arith::minus(convert::force<Value(I)>(),
 				       geodesic_reconstruction_erosion

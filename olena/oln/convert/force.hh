@@ -37,21 +37,21 @@ namespace oln {
 
     // FIXME: is this really useful with new types ?
 
-    /* Like cast::force, but as a conversion functor.  */
-    template<class Output, class Inferior = type::bottom>
+    /* Like ntg::cast::force, but as a conversion functor.  */
+    template<class Output, class Inferior = mlc::bottom>
     struct force : public conversion_to_type< Output, force<Output, Inferior> >
     {
       typedef Inferior inferior;
 
       template< class Input >
       Output operator() (const Input& v) const {
-	return cast::force<Output>(v);
+	return ntg::cast::force<Output>(v);
       }
 
       static std::string name() {
 	return std::string("force<")
-	  + typename_of<Output>() + ", "
-	  + typename_of<Inferior>() + ">";
+	  + ntg::typename_of<Output>() + ", "
+	  + ntg::typename_of<Inferior>() + ">";
       }
     };
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,17 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_OPTRAITS_BUILTINS_FLOAT_HH
-# define OLENA_VALUE_OPTRAITS_BUILTINS_FLOAT_HH
+#ifndef NTG_OPTRAITS_BUILTINS_FLOAT_HH
+# define NTG_OPTRAITS_BUILTINS_FLOAT_HH
 
 # include <ntg/config/system.hh> // for OLN_FLOAT_INFINITY
+
 # include <mlc/cmp.hh>
+
 # include <ntg/builtins_properties.hh>
 # include <ntg/global_ops_traits.hh>
 # include <ntg/optraits_scalar.hh>
 # include <ntg/typetraits_builtins_float.hh>
 
-namespace oln
+namespace ntg
 {
 
   //
@@ -166,7 +168,7 @@ namespace oln
     template <>
     struct operator_cmp_traits<float, float> : all_float_traits {};
 
-  } // end of namespace internal
+  } // end of internal
 
 
   //
@@ -315,8 +317,8 @@ namespace oln
     struct operator_cmp_traits<double, float> : all_double_traits {};
 
 
-  } // end of namespace internal
+  } // end of internal
 
-} // end of namespace oln
+} // end of ntg
 
-#endif // ndef OLENA_VALUE_OPTRAITS_BUILTINS_FLOAT_HH
+#endif // ndef NTG_OPTRAITS_BUILTINS_FLOAT_HH

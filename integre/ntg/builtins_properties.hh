@@ -25,14 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_BUILTINS_PROPERTIES_HH
-# define OLENA_VALUE_BUILTINS_PROPERTIES_HH
+#ifndef NTG_BUILTINS_PROPERTIES_HH
+# define NTG_BUILTINS_PROPERTIES_HH
 
 # include <limits.h>
 # include <float.h>
+
 # include <mlc/math.hh>
 
- namespace oln
+ namespace ntg
  {
 
    //
@@ -44,7 +45,7 @@
    struct C_for_int_u
    {
      enum {
-       mbits = meta::pow2sup<nbits>::value
+       mbits = mlc::pow2sup<nbits>::value
      };
      typedef typename C_for_int_u<mbits>::type type;
      static type max() {
@@ -55,7 +56,7 @@
    template<unsigned nbits>
    struct C_for_int_s
    {
-     enum { mbits = meta::pow2sup<nbits>::value };
+     enum { mbits = mlc::pow2sup<nbits>::value };
      typedef typename C_for_int_s<mbits>::type type;
      static type min() {
        return type(- max() - type(1));
@@ -150,6 +151,6 @@
      static type max() { return DBL_MAX; }
    };
 
- } // end of namespace oln
+ } // end of ntg
 
-#endif // ! OLERA_VALUE_BUILTINS_PROPERTIES_HH
+#endif // ! NTG_BUILTINS_PROPERTIES_HH

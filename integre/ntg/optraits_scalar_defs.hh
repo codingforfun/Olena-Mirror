@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_OPTRAITS_SCALAR_DEFS_HH
-# define OLENA_VALUE_OPTRAITS_SCALAR_DEFS_HH
+#ifndef NTG_OPTRAITS_SCALAR_DEFS_HH
+# define NTG_OPTRAITS_SCALAR_DEFS_HH
 
 //
 // macros used in optraits_scalar definition
@@ -37,8 +37,8 @@
   template <class T1, class T2> inline							\
   static T1& Name(T1& lhs, const T2& rhs)						\
   {											\
-    is_a(optraits<T1>, oln::optraits_scalar)::ensure();					\
-    is_a(optraits<T2>, oln::optraits_scalar)::ensure();					\
+    is_a(optraits<T1>, ntg::optraits_scalar)::ensure();					\
+    is_a(optraits<T2>, ntg::optraits_scalar)::ensure();					\
 											\
     return Name##_impl<T1,T2>(lhs, rhs);						\
   }											\
@@ -52,7 +52,7 @@
   }											\
 											\
   template <class T1, class T2> inline							\
-  static T1& Name##_impl(rec_scalar<T1>& lhs, const type::any_const_class<T2> rhs)	\
+  static T1& Name##_impl(rec_scalar<T1>& lhs, const ntg::any_const_class<T2> rhs)	\
   {											\
     typedef typename typetraits<T1>::behaviour_type behaviour_type;			\
     lhs.self() = behaviour_type::check_##Name(lhs.self().value(), rhs.self());		\
@@ -60,7 +60,7 @@
   }											\
 											\
   template <class T1, class T2> inline							\
-  static T1& Name##_impl(type::any_class<T1> lhs, const rec_scalar<T2>& rhs)		\
+  static T1& Name##_impl(ntg::any_class<T1> lhs, const rec_scalar<T2>& rhs)		\
   {											\
     typedef typename typetraits<T1>::behaviour_type behaviour_type;			\
     lhs.self() = behaviour_type::check_##Name(lhs.self(), rhs.self().value());		\
@@ -73,8 +73,8 @@
   internal::deduce_from_traits<internal::operator_##Name##_traits, T1, T2>::ret	\
   Name(const T1& lhs, const T2& rhs)						\
   {										\
-    is_a(optraits<T1>, oln::optraits_scalar)::ensure();				\
-    is_a(optraits<T2>, oln::optraits_scalar)::ensure();				\
+    is_a(optraits<T1>, ntg::optraits_scalar)::ensure();				\
+    is_a(optraits<T2>, ntg::optraits_scalar)::ensure();				\
 										\
     typedef typename								\
       internal::deduce_from_traits<internal::operator_##Name##_traits,		\
@@ -89,8 +89,8 @@
   template <class T1, class T2> inline							\
   static bool Name (const T1& lhs, const T2& rhs)					\
   {											\
-    is_a(optraits<T1>, oln::optraits_scalar)::ensure();					\
-    is_a(optraits<T2>, oln::optraits_scalar)::ensure();					\
+    is_a(optraits<T1>, ntg::optraits_scalar)::ensure();					\
+    is_a(optraits<T2>, ntg::optraits_scalar)::ensure();					\
 											\
     typedef typename									\
       internal::deduce_from_traits<internal::operator_cmp_traits,			\
@@ -106,7 +106,7 @@
 											\
   template <class T> inline 								\
   static bool										\
-  Name##_impl(const type::any_const_class<T> lhs, const type::any_const_class<T> rhs)	\
+  Name##_impl(const ntg::any_const_class<T> lhs, const ntg::any_const_class<T> rhs)	\
   { return lhs.self() Op rhs.self(); }
 
 
@@ -121,8 +121,8 @@
   template <class T1, class T2> inline						\
   static T1& Name(T1& lhs, const T2& rhs)					\
   {										\
-    is_a(optraits<T1>, oln::optraits_int)::ensure();				\
-    is_a(optraits<T2>, oln::optraits_int)::ensure();				\
+    is_a(optraits<T1>, ntg::optraits_int)::ensure();				\
+    is_a(optraits<T2>, ntg::optraits_int)::ensure();				\
 										\
     return Name##_impl<T1,T2>(lhs, rhs);					\
   }										\
@@ -135,14 +135,14 @@
   }										\
 										\
   template <class T1, class T2> inline						\
-  static T1& Name##_impl(rec_int<T1>& lhs, const type::any_const_class<T2>& rhs) \
+  static T1& Name##_impl(rec_int<T1>& lhs, const ntg::any_const_class<T2>& rhs) \
   {										\
     lhs.self() = lhs.self().value() Op rhs.self();				\
     return lhs.self();								\
   }										\
 										\
   template <class T1, class T2> inline						\
-  static T1& Name##_impl(type::any_class<T1>& lhs, const rec_int<T2>& rhs)	\
+  static T1& Name##_impl(ntg::any_class<T1>& lhs, const rec_int<T2>& rhs)	\
   {										\
     lhs.self() = lhs.self() Op rhs.self().value();				\
     return lhs.self();								\
@@ -154,8 +154,8 @@
   internal::deduce_from_traits<internal::operator_##Name##_traits, T1, T2>::ret	\
   Name(const T1& lhs, const T2& rhs)						\
   {										\
-    is_a(optraits<T1>, oln::optraits_int)::ensure();				\
-    is_a(optraits<T2>, oln::optraits_int)::ensure();				\
+    is_a(optraits<T1>, ntg::optraits_int)::ensure();				\
+    is_a(optraits<T2>, ntg::optraits_int)::ensure();				\
 										\
     typedef typename								\
       internal::deduce_from_traits<internal::operator_##Name##_traits,		\
@@ -167,4 +167,4 @@
 
 
 
-#endif // ndef OLENA_VALUE_OPTRAITS_SCALAR_DEFS_HH
+#endif // ndef NTG_OPTRAITS_SCALAR_DEFS_HH

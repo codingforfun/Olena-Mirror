@@ -137,7 +137,7 @@ namespace oln {
 	  current = start;
 	  for (coord i = 0; i < len; ++i)
 	    {
-	      image[current] = cast::force<Value(I)>(tmp1[i] + tmp2[i]);
+	      image[current] = ntg::cast::force<Value(I)>(tmp1[i] + tmp2[i]);
 	      current += d;
 	    }
 	}
@@ -247,7 +247,7 @@ namespace oln {
 
 	  Iter(I) it(in);
 	  for_all(it)
-	    work_img[it] = cast::force<sfloat>(in[it]);
+	    work_img[it] = ntg::cast::force<sfloat>(in[it]);
 
 	  _gaussian<I::dim>::doit(work_img, coef);
 

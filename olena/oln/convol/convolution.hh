@@ -1,4 +1,4 @@
-// Copyright (C) 2001  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -52,7 +52,7 @@ namespace oln {
       {
 	Exact_cref(I, input);
 	Exact_cref(Win, win);
-	meta::eq<I::dim, Win::dim>::ensure();
+	mlc::eq<I::dim, Win::dim>::ensure();
 
 	typename mute<I_, DestValue>::ret output(input.size());
 	border::adapt_copy(input, win.delta());
@@ -73,7 +73,7 @@ namespace oln {
       template<class DestValue, class I_, class Info, class Win_> 
       typename mute<I_, DestValue>::ret
       convolve(const image < I_ >& _input, 
-	       const meta::array2d<Info, Win_ >& _arr)
+	       const mlc::array2d<Info, Win_ >& _arr)
       {
 	return convolve<DestValue>(_input, static_cast< w_window2d<Win_> >(_arr));
 	// FIXME: Should be w_window<_T_arr>.  Adjust #include once done.

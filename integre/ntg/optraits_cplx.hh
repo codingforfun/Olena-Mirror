@@ -1,4 +1,4 @@
-// Copyright (C) 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,15 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_OPTRAITS_CPLX_HH
-# define OLENA_VALUE_OPTRAITS_CPLX_HH
+#ifndef NTG_OPTRAITS_CPLX_HH
+# define NTG_OPTRAITS_CPLX_HH
 
 # include <mlc/bool.hh>
 # include <mlc/is_a.hh>
 
 # include <ntg/predecls.hh>
 # include <ntg/to_oln.hh>
-
 # include <ntg/optraits.hh>
 # include <ntg/typetraits_builtins.hh>
 # include <ntg/behaviour.hh>
@@ -46,7 +45,7 @@
 template <class T1, class T2> inline						\
 static cplx<Rep, T1>& Name(cplx<Rep, T1>& lhs, const T2& rhs)			\
 {										\
-  is_a(optraits<T2>, oln::optraits_scalar)::ensure();				\
+  is_a(optraits<T2>, ntg::optraits_scalar)::ensure();				\
   lhs.first() Op rhs;								\
   return lhs;									\
 }
@@ -55,7 +54,7 @@ static cplx<Rep, T1>& Name(cplx<Rep, T1>& lhs, const T2& rhs)			\
 template <class T1, class T2> inline						\
 static cplx<Rep, T1>& Name(cplx<Rep, T1>& lhs, const T2& rhs)			\
 {										\
-  is_a(optraits<T2>, oln::optraits_scalar)::ensure();				\
+  is_a(optraits<T2>, ntg::optraits_scalar)::ensure();				\
   lhs.first() Op rhs;								\
   lhs.second() Op rhs;								\
   return lhs;									\
@@ -65,7 +64,7 @@ static cplx<Rep, T1>& Name(cplx<Rep, T1>& lhs, const T2& rhs)			\
 template <class T1, class T2> inline						\
 static cplx<polar, T1>& Name(cplx<polar, T1>& lhs, const T2& rhs)		\
 {										\
-  is_a(optraits<T2>, oln::optraits_scalar)::ensure();				\
+  is_a(optraits<T2>, ntg::optraits_scalar)::ensure();				\
   cplx<rect, dfloat> tmp(lhs);							\
   tmp.real() Op rhs;								\
   lhs = tmp;									\
@@ -145,7 +144,7 @@ cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_trai
                              T1, T2>::ret>							\
 Name(const cplx<Rep, T1>& lhs, const T2& rhs)							\
 {												\
-  is_a(optraits<T2>, oln::optraits_scalar)::ensure();						\
+  is_a(optraits<T2>, ntg::optraits_scalar)::ensure();						\
   typedef											\
     cplx<Rep, typename internal::deduce_from_traits<internal::operator_##Name##_traits,		\
     T1, T2>::ret> return_type;									\
@@ -199,7 +198,7 @@ Name(const vec<2, T1>& lhs, const cplx<Rep, T2>& rhs)						\
   return Name(rhs, lhs).invert();								\
 }
 
-namespace oln
+namespace ntg
 {
   //
   //  optraits for cplx<rect, T>
@@ -345,7 +344,8 @@ namespace oln
 
   };
 
-  namespace internal {
+  namespace internal 
+  {
     
     // Operators traits macros
 
@@ -402,8 +402,8 @@ namespace oln
       typedef cplx<R1, T1> impl;
     };
 
-  } // end of namespace internal
+  } // end of internal
 
-} // end of namespace oln
+} // end of ntg
 
-#endif // ndef OLENA_VALUE_OPTRAITS_CPLX_HH
+#endif // ndef NTG_OPTRAITS_CPLX_HH

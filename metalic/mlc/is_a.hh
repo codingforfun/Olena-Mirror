@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_META_TYPE_HH
-# define OLENA_META_TYPE_HH
+#ifndef METALIC_IS_A_HH
+# define METALIC_IS_A_HH
 
 
 # include <mlc/type.hh>
@@ -35,12 +35,14 @@
 
 // private macro so do _not_ use it
 # define _is_a__check_result \
-sizeof(helper<T,U>::check( (T*) helper<T,U>::makeT() )) == sizeof(type::internal::_yes)
+sizeof(helper<T,U>::check( (T*) helper<T,U>::makeT() )) == sizeof(mlc::internal::_yes)
 
 
-namespace type {
+namespace mlc 
+{
 
-  namespace internal {
+  namespace internal 
+  {
 
     //
     //  wrap
@@ -121,7 +123,7 @@ namespace type {
       
       template<class T, class U>
       struct check
-	: public oln::meta::returns_bool_<( _is_a__check_result )>
+	: public mlc::returns_bool_<( _is_a__check_result )>
       {
       };
     };
@@ -144,7 +146,7 @@ namespace type {
 
       template<class T, template<class> class U>
       struct check
-	: public oln::meta::returns_bool_<( _is_a__check_result )>
+	: public mlc::returns_bool_<( _is_a__check_result )>
       {
       };
     };
@@ -167,29 +169,28 @@ namespace type {
 
       template<class T, template<class,class> class U>
       struct check
-	: public oln::meta::returns_bool_<( _is_a__check_result )>
+	: public mlc::returns_bool_<( _is_a__check_result )>
       {
       };
     };
 
-  } // end of namespace type::internal
+  } // end of internal
 
-} // end of namespace type
+} // end of mlc
 
 // private macros: do _not_ use them
-# define is_a__2nd_is_meta(T,U) type::internal::_is_a< id_of_typeform(U) >::check<T, U>
+# define is_a__2nd_is_meta(T,U) mlc::internal::_is_a< id_of_typeform(U) >::check<T, U>
 
 // client macros
 
-# define id_of_typeform(T) sizeof(type::form::get<T>())
-//# define is_a(T,U) oln::type::internal::_is_a< id_of_typeform(U) >::check<T, U>
+# define id_of_typeform(T) sizeof(mlc::form::get<T>())
 
 template <class T>
 struct id_ { typedef T ret; };
 
 
-// FIXME: can we get rid of type::wrap ?
-# define is_a(T, U) type::internal::wrap<typename type::internal::_is_a< id_of_typeform(U) >::check<T, U> >
-# define is_a_(T, U) type::internal::wrap<type::internal::_is_a< id_of_typeform(U) >::check<T, U> >
+// FIXME: can we get rid of mlc::wrap ?
+# define is_a(T, U) mlc::internal::wrap<typename mlc::internal::_is_a< id_of_typeform(U) >::check<T, U> >
+# define is_a_(T, U) mlc::internal::wrap<mlc::internal::_is_a< id_of_typeform(U) >::check<T, U> >
 
-#endif // ndef OLENA_META_TYPE_HH
+#endif // ndef METALIC_IS_A_HH

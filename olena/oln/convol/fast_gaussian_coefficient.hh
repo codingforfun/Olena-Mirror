@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -61,7 +61,7 @@ namespace oln {
 			       FloatT b0, FloatT b1,
 			       FloatT c0, FloatT c1,
 			       FloatT w0, FloatT w1,
-			       dfloat s, FilterType filter_type);
+			       ntg::dfloat s, FilterType filter_type);
 	  std::vector<FloatT>	n, d, nm, dm;
 	  FloatT		sumA, sumC;
 	};
@@ -74,7 +74,7 @@ namespace oln {
 			       FloatT b0, FloatT b1,
 			       FloatT c0, FloatT c1,
 			       FloatT w0, FloatT w1,
-			       dfloat s, FilterType filter_type)
+			       ntg::dfloat s, FilterType filter_type)
 	{
 	  n.reserve(5);
 	  d.reserve(5);

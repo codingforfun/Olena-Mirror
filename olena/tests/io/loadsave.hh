@@ -10,7 +10,12 @@
 #include "data.hh"
 
 using namespace oln;
-using namespace std;
+using namespace ntg;
+
+using std::cout;
+using std::endl;
+using std::flush;
+using std::string;
 
 template<typename T>
 bool compare(const T& a, const T& b)
@@ -38,7 +43,7 @@ loadsave(const string& name, const string& savename)
 
   T im, im2;
 
-  cout << typename_of<T>() << endl;
+  cout << ntg::typename_of<T>() << endl;
   cout << "  load(" << name << ")" << flush;
   if (! io::load(im, name))
     {

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_OPTRAITS_BIN_HH
-# define OLENA_VALUE_OPTRAITS_BIN_HH
+#ifndef NTG_OPTRAITS_BIN_HH
+# define NTG_OPTRAITS_BIN_HH
 
 # include <ntg/global_ops.hh>
 # include <ntg/typetraits.hh>
@@ -37,7 +37,7 @@
 # include <string>
 # include <sstream>
 
-namespace oln
+namespace ntg
 {
   
   //
@@ -175,8 +175,8 @@ namespace oln
       typedef bin impl;
     };
 
-  } // end of namespace internal
+  } // end of internal
     
-} // end of namespace oln
+} // end of ntg
 
-#endif // ndef OLENA_VALUE_OPTRAITS_BIN_HH
+#endif // ndef NTG_OPTRAITS_BIN_HH

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_INTERVAL_HH
-# define OLENA_VALUE_INTERVAL_HH
+#ifndef NTG_INTERVAL_HH
+# define NTG_INTERVAL_HH
 
 # include <ntg/config/system.hh>
 # include <ntg/optraits.hh>
@@ -34,10 +34,12 @@
 # include <string>
 # include <sstream>
 
-namespace oln
+namespace ntg
 {
+
   namespace type_definitions
   {
+
     template <class T, T i_min, T i_max>
     class bounded
     {
@@ -79,7 +81,9 @@ namespace oln
 	return out.str();
       }
     };
-  } // type_definitions
-} // end of namespace oln
 
-#endif // ndef OLENA_VALUE_INTERVAL_HH
+  } // end of type_definitions
+
+} // end of ntg
+
+#endif // ndef NTG_INTERVAL_HH

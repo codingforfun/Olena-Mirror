@@ -1,8 +1,7 @@
 #include <mlc/bool.hh>
 #include <mlc/is_a.hh>
 
-using namespace oln;
-using namespace meta;
+using namespace mlc;
 
 class A {};
 class B : public A {};

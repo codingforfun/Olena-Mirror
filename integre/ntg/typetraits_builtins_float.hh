@@ -25,14 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_TYPETRAITS_BUILTINS_FLOAT_HH
-# define OLENA_VALUE_TYPETRAITS_BUILTINS_FLOAT_HH
+#ifndef NTG_TYPETRAITS_BUILTINS_FLOAT_HH
+# define NTG_TYPETRAITS_BUILTINS_FLOAT_HH
 
 # include <ntg/typetraits.hh>
 # include <ntg/optraits.hh>
 # include <ntg/behaviour.hh>
 
-namespace oln
+namespace ntg
 {
 
   template <>
@@ -79,6 +79,6 @@ namespace oln
     typedef self op_traits;
   };
 
-} // end of namespace oln
+} // end of ntg
 
-#endif // ndef OLENA_VALUE_TYPETRAITS_BUILTINS_FLOAT_HH
+#endif // ndef NTG_TYPETRAITS_BUILTINS_FLOAT_HH

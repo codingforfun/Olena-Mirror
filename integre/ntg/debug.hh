@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,14 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_DEBUG_HH
-# define OLENA_VALUE_DEBUG_HH
+#ifndef NTG_DEBUG_HH
+# define NTG_DEBUG_HH
 
 # include <ntg/config/system.hh>
 # include <ntg/optraits.hh>
+
 # include <string>
 
-namespace oln {
+namespace ntg
+{
 
   //
   //  usage: typename_of_var(obj)
@@ -52,4 +54,4 @@ namespace oln {
 
 }
 
-#endif // ndef OLENA_VALUE_DEBUG_HH
+#endif // ndef NTG_DEBUG_HH

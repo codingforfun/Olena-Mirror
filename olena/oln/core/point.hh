@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,11 +31,11 @@
 # include <mlc/type.hh>
 
 
-namespace oln {
+namespace oln
+{
 
-
-  template<class Inferior = type::bottom>
-  struct point : public type::any< point<Inferior> >
+  template<class Inferior = mlc::bottom>
+  struct point : public mlc::any< point<Inferior> >
   {
     typedef Inferior inferior;
     static std::string name() 
@@ -56,7 +56,6 @@ namespace oln {
   struct point_for_dim<DIM> {			\
     typedef TYPE ret;				\
   };
-
 
 } // end of oln
 

@@ -8,6 +8,7 @@
 using namespace oln;
 using namespace oln::level;
 using namespace oln::morpho;
+using namespace ntg;
 
 #define OK_OR_FAIL				\
       std::cout << "OK" << std::endl;		\

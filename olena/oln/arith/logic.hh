@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -40,13 +40,13 @@ namespace oln {
 
     // binary operators
 
-    _OLN_ARITH_DECLARE_BINFIXEDTYPE_FUNCTORS(logic_and, bin,
+    _OLN_ARITH_DECLARE_BINFIXEDTYPE_FUNCTORS(logic_and, ntg::bin,
 					     val1 && val2,
 					     val && _cst);
-    _OLN_ARITH_DECLARE_BINFIXEDTYPE_FUNCTORS(logic_or, bin,
+    _OLN_ARITH_DECLARE_BINFIXEDTYPE_FUNCTORS(logic_or, ntg::bin,
 					     val1 || val2,
 					     val || _cst);
-    _OLN_ARITH_DECLARE_BINFIXEDTYPE_FUNCTORS(logic_and_not, bin,
+    _OLN_ARITH_DECLARE_BINFIXEDTYPE_FUNCTORS(logic_and_not, ntg::bin,
 					     val1 && ! val2,
 					     val && ! _cst);
 
@@ -56,7 +56,7 @@ namespace oln {
 
     // unary operators
 
-    _OLN_ARITH_DECLARE_UNFIXEDTYPE_FUNCTOR(logic_not, bin, ! val);
+    _OLN_ARITH_DECLARE_UNFIXEDTYPE_FUNCTOR(logic_not, ntg::bin, ! val);
     _OLN_ARITH_DECLARE_NONGENERICUNOP_PROCS(logic_not);
 
   } // end of arith

@@ -41,7 +41,7 @@ namespace oln {
   class point2d : public pointnd< 2, point2d >
   {
   public:
-    typedef type::bottom		inferior;
+    typedef mlc::bottom		inferior;
     typedef pointnd< 2, point2d >	super;
     typedef dpoint2d			dpoint;
 

@@ -1,7 +1,6 @@
 #include <mlc/math.hh>
 
-using namespace oln;
-using namespace meta;
+using namespace mlc;
 
 int main()
 {

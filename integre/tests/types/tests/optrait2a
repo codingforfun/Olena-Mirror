@@ -1,2 +1,2 @@
-sfloat s = oln::optraits<sfloat>::max(); // COMPFAIL
+sfloat s = optraits<sfloat>::max(); // COMPFAIL
 (void) s;

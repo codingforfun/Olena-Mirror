@@ -1,4 +1,4 @@
-// Copyright (C) 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_OPTRAITS_VEC_HH
-# define OLENA_VALUE_OPTRAITS_VEC_HH
+#ifndef NTG_OPTRAITS_VEC_HH
+# define NTG_OPTRAITS_VEC_HH
 
 # include <mlc/bool.hh>
 # include <mlc/is_a.hh>
@@ -47,8 +47,8 @@
 template <class T1, class T2> inline			\
 static T1& Name(T1& lhs, const T2& rhs)			\
 {							\
-  is_a(optraits<T1>, oln::optraits_vector)::ensure();	\
-  is_a(optraits<T2>, oln::optraits_vector)::ensure();	\
+  is_a(optraits<T1>, ntg::optraits_vector)::ensure();	\
+  is_a(optraits<T2>, ntg::optraits_vector)::ensure();	\
   precondition(lhs.size() == rhs.size());		\
   unsigned s = lhs.size();				\
   for (unsigned i = 0; i < s; ++i)			\
@@ -61,8 +61,8 @@ static T1& Name(T1& lhs, const T2& rhs)			\
 template <class T1, class T2> inline			\
 static T1& Name(T1& lhs, const T2& rhs)			\
 {							\
-  is_a(optraits<T1>, oln::optraits_vector)::ensure();	\
-  is_a(optraits<T2>, oln::optraits_scalar)::ensure();	\
+  is_a(optraits<T1>, ntg::optraits_vector)::ensure();	\
+  is_a(optraits<T2>, ntg::optraits_scalar)::ensure();	\
   unsigned s = lhs.size();				\
   for (unsigned i = 0; i < s; ++i)			\
     lhs[i] Op rhs;					\
@@ -77,8 +77,8 @@ internal::deduce_from_traits<internal::operator_##Name##_traits, 	\
                              T1, T2>::ret   				\
 Name(const T1& lhs, const T2& rhs)					\
 {									\
-  is_a(optraits<T1>, oln::optraits_vector)::ensure();			\
-  is_a(optraits<T2>, oln::optraits_vector)::ensure();			\
+  is_a(optraits<T1>, ntg::optraits_vector)::ensure();			\
+  is_a(optraits<T2>, ntg::optraits_vector)::ensure();			\
   typedef typename                          				\
     internal::deduce_from_traits<internal::operator_##Name##_traits,   	\
     T1, T2>::ret return_type; 						\
@@ -87,7 +87,7 @@ Name(const T1& lhs, const T2& rhs)					\
   return result;							\
 }
 
-namespace oln
+namespace ntg
 {
   //
   //  optraits for vec<N,T>
@@ -134,8 +134,8 @@ namespace oln
 				 T1, T2>::ret
     div(const T1& lhs, const T2& rhs)
     {
-      is_a(optraits<T1>, oln::optraits_vector)::ensure();
-      is_a(optraits<T2>, oln::optraits_scalar)::ensure();
+      is_a(optraits<T1>, ntg::optraits_vector)::ensure();
+      is_a(optraits<T2>, ntg::optraits_scalar)::ensure();
       typedef typename
 	internal::deduce_from_traits<internal::operator_div_traits,
 	T1, T2>::ret return_type;
@@ -152,8 +152,8 @@ namespace oln
 				 T1, T2>::ret
     mod(const T1& lhs, const T2& rhs)
     {
-      is_a(optraits<T1>, oln::optraits_vector)::ensure();
-      is_a(optraits<T2>, oln::optraits_scalar)::ensure();
+      is_a(optraits<T1>, ntg::optraits_vector)::ensure();
+      is_a(optraits<T2>, ntg::optraits_scalar)::ensure();
       typedef typename
 	internal::deduce_from_traits<internal::operator_mod_traits,
 	T1, T2>::ret return_type;
@@ -173,8 +173,8 @@ namespace oln
     {
       typedef vec<M, T1> vec1;
       typedef vec<M, T2> vec2;
-      is_a(optraits<vec1>, oln::optraits_vector)::ensure();
-      is_a(optraits<vec2>, oln::optraits_vector)::ensure();
+      is_a(optraits<vec1>, ntg::optraits_vector)::ensure();
+      is_a(optraits<vec2>, ntg::optraits_vector)::ensure();
       typedef typename
 	internal::deduce_from_traits<internal::operator_times_traits,
 	vec<M, T1>, vec<M, T2> >::ret return_type;
@@ -195,8 +195,8 @@ namespace oln
 				 T1, T2>::ret
     times(const rec_vector<T1>& lhs, const T2& rhs)
     {
-      is_a(optraits<T1>, oln::optraits_vector)::ensure();
-      is_a(optraits<T2>, oln::optraits_scalar)::ensure();
+      is_a(optraits<T1>, ntg::optraits_vector)::ensure();
+      is_a(optraits<T2>, ntg::optraits_scalar)::ensure();
       typedef typename
 	internal::deduce_from_traits<internal::operator_times_traits,
 	T1, T2>::ret return_type;
@@ -219,8 +219,8 @@ namespace oln
     template <class T1, class T2>
     inline static bool cmp_eq (const T1& lhs, const T2& rhs)
     {
-      is_a(optraits<T1>, oln::optraits_vector)::ensure();
-      is_a(optraits<T2>, oln::optraits_vector)::ensure();
+      is_a(optraits<T1>, ntg::optraits_vector)::ensure();
+      is_a(optraits<T2>, ntg::optraits_vector)::ensure();
       precondition(lhs.size() == rhs.size());
 
       typedef typename
@@ -236,7 +236,8 @@ namespace oln
   };
 
 
-  namespace internal {
+  namespace internal
+  {
 
     //
     // Operators traits
@@ -340,7 +341,8 @@ namespace oln
       typedef vec<N, T1> impl;
     };
 
-  } // end of namespace internal
-} // namespace oln
+  } // end of internal
 
-#endif // ndef OLENA_VALUE_OPTRAITS_VEC_HH
+} // end of ntg
+
+#endif // ndef NTG_OPTRAITS_VEC_HH

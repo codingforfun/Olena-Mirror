@@ -32,8 +32,8 @@
 
 namespace oln {
 
-  template<class Inferior = type::bottom>
-  struct struct_elt : public type::any< struct_elt< Inferior > >
+  template<class Inferior = mlc::bottom>
+  struct struct_elt : public mlc::any< struct_elt< Inferior > >
   {
     typedef Inferior inferior;
 

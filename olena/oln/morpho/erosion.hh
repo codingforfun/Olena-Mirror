@@ -60,7 +60,7 @@ namespace oln {
      * see: morpho::n_erosion
      * see: morpho::dilation
      * ex:
-     * $ image2d<bin> im = load("object.pbm");
+     * $ image2d<ntg::bin> im = load("object.pbm");
      * $ save(morpho::erosion(im, win_c8p()), "out.pbm");
      * exi: object.pbm
      * exo: out.pbm
@@ -70,7 +70,7 @@ namespace oln {
     {
       Exact_cref(I, input);
       Exact_cref(E, se);
-      meta::eq<I::dim, E::dim>::ensure();
+      mlc::eq<I::dim, E::dim>::ensure();
       Concrete(I) output(input.size());
       border::adapt_copy(input, se.delta());
       Iter(I) p(input);
@@ -97,7 +97,7 @@ namespace oln {
 			   const struct_elt<E_>& se,
 			   unsigned n)
     {
-      //meta::eq<I_::dim, E_::dim>::ensure();
+      //mlc::eq<I_::dim, E_::dim>::ensure();
       precondition(n > 0);
       Exact_cref(I, input);
       Concrete(I_) output = input.clone();

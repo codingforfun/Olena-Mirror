@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,12 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_NRGB_HH
-# define OLENA_VALUE_NRGB_HH
+#ifndef NTG_NRGB_HH
+# define NTG_NRGB_HH
 
 # include <ntg/color.hh>
 
-namespace oln {
+namespace ntg
+{
 
   /* NTSC RGB */
   
@@ -56,7 +57,8 @@ namespace oln {
     return tmp;					\
   }
 
-  namespace nrgb_8_color {
+  namespace nrgb_8_color 
+  {
 
     DEFINE_COLOR(nrgb_8, white, 255, 255, 255);
     DEFINE_COLOR(nrgb_8, gray,  128, 128, 128);
@@ -67,9 +69,12 @@ namespace oln {
     DEFINE_COLOR(nrgb_8, yellow,255, 255, 0);
     DEFINE_COLOR(nrgb_8, cyan,  0,   255, 255);
     DEFINE_COLOR(nrgb_8, pink,  255, 0,   255);
+
   } // end of nrgb_8_color
 
-  namespace nrgb_16_color {
+  namespace nrgb_16_color 
+  {
+
     DEFINE_COLOR(nrgb_16, white, 255, 255, 255);
     DEFINE_COLOR(nrgb_16, gray,  128, 128, 128);
     DEFINE_COLOR(nrgb_16, black, 0,   0,   0);
@@ -79,9 +84,12 @@ namespace oln {
     DEFINE_COLOR(nrgb_16, yellow,255, 255, 0);
     DEFINE_COLOR(nrgb_16, cyan,  0,   255, 255);
     DEFINE_COLOR(nrgb_16, pink,  255, 0,   255);
+
   } // end of nrgb_16_color
 
-  namespace nrgb_32_color {
+  namespace nrgb_32_color 
+  {
+  
     DEFINE_COLOR(nrgb_32, white, 255, 255, 255);
     DEFINE_COLOR(nrgb_32, gray,  128, 128, 128);
     DEFINE_COLOR(nrgb_32, black, 0,   0,   0);
@@ -91,8 +99,9 @@ namespace oln {
     DEFINE_COLOR(nrgb_32, yellow,255, 255, 0);
     DEFINE_COLOR(nrgb_32, cyan,  0,   255, 255);
     DEFINE_COLOR(nrgb_32, pink,  255, 0,   255);
+    
   } // end of nrgb_32_color
     
-} // end of oln.
+} // end of ntg
 
-#endif // OLENA_VALUE_NRGB_HH
+#endif // NTG_NRGB_HH

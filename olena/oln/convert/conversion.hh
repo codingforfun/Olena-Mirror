@@ -53,8 +53,8 @@ namespace oln {
        }
     */
 
-    template<class Inferior = type::bottom>
-    struct conversion : public type::any< conversion<Inferior> >
+    template<class Inferior = mlc::bottom>
+    struct conversion : public mlc::any< conversion<Inferior> >
     {
       typedef Inferior inferior;
 
@@ -82,7 +82,7 @@ namespace oln {
        this case, output<T>::ret has the same definition for any T.
        Such conversions should inherit from the conversion_to_type<>
        class.  */
-    template<class Result_Type, class Inferior = type::bottom>
+    template<class Result_Type, class Inferior = mlc::bottom>
     struct conversion_to_type :
       public conversion< conversion_to_type< Result_Type, Inferior > >
     {
@@ -105,15 +105,15 @@ namespace oln {
 
       static std::string name() {
 	return std::string("conversion_to_type<")
-	  + typename_of<Result_Type>() + ", "
-	  + typename_of<Inferior>() + ">";
+	  + ntg::typename_of<Result_Type>() + ", "
+	  + ntg::typename_of<Inferior>() + ">";
       }
     };
 
     /* If both input and output types of the conversion are fixed.
        Inherit from conversion_from_type_to_type<>.  */
     template<class Argument_Type, class Result_Type,
-	     class Inferior = type::bottom>
+	     class Inferior = mlc::bottom>
     struct conversion_from_type_to_type :
       public conversion_to_type< Result_Type,
         conversion_from_type_to_type< Argument_Type, Result_Type, Inferior> >
@@ -126,9 +126,9 @@ namespace oln {
 
       static std::string name() {
 	return std::string("conversion_from_type_to_type<")
-	  + typename_of<Argument_Type>() + ", "
-	  + typename_of<Result_Type>() + ", "
-	  + typename_of<Inferior>() + ">";
+	  + ntg::typename_of<Argument_Type>() + ", "
+	  + ntg::typename_of<Result_Type>() + ", "
+	  + ntg::typename_of<Inferior>() + ">";
       }
     };
 

@@ -35,8 +35,8 @@ Concrete(I_) thickening(const image<I_>& _input,
   Exact_cref(I, input);
   Exact_cref(E1, se1);
   Exact_cref(E2, se2);
-  meta::eq<I::dim, E1::dim>::ensure();
-  meta::eq<I::dim, E2::dim>::ensure();
+  mlc::eq<I::dim, E1::dim>::ensure();
+  mlc::eq<I::dim, E2::dim>::ensure();
 
   Concrete(I) dilated = dilation(input, se1);
   Concrete(I) eroded =  erosion(input, se2);

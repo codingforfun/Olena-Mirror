@@ -34,7 +34,7 @@
 # include <ntg/optraits_builtins_int_defs.hh>
 # include <ntg/typetraits_builtins_int.hh>
 
-// FIXME: shouldn't this be included by system.hh ?
+// FIXME: isn't this included by system.hh ?
 # include <limits.h>
 
 # include <string>
@@ -48,7 +48,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-namespace oln
+namespace ntg
 {
 
   OPTRAITS_BUILTIN_INT_U(unsigned long,  ULONG_MAX);
@@ -61,6 +61,6 @@ namespace oln
   OPTRAITS_BUILTIN_INT_S(signed short, SHRT_MIN, SHRT_MAX);
   OPTRAITS_BUILTIN_INT_S(signed char,  CHAR_MIN, CHAR_MAX);
 
-} // end of namespace oln
+} // end of ntg
 
 #endif // ndef OPTRAITS_BUILTINS_INT_HH

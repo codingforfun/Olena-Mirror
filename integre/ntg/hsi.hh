@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,12 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_HSI_HH
-# define OLENA_VALUE_HSI_HH
+#ifndef NTG_HSI_HH
+# define NTG_HSI_HH
 
 # include <ntg/color.hh>
 
-namespace oln {
+namespace ntg
+{
 
   enum hsi_comp {
     hsi_H = 0,
@@ -47,6 +48,6 @@ namespace oln {
   typedef color<3,16,hsi_traits> hsi_16;
   typedef color<3,32,hsi_traits> hsi_32;
 
-} // oln
+} // end of ntg
 
-#endif // OLENA_VALUE_HSI_HH
+#endif // NTG_HSI_HH

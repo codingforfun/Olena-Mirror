@@ -41,7 +41,7 @@ namespace oln {
     // holds data, that is, every 1d image type which is not a proxy.
 
 
-    template<class T, class Inferior = type::bottom>
+    template<class T, class Inferior = mlc::bottom>
     class _real_image1d : public _image1d< T, _real_image1d<T,Inferior> >
     {
     public:

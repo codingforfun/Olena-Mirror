@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,12 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_CPLX_REPRESENTATION_HH
-# define OLENA_VALUE_CPLX_REPRESENTATION_HH
+#ifndef NTG_CPLX_REPRESENTATION_HH
+# define NTG_CPLX_REPRESENTATION_HH
 
-namespace oln {
+namespace ntg
+{
 
-  namespace type_definitions {
+  namespace type_definitions
+  {
 
     // Different representations of cplx :
     typedef enum {
@@ -38,8 +40,8 @@ namespace oln {
       polar
     } cplx_representation;
 
-  } // end of namespace type_definitions
+  } // end of type_definitions
 
-} // end of namespace oln
+} // end of ntg
 
-#endif // OLENA_VALUE_CPLX_REPRESENTATION_HH
+#endif // NTG_CPLX_REPRESENTATION_HH

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_ALL_HH
-# define OLENA_VALUE_ALL_HH
+#ifndef NTG_ALL_HH
+# define NTG_ALL_HH
 
 # include <ntg/config/system.hh>
 
@@ -65,4 +65,4 @@
 
 # include <ntg/cast.hh>
 
-#endif // ndef OLENA_VALUE_ALL_HH
+#endif // ndef NTG_ALL_HH

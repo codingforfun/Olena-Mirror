@@ -42,13 +42,13 @@ namespace oln {
   namespace internal {
 
 
-    template<class Inferior = type::bottom>
-    class _iter2d : public type::any< _iter2d<Inferior> >
+    template<class Inferior = mlc::bottom>
+    class _iter2d : public mlc::any< _iter2d<Inferior> >
     {
     public:
       typedef Inferior inferior;
 //       typedef _iter2d<Inferior> self;
-//       typedef typename type::exact<self>::ret exact;
+//       typedef typename mlc::exact<self>::ret exact;
 
       const point2d& point_ref() const
       {
@@ -111,19 +111,19 @@ namespace oln {
       //   bool _is_at_end() const;
       //   void _goto_next();
 
-      internal::_begin operator=(internal::_begin b)
+      mlc::_begin operator=(mlc::_begin b)
       {
 	to_exact(this)->_goto_begin();
 	return b;
       }
 
-      internal::_end operator=(internal::_end e)
+      mlc::_end operator=(mlc::_end e)
       {
 	to_exact(this)->_goto_end();
 	return e;
       }
 
-      bool operator==(internal::_end) const
+      bool operator==(mlc::_end) const
       {
 	return to_exact(this)->_is_at_end();
       }
@@ -137,15 +137,15 @@ namespace oln {
 
       // deduced methods:
 
-      bool operator!=(internal::_end e) const
+      bool operator!=(mlc::_end e) const
       {
 	return ! this->operator==(e);
       }
 
-//       typename type::exact<self>::ret operator++(int)
+//       typename mlc::exact<self>::ret operator++(int)
 //       {
 // 	precondition(*this != end);
-// 	typename type::exact<self>::ret tmp = to_exact(*this);
+// 	typename mlc::exact<self>::ret tmp = to_exact(*this);
 // 	this->operator++();
 // 	return tmp;
 //       }

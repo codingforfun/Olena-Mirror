@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_GLOBAL_OPS_TRAITS_HH
-# define OLENA_VALUE_GLOBAL_OPS_TRAITS_HH
+#ifndef NTG_GLOBAL_OPS_TRAITS_HH
+# define NTG_GLOBAL_OPS_TRAITS_HH
 
 # include <mlc/bool.hh>
 
@@ -46,10 +46,12 @@
 //
 ////////////////////////////////////////////////////////////////////
 
-namespace oln
+namespace ntg
 {
+
   namespace internal
   {
+
     struct undefined_traits {};
 
     template <class T>
@@ -174,7 +176,7 @@ namespace oln
     //  Dev note : 
     //  When using g++ >= 3.1, using deduce_from_traits<operator_xxx_traits, T, U>
     //  may fail at compile time, using 
-    //  deduce_from_traits<oln::internal::operator_xxx_traits, T, U> should resolve
+    //  deduce_from_traits<ntg::internal::operator_xxx_traits, T, U> should resolve
     //  the problem.
     //
   
@@ -220,13 +222,13 @@ namespace oln
       typedef typename internal::to_oln<T2_op>::ret T2_oln;
 
       typedef typename
-      meta::if_<is_defined<typename traits<T1_op, T2_op>::ret>::ret,
+      mlc::if_<is_defined<typename traits<T1_op, T2_op>::ret>::ret,
 		get_order<T1_op, T2_op>, typename
-		meta::if_<is_defined<typename traits<T2_op, T1_op>::ret>::ret && traits<T2_op, T1_op>::commutative,
+		mlc::if_<is_defined<typename traits<T2_op, T1_op>::ret>::ret && traits<T2_op, T1_op>::commutative,
 			  get_order_inv<T1_op, T2_op>, typename
-			  meta::if_<is_defined<typename traits<T1_oln, T2_oln>::ret>::ret,
+			  mlc::if_<is_defined<typename traits<T1_oln, T2_oln>::ret>::ret,
 				    get_order<T1_oln, T2_oln>, typename
-				    meta::if_<is_defined<typename traits<T2_oln, T1_oln>::ret>::ret && traits<T2_oln, T1_oln>::commutative,
+				    mlc::if_<is_defined<typename traits<T2_oln, T1_oln>::ret>::ret && traits<T2_oln, T1_oln>::commutative,
 					      get_order_inv<T1_oln, T2_oln>,
 					      meta_undefined_traits<undefined_traits>
 					     >::ret_t
@@ -243,7 +245,8 @@ namespace oln
       typedef typename traits<traits_lhs_type, traits_rhs_type>::impl impl;
     };
 
-  } // end of namespace internal  
-} // end of namespace oln
+  } // end of internal  
 
-#endif // ndef OLENA_VALUE_GLOBAL_OPS_TRAITS_HH
+} // end of ntg
+
+#endif // ndef NTG_GLOBAL_OPS_TRAITS_HH

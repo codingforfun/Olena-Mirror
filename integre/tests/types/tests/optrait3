@@ -1,7 +1,7 @@
-sfloat s1 = oln::optraits<sfloat>::sup();
-dfloat d1 = oln::optraits<dfloat>::sup();
-sfloat s2 = oln::optraits<sfloat>::inf();
-dfloat d2 = oln::optraits<dfloat>::inf();
+sfloat s1 = optraits<sfloat>::sup();
+dfloat d1 = optraits<dfloat>::sup();
+sfloat s2 = optraits<sfloat>::inf();
+dfloat d2 = optraits<dfloat>::inf();
 return s1 != OLN_FLOAT_INFINITY
     || d1 != OLN_DOUBLE_INFINITY
     || s2 != - OLN_FLOAT_INFINITY

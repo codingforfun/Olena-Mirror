@@ -1,4 +1,4 @@
-// Copyright (C) 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -77,7 +77,7 @@ namespace oln {
 			       const neighborhood<E_>& _se, 
 			       unsigned& nb_label)
     {
-      // FIXME: ensure the Value(I) is bin.
+      // FIXME: ensure the Value(I) is ntg::bin.
       Exact_cref(I, input);
       Exact_cref(E, se);
       typename mute<I_, DestType>::ret output(input.size());
@@ -142,13 +142,13 @@ namespace oln {
     }
 
     template <class I_>
-    typename mute<I_, bin>::ret
+    typename mute<I_, ntg::bin>::ret
     extract_i_cc(const image<I_>& _input,
 		 Value(I_) i)
     {
       Exact_cref(I, input);
 
-      typename mute<I_, bin>::ret output(input.size());
+      typename mute<I_, ntg::bin>::ret output(input.size());
       level::fill(output, false);
       Iter(I) p(input);
       for_all(p)

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_GLOBAL_OPS_HH
-# define OLENA_VALUE_GLOBAL_OPS_HH
+#ifndef NTG_GLOBAL_OPS_HH
+# define NTG_GLOBAL_OPS_HH
 
 # include <mlc/contract.hh>
 # include <mlc/is_a.hh>
@@ -48,7 +48,7 @@
 ///////////////////////////////////////////////////////////////////////
 
 
-namespace oln
+namespace ntg
 {
 
   namespace type_definitions
@@ -232,6 +232,6 @@ namespace oln
 
   } // type_definitions
 
-} // end of namespace oln
+} // end of ntg
 
-#endif // ndef OLENA_VALUE_GLOBAL_OPS_HH
+#endif // ndef NTG_GLOBAL_OPS_HH

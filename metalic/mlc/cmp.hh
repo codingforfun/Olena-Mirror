@@ -25,85 +25,82 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_META_CMP_HH
-# define OLENA_META_CMP_HH
+#ifndef METALIC_CMP_HH
+# define METALIC_CMP_HH
 
 # include <mlc/bool.hh>
 
-namespace oln {
+namespace mlc 
+{
 
-  namespace meta {
+  template<int i, int j>
+  struct less
+  {
+    enum { ret = (i < j) };
+    static void ensure() { is_true<ret>::ensure(); };
+  };
 
-    template<int i, int j>
-    struct less
-    {
-      enum { ret = (i < j) };
-      static void ensure() { is_true<ret>::ensure(); };
-    };
+  template<int i, int j>
+  struct lesseq
+  {
+    enum { ret = (i <= j) };
+    static void ensure() { is_true<ret>::ensure(); };
+  };
 
-    template<int i, int j>
-    struct lesseq
-    {
-      enum { ret = (i <= j) };
-      static void ensure() { is_true<ret>::ensure(); };
-    };
+  template<int i, int j>
+  struct eq
+  {
+    enum { ret = (i == j) };
+    static void ensure() { is_true<ret>::ensure(); };
+  };
 
-    template<int i, int j>
-    struct eq
-    {
-      enum { ret = (i == j) };
-      static void ensure() { is_true<ret>::ensure(); };
-    };
+  template<int i, int j>
+  struct neq
+  {
+    enum { ret = (i != j) };
+    static void ensure() { is_true<ret>::ensure(); };
+  };
 
-    template<int i, int j>
-    struct neq
-    {
-      enum { ret = (i != j) };
-      static void ensure() { is_true<ret>::ensure(); };
-    };
+  template<int i, int j>
+  struct greater
+  {
+    enum { ret = (i > j) };
+    static void ensure() { is_true<ret>::ensure(); };
+  };
 
-    template<int i, int j>
-    struct greater
-    {
-      enum { ret = (i > j) };
-      static void ensure() { is_true<ret>::ensure(); };
-    };
+  template<int i, int j>
+  struct geq
+  {
+    enum { ret = (i >= j) };
+    static void ensure() { is_true<ret>::ensure(); };
+  };
 
-    template<int i, int j>
-    struct geq
-    {
-      enum { ret = (i >= j) };
-      static void ensure() { is_true<ret>::ensure(); };
-    };
+  template<int i, int j>
+  struct min
+  {
+    enum { ret = (i < j ? i : j) };
+  };
 
-    template<int i, int j>
-    struct min
-    {
-      enum { ret = (i < j ? i : j) };
-    };
+  template<int i, int j>
+  struct max
+  {
+    enum { ret = (i > j ? i : j) };
+  };
 
-    template<int i, int j>
-    struct max
-    {
-      enum { ret = (i > j ? i : j) };
-    };
+  template<int i, int j, int N>
+  struct maxN
+  {
+    enum { ret = (i > j ? 
+		  (i > N ? N : i) : 
+		  (j > N ? N : j)) };
+  };
 
-    template<int i, int j, int N>
-    struct maxN
-    {
-      enum { ret = (i > j ? 
-		    (i > N ? N : i) : 
-		    (j > N ? N : j)) };
-    };
+  template<int i, int N>
+  struct saturateN
+  {
+    enum { ret = (i > N ? N : i) };
+  };
 
-    template<int i, int N>
-    struct saturateN
-    {
-      enum { ret = (i > N ? N : i) };
-    };
+} // end of mlc
 
-  } // end of meta
-
-} // end of oln
-
-#endif // ! OLENA_META_CMP_HH
+#endif // ! METALIC_CMP_HH

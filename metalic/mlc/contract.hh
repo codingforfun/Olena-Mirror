@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_CONTRACT_HH
-# define OLENA_CORE_CONTRACT_HH
+#ifndef METALIC_CONTRACT_HH
+# define METALIC_CONTRACT_HH
 
 # include <mlc/config/system.hh>
 
@@ -44,7 +44,8 @@
 #  include <sstream>
 #  include <stdexcept>
 
-namespace oln {
+namespace mlc 
+{
 
 #  ifndef OLN_EXCEPTIONS
 
@@ -101,7 +102,7 @@ inline void __FailedCondition( const char* condType,
 
 #  endif // OLN_EXCEPTIONS
 
-} // end of oln
+} // end of mlc
 
 #  define assertion(expr)         __TestCondition(Assertion,expr)
 #  define invariant(expr)         __TestCondition(Invariant,expr)
@@ -110,14 +111,14 @@ inline void __FailedCondition( const char* condType,
 
 #  ifndef RUNNING_TESTS
 #   define __TestCondition(condType,expr) \
-  ((void) ((expr) ? 0 : (::oln::__FailedCondition( #condType, #expr, \
+  ((void) ((expr) ? 0 : (::mlc::__FailedCondition( #condType, #expr, \
                                                    __FILE__, __LINE__ ), 0)))
 #  else
 #   define __TestCondition(condType,expr) \
-  ((void) ((expr) ? 0 : (::oln::__FailedCondition( #condType, #expr, \
+  ((void) ((expr) ? 0 : (::mlc::__FailedCondition( #condType, #expr, \
                                                    __FILE__ ), 0)))
 #  endif // NDEBUG
 
 # endif
 
-#endif // ! OLENA_CORE_CONTRACT_HH
+#endif // ! METALIC_CONTRACT_HH

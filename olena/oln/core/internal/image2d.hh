@@ -52,7 +52,7 @@ namespace oln {
 
     // _image2d is a base class for every 2d image type
 
-    template<class T, class Inferior = type::bottom>
+    template<class T, class Inferior = mlc::bottom>
     class _image2d : public regular_image< 2, _image2d<T,Inferior> >
     {
     public:
@@ -60,9 +60,9 @@ namespace oln {
       typedef Inferior inferior;
 
       typedef T value;
-      typedef fwd_iter2d<type::bottom> iter;
-      typedef fwd_iter2d<type::bottom> fwd_iter;
-      typedef bkd_iter2d<type::bottom> bkd_iter;
+      typedef fwd_iter2d<mlc::bottom> iter;
+      typedef fwd_iter2d<mlc::bottom> fwd_iter;
+      typedef bkd_iter2d<mlc::bottom> bkd_iter;
 
       // the following methods are deduced from the method data() that
       // has to be provided by sub-classes

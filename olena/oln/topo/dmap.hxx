@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,11 +30,15 @@
 
 # include <oln/arith/ops.hh>
 # include <ntg/optraits_builtins_float.hh>
-# include <mlc/array2d.hh>
+# include <mlc/array/2d.hh>
 
 namespace oln {
 
   namespace topo {
+
+    using mlc::lbrk;
+    using mlc::end;
+    using mlc::x;
 
     template <class T>
     chamfer<T>::chamfer(const w_window2d<T>& fwd,
@@ -59,10 +63,10 @@ namespace oln {
     template<int d10, int d11> inline
     const chamfer<int>& mk_chamfer_3x3(float coef)
     {
-      static const w_window2d<int> w_win_fwd = ( meta::ints_2d =
+      static const w_window2d<int> w_win_fwd = ( mlc::ints_2d =
 					       d11, d10, d11, lbrk,
 					       d10, x(),   0, end );
-      static const w_window2d<int> w_win_bkd = ( meta::ints_2d =
+      static const w_window2d<int> w_win_bkd = ( mlc::ints_2d =
 					       0, x(),  d10, lbrk,
 					       d11, d10,  d11, end );
       static const chamfer<int> _ch = chamfer<int>(w_win_fwd, w_win_bkd, coef);
@@ -73,10 +77,10 @@ namespace oln {
     const chamfer<float>& mk_chamfer_3x3(float d10, float d11) 
       // FIXME: add (?)  , float coef = 1.f
     {
-      static const w_window2d<float> w_win_fwd = ( meta::floats_2d =
+      static const w_window2d<float> w_win_fwd = ( mlc::floats_2d =
 						 d11, d10, d11, lbrk,
 						 d10, x(), 0.f, end );
-      static const w_window2d<float> w_win_bkd = ( meta::floats_2d =
+      static const w_window2d<float> w_win_bkd = ( mlc::floats_2d =
 						 0.f, x(),  d10, lbrk,
 						 d11, d10,  d11, end );
       static const chamfer<float> _ch = 
@@ -87,11 +91,11 @@ namespace oln {
     template<int d10, int d11, int d21> inline
     const chamfer<int>& mk_chamfer_5x5(float coef)
     {
-      static const w_window2d<int> w_win_fwd = ( meta::ints_2d =
+      static const w_window2d<int> w_win_fwd = ( mlc::ints_2d =
 					       0, d21,   0, d21,   0, lbrk,
 					       d21, d11, d10, d11, d21,
 					       0, d10, x(),   0,   0, end );
-      static const w_window2d<int> w_win_bkd = ( meta::ints_2d =
+      static const w_window2d<int> w_win_bkd = ( mlc::ints_2d =
 					       0,   0, x(), d10,   0, lbrk,
 					       d21, d11, d10, d11, d21,
 					       0, d21,   0, d21,   0, end );
@@ -103,11 +107,11 @@ namespace oln {
     const chamfer<float>& mk_chamfer_5x5(float d10, float d11, float d21)
     {
       const float O = 0.f;
-      static const w_window2d<float> w_win_fwd = ( meta::floats_2d =
+      static const w_window2d<float> w_win_fwd = ( mlc::floats_2d =
 						 O, d21,   O, d21,   O, lbrk,
 						 d21, d11, d10, d11, d21,
 						 O, d10, x(),   O,   O, end );
-      static const w_window2d<float> w_win_bkd = ( meta::floats_2d =
+      static const w_window2d<float> w_win_bkd = ( mlc::floats_2d =
 						 O,   O, x(), d10,   O, lbrk,
 						 d21, d11, d10, d11, d21,
 						 O, d21,   O, d21,   O, end );
@@ -231,7 +235,7 @@ namespace oln {
       {
 	typename image2d<V>::iter p(input);
 	for (p = begin; p != end; ++p)
-	  if (input[p] != optraits<T>::zero())
+	  if (input[p] != ntg::optraits<T>::zero())
 	    {
 	      _imap[p] = T(0);
 	      nearest_point_map[p] = p;

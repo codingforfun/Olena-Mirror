@@ -65,8 +65,8 @@ namespace oln {
 			const neighborhood<N_>& _Ng)
     {
       // FIXME: ensure the Value(I) is bin.
-      meta::eq<I_::dim, N_::dim>::ensure();
-      meta::eq<I_::dim, 2>::ensure();
+      mlc::eq<I_::dim, N_::dim>::ensure();
+      mlc::eq<I_::dim, 2>::ensure();
       Exact_cref(I, input);
       Exact_cref(N, Ng);
       typename mute<I_, DestType>::ret output(input.size());
@@ -117,7 +117,7 @@ namespace oln {
 		    output[p] = cl;
 		  else
 		    {
-		      DestType min = optraits<DestType>::max();
+		      DestType min = ntg::optraits<DestType>::max();
 		      for_all(p_prime)
 			if (output.hold(p_prime))
 			  if (output[p_prime] && T(output[p_prime]) < min)

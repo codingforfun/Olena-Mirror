@@ -1,4 +1,4 @@
-// Copyright (C) 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_TYPETRAITS_BUILTINS_INT_HH
-# define OLENA_VALUE_TYPETRAITS_BUILTINS_INT_HH
+#ifndef NTG_TYPETRAITS_BUILTINS_INT_HH
+# define NTG_TYPETRAITS_BUILTINS_INT_HH
 
 # include <ntg/typetraits.hh>
 # include <ntg/optraits.hh>
@@ -56,10 +56,11 @@
 										\
   };
 
-namespace oln
+namespace ntg
 {
 
-  namespace builtin {
+  namespace builtin
+  {
 
     template <class T>
     struct signed_trait { typedef T ret; };
@@ -125,7 +126,7 @@ namespace oln
     template <> struct unsigned_cumul_trait<unsigned char>  { typedef unsigned short ret; };
     template <> struct unsigned_cumul_trait<  signed char>  { typedef unsigned short ret; };
 
-  }
+  } // end of builtin
 
   TYPETRAITS_BUILTIN_INT(unsigned long);
   TYPETRAITS_BUILTIN_INT(  signed long);
@@ -140,6 +141,6 @@ namespace oln
   TYPETRAITS_BUILTIN_INT(  signed char);
 
 
-} // end of namespace oln
+} // end of ntg
 
-#endif // ndef OLENA_VALUE_TYPETRAITS_BUILTINS_INT_HH
+#endif // ndef NTG_TYPETRAITS_BUILTINS_INT_HH

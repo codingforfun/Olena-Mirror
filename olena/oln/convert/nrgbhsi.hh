@@ -43,6 +43,9 @@
 `--------------------------------------------------------------*/
 
 namespace oln {
+
+  using namespace ntg;
+
   namespace convert {
 
     static const float sqrt3_3   = sqrt(3) / 3;
@@ -53,7 +56,7 @@ namespace oln {
       : public color_conversion<3, nrgb_traits,
 				3, hsi_traits, nrgb_to_hsi>
     {
-      typedef type::bottom inferior;
+      typedef mlc::bottom inferior;
 
 
       template <unsigned qbits>
@@ -82,7 +85,7 @@ namespace oln {
       : public color_conversion<3, hsi_traits,
 				3, nrgb_traits, hsi_to_nrgb>
     {
-      typedef type::bottom inferior;
+      typedef mlc::bottom inferior;
 
 
       template <unsigned qbits>

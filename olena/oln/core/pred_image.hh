@@ -34,8 +34,8 @@
 namespace oln {
 
 
-  template<class Inferior = type::bottom>
-  struct pred_image : public type::any< pred_image<Inferior> >
+  template<class Inferior = mlc::bottom>
+  struct pred_image : public mlc::any< pred_image<Inferior> >
   {
     typedef Inferior inferior;
     static std::string name() { return std::string("pred_image<") + Inferior::name() + ">"; }

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_META_OPTIONAL_HH
-# define OLENA_META_OPTIONAL_HH
+#ifndef METALIC_OPTIONAL_HH
+# define METALIC_OPTIONAL_HH
 
-namespace oln {
+namespace mlc 
+{
 
   // This class is used as a static tag for specialization of certain
   // algorithm. Usually, it is used to mention that there is nothing
@@ -106,6 +107,6 @@ namespace oln {
   };
 
 
-} // end of oln.
+} // end of mlc
 
-#endif // OLENA_META_OPTIONAL_HH
+#endif // METALIC_OPTIONAL_HH

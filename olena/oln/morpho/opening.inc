@@ -39,7 +39,7 @@
  * see: morpho::dilation
  * see: morpho::closing
  * ex:
- * $ image2d<bin> im = load("object.pbm");
+ * $ image2d<ntg::bin> im = load("object.pbm");
  * $ save(morpho::opening(im, win_c8p()), "out.pbm");
  * exi: object.pbm
  * exo: out.pbm
@@ -47,6 +47,6 @@
 template<class I_, class E_>
 Concrete(I_) opening(const image<I_>& input, const struct_elt<E_>& _se)
 {
-  //  meta::eq< I_::dim, E_::dim >::ensure();
+  //  mlc::eq< I_::dim, E_::dim >::ensure();
   return dilation(erosion(input, _se), -to_exact(_se));
 }

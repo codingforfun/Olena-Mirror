@@ -47,7 +47,7 @@
  * (althought it is not increasing).  Beware the result depends upon the
  * image data type if it is not \code{bin}.
  * ex:
- * $ image2d<bin> im = load("object.pbm");
+ * $ image2d<ntg::bin> im = load("object.pbm");
  * $ window2d mywin;
  * $ mywin
  * $  .add(-3,-2).add(-3,-1).add(-3,0).add(-3,1).add(-3,2)
@@ -70,8 +70,8 @@ hit_or_miss(const conversion<C>& c,
   Exact_cref(I, input);
   Exact_cref(E1, se1);
   Exact_cref(E2, se2);
-  meta::eq<I::dim, E1::dim>::ensure();
-  meta::eq<E1::dim, E2::dim>::ensure();
+  mlc::eq<I::dim, E1::dim>::ensure();
+  mlc::eq<E1::dim, E2::dim>::ensure();
 
   precondition(inter(se1, se2).card() == 0);
   // FIXME: max(coord, coord) does not exist.
@@ -126,7 +126,7 @@ Concrete(I) hit_or_miss(const image<I>& input,
  * see: morpho::hit_or_miss_closing_bg
  * see: morpho::hit_or_miss_opening_bg
  * ex:
- * $ image2d<bin> im = load("object.pbm");
+ * $ image2d<ntg::bin> im = load("object.pbm");
  *  window2d mywin;
  *  mywin
  *   .add(-3,-2).add(-3,-1).add(-3,0).add(-3,1).add(-3,2)
@@ -171,7 +171,7 @@ Concrete(I_) hit_or_miss_opening(const image<I_>& _input,
  * see: morpho::hit_or_miss_closing_bg
  * see: morpho::hit_or_miss_opening
  * ex:
- * $ image2d<bin> im = load("object.pbm");
+ * $ image2d<ntg::bin> im = load("object.pbm");
  *  window2d mywin;
  *  mywin
  *   .add(-3,-2).add(-3,-1).add(-3,0).add(-3,1).add(-3,2)
@@ -218,7 +218,7 @@ Concrete(I) hit_or_miss_opening_bg(const image<I>& input,
  * see: morpho::hit_or_miss_opening
  * see: morpho::hit_or_miss_opening_bg
  * ex:
- * $ image2d<bin> im = load("object.pbm");
+ * $ image2d<ntg::bin> im = load("object.pbm");
  *  window2d mywin;
  *  mywin
  *   .add(-3,-2).add(-3,-1).add(-3,0).add(-3,1).add(-3,2)
@@ -264,7 +264,7 @@ Concrete(I) hit_or_miss_closing(const image<I>& input,
  * see: morpho::hit_or_miss_opening
  * see: morpho::hit_or_miss_opening_bg
  * ex:
- * $ image2d<bin> im = load("object.pbm");
+ * $ image2d<ntg::bin> im = load("object.pbm");
  *  window2d mywin;
  *  mywin
  *   .add(-3,-2).add(-3,-1).add(-3,0).add(-3,1).add(-3,2)

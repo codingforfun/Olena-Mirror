@@ -25,13 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_OPTRAITS_HH
-# define OLENA_VALUE_OPTRAITS_HH
+#ifndef NTG_OPTRAITS_HH
+# define NTG_OPTRAITS_HH
 
 # include <ntg/config/system.hh>
+
 # include <string>
 
-namespace oln
+namespace ntg
 {
 
   // top of hierarchy
@@ -56,6 +57,6 @@ namespace oln
   struct optraits : public optraits_top<T>
   {};
 
-} // end of namespace oln
+} // end of ntg
 
-#endif // ndef OLENA_VALUE_OPTRAITS_HH
+#endif // ndef NTG_OPTRAITS_HH

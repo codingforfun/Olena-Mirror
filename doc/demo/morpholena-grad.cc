@@ -2,6 +2,7 @@
 #include <oln/morpho/gradient.hh>
 
 using namespace oln;
+using namespace ntg;
 
 void morpholena_grad()
 {

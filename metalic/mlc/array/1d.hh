@@ -25,204 +25,199 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_META_ARRAY1D_HH
-# define OLENA_META_ARRAY1D_HH
+#ifndef METALIC_ARRAY_1D_HH
+# define METALIC_ARRAY_1D_HH
 
-# include <mlc/array/objs.hh>
 # include <mlc/contract.hh>
 # include <mlc/cmp.hh>
-# include <mlc/array/1d.hxx>
+# include <mlc/array/objs.hh>
 
 # include <iostream>
 
-namespace oln {
+// impl
+# include <mlc/array/1d.hxx>
 
-  namespace meta {
-
-
-    template<class _Info, class T_>
-    struct array1d
-    {
-      typedef array1d self;
-      typedef T_ T;
-      typedef _Info Info;
-
-
-      //
-      // Constructors
-      //
-
-      array1d()
-      {
-      }
-
-      array1d(T* ptr)
-      {
-	meta::less< 0, _Info::card >::ensure();
-	meta::less< _Info::card, internal::_max_card >::ensure();
-	for (unsigned i = 0; i < _Info::card; ++i)
-	  _buffer[i] = *ptr++;
-      }
-
-      // Copy
-
-      array1d(const self& rhs)
-      {
-	for (unsigned i = 0; i < _Info::card; ++i)
-	  _buffer[i] = rhs[i];
-      }
-      self& operator=(const self& rhs)
-      {
-	for (unsigned i = 0; i < _Info::card; ++i)
-	  _buffer[i] = rhs[i];
-	return *this;
-      }
-
-
-
-      //
-      // Operations on array
-      //
-
-      typedef array1d<_Info,float> to_float; // FIXME : argh
-
-      // Normalize (absolute values -> relative values)
-
-      to_float normalize()
-      {
-	to_float tmp;
-	float sum = 0.f; // FIXME: float only?
-	const float epsilon = 0.01f; // FIXME : epsilon should be global
-	unsigned i;
-	for (i = 0; i < _Info::card; ++i)
-	  sum += this->_buffer[i];
-	for (i = 0; i < _Info::card; ++i)
-	  tmp[i] = this->_buffer[i] / sum;
-	// security
-	sum = 0.f;
-	for (i = 0; i < _Info::card; ++i)
-	  sum += tmp[i];
-	postcondition(abs(sum - 1) <= epsilon);
-	return tmp;
-      }
-
-      // Central symmetry
-
-      array1d<array1d_info<_Info::card,
-			   _Info::card - _Info::center - 1,
-			   _Info::i>, T>
-      operator-() const
-      {
-	enum { new_center =  _Info::card - _Info::center - 1 };
-	array1d<array1d_info< _Info::card, new_center, _Info::i>,T> tmp;
-
-	for (unsigned i = 0; i < _Info::card; ++i)
-	  tmp[_Info::card - i - 1] = this->operator[](i);
-	return tmp;
-      }
-
-
-
-      //
-      // Accessors
-      //
-
-      unsigned size() const
-      {
-	return _Info::card;
-      }
-
-      const T* buffer() const
-      {
-	return _buffer;
-      }
-
-      // dynamic accessors:
-
-      T operator[](unsigned i) const	// Absolute position
-      {
-	precondition(i < _Info::card);
-	return *(_buffer + i);
-      }
-      T& operator[](unsigned i)
-      {
-	precondition(i < _Info::card);
-	return *(_buffer + i);
-      }
-
-      T operator()(int i) const		// Relative position
-      {
-	precondition(-_Info::center <= i);
-	precondition(i <= _Info::card - _Info::center - 1);
-	return *(_buffer + _Info::center + i);
-      }
-      T& operator()(int i)
-      {
-	precondition(-_Info::center <= i);
-	precondition(i <= _Info::card - _Info::center - 1);
-	return *(_buffer + _Info::center + i);
-      }
-
-
-      // do not use these methods...
-
-      template<unsigned i>
-      T _get_at() const {
-	meta::lesseq<i, _Info::card>::ensure();
-	return *(_buffer + i);
-      }
-
-      template<int i>
-      T _get() const {
-	meta::lesseq<-_Info::center, i>::ensure();
-	meta::lesseq<i, _Info::card - _Info::center - 1>::ensure();
-	return *(_buffer + _Info::center + i);
-      }
-
-
-    protected:
-
-      T _buffer[_Info::card];
-    };
-
-
-    // ...but these static accessors:
-
-    template<unsigned i, class Info, class T> inline
-    T get_at(const meta::array1d<Info, T>& arr)
-    {
-      return arr.template _get_at<i>();
-    }
-
-    template<int i, class Info, class T> inline
-    T get(const meta::array1d<Info, T>& arr)
-    {
-      return arr.template _get<i>();
-    }
-
-    // starter objects
-
-    static internal::_array1d_start<int>   ints_1d   = internal::_array1d_start<int>();
-    static internal::_array1d_start<float> floats_1d = internal::_array1d_start<float>();
-
-
-  } // end of meta
-
-} // end of oln
-
-template<class Info, class T>
-std::ostream& operator<<(std::ostream&				ostr,
-			 const oln::meta::array1d<Info, T>&	rhs)
+namespace mlc
 {
-  for (int i = 0; i < Info::card; ++i)
-    if (i == Info::center)
-      ostr << "<" << rhs[i] << "> ";
-    else
-      ostr << rhs[i] << " ";
-  ostr << std::endl;
 
-  return ostr;
-}
+  template<class _Info, class T_>
+  struct array1d
+  {
+    typedef array1d self;
+    typedef T_ T;
+    typedef _Info Info;
 
 
-#endif // ! OLENA_META_ARRAY1D_HH
+    //
+    // Constructors
+    //
+
+    array1d()
+    {
+    }
+
+    array1d(T* ptr)
+    {
+      less< 0, _Info::card >::ensure();
+      less< _Info::card, internal::_max_card >::ensure();
+      for (unsigned i = 0; i < _Info::card; ++i)
+	_buffer[i] = *ptr++;
+    }
+
+    // Copy
+
+    array1d(const self& rhs)
+    {
+      for (unsigned i = 0; i < _Info::card; ++i)
+	_buffer[i] = rhs[i];
+    }
+    self& operator=(const self& rhs)
+    {
+      for (unsigned i = 0; i < _Info::card; ++i)
+	_buffer[i] = rhs[i];
+      return *this;
+    }
+
+
+
+    //
+    // Operations on array
+    //
+
+    typedef array1d<_Info,float> to_float; // FIXME : argh
+
+    // Normalize (absolute values -> relative values)
+
+    to_float normalize()
+    {
+      to_float tmp;
+      float sum = 0.f; // FIXME: float only?
+      const float epsilon = 0.01f; // FIXME : epsilon should be global
+      unsigned i;
+      for (i = 0; i < _Info::card; ++i)
+	sum += this->_buffer[i];
+      for (i = 0; i < _Info::card; ++i)
+	tmp[i] = this->_buffer[i] / sum;
+      // security
+      sum = 0.f;
+      for (i = 0; i < _Info::card; ++i)
+	sum += tmp[i];
+      postcondition(abs(sum - 1) <= epsilon);
+      return tmp;
+    }
+
+    // Central symmetry
+
+    array1d<array1d_info<_Info::card,
+			 _Info::card - _Info::center - 1,
+			 _Info::i>, T>
+    operator-() const
+    {
+      enum { new_center =  _Info::card - _Info::center - 1 };
+      array1d<array1d_info< _Info::card, new_center, _Info::i>,T> tmp;
+
+      for (unsigned i = 0; i < _Info::card; ++i)
+	tmp[_Info::card - i - 1] = this->operator[](i);
+      return tmp;
+    }
+
+
+
+    //
+    // Accessors
+    //
+
+    unsigned size() const
+    {
+      return _Info::card;
+    }
+
+    const T* buffer() const
+    {
+      return _buffer;
+    }
+
+    // dynamic accessors:
+
+    T operator[](unsigned i) const	// Absolute position
+    {
+      precondition(i < _Info::card);
+      return *(_buffer + i);
+    }
+    T& operator[](unsigned i)
+    {
+      precondition(i < _Info::card);
+      return *(_buffer + i);
+    }
+
+    T operator()(int i) const		// Relative position
+    {
+      precondition(-_Info::center <= i);
+      precondition(i <= _Info::card - _Info::center - 1);
+      return *(_buffer + _Info::center + i);
+    }
+    T& operator()(int i)
+    {
+      precondition(-_Info::center <= i);
+      precondition(i <= _Info::card - _Info::center - 1);
+      return *(_buffer + _Info::center + i);
+    }
+
+
+    // do not use these methods...
+
+    template<unsigned i>
+    T _get_at() const {
+      lesseq<i, _Info::card>::ensure();
+      return *(_buffer + i);
+    }
+
+    template<int i>
+    T _get() const {
+      lesseq<-_Info::center, i>::ensure();
+      lesseq<i, _Info::card - _Info::center - 1>::ensure();
+      return *(_buffer + _Info::center + i);
+    }
+
+
+  protected:
+
+    T _buffer[_Info::card];
+  };
+
+
+  // ...but these static accessors:
+
+  template<unsigned i, class Info, class T> inline
+  T get_at(const array1d<Info, T>& arr)
+  {
+    return arr.template _get_at<i>();
+  }
+
+  template<int i, class Info, class T> inline
+  T get(const array1d<Info, T>& arr)
+  {
+    return arr.template _get<i>();
+  }
+
+  // starter objects
+
+  static internal::_array1d_start<int>   ints_1d   = internal::_array1d_start<int>();
+  static internal::_array1d_start<float> floats_1d = internal::_array1d_start<float>();
+
+  template<class Info, class T>
+  std::ostream& operator<<(std::ostream& ostr, const array1d<Info, T>& rhs)
+  {
+    for (int i = 0; i < Info::card; ++i)
+      if (i == Info::center)
+	ostr << "<" << rhs[i] << "> ";
+      else
+	ostr << rhs[i] << " ";
+    ostr << std::endl;
+
+    return ostr;
+  }
+
+} // end of mlc
+
+#endif // ! METALIC_ARRAY_1D_HH

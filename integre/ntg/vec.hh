@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_VEC_HH
-# define OLENA_VALUE_VEC_HH
+#ifndef NTG_VEC_HH
+# define NTG_VEC_HH
 
 # include <mlc/type.hh>
 
@@ -39,7 +39,8 @@
 
 // FIXME: optraits_vec.hh is included at the end of the file.
 
-namespace oln {
+namespace ntg
+{
 
   template <unsigned N, class T, class Self>
   struct typetraits<vec<N, T, Self> >
@@ -54,11 +55,12 @@ namespace oln {
     typedef self op_traits;
   };
 
-  namespace type_definitions {
+  namespace type_definitions
+  {
 
     template <unsigned N, class T, class Self>
     class vec : 
-      public rec_vector<typename type::select_self<vec<N, T, type::bottom>, Self>::ret>
+      public rec_vector<typename mlc::select_self<vec<N, T, mlc::bottom>, Self>::ret>
     {
     public :
 
@@ -69,10 +71,10 @@ namespace oln {
 
       /* A vector can be built from a 1xM array.  */
       template<int ncols, class T2>
-      vec(const oln::meta::array2d< oln::meta::array2d_info<1, ncols>, T2>&
+      vec(const mlc::array2d< mlc::array2d_info<1, ncols>, T2>&
 	  arr)
       {
-	meta::eq< ncols, N >::ensure();
+	mlc::eq< ncols, N >::ensure();
 	for (unsigned i = 0; i < N; ++i)
 	  _value[i] = arr[i];
       }
@@ -111,22 +113,20 @@ namespace oln {
       }
     };
 
-  } // type_definitions
+  } // end of type_definitions
 
-} // end of oln
+  template<unsigned N,class T> inline
+  std::ostream& operator<<(std::ostream& ostr, const vec<N,T>& rhs)
+  {
+    ostr << "[";
+    for (unsigned i = 0; i < N; ++i)
+      ostr << rhs[i] << ((i < N-1) ? "," : "]");
+    return ostr;
+  }
 
-
-
-template<unsigned N,class T> inline
-std::ostream& operator<<(std::ostream& ostr, const oln::vec<N,T>& rhs)
-{
-  ostr << "[";
-  for (unsigned i = 0; i < N; ++i)
-    ostr << rhs[i] << ((i < N-1) ? "," : "]");
-  return ostr;
-}
+} // end of ntg
 
 // FIXME: find another solution if we want self contained vec.hh.
 # include <ntg/optraits_vec.hh>
 
-#endif // ! OLENA_VALUE_VEC_HH
+#endif // ! NTG_VEC_HH

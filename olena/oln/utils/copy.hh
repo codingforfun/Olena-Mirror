@@ -55,7 +55,7 @@ image1d<T,Inferior>::image1d(const self& rhs)
 }
 
 template<class Inferior>
-image1d<bin,Inferior>::image1d(const self& rhs)
+image1d<ntg::bin,Inferior>::image1d(const self& rhs)
 {
   OLENA_UTILS_IMAGE_DEEP_COPY;
 }
@@ -72,7 +72,7 @@ image2d<T,Inferior>::image2d(const self& rhs)
 }
 
 template<class Inferior>
-image2d<bin,Inferior>::image2d(const self& rhs)
+image2d<ntg::bin,Inferior>::image2d(const self& rhs)
 {
   OLENA_UTILS_IMAGE_DEEP_COPY;
 }
@@ -89,7 +89,7 @@ image3d<T,Inferior>::image3d(const self& rhs)
 }
 
 template<class Inferior>
-image3d<bin,Inferior>::image3d(const self& rhs)
+image3d<ntg::bin,Inferior>::image3d(const self& rhs)
 {
   OLENA_UTILS_IMAGE_DEEP_COPY;
 }

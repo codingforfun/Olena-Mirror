@@ -37,8 +37,8 @@ namespace oln {
 
   template <class PointType>
   box<PointType>::box() :
-    top_(optraits<int>::min(), optraits<int>::min()),
-    bottom_(optraits<int>::max(), optraits<int>::max())
+    top_(ntg::optraits<int>::min(), ntg::optraits<int>::min()),
+    bottom_(ntg::optraits<int>::max(), ntg::optraits<int>::max())
   {
     card_ = 0;
     not_consistent_ = true;

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_TYPETRAITS_BUILTINS_HH
-# define OLENA_VALUE_TYPETRAITS_BUILTINS_HH
+#ifndef NTG_TYPETRAITS_BUILTINS_HH
+# define NTG_TYPETRAITS_BUILTINS_HH
 
 // shortcut for builtins typetraits
 
@@ -34,4 +34,4 @@
 # include <ntg/typetraits_builtins_float.hh>
 # include <ntg/typetraits_builtins_bool.hh>
 
-#endif // ndef OLENA_VALUE_TYPETRAITS_BUILTINS_HH
+#endif // ndef NTG_TYPETRAITS_BUILTINS_HH

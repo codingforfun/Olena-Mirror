@@ -42,7 +42,7 @@ namespace oln {
   class dpoint1d : public dpointnd< 1, dpoint1d >
   {
   public:
-    typedef type::bottom inferior;
+    typedef mlc::bottom inferior;
     typedef dpointnd< 1, dpoint1d > super;
 
     dpoint1d();

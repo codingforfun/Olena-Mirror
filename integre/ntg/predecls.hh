@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,13 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_PREDECLS_HH
-# define OLENA_VALUE_PREDECLS_HH
+#ifndef NTG_PREDECLS_HH
+# define NTG_PREDECLS_HH
 
 # include <mlc/type.hh>
 # include <ntg/cplx_representation.hh>
 
-namespace oln {
+namespace ntg
+{
 
   struct non_sense;
 
@@ -41,10 +42,11 @@ namespace oln {
   class saturate;
 
   // Put types and operators definitions in a subnamespace, then
-  // the important types in oln::, and rely on Koenig lookup to find
+  // the important types in ntg::, and rely on Koenig lookup to find
   // relevant operators.  This way our template operators do not
   // supersede the build-in operator.
-  namespace type_definitions {
+  namespace type_definitions
+  {
     // intervals
     template <class T, T i_min, T i_max> class		bounded;
     template <unsigned i_min, unsigned i_max> class	bounded_u;
@@ -55,7 +57,8 @@ namespace oln {
     template <unsigned nbits, class behaviour = strict>	class int_s;
     template <class T, class interval, class behaviour = strict> class range;
     template <class T, class interval> class		cycle;
-  }
+  } // end of type_definitions
+
   using type_definitions::bounded_u;
   using type_definitions::bounded_s;
   using type_definitions::int_u;
@@ -68,7 +71,8 @@ namespace oln {
   typedef double					dfloat;
 
   // enumerated types
-  namespace type_definitions {
+  namespace type_definitions
+  {
     class bin;
   }
   using type_definitions::bin;
@@ -79,15 +83,17 @@ namespace oln {
 
   // vec
 
-  namespace type_definitions {
-    template <unsigned N, class T, class Self = type::bottom> class vec;
+  namespace type_definitions 
+  {
+    template <unsigned N, class T, class Self = mlc::bottom> class vec;
   }
   using type_definitions::vec;
 
   // cplx
 
   using type_definitions::cplx_representation;
-  namespace type_definitions {
+  namespace type_definitions 
+  {
     template <cplx_representation R, class T> class cplx;
   }
   using type_definitions::cplx;
@@ -98,7 +104,8 @@ namespace oln {
   // Colors
   //
 
-  namespace type_definitions {
+  namespace type_definitions
+  {
     template <unsigned ncomps, unsigned qbits, template <unsigned>
     class color_system>
     struct color;
@@ -144,6 +151,6 @@ namespace oln {
   typedef int_s<32, unsafe>	int_s32u;
   typedef int_s<32, saturate>	int_s32s;
 
-} // end of namespace oln_predelcs
+} // end of ntg
 
 #endif

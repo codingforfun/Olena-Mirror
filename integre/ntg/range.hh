@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_RANGE_HH
-# define OLENA_VALUE_RANGE_HH
+#ifndef NTG_RANGE_HH
+# define NTG_RANGE_HH
 
 # include <mlc/is_a.hh>
 
@@ -38,7 +38,7 @@
 
 // FIXME: optraits_range.hh is included at the end of the file.
 
-namespace oln
+namespace ntg
 {
 
   //
@@ -110,20 +110,20 @@ namespace oln
       operator base_storage_type() const { return _value; }
     };
 
-    template<class T, class interval, class behaviour>
-    inline std::ostream&
-    operator<<(std::ostream& stream, 
-	       const oln::range<T, interval, behaviour>& rhs)
-    {
-      // Cast useful for range<unsigned char, ...>
-      stream << (typename typetraits<T>::largest_type)(rhs.value());
-      return stream;
-    }
-
   } // type_definitions
-} // end of namespace oln
+
+  template<class T, class interval, class behaviour>
+  inline std::ostream&
+  operator<<(std::ostream& stream, const range<T, interval, behaviour>& rhs)
+  {
+    // Cast useful for range<unsigned char, ...>
+    stream << (typename typetraits<T>::largest_type)(rhs.value());
+    return stream;
+  }
+
+} // end of ntg
 
 // FIXME: find another solution if we want self contained range.hh.
 # include <ntg/optraits_range.hh>
 
-#endif // ndef OLENA_VALUE_RANGE_HH
+#endif // ndef NTG_RANGE_HH

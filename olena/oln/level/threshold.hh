@@ -36,7 +36,7 @@ namespace oln {
   namespace level {
 
     /* Threshold the value of the image.  */
-    template<class Output, class Input, class Inferior = type::bottom>
+    template<class Output, class Input, class Inferior = mlc::bottom>
     class threshold : public std::unary_function<const Input&, Output>
     {
     public:
@@ -54,9 +54,9 @@ namespace oln {
 
       static std::string name() {
 	return std::string("threshold<")
-	  + typename_of<Output>() + ", "
-	  + typename_of<Input>() + ", "
-	  + typename_of<Inferior>() + ">";
+	  + ntg::typename_of<Output>() + ", "
+	  + ntg::typename_of<Input>() + ", "
+	  + ntg::typename_of<Inferior>() + ">";
       }
 
     private:

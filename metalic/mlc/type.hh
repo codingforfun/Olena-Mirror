@@ -25,17 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_TYPE_HH
-# define OLENA_CORE_TYPE_HH
+#ifndef METALIC_TYPE_HH
+# define METALIC_TYPE_HH
 
 # include <mlc/config/system.hh>
+
 # include <string>
 
 //
 //  FIXME: Move static hiearchy tools into a dedicated header.
 //
 
-namespace type
+namespace mlc
 {
 
   //
@@ -50,14 +51,16 @@ namespace type
   //
   /////////////////////////
 
-  class top {
+  class top 
+  {
   public:
     static std::string name() { return ""; }
   protected:
     top() {}
   };
 
-  class bottom {
+  class bottom 
+  {
   public:
     static std::string name() { return "bot"; }
   private:
@@ -65,7 +68,8 @@ namespace type
   };
 
   template<class Inferior = bottom>
-  class any : public top {
+  class any : public top
+  {
   public:
     typedef Inferior inferior;
     static std::string name() { return std::string("any<") + Inferior::name() + ">"; }
@@ -78,7 +82,7 @@ namespace type
   //
   //////////////////////////////////
 
-  // if Self is type::bottom return T else return Self
+  // if Self is mlc::bottom return T else return Self
 
   template <class T, class Self>
   struct select_self
@@ -99,14 +103,13 @@ namespace type
     typedef typename C::inferior ret;
   };
 
-
-
   //
   //  find exact
   //
   ///////////////////////////////
 
-  namespace internal {
+  namespace internal 
+  {
 
     // fwd decl
 
@@ -135,9 +138,7 @@ namespace type
       typedef typename _find_exact_helper<T,I>::ret ret;
     };
 
-  } // end of namespace internal
-
-
+  } // end of internal
 
   //
   //  exact traits
@@ -153,8 +154,6 @@ namespace type
   struct exact<T*> {
     typedef typename exact<T>::ret* ret;
   };
-
-
 
   //
   //  name_of and exact_name_of
@@ -195,9 +194,7 @@ namespace type
   }
 
 
-} // end of namespace type
-
-
+} // end of mlc
 
 //
 //  to_exact procs
@@ -206,35 +203,35 @@ namespace type
 
 
 template<class T> inline
-typename type::exact<T>::ret*
-to_exact(type::any<T>* ptr)
+typename mlc::exact<T>::ret*
+to_exact(mlc::any<T>* ptr)
 {
-  return static_cast<typename type::exact<T>::ret*>(ptr);
+  return static_cast<typename mlc::exact<T>::ret*>(ptr);
 }
 
 template<class T> inline
-const typename type::exact<T>::ret*
-to_exact(const type::any<T>* ptr)
+const typename mlc::exact<T>::ret*
+to_exact(const mlc::any<T>* ptr)
 {
-  return static_cast<const typename type::exact<T>::ret*>(ptr);
+  return static_cast<const typename mlc::exact<T>::ret*>(ptr);
 }
 
 template<class T> inline
-typename type::exact<T>::ret&
-to_exact(type::any<T>& ref)
+typename mlc::exact<T>::ret&
+to_exact(mlc::any<T>& ref)
 {
-  return static_cast<typename type::exact<T>::ret&>(ref);
+  return static_cast<typename mlc::exact<T>::ret&>(ref);
 }
 
 template<class T> inline
-const typename type::exact<T>::ret&
-to_exact(const type::any<T>& ref)
+const typename mlc::exact<T>::ret&
+to_exact(const mlc::any<T>& ref)
 {
-  return static_cast<const typename type::exact<T>::ret&>(ref);
+  return static_cast<const typename mlc::exact<T>::ret&>(ref);
 }
 
 # define Exact(Type) \
-typename type::exact<Type>::ret
+typename mlc::exact<Type>::ret
 
 # define Exact_ptr(Type, Var)			\
 typedef Exact(Type##_) Type;			\
@@ -253,4 +250,4 @@ typedef Exact(Type##_) Type;			\
 const Type & Var = to_exact(_##Var);
 
 
-#endif // ! OLENA_CORE_TYPE_HH
+#endif // ! METALIC_TYPE_HH

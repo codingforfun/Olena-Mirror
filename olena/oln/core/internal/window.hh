@@ -42,7 +42,7 @@ namespace oln {
 
     /* Don't always inherit from window<>.  See _neighborhood for
        an example where we use another base class.  */
-    template <unsigned Dim, class Inferior = type::bottom,
+    template <unsigned Dim, class Inferior = mlc::bottom,
 	      template <class> class Window = window>
     class _window : public Window< _window< Dim, Inferior > >
     {

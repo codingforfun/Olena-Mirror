@@ -35,7 +35,7 @@
 
 namespace oln {
 
-  template< unsigned Dim, class Inferior = type::bottom >
+  template< unsigned Dim, class Inferior = mlc::bottom >
   class imagend_size : public image_size< imagend_size<Dim, Inferior> >
   {
   public:
@@ -71,7 +71,7 @@ namespace oln {
     {
       std::ostringstream out;
       out << "imagend_size<" << dim << ","
-          << typename_of<Inferior>() << ">" << std::ends;
+          << ntg::typename_of<Inferior>() << ">" << std::ends;
       return out.str();
     }
 

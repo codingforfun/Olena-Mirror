@@ -36,7 +36,7 @@ namespace oln {
 
   struct image1d_size : public imagend_size< 1, image1d_size >
   {
-    typedef type::bottom inferior;
+    typedef mlc::bottom inferior;
 
     image1d_size(coord ncols)
     {

@@ -1,4 +1,4 @@
-// Copyright (C) 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -47,6 +47,8 @@
 namespace oln {
 
   namespace morpho {
+
+    using namespace ntg;
 
     template<class I_, class N_>
     typename mute<I_, bin>::ret
@@ -110,7 +112,7 @@ namespace oln {
     {
       Exact_cref(I, input);
       Exact_cref(N, Ng);
-      meta::eq<I_::dim, N_::dim>::ensure();
+      mlc::eq<I_::dim, N_::dim>::ensure();
       typedef typename mute<I_, bin >::ret ima_bin_t;
 
       ima_bin_t* cc_level_sets = new (image2d<bin> [256]);
@@ -167,7 +169,7 @@ namespace oln {
     {
       Exact_cref(I, input);
       Exact_cref(N, Ng);
-      meta::eq<I_::dim, N_::dim>::ensure();
+      mlc::eq<I_::dim, N_::dim>::ensure();
 
       typedef image2d<bin> ima_bin_t;
 
@@ -213,8 +215,8 @@ namespace oln {
       Exact_cref(P, p);
       Exact_cref(I, input);
       Exact_cref(N, Ng);
-      meta::eq<I_::dim, N_::dim>::ensure();
-      meta::eq<P_::dim, N_::dim>::ensure();
+      mlc::eq<I_::dim, N_::dim>::ensure();
+      mlc::eq<P_::dim, N_::dim>::ensure();
 
       bool is_p_lower = true;
       bool is_p_at_least_one_stricly_lower = false;
@@ -240,8 +242,8 @@ namespace oln {
       Exact_cref(P, p);
       Exact_cref(I, input);
       Exact_cref(N, Ng);
-      meta::eq<I_::dim, N_::dim>::ensure();
-      meta::eq<P_::dim, N_::dim>::ensure();
+      mlc::eq<I_::dim, N_::dim>::ensure();
+      mlc::eq<P_::dim, N_::dim>::ensure();
 
       bool is_p_upper = true;
       bool is_p_at_least_one_stricly_upper = false;
@@ -285,7 +287,7 @@ namespace oln {
     {
       Exact_cref(I, input);
       Exact_cref(N, Ng);
-      meta::eq<I_::dim, N_::dim>::ensure();
+      mlc::eq<I_::dim, N_::dim>::ensure();
 
       std::vector<Point(I)> cur_minimum;
       cur_minimum.reserve(15000);
@@ -391,7 +393,7 @@ namespace oln {
     {
       Exact_cref(I, input);
       Exact_cref(N, Ng);
-      meta::eq<I_::dim, N_::dim>::ensure();
+      mlc::eq<I_::dim, N_::dim>::ensure();
 
       std::vector<Point(I)> cur_maximum;
       Concrete(I) working_input = input.clone();

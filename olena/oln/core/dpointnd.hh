@@ -41,7 +41,7 @@ namespace oln {
   template< unsigned Dim, class Inferior >
   class pointnd;
 
-  template< unsigned Dim, class Inferior = type::bottom >
+  template< unsigned Dim, class Inferior = mlc::bottom >
   class dpointnd : public dpoint< dpointnd< Dim, Inferior > >
   {
   public:
@@ -100,7 +100,7 @@ namespace oln {
     {
       std::ostringstream out;
       out << "dpointnd<" << dim << ","
-	  << typename_of<Inferior>() << ">" << std::ends;
+	  << ntg::typename_of<Inferior>() << ">" << std::ends;
       return out.str();
     }
 

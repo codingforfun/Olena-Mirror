@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,19 +29,22 @@
 # define OLENA_TRANSFORMS_DWT_HH
 
 # include <oln/config/system.hh>
+# include <oln/basics.hh>
+
 # include <ntg/optraits.hh>
 # include <ntg/cast.hh>
-# include <oln/basics.hh>
 # include <mlc/array/1d.hh>
 
 namespace oln {
+
+  using namespace ntg;
 
   namespace transforms {
 
     // macros used to define all the wavelets coefficients
     
 # define Wavelet_coeffs_definition(Name, Type, Size) \
-    struct Name : public internal::_wavelet_coeffs<Type, Size, Name> \
+    struct Name : public oln::internal::_wavelet_coeffs<Type, Size, Name> \
     { \
       Name()
 
@@ -104,11 +107,11 @@ namespace oln {
 
       ~_wavelet_coeffs()
       {
-	meta::is_false<N % 2>::ensure();
+	mlc::is_false<N % 2>::ensure();
       }
 
-      meta::array1d< meta::array1d_info<N>, value_t>	h;
-      meta::internal::_array1d_start<value_t>		wc_start;
+      mlc::array1d< mlc::array1d_info<N>, value_t>	h;
+      mlc::internal::_array1d_start<value_t>		wc_start;
 
     private:
 

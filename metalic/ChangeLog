@@ -1,3 +1,19 @@
+2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ChangeLog, mlc/array/1d.hh, mlc/array/1d.hxx,
+	mlc/array/2d.hh, mlc/array/2d.hxx, mlc/array/3d.hh,
+	mlc/array/3d.hxx, mlc/array/all.hh, mlc/array/nd.hh,
+	mlc/array/objs.hh, mlc/bool.hh, mlc/cmp.hh, mlc/contract.hh,
+	mlc/is_a.hh, mlc/loop.hh, mlc/math.hh, mlc/objs.hh,
+	mlc/optional.hh, mlc/type.hh,
+	tests/array/gen_test_utils/prelude,
+	tests/array/test_array1d.cc, tests/array/test_array2d.cc,
+	tests/array/test_array3d.cc, tests/main/tests/ensure1,
+	tests/main/tests/ensure2, tests/main/tests/ensure3,
+	tests/main/tests/is_a1, tests/main/tests/pow2sup1,
+	tests/main/tests/pow2sup2: Update namespaces. Update header
+	guards.
+
 2003-03-05  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/main: New directory.

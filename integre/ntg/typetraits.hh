@@ -25,12 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_TYPETRAITS_HH
-# define OLENA_VALUE_TYPETRAITS_HH
+#ifndef NTG_TYPETRAITS_HH
+# define NTG_TYPETRAITS_HH
 
-namespace oln
+namespace ntg
 {
 
+  // FIXME: already defined in metalic
   struct undefined;
 
   template <class T>
@@ -39,6 +40,6 @@ namespace oln
     typedef undefined op_traits;
   };
 
-} // end of namespace oln
+} // end of ntg
 
-#endif // ndef OLENA_VALUE_TYPETRAITS_HH
+#endif // ndef NTG_TYPETRAITS_HH

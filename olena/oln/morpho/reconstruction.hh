@@ -71,8 +71,8 @@ namespace oln {
 	Exact_cref(I1, marker);
 	Exact_cref(I2, mask);
 	Exact_cref(N, Ng);
-	meta::eq<I1_::dim, I2_::dim>::ensure();
-	meta::eq<I1::dim, N::dim>::ensure();
+	mlc::eq<I1_::dim, I2_::dim>::ensure();
+	mlc::eq<I1::dim, N::dim>::ensure();
 	precondition(marker.size() == mask.size());
 	precondition(level::is_greater_or_equal(mask, marker));
 	Concrete(I1_) output = marker.clone();
@@ -122,8 +122,8 @@ namespace oln {
 	Exact_cref(I1, marker);
 	Exact_cref(I2, mask);
 	Exact_cref(N, Ng);
-	meta::eq<I1_::dim, I2_::dim>::ensure();
-	meta::eq<I1::dim, N::dim>::ensure();
+	mlc::eq<I1_::dim, I2_::dim>::ensure();
+	mlc::eq<I1::dim, N::dim>::ensure();
 	precondition(marker.size() == mask.size());
 	precondition(level::is_greater_or_equal(mask, marker));
 
@@ -167,9 +167,9 @@ namespace oln {
 	  Exact_cref(I1, marker);
 	  Exact_cref(I2, mask);
 	  Exact_cref(E, se);
-	  meta::eq<I1_::dim, I2_::dim>::ensure();
-	  meta::eq<I1::dim, E::dim>::ensure();
-	  meta::eq<I1::dim, P::dim>::ensure();
+	  mlc::eq<I1_::dim, I2_::dim>::ensure();
+	  mlc::eq<I1::dim, E::dim>::ensure();
+	  mlc::eq<I1::dim, P::dim>::ensure();
 
 	  Neighb(E) q(se, p);
 	  for_all (q)
@@ -213,8 +213,8 @@ namespace oln {
 	Exact_cref(I1, marker);
 	Exact_cref(I2, mask);
 	Exact_cref(N, Ng);
-	meta::eq<I1::dim, I2::dim>::ensure();
-	meta::eq<I1::dim, N::dim>::ensure();
+	mlc::eq<I1::dim, I2::dim>::ensure();
+	mlc::eq<I1::dim, N::dim>::ensure();
 
 	precondition(marker.size() == mask.size());
 	precondition(level::is_greater_or_equal(mask, marker));
@@ -293,8 +293,8 @@ namespace oln {
 	Exact_cref(I1, marker);
 	Exact_cref(I2, mask);
 	Exact_cref(N, Ng);
-	meta::eq<I1::dim, I2::dim>::ensure();
-	meta::eq<I1::dim, N::dim>::ensure();
+	mlc::eq<I1::dim, I2::dim>::ensure();
+	mlc::eq<I1::dim, N::dim>::ensure();
 	precondition(marker.size() == mask.size());
 	precondition(level::is_greater_or_equal(marker, mask));
 	Concrete(I1_) output = marker.clone();
@@ -344,8 +344,8 @@ namespace oln {
 	Exact_cref(I1, marker);
 	Exact_cref(I2, mask);
 	Exact_cref(N, Ng);
-	meta::eq<I1::dim, I2::dim>::ensure();
-	meta::eq<I1::dim, N::dim>::ensure();
+	mlc::eq<I1::dim, I2::dim>::ensure();
+	mlc::eq<I1::dim, N::dim>::ensure();
 	precondition(marker.size() == mask.size());
 	precondition(level::is_greater_or_equal(marker, mask));
 
@@ -386,9 +386,9 @@ namespace oln {
 	  Exact_cref(I1, marker);
 	  Exact_cref(I2, mask);
 	  Exact_cref(E, se);
-	  meta::eq<I1::dim, I2::dim>::ensure();
-	  meta::eq<I1::dim, E::dim>::ensure();
-	  meta::eq<I1::dim, P::dim>::ensure();
+	  mlc::eq<I1::dim, I2::dim>::ensure();
+	  mlc::eq<I1::dim, E::dim>::ensure();
+	  mlc::eq<I1::dim, P::dim>::ensure();
 
 	  Neighb(E) q(se, p);
 	  for_all (q)
@@ -432,8 +432,8 @@ namespace oln {
 	Exact_cref(I1, marker);
 	Exact_cref(I2, mask);
 	Exact_cref(N, Ng);
-	meta::eq<I1::dim, I2::dim>::ensure();
-	meta::eq<I1::dim, N::dim>::ensure();
+	mlc::eq<I1::dim, I2::dim>::ensure();
+	mlc::eq<I1::dim, N::dim>::ensure();
 
 	precondition(marker.size() == mask.size());
 	precondition(level::is_greater_or_equal(marker, mask));

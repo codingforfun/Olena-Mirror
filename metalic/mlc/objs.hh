@@ -25,25 +25,22 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_OBJS_HH
-# define OLENA_CORE_OBJS_HH
+#ifndef METALIC_OBJS_HH
+# define METALIC_OBJS_HH
 
 //
 // Useful objects to design iterators, arrays, etc ..
 //
 
-namespace oln {
+namespace mlc
+{
 
-  namespace internal {
+  class _begin {};
+  class _end   {};
 
-    class _begin {};
-    class _end   {};
+  static const _begin begin = _begin();
+  static const _end   end   = _end();
 
-  } // end of internal
+} // end of mlc
 
-  static const internal::_begin begin = internal::_begin();
-  static const internal::_end   end   = internal::_end();
-
-} // end of oln
-
-#endif // ! OLENA_CORE_OBJS_HH
+#endif // ! METALIC_OBJS_HH

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -41,13 +41,16 @@
 `--------------------------------------------------------------*/
 
 namespace oln {
+
+  using namespace ntg;
+
   namespace convert {
 
     struct nrgb_to_yiq
       : public color_conversion<3, nrgb_traits,
 				3, yiq_traits, nrgb_to_yiq>
     {
-      typedef type::bottom inferior;
+      typedef mlc::bottom inferior;
 
       template <unsigned qbits>
       color<3, qbits, yiq_traits>
@@ -71,7 +74,7 @@ namespace oln {
       : public color_conversion<3, yiq_traits,
 				3, nrgb_traits, yiq_to_nrgb>
     {
-      typedef type::bottom inferior;
+      typedef mlc::bottom inferior;
 
       template <unsigned qbits>
       color<3, qbits, nrgb_traits>

@@ -3,6 +3,7 @@
 
 
 using namespace oln;
+using namespace ntg;
 
 void morpholena_minima()
 {

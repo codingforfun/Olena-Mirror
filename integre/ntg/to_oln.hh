@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,18 +25,21 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_TO_OLN_HH
-# define OLENA_VALUE_TO_OLN_HH
+#ifndef NTG_TO_OLN_HH
+# define NTG_TO_OLN_HH
 
 # include <ntg/predecls.hh>
 
+// FIXME: rename, oln has nothing to do here !
+
 # define TO_OLN_CAST(T, Val) \
-  (static_cast<typename oln::internal::to_oln<T>::ret>(Val))
+  (static_cast<typename ntg::internal::to_oln<T>::ret>(Val))
 
-namespace oln {
+namespace ntg
+{
 
-  namespace internal {
-
+  namespace internal
+  {
 
     template<class T> struct to_oln { typedef T ret; };
 
@@ -56,7 +59,6 @@ namespace oln {
 
   } // end of internal
 
-} // end of oln
+} // end of ntg
 
-
-#endif // ! OLENA_VALUE_TO_OLN_HH
+#endif // ! NTG_TO_OLN_HH

@@ -39,7 +39,7 @@
  * see: morpho::dilation
  * see: morpho::closing
  * ex:
- * $ image2d<bin> im = load("object.pbm");
+ * $ image2d<ntg::bin> im = load("object.pbm");
  * $ save(morpho::dilation(im, win_c8p()), "out.pbm");
  * exi: object.pbm
  * exo: out.pbm

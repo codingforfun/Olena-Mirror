@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,7 +39,7 @@
 
 namespace oln {
 
-  template<class T, class Inferior = type::bottom>
+  template<class T, class Inferior = mlc::bottom>
   class w_window2d : public internal::_w_window< 2, T, w_window2d<T> >
   {
     typedef internal::_w_window< 2, T, w_window2d<T> > super;
@@ -70,7 +70,7 @@ namespace oln {
     }
 
     template<class I, class T2>
-    w_window2d(const meta::array2d<I, T2 >& arr) :
+    w_window2d(const mlc::array2d<I, T2 >& arr) :
       super(I::card), _delta(0)
     {
       unsigned i = 0;

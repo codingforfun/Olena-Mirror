@@ -1,3 +1,28 @@
+2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/all.hh, ntg/behaviour.hh, ntg/bin.hh,
+	ntg/builtins_properties.hh, ntg/cast.hh, ntg/color.hh,
+	ntg/cplx.hh, ntg/cplx_representation.hh, ntg/cycle.hh,
+	ntg/debug.hh, ntg/global_ops.hh, ntg/global_ops_defs.hh,
+	ntg/global_ops_traits.hh, ntg/hsi.hh, ntg/hsl.hh, ntg/hsv.hh,
+	ntg/int_s.hh, ntg/int_u.hh, ntg/interval.hh, ntg/nrgb.hh,
+	ntg/optraits.hh, ntg/optraits_bin.hh,
+	ntg/optraits_builtins.hh, ntg/optraits_builtins_bool.hh,
+	ntg/optraits_builtins_float.hh, ntg/optraits_builtins_int.hh,
+	ntg/optraits_cplx.hh, ntg/optraits_cycle.hh,
+	ntg/optraits_int_s.hh, ntg/optraits_int_u.hh,
+	ntg/optraits_range.hh, ntg/optraits_scalar.hh,
+	ntg/optraits_scalar_defs.hh, ntg/optraits_vec.hh,
+	ntg/predecls.hh, ntg/range.hh, ntg/rec_value.hh, ntg/rgb.hh,
+	ntg/to_oln.hh, ntg/type.hh, ntg/typetraits.hh,
+	ntg/typetraits_builtins.hh, ntg/typetraits_builtins_bool.hh,
+	ntg/typetraits_builtins_float.hh,
+	ntg/typetraits_builtins_int.hh, ntg/vec.hh, ntg/xyz.hh,
+	ntg/yiq.hh, ntg/yuv.hh, tests/types/runtests,
+	tests/types/tests/optrait1a, tests/types/tests/optrait2a,
+	tests/types/tests/optrait3: Update namespaces. Update header
+	guards.
+
 2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/builtins_properties.hh: Update includes.

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_META_BASICS_HH
-# define OLENA_META_BASICS_HH
+#ifndef METALIC_BOOL_HH
+# define METALIC_BOOL_HH
 
 // This file defines helper structures that deal with two kinds of
 // booleans.
@@ -42,109 +42,104 @@
 //        As types, it's easier to use them in template, and they
 //        can't be confounded with integers like booleans do.
 
-namespace oln {
+namespace mlc 
+{
 
-  namespace meta {
+  struct false_t;
 
-    struct false_t;
+  struct true_t  {
+    static void is_true() {}
+    typedef false_t not_t;
+    typedef void is_true_t;
+  };
 
-    struct true_t  {
-      static void is_true() {}
-      typedef false_t not_t;
-      typedef void is_true_t;
-    };
-
-    struct false_t {
-      static void is_false() {}
-      typedef true_t not_t;
-      typedef void is_false_t;
-    };
+  struct false_t {
+    static void is_false() {}
+    typedef true_t not_t;
+    typedef void is_false_t;
+  };
 
 
-    template <bool Cond, class if_true_type, class if_false_type>
-    struct if_ {
-      typedef if_true_type ret_t;
-    };
+  template <bool Cond, class if_true_type, class if_false_type>
+  struct if_ {
+    typedef if_true_type ret_t;
+  };
 
-    template<class if_true_type, class if_false_type>
-    struct if_<false, if_true_type, if_false_type> 
-    {
-      typedef if_false_type ret_t;
-      typedef false_t ensure_t;
-    };
+  template<class if_true_type, class if_false_type>
+  struct if_<false, if_true_type, if_false_type> 
+  {
+    typedef if_false_type ret_t;
+    typedef false_t ensure_t;
+  };
 
-    template<bool> struct is_true;
-    template<> struct is_true<true>
-    { 
-      static void ensure() {}; 
-      typedef true_t ensure_t;
-    };
+  template<bool> struct is_true;
+  template<> struct is_true<true>
+  { 
+    static void ensure() {}; 
+    typedef true_t ensure_t;
+  };
 
-    template<bool> struct is_false;
-    template<> struct is_false<false> { static void ensure() {}; };
+  template<bool> struct is_false;
+  template<> struct is_false<false> { static void ensure() {}; };
 
-    // FIXME: find a good name for this struct.
+  // FIXME: find a good name for this struct.
 
-    // base class for meta-types returning Boolean values
+  // base class for meta-types returning Boolean values
 
-    template<bool> struct returns_bool_;
+  template<bool> struct returns_bool_;
 
-    template<>
-    struct returns_bool_<true> : public true_t
-    {
-      static const bool ret = true;
-      static void ensure() {}
-    };
+  template<>
+  struct returns_bool_<true> : public true_t
+  {
+    static const bool ret = true;
+    static void ensure() {}
+  };
 
-    template<>
-    struct returns_bool_<false> : public false_t
-    {
-      static const bool ret = false;
-    };
+  template<>
+  struct returns_bool_<false> : public false_t
+  {
+    static const bool ret = false;
+  };
 
-    //
-    // FIXME: remove these logical operators.
-    //
-    // They can easily be replaced by is_true<b1 OP b2>::ensure()
-    //
-    /////////////////////////////////////////////////////////////
+  //
+  // FIXME: remove these logical operators.
+  //
+  // They can easily be replaced by is_true<b1 OP b2>::ensure()
+  //
+  /////////////////////////////////////////////////////////////
 
-    //
-    // or
-    //
+  //
+  // or
+  //
     
-    template<bool b1, bool b2>
-    struct logical_or {
-      enum { ret = (b1 || b2) };
-      static void ensure() {}
-    };
+  template<bool b1, bool b2>
+  struct logical_or {
+    enum { ret = (b1 || b2) };
+    static void ensure() {}
+  };
 
-    template<>
-    struct logical_or<false, false> {
-      enum { ret = false };
-    };
+  template<>
+  struct logical_or<false, false> {
+    enum { ret = false };
+  };
 
 
-    //
-    // and
-    //
+  //
+  // and
+  //
     
-    template<bool b1, bool b2>
-    struct logical_and {
-      enum { ret = (b1 && b2) };
-    };
+  template<bool b1, bool b2>
+  struct logical_and {
+    enum { ret = (b1 && b2) };
+  };
 
-    template<>
-    struct logical_and<true, true> {
-      enum { ret = true };
-      static void ensure() {}
-    };
+  template<>
+  struct logical_and<true, true> {
+    enum { ret = true };
+    static void ensure() {}
+  };
 
-
-    
-  } // meta
-
-} // oln
+} // mlc
 
 
-#endif // OLENA_META_BASICS_HH
+#endif // METALIC_BOOL_HH

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_OPTRAITS_BUILTINS_HH
-# define OLENA_VALUE_OPTRAITS_BUILTINS_HH
+#ifndef NTG_OPTRAITS_BUILTINS_HH
+# define NTG_OPTRAITS_BUILTINS_HH
 
 // shortcut for builtins optraits
 
@@ -34,4 +34,4 @@
 # include <ntg/optraits_builtins_float.hh>
 # include <ntg/optraits_builtins_bool.hh>
 
-#endif // ndef OLENA_VALUE_OPTRAITS_BUILTINS_HH
+#endif // ndef NTG_OPTRAITS_BUILTINS_HH

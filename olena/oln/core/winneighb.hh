@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,7 +32,8 @@
 # include <oln/core/image.hh>
 # include <string>
 
-namespace oln {
+namespace oln
+{
 
   template< class Win >
   struct winneighb {
@@ -48,29 +49,29 @@ namespace oln {
       return _cur;
     }
 
-    internal::_begin
-    operator=(internal::_begin)
+    mlc::_begin
+    operator=(mlc::_begin)
     {
       _pos = 0;
       _cur = _anchor + _win.dp(_pos);
       return begin;
     }
 
-    internal::_end
-    operator=(internal::_end)
+    mlc::_end
+    operator=(mlc::_end)
     {
       _pos = _win.card();
       return end;
     }
 
     bool
-    operator==(internal::_end) const
+    operator==(mlc::_end) const
     {
       return _pos == _win.card();
     }
 
     bool
-    operator!=(internal::_end) const
+    operator!=(mlc::_end) const
     {
       return _pos != _win.card();
     }
@@ -123,6 +124,6 @@ namespace oln {
 typename Neighbable::neighb
 
 
-} // oln
+} // end of oln
 
 #endif // OLENA_CORE_WINNEIGHB_HH

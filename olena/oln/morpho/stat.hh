@@ -46,7 +46,7 @@ namespace oln {
 	static V
 	max(const I& input, const Point(I)& p, const E& se)
 	{
-	  meta::eq<I::dim, E::dim>::ensure();
+	  mlc::eq<I::dim, E::dim>::ensure();
 
 	  Iter(E) dp(se);
 	  dp = begin;
@@ -60,7 +60,7 @@ namespace oln {
 	static V
 	min(const I& input, const Point(I)& p, const E& se)
 	{
-	  meta::eq<I::dim, E::dim>::ensure();
+	  mlc::eq<I::dim, E::dim>::ensure();
 	  Iter(E) dp(se);
 	  dp = begin;
 	  V val = input[p + dp];
@@ -75,12 +75,12 @@ namespace oln {
       /* Binary specialization.  */
 
       template <class I, class E>
-      struct _stat<I, E, bin> {
+      struct _stat<I, E, ntg::bin> {
 
-	static bin
+	static ntg::bin
 	max(const I& input, const Point(I)& p, const E& se)
 	{
-	  meta::eq<I::dim, E::dim>::ensure();
+	  mlc::eq<I::dim, E::dim>::ensure();
 	  Iter(E) dp(se);
 	  for_all (dp)
 	    if (input[p + dp] == true)
@@ -88,10 +88,10 @@ namespace oln {
 	  return false;
 	}
 
-	static bin
+	static ntg::bin
 	min(const I& input, const Point(I)& p, const E& se)
 	{
-	  meta::eq<I::dim, E::dim>::ensure();
+	  mlc::eq<I::dim, E::dim>::ensure();
 	  Iter(E) dp(se);
 	  for_all (dp)
 	    if (input[p + dp] == false)
@@ -110,7 +110,7 @@ namespace oln {
     {
       Exact_cref(I, input);
       Exact_cref(E, se);
-      meta::eq<I::dim, E::dim>::ensure();
+      mlc::eq<I::dim, E::dim>::ensure();
       return internal::_stat<I, E>::max(input, p, se);
     }
 
@@ -121,7 +121,7 @@ namespace oln {
     {
       Exact_cref(I, input);
       Exact_cref(E, se);
-      meta::eq<I::dim, E::dim>::ensure();
+      mlc::eq<I::dim, E::dim>::ensure();
       return internal::_stat<I, E>::min(input, p, se);
     }
 

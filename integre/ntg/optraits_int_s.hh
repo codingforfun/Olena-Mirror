@@ -1,4 +1,4 @@
-// Copyright (C) 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_OPTRAITS_INT_S_HH
-# define OLENA_VALUE_OPTRAITS_INT_S_HH
+#ifndef NTG_OPTRAITS_INT_S_HH
+# define NTG_OPTRAITS_INT_S_HH
 
 # include <ntg/config/system.hh>
 
@@ -47,13 +47,16 @@
 # include <sstream>
 # include <string>
 
-namespace oln
+namespace ntg
 {
 
   // fwd_decl
-  namespace type_definitions {
+  namespace type_definitions 
+  {
+    
     template <unsigned nbits, class behaviour> class int_s;
-  }
+  
+  } // end of type_definitions
 
   //
   //  optraits for int_s
@@ -169,7 +172,8 @@ namespace oln
   };
 
 
-  namespace internal {
+  namespace internal
+  {
 
     //
     // Operators traits
@@ -187,7 +191,7 @@ namespace oln
     struct operator_plus_traits<int_s<nbits, B1>, int_s<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_s<(unsigned)meta::maxN<nbits + 1,mbits + 1, 32>::ret,
+      typedef int_s<(unsigned)mlc::maxN<nbits + 1,mbits + 1, 32>::ret,
 		    typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_s<nbits, B1> impl;
     };
@@ -199,7 +203,7 @@ namespace oln
     struct operator_plus_traits<int_s<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_s<(unsigned)meta::maxN<nbits + 1,mbits + 2, 32>::ret,
+      typedef int_s<(unsigned)mlc::maxN<nbits + 1,mbits + 2, 32>::ret,
 		    typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_s<nbits, B1> impl;
     };
@@ -215,7 +219,7 @@ namespace oln
     struct operator_minus_traits<int_s<nbits, B1>, int_s<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_s<(unsigned)meta::maxN<nbits + 1, mbits + 1, 32>::ret,
+      typedef int_s<(unsigned)mlc::maxN<nbits + 1, mbits + 1, 32>::ret,
 		    typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_s<nbits, B1> impl;
     };
@@ -226,7 +230,7 @@ namespace oln
     struct operator_minus_traits<int_s<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_s<(unsigned)meta::maxN<nbits + 1, mbits + 2, 32>::ret,
+      typedef int_s<(unsigned)mlc::maxN<nbits + 1, mbits + 2, 32>::ret,
 		    typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_s<nbits, B1> impl;
     };
@@ -242,7 +246,7 @@ namespace oln
     struct operator_times_traits<int_s<nbits, B1>, int_s<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_s<(unsigned)meta::saturateN<nbits + mbits, 32>::ret,
+      typedef int_s<(unsigned)mlc::saturateN<nbits + mbits, 32>::ret,
 		    typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_s<nbits, B1> impl;
     };
@@ -254,7 +258,7 @@ namespace oln
     struct operator_times_traits<int_s<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_s<(unsigned)meta::saturateN<nbits + mbits+1, 32>::ret,
+      typedef int_s<(unsigned)mlc::saturateN<nbits + mbits+1, 32>::ret,
 		    typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_s<nbits, B1> impl;
     };
@@ -289,7 +293,7 @@ namespace oln
     struct operator_div_traits<int_u<mbits, B2>, int_s<nbits, B1> >
     {
       enum { commutative = false };
-      typedef int_s<meta::saturateN<mbits + 1, 32>::ret,
+      typedef int_s<mlc::saturateN<mbits + 1, 32>::ret,
 		    typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_s<nbits, B1> impl;
     };
@@ -314,7 +318,7 @@ namespace oln
     struct operator_mod_traits<int_s<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = false };
-      typedef int_s<(unsigned)meta::saturateN<mbits + 1, 32>::ret,
+      typedef int_s<(unsigned)mlc::saturateN<mbits + 1, 32>::ret,
 		    typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_s<nbits, B1> impl;
     };
@@ -338,7 +342,7 @@ namespace oln
     struct operator_min_traits<int_s<nbits, B1>, int_s<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_s<(unsigned) meta::min<nbits, mbits>::ret, 
+      typedef int_s<(unsigned) mlc::min<nbits, mbits>::ret, 
 		    typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_s<nbits, B1> impl;
     };
@@ -353,7 +357,7 @@ namespace oln
     struct operator_max_traits<int_s<nbits, B1>, int_s<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_s<(unsigned) meta::max<nbits, mbits>::ret, 
+      typedef int_s<(unsigned) mlc::max<nbits, mbits>::ret, 
 		    typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_s<nbits, B1> impl;
     };
@@ -368,7 +372,7 @@ namespace oln
     struct operator_cmp_traits<int_s<nbits, B1>, int_s<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_s<(unsigned)meta::maxN<nbits,mbits,32>::ret, unsafe> ret;
+      typedef int_s<(unsigned)mlc::maxN<nbits,mbits,32>::ret, unsafe> ret;
       typedef int_s<nbits, B1> impl;
     };
 
@@ -379,11 +383,12 @@ namespace oln
     struct operator_cmp_traits<int_s<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_s<(unsigned)meta::maxN<nbits,mbits+1, 32>::ret, unsafe> ret;
+      typedef int_s<(unsigned)mlc::maxN<nbits,mbits+1, 32>::ret, unsafe> ret;
       typedef int_s<nbits, B1> impl;
     };
 
-  } // end of namespace internal
-} // namespace oln
+  } // end of internal
 
-#endif // ndef OLENA_VALUE_OPTRAITS_INT_S_HH
+} // end of ntg
+
+#endif // ndef NTG_OPTRAITS_INT_S_HH

@@ -19,6 +19,7 @@
       }
 
 using namespace oln;
+using namespace ntg;
 #if HAVE_FFTW
 using namespace transforms;
 #endif

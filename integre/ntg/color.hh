@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_COLOR_HH
-# define OLENA_VALUE_COLOR_HH
+#ifndef NTG_COLOR_HH
+# define NTG_COLOR_HH
 
 # include <ntg/config/system.hh>
 
@@ -47,7 +47,8 @@
 # include <string>
 
 
-namespace oln {
+namespace ntg
+{
 
   template <unsigned ncomps, unsigned qbits, template <unsigned>
   class color_system>
@@ -142,7 +143,7 @@ namespace oln {
       }
     };
 
-  } // internal
+  } // end of internal
 
 
   namespace type_definitions
@@ -170,7 +171,7 @@ namespace oln {
 
       color(const comp_type& c1, const comp_type& c2, const comp_type& c3)
       {
-	meta::eq<ncomps, 3>::ensure();
+	mlc::eq<ncomps, 3>::ensure();
 	_value[0] = c1;
 	_value[1] = c2;
 	_value[2] = c3;
@@ -210,17 +211,17 @@ namespace oln {
       };
     };
 
-  } // type_definitions
+  } // end of type_definitions
 
-} // oln
+  template <unsigned ncomps, unsigned qbits, template <unsigned>
+  class color_system> inline
+  std::ostream& operator<<(std::ostream& o,
+			   const color<ncomps, qbits, color_system>& r)
+  {
+    o << r.as_vec();
+    return o;
+  }
 
-template <unsigned ncomps, unsigned qbits, template <unsigned>
-class color_system> inline
-std::ostream& operator<<(std::ostream& o,
-			 const oln::color<ncomps, qbits, color_system>& r)
-{
-  o << r.as_vec();
-  return o;
-}
+} // end of ntg
 
-#endif // OLENA_VALUE_COLOR_HH
+#endif // NTG_COLOR_HH

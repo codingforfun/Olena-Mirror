@@ -36,7 +36,7 @@
 namespace oln {
 
   template<unsigned Dim, // 1D, 2D, etc.
-	   class Inferior = type::bottom>
+	   class Inferior = mlc::bottom>
   struct regular_image : public image< regular_image< Dim, Inferior> >
   {
     typedef Inferior inferior;

@@ -25,17 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_META_ARRAY2D_HXX
-# define OLENA_META_ARRAY2D_HXX
+#ifndef METALIC_ARRAY_2D_HXX
+# define METALIC_ARRAY_2D_HXX
 
 # include <mlc/array/nd.hh>
 
-namespace oln {
+namespace mlc
+{
 
-  namespace meta {
-    
     //
-    //  meta::array2d_info
+    //  mlc::array2d_info
     //
     ////////////////////////////////////////
     
@@ -98,7 +97,8 @@ namespace oln {
     template<class, class> struct array2d;
 
 
-    namespace internal {
+    namespace internal 
+    {
 
       // fwd decl
 
@@ -112,7 +112,7 @@ namespace oln {
 
 
       //
-      //  meta::internal::_array2d_start decl
+      //  mlc::internal::_array2d_start decl
       //
       ////////////////////////////////////////
 
@@ -123,17 +123,17 @@ namespace oln {
 	operator=(T val);
 	
 	_array2d_elt< T, array2d_info< _unknown, _unknown, 0, 1 > > 
-	operator=(oln::internal::_x<T> val);
+	operator=(_x<T> val);
 	
 	_array2d_elt< T, array2d_info< _unknown, _unknown, 0, 1 > > 
-	operator=(oln::internal::_x<void> val);
+	operator=(_x<void> val);
 
 	T ptr[_max_card]; // could be static
       };
 
 
       //
-      //  meta::internal::_array2d_elt
+      //  mlc::internal::_array2d_elt
       //
       ////////////////////////////////////////
 
@@ -178,7 +178,7 @@ namespace oln {
 
 	// elt, x(elt)		-> center
 
-	_eat_center_t operator,(oln::internal::_x<T> val)
+	_eat_center_t operator,(_x<T> val)
 	{
 	  is_true<Info::center == _unknown>::ensure();
 	  *ptr = val.ue; // FIXME : give a *name* to this variable !!
@@ -188,7 +188,7 @@ namespace oln {
 
 	// elt, x()		-> center
 
-	_eat_center_t operator,(oln::internal::_x<void>)
+	_eat_center_t operator,(_x<void>)
 	{
 	  is_true<Info::center == _unknown>::ensure();
 	  *ptr = T(0);
@@ -198,7 +198,7 @@ namespace oln {
 
 	// elt, lbrk
 
-	_eat_lbrk_t operator,(oln::internal::_lbrk)
+	_eat_lbrk_t operator,(_lbrk)
 	{
 	  is_true<Info::ncols == _unknown>::ensure();
 	  is_true<Info::ncols != 0>::ensure();
@@ -208,7 +208,7 @@ namespace oln {
 
 	// elt, end
 	
-	_array2d_t operator,(oln::internal::_end)
+	_array2d_t operator,(_end)
 	{
 	  enum { nrows = Info::i / Info::ncols };
 	  
@@ -246,7 +246,7 @@ namespace oln {
 
 
       //
-      //  meta::internal::_array2d_start  impl
+      //  mlc::internal::_array2d_start  impl
       //
       ////////////////////////////////////////
 
@@ -260,7 +260,7 @@ namespace oln {
 
       template<class T> inline 
       _array2d_elt< T, array2d_info< _unknown, _unknown, 0, 1 > >
-      _array2d_start<T>::operator=(oln::internal::_x<T> val)
+      _array2d_start<T>::operator=(_x<T> val)
       {
 	ptr[0] = val.ue;
 	// center <- 0
@@ -269,19 +269,15 @@ namespace oln {
 
       template<class T> inline 
       _array2d_elt< T, array2d_info< _unknown, _unknown, 0, 1 > >
-      _array2d_start<T>::operator=(oln::internal::_x<void> val)
+      _array2d_start<T>::operator=(_x<void> val)
       {
 	ptr[0] = T(0);
 	// center <- 0
 	return _array2d_elt< T, array2d_info< _unknown, _unknown, 0, 1 > >(ptr+1,this);
       }
 
-
     } // end of internal
 
-  } // end of meta
+} // end of mlc
 
-} // end of oln
-
-
-#endif // ! OLENA_META_ARRAY2D_HXX
+#endif // ! METALIC_ARRAY_2D_HXX

@@ -36,9 +36,11 @@
 
 # include <mlc/objs.hh>
 
-namespace oln {
+namespace mlc
+{
 
-  namespace internal {
+  namespace internal
+  {
 
     class _lbrk  {};
     class _pbrk  {};
@@ -49,8 +51,8 @@ namespace oln {
       T ue;
     };
     template<> struct _x<void> {};
-    template<> struct _x<oln::internal::_lbrk>;
-    template<> struct _x<oln::internal::_end>;
+    template<> struct _x<_lbrk>;
+    template<> struct _x<_end>;
     
   } // end of internal
 
@@ -67,6 +69,6 @@ namespace oln {
   static const internal::_lbrk  lbrk  = internal::_lbrk();
   static const internal::_pbrk  pbrk  = internal::_pbrk();
 
-} // end of oln
+} // end of mlc
 
 #endif // METALIC_ARRAY_OBJS_HH

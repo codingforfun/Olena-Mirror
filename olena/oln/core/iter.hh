@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,15 +29,20 @@
 # define OLENA_CORE_ITER_HH
 
 # include <mlc/type.hh>
+# include <mlc/objs.hh>
 
+namespace oln
+{
 
-namespace oln {
-
+  using mlc::_begin;
+  using mlc::begin;
+  using mlc::_end;
+  using mlc::end;
 
   // iter
 
-  template<class Inferior = type::bottom>
-  struct iter : public type::any< iter<Inferior> >
+  template<class Inferior = mlc::bottom>
+  struct iter : public mlc::any< iter<Inferior> >
   {
     typedef Inferior inferior;
     static std::string name() { return std::string("iter<") + Inferior::name() + ">"; }
@@ -48,8 +53,8 @@ namespace oln {
 
   // fwd_iter
 
-  template<class Inferior = type::bottom>
-  struct fwd_iter : public type::any< fwd_iter<Inferior> >
+  template<class Inferior = mlc::bottom>
+  struct fwd_iter : public mlc::any< fwd_iter<Inferior> >
   {
     typedef Inferior inferior;
     static std::string name() { return std::string("fwd_iter<") + Inferior::name() + ">"; }
@@ -60,8 +65,8 @@ namespace oln {
 
   // bkd_iter
 
-  template<class Inferior = type::bottom>
-  struct bkd_iter : public type::any< bkd_iter<Inferior> >
+  template<class Inferior = mlc::bottom>
+  struct bkd_iter : public mlc::any< bkd_iter<Inferior> >
   {
     typedef Inferior inferior;
     static std::string name() { return std::string("bkd_iter<") + Inferior::name() + ">"; }

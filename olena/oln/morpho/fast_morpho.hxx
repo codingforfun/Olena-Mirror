@@ -46,8 +46,8 @@ namespace oln {
       template<class E1_, class E2_, class E3_>
       void
       find_struct_elts(const struct_elt<E1_>& _se,
-		       struct_elt<E2_> _se_add[type::exact<E1_>::ret::dim],
-		       struct_elt<E3_> _se_rem[type::exact<E1_>::ret::dim])
+		       struct_elt<E2_> _se_add[mlc::exact<E1_>::ret::dim],
+		       struct_elt<E3_> _se_rem[mlc::exact<E1_>::ret::dim])
       {
 	Exact_cref(E1, se);
 	Exact_ptr(E2, se_add);
@@ -237,7 +237,7 @@ namespace oln {
     template<class E_>
     struct sort_dimensions
     {
-      sort_dimensions(struct_elt<E_> se[type::exact<E_>::ret::dim])
+      sort_dimensions(struct_elt<E_> se[mlc::exact<E_>::ret::dim])
 	: _se(se) {}
 
       bool operator()(unsigned a, unsigned b)

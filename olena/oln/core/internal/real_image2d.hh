@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,7 +34,8 @@
 # include <iostream>
 # include <cmath>
 
-namespace oln {
+namespace oln
+{
 
   namespace internal
   {
@@ -43,7 +44,7 @@ namespace oln {
     // holds data, that is, every 2d image type which is not a proxy.
 
 
-    template<class T, class Inferior = type::bottom>
+    template<class T, class Inferior = mlc::bottom>
     class _real_image2d : public _image2d< T, _real_image2d<T,Inferior> >
     {
     public:
@@ -159,7 +160,7 @@ operator<<(std::ostream& o, const oln::internal::_real_image2d<T,I>& ima)
     {
       for (oln::coord col = 0; col < ima.ncols(); ++col)
 	{
-	  o.width(unsigned(log10(double(oln::optraits<T>::max()))+2));
+	  o.width(unsigned(log10(double(ntg::optraits<T>::max()))+2));
 	  o << ima(row,col) << ' ';
 	}
       o << std::endl;

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_OPTRAITS_INT_U_HH
-# define OLENA_VALUE_OPTRAITS_INT_U_HH
+#ifndef NTG_OPTRAITS_INT_U_HH
+# define NTG_OPTRAITS_INT_U_HH
 
 # include <ntg/config/system.hh>
 # include <ntg/builtins_properties.hh>
@@ -44,7 +44,7 @@
 # include <string>
 # include <sstream>
 
-namespace oln
+namespace ntg
 {
 
   //
@@ -102,7 +102,7 @@ namespace oln
     struct operator_plus_traits<int_u<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_u<(unsigned) meta::maxN<nbits + 1, mbits + 1, 32>::ret,
+      typedef int_u<(unsigned) mlc::maxN<nbits + 1, mbits + 1, 32>::ret,
 		    typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_u<nbits, B1> impl;
     };
@@ -117,7 +117,7 @@ namespace oln
     struct operator_minus_traits<int_u<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_s<(unsigned) meta::maxN<nbits+1, mbits+1, 32>::ret,
+      typedef int_s<(unsigned) mlc::maxN<nbits+1, mbits+1, 32>::ret,
 		    typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_u<nbits, B1> impl;
     };
@@ -143,7 +143,7 @@ namespace oln
     struct operator_times_traits<int_u<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_u<(unsigned) meta::saturateN<nbits + mbits, 32>::ret,
+      typedef int_u<(unsigned) mlc::saturateN<nbits + mbits, 32>::ret,
 	typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_u<nbits, B1> impl;
     };
@@ -187,7 +187,7 @@ namespace oln
     struct operator_min_traits<int_u<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_u<(unsigned) meta::min<nbits, mbits>::ret,
+      typedef int_u<(unsigned) mlc::min<nbits, mbits>::ret,
 		    typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_u<nbits, B1> impl;
     };
@@ -203,7 +203,7 @@ namespace oln
     struct operator_max_traits<int_u<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_u<(unsigned) meta::max<nbits, mbits>::ret,
+      typedef int_u<(unsigned) mlc::max<nbits, mbits>::ret,
 		    typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_u<nbits, B1> impl;
     };
@@ -219,11 +219,12 @@ namespace oln
     struct operator_cmp_traits<int_u<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_u<(unsigned) meta::maxN<nbits, mbits, 32>::ret, unsafe> ret;
+      typedef int_u<(unsigned) mlc::maxN<nbits, mbits, 32>::ret, unsafe> ret;
       typedef int_u<nbits, B1> impl;
     };
 
-  } // end of namespace internal
-} // namespace oln
+  } // end of internal
 
-#endif // ndef OLENA_VALUE_OPTRAITS_INT_U_HH
+} // end of ntg
+
+#endif // ndef NTG_OPTRAITS_INT_U_HH

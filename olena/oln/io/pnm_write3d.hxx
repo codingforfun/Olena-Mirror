@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,6 +31,9 @@
 # include <oln/io/pnm_write_common.hxx>
 
 namespace oln {
+
+  using namespace ntg;
+
   namespace io {
     namespace internal {
 

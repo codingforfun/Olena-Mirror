@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,69 +25,66 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_META_CONTROL_HH
-# define OLENA_META_CONTROL_HH
+#ifndef METALIC_LOOP_HH
+# define METALIC_LOOP_HH
 
 # include <mlc/cmp.hh>
 
-namespace oln {
+namespace mlc
+{
 
-  namespace meta {
+  namespace internal 
+  {
 
-    namespace internal {
+    // Helper struct for simple_for_ below.
 
-      // Helper struct for simple_for_ below.
+    template<int i,
+	     template<int,int>class Cmp, int to, int by, bool do_again>
+    struct simple_for_statement;
 
-      template<int i,
-	       template<int,int>class Cmp, int to, int by, bool do_again>
-      struct simple_for_statement;
-
-      template<int i, template<int,int>class Cmp, int to, int by>
-      struct simple_for_statement<i, Cmp, to, by, true>
-      {
-	template<class F>
-	static F& exec(F& f)
-	{
-	  f.template exec<i>();
-	  return simple_for_statement<i+by, Cmp, to, by,
-	                              Cmp<i+by,to>::ret>::exec(f);
-	}
-      };
-
-      template<int i, template<int,int>class Cmp, int to, int by>
-      struct simple_for_statement<i, Cmp, to, by, false>
-      {
-	template<class F>
-	static F& exec(F& f)
-	{
-	  return f;
-	}
-      };
-
-    } // internal
-
-
-    // simple_for_<from, Cmp,to, by>::exec(f);
-    //
-    // mimics
-    //
-    // simple_for (i = from; Cmp(i, to)::ret; i += by)
-    //   f::exec<i>();
-
-    template<int from, template<int,int>class Cmp, int to, int by>
-    struct simple_for_
+    template<int i, template<int,int>class Cmp, int to, int by>
+    struct simple_for_statement<i, Cmp, to, by, true>
     {
       template<class F>
       static F& exec(F& f)
       {
-	return internal::simple_for_statement< from, Cmp, to, by,
-	                                       Cmp<from,to>::ret >::exec(f);
+	f.template exec<i>();
+	return simple_for_statement<i+by, Cmp, to, by,
+	  Cmp<i+by,to>::ret>::exec(f);
       }
     };
 
+    template<int i, template<int,int>class Cmp, int to, int by>
+    struct simple_for_statement<i, Cmp, to, by, false>
+    {
+      template<class F>
+      static F& exec(F& f)
+      {
+	return f;
+      }
+    };
 
-  } // meta
+  } // end of internal
 
-} // oln
 
-#endif // OLENA_META_CONTROL_HH
+  // simple_for_<from, Cmp,to, by>::exec(f);
+  //
+  // mimics
+  //
+  // simple_for (i = from; Cmp(i, to)::ret; i += by)
+  //   f::exec<i>();
+
+  template<int from, template<int,int>class Cmp, int to, int by>
+  struct simple_for_
+  {
+    template<class F>
+    static F& exec(F& f)
+    {
+      return internal::simple_for_statement< from, Cmp, to, by,
+	Cmp<from,to>::ret >::exec(f);
+    }
+  };
+
+} // end of mlc
+
+#endif // METALIC_LOOP_HH

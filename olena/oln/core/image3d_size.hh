@@ -38,7 +38,7 @@ namespace oln {
   {
   public:
 
-    typedef type::bottom inferior;
+    typedef mlc::bottom inferior;
 
     image3d_size(coord nslices, coord nrows, coord ncols)
     {

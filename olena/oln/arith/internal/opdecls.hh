@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,13 +33,13 @@
 `-------------------*/
 
 /* For binary operators that takes rev_values<T> arguments
-   and define internal::operator_##OPNAME##_traits.  */
+   and define ntg::internal::operator_##OPNAME##_traits.  */
 # define _OLN_ARITH_DECLARE_BINRECVAL_FUNCTOR(OPNAME, OPCODE)		\
     template<class T1, class T2 = T1>					\
-    struct f_##OPNAME : std::binary_function<const rec_value<T1>&,	\
-      const rec_value<T2>&,						\
-      typename internal::deduce_from_traits<				\
-        internal::operator_##OPNAME##_traits, T1, T2 >::ret >		\
+    struct f_##OPNAME : std::binary_function<const ntg::rec_value<T1>&,	\
+      const ntg::rec_value<T2>&,					\
+      typename ntg::internal::deduce_from_traits<			\
+        ntg::internal::operator_##OPNAME##_traits, T1, T2 >::ret >		\
     {									\
       typedef f_##OPNAME self;						\
       typename self::result_type					\
@@ -51,12 +51,12 @@
     } /* no ; */
 
 /* For binary operators that takes rev_values<T> arguments
-   and define internal::operator_##OPNAME##_traits.  */
+   and define ntg::internal::operator_##OPNAME##_traits.  */
 # define _OLN_ARITH_DECLARE_BINRECVALCST_FUNCTOR(OPNAME, OPCODE_CST)	\
     template<class T1, class T2 = T1>					\
-    struct f_##OPNAME##_cst : std::unary_function<const rec_value<T1>&,	\
-      typename internal::deduce_from_traits<				\
-        internal::operator_##OPNAME##_traits, T1, T2>::ret >		\
+    struct f_##OPNAME##_cst : std::unary_function<const ntg::rec_value<T1>&,\
+      typename ntg::internal::deduce_from_traits<			\
+        ntg::internal::operator_##OPNAME##_traits, T1, T2>::ret >		\
     {									\
       typedef f_##OPNAME##_cst self;					\
       f_##OPNAME##_cst(T2 cst) : _cst(cst) {}				\

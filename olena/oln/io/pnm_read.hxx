@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,10 +30,14 @@
 
 # include <oln/core/image2d.hh>
 # include <oln/core/fwd_iter2d.hh>
-# include <ntg/bin.hh>
 # include <oln/io/pnm_read_common.hxx>
 
+# include <ntg/bin.hh>
+
 namespace oln {
+
+  using namespace ntg;
+
   namespace io {
     namespace internal {
 
@@ -154,6 +158,7 @@ namespace oln {
 	  coord cols = 0;
 	  unsigned bits = 0;
 	  unsigned char c = 0;
+	  // FIXME: begin and end should be included in namespace olena somewhere
 	  for (it = begin; it != end; ++it)
 	    {
 	      if (bits == 0)

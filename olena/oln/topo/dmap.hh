@@ -99,7 +99,7 @@ namespace oln {
     class dmap
     {
     public:
-      typedef image2d<bin>::point point;
+      typedef image2d<ntg::bin>::point point;
 
       dmap(const image2d_size& size,
 	   const chamfer<T2>& ch);
