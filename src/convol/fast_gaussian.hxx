@@ -154,7 +154,7 @@ namespace oln {
 	  void
 	  doit(image<_I>& _img, const F& coef)
 	  {
-	    Exact_ref(I, in);
+	    Exact_ref(I, img);
 
 	    // Apply on columns.
 	    _recursivefilter<float>(img, coef,

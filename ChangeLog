@@ -1,3 +1,7 @@
+2002-01-16  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/convol/fast_gaussian.hxx (_gaussian<1>::doit): Typo.
+
 2002-01-14  Jerome Darbon  <jerome@epita.fr>
 
 	* demo/Makefile.am (test_reconstruction_SOURCES): New.
