@@ -37,23 +37,38 @@ namespace oln {
   class strict;
   class saturate;
 
-  // intervals
-  template <class T, T i_min, T i_max> class		bounded;
-  template <unsigned i_min, unsigned i_max> class	bounded_u;
-  template <signed i_min, signed i_max> class		bounded_s;
+  // Put types and operators definitions in a subnamespace, then
+  // important the types in oln::, and rely on Koenig lookup to find
+  // relevant operators.  This way out template operator do not
+  // supersede the build-in operator.
+  namespace type_definitions {
+    // intervals
+    template <class T, T i_min, T i_max> class		bounded;
+    template <unsigned i_min, unsigned i_max> class	bounded_u;
+    template <signed i_min, signed i_max> class		bounded_s;
 
-  // scalar types
-  template<unsigned nbits, class behaviour = strict>	class int_u;
-  template<unsigned nbits, class behaviour = strict>	class int_s;
-  template<class T, class interval, class behaviour = strict> class range;
-  template<class T, class interval> class		cycle;
+    // scalar types
+    template <unsigned nbits, class behaviour = strict>	class int_u;
+    template <unsigned nbits, class behaviour = strict>	class int_s;
+    template <class T, class interval, class behaviour = strict> class range;
+    template <class T, class interval> class		cycle;
+  }
+  using type_definitions::bounded_u;
+  using type_definitions::bounded_s;
+  using type_definitions::int_u;
+  using type_definitions::int_s;
+  using type_definitions::range;
+  using type_definitions::cycle;
+
   // floats
   typedef float						sfloat;
   typedef double					dfloat;
 
   // enumerated types
-  class bin;
-
+  namespace type_definitions {
+    class bin;
+  }
+  using type_definitions::bin;
 
   // int_u
 
@@ -139,7 +154,6 @@ namespace types {
   using oln::strict;
   using oln::saturate;
 
-  using oln::bounded;
   using oln::bounded_u;
   using oln::bounded_s;
 

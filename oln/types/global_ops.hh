@@ -41,7 +41,7 @@
 
 //
 //  Global ops
-//  These operators cannot be called if one value_type is not involved, 
+//  These operators cannot be called if one value_type is not involved,
 //  as there are uncapsulated in a namespace
 //
 ///////////////////////////////////////////////////////////////////////
@@ -49,144 +49,149 @@
 namespace oln
 {
 
-  //
-  // Arithmetic assignements
-  //
-  ///////////////////////////
-
-
-  GLOBAL_ASSIGN_OP(operator+=, plus_equal);
-  GLOBAL_ASSIGN_OP(operator-=, minus_equal);
-  GLOBAL_ASSIGN_OP(operator*=, times_equal);
-  GLOBAL_ASSIGN_OP(operator/=, div_equal);
-  GLOBAL_ASSIGN_OP(operator%=, mod_equal);
-
-
-  //
-  //  Logical assignements
-  //
-  /////////////////////////
-
-  GLOBAL_ASSIGN_OP(operator|=, logical_or_equal);
-  GLOBAL_ASSIGN_OP(operator&=, logical_and_equal);
-  GLOBAL_ASSIGN_OP(operator^=, logical_xor_equal);
-
-
-  //
-  //  Arithmetic operations
-  //
-  //////////////////////////
-
-  GLOBAL_ARITH_OP(operator+, plus);
-  GLOBAL_ARITH_OP(operator-, minus);
-  GLOBAL_ARITH_OP(operator*, times);
-  GLOBAL_ARITH_OP(operator/, div);
-  GLOBAL_ARITH_OP(operator%, mod);
-
-  
-  //
-  //  Logical operators
-  //
-  ///////////////////////
-
-  GLOBAL_LOGICAL_OP(operator|, logical_or);
-  GLOBAL_LOGICAL_OP(operator&, logical_and);
-  GLOBAL_LOGICAL_OP(operator^, logical_xor);
-
-
-  //
-  //  Comparison operators
-  //
-  /////////////////////////
-
-  // eq
-
-  GLOBAL_CMP_OP(operator==, cmp_eq);
-
-  // neq
-
-  template <class T1, class T2>
-  bool operator!=(const T1& lhs, const T2& rhs)
-  { return !(lhs == rhs); }
-
-
-  // cmp_lt
-
-  GLOBAL_CMP_OP(operator<, cmp_lt);
-  
-
-  // cmp_gt
-
-  template <class T1, class T2>
-  bool operator>(const T1& lhs, const T2& rhs)
-  { return rhs < lhs; }  
-
-  
-  // cmp_ge
-
-  template <class T1, class T2>
-  bool operator>=(const T1& lhs, const T2& rhs)
-  { return !(lhs < rhs); }
-
-  
-  // cmp_le
-  
-  template <class T1, class T2>
-  bool operator<=(const T1& lhs, const T2& rhs)
-  { return !(rhs < lhs); }
-
-
-  //
-  //  Arithmetical unary operators
-  //
-  /////////////////////////////////
-
-  // plus
-  
-  template <class T> inline
-  const T& operator+(const T& val)
-  { 
-    return val;
-  }
-
-  template<class T> inline
-  const T& operator++(T& val)
+  namespace type_definitions
   {
-    val += optraits<T>::unit();
-    return val;
-  }
 
-  template<class T> inline
-  T operator++(T& val, int)
-  {
-    T tmp(val);
-    val += optraits<T>::unit();
-    return tmp;
-  }
+    //
+    // Arithmetic assignements
+    //
+    ///////////////////////////
 
-  // minus
 
-  template <class T> inline
-  const T operator-(const T& val)
-  { 
-    return optraits<T>::zero() - val; 
-  }
+    GLOBAL_ASSIGN_OP(operator+=, plus_equal);
+    GLOBAL_ASSIGN_OP(operator-=, minus_equal);
+    GLOBAL_ASSIGN_OP(operator*=, times_equal);
+    GLOBAL_ASSIGN_OP(operator/=, div_equal);
+    GLOBAL_ASSIGN_OP(operator%=, mod_equal);
 
-  template<class T> inline
-  const T& operator--(T& val)
-  {
-    val -= optraits<T>::unit();
-    return val;
-  }
 
-  template<class T> inline
-  T operator--(T& val, int)
-  {
-    T tmp(val);
-    val -= optraits<T>::unit();
-    return tmp;
-  }
-    
+    //
+    //  Logical assignements
+    //
+    /////////////////////////
+
+    GLOBAL_ASSIGN_OP(operator|=, logical_or_equal);
+    GLOBAL_ASSIGN_OP(operator&=, logical_and_equal);
+    GLOBAL_ASSIGN_OP(operator^=, logical_xor_equal);
+
+
+    //
+    //  Arithmetic operations
+    //
+    //////////////////////////
+
+    GLOBAL_ARITH_OP(operator+, plus);
+    GLOBAL_ARITH_OP(operator-, minus);
+    GLOBAL_ARITH_OP(operator*, times);
+    GLOBAL_ARITH_OP(operator/, div);
+    GLOBAL_ARITH_OP(operator%, mod);
+
+
+    //
+    //  Logical operators
+    //
+    ///////////////////////
+
+    GLOBAL_LOGICAL_OP(operator|, logical_or);
+    GLOBAL_LOGICAL_OP(operator&, logical_and);
+    GLOBAL_LOGICAL_OP(operator^, logical_xor);
+
+
+    //
+    //  Comparison operators
+    //
+    /////////////////////////
+
+    // eq
+
+    GLOBAL_CMP_OP(operator==, cmp_eq);
+
+    // neq
+
+    template <class T1, class T2>
+    bool operator!=(const T1& lhs, const T2& rhs)
+    { return !(lhs == rhs); }
+
+
+    // cmp_lt
+
+    GLOBAL_CMP_OP(operator<, cmp_lt);
+
+
+    // cmp_gt
+
+    template <class T1, class T2>
+    bool operator>(const T1& lhs, const T2& rhs)
+    { return rhs < lhs; }
+
+
+    // cmp_ge
+
+    template <class T1, class T2>
+    bool operator>=(const T1& lhs, const T2& rhs)
+    { return !(lhs < rhs); }
+
+
+    // cmp_le
+
+    template <class T1, class T2>
+    bool operator<=(const T1& lhs, const T2& rhs)
+    { return !(rhs < lhs); }
+
+
+    //
+    //  Arithmetical unary operators
+    //
+    /////////////////////////////////
+
+    // plus
+
+    template <class T> inline
+    const T& operator+(const T& val)
+    {
+      return val;
+    }
+
+    template<class T> inline
+    const T& operator++(T& val)
+    {
+      val += optraits<T>::unit();
+      return val;
+    }
+
+    template<class T> inline
+    T operator++(T& val, int)
+    {
+      T tmp(val);
+      val += optraits<T>::unit();
+      return tmp;
+    }
+
+    // minus
+
+    template <class T> inline
+    const T operator-(const T& val)
+    {
+      return optraits<T>::zero() - val;
+    }
+
+    template<class T> inline
+    const T& operator--(T& val)
+    {
+      val -= optraits<T>::unit();
+      return val;
+    }
+
+    template<class T> inline
+    T operator--(T& val, int)
+    {
+      T tmp(val);
+      val -= optraits<T>::unit();
+      return tmp;
+    }
+
+  } // type_definitions
+
 } // end of namespace oln
 
 #endif // ndef OLENA_VALUE_GLOBAL_OPS_HH

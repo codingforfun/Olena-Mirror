@@ -1,5 +1,16 @@
 2002-09-10  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
+	* oln/types/predecls.hh: Move the types for which we
+	declare operator into namespace type_definitions.  Don't
+	export `bounded' in namespace type.
+	* oln/types/rec_value.hh: Include oln/types/predecls.hh.
+	* oln/types/range.hh, oln/types/interval.hh, oln/types/int_u.hh,
+	oln/types/int_s.hh, oln/types/global_ops.hh, oln/types/cycle.hh:
+	oln/types/bin.hh: Don't predeclare the type.  Move type and
+	operators definitions in namespace type_definitions.
+
+2002-09-10  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
 	* oln/types/predecls.hh (int_u, int_s, range): Set default
 	behaviour to `strict'.
 

@@ -38,7 +38,7 @@ for test; do
   src=$dir/$test.cc
   cat >$src <<'EOF'
 #include <oln/types/all.hh>
-using namespace types;
+using namespace oln;
 int main() {
 EOF
   cat $input >>$src

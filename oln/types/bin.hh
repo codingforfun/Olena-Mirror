@@ -29,14 +29,11 @@
 # define OLENA_VALUE_BIN_HH
 
 # include <oln/core/contract.hh>
-
 # include <oln/types/rec_value.hh>
 # include <oln/types/typetraits.hh>
 
 namespace oln
 {
-
-  class bin; // fwd_decl
 
   //
   //  Typetraits
@@ -56,43 +53,48 @@ namespace oln
   };
 
 
-  //
-  //  Class bin
-  //
-  //////////////
-
-
-  class bin : public rec_enum<bin>
+  namespace type_definitions
   {
-  public:
-    bin (unsigned char val)
-    {
-      precondition (val < 2);
-      _value = val;
-    }
-    bin& operator=(unsigned char val)
-    {
-      precondition (val < 2);
-      _value = val;
-      return *this;
-    }
-    
-    template <class T>
-    bin (const rec_scalar<T>& val)
-    {
-      precondition (val < 2);
-      _value = val;
-    }
-    template <class T>
-    bin& operator=(const rec_scalar<T>& val)
-    {
-      precondition (val < 2);
-      _value = val;
-      return *this;
-    }
+    //
+    //  Class bin
+    //
+    //////////////
 
-    operator unsigned char() { return _value; }
-  };  
+
+    class bin : public rec_enum<bin>
+    {
+    public:
+      bin (unsigned char val)
+      {
+	precondition (val < 2);
+	_value = val;
+      }
+
+      bin& operator=(unsigned char val)
+      {
+	precondition (val < 2);
+	_value = val;
+	return *this;
+      }
+
+      template <class T>
+      bin (const rec_scalar<T>& val)
+      {
+	precondition (val < 2);
+	_value = val;
+      }
+      template <class T>
+      bin& operator=(const rec_scalar<T>& val)
+      {
+	precondition (val < 2);
+	_value = val;
+	return *this;
+      }
+
+      operator unsigned char() { return _value; }
+    };
+
+  } // type_definitions
 
 } // end of namespace oln
 

@@ -29,13 +29,14 @@
 # define OLENA_VALUE_REC_VALUE_HH_
 
 # include <oln/types/type.hh>
+# include <oln/types/predecls.hh>
 # include <oln/types/global_ops_traits.hh>
 # include <oln/types/typetraits.hh>
 # include <oln/types/optraits.hh>
 
 namespace oln
 {
-  
+
   //
   //   Value hierarchy, used for data storing
   //
@@ -59,7 +60,7 @@ namespace oln
     store_type _value;
   };
 
-  
+
   //
   //  Scalar branch
   //
@@ -68,11 +69,11 @@ namespace oln
   template <class Self>
   class rec_scalar : public rec_value<Self>
   {};
-  
+
 
   //
   // int
-  //  
+  //
 
   template <class Self>
   class rec_int : public rec_scalar<Self>
@@ -98,7 +99,7 @@ namespace oln
   {};
 
 
-  // 
+  //
   //  Enumerated branch
   //
   /////////////////////
@@ -106,7 +107,7 @@ namespace oln
   template <class Self>
   class rec_enum : public rec_value<Self>
   {};
-  
+
 } // namespace oln
 
 #endif // ndef OLENA_VALUE_REC_VALUE_HH_

@@ -36,8 +36,6 @@
 
 namespace oln
 {
-  
-  template <class T, class interval, class behaviour> class range; // fwd_decl
 
   //
   // Typetraits
@@ -49,57 +47,61 @@ namespace oln
   {
     typedef range<T, interval, behaviour> self;
     typedef optraits<self> optraits;
-    
+
     typedef typename typetraits<T>::base base;
     typedef T store;
     typedef typename typetraits<T>::cumul cumul;
-    
+
     // internal type used for binary operations traits
     typedef typename typetraits<T>::base op_traits;
-    
+
     // FIXME : add missing
   };
 
-  //
-  //  Class range<DecoratedType, Min, Max, Behaviour>
-  //
-  ////////////////////////////////////////////////////
-
-  template <class T, class interval, class behaviour>
-  class range : public rec_scalar<range<T, interval, behaviour> >
+  namespace type_definitions
   {
-  public:
-    typedef range<T, interval, behaviour> self;
 
-  private:
-    // shortcuts
-    typedef typename typetraits<self>::optraits optraits_type;
-    typedef typename typetraits<self>::base base_type;
-    typedef typename typetraits<base_type>::store base_store_type;
-    
-  public:
-    range ()
+    //
+    //  Class range<DecoratedType, Min, Max, Behaviour>
+    //
+    ////////////////////////////////////////////////////
+
+    template <class T, class interval, class behaviour>
+    class range : public rec_scalar<range<T, interval, behaviour> >
     {
-      _value = 0;
-    }
+    public:
+      typedef range<T, interval, behaviour> self;
 
-    template <class U>
-    range (const U& u)
-    {
-      is_a(optraits<U>, optraits_scalar)::ensure();
-      _value = optraits_type::check(u);
-    }
-    template <class U>
-    self& operator=(const U& u)
-    {
-      _value = optraits_type::check(u);
-      return *this;
-    }
+    private:
+      // shortcuts
+      typedef typename typetraits<self>::optraits optraits_type;
+      typedef typename typetraits<self>::base base_type;
+      typedef typename typetraits<base_type>::store base_store_type;
 
-    // cast
-    operator base_store_type() const { return _value; }
-  };
+    public:
+      range ()
+      {
+	_value = 0;
+      }
 
+      template <class U>
+      range (const U& u)
+      {
+	is_a(optraits<U>, optraits_scalar)::ensure();
+	_value = optraits_type::check(u);
+      }
+      template <class U>
+      self& operator=(const U& u)
+      {
+	_value = optraits_type::check(u);
+	return *this;
+      }
+
+      // cast
+      operator base_store_type() const { return _value; }
+    };
+
+  } // type_definitions
 } // end of namespace oln
 
 #endif // ndef OLENA_VALUE_RANGE_HH

@@ -37,8 +37,6 @@
 
 namespace oln
 {
-  
-  template <class T, class interval> class cycle; // fwd_decl
 
   //
   //  Typetraits
@@ -50,67 +48,71 @@ namespace oln
   {
     typedef cycle<T, interval> self;
     typedef optraits<self> optraits;
-    
+
     typedef typename typetraits<T>::base base;
     typedef T store;
     typedef self cumul;
-    
+
     // internal type used for binary operations traits
     typedef typename typetraits<T>::base op_traits;
-    
+
     // FIXME : add missing
   };
 
 
-  //
-  //  Class cycle<DecoratedType, class interval>
-  //
-  //  The interval has 0
-  //
-  ////////////////////////////////////////////////////
-
-  template <class T, 
-	    class interval>
-  class cycle : public rec_scalar<cycle<T, interval> >
+  namespace type_definitions
   {
-  public:
-    typedef cycle<T, interval> self;
+    //
+    //  Class cycle<DecoratedType, class interval>
+    //
+    //  The interval has 0
+    //
+    ////////////////////////////////////////////////////
 
-  private:
-    // shortcuts
-    typedef typename typetraits<self>::optraits optraits_type;
-    typedef typename typetraits<self>::base base_type;
-    typedef typename typetraits<base_type>::store base_store_type;
-    
-  public:
-    cycle ()
-    { 
-      _value = 0;
-    }
+    //
+    //  dev note
+    //
+    //  Arithmetic and other binary operators use base_type,
+    //  check typetraits<cycle>::op_traits
+    //
 
-    template <class U>
-    cycle (const U& u)
+    template <class T,
+	      class interval>
+    class cycle : public rec_scalar<cycle<T, interval> >
     {
-      is_a(optraits<U>, optraits_scalar)::ensure();
-      _value = optraits_type::check(u);
-    }
-    template <class U>
-    self& operator=(const U& u)
-    {
-      _value = optraits_type::check(u);
-      return *this;
-    }
-   
-    // cast
-    operator base_store_type() const { return _value; }
-  };
+    public:
+      typedef cycle<T, interval> self;
 
-  //
-  //  dev note
-  //
-  //  Arithmetic and other binary operators use base_type, 
-  //  check typetraits<cycle>::op_traits
-  //
+    private:
+      // shortcuts
+      typedef typename typetraits<self>::optraits optraits_type;
+      typedef typename typetraits<self>::base base_type;
+      typedef typename typetraits<base_type>::store base_store_type;
+
+    public:
+      cycle ()
+      {
+	_value = 0;
+      }
+
+      template <class U>
+      cycle (const U& u)
+      {
+	is_a(optraits<U>, optraits_scalar)::ensure();
+	_value = optraits_type::check(u);
+      }
+      template <class U>
+      self& operator=(const U& u)
+      {
+	_value = optraits_type::check(u);
+	return *this;
+      }
+
+      // cast
+      operator base_store_type() const { return _value; }
+    };
+
+  } // type_definitions
 
 } // end of namespace oln
 

@@ -81,92 +81,96 @@ namespace oln
   };
 
 
-  //
-  //  Class int_u<Nbits, Behaviour>
-  //
-  //////////////////////////////////
-
-  template <unsigned nbits, class behaviour>
-  class int_u : public rec_int_u<int_u<nbits, behaviour> >
+  namespace type_definitions
   {
-    typedef int_u<nbits, behaviour> self;
-    typedef typename typetraits<self>::store store_type;
-    // dev note : should be directly optraits<self_t>, but with g++ this
-    // breaks inheritance in optraits herarchy ...
-    typedef typename typetraits<self>::optraits optraits_type;
 
-  public:
-    int_u ()
+    //
+    //  Class int_u<Nbits, Behaviour>
+    //
+    //////////////////////////////////
+
+    template <unsigned nbits, class behaviour>
+    class int_u : public rec_int_u<int_u<nbits, behaviour> >
     {
-      _value = 0;
-    }
+      typedef int_u<nbits, behaviour> self;
+      typedef typename typetraits<self>::store store_type;
+      // dev note : should be directly optraits<self_t>, but with g++ this
+      // breaks inheritance in optraits herarchy ...
+      typedef typename typetraits<self>::optraits optraits_type;
 
-    // We define ctor for each builtin to avoid implicit builtin promotion
+    public:
+      int_u ()
+      {
+	_value = 0;
+      }
 
-    INT_U_CTOR_FROM_BUILTIN_INT(unsigned long);
-    INT_U_CTOR_FROM_BUILTIN_INT(signed   long);
+      // We define ctor for each builtin to avoid implicit builtin promotion
 
-    INT_U_CTOR_FROM_BUILTIN_INT(unsigned int);
-    INT_U_CTOR_FROM_BUILTIN_INT(signed   int);
+      INT_U_CTOR_FROM_BUILTIN_INT(unsigned long);
+      INT_U_CTOR_FROM_BUILTIN_INT(signed   long);
 
-    INT_U_CTOR_FROM_BUILTIN_INT(unsigned short);
-    INT_U_CTOR_FROM_BUILTIN_INT(signed   short);
+      INT_U_CTOR_FROM_BUILTIN_INT(unsigned int);
+      INT_U_CTOR_FROM_BUILTIN_INT(signed   int);
 
-    INT_U_CTOR_FROM_BUILTIN_INT(unsigned char);
-    INT_U_CTOR_FROM_BUILTIN_INT(signed   char);
+      INT_U_CTOR_FROM_BUILTIN_INT(unsigned short);
+      INT_U_CTOR_FROM_BUILTIN_INT(signed   short);
 
-    int_u (const float rhs)
-    {
-      _value = optraits_type::check(truncf(rhs));
-    }
-    self& operator=(const float rhs)
-    {
-      _value = optraits_type::check(truncf(rhs));
-      return *this;
-    }    
+      INT_U_CTOR_FROM_BUILTIN_INT(unsigned char);
+      INT_U_CTOR_FROM_BUILTIN_INT(signed   char);
 
-    int_u (const double rhs)
-    {
-      _value = optraits_type::check(trunc(rhs));
-    }
-    self& operator=(const double rhs)
-    {
-      _value = optraits_type::check(trunc(rhs));
-      return *this;
-    }
+      int_u (const float rhs)
+      {
+	_value = optraits_type::check(truncf(rhs));
+      }
+      self& operator=(const float rhs)
+      {
+	_value = optraits_type::check(truncf(rhs));
+	return *this;
+      }
+
+      int_u (const double rhs)
+      {
+	_value = optraits_type::check(trunc(rhs));
+      }
+      self& operator=(const double rhs)
+      {
+	_value = optraits_type::check(trunc(rhs));
+	return *this;
+      }
 
 
-    // FIXME: add int_u<mbits> here, and check only if mbits > nbits
-    int_u (const self& rhs)
-    {
-      _value = rhs.value();
-    }
-    self& operator=(const self& rhs)
-    {
-      _value = rhs.value();
-      return *this;
-    }
+      // FIXME: add int_u<mbits> here, and check only if mbits > nbits
+      int_u (const self& rhs)
+      {
+	_value = rhs.value();
+      }
+      self& operator=(const self& rhs)
+      {
+	_value = rhs.value();
+	return *this;
+      }
 
-    template <class T>
-    int_u (const rec_scalar<T>& rhs)
-    {
-      _value = optraits_type::check(rhs.value());
-    }
-    template <class T>
-    self& operator=(const rec_scalar<T>& rhs)
-    {
-      _value = optraits_type::check(rhs.value());
-      return *this;
-    }
+      template <class T>
+      int_u (const rec_scalar<T>& rhs)
+      {
+	_value = optraits_type::check(rhs.value());
+      }
+      template <class T>
+      self& operator=(const rec_scalar<T>& rhs)
+      {
+	_value = optraits_type::check(rhs.value());
+	return *this;
+      }
 
-    // Cast
-    operator store_type () const { return _value; }
+      // Cast
+      operator store_type () const { return _value; }
 
-  private:
-    // We want to prevent this
-    int_u(bool);
-  };
+    private:
+      // We want to prevent this
+      int_u(bool);
+    };
 
+  } // type_definitions
 } // end of namespace oln
 
 #endif // ndef OLENA_VALUE_INT_U_HH

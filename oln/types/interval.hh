@@ -30,29 +30,30 @@
 
 namespace oln
 {
-
-  template <class T, T i_min, T i_max>
-  class bounded
+  namespace type_definitions
   {
-  public:
-    typedef T store_type;
+    template <class T, T i_min, T i_max>
+    class bounded
+    {
+    public:
+      typedef T store_type;
 
-    static T min() { return i_min; }
-    static T max() { return i_max; }
-    static T inf() { return i_min; }
-    static T sup() { return i_max; }
-  };
-  
-  template <unsigned i_min, unsigned i_max>
-  class bounded_u : public bounded<unsigned, i_min, i_max>
-  {
-  };
+      static T min() { return i_min; }
+      static T max() { return i_max; }
+      static T inf() { return i_min; }
+      static T sup() { return i_max; }
+    };
 
-  template <signed i_min, signed i_max>
-  class bounded_s : public bounded<signed, i_min, i_max>
-  {
-  };
-    
+    template <unsigned i_min, unsigned i_max>
+    class bounded_u : public bounded<unsigned, i_min, i_max>
+    {
+    };
+
+    template <signed i_min, signed i_max>
+    class bounded_s : public bounded<signed, i_min, i_max>
+    {
+    };
+  } // type_definitions
 } // end of namespace oln
 
 #endif // ndef OLENA_VALUE_INTERVAL_HH
