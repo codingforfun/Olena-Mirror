@@ -18,24 +18,24 @@ maintainer-check:
 	  echo "$@: GNU cppi is required" >&2; \
 	fi
 
-dist_noinst_DATA = README BUILD INSTALL THANKS
-MAINTAINERCLEANFILES = README BUILD INSTALL THANKS
+dist_noinst_DATA = README BUILD INSTALL THANKS FAQ
+MAINTAINERCLEANFILES = README BUILD INSTALL THANKS FAQ
 
 INFOTOTEXT = $(MAKEINFO) --enable-encoding --no-headers
 devdoc = $(srcdir)/doc/dev
 
-README: $(devdoc)/abstract.texi $(devdoc)/biblio.texi
+README: 
 	$(INFOTOTEXT) $(devdoc)/abstract.texi >$@
 	$(INFOTOTEXT) $(devdoc)/biblio.texi >>$@
 
-BUILD: $(devdoc)/build.texi
-	$(INFOTOTEXT) $< >$@ 
+BUILD: 
+	$(INFOTOTEXT) $(devdoc)/build.texi >$@ 
 
-INSTALL: $(devdoc)/install.texi
-	$(INFOTOTEXT) $< >$@
+INSTALL: 
+	$(INFOTOTEXT) $(devdoc)/install.texi >$@
 
-THANKS: $(devdoc)/thanks.texi
-	$(INFOTOTEXT) $< >$@
+THANKS: 
+	$(INFOTOTEXT) $(devdoc)/thanks.texi >$@
 
-FAQ: $(devdoc)/faq.texi
-	$(INFOTOTEXT) $< >$@
+FAQ: 
+	$(INFOTOTEXT) $(devdoc)/faq.texi >$@

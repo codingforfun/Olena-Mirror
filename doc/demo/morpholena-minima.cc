@@ -6,7 +6,7 @@ using namespace oln;
 
 void morpholena_minima()
 {
-  image2d<int_u8> lena = load(IMGDIR2 "/lena.pgm");
+  image2d<int_u8> lena = load(IMGDIR "/lena.pgm");
   
   save(morpho::sure::regional_minima(lena, neighb_c4()),
        "regional_min_sure.pbm");
@@ -18,7 +18,7 @@ void morpholena_minima()
 
 void morpholena_minima_imp()
 {
-  image2d<int_u8> lena = load(IMGDIR2 "/lena.pgm");
+  image2d<int_u8> lena = load(IMGDIR "/lena.pgm");
 
   image2d<bin> minima_map = load(IMGDIR "/map.pbm");
   save(morpho::sure::minima_imposition(lena, minima_map, neighb_c4()),

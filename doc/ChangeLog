@@ -1,3 +1,29 @@
+2003-02-08  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* dev/Makefile.am (docdir, install-data-hook, uninstall-hook):
+	Install the documentation. Do not compile the Postscript version
+	by default.
+
+	* ref/Makefile.am (filelists.make): Import file lists
+	instead of using $(shell fgrep ...). Install the documentation.
+	* ref/gen_filelists.sh: New file.
+
+	* demo/Makefile.am (AM_CPPFLAGS): Adjust IMGDIR specification.
+	(CLEANFILES): Clean generated images.
+
+	* demo/convol-gaussian.cc (main),
+	demo/test-reconstruction.cc (main),
+	demo/tour.cc (main),
+	demo/morpholena-wshed-beucher.cc (morpholena_watershed_beucher),
+	demo/morpholena-ops.cc (morpholena_thin_thick),
+	demo/morpholena-minima.cc,
+	demo/morpholena-hit-miss.cc (morpholena_hit_or_miss),
+	demo/morpholena-hats.cc,
+	demo/morpholena-grad.cc (morpholena_grad),
+	demo/morpholena-base.cc (morpholena_base), 
+	demo/morpholena-wshed.cc (morpholena_watershed): Fix IMGDIR.
+	
+
 2003-01-30  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* dev/srctree.texi: Merge other srctree files.

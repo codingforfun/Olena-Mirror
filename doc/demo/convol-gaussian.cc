@@ -5,7 +5,7 @@ using namespace oln;
 
 int main(void)
 {
-  image2d<int_u8> lena = load(IMGDIR2 "/lena.pgm");
+  image2d<int_u8> lena = load(IMGDIR "/lena.pgm");
 
   save(convol::fast::gaussian(lena, dfloat(0.50f)),
        "lena-gau.pgm");

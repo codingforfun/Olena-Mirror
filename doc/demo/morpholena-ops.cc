@@ -6,7 +6,7 @@ using namespace oln;
 
 void morpholena_thin_thick()
 {
-  image2d<int_u8> lena = load(IMGDIR2 "/lena.pgm");
+  image2d<int_u8> lena = load(IMGDIR "/lena.pgm");
 
   window2d mywin;
   mywin

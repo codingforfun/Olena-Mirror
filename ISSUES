@@ -5,40 +5,48 @@ Olena is a work in progress.  Later versions can be found at
 BUILD AND COMPILER NOTES
 ========================
 
-We are developing under Linux i386 using GCC version 2.95.3, 3.0.4,
-3.1 and 3.2.  Olena should compile fine with these versions of the
-compiler.  Keeping the compatibility with 2.95.3 implies some
-restrictions over the template constructions used in Olena, because
-GCC 2.95.3 still bombs out on various valid expressions.  Therefore
-some part of the code have been arranged to "please" 2.95.3.  There
-are also a few issues that need workaround even with latter version of
-the compiler.
+Olena has been tested on the following configurations : 
+	
+  System	Compiler
+  ======        ========
+  Linux		g++-3.0, g++-3.2
+  Linux		Intel C++ Compiler v7 (icc)
+  MacOSX	g++-3.1
+  NetBSD1.6	g++-3.2
 
-There is a good reason to maintain 2.95.3 compatibility: performance.
-The inlining heuristic have changed between these versions.
-Kurt Garloff has some interesting material about this issue on his
-web page: http://www.garloff.de/kurt/freesoft/gcc/
-Here are some figures to give an idea of the performance penalty.
-These are the compilation- and run- times of one program (performing
-several morphological operations in a 128x128x128 images) with
-different compilations flags.
+Olena used to be compatible with g++-2.95 for performance
+reasons. With g++-3.2, this constraint is becoming obsolete.
+Moreover, it has many annoying issues, here are the two more 
+important ones :
 
-   GCC       options                     compilation-time  runtime
-   2.95.3    -O2 -ftemplate-depth-50          59s	     46s
-   3.0.3     -O2                            1m04s	    100s
-   3.0.3     -O2 -finline-limit-2500        3m14s	     75s
-   3.0.3     -O2 -finline-limit-4000        3m34s	     71s
-   3.0.3     -O2 -finline-limit-7000        7m49s	     73s
+- rejects valid expressions, often implying ugly workarounds.
 
-Here are another series of figures, showing the time of `make check'
-for Olena 0.5 with different versions of GCC.  (`make check' run the
-test suite, i.e. it compiles *and* runs a set of test programs.)  The
-machine is a 1GHz bi-PentiumIII.
+- optimizations sometimes generates invalid code, especially with 
+  intensive inlining.
 
-   GCC     make check
-   2.95.3    18m33s
-   3.0.3     37m24s
-   3.1       30m30s
+Actually Olena yet compiles with g++-2.95, but some wrong code is
+generated with data types.
+
+Compilation time may have important differences between compilers, the
+following benchmark gives an idea of the time needed to complete a
+make check. The tests have been run on a Bi-Xeon 2.4Ghz machine.
+
+  Compiler	Time
+  ========      ====
+  g++-2.95	16m42s
+  g++-3.0	23m20s
+  g++-3.2	20m03s
+  icc-7		12m52s
+
+These tests include compilation and running time, the following ones
+just show the runtime benchmarks for the "extrkiller" test : 
+
+  Compiler	Options				Time
+  ========	=======				====  
+  g++-2.95	-O3 -finline-limit-1500		3m14s
+  g++-3.0	-O3 -finline-limit-1500		2m08s
+  g++-3.2	-O3 -finline-limit-1500		1m50s
+  icc-7		-O3				5m41s
 
 LANGUAGE ENVIRONMENT
 ====================
@@ -63,14 +71,13 @@ PLAIN PNM (i.e. text) should be ok.
 DESIGN CONSIDERATIONS
 =====================
 
-(obsolete note from 0.5:) The full value/ hierarchy is to be
-rewritten.  This directory contains classes used to represent the
-value types.  These classes are presently programmed using an old
-paradigm (based on the Barton and Nackman trick) and will be rewritten
-using the scheme used for images, iterators, windows, etc.  The name
-and overall behavior will be remain the same, but you should expect
-some incompatibility if you use some internal stuff.  Especially, any
-code using type attributes (like `T::max()') will be invalidated.
+The old value/ hierarchy has been rewritten into types/. This
+directory contains classes used to represent the data types.  These
+classes had several problems, especially with builtin types and type
+conversions. The name and overall behavior remain the same, but you
+should expect some incompatibility if you use some internal stuff.  In
+particular, any code using type attributes (like `T::max()') is
+invalidated.
 
 The aforementioned image/iterator/window/point/... hierarchies will
 themselves be adjusted using Thierry's evil secret plan.  The result

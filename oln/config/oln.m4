@@ -111,85 +111,6 @@ AC_DEFUN([OLN_PATH_HEADERS],
 ])
 
 ###
-### Stuff for images
-###
-
-# OLN_PATH_LOCAL_IMGS([RELATIVE-PATH-TO-OLENA-IMAGES])
-
-# Tries to detect Olena sample images "near" the current source directory.
-# This macro is noticeably used in the Olena distribution itself
-# to instruct "configure" to use the bundled Olena images.
-
-# User projects can use this macro to point their "configure" to a 
-# nonstandard Olena images location, by invoking it _before_ using
-# AC_WITH_OLN_IMGS. See oln/configure.ac or doc/configure.ac in the Olena
-# distribution for an example.
-
-AC_DEFUN([OLN_PATH_LOCAL_IMGS],
-[ifelse([$1], [], [oln_cv_local_imgs=no], [dnl
-    AC_CACHE_CHECK([for Olena images in local distribution],
-                   [oln_cv_local_imgs],
-	           [oln_cv_local_imgs=no
-                    if test -r "$srcdir/$1/lena.ppm"; then
-                       oln_cv_local_imgs="$1"
-                    fi])
-])])
-
-# OLN_PATH_USER
-
-# Checks for the location of Olena images specified with the
-# user with the flag --with-oln-imgs.
-
-AC_DEFUN([OLN_PATH_USER_IMGS], 
-[dnl
-  AC_CACHE_CHECK([for Olena images in user-specified directory],
-		 [oln_cv_user_img_hint], 
-                 [oln_cv_user_img_hint=no
-                  AC_ARG_WITH([oln-imgs],
-                    [AC_HELP_STRING([--with-oln-imgs=DIR], 
-                    [Directory where Olena images are installed (optional)])],
-                    [if test -r "$withval/lena.ppm"; then
-		       oln_cv_user_img_hint=$withval
-                     fi])])
-])
-
-# OLN_PATH_IMGS
-
-# Find an Olena images location from various informations: availability of
-# Olena images around the current source directory, user flags, environment
-# variable.
-
-AC_DEFUN([OLN_PATH_IMGS],
-[dnl
-  AC_REQUIRE([OLN_PATH_LOCAL_IMGS])
-  AC_REQUIRE([OLN_PATH_USER_IMGS])
-
-  # User-specified directory overrides any other definition
-  if test "x$oln_cv_user_img_hint" != xno; then
-     if test "x$OLN_IMG_DIR" != x ; then
-       AC_MSG_WARN([using $oln_cv_user_img_hint instead of $OLN_IMG_DIR])
-     fi
-     OLN_IMG_DIR=$oln_cv_user_img_hint
-  else
-    if test "x$oln_cv_local_imgs" != xno; then
-      if test "x$OLN_IMG_DIR" != x ; then
-        AC_MSG_WARN([using local images path instead of $OLN_IMG_DIR])
-      fi
-      OLN_IMG_DIR=''
-      OLN_LOCAL_IMGS='$(top_srcdir)/'$oln_cv_local_imgs
-      OLN_LOCAL_AUX_IMGS='$(top_builddir)/'$oln_cv_local_imgs
-      AC_SUBST([OLN_LOCAL_IMGS])
-      AC_SUBST([OLN_LOCAL_AUX_IMGS])
-    fi
-  fi
-
-  AC_ARG_VAR([OLN_IMG_DIR], 
-             [location of Olena images (<dir>, should be autodetected)])
-  AC_SUBST([OLN_IMG_DIR])
-])
-
-
-###
 ### General-use macro repository
 ###
 
@@ -424,7 +345,6 @@ AC_DEFUN([AC_WITH_OLN],
   AC_REQUIRE([OLN_NUMERIC_LIMITS])
   AC_REQUIRE([OLN_FLOAT_MATH])
   AC_REQUIRE([OLN_PATH_HEADERS])
-  AC_REQUIRE([OLN_PATH_IMGS])
 ])
 
 # AC_CXX_FLAGS
@@ -475,13 +395,13 @@ AC_DEFUN([AC_CXX_FLAGS],
    case "$oln_cv_cxx_style" in
      GNU)
       _CXXFLAGS_DEBUG="-g"
-      _CXXFLAGS_OPTIMIZE="-O3 -frename-registers -finline-limit-1000"
+      _CXXFLAGS_OPTIMIZE="-O3 -finline-limit-1500"
       _CXXFLAGS_STRICT="-W -Wall -pedantic"
       _CXXFLAGS_STRICT_ERRORS="-W -Wall -pedantic -Werror"
       ;;
      weakGNU)
       _CXXFLAGS_DEBUG="-g"
-      _CXXFLAGS_OPTIMIZE="-O2 -finline-functions"
+      _CXXFLAGS_OPTIMIZE="-O2 -felide-consructors -funroll-loops"
       _CXXFLAGS_STRICT="-W -Wall -pedantic"
       _CXXFLAGS_STRICT_ERRORS="-W -Wall -pedantic -Werror"
       ;;

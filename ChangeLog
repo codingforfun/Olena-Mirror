@@ -1,3 +1,18 @@
+2003-02-09  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* configure.ac: Use AC_CHECK_PROGS instead of DOC_CHECK_PROG again
+	since failure to find the requested programs do not cause
+	documentation builds to fail any more.
+	* oln/config/oln-local.m4: Remove definition of DOC_CHECK_PROG.
+
+	* Makefile.am (README, BUILD, INSTALL, THANKS, FAQ): Remove
+	dependencies, so that there is no error when the documentation is
+	excluded.
+
+2003-02-06  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ISSUES: Update.
+
 2003-02-03  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* configure.ac: Check for `dvips' and `texi2dvi' for the doc/dev

@@ -21,13 +21,3 @@ AC_DEFUN([OLN_TESTS], dnl Auxiliary function for test categories selection
             AC_CONFIG_FILES([oln/tests/$1/Makefile])
           fi])dnl End of OLN_TESTS
 
-# This macro is used to detect tools necessary to build the
-# reference manual.
-
-AC_DEFUN([DOC_CHECK_PROG], [dnl Auxiliary function for program checking
-  AC_CHECK_PROGS([$1], [$2], [$am_aux_dir/missing $2])
-  if test -z "$[]$1"; then
-    oln_cv_build_ref=no
-    AC_MSG_WARN([$2 not found -- cannot build documentation])
-  fi
-])dnl End of DOC_CHECK_PROG

@@ -13,55 +13,71 @@ SOURCE_IMGS = \
 	se.pbm \
 	se9.pbm
 
-BUILT_IMGS =				\
-  lena.pbm				\
-  lena.pbm.gz				\
-  lena.pgm				\
-  lena.pgm.gz				\
-  lena.ppbm				\
-  lena.ppgm				\
-  lena.ppm.gz				\
-  lena.pppm				\
-  lena128.pgm				\
-  se.ppbm				\
-  se9.ppbm				\
-  se9.pbm.gz				\
-  neighbor.ppbm				\
-  neighbor9.ppbm			\
+BUILT_IMGS =			\
+  lena.pbm			\
+  lena.pbm.gz			\
+  lena.pgm			\
+  lena.pgm.gz			\
+  lena.ppbm			\
+  lena.ppgm			\
+  lena.ppm.gz			\
+  lena.pppm			\
+  lena128.pgm			\
+  se.ppbm			\
+  se9.ppbm			\
+  se9.pbm.gz			\
+  neighbor.ppbm			\
+  neighbor9.ppbm		\
   neighbor9.pbm.gz
 
+SRC_BUILT_IMGS =			\
+  $(srcdir)/lena.pbm			\
+  $(srcdir)/lena.pbm.gz			\
+  $(srcdir)/lena.pgm			\
+  $(srcdir)/lena.pgm.gz			\
+  $(srcdir)/lena.ppbm			\
+  $(srcdir)/lena.ppgm			\
+  $(srcdir)/lena.ppm.gz			\
+  $(srcdir)/lena.pppm			\
+  $(srcdir)/lena128.pgm			\
+  $(srcdir)/se.ppbm			\
+  $(srcdir)/se9.ppbm			\
+  $(srcdir)/se9.pbm.gz			\
+  $(srcdir)/neighbor.ppbm		\
+  $(srcdir)/neighbor9.ppbm		\
+  $(srcdir)/neighbor9.pbm.gz
 
-dist_pkgdata_DATA = $(SOURCE_IMGS) $(BUILT_IMGS)
-MAINTAINERCLEANFILES = $(BUILT_IMGS)
+dist_pkgdata_DATA = $(SOURCE_IMGS) $(SRC_BUILT_IMGS)
+MAINTAINERCLEANFILES = $(SRC_BUILT_IMGS)
+
 
 # Conversion rules.
 
 .png.ppm:
-	pngtopnm $< > $@
+	$(PNGTOPNM) $< > $@
 
 .ppm.pgm:
-	ppmtopgm $< > $@
+	$(PPMTOPGM) $< > $@
 
 .pgm.pbm:
-	pgmtopbm $< > $@
+	$(PGMTOPBM) $< > $@
 
 .ppm.pppm:
-	pnmtoplainpnm $< > $@
+	$(PNMTOPLAINPNM) $< > $@
 
 .pgm.ppgm:
-	pnmtoplainpnm $< > $@
+	$(PNMTOPLAINPNM) $< > $@
 
 .pbm.ppbm:
-	pnmtoplainpnm $< > $@
+	$(PNMTOPLAINPNM) $< > $@
 
 # This is a bit hackish.  There is no way to introduce a derivation
 # for `' -> `.gz', so we define the `m' -> `m.gz' rule instead.
 # (all our suffixes ends in `m': ppm, pgm, pbm.)
 SUFFIXES = m m.gz
 mm.gz:
-	gzip -c -9 $< > $@
+	$(GZIP) -c -9 $< > $@
 
-
-lena128.pgm: lena.pgm
-	convert -scale 25% $< $@
+$(srcdir)/lena128.pgm: lena.pgm
+	$(IMAGEMAGICK_CONVERT) -scale 25% `test -f '$<' || echo '$(srcdir)/'`$< $@
 

@@ -37,18 +37,18 @@ for test; do
   cat $input >>$src
   # Build the compile script (using such a script make it easier
   # to debug failures);
-  cat >./try <<EOF
+  cat >$dir/try <<EOF
 dir="\$2"
 exec 6>&2
 if test "x\$1" = "x-q"; then
-  exec 2>cxx.errors
+  exec 2>$dir/cxx.errors
 else
   echo $CXX $CPPFLAGS $CXXFLAGS $LDFLAGS $dir/$test.cc
 fi
 $CXX $CPPFLAGS $CXXFLAGS $LDFLAGS "$dir/$test.cc" -o "$dir/test$EXEEXT" || exit 50
 
 if test "x\$1" = "x-q"; then
-  exec 2>run.errors
+  exec 2>$dir/run.errors
 else
   echo $dir/test$EXEEXT
 fi
@@ -56,10 +56,10 @@ $dir/test$EXEEXT
 estatus=\$?
 
 exec 2>&6
-echo \$estatus > exit.status
+echo \$estatus > $dir/exit.status
 exit \$estatus
 EOF
-  chmod +x ./try
+  chmod +x $dir/try
 
   # Do we expect a failure?
   expected=ok
@@ -72,12 +72,12 @@ EOF
 
   # Run the test.
   $verb ========== Running $test... >&2
-  ($SHELL ./try "$quiet" "$dir")
+  ($SHELL $dir/try "$quiet" "$dir")
   estatus=$?
 
   msg="";
   case $expected:$estatus in
-    ok:0 | compfail:50 | abort:134) rm -rf $dir ;;
+    ok:0 | compfail:50 | abort:134) rm -rf "$dir" ;;
     *:50) msg="(doesn't compile)" ;;
     *:134) msg="(aborts at run-time)" ;;
     compfail:*) msg="(compiles!)" ;;

@@ -11,7 +11,9 @@ LDADD = ../../lib/libolntools.a
 include $(srcdir)/morpho-rules.make
 
 $(srcdir)/morpho-rules.make: $(srcdir)/generate_morpho.sh
-	$(SHELL) $(srcdir)/generate_morpho.sh $(srcdir)
+	$(SHELL) $(srcdir)/generate_morpho.sh $@ $(srcdir)
 
 $(srcdir)/Makefile.in: $(srcdir)/morpho-rules.make
+
+MAINTAINERCLEANFILES = $(srcdir)/morpho-rules.make
 

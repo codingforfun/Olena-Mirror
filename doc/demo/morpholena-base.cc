@@ -7,7 +7,7 @@ using namespace oln;
 
 void morpholena_base()
 {
-  image2d<int_u8> lena = load(IMGDIR2 "/lena.pgm");
+  image2d<int_u8> lena = load(IMGDIR "/lena.pgm");
 
   save(morpho::erosion(lena,  win_c8p()), "lena-ero.pgm");
   save(morpho::dilation(lena, win_c8p()), "lena-dil.pgm");

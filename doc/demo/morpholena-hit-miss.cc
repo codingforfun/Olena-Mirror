@@ -5,7 +5,7 @@ using namespace oln;
 
 void morpholena_hit_or_miss()
 {
-  image2d<int_u8> lena = load(IMGDIR2 "/lena.pgm");
+  image2d<int_u8> lena = load(IMGDIR "/lena.pgm");
 
   window2d mywin;
   mywin

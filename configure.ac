@@ -10,7 +10,6 @@ AC_CONFIG_HEADERS([config.h:config.hin])
 
 # Use included Olena version.
 OLN_PATH_LOCAL([oln])
-OLN_PATH_LOCAL_IMGS([oln/img])
 AC_WITH_OLN
 	
 # Some library archives are used. Some C code used.
@@ -41,6 +40,26 @@ OLN_COLLECTION([OLN_TOP],
 
   OLN_COLLECTION([OLN_SRC], 
   [dnl
+
+### Checks pertaining to the generation of auxiliary images
+
+     AC_CHECK_PROGS([GZIP], [gzip], [$am_aux_dir/missing gzip])
+     AC_CHECK_PROGS([PNGTOPNM], [pngtopnm], [$am_aux_dir/missing pngtopnm])
+     AC_CHECK_PROGS([PPMTOPGM], [ppmtopgm], [$am_aux_dir/missing ppmtopgm])
+     AC_CHECK_PROGS([PGMTOPBM], [pgmtopbm], [$am_aux_dir/missing pgmtopbm])
+     AC_CHECK_PROGS([PNMTOPLAINPNM], [pnmtoplainpnm], [$am_aux_dir/missing pnmtoplainpnm])
+     AC_CHECK_PROGS([IMAGEMAGICK_CONVERT], [convert], [$am_aux_dir/missing convert])
+
+### Compiler-specific auto-configuration
+    AC_CACHE_CHECK([whether to enable auto-configuration for multiple compilers],
+                   [oln_cv_enable_config_sh],
+                   [oln_cv_enable_config_sh=yes
+                    AC_ARG_WITH([config-sh],
+                          [AC_HELP_STRING([--without-config-sh],
+                          [disable generation of oln-config-xxx.sh])],
+                          [oln_cv_enable_config_sh=$withval])])
+    AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno])
+       
 
 ### The testsuite is a component.
 
@@ -108,13 +127,13 @@ OLN_COLLECTION([OLN_TOP],
 		  [doc/ref/Makefile],
     [dnl Configuration for the manuals directory.
 
-     # DOC_CHECK_PROG defined in oln-local.m4
-     DOC_CHECK_PROG([DVIPS], [dvips])
-     DOC_CHECK_PROG([TEXI2DVI], [texi2dvi])
-     DOC_CHECK_PROG([GETDEFS], [getdefs])
-     DOC_CHECK_PROG([HEVEA], [hevea])
-     DOC_CHECK_PROG([IMAGEMAGICK_CONVERT], [convert])
-     DOC_CHECK_PROG([EPSTOPDF], [epstopdf])
+     AC_CHECK_PROGS([TAR], [tar], [$am_aux_dir/missing tar])
+     AC_CHECK_PROGS([DVIPS], [dvips], [$am_aux_dir/missing dvips])
+     AC_CHECK_PROGS([TEXI2DVI], [texi2dvi], [$am_aux_dir/missing texi2dvi])
+     AC_CHECK_PROGS([GETDEFS], [getdefs], [$am_aux_dir/missing getdefs])
+     AC_CHECK_PROGS([HEVEA], [hevea], [$am_aux_dir/missing hevea])
+     AC_CHECK_PROGS([IMAGEMAGICK_CONVERT], [convert], [$am_aux_dir/missing convert])
+     AC_CHECK_PROGS([EPSTOPDF], [epstopdf], [$am_aux_dir/missing epstopdf])
 
     ], [ref])dnl End of OLN_COMPONENT([doc/ref])
 
@@ -128,7 +147,7 @@ OLN_COLLECTION([OLN_TOP],
 		  [doc/dev/Makefile],
     [dnl Configuration for the dev directory.
 
-     AC_CHECK_PROGS([DVIPS], [dvips], [$am_aux_dir/missing texi2dvi])
+     AC_CHECK_PROGS([DVIPS], [dvips], [$am_aux_dir/missing dvips])
      AC_CHECK_PROGS([TEXI2DVI], [texi2dvi], [$am_aux_dir/missing texi2dvi])
 
     ], [dev])dnl End of OLN_COMPONENT([doc/dev])

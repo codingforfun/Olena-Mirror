@@ -1,7 +1,7 @@
 #!/bin/sh
 # generate_toolbox.sh
 #
-# $Id: generate_morpho.sh 1.3.1.4 Sat, 18 Jan 2003 23:34:34 +0100 burrus_n $
+# $Id: generate_morpho.sh 1.3.1.5 Sun, 09 Feb 2003 16:56:18 +0100 raph $
 
 if [ "x$1" = "x" ]; then
    echo "usage: $0 <source directory>" >&2
@@ -50,7 +50,7 @@ for dim in $DIM_TYPE_LIST; do
   for data in $DATA_TYPE_LIST; do
 
     for fct in $FCT_LIST; do
-      lf "${fct/::/_}"_"$dim"_"$data" 
+      lf `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"
     done
 
     lf "laplacian"_"$dim"_"$data" 
@@ -59,23 +59,23 @@ for dim in $DIM_TYPE_LIST; do
     lf "fast_top_hat_contrast_op"_"$dim"_"$data" 
 
     for fct in $FCT_LIST_TWOWIN; do
-      lf "${fct/::/_}"_"$dim"_"$data"
+      lf `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"
     done
 
     for fct in $FCT_LIST_WATERSHED; do
-      lf "${fct/::/_}"_"$dim"_"$data" 
+      lf `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data" 
     done
 
     for fct in $FCT_LIST_GAUSSIAN; do
-      lf "${fct/::/_}"_"$dim"_"$data" 
+      lf `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data" 
     done
 
     for fct in $FCT_LIST_NEIGHB; do
-      lf "${fct/::/_}"_"$dim"_"$data" 
+      lf `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data" 
     done
 
     for fct in $FCT_LIST_EXTREMA; do
-      lf "${fct/::/_}"_"$dim"_"$data" 
+      lf `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data" 
     done
  
   done
@@ -87,8 +87,8 @@ echo >> $FILE;
 for dim in $DIM_TYPE_LIST; do
   for data in $DATA_TYPE_LIST; do
     for fct in $FCT_LIST; do
-      echo "${fct/::/_}"_"$dim"_"$data"_"SOURCES = morpho_template.cc" 
-      echo "${fct/::/_}"_"$dim"_"$data"_"CXXFLAGS = \$(AM_CXXFLAGS) -DDATA_TYPE=$data -DIMAGE_TYPE=image$dim -DWINDOW_TYPE=window$dim -DFUNC='$fct'" 
+      echo `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"_"SOURCES = morpho_template.cc" 
+      echo `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"_"CXXFLAGS = \$(AM_CXXFLAGS) -DDATA_TYPE=$data -DIMAGE_TYPE=image$dim -DWINDOW_TYPE=window$dim -DFUNC='$fct'" 
       echo 
     done
 
@@ -107,32 +107,32 @@ for dim in $DIM_TYPE_LIST; do
     echo 
 
     for fct in $FCT_LIST_TWOWIN; do
-      echo "${fct/::/_}"_"$dim"_"$data"_"SOURCES = morpho_template_with_twowin.cc" 
-      echo "${fct/::/_}"_"$dim"_"$data"_"CXXFLAGS = \$(AM_CXXFLAGS) -DDATA_TYPE=$data -DIMAGE_TYPE=image$dim -DWINDOW_TYPE=window$dim -DFUNC='$fct'" 
+      echo `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"_"SOURCES = morpho_template_with_twowin.cc" 
+      echo `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"_"CXXFLAGS = \$(AM_CXXFLAGS) -DDATA_TYPE=$data -DIMAGE_TYPE=image$dim -DWINDOW_TYPE=window$dim -DFUNC='$fct'" 
       echo 
     done
 
     for fct in $FCT_LIST_WATERSHED; do
-      echo "${fct/::/_}"_"$dim"_"$data"_"SOURCES = morpho_template_watershed.cc"
-      echo "${fct/::/_}"_"$dim"_"$data"_"CXXFLAGS = \$(AM_CXXFLAGS) -DDATA_TYPE=$data -DIMAGE_TYPE=image$dim -DNEIGHBORHOOD_TYPE=neighborhood$dim -DFUNC='$fct'"
+      echo `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"_"SOURCES = morpho_template_watershed.cc"
+      echo `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"_"CXXFLAGS = \$(AM_CXXFLAGS) -DDATA_TYPE=$data -DIMAGE_TYPE=image$dim -DNEIGHBORHOOD_TYPE=neighborhood$dim -DFUNC='$fct'"
       echo 
     done
 
     for fct in $FCT_LIST_GAUSSIAN; do
-      echo "${fct/::/_}"_"$dim"_"$data"_"SOURCES = morpho_template_gaussian.cc" 
-      echo "${fct/::/_}"_"$dim"_"$data"_"CXXFLAGS = \$(AM_CXXFLAGS) -DDATA_TYPE=$data -DIMAGE_TYPE=image$dim -DFUNC='$fct'" 
+      echo `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"_"SOURCES = morpho_template_gaussian.cc" 
+      echo `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"_"CXXFLAGS = \$(AM_CXXFLAGS) -DDATA_TYPE=$data -DIMAGE_TYPE=image$dim -DFUNC='$fct'" 
       echo 
     done
 
     for fct in $FCT_LIST_NEIGHB; do
-      echo "${fct/::/_}"_"$dim"_"$data"_"SOURCES = morpho_template_with_neighb.cc" 
-      echo "${fct/::/_}"_"$dim"_"$data"_"CXXFLAGS = \$(AM_CXXFLAGS) -DDATA_TYPE=$data -DIMAGE_TYPE=image$dim -DNEIGHBORHOOD_TYPE=neighborhood$dim -DFUNC='$fct'" 
+      echo `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"_"SOURCES = morpho_template_with_neighb.cc" 
+      echo `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"_"CXXFLAGS = \$(AM_CXXFLAGS) -DDATA_TYPE=$data -DIMAGE_TYPE=image$dim -DNEIGHBORHOOD_TYPE=neighborhood$dim -DFUNC='$fct'" 
       echo 
     done
 
     for fct in $FCT_LIST_EXTREMA; do
-      echo "${fct/::/_}"_"$dim"_"$data"_"SOURCES = morpho_template_extrema.cc"
-      echo "${fct/::/_}"_"$dim"_"$data"_"CXXFLAGS = \$(AM_CXXFLAGS) -DDATA_TYPE=$data -DIMAGE_TYPE=image$dim -DNEIGHBORHOOD_TYPE=neighborhood$dim -DFUNC='$fct'" 
+      echo `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"_"SOURCES = morpho_template_extrema.cc"
+      echo `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"_"CXXFLAGS = \$(AM_CXXFLAGS) -DDATA_TYPE=$data -DIMAGE_TYPE=image$dim -DNEIGHBORHOOD_TYPE=neighborhood$dim -DFUNC='$fct'" 
       echo 
     done
 

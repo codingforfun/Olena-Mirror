@@ -21,7 +21,7 @@ using std::endl;
 
 int main()
 {
-  image2d<int_u8> lena = load(IMGDIR2 "/lena128.pgm");
+  image2d<int_u8> lena = load(IMGDIR "/lena128.pgm");
   image2d<int_u8> lena_open = morpho::opening(lena, win_c4p());
 
   misc::timer t;

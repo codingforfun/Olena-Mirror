@@ -1,3 +1,32 @@
+2003-02-09  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* tests/morpho/Makefile.am (CXXFLAGS): Remove optimization
+	adjustement, since all tests are compiled with optimization by
+	default.
+		
+	* tests/arith/runtests (rundir): Move more stuff to runtime
+	subdirectories.
+	* tests/types/runtests (rundir): Likewise.
+	
+	* config/oln.m4: Simplify. Use -felide-constructors -funroll-loops
+	for GCC 2.95 optimizations.
+
+	* Makefile.am: Install oln-config-xxx.sh only when the conditional
+	OLN_CONFIG_SH is set (--without-oln-config for `configure').
+
+	* tests/convol/Makefile.am (XFAIL_TESTS): Use $(EXEEXT).
+
+	* tests/check/defs.in (CXXFLAGS): Optimize always.
+
+	* tests/check/Makefile.flags (AM_CXXFLAGS): Optimize always.
+	* tests/check/data.cc (rdata): Simplify.
+	* tests/check/data.hh, tests/check/data.cc (wdata): Simplify.
+
+	* tests/check/Makefile.am (AM_CPPFLAGS): Adjust image directory
+	specification.
+
+	* img/Makefile.am: Build images directly in $(srcdir).
+
 2003-02-03  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* tests/check/data.hh, tests/check/data.cc (data): Remove. (wdata,

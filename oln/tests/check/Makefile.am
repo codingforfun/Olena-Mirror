@@ -2,7 +2,7 @@
 
 include Makefile.flags
 
-AM_CPPFLAGS += -DOLN_IMG_DIR=\"$(OLN_LOCAL_IMGS)\" -DOLN_IMG_AUX_DIR=\"$(OLN_LOCAL_AUX_IMGS)\" \
+AM_CPPFLAGS += -DOLN_IMG_DIR=\"$(top_srcdir)/oln/img\" \
    -DCXX=\""$(CXX)"\" \
    -DCPPFLAGS=\""$(CPPFLAGS) $(OLN_CPPFLAGS)"\" \
    -DCXXFLAGS=\""$(CXXFLAGS) $(OLN_CXXFLAGS)"\" \

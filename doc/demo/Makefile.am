@@ -1,7 +1,7 @@
 ## Process this file with Automake to produce Makefile.in -*-Makefile-*-
 
 INCLUDES = -I$(OLN_LOCAL_SRC) -I$(OLN_LOCAL_BUILD)
-AM_CPPFLAGS = $(OLN_CPPFLAGS) -DIMGDIR=\"$(OLN_LOCAL_IMGS)\" -DIMGDIR2=\"$(OLN_LOCAL_AUX_IMGS)\"
+AM_CPPFLAGS = $(OLN_CPPFLAGS) -DIMGDIR=\"$(top_srcdir)/oln/img\"
 AM_CXXFLAGS = $(OLN_CXXFLAGS) $(CXXFLAGS_STRICT) 
 CXXFLAGS += $(CXXFLAGS_OPTIMIZE)
 
@@ -30,3 +30,48 @@ morpholena_SOURCES = morpholena.cc \
 
 test_reconstruction_SOURCES = test-reconstruction.cc
 convol_gaussian_SOURCES = convol-gaussian.cc
+
+CLEANFILES = \
+	lena-beg-f.pgm				\
+	lena-beg.pgm				\
+	lena-bth-f.pgm				\
+	lena-bth.pgm				\
+	lena-clo-f.pgm				\
+	lena-clo.pgm				\
+	lena-dil-f.pgm				\
+	lena-dil.pgm				\
+	lena-ero-f.pgm				\
+	lena-ero.pgm				\
+	lena-exb-f.pgm				\
+	lena-exb.pgm				\
+	lena-gau.pgm				\
+	lena-gd1.pgm				\
+	lena-gd2.pgm				\
+	lena-hom-f.pgm				\
+	lena-hom.pgm				\
+	lena-ing-f.pgm				\
+	lena-ing.pgm				\
+	lena-lap-f.pgm				\
+	lena-lap.pgm				\
+	lena-myw.pgm				\
+	lena-ope-f-face.pgm			\
+	lena-ope-f.pgm				\
+	lena-ope.pgm				\
+	lena-sth-f.pgm				\
+	lena-sth.pgm				\
+	lena-thc-f.pgm				\
+	lena-thc.pgm				\
+	lena-thick-f.pgm			\
+	lena-thin.pgm				\
+	lena-wor.pgm				\
+	lena-wsc.pgm				\
+	lena-wss.pgm				\
+	lena-wth-f.pgm				\
+	lena-wth.pgm				\
+	minima_imposition_hybrid.pgm		\
+	minima_imposition_sequential.pgm	\
+	minima_imposition_sure.pgm		\
+	regional_min_hybrid.pbm 		\
+	regional_min_sequential.pbm		\
+	regional_min_sure.pbm			\
+	output.pgm

@@ -9,6 +9,7 @@ dist_m4data_DATA = config/oln.m4
 
 EXTRA_DIST = config/oln-local.m4
 
+
 # Stuff pertaining to compiler-specific auto-configuration
 
 CLEANFILES = conf/config.log* conf/configure.log* conf/*.log conf/config.status conf/oln-config*.sh
@@ -19,11 +20,12 @@ EXTRA_DIST += conf/configure.ac \
 
 dist_pkgdata_DATA = conf/configure conf/oln-config.shin
 
+if OLN_CONFIG_SH
 # FIXME: when the two following rules are enabled, they are
 # always run, resulting in errors if aclocal and/or autoconf
 # are not available.
 
-# $(srcdir)/conf/aclocal.m4: $(srcdir)/conf/configure.ac $(srcdir)/oln.m4 $(srcdir)/../oln-version.m4
+# $(srcdir)/conf/aclocal.m4: $(srcdir)/conf/configure.ac $(srcdir)/config/oln.m4 
 #	cd $(srcdir)/conf && $(ACLOCAL) -I .. -I ../..
 
 # $(srcdir)/conf/configure: $(srcdir)/conf/configure.ac $(srcdir)/conf/aclocal.m4
@@ -48,3 +50,6 @@ uninstall-hook:
 	  echo " rm -f $(DESTDIR)$(bindir)/$$f"; \
 	  rm -f $(DESTDIR)$(bindir)/$$f; \
 	done
+
+endif
+

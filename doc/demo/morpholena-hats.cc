@@ -7,7 +7,7 @@ using namespace oln;
 
 void morpholena_opening_closing()
 {
-  image2d<int_u8> lena = load(IMGDIR2 "/lena.pgm");
+  image2d<int_u8> lena = load(IMGDIR "/lena.pgm");
 
   save(morpho::opening(lena,  win_c8p()), "lena-ope.pgm");
   save(morpho::closing(lena,  win_c8p()), "lena-clo.pgm");
@@ -28,7 +28,7 @@ void morpholena_opening_closing()
 
 void morpholena_hats()
 {
-  image2d<int_u8> lena = load(IMGDIR2 "/lena.pgm");
+  image2d<int_u8> lena = load(IMGDIR "/lena.pgm");
 
   save(morpho::white_top_hat(lena, win_c8p()), "lena-wth.pgm");
   save(morpho::black_top_hat(lena, win_c8p()), "lena-bth.pgm");
@@ -40,7 +40,7 @@ void morpholena_hats()
 
 void morpholena_fast_hats()
 {
-  image2d<int_u8> lena = load(IMGDIR2 "/lena.pgm");
+  image2d<int_u8> lena = load(IMGDIR "/lena.pgm");
 
   save(morpho::fast::white_top_hat(lena, win_c8p()), "lena-wth-f.pgm");
   save(morpho::fast::black_top_hat(lena, win_c8p()), "lena-bth-f.pgm");
