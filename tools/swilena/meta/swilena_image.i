@@ -28,7 +28,6 @@
 	 { return (*self)[p]; }
        T& set(const point ## Dim ## d& p, Val v) 
 	 { (*self)[p] = v; return *self; }
-
        Val& ref(const point ## Dim ## d& p)
 	 { return (*self)[p]; }
      }

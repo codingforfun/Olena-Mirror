@@ -1,5 +1,15 @@
 2003-09-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* meta/swilena_ntg_int_u.i: Fix type matching problems between
+	templates and typedefs.
+	* meta/swilena_ntg_int_s.i: Likewise.
+	* meta/swilena_ntg_cplx.i: Likewise.
+	* meta/swilena_ntg.i: Likewise. Tweak for ruby.
+	* meta/swilena_exception.i: Include <exception> in the c++ code.
+	* expand.sh: Adjust consequently.
+
+2003-09-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* meta/swilena_ntg.i: Adjust for ruby.
 	* meta/swilena_describe.i: Tweak for ruby.
 	

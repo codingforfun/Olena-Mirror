@@ -7,7 +7,17 @@
 #include <ntg/all.hh>
 %}
 
-%template(cplx_rf) ntg::cplx<ntg::rect, ntg::float_s>;
-%template(cplx_rd) ntg::cplx<ntg::rect, ntg::float_d>;
-%template(cplx_pf) ntg::cplx<ntg::polar, ntg::float_s>;
-%template(cplx_pd) ntg::cplx<ntg::polar, ntg::float_d>;
+%define declare_cplx(Name, repr, T)
+
+%template(Name) ntg::cplx<repr, T>;
+
+// See comments in swilena_ntg_int_u.i
+#define ntg_ ## Name ntg::cplx<repr, T>
+
+%enddef
+
+
+declare_cplx(cplx_rf, ntg::rect, ntg_float_s);
+declare_cplx(cplx_rd, ntg::rect, ntg_float_d);
+declare_cplx(cplx_pf, ntg::polar, ntg_float_s);
+declare_cplx(cplx_pd, ntg::polar, ntg_float_d);
