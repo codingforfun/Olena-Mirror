@@ -31,8 +31,8 @@
  * ns: morpho, morpho::fast
  * what: Morphological Beucher Gradient.
  * arg: const conversion<C>&, c, IN, conversion object
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se, IN, structural element
+ * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: mute<I, typename convoutput<C, Value(I)>::ret>::ret
  * doc:
  *   Compute the arithmetic difference between the diltation and
@@ -60,8 +60,8 @@ beucher_gradient(const conversion<C>& c,
 /*=processingoverload beucher_gradient
  * ns: morpho, morpho::fast
  * what: Morphological Beucher Gradient.
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se, IN, structural element
+ * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: Concrete(I)
 =*/
 template<class I, class E>
@@ -76,8 +76,8 @@ Concrete(I) beucher_gradient(const abstract::image<I>& input,
  * ns: morpho, morpho::fast
  * what: Morphological Internal Gradient.
  * arg: const conversion<C>&, c, IN, conversion object
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se, IN, structural element
+ * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: mute<I, typename convoutput<C, Value(I)>::ret>::ret
  * doc:
  *   Compute the arithmetic difference between the original image \var{input} and
@@ -103,8 +103,8 @@ internal_gradient(const conversion<C>& c,
 /*=processingoverload internal_gradient
  * ns: morpho, morpho::fast
  * what: Morphological Internal Gradient.
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se, IN, structural element
+ * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: Concrete(I)
 =*/
 template<class I, class E>
@@ -118,8 +118,8 @@ Concrete(I) internal_gradient(const abstract::image<I>& input, const
  * ns: morpho, morpho::fast
  * what: Morphological External Gradient.
  * arg: const conversion<C>&, c, IN, conversion object
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se, IN, structural element
+ * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: mute<I, typename convoutput<C, Value(I)>::ret>::ret
  * doc:
  *   Compute the arithmetic difference between  and the dilatation of
@@ -147,8 +147,8 @@ external_gradient(const conversion<C>& c,
 /*=processingoverload external_gradient
  * ns: morpho, morpho::fast
  * what: Morphological External Gradient.
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se, IN, structural element
+ * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: Concrete(I)
 =*/
 template<class I, class E>

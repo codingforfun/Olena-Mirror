@@ -1,6 +1,7 @@
 ## Process this file with Automake to produce Makefile.in -*- Makefile -*-
 
 AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_OPTIMIZE) $(ZLIB_CXXFLAGS)
+AM_LDFLAGS = $(LDFLAGS) $(ZLIB_LDFLAGS)
 
 INCLUDES = -I$(srcdir)/../../lib
 LDADD = ../../lib/libolntools.a

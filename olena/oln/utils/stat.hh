@@ -29,7 +29,6 @@
 # define OLENA_UTILS_STAT_HH
 
 # include <oln/basics.hh>
-
 # include <ntg/basics.hh>
 
 namespace oln {

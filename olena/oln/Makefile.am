@@ -111,7 +111,6 @@ nobase_oln_HEADERS =					\
   io/file.hh						\
   io/gz.hh						\
   io/gz_stream.hh					\
-  io/pnm.hh						\
   io/pnm3d.hh						\
   io/pnm_read.hh					\
   io/pnm_read3d.hxx					\

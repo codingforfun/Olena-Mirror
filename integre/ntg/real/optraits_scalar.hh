@@ -72,18 +72,18 @@ namespace ntg {
       // ASSIGN_SCALAR_OPERATOR includes default check_xxx_equal functions
       //
 
-      ASSIGN_SCALAR_OPERATOR(plus_equal,  +);
-      ASSIGN_SCALAR_OPERATOR(minus_equal, -);
-      ASSIGN_SCALAR_OPERATOR(times_equal, *);
-      ASSIGN_SCALAR_OPERATOR(div_equal,   /);
+      ASSIGN_SCALAR_OPERATOR(plus_equal,  +)
+      ASSIGN_SCALAR_OPERATOR(minus_equal, -)
+      ASSIGN_SCALAR_OPERATOR(times_equal, *)
+      ASSIGN_SCALAR_OPERATOR(div_equal,   /)
 
-      ARITH_SCALAR_OPERATOR(plus,  +=);
-      ARITH_SCALAR_OPERATOR(minus, -=);
-      ARITH_SCALAR_OPERATOR(times, *=);
-      ARITH_SCALAR_OPERATOR(div,   /=);
+      ARITH_SCALAR_OPERATOR(plus,  +=)
+      ARITH_SCALAR_OPERATOR(minus, -=)
+      ARITH_SCALAR_OPERATOR(times, *=)
+      ARITH_SCALAR_OPERATOR(div,   /=)
 
-      CMP_SCALAR_OPERATOR(cmp_eq, ==);
-      CMP_SCALAR_OPERATOR(cmp_lt, <);
+      CMP_SCALAR_OPERATOR(cmp_eq, ==)
+      CMP_SCALAR_OPERATOR(cmp_lt, <)
     };
 
     /*---------------.
@@ -116,8 +116,8 @@ namespace ntg {
 	return (unsigned) log10(double(optraits<Self>::max())) + 1;
       }
 
-      ASSIGN_INT_OPERATOR(mod_equal,  %);
-      ARITH_INT_OPERATOR(mod,  %=);
+      ASSIGN_INT_OPERATOR(mod_equal,  %)
+      ARITH_INT_OPERATOR(mod,  %=)
     };
 
     /*---------------.

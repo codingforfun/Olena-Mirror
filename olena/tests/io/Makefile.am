@@ -2,13 +2,15 @@
 
 include ../check/Makefile.check
 
-check_PROGRAMS = 2d se_pass se_fail pretty
+check_PROGRAMS = 2d bin se_pass se_fail pretty
 2d_SOURCES = 2d.cc loadsave.hh
 se_pass_SOURCES = se_pass.cc loadsave.hh
 se_fail_SOURCES = se_fail.cc loadsave.hh
 pretty_SOURCES = pretty.cc loadsave.hh
+bin_SOURCES = bin.cc
 
 CLEANFILES =					\
+  black-test.pbm white-test.pbm			\
   lena						\
   lena.ppm lena.pgm lena.pbm			\
   lena.pppm lena.ppgm lena.ppbm			\

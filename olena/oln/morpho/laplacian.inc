@@ -30,8 +30,8 @@
  * ns: morpho, morpho::fast
  * what: Laplacian.
  * arg: const conversion<C>&, c, IN, conversion object
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se, IN, structural element
+ * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
  * doc:
  *   Compute the laplacian of \var{input} using \var{se}
@@ -59,8 +59,8 @@ laplacian(const conversion<C>& c,
 /*=processingoverload laplacian
  * ns: morpho, morpho::fast
  * what: Laplacian.
- * arg: const image<I>&, input, IN, input image
- * arg: const struct_elt<E>&, se, IN, structural element
+ * arg: const abstract::image<I>&, input, IN, input image
+ * arg: const abstract::struct_elt<E>&, se, IN, structural element
  * ret: typename mute<I, Value(I)::slarger_t>::ret
 =*/
 template<class I, class E>

@@ -31,7 +31,7 @@
 # include <oln/core/coord.hh>
 # include <oln/core/point3d.hh>
 # include <oln/core/dpoint3d.hh>
-# include <oln/core/image3d.hh>
+# include <oln/core/image3d_size.hh>
 # include <oln/core/abstract/iter.hh>
 
 # include <mlc/contract.hh>
@@ -47,7 +47,7 @@ namespace oln {
   } // end of abstract
 
   template<class Exact>
-  struct iter_traits<abstract::iter3d<Exact> >: public virtual
+  struct iter_traits<abstract::iter3d<Exact> >: public
   iter_traits<abstract::iter<Exact> >
   {
     enum { dim = 3 };
@@ -111,7 +111,7 @@ namespace oln {
 	precondition(size.nslices() > 0
 		     && size.nrows() > 0
 		     && size.ncols() > 0);
-	to_exact(this)->goto_begin_();
+	this->exact().goto_begin_();
       }
     };
 

@@ -28,6 +28,7 @@
 #ifndef OLENA_IO_SE_NEIGHBORHOOD_HH_
 # define OLENA_IO_SE_NEIGHBORHOOD_HH_
 
+# include <oln/core/image2d.hh>
 # include <oln/core/neighborhood2d.hh>
 # include <oln/core/macros.hh>
 # include <oln/io/image.hh>
@@ -38,7 +39,7 @@ namespace oln {
 
     namespace internal {
 
-      bool read(neighborhood2d& output, const std::string& name)
+      static bool read(neighborhood2d& output, const std::string& name)
       {
 	image2d<ntg::bin> im;
 	if (!read(im, name))
@@ -57,7 +58,7 @@ namespace oln {
 	  {
 	    if (it.row() == im.nrows()/2 && it.col() == im.ncols()/2+1)
 	      break;
-	    if (!im[it])
+	    if (im[it])
 	      {
 		dpoint2d dp = dpoint2d(it) - dcenter;
 		if (dp.is_centered()) return false;
@@ -79,13 +80,13 @@ namespace oln {
 	return true;
       }
 
-      bool write(const neighborhood2d& input, const std::string& name)
+      static bool write(const neighborhood2d& input, const std::string& name)
       {
 	image2d<ntg::bin> im(input.delta()*2+1, input.delta()*2+1);
 	image2d<ntg::bin>::fwd_iter_type it(im);
-	for_all (it) im[it] = true;
+	for_all (it) im[it] = false;
 	for (unsigned i = 0; i < input.card(); ++i)
-	  im[point2d(input.delta(),input.delta()) + input.dp(i)] = false;
+	  im[point2d(input.delta(),input.delta()) + input.dp(i)] = true;
 	if (!write(im, name))
 	  return false;
 	return true;	

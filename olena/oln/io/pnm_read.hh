@@ -63,9 +63,10 @@ namespace oln {
       | pnm_read_header2d |
       `------------------*/
 
-      // FIXME: should return a struct with available informations
-      // read_header should not take an image argument !
-      bool pnm_read_header2d(std::istream& s, char type, pnm2d_info& info)
+      // FIXME: should be in a .cc file ?
+      static bool pnm_read_header2d(std::istream& s, 
+				    char type, 
+				    pnm2d_info& info)
       {
 	// check magic
 	if (s.get() != 'P' ) return false;

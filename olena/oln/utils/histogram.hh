@@ -52,28 +52,28 @@ namespace oln {
     {
     public:
 
-      histogram() : _values(0)
+      histogram() : values_(0)
       {
 	unsigned size = unsigned(ntg_max_val(T)
 				 - ntg_min_val(T)
 				 + ntg_unit_val(T));
-	_values = new U[size];
+	values_ = new U[size];
 	for (unsigned i = 0; i < size; ++i)
-	  _values[i] = 0;
+	  values_[i] = 0;
       }
 
       ~histogram()
       {
-	if (_values)
+	if (values_)
 	  {
-	    delete[] _values;
-	    _values = 0;
+	    delete[] values_;
+	    values_ = 0;
 	  }
       }
 
       U& operator[](const T& i)
       {
-	return _values[unsigned(i.val() - ntg_min_val(T))];
+	return values_[unsigned(i.val() - ntg_min_val(T))];
       }
 
       friend T min<T, U>(const histogram<T, U>& hist);
@@ -86,10 +86,10 @@ namespace oln {
 	Iter(I) p(img);
 
 	for_all (p)
-	  _values[unsigned(img[p].val())]++;
+	  values_[unsigned(img[p].val())]++;
       }
     protected:
-      U *_values;
+      U *values_;
     };
 
     template< typename T, typename U >
@@ -98,7 +98,7 @@ namespace oln {
     {
       unsigned i;
       for (i = 0; i < unsigned(ntg_max_val(T) - ntg_min_val(T)); ++i)
-	if (hist._values[i] > 0)
+	if (hist.values_[i] > 0)
 	  break;
       return T(ntg_min_val(T) + i);
     }
@@ -110,7 +110,7 @@ namespace oln {
     {
       unsigned i;
       for (i = unsigned(ntg_max_val(T) - ntg_min_val(T)); i > 0; --i)
-	if (hist._values[i] > 0)
+	if (hist.values_[i] > 0)
 	  break;
       return T(ntg_min_val(T) + i);
     }
@@ -158,14 +158,14 @@ namespace oln {
       {
 	unsigned idx = unsigned(i.val() - ntg_min_val(T));
 	adjust(idx);
-	return _values[idx];
+	return this->values_[idx];
       }
 
       U min()
       {
 	unsigned i;
 	for (i = _min; i < unsigned(ntg_max_val(T) - ntg_min_val(T)); ++i)
-	  if (_values[i] > 0)
+	  if (this->values_[i] > 0)
 	    break;
 	_min = i;
 	return T(ntg_min_val(T) + i);
@@ -175,7 +175,7 @@ namespace oln {
       {
 	unsigned i;
 	for (i = _max; i > 0; --i)
-	  if (_values[i] > 0)
+	  if (this->values_[i] > 0)
 	    break;
 	_max = i;
 	return T(ntg_min_val(T) + i);
@@ -203,14 +203,14 @@ namespace oln {
       {
 	unsigned idx = unsigned(i.val() - ntg_min_val(T));
 	adjust(idx);
-	return _values[idx];
+	return this->values_[idx];
       }
 
       U min()
       {
 	unsigned i;
 	for (i = _min; i < unsigned(ntg_max_val(T) - ntg_min_val(T)); ++i)
-	  if (_values[i] > 0)
+	  if (this->values_[i] > 0)
 	    break;
 	_min = i;
 	return T(ntg_min_val(T) + i);
@@ -244,14 +244,14 @@ namespace oln {
       {
 	unsigned idx = unsigned(unsigned(i) - unsigned(ntg_min_val(T)));
 	adjust(idx);
-	return _values[idx];
+	return this->values_[idx];
       }
 
       T max()
       {
 	unsigned i;
 	for (i = _max; i > 0; --i)
-	  if (_values[i] > 0)
+	  if (this->values_[i] > 0)
 	    break;
 	_max = i;
 	return T(ntg_min_val(T) + i);
@@ -293,14 +293,13 @@ namespace oln {
     }
 
 
-    template<class I_>
-    void distrib_sort(const abstract::image<I_>& _im, std::vector<Point(I_)> &v)
+    template<class I>
+    void distrib_sort(const abstract::image<I>& im, std::vector<Point(I)> &v)
     {
-      Exact_cref(I, im);
       typedef Value(I) val;
 
       // check the size
-      precondition(v.size() == unsigned(im.nrows() * im.ncols()));
+      precondition(v.size() == unsigned(im.npoints())); //unsigned(im.nrows() * im.ncols()));
 
       // calculate the histogram of the image
       utils::histogram< Value(I) > histo;
@@ -312,7 +311,7 @@ namespace oln {
       // value of the image
       std::vector< Point(I)* > ptr(ntg_max_val(val) + 1);
       ptr[0] = &(v[0]);
-      for (int i = ntg_max_val(val) + 1; i <= ntg_max_val(val); i++)
+      for (int i = ntg_min_val(val) + 1; i <= ntg_max_val(val); i++)
 	ptr[unsigned(i)] = ptr[unsigned(i - 1)] + histo[i - 1];
 
       // Now iterate on the image to sort point in the order of their

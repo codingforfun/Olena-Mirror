@@ -1,3 +1,20 @@
+2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* mlc/type.hh(self): Use static_cast.
+
+2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* tests/main/runtests: Don't test directories and temporary files.
+
+2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* mlc/contract.hh: Use assert to save compilation time.
+
+2003-07-29  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* mlc/type.hh: Use static_cast instead of reinterpret_cast as
+	there are no more diamond hierarchies.
+
 2003-07-24  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* mlc/bool.hh: Add a meta switch.

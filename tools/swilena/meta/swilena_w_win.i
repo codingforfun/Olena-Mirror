@@ -9,7 +9,7 @@
 
      W w(unsigned) const;
      
-     T& add(const dpoint ## Dim ## d&, const W& );
+     T& add(const oln::dpoint ## Dim ## d&, const W& );
 
 %enddef
 
@@ -41,11 +41,11 @@ namespace oln
   template<typename T>
   struct w_window ## Dim ## d
   {
-    structelt_methods_w(w_window ## Dim ## d<T>, T, Dim);
+    structelt_methods_w(oln::w_window ## Dim ## d<T>, T, Dim);
 
     %extend
     {
-      static w_window ## Dim ## d<T> of_window(T w, const window ## Dim ## d& win)
+      static oln::w_window ## Dim ## d<T> of_window(T w, const oln::window ## Dim ## d& win)
 	{ return oln::mk_w_win_from_win(w, win); }
     }
   };

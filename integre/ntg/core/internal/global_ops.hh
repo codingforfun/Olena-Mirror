@@ -62,24 +62,24 @@ namespace ntg
     | Arithmetic assignements |
     `------------------------*/
 
-    GLOBAL_ASSIGN_OP(operator+=, plus_equal);
-    GLOBAL_ASSIGN_OP_BUILTIN_INT(operator+=, plus_equal);
-    GLOBAL_ASSIGN_OP_BUILTIN_FLOAT(operator+=, plus_equal);
+    GLOBAL_ASSIGN_OP(operator+=, plus_equal)
+    GLOBAL_ASSIGN_OP_BUILTIN_INT(operator+=, plus_equal)
+    GLOBAL_ASSIGN_OP_BUILTIN_FLOAT(operator+=, plus_equal)
 
-    GLOBAL_ASSIGN_OP(operator-=, minus_equal);
-    GLOBAL_ASSIGN_OP_BUILTIN_INT(operator-=, minus_equal);
-    GLOBAL_ASSIGN_OP_BUILTIN_FLOAT(operator-=, minus_equal);
+    GLOBAL_ASSIGN_OP(operator-=, minus_equal)
+    GLOBAL_ASSIGN_OP_BUILTIN_INT(operator-=, minus_equal)
+    GLOBAL_ASSIGN_OP_BUILTIN_FLOAT(operator-=, minus_equal)
 
-    GLOBAL_ASSIGN_OP(operator*=, times_equal);
-    GLOBAL_ASSIGN_OP_BUILTIN_INT(operator*=, times_equal);
-    GLOBAL_ASSIGN_OP_BUILTIN_FLOAT(operator*=, times_equal);
+    GLOBAL_ASSIGN_OP(operator*=, times_equal)
+    GLOBAL_ASSIGN_OP_BUILTIN_INT(operator*=, times_equal)
+    GLOBAL_ASSIGN_OP_BUILTIN_FLOAT(operator*=, times_equal)
 
-    GLOBAL_ASSIGN_OP(operator/=, div_equal);
-    GLOBAL_ASSIGN_OP_BUILTIN_INT(operator/=, div_equal);
-    GLOBAL_ASSIGN_OP_BUILTIN_FLOAT(operator/=, div_equal);
+    GLOBAL_ASSIGN_OP(operator/=, div_equal)
+    GLOBAL_ASSIGN_OP_BUILTIN_INT(operator/=, div_equal)
+    GLOBAL_ASSIGN_OP_BUILTIN_FLOAT(operator/=, div_equal)
 
-    GLOBAL_ASSIGN_OP(operator%=, mod_equal);
-    GLOBAL_ASSIGN_OP_BUILTIN_INT(operator%=, mod_equal);
+    GLOBAL_ASSIGN_OP(operator%=, mod_equal)
+    GLOBAL_ASSIGN_OP_BUILTIN_INT(operator%=, mod_equal)
 
     /*---------------------.
     | Logical assignements |
@@ -87,38 +87,38 @@ namespace ntg
 
     // FIXME: implement |=, &= and ^= in optraits<bool>.
 
-    GLOBAL_ASSIGN_OP(operator|=, logical_or_equal);
-    //    GLOBAL_ASSIGN_OP_BUILTIN_BOOL(operator|=, logical_or_equal);
+    GLOBAL_ASSIGN_OP(operator|=, logical_or_equal)
+    //    GLOBAL_ASSIGN_OP_BUILTIN_BOOL(operator|=, logical_or_equal)
 
-    GLOBAL_ASSIGN_OP(operator&=, logical_and_equal);
-    //    GLOBAL_ASSIGN_OP_BUILTIN_BOOL(operator&=, logical_and_equal);
+    GLOBAL_ASSIGN_OP(operator&=, logical_and_equal)
+    //    GLOBAL_ASSIGN_OP_BUILTIN_BOOL(operator&=, logical_and_equal)
 
-    GLOBAL_ASSIGN_OP(operator^=, logical_xor_equal);
-    //    GLOBAL_ASSIGN_OP_BUILTIN_BOOL(operator^=, logical_xor_equal);
+    GLOBAL_ASSIGN_OP(operator^=, logical_xor_equal)
+    //    GLOBAL_ASSIGN_OP_BUILTIN_BOOL(operator^=, logical_xor_equal)
 
     /*----------------------.
     | Arithmetic operations |
     `----------------------*/
 			    
-    GLOBAL_ARITH_OP(operator+, plus);
-    GLOBAL_ARITH_OP(operator-, minus);
-    GLOBAL_ARITH_OP(operator*, times);
-    GLOBAL_ARITH_OP(operator/, div);
-    GLOBAL_ARITH_OP(operator%, mod);
+    GLOBAL_ARITH_OP(operator+, plus)
+    GLOBAL_ARITH_OP(operator-, minus)
+    GLOBAL_ARITH_OP(operator*, times)
+    GLOBAL_ARITH_OP(operator/, div)
+    GLOBAL_ARITH_OP(operator%, mod)
 
     /*------------------.
     | Logical operators |
     `------------------*/
 
-    GLOBAL_LOGICAL_OP(operator|, logical_or);
-    GLOBAL_LOGICAL_OP(operator&, logical_and);
-    GLOBAL_LOGICAL_OP(operator^, logical_xor);
+    GLOBAL_LOGICAL_OP(operator|, logical_or)
+    GLOBAL_LOGICAL_OP(operator&, logical_and)
+    GLOBAL_LOGICAL_OP(operator^, logical_xor)
 
     /*---------------------.
     | Comparison operators |
     `---------------------*/
 
-    GLOBAL_CMP_OP(operator==, cmp_eq);
+    GLOBAL_CMP_OP(operator==, cmp_eq)
 
     template <class T1, class T2> inline
     bool 
@@ -128,7 +128,7 @@ namespace ntg
     // >, >= and <= operators are defined using <. They are not
     // implicitely defined so we have to do so by hand.
 
-    GLOBAL_CMP_OP(operator<, cmp_lt);
+    GLOBAL_CMP_OP(operator<, cmp_lt)
 
     template <class T1, class T2> inline
     bool

@@ -33,13 +33,10 @@
 namespace oln {
   namespace level {
 
-    template<class I1_, class I2_> inline
-    bool is_greater_or_equal(const abstract::image<I1_>& _input1,
-			     const abstract::image<I2_>& _input2)
+    template<class I1, class I2> inline
+    bool is_greater_or_equal(const abstract::image<I1>& input1,
+			     const abstract::image<I2>& input2)
     {
-      Exact_cref(I1, input1);
-      Exact_cref(I2, input2);
-
       precondition(input1.size() == input2.size());
       Iter(I1) p(input1);
       for_all (p)
@@ -48,13 +45,10 @@ namespace oln {
       return true;
     }
 
-    template<class I1_, class I2_> inline
-    bool is_greater(const abstract::image<I1_>& _input1,
-		    const abstract::image<I2_>& _input2)
+    template<class I1, class I2> inline
+    bool is_greater(const abstract::image<I1>& input1,
+		    const abstract::image<I2>& input2)
     {
-      Exact_cref(I1, input1);
-      Exact_cref(I2, input2);
-
       precondition(input1.size() == input2.size());
       Iter(I1) p(input1);
       for_all (p)
@@ -63,13 +57,10 @@ namespace oln {
       return true;
     }
 
-    template<class I1_, class I2_> inline
-    bool is_lower_or_equal(const abstract::image<I1_>& _input1,
-			   const abstract::image<I2_>& _input2)
+    template<class I1, class I2> inline
+    bool is_lower_or_equal(const abstract::image<I1>& input1,
+			   const abstract::image<I2>& input2)
     {
-      Exact_cref(I1, input1);
-      Exact_cref(I2, input2);
-
       precondition(input1.size() == input2.size());
       Iter(I1) p(input1);
       for_all (p)
@@ -78,13 +69,10 @@ namespace oln {
       return true;
     }
 
-    template<class I1_, class I2_> inline
-    bool is_lower(const abstract::image<I1_>& _input1,
-		  const abstract::image<I2_>& _input2)
+    template<class I1, class I2> inline
+    bool is_lower(const abstract::image<I1>& input1,
+		  const abstract::image<I2>& input2)
     {
-      Exact_cref(I1, input1);
-      Exact_cref(I2, input2);
-
       precondition(input1.size() == input2.size());
       Iter(I1) p(input1);
       for_all (p)
@@ -93,13 +81,10 @@ namespace oln {
       return true;
     }
 
-    template<class I1_, class I2_> inline
-    bool is_equal(const abstract::image<I1_>& _input1,
-		  const abstract::image<I2_>& _input2)
+    template<class I1, class I2> inline
+    bool is_equal(const abstract::image<I1>& input1,
+		  const abstract::image<I2>& input2)
     {
-      Exact_cref(I1, input1);
-      Exact_cref(I2, input2);
-
       precondition(input1.size() == input2.size());
       Iter(I1) p(input1);
       for_all (p)

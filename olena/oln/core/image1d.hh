@@ -28,6 +28,10 @@
 #ifndef OLENA_CORE_IMAGE1D_HH
 # define OLENA_CORE_IMAGE1D_HH
 
+# include <oln/core/point1d.hh>
+# include <oln/core/dpoint1d.hh>
+# include <oln/core/fwd_iter1d.hh>
+# include <oln/core/bkd_iter1d.hh>
 # include <oln/core/impl/image_array1d.hh>
 # include <oln/core/image.hh>
 
@@ -78,35 +82,30 @@ namespace oln {
 		  value_type, 
 		  impl_type, 
 		  exact_type> super_type;
-    typedef abstract::image<exact_type> super_image; 
 
     image1d() : 
-      super_image(),
       super_type((impl_type*) 0)
     {}
 
     image1d(coord ncols, coord border = 2) : 
-      super_image(),
       super_type(new impl_type(image1d_size(ncols, border)))
     {
       super_type::impl()->ref();
     }
 
     image1d(const image1d_size& size) : 
-      super_image(),
       super_type(new impl_type(size))
     {
       super_type::impl()->ref(); 
     }
 
     image1d(self_type& rhs) : // shallow copy
-      super_image(),
       super_type(rhs)
     {}
 
     exact_type& operator=(self_type rhs)
     {
-      return to_exact(this)->assign(to_exact(rhs));
+      return this->exact().assign(rhs.exact());
     }
 
     self_type clone_() const // deep copy

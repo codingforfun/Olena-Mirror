@@ -1,7 +1,7 @@
 include ../check/Makefile.check
 
-AM_LDFLAGS = $(FFTW_LDFLAGS)
-AM_CFLAGS = $(FFTW_CFLAGS)
+AM_LDFLAGS += $(FFTW_LDFLAGS)
+AM_CXXFLAGS += $(FFTW_CFLAGS)
 
 check_PROGRAMS = fft dwt
 

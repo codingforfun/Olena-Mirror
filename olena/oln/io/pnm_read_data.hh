@@ -72,7 +72,7 @@ namespace oln {
 		    c = in.get();
 		  }
 		while ((c != '0') && (c != '1'));
-		output[it] = (c == '1');
+		output[it] = (c == '0');
 	      }
 	    return true;
 	  }
@@ -98,7 +98,7 @@ namespace oln {
 		    c = in.get();
 		    bits = 8;
 		  }
-		bool b = (c & (1 << --bits)) ? true : false;
+		bool b = (c & (1 << --bits)) ? false : true;
 		output[it] = b;
 		if (++cols >= info.cols)
 		  c = cols = bits = 0;

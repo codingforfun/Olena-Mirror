@@ -169,7 +169,7 @@ write_postlude_and_test (ofstream & ofs,
   int fd[2];
   pipe (fd);
   bool fail = false;
-
+  
   if ((pid = fork ()) != -1)
     if (!pid)
       {

@@ -38,10 +38,10 @@ namespace oln {
       /*=processing area_closing
        * ns: morpho
        * what: Area closing
-       * arg: const image<I_>&, _input, IN, input image
-       * arg: const neighborhood<N_>&, se, IN, neighborhood to consider
+       * arg: const abstract::image<I>&, input, IN, input image
+       * arg: const abstract::neighborhood<N>&, se, IN, neighborhood to consider
        * arg: unsigned int, area, IN, area
-       * ret: Concrete(I_)
+       * ret: Concrete(I)
        * doc:
        * Compute an area closing using union/find algorithm.
        * See A. Meijster and M. Wilkinson. A Comparison of Algorithms For Connected
@@ -61,7 +61,7 @@ namespace oln {
 	typedef T_attribute<unsigned int> area_t;
 
 	typedef tarjan::tarjan_set<Concrete(I), area_t > tarjan_set_t;
-	tarjan_set_t area_closing(to_exact(input));
+	tarjan_set_t area_closing(input.exact());
 	return area_closing.get_comptute(area_t(area) , Ng, true);
       }
 
@@ -69,10 +69,10 @@ namespace oln {
       /*=processing area_opening
        * ns: morpho
        * what: Area opening
-       * arg: const image<I_>&, _input, IN, input image
-       * arg: const neighborhood<N_>&, se, IN, neighborhood to consider
+       * arg: const abstract::image<I>&, input, IN, input image
+       * arg: const abstract::neighborhood<N>&, se, IN, neighborhood to consider
        * arg: unsigned int, area, IN, area
-       * ret: Concrete(I_)
+       * ret: Concrete(I)
        * doc:
        * Compute an area opening using union/find algorithm.
        * See A. Meijster and M. Wilkinson. A Comparison of Algorithms For Connected
@@ -92,7 +92,7 @@ namespace oln {
 	typedef T_attribute<unsigned int> area_t;
 
 	typedef tarjan::tarjan_set<Concrete(I), T_attribute<unsigned int> > tarjan_set_t;
-	tarjan_set_t area_closing(to_exact(input));
+	tarjan_set_t area_closing(input.exact());
 	return area_closing.get_comptute(area_t(area) , Ng, false);
       }
 

@@ -9,7 +9,7 @@
 
      // default constructor
      T();
-     T(const image ## Dim ## d_size&, coord border = 2);
+     T(const image ## Dim ## d_size&);
      T(const T& other);
 
      // operators
@@ -86,20 +86,22 @@ coord nslices() const;
 
 %extend
 {
-  void border_set_width(coord new_border, bool copy_border = false)
-    { oln::border::set_width(*self, new_border, copy_border); }
-  void border_adapt_width(coord new_border, bool copy_border = false)
-    { oln::border::adapt_width(*self, new_border, copy_border); }
-  void border_adapt_copy(coord min_border)
-    { oln::border::adapt_copy(*self, min_border); }
-  void border_adapt_mirror(coord min_border)
-    { oln::border::adapt_mirror(*self, min_border); }
-  void border_adapt_assign(coord min_border, Val v)
-    { oln::border::adapt_assign(*self, min_border, v); }
+  // FIXME: borders are in image.
+//   void border_set_width(coord new_border, bool copy_border = false)
+//     { oln::border::set_width(*self, new_border, copy_border); }
+//   void border_adapt_width(coord new_border, bool copy_border = false)
+//     { oln::border::adapt_width(*self, new_border, copy_border); }
+//   void border_adapt_copy(coord min_border)
+//     { oln::border::adapt_copy(*self, min_border); }
+//   void border_adapt_mirror(coord min_border)
+//     { oln::border::adapt_mirror(*self, min_border); }
+//   void border_adapt_assign(coord min_border, Val v)
+//     { oln::border::adapt_assign(*self, min_border, v); }
 }
 
 // image I/O
 
+#if Dim == 2
 %extend
 {
   bool load(const char *name)
@@ -107,6 +109,8 @@ coord nslices() const;
   bool save(const char *name) const
     { return oln::save(*self, name); }
 }
+#endif
+
 %enddef
 
 %define decl_image(Dim)
@@ -119,25 +123,17 @@ coord nslices() const;
 
 #if Dim == 1
 %{
-#include <oln/core/image1d.hh>
-#include <oln/core/border1d.hh>
+#include <oln/basics1d.hh>
 %}
 #elif Dim == 2
 %{
-#include <oln/core/image2d.hh>
-#include <oln/core/border2d.hh>
+#include <oln/basics2d.hh>
 %}  
 #elif Dim == 3
 %{
-#include <oln/core/image3d.hh>
-#include <oln/core/border3d.hh>
+#include <oln/basics3d.hh>
 %}
 #endif
-
-%{
-#include <oln/io/basics.hh>
-#include <oln/io/pnm.hh>
-%}
 
 namespace oln
 {

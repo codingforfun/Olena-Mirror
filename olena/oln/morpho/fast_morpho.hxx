@@ -48,8 +48,8 @@ namespace oln {
       template<class E1, class E2, class E3>
       void
       find_struct_elts(const abstract::struct_elt<E1>& se,
-		       E2 se_add[mlc::exact<E2>::ret::dim],
-		       E3 se_rem[mlc::exact<E3>::ret::dim])
+		       E2 se_add[mlc::exact<E1>::ret::dim],
+		       E3 se_rem[mlc::exact<E1>::ret::dim])
       {
 	mlc_is_a(E2, abstract::struct_elt)::ensure();
 	mlc_is_a(E3, abstract::struct_elt)::ensure();
@@ -104,7 +104,8 @@ namespace oln {
       // Update HIST by adding elements from _SE_ADD, and removing
       // those from _SE_REM.
       template<class I, class E1, class E2, class H>
-      inline void
+      // inline
+      void
       hist_update(H& hist,
 		  const abstract::image<I>& input,
 		  const Point(I)& p,
@@ -240,15 +241,15 @@ namespace oln {
     struct sort_dimensions
     {
       sort_dimensions(abstract::struct_elt<E> se[mlc::exact<E>::ret::dim])
-	: _se(se) {}
+	: se_(se) {}
 
       bool operator()(unsigned a, unsigned b)
       {
-	return _se[a].card() > _se[b].card();
+	return se_[a].card() > se_[b].card();
       }
 
     protected:
-      abstract::struct_elt<E>* _se;
+      abstract::struct_elt<E>* se_;
     };
 
 
@@ -308,7 +309,7 @@ namespace oln {
 
       internal::fast_morpho_inner<1, E::dim, const I,
 	const typename I::size_type, H<Value(I),unsigned>,
-	const E, Point(I), Concrete(I)>::doit(to_exact(input), size, hist,
+	const E, Point(I), Concrete(I)>::doit(input.exact(), size, hist,
 					      se_add, se_rem,
 					      se_add_back, se_rem_back,
 					      p, output, dims);

@@ -29,7 +29,6 @@
 # define OLENA_CORE_ABSTRACT_IMAGE_WITH_IMPL_HH
 
 # include <oln/core/abstract/image_with_dim.hh>
-# include <oln/core/abstract/image_with_type.hh>
 # include <oln/core/impl/image_impl.hh>
 
 namespace oln {
@@ -43,7 +42,7 @@ namespace oln {
 
     template<class Impl, class Exact>
     struct image_traits<abstract::image_with_impl<Impl, Exact> >: 
-    public image_traits<abstract::image_with_dim<image_id<Exact>::dim, Exact> >, public image_traits<abstract::image_with_type<typename image_id<Exact>::value_type, Exact> >
+    public image_traits<abstract::image_with_dim<image_id<Exact>::dim, Exact> >
     {
       typedef Impl impl_type;
     };
@@ -53,8 +52,7 @@ namespace oln {
 
     template<class Impl, class Exact>
     class image_with_impl: 
-      public image_with_dim<image_id<Exact>::dim, Exact>, 
-      public image_with_type<typename image_id<Exact>::value_type, Exact>
+      public image_with_dim<image_id<Exact>::dim, Exact>
     {
     public:
       typedef typename image_traits<Exact>::point_type point_type;
@@ -67,9 +65,7 @@ namespace oln {
       
       typedef image_with_impl<Impl, Exact> self_type;
       typedef Exact exact_type;
-      typedef image_with_dim<image_id<Exact>::dim, Exact> super_image_with_dim;
-      typedef image_with_type<typename image_id<Exact>::value_type, Exact> super_image_with_type;
-      typedef image<Exact> super_image;
+      typedef image_with_dim<image_id<Exact>::dim, Exact> super_type;
 
       const value_type& at(const point_type& p) const
       {
@@ -83,9 +79,7 @@ namespace oln {
 
       // shallow copy
       image_with_impl(self_type& rhs) 
-	: super_image(rhs),
-	  super_image_with_dim(rhs),
-	  super_image_with_type(rhs)
+	: super_type(rhs)
       {
 	assertion(rhs.has_impl_());
 	impl_ = rhs.impl();
@@ -94,19 +88,19 @@ namespace oln {
 
       exact_type& operator=(self_type rhs)
       {
-	return to_exact(this)->assign(to_exact(rhs));
+	return this->exact().assign(rhs.exact());
       }
 
       exact_type& assign(exact_type rhs) // shallow assignment
       {
 	assertion(rhs.impl() != 0);
 	if ( &rhs == this )
-	  return to_exact(*this);
+	  return this->exact();
 	if (this->impl() != 0)
 	  this->impl()->unref();
 	this->impl_ = rhs.impl();
 	this->impl()->ref();
-	return to_exact(*this);
+	return this->exact();
       }
 
       ~image_with_impl()
@@ -148,14 +142,11 @@ namespace oln {
       }
 
     protected:
-      image_with_impl() : super_image(), super_image_with_dim(),
-			  super_image_with_type(), impl_(0)
+      image_with_impl() : super_type(), impl_(0)
       {}
 
       image_with_impl(impl_type* impl) :
-	super_image(),
-	super_image_with_dim(), 
-	super_image_with_type(),
+	super_type(),
 	impl_(impl) {}
       
     private:

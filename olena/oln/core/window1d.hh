@@ -69,7 +69,7 @@ namespace oln {
 
     window1d& add(const dpoint_type& dp)
     {
-      return to_exact(this)->add_(dp);
+      return this->exact().add_(dp);
     }
 
     window1d& add(coord col)
