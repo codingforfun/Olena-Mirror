@@ -209,4 +209,15 @@ OLN_COLLECTION([OLN_TOP],
 
 AC_OUTPUT
 
-
+if test "x$oln_cxxflags_clean" = xno; then
+  AC_MSG_WARN([CXXFLAGS seems to contain both optimization and debugging flags ($CXXFLAGS).])
+  AC_MSG_NOTICE([*])
+  AC_MSG_NOTICE([* note that Olena sources are configured to add heavy optimization flags])
+  AC_MSG_NOTICE([* by appending CXXFLAGS_OPTIMIZE ($CXXFLAGS_OPTIMIZE) to CXXFLAGS;])
+  AC_MSG_NOTICE([* this can yield to compiler problems (bugs, invalid generated code)])
+  AC_MSG_NOTICE([* when used with debugging options, or conflict with preset optimization])
+  AC_MSG_NOTICE([* flags.])
+  AC_MSG_NOTICE([*])
+  AC_MSG_NOTICE([* Please read the file `BUILD' before continuing.])
+  AC_MSG_NOTICE([*])
+fi

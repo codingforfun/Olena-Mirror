@@ -91,10 +91,17 @@ Problem: My programs compiles and runs, but either the compiler (GCC)
 issues warnings at compile-time in the Olena headers, or the results
 are weird and/or inaccurate.
 
-Explanation: You are using GCC 2.95 and heavy optimisation (@option{-O3}) flags.
+Explanation 1: You are using GCC 2.95 and heavy optimisation (@option{-O3}) flags.
 This is known to produce invalid code with Olena. 
 
-Solution: Use @option{-O2} instead.
+Solution 1: Use @option{-O2} instead.
+
+Explanation 2: You used the default, invalid, value for CXXFLAGS when
+`configure' has run, and the sources were compiled using heavy optimization and
+debug settings, which is inconsistent.
+
+Solution 2: run @command{configure CXXFLAGS=''}. See the file
+@file{BUILD} at the toplevel source directory.
 
 @sp 1
 
@@ -129,5 +136,4 @@ Explanation: You are using a big-endian host and there are known bugs in the ima
 
 Solution: Save your images in the ``plain pnm'' (@file{.ppnm}) file format instead of raw. Beware,
 while this is a correct workaround, the generated images are bigger.
-
 

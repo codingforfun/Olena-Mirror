@@ -21,8 +21,13 @@ Assuming your Olena distribution is uncompressed in directory
 
 @example
 $ @kbd{mkdir ../build}
-$ @kbd{cd ../build && ../oln-0.7/configure}
+$ @kbd{cd ../build && ../oln-0.7/configure CXXFLAGS=''}
 @end example
+
+@strong{Note:} take care to set CXXFLAGS always when running
+@command{configure}, for the default value computed by
+@command{configure} may yield to compilation issues (conflicts between
+optimization and debugging).
 
 The build process can be altered by a number of options you can pass
 to the @command{configure} script. The following sections describe them.

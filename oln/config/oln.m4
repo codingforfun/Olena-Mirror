@@ -334,6 +334,38 @@ AC_DEFUN([OLN_FLOAT_MATH],
   OLN_MATH_FUNC([roundf], [ROUNDF], [float f = roundf(0.1f);])
 ])
 
+# OLN_WARN_CXXFLAGS
+
+# Check that the variable CXXFLAGS does not contain debug or
+# optimization flags
+
+AC_DEFUN([OLN_WARN_CXXFLAGS],
+[dnl
+  oln_cxxflags_clean=yes
+
+  AC_REQUIRE([AC_PROG_CXX])
+  AC_LANG_PUSH([C++])dnl force initialization of default CXXFLAGS
+  AC_MSG_CHECKING([for debbuging options in CXXFLAGS ($CXXFLAGS)])
+  if echo "$CXXFLAGS" | grep -- "-g" >/dev/null 2>&1; then
+     AC_MSG_RESULT([yes])
+     AC_MSG_WARN([CXXFLAGS seems to contain debugging options, which is known to conflict with Olena optimizations.])
+     AC_MSG_NOTICE([please cleanup CXXFLAGS and use CXXFLAGS_DEBUG instead for your own options.])
+     oln_cxxflags_clean=no
+  else
+     AC_MSG_RESULT([no, good])
+  fi
+  AC_MSG_CHECKING([for optimization options in CXXFLAGS ($CXXFLAGS)])
+  if echo "$CXXFLAGS" | grep -- "-O" >/dev/null 2>&1; then
+     AC_MSG_RESULT([yes])
+     AC_MSG_WARN([CXXFLAGS seems to contain optimization options, while Olena provides its own optimization flags.])
+     AC_MSG_NOTICE([please cleanup CXXFLAGS and use CXXFLAGS_OPTIMIZE instead for your own options.])
+     oln_cxxflags_clean=no
+  else
+     AC_MSG_RESULT([no, good])
+  fi
+  AC_LANG_POP([C++])
+])
+
 # AC_WITH_OLN
 
 # Invoke configuration code to test for Olena and set a collection
@@ -345,6 +377,7 @@ AC_DEFUN([AC_WITH_OLN],
   AC_REQUIRE([OLN_NUMERIC_LIMITS])
   AC_REQUIRE([OLN_FLOAT_MATH])
   AC_REQUIRE([OLN_PATH_HEADERS])
+  AC_REQUIRE([OLN_WARN_CXXFLAGS])
 ])
 
 # AC_CXX_FLAGS

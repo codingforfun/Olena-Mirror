@@ -1,5 +1,12 @@
 2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
 
+	* dev/build.texi (Configuration): Add note about setting CXXFLAGS.
+
+	* dev/faq.texi (Frequently Asked Questions): Add FAQ about the
+	initial value of CXXFLAGS.
+
+2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
+
 	* dev/oln-dev.texi (Olena fast installation guide): Include
 	`design.texi'.
 
