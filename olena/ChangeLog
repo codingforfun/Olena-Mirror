@@ -1,3 +1,23 @@
+2003-08-06  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/impl/image_impl.hh, 
+	oln/core/impl/image_array.hh,
+	oln/core/impl/image_array1d.hh, 
+	oln/core/impl/image_array2d.hh,
+	oln/core/impl/image_array3d.hh: Remove image type
+	parameterization.  
+
+	* oln/core/image1d.hh,
+	oln/core/image2d.hh,
+	oln/core/image3d.hh: Adjust consequently. Move calls to
+	data->ref()...
+	
+	* oln/core/abstract/image_with_impl.hh: ...here.
+
+	* olena/oln/core/image.hh: Fix constructors.
+
+	* tests/core/tests/image2: Adapt and fix.
+	
 2003-08-06  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/core/image.hh: Use exact_type instead of Exact for accessing

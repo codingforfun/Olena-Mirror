@@ -13,8 +13,7 @@ using namespace ntg;
 
 int main()
 {
-  typedef impl::image_array2d<int_u8, image<2, int_u8, mlc::final> > impl_type;
+  typedef impl::image_array2d<int_u8> impl_type;
 
-  // XFAIL because of reference counting problems.
   image<2, int_u8, impl_type> ima1(new impl_type(image2d_size(5, 5, 2)));
 }

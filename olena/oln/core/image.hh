@@ -51,8 +51,8 @@ namespace oln {
 
   template<class T, unsigned Dim, class Impl, class Exact>
   struct image_traits<image<Dim, T, Impl, Exact> >:
-    public image_traits<abstract::image_with_impl<Impl,
-						  typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret> >
+    public image_traits<abstract::image_with_impl<typename image_id<image<Dim, T, Impl, Exact> >::impl_type,
+						  typename image_id<image<Dim, T, Impl, Exact> >::exact_type> >
   {
 
   };
@@ -61,8 +61,8 @@ namespace oln {
 
   template<unsigned Dim, class T, class Impl, class Exact>
   class image:
-    public abstract::image_with_impl<Impl,
-				     typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret>
+    public abstract::image_with_impl<typename image_id<image<Dim, T, Impl, Exact> >::impl_type,
+				     typename image_id<image<Dim, T, Impl, Exact> >::exact_type>
   {
   public:
     typedef typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret exact_type;
@@ -80,9 +80,15 @@ namespace oln {
 					       exact_type> super_type;
 
 
-    image() : super_type() {}
+    image() : super_type() 
+    {
+      mlc_init_static_hierarchy(Exact);
+    }
 
-    image(self_type& rhs): super_type(rhs) {}
+    image(self_type& rhs): super_type(rhs)
+    {
+      mlc_init_static_hierarchy(Exact);
+    }
 
     static std::string name()
     {
@@ -92,7 +98,17 @@ namespace oln {
       return s.str();
     }
 
-    image(impl_type* i) : super_type(i) {}
+    image(impl_type* i) : super_type(i) 
+    {
+      mlc_init_static_hierarchy(Exact);
+    }
+
+    image(const size_type& size) : 
+      super_type(new impl_type(size))
+    {
+      mlc_init_static_hierarchy(Exact);
+    }
+
   };
 
   // mute

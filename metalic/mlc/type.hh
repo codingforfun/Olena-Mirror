@@ -128,6 +128,24 @@ namespace mlc
   template <class T>
   struct type_eq<T, T> : returns_bool_<true> {};
 
+  template <class Exact, class Final>
+  struct assign_exact_this
+  {
+    template <class V>
+    static void doit(V*, Exact**)
+    {}
+  };
+
+  template <>
+  struct assign_exact_this<mlc::final, mlc::final>
+  {
+    template <class U>
+    static void doit(U* src, U** dest)
+    {
+      *dest = src;
+    }
+  };
+
   //
   //  Helper for static hierarchies: 
   //  FIXME : should not be necessary 
@@ -253,7 +271,7 @@ namespace mlc
 //
 //  to_exact procs
 //
-///////////////////////////////
+////////////////////
 
 template<class T> inline
 mlc_exact_type(T)&
@@ -287,9 +305,8 @@ to_exact(const T* ptr)
 | Misc macros |
 `------------*/
 
-# define mlc_init_static_hierarchy(Exact)	\
-if (mlc::type_eq<Exact, mlc::final>::ret)	\
-  this->exact_this = this
+# define mlc_init_static_hierarchy(Exact) \
+mlc::assign_exact_this<Exact, mlc::final>::doit(this, &(this->exact_this))
 
 /*-------------------------.
 | bwd compatibility macros |

@@ -1,3 +1,7 @@
+2003-08-06  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* mlc/type.hh: Fix mlc_init_static_hierarchy.
+
 2003-08-05  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 	
 	* mlc/type.hh: Add class any_with_diamond. Add new macro

@@ -42,8 +42,6 @@ void bar(abstract::image<I>& input, const abstract::point<P>& p)
   input[p] = 69;
 }
 
-
-// FIXME: pred_image
 template<class I, class P>
 void base(abstract::image<I>& input, const abstract::binary_image<P>& pred)
 {

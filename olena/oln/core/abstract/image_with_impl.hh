@@ -151,7 +151,10 @@ namespace oln {
 
       image_with_impl(impl_type* impl) :
 	super_type(),
-	impl_(impl) {}
+	impl_(impl) 
+      {
+	impl_->ref(); 
+      }
       
     private:
       impl_type* impl_;

@@ -60,25 +60,40 @@ namespace oln {
     array = 0;  // security
   }
 
+  namespace impl {
+    template<class T>
+    class image_array2d;
+  } // end of impl
+
+  template<class T>
+  struct impl_traits<impl::image_array2d<T> >: public impl_traits<impl::image_array<T, impl::image_array2d<T> > >
+  {
+    enum { dim = 2 };
+    typedef point2d point_type;
+    typedef image2d_size size_type;
+    typedef T value_type;
+  };
+
+
   namespace impl 
   {
     
-    template<class T, class ExactI>
+    template<class T>
     class image_array2d : 
-      public image_array<T, ExactI, image_array2d<T, ExactI> >
+      public image_array<T, image_array2d<T> >
     {
     public:
-      typedef typename image_traits<ExactI>::point_type point_type;
-      typedef typename image_traits<ExactI>::iter_type iter_type;
-      typedef typename image_traits<ExactI>::fwd_iter_type fwd_iter_type;
-      typedef typename image_traits<ExactI>::bkd_iter_type bkd_iter_type;
-      typedef typename image_traits<ExactI>::value_type value_type;
-      typedef typename image_traits<ExactI>::size_type size_type;
+      typedef image_array2d<T> self_type;
+      typedef image_array2d<T> exact_type;
 
-      typedef image_array<T, ExactI, image_array2d<T, ExactI> > super_type;
-      typedef image_array2d<T, ExactI> self_type;
+      typedef typename impl_traits<exact_type>::point_type point_type;
+      typedef typename impl_traits<exact_type>::value_type value_type;
+      typedef typename impl_traits<exact_type>::size_type size_type;
 
-      friend class image_impl<ExactI, image_array2d<T, ExactI> >;
+      typedef image_array<T, image_array2d<T> > super_type;
+ 
+
+      friend class image_impl<image_array2d<T> >;
       friend class super_type;
 
       image_array2d(const size_type& s): super_type(s) 
@@ -93,7 +108,7 @@ namespace oln {
 
     protected:
 
-      bool hold_(const oln::point2d& p) const
+      bool hold_(const point_type& p) const
       {
 	return
 	  p.row() >= 0 &&
@@ -102,7 +117,7 @@ namespace oln {
 	  p.col() < this->size_.ncols();
       }
 
-      bool hold_large_(const oln::point2d& p) const
+      bool hold_large_(const point_type& p) const
       {
 	return
 	  p.row() >= - this->size_.border() &&
@@ -111,7 +126,7 @@ namespace oln {
 	  p.col() < this->size_.ncols() + this->size_.border();
       }
 
-      value_type& at_(const oln::point2d& p)
+      value_type& at_(const point_type& p)
       {
 	return at_(p.row(), p.col());
       }
@@ -123,7 +138,7 @@ namespace oln {
 	return array_[row][col];
       }
 
-      size_t len_(const oln::image2d_size& s) const 
+      size_t len_(const size_type& s) const 
       {
 	coord ncols_eff = s.ncols() + 2 * s.border();
 	coord nrows_eff = s.nrows() + 2 * s.border();
@@ -138,10 +153,10 @@ namespace oln {
 	T* buffer = 0;
 	T** array = 0;
 	// first allocate
-	allocate_data_(buffer, len_(image2d_size(this->size_.nrows(), this->size_.ncols(), new_border)));
+	allocate_data_(buffer, len_(size_type(this->size_.nrows(), this->size_.ncols(), new_border)));
 	
-	pretreat_2d_data_(buffer, array, image2d_size(this->size_.nrows(),
-						      this->size_.ncols(), new_border));
+	pretreat_2d_data_(buffer, array, size_type(this->size_.nrows(),
+						   this->size_.ncols(), new_border));
 	// move data
 	coord border = this->size_.border();
 	if (border > new_border)
