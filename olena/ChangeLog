@@ -1,3 +1,8 @@
+2004-01-19  Astrid Wang  <astrid@lrde.epita.fr>
+
+	* oln/core/point2d.hxx: Fix member function minus().
+	* oln/core/abstract/dpoint.hh: Add member function norm2().
+
 2003-12-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/core/Makefile.am: Put fftw libraries in LDADD instead of
@@ -16,20 +21,20 @@
 
 	* tests/morpho/tests/overall_benchs: New test.
 	* tests/core/tests/benchs: New test.
-	
+
 2003-11-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* oln/arith/internal/opdecls.hh: Add missing default functors.
 	* oln/level/cc.hh: Use default arithmetic functor.
-	
+
 	* oln/convert/cast.hh: New.
 	* oln/convert/basics.hh: Include it.
-	
+
 2003-11-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/io/pnm_write_2d.hh: Store in the header the maximal value of
-	the encoding, not of the actual image values.	
-	
+	the encoding, not of the actual image values.
+
 	* tests/io/tests/headers: New test.
 	* tests/io/Makefile.am: Remove headers.pgm.
 
@@ -55,9 +60,9 @@
 2003-10-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/io/readable.hh: Add default constructors for SWIG.
-	
+
 2003-10-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* oln/utils/histogram.hh: Temporary fix for ntg::bin type.
 
 2003-10-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
@@ -66,7 +71,7 @@
 	* oln/arith/ops.hh: Support builtin types.
 
 	* oln/utils/histogram.hh: Support builtin types.
-	
+
 	* oln/convert/nrgbhsl.hh: Use ntg::{min,max} instead of
 	std::{min,max}.
 	* oln/core/box.hxx: Likewise.
@@ -75,9 +80,9 @@
 	* oln/morpho/geodesic_dilation.hh: Force the output type of
 	arith::min. Use ntg::min instead of std::min.
 	* oln/morpho/geodesic_erosion.hh: Likewise with s/min/max/.
-	
+
 2003-10-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* tests/morpho/tests/builtin_types: New test.
 
 2003-09-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>

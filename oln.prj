@@ -1,29 +1,16 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 48)
-(Parent-Version oln 10 47)
-(Version-Log "Index: doc/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+(Project-Version oln 10 49)
+(Parent-Version oln 10 48)
+(Version-Log "from  Astrid Wang  <astrid@lrde.epita.fr>
 
-        * ref/integre-ref.tex: Update.
-
-        * demo/tour.cc (main): Check i/o errors.
-
-Index: integre/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-        * ntg/core/macros.hh (ntg_abstract_type): New macro.
-
-Index: tools/swilena/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-        * doc/swilena.texi: Update.
-
+	* oln/core/point2d.hxx: Fix member function minus().
+	* oln/core/abstract/dpoint.hh: Add member function norm2().
 ")
 (New-Version-Log "")
-(Checkin-Time "Sat, 03 Jan 2004 17:25:53 +0100")
-(Checkin-Login burrus_n)
+(Checkin-Time "Mon, 19 Jan 2004 18:35:23 +0100")
+(Checkin-Login astrid)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -129,7 +116,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.2 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.32 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.36 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.40 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.41 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.20 640))
 
@@ -224,7 +211,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/core/dpoint2d.hxx (oln/d/24_dpoint2d.h 1.6 640))
   (olena/oln/core/dpoint3d.hh (oln/d/23_dpoint3d.h 1.12 640))
   (olena/oln/core/dpoint3d.hxx (oln/d/22_dpoint3d.h 1.6 640))
-  (olena/oln/core/abstract/dpoint.hh (oln/d/28_dpoint.hh 1.16 640))
+  (olena/oln/core/abstract/dpoint.hh (oln/d/28_dpoint.hh 1.17 640))
   
   (olena/oln/core/fold.hh (oln/c/7_fold.hh 1.13 640))
   (olena/oln/core/fwd_iter1d.hh (oln/d/21_fwd_iter1d 1.13 640))
@@ -268,7 +255,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/core/point1d.hh (oln/c/32_point1d.hh 1.14 640))
   (olena/oln/core/point1d.hxx (oln/c/31_point1d.hx 1.6 640))
   (olena/oln/core/point2d.hh (oln/c/30_point2d.hh 1.12 640))
-  (olena/oln/core/point2d.hxx (oln/c/29_point2d.hx 1.5 640))
+  (olena/oln/core/point2d.hxx (oln/c/29_point2d.hx 1.6 640))
   (olena/oln/core/point3d.hh (oln/c/28_point3d.hh 1.14 640))
   (olena/oln/core/point3d.hxx (oln/c/27_point3d.hx 1.5 640))
   (olena/oln/core/abstract/point.hh (oln/c/33_point.hh 1.15 640))
@@ -909,7 +896,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (integre/ntg/core/contract.hh (oln/s/45_contract.h 1.3 640))
   (integre/ntg/real/builtin_int.hh (oln/s/46_builtin_in 1.1 640))
-  (integre/ntg/real/builtin_float.hh (oln/s/47_builtin_fl 1.2.1.1 640))
+  (integre/ntg/real/builtin_float.hh (oln/s/47_builtin_fl 1.2.1.2 640))
   (integre/ntg/real/builtin_properties.hh (oln/s/48_builtin_pr 1.1 640))
   (integre/ntg/enum/builtin_bool.hh (oln/s/50_builtin_bo 1.4.1.1 640))
   (integre/tests/sanity/includes.test (oln/s/51_includes.t 1.1 750))
@@ -1156,7 +1143,5 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (doc/hierarchies/iter.dia (oln/w/12_iter.dia 1.1 640) :no-keywords)
   (doc/hierarchies/implementation.dia (oln/w/13_implementa 1.1 640))
 )
-(Merge-Parents
-  (10.47 complete)
-)
+(Merge-Parents)
 (New-Merge-Parents)
