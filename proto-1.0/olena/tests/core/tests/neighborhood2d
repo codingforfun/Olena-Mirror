@@ -1,0 +1,17 @@
+#include <oln/core/2d/neighborhood2d.hh>
+
+#include <ntg/all.hh>
+
+#include <cassert>
+
+using namespace oln;
+using namespace ntg;
+
+int main()
+{
+  neighborhood2d w1;
+  w1.add(dpoint2d(0, 5));
+  w1.add(dpoint2d(0, 5));
+  neighborhood2d w2 = neighb_c8();
+  return 0;
+}

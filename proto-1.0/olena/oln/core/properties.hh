@@ -42,6 +42,7 @@ namespace oln
     struct data_storage;
     struct image;
     struct struct_elt;
+    struct neighborhood;
     struct point;
     struct size;
     struct piter;

@@ -1,5 +1,12 @@
 2005-03-19  Simon Odou  <simon@lrde.epita.fr>
 
+	* tests/core/tests/neighborhood2d: New.
+	* oln/core/abstract/neighborhood.hh: New.
+	* oln/core/2d/neighborhood2d.hh: New.
+	* oln/core/properties.hh: Add `neighborhood' category.
+
+2005-03-19  Simon Odou  <simon@lrde.epita.fr>
+
 	* tests/core/tests/window2d: New.
 	* oln/core/abstract/struct_elt.hh: New.
 	* oln/core/2d/window2d.hh: New.
