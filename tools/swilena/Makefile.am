@@ -1,3 +1,5 @@
+## Process this file through Automake to produce Makefile.in -*- Makefile -*-
 
-# SUBDIRS = src doc python
+SUBDIRS = src doc $(OLN_SWILENA_SUBDIRS)
+
 

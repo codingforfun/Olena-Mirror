@@ -13,19 +13,19 @@ LDADD = ../lib/libolntools.a
 
 oln_mosaic_u8_SOURCES = mosaic.cc
 oln_mosaic_u8_CXXFLAGS = $(AM_CXXFLAGS) -DTYPE=int_u8
-if HAVE_HELP2MAN
-oln-mosaic-u8.1: oln-mosaic-u8$(EXEEXT)
-	PATH=.:$$PATH $(HELP2MAN) $< >$@
+if REGEN_MANPAGES
+$(srcdir)/oln-mosaic-u8.1: oln-mosaic-u8$(EXEEXT)
+	PATH=.:$$PATH $(HELP2MAN) --output=$@ $< 
 endif
 
 oln_mosaic_u16_SOURCES = mosaic.cc
 oln_mosaic_u16_CXXFLAGS = $(AM_CXXFLAGS) -DTYPE=int_u16
-if HAVE_HELP2MAN
-oln-mosaic-u16.1: oln-mosaic-u16$(EXEEXT)
-	PATH=.:$$PATH $(HELP2MAN) $< >$@
+if REGEN_MANPAGES
+$(srcdir)/oln-mosaic-u16.1: oln-mosaic-u16$(EXEEXT)
+	PATH=.:$$PATH $(HELP2MAN) --output=$@ $<
 endif
 
-if HAVE_HELP2MAN
+if REGEN_MANPAGES
 ### FIXME
 # This is ugly, but necessary since `make dist' can be called
 # before the library was compiled.
@@ -33,3 +33,4 @@ if HAVE_HELP2MAN
 	cd ../lib && $(MAKE) libolntools.a
 endif
 
+MAINTAINERCLEANFILES = $(srcdir)/oln-mosaic-u8.1 $(srcdir)/oln-mosaic-u16.1

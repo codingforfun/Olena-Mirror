@@ -1,3 +1,25 @@
+2003-02-18  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* configure.ac (REGEN_MANPAGES): rename from HAVE_HELP2MAN.
+
+	* configure.ac, Makefile.am: Do not generate text documentation if
+	documentation sources are not present. Use dependencies for text
+	documentation again.
+
+	* configure.ac: Import Swilena in the build process (use
+	--without-swilena to disable it)
+
+2003-02-17  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* configure.ac: Regenerate manpages even if help2man is not found
+	since `missing' handles this correctly.
+
+	* NEWS: Correct release year.
+
+2003-02-16  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Fix manpages regeneration tests.
+
 2003-02-12  Raphaël Poss  <raph@lrde.epita.fr>
 
 	(Changes from 0.7)

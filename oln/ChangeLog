@@ -1,3 +1,14 @@
+2003-02-18  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* tests/check/defs.in, tests/arith/runtests, tests/types/runtests:
+	Use SHELL instead of AC_SHELL for better clarity.
+
+	* config/oln-local.m4 (AC_CHECK_SWIG13): New macro.
+
+2003-02-18  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/core/image2d.hh: Remove useless include.
+
 2003-02-11  Raphaël Poss  <raph@lrde.epita.fr>
 
 	(Changes from 0.7)

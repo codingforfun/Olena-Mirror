@@ -61,18 +61,15 @@ OLN_COLLECTION([OLN_TOP],
      AC_CHECK_PROGS([HELP2MAN], [help2man], [$am_aux_dir/missing help2man])
      AC_CACHE_CHECK([whether to re-generate manual pages from programs],
                     [oln_cv_regen_manpages],
-                    [oln_cv_regen_manpages=no
-                     if test "x$ac_cv_prog_HELP2MAN" != xno; then
-                        oln_cv_regen_manpages=yes
-                     fi
+                    [oln_cv_regen_manpages=yes
                      AC_ARG_ENABLE([manpages-regen],
                                    [AC_HELP_STRING([--disable-manpages-regen],
-                                                   [disable regeneration of manual pages])],
+                                                   [force disable regeneration of manual pages])],
                                    [oln_cv_regen_manpages=$enableval])
                     ])
                      
 
-     AM_CONDITIONAL([HAVE_HELP2MAN], [test "x$oln_cv_regen_manpages" != xno])
+     AM_CONDITIONAL([REGEN_MANPAGES], [test "x$oln_cv_regen_manpages" != xno])
 
 ### Compiler-specific auto-configuration
     AC_CACHE_CHECK([whether to enable auto-configuration for multiple compilers],
@@ -232,8 +229,41 @@ OLN_COLLECTION([OLN_TOP],
     ])dnl End of OLN_COLLECTION([OLN_UTILITIES])
     ], [utilities])dnl End of OLN_COMPONENT([tools/utilities])
 
+### Swilena is a component...
+    OLN_COMPONENT([tools/swilena],
+	          [swilena],
+                  [oln_cv_build_swilena],
+	          [the SWIG interface to Olena],
+                  [OLN_TOOLS],
+                  [tools/swilena/Makefile tools/swilena/src/Makefile tools/swilena/doc/Makefile],
+    [OLN_COLLECTION([OLN_SWILENA], dnl ... and a collection.
+    [dnl
+       
+      AC_CHECK_SWIG13 dnl definition in oln-local.m4
+ 
+      AC_ARG_VAR([DVIPS], [program to make Postscript from TeX DVI files])
+      AC_CHECK_PROGS([DVIPS], [dvips], [$am_aux_dir/missing dvips])
+      AC_ARG_VAR([TEXI2DVI], [program to create DVI from Texinfo files])
+      AC_CHECK_PROGS([TEXI2DVI], [texi2dvi], [$am_aux_dir/missing texi2dvi])
+
+      OLN_COMPONENT([tools/swilena/python],
+                    [pylena],
+                    [oln_cv_build_pylena],
+                    [the Python interface to Olena],
+                    [OLN_SWILENA],
+                    [tools/swilena/python/Makefile],
+      [
+         AM_PATH_PYTHON([2.1])
+      ], [python])dnl End of OLN_COMPONENT([tools/swilena/python])
+        
+
+    ])dnl End of OLN_COLLECTION([OLN_SWILENA])
+    ], [swilena])dnl End of OLN_COMPONENT([tools/swilena])
+
    ])dnl End of OLN_COLLECTION([OLN_TOOLS])
    ])dnl End of OLN_COMPONENT([tools])
+
+   AM_CONDITIONAL([HAVE_DOC_DEV], [test "x$oln_cv_build_doc" != xno -a "x$oln_cv_build_devdoc" != xno])
 
 ])dnl End of OLN_COLLECTION([OLN_TOP])
 
@@ -252,3 +282,4 @@ if test "x$oln_cxxflags_clean" = xno; then
   AC_MSG_NOTICE([* Please read the file `BUILD' before continuing.])
   AC_MSG_NOTICE([*])
 fi
+

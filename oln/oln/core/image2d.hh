@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,7 +31,6 @@
 # include <oln/core/internal/real_image2d.hh>
 # include <oln/core/pred_image.hh>
 # include <oln/types/bin.hh>
-# include <oln/types/optraits_bin.hh>
 # include <oln/io/readable.hh>
 # include <iostream>
 # include <stdlib.h>

@@ -1,9 +1,10 @@
-Olena 0.8	April 1st, 2002
+Olena 0.8	April 1st, 2003
 
 	* ...
 
-Olena 0.7	February 10, 2002
+Olena 0.7	February 10, 2003
 
+	* Manual pages for the command-line utilities.
 	* New, saner, source tree layout.
 	* Each `part' of the source tree can be excluded from the
 	  build process with configuration flags.

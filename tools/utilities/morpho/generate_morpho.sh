@@ -102,10 +102,11 @@ echo >> $FILE;
 
 print_man()
 {
-  echo "if HAVE_HELP2MAN"
-  echo "${prog}.1: ${prog}\$(EXEEXT)"
-  printf '\t'; echo "PATH=.:\$\$PATH \$(HELP2MAN) \$< >\$@"
+  echo "if REGEN_MANPAGES"
+  echo "\$(srcdir)/${prog}.1: ${prog}\$(EXEEXT)"
+  printf '\t'; echo "PATH=.:\$\$PATH \$(HELP2MAN) --output=\$@ \$<"
   echo "endif"
+  echo "MAINTAINERCLEANFILES += \$(srcdir)/${prog}.1"
 }
 get_flags()
 {

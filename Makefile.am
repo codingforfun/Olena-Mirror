@@ -10,24 +10,28 @@ CONFIGURE_DEPENDENCIES = oln/config/oln.m4
 dist_noinst_DATA = README BUILD INSTALL THANKS FAQ
 MAINTAINERCLEANFILES = README BUILD INSTALL THANKS FAQ
 
+if HAVE_DOC_DEV
+
 INFOTOTEXT = $(MAKEINFO) --enable-encoding --no-headers
 devdoc = $(srcdir)/doc/dev
 
-README: 
+README: $(devdoc)/abstract.texi $(devdoc)/biblio.texi
 	$(INFOTOTEXT) $(devdoc)/abstract.texi >$@
 	$(INFOTOTEXT) $(devdoc)/biblio.texi >>$@
 
-BUILD: 
+BUILD: $(devdoc)/build.texi
 	$(INFOTOTEXT) $(devdoc)/build.texi >$@ 
 
-INSTALL: 
+INSTALL: $(devdoc)/install.texi
 	$(INFOTOTEXT) $(devdoc)/install.texi >$@
 
-THANKS: 
+THANKS: $(devdoc)/thanks.texi
 	$(INFOTOTEXT) $(devdoc)/thanks.texi >$@
 
-FAQ: 
+FAQ: $(devdoc)/faq.texi
 	$(INFOTOTEXT) $(devdoc)/faq.texi >$@
+
+endif
 
 DISTCHECK_CONFIGURE_FLAGS = --disable-manpages-regen
 

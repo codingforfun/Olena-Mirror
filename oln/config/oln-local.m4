@@ -21,3 +21,24 @@ AC_DEFUN([OLN_TESTS], dnl Auxiliary function for test categories selection
             AC_CONFIG_FILES([oln/tests/$1/Makefile])
           fi])dnl End of OLN_TESTS
 
+AC_DEFUN([AC_CHECK_SWIG13],
+[dnl
+     AC_ARG_VAR([SWIG], [the SWIG interface generator])
+     AC_CHECK_PROGS([SWIG], [swig], [$am_aux_dir/missing swig])
+
+     AC_CACHE_CHECK([for SWIG >= 1.3],
+                    [oln_cv_recent_swig],
+                    [oln_cv_recent_swig=no
+                     if test "x$SWIG" != "x$am_aux_dir/missing swig"; then
+                     if $SWIG -version 2>&1 | \
+	                grep 'SWIG Version @<:@0-9@:>@@<:@0-9@:>@*\.@<:@0-9@:>@@<:@0-9@:>@*' \
+	                >/dev/null 2>&1; then
+                        swig_ver=`$SWIG -version 2>&1 | grep 'SWIG Version'`
+                        swig_major=`echo "$swig_ver" | sed -e 's,^.*Version \(@<:@0-9@:>@@<:@0-9@:>@*\).*$,\1,g'`
+                        swig_minor=`echo "$swig_ver" | sed -e 's,^.*Version @<:@0-9@:>@@<:@0-9@:>@*\.\(@<:@0-9@:>@@<:@0-9@:>@*\).*$,\1,g'`
+	                if test `expr $swig_major \* 100 + $swig_minor` -ge 103; then
+                           oln_cv_recent_swig=yes
+                        fi
+                     fi
+                     fi])
+])

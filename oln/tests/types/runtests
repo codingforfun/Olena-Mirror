@@ -77,7 +77,7 @@ EOF
 
   # Run the test.
   $verb ========== Running $test... >&2
-  ($AC_SHELL $dir/try "$quiet" "$dir")
+  ($SHELL $dir/try "$quiet" "$dir")
   estatus=$?
 
   msg="";

@@ -1,3 +1,13 @@
+2003-02-18  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* utilities/Makefile.am: Cleanup manpages generation.
+	* utilities/morpho/generate_morpho.sh: Likewise.
+
+2003-02-17  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* utilities/Makefile.am: Fix help2man invocation.
+	* utilities/morpho/generate_morpho.sh: Likewise.
+
 2003-02-12  Raphaël Poss  <raph@lrde.epita.fr>
 
 	(Changes from 0.7)
