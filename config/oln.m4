@@ -489,16 +489,16 @@ AC_DEFUN([AC_CXX_FLAGS],
       ;;
    esac
 
-   if test "x$CXXFLAGS_OPTIMIZE" = "x"; then
+   if test ! ${CXXFLAGS_OPTIMIZE+set}; then
 	CXXFLAGS_OPTIMIZE=$_CXXFLAGS_OPTIMIZE
    fi
-   if test "x$CXXFLAGS_DEBUG" = "x"; then
+   if test ! ${CXXFLAGS_DEBUG+set}; then
 	CXXFLAGS_DEBUG=$_CXXFLAGS_DEBUG
    fi
-   if test "x$CXXFLAGS_STRICT" = "x"; then
+   if test ! ${CXXFLAGS_STRICT+set}; then
 	CXXFLAGS_STRICT=$_CXXFLAGS_STRICT
    fi
-   if test "x$CXXFLAGS_STRICT_ERRORS" = "x"; then
+   if test ! ${CXXFLAGS_STRICT_ERRORS+set}; then
 	CXXFLAGS_STRICT_ERRORS=$_CXXFLAGS_STRICT_ERRORS
    fi
 

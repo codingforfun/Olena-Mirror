@@ -1,3 +1,30 @@
+2003-07-23  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
+	oln/core/bkd_iter3d.hh, oln/core/dpointnd.hh, 
+	oln/core/iter.hh, oln/core/image.hh: Rename template parameter E
+	as Exact.
+	
+	* oln/core/neighborhood.hh, oln/core/impl/image_array2d.hh: Remove
+	debug instructions.
+
+	* oln/core/abstract/image_with_impl.hh: Modify assign() member
+	function. Implement assignment operator.
+	
+	* oln/core/image1d.hh, oln/core/image2d.hh, oln/core/image3d.hh:
+	Implement assignment operator. Rename template parameter E as
+	Exact.
+
+	* oln/core/abstract/image.hh: Modify assignment operator.
+
+	* oln/core/abstract/image_with_dim.hh: Implement assignment
+	operators.
+
+	* oln/core/abstract/image_with_type.hh: Implement assignment
+	operator.
+
+	* tests/core/tests/ref: Adjust.
+
 2003-07-23  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/core/tests/ref: New test.

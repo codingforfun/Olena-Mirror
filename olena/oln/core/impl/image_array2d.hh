@@ -136,7 +136,7 @@ namespace oln {
 	T** array = 0;
 	// first allocate
 	allocate_data_(buffer, len_(image2d_size(size_.nrows(), size_.ncols(), new_border)));
-	std::cout << len_(image2d_size(size_.nrows(), size_.ncols(), new_border)) << std::endl;
+	
 	pretreat_2d_data_(buffer, array, image2d_size(size_.nrows(),
 						      size_.ncols(), new_border));
 	// move data

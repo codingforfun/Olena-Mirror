@@ -57,6 +57,15 @@ namespace oln {
     class image_with_type: public virtual type_switch<T, Exact>::ret
     {
     public:
+
+      typedef image_with_type<T, Exact> self_type;
+      typedef Exact exact_type;
+
+      exact_type& operator=(self_type rhs)
+      {
+	return to_exact(this)->assign(to_exact(rhs));
+      }
+
       static std::string name()
       {
 	return

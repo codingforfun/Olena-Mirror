@@ -67,9 +67,7 @@ namespace oln {
   {
     Exact_cref(N, lhs);
     Exact_cref(N, rhs);
-    
-    std::cout << lhs.name() << std::endl;
-    
+        
     Exact(N_) neighb;
     for (unsigned j = 0; j < rhs.card(); ++j)
       if (! neighb.has(rhs.dp(j)))

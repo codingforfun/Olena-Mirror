@@ -38,43 +38,43 @@
 
 namespace oln {
 
-  template<class T, class E = mlc::final>
+  template<class T, class Exact = mlc::final>
   class image2d; // fwd_decl
 
-  template<class T, class E>
-  struct image_id<image2d<T, E> >
+  template<class T, class Exact>
+  struct image_id<image2d<T, Exact> >
   {
     enum{dim = 2};
     typedef T value_type;
-    typedef typename mlc::exact_vt<image2d<T, E>, E>::ret exact_type;
+    typedef typename mlc::exact_vt<image2d<T, Exact>, Exact>::ret exact_type;
     typedef impl::image_array2d<T, exact_type> impl_type;
   };
 
-  template<class T, class E>
-  struct image_traits<image2d<T, E> >: 
-    public image_traits<image<image_id<image2d<T, E> >::dim, 
-			      typename image_id<image2d<T, E> >::value_type, 
-			      typename image_id<image2d<T, E> >::impl_type, 
-			      typename image_id<image2d<T, E> >::exact_type> >
+  template<class T, class Exact>
+  struct image_traits<image2d<T, Exact> >: 
+    public image_traits<image<image_id<image2d<T, Exact> >::dim, 
+			      typename image_id<image2d<T, Exact> >::value_type, 
+			      typename image_id<image2d<T, Exact> >::impl_type, 
+			      typename image_id<image2d<T, Exact> >::exact_type> >
   {};
 
   // client can use image2d; instances are real images, that is,
   // images with data ---conversely to proxy images
 
-  template<class T, class E>
+  template<class T, class Exact>
   class image2d: 
-    public image<image_id<image2d<T, E> >::dim, 
-		 typename image_id<image2d<T, E> >::value_type, 
-		 typename image_id<image2d<T, E> >::impl_type, 
-		 typename image_id<image2d<T, E> >::exact_type>
+    public image<image_id<image2d<T, Exact> >::dim, 
+		 typename image_id<image2d<T, Exact> >::value_type, 
+		 typename image_id<image2d<T, Exact> >::impl_type, 
+		 typename image_id<image2d<T, Exact> >::exact_type>
   {
   public:
 
-    typedef image2d<T, E> self_type;
-    typedef typename image_id<image2d<T, E> >::value_type value_type;
-    typedef typename image_id<image2d<T, E> >::exact_type exact_type;
-    typedef typename image_id<image2d<T, E> >::impl_type impl_type;
-    typedef oln::image<image_id<image2d<T, E> >::dim, 
+    typedef image2d<T, Exact> self_type;
+    typedef typename image_id<image2d<T, Exact> >::value_type value_type;
+    typedef typename image_id<image2d<T, Exact> >::exact_type exact_type;
+    typedef typename image_id<image2d<T, Exact> >::impl_type impl_type;
+    typedef oln::image<image_id<image2d<T, Exact> >::dim, 
 		       value_type, 
 		       impl_type, 
 		       exact_type> super_type;  
@@ -97,7 +97,8 @@ namespace oln {
 
     image2d(self_type& rhs) : // shallow copy
       super_type(rhs)
-    {}
+    {
+    }
 
     //     // io
     //     image2d(const io::internal::anything& r) : super()
@@ -108,6 +109,12 @@ namespace oln {
     //     {
     //       return r.assign(*this);
     //     }
+
+    exact_type& operator=(self_type rhs)
+    {
+      return to_exact(this)->assign(to_exact(rhs));
+    }
+
 
     self_type clone_() const // deep copy
     {
@@ -121,7 +128,7 @@ namespace oln {
       return
 	std::string("image2d<")
 	+ ntg_name(T) + ","
-	+ E::name() + ">";
+	+ Exact::name() + ">";
     }
 
     template<class U>
