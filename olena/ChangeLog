@@ -1,5 +1,11 @@
 2003-07-27  David Lesage  <david@lrde.epita.fr>
 
+	* oln/core/apply.hh, oln/core/fold.hh,
+	oln/core/generate.hh, oln/core/traverse.hh: Avoid using Exact
+	macros.
+	
+2003-07-27  David Lesage  <david@lrde.epita.fr>
+
 	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
 	oln/core/bkd_iter3d.hh, oln/core/fwd_iter1d.hh,
 	oln/core/fwd_iter2d.hh, oln/core/fwd_iter3d.hh,

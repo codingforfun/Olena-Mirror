@@ -40,12 +40,11 @@ namespace oln {
   `------*/
 
   /* Standard unary 'apply' procedure.  Apply function f to each
-     element of _input.  */
-  template<class AdaptableUnaryFun, class I_> inline
-  typename mute<I_, typename AdaptableUnaryFun::result_type>::ret
-  apply(AdaptableUnaryFun f, const abstract::image<I_>& _input)
+     element of input.  */
+  template<class AdaptableUnaryFun, class I> inline
+  typename mute<I, typename AdaptableUnaryFun::result_type>::ret
+  apply(AdaptableUnaryFun f, const abstract::image<I>& input)
   {
-    Exact_cref (I, input);
     typename mute<I, typename AdaptableUnaryFun::result_type>::ret
       output(input.size());
     Iter(I) p(input);
@@ -84,14 +83,12 @@ namespace oln {
   /* FIXME: Don't we want to name these functions 'apply()' too? */
 
   /* Standard binary 'apply' procedure.  Apply function f to each
-     element of _input1 and _inpu2.  */
-  template<class AdaptableBinaryFun, class I1_, class I2_> inline
-  typename mute<I1_, typename AdaptableBinaryFun::result_type>::ret
+     element of input1 and input2.  */
+  template<class AdaptableBinaryFun, class I1, class I2> inline
+  typename mute<I1, typename AdaptableBinaryFun::result_type>::ret
   apply2(AdaptableBinaryFun f,
-	 const abstract::image<I1_>& _input1, const abstract::image<I2_>& _input2)
+	 const abstract::image<I1>& input1, const abstract::image<I2>& input2)
   {
-    Exact_cref (I1, input1);
-    Exact_cref (I2, input2);
     precondition(input1.size() == input2.size());
     typename mute<I1, typename AdaptableBinaryFun::result_type>::ret
       output(input1.size());
@@ -144,10 +141,9 @@ namespace oln {
   /* Main apply_self() function.  Note we require a UnaryFun only,
      not a AdaptableUnaryFunc, because as we overwrite an abstract::image
      we already know the output type.  */
-  template<class UnaryFun, class I_> inline
-  abstract::image<I_>& apply_self(UnaryFun f, abstract::image<I_>& _input)
+  template<class UnaryFun, class I> inline
+  abstract::image<I>& apply_self(UnaryFun f, abstract::image<I>& input)
   {
-    Exact_ref(I, input);
     Iter(I) p(input);
     for_all(p) input[p] = f(input[p]);
     return input;
@@ -178,12 +174,10 @@ namespace oln {
   `------------*/
 
   /* Main apply2_self() function.  See also the comment for apply_self().  */
-  template<class UnaryFun, class I1_, class I2_>
-  abstract::image<I1_>& apply2_self(UnaryFun f,
-			  abstract::image<I1_>& _input1, const abstract::image<I2_>& _input2)
+  template<class UnaryFun, class I1, class I2>
+  abstract::image<I1>& apply2_self(UnaryFun f,
+			  abstract::image<I1>& input1, const abstract::image<I2>& input2)
   {
-    Exact_ref(I1, input1);
-    Exact_ref(I2, input2);
     precondition(input1.size() == input2.size());
     Iter(I1) p(input1);
     for_all(p) input1[p] = f(input1[p], input2[p]);

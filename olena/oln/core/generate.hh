@@ -53,11 +53,10 @@ namespace oln {
     return output;
   }
 
-  template<class AdaptableGen, class I_> inline
-  image<I_>
-  generate(AdaptableGen f, image<I_>& _input)
+  template<class AdaptableGen, class I> inline
+  abstract::image<I>
+  generate(AdaptableGen f, abstract::image<I>& input)
   {
-    Exact_ref (I, input);
     Iter(I) p(input);
     for_all(p) input[p] = f();
     return input;

@@ -37,16 +37,15 @@ namespace oln {
 
   // Compute f(...f(f(val,i_0),i_1)...,i_n), where i_0...i_n
   // are the value associated to each abstract::image point.
-  template<class AdaptableBinaryFun, class I_> inline
+  template<class AdaptableBinaryFun, class I> inline
   typename AdaptableBinaryFun::result_type
   fold(AdaptableBinaryFun f,
        // f could return a reference or a const.  Make sure VAL is assignable.
        typename mlc::typeadj<
          typename AdaptableBinaryFun::result_type>::mutable_val val,
-       const abstract::image<I_>& _input)
+       const abstract::image<I>& input)
   {
     // FIXME: ensure that first_argument_type == result_type.
-    Exact_cref (I, input);
     Iter(I) p(input);
     for_all(p)
       val = f(val, input[p]);
@@ -55,12 +54,11 @@ namespace oln {
 
 
   // Compute f(...f(f(i_0,i_1),i_2)...,i_n).
-  template<class AdaptableBinaryFun, class I_> inline
+  template<class AdaptableBinaryFun, class I> inline
   typename AdaptableBinaryFun::result_type
-  fold(AdaptableBinaryFun f, const abstract::image<I_>& _input)
+  fold(AdaptableBinaryFun f, const abstract::image<I>& input)
   {
     // FIXME: ensure that first_argument_type == result_type.
-    Exact_cref (I, input);
     Iter(I) p(input);
     p = begin;
     // f could return a reference or a const, so make sure VAL is assignable.
