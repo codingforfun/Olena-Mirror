@@ -25,34 +25,66 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_DPOINT_HH
-# define OLENA_CORE_DPOINT_HH
+#ifndef OLENA_CORE_ABSTRACT_W_WINDOW_HH
+# define OLENA_CORE_ABSTRACT_W_WINDOW_HH
 
-# include <mlc/type.hh>
+# include <oln/core/abstract/struct_elt.hh>
+# include <oln/core/abstract/dpoint.hh>
 
+namespace oln 
+{
 
-namespace oln {
-
-  template<class Exact>
-  struct dpoint : public mlc::any<Exact>
+  namespace abstract 
   {
-    static std::string name() { return std::string("dpoint<") + Exact::name() + ">"; }
-  protected:
-    dpoint() {}
+    
+    template<class Exact>
+    struct w_window; // fwd_decl
+    
+  } // end of abstract
+  
+  template<class Exact>
+  struct struct_elt_traits<abstract::w_window<Exact> > : public
+  struct_elt_traits<abstract::struct_elt<Exact> >
+  {
+
   };
 
+  namespace abstract 
+  {
 
-  /* Every dimension specializes this trait and define a ret typedef.  */
-  template< unsigned Dim >
-  struct dpoint_for_dim {};
+    template<class Exact>
+    struct w_window : public struct_elt< Exact >
+    {
+      typedef Exact exact_type;
+      typedef struct_elt<Exact> super_type;     
+      typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
+      typedef typename struct_elt_traits<Exact>::weight_type weight_type;
+       
 
-# define _DPointForDim(DIM, TYPE)		\
-  template<>					\
-  struct dpoint_for_dim<DIM> {			\
-    typedef TYPE ret;				\
-  };
+      static std::string name()
+      {
+	return std::string("w_window<") + Exact::name() + ">";
+      }
+
+      exact_type& add(const abstract::dpoint<dpoint_type>& dp, const weight_type& w)
+      {
+	return to_exact(this)->add_(to_exact(dp), w);
+      }
+
+      const weight_type& set(const abstract::dpoint<dpoint_type>& dp, const weight_type& weight)
+      {
+	return to_exact(this)->set_(to_exact(dp), weight);
+      }
+
+    protected:
+      w_window() : super_type() {}
+    };
+    
+# define Weight(WinType)                               \
+Exact(WinType)::weight_type
+
+  } // end of abstract
 
 } // end of oln
 
-
-#endif // ! OLENA_CORE_DPOINT_HH
+#endif // ! OLENA_CORE_ABSTRACT_W_WINDOW_HH

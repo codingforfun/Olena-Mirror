@@ -61,7 +61,7 @@ namespace oln {
     =*/
     template<class DestValue, class I, class N>
     typename mute<I, DestValue>::ret
-    watershed_seg(const image<I>& im_i, const neighborhood<N>& Ng);
+    watershed_seg(const abstract::image<I>& im_i, const abstract::neighborhood<N>& Ng);
 
     /*=processing watershed_con
      * what: Connected Watershed.
@@ -91,7 +91,7 @@ namespace oln {
     =*/
     template<class DestValue, class I, class N>
     typename mute<I, DestValue>::ret
-    watershed_con(const image<I>& im_i, const neighborhood<N>& Ng);
+    watershed_con(const abstract::image<I>& im_i, const abstract::neighborhood<N>& Ng);
 
     /*=processing watershed_seg_or
      * what: Segmented Watershed with user-supplied starting points.
@@ -124,9 +124,9 @@ namespace oln {
     =*/
     template<class I1, class I2, class N>
     Concrete(I2)&
-    watershed_seg_or(const image<I1>& D,
-		     image<I2>& M,
-		     const neighborhood<N>& Ng);
+    watershed_seg_or(const abstract::image<I1>& D,
+		     abstract::image<I2>& M,
+		     const abstract::neighborhood<N>& Ng);
 
   } // end of morpho
 

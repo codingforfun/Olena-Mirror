@@ -149,17 +149,14 @@ namespace oln {
       }
 
       // Algorithm by Vincent and Soille
-      template<class PointHandler, class DestValue, class I_, class N_>
-      typename mute<I_, DestValue>::ret
-      _soille_watershed(const image<I_>& _im_i, const neighborhood<N_>& _Ng)
+      template<class PointHandler, class DestValue, class I, class N>
+      typename mute<I, DestValue>::ret
+      _soille_watershed(const abstract::image<I>& im_i, const abstract::neighborhood<N>& Ng)
       {
-	Exact_cref(I, im_i);
-	Exact_cref(N, Ng);
-
 	_OLN_MORPHO_DECLARE_SOILLE_WATERSHED_CONSTS(DestValue);
 
 	// Initializations
-	typedef typename mute<I_, DestValue>::ret result_type;
+	typedef typename mute<I, DestValue>::ret result_type;
 	result_type im_o(im_i.size());
 	level::fill(im_o, init);
 	std::queue< Point(I) > fifo;
@@ -268,7 +265,7 @@ namespace oln {
     // Algorithm by Vincent and Soille
     template<class DestValue, class I, class N>
     typename mute<I, DestValue>::ret
-    watershed_seg(const image<I>& im_i, const neighborhood<N>& Ng)
+    watershed_seg(const abstract::image<I>& im_i, const abstract::neighborhood<N>& Ng)
     {
       return internal::_soille_watershed<
 	internal::_watershed_seg_point_handler, DestValue> (im_i, Ng);
@@ -276,7 +273,7 @@ namespace oln {
 
     template<class DestValue, class I, class N>
     typename mute<I, DestValue>::ret
-    watershed_con(const image<I>& im_i, const neighborhood<N>& Ng)
+    watershed_con(const abstract::image<I>& im_i, const abstract::neighborhood<N>& Ng)
     {
       return internal::_soille_watershed<
 	internal::_watershed_con_point_handler, DestValue> (im_i, Ng);
@@ -298,15 +295,12 @@ namespace oln {
     };
 
     // version by D'Ornellas et al.
-    template<class I1_, class I2_, class N_> inline
-    Concrete (I2_)&
-    watershed_seg_or(const image<I1_>& _In,
-		     image<I2_>& _Labels,
-		     const neighborhood<N_>& _Ng)
+    template<class I1, class I2, class N> inline
+    Concrete (I2)&
+    watershed_seg_or(const abstract::image<I1>& In,
+		     abstract::image<I2>& Labels,
+		     const abstract::neighborhood<N>& Ng)
     {
-      Exact_cref(I1, In);
-      Exact_ref(I2, Labels);
-      Exact_cref(N, Ng);
 
       typedef Value(I2) Values;
       const Value(I2) wshed   = ntg_max_val(Values);

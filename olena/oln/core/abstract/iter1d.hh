@@ -25,31 +25,76 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_WINDOW_HH
-# define OLENA_CORE_WINDOW_HH
+#ifndef OLENA_CORE_ABSTRACT_ITER1D_HH
+# define OLENA_CORE_ABSTRACT_ITER1D_HH
 
-# include <oln/core/structelt.hh>
-# include <oln/core/winneighb.hh>
+# include <oln/core/coord.hh>
+# include <oln/core/point1d.hh>
+# include <oln/core/dpoint1d.hh>
+# include <oln/core/image1d.hh>
+# include <oln/core/abstract/iter.hh>
+
+# include <mlc/contract.hh>
+# include <mlc/type.hh>
+# include <mlc/objs.hh>
 
 namespace oln {
 
-  template<class Exact>
-  struct window : public struct_elt<Exact>
-  {
+  namespace abstract {
+    template<class Exact>
+    class iter1d; // fwd_decl
+  } // end of abstract
 
-    static std::string name()
-    {
-      return std::string("window<") + Exact::name() + ">";
-    }
-  protected:
-    window() {}
+  template<class Exact>
+  struct iter_traits<abstract::iter1d<Exact> >: public virtual
+  iter_traits<abstract::iter<Exact> >
+  {
+    enum { dim = 1 };
+    typedef point1d point_type;
+    typedef dpoint1d dpoint_type;
   };
 
-   template<int N>
-   struct get_se
-   {};
+  namespace abstract {
 
+    template<class Exact>
+    class iter1d : public iter< Exact >
+    {
+    public:
+
+      typedef iter<Exact> super_type;
+
+      point1d to_point() const
+      {
+	precondition(*this != end);
+	invariant(p_.col() >= 0 &&
+		  p_.col() < ncols_);
+	return p_;
+      }
+
+      coord col() const
+      {
+	return p_.col();
+      }
+
+      static std::string name() { return std::string("_iter1d<") + Exact::name() + ">"; }
+
+    protected:
+      const coord ncols_;
+
+      iter1d() : super_type(), ncols_(0) {}
+
+      iter1d(const image1d_size& size) :
+	super_type(), ncols_(size.ncols())
+      {
+	precondition(size.ncols() > 0);
+	to_exact(this)->goto_begin_();
+      }
+    };
+
+
+  } // end of abstract
 
 } // end of oln
 
-#endif // ! OLENA_CORE_WINDOW_HH
+
+#endif // ! OLENA_CORE_ABSTRACT_ITER1D_HH

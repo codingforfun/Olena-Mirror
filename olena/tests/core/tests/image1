@@ -12,12 +12,16 @@ int main()
 {
   oln::image1d<ntg::int_u8> ima1(4); 
   ima1(1) = 7;
+  oln::image1d<ntg::int_u8>::iter_type it1(ima1);
+  ima1[it1] = 8;
   oln::image1d<ntg::int_u8> ima12;  
   ima12 = ima1;
   std::cout << ima1 << std::endl;
   
   oln::image2d<ntg::int_u8> ima2(2, 2);
   ima2(1, 0) = 7;
+  oln::image2d<ntg::int_u8>::iter_type it2(ima2);
+  ima2[it2] = 8;
   oln::image2d<ntg::int_u8> ima22;
   ima22 = ima2;
   std::cout << ima22 << std::endl;
@@ -27,10 +31,11 @@ int main()
   oln::image3d<ntg::int_u8> ima32;
   ima32 = ima3;
   
+
   oln::image3d<ntg::int_u8> ima4(ima3);
-  oln::image3d<ntg::int_u8>::iter_type it(ima4);
+  oln::image3d<ntg::int_u8>::iter_type it3(ima4);
   //for_all(it)
-  ima4[it] = 6;
+  ima4[it3] = 6;
 
   //ima3 = ima4;
   std::cout << ima32 << std::endl;

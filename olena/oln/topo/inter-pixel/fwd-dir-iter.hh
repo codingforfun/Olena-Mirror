@@ -29,7 +29,7 @@
 #ifndef OLENA_TOPO_INTER_PIXEL_FWD_DIR_ITER_HH
 # define OLENA_TOPO_INTER_PIXEL_FWD_DIR_ITER_HH
 
-# include <oln/core/iter.hh>
+# include <oln/core/abstract/iter.hh>
 # include <oln/topo/inter-pixel/internal/dir-iter.hh>
 
 namespace oln {
@@ -37,10 +37,26 @@ namespace oln {
   namespace topo {
 
     namespace inter_pixel {
-
       template<unsigned Dim, class Exact = mlc::final>
-      class fwd_dir_iter : public internal::_dir_iter<Dim, typename mlc::exact_vt<fwd_dir_iter<Dim, Exact>, Exact>::ret>,
-			   public fwd_iter<typename mlc::exact_vt<fwd_dir_iter<Dim, Exact>, Exact>::ret>
+      class fwd_dir_iter;
+    }
+
+  }
+
+  template<unsigned Dim, class Exact>
+  struct iter_traits<topo::inter_pixel::fwd_dir_iter<Dim, Exact> >: public
+  iter_traits<topo::inter_pixel::internal::_dir_iter<Dim, typename
+  mlc::exact_vt<topo::inter_pixel::fwd_dir_iter<Dim, Exact>, Exact>::ret> >
+  {
+
+  };
+
+  namespace topo {
+
+    namespace inter_pixel {
+
+      template<unsigned Dim, class Exact>
+      class fwd_dir_iter : public internal::_dir_iter<Dim, typename mlc::exact_vt<fwd_dir_iter<Dim, Exact>, Exact>::ret>
       {
       private:
 	typedef internal::_dir_iter<Dim, typename mlc::exact_vt<fwd_dir_iter<Dim, Exact>, Exact>::ret> super;

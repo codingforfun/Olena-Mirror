@@ -72,19 +72,19 @@ namespace oln {
   }
 
   inline
-  dpoint2d::dpoint2d(const point2d& p) : super(p)
+  dpoint2d::dpoint2d(const point2d& p) : super_type(p)
   {
   }
 
   inline dpoint2d
-  dpoint2d::operator-() const
+  dpoint2d::minus() const
   {
     dpoint2d dp(-row(), -col());
     return dp;
   }
 
   inline dpoint2d&
-  dpoint2d::operator+=(const dpoint2d& dp)
+  dpoint2d::plus_assign_dp(const dpoint2d& dp)
   {
     row() += dp.row();
     col() += dp.col();
@@ -92,7 +92,7 @@ namespace oln {
   }
 
   inline dpoint2d&
-  dpoint2d::operator-=(const dpoint2d& dp)
+  dpoint2d::minus_assign_dp(const dpoint2d& dp)
   {
     row() -= dp.row();
     col() -= dp.col();
@@ -100,7 +100,7 @@ namespace oln {
   }
 
   inline dpoint2d
-  dpoint2d::operator+(const dpoint2d& dp) const
+  dpoint2d::plus_dp(const dpoint2d& dp) const
   {
     dpoint2d tmp = *this;
     tmp += dp;
@@ -108,7 +108,7 @@ namespace oln {
   }
 
   inline dpoint2d
-  dpoint2d::operator-(const dpoint2d& dp) const
+  dpoint2d::minus_dp(const dpoint2d& dp) const
   {
     dpoint2d tmp = *this;
     tmp -= dp;

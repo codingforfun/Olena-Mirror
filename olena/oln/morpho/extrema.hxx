@@ -27,13 +27,12 @@
 
 
 namespace internal {
-  template <class DestType, class I_>
-  typename mute<I_, DestType>::ret
-  _create_minima_image_from_bin(const image<I_>& _input)
+  template <class DestType, class I>
+  typename mute<I, DestType>::ret
+  _create_minima_image_from_bin(const abstract::image<I>& input)
   {
-    Exact_cref(I, input);
     Iter(I) p(input);
-    typename mute<I_, DestType>::ret output(input.size());
+    typename mute<I, DestType>::ret output(input.size());
     for_all (p)
       // FIXME: min() and max() should be inf() and sup()
       // once these functions exist.  Otherwise it doesn't
@@ -45,13 +44,12 @@ namespace internal {
   }
 
 
-  template <class I_>
-  typename mute<I_, ntg::bin>::ret
-  _ima_to_bin(const image<I_>& _input)
+  template <class I>
+  typename mute<I, ntg::bin>::ret
+  _ima_to_bin(const abstract::image<I>& input)
   {
-    Exact_cref(I, input);
     Iter(I) p(input);
-    typename mute<I_, ntg::bin>::ret output(input.size());
+    typename mute<I, ntg::bin>::ret output(input.size());
     for_all (p)
       output[p] = (input[p] ? true : false);
     return output;
@@ -85,22 +83,19 @@ namespace internal {
  * exi: lena.pgm map.pbm
  * exo: out.pgm
  =*/
-template<class I_, class I2_, class N_>
-Concrete(I_) minima_imposition(const image<I_>& _input,
-			       const image<I2_>& _minima_map,
-			       const neighborhood<N_>& _Ng)
+template<class I, class I2, class N>
+Concrete(I) minima_imposition(const abstract::image<I>& input,
+			      const abstract::image<I2>& minima_map,
+			      const abstract::neighborhood<N>& Ng)
 {
-  Exact_cref(I, input);
-  Exact_cref(I2, minima_map);
-  Exact_cref(N, Ng);
   mlc::eq<I::dim, I2::dim>::ensure();
   mlc::eq<I::dim, N::dim>::ensure();
   precondition(input.size() == minima_map.size());
   Concrete(I) mm =
     internal::_create_minima_image_from_bin<Value(I)>(minima_map);
   return geodesic_reconstruction_erosion(mm,
-					 arith::min(arith::plus_cst(input, Value(I_)(1)),
-						    (arith::plus_cst(mm, Value(I_)(0)))), Ng);
+					 arith::min(arith::plus_cst(input, Value(I)(1)),
+						    (arith::plus_cst(mm, Value(I)(0)))), Ng);
 }
 
 
@@ -127,12 +122,10 @@ Concrete(I_) minima_imposition(const image<I_>& _input,
  * exi: lena.pgm
  * exo: out.pgm
  =*/
-template<class I_, class N_>
-typename mute<I_, ntg::bin>::ret regional_minima(const image<I_>& _input,
-					    const neighborhood<N_>& _Ng)
+template<class I, class N>
+typename mute<I, ntg::bin>::ret regional_minima(const abstract::image<I>& input,
+						const abstract::neighborhood<N>& Ng)
 {
-  Exact_cref(I, input);
-  Exact_cref(N, Ng);
   mlc::eq<I::dim, N::dim>::ensure();
   return
     internal::_ima_to_bin(arith::minus(convert::force<Value(I)>(),

@@ -25,54 +25,61 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ITER_HH
-# define OLENA_CORE_ITER_HH
+#ifndef OLENA_CORE_ABSTRACT_NEIGHBORHOODND_HH
+# define OLENA_CORE_ABSTRACT_NEIGHBORHOODND_HH
 
-# include <mlc/type.hh>
-# include <mlc/objs.hh>
+# include <oln/core/abstract/window_base.hh>
 
-namespace oln
+namespace oln 
 {
-
-  using mlc::_begin;
-  using mlc::begin;
-  using mlc::_end;
-  using mlc::end;
-
-  // iter
+  namespace abstract 
+  {
+    template<class Exact>
+    struct neighborhoodnd; //fwd_decl
+  } // end of abstract
 
   template<class Exact>
-  struct iter : public mlc::any<Exact>
+  struct struct_elt_traits<abstract::neighborhoodnd<Exact> >: public
+  struct_elt_traits<abstract::window_base<abstract::neighborhood<Exact>, Exact> >
   {
-    static std::string name() { return std::string("iter<") + Exact::name() + ">"; }
-  protected:
-    iter() {}
+
   };
 
-
-  // fwd_iter
-
-  template<class Exact>
-  struct fwd_iter : public virtual iter<Exact>
+  namespace abstract 
   {
-    static std::string name() { return std::string("fwd_iter<") + Exact::name() + ">"; }
-  protected:
-    fwd_iter() {}
-  };
+    template<class Exact>
+    struct neighborhoodnd: public window_base<neighborhood<Exact>, Exact> 
+    {
+      typedef window_base<neighborhood<Exact>, Exact> super_type;
+      typedef neighborhoodnd<Exact> self_type;
+      typedef Exact exact_type;
+      typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
 
+      static std::string name()
+      {
+	return std::string("neighborhoodnd<") + Exact::name() + ">" ;
+      }
 
-  // bkd_iter
+      exact_type& add_(const dpoint_type& dp)
+      {
+	precondition( !dp.is_centered() );	
+	centered_ = true;
+	if (!(has_(dp)))
+	  dp_.push_back(dp);
+	delta_update(dp);
+	return to_exact(*this);
+      }
 
-  template<class Exact>
-  struct bkd_iter : public virtual iter<Exact>
-  {
-    static std::string name() { return std::string("bkd_iter<") + Exact::name() + ">"; }
-  protected:
-    bkd_iter() {}
-  };
-
-
+    protected:
+      neighborhoodnd() : super_type() {}
+      
+      neighborhoodnd(unsigned size) : super_type(size)
+      {
+	
+      }
+      
+    };
+  } // end of abstract
 } // end of oln
 
-
-#endif // ! OLENA_CORE_ITER_HH
+#endif // OLENA_CORE_ABSTRACT_NEIGHBORHOODND_HH

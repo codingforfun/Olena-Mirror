@@ -29,46 +29,64 @@
 # define OLENA_CORE_DPOINT3D_HH
 
 # include <oln/core/coord.hh>
-# include <oln/core/dpointnd.hh>
+# include <oln/core/abstract/dpoint.hh>
 # include <iostream>
 
 namespace oln {
 
   // fwd decl
   class point3d;
+  class dpoint3d;
 
-  class dpoint3d : public dpointnd< 3, dpoint3d >
+  template<>
+  struct dpoint_traits<dpoint3d>: public
+  dpoint_traits<abstract::dpoint<dpoint2d> >
+  {
+    enum { dim = 3 };
+    typedef point3d point_type;
+  };
+
+  class dpoint3d : public abstract::dpoint< dpoint3d >
   {
   public:
-    typedef dpointnd< 3, dpoint3d > super;
+    typedef abstract::dpoint< dpoint3d > super_type;
 
     dpoint3d();
+
     dpoint3d(coord slice, coord row, coord col);
+
     explicit dpoint3d(const point3d& p);
 
     coord slice() const;
+
     coord& slice();
+
     coord row() const;
+
     coord& row();
+
     coord col() const;
+
     coord& col();
 
-    dpoint3d operator+(const dpoint3d& dp) const;
-    dpoint3d operator-() const;
-    dpoint3d operator-(const dpoint3d& dp) const;
-    dpoint3d& operator+=(const dpoint3d& dp);
-    dpoint3d& operator-=(const dpoint3d& dp);
+    dpoint3d plus_dp(const dpoint3d& dp) const;
+
+    dpoint3d minus() const;
+
+    dpoint3d minus_dp(const dpoint3d& dp) const;
+
+    dpoint3d& plus_assign_dp(const dpoint3d& dp);
+
+    dpoint3d& minus_assign_dp(const dpoint3d& dp);
 
     static std::string name() { return "dpoint3d"; }
   };
-
-  _DPointForDim(3, dpoint3d);
 
   namespace internal
   {
     template<>
     struct default_less<dpoint3d> :
-      public default_less<dpoint3d::super>
+      public default_less<dpoint3d::super_type>
     {
     };
   } // end of internal
@@ -76,8 +94,9 @@ namespace oln {
 } // end of oln
 
 inline std::ostream&
-operator<<(std::ostream& o, const oln::dpoint3d& p);
+operator<<(std::ostream& o, const oln::dpoint3d& dp);
 
 # include <oln/core/dpoint3d.hxx>
+
 
 #endif // ! OLENA_CORE_DPOINT3D_HH

@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_NEIGHBORHOOD2D_HH
 # define OLENA_CORE_NEIGHBORHOOD2D_HH
 
-# include <oln/core/internal/neighborhood.hh>
+# include <oln/core/abstract/neighborhoodnd.hh>
 # include <oln/core/winiter.hh>
 # include <oln/core/accum.hh>
 # include <oln/core/window2d.hh>
@@ -37,44 +37,62 @@
 
 namespace oln {
 
+  class neighborhood2d; // fwd_decl
+
+  template<>
+  struct struct_elt_traits<neighborhood2d>: public
+  struct_elt_traits<abstract::neighborhoodnd<neighborhood2d> >
+  {
+    enum { dim = 2 };
+    typedef point2d point_type;
+    typedef dpoint2d dpoint_type;
+    typedef winiter< neighborhood2d > iter_type;
+    typedef winneighb< neighborhood2d > neighb_type;
+    typedef window2d win_type;
+  };
+
+
   class neighborhood2d :
-    public internal::_neighborhood< 2, neighborhood2d >
+    public abstract::neighborhoodnd< neighborhood2d >
   {
   public:
 
-    typedef internal::_neighborhood< 2, neighborhood2d > super;
-    typedef neighborhood2d self;
+    typedef abstract::neighborhoodnd< neighborhood2d > super_type;
+    typedef neighborhood2d self_type;
 
-    typedef winiter< self >   iter;
-    typedef winneighb< self > neighb;
+    typedef struct_elt_traits< self_type >::iter_type   iter_type;
+    typedef struct_elt_traits< self_type >::neighb_type
+    neighb_type;
+    typedef struct_elt_traits< self_type >::dpoint_type dpoint_type;
 
-    neighborhood2d& add(const dpoint2d& dp)
+    coord delta_update_(const dpoint_type& dp)
     {
-      precondition( !dp.is_centered() );
-      super::add(dp);
-      super::add(-dp);
-      _delta(abs(dp.row()));
-      _delta(abs(dp.col()));
-      return *this;
+      delta_(abs(dp.row()));
+      delta_(abs(dp.col()));
+      return delta_;
+    }
+
+    neighborhood2d& add(const dpoint_type& dp)
+    {
+      to_exact(this)->add_(dp);
+      return to_exact(this)->add_(-dp);
     }
 
     neighborhood2d& add(coord row, coord col)
     {
-      return this->add(dpoint2d(row, col));
+      return this->add(dpoint_type(row, col));
     }
 
-    neighborhood2d() : super(), _delta(0) {}
-    neighborhood2d(unsigned size) : super(size), _delta(0) {}
-    neighborhood2d(unsigned n, const coord crd[]) : super(), _delta(0)
+    neighborhood2d() : super_type() {}
+    neighborhood2d(unsigned size) : super_type(size) {}
+    neighborhood2d(unsigned n, const coord crd[]) : super_type(n)
     {
-      _dp.reserve(n);
-      _centered = false;
       for (unsigned i = 0; i < 2 * n; i += 2)
-	add(dpoint2d(crd[i], crd[i+1]));
+	add(dpoint_type(crd[i], crd[i+1]));
     }
 
     // io
-    neighborhood2d(const io::internal::anything& r) : super(), _delta(0)
+    neighborhood2d(const io::internal::anything& r) : super_type()
     {
       r.assign(*this);
     }
@@ -83,21 +101,8 @@ namespace oln {
       return r.assign(*this);
     }
 
-    coord delta() const
-    {
-      return _delta;
-    }
-
     static std::string name() { return std::string("neighborhood2d"); }
 
-    // obsolete
-    self operator-() const
-    {
-      return *this;
-    }
-
-  private:
-    max_accumulator<coord> _delta;
   };
 
   // std neighbs

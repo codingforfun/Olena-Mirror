@@ -103,26 +103,23 @@ namespace oln {
 
     } // internal
 
-    template<class I_, class E_>
-    Value(I_) max(const image<I_>& _input,
-		  const Exact(I_)::point& p,
-		  const struct_elt<E_>& _se)
+    template<class I, class E>
+    Value(I) max(const abstract::image<I>& input,
+		 const Exact(I)::point_type& p,
+		 const abstract::struct_elt<E>& se)
     {
-      Exact_cref(I, input);
-      Exact_cref(E, se);
       mlc::eq<I::dim, E::dim>::ensure();
-      return internal::_stat<I, E>::max(input, p, se);
+      return internal::_stat<I, E>::max(to_exact(input), p, to_exact(se));
     }
 
-    template<class I_, class E_>
-    Value(I_) min(const image<I_>& _input,
-		  const Exact(I_)::point& p,
-		  const struct_elt<E_>& _se)
+    template<class I, class E>
+    Value(I) min(const abstract::image<I>& input,
+		 const Exact(I)::point_type& p,
+		 //		 const Exact(I)::iter_type& p,
+		 const abstract::struct_elt<E>& se)
     {
-      Exact_cref(I, input);
-      Exact_cref(E, se);
       mlc::eq<I::dim, E::dim>::ensure();
-      return internal::_stat<I, E>::min(input, p, se);
+      return internal::_stat<I, E>::min(to_exact(input), p, to_exact(se));
     }
 
   } // morpho

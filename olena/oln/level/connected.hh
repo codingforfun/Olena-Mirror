@@ -62,7 +62,7 @@ namespace oln {
     template <class DestType, class I_, class N_>
     typename mute<I_, DestType>::ret
     connected_component(const abstract::image<I_>& _input,
-			const neighborhood<N_>& _Ng)
+			const abstract::neighborhood<N_>& _Ng)
     {
       // FIXME: ensure the Value(I) is bin.
       mlc::eq<I_::dim, N_::dim>::ensure();

@@ -56,7 +56,7 @@ namespace oln {
     template<class Exact>
     struct conversion : public mlc::any< Exact >
     {
-   
+
       static std::string
       name()
       {
@@ -232,7 +232,7 @@ namespace oln {
        apply function here, to apply conversions.  */
     template<class C, class I> inline
     typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
-    apply(const conversion<C>& conv, const image<I>& input)
+    apply(const conversion<C>& conv, const abstract::image<I>& input)
     {
       /* CONV can now be wrapped as an Adaptable Unary Function
 	 because we know the input type.  Composing CONV with the

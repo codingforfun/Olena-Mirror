@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_W_WINDOW3D_HH
 # define OLENA_CORE_W_WINDOW3D_HH
 
-# include <oln/core/internal/w_window.hh>
+# include <oln/core/abstract/w_windownd.hh>
 # include <oln/core/accum.hh>
 # include <oln/core/winiter.hh>
 # include <oln/core/winneighb.hh>
@@ -38,74 +38,68 @@
 
 namespace oln {
 
-  template<class T, class Exact = mlc::final>
-  class w_window3d : public internal::_w_window< 3, T, typename mlc::exact_vt<w_window3d<T, Exact>, Exact>::ret >
+  template<class T>
+  class w_window3d; // fwd_decl
+
+  template<class T>
+  struct struct_elt_traits<w_window3d<T> >: public
+  struct_elt_traits<abstract::w_windownd<w_window3d<T> > >
   {
-    typedef internal::_w_window< 3, T, typename mlc::exact_vt<w_window3d<T, Exact>, Exact>::ret > super;
+    enum { dim = 3 };
+    typedef T weight_type;
+    typedef point3d point_type;
+    typedef dpoint3d dpoint_type;
+    typedef winiter< w_window3d<T> > iter_type;
+    typedef winneighb< w_window3d<T> > neighb_type;
+  };
+
+
+  template<class T>
+  class w_window3d : public abstract::w_windownd<w_window3d<T> >
+  {
+    typedef abstract::w_windownd< w_window3d<T> > super_type;
   public:
+    typedef w_window3d<T> self_type;
+    typedef typename struct_elt_traits< self_type >::iter_type   iter_type;
+    typedef typename struct_elt_traits< self_type >::neighb_type neighb_type;
+    typedef typename struct_elt_traits< self_type >::dpoint_type dpoint_type;
+    typedef typename struct_elt_traits< self_type >::weight_type weight_type;
 
-    typedef w_window3d self;
+    w_window3d(): super_type() {}
+    w_window3d(unsigned size) : super_type(size) {}
 
-    typedef winiter< self >   iter;
-    typedef winneighb< self > neighb;
-
-    w_window3d<T>& add(coord slice, coord row, coord col, T weight)
+    coord delta_update_(const dpoint_type& dp)
     {
-      return add(dpoint3d(slice, row, col), weight);
+      delta_(abs(dp.slice()));
+      delta_(abs(dp.row()));
+      delta_(abs(dp.col()));
+      return delta_;
     }
 
-    w_window3d(): super(), _delta(0) {}
-    w_window3d(unsigned size) : super(size), _delta(0) {}
-
-    w_window3d<T>& add(const dpoint3d& dp, T weight)
+    w_window3d<T>& add(const dpoint_type& dp, const weight_type& w)
     {
-      if (weight == 0)		// Don't add 0 weighted entries
-	return *this;
-
-      super::add(dp, weight);
-      _delta(abs(dp.slice()));
-      _delta(abs(dp.row()));
-      _delta(abs(dp.col()));
-      return *this;
+      return to_exact(this)->add_(dp, w);
     }
 
-    T& set(const dpoint3d& dp, T weight)
+    w_window3d<T>& add(coord slice, coord row, coord col, const weight_type& weight)
     {
-      // if the dp exists, return a ref to the existing entry
-      for (unsigned i = 0; i < card(); ++i)
-	if (_dp[i] == dp)
-	  {
-	    _w[i] = weight;
-	    return _w[i];
-	  }
-
-      // otherwise, create new entry
-      add(dp, weight);
-      return _w.back();
+      return add(dpoint_type(slice, row, col), weight);
     }
 
-    T& set(coord slice, coord row, coord col)
+    const weight_type& set(const dpoint_type& dp, const weight_type& weight)
     {
-      return set(dpoint3d(slice, row, col));
+      return to_exact(this)->set_(dp, weight);
     }
 
-    coord delta() const
+    const weight_type& set(coord slice, coord row, coord col, const
+			   weight_type& weight)
     {
-      return _delta;
-    }
-
-    self operator-() const
-    {
-      self win(*this);
-      win.sym();
-      return win;
+      return set(dpoint_type(slice, row, col), weight);
     }
 
     static std::string name() { return std::string("w_window3d")
-				       + T::name() + ","
-				       + Exact::name() + ">"; }
-  private:
-    max_accumulator<coord> _delta;
+				       + T::name() + ">"; }
+
   };
 
 

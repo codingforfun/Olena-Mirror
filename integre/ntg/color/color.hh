@@ -53,10 +53,14 @@ namespace ntg {
     template <unsigned ncomps, 
 	      unsigned qbits, 
 	      template <unsigned> class color_system>
-    struct typetraits<color<ncomps, qbits, color_system> >
+    struct typetraits<color<ncomps, qbits, color_system> > 
     {
-      typedef data_type					abstract_type;
+      enum { nb_comp = ncomps };
+
       typedef color<ncomps, qbits, color_system>	self;
+      typedef self					ntg_type;
+      typedef vectorial					abstract_type;
+      typedef int_u<qbits>				comp_type;
       typedef self					base_type;
       typedef vec<ncomps, int_u<qbits> >		storage_type;
     };
@@ -174,7 +178,7 @@ namespace ntg {
   template <unsigned ncomps, 
 	    unsigned qbits, 
 	    template <unsigned> class color_system>
-  struct color : public value<color<ncomps, qbits, color_system> >
+  struct color : public vect_value<color<ncomps, qbits, color_system> >
   {
     template<unsigned icomp>
     struct lower_bound { enum { ret = color_system<icomp>::lower_bound }; };
@@ -199,9 +203,6 @@ namespace ntg {
       this->val_[1] = c2;
       this->val_[2] = c3;
     }
-
-    comp_type&		operator[](unsigned i)	     { return this->val_[i]; }
-    const comp_type	operator[](unsigned i) const { return this->val_[i]; }
 
     vec_type&		as_vec()       { return this->val_; }
     const vec_type&	as_vec() const { return this->val_; }

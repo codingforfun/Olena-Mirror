@@ -25,35 +25,57 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_IMAGE_SIZE_HH
-# define OLENA_CORE_IMAGE_SIZE_HH
+#ifndef OLENA_CORE_ABSTRACT_WINDOWND_HH
+# define OLENA_CORE_ABSTRACT_WINDOWND_HH
 
-# include <mlc/type.hh>
+# include <oln/core/abstract/window_base.hh>
 
-
-namespace oln {
-
+namespace oln 
+{
+  namespace abstract 
+  {
+    template<class Exact>
+    struct windownd; //fwd_decl
+  } // end of abstract
 
   template<class Exact>
-  struct image_size : public mlc::any< Exact >
+  struct struct_elt_traits<abstract::windownd<Exact> >: public
+  struct_elt_traits<abstract::window_base<abstract::window<Exact>, Exact> >
   {
 
-    static std::string name() { return std::string("image_size<") + Exact::name() + ">"; }
-  protected:
-    image_size() {}
   };
 
-  /* Every dimension specializes this trait and define a ret typedef.  */
-  template< unsigned Dim >
-  struct image_size_for_dim {};
+  namespace abstract 
+  {
+    template<class Exact>
+    struct windownd: public window_base<window<Exact>, Exact> 
+    {
+      typedef window_base<window<Exact>, Exact> super_type;
+      typedef windownd<Exact> self_type;
+      typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
+      typedef Exact exact_type;
 
-# define _ImageSizeForDim(DIM, TYPE)		\
-  template<>					\
-  struct image_size_for_dim<DIM> {		\
-    typedef TYPE ret;				\
-  };
+      static std::string name()
+      {
+	return std::string("windownd<") + Exact::name() + ">" ;
+      }
 
+      exact_type& add_(const dpoint_type& dp)
+      {
+	if (dp.is_centered())
+	  centered_ = true;
+	if (!(has_(dp)))
+	  dp_.push_back(dp);
+	this->delta_update(dp);
+	return to_exact(*this);
+      }
+
+    protected:
+      windownd() : super_type() {}
+
+      windownd(unsigned size) : super_type(size) {}
+    };
+  } // end of abstract
 } // end of oln
 
-
-#endif // ! OLENA_CORE_IMAGE_SIZE_HH
+#endif // OLENA_CORE_ABSTRACT_WINDOWND_HH

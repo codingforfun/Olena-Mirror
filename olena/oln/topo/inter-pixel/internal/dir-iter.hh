@@ -29,10 +29,48 @@
 # define OLENA_TOPO_INTER_PIXEL_INTERNAL_DIR_ITER_HH
 
 # include <mlc/objs.hh>
-# include <oln/core/iter.hh>
+# include <oln/core/abstract/iter1d.hh>
+# include <oln/core/abstract/iter2d.hh>
+# include <oln/core/abstract/iter3d.hh>
 # include <oln/topo/inter-pixel/internal/dir.hh>
 
 namespace oln {
+
+  namespace topo {
+    namespace inter_pixel {
+      namespace internal {
+	template<unsigned Dim, class Exact>
+	class _dir_iter; // fwd_decl
+      }
+    }
+  }
+
+  template<class Exact>
+  struct iter_traits<topo::inter_pixel::internal::_dir_iter<1, Exact> >: public
+  iter_traits<abstract::iter1d<Exact> >
+  {
+    typedef abstract::iter1d<Exact> super_type;
+    typedef point1d point_type;
+    typedef dpoint1d dpoint_type;
+  };
+
+  template<class Exact>
+  struct iter_traits<topo::inter_pixel::internal::_dir_iter<2, Exact> >: public
+  iter_traits<abstract::iter2d<Exact> >
+  {
+    typedef abstract::iter2d<Exact> super_type;
+    typedef point2d point_type;
+    typedef dpoint2d dpoint_type;
+  };
+
+  template<class Exact>
+  struct iter_traits<topo::inter_pixel::internal::_dir_iter<3, Exact> >: public
+  iter_traits<abstract::iter3d<Exact> >
+  {
+    typedef abstract::iter3d<Exact> super_type;
+    typedef point3d point_type;
+    typedef dpoint3d dpoint_type;
+  };
 
   namespace topo {
 
@@ -41,16 +79,22 @@ namespace oln {
       namespace internal {
 
 	template<unsigned Dim, class Exact>
-	class _dir_iter : public virtual iter<Exact>
+	class _dir_iter : public iter_traits<_dir_iter<Dim, Exact> >::super_type
 	{
 	protected:
 	  typedef typename dir_traits<Dim>::ret dir_t;
+	  typedef typename iter_traits<_dir_iter<Dim, Exact> >::super_type super_type;
 
-	  _dir_iter() : _cur(to_exact(this)->begin()), _cnt(0) {}
-	  _dir_iter(dir_t i) : _cur(i), _cnt(0) {}
+	  _dir_iter() : super_type(), _cur(to_exact(this)->begin()), _cnt(0) {}
+	  _dir_iter(dir_t i) : super_type(), _cur(i), _cnt(0) {}
 
 	public:
 	  operator dir_t()
+	  {
+	    return _cur;
+	  }
+
+	  dir_t to_dir() const
 	  {
 	    return _cur;
 	  }
@@ -98,5 +142,13 @@ namespace oln {
   } // end topo
 
 } // end oln
+
+template<unsigned Dim, class Exact>
+inline 
+std::ostream&
+operator<<(std::ostream& o, const oln::topo::inter_pixel::internal::_dir_iter<Dim, Exact>& it)
+{
+  return o << it.to_dir();
+}
 
 #endif // !OLENA_TOPO_INTER_PIXEL_INTERNAL_DIR_ITER_HH

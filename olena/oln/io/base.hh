@@ -31,8 +31,8 @@
 # include <oln/io/image_read.hh>
 # include <oln/io/image_write.hh>
 
-# include <oln/io/se_window.hxx>
-# include <oln/io/se_neighborhood.hxx>
+# include <oln/io/se_window.hh>
+# include <oln/io/se_neighborhood.hh>
 
 namespace oln {
 

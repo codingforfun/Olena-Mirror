@@ -26,6 +26,8 @@ fi
 
 for test; do
   # We want only the basename of $test.
+  if test -d $test; then continue; fi
+  echo $test | grep '~$' && continue;
   test=`basename "$test"`
   fail=0
   dir=$rundir/$test

@@ -76,6 +76,8 @@ namespace ntg {
       static bool sup()  { return max(); }
 
       static unsigned max_print_width () { return 1U; }
+
+      static std::string name() { return "bool"; }
     };
     
   } // end of internal.

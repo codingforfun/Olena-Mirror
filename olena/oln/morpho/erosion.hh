@@ -65,14 +65,13 @@ namespace oln {
      * exi: object.pbm
      * exo: out.pbm
     =*/
-    template<class I_, class E_>
-    Concrete(I_) erosion(const image<I_>& _input, const struct_elt<E_>& _se)
+    template<class I, class E>
+    Concrete(I) erosion(const abstract::image<I>& input, const abstract::struct_elt<E>& se)
     {
-      Exact_cref(I, input);
-      Exact_cref(E, se);
       mlc::eq<I::dim, E::dim>::ensure();
       Concrete(I) output(input.size());
-      border::adapt_copy(input, se.delta());
+      se.delta();
+      input.border_adapt_copy(se.delta());
       Iter(I) p(input);
       for_all (p)
 	output[p] = morpho::min(input, p, se);
@@ -92,18 +91,17 @@ namespace oln {
      * see: morpho::n_dilation
     =*/
 
-    template<class I_, class E_>
-    Concrete(I_) n_erosion(const image<I_> & _input,
-			   const struct_elt<E_>& se,
-			   unsigned n)
+    template<class I, class E>
+    Concrete(I) n_erosion(const abstract::image<I> & input,
+			  const abstract::struct_elt<E>& se,
+			  unsigned n)
     {
       //mlc::eq<I_::dim, E_::dim>::ensure();
       precondition(n > 0);
-      Exact_cref(I, input);
-      Concrete(I_) output = input.clone();
+      Concrete(I) output = input.clone();
       for (unsigned i = 0; i < n; ++i)
 	{
-	  Concrete(I_) work = erosion(output, se);
+	  Concrete(I) work = erosion(output, se);
 	  output = work;
  	}
       return output;
@@ -111,7 +109,7 @@ namespace oln {
 
     namespace fast {
       template<class I, class E>
-      Concrete(I) erosion(const image<I>& input, const struct_elt<E>& se)
+      Concrete(I) erosion(const abstract::image<I>& input, const abstract::struct_elt<E>& se)
       {
         return fast_morpho<I, E, utils::histogram_min>(input, se);
       }

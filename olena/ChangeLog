@@ -1,3 +1,308 @@
+2003-07-28  Giovanni Palma  <giovanni.palma@lrde.epita.fr>
+
+	* oln/convert/conversion.hh,
+	oln/morpho/opening.inc,
+	oln/morpho/splitse.hh,
+	oln/morpho/watershed.hh,
+	oln/utils/histogram.hh,
+	oln/level/connected.hh,
+	oln/convert/conversion_ng_se.hh,
+	oln/morpho/closing.inc,
+	oln/morpho/fast_morpho.hh: Add some "abstract".
+
+	* oln/level/fill.hh,
+	oln/morpho/hit_or_miss.inc,
+	oln/morpho/thickening.inc,
+	oln/morpho/thinning.inc,
+	oln/morpho/watershed.hxx,
+	oln/morpho/attribute_closing_opening.hh,
+	oln/morpho/attribute_union_find.hh,
+	oln/morpho/extrema.hxx
+	oln/morpho/geodesic_dilation.hh,
+	oln/morpho/geodesic_erosion.hh: Add some "abstract". Remove cref.
+
+	* oln/morpho/dilation.hh,
+	oln/morpho/erosion.hh
+	oln/morpho/fast_morpho.hxx: Add some "abstract". Remove cref.
+	Correct border calls.
+
+	* oln/morpho/extrema_killer.hh,
+	oln/morpho/reconstruction.hh: Add some "abstract".
+	Rename some used types. Remove cref.
+
+	* oln/morpho/stat.hh: Add some "abstract". Remove cref.
+	Add "to_exact" in min and max.
+
+	* tests/morpho/reconstruction.cc: Add ntg/all.hh include.
+
+2003-07-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/arith/runtests, tests/core/runtests: Don't check temporary
+	files.
+
+2003-07-28  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/winiter.hh: Fix bugs.
+
+	* oln/core/abstract/struct_elt.hh: Add add(dp) member function.
+
+	* oln/core/abstract/window.hh: Rename add(dp) member function.
+
+2003-07-28  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/abstract/point.hh: Implement point_ref.
+	* oln/core/point1d.hh, oln/core/point1d.hxx,
+	oln/core/point2d.hh, oln/core/point2d.hxx,
+	oln/core/point3d.hh, oln/core/point3d.hxx: Remove point_ref member
+	function.
+
+2003-07-28  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/abstract/dpoint.hh, oln/core/abstract/iter.hh,
+	oln/core/abstract/neighborhood.hh, oln/core/abstract/point.hh,
+	oln/core/abstract/struct_elt.hh, oln/core/abstract/window.hh,
+	oln/core/abstract/w_window.hh, oln/core/abstract/image.hh: Adapt
+	interfaces.
+
+2003-07-28  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/abstract/neighborhood.hh,
+	oln/core/abstract/struct_elt.hh: Add typedefs.
+
+	* oln/core/winiter.hh, oln/core/winneighb.hh: Adapt constructor.
+
+2003-07-28  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/abstract/structelt.hh: Rename as...
+
+	* oln/core/abstract/struct_elt.hh: ...this.
+
+	* oln/core/abstract/window.hh,
+	oln/core/abstract/w_window.hh,
+	oln/Makefile.am: Adapt in consequence.
+
+2003-07-28  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/winiter.hh, oln/core/winneighb.hh: Adapt constructor.
+
+	* tests/arith/tests/min1: Fix.
+
+2003-07-28  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
+	oln/core/bkd_iter3d.hh, oln/core/fwd_iter1d.hh,
+	oln/core/fwd_iter2d.hh, oln/core/fwd_iter3d.hh: Add typedefs.
+
+	* oln/core/abstract/iter1d.hh,
+	oln/core/abstract/iter2d.hh,
+	oln/core/abstract/iter3d.hh: Add default constructor.
+
+	* oln/topo/inter-pixel/fwd-dir-iter.hh,
+	oln/topo/inter-pixel/bkd-dir-iter.hh,
+	oln/topo/inter-pixel/internal/dir-iter.hh: Adapt to get it working
+	with the new hierarchy of iterators.
+
+	* oln/topo/tarjan/flat-zone.hh: Adapt.
+
+2003-07-28  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/abstract/dpoint.hh: Implement the interface.
+
+	* oln/core/dpoint1d.hh, oln/core/dpoint1d.hxx,
+	oln/core/dpoint2d.hh, oln/core/dpoint2d.hxx,
+	oln/core/dpoint3d.hh, oln/core/dpoint3d.hxx: Rename member
+	functions.
+
+	* oln/core/abstract/point.hh: Implement the interface.
+
+	* oln/core/point1d.hh, oln/core/point1d.hxx,
+	oln/core/point2d.hh, oln/core/point2d.hxx,
+	oln/core/point3d.hh, oln/core/point3d.hxx: Rename member
+	functions.
+
+2003-07-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/io/2d.cc (check): Minor fix.
+
+2003-07-27  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/apply.hh, oln/core/fold.hh,
+	oln/core/generate.hh, oln/core/traverse.hh: Avoid using Exact
+	macros.
+
+2003-07-27  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
+	oln/core/bkd_iter3d.hh, oln/core/fwd_iter1d.hh,
+	oln/core/fwd_iter2d.hh, oln/core/fwd_iter3d.hh,
+	oln/core/abstract/image_size.hh,
+	oln/core/abstract/neighborhood.hh,
+	oln/core/abstract/structelt.hh,
+	oln/core/abstract/window.hh,
+	oln/core/abstract/window_base.hh: Fix bugs.
+
+	* oln/core/image2d.hh: Remove commented code.
+
+2003-07-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/io/se_neighborhood.hxx: Rename as...
+	* oln/io/se_neighborhood.hh: ...this.
+
+	* oln/io/se_window.hxx: Rename as...
+	* oln/io/se_window.hh: ...this.
+
+2003-07-26  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/io/pnm_read.hh, oln/io/pnm_write.hh: Add missing features.
+	* oln/io/se_neighborhood.hxx, oln/io/se_window.hxx: Rewrite.
+	* oln/Makefile.am: Adjust.
+
+	* tests/io/2d.cc: Add test cases.
+	* tests/io/se_fail.cc: Fix wrong tests.
+	* tests/io/Makefile.am: Fix the compilation of se_fail.
+
+	* tests/core/runtests: Don't take directories.
+	* tests/core/traverse: New test.
+
+	* oln/io/pnm_common.hh: Update.
+
+	* oln/io/pnm_data.hh: Split into...
+	* oln/io/pnm_read_data.hh, oln/io/pnm_write_data.hh: ...these. New
+	files. Implement missing features.
+
+2003-07-26  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/dpoint2d.hh: Fix include mistake.
+
+2003-07-26  David Lesage  <david@lrde.epita.fr>
+
+	* tests/core/tests/image1: Adjust.
+
+	* oln/core/internal/rec_operable.hh: Remove.
+
+	* oln/basics.hh, oln/core/apply.hh,
+	oln/core/fold.hh, oln/core/generate.hh,
+	oln/core/traverse.hh, oln/core/winneighb.hh: Adjust according to
+	previous changes.
+
+	* oln/Makefile.am: Adjust according to previous changes.
+
+2003-07-26  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/image1d.hh, oln/core/image2d.hh,
+	oln/core/image3d.hh, oln/core/image.hh,
+	oln/core/abstract/image.hh,
+	oln/core/abstract/image_with_dim.hh,
+	oln/core/abstract/image_with_impl.hh,
+	oln/core/abstract/image_with_type.hh: Fix constructors.
+
+2003-07-26  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/structelt.hh: Move...
+
+	* oln/core/abstract/structelt.hh: ...here.
+
+	* oln/core/abstract/window_base.hh: New. Factorize neighborhood,
+	window and w_window shared code.
+
+	* oln/core/internal/neighborhood.hh: Remove.
+
+	* oln/core/abstract/neighborhoodnd.hh: New.
+
+	* oln/core/neighborhood.hh: Move...
+
+	* oln/core/abstract/neighborhood.hh: ...here. Modify the interface.
+
+	* oln/core/neighborhood1d.hh,
+	oln/core/neighborhood2d.hh,
+	oln/core/neighborhood3d.hh: Adjust in consequence.
+
+	* tests/core/tests/neighborhood: New test.
+
+	* oln/core/internal/window.hh: Remove.
+
+	* oln/core/abstract/windownd.hh: New.
+
+	* oln/core/window.hh: Move...
+
+	* oln/core/abstract/window.hh: ...here. Modify the interface.
+
+	* oln/core/window1d.hh,
+	oln/core/window2d.hh,
+	oln/core/window3d.hh: Adjust in consequence.
+
+	* tests/core/tests/window: New test.
+
+	* oln/core/internal/w_window.hh: Remove.
+
+	* oln/core/abstract/w_windownd.hh: New.
+
+	* oln/core/w_window.hh: Move...
+
+	* oln/core/abstract/w_window.hh: ...here. Modify the interface.
+
+	* oln/core/w_window1d.hh,
+	oln/core/w_window2d.hh,
+	oln/core/w_window3d.hh: Adjust in consequence.
+
+2003-07-26  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/imagend_size.hh: Remove.
+
+	* oln/core/internal/image_size.hh: Move...
+
+	* oln/core/abstract/image_size.hh: ...here. Implement previous
+	imagend_size interface.
+
+	* oln/core/image1d_size.hh,
+	oln/core/image2d_size.hh,
+	oln/core/image3d_size.hh: Adjust in consequence.
+
+2003-07-26  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/iter.hh: Move...
+
+	* oln/core/abstract/iter.hh: here. Implement the interface for all
+	iterators. Remove fwd_iter and bkd_iter unused classes.
+
+	* oln/core/internal/iter1d.hh,
+	oln/core/internal/iter2d.hh,
+	oln/core/internal/iter3d.hh: Move...
+
+	* oln/core/abstract/iter1d.hh,
+	oln/core/abstract/iter2d.hh,
+	oln/core/abstract/iter3d.hh: ...here, respectively. Adjust inheritance.
+
+	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
+	oln/core/bkd_iter3d.hh, oln/core/fwd_iter1d.hh,
+	oln/core/fwd_iter2d.hh, oln/core/fwd_iter3d.hh: Adjust in consequence.
+
+2003-07-26  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/dpointnd.hh: Remove.
+
+	* oln/core/dpoint.hh: Move...
+
+	* oln/core/abstract/dpoint.hh: ...here. Implement previous dpointnd
+	interface.
+
+	* oln/core/dpoint1d.hh, oln/core/dpoint1d.hxx,
+	oln/core/dpoint2d.hh, oln/core/dpoint2d.hxx,
+	oln/core/dpoint3d.hh, oln/core/dpoint3d.hxx: Adjust in consequence.
+
+2003-07-26  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/pointnd.hh: Remove.
+
+	* oln/core/point.hh: Move...
+
+	* oln/core/abstract/point.hh: ...here. Implement previous pointnd
+	interface.
+
+	* oln/core/point1d.hh,
+	oln/core/point2d.hh,
+	oln/core/point3d.hh: Adjust in consequence.
+
 2003-07-25  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
 	* tests/level/threshold.cc, tests/level/set_level.cc,

@@ -30,7 +30,7 @@
 
 # include <mlc/contract.hh>
 # include <oln/core/abstract/image.hh>
-# include <oln/core/iter.hh>
+# include <oln/core/abstract/iter.hh>
 # include <oln/core/macros.hh>
 
 namespace oln {
@@ -38,10 +38,9 @@ namespace oln {
   // traverse (unary)
 
 
-  template<class I_, class F>
-  const F& traverse(F& f, const abstract::image<I_>& _input)
+  template<class I, class F>
+  const F& traverse(F& f, const abstract::image<I>& input)
   {
-    Exact_cref(I, input);
     Iter(I) p(input);
     for_all(p) f(input[p]);
     return f;
@@ -85,12 +84,10 @@ namespace oln {
   // traverse2 (binary)
 
 
-  template<class I1_, class I2_, class F>
+  template<class I1, class I2, class F>
   const F& traverse2(F& f,
-		    const abstract::image<I1_>& _input1, const abstract::image<I2_>& _input2)
+		    const abstract::image<I1>& input1, const abstract::image<I2>& input2)
   {
-    Exact_cref(I1, input1);
-    Exact_cref(I2, input2);
     precondition(input1.size() == input2.size());
     Iter(I1) p(input1);
     for_all(p) f(input1[p], input2[p]);

@@ -1,0 +1,19 @@
+//								    -*- c++ -*-
+
+#include <oln/basics2d.hh>
+#include <oln/core/traverse.hh>
+#include <oln/utils/stat.hh>
+
+#include <ntg/all.hh>
+
+using namespace oln;
+using namespace ntg;
+
+int main()
+{
+  image2d<int_u8> ima(5, 5);
+  
+  utils::f_minmax<int_u8> f;
+  traverse(f, ima);
+  std::cout << f.max() << std::endl;
+}

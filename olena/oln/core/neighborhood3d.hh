@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_NEIGHBORHOOD3D_HH
 # define OLENA_CORE_NEIGHBORHOOD3D_HH
 
-# include <oln/core/internal/neighborhood.hh>
+# include <oln/core/abstract/neighborhoodnd.hh>
 # include <oln/core/winiter.hh>
 # include <oln/core/accum.hh>
 # include <oln/core/window3d.hh>
@@ -36,26 +36,47 @@
 
 namespace oln {
 
+  class neighborhood3d; // fwd_decl
+
+  template<>
+  struct struct_elt_traits<neighborhood3d>: public
+  struct_elt_traits<abstract::neighborhoodnd<neighborhood3d> >
+  {
+    enum { dim = 3 };
+    typedef point3d point_type;
+    typedef dpoint3d dpoint_type;
+    typedef winiter< neighborhood3d > iter_type;
+    typedef winneighb< neighborhood3d > neighb_type;
+    typedef window3d win_type;
+  };
+
+
   class neighborhood3d :
-    public internal::_neighborhood< 3, neighborhood3d >
+    public abstract::neighborhoodnd< neighborhood3d >
   {
   public:
 
-    typedef internal::_neighborhood< 3, neighborhood3d > super;
-    typedef neighborhood3d self;
+    typedef abstract::neighborhoodnd< neighborhood3d > super_type;
+    typedef neighborhood3d self_type;
 
-    typedef winiter< self >   iter;
-    typedef winneighb< self > neighb;
+    typedef struct_elt_traits< self_type >::iter_type   iter_type;
+    typedef struct_elt_traits< self_type >::neighb_type
+    neighb_type;
+    typedef struct_elt_traits< self_type >::dpoint_type dpoint_type;
 
-    neighborhood3d& add(const dpoint3d& dp)
+
+    coord delta_update_(const dpoint_type& dp)
     {
-      precondition( !dp.is_centered() );
-      super::add(dp);
-      super::add(-dp);
-      _delta(abs(dp.slice()));
-      _delta(abs(dp.row()));
-      _delta(abs(dp.col()));
-      return *this;
+      delta_(abs(dp.slice()));
+      delta_(abs(dp.row()));
+      delta_(abs(dp.col()));
+      return delta_;
+    }
+
+    neighborhood3d& add(const dpoint_type& dp)
+    {
+      to_exact(this)->add_(dp);
+      return to_exact(this)->add_(-dp);
     }
 
     neighborhood3d& add(coord slice, coord row, coord col)
@@ -63,30 +84,16 @@ namespace oln {
       return this->add(dpoint3d(slice, row, col));
     }
 
-    neighborhood3d() : super(), _delta(0) {}
-    neighborhood3d(unsigned size) : super(size), _delta(0) {}
-    neighborhood3d(unsigned n, const coord crd[]) : super(), _delta(0)
+    neighborhood3d() : super_type() {}
+    neighborhood3d(unsigned size) : super_type(size) {}
+    neighborhood3d(unsigned n, const coord crd[]) : super_type()    
     {
-      _dp.reserve(n);
-      _centered = false;
       for (unsigned i = 0; i < 3 * n; i += 3)
-	add(dpoint3d(crd[i], crd[i+1], crd[i+2]));
-    }
-
-    coord delta() const
-    {
-      return _delta;
-    }
-
-    // obsolete
-    self operator-() const
-    {
-      return *this;
+	add(dpoint_type(crd[i], crd[i+1], crd[i+2]));
     }
 
     static std::string name() { return std::string("neighborhood3d"); }
-  private:
-    max_accumulator<coord> _delta;
+
   };
 
  // std neighb

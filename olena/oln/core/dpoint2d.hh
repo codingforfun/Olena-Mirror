@@ -29,51 +29,67 @@
 # define OLENA_CORE_DPOINT2D_HH
 
 # include <oln/core/coord.hh>
-# include <oln/core/dpointnd.hh>
+# include <oln/core/abstract/dpoint.hh>
 # include <iostream>
 
 namespace oln {
 
   // fwd decl
   class point2d;
+  class dpoint2d;
 
-  class dpoint2d : public dpointnd< 2, dpoint2d >
+  template<>
+  struct dpoint_traits<dpoint2d>: public
+  dpoint_traits<abstract::dpoint<dpoint2d> >
+  {
+    enum { dim = 2 };
+    typedef point2d point_type;
+  };
+
+  class dpoint2d : public abstract::dpoint< dpoint2d >
   {
   public:
-    typedef dpointnd< 2, dpoint2d > super;
+    typedef abstract::dpoint< dpoint2d > super_type;
 
     dpoint2d();
+
     dpoint2d(coord row, coord col);
+
     explicit dpoint2d(const point2d& p);
 
     coord row() const;
+
     coord& row();
+
     coord col() const;
+
     coord& col();
 
-    dpoint2d operator+(const dpoint2d& dp) const;
-    dpoint2d operator-() const;
-    dpoint2d operator-(const dpoint2d& dp) const;
-    dpoint2d& operator+=(const dpoint2d& dp);
-    dpoint2d& operator-=(const dpoint2d& dp);
+    dpoint2d plus_dp(const dpoint2d& dp) const;
+
+    dpoint2d minus() const;
+
+    dpoint2d minus_dp(const dpoint2d& dp) const;
+
+    dpoint2d& plus_assign_dp(const dpoint2d& dp);
+
+    dpoint2d& minus_assign_dp(const dpoint2d& dp);
 
     static std::string name() { return "dpoint2d"; }
   };
-
-  _DPointForDim(2, dpoint2d);
 
   namespace internal
   {
     template<>
     struct default_less<dpoint2d> :
-      public default_less<dpoint2d::super>
+      public default_less<dpoint2d::super_type>
     {};
   } // end of internal
 
 } // end of oln
 
 inline std::ostream&
-operator<<(std::ostream& o, const oln::dpoint2d& p);
+operator<<(std::ostream& o, const oln::dpoint2d& dp);
 
 # include <oln/core/dpoint2d.hxx>
 

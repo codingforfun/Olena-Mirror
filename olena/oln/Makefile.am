@@ -36,10 +36,25 @@ nobase_oln_HEADERS =					\
   convol/fast_gaussian.hxx				\
   convol/fast_gaussian_coefficient.hh			\
   core/abstract/binary_image.hh				\
+  core/abstract/dpoint.hh				\
   core/abstract/image.hh				\
+  core/abstract/image_size.hh				\
   core/abstract/image_with_dim.hh			\
   core/abstract/image_with_impl.hh			\
   core/abstract/image_with_type.hh			\
+  core/abstract/iter.hh					\
+  core/abstract/iter1d.hh				\
+  core/abstract/iter2d.hh				\
+  core/abstract/iter3d.hh				\
+  core/abstract/neighborhood.hh				\
+  core/abstract/neighborhoodnd.hh			\
+  core/abstract/point.hh				\
+  core/abstract/struct_elt.hh				\
+  core/abstract/w_window.hh				\
+  core/abstract/w_windownd.hh				\
+  core/abstract/window.hh				\
+  core/abstract/window_base.hh				\
+  core/abstract/windownd.hh				\
   core/accum.hh						\
   core/apply.hh						\
   core/box.hh						\
@@ -49,14 +64,12 @@ nobase_oln_HEADERS =					\
   core/bkd_iter3d.hh					\
   core/compose.hh					\
   core/coord.hh						\
-  core/dpoint.hh					\
   core/dpoint1d.hh					\
   core/dpoint1d.hxx					\
   core/dpoint2d.hh					\
   core/dpoint2d.hxx					\
   core/dpoint3d.hh					\
   core/dpoint3d.hxx					\
-  core/dpointnd.hh					\
   core/fold.hh						\
   core/fwd_iter1d.hh					\
   core/fwd_iter2d.hh					\
@@ -69,64 +82,47 @@ nobase_oln_HEADERS =					\
   core/image2d_size.hh					\
   core/image3d.hh					\
   core/image3d_size.hh					\
-  core/image_size.hh					\
-  core/imagend_size.hh					\
   core/impl/image_impl.hh 				\
   core/impl/image_array1d.hh				\
   core/impl/image_array2d.hh				\
   core/impl/image_array3d.hh				\
   core/internal/fake.hh					\
-  core/internal/iter1d.hh				\
-  core/internal/iter2d.hh				\
-  core/internal/iter3d.hh				\
-  core/internal/neighborhood.hh				\
-  core/internal/rec_operable.hh				\
-  core/internal/w_window.hh				\
-  core/internal/window.hh				\
-  core/iter.hh						\
   core/macros.hh					\
-  core/neighborhood.hh					\
   core/neighborhood1d.hh				\
   core/neighborhood2d.hh				\
   core/neighborhood3d.hh				\
-  core/point.hh						\
   core/point1d.hh					\
   core/point1d.hxx					\
   core/point2d.hh					\
   core/point2d.hxx					\
   core/point3d.hh					\
   core/point3d.hxx					\
-  core/pointnd.hh					\
-  core/structelt.hh					\
   core/traverse.hh					\
-  core/w_window.hh					\
   core/w_window1d.hh					\
   core/w_window2d.hh					\
   core/w_window3d.hh					\
-  core/window.hh					\
   core/window1d.hh					\
   core/window2d.hh					\
   core/window3d.hh					\
   core/winiter.hh					\
   core/winneighb.hh					\
   io/base.hh						\
-  io/base.hxx						\
   io/basics.hh						\
   io/file.hh						\
   io/gz.hh						\
   io/gz_stream.hh					\
   io/pnm.hh						\
   io/pnm3d.hh						\
-  io/pnm_read.hxx					\
+  io/pnm_read.hh					\
   io/pnm_read3d.hxx					\
-  io/pnm_read_common.hxx				\
-  io/pnm_write.hxx					\
+  io/pnm_read_data.hh					\
+  io/pnm_write.hh					\
   io/pnm_write3d.hxx					\
-  io/pnm_write_common.hxx				\
+  io/pnm_write_data.hh					\
   io/readable.hh					\
   io/se.hh						\
-  io/se_neighborhood.hxx				\
-  io/se_window.hxx					\
+  io/se_neighborhood.hh					\
+  io/se_window.hh					\
   level/cc.hh						\
   level/compare.hh					\
   level/connected.hh					\

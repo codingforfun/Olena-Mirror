@@ -38,18 +38,17 @@
 
 # include <oln/core/coord.hh>
 # include <oln/core/macros.hh>
-# include <oln/core/point.hh>
-# include <oln/core/dpoint.hh>
+# include <oln/core/abstract/point.hh>
+# include <oln/core/abstract/dpoint.hh>
 # include <oln/core/image.hh>
 # include <oln/core/abstract/image_with_impl.hh>
 # include <oln/core/abstract/image_with_dim.hh>
-//# include <oln/core/border.hh>
 
-# include <oln/core/window.hh>
-# include <oln/core/w_window.hh>
-# include <oln/core/neighborhood.hh>
+# include <oln/core/abstract/window.hh>
+# include <oln/core/abstract/w_window.hh>
+# include <oln/core/abstract/neighborhood.hh>
 
-# include <oln/core/iter.hh>
+# include <oln/core/abstract/iter.hh>
 # include <oln/core/apply.hh>
 # include <oln/core/fold.hh>
 # include <oln/core/traverse.hh>

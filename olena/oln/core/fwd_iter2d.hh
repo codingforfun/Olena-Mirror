@@ -28,53 +28,67 @@
 #ifndef OLENA_CORE_FWD_ITER2D_HH
 # define OLENA_CORE_FWD_ITER2D_HH
 
-# include <oln/core/internal/iter2d.hh>
+# include <oln/core/abstract/iter2d.hh>
 
 
 namespace oln {
 
   template<class Exact = mlc::final>
-  class fwd_iter2d : public internal::_iter2d<typename mlc::exact_vt<fwd_iter2d<Exact>, Exact>::ret>,
-                     public fwd_iter<typename mlc::exact_vt<fwd_iter2d<Exact>, Exact>::ret>
+  class fwd_iter2d; // fwd_decl
+
+  template<class Exact>
+  struct iter_traits<fwd_iter2d<Exact> >: public
+  iter_traits<abstract::iter2d<typename
+  mlc::exact_vt<fwd_iter2d<Exact>, Exact>::ret> >
+  {
+    typedef point2d point_type;
+    typedef dpoint2d dpoint_type;
+  };
+
+  template<class Exact>
+  class fwd_iter2d : public abstract::iter2d<typename mlc::exact_vt<fwd_iter2d<Exact>, Exact>::ret>
   {
   public:
 
-    typedef internal::_iter2d<typename mlc::exact_vt<fwd_iter2d<Exact>, Exact>::ret> super;
-    typedef fwd_iter<typename mlc::exact_vt<fwd_iter2d<Exact>, Exact>::ret> super2;
+    typedef typename mlc::exact_vt<fwd_iter2d<Exact>, Exact>::ret exact_type;
 
-    enum { dim = 2 };
-    typedef point2d point;
+    typedef abstract::iter2d<exact_type> super_type;
+    typedef abstract::iter<exact_type> super_iter_type;
+
+    enum { dim = iter_traits<exact_type>::dim };
+    typedef typename iter_traits<exact_type>::point_type point_type;
+    
 
     template<class Image>
     fwd_iter2d(const Image& ima) :
-      super(ima.size()), super2()
+      super_type(ima.size())
     {
     }
 
-    template<class U> U operator=(U u) { return super::operator=(u); }
+    template<class U> U operator=(U u) { return super_iter_type::operator=(u); }
 
-    void _goto_begin()
+    void goto_begin_()
     {
-      _p.row() = _p.col() = 0;
+      p_.row() = p_.col() = 0;
     }
 
     void _goto_end()
     {
-      _p.row() = _nrows;
+      p_.row() = nrows_;
     }
 
-    bool _is_at_end() const
+    bool is_at_end_() const
     {
-      return _p.row() == _nrows;
+      return p_.row() == nrows_;
     }
 
-    void _goto_next()
+    void goto_next_()
     {
-      ++_p.col();
-      if (_p.col() < _ncols)
+      ++p_.col();
+      if (p_.col() < ncols_)
 	return;
-      _p.col() = 0;
-      ++_p.row();
+      p_.col() = 0;
+      ++p_.row();
     }
 
     static std::string name() { return "fwd_iter2d<" + Exact::name() + ">"; }

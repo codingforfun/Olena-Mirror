@@ -28,48 +28,61 @@
 #ifndef OLENA_CORE_FWD_ITER1D_HH
 # define OLENA_CORE_FWD_ITER1D_HH
 
-# include <oln/core/internal/iter1d.hh>
+# include <oln/core/abstract/iter1d.hh>
 
 namespace oln {
 
   template<class Exact = mlc::final>
-  class fwd_iter1d : public internal::_iter1d<typename mlc::exact_vt<fwd_iter1d<Exact>, Exact>::ret>, 
-                     public fwd_iter<typename mlc::exact_vt<fwd_iter1d<Exact>, Exact>::ret>
+  class fwd_iter1d; // fwd_decl
+
+  template<class Exact>
+  struct iter_traits<fwd_iter1d<Exact> >: public
+  iter_traits<abstract::iter1d<typename
+  mlc::exact_vt<fwd_iter1d<Exact>, Exact>::ret> >
+  {
+    typedef point1d point_type;
+    typedef dpoint1d dpoint_type;
+  };
+
+  template<class Exact>
+  class fwd_iter1d : public abstract::iter1d<typename mlc::exact_vt<fwd_iter1d<Exact>, Exact>::ret>
   {
   public:
 
-    typedef internal::_iter1d< typename mlc::exact_vt<fwd_iter1d<Exact>, Exact>::ret> super;
-    typedef fwd_iter<typename mlc::exact_vt<fwd_iter1d<Exact>, Exact>::ret> super2;
+    typedef typename mlc::exact_vt<fwd_iter1d<Exact>, Exact>::ret exact_type;
 
-    enum { dim = 1 };
-    typedef point1d point;
+    typedef abstract::iter1d<exact_type> super_type;
+    typedef abstract::iter<exact_type> super_iter_type;
+
+    enum { dim = iter_traits<exact_type>::dim };
+    typedef typename iter_traits<exact_type>::point_type point_type;
 
     template<class Image>
-    fwd_iter1d(const Image& ima) :
-      super(ima.size()), super2()
+    fwd_iter1d(const Image& ima) : 
+      super_type(ima.size())
     {
     }
 
-    template<class U> U operator=(U u) { return super::operator=(u); }
+    template<class U> U operator=(U u) { return super_iter_type::operator=(u); }
 
-    void _goto_begin()
+    void goto_begin_()
     {
-      _p.col() = 0;
+      p_.col() = 0;
     }
 
-    void _goto_end()
+    void goto_end_()
     {
-      _p.col() = _ncols;
+      p_.col() = ncols_;
     }
 
-    bool _is_at_end() const
+    bool is_at_end_() const
     {
-      return _p.col() == _ncols;
+      return p_.col() == ncols_;
     }
 
-    void _goto_next()
+    void goto_next_()
     {
-      ++_p.col();
+      ++p_.col();
     }
 
     static std::string name() { return "fwd_iter1d<" + Exact::name() + ">"; }

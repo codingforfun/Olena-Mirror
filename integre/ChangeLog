@@ -1,3 +1,22 @@
+2003-07-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/types/runtests, tests/utils/runtests: Don't test temporary
+	files.
+
+2003-07-26  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/core/internal/global_ops_defs.hh, ntg/real/int_s.hh,
+	ntg/real/int_u.hh, ntg/real/typetraits_builtin_int.hh: Fix
+	problems with 'char'.
+	* tests/types/tests/int_u7: New test.
+
+	* ntg/core/macros.hh: Add ntg_comp_type and ntg_nb_comp.
+	* ntg/vect/vect_value.hh: Implement operator[].
+	* ntg/vect/vec.hh, ntg/vect/cplx.hh: Adjust.
+	* ntg/color/color.hh: Inherit from vect_value.
+	
+	* ntg/real/range.hh: Fix cast operator.
+
 2003-07-24  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/enum/bin.hh, ntg/enum/builtin_bool.hh: Set abstract_type to

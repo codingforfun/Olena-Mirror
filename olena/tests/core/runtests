@@ -25,6 +25,8 @@ if test $# = 0; then
 fi
 
 for test; do
+  if test -d $test; then continue; fi
+  echo $test | grep '~$' && continue;
   # We want only the basename of $test.
   test=`basename "$test"`
   fail=0

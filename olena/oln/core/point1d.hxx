@@ -45,12 +45,6 @@ namespace oln {
     nth(0) = col;
   }
 
-  inline const point1d&
-  point1d::point_ref() const
-  {
-    return *this;
-  }
-
   inline coord
   point1d::col() const
   {
@@ -64,28 +58,28 @@ namespace oln {
   }
 
   inline point1d&
-  point1d::operator+=(const dpoint1d& dp)
+  point1d::plus_assign_dp(const dpoint1d& dp)
   {
     col() += dp.col();
     return *this;
   }
 
   inline point1d&
-  point1d::operator-=(const dpoint1d& dp)
+  point1d::minus_assign_dp(const dpoint1d& dp)
   {
     col() -= dp.col();
     return *this;
   }
 
   inline dpoint1d
-  point1d::operator-(const point1d& p) const
+  point1d::minus_p(const point1d& p) const
   {
     dpoint1d dp(col() - p.col());
     return dp;
   }
 
   inline point1d
-  point1d::operator+(const dpoint1d& dp) const
+  point1d::plus_dp(const dpoint1d& dp) const
   {
     point1d p = *this;
     p += dp;
@@ -93,7 +87,7 @@ namespace oln {
   }
 
   inline point1d
-  point1d::operator-(const dpoint1d& dp) const
+  point1d::minus_dp(const dpoint1d& dp) const
   {
     point1d p = *this;
     p -= dp;
@@ -101,7 +95,7 @@ namespace oln {
   }
 
   inline point1d
-  point1d::operator-() const
+  point1d::minus() const
   {
     point1d p(-col());
     return p;

@@ -198,23 +198,19 @@ namespace ntg {
 
   namespace internal {
 
-    /*-----------------.
-    | typetraits<cplx> |
-    `-----------------*/
+    /*----------------------.
+    | typetraits<cplx<R, T> |
+    `----------------------*/
+
+    // FIXME: why cplx<polar> does not inherit from vec<2, ...> ?
 
     template <cplx_representation R, class T>
-    struct typetraits<cplx<R, T> >
+    struct typetraits<cplx<R, T> > : 
+      public typetraits<vec<2, T, cplx<R, T> > >
     {
       typedef cplx<R, T>	self;
-      typedef vectorial		abstract_type;
       typedef self		ntg_type;
       typedef optraits<self>	optraits_type;
-
-      ntg_build_value_type(vect_value<E>);
-
-      typedef typename typetraits<T>::base_type  base_type[2];
-      typedef T					 storage_type[2];
-      typedef typename typetraits<T>::cumul_type cumul_type[2];
     };
 
   } // end of internal.
@@ -454,7 +450,7 @@ namespace ntg {
     `-------------------------*/
   
     template <class T>
-    class optraits<cplx<rect, T> >: public optraits<vec<2, T> >
+    class optraits<cplx<rect, T> > : public optraits<vec<2, T> >
     {
       typedef cplx<rect, T> self;
       typedef typename typetraits<self>::storage_type storage_type_;
@@ -527,7 +523,7 @@ namespace ntg {
     `--------------------------*/
 
     template <class T>
-    class optraits<cplx<polar, T> >: public optraits_top<cplx<polar, T> >
+    class optraits<cplx<polar, T> >
     {
       typedef cplx<polar, T> self;
       typedef ntgi_storage_type(self) storage_type_;

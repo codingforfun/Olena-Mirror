@@ -58,6 +58,7 @@ namespace oln {
     {
     public:
 
+      typedef typename type_switch<T, Exact>::ret super_type;
       typedef image_with_type<T, Exact> self_type;
       typedef Exact exact_type;
 
@@ -75,7 +76,8 @@ namespace oln {
       }
 
     protected:
-      image_with_type() {}
+      image_with_type() : super_type() {}
+
     };
 
   } // end of namespace abstract
