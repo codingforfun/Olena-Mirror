@@ -1,5 +1,16 @@
 2005-03-20  Simon Odou  <simon@lrde.epita.fr>
 
+	* oln/convert/value_to_point.hh: New.
+	Conversion of value to point. This is temporary: waiting for a 
+	coherent `convert' in this prototype.
+	* tests/convert/tests/value_to_point: New.
+	* tests/convert: New.
+	* tests/convert/tests: New.
+	* tests/convert/Makefile.am: New.
+	* oln/convert: New.
+
+2005-03-20  Simon Odou  <simon@lrde.epita.fr>
+
 	* oln/morpho: New.
 	* oln/morpho/stat.hh: New. Add morphological min and max.
 	* oln/core/abstract/piter.hh: Add `for_all_remaining' macro.

@@ -1,0 +1,27 @@
+
+#include <iostream>
+
+#include <ntg/basics.hh>
+#include <ntg/color.hh>
+#include <oln/convert/value_to_point.hh>
+
+#include "check.hh"
+#include "data.hh"
+
+bool check()
+{
+  oln::point1d p = oln::convert::value_to_point(42u);
+  oln::point3d p2 = oln::convert::value_to_point(ntg::rgb_8(1,6,64));
+  std::cout << p.index() << std::endl;
+  std::cout << p2.row() << std::endl;
+  std::cout << p2.col() << std::endl;
+  std::cout << p2.slice() << std::endl;
+  std::cout << p2 << std::endl;
+fdas
+  if (p.index() != 42 ||
+      p2.row() != 6 ||
+      p2.col() != 64 ||
+      p2.slice() != 1)
+    return true;
+  return false;
+}
