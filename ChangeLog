@@ -1,3 +1,8 @@
+2002-11-30  Jean-Sébastien Mouret  <js@lrde.epita.fr>
+
+	* oln/config/system.hh: Use HUGE_VAL for OLN_FLOAT_INFINITY if
+	HUGE_VALF is not defined.
+
 2002-11-28  Reda Dehak  <reda@nemours.lrde.epita.fr>
 
 	* oln/core/neighborhood1d.hh: Remove the functions inter and uni,
