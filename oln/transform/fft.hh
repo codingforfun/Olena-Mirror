@@ -408,13 +408,13 @@ namespace oln {
 
       image2d<cplx<R, T> > transform_inv()
       {
-	return transform_inv<R, T>();
+	return transform_inv<T>();
       }
 
     };
 
-} // end of namespace transform
-
+  } // end of namespace transform
+  
 } // end of namespace oln
 
 # endif // HAVE_FFTW

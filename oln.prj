@@ -1,79 +1,12 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 69)
-(Parent-Version oln 0_5 68)
-(Version-Log "2002-09-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* demo/Makefile.am: Remove -DNDEBUG by default.
-	* demo/morpholena.cc, demo/tour.cc, oln/arith/internal/opdecls.hh,
-	* demo/test-reconstruction.cc: Fix includes and namespaces.
-	* oln/Makefile.am: Remove old value headers, add new headers.
-	* oln/core/type.hh: Add helper for static_hierarchy : select_self.
-	* oln/io/pnm_read3d.hxx, oln/io/pnm_read_common.hxx, 
-	oln/io/pnm_read.hxx, oln/io/pnm_write3d.hxx, 
-	oln/io/pnm_write_common.hxx, oln/io/pnm_write.hxx: Enable colors.
-	* oln/transform/fft.hh: Fix includes.
-	* oln/types/all.hh: Add colors headers, optraits_builtins.hh, 
-	typetraits_builtins.hh, cast.hh.
-	* oln/types/behaviour.hh: Fix times check problem.
-	* oln/types/bin.hh: Add const to cast operator.
-	* oln/types/cplx.hh: Fix includes, adapt to vec's new prototype.
-	* oln/types/global_ops.hh: Add min and max operators.
-	* oln/types/global_ops_defs.hh: Replace completely generic operators
-	by more adapted ones to prevent C++ namespace resolution problem.
-	* oln/types/global_ops_traits.hh: Add min and max traits.
-	* oln/types/optraits_bin.hh: Change zero,unit,min,max,inf and sup 
-	return types to allow histograms which needs (max() - min() + unit());
-	restrict operator_cmp_traits.
-	* oln/types/optraits_builtins_float.hh: Add min and max traits.
-	* oln/types/optraits_builtins_int.hh: Fix headers.
-	* oln/types/optraits_builtins_int_defs.hh: Add name().
-	* oln/types/optraits_int_u.hh: Add fwd_decl, change minus traits 
-	for (int_u - int_u), add min and max traits.
-	* oln/types/optraits_int_u.hh: Add fwd_decl, add min and max traits.
-	* oln/types/optraits_vec.hh: Adapt to vec's new prototype.
-	* oln/types/predecls.hh: Add colors, adapt to vec's new prototype.
-	* oln/types/typetraits.hh: Add default definition.
-	* oln/types/typetraits_builtins_bool.hh: Fix includes.
-	* oln/types/vec.hh: Change prototype to allow vec to be an intermediate
-	class in the static hierarchy.
-	* utilities/Makefile.am: Remove NDEBUG by default.
-	* oln/types/optraits_builtins.hh, oln/types/typetraits_builtins.hh: 
-	New files.
-	* oln/types/color.hh, oln/types/rgb.hh, oln/types/nrgb.hh, 
-	oln/types/hsi.hh, oln/types/hsl.hh, oln/types/hsv.hh, 
-	oln/types/xyz.hh, oln/types/yiq.hh, oln/types/yuv.hh: New files.
-	* oln/types/cast.hh: New file.
-	* oln/arith/logic.hh, oln/arith/ops.hh, oln/convert/bound.hh, 
-	oln/convert/colorconv.hh, oln/convert/conversion.hh, 
-	oln/convert/force.hh, oln/convert/nrgbhsi.hh, oln/convert/nrgbhsl.hh, 
-	oln/convert/nrgbhsv.hh, oln/convert/nrgbxyz.hh, oln/convert/nrgbyiq.hh,
-	oln/convert/nrgbyuv.hh, oln/convert/rgbnrgb.hh, oln/convert/rgbxyz.hh, 
-	oln/convol/convolution.hh, oln/convol/fast_gaussian_coefficient.hh, 
-	oln/convol/fast_gaussian.hh, oln/convol/fast_gaussian.hxx, 
-	oln/core/dpoint1d.hh, oln/core/image2d.hh, oln/core/imagend_size.hh, 
-	oln/core/point1d.hh, oln/core/point3d.hh, oln/level/cc.hh, 
-	oln/level/connected.hh, oln/level/extrema_killer.hh, 
-	oln/level/invert.hh, oln/level/threshold.hh, oln/math/macros.hh,
-	oln/morpho/extrema.hh, oln/morpho/geodesic_dilation.hh, 
-	oln/morpho/reconstruction.hh, oln/morpho/stat.hh, 
-	oln/morpho/watershed.hxx, oln/utils/stat.hh, tests/io/loadsave.hh, 
-	tests/morpho/edoc.cc, tests/morpho/extrkiller.cc, 
-	oln/convert/stretch.hh: Adapt to new types.
-	* oln/value/all.hh, oln/value/bin.hh, oln/value/built_in.hh, 
-	oln/value/cast.hh, oln/value/color.hh, oln/value/cplx.hh, 
-	oln/value/debug.hh, oln/value/float_p.hh, oln/value/hsi.hh, 
-	oln/value/hsl.hh, oln/value/hsv.hh, oln/value/int_s.hh, 
-	oln/value/int_u.hh, oln/value/nrgb.hh, oln/value/op_traits.hh, 
-	oln/value/ops.hh, oln/value/predefs.hh, oln/value/rec_float.hh, 
-	oln/value/rec_int.hh, oln/value/rec_oln/value.hh, oln/value/rgb.hh, 
-	oln/value/to_oln.hh, oln/value/vec.hh, oln/value/xyz.hh, 
-	oln/value/yiq.hh, oln/value/yuv.hh: Remove files.
-")
+(Project-Version oln 0_5 70)
+(Parent-Version oln 0_5 69)
+(Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Mon, 30 Sep 2002 19:51:13 +0200")
-(Checkin-Login burrus_n)
+(Checkin-Time "Tue, 01 Oct 2002 16:41:48 +0200")
+(Checkin-Login ender)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
 ;; diff-ignore Makefile\.in$
@@ -179,7 +112,7 @@
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.22 600))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.70 600))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.71 600))
   (configure.ac (oln/3_configure. 1.23 600))
   (configure (oln/e/7_configure 1.29 700))
   (README (oln/1_README 1.4 600))
@@ -339,11 +272,11 @@
   (oln/io/pnm3d.hh (oln/b/14_pnm3d.hh 1.2 600))
   (oln/io/pnm.hh (oln/b/19_pnm.hh 1.2 600))
   (oln/io/pnm_read3d.hxx (oln/b/11_pnm_read3d 1.6 600))
-  (oln/io/pnm_read_common.hxx (oln/b/10_pnm_read_c 1.5 600))
-  (oln/io/pnm_read.hxx (oln/b/16_pnm_read.h 1.6 600))
+  (oln/io/pnm_read_common.hxx (oln/b/10_pnm_read_c 1.6 600))
+  (oln/io/pnm_read.hxx (oln/b/16_pnm_read.h 1.7 600))
   (oln/io/pnm_write3d.hxx (oln/b/9_pnm_write3 1.1.1.4 600))
-  (oln/io/pnm_write_common.hxx (oln/b/8_pnm_write_ 1.6 600))
-  (oln/io/pnm_write.hxx (oln/b/15_pnm_write. 1.5 600))
+  (oln/io/pnm_write_common.hxx (oln/b/8_pnm_write_ 1.7 600))
+  (oln/io/pnm_write.hxx (oln/b/15_pnm_write. 1.6 600))
   (oln/io/readable.hh (oln/b/13_readable.h 1.3 600))
   (oln/level/cc.hh (oln/e/20_cc.hh 1.5 600))
   (oln/level/compare.hh (oln/31_compare.hh 1.2 600))
@@ -519,7 +452,7 @@
   (oln/types/cycle.hh (oln/g/28_cycle.hh 1.7 640))
   (oln/types/builtins_properties.hh (oln/g/29_builtins_p 1.3 640))
   (oln/types/bin.hh (oln/g/30_bin.hh 1.6 640))
-  (oln/types/behaviour.hh (oln/g/31_behaviour. 1.7 640))
+  (oln/types/behaviour.hh (oln/g/31_behaviour. 1.8 640))
   (oln/types/all.hh (oln/g/32_all.hh 1.6 640))
 
 
@@ -686,7 +619,7 @@
 ;; Files added by populate at Tue, 24 Sep 2002 13:53:09 +0200,
 ;; to version 0_5.60(w), by ender:
 
-  (oln/transform/fft.hh (oln/i/11_fft.hh 1.6 640))
+  (oln/transform/fft.hh (oln/i/11_fft.hh 1.7 640))
 
 ;; Files added by populate at Tue, 24 Sep 2002 13:54:11 +0200,
 ;; to version 0_5.60(w), by ender:

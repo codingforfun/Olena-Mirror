@@ -190,7 +190,7 @@ namespace oln
 	    if (TO_OLN_CAST(T, ret) > lhs)
 	      ret = optraits<T>::min();
 	  }
-	else if (TO_OLN_CAST(T, ret) <= lhs)
+	else if (rhs != 0 && TO_OLN_CAST(T, ret) <= lhs)
 	  ret = optraits<T>::max();
 	return ret;
       }

@@ -37,7 +37,7 @@ namespace oln {
 
       using oln::internal::image2d_data;
 
-      template<class U, typename T>
+      template <class U, typename T>
       bool pnm_write_header(std::ostream& s, const image2d<T>& im, char type)
       {
 	s.put('P'); s.put(type); s.put('\n');
@@ -71,8 +71,8 @@ namespace oln {
 	}
       };
 
-      template<unsigned N>
-      struct writer<WritePnmPlain, image2d< int_u<N> > >
+      template <unsigned N, class behaviour>
+      struct writer<WritePnmPlain, image2d< int_u<N, behaviour> > >
       {
 	static const std::string& name()
 	{ static const std::string _name("pnm/P2"); return _name;	}
@@ -80,9 +80,10 @@ namespace oln {
 	static bool knows_ext(const std::string& ext)
 	{ return ext == "ppgm"; }
 
-	static bool write(std::ostream& out, const image2d< int_u<N> >& im)
+	static bool write(std::ostream& out, const image2d< int_u<N,
+			  behaviour> >& im)
 	{
-	  if (!pnm_write_header<int_u<N> >(out, im, '2'))
+	  if (!pnm_write_header<int_u<N, behaviour> >(out, im, '2'))
 	    return false;
 	  if (im.border())
 	    for (coord j = 0; j < im.nrows(); ++j)
@@ -93,7 +94,7 @@ namespace oln {
 	}
       };
 
-      template<template <unsigned> class color_system>
+      template <template <unsigned> class color_system>
       struct writer<WritePnmPlain, image2d< color<3, 8, color_system> > >
       {
 	static const std::string& name()
@@ -155,8 +156,8 @@ namespace oln {
 	}
       };
 
-      template<unsigned N>
-      struct writer<WritePnmRaw, image2d< int_u<N> > >
+      template <unsigned N, class behaviour>
+      struct writer<WritePnmRaw, image2d< int_u<N, behaviour> > >
       {
 	static const std::string& name()
 	{ static const std::string _name("pnm/P5"); return _name;	}
@@ -164,9 +165,10 @@ namespace oln {
 	static bool knows_ext(const std::string& ext)
 	{ return ext == "pgm"; }
 
-	static bool write(std::ostream& out, const image2d< int_u<N> >& im)
+	static bool write(std::ostream& out, const image2d< int_u<N,
+			  behaviour> >& im)
 	{
-	  if (!pnm_write_header<int_u<N> >(out, im, '5'))
+	  if (!pnm_write_header<int_u<N, behaviour> >(out, im, '5'))
 	    return false;
 	  if (im.border())
 	    for (coord j = 0; j < im.nrows(); ++j)
@@ -177,7 +179,7 @@ namespace oln {
 	}
       };
 
-      template<template <unsigned> class color_system>
+      template <template <unsigned> class color_system>
       struct writer<WritePnmRaw, image2d< color<3, 8, color_system> > >
       {
 	static const std::string& name()

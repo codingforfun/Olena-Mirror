@@ -37,7 +37,7 @@ namespace oln {
   namespace io {
     namespace internal {
 
-      template< typename T >
+      template <typename T>
       bool pnm_read_header(std::istream& s, image2d<T>& im, char type)
       {
 	// check magic
@@ -92,8 +92,8 @@ namespace oln {
 	}
       };
 
-      template<>
-      struct reader<ReadPnmPlain, image2d<int_u8> >
+      template <class behaviour>
+      struct reader<ReadPnmPlain, image2d<int_u<8, behaviour> > >
       {
 	static const std::string& name()
 	{ static const std::string _name("pnm/P2"); return _name; }
@@ -101,7 +101,7 @@ namespace oln {
 	static bool knows_ext(const std::string& ext)
 	{ return ext == "ppgm"; }
 
-	static bool read(std::istream& in, image2d<int_u8>& im)
+	static bool read(std::istream& in, image2d<int_u<8, behaviour> >& im)
 	{
 	  if (!pnm_read_header(in, im, '2'))
 	    return false;
@@ -114,7 +114,7 @@ namespace oln {
 	}
       };
 
-      template<template <unsigned> class color_system>
+      template <template <unsigned> class color_system>
       struct reader<ReadPnmPlain, image2d< color<3, 8, color_system> > >
       {
 	static const std::string& name()
@@ -169,8 +169,8 @@ namespace oln {
 	}
       };
 
-      template<>
-      struct reader<ReadPnmRaw, image2d<int_u8> >
+      template <class behaviour>
+      struct reader<ReadPnmRaw, image2d<int_u<8, behaviour> > >
       {
 	static const std::string& name()
 	{ static const std::string _name("pnm/P5"); return _name;	}
@@ -178,7 +178,7 @@ namespace oln {
 	static bool knows_ext(const std::string& ext)
 	{ return ext == "pgm"; }
 
-	static bool read(std::istream& in, image2d<int_u8>& im)
+	static bool read(std::istream& in, image2d<int_u<8, behaviour> >& im)
 	{
 	  if (!pnm_read_header(in, im, '5'))
 	    return false;
@@ -191,7 +191,7 @@ namespace oln {
 	}
       };
 
-      template<template <unsigned> class color_system>
+      template <template <unsigned> class color_system>
       struct reader<ReadPnmRaw, image2d< color<3, 8, color_system> > >
       {
 	static const std::string& name()

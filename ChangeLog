@@ -1,3 +1,14 @@
+2002-10-01  Emmanuel Turquin  <turqui_e@epita.fr>
+
+	* oln/io/pnm_read_common.hxx: Change int_u<N> to int_u<N, behaviour>.
+	* oln/io/pnm_read.hxx: Likewise.
+	* oln/io/pnm_write_common.hxx: Likewise.
+	* oln/io/pnm_write.hxx: Likewise.
+	* oln/types/behaviour.hh: Fix a problem with the saturate behaviour
+	which caused 0 - 0 to be evaluated to optraits<T>::max().
+	* oln/transform/fft.hh: Fix a template problem in call to
+	transform_inv.
+
 2002-09-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* demo/Makefile.am: Remove -DNDEBUG by default.

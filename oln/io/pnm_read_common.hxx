@@ -57,8 +57,9 @@ namespace oln {
 	  }
       }
 
+      template< class behaviour >
       inline void
-      readmany_plain(std::istream& in, int_u8* elt, coord n)
+      readmany_plain(std::istream& in, int_u<8, behaviour>* elt, coord n)
       {
 	for (; n; --n)
 	  {
@@ -68,9 +69,9 @@ namespace oln {
 	  }
       }
 
-      template< unsigned N >
+      template< unsigned N, class behaviour >
       inline void
-      readmany_raw(std::istream& in, int_u<N>* elt, coord n)
+      readmany_raw(std::istream& in, int_u<N, behaviour>* elt, coord n)
       {
 	in.read((char*)elt, n * sizeof(*elt));
       }
