@@ -1,3 +1,14 @@
+2005-01-26  Simon Odou  <simon@lrde.epita.fr>
+
+	* mlc/tracked_ptr.hh: Add copyright.
+	* mlc/types.hh: Likewise.
+	* mlc/traits.hh: Likewise.
+	* mlc/any.hh: Likewise.
+	* mlc/box.hh: Likewise.
+	* mlc/bool.hh: Likewise.
+	* mlc/contract.hh: Likewise.
+	* mlc/cmp.hh: Likewise.
+
 2005-01-21  Simon Odou  <simon@lrde.epita.fr>
 
 	* mlc/traits.hh: Add `mlc_encoding_type_' macro.
