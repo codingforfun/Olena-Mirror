@@ -76,12 +76,12 @@ namespace oln {
     {
     public:
 
-      const image2d<cplx<rect, dfloat> > transformed_image() const
+      const image2d<cplx<R, dfloat> > transformed_image() const
       {
 	return trans_im;
       }
 
-      image2d<cplx<rect, dfloat> >& transformed_image()
+      image2d<cplx<R, dfloat> >& transformed_image()
       {
 	return trans_im;
       }
@@ -353,7 +353,7 @@ namespace oln {
 	trans_im = image2d<cplx<rect, dfloat> >(original_im.nrows(), original_im.ncols());
       }
 
-      image2d<cplx<rect, dfloat> > transform()
+      image2d<cplx<R, dfloat> > transform()
       {
 	fftwnd_one(p, in, out);
 
@@ -371,7 +371,7 @@ namespace oln {
       }
 
       template <class T1>
-      image2d<cplx<rect, T1> > transform_inv()
+      image2d<cplx<R, T1> > transform_inv()
       {
 	for (int row = 0; row < trans_im.nrows(); ++row)
 	  for (int col = 0; col < trans_im.ncols(); ++col)
@@ -381,7 +381,7 @@ namespace oln {
 	    }
 	fftwnd_one(p_inv, out, in);
 
-	image2d<cplx<rect, T1> > new_im(trans_im.nrows(), trans_im.ncols());
+	image2d<cplx<R, T1> > new_im(trans_im.nrows(), trans_im.ncols());
 	int i = 0;
 	for (int row = 0; row < trans_im.nrows(); ++row)
 	  for (int col = 0; col < trans_im.ncols(); ++col)
@@ -392,9 +392,9 @@ namespace oln {
 	return new_im;
       }
 
-      image2d<cplx<rect, T> > transform_inv()
+      image2d<cplx<R, T> > transform_inv()
       {
-	return transform_inv<rect, T>();
+	return transform_inv<R, T>();
       }
 
     };

@@ -1,11 +1,11 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 65)
-(Parent-Version oln 0_5 64)
+(Project-Version oln 0_5 66)
+(Parent-Version oln 0_5 65)
 (Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Fri, 27 Sep 2002 02:56:06 +0200")
+(Checkin-Time "Fri, 27 Sep 2002 05:19:29 +0200")
 (Checkin-Login ender)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -112,7 +112,7 @@
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.21 640))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.66 600))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.67 600))
   (configure.ac (oln/3_configure. 1.23 600))
   (configure (oln/e/7_configure 1.28 700))
   (README (oln/1_README 1.4 600))
@@ -245,7 +245,7 @@
   (oln/core/point3d.hh (oln/c/28_point3d.hh 1.2 600))
   (oln/core/point3d.hxx (oln/c/27_point3d.hx 1.2 600))
   (oln/core/point.hh (oln/c/33_point.hh 1.2 600))
-  (oln/core/pointnd.hh (oln/c/10_pointnd.hh 1.4 600))
+  (oln/core/pointnd.hh (oln/c/10_pointnd.hh 1.5 600))
   (oln/core/old/pred.hh (oln/c/26_pred.hh 1.5 600))
   (oln/core/pred_image.hh (oln/c/24_pred_image 1.2 600))
   (oln/core/regular_image.hh (oln/c/23_regular_im 1.3 600))
@@ -645,12 +645,12 @@
 ;; Files added by populate at Tue, 24 Sep 2002 13:53:09 +0200,
 ;; to version 0_5.60(w), by ender:
 
-  (oln/transform/fft.hh (oln/i/11_fft.hh 1.3 644))
+  (oln/transform/fft.hh (oln/i/11_fft.hh 1.4 644))
 
 ;; Files added by populate at Tue, 24 Sep 2002 13:54:11 +0200,
 ;; to version 0_5.60(w), by ender:
 
-  (tests/transform/fft.cc (oln/i/12_fft.cc 1.3 644))
+  (tests/transform/fft.cc (oln/i/12_fft.cc 1.4 644))
   (tests/transform/Makefile.in (oln/i/13_Makefile.i 1.2 644))
   (tests/transform/Makefile.am (oln/i/14_Makefile.a 1.2 600))
 

@@ -32,6 +32,7 @@
 # include <oln/core/coord.hh>
 # include <oln/core/point.hh>
 # include <iostream>
+# include <sstream>
 
 namespace oln {
 

@@ -2,6 +2,7 @@
 
 	* oln/transform/fft.hh: Add a 'transform' namespace, add
 	few methods (notably transformed_image_magn()).
+	* oln/core/pointnd.hh: Add #include <sstream>.
 	* oln/io/pnm_read_common.hxx: Adapt to new types.
 	* oln/io/pnm_write_common.hxx: Adapt to new types.
 	* oln/level/extrema_killer.hh: Adapt to new types.

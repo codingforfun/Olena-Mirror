@@ -25,8 +25,8 @@ check()
   bool fail = false;
 
   image2d<int_u8> im1(data("lena.pgm"));
-  
-  transform::fft<int_u8> fourier(im1);
+
+  oln::transform::fft<int_u8> fourier(im1);
 
   image2d<cplx<polar, dfloat> > im2 = fourier.transform();
 
