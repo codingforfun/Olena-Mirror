@@ -69,7 +69,7 @@ namespace oln {
     **   typedef oln::image2d<ntg::int_u8>	im_type;
     **
     **   im_type	im1(oln::load(IMG_IN "lena128.pgm"));
-    **   im_type	im2(oln::morpho::opening(im1, oln::win_c4p()));
+    **   im_type	im2 = oln::morpho::opening(im1, oln::win_c4p());
     **
     **   save(oln::morpho::geodesic_dilation(im2, im1, oln::neighb_c4()),
     **                                       IMG_OUT "oln_morpho_geodesic_dilation.pbm");
@@ -130,7 +130,7 @@ namespace oln {
       **   typedef oln::image2d<ntg::int_u8>	im_type;
       **
       **   im_type	im1(oln::load(IMG_IN "lena128.pgm"));
-      **   im_type	im2(oln::morpho::opening(im1, oln::win_c4p()));
+      **   im_type	im2 = oln::morpho::opening(im1, oln::win_c4p());
       **
       **   save(oln::morpho::sure::geodesic_dilation(im2, im1, oln::neighb_c4()),
       **                                       IMG_OUT "oln_morpho_sure_geodesic_dilation.pbm");

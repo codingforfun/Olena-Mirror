@@ -28,6 +28,9 @@
 #ifndef OLENA_SNAKES_ENERGIES_HH
 # define OLENA_SNAKES_ENERGIES_HH
 
+# include "node.hh"
+# include <ntg/float.hh>
+
 namespace oln {
 
   namespace snakes {

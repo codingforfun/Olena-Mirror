@@ -7,12 +7,21 @@ include $(top_srcdir)/integre/ntg/makefile.src
 
 EXTRA_DIST = out/exdoc.config.in
 olnsrc = $(top_srcdir)/olena/oln
-DOXYGEN = doxygen
 EXDOC = $(srcdir)/exdoc.pl
 OUT_DIR = "out"
 IMG_CONV = $(srcdir)/img_conv.pl
-CLEANFILES = html.tar.gz \
-	oln-ref.pdf
+CLEANFILES = 	html.tar.gz \
+		oln-ref.pdf \
+		out/out* out/makefile out/all.mk
+
+clean-local:
+	rm -rf img html latex
+
+DISTCLEANFILES = out/exdoc.config
+
+MAINTAINERCLEANFILES = $(dist_noinst_DATA) \
+	./html/* ./img/*
+
 HDRS_DEP = $(NTG_DEP)
 HDRS_DEP += $(MLC_DEP)
 HDRS_DEP += $(OLN_DEP)
@@ -34,20 +43,10 @@ html.tar.gz: $(HDRS_DEP)
 	$(TAR) -czf $@ html
 
 oln-ref.pdf: html.tar.gz
-	make -C ./latex || echo "Discarding problems..." # FIXME: Find a better way to use large graph with pdflatex.
+	$(MAKE) -C ./latex || echo "Discarding problems..." # FIXME: Find a better way to use large graph with pdflatex.
 	cp latex/refman.pdf ./$@
 
 dist_noinst_DATA = oln-ref.pdf html.tar.gz $(srcdir)/exdoc.pl $(srcdir)/img_conv.pl
-
-clean-local:
-	rm -rf img out/out* html latex out/makefile out/all.mk
-
-distclean-local:
-	rm -f out/exdoc.config
-
-
-MAINTAINERCLEANFILES = $(dist_noinst_DATA) \
-	./html/* ./img/*
 
 # ###
 # ### What gets installed.

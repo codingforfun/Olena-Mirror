@@ -1,4 +1,4 @@
-// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -38,15 +38,15 @@
 
 # define TYPETRAITS_BUILTIN_INT(Name, Value)					\
   template<>									\
-  struct typetraits<Name> : public typetraits<Value<Name> >			\
+  struct typetraits<Name> : public typetraits<Value<Name > >			\
   {										\
     typedef Name self;								\
-    typedef builtin::to_ntg<Name>::ret ntg_type;				\
-    typedef builtin::abstract_trait<Name>::ret abstract_type;			\
+    typedef builtin::to_ntg<Name >::ret ntg_type;				\
+    typedef builtin::abstract_trait<Name >::ret abstract_type;			\
     template <class E>								\
     struct build_value_type							\
     {										\
-      typedef typename builtin::value_type<Name, E>::ret ret;			\
+      typedef typename builtin::value_type<Name, E >::ret ret;			\
     };										\
 										\
     typedef optraits<self> optraits;						\
@@ -55,14 +55,14 @@
 										\
     typedef self				       base_type;		\
     typedef self				       storage_type;		\
-    typedef builtin::signed_trait<Name>::ret	       signed_type;		\
-    typedef builtin::unsigned_trait<Name>::ret	       unsigned_type;		\
-    typedef builtin::cumul_trait<Name>::ret	       cumul_type;		\
-    typedef builtin::largest_trait<Name>::ret	       largest_type;		\
-    typedef builtin::signed_largest_trait<Name>::ret   signed_largest_type;	\
-    typedef builtin::signed_cumul_trait<Name>::ret     signed_cumul_type;	\
-    typedef builtin::unsigned_largest_trait<Name>::ret unsigned_largest_type;	\
-    typedef builtin::unsigned_cumul_trait<Name>::ret   unsigned_cumul_type;	\
+    typedef builtin::signed_trait<Name >::ret	       signed_type;		\
+    typedef builtin::unsigned_trait<Name >::ret	       unsigned_type;		\
+    typedef builtin::cumul_trait<Name >::ret	       cumul_type;		\
+    typedef builtin::largest_trait<Name >::ret	       largest_type;		\
+    typedef builtin::signed_largest_trait<Name >::ret   signed_largest_type;	\
+    typedef builtin::signed_cumul_trait<Name >::ret     signed_cumul_type;	\
+    typedef builtin::unsigned_largest_trait<Name >::ret unsigned_largest_type;	\
+    typedef builtin::unsigned_cumul_trait<Name >::ret   unsigned_cumul_type;	\
     typedef self				       integer_type;		\
   };
 
@@ -112,7 +112,7 @@ namespace ntg {
     template <class T>
     struct signed_largest_trait { typedef signed int ret; };
     template <> struct signed_largest_trait<unsigned long>  { typedef signed long ret; };
-    
+
     template <class T>
     struct signed_cumul_trait { typedef signed int ret; };
     template <> struct signed_cumul_trait<unsigned long>  { typedef signed long ret; };
@@ -123,7 +123,7 @@ namespace ntg {
     template <class T>
     struct unsigned_largest_trait { typedef unsigned int ret; };
     template <> struct unsigned_largest_trait<  signed long>  { typedef unsigned long ret; };
-        
+
     template <class T>
     struct unsigned_cumul_trait { typedef unsigned int ret; };
     template <> struct unsigned_cumul_trait<signed long>    { typedef unsigned long ret; };
@@ -155,10 +155,10 @@ namespace ntg {
 
     TYPETRAITS_BUILTIN_INT(unsigned long, uint_value)
     TYPETRAITS_BUILTIN_INT(signed long, sint_value)
-    
+
     TYPETRAITS_BUILTIN_INT(unsigned int, uint_value)
     TYPETRAITS_BUILTIN_INT(signed int, sint_value)
-    
+
     TYPETRAITS_BUILTIN_INT(unsigned short, uint_value)
     TYPETRAITS_BUILTIN_INT(signed short, sint_value)
 

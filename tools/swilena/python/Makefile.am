@@ -9,5 +9,3 @@ python_PYTHON = swilena_display.py swilena_all1d.py swilena_all2d.py swilena_all
 
 include makefile.swig
 
-clean-local:
-	rm -f *.pyc *.cxx

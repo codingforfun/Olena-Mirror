@@ -19,7 +19,7 @@ files on your system, run:
 
 from the build directory.
 
-If not overriden with @option{--prefix}
+If not overridden with @option{--prefix}
 @ifplaintext
 (see the BUILD file)
 @end ifplaintext

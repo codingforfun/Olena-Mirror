@@ -28,11 +28,11 @@
 #ifndef OLENA_TOPO_TARJAN_TARJAN_HH
 # define OLENA_TOPO_TARJAN_TARJAN_HH
 # include <oln/basics.hh>
-
+# include <vector>
 // Macros for extract information on tarjan algorithms.
-# define oln_tarjan_input_type(T) typename oln::topo::tarjan::tarjan_traits<T>::input_type
-# define oln_tarjan_output_type(T) typename oln::topo::tarjan::tarjan_traits<T>::output_type
-# define oln_tarjan_attr_type(T) typename oln::topo::tarjan::tarjan_traits<T>::attr_type
+# define oln_tarjan_input_type(T) typename oln::topo::tarjan::tarjan_traits<T >::input_type
+# define oln_tarjan_output_type(T) typename oln::topo::tarjan::tarjan_traits<T >::output_type
+# define oln_tarjan_attr_type(T) typename oln::topo::tarjan::tarjan_traits<T >::attr_type
 
 
 // # define oln_tarjan_input_type(T) typename oln::topo::tarjan::tarjan_traits<mlc_exact_type(T)>::input_type

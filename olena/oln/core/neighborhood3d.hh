@@ -260,6 +260,55 @@ namespace oln {
     return neighb;
   }
 
+
+  /*!
+  ** \brief Create an ellipsoid neighborhood (3 dimension).
+  ** \arg zradius radius Z.
+  ** \arg yradius radius Y.
+  ** \arg xradius radius X.
+  ** \pre zradius > 0
+  ** \pre yradius > 0
+  ** \pre xradius > 0
+  **
+  ** The ellipsoid formula is :
+  ** \f$$\frac{x^2}{xradius^2} + \frac{y^2}{yradius^2} + \frac{z^2}{zradius^2} = 1$\f$
+  */
+  inline neighborhood3d
+  mk_neighb_ellipsoid(float zradius, float yradius, float xradius)
+  {
+    precondition(zradius > 0);
+    precondition(yradius > 0);
+    precondition(xradius > 0);
+
+    neighborhood3d neighb;
+    coord zmax = (coord)roundf(zradius);
+    float zr2 = zradius * zradius;
+    float yr2 = yradius * yradius;
+    for (coord z = -zmax; z <= zmax; ++z)
+      {
+	/*
+	      x^2         y^2         z^2
+	   --------- + --------- + --------- = 1
+	   xradius^2   yradius^2   zradius^2
+	*/
+
+	/* Set x to 0 in the above formula to find ymax.  */
+	float v = 1 - z * z / zr2;
+	if (v < 0) v = 0;	// Can happen because zmax has been rounded.
+	coord ymax = (coord)roundf(yradius * sqrtf(v));
+	for (coord y = -ymax; y <= ymax; ++y)
+	  {
+	    float w = v - y * y / yr2;
+	    if (w < 0) w = 0;	// Can happen because ymax has been rounded.
+	    coord xmax = (coord)roundf(xradius * sqrtf(w));
+	    for (coord x = z > 0 ? 0 : 1; x <= xmax; ++x)
+	      neighb.add(z, y, x);
+	  }
+      }
+    return neighb;
+  }
+
+
   /*!
   ** \brief Create a cube neighborhood (3 dimension).
   ** \arg width Number of slice, colunm and row.
@@ -285,6 +334,16 @@ namespace oln {
     return win;
   }
 
+  /*!
+  ** \brief Create a ball neighborhood (3 dimension).
+  ** \arg radius The radius.
+  ** \return The new neighborhood (3d).
+  */
+  inline neighborhood3d
+  mk_neighb_ball(float radius)
+  {
+    return mk_neighb_ellipsoid(radius, radius, radius);
+  }
 } // end of oln
 
 #endif // OLENA_CORE_NEIGHBORHOOD3D_HH

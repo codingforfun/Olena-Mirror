@@ -4,9 +4,15 @@
 @chapter Upgrading from older versions
 
 @menu
+* Upgrading from 0.9 to 0.10::
 * Upgrading from 0.8 to 0.9::
 * Upgrading from 0.7 to 0.8::
 @end menu
+
+@node Upgrading from 0.9 to 0.10
+@section Upgrading from 0.9 to 0.10
+Nothing should be done since the this release only provide a new
+documentation system and many bug fixes.
 
 @node Upgrading from 0.8 to 0.9
 @section Upgrading from 0.8 to 0.9

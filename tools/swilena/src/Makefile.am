@@ -3,7 +3,6 @@
 ## Makefile.am for swilena/src
 ##
 
-distclean-local:
-	rm -f *.i makefile.swig
+DISTCLEANFILES = *.i makefile.swig
 
 include makefile.swig

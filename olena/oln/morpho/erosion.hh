@@ -88,7 +88,6 @@ namespace oln {
     {
       mlc::eq<I::dim, E::dim>::ensure();
       oln_concrete_type(I) output(input.size());
-      se.delta();
       input.border_adapt_copy(se.delta());
       oln_iter_type(I) p(input);
       for_all (p)

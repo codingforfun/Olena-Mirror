@@ -40,11 +40,11 @@ namespace oln {
     /* GCC's optimizer is smart enough to compute these values at compile
        time and really use them as constants.  That's great.  */
 # define oln_morpho_declare_soille_watershed_consts_(DestValue)				\
-    const DestValue mask    = ntg::cast::force<DestValue>(ntg_max_val(DestValue) - 2);	\
+    const DestValue mask    = ntg::cast::force<DestValue >(ntg_max_val(DestValue) - 2);	\
     const DestValue wshed   = ntg_max_val(DestValue);					\
-    const DestValue init    = ntg::cast::force<DestValue>(ntg_max_val(DestValue) - 1);	\
-    const DestValue inqueue = ntg::cast::force<DestValue>(ntg_max_val(DestValue) - 3);	\
-    const DestValue maxlevel = ntg::cast::force<DestValue>(inqueue - 1) /* no ; */
+    const DestValue init    = ntg::cast::force<DestValue >(ntg_max_val(DestValue) - 1);	\
+    const DestValue inqueue = ntg::cast::force<DestValue >(ntg_max_val(DestValue) - 3);	\
+    const DestValue maxlevel = ntg::cast::force<DestValue >(inqueue - 1) /* no ; */
 
     namespace internal {
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -50,7 +50,7 @@ namespace oln {
     {}
 
     template <class T>
-    coord 
+    coord
     chamfer<T>::delta() const
     {
       coord d = fwd.delta();
@@ -132,15 +132,15 @@ namespace oln {
     inline const chamfer<int>& Name##_##I##_##J()		\
      { 								\
        static const chamfer<int> tmp =                          \
-          mk_chamfer_##D##x##D< I, J>(E);   	                \
+          mk_chamfer_##D##x##D< I, J >(E);   	                \
        return tmp;						\
      }
 
-# define oln_topo_chamfer3_(Name, I, J, K, D, E)				\
-    inline const chamfer<int>& Name##_##I##_##J##_##K()	\
+# define oln_topo_chamfer3_(Name, I, J, K, D, E)		\
+    inline const chamfer<int>& Name##_##I##_##J##_##K()		\
     {								\
       static const chamfer<int> tmp =				\
-         mk_chamfer_##D##x##D< I, J, K>(E);			\
+         mk_chamfer_##D##x##D< I, J, K >(E);			\
       return tmp;						\
     }
 
@@ -210,7 +210,7 @@ namespace oln {
 
     template <class T, class T2>
     template <class V>
-    void 
+    void
     dmap<T, T2>::compute(const image2d<V>&	input,
 			 float			infty)
     {

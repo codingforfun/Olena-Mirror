@@ -1,15 +1,42 @@
 //                                                                  -*- c++ -*-
+// Copyright (C) 2004  EPITA Research and Development Laboratory
+//
+// This file is part of the Olena Library.  This library is free
+// software; you can redistribute it and/or modify it under the terms
+// of the GNU General Public License version 2 as published by the
+// Free Software Foundation.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this library; see the file COPYING.  If not, write to
+// the Free Software Foundation, 59 Temple Place - Suite 330, Boston,
+// MA 02111-1307, USA.
+//
+// As a special exception, you may use this file as part of a free
+// software library without restriction.  Specifically, if other files
+// instantiate templates or use macros or inline functions from this
+// file, or you compile this file and link it with other files to
+// produce an executable, this file does not by itself cause the
+// resulting executable to be covered by the GNU General Public
+// License.  This exception does not however invalidate any other
+// reasons why the executable file might be covered by the GNU General
+// Public License.
+
 #include "data.hh"
 #include <oln/utils/md5.hh>
 
-#include "check.hh" 
-#include <oln/basics2d.hh> 
-#include <oln/morpho/opening.hh> 
-#include <oln/morpho/reconstruction.hh> 
-#include <oln/level/compare.hh> 
-#include <ntg/all.hh> 
- 
-int main() 
+#include "check.hh"
+#include <oln/basics2d.hh>
+#include <oln/morpho/opening.hh>
+#include <oln/morpho/reconstruction.hh>
+#include <oln/level/compare.hh>
+#include <ntg/all.hh>
+
+int main()
 {
 oln::utils::key::value_type   data_key[16] = {0x7e, 0x56, 0x6, 0xbe, 0xa1, 0xcd, 0x80, 0xf1, 0x4c, 0x9d, 0x63, 0x10, 0x4e, 0x3e, 0x9, 0x96};
 
@@ -18,7 +45,7 @@ oln::utils::key		   key(data_key);
    typedef oln::image2d<ntg::
 int_u8>	im_type;
    im_type	im1(oln::load(rdata("lena128.pgm")));
-   im_type	im2(oln::morpho::opening(im1, oln::win_c4p()));
+   im_type	im2 = oln::morpho::opening(im1, oln::win_c4p());
    if (oln::utils::md5(oln::morpho::sequential::geodesic_reconstruction_dilation(im2,                                                                 im1,                                                                 oln::neighb_c4())) == key)
   std::cout << "OK" << std::endl;
 else

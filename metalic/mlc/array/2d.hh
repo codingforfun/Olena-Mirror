@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -296,7 +296,7 @@ namespace mlc
   // returning a starter.
 
 # define array2d_starter(T) \
-  static internal::array2d_start_<T>   T##s_2d   = internal::array2d_start_<T>()
+  static internal::array2d_start_<T >   T##s_2d   = internal::array2d_start_<T >()
 
   array2d_starter(int);		// ints_2d
   array2d_starter(float);	// floats_2d

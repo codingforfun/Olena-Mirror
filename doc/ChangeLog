@@ -1,3 +1,48 @@
+2004-05-12  Reda Dehak  <reda@lrde.epita.fr>
+
+	* doc/dev/thanks.texi: Rewording.
+	* doc/dev/abstract.texi: Change olena web page adresse.
+	* doc/dev/oln-dev.texi, doc/dev/build.texi,
+	  doc/dev/install.texi, doc/dev/faq.texi,
+	  doc/dev/srctree.texi, doc/dev/conf.texi: Spell checking.
+
+2004-04-28  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* doc/ref/Makefile.am: Move "out/out* out/makefile out/all.mk" from
+	clean-local to CLEANFILES. Replace distclean-local by DISTCLEANFILES.
+
+2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* doc/dev/build.texi: Replace '@item @strong[...]' by '@headitem'.
+
+2004-04-15  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* dev/faq.texi: Update the file.
+
+2004-04-15  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* dev/abstract.texi: Update the file.
+	* dev/biblio.texi: Update the file.
+
+2004-04-15  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* dev/build.texi: Update the file.
+	* dev/srctree.texi: Likewise.
+	* dev/upgrading.texi: Likewise.
+
+2004-04-15  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* dev/thanks.texi: Update thanks.
+
+2004-04-15  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* doc/ref/Makefile.am: Changed 'make' to '$(MAKE)'
+
+2004-04-13  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* ref/Makefile.am: Make the makefile use the doxygen defined by
+	configure.
+
 2004-04-13  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* ref/Makefile.am: Make the doc have good dependencies.

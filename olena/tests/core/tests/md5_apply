@@ -1,15 +1,42 @@
 //                                                                  -*- c++ -*-
+// Copyright (C) 2004  EPITA Research and Development Laboratory
+//
+// This file is part of the Olena Library.  This library is free
+// software; you can redistribute it and/or modify it under the terms
+// of the GNU General Public License version 2 as published by the
+// Free Software Foundation.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this library; see the file COPYING.  If not, write to
+// the Free Software Foundation, 59 Temple Place - Suite 330, Boston,
+// MA 02111-1307, USA.
+//
+// As a special exception, you may use this file as part of a free
+// software library without restriction.  Specifically, if other files
+// instantiate templates or use macros or inline functions from this
+// file, or you compile this file and link it with other files to
+// produce an executable, this file does not by itself cause the
+// resulting executable to be covered by the GNU General Public
+// License.  This exception does not however invalidate any other
+// reasons why the executable file might be covered by the GNU General
+// Public License.
+
 #include "data.hh"
 #include <oln/utils/md5.hh>
 
-#include "check.hh" 
-#include <oln/basics2d.hh> 
-#include <oln/level/threshold.hh> 
-#include <ntg/all.hh> 
+#include "check.hh"
+#include <oln/basics2d.hh>
+#include <oln/level/threshold.hh>
+#include <ntg/all.hh>
 using namespace ntg;
- 
- 
-int main() 
+
+
+int main()
 {
 oln::utils::key::value_type   data_key[16] = {0x98, 0xf0, 0x2f, 0x75, 0x92, 0x22, 0xbe, 0x3f, 0x36, 0x10, 0x44, 0x1e, 0x53, 0xf3, 0xb9, 0xce};
 
@@ -17,7 +44,7 @@ oln::utils::key		   key(data_key);
 
    oln::image2d<
 int_u8> in = oln::load(rdata("lena256.pgm"));
-   
+
 int_u8 th	= 127;
    rgb_8 low	= rgb_8(100, 0, 0);
    rgb_8 height	= rgb_8(0, 200, 255);

@@ -1,3 +1,112 @@
+2004-05-23  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* oln/morpho/attribute_union_find.hh: Change sort algorithm.
+	* oln/morpho/attributes.hh: Add volume attribute.
+	* oln/utils/qsort.hh: Add file.
+
+2004-05-15  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* olena/oln/morpho/attributes.hh (integral): Change the function.
+
+2004-05-14  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* olena/oln/morpho/attributes.hh (integral): Fix a bug in the
+	constructor.
+
+2004-05-12  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* olena/oln/core/neighborhood3d.hh: Add some common neighborhoods.
+	* olena/oln/convol/slow_gaussian.hh: Add file.
+	* olena/oln/convol/slow_gaussian.hxx: Add file.
+
+2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* olena/tests/sanity/Makefile.am: Replace maintainer-check by check.
+
+2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* olena/oln/convert/rgbhsl.hh: Include headers so as to pass
+	sanity check.
+	* olena/oln/snakes/energies.hh: Likewise.
+	* olena/oln/utils/buffer.hh: Likewise.
+	* olena/oln/topo/tarjan/tarjan.hh: Likewise.
+
+2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* tests/*/tests/* (168 files): Add copyright.
+
+2004-04-15  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* tests/check/Makefile.flags: Reorder flags.
+	* tests/check/Makefile.check: Likewise.
+	* tests/check/Makefile.runtests: Likewise.
+
+2004-04-15  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* tests/morpho/tests/attr_op_cl: Disable dist closing/opening
+	tests.
+
+	* tests/morpho/tests/md5_morpho_attribute_closing_opening_hh12:
+	Disable test.
+
+	* tests/morpho/tests/md5_morpho_attribute_closing_opening_hh13:
+	Disable test.
+
+
+
+2004-04-14  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* olena/tests/morpho/tests/md5_morpho_reconstruction_hh5: Fix to make
+	compile with ICC. More details are available here:
+	http://www.lrde.epita.fr/cgi-bin/twiki/view/Projects/OlenaConstImages
+	* olena/tests/morpho/tests/md5_morpho_reconstruction_hh4: Likewise.
+	* olena/tests/morpho/tests/md5_morpho_reconstruction_hh3: Likewise.
+	* olena/tests/morpho/tests/md5_morpho_reconstruction_hh2: Likewise.
+	* olena/tests/morpho/tests/md5_morpho_reconstruction_hh1: Likewise.
+	* olena/tests/morpho/tests/md5_morpho_reconstruction_hh0: Likewise.
+	* olena/tests/morpho/tests/md5_morpho_geodesic_erosion_hh1: Likewise.
+	* olena/tests/morpho/tests/md5_morpho_geodesic_erosion_hh0: Likewise.
+	* olena/tests/morpho/tests/md5_morpho_geodesic_dilation_hh1: Likewise.
+	* olena/tests/morpho/tests/md5_morpho_geodesic_dilation_hh0: Likewise.
+
+2004-04-14  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* tests/morpho/tests/md5_morpho_watershed_hh0: Disable the test.
+	* tests/morpho/tests/md5_morpho_watershed_hh1: Likewise.
+
+2004-04-13  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* olena/tests/convol/tests/md5_convol_fast_gaussian_hh4: Make this test xfail.
+	* olena/tests/convol/tests/md5_convol_fast_gaussian_hh1: Likewise.
+
+2004-04-13  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* olena/oln/morpho/geodesic_dilation.hh: Fix to make compile with ICC.
+	* olena/oln/morpho/geodesic_erosion.hh: Likewise.
+	* olena/oln/morpho/reconstruction.hh: Likewise.
+	* olena/oln/topo/tarjan/flat-zone.hh: Likewise.
+
+2004-04-13  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* olena/oln/utils/md5.hxx: Changed abstract::image to
+	oln::abstract::image (ICC error).
+	* olena/oln/utils/md5.hh: Likewise.
+
+2004-04-13  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* oln/arith/internal/opdecls.hh: Add white space after variables of
+	macros used as template parameters (ICC error).
+	* oln/morpho/watershed.hxx: Likewise.
+	* oln/topo/dmap.hxx: Likewise.
+	* oln/transforms/dwt.hh: Likewise.
+	* oln/core/abstract/image.hh: Likewise.
+	* oln/morpho/attributes.hh: Likewise.
+	* oln/topo/tarjan/tarjan.hh: Likewise.
+
+2004-04-13  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* tests/convol/tests/nagao: Disable test.
+
 2004-04-13  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* tests/convol/tests/md5_convol_fast_gaussian_hh3: Correct the

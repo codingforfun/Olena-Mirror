@@ -325,7 +325,7 @@ AC_DEFUN([AC_CHECK_SWIG_FLAGS],
 [dnl
   AC_CACHE_CHECK([for SWIG supports for -noruntime],
                   [ac_cv_swig_flags],
-                  [if swig -help 2>&1 | grep -- "-noruntime" > /dev/null 2>&1; then
+                  [if $SWIG -help 2>&1 | grep -- "-noruntime" > /dev/null 2>&1; then
 			ac_cv_swig_flags=recent
                       else
                         ac_cv_swig_flags=old
@@ -341,6 +341,23 @@ AC_DEFUN([AC_CHECK_SWIG_FLAGS],
 
    AC_SUBST([SWIG_FLAGS])
 ])
+
+# Doxygen >= 1.3.4 is needed.
+
+AC_DEFUN([AC_CHECK_DOXYGEN_VERSION],
+[dnl
+  AC_CACHE_CHECK([for doxygen >= 1.3.4],
+                  [ac_cv_doxygen_version],
+                  [if $DOXYGEN --version 2>&1 | grep ['1.3.[456]'] > /dev/null 2>&1; then
+			ac_cv_doxygen_version=recent
+                      else
+                        ac_cv_doxygen_version=old
+                   fi])
+  if [ [ "$ac_cv_doxygen_version" = "old" ] ] ; then
+	AC_MSG_ERROR([Doxygen 1.3.4 or newer is required, run ./configure with --without-doc to disable the doc build])
+  fi
+])
+
 
 # AC_CXX_CHECK_MATH([FUNCTION], [MACRO_NAME], [TEST])
 
@@ -376,6 +393,7 @@ AC_DEFUN([AC_CXX_CHECK_MATH],
      DOC_CPPFLAGS="$DOC_CPPFLAGS -DNEED_$2"
   elif test "x$[]oln_cv_$1_flags" = xisodef; then
      CPPFLAGS="$CPPFLAGS -D_ISOC99_SOURCE=1"
+     DOC_CPPFLAGS="$DOC_CPPFLAGS -D_ISOC99_SOURCE=1"
   fi
   AC_LANG_POP([C++])
 ])

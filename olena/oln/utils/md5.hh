@@ -211,7 +211,7 @@ namespace oln {
     ** Non vectorial image version.
     */
     template <class I>
-    key md5(const abstract::non_vectorial_image<I> &im);
+    key md5(const oln::abstract::non_vectorial_image<I> &im);
 
     /*!
     ** \brief Compute The Md5 value of an image.
@@ -223,7 +223,7 @@ namespace oln {
     ** Vectorial image version.
     */
     template <class I>
-    key md5(const abstract::vectorial_image<I> &im);
+    key md5(const oln::abstract::vectorial_image<I> &im);
 
   } // !utils
 } // !oln

@@ -78,7 +78,7 @@ cat <<EOF
 
 INCLUDES = \$(PYTHON_CPPFLAGS) -I\$(srcdir)/../src
 AM_CPPFLAGS = -DOLN_EXCEPTIONS
-AM_CXXFLAGS = \$(CXXFLAGS_OPTIMIZE)
+AM_CXXFLAGS = \$(CXXFLAGS_OPTIMIZE) \$(DOC_CPPFLAGS)
 AM_LDFLAGS = -shared -lswigpy \$(ZLIB_LDFLAGS)
 
 EOF
@@ -111,9 +111,15 @@ dump_python()
     done
     echo; echo
     echo -ne "CLEANFILES= "
+    echo -e " swilena_all1d_wrap.cxx \\"
+    echo -e " swilena_all2d_wrap.cxx \\"
+    echo -e " swilena_all3d_wrap.cxx \\"
+    echo -ne " swilena_display_wrap.cxx"
     for mod in $MODULES; do
 	echo -e "\\"
 	echo -ne "\t swilena_$mod.py"
+	echo -e "\\"
+	echo -ne "\t swilena_${mod}_wrap.cxx"
     done
     echo; echo
 
@@ -143,7 +149,7 @@ cat <<EOF
 
 INCLUDES = \$(RUBY_CPPFLAGS) -I\$(srcdir)/../src
 AM_CPPFLAGS = -DOLN_EXCEPTIONS
-AM_CXXFLAGS = \$(CXXFLAGS_OPTIMIZE)
+AM_CXXFLAGS = \$(CXXFLAGS_OPTIMIZE) \$(DOC_CPPFLAGS)
 AM_LDFLAGS = -shared -lswigrb \$(ZLIB_LDFLAGS)
 
 EOF

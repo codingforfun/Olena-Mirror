@@ -1,20 +1,18 @@
-Olena 0.10	Not yet
+Olena 0.10	April 15, 2004
 
-	* New documentaion system.
+	* New documentation system.
 	  Now any comment should use doxygen style (i.e. /*! ... */).
-	  You can also put some code in comments to make them
-          compile at documentation generation time. It is useful to
-          illustrate some algorithm with concrete input and output. To
- 	  use this feature the only thing to be done is to put the
-	  code into \code and \endcode tags. If you produce an image,
-	  you can include it in the comments with the \image command,
- 	  using the same name you used to produce it, but with the png
-	  extension. To make sure your image will not overwrite
-	  another existing one, you should name it taking care of
+	  You can also write some programs inside the comments. They are
+	  compiled at documentation generation time. It is useful to
+          illustrate some algorithms with concrete input and output. To
+ 	  use this feature the program has to be between \code and \endcode
+	  tags. If you produce an image, you can include it in the comments
+	  with the \image command, using the same name you used to produce
+	  it, but with the png extension. To make sure your image will not
+	  overwrite another existing one, you should name it taking care of
 	  the namespace you are using: e.g. if you comment the function
-	  oln::boo::bar::fun, an image should be named oln_foo_bar_fun.ppm
-	  It can be added that two macros are provided to make abstraction
-	  of input and output directories, they are named IMG_IN and IMG_OUT.
+	  oln::boo::bar::fun, the image should be named oln_foo_bar_fun.ppm.
+	  The macros IMG_IN and IMG_OUT correspond to the path of the images.
 
 	* Border behavior can be controlled with the behavior hierarchy.
 	  If an algorithm support it, you can choose the way the image
@@ -30,6 +28,15 @@ Olena 0.10	Not yet
 	  - CIE RGB is the main color system i.e. it can be converted
 	    directly into any other color system.
 	  - Conversion between 2 color systems should pass by the RGB one.
+
+	* Generic and concrete morphers are now implemented in Olena.
+	  - Five morphers are included in this release:
+		 Color morpher
+		 Sub quantifying morpher
+		 Piece morpher
+		 Iter morpher
+		 Slicing morpher
+	  - These morphers can be manipulated as if they were normal images.
 
 Olena 0.9	August 8, 2003
 

@@ -1,3 +1,70 @@
+2004-04-28  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* tools/swilena/ruby/Makefile.am: Replace clean-local by CLEANFILES.
+	* tools/swilena/src/Makefile.am: Replace distclean-local by
+	DISTCLEANFILES.
+
+2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* tools/swilena/expand.sh (generation of makefile.swig): Add cxx
+	files to CLEANFILES.
+	* tools/swilena/python/Makefile.am (CLEANFILES): Remove.
+
+2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* swilena/python/Makefile.am: Add new line at end of file.
+
+2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* swilena/python/Makefile.am: Remove clean-file. Add CLEANFILES.
+
+2004-04-19  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* swilena/python/tests/Makefile.am: Factor code for `TESTS' variable
+	declaration.
+	* swilena/python/tests/Makefile.am: Add new line at end of file.
+
+2004-04-15  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* tools/swilena/meta/Makefile.am: Add swilena_ntg_macros.i to
+	the dist.
+
+2004-04-14  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* swilena/python/tests/Makefile.am: Add tests to the distribution.
+	* swilena/ruby/tests/Makefile.am: Likewise.
+
+2004-04-14  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* swilena/python/tests/Makefile.am: Readd tests for swilena.
+	* swilena/ruby/Makefile.am: Likewise.
+	* swilena/ruby/tests/Makefile.am: Likewise.
+	* swilena/python/Makefile.am: Likewise.
+	* swilena/python/tests/morpho.py: Fix.
+	* swilena/python/swilena_all1d.py: Adjust according to the split of
+	swilena_morpho1d.
+	* swilena/python/swilena_all2d.py: Likewise for swilena_morpho2d.
+	* swilena/python/swilena_all3d.py: Likewise for swilena_morpho3d.
+
+2004-04-14  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* tools/swilena/ruby/tests/Makefile.am: Add comments.
+	* tools/swilena/python/tests/Makefile.am: Likewise.
+
+2004-04-14  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* swilena/ruby/Makefile.am: Remove test for python, they will be back
+	when swilena will be entirely repaired.
+	* swilena/python/Makefile.am: Likewise.
+
+2004-04-13  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* swilena/expand.sh: Add `DOC_CPPFLAGS' to the compilation flags.
+
+2004-04-13  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* tools/swilena/ruby/Makefile.am: Remove `ruby_DATA' variable.
+
 2004-04-12  Niels Van Vliet  <niels@lrde.epita.fr>
 
 	* tools/swilena/generate_morpho_instantiations.py: Remove
@@ -19,6 +86,8 @@
 2004-04-11  Niels Van Vliet  <niels@lrde.epita.fr>
 
 	* tools/swilena/meta/swilena_ntg.i: Remove "(do_nothing)".
+	Since swig 1.3 '%define foo() bar' must be replace by
+	'%define foo bar'.
 	* tools/swilena/meta/swilena_morpho.i: Likewise.
 	* tools/swilena/meta/swilena_exception.i: Likewise.
 	* tools/swilena/generate_morpho_instantiations.py: Remove debug info.
@@ -34,9 +103,10 @@
 
 2004-04-10  Niels Van Vliet  <niels@lrde.epita.fr>
 
-	* swilena/meta/swilena_structelt.i: Fix a bug.
-	* swilena/doc/swilena.texi: Fix a bug.
-	* swilena/python/Makefile.am: Add clean_local.
+	* swilena/meta/swilena_structelt.i (operator-): Remove.
+	* swilena/doc/swilena.texi:
+	(Using Swilena for Olena development): Now a section.
+	* swilena/python/Makefile.am (clean-local): New.
 
 2004-01-26  Astrid Wang  <astrid@lrde.epita.fr>
 

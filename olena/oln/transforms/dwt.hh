@@ -49,7 +49,7 @@ namespace oln {
     // macros used to define all the wavelets coefficients
 
 # define Wavelet_coeffs_definition(Name, Type, Size) \
-    struct Name : public oln::internal::wavelet_coeffs_<Type, Size, Name> \
+    struct Name : public oln::internal::wavelet_coeffs_<Type, Size, Name > \
     { \
       Name()
 

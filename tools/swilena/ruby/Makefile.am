@@ -7,9 +7,6 @@ SUBDIRS = . tests
 
 rubydir = $(libdir)/ruby
 
-ruby_DATA = swilena_display.rb
-
 include makefile.swig
 
-clean-local:
-	rm -f *.cxx
+CLEANFILES = *.cxx

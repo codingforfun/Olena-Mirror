@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,7 +34,7 @@
 */
 
 # include <ntg/core/abstract_hierarchy.hh>
-
+# include <string>
 namespace ntg {
 
   namespace internal {
@@ -51,7 +51,7 @@ namespace ntg {
       methods. This is necessary to handle mutual instantiation
       problems, as optraits usually needs typetraits to be
       instantiated.
-    */    
+    */
     template <class T>
     struct typetraits
     {

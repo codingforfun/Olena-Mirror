@@ -50,7 +50,7 @@ some compiler optimizations on systems where they are unneeded.
 
 The ISO C++ standard specifies that compliant compiler must support a
 recursion depth of @emph{at least} 17 levels. Some code pieces in Olena
-need at least 50. Most compilers happen to support recursion upto many
+need at least 50. Most compilers happen to support recursion up to many
 more levels, however it is not guaranteed.
 
 In particular, GCC 2.95 is known to need the flag
@@ -244,7 +244,7 @@ if it works, @code{AC_DEFINE} @env{HAVE_FFTW} to 1.
 
 @strong{Rationale for using the C++ compiler} (instead of the C
 compiler): the FFTW library is a C library and there are systems where
-C++ programs cannot link with any C library without options. This ckeck
+C++ programs cannot link with any C library without options. This check
 ensures that faulty link configurations fail early.
 
 @c ************************************************************************
@@ -254,7 +254,7 @@ ensures that faulty link configurations fail early.
 @cindex @env{HAVE_ZLIB}
 
 The implementation of the I/O operators in Olena can make use of the
-Zlib library fo save or load images from gzipped files. Because this
+Zlib library to save or load images from gzipped files. Because this
 library might be unavailable, it is only used if the macro
 @env{HAVE_ZLIB} is defined to nonzero, and the correct include path is
 given to the compiler.

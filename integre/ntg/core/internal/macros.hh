@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,45 +43,45 @@
 */
 
 # define ntgi_storage_type(T) \
-typename ntg::internal::typetraits<T>::storage_type
+typename ntg::internal::typetraits< T >::storage_type
 
 # define ntgi_abstract_type(T) \
-typename ntg::internal::typetraits<T>::abstract_type
+typename ntg::internal::typetraits< T >::abstract_type
 
 # define ntgi_optraits_type(T) \
-typename ntg::internal::typetraits<T>::optraits_type
+typename ntg::internal::typetraits< T >::optraits_type
 
 # define ntgi_behavior_type(T) \
-typename ntg::internal::typetraits<T>::behavior_type
+typename ntg::internal::typetraits< T >::behavior_type
 
 # define ntgi_base_type(T) \
-typename ntg::internal::typetraits<T>::base_type
+typename ntg::internal::typetraits< T >::base_type
 
 # define ntgi_signed_type(T) \
-typename ntg::internal::typetraits<T>::signed_type
+typename ntg::internal::typetraits< T >::signed_type
 
 # define ntgi_unsigned_type(T) \
-typename ntg::internal::typetraits<T>::unsigned_type
+typename ntg::internal::typetraits< T >::unsigned_type
 
 # define ntgi_cumul_type(T) \
-typename ntg::internal::typetraits<T>::cumul_type
+typename ntg::internal::typetraits< T >::cumul_type
 
 # define ntgi_largest_type(T) \
-typename ntg::internal::typetraits<T>::largest_type
+typename ntg::internal::typetraits< T >::largest_type
 
 # define ntgi_signed_largest_type(T) \
-typename ntg::internal::typetraits<T>::signed_largest_type
+typename ntg::internal::typetraits< T >::signed_largest_type
 
 # define ntgi_signed_cumul_type(T) \
-typename ntg::internal::typetraits<T>::signed_cumul_type
+typename ntg::internal::typetraits< T >::signed_cumul_type
 
 # define ntgi_unsigned_largest_type(T) \
-typename ntg::internal::typetraits<T>::unsigned_largest_type
+typename ntg::internal::typetraits< T >::unsigned_largest_type
 
 # define ntgi_unsigned_cumul_type(T) \
-typename ntg::internal::typetraits<T>::unsigned_cumul_type
+typename ntg::internal::typetraits< T >::unsigned_cumul_type
 
 # define ntgi_integer_type(T) \
-typename ntg::internal::typetraits<T>::integer_type
+typename ntg::internal::typetraits< T >::integer_type
 
 #endif // !NTG_CORE_INTERNAL_MACROS_HH

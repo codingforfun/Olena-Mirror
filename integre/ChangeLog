@@ -1,3 +1,24 @@
+2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* integre/tests/sanity/Makefile.am: Replace maintainer-check by check.
+
+2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* integre/ntg/core/internal/traits.hh: Include headers so as to pass
+	sanity check.
+
+2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* tests/*/tests/* (82 files): Add copyright.
+
+2004-04-13  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* ntg/real/optraits_builtin_int.hh: Add white space after variables
+	of macros used as template parameters (ICC error).
+	* ntg/real/typetraits_builtin_int.hh: Likewise.
+	* ntg/core/internal/macros.hh: Likewise.
+	* ntg/core/macros.hh: Likewise.
+
 2004-04-13  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* ntg/Makefile.am: Move source listing into 'makefile.src'.

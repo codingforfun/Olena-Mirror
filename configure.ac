@@ -235,7 +235,13 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
 ### The reference manual uses Doxygen
 ### FIXME: could be much better.
 
-AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
+  AC_ARG_WITH([doc],
+ 	      [Doxygen is needed to build the doc],
+	      [],
+	      [AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
+	       AC_CHECK_DOXYGEN_VERSION
+	     ])
+
 ## if test -z "$DOXYGEN"; then
 ##   AC_MSG_WARN([`doxygen' not found -- `doxygen' must be installed to generate the documentation])
 

@@ -33,13 +33,13 @@
 # include <oln/morpho/environments.hh>
 
 // attribute dedicated macros
-# define attr_lambda_type(T)	typename oln::morpho::attr::attr_traits<T>::lambda_type
-# define attr_env_type(T)	typename oln::morpho::attr::attr_traits<T>::env_type
-# define attr_value_type(T)	typename oln::morpho::attr::attr_traits<T>::value_type
+# define attr_lambda_type(T)	typename oln::morpho::attr::attr_traits< T >::lambda_type
+# define attr_env_type(T)	typename oln::morpho::attr::attr_traits< T >::env_type
+# define attr_value_type(T)	typename oln::morpho::attr::attr_traits< T >::value_type
 
-# define attr_lambda_type_(T)	 oln::morpho::attr::attr_traits<T>::lambda_type
-# define attr_env_type_(T)	 oln::morpho::attr::attr_traits<T>::env_type
-# define attr_value_type_(T)	 oln::morpho::attr::attr_traits<T>::value_type
+# define attr_lambda_type_(T)	 oln::morpho::attr::attr_traits< T >::lambda_type
+# define attr_env_type_(T)	 oln::morpho::attr::attr_traits< T >::env_type
+# define attr_value_type_(T)	 oln::morpho::attr::attr_traits< T >::value_type
 
 
 # define attr_type_decl(self_type) \
@@ -345,21 +345,21 @@ namespace oln {
 	  };
       };
 
-      /*--------------*
-	|  integral   |
-	*------------*/
-
+      /*-----------*
+	|  volume   |
+	*-----------*/
       /*!
       ** \brief Integral attribute.
       **
       ** It is equivalent to volume in 2D, and weight in 3D.
+      ** \todo FIXME: Change the name and explain the diferences with integral.
       */
-      template <class T = unsigned, class Exact = mlc::final>
-      class integral_type:
-	public attribute<mlc_2_exact_vt_type(integral_type, T, Exact)>
+      template <class I, class Exact = mlc::final>
+      class volume_type:
+	public attribute<mlc_2_exact_vt_type(volume_type, I, Exact)>
       {
       public:
-	typedef integral_type<T, Exact>			self_type; /*!< Self type of the class. */
+	typedef volume_type<I, Exact>			self_type; /*!< Self type of the class. */
 	attr_type_decl(self_type);
 
 	/*!
@@ -368,27 +368,27 @@ namespace oln {
 	** \warning  After this  call, the  object is  only instantiated
 	** (not initialized).
 	*/
-	integral_type()
+	volume_type()
 	  {
 	  };
 
 	/*!
 	** \brief Ctor from a lambda_type value.
 	*/
-	integral_type(const lambda_type &lambda): value_(lambda)
+	volume_type(const lambda_type &lambda): value_(lambda)
 	  {
 	  };
 
 	/*!
 	** \brief Ctor from a point and an image.
 	*/
-	template <class I>
-	  integral_type(const abstract::image<I> &input,
-			const oln_point_type(I) &p,
-			const env_type &) :
-	  reflevel_(input[p]),
-	  area_(ntg_unit_val(value_type)),
-	  value_(ntg_unit_val(value_type))
+	template <class J>
+	  volume_type(const abstract::image<J> &,
+		      const oln_point_type(J) &p,
+		      const env_type &e) :
+	  reflevel_(e.getImage()[p]),
+	  area_(1),
+	  value_(1)
 	  {
 	  };
 
@@ -471,7 +471,7 @@ namespace oln {
 	** method to provide a new implementation of this operator.
 	** \warning This method SHOULDN'T directly be called.
 	*/
-	void pe_impl(const self_type &rhs)
+	void pe_impl(const volume_type &rhs)
 	  {
 	    value_ += rhs.getValue() + area_ * tools::diffabs(reflevel_, rhs.getReflevel());
 	    area_ += rhs.getArea();
@@ -504,6 +504,120 @@ namespace oln {
       protected:
 	value_type reflevel_; ///< Reference level.
 	value_type area_; ///< Current area.
+	value_type value_; ///< Current value (deduced from area and level).
+      };
+
+
+      /*--------------*
+	|  integral   |
+	*------------*/
+
+      /*!
+      ** \brief Integral attribute.
+      **
+      ** It is equivalent to volume in 2D, and weight in 3D.
+      ** FIXME: Add math definition here.
+      */
+      template <class T = unsigned, class Exact = mlc::final>
+      class integral_type:
+	public attribute<mlc_2_exact_vt_type(integral_type, T, Exact)>
+      {
+      public:
+	typedef integral_type<T, Exact>			self_type; /*!< Self type of the class. */
+	attr_type_decl(self_type);
+
+	/*!
+	** \brief Basic Ctor.
+	**
+	** \warning  After this  call, the  object is  only instantiated
+	** (not initialized).
+	*/
+	integral_type()
+	  {
+	  };
+
+	/*!
+	** \brief Ctor from a lambda_type value.
+	*/
+	integral_type(const lambda_type &lambda): value_(lambda)
+	  {
+	  };
+
+	/*!
+	** \brief Ctor from a point and an image.
+	*/
+	template <class I>
+	  integral_type(const abstract::image<I> &input,
+			const oln_point_type(I) &p,
+			const env_type &) :
+	  value_(input[p])
+	  {
+	  };
+
+	// interface part
+	/*!
+	** \brief Accessor to value_.
+	**
+	** Virtual method.
+	** \see getValue_impl()
+	*/
+	const value_type &getValue() const
+	  {
+	    mlc_dispatch(getValue)();
+	  };
+
+	// impl part
+	/*!
+	** \brief Implementation of getValue().
+	**
+	** Override this  method in  order to provide  a new  version of
+	** getValue().
+	**
+	** \warning Do not call this method, use getValue() instead.
+	*/
+	const value_type &getValue_impl() const
+	  {
+	    return value_;
+	  };
+
+
+	/*!
+	** \brief += operator implementation.
+	**
+	** This is an implementation  of the += operator.  Override this
+	** method to provide a new implementation of this operator.
+	** \warning This method SHOULDN'T directly be called.
+	*/
+	void pe_impl(const self_type &rhs)
+	  {
+	    value_ += rhs.getValue();
+	  };
+
+	/*!
+	** \brief "<" operator implementation.
+	**
+	** This is an implementation  of the += operator.  Override this
+	** method to provide a new implementation of this operator.
+	** \warning This method SHOULDN'T directly be called.
+	*/
+	bool less_impl(const lambda_type &lambda) const
+	  {
+	    return value_ < lambda;
+	  };
+
+	/*!
+	** \brief != operator implementation.
+	**
+	** This is an implementation  of the += operator.  Override this
+	** method to provide a new implementation of this operator.
+	** \warning This method SHOULDN'T directly be called.
+	*/
+	bool ne_impl(const lambda_type &lambda) const
+	  {
+	    return lambda != value_;
+	  };
+
+      protected:
 	value_type value_; ///< Current value (deduced from area and level).
       };
 
@@ -1907,6 +2021,16 @@ namespace oln {
 	typedef integral_type<T, NewExact>	ret;
       };
 
+      /*!
+      ** \brief Trait specialization for the volume attribute.
+      */
+      template <class I, class Exact>
+      struct attr_traits<volume_type<I, Exact> >
+      {
+	typedef unsigned	value_type;
+	typedef value_type	lambda_type;
+	typedef env::OtherImageEnv<I>		env_type;
+      };
     }// !attr
   } // !morpho
 } //!oln

@@ -25,7 +25,7 @@ I disable it ?
 Answer 1: run the toplevel configure with the @option{--without-doc} option.
 
 Answer 2: if you do not want to build the reference manuals but still
-compile the demonstraction programs and developer's info files, use
+compile the demonstration programs and developer's info files, use
 @option{--without-doc-ref}.
 
 @section Using Olena
@@ -60,7 +60,7 @@ macros.
 @cindex @file{oln-config.sh}
 
 Answer 3: use the generated @command{oln-config-xxx.sh}, substituting
-@samp{xxx} with your favourite compiler. This script dumps to its
+@samp{xxx} with your favorite compiler. This script dumps to its
 standard output the flags necessary to build programs that use Olena
 successfully with the corresponding compiler. Use the @option{--help}
 flag to see what data is available.
@@ -97,7 +97,7 @@ issues warnings at compile-time in the Olena headers, or the results
 are weird and/or inaccurate.
 
 @item Explanation 1
-You are using GCC 2.95 and heavy optimisation
+You are using GCC 2.95 and heavy optimization
 (@option{-O3}) flags.  This is known to produce invalid code with Olena.
 
 @item Solution 1
@@ -111,6 +111,12 @@ optimization and debug settings, which is inconsistent.
 @item Solution 2
 Run @command{configure CXXFLAGS=''}. See the file
 @file{BUILD} at the toplevel source directory.
+
+@item Explanation 3
+Your compiler has internal problem.
+
+@item Solution 3
+Lower the limit of inlining: set CXXFLAGS_OPTIMIZE to -finline-limit-500 -O2
 
 @end table
 
@@ -168,6 +174,22 @@ GCC but not @option{-Werror}).
 
 @end table
 
+@unnumberedsubsec Errors in standard headers
+
+@cindex errors, in standard headers
+@cindex HP-UX
+@cindex NetBSD
+@cindex @env{CXXFLAGS}
+
+@table @strong
+@item Problem
+The math functions (acos, ...) are not declared.
+
+@item Solution
+Set CXXFLAGS to -includemath.h.
+
+@end table
+
 @unnumberedsubsec Invalid data saved on I/O
 
 @cindex big-endian
@@ -188,3 +210,5 @@ format instead of raw. Beware, while this is a correct workaround, the
 generated images are bigger.
 
 @end table
+
+

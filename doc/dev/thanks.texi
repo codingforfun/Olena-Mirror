@@ -1,7 +1,7 @@
 @documentencoding ISO-8859-1
 
-@node Aknowledgements
-@section Aknowledgements
+@node Acknowledgements
+@section Acknowledgements
 
 The following people contributed to Olena, maybe indirectly through
 one of the numerous prototypes Olena has uprisen from. Olena would not
@@ -10,145 +10,192 @@ be what it is today without their work.
 @table @sc
 @item Thierry G@'eraud
 @itemize @minus
-@item for managing the project in the first place,
-@item for his work on the type system,
-@item for his numerous hours spent thinking about Olena.
+@item management of the project in the first place,
+@item type system,
+@item numerous hours spent thinking about Olena.
 @end itemize
 
 @item Alexandre Duret-Lutz
 @itemize @minus
-@item for having maintained the source tree for several years,
-@item for his work on the type system,
-@item for his work on the test system,
-@item for his work on the documentation system,
-@item for his numerous hours spent on Olena to make it better.
+@item maintenance of the source tree for several years,
+@item type system,
+@item test system,
+@item first documentation system,
+@item numerous hours spent on Olena to make it better.
 @end itemize
 
 @item Reda Dehak
 @itemize @minus
-@item for managing the project,
-@item for his work on the color conversions,
-@item for his contributions to cleanup the sources.
+@item management of the project,
+@item color conversions,
+@item cleanup the sources.
 @end itemize
 
 @item Akim Demaille
 @itemize @minus
-@item for his help with the configuration system,
-@item for his help to keep things clean.
+@item configuration system.
+@item maintenance of code's clearness.
 @end itemize
 
 @item Anthony Pinagot
 @itemize @minus
-@item for his work on Olena I/O,
-@item for his work on statistical operators,
-@item for his study on the FFT.
+@item Olena I/O,
+@item statistical operators,
+@item FFT algorithm.
 @end itemize
 
 @item Astrid Wang
-for her work on static arrays.
+@itemize @minus
+@item new documentation system,
+@item static arrays implementation.
+@end itemize
+
+@item Damien Thivolle
+@itemize @minus
+@item contributions to document the code,
+@item generic morphers,
+@item configuration system.
+@end itemize
 
 @item David Lesage
 @itemize @minus
-@item for his work on the type system,
-@item for his work on the new paradigm,
-@item for his contributions to cleanup the sources.
+@item type system,
+@item new paradigm,
+@item cleanup the sources.
 @end itemize
 
 @item Dimitri Papadopoulos-Orfanos
-for his work on the type system
+@itemize @minus
+@item  type system
+@end itemize
+
 
 @item Emmanuel Turquin
 @itemize @minus
-@item for implementing transforms,
-@item for his work on integre.
+@item implementation of transforms,
+@item integre.
 @end itemize
 
 @item Giovanni Palma
-@item for his contributions to cleanup the sources.
+@itemize @minus
+@item color conversion,
+@item attribute opening and closing algorithms,
+@item new documentation system,
+@item document the code,
+@item cleanup the sources.
+@end itemize
 
 @item Heru Xue
-for his work on the color system.
+@itemize @minus
+@item color system.
+@end itemize
 
 @item Ignacy Gawedzki
-for his work on the color system.
+@itemize @minus
+@item color system.
+@end itemize
+
 
 @item Jean Chalard
 @itemize @minus
-@item for his work on colors,
-@item for implementing vectors and matrices,
-@item for implementing Olena iterators,
-@item for his study of wavelets.
+@item colors,
+@item vectors and matrices implementation,
+@item Olena iterators implementation,
+@item wavelets.
 @end itemize
 
 @item Jean-S@'ebastien Mouret
 @itemize @minus
-@item for his work on image I/O,
-@item for his work on the source tree and configuration system,
-@item for his work on fast morphological operators.
+@item image I/O,
+@item source tree and configuration system,
+@item fast morphological operators.
 @end itemize
 
 @item J@'er@^ome Darbon
-for his work on image morphology and Olena morpho.
+@itemize @minus
+@item image morphology and Olena morpho.
+@end itemize
 
 @item Ludovic Perrine
-for his study of fuzzy types.
+@itemize @minus
+@item fuzzy types.
+@end itemize
 
 @item Micha@"el Strauss
 @itemize @minus
-@item for his work on image morphology,
-@item for his work on the watershed algorithms,
-@item for his work on Olena I/O.
+@item image morphology,
+@item watershed algorithms,
+@item Olena I/O.
 @end itemize
 
 @item Nicolas Burrus
 @itemize @minus
-@item for his work on integre,
-@item for his work on Olena I/O,
-@item for his work on the source tree.
+@item integre,
+@item Olena I/O,
+@item source tree.
+@end itemize
+
+@item Niels van Vliet
+@itemize @minus
+@item color conversion,
+@item attribute opening and closing algorithms,
+@item contributions to document the code,
+@item histograms.
 @end itemize
 
 @item Pierre-Yves Strub
 @itemize @minus
-@item for his work on Olena morpho,
-@item for his work on the source tree and configuration system,
-@item for his work on the type system.
+@item Olena morpho,
+@item source tree and configuration system,
+@item type system.
 @end itemize
 
 @item Qu@^oc Peyrot
-for his work on the watershed algorithm.
+@itemize @minus
+@item watershed algorithm.
+@end itemize
 
 @item Rapha@"el Poss
 @itemize @minus
-@item for his work on the source tree and configuration system,
-@item for his work on the documentation.
+@item source tree and configuration system,
+@item documentation.
 @end itemize
 
 @item R@'emi Coupet
 @itemize @minus
-@item for his work on Olena morpho,
-@item for his work on data types (pre-0.6),
-@item for his work on the Olena core,
-@item for his bibliographic research.
+@item Olena morpho,
+@item data types (pre-0.6),
+@item Olena core,
+@item bibliographic research.
 @end itemize
 
 @item Renaud Fran@,cois
-for his bibliographic research.
+@itemize @minus
+@item bibliographic research.
+@end itemize
+
+@item Simon Odou
+@itemize @minus
+@item contributions to document the code,
+@item generic morphers.
+@end itemize
 
 @item Sylvain Berlemont
 @itemize @minus
-@item for his work on combinatorial maps,
-@item for his contributions to cleanup the sources.
+@item combinatorial maps,
+@item cleanup the sources.
 @end itemize
 
 @item Yann R@'egis-Gianas
 @itemize @minus
-@item for his work on the type system,
-@item for his work on graphs,
-@item for his numerous contributions to various parts of Olena.
+@item type system.
 @end itemize
 
 @item Yoann Fabre
-for his work on the type system.
+@itemize @minus
+@item type system.
+@end itemize
+
 
 @item Vincent Berruchon
 
