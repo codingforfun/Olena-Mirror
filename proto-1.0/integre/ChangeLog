@@ -1,3 +1,9 @@
+2005-01-26  Simon Odou  <simon@lrde.epita.fr>
+
+	* ntg/real/int_u8.hh: Add copyright.
+	* ntg/real/bin.hh: Likewise.
+	* ntg/color/rgb_8.hh: Likewise.
+
 2005-01-21  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* ChangeLog: New.
