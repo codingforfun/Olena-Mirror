@@ -1,0 +1,6 @@
+// FIXME: add more exhaustive tests based on C_for_* instead of hard coded
+// types
+
+return (sizeof(int_u8) != sizeof(unsigned char))
+  || (sizeof(int_u16) != sizeof(unsigned short))
+  || (sizeof(range<int_u8, bounded_u<0, 5>, strict>) != sizeof(unsigned char));

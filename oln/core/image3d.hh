@@ -30,7 +30,7 @@
 
 # include <oln/core/internal/real_image3d.hh>
 # include <oln/core/pred_image.hh>
-# include <oln/value/bin.hh>
+# include <oln/types/bin.hh>
 # include <oln/io/readable.hh>
 # include <iostream>
 # include <stdlib.h>

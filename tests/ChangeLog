@@ -1,6 +1,13 @@
+2002-09-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* types/tests/cplx6: Fix typo.
+	* types/tests/sizes: New file.
+
 2002-09-26  Emmanuel Turquin  <turqui_e@epita.fr>
 
-	* transform/fft.cc, transform/Makefile.am: Update.
+	* transform/fft.cc: Change transformed_image_log_magn second argument
+	value.
+	* transform/Makefile.am: Adjust.
 	* transform/output: New directory.
 
 2002-09-24  Emmanuel Turquin  <turqui_e@epita.fr>

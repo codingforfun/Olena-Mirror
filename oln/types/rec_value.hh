@@ -42,8 +42,11 @@ namespace oln
   //
   ////////////////////////////////////////////
 
+  // FIXME: does not inherit from type::any_type because of g++-2.95
+  // memory allocation for empty classes
+
   template <class Self>
-  class rec_value : type::any_type<Self>
+  class rec_value
   {
     typedef typename typetraits<Self>::storage_type storage_type;
 

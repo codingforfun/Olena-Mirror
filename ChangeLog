@@ -1,5 +1,16 @@
+2002-09-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/core/dpointnd.hh, oln/core/image3d.hh, 
+	oln/core/image1d.hh: Fix include for new types.
+	* oln/types/rec_value.hh: Fix size problem with g++-2.95.
+	
 2002-09-27  Emmanuel Turquin  <turqui_e@epita.fr>
 
+	* oln/transform/fft.hh: Make cosmetic changes to the code formatting
+	in order to be under 100 columns, fix a problem of transformed image
+	storage.
+	* oln/Makefile.am (nobase_oln_HEADERS): Add config/system.hh,
+	transform/fft.hh.
 	* oln/transform/fft.hh: Add a 'transform' namespace, add
 	few methods (notably transformed_image_magn()).
 	* oln/core/pointnd.hh: Add #include <sstream>.
