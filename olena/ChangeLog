@@ -1,3 +1,9 @@
+2003-03-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/check/Makefile.am: Import sources from metalic/tests/check
+	directory instead of a compiled library. This allows make check
+	to be run directly in $top_srcdir/olena/ directory.
+
 2003-03-20  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
 	* img/test-cmap.pgm: Add new image.

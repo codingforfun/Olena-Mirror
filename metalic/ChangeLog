@@ -1,3 +1,7 @@
+2003-03-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Makefile.am: Adjust.
+
 2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/Makefile.am: Adjust with components.

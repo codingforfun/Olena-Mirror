@@ -1,3 +1,8 @@
+2003-03-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Don't go into metalic/tests when
+	--without-mlc-testsuite was specified.
+
 2003-03-19  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
 	* configure.ac: Add test entry for topo.

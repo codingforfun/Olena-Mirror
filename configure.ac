@@ -30,9 +30,6 @@ AC_CONFIG_FILES([Makefile
 		 integre/ntg/Makefile
                  metalic/Makefile
                  metalic/mlc/Makefile
-                 metalic/tests/Makefile
-                 metalic/tests/check/Makefile
-		 metalic/tests/check/defs
 		 olena/Makefile
 		 olena/img/Makefile
 		 olena/oln/Makefile
@@ -103,8 +100,7 @@ OLN_COLLECTION([OLN_TOP],
 		  [oln_cv_build_tests], 
 		  [the olena's testsuite], 
 		  [OLN_SRC], 
-	          [
-		   olena/tests/Makefile
+	          [olena/tests/Makefile
 		   olena/tests/check/Makefile
 		   olena/tests/check/defs],
     [dnl Configuration for the testsuite
@@ -149,8 +145,7 @@ OLN_COLLECTION([OLN_TOP],
 		  [ntg_cv_build_tests], 
 		  [the integre's testsuite], 
 		  [NTG_SRC], 
-	          [
-		   integre/tests/Makefile
+	          [integre/tests/Makefile
 		   integre/tests/check/defs],
     [dnl Configuration for the testsuite
 
@@ -187,7 +182,9 @@ OLN_COLLECTION([OLN_TOP],
 		  [mlc_cv_build_tests], 
 		  [the metalic's testsuite], 
 		  [MLC_SRC], 
-	          [],
+	          [metalic/tests/Makefile
+                   metalic/tests/check/Makefile
+		   metalic/tests/check/defs],
     [dnl Configuration for the testsuite
 
       MLC_TESTS_SUBDIRS=""
