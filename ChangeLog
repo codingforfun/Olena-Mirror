@@ -1,5 +1,9 @@
 2002-09-03  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
+	* oln/config/system.hh: Typos.
+
+2002-09-03  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
 	* configure.ac: Check for limits.
 	* oln/config/system.h (OLN_FLOAT_INFINITY, OLN_DOUBLE_INFINITY):
 	New macros.

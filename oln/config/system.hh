@@ -38,7 +38,7 @@
 #  define M_PI 3.14159265358979323846264338327
 # endif
 
-# ifdef HAVE_LIMITS
+# if HAVE_LIMITS
 #  include <limits>
 #  define OLN_FLOAT_INFINITY (std::numeric_limits<float>::infinity())
 #  define OLN_DOUBLE_INFINITY (std::numeric_limits<double>::infinity())
@@ -48,7 +48,7 @@
 #   define OLN_FLOAT_INFINITY HUGE_VALF
 #   define OLN_DOUBLE_INFINITY HUGE_VAL
 #  else
-Do not know how to define infinity on this host.
+#   error Do not know how to define infinity on this host.
 #  endif
 # endif
 

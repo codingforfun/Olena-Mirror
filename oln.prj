@@ -1,24 +1,14 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 31)
-(Parent-Version oln 0_5 30)
+(Project-Version oln 0_5 32)
+(Parent-Version oln 0_5 31)
 (Version-Log "2002-09-03  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-	* configure.ac: Check for limits.
-	* oln/config/system.h (OLN_FLOAT_INFINITY, OLN_DOUBLE_INFINITY):
-	New macros.
-	* oln/types/optraits_builtins_float.hh: Define inf() and sup()
-	instead of min() and max().
-
-2002-09-03  Alexandre Duret-Lutz  <duret_g@epita.fr>
-
-	* types/tests/optrait3: Use OLN_FLOAT_INFINITY and
-	OLN_DOUBLE_INFINITY.  Check inf() too.
-
+	* oln/config/system.hh: Typos.
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 03 Sep 2002 15:43:47 +0200")
+(Checkin-Time "Tue, 03 Sep 2002 17:21:50 +0200")
 (Checkin-Login duret_g)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -86,7 +76,7 @@
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.19 640))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.37 600))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.38 600))
   (configure.ac (oln/3_configure. 1.20 600))
   (configure (oln/e/7_configure 1.24 700))
   (README (oln/1_README 1.4 600))
@@ -130,7 +120,7 @@
   (oln/basics.hh (oln/d/42_basics.hh 1.5 600))
   (oln/config/config.hin (oln/f/10_config.hin 1.7 644))
   (oln/config/README (oln/f/9_README 1.1 600))
-  (oln/config/system.hh (oln/7_system.hh 1.6 600))
+  (oln/config/system.hh (oln/7_system.hh 1.7 600))
   (oln/convert/basics.hh (oln/23_basics.hh 1.3 600))
   (oln/convert/bound.hh (oln/22_bound.hh 1.2 600))
   (oln/convert/colorconv.hh (oln/18_colorconv. 1.2 600))
