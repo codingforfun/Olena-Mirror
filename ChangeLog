@@ -1,3 +1,11 @@
+2002-04-24  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* configure.ac: Bump version to 0.4.
+	* src/Makefile.am (DISTCLEANFILES): New.
+	(EXTRA_SCRIPTS): Rename as ...
+	(EXTRA_DIST): ... this.
+	(config/pconf.hh): Use $(top_srcdir)/src/config/extrconf.sh.
+
 2002-04-23  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* NEWS update for 0.4.

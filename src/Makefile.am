@@ -203,17 +203,19 @@ nobase_oln_HEADERS =				\
   value/yiq.hh					\
   value/yuv.hh
 
-EXTRA_SCRIPTS = config/extrconf.sh
+EXTRA_DIST = config/extrconf.sh
 PERL = perl
 SCANDEFS_PL = $(top_srcdir)/tools/scandefs.pl
 PCONF_OCCURS = config/system.hh config/hash_map.hh
 config/extrconf.sh: $(SCANDEFS_PL) $(PCONF_OCCURS)
 	$(PERL) $(SCANDEFS_PL) $(PCONF_OCCURS) >config/extrconf.sh
 
-config/pconf.hh: config/extrconf.sh $(CONFIG_HEADER)
+config/pconf.hh: $(top_srcdir)/src/config/extrconf.sh $(CONFIG_HEADER)
 	test -f $(CONFIG_HEADER)
 ## Ignore the result of config/extrconf.sh.  It might be non 0 if
 ## grep matched nothing, but that's ok for us.  The sole case
 ## we bother with is failure caused by an unexisting $(CONFIG_HEADER).
 ## The test -f above take care of this.
-	$(SHELL) config/extrconf.sh $(CONFIG_HEADER) >config/pconf.hh; :
+	$(SHELL) $(top_srcdir)/src/config/extrconf.sh $(CONFIG_HEADER) >config/pconf.hh; :
+
+DISTCLEANFILES = config/pconf.hh config/stamp-h1

@@ -1,10 +1,10 @@
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.50])
-AC_INIT([olena], [0.3], [olena-bugs@lrde.epita.fr])
+AC_PREREQ([2.52])
+AC_INIT([olena], [0.4], [olena-bugs@lrde.epita.fr])
 AC_CONFIG_SRCDIR([ChangeLog])
 AC_CONFIG_AUX_DIR([tools])
-AM_INIT_AUTOMAKE([olena], [0.3], [:])
+AM_INIT_AUTOMAKE([no-define])
 
 AM_CONFIG_HEADER(src/config/config.h:src/config/config.hin)
 
