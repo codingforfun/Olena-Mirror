@@ -1,15 +1,19 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 20)
-(Parent-Version oln 2003paradigm 17)
-(Version-Log "	* oln/core/abstract/image.hh: Make procedures on borders const.
+(Project-Version oln 2003paradigm 21)
+(Parent-Version oln 2003paradigm 20)
+(Version-Log "2003-07-24  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
-	* tests/core/tests/borders: Adjust..
+	* oln/core/abstract/image_with_dim.hh: Add upper hold function.
+
+	* oln/core/internal/window.hh: Adjust typedef name.
+
+	* oln/core/image.hh: Add empty constructor.
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 23 Jul 2003 20:19:57 +0200")
-(Checkin-Login david)
+(Checkin-Time "Thu, 24 Jul 2003 17:15:47 +0200")
+(Checkin-Login sylvain)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
 ;; diff-ignore doc/doc/ref-morpho.tex$
@@ -179,10 +183,10 @@
   (olena/oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.10 640))
   (olena/oln/core/bkd_iter2d.hh (oln/d/37_bkd_iter2d 1.10 640))
   (olena/oln/core/bkd_iter3d.hh (oln/d/36_bkd_iter3d 1.10 640))
-  
-  
-  
-  
+
+
+
+
   (olena/oln/core/box.hh (oln/o/51_box.hh 1.3 640))
   (olena/oln/core/box.hxx (oln/p/0_box.hxx 1.4.1.1.1.1 640))
   (olena/oln/core/compose.hh (oln/c/22_compose.hh 1.3 640))
@@ -207,26 +211,26 @@
   (olena/oln/core/image2d_size.hh (oln/c/44_image2d_si 1.8 640))
   (olena/oln/core/image3d.hh (oln/c/43_image3d.hh 1.14 640))
   (olena/oln/core/image3d_size.hh (oln/c/42_image3d_si 1.8 640))
-  (olena/oln/core/image.hh (oln/d/18_image.hh 1.10 640))
+  (olena/oln/core/image.hh (oln/d/18_image.hh 1.11 600))
   (olena/oln/core/imagend_size.hh (oln/c/8_imagend_si 1.12 640))
   (olena/oln/core/image_size.hh (oln/c/41_image_size 1.6 640))
   (olena/oln/core/internal/fake.hh (oln/d/17_fake.hh 1.3 640))
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
   (olena/oln/core/internal/iter1d.hh (oln/d/10_iter1d.hh 1.6 640))
   (olena/oln/core/internal/iter2d.hh (oln/d/9_iter2d.hh 1.6 640))
   (olena/oln/core/internal/iter3d.hh (oln/d/8_iter3d.hh 1.6 640))
   (olena/oln/core/internal/neighborhood.hh (oln/d/7_neighborho 1.6 640))
-  
-  
-  
-  
+
+
+
+
   (olena/oln/core/internal/rec_operable.hh (oln/d/2_rec_operab 1.2 640))
-  (olena/oln/core/internal/window.hh (oln/d/0_window.hh 1.10 640))
+  (olena/oln/core/internal/window.hh (oln/d/0_window.hh 1.11 600))
   (olena/oln/core/internal/w_window.hh (oln/d/1_w_window.h 1.9 640))
   (olena/oln/core/iter.hh (oln/c/40_iter.hh 1.8 640))
   (olena/oln/core/macros.hh (oln/c/39_macros.hh 1.4 640))
@@ -244,7 +248,7 @@
   (olena/oln/core/point.hh (oln/c/33_point.hh 1.7 640))
   (olena/oln/core/pointnd.hh (oln/c/10_pointnd.hh 1.10 640))
   (olena/oln/core/abstract/binary_image.hh (oln/c/24_pred_image 1.6 640))
-  
+
   (olena/oln/core/structelt.hh (oln/c/25_structelt. 1.5 640))
   (olena/oln/core/traverse.hh (oln/d/30_traverse.h 1.7 640))
   (metalic/mlc/typeadj.hh (oln/e/25_typeadj.hh 1.5 640))
@@ -299,10 +303,10 @@
   (metalic/mlc/bool.hh (oln/c/4_basics.hh 1.12 640))
   (metalic/mlc/cmp.hh (oln/c/3_cmp.hh 1.8 640))
   (metalic/mlc/loop.hh (oln/c/2_control.hh 1.7 640))
-  
+
   (metalic/mlc/optional.hh (oln/o/41_optional.h 1.6 640))
   (metalic/mlc/is_a.hh (oln/g/33_type.hh 1.11 640))
-  
+
   (metalic/mlc/math.hh (oln/b/51_ufuncs.hh 1.9 640))
   (olena/oln/morpho/closing.hh (oln/b/6_closing.hh 1.6 640))
   (olena/oln/morpho/closing.inc (oln/44_closing.in 1.7 640))
@@ -343,7 +347,7 @@
   (integre/ntg/all.hh (oln/g/32_all.hh 1.10.1.8 640))
   (integre/ntg/core/behavior.hh (oln/g/31_behaviour. 1.13.1.12 640))
   (integre/ntg/bin.hh (oln/t/15_bin.hh 1.1 640))
-  
+
   (integre/ntg/utils/cast.hh (oln/i/26_cast.hh 1.3.1.7 640))
   (integre/ntg/color.hh (oln/t/14_color.hh 1.1 640))
   (integre/ntg/cplx.hh (oln/t/13_cplx.hh 1.1 640))
@@ -360,32 +364,32 @@
   (integre/ntg/real/int_s.hh (oln/g/24_int_s.hh 1.16.1.14 640))
   (integre/ntg/real/int_u.hh (oln/g/23_int_u.hh 1.19.1.14 640))
   (integre/ntg/color/nrgb.hh (oln/i/19_nrgb.hh 1.5.1.4 640))
-  
-  
-  
-  
-  
+
+
+
+
+
   (integre/ntg/real/optraits_builtin_int.hh (oln/g/18_optraits_b 1.6.1.6 640))
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
   (integre/ntg/real/optraits_scalar_defs.hh (oln/g/11_optraits_s 1.12 640))
   (integre/ntg/real/optraits_scalar.hh (oln/g/12_optraits_s 1.11.1.7 640))
-  
+
   (integre/ntg/core/predecls.hh (oln/g/10_predecls.h 1.10.1.3.1.2 640))
   (integre/ntg/range.hh (oln/t/11_range.hh 1.1 640))
   (integre/ntg/core/value.hh (oln/g/8_rec_value. 1.8.1.8 640))
   (integre/ntg/color/rgb.hh (oln/i/18_rgb.hh 1.3.1.4 640))
-  
+
   (integre/ntg/core/type.hh (oln/g/6_type.hh 1.9 640))
-  
-  
-  
+
+
+
   (integre/ntg/real/typetraits_builtin_int.hh (oln/g/3_typetraits 1.7.1.8 640))
-  
+
   (integre/ntg/vec.hh (oln/t/10_vec.hh 1.1 640))
   (integre/ntg/color/xyz.hh (oln/i/24_xyz.hh 1.3.1.4 640))
   (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.4 640))
@@ -412,13 +416,13 @@
   (olena/tests/convert/convcomp.cc (oln/f/3_convcomp.c 1.7 640))
   (olena/tests/convert/convcomp.hh (oln/f/1_convcomp.h 1.7 640))
   (olena/tests/convert/Makefile.am (oln/f/0_Makefile.a 1.9 640))
-  
+
   (olena/tests/convol/Makefile.am (oln/f/38_Makefile.a 1.11 640))
   (olena/tests/convol/slow_sum_2d_1.cc (oln/f/41_slow_sum_2 1.2.1.4 640))
   (olena/tests/convol/slow_sum_2d_2.cc (oln/f/40_slow_sum_2 1.2.1.4 640))
   (olena/tests/convol/sobel_gradient.cc (oln/f/45_sobel_grad 1.3.1.4 640))
   (olena/tests/convol/sum_on_random.pgm (oln/f/42_sum_on_ran 1.1 640) :no-keywords)
-  
+
   (olena/tests/io/2d.cc (oln/e/47_2d.cc 1.8 640))
   (olena/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.7.1.5 640))
   (olena/tests/io/Makefile.am (oln/e/49_Makefile.a 1.13 640))
@@ -426,7 +430,7 @@
   (olena/tests/io/se_fail.cc (oln/i/43_se_fail.cc 1.2 640))
   (olena/tests/io/se_pass.cc (oln/i/44_se_pass.cc 1.2 640))
   (olena/tests/Makefile.am (oln/e/45_Makefile.a 1.20 640))
-  
+
   (metalic/tests/array/gen_test.cc (oln/f/34_gen_test.c 1.11.1.3 640))
   (metalic/tests/array/gen_test_utils/errors.cc (oln/f/33_errors.cc 1.1 640))
   (metalic/tests/array/gen_test_utils/errors.hh (oln/f/32_errors.hh 1.1 640))
@@ -535,15 +539,15 @@
   (tools/swilena/java/Makefile.am (oln/n/42_Makefile.a 1.1 640))
   ; (tools/swilena/java/Makefile.in ())
   (tools/swilena/Makefile.am (oln/o/25_Makefile.a 1.4 640))
-  
-  
+
+
   (tools/swilena/README (oln/n/35_README 1.1 640))
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
   (tools/swilena/meta/attic/swilena1d_convert.i (oln/n/48_swilena1d_ 1.1 640))
   (tools/swilena/meta/attic/swilena1d.i (oln/o/17_swilena1d. 1.1 640))
   (tools/swilena/meta/attic/swilena1d_morpho.i (oln/o/0_swilena1d_ 1.1 640))
@@ -570,7 +574,7 @@
   (tools/swilena/meta/attic/swilena_types.i (oln/o/3_swilena_ty 1.4 640))
   (tools/swilena/meta/attic/swilena_window.i (oln/o/9_swilena_wi 1.1 640))
   (tools/swilena/meta/attic/swilena_w_window.i (oln/o/6_swilena_w_ 1.1 640))
-  
+
   (tools/swilena/TODO (oln/n/36_TODO 1.2 640))
   (tools/utilities/configure.ac (oln/o/27_configure. 1.2 640))
   (tools/utilities/Makefile.am (oln/g/2_Makefile.a 1.12.1.4 640))
@@ -873,7 +877,7 @@
 ;; to version 2003paradigm.7(w), by burrus_n:
 
   (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.7 640))
-  (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.5 640))
+  (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.6 600))
   (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.7 640))
   (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.2 640))
   (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.6 640))
@@ -921,9 +925,5 @@
 
 
   (olena/tests/core/tests/ref (oln/t/37_ref 1.2 640)))
-(Merge-Parents
-  (2003paradigm.19 complete
-    (ChangeLog ChangeLog ChangeLog r) (olena/ChangeLog olena/ChangeLog olena/ChangeLog r)
-    (config/oln.m4 config/oln.m4 config/oln.m4 r) (olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh m))
-)
+(Merge-Parents)
 (New-Merge-Parents)

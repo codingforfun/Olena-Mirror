@@ -60,7 +60,7 @@ namespace oln {
 
 
   namespace abstract {
-    
+
     // fwd_decl
     template <unsigned Dim, class Exact>
     class image_with_dim;
@@ -149,11 +149,13 @@ namespace oln {
 	//          super_type::operator[](point_type(col));
       }
 
-      value_type& operator()(coord col) 
+      value_type& operator()(coord col)
       {
 	return to_exact(*this)[point_type(col)];
 	//return super_type::operator[](point_type(col));
       }
+
+      using abstract::image<Exact>::hold;
 
       bool hold(coord col) const
       {
@@ -205,7 +207,7 @@ namespace oln {
       {
 	return size().ncols();
       }
-      
+
       // FIXME: size_t ???
       size_t npoints_() const
       {
@@ -223,6 +225,8 @@ namespace oln {
 	return to_exact(*this)[point_type(row, col)];
 	//return super_type::operator[](point_type(row, col));
       }
+
+      using abstract::image<Exact>::hold;
 
       bool hold(coord row, coord col) const
       {
@@ -244,8 +248,6 @@ namespace oln {
 
     protected:
       image_with_dim() {}
-
-      
 
     }; // end of bi-dimensional specialization
 
@@ -280,7 +282,7 @@ namespace oln {
       {
 	return size().ncols();
       }
-   
+
       size_t npoints_() const
       {
 	return size_t(nslices()) * size_t(nrows()) * size_t(ncols());
@@ -317,7 +319,7 @@ namespace oln {
       }
 
     protected:
-      image_with_dim(){}     
+      image_with_dim(){}
 
     }; // end of tri-dimensional specialization
 
