@@ -160,6 +160,15 @@ namespace oln {
     }
 
 
+    /// Cpy ctor.
+
+    value_box(const value_box& rhs) :
+      ima_(rhs.ima_),
+      p_(rhs.p_)
+    {
+    }
+
+
   private:
 
     /*-------*
@@ -173,14 +182,6 @@ namespace oln {
     value_box(abstract::image<I>& ima, const oln_point_type(I)& p) :
       ima_(ima.exact()),
       p_(p)
-    {
-    }
-
-    /// Cpy ctor (restricted access).
-
-    value_box(const value_box& rhs) :
-      ima_(rhs.ima_),
-      p_(rhs.p_)
     {
     }
 
@@ -255,6 +256,16 @@ namespace oln {
 
     // IDEA: provide op->
 
+
+    /// Cpy ctor.
+
+    value_box(const value_box& rhs) :
+      ima_(rhs.ima_),
+      p_(rhs.p_)
+    {
+    }
+
+
   private:
 
     /*-------*
@@ -268,14 +279,6 @@ namespace oln {
     value_box(const abstract::image<I>& ima, const oln_point_type(I)& p) :
       ima_(ima.exact()),
       p_(p)
-    {
-    }
-
-    /// Cpy ctor (restricted access).
-
-    value_box(const value_box& rhs) :
-      ima_(rhs.ima_),
-      p_(rhs.p_)
     {
     }
 

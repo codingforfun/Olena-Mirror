@@ -139,6 +139,7 @@ namespace oln {
 
       bool hold(const oln_point_type(E)& p) const
       {
+	precondition(this->npoints() != 0);
 	return this->exact().impl_hold(p);
       }
 
@@ -159,6 +160,7 @@ namespace oln {
 
       bool hold_large(const oln_point_type(E)& p) const
       {
+	precondition(this->npoints() != 0);
 	return this->exact().impl_hold_large(p);
       }
 
@@ -196,6 +198,7 @@ namespace oln {
 
       oln_value_box_type(const E) operator[](const oln_point_type(E)& p) const
       {
+	precondition(this->npoints() != 0);
 	precondition(this->hold_large(p));
 	oln_value_box_type(const E) tmp(this->exact(), p);
 	return tmp;
@@ -213,6 +216,7 @@ namespace oln {
 
       oln_value_box_type(E) operator[](const oln_point_type(E)& p)
       {
+	precondition(this->npoints() != 0);
 	precondition(this->hold_large(p));
 	oln_value_box_type(E) tmp(this->exact(), p);
 	return tmp;

@@ -48,8 +48,10 @@ namespace oln {
 
       void clear_data()
       {
+	if (! this->has_data())
+	  return;
 	this->exact().impl_clear_data();
-	postcondition(this->has_data() == false);
+	postcondition(! this->has_data());
       }
 
       const oln_size_type(E)& size() const
@@ -64,18 +66,21 @@ namespace oln {
 
       unsigned long npoints() const
       {
-	precondition(this->has_data());
+	if (! this->has_data())
+	  return 0;
 	return this->exact().impl_npoints();
       }
 
       bool hold(const oln_point_type(E)& p) const
       {
-	precondition(this->has_data());
+	if (! this->has_data())
+	  return false;
 	return this->exact().impl_hold(p);
       }
 
       const oln_data_type(E) get(const oln_point_type(E)& p) const
       {
+	precondition(this->has_data());
 	precondition(this->hold_large(p));
 	return this->exact().impl_get(p);
       }
@@ -83,6 +88,7 @@ namespace oln {
       void set(const oln_point_type(E)& p,
 	       const oln_data_type(E)& v)
       {
+	precondition(this->has_data());
 	precondition(this->hold_large(p));
 	this->exact().impl_set(p, v);
       }
@@ -97,7 +103,8 @@ namespace oln {
 
       bool hold_large(const oln_point_type(E)& p) const
       {
-	precondition(this->has_data());
+	if (! this->has_data())
+	  return false;
 	return this->exact().impl_hold_large(p);
       }
 

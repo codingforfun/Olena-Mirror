@@ -1,5 +1,13 @@
 2005-02-08  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	* oln/core/value_box.hh (value_box): Set cpy ctors public.
+	* oln/core/abstract/image.hh: Add preconditions.
+	* oln/core/abstract/data_storage.hh (get, set): Add preconditions.
+	(clear_data, npoints, hold, hold_large): Replace preconditions by
+	lax behavior.
+
+2005-02-08  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	* oln/core/value_box.hh: Ensure g++-2.95 compliance.
 	* oln/core/abstract/piter.hh: Likewise.
 	* oln/core/abstract/point.hh: Likewise.
