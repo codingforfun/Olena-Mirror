@@ -1,3 +1,11 @@
+2002-08-28  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* types/tests/int_u2d, types/tests/int_u2a, types/tests/int_u3a,
+	types/tests/int_u4, types/tests/int_u2b, types/tests/int_u2c,
+	types/tests/int_u1, types/tests/int_u3b: New files.
+	* types/tests/op1, types/tests/op2: Fix with casts.
+	* types/tests/float_r1: Check value.
+
 2002-08-27  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* types/tests/op2, types/tests/comp3, types/tests/comp2,

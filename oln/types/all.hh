@@ -28,14 +28,7 @@
 #ifndef OLENA_VALUE_ALL_HH
 # define OLENA_VALUE_ALL_HH
 
-#if (defined __GNUC__) && (__GNUC__ < 3) && HAVE_STL_CONFIG_H
-#  include <stl_config.h>
-#  undef __STL_BEGIN_RELOPS_NAMESPACE
-#  define __STL_BEGIN_RELOPS_NAMESPACE namespace rel_ops {
-#  undef __STL_END_RELOPS_NAMESPACE
-#  define __STL_END_RELOPS_NAMESPACE }
-#endif
-
+# include <oln/config/system.hh>
 
 # include <oln/types/type.hh>
 

@@ -1,0 +1,3 @@
+int_u32 u = 0;
+u--;  // ABORT
+std::cout << u << std::endl;
