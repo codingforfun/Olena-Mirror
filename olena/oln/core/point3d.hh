@@ -28,166 +28,48 @@
 #ifndef OLENA_CORE_POINT3D_HH
 # define OLENA_CORE_POINT3D_HH
 
-# include <ntg/core/predecls.hh>
-# include <oln/core/coord.hh>
-# include <oln/core/point2d.hh>
-# include <iostream>
 
+# include "point_nd.hh"
 
 namespace oln {
 
+  template <unsigned Dim>
+  struct point;//fwd decl
 
-  // fwd decl
-  class dpoint3d;
-  class point3d;
-
-  /*! \class point_traits<point3d>
+  /*! \class Concrete point 3.
   **
-  ** The specialized version for point3d.
+  ** Provides syntactic sugar.
   */
-
-  template<>
-  struct point_traits<point3d>: public point_traits<abstract::point<point3d> >
+  template <>
+  struct point<3>: public abstract::point_nd<point<3> >
   {
-    enum { dim = 3 };
-    typedef dpoint3d dpoint_type;
-  };
+    point()
+    {}
+    point(coord slice, coord row, coord col)
+    {
+      coord_[0] = slice;
+      coord_[1] = row;
+      coord_[2] = col;
+    }
 
-  /*! \class point3d
-  **
-  ** Subclass of abstract::point, declaration of point
-  ** for image3d. To instantiate a point3d on an
-  ** oln::image3d<ngt::rgb_8> for example, use the
-  ** macro oln_point_type(I).\n
-  ** oln_point_type(oln::image3d<ngt::rgb_8>) p();\n
-  ** or\n
-  ** oln_point_type(oln::image3d<ngt::rgb_8>) p(1, 2, 3);
-  */
+    coord slice() const		{ return coord_[0]; }
+    coord& slice()		{ return coord_[0]; }
 
-  class point3d : public abstract::point< point3d >
-  {
-  public:
+    coord row() const		{ return coord_[1]; }
+    coord& row() 		{ return coord_[1]; }
 
-    typedef abstract::point< point3d >	super_type;
-    typedef point_traits<point3d>::dpoint_type dpoint_type;
-
-    friend class abstract::point< point3d >;
-
-
-    point3d();
-
-    /// The coordinates of the point3d are set to \a slice, \a row, and \a col.
-
-    point3d(coord slice, coord row, coord col);
-
-    /// The coordinates of the point3d are set to \a p, and \a slice.
-
-    point3d(const point2d& p, coord slice);
-
-    /// Return the value of the point3d slice coordinate.
-
-    coord
-    slice() const;
-
-    /// Return a reference to the value of the point3d slice coordinate.
-
-    coord&
-    slice();
-
-    /// Return the value of the point3d row coordinate.
-
-    coord
-    row() const;
-
-    /// Return a reference to the point3d row coordinate.
-
-    coord&
-    row();
-
-    /// Return the value of the point3d col coordinate.
-
-    coord
-    col() const;
-
-    /// Return a reference to the point3d col coordinate.
-
-    coord&
-    col();
+    coord col() const		{ return coord_[2]; }
+    coord& col() 		{ return coord_[2]; }
 
     static std::string
     name()
     {
-      return "point3d";
+      return "point<3>";
     }
-
-  protected:
-
-    /*! \brief Return a point3d whose coordinates are equal to
-    ** \a dp coordinates plus the current point3d coordinates.
-    */
-
-    point3d
-    plus_dp(const dpoint3d& dp) const;
-
-    /*! \brief Return a point3d whose coordinates are equal to
-    ** the current point3d coordinates minus \a dp coordinates.
-    */
-
-    point3d
-    minus_dp(const dpoint3d& dp) const;
-
-    /*! \brief Return a reference to the current point3d
-    ** plus \a dp.
-    */
-
-    point3d&
-    plus_assign_dp(const dpoint3d& dp);
-
-    /*! \brief Return a reference to the current point3d
-    ** minus \a dp.
-    */
-
-    point3d&
-    minus_assign_dp(const dpoint3d& dp);
-
-    /*! \brief Return a dpoint3d whose coordinates are equal
-    ** to the current point3d coordinates minus \a p coordinates.
-    */
-
-    dpoint3d
-    minus_p(const point3d& p) const;
-
-    /*! \brief Return a point3d whose coordinates are equal to
-    ** the opposite of the current point3d coordinates.
-    */
-
-    point3d
-    minus() const;
-
   };
 
-  namespace internal
-  {
-
-    /*! \class default_less<point3d>
-    **
-    ** The specialized version for point3d.
-    */
-
-    template<>
-    struct default_less<point3d> : public default_less<point3d::super_type>
-    {
-    };
-
-  } // end of internal
-
+  /// Depreciated. Use point<3> instead.
+  typedef point<3> point3d;
 } // end of oln
-
-/// Write on an output stream \a o the coordinates of the point3d \a p.
-
-inline std::ostream&
-operator<<(std::ostream& o, const oln::point3d& p);
-
-# include <oln/core/point3d.hxx>
 
 #endif // ! OLENA_CORE_POINT3D_HH

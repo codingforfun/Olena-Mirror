@@ -28,143 +28,38 @@
 #ifndef OLENA_CORE_POINT1D_HH
 # define OLENA_CORE_POINT1D_HH
 
-# include <oln/config/system.hh>
-# include <ntg/core/predecls.hh>
-# include <oln/core/coord.hh>
-# include <oln/core/abstract/point.hh>
-# include <iostream>
+# include "point_nd.hh"
 
 namespace oln {
 
+  template <unsigned Dim>
+  struct point;//fwd decl
 
-  // fwd decl
-  class dpoint1d;
-  class point1d;
-
- 
-  /*! \class point_traits<point1d>
+ /*! \class Concrete point 1.
   **
-  ** The specialized version for point1d.
-  */ 
-  
-  template<>
-  struct point_traits<point1d> : public point_traits<abstract::point<point1d> >
-  {
-    enum { dim = 1 };
-    typedef dpoint1d dpoint_type;
-  };
-
-  /*! \class point1d
-  **
-  ** Subclass of abstract::point, declaration of point
-  ** for image1d. To instantiate a point1d on an
-  ** oln::image1d<ntg::rgb_8> for example, use the
-  ** macro oln_point_type.\n
-  ** oln_point_type(oln::image1d<ntg::rgb_8>) p();\n
-  ** or\n
-  ** oln_point_type(oln::image1d<ntg::rgb_8>) p(1);
+  ** Provides syntactic sugar.
   */
-  
-  class point1d : public abstract::point<point1d>
+  template <>
+  struct point<1>: public abstract::point_nd<point<1> >
   {
-  public:
-
-    typedef abstract::point<point1d>	super_type;
-    typedef point_traits<point1d>::dpoint_type dpoint_type;
-
-    friend class abstract::point<point1d>;
-
-    point1d();
-    
-    /// The coordinate of the point1d is set to \a col.
-    
-    point1d(coord col);
-    
-    /// Return the value of the point1d coordinate.
-    
-    coord 
-    col() const;
-    
-    /// Return a reference to the point1d coordinate.
-
-    coord& 
-    col();
- 
-    static std::string 
-    name() 
-    { 
-      return "point1d"; 
+    point()
+    {}
+    point(coord col)
+    {
+      coord_[0] = col;
     }
 
-  protected:
-
-    
-    /*! \brief Return a point1d whose coordinate is equal to 
-    ** \a dp coordinate plus the current point1d coordinate.
-    */
-    
-    point1d 
-    plus_dp(const dpoint1d& dp) const;
-  
-    /*! \brief Return a point1d whose coordinate is equal to
-    ** the current point1d coordinate minus \a dp coordinate.
-    */
-    
-    point1d 
-    minus_dp(const dpoint1d& dp) const;
-    
-    /*! \brief Return a reference to the current point1d 
-    ** plus \a dp.
-    */
-    
-    point1d& 
-    plus_assign_dp(const dpoint1d& dp);
-
-    /*! \brief Return a reference to the current point1d
-    ** minus \a dp.
-    */
-    
-    point1d& 
-    minus_assign_dp(const dpoint1d& dp);
-    
-    /*! \brief Return a dpoint1d whose coordinate is equal
-    ** to the current point1d coordinate minus \a p coordinate.
-    */
-    
-    dpoint1d 
-    minus_p(const point1d& p) const;
-
-    /*! \brief Return a point1d whose coordinate is equal to 
-    ** the opposite of the current point1d coordinate.
-    */ 
-    
-    point1d 
-    minus() const;
-
-  };
-    
-  namespace internal
-  {
-    
-    /*! \class default_less<point1d>
-    ** 
-    ** The specialized version for point1d.
-    */
-    
-    template<>
-    struct default_less<point1d> : public default_less<point1d::super_type>
+    coord col() const		{ return coord_[0]; }
+    coord& col()		{ return coord_[0]; }
+    static std::string
+    name()
     {
-    };
-  } // internal
+      return "point<1>";
+    }
+  };
 
-
+/// Depreciated. Use point<1> instead.
+  typedef point<1> point1d;
 } // oln
-
-/// Write on an output stream \a o the coordinate of the point1d \a p.
-
-inline std::ostream&
-operator<<(std::ostream& o, const oln::point1d& p);
-
-# include <oln/core/point1d.hxx>
 
 #endif // ! OLENA_CORE_POINT1D_HH

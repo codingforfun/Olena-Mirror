@@ -28,142 +28,38 @@
 #ifndef OLENA_CORE_DPOINT1D_HH
 # define OLENA_CORE_DPOINT1D_HH
 
-# include <oln/config/system.hh>
-# include <ntg/core/predecls.hh>
-# include <oln/core/coord.hh>
-# include <oln/core/abstract/dpoint.hh>
-# include <iostream>
+# include <oln/core/abstract/dpoint_nd.hh>
 
 namespace oln {
 
-  // fwd decl
-  class point1d;
+  template<unsigned dim>
+  class dpoint; //fwd decl
 
-  class dpoint1d; //fwd_decl
-
-  /*! \class dpoint_traits<dpoint1d>
+  /*! \class Concrete dpoint 1.
   **
-  ** The specialized version for dpoint1d.
+  ** Provides syntactic sugar.
   */
-  
   template <>
-  struct dpoint_traits<dpoint1d>: public
-  dpoint_traits<abstract::dpoint<dpoint1d> >
+  struct dpoint<1>: public abstract::dpoint_nd<dpoint<1> >
   {
-    enum { dim = 1 };
-    typedef point1d point_type;
-  };
-
-  /*! \class dpoint1d
-  **
-  ** Subclass of abstract::dpoint, declaration of dpoint
-  ** for image1d. To instantiate a dpoint1d on an 
-  ** oln::image1d<ntg::rgb_8> for example, use the
-  ** macro oln_dpoint_type(I).\n
-  ** oln_dpoint_type(oln::image1d<ntg::rgb_8>) p();\n
-  ** or\n
-  ** oln_dpoint_type(oln::image1d<ntg::rgb_8>) p(1);
-  */
-
-  class dpoint1d : public abstract::dpoint<dpoint1d>
-  {
-
-  public:
-
-    typedef abstract::dpoint<dpoint1d> super_type;
-
-    friend class abstract::dpoint<dpoint1d>;
-
-    
-    dpoint1d();
-
-    /// The coordinate of the dpoint1d is set to \a c.
-
-    dpoint1d(coord c);
-
-    /// The coordinate of the dpoint1d is set to the \p coordinate.
-        
-    explicit dpoint1d(const point1d& p);
-
-    /// Return the value of the dpoint1d coordinate.
-    coord 
-    col() const;
-    
-    /// Return a reference to the dpoint1d coordinate.
-    
-    coord& 
-    col();
-
-    static std::string 
-    name() 
-    { 
-      return "dpoint1d"; 
+    dpoint()
+    {}
+    dpoint(coord col)
+    {
+      coord_[0] = col;
     }
 
-  protected:
-
-    /*! \brief Return a dpoint1d whose coordinate is equal to 
-    ** \a dp coordinate plus the current dpoint1d coordinate.
-    **
-    */
-    
-    dpoint1d 
-    plus_dp(const dpoint1d& dp) const;
-    
-    /*! \brief Return a dpoint1d whose coordinate is equal to 
-    ** the opposite of the current dpoint1d coordinate.
-    */
-    
-    dpoint1d 
-    minus() const;
-
-    /*! \brief Return a dpoint1d whose coordinate is equal to
-    ** the current dpoint1d coordinate minus 'dp' coordinate.
-    */
-    
-    dpoint1d 
-    minus_dp(const dpoint1d& dp) const;
-
-    /*! \brief Return a reference to the current dpoint1d 
-    ** plus 'dp'.
-    */
-    
-    dpoint1d& 
-    plus_assign_dp(const dpoint1d& dp);
-    
-    /*! \brief Return a reference to the current dpoint1d
-    ** minus 'dp'.
-    */
-    
-    dpoint1d& 
-    minus_assign_dp(const dpoint1d& dp);
-
+    coord col() const		{ return coord_[0]; }
+    coord& col()		{ return coord_[0]; }
   };
 
-    
-  namespace internal
-  {
 
-    /*! \class default_less<dpoint1d>
-    ** 
-    ** The specialized version for dpoint1d.
-    */
 
-    template<>
-    struct default_less<dpoint1d> :
-      public default_less<dpoint1d::super_type>
-    {
-    };
 
-  } // end of internal
+  /// Depreciated. Use dpoint<1> instead.
+  typedef dpoint<1> dpoint1d;
+
 } // end of oln
 
-
-/// Write on an output stream \a o the coordinate of the dpoint1d \a dp.
-
-inline std::ostream&
-operator<<(std::ostream& o, const oln::dpoint1d& dp);
-
-# include <oln/core/dpoint1d.hxx>
 
 #endif // ! OLENA_CORE_DPOINT1D_HH

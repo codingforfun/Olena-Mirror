@@ -24,240 +24,212 @@
 // License.  This exception does not however invalidate any other
 // reasons why the executable file might be covered by the GNU General
 // Public License.
-
 #ifndef OLENA_CORE_ABSTRACT_DPOINT_HH
 # define OLENA_CORE_ABSTRACT_DPOINT_HH
 
 # include <mlc/type.hh>
 # include <oln/core/coord.hh>
-# include <ntg/float.hh>
-# include <cmath>
+# include <oln/core/macros.hh>
 
-namespace oln {
+# include <iostream>
+# include <sstream>
 
-
-  namespace abstract {
-    template<class Exact>
-    struct dpoint; // fwd_decl
-
-    template<class Exact>
-    struct point; // fwd_decl
-  } // end of abstract
+namespace oln
+{
 
   template<class Exact>
-  struct dpoint_traits; // fwd_decl
-
-  /*! \class dpoint_traits<abstract::dpoint<Exact> >
-  **
-  ** The specialized version for abstract::dpoint<Exact>.
-  */
-
-  template<class Exact>
-  struct dpoint_traits<abstract::dpoint<Exact> >
-  {
-
-  };
-
+  struct prop; // fwd declaration
 
   namespace abstract {
 
-    /*! \class dpoint
+    template<class Exact>
+    struct point; // fwd declaration
+
+
+
+    /*! \class Abstract dpoint.
     **
-    ** The abstract dpoint class from whom derives
-    ** all the others dpoint classes.
+    ** This class provides an interface.
+    ** \see oln::dpoint
     */
-
     template<class Exact>
     struct dpoint : public mlc_hierarchy::any<Exact>
     {
+    public:
 
-      typedef Exact exact_type;
-      typedef dpoint<Exact> self_type;
-      enum { dim = dpoint_traits<exact_type>::dim };
-      typedef typename dpoint_traits<exact_type>::point_type point_type;
-
-      /*! \brief Construct a dpoint with the same coordinates
-      ** a the point \a p.
-      */
-
-      explicit dpoint(const abstract::point<point_type>& p)
-      {
-	for (unsigned i = 0; i < dim; ++i)
-	  nth(i) = p.exact().nth(i);
-      }
-
-      /// Return the dth coordinate of the current dpoint.
-
+      /// Give the value of the nth coordinate of the dpoint.
       coord
-      nth(const unsigned d) const
+      nth(const unsigned			dim) const
       {
-	return coord_[d];
+	mlc_dispatch(nth)(dim);
       }
 
-      /// Return a reference to the dth coordinate of the current dpoint.
+      /// Return a reference to the nth coordinate of the dpoint.
       coord&
-      nth(const unsigned d)
+      nth(const unsigned			dim)
       {
-	return coord_[d];
+	mlc_dispatch(nth)(dim);
       }
 
-      /*! \brief Return a dpoint whose coordinates are the opposite
-      ** of the current dpoint coordinates.
-      */
+      /// Add a delta dpoint \a dp to the current dpoint
+      Exact &
+      operator+=(const Exact	&dp)
+      {
+	mlc_dispatch(op_plus_assign)(dp);
+      }
 
-      exact_type
+
+      /// Subtract a delta dpoint \a dp from the current dpoint.
+      Exact&
+      operator-=(const Exact	&dp)
+      {
+	mlc_dispatch(op_minus_assign)(dp);
+      }
+
+      /// Subtract a dpoint \a p from the current dpoint.
+      Exact
+      operator-(const Exact			&p) const
+      {
+	mlc_dispatch(op_minus)(p);
+      }
+
+
+      /// Addition of a delta dpoint \a dp and the current dpoint.
+      Exact
+      operator+(const Exact	&dp) const
+      {
+	mlc_dispatch(op_plus)(dp);
+      }
+      /// Opposite of the current dpoint coordinates
+      Exact
       operator-() const
       {
-	return this->exact().minus();
+	mlc_dispatch(op_minus)();
       }
 
-      /*! \brief Add a dpoint \a dp to the current dpoint.
-      **
-      ** \return A reference to the current dpoint plus \a dp.
-      */
-
-      exact_type&
-      operator+=(const self_type& dp)
-      {
-	return this->exact().plus_assign_dp(dp.exact());
-      }
-
-      /*! \brief Subtract a dpoint \a dp from the current dpoint.
-      **
-      ** \return A reference to the current point minus \a dp.
-      */
-
-      exact_type&
-      operator-=(const self_type& dp)
-      {
-	return this->exact().minus_assign_dp(dp.exact());
-      }
-
-      /*! \brief Add a dpoint \a dp to the current dpoint.
-      **
-      ** \return The value of the current point plus \a dp.
-      */
-
-      exact_type
-      operator+(const self_type& dp) const
-      {
-	return this->exact().plus_dp(dp.exact());
-      }
-
-      /*! \brief Subtract a dpoint \a dp from the current dpoint.
-      **
-      ** \return The value of the current point minus \a dp.
-      */
-
-      exact_type
-      operator-(const self_type& dp) const
-      {
-	return this->exact().minus_dp(dp.exact());
-      }
-
-      /*! \brief Test if two dpoints have the same coordinates.
-      **
-      ** \arg dp A dpoint.
-      **
-      ** \return True if \a dp and the current point have the same
-      ** coordinate, false otherwise.
-      */
-
+      /// Dpoints equal.
       bool
-      operator==(const self_type& dp) const
+      operator==(const Exact			&p) const
       {
-	for (unsigned i = 0; i < dim; ++i)
-	  if (dp.nth(i) != nth(i))
-	    return false;
-	return true;
+	mlc_dispatch(op_equal_p)(p);
       }
 
-      /*! \brief Test if two dpoints do not have the same coordinates.
-      **
-      ** \arg dp A dpoint.
-      **
-      ** \return False if \a dp and the current point have the same
-      ** coordinate, true otherwise.
-      */
 
+      /// Dpoints not equal.
       bool
-      operator!=(const self_type& dp) const
+      operator!=(const Exact			&p) const
       {
-	for (unsigned i = 0; i < dim; ++i)
-	  if (dp.nth(i) != nth(i))
-	    return true;
-	return false;
-      }
-
-      /*! \brief Test if all the dpoint coordinates are set to zero.
-      **
-      ** \return True if all the coordinates of the current dpoint
-      ** are set to zero.
-      */
-
-      bool
-      is_centered(void) const
-      {
-	for (unsigned i = 0; i < dim; ++i)
-	  if (nth(i) != 0)
-	    return false;
-	return true;
-      }
-
-      /// Return the norm of the current dpoint.
-
-      ntg::float_d
-      norm2(void) const
-      {
-	double norm = 0;
-
-	for (unsigned i = 0; i < dim; ++i)
-	  norm += nth(i) * nth(i);
-	return sqrt(norm);
-      }
-
-      /// Return the square of the norm of the current dpoint.
-
-      ntg::float_d
-      sqr_norm2(void) const
-      {
-	double norm = 0;
-
-	for (unsigned i = 0; i < dim; ++i)
-	  norm += nth(i) * nth(i);
-	return norm;
+	mlc_dispatch(op_not_equal_p)(p);
       }
 
       static std::string
       name()
       {
-	return std::string("dpoint<") +
-	  Exact::name() + ">";
+	return std::string("dpoint<") + Exact::name() + ">";
       }
 
     protected:
 
       dpoint()
       {}
+    };
 
-    private:
 
-      coord coord_[dim];
+    template<class Exact>
+    inline std::ostream&
+    operator<<(std::ostream& o, const dpoint<Exact> &p)
+    {
+      o << "(";
+      for (unsigned dim = 0; dim < oln_dim_val(Exact); ++dim)
+	{
+	  o << p.nth(dim);
+	  if (dim + 1 < oln_dim_val(Exact))
+	    o << ",";
+	}
+      o << ")";
+      return o;
+    }
+
+
+
+    /*! \class Abstract dpoint with dimension.
+    **
+    ** This class provides an implementation.
+    ** \see oln::dpoint
+    */
+    template<class Exact>
+    struct dpoint_nd : public dpoint<Exact>
+    {
+    public:
+
+      /// Give the value of the nth coordinate of the dpoint.
+      coord
+      nth_impl(const unsigned			dim) const;
+
+      /// Return a reference to the nth coordinate of the dpoint.
+      coord&
+      nth_impl(const unsigned			dim);
+
+      /// Add a delta dpoint \a dp to the current dpoint
+      Exact &
+      op_plus_assign_impl(const Exact& dp);
+
+
+      /// Subtract a delta dpoint \a dp from the current dpoint.
+      Exact&
+      op_minus_assign_impl(const Exact	&dp);
+
+      /// Subtract a dpoint \a p from the current dpoint.
+      Exact
+      op_minus_impl(const Exact			&p) const;
+
+
+      /// Addition of a delta dpoint \a dp and the current dpoint.
+      Exact
+      op_plus_impl(const Exact	&dp) const;
+
+
+      /// Opposite of the current dpoint coordinates
+      Exact
+      op_minus_impl() const;
+
+
+      /// Dpoints equal.
+      bool
+      op_equal_impl(const Exact			&p) const;
+
+
+      /// Dpoints not equal.
+      bool
+      op_not_equal_impl(const Exact			&p) const;
+
+
+
+      static std::string
+      name()
+      {
+	return std::string("dpoint_nd<") + Exact::name() + ">";
+      }
+
+    protected:
+
+      dpoint_nd()
+      {}
+      coord coord_[oln_dim_val(Exact)];
     };
 
   } // end of abstract
 
-  /*! \brief Internal purpose only.
-  */
+
+
+
   namespace internal
   {
 
     /*! \class default_less< abstract::dpoint<Exact> >
     **
-    ** The specialized version for < abstract::dpoint<Exact> >.
+    ** The specialized version for abstract::dpoint.
     */
-
-
     template<class Exact>
     struct default_less< abstract::dpoint<Exact> >
     {
@@ -265,13 +237,18 @@ namespace oln {
       /*! \brief Test if the coordinates of a dpoint l
       ** are not greater than the coordinates of a dpoint r.
       **
+      ** \arg l A dpoint.
+      **
+      ** \arg r Another dpoint.
+      **
       ** \return True if the coordinates of l are not greater
       ** than the coordinates of r.
       */
+
       bool operator()(const abstract::dpoint<Exact>& l,
 		      const abstract::dpoint<Exact>& r) const
       {
-	for (unsigned i = 0; i < abstract::dpoint<Exact>::dim; ++i)
+	for (unsigned i = 0; i < oln_dim_val(Exact); ++i)
 	  if (l.nth(i) < r.nth(i))
 	    return true;
 	  else if (l.nth(i) > r.nth(i))
@@ -279,11 +256,10 @@ namespace oln {
 	return false;
       }
     };
-
   } // internal
-
-
 } // end of oln
 
+
+#include "dpoint.hxx"
 
 #endif // ! OLENA_CORE_ABSTRACT_DPOINT_HH

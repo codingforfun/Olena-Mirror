@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -38,5 +38,17 @@
    */
 # define for_all_remaining(p) \
   if (p == mlc::end) {} else while(++(p), ((p) != mlc::end))
+
+
+
+# define oln_point_type(E)		typename oln::prop<E>::point_type
+# define oln_point_type_(E)		oln::prop<E>::point_type
+
+# define oln_dpoint_type(E)		typename oln::prop<E>::dpoint_type
+# define oln_dpoint_type_(E)	        oln::prop<E>::dpoint_type
+
+
+# define oln_dim_val(E)			oln::prop<E>::dim
+# define oln_dim_val_(E)	        oln::prop<E>::dim
 
 #endif // OLENA_CORE_MACROS_HH

@@ -28,150 +28,50 @@
 #ifndef OLENA_CORE_POINT2D_HH
 # define OLENA_CORE_POINT2D_HH
 
-# include <oln/core/coord.hh>
-# include <oln/core/point1d.hh>
-# include <iostream>
+
+# include "point_nd.hh"
+
 namespace oln {
 
-  // fwd decl
-  class dpoint2d;
-  class point2d;
 
-  /*! \class point_traits<point2d>
+  template<class Exact>
+  struct prop; // fwd declaration
+
+  template <unsigned Dim>
+  struct point;//fwd decl
+
+  /*! \class Concrete point 2.
   **
-  ** The specialized version for point2d.
+  ** Provides syntactic sugar.
   */
-
-  template<>
-  struct point_traits<point2d>: public point_traits<abstract::point<point2d> >
+  template <>
+  struct point<2>: public abstract::point_nd<point<2> >
   {
-    enum { dim = 2 };
-    typedef dpoint2d dpoint_type;
-  };
+    point()
+    {}
+    point(coord row, coord col)
+    {
+      coord_[0] = row;
+      coord_[1] = col;
+    }
 
-  /*! \class point2d
-  **
-  ** Subclass of abstract::point, declaration of point
-  ** for image2d. To instantiate a dpoint2d on an
-  ** oln::image2d<ntg::rgb_8> for example, use the
-  ** macro oln_point_type(I).\n
-  ** oln_point_type(oln::image2d<ntg::rgb_8>) p();\n
-  ** or\n
-  ** oln_point_type(oln::image2d<ntg::rgb_8>) p(1, 2);
-  */
+    coord row() const		{ return coord_[0]; }
+    coord& row() 		{ return coord_[0]; }
 
-  class point2d : public abstract::point<point2d >
-  {
-  public:
+    coord col() const		{ return coord_[1]; }
+    coord& col() 		{ return coord_[1]; }
 
-    typedef abstract::point< point2d >	super_type;
-    typedef point_traits<point2d>::dpoint_type dpoint_type;
-
-    friend class abstract::point< point2d >;
-
-    point2d();
-
-    /// The coordinates of the point2d are set to \a row and \a col.
-
-    point2d(coord row, coord col);
-
-    /// The coordinates of the point2d are set to \a p and \a col.
-
-    point2d(const point1d& p, coord col);
-
-    /// Return Give the value of the point2d row coordinate.
-
-    coord
-    row() const;
-
-    /// Return a reference to the point2d row coordinate.
-
-    coord&
-    row();
-
-    /// Return the value of the point2d col coordinate.
-
-    coord
-    col() const;
-
-    /// Return a reference to the point2d col coordinate.
-
-    coord&
-    col();
 
     static std::string
     name()
     {
-      return "point2d";
+      return "point<2>";
     }
-
-  protected:
-
-    /*! \brief Return a point2d whose coordinates are equal to
-    ** \a dp coordinates plus the current point2d coordinates.
-    */
-
-    point2d
-    plus_dp(const dpoint2d& dp) const;
-
-    /*! \brief Return a point2d whose coordinates are equal to
-    ** the current point2d coordinates minus \a dp coordinates.
-    */
-
-    point2d
-    minus_dp(const dpoint2d& dp) const;
-
-    /*! \brief Return a reference to the current point2d
-    ** plus \a dp.
-    */
-
-    point2d&
-    plus_assign_dp(const dpoint2d& dp);
-
-    /*! \brief Return a reference to the current point2d
-    ** minus \a dp.
-    */
-
-    point2d&
-    minus_assign_dp(const dpoint2d& dp);
-
-    /*! \brief Return a dpoint2d whose coordinates are equal
-    ** to the current point2d coordinates minus \a p coordinates.
-    */
-
-    dpoint2d
-    minus_p(const point2d& p) const;
-
-    /*! \brief Return a point2d whose coordinates are equal to
-    ** the opposite of the current point2d coordinates.
-    */
-
-    point2d
-    minus() const;
-
   };
 
-  namespace internal
-  {
 
-    /*! \class default_less<point2d>
-    **
-    ** The specialized version for point2d.
-    */
-
-    template<>
-    struct default_less<point2d> :
-      public default_less<point2d::super_type>
-    {};
-  } // internal
-
+ /// Depreciated. Use point<2> instead.
+  typedef point<2> point2d;
 } // oln
-
-/// Write on an output stream \a o the coordinates of the point2d \a p.
-
-inline std::ostream&
-operator<<(std::ostream& o, const oln::point2d& p);
-
-# include <oln/core/point2d.hxx>
 
 #endif // ! OLENA_CORE_POINT2D_HH
