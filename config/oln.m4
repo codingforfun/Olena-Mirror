@@ -573,7 +573,9 @@ AC_DEFUN([AC_WITH_CXX_FFTW],
      FFTW_LDFLAGS="-L${with_fftw}/lib"
    fi
    oln_save_CXXFLAGS=$CXXFLAGS
+   oln_save_LDFLAGS=$LDFLAGS
    CXXFLAGS="$CXXFLAGS $FFTW_CXXFLAGS"
+   LDFLAGS="$LDFLAGS $FFTW_LDFLAGS"
    oln_have_fftw=no
    AC_CHECK_HEADER([fftw.h],
                  [AC_CHECK_LIB([fftw],
@@ -583,7 +585,8 @@ AC_DEFUN([AC_WITH_CXX_FFTW],
                                 AC_DEFINE([HAVE_FFTW], 1,
                                           [Define to 1 if we can use fftw])])])
    CXXFLAGS=$oln_save_CXXFLAGS
-   LDFLAGS="$LDFLAGS $FFTW_LDFLAGS"
+   LDFLAGS=$oln_save_LDFLAGS
+   TOOLS_LDFLAGS="$TOOLS_LDFLAGS $FFTW_LDFLAGS"
  fi
  AC_SUBST([FFTW_CXXFLAGS])
  AC_SUBST([FFTW_LDFLAGS])
@@ -614,7 +617,9 @@ AC_DEFUN([AC_WITH_CXX_ZLIB],
      ZLIB_LDFLAGS="-L${with_zlib}/lib"
    fi
    oln_save_CXXFLAGS=$CXXFLAGS
+   oln_save_LDFLAGS=$LDFLAGS
    CXXFLAGS="$CXXFLAGS $ZLIB_CXXFLAGS"
+   LDFLAGS="$LDFLAGS $ZLIB_LDFLAGS"
    oln_have_zlib=no
    AC_CHECK_HEADER([zlib.h],
                    [AC_CHECK_LIB([z],
@@ -624,7 +629,8 @@ AC_DEFUN([AC_WITH_CXX_ZLIB],
                                 AC_DEFINE([HAVE_ZLIB], 1,
                                           [Define to 1 if we can use zlib])])])
    CXXFLAGS=$oln_save_CXXFLAGS
-   LDFLAGS="$LDFLAGS $ZLIB_LDFLAGS"
+   LDFLAGS=$oln_save_LDFLAGS
+   TOOLS_LDFLAGS="$TOOLS_LDFLAGS $ZLIB_LDFLAGS"
  fi
  AC_SUBST([ZLIB_CXXFLAGS])
  AC_SUBST([ZLIB_LDFLAGS])

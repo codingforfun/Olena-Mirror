@@ -1,3 +1,7 @@
+2004-06-24  Simon Odou  <simon@lrde.epita.fr>
+
+	* ref/out/exdoc.config.in: Use TOOLS_LDFLAGS instead of LDLAGS.
+
 2004-06-14  Simon Odou  <simon@lrde.epita.fr>
 
 	* ref/out/exdoc.config.in: Use LDFLAGS instead of libs.
