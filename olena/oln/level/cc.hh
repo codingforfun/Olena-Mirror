@@ -42,8 +42,6 @@
 # include <oln/level/compare.hh>
 
 # include <set>
-# include <list>
-# include <vector>
 # include <ntg/core/macros.hh>
 
 # include <mlc/is_a.hh>
@@ -102,12 +100,10 @@ namespace oln {
 
     template <class DestType, class I, class E>
     typename mute<I, DestType>::ret
-    frontp_connected_component(const abstract::image<I>& input,
+    frontp_connected_component(const abstract::binary_image<I>& input,
 			       const abstract::neighborhood<E>& se,
 			       unsigned& nb_label)
     {
-      ntg_is_a(oln_value_type(I), ntg::binary)::ensure();
-
       typename mute<I, DestType>::ret output(input.size());
       level::fill(output, 0);
 

@@ -65,14 +65,25 @@ namespace oln
       struct f_tarjan_map
       {
       public:
-	typedef abstract::image<I>			input_type; ///< Image type (abstract).
-	typedef oln_concrete_type(I)			img_type; ///< Image type (concrete).
+	typedef abstract::non_vectorial_image<I>	input_type;
+						///< Image type (abstract).
 
-	typedef oln_point_type(input_type)		point_type; ///< Associated point type.
-	typedef oln_value_type(input_type)		value_type; ///< Value type fo the image.
-	typedef typename mute<input_type, point_type>::ret parent_type; ///< Image of points.
-	typedef typename mute<input_type, bool>::ret	is_proc_type; ///< Image of bool.
-	typedef attr_lambda_type(D)			lambda_type; ///< dTthreshold type.
+	typedef oln_concrete_type(I)			img_type;
+						///< Image type (concrete).
+
+	typedef oln_point_type(input_type)		point_type;
+						///< Associated point type.
+
+	typedef oln_value_type(input_type)		value_type;
+						///< Value type fo the image.
+
+	typedef typename mute<input_type, point_type>::ret parent_type;
+						///< Image of points.
+
+	typedef typename mute<input_type, bool>::ret	is_proc_type;
+						///< Image of bool.
+	typedef attr_lambda_type(D)			lambda_type;
+						///< Threshold type.
 
 	// e.g.,
 	// when I is image2d<int_u8> and D is area_type, we've got:
@@ -160,14 +171,16 @@ namespace oln
 	void
 	do_union(const point_type& n, const point_type& p);
 
-	const bool							is_closing; ///< Do you want a closing or an openng ?
-	const input_type&						input; ///< Input image.
-	lambda_type							lambda; ///<  Trheshold.
-	parent_type							parent; ///< Give a parent of a point.
-	is_proc_type							is_proc; ///< Tell if a point has already been preceded
-	img_type							output; ///< Image to store the result
-	std::map<point_type, D, oln::internal::default_less<point_type> > auxdata; ///< Map to store attributes.
-	Env								env; ///< The envronment.
+	const bool     	is_closing; ///< Do you want a closing or an openng ?
+	const input_type&input; ///< Input image.
+	lambda_type	lambda; ///<  Trheshold.
+	parent_type	parent; ///< Give a parent of a point.
+	is_proc_type	is_proc;///< Tell if a point has already been preceded.
+	img_type	output; ///< Image to store the result.
+	std::map<point_type, D,
+		 oln::internal::default_less<point_type> > auxdata;
+				///< Map to store attributes.
+	Env		env;	///< The envronment.
       };
 
 
@@ -180,7 +193,7 @@ namespace oln
       template <class D, class I, class N>
       oln_concrete_type(I)
 	tarjan_map(bool is_closing,
-		   const abstract::image<I>& input,
+		   const abstract::non_vectorial_image<I>& input,
 		   const abstract::neighborhood<N>& ng,
 		   const attr_lambda_type(D)& lambda,
 		   const attr_env_type(D)& env/* = Env()*/)
@@ -195,50 +208,53 @@ namespace oln
 
 // Some macro to declare friendly function for different attributes
 // opening/closing
-# define xxx_opening_map_decl(T)						\
-template <class I, class N>							\
-oln_concrete_type(I)								\
-T##_opening(const abstract::image<I>& input,					\
-	    const abstract::neighborhood<N>& ng,				\
-	    const attr_lambda_type(T##_type<>)& lambda)				\
-    {										\
-      return tarjan_map<T##_type<>, I, N>(false, input, ng, lambda,		\
-						    attr_env_type(T##_type<>)()); \
+# define xxx_opening_map_decl(T)					\
+template <class I, class N>						\
+oln_concrete_type(I)							\
+T##_opening(const abstract::non_vectorial_image<I>& input,		\
+	    const abstract::neighborhood<N>& ng,			\
+	    const attr_lambda_type(T##_type<>)& lambda)			\
+    {									\
+      return tarjan_map<T##_type<>, I, N>(false, input, ng, lambda,	\
+					  attr_env_type(T##_type<>)());	\
     }
 
       // same but attribute take care of the image type
-# define xxx_opening_im_map_decl(T)						\
-template <class I, class N>							\
-oln_concrete_type(I)								\
-T##_opening(const abstract::image<I>& input,					\
-	    const abstract::neighborhood<N>& ng,				\
-	    const attr_lambda_type(T##_type<I>)& lambda)			\
-    {										\
-      return tarjan_map<T##_type<I>, I, N>(false, input, ng, lambda,		\
-						    attr_env_type(T##_type<I>)()); \
+# define xxx_opening_im_map_decl(T)					\
+template <class I, class N>						\
+oln_concrete_type(I)							\
+T##_opening(const abstract::non_vectorial_image<I>& input,		\
+	    const abstract::neighborhood<N>& ng,			\
+	    const attr_lambda_type(T##_type<I>)& lambda)		\
+    {									\
+      return tarjan_map<T##_type<I>, I, N>(false, input, ng, lambda,	\
+				  attr_env_type(T##_type<I>)());	\
     }
 
       //return input;
-      //      return tarjan_map<T##_type, I, N>(false, input, ng, lambda, attr_env_type(T##_type<>)());
-# define xxx_closing_map_decl(T)						\
-template <class I, class N>							\
-oln_concrete_type(I)								\
-T##_closing(const abstract::image<I>& input,					\
-	    const abstract::neighborhood<N>& ng,				\
-	    const attr_lambda_type(T##_type<>)& lambda)				\
-    {										\
-      return tarjan_map<T##_type<>, I, N>(true, input, ng, lambda, attr_env_type(T##_type<>)()); \
+      //      return tarjan_map<T##_type, I, N>(false, input, ng, lambda,
+      //	 attr_env_type(T##_type<>)());
+# define xxx_closing_map_decl(T)					\
+template <class I, class N>						\
+oln_concrete_type(I)							\
+T##_closing(const abstract::non_vectorial_image<I>& input,		\
+	    const abstract::neighborhood<N>& ng,			\
+	    const attr_lambda_type(T##_type<>)& lambda)			\
+    {									\
+      return tarjan_map<T##_type<>, I, N>(true, input, ng, lambda,	\
+					  attr_env_type(T##_type<>)()); \
     }
 
       // same but attribute take care of the image type
-# define xxx_closing_im_map_decl(T)						\
-template <class I, class N>							\
-oln_concrete_type(I)								\
-T##_closing(const abstract::image<I>& input,					\
-	    const abstract::neighborhood<N>& ng,				\
-	    const attr_lambda_type(T##_type<I>)& lambda)				\
-    {										\
-      return tarjan_map<T##_type<I>, I, N>(true, input, ng, lambda, attr_env_type(T##_type<I>)()); \
+# define xxx_closing_im_map_decl(T)					\
+template <class I, class N>						\
+oln_concrete_type(I)							\
+T##_closing(const abstract::non_vectorial_image<I>& input,		\
+	    const abstract::neighborhood<N>& ng,			\
+	    const attr_lambda_type(T##_type<I>)& lambda)		\
+    {									\
+      return tarjan_map<T##_type<I>, I, N>(true, input, ng, lambda,	\
+					   attr_env_type(T##_type<I>)());\
     }
 
       /*!
@@ -306,7 +322,8 @@ T##_closing(const abstract::image<I>& input,					\
       **   typedef oln::image2d<ntg::int_u8>	im_type;
       **
       **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
-      **   im1 = oln::morpho::slow::integral_closing(im1, oln::neighb_c4(), 200);
+      **   im1 = oln::morpho::slow::integral_closing(im1, oln::neighb_c4(),
+      **					     200);
       **   oln::save(im1, IMG_OUT "oln_morpho_slow_integral_closing.ppm");
       ** }
       ** \endcode
@@ -332,7 +349,8 @@ T##_closing(const abstract::image<I>& input,					\
       **   typedef oln::image2d<ntg::int_u8>	im_type;
       **
       **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
-      **   im1 = oln::morpho::slow::integral_opening(im1, oln::neighb_c4(), 200);
+      **   im1 = oln::morpho::slow::integral_opening(im1, oln::neighb_c4(),
+      **					     200);
       **   oln::save(im1, IMG_OUT "oln_morpho_slow_integral_opening.ppm");
       ** }
       ** \endcode

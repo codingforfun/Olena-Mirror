@@ -40,7 +40,7 @@ namespace oln {
 
     /* \brief Processing connected_component extract the connected components.
     **
-    ** \arg: input image
+    ** \arg: input a 2d image of binary.
     ** \arg: Ng neighborhood
     **
     ** \return Returns a labeled image
@@ -52,18 +52,15 @@ namespace oln {
     ** d'images, filtrages et segmentations p.62.
     **
     ** \see level::frontp_connected_component
-    ** \todo FIXME: The type of input shoud be a binary 2d image.
     */
     // Number the connected components i.e label true. background(i.e
     // label false) has the label 0; This algorithm works only for 2D images.
     template <class DestType, class I, class N>
     typename mute<I, DestType>::ret
-    connected_component(const abstract::image<I>& input,
+    connected_component(const abstract::binary_image_with_dim<2, I>& input,
 			const abstract::neighborhood<N>& Ng)
     {
-      // FIXME: ensure the oln_value_type(I) is bin.
       mlc::eq<I::dim, N::dim>::ensure();
-      mlc::eq<I::dim, 2>::ensure();
       typename mute<I, DestType>::ret output(input.size());
       level::hlut< DestType, DestType > T;
       DestType k = 1;

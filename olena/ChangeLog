@@ -1,3 +1,13 @@
+2004-03-23  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/level/cc.hh (frontp_connected_component): Change image to
+	binary_image.
+	* olena/oln/level/connected.hh (connected_component): Change image to
+	binary_image_with_dim.
+	* olena/oln/morpho/extrema_killer.hh (internal_kill_cc_area): Change
+	non_vectorial_image to binary_image_with_dim
+	* olena/oln/morpho/attribute_closing_opening_map.hh (f_tarjan_map):
+	Change image to non_vectorial_image.
+
 2004-03-19  Simon Odou  <simon@lrde.epita.fr>
 
 	* olena/oln/core/bkd_iter1d.hh: Correct comments.
