@@ -41,10 +41,47 @@ namespace oln {
     {
       return std::string("neighborhood<") + Inferior::name() + ">";
     }
+
   protected:
     neighborhood() {}
   };
 
+  template<class _N>
+  inline 
+  Exact(_N) inter(const neighborhood<_N> &_lhs, 
+		  const neighborhood<_N> &_rhs)
+  {
+    Exact_cref(N, lhs);
+    Exact_cref(N, rhs);
+    
+    Exact(_N) neighb;
+    for (unsigned j = 0; j < rhs.card(); ++j)
+      if (lhs.has(rhs.dp(j)) && ! neighb.has(rhs.dp(j)))
+	neighb.add(rhs.dp(j));
+    return neighb;
+  }
+
+  template<class _N>
+  inline
+  Exact(_N) uni(const neighborhood<_N> &_lhs, 
+		const neighborhood<_N> &_rhs)
+  {
+    Exact_cref(N, lhs);
+    Exact_cref(N, rhs);
+    
+    std::cout << lhs.name() << std::endl;
+    
+    Exact(_N) neighb;
+    for (unsigned j = 0; j < rhs.card(); ++j)
+      if (! neighb.has(rhs.dp(j)))
+	neighb.add(rhs.dp(j));
+    for (unsigned j = 0; j < lhs.card(); ++j)
+      if (! neighb.has(lhs.dp(j)))
+	neighb.add(lhs.dp(j));
+    return neighb;
+  }
+
 } // end of oln
+
 
 #endif // OLENA_CORE_NEIGHBORHOOD_HH

@@ -1,3 +1,12 @@
+2002-11-28  Reda Dehak  <reda@nemours.lrde.epita.fr>
+
+	* oln/core/neighborhood1d.hh: Remove the functions inter and uni,
+                                      Fix operator-() method (obsolete).
+	* oln/core/neighborhood2d.hh: Likewise.
+	* oln/core/neighborhood3d.hh: Likewise.
+	* oln/core/neighborhood.hh: remplace the functions inter and uni
+        removed by a generic algorithm.
+
 2002-11-27  Raphael Poss  <raph@lrde.epita.fr>
 
 	* configure.ac (fftw detection): minor fix in message. 

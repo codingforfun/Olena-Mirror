@@ -78,11 +78,10 @@ namespace oln {
       return _delta;
     }
 
+    // obsolete
     self operator-() const
     {
-      self neighb(*this);
-      neighb.sym();
-      return neighb;
+      return *this;
     }
 
     static std::string name() { return std::string("neighborhood3d"); }
@@ -90,34 +89,7 @@ namespace oln {
     max_accumulator<coord> _delta;
   };
 
-
-  inline
-  neighborhood3d inter(const neighborhood3d& lhs, const neighborhood3d& rhs)
-  {
-    neighborhood3d neighb;
-    for (unsigned i = 0; i < lhs.card(); ++i)
-      if (rhs.has(lhs.dp(i)))
-	neighb.add(lhs.dp(i));
-    for (unsigned j = 0; j < rhs.card(); ++j)
-      if (! neighb.has(rhs.dp(j)) && lhs.has(rhs.dp(j)))
-	neighb.add(rhs.dp(j));
-    return neighb;
-  }
-
-  inline
-  neighborhood3d uni(const neighborhood3d& lhs, const neighborhood3d& rhs)
-  {
-    neighborhood3d neighb;
-    for (unsigned i = 0; i < lhs.card(); ++i)
-      neighb.add(lhs.dp(i));
-    for (unsigned j = 0; j < rhs.card(); ++j)
-      if (! neighb.has(rhs.dp(j)))
-	neighb.add(rhs.dp(j));
-    return neighb;
-  }
-
-
-  // std neighb
+ // std neighb
 
   inline const neighborhood3d&
   neighb_c6()

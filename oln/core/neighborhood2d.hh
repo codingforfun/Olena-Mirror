@@ -90,42 +90,15 @@ namespace oln {
 
     static std::string name() { return std::string("neighborhood2d"); }
 
+    // obsolete
     self operator-() const
     {
-      self neighb(*this);
-      neighb.sym();
-      return neighb;
+      return *this;
     }
 
   private:
     max_accumulator<coord> _delta;
   };
-
-  inline
-  neighborhood2d inter(const neighborhood2d& lhs, const neighborhood2d& rhs)
-  {
-    neighborhood2d neighb;
-    for (unsigned i = 0; i < lhs.card(); ++i)
-      if (rhs.has(lhs.dp(i)))
-	neighb.add(lhs.dp(i));
-    for (unsigned j = 0; j < rhs.card(); ++j)
-      if (! neighb.has(rhs.dp(j)) && lhs.has(rhs.dp(j)))
-	neighb.add(rhs.dp(j));
-    return neighb;
-  }
-
-  inline
-  neighborhood2d uni(const neighborhood2d& lhs, const neighborhood2d& rhs)
-  {
-    neighborhood2d neighb;
-    for (unsigned i = 0; i < lhs.card(); ++i)
-      neighb.add(lhs.dp(i));
-    for (unsigned j = 0; j < rhs.card(); ++j)
-      if (! neighb.has(rhs.dp(j)))
-	neighb.add(rhs.dp(j));
-    return neighb;
-  }
-
 
   // std neighbs
 
