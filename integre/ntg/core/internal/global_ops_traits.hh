@@ -51,7 +51,7 @@ namespace ntg {
     struct undefined_traits {};
 
     template <class T>
-    struct meta_undefined_traits 
+    struct meta_undefined_traits
     {
       typedef undefined_traits ret;
       typedef undefined_traits lhs_type;
@@ -64,7 +64,7 @@ namespace ntg {
     struct is_defined { enum { ret = true }; };
     template <>
     struct is_defined<undefined_traits> { enum { ret = false }; };
-    
+
     /*
       get_order, get_order_inv
 
@@ -72,7 +72,7 @@ namespace ntg {
       is commutative) and to specify whether input types should be
       converted into another type (eg. the corresponding ntg_type).
     */
-  
+
     template <class T1, class T2>
     struct get_order
     {
@@ -97,14 +97,14 @@ namespace ntg {
     | Operator traits definition |
     `---------------------------*/
     //! Give return type for operators, depending on the input types.
-    /*! 
+    /*!
        operator_traits traits should not be used directly. Instead one
        should use deduce_from_traits, see comments below for more
        details.
 
-       These traits defines 3 properties: 
+       These traits defines 3 properties:
 
-       * commutative (enum): Tells whether the operator is commutative 
+       * commutative (enum): Tells whether the operator is commutative
          or not.
 
        * ret (typedef): Specifies the return type.
@@ -123,17 +123,17 @@ namespace ntg {
 	   ...
 	 }
     */
-    
+
     template <class Op, class T, class U>
     struct operator_traits
     {
       enum { commutative = false };
-      typedef undefined_traits ret; 
-      typedef undefined_traits impl; 
+      typedef undefined_traits ret;
+      typedef undefined_traits impl;
     };
 
     struct operator_plus {};
-    struct operator_minus {};  
+    struct operator_minus {};
     struct operator_times {};
     struct operator_div {};
     struct operator_mod {};
@@ -153,11 +153,11 @@ namespace ntg {
 
       1) Convert T1 and T2 to ntg types.
       2) Check if traits<T1, T2> is defined.
-      3) Else, check if traits<T2, T1> is defined 
+      3) Else, check if traits<T2, T1> is defined
          AND traits<T2, T1>::commutative is true.
 
       deduce_from_traits defines several types:
-      
+
       - lhs_type and rhs_type: The types into which the first and
         second paramaters should be converted before called the
         implementation.
@@ -169,7 +169,7 @@ namespace ntg {
       - deduced_traits: A pointer to the good operator_traits<>
         specialization. This can be useful sometimes.
     */
-   
+
     template <class Op, class T, class U>
     struct deduce_from_traits
     {
@@ -180,7 +180,7 @@ namespace ntg {
       typedef typename operator_traits<Op, T1, T2>::ret traits;
       typedef typename operator_traits<Op, T2, T1>::ret rev_traits;
 
-      enum { can_invert = (operator_traits<Op, T2, T1>::commutative 
+      enum { can_invert = (operator_traits<Op, T2, T1>::commutative
 			   && is_defined<rev_traits>::ret) };
 
       typedef typename
@@ -191,13 +191,13 @@ namespace ntg {
 			 meta_undefined_traits<undefined_traits>
                         >::ret_t
               >::ret_t deduced_type;
-				    
+
       typedef typename deduced_type::traits_lhs_type traits_lhs_type;
       typedef typename deduced_type::traits_rhs_type traits_rhs_type;
 
     public:
-      typedef operator_traits<Op, 
-			      traits_lhs_type, 
+      typedef operator_traits<Op,
+			      traits_lhs_type,
 			      traits_rhs_type> deduced_traits;
 
       typedef typename deduced_type::lhs_type lhs_type;

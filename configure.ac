@@ -130,6 +130,7 @@ OLN_COLLECTION([OLN_TOP],
       OLN_TESTS([convol])
       OLN_TESTS([core])
       OLN_TESTS([io])
+      OLN_TESTS([math])
       OLN_TESTS([morpho])
       OLN_TESTS([level])
       OLN_TESTS([sanity])
