@@ -1,3 +1,8 @@
+2004-04-15  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* dev/abstract.texi: Update the file.
+	* dev/biblio.texi: Update the file.
+
 2004-04-15  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* dev/build.texi: Update the file.
