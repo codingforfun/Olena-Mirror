@@ -1,10 +1,5 @@
-@ifnotplaintext
 @node Frequently Asked Questions
 @chapter Frequently Asked Questions
-@end ifnotplaintext
-@ifplaintext
-@chapter Frequently Asked Questions
-@end ifplaintext
 
 @section Cleaning up the source tree
 
@@ -41,9 +36,7 @@ Answer 1: add @option{-I<path_to_installed_headers>} to your compile
 flags and it @emph{should} work. In practice, of course, it does not.
 Proceed with the following answers.
 
-@ifnotplaintext
 @cindex @file{oln.m4}
-@end ifnotplaintext
 Answer 2: use Autoconf and the provided @file{oln.m4}. Several macros
 can be used:
 
@@ -64,9 +57,7 @@ macros.
 
 @sp 1
 
-@ifnotplaintext
 @cindex @file{oln-config.sh}
-@end ifnotplaintext
 
 Answer 3: use the generated @command{oln-config-xxx.sh}, substituting
 @samp{xxx} with your favourite compiler. This script dumps to its
@@ -90,7 +81,7 @@ complains about missing @code{_roundf}.
 
 @item Explanation
 Your standard library headers declare @code{roundf} but it is
-not actually defined. 
+not actually defined.
 
 @item Solution
 Add @option{-DOLN_NEED_ROUNDF} to your
@@ -149,7 +140,7 @@ Compilation fails at points where @code{OLN_FLOAT_INFINITY} or
 @code{std::numeric_limits} is used.
 
 @item Explanation
-Your C++ standard library is broken. 
+Your C++ standard library is broken.
 
 @item Solution
 As a workaround, add @option{-DOLN_USE_C_LIMITS} to
@@ -175,7 +166,7 @@ Run @command{configure} with @env{CXXFLAGS_STRICT_ERRORS} set
 to more tolerant warning flags (for example, set @option{-Wall -W} for
 GCC but not @option{-Werror}).
 
-@end table 
+@end table
 
 @unnumberedsubsec Invalid data saved on I/O
 
@@ -197,4 +188,3 @@ format instead of raw. Beware, while this is a correct workaround, the
 generated images are bigger.
 
 @end table
-

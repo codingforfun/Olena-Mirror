@@ -1,10 +1,5 @@
-@ifnotplaintext
 @node Abstract
 @chapter Abstract
-@end ifnotplaintext
-@ifplaintext
-@chapter Abstract
-@end ifplaintext
 
 This is the eighth public release of Olena, a generic image
 processing library in C++.
@@ -37,4 +32,3 @@ or @email{olena-bugs@@lrde.epita.fr}.
 
 Olena also has a web page, located at
 @url{http://www.lrde.epita.fr/cgi-bin/twiki/view/Projects/Olena}.
-

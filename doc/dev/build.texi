@@ -5,19 +5,14 @@ This file contains information about the build process of Olena.
 Please read the @file{README} file for general information about Olena.
 @end ifplaintext
 
-@ifnotplaintext
 @node Required software
 @section Required software
-@end ifnotplaintext
-@ifplaintext
-@section Required software
-@end ifplaintext
 
-Here is a non-exhaustive list of required software 
+Here is a non-exhaustive list of required software
 required to build Olena successfully.
 
 @itemize @bullet
-@item 
+@item
 to compile the user tools:
 @itemize @minus
 @item
@@ -51,13 +46,8 @@ GNU Autotools (Autoconf 2.54, Automake 1.7)
 @end itemize
 @end itemize
 
-@ifnotplaintext
 @node Configuration
 @section Configuration
-@end ifnotplaintext
-@ifplaintext
-@section Configuration
-@end ifplaintext
 
 In order to prepare the build process, you need to configure the
 source tree.
@@ -90,7 +80,7 @@ By default, Olena is installed in the standard ``local'' directory
 of your system. This is usually @file{/usr/local} under Unix.
 
 You can change this path with the following flag:
-	
+
 @example
  --prefix=<installation prefix>
 @end example
@@ -120,7 +110,7 @@ $ @kbd{.../configure CXX=<your-favorite-C++-compiler>}
 As an alternative, you can also set the environment variable @samp{CXX}.
 
 @sp 2
-             
+
 For most compilers, @command{configure} will select debugging and
 minimal optimization (@option{-g -O2} with g++), which is wrong. You
 should override the default C++ flags by giving @command{configure} your
@@ -129,17 +119,12 @@ selection of flags:
 @example
 $ @kbd{.../configure CXXFLAGS="<your-favorite-flags>"}
 @end example
-    
+
 This is especially useful to solve a number of problems, described
 in the following section.
 
-@ifnotplaintext
 @node Using CXXFLAGS to solve compilation problems
 @section Using @env{CXXFLAGS} to solve compilation problems
-@end ifnotplaintext
-@ifplaintext
-@section Using @env{CXXFLAGS} to solve compilation problems
-@end ifplaintext
 
 
 @subsection Olena needs C99
@@ -152,7 +137,7 @@ functions, add them to @env{CXXFLAGS}.
 
 In case your system does not provide some math functions necessary
 for Olena, you can force the use of a local, overloaded, implementation,
-by using macros of the form @option{-DOLN_NEED_xxx}, where @option{xxx} 
+by using macros of the form @option{-DOLN_NEED_xxx}, where @option{xxx}
 stands for the name of the missing function, in uppercase.
 For example, on Darwin (MacOS X), the flag @option{-DOLN_NEED_SQRTF} is
 needed (but @command{configure} should add it anyway).
@@ -187,13 +172,8 @@ compilation phases in parallel, which brings a compilation speedup on
 multiprocessor machines or machines with slow storage access (when using
 @option{-pipe}, no intermediary data is saved).
 
-@ifnotplaintext
 @node Speeding up the configuration process
 @section Speeding up the configuration process
-@end ifnotplaintext
-@ifplaintext
-@section Speeding up the configuration process
-@end ifplaintext
 
 @command{configure} can manage a cache of autodetected features and
 values. This cache speeds up @command{configure} runs and can be
@@ -204,13 +184,8 @@ activated with the @option{-C} option.
 @command{configure} with other flags, delete the @file{config.cache}
 file first.
 
-@ifnotplaintext
 @node Optional Features
 @section Optional Features
-@end ifnotplaintext
-@ifplaintext
-@section Optional Features
-@end ifplaintext
 
 @subsection Using external libraries
 
@@ -248,13 +223,8 @@ obtain a list of them by running:
 $ @kbd{.../configure --help}
 @end example
 
-@ifnotplaintext
 @node Building
 @section Building
-@end ifnotplaintext
-@ifplaintext
-@section Building
-@end ifplaintext
 
 Once your build directory is @command{configure}d, you can run
 
@@ -283,15 +253,10 @@ bi-Xeon machine.
 You can now proceed after reading the @file{INSTALL} file.
 @end ifplaintext
 
-@ifnotplaintext
 @node Compiler notes
 @section Compiler notes
-@end ifnotplaintext
-@ifplaintext
-@section Compiler notes
-@end ifplaintext
 
-Olena has been tested on the following configurations : 
+Olena has been tested on the following configurations :
 
 @multitable @columnfractions .33 .66
 @item @strong{System} @tab @strong{Compiler}
@@ -301,10 +266,10 @@ Olena has been tested on the following configurations :
 @item NetBSD 1.6 @tab g++ 3.2
 @item Cygwin @tab g++ 3.2
 @end multitable
-	
+
 Olena used to be compatible with g++ 2.95 for performance
 reasons. With g++ 3.2, this constraint is becoming obsolete.
-Moreover, it has many annoying issues, here are the two more 
+Moreover, it has many annoying issues, here are the two more
 important ones:
 
 @itemize @minus
@@ -312,7 +277,7 @@ important ones:
 g++ 2.95 rejects valid expressions, often implying ugly workarounds;
 @item
 under various circumstances, optimizations sometimes generates invalid
-code, especially with intensive inlining. 
+code, especially with intensive inlining.
 @end itemize
 
 Actually Olena yet compiles with g++ 2.95, but some wrong code might

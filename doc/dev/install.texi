@@ -7,13 +7,8 @@ Olena. Make sure you have read the @file{BUILD} file first.
 You can read the @file{README} file for general information about Olena.
 @end ifplaintext
 
-@ifnotplaintext
 @node Installing
 @section Installing
-@end ifnotplaintext
-@ifplaintext
-@section Installing
-@end ifplaintext
 
 To install the Olena headers, command-lines utilities and additional
 files on your system, run:
@@ -49,4 +44,3 @@ You can later remove Olena from your system by running
 @end example
 
 from the build directory.
-

@@ -1,24 +1,35 @@
-This file contains information about the installation process of
-Olena. Make sure you have read the BUILD file first.
 
-Please read the README file for general information about Olena.
+This file contains information about the installation process of Olena.
+Make sure you have read the `BUILD' file first.
 
-INSTALLING
+   You can read the `README' file for general information about Olena.
+
+Installing
 ==========
 
-To install 
-utilities on your system, run
+   To install the Olena headers, command-lines utilities and additional
+files on your system, run:
 
-  make install
+      $ make install
 
-from the build directory.
+   from the build directory.
 
-If not overriden with `--prefix' (see the BUILD file), this will
+   If not overriden with `--prefix' (see the BUILD file) , this will
 install:
 
    * the headers in `/usr/local/include/oln',
-   * utilities in `/usr/local/bin',
-   * sample images in '/usr/local/share/oln',
-   * the autoconf helper oln.m4 in `/usr/local/share/aclocal'.
 
+   * the utilities in `/usr/local/bin',
+
+   * sample images in `/usr/local/share/oln',
+
+   * the Autoconf helper `oln.m4' in `/usr/local/share/aclocal'.
+
+
+
+   You can later remove Olena from your system by running
+
+      $ make uninstall
+
+   from the build directory.
 

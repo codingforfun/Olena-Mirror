@@ -1,10 +1,5 @@
-@ifnotplaintext
 @node Bibliography
 @section Bibliography
-@end ifnotplaintext
-@ifplaintext
-@section Bibliography
-@end ifplaintext
 
 Further information about Olena, can be found into the following
 related papers:
@@ -57,4 +52,3 @@ Processing Algorithms}).
 
 You can download these papers and related materials from
 @url{http://www.lrde.epita.fr/cgi-bin/twiki/view/Publications}
-

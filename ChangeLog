@@ -1,3 +1,10 @@
+2003-02-21  Akim Demaille  <akim@epita.fr>
+
+	* Makefile.am (INFOTOTEXT): Add --no-validate.
+	* doc/dev/biblio.texi, doc/dev/thanks.texi, doc/dev/faq.texi
+	* doc/dev/abstract.texi, doc/dev/build.texi, doc/dev/install.texi:
+	Remove useless "ifnotplaintext".
+
 2003-02-18  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* configure.ac (REGEN_MANPAGES): rename from HAVE_HELP2MAN.
@@ -23,7 +30,7 @@
 2003-02-12  Raphaël Poss  <raph@lrde.epita.fr>
 
 	(Changes from 0.7)
-	
+
 	* configure.ac: More verbose help. Better version support. Allow
 	disabling manpages regeneration.
 

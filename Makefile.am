@@ -12,7 +12,7 @@ MAINTAINERCLEANFILES = README BUILD INSTALL THANKS FAQ
 
 if HAVE_DOC_DEV
 
-INFOTOTEXT = $(MAKEINFO) --enable-encoding --no-headers
+INFOTOTEXT = $(MAKEINFO) --enable-encoding --no-headers --no-validate
 devdoc = $(srcdir)/doc/dev
 
 README: $(devdoc)/abstract.texi $(devdoc)/biblio.texi
@@ -20,7 +20,7 @@ README: $(devdoc)/abstract.texi $(devdoc)/biblio.texi
 	$(INFOTOTEXT) $(devdoc)/biblio.texi >>$@
 
 BUILD: $(devdoc)/build.texi
-	$(INFOTOTEXT) $(devdoc)/build.texi >$@ 
+	$(INFOTOTEXT) $(devdoc)/build.texi >$@
 
 INSTALL: $(devdoc)/install.texi
 	$(INFOTOTEXT) $(devdoc)/install.texi >$@
@@ -43,4 +43,3 @@ maintainer-check:
 	else \
 	  echo "$@: GNU cppi is required" >&2; \
 	fi
-
