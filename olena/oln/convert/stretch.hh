@@ -30,6 +30,8 @@
 
 # include <mlc/type.hh>
 
+# include <oln/basics.hh>
+
 # include <ntg/basics.hh>
 
 # include <oln/convert/abstract/conversion.hh>

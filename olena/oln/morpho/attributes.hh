@@ -138,6 +138,17 @@ namespace oln {
 	};
 
 	/*!
+	** \brief "<" operator
+	**
+	** This is a static dispatcher for the "<" operator.
+	** This method is abstract.
+	*/
+	bool operator<(const exact_type &x) const
+	{
+	  mlc_dispatch(less2)(x);
+	};
+
+	/*!
 	** \brief != operator
 	**
 	** This is a static dispatcher for the != operator.
@@ -146,6 +157,16 @@ namespace oln {
 	bool operator!=(const lambda_type &lambda) const
 	{
 	  mlc_dispatch(ne)(lambda);
+	};
+
+	/*!
+	** \brief conversion to lambda type.
+	**
+	** \warning Virtual method.
+	*/
+	const lambda_type &toLambda() const
+	{
+	  mlc_dispatch(toLambda)();
 	};
 
 	/*!
@@ -159,6 +180,20 @@ namespace oln {
 	{
 	  return !(*this < lambda);
 	};
+
+	/*!
+	** \brief "<" operator implementation.
+	**
+	** This is an implementation  of the < operator.  Override this
+	** method to provide a new implementation of this operator.
+	** \warning This method SHOULDN'T be called.
+	*/
+	bool less2_impl(const exact_type &x) const
+	{
+	  return *this < x.toLambda();
+	};
+
+
 
       protected:
 	attribute() {};
@@ -249,14 +284,70 @@ namespace oln {
 	    return lambda != value_;
 	  };
 
+	/*!
+	** \brief conversion to lambda type implementation.
+	**
+	** This  is  an   implementation  of  the  toLambda()  method.
+	** Override  this method  to provide  a new  implementation.
+	** \warning This method SHOULDN'T be called .
+	*/
+	const lambda_type &toLambda_impl() const
+	{
+	  return value_;
+	};
+
       protected:
 	value_type value_; /*!< Value used inside the class. */
       };
 
+      /*-------------------------------*
+	| card with info on other image |
+	*------------------------------*/
+      template <class I, class T = unsigned, class Exact = mlc::final>
+      class card_full_type: public card_type<T,
+					     typename mlc::exact_vt<card_full_type<I,
+										   T,
+										   Exact>,
+								    Exact>::ret>
+      {
+      public:
+	typedef card_full_type<I, T, Exact>			self_type; /*!< Self type of the class. */
+	attr_type_decl(self_type);
+	typedef card_type<T, exact_type>			super_type; ///< Parent class type.
 
-      /*-----------*
+	/*!
+	** \brief Basic Ctor.
+	**
+	** \warning  After this  call, the  object is  only instantiated
+	** (not initialized).
+	*/
+	card_full_type(): super_type()
+	  {
+	  };
+
+	/*!
+	** \brief Ctor from a lambda_type value.
+	*/
+	card_full_type(const lambda_type &lambda): super_type(lambda)
+	  {
+	  };
+
+	/*!
+	** \brief Ctor from a point and an image.
+	**
+	** Every parameters are useless.
+	*/
+	template <class I2>
+	  card_full_type(const abstract::image<I2> &im,
+		    const oln_point_type(I2) &p,
+		    const env_type &env): super_type(im, p, env)
+	  {
+	  };
+      };
+
+      /*--------------*
 	|  integral   |
-	*-----------*/
+	*------------*/
 
       /*!
       ** \brief Integral attribute.
@@ -1698,6 +1789,17 @@ namespace oln {
 	typedef T		value_type; ///< Type of data.
 	typedef value_type	lambda_type; ///< Type of lambda.
 	typedef env::NullEnv	env_type; ///< Type of environment.
+      };
+
+      /*!
+      ** \brief Trait specialization for card_full attribute.
+      */
+      template <class I, class T, class Exact>
+      struct attr_traits<card_full_type<I, T, Exact> >
+      {
+	typedef T			value_type; ///< Type of data.
+	typedef value_type		lambda_type; ///< Type of lambda.
+	typedef env::OtherImageEnv<I>	env_type; ///< Type of environment.
       };
 
       /*!

@@ -28,8 +28,10 @@
 #ifndef NTG_CORE_PRED_SUCC_HH
 # define NTG_CORE_PRED_SUCC_HH
 
-#include <ntg/all.hh>
+
 #include <mlc/is_a.hh>
+#include <ntg/real/int_u.hh>
+#include <ntg/core/macros.hh>
 
 namespace ntg {
 
@@ -69,6 +71,24 @@ namespace ntg {
   pred(const T&t)
   {
     return T(internal::with_arith<T>::ret(t) - 1);
+  }
+
+  namespace internal {
+    /*! Default less.
+    **
+    ** Specialization of this class provides a less functor even for
+    ** types that do not support the operator "<".
+    */
+    template <typename T>
+    struct default_less
+    {
+      typedef T arg_type;
+      bool operator()(const T& l,
+		      const T& r) const
+      {
+	return l < r;
+      }
+    };
   }
 }
 
