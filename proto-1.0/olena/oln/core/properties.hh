@@ -58,6 +58,7 @@ namespace oln
     struct value_storage_type;
     struct storage_type;
     struct point_type;
+    struct concrete_type;
     struct dpoint_type;
     struct fwd_piter_type;
     struct bkd_piter_type;

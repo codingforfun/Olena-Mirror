@@ -65,6 +65,7 @@ namespace oln {
   {
     // intrusive property:
     typedef is_a<abstract::readwrite_image> image_constness_type;
+    typedef E concrete_type;
   };
 
 

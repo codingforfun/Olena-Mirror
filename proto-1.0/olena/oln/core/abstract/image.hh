@@ -60,6 +60,7 @@ namespace oln {
   {
     typedef mlc::true_type user_defined_;
     
+    mlc_decl_prop(category::image, concrete_type);
     mlc_decl_prop(category::image, value_type);
     mlc_decl_prop(category::image, point_type);
     mlc_decl_prop(category::image, size_type);
@@ -95,6 +96,7 @@ namespace oln {
 
   };
 
+  mlc_register_prop(category::image, concrete_type);
   mlc_register_prop(category::image, value_type);
   mlc_register_prop(category::image, point_type); 
   mlc_register_prop(category::image, size_type); 

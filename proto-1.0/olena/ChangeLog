@@ -1,3 +1,9 @@
+2005-03-25  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
+
+	* oln/core/abstract/image.hh: Add concrete type.
+	* oln/core/abstract/image_with_data.hh: Likewise.
+	* oln/core/properties.hh: Likewise.
+
 2005-03-23  Christophe Berger  <christophe@lrde.epita.fr>
 
 	* oln/core/abstract/point.hh: Fix point type.
