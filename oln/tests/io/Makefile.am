@@ -1,4 +1,4 @@
-include $(top_srcdir)/tests/check/Makefile.check
+include $(top_srcdir)/check/Makefile.check
 
 LDADD += $(ZLIB_LDFLAGS)
 AM_CFLAGS = $(ZLIB_CFLAGS)

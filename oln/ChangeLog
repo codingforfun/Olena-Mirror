@@ -1,0 +1,19 @@
+2002-12-12  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* oln/config/system.hh: Fix bug.
+	* oln/config/pconf.hh: Fix bug.
+
+2002-12-11  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* Makefile.am (m4datadir, dist_m4data_DATA): Add for
+	oln.m4. (EXAMPLE_IMGS, dist_pkgdata_DATA): Add for images.
+	
+	* oln/Makefile.am (pkginclude_HEADERS): Use instead of nobase_inst_HEADERS.
+
+	* configure.ac: The testsuite is now optional. Depend again on Automake 1.7.1.
+
+	* ChangeLog: Create. Old version moves to ../attic.
+	* tests/ChangeLog: Remove. Old version moves to ../attic.
+
+	
+

@@ -2,11 +2,12 @@
 
 AC_PREREQ([2.54])
 
-source oln-version
+include (oln-version.m4)
 
-AC_INIT([$OLN_PNAME], [$OLN_VERSION], [$OLN_CONTACT])
-AC_CONFIG_SRCDIR([oln-version])
-AM_INIT_AUTOMAKE([1.6 no-define foreign dist-bzip2])
+AC_INIT([oln-meta], OLN_VERSION, OLN_CONTACT)
+AC_CONFIG_AUX_DIR([oln])
+AC_CONFIG_SRCDIR([oln-version.m4])
+AM_INIT_AUTOMAKE([1.7.1 no-define foreign dist-bzip2])
 AM_MAINTAINER_MODE
 
 AC_CONFIG_SUBDIRS([oln])
@@ -16,55 +17,39 @@ if test -d $srcdir/doc; then
   AC_ARG_WITH([doc], 
               AC_HELP_STRING([--without-doc],
 		             [disable building the documentation]),
-              [ac_cv_oln_doc], [ac_cv_oln_doc=yes])
+              [ac_cv_oln_doc=$withval], [ac_cv_oln_doc=yes])
   AC_CACHE_CHECK([whether to build the documentation],
                  [ac_cv_oln_doc], [ac_cv_oln_doc=yes])
 
-  if test x$ac_cv_oln_doc != xno; then
-     if test -w $srcdir/doc/
-        cp -f $srcdir/oln-version $srcdir/doc/
-     fi
+  if test x$ac_cv_oln_doc != xno; then 
      OLN_SUBDIRS="$OLN_SUBDIRS doc"
      AC_CONFIG_SUBDIRS([doc])
   fi
 fi
 
-if test -d $srcdir/utilities; then
-  AC_ARG_WITH([utilities], 
-              AC_HELP_STRING([--without-utilities],
-		             [disable building the documentation]),
-              [ac_cv_oln_utils], [ac_cv_oln_utils=yes])
-  AC_CACHE_CHECK([whether to build the utilities],
-                 [ac_cv_oln_utils], [ac_cv_oln_utils=yes])
+if test -d $srcdir/tools; then
+  AC_ARG_WITH([tools], 
+              AC_HELP_STRING([--without-tools],
+		             [disable building the runtime tools]),
+              [ac_cv_oln_tools=$withval], [ac_cv_oln_tools=yes])
+  AC_CACHE_CHECK([whether to build the tools],
+                 [ac_cv_oln_tools], [ac_cv_oln_tools=yes])
 
 
-  if test x$ac_cv_oln_utils != xno; then
-     if test -w $srcdir/utilities/
-        cp -f $srcdir/oln-version $srcdir/utilities/
-     fi
-     OLN_SUBDIRS="$OLN_SUBDIRS utilities"
-     AC_CONFIG_SUBDIRS([utilities])
+  if test x$ac_cv_oln_tools != xno; then
+     OLN_SUBDIRS="$OLN_SUBDIRS tools"
+     AC_CONFIG_SUBDIRS([tools])
   fi
 fi
 
-if test -d $srcdir/swilena; then
-  AC_ARG_WITH([swilena], 
-              AC_HELP_STRING([--without-swilena],
-		             [disable building Swilena]),
-              [ac_cv_swilena], [ac_cv_swilena=yes])
-  AC_CACHE_CHECK([whether to build the swilena],
-                 [ac_cv_swilena], [ac_cv_swilena=yes])
+#### Complementary configure arguments, report from subdirectories ####
+AC_ARG_WITH([fftw], AC_HELP_STRING([--with-fft[=DIR]], [using fftw (DIR = prefix for fftw installation)]))
+AC_ARG_WITH([zlib], AC_HELP_STRING([--with-zlib[=DIR]], [using zlib (DIR = prefix for zlib installation)]))
+AC_ARG_WITH([tests], AC_HELP_STRING([--without-tests], [disable the testsuite]))
+AC_ARG_WITH([manuals], AC_HELP_STRING([--without-manuals], [disable building the Olena manuals]))
+AC_ARG_WITH([utilities], AC_HELP_STRING([--without-utilities], [disable building the command-line utilities]))
+AC_ARG_WITH([swilena], AC_HELP_STRING([--without-swilena], [disable generation of Olena SWIG modules]))
 
-
-  if test x$ac_cv_swilena != xno; then
-     if test -w $srcdir/swilena/
-        cp -f $srcdir/oln-version $srcdir/swilena/
-     fi
-     OLN_SUBDIRS="$OLN_SUBDIRS swilena"
-     AC_CONFIG_SUBDIRS([swilena])
-  fi
-fi
-
-AC_SUBST([OLN_SUBDIRS]
+AC_SUBST([OLN_SUBDIRS])
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

@@ -1,10 +1,6 @@
 ## Process this file with Automake to produce Makefile.in -*-Makefile-*-
 
-olndir = $(includedir)/oln
-
-# nobase_nodist_oln_HEADERS = config/pconf.hh
-
-nobase_oln_HEADERS =				\
+nobase_pkginclude_HEADERS =			\
   arith/internal/opdecls.hh			\
   arith/logic.hh				\
   arith/ops.hh					\

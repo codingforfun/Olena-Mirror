@@ -1,4 +1,4 @@
 SUBDIRS = oln @OLN_SUBDIRS@
 
-EXTRA_DIST = oln-version
+EXTRA_DIST = oln-version.m4
 

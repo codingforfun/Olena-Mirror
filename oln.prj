@@ -1,11 +1,12 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_7_reconf 2)
-(Parent-Version oln 0_7_reconf 1)
-(Version-Log "")
+(Project-Version oln 0_7_reconf 3)
+(Parent-Version oln 0_7_reconf 2)
+(Version-Log "Intermediate checkin. \"make distcheck\" works with everything disabled.
+")
 (New-Version-Log "")
-(Checkin-Time "Wed, 11 Dec 2002 19:20:50 +0100")
+(Checkin-Time "Thu, 12 Dec 2002 00:14:32 +0100")
 (Checkin-Login raph)
 ;; diff-ignore configure$
 ;; diff-ignore aclocal\.m4$
@@ -83,14 +84,14 @@
 (Project-Keywords)
 (Files
   
-  (attic/oln-ChangeLog (oln/6_ChangeLog 1.50.1.98.1.3 660))
-  (configure.ac (oln/3_configure. 1.33 644))
+  (attic/oln-ChangeLog (oln/6_ChangeLog 1.50.1.98.1.4 660))
+  (configure.ac (oln/3_configure. 1.34 664))
   
   (attic/README (oln/1_README 1.5 660))
   (oln/ISSUES (oln/d/47_ISSUES 1.4 660))
-  (oln/Makefile.am (oln/2_Makefile.a 1.18 660))
+  (oln/Makefile.am (oln/2_Makefile.a 1.19 660))
   
-  (NEWS (oln/0_NEWS 1.7 660))
+  (NEWS (oln/0_NEWS 1.8 660))
 
   (doc/demo/image.cc (oln/d/46_image.cc 1.2 660))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.6 660))
@@ -100,14 +101,14 @@
   (doc/demo/tour.cc (oln/d/45_tour.cc 1.5 660))
 
   (attic/doc-ChangeLog (oln/e/1_ChangeLog 1.31 660))
-  (doc/configure.ac (oln/e/2_configure. 1.10 660))
-  (doc/configure (oln/e/3_configure 1.16 775))
+  (doc/configure.ac (oln/e/2_configure. 1.11 660))
+  (doc/configure (oln/e/3_configure 1.17 775))
   (doc/doc/bin () :directory)
   (doc/doc/html () :directory)
   (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.21 660))
   
   (doc/doc/oln-ref.tex (oln/f/14_oln-ref.te 1.3 660))
-  (doc/Makefile.am (oln/e/0_Makefile.a 1.5 660))
+  (doc/Makefile.am (oln/e/0_Makefile.a 1.6 660))
   
   (doc/tpl/processing.tpl (oln/d/48_processing 1.14 660))
 
@@ -120,7 +121,7 @@
   (oln/oln/basics.hh (oln/d/42_basics.hh 1.5 660))
   
   
-  (oln/oln/config/system.hh (oln/7_system.hh 1.10 660))
+  (oln/oln/config/system.hh (oln/7_system.hh 1.11 660))
   (oln/oln/convert/basics.hh (oln/23_basics.hh 1.3 660))
   (oln/oln/convert/bound.hh (oln/22_bound.hh 1.3 660))
   (oln/oln/convert/colorconv.hh (oln/18_colorconv. 1.3 660))
@@ -250,7 +251,7 @@
   (oln/oln/level/invert.hh (oln/33_invert.hh 1.4 660))
   (oln/oln/level/lut.hh (oln/29_lut.hh 1.6 660))
   (oln/oln/level/threshold.hh (oln/f/15_threshold. 1.4 660))
-  (oln/oln/Makefile.am (oln/27_Makefile.a 1.30 660))
+  (oln/oln/Makefile.am (oln/27_Makefile.a 1.31 660))
   
   (oln/oln/math/macros.hh (oln/b/21_macros.hh 1.4 660))
   (oln/oln/meta/array1d.hh (oln/f/23_array1d.hh 1.2 660))
@@ -305,18 +306,18 @@
   (oln/tests/meta/gen_test_utils/errors.hh (oln/f/32_errors.hh 1.1 660))
   (oln/tests/meta/gen_test_utils/postlude (oln/f/31_postlude 1.1 660))
   (oln/tests/meta/gen_test_utils/prelude (oln/f/30_prelude 1.2 660))
-  (oln/tests/meta/Makefile.am (oln/f/27_Makefile.a 1.2 660))
+  (oln/tests/meta/Makefile.am (oln/f/27_Makefile.a 1.3 660))
   
   (oln/tests/meta/test_array1d.cc (oln/f/26_test_array 1.2 660))
   (oln/tests/meta/test_array2d.cc (oln/f/25_test_array 1.2 660))
   (oln/tests/meta/test_array3d.cc (oln/f/24_test_array 1.2 660))
-  (attic/tests-ChangeLog (oln/e/30_ChangeLog 1.51 660))
+  (attic/tests-ChangeLog (oln/e/30_ChangeLog 1.52 660))
   (oln/tests/check/check.hh (oln/e/40_check.hh 1.2 660))
   (oln/tests/check/data.cc (oln/f/5_data.cc 1.3 660))
   (oln/tests/check/data.hh (oln/f/6_data.hh 1.1 660))
   (oln/tests/check/main.cc (oln/e/43_main.cc 1.1 660))
   (oln/tests/check/Makefile.am (oln/e/44_Makefile.a 1.3 660))
-  (oln/tests/check/Makefile.check (oln/e/37_Makefile.c 1.3 660))
+  (oln/tests/check/Makefile.check (oln/e/37_Makefile.c 1.4 660))
   (oln/tests/check/Makefile.flags (oln/e/36_Makefile.f 1.5 660))
   
   (oln/tests/check/srcdir.cc (oln/e/38_srcdir.cc 1.5 660))
@@ -325,12 +326,12 @@
   (oln/tests/check/verbose.hh (oln/e/42_verbose.hh 1.2 660))
   (oln/tests/convert/convcomp.cc (oln/f/3_convcomp.c 1.4 660))
   (oln/tests/convert/convcomp.hh (oln/f/1_convcomp.h 1.3 660))
-  (oln/tests/convert/Makefile.am (oln/f/0_Makefile.a 1.2 660))
+  (oln/tests/convert/Makefile.am (oln/f/0_Makefile.a 1.3 660))
   
 
 
   (oln/tests/convol () :directory)
-  (oln/tests/convol/Makefile.am (oln/f/38_Makefile.a 1.4 660))
+  (oln/tests/convol/Makefile.am (oln/f/38_Makefile.a 1.5 660))
   
   (oln/tests/convol/slow_sum_2d_1.cc (oln/f/41_slow_sum_2 1.2 660))
   (oln/tests/convol/slow_sum_2d_2.cc (oln/f/40_slow_sum_2 1.2 660))
@@ -340,16 +341,16 @@
 
   (oln/tests/io/2d.cc (oln/e/47_2d.cc 1.4 660))
   (oln/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.5 660))
-  (oln/tests/io/Makefile.am (oln/e/49_Makefile.a 1.6 660))
+  (oln/tests/io/Makefile.am (oln/e/49_Makefile.a 1.7 660))
   
   (oln/tests/Makefile.am (oln/e/45_Makefile.a 1.14 660))
   
   (oln/tests/morpho/edoc.cc (oln/f/13_edoc.cc 1.3 660))
   (oln/tests/morpho/extrkiller.cc (oln/e/31_extrkiller 1.5 660))
-  (oln/tests/morpho/Makefile.am (oln/e/32_Makefile.a 1.5 660))
+  (oln/tests/morpho/Makefile.am (oln/e/32_Makefile.a 1.6 660))
   
   (oln/tests/morpho/reconstruction.cc (oln/e/34_reconstruc 1.6 660))
-  (oln/tests/README (oln/f/4_README 1.3 660))
+  (oln/tests/README (oln/f/4_README 1.4 660))
   (THANKS (oln/4_THANKS 1.3 660))
   
   (tools () :directory)
@@ -623,7 +624,7 @@
   (oln/tests/transforms/fft.cc (oln/i/37_fft.cc 1.2 660))
   (oln/tests/transforms/dwt.cc (oln/i/38_dwt.cc 1.3 660))
   
-  (oln/tests/transforms/Makefile.am (oln/i/40_Makefile.a 1.2 660))
+  (oln/tests/transforms/Makefile.am (oln/i/40_Makefile.a 1.3 660))
 
 ;; Files added by populate at Tue, 19 Nov 2002 01:01:31 +0100,
 ;; to version 0_5.87(w), by js:
@@ -656,7 +657,7 @@
 ;; Files added by populate at Wed, 04 Dec 2002 15:51:21 +0100,
 ;; to version 0_5_reconf.1(w), by raph:
 
-  (oln/oln.m4 (oln/j/15_oln.m4 1.2 664))
+  (oln/oln.m4 (oln/j/15_oln.m4 1.3 664))
 
 ;; Files added by populate at Wed, 04 Dec 2002 15:51:40 +0100,
 ;; to version 0_5_reconf.1(w), by raph:
@@ -666,7 +667,7 @@
 ;; Files added by populate at Wed, 04 Dec 2002 16:24:21 +0100,
 ;; to version 0_5_reconf.2(w), by raph:
 
-  (oln/oln/config/pconf.hh (oln/j/20_pconf.hh 1.3 664))
+  (oln/oln/config/pconf.hh (oln/j/20_pconf.hh 1.4 664))
 
 ;; Files added by populate at Thu, 05 Dec 2002 18:01:07 +0100,
 ;; to version 0_5_reconf.12(w), by raph:
@@ -677,15 +678,15 @@
 ;; Files added by populate at Wed, 11 Dec 2002 19:01:45 +0100,
 ;; to version 0_5.104(w), by raph:
 
-  (oln-version (oln/m/48_oln-versio 1.1 644))
-  (oln/depcomp (oln/m/49_depcomp 1.1 755))
-  (oln/Makefile.in (oln/m/50_Makefile.i 1.1 664))
-  (oln/missing (oln/m/51_missing 1.1 755))
-  (oln/mkinstalldirs (oln/n/0_mkinstalld 1.1 755))
-  (oln/install-sh (oln/n/1_install-sh 1.1 755))
-  (oln/configure (oln/n/2_configure 1.1 775))
-  (oln/aclocal.m4 (oln/n/3_aclocal.m4 1.1 664))
-  (oln/configure.ac (oln/n/4_configure. 1.1 660))
+  (oln-version.m4 (oln/m/48_oln-versio 1.2 664))
+  (oln/depcomp (oln/m/49_depcomp 1.1 775))
+  (oln/Makefile.in (oln/m/50_Makefile.i 1.2 664))
+  (oln/missing (oln/m/51_missing 1.1 775))
+  (oln/mkinstalldirs (oln/n/0_mkinstalld 1.2 775))
+  (oln/install-sh (oln/n/1_install-sh 1.1 775))
+  (oln/configure (oln/n/2_configure 1.2 775))
+  (oln/aclocal.m4 (oln/n/3_aclocal.m4 1.2 664))
+  (oln/configure.ac (oln/n/4_configure. 1.2 660))
   (oln/img/se9.pbm (oln/n/5_se9.pbm 1.1 660) :no-keywords)
   (oln/img/se.pbm (oln/n/6_se.pbm 1.1 660) :no-keywords)
   (oln/img/random.pgm (oln/n/7_random.pgm 1.1 660))
@@ -696,33 +697,33 @@
   (oln/img/map.pbm (oln/n/12_map.pbm 1.1 660))
   (oln/img/lena_dark.pgm (oln/n/13_lena_dark. 1.1 660))
   (oln/img/lena256.pgm (oln/n/14_lena256.pg 1.1 660))
-  (oln/img/lena128.pgm (oln/n/15_lena128.pg 1.1 660))
-  (oln/img/lena.pgm (oln/n/16_lena.pgm 1.1 660))
+  
+  
   (oln/img/face_se.pbm (oln/n/17_face_se.pb 1.1 660) :no-keywords)
-  (oln/tests/Makefile.in (oln/n/18_Makefile.i 1.1 664))
-  (oln/tests/transforms/Makefile.in (oln/n/19_Makefile.i 1.1 664))
-  (oln/tests/types/Makefile.in (oln/n/20_Makefile.i 1.1 664))
-  (oln/tests/sanity/Makefile.in (oln/n/21_Makefile.i 1.1 664))
-  (oln/tests/morpho/Makefile.in (oln/n/22_Makefile.i 1.1 664))
-  (oln/tests/io/Makefile.in (oln/n/23_Makefile.i 1.1 664))
-  (oln/tests/convol/Makefile.in (oln/n/24_Makefile.i 1.1 664))
-  (oln/tests/convert/Makefile.in (oln/n/25_Makefile.i 1.1 664))
-  (oln/tests/check/Makefile.in (oln/n/26_Makefile.i 1.1 664))
-  (oln/tests/meta/Makefile.in (oln/n/27_Makefile.i 1.1 664))
-  (oln/oln/config/pconf-inc.in (oln/n/28_pconf-inc. 1.1 664))
-  (mkinstalldirs (oln/n/29_mkinstalld 1.1 755))
-  (missing (oln/n/30_missing 1.1 755))
-  (Makefile.in (oln/n/31_Makefile.i 1.1 664))
-  (Makefile.am (oln/n/32_Makefile.a 1.1 644))
-  (install-sh (oln/n/33_install-sh 1.1 755))
-  (configure (oln/n/34_configure 1.1 775))
+  (oln/tests/Makefile.in (oln/n/18_Makefile.i 1.2 664))
+  (oln/tests/transforms/Makefile.in (oln/n/19_Makefile.i 1.2 664))
+  (oln/tests/types/Makefile.in (oln/n/20_Makefile.i 1.2 664))
+  (oln/tests/sanity/Makefile.in (oln/n/21_Makefile.i 1.2 664))
+  (oln/tests/morpho/Makefile.in (oln/n/22_Makefile.i 1.2 664))
+  (oln/tests/io/Makefile.in (oln/n/23_Makefile.i 1.2 664))
+  (oln/tests/convol/Makefile.in (oln/n/24_Makefile.i 1.2 664))
+  (oln/tests/convert/Makefile.in (oln/n/25_Makefile.i 1.2 664))
+  (oln/tests/check/Makefile.in (oln/n/26_Makefile.i 1.2 664))
+  (oln/tests/meta/Makefile.in (oln/n/27_Makefile.i 1.2 664))
+  (oln/oln/config/pconf-inc.in (oln/n/28_pconf-inc. 1.2 664))
+  
+  
+  (Makefile.in (oln/n/31_Makefile.i 1.2 664))
+  (Makefile.am (oln/n/32_Makefile.a 1.2 664))
+  
+  (configure (oln/n/34_configure 1.2 775))
   (tools/swilena/README (oln/n/35_README 1.1 664))
   (tools/swilena/TODO (oln/n/36_TODO 1.1 664))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.1 664))
   (tools/swilena/swilena.prj (oln/n/38_swilena.pr 1.1 664))
   (tools/swilena/doc/Makefile.am (oln/n/39_Makefile.a 1.1 664))
   (tools/swilena/doc/swilena.texi (oln/n/40_swilena.te 1.1 660))
-  (tools/swilena/java/Makefile.in (oln/n/41_Makefile.i 1.1 664))
+  
   (tools/swilena/java/Makefile.am (oln/n/42_Makefile.a 1.1 664))
   (tools/swilena/python/typedefs.hh (oln/n/43_typedefs.h 1.1 664))
   (tools/swilena/python/Makefile.am (oln/n/44_Makefile.a 1.1 664))
@@ -761,13 +762,35 @@
   (tools/swilena/Makefile.am (oln/o/25_Makefile.a 1.1 664))
   (tools/swilena/configure.ac (oln/o/26_configure. 1.1 664))
   (tools/utilities/configure.ac (oln/o/27_configure. 1.1 664))
-  (aclocal.m4 (oln/o/28_aclocal.m4 1.1 664))
+  (aclocal.m4 (oln/o/28_aclocal.m4 1.2 664))
 
 
 ;; Files added by populate at Wed, 11 Dec 2002 19:17:58 +0100,
 ;; to version 0_7_reconf.1(w), by raph:
 
   (cleanup.sh (oln/o/29_cleanup.sh 1.1 775))
+
+;; Files added by populate at Wed, 11 Dec 2002 19:29:49 +0100,
+;; to version 0_7_reconf.2(w), by raph:
+
+  (oln/ChangeLog (oln/o/30_ChangeLog 1.1 664))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.1 664))
+  (tools/ChangeLog (oln/o/32_ChangeLog 1.1 664))
+  (ChangeLog (oln/o/33_ChangeLog 1.1 664))
+
+;; Files deleted by depopulate at Thu, 12 Dec 2002 00:11:27 +0100,
+;; from version 0_7_reconf.2(w), by raph:
+
+  ; (mkinstalldirs ())
+  ; (missing ())
+  ; (install-sh ())
+  ; (tools/swilena/java/Makefile.in ())
+
+;; Files deleted by depopulate at Thu, 12 Dec 2002 00:11:58 +0100,
+;; from version 0_7_reconf.2(w), by raph:
+
+  ; (oln/img/lena128.pgm ())
+  ; (oln/img/lena.pgm ())
 )
 (Merge-Parents)
 (New-Merge-Parents)

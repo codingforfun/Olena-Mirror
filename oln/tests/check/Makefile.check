@@ -1,5 +1,5 @@
 # -*- Makefile -*-
 
-include $(top_srcdir)/tests/check/Makefile.flags
-LDADD = $(top_builddir)/tests/check/libcheck.a
+include $(top_srcdir)/check/Makefile.flags
+LDADD = $(top_builddir)/check/libcheck.a
 TESTS = $(check_PROGRAMS)

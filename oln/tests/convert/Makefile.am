@@ -1,4 +1,4 @@
-include $(top_srcdir)/tests/check/Makefile.check
+include $(top_srcdir)/check/Makefile.check
 
 check_PROGRAMS = \
   8-nrgb-hsi \

@@ -1,4 +1,4 @@
-include $(top_srcdir)/tests/check/Makefile.check
+include $(top_srcdir)/check/Makefile.check
 
 check_PROGRAMS = slow_sum_2d_1 slow_sum_2d_2 sobel_gradient
 

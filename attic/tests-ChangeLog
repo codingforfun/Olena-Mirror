@@ -1,38 +1,38 @@
-2002-12-05  Raphael Poss  <raph@sandrock>
+2002-12-05  Raphael Poss  <raph@lrde.epita.fr>
 
-	* types/runtests (rundir): add $CPPFLAGS to compilation flags and
+	* types/runtests (rundir): Add $CPPFLAGS to compilation flags and
 	cross fingers.
 
 2002-12-05  Raphael Poss  <raph@lrde.epita.fr>
 
-	* transforms/fft.cc, transforms/dwt.cc (check): create OUTPUT_DIR
+	* transforms/fft.cc, transforms/dwt.cc (check): Create OUTPUT_DIR
 	before using it.
 
-	* types/tests/conv2: mark XFAIL for seemingly obvious reasons.
+	* types/tests/conv2: Mark XFAIL for seemingly obvious reasons.
 
-	* morpho/Makefile.am (CXXFLAGS): do not override CXXFLAGS
+	* morpho/Makefile.am (CXXFLAGS): Do not override CXXFLAGS
 	completely.
 
-	* meta/gen_test.cc (write_postlude_and_test): be nice to the new
+	* meta/gen_test.cc (write_postlude_and_test): Be nice to the new
 	configuration system. Report exit status of commands.
-	* check/Makefile.flags: likewise.
+	* check/Makefile.flags: Likewise.
 
-	* Makefile.am: make things work when Olena is 'configure'd from
+	* Makefile.am: Make things work when Olena is 'configure'd from
 	another directory than its sources.  (BUILTDATA, SOURCEDATA,
 	SOURCEIMGS, BUILTIMGS) macro name changes.
 
-	* data-src: renamed from data.
+	* data-src: Renamed from data.
 	
-	* check/data.cc: remove a small glitch.
+	* check/data.cc: Remove a small glitch.
 	
 2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
 
-	* Makefile.am: cleanup and fixes. 
+	* Makefile.am: Cleanup and fixes. 
 
 2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
 
-	* defs.in (CXXFLAGS): use OLN_INCLUDEDIR.
-	* check/Makefile.flags (AM_CPPFLAGS): likewise.
+	* defs.in (CXXFLAGS): Use OLN_INCLUDEDIR.
+	* check/Makefile.flags (AM_CPPFLAGS): Likewise.
 
 2002-12-01  Emmanuel Turquin  <turqui_e@epita.fr>
 

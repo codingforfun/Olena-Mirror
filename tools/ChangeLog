@@ -1,0 +1,8 @@
+2002-12-11  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* Makefile.am: Create.
+	* configure.ac: Create.
+
+	* ChangeLog: Create.
+	
+

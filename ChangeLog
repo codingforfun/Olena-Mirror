@@ -1,0 +1,15 @@
+2002-12-11  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* configure.ac: Make the doc/ and tools/ subdirectories optional.
+	Depend again on Automake 1.7.1. Document optional arguments pertaining
+	to subdirectories in the toplevel "configure" script.
+	
+	* oln-version.m4: Add (replaces oln-version). Use with more sanity.
+
+	* NEWS: Create entry for 0.7.
+
+	* oln/Changelog, attic/oln-ChangeLog: Fix typos. Rename.
+	* oln/test/ChangeLog, attic/tests-ChangeLog: Fix typos. Rename.
+	* doc/ChangeLog, attic/doc-ChangeLoog: Fix typos. Rename.
+	
+

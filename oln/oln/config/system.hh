@@ -34,7 +34,7 @@
 # ifdef HAVE_CONFIG_H
 # include <config.h>
 # endif 
-# include <oln/config/pconf.inc>
+# include <oln/config/pconf.hh>
 # include <cmath>
 
 # ifndef M_PI

@@ -1,0 +1,8 @@
+2002-12-11  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* configure.ac: Building the manuals and the demo programs are now
+	optional.
+
+	* ChangeLog: Create. Old version moved to ../attic.
+
+

@@ -1,6 +1,6 @@
-# aclocal.m4t generated automatically by aclocal 1.6.3 -*- Autoconf -*-
+# generated automatically by aclocal 1.7.1 -*- Autoconf -*-
 
-# Copyright 1996, 1997, 1998, 1999, 2000, 2001, 2002
+# Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2002
 # Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -43,7 +43,7 @@
 # CC etc. in the Makefile, will ask for an AC_PROG_CC use...
 
 
-AC_PREREQ([2.52])
+AC_PREREQ([2.54])
 
 # Autoconf 2.50 wants to disallow AM_ names.  We explicitly allow
 # the ones we care about.
@@ -68,6 +68,16 @@ if test "`cd $srcdir && pwd`" != "`pwd`" &&
    test -f $srcdir/config.status; then
   AC_MSG_ERROR([source directory already configured; run "make distclean" there first])
 fi
+
+# test whether we have cygpath
+if test -z "$CYGPATH_W"; then
+  if (cygpath --version) >/dev/null 2>/dev/null; then
+    CYGPATH_W='cygpath -w'
+  else
+    CYGPATH_W=echo
+  fi
+fi
+AC_SUBST([CYGPATH_W])
 
 # Define the identity of the package.
 dnl Distinguish between old-style and new-style calls.
@@ -100,16 +110,28 @@ AC_REQUIRE([AC_PROG_AWK])dnl
 AC_REQUIRE([AC_PROG_MAKE_SET])dnl
 
 _AM_IF_OPTION([no-dependencies],,
-[AC_PROVIDE_IFELSE([AC_PROG_][CC],
+[AC_PROVIDE_IFELSE([AC_PROG_CC],
                   [_AM_DEPENDENCIES(CC)],
-                  [define([AC_PROG_][CC],
-                          defn([AC_PROG_][CC])[_AM_DEPENDENCIES(CC)])])dnl
-AC_PROVIDE_IFELSE([AC_PROG_][CXX],
+                  [define([AC_PROG_CC],
+                          defn([AC_PROG_CC])[_AM_DEPENDENCIES(CC)])])dnl
+AC_PROVIDE_IFELSE([AC_PROG_CXX],
                   [_AM_DEPENDENCIES(CXX)],
-                  [define([AC_PROG_][CXX],
-                          defn([AC_PROG_][CXX])[_AM_DEPENDENCIES(CXX)])])dnl
+                  [define([AC_PROG_CXX],
+                          defn([AC_PROG_CXX])[_AM_DEPENDENCIES(CXX)])])dnl
 ])
 ])
+
+
+# When config.status generates a header, we must update the stamp-h file.
+# This file resides in the same directory as the config header
+# that is generated.  The stamp files are numbered to have different names.
+
+# Autoconf calls _AC_AM_CONFIG_HEADER_HOOK (when defined) in the
+# loop where config.status creates the headers, so we can generate
+# our stamp files there.
+AC_DEFUN([_AC_AM_CONFIG_HEADER_HOOK],
+[_am_stamp_count=`expr ${_am_stamp_count-0} + 1`
+echo "timestamp for $1" >`AS_DIRNAME([$1])`/stamp-h[]$_am_stamp_count])
 
 # Copyright 2002  Free Software Foundation, Inc.
 
@@ -131,14 +153,14 @@ AC_PROVIDE_IFELSE([AC_PROG_][CXX],
 # ----------------------------
 # Automake X.Y traces this macro to ensure aclocal.m4 has been
 # generated from the m4 files accompanying Automake X.Y.
-AC_DEFUN([AM_AUTOMAKE_VERSION],[am__api_version="1.6"])
+AC_DEFUN([AM_AUTOMAKE_VERSION],[am__api_version="1.7"])
 
 # AM_SET_CURRENT_AUTOMAKE_VERSION
 # -------------------------------
 # Call AM_AUTOMAKE_VERSION so it can be traced.
 # This function is AC_REQUIREd by AC_INIT_AUTOMAKE.
 AC_DEFUN([AM_SET_CURRENT_AUTOMAKE_VERSION],
-	 [AM_AUTOMAKE_VERSION([1.6.3])])
+	 [AM_AUTOMAKE_VERSION([1.7.1])])
 
 # Helper functions for option handling.                    -*- Autoconf -*-
 
@@ -518,7 +540,7 @@ AC_CACHE_CHECK([dependency style of $depcc],
     if depmode=$depmode \
        source=conftest.c object=conftest.o \
        depfile=conftest.Po tmpdepfile=conftest.TPo \
-       $SHELL ./depcomp $depcc -c conftest.c -o conftest.o >/dev/null 2>&1 &&
+       $SHELL ./depcomp $depcc -c -o conftest.o conftest.c >/dev/null 2>&1 &&
        grep conftest.h conftest.Po > /dev/null 2>&1 &&
        ${MAKE-make} -s -f confmf > /dev/null 2>&1; then
       am_cv_$1_dependencies_compiler_type=$depmode
@@ -533,6 +555,9 @@ else
 fi
 ])
 AC_SUBST([$1DEPMODE], [depmode=$am_cv_$1_dependencies_compiler_type])
+AM_CONDITIONAL([am__fastdep$1], [
+  test "x$enable_dependency_tracking" != xno \
+  && test "$am_cv_$1_dependencies_compiler_type" = gcc3])
 ])
 
 
@@ -652,7 +677,9 @@ AC_DEFUN([AM_OUTPUT_DEPENDENCY_COMMANDS],
      [AMDEP_TRUE="$AMDEP_TRUE" ac_aux_dir="$ac_aux_dir"])
 ])
 
-# Copyright 2001 Free Software Foundation, Inc.             -*- Autoconf -*-
+# Check to see how 'make' treats includes.	-*- Autoconf -*-
+
+# Copyright (C) 2001, 2002 Free Software Foundation, Inc.
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -692,7 +719,7 @@ echo "include confinc" > confmf
 # In particular we don't look at `^make:' because GNU make might
 # be invoked under some other name (usually "gmake"), in which
 # case it prints its new name instead of `make'.
-if test "`$am_make -s -f confmf 2> /dev/null | fgrep -v 'ing directory'`" = "done"; then
+if test "`$am_make -s -f confmf 2> /dev/null | grep -v 'ing directory'`" = "done"; then
    am__include=include
    am__quote=
    _am_result=GNU
@@ -752,14 +779,14 @@ else
 fi
 AC_CONFIG_COMMANDS_PRE(
 [if test -z "${$1_TRUE}" && test -z "${$1_FALSE}"; then
-  AC_MSG_ERROR([conditional \"$1\" was never defined.
+  AC_MSG_ERROR([conditional "$1" was never defined.
 Usually this means the macro was only invoked conditionally.])
 fi])])
 
 # Add --enable-maintainer-mode option to configure.
 # From Jim Meyering
 
-# Copyright 1996, 1998, 2000, 2001 Free Software Foundation, Inc.
+# Copyright 1996, 1998, 2000, 2001, 2002  Free Software Foundation, Inc.
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -776,7 +803,7 @@ fi])])
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
 
-# serial 1
+# serial 2
 
 AC_DEFUN([AM_MAINTAINER_MODE],
 [AC_MSG_CHECKING([whether to enable maintainer-specific portions of Makefiles])
@@ -793,204 +820,5 @@ AC_DEFUN([AM_MAINTAINER_MODE],
 ]
 )
 
-
-AC_DEFUN(AM_PATH_OLN,
-      [dnl 
-dnl Get the cflags and libraries from the oln-config script
-dnl
-AC_ARG_WITH(oln-include,[  --with-oln-include=PFX   Prefix where OLN is installed (optional)],
-            oln_include_prefix="$withval", oln_include_prefix="")
-
-  AC_REQUIRE([AC_PROG_CXX])
-  AC_LANG_PUSH([C++])
-
-  OLN_INCLUDEDIR=""
-  oln_save_CXXFLAGS="$CXXFLAGS"
-  oln_save_CPPFLAGS="$CPPFLAGS"
-
-  AC_MSG_NOTICE([checking for Olena headers])
-
-  within_olena_source_tree=ifelse([$1], [], [no], [$1])
-  if test x$within_olena_source_tree != xno; then
-     AC_MSG_CHECKING([for Olena around us ($within_olena_source_tree)])
-     within_olena_source_tree=`( cd $srcdir; cd $within_olena_source_tree; pwd )`
-     if test -r $within_olena_source_tree/oln/config/pconf.hh; then
-        AC_MSG_RESULT([yes, present])
-        OLN_SOURCE_DIR="${within_olena_source_tree}/oln"
-        OLN_INCLUDEDIR="${within_olena_source_tree}"
-        CXXFLAGS="-I${within_olena_source_tree} $CXXFLAGS"
-        CPPFLAGS="-I${within_olena_source_tree} $CPPFLAGS"
-     else
-        AC_MSG_RESULT([no, searching again])
-     fi
-  fi
-
-  if test x$oln_include_prefix != x ; then
-     AC_MSG_CHECKING([for Olena in $oln_include_prefix])
-     if test -r $oln_include_prefix/oln/config/pconf.hh; then
-        AC_MSG_RESULT([yes, present])
-        if test x$OLN_INCLUDEDIR != x ; then
-           AC_MSG_WARN([Olena present in $OLN_INCLUDEDIR, but using version in $oln_include_prefix])
-        fi
-        OLN_SOURCE_DIR="$oln_include_prefix/oln"
-        OLN_INCLUDEDIR="$oln_include_prefix"
-        CXXFLAGS="-I$oln_include_prefix $CXXFLAGS"
-        CPPFLAGS="-I$oln_include_prefix $CPPFLAGS"
-     else
-        AC_MSG_RESULT([no])
-     fi
-  fi
-
-  have_olena=yes
-  AC_CHECK_HEADER([oln/config/pconf.hh], [], [have_olena=no])
-
-  if test $have_olena = yes; then
-     if test x$OLN_INCLUDEDIR != x; then
-        AC_MSG_NOTICE([using include path $OLN_INCLUDEDIR to find Olena.])
-     fi
-     if test -z "$OLN_SOURCE_DIR"; then
-        AC_MSG_CHECKING([for location of Olena headers])
-        OLN_SOURCE_DIR=no
-        AC_TRY_RUN([
-#include <oln/config/pconf.hh>
-#include <fstream>
-int main(void) { std::ofstream f("conftest.oln"); f << OLN_SOURCE_DIR; return 0; }
-                   ], [OLN_SOURCE_DIR=`cat conftest.oln`], [], [])
-        if test x$OLN_SOURCE_DIR != xno; then
-             if test -r $OLN_SOURCE_DIR/config/pconf.hh; then
-                AC_MSG_RESULT([$OLN_SOURCE_DIR])
-             else
-	        AC_MSG_RESULT([duh ?])
-	        AC_MSG_WARN([Olena advertises $OLN_SOURCE_DIR but $OLN_SOURCE_DIR/config/pconf.hh not found])
-	     fi
-        else 
-            OLN_SOURCE_DIR=''
-            AC_MSG_RESULT([unknown])
-        fi
-     fi
-  else
-     AC_MSG_WARN([*** Olena source headers not found. Expect problems.])
-  fi   
-  CXXFLAGS="$oln_save_CXXFLAGS"
-  CPPFLAGS="$oln_save_CPPFLAGS"
-
-  AC_SUBST([OLN_SOURCE_DIR])
-  AC_SUBST([OLN_INCLUDEDIR])
-  
-  AC_LANG_POP([C++])
-])
-
-AC_DEFUN(AC_TEMPLATE_DEPTH,
-[
-  AC_REQUIRE([AC_PROG_CXX])
-  AC_LANG_PUSH([C++])
-
-  cxx_tdepth=ifelse([$1], , 50, [$1])
-
-  AC_MSG_CHECKING([for automatic C++ template depth adjustment by the compiler, upto $cxx_tdepth])
- 
-  oln_save_CPPFLAGS="$CPPFLAGS"
-  CPPFLAGS="$CPPFLAGS -DTDEPTH=$cxx_tdepth"
-  AC_TRY_RUN([
-   template<unsigned n> struct rec { typedef typename rec<n-1>::ret ret; };
-   template<> struct rec<0> { typedef int ret; };
-   int main(void) { rec<TDEPTH>::ret i = 0; return i; }
-  ], [AC_MSG_RESULT([yes])], [
-     oln_save_CXXFLAGS="$CXXFLAGS"
-     CXXFLAGS="$CXXFLAGS -ftemplate-depth-$cxx_tdepth"
-     AC_TRY_RUN([
-        template<unsigned n> struct rec { typedef typename rec<n-1>::ret ret; };
-        template<> struct rec<0> { typedef int ret; };
-        int main(void) { rec<TDEPTH>::ret i = 0; return i; }
-       ], [AC_MSG_RESULT([yes, with -ftemplate-depth-$cxx_tdepth])], [
-          AC_MSG_RESULT([no])
-	  AC_MSG_WARN([deep template recursions ($cxx_tdepth) not supported. Sorry.])
-          CXXFLAGS="$oln_save_CXXFLAGS"
-	])
-	])
-  CPPFLAGS="$oln_save_CPPFLAGS"
-
-  AC_LANG_POP([C++])
-])
-
-AC_DEFUN(OLN_ENABLE_EXCEPTIONS,
-[
-  oln_exn_default=ifselse([$1], , [yes], [$1])
-
-  AC_ARG_ENABLE(oln-exceptions,
-       [AC_HELP_STRING([--enable-oln-exceptions], [enable generation of C++ exceptions instead of aborting on error (default is $oln_exn_default)])],
-	[oln_exn_enable=$enableval], [oln_exn_enable=$oln_exn_default])
-  if test x$oln_exn_enable != xno; then
-     CPPFLAGS="$CPPFLAGS -DOLN_EXCEPTIONS"
-  fi
-])
-AC_DEFUN(OLN_DISABLE_EXCEPTIONS, [OLN_ENABLE_EXCEPTIONS([no])])
-
-
-AC_DEFUN(AC_WITH_OLN,
-[
-  AC_REQUIRE([AM_PATH_OLN])
-  AC_REQUIRE([AC_TEMPLATE_DEPTH])
-
-  AC_LANG_PUSH([C++])
-  AC_CHECK_HEADERS([limits stl_config.h])
-  AC_LANG_POP([C++])
-])
-
-
-AC_DEFUN(AC_WITH_FFTW,
-[
-   AC_ARG_WITH(fftw,
-      [AC_HELP_STRING([--with-fft[=DIR]], [using fftw (DIR = prefix for fftw installation)])])
-   FFTW_CFLAGS=''
-   FFTW_LDFLAGS=''
-   if test "x$with_fftw" != xno; then
-      if test -n "$with_fftw"; then
-        FFTW_CFLAGS="-I${with_fftw}/include"
-        FFTW_LDFLAGS="-L${with_fftw}/lib"
-      fi
-      oln_save_CFLAGS="$CFLAGS"
-      oln_save_LDFLAGS="$LDFLAGS"
-      CFLAGS="$CFLAGS $FFTW_CFLAGS"
-      LDFLAGS="$LDFLAGS $FFTW_LDFLAGS"
-      AC_CHECK_HEADER([fftw.h],
-           [AC_CHECK_LIB([fftw], [fftw2d_create_plan],
-                [FFTW_LDFLAGS="${FFTW_LDFLAGS} -lfftw -lrfftw"
-                 AC_DEFINE([HAVE_FFTW], 1, [Define to 1 if we can use fftw])
-                ])
-           ])
-      CFLAGS="$oln_save_CFLAGS"
-      LDFLAGS="$oln_save_LDFLAGS"
-  fi
-  AC_SUBST([FFTW_CFLAGS])
-  AC_SUBST([FFTW_LDFLAGS])
-])
-
-
-AC_DEFUN(AC_WITH_ZLIB,
-[
-   AC_ARG_WITH(zlib,
-      [AC_HELP_STRING([--with-zlib[=DIR]], [using zlib (DIR = prefix for zlib installation)])])
-   ZLIB_CFLAGS=''
-   ZLIB_LDFLAGS=''
-   if test "x$with_zlib" != xno; then
-      if test -n "$with_zlib"; then
-        ZLIB_CFLAGS="-I${with_zlib}/include"
-        ZLIB_LDFLAGS="-L${with_zlib}/lib"
-      fi
-      oln_save_CFLAGS="$CFLAGS"
-      oln_save_LDFLAGS="$LDFLAGS"
-      CFLAGS="$CFLAGS $ZLIB_CFLAGS"
-      LDFLAGS="$LDFLAGS $ZLIB_LDFLAGS"
-      AC_CHECK_HEADER([zlib.h],
-       [AC_CHECK_LIB([z], [gzopen],
-          [ZLIB_LDFLAGS="${ZLIB_LDFLAGS} -lz"
-            AC_DEFINE([HAVE_ZLIB], 1, [Define to 1 if we can use zlib])])])
-      CFLAGS="$oln_save_CFLAGS"
-      LDFLAGS="$oln_save_LDFLAGS"
-   fi
-   AC_SUBST([ZLIB_CFLAGS])
-   AC_SUBST([ZLIB_LDFLAGS])
-])
-
+AU_DEFUN([jm_MAINTAINER_MODE], [AM_MAINTAINER_MODE])
 

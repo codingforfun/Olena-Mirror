@@ -1,84 +1,84 @@
 2002-12-09  Raphael Poss  <raph@lrde.epita.fr>
 
-	* Makefile.am (EXTRA_DIST): add FAQ.
-	* all Makefile.in's, configure's, aclocal.m4's, texinfo.tex: remove.
-	* pconf-inc.in pconf.inc: remove.
+	* Makefile.am (EXTRA_DIST): Add FAQ.
+	* Makefile.in, configure, aclocal.m4, texinfo.tex: Remove in all subdirectories.
+	* pconf-inc.in, pconf.inc: Remove.
 	
 2002-12-05  Raphael Poss  <raph@lrde.epita.fr>
 
-	* FAQ: add.
+	* FAQ: Add.
 
 2002-12-05  Raphael Poss  <raph@lrde.epita.fr>
 
-	* Makefile.am: tweak.
-	* configure.ac (OLN_SOURCE_DIR): new AC_DEFINE. tweak.
+	* Makefile.am: Tweak.
+	* configure.ac (OLN_SOURCE_DIR): Add new AC_DEFINE. Tweak.
 
-	* src/oln.m4 (OLN_ENABLE_EXCEPTIONS, OLN_DISABLE_EXCEPTIONS): new
+	* src/oln.m4 (OLN_ENABLE_EXCEPTIONS, OLN_DISABLE_EXCEPTIONS): New
 	macros.
 
-	* src/Makefile.am (ACLOCAL_FLAGS): add.
-	(CONFIGURE_DEPENDENCIES): depend on oln.m4.
+	* src/Makefile.am (ACLOCAL_FLAGS): Add.
+	(CONFIGURE_DEPENDENCIES): Depend on oln.m4.
 
-	* src/oln.m4 (CPPFLAGS, CXXFLAGS): now user-defined CXXFLAGS and
+	* src/oln.m4 (CPPFLAGS, CXXFLAGS): Now user-defined CXXFLAGS and
 	CPPFLAGS are never totally overriden. (AC_TEMPLATE_DEPTH) Add
 	checks for deep template recursion.
 	
 	* src/configure.ac (CXX, CXXFLAGS, OLN_INCLUDEDIR): AC_DEFINE more
 	variables.
 
-	* src/utilities/generate_morpho.sh (AM_CPPFLAGS, AM_CXXFLAGS): be
+	* src/utilities/generate_morpho.sh (AM_CPPFLAGS, AM_CXXFLAGS): Be
 	nice to the new configuration system.
-	* src/utilities/Makefile.am (AM_CXXFLAGS): likewise.
+	* src/utilities/Makefile.am (AM_CXXFLAGS): Likewise.
 
-	* oln/config/system.hh: include config.h if HAVE_CONFIG_H is defined.
+	* oln/config/system.hh: Include config.h if HAVE_CONFIG_H is defined.
 	
 	
-2002-12-04  Raphael Poss  <raph@sandrock>
+2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
 
-	* oln/config/pconf.hh: fix bug.
+	* oln/config/pconf.hh: Fix bug.
 
-	* src/configure.ac: add AC_PROG_RANLIB for tests
+	* src/configure.ac: Add AC_PROG_RANLIB for tests
 
 2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
 
-	* oln/config/README: remove obsolete file 
+	* oln/config/README: Remove obsolete file 
 
 2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
 
-	* oln/config/pconf.hh: add (useful for initial builds).
+	* oln/config/pconf.hh: Add (useful for initial builds).
 
 2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
 
-	* src/oln.m4: add. New Autoconf macros: 
+	* src/oln.m4: Add. New Autoconf macros: 
 	AM_PATH_OLN, AC_WITH_OLN, AC_WITH_FFTW, AC_WITH_ZLIB
-	* bootstrap.sh: add. aclocal must be informed of the location of
+	* bootstrap.sh: Add. aclocal must be informed of the location of
 	oln.m4, use an environment variable.
 
-	* configure.ac: change to use new configuration system. Now declares
+	* configure.ac: Change to use new configuration system. Now declares
 	src/configure and doc/configure as AC_CONFIG_SUBDIRS.
-	* Makefile.am (SUBDIRS): simplify. 
+	* Makefile.am (SUBDIRS): Simplify. 
 	
-	* src/configure.ac: add.
-	* src/Makefile.am: add.
-	* doc/configure.ac: change to use new configuration system.
+	* src/configure.ac: Add.
+	* src/Makefile.am: Add.
+	* doc/configure.ac: Change to use new configuration system.
 
-	* oln/config/config.hin: remove.
-	* oln/config/pconf-hh.in: add.
-	* oln/config/pconf.inc: add.
-	* tools/scandefs.pl: remove.
-	* oln/Makefile.am: cleanup. Now pconf.hh only contains pertinent
+	* oln/config/config.hin: Remove.
+	* oln/config/pconf-hh.in: Add.
+	* oln/config/pconf.inc: Add.
+	* tools/scandefs.pl: Remove.
+	* oln/Makefile.am: Cleanup. Now pconf.hh only contains pertinent
 	definitions, no more compile-time header generation.
 	
 2002-12-04  Quoc Peyrot  <chojin@lrde.epita.fr>
 
-	* utilities/generate_morpho.sh(usage): typo in generated files.
-	* utilities/morpho/morpho_template.cc: modify accordingly (generated).
+	* utilities/generate_morpho.sh(usage): Typo in generated files.
+	* utilities/morpho/morpho_template.cc: Modify accordingly (generated).
 
 2002-12-03  Quoc Peyrot  <chojin@lrde.epita.fr>
 
-	* utilities/generate_morpho.sh: add a lot of binary generation.
-	* utilities/morpho/Makefile.am: modify accordingly (generated).
-	* utilities/morpho/morpho_template.cc: add windows loading (generated).
+	* utilities/generate_morpho.sh: Add a lot of binary generation.
+	* utilities/morpho/Makefile.am: Modify accordingly (generated).
+	* utilities/morpho/morpho_template.cc: Add windows loading (generated).
 	* utilities/morpho/morpho_template_extrema.cc,
 	utilities/morpho/morpho_template_watershed.cc,
 	utilities/morpho/morpho_template_with_neighb.cc,
@@ -89,30 +89,30 @@
 
 2002-12-02  Quoc Peyrot  <chojin@lrde.epita.fr>
 
-	* configure.ac: add --disable-utilities and
+	* configure.ac: Add --disable-utilities and
 	--disable-morpho-utilities options.
-	* Makefile.am: modify SUBDIRS variable accordingly.
+	* Makefile.am: Modify SUBDIRS variable accordingly.
 	* utilities/Makefile.am: Likewise.
-	* utilities/morpho/morpho_template.cc: change default defines to #error.
-	* utilities/generate_morpho.sh: modifiy accordingly.
+	* utilities/morpho/morpho_template.cc: Change default defines to #error.
+	* utilities/generate_morpho.sh: Modifiy accordingly.
 
 2002-12-02  Jerome Darbon  <jerome@epita.fr>
 
-	* oln/morpho/geodesic_erosion.cc : add new namespace.
-	* oln/morpho/geodesic_dilation.cc : likewise.
-	* oln/morpho/reconstruction.cc : likewise.
-	* oln/morpho/extrema.hxx.cc : new file.
-	* demo/test-reconstruction.cc : adjust.
-	* test/morpho/reconstruction.cc : likewise.
-	* tests/data/lena.pgm : new file.
+	* oln/morpho/geodesic_erosion.cc : Add new namespace.
+	* oln/morpho/geodesic_dilation.cc : Likewise.
+	* oln/morpho/reconstruction.cc : Likewise.
+	* oln/morpho/extrema.hxx.cc : New file.
+	* demo/test-reconstruction.cc : Adjust.
+	* test/morpho/reconstruction.cc : Likewise.
+	* tests/data/lena.pgm : New file.
 
 2002-12-02  Jerome Darbon  <jerome@epita.fr>
 
-	* demo/morpholena.cc : add new demos.
-	* oln/morpho/* : add documentation.
-	* oln/extrema.hh : bug fixes.
-	* ima/map.pbm : new file.
-	* ima/lena_dark.pbm : new file.
+	* demo/morpholena.cc : Add new demos.
+	* oln/morpho/* : Add documentation.
+	* oln/extrema.hh : Bug fixes.
+	* ima/map.pbm : New file.
+	* ima/lena_dark.pbm : New file.
 
 2002-12-01  Emmanuel Turquin  <turqui_e@epita.fr>
 

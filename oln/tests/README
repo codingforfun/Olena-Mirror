@@ -3,12 +3,11 @@
 
 ** Structure
 
-For each directory X in the source tree (src/), we should have a
+For each directory X in the source tree (oln/), we should have a
 directory in the test tree (tests/), focusing on this part of Olena.
 
 There are two additional directories:
 
- data-src/   contains data needed by the test from the other directories
  check/      contains code common to all tests (libcheck.a, described below)
 
 
@@ -146,7 +145,7 @@ be skipped, call the skip() function.
 
 Begin each Makefile.am with
 
-  include $(top_srcdir)/tests/check/Makefile.check
+  include $(top_srcdir)/check/Makefile.check
 
 lists all your test programs in a check_PROGRAMS variable:
 

@@ -9,7 +9,9 @@ AC_ARG_WITH(oln-include,[  --with-oln-include=PFX   Prefix where OLN is installe
   AC_REQUIRE([AC_PROG_CXX])
   AC_LANG_PUSH([C++])
 
-  OLN_INCLUDEDIR=""
+  OLN_INCLUDE_DIR=""
+  oln_save_OLN_CPPFLAGS="$OLN_CPPFLAGS"
+  oln_save_OLN_CXXFLAGS="$OLN_CXXFLAGS"
   oln_save_CXXFLAGS="$CXXFLAGS"
   oln_save_CPPFLAGS="$CPPFLAGS"
 
@@ -22,9 +24,9 @@ AC_ARG_WITH(oln-include,[  --with-oln-include=PFX   Prefix where OLN is installe
      if test -r $within_olena_source_tree/oln/config/pconf.hh; then
         AC_MSG_RESULT([yes, present])
         OLN_SOURCE_DIR="${within_olena_source_tree}/oln"
-        OLN_INCLUDEDIR="${within_olena_source_tree}"
-        CXXFLAGS="-I${within_olena_source_tree} $CXXFLAGS"
-        CPPFLAGS="-I${within_olena_source_tree} $CPPFLAGS"
+        OLN_INCLUDE_DIR="${within_olena_source_tree}"
+	OLN_CPPFLAGS="$oln_save_OLN_CPPFLAGS -I$OLN_INCLUDE_DIR"
+        CPPFLAGS="$OLN_CPPFLAGS $CPPFLAGS"
      else
         AC_MSG_RESULT([no, searching again])
      fi
@@ -34,13 +36,13 @@ AC_ARG_WITH(oln-include,[  --with-oln-include=PFX   Prefix where OLN is installe
      AC_MSG_CHECKING([for Olena in $oln_include_prefix])
      if test -r $oln_include_prefix/oln/config/pconf.hh; then
         AC_MSG_RESULT([yes, present])
-        if test x$OLN_INCLUDEDIR != x ; then
-           AC_MSG_WARN([Olena present in $OLN_INCLUDEDIR, but using version in $oln_include_prefix])
+        if test x$OLN_INCLUDE_DIR != x ; then
+           AC_MSG_WARN([Olena present in $OLN_INCLUDE_DIR, but using version in $oln_include_prefix])
         fi
         OLN_SOURCE_DIR="$oln_include_prefix/oln"
-        OLN_INCLUDEDIR="$oln_include_prefix"
-        CXXFLAGS="-I$oln_include_prefix $CXXFLAGS"
-        CPPFLAGS="-I$oln_include_prefix $CPPFLAGS"
+        OLN_INCLUDE_DIR="$oln_include_prefix"
+	OLN_CPPFLAGS="$oln_save_OLN_CPPFLAGS -I$oln_include_prefix"
+        CPPFLAGS="-I$OLN_CPPFLAGS $CPPFLAGS"
      else
         AC_MSG_RESULT([no])
      fi
@@ -50,8 +52,8 @@ AC_ARG_WITH(oln-include,[  --with-oln-include=PFX   Prefix where OLN is installe
   AC_CHECK_HEADER([oln/config/pconf.hh], [], [have_olena=no])
 
   if test $have_olena = yes; then
-     if test x$OLN_INCLUDEDIR != x; then
-        AC_MSG_NOTICE([using include path $OLN_INCLUDEDIR to find Olena.])
+     if test x$OLN_INCLUDE_DIR != x; then
+        AC_MSG_NOTICE([using include path $OLN_INCLUDE_DIR to find Olena.])
      fi
      if test -z "$OLN_SOURCE_DIR"; then
         AC_MSG_CHECKING([for location of Olena headers])
@@ -80,7 +82,7 @@ int main(void) { std::ofstream f("conftest.oln"); f << OLN_SOURCE_DIR; return 0;
   CPPFLAGS="$oln_save_CPPFLAGS"
 
   AC_SUBST([OLN_SOURCE_DIR])
-  AC_SUBST([OLN_INCLUDEDIR])
+  AC_SUBST([OLN_INCLUDE_DIR])
   
   AC_LANG_POP([C++])
 ])
