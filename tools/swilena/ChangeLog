@@ -1,5 +1,11 @@
 2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
 
+	* tools/swilena/expand.sh (generation of makefile.swig): Add cxx
+	files to CLEANFILES.
+	* tools/swilena/python/Makefile.am (CLEANFILES): Remove.
+
+2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
+
 	* swilena/python/Makefile.am: Add new line at end of file.
 
 2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>

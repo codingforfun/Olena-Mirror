@@ -1,5 +1,9 @@
 2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
 
+	* metalic/tests/sanity/Makefile.am: Replace maintainer-check by check.
+
+2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
+
 	* tests/*/tests/* (6 files): Add copyright.
 
 2004-04-13  Niels Van Vliet  <niels@lrde.epita.fr>

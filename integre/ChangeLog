@@ -1,5 +1,9 @@
 2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
 
+	* integre/tests/sanity/Makefile.am: Replace maintainer-check by check.
+
+2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
+
 	* integre/ntg/core/internal/traits.hh: Include headers so as to pass
 	sanity check.
 

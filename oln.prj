@@ -1,20 +1,20 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 177)
-(Parent-Version oln 10 176)
+(Project-Version oln 10 178)
+(Parent-Version oln 10 177)
 (Version-Log "2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
-	* integre/ntg/core/internal/traits.hh: Include headers so as to pass
-	sanity check.
-	* olena/oln/convert/rgbhsl.hh: Include headers so as to pass
-	sanity check.
-	* olena/oln/snakes/energies.hh: Likewise.
-	* olena/oln/utils/buffer.hh: Likewise.
-	* olena/oln/topo/tarjan/tarjan.hh: Likewise.
-	* swilena/python/Makefile.am: Add new line at end of file.
+	* tools/swilena/expand.sh (generation of makefile.swig): Add cxx
+	files to CLEANFILES.
+	* tools/swilena/python/Makefile.am (CLEANFILES): Remove.
+	* olena/tests/sanity/Makefile.am: Replace maintainer-check by check.
+
+
+	* metalic/tests/sanity/Makefile.am: Replace maintainer-check by check.
+	* integre/tests/sanity/Makefile.am: Replace maintainer-check by check.
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 20 Apr 2004 16:03:16 +0200")
+(Checkin-Time "Tue, 20 Apr 2004 18:09:05 +0200")
 (Checkin-Login van-vl_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -119,11 +119,11 @@
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.11 600))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.9 600))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.44 600))
-  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.41 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.91 600))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.45 600))
+  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.42 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.92 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.13 600))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.37 600))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.38 600))
 
   (olena/ChangeLog.0 (oln/6_ChangeLog 1.50.1.98.1.5 600))
   (doc/ChangeLog.0 (oln/e/1_ChangeLog 1.31 600))
@@ -458,7 +458,7 @@
   (olena/tests/morpho/tests/reconstruction (oln/e/34_reconstruc 1.13 600))
   (olena/tests/README (oln/f/4_README 1.6 600))
   (olena/tests/sanity/includes.test (oln/f/46_includes.t 1.8 700))
-  (olena/tests/sanity/Makefile.am (oln/f/48_Makefile.a 1.4.1.2 600))
+  (olena/tests/sanity/Makefile.am (oln/f/48_Makefile.a 1.4.1.3 600))
   (olena/tests/transforms/tests/dwt (oln/i/38_dwt.cc 1.8.1.6 600))
   (olena/tests/transforms/tests/fft (oln/i/37_fft.cc 1.6.1.5 600))
   (olena/tests/transforms/Makefile.am (oln/i/40_Makefile.a 1.12 600))
@@ -857,7 +857,7 @@
 ;; Files added by populate at Tue, 06 May 2003 06:05:19 +0200,
 ;; to version 8.33(w), by raph:
 
-  (tools/swilena/expand.sh (oln/s/25_expand.sh 1.16 700))
+  (tools/swilena/expand.sh (oln/s/25_expand.sh 1.17 700))
 
 ;; Files added by populate at Tue, 06 May 2003 06:05:41 +0200,
 ;; to version 8.33(w), by raph:
@@ -905,9 +905,9 @@
   (integre/ntg/real/builtin_properties.hh (oln/s/48_builtin_pr 1.1 600))
   (integre/ntg/enum/builtin_bool.hh (oln/s/50_builtin_bo 1.4.1.1 600))
   (integre/tests/sanity/includes.test (oln/s/51_includes.t 1.1 700))
-  (integre/tests/sanity/Makefile.am (oln/t/0_Makefile.a 1.1 600))
+  (integre/tests/sanity/Makefile.am (oln/t/0_Makefile.a 1.2 600))
   (metalic/tests/sanity/includes.test (oln/t/1_includes.t 1.1 700))
-  (metalic/tests/sanity/Makefile.am (oln/t/2_Makefile.a 1.1 600))
+  (metalic/tests/sanity/Makefile.am (oln/t/2_Makefile.a 1.2 600))
   (integre/tests/types/tests/int_sc5 (oln/t/3_int_sc5 1.3 600))
 
 ;; Files added by populate at Mon, 02 Jun 2003 17:20:22 +0200,
@@ -1064,7 +1064,7 @@
 ;; Files added by populate at Sat, 27 Sep 2003 18:32:26 +0200,
 ;; to version 10.24(w), by burrus_n:
 
-  (tools/swilena/generate_morpho_instantiations.py (oln/v/24_generate_m 1.8 700))
+  (tools/swilena/generate_morpho_instantiations.py (oln/v/24_generate_m 1.9 700))
 
 ;; Files deleted by populate at Sat, 27 Sep 2003 18:33:27 +0200,
 ;; from version 10.24(w), by nes:
@@ -1115,8 +1115,8 @@
   (tools/swilena/python/tests/morpho.py (oln/v/47_morpho.py 1.2 700))
   (tools/swilena/meta/swilena_arith.i (oln/v/48_swilena_ar 1.1 600))
   (tools/swilena/meta/swilena_conversions.i (oln/v/49_swilena_co 1.1 600))
-  (tools/swilena/generate_conversions_instantiations.py (oln/v/50_generate_c 1.1 700))
-  (tools/swilena/generate_arith_instantiations.py (oln/v/51_generate_a 1.1 700))
+  (tools/swilena/generate_conversions_instantiations.py (oln/v/50_generate_c 1.2 700))
+  (tools/swilena/generate_arith_instantiations.py (oln/v/51_generate_a 1.2 700))
 
 ;; Files added by populate at Mon, 10 Nov 2003 14:06:22 +0100,
 ;; to version 10.39(w), by burrus_n:
@@ -1127,7 +1127,7 @@
 ;; Files added by populate at Mon, 10 Nov 2003 14:10:01 +0100,
 ;; to version 10.40(w), by burrus_n:
 
-  (tools/swilena/python/Makefile.am (oln/w/2_Makefile.a 1.6 600))
+  (tools/swilena/python/Makefile.am (oln/w/2_Makefile.a 1.7 600))
   (tools/swilena/python/swilena_all1d.py (oln/w/3_swilena_al 1.2 600))
   (tools/swilena/python/swilena_all2d.py (oln/w/4_swilena_al 1.2 600))
   (tools/swilena/python/swilena_all3d.py (oln/w/5_swilena_al 1.2 600))

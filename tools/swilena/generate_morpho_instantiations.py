@@ -13,13 +13,13 @@ def close_files():
 	file.close()
 
 def open_files(path):
-    for dim in range(1, 4):
+    for dim in range(1, 2):
         for type in range(1, 7):
             str_type = dict_type_num[type]
             files.append(open(path + "/swilena_morpho%(dim)sd_%(str_type)s.i" % vars(), 'w'))
 
 def write_headers():
-    for dim in range(1, 4):
+    for dim in range(1, 2):
         for type in range(1, 7):
             str_type = dict_type_num[type]
             file = files[(dim - 1)* 6 + type - 1]
@@ -50,7 +50,7 @@ def instantiate(idx, algorithm, *args):
 
 def write_algorithms():
     # Algorithms with all types and all dims
-    for dim in range(1, 4):
+    for dim in range(1, 2):
 	for type in [ "ntg_bin",
 		      "ntg_int_u8", "ntg_int_u32",
 		      "ntg_int_s8", "ntg_int_s32",
@@ -64,100 +64,7 @@ def write_algorithms():
 	    # FIXME: these algorithms do not work with floats
             if type != "ntg_float":
 		instantiate(idx, "erosion", img_type, img_type, win_type)
-		instantiate(idx, "fast_erosion", img_type, img_type, win_type)
-
-		instantiate(idx, "dilation", img_type, img_type, win_type)
-		instantiate(idx, "fast_dilation", img_type, img_type, win_type)
-
-		instantiate(idx, "opening", img_type, img_type, win_type)
-		instantiate(idx, "fast_opening", img_type, img_type, win_type)
-
-		instantiate(idx, "closing", img_type, img_type, win_type)
-		instantiate(idx, "fast_closing", img_type, img_type, win_type)
-
-		instantiate(idx, "thickening", img_type, img_type, win_type, win_type)
-		instantiate(idx, "fast_thickening", img_type, img_type, win_type, win_type)
-
-		instantiate(idx, "thinning", img_type, img_type, win_type, win_type)
-		instantiate(idx, "fast_thinning", img_type, img_type, win_type, win_type)
-
-		instantiate(idx, "geodesic_erosion", img_type, img_type, img_type, neighb_type)
-		instantiate(idx, "sure_geodesic_erosion", img_type, img_type, img_type, neighb_type)
-
-		instantiate(idx, "geodesic_dilation", img_type, img_type, img_type, neighb_type)
-                instantiate(idx, "sure_geodesic_dilation", img_type, img_type, img_type, neighb_type)
-
-                instantiate(idx, "sure_geodesic_reconstruction_dilation", img_type, img_type, img_type, neighb_type)
-                instantiate(idx, "sequential_geodesic_reconstruction_dilation", img_type, img_type, img_type, neighb_type)
-                instantiate(idx, "hybrid_geodesic_reconstruction_dilation", img_type, img_type, img_type, neighb_type)
-
-                instantiate(idx, "sure_geodesic_reconstruction_erosion", img_type, img_type, img_type, neighb_type)
-                instantiate(idx, "sequential_geodesic_reconstruction_erosion", img_type, img_type, img_type, neighb_type)
-                instantiate(idx, "hybrid_geodesic_reconstruction_erosion", img_type, img_type, img_type, neighb_type)
-
-		instantiate(idx, "hit_or_miss", img_type, img_type, win_type, win_type)
-                instantiate(idx, "fast_hit_or_miss", img_type, img_type, win_type, win_type)
-
-		instantiate(idx, "hit_or_miss_opening", img_type, img_type, win_type, win_type)
-                instantiate(idx, "fast_hit_or_miss_opening", img_type, img_type, win_type, win_type)
-
-		instantiate(idx, "hit_or_miss_opening_bg", img_type, img_type, win_type, win_type)
-		instantiate(idx, "fast_hit_or_miss_opening_bg", img_type, img_type, win_type, win_type)
-
-		instantiate(idx, "hit_or_miss_closing", img_type, img_type, win_type, win_type)
-		instantiate(idx, "fast_hit_or_miss_closing", img_type, img_type, win_type, win_type)
-
-		instantiate(idx, "hit_or_miss_closing_bg", img_type, img_type, win_type, win_type)
-		instantiate(idx, "fast_hit_or_miss_closing_bg", img_type, img_type, win_type, win_type)
-
-                # FIXME: This should work with other types.
-                if type != "ntg_bin":
-                    instantiate(idx, "beucher_gradient", img_type, img_type, win_type)
-                    instantiate(idx, "fast_beucher_gradient", img_type, img_type, win_type)
-
-                    instantiate(idx, "internal_gradient", img_type, img_type, win_type)
-                    instantiate(idx, "fast_internal_gradient", img_type, img_type, win_type)
-
-                    instantiate(idx, "external_gradient", img_type, img_type, win_type)
-                    instantiate(idx, "fast_external_gradient", img_type, img_type, win_type)
-
-                    instantiate(idx, "white_top_hat", img_type, img_type, win_type)
-                    instantiate(idx, "fast_white_top_hat", img_type, img_type, win_type)
-
-                    instantiate(idx, "black_top_hat", img_type, img_type, win_type)
-                    instantiate(idx, "fast_black_top_hat", img_type, img_type, win_type)
-
-                    instantiate(idx, "self_complementary_top_hat", img_type, img_type, win_type)
-                    instantiate(idx, "fast_self_complementary_top_hat", img_type, img_type, win_type)
-
-                    instantiate(idx, "top_hat_contrast_op", img_type, img_type, win_type)
-                    instantiate(idx, "fast_top_hat_contrast_op", img_type, img_type, win_type)
-                    # Watershed
-                    img_ret_type = "::oln::image%(dim)sd< ntg_int_u32 >" % vars()
-                    instantiate(idx, "watershed_seg", img_ret_type, img_type, neighb_type)
-                    instantiate(idx, "watershed_con", img_ret_type, img_type, neighb_type)
-                    bin_img_type = "::oln::image%(dim)sd< ntg_bin >" % vars()
-                    instantiate(idx, "sure_minima_imposition", img_type, img_type, bin_img_type, neighb_type)
-                    instantiate(idx, "sequential_minima_imposition", img_type, img_type, bin_img_type, neighb_type)
-                    instantiate(idx, "hybrid_minima_imposition", img_type, img_type, bin_img_type, neighb_type)
-
-                    instantiate(idx, "sure_regional_minima", bin_img_type, img_type, neighb_type)
-                    instantiate(idx, "sequential_regional_minima", bin_img_type, img_type, neighb_type)
-                    instantiate(idx, "hybrid_regional_minima", bin_img_type, img_type, neighb_type)
-
-                    # Extrema killers
-                    if dim == 2:
-                        instantiate(idx, "fast_maxima_killer", img_type, neighb_type)
-                        instantiate(idx, "fast_minima_killer", img_type, neighb_type)
-                        # FIXME: This should work with other types.
-                        if type == "ntg_int_u8":
-                            instantiate(idx, "sure_maxima_killer", img_type, neighb_type)
-                            instantiate(idx, "sure_minima_killer", img_type, neighb_type)
-
-                #FIXME: Does not work due to the return type:
-                #instantiate(idx, "watershed_seg_or", img_type, img_type, img_ret_type, neighb_type)
-                #instantiate(idx, "laplacian", img_type, img_type, win_type)
-	        #instantiate(idx, "fast_laplacian", img_type, img_type, win_type)
+#FIXME
 
 def main():
     if len(sys.argv) != 2:
