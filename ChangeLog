@@ -1,3 +1,7 @@
+2005-01-19  Damien Thivolle <damien@lrde.epita.fr>
+
+	* prop_heredity: Remove obsolete prototype.
+
 2004-07-09  Simon Odou  <simon@lrde.epita.fr>
 
 	* prop_heredity: New prototype for olena.
