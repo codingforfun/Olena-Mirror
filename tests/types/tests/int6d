@@ -1,0 +1,4 @@
+int_u8 u8 = 250;
+int_u<9, strict> u9 = 6;
+u9 += u8;
+return u9 != 256;

@@ -1,0 +1,3 @@
+int_u<7,saturate> i = 130;
+int_u<7,saturate> j = 127;
+return i != j;

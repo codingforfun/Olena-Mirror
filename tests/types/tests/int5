@@ -1,0 +1,2 @@
+int_u<7, strict> i = 120;
+i += 10; // ABORT

@@ -1,0 +1,4 @@
+int_s8 s1 = 10;
+int_s16 s2 = -200;
+int_s8 s3 = s1 + s2; // ABORT
+(void) s3;

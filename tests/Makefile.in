@@ -87,7 +87,8 @@ SUBDIRS = . check \
   convol \
   io \
   morpho \
-  sanity
+  sanity \
+  types
 
 
 # SOURCEDATA should never be erased, they are needed to generate

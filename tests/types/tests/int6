@@ -1,0 +1,3 @@
+int_u8 u8 = 250;
+int_u<7, strict> u7 = 6;
+u8 += u7; // ABORT

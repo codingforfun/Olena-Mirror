@@ -1,0 +1,4 @@
+int_s8 s1 = 10;
+int_s16 s2 = -20;
+int_s8 s3 = s1 + s2;
+return s3 != -10;

@@ -1,0 +1,2 @@
+int_u<7,saturate> i = 130;
+return i != 127;

@@ -7,7 +7,8 @@ SUBDIRS = . check \
   convol \
   io \
   morpho \
-  sanity
+  sanity \
+  types
 
 # SOURCEDATA should never be erased, they are needed to generate
 # BUILTDATA.  SOURCEDATA are the only data files worth to keep under

@@ -1,0 +1,2 @@
+int_u<7, unsafe> u = 140;
+(void) u;

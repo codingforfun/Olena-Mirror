@@ -1,0 +1,3 @@
+sfloat s = -128.8;
+int_s8 u = s;
+return u != -128;

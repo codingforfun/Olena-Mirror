@@ -1,0 +1,4 @@
+typedef cycle<int_s8, bounded_s<-128, +127> > int_s8c;
+int_s8c a = 255;    // a == 0
+int_s8c b = 256;    // b == 1
+return a != 0 || b != 1;

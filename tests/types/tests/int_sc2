@@ -1,0 +1,5 @@
+typedef cycle<int_s8, bounded_s<-3, +12> > type;
+type a = 14;     // a = -1
+type b = a * 2;  // b = -2
+type c = b * 2;  // c = 11
+return a != -1 || b != -2 || c != 11;

@@ -53,6 +53,7 @@ AC_CONFIG_FILES([
   tests/io/Makefile
   tests/morpho/Makefile
   tests/sanity/Makefile
+  tests/types/Makefile
   utilities/Makefile
 ])
 AC_OUTPUT

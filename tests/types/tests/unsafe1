@@ -1,0 +1,3 @@
+int_u<8, unsafe> u = 200;
+u += 56;
+return u != 0;
