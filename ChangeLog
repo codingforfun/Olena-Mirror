@@ -1,5 +1,8 @@
 2003-08-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* config/oln-local.m4: Fail when swig is not detected and swilena
+	is enabled.
+
 	* configure.ac: Temporary fix to ensure that Python.h is present.
 
 2003-08-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>

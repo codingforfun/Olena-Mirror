@@ -60,7 +60,11 @@ AC_DEFUN([MLC_TESTS], dnl Auxiliary function for test categories selection
 AC_DEFUN([AC_CHECK_SWIG13],
 [dnl
      AC_ARG_VAR([SWIG], [the SWIG interface generator])
-     AC_CHECK_PROGS([SWIG], [swig], [$am_aux_dir/missing swig])
+# FIXME: cleanup this
+# We cannot enable the compilation of swilena without swig, since 
+# the link phase requires libswigpy.so.
+#     AC_CHECK_PROGS([SWIG], [swig], [$am_aux_dir/missing swig])
+     AC_CHECK_PROGS([SWIG], [swig], AC_MSG_ERROR([You need swig >= 1.3 to compile swilena. You can disable swilena by specifying --without-swilena to configure.]))
 
      AC_CACHE_CHECK([for SWIG >= 1.3],
                     [oln_cv_recent_swig],

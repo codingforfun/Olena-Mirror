@@ -1,35 +1,16 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 100)
-(Parent-Version oln 2003paradigm 98)
+(Project-Version oln 2003paradigm 101)
+(Parent-Version oln 2003paradigm 100)
 (Version-Log "Index: ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-        * configure.ac: Temporary fix to ensure that Python.h is present.
-
-Index: olena/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-        * oln/core/abstract/image_with_impl.hh: Fix friend classes.
-
-+2003-08-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-+
-        * oln/topo/dmap.hxx: Fix compilation with g++-3.4.
-        * oln/transforms/dwt.hh: Likewise.
-        * oln/transforms/wavelet_coeffs.hh: Likewise.
-Index: tools/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-        * lib/getopt.c: Update from gcc/libiberty.
-        * lib/getopt1.c: Likewise.
-        * lib/getopt.h: Likewise.
-
-        * lib/getopt.h: Rename as...
-        * lib/oln_getopt.h: ...this.
+        * config/oln-local.m4: Fail when swig is not detected and swilena
+        is enabled.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 04 Aug 2003 16:52:22 +0200")
+(Checkin-Time "Mon, 04 Aug 2003 17:34:35 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -131,7 +112,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.14 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.15 640))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.13 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.23 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.30 640))
@@ -722,7 +703,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 ;; Files added by populate at Thu, 23 Jan 2003 14:26:31 +0100,
 ;; to version 7.36(w), by raph:
 
-  (config/oln-local.m4 (oln/p/37_oln-local. 1.5 640))
+  (config/oln-local.m4 (oln/p/37_oln-local. 1.6 640))
 
 ;; Files deleted by depopulate at Thu, 23 Jan 2003 14:57:33 +0100,
 ;; from version 7.37(w), by raph:
@@ -1087,14 +1068,5 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (olena/tests/core/tests/label_images (oln/v/0_label_imag 1.1 600))
 )
-(Merge-Parents
-  (2003paradigm.99 complete
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog m) (doc/ChangeLog doc/ChangeLog doc/ChangeLog r)
-    (doc/demo/image.cc doc/demo/image.cc doc/demo/image.cc r) (olena/oln/convert/conversion_ng_se.hh olena/oln/convert/conversion_ng_se.hh olena/oln/convert/conversion_ng_se.hh r)
-    (olena/oln/core/abstract/struct_elt.hh olena/oln/core/abstract/struct_elt.hh olena/oln/core/abstract/struct_elt.hh r) (olena/oln/core/window1d.hh olena/oln/core/window1d.hh olena/oln/core/window1d.hh r)
-    (olena/oln/core/window2d.hh olena/oln/core/window2d.hh olena/oln/core/window2d.hh r) (olena/oln/core/window3d.hh olena/oln/core/window3d.hh olena/oln/core/window3d.hh r)
-    (olena/oln/core/abstract/window.hh olena/oln/core/abstract/window.hh olena/oln/core/abstract/window.hh r) (olena/oln/core/abstract/w_window.hh olena/oln/core/abstract/w_window.hh olena/oln/core/abstract/w_window.hh r)
-    (olena/oln/level/connected.hh olena/oln/level/connected.hh olena/oln/level/connected.hh r) (olena/oln/morpho/fast_morpho.hxx olena/oln/morpho/fast_morpho.hxx olena/oln/morpho/fast_morpho.hxx r)
-    (olena/oln/morpho/hit_or_miss.inc olena/oln/morpho/hit_or_miss.inc olena/oln/morpho/hit_or_miss.inc r) (olena/oln/morpho/reconstruction.hh olena/oln/morpho/reconstruction.hh olena/oln/morpho/reconstruction.hh r))
-)
+(Merge-Parents)
 (New-Merge-Parents)
