@@ -1,3 +1,14 @@
+2004-03-11  Damien Thivolle  <damien@lrde.epita.fr>
+	* olena/oln/core/abstract/dpoint.hh: Add comments.
+	* olena/oln/core/abstract/image_size.hh: Add comments.
+	* olena/oln/core/abstract/point.hh: Add comments.
+	* olena/oln/core/abstract/image.hh: Add comments.
+	* olena/oln/core/abstract/image_with_dim.hh: Add comments.
+	* olena/oln/core/abstract/image_with_impl.hh: Add comments.
+	* olena/oln/core/abstract/image_with_type.hh: Add comments.
+	* olena/oln/core/abstract/image_with_type_with_dim.hh: Add comments.
+	* olena/oln/core/abstract/behavior.hh: Add comments.
+
 2004-03-10  Niels Van Vliet  <niels@lrde.epita.fr>
 	* olena/oln/level/compare.hh: Add comments.
 	* olena/oln/level/connected.hh: Add comments.
