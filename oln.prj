@@ -1,12 +1,12 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5_reconf 14)
-(Parent-Version oln 0_5_reconf 13)
-(Version-Log "add changes from 0_5.102
+(Project-Version oln 0_5 103)
+(Parent-Version oln 0_5_reconf 14)
+(Version-Log "Branch merge from 0_5_reconf
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 05 Dec 2002 18:20:33 +0100")
+(Checkin-Time "Thu, 05 Dec 2002 18:25:16 +0100")
 (Checkin-Login raph)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -45,8 +45,8 @@
                   "\\.pdf$"
                   "\\.eps$"
                   "doc/doc/.*\\.pbm$"
-		  "doc/doc/bin/.*$"
-		  "doc/doc/html/.*$"
+                  "doc/doc/bin/.*$"
+                  "doc/doc/html/.*$"
                   "doc/doc/oln-ref.toc$"
                   "doc/doc/oln-ref.tmp$"
                   "doc/doc/oln-ref.pg$"
@@ -58,7 +58,6 @@
                   "doc/doc/oln-ref.cps$"
                   "doc/doc/oln-ref.aux$"
                   "doc/doc/oln-ref.info$"
-
                   "doc/doc/oln-dev.tmp$"
                   "doc/doc/oln-dev.toc$"
                   "doc/doc/oln-dev.pg$"
@@ -70,7 +69,6 @@
                   "doc/doc/oln-dev.cps$"
                   "doc/doc/oln-dev.aux$"
                   "doc/doc/oln-dev.info$"
-
                   "doc/doc/ref-morpho.tex$"
                   "doc/doc/ref-level.tex$"
                   "doc/doc/stamp-vti$"
@@ -126,7 +124,45 @@
                   "src/tests/array/test_array1d$"
                   "src/tests/array/gen_test_utils/prelude$"
                   "diffs.patch$"
-                  "utilities/oln-mosaic-u16$"))
+                  "utilities/oln-mosaic-u16$"
+                  "tests/\\(data\\|io\\)/lena\\.\\(pppm\\|ppgm\\|ppbm\\|pbm\\|pgm\\)$"
+                  "tests/types/runs/int_sc4/int_sc4.cc$"
+                  "tests/io/2d$"
+                  "tests/defs$"
+                  "tests/convol/slow_sum_2d_2$"
+                  "tests/convert/.*-.*-.*$"
+                  "tests/array/test_array1d.cc$"
+                  "tests/array/test_array2d$"
+                  "tests/sanity/log$"
+                  "tests/sanity/incltest.cc$"
+                  "tests/array/gen_test_utils/postlude$"
+                  "tests/types/runs/int_sc4/run.errors$"
+                  "src/config/pconf.hh$"
+                  "tests/array/Makefile.in$"
+                  "tests/types/runs/int_sc4/cxx.errors$"
+                  "tests/morpho/reconstruction$"
+                  "tests/meta/test_array1d$"
+                  "tests/array/gen_test_utils/.dirstamp$"
+                  "tests/morpho/extrkiller$"
+                  "tests/array/gen_test$"
+                  "tests/array/test_array3d$"
+                  "tests/array/gen_test_utils/errors.cc$"
+                  "tests/array/test_array2d.cc$"
+                  "tests/meta/gen_test_utils/.dirstamp$"
+                  "tests/io/savetmp$"
+                  "tests/meta/test_array2d$"
+                  "tests/array/test_array3d.cc$"
+                  "tests/data/lena128.pgm$"
+                  "tests/meta/gen_test$"
+                  "tests/convol/lena-sobel.pgm$"
+                  "tests/io/lena.ppm$"
+                  "tests/types/runs/int_sc4/try$"
+                  "tests/array/gen_test_utils/errors.hh$"
+                  "tests/convol/sobel_gradient$"
+                  "tests/morpho/edoc$"
+                  "tests/convol/slow_sum_2d_1$"
+                  "tests/array/test_array1d$"
+                  "tests/array/gen_test_utils/prelude$"))
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.26 660))
@@ -841,12 +877,13 @@
   (FAQ (oln/j/31_FAQ 1.1 664))
 )
 (Merge-Parents
-  (0_5.102 complete
-    (ChangeLog ChangeLog ChangeLog m) (() oln/config/config.hin oln/config/config.hin n)
-    (() oln/config/README oln/config/README n) (() tests/meta tests/meta n)
-    (() tests/convol tests/convol n) (() tools/ChangeLog tools/ChangeLog n)
-    (() tools/mdate-sh tools/mdate-sh n) (() tools/scandefs.pl tools/scandefs.pl n)
-    (() tools/texinfo.tex tools/texinfo.tex n) (src/utilities/generate_morpho.sh utilities/generate_morpho.sh utilities/generate_morpho.sh m)
-    (src/utilities/morpho/morpho_template.cc utilities/morpho/morpho_template.cc utilities/morpho/morpho_template.cc r) (() tests/transforms/output tests/transforms/output n))
+  (0_5.102 incomplete
+    (() oln/config/config.hin oln/config/config.hin n) (() oln/config/README oln/config/README n)
+    (() tests/meta tests/meta n) (() tests/convol tests/convol n)
+    (() tools/ChangeLog tools/ChangeLog n) (() tools/mdate-sh tools/mdate-sh n)
+    (() tools/scandefs.pl tools/scandefs.pl n) (() tools/texinfo.tex tools/texinfo.tex n)
+    (() tests/transforms/output tests/transforms/output n) 
+  )
+  (0_5.102 complete)
 )
 (New-Merge-Parents)
