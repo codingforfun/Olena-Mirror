@@ -30,54 +30,54 @@
 
 # include "meta/basics.hh"
 
+// Comparison functions.
 
 namespace oln {
 
   namespace meta {
 
-
     namespace internal {
 
       // less
 
-      template<unsigned n, unsigned m>
-      struct less { typedef typename less<n-1,m-1>::ret_t ret_t; };
+      template<unsigned N, unsigned M>
+      struct less { typedef typename less<N-1,M-1>::ret_t ret_t; };
 
-      template<unsigned n> struct less<n,0> { typedef false_t ret_t; };
-      template<unsigned n> struct less<n,n> { typedef false_t ret_t; };
-      template<unsigned m> struct less<0,m> { typedef true_t  ret_t; };
+      template<unsigned N> struct less<N,0> { typedef false_t ret_t; };
+      template<unsigned N> struct less<N,N> { typedef false_t ret_t; };
+      template<unsigned M> struct less<0,M> { typedef true_t  ret_t; };
       template<>           struct less<0,0> { typedef false_t ret_t; };
 
       // lesseq
 
-      template<unsigned n, unsigned m>
-      struct lesseq { typedef typename less<n,m>::ret_t ret_t; };
+      template<unsigned N, unsigned M>
+      struct lesseq { typedef typename less<N,M>::ret_t ret_t; };
 
-      template<unsigned n> struct lesseq<n,n> { typedef true_t ret_t; };
+      template<unsigned N> struct lesseq<N,N> { typedef true_t ret_t; };
 
       // eq
 
-      template<unsigned n, unsigned m> struct eq { typedef false_t ret_t; };
-      template<unsigned n> struct eq<n,n> { typedef true_t ret_t; };
+      template<unsigned N, unsigned M> struct eq { typedef false_t ret_t; };
+      template<unsigned N> struct eq<N,N> { typedef true_t ret_t; };
 
       // value
 
-      template<unsigned n, unsigned m, class B> struct value;
+      template<unsigned N, unsigned M, class B> struct value;
 
-      template<unsigned n, unsigned m>
-      struct value<n,m,true_t>  { enum { min = n, max = m }; };
+      template<unsigned N, unsigned M>
+      struct value<N,M,true_t>  { enum { min = N, max = M }; };
 
-      template<unsigned n, unsigned m>
-      struct value<n,m,false_t> { enum { min = m, max = n }; };
-
-
-    } // end of internal
+      template<unsigned N, unsigned M>
+      struct value<N,M,false_t> { enum { min = M, max = N }; };
 
 
+    } // internal
 
-    template<unsigned n, unsigned m>
+
+    template<unsigned N, unsigned M>
     class ucmp {
-      typedef internal::value< n, m, typename internal::less<n,m>::ret_t > value;
+      typedef internal::value< N, M,
+			       typename internal::less<N,M>::ret_t > value;
     public:
 
       enum {
@@ -85,9 +85,9 @@ namespace oln {
 	minval = value::min
       };
 
-      typedef typename internal::less<n,m>::ret_t   is_less_t;
-      typedef typename internal::lesseq<n,m>::ret_t is_lesseq_t;
-      typedef typename internal::eq<n,m>::ret_t     is_eq_t;
+      typedef typename internal::less<N,M>::ret_t   is_less_t;
+      typedef typename internal::lesseq<N,M>::ret_t is_lesseq_t;
+      typedef typename internal::eq<N,M>::ret_t     is_eq_t;
       typedef typename is_eq_t::not_t               is_neq_t;
 
       static void ensure_less()   { is_less_t::is_true(); }
@@ -96,11 +96,9 @@ namespace oln {
       static void ensure_neq()    { is_neq_t::is_true(); }
     };
 
+  } // meta
+
+} // oln
 
 
-  } // end of meta
-
-} // end of oln
-
-
-#endif
+#endif  // OLENA_META_UCMP_HH

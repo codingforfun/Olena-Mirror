@@ -1,30 +1,17 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_3 11)
-(Parent-Version oln 0_3 10)
+(Project-Version oln 0_3 12)
+(Parent-Version oln 0_3 11)
 (Version-Log "2002-03-25  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-	Change const accessors to return const temporary values, so that
-	e.g. image[p] = v; fails to compile when image is const.
-
-	* src/core/pred.hh (operator[] const): Return a const value.
-	* src/core/internal/window.hh (operator[] const): Likewise.
-	* src/core/internal/w_window.hh (operator[] const): Likewise.
-	* src/core/internal/image1d.hh (size const, operator[] const,
-	operator() const): Likewise.
-	* src/core/internal/image2d.hh (size const, operator[] const,
-	operator() const): Likewise.
-	* src/core/internal/image3d.hh (size const, operator[] const,
-	operator() const): Likewise.
-
-	* src/core/internal/image1d_data.hh,
-	src/core/internal/image2d_data.hh,
-	src/core/internal/image3d_data.hh: More comments.
+	* src/meta/ufuncs.hh, src/meta/ucmp.hh, src/meta/logic.hh,
+	src/meta/control.hh, src/meta/basics.hh: Cosmetic changes.  Add
+	more comments.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 25 Mar 2002 16:48:43 +0100")
+(Checkin-Time "Mon, 25 Mar 2002 17:54:58 +0100")
 (Checkin-Login adl)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
@@ -81,7 +68,7 @@
   (configure.ac (oln/3_configure. 1.2 644))
   (THANKS (oln/4_THANKS 1.1 644))
   (img/lena.pgm (oln/5_lena.pgm 1.1 640) :no-keywords)
-  (ChangeLog (oln/6_ChangeLog 1.20 644))
+  (ChangeLog (oln/6_ChangeLog 1.21 644))
   (src/config/system.hh (oln/7_system.hh 1.1 644))
   (src/utils/timer.hh (oln/8_timer.hh 1.1 644))
   (src/utils/stat.hh (oln/9_stat.hh 1.2 644))
@@ -178,12 +165,12 @@
   (src/value/built_in.hh (oln/b/48_built_in.h 1.1 644))
   (src/value/bin.hh (oln/b/49_bin.hh 1.1 644))
   (src/value/all.hh (oln/b/50_all.hh 1.1 644))
-  (src/meta/ufuncs.hh (oln/b/51_ufuncs.hh 1.1 644))
-  (src/meta/ucmp.hh (oln/c/0_ucmp.hh 1.1 644))
-  (src/meta/logic.hh (oln/c/1_logic.hh 1.1 644))
-  (src/meta/control.hh (oln/c/2_control.hh 1.1 644))
+  (src/meta/ufuncs.hh (oln/b/51_ufuncs.hh 1.2 644))
+  (src/meta/ucmp.hh (oln/c/0_ucmp.hh 1.2 644))
+  (src/meta/logic.hh (oln/c/1_logic.hh 1.2 644))
+  (src/meta/control.hh (oln/c/2_control.hh 1.2 644))
   (src/meta/cmp.hh (oln/c/3_cmp.hh 1.1 644))
-  (src/meta/basics.hh (oln/c/4_basics.hh 1.1 644))
+  (src/meta/basics.hh (oln/c/4_basics.hh 1.2 644))
   (src/meta/array.hxx (oln/c/5_array.hxx 1.1 644))
   (src/meta/array.hh (oln/c/6_array.hh 1.1 644))
   (src/core/fold.hh (oln/c/7_fold.hh 1.1 644))

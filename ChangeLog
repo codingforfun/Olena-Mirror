@@ -1,5 +1,11 @@
 2002-03-25  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
+	* src/meta/ufuncs.hh, src/meta/ucmp.hh, src/meta/logic.hh,
+	src/meta/control.hh, src/meta/basics.hh: Cosmetic changes.  Add
+	more comments.
+
+2002-03-25  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
 	Change const accessors to return const temporary values, so that
 	e.g. image[p] = v; fails to compile when image is const.
 

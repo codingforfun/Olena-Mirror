@@ -33,58 +33,55 @@
 
 
 namespace oln {
-
   namespace meta {
-
 
     namespace internal {
 
-      // for pow2sup<n>::value
+      // Helper structs for pow2sup below.
 
-      template<unsigned n> struct is_pow2 { typedef false_t ret_t; };
+      template<unsigned N> struct is_pow2 { typedef false_t ret_t; };
       template<> struct is_pow2<8>  { typedef true_t ret_t; };
       template<> struct is_pow2<16> { typedef true_t ret_t; };
       template<> struct is_pow2<32> { typedef true_t ret_t; };
       template<> struct is_pow2<64> { typedef true_t ret_t; };
 
-      template<unsigned n, class> struct find_pow2sup;
-      template<unsigned n> struct find_pow2sup<n,true_t> {
-	enum { value = n };
+      template<unsigned N, class> struct find_pow2sup;
+      template<unsigned N> struct find_pow2sup<N,true_t> {
+	enum { value = N };
       };
-      template<unsigned n> struct find_pow2sup<n,false_t> {
-	enum { value = find_pow2sup< n+1, typename is_pow2<n+1>::ret_t >::value };
+      template<unsigned N> struct find_pow2sup<N,false_t> {
+	enum { value = find_pow2sup< N+1,
+	                             typename is_pow2<N+1>::ret_t >::value };
       };
 
-    } // end of internal
+    } // internal
 
+    // Smaller power of 2 greater than N.
 
-
-    // puissance de 2 superieure (FIXME: american!)
-
-    template<unsigned n>
+    template<unsigned N>
     struct pow2sup {
       enum {
-	value = internal::find_pow2sup< n, typename internal::is_pow2<n>::ret_t >::value
+	value =
+	  internal::find_pow2sup< N,
+	                          typename internal::is_pow2<N>::ret_t >::value
       };
     private:
-      typedef typename ucmp<n,32>::is_lesseq_t::is_true_t precondition_t;
+      typedef typename ucmp<N, 32>::is_lesseq_t::is_true_t precondition_t;
     };
 
 
 
-    // test over n
+    // Various tests on N (actually, we tests only oddness.)
 
-    template<unsigned n>
+    template<unsigned N>
     class utest {
     public:
-      typedef typename ucmp<n/2,(n+1)/2>::is_neq_t is_odd_t;
+      typedef typename ucmp<N/2, (N+1)/2>::is_neq_t is_odd_t;
       static void ensure_odd()   { is_odd_t::is_true(); }
     };
 
 
-  } // end of meta
+  } // meta
+} // oln
 
-} // end of oln
-
-
-#endif
+#endif  // OLENA_META_UFUNCS_HH

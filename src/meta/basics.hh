@@ -28,6 +28,19 @@
 #ifndef OLENA_META_BASICS_HH
 # define OLENA_META_BASICS_HH
 
+// This file defines helper structures that deal with two kinds of
+// booleans.
+//
+//    - classic boolean values: `true' or `false'
+//        These can be checked with is_true and is_false, and
+//        used in the `if_' type selector.
+//        They usually are the result of a test made in the
+//        argument itself.
+//          if_<N != 0, some_type, another_type>
+//
+//    - boolean TYPES: `true_t' or `false_t'
+//        As types, it's easier to use them in template, and they
+//        can't be confounded with integers like booleans do.
 
 namespace oln {
 
@@ -58,7 +71,6 @@ namespace oln {
       typedef if_false_type ret_t;
     };
 
-
     template<bool> struct is_true;
     template<> struct is_true<true>   { static void ensure() {}; };
 
@@ -66,9 +78,9 @@ namespace oln {
     template<> struct is_false<false> { static void ensure() {}; };
 
 
-  } // end of meta
+  } // meta
 
-} // end of oln
+} // oln
 
 
-#endif // ! OLENA_META_BASICS_HH
+#endif // OLENA_META_BASICS_HH

@@ -30,15 +30,16 @@
 
 # include "meta/cmp.hh"
 
-
 namespace oln {
 
   namespace meta {
 
-
     namespace internal {
 
-      template<int i, template<int,int>class Cmp, int to, int by, bool do_again>
+      // Helper struct for simple_for_ below.
+
+      template<int i,
+	       template<int,int>class Cmp, int to, int by, bool do_again>
       struct simple_for_statement;
 
       template<int i, template<int,int>class Cmp, int to, int by>
@@ -48,7 +49,8 @@ namespace oln {
 	static F& exec(F& f)
 	{
 	  f.template exec<i>();
-	  return simple_for_statement<i+by, Cmp, to, by, Cmp<i+by,to>::ret>::exec(f);
+	  return simple_for_statement<i+by, Cmp, to, by,
+	                              Cmp<i+by,to>::ret>::exec(f);
 	}
       };
 
@@ -62,13 +64,12 @@ namespace oln {
 	}
       };
 
-    } // end of internal
-
+    } // internal
 
 
     // simple_for_<from, Cmp,to, by>::exec(f);
     //
-    // mimics:
+    // mimics
     //
     // simple_for (i = from; Cmp(i, to)::ret; i += by)
     //   f::exec<i>();
@@ -85,9 +86,8 @@ namespace oln {
     };
 
 
-  } // end of meta
+  } // meta
 
-} // end of oln
+} // oln
 
-
-#endif // ! OLENA_META_CONTROL_HH
+#endif // OLENA_META_CONTROL_HH

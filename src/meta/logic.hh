@@ -35,6 +35,12 @@ namespace oln {
 
   namespace meta {
 
+    // FIXME: I hardly see the purpose of these structs.
+    // What's the point of writing
+    //   l_not<l_and<A, B>::ret>::ensure()
+    // when one can simply do
+    //   is_true<!(A && B)>::ensure ()
+    // ? -- adl.
 
     template<bool b>
     struct l_not
@@ -66,10 +72,8 @@ namespace oln {
 
     // FIXME: define l_and_not, etc.?
 
+  } // meta
 
-  } // end of meta
+} // oln
 
-} // end of oln
-
-
-#endif // ! OLENA_META_LOGIC_HH
+#endif // OLENA_META_LOGIC_HH
