@@ -1,6 +1,8 @@
 ## Process this file with Automake to produce Makefile.in -*-Makefile-*-
 
 SOURCE_IMGS =			\
+  black.pbm			\
+  white.pbm			\
   face_se.pbm			\
   lena.ppm			\
   lena256.pgm			\

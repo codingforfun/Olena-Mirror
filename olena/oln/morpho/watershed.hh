@@ -38,8 +38,8 @@ namespace oln {
      * what: Segmented Watershed.
      * ns: morpho
      * tpl: class, DestValue, type of output labels
-     * arg: const image<I>&, im, IN, image of levels
-     * arg: const neighborhood<N>&, ng, IN, neighborhood to consider
+     * arg: const abstract::image<I>&, im, IN, image of levels
+     * arg: const abstract::neighborhood<N>&, ng, IN, neighborhood to consider
      * ret: typename mute<I, DestValue>::ret
      * doc:
      *   Compute the segmented watershed for image \var{im} using
@@ -67,8 +67,8 @@ namespace oln {
      * what: Connected Watershed.
      * ns: morpho
      * tpl: class, DestValue, type of output labels
-     * arg: const image<I>&, im, IN, image of levels
-     * arg: const neighborhood<N>&, ng, IN, neighborhood to consider
+     * arg: const abstract::image<I>&, im, IN, image of levels
+     * arg: const abstract::neighborhood<N>&, ng, IN, neighborhood to consider
      * ret: typename mute<I, DestValue>::ret
      * doc:
      *   Compute the connected watershed for image \var{im} using
@@ -96,9 +96,9 @@ namespace oln {
     /*=processing watershed_seg_or
      * what: Segmented Watershed with user-supplied starting points.
      * ns: morpho
-     * arg: const image<I1>&, levels, IN, image of levels
-     * arg: image<I2>&, markers, INOUT, image of markers
-     * arg: const neighborhood<N>&, ng, IN, neighborhood to consider
+     * arg: const abstract::image<I1>&, levels, IN, image of levels
+     * arg: abstract::image<I2>&, markers, INOUT, image of markers
+     * arg: const abstract::neighborhood<N>&, ng, IN, neighborhood to consider
      * ret: Concrete(I2)&
      * doc:
      *   Compute a segmented watershed for image \var{levels} using

@@ -41,7 +41,7 @@ namespace oln {
 	 max and min on binary images.  */
 
       template <class I, class E, class V = Value(I)>
-      struct _stat {
+      struct stat_ {
 
 	static V
 	max(const I& input, const Point(I)& p, const E& se)
@@ -75,7 +75,7 @@ namespace oln {
       /* Binary specialization.  */
 
       template <class I, class E>
-      struct _stat<I, E, ntg::bin> {
+      struct stat_<I, E, ntg::bin> {
 
 	static ntg::bin
 	max(const I& input, const Point(I)& p, const E& se)
@@ -109,7 +109,7 @@ namespace oln {
 		 const abstract::struct_elt<E>& se)
     {
       mlc::eq<I::dim, E::dim>::ensure();
-      return internal::_stat<I, E>::max(to_exact(input), p, to_exact(se));
+      return internal::stat_<I, E>::max(input.exact(), p, se.exact());
     }
 
     template<class I, class E>
@@ -119,7 +119,7 @@ namespace oln {
 		 const abstract::struct_elt<E>& se)
     {
       mlc::eq<I::dim, E::dim>::ensure();
-      return internal::_stat<I, E>::min(to_exact(input), p, to_exact(se));
+      return internal::stat_<I, E>::min(input.exact(), p, se.exact());
     }
 
   } // morpho

@@ -68,15 +68,10 @@ namespace oln {
     typedef typename struct_elt_traits< self_type >::dpoint_type dpoint_type;
     typedef typename struct_elt_traits< self_type >::weight_type weight_type;
 
+    friend class abstract::window_base<abstract::w_window<w_window2d>, w_window2d>;
+
     w_window2d(): super_type() {}
     w_window2d(unsigned size) : super_type(size) {}
-
-    coord delta_update_(const dpoint_type& dp)
-    {
-      delta_(abs(dp.row()));
-      delta_(abs(dp.col()));
-      return this->delta_;
-    }
 
     template<class I, class T2>
     w_window2d(const mlc::array2d<I, T2 >& arr) :
@@ -95,12 +90,12 @@ namespace oln {
 
     w_window2d<T>& add(const dpoint_type& dp, const weight_type& w)
     {
-      return to_exact(this)->add_(dp, w);
+      return this->exact().add_(dp, w);
     }
 
     const weight_type& set(const dpoint_type& dp, const weight_type& weight)
     {
-      return to_exact(this)->set_(dp, weight);
+      return this->exact().set_(dp, weight);
     }
 
     const weight_type& set(coord row, coord col, const weight_type& weight)
@@ -111,6 +106,15 @@ namespace oln {
     static std::string name() { return std::string("w_window2d<")
 				       + T::name() +  ">"; }
 
+
+  protected:
+
+    coord delta_update_(const dpoint_type& dp)
+    {
+      delta_(abs(dp.row()));
+      delta_(abs(dp.col()));
+      return this->delta_;
+    }
   };
 
 

@@ -29,6 +29,7 @@
 # define OLENA_IO_PNM_WRITE_DATA_HH_
 
 # include <oln/core/image.hh>
+# include <oln/io/image_base.hh>
 # include <oln/io/pnm_common.hh>
 
 # include <iostream>
@@ -67,7 +68,7 @@ namespace oln {
 	    {
 	      bool b = input[it];
 	      
-	      out.put(b == true ? '1' : '0');
+	      out.put(b == true ? '0' : '1');
 	      if (++stride >= 70)
 		{
 		  out << std::endl;
@@ -95,7 +96,7 @@ namespace oln {
 	  for (it = begin; it != end; ++it)
 	    {
 	      c <<= 1;
-	      c += (input[it] == true ? 1 : 0);
+	      c += (input[it] == true ? 0 : 1);
 	      if (++cols >= info.cols)
 		{
 		  c <<= (8 - stride - 1);

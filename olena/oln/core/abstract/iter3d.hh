@@ -64,18 +64,7 @@ namespace oln {
     public:
 
       typedef iter<Exact> super_type;
-
-      point3d to_point() const
-      {
-	precondition(*this != end);
-	invariant(this->p_.slice() >=0
-		  && this->p_.slice() < nslices_
-		  && this->p_.row() >= 0
-		  && this->p_.row() < nrows_
-		  && this->p_.col() >= 0
-		  && this->p_.col() < ncols_);
-	return this->p_;
-      }
+      friend class super_type;
 
       coord slice() const
       {
@@ -100,6 +89,18 @@ namespace oln {
       const coord nrows_;
       const coord ncols_;
 
+      point3d to_point() const
+      {
+	precondition(*this != end);
+	invariant(this->p_.slice() >=0
+		  && this->p_.slice() < nslices_
+		  && this->p_.row() >= 0
+		  && this->p_.row() < nrows_
+		  && this->p_.col() >= 0
+		  && this->p_.col() < ncols_);
+	return this->p_;
+      }
+
       iter3d() : super_type(), nslices_(0), nrows_(0), ncols_(0) {}
 
       iter3d(const image3d_size& size) :
@@ -111,7 +112,7 @@ namespace oln {
 	precondition(size.nslices() > 0
 		     && size.nrows() > 0
 		     && size.ncols() > 0);
-	to_exact(this)->goto_begin_();
+	this->exact().goto_begin_();
       }
     };
 

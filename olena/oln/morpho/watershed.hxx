@@ -39,7 +39,7 @@ namespace oln {
 
     /* GCC's optimizer is smart enough to compute these values at compile
        time and really use them as constants.  That's great.  */
-# define _OLN_MORPHO_DECLARE_SOILLE_WATERSHED_CONSTS(DestValue)				\
+# define OLN_MORPHO_DECLARE_SOILLE_WATERSHED_CONSTS_(DestValue)				\
     const DestValue mask    = ntg::cast::force<DestValue>(ntg_max_val(DestValue) - 2);	\
     const DestValue wshed   = ntg_max_val(DestValue);					\
     const DestValue init    = ntg::cast::force<DestValue>(ntg_max_val(DestValue) - 1);	\
@@ -48,14 +48,14 @@ namespace oln {
 
     namespace internal {
 
-      struct _watershed_seg_point_handler
+      struct watershed_seg_point_handler_
       {
 	template<class Fifo, class II, class IO, class N>
 	static inline void
 	process (Fifo& fifo, const II&, IO& im_o, const N& Ng)
 	{
 	  typedef Value(IO) DestValue;
-	  _OLN_MORPHO_DECLARE_SOILLE_WATERSHED_CONSTS(DestValue);
+	  OLN_MORPHO_DECLARE_SOILLE_WATERSHED_CONSTS_(DestValue);
 	  (void) init; /* unused */
 
 	  Point(II) p = fifo.front();
@@ -97,14 +97,14 @@ namespace oln {
 	}
       };
 
-      struct _watershed_con_point_handler
+      struct watershed_con_point_handler_
       {
 	template<class Fifo, class II, class IO, class N>
 	static inline void
 	process (Fifo& fifo, const II& im_i, IO& im_o, const N& Ng)
 	{
 	  typedef Value(IO) DestValue;
-	  _OLN_MORPHO_DECLARE_SOILLE_WATERSHED_CONSTS(DestValue);
+	  OLN_MORPHO_DECLARE_SOILLE_WATERSHED_CONSTS_(DestValue);
 	  (void) init; (void) wshed; /* unused */
 
 	  Point(II) p = fifo.front();
@@ -142,7 +142,7 @@ namespace oln {
       };
 
       template<class Point, class T> inline
-      bool _watershed_seg_sort(const std::pair<Point, T>& p1,
+      bool watershed_seg_sort_(const std::pair<Point, T>& p1,
 			       const std::pair<Point, T>& p2)
       {
 	return p1.second < p2.second;
@@ -151,9 +151,9 @@ namespace oln {
       // Algorithm by Vincent and Soille
       template<class PointHandler, class DestValue, class I, class N>
       typename mute<I, DestValue>::ret
-      _soille_watershed(const abstract::image<I>& im_i, const abstract::neighborhood<N>& Ng)
+      soille_watershed_(const abstract::image<I>& im_i, const abstract::neighborhood<N>& Ng)
       {
-	_OLN_MORPHO_DECLARE_SOILLE_WATERSHED_CONSTS(DestValue);
+	OLN_MORPHO_DECLARE_SOILLE_WATERSHED_CONSTS_(DestValue);
 
 	// Initializations
 	typedef typename mute<I, DestValue>::ret result_type;
@@ -176,7 +176,7 @@ namespace oln {
 	  // not work with float values.  We should have a specialized
 	  // sorting proc to handle this in the future.
 	  sort(histo.begin(), histo.end(),
-	       _watershed_seg_sort< Point(I), Value(I)>);
+	       watershed_seg_sort_< Point(I), Value(I)>);
 	}
 
 	for (unsigned int i = 0; i < histo.size(); )
@@ -267,16 +267,16 @@ namespace oln {
     typename mute<I, DestValue>::ret
     watershed_seg(const abstract::image<I>& im_i, const abstract::neighborhood<N>& Ng)
     {
-      return internal::_soille_watershed<
-	internal::_watershed_seg_point_handler, DestValue> (im_i, Ng);
+      return internal::soille_watershed_<
+	internal::watershed_seg_point_handler_, DestValue> (im_i, Ng);
     }
 
     template<class DestValue, class I, class N>
     typename mute<I, DestValue>::ret
     watershed_con(const abstract::image<I>& im_i, const abstract::neighborhood<N>& Ng)
     {
-      return internal::_soille_watershed<
-	internal::_watershed_con_point_handler, DestValue> (im_i, Ng);
+      return internal::soille_watershed_<
+	internal::watershed_con_point_handler_, DestValue> (im_i, Ng);
     }
 
 

@@ -65,20 +65,14 @@ namespace oln {
     typedef typename struct_elt_traits< self_type >::dpoint_type dpoint_type;
     typedef typename struct_elt_traits< self_type >::weight_type weight_type;
 
+    friend class abstract::window_base<abstract::w_window<w_window3d>, w_window3d>;
+
     w_window3d(): super_type() {}
     w_window3d(unsigned size) : super_type(size) {}
 
-    coord delta_update_(const dpoint_type& dp)
-    {
-      delta_(abs(dp.slice()));
-      delta_(abs(dp.row()));
-      delta_(abs(dp.col()));
-      return this->delta_;
-    }
-
     w_window3d<T>& add(const dpoint_type& dp, const weight_type& w)
     {
-      return to_exact(this)->add_(dp, w);
+      return this->exact().add_(dp, w);
     }
 
     w_window3d<T>& add(coord slice, coord row, coord col, const weight_type& weight)
@@ -88,7 +82,7 @@ namespace oln {
 
     const weight_type& set(const dpoint_type& dp, const weight_type& weight)
     {
-      return to_exact(this)->set_(dp, weight);
+      return this->exact().set_(dp, weight);
     }
 
     const weight_type& set(coord slice, coord row, coord col, const
@@ -100,6 +94,15 @@ namespace oln {
     static std::string name() { return std::string("w_window3d")
 				       + T::name() + ">"; }
 
+  protected:
+
+    coord delta_update_(const dpoint_type& dp)
+    {
+      delta_(abs(dp.slice()));
+      delta_(abs(dp.row()));
+      delta_(abs(dp.col()));
+      return this->delta_;
+    }
   };
 
 

@@ -59,6 +59,9 @@ namespace oln {
     enum { dim = iter_traits<exact_type>::dim };
     typedef typename iter_traits<exact_type>::point_type point_type;
 
+    friend class abstract::iter<exact_type>;
+    friend class abstract::iter2d<exact_type>;
+
     template<class Image>
     bkd_iter2d(const Image& ima) :
       super_type(ima.size())
@@ -66,6 +69,10 @@ namespace oln {
     }
 
     template<class U> U operator=(U u) { return super_iter_type::operator=(u); }
+
+    static std::string name() { return std::string("bkd_iter2d<") + Exact::name() + ">"; }
+
+  protected:
 
     void goto_begin_()
     {
@@ -91,8 +98,6 @@ namespace oln {
       this->p_.col() = this->ncols_ - 1;
       --this->p_.row();
     }
-
-    static std::string name() { return std::string("bkd_iter2d<") + Exact::name() + ">"; }
 
   };
 

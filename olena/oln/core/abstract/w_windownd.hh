@@ -56,10 +56,14 @@ namespace oln
       typedef typename struct_elt_traits<Exact>::weight_type weight_type;
       typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
 
+      friend class w_window<exact_type>;
+
       static std::string name()
       {
 	return std::string("w_windownd<") + Exact::name() + ">" ;
       }
+
+    protected:
 
       weight_type get_weight(unsigned i) const
       {
@@ -71,13 +75,13 @@ namespace oln
       {
 	precondition(! has_(dp));
 	if (w == 0)		// Don't add 0 weighted entries
-	  return to_exact(*this);
+	  return this->exact();
 	if (dp.is_centered())
 	  this->centered_ = true;
 	this->dp_.push_back(dp);
 	delta_update(dp);
 	w_.push_back(w);
-	return to_exact(*this);
+	return this->exact();
       }
 
       const weight_type& set_(const dpoint_type& dp, const weight_type& w)
@@ -95,7 +99,6 @@ namespace oln
 	return w_.back();
       }
 
-    protected:
       w_windownd() : super_type() {}
       
       w_windownd(unsigned size) : super_type(size)

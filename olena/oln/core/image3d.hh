@@ -55,8 +55,8 @@ namespace oln {
 
   template<class T, class Exact>
   struct image_traits<image3d<T, Exact> >: 
-    public image_traits<image<image_id<image3d<T, Exact> >::dim, 
-			      typename image_id<image3d<T, Exact> >::value_type, 
+    public image_traits<image<typename image_id<image3d<T, Exact> >::value_type, 
+			      image_id<image3d<T, Exact> >::dim, 
 			      typename image_id<image3d<T, Exact> >::impl_type, 
 			      typename image_id<image3d<T, Exact> >::exact_type> >
   {};
@@ -68,8 +68,8 @@ namespace oln {
 
   template<class T, class Exact>
   class image3d: 
-    public image<image_id<image3d<T, Exact> >::dim, 
-		 typename image_id<image3d<T, Exact> >::value_type, 
+    public image<typename image_id<image3d<T, Exact> >::value_type, 
+		 image_id<image3d<T, Exact> >::dim, 
 		 typename image_id<image3d<T, Exact> >::impl_type, 
 		 typename image_id<image3d<T, Exact> >::exact_type>
   {
@@ -79,10 +79,12 @@ namespace oln {
     typedef typename image_id<image3d<T, Exact> >::value_type value_type;
     typedef typename image_id<image3d<T, Exact> >::exact_type exact_type;
     typedef typename image_id<image3d<T, Exact> >::impl_type impl_type;
-    typedef image<image_id<image3d<T, Exact> >::dim, 
-		  value_type, 
+    typedef image<value_type, 
+		  image_id<image3d<T, Exact> >::dim, 
 		  impl_type, 
 		  exact_type> super_type;
+
+    friend class abstract::image<exact_type>;
 
     image3d() :
       super_type((impl_type*) 0)
@@ -117,16 +119,7 @@ namespace oln {
 
     exact_type& operator=(self_type rhs)
     {
-      return to_exact(this)->assign(to_exact(rhs));
-    }
-
-    self_type clone_() const // deep copy
-    {
-      // FIXME: it may be really dangerous to instantiate a self_type
-      // and not an exact_type is Exact != mlc::final.
-      self_type output(this->nslices(), this->nrows(), this->ncols(), this->border());
-      clone_to(output.impl());
-      return output;
+      return this->exact().assign(rhs.exact());
     }
 
     static std::string name()
@@ -144,6 +137,17 @@ namespace oln {
     };
 
     image3d(const self_type& rhs); // w/o impl
+
+  protected:
+
+    self_type clone_() const // deep copy
+    {
+      // FIXME: it may be really dangerous to instantiate a self_type
+      // and not an exact_type is Exact != mlc::final.
+      self_type output(this->nslices(), this->nrows(), this->ncols(), this->border());
+      clone_to(output.impl());
+      return output;
+    }
   };
 
 } // end of oln

@@ -28,6 +28,8 @@
 #ifndef OLENA_IO_PNM_WRITE3D_HXX_
 # define OLENA_IO_PNM_WRITE3D_HXX_
 
+#if 0
+
 # include <oln/io/pnm_write_common.hxx>
 
 namespace oln {
@@ -246,5 +248,6 @@ namespace oln {
   } // io
 } // oln
 
+# endif
 
 #endif // OLENA_IO_PNM_WRITE3D_HXX_

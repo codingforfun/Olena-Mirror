@@ -67,15 +67,7 @@ namespace oln {
       typedef Exact exact_type;
       typedef image_with_dim<image_id<Exact>::dim, Exact> super_type;
 
-      const value_type& at(const point_type& p) const
-      {
-	return impl_->at(p);
-      }
-
-      value_type& at(const point_type& p)
-      {
-	return impl_->at(p);
-      }
+      friend class image<exact_type>;
 
       // shallow copy
       image_with_impl(self_type& rhs) 
@@ -88,33 +80,7 @@ namespace oln {
 
       exact_type& operator=(self_type rhs)
       {
-	return to_exact(this)->assign(to_exact(rhs));
-      }
-
-      exact_type& assign(exact_type rhs) // shallow assignment
-      {
-	assertion(rhs.impl() != 0);
-	if ( &rhs == this )
-	  return to_exact(*this);
-	if (this->impl() != 0)
-	  this->impl()->unref();
-	this->impl_ = rhs.impl();
-	this->impl()->ref();
-	return to_exact(*this);
-      }
-
-      ~image_with_impl()
-      {
-	clear();
-      }
-
-      void clear()
-      {
-	if (impl_ != 0)
-	  {
-	    impl_->unref();
-	    impl_ = 0; // security
-	  }
+	return this->exact().assign(rhs.exact());
       }
 
       const impl_type* impl() const
@@ -142,6 +108,42 @@ namespace oln {
       }
 
     protected:
+      const value_type& at(const point_type& p) const
+      {
+	return impl_->at(p);
+      }
+      
+      value_type& at(const point_type& p)
+      {
+	return impl_->at(p);
+      }
+
+      exact_type& assign(exact_type rhs) // shallow assignment
+      {
+	assertion(rhs.impl() != 0);
+	if ( &rhs == this )
+	  return this->exact();
+	if (this->impl() != 0)
+	  this->impl()->unref();
+	this->impl_ = rhs.impl();
+	this->impl()->ref();
+	return this->exact();
+      }
+
+      ~image_with_impl()
+      {
+	clear();
+      }
+
+      void clear()
+      {
+	if (impl_ != 0)
+	  {
+	    impl_->unref();
+	    impl_ = 0; // security
+	  }
+      }
+
       image_with_impl() : super_type(), impl_(0)
       {}
 

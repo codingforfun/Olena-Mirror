@@ -55,10 +55,14 @@ namespace oln
       typedef Exact exact_type;
       typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
 
+      friend class neighborhood<exact_type>;
+
       static std::string name()
       {
 	return std::string("neighborhoodnd<") + Exact::name() + ">" ;
       }
+
+    protected:
 
       exact_type& add_(const dpoint_type& dp)
       {
@@ -67,10 +71,9 @@ namespace oln
 	if (!(has_(dp)))
 	  this->dp_.push_back(dp);
 	delta_update(dp);
-	return to_exact(*this);
+	return this->exact();
       }
 
-    protected:
       neighborhoodnd() : super_type() {}
       
       neighborhoodnd(unsigned size) : super_type(size)

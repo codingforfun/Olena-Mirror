@@ -25,14 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_MISC_TIMER_HH
-# define OLENA_MISC_TIMER_HH
+#ifndef OLENA_UTILS_TIMER_HH
+# define OLENA_UTILS_TIMER_HH
 
 # include <mlc/contract.hh>
 # include <time.h>
 
 namespace oln {
-  namespace misc {
+
+  namespace utils {
 
     class timer
     {
@@ -97,7 +98,8 @@ namespace oln {
       clock_t _start_time;
     };
 
-  } // misc
+  } // utils
+
 } // oln
 
-#endif // OLENA_MISC_TIMER_HH
+#endif // OLENA_UTILS_TIMER_HH

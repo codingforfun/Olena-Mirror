@@ -28,6 +28,7 @@
 #ifndef OLENA_CONVERT_BASICS_HH
 # define OLENA_CONVERT_BASICS_HH
 
+# include <oln/convert/abstract/conversion.hh>
 # include <oln/convert/conversion.hh>
 # include <oln/convert/force.hh>
 # include <oln/convert/bound.hh>

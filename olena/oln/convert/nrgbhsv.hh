@@ -30,13 +30,15 @@
 # define OLENA_CONVERT_NRGBHSV_HH
 
 # include <oln/basics.hh>
-# include <oln/convert/colorconv.hh>
+# include <oln/convert/abstract/colorconv.hh>
 
 # include <ntg/basics.hh>
 # include <ntg/color/nrgb.hh>
 # include <ntg/color/hsv.hh>
 
 # include <mlc/contract.hh>
+
+# include <sstream>
 
 /*-----------------------------------------------------------------.
 | The formulas used here come from ``Color Conversion Algorithms'' |
@@ -48,13 +50,13 @@ namespace oln {
 
   namespace convert {
 
+    template<unsigned inbits, unsigned outbits>
     struct f_nrgb_to_hsv
-      : public color_conversion<3, nrgb_traits,
-				3, hsv_traits, f_nrgb_to_hsv>
+      : public abstract::color_conversion<3, inbits, nrgb_traits,
+					  3, outbits, hsv_traits, f_nrgb_to_hsv<inbits, outbits> >
     {
-      template <unsigned qbits>
-      color<3, qbits, hsv_traits>
-      operator() (const color<3, qbits, nrgb_traits>& v) const
+      color<3, outbits, hsv_traits>
+      doit(const color<3, inbits, nrgb_traits>& v) const
       {
 	vec<3, float> in = v.to_float();
 	vec<3, float> out;
@@ -87,24 +89,29 @@ namespace oln {
 	return out;
       }
 
-      static std::string name() { return "f_nrgb_to_hsv"; }
+      static std::string name()
+      { 
+	std::ostringstream s;
+	s << "f_nrgb_to_hsv<" << inbits << ", " << outbits << '>'; 
+	s.str();
+      }
     };
 
-    template <unsigned qbits>
-    color<3, qbits, hsv_traits>
-    nrgb_to_hsv(const color<3, qbits, nrgb_traits>& v)
+    template <unsigned inbits, unsigned outbits>
+    color<3, outbits, hsv_traits>
+    nrgb_to_hsv(const color<3, inbits, nrgb_traits>& v)
     {
-      f_nrgb_to_hsv f;
+      f_nrgb_to_hsv<inbits, outbits> f;
       return f(v);
     }
 
+    template<unsigned inbits, unsigned outbits>
     struct f_hsv_to_nrgb
-      : public color_conversion<3, hsv_traits,
-				3, nrgb_traits, f_hsv_to_nrgb>
+      : public abstract::color_conversion<3, inbits, hsv_traits,
+				3, outbits, nrgb_traits, f_hsv_to_nrgb<inbits, outbits> >
     {
-      template <unsigned qbits>
-      color<3, qbits, nrgb_traits>
-      operator() (const color<3, qbits, hsv_traits>& v) const
+      color<3, outbits, nrgb_traits>
+      doit(const color<3, inbits, hsv_traits>& v) const
       {
 	vec<3, float> in = v.to_float();
 	vec<3, float> out;
@@ -157,14 +164,19 @@ namespace oln {
 	return out;
       }
 
-      static std::string name() { return "hsv_to_nrgb"; }
+      static std::string name() 
+      { 
+	std::ostringstream s;
+	s << "f_hsv_to_nrgb<" << inbits << ", " << outbits << '>'; 
+	s.str();
+      }
     };
 
-    template <unsigned qbits>
-    color<3, qbits, nrgb_traits>
-    hsv_to_nrgb(const color<3, qbits, hsv_traits>& v)
+    template <unsigned inbits, unsigned outbits>
+    color<3, outbits, nrgb_traits>
+    hsv_to_nrgb(const color<3, inbits, hsv_traits>& v)
     {
-      f_hsv_to_nrgb f;
+      f_hsv_to_nrgb<inbits, outbits> f;
       return f(v);
     }
 

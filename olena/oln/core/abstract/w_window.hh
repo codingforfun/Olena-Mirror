@@ -68,17 +68,18 @@ namespace oln
 
       exact_type& add(const abstract::dpoint<dpoint_type>& dp, const weight_type& w)
       {
-	return to_exact(this)->add_(to_exact(dp), w);
+	return this->exact().add_(dp.exact(), w);
       }
 
-      const weight_type& set(const abstract::dpoint<dpoint_type>& dp, const weight_type& weight)
+      const weight_type& set(const abstract::dpoint<dpoint_type>& dp, 
+			     const weight_type& weight)
       {
-	return to_exact(this)->set_(to_exact(dp), weight);
+	return this->exact().set_(dp.exact(), weight);
       }
 
       weight_type w(unsigned i) const
       {
-	return to_exact(this)->get_weight(i);
+	return this->exact().get_weight(i);
       }
 
     protected:

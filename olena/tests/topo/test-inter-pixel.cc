@@ -9,7 +9,16 @@
 
 using namespace oln;
 using namespace ntg;
-using namespace topo::inter_pixel;
+using namespace topo;
+using namespace inter_pixel;
+
+#define OK_OR_FAIL				\
+      std::cout << "OK" << std::endl;		\
+    else					\
+      {						\
+	std::cout << "FAIL" << std::endl;	\
+	fail = true;				\
+      }
 
 bool
 check()
@@ -18,12 +27,9 @@ check()
 
   image2d<int_u8> src = load(rdata("test-cmap"));
 
-  std::cerr << "building inter-pixel representation ... " << std::endl;
   interpixel< image2d<int_u8> > ip(src);
 
-  std::cerr << ip << std::endl;
-
-  std::cerr << "OK" << std::endl;
+  std::cout << "OK" << std::endl;
 
   return fail;
 }

@@ -92,10 +92,20 @@ namespace oln {
       typedef image_array<T, ExactI, image_array3d<T, ExactI> > super_type;
       typedef image_array3d<T, ExactI> self_type;
 
+      friend class image_impl<ExactI, image_array3d<T, ExactI> >;
+      friend class super_type;
+
       image_array3d(const size_type& s): super_type(s) 
       {
 	pretreat_3d_data_(this->buffer_, array2_, array_, s);
       }
+
+      ~image_array3d()
+      {
+	desallocate_3d_data_(array2_, array_, this->size_);
+      }
+
+    protected:
 
       bool hold_(const oln::point3d& p) const
       {
@@ -138,14 +148,6 @@ namespace oln {
 	return size_t(nslices_eff * nrows_eff * ncols_eff);
       }
 
-      ~image_array3d()
-      {
-	desallocate_3d_data_(array2_, array_, this->size_);
-      }
-
-    protected:
-
-    public:
       // borders
 
       void border_reallocate_and_copy_(coord new_border, bool

@@ -293,14 +293,13 @@ namespace oln {
     }
 
 
-    template<class I_>
-    void distrib_sort(const abstract::image<I_>& _im, std::vector<Point(I_)> &v)
+    template<class I>
+    void distrib_sort(const abstract::image<I>& im, std::vector<Point(I)> &v)
     {
-      Exact_cref(I, im);
       typedef Value(I) val;
 
       // check the size
-      precondition(v.size() == unsigned(im.nrows() * im.ncols()));
+      precondition(v.size() == unsigned(im.npoints())); //unsigned(im.nrows() * im.ncols()));
 
       // calculate the histogram of the image
       utils::histogram< Value(I) > histo;
@@ -312,7 +311,7 @@ namespace oln {
       // value of the image
       std::vector< Point(I)* > ptr(ntg_max_val(val) + 1);
       ptr[0] = &(v[0]);
-      for (int i = ntg_max_val(val) + 1; i <= ntg_max_val(val); i++)
+      for (int i = ntg_min_val(val) + 1; i <= ntg_max_val(val); i++)
 	ptr[unsigned(i)] = ptr[unsigned(i - 1)] + histo[i - 1];
 
       // Now iterate on the image to sort point in the order of their

@@ -125,26 +125,22 @@ namespace oln {
       typedef image_with_dim<1, Exact> self_type;
       typedef Exact exact_type;
    
+      friend class image<exact_type>;
+
       coord ncols() const
       {
 	return this->size().ncols();
       }
 
-      // FIXME: size_t ???
-      size_t npoints_() const
-      {
-	return size_t(ncols());
-      }
-
       const value_type operator()(coord col) const
       {
-	return to_exact(*this)[point_type(col)];
+	return this->exact()[point_type(col)];
 	//          super_type::operator[](point_type(col));
       }
 
       value_type& operator()(coord col)
       {
-	return to_exact(*this)[point_type(col)];
+	return this->exact()[point_type(col)];
 	//return super_type::operator[](point_type(col));
       }
 
@@ -157,7 +153,7 @@ namespace oln {
 
       exact_type& operator=(self_type rhs)
       {
-	return to_exact(this)->assign(to_exact(rhs));
+	return this->exact().assign(rhs.exact());
       }
 
       static std::string name()
@@ -169,6 +165,13 @@ namespace oln {
       }
 
     protected:
+
+      // FIXME: size_t ???
+      size_t npoints_() const
+      {
+	return size_t(ncols());
+      }
+
       image_with_dim() : super_type(){}
 
     }; // end of one-dimensional specialization
@@ -189,6 +192,9 @@ namespace oln {
       typedef image_with_dim<2, Exact> self_type;
       typedef Exact exact_type;
       typedef image_with_type<typename image_id<Exact>::value_type, Exact> super_type;
+
+      friend class image<exact_type>;
+
       coord nrows() const
       {
 	return this->size().nrows();
@@ -199,21 +205,15 @@ namespace oln {
 	return this->size().ncols();
       }
 
-      // FIXME: size_t ???
-      size_t npoints_() const
-      {
-	return size_t(nrows()) * size_t(ncols());
-      }
-
       const value_type operator()(coord row, coord col) const
       {
-	return to_exact(*this)[point_type(row, col)];
+	return this->exact()[point_type(row, col)];
 	//return super_type::operator[](point_type(row, col));
       }
 
       value_type& operator()(coord row, coord col)
       {
-	return to_exact(*this)[point_type(row, col)];
+	return this->exact()[point_type(row, col)];
 	//return super_type::operator[](point_type(row, col));
       }
 
@@ -226,7 +226,7 @@ namespace oln {
 
       exact_type& operator=(self_type rhs)
       {
-	return to_exact(this)->assign(to_exact(rhs));
+	return this->exact().assign(rhs.exact());
       }
 
       static std::string name()
@@ -238,6 +238,13 @@ namespace oln {
       }
 
     protected:
+
+      // FIXME: size_t ???
+      size_t npoints_() const
+      {
+	return size_t(nrows()) * size_t(ncols());
+      }
+
       image_with_dim() : super_type() {}
  
     }; // end of bi-dimensional specialization
@@ -259,6 +266,8 @@ namespace oln {
       typedef image_with_dim<3, Exact> self_type;
       typedef Exact exact_type;
 
+      friend class image<exact_type>;
+
       coord nslices() const
       {
 	return this->size().nslices();
@@ -274,20 +283,15 @@ namespace oln {
 	return this->size().ncols();
       }
 
-      size_t npoints_() const
-      {
-	return size_t(nslices()) * size_t(nrows()) * size_t(ncols());
-      }
-
       const value_type operator()(coord slice, coord row, coord col) const
       {
-	return to_exact(*this)[point_type(slice, row, col)];
+	return this->exact()[point_type(slice, row, col)];
 	// return super_type::operator[](point_type(slice, row, col));
       }
 
       value_type& operator()(coord slice, coord row, coord col)
       {
-	return to_exact(*this)[point_type(slice, row, col)];
+	return this->exact()[point_type(slice, row, col)];
 	// return super_type::operator[](point_type(slice, row, col));
       }
 
@@ -300,7 +304,7 @@ namespace oln {
 
       exact_type& operator=(self_type rhs)
       {
-	return to_exact(this)->assign(to_exact(rhs));
+	return this->exact().assign(rhs.exact());
       }
 
       static std::string name()
@@ -312,6 +316,12 @@ namespace oln {
       }
 
     protected:
+
+      size_t npoints_() const
+      {
+	return size_t(nslices()) * size_t(nrows()) * size_t(ncols());
+      }
+
       image_with_dim() : super_type() {}
  
     }; // end of tri-dimensional specialization
@@ -325,7 +335,7 @@ namespace oln {
 template<class Exact> inline std::ostream&
 operator<<(std::ostream& o, const oln::abstract::image_with_dim<1, Exact>& ima)
 {
-  if (to_exact(ima).impl() == 0)
+  if (ima.exact().impl() == 0)
     return o << "null";
   for (oln::coord col = 0; col < ima.ncols(); ++col)
     o << ima(col) << ' ';
@@ -337,7 +347,7 @@ template<class Exact> inline std::ostream&
 operator<<(std::ostream& o, const oln::abstract::image_with_dim<2, Exact>& ima)
 {
   typedef typename oln::image_id<Exact>::value_type value_type;
-  if (to_exact(ima).impl() == 0)
+  if (ima.exact().impl() == 0)
     return o << "null";
 
   for (oln::coord row = 0; row < ima.nrows(); ++row)
@@ -357,7 +367,7 @@ operator<<(std::ostream& o, const oln::abstract::image_with_dim<3, Exact>& ima)
 {
   typedef typename oln::image_id<Exact>::value_type value_type;
 
-  if (to_exact(ima).impl() == 0)
+  if (ima.exact().impl() == 0)
     return o << "null";
   for (oln::coord slice = 0; slice < ima.nslices(); ++slice) {
     o << "### " << slice << std::endl;

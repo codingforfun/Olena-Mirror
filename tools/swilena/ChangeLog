@@ -1,3 +1,7 @@
+2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* expand.sh: Fix data types prefix.
+
 2003-07-29  David Lesage  <david@lrde.epita.fr>
 
 	* swilena/meta/swilena_w_win.i, 

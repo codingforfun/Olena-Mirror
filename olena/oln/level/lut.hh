@@ -49,17 +49,17 @@ namespace oln {
       }
       hlut& set(const T& val, const T2& newval)
       {
-	_hmap[val] = newval;
+	hmap_[val] = newval;
 	return *this;
       }
       const T2 operator()(const T& val) const
       {
 	static typename hmap_t::const_iterator i;
-	i = _hmap.find(val);
-	return i != _hmap.end() ? i->second : val;
+	i = hmap_.find(val);
+	return i != hmap_.end() ? i->second : val;
       }
     private:
-      hmap_t _hmap;
+      hmap_t hmap_;
     };
 
 
@@ -74,27 +74,27 @@ namespace oln {
       typedef T2 output_t;
       hlut_def()
       {
-	_defaultval = T2();
+	defaultval_ = T2();
       }
       hlut_def& set(const T& val, const T2& newval)
       {
-	_hmap[val] = newval;
+	hmap_[val] = newval;
 	return *this;
       }
       hlut_def& set_default(const T2& defaultval)
       {
-	_defaultval = defaultval;
+	defaultval_ = defaultval;
 	return *this;
       }
       const T2 operator()(const T& val) const
       {
 	static typename hmap_t::const_iterator i;
-	i = _hmap.find(val);
-	return i != _hmap.end() ? i->second : _defaultval;
+	i = hmap_.find(val);
+	return i != hmap_.end() ? i->second : defaultval_;
       }
     private:
-      hmap_t _hmap;
-      T2 _defaultval;
+      hmap_t hmap_;
+      T2 defaultval_;
     };
 
 
