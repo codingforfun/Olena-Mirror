@@ -1,11 +1,11 @@
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.53])
+AC_PREREQ([2.54])
 
 AC_INIT([oln], OLN_VERSION, OLN_CONTACT)
 AC_CONFIG_AUX_DIR([oln/config])
 AC_CONFIG_SRCDIR([oln/config/oln.m4])
-AM_INIT_AUTOMAKE([1.6 no-define foreign dist-bzip2])
+AM_INIT_AUTOMAKE([1.7 no-define foreign dist-bzip2])
 AC_CONFIG_HEADERS([config.h:config.hin])
 
 # Use included Olena version.

@@ -1,17 +1,16 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 7 51)
-(Parent-Version oln 7 50)
-(Version-Log "Index: doc/ChangeLog
-from  +2003-02-09  Raphaël Poss  <raph@lrde.epita.fr>
+(Project-Version oln 7 52)
+(Parent-Version oln 7 51)
+(Version-Log "Index: ChangeLog
+from  +2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
 
-        * demo/Makefile.am (AM_CXXFLAGS): Cleanup optimization flags
-        specification.
+        * configure.ac: Bump Autotools requirements.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Sun, 09 Feb 2003 17:03:01 +0100")
+(Checkin-Time "Mon, 10 Feb 2003 09:07:48 +0100")
 (Checkin-Login raph)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -89,7 +88,7 @@ from  +2003-02-09  Raphaël Poss  <raph@lrde.epita.fr>
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.25 664))
+  (ChangeLog (oln/o/33_ChangeLog 1.26 664))
   (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.13 664))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.16 664))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10 664))
@@ -104,7 +103,7 @@ from  +2003-02-09  Raphaël Poss  <raph@lrde.epita.fr>
   
   (cleanup.sh (oln/o/29_cleanup.sh 1.4 775))
   
-  (configure.ac (oln/3_configure. 1.45 664))
+  (configure.ac (oln/3_configure. 1.46 664))
   
   (doc/demo/image.cc (oln/d/46_image.cc 1.2 660))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.13 660))
@@ -775,5 +774,7 @@ from  +2003-02-09  Raphaël Poss  <raph@lrde.epita.fr>
 
   (doc/ref/gen_filelists.sh (oln/q/4_gen_fileli 1.1 664))
 )
-(Merge-Parents)
+(Merge-Parents
+  (7.51 complete)
+)
 (New-Merge-Parents)

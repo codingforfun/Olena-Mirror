@@ -1,3 +1,7 @@
+2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* configure.ac: Bump Autotools requirements.
+
 2003-02-09  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* configure.ac: Use AC_CHECK_PROGS instead of DOC_CHECK_PROG again
