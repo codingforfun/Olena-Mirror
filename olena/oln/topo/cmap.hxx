@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef TOPO_CMAP_CMAP_HXX
-# define TOPO_CMAP_CMAP_HXX
+#ifndef OLENA_TOPO_CMAP_CMAP_HXX
+# define OLENA_TOPO_CMAP_CMAP_HXX
 
 using namespace oln::topo::cmap;
 
@@ -43,4 +43,4 @@ inline std::ostream & operator<<(std::ostream & ostr, const cmap<_I> & cm)
   return cm.print(ostr);
 }
 
-#endif // !TOPO_CMAP_CMAP_HXX
+#endif // !OLENA_TOPO_CMAP_CMAP_HXX

@@ -25,14 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef TOPO_BOUNDARY_INTER_PIXEL_HH
-# define TOPO_BOUNDARY_INTER_PIXEL_HH
+#ifndef OLENA_TOPO_BOUNDARY_INTER_PIXEL_HH
+# define OLENA_TOPO_BOUNDARY_INTER_PIXEL_HH
 
-#include <oln/basics2d.hh>
-#include <ntg/all.hh>
+# include <ntg/cycle.hh>
 
 # include <map>
 # include <set>
+
+using namespace ntg;
 
 namespace oln {
 
@@ -45,8 +46,11 @@ namespace oln {
 	class _node;
       }
 
-      // Class interpixel
-      // Build an inter-pixel boundary representation.
+      //
+      //  Class interpixel<_I>
+      //
+      //////////////////////////////////
+
       template <class _I>
       class interpixel
       {
@@ -69,7 +73,7 @@ namespace oln {
 	  // pearhaps we should clone img with a higher type.
 	  border::adapt_assign(img, 1, optraits<T>::max());
 
-	  Iter(image2d< internal::_node<T> >) p(_data);
+	  Iter(data_t) p(_data);
 
 	  for_all(p)
 	    {
@@ -112,9 +116,8 @@ namespace oln {
 
 	      if(_data[cur].get(i + 1))
 		++i;
-	      else
-		if (_data[cur].get(i - 1))
-		  --i;
+	      else if (_data[cur].get(i - 1))
+		--i;
 	    }
 	  while (cur != p);
 
@@ -137,9 +140,8 @@ namespace oln {
 
 	      if (_data[cur].get(i + 1))
 		++i;
-	      else
-		if (!_data[cur].get(i))
-		  --i;
+	      else if (!_data[cur].get(i))
+		--i;
 
 	      point_t pt = cur + _neighb[i + 1];
 
@@ -215,6 +217,26 @@ namespace oln {
 	  return false;
 	}
 
+	std::ostream & print(std::ostream & ostr) const
+	{
+	  Iter(data_t) p(_data);
+
+	  for_all(p)
+	    if (_data[p].rank() > 2)
+	      {
+		ostr << p << ":";
+
+		cycle_t i = 0;
+		do
+		  ostr << " " << _data[p].get(i);
+		while (++i);
+
+		ostr << std::endl;
+	      }
+
+	  return ostr;
+	}
+
       private:
 	data_t	_data;
 	mark_t	_mark;
@@ -230,7 +252,7 @@ namespace oln {
 	class _node
 	{
 	public:
-	  typedef ntg::cycle<T, ntg::bounded_u<0, 4> > cycle_t;
+	  typedef cycle<T, bounded_u<0, 4> > cycle_t;
 
 	public:
 	  _node() : _rank(0)
@@ -293,4 +315,4 @@ namespace oln {
 
 # include <oln/topo/inter-pixel.hxx>
 
-#endif // !TOPO_BOUNDARY_INTER_PIXEL_HH
+#endif // !OLENA_TOPO_BOUNDARY_INTER_PIXEL_HH

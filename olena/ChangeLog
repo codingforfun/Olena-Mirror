@@ -1,3 +1,22 @@
+2003-03-20  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
+
+	* img/test-cmap.pgm: Add new image.
+
+	* tests/topo/test-inter-pixel.ref, tests/topo/test-cmap.ref:
+	Add reference output files for test suite.
+
+	* tests/topo/test.sh: Add new file.
+
+	* oln/topo/cmap-functor.hh, oln/topo/cmap-functor.hxx,
+	olena/oln/topo/inter-pixel.hxx, olena/oln/topo/cmap.hxx,
+	olena/oln/topo/union.hh, olena/oln/topo/inter-pixel.hh,
+	olena/oln/topo/flat-zone.hh, olena/oln/topo/cmap.hh:
+	Modify guards lines, fix namespaces and comments.
+
+	* tests/topo/test-cmap.cc, tests/topo/test-inter-pixel.cc: Adjust.
+
+	* tests/topo/Makefile.am: Adjust.
+
 2003-03-19  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
 	* tests/topo/Makefile.am, tests/topo/test-inter-pixel.cc,

@@ -17,12 +17,14 @@ check()
 {
   bool fail = false;
 
-  image2d<ntg::int_u8> src = load(rdata("lena128.pgm"));
+  image2d<ntg::int_u8> src = load(rdata("test-cmap.pgm"));
 
-  std::cout << "building cmap ... " << std::flush;
+  std::cerr << "building cmap ... " << std::endl;
   cmap< image2d<ntg::int_u8> > cm(src);
 
-  std::cout << "OK" << std::endl;
+  std::cerr << cm << std::endl;
+
+  std::cerr << "OK" << std::endl;
 
   return fail;
 }

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef UNION_HH
-# define UNION_HH
+#ifndef OLENA_TOPO_TARJAN_UNION_HH
+# define OLENA_TOPO_TARJAN_UNION_HH
 
 #include <oln/basics2d.hh>
 #include <ntg/all.hh>
@@ -34,148 +34,134 @@
 #include <oln/level/fill.hh>
 
 namespace oln {
-  namespace tarjan {
 
-    struct EMPTY_CLASS
-    {};
+  namespace topo {
 
-    template< class _I, class aux_data_t>
-    struct tarjan_set
-    {
-      typedef Point(_I) point_t;
-      typedef Value(_I) data_t;
-      typedef Concrete(_I) image_t;
+    namespace tarjan {
 
-      typedef typename mute<_I, point_t>::ret ima_parent_t;
-      typedef typename mute<_I, aux_data_t>::ret ima_aux_data_t;
+      struct EMPTY_CLASS
+      {};
 
-    public:
-      tarjan_set(const image_t & ima) : input(ima)
+      template< class _I, class aux_data_t>
+      struct tarjan_set
       {
- 	parent = typename mute<_I, point_t>::ret(ima.size());
- 	level::fill(parent, INACTIVE());
+	typedef Point(_I) point_t;
+	typedef Value(_I) data_t;
+	typedef Concrete(_I) image_t;
 
-	border::adapt_assign(parent, 1, INACTIVE());
+	typedef typename mute<_I, point_t>::ret ima_parent_t;
+	typedef typename mute<_I, aux_data_t>::ret ima_aux_data_t;
 
-//    	aux_data = typename mute<_I, aux_data_t>::ret(ima.size());
-      }
+      public:
+	tarjan_set(const image_t & ima) : input(ima)
+	{
+	  parent = typename mute<_I, point_t>::ret(ima.size());
+	  level::fill(parent, INACTIVE());
 
-
-      // ACTIVE and INACTIVE are defined with a hook to be static
-      // and initialized ionly once.
-      static const point_t & ACTIVE()
-      {
-	static struct foo_def{
-	  point_t elt;
-	  foo_def()
-	  {
-	    const unsigned dim = point_t::dim;
-	    for (unsigned i = 0; i < dim; ++i )
-	      elt.nth(i) = -1;
-	  }
-	} tmp;
-
-	return tmp.elt;
-      }
-
-      static const point_t &INACTIVE()
-      {
-	static struct foo_def{
-	  point_t elt;
-	  foo_def() {
-	    const unsigned dim = point_t::dim;
-	    for (unsigned i = 0; i < dim; ++i )
-	      elt.nth(i) = -2;
-	  }
-	} tmp;
-
-	return tmp.elt;
-      }
+	  border::adapt_assign(parent, 1, INACTIVE());
+	}
 
 
-      void make_set(const point_t& x)
-      {
-	precondition(parent[x] == INACTIVE());
-	parent[x] = ACTIVE();
-// 	aux_data[x] = 1;
-	// FIXME stuff with aux_data
-      }
+	// ACTIVE and INACTIVE are defined with a hook to be static
+	// and initialized ionly once.
+	static const point_t & ACTIVE()
+	{
+	  static struct foo_def{
+	    point_t elt;
+	    foo_def()
+	    {
+	      const unsigned dim = point_t::dim;
+	      for (unsigned i = 0; i < dim; ++i )
+		elt.nth(i) = -1;
+	    }
+	  } tmp;
 
-      void link(const point_t& x, const point_t& y)
-      {
-	//    delete aux_data[x];
-// 	aux_data[y] += aux_data[x];
-	parent[x] = y;
-      }
+	  return tmp.elt;
+	}
 
-      unsigned int attribute(const point_t& x)
-      {
-	precondition(parent[x] == ACTIVE());
-	precondition(aux_data[x] != 0);
-	return aux_data[x];
-      }
+	static const point_t &INACTIVE()
+	{
+	  static struct foo_def{
+	    point_t elt;
+	    foo_def() {
+	      const unsigned dim = point_t::dim;
+	      for (unsigned i = 0; i < dim; ++i )
+		elt.nth(i) = -2;
+	    }
+	  } tmp;
 
-      bool equiv(const point_t& x, const point_t& y)
-      {
-// 	precondition((parent[x] == ACTIVE()) || (parent[x] == INACTIVE()));
-// 	precondition((parent[y] == ACTIVE()) || (parent[y] == INACTIVE()));
-
-// 	// FIXME FAKE return TRUE
-//  	return true;
-  	return ( (input[x] == input[y]));// || (attribute(x) < 5000));
-// 	return ( (input[x] == input[y]) || (parent[x] == ACTIVE()) );
-      }
+	  return tmp.elt;
+	}
 
 
-      void uni(const point_t& n, const point_t& p)
-      {
-	point_t r = find_root(n);
-	if (r != p)
-	  {
- 	    if (equiv(r,p))
-	      link(r,p);
-	    else
-	      {
-//  		aux_data[p] = 5000;
-// 		parent[p] = INACTIVE();
-	      }
-	  }
-      }
+	void make_set(const point_t& x)
+	{
+	  precondition(parent[x] == INACTIVE());
+	  parent[x] = ACTIVE();
+	}
 
-      const point_t & find_root(const point_t& x)
-      {
-	//FIXME do it iteratively
-	if ((parent[x] != ACTIVE()) && (parent[x] != INACTIVE()))
-	  {
-	    parent[x] = find_root(parent[x]);
+	void link(const point_t& x, const point_t& y)
+	{
+	  parent[x] = y;
+	}
+
+	unsigned int attribute(const point_t& x)
+	{
+	  precondition(parent[x] == ACTIVE());
+	  precondition(aux_data[x] != 0);
+	  return aux_data[x];
+	}
+
+	bool equiv(const point_t& x, const point_t& y)
+	{
+	  return ( (input[x] == input[y]));
+	}
+
+
+	void uni(const point_t& n, const point_t& p)
+	{
+	  point_t r = find_root(n);
+	  if (r != p && equiv(r,p))
+	    link(r,p);
+	}
+
+	const point_t & find_root(const point_t& x)
+	{
+	  //FIXME do it iteratively
+	  if ((parent[x] != ACTIVE()) && (parent[x] != INACTIVE()))
+	    {
+	      parent[x] = find_root(parent[x]);
+	      return parent[x];
+	    }
+	  else
+	    return x;
+	}
+
+
+	const point_t & sure_find_root(const point_t& x)
+	{
+	  if ((parent[x] != ACTIVE()) && (parent[x] != INACTIVE()))
 	    return parent[x];
-	  }
-	else
-	  return x;
-      }
+	  else
+	    return x;
+	}
 
+	const bool is_root(const point_t& x)
+	{
+	  if ((parent[x] != ACTIVE()) && (parent[x] != INACTIVE()))
+	    return false;
+	  return true;
+	}
 
-      const point_t & sure_find_root(const point_t& x)
-      {
-	if ((parent[x] != ACTIVE()) && (parent[x] != INACTIVE()))
-	  return parent[x];
-	else
-	  return x;
-      }
+	const image_t &input;
+	ima_parent_t parent;
+	ima_aux_data_t aux_data;
+      };
 
-      const bool is_root(const point_t& x)
-      {
-	if ((parent[x] != ACTIVE()) && (parent[x] != INACTIVE()))
-	  return false;
-	return true;
-      }
+    } // end tarjan
 
-      const image_t &input;
-      ima_parent_t parent;
-      ima_aux_data_t aux_data;
-    };
+  } // end topo
 
-  } // end tarjan
 } // end oln
 
-#endif // ! UNION_HH
+#endif // ! OLENA_TOPO_TARJAN_UNION_HH

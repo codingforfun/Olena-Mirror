@@ -1,27 +1,28 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 8 22)
-(Parent-Version oln 8 21)
-(Version-Log "Index: ChangeLog
-from  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
+(Project-Version oln 8 23)
+(Parent-Version oln 8 22)
+(Version-Log "        * img/test-cmap.pgm: Add new image.
 
-        * configure.ac: Add test entry for topo.
+        * tests/topo/test-inter-pixel.ref, tests/topo/test-cmap.ref:
+        Add reference output files for test suite.
 
-Index: olena/ChangeLog
-from  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
-
-        * tests/topo/Makefile.am, tests/topo/test-inter-pixel.cc,
-        tests/topo/test-cmap.cc: New tests.
+        * tests/topo/test.sh: Add new file.
 
         * oln/topo/cmap-functor.hh, oln/topo/cmap-functor.hxx,
-        oln/topo/inter-pixel.hxx, oln/topo/cmap.hxx, oln/topo/union.hh,
-        oln/topo/inter-pixel.hh, oln/topo/flat-zone.hh, oln/topo/cmap.hh:
-        New files.
+        olena/oln/topo/inter-pixel.hxx, olena/oln/topo/cmap.hxx,
+        olena/oln/topo/union.hh, olena/oln/topo/inter-pixel.hh,
+        olena/oln/topo/flat-zone.hh, olena/oln/topo/cmap.hh:
+        Modify guards lines, fix namespaces and comments.
+
+        * tests/topo/test-cmap.cc, tests/topo/test-inter-pixel.cc: Adjust.
+
+        * tests/topo/Makefile.am: Adjust.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 19 Mar 2003 13:55:35 +0100")
+(Checkin-Time "Fri, 21 Mar 2003 18:48:55 +0100")
 (Checkin-Login sylvain)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -105,7 +106,7 @@ from  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
   (doc/ChangeLog (oln/o/31_ChangeLog 1.30 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.14 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.29 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.30 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.7 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.6 600))
 
@@ -799,17 +800,27 @@ from  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 ;; Files added by populate at Wed, 19 Mar 2003 13:39:57 +0100,
 ;; to version 8.21(w), by sylvain:
 
-  (olena/tests/topo/Makefile.am (oln/r/26_Makefile.a 1.1 600))
-  (olena/tests/topo/test-inter-pixel.cc (oln/r/27_test-inter 1.1 604))
-  (olena/tests/topo/test-cmap.cc (oln/r/28_test-cmap. 1.1 604))
-  (olena/oln/topo/cmap-functor.hh (oln/r/29_cmap-funct 1.1 604))
-  (olena/oln/topo/cmap-functor.hxx (oln/r/30_cmap-funct 1.1 604))
-  (olena/oln/topo/inter-pixel.hxx (oln/r/31_inter-pixe 1.1 600))
-  (olena/oln/topo/cmap.hxx (oln/r/32_cmap.hxx 1.1 600))
-  (olena/oln/topo/union.hh (oln/r/33_union.hh 1.1 600))
-  (olena/oln/topo/inter-pixel.hh (oln/r/34_inter-pixe 1.1 600))
-  (olena/oln/topo/flat-zone.hh (oln/r/35_flat-zone. 1.1 600))
-  (olena/oln/topo/cmap.hh (oln/r/36_cmap.hh 1.1 600))
+  (olena/tests/topo/Makefile.am (oln/r/26_Makefile.a 1.2 600))
+  (olena/tests/topo/test-inter-pixel.cc (oln/r/27_test-inter 1.2 604))
+  (olena/tests/topo/test-cmap.cc (oln/r/28_test-cmap. 1.2 604))
+  (olena/oln/topo/cmap-functor.hh (oln/r/29_cmap-funct 1.2 604))
+  (olena/oln/topo/cmap-functor.hxx (oln/r/30_cmap-funct 1.2 604))
+  (olena/oln/topo/inter-pixel.hxx (oln/r/31_inter-pixe 1.2 600))
+  (olena/oln/topo/cmap.hxx (oln/r/32_cmap.hxx 1.2 600))
+  (olena/oln/topo/union.hh (oln/r/33_union.hh 1.2 600))
+  (olena/oln/topo/inter-pixel.hh (oln/r/34_inter-pixe 1.2 600))
+  (olena/oln/topo/flat-zone.hh (oln/r/35_flat-zone. 1.2 600))
+  (olena/oln/topo/cmap.hh (oln/r/36_cmap.hh 1.2 600))
+
+;; Files added by populate at Thu, 20 Mar 2003 18:06:35 +0100,
+;; to version 8.22(w), by sylvain:
+
+  (olena/tests/topo/test.sh (oln/r/37_test.sh 1.1 700))
+  (olena/tests/topo/test-cmap.ref (oln/r/38_test-cmap. 1.1 604))
+  (olena/tests/topo/test-inter-pixel.ref (oln/r/39_test-inter 1.1 604))
+  (olena/img/test-cmap.pgm (oln/r/40_test-cmap. 1.1 604) :no-keywords)
+  (metalic/tests/check/defs (oln/r/41_defs 1.1 604))
+  (integre/tests/check/defs (oln/r/42_defs 1.1 604))
 )
 (Merge-Parents)
 (New-Merge-Parents)

@@ -19,12 +19,14 @@ check()
 {
   bool fail = false;
 
-  image2d<int_u8> src = load(rdata("lena128.pgm"));
+  image2d<int_u8> src = load(rdata("test-cmap.pgm"));
 
-  std::cout << "building inter-pixel representation ... " << std::flush;
+  std::cerr << "building inter-pixel representation ... " << std::endl;
   interpixel< image2d<int_u8> > ip(src);
 
-  std::cout << "OK" << std::endl;
+  std::cerr << ip << std::endl;
+
+  std::cerr << "OK" << std::endl;
 
   return fail;
 }

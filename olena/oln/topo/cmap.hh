@@ -25,21 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef TOPO_CMAP_CMAP_HH
-# define TOPO_CMAP_CMAP_HH
-
-# include <set>
-
-# include <oln/basics2d.hh>
-# include <ntg/all.hh>
-
-# include <algorithm>
-# include <functional>
-# include <iterator>
+#ifndef OLENA_TOPO_CMAP_CMAP_HH
+# define OLENA_TOPO_CMAP_CMAP_HH
 
 # include <oln/topo/inter-pixel.hh>
 # include <oln/topo/flat-zone.hh>
 # include <oln/topo/cmap-functor.hh>
+
+# include <set>
+# include <algorithm>
+# include <functional>
+# include <iterator>
 
 namespace oln {
 
@@ -54,8 +50,11 @@ namespace oln {
 	class _zeta;
       }
 
-      // Class cmap
-      // Build the combinatorial map from an image.
+      //
+      //  Class cmap<_I>
+      //
+      //////////////////////////////////
+
       template <class _I>
       class cmap
       {
@@ -93,7 +92,7 @@ namespace oln {
 	  std::vector<unsigned>::iterator it = known_labels.begin();
 	  for (++it; it != known_labels.end(); ++it)
 	    {
-	      point2d p = _fz.get_root(*it);
+	      point_t p = _fz.get_root(*it);
 
 	      while (_ip.find_inside_node(p, *it))
 		_build_level(known_labels, mark, *it, p);
@@ -228,7 +227,7 @@ namespace oln {
 
       private:
 
-	flat_zone<_I> _fz;
+	tarjan::flat_zone<_I> _fz;
 	boundary::interpixel<_I> _ip;
 
 	unsigned _nlabels;
@@ -251,12 +250,12 @@ namespace oln {
 	void _build_level(std::vector<unsigned> & known_labels,
 			  std::vector<bool> & mark,
 			  const unsigned moth = 1,
-			  const point2d p = point2d(0,0))
+			  const point_t p = point_t(0,0))
 	{
 	  static zeta_t zeta(_ip.size());
 
-	  std::list<point2d> acc;
-	  std::list<point2d>::iterator it;
+	  std::list<point_t> acc;
+	  typename std::list<point_t>::iterator it;
 
 	  cycle_t dir = 0;
 	  do
@@ -264,7 +263,7 @@ namespace oln {
 	      break;
 	  while (++dir);
 
-	  point2d n1 = _ip.folw(p, dir);
+	  point_t n1 = _ip.folw(p, dir);
 
 	  zeta[n1] = internal::_zeta<T>(dir);
 	  acc.push_back(n1);
@@ -280,7 +279,7 @@ namespace oln {
 		  if (_ip[n1].get(dir) && !zeta[n1][dir])
 		    {
 		      zeta[n1][dir] = ++_ndarts;
-		      point2d n2 = _ip.folw(n1, dir);
+		      point_t n2 = _ip.folw(n1, dir);
 
 		      if (zeta[n2] == internal::_zeta<T>::null())
 			{
@@ -431,4 +430,4 @@ operator<<(std::ostream & ostr,
 
 # include <oln/topo/cmap.hxx>
 
-#endif // !TOPO_CMPA_CMAP_HH
+#endif // !OLENA_TOPO_CMPA_CMAP_HH

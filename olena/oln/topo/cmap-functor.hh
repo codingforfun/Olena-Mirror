@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef TOPO_CMAP_INTERNAL_FUNCTOR_HH
-# define TOPO_CMAP_INTERNAL_FUNCTOR_HH
+#ifndef OLENA_TOPO_CMAP_INTERNAL_FUNCTOR_HH
+# define OLENA_TOPO_CMAP_INTERNAL_FUNCTOR_HH
 
 #include <mlc/contract.hh>
 
@@ -318,8 +318,11 @@ namespace oln {
 	};
 
       } // end internal
+
     } // end cmap
+
   } // end topo
+
 } // end oln
 
 template <class U, class V, class Inf>
@@ -329,4 +332,4 @@ operator<<(std::ostream & ostr,
 
 # include <oln/topo/cmap-functor.hxx>
 
-#endif // !TOPO_CMAP_INTERNAL_FUNCTOR_HH
+#endif // !OLENA_TOPO_CMAP_INTERNAL_FUNCTOR_HH

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef TOPO_CMAP_INTERNAL_FUNCTOR_HXX
-# define TOPO_CMAP_INTERNAL_FUNCTOR_HXX
+#ifndef OLENA_TOPO_CMAP_INTERNAL_CMAP_FUNCTOR_HXX
+# define OLENA_TOPO_CMAP_INTERNAL_CMAP_FUNCTOR_HXX
 
 using namespace oln::topo::cmap::internal;
 
@@ -41,4 +41,4 @@ operator<<(std::ostream &ostr, const anyfunc<U, V, Inferior> & f)
   return f.self().print(ostr);
 }
 
-#endif // !TOPO_CMAP_INTERNAL_FUNCTOR_HXX
+#endif // !OLENA_TOPO_CMAP_INTERNAL_CMAP_FUNCTOR_HXX
