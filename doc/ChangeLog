@@ -1,5 +1,10 @@
 2002-06-05  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
+	* doc/Makefile.am (noinst_DATA): Add oln-ref.pdf and oln-ref.ps,
+	remove oln-ref.dvi.
+
+2002-06-05  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
 	* configure.ac: Check for getdefs, hevea, and texi2dvi.
 	Don't check for texi2pdf and texi2html (unused).
 	Use AC_CHECK_PROGS instead of AC_PATH_PROG.

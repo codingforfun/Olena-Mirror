@@ -1,4 +1,4 @@
-noinst_DATA = oln-ref.dvi html/oln-ref.html
+noinst_DATA = oln-ref.ps oln-ref.pdf html/oln-ref.html
 
 tex_TEX = oln-ref.tex
 oln_ref_TEX = ref-morpho.tex ref-level.tex

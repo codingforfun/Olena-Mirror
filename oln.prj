@@ -1,16 +1,17 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_4 8)
-(Parent-Version oln 0_4 7)
+(Project-Version oln 0_4 9)
+(Parent-Version oln 0_4 8)
 (Version-Log "2002-06-05  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-	* Makefile.am (EXTRA_DIST): Remove doc/doc/oln-ref.info.
+	* doc/Makefile.am (noinst_DATA): Add oln-ref.pdf and oln-ref.ps,
+	remove oln-ref.dvi.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 05 Jun 2002 10:41:58 +0200")
-(Checkin-Login duret_g)
+(Checkin-Time "Wed, 05 Jun 2002 10:45:19 +0200")
+(Checkin-Login adl)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
                   "\\.o$"
@@ -290,9 +291,9 @@
   (doc/tpl/processing.tpl (oln/d/48_processing 1.8 644))
   (doc/img/object.pbm (oln/d/49_object.pbm 1.1 644))
 
-  (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.8 644))
+  (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.9 644))
   (doc/Makefile.am (oln/e/0_Makefile.a 1.1 644))
-  (doc/ChangeLog (oln/e/1_ChangeLog 1.13 644))
+  (doc/ChangeLog (oln/e/1_ChangeLog 1.14 644))
 
 ;; Files added by populate at Sat, 12 Jan 2002 17:28:39 +0100,
 ;; to version 0_2.5(w), by adl:
@@ -305,7 +306,7 @@
   (doc/configure (oln/e/3_configure 1.7 755))
   (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.5 644))
   (doc/Makefile.in (oln/e/5_Makefile.i 1.7 644))
-  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.10 644))
+  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.11 644))
   (configure (oln/e/7_configure 1.10 755))
   (aclocal.m4 (oln/e/8_aclocal.m4 1.7 644))
   (Makefile.in (oln/e/9_Makefile.i 1.11 644))
