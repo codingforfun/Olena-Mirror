@@ -1,34 +1,20 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln cleanup 12)
-(Parent-Version oln cleanup 11)
-(Version-Log "Index: doc/ChangeLog
+(Project-Version oln cleanup 13)
+(Parent-Version oln cleanup 12)
+(Version-Log "Index: ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* demo/tour.cc: Replace <oln/types/ by ntg/.
-	* dev/srctree.texi: Remove reference to oln/types.
-
-Index: tools/ChangeLog
+	* configure.ac: Adapt to types tests move.
+Index: metalic/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* utilities/morpho/morpho_template.cc,
-	utilities/morpho/morpho_template_extrema.cc,
-	utilities/morpho/morpho_template_gaussian.cc,
-	utilities/morpho/morpho_template_watershed.cc,
-	utilities/morpho/morpho_template_with_functor.cc,
-	utilities/morpho/morpho_template_with_neighb.cc,
-	utilities/morpho/morpho_template_with_twowin.cc,
-	utilities/mosaic.cc: Replace <oln/types by <ntg/.
-
-Index: tools/swilena/ChangeLog
+	* tests/check/defs.in: Remove.
+Index: oln/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* swilena/python/typedefs.hh, swilena/src/swilena_dim.i,
-	swilena/src/swilena_types.i: Replace <oln/types by <ntg/.
+	* tests/types: Move into ../integre/tests/.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sat, 01 Mar 2003 14:32:04 +0100")
+(Checkin-Time "Sat, 01 Mar 2003 15:25:33 +0100")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -111,9 +97,9 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.2 640))
-  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.2 640))
-  (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.20.1.4.1.2 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.3 640))
+  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.3 640))
+  (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.20.1.4.1.3 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.25 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.3 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.3 640))
@@ -127,7 +113,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (cleanup.sh (oln/o/29_cleanup.sh 1.4 750))
 
-  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.2 640))
+  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.3 640))
 
   (doc/demo/image.cc (oln/d/46_image.cc 1.3 640))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.14 640))
@@ -434,7 +420,6 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (oln/tests/convol/slow_sum_2d_2.cc (oln/f/40_slow_sum_2 1.2.1.3 640))
   (oln/tests/convol/sobel_gradient.cc (oln/f/45_sobel_grad 1.3.1.3 640))
   (oln/tests/convol/sum_on_random.pgm (oln/f/42_sum_on_ran 1.1 640) :no-keywords)
-  (metalic/tests/check/defs.in (oln/f/49_defs.in 1.14 600))
   (oln/tests/io/2d.cc (oln/e/47_2d.cc 1.5 640))
   (oln/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.7.1.2 640))
   (oln/tests/io/Makefile.am (oln/e/49_Makefile.a 1.12 640))
@@ -462,81 +447,81 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (oln/tests/transforms/fft.cc (oln/i/37_fft.cc 1.6.1.2 640))
   (oln/tests/transforms/Makefile.am (oln/i/40_Makefile.a 1.8 640))
 ;;  (oln/tests/transforms/output () :directory)
-  (oln/tests/types/Makefile.am (oln/h/5_Makefile.a 1.6 640))
-  (oln/tests/types/runtests (oln/h/3_runtests 1.14.1.2 750))
-  (oln/tests/types/tests/bin1 (oln/i/28_bin1 1.1 640))
-  (oln/tests/types/tests/bin2 (oln/o/42_bin2 1.2 640))
-  (oln/tests/types/tests/bin3 (oln/o/46_bin3 1.1 640))
-  (oln/tests/types/tests/comp1 (oln/h/9_comp1 1.1 640))
-  (oln/tests/types/tests/comp2 (oln/h/8_comp2 1.1 640))
-  (oln/tests/types/tests/comp3 (oln/h/7_comp3 1.1 640))
-  (oln/tests/types/tests/conv1 (oln/g/49_conv1 1.2 640))
-  (oln/tests/types/tests/conv2 (oln/g/42_conv2 1.2 640))
-  (oln/tests/types/tests/cplx1 (oln/i/2_cplx1 1.1 640))
-  (oln/tests/types/tests/cplx2 (oln/i/1_cplx2 1.1 640))
-  (oln/tests/types/tests/cplx3 (oln/i/0_cplx3 1.1 640))
-  (oln/tests/types/tests/cplx4 (oln/h/51_cplx4 1.1 640))
-  (oln/tests/types/tests/cplx5 (oln/i/7_cplx5 1.1 640))
-  (oln/tests/types/tests/cplx6 (oln/i/6_cplx6 1.3 640))
-  (oln/tests/types/tests/float1 (oln/h/12_float1 1.1 640))
-  (oln/tests/types/tests/float2 (oln/h/40_float2 1.1 640))
-  (oln/tests/types/tests/float_c1 (oln/h/13_float_c1 1.1 640))
-  (oln/tests/types/tests/float_r1 (oln/h/10_float_r1 1.2 640))
-  (oln/tests/types/tests/float_r2 (oln/h/11_float_r2 1.1 640))
-  (oln/tests/types/tests/int1b (oln/g/48_int1b 1.1 640))
-  (oln/tests/types/tests/int1 (oln/h/1_int1 1.1 640))
-  (oln/tests/types/tests/int2 (oln/h/0_int2 1.1 640))
-  (oln/tests/types/tests/int3 (oln/g/51_int3 1.1 640))
-  (oln/tests/types/tests/int4b (oln/h/35_int4b 1.1 640))
-  (oln/tests/types/tests/int4 (oln/g/50_int4 1.1 640))
-  (oln/tests/types/tests/int5 (oln/g/47_int5 1.1 640))
-  (oln/tests/types/tests/int6b (oln/g/45_int6b 1.1 640))
-  (oln/tests/types/tests/int6c (oln/g/44_int6c 1.1 640))
-  (oln/tests/types/tests/int6d (oln/g/43_int6d 1.1 640))
-  (oln/tests/types/tests/int6 (oln/g/46_int6 1.1 640))
-  (oln/tests/types/tests/int7 (oln/h/14_int7 1.1 640))
-  (oln/tests/types/tests/int_s1 (oln/g/40_int_s1 1.1 640))
-  (oln/tests/types/tests/int_s2b (oln/g/38_int_s2b 1.1 640))
-  (oln/tests/types/tests/int_s2 (oln/g/39_int_s2 1.1 640))
-  (oln/tests/types/tests/int_sc1 (oln/g/37_int_sc1 1.2 640))
-  (oln/tests/types/tests/int_sc2 (oln/g/36_int_sc2 1.1 640))
-  (oln/tests/types/tests/int_sc3 (oln/g/35_int_sc3 1.1 640))
-  (oln/tests/types/tests/int_sc4 (oln/h/39_int_sc4 1.2 640))
-  (oln/tests/types/tests/int_u1 (oln/h/22_int_u1 1.1 640))
-  (oln/tests/types/tests/int_u2a (oln/h/17_int_u2a 1.1 640))
-  (oln/tests/types/tests/int_u2b (oln/h/20_int_u2b 1.1 640))
-  (oln/tests/types/tests/int_u2c (oln/h/21_int_u2c 1.1 640))
-  (oln/tests/types/tests/int_u2d (oln/h/16_int_u2d 1.1 640))
-  (oln/tests/types/tests/int_u2e (oln/h/38_int_u2e 1.1 640))
-  (oln/tests/types/tests/int_u2f (oln/h/41_int_u2f 1.1 640))
-  (oln/tests/types/tests/int_u3a (oln/h/18_int_u3a 1.1 640))
-  (oln/tests/types/tests/int_u3b (oln/h/23_int_u3b 1.1 640))
-  (oln/tests/types/tests/int_u4 (oln/h/19_int_u4 1.1 640))
-  (oln/tests/types/tests/int_u6 (oln/h/37_int_u6 1.2 640))
-  (oln/tests/types/tests/op1 (oln/h/15_op1 1.2 640))
-  (oln/tests/types/tests/op2 (oln/h/6_op2 1.2 640))
-  (oln/tests/types/tests/optrait1a (oln/h/25_optrait1a 1.1 640))
-  (oln/tests/types/tests/optrait1b (oln/h/26_optrait1b 1.1 640))
-  (oln/tests/types/tests/optrait2a (oln/h/28_optrait2a 1.1 640))
-  (oln/tests/types/tests/optrait2b (oln/h/27_optrait2b 1.1 640))
-  (oln/tests/types/tests/optrait3 (oln/h/24_optrait3 1.2 640))
-  (oln/tests/types/tests/range1 (oln/h/34_range1 1.1 640))
-  (oln/tests/types/tests/range2b (oln/h/36_range2b 1.1 640))
-  (oln/tests/types/tests/range2 (oln/h/33_range2 1.1 640))
-  (oln/tests/types/tests/range3b (oln/h/32_range3b 1.1 640))
-  (oln/tests/types/tests/range3c (oln/h/30_range3c 1.1 640))
-  (oln/tests/types/tests/range3d (oln/h/29_range3d 1.1 640))
-  (oln/tests/types/tests/range3 (oln/h/31_range3 1.1 640))
-  (oln/tests/types/tests/sizes (oln/i/15_sizes 1.1 640))
-  (oln/tests/types/tests/unsafe1 (oln/h/2_unsafe1 1.1 640))
-  (oln/tests/types/tests/unsafe2 (oln/g/41_unsafe2 1.1 640))
-  (oln/tests/types/tests/vec1 (oln/h/49_vec1 1.1 640))
-  (oln/tests/types/tests/vec2 (oln/h/48_vec2 1.1 640))
-  (oln/tests/types/tests/vec3 (oln/h/47_vec3 1.1 640))
-  (oln/tests/types/tests/vec4 (oln/h/46_vec4 1.1 640))
-  (oln/tests/types/tests/vec5 (oln/h/45_vec5 1.2 640))
-  (oln/tests/types/tests/vec6 (oln/h/44_vec6 1.1 640))
-  (oln/tests/types/tests/vec7 (oln/h/50_vec7 1.1 640))
+  (integre/tests/types/Makefile.am (oln/h/5_Makefile.a 1.7 640))
+  (integre/tests/types/runtests (oln/h/3_runtests 1.14.1.2 750))
+  (integre/tests/types/tests/bin1 (oln/i/28_bin1 1.1 640))
+  (integre/tests/types/tests/bin2 (oln/o/42_bin2 1.2 640))
+  (integre/tests/types/tests/bin3 (oln/o/46_bin3 1.1 640))
+  (integre/tests/types/tests/comp1 (oln/h/9_comp1 1.1 640))
+  (integre/tests/types/tests/comp2 (oln/h/8_comp2 1.1 640))
+  (integre/tests/types/tests/comp3 (oln/h/7_comp3 1.1 640))
+  (integre/tests/types/tests/conv1 (oln/g/49_conv1 1.2 640))
+  (integre/tests/types/tests/conv2 (oln/g/42_conv2 1.2 640))
+  (integre/tests/types/tests/cplx1 (oln/i/2_cplx1 1.1 640))
+  (integre/tests/types/tests/cplx2 (oln/i/1_cplx2 1.1 640))
+  (integre/tests/types/tests/cplx3 (oln/i/0_cplx3 1.1 640))
+  (integre/tests/types/tests/cplx4 (oln/h/51_cplx4 1.1 640))
+  (integre/tests/types/tests/cplx5 (oln/i/7_cplx5 1.1 640))
+  (integre/tests/types/tests/cplx6 (oln/i/6_cplx6 1.3 640))
+  (integre/tests/types/tests/float1 (oln/h/12_float1 1.1 640))
+  (integre/tests/types/tests/float2 (oln/h/40_float2 1.1 640))
+  (integre/tests/types/tests/float_c1 (oln/h/13_float_c1 1.1 640))
+  (integre/tests/types/tests/float_r1 (oln/h/10_float_r1 1.2 640))
+  (integre/tests/types/tests/float_r2 (oln/h/11_float_r2 1.1 640))
+  (integre/tests/types/tests/int1b (oln/g/48_int1b 1.1 640))
+  (integre/tests/types/tests/int1 (oln/h/1_int1 1.1 640))
+  (integre/tests/types/tests/int2 (oln/h/0_int2 1.1 640))
+  (integre/tests/types/tests/int3 (oln/g/51_int3 1.1 640))
+  (integre/tests/types/tests/int4b (oln/h/35_int4b 1.1 640))
+  (integre/tests/types/tests/int4 (oln/g/50_int4 1.1 640))
+  (integre/tests/types/tests/int5 (oln/g/47_int5 1.1 640))
+  (integre/tests/types/tests/int6b (oln/g/45_int6b 1.1 640))
+  (integre/tests/types/tests/int6c (oln/g/44_int6c 1.1 640))
+  (integre/tests/types/tests/int6d (oln/g/43_int6d 1.1 640))
+  (integre/tests/types/tests/int6 (oln/g/46_int6 1.1 640))
+  (integre/tests/types/tests/int7 (oln/h/14_int7 1.1 640))
+  (integre/tests/types/tests/int_s1 (oln/g/40_int_s1 1.1 640))
+  (integre/tests/types/tests/int_s2b (oln/g/38_int_s2b 1.1 640))
+  (integre/tests/types/tests/int_s2 (oln/g/39_int_s2 1.1 640))
+  (integre/tests/types/tests/int_sc1 (oln/g/37_int_sc1 1.2 640))
+  (integre/tests/types/tests/int_sc2 (oln/g/36_int_sc2 1.1 640))
+  (integre/tests/types/tests/int_sc3 (oln/g/35_int_sc3 1.1 640))
+  (integre/tests/types/tests/int_sc4 (oln/h/39_int_sc4 1.2 640))
+  (integre/tests/types/tests/int_u1 (oln/h/22_int_u1 1.1 640))
+  (integre/tests/types/tests/int_u2a (oln/h/17_int_u2a 1.1 640))
+  (integre/tests/types/tests/int_u2b (oln/h/20_int_u2b 1.1 640))
+  (integre/tests/types/tests/int_u2c (oln/h/21_int_u2c 1.1 640))
+  (integre/tests/types/tests/int_u2d (oln/h/16_int_u2d 1.1 640))
+  (integre/tests/types/tests/int_u2e (oln/h/38_int_u2e 1.1 640))
+  (integre/tests/types/tests/int_u2f (oln/h/41_int_u2f 1.1 640))
+  (integre/tests/types/tests/int_u3a (oln/h/18_int_u3a 1.1 640))
+  (integre/tests/types/tests/int_u3b (oln/h/23_int_u3b 1.1 640))
+  (integre/tests/types/tests/int_u4 (oln/h/19_int_u4 1.1 640))
+  (integre/tests/types/tests/int_u6 (oln/h/37_int_u6 1.2 640))
+  (integre/tests/types/tests/op1 (oln/h/15_op1 1.2 640))
+  (integre/tests/types/tests/op2 (oln/h/6_op2 1.2 640))
+  (integre/tests/types/tests/optrait1a (oln/h/25_optrait1a 1.1 640))
+  (integre/tests/types/tests/optrait1b (oln/h/26_optrait1b 1.1 640))
+  (integre/tests/types/tests/optrait2a (oln/h/28_optrait2a 1.1 640))
+  (integre/tests/types/tests/optrait2b (oln/h/27_optrait2b 1.1 640))
+  (integre/tests/types/tests/optrait3 (oln/h/24_optrait3 1.2 640))
+  (integre/tests/types/tests/range1 (oln/h/34_range1 1.1 640))
+  (integre/tests/types/tests/range2b (oln/h/36_range2b 1.1 640))
+  (integre/tests/types/tests/range2 (oln/h/33_range2 1.1 640))
+  (integre/tests/types/tests/range3b (oln/h/32_range3b 1.1 640))
+  (integre/tests/types/tests/range3c (oln/h/30_range3c 1.1 640))
+  (integre/tests/types/tests/range3d (oln/h/29_range3d 1.1 640))
+  (integre/tests/types/tests/range3 (oln/h/31_range3 1.1 640))
+  (integre/tests/types/tests/sizes (oln/i/15_sizes 1.1 640))
+  (integre/tests/types/tests/unsafe1 (oln/h/2_unsafe1 1.1 640))
+  (integre/tests/types/tests/unsafe2 (oln/g/41_unsafe2 1.1 640))
+  (integre/tests/types/tests/vec1 (oln/h/49_vec1 1.1 640))
+  (integre/tests/types/tests/vec2 (oln/h/48_vec2 1.1 640))
+  (integre/tests/types/tests/vec3 (oln/h/47_vec3 1.1 640))
+  (integre/tests/types/tests/vec4 (oln/h/46_vec4 1.1 640))
+  (integre/tests/types/tests/vec5 (oln/h/45_vec5 1.2 640))
+  (integre/tests/types/tests/vec6 (oln/h/44_vec6 1.1 640))
+  (integre/tests/types/tests/vec7 (oln/h/50_vec7 1.1 640))
 
   (prj (oln.prj) :symlink)
 
@@ -808,8 +793,8 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 ;; Files added by populate at Sat, 01 Mar 2003 13:18:48 +0100,
 ;; to version cleanup.10(w), by nes:
 
-  (integre/Makefile.am (oln/q/34_Makefile.a 1.1 640))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.1 640))
+  (integre/Makefile.am (oln/q/34_Makefile.a 1.2 640))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.2 640))
   (integre/ntg/Makefile.am (oln/q/36_Makefile.a 1.1 640))
 
 ;; Files added by populate at Sat, 01 Mar 2003 13:19:17 +0100,
@@ -819,6 +804,12 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (oln/tests/check/Makefile.am (oln/q/38_Makefile.a 1.1 600))
   (oln/tests/check/Makefile.flags (oln/q/39_Makefile.f 1.1 600))
   (oln/tests/check/Makefile.check (oln/q/40_Makefile.c 1.1 600))
+
+;; Files added by populate at Sat, 01 Mar 2003 15:16:03 +0100,
+;; to version cleanup.12(w), by nes:
+
+  (integre/tests/Makefile.am (oln/q/41_Makefile.a 1.1 600))
+  (integre/tests/check/defs.in (oln/q/42_defs.in 1.1 600))
 )
 (Merge-Parents)
 (New-Merge-Parents)

@@ -1,5 +1,9 @@
 2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* configure.ac: Adapt to types tests move.
+
+2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
 	* lib/check/Makefile.am, lib/check/Makefile.check,
 	lib/check/Makefile.flags, lib/check/defs.in, lib/check/compile.cc,
 	lib/check/compile.hh, lib/check/check.hh, lib/check/main.cc,

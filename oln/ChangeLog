@@ -1,5 +1,9 @@
 2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* tests/types: Move into ../integre/tests/.
+
+2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
 	* tests/check/defs.in, tests/check/Makefile.am,
 	tests/check/Makefile.check, tests/check/Makefile.flags: New
 	directory.

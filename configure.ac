@@ -31,13 +31,16 @@ AC_CXX_FLAGS
 AC_CONFIG_FILES([Makefile
 		 integre/Makefile
 		 integre/ntg/Makefile
+		 integre/tests/Makefile
+		 integre/tests/check/defs
+		 integre/tests/types/Makefile
                  metalic/Makefile 
                  metalic/mlc/Makefile
                  metalic/tests/Makefile
                  metalic/tests/array/Makefile
                  metalic/tests/check/Makefile
-                 oln/Makefile 
-		 oln/img/Makefile 
+		 oln/Makefile
+		 oln/img/Makefile
 		 oln/oln/config/pconf.hh:oln/oln/config/pconf-hh.in])
 
 ### Olena components.
@@ -112,7 +115,7 @@ OLN_COLLECTION([OLN_TOP],
                      [oln_cv_tests_selection],
                      [AC_ARG_WITH([tests],
     	                          [AC_HELP_STRING([--with-tests=<list>],
-                                                  [none,all,convert,convol,io,morpho,sanity,transforms,types])],
+                                                  [none,all,convert,convol,io,morpho,sanity,transforms])],
                                   [oln_cv_tests_selection=$withval],
                                   [oln_cv_tests_selection=all])dnl
                      ])dnl
@@ -126,7 +129,6 @@ OLN_COLLECTION([OLN_TOP],
       OLN_TESTS([morpho])
       OLN_TESTS([sanity])
       OLN_TESTS([transforms])
-      OLN_TESTS([types])
 
       AC_SUBST([OLN_TESTS_SUBDIRS])
 

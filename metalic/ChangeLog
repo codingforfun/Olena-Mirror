@@ -1,5 +1,9 @@
 2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* tests/check/defs.in: Remove.
+
+2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
 	* tests/Makefile.am: Add check directory.
 
 	* tests/array/Makefile.am: Adapt to new tests location.
