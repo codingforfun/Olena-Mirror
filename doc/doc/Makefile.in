@@ -110,11 +110,14 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-noinst_DATA = oln-ref.ps oln-ref.pdf html/oln-ref.html oln-dev.pdf
+noinst_DATA = oln-ref.ps oln-ref.pdf html/oln-ref.html \
+	      oln-dev.ps oln-dev.pdf
+
 
 info_TEXINFOS = oln-dev.texi
 
 tex_TEX = oln-ref.tex
+
 built_oln_ref_TEX = \
   ref-morpho.tex \
   ref-level.tex

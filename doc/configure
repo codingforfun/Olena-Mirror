@@ -2884,7 +2884,7 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
 
 
-for ac_header in limits sdl_config.h
+for ac_header in limits stl_config.h
 do
 as_ac_Header=`echo "ac_cv_header_$ac_header" | $as_tr_sh`
 if eval "test \"\${$as_ac_Header+set}\" = set"; then
