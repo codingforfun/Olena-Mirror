@@ -72,9 +72,11 @@ am__include = @am__include@
 am__quote = @am__quote@
 install_sh = @install_sh@
 
-AUTOMAKE_OPTIONS = foreign dist-bzip2 1.5a
+AUTOMAKE_OPTIONS = foreign dist-bzip2 1.5b
 SUBDIRS = src demo
-EXTRA_DIST = img/lena.pgm ISSUES
+EXTRA_DIST = img/lena.pgm ISSUES \
+  doc/doc/oln-ref.pdf doc/doc/oln-ref.ps doc/doc/html
+
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 mkinstalldirs = $(SHELL) $(top_srcdir)/tools/mkinstalldirs
@@ -219,15 +221,18 @@ distcleancheck_listfiles = find . -type f -print
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkinstalldirs) $(distdir)/img $(distdir)/tools
+	$(mkinstalldirs) $(distdir)/doc/doc $(distdir)/img $(distdir)/tools
 	@for file in $(DISTFILES); do \
 	  if test -f $$file || test -d $$file; then d=.; else d=$(srcdir); fi; \
 	  dir=`echo "$$file" | sed -e 's,/[^/]*$$,,'`; \
 	  if test "$$dir" != "$$file" && test "$$dir" != "."; then \
-	    $(mkinstalldirs) "$(distdir)/$$dir"; \
+	    dir="/$$dir"; \
+	    $(mkinstalldirs) "$(distdir)$$dir"; \
+	  else \
+	    dir=''; \
 	  fi; \
 	  if test -d $$d/$$file; then \
-	    cp -pR $$d/$$file $(distdir) \
+	    cp -pR $$d/$$file $(distdir)$$dir \
 	    || exit 1; \
 	  else \
 	    test -f $(distdir)/$$file \

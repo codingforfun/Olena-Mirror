@@ -1,20 +1,12 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_2 9)
-(Parent-Version oln 0_2 8)
-(Version-Log "2002-01-13  Alexandre Duret-Lutz  <duret_g@epita.fr>
-
-	* doc/Makefile.am (.texi.pdf): Depend on version.texi.
-	(all-local, install-data-local, installdirs-local,
-	uninstall-local): Always build ps and pdf.
-	* doc/tpl/processing.tpl: Use @flushleft instead of @example.
-	* doc/doc/oln-ref.texi (Introduction): New.
-
-")
+(Project-Version oln 0_2 10)
+(Parent-Version oln 0_2 9)
+(Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Sun, 13 Jan 2002 16:59:11 +0100")
-(Checkin-Login adl)
+(Checkin-Time "Sun, 13 Jan 2002 18:32:41 +0100")
+(Checkin-Login duret_g)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
                   "\\.o$"
@@ -66,11 +58,11 @@
 
   (NEWS (oln/0_NEWS 1.1 644))
   (README (oln/1_README 1.2 644))
-  (Makefile.am (oln/2_Makefile.a 1.2 644))
+  (Makefile.am (oln/2_Makefile.a 1.3 644))
   (configure.ac (oln/3_configure. 1.1 644))
   (THANKS (oln/4_THANKS 1.1 644))
   (img/lena.pgm (oln/5_lena.pgm 1.1 640) :no-keywords)
-  (ChangeLog (oln/6_ChangeLog 1.4 644))
+  (ChangeLog (oln/6_ChangeLog 1.5 644))
   (src/config/system.hh (oln/7_system.hh 1.1 644))
   (src/utils/timer.hh (oln/8_timer.hh 1.1 644))
   (src/utils/stat.hh (oln/9_stat.hh 1.2 644))
@@ -277,12 +269,12 @@
 ;; Files added by populate at Sat, 12 Jan 2002 17:25:43 +0100,
 ;; to version 0_2.4(w), by adl:
 
-  (doc/tpl/processing.tpl (oln/d/48_processing 1.2 644))
+  (doc/tpl/processing.tpl (oln/d/48_processing 1.3 644))
   (doc/img/object.pbm (oln/d/49_object.pbm 1.1 644))
   (doc/doc/oln-ref.texi (oln/d/50_oln-ref.te 1.2 644))
-  (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.2 644))
+  (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.3 644))
   (doc/Makefile.am (oln/e/0_Makefile.a 1.1 644))
-  (doc/ChangeLog (oln/e/1_ChangeLog 1.3 644))
+  (doc/ChangeLog (oln/e/1_ChangeLog 1.4 644))
 
 ;; Files added by populate at Sat, 12 Jan 2002 17:28:39 +0100,
 ;; to version 0_2.5(w), by adl:
@@ -294,24 +286,29 @@
 
   (doc/configure (oln/e/3_configure 1.1 755))
   (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.1 644))
-  (doc/Makefile.in (oln/e/5_Makefile.i 1.2 644))
-  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.2 644))
+  (doc/Makefile.in (oln/e/5_Makefile.i 1.3 644))
+  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.3 644))
   (configure (oln/e/7_configure 1.1 755))
   (aclocal.m4 (oln/e/8_aclocal.m4 1.1 644))
-  (Makefile.in (oln/e/9_Makefile.i 1.2 644))
+  (Makefile.in (oln/e/9_Makefile.i 1.3 644))
   (tools/texinfo.tex (oln/e/10_texinfo.te 1.2 644))
   (tools/mdate-sh (oln/e/11_mdate-sh 1.1 755))
   (tools/depcomp (oln/e/12_depcomp 1.1 755))
   (tools/missing (oln/e/13_missing 1.1 755))
   (tools/mkinstalldirs (oln/e/14_mkinstalld 1.1 755))
   (tools/install-sh (oln/e/15_install-sh 1.1 755))
-  (demo/Makefile.in (oln/e/16_Makefile.i 1.1 644))
-  (src/Makefile.in (oln/e/17_Makefile.i 1.1 644))
+  (demo/Makefile.in (oln/e/16_Makefile.i 1.2 644))
+  (src/Makefile.in (oln/e/17_Makefile.i 1.2 644))
 
 ;; Files added by populate at Sun, 13 Jan 2002 12:33:06 +0100,
 ;; to version 0_2.7(w), by adl:
 
   (tools/ChangeLog (oln/e/18_ChangeLog 1.1 644))
+
+;; Files added by populate at Sun, 13 Jan 2002 17:05:59 +0100,
+;; to version 0_2.9(w), by adl:
+
+  (doc/doc/html () :directory)
 )
 (Merge-Parents)
 (New-Merge-Parents)

@@ -104,26 +104,26 @@ uninstall-pdf:
 TEXI2HTML = @TEXI2HTML@
 
 html-monolithic: oln-ref.html
-html-split: oln-ref_toc.html
+html-split: html/oln-ref_toc.html
 
 oln-ref.html: oln-ref.texi version.texi $(oln-ref_TEXINFOS)
 	$(TEXI2HTML) -expandinfo -number -monolithic `if test -f oln-ref.texi; then echo oln-ref.texi; else echo $(srcdir)/oln-ref.texi; fi`
 
-oln-ref_toc.html: oln-ref.texi version.texi $(oln-ref_TEXINFOS)
+html/oln-ref_toc.html: oln-ref.texi version.texi $(oln-ref_TEXINFOS)
 	case "$(TEXI2HTML)" in \
 	  *"/missing texi2html") \
-	     $(TEXI2HTML) -expandinfo -number -split_chapter `if test -f oln-ref.texi; then echo oln-ref.texi; else echo $(srcdir)/oln-ref.texi; fi` || exit 0 ;; \
+	     $(TEXI2HTML) -subdir html -expandinfo -number -split_chapter `if test -f oln-ref.texi; then echo oln-ref.texi; else echo $(srcdir)/oln-ref.texi; fi` || exit 0 ;; \
 	  *) $(RM) oln-ref_*.html ; \
-	     $(TEXI2HTML) -expandinfo -number -split_chapter `if test -f oln-ref.texi; then echo oln-ref.texi; else echo $(srcdir)/oln-ref.texi; fi` ;; \
+	     $(TEXI2HTML) -subdir html -expandinfo -number -split_chapter `if test -f oln-ref.texi; then echo oln-ref.texi; else echo $(srcdir)/oln-ref.texi; fi` ;; \
 	esac
 
 install-html-monolithic: oln-ref.html
 	$(mkinstalldirs) $(DESTDIR)$(htmldir)
 	$(INSTALL_DATA) `if test -f oln-ref.html; then echo .; else echo $(srcdir); fi`/oln-ref.html $(DESTDIR)$(htmldir)/oln-ref.html
 
-install-html-split: oln-ref_toc.html
+install-html-split: html/oln-ref_toc.html
 	$(mkinstalldirs) $(DESTDIR)$(htmldir)
-	for file in `if test -f oln-ref_toc.html; then echo .; else echo $(srcdir); fi`/oln-ref_*.html; do \
+	for file in `if test -f html/oln-ref_toc.html; then echo .; else echo $(srcdir); fi`/html/oln-ref_*.html; do \
 	  $(INSTALL_DATA) $$file $(DESTDIR)$(htmldir)/`basename $$file`; \
 	done
 

@@ -1,3 +1,8 @@
+2002-01-13  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* Makefile.am (EXTRA_DIST): Add doc/doc/oln-ref.pdf,
+	doc/doc/oln-ref.ps, and doc/doc/html.
+
 2002-01-12  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* src/core/neighborhood3d.hh (mk_win_from_neighb): New function.

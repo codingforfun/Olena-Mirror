@@ -1,5 +1,11 @@
 2002-01-13  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
+	* doc/Makefile.am (oln-ref_toc.html): Output doc in
+	html/.
+	* doc/tpl/processing.tpl: Create png files in html/
+
+2002-01-13  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
 	* doc/Makefile.am (.texi.pdf): Depend on version.texi.
 	(all-local, install-data-local, installdirs-local,
 	uninstall-local): Always build ps and pdf.
