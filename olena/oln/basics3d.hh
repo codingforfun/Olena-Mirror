@@ -1,4 +1,4 @@
-// Copyright (C) 2001  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,21 +28,24 @@
 #ifndef OLENA_BASICS3D_HH
 # define OLENA_BASICS3D_HH
 
-# include "basics.hh"
+# include <oln/basics.hh>
 
-# include "core/point3d.hh"
-# include "core/dpoint3d.hh"
-# include "core/image3d.hh"
-# include "core/border3d.hh"
+# include <oln/core/point3d.hh>
+# include <oln/core/dpoint3d.hh>
+# include <oln/core/image3d.hh>
+//# include <oln/core/border3d.hh>
 
-# include "core/window3d.hh"
-# include "core/w_window3d.hh"
-# include "core/neighborhood3d.hh"
+# include <oln/core/window3d.hh>
+# include <oln/core/w_window3d.hh>
+# include <oln/core/neighborhood3d.hh>
 
-# include "core/fwd_iter3d.hh"
-# include "core/bkd_iter3d.hh"
+# include <oln/core/fwd_iter3d.hh>
+# include <oln/core/bkd_iter3d.hh>
 
-# include "io/basics.hh"
-# include "io/pnm3d.hh"
+// FIXME: uncomment when ready
+#if 0
+# include <oln/io/basics.hh>
+# include <oln/io/pnm3d.hh>
+#endif
 
 #endif // ! OLENA_BASICS3D_HH

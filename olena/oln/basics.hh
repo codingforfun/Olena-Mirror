@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,17 +31,19 @@
 # include <oln/config/system.hh>
 
 # include <mlc/contract.hh>
-# include <oln/core/macros.hh>
 # include <mlc/type.hh>
 # include <mlc/typeadj.hh>
 
 # include <mlc/objs.hh>
 
 # include <oln/core/coord.hh>
+# include <oln/core/macros.hh>
 # include <oln/core/point.hh>
 # include <oln/core/dpoint.hh>
 # include <oln/core/image.hh>
-# include <oln/core/border.hh>
+# include <oln/core/abstract/image_with_impl.hh>
+# include <oln/core/abstract/image_with_dim.hh>
+//# include <oln/core/border.hh>
 
 # include <oln/core/window.hh>
 # include <oln/core/w_window.hh>

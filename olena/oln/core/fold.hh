@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_FOLD_HH
 # define OLENA_CORE_FOLD_HH
 
-# include <oln/core/image.hh>
+# include <oln/core/abstract/image.hh>
 # include <oln/core/iter.hh>
 # include <mlc/typeadj.hh>
 # include <oln/core/macros.hh>
@@ -36,14 +36,14 @@
 namespace oln {
 
   // Compute f(...f(f(val,i_0),i_1)...,i_n), where i_0...i_n
-  // are the value associated to each image point.
+  // are the value associated to each abstract::image point.
   template<class AdaptableBinaryFun, class I_> inline
   typename AdaptableBinaryFun::result_type
   fold(AdaptableBinaryFun f,
        // f could return a reference or a const.  Make sure VAL is assignable.
        typename mlc::typeadj<
          typename AdaptableBinaryFun::result_type>::mutable_val val,
-       const image<I_>& _input)
+       const abstract::image<I_>& _input)
   {
     // FIXME: ensure that first_argument_type == result_type.
     Exact_cref (I, input);
@@ -57,7 +57,7 @@ namespace oln {
   // Compute f(...f(f(i_0,i_1),i_2)...,i_n).
   template<class AdaptableBinaryFun, class I_> inline
   typename AdaptableBinaryFun::result_type
-  fold(AdaptableBinaryFun f, const image<I_>& _input)
+  fold(AdaptableBinaryFun f, const abstract::image<I_>& _input)
   {
     // FIXME: ensure that first_argument_type == result_type.
     Exact_cref (I, input);

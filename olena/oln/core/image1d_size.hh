@@ -36,9 +36,10 @@ namespace oln {
 
   struct image1d_size : public imagend_size< 1, image1d_size >
   {
-    image1d_size(coord ncols)
+    image1d_size(coord ncols, coord border)
     {
       nth(0) = ncols;
+      border_ = border;
     }
 
     coord ncols() const
@@ -49,8 +50,6 @@ namespace oln {
 
     static std::string name() { return "image1d_size"; }
   };
-
-  _ImageSizeForDim(1, image1d_size);
 
 } // end of oln
 

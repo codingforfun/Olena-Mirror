@@ -38,6 +38,9 @@
 
 namespace oln {
 
+  // FIXME: uncomment when ready
+#if 0
+
   // generate (generator)
 
   template<class AdaptableGen, class I> inline
@@ -59,6 +62,7 @@ namespace oln {
     for_all(p) input[p] = f();
     return input;
   }
+#endif
 
 } // end of oln
 

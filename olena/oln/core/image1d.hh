@@ -28,63 +28,78 @@
 #ifndef OLENA_CORE_IMAGE1D_HH
 # define OLENA_CORE_IMAGE1D_HH
 
-# include <oln/core/internal/real_image1d.hh>
-# include <oln/core/pred_image.hh>
-# include <ntg/bin.hh>
+# include <oln/core/impl/image_array.hh>
+// # include <oln/io/readable.hh>
+// # include <oln/core/image.hh>
+# include <oln/core/abstract/image_with_impl.hh>
 # include <iostream>
 # include <stdlib.h>
 
 namespace oln {
 
-  using ntg::bin;
+  template<class T, class E = mlc::final>
+  class image1d; // fwd_decl
+
+  template<class T, class E>
+  struct image_traits<image1d<T, E> > : public image_traits<abstract::image_with_impl<1, T, oln::impl::image_array1d<T, typename mlc::exact_vt<image1d<T, E>, E>::ret>, typename mlc::exact_vt<image1d<T, E>, E>::ret> >
+  {
+
+  };
 
   // client can use image1d; instances are real images, that is,
   // images with data ---conversely to proxy images
 
-  template<class T, class Exact = mlc::final>
-  class image1d : public internal::_real_image1d< T, typename mlc::exact_vt<image1d<T, Exact>, Exact>::ret >
+  template<class T, class E>
+  class image1d : public abstract::image_with_impl<1, T, oln::impl::image_array1d<T, typename mlc::exact_vt<image1d<T, E>, E>::ret>, typename mlc::exact_vt<image1d<T, E>, E>::ret>
   {
   public:
 
-    typedef image1d<T, Exact> self;
-    typedef internal::_real_image1d< T, typename mlc::exact_vt<image1d<T, Exact>, Exact>::ret > super;
-
+    typedef image1d<T, E> self_type;
+    typedef typename mlc::exact_vt<image1d<T, E>, E>::ret exact_type; 
+    typedef oln::impl::image_array1d<T, exact_type> impl_type;
+    typedef oln::abstract::image_with_impl<1, T, impl_type, exact_type> super_type;
+ 
     image1d() :
-      super()
+      super_type()
     {}
 
     image1d(coord ncols, coord border = 2) :
-      super(ncols, border)
-    {}
-
-    image1d(const image1d_size& size, coord border = 2) :
-      super(size, border)
-    {}
-
-    image1d(self& rhs) : // shallow copy
-      super(rhs)
-    {}
-
-    self& operator=(self rhs) // shallow assignment
+      super_type(new impl_type(image1d_size(ncols, border)),
+		 image1d_size(ncols, border))
     {
-      this->super::operator=(rhs);
-      return *this;
+      super_type::impl()->ref();
     }
 
-    self clone() const // deep copy
+    image1d(const image1d_size& size) :
+      super_type(new impl_type(size), size)
     {
-      self output(ncols(), this->border());
-      _clone_to(output.data());
-      return output;
+      super_type::impl()->ref(); 
     }
 
-    static std::string name()
-    {
-      return
-	std::string("image1d<")
-	+ T::name() + ","
-	+ Exact::name() + ">";
-    }
+    image1d(self_type& rhs) : // shallow copy
+      super_type(rhs)
+    {}
+
+//     self& operator=(self rhs) // shallow assignment
+//     {
+//       this->super::operator=(rhs);
+//       return *this;
+//     }
+
+//     self clone() const // deep copy
+//     {
+//       self output(ncols(), this->border());
+//       _clone_to(output.data());
+//       return output;
+//     }
+
+//     static std::string name()
+//     {
+//       return
+// 	std::string("image1d<")
+// 	+ T::name() + ","
+// 	+ E::name() + ">";
+//     }
 
     template<class U>
     struct mute
@@ -92,72 +107,9 @@ namespace oln {
       typedef image1d<U> ret;
     };
 
-    image1d(const self& rhs); // w/o impl
+    image1d(const self_type& rhs); // w/o impl
   };
 
-  _ImageForDim(1, image1d)
-
-  // specialization for bin data
-
-  // image1d<bin> is also a pred_image, that is, an image type that
-  // can be used as a predicate having the structure of an image
-
-
-  template<class Exact>
-  class image1d<bin, Exact> : public internal::_real_image1d< bin, typename mlc::exact_vt<image1d<bin, Exact>, Exact>::ret >,
-			      public pred_image< typename mlc::exact_vt<image1d<bin, Exact>, Exact>::ret >
-  {
-  public:
-
-    typedef image1d<bin, Exact> self;
-    typedef internal::_real_image1d< bin, typename mlc::exact_vt<image1d<bin, Exact>, Exact>::ret > super;
-    typedef pred_image< typename mlc::exact_vt<image1d<bin, Exact>, Exact>::ret > super_pred;
-
-    image1d() :
-      super()
-    {}
-
-    image1d(coord ncols, coord border = 2) :
-      super(ncols, border)
-    {}
-
-    image1d(const image1d_size& size, coord border = 2) :
-      super(size, border)
-    {}
-
-    image1d(self& rhs) : // shallow copy
-      super(rhs), super_pred()
-    {}
-
-    self& operator=(self rhs) // shallow assignment
-    {
-      super::operator=(rhs);
-      return *this;
-    }
-
-    self clone() const // deep copy
-    {
-      self output(ncols(), this->border());
-      _clone_to(output.data());
-      return output;
-    }
-
-    static std::string name()
-    {
-      return
-	std::string("image1d<")
-	+ ntg_name(bin) + ","
-	+ Exact::name() + ">";
-    }
-
-    template<class U>
-    struct mute
-    {
-      typedef image1d<U> ret;
-    };
-
-    image1d(const self& rhs); // w/o impl
-  };
 
 } // end of oln
 

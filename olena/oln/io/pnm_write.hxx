@@ -38,8 +38,6 @@ namespace oln {
   namespace io {
     namespace internal {
 
-      using oln::internal::image2d_data;
-
       template <class U, typename T>
       bool pnm_write_header(std::ostream& s, const image2d<T>& im, char type)
       {

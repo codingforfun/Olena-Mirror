@@ -455,18 +455,20 @@ AC_DEFUN([AC_CXX_FLAGS],
                    fi])
    AC_LANG_POP([C++])
 
+   # Note for gnu compilers: the -W flags warns for non explicit call
+   # to base class constructors even if there are only default constructors.
    case "$ac_cv_cxx_style" in
      GNU)
       _CXXFLAGS_DEBUG="-g"
       _CXXFLAGS_OPTIMIZE="-O3 -finline-limit-1500"
-      _CXXFLAGS_STRICT="-W -Wall -pedantic"
-      _CXXFLAGS_STRICT_ERRORS="-W -Wall -pedantic -Werror"
+      _CXXFLAGS_STRICT="-Wall -pedantic"
+      _CXXFLAGS_STRICT_ERRORS="-Wall -pedantic -Werror"
       ;;
      weakGNU)
       _CXXFLAGS_DEBUG="-g"
       _CXXFLAGS_OPTIMIZE="-O2 -felide-constructors -funroll-loops"
-      _CXXFLAGS_STRICT="-W -Wall -pedantic"
-      _CXXFLAGS_STRICT_ERRORS="-W -Wall -pedantic -Werror"
+      _CXXFLAGS_STRICT="-Wall -pedantic"
+      _CXXFLAGS_STRICT_ERRORS="-Wall -pedantic -Werror"
       ;;
      Sun)
       _CXXFLAGS_DEBUG="-g"

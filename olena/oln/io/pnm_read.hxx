@@ -78,7 +78,7 @@ namespace oln {
       struct reader<ReadPnmPlain, image2d<bin> >
       {
 	static const std::string& name()
-	{ static const std::string _name("pnm/P1"); return _name;	}
+	{ static const std::string _name("pnm/P1"); return _name; }
 
 	static bool knows_ext(const std::string& ext)
 	{ return ext == "ppbm"; }
@@ -154,7 +154,7 @@ namespace oln {
 	{
 	  if (!pnm_read_header(in, im, '4'))
 	    return false;
-	  image2d<bin>::iter it(im);
+	  image2d<bin>::iter_type it(im);
 	  coord cols = 0;
 	  unsigned bits = 0;
 	  unsigned char c = 0;

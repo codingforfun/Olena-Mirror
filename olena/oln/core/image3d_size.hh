@@ -38,11 +38,12 @@ namespace oln {
   {
   public:
 
-    image3d_size(coord nslices, coord nrows, coord ncols)
+    image3d_size(coord nslices, coord nrows, coord ncols, coord border)
     {
       nth(0) = nslices;
       nth(1) = nrows;
       nth(2) = ncols;
+      border_ = border;
     }
 
     coord nslices() const
@@ -65,8 +66,6 @@ namespace oln {
 
     static std::string name() { return "image3d_size"; }
   };
-
-  _ImageSizeForDim(3, image3d_size);
 
 } // end of oln
 

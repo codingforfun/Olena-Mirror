@@ -44,14 +44,19 @@ namespace oln {
 
     coord nth(unsigned n) const
     {
-      return _coord[n];
+      return coord_[n];
+    }
+
+    coord border() const
+    {
+      return border_;
     }
 
     template< class S >
     bool operator==(const imagend_size<Dim, S>& size) const
     {
       for (unsigned i = 0; i < Dim; ++i)
-	if (_coord[i] != size._coord[i])
+	if (coord_[i] != size.coord_[i])
 	  return false;
       return true;
     }
@@ -60,7 +65,7 @@ namespace oln {
     bool operator!=(const imagend_size<Dim, S>& size) const
     {
       for (unsigned i = 0; i < Dim; ++i)
-	if (_coord[i] != size._coord[i])
+	if (coord_[i] != size.coord_[i])
 	  return true;
       return false;
     }
@@ -76,11 +81,12 @@ namespace oln {
   protected:
     coord& nth(unsigned n)
     {
-      return _coord[n];
+      return coord_[n];
     }
-
+    coord border_;
   private:
-    coord _coord[dim];
+    coord coord_[dim];
+    
   };
 
 } // end of oln

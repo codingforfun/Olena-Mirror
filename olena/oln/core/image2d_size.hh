@@ -37,10 +37,11 @@ namespace oln {
 
   struct image2d_size : public imagend_size< 2, image2d_size >
   {
-    image2d_size(coord nrows, coord ncols)
+    image2d_size(coord nrows, coord ncols, coord border)
     {
       nth(0) = nrows;
       nth(1) = ncols;
+      border_ = border;
     }
 
     coord nrows() const
@@ -57,8 +58,6 @@ namespace oln {
 
     static std::string name() { return "image2d_size"; }
   };
-
-  _ImageSizeForDim(2, image2d_size);
 
 } // end of oln
 

@@ -1,3 +1,45 @@
+2003-07-16  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/basics1d.hh, oln/basics2d.hh, oln/basics3d.hh,
+	oln/basics.hh, oln/core/apply.hh, oln/core/bkd_iter1d.hh,
+	oln/core/bkd_iter2d.hh, oln/core/bkd_iter3d.hh,
+	oln/core/traverse.hh, oln/core/fold.hh, 
+	oln/core/generate.hh: Adjust.
+	
+	* tests/core/tests/image1: New test.
+	
+2003-02-25  David Lesage  <david@lrde.epita.fr>
+
+	Major changes, redesign the image hierarchy.
+
+	* oln/core/image1d.hh, oln/core/image1d_size.hh,
+	oln/core/image2d.hh, oln/core/image2d_size.hh,
+	oln/core/image3d.hh, oln/core/image3d_size.hh,
+	oln/core/image.hh, oln/core/imagend_size.hh: Rewrite using the
+	new design.
+
+	* oln/core/pred_image.hh: Rename as...
+	* oln/core/abstract/binary_image.hh: ...this. Rewrite 
+	using the new design.
+
+	* oln/core/abstract/image.hh,
+	oln/core/abstract/image_with_dim.hh,
+	oln/core/abstract/image_with_impl.hh,
+	oln/core/abstract/image_with_type.hh,
+	oln/core/impl/image_impl.hh, 
+	oln/core/impl/image_array.hh: New.
+
+	* oln/core/internal/image1d_data.hh,
+	oln/core/internal/image1d.hh,
+	oln/core/internal/image2d_data.hh,
+	oln/core/internal/image2d.hh,
+	oln/core/internal/image3d_data.hh,
+	oln/core/internal/image3d.hh,
+	oln/core/internal/real_image1d.hh,
+	oln/core/internal/real_image2d.hh,
+	oln/core/internal/real_image3d.hh, 
+	oln/core/regular_image.hh: Remove.
+	
 2003-07-11  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/core/internal/real_image2d.hh,

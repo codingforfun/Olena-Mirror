@@ -41,10 +41,10 @@ namespace oln
 
   // iter
 
-  template<class Exact>
-  struct iter : public mlc::any<Exact>
+  template<class E>
+  struct iter : public mlc::any<E>
   {
-    static std::string name() { return std::string("iter<") + Exact::name() + ">"; }
+    static std::string name() { return std::string("iter<") + E::name() + ">"; }
   protected:
     iter() {}
   };
@@ -52,10 +52,10 @@ namespace oln
 
   // fwd_iter
 
-  template<class Exact>
-  struct fwd_iter : public virtual iter<Exact>
+  template<class E>
+  struct fwd_iter : public virtual iter<E>
   {
-    static std::string name() { return std::string("fwd_iter<") + Exact::name() + ">"; }
+    static std::string name() { return std::string("fwd_iter<") + E::name() + ">"; }
   protected:
     fwd_iter() {}
   };
@@ -63,10 +63,10 @@ namespace oln
 
   // bkd_iter
 
-  template<class Exact>
-  struct bkd_iter : public virtual iter<Exact>
+  template<class E>
+  struct bkd_iter : public virtual iter<E>
   {
-    static std::string name() { return std::string("bkd_iter<") + Exact::name() + ">"; }
+    static std::string name() { return std::string("bkd_iter<") + E::name() + ">"; }
   protected:
     bkd_iter() {}
   };

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,36 +25,51 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_REGULAR_IMAGE_HH
-# define OLENA_CORE_REGULAR_IMAGE_HH
 
-# include <oln/core/image.hh>
-# include <oln/core/image_size.hh>
-# include <oln/core/point.hh>
-# include <oln/core/dpoint.hh>
+#ifndef OLENA_CORE_ABSTRACT_IMAGE_WITH_TYPE_HH
+# define OLENA_CORE_ABSTRACT_IMAGE_WITH_TYPE_HH
+
+# include <oln/core/abstract/image.hh>
 
 namespace oln {
+  namespace abstract {
+    
+    template<class T, class Exact>
+    class image_with_type;
+  } // end of namespace abstract
 
-  template<unsigned Dim, // 1D, 2D, etc.
-	   class Exact>
-  struct regular_image : public image< Exact >
-  {
-
-    enum { dim = Dim };
-    typedef typename point_for_dim<Dim>::ret      point;
-    typedef typename dpoint_for_dim<Dim>::ret     dpoint;
-    typedef typename image_size_for_dim<Dim>::ret image_size;
-
-    static std::string name()
+    template <class T, class Exact>
+    struct image_traits<abstract::image_with_type<T, Exact> >: public image_traits<abstract::image<Exact> >
     {
-      return
-	std::string("regular_image<") + dim + ", " + Exact::name() + ">";
-    }
-  protected:
-    regular_image() {}
-  };
-
-} // oln
+      typedef T value_type;
+    };
 
 
-#endif // OLENA_CORE_REGULAR_IMAGE_HH
+  namespace abstract {
+
+    template<class T, class Exact>
+    struct type_switch
+    {
+      typedef abstract::image<Exact> ret;
+    };
+
+    template<class T, class Exact>
+    class image_with_type: public virtual type_switch<T, Exact>::ret
+    {
+    public:
+      static std::string name()
+      {
+	return
+	  std::string("abstract::image_with_type<")
+	  + T::name() + ", "
+	  + Exact::name() + ">";
+      }
+
+    protected:
+      image_with_type() {}
+    };
+
+  } // end of namespace abstract
+} // end of namespace oln
+
+#endif // ! OLENA_CORE_ABSTRACT_IMAGE_WITH_TYPE_HH
