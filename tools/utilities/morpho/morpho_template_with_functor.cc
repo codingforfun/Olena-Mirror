@@ -4,7 +4,8 @@
 #include <oln/morpho/laplacian.hh>
 #include <oln/morpho/top_hat.hh>
 #include <iostream>
-#include <getopt.h>
+
+#include "getopt.hh"
 
 using namespace oln;
 

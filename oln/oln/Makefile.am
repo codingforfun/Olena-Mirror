@@ -8,6 +8,7 @@ nobase_pkginclude_HEADERS =			\
   basics1d.hh					\
   basics2d.hh					\
   basics3d.hh					\
+  config/math.hh				\
   config/system.hh				\
   config/pconf.hh				\
   convert/basics.hh				\

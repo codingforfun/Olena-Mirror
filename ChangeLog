@@ -1,4 +1,16 @@
+2003-01-21  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* component.m4 (OLN_COMPONENT): Test for `Makefile.in' in
+	directories instead of the directory existence itself, to prevent
+	problems due to empty directories.
+
+	* oln/Makefile.am, tools/Makefile.am (maintainer-check): Move
+	indentation checker away to ...
+	* Makefile.am: ... here.
+
 2003-01-20  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* NEWS: Mention changes in 0.6. Update changes for 0.7.
 
 	* bootstrap.sh: Recurse autoconf into oln/conf.
 

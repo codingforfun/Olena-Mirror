@@ -3,7 +3,8 @@
 #include <oln/basics3d.hh>
 #include <oln/morpho/extrema.hh>
 #include <iostream>
-#include <getopt.h>
+
+#include "getopt.hh"
 
 using namespace oln;
 

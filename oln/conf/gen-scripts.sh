@@ -31,6 +31,7 @@ while [ $n -le $nconf ]; do
     CXXFLAGS=""; export CXXFLAGS
     if "$srcdir/configure" --with-oln="$includedir" >"configure.log-$c" 2>&1; then
        supported=$c
+       mv config.log "config.log-$c"
        break
     fi
     mv config.log "config.log-$c" 

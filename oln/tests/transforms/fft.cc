@@ -1,7 +1,9 @@
 #include <oln/types/all.hh>
 #include <oln/basics2d.hh>
 #include <oln/level/compare.hh>
-#include <oln/transforms/fft.hh>
+#if HAVE_FFTW
+# include <oln/transforms/fft.hh>
+#endif
 #include <cstdlib>
 
 #include "check.hh"
@@ -12,18 +14,20 @@
     else					\
       {						\
 	std::cout << "FAIL" << std::endl;	\
-	fail = true;				\
+	status = 1;				\
       }
 
 using namespace oln;
+#if HAVE_FFTW
 using namespace transforms;
+#endif
 
 bool
 check()
 {
-#if HAVE_FFTW
+  int status = 0;
 
-  bool fail = false;
+#if HAVE_FFTW
 
   image2d<int_u8> im1(data("lena.pgm"));
 
@@ -58,13 +62,11 @@ check()
 
   io::save(out, "fft_low_pass.pgm");
 
-  return fail;
-
 #else
 
   std::cout << "You have not enabled fftw support." << std::endl;
-  return true;
 
 #endif
 
+  return status;
 }

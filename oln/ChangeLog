@@ -1,3 +1,43 @@
+2003-01-21  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* tests/transforms/fft.cc (CHECK): Correct minor typo.
+
+	* Makefile.am: Temporarily disable rules to regenerate
+	conf/aclocal.m4 and conf/configure. (CLEANFILES): Cleanup conf/
+	completely.
+
+	* oln/types/builtins_properties.hh: Avoid static variables in
+	template members.
+
+2003-01-20  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* Makefile.am (uninstall-hook): Remove installed oln-config-*.sh
+	scripts.
+
+	* oln/transforms/fft.hh: Do not abord if FFTW is unavailable.
+
+	* oln/Makefile.am (nobase_pkginclude_HEADERS): Mention
+	oln/config/math.hh.
+
+	* tests/transforms/fft.cc: Include oln/transforms/fft.hh only when
+	HAVE_FFTW is defined. Test succeeds when FFTW is not available.
+
+	* oln.m4 (OLN_MATH_FUNC):  New macro. (OLN_FLOAT_MATH): New macro,
+	which replaces OLN_C99_MATH. (AC_WITH_OLN): Modify accordingly.
+
+	* oln/config/system.hh: Move away tests pertaining to math.h ...
+	* oln/config/math.hh: ... to this new file. Add optional
+	replacements for sqrtf, floorf, round and roundf.
+
+	* oln/morpho/watershed.hxx: Rename more identifiers to avoid the
+	_X form.
+
+2003-01-20  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln.m4: Allow CXXFLAGS_* variables to be overwritten. Change
+	como default CXXFLAGS_STRICT and CXXFLAGS_STRICT_ERRORS
+	variables.
+
 2003-01-20  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* Makefile.am: Add a section pertaining to per-compiler
@@ -7,44 +47,26 @@
 	conf/gen-scripts.sh,
 	conf/compilers.def: Add.
 
-	* oln/convert/conversion.hh,
-	oln/convert/conversion_ng_se.hh,
-	oln/convol/convolution.hh,
-	oln/convol/fast_gaussian.hxx,
-	oln/core/apply.hh,
-	oln/core/border.hh,
-	oln/core/fold.hh,
-	oln/core/generate.hh,
-	oln/core/neighborhood.hh,
-	oln/core/traverse.hh,
-	oln/level/cc.hh,
-	oln/level/compare.hh,
-	oln/level/connected.hh,
-	oln/level/fill.hh,
-	oln/level/set_level.hh,
-	oln/meta/array1d.hh,
-	oln/meta/array2d.hh,
-	oln/meta/array3d.hh,
-	oln/morpho/dilation.hh,
-	oln/morpho/erosion.hh,
-	oln/morpho/extrema.hxx,
-	oln/morpho/extrema_killer.hh,
-	oln/morpho/fast_morpho.hxx,
-	oln/morpho/geodesic_dilation.hh,
-	oln/morpho/geodesic_erosion.hh,
-	oln/morpho/hit_or_miss.inc,
-	oln/morpho/opening.inc,
-	oln/morpho/reconstruction.hh,
-	oln/morpho/splitse.hh,
-	oln/morpho/stat.hh,
-	oln/morpho/thickening.inc,
-	oln/morpho/thinning.inc,
-	oln/morpho/watershed.hxx,
-	oln/topo/dmap.hh,
-	oln/topo/dmap.hxx,
-	oln/transforms/dwt.hh,
-	oln/utils/histogram.hh,
-	tests/convert/convcomp.hh: Rename _X template parameters to X_.
+	* oln/convert/conversion.hh, oln/convert/conversion_ng_se.hh,
+	oln/convol/convolution.hh, oln/convol/fast_gaussian.hxx,
+	oln/core/apply.hh, oln/core/border.hh, oln/core/fold.hh,
+	oln/core/generate.hh, oln/core/neighborhood.hh,
+	oln/core/traverse.hh, oln/level/cc.hh, oln/level/compare.hh,
+	oln/level/connected.hh, oln/level/fill.hh, oln/level/set_level.hh,
+	oln/meta/array1d.hh, oln/meta/array2d.hh, oln/meta/array3d.hh,
+	oln/morpho/dilation.hh, oln/morpho/erosion.hh,
+	oln/morpho/extrema.hxx, oln/morpho/extrema_killer.hh,
+	oln/morpho/fast_morpho.hxx, oln/morpho/geodesic_dilation.hh,
+	oln/morpho/geodesic_erosion.hh, oln/morpho/hit_or_miss.inc,
+	oln/morpho/opening.inc, oln/morpho/reconstruction.hh,
+	oln/morpho/splitse.hh, oln/morpho/stat.hh,
+	oln/morpho/thickening.inc, oln/morpho/thinning.inc,
+	oln/morpho/watershed.hxx, oln/topo/dmap.hh, oln/topo/dmap.hxx,
+	oln/transforms/dwt.hh, oln/utils/histogram.hh,
+	tests/convert/convcomp.hh: Rename _X template parameters to X_,
+	for single-letters identifiers prepended with an underscore are
+	reserved for POSIX internal use, and actually are defined in
+	ctype.h on BSD and cygwin systems.
 	* oln/core/type.hh: Correct `Exact_...()' accordingly.
 
 2003-01-19  Raphaël Poss  <raph@lrde.epita.fr>

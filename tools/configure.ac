@@ -20,8 +20,11 @@ AC_WITH_CXX_FFTW
 
 AC_CXX_FLAGS
 
+AC_PROG_CC
+AC_PROG_RANLIB
+
 AC_CONFIG_HEADERS([config.h:config.hin])
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile lib/Makefile])
 
 OLN_COLLECTION([OLN_TOOLS], [dnl
 OLN_COMPONENT([utilities], [utilities], 

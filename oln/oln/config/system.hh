@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001,2002,2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,28 +35,8 @@
 # ifndef IGNORE_PCONF_HH
 #  include <oln/config/pconf.hh>
 # endif
-# include <cmath>
 
-# ifndef OLN_USE_C_LIMITS
-#  include <limits>
-#  define OLN_DOUBLE_INFINITY (std::numeric_limits<double>::infinity())
-#  define OLN_FLOAT_INFINITY (std::numeric_limits<float>::infinity())
-# else
-#  ifdef HUGE_VAL
-#   define OLN_DOUBLE_INFINITY HUGE_VAL
-#   ifdef HUGE_VALF
-#    define OLN_FLOAT_INFINITY HUGE_VALF
-#   else
-#    define OLN_FLOAT_INFINITY ((float)HUGE_VAL)
-#   endif
-#  else
-#   error Cannot define Infinity in this configuration.
-#  endif
-# endif
-
-# ifndef M_PI
-#  define M_PI 3.14159265358979323846264338327
-# endif
+# include <oln/config/math.hh>
 
 /* The STL used by g++ versions < 3 have namespaces disabled,
    because these g++ versions do not honor `std::' (unless requested).

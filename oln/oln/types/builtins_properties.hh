@@ -48,8 +48,7 @@
      };
      typedef typename C_for_int_u<mbits>::type type;
      static type max() {
-       static type val = (type(1) << nbits) - type(1);  // FIXME: is static?
-       return val;
+       return type((type(1) << nbits) - type(1));
      }
    };
 
@@ -59,12 +58,10 @@
      enum { mbits = meta::pow2sup<nbits>::value };
      typedef typename C_for_int_s<mbits>::type type;
      static type min() {
-       static type val = - max() - type(1);
-       return val;
+       return type(- max() - type(1));
      }
      static type max() {
-       static type val = (type(1) << (nbits-1)) - type(1);
-       return val;
+       return type((type(1) << (nbits-1)) - type(1));
      }
    };
 

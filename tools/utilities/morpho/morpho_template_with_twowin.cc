@@ -5,7 +5,8 @@
 #include <oln/morpho/thinning.hh>
 #include <oln/morpho/thickening.hh>
 #include <iostream>
-#include <getopt.h>
+
+#include "getopt.hh"
 
 using namespace oln;
 

@@ -30,10 +30,7 @@
 
 # include <oln/config/system.hh>
 
-# ifndef HAVE_FFTW
-#  error You need the fftw library if you want to use the fft class of Olena \
-         (see "www.fftw.org" for more details about fftw and how to get it).
-# else
+# ifdef HAVE_FFTW
 
 #  include <fftw.h>
 #  include <rfftw.h>

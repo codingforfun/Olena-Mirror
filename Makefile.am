@@ -8,3 +8,14 @@ ACLOCAL_AMFLAGS = -I .
 CONFIGURE_DEPENDENCIES = oln-version.m4 component.m4
 
 EXTRA_DIST = oln-version.m4 component.m4
+
+# This is totally experimental. Comments are welcome.
+maintainer-check:
+	if cppi --version >/dev/null 2>&1; then \
+	  find $(srcdir) -name '*.{cc,hh,hxx}' | \
+	    xargs cppi --check; \
+	else \
+	  echo "$@: GNU cppi is required" >&2; \
+	fi
+
+

@@ -49,7 +49,7 @@ AC_DEFUN([OLN_COMPONENT], [dnl
 AC_CACHE_CHECK([whether to build $4],
                [$3],
                [$3=no
-                if test -d $srcdir/$1; then
+                if test -r "$srcdir/$1/Makefile.in"; then
                    AC_ARG_WITH([$2],
                                [AC_HELP_STRING([--without-$2], [disable building $4])],
                                [$3=$withval],

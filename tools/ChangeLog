@@ -1,3 +1,26 @@
+2003-01-21  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* utilities/morpho/morpho_template.cc: Include getopt.hh instead
+	of getopt.h, to prevent type errors due to bad prototyping
+	behavior of getopt.h.
+	* utilities/morpho/morpho_template_extrema.cc,
+	utilities/morpho/morpho_template_gaussian.cc,
+	utilities/morpho/morpho_template_watershed.cc,
+	utilities/morpho/morpho_template_with_functor.cc,
+	utilities/morpho/morpho_template_with_neighb.cc,
+	utilities/morpho/morpho_template_with_twowin.cc,
+	utilities/mosaic.cc: Likewise.
+
+	* utilities/Makefile.am (INCLUDES, LDADD): Link with
+	libolntools.a, which now provides, if necessary, getopt_long.
+	* utilities/morpho/Makefile.am: Likewise.
+	
+	* configure.ac: Check for C compiler and ranlib, to help building
+	lib/libolntools.a.
+	* lib/Makefile.am, lib/getopt.h, lib/getopt1.c lib/getopt.c,
+	lib/getopt.hh, lib/gettext.h: Add.
+	* Makefile.am (SUBDIRS): Mention `lib'.
+
 2003-01-19  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* utilities/Makefile.am (AM_CXXFLAGS): Use $(CXXFLAGS_STRICT) and

@@ -1,8 +1,12 @@
+## Process this file with Automake to produce Makefile.in -*- Makefile -*-
 
 AM_CPPFLAGS = $(OLN_CPPFLAGS) 
 AM_CXXFLAGS = $(OLN_CXXFLAGS) $(CXXFLAGS_STRICT) $(CXXFLAGS_OPTIMIZE) $(ZLIB_CXXFLAGS)
 
 EXTRA_DIST = generate_morpho.sh morpho-rules.make
+
+INCLUDES = -I$(srcdir)/../../lib
+LDADD = ../../lib/libolntools.a
 
 include $(srcdir)/morpho-rules.make
 

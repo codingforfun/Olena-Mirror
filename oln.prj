@@ -1,12 +1,157 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 7 29)
-(Parent-Version oln 7 28)
-(Version-Log "Cleanup ChangeLogs.
+(Project-Version oln 7 31)
+(Parent-Version oln 7 29)
+(Version-Log "Index: ChangeLog
+from  +2003-01-21  Raphaël Poss  <raph@lrde.epita.fr>
+
+   * component.m4 (OLN_COMPONENT): Test for `Makefile.in' in
+   directories instead of the directory existence itself, to prevent
+   problems due to empty directories.
+
+   * oln/Makefile.am, tools/Makefile.am (maintainer-check): Move
+   indentation checker away to ...
+   * Makefile.am: ... here.
+
+   * NEWS: Mention changes in 0.6. Update changes for 0.7.
+
+Index: oln/ChangeLog
+from  +2003-01-21  Raphaël Poss  <raph@lrde.epita.fr>
+
+   * tests/transforms/fft.cc (CHECK): Correct minor typo.
+
+   * Makefile.am: Temporarily disable rules to regenerate
+   conf/aclocal.m4 and conf/configure. (CLEANFILES): Cleanup conf/
+   completely.
+
+   * oln/types/builtins_properties.hh: Avoid static variables in
+   template members.
+
++2003-01-20  Raphaël Poss  <raph@lrde.epita.fr>
++
++  * Makefile.am (uninstall-hook): Remove installed oln-config-*.sh
++  scripts.
++
++  * oln/transforms/fft.hh: Do not abord if FFTW is unavailable.
++
++  * oln/Makefile.am (nobase_pkginclude_HEADERS): Mention
++  oln/config/math.hh.
++
++  * tests/transforms/fft.cc: Include oln/transforms/fft.hh only when
++  HAVE_FFTW is defined. Test succeeds when FFTW is not available.
++
++  * oln.m4 (OLN_MATH_FUNC):  New macro. (OLN_FLOAT_MATH): New macro,
++  which replaces OLN_C99_MATH. (AC_WITH_OLN): Modify accordingly.
++
++  * oln/config/system.hh: Move away tests pertaining to math.h ...
++  * oln/config/math.hh: ... to this new file. Add optional
++  replacements for sqrtf, floorf, round and roundf.
++
++  * oln/morpho/watershed.hxx: Rename more identifiers to avoid the
++  _X form.
++
++2003-01-20  Nicolas Burrus  <burrus_n@lrde.epita.fr>
++
++  * oln.m4: Allow CXXFLAGS_* variables to be overwritten. Change
++  como default CXXFLAGS_STRICT and CXXFLAGS_STRICT_ERRORS
++  variables.
++
+ 2003-01-20  Raphaël Poss  <raph@lrde.epita.fr>
+ 
+        * Makefile.am: Add a section pertaining to per-compiler
+@@ -7,44 +47,26 @@
+        conf/gen-scripts.sh,
+        conf/compilers.def: Add.
+ 
+-  * oln/convert/conversion.hh,
+-  oln/convert/conversion_ng_se.hh,
+-  oln/convol/convolution.hh,
+-  oln/convol/fast_gaussian.hxx,
+-  oln/core/apply.hh,
+-  oln/core/border.hh,
+-  oln/core/fold.hh,
+-  oln/core/generate.hh,
+-  oln/core/neighborhood.hh,
+-  oln/core/traverse.hh,
+-  oln/level/cc.hh,
+-  oln/level/compare.hh,
+-  oln/level/connected.hh,
+-  oln/level/fill.hh,
+-  oln/level/set_level.hh,
+-  oln/meta/array1d.hh,
+-  oln/meta/array2d.hh,
+-  oln/meta/array3d.hh,
+-  oln/morpho/dilation.hh,
+-  oln/morpho/erosion.hh,
+-  oln/morpho/extrema.hxx,
+-  oln/morpho/extrema_killer.hh,
+-  oln/morpho/fast_morpho.hxx,
+-  oln/morpho/geodesic_dilation.hh,
+-  oln/morpho/geodesic_erosion.hh,
+-  oln/morpho/hit_or_miss.inc,
+-  oln/morpho/opening.inc,
+-  oln/morpho/reconstruction.hh,
+-  oln/morpho/splitse.hh,
+-  oln/morpho/stat.hh,
+-  oln/morpho/thickening.inc,
+-  oln/morpho/thinning.inc,
+-  oln/morpho/watershed.hxx,
+-  oln/topo/dmap.hh,
+-  oln/topo/dmap.hxx,
+-  oln/transforms/dwt.hh,
+-  oln/utils/histogram.hh,
+-  tests/convert/convcomp.hh: Rename _X template parameters to X_.
++  * oln/convert/conversion.hh, oln/convert/conversion_ng_se.hh,
++  oln/convol/convolution.hh, oln/convol/fast_gaussian.hxx,
++  oln/core/apply.hh, oln/core/border.hh, oln/core/fold.hh,
++  oln/core/generate.hh, oln/core/neighborhood.hh,
++  oln/core/traverse.hh, oln/level/cc.hh, oln/level/compare.hh,
++  oln/level/connected.hh, oln/level/fill.hh, oln/level/set_level.hh,
++  oln/meta/array1d.hh, oln/meta/array2d.hh, oln/meta/array3d.hh,
++  oln/morpho/dilation.hh, oln/morpho/erosion.hh,
++  oln/morpho/extrema.hxx, oln/morpho/extrema_killer.hh,
++  oln/morpho/fast_morpho.hxx, oln/morpho/geodesic_dilation.hh,
++  oln/morpho/geodesic_erosion.hh, oln/morpho/hit_or_miss.inc,
++  oln/morpho/opening.inc, oln/morpho/reconstruction.hh,
++  oln/morpho/splitse.hh, oln/morpho/stat.hh,
++  oln/morpho/thickening.inc, oln/morpho/thinning.inc,
++  oln/morpho/watershed.hxx, oln/topo/dmap.hh, oln/topo/dmap.hxx,
++  oln/transforms/dwt.hh, oln/utils/histogram.hh,
++  tests/convert/convcomp.hh: Rename _X template parameters to X_,
++  for single-letters identifiers prepended with an underscore are
++  reserved for POSIX internal use, and actually are defined in
++  ctype.h on BSD and cygwin systems.
+        * oln/core/type.hh: Correct `Exact_...()' accordingly.
+ 
+ 2003-01-19  Raphaël Poss  <raph@lrde.epita.fr>
+Index: tools/ChangeLog
+from  +2003-01-21  Raphaël Poss  <raph@lrde.epita.fr>
+
+   * utilities/morpho/morpho_template.cc: Include getopt.hh instead
+   of getopt.h, to prevent type errors due to bad prototyping
+   behavior of getopt.h.
+   * utilities/morpho/morpho_template_extrema.cc,
+   utilities/morpho/morpho_template_gaussian.cc,
+   utilities/morpho/morpho_template_watershed.cc,
+   utilities/morpho/morpho_template_with_functor.cc,
+   utilities/morpho/morpho_template_with_neighb.cc,
+   utilities/morpho/morpho_template_with_twowin.cc,
+   utilities/mosaic.cc: Likewise.
+
+   * utilities/Makefile.am (INCLUDES, LDADD): Link with
+   libolntools.a, which now provides, if necessary, getopt_long.
+   * utilities/morpho/Makefile.am: Likewise.
+
+   * configure.ac: Check for C compiler and ranlib, to help building
+   lib/libolntools.a.
+   * lib/Makefile.am, lib/getopt.h, lib/getopt1.c lib/getopt.c,
+   lib/getopt.hh, lib/gettext.h: Add.
+   * Makefile.am (SUBDIRS): Mention `lib'.
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 20 Jan 2003 12:10:49 +0100")
+(Checkin-Time "Tue, 21 Jan 2003 09:45:50 +0100")
 (Checkin-Login raph)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -36,10 +181,6 @@
    ".cvsignore$"
    "obsolete/"
    "/obsolete/"
-   "demo/.*\\.p.m$"
-   "demo/tour$"
-   "demo/morpholena$"
-   "demo/image$"
    "autom4te.cache"
    "\\.html$"
    "\\.png$"
@@ -54,13 +195,10 @@
    "src/tests/convert/.*-.*-.*$"
    "\\.#"
    "^#"
+   "/#"
    "src/tests/defs$"
    "\\(TAGS\\|tags\\)$"
    "diffs.patch$"
-   "oln/tests/arith/runs"
-   "oln/oln/config/pconf\\.inc$"
-   "tests/defs$"
-   "attic/"
    "/Makefile.in$"
    "^Makefile.in$"
    "/\\(missing\\|install-sh\\|mkinstalldirs\\|depcomp\\)$"
@@ -82,56 +220,17 @@
    "oln/img/neighbor.ppbm"
    "oln/img/se9.ppbm"
    "oln/img/se.ppbm"
-   "tools/utilities/morpho/black_top_hat_2d_int_u8"
-   "tools/utilities/morpho/closing_2d_int_u8"
-   "tools/utilities/morpho/dilation_2d_int_u8"
-   "tools/utilities/morpho/erosion_2d_int_u8"
-   "tools/utilities/morpho/fast_beucher_gradient_2d_int_u8"
-   "tools/utilities/morpho/fast_black_top_hat_2d_int_u8"
-   "tools/utilities/morpho/fast_closing_2d_int_u8"
-   "tools/utilities/morpho/fast_dilation_2d_int_u8"
-   "tools/utilities/morpho/fast_erosion_2d_int_u8"
-   "tools/utilities/morpho/fast_external_gradient_2d_int_u8"
-   "tools/utilities/morpho/fast_gaussian_2d_int_u8"
-   "tools/utilities/morpho/fast_gaussian_derivative_2d_int_u8"
-   "tools/utilities/morpho/fast_gaussian_second_derivative_2d_int_u8"
-   "tools/utilities/morpho/fast_hit_or_miss_2d_int_u8"
-   "tools/utilities/morpho/fast_internal_gradient_2d_int_u8"
-   "tools/utilities/morpho/fast_laplacian_2d_int_u8"
-   "tools/utilities/morpho/fast_opening_2d_int_u8"
-   "tools/utilities/morpho/fast_self_complementary_top_hat_2d_int_u8"
-   "tools/utilities/morpho/fast_thickening_2d_int_u8"
-   "tools/utilities/morpho/fast_thinning_2d_int_u8"
-   "tools/utilities/morpho/fast_top_hat_contrast_op_2d_int_u8"
-   "tools/utilities/morpho/fast_white_top_hat_2d_int_u8"
-   "tools/utilities/morpho/hit_or_miss_2d_int_u8"
-   "tools/utilities/morpho/hybrid_minima_imposition_2d_int_u8"
-   "tools/utilities/morpho/hybrid_regional_minima_2d_int_u8"
-   "tools/utilities/morpho/laplacian_2d_int_u8"
-   "tools/utilities/morpho/opening_2d_int_u8"
-   "tools/utilities/morpho/self_complementary_top_hat_2d_int_u8"
-   "tools/utilities/morpho/sequential_minima_imposition_2d_int_u8"
-   "tools/utilities/morpho/sequential_regional_minima_2d_int_u8"
-   "tools/utilities/morpho/sure_minima_imposition_2d_int_u8"
-   "tools/utilities/morpho/sure_regional_minima_2d_int_u8"
-   "tools/utilities/morpho/thickening_2d_int_u8"
-   "tools/utilities/morpho/thinning_2d_int_u8"
-   "tools/utilities/morpho/top_hat_contrast_op_2d_int_u8"
-   "tools/utilities/morpho/watershed_con_2d_int_u8"
-   "tools/utilities/morpho/watershed_seg_2d_int_u8"
-   "tools/utilities/morpho/white_top_hat_2d_int_u8"
-   "tools/utilities/oln-mosaic-u16"
-   "tools/utilities/oln-mosaic-u8"
    "oln/oln/config/pconf.hh$"
+   "^attic/"
    )
 )
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.12 664))
-  (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.2 664))
+  (ChangeLog (oln/o/33_ChangeLog 1.13 664))
+  (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.4 664))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.6 664))
-  (tools/ChangeLog (oln/o/32_ChangeLog 1.6 664))
+  (tools/ChangeLog (oln/o/32_ChangeLog 1.7 664))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.1 664))
 
   (attic/oln-ChangeLog (oln/6_ChangeLog 1.50.1.98.1.5 660))
@@ -142,7 +241,7 @@
   (bootstrap.sh (oln/j/16_bootstrap. 1.5 775))
   (BUILD (oln/o/38_BUILD 1.2 664))
   (cleanup.sh (oln/o/29_cleanup.sh 1.3 775))
-  (component.m4 (oln/o/40_component. 1.4 664))
+  (component.m4 (oln/o/40_component. 1.5 664))
   (configure.ac (oln/3_configure. 1.38 664))
   (doc/configure.ac (oln/e/2_configure. 1.15 660))
   (doc/demo/image.cc (oln/d/46_image.cc 1.2 660))
@@ -160,8 +259,8 @@
   (doc/tpl/processing.tpl (oln/d/48_processing 1.14 660))
   (FAQ (oln/j/31_FAQ 1.2 664))
   (INSTALL (oln/o/39_INSTALL 1.2 664))
-  (Makefile.am (oln/n/32_Makefile.a 1.6 664))
-  (NEWS (oln/0_NEWS 1.9 660))
+  (Makefile.am (oln/n/32_Makefile.a 1.7 664))
+  (NEWS (oln/0_NEWS 1.10 660))
   (oln/configure.ac (oln/n/4_configure. 1.6 660))
   (oln/img/face_se.pbm (oln/n/17_face_se.pb 1.1 660) :no-keywords)
   (oln/img/lena256.pgm (oln/n/14_lena256.pg 1.1 660))
@@ -177,7 +276,7 @@
   (oln/img/se9.pbm (oln/n/5_se9.pbm 1.1 660) :no-keywords)
   (oln/img/se.pbm (oln/n/6_se.pbm 1.1 660) :no-keywords)
   (oln/ISSUES (oln/d/47_ISSUES 1.5 660))
-  (oln/Makefile.am (oln/2_Makefile.a 1.24 660))
+  (oln/Makefile.am (oln/2_Makefile.a 1.25 660))
   (oln/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.5 664))
   (oln/oln/arith/logic.hh (oln/b/24_logic.hh 1.6 664))
   (oln/oln/arith/ops.hh (oln/b/23_ops.hh 1.5.1.2 664))
@@ -187,7 +286,7 @@
   (oln/oln/basics.hh (oln/d/42_basics.hh 1.6 664))
   
   
-  (oln/oln/config/system.hh (oln/7_system.hh 1.15 664))
+  (oln/oln/config/system.hh (oln/7_system.hh 1.16 664))
   (oln/oln/convert/basics.hh (oln/23_basics.hh 1.4 664))
   (oln/oln/convert/bound.hh (oln/22_bound.hh 1.4 664))
   (oln/oln/convert/colorconv.hh (oln/18_colorconv. 1.5 664))
@@ -318,8 +417,8 @@
   (oln/oln/level/lut.hh (oln/29_lut.hh 1.7 664))
   (oln/oln/level/set_level.hh (oln/p/1_set_level. 1.5 664))
   (oln/oln/level/threshold.hh (oln/f/15_threshold. 1.5 664))
-  (oln/oln.m4 (oln/j/15_oln.m4 1.7 664))
-  (oln/oln/Makefile.am (oln/27_Makefile.a 1.36 600))
+  (oln/oln.m4 (oln/j/15_oln.m4 1.9 664))
+  (oln/oln/Makefile.am (oln/27_Makefile.a 1.37 600))
   (oln/oln/math/macros.hh (oln/b/21_macros.hh 1.6 664))
   (oln/oln/meta/array1d.hh (oln/f/23_array1d.hh 1.4 664))
   (oln/oln/meta/array1d.hxx (oln/f/22_array1d.hx 1.5 664))
@@ -367,16 +466,16 @@
   (oln/oln/morpho/top_hat.hh (oln/49_top_hat.hh 1.4 664))
   (oln/oln/morpho/top_hat.inc (oln/39_top_hat.in 1.5 664))
   (oln/oln/morpho/watershed.hh (oln/48_watershed. 1.5 664))
-  (oln/oln/morpho/watershed.hxx (oln/47_watershed. 1.8 664))
+  (oln/oln/morpho/watershed.hxx (oln/47_watershed. 1.9 664))
   (oln/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.4 664))
   (oln/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.6 664))
   (oln/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.3 664))
-  (oln/oln/transforms/fft.hh (oln/i/36_fft.hh 1.3 664))
+  (oln/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4 664))
   (oln/oln/transforms/wavelet_coeffs.hh (oln/i/34_wavelet_co 1.3 664))
   (oln/oln/types/all.hh (oln/g/32_all.hh 1.10 664))
   (oln/oln/types/behaviour.hh (oln/g/31_behaviour. 1.12 664))
   (oln/oln/types/bin.hh (oln/g/30_bin.hh 1.9 664))
-  (oln/oln/types/builtins_properties.hh (oln/g/29_builtins_p 1.5 664))
+  (oln/oln/types/builtins_properties.hh (oln/g/29_builtins_p 1.6 664))
   (oln/oln/types/cast.hh (oln/i/26_cast.hh 1.3 664))
   (oln/oln/types/color.hh (oln/i/17_color.hh 1.6 664))
   (oln/oln/types/cplx.hh (oln/i/4_cplx.hh 1.8 664))
@@ -477,7 +576,7 @@
   (oln/tests/sanity/includes.test (oln/f/46_includes.t 1.7 770))
   (oln/tests/sanity/Makefile.am (oln/f/48_Makefile.a 1.2 660))
   (oln/tests/transforms/dwt.cc (oln/i/38_dwt.cc 1.7 660))
-  (oln/tests/transforms/fft.cc (oln/i/37_fft.cc 1.4 660))
+  (oln/tests/transforms/fft.cc (oln/i/37_fft.cc 1.5 660))
   (oln/tests/transforms/Makefile.am (oln/i/40_Makefile.a 1.5 660))
 ;;  (oln/tests/transforms/output () :directory)
   (oln/tests/types/Makefile.am (oln/h/5_Makefile.a 1.3 660))
@@ -558,10 +657,10 @@
   (oln-version.m4 (oln/m/48_oln-versio 1.3 664))
   (prj (oln.prj) :symlink)
   (README (oln/1_README 1.7 664))
-  (THANKS (oln/4_THANKS 1.4 660))
-  (tools/configure.ac (oln/o/36_configure. 1.4 664))
+  (THANKS (oln/4_THANKS 1.5 660))
+  (tools/configure.ac (oln/o/36_configure. 1.5 664))
   (tools () :directory)
-  (tools/Makefile.am (oln/o/37_Makefile.a 1.3 664))
+  (tools/Makefile.am (oln/o/37_Makefile.a 1.4 664))
   (tools/swilena/configure.ac (oln/o/26_configure. 1.1 664))
   (tools/swilena/doc/Makefile.am (oln/n/39_Makefile.a 1.1 664))
   (tools/swilena/doc/swilena.texi (oln/n/40_swilena.te 1.1 660))
@@ -606,17 +705,17 @@
   (tools/swilena/swilena.prj (oln/n/38_swilena.pr 1.1 664))
   (tools/swilena/TODO (oln/n/36_TODO 1.1 664))
   (tools/utilities/configure.ac (oln/o/27_configure. 1.1 664))
-  (tools/utilities/Makefile.am (oln/g/2_Makefile.a 1.10 660))
+  (tools/utilities/Makefile.am (oln/g/2_Makefile.a 1.11 660))
   (tools/utilities/morpho/generate_morpho.sh (oln/i/30_generate_m 1.3.1.4 775))
-  (tools/utilities/morpho/Makefile.am (oln/i/32_Makefile.a 1.6 660))
-  (tools/utilities/morpho/morpho_template.cc (oln/i/33_morpho_tem 1.5.1.1 660))
-  (tools/utilities/morpho/morpho_template_extrema.cc (oln/j/5_morpho_tem 1.1.1.1 660))
-  (tools/utilities/morpho/morpho_template_gaussian.cc (oln/j/8_morpho_tem 1.1.1.1 660))
-  (tools/utilities/morpho/morpho_template_watershed.cc (oln/j/6_morpho_tem 1.1.1.1 660))
-  (tools/utilities/morpho/morpho_template_with_functor.cc (oln/j/10_morpho_tem 1.1.1.1 660))
-  (tools/utilities/morpho/morpho_template_with_neighb.cc (oln/j/7_morpho_tem 1.1.1.1 660))
-  (tools/utilities/morpho/morpho_template_with_twowin.cc (oln/j/9_morpho_tem 1.1.1.1 660))
-  (tools/utilities/mosaic.cc (oln/g/0_mosaic.cc 1.4 660))
+  (tools/utilities/morpho/Makefile.am (oln/i/32_Makefile.a 1.7 660))
+  (tools/utilities/morpho/morpho_template.cc (oln/i/33_morpho_tem 1.5.1.2 660))
+  (tools/utilities/morpho/morpho_template_extrema.cc (oln/j/5_morpho_tem 1.1.1.2 660))
+  (tools/utilities/morpho/morpho_template_gaussian.cc (oln/j/8_morpho_tem 1.1.1.2 660))
+  (tools/utilities/morpho/morpho_template_watershed.cc (oln/j/6_morpho_tem 1.1.1.2 660))
+  (tools/utilities/morpho/morpho_template_with_functor.cc (oln/j/10_morpho_tem 1.1.1.2 660))
+  (tools/utilities/morpho/morpho_template_with_neighb.cc (oln/j/7_morpho_tem 1.1.1.2 660))
+  (tools/utilities/morpho/morpho_template_with_twowin.cc (oln/j/9_morpho_tem 1.1.1.2 660))
+  (tools/utilities/mosaic.cc (oln/g/0_mosaic.cc 1.5 660))
 
 ;; Files added by populate at Sun, 19 Jan 2003 21:48:10 +0100,
 ;; to version 7.25(w), by raph:
@@ -657,12 +756,40 @@
 ;; Files added by populate at Mon, 20 Jan 2003 11:43:58 +0100,
 ;; to version 7.27(w), by raph:
 
-  (oln/conf/configure.ac (oln/p/23_configure. 1.1 664))
-  (oln/conf/gen-scripts.sh (oln/p/24_gen-script 1.1 775))
+  (oln/conf/configure.ac (oln/p/23_configure. 1.2 664))
+  (oln/conf/gen-scripts.sh (oln/p/24_gen-script 1.2 775))
   (oln/conf/oln-config.shin (oln/p/25_oln-config 1.1 664))
   (oln/conf/compilers.def (oln/p/26_compilers. 1.1 664))
+
+;; Files added by populate at Tue, 21 Jan 2003 00:25:46 +0100,
+;; to version 7.29(w), by raph:
+
+  (tools/lib/Makefile.am (oln/p/27_Makefile.a 1.1 664))
+
+;; Files added by populate at Tue, 21 Jan 2003 00:25:52 +0100,
+;; to version 7.29(w), by raph:
+
+  (tools/lib/getopt1.c (oln/p/28_getopt1.c 1.1 664))
+  (tools/lib/getopt.h (oln/p/29_getopt.h 1.1 664))
+  (tools/lib/getopt.c (oln/p/30_getopt.c 1.1 664))
+
+;; Files added by populate at Tue, 21 Jan 2003 00:33:22 +0100,
+;; to version 7.29(w), by raph:
+
+  (tools/lib/gettext.h (oln/p/31_gettext.h 1.1 664))
+
+;; Files added by populate at Tue, 21 Jan 2003 00:57:11 +0100,
+;; to version 7.29(w), by raph:
+
+  (tools/lib/getopt.hh (oln/p/32_getopt.hh 1.1 664))
+
+;; Files added by populate at Tue, 21 Jan 2003 09:12:30 +0100,
+;; to version 7.29(w), by raph:
+
+  (oln/oln/config/math.hh (oln/p/33_math.hh 1.1 664))
 )
 (Merge-Parents
-  (7.28 complete)
+  (7.30 complete
+    (oln/ChangeLog oln/ChangeLog oln/ChangeLog r) (oln/oln.m4 oln/oln.m4 oln/oln.m4 m))
 )
 (New-Merge-Parents)

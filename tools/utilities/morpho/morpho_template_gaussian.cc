@@ -3,8 +3,9 @@
 #include <oln/basics3d.hh>
 #include <oln/convol/fast_gaussian.hh>
 #include <iostream>
-#include <getopt.h>
 #include <stdlib.h>
+
+#include "getopt.hh"
 
 using namespace oln;
 

@@ -408,62 +408,55 @@ AC_DEFUN(OLN_NUMERIC_LIMITS,
   AC_LANG_POP([C++])
 ])
 
-# OLN_C99_MATH
+# OLN_MATH_FUNC([FUNCTION], [MACRO_NAME], [TEST])
 
-# Checks for the availability of ISO C99 math functions from
-# C++.
+# Checks for the availability of a particular math function
+# from C++.
 
-# This test attempts to use roundf and nearbyintf without flags
+# This test attempts to use the function without flags
 # at first, then with -D_ISOC99_SOURCE which is known to
 # activate C99 declarations in the GNU libc headers.
 # If the latter works, the flag is added to OLN_CPPFLAGS.
+# In the default case, it adds -DOLN_NEED_XXX to
+# OLN_CPPFLAGS, hoping that oln/config/math.hh will provide
+# an implementation.
 
-AC_DEFUN(OLN_C99_MATH,
+AC_DEFUN(OLN_MATH_FUNC,
 [dnl
   AC_REQUIRE([AC_PROG_CXX])
   AC_LANG_PUSH([C++])
-# Check for various ISO C99 float functions.
-# Olena noticeably uses roundf(3).
-  AC_CACHE_CHECK([for flag to activate C99 float functions from C++],
-                 [oln_cv_c99_flags],
+  AC_CACHE_CHECK([for flags to enable $1() from C++],
+                 [oln_cv_$1_flags],
                  [oln_save_CPPFLAGS="$CPPFLAGS"
- 		  oln_save_CXXFLAGS="$CXXFLAGS"
+                  oln_save_CXXFLAGS="$CXXFLAGS"
 		  CPPFLAGS="$OLN_CPPFLAGS $CPPFLAGS"
 		  CXXFLAGS="$OLN_CXXFLAGS $CXXFLAGS"
-
-# The checks are done using AC_TRY_COMPILE instead of AC_TRY_FUNC,
-# because the latter uses invalid C++ syntax.
                   AC_LINK_IFELSE([@%:@include <cmath>
-                                  int main() {
-                                    float f1 = roundf(0f); 
-				    float f2 = nearbyintf(0f);
-                                  }],  
-                                 [oln_cv_c99_flags=unneeded],
-                                 [
-# When using a ISO-compliant C++98 compiler with a C99 standard library,
-# usually the C99 functions are not declared in C++ scope. 
-# However, with GNU systems, the _ISOC99_SOURCE macro conditional
-# forces C99 declarations when set to 1. 
-                                  CPPFLAGS="$CPPFLAGS -D_ISOC99_SOURCE=1"
+                                  int main() { $3 }],
+                                 [oln_cv_$1_flags=unneeded],
+                                 [CPPFLAGS="$CPPFLAGS -D_ISOC99_SOURCE=1"
                                   AC_LINK_IFELSE([@%:@include <cmath>
-                                                  int main() {
-                                                    float f1 = roundf(0.); 
-						    float f2 = nearbyintf(0.);
-                                                  }],
-                                       [oln_cv_c99_flags="-D_ISOC99_SOURCE=1"],
-                                       [oln_cv_c99_flags=unavailable])])
+                                                  int main() { $3 }],
+                                       [oln_cv_$1_flags=isodef],
+                                       [oln_cv_$1_flags=redef])])
                   CPPFLAGS="$oln_save_CPPFLAGS"
                   CXXFLAGS="$oln_save_CXXFLAGS"])
+  if test "x$[]oln_cv_$1_flags" = xredef; then
+     OLN_CPPFLAGS="$OLN_CPPFLAGS -DOLN_NEED_$2"
+  elif test "x$[]oln_cv_$1_flags" = xisodef; then
+     OLN_CPPFLAGS="$OLN_CPPFLAGS -D_ISOC99_SOURCE=1"
+  fi
   AC_LANG_POP([C++])
 
-  case "$oln_cv_c99_flags" in 
-     unavailable | unneeded )
-        ;;
-     * )
-        OLN_CPPFLAGS="$OLN_CPPFLAGS $oln_cv_c99_flags"
-        ;;
-  esac
   AC_SUBST([OLN_CPPFLAGS])
+])  
+
+AC_DEFUN(OLN_FLOAT_MATH,
+[dnl
+  OLN_MATH_FUNC([sqrtf], [SQRTF], [float f = sqrtf(0.1f);])
+  OLN_MATH_FUNC([floorf], [FLOORF], [float f = floorf(0.1f);])
+  OLN_MATH_FUNC([round], [ROUND], [double f = round(0.1);])
+  OLN_MATH_FUNC([roundf], [ROUNDF], [float f = roundf(0.1f);])
 ])
 
 # AC_WITH_OLN
@@ -475,7 +468,7 @@ AC_DEFUN(AC_WITH_OLN,
 [dnl
   AC_REQUIRE([OLN_TEMPLATE_DEPTH])
   AC_REQUIRE([OLN_NUMERIC_LIMITS])
-  AC_REQUIRE([OLN_C99_MATH])
+  AC_REQUIRE([OLN_FLOAT_MATH])
   AC_REQUIRE([OLN_PATH_HEADERS])
   AC_REQUIRE([OLN_PATH_IMGS])
 ])
@@ -494,6 +487,7 @@ AC_DEFUN(AC_WITH_OLN,
 # and sets the following autoconf variables:
 #   CXXFLAGS_DEBUG
 #   CXXFLAGS_STRICT
+#   CXXFLAGS_STRICT_ERRORS
 #   CXXFLAGS_OPTIMIZE
 
 AC_DEFUN([AC_CXX_FLAGS],
@@ -522,29 +516,43 @@ AC_DEFUN([AC_CXX_FLAGS],
 
    case "$oln_cv_cxx_style" in
      GNU)
-      CXXFLAGS_DEBUG="-g"
-      CXXFLAGS_OPTIMIZE="-O3 -finline-limit-1000"
-      CXXFLAGS_STRICT="-W -Wall -pedantic"
-      CXXFLAGS_STRICT_ERRORS="-W -Wall -pedantic -Werror"
+      _CXXFLAGS_DEBUG="-g"
+      _CXXFLAGS_OPTIMIZE="-O3 -finline-limit-1000"
+      _CXXFLAGS_STRICT="-W -Wall -pedantic"
+      _CXXFLAGS_STRICT_ERRORS="-W -Wall -pedantic -Werror"
       ;;
      Sun)
-      CXXFLAGS_DEBUG="-g"
-      CXXFLAGS_OPTIMIZE="-fast"
-      CXXFLAGS_STRICT="-v"
-      CXXFLAGS_STRICT_ERRORS="-v -xwe"
+      _CXXFLAGS_DEBUG="-g"
+      _CXXFLAGS_OPTIMIZE="-fast"
+      _CXXFLAGS_STRICT="-v"
+      _CXXFLAGS_STRICT_ERRORS="-v -xwe"
       ;;
      Comeau)
-      CXXFLAGS_DEBUG="-g"
-      CXXFLAGS_STRICT="-r -a"
-      CXXFLAGS_STRICT_ERRORS="-r -A"
+      _CXXFLAGS_DEBUG="-g"
+      _CXXFLAGS_STRICT="-r"
+      _CXXFLAGS_STRICT_ERRORS="-r"
       ;;
      Intel)
-      CXXFLAGS_OPTIMIZE="-O3"
-      CXXFLAGS_DEBUG="-g"
-      CXXFLAGS_STRICT="-w2 -Wall"
-      CXXFLAGS_STRICT_ERRORS="-w2 -Wall -Werror"
+      _CXXFLAGS_OPTIMIZE="-O3"
+      _CXXFLAGS_DEBUG="-g"
+      _CXXFLAGS_STRICT="-w2 -Wall"
+      _CXXFLAGS_STRICT_ERRORS="-w2 -Wall -Werror"
       ;;
    esac
+
+   if test "x$CXXFLAGS_OPTIMIZE" = "x"; then
+	CXXFLAGS_OPTIMIZE="$_CXXFLAGS_OPTIMIZE"
+   fi
+   if test "x$CXXFLAGS_DEBUG" = "x"; then
+	CXXFLAGS_DEBUG="$_CXXFLAGS_DEBUG"
+   fi
+   if test "x$CXXFLAGS_STRICT" = "x"; then
+	CXXFLAGS_STRICT="$_CXXFLAGS_STRICT"
+   fi
+   if test "x$CXXFLAGS_STRICT_ERRORS" = "x"; then
+	CXXFLAGS_STRICT_ERRORS="$_CXXFLAGS_STRICT_ERRORS"
+   fi
+
    AC_SUBST([CXXFLAGS_DEBUG])
    AC_SUBST([CXXFLAGS_OPTIMIZE])
    AC_SUBST([CXXFLAGS_STRICT])

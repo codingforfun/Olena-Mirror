@@ -300,12 +300,12 @@ namespace oln {
     // version by D'Ornellas et al.
     template<class I1_, class I2_, class N_> inline
     Concrete (I2_)&
-    watershed_seg_or(const image<I1_>& _D,
-		     image<I2_>& _M,
+    watershed_seg_or(const image<I1_>& _In,
+		     image<I2_>& _Labels,
 		     const neighborhood<N_>& _Ng)
     {
-      Exact_cref(I1, D);
-      Exact_ref(I2, M);
+      Exact_cref(I1, In);
+      Exact_ref(I2, Labels);
       Exact_cref(N, Ng);
 
       typedef Value(I2) Values;
@@ -319,14 +319,14 @@ namespace oln {
       // Initialization
       // Enqueue all labeled points which have a unlabeled neighbor.
       {
-	Iter(I2) p(M);
+	Iter(I2) p(Labels);
 	Neighb(N) p_prime(Ng, p);
 	for_all(p)
-	  if (M[p] != unknown)
+	  if (Labels[p] != unknown)
 	    for_all (p_prime)
-	      if (M.hold(p_prime) && M[p_prime] == unknown)
+	      if (Labels.hold(p_prime) && Labels[p_prime] == unknown)
 		{
-		  PQ.push(queue_elt(p, D[p]));
+		  PQ.push(queue_elt(p, In[p]));
 		  break;
 		}
       }
@@ -342,10 +342,10 @@ namespace oln {
 	  p = PQ.top().first;
 	  PQ.pop();
 	  // Consider all neighbors of p.
-	  for_all (p_prime) if (M.hold(p_prime))
+	  for_all (p_prime) if (Labels.hold(p_prime))
 	    {
 	      // Focus on unlabeled neighbors of p.
-	      if (M[p_prime] == unknown)
+	      if (Labels[p_prime] == unknown)
 		{
 		  // Since p_prime is a neighbor of p, it should
 		  // be either labeled using the same label as p,
@@ -363,25 +363,25 @@ namespace oln {
 		    // have a different label.  It should be possible
 		    // to precompute an array of the resulting windows
 		    // for each neighbor (of p).
-		    if (M.hold(p_second)
-			&& M[p_second] != unknown
-			&& M[p_second] != wshed
-			&& M[p_second] != M[p])
+		    if (Labels.hold(p_second)
+			&& Labels[p_second] != unknown
+			&& Labels[p_second] != wshed
+			&& Labels[p_second] != Labels[p])
 		      {
 			exists = true;
 			break;
 		      }
 		  if (exists)
-		    M[p_prime] = wshed;
+		    Labels[p_prime] = wshed;
 		  else
 		    {
-		      M[p_prime] = M[p];
-		      PQ.push(queue_elt(p_prime, D[p_prime]));
+		      Labels[p_prime] = Labels[p];
+		      PQ.push(queue_elt(p_prime, In[p_prime]));
 		    }
 		}
 	    }
 	}
-      return M;
+      return Labels;
     }
 
   } // morpho
