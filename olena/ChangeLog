@@ -1,5 +1,20 @@
 2003-07-29  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* oln/convert/conversion.hh: Fix compilation with g++-3.4.
+	* oln/utils/histogram.hh: Likewise.
+
+	Remove diamond hierarchies.
+	* oln/core/abstract/image_with_dim.hh: Inherit from image_with_type.
+	* oln/core/abstract/image_with_type.hh: Do not inherit virtually
+	from image.
+	* oln/core/abstract/image_with_impl.hh: Adjust consequently.
+	* oln/core/image1d.hh: Likewise.
+	* oln/core/image2d.hh: Likewise.
+	* oln/core/image3d.hh: Likewise.
+	* oln/core/image.hh: Likewise.
+
+2003-07-29  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* oln/core/abstract/iter1d.hh, oln/core/abstract/iter2d.hh,
 	oln/core/abstract/iter3d.hh: Remove virtual inheritance.
 

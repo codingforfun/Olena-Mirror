@@ -78,36 +78,30 @@ namespace oln {
 		       impl_type, 
 		       exact_type> super_type;  
 
-    typedef abstract::image<exact_type> super_image; 
-
     image2d() : 
-      super_image(),
       super_type((impl_type*) 0)
     {}
 
     image2d(coord nrows, coord ncols, coord border = 2) : 
-      super_image(),
       super_type(new impl_type(image2d_size(nrows, ncols, border)))
     {
       super_type::impl()->ref();
     }
 
     image2d(const image2d_size& size) : 
-      super_image(),
       super_type(new impl_type(size))
     {
       super_type::impl()->ref();
     }
 
     image2d(self_type& rhs) : // shallow copy
-      super_image(),
       super_type(rhs)
     {
     }
 
     // io
     image2d(const io::internal::anything& r) 
-      : super_image(), super_type((impl_type*) 0)
+      : super_type((impl_type*) 0)
     {
       r.assign(*this);
     }

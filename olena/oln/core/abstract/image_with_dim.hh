@@ -29,7 +29,7 @@
 # define OLENA_CORE_ABSTRACT_IMAGE_WITH_DIM_HH
 
 # include <mlc/contract.hh>
-# include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/image_with_type.hh>
 # include <oln/core/coord.hh>
 # include <oln/core/point1d.hh>
 # include <oln/core/image1d_size.hh>
@@ -68,7 +68,8 @@ namespace oln {
   } // end of namespace abstract
 
   template <class Exact>
-  struct image_traits<abstract::image_with_dim<1, Exact> >: public image_traits<abstract::image<Exact> >
+  struct image_traits<abstract::image_with_dim<1, Exact> > 
+    : public image_traits<abstract::image_with_type<typename image_id<Exact>::value_type, Exact> >
   {
     enum {dim = 1};
     typedef point1d point_type;
@@ -80,7 +81,8 @@ namespace oln {
   };
   
   template <class Exact>
-  struct image_traits<abstract::image_with_dim<2, Exact> >: public image_traits<abstract::image<Exact> >
+  struct image_traits<abstract::image_with_dim<2, Exact> >
+    : public image_traits<abstract::image_with_type<typename image_id<Exact>::value_type, Exact> >
   {
     enum {dim = 2};
     typedef point2d point_type;
@@ -92,7 +94,8 @@ namespace oln {
   };
   
   template <class Exact>
-  struct image_traits<abstract::image_with_dim<3, Exact> >: public image_traits<abstract::image<Exact> >
+  struct image_traits<abstract::image_with_dim<3, Exact> >
+    : public image_traits<abstract::image_with_type<typename image_id<Exact>::value_type, Exact> >
   {
     enum {dim = 3};
     typedef point3d point_type;
@@ -103,12 +106,11 @@ namespace oln {
     typedef image3d_size size_type;
   };
 
-
   namespace abstract {
 
     // one-dimensional specialization
     template <class Exact>
-    class image_with_dim<1, Exact>: public virtual abstract::image<Exact>
+    class image_with_dim<1, Exact>: public image_with_type<typename image_id<Exact>::value_type, Exact>
     {
     public:
       typedef typename image_traits<Exact>::point_type point_type;
@@ -119,7 +121,7 @@ namespace oln {
       typedef typename image_traits<Exact>::value_type value_type;
       typedef typename image_traits<Exact>::size_type size_type;
 
-      typedef abstract::image<Exact> super_type;
+      typedef image_with_type<typename image_id<Exact>::value_type, Exact> super_type;
       typedef image_with_dim<1, Exact> self_type;
       typedef Exact exact_type;
    
@@ -173,7 +175,7 @@ namespace oln {
 
     // bi-dimensional specialization
     template <class Exact>
-    class image_with_dim<2, Exact>: public virtual abstract::image<Exact>
+    class image_with_dim<2, Exact>: public image_with_type<typename image_id<Exact>::value_type, Exact>
     {
     public:
       typedef typename image_traits<Exact>::point_type point_type;
@@ -186,8 +188,7 @@ namespace oln {
 
       typedef image_with_dim<2, Exact> self_type;
       typedef Exact exact_type;
-      typedef abstract::image<Exact> super_type;
-    
+      typedef image_with_type<typename image_id<Exact>::value_type, Exact> super_type;
       coord nrows() const
       {
 	return this->size().nrows();
@@ -243,7 +244,7 @@ namespace oln {
 
     // tri-dimensional specialization
     template <class Exact>
-    class image_with_dim<3, Exact>: public virtual abstract::image<Exact>
+    class image_with_dim<3, Exact>: public image_with_type<typename image_id<Exact>::value_type, Exact>
     {
     public:
       typedef typename image_traits<Exact>::point_type point_type;
@@ -253,7 +254,7 @@ namespace oln {
       typedef typename image_traits<Exact>::bkd_iter_type bkd_iter_type;
       typedef typename image_traits<Exact>::value_type value_type;
       typedef typename image_traits<Exact>::size_type size_type;
-      typedef abstract::image<Exact> super_type;
+      typedef image_with_type<typename image_id<Exact>::value_type, Exact> super_type;
 
       typedef image_with_dim<3, Exact> self_type;
       typedef Exact exact_type;

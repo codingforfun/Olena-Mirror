@@ -1,19 +1,37 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 57)
-(Parent-Version oln 2003paradigm 56)
+(Project-Version oln 2003paradigm 58)
+(Parent-Version oln 2003paradigm 57)
 (Version-Log "Index: olena/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+        * oln/convert/conversion.hh: Fix compilation with g++-3.4.
+        * oln/utils/histogram.hh: Likewise.
 
+        Remove diamond hierarchies.
+        * oln/core/abstract/image_with_dim.hh: Inherit from image_with_type.
+        * oln/core/abstract/image_with_type.hh: Do not inherit virtually
+        from image.
+        * oln/core/abstract/image_with_impl.hh: Adjust consequently.
+        * oln/core/image1d.hh: Likewise.
+        * oln/core/image2d.hh: Likewise.
+        * oln/core/image3d.hh: Likewise.
+        * oln/core/image.hh: Likewise.
+
++2003-07-29  Nicolas Burrus  <burrus_n@lrde.epita.fr>
++
         * oln/core/abstract/iter1d.hh, oln/core/abstract/iter2d.hh,
         oln/core/abstract/iter3d.hh: Remove virtual inheritance.
 
-        * oln/morpho/fast_morpho.hxx: Fix typo.
+Index: metalic/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+        * mlc/type.hh: Use static_cast instead of reinterpret_cast as
+        there are no more diamond hierarchies.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 29 Jul 2003 18:26:00 +0200")
+(Checkin-Time "Tue, 29 Jul 2003 21:52:13 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -103,8 +121,10 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.8 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.41 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.42 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38 640))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.18 640))
+  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.24 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.11 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.5 640))
 
@@ -164,7 +184,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/convert/basics.hh (oln/23_basics.hh 1.4 640))
   (olena/oln/convert/bound.hh (oln/22_bound.hh 1.8 640))
   (olena/oln/convert/colorconv.hh (oln/18_colorconv. 1.8 640))
-  (olena/oln/convert/conversion.hh (oln/21_conversion 1.11 640))
+  (olena/oln/convert/conversion.hh (oln/21_conversion 1.12 640))
   (olena/oln/convert/conversion_ng_se.hh (oln/e/24_conversion 1.6 640))
   (olena/oln/convert/force.hh (oln/20_force.hh 1.8 640))
   (olena/oln/convert/nrgbhsi.hh (oln/15_nrgbhsi.hh 1.10 640))
@@ -207,13 +227,13 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/core/fwd_iter2d.hh (oln/d/20_fwd_iter2d 1.11 640))
   (olena/oln/core/fwd_iter3d.hh (oln/d/19_fwd_iter3d 1.11 640))
   (olena/oln/core/generate.hh (oln/f/12_generate.h 1.15 640))
-  (olena/oln/core/image1d.hh (oln/c/47_image1d.hh 1.17 640))
+  (olena/oln/core/image1d.hh (oln/c/47_image1d.hh 1.18 640))
   (olena/oln/core/image1d_size.hh (oln/c/46_image1d_si 1.9 640))
-  (olena/oln/core/image2d.hh (oln/c/45_image2d.hh 1.21 640))
+  (olena/oln/core/image2d.hh (oln/c/45_image2d.hh 1.22 640))
   (olena/oln/core/image2d_size.hh (oln/c/44_image2d_si 1.9 640))
-  (olena/oln/core/image3d.hh (oln/c/43_image3d.hh 1.17 640))
+  (olena/oln/core/image3d.hh (oln/c/43_image3d.hh 1.18 640))
   (olena/oln/core/image3d_size.hh (oln/c/42_image3d_si 1.9 640))
-  (olena/oln/core/image.hh (oln/d/18_image.hh 1.13 640))
+  (olena/oln/core/image.hh (oln/d/18_image.hh 1.14 640))
   
   (olena/oln/core/abstract/image_size.hh (oln/c/41_image_size 1.8 640))
   (olena/oln/core/internal/fake.hh (oln/d/17_fake.hh 1.3 640))
@@ -253,7 +273,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/core/abstract/struct_elt.hh (oln/c/25_structelt. 1.15 640))
   (olena/oln/core/traverse.hh (oln/d/30_traverse.h 1.9 640))
   (metalic/mlc/typeadj.hh (oln/e/25_typeadj.hh 1.5 640))
-  (metalic/mlc/type.hh (oln/c/21_type.hh 1.16 640))
+  (metalic/mlc/type.hh (oln/c/21_type.hh 1.17 640))
   (olena/oln/core/window1d.hh (oln/c/15_window1d.h 1.10 640))
   (olena/oln/core/window2d.hh (oln/c/14_window2d.h 1.12 640))
   (olena/oln/core/window3d.hh (oln/c/13_window3d.h 1.11 640))
@@ -396,7 +416,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.6 640))
   (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.6 640))
   (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.5 640))
-  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.6 640))
+  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.7 640))
   (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.7 640))
   (olena/oln/utils/timer.hh (oln/8_timer.hh 1.5 640))
   (olena/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.5 640))
@@ -754,10 +774,6 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (doc/dev/design.texi (oln/q/5_design.tex 1.2 640))
 
-
-
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.18 640))
-  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.23 640))
   (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.5 640))
   (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.4 640))
   (olena/tests/convol () :directory)
@@ -878,9 +894,9 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 ;; to version 2003paradigm.7(w), by burrus_n:
 
   (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.9 640))
-  (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.10 640))
-  (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.9 640))
-  (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.3 640))
+  (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.11 640))
+  (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.10 640))
+  (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.4 640))
   (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.8 640))
   (olena/oln/core/impl/image_array.hh (oln/t/30_image_arra 1.8 640))
   (olena/tests/core/tests/image1 (oln/t/31_image1 1.4 640))
@@ -1034,5 +1050,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/io/image.hh (oln/u/11_image.hh 1.1 600))
   (olena/tests/convert/conv.cc (oln/u/12_conv.cc 1.1 640))
   (olena/tests/convert/conv.hh (oln/u/13_conv.hh 1.1 640)))
-(Merge-Parents)
+(Merge-Parents
+  (2003paradigm.57 complete)
+)
 (New-Merge-Parents)

@@ -142,7 +142,7 @@ namespace oln {
     template<class ConvType, class InputType>
     struct convoutput
     {
-      typedef Exact(ConvType)::output<InputType>::ret ret;
+      typedef Exact(ConvType)::template output<InputType>::ret ret;
     };
 
 
@@ -166,7 +166,7 @@ namespace oln {
       template <class C, class UF>
       struct _compconv1 :
 	public std::unary_function <typename UF::argument_type,
-	  typename C::output<typename UF::argument_type>::ret>
+	  typename C::template output<typename UF::argument_type>::ret>
       {
 	typedef _compconv1 self;
 
@@ -189,7 +189,7 @@ namespace oln {
       struct _compconv2 :
 	public std::binary_function <typename BF::first_argument_type,
           typename BF::second_argument_type,
-          typename C::output<typename BF::result_type>::ret>
+          typename C::template output<typename BF::result_type>::ret>
       {
 	typedef _compconv2 self;
 

@@ -78,29 +78,24 @@ namespace oln {
 		  value_type, 
 		  impl_type, 
 		  exact_type> super_type;
-    typedef abstract::image<exact_type> super_image; 
 
     image1d() : 
-      super_image(),
       super_type((impl_type*) 0)
     {}
 
     image1d(coord ncols, coord border = 2) : 
-      super_image(),
       super_type(new impl_type(image1d_size(ncols, border)))
     {
       super_type::impl()->ref();
     }
 
     image1d(const image1d_size& size) : 
-      super_image(),
       super_type(new impl_type(size))
     {
       super_type::impl()->ref(); 
     }
 
     image1d(self_type& rhs) : // shallow copy
-      super_image(),
       super_type(rhs)
     {}
 
