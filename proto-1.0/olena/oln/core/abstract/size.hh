@@ -52,7 +52,7 @@ namespace oln {
       template <typename Ep>
       bool operator!=(const size<Ep>& rhs) const
       {
-	return not this->operator==(rhs);
+	return ! this->operator==(rhs);
       }
 
     protected:

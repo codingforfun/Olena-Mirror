@@ -70,35 +70,35 @@ namespace oln {
     {
       this->p_.row() = 0;
       this->p_.col() = 0;
-      postcondition(this->p_.row().is_defined() and this->p_.col().is_defined());
+      postcondition(this->p_.row().is_defined() && this->p_.col().is_defined());
     }
 
     bool impl_is_valid() const
     {
-      precondition(this->p_.row().is_defined() and this->p_.col().is_defined());
+      precondition(this->p_.row().is_defined() && this->p_.col().is_defined());
       return this->p_.row() < this->s_.nrows();
     }
 
     void impl_next()
     {
-      precondition(this->p_.row().is_defined() and this->p_.col().is_defined());
-      precondition(this->p_.row() >= 0 and this->p_.row() <= this->s_.nrows()
-		   and
-		   this->p_.col() >= 0 and this->p_.col() <= this->s_.ncols());
+      precondition(this->p_.row().is_defined() && this->p_.col().is_defined());
+      precondition(this->p_.row() >= 0 && this->p_.row() <= this->s_.nrows()
+		   &&
+		   this->p_.col() >= 0 && this->p_.col() <= this->s_.ncols());
       ++this->p_.col();
       if (this->p_.col() != this->s_.ncols())
 	return;
       this->p_.col() = 0;
       precondition(this->p_.row() != this->s_.nrows());
       ++this->p_.row();
-      postcondition(this->p_.row().is_defined() and this->p_.col().is_defined());
+      postcondition(this->p_.row().is_defined() && this->p_.col().is_defined());
     }
 
     void impl_invalidate()
     {
       this->p_.row() = this->s_.nrows();
       this->p_.col() = this->s_.ncols();
-      postcondition(this->p_.row().is_defined() and this->p_.col().is_defined());
+      postcondition(this->p_.row().is_defined() && this->p_.col().is_defined());
     }
 
   };

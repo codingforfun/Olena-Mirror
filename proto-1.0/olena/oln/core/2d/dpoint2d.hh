@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_2D_DPOINT2D_HH
 # define OLENA_CORE_2D_DPOINT2D_HH
 
-# include <ostream>
+# include <iostream>
 
 # include <oln/core/coord.hh>
 # include <oln/core/2d/point2d.hh>
@@ -69,12 +69,12 @@ namespace oln {
 
     bool operator==(const dpoint2d& rhs) const
     {
-      return this->row_ == rhs.row_ and this->col_ == rhs.col_;
+      return this->row_ == rhs.row_ && this->col_ == rhs.col_;
     }
 
     bool operator!=(const dpoint2d& rhs) const
     {
-      return not this->operator==(rhs);
+      return ! this->operator==(rhs);
     }
 
     const dpoint2d operator+(const dpoint2d& rhs) const

@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_VALUE_BOX_HH
 # define OLENA_CORE_VALUE_BOX_HH
 
-# include <ostream>
+# include <iostream>
 
 # include <oln/core/macros.hh>
 

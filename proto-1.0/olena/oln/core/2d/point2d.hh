@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_2D_POINT2D_HH
 # define OLENA_CORE_2D_POINT2D_HH
 
-# include <ostream>
+# include <iostream>
 
 # include <oln/core/abstract/point.hh>
 # include <oln/core/coord.hh>
@@ -95,7 +95,7 @@ namespace oln {
 
     bool impl_eq(const point2d& rhs) const
     {
-      return this->row_ == rhs.row_ and this->col_ == rhs.col_;
+      return this->row_ == rhs.row_ && this->col_ == rhs.col_;
     }
 
   protected:

@@ -115,8 +115,8 @@ namespace oln {
 
     void impl_resize(const size2d& s)
     {
-      precondition(s.nrows() > 0 and
-		   s.ncols() > 0 and
+      precondition(s.nrows() > 0 &&
+		   s.ncols() > 0 &&
 		   s.border() >= 0);
       invariant_();
       this->clear_data();
@@ -147,18 +147,18 @@ namespace oln {
     bool impl_hold(const point2d& p) const
     {
       return
-	p.row() >= 0 and
-	p.row() < size_.nrows() and
-	p.col() >= 0 and
+	p.row() >= 0 &&
+	p.row() < size_.nrows() &&
+	p.col() >= 0 &&
 	p.col() < size_.ncols();
     }
 
     bool impl_hold_large(const point2d& p) const
     {
       return
-	p.row() >= - size_.border() and
-	p.row() < size_.nrows() + size_.border() and
-	p.col() >= - size_.border() and
+	p.row() >= - size_.border() &&
+	p.row() < size_.nrows() + size_.border() &&
+	p.col() >= - size_.border() &&
 	p.col() < size_.ncols() + size_.border();
     }
 
@@ -193,16 +193,16 @@ namespace oln {
 
     void invariant_() const
     {
-      invariant((buffer_ != 0 and
-		 array_ != 0 and
-		 size_.nrows() > 0 and
-		 size_.ncols() > 0 and
+      invariant((buffer_ != 0 &&
+		 array_ != 0 &&
+		 size_.nrows() > 0 &&
+		 size_.ncols() > 0 &&
 		 size_.border() >= 0)
-		or
-		(buffer_ == 0 and
-		 array_ == 0 and
-		 size_.nrows().is_undefined() and
-		 size_.ncols().is_undefined() and
+		||
+		(buffer_ == 0 &&
+		 array_ == 0 &&
+		 size_.nrows().is_undefined() &&
+		 size_.ncols().is_undefined() &&
 		 size_.border().is_undefined()));
     }
 

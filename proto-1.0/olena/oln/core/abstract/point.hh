@@ -92,7 +92,7 @@ namespace oln {
       */
       bool operator!=(const point& rhs) const
       {
-	return not this->operator==(rhs);
+	return ! this->operator==(rhs);
       }
 
       typedef oln_dpoint_type(E) dpoint_type;

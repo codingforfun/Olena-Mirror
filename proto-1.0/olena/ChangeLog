@@ -1,5 +1,17 @@
 2005-02-08  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	* oln/core/value_box.hh: Ensure g++-2.95 compliance.
+	* oln/core/abstract/piter.hh: Likewise.
+	* oln/core/abstract/point.hh: Likewise.
+	* oln/core/abstract/size.hh: Likewise.
+	* oln/core/2d/dpoint2d.hh: Likewise.
+	* oln/core/2d/array2d.hh: Likewise.
+	* oln/core/2d/fwd_piter2d.hh: Likewise.
+	* oln/core/2d/point2d.hh: Likewise.
+	* oln/core/2d/size2d.hh: Likewise.
+
+2005-02-08  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	* oln/core/value_box.hh: Unbox image attribute.
 	* oln/core/abstract/image_with_data.hh: Clean up in ctors.
 	* oln/core/abstract/data_storage.hh: Fix bug in size().

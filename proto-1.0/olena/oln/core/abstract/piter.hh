@@ -97,7 +97,7 @@ namespace oln {
       void invalidate()
       {
 	this->exact().impl_invalidate();
-	postcondition(not this->is_valid());
+	postcondition(! this->is_valid());
       }
 
     protected:

@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_2D_SIZE2D_HH
 # define OLENA_CORE_2D_SIZE2D_HH
 
-# include <ostream>
+# include <iostream>
 
 # include <oln/core/abstract/size.hh>
 # include <oln/core/coord.hh>
@@ -73,7 +73,7 @@ namespace oln {
 
     bool impl_eq(const size2d& rhs) const
     {
-      return this->nrows_ == rhs.nrows_ and
+      return this->nrows_ == rhs.nrows_ &&
              this->ncols_ == rhs.ncols_;
     }
 
