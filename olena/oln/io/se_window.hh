@@ -28,6 +28,8 @@
 #ifndef OLENA_IO_SE_WINDOW_HH_
 # define OLENA_IO_SE_WINDOW_HH_
 
+# include <mlc/type.hh>
+
 # include <oln/core/image2d.hh>
 # include <oln/core/window2d.hh>
 # include <oln/core/macros.hh>
@@ -55,7 +57,7 @@ namespace oln {
 	image2d<ntg::bin>::fwd_iter_type it(im);
 	window2d w;
 	for_all (it)
-	  if (im[it])
+	  if (!im[it])
 	    w.add(dpoint2d(it) - dpoint2d(im.nrows()/2, im.ncols()/2));
 	output = w;
 	return true;
@@ -65,9 +67,9 @@ namespace oln {
       {
 	image2d<ntg::bin> im(input.delta()*2+1, input.delta()*2+1);
 	image2d<ntg::bin>::fwd_iter_type it(im);
-	for_all (it) im[it] = false;
+	for_all (it) im[it] = true;
 	for (unsigned i = 0; i < input.card(); ++i)
-	  im[point2d(input.delta(), input.delta()) + input.dp(i)] = true;
+	  im[point2d(input.delta(), input.delta()) + input.dp(i)] = false;
 	if (!write(im, name))
 	  return false;
 	return true;

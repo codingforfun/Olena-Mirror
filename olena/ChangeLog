@@ -1,3 +1,36 @@
+2003-07-30  Reda Dehak  <reda@lrde.epita.fr>
+
+	* oln/core/box.hh,
+	oln/core/box.hxx: Fix typedefs. 
+
+	* oln/level/cc.hh, oln/level/compare.hh,
+	oln/level/connected.hh, oln/level/lut.hh,
+	oln/level/set_level.hh: Remove some Exact_cref.	
+
+2003-07-30  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/apply.hh, 
+	oln/core/abstract/dpoint.hh,
+	oln/core/fold.hh, 
+	oln/core/image1d.hh,
+	oln/core/image2d.hh, 
+	oln/core/image3d.hh,
+	oln/core/image.hh, 
+	oln/core/abstract/iter1d.hh,
+	oln/core/abstract/iter2d.hh, 
+	oln/core/abstract/iter3d.hh,
+	oln/core/abstract/neighborhood.hh, 
+	oln/io/se_neighborhood.hh,
+	oln/io/se_window.hh, 
+	oln/core/abstract/image.hh,
+	oln/core/abstract/image_with_impl.hh,
+	oln/core/impl/image_array3d.hh,
+	oln/core/impl/image_array2d.hh, 
+	oln/core/impl/image_array1d.hh: Fix includes for sanity check.
+
+	* oln/topo/dmap.hh, oln/topo/dmap.hxx: Fix typedefs and coding
+	style. Remove some Exact_cref.
+	
 2003-07-29  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/convert/conversion.hh: Fix compilation with g++-3.4.
@@ -40,7 +73,7 @@
 	oln/transforms/fft.hh: Adapt to new paradigm.
 
 	* tests/transforms/Makefile.am: Replace = by += in AM_LDFLAGS and
-	AM_CXXFLAGS definitionsi.
+	AM_CXXFLAGS definitions.
 
 2003-07-29  David Lesage  <david@lrde.epita.fr>
 

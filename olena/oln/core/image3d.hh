@@ -28,6 +28,10 @@
 #ifndef OLENA_CORE_IMAGE3D_HH
 # define OLENA_CORE_IMAGE3D_HH
 
+# include <oln/core/point3d.hh>
+# include <oln/core/dpoint3d.hh>
+# include <oln/core/fwd_iter3d.hh>
+# include <oln/core/bkd_iter3d.hh>
 # include <oln/core/impl/image_array3d.hh>
 // # include <oln/io/readable.hh>
 # include <oln/core/image.hh>

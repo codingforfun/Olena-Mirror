@@ -35,14 +35,12 @@ namespace oln {
 
   namespace level {
 
-    template <class I_>
-    void set_level(abstract::image<I_>& _inout,
-		   const Point(I_)&  p1,
-		   const Point(I_)&  p2,
-		   Value(I_)         level)
+    template <class I>
+    void set_level(abstract::image_with_dim<2,I>& inout,
+		   const Point(I)&  p1,
+		   const Point(I)&  p2,
+		   Value(I)         level)
     {
-      Exact_ref(I, inout);
-
       int iRow1 = p1.row();
       int iCol1 = p1.col();
       int iRow2 = p2.row();
@@ -62,7 +60,7 @@ namespace oln {
 	  e = ddRow - dCol;
 	  for ( i = 0; i < dCol; ++i )
 	    {
-	      inout(iRow,iCol) = level;
+	      inout(iRow, iCol) = level;
 	      while ( e >= 0 )
 		{
 		  iRow += sRow;
@@ -91,14 +89,13 @@ namespace oln {
     }
 
 
-    template <class I_, class BoxType>
-    void set_level(abstract::image<I_>&  _inout,
+    template <class I, class BoxType>
+    void set_level(abstract::image_with_dim<2,I>&   inout,
  		   BoxType&              box,
- 		   const Value(I_)&      level)
+ 		   const Value(I)&       level)
     {
       if (box.card() != 0)
 	{
-	  Exact_ref(I, inout);
 	  dpoint2d drows(box.top().row() - box.bottom().row(), 0);
 	  dpoint2d dcols(0, box.top().col() - box.bottom().col());
 	  set_level(inout, box.top(), box.top() - drows, level);

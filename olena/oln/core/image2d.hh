@@ -28,6 +28,10 @@
 #ifndef OLENA_CORE_IMAGE2D_HH
 # define OLENA_CORE_IMAGE2D_HH
 
+# include <oln/core/point2d.hh>
+# include <oln/core/dpoint2d.hh>
+# include <oln/core/fwd_iter2d.hh>
+# include <oln/core/bkd_iter2d.hh>
 # include <oln/core/impl/image_array2d.hh>
 # include <oln/core/image.hh>
 # include <oln/io/readable.hh>

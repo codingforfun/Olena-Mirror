@@ -29,7 +29,6 @@
 # define OLENA_CORE_ABSTRACT_IMAGE_WITH_IMPL_HH
 
 # include <oln/core/abstract/image_with_dim.hh>
-# include <oln/core/abstract/image_with_type.hh>
 # include <oln/core/impl/image_impl.hh>
 
 namespace oln {

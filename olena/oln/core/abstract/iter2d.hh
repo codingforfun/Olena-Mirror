@@ -31,7 +31,7 @@
 # include <oln/core/coord.hh>
 # include <oln/core/point2d.hh>
 # include <oln/core/dpoint2d.hh>
-# include <oln/core/image2d.hh>
+# include <oln/core/image2d_size.hh>
 # include <oln/core/abstract/iter.hh>
 
 # include <mlc/contract.hh>

@@ -29,7 +29,7 @@
 # define OLENA_CORE_ABSTRACT_DPOINT_HH
 
 # include <mlc/type.hh>
-
+# include <oln/core/coord.hh>
 
 namespace oln {
 

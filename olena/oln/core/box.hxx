@@ -58,7 +58,7 @@ namespace oln {
   }
 
   template <class PointType>
-  void box<PointType>::add(point p)
+  void box<PointType>::add(point_type p)
   {
     for (unsigned i = 0; i < dim(); ++i)
       {
@@ -129,19 +129,19 @@ namespace oln {
   }
 
   template <class PointType>
-  typename box<PointType>::point box<PointType>::top() const
+  typename box<PointType>::point_type box<PointType>::top() const
   {
     return top_;
   }
 
   template <class PointType>
-  typename box<PointType>::point box<PointType>::bottom() const
+  typename box<PointType>::point_type box<PointType>::bottom() const
   {
     return bottom_;
   }
 
   template <class PointType>
-  typename box<PointType>::point box<PointType>::mass_center() 
+  typename box<PointType>::point_type box<PointType>::mass_center() 
   {
     if (not_consistent_)
       make_consistent();
@@ -149,13 +149,13 @@ namespace oln {
   }
 
   template <class PointType>
-  typename box<PointType>::point box<PointType>::mass_center() const
+  typename box<PointType>::point_type box<PointType>::mass_center() const
   {
     return mass_center_;
   }
 
   template <class PointType>
-  typename box<PointType>::point box<PointType>::box_center() 
+  typename box<PointType>::point_type box<PointType>::box_center() 
   {
     if (not_consistent_)
       make_consistent();
@@ -163,7 +163,7 @@ namespace oln {
   }
 
   template <class PointType>
-  typename box<PointType>::point box<PointType>::box_center() const
+  typename box<PointType>::point_type box<PointType>::box_center() const
   {
     return box_center_;
   }

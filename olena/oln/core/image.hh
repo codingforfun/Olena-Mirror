@@ -102,22 +102,6 @@ namespace oln {
     typedef typename mlc::exact<I>::ret::template mute<T>::ret ret;
   };
 
-
-# define Value(ImgType)				\
-Exact(ImgType)::value_type
-
-# define Concrete(ImgType)			\
-typename mute<ImgType>::ret
-
-# define Iter(Iterable)				\
-Exact(Iterable)::iter_type
-
-# define Point(Pointable)			\
-Exact(Pointable)::point_type
-
-# define DPoint(DPointable)			\
-Exact(DPointable)::dpoint_type
-
 } // end of oln
 
 #endif // ! OLENA_CORE_IMAGE_HH
