@@ -1,8 +1,5 @@
 //							            -*- c++ -*-
 
-// FIXME: this test should work before any serious release.
-// XFAIL
-
 #include <oln/basics2d.hh>
 
 #include <oln/morpho/opening.hh>
@@ -32,9 +29,9 @@ check()
 {
   bool fail = false;
   
-  image2d<unsigned> lena_uint = load(rdata("lena128.pgm"));
-  image2d<signed> lena_sint = load(rdata("lena128.pgm"));
-  image2d<unsigned> lena_open = morpho::fast::opening(lena_uint, win_c4p());
+  image2d<unsigned char> lena_uint = load(rdata("lena128.pgm"));
+  image2d<unsigned char> lena_open = morpho::fast::opening(lena_uint, win_c4p());
+
   image2d<ntg::bin> minima_map(lena_uint.size());
   image2d<int_u8> max_map(lena_uint.size());
 

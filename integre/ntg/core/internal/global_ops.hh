@@ -46,6 +46,9 @@
 // macros defs
 # include <ntg/core/internal/global_ops_defs.hh>
 
+// min and max
+# include <algorithm>
+
 namespace ntg
 {
 
@@ -204,6 +207,11 @@ namespace ntg
     | Min/Max operators |
     `------------------*/
 
+    /*
+      These operators are slighly different from standard library ones
+      since they can operate on values of 2 different types.
+    */
+
     template <class T1, class T2> inline
     ntg_return_type(min, T1, T2)
     min (const T1& lhs, const T2& rhs)
@@ -221,6 +229,12 @@ namespace ntg
     }
 
   } // end of internal.
+
+  // FIXME: those are needed to handle max and min between two builtin
+  // types. Maybe std::min and std::max should be extended to work
+  // with builtin types?
+  using internal::min;
+  using internal::max;
 
 } // end of ntg.
 

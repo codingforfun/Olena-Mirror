@@ -53,7 +53,6 @@ namespace oln {
     {
     private:
       typedef typename ntg_is_a(T, ntg::non_vectorial)::ensure_type ensure_type;
-
     public:
 
       histogram() : values_(0)
@@ -61,6 +60,10 @@ namespace oln {
 	unsigned size = unsigned(ntg_max_val(T)
 				 - ntg_min_val(T)
 				 + ntg_unit_val(T));
+	// FIXME: what if T is an unsigned int?
+	// This should be checked more strictly somewhere.
+	// size = max + 1 = 0
+	precondition(size > 0);
 	values_ = new U[size];
 	for (unsigned i = 0; i < size; ++i)
 	  values_[i] = 0;
@@ -78,7 +81,7 @@ namespace oln {
       U&
       operator[](const T& i)
       {
-	return values_[unsigned(i.val() - ntg_min_val(T))];
+	return values_[unsigned(i - ntg_min_val(T))];
       }
 
       friend T min<T, U>(const histogram<T, U>& hist);
@@ -91,7 +94,7 @@ namespace oln {
 	oln_iter_type(I) p(img);
 
 	for_all (p)
-	  values_[unsigned(img[p].val())]++;
+	  values_[unsigned(img[p])]++;
       }
 
     protected:
@@ -162,7 +165,7 @@ namespace oln {
       U&
       operator[](const T& i)
       {
-	unsigned idx = unsigned(i.val() - ntg_min_val(T));
+	unsigned idx = unsigned(i - ntg_min_val(T));
 	adjust(idx);
 	return this->values_[idx];
       }
@@ -210,7 +213,7 @@ namespace oln {
       U&
       operator[](const T& i)
       {
-	unsigned idx = unsigned(i.val() - ntg_min_val(T));
+	unsigned idx = unsigned(i - ntg_min_val(T));
 	adjust(idx);
 	return this->values_[idx];
       }
@@ -334,7 +337,7 @@ namespace oln {
       // level
      oln_iter_type(I) p(im);
       for_all(p)
-	*(ptr[unsigned(im[p].val())]++) = p;
+	*(ptr[unsigned(im[p])]++) = p;
     }
 
   } // end of namespace utils

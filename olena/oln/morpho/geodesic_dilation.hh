@@ -74,7 +74,9 @@ namespace oln {
       mlc::eq<I1::dim, N::dim>::ensure();
       precondition(marker.size() == mask.size());
       precondition(level::is_greater_or_equal(mask, marker));
-      return arith::min(dilation(marker, convert::ng_to_cse(Ng)), mask);
+      return arith::min<oln_concrete_type(I1)>(dilation(marker, 
+							convert::ng_to_cse(Ng)),
+					       mask);
     }
 
     namespace sure {
@@ -116,7 +118,7 @@ namespace oln {
 	marker.border_adapt_copy(Ng.delta());
 	oln_iter_type(I1) p(marker);
 	for_all (p)
-	  output[p] = min(morpho::max(marker, p, convert::ng_to_cse(Ng)), mask[p]);
+	  output[p] = std::min(morpho::max(marker, p, convert::ng_to_cse(Ng)), mask[p]);
 	return output;
       }
 

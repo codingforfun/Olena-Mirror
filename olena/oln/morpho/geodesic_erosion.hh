@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -61,7 +61,7 @@ namespace oln {
      * wontcompile: fixme
      =*/
     template<class I1, class I2, class N>
-    oln_concrete_type(I1) 
+    oln_concrete_type(I1)
       geodesic_erosion(const abstract::non_vectorial_image<I1> & marker,
 		       const abstract::non_vectorial_image<I2> & mask,
 		       const abstract::neighborhood<N>& Ng)
@@ -70,9 +70,8 @@ namespace oln {
       mlc::eq<I1::dim, N::dim>::ensure();
       precondition(marker.size() == mask.size());
       precondition(level::is_greater_or_equal(marker, mask));
-      return arith::max(erosion(marker, convert::ng_to_cse(Ng)), mask);
+      return arith::max<oln_concrete_type(I1)>(erosion(marker, convert::ng_to_cse(Ng)), mask);
     }
-
 
     namespace sure {
       /*=processing simple_geodesic_erosion
@@ -112,7 +111,7 @@ namespace oln {
 	marker.border_adapt_copy(Ng.delta());
 	oln_iter_type(I1) p(marker);
 	for_all (p)
-	  output[p] = max(morpho::min(marker, p, convert::ng_to_cse(Ng)), mask[p]);
+	  output[p] = ntg::max(morpho::min(marker, p, convert::ng_to_cse(Ng)), mask[p]);
 	return output;
       }
 

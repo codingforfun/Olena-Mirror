@@ -1,8 +1,13 @@
+2003-10-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/core/internal/global_ops.hh: Import min and max into
+	namespace ntg.
+
 2003-08-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-       * ntg/core/behavior.hh: Fix coding style.
-       * ntg/core/internal/global_ops_traits.hh: Likewise.
-       * ntg/vect/vec.hh: Likewise.
+	* ntg/core/behavior.hh: Fix coding style.
+	* ntg/core/internal/global_ops_traits.hh: Likewise.
+	* ntg/vect/vec.hh: Likewise.
 
 2003-08-05  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 

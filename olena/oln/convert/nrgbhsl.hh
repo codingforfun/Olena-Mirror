@@ -63,8 +63,8 @@ namespace oln {
 	vec<3, float> in = v.to_float();
 	vec<3, float> out;
 
-	float max_in = std::max(in[nrgb_R], std::max(in[nrgb_B], in[nrgb_G]));
-	float min_in = std::min(in[nrgb_R], std::min(in[nrgb_B], in[nrgb_G]));
+	float max_in = ntg::max(in[nrgb_R], std::max(in[nrgb_B], in[nrgb_G]));
+	float min_in = ntg::min(in[nrgb_R], std::min(in[nrgb_B], in[nrgb_G]));
 	float diff = max_in-min_in;
 
 	out[hsl_L] = (max_in + min_in) / 2;

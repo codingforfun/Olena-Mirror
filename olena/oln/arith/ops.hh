@@ -41,24 +41,24 @@ namespace oln {
   namespace arith {
 
     oln_arith_declare_binrecval_functors_(plus,
-					  val1.exact() + val2.exact(),
-					  val.exact() + cst_);
+					  val1 + val2,
+					  val + cst_);
     // need a cast for the case int_u - int_u
     oln_arith_declare_binrecval_functors_(minus,
-					  val1.exact() - val2.exact(),
-					  val.exact() - cst_);
+					  val1 - val2,
+					  val - cst_);
     oln_arith_declare_binrecval_functors_(times,
-					  val1.exact() * val2.exact(),
-					  val.exact() * cst_);
+					  val1 * val2,
+					  val * cst_);
     oln_arith_declare_binrecval_functors_(div,
-					  val1.exact() / val2.exact(),
-					  val.exact() / cst_);
+					  val1 / val2,
+					  val / cst_);
     oln_arith_declare_binrecval_functors_(min,
-					  min(val1.exact(), val2.exact()),
-					  min(val.exact(), cst_));
+					  ntg::min(val1, val2),
+					  ntg::min(val, cst_));
     oln_arith_declare_binrecval_functors_(max,
-					  max(val1.exact(), val2.exact()),
-					  max(val.exact(), cst_));
+					  ntg::max(val1, val2),
+					  ntg::max(val, cst_));
 
     oln_arith_declare_all_binop_procs_(plus)
     oln_arith_declare_all_binop_procs_(minus)

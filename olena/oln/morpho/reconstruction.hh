@@ -137,9 +137,9 @@ namespace oln {
 	    oln_concrete_type(I1) work = output.clone();
 	    work.border_adapt_copy(Ng.delta());
 	    for_all (fwd_p)
-	      work[fwd_p] = min(morpho::max(work, fwd_p, se_plus), mask[fwd_p]);
+	      work[fwd_p] = ntg::min(morpho::max(work, fwd_p, se_plus), mask[fwd_p]);
 	    for_all (bkd_p)
-	      work[bkd_p] = min(morpho::max(work, bkd_p, se_minus), mask[bkd_p]);
+	      work[bkd_p] = ntg::min(morpho::max(work, bkd_p, se_minus), mask[bkd_p]);
 	    non_stability = !(level::is_equal(work, output));
 	    output = work;
 	  }
@@ -217,13 +217,13 @@ namespace oln {
 	  typename I1::fwd_iter_type fwd_p(output);
 	  typename I1::bkd_iter_type bkd_p(output);
 	  for_all (fwd_p)
-	    output[fwd_p] = std::min(morpho::max(output, fwd_p, Ng_plus),
+	    output[fwd_p] = ntg::min(morpho::max(output, fwd_p, Ng_plus),
 				     mask[fwd_p]);
 
 	  std::queue<oln_point_type(I1) > fifo;
 	  for_all (bkd_p)
 	    {
-	      output[bkd_p] = std::min(morpho::max(output, bkd_p, Ng_minus),
+	      output[bkd_p] = ntg::min(morpho::max(output, bkd_p, Ng_minus),
 				       mask[bkd_p]);
 	      if (internal::exist_init_dilation(bkd_p.cur(), output, mask, Ng_minus))
 		fifo.push(bkd_p);
@@ -238,7 +238,7 @@ namespace oln {
 		{
 		  if ((output[q] < output[p]) && (mask[q] != output[q]))
 		    {
-		      output[q] = std::min(output[p], mask[q]);
+		      output[q] = ntg::min(output[p], mask[q]);
 		      fifo.push(q);
 		    }
 		}
@@ -345,9 +345,9 @@ namespace oln {
 	    oln_concrete_type(I1) work = output.clone();
 	    work.border_adapt_copy(Ng.delta());
 	    for_all (fwd_p)
-	      work[fwd_p] = max(morpho::min(work, fwd_p, se_plus), mask[fwd_p]);
+	      work[fwd_p] = ntg::max(morpho::min(work, fwd_p, se_plus), mask[fwd_p]);
 	    for_all (bkd_p)
-	      work[bkd_p] = max(morpho::min(work, bkd_p, se_minus), mask[bkd_p]);
+	      work[bkd_p] = ntg::max(morpho::min(work, bkd_p, se_minus), mask[bkd_p]);
 	    non_stability = !(level::is_equal(work, output));
 	    output = work;
 	  }
@@ -423,14 +423,14 @@ namespace oln {
 	  typename I1::fwd_iter_type fwd_p(output);
 	  typename I1::bkd_iter_type bkd_p(output);
 	  for_all (fwd_p)
-	    output[fwd_p] = max(morpho::min(output, fwd_p, Ng_plus),
-				mask[fwd_p]);
+	    output[fwd_p] = ntg::max(morpho::min(output, fwd_p, Ng_plus),
+				     mask[fwd_p]);
 
 	  std::queue<oln_point_type(I1) > fifo;
 	  for_all (bkd_p)
 	    {
-	      output[bkd_p] = max(morpho::min(output, bkd_p, Ng_minus),
-				  mask[bkd_p]);
+	      output[bkd_p] = ntg::max(morpho::min(output, bkd_p, Ng_minus),
+				       mask[bkd_p]);
 	      if (internal::exist_init_erosion(bkd_p.cur(), output, mask, Ng_minus))
 		fifo.push(bkd_p);
 	    }
@@ -444,7 +444,7 @@ namespace oln {
 		{
 		  if ((output[q] > output[p]) && (mask[q] != output[q]))
 		    {
-		      output[q] = max(output[p], mask[q]);
+		      output[q] = ntg::max(output[p], mask[q]);
 		      fifo.push(q);
 		    }
 		}

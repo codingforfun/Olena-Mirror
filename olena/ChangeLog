@@ -1,5 +1,21 @@
 2003-10-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* oln/arith/internal/opdecls.hh: Support builtin types. Document.
+	* oln/arith/ops.hh: Support builtin types.
+
+	* oln/utils/histogram.hh: Support builtin types.
+	
+	* oln/convert/nrgbhsl.hh: Use ntg::{min,max} instead of
+	std::{min,max}.
+	* oln/core/box.hxx: Likewise.
+	* oln/morpho/reconstruction.hh: Likewise.
+
+	* oln/morpho/geodesic_dilation.hh: Force the output type of
+	arith::min. Use ntg::min instead of std::min.
+	* oln/morpho/geodesic_erosion.hh: Likewise with s/min/max/.
+	
+2003-10-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* tests/morpho/tests/builtin_types: New test.
 
 2003-09-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>

@@ -28,17 +28,33 @@
 #ifndef OLENA_ARITH_INTERNAL_OPDECLS_HH
 # define OLENA_ARITH_INTERNAL_OPDECLS_HH
 
-/*-------------------.
-| Binary functions.  |
-`-------------------*/
+/*
+  These macros should be rewritten / split into real code to make
+  things clearer.
 
-/* For binary operators that takes rev_values<T> arguments
-   and define ntg::internal::operator_##OPNAME##_traits.  */
+  Operations are defined between two images and between one image and
+  one constant value (with the cst suffix).
+
+  The two main components are:
+  
+  1) Define functors for each operations, taking two values and
+     returning the result.
+
+  2) Define front-end functions applying a functor on the whole image.
+     3 versions are defined, leaving the possibility to specify the
+     return type automatically, manually or using a conversion (from
+     convert).
+*/
+
+/*------------------.
+| Binary functors.  |
+`------------------*/
+
 # define oln_arith_declare_binrecval_functor_(OPNAME, OPCODE)		\
-    template<class T1, class T2 = T1>					\
-    struct f_##OPNAME : std::binary_function<const ntg::value<T1>&,	\
-      const ntg::value<T2>&,						\
-      ntg_return_type(OPNAME, T1, T2) >					\
+    template<class T1, class T2, class Ret>				\
+    struct f_##OPNAME : std::binary_function<const T1&,			\
+      const T2&,							\
+      Ret>								\
     {									\
       typedef f_##OPNAME self_type;					\
       typename self_type::result_type					\
@@ -49,30 +65,29 @@
       }									\
     } /* no ; */
 
-/* For binary operators that takes rev_values<T> arguments			\
-   and define ntg::internal::operator_##OPNAME##_traits.  */			\
-# define oln_arith_declare_binrecvalcst_functor_(OPNAME, OPCODE_CST)		\
-    template<class T1, class T2 = T1>						\
-    struct f_##OPNAME##_cst : std::unary_function<const ntg::value<T1>&,	\
-      ntg_return_type(OPNAME, T1, T2) >						\
-    {										\
-      typedef f_##OPNAME##_cst self_type;						\
-      f_##OPNAME##_cst(T2 cst) : cst_(cst) {}					\
-										\
-      typename self_type::result_type						\
-      operator()(typename self_type::argument_type val) const			\
-      {										\
-	return OPCODE_CST;							\
-      }										\
-    private:									\
-      T2 cst_;									\
+// Functor used by operations between an image and a constant
+
+# define oln_arith_declare_binrecvalcst_functor_(OPNAME, OPCODE_CST)	\
+    template<class T1, class T2, class Ret>				\
+     struct f_##OPNAME##_cst : std::unary_function<const T1&,		\
+      Ret>								\
+    {									\
+      typedef f_##OPNAME##_cst self_type;				\
+      f_##OPNAME##_cst(T2 cst) : cst_(cst) {}				\
+									\
+      typename self_type::result_type					\
+      operator()(typename self_type::argument_type val) const		\
+      {									\
+	return OPCODE_CST;						\
+      }									\
+    private:								\
+      T2 cst_;								\
     } /* no ; */
 
 /* Both the above. */
-# define oln_arith_declare_binrecval_functors_(OPNAME, OPCODE, OPCODE_CST) \
-    oln_arith_declare_binrecval_functor_(OPNAME, OPCODE);	   \
+# define oln_arith_declare_binrecval_functors_(OPNAME, OPCODE, OPCODE_CST)	\
+    oln_arith_declare_binrecval_functor_(OPNAME, OPCODE);			\
     oln_arith_declare_binrecvalcst_functor_(OPNAME, OPCODE_CST)
-
 
 /* For binary functions that work on a single known datatype.  */
 # define oln_arith_declare_binfixedtype_functor_(OPNAME, OPCODE, TYPE)	      \
@@ -102,129 +117,170 @@
     } /* no ; */
 
 /* Both the above.  */
-# define oln_arith_declare_binfixedtype_functors_(NAME, TYPE, CODE, CODE_CST) \
-    oln_arith_declare_binfixedtype_functor_(NAME, CODE, TYPE);		     \
+# define oln_arith_declare_binfixedtype_functors_(NAME, TYPE, CODE, CODE_CST)	\
+    oln_arith_declare_binfixedtype_functor_(NAME, CODE, TYPE);			\
     oln_arith_declare_binfixedtypecst_functor_(NAME, CODE_CST, TYPE)
 
-# define oln_arith_declare_binop_procs_(OPNAME)				   \
-    /* Standard application of OPNAME */				   \
-    template<class I1, class I2> inline					   \
-    typename mute<I1,							   \
-      typename f_##OPNAME<oln_value_type(I1),oln_value_type(I2)>::result_type>::ret	   \
-    OPNAME(const abstract::image<I1>& input1, const abstract::image<I2>& input2)   \
-    {									   \
-      /* KLUGE: Build the functor, don't pass it as a parameter as in	   \
-	   apply2<f_##OPNAME>(input1, input2)				   \
-	 otherwise GCC 2.95.x will ICE.  */				   \
-      return apply2(f_##OPNAME<oln_value_type(I1),oln_value_type(I2)>(), input1, input2);   \
-    }									   \
-									   \
-    /* Same as above, plus conversion.  */				   \
-    template<class C, class B, class I1, class I2> inline		   \
-    typename mute<I1,							   \
-      typename convoutput<C, B,						   \
-        typename f_##OPNAME<oln_value_type(I1),oln_value_type(I2)>::result_type>::ret>::ret \
-    OPNAME(const convert::abstract::conversion<C, B>& conv,			   \
-	 const abstract::image<I1>& input1, const abstract::image<I2>& input2)	   \
-    {									   \
-      return apply2(convert::compconv2(conv,				   \
-				    f_##OPNAME<oln_value_type(I1),oln_value_type(I2)>()),   \
-		    input1, input2);					   \
+// Shortcuts
+#define default_functor_return_type_(OPNAME, I1, I2)			\
+  typename f_##OPNAME<oln_value_type(I1),				\
+                      oln_value_type(I2),				\
+	              ntg_return_type(OPNAME,				\
+				      oln_value_type(I1),		\
+				      oln_value_type(I2))>::result_type
+
+#define default_functor_type_cst_(OPNAME, I1, T2)	\
+  f_##OPNAME##_cst<oln_value_type(I1),			\
+                   T2,					\
+	           ntg_return_type(OPNAME,		\
+			           oln_value_type(I1),	\
+			           T2)>
+
+#define default_functor_return_type_cst_(OPNAME, I1, T2)		\
+  typename default_functor_type_cst_(OPNAME, I1, T2)::result_type
+
+/*----------------------------.
+| Declare front-end functions |
+`----------------------------*/
+
+# define oln_arith_declare_binop_procs_(OPNAME)									\
+    /* 														\
+       FIXME: this is a workaround for an odd bug of icc and como						\
+       http://www.lrde.epita.fr/cgi-bin/twiki/view/Know/MysteriousTemplateFunctionOverloadingWithIccAndComo	\
+       Remove this traits and use its content directly when this bug gets fixed.				\
+    */														\
+    template <class I1, class I2>										\
+    struct arith_return_type_proxy_##OPNAME##_									\
+    {														\
+      typedef typename mute<I1, default_functor_return_type_(OPNAME, I1, I2)>::ret ret;				\
+    };														\
+														\
+    /* Standard application of OPNAME */									\
+    template<class I1, class I2> inline										\
+    typename arith_return_type_proxy_##OPNAME##_<I1, I2>::ret							\
+    OPNAME(const abstract::image<I1>& input1, const abstract::image<I2>& input2)				\
+    {														\
+      typedef oln_value_type(I1) T1;										\
+      typedef oln_value_type(I2) T2;										\
+      /* KLUGE: Build the functor, don't pass it as a parameter as in						\
+	   apply2<f_##OPNAME>(input1, input2)									\
+	 otherwise GCC 2.95.x will ICE.  */									\
+      return apply2(f_##OPNAME<T1,										\
+		               T2,										\
+		               ntg_return_type(OPNAME, T1, T2)>(),						\
+		    input1, input2);										\
+    }														\
+														\
+    /* Same as above, plus conversion.  */									\
+    template<class C, class B, class I1, class I2> inline							\
+    typename mute<I1,												\
+      typename convoutput<C, B, default_functor_return_type_(OPNAME, I1, I2)>::ret>::ret			\
+    OPNAME(const convert::abstract::conversion<C, B>& conv,							\
+	   const abstract::image<I1>& input1, const abstract::image<I2>& input2)				\
+    {														\
+      typedef oln_value_type(I1) T1;										\
+      typedef oln_value_type(I2) T2;										\
+      return apply2(convert::compconv2(conv,									\
+				      f_##OPNAME<T1,								\
+				                 T2,								\
+						 ntg_return_type(OPNAME, T1, T2)>()),				\
+		    input1, input2);										\
+    }														\
+														\
+    /* Same as above, with inline conversion in the functor. */							\
+    template<class IRet, class I1, class I2> inline								\
+    typename mute<I1, oln_value_type(IRet)>::ret								\
+    OPNAME(const abstract::image<I1>& input1, const abstract::image<I2>& input2)				\
+    {														\
+      return apply2(f_##OPNAME<oln_value_type(I1),								\
+		               oln_value_type(I2),								\
+		               oln_value_type(IRet)>(),								\
+		    input1, input2);										\
     }
 
-# define oln_arith_declare_binopcst_procs_(OPNAME)			  \
-    /* Apply OPNAME with a constant as second operand.  */		  \
-    template<class I, class T> inline					  \
-    typename mute<I,							  \
-      typename f_##OPNAME##_cst<oln_value_type(I), T>::result_type>::ret		  \
-    OPNAME##_cst(const abstract::image<I>& input, T val)			  \
-    {									  \
-      return apply(f_##OPNAME##_cst<oln_value_type(I),T>(val), input);		  \
-    }									  \
-									  \
-    /* Same as above, plus conversion.  */				  \
-    template<class C, class B, class I, class T> inline				  \
-    typename mute<I,							  \
-      typename convoutput<C, B,						  \
-        typename f_##OPNAME##_cst<oln_value_type(I), T>::result_type>::ret>::ret	  \
-    OPNAME##_cst(const convert::abstract::conversion<C, B>& conv, const abstract::image<I>& input, T val) \
-    {									  \
-      return apply(convert::compconv1(conv,				  \
-				   f_##OPNAME##_cst<oln_value_type(I),T>(val)),	  \
-		   input);						  \
+# define oln_arith_declare_binopcst_procs_(OPNAME)						\
+    /* Apply OPNAME with a constant as second operand.  */					\
+												\
+    /* FIXME: cf explications above */								\
+    template <class I, class T>									\
+    struct arith_return_type_proxy_cst_##OPNAME##_						\
+    {												\
+      typedef typename mute<I, default_functor_return_type_cst_(OPNAME, I, T)>::ret ret;	\
+    };												\
+												\
+    template<class I, class T> inline								\
+    typename arith_return_type_proxy_cst_##OPNAME##_<I, T>::ret					\
+    OPNAME##_cst(const abstract::image<I>& input, T val)					\
+    {												\
+      typedef default_functor_type_cst_(OPNAME, I, T) functor_type;				\
+      return apply(functor_type(val), input);							\
+    }												\
+												\
+    /* Same as above, plus conversion.  */							\
+    template<class C, class B, class I, class T> inline						\
+    typename mute<I,										\
+      typename convoutput<C, B,	default_functor_return_type_cst_(OPNAME, I, T)>::ret>::ret	\
+    OPNAME##_cst(const convert::abstract::conversion<C, B>& conv,				\
+		 const abstract::image<I>& input, T val)					\
+    {												\
+      typedef default_functor_type_cst_(OPNAME, I, T) functor_type;				\
+      return apply(convert::compconv1(conv, functor_type(val)), input);				\
+    }												\
+												\
+    template<class IRet, class I, class T> inline						\
+    typename mute<I, oln_value_type(IRet)>::ret							\
+    OPNAME##_cst(const abstract::image<I>& input, T val)					\
+    {												\
+      return apply(f_##OPNAME##_cst<oln_value_type(I), T, oln_value_type(IRet)>(val), input);	\
     }
 
 # define oln_arith_declare_all_binop_procs_(OPNAME)	\
     oln_arith_declare_binop_procs_(OPNAME)		\
     oln_arith_declare_binopcst_procs_(OPNAME)
 
-
-/* Same as oln_arith_declare_binop_procs_, for functor parametred by
-   a single type.  */
-# define oln_arith_declare_semigeneric_binop_procs_(OPNAME)		\
-    /* Standard application of OPNAME */				\
-    template<class I1, class I2> inline					\
-    typename mute<I1,							\
-      typename f_##OPNAME<oln_value_type(I1)>::result_type>::ret			\
-    OPNAME(const abstract::image<I1>& input1, const abstract::image<I2>& input2) \
-    {									\
-      return apply2<f_##OPNAME>(input1, input2);			\
-    }									\
-									\
-    /* Same as above, plus conversion.  */				\
-    template<class C, class B, class I1, class I2> inline			\
-    typename mute<I1,							\
-      typename convoutput<C, B,						\
-        typename f_##OPNAME<oln_value_type(I1)>::result_type>::ret>::ret		\
-    OPNAME(const convert::abstract::conversion<C, B>& conv,				\
-	 const abstract::image<I1>& input1, const abstract::image<I2>& input2)		\
-    {									\
-      return apply2(convert::compconv2(conv, f_##OPNAME<oln_value_type(I1)>()),	\
-		    input1, input2);					\
-    }
-
 /* Same as oln_arith_declare_nongenericbinop_procs_ but for non template
    functors.  */
-# define oln_arith_declare_nongenericbinop_procs_(OPNAME)		  \
-    /* Standard application of OPNAME */				  \
-    template<class I1, class I2> inline					  \
-    typename mute<I1, typename f_##OPNAME::result_type>::ret		  \
-    OPNAME(const abstract::image<I1>& input1, const abstract::image<I2>& input2)  \
-    {									  \
-      return apply2<f_##OPNAME>(input1, input2);			  \
-    }									  \
-									  \
-    /* Same as above, plus conversion.  */				  \
-    template<class C, class B, class I1, class I2> inline			  \
-    typename mute<I1,							  \
-      typename convoutput<C, B, typename f_##OPNAME::result_type>::ret>::ret \
-    OPNAME(const convert::abstract::conversion<C, B>& conv,			  \
-	 const abstract::image<I1>& input1, const abstract::image<I2>& input2)	  \
-    {									  \
-      return apply2(convert::compconv2(conv, f_##OPNAME()),		  \
-		    input1, input2);					  \
+# define oln_arith_declare_nongenericbinop_procs_(OPNAME)				\
+    /* Standard application of OPNAME */						\
+    template<class I1, class I2> inline							\
+    typename mute<I1, typename f_##OPNAME::result_type>::ret				\
+    OPNAME(const abstract::image<I1>& input1, const abstract::image<I2>& input2)	\
+    {											\
+      return apply2<f_##OPNAME>(input1, input2);					\
+    }											\
+											\
+    /* Same as above, plus conversion.  */						\
+    template<class C, class B, class I1, class I2> inline				\
+    typename mute<I1,									\
+      typename convoutput<C, B, typename f_##OPNAME::result_type>::ret>::ret		\
+    OPNAME(const convert::abstract::conversion<C, B>& conv,				\
+	   const abstract::image<I1>& input1, const abstract::image<I2>& input2)	\
+    {											\
+      return apply2(convert::compconv2(conv, f_##OPNAME()),				\
+		    input1, input2);							\
     }
 
 /* Same as oln_arith_declare_nongenericbinopcst_procs_ but for non
    template functors.  */
-# define oln_arith_declare_nongenericbinopcst_procs_(OPNAME)		    \
-    /* Apply OPNAME with a constant as second operand.  */		    \
-    template<class I, class T> inline					    \
-    typename mute<I, typename f_##OPNAME##_cst::result_type>::ret	    \
-    OPNAME##_cst(const abstract::image<I>& input, T val)		    \
-    {									    \
-      return apply(f_##OPNAME##_cst(val), input);			    \
-    }									    \
-									    \
-    /* Same as above, plus conversion.  */				    \
-    template<class C, class B, class I, class T> inline				    \
-    typename mute<I,							    \
-      typename convoutput<C, B,						    \
-        typename f_##OPNAME##_cst::result_type>::ret>::ret		    \
-    OPNAME##_cst(const convert::abstract::conversion<C, B>& conv, const abstract::image<I>& input, T val)   \
-    {									    \
-      return apply(convert::compconv1(conv, f_##OPNAME##_cst(val)),	    \
-		   input);						    \
+# define oln_arith_declare_nongenericbinopcst_procs_(OPNAME)		\
+    /* Apply OPNAME with a constant as second operand.  */		\
+    template<class I, class T> inline					\
+    typename mute<I, typename f_##OPNAME##_cst::result_type>::ret	\
+    OPNAME##_cst(const abstract::image<I>& input, T val)		\
+    {									\
+      return apply(f_##OPNAME##_cst(val), input);			\
+    }									\
+									\
+    /* Same as above, plus conversion.  */				\
+    template<class C, class B, class I, class T> inline			\
+    typename mute<I,							\
+      typename convoutput<C, B,						\
+        typename f_##OPNAME##_cst::result_type>::ret>::ret		\
+    OPNAME##_cst(const convert::abstract::conversion<C, B>& conv, 	\
+		 const abstract::image<I>& input, T val)		\
+    {									\
+      return apply(convert::compconv1(conv, f_##OPNAME##_cst(val)),	\
+		   input);						\
     }
 
 /* Same as oln_arith_declare_all_nongenericbinop_procs_ but for non
@@ -232,7 +288,6 @@
 # define oln_arith_declare_all_nongenericbinop_procs_(OPNAME)	\
     oln_arith_declare_nongenericbinop_procs_(OPNAME)		\
     oln_arith_declare_nongenericbinopcst_procs_(OPNAME)
-
 
 /*------------------.
 | Unary functions.  |
@@ -248,42 +303,71 @@
       }									\
     } /* no ; */
 
-# define oln_arith_declare_nongenericunop_procs_(OPNAME)		  \
-    /* Standard application of OPNAME */				  \
-    template<class I> inline						  \
-    typename mute<I, typename f_##OPNAME::result_type>::ret		  \
-    OPNAME(const abstract::image<I>& input1)					  \
-    {									  \
-      return apply<f_##OPNAME>(input1);					  \
-    }									  \
-									  \
-    /* Same as above, plus conversion.  */				  \
-    template<class C, class B, class I> inline				  \
-    typename mute<I,							  \
-      typename convoutput<C, B, typename f_##OPNAME::result_type>::ret>::ret \
-    OPNAME(const convert::abstract::conversion<C, B>& conv, const abstract::image<I>& input1)  \
-    {									  \
-      return apply(convert::compconv2(conv, f_##OPNAME()), input1);	  \
+# define oln_arith_declare_nongenericunop_procs_(OPNAME)					\
+    /* Standard application of OPNAME */							\
+    template<class I> inline									\
+    typename mute<I, typename f_##OPNAME::result_type>::ret					\
+    OPNAME(const abstract::image<I>& input1)							\
+    {												\
+      return apply<f_##OPNAME>(input1);								\
+    }												\
+												\
+    /* Same as above, plus conversion.  */							\
+    template<class C, class B, class I> inline							\
+    typename mute<I,										\
+      typename convoutput<C, B, typename f_##OPNAME::result_type>::ret>::ret			\
+    OPNAME(const convert::abstract::conversion<C, B>& conv, const abstract::image<I>& input1)	\
+    {												\
+      return apply(convert::compconv2(conv, f_##OPNAME()), input1);				\
     }
 
-# define oln_arith_declare_unop_procs_(OPNAME)				      \
-    /* Standard application of OPNAME */				      \
-    template<class I> inline						      \
-    typename mute<I, typename f_##OPNAME<oln_value_type(I)>::result_type>::ret	      \
-    OPNAME(const abstract::image<I>& input1)					      \
-    {									      \
-      return apply(f_##OPNAME<oln_value_type(I)>(), input1);			      \
-    }									      \
-									      \
-    /* Same as above, plus conversion.  */				      \
-    template<class C, class B, class I> inline					      \
-    typename mute<I,							      \
-      typename convoutput<C, B,						      \
-        typename f_##OPNAME<oln_value_type(I)>::result_type>::ret>::ret		      \
-    OPNAME(const convert::abstract::conversion<C>& conv, const abstract::image<I>& input1)      \
-    {									      \
-      return apply(convert::compconv2(conv, f_##OPNAME<oln_value_type(I)>()), input1); \
+# define oln_arith_declare_unop_procs_(OPNAME)							\
+    /* Standard application of OPNAME */							\
+    template<class I> inline									\
+    typename mute<I, typename f_##OPNAME<oln_value_type(I)>::result_type>::ret			\
+    OPNAME(const abstract::image<I>& input1)							\
+    {												\
+      return apply(f_##OPNAME<oln_value_type(I)>(), input1);					\
+    }												\
+												\
+    /* Same as above, plus conversion.  */							\
+    template<class C, class B, class I> inline							\
+    typename mute<I,										\
+      typename convoutput<C, B,									\
+        typename f_##OPNAME<oln_value_type(I)>::result_type>::ret>::ret				\
+    OPNAME(const convert::abstract::conversion<C>& conv, const abstract::image<I>& input1)	\
+    {												\
+      return apply(convert::compconv2(conv, f_##OPNAME<oln_value_type(I)>()), input1);		\
     }
 
+// FIXME: this code sounds odd and isn't used anywhere.
+// It should be rewritten properly if we want to keep it.
+# if 0
 
-#endif // OLENA_ARITH_INTERNAL_OPDECLS_HH
+/* Same as oln_arith_declare_binop_procs_, for functor parametred by
+   a single type.  */
+# define oln_arith_declare_semigeneric_binop_procs_(OPNAME)				\
+    /* Standard application of OPNAME */						\
+    template<class I1, class I2> inline							\
+    typename mute<I1,									\
+      typename f_##OPNAME<oln_value_type(I1), oln_value_type(I1)>::result_type>::ret	\
+    OPNAME(const abstract::image<I1>& input1, const abstract::image<I2>& input2)	\
+    {											\
+      return apply2<f_##OPNAME>(input1, input2);					\
+    }											\
+											\
+    /* Same as above, plus conversion.  */						\
+    template<class C, class B, class I1, class I2> inline				\
+    typename mute<I1,									\
+      typename convoutput<C, B,								\
+        typename f_##OPNAME<oln_value_type(I1)>::result_type>::ret>::ret		\
+    OPNAME(const convert::abstract::conversion<C, B>& conv,				\
+	 const abstract::image<I1>& input1, const abstract::image<I2>& input2)		\
+    {											\
+      return apply2(convert::compconv2(conv, f_##OPNAME<oln_value_type(I1)>()),		\
+		    input1, input2);							\
+    }
+
+# endif
+
+#endif // ! OLENA_ARITH_INTERNAL_OPDECLS_HH
