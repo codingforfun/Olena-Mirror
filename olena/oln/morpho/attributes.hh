@@ -388,7 +388,7 @@ namespace oln {
 			const env_type &) :
 	  reflevel_(input[p]),
 	  area_(ntg_unit_val(value_type)),
-	  value_(ntg_unit_val(value_type))
+	  value_(input[p])
 	  {
 	  };
 
