@@ -1,10 +1,15 @@
+2002-09-19  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/types/int_u.hh: Replace trunc(f) by round(f) in int_u float
+	constructor.
+
 2002-09-19  Emmanuel Turquin  <turqui_e@epita.fr>
 
 	* oln/types/cplx.hh, oln/types/optraits_cplx.hh,
 	oln/types/cplx_representation.hh: New files.
-        * oln/types/predecls.hh: Updated consequently.
-        * oln/types/all.hh: Updated consequently.
-	* oln/Makefile.am (nobase_oln_HEADERS): Added new files
+        * oln/types/predecls.hh: Update consequently.
+        * oln/types/all.hh: Update consequently.
+	* oln/Makefile.am (nobase_oln_HEADERS): Add new files
 	mentionned above.
 
 2002-09-18  Nicolas Burrus  <burrus_n@lrde.epita.fr>
