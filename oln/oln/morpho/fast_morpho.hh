@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -41,6 +41,6 @@ namespace oln {
   } // end of morpho
 } // end of oln
 
-#include <oln/morpho/fast_morpho.hxx>
+# include <oln/morpho/fast_morpho.hxx>
 
 #endif // ! OLENA_MORPHO_FAST_MORPHO_HH

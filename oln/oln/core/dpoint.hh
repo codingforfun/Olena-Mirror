@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -48,7 +48,7 @@ namespace oln {
   template< unsigned Dim >
   struct dpoint_for_dim {};
 
-#define _DPointForDim(DIM, TYPE)		\
+# define _DPointForDim(DIM, TYPE)		\
   template<>					\
   struct dpoint_for_dim<DIM> {			\
     typedef TYPE ret;				\

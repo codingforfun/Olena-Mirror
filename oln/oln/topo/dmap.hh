@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -126,7 +126,8 @@ namespace oln {
       T		       	_infTy;
     };
 
-    image<float> exact_dmap(const image<bin>& input);
+    template <class _I>
+    image2d<float> exact_dmap(const image<_I>& _input);
 
   } // end of topo.
 

@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,7 +34,7 @@
 // structuring elements". Pattern Recognition Letters,
 // 17(14):1451-1460, 1996.
 
-#include <oln/utils/histogram.hh>
+# include <oln/utils/histogram.hh>
 
 namespace oln {
   namespace morpho {

@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,7 +28,7 @@
 #ifndef OLENA_VALUE_OPTRAITS_SCALAR_HH_
 # define OLENA_VALUE_OPTRAITS_SCALAR_HH_
 
-#include <typeinfo>
+# include <typeinfo>
 
 # include <oln/meta/type.hh>
 

@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,9 +31,11 @@
 # include <oln/config/system.hh>
 
 # include <oln/types/optraits_scalar.hh>
+# include <oln/types/optraits_builtins_int_defs.hh>
 # include <oln/types/typetraits_builtins_int.hh>
 
-# include "optraits_builtins_int_defs.hh"
+// FIXME: shouldn't this be included by system.hh ?
+# include <limits.h>
 
 # include <string>
 
@@ -41,7 +43,7 @@
 //  optraits for builtins
 //
 //  dev note : optraits<builtins> artihmetic operators are only called
-//  when there is an operator_xxx_traits defined, else buitlins are 
+//  when there is an operator_xxx_traits defined, else buitlins are
 //  converted into oln type.
 //
 ///////////////////////////////////////////////////////////////////////////////

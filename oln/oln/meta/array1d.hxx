@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,7 +28,7 @@
 #ifndef OLENA_META_ARRAY1D_HXX
 # define OLENA_META_ARRAY1D_HXX
 
-#include <oln/meta/arraynd.hh>
+# include <oln/meta/arraynd.hh>
 
 namespace oln {
 

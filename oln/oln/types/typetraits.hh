@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,7 +33,7 @@ namespace oln
 
   struct undefined;
 
-  template <class T> 
+  template <class T>
   struct typetraits
   {
     typedef undefined op_traits;

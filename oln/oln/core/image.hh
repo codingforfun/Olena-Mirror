@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -72,7 +72,7 @@ Exact(DPointable)::dpoint
 
   template<unsigned DIM>  struct image_for_dim {};
 
-#define _ImageForDim(DIM, TYPE)                 \
+# define _ImageForDim(DIM, TYPE)                 \
   template<>                                    \
   struct image_for_dim<DIM> {                   \
     template<class T>                           \

@@ -1,4 +1,4 @@
-// Copyright 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -36,9 +36,9 @@
 
 namespace oln {
   namespace morpho {
-#   include <oln/morpho/thickening.inc>
+# include <oln/morpho/thickening.inc>
     namespace fast {
-#     include <oln/morpho/thickening.inc>
+# include <oln/morpho/thickening.inc>
     }
   }
 }

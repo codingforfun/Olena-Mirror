@@ -1,14 +1,13 @@
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.54])
+AC_PREREQ([2.57])
 
 m4_include(../../oln-version.m4)
 
 AC_INIT([oln], OLN_VERSION, OLN_CONTACT)
 AC_CONFIG_AUX_DIR([..])
 AC_CONFIG_SRCDIR([defs.in])
-AM_INIT_AUTOMAKE([1.7.1 no-define foreign dist-bzip2])
-AM_MAINTAINER_MODE
+AM_INIT_AUTOMAKE([1.7.2 no-define foreign dist-bzip2])
 
 # check for Olena sources and flags
 OLN_PATH_LOCAL([..])
@@ -22,6 +21,7 @@ AC_WITH_CXX_ZLIB
 AC_WITH_CXX_FFTW
 
 # Tests auto-generate stuff using the C++ compiler and its flags
+AC_SUBST([GXX])
 AC_DEFINE_UNQUOTED([CXX], ["$CXX"], [The C++ compiler])
 AC_DEFINE_UNQUOTED([CXXFLAGS], ["$CXXFLAGS"], [The C++ compiler flags])
 AC_DEFINE_UNQUOTED([CPPFLAGS], ["$CPPFLAGS"], [The C/C++ preprocessor flags])

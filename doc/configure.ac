@@ -1,13 +1,12 @@
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.54])
+AC_PREREQ([2.57])
 
 m4_include(../oln-version.m4)
 
 AC_INIT([oln-doc], OLN_VERSION, OLN_CONTACT)
 AC_CONFIG_SRCDIR([ChangeLog])
-AM_INIT_AUTOMAKE([1.7.1 no-define foreign dist-bzip2])
-AM_MAINTAINER_MODE
+AM_INIT_AUTOMAKE([1.7.2 no-define foreign dist-bzip2])
 
 AC_CONFIG_FILES([Makefile])
 
@@ -33,7 +32,7 @@ OLN_COMPONENT([doc], [manuals], [oln_cv_build_ref], [the Olena manuals],
          oln_doc_dir=''
          AC_MSG_WARN([texi2dvi not found -- documentation cannot be built])
       fi
- 
+
       AC_CHECK_PROGS([GETDEFS], [getdefs])
       if test -z "$GETDEFS"; then
          oln_doc_dir=''
@@ -46,7 +45,7 @@ OLN_COMPONENT([doc], [manuals], [oln_cv_build_ref], [the Olena manuals],
          AC_MSG_WARN([hevea not found -- documentation cannot be built])
       fi
 
-      if test -n "$oln_doc_dir"; then 
+      if test -n "$oln_doc_dir"; then
          OLN_DOC_SUBDIRS="$OLN_DOC_SUBDIRS $oln_doc_dir"
          AC_CONFIG_FILES([doc/Makefile])
       fi])

@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -77,7 +77,7 @@
 
 
 /* For binary functions that work on a single known datatype.  */
-#define _OLN_ARITH_DECLARE_BINFIXEDTYPE_FUNCTOR(OPNAME, OPCODE, TYPE)	      \
+# define _OLN_ARITH_DECLARE_BINFIXEDTYPE_FUNCTOR(OPNAME, OPCODE, TYPE)	      \
     struct f_##OPNAME : std::binary_function< const TYPE&, const TYPE&, TYPE> \
     {									      \
       const result_type							      \
@@ -89,7 +89,7 @@
     } /* no ; */
 
 /* For binary functions that work on a single known datatype.  */
-#define _OLN_ARITH_DECLARE_BINFIXEDTYPECST_FUNCTOR(OPNAME, OPCODE_CST, TYPE) \
+# define _OLN_ARITH_DECLARE_BINFIXEDTYPECST_FUNCTOR(OPNAME, OPCODE_CST, TYPE) \
     struct f_##OPNAME##_cst: std::unary_function<const TYPE, TYPE>	     \
     {									     \
       f_##OPNAME##_cst(TYPE cst) : _cst(cst) {}				     \
@@ -104,7 +104,7 @@
     } /* no ; */
 
 /* Both the above.  */
-#define _OLN_ARITH_DECLARE_BINFIXEDTYPE_FUNCTORS(NAME, TYPE, CODE, CODE_CST) \
+# define _OLN_ARITH_DECLARE_BINFIXEDTYPE_FUNCTORS(NAME, TYPE, CODE, CODE_CST) \
     _OLN_ARITH_DECLARE_BINFIXEDTYPE_FUNCTOR(NAME, CODE, TYPE);		     \
     _OLN_ARITH_DECLARE_BINFIXEDTYPECST_FUNCTOR(NAME, CODE_CST, TYPE)
 
@@ -241,7 +241,7 @@
 `------------------*/
 
 /* For binary functions that work on a single known datatype.  */
-#define _OLN_ARITH_DECLARE_UNFIXEDTYPE_FUNCTOR(OPNAME, TYPE, OPCODE)	\
+# define _OLN_ARITH_DECLARE_UNFIXEDTYPE_FUNCTOR(OPNAME, TYPE, OPCODE)	\
     struct f_##OPNAME : std::unary_function< const TYPE&, TYPE>		\
     {									\
       const result_type operator()(argument_type val) const		\

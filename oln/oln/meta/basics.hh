@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -47,6 +47,8 @@ namespace oln {
   namespace meta {
 
     struct false_t;
+
+    struct undefined {};
 
     struct true_t  {
       static void is_true() {}

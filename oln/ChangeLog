@@ -1,111 +1,175 @@
+2003-01-16  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ChangeLog: clean.
+
+	* oln/types/typetraits_builtins_int.hh, oln/types/range.hh,
+	oln/types/optraits_builtins_int.hh, oln/types/int_u.hh,
+	oln/types/int_s.hh, oln/types/global_ops.hh, oln/types/cycle.hh,
+	oln/types/bin.hh, oln/types/vec.hh, oln/types/cplx.hh,
+	oln/types/optraits_cplx.hh, oln/types/color.hh: Fix includes.
+
+2003-01-16  Akim Demaille  <akim@epita.fr>
+
+	* tests/sanity/includes.test: Don't jump over `old/' which no
+	longer exists.
+
+2003-01-16  Akim Demaille  <akim@epita.fr>
+
+	* tests/sanity/includes.test: Support arguments on command line.
+	* oln/types/behaviour.hh (strict::get::apply): Use TO_OLN_CAST.
+	* oln/types/optraits_int_u.hh: Include oln/types/global_ops.hh,
+	not oln/types/global_ops_traits.hh.
+
+2003-01-16  Akim Demaille  <akim@epita.fr>
+
+	* tests/configure.ac: Require Autoconf 2.57, Automake 1.7.2.
+	(AM_MAINTAINER_MODE): Remove it, since it doesn't solve anything,
+	at the contrary.
+	* tests/defs.in (GXX): New.
+	Use it to add G++ specific flags to CXXFLAGS.
+	* tests/sanity/includes.test (CXXFLAGS): Add -Werror when using G++.
+
+2003-01-16  Akim Demaille  <akim@epita.fr>
+
+	* tests/meta/gen_test.cc: Indenting changes.
+
+2003-01-15  Akim Demaille  <akim@epita.fr>
+
+	* configure.ac: Require Autoconf 2.57, Automake 1.7.2.
+	(AM_MAINTAINER_MODE): Remove it, since it doesn't solve anything,
+	at the contrary.
+	* Makefile.am (maintainer-check): New.
+
+2003-01-14  Yann Régis-Gianas  <yann@lrde.epita.fr>
+
+	* oln/core/point1d.hh: Add dpoint1d typedef.
+	* oln/core/point2d.hh: Add dpoint2d typedef.
+	* oln/core/point3d.hh: Add dpoint3d typedef.
+	* oln/core/point.hh: Minor change.
+	* oln/meta/basics.hh: Add an 'undefined' class for static
+	                          error reporting.
+	* oln/core/box.hh:
+		- Parameter is changed to 'PointType'.
+		- (overlay): New.
+		- (inner_boxes_mean_dim): New.
+		- (inner_boxes_card): New.
+	* oln/core/box.hxx: Implement new interface.
+	* oln/level/set_level.hh: Empty box are not drawn.
+	* oln/topo/dmap.hh: 'exact_dmap' is template <class _I>.
+	* oln/topo/dmap.hxx: Implement it, Fix some bugs.
+
 2003-01-10  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* oln/oln/arith/ops.hh: replace std::min and std::max by types min
+	* oln/level/set_level.hh, oln/types/range.hh, 
+	oln/types/cplx.hh: Add missing includes.
+	
+2003-01-10  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/arith/ops.hh: Replace std::min and std::max by types min
 	and max operators.
 
-	* oln/oln/types/optraits_scalar.hh: adapt to new optraits_top.
-	* oln/oln/types/optraits.hh: extend static hierarchy to
+	* oln/types/optraits_scalar.hh: Adapt to new optraits_top.
+	* oln/types/optraits.hh: Extend static hierarchy to
 	optraits_top.
 
-	* oln/oln/types/bin.hh, oln/oln/types/optraits_bin.hh,
-	oln/oln/types/cplx.hh, oln/oln/types/optraits_cplx.hh,
-	oln/oln/types/cycle.hh, oln/oln/types/optraits_cycle.hh,
-	oln/oln/types/int_u.hh, oln/oln/types/optraits_int_u.hh,
-	oln/oln/types/int_s.hh, oln/oln/types/optraits_int_s.hh,
-	oln/oln/types/range.hh, oln/oln/types/optraits_range.hh,
-	oln/oln/types/vec.hh, oln/oln/types/optraits_vec.hh,
-	oln/oln/types/behaviour.hh, oln/oln/types/all.hh: temporarily fix
+	* oln/types/bin.hh, oln/types/optraits_bin.hh,
+	oln/types/cplx.hh, oln/types/optraits_cplx.hh,
+	oln/types/cycle.hh, oln/types/optraits_cycle.hh,
+	oln/types/int_u.hh, oln/types/optraits_int_u.hh,
+	oln/types/int_s.hh, oln/types/optraits_int_s.hh,
+	oln/types/range.hh, oln/types/optraits_range.hh,
+	oln/types/vec.hh, oln/types/optraits_vec.hh,
+	oln/types/behaviour.hh, oln/types/all.hh: Temporarily fix
 	includes.
 
-	* oln/oln/types/optraits_vec.hh: fix zero() return type.
-	* oln/oln/types/optraits_cplx.hh: fix zero() and unit() return
+	* oln/types/optraits_vec.hh: Fix zero() return type.
+	* oln/types/optraits_cplx.hh: Fix zero() and unit() return
 	types.
-	
+
 2003-01-10  Yann Régis-Gianas  <yann@lrde.epita.fr>
 
-	* oln/oln/topo/dmap.hh: new.
-	* oln/oln/topo/dmap.hxx: likewise.	
-	* oln/oln/Makefile.am: add dmap.h[xx,h]
-	* oln/oln/types/nrgb.hh: use a singleton for classic color.
-	* oln/oln/core/box.hxx(make_consistent): test the flag.
+	* oln/topo/dmap.hh: New.
+	* oln/topo/dmap.hxx: Likewise.
+	* oln/Makefile.am: Add dmap.h[xx,h]
+	* oln/types/nrgb.hh: Use a singleton for classic color.
+	* oln/core/box.hxx(make_consistent): Test the flag.
 
 2003-01-09  Yann Régis-Gianas  <yann@lrde.epita.fr>
 
-	* oln/oln/level/cc.hh: fix a bug.
-	* oln/oln/Makefile.am: distribute box.hh, box.hxx and set_level.hh
-	* oln/oln/types/int_u.hh: fix include bug.
-	* oln/oln/types/int_s.hh: idem.
-	* oln/oln/types/color.hh: add a 3 components constructor.
-	* oln/oln/types/nrgb.hh: add classic rgb color.
-	* oln/oln/core/box.hh: new.
-	* oln/oln/core/box.hxx: likewise.
-	* oln/oln/level/set_level.hh: new.
+	* oln/level/cc.hh: Fix a bug.
+	* oln/Makefile.am: Distribute box.hh, box.hxx and set_level.hh
+	* oln/types/int_u.hh: Fix include bug.
+	* oln/types/int_s.hh: Idem.
+	* oln/types/color.hh: Add a 3 components constructor.
+	* oln/types/nrgb.hh: Add classic rgb color.
+	* oln/core/box.hh: New.
+	* oln/core/box.hxx: Likewise.
+	* oln/level/set_level.hh: New.
 
 2003-01-09  Yann Régis-Gianas  <yann@lrde.epita.fr>
 
-	* oln/oln/level/cc.hh: do not use optional.hh stuff anymore.
-	* oln/oln/meta/optional.hh: fix a bug.
+	* oln/level/cc.hh: Do not use optional.hh stuff anymore.
+	* oln/meta/optional.hh: Fix a bug.
 
 2003-01-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* oln/types/optraits_bin.hh: fix logical "and" and "xor" 
+	* oln/types/optraits_bin.hh: Fix logical "and" and "xor"
 	operators.
 
-	* oln/tests/types/tests/bin2: fix comparisons.
-	* oln/tests/types/tests/bin3: new test.
+	* oln/tests/types/tests/bin2: Fix comparisons.
+	* oln/tests/types/tests/bin3: New test.
 
 2003-01-07  Nicolas Burrus  <nes@lrde.epita.fr>
 
-	* oln/morpho/geodesic_dilation.hh: use arith::min instead of
+	* oln/morpho/geodesic_dilation.hh: Use arith::min instead of
 	morpho::min.
-	* oln/morpho/hit_or_miss.inc: likewise.
-	* oln/morpho/geodesic_erosin.hh: use arith::max instead of
+	* oln/morpho/hit_or_miss.inc: Likewise.
+	* oln/morpho/geodesic_erosin.hh: Use arith::max instead of
 	morpho::min.
 
-	* oln/tests/configure.ac: adapt to new arith directory.
-	* oln/tests/arith, oln/tests/arith/tests: new directories.
-	* oln/tests/arith/runtests, oln/tests/arith/Makefile.am: new files.
+	* oln/tests/configure.ac: Adapt to new arith directory.
+	* oln/tests/arith, oln/tests/arith/tests: New directories.
+	* oln/tests/arith/runtests, oln/tests/arith/Makefile.am: New files.
 
-	* oln/tests/arith/tests/min1: new test.
-	* oln/tests/types/tests/bin2: new test.
+	* oln/tests/arith/tests/min1: New test.
+	* oln/tests/types/tests/bin2: New test.
 
-	* oln/oln/core/apply.hh: add workaround for g++-2.95 ICE with
+	* oln/core/apply.hh: Add workaround for g++-2.95 ICE with
 	direct meta class template parameter instanciation as function
 	parameter.
 
-	* oln/oln/types/optraits_bin.hh: add traits for min and max.
+	* oln/types/optraits_bin.hh: Add traits for min and max.
 
-	* oln/morpho/minmax.hh: remove useless min and max operators.
+	* oln/morpho/minmax.hh: Remove useless min and max operators.
 	Compatibility is preserved with older versions, but morpho::min
 	and morpho::max for arithmetic operations are obsolete.
 
 2003-01-07  Yann Régis-Gianas  <yann@lrde.epita.fr>
 
-	* oln/core/internal/window.hh: disable precondition of 'add'.
+	* oln/core/internal/window.hh: Disable precondition of 'add'.
 
 2003-01-07  Yann Régis-Gianas  <yann@lrde.epita.fr>
 
-	* oln/meta/optional.hh: new.
-	* oln/level/cc.hh: 
-		add 'update_nb_level' as an optional behaviour.
-		fix some dead code.
+	* oln/meta/optional.hh: New.
+	* oln/level/cc.hh: Add 'update_nb_level' as an optional behaviour.
+	Fix some dead code.
 
 2003-01-06  Yann Régis-Gianas  <yann@lrde.epita.fr>
 
-	* oln/oln/arith/logic.hh: bug fixed in 'logical and'.
+	* oln/arith/logic.hh: Bug fixed in 'logical and'.
 
 2003-01-05  Raphaël Poss  <raph@lrde.epita.fr>
 
-	* oln.m4 (AC_WITH_CXX_WARNINGS): new macro.
+	* oln.m4 (AC_WITH_CXX_WARNINGS): New macro.
 
-	* Makefile.am (ACLOCAL_AMFLAGS): update to find component.m4.
-	* configure.ac: use OLN_COMPONENT and OLN_COLLECTION.
+	* Makefile.am (ACLOCAL_AMFLAGS): Update to find component.m4.
+	* configure.ac: Use OLN_COMPONENT and OLN_COLLECTION.
 
 2003-01-04  Raphaël Poss  <raph@lrde.epita.fr>
 
-	* oln.m4 (AC_WITH_CXX_FFTW): fix description of --with-fftw.
+	* oln.m4 (AC_WITH_CXX_FFTW): Fix description of --with-fftw.
 
-	* tests/meta/gen_test.cc (write_postlude_and_test): fix
+	* tests/meta/gen_test.cc (write_postlude_and_test): Fix
 	compilation flags.  Adjust use of the `srcdir' global
 	variable. FIXME: there is a bug somewhere triggered by missing
 	prelude/postlude files (if this case occurs an empty and
@@ -114,48 +178,48 @@
 
 2002-12-30  Raphaël Poss  <raph@lrde.epita.fr>
 
-	* Makefile.am (CONFIGURE_DEPENDENCIES): fix.
-	* tests/Makefile.am (CONFIGURE_DEPENDENCIES): fix.
+	* Makefile.am (CONFIGURE_DEPENDENCIES): Fix.
+	* tests/Makefile.am (CONFIGURE_DEPENDENCIES): Fix.
 
-	* oln/transforms/dwt.hh: remove argument names from default
+	* oln/transforms/dwt.hh: Remove argument names from default
 	_dim_iterate_rec::doit to shut up the compiler.
 
-	* tests/defs.in: add OLN_INCLUDE_DIR. Set CPPFLAGS. Clean CXXFLAGS.
-	* tests/sanity/includes.test: use CPPFLAGS together with CXXFLAGS.
-	* tests/types/runtests: cleanup.
+	* tests/defs.in: Add OLN_INCLUDE_DIR. Set CPPFLAGS. Clean CXXFLAGS.
+	* tests/sanity/includes.test: Use CPPFLAGS together with CXXFLAGS.
+	* tests/types/runtests: Cleanup.
 
-	* tests/transforms/dwt.cc (check): output images to current
+	* tests/transforms/dwt.cc (check): Output images to current
 	directory.
-	* tests/transforms/fft.cc (check): likewise.
-	* tests/transforms/output: remove directory.
+	* tests/transforms/fft.cc (check): Likewise.
+	* tests/transforms/output: Remove directory.
 
 
 2002-12-29  Raphaël Poss  <raph@lrde.epita.fr>
 
-	* tests/convert/Makefile.am: add `FIXME'. Add missing dependencies.
+	* tests/convert/Makefile.am: Add `FIXME'. Add missing dependencies.
 
-	* tests/check/srcdir.cc (srcdir_setup): do not add '/' to srcdir.
-	* tests/check/data.cc (data): use RDATADIR and WDATADIR to create
+	* tests/check/srcdir.cc (srcdir_setup): Do not add '/' to srcdir.
+	* tests/check/data.cc (data): Use RDATADIR and WDATADIR to create
 	paths instead of ugly heuristics.
-	* tests/check/Makefile.flags (AM_CPPFLAGS): add RDATADIR and
+	* tests/check/Makefile.flags (AM_CPPFLAGS): Add RDATADIR and
 	WDATADIR for use by data().
 
-	* tests/check/verbose.cc (verbose_setup): new way to shut up.
+	* tests/check/verbose.cc (verbose_setup): New way to shut up.
 
-	* tests/convol/slow_sum_2d_1.cc (check): change path of image.
-	* tests/convol/slow_sum_2d_2.cc (check): likewise.
+	* tests/convol/slow_sum_2d_1.cc (check): Change path of image.
+	* tests/convol/slow_sum_2d_2.cc (check): Likewise.
 
-	* tests/configure.ac: all testsuites are now selectable and
+	* tests/configure.ac: All testsuites are now selectable and
 	optional.
 
 	* oln.m4 (OLN_PATH_LOCAL, OLN_PATH_USER, _OLN_CHECK,
 	OLN_PATH_HEADERS, OLN_PATH_IMGS): create. (OLN_TEMPLATE_DEPTH,
 	OLN_C99_MATH, OLN_NUMERIC_LIMITS, AC_WITH_CXX_FFTW,
-	AC_WITH_CXX_ZLIB): new names. Sanitize macros. Use the value cache
+	AC_WITH_CXX_ZLIB): New names. Sanitize macros. Use the value cache
 	for most variables. Add comments. Use the C++ compiler to test for
 	fftw and zlib -> do not depend on the C compiler any more.
 
-	* tests/configure.ac (AC_WITH_ZLIB, AC_WITH_FFTW): rename to
+	* tests/configure.ac (AC_WITH_ZLIB, AC_WITH_FFTW): Rename to
 	AC_WITH_CXX_ZLIB and AC_WITH_CXX_FFTW.
 
 (Changes from 0.6)
@@ -163,31 +227,31 @@
 2002-12-26  Reda Dehak  <reda@nemours.epita.fr>
 
         * oln/convol/convolution.hh: Fix include files.
-        * tests/convol/slow_sum_2d_1.cc: change accordingly.
-        * tests/convol/slow_sum_2d_2.cc: change accordingly.
-        * tests/convol/sobel_gradient.cc: change accordingly.
+        * tests/convol/slow_sum_2d_1.cc: Change accordingly.
+        * tests/convol/slow_sum_2d_2.cc: Change accordingly.
+        * tests/convol/sobel_gradient.cc: Change accordingly.
 
 2002-12-11  Quoc Peyrot  <chojin@lrde.epita.fr>
 
-        * oln/Makefile.am (nobase_oln_HEADERS): add morpho/extrema.hxx.
+        * oln/Makefile.am (nobase_oln_HEADERS): Add morpho/extrema.hxx.
         move level/extrema_killer.hh to morpho/extrema_killer.hh.
 
-        * oln/morpho/extrema_killer.hh: change namespace.
-        * demo/test-reconstruction.cc: change accordingly.
+        * oln/morpho/extrema_killer.hh: Change namespace.
+        * demo/test-reconstruction.cc: Change accordingly.
 
 2002-12-11  Reda Dehak  <reda@lrde.epita.fr>
 
         * oln/convol/convolution.hh: Fix convolve function.
-        * test/convol/slow_sum_2d_1.hh: modify accordingly.
-        * test/convol/slow_sum_2d_2.hh: modify accordingly.
-        * test/convol/sobel_gradient.hh: modify accordingly.
+        * test/convol/slow_sum_2d_1.hh: Modify accordingly.
+        * test/convol/slow_sum_2d_2.hh: Modify accordingly.
+        * test/convol/sobel_gradient.hh: Modify accordingly.
 
 2002-12-11  Quoc Peyrot <chojin@lrde.epita.fr>
 
         * Branch for olena 0.6 stable
 
 (End of changes from 0.6)
-	
+
 2002-12-12  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* oln.m4 (AC_NUMERIC_LIMITS, AC_CXX_C99_MATH): Add new macros...
@@ -201,7 +265,7 @@
 
 	* Makefile.am (m4datadir, dist_m4data_DATA): Add for
 	oln.m4. (EXAMPLE_IMGS, dist_pkgdata_DATA): Add for images.
-	
+
 	* oln/Makefile.am (pkginclude_HEADERS): Use instead of nobase_inst_HEADERS.
 
 	* configure.ac: The testsuite is now optional. Depend again on Automake 1.7.1.

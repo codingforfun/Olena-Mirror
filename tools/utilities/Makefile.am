@@ -1,6 +1,6 @@
 ## Process this file with Automake to produce Makefile.in -*-Makefile-*-
 
-SUBDIRS = @OLN_UTILITIES_SUBDIRS@
+SUBDIRS = $(OLN_UTILITIES_SUBDIRS)
 
 AM_CPPFLAGS = $(OLN_CPPFLAGS) 
 AM_CXXFLAGS = $(OLN_CXXFLAGS) $(ZLIB_CXXFLAGS)

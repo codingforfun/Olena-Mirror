@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -120,19 +120,19 @@ namespace oln {
     // in two and three dimensions, Pattern Recognition Letters 12 (1991) 671-682
 
     // unbiased minimal mean square error for integer local distances (Table 5)
-#define CHAMFER2(Name, I, J, D, E) \
-    inline const chamfer<int>& Name##_##I##_##J##()		\
+# define CHAMFER2(Name, I, J, D, E) \
+    inline const chamfer<int>& Name##_##I##_##J()		\
      { 								\
        static const chamfer<int> tmp =                          \
-          mk_chamfer_##D##x##D##< I, J>(E);   	                \
+          mk_chamfer_##D##x##D< I, J>(E);   	                \
        return tmp;						\
      }
 
-#define CHAMFER3(Name, I, J, K, D, E)				\
-    inline const chamfer<int>& Name##_##I##_##J##_##K##()	\
+# define CHAMFER3(Name, I, J, K, D, E)				\
+    inline const chamfer<int>& Name##_##I##_##J##_##K()	\
     {								\
       static const chamfer<int> tmp =				\
-         mk_chamfer_##D##x##D##< I, J, K>(E);			\
+         mk_chamfer_##D##x##D< I, J, K>(E);			\
       return tmp;						\
     }
 
@@ -187,8 +187,8 @@ namespace oln {
       return mk_chamfer_5x5(1/coef, sqrt(2.f)/coef, sqrt(5.f)/coef);
     }
 
-#undef CHAMFER2
-#undef CHAMFER3
+# undef CHAMFER2
+# undef CHAMFER3
 
 
     template <class T, class T2>
@@ -203,7 +203,7 @@ namespace oln {
     template <class T, class T2>
     template <class V>
     void dmap<T, T2>::compute(const image2d<V>&   input, 
-			      float		  infty = 0.f)
+			      float		  infty)
     {
       image2d<point> dummy;
       compute(input, dummy, infty);
@@ -211,9 +211,9 @@ namespace oln {
 
     template <class T, class T2>
     template <class V>
-    void dmap<T, T2>::compute(const image2d<V>&   input, 
+    void dmap<T, T2>::compute(const image2d<V>&     input, 
 			      image2d<point>&       nearest_point_map,
-			      float			infty = 0.f)
+			      float		    infty)
     {
       precondition(input.size() == _imap.size());
       if (infty == 0.f)
@@ -229,7 +229,7 @@ namespace oln {
 
       // init
       {
-	image2d<V>::iter p(input);
+	typename image2d<V>::iter p(input);
 	for (p = begin; p != end; ++p)
 	  if (input[p] != optraits<T>::zero())
 	    {
@@ -243,7 +243,7 @@ namespace oln {
 
       // fwd
       {
-	image2d<V>::fwd_iter p(input);
+	typename image2d<V>::fwd_iter p(input);
 	for (p = begin; p != end; ++p)
 	  {
 	    if (_imap[p] == T(0))
@@ -266,7 +266,7 @@ namespace oln {
 
       // bkd
       {
-	image2d<V>::bkd_iter p(input);
+	typename image2d<V>::bkd_iter p(input);
 	for_all(p)
 	  {
 	    if (_imap[p] == T(0))
@@ -328,8 +328,10 @@ namespace oln {
       return dr * dr + dc * dc;
     }
 
-    image2d<float> exact_dmap(const image2d<bin>& input)
+    template <class _I>
+    image2d<float> exact_dmap(const image<_I>& _input)
     {
+      Exact_cref(I, input);
       image2d<float> output(input.size());
       image2d<float>::fwd_iter p(input);
       for_all(p)

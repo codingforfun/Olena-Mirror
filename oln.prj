@@ -1,33 +1,20 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 7 8)
-(Parent-Version oln 7 4)
-(Version-Log "2003-01-10  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+(Project-Version oln 7 17)
+(Parent-Version oln 7 8)
+(Version-Log "2003-01-16  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* oln/oln/arith/ops.hh: replace std::min and std::max by types min
-	and max operators.
+	* ChangeLog: clean.
 
-	* oln/oln/types/optraits_scalar.hh: adapt to new optraits_top.
-	* oln/oln/types/optraits.hh: extend static hierarchy to
-	optraits_top.
-
-	* oln/oln/types/bin.hh, oln/oln/types/optraits_bin.hh,
-	oln/oln/types/cplx.hh, oln/oln/types/optraits_cplx.hh,
-	oln/oln/types/cycle.hh, oln/oln/types/optraits_cycle.hh,
-	oln/oln/types/int_u.hh, oln/oln/types/optraits_int_u.hh,
-	oln/oln/types/int_s.hh, oln/oln/types/optraits_int_s.hh,
-	oln/oln/types/range.hh, oln/oln/types/optraits_range.hh,
-	oln/oln/types/vec.hh, oln/oln/types/optraits_vec.hh,
-	oln/oln/types/behaviour.hh, oln/oln/types/all.hh: temporarily fix
-	includes.
-
-	* oln/oln/types/optraits_vec.hh: fix zero() return type.
-	* oln/oln/types/optraits_cplx.hh: fix zero() and unit() return
-	types.
+	* oln/types/typetraits_builtins_int.hh, oln/types/range.hh,
+	oln/types/optraits_builtins_int.hh, oln/types/int_u.hh,
+	oln/types/int_s.hh, oln/types/global_ops.hh, oln/types/cycle.hh,
+	oln/types/bin.hh, oln/types/vec.hh, oln/types/cplx.hh,
+	oln/types/optraits_cplx.hh, oln/types/color.hh: Fix includes..
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 10 Jan 2003 17:07:59 +0100")
+(Checkin-Time "Thu, 16 Jan 2003 23:47:57 +0100")
 (Checkin-Login burrus_n)
 ;; diff-ignore configure$
 ;; diff-ignore aclocal\.m4$
@@ -122,18 +109,18 @@
 (Project-Keywords)
 (Files
   
-  (ChangeLog (oln/o/33_ChangeLog 1.5 640))
-  (oln/ChangeLog (oln/o/30_ChangeLog 1.12 640))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.3 640))
-  (tools/ChangeLog (oln/o/32_ChangeLog 1.3 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.9 640))
+  (oln/ChangeLog (oln/o/30_ChangeLog 1.19 640))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.4 640))
+  (tools/ChangeLog (oln/o/32_ChangeLog 1.4 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.1 640))
 
   (attic/oln-ChangeLog (oln/6_ChangeLog 1.50.1.98.1.5 640))
-  (configure.ac (oln/3_configure. 1.36 640))
+  (configure.ac (oln/3_configure. 1.37 640))
   
   (README (oln/1_README 1.6 640))
   (oln/ISSUES (oln/d/47_ISSUES 1.5 640))
-  (oln/Makefile.am (oln/2_Makefile.a 1.21 640))
+  (oln/Makefile.am (oln/2_Makefile.a 1.22 640))
   
   (NEWS (oln/0_NEWS 1.9 640))
 
@@ -145,207 +132,207 @@
   (doc/demo/tour.cc (oln/d/45_tour.cc 1.6 640))
 
   (attic/doc-ChangeLog (oln/e/1_ChangeLog 1.31 640))
-  (doc/configure.ac (oln/e/2_configure. 1.13 640))
+  (doc/configure.ac (oln/e/2_configure. 1.14 640))
   
   (doc/doc/bin () :directory)
   (doc/doc/html () :directory)
-  (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.22 640))
+  (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.23 640))
   
   (doc/doc/oln-ref.tex (oln/f/14_oln-ref.te 1.3 640))
-  (doc/Makefile.am (oln/e/0_Makefile.a 1.9 640))
+  (doc/Makefile.am (oln/e/0_Makefile.a 1.10 640))
   
   (doc/tpl/processing.tpl (oln/d/48_processing 1.14 640))
 
-  (oln/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.3 640))
-  (oln/oln/arith/logic.hh (oln/b/24_logic.hh 1.5 640))
-  (oln/oln/arith/ops.hh (oln/b/23_ops.hh 1.5.1.1 640))
-  (oln/oln/basics1d.hh (oln/d/41_basics1d.h 1.1 640))
-  (oln/oln/basics2d.hh (oln/b/7_basics2d.h 1.2 640))
-  (oln/oln/basics3d.hh (oln/28_basics3d.h 1.1 640))
-  (oln/oln/basics.hh (oln/d/42_basics.hh 1.5 640))
+  (oln/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.5 640))
+  (oln/oln/arith/logic.hh (oln/b/24_logic.hh 1.6 640))
+  (oln/oln/arith/ops.hh (oln/b/23_ops.hh 1.5.1.2 640))
+  (oln/oln/basics1d.hh (oln/d/41_basics1d.h 1.2 640))
+  (oln/oln/basics2d.hh (oln/b/7_basics2d.h 1.3 640))
+  (oln/oln/basics3d.hh (oln/28_basics3d.h 1.2 640))
+  (oln/oln/basics.hh (oln/d/42_basics.hh 1.6 640))
   
   
-  (oln/oln/config/system.hh (oln/7_system.hh 1.12 640))
-  (oln/oln/convert/basics.hh (oln/23_basics.hh 1.3 640))
-  (oln/oln/convert/bound.hh (oln/22_bound.hh 1.3 640))
-  (oln/oln/convert/colorconv.hh (oln/18_colorconv. 1.3 640))
-  (oln/oln/convert/conversion.hh (oln/21_conversion 1.4 640))
-  (oln/oln/convert/conversion_ng_se.hh (oln/e/24_conversion 1.3 640))
-  (oln/oln/convert/force.hh (oln/20_force.hh 1.3 640))
-  (oln/oln/convert/nrgbhsi.hh (oln/15_nrgbhsi.hh 1.3 640))
-  (oln/oln/convert/nrgbhsl.hh (oln/12_nrgbhsl.hh 1.4 640))
-  (oln/oln/convert/nrgbhsv.hh (oln/11_nrgbhsv.hh 1.4 640))
-  (oln/oln/convert/nrgbxyz.hh (oln/16_nrgbxyz.hh 1.3 640))
-  (oln/oln/convert/nrgbyiq.hh (oln/14_nrgbyiq.hh 1.3 640))
-  (oln/oln/convert/nrgbyuv.hh (oln/13_nrgbyuv.hh 1.3 640))
-  (oln/oln/convert/rgbnrgb.hh (oln/17_rgbnrgb.hh 1.3 640))
-  (oln/oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.3 640))
-  (oln/oln/convol/convolution.hh (oln/f/39_convolutio 1.4.1.1 640))
-  (oln/oln/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.4 640))
-  (oln/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.4 640))
-  (oln/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.4 640))
-  (oln/oln/core/accum.hh (oln/d/40_accum.hh 1.1 640))
-  (oln/oln/core/apply.hh (oln/d/39_apply.hh 1.4 640))
-  (oln/oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.4 640))
-  (oln/oln/core/bkd_iter2d.hh (oln/d/37_bkd_iter2d 1.4 640))
-  (oln/oln/core/bkd_iter3d.hh (oln/d/36_bkd_iter3d 1.4 640))
-  (oln/oln/core/border1d.hh (oln/d/34_border1d.h 1.3 640))
-  (oln/oln/core/border2d.hh (oln/d/33_border2d.h 1.3 640))
-  (oln/oln/core/border3d.hh (oln/d/32_border3d.h 1.3 640))
-  (oln/oln/core/border.hh (oln/d/35_border.hh 1.5 640))
-  (oln/oln/core/compose.hh (oln/c/22_compose.hh 1.1 640))
-  (oln/oln/core/contract.hh (oln/d/31_contract.h 1.3 640))
-  (oln/oln/core/coord.hh (oln/d/29_coord.hh 1.1 640))
-  (oln/oln/core/dpoint1d.hh (oln/d/27_dpoint1d.h 1.3 640))
-  (oln/oln/core/dpoint1d.hxx (oln/d/26_dpoint1d.h 1.2 640))
-  (oln/oln/core/dpoint2d.hh (oln/d/25_dpoint2d.h 1.2 640))
-  (oln/oln/core/dpoint2d.hxx (oln/d/24_dpoint2d.h 1.2 640))
-  (oln/oln/core/dpoint3d.hh (oln/d/23_dpoint3d.h 1.2 640))
-  (oln/oln/core/dpoint3d.hxx (oln/d/22_dpoint3d.h 1.2 640))
-  (oln/oln/core/dpoint.hh (oln/d/28_dpoint.hh 1.2 640))
-  (oln/oln/core/dpointnd.hh (oln/c/9_dpointnd.h 1.4 640))
-  (oln/oln/core/fold.hh (oln/c/7_fold.hh 1.4 640))
-  (oln/oln/core/fwd_iter1d.hh (oln/d/21_fwd_iter1d 1.3 640))
-  (oln/oln/core/fwd_iter2d.hh (oln/d/20_fwd_iter2d 1.3 640))
-  (oln/oln/core/fwd_iter3d.hh (oln/d/19_fwd_iter3d 1.3 640))
-  (oln/oln/core/generate.hh (oln/f/12_generate.h 1.6 640))
-  (oln/oln/core/image1d.hh (oln/c/47_image1d.hh 1.4 640))
-  (oln/oln/core/image1d_size.hh (oln/c/46_image1d_si 1.3 640))
-  (oln/oln/core/image2d.hh (oln/c/45_image2d.hh 1.5 640))
-  (oln/oln/core/image2d_size.hh (oln/c/44_image2d_si 1.3 640))
-  (oln/oln/core/image3d.hh (oln/c/43_image3d.hh 1.4 640))
-  (oln/oln/core/image3d_size.hh (oln/c/42_image3d_si 1.3 640))
-  (oln/oln/core/image.hh (oln/d/18_image.hh 1.3 640))
-  (oln/oln/core/imagend_size.hh (oln/c/8_imagend_si 1.4 640))
-  (oln/oln/core/image_size.hh (oln/c/41_image_size 1.2 640))
-  (oln/oln/core/internal/fake.hh (oln/d/17_fake.hh 1.1 640))
-  (oln/oln/core/internal/image1d_data.hh (oln/d/15_image1d_da 1.4 640))
-  (oln/oln/core/internal/image1d.hh (oln/d/16_image1d.hh 1.5 640))
-  (oln/oln/core/internal/image2d_data.hh (oln/d/13_image2d_da 1.4 640))
-  (oln/oln/core/internal/image2d.hh (oln/d/14_image2d.hh 1.5 640))
-  (oln/oln/core/internal/image3d_data.hh (oln/d/11_image3d_da 1.4 640))
-  (oln/oln/core/internal/image3d.hh (oln/d/12_image3d.hh 1.7 640))
-  (oln/oln/core/internal/iter1d.hh (oln/d/10_iter1d.hh 1.2 640))
-  (oln/oln/core/internal/iter2d.hh (oln/d/9_iter2d.hh 1.2 640))
-  (oln/oln/core/internal/iter3d.hh (oln/d/8_iter3d.hh 1.2 640))
-  (oln/oln/core/internal/neighborhood.hh (oln/d/7_neighborho 1.3 640))
-  (oln/oln/core/internal/objs.hxx (oln/d/6_objs.hxx 1.2 640))
-  (oln/oln/core/internal/real_image1d.hh (oln/d/5_real_image 1.2 640))
-  (oln/oln/core/internal/real_image2d.hh (oln/d/4_real_image 1.3 640))
-  (oln/oln/core/internal/real_image3d.hh (oln/d/3_real_image 1.3 640))
-  (oln/oln/core/internal/rec_operable.hh (oln/d/2_rec_operab 1.1 640))
-  (oln/oln/core/internal/window.hh (oln/d/0_window.hh 1.6 640))
-  (oln/oln/core/internal/w_window.hh (oln/d/1_w_window.h 1.6 640))
-  (oln/oln/core/iter.hh (oln/c/40_iter.hh 1.2 640))
-  (oln/oln/core/macros.hh (oln/c/39_macros.hh 1.1 640))
-  (oln/oln/core/neighborhood1d.hh (oln/c/37_neighborho 1.7 640))
-  (oln/oln/core/neighborhood2d.hh (oln/c/36_neighborho 1.8 640))
-  (oln/oln/core/neighborhood3d.hh (oln/c/35_neighborho 1.7 640))
-  (oln/oln/core/neighborhood.hh (oln/c/38_neighborho 1.3 640))
-  (oln/oln/core/objs.hh (oln/c/34_objs.hh 1.3 640))
-  (oln/oln/core/old/image2d_bin.hh (oln/c/50_image2d_bi 1.2 640))
-  (oln/oln/core/old/image2d_bin.hxx (oln/c/49_image2d_bi 1.2 640))
-  (oln/oln/core/old/image2d.hxx (oln/c/51_image2d.hx 1.2 640))
-  (oln/oln/core/old/rec_window.hh (oln/c/48_rec_window 1.2 640))
-  (oln/oln/core/point1d.hh (oln/c/32_point1d.hh 1.3 640))
-  (oln/oln/core/point1d.hxx (oln/c/31_point1d.hx 1.2 640))
-  (oln/oln/core/point2d.hh (oln/c/30_point2d.hh 1.2 640))
-  (oln/oln/core/point2d.hxx (oln/c/29_point2d.hx 1.2 640))
-  (oln/oln/core/point3d.hh (oln/c/28_point3d.hh 1.3 640))
-  (oln/oln/core/point3d.hxx (oln/c/27_point3d.hx 1.2 640))
-  (oln/oln/core/point.hh (oln/c/33_point.hh 1.2 640))
-  (oln/oln/core/pointnd.hh (oln/c/10_pointnd.hh 1.5 640))
-  (oln/oln/core/old/pred.hh (oln/c/26_pred.hh 1.5 640))
-  (oln/oln/core/pred_image.hh (oln/c/24_pred_image 1.2 640))
-  (oln/oln/core/regular_image.hh (oln/c/23_regular_im 1.3 640))
-  (oln/oln/core/structelt.hh (oln/c/25_structelt. 1.2 640))
-  (oln/oln/core/traverse.hh (oln/d/30_traverse.h 1.3 640))
-  (oln/oln/core/typeadj.hh (oln/e/25_typeadj.hh 1.1 640))
+  (oln/oln/config/system.hh (oln/7_system.hh 1.14 640))
+  (oln/oln/convert/basics.hh (oln/23_basics.hh 1.4 640))
+  (oln/oln/convert/bound.hh (oln/22_bound.hh 1.4 640))
+  (oln/oln/convert/colorconv.hh (oln/18_colorconv. 1.4 640))
+  (oln/oln/convert/conversion.hh (oln/21_conversion 1.5 640))
+  (oln/oln/convert/conversion_ng_se.hh (oln/e/24_conversion 1.4 640))
+  (oln/oln/convert/force.hh (oln/20_force.hh 1.4 640))
+  (oln/oln/convert/nrgbhsi.hh (oln/15_nrgbhsi.hh 1.4 640))
+  (oln/oln/convert/nrgbhsl.hh (oln/12_nrgbhsl.hh 1.5 640))
+  (oln/oln/convert/nrgbhsv.hh (oln/11_nrgbhsv.hh 1.5 640))
+  (oln/oln/convert/nrgbxyz.hh (oln/16_nrgbxyz.hh 1.4 640))
+  (oln/oln/convert/nrgbyiq.hh (oln/14_nrgbyiq.hh 1.4 640))
+  (oln/oln/convert/nrgbyuv.hh (oln/13_nrgbyuv.hh 1.4 640))
+  (oln/oln/convert/rgbnrgb.hh (oln/17_rgbnrgb.hh 1.4 640))
+  (oln/oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.4 640))
+  (oln/oln/convol/convolution.hh (oln/f/39_convolutio 1.4.1.2 640))
+  (oln/oln/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.5 640))
+  (oln/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6 640))
+  (oln/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.6 640))
+  (oln/oln/core/accum.hh (oln/d/40_accum.hh 1.2 640))
+  (oln/oln/core/apply.hh (oln/d/39_apply.hh 1.5 640))
+  (oln/oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.5 640))
+  (oln/oln/core/bkd_iter2d.hh (oln/d/37_bkd_iter2d 1.5 640))
+  (oln/oln/core/bkd_iter3d.hh (oln/d/36_bkd_iter3d 1.5 640))
+  (oln/oln/core/border1d.hh (oln/d/34_border1d.h 1.4 640))
+  (oln/oln/core/border2d.hh (oln/d/33_border2d.h 1.4 640))
+  (oln/oln/core/border3d.hh (oln/d/32_border3d.h 1.4 640))
+  (oln/oln/core/border.hh (oln/d/35_border.hh 1.6 640))
+  (oln/oln/core/compose.hh (oln/c/22_compose.hh 1.3 640))
+  (oln/oln/core/contract.hh (oln/d/31_contract.h 1.5 640))
+  (oln/oln/core/coord.hh (oln/d/29_coord.hh 1.2 640))
+  (oln/oln/core/dpoint1d.hh (oln/d/27_dpoint1d.h 1.5 640))
+  (oln/oln/core/dpoint1d.hxx (oln/d/26_dpoint1d.h 1.4 640))
+  (oln/oln/core/dpoint2d.hh (oln/d/25_dpoint2d.h 1.4 640))
+  (oln/oln/core/dpoint2d.hxx (oln/d/24_dpoint2d.h 1.4 640))
+  (oln/oln/core/dpoint3d.hh (oln/d/23_dpoint3d.h 1.4 640))
+  (oln/oln/core/dpoint3d.hxx (oln/d/22_dpoint3d.h 1.4 640))
+  (oln/oln/core/dpoint.hh (oln/d/28_dpoint.hh 1.4 640))
+  (oln/oln/core/dpointnd.hh (oln/c/9_dpointnd.h 1.5 640))
+  (oln/oln/core/fold.hh (oln/c/7_fold.hh 1.5 640))
+  (oln/oln/core/fwd_iter1d.hh (oln/d/21_fwd_iter1d 1.4 640))
+  (oln/oln/core/fwd_iter2d.hh (oln/d/20_fwd_iter2d 1.4 640))
+  (oln/oln/core/fwd_iter3d.hh (oln/d/19_fwd_iter3d 1.4 640))
+  (oln/oln/core/generate.hh (oln/f/12_generate.h 1.7 640))
+  (oln/oln/core/image1d.hh (oln/c/47_image1d.hh 1.5 640))
+  (oln/oln/core/image1d_size.hh (oln/c/46_image1d_si 1.4 640))
+  (oln/oln/core/image2d.hh (oln/c/45_image2d.hh 1.6 640))
+  (oln/oln/core/image2d_size.hh (oln/c/44_image2d_si 1.4 640))
+  (oln/oln/core/image3d.hh (oln/c/43_image3d.hh 1.5 640))
+  (oln/oln/core/image3d_size.hh (oln/c/42_image3d_si 1.4 640))
+  (oln/oln/core/image.hh (oln/d/18_image.hh 1.5 640))
+  (oln/oln/core/imagend_size.hh (oln/c/8_imagend_si 1.5 640))
+  (oln/oln/core/image_size.hh (oln/c/41_image_size 1.4 640))
+  (oln/oln/core/internal/fake.hh (oln/d/17_fake.hh 1.3 640))
+  (oln/oln/core/internal/image1d_data.hh (oln/d/15_image1d_da 1.6 640))
+  (oln/oln/core/internal/image1d.hh (oln/d/16_image1d.hh 1.6 640))
+  (oln/oln/core/internal/image2d_data.hh (oln/d/13_image2d_da 1.6 640))
+  (oln/oln/core/internal/image2d.hh (oln/d/14_image2d.hh 1.6 640))
+  (oln/oln/core/internal/image3d_data.hh (oln/d/11_image3d_da 1.6 640))
+  (oln/oln/core/internal/image3d.hh (oln/d/12_image3d.hh 1.8 640))
+  (oln/oln/core/internal/iter1d.hh (oln/d/10_iter1d.hh 1.3 640))
+  (oln/oln/core/internal/iter2d.hh (oln/d/9_iter2d.hh 1.3 640))
+  (oln/oln/core/internal/iter3d.hh (oln/d/8_iter3d.hh 1.3 640))
+  (oln/oln/core/internal/neighborhood.hh (oln/d/7_neighborho 1.4 640))
+  (oln/oln/core/internal/objs.hxx (oln/d/6_objs.hxx 1.4 640))
+  (oln/oln/core/internal/real_image1d.hh (oln/d/5_real_image 1.3 640))
+  (oln/oln/core/internal/real_image2d.hh (oln/d/4_real_image 1.4 640))
+  (oln/oln/core/internal/real_image3d.hh (oln/d/3_real_image 1.4 640))
+  (oln/oln/core/internal/rec_operable.hh (oln/d/2_rec_operab 1.2 640))
+  (oln/oln/core/internal/window.hh (oln/d/0_window.hh 1.7 640))
+  (oln/oln/core/internal/w_window.hh (oln/d/1_w_window.h 1.7 640))
+  (oln/oln/core/iter.hh (oln/c/40_iter.hh 1.3 640))
+  (oln/oln/core/macros.hh (oln/c/39_macros.hh 1.3 640))
+  (oln/oln/core/neighborhood1d.hh (oln/c/37_neighborho 1.8 640))
+  (oln/oln/core/neighborhood2d.hh (oln/c/36_neighborho 1.9 640))
+  (oln/oln/core/neighborhood3d.hh (oln/c/35_neighborho 1.8 640))
+  (oln/oln/core/neighborhood.hh (oln/c/38_neighborho 1.4 640))
+  (oln/oln/core/objs.hh (oln/c/34_objs.hh 1.4 640))
+  
+  
+  
+  
+  (oln/oln/core/point1d.hh (oln/c/32_point1d.hh 1.5 640))
+  (oln/oln/core/point1d.hxx (oln/c/31_point1d.hx 1.3 640))
+  (oln/oln/core/point2d.hh (oln/c/30_point2d.hh 1.4 640))
+  (oln/oln/core/point2d.hxx (oln/c/29_point2d.hx 1.3 640))
+  (oln/oln/core/point3d.hh (oln/c/28_point3d.hh 1.5 640))
+  (oln/oln/core/point3d.hxx (oln/c/27_point3d.hx 1.3 640))
+  (oln/oln/core/point.hh (oln/c/33_point.hh 1.5 640))
+  (oln/oln/core/pointnd.hh (oln/c/10_pointnd.hh 1.6 640))
+  
+  (oln/oln/core/pred_image.hh (oln/c/24_pred_image 1.3 640))
+  (oln/oln/core/regular_image.hh (oln/c/23_regular_im 1.4 640))
+  (oln/oln/core/structelt.hh (oln/c/25_structelt. 1.3 640))
+  (oln/oln/core/traverse.hh (oln/d/30_traverse.h 1.4 640))
+  (oln/oln/core/typeadj.hh (oln/e/25_typeadj.hh 1.3 640))
   (oln/oln/core/type.hh (oln/c/21_type.hh 1.8 640))
-  (oln/oln/core/window1d.hh (oln/c/15_window1d.h 1.5 640))
-  (oln/oln/core/window2d.hh (oln/c/14_window2d.h 1.6 640))
-  (oln/oln/core/window3d.hh (oln/c/13_window3d.h 1.5 640))
-  (oln/oln/core/window.hh (oln/c/16_window.hh 1.4 640))
-  (oln/oln/core/winiter.hh (oln/c/12_winiter.hh 1.1 640))
-  (oln/oln/core/winneighb.hh (oln/c/11_winneighb. 1.2 640))
-  (oln/oln/core/w_window1d.hh (oln/c/19_w_window1d 1.4 640))
-  (oln/oln/core/w_window2d.hh (oln/c/18_w_window2d 1.5 640))
-  (oln/oln/core/w_window3d.hh (oln/c/17_w_window3d 1.4 640))
-  (oln/oln/core/w_window.hh (oln/c/20_w_window.h 1.3 640))
-  (oln/oln/io/base.hh (oln/b/20_base.hh 1.4 640))
-  (oln/oln/io/base.hxx (oln/b/18_base.hxx 1.3 640))
-  (oln/oln/io/basics.hh (oln/b/12_basics.hh 1.2 640))
-  (oln/oln/io/file.hh (oln/b/17_file.hh 1.2 640))
-  (oln/oln/io/gz.hh (oln/f/16_gz.hh 1.2 640))
-  (oln/oln/io/gz_stream.hh (oln/f/17_gz_stream. 1.3 640))
-  (oln/oln/io/pnm3d.hh (oln/b/14_pnm3d.hh 1.2 640))
-  (oln/oln/io/pnm.hh (oln/b/19_pnm.hh 1.2 640))
-  (oln/oln/io/pnm_read3d.hxx (oln/b/11_pnm_read3d 1.6 640))
-  (oln/oln/io/pnm_read_common.hxx (oln/b/10_pnm_read_c 1.6 640))
-  (oln/oln/io/pnm_read.hxx (oln/b/16_pnm_read.h 1.8 640))
-  (oln/oln/io/pnm_write3d.hxx (oln/b/9_pnm_write3 1.1.1.6 640))
-  (oln/oln/io/pnm_write_common.hxx (oln/b/8_pnm_write_ 1.7 640))
-  (oln/oln/io/pnm_write.hxx (oln/b/15_pnm_write. 1.7 640))
-  (oln/oln/io/readable.hh (oln/b/13_readable.h 1.5 640))
-  (oln/oln/level/cc.hh (oln/e/20_cc.hh 1.8 640))
-  (oln/oln/level/compare.hh (oln/31_compare.hh 1.2 640))
-  (oln/oln/level/connected.hh (oln/30_connected. 1.7 640))
-  (oln/oln/morpho/extrema_killer.hh (oln/e/19_extrema_ki 1.7.1.1 640))
-  (oln/oln/level/fill.hh (oln/32_fill.hh 1.2 640))
-  (oln/oln/level/invert.hh (oln/33_invert.hh 1.4 640))
-  (oln/oln/level/lut.hh (oln/29_lut.hh 1.6 640))
-  (oln/oln/level/threshold.hh (oln/f/15_threshold. 1.4 640))
+  (oln/oln/core/window1d.hh (oln/c/15_window1d.h 1.6 640))
+  (oln/oln/core/window2d.hh (oln/c/14_window2d.h 1.7 640))
+  (oln/oln/core/window3d.hh (oln/c/13_window3d.h 1.6 640))
+  (oln/oln/core/window.hh (oln/c/16_window.hh 1.5 640))
+  (oln/oln/core/winiter.hh (oln/c/12_winiter.hh 1.2 640))
+  (oln/oln/core/winneighb.hh (oln/c/11_winneighb. 1.3 640))
+  (oln/oln/core/w_window1d.hh (oln/c/19_w_window1d 1.5 640))
+  (oln/oln/core/w_window2d.hh (oln/c/18_w_window2d 1.6 640))
+  (oln/oln/core/w_window3d.hh (oln/c/17_w_window3d 1.5 640))
+  (oln/oln/core/w_window.hh (oln/c/20_w_window.h 1.4 640))
+  (oln/oln/io/base.hh (oln/b/20_base.hh 1.5 640))
+  (oln/oln/io/base.hxx (oln/b/18_base.hxx 1.4 640))
+  (oln/oln/io/basics.hh (oln/b/12_basics.hh 1.3 640))
+  (oln/oln/io/file.hh (oln/b/17_file.hh 1.3 640))
+  (oln/oln/io/gz.hh (oln/f/16_gz.hh 1.3 640))
+  (oln/oln/io/gz_stream.hh (oln/f/17_gz_stream. 1.5 640))
+  (oln/oln/io/pnm3d.hh (oln/b/14_pnm3d.hh 1.3 640))
+  (oln/oln/io/pnm.hh (oln/b/19_pnm.hh 1.3 640))
+  (oln/oln/io/pnm_read3d.hxx (oln/b/11_pnm_read3d 1.7 640))
+  (oln/oln/io/pnm_read_common.hxx (oln/b/10_pnm_read_c 1.7 640))
+  (oln/oln/io/pnm_read.hxx (oln/b/16_pnm_read.h 1.9 640))
+  (oln/oln/io/pnm_write3d.hxx (oln/b/9_pnm_write3 1.1.1.7 640))
+  (oln/oln/io/pnm_write_common.hxx (oln/b/8_pnm_write_ 1.8 640))
+  (oln/oln/io/pnm_write.hxx (oln/b/15_pnm_write. 1.8 640))
+  (oln/oln/io/readable.hh (oln/b/13_readable.h 1.6 640))
+  (oln/oln/level/cc.hh (oln/e/20_cc.hh 1.9 640))
+  (oln/oln/level/compare.hh (oln/31_compare.hh 1.3 640))
+  (oln/oln/level/connected.hh (oln/30_connected. 1.8 640))
+  (oln/oln/morpho/extrema_killer.hh (oln/e/19_extrema_ki 1.7.1.3 640))
+  (oln/oln/level/fill.hh (oln/32_fill.hh 1.3 640))
+  (oln/oln/level/invert.hh (oln/33_invert.hh 1.5 640))
+  (oln/oln/level/lut.hh (oln/29_lut.hh 1.7 640))
+  (oln/oln/level/threshold.hh (oln/f/15_threshold. 1.5 640))
   (oln/oln/Makefile.am (oln/27_Makefile.a 1.35 600))
   
-  (oln/oln/math/macros.hh (oln/b/21_macros.hh 1.4 640))
-  (oln/oln/meta/array1d.hh (oln/f/23_array1d.hh 1.2 640))
-  (oln/oln/meta/array1d.hxx (oln/f/22_array1d.hx 1.3 640))
-  (oln/oln/meta/array2d.hh (oln/f/21_array2d.hh 1.2 640))
-  (oln/oln/meta/array2d.hxx (oln/f/20_array2d.hx 1.2 640))
-  (oln/oln/meta/array3d.hh (oln/f/19_array3d.hh 1.3 640))
-  (oln/oln/meta/array3d.hxx (oln/f/18_array3d.hx 1.3 640))
-  (oln/oln/meta/array.hh (oln/f/36_array.hh 1.2 640))
-  (oln/oln/meta/arraynd.hh (oln/f/35_arraynd.hh 1.1 640))
-  (oln/oln/meta/basics.hh (oln/c/4_basics.hh 1.5 640))
-  (oln/oln/meta/cmp.hh (oln/c/3_cmp.hh 1.3 640))
-  (oln/oln/meta/control.hh (oln/c/2_control.hh 1.4 640))
-  (oln/oln/meta/logic.hh (oln/c/1_logic.hh 1.5 640))
-  (oln/oln/meta/ucmp.hh (oln/c/0_ucmp.hh 1.5 640))
-  (oln/oln/meta/ufuncs.hh (oln/b/51_ufuncs.hh 1.4 640))
-  (oln/oln/morpho/closing.hh (oln/b/6_closing.hh 1.3 640))
-  (oln/oln/morpho/closing.inc (oln/44_closing.in 1.5 640))
-  (oln/oln/morpho/dilation.hh (oln/b/5_dilation.h 1.7 640))
-  (oln/oln/morpho/erosion.hh (oln/b/4_erosion.hh 1.6 640))
-  (oln/oln/morpho/extrema.hh (oln/38_extrema.hh 1.9 640))
-  (oln/oln/morpho/fast_morpho.hh (oln/46_fast_morph 1.2 640))
-  (oln/oln/morpho/fast_morpho.hxx (oln/45_fast_morph 1.4 640))
-  (oln/oln/morpho/geodesic_dilation.hh (oln/37_geodesic_d 1.8 640))
-  (oln/oln/morpho/geodesic_erosion.hh (oln/36_geodesic_e 1.7 640))
-  (oln/oln/morpho/gradient.hh (oln/b/3_gradient.h 1.3 640))
-  (oln/oln/morpho/gradient.inc (oln/43_gradient.i 1.4 640))
-  (oln/oln/morpho/hit_or_miss.hh (oln/b/2_hit_or_mis 1.4 640))
-  (oln/oln/morpho/hit_or_miss.inc (oln/42_hit_or_mis 1.6 640))
-  (oln/oln/morpho/laplacian.hh (oln/b/1_laplacian. 1.3 640))
-  (oln/oln/morpho/laplacian.inc (oln/41_laplacian. 1.4 640))
-  (oln/oln/morpho/minmax.hh (oln/b/0_minmax.hh 1.3 640))
-  (oln/oln/morpho/opening.hh (oln/51_opening.hh 1.3 640))
-  (oln/oln/morpho/opening.inc (oln/40_opening.in 1.4 640))
-  (oln/oln/morpho/reconstruction.hh (oln/35_reconstruc 1.11 640))
-  (oln/oln/morpho/splitse.hh (oln/34_splitse.hh 1.2 640))
-  (oln/oln/morpho/stat.hh (oln/50_stat.hh 1.5 640))
-  (oln/oln/morpho/thickening.hh (oln/e/29_thickening 1.4 640))
-  (oln/oln/morpho/thickening.inc (oln/e/28_thickening 1.2 640))
-  (oln/oln/morpho/thinning.hh (oln/e/27_thinning.h 1.4 640))
-  (oln/oln/morpho/thinning.inc (oln/e/26_thinning.i 1.2 640))
-  (oln/oln/morpho/top_hat.hh (oln/49_top_hat.hh 1.2 640))
-  (oln/oln/morpho/top_hat.inc (oln/39_top_hat.in 1.4 640))
-  (oln/oln/morpho/watershed.hh (oln/48_watershed. 1.3 640))
-  (oln/oln/morpho/watershed.hxx (oln/47_watershed. 1.5 640))
-  (oln/oln/utils/histogram.hh (oln/10_histogram. 1.4 640))
-  (oln/oln/utils/stat.hh (oln/9_stat.hh 1.4 640))
-  (oln/oln/utils/timer.hh (oln/8_timer.hh 1.2 640))
+  (oln/oln/math/macros.hh (oln/b/21_macros.hh 1.6 640))
+  (oln/oln/meta/array1d.hh (oln/f/23_array1d.hh 1.3 640))
+  (oln/oln/meta/array1d.hxx (oln/f/22_array1d.hx 1.5 640))
+  (oln/oln/meta/array2d.hh (oln/f/21_array2d.hh 1.3 640))
+  (oln/oln/meta/array2d.hxx (oln/f/20_array2d.hx 1.4 640))
+  (oln/oln/meta/array3d.hh (oln/f/19_array3d.hh 1.4 640))
+  (oln/oln/meta/array3d.hxx (oln/f/18_array3d.hx 1.5 640))
+  (oln/oln/meta/array.hh (oln/f/36_array.hh 1.4 640))
+  (oln/oln/meta/arraynd.hh (oln/f/35_arraynd.hh 1.2 640))
+  (oln/oln/meta/basics.hh (oln/c/4_basics.hh 1.7 640))
+  (oln/oln/meta/cmp.hh (oln/c/3_cmp.hh 1.4 640))
+  (oln/oln/meta/control.hh (oln/c/2_control.hh 1.5 640))
+  (oln/oln/meta/logic.hh (oln/c/1_logic.hh 1.6 640))
+  (oln/oln/meta/ucmp.hh (oln/c/0_ucmp.hh 1.6 640))
+  (oln/oln/meta/ufuncs.hh (oln/b/51_ufuncs.hh 1.5 640))
+  (oln/oln/morpho/closing.hh (oln/b/6_closing.hh 1.5 640))
+  (oln/oln/morpho/closing.inc (oln/44_closing.in 1.6 640))
+  (oln/oln/morpho/dilation.hh (oln/b/5_dilation.h 1.8 640))
+  (oln/oln/morpho/erosion.hh (oln/b/4_erosion.hh 1.7 640))
+  (oln/oln/morpho/extrema.hh (oln/38_extrema.hh 1.11 640))
+  (oln/oln/morpho/fast_morpho.hh (oln/46_fast_morph 1.4 640))
+  (oln/oln/morpho/fast_morpho.hxx (oln/45_fast_morph 1.6 640))
+  (oln/oln/morpho/geodesic_dilation.hh (oln/37_geodesic_d 1.9 640))
+  (oln/oln/morpho/geodesic_erosion.hh (oln/36_geodesic_e 1.8 640))
+  (oln/oln/morpho/gradient.hh (oln/b/3_gradient.h 1.5 640))
+  (oln/oln/morpho/gradient.inc (oln/43_gradient.i 1.5 640))
+  (oln/oln/morpho/hit_or_miss.hh (oln/b/2_hit_or_mis 1.6 640))
+  (oln/oln/morpho/hit_or_miss.inc (oln/42_hit_or_mis 1.7 640))
+  (oln/oln/morpho/laplacian.hh (oln/b/1_laplacian. 1.5 640))
+  (oln/oln/morpho/laplacian.inc (oln/41_laplacian. 1.5 640))
+  (oln/oln/morpho/minmax.hh (oln/b/0_minmax.hh 1.4 640))
+  (oln/oln/morpho/opening.hh (oln/51_opening.hh 1.5 640))
+  (oln/oln/morpho/opening.inc (oln/40_opening.in 1.5 640))
+  (oln/oln/morpho/reconstruction.hh (oln/35_reconstruc 1.12 640))
+  (oln/oln/morpho/splitse.hh (oln/34_splitse.hh 1.3 640))
+  (oln/oln/morpho/stat.hh (oln/50_stat.hh 1.6 640))
+  (oln/oln/morpho/thickening.hh (oln/e/29_thickening 1.6 640))
+  (oln/oln/morpho/thickening.inc (oln/e/28_thickening 1.3 640))
+  (oln/oln/morpho/thinning.hh (oln/e/27_thinning.h 1.6 640))
+  (oln/oln/morpho/thinning.inc (oln/e/26_thinning.i 1.3 640))
+  (oln/oln/morpho/top_hat.hh (oln/49_top_hat.hh 1.4 640))
+  (oln/oln/morpho/top_hat.inc (oln/39_top_hat.in 1.5 640))
+  (oln/oln/morpho/watershed.hh (oln/48_watershed. 1.5 640))
+  (oln/oln/morpho/watershed.hxx (oln/47_watershed. 1.7 640))
+  (oln/oln/utils/histogram.hh (oln/10_histogram. 1.5 640))
+  (oln/oln/utils/stat.hh (oln/9_stat.hh 1.5 640))
+  (oln/oln/utils/timer.hh (oln/8_timer.hh 1.4 640))
   (oln/tests/meta () :directory)
-  (oln/tests/meta/gen_test.cc (oln/f/34_gen_test.c 1.6 640))
+  (oln/tests/meta/gen_test.cc (oln/f/34_gen_test.c 1.7 640))
   (oln/tests/meta/gen_test_utils/errors.cc (oln/f/33_errors.cc 1.1 640))
   (oln/tests/meta/gen_test_utils/errors.hh (oln/f/32_errors.hh 1.1 640))
   (oln/tests/meta/gen_test_utils/postlude (oln/f/31_postlude 1.1 640))
@@ -356,19 +343,19 @@
   (oln/tests/meta/test_array2d.cc (oln/f/25_test_array 1.2 640))
   (oln/tests/meta/test_array3d.cc (oln/f/24_test_array 1.2 640))
   (attic/tests-ChangeLog (oln/e/30_ChangeLog 1.52 640))
-  (oln/tests/check/check.hh (oln/e/40_check.hh 1.2 640))
+  (oln/tests/check/check.hh (oln/e/40_check.hh 1.3 640))
   (oln/tests/check/data.cc (oln/f/5_data.cc 1.4 640))
-  (oln/tests/check/data.hh (oln/f/6_data.hh 1.1 640))
+  (oln/tests/check/data.hh (oln/f/6_data.hh 1.2 640))
   (oln/tests/check/main.cc (oln/e/43_main.cc 1.1 640))
   (oln/tests/check/Makefile.am (oln/e/44_Makefile.a 1.3 640))
   (oln/tests/check/Makefile.check (oln/e/37_Makefile.c 1.4 640))
   (oln/tests/check/Makefile.flags (oln/e/36_Makefile.f 1.6 640))
   
   (oln/tests/check/srcdir.cc (oln/e/38_srcdir.cc 1.6 640))
-  (oln/tests/check/srcdir.hh (oln/e/35_srcdir.hh 1.3 640))
+  (oln/tests/check/srcdir.hh (oln/e/35_srcdir.hh 1.4 640))
   (oln/tests/check/verbose.cc (oln/e/41_verbose.cc 1.3 640))
-  (oln/tests/check/verbose.hh (oln/e/42_verbose.hh 1.2 640))
-  (oln/tests/convert/convcomp.cc (oln/f/3_convcomp.c 1.4 640))
+  (oln/tests/check/verbose.hh (oln/e/42_verbose.hh 1.3 640))
+  (oln/tests/convert/convcomp.cc (oln/f/3_convcomp.c 1.5 640))
   (oln/tests/convert/convcomp.hh (oln/f/1_convcomp.h 1.3 640))
   (oln/tests/convert/Makefile.am (oln/f/0_Makefile.a 1.4 640))
   
@@ -384,10 +371,10 @@
 
 
   (oln/tests/io/2d.cc (oln/e/47_2d.cc 1.4 640))
-  (oln/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.5 640))
+  (oln/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.6 640))
   (oln/tests/io/Makefile.am (oln/e/49_Makefile.a 1.8 640))
   
-  (oln/tests/Makefile.am (oln/e/45_Makefile.a 1.16 640))
+  (oln/tests/Makefile.am (oln/e/45_Makefile.a 1.17 640))
   
   (oln/tests/morpho/edoc.cc (oln/f/13_edoc.cc 1.3 640))
   (oln/tests/morpho/extrkiller.cc (oln/e/31_extrkiller 1.5.1.1 640))
@@ -402,62 +389,62 @@
 ;; Files added by populate at Thu, 18 Jul 2002 20:26:30 +0200,
 ;; to version 0_4.26(w), by adl:
 
-  (oln/tests/sanity/includes.test (oln/f/46_includes.t 1.3 750))
+  (oln/tests/sanity/includes.test (oln/f/46_includes.t 1.6 750))
   
   (oln/tests/sanity/Makefile.am (oln/f/48_Makefile.a 1.2 640))
 
 ;; Files added by populate at Thu, 18 Jul 2002 20:30:39 +0200,
 ;; to version 0_4.26(w), by duret_g:
 
-  (oln/tests/defs.in (oln/f/49_defs.in 1.4 640))
+  (oln/tests/defs.in (oln/f/49_defs.in 1.5 640))
 
 ;; Files added by populate at Thu, 18 Jul 2002 21:13:31 +0200,
 ;; to version 0_4.28(w), by astrid:
 
-  (oln/oln/convert/stretch.hh (oln/f/51_stretch.hh 1.3 640))
+  (oln/oln/convert/stretch.hh (oln/f/51_stretch.hh 1.4 640))
 
 ;; Files added by populate at Mon, 29 Jul 2002 15:53:36 +0200,
 ;; to version 0_5.2(w), by burrus_n:
 
-  (oln/oln/types/typetraits_builtins_int.hh (oln/g/3_typetraits 1.5 640))
-  (oln/oln/types/typetraits_builtins_float.hh (oln/g/4_typetraits 1.7 640))
-  (oln/oln/types/typetraits.hh (oln/g/5_typetraits 1.4 640))
-  (oln/oln/types/type.hh (oln/g/6_type.hh 1.3 640))
-  (oln/oln/types/to_oln.hh (oln/g/7_to_oln.hh 1.6 640))
-  (oln/oln/types/rec_value.hh (oln/g/8_rec_value. 1.7 640))
-  (oln/oln/types/range.hh (oln/g/9_range.hh 1.6 640))
-  (oln/oln/types/predecls.hh (oln/g/10_predecls.h 1.9 640))
-  (oln/oln/types/optraits_scalar_defs.hh (oln/g/11_optraits_s 1.4 640))
-  (oln/oln/types/optraits_scalar.hh (oln/g/12_optraits_s 1.7 640))
-  (oln/oln/types/optraits_range.hh (oln/g/13_optraits_r 1.4 640))
-  (oln/oln/types/optraits_int_u.hh (oln/g/14_optraits_i 1.8 640))
-  (oln/oln/types/optraits_int_s.hh (oln/g/15_optraits_i 1.7 640))
-  (oln/oln/types/optraits_cycle.hh (oln/g/16_optraits_c 1.9 640))
-  (oln/oln/types/optraits_builtins_int_defs.hh (oln/g/17_optraits_b 1.3 640))
-  (oln/oln/types/optraits_builtins_int.hh (oln/g/18_optraits_b 1.3 640))
-  (oln/oln/types/optraits_builtins_float.hh (oln/g/19_optraits_b 1.8 640))
-  (oln/oln/types/optraits_bin.hh (oln/g/20_optraits_b 1.8 640))
-  (oln/oln/types/optraits.hh (oln/g/21_optraits.h 1.5 640))
-  (oln/oln/types/interval.hh (oln/g/22_interval.h 1.5 640))
-  (oln/oln/types/int_u.hh (oln/g/23_int_u.hh 1.15 640))
-  (oln/oln/types/int_s.hh (oln/g/24_int_s.hh 1.13 640))
-  (oln/oln/types/global_ops_traits.hh (oln/g/25_global_ops 1.4 640))
-  (oln/oln/types/global_ops_defs.hh (oln/g/26_global_ops 1.4 640))
-  (oln/oln/types/global_ops.hh (oln/g/27_global_ops 1.7 640))
-  (oln/oln/types/cycle.hh (oln/g/28_cycle.hh 1.8 640))
-  (oln/oln/types/builtins_properties.hh (oln/g/29_builtins_p 1.4 640))
-  (oln/oln/types/bin.hh (oln/g/30_bin.hh 1.7 640))
-  (oln/oln/types/behaviour.hh (oln/g/31_behaviour. 1.9 640))
-  (oln/oln/types/all.hh (oln/g/32_all.hh 1.9 640))
+  (oln/oln/types/typetraits_builtins_int.hh (oln/g/3_typetraits 1.7 640))
+  (oln/oln/types/typetraits_builtins_float.hh (oln/g/4_typetraits 1.8 640))
+  (oln/oln/types/typetraits.hh (oln/g/5_typetraits 1.6 640))
+  (oln/oln/types/type.hh (oln/g/6_type.hh 1.4 640))
+  (oln/oln/types/to_oln.hh (oln/g/7_to_oln.hh 1.7 640))
+  (oln/oln/types/rec_value.hh (oln/g/8_rec_value. 1.8 640))
+  (oln/oln/types/range.hh (oln/g/9_range.hh 1.8 640))
+  (oln/oln/types/predecls.hh (oln/g/10_predecls.h 1.10 640))
+  (oln/oln/types/optraits_scalar_defs.hh (oln/g/11_optraits_s 1.5 640))
+  (oln/oln/types/optraits_scalar.hh (oln/g/12_optraits_s 1.10 640))
+  (oln/oln/types/optraits_range.hh (oln/g/13_optraits_r 1.5 640))
+  (oln/oln/types/optraits_int_u.hh (oln/g/14_optraits_i 1.9 640))
+  (oln/oln/types/optraits_int_s.hh (oln/g/15_optraits_i 1.8 640))
+  (oln/oln/types/optraits_cycle.hh (oln/g/16_optraits_c 1.10 640))
+  (oln/oln/types/optraits_builtins_int_defs.hh (oln/g/17_optraits_b 1.4 640))
+  (oln/oln/types/optraits_builtins_int.hh (oln/g/18_optraits_b 1.6 640))
+  (oln/oln/types/optraits_builtins_float.hh (oln/g/19_optraits_b 1.9 640))
+  (oln/oln/types/optraits_bin.hh (oln/g/20_optraits_b 1.9 640))
+  (oln/oln/types/optraits.hh (oln/g/21_optraits.h 1.6 640))
+  (oln/oln/types/interval.hh (oln/g/22_interval.h 1.6 640))
+  (oln/oln/types/int_u.hh (oln/g/23_int_u.hh 1.17 640))
+  (oln/oln/types/int_s.hh (oln/g/24_int_s.hh 1.15 640))
+  (oln/oln/types/global_ops_traits.hh (oln/g/25_global_ops 1.5 640))
+  (oln/oln/types/global_ops_defs.hh (oln/g/26_global_ops 1.6 640))
+  (oln/oln/types/global_ops.hh (oln/g/27_global_ops 1.9 640))
+  (oln/oln/types/cycle.hh (oln/g/28_cycle.hh 1.10 640))
+  (oln/oln/types/builtins_properties.hh (oln/g/29_builtins_p 1.5 640))
+  (oln/oln/types/bin.hh (oln/g/30_bin.hh 1.9 640))
+  (oln/oln/types/behaviour.hh (oln/g/31_behaviour. 1.10 640))
+  (oln/oln/types/all.hh (oln/g/32_all.hh 1.10 640))
 
 
-  (tools/utilities/mosaic.cc (oln/g/0_mosaic.cc 1.3 640))
+  (tools/utilities/mosaic.cc (oln/g/0_mosaic.cc 1.4 640))
   
-  (tools/utilities/Makefile.am (oln/g/2_Makefile.a 1.8 640))
+  (tools/utilities/Makefile.am (oln/g/2_Makefile.a 1.9 640))
 ;; Files added by populate at Mon, 29 Jul 2002 16:23:03 +0200,
 ;; to version 0_5.4(w), by burrus_n:
 
-  (oln/oln/meta/type.hh (oln/g/33_type.hh 1.3 640))
+  (oln/oln/meta/type.hh (oln/g/33_type.hh 1.5 640))
 
 ;; Files added by populate at Thu, 01 Aug 2002 15:28:28 +0200,
 ;; to version 0_5.11(w), by adl:
@@ -562,8 +549,8 @@
 ;; Files added by populate at Mon, 16 Sep 2002 19:47:02 +0200,
 ;; to version 0_5.46(w), by adl:
 
-  (oln/oln/types/optraits_vec.hh (oln/h/42_optraits_v 1.8 640))
-  (oln/oln/types/vec.hh (oln/h/43_vec.hh 1.4 640))
+  (oln/oln/types/optraits_vec.hh (oln/h/42_optraits_v 1.9 640))
+  (oln/oln/types/vec.hh (oln/h/43_vec.hh 1.6 640))
 
 ;; Files added by populate at Mon, 16 Sep 2002 19:47:21 +0200,
 ;; to version 0_5.46(w), by adl:
@@ -589,13 +576,13 @@
 ;; Files added by populate at Thu, 19 Sep 2002 20:13:02 +0200,
 ;; to version 0_5.47(w), by ender:
 
-  (oln/oln/types/cplx_representation.hh (oln/i/3_cplx_repre 1.1 640))
-  (oln/oln/types/cplx.hh (oln/i/4_cplx.hh 1.6 640))
+  (oln/oln/types/cplx_representation.hh (oln/i/3_cplx_repre 1.2 640))
+  (oln/oln/types/cplx.hh (oln/i/4_cplx.hh 1.8 640))
 
 ;; Files added by populate at Thu, 19 Sep 2002 20:13:11 +0200,
 ;; to version 0_5.47(w), by ender:
 
-  (oln/oln/types/optraits_cplx.hh (oln/i/5_optraits_c 1.4 640))
+  (oln/oln/types/optraits_cplx.hh (oln/i/5_optraits_c 1.6 640))
 
 ;; Files added by populate at Fri, 20 Sep 2002 17:49:50 +0200,
 ;; to version 0_5.54(w), by ender:
@@ -607,9 +594,9 @@
 ;; Files added by populate at Mon, 23 Sep 2002 17:15:37 +0200,
 ;; to version 0_5.59(w), by burrus_n:
 
-  (oln/oln/types/debug.hh (oln/i/8_debug.hh 1.1 640))
-  (oln/oln/types/typetraits_builtins_bool.hh (oln/i/9_typetraits 1.3 640))
-  (oln/oln/types/optraits_builtins_bool.hh (oln/i/10_optraits_b 1.2 640))
+  (oln/oln/types/debug.hh (oln/i/8_debug.hh 1.2 640))
+  (oln/oln/types/typetraits_builtins_bool.hh (oln/i/9_typetraits 1.4 640))
+  (oln/oln/types/optraits_builtins_bool.hh (oln/i/10_optraits_b 1.3 640))
 
 ;; Files added by populate at Fri, 27 Sep 2002 12:19:43 +0200,
 ;; to version 0_5.66(w), by burrus_n:
@@ -619,22 +606,22 @@
 ;; Files added by populate at Sat, 28 Sep 2002 12:59:47 +0200,
 ;; to version 0_5.68(w), by nes:
 
-  (oln/oln/types/optraits_builtins.hh (oln/i/16_optraits_b 1.1 640))
+  (oln/oln/types/optraits_builtins.hh (oln/i/16_optraits_b 1.2 640))
 
 ;; Files added by populate at Mon, 30 Sep 2002 11:27:53 +0200,
 ;; to version 0_5.68(w), by nes:
 
-  (oln/oln/types/color.hh (oln/i/17_color.hh 1.4 640))
-  (oln/oln/types/rgb.hh (oln/i/18_rgb.hh 1.1 640))
-  (oln/oln/types/nrgb.hh (oln/i/19_nrgb.hh 1.3 640))
-  (oln/oln/types/hsi.hh (oln/i/20_hsi.hh 1.1 640))
-  (oln/oln/types/hsl.hh (oln/i/21_hsl.hh 1.1 640))
-  (oln/oln/types/hsv.hh (oln/i/22_hsv.hh 1.1 640))
-  (oln/oln/types/yiq.hh (oln/i/23_yiq.hh 1.1 640))
-  (oln/oln/types/xyz.hh (oln/i/24_xyz.hh 1.1 640))
-  (oln/oln/types/yuv.hh (oln/i/25_yuv.hh 1.1 640))
-  (oln/oln/types/cast.hh (oln/i/26_cast.hh 1.1 640))
-  (oln/oln/types/typetraits_builtins.hh (oln/i/27_typetraits 1.1 640))
+  (oln/oln/types/color.hh (oln/i/17_color.hh 1.6 640))
+  (oln/oln/types/rgb.hh (oln/i/18_rgb.hh 1.3 640))
+  (oln/oln/types/nrgb.hh (oln/i/19_nrgb.hh 1.5 640))
+  (oln/oln/types/hsi.hh (oln/i/20_hsi.hh 1.3 640))
+  (oln/oln/types/hsl.hh (oln/i/21_hsl.hh 1.3 640))
+  (oln/oln/types/hsv.hh (oln/i/22_hsv.hh 1.3 640))
+  (oln/oln/types/yiq.hh (oln/i/23_yiq.hh 1.3 640))
+  (oln/oln/types/xyz.hh (oln/i/24_xyz.hh 1.3 640))
+  (oln/oln/types/yuv.hh (oln/i/25_yuv.hh 1.3 640))
+  (oln/oln/types/cast.hh (oln/i/26_cast.hh 1.3 640))
+  (oln/oln/types/typetraits_builtins.hh (oln/i/27_typetraits 1.2 640))
 
 ;; Files added by populate at Mon, 30 Sep 2002 12:17:02 +0200,
 ;; to version 0_5.68(w), by nes:
@@ -644,7 +631,7 @@
 ;; Files added by populate at Wed, 06 Nov 2002 16:10:39 +0100,
 ;; to version 0_5.73(w), by js:
 
-  (oln/oln/utils/copy.hh (oln/i/29_copy.hh 1.2 640))
+  (oln/oln/utils/copy.hh (oln/i/29_copy.hh 1.3 640))
 
 ;; Files added by populate at Fri, 08 Nov 2002 18:04:09 +0100,
 ;; to version 0_5.74(w), by chojin:
@@ -657,9 +644,9 @@
 ;; Files added by populate at Wed, 13 Nov 2002 10:21:22 +0100,
 ;; to version 0_5.77(w), by ender:
 
-  (oln/oln/transforms/wavelet_coeffs.hh (oln/i/34_wavelet_co 1.2 640))
-  (oln/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.1 640))
-  (oln/oln/transforms/fft.hh (oln/i/36_fft.hh 1.2 640))
+  (oln/oln/transforms/wavelet_coeffs.hh (oln/i/34_wavelet_co 1.3 640))
+  (oln/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.2 640))
+  (oln/oln/transforms/fft.hh (oln/i/36_fft.hh 1.3 640))
 
 ;; Files added by populate at Wed, 13 Nov 2002 10:22:37 +0100,
 ;; to version 0_5.77(w), by ender:
@@ -676,9 +663,9 @@
   (oln/tests/io/pretty.cc (oln/i/42_pretty.cc 1.1 640))
   (oln/tests/io/se_fail.cc (oln/i/43_se_fail.cc 1.1 640))
   (oln/tests/io/se_pass.cc (oln/i/44_se_pass.cc 1.1 640))
-  (oln/oln/io/se.hh (oln/i/45_se.hh 1.1 640))
-  (oln/oln/io/se_window.hxx (oln/i/46_se_window. 1.2 640))
-  (oln/oln/io/se_neighborhood.hxx (oln/i/47_se_neighbo 1.2 640))
+  (oln/oln/io/se.hh (oln/i/45_se.hh 1.2 640))
+  (oln/oln/io/se_window.hxx (oln/i/46_se_window. 1.3 640))
+  (oln/oln/io/se_neighborhood.hxx (oln/i/47_se_neighbo 1.3 640))
 
 ;; Files added by populate at Wed, 27 Nov 2002 23:09:56 +0100,
 ;; to version 0_5.92(w), by raph:
@@ -688,7 +675,7 @@
 ;; Files added by populate at Mon, 02 Dec 2002 19:20:06 +0100,
 ;; to version 0_5.98(w), by jerome:
 
-  (oln/oln/morpho/extrema.hxx (oln/j/4_extrema.hx 1.1 640))
+  (oln/oln/morpho/extrema.hxx (oln/j/4_extrema.hx 1.2 640))
 
 
   (tools/utilities/morpho/morpho_template_extrema.cc (oln/j/5_morpho_tem 1.1 640))
@@ -711,7 +698,7 @@
 ;; Files added by populate at Wed, 04 Dec 2002 16:24:21 +0100,
 ;; to version 0_5_reconf.2(w), by raph:
 
-  (oln/oln/config/pconf.hh (oln/j/20_pconf.hh 1.4 640))
+  (oln/oln/config/pconf.hh (oln/j/20_pconf.hh 1.5 640))
 
 ;; Files added by populate at Thu, 05 Dec 2002 18:01:07 +0100,
 ;; to version 0_5_reconf.12(w), by raph:
@@ -729,8 +716,8 @@
   
   
   
-  (oln/aclocal.m4 (oln/n/3_aclocal.m4 1.7 640))
-  (oln/configure.ac (oln/n/4_configure. 1.4 640))
+  (oln/aclocal.m4 (oln/n/3_aclocal.m4 1.9 600))
+  (oln/configure.ac (oln/n/4_configure. 1.5 640))
   (oln/img/se9.pbm (oln/n/5_se9.pbm 1.1 640) :no-keywords)
   (oln/img/se.pbm (oln/n/6_se.pbm 1.1 640) :no-keywords)
   (oln/img/random.pgm (oln/n/7_random.pgm 1.1 640))
@@ -754,11 +741,11 @@
   
   
   
-  (oln/oln/config/pconf-inc.in (oln/n/28_pconf-inc. 1.2 640))
+  (oln/oln/config/pconf-inc.in (oln/n/28_pconf-inc. 1.2 600))
   
   
   
-  (Makefile.am (oln/n/32_Makefile.a 1.4 640))
+  (Makefile.am (oln/n/32_Makefile.a 1.5 640))
   
   
   (tools/swilena/README (oln/n/35_README 1.1 640))
@@ -768,7 +755,7 @@
   (tools/swilena/doc/swilena.texi (oln/n/40_swilena.te 1.1 640))
   
   (tools/swilena/java/Makefile.am (oln/n/42_Makefile.a 1.1 640))
-  (tools/swilena/python/typedefs.hh (oln/n/43_typedefs.h 1.1 640))
+  (tools/swilena/python/typedefs.hh (oln/n/43_typedefs.h 1.2 640))
   (tools/swilena/python/Makefile.am (oln/n/44_Makefile.a 1.1 640))
   (tools/swilena/src/swilena3d_morpho.i (oln/n/45_swilena3d_ 1.1 640))
   (tools/swilena/src/swilena3d_convert.i (oln/n/46_swilena3d_ 1.1 640))
@@ -805,7 +792,7 @@
   (tools/swilena/Makefile.am (oln/o/25_Makefile.a 1.1 640))
   (tools/swilena/configure.ac (oln/o/26_configure. 1.1 640))
   (tools/utilities/configure.ac (oln/o/27_configure. 1.1 640))
-  (aclocal.m4 (oln/o/28_aclocal.m4 1.7 640))
+  (aclocal.m4 (oln/o/28_aclocal.m4 1.9 600))
 
 
 ;; Files added by populate at Wed, 11 Dec 2002 19:17:58 +0100,
@@ -844,17 +831,17 @@
 ;; Files added by populate at Fri, 03 Jan 2003 10:06:30 +0100,
 ;; to version 0_7_reconf.4(w), by elrond:
 
-  (oln/tests/configure.ac (oln/o/35_configure. 1.3 640))
+  (oln/tests/configure.ac (oln/o/35_configure. 1.4 640))
 
 ;; Files added by populate at Fri, 03 Jan 2003 10:06:51 +0100,
 ;; to version 0_7_reconf.4(w), by elrond:
 
-  (tools/configure.ac (oln/o/36_configure. 1.2 640))
+  (tools/configure.ac (oln/o/36_configure. 1.3 640))
 
 ;; Files added by populate at Fri, 03 Jan 2003 10:06:56 +0100,
 ;; to version 0_7_reconf.4(w), by elrond:
 
-  (tools/Makefile.am (oln/o/37_Makefile.a 1.2 640))
+  (tools/Makefile.am (oln/o/37_Makefile.a 1.3 640))
 
 ;; Files deleted by depopulate at Sat, 04 Jan 2003 16:25:50 +0100,
 ;; from version 0_7_reconf.5(w), by raph:
@@ -905,7 +892,7 @@
 ;; Files added by populate at Tue, 07 Jan 2003 11:04:34 +0100,
 ;; to version 0_7_reconf.7(w), by yann:
 
-  (oln/oln/meta/optional.hh (oln/o/41_optional.h 1.2 600))
+  (oln/oln/meta/optional.hh (oln/o/41_optional.h 1.4 600))
 
 ;; Files added by populate at Tue, 07 Jan 2003 15:01:01 +0100,
 ;; to version 7.1(w), by nes:
@@ -925,25 +912,154 @@
   (oln/tests/types/tests/bin3 (oln/o/46_bin3 1.1 640))
 
 
-  (oln/oln/core/box.hh (oln/o/51_box.hh 1.1 640))
-  (oln/oln/core/box.hxx (oln/p/0_box.hxx 1.2 640))
-  (oln/oln/level/set_level.hh (oln/p/1_set_level. 1.1 640))
+  (oln/oln/core/box.hh (oln/o/51_box.hh 1.3 640))
+  (oln/oln/core/box.hxx (oln/p/0_box.hxx 1.4 640))
+  (oln/oln/level/set_level.hh (oln/p/1_set_level. 1.4 640))
 
-  (oln/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.1 640))
-  (oln/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.1 640)))
+  (oln/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.3 640))
+  (oln/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.4 640)))
 (Merge-Parents
-  (7.6 complete
-    (oln/ChangeLog oln/ChangeLog oln/ChangeLog r) (oln/oln/level/cc.hh oln/oln/level/cc.hh oln/oln/level/cc.hh r)
-    (oln/oln/Makefile.am oln/oln/Makefile.am oln/oln/Makefile.am r) (oln/oln/types/int_u.hh oln/oln/types/int_u.hh oln/oln/types/int_u.hh m)
-    (oln/oln/types/int_s.hh oln/oln/types/int_s.hh oln/oln/types/int_s.hh m) (oln/oln/types/color.hh oln/oln/types/color.hh oln/oln/types/color.hh r)
-    (oln/oln/types/nrgb.hh oln/oln/types/nrgb.hh oln/oln/types/nrgb.hh r) (oln/aclocal.m4 oln/aclocal.m4 oln/aclocal.m4 r)
-    (aclocal.m4 aclocal.m4 aclocal.m4 r) (oln/oln/meta/optional.hh oln/oln/meta/optional.hh oln/oln/meta/optional.hh r)
-    (() () oln/oln/core/box.hh a) (() () oln/oln/core/box.hxx a)
-    (() () oln/oln/level/set_level.hh a) 
+  (7.16 complete
+    (ChangeLog ChangeLog ChangeLog r) (oln/ChangeLog oln/ChangeLog oln/ChangeLog m)
+    (doc/ChangeLog doc/ChangeLog doc/ChangeLog r) (tools/ChangeLog tools/ChangeLog tools/ChangeLog r)
+    (configure.ac configure.ac configure.ac r) (oln/Makefile.am oln/Makefile.am oln/Makefile.am r)
+    (doc/configure.ac doc/configure.ac doc/configure.ac r) (doc/doc/Makefile.am doc/doc/Makefile.am doc/doc/Makefile.am r)
+    (doc/Makefile.am doc/Makefile.am doc/Makefile.am r) (oln/oln/arith/internal/opdecls.hh oln/oln/arith/internal/opdecls.hh oln/oln/arith/internal/opdecls.hh r)
+    (oln/oln/arith/logic.hh oln/oln/arith/logic.hh oln/oln/arith/logic.hh r) (oln/oln/arith/ops.hh oln/oln/arith/ops.hh oln/oln/arith/ops.hh r)
+    (oln/oln/basics1d.hh oln/oln/basics1d.hh oln/oln/basics1d.hh r) (oln/oln/basics2d.hh oln/oln/basics2d.hh oln/oln/basics2d.hh r)
+    (oln/oln/basics3d.hh oln/oln/basics3d.hh oln/oln/basics3d.hh r) (oln/oln/basics.hh oln/oln/basics.hh oln/oln/basics.hh r)
+    (oln/oln/config/system.hh oln/oln/config/system.hh oln/oln/config/system.hh r) (oln/oln/convert/basics.hh oln/oln/convert/basics.hh oln/oln/convert/basics.hh r)
+    (oln/oln/convert/bound.hh oln/oln/convert/bound.hh oln/oln/convert/bound.hh r) (oln/oln/convert/colorconv.hh oln/oln/convert/colorconv.hh oln/oln/convert/colorconv.hh r)
+    (oln/oln/convert/conversion.hh oln/oln/convert/conversion.hh oln/oln/convert/conversion.hh r) (oln/oln/convert/conversion_ng_se.hh oln/oln/convert/conversion_ng_se.hh oln/oln/convert/conversion_ng_se.hh r)
+    (oln/oln/convert/force.hh oln/oln/convert/force.hh oln/oln/convert/force.hh r) (oln/oln/convert/nrgbhsi.hh oln/oln/convert/nrgbhsi.hh oln/oln/convert/nrgbhsi.hh r)
+    (oln/oln/convert/nrgbhsl.hh oln/oln/convert/nrgbhsl.hh oln/oln/convert/nrgbhsl.hh r) (oln/oln/convert/nrgbhsv.hh oln/oln/convert/nrgbhsv.hh oln/oln/convert/nrgbhsv.hh r)
+    (oln/oln/convert/nrgbxyz.hh oln/oln/convert/nrgbxyz.hh oln/oln/convert/nrgbxyz.hh r) (oln/oln/convert/nrgbyiq.hh oln/oln/convert/nrgbyiq.hh oln/oln/convert/nrgbyiq.hh r)
+    (oln/oln/convert/nrgbyuv.hh oln/oln/convert/nrgbyuv.hh oln/oln/convert/nrgbyuv.hh r) (oln/oln/convert/rgbnrgb.hh oln/oln/convert/rgbnrgb.hh oln/oln/convert/rgbnrgb.hh r)
+    (oln/oln/convert/rgbxyz.hh oln/oln/convert/rgbxyz.hh oln/oln/convert/rgbxyz.hh r) (oln/oln/convol/convolution.hh oln/oln/convol/convolution.hh oln/oln/convol/convolution.hh r)
+    (oln/oln/convol/fast_gaussian_coefficient.hh oln/oln/convol/fast_gaussian_coefficient.hh oln/oln/convol/fast_gaussian_coefficient.hh r) (oln/oln/convol/fast_gaussian.hh oln/oln/convol/fast_gaussian.hh oln/oln/convol/fast_gaussian.hh r)
+    (oln/oln/convol/fast_gaussian.hxx oln/oln/convol/fast_gaussian.hxx oln/oln/convol/fast_gaussian.hxx r) (oln/oln/core/accum.hh oln/oln/core/accum.hh oln/oln/core/accum.hh r)
+    (oln/oln/core/apply.hh oln/oln/core/apply.hh oln/oln/core/apply.hh r) (oln/oln/core/bkd_iter1d.hh oln/oln/core/bkd_iter1d.hh oln/oln/core/bkd_iter1d.hh r)
+    (oln/oln/core/bkd_iter2d.hh oln/oln/core/bkd_iter2d.hh oln/oln/core/bkd_iter2d.hh r) (oln/oln/core/bkd_iter3d.hh oln/oln/core/bkd_iter3d.hh oln/oln/core/bkd_iter3d.hh r)
+    (oln/oln/core/border1d.hh oln/oln/core/border1d.hh oln/oln/core/border1d.hh r) (oln/oln/core/border2d.hh oln/oln/core/border2d.hh oln/oln/core/border2d.hh r)
+    (oln/oln/core/border3d.hh oln/oln/core/border3d.hh oln/oln/core/border3d.hh r) (oln/oln/core/border.hh oln/oln/core/border.hh oln/oln/core/border.hh r)
+    (oln/oln/core/compose.hh oln/oln/core/compose.hh oln/oln/core/compose.hh r) (oln/oln/core/contract.hh oln/oln/core/contract.hh oln/oln/core/contract.hh r)
+    (oln/oln/core/coord.hh oln/oln/core/coord.hh oln/oln/core/coord.hh r) (oln/oln/core/dpoint1d.hh oln/oln/core/dpoint1d.hh oln/oln/core/dpoint1d.hh r)
+    (oln/oln/core/dpoint1d.hxx oln/oln/core/dpoint1d.hxx oln/oln/core/dpoint1d.hxx r) (oln/oln/core/dpoint2d.hh oln/oln/core/dpoint2d.hh oln/oln/core/dpoint2d.hh r)
+    (oln/oln/core/dpoint2d.hxx oln/oln/core/dpoint2d.hxx oln/oln/core/dpoint2d.hxx r) (oln/oln/core/dpoint3d.hh oln/oln/core/dpoint3d.hh oln/oln/core/dpoint3d.hh r)
+    (oln/oln/core/dpoint3d.hxx oln/oln/core/dpoint3d.hxx oln/oln/core/dpoint3d.hxx r) (oln/oln/core/dpoint.hh oln/oln/core/dpoint.hh oln/oln/core/dpoint.hh r)
+    (oln/oln/core/dpointnd.hh oln/oln/core/dpointnd.hh oln/oln/core/dpointnd.hh r) (oln/oln/core/fold.hh oln/oln/core/fold.hh oln/oln/core/fold.hh r)
+    (oln/oln/core/fwd_iter1d.hh oln/oln/core/fwd_iter1d.hh oln/oln/core/fwd_iter1d.hh r) (oln/oln/core/fwd_iter2d.hh oln/oln/core/fwd_iter2d.hh oln/oln/core/fwd_iter2d.hh r)
+    (oln/oln/core/fwd_iter3d.hh oln/oln/core/fwd_iter3d.hh oln/oln/core/fwd_iter3d.hh r) (oln/oln/core/generate.hh oln/oln/core/generate.hh oln/oln/core/generate.hh r)
+    (oln/oln/core/image1d.hh oln/oln/core/image1d.hh oln/oln/core/image1d.hh r) (oln/oln/core/image1d_size.hh oln/oln/core/image1d_size.hh oln/oln/core/image1d_size.hh r)
+    (oln/oln/core/image2d.hh oln/oln/core/image2d.hh oln/oln/core/image2d.hh r) (oln/oln/core/image2d_size.hh oln/oln/core/image2d_size.hh oln/oln/core/image2d_size.hh r)
+    (oln/oln/core/image3d.hh oln/oln/core/image3d.hh oln/oln/core/image3d.hh r) (oln/oln/core/image3d_size.hh oln/oln/core/image3d_size.hh oln/oln/core/image3d_size.hh r)
+    (oln/oln/core/image.hh oln/oln/core/image.hh oln/oln/core/image.hh r) (oln/oln/core/imagend_size.hh oln/oln/core/imagend_size.hh oln/oln/core/imagend_size.hh r)
+    (oln/oln/core/image_size.hh oln/oln/core/image_size.hh oln/oln/core/image_size.hh r) (oln/oln/core/internal/fake.hh oln/oln/core/internal/fake.hh oln/oln/core/internal/fake.hh r)
+    (oln/oln/core/internal/image1d_data.hh oln/oln/core/internal/image1d_data.hh oln/oln/core/internal/image1d_data.hh r) (oln/oln/core/internal/image1d.hh oln/oln/core/internal/image1d.hh oln/oln/core/internal/image1d.hh r)
+    (oln/oln/core/internal/image2d_data.hh oln/oln/core/internal/image2d_data.hh oln/oln/core/internal/image2d_data.hh r) (oln/oln/core/internal/image2d.hh oln/oln/core/internal/image2d.hh oln/oln/core/internal/image2d.hh r)
+    (oln/oln/core/internal/image3d_data.hh oln/oln/core/internal/image3d_data.hh oln/oln/core/internal/image3d_data.hh r) (oln/oln/core/internal/image3d.hh oln/oln/core/internal/image3d.hh oln/oln/core/internal/image3d.hh r)
+    (oln/oln/core/internal/iter1d.hh oln/oln/core/internal/iter1d.hh oln/oln/core/internal/iter1d.hh r) (oln/oln/core/internal/iter2d.hh oln/oln/core/internal/iter2d.hh oln/oln/core/internal/iter2d.hh r)
+    (oln/oln/core/internal/iter3d.hh oln/oln/core/internal/iter3d.hh oln/oln/core/internal/iter3d.hh r) (oln/oln/core/internal/neighborhood.hh oln/oln/core/internal/neighborhood.hh oln/oln/core/internal/neighborhood.hh r)
+    (oln/oln/core/internal/objs.hxx oln/oln/core/internal/objs.hxx oln/oln/core/internal/objs.hxx r) (oln/oln/core/internal/real_image1d.hh oln/oln/core/internal/real_image1d.hh oln/oln/core/internal/real_image1d.hh r)
+    (oln/oln/core/internal/real_image2d.hh oln/oln/core/internal/real_image2d.hh oln/oln/core/internal/real_image2d.hh r) (oln/oln/core/internal/real_image3d.hh oln/oln/core/internal/real_image3d.hh oln/oln/core/internal/real_image3d.hh r)
+    (oln/oln/core/internal/rec_operable.hh oln/oln/core/internal/rec_operable.hh oln/oln/core/internal/rec_operable.hh r) (oln/oln/core/internal/window.hh oln/oln/core/internal/window.hh oln/oln/core/internal/window.hh r)
+    (oln/oln/core/internal/w_window.hh oln/oln/core/internal/w_window.hh oln/oln/core/internal/w_window.hh r) (oln/oln/core/iter.hh oln/oln/core/iter.hh oln/oln/core/iter.hh r)
+    (oln/oln/core/macros.hh oln/oln/core/macros.hh oln/oln/core/macros.hh r) (oln/oln/core/neighborhood1d.hh oln/oln/core/neighborhood1d.hh oln/oln/core/neighborhood1d.hh r)
+    (oln/oln/core/neighborhood2d.hh oln/oln/core/neighborhood2d.hh oln/oln/core/neighborhood2d.hh r) (oln/oln/core/neighborhood3d.hh oln/oln/core/neighborhood3d.hh oln/oln/core/neighborhood3d.hh r)
+    (oln/oln/core/neighborhood.hh oln/oln/core/neighborhood.hh oln/oln/core/neighborhood.hh r) (oln/oln/core/objs.hh oln/oln/core/objs.hh oln/oln/core/objs.hh r)
+    (oln/oln/core/old/image2d_bin.hh oln/oln/core/old/image2d_bin.hh () d) (oln/oln/core/old/image2d_bin.hxx oln/oln/core/old/image2d_bin.hxx () d)
+    (oln/oln/core/old/image2d.hxx oln/oln/core/old/image2d.hxx () d) (oln/oln/core/old/rec_window.hh oln/oln/core/old/rec_window.hh () d)
+    (oln/oln/core/point1d.hh oln/oln/core/point1d.hh oln/oln/core/point1d.hh r) (oln/oln/core/point1d.hxx oln/oln/core/point1d.hxx oln/oln/core/point1d.hxx r)
+    (oln/oln/core/point2d.hh oln/oln/core/point2d.hh oln/oln/core/point2d.hh r) (oln/oln/core/point2d.hxx oln/oln/core/point2d.hxx oln/oln/core/point2d.hxx r)
+    (oln/oln/core/point3d.hh oln/oln/core/point3d.hh oln/oln/core/point3d.hh r) (oln/oln/core/point3d.hxx oln/oln/core/point3d.hxx oln/oln/core/point3d.hxx r)
+    (oln/oln/core/point.hh oln/oln/core/point.hh oln/oln/core/point.hh r) (oln/oln/core/pointnd.hh oln/oln/core/pointnd.hh oln/oln/core/pointnd.hh r)
+    (oln/oln/core/old/pred.hh oln/oln/core/old/pred.hh () d) (oln/oln/core/pred_image.hh oln/oln/core/pred_image.hh oln/oln/core/pred_image.hh r)
+    (oln/oln/core/regular_image.hh oln/oln/core/regular_image.hh oln/oln/core/regular_image.hh r) (oln/oln/core/structelt.hh oln/oln/core/structelt.hh oln/oln/core/structelt.hh r)
+    (oln/oln/core/traverse.hh oln/oln/core/traverse.hh oln/oln/core/traverse.hh r) (oln/oln/core/typeadj.hh oln/oln/core/typeadj.hh oln/oln/core/typeadj.hh r)
+    (oln/oln/core/window1d.hh oln/oln/core/window1d.hh oln/oln/core/window1d.hh r) (oln/oln/core/window2d.hh oln/oln/core/window2d.hh oln/oln/core/window2d.hh r)
+    (oln/oln/core/window3d.hh oln/oln/core/window3d.hh oln/oln/core/window3d.hh r) (oln/oln/core/window.hh oln/oln/core/window.hh oln/oln/core/window.hh r)
+    (oln/oln/core/winiter.hh oln/oln/core/winiter.hh oln/oln/core/winiter.hh r) (oln/oln/core/winneighb.hh oln/oln/core/winneighb.hh oln/oln/core/winneighb.hh r)
+    (oln/oln/core/w_window1d.hh oln/oln/core/w_window1d.hh oln/oln/core/w_window1d.hh r) (oln/oln/core/w_window2d.hh oln/oln/core/w_window2d.hh oln/oln/core/w_window2d.hh r)
+    (oln/oln/core/w_window3d.hh oln/oln/core/w_window3d.hh oln/oln/core/w_window3d.hh r) (oln/oln/core/w_window.hh oln/oln/core/w_window.hh oln/oln/core/w_window.hh r)
+    (oln/oln/io/base.hh oln/oln/io/base.hh oln/oln/io/base.hh r) (oln/oln/io/base.hxx oln/oln/io/base.hxx oln/oln/io/base.hxx r)
+    (oln/oln/io/basics.hh oln/oln/io/basics.hh oln/oln/io/basics.hh r) (oln/oln/io/file.hh oln/oln/io/file.hh oln/oln/io/file.hh r)
+    (oln/oln/io/gz.hh oln/oln/io/gz.hh oln/oln/io/gz.hh r) (oln/oln/io/gz_stream.hh oln/oln/io/gz_stream.hh oln/oln/io/gz_stream.hh r)
+    (oln/oln/io/pnm3d.hh oln/oln/io/pnm3d.hh oln/oln/io/pnm3d.hh r) (oln/oln/io/pnm.hh oln/oln/io/pnm.hh oln/oln/io/pnm.hh r)
+    (oln/oln/io/pnm_read3d.hxx oln/oln/io/pnm_read3d.hxx oln/oln/io/pnm_read3d.hxx r) (oln/oln/io/pnm_read_common.hxx oln/oln/io/pnm_read_common.hxx oln/oln/io/pnm_read_common.hxx r)
+    (oln/oln/io/pnm_read.hxx oln/oln/io/pnm_read.hxx oln/oln/io/pnm_read.hxx r) (oln/oln/io/pnm_write3d.hxx oln/oln/io/pnm_write3d.hxx oln/oln/io/pnm_write3d.hxx r)
+    (oln/oln/io/pnm_write_common.hxx oln/oln/io/pnm_write_common.hxx oln/oln/io/pnm_write_common.hxx r) (oln/oln/io/pnm_write.hxx oln/oln/io/pnm_write.hxx oln/oln/io/pnm_write.hxx r)
+    (oln/oln/io/readable.hh oln/oln/io/readable.hh oln/oln/io/readable.hh r) (oln/oln/level/cc.hh oln/oln/level/cc.hh oln/oln/level/cc.hh r)
+    (oln/oln/level/compare.hh oln/oln/level/compare.hh oln/oln/level/compare.hh r) (oln/oln/level/connected.hh oln/oln/level/connected.hh oln/oln/level/connected.hh r)
+    (oln/oln/morpho/extrema_killer.hh oln/oln/morpho/extrema_killer.hh oln/oln/morpho/extrema_killer.hh r) (oln/oln/level/fill.hh oln/oln/level/fill.hh oln/oln/level/fill.hh r)
+    (oln/oln/level/invert.hh oln/oln/level/invert.hh oln/oln/level/invert.hh r) (oln/oln/level/lut.hh oln/oln/level/lut.hh oln/oln/level/lut.hh r)
+    (oln/oln/level/threshold.hh oln/oln/level/threshold.hh oln/oln/level/threshold.hh r) (oln/oln/math/macros.hh oln/oln/math/macros.hh oln/oln/math/macros.hh r)
+    (oln/oln/meta/array1d.hh oln/oln/meta/array1d.hh oln/oln/meta/array1d.hh r) (oln/oln/meta/array1d.hxx oln/oln/meta/array1d.hxx oln/oln/meta/array1d.hxx r)
+    (oln/oln/meta/array2d.hh oln/oln/meta/array2d.hh oln/oln/meta/array2d.hh r) (oln/oln/meta/array2d.hxx oln/oln/meta/array2d.hxx oln/oln/meta/array2d.hxx r)
+    (oln/oln/meta/array3d.hh oln/oln/meta/array3d.hh oln/oln/meta/array3d.hh r) (oln/oln/meta/array3d.hxx oln/oln/meta/array3d.hxx oln/oln/meta/array3d.hxx r)
+    (oln/oln/meta/array.hh oln/oln/meta/array.hh oln/oln/meta/array.hh r) (oln/oln/meta/arraynd.hh oln/oln/meta/arraynd.hh oln/oln/meta/arraynd.hh r)
+    (oln/oln/meta/basics.hh oln/oln/meta/basics.hh oln/oln/meta/basics.hh r) (oln/oln/meta/cmp.hh oln/oln/meta/cmp.hh oln/oln/meta/cmp.hh r)
+    (oln/oln/meta/control.hh oln/oln/meta/control.hh oln/oln/meta/control.hh r) (oln/oln/meta/logic.hh oln/oln/meta/logic.hh oln/oln/meta/logic.hh r)
+    (oln/oln/meta/ucmp.hh oln/oln/meta/ucmp.hh oln/oln/meta/ucmp.hh r) (oln/oln/meta/ufuncs.hh oln/oln/meta/ufuncs.hh oln/oln/meta/ufuncs.hh r)
+    (oln/oln/morpho/closing.hh oln/oln/morpho/closing.hh oln/oln/morpho/closing.hh r) (oln/oln/morpho/closing.inc oln/oln/morpho/closing.inc oln/oln/morpho/closing.inc r)
+    (oln/oln/morpho/dilation.hh oln/oln/morpho/dilation.hh oln/oln/morpho/dilation.hh r) (oln/oln/morpho/erosion.hh oln/oln/morpho/erosion.hh oln/oln/morpho/erosion.hh r)
+    (oln/oln/morpho/extrema.hh oln/oln/morpho/extrema.hh oln/oln/morpho/extrema.hh r) (oln/oln/morpho/fast_morpho.hh oln/oln/morpho/fast_morpho.hh oln/oln/morpho/fast_morpho.hh r)
+    (oln/oln/morpho/fast_morpho.hxx oln/oln/morpho/fast_morpho.hxx oln/oln/morpho/fast_morpho.hxx r) (oln/oln/morpho/geodesic_dilation.hh oln/oln/morpho/geodesic_dilation.hh oln/oln/morpho/geodesic_dilation.hh r)
+    (oln/oln/morpho/geodesic_erosion.hh oln/oln/morpho/geodesic_erosion.hh oln/oln/morpho/geodesic_erosion.hh r) (oln/oln/morpho/gradient.hh oln/oln/morpho/gradient.hh oln/oln/morpho/gradient.hh r)
+    (oln/oln/morpho/gradient.inc oln/oln/morpho/gradient.inc oln/oln/morpho/gradient.inc r) (oln/oln/morpho/hit_or_miss.hh oln/oln/morpho/hit_or_miss.hh oln/oln/morpho/hit_or_miss.hh r)
+    (oln/oln/morpho/hit_or_miss.inc oln/oln/morpho/hit_or_miss.inc oln/oln/morpho/hit_or_miss.inc r) (oln/oln/morpho/laplacian.hh oln/oln/morpho/laplacian.hh oln/oln/morpho/laplacian.hh r)
+    (oln/oln/morpho/laplacian.inc oln/oln/morpho/laplacian.inc oln/oln/morpho/laplacian.inc r) (oln/oln/morpho/minmax.hh oln/oln/morpho/minmax.hh oln/oln/morpho/minmax.hh r)
+    (oln/oln/morpho/opening.hh oln/oln/morpho/opening.hh oln/oln/morpho/opening.hh r) (oln/oln/morpho/opening.inc oln/oln/morpho/opening.inc oln/oln/morpho/opening.inc r)
+    (oln/oln/morpho/reconstruction.hh oln/oln/morpho/reconstruction.hh oln/oln/morpho/reconstruction.hh r) (oln/oln/morpho/splitse.hh oln/oln/morpho/splitse.hh oln/oln/morpho/splitse.hh r)
+    (oln/oln/morpho/stat.hh oln/oln/morpho/stat.hh oln/oln/morpho/stat.hh r) (oln/oln/morpho/thickening.hh oln/oln/morpho/thickening.hh oln/oln/morpho/thickening.hh r)
+    (oln/oln/morpho/thickening.inc oln/oln/morpho/thickening.inc oln/oln/morpho/thickening.inc r) (oln/oln/morpho/thinning.hh oln/oln/morpho/thinning.hh oln/oln/morpho/thinning.hh r)
+    (oln/oln/morpho/thinning.inc oln/oln/morpho/thinning.inc oln/oln/morpho/thinning.inc r) (oln/oln/morpho/top_hat.hh oln/oln/morpho/top_hat.hh oln/oln/morpho/top_hat.hh r)
+    (oln/oln/morpho/top_hat.inc oln/oln/morpho/top_hat.inc oln/oln/morpho/top_hat.inc r) (oln/oln/morpho/watershed.hh oln/oln/morpho/watershed.hh oln/oln/morpho/watershed.hh r)
+    (oln/oln/morpho/watershed.hxx oln/oln/morpho/watershed.hxx oln/oln/morpho/watershed.hxx r) (oln/oln/utils/histogram.hh oln/oln/utils/histogram.hh oln/oln/utils/histogram.hh r)
+    (oln/oln/utils/stat.hh oln/oln/utils/stat.hh oln/oln/utils/stat.hh r) (oln/oln/utils/timer.hh oln/oln/utils/timer.hh oln/oln/utils/timer.hh r)
+    (oln/tests/meta/gen_test.cc oln/tests/meta/gen_test.cc oln/tests/meta/gen_test.cc r) (oln/tests/check/check.hh oln/tests/check/check.hh oln/tests/check/check.hh r)
+    (oln/tests/check/data.hh oln/tests/check/data.hh oln/tests/check/data.hh r) (oln/tests/check/srcdir.hh oln/tests/check/srcdir.hh oln/tests/check/srcdir.hh r)
+    (oln/tests/check/verbose.hh oln/tests/check/verbose.hh oln/tests/check/verbose.hh r) (oln/tests/convert/convcomp.cc oln/tests/convert/convcomp.cc oln/tests/convert/convcomp.cc r)
+    (oln/tests/io/loadsave.hh oln/tests/io/loadsave.hh oln/tests/io/loadsave.hh r) (oln/tests/Makefile.am oln/tests/Makefile.am oln/tests/Makefile.am r)
+    (oln/tests/sanity/includes.test oln/tests/sanity/includes.test oln/tests/sanity/includes.test r) (oln/tests/defs.in oln/tests/defs.in oln/tests/defs.in r)
+    (oln/oln/convert/stretch.hh oln/oln/convert/stretch.hh oln/oln/convert/stretch.hh r) (oln/oln/types/typetraits_builtins_int.hh oln/oln/types/typetraits_builtins_int.hh oln/oln/types/typetraits_builtins_int.hh m)
+    (oln/oln/types/typetraits_builtins_float.hh oln/oln/types/typetraits_builtins_float.hh oln/oln/types/typetraits_builtins_float.hh r) (oln/oln/types/typetraits.hh oln/oln/types/typetraits.hh oln/oln/types/typetraits.hh r)
+    (oln/oln/types/type.hh oln/oln/types/type.hh oln/oln/types/type.hh r) (oln/oln/types/to_oln.hh oln/oln/types/to_oln.hh oln/oln/types/to_oln.hh r)
+    (oln/oln/types/rec_value.hh oln/oln/types/rec_value.hh oln/oln/types/rec_value.hh r) (oln/oln/types/range.hh oln/oln/types/range.hh oln/oln/types/range.hh m)
+    (oln/oln/types/predecls.hh oln/oln/types/predecls.hh oln/oln/types/predecls.hh r) (oln/oln/types/optraits_scalar_defs.hh oln/oln/types/optraits_scalar_defs.hh oln/oln/types/optraits_scalar_defs.hh r)
+    (oln/oln/types/optraits_scalar.hh oln/oln/types/optraits_scalar.hh oln/oln/types/optraits_scalar.hh r) (oln/oln/types/optraits_range.hh oln/oln/types/optraits_range.hh oln/oln/types/optraits_range.hh r)
+    (oln/oln/types/optraits_int_u.hh oln/oln/types/optraits_int_u.hh oln/oln/types/optraits_int_u.hh r) (oln/oln/types/optraits_int_s.hh oln/oln/types/optraits_int_s.hh oln/oln/types/optraits_int_s.hh r)
+    (oln/oln/types/optraits_cycle.hh oln/oln/types/optraits_cycle.hh oln/oln/types/optraits_cycle.hh r) (oln/oln/types/optraits_builtins_int_defs.hh oln/oln/types/optraits_builtins_int_defs.hh oln/oln/types/optraits_builtins_int_defs.hh r)
+    (oln/oln/types/optraits_builtins_int.hh oln/oln/types/optraits_builtins_int.hh oln/oln/types/optraits_builtins_int.hh m) (oln/oln/types/optraits_builtins_float.hh oln/oln/types/optraits_builtins_float.hh oln/oln/types/optraits_builtins_float.hh r)
+    (oln/oln/types/optraits_bin.hh oln/oln/types/optraits_bin.hh oln/oln/types/optraits_bin.hh r) (oln/oln/types/optraits.hh oln/oln/types/optraits.hh oln/oln/types/optraits.hh r)
+    (oln/oln/types/interval.hh oln/oln/types/interval.hh oln/oln/types/interval.hh r) (oln/oln/types/int_u.hh oln/oln/types/int_u.hh oln/oln/types/int_u.hh m)
+    (oln/oln/types/int_s.hh oln/oln/types/int_s.hh oln/oln/types/int_s.hh m) (oln/oln/types/global_ops_traits.hh oln/oln/types/global_ops_traits.hh oln/oln/types/global_ops_traits.hh r)
+    (oln/oln/types/global_ops_defs.hh oln/oln/types/global_ops_defs.hh oln/oln/types/global_ops_defs.hh r) (oln/oln/types/global_ops.hh oln/oln/types/global_ops.hh oln/oln/types/global_ops.hh m)
+    (oln/oln/types/cycle.hh oln/oln/types/cycle.hh oln/oln/types/cycle.hh m) (oln/oln/types/builtins_properties.hh oln/oln/types/builtins_properties.hh oln/oln/types/builtins_properties.hh r)
+    (oln/oln/types/bin.hh oln/oln/types/bin.hh oln/oln/types/bin.hh m) (oln/oln/types/behaviour.hh oln/oln/types/behaviour.hh oln/oln/types/behaviour.hh r)
+    (oln/oln/types/all.hh oln/oln/types/all.hh oln/oln/types/all.hh r) (tools/utilities/mosaic.cc tools/utilities/mosaic.cc tools/utilities/mosaic.cc r)
+    (tools/utilities/Makefile.am tools/utilities/Makefile.am tools/utilities/Makefile.am r) (oln/oln/meta/type.hh oln/oln/meta/type.hh oln/oln/meta/type.hh r)
+    (oln/oln/types/optraits_vec.hh oln/oln/types/optraits_vec.hh oln/oln/types/optraits_vec.hh r) (oln/oln/types/vec.hh oln/oln/types/vec.hh oln/oln/types/vec.hh m)
+    (oln/oln/types/cplx_representation.hh oln/oln/types/cplx_representation.hh oln/oln/types/cplx_representation.hh r) (oln/oln/types/cplx.hh oln/oln/types/cplx.hh oln/oln/types/cplx.hh m)
+    (oln/oln/types/optraits_cplx.hh oln/oln/types/optraits_cplx.hh oln/oln/types/optraits_cplx.hh m) (oln/oln/types/debug.hh oln/oln/types/debug.hh oln/oln/types/debug.hh r)
+    (oln/oln/types/typetraits_builtins_bool.hh oln/oln/types/typetraits_builtins_bool.hh oln/oln/types/typetraits_builtins_bool.hh r) (oln/oln/types/optraits_builtins_bool.hh oln/oln/types/optraits_builtins_bool.hh oln/oln/types/optraits_builtins_bool.hh r)
+    (oln/oln/types/optraits_builtins.hh oln/oln/types/optraits_builtins.hh oln/oln/types/optraits_builtins.hh r) (oln/oln/types/color.hh oln/oln/types/color.hh oln/oln/types/color.hh m)
+    (oln/oln/types/rgb.hh oln/oln/types/rgb.hh oln/oln/types/rgb.hh r) (oln/oln/types/nrgb.hh oln/oln/types/nrgb.hh oln/oln/types/nrgb.hh m)
+    (oln/oln/types/hsi.hh oln/oln/types/hsi.hh oln/oln/types/hsi.hh r) (oln/oln/types/hsl.hh oln/oln/types/hsl.hh oln/oln/types/hsl.hh r)
+    (oln/oln/types/hsv.hh oln/oln/types/hsv.hh oln/oln/types/hsv.hh r) (oln/oln/types/yiq.hh oln/oln/types/yiq.hh oln/oln/types/yiq.hh r)
+    (oln/oln/types/xyz.hh oln/oln/types/xyz.hh oln/oln/types/xyz.hh r) (oln/oln/types/yuv.hh oln/oln/types/yuv.hh oln/oln/types/yuv.hh r)
+    (oln/oln/types/cast.hh oln/oln/types/cast.hh oln/oln/types/cast.hh r) (oln/oln/types/typetraits_builtins.hh oln/oln/types/typetraits_builtins.hh oln/oln/types/typetraits_builtins.hh r)
+    (oln/oln/utils/copy.hh oln/oln/utils/copy.hh oln/oln/utils/copy.hh r) (oln/oln/transforms/wavelet_coeffs.hh oln/oln/transforms/wavelet_coeffs.hh oln/oln/transforms/wavelet_coeffs.hh r)
+    (oln/oln/transforms/dwt.hh oln/oln/transforms/dwt.hh oln/oln/transforms/dwt.hh r) (oln/oln/transforms/fft.hh oln/oln/transforms/fft.hh oln/oln/transforms/fft.hh r)
+    (oln/oln/io/se.hh oln/oln/io/se.hh oln/oln/io/se.hh r) (oln/oln/io/se_window.hxx oln/oln/io/se_window.hxx oln/oln/io/se_window.hxx r)
+    (oln/oln/io/se_neighborhood.hxx oln/oln/io/se_neighborhood.hxx oln/oln/io/se_neighborhood.hxx r) (oln/oln/morpho/extrema.hxx oln/oln/morpho/extrema.hxx oln/oln/morpho/extrema.hxx r)
+    (oln/oln/config/pconf.hh oln/oln/config/pconf.hh oln/oln/config/pconf.hh r) (oln/aclocal.m4 oln/aclocal.m4 oln/aclocal.m4 r)
+    (oln/configure.ac oln/configure.ac oln/configure.ac r) (Makefile.am Makefile.am Makefile.am r)
+    (tools/swilena/python/typedefs.hh tools/swilena/python/typedefs.hh tools/swilena/python/typedefs.hh r) (aclocal.m4 aclocal.m4 aclocal.m4 r)
+    (oln/tests/configure.ac oln/tests/configure.ac oln/tests/configure.ac r) (tools/configure.ac tools/configure.ac tools/configure.ac r)
+    (tools/Makefile.am tools/Makefile.am tools/Makefile.am r) (oln/oln/meta/optional.hh oln/oln/meta/optional.hh oln/oln/meta/optional.hh r)
+    (oln/oln/core/box.hh oln/oln/core/box.hh oln/oln/core/box.hh r) (oln/oln/core/box.hxx oln/oln/core/box.hxx oln/oln/core/box.hxx r)
+    (oln/oln/level/set_level.hh oln/oln/level/set_level.hh oln/oln/level/set_level.hh m) (oln/oln/topo/dmap.hh oln/oln/topo/dmap.hh oln/oln/topo/dmap.hh r)
+    (oln/oln/topo/dmap.hxx oln/oln/topo/dmap.hxx oln/oln/topo/dmap.hxx r) 
   )
-  (7.7 complete
-    (oln/ChangeLog oln/ChangeLog oln/ChangeLog r) (oln/oln/Makefile.am oln/oln/Makefile.am oln/oln/Makefile.am r)
-    (oln/oln/types/nrgb.hh oln/oln/types/nrgb.hh oln/oln/types/nrgb.hh r) (oln/oln/core/box.hxx oln/oln/core/box.hxx oln/oln/core/box.hxx r)
-    (() () oln/oln/topo/dmap.hh a) (() () oln/oln/topo/dmap.hxx a))
 )
 (New-Merge-Parents)

@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,10 +26,10 @@
 // Public License.
 
 #ifndef	OLENA_CORE_DPOINT2D_HXX
-#define OLENA_CORE_DPOINT2D_HXX
+# define OLENA_CORE_DPOINT2D_HXX
 
-#include <oln/core/point2d.hh>
-#include <iostream>
+# include <oln/core/point2d.hh>
+# include <iostream>
 
 namespace oln {
 

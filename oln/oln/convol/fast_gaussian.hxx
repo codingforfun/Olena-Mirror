@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,9 +31,9 @@
 // Deriche 93 INRIA REPORT
 //
 
-# include <oln/types/cast.hh>
-# include <oln/convol/fast_gaussian_coefficient.hh>
-# include <vector>
+#include <oln/types/cast.hh>
+#include <oln/convol/fast_gaussian_coefficient.hh>
+#include <vector>
 
 namespace oln {
   namespace convol {

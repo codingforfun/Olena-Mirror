@@ -1,4 +1,4 @@
-// Copyright 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,11 +35,10 @@
 # include <oln/types/to_oln.hh>
 
 # include <oln/types/optraits.hh>
-# include <oln/types/typetraits.hh>
+# include <oln/types/typetraits_builtins.hh>
 # include <oln/types/behaviour.hh>
 # include <oln/types/global_ops_traits.hh>
 # include <oln/types/cplx.hh>
-
 
 // Assignement operators macros
 

@@ -1,26 +1,33 @@
 #! /bin/sh
 
-# Check that each header is self contained.
+# Check that each header is self contained and generates no warning.
 
 : ${VERBOSE=1}
 
 . ../defs || exit 1
 
+if test "$GXX" = yes; then
+  CXXFLAGS="$CXXFLAGS -Werror"
+fi
+
 set -e
 
 rm -f failures
 
-find "$OLN_INCLUDE_DIR/oln" -name "${1-*}.hh" \
-                    -a ! -path '*/old/*' \
-                    -a ! -path '*/obsolete/*' -type f -print |
+if test $# = 0; then
+  find "$OLN_INCLUDE_DIR/oln" -name "${1-*}.hh" \
+                      -a ! -path '*/obsolete/*' -type f -print |
+    sed "s,$OLN_INCLUDE_DIR/,,g"
+else
+  echo "$@"
+fi |
 while read file; do
-   name=`expr $file : "$OLN_INCLUDE_DIR/\(.*\)"`
-   echo "#include <$name>" > incltest.cc
+   echo "#include <$file>" > incltest.cc
    if $CXX $CPPFLAGS $CXXFLAGS -c incltest.cc; then
-      echo "  PASS: $name"
+      echo "  PASS: $file"
    else
-      echo "  FAIL: $name"
-      echo "  $name" >> failures
+      echo "  FAIL: $file"
+      echo "  $file" >> failures
    fi
 done
 

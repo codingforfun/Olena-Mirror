@@ -1,4 +1,4 @@
-// Copyright 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -36,7 +36,7 @@ namespace oln {
     For instance `oln::typeadj<const int>::mutable_ref' equals `int &'.
   */
 
-#define _OLN_TYPEADJ_DEFS			\
+# define _OLN_TYPEADJ_DEFS			\
   {						\
     typedef T mutable_val;			\
     typedef const T const_val;			\

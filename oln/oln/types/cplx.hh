@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,10 +33,11 @@
 # include <oln/meta/cmp.hh>
 # include <oln/meta/type.hh>
 
-# include <oln/types/typetraits.hh>
-# include <oln/types/optraits.hh>
-# include <oln/types/vec.hh>
 # include <oln/types/cplx_representation.hh>
+# include <oln/types/global_ops.hh>
+# include <oln/types/optraits.hh>
+# include <oln/types/typetraits.hh>
+# include <oln/types/vec.hh>
 
 // FIXME: optraits_cplx.hh is included at the end of the file.
 

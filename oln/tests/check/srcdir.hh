@@ -1,7 +1,7 @@
 #ifndef OLENA__TESTS__CHECK__SRCDIR__H
 # define OLENA__TESTS__CHECK__SRCDIR__H
 
-#include <string>
+# include <string>
 
 extern std::string srcdir;
 

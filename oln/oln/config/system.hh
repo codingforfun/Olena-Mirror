@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,7 +29,7 @@
 # define OLENA_CONFIG_SYSTEM_HH
 
 # ifdef HAVE_CONFIG_H
-# include <config.h>
+#  include <config.h>
 # endif 
 
 # if HAVE_LIMITS
@@ -78,12 +78,12 @@
    `std::rel_ops' but since g++ < 3 doesn't honor `std' it makes sense
    to use only `rel_ops'.)
 */
-#if (defined __GNUC__) && (__GNUC__ < 3) && HAVE_STL_CONFIG_H
+# if (defined __GNUC__) && (__GNUC__ < 3) && HAVE_STL_CONFIG_H
 #  include <stl_config.h>
 #  undef __STL_BEGIN_RELOPS_NAMESPACE
 #  define __STL_BEGIN_RELOPS_NAMESPACE namespace rel_ops {
 #  undef __STL_END_RELOPS_NAMESPACE
 #  define __STL_END_RELOPS_NAMESPACE }
-#endif
+# endif
 
 #endif // OLENA_CONFIG_SYSTEM_HH

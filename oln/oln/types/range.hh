@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,9 +30,11 @@
 
 # include <oln/meta/type.hh>
 
+# include <oln/types/behaviour.hh>
+# include <oln/types/global_ops.hh>
+# include <oln/types/optraits_scalar.hh>
 # include <oln/types/rec_value.hh>
 # include <oln/types/typetraits.hh>
-# include <oln/types/optraits.hh>
 
 // FIXME: optraits_range.hh is included at the end of the file.
 

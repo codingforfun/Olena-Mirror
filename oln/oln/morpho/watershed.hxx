@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,7 +39,7 @@ namespace oln {
 
     /* GCC's optimizer is smart enough to compute these values at compile
        time and really use them as constants.  That's great.  */
-#define _OLN_MORPHO_DECLARE_SOILLE_WATERSHED_CONSTS(DestValue)				\
+# define _OLN_MORPHO_DECLARE_SOILLE_WATERSHED_CONSTS(DestValue)				\
     const DestValue mask    = cast::force<DestValue>(optraits<DestValue>::max() - 2);	\
     const DestValue wshed   = optraits<DestValue>::max();				\
     const DestValue init    = cast::force<DestValue>(optraits<DestValue>::max() - 1);	\

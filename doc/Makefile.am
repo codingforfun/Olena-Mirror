@@ -1,4 +1,4 @@
-SUBDIRS = @OLN_DOC_SUBDIRS@
+SUBDIRS = $(OLN_DOC_SUBDIRS)
 
 EXTRA_DIST = tpl/processing.tpl 
 

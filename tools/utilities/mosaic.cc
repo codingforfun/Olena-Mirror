@@ -15,8 +15,8 @@ using namespace oln;
    argument of STR() is itself macro, it will be expanded before being
    quoted.  */
 #ifndef STR
-#  define _STR(arg)     #arg
-#  define STR(arg)      _STR(arg)
+# define _STR(arg)     #arg
+# define STR(arg)      _STR(arg)
 #endif
 
 #define TYPE_STR STR(TYPE)

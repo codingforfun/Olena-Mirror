@@ -1,4 +1,4 @@
-// Copyright 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,7 +30,7 @@
 
 # include <oln/types/typetraits.hh>
 # include <oln/types/optraits.hh>
-# include <oln/types/int_u.hh>
+# include <oln/types/behaviour.hh>
 
 # define TYPETRAITS_BUILTIN_INT(Name)						\
   template<>									\

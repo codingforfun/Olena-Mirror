@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,14 +29,18 @@
 # define OLENA_VALUE_COLOR_HH
 
 # include <oln/config/system.hh>
+
 # include <oln/meta/cmp.hh>
-# include <oln/types/rec_value.hh>
-# include <oln/types/predecls.hh>
-# include <oln/types/vec.hh>
-# include <oln/types/optraits_vec.hh>
-# include <oln/types/typetraits.hh>
+
 # include <oln/types/behaviour.hh>
 # include <oln/types/cast.hh>
+# include <oln/types/global_ops.hh>
+# include <oln/types/int_u.hh>
+# include <oln/types/optraits_vec.hh>
+# include <oln/types/predecls.hh>
+# include <oln/types/rec_value.hh>
+# include <oln/types/typetraits.hh>
+# include <oln/types/vec.hh>
 
 # include <iostream>
 # include <sstream>

@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,11 +34,8 @@
 # include <oln/types/to_oln.hh>
 # include <oln/types/rec_value.hh>
 # include <oln/types/global_ops_traits.hh>
-# include <oln/types/optraits.hh>
-# include <oln/types/optraits_builtins_int.hh>
-# include <oln/types/optraits_builtins_float.hh>
-# include <oln/types/optraits_builtins_bool.hh>
-# include <oln/types/typetraits.hh>
+# include <oln/types/optraits_builtins.hh>
+# include <oln/types/typetraits_builtins.hh>
 
 // macros defs
 # include <oln/types/global_ops_defs.hh>

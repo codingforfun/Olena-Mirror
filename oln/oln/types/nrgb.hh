@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,7 +28,7 @@
 #ifndef OLENA_VALUE_NRGB_HH
 # define OLENA_VALUE_NRGB_HH
 
-#include <oln/types/color.hh>
+# include <oln/types/color.hh>
 
 namespace oln {
 
@@ -50,7 +50,7 @@ namespace oln {
   typedef color<3,32,nrgb_traits> nrgb_32;
 
   // FIXME: not thread safe !
-#define DEFINE_COLOR(Type, Name, V1, V2, V3)	\
+# define DEFINE_COLOR(Type, Name, V1, V2, V3)	\
   inline const Type& Name() {			\
     static const Type tmp(V1, V2, V3);		\
     return tmp;					\

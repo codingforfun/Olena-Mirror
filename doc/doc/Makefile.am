@@ -30,7 +30,7 @@ html/oln-ref.html: $(tex_TEX) $(oln_ref_TEX)
 olnsrc = $(OLN_INCLUDE_DIR)/oln
 
 # Bogus C++ entry to provoke the definition of CXXCOMPILE
-COMMONGETDEFSFLAGS =  --agarg=-DCXXCOMPILE="@CXX@ -I$(top_srcdir) -DHAVE_CONFIG_H @CPPFLAGS@ @OLN_CPPFLAGS@ @CXXFLAGS@ @OLN_CXXFLAGS@" \
+COMMONGETDEFSFLAGS =  --agarg=-DCXXCOMPILE="$(CXX) -I$(top_srcdir) -DHAVE_CONFIG_H $(CPPFLAGS) $(OLN_CPPFLAGS) $(CXXFLAGS) $(OLN_CXXFLAGS)" \
 	              --agarg=--templ-dirs=$(top_srcdir)/tpl \
 	              --agarg=-DIMGDIR=$(OLN_IMG_DIR)
 PROCESSINGGETDEFSFLAGS = \

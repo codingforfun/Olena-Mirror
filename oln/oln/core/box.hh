@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,28 +33,33 @@ namespace oln {
   // FIXME: despite of it usefulness, this box classes is not good
   // FIXME: since it is not generic.
 
-  template <class I>
+  template <class PointType>
   class box 
   {
   public:
-    typedef typename I::dpoint		dpoint;
-    typedef typename I::point		point;
+    typedef typename PointType::dpoint  dpoint;
+    typedef PointType			point;
 
-    enum { d = dpoint::dim };
+    enum { d = point::dim };
     
     box();
     unsigned    dim() const;
     void	add(point p);
-    void	add(const box<I>& p);
+    void	add(const box<PointType>& p);
+    bool	overlay(unsigned dim, const box<PointType>& p) const;
     void	make_consistent();
+    point	mass_center();
+    point	box_center();
     point	mass_center() const;
     point	box_center() const;
     point	top() const;
     unsigned	card() const;
+    unsigned	inner_boxes_card() const;
     point	bottom() const;
     unsigned	width() const;
     unsigned	height() const;
     unsigned	integrale() const;
+    float	inner_boxes_mean_dim(unsigned i) const;
     unsigned	volume() const;
     unsigned	area() const;
     float	density() const;
@@ -66,7 +71,9 @@ namespace oln {
     point	bottom_;
     point	mass_center_;
     point	box_center_;
+    float	inner_boxes_mean_dim_[point::dim];
     unsigned	card_;
+    unsigned	box_card_;
     dpoint	dimension_;
     float	mass_[point::dim];
   };

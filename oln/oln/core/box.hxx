@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,21 +35,30 @@ namespace oln {
   // FIXME: despite of it usefulness, this box classes is not good
   // FIXME: since it is not generic.
 
-  template <class I>
-  box<I>::box() :
+  template <class PointType>
+  box<PointType>::box() :
     top_(optraits<int>::min(), optraits<int>::min()),
     bottom_(optraits<int>::max(), optraits<int>::max())
   {
+    card_ = 0;
+    not_consistent_ = true;
+    make_consistent();
+    box_card_ = 0;
+    for (unsigned i = 0; i < dim(); ++i)
+      {
+	mass_[i] = 0;
+	inner_boxes_mean_dim_[i] = 0;
+      }
   }
 
-  template <class I>
-  unsigned box<I>::dim() const
+  template <class PointType>
+  unsigned box<PointType>::dim() const
   {
     return d;
   }
 
-  template <class I>
-  void box<I>::add(point p)
+  template <class PointType>
+  void box<PointType>::add(point p)
   {
     for (unsigned i = 0; i < dim(); ++i)
       {
@@ -61,75 +70,118 @@ namespace oln {
     not_consistent_ = true;
   }
 
-  template <class I>
-  void box<I>::add(const box<I>& b)
+  template <class PointType>
+  void box<PointType>::add(const box<PointType>& b)
   {
-    add(b.top());
-    add(b.bottom());
-    card_ += b.card();
-    not_consistent_ = true;
+    if (b.card() != 0)
+      {
+	add(b.top());
+	add(b.bottom());
+	card_ += b.card();
+	box_card_++;
+	not_consistent_ = true;
+	for (unsigned i = 0; i < b.dim(); ++i)
+	  {
+	    inner_boxes_mean_dim_[i] += b.width();
+	    mass_[i] += b.mass_[i];
+	  }
+      }
   }
 
-  template <class I>
-  void box<I>::make_consistent()
+  template <class PointType>
+  float box<PointType>::inner_boxes_mean_dim(unsigned d) const
   {
-    if (not_consistent)
+    return inner_boxes_mean_dim_[d] / box_card_;
+  }
+
+  template <class PointType>
+  bool box<PointType>::overlay(unsigned dim, const box<PointType>& b) const
+  {
+    return 
+      ((top().nth(dim) > b.bottom().nth(dim))
+      && (bottom().nth(dim) < b.top().nth(dim)));
+  }
+
+  template <class PointType>
+  void box<PointType>::make_consistent()
+  {
+    if (not_consistent_)
       for (unsigned i = 0; i < dim(); ++i)
 	{
-	  mass_center_.nth(i) = int(mass_[i] / card_);
+	  if (card_ != 0)
+	    mass_center_.nth(i) = int(mass_[i] / card_);
 	  dimension_.nth(i) = top_.nth(i) - bottom_.nth(i) + 1;
 	  box_center_.nth(i) = (top_.nth(i) + bottom_.nth(i)) / 2;
+	  not_consistent_ = false;
 	}
   }
 
-  template <class I>
-  unsigned box<I>::card() const
+  template <class PointType>
+  unsigned box<PointType>::card() const
   {
     return card_;
   }
 
-  template <class I>
-  typename box<I>::point box<I>::top() const
+  template <class PointType>
+  unsigned box<PointType>::inner_boxes_card() const
+  {
+    return box_card_;
+  }
+
+  template <class PointType>
+  typename box<PointType>::point box<PointType>::top() const
   {
     return top_;
   }
 
-  template <class I>
-  typename box<I>::point box<I>::bottom() const
+  template <class PointType>
+  typename box<PointType>::point box<PointType>::bottom() const
   {
     return bottom_;
   }
 
-  template <class I>
-  typename box<I>::point box<I>::mass_center() const
+  template <class PointType>
+  typename box<PointType>::point box<PointType>::mass_center() 
   {
     if (not_consistent_)
       make_consistent();
     return mass_center_;
   }
 
-  template <class I>
-  typename box<I>::point box<I>::box_center() const
+  template <class PointType>
+  typename box<PointType>::point box<PointType>::mass_center() const
+  {
+    return mass_center_;
+  }
+
+  template <class PointType>
+  typename box<PointType>::point box<PointType>::box_center() 
   {
     if (not_consistent_)
       make_consistent();
     return box_center_;
   }
 
-  template <class I>
-  unsigned box<I>::width() const
+  template <class PointType>
+  typename box<PointType>::point box<PointType>::box_center() const
+  {
+    return box_center_;
+  }
+
+  template <class PointType>
+  unsigned box<PointType>::width() const
   {
     return dimension_.nth(1);
   }
 
-  template <class I>
-  unsigned box<I>::height() const
+  template <class PointType>
+  unsigned box<PointType>::height() const
   {
     return dimension_.nth(0);
   }
 
-  template <class I>
-  unsigned box<I>::integrale() const
+  template <class PointType>
+  unsigned box<PointType>::integrale() const
   {
     unsigned acu = 1;
     for (unsigned i = 0; i < dim(); ++i)
@@ -137,28 +189,28 @@ namespace oln {
     return acu;
   }
 
-  template <class I>  
-  unsigned box<I>::volume() const
+  template <class PointType>  
+  unsigned box<PointType>::volume() const
   {
     precondition(dim() == 3);
     return integrale();
   }
 
-  template <class I>
-  unsigned box<I>::area() const
+  template <class PointType>
+  unsigned box<PointType>::area() const
   {
     precondition(dim() == 2);
     return integrale();
   }
 
-  template <class I>
-  float box<I>::density() const
+  template <class PointType>
+  float box<PointType>::density() const
   {
     return ((float)card_ / (float)integrale());
   }
 
-  template <class I>
-  float box<I>::square_ratio() const
+  template <class PointType>
+  float box<PointType>::square_ratio() const
   {
     precondition(dim() == 2);
     return width() > height() ?

@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -76,6 +76,6 @@ namespace oln {
 inline std::ostream&
 operator<<(std::ostream& o, const oln::dpoint2d& p);
 
-#include <oln/core/dpoint2d.hxx>
+# include <oln/core/dpoint2d.hxx>
 
 #endif // OLENA_CORE_DPOINT2D_HH

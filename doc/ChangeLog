@@ -1,3 +1,9 @@
+2003-01-15  Akim Demaille  <akim@epita.fr>
+
+	* configure.ac: Require Autoconf 2.57, Automake 1.7.2.
+	(AM_MAINTAINER_MODE): Remove it, since it doesn't solve anything,
+	at the contrary.
+
 2003-01-05  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* demo/Makefile.am (AM_CXXFLAGS): remove -W -Wall -pedantic -ansi, ...
@@ -26,5 +32,3 @@
 	optional.
 
 	* ChangeLog: Create. Old version moved to ../attic.
-
-

@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,6 +29,7 @@
 # define OLENA_LEVEL_SET_LEVEL_HH
 
 # include <oln/core/box.hh>
+# include <oln/core/dpoint2d.hh>
 
 namespace oln {
 
@@ -95,13 +96,16 @@ namespace oln {
  		   BoxType&              box,
  		   const Value(_I)&      level)
     {
-      Exact_ref(I, inout);
-      dpoint2d drows(box.top().row() - box.bottom().row(), 0);
-      dpoint2d dcols(0, box.top().col() - box.bottom().col());
-      set_level(inout, box.top(), box.top() - drows, level);
-      set_level(inout, box.top(), box.top() - dcols, level);
-      set_level(inout, box.bottom(), box.bottom() + drows, level);
-      set_level(inout, box.bottom(), box.bottom() + dcols, level);
+      if (box.card() != 0)
+	{
+	  Exact_ref(I, inout);
+	  dpoint2d drows(box.top().row() - box.bottom().row(), 0);
+	  dpoint2d dcols(0, box.top().col() - box.bottom().col());
+	  set_level(inout, box.top(), box.top() - drows, level);
+	  set_level(inout, box.top(), box.top() - dcols, level);
+	  set_level(inout, box.bottom(), box.bottom() + drows, level);
+	  set_level(inout, box.bottom(), box.bottom() + dcols, level);
+	}
     }
 
   } // end of level.

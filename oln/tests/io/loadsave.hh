@@ -5,7 +5,7 @@
 #if HAVE_ZLIB
 # include <oln/io/gz.hh>
 #endif
-# include <oln/io/se.hh>
+#include <oln/io/se.hh>
 #include "check.hh"
 
 using namespace oln;

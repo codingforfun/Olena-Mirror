@@ -4,13 +4,13 @@
    if the arguments to STR() (or CONC()) are themselves macros, they will
    be expanded before being quoted.   */
 #ifndef STR
-#  define _STR(arg)     #arg
-#  define STR(arg)      _STR(arg)
+# define _STR(arg)     #arg
+# define STR(arg)      _STR(arg)
 #endif
 
 #ifndef CONC
-#  define _CONC(a, b)   a##b
-#  define CONC(a, b)    _CONC(a, b)
+# define _CONC(a, b)   a##b
+# define CONC(a, b)    _CONC(a, b)
 #endif
 
 #include STR(oln/convert/CONC(SRC,DEST).hh)

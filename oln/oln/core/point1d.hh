@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,8 +43,9 @@ namespace oln {
   class point1d : public pointnd< 1, point1d>
   {
   public:
-    typedef type::bottom inferior;
-    typedef pointnd< 1, point1d> super;
+    typedef type::bottom		inferior;
+    typedef pointnd< 1, point1d>	super;
+    typedef dpoint1d			dpoint;
 
     point1d();
     point1d(coord col);

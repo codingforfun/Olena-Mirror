@@ -1,4 +1,4 @@
-// Copyright 2001  EPITA Research and Development Laboratory
+// Copyright (C) 2001  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,12 +30,12 @@
 
 /* This is called for_all, not for_each, otherwise calls to the
    for_each() STL function would fail.  */
-#define for_all(p) for((p) = begin; (p) != end; ++(p))
+# define for_all(p) for((p) = begin; (p) != end; ++(p))
 
 /* Same as for_all, but the iterattion has already begun.  We use 'if
    (p == end) {} else', not 'if (p != end)' so that an 'else'
    following the for_all_remaining macro will match the expected if.
    */
-#define for_all_remaining(p) if (p == end) {} else while(++(p), ((p) != end))
+# define for_all_remaining(p) if (p == end) {} else while(++(p), ((p) != end))
 
 #endif // OLENA_CORE_MACROS_HH
