@@ -138,6 +138,29 @@ namespace oln {
 	return tarjan::internal::attr_closing_<I, N, attr::T##_type<I> >(input, Ng, lambda); \
       }
 
+      // same as previous, but for attribute based on image types with environment
+# define xxx_opening_im_env_decl(T) \
+      template<class I, class N> \
+      oln_concrete_type(I) \
+	T##_opening(const abstract::non_vectorial_image<I>& input, \
+		       const abstract::neighborhood<N>& Ng, \
+		       const attr_lambda_type(attr::T##_type<I>) &lambda, \
+		    const attr_env_type(attr::T##_type<I>) &env) \
+      { \
+	return tarjan::internal::attr_opening_<I, N, attr::T##_type<I> >(input, Ng, lambda, env); \
+      }
+
+# define xxx_closing_im_env_decl(T) \
+      template<class I, class N> \
+      oln_concrete_type(I) \
+	T##_closing(const abstract::non_vectorial_image<I>& input, \
+		       const abstract::neighborhood<N>& Ng, \
+		       const attr_lambda_type(attr::T##_type<I>) &lambda, \
+		    const attr_env_type(attr::T##_type<I>) &env) \
+      { \
+	return tarjan::internal::attr_closing_<I, N, attr::T##_type<I> >(input, Ng, lambda, env); \
+      }
+
       /*!
       ** \brief Perform a cardinal closing.
       **
@@ -245,6 +268,62 @@ namespace oln {
       **
       */
       xxx_opening_decl(integral)
+
+      /*!
+      ** \brief Perform an integral closing.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/attribute_closing_opening.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
+      **   oln::morpho::env::OtherImageEnv<im_type>	env(im1);
+      **   im1 = oln::morpho::fast::integral_closing(im1, oln::neighb_c4(), 200, env);
+      **   oln::save(im1, IMG_OUT "oln_morpho_fast_volume_closing.ppm");
+      **   return  0;
+      ** }
+      ** \endcode
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
+      ** =>
+      ** \image html oln_morpho_fast_integral_closing.png
+      ** \image latex oln_morpho_fast_integral_closing.png
+      **
+      */
+	xxx_closing_im_env_decl(volume)
+
+
+      /*!
+      ** \brief Perform an integral opening.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/attribute_closing_opening.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
+      **   im1 = oln::morpho::fast::integral_opening(im1, oln::neighb_c4(), 200);
+      **   oln::save(im1, IMG_OUT "oln_morpho_fast_integral_opening.ppm");
+      **   return  0;
+      ** }
+      ** \endcode
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
+      ** =>
+      ** \image html oln_morpho_fast_integral_opening.png
+      ** \image latex oln_morpho_fast_integral_opening.png
+      **
+      */
+      xxx_opening_im_env_decl(volume)
 
       /*!
       ** \brief Perform a height closing.

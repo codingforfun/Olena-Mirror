@@ -231,6 +231,19 @@ T##_opening(const abstract::non_vectorial_image<I>& input,		\
 				  attr_env_type(attr::T##_type<I>)());	\
     }
 
+      // same but attribute take care of the image type
+# define xxx_opening_im_env_map_decl(T)					\
+template <class I, class N>						\
+oln_concrete_type(I)							\
+T##_opening(const abstract::non_vectorial_image<I>& input,		\
+	    const abstract::neighborhood<N>& ng,			\
+	    const attr_lambda_type(attr::T##_type<I>)& lambda,		\
+            const attr_env_type(attr::T##_type<I>) &env)		\
+    {									\
+      return tarjan_map<attr::T##_type<I>, I, N>(false, input, ng, lambda,	\
+				  env);	\
+    }
+
       //return input;
       //      return tarjan_map<T##_type, I, N>(false, input, ng, lambda,
       //	 attr_env_type(T##_type<>)());
@@ -255,6 +268,18 @@ T##_closing(const abstract::non_vectorial_image<I>& input,		\
     {									\
       return tarjan_map<attr::T##_type<I>, I, N>(true, input, ng, lambda,	\
 					   attr_env_type(attr::T##_type<I>)());\
+    }
+
+# define xxx_closing_im_env_map_decl(T)					\
+template <class I, class N>						\
+oln_concrete_type(I)							\
+T##_closing(const abstract::non_vectorial_image<I>& input,		\
+	    const abstract::neighborhood<N>& ng,			\
+	    const attr_lambda_type(attr::T##_type<I>)& lambda,		\
+            const attr_env_type(attr::T##_type<I>) &env)		\
+    {									\
+      return tarjan_map<attr::T##_type<I>, I, N>(true, input, ng, lambda,	\
+				  env);	\
     }
 
       /*!
@@ -362,6 +387,62 @@ T##_closing(const abstract::non_vectorial_image<I>& input,		\
       **
       */
       xxx_opening_map_decl(integral)
+
+      /*!
+      ** \brief Perform an integral closing.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/attribute_closing_opening_map.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
+      **   oln::morpho::env::OtherImageEnv<im_type>	env(im1);
+      **   im1 = oln::morpho::slow::volume_closing(im1, oln::neighb_c4(),
+      **				           200, env);
+      **   oln::save(im1, IMG_OUT "oln_morpho_slow_integral_closing.ppm");
+      ** }
+      ** \endcode
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
+      ** =>
+      ** \image html oln_morpho_slow_integral_closing.png
+      ** \image latex oln_morpho_slow_integral_closing.png
+      **
+      */
+      xxx_closing_im_env_map_decl(volume)
+
+      /*!
+      ** \brief Perform an integral opening.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/attribute_closing_opening_map.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
+      **   oln::morpho::env::OtherImageEnv<im_type>	env(im1);
+      **   im1 = oln::morpho::slow::volume_opening(im1, oln::neighb_c4(),
+      **				           200, env);
+      **   oln::save(im1, IMG_OUT "oln_morpho_slow_integral_opening.ppm");
+      ** }
+      ** \endcode
+      ** \image html lena128_pgm.png
+      ** \image latex lena128_pgm.png
+      ** =>
+      ** \image html oln_morpho_slow_integral_opening.png
+      ** \image latex oln_morpho_slow_integral_opening.png
+      **
+      */
+      xxx_opening_im_env_map_decl(volume)
 
       /*!
       ** \brief Perform a height closing.

@@ -1,47 +1,11 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 202)
-(Parent-Version oln 10 201)
-(Version-Log "Index: tools/ChangeLog
-from  Giovanni Palma  <giovanni@lrde.epita.fr>
-
-	* utilities/convert/color_space.cc: Remove warnings.
-	* utilities/convert/Makefile.am: Add AM_LDFLAGS.
-
-Index: tools/utilities/convert/color_space.cc
---- tools/utilities/convert/color_space.cc Mon, 28 Jun 2004 15:53:02 +0200 thivol_d (oln/u/19_color_spac 1.2 600)
-+++ tools/utilities/convert/color_space.cc Wed, 07 Jul 2004 11:31:07 +0200 palma_g (oln/u/19_color_spac 1.2 600)
-@@ -122,6 +122,7 @@
- from_x_to_rgb(const oln::image2d<T>			&in)
- {
-   assert(0);
-+  return oln::image2d<ntg::rgb_8>();
- }
- 
- #define FROM_X_TO_RGB(T)						\\
-@@ -138,6 +139,7 @@
- from_rgb_to_x(const oln::image2d<ntg::rgb_8>		&in)
- {
-   assert(0);
-+  return oln::image2d<T>();
- }
- 
- #define FROM_RGB_TO_X(T)						\\
-Index: tools/utilities/convert/Makefile.am
---- tools/utilities/convert/Makefile.am Tue, 29 Jun 2004 10:54:13 +0200 palma_g (oln/v/10_Makefile.a 1.3 600)
-+++ tools/utilities/convert/Makefile.am Wed, 07 Jul 2004 11:26:33 +0200 palma_g (oln/v/10_Makefile.a 1.3 600)
-@@ -1,4 +1,5 @@
--AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_OPTIMIZE) $(ZLIB_LDFLAGS)
-+AM_LDFLAGS = $(ZLIB_LDFLAGS)
-+AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_OPTIMIZE)
- INCLUDES = -I$(srcdir)/../../lib
- LDADD = ../../lib/libolntools.a
- bin_PROGRAMS = color_space
-
-")
+(Project-Version oln 10 204)
+(Parent-Version oln 10 202)
+(Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Wed, 07 Jul 2004 11:34:58 +0200")
+(Checkin-Time "Fri, 09 Jul 2004 17:34:56 +0200")
 (Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -145,10 +109,10 @@ Index: tools/utilities/convert/Makefile.am
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.16 600))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.15 600))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.16 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.47 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.43 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.14 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.15 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.17 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.39 640))
 
@@ -434,7 +398,7 @@ Index: tools/utilities/convert/Makefile.am
   (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.7 640))
   (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.7 640))
   (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.9 640))
-  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.15 640))
+  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.16 640))
   (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.10 640))
   (olena/oln/utils/timer.hh (oln/8_timer.hh 1.9 640))
   (olena/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.5.1.1 640))
@@ -770,7 +734,7 @@ Index: tools/utilities/convert/Makefile.am
 ;; Files added by populate at Fri, 24 Jan 2003 14:34:30 +0100,
 ;; to version 7.40(w), by raph:
 
-  (doc/dev/build.texi (oln/p/42_build.texi 1.14 640))
+  (doc/dev/build.texi (oln/p/42_build.texi 1.15 640))
 
 ;; Files added by populate at Fri, 24 Jan 2003 14:34:47 +0100,
 ;; to version 7.40(w), by raph:
@@ -799,8 +763,8 @@ Index: tools/utilities/convert/Makefile.am
 ;; Files added by populate at Tue, 04 Mar 2003 19:30:28 +0100,
 ;; to version 8.9(w), by jerome:
 
-  (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.24 640))
-  (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.19 640))
+  (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.25 640))
+  (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.20 640))
 
   (olena/tests/convol () :directory)
   (metalic/config (../config) :symlink)
@@ -1217,7 +1181,7 @@ Index: tools/utilities/convert/Makefile.am
 ;; Files added by populate at Fri, 06 Feb 2004 16:00:19 +0100,
 ;; to version 10.57(w), by palma_g:
 
-  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.13.1.4 644))
+  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.13.1.5 644))
 
 ;; Files added by populate at Tue, 10 Feb 2004 15:26:15 +0100,
 ;; to version 10.62(w), by palma_g:
@@ -1231,7 +1195,7 @@ Index: tools/utilities/convert/Makefile.am
 
 
   (olena/oln/morpho/attribute_closing_opening_map.hxx (oln/j/48_attribute_ 1.2 644))
-  (olena/oln/morpho/attribute_closing_opening_map.hh (oln/j/49_attribute_ 1.12 600))
+  (olena/oln/morpho/attribute_closing_opening_map.hh (oln/j/49_attribute_ 1.13 600))
   (olena/oln/utils/special_points.hh (oln/j/50_special_po 1.3 644))
   (olena/tests/morpho/tests/attribute (oln/j/51_attribute 1.6 644))
 ;; Files added by populate at Mon, 16 Feb 2004 18:59:27 +0100,
@@ -1366,8 +1330,8 @@ Index: tools/utilities/convert/Makefile.am
   (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh6 (oln/l/25_md5_morpho 1.2 644))
   (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh5 (oln/l/26_md5_morpho 1.2 644))
   (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh4 (oln/l/27_md5_morpho 1.2 644))
-  (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh3 (oln/l/28_md5_morpho 1.2 644))
-  (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh2 (oln/l/29_md5_morpho 1.2 644))
+  
+  
   (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh17 (oln/l/30_md5_morpho 1.2 644))
   (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh16 (oln/l/31_md5_morpho 1.2 644))
   (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh15 (oln/l/32_md5_morpho 1.2 644))
@@ -1390,8 +1354,8 @@ Index: tools/utilities/convert/Makefile.am
   (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh6 (oln/l/49_md5_morpho 1.2 644))
   (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh5 (oln/l/50_md5_morpho 1.2 644))
   (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh4 (oln/l/51_md5_morpho 1.2 644))
-  (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh3 (oln/m/0_md5_morpho 1.2 644))
-  (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh2 (oln/m/1_md5_morpho 1.2 644))
+  (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh3 (oln/m/0_md5_morpho 1.3 644))
+  (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh2 (oln/m/1_md5_morpho 1.3 644))
   (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh17 (oln/m/2_md5_morpho 1.2 644))
   (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh16 (oln/m/3_md5_morpho 1.2 644))
   (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh15 (oln/m/4_md5_morpho 1.2 644))
@@ -1476,7 +1440,7 @@ Index: tools/utilities/convert/Makefile.am
 ;; Files added by populate at Sun, 23 May 2004 13:50:56 +0200,
 ;; to version 10.186(w), by palma_g:
 
-  (olena/oln/utils/qsort.hh (oln/r/9_qsort.hh 1.2 644))
+  (olena/oln/utils/qsort.hh (oln/r/9_qsort.hh 1.3 644))
 
 
   (olena/oln/transforms/shapelets.hh (oln/r/10_shapelets. 1.4 600))
@@ -1491,8 +1455,16 @@ Index: tools/utilities/convert/Makefile.am
   (olena/oln/morpher/border_morpher.hh (oln/u/15_border_mor 1.2 600))
   (olena/tests/morpher/tests/border (oln/u/16_border 1.1 600))
   (tools/utilities/convert/color_space.cc (oln/u/19_color_spac 1.3 600))
-  (tools/utilities/convert/Makefile.am (oln/v/10_Makefile.a 1.4 600)))
+  (tools/utilities/convert/Makefile.am (oln/v/10_Makefile.a 1.4 600))
+;; Files deleted by depopulate at Fri, 09 Jul 2004 17:22:25 +0200,
+;; from version 10.202(w), by palma_g:
+
+  ; (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh3 ())
+  ; (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh2 ())
+)
 (Merge-Parents
-  (10.201 complete)
+  (10.203 complete
+    (doc/ChangeLog doc/ChangeLog doc/ChangeLog r) (doc/dev/build.texi doc/dev/build.texi doc/dev/build.texi r)
+    (() olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh3 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh3 n) (() olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh2 olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh2 n))
 )
 (New-Merge-Parents)

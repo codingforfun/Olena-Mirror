@@ -92,11 +92,10 @@ namespace oln {
 
 	    std::vector<point_type>	I;//(/*input_.npoints()*/);
 
+	    // FIXME: make both version avialble: qsort and dsort
 	    //	    oln::utils::select_distrib_sort<closing>()(input_, I);
-	    if (closing)
-	      oln::utils::qsort_inv(input_, I);
-	    else
-	      oln::utils::qsort(input_, I);
+	    oln::utils::select_q_sort<closing>()(input_, I);
+
 	    level::fill(aux_data_, ntg_sup_val(lambda_type));
 	    aux_data_.border_adapt_assign(Ng.delta(), ntg_sup_val(lambda_type));
 

@@ -65,10 +65,17 @@ namespace oln
 	** \arg i The first point.
 	** \arg j The second point.
 	** \return im[i] < im[j]
+	** \warning In  the case where im_[j] =  im_[i] the comparison
+	** is  done on  the point  type components  (for compatibility
+	** purpose with distributed sort).
 	*/
 	bool operator()(const point_type &i, const point_type &j)
 	{
-	  return im_[j] < im_[i];
+	  if (im_[i] == im_[j])
+	    for (unsigned t(0); t < point_type::dim; ++t)
+	      if (i.nth(t) != j.nth(t))
+		return i.nth(t) < j.nth(t);
+	  return im_[j] > im_[i];
 	}
 
       protected:
@@ -101,10 +108,17 @@ namespace oln
 	** \arg i The first point.
 	** \arg j The second point.
 	** \return im[i] > im[j]
+	** \warning In  the case where im_[j] =  im_[i] the comparison
+	** is  done on  the point  type components  (for compatibility
+	** purpose with distributed sort).
 	*/
 	bool operator()(const point_type &i, const point_type &j)
 	{
-	  return im_[i] < im_[j];
+	  if (im_[i] == im_[j])
+	    for (unsigned t(0); t < point_type::dim; ++t)
+	      if (i.nth(t) != j.nth(t))
+		return i.nth(t) < j.nth(t);
+	  return im_[i] > im_[j];
 	}
 
       protected:
@@ -156,6 +170,38 @@ namespace oln
 
       std::sort(v.begin(), v.end(), c);
     }
+
+    /*! Select statically the good qsort.
+    **
+    ** \param reverse If the sort should be reverted or not.
+    */
+    template <bool reverse>
+    struct select_q_sort
+    {
+      template <class I>
+      void
+      operator ()(const oln::abstract::non_vectorial_image<I>& im,
+		  std::vector<oln_point_type(I)> &v)
+      {
+	qsort_inv(im, v);
+      }
+    };
+
+    /*! Select statically the good qsort.
+    **
+    ** Specialisation.
+    */
+    template <>
+    struct select_q_sort<true>
+    {
+      template <class I>
+      void
+      operator ()(const oln::abstract::non_vectorial_image<I>& im,
+		  std::vector<oln_point_type(I)> &v)
+      {
+	qsort(im, v);
+      }
+    };
   } // !utils
 } // !oln
 

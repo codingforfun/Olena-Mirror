@@ -1,3 +1,7 @@
+2004-07-09  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* dev/build.texi: Use @item in doc.
+
 2004-06-24  Simon Odou  <simon@lrde.epita.fr>
 
 	* ref/out/exdoc.config.in: Use TOOLS_LDFLAGS instead of LDLAGS.

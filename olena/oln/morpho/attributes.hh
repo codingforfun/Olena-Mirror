@@ -386,9 +386,10 @@ namespace oln {
 	  volume_type(const abstract::image<J> &,
 		      const oln_point_type(J) &p,
 		      const env_type &e) :
+	  //	  reflevel_(e.getImage()[p]),
 	  reflevel_(e.getImage()[p]),
-	  area_(1),
-	  value_(1)
+	  area_(ntg_unit_val(value_type)),
+	  value_(ntg_unit_val(value_type))
 	  {
 	  }
 

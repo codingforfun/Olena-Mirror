@@ -1,3 +1,16 @@
+2004-07-09  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* oln/utils/qsort.hh: Correct comparison operators.
+	* tests/morpho/tests/md5_morpho_attribute_closing_opening_hh3: Correct test.
+	* tests/morpho/tests/md5_morpho_attribute_closing_opening_hh2: Likewise.
+	* tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh2: Remove file.
+	* tests/morpho/tests/md5_morpho_attribute_closing_opening_map_hh3: Likewise.
+	* oln/morpho/attributes.hh: Make code use ntg macros.
+	* oln/morpho/attribute_union_find.hh: Add a static if for sort choice.
+	* oln/morpho/attribute_closing_opening.hh: Add prototypes.
+	* oln/morpho/attribute_closing_opening_map.hh: Likewise.
+	* oln/utils/histogram.hh: Correct prototypes.
+
 2004-06-26  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* oln/morpher/border_morpher.hh: Make compliant to g++-3.4.

@@ -673,13 +673,10 @@ namespace oln {
     */
     template<class I>
     void
-    distrib_sort(const oln::abstract::image<I>& im,
+    distrib_sort(const oln::abstract::non_vectorial_image<I>& im,
 		 std::vector<oln_point_type(I)> &v)
     {
       typedef oln_value_type(I) val;
-
-      typedef typename ntg_is_a(val, ntg::non_vectorial)::ensure_type
-							 ensure_type;
 
       // check the size
       precondition(v.size() == im.npoints());
@@ -716,13 +713,10 @@ namespace oln {
     */
     template<class I>
     void
-    distrib_sort_inv(const oln::abstract::image<I>& im,
+    distrib_sort_inv(const oln::abstract::non_vectorial_image<I>& im,
 		     std::vector<oln_point_type(I)> &v)
     {
       typedef oln_value_type(I) val;
-
-      typedef typename ntg_is_a(val, ntg::non_vectorial)::ensure_type
-							ensure_type;
 
       precondition(v.size() == im.npoints());
 
@@ -750,19 +744,23 @@ namespace oln {
     {
       template <class I>
       void
-      operator ()(const oln::abstract::image<I>& im,
+      operator ()(const oln::abstract::non_vectorial_image<I>& im,
 		  std::vector<oln_point_type(I)> &v)
       {
 	distrib_sort_inv(im, v);
       }
     };
 
+    /*! Select statically the good distrib_sort.
+    **
+    ** Specialisation.
+    */
     template <>
     struct select_distrib_sort<true>
     {
       template <class I>
       void
-      operator ()(const oln::abstract::image<I>& im,
+      operator ()(const oln::abstract::non_vectorial_image<I>& im,
 		  std::vector<oln_point_type(I)> &v)
       {
 	distrib_sort(im, v);
