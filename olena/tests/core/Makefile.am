@@ -16,7 +16,7 @@ image-print:
 	CXXFLAGS="$(AM_CXXFLAGS)" \
 	  $(SHELL) $(srcdir)/image_print.sh
 
-tests: 
+other-tests: 
 	TOP_SRCDIR=$(top_srcdir) SRCDIR=$(srcdir) \
 	TOP_BUILDDIR=$(top_builddir) \
 	LDFLAGS="$(AM_LDFLAGS)" \
@@ -24,9 +24,7 @@ tests:
 	CXXFLAGS="$(AM_CXXFLAGS)" \
 	  $(SHELL) $(srcdir)/runtests
 
-check-local: image-print tests
+check-local: image-print other-tests
 
 distclean-local:
 	rm -rf runs
-
-.PHONY: tests

@@ -66,7 +66,8 @@ namespace oln {
      * exo: out.pbm
     =*/
     template<class I, class E>
-    Concrete(I) erosion(const abstract::image<I>& input, const abstract::struct_elt<E>& se)
+    Concrete(I) erosion(const abstract::image<I>& input, 
+			const abstract::struct_elt<E>& se)
     {
       mlc::eq<I::dim, E::dim>::ensure();
       Concrete(I) output(input.size());
@@ -109,7 +110,8 @@ namespace oln {
 
     namespace fast {
       template<class I, class E>
-      Concrete(I) erosion(const abstract::image<I>& input, const abstract::struct_elt<E>& se)
+      Concrete(I) erosion(const abstract::image<I>& input, 
+			  const abstract::struct_elt<E>& se)
       {
         return fast_morpho<I, E, utils::histogram_min>(input, se);
       }

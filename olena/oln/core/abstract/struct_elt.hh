@@ -53,7 +53,7 @@ namespace oln {
   namespace abstract {
 
     template<class Exact>
-    struct struct_elt : public mlc::any< Exact >
+    struct struct_elt : public mlc_hierarchy::any< Exact >
     {
       enum { dim = struct_elt_traits<Exact>::dim };
 

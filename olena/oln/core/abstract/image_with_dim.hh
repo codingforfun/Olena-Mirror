@@ -144,7 +144,7 @@ namespace oln {
 	//return super_type::operator[](point_type(col));
       }
 
-      using abstract::image<Exact>::hold;
+      using super_type::hold;
 
       bool hold(coord col) const
       {
@@ -217,7 +217,7 @@ namespace oln {
 	//return super_type::operator[](point_type(row, col));
       }
 
-      using abstract::image<Exact>::hold;
+      using super_type::hold;
 
       bool hold(coord row, coord col) const
       {
@@ -295,7 +295,7 @@ namespace oln {
 	// return super_type::operator[](point_type(slice, row, col));
       }
 
-      using abstract::image<Exact>::hold;
+      using super_type::hold;
 
       bool hold(coord slice, coord row, coord col) const
       {

@@ -33,11 +33,11 @@
 /*=processing hit_or_miss
  * ns: morpho, morpho::fast
  * what: Hit_or_Miss Transform.
- * arg: const convert::abstract::conversion<C>&, c, IN, conversion object
+ * arg: const convert::abstract::conversion<C, B>&, c, IN, conversion object
  * arg: const abstract::image<I>&, input, IN, input image
  * arg: const abstract::struct_elt<E>&, se1, IN, structural element
  * arg: const abstract::struct_elt<E>&, se2, IN, structural element
- * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
+ * ret: typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
  * doc:
  * Compute the hit_or_miss transform of \var{input} by the composite structural
  * element (\var{se1}, \var{se2}). Soille p.131.

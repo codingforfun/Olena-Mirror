@@ -1,3 +1,8 @@
+2003-07-31  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* mlc/type.hh: Move any into namespace mlc_hierarchy to avoid
+	namespace lookup problems.
+
 2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* mlc/type.hh(self): Use static_cast.

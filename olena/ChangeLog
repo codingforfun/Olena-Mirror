@@ -1,4 +1,40 @@
-2003-07-31  Giovanni Palma  <palma_g@headache>
+2003-07-31  Giovanni Palma  <palma_g@lrde.epita.fr>
+
+	* oln/morpho/gradient.inc,
+	oln/morpho/hit_or_miss.inc,
+	oln/morpho/laplacian.inc,
+	oln/morpho/top_hat.inc: Fix comments.
+
+2003-07-31  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/convert/conversion.hh: Inherit from mlc_hierarchy::any
+	instead of mlc::any.
+	* oln/core/abstract/dpoint.hh: Likewise.
+	* oln/core/abstract/image_size.hh: Likewise.
+	* oln/core/abstract/iter.hh: Likewise.
+	* oln/core/abstract/neighborhood.hh: Likewise.
+	* oln/core/abstract/point.hh: Likewise.
+	* oln/core/abstract/struct_elt.hh: Likewise.
+	* oln/core/abstract/image.hh: Likewise.
+	* oln/core/impl/image_impl.hh: Likewise.
+
+	* tests/core/Makefile.am: Fix targets.
+
+2003-07-31  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/io/se_neighborhood.hh: Make read and write inline instead of
+	static to avoid g++ warnings when unused.
+	* oln/io/se_window.hh: Likewise.
+
+2003-07-31  Astrid Wang  <astrid@lrde.epita.fr>
+
+	* oln/convol/convolution.hh,
+	oln/convol/fast_gaussian.hh,
+	oln/convol/fast_gaussian.hxx,
+	oln/convol/fast_gaussian_coefficient.hh: Remove Exact_cref.
+	Fix coding style.
+
+2003-07-31  Giovanni Palma  <palma_g@lrde.epita.fr>
 
 	* oln/morpho/gradient.inc,
 	oln/morpho/hit_or_miss.inc,
@@ -70,7 +106,7 @@
 	oln/convert/rgbnrgb.hh,
 	oln/convert/rgbxyz.hh,
 	oln/convert/stretch.hh: Rewrite using the new design to avoid
-				use of exact_cref.
+	the use of exact_cref.
 
 	* oln/convert/abstract/conversion.hh: New.
 
