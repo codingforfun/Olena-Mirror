@@ -1,42 +1,24 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 45)
-(Parent-Version oln 10 41)
-(Version-Log "Index: integre/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-        * tests/types/tests/int_u8: New test.
-        * tests/types/runtests: Rename KEEP_RUN as KEEP_RUNS.
+(Project-Version oln 10 46)
+(Parent-Version oln 10 45)
+(Version-Log "2003-12-08  David Lesage  <david@lrde.epita.fr>
 
-+2003-11-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-+
-+       * ntg/real/behavior.hh: Check arithmetic operators, not arithmetic
-+       assignment operators.
-+       (force): New behavior.
-+       (ret_behavior_if): New helper struct.
-+
-+       * ntg/core/value.hh: Define unsafe_type.
-+       * ntg/core/macros.hh (ntg_unsafe_type): New macro.
-+       * ntg/utils/cast.hh: Use ntg_unsafe_type.
-+
-+       * ntg/real/typetraits_builtin_int.hh: Define abstract_behavior_type.
-+       * ntg/real/builtin_float.hh: Likewise.
-+       * ntg/real/range.hh: Likewise.
-+       * ntg/real/cycle.hh: Likewise.
-+
-+       * ntg/real/int_s.hh: Remove useless arithmetic operations
-+       checks. Define need_check for operation traits.
-+       * ntg/real/int_u.hh: Likewise.
-+
-+       * ntg/real/optraits_real_defs.hh: Derive arithmetic assignment
-+       operators from arithmetic operators. Use the behavior given by the
-+       operator traits instead of the behavior of the return type.
-+       * ntg/real/optraits_real.hh: Adjust consequently.
-
+	Add Dia UML hierarchies.
+	
+	* hierarchies/,
+	* hierarchies/structelt.dia,
+	* hierarchies/point.dia,
+	* hierarchies/new_olena_model.dia,
+	* hierarchies/misc.dia,
+	* hierarchies/labels.dia,
+	* hierarchies/iter.dia,
+	* hierarchies/implementation.dia: New.
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 27 Nov 2003 11:26:27 +0100")
-(Checkin-Login burrus_n)
+(Checkin-Time "Mon, 08 Dec 2003 11:00:23 +0100")
+(Checkin-Login david)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -139,7 +121,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.10 640))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5 640))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.1 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.31 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.36 640))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.39 640))
@@ -1157,16 +1139,17 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 ;; to version 10.41(w), by burrus_n:
 
   (integre/tests/types/tests/int_u8 (oln/w/6_int_u8 1.1 640))
+
+;; Files added by populate at Mon, 08 Dec 2003 10:54:08 +0100,
+;; to version 10.45(w), by david:
+
+  (doc/hierarchies/structelt.dia (oln/w/7_structelt. 1.1 644) :no-keywords)
+  (doc/hierarchies/point.dia (oln/w/8_point.dia 1.1 644) :no-keywords)
+  (doc/hierarchies/new_olena_model.dia (oln/w/9_new_olena_ 1.1 644) :no-keywords)
+  (doc/hierarchies/misc.dia (oln/w/10_misc.dia 1.1 644) :no-keywords)
+  (doc/hierarchies/labels.dia (oln/w/11_labels.dia 1.1 644) :no-keywords)
+  (doc/hierarchies/iter.dia (oln/w/12_iter.dia 1.1 644) :no-keywords)
+  (doc/hierarchies/implementation.dia (oln/w/13_implementa 1.1 644))
 )
-(Merge-Parents
-  (10.44 complete
-    (integre/ChangeLog integre/ChangeLog integre/ChangeLog m) (olena/ChangeLog olena/ChangeLog olena/ChangeLog r)
-    (integre/ntg/real/behavior.hh integre/ntg/core/behavior.hh integre/ntg/real/behavior.hh n) (integre/ntg/real/int_s.hh integre/ntg/real/int_s.hh integre/ntg/real/int_s.hh n)
-    (integre/ntg/real/int_u.hh integre/ntg/real/int_u.hh integre/ntg/real/int_u.hh n) (integre/ntg/real/optraits_real_defs.hh integre/ntg/real/optraits_scalar_defs.hh integre/ntg/real/optraits_real_defs.hh n)
-    (integre/ntg/real/optraits_real.hh integre/ntg/real/optraits_scalar.hh integre/ntg/real/optraits_real.hh n) (integre/ntg/core/value.hh integre/ntg/core/value.hh integre/ntg/core/value.hh n)
-    (integre/ntg/real/typetraits_builtin_int.hh integre/ntg/real/typetraits_builtin_int.hh integre/ntg/real/typetraits_builtin_int.hh n) (olena/oln/Makefile.am olena/oln/Makefile.am olena/oln/Makefile.am r)
-    (integre/ntg/real/builtin_float.hh integre/ntg/real/builtin_float.hh integre/ntg/real/builtin_float.hh n) (integre/ntg/real/range.hh integre/ntg/real/range.hh integre/ntg/real/range.hh n)
-    (integre/ntg/real/cycle.hh integre/ntg/real/cycle.hh integre/ntg/real/cycle.hh n) 
-  )
-)
+(Merge-Parents)
 (New-Merge-Parents)
