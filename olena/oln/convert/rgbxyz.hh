@@ -45,7 +45,7 @@
 namespace oln {
 
   using namespace ntg;
-  
+
   namespace convert {
 
     template <unsigned inbits, unsigned outbits>
@@ -59,16 +59,16 @@ namespace oln {
 	vec<3, float> in = v.to_float();
 	vec<3, float> out;
 	out[xyz_X] = 0.490 * in[rgb_R] + 0.310 * in[rgb_G] + 0.200 * in[rgb_B];
-	out[xyz_Y] = 0.177 * in[rgb_R] + 0.813 * in[rgb_G] + 0.011 * in[rgb_B];
+	out[xyz_Y] = 0.177 * in[rgb_R] + 0.812 * in[rgb_G] + 0.011 * in[rgb_B];
 	out[xyz_Z] =                     0.010 * in[rgb_G] + 0.990 * in[rgb_B];
 	return out;
       }
 
-      static std::string 
-      name() 
-      { 
+      static std::string
+      name()
+      {
 	std::ostringstream s;
-	s << "f_rgb_to_xyz<" << inbits << ", " << outbits << '>'; 
+	s << "f_rgb_to_xyz<" << inbits << ", " << outbits << '>';
 	s.str();
       }
     };
@@ -95,17 +95,17 @@ namespace oln {
 	out[rgb_R] =
 	    2.365 * in[xyz_X] - 0.896 * in[xyz_Y] - 0.468 * in[xyz_Z];
 	out[rgb_G] =
-	  - 0.515 * in[xyz_X] + 1.425 * in[xyz_Y] + 0.088 * in[xyz_Z];
+	  - 0.515 * in[xyz_X] + 1.425 * in[xyz_Y] + 0.089 * in[xyz_Z];
 	out[rgb_B] =
-	    0.005 * in[xyz_X] - 0.014 * in[xyz_Y] + 1.009 * in[xyz_Z];
+	    0.005 * in[xyz_X] - 0.014 * in[xyz_Y] + 1.01 * in[xyz_Z];
 	return out;
       }
 
-      static std::string 
-      name() 
-      { 
+      static std::string
+      name()
+      {
 	std::ostringstream s;
-	s << "f_xyz_to_rgb<" << inbits << ", " << outbits << '>'; 
+	s << "f_xyz_to_rgb<" << inbits << ", " << outbits << '>';
 	s.str();
       }
     };

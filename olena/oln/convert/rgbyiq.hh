@@ -26,96 +26,95 @@
 // Public License.
 
 
-#ifndef OLENA_CONVERT_NRGBYUV_HH
-# define OLENA_CONVERT_NRGBYUV_HH
+#ifndef OLENA_CONVERT_RGBYIQ_HH
+# define OLENA_CONVERT_RGBYIQ_HH
 
 # include <oln/convert/abstract/colorconv.hh>
 
-# include <ntg/color/nrgb.hh>
-# include <ntg/color/yuv.hh>
+# include <ntg/color/rgb.hh>
+# include <ntg/color/yiq.hh>
 # include <ntg/basics.hh>
 
 # include <sstream>
 
-/*---------------------------------------------------------------.
-| The formulas used here come from ``Colour Space Conversions'', |
-| IAdrian Ford and Alan Roberts; August 11,1998.                 |
-`---------------------------------------------------------------*/
+/*--------------------------------------------------------------.
+| The formulas used here come from ``Digital Image Processing   |
+| Algorithms and Applications'', I. Pitas; Wiley-Interscience.  |
+`--------------------------------------------------------------*/
 
 namespace oln {
-  
+
   using namespace ntg;
 
   namespace convert {
 
-    template <unsigned inbits, unsigned outbits>
-    struct f_nrgb_to_yuv
-      : public abstract::color_conversion<3, inbits, nrgb_traits,
-					  3, outbits, yuv_traits, f_nrgb_to_yuv<inbits, outbits> >
+    template<unsigned inbits, unsigned outbits>
+    struct f_rgb_to_yiq
+      : public abstract::color_conversion<3, inbits, rgb_traits,
+					  3, outbits, yiq_traits, f_rgb_to_yiq<inbits, outbits> >
     {
-      color<3, outbits, yuv_traits>
-      doit(const color<3, inbits, nrgb_traits>& v) const
+      color<3, inbits, yiq_traits>
+      doit(const color<3, outbits, rgb_traits>& v) const
       {
 	vec<3, float> in = v.to_float();
 	vec<3, float> out;
-	out[yuv_Y] =
-	  + 0.299 * in[nrgb_R] + 0.587  * in[nrgb_G] + 0.114 * in[nrgb_B];
-	out[yuv_U] =
-	  - 0.147 * in[nrgb_R] - 0.289 * in[nrgb_G] + 0.436 * in[nrgb_B];
-	out[yuv_V] =
-	  + 0.615 * in[nrgb_R] - 0.515  * in[nrgb_G] - 0.100 * in[nrgb_B];
+	out[yiq_Y] =
+	  0.1768 * in[rgb_R] + 0.8130 * in[rgb_G] + 0.0101 * in[rgb_B];
+	out[yiq_I] =
+	  0.5346 * in[rgb_R] - 0.2461 * in[rgb_G] - 0.1791 * in[rgb_B];
+	out[yiq_Q] =
+	  0.2474 * in[rgb_R] - 0.6783 * in[rgb_G] + 0.4053 * in[rgb_B];
 	return out;
       }
 
-      static std::string 
-      name() 
-      { 
+      static std::string
+      name()
+      {
 	std::ostringstream s;
-	s << "f_nrgb_to_yuv<" << inbits << ", " << outbits << '>'; 
+	s << "f_rgb_to_yiq<" << inbits << ", " << outbits << '>';
 	s.str();
       }
     };
 
     template <unsigned inbits, unsigned outbits>
-    color<3, outbits, yuv_traits>
-    nrgb_to_yuv(const color<3, inbits, nrgb_traits>& v)
+    color<3, outbits, yiq_traits>
+    rgb_to_yiq(const color<3, inbits, rgb_traits>& v)
     {
-      f_nrgb_to_yuv<inbits, outbits> f;
-      
+      f_rgb_to_yiq<inbits, outbits> f;
+
       return f(v);
     }
 
     template<unsigned inbits, unsigned outbits>
-    struct f_yuv_to_nrgb
-      : public abstract::color_conversion<3, inbits, yuv_traits,
-					  3, outbits, nrgb_traits, f_yuv_to_nrgb<inbits, outbits> >
+    struct f_yiq_to_rgb
+      : public abstract::color_conversion<3, inbits, yiq_traits,
+					  3, outbits, rgb_traits, f_yiq_to_rgb<inbits, outbits> >
     {
-      color<3, outbits, nrgb_traits>
-      doit(const color<3, inbits, yuv_traits>& v) const
+      color<3, inbits, rgb_traits>
+      doit(const color<3, outbits, yiq_traits>& v) const
       {
 	vec<3, float> in = v.to_float();
 	vec<3, float> out;
-	out[nrgb_R] = in[yuv_Y]                     + 1.140 * in[yuv_V];
-	out[nrgb_G] = in[yuv_Y] - 0.394 * in[yuv_U] - 0.581 * in[yuv_V];
-	out[nrgb_B] = in[yuv_Y] + 2.028 * in[yuv_U];
-
+	out[rgb_R] = 0.87   * in[yiq_Y] + 1.3223 * in[yiq_I] + 0.5628 * in[yiq_Q];
+	out[rgb_G] = 1.026  * in[yiq_Y] - 0.2718 * in[yiq_I] - 0.1458 * in[yiq_Q];
+	out[rgb_B] = 1.186  * in[yiq_Y] - 1.2620 * in[yiq_I] + 1.8795 * in[yiq_Q];
 	return out;
       }
 
-      static std::string 
-      name() 
-      { 
+      static std::string
+      name()
+      {
 	std::ostringstream s;
-	s << "f_yuv_to_nrgb<" << inbits << ", " << outbits << '>'; 
+	s << "f_yiq_to_rgb<" << inbits << ", " << outbits << '>';
 	s.str();
       }
     };
 
     template <unsigned inbits, unsigned outbits>
-    color<3, outbits, nrgb_traits>
-    yuv_to_nrgb(const color<3, inbits, yuv_traits>& v)
+    color<3, outbits, rgb_traits>
+    yiq_to_rgb(const color<3, inbits, yiq_traits>& v)
     {
-      f_yuv_to_nrgb<inbits, outbits> f;
+      f_yiq_to_rgb<inbits, outbits> f;
 
       return f(v);
     }
@@ -123,4 +122,4 @@ namespace oln {
   } // convert
 } // oln
 
-#endif // OLENA_CONVERT_NRGBYUV_HH
+#endif // OLENA_CONVERT_RGBYIQ_HH

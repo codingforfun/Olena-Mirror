@@ -26,13 +26,13 @@
 // Public License.
 
 
-#ifndef OLENA_CONVERT_NRGBHSI_HH
-# define OLENA_CONVERT_NRGBHSI_HH
+#ifndef OLENA_CONVERT_RGBHSI_HH
+# define OLENA_CONVERT_RGBHSI_HH
 
 # include <oln/convert/abstract/colorconv.hh>
 
 # include <ntg/basics.hh>
-# include <ntg/color/nrgb.hh>
+# include <ntg/color/rgb.hh>
 # include <ntg/color/hsi.hh>
 
 # include <sstream>
@@ -53,20 +53,20 @@ namespace oln {
     static const float inv_sqrt2 = 1 / sqrt(2);
 
     template<unsigned inbits, unsigned outbits>
-    struct f_nrgb_to_hsi
-      : public abstract::color_conversion<3, inbits, nrgb_traits,
-					  3, outbits, hsi_traits, f_nrgb_to_hsi<inbits, outbits> >
+    struct f_rgb_to_hsi
+      : public abstract::color_conversion<3, inbits, rgb_traits,
+					  3, outbits, hsi_traits, f_rgb_to_hsi<inbits, outbits> >
     {
       color<3, inbits, hsi_traits>
-      doit(const color<3, outbits, nrgb_traits>& v) const
+      doit(const color<3, outbits, rgb_traits>& v) const
       {
 	vec<3, float> in = v.to_float();
 	vec<3, float> out;
 	out[hsi_I] =
-	  sqrt3_3 * in[nrgb_R] + sqrt3_3 * in[nrgb_G] + sqrt3_3 * in[nrgb_B];
-	const float v1 = inv_sqrt2 * in[nrgb_G] - inv_sqrt2 * in[nrgb_B];
-	const float v2 = 2 * inv_sqrt6 * in[nrgb_R] - inv_sqrt6 * in[nrgb_G]
-	  - inv_sqrt6 * in[nrgb_B];
+	  sqrt3_3 * in[rgb_R] + sqrt3_3 * in[rgb_G] + sqrt3_3 * in[rgb_B];
+	const float v1 = inv_sqrt2 * in[rgb_G] - inv_sqrt2 * in[rgb_B];
+	const float v2 = 2 * inv_sqrt6 * in[rgb_R] - inv_sqrt6 * in[rgb_G]
+	  - inv_sqrt6 * in[rgb_B];
 	out[hsi_H] = atan2(v2, v1) / M_PI * 180.0;
 	if (out[hsi_H] < 0)
 	  out[hsi_H] += 360.0;
@@ -75,30 +75,30 @@ namespace oln {
 	return out;
       }
 
-      static std::string 
-      name() 
-      { 
+      static std::string
+      name()
+      {
 	std::ostringstream s;
-	s << "f_nrgb_to_hsi<" << inbits << ", " << outbits << '>'; 
+	s << "f_rgb_to_hsi<" << inbits << ", " << outbits << '>';
 	s.str();
       }
     };
 
     template <unsigned inbits, unsigned outbits>
     color<3, outbits, hsi_traits>
-    nrgb_to_hsi(const color<3, inbits, nrgb_traits>& v)
+    rgb_to_hsi(const color<3, inbits, rgb_traits>& v)
     {
-      f_nrgb_to_hsi<inbits, outbits> f;
+      f_rgb_to_hsi<inbits, outbits> f;
 
       return f(v);
-    } 
+    }
 
     template<unsigned inbits, unsigned outbits>
-    struct f_hsi_to_nrgb
+    struct f_hsi_to_rgb
       : public abstract::color_conversion<3, inbits, hsi_traits,
-					  3, outbits, nrgb_traits, f_hsi_to_nrgb<inbits, outbits> >
+					  3, outbits, rgb_traits, f_hsi_to_rgb<inbits, outbits> >
     {
-      color<3, outbits, nrgb_traits>
+      color<3, outbits, rgb_traits>
       doit(const color<3, inbits, hsi_traits>& v) const
       {
 	vec<3, float> in = v.to_float();
@@ -106,31 +106,31 @@ namespace oln {
 	const float h = in[hsi_H] / 180.0 * M_PI;
 	const float v1 = in[hsi_S] * cos(h);
 	const float v2 = in[hsi_S] * sin(h);
-	out[nrgb_R] = sqrt3_3 * in[hsi_I] + 2 * inv_sqrt6 * v2;
-	out[nrgb_G] = sqrt3_3 * in[hsi_I] + inv_sqrt2 * v1 - inv_sqrt6 * v2;
-	out[nrgb_B] = sqrt3_3 * in[hsi_I] - inv_sqrt2 * v1 - inv_sqrt6 * v2;
+	out[rgb_R] = sqrt3_3 * in[hsi_I] + 2 * inv_sqrt6 * v2;
+	out[rgb_G] = sqrt3_3 * in[hsi_I] + inv_sqrt2 * v1 - inv_sqrt6 * v2;
+	out[rgb_B] = sqrt3_3 * in[hsi_I] - inv_sqrt2 * v1 - inv_sqrt6 * v2;
 	return out;
       }
 
-      static std::string 
-      name() 
-	{ 
+      static std::string
+      name()
+	{
 	std::ostringstream s;
-	s << "f_hsi_to_nrgb<" << inbits << ", " << outbits << '>'; 
+	s << "f_hsi_to_rgb<" << inbits << ", " << outbits << '>';
 	s.str();
       }
     };
 
     template <unsigned inbits, unsigned outbits>
-    color<3, outbits, nrgb_traits>
-    hsi_to_nrgb (const color<3, inbits, hsi_traits>& v)
+    color<3, outbits, rgb_traits>
+    hsi_to_rgb (const color<3, inbits, hsi_traits>& v)
     {
-      f_hsi_to_nrgb<inbits, outbits> f;
+      f_hsi_to_rgb<inbits, outbits> f;
 
       return f(v);
     }
 
   } // convert
-} // oln 
+} // oln
 
-#endif // OLENA_CONVERT_NRGBHSI_HH
+#endif // OLENA_CONVERT_RGBHSI_HH

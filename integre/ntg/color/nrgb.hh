@@ -33,10 +33,10 @@
 namespace ntg
 {
 
-  /*! 
+  /*!
     NTSC RGB format.
   */
-  
+
   enum nrgb_comp
     {
       nrgb_R = 0,
@@ -45,10 +45,30 @@ namespace ntg
     };
 
   template<unsigned icomp> struct nrgb_traits;
-  template<> struct nrgb_traits<nrgb_R> : public interval<0,1> {};
-  template<> struct nrgb_traits<nrgb_G> : public interval<0,1> {};
-  template<> struct nrgb_traits<nrgb_B> : public interval<0,1> {};
- 
+  template<>
+  struct nrgb_traits<nrgb_R>
+  {
+    static float lower_bound() { return 0;}
+    static float upper_bound() { return 1.0885004;}
+  };
+
+
+  template<>
+  struct nrgb_traits<nrgb_G>
+  {
+    static float lower_bound() { return -0.3321984;}
+    static float upper_bound() { return  1.3189264;}
+  };
+
+
+  template<>
+  struct nrgb_traits<nrgb_B>
+  {
+    static float lower_bound() { return -0.0688480;}
+    static float upper_bound() { return 0.904727;}
+  };
+
+
   typedef color<3,8,nrgb_traits>  nrgb_8;
   typedef color<3,16,nrgb_traits> nrgb_16;
   typedef color<3,32,nrgb_traits> nrgb_32;
@@ -60,7 +80,7 @@ namespace ntg
     return tmp;					\
   }
 
-  namespace nrgb_8_color 
+  namespace nrgb_8_color
   {
 
     DEFINE_COLOR(nrgb_8, white, 255, 255, 255)
@@ -75,7 +95,7 @@ namespace ntg
 
   } // end of nrgb_8_color
 
-  namespace nrgb_16_color 
+  namespace nrgb_16_color
   {
 
     DEFINE_COLOR(nrgb_16, white, 255, 255, 255)
@@ -90,9 +110,9 @@ namespace ntg
 
   } // end of nrgb_16_color
 
-  namespace nrgb_32_color 
+  namespace nrgb_32_color
   {
-  
+
     DEFINE_COLOR(nrgb_32, white, 255, 255, 255)
     DEFINE_COLOR(nrgb_32, gray,  128, 128, 128)
     DEFINE_COLOR(nrgb_32, black, 0,   0,   0)
@@ -102,9 +122,9 @@ namespace ntg
     DEFINE_COLOR(nrgb_32, yellow,255, 255, 0)
     DEFINE_COLOR(nrgb_32, cyan,  0,   255, 255)
     DEFINE_COLOR(nrgb_32, pink,  255, 0,   255)
-    
+
   } // end of nrgb_32_color.
-    
+
 } // end of ntg.
 
 #endif // !NTG_COLOR_NRGB_HH

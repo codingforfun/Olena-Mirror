@@ -54,7 +54,7 @@ namespace ntg {
       typedef self	ntg_type;
 
       ntg_build_value_type(float_value<E>);
-      
+
       typedef optraits<self>	optraits_type;
       typedef unsafe::get<self>	behavior_type;
       typedef unsafe		abstract_behavior_type;
@@ -149,7 +149,7 @@ namespace ntg {
     // So when using cycle<float,..> + float, it searches
     // operator_traits<operator_plus, float,float>
     template <>
-    struct operator_traits<operator_plus, float, float> 
+    struct operator_traits<operator_plus, float, float>
       : all_float_traits {};
 
     //
@@ -399,7 +399,7 @@ namespace ntg {
     template <>
     struct operator_traits<operator_max, double, float>
       : all_double_traits {};
-   
+
     //
     // Comparison
     //

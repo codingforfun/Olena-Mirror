@@ -25,11 +25,11 @@ nobase_oln_HEADERS =				\
   convert/conversion_ng_se.hh			\
   convert/force.hh				\
   convert/nrgbxyz.hh				\
-  convert/nrgbyiq.hh				\
-  convert/nrgbyuv.hh				\
-  convert/nrgbhsi.hh				\
-  convert/nrgbhsl.hh				\
-  convert/nrgbhsv.hh				\
+  convert/rgbyiq.hh				\
+  convert/rgbyuv.hh				\
+  convert/rgbhsi.hh				\
+  convert/rgbhsl.hh				\
+  convert/rgbhsv.hh				\
   convert/rgbnrgb.hh				\
   convert/rgbxyz.hh				\
   convert/stretch.hh				\

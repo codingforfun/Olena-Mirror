@@ -31,13 +31,14 @@
 # include <mlc/array/objs.hh>
 # include <mlc/contract.hh>
 # include <mlc/cmp.hh>
+# include <ntg/basics.hh>
 
 # include <iostream>
 
 // impl
 # include <mlc/array/3d.hxx>
 
-namespace mlc 
+namespace mlc
 {
 
   class not_implemented_yet{}; // FIXME
@@ -82,20 +83,28 @@ namespace mlc
     }
 
 
+    // Name
+
+    static std::string
+    name()
+    {
+      return std::string("array3d< Info, ") + ntg_name(T) + " >";
+    }
+
+
 
     //
     // Operations on array
     //
 
-    typedef array3d<Info_, float> to_float; // FIXME : argh
-
     // Normalize (absolute values -> relative values)
 
-    to_float normalize()
+    array3d<Info_, ntg::float_s>
+    normalize()
     {
-      to_float tmp;
-      float sum = 0.f; // FIXME: float only?
-      const float epsilon = 0.01f; // FIXME : epsilon should be global
+      array3d<Info_, ntg::float_s> tmp;
+      ntg::float_s sum = 0.f;
+      const ntg::float_s epsilon = 0.01f; // FIXME : epsilon should be global
       unsigned i;
       for (i = 0; i < Info_::card; ++i)
 	sum += this->buffer_[i];
@@ -119,7 +128,7 @@ namespace mlc
     operator-() const
     {
       enum { new_center =  Info_::card - Info_::center - 1 };
-      array3d<array3d_info< Info::nplanes, Info_::nrows, Info_::ncols, new_center, Info_::i>,T> tmp;
+      array3d<array3d_info< Info_::nplanes, Info_::nrows, Info_::ncols, new_center, Info_::i>,T> tmp;
 
       for (unsigned i = 0; i < Info_::card; ++i)
 	tmp[Info_::card - i - 1] = this->operator[](i);
@@ -129,12 +138,67 @@ namespace mlc
 
     // Transpose
 
-
     array3d<Info, T> transpose() const // FIXME
     {
       std::cerr << "[31m===> 3D transposition not implemented yet. <===[0m" << std::endl;
       throw not_implemented_yet();
     }
+
+
+    // Operators
+
+    // FIXME: This code should be factorized between 1d, 2d and 3d.
+    // Think of a mechanism similar to apply() and apply2().
+
+    template <class U>
+    array3d< Info, ntg_return_type(times, T, U) >
+    operator*(U w)
+    {
+      array3d< Info, ntg_return_type(times, T, U) > tmp;
+      for (unsigned i = 0; i < Info::card; ++i)
+	tmp[i] = this->buffer_[i] * w;
+      return tmp;
+    }
+
+    template <class U>
+    array3d< Info, ntg_return_type(div, T, U) >
+    operator/(U w)
+    {
+      array3d< Info, ntg_return_type(div, T, U) > tmp;
+      for (unsigned i = 0; i < Info::card; ++i)
+	tmp[i] = this->buffer_[i] / w;
+      return tmp;
+    }
+
+    self operator+(const self& rhs) const
+    {
+      self tmp;
+      for (unsigned i = 0; i < Info::card; ++i)
+	tmp[i] = this->buffer_[i] + rhs.buffer_[i];
+      return tmp;
+    }
+    self& operator+=(const self& rhs)
+    {
+      for (unsigned i = 0; i < Info::card; ++i)
+	this->buffer_[i] += rhs.buffer_[i];
+      return *this;
+    }
+
+    self operator-(const self& rhs) const
+    {
+      self tmp;
+      for (unsigned i = 0; i < Info::card; ++i)
+	tmp[i] = this->buffer_[i] - rhs.buffer_[i];
+      return tmp;
+    }
+    self& operator-=(const self& rhs)
+    {
+      for (unsigned i = 0; i < Info::card; ++i)
+	this->buffer_[i] -= rhs.buffer_[i];
+      return *this;
+    }
+
+
 
     //      template<class U> int operator,(U); // FIXME: why this?
 
@@ -207,8 +271,6 @@ namespace mlc
       lesseq< nrow, Info_::nrows - Info_::center_row - 1 >::ensure();
       lesseq< -Info_::center_col, ncol >::ensure();
       lesseq< ncol, Info_::ncols - Info_::center_col - 1 >::ensure();
-
-      //FIXME:      return *(buffer_ + Info_::center + (nplane * Info::nrows * Info::ncols) + (row * Info::ncols) + col);
       return *(buffer_ + Info_::center + (nplane * Info::nrows * Info::ncols) + (nrow * Info::ncols) + ncol);
     }
 
@@ -235,8 +297,17 @@ namespace mlc
 
   // starter objects
 
-  static internal::array3d_start_<int>   ints_3d   = internal::array3d_start_<int>();
-  static internal::array3d_start_<float> floats_3d = internal::array3d_start_<float>();
+  // FIXME: what about other types? Replace this by a function
+  // returning a starter.
+
+# define array3d_starter(T) \
+  static internal::array3d_start_<T>   T##s_3d   = internal::array3d_start_<T>()
+
+  array3d_starter(int);		// ints_3d
+  array3d_starter(float);	// floats_3d
+
+
+  // print
 
   template<class Info, class T>
   std::ostream& operator<<(std::ostream& ostr, const array3d<Info, T>& rhs)
@@ -255,6 +326,7 @@ namespace mlc
 
     return ostr;
   }
+
 
 } // end of mlc
 

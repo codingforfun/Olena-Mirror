@@ -30,6 +30,7 @@
 
 # include <mlc/type.hh>
 # include <oln/core/coord.hh>
+# include <ntg/real/builtin_float.hh>
 
 namespace oln {
 
@@ -54,7 +55,7 @@ namespace oln {
     template<class Exact>
     struct dpoint : public mlc_hierarchy::any<Exact>
     {
-     
+
       typedef Exact exact_type;
       typedef dpoint<Exact> self_type;
       enum { dim = dpoint_traits<exact_type>::dim };
@@ -65,50 +66,50 @@ namespace oln {
 	for (unsigned i = 0; i < dim; ++i)
 	  nth(i) = p.exact().nth(i);
       }
-      
-      coord 
+
+      coord
       nth(const unsigned d) const
       {
 	return coord_[d];
       }
-      
-      coord& 
+
+      coord&
       nth(const unsigned d)
       {
 	return coord_[d];
       }
 
-      exact_type 
+      exact_type
       operator-() const
       {
 	return this->exact().minus();
       }
 
-      exact_type& 
+      exact_type&
       operator+=(const self_type& dp)
       {
 	return this->exact().plus_assign_dp(dp.exact());
       }
 
-      exact_type& 
+      exact_type&
       operator-=(const self_type& dp)
       {
 	return this->exact().minus_assign_dp(dp.exact());
       }
 
-      exact_type 
+      exact_type
       operator+(const self_type& dp) const
       {
 	return this->exact().plus_dp(dp.exact());
       }
 
-      exact_type 
+      exact_type
       operator-(const self_type& dp) const
       {
 	return this->exact().minus_dp(dp.exact());
       }
 
-      bool 
+      bool
       operator==(const self_type& dp) const
       {
 	for (unsigned i = 0; i < dim; ++i)
@@ -116,8 +117,8 @@ namespace oln {
 	    return false;
 	return true;
       }
-      
-      bool 
+
+      bool
       operator!=(const self_type& dp) const
       {
 	for (unsigned i = 0; i < dim; ++i)
@@ -125,8 +126,8 @@ namespace oln {
 	    return true;
 	return false;
       }
-      
-      bool 
+
+      bool
       is_centered(void) const
       {
 	for (unsigned i = 0; i < dim; ++i)
@@ -135,23 +136,33 @@ namespace oln {
 	return true;
       }
 
-      static std::string 
-      name() 
-      { 
+      ntg::float_d
+      norm2(void) const
+      {
+	double norm = 0;
+
+	for (unsigned i = 0; i < dim; ++i)
+	  norm += nth(i) * nth(i);
+	return sqrt(norm);
+      }
+
+      static std::string
+      name()
+      {
 	return std::string("dpoint<") +
-	  Exact::name() + ">"; 
+	  Exact::name() + ">";
       }
 
     protected:
 
-      dpoint() 
+      dpoint()
       {}
 
     private:
 
       coord coord_[dim];
     };
-    
+
   } // end of abstract
 
   namespace internal

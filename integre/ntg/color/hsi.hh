@@ -33,7 +33,7 @@
 namespace ntg
 {
 
-  enum hsi_comp 
+  enum hsi_comp
     {
       hsi_H = 0,
       hsi_S = 1,
@@ -42,10 +42,10 @@ namespace ntg
 
   template<unsigned icomp> struct hsi_traits;
   template<> struct hsi_traits<hsi_H> : public interval<0,360> {};
-  template<> struct hsi_traits<hsi_S> 
+  template<> struct hsi_traits<hsi_S>
   {
     static float lower_bound() { return 0.; }
-    static float upper_bound() { return 1.0801234; } //sqrt(7. / 6)
+    static float upper_bound() { return 0.816497; } //2 / sqrt(6)
   };
 
   template<> struct hsi_traits<hsi_I>

@@ -45,33 +45,31 @@
 | The formulas used here come from ``Color space conversion''; Paul |
 | Bourke.                                                           |
 `------------------------------------------------------------------*/
-
 namespace oln {
 
   using namespace ntg;
 
   namespace convert {
-
     template<unsigned inbits, unsigned outbits>
-    struct f_nrgb_to_hsl
-      : public abstract::color_conversion<3, inbits, nrgb_traits,
-					  3, outbits, hsl_traits, f_nrgb_to_hsl<inbits, outbits> >
+    struct f_rgb_to_hsl
+      : public abstract::color_conversion<3, inbits, rgb_traits,
+					  3, outbits, hsl_traits, f_rgb_to_hsl<inbits, outbits> >
     {
       color<3, outbits, hsl_traits>
-      doit(const color<3, inbits, nrgb_traits>& v) const
+      doit(const color<3, inbits, rgb_traits>& v) const
       {
 	vec<3, float> in = v.to_float();
 	vec<3, float> out;
 
-	float max_in = ntg::max(in[nrgb_R], std::max(in[nrgb_B], in[nrgb_G]));
-	float min_in = ntg::min(in[nrgb_R], std::min(in[nrgb_B], in[nrgb_G]));
+	float max_in = ntg::max(in[rgb_R], std::max(in[rgb_B], in[rgb_G]));
+	float min_in = ntg::min(in[rgb_R], std::min(in[rgb_B], in[rgb_G]));
 	float diff = max_in-min_in;
 
 	out[hsl_L] = (max_in + min_in) / 2;
 	if (std::abs(diff) <= FLT_EPSILON){
 	  out[hsl_S] = 0;
 	  out[hsl_H] = 0; // undefined
-	} 
+	}
 	else {
 	  if (out[hsl_L] <= 0.5)
 	    out[hsl_S] = diff / (max_in + min_in);
@@ -79,15 +77,15 @@ namespace oln {
 	    out[hsl_S] = diff / (2 - max_in - min_in);
 
 
-	  float r_dist = (max_in - in[nrgb_R]) / diff;
-	  float g_dist = (max_in - in[nrgb_G]) / diff;
-	  float b_dist = (max_in - in[nrgb_B]) / diff;
+	  float r_dist = (max_in - in[rgb_R]) / diff;
+	  float g_dist = (max_in - in[rgb_G]) / diff;
+	  float b_dist = (max_in - in[rgb_B]) / diff;
 
-	  if (in[nrgb_R] == max_in)
+	  if (in[rgb_R] == max_in)
 	    out[hsl_H] = b_dist - g_dist;
-	  else if(in[nrgb_G] == max_in)
+	  else if(in[rgb_G] == max_in)
 	    out[hsl_H] = 2 + r_dist - b_dist;
-	  else if(in[nrgb_B] == max_in)
+	  else if(in[rgb_B] == max_in)
 	    out[hsl_H] = 4 + g_dist - r_dist;
 
 	  out[hsl_H] *= 60;
@@ -97,25 +95,25 @@ namespace oln {
 	return out;
       }
 
-      static std::string 
-      name() 
-      { 
+      static std::string
+      name()
+      {
 	std::ostringstream s;
-	s << "f_nrgb_to_hsl<" << inbits << ", " << outbits << '>'; 
+	s << "f_rgb_to_hsl<" << inbits << ", " << outbits << '>';
 	s.str();
       }
     };
 
     template <unsigned inbits, unsigned outbits>
     color<3, inbits, hsl_traits>
-    nrgb_to_hsl(const color<3, outbits, nrgb_traits>& v)
+    rgb_to_hsl(const color<3, outbits, rgb_traits>& v)
     {
-      f_nrgb_to_hsl<inbits, outbits> f;
+      f_rgb_to_hsl<inbits, outbits> f;
       return f(v);
     }
 
     namespace internal {
-      float 
+      float
       RGB(float q1, float q2, float hue)
       {
 	if (hue >= 360)
@@ -134,11 +132,11 @@ namespace oln {
     }
 
     template<unsigned inbits, unsigned outbits>
-    struct f_hsl_to_nrgb
+    struct f_hsl_to_rgb
       : public abstract::color_conversion<3, inbits, hsl_traits,
-					  3, outbits, nrgb_traits, f_hsl_to_nrgb<inbits, outbits> >
+					  3, outbits, rgb_traits, f_hsl_to_rgb<inbits, outbits> >
     {
-      color<3, outbits, nrgb_traits>
+      color<3, outbits, rgb_traits>
       doit(const color<3, inbits, hsl_traits>& v) const
       {
 	vec<3, float> in = v.to_float();
@@ -153,35 +151,35 @@ namespace oln {
  	float p1 = 2 * in[hsl_L] - p2;
 
 	if(in[hsl_S] == 0)
-	  out[nrgb_R] = out[nrgb_G] = out[nrgb_B] = in[hsl_L];
+	  out[rgb_R] = out[rgb_G] = out[rgb_B] = in[hsl_L];
 	else
 	  {
-	    out[nrgb_R] = internal::RGB(p1, p2, in[hsl_H] + 120);
-	    out[nrgb_G] = internal::RGB(p1, p2, in[hsl_H]);
-	    out[nrgb_B] = internal::RGB(p1, p2, in[hsl_H] - 120);
+	    out[rgb_R] = internal::RGB(p1, p2, in[hsl_H] + 120);
+	    out[rgb_G] = internal::RGB(p1, p2, in[hsl_H]);
+	    out[rgb_B] = internal::RGB(p1, p2, in[hsl_H] - 120);
 	  }
 
 	return out;
       }
 
-      static std::string 
-      name() 
-      { 
+      static std::string
+      name()
+      {
 	std::ostringstream s;
-	s << "f_hsl_to_nrgb<" << inbits << ", " << outbits << '>'; 
+	s << "f_hsl_to_rgb<" << inbits << ", " << outbits << '>';
 	s.str();
       }
     };
 
     template<unsigned inbits, unsigned outbits>
-    color<3, outbits, nrgb_traits>
-    hsl_to_nrgb(const color<3, inbits, hsl_traits>& v)
+    color<3, outbits, rgb_traits>
+    hsl_to_rgb(const color<3, inbits, hsl_traits>& v)
     {
-      f_hsl_to_nrgb<inbits, outbits> f;
+      f_hsl_to_rgb<inbits, outbits> f;
       return f(v);
     }
 
   } // convert
 } // oln
 
-#endif // OLENA_CONVERT_NRGBHSL_HH
+#endif // OLENA_CONVERT_RGBHSL_HH

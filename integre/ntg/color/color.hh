@@ -50,10 +50,10 @@ namespace ntg {
     | typetraits<color> |
     `------------------*/
 
-    template <unsigned ncomps, 
-	      unsigned qbits, 
+    template <unsigned ncomps,
+	      unsigned qbits,
 	      template <unsigned> class color_system>
-    struct typetraits<color<ncomps, qbits, color_system> > 
+    struct typetraits<color<ncomps, qbits, color_system> >
     {
       enum { nb_comp = ncomps };
 
@@ -64,18 +64,18 @@ namespace ntg {
       typedef self					base_type;
       typedef vec<ncomps, int_u<qbits> >		storage_type;
     };
-  
+
     /*-------------------------.
     | Helper structs for float |
     `-------------------------*/
 
     /*!
-      Helper struct to convert vec<N,T> to vec<N,float>, 
+      Helper struct to convert vec<N,T> to vec<N,float>,
       taking color_system into account.
     */
-    template <unsigned n, 
-	      unsigned ncomps, 
-	      unsigned qbits, 
+    template <unsigned n,
+	      unsigned ncomps,
+	      unsigned qbits,
 	      template <unsigned> class color_system>
     struct _to_float
     {
@@ -99,8 +99,8 @@ namespace ntg {
     };
 
     // Stop recursion when n == ncomps.
-    template <unsigned ncomps, 
-	      unsigned qbits, 
+    template <unsigned ncomps,
+	      unsigned qbits,
 	      template <unsigned> class color_system>
     struct _to_float<ncomps, ncomps, qbits, color_system>
     {
@@ -116,9 +116,9 @@ namespace ntg {
       Helper struct to convert vec<N,float> to vec<N,T>,
       taking color_system into account.
     */
-    template <unsigned n, 
-	      unsigned ncomps, 
-	      unsigned qbits, 
+    template <unsigned n,
+	      unsigned ncomps,
+	      unsigned qbits,
 	      template <unsigned> class color_system>
     struct _from_float
     {
@@ -129,7 +129,7 @@ namespace ntg {
       static void
       doit (const in_type& in, out_type& out)
       {
-	float out_range = float(optraits<T>::max()) 
+	float out_range = float(optraits<T>::max())
 	  - float(optraits<T>::min());
 	float in_range = float(color_system<n>::upper_bound())
 	  - float(color_system<n>::lower_bound());
@@ -138,15 +138,15 @@ namespace ntg {
 	  ((in[n] - float(color_system<n>::lower_bound()))
 	   * out_range / in_range
 	   + float(color_system<n>::lower_bound()));
-	
+
 	// process next componant recursively:
 	_from_float<n + 1, ncomps, qbits, color_system>::doit(in, out);
       }
     };
 
     // stop recursion when n == ncomps.
-    template <unsigned ncomps, 
-	      unsigned qbits, 
+    template <unsigned ncomps,
+	      unsigned qbits,
 	      template <unsigned> class color_system>
     struct _from_float<ncomps, ncomps, qbits, color_system>
     {
@@ -165,7 +165,7 @@ namespace ntg {
   `-----------------------------------*/
 
   //! Generic type for color.
-  /*! 
+  /*!
     Specific color types (such as rgb, xyz, etc.) are defined by
     specifying ncomps, qbits and a color_system trait.
 
@@ -175,8 +175,8 @@ namespace ntg {
 
     Colors are implemented and seen as a vector of components.
   */
-  template <unsigned ncomps, 
-	    unsigned qbits, 
+  template <unsigned ncomps,
+	    unsigned qbits,
 	    template <unsigned> class color_system>
   struct color : public vect_value<color<ncomps, qbits, color_system> >
   {
@@ -202,7 +202,7 @@ namespace ntg {
     vec_type&		as_vec()       { return this->val_; }
     const vec_type&	as_vec() const { return this->val_; }
 
-    float_vec_type 
+    float_vec_type
     to_float() const
     {
       float_vec_type tmp;
@@ -210,7 +210,7 @@ namespace ntg {
       return tmp;
     }
 
-    bool 
+    bool
     operator==(const color& r) const
     { return this->val_ == r.val_; }
   };
@@ -225,10 +225,10 @@ namespace ntg {
     static int upper_bound() { return uval; }
   };
 
-  template <unsigned ncomps, 
-	    unsigned qbits, 
-	    template <unsigned> class color_system> 
-  inline std::ostream& 
+  template <unsigned ncomps,
+	    unsigned qbits,
+	    template <unsigned> class color_system>
+  inline std::ostream&
   operator<<(std::ostream& o,
 	     const color<ncomps, qbits, color_system>& r)
   {
@@ -243,8 +243,8 @@ namespace ntg {
     | optraits<color> |
     `----------------*/
 
-    template <unsigned ncomps, 
-	      unsigned qbits, 
+    template <unsigned ncomps,
+	      unsigned qbits,
 	      template <unsigned> class color_system>
     struct optraits<color<ncomps, qbits, color_system> >
     {

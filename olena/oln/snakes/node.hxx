@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,40 +25,22 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_COLOR_YIQ_HH
-# define NTG_COLOR_YIQ_HH
+#ifndef OLENA_SNAKES_NODE_HXX
+# define OLENA_SNAKES_NODE_HXX
 
-# include <ntg/color/color.hh>
+namespace oln {
 
-namespace ntg
-{
+  namespace snakes {
 
-  enum yiq_comp
+    template <class I>
+    ntg::float_s
+    node<I>::energy(const I& gradient, point_type prev, point_type next) const
     {
-      yiq_Y = 0,
-      yiq_I = 1,
-      yiq_Q = 2
-    };
+      return 42; // FIXME: compute the real value.
+    }
 
-  template<unsigned icomp> struct yiq_traits;
-  template<> struct yiq_traits<yiq_Y> : public interval<0,1> {};
+  } // end snakes
 
-  template<> struct yiq_traits<yiq_I>
-  {
-    static float lower_bound() { return -.4192; }
-    static float upper_bound() { return .5346; }
-  };
+} // end oln
 
-  template<> struct yiq_traits<yiq_Q>
-  {
-    static float lower_bound() { return -.6783; }
-    static float upper_bound() { return .6527; }
-  };
-
-  typedef color<3,8,yiq_traits>  yiq_8;
-  typedef color<3,16,yiq_traits> yiq_16;
-  typedef color<3,32,yiq_traits> yiq_32;
-
-} // end of ntg.
-
-#endif // !NTG_COLOR_YIQ_HH
+#endif // !OLENA_SNAKES_NODE_HXX

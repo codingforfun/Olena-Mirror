@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,40 +25,60 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_COLOR_YIQ_HH
-# define NTG_COLOR_YIQ_HH
+#ifndef OLENA_SNAKES_SNAKES_BASE_HXX
+# define OLENA_SNAKES_SNAKES_BASE_HXX
 
-# include <ntg/color/color.hh>
+#include <oln/morpho/gradient.hh>
 
-namespace ntg
-{
+namespace oln {
 
-  enum yiq_comp
+  namespace snakes {
+
+    template <class algorithm>
+    snake<algorithm>::snake(const image_type&		image,
+			    std::list<point_type>	initial_contour,
+			    ntg::float_s		alpha,
+			    ntg::float_s		beta,
+			    ntg::float_s		gamma,
+			    ntg::float_s		khi = 0.0f) :
+      s(initial_contour), a(alpha, beta, gamma, khi),
+      alpha(alpha), beta(beta), gamma(gamma), khi(khi)
     {
-      yiq_Y = 0,
-      yiq_I = 1,
-      yiq_Q = 2
+      gradient = morpho::fast::beucher_gradient(image, win_c8p());
     };
 
-  template<unsigned icomp> struct yiq_traits;
-  template<> struct yiq_traits<yiq_Y> : public interval<0,1> {};
+    template <class algorithm>
+    std::list<typename snake<algorithm>::point_type>
+    snake<algorithm>::contour(void) const
+    {
+      return s.contour();
+    }
 
-  template<> struct yiq_traits<yiq_I>
-  {
-    static float lower_bound() { return -.4192; }
-    static float upper_bound() { return .5346; }
-  };
+    template <class algorithm>
+    ntg::float_s
+    snake<algorithm>::energy(void) const
+    {
+      return s.energy(gradient);
+    }
 
-  template<> struct yiq_traits<yiq_Q>
-  {
-    static float lower_bound() { return -.6783; }
-    static float upper_bound() { return .6527; }
-  };
+    template <class algorithm>
+    inline
+    int
+    snake<algorithm>::update_snake(void)
+    {
+      return a.update_snake(gradient, *this);
+    }
 
-  typedef color<3,8,yiq_traits>  yiq_8;
-  typedef color<3,16,yiq_traits> yiq_16;
-  typedef color<3,32,yiq_traits> yiq_32;
+    template <class algorithm>
+    inline
+    void
+    snake<algorithm>::converge(void)
+    {
+      a.converge(gradient, *this);
+    }
 
-} // end of ntg.
+  } // end snakes
 
-#endif // !NTG_COLOR_YIQ_HH
+} // end oln
+
+#endif // !OLENA_SNAKES_SNAKES_BASE_HXX
