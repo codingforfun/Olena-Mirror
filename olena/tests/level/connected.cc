@@ -38,10 +38,19 @@ using namespace oln;
 using namespace mlc;
 using namespace ntg;
 
+#define OK_OR_FAIL				\
+      std::cout << "OK" << std::endl;		\
+    else					\
+      {						\
+	std::cout << "FAIL" << std::endl;	\
+	fail = true;				\
+      }
 
 bool
 check(void)
 {
+  bool fail = false;
+
   image2d<bin> lena = load(rdata("object"));
 
   std::cout << "--- level::connected_component<int_u8> --" << std::endl
@@ -49,5 +58,5 @@ check(void)
 
   save(level::connected_component<int_u8>(lena, neighb_c4()), "connected_out");
 
-  return true;
+  return fail;
 }

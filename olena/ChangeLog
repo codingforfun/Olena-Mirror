@@ -1,5 +1,9 @@
 2003-07-31  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
+	* olena/tests/level/connected.cc: Fix return value.
+
+2003-07-31  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
+
 	* olena/oln/topo/dmap.hxx,
 	olena/oln/topo/inter-pixel/internal/dir-iter.hh: Fix bugs.
 
