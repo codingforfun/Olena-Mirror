@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,8 +35,51 @@ namespace oln {
 
   namespace level {
 
+
+    /*!
+    ** \brief Draw a line between two points in the image.
+    **
+    ** \arg inout a 2d image.
+    ** \arg p1 A point in the image.
+    ** \arg p2 A point in the image (p1 and p2 can be swaped).
+    ** \arg level Value of the line.
+    **
+    ** \code
+    ** #include <oln/basics2d.hh>
+    ** #include <oln/level/set_level.hh>
+    ** #include <ntg/all.hh>
+    **
+    ** int main()
+    ** {
+    **   oln::image2d<ntg::int_u8> in = oln::load(IMG_IN "lena256.pgm");
+    **   oln::coord R = in.nrows();
+    **   oln::coord C = in.ncols();
+    **
+    **   //Draw the line
+    **   oln::level::set_level(in,
+    ** 			oln::point2d(R * 1/4, C* 1/2),
+    ** 			oln::point2d(R * 4/5, C* 7/8),
+    ** 			0);
+    **
+    **
+    **   oln::box<oln::point2d> b;
+    **   b.add(oln::point2d(R * 1/6, C * 1/6));
+    **   b.add(oln::point2d(R * 4/5, C * 1/3));
+    **
+    **   //Draw the box
+    **   oln::level::set_level(in, b, 255);
+    **
+    **   save(in, IMG_OUT "oln_level_set_level.pgm");
+    ** }
+    ** \endcode
+    ** \image html lena256.png
+    ** \image latex lena256.png
+    ** =>
+    ** \image html oln_level_set_level.png
+    ** \image latex oln_level_set_level.png
+    */
     template <class I>
-    void 
+    void
     set_level(abstract::image_with_dim<2,I>& inout,
 	      const oln_point_type(I)& p1,
 	      const oln_point_type(I)& p2,
@@ -89,9 +132,12 @@ namespace oln {
       inout(iRow,iCol) = level;
     }
 
-
+    /*! Draw a box in the image.
+    **
+    ** \see set_level for an example.
+    */
     template <class I, class BoxType>
-    void 
+    void
     set_level(abstract::image_with_dim<2,I>& inout,
 	      BoxType& box,
 	      const oln_value_type(I)& level)

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,8 +34,12 @@ namespace oln {
 
   namespace level {
 
+    /*! \brief Tests if all pixels of input1 are greater or equal than input2.
+    **
+    ** \pre input1.size() == input2.size()
+    **/
     template<class I1, class I2> inline
-    bool 
+    bool
     is_greater_or_equal(const abstract::image<I1>& input1,
 			const abstract::image<I2>& input2)
     {
@@ -47,8 +51,12 @@ namespace oln {
       return true;
     }
 
+    /*! \brief Tests if all pixels of input1 are greater than input2.
+    **
+    ** \pre input1.size() == input2.size()
+    **/
     template<class I1, class I2> inline
-    bool 
+    bool
     is_greater(const abstract::image<I1>& input1,
 	       const abstract::image<I2>& input2)
     {
@@ -60,8 +68,12 @@ namespace oln {
       return true;
     }
 
+    /*! \brief Tests if all pixels of input1 are lower or equal than input2.
+    **
+    ** \pre input1.size() == input2.size()
+    **/
     template<class I1, class I2> inline
-    bool 
+    bool
     is_lower_or_equal(const abstract::image<I1>& input1,
 		      const abstract::image<I2>& input2)
     {
@@ -73,8 +85,12 @@ namespace oln {
       return true;
     }
 
+    /*! \brief Tests if all pixel of input1 are lower than input2.
+    **
+    ** \pre input1.size() == input2.size()
+    **/
     template<class I1, class I2> inline
-    bool 
+    bool
     is_lower(const abstract::image<I1>& input1,
 	     const abstract::image<I2>& input2)
     {
@@ -86,8 +102,13 @@ namespace oln {
       return true;
     }
 
+
+    /*! \brief Tests if input1 is equal to input2.
+    **
+    ** \pre input1.size() == input2.size()
+    **/
     template<class I1, class I2> inline
-    bool 
+    bool
     is_equal(const abstract::image<I1>& input1,
 	     const abstract::image<I2>& input2)
     {

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -38,27 +38,24 @@ namespace oln {
 
   namespace level {
 
-    /*=processing connected_component
-     * ns: level
-     * what: Connected Component.
-     * arg: const abstract::image<I1>&, marker, IN, marker image
-     * arg: const abstract::neighborhood<E>&, se, IN, structural element
-     * ret: typename mute<I, DestType>::ret
-     * doc: It removes the small (in area) connected components of the upper
-     * level sets of \var{input} using \var{se} as structural element. The
-     * implementation comes from \emph{Cocquerez et Philipp, Analyse d'images,
-     * filtrages et segmentations} p.62.
-     * see: level::frontp_connected_component
-     * ex:
-     * $ image2d<int_u8> light = load("light.pgm");
-     * $ save(level::connected_component<int_u8>(light, win_c8p()), "out.pgm");
-     * exi: light.pgm
-     * exo: out.pgm
-     * wontcompile: fixme
-     =*/
-
+    /* \brief Processing connected_component extract the connected components.
+    **
+    ** \arg: input image
+    ** \arg: Ng neighborhood
+    **
+    ** \return Returns a labeled image
+    **
+    ** It removes the small (in area) connected components of the upper
+    ** level sets of \var{input} using \var{se} as structural element.
+    **
+    ** \ref The implementation comes from Cocquerez et Philipp, Analyse
+    ** d'images, filtrages et segmentations p.62.
+    **
+    ** \see level::frontp_connected_component
+    ** \todo FIXME: The type of input shoud be a binary 2d image.
+    */
     // Number the connected components i.e label true. background(i.e
-    // label false) has the label 0; This algorithm works only for 2D images
+    // label false) has the label 0; This algorithm works only for 2D images.
     template <class DestType, class I, class N>
     typename mute<I, DestType>::ret
     connected_component(const abstract::image<I>& input,
@@ -150,9 +147,9 @@ namespace oln {
 	output[p] = T(output[p]);
       return output;
     }
-    
+
   } // end of namespace level
-  
+
 } // end of namespace oln
 
 #endif // ! OLENA_LEVEL_CONNECTED_HH

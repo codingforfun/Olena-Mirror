@@ -1,13 +1,22 @@
 2004-03-10  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/level/compare.hh: Add comments.
+	* olena/oln/level/connected.hh: Add comments.
+	* olena/oln/level/fill.hh: Add comments.
+	* olena/oln/level/invert.hh: Add comments.
+	* olena/oln/level/lut.hh: Add comments.
+	* olena/oln/level/set_level.hh: Add comments.
+	* olena/oln/level/threshold.hh: Add comments.
 
-	* olena/oln/snakes/snakes_base.hh: Add comments
-	* olena/oln/snakes/energies.hh: Add comments
-	* olena/oln/snakes/greedy.hh: Add comments
-	* olena/oln/snakes/node.hh: Add comments
-	* olena/oln/snakes/segment.hh: Add comments
-	* olena/oln/snakes/snakes_base.hh: Add comments
-	* olena/oln/morpho/attribute_closing_opening.hh: Fix bug in doc
-	* olena/oln/morpho/attribute_closing_opening_map.hh: Fix bug in doc
+2004-03-10  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* olena/oln/snakes/snakes_base.hh: Add comments.
+	* olena/oln/snakes/energies.hh: Add comments.
+	* olena/oln/snakes/greedy.hh: Add comments.
+	* olena/oln/snakes/node.hh: Add comments.
+	* olena/oln/snakes/segment.hh: Add comments.
+	* olena/oln/snakes/snakes_base.hh: Add comments.
+	* olena/oln/morpho/attribute_closing_opening.hh: Fix bug in doc.
+	* olena/oln/morpho/attribute_closing_opening_map.hh: Fix bug in doc.
 
 2004-03-10  Giovanni Palma  <giovanni@lrde.epita.fr>
 

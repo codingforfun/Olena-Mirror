@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,15 +39,18 @@ namespace oln {
 
   namespace level {
 
-    // ftors
-
+    /*! \brief Fctor to invert a value
+    **
+    ** \see invert.
+    ** \note FIXME: the specialisation is done within the class.
+    */
     template<class T>
     struct f_invert : public std::unary_function<const ntg::value<T>&, T>
     {
       typedef f_invert self;
 
       const typename self::result_type
-      operator()(typename self::argument_type val) const 
+      operator()(typename self::argument_type val) const
       {
 	return doit(val.exact());
       }
@@ -56,27 +59,27 @@ namespace oln {
       // Inversion ought to be an operation defined on value types and
       // specialized there. -- adl
 
-      template<unsigned N, class B> 
+      template<unsigned N, class B>
       static const ntg::int_s<N, B>
-      doit(const ntg::int_s<N, B>& val) 
+      doit(const ntg::int_s<N, B>& val)
       {
 	return - val;
       }
 
       static const ntg::float_d
-      doit(const ntg::float_d& val) 
+      doit(const ntg::float_d& val)
       {
 	return - val;
       }
 
-      static const ntg::float_s 
-      doit(const ntg::float_s& val) 
+      static const ntg::float_s
+      doit(const ntg::float_s& val)
       {
 	return - val;
       }
 
-      template<unsigned N, class B> 
-      static const ntg::int_u<N, B> 
+      template<unsigned N, class B>
+      static const ntg::int_u<N, B>
       doit(const ntg::int_u<N, B>& val)
       {
 	typedef ntg::int_u<N, B> tmp;
@@ -90,17 +93,17 @@ namespace oln {
       }
     };
 
-    // procs
-
+    /*! \brief Return the image inverted. */
     template<class I>
-    inline oln_concrete_type(I) 
+    inline oln_concrete_type(I)
     invert(const abstract::image<I>& input)
     {
       return apply(f_invert<oln_value_type(I)>(), input);
     }
 
-    template<class I> 
-    inline void 
+    /*! \brief Invert an image. */
+    template<class I>
+    inline void
     invert_self(abstract::image<I>& input)
     {
       apply_self(f_invert<oln_value_type(I)>(), input);
