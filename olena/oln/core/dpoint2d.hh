@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -38,6 +38,13 @@ namespace oln {
   class point2d;
   class dpoint2d;
 
+
+  
+  /*! \class dpoint_traits<dpoint2d>
+  **
+  ** The specialized version for dpoint2d.
+  */
+  
   template<>
   struct dpoint_traits<dpoint2d>: public
   dpoint_traits<abstract::dpoint<dpoint2d> >
@@ -46,6 +53,18 @@ namespace oln {
     typedef point2d point_type;
   };
 
+  /*! \class dpoint2d
+  **
+  ** Subclass of abstract::dpoint, declaration of dpoint
+  ** for image2d. To instantiate a dpoint2d on an
+  ** oln::image2d<ntg::rgb_8> for example, use the
+  ** macro oln_dpoint_type(I).\n
+  ** oln_dpoint_type(oln::image2d<ntg::rgb_8>) dp();\n
+  ** or\n
+  ** oln_dpoint_type(oln::image2d<ntg::rgb_8>) dp(1, 2);
+  */
+ 
+  
   class dpoint2d : public abstract::dpoint< dpoint2d >
   {
 
@@ -57,18 +76,29 @@ namespace oln {
 
     dpoint2d();
 
+    /// The coordinates of the dpoint2d are set to \a row and \a col.
+
     dpoint2d(coord row, coord col);
 
+    /// The coordinates of the dpoint2d are set to the \a p coordinates.
     explicit dpoint2d(const point2d& p);
+
+    /// Return the value of the dpoint2d row coordinate.
 
     coord 
     row() const;
-
+    
+    /// Return a reference to the dpoint2d row coordinate.
+    
     coord& 
     row();
-
+    
+    /// Return the value of the dpoint2d column coordinate.
+    
     coord 
     col() const;
+
+    /// Return a reference to the dpoint2d column coordinate.
 
     coord& 
     col();
@@ -81,25 +111,52 @@ namespace oln {
 
   protected:
 
+    
+    /*! \brief Return a dpoint2d whose coordinates are equal to 
+    ** \a dp coordinates plus the current dpoint2d coordinates.
+    */
+    
     dpoint2d 
     plus_dp(const dpoint2d& dp) const;
 
+    /*! \brief Return a dpoint2d whose coordinates are equal to 
+    ** the opposite of the current dpoint2d coordinates.
+    */
+    
     dpoint2d 
     minus() const;
 
+    
+    /*! \brief Return a dpoint2d whose coordinates are equal to
+    ** the current dpoint2d coordinates minus \a dp coordinates.
+    */
+    
     dpoint2d 
     minus_dp(const dpoint2d& dp) const;
 
+    /*! \brief Return a reference to the current dpoint2d 
+    ** plus \a dp.
+    */
+    
     dpoint2d& 
     plus_assign_dp(const dpoint2d& dp);
 
+    /*! \brief Return a reference to the current dpoint2d
+    ** minus \a dp.
+    */
+    
     dpoint2d& 
     minus_assign_dp(const dpoint2d& dp);
 
   };
-
+  
   namespace internal
   {
+    /*! \class default_less<dpoint2d>
+    ** 
+    ** The specialized version for dpoint2d.
+    */
+    
     template<>
     struct default_less<dpoint2d> :
       public default_less<dpoint2d::super_type>
@@ -107,6 +164,8 @@ namespace oln {
   } // end of internal
 
 } // end of oln
+
+/// Write on an output stream \a o the coordinates of the dpoint2d \a dp.
 
 inline std::ostream&
 operator<<(std::ostream& o, const oln::dpoint2d& dp);

@@ -37,6 +37,9 @@
 
 namespace oln {
 
+  /*! \namespace abstract
+  ** \brief abstract namespace.
+  */
 
   namespace abstract {
 

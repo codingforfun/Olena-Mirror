@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,7 +37,12 @@ namespace oln {
   // fwd decl
   class point3d;
   class dpoint3d;
-
+  
+  /*! \class dpoint_traits<dpoint3d>
+  **
+  ** The specialized version for dpoint3d.
+  */
+  
   template<>
   struct dpoint_traits<dpoint3d>: public
   dpoint_traits<abstract::dpoint<dpoint3d> >
@@ -46,6 +51,17 @@ namespace oln {
     typedef point3d point_type;
   };
 
+  /*! \class dpoint3d
+  **
+  ** Subclass of abstract::dpoint, declaration of dpoint
+  ** for image3d. To instantiate a dpoint3d on an 
+  ** oln::image3d<ntg::rgb_8> for example, use the 
+  ** macro oln_dpoint_type(I).\n
+  ** oln_dpoint_type(oln::image3d<ntg::rgb_8>) dp();\n
+  ** or\n
+  ** oln_dpoint_type(oln::image3d<ntg::rgb_8>) dp(1, 2, 3);
+  */
+  
   class dpoint3d : public abstract::dpoint< dpoint3d >
   {
 
@@ -54,29 +70,48 @@ namespace oln {
     typedef abstract::dpoint< dpoint3d > super_type;
 
     friend class abstract::dpoint< dpoint3d >;
-
+    
     dpoint3d();
+    
+    /// The coordinates of the dpoint3d are set to \a slice, \a row, and \a col.
 
     dpoint3d(coord slice, coord row, coord col);
-
+    
+    /// The coordinates of the dpoint3d are set to the \a p coordinates.
+    
     explicit dpoint3d(const point3d& p);
 
+    
+    /// Return the value of the dpoint3d slice coordinate.
+    
     coord 
     slice() const;
 
+    /// Return a reference to the dpoint3d slice coordinate.
+    
     coord& 
     slice();
-
+    
+    /// Give the value of the dpoint3d row coordinate.
+    
     coord 
     row() const;
 
+    /*! \brief Return a reference to the dpoint3d row coordinate.
+    **
+    */
+    
     coord& 
     row();
 
+    /// Return the value of the dpoint3d column coordinate.
+    
     coord 
     col() const;
 
-    coord& 
+    /// Return a reference to the dpoint3d column coordinate.
+    
+    coord&
     col();
 
     static std::string 
@@ -87,25 +122,50 @@ namespace oln {
 
   protected:
 
+    /*! \brief Return a dpoint3d whose coordinates are equal to 
+    ** \a dp coordinates plus the current dpoint3d coordinates.
+    **
+    */ 
+    
     dpoint3d 
     plus_dp(const dpoint3d& dp) const;
+
+    /*! \brief Return a dpoint3d whose coordinates are equal to 
+    ** the opposite of the current dpoint3d coordinates.
+    */
 
     dpoint3d 
     minus() const;
 
+    /*! \brief Return a dpoint3d whose coordinates are equal to
+    ** the current dpoint3d coordinates minus \a dp coordinates.
+    */    
+    
     dpoint3d 
     minus_dp(const dpoint3d& dp) const;
 
+    /*! \brief Return a reference to the current dpoint3d 
+    ** plus \a dp.
+    */ 
+    
     dpoint3d& 
     plus_assign_dp(const dpoint3d& dp);
-
+ 
+    /*! \brief Return a reference to the current dpoint3d
+    ** minus 'dp'.
+    */   
+    
     dpoint3d& 
     minus_assign_dp(const dpoint3d& dp);
 
   };
-
   namespace internal
-  {
+  { 
+    /*! \class default_less<dpoint3d>
+    ** 
+    ** The specialized version for dpoint3d.
+    */
+    
     template<>
     struct default_less<dpoint3d> :
       public default_less<dpoint3d::super_type>
@@ -114,6 +174,8 @@ namespace oln {
   } // end of internal
 
 } // end of oln
+
+/// Write on an output stream \a o the coordinates of the dpoint3d \a dp.
 
 inline std::ostream&
 operator<<(std::ostream& o, const oln::dpoint3d& dp);

@@ -1,3 +1,32 @@
+2004-03-12  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* olena/oln/core/accum.hh: Add comments.
+	* olena/oln/core/apply.hh: Likewise.
+	* olena/oln/core/compose.hh: Likewise.
+	* olena/oln/core/coord.hh: Likewise.
+	* olena/oln/core/dpoint1d.hh: Likewise.
+	* olena/oln/core/dpoint2d.hh: Likewise.
+	* olena/oln/core/dpoint3d.hh: Likewise.
+	* olena/oln/core/fold.hh: Likewise.
+	* olena/oln/core/image1d.hh: Likewise.
+	* olena/oln/core/image1d_size.hh: Likewise.
+	* olena/oln/core/image2d.hh: Likewise.
+	* olena/oln/core/image2d_size.hh: Likewise.
+	* olena/oln/core/image3d.hh: Likewise.
+	* olena/oln/core/image3d_size.hh: Likewise.
+	* olena/oln/core/image.hh: Likewise.
+	* olena/oln/core/point1d.hh: Likewise.
+	* olena/oln/core/point2d.hh: Likewise.
+	* olena/oln/core/point3d.hh: Likewise.
+	* olena/oln/core/traverse.hh: Likewise.
+	* olena/oln/core/abstract/image.hh: Correct comments.
+	* olena/oln/core/impl/image_impl.hh: Add comments.
+	* olena/oln/core/impl/image_array.hh: Likewise.
+	* olena/oln/core/impl/image_array3d.hh: Likewise.
+	* olena/oln/core/impl/image_array2d.hh: Likewise.
+	* olena/oln/core/impl/image_array1d.hh: Likewise.
+	* olena/oln/core/behavior.hh: Likewise.
+
 2004-03-12  Simon Odou  <simon@lrde.epita.fr>
 
 	* olena/oln/core/bkd_iter1d.hh: Correct comments.

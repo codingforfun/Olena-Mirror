@@ -1,4 +1,4 @@
-// Copyright (C) 2001  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,9 +28,19 @@
 #ifndef OLENA_CORE_ACCUM_HH
 # define OLENA_CORE_ACCUM_HH
 
+
+/*! \class max_accumulator
+**
+** This is a \a functor. It saves the maximum T value
+** that has been passed as an argument of its operator()
+** method. To retrieve the value saved, just use the
+** max_accumulator as a T instance.
+*/
+
 template <class T>
 struct max_accumulator
 {
+  
   max_accumulator (T t) : acc_(t) 
   {}
 
@@ -40,7 +50,7 @@ struct max_accumulator
     if (t > acc_)
       acc_ = t;
   }
-
+  
   operator T() const
   {
     return acc_;
@@ -49,7 +59,7 @@ struct max_accumulator
 private:
   
   T acc_;
-
+  
 };
 
 #endif // OLENA_CORE_ACCUM_HH

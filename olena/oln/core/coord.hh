@@ -1,4 +1,4 @@
-// Copyright (C) 2001  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,6 +31,7 @@
 
 namespace oln {
 
+  /// coord == int
 
   typedef int coord;
 
@@ -39,6 +40,13 @@ namespace oln {
   {
     template<class T> struct default_less;
 
+    /*! \brief default_less<coord>
+    **
+    ** Specialized version for \a coord. This functor
+    ** test if a coord \a lhs is less than another
+    ** coord \a rhs.
+    */
+    
     template<>
     struct default_less<coord>
     {

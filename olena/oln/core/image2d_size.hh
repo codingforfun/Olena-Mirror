@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -36,15 +36,37 @@ namespace oln {
 
   struct image2d_size;
 
+  /*! \class image_size_traits<image2d_size>
+  **
+  ** The specialized version for image2d_size.
+  */
+  
   template<>
   struct image_size_traits<image2d_size>
   {
     enum { dim = 2 };
   };
 
+  
+  /*! \class image2d_size
+  **
+  ** Size_type for image2d.
+  */
 
   struct image2d_size : public abstract::image_size<image2d_size >
   {
+    /*! \brief Image2d_size constructor.
+    **
+    ** \arg nrows The number of rows in 
+    ** the image is set to \a nrows.
+    ** 
+    ** \arg ncols The number of columns in
+    ** the image is set to \a ncols.
+    **
+    ** \arg border The border width of the image
+    ** is set to border.
+    */
+    
     image2d_size(coord nrows, coord ncols, coord border)
     {
       nth(0) = nrows;
@@ -52,12 +74,16 @@ namespace oln {
       border_ = border;
     }
 
+    /// Return the number of rows in the image.
+    
     coord 
     nrows() const
     {
       invariant(nth(0) > 0);
       return nth(0);
     }
+
+    /// Return a reference to the number of rows in the image.
 
     coord& 
     nrows() 
@@ -66,6 +92,8 @@ namespace oln {
       return nth(0);
     }
 
+    /// Return the number of columns in the image.
+    
     coord 
     ncols() const
     {
@@ -73,6 +101,8 @@ namespace oln {
       return nth(1);
     }
 
+    /// Return a reference to the number of columns in the image.
+    
     coord& 
     ncols() 
     {

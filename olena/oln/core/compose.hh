@@ -1,4 +1,4 @@
-// Copyright (C) 2001  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,6 +34,12 @@ namespace oln {
 
   namespace internal {
 
+    /*! \class compose_uu_
+    **
+    ** The operator () of this class performs a composition between
+    ** two unary functors F1 & F2.
+    */
+    
     template< class F1, class F2 >
     struct compose_uu_ :
       public std::unary_function <typename F2::argument_type,
@@ -56,6 +62,13 @@ namespace oln {
     
     };
 
+    /*! \class compose_ub_
+    **
+    ** The operator () of this class performs a composition between
+    ** an unary functor F1 and a binary functor F2.
+    */
+    
+    
     template< class F1, class F2 >
     struct compose_ub_ :
       public std::binary_function <typename F2::first_argument_type,
@@ -79,6 +92,12 @@ namespace oln {
       const F2 f2_;
     
     };
+    
+    /*! \class compose_bu_
+    **
+    ** The operator () of this class performs a composition between
+    ** a binary functor F1 and an unary functor F2.
+    */
 
     template< class F1, class F2 >
     struct compose_bu_ :
@@ -106,7 +125,8 @@ namespace oln {
 
   }
 
-
+  
+  /// Compose two unary functors F1 & F2.
   template<class UF1, class UF2>
   internal::compose_uu_<UF1, UF2>
   compose_uu(const UF1& f1, const UF2& f2)
@@ -114,6 +134,7 @@ namespace oln {
     return internal::compose_uu_<UF1, UF2>(f1, f2);
   }
 
+  /// Compose an unary functors F1 with a binary functor F2.
   template<class UF1, class BF2>
   internal::compose_ub_<UF1, BF2>
   compose_ub(const UF1& f1, const BF2& f2)
@@ -121,6 +142,7 @@ namespace oln {
     return internal::compose_ub_<UF1, BF2>(f1, f2);
   }
 
+  /// Compose a binary functor F1 and an unary functor F2.
   template<class BF1, class UF2>
   internal::compose_bu_<BF1, UF2>
   compose_bu(const BF1& f1, const UF2& f2)
@@ -128,7 +150,11 @@ namespace oln {
     return internal::compose_bu_<BF1, UF2>(f1, f2);
   }
 
-
+  /*! \class f_identity
+  **
+  ** This functor returns its argument.
+  */
+  
   template<class T>
   struct f_identity : std::unary_function<T, T>
   {

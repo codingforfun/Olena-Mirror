@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,6 +34,8 @@
 
 namespace oln {
 
+   /// Build an image data array with the real data and the border.
+  
   template<class T>
   void 
   pretreat_3d_data_(T*& buffer, T**& array2, T***& array,
@@ -64,6 +66,8 @@ namespace oln {
     array += s.border();
   }
 
+  /// Free the image3d data array.
+  
   template<class T>
   void 
   desallocate_3d_data_(T**& array2, T***& array, const
@@ -82,6 +86,12 @@ namespace oln {
     class image_array3d;
   } // end of impl
 
+  /*! \class impl_traits<impl::image_array3d<T> >
+  **
+  ** Specialized version for impl::image_array3d<T>. Retrieve
+  ** associated types.
+  */
+  
   template<class T>
   struct impl_traits<impl::image_array3d<T> >: public impl_traits<impl::image_array<T, impl::image_array3d<T> > >
   {
@@ -93,6 +103,11 @@ namespace oln {
 
   namespace impl
   {
+
+    /*! \class image_array3d
+    **
+    ** Data array implementation for image3d
+    */ 
     
     template<class T>
     class image_array3d :
@@ -125,7 +140,9 @@ namespace oln {
       }
 
     protected:
-
+      
+      /// Return true if \a p belongs to the image.
+      
       bool 
       hold_(const point_type& p) const
       {
@@ -136,6 +153,8 @@ namespace oln {
 		&& p.col() >= 0
 		&& p.col() < this->size_.ncols());
       }
+
+      /// Return true if \a p belongs to the image or the image border
 
       bool 
       hold_large_(const point_type& p) const
@@ -148,12 +167,16 @@ namespace oln {
 		&& p.col() < this->size_.ncols() + this->size_.border());
       }
 
+      /// Return a reference to the value stored at \a p. 
+
       value_type& 
       at_(const point_type& p)
       {
 	
 	return at_(p.slice(), p.row(), p.col());
       }
+      
+      /// Return a reference to the value stored at \a slice, \a row and \a col.
 
       value_type& 
       at_(coord slice, coord row, coord col)
@@ -162,6 +185,8 @@ namespace oln {
 	precondition_hold_large(point_type(slice, row, col));
 	return array_[slice][row][col];
       }
+      
+      /// Return the total size of the data array.
       
       size_t 
       len_(const size_type& s) const
@@ -174,6 +199,10 @@ namespace oln {
 
       // borders
 
+      /*! \brief Reallocate the border regarding to the value of \a
+      ** new_border.
+      */
+      
       void 
       border_reallocate_and_copy_(coord new_border, bool
 				  copy_border) 
@@ -211,7 +240,11 @@ namespace oln {
 	array2_ = array2;
 	array_ = array;
       }
-            
+      
+      /*! \brief The border points are all set to 
+      ** the value of the closest image point.
+      */
+      
       void 
       border_replicate_(void) 
       {
@@ -244,6 +277,10 @@ namespace oln {
 	      }
       }
 
+      /*! \brief The border points are set by mirroring
+      ** the image edges.
+      */
+      
       void 
       border_mirror_(void) 
       {
@@ -275,6 +312,8 @@ namespace oln {
 		at_(i, j, kmax - k) = at_(i, j, kmax + k);
 	      }
       }
+
+      /// The border points are set to \a val.
 
       void 
       border_assign_(value_type val) 

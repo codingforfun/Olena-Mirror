@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,7 +37,9 @@ namespace oln {
 
   // traverse (unary)
 
-
+  /*! \brief Call the functor \a f on each point of the
+  ** input image.
+  */
   template<class I, class F>
   const F& 
   traverse(F& f, const abstract::image<I>& input)
@@ -47,6 +49,10 @@ namespace oln {
     return f;
   }
 
+  
+  /*! \brief Create a functor \a f whose type is F, then
+  ** call it on each point of the input image.
+  */
   template<class F, class I> 
   inline const F 
   traverse(const abstract::image<I>& input)
@@ -55,6 +61,9 @@ namespace oln {
     return traverse(f, input);
   }
 
+  /*! \brief Create a functor \a f whose type is F<oln_value_type(I)>, 
+  ** then call it on each point of the input image.
+  */
   template<template<class> class F, class I> 
   inline const F<oln_value_type(I)> 
   traverse(const abstract::image<I>& input)
@@ -63,6 +72,10 @@ namespace oln {
     return traverse(f, input);
   }
 
+  
+  /*! \brief Create a functor \a f whose type is F<oln_value_type(I), I2>,
+  ** the call it on each point of the input image.
+  */
   template<template<class, class> class F, class I2, class I> 
   inline const F<oln_value_type(I), I2> 
   traverse(const abstract::image<I>& input)
@@ -71,6 +84,10 @@ namespace oln {
     return traverse(f, input);
   }
 
+  /*! \brief Create a functor \a f whose type is 
+  ** F<oln_value_type(I), F2<oln_value_type(I)> >, then call it on
+  ** each point of the input image.
+  */
   template<template<class,class> class F,
            template<class> class F2,
            class I> 
@@ -85,7 +102,11 @@ namespace oln {
 
   // traverse2 (binary)
 
-
+  /*! \brief Call functor \a f whose type is F on each point
+  ** of the two input images.
+  **
+  ** \pre input1.size() == input2.size()
+  */
   template<class I1, class I2, class F>
   const F& 
   traverse2(F& f,
@@ -98,6 +119,12 @@ namespace oln {
     return f;
   }
 
+  /*! \brief Create a functor \a f whose type is F<oln_value_type(I)>,
+  ** then call it on each point of the two input images.
+  **
+  ** \pre input1.size() == input2.size()
+  */
+  
   template<template<class> class F, class I> 
   inline const F<oln_value_type(I)> 
   traverse2(const abstract::image<I>& input1, const abstract::image<I>& input2)
@@ -106,6 +133,13 @@ namespace oln {
     return traverse2(f, input1, input2);
   }
 
+  /*! \brief Create a functor \a f whose type is 
+  ** F<oln_value_type(I1), oln_value_type(I2)>, then call it on each point 
+  ** of the two input images.
+  **
+  ** \pre input1.size() == input2.size()
+  */
+  
   template<template<class,class> class F, class I1, class I2> 
   inline const F<oln_value_type(I1), oln_value_type(I2)> 
   traverse2(const abstract::image<I1>& input1, 

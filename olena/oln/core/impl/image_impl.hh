@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -48,6 +48,12 @@ namespace oln {
   template<class Impl>
   struct impl_traits;
 
+  /*! \class impl_traits<impl::image_impl<Exact> >
+  **
+  ** Specialized version for impl::image_impl<Exact>. Retrieve
+  ** associated types.
+  */
+  
   template<class Exact>
   struct impl_traits<impl::image_impl<Exact> >
   {
@@ -56,6 +62,11 @@ namespace oln {
 
   namespace impl {
 
+    /*! \class image_impl
+    **
+    ** Data array implementation for image
+    */ 
+    
     template<class Exact>
     class image_impl : public mlc_hierarchy::any<Exact>
     {
@@ -70,12 +81,19 @@ namespace oln {
 
       image_impl(const size_type s): refcount_(0), size_(s) {}
 
+      
+      /// Notice that there is a new reference to the object.
+      
       void 
       ref() const
       {
 	++refcount_;
       }
-
+      
+      /*! \brief Notice that there a reference to the object has disappeared.
+      ** When there is no reference left, the object is deleted.
+      */
+      
       void 
       unref() const
       {
@@ -85,29 +103,39 @@ namespace oln {
 	  delete mlc::to_exact(this);
       }
 
+      /// Return a constant reference to the value stored at \a p.
+      
       const value_type& 
       at(const point_type& p) const
       {
 	return this->exact().at_(p);
       }
 
+      /// Return a reference to the value stored at \p.
+      
       value_type& 
       at(const point_type& p) 
       {
 	return this->exact().at_(p);
       }
 
+      /// Return true if \a p belongs to the image.
+      
       bool 
       hold(const point_type& p) const
       {
 	return this->exact().hold_(p);
       }
-
+      
+      /// Return true if \a p belongs to the image or the image border.
+      
       bool 
       hold_large(const point_type& p) const
       {
 	return this->exact().hold_large_(p);
       }
+      
+      /// Use the function for debugging purpose.
 
       void 
       precondition_hold_large(const point_type& p) const
@@ -120,12 +148,17 @@ namespace oln {
 # endif
       }
 
+
+      /// Perform a deep copy from the data array to output_data.
+
       void 
       clone_to(exact_type* output_data) const
       {
 	return this->exact().clone_to_(output_data);
       }
-
+      
+      /// Return the number of point in the image.
+      
       const 
       size_type& size() const
       {
@@ -139,26 +172,40 @@ namespace oln {
       }
 
       // borders
-
+      
+      /*! \brief Reallocate the border regarding to the value of \a
+      ** new_border.
+      */
+            
       void 
       border_reallocate_and_copy(coord new_border, bool
 				 copy_border) 
       {
 	this->exact().border_reallocate_and_copy_(new_border, copy_border);
       }
-
+      
+      /*! \brief The border points are all set to 
+      ** the value of the closest image point.
+      */
+      
       void 
       border_replicate(void) 
       {
 	this->exact().border_replicate_();
       }
 
+      /*! \brief The border points are set by mirroring
+      ** the image edges.
+      */
+      
       void 
       border_mirror(void) 
       {
 	this->exact().border_mirror_();
       }
-
+      
+      /// The border points are set to \a val.
+      
       void 
       border_assign(value_type val) 
       {
