@@ -286,7 +286,7 @@ key MD5::execute()
 // md5 implementation.
 template <class I>
 inline
-key md5(const abstract::non_vectorial_image<I> &im)
+key md5(const oln::abstract::non_vectorial_image<I> &im)
 {
   oln_iter_type(I)	p(im);
   buffer	b;
@@ -303,7 +303,7 @@ key md5(const abstract::non_vectorial_image<I> &im)
 // md5 implementation.
 template <class I>
 inline
-key md5(const abstract::vectorial_image<I> &im)
+key md5(const oln::abstract::vectorial_image<I> &im)
 {
   oln_iter_type(I)	p(im);
   buffer	b;

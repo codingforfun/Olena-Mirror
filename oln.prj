@@ -1,16 +1,16 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 154)
-(Parent-Version oln 10 153)
-(Version-Log "2004-04-13  Damien Thivolle  <damien@lrde.epita.fr>
-        * configure.ac: Check for doxygen version.
-        * config/oln.m4: Fix.
-        * swilena/expand.sh: Add `DOC_CPPFLAGS' to the compilation flags.
+(Project-Version oln 10 155)
+(Parent-Version oln 10 154)
+(Version-Log "2004-04-13  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/utils/md5.hxx: Changed abstract::image to
+	oln::abstract::image (ICC error).
+	* olena/oln/utils/md5.hh: Likewise.
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 13 Apr 2004 19:49:30 +0200")
-(Checkin-Login thivol_d)
+(Checkin-Time "Tue, 13 Apr 2004 21:22:13 +0200")
+(Checkin-Login van-vl_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -116,7 +116,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.3 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.42 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.40 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.82 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.83 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.29 600))
 
@@ -1237,8 +1237,8 @@
   (olena/oln/utils/buffer.hh (oln/k/10_buffer.hh 1.1 600))
   (olena/oln/utils/key.hxx (oln/k/11_key.hxx 1.2 600))
   (olena/oln/utils/key.hh (oln/k/12_key.hh 1.2 600))
-  (olena/oln/utils/md5.hxx (oln/k/13_md5.hxx 1.2 600))
-  (olena/oln/utils/md5.hh (oln/k/14_md5.hh 1.2 600))
+  (olena/oln/utils/md5.hxx (oln/k/13_md5.hxx 1.3 600))
+  (olena/oln/utils/md5.hh (oln/k/14_md5.hh 1.3 600))
 
 ;; Files added by populate at Fri, 19 Mar 2004 17:25:06 +0100,
 ;; to version 10.99(w), by palma_g:

@@ -1,5 +1,11 @@
 2004-04-13  Niels Van Vliet  <niels@lrde.epita.fr>
 
+	* olena/oln/utils/md5.hxx: Changed abstract::image to
+	oln::abstract::image (ICC error).
+	* olena/oln/utils/md5.hh: Likewise.
+
+2004-04-13  Niels Van Vliet  <niels@lrde.epita.fr>
+
 	* oln/arith/internal/opdecls.hh: Add white space after variables of
 	macros used as template parameters (ICC error).
 	* oln/morpho/watershed.hxx: Likewise.
