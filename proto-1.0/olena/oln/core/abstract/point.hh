@@ -29,9 +29,11 @@
 # define OLENA_CORE_ABSTRACT_POINT_HH
 
 # include <mlc/any.hh>
+# include <mlc/if.hh>
+# include <mlc/cmp.hh>
+
 # include <oln/core/coord.hh>
 # include <oln/core/properties.hh>
-# include <mlc/properties.hh> // FIXME: for better 'meta if' and 'meta eq'
 
 
 // fwd decl
@@ -41,8 +43,7 @@ namespace oln {
 
 
 
-# define oln_point_type_from_2(P1, P2) \
-mlc_internal_if( mlc_internal_eq( P2, oln::any_point ),	P1, P2 )
+# define oln_point_type_from_2(P1, P2)   mlc_if( mlc_eq( P2, oln::any_point ), P1, P2 )
 
 
 

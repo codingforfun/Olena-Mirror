@@ -29,7 +29,8 @@
 # define OLENA_CORE_ABSTRACT_SIZE_HH
 
 # include <mlc/any.hh>
-# include <mlc/properties.hh> // FIXME: for better 'meta if' and 'meta eq'
+# include <mlc/if.hh>
+# include <mlc/cmp.hh>
 
 
 // fwd decl
@@ -38,8 +39,7 @@ namespace oln {
 }
 
 
-# define oln_size_type_from_2(S1, S2) \
-mlc_internal_if( mlc_internal_eq( S2, oln::any_size ), S1, S2 )
+# define oln_size_type_from_2(S1, S2)  mlc_if( mlc_eq( S2, oln::any_size ), S1, S2 )
 
 
 

@@ -1,3 +1,8 @@
+2005-04-05  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* oln/core/abstract/point.hh: Conform to mlc macros.
+	* oln/core/abstract/size.hh: Likewise.
+
 2005-04-05  Roland Levillain  <roland@lrde.epita.fr>
 
 	More oln::apply (for Adaptable Unary Functions).
