@@ -29,13 +29,13 @@ html/oln-ref.html: $(tex_TEX) $(oln_ref_TEX)
 
 olnsrc = $(OLN_INCLUDEDIR)/oln/
 
-COMMONGETDEFSFLAGS =  --agarg=-DCXX=$(CXX) --agarg=-DOLN_INCLUDEDIR=$(OLN_INCLUDEDIR) --agarg=--templ-dirs=../tpl
+COMMONGETDEFSFLAGS =  --agarg=-DCXX=$(CXX) --agarg=-DOLN_INCLUDEDIR=$(OLN_INCLUDEDIR) --agarg=--templ-dirs=$(top_srcdir)/tpl
 PROCESSINGGETDEFSFLAGS = \
   --subblock=tpl=type,name,doc \
   --subblock=arg=type,name,mode,doc \
   --listattr=exh \
   --listattr=ns \
-  --template ../tpl/processing.tpl \
+  --template $(top_srcdir)/tpl/processing.tpl \
   --srcfile
 
 morpho_files = $(shell fgrep -l '/*=' \
@@ -47,7 +47,7 @@ ref-morpho.tex: $(morpho_files) $(srcdir)/../tpl/processing.tpl
 
 level_files = $(shell fgrep -l '/*=' $(olnsrc)/level/*.hh)
 
-ref-level.tex: $(level_files) $(srcdir)/../tpl/processing.tpl
+ref-level.tex: $(level_files) $(top_srcdir)/tpl/processing.tpl
 	$(GETDEFS) $(COMMONGETDEFSFLAGS) $(PROCESSINGGETDEFSFLAGS) \
 	  $(GETDEFSFLAGS) --base-name=ref-level $(level_files)
 
