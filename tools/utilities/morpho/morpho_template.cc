@@ -42,6 +42,7 @@
 #include "getopt.hh"
 
 using namespace oln;
+using namespace ntg;
 
 #define _MAKE_STRING(S) # S
 #define MAKE_STRING(S) _MAKE_STRING(S)

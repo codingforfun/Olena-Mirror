@@ -28,6 +28,7 @@
 #ifndef OLENA_IO_SE_NEIGHBORHOOD_HH_
 # define OLENA_IO_SE_NEIGHBORHOOD_HH_
 
+# include <oln/core/image2d.hh>
 # include <oln/core/neighborhood2d.hh>
 # include <oln/core/macros.hh>
 # include <oln/io/image.hh>

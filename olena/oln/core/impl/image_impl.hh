@@ -29,11 +29,12 @@
 # define OLENA_CORE_IMPL_IMAGE_IMPL_HH
 
 # include <oln/core/internal/fake.hh>
-# include <mlc/contract.hh>
 # include <oln/core/coord.hh>
-# include <iostream>
+# include <oln/core/abstract/image.hh>
+# include <mlc/contract.hh>
 # include <mlc/type.hh>
 
+# include <iostream>
 
 namespace oln {
 

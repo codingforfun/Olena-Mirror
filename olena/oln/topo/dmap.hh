@@ -99,7 +99,7 @@ namespace oln {
     class dmap
     {
     public:
-      typedef image2d<ntg::bin>::point point;
+      typedef image2d<ntg::bin>::point_type point_type;
 
       dmap(const image2d_size& size,
 	   const chamfer<T2>& ch);
@@ -115,19 +115,19 @@ namespace oln {
       const image2d<T>& imap() const;
       image2d<float> to_image() const;
 
-      const T& operator[](const point& p) const;
+      const T& operator[](const point_type& p) const;
 
       const T& operator()(coord row, coord col) const;
 
     private:
-      image2d<T>	_imap;
-      chamfer<T2>	_ch;
-      float		_inFty;
-      T		       	_infTy;
+      image2d<T>	imap_;
+      chamfer<T2>	ch_;
+      float		inFty_;
+      T		       	infTy_;
     };
 
-    template <class I_>
-    image2d<float> exact_dmap(const image<I_>& _input);
+    template <class I>
+    image2d<float> exact_dmap(const abstract::image<I>& input);
 
   } // end of topo.
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2001  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,19 +32,21 @@
 # include <oln/core/abstract/image.hh>
 
 namespace oln {
+
   namespace abstract {
     
     template<class T, class Exact>
     class image_with_type;
+    
   } // end of namespace abstract
 
-    template <class T, class Exact>
-    struct image_traits<abstract::image_with_type<T, Exact> >: public image_traits<abstract::image<Exact> >
-    {
-      typedef T value_type;
-    };
-
-
+  template <class T, class Exact>
+  struct image_traits<abstract::image_with_type<T, Exact> >
+    : public image_traits<abstract::image<Exact> >
+  {
+    typedef T value_type;
+  };
+  
   namespace abstract {
 
     template<class T, class Exact>
@@ -54,7 +56,7 @@ namespace oln {
     };
 
     template<class T, class Exact>
-    class image_with_type: public virtual type_switch<T, Exact>::ret
+    class image_with_type: public type_switch<T, Exact>::ret
     {
     public:
 

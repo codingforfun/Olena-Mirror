@@ -29,7 +29,7 @@
 # define OLENA_CORE_ABSTRACT_DPOINT_HH
 
 # include <mlc/type.hh>
-
+# include <oln/core/coord.hh>
 
 namespace oln {
 
@@ -91,12 +91,12 @@ namespace oln {
 	return to_exact(this)->minus_assign_dp(to_exact(dp));
       }
 
-      exact_type operator+(const self_type& dp)
+      exact_type operator+(const self_type& dp) const
       {
 	return to_exact(this)->plus_dp(to_exact(dp));
       }
 
-      exact_type operator-(const self_type& dp)
+      exact_type operator-(const self_type& dp) const
       {
 	return to_exact(this)->minus_dp(to_exact(dp));
       }

@@ -83,8 +83,8 @@ namespace mlc
     // in such cases; if a bug occurs because of one of these
     // casts, please submit a bug report!
 
-          E& exact()       { return reinterpret_cast<E&>(*this); }
-    const E& exact() const { return reinterpret_cast<const E&>(*this); }
+          E& exact()       { return static_cast<E&>(*this); }
+    const E& exact() const { return static_cast<const E&>(*this); }
 
     // self() is only for bwd compatibility purpose
     // please now use exact() instead of self()

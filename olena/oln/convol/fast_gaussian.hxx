@@ -153,7 +153,7 @@ namespace oln {
 	{
 	  template <class I, class F> static
 	  void
-	  doit(abstract::image<I>& img, const F& coef)
+	  doit(abstract::image_with_dim<1, I>& img, const F& coef)
 	  {
 
 	    // Apply on columns.
@@ -172,7 +172,7 @@ namespace oln {
 	{
 	  template <class I, class F> static
 	  void
-	  doit(abstract::image<I>& img, const F& coef)
+	  doit(abstract::image_with_dim<2, I>& img, const F& coef)
 	  {
 
 	    // Apply on rows.
@@ -199,7 +199,7 @@ namespace oln {
 	{
 	  template <class I, class F> static
 	  void
-	  doit(abstract::image<I>& img, const F& coef)
+	  doit(abstract::image_with_dim<3, I>& img, const F& coef)
 	  {
 	    // Apply on slices.
 	    for (coord j = 0; j < img.nrows(); ++j)
@@ -233,7 +233,7 @@ namespace oln {
 	template <class C_, class I, class F>
 	typename mute<I, typename convoutput<C_,Value(I)>::ret>::ret
 	_gaussian_common(const conversion<C_>& _c,
-			 const image<I>& in,
+			 const abstract::image<I>& in,
 			 const F& coef)
 	{
 	  Exact_cref(C, c);
@@ -249,7 +249,7 @@ namespace oln {
 	  /* Convert the result image to the user-requested datatype.
 	     FIXME: We are making an unnecessary copy in case the
 	     user expects a ntg::float_s image.  */
-	  typename mute<I_, typename convoutput<C_,Value(I_)>::ret>::ret
+	  typename mute<I, typename convoutput<C_,Value(I)>::ret>::ret
 	    out_img(in.size());
 	  for_all(it)
 	    out_img[it] = c(work_img[it]);

@@ -31,7 +31,7 @@
 # include <oln/core/coord.hh>
 # include <oln/core/point2d.hh>
 # include <oln/core/dpoint2d.hh>
-# include <oln/core/image2d.hh>
+# include <oln/core/image2d_size.hh>
 # include <oln/core/abstract/iter.hh>
 
 # include <mlc/contract.hh>
@@ -46,7 +46,7 @@ namespace oln {
   } // end of abstract
 
   template<class Exact>
-  struct iter_traits<abstract::iter2d<Exact> >: public virtual
+  struct iter_traits<abstract::iter2d<Exact> >: public
   iter_traits<abstract::iter<Exact> >
   {
     enum { dim = 2 };

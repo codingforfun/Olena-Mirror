@@ -1,3 +1,18 @@
+2003-07-29  David Lesage  <david@lrde.epita.fr>
+
+	* utilities/morpho/Makefile.am,
+	utilities/morpho/morpho_template.cc, 
+	utilities/morpho/morpho_template_extrema.cc,
+	utilities/morpho/morpho_template_gaussian.cc,
+	utilities/morpho/morpho_template_watershed.cc,
+	utilities/morpho/morpho_template_with_functor.cc,
+	utilities/morpho/morpho_template_with_neighb.cc,
+	utilities/morpho/morpho_template_with_twowin.cc: Fix.
+	
+	* utilities/Makefile.am: Deactivate mosaic tool.
+
+	* utilities/mosaic.cc: Fix partially.
+
 2003-06-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* Merge from integre.28:

@@ -49,8 +49,8 @@ namespace oln {
     /*=processing frontp_connected_component
      * ns: level
      * what: Connected Component.
-     * arg: const image<I1>&, marker, IN, marker image
-     * arg: const neighborhood<E>&, se, IN, neighbourhood
+     * arg: const abstract::image<I>&, marker, IN, marker image
+     * arg: const abstract::neighborhood<E>&, se, IN, neighbourhood
      * arg: numeric_value&, nb, IN, nb_label (optional)
      * ret: typename mute<I, DestType>::ret
      * doc: It removes the small (in area) connected components of the upper
@@ -71,16 +71,14 @@ namespace oln {
     // Number the connected components i.e label true. background(i.e
     // label false) has the label 0; in the output
     // FIXME: Should probably be turned into a class.
-    template <class DestType, class I_, class E_>
-    typename mute<I_, DestType>::ret
-    frontp_connected_component(const abstract::image<I_>& _input,
-			       const neighborhood<E_>& _se,
+    template <class DestType, class I, class E>
+    typename mute<I, DestType>::ret
+    frontp_connected_component(const abstract::image<I>& input,
+			       const abstract::neighborhood<E>& se,
 			       unsigned& nb_label)
     {
       // FIXME: ensure the Value(I) is ntg::bin.
-      Exact_cref(I, input);
-      Exact_cref(E, se);
-      typename mute<I_, DestType>::ret output(input.size());
+      typename mute<I, DestType>::ret output(input.size());
       level::fill(output, 0);
 
       typedef std::set<Point(I), oln::internal::default_less< Point(I) > >
@@ -117,7 +115,7 @@ namespace oln {
 			     component.begin(), component.end(),
 			     inserter(points_to_process,
 				      points_to_process.begin()),
-			     oln::internal::default_less< Point(I_) >());
+			     oln::internal::default_less< Point(I) >());
 	    }
 	  for (typename points_set::const_iterator i = component.begin();
 	       i != component.end();
@@ -132,23 +130,22 @@ namespace oln {
       return output;
     }
 
-    template <class DestType, class I_, class E_>
-    typename mute<I_, DestType>::ret
-    frontp_connected_component(const abstract::image<I_>& _input,
-			       const neighborhood<E_>& _se)
+    template <class DestType, class I, class E>
+    typename mute<I, DestType>::ret
+    frontp_connected_component(const abstract::image<I>& input,
+			       const abstract::neighborhood<E>& se)
     {
       unsigned dummy;
-      return frontp_connected_component(_input, _se, dummy);
+      return frontp_connected_component(input, se, dummy);
     }
 
-    template <class I_>
-    typename mute<I_, ntg::bin>::ret
-    extract_i_cc(const abstract::image<I_>& _input,
-		 Value(I_) i)
+    template <class I>
+    typename mute<I, ntg::bin>::ret
+    extract_i_cc(const abstract::image<I>& input,
+		 Value(I) i)
     {
-      Exact_cref(I, input);
 
-      typename mute<I_, ntg::bin>::ret output(input.size());
+      typename mute<I, ntg::bin>::ret output(input.size());
       level::fill(output, false);
       Iter(I) p(input);
       for_all(p)
@@ -157,10 +154,9 @@ namespace oln {
       return output;
     }
 
-    template <class I_>
-    Value(I_) get_n_cc(const abstract::image<I_>& _input)
+    template <class I>
+    Value(I) get_n_cc(const abstract::image<I>& input)
     {
-      Exact_cref(I, input);
       return  fold(arith::f_max<Value(I)>(), input);
     }
 

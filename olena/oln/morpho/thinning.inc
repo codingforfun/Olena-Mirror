@@ -28,9 +28,9 @@
 
 
 template<class I, class E1, class E2>
-Concrete(I) thinning(const image<I>& input,
-		     const struct_elt<E1>& se1,
-		     const struct_elt<E2>& se2)
+Concrete(I) thinning(const abstract::image<I>& input,
+		     const abstract::struct_elt<E1>& se1,
+		     const abstract::struct_elt<E2>& se2)
 {
   mlc::eq<I::dim, E1::dim>::ensure();
   mlc::eq<I::dim, E2::dim>::ensure();

@@ -29,11 +29,11 @@
 	 }
      }
 #if Dim == 1
-T(coord);
-#elif Dim == 2
 T(coord, coord);
-#elif Dim == 3
+#elif Dim == 2
 T(coord, coord, coord);
+#elif Dim == 3
+T(coord, coord, coord, coord);
 #endif
 
 #if Dim >= 1
@@ -74,4 +74,3 @@ namespace oln
 }
 
 %enddef
-
