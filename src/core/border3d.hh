@@ -135,6 +135,42 @@ namespace oln {
 		data.at(i, j, kmax - k) = data.at(i, j, kmax + k);
 	      }
       }
+
+
+      template<class T>
+      void _assign_borders(const image3d<T>& input, T val)
+      {
+        image3d_data<T>& data = *const_cast<image3d_data<T>*>(input.data());
+        const coord imax = data.nslices() - 1;
+        const coord jmax = data.nrows() - 1;
+        const coord kmax = data.ncols() - 1;
+        // front & rear
+        for (coord i = - data.border(); i; ++i)
+          for (coord j = 0; j <= jmax; ++j)
+            for (coord k = 0; k <= kmax; ++k)
+              {
+                data.at(i, j, k)        = val;
+                data.at(imax - i, j, k) = val;
+              }
+        // top & bottom
+        for (coord i = - data.border(); i <= imax + data.border(); ++i)
+          for (coord j = - data.border(); j; ++j)
+            for (coord k = 0; k <= kmax; ++k)
+              {
+                data.at(i, j, k)        = val;
+                data.at(i, jmax - j, k) = val;
+              }
+        // left & right
+        for (coord i = - data.border(); i <= imax + data.border(); ++i)
+          for (coord j = - data.border(); j <= jmax + data.border(); ++j)
+            for (coord k = - data.border(); k; ++k)
+              {
+                data.at(i, j, k)        = val;
+                data.at(i, j, kmax - k) = val;
+              }
+      }
+
+
     } // internal
 
   } // border

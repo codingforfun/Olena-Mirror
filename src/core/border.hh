@@ -90,9 +90,9 @@ namespace oln {
     template<class T>
     void adapt_assign(const image<T>& input, coord min_border, Value(T) val)
     {
+      Exact_cref(T, input);
       adapt_width(input, min_border);
-      // FIXME: fill in.
-      std::cerr << "adapt_assign is not fully implemented yet!" << std::endl;
+      internal::_assign_borders(input, val);
     }
 
   } // end of border

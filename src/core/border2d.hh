@@ -112,6 +112,31 @@ namespace oln {
 	    }
       }
 
+
+      template<class T>
+      void _assign_borders(const image2d<T>& input, T val)
+      {
+	image2d_data<T>& data = *const_cast<image2d_data<T>*>(input.data());
+	// top & bottom
+        const coord imax = data.nrows() - 1;
+        const coord jmax = data.ncols() - 1;
+
+        for (coord i = - data.border(); i; ++i)
+          for (coord j = 0; j <= jmax; ++j)
+            {
+              data.at(i, j) = val;
+              data.at(imax - i, j) = val;
+            }
+        // left & right
+        for (coord i = - data.border(); i <= imax + data.border(); ++i)
+          for (coord j = - data.border(); j; ++j)
+            {
+              data.at(i, j) = val;
+              data.at(i, jmax - j) = val;
+            }
+      }
+
+
     } // internal
 
   } // border

@@ -80,6 +80,19 @@ namespace oln {
 	    data.at(data.ncols() - j - 1) = data.at(data.ncols() + j - 1);
 	  }
       }
+
+      template<class T>
+      void _assign_borders(const image1d<T>& input, T val)
+      {
+        image1d_data<T>& data = *const_cast<image1d_data<T>*>(input.data());
+        for (coord j = - data.border(); j; ++j)
+          {
+            data.at(j) = val;
+            data.at(data.ncols() - j - 1) = val;
+          }
+      }
+
+
     } // internal
 
   } // border

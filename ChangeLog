@@ -1,3 +1,10 @@
+2002-01-31  Jerome Darbon  <jerome@epita.fr>
+
+	* src/core/border.hh: Update adapt_assign
+        * src/core/border1d.hh: Likewise
+        * src/core/border2d.hh: Likewise
+        * src/core/border3d.hh: Likewise
+
 2002-01-16  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* src/convol/fast_gaussian.hxx (_gaussian<1>::doit): Typo.
