@@ -1,3 +1,16 @@
+2004-01-21  Astrid Wang  <astrid@lrde.epita.fr>
+
+	* oln/snakes/snakes_base.hh,
+	* oln/snakes/snakes_base.hxx,
+	* oln/snakes/segment.hh,
+	* oln/snakes/segment.hxx,
+	* oln/snakes/node.hh,
+	* oln/snakes/node.hxx,
+	* oln/snakes/energies.hh,
+	* oln/snakes/energies.hxx,
+	* oln/snakes/greedy.hh,
+	* oln/snakes/greedy.hxx: New.
+
 2004-01-19  Astrid Wang  <astrid@lrde.epita.fr>
 
 	* oln/core/point2d.hxx: Fix member function minus().
