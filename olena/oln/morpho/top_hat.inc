@@ -45,9 +45,9 @@
  * exi: lena256.pgm
  * exo: out.pgm
 =*/
-template<class C, class I, class E>
-typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
-white_top_hat(const conversion<C>& c,
+template<class C, class B, class I, class E>
+typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
+white_top_hat(const convert::abstract::conversion<C, B>& c,
 	      const abstract::image<I>& input,
 	      const abstract::struct_elt<E>& se)
 {
@@ -88,9 +88,9 @@ Concrete(I) white_top_hat(const abstract::image<I>& input,
  * exi: lena256.pgm
  * exo: out.pgm
 =*/
-template<class C, class I, class E>
-typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
-black_top_hat(const conversion<C>& c,
+template<class C, class B, class I, class E>
+typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
+black_top_hat(const convert::abstract::conversion<C, B>& c,
 	      const abstract::image<I>& input,
 	      const abstract::struct_elt<E>& se)
 {
@@ -137,9 +137,9 @@ Concrete(I) black_top_hat(const abstract::image<I>& input,
  * exo: out.pgm
 =*/
 
-template<class C, class I, class E>
-typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
-self_complementary_top_hat(const conversion<C>& c,
+template<class C, class B, class I, class E>
+typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
+self_complementary_top_hat(const convert::abstract::conversion<C, B>& c,
 			   const abstract::image<I>& input,
 			   const abstract::struct_elt<E>& se)
 {
@@ -185,9 +185,9 @@ Concrete(I) self_complementary_top_hat(const abstract::image<I>& input,
  * exh: convert/bound.hh
 =*/
 
-template<class C, class I, class E>
-typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
-top_hat_contrast_op(const conversion<C>& c,
+template<class C, class B, class I, class E>
+typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
+top_hat_contrast_op(const convert::abstract::conversion<C, B>& c,
 		    const abstract::image<I>& input,
 		    const abstract::struct_elt<E>& se)
 {

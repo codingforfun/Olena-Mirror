@@ -27,6 +27,7 @@
 // Public License.
 
 
+
 /*=processing beucher_gradient
  * ns: morpho, morpho::fast
  * what: Morphological Beucher Gradient.
@@ -47,9 +48,9 @@
  * exi: lena256.pgm
  * exo: out.pgm
 =*/
-template<class C, class I, class E>
-typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
-beucher_gradient(const conversion<C>& c,
+template<class C, class B, class I, class E>
+typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
+beucher_gradient(const convert::abstract::conversion<C, B>& c,
 		 const abstract::image<I>& input,
 		 const abstract::struct_elt<E>& se)
 {
@@ -91,9 +92,9 @@ Concrete(I) beucher_gradient(const abstract::image<I>& input,
  * exi: lena256.pgm
  * exo: out.pgm
 =*/
-template<class C, class I, class E>
-typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
-internal_gradient(const conversion<C>& c,
+template<class C, class B, class I, class E>
+typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
+internal_gradient(const convert::abstract::conversion<C, B>& c,
 		  const abstract::image<I>& input,
 		  const abstract::struct_elt<E>& se)
 {
@@ -134,9 +135,9 @@ Concrete(I) internal_gradient(const abstract::image<I>& input, const
  * exi: lena256.pgm
  * exo: out.pgm
 =*/
-template<class C, class I, class E>
-typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
-external_gradient(const conversion<C>& c,
+template<class C, class B, class I, class E>
+typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
+external_gradient(const convert::abstract::conversion<C, B>& c,
 		  const abstract::image<I>& input,
 		  const abstract::struct_elt<E>& se)
 {

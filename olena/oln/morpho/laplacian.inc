@@ -45,9 +45,9 @@
  * exo: out.pgm
  * exh: convert/bound.hh
 =*/
-template<class C, class I, class E>
-typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
-laplacian(const conversion<C>& c,
+template<class C, class B, class I, class E>
+typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
+laplacian(const convert::abstract::conversion<C, B>& c,
 	  const abstract::image<I>& input,
 	  const abstract::struct_elt<E>& se)
 {

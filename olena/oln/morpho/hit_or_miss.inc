@@ -60,9 +60,9 @@
  * exi: object.pbm
  * exo: out.pgm
 =*/
-template<class C, class I, class E1, class E2>
-typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
-hit_or_miss(const conversion<C>& c,
+template<class C, class B, class I, class E1, class E2>
+typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
+hit_or_miss(const convert::abstract::conversion<C, B>& c,
 	    const abstract::image<I>& input,
 	    const abstract::struct_elt<E1>& se1,
 	    const abstract::struct_elt<E2>& se2)

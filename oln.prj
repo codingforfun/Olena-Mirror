@@ -1,34 +1,20 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 74)
-(Parent-Version oln 2003paradigm 52)
+(Project-Version oln 2003paradigm 78)
+(Parent-Version oln 2003paradigm 74)
 (Version-Log "2003-07-31  Giovanni Palma  <palma_g@lrde.epita.fr>
 
-	* oln/morpho/closing.inc,
-	oln/morpho/dilation.hh,
-	oln/morpho/erosion.hh,
-	oln/morpho/geodesic_dilation.hh,
-	oln/morpho/geodesic_erosion.hh,
+	* oln/convert/abstract/colorconv.hh,
+	oln/convert/nrgbyuv.hh,
+	oln/convert/stretch.hh,
 	oln/morpho/gradient.inc,
 	oln/morpho/hit_or_miss.inc,
 	oln/morpho/laplacian.inc,
-	oln/morpho/reconstruction.hh,
-	oln/morpho/top_hat.inc,
-	oln/morpho/watershed.hh,
-	oln/morpho/attribute_closing_opening.hh: Fix comments.
-
-	* oln/morpho/extrema.hxx,
-	oln/morpho/fast_morpho.hxx,
-	oln/morpho/stat.hh,
-	oln/morpho/watershed.hxx,
-	oln/morpho/attribute_union_find.hh: Fix coding style.
-
-	* oln/morpho/extrema_killer.hh,
-	oln/morpho/opening.inc: Fix coding style. Fix comments.
+	oln/morpho/top_hat.inc: Fix convert usage..
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 31 Jul 2003 13:20:51 +0200")
+(Checkin-Time "Thu, 31 Jul 2003 17:48:15 +0200")
 (Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -118,7 +104,7 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.9 644))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.55 644))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.59 644))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38 644))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.11 644))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.6 644))
@@ -166,7 +152,7 @@
   (olena/img/se.pbm (oln/n/6_se.pbm 1.1 644) :no-keywords)
 
   (olena/Makefile.am (oln/2_Makefile.a 1.30.1.1.1.2.1.9 644))
-  (olena/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.9 644))
+  (olena/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.11 644))
   (olena/oln/arith/logic.hh (oln/b/24_logic.hh 1.6.1.2 644))
   (olena/oln/arith/ops.hh (oln/b/23_ops.hh 1.5.1.2.1.4 644))
   (olena/oln/basics1d.hh (oln/d/41_basics1d.h 1.4 644))
@@ -176,21 +162,21 @@
 
 
   (olena/oln/config/system.hh (oln/7_system.hh 1.17 644))
-  (olena/oln/convert/basics.hh (oln/23_basics.hh 1.4 644))
-  (olena/oln/convert/bound.hh (oln/22_bound.hh 1.8 644))
-  (olena/oln/convert/colorconv.hh (oln/18_colorconv. 1.8 644))
-  (olena/oln/convert/conversion.hh (oln/21_conversion 1.12 644))
-  (olena/oln/convert/conversion_ng_se.hh (oln/e/24_conversion 1.6 644))
-  (olena/oln/convert/force.hh (oln/20_force.hh 1.8 644))
-  (olena/oln/convert/nrgbhsi.hh (oln/15_nrgbhsi.hh 1.10 644))
-  (olena/oln/convert/nrgbhsl.hh (oln/12_nrgbhsl.hh 1.14 644))
-  (olena/oln/convert/nrgbhsv.hh (oln/11_nrgbhsv.hh 1.12 644))
-  (olena/oln/convert/nrgbxyz.hh (oln/16_nrgbxyz.hh 1.9 644))
-  (olena/oln/convert/nrgbyiq.hh (oln/14_nrgbyiq.hh 1.9 644))
-  (olena/oln/convert/nrgbyuv.hh (oln/13_nrgbyuv.hh 1.9 644))
-  (olena/oln/convert/rgbnrgb.hh (oln/17_rgbnrgb.hh 1.9 644))
-  (olena/oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.9 644))
-  (olena/oln/convert/stretch.hh (oln/f/51_stretch.hh 1.9 644))
+  (olena/oln/convert/basics.hh (oln/23_basics.hh 1.5 644))
+  (olena/oln/convert/bound.hh (oln/22_bound.hh 1.9 644))
+  (olena/oln/convert/abstract/colorconv.hh (oln/18_colorconv. 1.10 644))
+  (olena/oln/convert/conversion.hh (oln/21_conversion 1.14 644))
+  (olena/oln/convert/conversion_ng_se.hh (oln/e/24_conversion 1.8 644))
+  (olena/oln/convert/force.hh (oln/20_force.hh 1.10 644))
+  (olena/oln/convert/nrgbhsi.hh (oln/15_nrgbhsi.hh 1.11 644))
+  (olena/oln/convert/nrgbhsl.hh (oln/12_nrgbhsl.hh 1.15 644))
+  (olena/oln/convert/nrgbhsv.hh (oln/11_nrgbhsv.hh 1.13 644))
+  (olena/oln/convert/nrgbxyz.hh (oln/16_nrgbxyz.hh 1.10 644))
+  (olena/oln/convert/nrgbyiq.hh (oln/14_nrgbyiq.hh 1.10 644))
+  (olena/oln/convert/nrgbyuv.hh (oln/13_nrgbyuv.hh 1.11 644))
+  (olena/oln/convert/rgbnrgb.hh (oln/17_rgbnrgb.hh 1.10 644))
+  (olena/oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.10 644))
+  (olena/oln/convert/stretch.hh (oln/f/51_stretch.hh 1.12 644))
   (olena/oln/convol/convolution.hh (oln/f/39_convolutio 1.4.1.4.1.4 644))
   (olena/oln/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.5.1.4 644))
   (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.5 644))
@@ -337,11 +323,11 @@
   (olena/oln/morpho/geodesic_dilation.hh (oln/37_geodesic_d 1.11.1.6 644))
   (olena/oln/morpho/geodesic_erosion.hh (oln/36_geodesic_e 1.13 644))
   (olena/oln/morpho/gradient.hh (oln/b/3_gradient.h 1.6 644))
-  (olena/oln/morpho/gradient.inc (oln/43_gradient.i 1.7 644))
+  (olena/oln/morpho/gradient.inc (oln/43_gradient.i 1.8 644))
   (olena/oln/morpho/hit_or_miss.hh (oln/b/2_hit_or_mis 1.7 644))
-  (olena/oln/morpho/hit_or_miss.inc (oln/42_hit_or_mis 1.12 644))
+  (olena/oln/morpho/hit_or_miss.inc (oln/42_hit_or_mis 1.13 644))
   (olena/oln/morpho/laplacian.hh (oln/b/1_laplacian. 1.6 644))
-  (olena/oln/morpho/laplacian.inc (oln/41_laplacian. 1.7 644))
+  (olena/oln/morpho/laplacian.inc (oln/41_laplacian. 1.8 644))
   (olena/oln/morpho/minmax.hh (oln/b/0_minmax.hh 1.4 644))
   (olena/oln/morpho/opening.hh (oln/51_opening.hh 1.6 644))
   (olena/oln/morpho/opening.inc (oln/40_opening.in 1.9 644))
@@ -353,7 +339,7 @@
   (olena/oln/morpho/thinning.hh (oln/e/27_thinning.h 1.7 644))
   (olena/oln/morpho/thinning.inc (oln/e/26_thinning.i 1.8 644))
   (olena/oln/morpho/top_hat.hh (oln/49_top_hat.hh 1.4 644))
-  (olena/oln/morpho/top_hat.inc (oln/39_top_hat.in 1.7 644))
+  (olena/oln/morpho/top_hat.inc (oln/39_top_hat.in 1.8 644))
   (olena/oln/morpho/watershed.hh (oln/48_watershed. 1.7 644))
   (olena/oln/morpho/watershed.hxx (oln/47_watershed. 1.9.1.5 644))
   (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.6 644))
@@ -430,7 +416,7 @@
   (metalic/tests/check/verbose.cc (oln/e/41_verbose.cc 1.3 644))
   (metalic/tests/check/verbose.hh (oln/e/42_verbose.hh 1.3 644))
 
-  (olena/tests/convert/convcomp.cc (oln/f/3_convcomp.c 1.8 644))
+  (olena/tests/convert/convcomp.cc (oln/f/3_convcomp.c 1.9 644))
   (olena/tests/convert/convcomp.hh (oln/f/1_convcomp.h 1.8 644))
   (olena/tests/convert/Makefile.am (oln/f/0_Makefile.a 1.12 644))
 
@@ -799,7 +785,7 @@
   (integre/tests/check/defs.in (oln/q/42_defs.in 1.1 644))
   (metalic/mlc/array/objs.hh (oln/q/45_objs.hh 1.2 644))
   (metalic/mlc/config/system.hh (oln/q/46_system.hh 1.2 644))
-  (olena/oln/Makefile.am (oln/q/47_Makefile.a 1.3.1.1.1.4.1.1 644))
+  (olena/oln/Makefile.am (oln/q/47_Makefile.a 1.3.1.1.1.6 644))
   (integre/ntg/config/system.hh (oln/q/48_system.hh 1.2 644))
   (metalic/tests/main/tests/is_a1 (oln/r/17_is_a1 1.3 644))
   (metalic/tests/main/tests/ensure3 (oln/r/18_ensure3 1.2 644))
@@ -991,7 +977,7 @@
   (olena/oln/io/pnm_write_data.hh (oln/u/10_pnm_write_ 1.3 644))
 
   (olena/oln/io/image.hh (oln/u/11_image.hh 1.1 600))
-  (olena/tests/convert/conv.cc (oln/u/12_conv.cc 1.1 640))
+  (olena/tests/convert/conv.cc (oln/u/12_conv.cc 1.2 640))
   (olena/tests/convert/conv.hh (oln/u/13_conv.hh 1.1 640))
 
   (olena/tests/io/bin.cc (oln/u/20_bin.cc 1.1 640))
@@ -1005,108 +991,30 @@
   (olena/tests/utils/histogram.cc (oln/u/27_histogram. 1.1 604))
   (olena/tests/utils/stat.cc (oln/u/28_stat.cc 1.1 604))
   (olena/tests/utils/timer.cc (oln/u/29_timer.cc 1.1 604))
-  (olena/tests/topo/test-tarjan.cc (oln/u/30_test-tarja 1.1 600)))
+  (olena/tests/topo/test-tarjan.cc (oln/u/30_test-tarja 1.1 600))
+
+  (olena/oln/convert/abstract/conversion.hh (oln/u/31_conversion 1.1 644)))
 (Merge-Parents
-  (2003paradigm.52 complete)
-  (2003paradigm.54 complete
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (olena/oln/core/accum.hh olena/oln/core/accum.hh olena/oln/core/accum.hh r)
-    (olena/oln/core/compose.hh olena/oln/core/compose.hh olena/oln/core/compose.hh r) (olena/oln/core/abstract/w_window.hh olena/oln/core/abstract/w_window.hh olena/oln/core/abstract/w_window.hh r))
-  (2003paradigm.63 complete
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (tools/ChangeLog tools/ChangeLog tools/ChangeLog r)
-    (tools/swilena/ChangeLog tools/swilena/ChangeLog tools/swilena/ChangeLog r) (olena/img/Makefile.am olena/img/Makefile.am olena/img/Makefile.am r)
-    (olena/oln/basics.hh olena/oln/basics.hh olena/oln/basics.hh r) (olena/oln/convert/conversion.hh olena/oln/convert/conversion.hh olena/oln/convert/conversion.hh r)
-    (olena/oln/convol/convolution.hh olena/oln/convol/convolution.hh olena/oln/convol/convolution.hh r) (olena/oln/convol/fast_gaussian.hh olena/oln/convol/fast_gaussian.hh olena/oln/convol/fast_gaussian.hh r)
-    (olena/oln/convol/fast_gaussian.hxx olena/oln/convol/fast_gaussian.hxx olena/oln/convol/fast_gaussian.hxx r) (olena/oln/core/apply.hh olena/oln/core/apply.hh olena/oln/core/apply.hh r)
-    (olena/oln/core/box.hh olena/oln/core/box.hh olena/oln/core/box.hh r) (olena/oln/core/box.hxx olena/oln/core/box.hxx olena/oln/core/box.hxx r)
-    (metalic/mlc/contract.hh metalic/mlc/contract.hh metalic/mlc/contract.hh r) (olena/oln/core/dpoint3d.hh olena/oln/core/dpoint3d.hh olena/oln/core/dpoint3d.hh r)
-    (olena/oln/core/abstract/dpoint.hh olena/oln/core/abstract/dpoint.hh olena/oln/core/abstract/dpoint.hh r) (olena/oln/core/fold.hh olena/oln/core/fold.hh olena/oln/core/fold.hh r)
-    (olena/oln/core/generate.hh olena/oln/core/generate.hh olena/oln/core/generate.hh r) (olena/oln/core/image1d.hh olena/oln/core/image1d.hh olena/oln/core/image1d.hh r)
-    (olena/oln/core/image2d.hh olena/oln/core/image2d.hh olena/oln/core/image2d.hh r) (olena/oln/core/image3d.hh olena/oln/core/image3d.hh olena/oln/core/image3d.hh r)
-    (olena/oln/core/image.hh olena/oln/core/image.hh olena/oln/core/image.hh r) (olena/oln/core/abstract/iter1d.hh olena/oln/core/abstract/iter1d.hh olena/oln/core/abstract/iter1d.hh r)
-    (olena/oln/core/abstract/iter2d.hh olena/oln/core/abstract/iter2d.hh olena/oln/core/abstract/iter2d.hh r) (olena/oln/core/abstract/iter3d.hh olena/oln/core/abstract/iter3d.hh olena/oln/core/abstract/iter3d.hh r)
-    (olena/oln/core/abstract/iter.hh olena/oln/core/abstract/iter.hh olena/oln/core/abstract/iter.hh r) (olena/oln/core/neighborhood1d.hh olena/oln/core/neighborhood1d.hh olena/oln/core/neighborhood1d.hh r)
-    (olena/oln/core/neighborhood2d.hh olena/oln/core/neighborhood2d.hh olena/oln/core/neighborhood2d.hh r) (olena/oln/core/neighborhood3d.hh olena/oln/core/neighborhood3d.hh olena/oln/core/neighborhood3d.hh r)
-    (olena/oln/core/abstract/neighborhood.hh olena/oln/core/abstract/neighborhood.hh olena/oln/core/abstract/neighborhood.hh r) (olena/oln/core/point1d.hxx olena/oln/core/point1d.hxx olena/oln/core/point1d.hxx r)
-    (olena/oln/core/abstract/point.hh olena/oln/core/abstract/point.hh olena/oln/core/abstract/point.hh r) (olena/oln/core/abstract/struct_elt.hh olena/oln/core/abstract/struct_elt.hh olena/oln/core/abstract/struct_elt.hh r)
-    (metalic/mlc/type.hh metalic/mlc/type.hh metalic/mlc/type.hh r) (olena/oln/core/window1d.hh olena/oln/core/window1d.hh olena/oln/core/window1d.hh r)
-    (olena/oln/core/window2d.hh olena/oln/core/window2d.hh olena/oln/core/window2d.hh r) (olena/oln/core/window3d.hh olena/oln/core/window3d.hh olena/oln/core/window3d.hh r)
-    (olena/oln/core/abstract/window.hh olena/oln/core/abstract/window.hh olena/oln/core/abstract/window.hh r) (olena/oln/core/winiter.hh olena/oln/core/winiter.hh olena/oln/core/winiter.hh r)
-    (olena/oln/core/winneighb.hh olena/oln/core/winneighb.hh olena/oln/core/winneighb.hh r) (olena/oln/core/w_window1d.hh olena/oln/core/w_window1d.hh olena/oln/core/w_window1d.hh r)
-    (olena/oln/core/w_window2d.hh olena/oln/core/w_window2d.hh olena/oln/core/w_window2d.hh r) (olena/oln/core/w_window3d.hh olena/oln/core/w_window3d.hh olena/oln/core/w_window3d.hh r)
-    (olena/oln/core/abstract/w_window.hh olena/oln/core/abstract/w_window.hh olena/oln/core/abstract/w_window.hh r) (olena/oln/io/se_neighborhood.hh olena/oln/io/se_neighborhood.hh olena/oln/io/se_neighborhood.hh r)
-    (olena/oln/io/se_window.hh olena/oln/io/se_window.hh olena/oln/io/se_window.hh r) (olena/oln/level/cc.hh olena/oln/level/cc.hh olena/oln/level/cc.hh r)
-    (olena/oln/level/compare.hh olena/oln/level/compare.hh olena/oln/level/compare.hh r) (olena/oln/level/connected.hh olena/oln/level/connected.hh olena/oln/level/connected.hh r)
-    (olena/oln/level/fill.hh olena/oln/level/fill.hh olena/oln/level/fill.hh r) (olena/oln/level/lut.hh olena/oln/level/lut.hh olena/oln/level/lut.hh r)
-    (olena/oln/level/set_level.hh olena/oln/level/set_level.hh olena/oln/level/set_level.hh r) (olena/oln/morpho/closing.inc olena/oln/morpho/closing.inc olena/oln/morpho/closing.inc r)
-    (olena/oln/morpho/extrema_killer.hh olena/oln/morpho/extrema_killer.hh olena/oln/morpho/extrema_killer.hh r) (olena/oln/morpho/fast_morpho.hxx olena/oln/morpho/fast_morpho.hxx olena/oln/morpho/fast_morpho.hxx r)
-    (olena/oln/morpho/stat.hh olena/oln/morpho/stat.hh olena/oln/morpho/stat.hh r) (olena/oln/morpho/thickening.inc olena/oln/morpho/thickening.inc olena/oln/morpho/thickening.inc r)
-    (olena/oln/morpho/thinning.inc olena/oln/morpho/thinning.inc olena/oln/morpho/thinning.inc r) (olena/oln/topo/dmap.hh olena/oln/topo/dmap.hh olena/oln/topo/dmap.hh r)
-    (olena/oln/topo/dmap.hxx olena/oln/topo/dmap.hxx olena/oln/topo/dmap.hxx r) (olena/oln/transforms/dwt.hh olena/oln/transforms/dwt.hh olena/oln/transforms/dwt.hh r)
-    (olena/oln/transforms/fft.hh olena/oln/transforms/fft.hh olena/oln/transforms/fft.hh r) (olena/oln/utils/histogram.hh olena/oln/utils/histogram.hh olena/oln/utils/histogram.hh r)
-    (olena/tests/io/Makefile.am olena/tests/io/Makefile.am olena/tests/io/Makefile.am r) (olena/tests/transforms/dwt.cc olena/tests/transforms/dwt.cc olena/tests/transforms/dwt.cc r)
-    (olena/tests/transforms/Makefile.am olena/tests/transforms/Makefile.am olena/tests/transforms/Makefile.am r) (tools/utilities/Makefile.am tools/utilities/Makefile.am tools/utilities/Makefile.am r)
-    (tools/utilities/morpho/Makefile.am tools/utilities/morpho/Makefile.am tools/utilities/morpho/Makefile.am r) (tools/utilities/morpho/morpho_template.cc tools/utilities/morpho/morpho_template.cc tools/utilities/morpho/morpho_template.cc r)
-    (tools/utilities/morpho/morpho_template_extrema.cc tools/utilities/morpho/morpho_template_extrema.cc tools/utilities/morpho/morpho_template_extrema.cc r) (tools/utilities/morpho/morpho_template_gaussian.cc tools/utilities/morpho/morpho_template_gaussian.cc tools/utilities/morpho/morpho_template_gaussian.cc r)
-    (tools/utilities/morpho/morpho_template_watershed.cc tools/utilities/morpho/morpho_template_watershed.cc tools/utilities/morpho/morpho_template_watershed.cc r) (tools/utilities/morpho/morpho_template_with_functor.cc tools/utilities/morpho/morpho_template_with_functor.cc tools/utilities/morpho/morpho_template_with_functor.cc r)
-    (tools/utilities/morpho/morpho_template_with_neighb.cc tools/utilities/morpho/morpho_template_with_neighb.cc tools/utilities/morpho/morpho_template_with_neighb.cc r) (tools/utilities/morpho/morpho_template_with_twowin.cc tools/utilities/morpho/morpho_template_with_twowin.cc tools/utilities/morpho/morpho_template_with_twowin.cc r)
-    (tools/utilities/mosaic.cc tools/utilities/mosaic.cc tools/utilities/mosaic.cc r) (metalic/ChangeLog metalic/ChangeLog metalic/ChangeLog r)
-    (olena/oln/morpho/attribute_closing_opening.hh olena/oln/morpho/attribute_closing_opening.hh olena/oln/morpho/attribute_closing_opening.hh r) (tools/swilena/meta/swilena_w_win.i tools/swilena/meta/swilena_w_win.i tools/swilena/meta/swilena_w_win.i r)
-    (tools/swilena/meta/swilena_structelt.i tools/swilena/meta/swilena_structelt.i tools/swilena/meta/swilena_structelt.i r) (tools/swilena/meta/swilena_point.i tools/swilena/meta/swilena_point.i tools/swilena/meta/swilena_point.i r)
-    (tools/swilena/meta/swilena_imagesize.i tools/swilena/meta/swilena_imagesize.i tools/swilena/meta/swilena_imagesize.i r) (tools/swilena/meta/swilena_image.i tools/swilena/meta/swilena_image.i tools/swilena/meta/swilena_image.i r)
-    (olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh r) (olena/oln/core/abstract/image_with_dim.hh olena/oln/core/abstract/image_with_dim.hh olena/oln/core/abstract/image_with_dim.hh r)
-    (olena/oln/core/abstract/image_with_impl.hh olena/oln/core/abstract/image_with_impl.hh olena/oln/core/abstract/image_with_impl.hh r) (olena/oln/core/abstract/image_with_type.hh olena/oln/core/abstract/image_with_type.hh olena/oln/core/abstract/image_with_type.hh r)
-    (olena/oln/core/impl/image_impl.hh olena/oln/core/impl/image_impl.hh olena/oln/core/impl/image_impl.hh r) (olena/oln/core/impl/image_array.hh olena/oln/core/impl/image_array.hh olena/oln/core/impl/image_array.hh r)
-    (olena/oln/core/impl/image_array3d.hh olena/oln/core/impl/image_array3d.hh olena/oln/core/impl/image_array3d.hh r) (olena/oln/core/impl/image_array2d.hh olena/oln/core/impl/image_array2d.hh olena/oln/core/impl/image_array2d.hh r)
-    (olena/oln/core/impl/image_array1d.hh olena/oln/core/impl/image_array1d.hh olena/oln/core/impl/image_array1d.hh r) (olena/oln/core/abstract/window_base.hh olena/oln/core/abstract/window_base.hh olena/oln/core/abstract/window_base.hh r)
-    (olena/oln/core/abstract/windownd.hh olena/oln/core/abstract/windownd.hh olena/oln/core/abstract/windownd.hh r) (olena/oln/core/abstract/w_windownd.hh olena/oln/core/abstract/w_windownd.hh olena/oln/core/abstract/w_windownd.hh r)
-    (olena/oln/core/abstract/neighborhoodnd.hh olena/oln/core/abstract/neighborhoodnd.hh olena/oln/core/abstract/neighborhoodnd.hh r) (olena/oln/io/pnm_read_data.hh olena/oln/io/pnm_read_data.hh olena/oln/io/pnm_read_data.hh r)
-    (olena/oln/io/pnm_write_data.hh olena/oln/io/pnm_write_data.hh olena/oln/io/pnm_write_data.hh r) (() () olena/tests/io/bin.cc a)
-    (() () olena/img/black.pbm a) (() () olena/img/white.pbm a))
-  (2003paradigm.73 complete
-    (ChangeLog ChangeLog ChangeLog r) (olena/ChangeLog olena/ChangeLog olena/ChangeLog r)
-    (integre/ChangeLog integre/ChangeLog integre/ChangeLog r) (metalic/ChangeLog metalic/ChangeLog metalic/ChangeLog r)
-    (tools/swilena/ChangeLog tools/swilena/ChangeLog tools/swilena/ChangeLog r) (configure.ac configure.ac configure.ac r)
-    (olena/oln/arith/ops.hh olena/oln/arith/ops.hh olena/oln/arith/ops.hh r) (olena/oln/core/abstract/dpoint.hh olena/oln/core/abstract/dpoint.hh olena/oln/core/abstract/dpoint.hh r)
-    (olena/oln/core/image1d.hh olena/oln/core/image1d.hh olena/oln/core/image1d.hh r) (olena/oln/core/image2d.hh olena/oln/core/image2d.hh olena/oln/core/image2d.hh r)
-    (olena/oln/core/image3d.hh olena/oln/core/image3d.hh olena/oln/core/image3d.hh r) (olena/oln/core/abstract/iter1d.hh olena/oln/core/abstract/iter1d.hh olena/oln/core/abstract/iter1d.hh r)
-    (olena/oln/core/abstract/iter2d.hh olena/oln/core/abstract/iter2d.hh olena/oln/core/abstract/iter2d.hh r) (olena/oln/core/abstract/iter3d.hh olena/oln/core/abstract/iter3d.hh olena/oln/core/abstract/iter3d.hh r)
-    (olena/oln/core/abstract/iter.hh olena/oln/core/abstract/iter.hh olena/oln/core/abstract/iter.hh r) (olena/oln/core/neighborhood1d.hh olena/oln/core/neighborhood1d.hh olena/oln/core/neighborhood1d.hh r)
-    (olena/oln/core/neighborhood2d.hh olena/oln/core/neighborhood2d.hh olena/oln/core/neighborhood2d.hh r) (olena/oln/core/neighborhood3d.hh olena/oln/core/neighborhood3d.hh olena/oln/core/neighborhood3d.hh r)
-    (olena/oln/core/abstract/neighborhood.hh olena/oln/core/abstract/neighborhood.hh olena/oln/core/abstract/neighborhood.hh r) (olena/oln/core/abstract/point.hh olena/oln/core/abstract/point.hh olena/oln/core/abstract/point.hh r)
-    (olena/oln/core/abstract/struct_elt.hh olena/oln/core/abstract/struct_elt.hh olena/oln/core/abstract/struct_elt.hh r) (metalic/mlc/type.hh metalic/mlc/type.hh metalic/mlc/type.hh r)
-    (olena/oln/core/window1d.hh olena/oln/core/window1d.hh olena/oln/core/window1d.hh r) (olena/oln/core/window2d.hh olena/oln/core/window2d.hh olena/oln/core/window2d.hh r)
-    (olena/oln/core/window3d.hh olena/oln/core/window3d.hh olena/oln/core/window3d.hh r) (olena/oln/core/abstract/window.hh olena/oln/core/abstract/window.hh olena/oln/core/abstract/window.hh r)
-    (olena/oln/core/w_window1d.hh olena/oln/core/w_window1d.hh olena/oln/core/w_window1d.hh r) (olena/oln/core/w_window2d.hh olena/oln/core/w_window2d.hh olena/oln/core/w_window2d.hh r)
-    (olena/oln/core/w_window3d.hh olena/oln/core/w_window3d.hh olena/oln/core/w_window3d.hh r) (olena/oln/core/abstract/w_window.hh olena/oln/core/abstract/w_window.hh olena/oln/core/abstract/w_window.hh r)
-    (olena/oln/io/pnm3d.hh olena/oln/io/pnm3d.hh olena/oln/io/pnm3d.hh r) (olena/oln/io/pnm_read3d.hxx olena/oln/io/pnm_read3d.hxx olena/oln/io/pnm_read3d.hxx r)
-    (olena/oln/io/pnm_read.hh olena/oln/io/pnm_read.hh olena/oln/io/pnm_read.hh r) (olena/oln/io/pnm_write3d.hxx olena/oln/io/pnm_write3d.hxx olena/oln/io/pnm_write3d.hxx r)
-    (olena/oln/io/pnm_write.hh olena/oln/io/pnm_write.hh olena/oln/io/pnm_write.hh r) (olena/oln/io/se_neighborhood.hh olena/oln/io/se_neighborhood.hh olena/oln/io/se_neighborhood.hh r)
-    (olena/oln/io/se_window.hh olena/oln/io/se_window.hh olena/oln/io/se_window.hh r) (olena/oln/level/invert.hh olena/oln/level/invert.hh olena/oln/level/invert.hh r)
-    (olena/oln/morpho/erosion.hh olena/oln/morpho/erosion.hh olena/oln/morpho/erosion.hh m) (olena/oln/morpho/extrema_killer.hh olena/oln/morpho/extrema_killer.hh olena/oln/morpho/extrema_killer.hh m)
-    (olena/oln/topo/dmap.hxx olena/oln/topo/dmap.hxx olena/oln/topo/dmap.hxx r) (integre/ntg/utils/cast.hh integre/ntg/utils/cast.hh integre/ntg/utils/cast.hh r)
-    (integre/ntg/utils/debug.hh integre/ntg/utils/debug.hh integre/ntg/utils/debug.hh r) (integre/ntg/core/internal/global_ops_defs.hh integre/ntg/core/internal/global_ops_defs.hh integre/ntg/core/internal/global_ops_defs.hh r)
-    (integre/ntg/core/internal/global_ops.hh integre/ntg/core/internal/global_ops.hh integre/ntg/core/internal/global_ops.hh r) (integre/ntg/color/nrgb.hh integre/ntg/color/nrgb.hh integre/ntg/color/nrgb.hh r)
-    (integre/ntg/real/optraits_builtin_int.hh integre/ntg/real/optraits_builtin_int.hh integre/ntg/real/optraits_builtin_int.hh r) (integre/ntg/real/optraits_scalar.hh integre/ntg/real/optraits_scalar.hh integre/ntg/real/optraits_scalar.hh r)
-    (integre/ntg/real/typetraits_builtin_int.hh integre/ntg/real/typetraits_builtin_int.hh integre/ntg/real/typetraits_builtin_int.hh r) (olena/oln/utils/histogram.hh olena/oln/utils/histogram.hh olena/oln/utils/histogram.hh r)
-    (olena/oln/utils/stat.hh olena/oln/utils/stat.hh olena/oln/utils/stat.hh r) (olena/oln/utils/timer.hh olena/oln/utils/timer.hh olena/oln/utils/timer.hh r)
-    (metalic/tests/array/gen_test.cc metalic/tests/array/gen_test.cc metalic/tests/array/gen_test.cc r) (olena/tests/morpho/extrkiller.cc olena/tests/morpho/extrkiller.cc olena/tests/morpho/extrkiller.cc r)
-    (integre/tests/types/runtests integre/tests/types/runtests integre/tests/types/runtests r) (metalic/tests/main/runtests metalic/tests/main/runtests metalic/tests/main/runtests r)
-    (olena/tests/topo/Makefile.am olena/tests/topo/Makefile.am olena/tests/topo/Makefile.am r) (olena/tests/topo/test-inter-pixel.cc olena/tests/topo/test-inter-pixel.cc olena/tests/topo/test-inter-pixel.cc r)
-    (olena/tests/topo/test-cmap.cc olena/tests/topo/test-cmap.cc olena/tests/topo/test-cmap.cc r) (olena/tests/topo/test.sh olena/tests/topo/test.sh () d)
-    (olena/tests/topo/test-cmap.ref olena/tests/topo/test-cmap.ref () d) (olena/tests/topo/test-inter-pixel.ref olena/tests/topo/test-inter-pixel.ref () d)
-    (olena/oln/topo/inter-pixel/internal/dir-iter.hh olena/oln/topo/inter-pixel/internal/dir-iter.hh olena/oln/topo/inter-pixel/internal/dir-iter.hh r) (olena/tests/core/Makefile.am olena/tests/core/Makefile.am olena/tests/core/Makefile.am r)
-    (tools/swilena/expand.sh tools/swilena/expand.sh tools/swilena/expand.sh r) (integre/tests/utils/tests/debug1 integre/tests/utils/tests/debug1 integre/tests/utils/tests/debug1 r)
-    (integre/ntg/core/contract.hh integre/ntg/core/contract.hh integre/ntg/core/contract.hh r) (integre/ntg/vect/vec.hh integre/ntg/vect/vec.hh integre/ntg/vect/vec.hh r)
-    (integre/ntg/vect/cplx.hh integre/ntg/vect/cplx.hh integre/ntg/vect/cplx.hh r) (olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh r)
-    (olena/oln/core/abstract/image_with_dim.hh olena/oln/core/abstract/image_with_dim.hh olena/oln/core/abstract/image_with_dim.hh r) (olena/oln/core/abstract/image_with_impl.hh olena/oln/core/abstract/image_with_impl.hh olena/oln/core/abstract/image_with_impl.hh r)
-    (olena/oln/core/abstract/image_with_type.hh olena/oln/core/abstract/image_with_type.hh olena/oln/core/abstract/image_with_type.hh r) (olena/oln/core/impl/image_impl.hh olena/oln/core/impl/image_impl.hh olena/oln/core/impl/image_impl.hh r)
-    (olena/oln/core/impl/image_array.hh olena/oln/core/impl/image_array.hh olena/oln/core/impl/image_array.hh r) (olena/oln/core/abstract/window_base.hh olena/oln/core/abstract/window_base.hh olena/oln/core/abstract/window_base.hh r)
-    (olena/oln/core/abstract/windownd.hh olena/oln/core/abstract/windownd.hh olena/oln/core/abstract/windownd.hh r) (olena/oln/core/abstract/w_windownd.hh olena/oln/core/abstract/w_windownd.hh olena/oln/core/abstract/w_windownd.hh r)
-    (olena/oln/core/abstract/neighborhoodnd.hh olena/oln/core/abstract/neighborhoodnd.hh olena/oln/core/abstract/neighborhoodnd.hh r) (olena/tests/level/connected.cc olena/tests/level/connected.cc olena/tests/level/connected.cc r)
-    (olena/tests/level/invert.cc olena/tests/level/invert.cc olena/tests/level/invert.cc r) (olena/oln/io/pnm_write_data.hh olena/oln/io/pnm_write_data.hh olena/oln/io/pnm_write_data.hh r)
-    (() () olena/tests/topo/test-dmap.cc a) (() () olena/tests/core/multiple_sources_2.cc a)
-    (() () olena/tests/core/multiple_sources_1.cc a) (() () olena/tests/utils/Makefile.am a)
-    (() () olena/tests/utils/histogram.cc a) (() () olena/tests/utils/stat.cc a)
-    (() () olena/tests/utils/timer.cc a) (() () olena/tests/topo/test-tarjan.cc a))
+  (2003paradigm.74 complete)
+  (2003paradigm.75 complete
+    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (olena/oln/arith/internal/opdecls.hh olena/oln/arith/internal/opdecls.hh olena/oln/arith/internal/opdecls.hh r)
+    (olena/oln/convert/basics.hh olena/oln/convert/basics.hh olena/oln/convert/basics.hh r) (olena/oln/convert/bound.hh olena/oln/convert/bound.hh olena/oln/convert/bound.hh r)
+    (olena/oln/convert/abstract/colorconv.hh olena/oln/convert/colorconv.hh olena/oln/convert/abstract/colorconv.hh r) (olena/oln/convert/conversion.hh olena/oln/convert/conversion.hh olena/oln/convert/conversion.hh r)
+    (olena/oln/convert/conversion_ng_se.hh olena/oln/convert/conversion_ng_se.hh olena/oln/convert/conversion_ng_se.hh r) (olena/oln/convert/force.hh olena/oln/convert/force.hh olena/oln/convert/force.hh r)
+    (olena/oln/convert/nrgbhsi.hh olena/oln/convert/nrgbhsi.hh olena/oln/convert/nrgbhsi.hh r) (olena/oln/convert/nrgbhsl.hh olena/oln/convert/nrgbhsl.hh olena/oln/convert/nrgbhsl.hh r)
+    (olena/oln/convert/nrgbhsv.hh olena/oln/convert/nrgbhsv.hh olena/oln/convert/nrgbhsv.hh r) (olena/oln/convert/nrgbxyz.hh olena/oln/convert/nrgbxyz.hh olena/oln/convert/nrgbxyz.hh r)
+    (olena/oln/convert/nrgbyiq.hh olena/oln/convert/nrgbyiq.hh olena/oln/convert/nrgbyiq.hh r) (olena/oln/convert/nrgbyuv.hh olena/oln/convert/nrgbyuv.hh olena/oln/convert/nrgbyuv.hh r)
+    (olena/oln/convert/rgbnrgb.hh olena/oln/convert/rgbnrgb.hh olena/oln/convert/rgbnrgb.hh r) (olena/oln/convert/rgbxyz.hh olena/oln/convert/rgbxyz.hh olena/oln/convert/rgbxyz.hh r)
+    (olena/oln/convert/stretch.hh olena/oln/convert/stretch.hh olena/oln/convert/stretch.hh r) (olena/tests/convert/convcomp.cc olena/tests/convert/convcomp.cc olena/tests/convert/convcomp.cc r)
+    (olena/oln/Makefile.am olena/oln/Makefile.am olena/oln/Makefile.am r) (olena/tests/convert/conv.cc olena/tests/convert/conv.cc olena/tests/convert/conv.cc r)
+    (() () olena/oln/convert/abstract/conversion.hh a) 
+  )
+  (2003paradigm.76 complete
+    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (olena/oln/arith/internal/opdecls.hh olena/oln/arith/internal/opdecls.hh olena/oln/arith/internal/opdecls.hh r)
+    (olena/oln/convert/conversion.hh olena/oln/convert/conversion.hh olena/oln/convert/conversion.hh r) (olena/oln/convert/conversion_ng_se.hh olena/oln/convert/conversion_ng_se.hh olena/oln/convert/conversion_ng_se.hh r)
+    (olena/oln/convert/force.hh olena/oln/convert/force.hh olena/oln/convert/force.hh r) (olena/oln/convert/stretch.hh olena/oln/convert/stretch.hh olena/oln/convert/stretch.hh r))
+  (2003paradigm.77 complete
+    (olena/ChangeLog olena/ChangeLog olena/ChangeLog m) (olena/oln/convert/abstract/colorconv.hh olena/oln/convert/abstract/colorconv.hh olena/oln/convert/abstract/colorconv.hh r)
+    (olena/oln/convert/nrgbyuv.hh olena/oln/convert/nrgbyuv.hh olena/oln/convert/nrgbyuv.hh r) (olena/oln/convert/stretch.hh olena/oln/convert/stretch.hh olena/oln/convert/stretch.hh r))
 )
 (New-Merge-Parents)
