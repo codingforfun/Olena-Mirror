@@ -49,8 +49,8 @@ namespace oln {
      * arg: const struct_elt<E>&, se, IN, structural element
      * ret: Concrete(I1)
      * doc:
-     *  Compute the reconstruction by dilation of @var{marker} with respect
-     * to the mask @var{mask} image using @var{se}
+     *  Compute the reconstruction by dilation of \var{marker} with respect
+     * to the mask \var{mask} image using \var{se}
      *   as structural element. Soille p.160. This is the simplest algorithm:
      * iteration is performed until stability.
      * see: morpho::simple_geodesic_dilation
@@ -95,8 +95,8 @@ namespace oln {
      * arg: const struct_elt<E>&, se, IN, structural element
      * ret: Concrete(I1)
      * doc:
-     *  Compute the reconstruction by dilation of @var{marker} with respect
-     * to the mask @var{mask} image using @var{se}
+     *  Compute the reconstruction by dilation of \var{marker} with respect
+     * to the mask \var{mask} image using \var{se}
      *   as structural element. Soille p.160. The algorithm used is the
      * one defined as sequential
      * in Vincent(1993), Morphological grayscale reconstruction in
@@ -218,8 +218,8 @@ namespace oln {
      * arg: const struct_elt<E>&, se, IN, structural element
      * ret: Concrete(I1)
      * doc:
-     *  Compute the reconstruction by dilation of @var{marker} with respect
-     * to the mask @var{mask} image using @var{se}
+     *  Compute the reconstruction by dilation of \var{marker} with respect
+     * to the mask \var{mask} image using \var{se}
      *   as structural element. Soille p.160. The algorithm used is the
      * one defined as hybrid
      * in Vincent(1993), Morphological grayscale reconstruction in
@@ -299,8 +299,8 @@ namespace oln {
      * arg: const struct_elt<E>&, se, IN, structural element
      * ret: Concrete(I1)
      * doc:
-     *  Compute the reconstruction by erosion of @var{marker} with respect
-     * to the mask @var{mask} image using @var{se}
+     *  Compute the reconstruction by erosion of \var{marker} with respect
+     * to the mask \var{mask} image using \var{se}
      *   as structural element. Soille p.160. This is the simplest algorithm :
      * iteration is performed until stability.
      * see: morpho::simple_geodesic_erosion
@@ -344,8 +344,8 @@ namespace oln {
      * arg: const struct_elt<E>&, se, IN, structural element
      * ret: Concrete(I1)
      * doc:
-     *  Compute the reconstruction by erosion of @var{marker} with respect
-     * to the mask @var{mask} image using @var{se}
+     *  Compute the reconstruction by erosion of \var{marker} with respect
+     * to the mask \var{mask} image using \var{se}
      *   as structural element. Soille p.160.  The algorithm used is the
      * one defined as sequential
      * in Vincent(1993), Morphological grayscale reconstruction in
@@ -428,8 +428,8 @@ namespace oln {
      * arg: const struct_elt<E>&, se, IN, structural element
      * ret: Concrete(I1)
      * doc:
-     *  Compute the reconstruction by erosion of @var{marker} with respect
-     * to the mask @var{mask} image using @var{se}
+     *  Compute the reconstruction by erosion of \var{marker} with respect
+     * to the mask \var{mask} image using \var{se}
      *   as structural element. Soille p.160.  The algorithm used is the
      * one defined as hybrid
      * in Vincent(1993), Morphological grayscale reconstruction in

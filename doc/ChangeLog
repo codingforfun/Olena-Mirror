@@ -1,3 +1,10 @@
+2002-06-04  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* tpl/processing.tpl: Rewrite to output LaTeX instead of Texinfo.
+	* doc/Makefile.am: Rewrite.
+	* doc/oln-ref.tex: New file.
+	* doc/oln-ref.texi: Delete.
+
 2002-04-24  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* configure.ac: Bump version to 0.4.

@@ -33,7 +33,7 @@
  * arg: const struct_elt<E>&, se, IN, structural element
  * ret: Concrete(I)
  * doc:
- *   Compute the morphological closing of @var{input} using @var{se}
+ *   Compute the morphological closing of \var{input} using \var{se}
  *   as structural element.
  * see: morpho::erosion
  * see: morpho::dilation

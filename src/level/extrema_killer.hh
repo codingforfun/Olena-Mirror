@@ -91,7 +91,7 @@ namespace oln {
      * arg: const struct_elt<E>&, se, IN, structural element
      * ret: Concrete(I1)
      * doc: It removes the small (in area) connected components of the upper
-     * level sets of @var{input} using @var{se} as structual element. The implementation
+     * level sets of \var{input} using \var{se} as structual element. The implementation
      * uses the threshold superposition principle; so it is very slow ! it works only for
      * int_u8 images.
      * see: level::fast_maxima_killer
@@ -148,7 +148,7 @@ namespace oln {
      * arg: const struct_elt<E>&, se, IN, structural element
      * ret: Concrete(I1)
      * doc: It removes the small (in area) connected components of the lower
-     * level sets of @var{input} using @var{se} as structual element. The implementation
+     * level sets of \var{input} using \var{se} as structual element. The implementation
      * uses the threshold superposition principle; so it is very slow ! it works only for
      * int_u8 images.
      * see: level::fast_maxima_killer
@@ -265,7 +265,7 @@ namespace oln {
      * arg: const neighborhood<_N>&, Ng, IN, neighboorhood
      * ret: Concrete(_I1)
      * doc: It removes the small (in area) connected components of the lower
-     * level sets of @var{input} using @var{Ng} as neighboorhood. The implementation
+     * level sets of \var{input} using \var{Ng} as neighboorhood. The implementation
      * is based on stak. Guichard and Morel, Image iterative smoothing and PDE's.
      * Book in preparation. p 265.
      * see: level::sure_minima_killer
@@ -372,7 +372,7 @@ namespace oln {
      * arg: const neighborhood<_N>&, Ng, IN, neighboorhood
      * ret: Concrete(_I1)
      * doc: It removes the small (in area) connected components of the upper
-     * level sets of @var{input} using @var{Ng} as neighboorhood. The implementation
+     * level sets of \var{input} using \var{Ng} as neighboorhood. The implementation
      * is based on stak. Guichard and Morel, Image iterative smoothing and PDE's. Book in preparation. p 265.
      * see: level::sure_maxima_killer
      * ex:

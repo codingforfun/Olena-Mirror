@@ -58,7 +58,7 @@ namespace oln {
      * arg: const neighborhood<E>&, se, IN, neighbourhood
      * ret: typename mute<I, DestType>::ret
      * doc: It removes the small (in area) connected components of the upper
-     * level sets of @var{input} using @var{se} as structural element. The implementation
+     * level sets of \var{input} using \var{se} as structural element. The implementation
      * uses front propagation.
      * see: level::connected_component
      * ex:

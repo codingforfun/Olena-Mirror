@@ -36,7 +36,7 @@
  * ret: mute<I, typename convoutput<C, Value(I)>::ret>::ret
  * doc:
  *   Compute the arithmetic difference between the diltation and
- * the erosion of @var{input}  using @var{se} as structural element. Soille, p67.
+ * the erosion of \var{input}  using \var{se} as structural element. Soille, p67.
  * see: morpho::erosion
  * see: morpho::dilation
  * see: morpho::external_gradient
@@ -79,8 +79,8 @@ Concrete(I) beucher_gradient(const image<I>& input,
  * arg: const struct_elt<E>&, se, IN, structural element
  * ret: mute<I, typename convoutput<C, Value(I)>::ret>::ret
  * doc:
- *   Compute the arithmetic difference between the original image @var{input} and
- * the erosion of @var{input} using @var{se} as structural element. Soille, p67.
+ *   Compute the arithmetic difference between the original image \var{input} and
+ * the erosion of \var{input} using \var{se} as structural element. Soille, p67.
  * see: morpho::beucher_gradient
  * see: morpho::external_gradient
  * see: morpho::erosion
@@ -121,8 +121,8 @@ Concrete(I) internal_gradient(const image<I>& input, const
  * ret: mute<I, typename convoutput<C, Value(I)>::ret>::ret
  * doc:
  *   Compute the arithmetic difference between  and the dilatation of
- * @var{input} using @var{se} as structural element, and the original image
- * @var{input}. Soille, p67.
+ * \var{input} using \var{se} as structural element, and the original image
+ * \var{input}. Soille, p67.
  * see: morpho::beucher_gradient
  * see: morpho::internal_gradient
  * see: morpho::dilation

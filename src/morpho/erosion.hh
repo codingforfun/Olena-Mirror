@@ -44,17 +44,17 @@ namespace oln {
      * arg: const struct_elt<E>&, se, IN, structural element
      * ret: Concrete(I)
      * doc:
-     *   Compute the morphological erosion of @var{input} using @var{se}
+     *   Compute the morphological erosion of \var{input} using \var{se}
      *   as structural element.
      *
      *   On grey-scale images, each point is replaced by the minimum value
-     *   of its neighbors, as indicated by @var{se}.  On binary images,
-     *   a logical @code{and} is performed between neighbors.
-     *   The @code{morpho::fast} version of this function use a different
+     *   of its neighbors, as indicated by \var{se}.  On binary images,
+     *   a logical \code{and} is performed between neighbors.
+     *   The \code{morpho::fast} version of this function use a different
      *   algorithm: an
      *
      *   histogram of the value of the neighborhood indicated by
-     *   @var{se} is updated while iterating over all point of the
+     *   \var{se} is updated while iterating over all point of the
      *   image.  Doing so is more efficient  when the
      *   structural element is large.
      * see: morpho::n_erosion
@@ -87,7 +87,7 @@ namespace oln {
      * arg: unsigned, n, IN, number of iterations
      * ret: Concrete(I)
      * doc:
-     *   Apply @code{morpho::erosion} @var{n} times.
+     *   Apply \code{morpho::erosion} \var{n} times.
      * see: morpho::erosion
      * see: morpho::n_dilation
     =*/

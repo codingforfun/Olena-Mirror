@@ -34,7 +34,7 @@
  * arg: const struct_elt<E>&, se, IN, structural element
  * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
  * doc:
- *   Compute the laplacian of @var{input} using @var{se}
+ *   Compute the laplacian of \var{input} using \var{se}
  *   as structural element.
  * see: morpho::dilation
  * see: morpho::erosion

@@ -1,17 +1,31 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_4 5)
-(Parent-Version oln 0_4 4)
-(Version-Log "2002-05-23  Alexandre Duret-Lutz  <duret_g@epita.fr>
+(Project-Version oln 0_4 6)
+(Parent-Version oln 0_4 5)
+(Version-Log "2002-06-04  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-        * src/config/system.hh (__STL_BEGIN_RELOPS_NAMESPACE,
-        __STL_END_RELOPS_NAMESPACE): Redefine if needed.
-        * configure.ac: Check for stl_config.h.
+	* src/level/connected.hh, src/morpho/reconstruction.hh,
+	src/morpho/geodesic_erosion.hh, src/morpho/geodesic_dilation.hh,
+	src/morpho/extrema.hh, src/morpho/top_hat.inc,
+	src/morpho/opening.inc, src/morpho/laplacian.inc,
+	src/morpho/hit_or_miss.inc, src/morpho/gradient.inc,
+	src/morpho/closing.inc, src/morpho/watershed.hh,
+	src/morpho/erosion.hh, src/morpho/dilation.hh,
+	src/level/extrema_killer.hh, src/level/cc.hh: Rewrite
+	documentation in LaTeX instead of Texinfo (i.e., s/@/\\\\/g).
+
+In doc/:
+2002-06-04  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* tpl/processing.tpl: Rewrite to output LaTeX instead of Texinfo.
+	* doc/Makefile.am: Rewrite.
+	* doc/oln-ref.tex: New file.
+	* doc/oln-ref.texi: Delete.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 23 May 2002 19:54:18 +0200")
+(Checkin-Time "Tue, 04 Jun 2002 17:40:51 +0200")
 (Checkin-Login adl)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
@@ -82,7 +96,7 @@
   (configure.ac (oln/3_configure. 1.8 644))
   (THANKS (oln/4_THANKS 1.1 644))
   (img/lena.pgm (oln/5_lena.pgm 1.1 640) :no-keywords)
-  (ChangeLog (oln/6_ChangeLog 1.40 644))
+  (ChangeLog (oln/6_ChangeLog 1.41 644))
   (src/config/system.hh (oln/7_system.hh 1.3 644))
   (src/utils/timer.hh (oln/8_timer.hh 1.1 644))
   (src/utils/stat.hh (oln/9_stat.hh 1.2 644))
@@ -106,25 +120,25 @@
   (src/Makefile.am (oln/27_Makefile.a 1.9 644))
   (src/basics3d.hh (oln/28_basics3d.h 1.1 644))
   (src/level/lut.hh (oln/29_lut.hh 1.4 644))
-  (src/level/connected.hh (oln/30_connected. 1.4 644))
+  (src/level/connected.hh (oln/30_connected. 1.5 644))
   (src/level/compare.hh (oln/31_compare.hh 1.1 644))
   (src/level/fill.hh (oln/32_fill.hh 1.1 644))
   (src/level/invert.hh (oln/33_invert.hh 1.2 644))
   (src/morpho/splitse.hh (oln/34_splitse.hh 1.1 644))
-  (src/morpho/reconstruction.hh (oln/35_reconstruc 1.6 644))
-  (src/morpho/geodesic_erosion.hh (oln/36_geodesic_e 1.4 644))
-  (src/morpho/geodesic_dilation.hh (oln/37_geodesic_d 1.4 644))
-  (src/morpho/extrema.hh (oln/38_extrema.hh 1.3 644))
-  (src/morpho/top_hat.inc (oln/39_top_hat.in 1.3 644))
-  (src/morpho/opening.inc (oln/40_opening.in 1.3 644))
-  (src/morpho/laplacian.inc (oln/41_laplacian. 1.3 644))
-  (src/morpho/hit_or_miss.inc (oln/42_hit_or_mis 1.4 644))
-  (src/morpho/gradient.inc (oln/43_gradient.i 1.3 644))
-  (src/morpho/closing.inc (oln/44_closing.in 1.3 644))
+  (src/morpho/reconstruction.hh (oln/35_reconstruc 1.7 644))
+  (src/morpho/geodesic_erosion.hh (oln/36_geodesic_e 1.5 644))
+  (src/morpho/geodesic_dilation.hh (oln/37_geodesic_d 1.5 644))
+  (src/morpho/extrema.hh (oln/38_extrema.hh 1.4 644))
+  (src/morpho/top_hat.inc (oln/39_top_hat.in 1.4 644))
+  (src/morpho/opening.inc (oln/40_opening.in 1.4 644))
+  (src/morpho/laplacian.inc (oln/41_laplacian. 1.4 644))
+  (src/morpho/hit_or_miss.inc (oln/42_hit_or_mis 1.5 644))
+  (src/morpho/gradient.inc (oln/43_gradient.i 1.4 644))
+  (src/morpho/closing.inc (oln/44_closing.in 1.4 644))
   (src/morpho/fast_morpho.hxx (oln/45_fast_morph 1.1 644))
   (src/morpho/fast_morpho.hh (oln/46_fast_morph 1.1 644))
   (src/morpho/watershed.hxx (oln/47_watershed. 1.3 644))
-  (src/morpho/watershed.hh (oln/48_watershed. 1.1 644))
+  (src/morpho/watershed.hh (oln/48_watershed. 1.2 644))
   (src/morpho/top_hat.hh (oln/49_top_hat.hh 1.1 644))
   (src/morpho/stat.hh (oln/50_stat.hh 1.2 644))
   (src/morpho/opening.hh (oln/51_opening.hh 1.2 644))
@@ -132,8 +146,8 @@
   (src/morpho/laplacian.hh (oln/b/1_laplacian. 1.2 644))
   (src/morpho/hit_or_miss.hh (oln/b/2_hit_or_mis 1.2 644))
   (src/morpho/gradient.hh (oln/b/3_gradient.h 1.2 644))
-  (src/morpho/erosion.hh (oln/b/4_erosion.hh 1.4 644))
-  (src/morpho/dilation.hh (oln/b/5_dilation.h 1.4 644))
+  (src/morpho/erosion.hh (oln/b/4_erosion.hh 1.5 644))
+  (src/morpho/dilation.hh (oln/b/5_dilation.h 1.5 644))
   (src/morpho/closing.hh (oln/b/6_closing.hh 1.2 644))
   (src/basics2d.hh (oln/b/7_basics2d.h 1.1 644))
   (src/io/pnm_write_common.hxx (oln/b/8_pnm_write_ 1.1 644))
@@ -289,12 +303,12 @@
 ;; Files added by populate at Sat, 12 Jan 2002 17:25:43 +0100,
 ;; to version 0_2.4(w), by adl:
 
-  (doc/tpl/processing.tpl (oln/d/48_processing 1.7 644))
+  (doc/tpl/processing.tpl (oln/d/48_processing 1.8 644))
   (doc/img/object.pbm (oln/d/49_object.pbm 1.1 644))
-  (doc/doc/oln-ref.texi (oln/d/50_oln-ref.te 1.5 644))
-  (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.6 644))
+
+  (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.7 644))
   (doc/Makefile.am (oln/e/0_Makefile.a 1.1 644))
-  (doc/ChangeLog (oln/e/1_ChangeLog 1.11 644))
+  (doc/ChangeLog (oln/e/1_ChangeLog 1.12 644))
 
 ;; Files added by populate at Sat, 12 Jan 2002 17:28:39 +0100,
 ;; to version 0_2.5(w), by adl:
@@ -304,10 +318,10 @@
 ;; Files added by populate at Sat, 12 Jan 2002 17:48:01 +0100,
 ;; to version 0_2.6(w), by adl:
 
-  (doc/configure (oln/e/3_configure 1.5 755))
-  (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.4 644))
-  (doc/Makefile.in (oln/e/5_Makefile.i 1.5 644))
-  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.8 644))
+  (doc/configure (oln/e/3_configure 1.6 755))
+  (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.5 644))
+  (doc/Makefile.in (oln/e/5_Makefile.i 1.6 644))
+  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.9 644))
   (configure (oln/e/7_configure 1.10 755))
   (aclocal.m4 (oln/e/8_aclocal.m4 1.7 644))
   (Makefile.in (oln/e/9_Makefile.i 1.10 644))
@@ -333,8 +347,8 @@
 ;; Files added by populate at Sun, 13 Jan 2002 18:55:14 +0100,
 ;; to version 0_2.10(w), by adl:
 
-  (src/level/extrema_killer.hh (oln/e/19_extrema_ki 1.3 644))
-  (src/level/cc.hh (oln/e/20_cc.hh 1.2 644))
+  (src/level/extrema_killer.hh (oln/e/19_extrema_ki 1.4 644))
+  (src/level/cc.hh (oln/e/20_cc.hh 1.3 644))
 
 ;; Files added by populate at Sun, 13 Jan 2002 19:40:36 +0100,
 ;; to version 0_2.11(w), by adl:
@@ -439,6 +453,17 @@
 ;; to version 0_3.30(w), by adl:
 
   (tests/morpho/edoc.cc (oln/f/13_edoc.cc 1.1 644))
+
+;; Files added by populate at Tue, 04 Jun 2002 17:33:04 +0200,
+;; to version 0_4.5(w), by duret_g:
+
+  (doc/doc/oln-ref.tex (oln/f/14_oln-ref.te 1.1 644))
+  (doc/doc/bin () :directory)
+
+;; Files deleted by populate at Tue, 04 Jun 2002 17:33:04 +0200,
+;; from version 0_4.5(w), by duret_g:
+
+  ; (doc/doc/oln-ref.texi ())
 )
 (Merge-Parents)
 (New-Merge-Parents)

@@ -1,0 +1,67 @@
+\documentclass{book}
+\usepackage{graphicx}
+\usepackage{hevea}
+
+\newcommand\var\textit
+\newcommand\code\texttt
+
+\begin{document}
+\title{Olena Reference Manual}
+\author{EPITA Reserch and Development Laboratory}
+\date{FIXME:}
+\maketitle
+
+%\mbox{const image$<$I2$>$\& \var{minima_map}}, \mbox{const struct\_elt$<$E$>$\& \var{se}});X
+
+This manual documents Olena, a generic image processing library.
+
+Copyright 2001, 2002  Laboratoire de Recherche et D\'eveloppement de l'\'Epita.
+
+Permission is granted to make and distribute verbatim
+copies of this manual provided the copyright notice and
+this permission notice are preserved on all copies.
+
+% Permission is granted to process this file through TeX
+% and print the results, provided the printed document
+% carries a copying permission notice identical to this
+% one except for the removal of this paragraph (this
+% paragraph not being relevant to the printed manual).
+
+Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided that the
+entire resulting derived work is distributed under the terms of a
+permission notice identical to this one.
+
+Permission is granted to copy and distribute
+translations of this manual into another language,
+under the above conditions for modified versions,
+except that this permission notice may be stated in a
+translation approved by the Free Software Foundation.
+
+\newpage
+
+\chapter{Introduction}
+
+This reference manual will eventually document any public class and
+functions available in Olena.  Sadly, it only covers the morphological
+processing presently.
+
+The \texttt{demo/} directory contains a few sample programs that may be
+worth looking at before digging the source or sending us an email
+(\texttt{olena@lrde.epita.fr}).
+
+
+\chapter{Processings}
+
+\section{Morphological processings}
+
+\emph{Soille} refers to \emph{P. Soille, morphological Image Analysis
+-- Principals and Applications}.  Springer 1998.
+
+\input{ref-morpho.tex}
+
+\section{Level processings}
+
+\input{ref-level.tex}
+
+\end{document}

@@ -61,9 +61,9 @@ namespace oln {
      * arg: const struct_elt<E>&, se, IN, structural element
      * ret: Concrete(_I)
      * doc:
-     * Impose minima defined by @var{minima_map} on @var{input}
-     * using @var{se}
-     *   as structural element. Soille p.172. @var{minima_map} must
+     * Impose minima defined by \var{minima_map} on \var{input}
+     * using \var{se}
+     *   as structural element. Soille p.172. \var{minima_map} must
      * be a bin image (true for a minimum, false for a non minimum).
      * The algorithm uses
      * sure_geodesic_reconstruction_erosion.
@@ -106,10 +106,10 @@ namespace oln {
      * arg: const struct_elt<E>&, se, IN, structural element
      * ret: Concrete(_I)
      * doc:
-     * Impose minima defined by @var{minima_map} on @var{input}
-     * using @var{se}
+     * Impose minima defined by \var{minima_map} on \var{input}
+     * using \var{se}
      *   as structural element. Soille p.172.  The algorithm uses
-     * sequential_geodesic_reconstruction_erosion. @var{minima_map} must
+     * sequential_geodesic_reconstruction_erosion. \var{minima_map} must
      * be a bin image (true for a minimum, false for a non minimum).
      * see: morpho::sequential_geodesic_reconstruction_erosion
      * ex:
@@ -146,9 +146,9 @@ namespace oln {
      * arg: const struct_elt<E>&, se, IN, structural element
      * ret: Concrete(_I)
      * doc:
-     * Impose minima defined by @var{minima_map} on @var{input}
-     * using @var{se}
-     *   as structural element. Soille p.172.   @var{minima_map} must
+     * Impose minima defined by \var{minima_map} on \var{input}
+     * using \var{se}
+     *   as structural element. Soille p.172.   \var{minima_map} must
      * be a bin image (true for a minimum, false for a non minimum).
      * The algorithm uses
      * hybrid_geodesic_reconstruction_erosion.
@@ -190,8 +190,8 @@ namespace oln {
      * arg: const struct_elt<E>&, se, IN, structural element
      * ret: Concrete(_I)
      * doc:
-     * Extract regional minima of @var{input}
-     * using @var{se}
+     * Extract regional minima of \var{input}
+     * using \var{se}
      *   as structural element. Soille p.169.  The algorithm uses
      * sure_geodesic_reconstruction_erosion.
      * see: morpho::sure_geodesic_reconstruction_erosion
@@ -224,8 +224,8 @@ namespace oln {
      * arg: const struct_elt<E>&, se, IN, structural element
      * ret: Concrete(_I)
      * doc:
-     * Extract regional minima of @var{input}
-     * using @var{se}
+     * Extract regional minima of \var{input}
+     * using \var{se}
      *   as structural element. Soille p.169.  The algorithm uses
      * sequential_geodesic_reconstruction_erosion.
      * see: morpho::sequential_geodesic_reconstruction_erosion
@@ -257,8 +257,8 @@ namespace oln {
      * arg: const struct_elt<E>&, se, IN, structural element
      * ret: Concrete(_I)
      * doc:
-     * Extract regional minima of @var{input}
-     * using @var{se}
+     * Extract regional minima of \var{input}
+     * using \var{se}
      *   as structural element. Soille p.169.  The algorithm uses
      * hybrid_geodesic_reconstruction_erosion.
      * see: morpho::hybrid_geodesic_reconstruction_erosion

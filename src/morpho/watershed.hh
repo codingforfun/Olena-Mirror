@@ -42,17 +42,17 @@ namespace oln {
      * arg: const neighborhood<N>&, ng, IN, neighborhood to consider
      * ret: typename mute<I, DestValue>::ret
      * doc:
-     *   Compute the segmented watershed for image @var{im} using
-     *   neighborhood @var{ng}.
+     *   Compute the segmented watershed for image \var{im} using
+     *   neighborhood \var{ng}.
      *
-     *   @code{watershed_seg} creates an ouput image whose values have
-     *   type @var{DestValue} (which should be discrete).  In this output
-     *   image, @code{DestValue::max()} indicates a watershed, and all
-     *   basins are labeled using values from @code{DestValue::min()} to
-     *   @code{DestValue::max() - 4} (the remaining values are used internally
+     *   \code{watershed_seg} creates an ouput image whose values have
+     *   type \var{DestValue} (which should be discrete).  In this output
+     *   image, \code{DestValue::max()} indicates a watershed, and all
+     *   basins are labeled using values from \code{DestValue::min()} to
+     *   \code{DestValue::max() - 4} (the remaining values are used internally
      *   by the algorithm).
      *
-     *   When there are more basins than @code{DestValue} can hold,
+     *   When there are more basins than \code{DestValue} can hold,
      *   wrapping occurs (i.e., the same label is used for several
      *   basin).
      * ref:
@@ -71,16 +71,16 @@ namespace oln {
      * arg: const neighborhood<N>&, ng, IN, neighborhood to consider
      * ret: typename mute<I, DestValue>::ret
      * doc:
-     *   Compute the connected watershed for image @var{im} using
-     *   neighborhood @var{ng}.
+     *   Compute the connected watershed for image \var{im} using
+     *   neighborhood \var{ng}.
      *
-     *   @code{watershed_con} creates an ouput image whose values have
-     *   type @var{DestValue} (which should be discrete).  In this output
-     *   all basins are labeled using values from @code{DestValue::min()} to
-     *   @code{DestValue::max() - 4} (the remaining values are used internally
+     *   \code{watershed_con} creates an ouput image whose values have
+     *   type \var{DestValue} (which should be discrete).  In this output
+     *   all basins are labeled using values from \code{DestValue::min()} to
+     *   \code{DestValue::max() - 4} (the remaining values are used internally
      *   by the algorithm).
      *
-     *   When there are more basins than @code{DestValue} can hold, wrapping
+     *   When there are more basins than \code{DestValue} can hold, wrapping
      *   occurs (i.e., the same label is used for several basin).  This is
      *   potentially harmful, because if two connected basins are labeled
      *   with the same value they will appear as one basin.
@@ -101,23 +101,23 @@ namespace oln {
      * arg: const neighborhood<N>&, ng, IN, neighborhood to consider
      * ret: Concrete(I2)&
      * doc:
-     *   Compute a segmented watershed for image @var{levels} using
-     *   neighborhood @var{ng}, and @var{markers} as starting point for
+     *   Compute a segmented watershed for image \var{levels} using
+     *   neighborhood \var{ng}, and \var{markers} as starting point for
      *   the flooding algorithm.
      *
-     *   @var{markers} is an image of the same size as @var{levels}
+     *   \var{markers} is an image of the same size as \var{levels}
      *   and containing discrete values indicating label associated to
-     *   each basin.  On input, fill @var{markers} with
-     *   @code{Value(I2)::min()} (this is the @emph{unknown} label)
+     *   each basin.  On input, fill \var{markers} with
+     *   \code{Value(I2)::min()} (this is the \emph{unknown} label)
      *   and mark the starting points or regions
-     *   (usually these are minima in @var{levels}) using a value
-     *   between @code{Value(I2)::min()+1} and @code{Value(I2)::max()-1}.
+     *   (usually these are minima in \var{levels}) using a value
+     *   between \code{Value(I2)::min()+1} and \code{Value(I2)::max()-1}.
      *
-     *   @code{watershed_seg_or} will flood @var{levels} from these
-     *   non-@emph{unknown} starting points, labeling basins using
+     *   \code{watershed_seg_or} will flood \var{levels} from these
+     *   non-\emph{unknown} starting points, labeling basins using
      *   the value you assigned to them, and markining watershed lines
-     *   with @code{Value(I2)::max()}.  @var{markers} should not contains
-     *   any @code{Value(I2)::min()} value on output.
+     *   with \code{Value(I2)::max()}.  \var{markers} should not contains
+     *   any \code{Value(I2)::min()} value on output.
      * ref:
      *   This is based on the original algorithm
      *   presented by D'Ornellas et al. (FIXME: ref?)

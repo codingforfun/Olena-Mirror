@@ -48,8 +48,8 @@ namespace oln {
      * arg: const struct_elt<E>&, se, IN, structural element
      * ret: Concrete(I1)
      * doc:
-     *  Compute the geodesic dilation of @var{marker} with respect
-     * to the mask @var{mask} image using @var{se}
+     *  Compute the geodesic dilation of \var{marker} with respect
+     * to the mask \var{mask} image using \var{se}
      *   as structural element. Soille p.156.
      * Note mask must be greater or equal than marker.
      * see: morpho::simple_geodesic_dilation
@@ -85,8 +85,8 @@ namespace oln {
      * arg: const struct_elt<E>&, se, IN, structural element
      * ret: Concrete(I1)
      * doc:
-     *  Compute the geodesic dilation of @var{marker} with respect
-     * to the mask @var{mask} image using @var{se}
+     *  Compute the geodesic dilation of \var{marker} with respect
+     * to the mask \var{mask} image using \var{se}
      *   as structural element. Soille p.156. Computation is
      * performed by hand (i.e without calling dilation).
      * Note mask must be greater or equal than marker.

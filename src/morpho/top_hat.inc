@@ -36,7 +36,7 @@
  * arg: const struct_elt<E>&, se, IN, structural element
  * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
  * doc:
- *   Compute white top hat of @var{input} using @var{se}
+ *   Compute white top hat of \var{input} using \var{se}
  *   as structural element. Soille p.105.
  * see: morpho::opening
  * ex:
@@ -77,7 +77,7 @@ Concrete(I) white_top_hat(const image<I>& input, const struct_elt<E>& se)
  * arg: const struct_elt<E>&, se, IN, structural element
  * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
  * doc:
- *   Compute black top hat of @var{input} using @var{se}
+ *   Compute black top hat of \var{input} using \var{se}
  *   as structural element. Soille p.105.
  * see: morpho::closing
  * ex:
@@ -122,7 +122,7 @@ Concrete(I) black_top_hat(const image<I>& input, const struct_elt<E>& se)
  * arg: const struct_elt<E>&, se, IN, structural element
  * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
  * doc:
- *   Compute self complementary top hat of @var{input} using @var{se}
+ *   Compute self complementary top hat of \var{input} using \var{se}
  *   as structural element. Soille p.106.
  * see: morpho::closing
  * see: morpho::opening
@@ -166,9 +166,9 @@ Concrete(I) self_complementary_top_hat(const image<I>& input,
  * arg: const struct_elt<E>&, se, IN, structural element
  * ret: typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
  * doc:
- *   Enhance contrast @var{input} by adding the white top hat, then
- * substracting the black top hat to @var{input}. Top hats are computed using
- * @var{se} as structural element. Soille p.109.
+ *   Enhance contrast \var{input} by adding the white top hat, then
+ * substracting the black top hat to \var{input}. Top hats are computed using
+ * \var{se} as structural element. Soille p.109.
  * see: morpho::white_top_hat
  * see: morpho::black_top_hat
  * ex:
