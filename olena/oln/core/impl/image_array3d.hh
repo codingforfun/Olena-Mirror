@@ -112,7 +112,7 @@ namespace oln {
       
 
       friend class image_impl<image_array3d<T> >;
-      friend class super_type;
+      friend class image_array<T, image_array3d<T> >;
 
       image_array3d(const size_type& s): super_type(s) 
       {

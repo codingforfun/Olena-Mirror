@@ -62,7 +62,7 @@ namespace oln {
     public:
 
       typedef iter<Exact> super_type;
-      friend class super_type;
+      friend class iter<Exact>;
 
       coord 
       col() const

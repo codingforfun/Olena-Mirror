@@ -1,3 +1,13 @@
+2003-10-14  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/core/dpoint1d.hh, oln/core/dpoint2d.hh,
+	* oln/core/dpoint3d.hh, oln/core/abstract/iter1d.hh,
+	* oln/core/abstract/iter2d.hh, oln/core/abstract/iter3d.hh,
+	* oln/core/point1d.hh, oln/core/point2d.hh, oln/core/point3d.hh,
+	* oln/core/impl/image_array.hh, oln/core/impl/image_array3d.hh,
+	* oln/core/impl/image_array2d.hh, oln/core/impl/image_array1d.h:
+	Don't use typedefs with the friend specifier.
+
 2003-10-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/io/readable.hh: Add default constructors for SWIG.

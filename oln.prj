@@ -1,39 +1,22 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 31)
-(Parent-Version oln 10 30)
+(Project-Version oln 10 32)
+(Parent-Version oln 10 31)
 (Version-Log "Index: olena/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-        * oln/io/readable.hh: Add default constructors for SWIG.
 
-+2003-10-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-+
-        * oln/utils/histogram.hh: Temporary fix for ntg::bin type.
-
- 2003-10-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-Index: tools/swilena/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-        * meta/swilena_ntg.i: Use builtin value type when possible. Define
-        int_u8 and int_s8. Remove obsolete typemaps.
-
-        * generate_morpho_instantiations.py (write_algorithms): Add int_u8
-        and int_s8. Enable algorithms fixed by previous patches.
-
-        * meta/swilena_image.i: Cleanup. Use builtin value type instead of real
-        data type when possible.
-
-        * expand.sh: Adjust consequently.
-
-        * ruby/tests/simple1.rb: Adjust consequently.
-        * python/tests/simple1.py: Adjust consequently.
-        * doc/examples/ruby/simple.rb: Adjust consequently.
-        * doc/examples/python/simple.py: Adjust consequently.
+        * oln/core/dpoint1d.hh, oln/core/dpoint2d.hh,
+        * oln/core/dpoint3d.hh, oln/core/abstract/iter1d.hh,
+        * oln/core/abstract/iter2d.hh, oln/core/abstract/iter3d.hh,
+        * oln/core/point1d.hh, oln/core/point2d.hh, oln/core/point3d.hh,
+        * oln/core/impl/image_array.hh, oln/core/impl/image_array3d.hh,
+        * oln/core/impl/image_array2d.hh, oln/core/impl/image_array1d.h:
+        Don't use typedefs with the friend specifier.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 09 Oct 2003 16:21:55 +0200")
+(Checkin-Time "Tue, 14 Oct 2003 09:40:52 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -141,7 +124,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.26 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.35 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.33 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.34 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.15 640))
 
@@ -230,11 +213,11 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/core/compose.hh (oln/c/22_compose.hh 1.5 640))
   (metalic/mlc/contract.hh (oln/d/31_contract.h 1.10 640))
   (olena/oln/core/coord.hh (oln/d/29_coord.hh 1.3 640))
-  (olena/oln/core/dpoint1d.hh (oln/d/27_dpoint1d.h 1.12 640))
+  (olena/oln/core/dpoint1d.hh (oln/d/27_dpoint1d.h 1.13 640))
   (olena/oln/core/dpoint1d.hxx (oln/d/26_dpoint1d.h 1.8 640))
-  (olena/oln/core/dpoint2d.hh (oln/d/25_dpoint2d.h 1.11 640))
+  (olena/oln/core/dpoint2d.hh (oln/d/25_dpoint2d.h 1.12 640))
   (olena/oln/core/dpoint2d.hxx (oln/d/24_dpoint2d.h 1.6 640))
-  (olena/oln/core/dpoint3d.hh (oln/d/23_dpoint3d.h 1.11 640))
+  (olena/oln/core/dpoint3d.hh (oln/d/23_dpoint3d.h 1.12 640))
   (olena/oln/core/dpoint3d.hxx (oln/d/22_dpoint3d.h 1.6 640))
   (olena/oln/core/abstract/dpoint.hh (oln/d/28_dpoint.hh 1.16 640))
   
@@ -259,9 +242,9 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   
   
   
-  (olena/oln/core/abstract/iter1d.hh (oln/d/10_iter1d.hh 1.15 640))
-  (olena/oln/core/abstract/iter2d.hh (oln/d/9_iter2d.hh 1.15 640))
-  (olena/oln/core/abstract/iter3d.hh (oln/d/8_iter3d.hh 1.15 640))
+  (olena/oln/core/abstract/iter1d.hh (oln/d/10_iter1d.hh 1.16 640))
+  (olena/oln/core/abstract/iter2d.hh (oln/d/9_iter2d.hh 1.16 640))
+  (olena/oln/core/abstract/iter3d.hh (oln/d/8_iter3d.hh 1.16 640))
   
 
   
@@ -277,11 +260,11 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/core/neighborhood3d.hh (oln/c/35_neighborho 1.15 640))
   (olena/oln/core/abstract/neighborhood.hh (oln/c/38_neighborho 1.18 640))
   (metalic/mlc/objs.hh (oln/c/34_objs.hh 1.7 640))
-  (olena/oln/core/point1d.hh (oln/c/32_point1d.hh 1.13 640))
+  (olena/oln/core/point1d.hh (oln/c/32_point1d.hh 1.14 640))
   (olena/oln/core/point1d.hxx (oln/c/31_point1d.hx 1.6 640))
-  (olena/oln/core/point2d.hh (oln/c/30_point2d.hh 1.11 640))
+  (olena/oln/core/point2d.hh (oln/c/30_point2d.hh 1.12 640))
   (olena/oln/core/point2d.hxx (oln/c/29_point2d.hx 1.5 640))
-  (olena/oln/core/point3d.hh (oln/c/28_point3d.hh 1.13 640))
+  (olena/oln/core/point3d.hh (oln/c/28_point3d.hh 1.14 640))
   (olena/oln/core/point3d.hxx (oln/c/27_point3d.hx 1.5 640))
   (olena/oln/core/abstract/point.hh (oln/c/33_point.hh 1.15 640))
   
@@ -972,11 +955,11 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.14.1.8 640))
   (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.11 640))
   (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.16 640))
-  (olena/oln/core/impl/image_array.hh (oln/t/30_image_arra 1.13 640))
+  (olena/oln/core/impl/image_array.hh (oln/t/30_image_arra 1.14 640))
   (olena/tests/core/tests/image1 (oln/t/31_image1 1.4 640))
-  (olena/oln/core/impl/image_array3d.hh (oln/t/32_image_arra 1.9 640))
-  (olena/oln/core/impl/image_array2d.hh (oln/t/33_image_arra 1.10 640))
-  (olena/oln/core/impl/image_array1d.hh (oln/t/34_image_arra 1.11 640))
+  (olena/oln/core/impl/image_array3d.hh (oln/t/32_image_arra 1.10 640))
+  (olena/oln/core/impl/image_array2d.hh (oln/t/33_image_arra 1.11 640))
+  (olena/oln/core/impl/image_array1d.hh (oln/t/34_image_arra 1.12 640))
   (olena/tests/core/tests/borders (oln/t/35_borders 1.3 640))
   (olena/tests/core/tests/clone (oln/t/36_clone 1.1 640))
   (olena/tests/core/tests/ref (oln/t/37_ref 1.3 640))
