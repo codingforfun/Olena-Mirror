@@ -1,21 +1,20 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 33)
-(Parent-Version oln 10 32)
+(Project-Version oln 10 34)
+(Parent-Version oln 10 33)
 (Version-Log "Index: olena/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-        * oln/core/abstract/image_with_type_with_dim.hh
-        (image_with_type_with_dim_swith): Select data_type_image_with_dim
-        by default, not data_type_image.
+        * oln/io/pnm_write_2d.hh: Store in the header the maximal value of
+        the encoding, not of the actual image values.
 
-        * tests/core/tests/without_ntg:
-        New test.
+        * tests/io/tests/headers: New test.
+        * tests/io/Makefile.am: Remove headers.pgm.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Sun, 02 Nov 2003 17:27:23 +0100")
+(Checkin-Time "Mon, 03 Nov 2003 21:57:43 +0100")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -123,7 +122,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.26 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.35 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.35 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.36 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.15 640))
 
@@ -439,7 +438,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (olena/tests/io/tests/2d (oln/e/47_2d.cc 1.7.1.7 640))
   (olena/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.7.1.10 640))
-  (olena/tests/io/Makefile.am (oln/e/49_Makefile.a 1.23 640))
+  (olena/tests/io/Makefile.am (oln/e/49_Makefile.a 1.24 640))
   (olena/tests/io/tests/pretty (oln/i/42_pretty.cc 1.2 640))
   (olena/tests/io/tests/se_fail (oln/i/43_se_fail.cc 1.3 640))
   (olena/tests/io/tests/se_pass (oln/i/44_se_pass.cc 1.2 640))
@@ -1012,7 +1011,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/tests/core/tests/image_list (oln/u/41_image_list 1.1 600))
   (olena/tests/io/tests/3d (oln/u/42_3d 1.2 600))
   (olena/oln/io/pnm_read_2d.hh (oln/u/43_pnm_read_2 1.4 600))
-  (olena/oln/io/pnm_write_2d.hh (oln/u/44_pnm_write_ 1.4 600))
+  (olena/oln/io/pnm_write_2d.hh (oln/u/44_pnm_write_ 1.5 600))
   (olena/img/lena3d.ppm (oln/u/45_lena3d.ppm 1.1 600))
   (olena/tests/io/tests/se_3d (oln/u/46_se_3d 1.1 600))
   (olena/tests/io/tests/se_1d (oln/u/47_se_1d 1.1 600))
@@ -1089,8 +1088,11 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 ;; to version 10.32(w), by nes:
 
   (olena/tests/core/tests/without_ntg (oln/v/31_without_nt 1.1 600))
+
+;; Files added by populate at Mon, 03 Nov 2003 21:56:15 +0100,
+;; to version 10.33(w), by burrus_n:
+
+  (olena/tests/io/tests/headers (oln/v/32_headers 1.1 600))
 )
-(Merge-Parents
-  (10.32 complete)
-)
+(Merge-Parents)
 (New-Merge-Parents)
