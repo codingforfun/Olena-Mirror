@@ -50,6 +50,7 @@ namespace oln {
       {
 	assertion(status_ != e_running);
 	total_time_ = 0;
+	stop_time_ = 0;
 	status_ = e_running;
 	start_time_ = clock();
       }
@@ -58,7 +59,7 @@ namespace oln {
       restart()
       {
 	assertion(status_ != e_unknown);
-	float val = value();
+	float val = total_time();
 	start();
 	return val;
       }
@@ -75,13 +76,25 @@ namespace oln {
       stop()
       {
 	assertion(status_ == e_running);
-	total_time_ += (clock() - start_time_);
+	stop_time_ = clock();
+	total_time_ += (stop_time_ - start_time_);
 	status_ = e_stopped;
-	return value();
+	return total_time();
+      }
+
+      // Time since the last resume() or start()
+      float
+      last_time() const
+      {
+	assertion(status_ != e_unknown);
+	return
+	  status_ == e_stopped ?
+	  float(stop_time_ - start_time_) / CLOCKS_PER_SEC :
+	  float((clock() - start_time_)) / CLOCKS_PER_SEC;
       }
 
       float
-      value()
+      total_time() const
       {
 	assertion(status_ != e_unknown);
 	return
@@ -99,6 +112,7 @@ namespace oln {
       } status_;
       clock_t total_time_;
       clock_t start_time_;
+      clock_t stop_time_;
     };
 
   } // end of namespace utils

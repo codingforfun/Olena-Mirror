@@ -1,5 +1,14 @@
 2003-11-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* oln/utils/timer.hh: Improve. Can give the elapsed time since the
+	last resume.
+	* tests/utils/tests/timer: Adjust consequently.
+
+	* tests/morpho/tests/overall_benchs: New test.
+	* tests/core/tests/benchs: New test.
+	
+2003-11-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* oln/arith/internal/opdecls.hh: Add missing default functors.
 	* oln/level/cc.hh: Use default arithmetic functor.
 	

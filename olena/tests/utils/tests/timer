@@ -30,14 +30,14 @@ check()
 
   t.stop();
 
-  float b = t.value();
+  float b = t.total_time();
 
   t.resume();
 
   for (int i = 0; i < 1000000000; )
     ++i;
 
-  b = t.value() - b;
+  b = t.total_time() - b;
 
   if (b >= 0)
     OK_OR_FAIL;
