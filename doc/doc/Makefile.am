@@ -1,4 +1,6 @@
-noinst_DATA = oln-ref.ps oln-ref.pdf html/oln-ref.html
+noinst_DATA = oln-ref.ps oln-ref.pdf html/oln-ref.html oln-dev.pdf
+
+info_TEXINFOS = oln-dev.texi
 
 tex_TEX = oln-ref.tex
 built_oln_ref_TEX = \
@@ -48,4 +50,4 @@ ref-level.tex: $(level_files) $(srcdir)/../tpl/processing.tpl
 	  $(GETDEFSFLAGS) --base-name=ref-level $(level_files)
 
 CLEANFILES = $(built_oln_ref_TEX) $(noinst_DATA) *.pdf *.eps *.ps
-CLEANFILES += *.aux *.bbl *blg *.dvi *.lot *.log *.out *.toc html/* bin/*
+CLEANFILES += *.tmp *.aux *.bbl *blg *.dvi *.lot *.log *.out *.toc html/* bin/*

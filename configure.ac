@@ -40,7 +40,7 @@ AC_SUBST([ZLIB_LDFLAGS])
 
 # Check for fftw.
 AC_ARG_WITH(fftw,
-  [AC_HELP_STRING([--with-fftw=DIR], [prefix for zlib installation])])
+  [AC_HELP_STRING([--with-fftw=DIR], [prefix for fftw installation])])
 FFTW_CFLAGS=''
 FFTW_LDFLAGS=''
 if test "x$with_fftw" != xno; then

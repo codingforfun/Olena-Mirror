@@ -1,3 +1,7 @@
+2002-11-27  Raphael Poss  <raph@lrde.epita.fr>
+
+	* configure.ac (fftw detection): minor fix in message. 
+
 2002-11-27  Jean-Sébastien Mouret  <js@lrde.epita.fr>
 
 	* oln/morpho/fast_morpho.hxx: Sort iterated dimensions
