@@ -1,5 +1,11 @@
 2004-02-10  Giovanni Palma  <giovanni@lrde.epita.fr>
 
+	* oln/morpho/attribute_closing_opening.hh: Make the
+	opening/closing choice at compile time.
+	* oln/morpho/attribute_union_find.hh: Likewise.
+
+	* oln/utils/histogram.hh: Add a distrib sort functor.
+
 	* oln/core/abstract/behavior.hh: Add behavior hierarchy (abstract
 	part).
 	* oln/core/behavior.hh: Add behavior hierarchy content.

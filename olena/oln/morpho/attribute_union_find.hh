@@ -171,20 +171,16 @@ namespace oln {
 
 	// bool closing = true -> a closing is performed,
 	// an opening otherwise.
-	template<class N>
+	template<bool closing, class N>
 	image_type
 	get_comptute(const lambda_type & lambda,
-		     const abstract::neighborhood<N>& Ng,
-		     const bool closing)
+		     const abstract::neighborhood<N>& Ng)
 	{
 	  lambda_ = &lambda;
 
 	  std::vector<point_type>	I(input_.npoints());
 
-	  if (closing)
-	    oln::utils::distrib_sort(input_, I);
-	  else
-	    oln::utils::distrib_sort_inv(input_, I);
+	  oln::utils::select_distrib_sort<closing>()(input_, I);
 
 	  level::fill(aux_data_, ntg_sup_val(lambda_type));
 	  aux_data_.border_adapt_assign(Ng.delta(), ntg_sup_val(lambda_type));

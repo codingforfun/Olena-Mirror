@@ -1,453 +1,120 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 63)
-(Parent-Version oln 10 62)
-(Version-Log "Index: ChangeLog
+(Project-Version oln 10 64)
+(Parent-Version oln 10 63)
+(Version-Log "Index: olena/ChangeLog
 from  Giovanni Palma  <giovanni@lrde.epita.fr>
+	* oln/morpho/attribute_closing_opening.hh: Make the
+	opening/closing choice at compile time.
+	* oln/morpho/attribute_union_find.hh: Likewise.
 
-	* NEWS: Describe behavior hierarchy.
-
-Index: olena/ChangeLog
-from  Giovanni Palma  <giovanni@lrde.epita.fr>
-
-	* oln/core/abstract/behavior.hh: Add behavior hierarchy (abstract
-	part).
-	* oln/core/behavior.hh: Add behavior hierarchy content.
-
-	* oln/morpho/attributes.hh: Correct 'ifndef' macros.
-
-	* tests/convol/tests/uniform_gauss: Improve tests.
-
-	* oln/convol/fast_gaussian.hh: Make the gaussian take care of the
-	behavior hierarchy.
-	* oln/convol/fast_gaussian.hxx: Likewise.
+	* oln/utils/histogram.hh: Add a distrib sort functor.
 
 Index: NEWS
---- NEWS Mon, 09 Feb 2004 18:57:03 +0100 palma_g (oln/0_NEWS 1.17 640)
-+++ NEWS Tue, 10 Feb 2004 15:25:07 +0100 palma_g (oln/0_NEWS 1.17 640)
-@@ -1,11 +1,18 @@
- Olena 0.10	Not yet
- 
-+	* Border behavior can be controlled with the behavior hierarchy.
-+	  If an algorithm support it, you can choose the way the image
-+          border will be seen. Three behaviors are available: mirror,
-+	  replicate or user defined value.
-+
- 	* Attribute opening/closing enhancement
--	  - Make the algothim more generic.
--	  - Add a lot of attributes.
-+	  - Make the algorithm more generic.
-+	  - Add a lot of attributes (area, disk, square, dist,
-+            rectangle, volume, height, maxvalue, minvalue).
+--- NEWS Tue, 10 Feb 2004 15:35:04 +0100 palma_g (oln/0_NEWS 1.18 640)
++++ NEWS Tue, 10 Feb 2004 17:19:37 +0100 palma_g (oln/0_NEWS 1.18 640)
+@@ -11,7 +11,7 @@
+             rectangle, volume, height, maxvalue, minvalue).
  
  	* Change the color conversion system
--	  - CIE RGB is the main color system.
-+	  - CIE RGB is the main color system e.g. it can be converted
-+	    directly into any other color system.
+-	  - CIE RGB is the main color system e.g. it can be converted
++	  - CIE RGB is the main color system i.e. it can be converted
+ 	    directly into any other color system.
  	  - Conversion between 2 color systems should pass by the RGB one.
  
- Olena 0.9	August 8, 2003
-Index: olena/oln/convol/fast_gaussian.hh
---- olena/oln/convol/fast_gaussian.hh Thu, 07 Aug 2003 02:08:21 +0200 david (oln/26_fast_gauss 1.6.1.6.1.3 640)
-+++ olena/oln/convol/fast_gaussian.hh Tue, 10 Feb 2004 14:56:04 +0100 palma_g (oln/26_fast_gauss 1.6.1.6.1.3 640)
-@@ -31,7 +31,7 @@
- # include <oln/basics.hh>
- # include <oln/convert/basics.hh>
- # include <ntg/float.hh>
--
-+# include <oln/core/behavior.hh>
- //
- // Gaussian filter implementation from
- // \"Recursively implementing the gaussian and its derivatives\"
-@@ -44,39 +44,66 @@
- 
-       // FIXME: add tests!
- 
--      template <class C, class B, class I>
-+      template <class C, class B, class I, class BE>
-       typename mute<I, typename convoutput<C, B, oln_value_type(I)>::ret>::ret
-       gaussian(const convert::abstract::conversion<C, B>& input_conv,
--	       const abstract::image<I>& in, ntg::float_s sigma);
-+	       const abstract::image<I>& in, ntg::float_s sigma,
-+	       const abstract::behavior<BE> &behavior);
- 
--      template <class C, class B, class I>
-+      template <class C, class B, class I, class BE>
-       typename mute<I, typename convoutput<C, B, oln_value_type(I)>::ret>::ret
-       gaussian_derivative(const convert::abstract::conversion<C, B>& input_conv,
--			  const abstract::image<I>& in, ntg::float_s sigma);
--      template <class C, class B, class I>
-+			  const abstract::image<I>& in, ntg::float_s sigma,
-+			  const abstract::behavior<BE> &behavior);
-+      template <class C, class B, class I, class BE>
-       typename mute<I, typename convoutput<C, B, oln_value_type(I)>::ret>::ret
-       gaussian_second_derivative(const convert::abstract::conversion<C, B>& input_conv,
- 				 const abstract::image<I>& in,
--				 ntg::float_s sigma);
-+				 ntg::float_s sigma,
-+				 const abstract::behavior<BE> &behavior);
- 
-       /* Same functions, with a default conversion.  */
- 
-+      template <class I, class BE> inline
-+      oln_concrete_type(I)
-+      gaussian(const abstract::image<I>& in, ntg::float_s sigma,
-+	       const abstract::behavior<BE> &behavior)
-+      { return gaussian(convert::force<oln_value_type(I)>(), in, sigma,
-+			behavior); }
-+
-+      template <class I, class BE> inline
-+      oln_concrete_type(I)
-+      gaussian_derivative(const abstract::image<I>& in, ntg::float_s sigma,
-+			  const abstract::behavior<BE> &behavior)
-+      { return gaussian_derivative(convert::force<oln_value_type(I)>(), in, sigma,
-+				   behavior); }
-+
-+      template <class I, class BE> inline
-+      oln_concrete_type(I)
-+      gaussian_second_derivative(const abstract::image<I>& in,
-+				 ntg::float_s sigma,
-+				 const abstract::behavior<BE> &behavior = mirror_behavior<>())
-+      { return gaussian_second_derivative(convert::force<oln_value_type(I)>(),
-+					  in, sigma, behavior); }
-+
-+      /* Same functions, with a default behavior (mirror_behavior). */
-       template <class I> inline
-       oln_concrete_type(I)
-       gaussian(const abstract::image<I>& in, ntg::float_s sigma)
--      { return gaussian(convert::force<oln_value_type(I)>(), in, sigma); }
-+      { return gaussian(convert::force<oln_value_type(I)>(), in, sigma,
-+			mirror_bhv()); }
- 
-       template <class I> inline
-       oln_concrete_type(I)
-       gaussian_derivative(const abstract::image<I>& in, ntg::float_s sigma)
--      { return gaussian_derivative(convert::force<oln_value_type(I)>(), in, sigma); }
-+      { return gaussian_derivative(convert::force<oln_value_type(I)>(), in, sigma,
-+				   mirror_bhv()); }
- 
-       template <class I> inline
-       oln_concrete_type(I)
--      gaussian_second_derivative(const abstract::image<I>& in,
--				 ntg::float_s sigma)
--      { return gaussian_second_derivative(convert::force<oln_value_type(I)>(),
--					  in, sigma); }
-+	gaussian_second_derivative(const abstract::image<I>& in, ntg::float_s sigma)
-+      { return gaussian_second_derivative(convert::force<oln_value_type(I)>(), in, sigma,
-+					  mirror_bhv()); }
+Index: olena/oln/utils/histogram.hh
+--- olena/oln/utils/histogram.hh Fri, 06 Feb 2004 16:02:37 +0100 palma_g (oln/10_histogram. 1.6.1.14.1.4 640)
++++ olena/oln/utils/histogram.hh Tue, 10 Feb 2004 17:13:39 +0100 palma_g (oln/10_histogram. 1.6.1.14.1.4 640)
+@@ -523,6 +523,30 @@
+ 	*(ptr[unsigned(im[p] - ntg_min_val(val))]++) = p;
      }
-   }
- }
-Index: olena/oln/convol/fast_gaussian.hxx
---- olena/oln/convol/fast_gaussian.hxx Wed, 28 Jan 2004 16:28:44 +0100 palma_g (oln/25_fast_gauss 1.7.1.8.1.5 640)
-+++ olena/oln/convol/fast_gaussian.hxx Tue, 10 Feb 2004 13:09:29 +0100 palma_g (oln/25_fast_gauss 1.7.1.8.1.5 640)
-@@ -230,12 +230,13 @@
- 	  }
- 	};
  
--	template <class C, class B, class I, class F>
-+	template <class C, class B, class I, class F, class BE>
- 	typename mute<I, typename convoutput<C,B,oln_value_type(I)>::ret>::ret
- 	gaussian_common_(const convert::abstract::conversion<C,B>& c,
- 			 const abstract::image<I>& in,
- 			 const F& coef,
--			 ntg::float_s sigma)
-+			 ntg::float_s sigma,
-+			 const abstract::behavior<BE> &behavior)
++    // to select staticly the good distrib_sort
++    template <bool reverse>
++    struct select_distrib_sort
++    {
++      template <class I>
++      void
++      operator ()(const oln::abstract::image<I>& im,
++		  std::vector<oln_point_type(I)> &v)
++      {
++	distrib_sort_inv(im, v);
++      }
++    };
++
++    template <>
++    struct select_distrib_sort<true>
++    {
++      template <class I>
++      void
++      operator ()(const oln::abstract::image<I>& im,
++		  std::vector<oln_point_type(I)> &v)
++      {
++	distrib_sort(im, v);
++      }
++    };
+   } // end of namespace utils
+ 
+ } // end of namespace oln
+Index: olena/oln/morpho/attribute_closing_opening.hh
+--- olena/oln/morpho/attribute_closing_opening.hh Mon, 09 Feb 2004 18:57:03 +0100 palma_g (oln/q/49_attribute_ 1.12 640)
++++ olena/oln/morpho/attribute_closing_opening.hh Tue, 10 Feb 2004 16:52:24 +0100 palma_g (oln/q/49_attribute_ 1.12 640)
+@@ -43,9 +43,10 @@
+ 			const abstract::neighborhood<N>& Ng,
+ 			const attr_lambda_type(A) &lambda)
  	{
- 	  typename mute<I, ntg::float_s>::ret work_img(in.size());
++	  typedef N	toto;
+ 	  typedef tarjan::tarjan_set<oln_concrete_type(I), A > tarjan_set_type;
+-	  tarjan_set_type area_closing(input.exact(), attr_env_type(A)());
+-	  return area_closing.get_comptute(lambda, Ng, true);
++	  tarjan_set_type attr_closing(input.exact(), attr_env_type(A)());
++	  return attr_closing.template get_comptute<true>(lambda, Ng);
+ 	}
  
-@@ -247,7 +248,7 @@
- 	     be linear, so when sigma is big enougth, the signal may
- 	     be parasitized by the non signal values.
- 	   */
--	  work_img.border_adapt_mirror(ntg::cast::round<coord>(5 * sigma));
-+	  behavior.adapt_border(work_img, ntg::cast::round<coord>(5 * sigma));
+ 	// attribute opening
+@@ -56,8 +57,8 @@
+ 			const attr_lambda_type(A) &lambda)
+ 	{
+ 	  typedef tarjan::tarjan_set<oln_concrete_type(I), A > tarjan_set_type;
+-	  tarjan_set_type area_opening(input.exact(), attr_env_type(A)());
+-	  return area_opening.get_comptute(lambda , Ng, false);
++	  tarjan_set_type attr_opening(input.exact(), attr_env_type(A)());
++	  return attr_opening.template get_comptute<false>(lambda, Ng);
+ 	}
  
- 	  gaussian_<I::dim>::doit(work_img, coef);
+       } // !internal
+Index: olena/oln/morpho/attribute_union_find.hh
+--- olena/oln/morpho/attribute_union_find.hh Mon, 09 Feb 2004 18:57:03 +0100 palma_g (oln/q/50_attribute_ 1.10 640)
++++ olena/oln/morpho/attribute_union_find.hh Tue, 10 Feb 2004 17:15:02 +0100 palma_g (oln/q/50_attribute_ 1.10 640)
+@@ -171,20 +171,16 @@
  
-@@ -265,10 +266,11 @@
+ 	// bool closing = true -> a closing is performed,
+ 	// an opening otherwise.
+-	template<class N>
++	template<bool closing, class N>
+ 	image_type
+ 	get_comptute(const lambda_type & lambda,
+-		     const abstract::neighborhood<N>& Ng,
+-		     const bool closing)
++		     const abstract::neighborhood<N>& Ng)
+ 	{
+ 	  lambda_ = &lambda;
  
-       } // internal
+ 	  std::vector<point_type>	I(input_.npoints());
  
--      template <class C, class B, class I>
-+      template <class C, class B, class I, class BE>
-       typename mute<I, typename convoutput<C,B,oln_value_type(I)>::ret>::ret
-       gaussian(const convert::abstract::conversion<C,B>& c,
--	       const abstract::image<I>& in, ntg::float_s sigma)
-+	       const abstract::image<I>& in, ntg::float_s sigma,
-+	       const abstract::behavior<BE> &behavior)
-       {
- 	internal::recursivefilter_coef_<float>
- 	  coef(1.68f, 3.735f,
-@@ -278,13 +280,14 @@
- 	       sigma,
- 	       internal::recursivefilter_coef_<float>::DericheGaussian);
+-	  if (closing)
+-	    oln::utils::distrib_sort(input_, I);
+-	  else
+-	    oln::utils::distrib_sort_inv(input_, I);
++	  oln::utils::select_distrib_sort<closing>()(input_, I);
  
--	return internal::gaussian_common_(c, in, coef, sigma);
-+	return internal::gaussian_common_(c, in, coef, sigma, behavior);
-       }
- 
--      template <class C, class B, class I>
-+      template <class C, class B, class I, class BE>
-       typename mute<I, typename convoutput<C,B,oln_value_type(I)>::ret>::ret
-       gaussian_derivative(const convert::abstract::conversion<C,B>& c,
--			  const abstract::image<I>& in, ntg::float_s sigma)
-+			  const abstract::image<I>& in, ntg::float_s sigma,
-+			  const abstract::behavior<BE> &behavior)
-       {
- 	internal::recursivefilter_coef_<float>
- 	  coef(-0.6472f, -4.531f,
-@@ -295,13 +298,14 @@
- 	       internal::recursivefilter_coef_<float>
- 	       ::DericheGaussianFirstDerivative);
- 
--	return internal::gaussian_common_(c, in, coef, sigma);
-+	return internal::gaussian_common_(c, in, coef, sigma, behavior);
-       }
- 
--      template <class C, class B, class I>
-+      template <class C, class B, class I, class BE>
-       typename mute<I, typename convoutput<C,B,oln_value_type(I)>::ret>::ret
-       gaussian_second_derivative(const convert::abstract::conversion<C,B>& c,
--				 const abstract::image<I>& in, ntg::float_s sigma)
-+				 const abstract::image<I>& in, ntg::float_s sigma,
-+				 const abstract::behavior<BE> &behavior)
-       {
- 	internal::recursivefilter_coef_<float>
- 	  coef(-1.331f, 3.661f,
-@@ -312,7 +316,7 @@
- 	       internal::recursivefilter_coef_<float>
- 	       ::DericheGaussianSecondDerivative);
- 
--	return internal::gaussian_common_(c, in, coef, sigma);
-+	return internal::gaussian_common_(c, in, coef, sigma, behavior);
-       }
- 
-     } // fast
-Index: olena/tests/convol/tests/uniform_gauss
---- olena/tests/convol/tests/uniform_gauss Fri, 30 Jan 2004 10:25:13 +0100 palma_g (oln/j/41_uniform_ga 1.1 644)
-+++ olena/tests/convol/tests/uniform_gauss Tue, 10 Feb 2004 15:17:49 +0100 palma_g (oln/j/41_uniform_ga 1.1 644)
-@@ -23,9 +23,10 @@
-   for_all(it)
-     img[it] = 42;
-   image2d<int_u8>		img2 = convol::fast::gaussian(img, 5);
-+  image2d<int_u8>		img3 = convol::fast::gaussian(img, 5, replicate_bhv());
- 
-   for_all(it)
--    if (img[it] != img2[it])
-+    if ((img[it] != img2[it]) || (img[it] != img3[it]))
-       return true;
-   return false;
- }
-Index: olena/oln/morpho/attributes.hh
---- olena/oln/morpho/attributes.hh Mon, 09 Feb 2004 18:57:03 +0100 palma_g (oln/j/45_attributes 1.2 644)
-+++ olena/oln/morpho/attributes.hh Tue, 10 Feb 2004 14:59:24 +0100 palma_g (oln/j/45_attributes 1.2 644)
-@@ -25,18 +25,11 @@
- // reasons why the executable file might be covered by the GNU General
- // Public License.
- 
--#ifndef ATTRIBUTES_HH
--# define ATTRIBUTES_HH
-+#ifndef OLN_MORPHO_ATTRIBUTES_HH
-+# define OLN_MORPHO_ATTRIBUTES_HH
- # include <mlc/type.hh>
- # include <vector>
- 
--// some usefull macros
--
--// those macros should be moved into mlc
--// # define mlc_exact_vt_type(T, Exact)	typename mlc::exact_vt<T, Exact>::ret
--// # define oln_2_exact_vt_type(self, T, Exact)	typename mlc::exact_vt<self<T, Exact>, Exact>::ret
--// # define dispatch(Fun)			return exact().Fun##_impl
--
- // attribute dedicated macros
- # define attr_lambda_type(T)	typename attr_traits<T>::lambda_type
- # define attr_env_type(T)	typename attr_traits<T>::env_type
-@@ -859,5 +852,5 @@
- // FIXME: to be written...
- 
- 
--#endif // ndef ATTRIBUTES_HH
-+#endif // !OLN_MORPHO_ATTRIBUTES
- 
-Index: olena/oln/core/abstract/behavior.hh
---- olena/oln/core/abstract/behavior.hh Tue, 10 Feb 2004 15:33:34 +0100 palma_g ()
-+++ olena/oln/core/abstract/behavior.hh Tue, 10 Feb 2004 14:54:58 +0100 palma_g (oln/j/46_behavior.h  644)
-@@ -0,0 +1,57 @@
-+// Copyright (C) 2004  EPITA Research and Development Laboratory
-+//
-+// This  file is  part of  the Olena  Library.  This  library  is free
-+// software; you can redistribute it  and/or modify it under the terms
-+// of the  GNU General  Public License version  2 as published  by the
-+// Free Software Foundation.
-+//
-+// This library is distributed in the hope that it will be useful, but
-+// WITHOUT  ANY  WARRANTY;  without   even  the  implied  warranty  of
-+// MERCHANTABILITY or  FITNESS FOR A PARTICULAR PURPOSE.   See the GNU
-+// General Public License for more details.
-+//
-+// You should have  received a copy of the  GNU General Public License
-+// along with  this library; see the  file COPYING.  If  not, write to
-+// the Free Software Foundation, 59  Temple Place - Suite 330, Boston,
-+// MA 02111-1307, USA.
-+//
-+// As a  special exception, you  may use this  file as part of  a free
-+// software library without restriction.  Specifically, if other files
-+// instantiate templates  or use macros or inline  functions from this
-+// file, or  you compile  this file  and link it  with other  files to
-+// produce  an executable,  this file  does  not by  itself cause  the
-+// resulting  executable  to be  covered  by  the  GNU General  Public
-+// License.   This exception  does  not however  invalidate any  other
-+// reasons why the executable file might be covered by the GNU General
-+// Public License.
-+
-+#ifndef OLENA_CORE_ABSTRACT_BEHAVIOR_HH
-+# define OLENA_CORE_ABSTRACT_BEHAVIOR_HH
-+# include <mlc/type.hh>
-+# include <oln/core/abstract/image.hh>
-+# include <oln/core/coord.hh>
-+
-+namespace oln {
-+    namespace abstract {
-+      // behavior hierarchy
-+      //the aim of this one is to describe how an algorithm should work
-+      //on borders
-+      template <class Exact>
-+      class behavior: public mlc_hierarchy::any<Exact>
-+      {
-+      public:
-+	typedef behavior<Exact>				self_type;
-+	typedef mlc_exact_vt_type(self_type, Exact)	exact_type;
-+
-+	template <class I>
-+	void adapt_border(oln::abstract::image<I> &im, coord border_size) const
-+	{
-+	  mlc_dispatch(adapt_border)(im, border_size);
-+	};
-+      protected:
-+	behavior() {};
-+      };
-+    } // !abstract
-+}
-+
-+#endif // !OLENA_CORE_ABSTRACT_BEHAVIOR_HH
-Index: olena/oln/core/behavior.hh
---- olena/oln/core/behavior.hh Tue, 10 Feb 2004 15:33:34 +0100 palma_g ()
-+++ olena/oln/core/behavior.hh Tue, 10 Feb 2004 15:12:48 +0100 palma_g (oln/j/47_behavior.h  644)
-@@ -0,0 +1,108 @@
-+// Copyright (C) 2004 EPITA Research and Development Laboratory
-+//
-+// This  file is  part of  the Olena  Library.  This  library  is free
-+// software; you can redistribute it  and/or modify it under the terms
-+// of the  GNU General  Public License version  2 as published  by the
-+// Free Software Foundation.
-+//
-+// This library is distributed in the hope that it will be useful, but
-+// WITHOUT  ANY  WARRANTY;  without   even  the  implied  warranty  of
-+// MERCHANTABILITY or  FITNESS FOR A PARTICULAR PURPOSE.   See the GNU
-+// General Public License for more details.
-+//
-+// You should have  received a copy of the  GNU General Public License
-+// along with  this library; see the  file COPYING.  If  not, write to
-+// the Free Software Foundation, 59  Temple Place - Suite 330, Boston,
-+// MA 02111-1307, USA.
-+//
-+// As a  special exception, you  may use this  file as part of  a free
-+// software library without restriction.  Specifically, if other files
-+// instantiate templates  or use macros or inline  functions from this
-+// file, or  you compile  this file  and link it  with other  files to
-+// produce  an executable,  this file  does  not by  itself cause  the
-+// resulting  executable  to be  covered  by  the  GNU General  Public
-+// License.   This exception  does  not however  invalidate any  other
-+// reasons why the executable file might be covered by the GNU General
-+// Public License.
-+
-+#ifndef OLENA_CORE_BEHAVIOR_HH
-+# define OLENA_CORE_BEHAVIOR_HH
-+# include <oln/core/abstract/behavior.hh>
-+# include <mlc/type.hh>
-+
-+namespace oln {
-+  // mirror the image content into the border
-+  template <class Exact = mlc::final>
-+  class mirror_behavior:
-+    public abstract::behavior<mlc_exact_vt_type(mirror_behavior<Exact>, Exact)>
-+  {
-+  public:
-+    typedef mirror_behavior<Exact>			self_type;
-+    typedef mlc_exact_vt_type(self_type, Exact)	exact_type;
-+
-+    template <class I>
-+      void adapt_border_impl(oln::abstract::image<I> &im, coord border_size) const
-+      {
-+	im.border_adapt_mirror(border_size);
-+      };
-+  };
-+
-+  // set the border to a specific value
-+  template <class T, class Exact = mlc::final>
-+  class value_behavior:
-+    public abstract::behavior<mlc_2_exact_vt_type(value_behavior, T, Exact)>
-+  {
-+  public:
-+    typedef value_behavior<T, Exact>		self_type;
-+    typedef mlc_exact_vt_type(self_type, Exact)	exact_type;
-+    typedef T					value_type;
-+
-+    explicit value_behavior(value_type value): value_(value)
-+      {
-+      };
-+
-+    template <class I>
-+      void adapt_border_impl(abstract::image<I> &im, coord border_size) const
-+      {
-+	im.border_adapt_assign(border_size, ntg::cast::force<oln_value_type(I)>(value_));
-+      };
-+
-+  protected:
-+    value_type	value_;
-+  };
-+
-+  // replicate the border
-+  template <class Exact = mlc::final>
-+  class replicate_behavior:
-+    public abstract::behavior<mlc_exact_vt_type(replicate_behavior<Exact>, Exact)>
-+  {
-+  public:
-+    typedef replicate_behavior<Exact>		self_type;
-+    typedef mlc_exact_vt_type(self_type, Exact)	exact_type;
-+
-+    template <class I>
-+      void adapt_border_impl(abstract::image<I> &im, coord border_size) const
-+      {
-+	im.border_adapt_copy(border_size);
-+      };
-+  };
-+
-+  // tools to call ctors with type inference
-+  inline mirror_behavior<> mirror_bhv()
-+  {
-+    return mirror_behavior<>();
-+  }
-+
-+  template <class T>
-+  inline value_behavior<T> value_bhv(const T &value)
-+  {
-+    return value_behavior<T>(value);
-+  }
-+
-+  inline replicate_behavior<> replicate_bhv()
-+  {
-+    return replicate_behavior<>();
-+  }
-+} // !oln
-+
-+#endif // !OLN_CORE_BEHAVIOR_HH
+ 	  level::fill(aux_data_, ntg_sup_val(lambda_type));
+ 	  aux_data_.border_adapt_assign(Ng.delta(), ntg_sup_val(lambda_type));
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 10 Feb 2004 15:35:04 +0100")
+(Checkin-Time "Tue, 10 Feb 2004 17:32:17 +0100")
 (Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -554,7 +221,7 @@ Index: olena/oln/core/behavior.hh
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.2 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.35 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.6 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.7 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 640))
 
@@ -583,7 +250,7 @@ Index: olena/oln/core/behavior.hh
   (doc/ref/processing.tpl (oln/d/48_processing 1.16 640))
 
   (Makefile.am (oln/n/32_Makefile.a 1.17.1.2.1.7 640))
-  (NEWS (oln/0_NEWS 1.18 640))
+  (NEWS (oln/0_NEWS 1.19 640))
 
   (olena/img/face_se.pbm (oln/n/17_face_se.pb 1.1 640) :no-keywords)
   (olena/img/lena256.pgm (oln/n/14_lena256.pg 1.1 640) :no-keywords)
@@ -840,7 +507,7 @@ Index: olena/oln/core/behavior.hh
   (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.7 640))
   (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.7 640))
   (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.7 640))
-  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.4 640))
+  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.5 640))
   (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.9 640))
   (olena/oln/utils/timer.hh (oln/8_timer.hh 1.8 640))
   (olena/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.5.1.1 640))
@@ -1205,8 +872,8 @@ Index: olena/oln/core/behavior.hh
 ;; Files added by populate at Tue, 04 Mar 2003 19:30:28 +0100,
 ;; to version 8.9(w), by jerome:
 
-  (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.12 640))
-  (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.10 640))
+  (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.13 640))
+  (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.11 640))
 
   (olena/tests/convol () :directory)
   (metalic/config (../config) :symlink)
@@ -1636,6 +1303,6 @@ Index: olena/oln/core/behavior.hh
   (olena/oln/core/behavior.hh (oln/j/47_behavior.h 1.1 644))
 )
 (Merge-Parents
-  (10.62 complete)
+  (10.63 complete)
 )
 (New-Merge-Parents)

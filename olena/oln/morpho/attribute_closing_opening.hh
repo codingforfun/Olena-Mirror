@@ -43,9 +43,10 @@ namespace oln {
 			const abstract::neighborhood<N>& Ng,
 			const attr_lambda_type(A) &lambda)
 	{
+	  typedef N	toto;
 	  typedef tarjan::tarjan_set<oln_concrete_type(I), A > tarjan_set_type;
-	  tarjan_set_type area_closing(input.exact(), attr_env_type(A)());
-	  return area_closing.get_comptute(lambda, Ng, true);
+	  tarjan_set_type attr_closing(input.exact(), attr_env_type(A)());
+	  return attr_closing.template get_comptute<true>(lambda, Ng);
 	}
 
 	// attribute opening
@@ -56,8 +57,8 @@ namespace oln {
 			const attr_lambda_type(A) &lambda)
 	{
 	  typedef tarjan::tarjan_set<oln_concrete_type(I), A > tarjan_set_type;
-	  tarjan_set_type area_opening(input.exact(), attr_env_type(A)());
-	  return area_opening.get_comptute(lambda , Ng, false);
+	  tarjan_set_type attr_opening(input.exact(), attr_env_type(A)());
+	  return attr_opening.template get_comptute<false>(lambda, Ng);
 	}
 
       } // !internal

@@ -11,7 +11,7 @@ Olena 0.10	Not yet
             rectangle, volume, height, maxvalue, minvalue).
 
 	* Change the color conversion system
-	  - CIE RGB is the main color system e.g. it can be converted
+	  - CIE RGB is the main color system i.e. it can be converted
 	    directly into any other color system.
 	  - Conversion between 2 color systems should pass by the RGB one.
 

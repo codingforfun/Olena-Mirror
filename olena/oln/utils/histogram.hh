@@ -523,6 +523,30 @@ namespace oln {
 	*(ptr[unsigned(im[p] - ntg_min_val(val))]++) = p;
     }
 
+    // to select staticly the good distrib_sort
+    template <bool reverse>
+    struct select_distrib_sort
+    {
+      template <class I>
+      void
+      operator ()(const oln::abstract::image<I>& im,
+		  std::vector<oln_point_type(I)> &v)
+      {
+	distrib_sort_inv(im, v);
+      }
+    };
+
+    template <>
+    struct select_distrib_sort<true>
+    {
+      template <class I>
+      void
+      operator ()(const oln::abstract::image<I>& im,
+		  std::vector<oln_point_type(I)> &v)
+      {
+	distrib_sort(im, v);
+      }
+    };
   } // end of namespace utils
 
 } // end of namespace oln
