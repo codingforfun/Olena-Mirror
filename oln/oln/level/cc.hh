@@ -71,11 +71,11 @@ namespace oln {
     // Number the connected components i.e label true. background(i.e
     // label false) has the label 0; in the output
     // FIXME: Should probably be turned into a class.
-    template <class DestType, class _I, class _E, class NbLabel>
+    template <class DestType, class _I, class _E>
     typename mute<_I, DestType>::ret
     frontp_connected_component(const image<_I>& _input,
 			       const neighborhood<_E>& _se, 
-			       NbLabel& nb = none())
+			       unsigned& nb)
     {
       // FIXME: ensure the Value(I) is bin.
       Exact_cref(I, input);
@@ -128,8 +128,17 @@ namespace oln {
 	    }
 	  cur_label;
 	}
-      optional_behaviour<update_label,NbLabel>::do_it(nb, cur_label);
+      nb_label = cur_label;
       return output;
+    }
+
+    template <class DestType, class _I, class _E>
+    typename mute<_I, DestType>::ret
+    frontp_connected_component(const image<_I>& _input,
+			       const neighborhood<_E>& _se)
+    {
+      unsigned dummy;
+      return frontp_connected_component(_input, _se, dummy);
     }
 
     template <class _I>
@@ -156,19 +165,6 @@ namespace oln {
     }
 
   } // end of level.
-
-  template <class T>
-  struct optional_behaviour<level::update_label, T>
-  {
-    template <class U>
-    static inline 
-    void do_it(T& nb, U new_nb)
-    {
-	nb = new_nb;
-    }
-  };
-  
-  DoNothingWhenNone(level::update_label);
 
 } // end of oln.
 

@@ -1,3 +1,8 @@
+2003-01-09  Yann Régis-Gianas  <yann@lrde.epita.fr>
+
+	* oln/oln/level/cc.hh: do not use optional.hh stuff anymore.
+	* oln/oln/meta/optional.hh: fix a bug.
+
 2003-01-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/types/optraits_bin.hh: fix logical "and" and "xor" 
