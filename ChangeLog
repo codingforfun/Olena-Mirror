@@ -1,5 +1,9 @@
 2004-04-13  Damien Thivolle  <damien@lrde.epita.fr>
 
+	* config/oln.m4: Fix.
+
+2004-04-13  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* configure.ac: Check for doxygen version.
 	* config/oln.m4: Add macro to check for doxygen version.
 

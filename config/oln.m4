@@ -393,6 +393,7 @@ AC_DEFUN([AC_CXX_CHECK_MATH],
      DOC_CPPFLAGS="$DOC_CPPFLAGS -DNEED_$2"
   elif test "x$[]oln_cv_$1_flags" = xisodef; then
      CPPFLAGS="$CPPFLAGS -D_ISOC99_SOURCE=1"
+     DOC_CPPFLAGS="$DOC_CPPFLAGS -D_ISOC99_SOURCE=1"
   fi
   AC_LANG_POP([C++])
 ])

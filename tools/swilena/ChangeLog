@@ -1,5 +1,9 @@
 2004-04-13  Damien Thivolle  <damien@lrde.epita.fr>
 
+	* swilena/expand.sh: Add `DOC_CPPFLAGS' to the compilation flags.
+
+2004-04-13  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* tools/swilena/ruby/Makefile.am: Remove `ruby_DATA' variable.
 
 2004-04-12  Niels Van Vliet  <niels@lrde.epita.fr>
