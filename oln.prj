@@ -1,139 +1,14 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 27)
-(Parent-Version oln 2003paradigm 20)
+(Project-Version oln 2003paradigm 28)
+(Parent-Version oln 2003paradigm 27)
 (Version-Log "2003-07-26  David Lesage  <david@lrde.epita.fr>
 
-	* tests/core/tests/image1: Adjust.
-		
-	* oln/core/internal/rec_operable.hh: Remove.
-
-	* oln/basics.hh, oln/core/apply.hh, 
-	oln/core/fold.hh, oln/core/generate.hh,
-	oln/core/traverse.hh, oln/core/winneighb.hh: Adjust according to
-	previous changes.
-
-	* oln/Makefile.am: Adjust according to previous changes.
-
-2003-07-26  David Lesage  <david@lrde.epita.fr>
-	
-	* oln/core/image1d.hh, oln/core/image2d.hh, 
-	oln/core/image3d.hh, oln/core/image.hh, 
-	oln/core/abstract/image.hh, 
-	oln/core/abstract/image_with_dim.hh, 
-	oln/core/abstract/image_with_impl.hh,
-	oln/core/abstract/image_with_type.hh: Fix constructors.
-
-2003-07-26  David Lesage  <david@lrde.epita.fr>
-
-	* oln/core/structelt.hh: Move...
-
-	* oln/core/abstract/structelt.hh: ...here.
-
-	* oln/core/abstract/window_base.hh: New. Factorize neighborhood,
-	window and w_window shared code.
-
-	* oln/core/internal/neighborhood.hh: Remove.
-
-	* oln/core/abstract/neighborhoodnd.hh: New.
-	
-	* oln/core/neighborhood.hh: Move...
-
-	* oln/core/abstract/neighborhood.hh: ...here. Modify the interface.
-
-	* oln/core/neighborhood1d.hh,
-	oln/core/neighborhood2d.hh,
-	oln/core/neighborhood3d.hh: Adjust in consequence.
-	
-	* tests/core/tests/neighborhood: New test.
-		
-	* oln/core/internal/window.hh: Remove.
-
-	* oln/core/abstract/windownd.hh: New.
-	
-	* oln/core/window.hh: Move...
-
-	* oln/core/abstract/window.hh: ...here. Modify the interface.
-
-	* oln/core/window1d.hh,
-	oln/core/window2d.hh,
-	oln/core/window3d.hh: Adjust in consequence.
-
-	* tests/core/tests/window: New test.
-
-	* oln/core/internal/w_window.hh: Remove.
-
-	* oln/core/abstract/w_windownd.hh: New.
-	
-	* oln/core/w_window.hh: Move...
-
-	* oln/core/abstract/w_window.hh: ...here. Modify the interface.
-
-	* oln/core/w_window1d.hh,
-	oln/core/w_window2d.hh,
-	oln/core/w_window3d.hh: Adjust in consequence.
-	
-2003-07-26  David Lesage  <david@lrde.epita.fr>
-	
-	* oln/core/imagend_size.hh: Remove.
-
-	* oln/core/internal/image_size.hh: Move...
-
-	* oln/core/abstract/image_size.hh: ...here. Implement previous
-	imagend_size interface.
-
-	* oln/core/image1d_size.hh, 
-	oln/core/image2d_size.hh, 
-	oln/core/image3d_size.hh: Adjust in consequence.
-	
-2003-07-26  David Lesage  <david@lrde.epita.fr>
-
-	* oln/core/iter.hh: Move...
-
-	* oln/core/abstract/iter.hh: here. Implement the interface for all
-	iterators. Remove fwd_iter and bkd_iter unused classes.
-
-	* oln/core/internal/iter1d.hh, 
-	oln/core/internal/iter2d.hh,
-	oln/core/internal/iter3d.hh: Move...
-
-	* oln/core/abstract/iter1d.hh, 
-	oln/core/abstract/iter2d.hh,
-	oln/core/abstract/iter3d.hh: ...here, respectively. Adjust inheritance.
-	
-	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
-	oln/core/bkd_iter3d.hh, oln/core/fwd_iter1d.hh,
-	oln/core/fwd_iter2d.hh, oln/core/fwd_iter3d.hh: Adjust in consequence.
-
-2003-07-26  David Lesage  <david@lrde.epita.fr>
-
-	* oln/core/dpointnd.hh: Remove.
-	
-	* oln/core/dpoint.hh: Move...
-
-	* oln/core/abstract/dpoint.hh: ...here. Implement previous dpointnd
-	interface.
-
-	* oln/core/dpoint1d.hh, oln/core/dpoint1d.hxx,
-	oln/core/dpoint2d.hh, oln/core/dpoint2d.hxx,
-	oln/core/dpoint3d.hh, oln/core/dpoint3d.hxx: Adjust in consequence.
-
-2003-07-26  David Lesage  <david@lrde.epita.fr>
-
-	* oln/core/pointnd.hh: Remove.
-	
-	* oln/core/point.hh: Move...
-
-	* oln/core/abstract/point.hh: ...here. Implement previous pointnd
-	interface.
-
-	* oln/core/point1d.hh, 
-	oln/core/point2d.hh,
-	oln/core/point3d.hh: Adjust in consequence..
+	* oln/core/dpoint2d.hh: Fix include mistake..
 ")
 (New-Version-Log "")
-(Checkin-Time "Sat, 26 Jul 2003 17:15:42 +0200")
+(Checkin-Time "Sat, 26 Jul 2003 17:27:47 +0200")
 (Checkin-Login david)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -223,7 +98,7 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.8 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.11 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.12 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.37 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.10 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.4 640))
@@ -316,7 +191,7 @@
   (olena/oln/core/coord.hh (oln/d/29_coord.hh 1.2 640))
   (olena/oln/core/dpoint1d.hh (oln/d/27_dpoint1d.h 1.9 640))
   (olena/oln/core/dpoint1d.hxx (oln/d/26_dpoint1d.h 1.6 640))
-  (olena/oln/core/dpoint2d.hh (oln/d/25_dpoint2d.h 1.7 640))
+  (olena/oln/core/dpoint2d.hh (oln/d/25_dpoint2d.h 1.8 640))
   (olena/oln/core/dpoint2d.hxx (oln/d/24_dpoint2d.h 1.5 640))
   (olena/oln/core/dpoint3d.hh (oln/d/23_dpoint3d.h 1.7 640))
   (olena/oln/core/dpoint3d.hxx (oln/d/22_dpoint3d.h 1.5 640))
@@ -1145,56 +1020,5 @@
 
   ; (olena/oln/core/internal/w_window.hh ())
 )
-(Merge-Parents
-  (2003paradigm.23 complete
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (doc/ChangeLog doc/ChangeLog doc/ChangeLog r)
-    (doc/ref/Makefile.am doc/ref/Makefile.am doc/ref/Makefile.am r) (olena/oln/core/image1d.hh olena/oln/core/image1d.hh olena/oln/core/image1d.hh r)
-    (olena/oln/core/image2d.hh olena/oln/core/image2d.hh olena/oln/core/image2d.hh r) (olena/oln/core/image3d.hh olena/oln/core/image3d.hh olena/oln/core/image3d.hh r)
-    (olena/oln/core/image.hh olena/oln/core/image.hh olena/oln/core/image.hh r) (olena/oln/core/internal/window.hh olena/oln/core/internal/window.hh olena/oln/core/internal/window.hh r)
-    (olena/oln/io/base.hh olena/oln/io/base.hh olena/oln/io/base.hh r) (olena/oln/io/base.hxx olena/oln/io/base.hxx () d)
-    (olena/oln/io/file.hh olena/oln/io/file.hh olena/oln/io/file.hh r) (olena/oln/io/gz.hh olena/oln/io/gz.hh olena/oln/io/gz.hh r)
-    (olena/oln/io/pnm.hh olena/oln/io/pnm.hh olena/oln/io/pnm.hh r) (olena/oln/io/pnm_read_common.hxx olena/oln/io/pnm_read_common.hxx () d)
-    (olena/oln/io/pnm_read.hh olena/oln/io/pnm_read.hxx olena/oln/io/pnm_read.hh r) (olena/oln/io/pnm_write_common.hxx olena/oln/io/pnm_write_common.hxx () d)
-    (olena/oln/io/pnm_write.hh olena/oln/io/pnm_write.hxx olena/oln/io/pnm_write.hh r) (olena/oln/io/readable.hh olena/oln/io/readable.hh olena/oln/io/readable.hh r)
-    (olena/oln/io/se_neighborhood.hxx olena/oln/io/se_neighborhood.hxx olena/oln/io/se_neighborhood.hxx r) (olena/oln/io/se_window.hxx olena/oln/io/se_window.hxx olena/oln/io/se_window.hxx r)
-    (metalic/mlc/array/1d.hh metalic/mlc/array/1d.hh metalic/mlc/array/1d.hh r) (metalic/mlc/array/2d.hh metalic/mlc/array/2d.hh metalic/mlc/array/2d.hh r)
-    (metalic/mlc/array/3d.hh metalic/mlc/array/3d.hh metalic/mlc/array/3d.hh r) (metalic/mlc/bool.hh metalic/mlc/bool.hh metalic/mlc/bool.hh r)
-    (integre/ntg/core/behavior.hh integre/ntg/core/behavior.hh integre/ntg/core/behavior.hh r) (integre/ntg/core/internal/global_ops_defs.hh integre/ntg/core/internal/global_ops_defs.hh integre/ntg/core/internal/global_ops_defs.hh r)
-    (integre/ntg/core/internal/global_ops.hh integre/ntg/core/internal/global_ops.hh integre/ntg/core/internal/global_ops.hh r) (integre/ntg/real/int_s.hh integre/ntg/real/int_s.hh integre/ntg/real/int_s.hh r)
-    (integre/ntg/real/int_u.hh integre/ntg/real/int_u.hh integre/ntg/real/int_u.hh r) (integre/ntg/real/optraits_builtin_int.hh integre/ntg/real/optraits_builtin_int.hh integre/ntg/real/optraits_builtin_int.hh r)
-    (integre/ntg/real/typetraits_builtin_int.hh integre/ntg/real/typetraits_builtin_int.hh integre/ntg/real/typetraits_builtin_int.hh r) (olena/tests/convert/Makefile.am olena/tests/convert/Makefile.am olena/tests/convert/Makefile.am r)
-    (olena/tests/io/2d.cc olena/tests/io/2d.cc olena/tests/io/2d.cc r) (olena/tests/io/loadsave.hh olena/tests/io/loadsave.hh olena/tests/io/loadsave.hh r)
-    (olena/tests/io/Makefile.am olena/tests/io/Makefile.am olena/tests/io/Makefile.am r) (integre/tests/types/Makefile.am integre/tests/types/Makefile.am integre/tests/types/Makefile.am r)
-    (integre/ChangeLog integre/ChangeLog integre/ChangeLog r) (metalic/ChangeLog metalic/ChangeLog metalic/ChangeLog r)
-    (olena/tests/core/Makefile.am olena/tests/core/Makefile.am olena/tests/core/Makefile.am r) (integre/ntg/real/builtin_float.hh integre/ntg/real/builtin_float.hh integre/ntg/real/builtin_float.hh r)
-    (integre/ntg/enum/builtin_bool.hh integre/ntg/enum/builtin_bool.hh integre/ntg/enum/builtin_bool.hh r) (integre/ntg/real/range.hh integre/ntg/real/range.hh integre/ntg/real/range.hh r)
-    (integre/ntg/real/cycle.hh integre/ntg/real/cycle.hh integre/ntg/real/cycle.hh r) (integre/ntg/vect/vec.hh integre/ntg/vect/vec.hh integre/ntg/vect/vec.hh r)
-    (integre/ntg/vect/cplx.hh integre/ntg/vect/cplx.hh integre/ntg/vect/cplx.hh r) (integre/ntg/color/color.hh integre/ntg/color/color.hh integre/ntg/color/color.hh r)
-    (integre/ntg/enum/bin.hh integre/ntg/enum/bin.hh integre/ntg/enum/bin.hh r) (olena/oln/core/abstract/image_with_dim.hh olena/oln/core/abstract/image_with_dim.hh olena/oln/core/abstract/image_with_dim.hh r)
-    (olena/oln/core/abstract/image_with_impl.hh olena/oln/core/abstract/image_with_impl.hh olena/oln/core/abstract/image_with_impl.hh r) (olena/tests/core/tests/image1 olena/tests/core/tests/image1 olena/tests/core/tests/image1 r)
-    (olena/tests/core/tests/ref olena/tests/core/tests/ref olena/tests/core/tests/ref r) (() () integre/tests/types/tests/char1 a)
-    (() () olena/tests/core/image_print.sh a) (() () olena/tests/io/simple2d.cc a)
-    (() () olena/oln/io/pnm_data.hh a) (() () olena/oln/io/pnm_common.hh a)
-    (() () olena/oln/io/image_base.hh a) (() () olena/oln/io/image_write.hh a)
-    (() () olena/oln/io/stream_wrapper.hh a) (() () olena/oln/io/utils.hh a)
-    (() () olena/oln/io/image_read.hh a) 
-  )
-  (2003paradigm.26 complete
-    (ChangeLog ChangeLog ChangeLog r) (olena/ChangeLog olena/ChangeLog olena/ChangeLog m)
-    (configure.ac configure.ac configure.ac r) (olena/oln/arith/internal/opdecls.hh olena/oln/arith/internal/opdecls.hh olena/oln/arith/internal/opdecls.hh r)
-    (olena/oln/basics2d.hh olena/oln/basics2d.hh olena/oln/basics2d.hh r) (() olena/oln/core/dpointnd.hh olena/oln/core/dpointnd.hh n)
-    (() olena/oln/core/imagend_size.hh olena/oln/core/imagend_size.hh n) (() olena/oln/core/internal/neighborhood.hh olena/oln/core/internal/neighborhood.hh n)
-    (() olena/oln/core/internal/rec_operable.hh olena/oln/core/internal/rec_operable.hh n) (() olena/oln/core/pointnd.hh olena/oln/core/pointnd.hh n)
-    (() olena/oln/core/window.hh olena/oln/core/window.hh n) (() olena/oln/core/w_window.hh olena/oln/core/w_window.hh n)
-    (olena/oln/level/cc.hh olena/oln/level/cc.hh olena/oln/level/cc.hh r) (olena/oln/level/compare.hh olena/oln/level/compare.hh olena/oln/level/compare.hh r)
-    (olena/oln/level/connected.hh olena/oln/level/connected.hh olena/oln/level/connected.hh r) (olena/oln/level/fill.hh olena/oln/level/fill.hh olena/oln/level/fill.hh r)
-    (olena/oln/level/invert.hh olena/oln/level/invert.hh olena/oln/level/invert.hh r) (olena/oln/level/set_level.hh olena/oln/level/set_level.hh olena/oln/level/set_level.hh r)
-    (olena/oln/level/threshold.hh olena/oln/level/threshold.hh olena/oln/level/threshold.hh r) (olena/tests/topo/test-inter-pixel.cc olena/tests/topo/test-inter-pixel.cc olena/tests/topo/test-inter-pixel.cc r)
-    (olena/tests/topo/test-cmap.cc olena/tests/topo/test-cmap.cc olena/tests/topo/test-cmap.cc r) (olena/oln/topo/tarjan/union.hh olena/oln/topo/tarjan/union.hh olena/oln/topo/tarjan/union.hh r)
-    (olena/oln/topo/inter-pixel/inter-pixel.hh olena/oln/topo/inter-pixel/inter-pixel.hh olena/oln/topo/inter-pixel/inter-pixel.hh r) (olena/oln/topo/tarjan/flat-zone.hh olena/oln/topo/tarjan/flat-zone.hh olena/oln/topo/tarjan/flat-zone.hh r)
-    (olena/oln/topo/combinatorial-map/cmap.hh olena/oln/topo/combinatorial-map/cmap.hh olena/oln/topo/combinatorial-map/cmap.hh r) (() () olena/tests/level/Makefile.am a)
-    (() () olena/tests/level/cc.cc a) (() () olena/tests/level/compare.cc a)
-    (() () olena/tests/level/connected.cc a) (() () olena/tests/level/invert.cc a)
-    (() () olena/tests/level/set_level.cc a) (() () olena/tests/level/threshold.cc a))
-)
+(Merge-Parents)
 (New-Merge-Parents)

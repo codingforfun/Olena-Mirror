@@ -1,5 +1,9 @@
 2003-07-26  David Lesage  <david@lrde.epita.fr>
 
+	* oln/core/dpoint2d.hh: Fix include mistake.
+
+2003-07-26  David Lesage  <david@lrde.epita.fr>
+
 	* tests/core/tests/image1: Adjust.
 		
 	* oln/core/internal/rec_operable.hh: Remove.
