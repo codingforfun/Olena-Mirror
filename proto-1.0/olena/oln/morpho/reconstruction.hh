@@ -31,6 +31,8 @@
 # include <queue>
 
 # include <mlc/contract.hh>
+# include <mlc/cmp.hh>
+
 # include <oln/convert/ng_to_se.hh>
 # include <oln/morpho/splitse.hh>
 # include <oln/level/compare.hh>
@@ -148,8 +150,7 @@ namespace oln {
 
 	  void impl_run()
 	  {
-	    mlc::is_true<mlc::type::eq<oln_type_of(I, size),
-	                 oln_type_of(N, size)>::ret>::ensure();
+	    mlc::eq<oln_type_of(I, size), oln_type_of(N, size)>::ensure();
 	    precondition(this->input1.size() == this->input2.size());
 	    precondition(level::is_greater_or_equal(this->input2, this->input1));
 
@@ -289,8 +290,7 @@ namespace oln {
 
 	  void impl_run()
 	  {
-	    mlc::is_true<mlc::type::eq<oln_type_of(I, size),
-	                 oln_type_of(N, size)>::ret>::ensure();
+	    mlc::eq<oln_type_of(I, size), oln_type_of(N, size)>::ensure();
 	    precondition(this->input1.size() == this->input2.size());
 	    precondition(level::is_greater_or_equal(this->input2, this->input1));
 
@@ -427,8 +427,7 @@ namespace oln {
 
 	  void impl_run()
 	  {
-	    mlc::is_true<mlc::type::eq<oln_type_of(I, size),
-	                 oln_type_of(N, size)>::ret>::ensure();
+	    mlc::eq<oln_type_of(I, size), oln_type_of(N, size)>::ensure();
 	    precondition(this->input1.size() == this->input2.size());
 	    precondition(level::is_greater_or_equal(this->input2, this->input1));
 
@@ -570,8 +569,7 @@ namespace oln {
 
 	  void impl_run()
 	  {
-	    mlc::is_true<mlc::type::eq<oln_type_of(I, size),
-	                 oln_type_of(N, size)>::ret>::ensure();
+	    mlc::eq<oln_type_of(I, size), oln_type_of(N, size)>::ensure();
 	    precondition(this->input1.size() == this->input2.size());
 	    precondition(level::is_greater_or_equal(this->input2, this->input1));
 

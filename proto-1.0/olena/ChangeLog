@@ -1,5 +1,17 @@
 2005-04-05  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	* oln/core/pw/image.hh: Conform to mlc macros.
+	* oln/core/abstract/image_vectorialness.hh: Likewise.
+	* oln/core/abstract/point.hh: Likewise.
+	* oln/core/abstract/size.hh: Likewise.
+	* oln/basics2d.hh: Likewise.
+	* oln/morpho/reconstruction.hh: Likewise.
+	* oln/morpho/dilation.hh: Likewise.
+	* oln/morpho/stat.hh: Likewise.
+	* oln/morpho/erosion.hh: Likewise.
+
+2005-04-05  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	* oln/core/abstract/point.hh: Conform to mlc macros.
 	* oln/core/abstract/size.hh: Likewise.
 

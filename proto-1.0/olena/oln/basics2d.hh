@@ -31,7 +31,6 @@
 
 # include <oln/basics.hh>
 
-
 # include <oln/core/2d/size2d.hh>
 # include <oln/core/2d/point2d.hh>
 # include <oln/core/2d/image2d.hh>

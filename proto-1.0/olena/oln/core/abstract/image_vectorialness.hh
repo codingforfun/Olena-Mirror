@@ -28,11 +28,10 @@
 #ifndef OLENA_CORE_ABSTRACT_IMAGE_VECTORIALNESS_HH
 # define OLENA_CORE_ABSTRACT_IMAGE_VECTORIALNESS_HH
 
-# include <mlc/bool.hh>
-
+# include <mlc/switch.hh>
 # include <ntg/basics.hh>
-
 # include <oln/core/abstract/image.hh>
+
 
 /*! \namespace oln
 ** \brief oln namespace.

@@ -39,7 +39,9 @@ namespace oln {
 }
 
 
-# define oln_size_type_from_2(S1, S2)  mlc_if( mlc_eq( S2, oln::any_size ), S1, S2 )
+
+# define oln_size_type_from_2(S1, S2)   typename mlc::if_< typename mlc::eq< S2, oln::any_size >::ret, S1, S2 >::ret
+
 
 
 

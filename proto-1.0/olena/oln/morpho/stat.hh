@@ -30,6 +30,8 @@
 
 # include <oln/basics.hh>
 # include <ntg/bin.hh>
+# include <mlc/cmp.hh>
+
 
 namespace oln {
 
@@ -64,8 +66,7 @@ namespace oln {
 	max(const I& input, const oln_type_of(I, point)& p, const E& se)
 	{
           // FIXME: test dim I == dim
-	  mlc::is_true<mlc::type::eq<oln_type_of(I, size),
-	    oln_type_of(E, size)>::ret>::ensure();
+	  mlc::eq<oln_type_of(I, size), oln_type_of(E, size)>::ensure();
 
           oln_type_of(E, fwd_witer) dp(se);
 	  dp.start();
@@ -91,8 +92,7 @@ namespace oln {
 	min(const I& input, const oln_type_of(I, point)& p, const E& se)
 	{
           // FIXME: test dim I == dim E
-	  mlc::is_true<mlc::type::eq<oln_type_of(I, size),
-	    oln_type_of(E, size)>::ret>::ensure();
+	  mlc::eq<oln_type_of(I, size), oln_type_of(E, size)>::ensure();
 
 	  oln_type_of(E, fwd_witer) dp(se);
 	  dp.start();
@@ -114,8 +114,7 @@ namespace oln {
 	static ntg::bin
 	max(const I& input, const oln_type_of(I, point)& p, const E& se)
 	{
-	  mlc::is_true<mlc::type::eq<oln_type_of(I, size),
-	    oln_type_of(E, size)>::ret>::ensure();
+	  mlc::eq<oln_type_of(I, size), oln_type_of(E, size)>::ensure();
 	  oln_type_of(E, fwd_witer) dp(se);
 	  for_all (dp)
 	    if (input.hold(p + dp))
@@ -127,8 +126,7 @@ namespace oln {
 	static ntg::bin
 	min(const I& input, const oln_type_of(I, point)& p, const E& se)
 	{
-	  mlc::is_true<mlc::type::eq<oln_type_of(I, size),
-	    oln_type_of(E, size)>::ret>::ensure();
+	  mlc::eq<oln_type_of(I, size), oln_type_of(E, size)>::ensure();
 	  oln_type_of(E, fwd_witer) dp(se);
 	  for_all (dp)
 	    if (input.hold(p + dp))

@@ -243,12 +243,7 @@ namespace oln {
     template <typename F>
     bool check(const pw::abstract::function<F>& pred)
     {
-      // FIXME: ugly syntax
-      // FIXME: bool or bin or...
-      mlc::is_true<
-	mlc::type::eq< oln_pw_value_type(F), bool >::ret
-	>::ensure();
-
+      mlc::eq< oln_pw_value_type(F), bool >::ensure();
       return oln::check(for_all_p(pred));
     }
 

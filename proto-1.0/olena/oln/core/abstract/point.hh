@@ -43,7 +43,7 @@ namespace oln {
 
 
 
-# define oln_point_type_from_2(P1, P2)   mlc_if( mlc_eq( P2, oln::any_point ), P1, P2 )
+# define oln_point_type_from_2(P1, P2)   typename mlc::if_< typename mlc::eq< P2, oln::any_point >::ret, P1, P2 >::ret
 
 
 
