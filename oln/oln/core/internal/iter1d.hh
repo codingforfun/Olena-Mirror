@@ -41,7 +41,7 @@ namespace oln {
   namespace internal {
 
     template<class Exact>
-    class _iter1d : public type::any< Exact >
+    class _iter1d : public virtual iter< Exact >
     {
     public:
 

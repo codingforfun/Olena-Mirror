@@ -43,7 +43,7 @@ namespace oln {
 
 
     template<class Exact>
-    class _iter3d : public type::any< Exact >
+    class _iter3d : public virtual iter< Exact >
     {
     public:
 

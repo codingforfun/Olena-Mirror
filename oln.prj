@@ -1,87 +1,23 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 3)
-(Parent-Version oln 2003paradigm 2)
+(Project-Version oln 2003paradigm 4)
+(Parent-Version oln 2003paradigm 3)
 (Version-Log "2003-02-28  David Lesage  <david@lrde.epita.fr>
 
-	* oln/ChangeLog: Harmonize.
+	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
+	* oln/core/bkd_iter3d.hh, oln/core/fwd_iter1d.hh,
+	* oln/core/fwd_iter2d.hh, oln/core/fwd_iter3d.hh,
+	* oln/core/internal/iter1d.hh, oln/core/internal/iter2d.hh,
+	* oln/core/internal/iter3d.hh, oln/core/iter.hh:
+	Repare iterators hierarchy 
+	(classes iter, fwd_iter and bkd_iter never linked before).
 
 	* oln/core/type.hh: 
-	Rewrite existing tools and introduce new Exact-related tools.
-	
-	* oln/convert/bound.hh,
-	oln/convert/colorconv.hh,
-	oln/convert/conversion.hh,
-	oln/convert/force.hh,
-	oln/convert/nrgbhsi.hh,
-	oln/convert/nrgbhsl.hh,
-	oln/convert/nrgbhsv.hh,
-	oln/convert/nrgbxyz.hh,
-	oln/convert/nrgbyiq.hh,
-	oln/convert/nrgbyuv.hh,
-	oln/convert/rgbnrgb.hh,
-	oln/convert/rgbxyz.hh,
-	oln/convert/stretch.hh,
-	oln/core/bkd_iter1d.hh,
-	oln/core/bkd_iter2d.hh,
-	oln/core/bkd_iter3d.hh,
-	oln/core/dpoint1d.hh,
-	oln/core/dpoint2d.hh,
-	oln/core/dpoint3d.hh,
-	oln/core/dpoint.hh,
-	oln/core/dpointnd.hh,
-	oln/core/fwd_iter1d.hh,
-	oln/core/fwd_iter2d.hh,
-	oln/core/fwd_iter3d.hh,
-	oln/core/image1d.hh,
-	oln/core/image1d_size.hh,
-	oln/core/image2d.hh,
-	oln/core/image2d_size.hh,
-	oln/core/image3d.hh,
-	oln/core/image3d_size.hh,
-	oln/core/image.hh,
-	oln/core/imagend_size.hh,
-	oln/core/image_size.hh,
-	oln/core/internal/image1d.hh,
-	oln/core/internal/image2d.hh,
-	oln/core/internal/image3d.hh,
-	oln/core/internal/iter1d.hh,
-	oln/core/internal/iter2d.hh,
-	oln/core/internal/iter3d.hh,
-	oln/core/internal/neighborhood.hh,
-	oln/core/internal/real_image1d.hh,
-	oln/core/internal/real_image2d.hh,
-	oln/core/internal/real_image3d.hh,
-	oln/core/internal/window.hh,
-	oln/core/internal/w_window.hh,
-	oln/core/iter.hh,
-	oln/core/neighborhood1d.hh,
-	oln/core/neighborhood2d.hh,
-	oln/core/neighborhood3d.hh,
-	oln/core/neighborhood.hh,
-	oln/core/point1d.hh,
-	oln/core/point2d.hh,
-	oln/core/point3d.hh,
-	oln/core/point.hh,
-	oln/core/pointnd.hh,
-	oln/core/pred_image.hh,
-	oln/core/regular_image.hh,
-	oln/core/structelt.hh,
-	oln/core/typeadj.hh,
-	oln/core/window1d.hh,
-	oln/core/window2d.hh,
-	oln/core/window3d.hh,
-	oln/core/window.hh,
-	oln/core/w_window1d.hh,
-	oln/core/w_window2d.hh,
-	oln/core/w_window3d.hh,
-	oln/core/w_window.hh,
-	oln/level/threshold.hh,
-	oln/utils/copy.hh: Change to Exact hierarchy..
+	Prepare \"FindExact\" variadic macros arrival..
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 28 Feb 2003 13:32:15 +0100")
+(Checkin-Time "Fri, 28 Feb 2003 17:04:57 +0100")
 (Checkin-Login david)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -165,7 +101,7 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.34 640))
-  (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.22 640))
+  (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.23 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.24 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.2 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.2 640))
@@ -244,9 +180,9 @@
   (oln/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7 640))
   (oln/oln/core/accum.hh (oln/d/40_accum.hh 1.2 640))
   (oln/oln/core/apply.hh (oln/d/39_apply.hh 1.6 640))
-  (oln/oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.6 640))
-  (oln/oln/core/bkd_iter2d.hh (oln/d/37_bkd_iter2d 1.6 640))
-  (oln/oln/core/bkd_iter3d.hh (oln/d/36_bkd_iter3d 1.6 640))
+  (oln/oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.7 640))
+  (oln/oln/core/bkd_iter2d.hh (oln/d/37_bkd_iter2d 1.7 640))
+  (oln/oln/core/bkd_iter3d.hh (oln/d/36_bkd_iter3d 1.7 640))
   (oln/oln/core/border1d.hh (oln/d/34_border1d.h 1.4 640))
   (oln/oln/core/border2d.hh (oln/d/33_border2d.h 1.4 640))
   (oln/oln/core/border3d.hh (oln/d/32_border3d.h 1.4 640))
@@ -265,9 +201,9 @@
   (oln/oln/core/dpoint.hh (oln/d/28_dpoint.hh 1.5 640))
   (oln/oln/core/dpointnd.hh (oln/c/9_dpointnd.h 1.6 640))
   (oln/oln/core/fold.hh (oln/c/7_fold.hh 1.6 640))
-  (oln/oln/core/fwd_iter1d.hh (oln/d/21_fwd_iter1d 1.5 640))
-  (oln/oln/core/fwd_iter2d.hh (oln/d/20_fwd_iter2d 1.5 640))
-  (oln/oln/core/fwd_iter3d.hh (oln/d/19_fwd_iter3d 1.5 640))
+  (oln/oln/core/fwd_iter1d.hh (oln/d/21_fwd_iter1d 1.6 640))
+  (oln/oln/core/fwd_iter2d.hh (oln/d/20_fwd_iter2d 1.6 640))
+  (oln/oln/core/fwd_iter3d.hh (oln/d/19_fwd_iter3d 1.6 640))
   (oln/oln/core/generate.hh (oln/f/12_generate.h 1.8 640))
   (oln/oln/core/image1d.hh (oln/c/47_image1d.hh 1.6 640))
   (oln/oln/core/image1d_size.hh (oln/c/46_image1d_si 1.5 640))
@@ -285,9 +221,9 @@
   (oln/oln/core/internal/image2d.hh (oln/d/14_image2d.hh 1.7 640))
   (oln/oln/core/internal/image3d_data.hh (oln/d/11_image3d_da 1.6 640))
   (oln/oln/core/internal/image3d.hh (oln/d/12_image3d.hh 1.9 640))
-  (oln/oln/core/internal/iter1d.hh (oln/d/10_iter1d.hh 1.4 640))
-  (oln/oln/core/internal/iter2d.hh (oln/d/9_iter2d.hh 1.4 640))
-  (oln/oln/core/internal/iter3d.hh (oln/d/8_iter3d.hh 1.4 640))
+  (oln/oln/core/internal/iter1d.hh (oln/d/10_iter1d.hh 1.5 640))
+  (oln/oln/core/internal/iter2d.hh (oln/d/9_iter2d.hh 1.5 640))
+  (oln/oln/core/internal/iter3d.hh (oln/d/8_iter3d.hh 1.5 640))
   (oln/oln/core/internal/neighborhood.hh (oln/d/7_neighborho 1.5 640))
   (oln/oln/core/internal/objs.hxx (oln/d/6_objs.hxx 1.4 640))
   (oln/oln/core/internal/real_image1d.hh (oln/d/5_real_image 1.4 640))
@@ -296,7 +232,7 @@
   (oln/oln/core/internal/rec_operable.hh (oln/d/2_rec_operab 1.2 640))
   (oln/oln/core/internal/window.hh (oln/d/0_window.hh 1.8 640))
   (oln/oln/core/internal/w_window.hh (oln/d/1_w_window.h 1.8 640))
-  (oln/oln/core/iter.hh (oln/c/40_iter.hh 1.4 640))
+  (oln/oln/core/iter.hh (oln/c/40_iter.hh 1.5 640))
   (oln/oln/core/macros.hh (oln/c/39_macros.hh 1.3 640))
   (oln/oln/core/neighborhood1d.hh (oln/c/37_neighborho 1.9 640))
   (oln/oln/core/neighborhood2d.hh (oln/c/36_neighborho 1.10 640))
@@ -316,7 +252,7 @@
   (oln/oln/core/structelt.hh (oln/c/25_structelt. 1.4 640))
   (oln/oln/core/traverse.hh (oln/d/30_traverse.h 1.5 640))
   (oln/oln/core/typeadj.hh (oln/e/25_typeadj.hh 1.4 640))
-  (oln/oln/core/type.hh (oln/c/21_type.hh 1.11 640))
+  (oln/oln/core/type.hh (oln/c/21_type.hh 1.12 640))
   (oln/oln/core/window1d.hh (oln/c/15_window1d.h 1.7 640))
   (oln/oln/core/window2d.hh (oln/c/14_window2d.h 1.8 640))
   (oln/oln/core/window3d.hh (oln/c/13_window3d.h 1.7 640))

@@ -34,18 +34,21 @@
 namespace oln {
 
   template<class Exact = type::final>
-  class fwd_iter3d : public internal::_iter3d<typename type::exact_vt<fwd_iter3d<Exact>, Exact>::ret>
+  class fwd_iter3d : public internal::_iter3d<typename type::exact_vt<fwd_iter3d<Exact>, Exact>::ret>,
+                     public fwd_iter<typename type::exact_vt<fwd_iter3d<Exact>, Exact>::ret>
   {
   public:
 
     typedef internal::_iter3d<typename type::exact_vt<fwd_iter3d<Exact>, Exact>::ret> super;
+    typedef fwd_iter<typename type::exact_vt<fwd_iter3d<Exact>, Exact>::ret> super2;
+
 
     enum { dim = 3 };
     typedef point3d point;
 
     template<class Image>
     fwd_iter3d(const Image& ima) :
-      super(ima.size())
+      super(ima.size()), super2()
     {
     }
 

@@ -48,7 +48,7 @@ namespace oln {
   // fwd_iter
 
   template<class Exact>
-  struct fwd_iter : public type::any<Exact>
+  struct fwd_iter : public virtual iter<Exact>
   {
     static std::string name() { return std::string("fwd_iter<") + Exact::name() + ">"; }
   protected:
@@ -59,7 +59,7 @@ namespace oln {
   // bkd_iter
 
   template<class Exact>
-  struct bkd_iter : public type::any<Exact>
+  struct bkd_iter : public virtual iter<Exact>
   {
     static std::string name() { return std::string("bkd_iter<") + Exact::name() + ">"; }
   protected:

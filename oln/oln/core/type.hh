@@ -115,17 +115,6 @@ namespace type
   // typedef typename C::inferior ret;
   // };
 
-
-
-  //
-  //  find exact
-  //
-  ///////////////////////////////
-
-  
-
-
-
   //
   //  exact traits
   //
@@ -226,6 +215,15 @@ namespace type
 typename type::exact<Type>::ret
 #define Exact_(Type) type::exact<Type>::ret
 
+//
+//  find exact : FIXME: variadic macros !!!
+//
+////////////////////////////////////////////
+
+// #define FindExact(...) 
+// typename type::exact_vt<__VA_ARGS__>::ret
+// #define FindExact_(...) 
+// type::exact_vt<__VA_ARGS__>::ret
 
 //
 //  to_exact procs
