@@ -28,15 +28,14 @@
 #ifndef OLENA_TOPO_COMBINATORIAL_MAP_CMAP_HH
 # define OLENA_TOPO_COMBINATORIAL_MAP_CMAP_HH
 
+# include <algorithm>
+# include <iterator>
+
 # include <oln/topo/tarjan/flat-zone.hh>
 # include <oln/topo/inter-pixel/inter-pixel.hh>
 # include <oln/topo/combinatorial-map/internal/zeta.hh>
-# include <oln/topo/combinatorial-map/internal/cmap-functor.hh>
-
-# include <set>
-# include <list>
-# include <algorithm>
-# include <iterator>
+# include <oln/topo/combinatorial-map/internal/allfunc.hh>
+# include <oln/topo/combinatorial-map/internal/level.hh>
 
 namespace oln {
 
@@ -46,8 +45,6 @@ namespace oln {
 
       using tarjan::flat_zone;
       using inter_pixel::interpixel;
-
-      typedef std::set<unsigned> labels_t;
 
       template <class I>
       class cmap
@@ -61,27 +58,19 @@ namespace oln {
 	typedef Zeta(I)		zeta_t;
 
       public:
-	cmap(const I & input,
-	     const interpixel<I> & ip,
-	     const flat_zone<I> & cc) :
+	cmap(const I & input, const interpixel<I> & ip, flat_zone<I> & cc) :
+	  _ndarts(0),
 	  _zeta(input.nrows() + 1, input.ncols() + 1),
-	  _beta(cc.nlabels()),
-	  _moth(cc.nlabels()),
-	  _daugh(cc.nlabels()),
-	  _lambda(_beta)
+	  _cc(cc),
+	  _level(cc.nlabels()),
+	  _beta(cc.nlabels())
 	{
-	  internal::labels<unsigned>::resize(cc.nlabels());
+	  _build_zeta(ip);
 
-	  unsigned ndarts = 0;
+	  _sigma.resize(_ndarts);
+	  _lambda.resize(_ndarts);
 
-	  ndarts = _build_zeta(ip, cc);
-
-	  internal::darts<unsigned>::resize(ndarts);
-	  _alpha._resize(ndarts);
-	  _sigma._resize(ndarts);
-	  _lambda._resize(ndarts);
-
-	  _build_functions(ip, cc);
+	  _build_functions(ip);
 	}
 
 	//
@@ -92,47 +81,47 @@ namespace oln {
 	// ext_neighb:
 	// give a labels' set of connected component of given label which
 	// are ouside of l.
-	void ext_neighb(const unsigned l, labels_t & n)
-	{
-	  if (_beta(l) == 0)
-	    return;
+// 	void ext_neighb(const unsigned l, labels_t & n)
+// 	{
+// 	  if (_beta(l) == 0)
+// 	    return;
 
-	  unsigned d = _beta(l);
+// 	  unsigned d = _beta(l);
 
-	  do
-	    {
-	      n.insert(_lambda(_alpha(d)));
+// 	  do
+// 	    {
+// 	      n.insert(_lambda(_alpha(d)));
 
-	      d = _sigma(_alpha(d));
-	    }
-	  while (d != _beta(l));
-	}
+// 	      d = _sigma(_alpha(d));
+// 	    }
+// 	  while (d != _beta(l));
+// 	}
 
 	// int_neighb:
 	// give a labels' set of connected component of given label which
 	// are inside of l.
-	void int_neighb(const unsigned l, labels_t & n)
-	{
-	  labels_t ext;
+// 	void int_neighb(const unsigned l, labels_t & n)
+// 	{
+// 	  labels_t ext;
 
-	  labels_t::const_iterator it;
-	  for (it = _daugh(l).begin(); it != _daugh(l).end(); ++it)
-	    {
-	      ext.clear();
-	      ext_neighb(*it, ext);
+// 	  labels_t::const_iterator it;
+// 	  for (it = _daugh(l).begin(); it != _daugh(l).end(); ++it)
+// 	    {
+// 	      ext.clear();
+// 	      ext_neighb(*it, ext);
 
-	      if (ext.find(l) != ext.end())
-		n.insert(*it);
-	    }
-	}
+// 	      if (ext.find(l) != ext.end())
+// 		n.insert(*it);
+// 	    }
+// 	}
 
 	// neighb
 	// give a label' set of both inside and outside connected component
-	void neighb(const unsigned l, labels_t & n)
-	{
-	  ext_neighb(l, n);
-	  int_neighb(l, n);
-	}
+// 	void neighb(const unsigned l, labels_t & n)
+// 	{
+// 	  ext_neighb(l, n);
+// 	  int_neighb(l, n);
+// 	}
 
 
 	//
@@ -142,72 +131,43 @@ namespace oln {
 
 	void merge(const unsigned l1, const unsigned l2)
 	{
-	  if (_beta(l1) == 0 || _beta(l2) == 0)
-	    return;
+	  static std::vector<unsigned> inter;
 
-	  labels_t s1, s2, inter;
-	  unsigned d = _beta(l1);
+	  // FIXME: Do not check whether a label is valide on beta function
+	  assertion(_beta(l1) && _beta(l2));
 
-	  do
+	  if (_level.father(l2) != l1)
 	    {
-	      s1.insert(d);
-	      d = _sigma(_alpha(d));
+	      // l1 and l2 are connected
+	      assertion(_make_inter1(l1, l2, inter));
 	    }
-	  while (d != _beta(l1));
-
-	  d = _beta(l2);
-	  do
-	    {
-	      s2.insert(_alpha(d));
-	      d = _sigma(_alpha(d));
-	    }
-	  while (d != _beta(l2));
-
-	  set_intersection(s1.begin(), s1.end(), s2.begin(), s2.end(),
-			   std::inserter(inter, inter.begin()));
-
-	  if (inter.empty())
-	    if (_daugh(l1).find(l2) == _daugh(l2).end())
-	      return;
-	    else
-	      {
-		labels_t::const_iterator it;
-		for (it = s2.begin(); it != s2.end(); ++it)
-		  if (_lambda(*it) == l1)
-		    {
-		      internal::darts<unsigned>::erase(_alpha(*it));
-		      internal::darts<unsigned>::erase(*it);
-		    }
-	      }
 	  else
 	    {
-	      labels_t::const_iterator it;
-	      for (it = inter.begin(); it != inter.end(); ++it)
-		{
-		  internal::darts<unsigned>::erase(_alpha(*it));
-		  internal::darts<unsigned>::erase(*it);
-		}
+	      // l2 is included in l1
+	      assertion(_make_inter2(l1, l2, inter));
 	    }
 
-	  internal::labels<unsigned>::substitute(l2, l1);
+	  _update_darts(l1, l2, inter);
 
-	  // FIXME: don't know how to fix this -- burrus_n
-	  // cc.merge(l1, l2);
-	  assert(0);
+	  _level.merge(l1, l2);
+
+	  _cc.merge(l1, l2);
+
+	  inter.clear();
 	}
 
 	//
 	// print
 	//
 	////////
+
 	std::ostream& print(std::ostream & ostr) const
 	{
-	  ostr << _alpha << std::endl;
 	  ostr << _sigma << std::endl;
 	  ostr << _lambda << std::endl;
-	  ostr << _moth << std::endl;
-	  ostr << _daugh << std::endl;
 	  ostr << _beta << std::endl;
+
+ 	  ostr << _level << std::endl;
 
 	  return ostr;
 	}
@@ -216,25 +176,24 @@ namespace oln {
 
 	//
 	// building combinatorial map
-	////////////////////////
+	//
+	/////////////////////////////
 
-	unsigned _build_zeta(const interpixel<I> & ip,
-			     const flat_zone<I> & cc)
+	void _build_zeta(const interpixel<I> & ip)
 	{
-	  unsigned ndarts = 0;
-	  unsigned moth = 0;
+	  unsigned father = 0;
 
 	  std::list<point_t> acc;
 	  fwd_dir_iter_t i;
 
-	  for (unsigned l = 2; l <= cc.nlabels(); ++l)
-	    if (_moth(l) == 0)
+	  for (unsigned l = 2; l <= _cc.nlabels(); ++l)
+	    if (_level.father(l) == 0)
 	      {
 		acc.clear();
 
-		point_t n1 = cc.get_root(l);
+		point_t n1 = _cc.get_root(l);
 
-		moth = cc.get_label(n1 + dpoint_t(0, -1));
+		father = _cc.get_label(n1 + dpoint_t(0, -1));
 
 		head_t h1 = ip.folw(head_t(n1, DirTraits(I)::first()));
 
@@ -247,32 +206,26 @@ namespace oln {
 		    for_all(i)
 		      if (ip[n1].get(i) && !_zeta[n1][i])
 			{
-			  unsigned l = cc.get_label(n1 + ip._neighb[i]);
+			  unsigned l = _cc.get_label(n1 + ip._neighb[i]);
 
-			  if (moth != l)
-			    {
-			      _moth(l) = moth;
-			      _daugh(moth).insert(l);
-			    }
+			  if (father != l && !_level.father(l))
+			    _level.insert(father, l);
 
-			  _zeta[n1][i] = ++ndarts;
+			  _zeta[n1][i] = ++_ndarts;
 			  head_t h2 = ip.folw(head_t(n1, i));
 
 			  if (_zeta[h2.first].empty())
 			    acc.push_back(h2.first);
 
-			  _zeta[h2.first][h2.second] = ++ndarts;
+			  _zeta[h2.first][h2.second] = ++_ndarts;
 			}
 
 		    acc.pop_front();
 		  }
 	      }
-
-	  return ndarts;
 	}
 
-	void _build_functions(const interpixel<I> & ip,
-			      const flat_zone<I> & cc)
+	void _build_functions(const interpixel<I> & ip)
 	{
 	  Iter(zeta_t) it(_zeta);
 	  fwd_dir_iter_t i;
@@ -293,13 +246,11 @@ namespace oln {
 
 			  if (s)
 			    {
-			      unsigned l = cc.get_label(it + ip._neighb[i]);
+			      unsigned l = _cc.get_label(it + ip._neighb[i]);
 
-			      _alpha(d) = d & 1 ? d + 1 : d - 1;
-			      _sigma(d) = s;
-
-			      _beta(l) = d;
-			      _lambda(d) = l;
+			      _sigma.assign(d, s);
+			      _lambda.assign(d, l);
+			      _beta.assign(l, d);
 
 			      break;
 			    }
@@ -309,16 +260,96 @@ namespace oln {
 	    }
 	}
 
+	//
+	// internal method for merge
+	//
+	////////////////////////////
+
+	bool _make_inter1(const unsigned l1,
+			  const unsigned l2,
+			  std::vector<unsigned> & inter)
+	{
+	  static std::vector<bool> buff(_ndarts);
+
+ 	  unsigned d = _beta(l1);
+
+ 	  do
+ 	    {
+ 	      buff[d] = true;
+ 	      d = _sigma(internal::alpha<unsigned>::result(d));
+ 	    }
+ 	  while (d != _beta(l1));
+
+ 	  d = _beta(l2);
+
+	  unsigned d_ = 0;
+
+ 	  do
+ 	    {
+	      d_ = internal::alpha<unsigned>::result(d);
+
+ 	      if (buff[d_])
+		inter.push_back(d_);
+	      d = _sigma(d_);
+ 	    }
+ 	  while (d != _beta(l2));
+
+	  buff.clear();
+
+	  return !inter.empty();
+	}
+
+	bool _make_inter2(const unsigned l1,
+			  const unsigned l2,
+			  std::vector<unsigned> & inter)
+	{
+	  unsigned d = _beta(l2);
+	  unsigned d_;
+
+	  do
+	    {
+	      d_ = internal::alpha<unsigned>::result(d);
+
+	      if (_lambda(d_) == l1)
+		inter.push_back(d_);
+
+ 	      d = _sigma(d_);
+	    }
+	  while (d != _beta(l2));
+
+	  return !inter.empty();
+	}
+
+	void _update_darts(const unsigned l1,
+			   const unsigned l2,
+			   std::vector<unsigned> & inter)
+	{
+	  std::vector<unsigned>::const_iterator i;
+	  for (i = inter.begin(); i != inter.end(); ++i)
+	    {
+	      unsigned d = *i;
+
+	      _sigma.erase(d);
+	      _lambda.erase(d);
+	    }
+
+	  // FIXME: find a way to get this in constant time
+	  for (unsigned j = 1; j < _ndarts; ++j)
+	    if (_lambda(j) == l2)
+	      _lambda._assign(j, l1);
+
+	  _beta.erase(l2);
+	}
+
       private:
-	zeta_t _zeta;
+	unsigned			_ndarts;
+	zeta_t				_zeta;
+	flat_zone<I> &			_cc;
+	internal::level<unsigned>	_level;
 
-	internal::beta<unsigned> _beta;
-	internal::moth<unsigned>  _moth;
-	internal::daugh<unsigned, labels_t> _daugh;
-
-	internal::alpha<unsigned>  _alpha;
-	internal::sigma<unsigned>  _sigma;
-	internal::lambda<unsigned> _lambda;
+	internal::beta<unsigned>	_beta;
+	internal::sigma<unsigned>	_sigma;
+	internal::lambda<unsigned>	_lambda;
       };
 
     } // end combinatorial_map
@@ -331,10 +362,6 @@ template<class I>
 inline std::ostream &
 operator<<(std::ostream & ostr,
 	   const oln::topo::combinatorial_map::cmap<I> & cm);
-
-inline std::ostream &
-operator<<(std::ostream & ostr,
-	   const oln::topo::combinatorial_map::labels_t & l);
 
 # include <oln/topo/combinatorial-map/cmap.hxx>
 

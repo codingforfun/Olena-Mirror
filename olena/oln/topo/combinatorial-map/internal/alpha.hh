@@ -25,15 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_TOPO_COMBINATORIAL_MAP_CMAP_HXX
-# define OLENA_TOPO_COMBINATORIAL_MAP_CMAP_HXX
+#ifndef OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_ALPHA_HH
+# define OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_ALPHA_HH
 
-using namespace oln::topo::combinatorial_map;
+namespace oln {
 
-template<class I>
-inline std::ostream & operator<<(std::ostream & ostr, const cmap<I> & cm)
-{
-  return cm.print(ostr);
-}
+  namespace topo {
 
-#endif // !OLENA_TOPO_COMBINATORIAL_MAP_CMAP_HXX
+    namespace combinatorial_map {
+
+      namespace internal {
+
+	template <class U>
+	struct alpha
+	{
+	  static U result(const U & d) { return d + ((d & 1) << 1) - 1; }
+	};
+
+      } // end internal
+
+    } // end combinatorial_map
+
+  } // end topo
+
+} // end oln
+
+#endif // ! OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_ALPHA_HH

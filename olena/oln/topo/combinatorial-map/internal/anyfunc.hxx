@@ -25,14 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_CMAP_FUNCTOR_HXX
-# define OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_CMAP_FUNCTOR_HXX
+#ifndef OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_ANYFUNC_HXX
+# define OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_ANYFUNC_HXX
 
 using namespace oln::topo::combinatorial_map::internal;
-
-template <class U> std::vector<U> labels<U>::_labels = std::vector<U>(1);
-
-template <class U> std::vector<U> darts<U>::_darts = std::vector<U>(1);
 
 template <class U, class V, class Inferior>
 inline std::ostream &
@@ -41,4 +37,4 @@ operator<<(std::ostream &ostr, const anyfunc<U, V, Inferior> & f)
   return f.self().print(ostr);
 }
 
-#endif // !OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_CMAP_FUNCTOR_HXX
+#endif // !OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_ANYFUNC_HXX

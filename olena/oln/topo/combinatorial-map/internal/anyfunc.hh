@@ -25,8 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_ZETA_HH
-# define OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_ZETA_HH
+#ifndef OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_ANYFUNC_HH
+# define OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_ANYFUNC_HH
+
+# include <mlc/contract.hh>
+
+# include <vector>
 
 namespace oln {
 
@@ -36,33 +40,56 @@ namespace oln {
 
       namespace internal {
 
-	struct zeta
+	// any
+	template <class Inf>
+	class any
 	{
-	  zeta() : _empty(true)
-	  {
-	    for (unsigned i = 0; i < 4; ++i)
-	      _darts[i] = 0;
-	  }
-
-	  bool empty() const { return _empty; }
-
-	  unsigned operator[](unsigned i) const
-	  {
-	    return _darts[i];
-	  }
-	  unsigned & operator[](unsigned i)
-	  {
-	    _empty = false;
-	    return _darts[i];
-	  }
-
-	private:
-	  unsigned _darts[4];
-	  bool _empty;
+	public:
+	  const Inf & self() const { return static_cast<const Inf &>(*this); }
+	  Inf & self() { return static_cast<Inf &>(*this); }
 	};
 
-# define Zeta(ImgType)			\
-typename mute< ImgType, internal::zeta >::ret
+	template <class U, class V, class Inf>
+	class anyfunc : public any<Inf>
+	{
+	protected:
+	  anyfunc() : _f(1) {}
+	  anyfunc(unsigned n) : _f(n+1) { assertion(n); }
+
+	public:
+	  V operator()(const U & e) const
+	  {
+	    assertion(e < _f.size());
+	    return _f[e];
+	  }
+
+	  void resize(unsigned n)
+	  {
+	    self()._resize(n);
+	  }
+
+	  void assign(const U & i, const V & e)
+	  {
+	    assertion(i < _f.size());
+	    self()._assign(i, e);
+	  }
+
+	  void erase(const U & i)
+	  {
+	    assertion(i < _f.size());
+	    self()._erase(i);
+	  }
+
+	  std::ostream & print(std::ostream & ostr) const
+	  {
+	    for (unsigned i = 1; i < _f.size(); ++i)
+	      ostr << self().name() << "(" << i << ") = " << _f[i] << std::endl;
+	    return ostr;
+	  }
+
+	protected:
+	  std::vector<V> _f;
+	};
 
       } // end internal
 
@@ -72,4 +99,11 @@ typename mute< ImgType, internal::zeta >::ret
 
 } // end oln
 
-#endif // !OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_ZETA_HH
+template <class U, class V, class Inf>
+inline std::ostream &
+operator<<(std::ostream & ostr,
+	   const oln::topo::combinatorial_map::internal::anyfunc<U,V,Inf> & f);
+
+# include <oln/topo/combinatorial-map/internal/anyfunc.hxx>
+
+#endif // !OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_ANYFUNC_HH

@@ -25,15 +25,49 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_TOPO_COMBINATORIAL_MAP_CMAP_HXX
-# define OLENA_TOPO_COMBINATORIAL_MAP_CMAP_HXX
+#ifndef OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_LAMBDA_HH
+# define OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_LAMBDA_HH
 
-using namespace oln::topo::combinatorial_map;
+# include <oln/topo/combinatorial-map/internal/anyfunc.hh>
+# include <oln/topo/combinatorial-map/internal/alpha.hh>
 
-template<class I>
-inline std::ostream & operator<<(std::ostream & ostr, const cmap<I> & cm)
-{
-  return cm.print(ostr);
-}
+namespace oln {
 
-#endif // !OLENA_TOPO_COMBINATORIAL_MAP_CMAP_HXX
+  namespace topo {
+
+    namespace combinatorial_map {
+
+      namespace internal {
+
+	template <class U, class V = U>
+	class lambda : public anyfunc<U, V, lambda<U, V> >
+	{
+	public:
+	  static std::string name() { return "lambda"; }
+
+	  void _resize(unsigned n)
+	  {
+	    _f.resize(n+1);
+	  }
+
+	  void _assign(const U & i, const V & e)
+	  {
+	    _f[i] = e;
+	  }
+
+	  void erase(const U & i)
+	  {
+	    _f[i] = 0;
+	    _f[alpha<U>::result(i)] = 0;
+	  }
+	};
+
+      } // end internal
+
+    } // end combinatorial_map
+
+  } // end topo
+
+} // end oln
+
+#endif // ! OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_LAMBDA_HH
