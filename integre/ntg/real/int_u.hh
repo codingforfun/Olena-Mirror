@@ -25,18 +25,21 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_INT_U_HH
-# define NTG_INT_U_HH
+#ifndef NTG_REAL_INT_U_HH
+# define NTG_REAL_INT_U_HH
 
 # include <ntg/config/system.hh>
+# include <ntg/real/real.hh>
+
 # include <mlc/cmp.hh>
+
+// --
 
 # include <ntg/core/behavior.hh>
 # include <ntg/core/builtins_properties.hh>
 # include <ntg/core/global_ops.hh>
 # include <ntg/core/optraits.hh>
 # include <ntg/core/predecls.hh>
-# include <ntg/core/rec_value.hh>
 # include <ntg/core/typetraits.hh>
 # include <ntg/real/optraits_scalar.hh>
 
@@ -48,11 +51,11 @@
 # define INT_U_CTOR_FROM_BUILTIN_INT(Builtin)   \
 int_u (const Builtin rhs)			\
 {						\
-  _value = optraits_type::check(rhs);		\
+  val_ = optraits_type::check(rhs);		\
 }						\
 self& operator=(const Builtin rhs)	        \
 {						\
-  _value = optraits_type::check(rhs);		\
+  val_ = optraits_type::check(rhs);		\
   return *this;					\
 }
 
@@ -93,108 +96,103 @@ namespace ntg
   };
 
 
-  namespace type_definitions
+  //
+  //  Class int_u<Nbits, Behaviour>
+  //
+  //////////////////////////////////
+
+  template <unsigned nbits, class behaviour>
+  class int_u : public integer<int_u<nbits, behaviour> >
   {
+    typedef int_u<nbits, behaviour> self;
+    typedef typename typetraits<self>::storage_type storage_type;
+    // dev note : should be directly optraits<self_t>, but with g++ this
+    // breaks inheritance in optraits herarchy ...
+    typedef typename typetraits<self>::optraits optraits_type;
 
-    //
-    //  Class int_u<Nbits, Behaviour>
-    //
-    //////////////////////////////////
+  public:
+    int_u () { val_ = 0; }
 
-    template <unsigned nbits, class behaviour>
-    class int_u : public rec_int_u<int_u<nbits, behaviour> >
+    // We define ctor for each builtin to avoid implicit builtin promotion
+
+    INT_U_CTOR_FROM_BUILTIN_INT(unsigned long);
+    INT_U_CTOR_FROM_BUILTIN_INT(signed   long);
+
+    INT_U_CTOR_FROM_BUILTIN_INT(unsigned int);
+    INT_U_CTOR_FROM_BUILTIN_INT(signed   int);
+
+    INT_U_CTOR_FROM_BUILTIN_INT(unsigned short);
+    INT_U_CTOR_FROM_BUILTIN_INT(signed   short);
+
+    INT_U_CTOR_FROM_BUILTIN_INT(unsigned char);
+    INT_U_CTOR_FROM_BUILTIN_INT(signed   char);
+
+    int_u (const float rhs)
     {
-      typedef int_u<nbits, behaviour> self;
-      typedef typename typetraits<self>::storage_type storage_type;
-      // dev note : should be directly optraits<self_t>, but with g++ this
-      // breaks inheritance in optraits herarchy ...
-      typedef typename typetraits<self>::optraits optraits_type;
-
-    public:
-      int_u () { _value = 0; }
-
-      // We define ctor for each builtin to avoid implicit builtin promotion
-
-      INT_U_CTOR_FROM_BUILTIN_INT(unsigned long);
-      INT_U_CTOR_FROM_BUILTIN_INT(signed   long);
-
-      INT_U_CTOR_FROM_BUILTIN_INT(unsigned int);
-      INT_U_CTOR_FROM_BUILTIN_INT(signed   int);
-
-      INT_U_CTOR_FROM_BUILTIN_INT(unsigned short);
-      INT_U_CTOR_FROM_BUILTIN_INT(signed   short);
-
-      INT_U_CTOR_FROM_BUILTIN_INT(unsigned char);
-      INT_U_CTOR_FROM_BUILTIN_INT(signed   char);
-
-      int_u (const float rhs)
-      {
-	_value = optraits_type::check(roundf(rhs));
-      }
-      self& operator=(const float rhs)
-      {
-	_value = optraits_type::check(roundf(rhs));
-	return *this;
-      }
-
-      int_u (const double rhs)
-      {
-	_value = optraits_type::check(round(rhs));
-      }
-      self& operator=(const double rhs)
-      {
-	_value = optraits_type::check(round(rhs));
-	return *this;
-      }
-
-      template <unsigned mbits, class B2>
-      int_u (const int_u<mbits, B2>& rhs)
-      {
-	if (mbits <= nbits)
-	  _value = rhs.value();
-	else
-	  _value = optraits_type::check(rhs.value());
-      }
-      template <unsigned mbits, class B2>
-      self& operator=(const int_u<mbits, B2>& rhs)
-      {
-	if (mbits <= nbits)
-	  _value = rhs.value();
-	else
-	  _value = optraits_type::check(rhs.value());
-	return *this;
-      }
-
-      template <class T>
-      int_u (const rec_scalar<T>& rhs)
-      {
-	_value = optraits_type::check(rhs.value());
-      }
-      template <class T>
-      self& operator=(const rec_scalar<T>& rhs)
-      {
-	_value = optraits_type::check(rhs.value());
-	return *this;
-      }
-
-      // Cast
-      operator storage_type () const { return _value; }
-
-    private:
-      // We want to prevent this
-      int_u(bool);
-    };
-
-    template<unsigned nbits, class behaviour>
-    inline std::ostream&
-    operator<<(std::ostream& stream, const int_u<nbits, behaviour>& rhs)
+      val_ = optraits_type::check(roundf(rhs));
+    }
+    self& operator=(const float rhs)
     {
-      stream << unsigned(rhs.value());
-      return stream;
+      val_ = optraits_type::check(roundf(rhs));
+      return *this;
     }
 
-  } // end of type_definitions
-  
+    int_u (const double rhs)
+    {
+      val_ = optraits_type::check(round(rhs));
+    }
+    self& operator=(const double rhs)
+    {
+      val_ = optraits_type::check(round(rhs));
+      return *this;
+    }
+
+    template <unsigned mbits, class B2>
+    int_u (const int_u<mbits, B2>& rhs)
+    {
+      if (mbits <= nbits)
+	val_ = rhs.val();
+      else
+	val_ = optraits_type::check(rhs.val());
+    }
+    template <unsigned mbits, class B2>
+    self& operator=(const int_u<mbits, B2>& rhs)
+    {
+      if (mbits <= nbits)
+	val_ = rhs.val();
+      else
+	val_ = optraits_type::check(rhs.val());
+      return *this;
+    }
+
+    template <class T>
+    int_u (const real<T>& rhs)
+    {
+      val_ = optraits_type::check(rhs.val());
+    }
+    template <class T>
+    self& operator=(const real<T>& rhs)
+    {
+      val_ = optraits_type::check(rhs.val());
+      return *this;
+    }
+
+    // Cast
+    operator storage_type () const { return val_; }
+
+  private:
+    // We want to prevent this
+    int_u(bool);
+  };
+
+  template<unsigned nbits, class behaviour>
+  inline std::ostream&
+  operator<<(std::ostream& stream, const int_u<nbits, behaviour>& rhs)
+  {
+    stream << unsigned(rhs.val());
+    return stream;
+  }
+
   //
   //  optraits for int_u
   //
@@ -371,8 +369,8 @@ namespace ntg
       typedef int_u<nbits, B1> impl;
     };
 
-  } // end of internal
+  } // end of internal.
 
-} // end of ntg
+} // end of ntg.
 
-#endif // ndef NTG_INT_U_HH
+#endif // ndef NTG_REAL_INT_U_HH

@@ -32,7 +32,7 @@
 # include <mlc/is_a.hh>
 
 # include <ntg/utils/to_oln.hh>
-# include <ntg/core/rec_value.hh>
+# include <ntg/core/value.hh>
 # include <ntg/core/global_ops_traits.hh>
 # include <ntg/core/optraits_builtins.hh>
 # include <ntg/core/typetraits_builtins.hh>
@@ -51,7 +51,7 @@
 namespace ntg
 {
 
-  namespace type_definitions
+  namespace internal
   {
 
     //
@@ -194,7 +194,6 @@ namespace ntg
       return tmp;
     }
 
-
     //
     //  Min/Max operators
     //
@@ -230,7 +229,7 @@ namespace ntg
       return (lhs > rhs) ? result_type(lhs) : result_type(rhs);
     }
 
-  } // type_definitions
+  } // internal
 
 } // end of ntg
 

@@ -203,7 +203,7 @@ Name(const vec<2, T1>& lhs, const cplx<Rep, T2>& rhs)						\
 namespace ntg
 {
 
-  template <type_definitions::cplx_representation R, class T>
+  template <cplx_representation R, class T>
   struct typetraits<cplx<R, T> >
   {
     typedef cplx<R, T> self;
@@ -216,204 +216,199 @@ namespace ntg
     typedef self op_traits;
   };
 
-  namespace type_definitions 
-  {
-
-    //
-    // Non-specialized cplx class (declared in predecls.hh) :
-    // template <cplx_representation R, class T> class cplx;
-    //
-    //////////////////////////////////////
+  //
+  // Non-specialized cplx class (declared in predecls.hh) :
+  // template <cplx_representation R, class T> class cplx;
+  //
+  //////////////////////////////////////
     
-    //
-    // cplx<rect, T>
-    //
-    //////////////////////////////////////
+  //
+  // cplx<rect, T>
+  //
+  //////////////////////////////////////
 
-    template <class T>
-    class cplx<rect, T> : public vec<2, T, cplx<rect, T> >
+  template <class T>
+  class cplx<rect, T> : public vec<2, T, cplx<rect, T> >
+  {
+  public:
+
+    cplx(const T& re = 0, const T& im = 0)
     {
-    public:
+      val_[0] = re;
+      val_[1] = im;
+    }
 
-      cplx(const T& re = 0, const T& im = 0)
-      {
-	_value[0] = re;
-	_value[1] = im;
-      }
-
-      cplx<rect, T>& operator=(const T& r)
-      {
-	_value[0] = r;
-	_value[1] = 0;
-	return *this;
-      }
-
-      template<cplx_representation R, class T2>
-      cplx(const cplx<R, T2>& rhs)
-      {
-	_value[0] = (T)rhs.real();
-	_value[1] = (T)rhs.imag();
-      }
-
-      template<cplx_representation R, class T2>
-      cplx<rect, T>& operator=(const cplx<R, T2>& rhs)
-      {
-	_value[0] = (T)rhs.real();
-	_value[1] = (T)rhs.imag();
-	return *this;
-      }
-
-      template<class T2>
-      cplx(const vec<2, T2>& rhs)
-      {
-	_value[0] = (T)rhs[0];
-	_value[1] = (T)rhs[1];
-      }
-
-      template<class T2>
-      cplx<rect, T>& operator=(const vec<2, T2>& rhs)
-      {
-	_value[0] = (T)rhs[0];
-	_value[1] = (T)rhs[1];
-	return *this;
-      }
-
-      ~cplx()
-      {
-	is_a(optraits<T>, optraits_scalar)::ensure();
-      }
-
-      // accessors
-
-      const T real() const { return _value[0]; }
-      T& real() { return _value[0]; }
-
-      const T imag() const { return _value[1]; }
-      T& imag() { return _value[1]; }
-
-      const T first() const { return _value[0]; }
-      T& first() { return _value[0]; }
-
-      const T second() const { return _value[1]; }
-      T& second() { return _value[1]; }
-
-      // methods
-
-      const dfloat magn() const
-      {
-	return sqrt(_value[0] * _value[0] + _value[1] * _value[1]);
-      }
-
-      const dfloat angle() const
-      {
-	return atan2(_value[1], _value[0]);
-      }
-
-      const cplx<rect, T> conj() const
-      {
-	return cplx<rect, T>(_value[0], -_value[1]);
-      }
-
-      const cplx<rect, T> invert() const
-      {
-	return cplx<rect, T>(-_value[0], -_value[1]);
-      }
-
-      const cplx<polar, dfloat> to_polar() const
-      {
-	return cplx<polar, dfloat>(magn(), angle());
-      }
-
-    };
-
-    //
-    // cplx<polar, T>
-    //
-    //////////////////////////////////////
-
-    template <class T>
-    class cplx<polar, T> : public rec_vector<cplx<polar, T> >
+    cplx<rect, T>& operator=(const T& r)
     {
-    public:
+      val_[0] = r;
+      val_[1] = 0;
+      return *this;
+    }
 
-      cplx(const T& ma = 0, const T& an = 0)
-      {
-	precondition (ma >= 0);
-	_value[0] = ma;
-	_value[1] = an;
-      }
+    template<cplx_representation R, class T2>
+    cplx(const cplx<R, T2>& rhs)
+    {
+      val_[0] = (T)rhs.real();
+      val_[1] = (T)rhs.imag();
+    }
 
-      cplx<polar, T>& operator=(const T& r)
-      {
-	_value[0] = r;
-	_value[1] = 0;
-	return *this;
-      }
+    template<cplx_representation R, class T2>
+    cplx<rect, T>& operator=(const cplx<R, T2>& rhs)
+    {
+      val_[0] = (T)rhs.real();
+      val_[1] = (T)rhs.imag();
+      return *this;
+    }
 
-      template<cplx_representation R, class T2>
-      cplx(const cplx<R, T2>& rhs)
-      {
-	_value[0] = (T)rhs.magn();
-	_value[1] = (T)rhs.angle();
-      }
+    template<class T2>
+    cplx(const vec<2, T2>& rhs)
+    {
+      val_[0] = (T)rhs[0];
+      val_[1] = (T)rhs[1];
+    }
 
-      template<cplx_representation R, class T2>
-      cplx<polar, T>& operator=(const cplx<R, T2>& rhs)
-      {
-	_value[0] = (T)rhs.magn();
-	_value[1] = (T)rhs.angle();
-	return *this;
-      }
+    template<class T2>
+    cplx<rect, T>& operator=(const vec<2, T2>& rhs)
+    {
+      val_[0] = (T)rhs[0];
+      val_[1] = (T)rhs[1];
+      return *this;
+    }
 
-      ~cplx()
-      {
-	is_a(optraits<T>, optraits_scalar)::ensure();
-      }
+    ~cplx()
+    {
+      is_a(optraits<T>, optraits_scalar)::ensure();
+    }
 
-      // accessors
+    // accessors
 
-      const T magn() const { return _value[0]; }
-      T& magn() { return _value[0]; }
+    const T real() const { return val_[0]; }
+    T& real() { return val_[0]; }
 
-      const T angle() const { return _value[1]; }
-      T& angle() { return _value[1]; }
+    const T imag() const { return val_[1]; }
+    T& imag() { return val_[1]; }
 
-      const T first() const { return _value[0]; }
-      T& first() { return _value[0]; }
+    const T first() const { return val_[0]; }
+    T& first() { return val_[0]; }
 
-      const T second() const { return _value[1]; }
-      T& second() { return _value[1]; }
+    const T second() const { return val_[1]; }
+    T& second() { return val_[1]; }
 
-      // methods
+    // methods
 
-      const dfloat real() const
-      {
-	return _value[0] * cos(_value[1]);
-      }
+    const dfloat magn() const
+    {
+      return sqrt(val_[0] * val_[0] + val_[1] * val_[1]);
+    }
 
-      const dfloat imag() const
-      {
-	return _value[0] * sin(_value[1]);
-      }
+    const dfloat angle() const
+    {
+      return atan2(val_[1], val_[0]);
+    }
 
-      const cplx<polar, T> conj() const
-      {
-	return cplx<polar, T>(_value[0], -_value[1]);
-      }
+    const cplx<rect, T> conj() const
+    {
+      return cplx<rect, T>(val_[0], -val_[1]);
+    }
 
-      const cplx<rect, T> invert() const
-      {
-	return cplx<rect, T>(_value[0], _value[1] + M_PI);
-      }
+    const cplx<rect, T> invert() const
+    {
+      return cplx<rect, T>(-val_[0], -val_[1]);
+    }
 
-      const cplx<rect, dfloat> to_rect() const
-      {
-	return cplx<rect, dfloat>(real(), imag());
-      }
+    const cplx<polar, dfloat> to_polar() const
+    {
+      return cplx<polar, dfloat>(magn(), angle());
+    }
 
-    };
+  };
 
-  } // end of type_definitions
+  //
+  // cplx<polar, T>
+  //
+  //////////////////////////////////////
+
+  template <class T>
+  class cplx<polar, T> : public vectorial<cplx<polar, T> >
+  {
+  public:
+
+    cplx(const T& ma = 0, const T& an = 0)
+    {
+      precondition (ma >= 0);
+      val_[0] = ma;
+      val_[1] = an;
+    }
+
+    cplx<polar, T>& operator=(const T& r)
+    {
+      val_[0] = r;
+      val_[1] = 0;
+      return *this;
+    }
+
+    template<cplx_representation R, class T2>
+    cplx(const cplx<R, T2>& rhs)
+    {
+      val_[0] = (T)rhs.magn();
+      val_[1] = (T)rhs.angle();
+    }
+
+    template<cplx_representation R, class T2>
+    cplx<polar, T>& operator=(const cplx<R, T2>& rhs)
+    {
+      val_[0] = (T)rhs.magn();
+      val_[1] = (T)rhs.angle();
+      return *this;
+    }
+
+    ~cplx()
+    {
+      is_a(optraits<T>, optraits_scalar)::ensure();
+    }
+
+    // accessors
+
+    const T magn() const { return val_[0]; }
+    T& magn() { return val_[0]; }
+
+    const T angle() const { return val_[1]; }
+    T& angle() { return val_[1]; }
+
+    const T first() const { return val_[0]; }
+    T& first() { return val_[0]; }
+
+    const T second() const { return val_[1]; }
+    T& second() { return val_[1]; }
+
+    // methods
+
+    const dfloat real() const
+    {
+      return val_[0] * cos(val_[1]);
+    }
+
+    const dfloat imag() const
+    {
+      return val_[0] * sin(val_[1]);
+    }
+
+    const cplx<polar, T> conj() const
+    {
+      return cplx<polar, T>(val_[0], -val_[1]);
+    }
+
+    const cplx<rect, T> invert() const
+    {
+      return cplx<rect, T>(val_[0], val_[1] + M_PI);
+    }
+
+    const cplx<rect, dfloat> to_rect() const
+    {
+      return cplx<rect, dfloat>(real(), imag());
+    }
+
+  };
 
   template<class T>
   inline

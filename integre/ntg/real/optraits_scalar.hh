@@ -32,7 +32,10 @@
 
 # include <mlc/is_a.hh>
 
-# include <ntg/core/rec_value.hh>
+# include <ntg/real/real.hh>
+
+// --
+
 # include <ntg/core/optraits.hh>
 # include <ntg/core/global_ops_traits.hh>
 # include <ntg/core/typetraits.hh>
@@ -40,7 +43,8 @@
 // macros definitions
 # include <ntg/real/optraits_scalar_defs.hh>
 
-// useful cast macros
+// FIXME: nothing to do here !
+// useful cast macros.
 # define SIGNED_CAST(T, Val) \
   (static_cast<typename typetraits<T>::signed_type>(Val))
 
@@ -60,11 +64,11 @@ namespace ntg
   public:
     static storage_type zero () { return 0; }
     static storage_type unit () { return 1; }
-    static storage_type default_value() { return zero(); }
+    static storage_type default_val() { return zero(); }
 
     //
     // dev note : the goal in those default operators is to check the kind
-    // of operands (rec_value or not), and then call the good function.
+    // of operands (value or not), and then call the good function.
     //
     // ASSIGN_SCALAR_OPERATOR includes default check_xxx_equal functions
     //

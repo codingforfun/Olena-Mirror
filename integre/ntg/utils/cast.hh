@@ -28,7 +28,7 @@
 #ifndef NTG_CAST_HH
 # define NTG_CAST_HH
 
-# include <ntg/core/rec_value.hh>
+# include <ntg/core/value.hh>
 # include <ntg/core/typetraits.hh>
 # include <ntg/core/typetraits_builtins.hh>
 # include <ntg/core/optraits.hh>
@@ -67,8 +67,8 @@ namespace ntg
 	// This cast does only work on float input.
       };
       template<class Tdest, class Tsrc>
-      struct _round<Tdest, rec_float<Tsrc> > {
-	static const Tdest doit(const rec_float<Tsrc>& val)
+      struct _round<Tdest, decimal<Tsrc> > {
+	static const Tdest doit(const decimal<Tsrc>& val)
 	{
 	  // FIXME: update comments
 
@@ -117,22 +117,22 @@ namespace ntg
       };
 # endif
       template<class Tdest, class Tsrc>
-      struct _round<rec_float<Tdest>, rec_float<Tsrc> > {
-	static const Tdest doit(const rec_float<Tsrc>& val)
+      struct _round<decimal<Tdest>, decimal<Tsrc> > {
+	static const Tdest doit(const decimal<Tsrc>& val)
 	{
 	  return val.self();
 	}
       };
       template<class Tsrc>
-      struct _round<float, rec_float<Tsrc> > {
-	static float doit(const rec_float<Tsrc>& val)
+      struct _round<float, decimal<Tsrc> > {
+	static float doit(const decimal<Tsrc>& val)
 	{
 	  return val.self();
 	}
       };
       template<class Tsrc>
-      struct _round<double, rec_float<Tsrc> > {
-	static double doit(const rec_float<Tsrc>& val)
+      struct _round<double, decimal<Tsrc> > {
+	static double doit(const decimal<Tsrc>& val)
 	{
 	  return val.self();
 	}

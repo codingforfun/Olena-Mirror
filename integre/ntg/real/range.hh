@@ -33,7 +33,7 @@
 # include <ntg/core/behavior.hh>
 # include <ntg/core/global_ops.hh>
 # include <ntg/core/predecls.hh>
-# include <ntg/core/rec_value.hh>
+# include <ntg/core/value.hh>
 # include <ntg/core/typetraits.hh>
 # include <ntg/real/optraits_scalar.hh>
 
@@ -72,54 +72,49 @@ namespace ntg
     typedef typename typetraits<T>::base_type op_traits;
   };
 
-  namespace type_definitions
+  //
+  //  Class range<DecoratedType, Min, Max, Behaviour>
+  //
+  ////////////////////////////////////////////////////
+
+  template <class T, class interval, class behaviour>
+  class range : public real<range<T, interval, behaviour> >
   {
+  public:
+    typedef range<T, interval, behaviour> self;
 
-    //
-    //  Class range<DecoratedType, Min, Max, Behaviour>
-    //
-    ////////////////////////////////////////////////////
+  private:
+    // shortcuts
+    typedef typename typetraits<self>::optraits optraits_type;
+    typedef typename typetraits<self>::base_type base_type;
+    typedef typename typetraits<base_type>::storage_type base_storage_type;
 
-    template <class T, class interval, class behaviour>
-    class range : public rec_scalar<range<T, interval, behaviour> >
+  public:
+    range () { val_ = 0; }
+
+    template <class U>
+    range (const U& u)
     {
-    public:
-      typedef range<T, interval, behaviour> self;
+      is_a(optraits<U>, optraits_scalar)::ensure();
+      val_ = optraits_type::check(u);
+    }
+    template <class U>
+    self& operator=(const U& u)
+    {
+      val_ = optraits_type::check(u);
+      return *this;
+    }
 
-    private:
-      // shortcuts
-      typedef typename typetraits<self>::optraits optraits_type;
-      typedef typename typetraits<self>::base_type base_type;
-      typedef typename typetraits<base_type>::storage_type base_storage_type;
-
-    public:
-      range () { _value = 0; }
-
-      template <class U>
-      range (const U& u)
-      {
-	is_a(optraits<U>, optraits_scalar)::ensure();
-	_value = optraits_type::check(u);
-      }
-      template <class U>
-      self& operator=(const U& u)
-      {
-	_value = optraits_type::check(u);
-	return *this;
-      }
-
-      // cast
-      operator base_storage_type() const { return _value; }
-    };
-
-  } // type_definitions
+    // cast
+    operator base_storage_type() const { return val_; }
+  };
 
   template<class T, class interval, class behaviour>
   inline std::ostream&
   operator<<(std::ostream& stream, const range<T, interval, behaviour>& rhs)
   {
     // Cast useful for range<unsigned char, ...>
-    stream << (typename typetraits<T>::largest_type)(rhs.value());
+    stream << (typename typetraits<T>::largest_type)(rhs.val());
     return stream;
   }
 

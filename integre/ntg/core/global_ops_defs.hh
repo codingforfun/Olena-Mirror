@@ -43,19 +43,19 @@
 
 # define GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, Builtin)		\
 template <class T2>						\
-inline Builtin& Op(Builtin& lhs, const rec_value<T2>& rhs)	\
+inline Builtin& Op(Builtin& lhs, const value<T2>& rhs)	\
 { return optraits<Builtin>::Name(lhs, rhs.self()); }
 
 
 // 
-//  Define global assignements for both rec_value and builtins
+//  Define global assignements for both value and builtins
 //
 ///////////////////////////////////////////////////////////////
 
 
 # define GLOBAL_ASSIGN_OP(Op, Name)			\
 template <class T1, class T2>				\
-inline T1& Op(rec_value<T1>& lhs, const T2& rhs)	\
+inline T1& Op(value<T1>& lhs, const T2& rhs)	\
 { return optraits<T1>::Name(lhs.self(), rhs); }		\
 							\
 GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, signed   long);	\
@@ -84,7 +84,7 @@ inline typename								\
 internal::deduce_from_traits<internal::operator_##Name##_traits, 	\
                             Builtin, 					\
                             T2>::ret					\
-Op(Builtin lhs, const rec_value<T2>& rhs)				\
+Op(Builtin lhs, const value<T2>& rhs)				\
 {									\
   typedef								\
     internal::deduce_from_traits<internal::operator_##Name##_traits,	\
@@ -99,7 +99,7 @@ Op(Builtin lhs, const rec_value<T2>& rhs)				\
 }
 
 // 
-//  Define global arithmetic operators for both rec_values and builtins
+//  Define global arithmetic operators for both values and builtins
 //
 ////////////////////////////////////////////////////////////////////////
 
@@ -107,7 +107,7 @@ Op(Builtin lhs, const rec_value<T2>& rhs)				\
 template <class T1, class T2>							\
 inline typename									\
 internal::deduce_from_traits<internal::operator_##Name##_traits, T1, T2>::ret	\
-Op(const rec_value<T1>& lhs, const T2& rhs)					\
+Op(const value<T1>& lhs, const T2& rhs)					\
 {										\
   typedef									\
     internal::deduce_from_traits<internal::operator_##Name##_traits,		\
@@ -148,7 +148,7 @@ inline typename								\
 internal::deduce_from_traits<internal::operator_logical_traits, 	\
 			     Builtin, 					\
 			     T2>::ret					\
-Op(const Builtin& lhs, const rec_value<T2>& rhs)			\
+Op(const Builtin& lhs, const value<T2>& rhs)			\
 {									\
   typedef								\
     internal::deduce_from_traits<internal::operator_logical_traits,	\
@@ -163,7 +163,7 @@ Op(const Builtin& lhs, const rec_value<T2>& rhs)			\
 }
 
 // 
-//  Define global logical operators for both rec_values and builtins
+//  Define global logical operators for both values and builtins
 //
 ////////////////////////////////////////////////////////////////////
 
@@ -171,7 +171,7 @@ Op(const Builtin& lhs, const rec_value<T2>& rhs)			\
 template <class T1, class T2>							\
 inline typename									\
 internal::deduce_from_traits<internal::operator_logical_traits, T1, T2>::ret	\
-Op(const rec_value<T1>& lhs, const T2& rhs)					\
+Op(const value<T1>& lhs, const T2& rhs)					\
 {										\
   typedef									\
     internal::deduce_from_traits<internal::operator_logical_traits,		\
@@ -202,7 +202,7 @@ GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, bool);
 
 # define GLOBAL_CMP_OP_BUILTIN(Op, Name, Builtin)			\
 template <class T2>							\
-inline bool Op(const Builtin& lhs, const rec_value<T2>& rhs)		\
+inline bool Op(const Builtin& lhs, const value<T2>& rhs)		\
 {									\
   typedef								\
     internal::deduce_from_traits<internal::operator_cmp_traits,		\
@@ -219,7 +219,7 @@ inline bool Op(const Builtin& lhs, const rec_value<T2>& rhs)		\
 
 # define GLOBAL_CMP_OP(Op, Name)					\
 template <class T1, class T2>						\
-inline bool Op(const rec_value<T1>& lhs, const T2& rhs)			\
+inline bool Op(const value<T1>& lhs, const T2& rhs)			\
 {									\
   typedef								\
     internal::deduce_from_traits<internal::operator_cmp_traits,		\

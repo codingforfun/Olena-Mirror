@@ -32,7 +32,7 @@
 # include <mlc/bool.hh>
 # include <mlc/is_a.hh>
 
-# include <ntg/core/rec_value.hh>
+# include <ntg/core/value.hh>
 # include <ntg/core/optraits.hh>
 # include <ntg/real/optraits_scalar.hh>
 # include <ntg/core/typetraits.hh>

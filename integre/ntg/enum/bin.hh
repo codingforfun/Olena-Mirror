@@ -30,8 +30,12 @@
 
 # include <mlc/contract.hh>
 
+# include <ntg/enum/enumerated.hh>
+
+// --
+
 # include <ntg/core/global_ops.hh>
-# include <ntg/core/rec_value.hh>
+# include <ntg/core/value.hh>
 # include <ntg/core/typetraits.hh>
 # include <ntg/core/optraits.hh>
 # include <ntg/core/predecls.hh>
@@ -68,57 +72,56 @@ namespace ntg
   };
 
 
-  namespace type_definitions
+  //
+  //  Class bin
+  //
+  //////////////
+
+
+  class bin : public enumerated<bin>
   {
-    //
-    //  Class bin
-    //
-    //////////////
+  public:
+    bin () { val_ = 0; }
 
-
-    class bin : public rec_enum<bin>
+    // FIXME: create a template constructor and check into it if T
+    // is_a real or whatever ?
+    
+    bin (unsigned char val)
     {
-    public:
-      bin () { _value = 0; }
-
-      bin (unsigned char val)
-      {
-	precondition (val < 2);
-	_value = val;
-      }
-
-      bin& operator=(unsigned char val)
-      {
-	precondition (val < 2);
-	_value = val;
-	return *this;
-      }
-
-      template <class T>
-      bin (const rec_scalar<T>& val)
-      {
-	precondition (val < 2);
-	_value = val;
-      }
-      template <class T>
-      bin& operator=(const rec_scalar<T>& val)
-      {
-	precondition (val < 2);
-	_value = val;
-	return *this;
-      }
-
-      operator unsigned char() const { return _value; }
-    };
-
-    inline std::ostream&
-    operator<<(std::ostream& stream, const bin& rhs)
-    {
-      stream << (unsigned int) rhs.value();
-      return stream;
+      precondition (val < 2);
+      val_ = val;
     }
 
-  } // type_definitions
+    bin& operator=(unsigned char val)
+    {
+      precondition (val < 2);
+      val_ = val;
+      return *this;
+    }
+
+    template <class T>
+    bin (const real<T>& val)
+    {
+      precondition (val < 2);
+      val_ = val;
+    }
+    template <class T>
+    bin& operator=(const real<T>& val)
+    {
+      precondition (val < 2);
+      val_ = val;
+      return *this;
+    }
+
+    operator unsigned char() const { return val_; }
+  };
+
+  inline std::ostream&
+  operator<<(std::ostream& stream, const bin& rhs)
+  {
+    stream << (unsigned int) rhs.val();
+    return stream;
+  }
   
   //
   //  optraits for bin
@@ -141,19 +144,19 @@ namespace ntg
 
     static bin& logical_or_equal(bin& lhs, const bin& rhs)
     {
-      lhs = lhs.value() | rhs.value();
+      lhs = lhs.val() | rhs.val();
       return lhs;
     }
 
     static bin& logical_and_equal(bin& lhs, const bin& rhs)
     {
-      lhs = lhs.value() & rhs.value();
+      lhs = lhs.val() & rhs.val();
       return lhs;
     }
 
     static bin& logical_xor_equal(bin& lhs, const bin& rhs)
     {
-      lhs = lhs.value() ^ rhs.value();
+      lhs = lhs.val() ^ rhs.val();
       return lhs;
     }
 
@@ -185,12 +188,12 @@ namespace ntg
 
     static bool cmp_lt(const bin& lhs, const bin& rhs)
     {
-      return lhs.value() < rhs.value();
+      return lhs.val() < rhs.val();
     }
 
     static bool cmp_eq(const bin& lhs, const bin& rhs)
     {
-      return lhs.value() == rhs.value();
+      return lhs.val() == rhs.val();
     }
 
     // debug

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_PREDECLS_HH
-# define NTG_PREDECLS_HH
+#ifndef NTG_CORE_PREDECLS_HH
+# define NTG_CORE_PREDECLS_HH
 
 # include <mlc/type.hh>
 # include <ntg/vect/cplx_representation.hh>
@@ -41,80 +41,44 @@ namespace ntg
   class strict;
   class saturate;
 
-  // Put types and operators definitions in a subnamespace, then
-  // the important types in ntg::, and rely on Koenig lookup to find
-  // relevant operators.  This way our template operators do not
-  // supersede the build-in operator.
-  namespace type_definitions
-  {
-    // intervals
-    template <class T, T i_min, T i_max> class		bounded;
-    template <unsigned i_min, unsigned i_max> class	bounded_u;
-    template <signed i_min, signed i_max> class		bounded_s;
+  // intervals
+  template <class T, T i_min, T i_max> class		bounded;
+  template <unsigned i_min, unsigned i_max> class	bounded_u;
+  template <signed i_min, signed i_max> class		bounded_s;
 
-    // scalar types
-    template <unsigned nbits, class behaviour = strict>	class int_u;
-    template <unsigned nbits, class behaviour = strict>	class int_s;
-    template <class T, class interval, class behaviour = strict> class range;
-    template <class T, class interval> class		cycle;
-  } // end of type_definitions
-
-  using type_definitions::bounded_u;
-  using type_definitions::bounded_s;
-  using type_definitions::int_u;
-  using type_definitions::int_s;
-  using type_definitions::range;
-  using type_definitions::cycle;
+  // scalar types
+  template <unsigned nbits, class behaviour = strict>	class int_u;
+  template <unsigned nbits, class behaviour = strict>	class int_s;
+  template <class T, class interval, class behaviour = strict> class range;
+  template <class T, class interval> class		cycle;
 
   // floats
   typedef float						sfloat;
   typedef double					dfloat;
 
   // enumerated types
-  namespace type_definitions
-  {
-    class bin;
-  }
-  using type_definitions::bin;
+  class bin;
 
   //
   // vectorial types
   //
 
   // vec
-
-  namespace type_definitions 
-  {
-    template <unsigned N, class T, class Self = mlc::bottom> class vec;
-  }
-  using type_definitions::vec;
+  template <unsigned N, class T, class Self = mlc::bottom> class vec;
 
   // cplx
-
-  using type_definitions::cplx_representation;
-  namespace type_definitions 
-  {
-    template <cplx_representation R, class T> class cplx;
-  }
-  using type_definitions::cplx;
-  using type_definitions::rect;
-  using type_definitions::polar;
+  template <cplx_representation R, class T> class cplx;
 
   //
   // Colors
   //
 
-  namespace type_definitions
-  {
-    template <unsigned ncomps, unsigned qbits, template <unsigned>
-    class color_system>
-    struct color;
-
-    template<int lval, int uval>
-    struct interval;
-  }
-  using type_definitions::color;
-  using type_definitions::interval;
+  template <unsigned ncomps, unsigned qbits, template <unsigned>
+  class color_system>
+  struct color;
+  
+  template<int lval, int uval>
+  struct interval;
 
   //
   // Scalar types
@@ -151,6 +115,6 @@ namespace ntg
   typedef int_s<32, unsafe>	int_s32u;
   typedef int_s<32, saturate>	int_s32s;
 
-} // end of ntg
+} // end of ntg.
 
-#endif
+#endif // ndef NTG_CORE_PREDECLS_HH

@@ -38,7 +38,7 @@
 # include <ntg/core/interval.hh>
 # include <ntg/core/optraits.hh>
 # include <ntg/core/predecls.hh>
-# include <ntg/core/rec_value.hh>
+# include <ntg/core/value.hh>
 # include <ntg/core/typetraits.hh>
 # include <ntg/utils/to_oln.hh>
 
@@ -78,65 +78,61 @@ namespace ntg
   };
 
 
-  namespace type_definitions
+  //
+  //  Class cycle<DecoratedType, class interval>
+  //
+  //  The interval has 0
+  //
+  ////////////////////////////////////////////////////
+
+  //
+  //  dev note
+  //
+  //  Arithmetic and other binary operators use base_type,
+  //  check typetraits<cycle>::op_traits
+  //
+
+  template <class T,
+	    class interval>
+  class cycle : public real<cycle<T, interval> >
   {
-    //
-    //  Class cycle<DecoratedType, class interval>
-    //
-    //  The interval has 0
-    //
-    ////////////////////////////////////////////////////
+  public:
+    typedef cycle<T, interval> self;
 
-    //
-    //  dev note
-    //
-    //  Arithmetic and other binary operators use base_type,
-    //  check typetraits<cycle>::op_traits
-    //
+  private:
+    // shortcuts
+    typedef typename typetraits<self>::optraits optraits_type;
+    typedef typename typetraits<self>::base_type base_type;
+    typedef typename typetraits<base_type>::storage_type base_storage_type;
 
-    template <class T,
-	      class interval>
-    class cycle : public rec_scalar<cycle<T, interval> >
+  public:
+    cycle () { val_ = 0; }
+
+    template <class U>
+    cycle (const U& u)
     {
-    public:
-      typedef cycle<T, interval> self;
-
-    private:
-      // shortcuts
-      typedef typename typetraits<self>::optraits optraits_type;
-      typedef typename typetraits<self>::base_type base_type;
-      typedef typename typetraits<base_type>::storage_type base_storage_type;
-
-    public:
-      cycle () { _value = 0; }
-
-      template <class U>
-      cycle (const U& u)
-      {
-	is_a(optraits<U>, optraits_scalar)::ensure();
-	_value = optraits_type::check(u);
-      }
-      template <class U>
-      self& operator=(const U& u)
-      {
-	_value = optraits_type::check(u);
-	return *this;
-      }
-
-      // cast
-      operator base_storage_type() const { return _value; }
-    };
-
-    template<class T, class interval>
-    inline std::ostream&
-    operator<<(std::ostream& stream, const cycle<T, interval>& rhs)
+      is_a(optraits<U>, optraits_scalar)::ensure();
+      val_ = optraits_type::check(u);
+    }
+    template <class U>
+    self& operator=(const U& u)
     {
-      // Cast useful for cycle<unsigned char, ...>
-      stream << (typename typetraits<T>::largest_type)(rhs.value());
-      return stream;
+      val_ = optraits_type::check(u);
+      return *this;
     }
 
-  } // type_definitions
+    // cast
+    operator base_storage_type() const { return val_; }
+  };
+
+  template<class T, class interval>
+  inline std::ostream&
+  operator<<(std::ostream& stream, const cycle<T, interval>& rhs)
+  {
+    // Cast useful for cycle<unsigned char, ...>
+    stream << (typename typetraits<T>::largest_type)(rhs.val());
+    return stream;
+  }
 
   template<class T,
 	   class interval>
@@ -185,6 +181,5 @@ namespace ntg
   };
 
 } // end of ntg
-
 
 #endif // ndef NTG_CYCLE_HH

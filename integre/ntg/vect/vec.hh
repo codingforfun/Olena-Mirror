@@ -25,17 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_VEC_HH
-# define NTG_VEC_HH
-
-# include <mlc/type.hh>
+#ifndef NTG_VECT_VEC_HH
+# define NTG_VECT_VEC_HH
 
 # include <mlc/array/all.hh>
+# include <mlc/type.hh>
+
+# include <ntg/vect/vectorial.hh>
+
+// --
 
 # include <ntg/core/global_ops.hh>
 # include <ntg/core/optraits.hh>
 # include <ntg/core/predecls.hh>
-# include <ntg/core/rec_value.hh>
 # include <ntg/core/typetraits.hh>
 
 // FIXME: move these macros and document them.
@@ -98,65 +100,60 @@ namespace ntg
     typedef self op_traits;
   };
 
-  namespace type_definitions
+  template <unsigned N, class T, class Self>
+  class vec : 
+    public vectorial<typename mlc::select_self<vec<N, T, mlc::bottom>, Self>::ret>
   {
+  public :
 
-    template <unsigned N, class T, class Self>
-    class vec : 
-      public rec_vector<typename mlc::select_self<vec<N, T, mlc::bottom>, Self>::ret>
+    vec()
     {
-    public :
+      _fill (optraits<T>::zero());
+    }
 
-      vec()
-      {
-	_fill (optraits<T>::zero());
-      }
+    /* A vector can be built from a 1xM array.  */
+    template<int ncols, class T2>
+    vec(const mlc::array2d< mlc::array2d_info<1, ncols>, T2>&
+	arr)
+    {
+      mlc::eq< ncols, N >::ensure();
+      for (unsigned i = 0; i < N; ++i)
+	val_[i] = arr[i];
+    }
 
-      /* A vector can be built from a 1xM array.  */
-      template<int ncols, class T2>
-      vec(const mlc::array2d< mlc::array2d_info<1, ncols>, T2>&
-	  arr)
-      {
-	mlc::eq< ncols, N >::ensure();
-	for (unsigned i = 0; i < N; ++i)
-	  _value[i] = arr[i];
-      }
+    template<class U, class Self2>
+    vec(const vec<N, U, Self2>& v)
+    {
+      for (unsigned i = 0; i < N; ++i)
+	val_[i] = v[i];
+    }
 
-      template<class U, class Self2>
-      vec(const vec<N, U, Self2>& v)
-      {
-	for (unsigned i = 0; i < N; ++i)
-	  _value[i] = v[i];
-      }
+    template<class U, class Self2>
+    vec<N, T>& operator=(const vec<N, U, Self2>& v)
+    {
+      for (unsigned i = 0; i < N; ++i)
+	val_[i] = v[i];
+      return *this;
+    }
 
-      template<class U, class Self2>
-      vec<N, T>& operator=(const vec<N, U, Self2>& v)
-      {
-	for (unsigned i = 0; i < N; ++i)
-	  _value[i] = v[i];
-	return *this;
-      }
+    // accessor
+    T &     operator[](unsigned i) 	   { return val_[i]; }
+    const T operator[](unsigned i) const { return val_[i]; }
 
-      // accessor
-      T &     operator[](unsigned i) 	   { return _value[i]; }
-      const T operator[](unsigned i) const { return _value[i]; }
+    unsigned size() const { return N; }
 
-      unsigned size() const { return N; }
+    static const vec<N,T> zero() { return vec(); }
+    // There is no unit() for vec<>.
+    ~vec() {}
 
-      static const vec<N,T> zero() { return vec(); }
-      // There is no unit() for vec<>.
-      ~vec() {}
-
-    protected:
-      vec& _fill(T t)
-      {
-	for (unsigned i = 0; i < N; ++i)
-	  _value[i] = t;
-	return *this;
-      }
-    };
-
-  } // end of type_definitions
+  protected:
+    vec& _fill(T t)
+    {
+      for (unsigned i = 0; i < N; ++i)
+	val_[i] = t;
+      return *this;
+    }
+  };
 
   template<unsigned N,class T> inline
   std::ostream& operator<<(std::ostream& ostr, const vec<N,T>& rhs)
@@ -271,7 +268,7 @@ namespace ntg
     inline static typename
     internal::deduce_from_traits<internal::operator_times_traits,
 				 T1, T2>::ret
-    times(const rec_vector<T1>& lhs, const T2& rhs)
+    times(const vectorial<T1>& lhs, const T2& rhs)
     {
       is_a(optraits<T1>, ntg::optraits_vector)::ensure();
       is_a(optraits<T2>, ntg::optraits_scalar)::ensure();
@@ -288,7 +285,7 @@ namespace ntg
     inline static typename
     internal::deduce_from_traits<internal::operator_times_traits,
 				 T1, T2>::ret
-    times(const T1& lhs, const rec_vector<T2>& rhs)
+    times(const T1& lhs, const vectorial<T2>& rhs)
     {
       return times(rhs, lhs);
     }
@@ -423,4 +420,4 @@ namespace ntg
 
 } // end of ntg
 
-#endif // ! NTG_VEC_HH
+#endif // ! NTG_VECT_VEC_HH

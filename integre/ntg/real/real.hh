@@ -25,18 +25,38 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_CPLX_REPRESENTATION_HH
-# define NTG_CPLX_REPRESENTATION_HH
+#ifndef NTG_REAL_REAL_HH
+# define NTG_REAL_REAL_HH
+
+# include <ntg/core/value.hh>
 
 namespace ntg
 {
 
-  // Different representations of cplx :
-  typedef enum {
-    rect,
-    polar
-  } cplx_representation;
-  
-} // end of ntg
+  /*-----.
+  | real |
+  `-----*/
 
-#endif // NTG_CPLX_REPRESENTATION_HH
+  template <class E> 
+  class real : public value<E> 
+  {};
+
+  /*--------.
+  | integer |
+  `--------*/
+  
+  template <class E> 
+  class integer : public real<E> 
+  {};
+
+  /*--------.
+  | decimal |
+  `--------*/
+
+  template <class E>
+  class decimal : public real<E>
+  {};
+
+} // end of ntg.
+
+#endif // !NTG_REAL_REAL_HH

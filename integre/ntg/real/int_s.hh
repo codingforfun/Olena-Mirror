@@ -40,7 +40,7 @@
 # include <ntg/core/global_ops_traits.hh>
 # include <ntg/core/optraits.hh>
 # include <ntg/core/predecls.hh>
-# include <ntg/core/rec_value.hh>
+# include <ntg/core/value.hh>
 # include <ntg/core/typetraits.hh>
 # include <ntg/real/optraits_scalar.hh>
 # include <ntg/utils/to_oln.hh>
@@ -55,11 +55,11 @@
 # define INT_S_CTOR_FROM_BUILTIN(Builtin)       \
 int_s (const Builtin rhs)			\
 {						\
-  _value = optraits_type::check(rhs);		\
+  val_ = optraits_type::check(rhs);		\
 }						\
 self& operator=(const Builtin rhs)	        \
 {						\
-  _value = optraits_type::check(rhs);		\
+  val_ = optraits_type::check(rhs);		\
   return *this;					\
 }
 
@@ -98,106 +98,101 @@ namespace ntg
   };
 
 
-  namespace type_definitions
+  //
+  //  Class int_s<Nbits, Behaviour>
+  //
+  //////////////////////////////////
+
+
+  template <unsigned nbits, class behaviour>
+  class int_s : public integer<int_s<nbits, behaviour> >
   {
+    typedef int_s<nbits, behaviour> self;
+    typedef typename typetraits<self>::storage_type storage_type;
+    typedef typename typetraits<self>::optraits optraits_type;
 
-    //
-    //  Class int_s<Nbits, Behaviour>
-    //
-    //////////////////////////////////
+  public:
 
+    int_s () { val_ = 0; }
 
-    template <unsigned nbits, class behaviour>
-    class int_s : public rec_int_s<int_s<nbits, behaviour> >
+    // We define ctor for each builtin to avoid implicit builtin promotion
+
+    INT_S_CTOR_FROM_BUILTIN(unsigned long);
+    INT_S_CTOR_FROM_BUILTIN(signed   long);
+
+    INT_S_CTOR_FROM_BUILTIN(unsigned int);
+    INT_S_CTOR_FROM_BUILTIN(signed   int);
+
+    INT_S_CTOR_FROM_BUILTIN(unsigned short);
+    INT_S_CTOR_FROM_BUILTIN(signed   short);
+
+    INT_S_CTOR_FROM_BUILTIN(unsigned char);
+    INT_S_CTOR_FROM_BUILTIN(signed   char);
+
+    template <unsigned mbits, class B2>
+    int_s (const int_s<mbits, B2>& rhs)
     {
-      typedef int_s<nbits, behaviour> self;
-      typedef typename typetraits<self>::storage_type storage_type;
-      typedef typename typetraits<self>::optraits optraits_type;
-
-    public:
-
-      int_s () { _value = 0; }
-
-      // We define ctor for each builtin to avoid implicit builtin promotion
-
-      INT_S_CTOR_FROM_BUILTIN(unsigned long);
-      INT_S_CTOR_FROM_BUILTIN(signed   long);
-
-      INT_S_CTOR_FROM_BUILTIN(unsigned int);
-      INT_S_CTOR_FROM_BUILTIN(signed   int);
-
-      INT_S_CTOR_FROM_BUILTIN(unsigned short);
-      INT_S_CTOR_FROM_BUILTIN(signed   short);
-
-      INT_S_CTOR_FROM_BUILTIN(unsigned char);
-      INT_S_CTOR_FROM_BUILTIN(signed   char);
-
-      template <unsigned mbits, class B2>
-      int_s (const int_s<mbits, B2>& rhs)
-      {
-	if (mbits <= nbits)
-	  _value = rhs.value();
-	else
-	  _value = optraits_type::check(rhs.value());
-      }
-      template <unsigned mbits, class B2>
-      self& operator=(const int_s<mbits, B2>& rhs)
-      {
-	if (mbits <= nbits)
-	  _value = rhs.value();
-	else
-	  _value = optraits_type::check(rhs.value());
-	return *this;
-      }
-
-      template <class T>
-      int_s (const rec_scalar<T>& rhs)
-      {
-	_value = optraits_type::check(rhs.value());
-      }
-      template <class T>
-      self& operator=(const rec_scalar<T>& rhs)
-      {
-	_value = optraits_type::check(rhs.value());
-	return *this;
-      }
-
-      int_s (const float rhs)
-      {
-	_value = optraits_type::check(roundf(rhs));
-      }
-      self& operator=(const float rhs)
-      {
-	_value = optraits_type::check(roundf(rhs));
-	return *this;
-      }
-
-      int_s (const double rhs)
-      {
-	_value = optraits_type::check(round(rhs));
-      }
-      self& operator=(const double rhs)
-      {
-	_value = optraits_type::check(round(rhs));
-	return *this;
-      }
-
-      operator storage_type () const { return _value; }
-
-    private:
-      // We want to prevent this
-      int_s(bool);
-    };
-
-    template<unsigned nbits, class behaviour>
-    inline std::ostream&
-    operator<<(std::ostream& stream, const int_s<nbits, behaviour>& rhs)
+      if (mbits <= nbits)
+	val_ = rhs.val();
+      else
+	val_ = optraits_type::check(rhs.val());
+    }
+    template <unsigned mbits, class B2>
+    self& operator=(const int_s<mbits, B2>& rhs)
     {
-      stream << signed(rhs.value());
-      return stream;
+      if (mbits <= nbits)
+	val_ = rhs.val();
+      else
+	val_ = optraits_type::check(rhs.val());
+      return *this;
     }
 
-  } // end of type_definitions
+    template <class T>
+    int_s (const real<T>& rhs)
+    {
+      val_ = optraits_type::check(rhs.val());
+    }
+    template <class T>
+    self& operator=(const real<T>& rhs)
+    {
+      val_ = optraits_type::check(rhs.val());
+      return *this;
+    }
+
+    int_s (const float rhs)
+    {
+      val_ = optraits_type::check(roundf(rhs));
+    }
+    self& operator=(const float rhs)
+    {
+      val_ = optraits_type::check(roundf(rhs));
+      return *this;
+    }
+
+    int_s (const double rhs)
+    {
+      val_ = optraits_type::check(round(rhs));
+    }
+    self& operator=(const double rhs)
+    {
+      val_ = optraits_type::check(round(rhs));
+      return *this;
+    }
+
+    operator storage_type () const { return val_; }
+
+  private:
+    // We want to prevent this
+    int_s(bool);
+  };
+
+  template<unsigned nbits, class behaviour>
+  inline std::ostream&
+  operator<<(std::ostream& stream, const int_s<nbits, behaviour>& rhs)
+  {
+    stream << signed(rhs.val());
+    return stream;
+  }
 
   //
   //  optraits for int_s
@@ -256,10 +251,10 @@ namespace ntg
     static bool
     cmp_eq(const self& lhs, const int_u<32, B2>& rhs)
     {
-      if (lhs.value() < 0)
+      if (lhs.val() < 0)
 	return false;
 
-      return static_cast<int_u<32, B2> >(lhs).value() == rhs.value();
+      return static_cast<int_u<32, B2> >(lhs).val() == rhs.val();
     }
     template <class B1>
     static bool cmp_eq(const int_u<32, B1>& lhs, const self& rhs)
@@ -283,18 +278,18 @@ namespace ntg
     static bool
     cmp_lt(const self& lhs, const int_u<32, B2>& rhs)
     {
-      if (lhs.value() < 0)
+      if (lhs.val() < 0)
 	return true;
 
-      return static_cast<int_u<32, B2> >(lhs).value() < rhs.value();
+      return static_cast<int_u<32, B2> >(lhs).val() < rhs.val();
     }
     template <class B1>
     static bool cmp_lt(const int_u<32, B1>& lhs, const self& rhs)
     {
-      if (rhs.value() < 0)
+      if (rhs.val() < 0)
 	return false;
 
-      return lhs.value() < static_cast<int_u<32, B1> >(rhs.value());
+      return lhs.val() < static_cast<int_u<32, B1> >(rhs.val());
     }
 
     // <T1> < <T2>

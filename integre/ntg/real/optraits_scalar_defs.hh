@@ -44,26 +44,26 @@
   }											\
 											\
   template <class T1, class T2> inline							\
-  static T1& Name##_impl(rec_scalar<T1>& lhs, const rec_scalar<T2>& rhs)		\
+  static T1& Name##_impl(real<T1>& lhs, const real<T2>& rhs)		\
   {											\
     typedef typename typetraits<T1>::behaviour_type behaviour_type;			\
-    lhs.self() = behaviour_type::check_##Name(lhs.self().value(), rhs.self().value());	\
+    lhs.self() = behaviour_type::check_##Name(lhs.self().val(), rhs.self().val());	\
     return lhs.self();									\
   }											\
 											\
   template <class T1, class T2> inline							\
-  static T1& Name##_impl(rec_scalar<T1>& lhs, const ntg::any_const_class<T2> rhs)	\
+  static T1& Name##_impl(real<T1>& lhs, const ntg::any_const_class<T2> rhs)	\
   {											\
     typedef typename typetraits<T1>::behaviour_type behaviour_type;			\
-    lhs.self() = behaviour_type::check_##Name(lhs.self().value(), rhs.self());		\
+    lhs.self() = behaviour_type::check_##Name(lhs.self().val(), rhs.self());		\
     return lhs.self();									\
   }											\
 											\
   template <class T1, class T2> inline							\
-  static T1& Name##_impl(ntg::any_class<T1> lhs, const rec_scalar<T2>& rhs)		\
+  static T1& Name##_impl(ntg::any_class<T1> lhs, const real<T2>& rhs)		\
   {											\
     typedef typename typetraits<T1>::behaviour_type behaviour_type;			\
-    lhs.self() = behaviour_type::check_##Name(lhs.self(), rhs.self().value());		\
+    lhs.self() = behaviour_type::check_##Name(lhs.self(), rhs.self().val());		\
     return lhs.self();									\
   }
 
@@ -101,8 +101,8 @@
   }											\
 											\
   template <class T> inline 								\
-  static bool Name##_impl(const rec_scalar<T>& lhs, const rec_scalar<T>& rhs)		\
-  { return lhs.self().value() Op rhs.self().value(); }					\
+  static bool Name##_impl(const real<T>& lhs, const real<T>& rhs)		\
+  { return lhs.self().val() Op rhs.self().val(); }					\
 											\
   template <class T> inline 								\
   static bool										\
@@ -128,23 +128,23 @@
   }										\
 										\
   template <class T1, class T2> inline						\
-  static T1& Name##_impl(rec_int<T1>& lhs, const rec_int<T2>& rhs)		\
+  static T1& Name##_impl(integer<T1>& lhs, const integer<T2>& rhs)		\
   {										\
-    lhs.self() = lhs.self().value() Op rhs.self().value();			\
+    lhs.self() = lhs.self().val() Op rhs.self().val();			\
     return lhs.self();								\
   }										\
 										\
   template <class T1, class T2> inline						\
-  static T1& Name##_impl(rec_int<T1>& lhs, const ntg::any_const_class<T2>& rhs) \
+  static T1& Name##_impl(integer<T1>& lhs, const ntg::any_const_class<T2>& rhs) \
   {										\
-    lhs.self() = lhs.self().value() Op rhs.self();				\
+    lhs.self() = lhs.self().val() Op rhs.self();				\
     return lhs.self();								\
   }										\
 										\
   template <class T1, class T2> inline						\
-  static T1& Name##_impl(ntg::any_class<T1>& lhs, const rec_int<T2>& rhs)	\
+  static T1& Name##_impl(ntg::any_class<T1>& lhs, const integer<T2>& rhs)	\
   {										\
-    lhs.self() = lhs.self() Op rhs.self().value();				\
+    lhs.self() = lhs.self() Op rhs.self().val();				\
     return lhs.self();								\
   }    
 

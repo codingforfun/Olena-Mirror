@@ -37,7 +37,7 @@
 # include <ntg/core/global_ops.hh>
 # include <ntg/real/int_u.hh>
 # include <ntg/core/predecls.hh>
-# include <ntg/core/rec_value.hh>
+# include <ntg/core/value.hh>
 # include <ntg/core/typetraits.hh>
 # include <ntg/vect/vec.hh>
 
@@ -145,72 +145,67 @@ namespace ntg
   } // end of internal
 
 
-  namespace type_definitions
+  template <unsigned ncomps, unsigned qbits, template <unsigned>
+  class color_system>
+  struct color : public value<color<ncomps, qbits, color_system> >
   {
+    template<unsigned icomp>
+    struct lower_bound { enum { ret = color_system<icomp>::lower_bound }; };
+    template<unsigned icomp>
+    struct upper_bound { enum { ret = color_system<icomp>::upper_bound }; };
 
-    template <unsigned ncomps, unsigned qbits, template <unsigned>
-    class color_system>
-    struct color : public rec_value<color<ncomps, qbits, color_system> >
+    typedef int_u<qbits> comp_type;
+    typedef vec<ncomps, comp_type > vec_type;
+    typedef vec<ncomps, float > float_vec_type;
+
+    color() {};
+    color(const vec_type& vec) { val_ = vec; };
+    color(const float_vec_type& vec)
     {
-      template<unsigned icomp>
-      struct lower_bound { enum { ret = color_system<icomp>::lower_bound }; };
-      template<unsigned icomp>
-      struct upper_bound { enum { ret = color_system<icomp>::upper_bound }; };
+      internal::_from_float<0,ncomps,qbits,color_system>::doit(vec,val_);
+    }
 
-      typedef int_u<qbits> comp_type;
-      typedef vec<ncomps, comp_type > vec_type;
-      typedef vec<ncomps, float > float_vec_type;
-
-      color() {};
-      color(const vec_type& vec) { _value = vec; };
-      color(const float_vec_type& vec)
-      {
-	internal::_from_float<0,ncomps,qbits,color_system>::doit(vec,_value);
-      }
-
-      color(const comp_type& c1, const comp_type& c2, const comp_type& c3)
-      {
-	mlc::eq<ncomps, 3>::ensure();
-	_value[0] = c1;
-	_value[1] = c2;
-	_value[2] = c3;
-      }
-
-      comp_type&       operator[](unsigned i)	    { return _value[i]; }
-      const comp_type  operator[](unsigned i) const { return _value[i]; }
-
-      vec_type&       as_vec()       { return _value; }
-      const vec_type& as_vec() const { return _value; }
-
-      float_vec_type to_float() const
-      {
-	float_vec_type tmp;
-	internal::_to_float<0,ncomps,qbits,color_system>::doit(_value, tmp);
-	return tmp;
-      }
-
-      bool operator==(const color& r) const { return _value == r._value; }
-
-      static std::string name() {
-	std::ostringstream out;
-	// FIXME: Output color_system somehow.
-	out << "color<" << ncomps << "," << qbits <<  ",...>" << std::ends;
-	return out.str();
-      }
-    };
-
-
-    // Helper function to complete color_system (by inheritance).
-    template<int lval, int uval>
-    struct interval
+    color(const comp_type& c1, const comp_type& c2, const comp_type& c3)
     {
-      enum {
-	lower_bound = lval,
-	upper_bound = uval
-      };
-    };
+      mlc::eq<ncomps, 3>::ensure();
+      val_[0] = c1;
+      val_[1] = c2;
+      val_[2] = c3;
+    }
 
-  } // end of type_definitions
+    comp_type&       operator[](unsigned i)	    { return val_[i]; }
+    const comp_type  operator[](unsigned i) const { return val_[i]; }
+
+    vec_type&       as_vec()       { return val_; }
+    const vec_type& as_vec() const { return val_; }
+
+    float_vec_type to_float() const
+    {
+      float_vec_type tmp;
+      internal::_to_float<0,ncomps,qbits,color_system>::doit(val_, tmp);
+      return tmp;
+    }
+
+    bool operator==(const color& r) const { return val_ == r.val_; }
+
+    static std::string name() {
+      std::ostringstream out;
+      // FIXME: Output color_system somehow.
+      out << "color<" << ncomps << "," << qbits <<  ",...>" << std::ends;
+      return out.str();
+    }
+  };
+
+
+  // Helper function to complete color_system (by inheritance).
+  template<int lval, int uval>
+  struct interval
+  {
+    enum {
+      lower_bound = lval,
+      upper_bound = uval
+    };
+  };
 
   template <unsigned ncomps, unsigned qbits, template <unsigned>
   class color_system> inline

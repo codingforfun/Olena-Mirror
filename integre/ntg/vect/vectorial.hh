@@ -25,18 +25,23 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_CPLX_REPRESENTATION_HH
-# define NTG_CPLX_REPRESENTATION_HH
+#ifndef NTG_VECT_VECTORIAL_HH
+# define NTG_VECT_VECTORIAL_HH
+
+# include <ntg/core/value.hh>
 
 namespace ntg
 {
 
-  // Different representations of cplx :
-  typedef enum {
-    rect,
-    polar
-  } cplx_representation;
-  
-} // end of ntg
+  /*----------.
+  | vectorial |
+  `----------*/
+  //! Vectorial types abstract class.
 
-#endif // NTG_CPLX_REPRESENTATION_HH
+  template <class E>
+  class vectorial : public value<E>
+  {};
+
+}
+
+#endif // !NTG_VECT_VECTORIAL_HH

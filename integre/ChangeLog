@@ -1,3 +1,22 @@
+2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/enum/bin.hh, ntg/color/color.hh, ntg/vect/cplx.hh,
+	ntg/vect/cplx_representation.hh, ntg/real/cycle.hh,
+	ntg/core/global_ops_defs.hh, ntg/core/global_ops.hh,
+	ntg/core/interval.hh, ntg/real/int_s.hh, ntg/real/int_u.hh,
+	ntg/core/predecls.hh, ntg/real/range.hh, ntg/vect/vec.hh,
+	ntg/real/real.hh, ntg/vect/vectorial.hh,
+	ntg/enum/enumerated.hh: Remove namespace type_definitions.
+
+	* ntg/core/rec_value.hh: Rename as ...
+	* ntg/core/value.hh: ... this.
+	* ntg/core/value.hh: Rename rec_value as value.
+
+	* ntg/enum/enumerated.hh, ntg/real/real.hh, 
+	ntg/vect/vectorial.hh: New files.
+
+	* ntg/core/behavior.hh: Update includes.
+
 2003-04-15  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/bin.hh, ntg/cplx.hh, ntg/cycle.hh, ntg/float.hh, ntg/int.hh,

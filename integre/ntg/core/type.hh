@@ -25,21 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_TYPE_HH
-# define NTG_TYPE_HH
+#ifndef NTG_CORE_TYPE_HH
+# define NTG_CORE_TYPE_HH
 
 namespace ntg
 {
 
-  // FIXME: merge this with metalic
+  // FIXME: see comments in ntg/core/value.hh about this duplicate of
+  // metalic's code.
 
-  // Static hierarchy tool
-  template <class Self>
-  class any_type
+  template <class E>
+  class any
   {
   public:
-    Self& self() { return static_cast<Self&>(*this); }
-    const Self& self() const { return static_cast<const Self&>(*this); }
+    E& exact() { return static_cast<E&>(*this); }
+    const E& exact() const { return static_cast<const E&>(*this); }
+
+    E& self() { return static_cast<E&>(*this); }
+    const E& self() const { return static_cast<const E&>(*this); }
   };
 
   // classes used to disambiguate overloading
@@ -70,4 +73,4 @@ namespace ntg
 
 } // end of ntg
 
-#endif // ndef NTG_TYPE_HH
+#endif // ndef NTG_CORE_TYPE_HH
