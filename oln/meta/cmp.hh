@@ -92,6 +92,19 @@ namespace oln {
       enum { ret = (i > j ? i : j) };
     };
 
+    template<int i, int j, int N>
+    struct maxN
+    {
+      enum { ret = (i > j ? 
+		    (i > N ? N : i) : 
+		    (j > N ? N : j)) };
+    };
+
+    template<int i, int N>
+    struct saturateN
+    {
+      enum { ret = (i > N ? N : i) };
+    };
 
   } // end of meta
 

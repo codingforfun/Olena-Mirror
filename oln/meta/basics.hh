@@ -77,6 +77,25 @@ namespace oln {
     template<bool> struct is_false;
     template<> struct is_false<false> { static void ensure() {}; };
 
+    
+    // FIXME: waiting for an unified meta package
+
+    // base class for meta-types returning Boolean values
+
+    template<bool> struct returns_bool_;
+
+    template<>
+    struct returns_bool_<true> : public true_t
+    {
+      static const bool ret = true;
+      static void ensure() {}
+    };
+
+    template<>
+    struct returns_bool_<false> : public false_t
+    {
+      static const bool ret = false;
+    };
 
     //
     // or

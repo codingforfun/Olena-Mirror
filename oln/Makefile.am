@@ -210,7 +210,39 @@ nobase_oln_HEADERS =				\
   value/vec.hh					\
   value/xyz.hh					\
   value/yiq.hh					\
-  value/yuv.hh
+  value/yuv.hh					\
+  types/all.hh					\
+  types/behaviour.hh				\
+  types/bin.hh					\
+  types/builtins_properties.hh			\
+  types/cycle.hh				\
+  types/global_ops.hh				\
+  types/global_ops_defs.hh			\
+  types/global_ops_traits.hh			\
+  types/int_s.hh				\
+  types/int_u.hh				\
+  types/interval.hh				\
+  types/optraits.hh				\
+  types/optraits_bin.hh				\
+  types/optraits_builtins_float.hh		\
+  types/optraits_builtins_int.hh		\
+  types/optraits_builtins_int_defs.hh		\
+  types/optraits_cycle.hh			\
+  types/optraits_int_s.hh			\
+  types/optraits_int_u.hh			\
+  types/optraits_range.hh			\
+  types/optraits_scalar.hh			\
+  types/optraits_scalar_defs.hh			\
+  types/predecls.hh				\
+  types/range.hh				\
+  types/rec_value.hh				\
+  types/to_oln.hh				\
+  types/type.hh					\
+  types/typetraits.hh				\
+  types/typetraits_builtins_float.hh		\
+  types/typetraits_builtins_int.hh
+
+
 
 EXTRA_DIST = config/extrconf.sh
 PERL = perl

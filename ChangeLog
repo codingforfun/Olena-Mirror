@@ -1,9 +1,39 @@
+2002-07-29  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/meta/cmp.hh: Add maxN and saturateN.  
+	* oln/meta/basics.hh: Add returns_bool_.
+	* oln/core/type.hh: Move wrap into oln/meta/type.hh.
+	* oln/types, oln/types/all.hh, oln/types/behaviour.hh,
+	oln/types/bin.hh, oln/types/builtins_properties.hh,
+	oln/types/cycle.hh, oln/types/global_ops.hh,
+	oln/types/global_ops_defs.hh, oln/types/global_ops_traits.hh,
+	oln/types/int_s.hh, oln/types/int_u.hh, oln/types/interval.hh,
+	oln/types/optraits.hh, oln/types/optraits_bin.hh,
+	oln/types/optraits_builtins_float.hh,
+	oln/types/optraits_builtins_int.hh,
+	oln/types/optraits_builtins_int_defs.hh,
+	oln/types/optraits_cycle.hh, oln/types/optraits_int_s.hh,
+	oln/types/optraits_int_u.hh, oln/types/optraits_range.hh,
+	oln/types/optraits_scalar.hh, oln/types/optraits_scalar_defs.hh,
+	oln/types/predecls.hh, oln/types/range.hh, oln/types/rec_value.hh,
+	oln/types/to_oln.hh, oln/types/type.hh, oln/types/typetraits.hh,
+	oln/types/typetraits_builtins_float.hh,
+	oln/types/typetraits_builtins_int.hh : New files.
+
+2002-07-29  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* configure.ac: Output utilities/Makefile.
+	* Makefile.am (SUBDIRS): Add utilities.
+	* utilities/Makefile.am: New file.
+	* utilities/mosaic.cc: New file.
+
 2002-07-26  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/value/cast.hh: Remove const preceding builtin return type.
 	* oln/core/internal/neighborhood.hh: Add comeau compatibility.
-	* oln/core/type.hh (type): Add wrap type.
-	* oln/core/generate.hh: Add wrap call for compatibility with comeau and icc.
+	* oln/core/type.hh: Add wrap type.
+	* oln/core/generate.hh: Add wrap call for compatibility with comeau 
+	and icc.
 	* oln/io/pnm_read3d.hxx: Fix unexistent N problem.
 	* oln/meta/ucmp.h: Rewrite less, lesseq and eq.
 

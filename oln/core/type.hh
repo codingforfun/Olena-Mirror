@@ -35,16 +35,6 @@ namespace type
 {
   
   //
-  //  wrap
-  //
-  //  FIXE: This type is a workaround for g++-2.95 problem with implicit typename in
-  //  <foo<T>::ret::dim>, write <wrap<typename foo<T>::ret>::dim instead.
-  //
-  //////////////////////////////////////////////////////////////////////////////////
-
-  template <class T> struct wrap : public T {};
-
-  //
   //  top, bottom, and any
   //
   ///////////////////////////////
