@@ -57,13 +57,17 @@ else
 fi
 $CXX $CPPFLAGS $CXXFLAGS $LDFLAGS "$dir/$test.cc" -o "$dir/test$EXEEXT" $LDADD || exit 50
 
-if test "x\$1" = "x-q"; then
-  exec 2>$dir/run.errors
+if test "x$COMPILE_ONLY" != "x1"; then
+  if test "x\$1" = "x-q"; then
+    exec 2>$dir/run.errors
+  else
+    echo srcdir="$SRCDIR" $dir/test$EXEEXT
+  fi
+  srcdir="$SRCDIR" $dir/test$EXEEXT
+  estatus=\$?
 else
-  echo srcdir="$SRCDIR" $dir/test$EXEEXT
+  estatus=0
 fi
-srcdir="$SRCDIR" $dir/test$EXEEXT
-estatus=\$?
 
 exec 2>&6
 echo \$estatus > $dir/exit.status

@@ -1,5 +1,21 @@
-2003-08-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+2003-08-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* oln/topo/dmap.hxx: Fix compilation with g++-3.4.
+	* oln/transforms/dwt.hh: Likewise.
+	* oln/transforms/wavelet_coeffs.hh: Likewise.
+	* oln/transforms/fft.hh: Likewise.
+	* oln/topo/combinatorial-map/internal/cmap-functor.hh: Likewise.
+	* oln/topo/combinatorial-map/cmap.hh: Likewise.
+	* oln/topo/inter-pixel/fwd-dir-iter.hh: Likewise.
+	* oln/topo/inter-pixel/bkd-dir-iter.hh: Likewise.
+	* oln/core/abstract/image_with_type.hh: Likewise.
+	* oln/convert/abstract/conversion.hh: Likewise.
+	* oln/core/winiter.hh: Likewise.
+	
+	* oln/core/abstract/window_base.hh: Fix compilation with icc.
+	
+2003-08-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* oln/core/abstract/image_with_dim.hh: Inherit from abstract::image.
 	* oln/core/abstract/image_with_impl.h:: Inherit from image_with_type.
 	* oln/core/abstract/image_with_type.hh: Inherit from

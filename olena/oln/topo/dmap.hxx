@@ -303,9 +303,9 @@ namespace oln {
     {
       // FIXME: if T is float, call invariant(_ch.coef == 1.f);
       // and then return imap();
-      // otherwise: 	return arith::div(_imap, _ch.coef);
+      // otherwise: 	return arith::div(imap_, _ch.coef);
       image2d<float> output(imap_.size());
-      typename image2d<float>::iter_type p(_imap);
+      typename image2d<float>::iter_type p(imap_);
       for_all(p)
 	output[p] = (imap_[p] == infTy_ ?
 		     inFty_ :

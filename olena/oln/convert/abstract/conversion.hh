@@ -93,7 +93,7 @@ namespace oln {
 	template <class T>
 	typename output<T>::ret operator()(const T& in) const
 	{
-	  return exact().doit(in);
+	  return this->exact().doit(in);
 	}
 	
       protected:

@@ -1,3 +1,7 @@
+2003-08-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* contrib/runtests: Handle new flag (COMPILE_ONLY).
+
 2003-08-01  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
 	* configure.ac: New math test.

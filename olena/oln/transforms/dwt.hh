@@ -32,12 +32,11 @@
 # include <oln/basics.hh>
 
 # include <ntg/basics.hh>
+# include <ntg/float.hh>
 # include <ntg/utils/cast.hh>
 # include <mlc/array/1d.hh>
 
 namespace oln {
-
-  using namespace ntg;
 
   namespace transforms {
 
@@ -66,7 +65,7 @@ namespace oln {
   namespace internal
   {
 
-    static const float_d ln_2_ = 0.6931471805599453092;
+    static const ntg::float_d ln_2_ = 0.6931471805599453092;
 
     //
     // wavelet_coeffs_<T, N, Self>
@@ -136,7 +135,7 @@ namespace oln {
 
       const unsigned half = n >> 1;
       unsigned lim = n + 1 - coeffs.size();
-      float_d* tmp = new float_d[n];
+      ntg::float_d* tmp = new ntg::float_d[n];
       Point(I) p(p_);
       unsigned i, j, k;
 
@@ -180,7 +179,7 @@ namespace oln {
 
       const unsigned half = n >> 1;
       unsigned lim = coeffs.size() - 2;
-      float_d* tmp = new float_d[n];
+      ntg::float_d* tmp = new ntg::float_d[n];
       Point(I) p(p_), q(p_);
       unsigned i, j, k, l;
 
@@ -314,10 +313,10 @@ namespace oln {
       Point(I) p;
 
       switch (t) {
-      case dwt_std:
+      case transforms::dwt_std:
 	dim_iterate_rec_<I::dim, I::dim>::doit(im, p, l1, l2, coeffs, dwt_fwd);
 	break;
-      case dwt_non_std:
+      case transforms::dwt_non_std:
 	for (unsigned n = l2; n >= l1; n >>= 1)
 	  dim_iterate_rec_<I::dim, I::dim>::doit(im, p, n, n, coeffs, dwt_fwd);	  
 	break;
@@ -334,10 +333,10 @@ namespace oln {
       Point(I) p;
       
       switch (t) {
-      case dwt_std:
+      case transforms::dwt_std:
 	dim_iterate_rec_<I::dim, I::dim>::doit(im, p, l1, l2, coeffs, dwt_bwd);
 	break;
-      case dwt_non_std:
+      case transforms::dwt_non_std:
 	for (unsigned n = l1; n <= l2; n <<= 1)
 	  dim_iterate_rec_<I::dim, I::dim>::doit(im, p, n, n, coeffs, dwt_bwd);	  
 	break;
@@ -360,7 +359,7 @@ namespace oln {
 
       typedef I					original_im_t;
       typedef Value(I)				original_im_value_t;
-      typedef typename mute<I, float_d>::ret	trans_im_t;
+      typedef typename mute<I, ntg::float_d>::ret	trans_im_t;
       typedef typename K::self_t		coeffs_t;
 
       dwt(const original_im_t& im) : original_im(im)
@@ -475,7 +474,7 @@ namespace oln {
       unsigned			im_size;
       unsigned			max_level;
       unsigned			current_level;
-      float_d			norm;
+      ntg::float_d		norm;
       dwt_transform_type	transform_type;
     };
 

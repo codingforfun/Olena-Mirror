@@ -1,15 +1,33 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 97)
-(Parent-Version oln 2003paradigm 96)
-(Version-Log "Index: integre/ChangeLog
+(Project-Version oln 2003paradigm 98)
+(Parent-Version oln 2003paradigm 97)
+(Version-Log "Index: ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-        * ntg/core/internal/traits.hh: Define default versions of optraits
-        and typetraits.
+
+        * contrib/runtests: Handle new flag (COMPILE_ONLY).
+
+Index: olena/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+        * oln/topo/dmap.hxx: Fix compilation with g++-3.4.
+        * oln/transforms/dwt.hh: Likewise.
+        * oln/transforms/wavelet_coeffs.hh: Likewise.
+        * oln/transforms/fft.hh: Likewise.
+        * oln/topo/combinatorial-map/internal/cmap-functor.hh: Likewise.
+        * oln/topo/combinatorial-map/cmap.hh: Likewise.
+        * oln/topo/inter-pixel/fwd-dir-iter.hh: Likewise.
+        * oln/topo/inter-pixel/bkd-dir-iter.hh: Likewise.
+        * oln/core/abstract/image_with_type.hh: Likewise.
+        * oln/convert/abstract/conversion.hh: Likewise.
+        * oln/core/winiter.hh: Likewise.
+
+        * oln/core/abstract/window_base.hh: Fix compilation with icc.
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Sun, 03 Aug 2003 21:08:04 +0200")
+(Checkin-Time "Mon, 04 Aug 2003 00:15:15 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -111,8 +129,8 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.12 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.10 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.13 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.11 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.23 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.30 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.3 640))
@@ -264,12 +282,12 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/core/abstract/struct_elt.hh (oln/c/25_structelt. 1.18 640))
   (olena/oln/core/traverse.hh (oln/d/30_traverse.h 1.9 640))
   (metalic/mlc/typeadj.hh (oln/e/25_typeadj.hh 1.5 640))
-  (metalic/mlc/type.hh (oln/c/21_type.hh 1.19 640))
+  (metalic/mlc/type.hh (oln/c/21_type.hh 1.20 640))
   (olena/oln/core/window1d.hh (oln/c/15_window1d.h 1.13 640))
   (olena/oln/core/window2d.hh (oln/c/14_window2d.h 1.15 640))
   (olena/oln/core/window3d.hh (oln/c/13_window3d.h 1.14 640))
   (olena/oln/core/abstract/window.hh (oln/c/16_window.hh 1.15 640))
-  (olena/oln/core/winiter.hh (oln/c/12_winiter.hh 1.9 640))
+  (olena/oln/core/winiter.hh (oln/c/12_winiter.hh 1.10 640))
   (olena/oln/core/winneighb.hh (oln/c/11_winneighb. 1.11 640))
   (olena/oln/core/w_window1d.hh (oln/c/19_w_window1d 1.15 640))
   (olena/oln/core/w_window2d.hh (oln/c/18_w_window2d 1.6.1.10 640))
@@ -352,10 +370,10 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/morpho/watershed.hh (oln/48_watershed. 1.8 640))
   (olena/oln/morpho/watershed.hxx (oln/47_watershed. 1.9.1.5.1.2 640))
   (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.6 640))
-  (olena/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.7.1.6 640))
-  (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.7 640))
-  (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.6 640))
-  (olena/oln/transforms/wavelet_coeffs.hh (oln/i/34_wavelet_co 1.5 640))
+  (olena/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.7.1.7 640))
+  (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.8 640))
+  (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.7 640))
+  (olena/oln/transforms/wavelet_coeffs.hh (oln/i/34_wavelet_co 1.6 640))
   (integre/ntg/all.hh (oln/g/32_all.hh 1.10.1.8 640))
   (integre/ntg/core/behavior.hh (oln/g/31_behaviour. 1.13.1.13 640))
   (integre/ntg/bin.hh (oln/t/15_bin.hh 1.1 640))
@@ -809,21 +827,21 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/tests/topo/Makefile.am (oln/r/26_Makefile.a 1.3.1.3 640))
   (olena/tests/topo/tests/test-inter-pixel (oln/r/27_test-inter 1.6 640))
   (olena/tests/topo/tests/test-cmap (oln/r/28_test-cmap. 1.8 640))
-  (olena/oln/topo/combinatorial-map/internal/cmap-functor.hh (oln/r/29_cmap-funct 1.3 640))
+  (olena/oln/topo/combinatorial-map/internal/cmap-functor.hh (oln/r/29_cmap-funct 1.4 640))
   (olena/oln/topo/combinatorial-map/internal/cmap-functor.hxx (oln/r/30_cmap-funct 1.3 640))
   (olena/oln/topo/inter-pixel/inter-pixel.hxx (oln/r/31_inter-pixe 1.4 640))
   (olena/oln/topo/combinatorial-map/cmap.hxx (oln/r/32_cmap.hxx 1.4 640))
   (olena/oln/topo/tarjan/union.hh (oln/r/33_union.hh 1.4 640))
   (olena/oln/topo/inter-pixel/inter-pixel.hh (oln/r/34_inter-pixe 1.9 640))
   (olena/oln/topo/tarjan/flat-zone.hh (oln/r/35_flat-zone. 1.6 640))
-  (olena/oln/topo/combinatorial-map/cmap.hh (oln/r/36_cmap.hh 1.5 640))
+  (olena/oln/topo/combinatorial-map/cmap.hh (oln/r/36_cmap.hh 1.6 640))
   
   
   
   (olena/img/test-cmap.pgm (oln/r/40_test-cmap. 1.1 640) :no-keywords)
   (olena/oln/topo/combinatorial-map/internal/zeta.hh (oln/r/43_zeta.hh 1.1 640))
-  (olena/oln/topo/inter-pixel/fwd-dir-iter.hh (oln/r/44_fwd-dir-it 1.2 640))
-  (olena/oln/topo/inter-pixel/bkd-dir-iter.hh (oln/r/45_bkd-dir-it 1.2 640))
+  (olena/oln/topo/inter-pixel/fwd-dir-iter.hh (oln/r/44_fwd-dir-it 1.3 640))
+  (olena/oln/topo/inter-pixel/bkd-dir-iter.hh (oln/r/45_bkd-dir-it 1.3 640))
   (olena/oln/topo/inter-pixel/node.hh (oln/r/46_node.hh 1.2 640))
   (olena/oln/topo/inter-pixel/internal/dir-iter.hh (oln/r/47_dir-iter.h 1.4 640))
   (olena/oln/topo/inter-pixel/internal/dir.hh (oln/r/48_dir.hh 1.1 640))
@@ -888,7 +906,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.14 640))
   (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.16 640))
   (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.14.1.3 640))
-  (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.8 640))
+  (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.9 640))
   (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.13 640))
   (olena/oln/core/impl/image_array.hh (oln/t/30_image_arra 1.11 640))
   (olena/tests/core/tests/image1 (oln/t/31_image1 1.4 640))
@@ -947,7 +965,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   
   (olena/oln/io/pnm_common.hh (oln/t/40_pnm_common 1.2 600))
   (olena/oln/io/image_base.hh (oln/t/41_image_base 1.3 600))
-  (olena/oln/io/image_write.hh (oln/t/42_image_writ 1.6 600))
+  (olena/oln/io/image_write.hh (oln/t/42_image_writ 1.7 600))
   (olena/oln/io/stream_wrapper.hh (oln/t/43_stream_wra 1.3 600))
   (olena/oln/io/utils.hh (oln/t/44_utils.hh 1.2 600))
   (olena/oln/io/image_read.hh (oln/t/45_image_read 1.6 600))
@@ -973,7 +991,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (olena/tests/core/tests/window (oln/u/1_window 1.1 640))
   (olena/tests/core/tests/neighborhood (oln/u/2_neighborho 1.1 640))
-  (olena/oln/core/abstract/window_base.hh (oln/u/3_window_bas 1.7 640))
+  (olena/oln/core/abstract/window_base.hh (oln/u/3_window_bas 1.8 640))
   (olena/oln/core/abstract/windownd.hh (oln/u/4_windownd.h 1.6 640))
   (olena/oln/core/abstract/w_windownd.hh (oln/u/5_w_windownd 1.5 640))
   (olena/oln/core/abstract/neighborhoodnd.hh (oln/u/6_neighborho 1.5 640))
@@ -999,12 +1017,12 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/tests/utils/tests/timer (oln/u/29_timer.cc 1.2 600))
   (olena/tests/topo/tests/test-tarjan (oln/u/30_test-tarja 1.1 600))
 
-  (olena/oln/convert/abstract/conversion.hh (oln/u/31_conversion 1.2 640))
+  (olena/oln/convert/abstract/conversion.hh (oln/u/31_conversion 1.3 640))
 ;; Files added by populate at Fri, 01 Aug 2003 01:58:39 +0200,
 ;; to version 2003paradigm.83(w), by nes:
 
   (olena/tests/check/Makefile.runtests (oln/u/32_Makefile.r 1.1 600))
-  (contrib/runtests (oln/u/33_runtests 1.2 700))
+  (contrib/runtests (oln/u/33_runtests 1.3 700))
 
 ;; Files deleted by populate at Fri, 01 Aug 2003 02:03:16 +0200,
 ;; from version 2003paradigm.843(w), by nes:

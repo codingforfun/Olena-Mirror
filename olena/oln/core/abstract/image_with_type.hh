@@ -32,6 +32,8 @@
 # include <mlc/bool.hh>
 # include <ntg/basics.hh>
 # include <oln/core/abstract/image_with_dim.hh>
+# include <string>
+# include <sstream>
 
 // Define a type label image This macro create two classes,
 // Name<Exact> and Name##_with_dim<N, Exact>.  Super is used to
@@ -75,10 +77,11 @@
 								\
     static std::string name()					\
     {								\
-      return							\
-	std::string(#Name "_with_dim<")				\
-	+ Dim + ", "						\
-	+ Exact::name() + ">";					\
+      std::ostringstream s;					\
+      s << #Name "_with_dim<"					\
+	<< Dim << ", "						\
+	<< Exact::name() << ">";				\
+      return s.str();						\
     }								\
   }
 
