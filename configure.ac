@@ -14,12 +14,6 @@ MLC_PATH_LOCAL([metalic])
 OLN_PATH_LOCAL([olena])
 AC_WITH_OLN
 
-# Import local version of Metalic.
-CPPFLAGS="-I\$(top_srcdir)/metalic $CPPFLAGS"
-
-# Import local version of Integre.
-CPPFLAGS="-I\$(top_srcdir)/integre $CPPFLAGS"
-
 # Some library archives are used. Some C code used.
 AC_PROG_RANLIB
 AC_PROG_CC
