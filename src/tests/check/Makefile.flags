@@ -3,4 +3,4 @@
 # Don't use -ansi because it prevents us from using functions
 # like `remove' or `mkstemp' with g++-2.95.x.
 AM_CXXFLAGS = -Wall -W -ftemplate-depth-50 -pedantic
-AM_CPPFLAGS = -I$(top_builddir) -I$(top_srcdir) -I$(top_srcdir)/tests/check
+AM_CPPFLAGS = -I$(OLN_INCLUDEDIR) -I$(top_srcdir)/tests/check

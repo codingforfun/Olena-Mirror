@@ -1,3 +1,11 @@
+2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
+
+	* configure.ac: parametrize generation of documentation. change to
+	use new configuration system.
+	* Makefile.am (SUBDIRS): change.
+	* tpl/processing.tpl: cleanup. Use OLN_INCLUDEDIR.
+	* doc/Makefile.am: cleanup. Use OLN_INCLUDEDIR. add dependency on oln-dev.ps.
+	
 2002-11-27  Raphael Poss  <raph@lrde.epita.fr>
 
 	* doc/Makefile.am (info_TEXINFOS): add for oln-dev.texi.

@@ -1,3 +1,8 @@
+2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
+
+	* defs.in (CXXFLAGS): use OLN_INCLUDEDIR.
+	* check/Makefile.flags (AM_CPPFLAGS): likewise.
+
 2002-12-01  Emmanuel Turquin  <turqui_e@epita.fr>
 
 	* transforms/dwt.cc: Fix.

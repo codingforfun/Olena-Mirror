@@ -1,0 +1,4 @@
+
+SUBDIRS = demo @UTILITIES@
+EXTRA_DIST = oln.m4
+
