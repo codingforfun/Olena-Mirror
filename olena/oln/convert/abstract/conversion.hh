@@ -85,7 +85,7 @@ namespace oln {
       ** must write the specialization of the output trait.
       */
       template<class Exact, class Base>
-      struct conversion : public mlc::any< Exact >
+      struct conversion : public mlc_hierarchy::any< Exact >
       {
 	static std::string
 	name()

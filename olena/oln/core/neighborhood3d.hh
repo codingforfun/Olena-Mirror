@@ -1,132 +1,52 @@
-// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004 EPITA Research and Development
+// Laboratory
 //
-// This file is part of the Olena Library.  This library is free
-// software; you can redistribute it and/or modify it under the terms
-// of the GNU General Public License version 2 as published by the
+// This  file is  part of  the Olena  Library.  This  library  is free
+// software; you can redistribute it  and/or modify it under the terms
+// of the  GNU General  Public License version  2 as published  by the
 // Free Software Foundation.
 //
-// This library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// This library is distributed in the hope that it will be useful, but
+// WITHOUT  ANY  WARRANTY;  without   even  the  implied  warranty  of
+// MERCHANTABILITY or  FITNESS FOR A PARTICULAR PURPOSE.   See the GNU
 // General Public License for more details.
 //
-// You should have received a copy of the GNU General Public License
-// along with this library; see the file COPYING.  If not, write to
-// the Free Software Foundation, 59 Temple Place - Suite 330, Boston,
+// You should have  received a copy of the  GNU General Public License
+// along with  this library; see the  file COPYING.  If  not, write to
+// the Free Software Foundation, 59  Temple Place - Suite 330, Boston,
 // MA 02111-1307, USA.
 //
-// As a special exception, you may use this file as part of a free
+// As a  special exception, you  may use this  file as part of  a free
 // software library without restriction.  Specifically, if other files
-// instantiate templates or use macros or inline functions from this
-// file, or you compile this file and link it with other files to
-// produce an executable, this file does not by itself cause the
-// resulting executable to be covered by the GNU General Public
-// License.  This exception does not however invalidate any other
+// instantiate templates  or use macros or inline  functions from this
+// file, or  you compile  this file  and link it  with other  files to
+// produce  an executable,  this file  does  not by  itself cause  the
+// resulting  executable  to be  covered  by  the  GNU General  Public
+// License.   This exception  does  not however  invalidate any  other
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
 #ifndef OLENA_CORE_NEIGHBORHOOD3D_HH
 # define OLENA_CORE_NEIGHBORHOOD3D_HH
 
-# include <oln/core/abstract/neighborhoodnd.hh>
-# include <oln/core/winiter.hh>
-# include <oln/core/accum.hh>
-# include <oln/core/window3d.hh>
-# include <algorithm>
+
+# include <oln/core/neighborhood_nd.hh>
+# include <oln/core/dpoint2d.hh>
 
 namespace oln {
 
-  class neighborhood3d; // forward declaration
 
-  /*!
-  ** \brief Traits for neighborhood3d.
-  */
-  template<>
-  struct struct_elt_traits<neighborhood3d>: public
-  struct_elt_traits<abstract::neighborhoodnd<neighborhood3d> >
+  template <>
+  struct neighborhood<3> : public abstract::neighborhood_nd< neighborhood<3> >
   {
-    enum { dim = 3 }; ///< Dimension.
-    typedef point3d point_type; ///< Type of point.
-    typedef dpoint3d dpoint_type; ///< Type of dpoint (move).
-    typedef winiter< neighborhood3d > iter_type; ///< Type of iterator.
-    typedef winneighb< neighborhood3d > neighb_type; ///< Type of neighbor.
-    typedef window3d win_type; ///< Type of window.
-  };
-
-  /*!
-  ** \brief Neighborhood 3 dimensions.
-  **
-  ** It looks like structuring elements but here, when
-  ** you add an element, you add its opposite.
-  ** Points have 3 dimensions.
-  **
-  */
-  class neighborhood3d :
-    public abstract::neighborhoodnd< neighborhood3d >
-  {
-  public:
-
-    typedef abstract::neighborhoodnd< neighborhood3d > super_type;
-    ///< Super type.
-    typedef neighborhood3d self_type; ///< Self type.
-
-    /*!
-    ** \brief The associate image's type of iterator.
-    ** \warning Prefer the macros oln_iter_type(Iterable) and
-    ** oln_iter_type_(Iterable) (the same without the 'typename' keyword)
-    */
-    typedef struct_elt_traits< self_type >::iter_type   iter_type;
-    typedef struct_elt_traits< self_type >::neighb_type	neighb_type;
-
-    /*!
-    ** \brief The associate image's type of dpoint (move point).
-    ** \warning Prefer the macros oln_dpoint_type(Pointable) and
-    ** oln_dpoint_type_(Pointable) (the same without the 'typename' keyword)
-    */
-    typedef struct_elt_traits< self_type >::dpoint_type dpoint_type;
-
-    friend class abstract::window_base<abstract::neighborhood<neighborhood3d>, neighborhood3d>;
-
-    /*!
-    ** \brief Add a dpoint (move point) to the neighborhood.
-    ** \arg dp The new point.
-    **
-    ** Add a new member to the neighborhood. This point must be of 3
-    ** dimensions.
-    */
-    neighborhood3d&
-    add(const dpoint_type& dp)
-    {
-      this->exact().add_(dp);
-      return this->exact().add_(-dp);
-    }
-
-    /*!
-    ** \brief Add a point by coordinates to the neighborhood.
-    ** \arg slice The coordinates of the new point.
-    ** \arg row The coordinates of the new point.
-    ** \arg col The coordinates of the new point.
-    **
-    ** Add a new member by its coordinates to the neighborhood.
-    ** The coordinates have 3 dimensions.
-    */
-    neighborhood3d&
-    add(coord slice, coord row, coord col)
+    neighborhood& add(coord slice, coord row, coord col)
     {
       return this->add(dpoint3d(slice, row, col));
     }
-
     /*!
     ** \brief Construct a neighborhood of 3 dimensions.
     */
-    neighborhood3d() : super_type()
-    {}
-
-    /*!
-    ** \brief Construct a neighborhood of 3 dimensions.
-    ** \arg size Reserve 'size' elements for the neighborhood.
-    */
-    neighborhood3d(unsigned size) : super_type(size)
+    neighborhood()
     {}
 
     /*!
@@ -134,39 +54,14 @@ namespace oln {
     ** \arg n Add 'n' elements to the neighborhood.
     ** \arg crd Coordinates of the 'n' elements.
     */
-    neighborhood3d(unsigned n, const coord crd[]) : super_type()
+    neighborhood(unsigned n, const coord crd[]) : super_type()
     {
       for (unsigned i = 0; i < 3 * n; i += 3)
-	add(dpoint_type(crd[i], crd[i+1], crd[i+2]));
+	add(crd[i], crd[i+1], crd[i+2]);
     }
-
-    /// Return the name of the type.
-    static std::string
-    name()
-    {
-      return std::string("neighborhood3d");
-    }
-
-  protected:
-
-    /*!
-    ** \brief Update delta.
-    ** \arg dp a deplacement point.
-    ** \return Delta.
-    **
-    ** If the point is the biggest element of the neighborhood,
-    ** then this point is assigned to delta.
-    */
-    coord
-    delta_update_(const dpoint_type& dp)
-    {
-      delta_(abs(dp.slice()));
-      delta_(abs(dp.row()));
-      delta_(abs(dp.col()));
-      return delta_;
-    }
-
   };
+
+  typedef neighborhood<3>	neighborhood3d;
 
   // std neighb
 

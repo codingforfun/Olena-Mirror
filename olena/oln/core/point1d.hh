@@ -1,80 +1,65 @@
-#ifndef PROTO_OLN_CORE_POINT1D_HH
-# define PROTO_OLN_CORE_POINT1D_HH
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
+//
+// This file is part of the Olena Library.  This library is free
+// software; you can redistribute it and/or modify it under the terms
+// of the GNU General Public License version 2 as published by the
+// Free Software Foundation.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this library; see the file COPYING.  If not, write to
+// the Free Software Foundation, 59 Temple Place - Suite 330, Boston,
+// MA 02111-1307, USA.
+//
+// As a special exception, you may use this file as part of a free
+// software library without restriction.  Specifically, if other files
+// instantiate templates or use macros or inline functions from this
+// file, or you compile this file and link it with other files to
+// produce an executable, this file does not by itself cause the
+// resulting executable to be covered by the GNU General Public
+// License.  This exception does not however invalidate any other
+// reasons why the executable file might be covered by the GNU General
+// Public License.
 
+#ifndef OLENA_CORE_POINT1D_HH
+# define OLENA_CORE_POINT1D_HH
+
+# include "point_nd.hh"
 
 namespace oln {
 
-  struct point1d;
+  template <unsigned Dim>
+  struct point;//fwd decl
 
+ /*! \class Concrete point 1.
+  **
+  ** Provides syntactic sugar.
+  */
   template <>
-  struct props <point1d>
+  struct point<1>: public abstract::point_nd<point<1> >
   {
-    typedef dim1d dim_type;
+    point()
+    {}
+    point(coord col)
+    {
+      coord_[0] = col;
+    }
+
+    coord col() const		{ return coord_[0]; }
+    coord& col()		{ return coord_[0]; }
+    static std::string
+    name()
+    {
+      return "point<1>";
+    }
   };
 
-  struct point1d : public abstract::point< point1d >
-  {
-    point1d() :
-      index_(0)
-    {
-      this->exact_ptr = this;
-    }
+/// Depreciated. Use point<1> instead.
+  typedef point<1> point1d;
+} // oln
 
-    point1d(coord index_) :
-      index_(index_)
-    {
-      this->exact_ptr = this;
-    }
-
-    point1d(const point1d& rhs) :
-      index_(rhs.index_)
-    {
-      this->exact_ptr = this;
-    }
-
-    point1d& operator=(const point1d& rhs)
-    {
-      if (&rhs == this)
-	return *this;
-      this->index_ = rhs.index_;
-      return *this;
-    }
-
-    bool op_eq_impl(const point1d& rhs) const
-    {
-      return this->index_ == rhs.index_;
-    }
-
-    bool op_less_impl(const point1d& rhs) const
-    {
-      return
-	this->index() < rhs.index();
-    }
-
-    const coord index() const { return index_; }
-
-    coord& index() { return index_; }
-
-  protected:
-    coord index_;
-  };
-
-} // end of namespace oln
-
-
-namespace ntg {
-
-  template <> struct props < oln::point1d > {
-    enum { tag_value = ntg::scalar_tag };
-  };
-
-} // end of namespace ntg
-
-
-std::ostream& operator<<(std::ostream& ostr, const oln::point1d& p)
-{
-  return ostr << '(' << p.index() << ')';
-}
-
-
-#endif // ndef PROTO_OLN_CORE_POINT1D_HH
+#endif // ! OLENA_CORE_POINT1D_HH

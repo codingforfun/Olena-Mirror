@@ -1,11 +1,1810 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln oln_2004_paradigm 2)
-(Parent-Version oln oln_2004_paradigm 1)
-(Version-Log "")
+(Project-Version oln oln_2004_paradigm 4)
+(Parent-Version oln oln_2004_paradigm 2)
+(Version-Log "Index: olena/ChangeLog
+from  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* olena/oln/core/dpoint1d.hh: Correct type definition problems.
+	* olena/oln/core/abstract/dpoint.hh: Likewise.
+	* olena/oln/core/point_nd.hh: Likewise.
+	* olena/oln/core/dpoint_nd.hh: Likewise.
+	* olena/oln/core/macros.hh: Add new macros.
+
+	* olena/oln/core/neighborhood1d.hh: Restart from scratch.
+	* olena/oln/core/neighborhood2d.hh: Likewise.
+	* olena/oln/core/neighborhood3d.hh: Likewise.
+	* olena/oln/core/abstract/neighborhood.hh: Likewise.
+	* olena/oln/core/abstract/point.hh: Likewise.
+	* olena/oln/core/abstract/struct_elt.hh: Likewise.
+	* olena/oln/core/dim3d.hh: Likewise.
+	* olena/oln/core/dim2d.hh: Likewise.
+	* olena/oln/core/dim1d.hh: Likewise.
+	* olena/oln/core/abstract/dim.hh: Likewise.
+
+	* olena/oln/core/default_props.hh: New file. Definition of default
+	properties.
+
+
+Index: olena/oln/core/dpoint1d.hh
+--- olena/oln/core/dpoint1d.hh Mon, 13 Sep 2004 22:08:03 +0200 van-vl_n (oln/d/27_dpoint1d.h 1.14.2.1 600)
++++ olena/oln/core/dpoint1d.hh Tue, 14 Sep 2004 10:11:38 +0200 palma_g (oln/d/27_dpoint1d.h 1.14.2.1 600)
+@@ -28,7 +28,8 @@
+ #ifndef OLENA_CORE_DPOINT1D_HH
+ # define OLENA_CORE_DPOINT1D_HH
+ 
+-# include <oln/core/abstract/dpoint_nd.hh>
++# include <oln/core/abstract/dpoint.hh>
++# include <oln/core/dpoint_nd.hh>
+ 
+ namespace oln {
+ 
+Index: olena/oln/core/abstract/dpoint.hh
+--- olena/oln/core/abstract/dpoint.hh Mon, 13 Sep 2004 22:08:03 +0200 van-vl_n (oln/d/28_dpoint.hh 1.20.2.1 600)
++++ olena/oln/core/abstract/dpoint.hh Tue, 14 Sep 2004 10:33:53 +0200 palma_g (oln/d/28_dpoint.hh 1.20.2.1 600)
+@@ -24,8 +24,8 @@
+ // License.  This exception does not however invalidate any other
+ // reasons why the executable file might be covered by the GNU General
+ // Public License.
+-#ifndef OLENA_CORE_ABSTRACT_DPOINT_HH
+-# define OLENA_CORE_ABSTRACT_DPOINT_HH
++#ifndef OLN_CORE_ABSTRACT_DPOINT_HH
++# define OLN_CORE_ABSTRACT_DPOINT_HH
+ 
+ # include <mlc/type.hh>
+ # include <oln/core/coord.hh>
+@@ -38,7 +38,7 @@
+ {
+ 
+   template<class Exact>
+-  struct prop; // fwd declaration
++  struct props; // fwd declaration
+ 
+   namespace abstract {
+ 
+@@ -223,43 +223,43 @@
+ 
+ 
+ 
+-  namespace internal
+-  {
+-
+-    /*! \\class default_less< abstract::dpoint<Exact> >
+-    **
+-    ** The specialized version for abstract::dpoint.
+-    */
+-    template<class Exact>
+-    struct default_less< abstract::dpoint<Exact> >
+-    {
+-
+-      /*! \\brief Test if the coordinates of a dpoint l
+-      ** are not greater than the coordinates of a dpoint r.
+-      **
+-      ** \\arg l A dpoint.
+-      **
+-      ** \\arg r Another dpoint.
+-      **
+-      ** \\return True if the coordinates of l are not greater
+-      ** than the coordinates of r.
+-      */
++//   namespace internal
++//   {
+ 
+-      bool operator()(const abstract::dpoint<Exact>& l,
+-		      const abstract::dpoint<Exact>& r) const
+-      {
+-	for (unsigned i = 0; i < oln_dim_val(Exact); ++i)
+-	  if (l.nth(i) < r.nth(i))
+-	    return true;
+-	  else if (l.nth(i) > r.nth(i))
+-	    return false;
+-	return false;
+-      }
+-    };
+-  } // internal
++//     /*! \\class default_less< abstract::dpoint<Exact> >
++//     **
++//     ** The specialized version for abstract::dpoint.
++//     */
++//     template<class Exact>
++//     struct default_less< abstract::dpoint<Exact> >
++//     {
++
++//       /*! \\brief Test if the coordinates of a dpoint l
++//       ** are not greater than the coordinates of a dpoint r.
++//       **
++//       ** \\arg l A dpoint.
++//       **
++//       ** \\arg r Another dpoint.
++//       **
++//       ** \\return True if the coordinates of l are not greater
++//       ** than the coordinates of r.
++//       */
++
++//       bool operator()(const abstract::dpoint<Exact>& l,
++// 		      const abstract::dpoint<Exact>& r) const
++//       {
++// 	for (unsigned i = 0; i < oln_dim_val(Exact); ++i)
++// 	  if (l.nth(i) < r.nth(i))
++// 	    return true;
++// 	  else if (l.nth(i) > r.nth(i))
++// 	    return false;
++// 	return false;
++//       }
++//     };
++//   } // internal
+ } // end of oln
+ 
+ 
+ #include \"dpoint.hxx\"
+ 
+-#endif // ! OLENA_CORE_ABSTRACT_DPOINT_HH
++#endif // ! OLN_CORE_ABSTRACT_DPOINT_HH
+Index: olena/oln/core/macros.hh
+--- olena/oln/core/macros.hh Mon, 13 Sep 2004 22:08:03 +0200 van-vl_n (oln/c/39_macros.hh 1.5.2.1 600)
++++ olena/oln/core/macros.hh Tue, 14 Sep 2004 11:39:32 +0200 palma_g (oln/c/39_macros.hh 1.5.2.1 600)
+@@ -41,14 +41,27 @@
+ 
+ 
+ 
+-# define oln_point_type(E)		typename oln::prop<E>::point_type
+-# define oln_point_type_(E)		oln::prop<E>::point_type
++# define oln_point_type(E)		typename oln::props<E>::point_type
++# define oln_point_type_(E)		oln::props<E>::point_type
+ 
+-# define oln_dpoint_type(E)		typename oln::prop<E>::dpoint_type
+-# define oln_dpoint_type_(E)	        oln::prop<E>::dpoint_type
++# define oln_dpoint_type(E)		typename oln::props<E>::dpoint_type
++# define oln_dpoint_type_(E)	        oln::props<E>::dpoint_type
+ 
+ 
+-# define oln_dim_val(E)			oln::prop<E>::dim
+-# define oln_dim_val_(E)	        oln::prop<E>::dim
++# define oln_dim_val(E)			oln::props<E>::dim_value
++# define oln_dim_val_(E)	        oln::props<E>::dim_value
++
++# define oln_concrete_type(E)		typename oln::props<E>::concrete_type
++# define oln_concrete_type_(E)		oln::props<E>::concrete_type
++
++# define oln_neighborhood_type(E)	typename oln::props<E>::neighborhood_type
++# define oln_neighborhood_type_(E)	oln::props<E>::neighborhood_type
++
++# define oln_window_type(E)		typename oln::props<E>::window_type
++# define oln_window_type_(E)		oln::props<E>::window_type
++
++# define oln_flat_se_type(E)		typename oln::props<E>::window_type
++# define oln_flat_se_type_(E)		oln::props<E>::flat_se_type
++
+ 
+ #endif // OLENA_CORE_MACROS_HH
+Index: olena/oln/core/neighborhood1d.hh
+--- olena/oln/core/neighborhood1d.hh Fri, 13 Aug 2004 19:03:16 +0200 levill_r (oln/c/37_neighborho 1.20 600)
++++ olena/oln/core/neighborhood1d.hh Tue, 14 Sep 2004 12:39:29 +0200 palma_g (oln/c/37_neighborho 1.21 640)
+@@ -1,12 +1,13 @@
+-// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
++// Copyright (C) 2001, 2002, 2003, 2004 EPITA Research and Development
++// Laboratory
+ //
+ // This file is part of the Olena Library.  This library is free
+ // software; you can redistribute it and/or modify it under the terms
+ // of the GNU General Public License version 2 as published by the
+ // Free Software Foundation.
+ //
+-// This library is distributed in the hope that it will be useful,
+-// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// This library is distributed in the hope that it will be useful, but
++// WITHOUT  ANY  WARRANTY;  without   even  the  implied  warranty  of
+ // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ // General Public License for more details.
+ //
+@@ -25,196 +26,44 @@
+ // reasons why the executable file might be covered by the GNU General
+ // Public License.
+ 
+-#ifndef OLENA_CORE_NEIGHBORHOOD1D_HH
+-# define OLENA_CORE_NEIGHBORHOOD1D_HH
++#ifndef OLN_CORE_NEIGHBORHOOD1D_HH
++# define OLN_CORE_NEIGHBORHOOD1D_HH
+ 
+-# include <oln/core/abstract/neighborhoodnd.hh>
+-# include <oln/core/winiter.hh>
+-# include <oln/core/accum.hh>
+-# include <oln/core/window1d.hh>
+-# include <algorithm>
++# include <oln/core/dpoint1d.hh>
++# include <oln/core/neighborhood_nd.hh>
+ 
+ namespace oln {
+ 
+-  class neighborhood1d; // forward declaration
+-
+-  /*!
+-  ** \\brief Traits for neighborhood1d.
+-  */
+   template<>
+-  struct struct_elt_traits<neighborhood1d>: public
+-  struct_elt_traits<abstract::neighborhoodnd<neighborhood1d> >
+-  {
+-    enum { dim = 1 }; ///< Dimension.
+-    typedef point1d point_type; ///< Type of point.
+-    typedef dpoint1d dpoint_type; ///< Type of dpoint (move).
+-    typedef winiter< neighborhood1d > iter_type; ///< Type of iterator.
+-    typedef winneighb< neighborhood1d > neighb_type; ///< Type of neighbor.
+-    typedef window1d win_type; ///< Type of window.
+-  };
+-
+-  /*!
+-  ** \\brief Neighborhood 1 dimension.
+-  **
+-  ** It looks like structuring elements but here, when
+-  ** you add an element, you add its opposite.
+-  ** Points (dpoint) have 1 dimension.
+-  **
+-  */
+-  class neighborhood1d :
+-    public abstract::neighborhoodnd< neighborhood1d >
+-  {
+-  public:
+-
+-    typedef abstract::neighborhoodnd< neighborhood1d > super_type;
+-    ///< Super type.
+-    typedef neighborhood1d self_type; ///< Self type.
+-
+-    /*!
+-    ** \\brief The associate image's type of iterator (move point).
+-    ** \\warning Prefer the macros oln_iter_type(Pointable) and
+-    ** oln_iter_type_(Pointable) (the same without the 'typename' keyword)
+-    */
+-    typedef struct_elt_traits< self_type >::iter_type   iter_type;
+-    typedef struct_elt_traits< self_type >::neighb_type	neighb_type;
+-
+-    /*!
+-    ** \\brief The associate image's type of dpoint (move point).
+-    ** \\warning Prefer the macros oln_dpoint_type(Pointable) and
+-    ** oln_dpoint_type_(Pointable) (the same without the 'typename' keyword)
+-    */
+-    typedef struct_elt_traits< self_type >::dpoint_type dpoint_type;
+-
+-    friend class abstract::window_base<abstract::neighborhood<neighborhood1d>, neighborhood1d>;
+-
+-    /*!
+-    ** \\brief Add a dpoint (move point) to the neighborhood.
+-    ** \\arg dp The new point.
+-    **
+-    ** Add a new member to the neighborhood. This point must be of 1
+-    ** dimension.
+-    */
+-    neighborhood1d&
+-    add(const dpoint_type& dp)
++  struct neighborhood<1> : public abstract::neighborhood_nd< neighborhood<1> >
+     {
+-      this->exact().add_(dp);
+-      return this->exact().add_(-dp);
+-    }
+-
+-    /*!
+-    ** \\brief Add a point by coordinates to the neighborhood.
+-    ** \\arg col The coordinate of the new point (1 dimension).
+-    **
+-    ** Add a new member by its coordinates to the neighborhood.
+-    ** The coordinates are only the column number because the neighborhood has
+-    ** 1 dimension.
+-    */
+-    neighborhood1d&
+-    add(coord col)
+-    {
+-      return this->add(dpoint_type(col));
+-    }
++    typedef abstract::neighborhood_nd< neighborhood<1> >	super;
+ 
+-    /*!
+-    ** \\brief Construct a neighborhood of 1 dimension.
+-    */
+-    neighborhood1d() : super_type()
+-    {}
+-
+-    /*!
+-    ** \\brief Construct a neighborhood of 1 dimension.
+-    ** \\arg size Reserve 'size' elements for the neighborhood.
+-    */
+-    neighborhood1d(unsigned size) : super_type(size)
+-    {}
+-
+-    /*!
+-    ** \\brief Construct a neighborhood of 1 dimension.
+-    ** \\arg n Add 'n' elements to the neighborhood.
+-    ** \\arg crd Coordinates of the 'n' elements.
+-    */
+-    neighborhood1d(unsigned n, const coord crd[]) : super_type()
++    neighborhood& add(coord index)
+     {
+-      for (unsigned i = 0; i < n; ++i)
+-	add(dpoint_type(crd[i]));
+-    }
+-
+-    /// Return the name of the type.
+-    static std::string
+-    name()
+-    {
+-      return std::string(\"neighborhood1d\");
+-    }
+-
+-  protected:
+-
+-    /*!
+-    ** \\brief Update delta.
+-    ** \\arg dp a move point.
+-    ** \\return Delta.
+-    **
+-    ** If the point is the biggest element of the neighborhood,
+-    ** then this point is assigned to delta.
+-    */
+-    coord
+-    delta_update_(const dpoint_type& dp)
+-    {
+-      delta_(abs(dp.col()));
+-      return delta_;
++      // FIXME: below, \"this->super::\" is required for the call
++      // to \"add\" to be resolved!
++      return this->super::add(dpoint1d(index));
+     }
+ 
+   };
+ 
++  typedef neighborhood<1>	neighborhood1d;
+ 
+-  // standard neighborhood
+-
+-  /*!
+-  ** \\brief Create a neighborhood (1 dimension) with 1 element : 1.
+-  ** \\return The new neighborhood.
+-  */
+-  inline const neighborhood1d&
+-  neighb_c2()
++  const neighborhood1d c2()
+   {
+-    static const coord crd[] = {  1 };
+-    static const neighborhood1d neighb(1, crd);
+-    return neighb;
+-  }
+-
+-  /*!
+-  ** \\brief Create a neighborhood (1 dimension).
+-  ** \\arg width The width.
+-  ** \\return The new neighborhood.
+-  ** \\pre width >= 3.
+-  ** \\pre width % 2 == 1.
+-  **
+-  ** Add elements of coordinates 1, ..., width / 2.
+-  */
+-  inline neighborhood1d
+-  mk_neighb_segment(unsigned width)
++    static bool flower = true;
++    static neighborhood1d nbh;
++    if (flower)
+   {
+-    precondition(width>= 3 && (width % 2) == 1);
+-    neighborhood1d neighb(width);
+-    int half_ncols = width / 2;
+-    for (coord col = 1; col <= half_ncols; ++col)
+-	neighb.add(col);
+-    return neighb;
++	nbh.add(-1).add(1);
++	flower = false;
+   }
+-
+-  /*!
+-  ** \\brief Convert a neighborhood (1 dimension) to a window (1 dimension).
+-  ** \\arg n The neighborhood to convert.
+-  ** \\return The new window.
+-  */
+-  inline window1d
+-  mk_win_from_neighb(const neighborhood1d& n)
+-  {
+-    window1d win(n.card());
+-    for (unsigned i = 0; i < n.card(); ++i)
+-      win.add(n.dp(i));
+-    return win;
++    return nbh;
+   }
+ 
+ 
+-} // end of oln
++} // end of namespace oln
++
+ 
+-#endif // OLENA_CORE_NEIGHBORHOOD1D_HH
++#endif // ndef PROTO_OLN_CORE_NEIGHBORHOOD1D_HH
+Index: olena/oln/core/neighborhood2d.hh
+--- olena/oln/core/neighborhood2d.hh Fri, 13 Aug 2004 19:03:16 +0200 levill_r (oln/c/36_neighborho 1.22 600)
++++ olena/oln/core/neighborhood2d.hh Tue, 14 Sep 2004 12:39:40 +0200 palma_g (oln/c/36_neighborho 1.23 640)
+@@ -1,12 +1,13 @@
+-// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
++// Copyright (C) 2001, 2002, 2003, 2004 EPITA Research and Development
++// Laboratory
+ //
+ // This file is part of the Olena Library.  This library is free
+ // software; you can redistribute it and/or modify it under the terms
+ // of the GNU General Public License version 2 as published by the
+ // Free Software Foundation.
+ //
+-// This library is distributed in the hope that it will be useful,
+-// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// This library is distributed in the hope that it will be useful, but
++// WITHOUT  ANY  WARRANTY;  without   even  the  implied  warranty  of
+ // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ // General Public License for more details.
+ //
+@@ -25,233 +26,56 @@
+ // reasons why the executable file might be covered by the GNU General
+ // Public License.
+ 
+-#ifndef OLENA_CORE_NEIGHBORHOOD2D_HH
+-# define OLENA_CORE_NEIGHBORHOOD2D_HH
++#ifndef OLN_CORE_NEIGHBORHOOD2D_HH
++# define OLN_CORE_NEIGHBORHOOD2D_HH
+ 
+-# include <oln/core/abstract/neighborhoodnd.hh>
+-# include <oln/core/winiter.hh>
+-# include <oln/core/accum.hh>
+-# include <oln/core/window2d.hh>
+-# include <oln/io/readable.hh>
+-# include <algorithm>
++# include <oln/core/neighborhood_nd.hh>
++# include <oln/core/dpoint2d.hh>
+ 
+-namespace oln {
+ 
+-  class neighborhood2d; // forward declaration
++namespace oln {
+ 
+-  /*!
+-  ** \\brief Traits for neighborhood2d.
+-  */
+   template<>
+-  struct struct_elt_traits<neighborhood2d>: public
+-  struct_elt_traits<abstract::neighborhoodnd<neighborhood2d> >
+-  {
+-    enum { dim = 2 }; ///< Dimension.
+-    typedef point2d point_type; ///< Type of point.
+-    typedef dpoint2d dpoint_type; ///< Type of dpoint (move).
+-    typedef winiter< neighborhood2d > iter_type; ///< Type of iterator.
+-    typedef winneighb< neighborhood2d > neighb_type; ///< Type of neighbor.
+-    typedef window2d win_type; ///< Type of window.
+-  };
+-
+-  /*!
+-  ** \\brief Neighborhood 2 dimensions.
+-  **
+-  ** It looks like structuring elements but here, when
+-  ** you add an element, you add its opposite.
+-  ** Points have 2 dimensions.
+-  **
+-  */
+-  class neighborhood2d :
+-    public abstract::neighborhoodnd< neighborhood2d >
++  struct neighborhood<2> : public abstract::neighborhood_nd< neighborhood<2> >
+   {
+-  public:
+-
+-    typedef abstract::neighborhoodnd< neighborhood2d > super_type;
+-    ///< Super type.
+-    typedef neighborhood2d self_type; ///< Self type.
+-
+-    /*!
+-    ** \\brief The associate image's type of iterator.
+-    ** \\warning Prefer the macros oln_iter_type(Iterable) and
+-    ** oln_iter_type_(Iterable) (the same without the 'typename' keyword)
+-    */
+-    typedef struct_elt_traits< self_type >::iter_type   iter_type;
+-
+-    typedef struct_elt_traits< self_type >::neighb_type	neighb_type;
+-
+-    /*!
+-    ** \\brief The associate image's type of dpoint (move point).
+-    ** \\warning Prefer the macros oln_dpoint_type(Pointable) and
+-    ** oln_dpoint_type_(Pointable) (the same without the 'typename' keyword)
+-    */
+-    typedef struct_elt_traits< self_type >::dpoint_type dpoint_type;
+-
+-    friend class abstract::window_base<abstract::neighborhood<neighborhood2d>, neighborhood2d>;
+-
+-    /*!
+-    ** \\brief Add a dpoint (move point) to the neighborhood.
+-    ** \\arg dp The new point.
+-    **
+-    ** Add a new member to the neighborhood. This point must be of 2
+-    ** dimensions.
+-    */
+-    neighborhood2d&
+-    add(const dpoint_type& dp)
++    neighborhood& add(coord row, coord col)
+     {
+-      this->exact().add_(dp);
+-      return this->exact().add_(-dp);
++      // FIXME: below, \"this->super::\" is required for the call
++      // to \"add\" to be resolved!
++      return this->add(dpoint2d(row, col));
+     }
+ 
+-    /*!
+-    ** \\brief Add a point by coordinates to the neighborhood.
+-    ** \\arg row The coordinates of the new point.
+-    ** \\arg col The coordinates of the new point.
+-    **
+-    ** Add a new member by its coordinates to the neighborhood.
+-    ** The coordinates have 2 dimensions.
+-    */
+-    neighborhood2d&
+-    add(coord row, coord col)
+-    {
+-      return this->add(dpoint_type(row, col));
+-    }
++  };
+ 
+-    /*!
+-    ** \\brief Construct a neighborhood of 2 dimensions.
+-    */
+-    neighborhood2d() : super_type()
+-    {}
+-
+-    /*!
+-    ** \\brief Construct a neighborhood of 2 dimensions.
+-    ** \\arg size Reserve 'size' elements for the neighborhood.
+-    */
+-    neighborhood2d(unsigned size) : super_type(size)
+-    {}
+-
+-    /*!
+-    ** \\brief Construct a neighborhood of 2 dimensions.
+-    ** \\arg n Add 'n' elements to the neighborhood.
+-    ** \\arg crd Coordinates of the 'n' elements.
+-    */
+-    neighborhood2d(unsigned n, const coord crd[]) : super_type(n)
+-    {
+-      for (unsigned i = 0; i < 2 * n; i += 2)
+-	add(dpoint_type(crd[i], crd[i+1]));
+-    }
++  typedef neighborhood<2>	neighborhood2d;
+ 
+-    // Constructor used in io functions.
+-    neighborhood2d(const io::internal::anything& r) : super_type()
++  const neighborhood2d c4()
+     {
+-      r.assign(*this);
+-    }
+-
+-    /// Return the name of the type.
+-    static std::string
+-    name()
++    static bool flower = true;
++    static neighborhood2d nbh;
++    if (flower)
+     {
+-      return std::string(\"neighborhood2d\");
++	nbh.add(-1,0).add(0,-1).add(0,1).add(1,0);
++	flower = false;
+     }
+-
+-  protected:
+-
+-    /*!
+-    ** \\brief Update delta.
+-    ** \\arg dp a deplacement point.
+-    ** \\return Delta.
+-    **
+-    ** If the point is the biggest element of the neighborhood,
+-    ** then this point is assigned to delta.
+-    */
+-    coord
+-    delta_update_(const dpoint_type& dp)
+-    {
+-      delta_(abs(dp.row()));
+-      delta_(abs(dp.col()));
+-      return delta_;
++    return nbh;
+     }
+ 
+-  };
+-
+-  // std neighbs
+-
+-  /*!
+-  ** \\brief Create a neighborhood (2 dimension) with 0,1, 1,0.
+-  ** \\return The new neighborhood.
+-  */
+-  inline const neighborhood2d&
+-  neighb_c4()
++  const neighborhood2d c8()
+   {
+-    static const coord crd[] = { 0,1,  1,0 };
+-    static const neighborhood2d neighb(2, crd);
+-    return neighb;
+-  }
+-
+-
+-  /*!
+-  ** \\brief Create a neighborhood (2 dimension) with 4 coordinates:
+-  ** 0,1, 1,1, 1,0, 1,-1.
+-  ** \\return The new neighborhood.
+-  */
+-  inline const neighborhood2d&
+-  neighb_c8()
++    static bool flower = true;
++    static neighborhood2d nbh;
++    if (flower)
+   {
+-    static const coord crd[] = { 0,1,  1,1,  1,0,  1,-1 };
+-    static const neighborhood2d neighb(4, crd);
+-    return neighb;
++	nbh = c4();
++	nbh.add(-1,-1).add(-1,1).add(1,-1).add(1,1);
++	flower = false;
+   }
+-
+-  // mk_neighb's
+-
+-  /*!
+-  ** \\brief Create a rectangular neighborhood (2 dimensions).
+-  ** \\arg nrows Number of row.
+-  ** \\arg ncols Number of column.
+-  ** \\return The new neighborhood (2d).
+-  ** \\pre nrows >= 3.
+-  ** \\pre nrows % 2 == 1.
+-  ** \\pre ncols >= 3.
+-  ** \\pre ncols % 2 == 1.
+-  */
+-  inline neighborhood2d
+-  mk_neighb_rectangle(unsigned nrows, unsigned ncols)
+-  {
+-    precondition(nrows >= 3 && (nrows % 2) == 1);
+-    precondition(ncols >= 3 && (ncols % 2) == 1);
+-    neighborhood2d neighb(nrows * ncols);
+-    int half_nrows = nrows / 2, half_ncols = ncols / 2;
+-    for (coord row = - half_nrows; row <= half_nrows; ++row)
+-      for (coord col = (row <= 0)? 1 : 0; col <= half_ncols; ++col)
+-	  neighb.add(row, col);
+-    return neighb;
++    return nbh;
+   }
+ 
+-  /*!
+-  ** \\brief Create a square neighborhood (2 dimensions).
+-  ** \\arg width Number of colunm and row.
+-  ** \\return The new neighborhood (2d).
+-  */
+-  inline neighborhood2d
+-  mk_neighb_square(unsigned width)
+-  {
+-    return mk_neighb_rectangle(width, width);
+-  }
+ 
+-  /*!
+-  ** \\brief Convert a neighborhood (2 dimensions) to a window (2 dimensions).
+-  ** \\arg n The neighborhood to convert.
+-  ** \\return The new window.
+-  */
+-  inline window2d
+-  mk_win_from_neighb(const neighborhood2d& n)
+-  {
+-    window2d win(n.card());
+-    for (unsigned i = 0; i < n.card(); ++i)
+-      win.add(n.dp(i));
+-    return win;
+-  }
++} // end of namespace oln
+ 
+-} // end of oln
+ 
+-#endif // OLENA_CORE_NEIGHBORHOOD2D_HH
++#endif // ndef PROTO_OLN_CORE_NEIGHBORHOOD2D_HH
+Index: olena/oln/core/neighborhood3d.hh
+--- olena/oln/core/neighborhood3d.hh Fri, 13 Aug 2004 19:03:16 +0200 levill_r (oln/c/35_neighborho 1.21 600)
++++ olena/oln/core/neighborhood3d.hh Tue, 14 Sep 2004 12:40:28 +0200 palma_g (oln/c/35_neighborho 1.21 640)
+@@ -1,12 +1,13 @@
+-// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
++// Copyright (C) 2001, 2002, 2003, 2004 EPITA Research and Development
++// Laboratory
+ //
+ // This file is part of the Olena Library.  This library is free
+ // software; you can redistribute it and/or modify it under the terms
+ // of the GNU General Public License version 2 as published by the
+ // Free Software Foundation.
+ //
+-// This library is distributed in the hope that it will be useful,
+-// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// This library is distributed in the hope that it will be useful, but
++// WITHOUT  ANY  WARRANTY;  without   even  the  implied  warranty  of
+ // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ // General Public License for more details.
+ //
+@@ -28,105 +29,24 @@
+ #ifndef OLENA_CORE_NEIGHBORHOOD3D_HH
+ # define OLENA_CORE_NEIGHBORHOOD3D_HH
+ 
+-# include <oln/core/abstract/neighborhoodnd.hh>
+-# include <oln/core/winiter.hh>
+-# include <oln/core/accum.hh>
+-# include <oln/core/window3d.hh>
+-# include <algorithm>
++
++# include <oln/core/neighborhood_nd.hh>
++# include <oln/core/dpoint2d.hh>
+ 
+ namespace oln {
+ 
+-  class neighborhood3d; // forward declaration
+ 
+-  /*!
+-  ** \\brief Traits for neighborhood3d.
+-  */
+   template<>
+-  struct struct_elt_traits<neighborhood3d>: public
+-  struct_elt_traits<abstract::neighborhoodnd<neighborhood3d> >
+-  {
+-    enum { dim = 3 }; ///< Dimension.
+-    typedef point3d point_type; ///< Type of point.
+-    typedef dpoint3d dpoint_type; ///< Type of dpoint (move).
+-    typedef winiter< neighborhood3d > iter_type; ///< Type of iterator.
+-    typedef winneighb< neighborhood3d > neighb_type; ///< Type of neighbor.
+-    typedef window3d win_type; ///< Type of window.
+-  };
+-
+-  /*!
+-  ** \\brief Neighborhood 3 dimensions.
+-  **
+-  ** It looks like structuring elements but here, when
+-  ** you add an element, you add its opposite.
+-  ** Points have 3 dimensions.
+-  **
+-  */
+-  class neighborhood3d :
+-    public abstract::neighborhoodnd< neighborhood3d >
+-  {
+-  public:
+-
+-    typedef abstract::neighborhoodnd< neighborhood3d > super_type;
+-    ///< Super type.
+-    typedef neighborhood3d self_type; ///< Self type.
+-
+-    /*!
+-    ** \\brief The associate image's type of iterator.
+-    ** \\warning Prefer the macros oln_iter_type(Iterable) and
+-    ** oln_iter_type_(Iterable) (the same without the 'typename' keyword)
+-    */
+-    typedef struct_elt_traits< self_type >::iter_type   iter_type;
+-    typedef struct_elt_traits< self_type >::neighb_type	neighb_type;
+-
+-    /*!
+-    ** \\brief The associate image's type of dpoint (move point).
+-    ** \\warning Prefer the macros oln_dpoint_type(Pointable) and
+-    ** oln_dpoint_type_(Pointable) (the same without the 'typename' keyword)
+-    */
+-    typedef struct_elt_traits< self_type >::dpoint_type dpoint_type;
+-
+-    friend class abstract::window_base<abstract::neighborhood<neighborhood3d>, neighborhood3d>;
+-
+-    /*!
+-    ** \\brief Add a dpoint (move point) to the neighborhood.
+-    ** \\arg dp The new point.
+-    **
+-    ** Add a new member to the neighborhood. This point must be of 3
+-    ** dimensions.
+-    */
+-    neighborhood3d&
+-    add(const dpoint_type& dp)
++  struct neighborhood<3> : public abstract::neighborhood_nd< neighborhood<3> >
+     {
+-      this->exact().add_(dp);
+-      return this->exact().add_(-dp);
+-    }
+-
+-    /*!
+-    ** \\brief Add a point by coordinates to the neighborhood.
+-    ** \\arg slice The coordinates of the new point.
+-    ** \\arg row The coordinates of the new point.
+-    ** \\arg col The coordinates of the new point.
+-    **
+-    ** Add a new member by its coordinates to the neighborhood.
+-    ** The coordinates have 3 dimensions.
+-    */
+-    neighborhood3d&
+-    add(coord slice, coord row, coord col)
++    neighborhood& add(coord slice, coord row, coord col)
+     {
+       return this->add(dpoint3d(slice, row, col));
+     }
+-
+     /*!
+     ** \\brief Construct a neighborhood of 3 dimensions.
+     */
+-    neighborhood3d() : super_type()
+-    {}
+-
+-    /*!
+-    ** \\brief Construct a neighborhood of 3 dimensions.
+-    ** \\arg size Reserve 'size' elements for the neighborhood.
+-    */
+-    neighborhood3d(unsigned size) : super_type(size)
++    neighborhood()
+     {}
+ 
+     /*!
+@@ -134,40 +54,15 @@
+     ** \\arg n Add 'n' elements to the neighborhood.
+     ** \\arg crd Coordinates of the 'n' elements.
+     */
+-    neighborhood3d(unsigned n, const coord crd[]) : super_type()
++    neighborhood(unsigned n, const coord crd[]) : super_type()
+     {
+       for (unsigned i = 0; i < 3 * n; i += 3)
+-	add(dpoint_type(crd[i], crd[i+1], crd[i+2]));
++	add(crd[i], crd[i+1], crd[i+2]);
+     }
+-
+-    /// Return the name of the type.
+-    static std::string
+-    name()
+-    {
+-      return std::string(\"neighborhood3d\");
+-    }
+-
+-  protected:
+-
+-    /*!
+-    ** \\brief Update delta.
+-    ** \\arg dp a deplacement point.
+-    ** \\return Delta.
+-    **
+-    ** If the point is the biggest element of the neighborhood,
+-    ** then this point is assigned to delta.
+-    */
+-    coord
+-    delta_update_(const dpoint_type& dp)
+-    {
+-      delta_(abs(dp.slice()));
+-      delta_(abs(dp.row()));
+-      delta_(abs(dp.col()));
+-      return delta_;
+-    }
+-
+   };
+ 
++  typedef neighborhood<3>	neighborhood3d;
++
+   // std neighb
+ 
+   /*!
+Index: olena/oln/core/abstract/neighborhood.hh
+--- olena/oln/core/abstract/neighborhood.hh Mon, 29 Mar 2004 09:53:11 +0200 odou_s (oln/c/38_neighborho 1.23 600)
++++ olena/oln/core/abstract/neighborhood.hh Tue, 14 Sep 2004 12:41:25 +0200 palma_g (oln/c/38_neighborho 1.24 640)
+@@ -1,12 +1,13 @@
+-// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
++// Copyright (C) 2001, 2002, 2003, 2004 EPITA Research and Development
++// Laboratory
+ //
+ // This file is part of the Olena Library.  This library is free
+ // software; you can redistribute it and/or modify it under the terms
+ // of the GNU General Public License version 2 as published by the
+ // Free Software Foundation.
+ //
+-// This library is distributed in the hope that it will be useful,
+-// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// This library is distributed in the hope that it will be useful, but
++// WITHOUT  ANY  WARRANTY;  without   even  the  implied  warranty  of
+ // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ // General Public License for more details.
+ //
+@@ -25,254 +26,55 @@
+ // reasons why the executable file might be covered by the GNU General
+ // Public License.
+ 
+-#ifndef OLENA_CORE_ABSTRACT_NEIGHBORHOOD_HH
+-# define OLENA_CORE_ABSTRACT_NEIGHBORHOOD_HH
++#ifndef OLN_CORE_ABSTRACT_NEIGHBORHOOD_HH
++# define OLN_CORE_ABSTRACT_NEIGHBORHOOD_HH
+ 
+-# include <mlc/type.hh>
+-# include <oln/core/abstract/dpoint.hh>
+-# include <oln/core/abstract/struct_elt.hh>
++#include <oln/core/abstract/dpoint_set.hh>
++#include <oln/core/abstract/flat_se.hh>
+ 
+ namespace oln {
+ 
+   namespace abstract {
+-    template<class Exact>
+-    struct neighborhood; // forward declaration
+-  } // end of abstract
+ 
+-  /*!
+-  ** \\brief Traits for abstract::neighborhood.
+-  */
+-  template<class Exact>
+-  struct struct_elt_traits<abstract::neighborhood<Exact> >
+-  {
+-    typedef abstract::neighborhood<Exact> abstract_type;
+-  };
+-
+-  namespace abstract
+-  {
+-
+-    /*!
+-    **
+-    ** \\brief Neighborhood.
+-    **
+-    ** It looks like structuring elements but here, when
+-    ** you add an element, you add its opposite.
+-    ** This abstract class defines several virtual methods for his
+-    ** subclasses. Its goal is to deal with a set of deplacement points.
+-    **
+-    */
+-    template<class Exact>
+-    struct neighborhood : public mlc_hierarchy::any<Exact>
+-    {
+-      typedef Exact exact_type; ///< Set the exact type.
+-      typedef neighborhood<Exact> self_type; ///< Set its type.
+-
+-      /*!
+-      ** \\brief The associate image's type of iterator.
+-      ** \\warning Prefer the macros oln_iter_type(Iterable) and
+-      ** oln_iter_type_(Iterable) (the same without the 'typename' keyword)
+-      */
+-      typedef typename struct_elt_traits<Exact>::iter_type iter_type;
+-
+-      typedef typename struct_elt_traits<Exact>::neighb_type neighb_type;
+-      ///< Set the neighborhood type.
+-      typedef typename struct_elt_traits<Exact>::win_type win_type;
+-      ///< Set the window type.
+-
+-      /*!
+-      ** \\brief The associate image's type of dpoint (move point).
+-      ** \\warning Prefer the macros oln_dpoint_type(Pointable) and
+-      ** oln_dpoint_type_(Pointable) (the same without the 'typename' keyword)
+-      */
+-      typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
+-
+-      typedef typename struct_elt_traits<Exact>::abstract_type abstract_type;
+-      ///< Set the abstract type.
+-
+-      enum { dim = struct_elt_traits<Exact>::dim };
+-      ///< Set the dim of the points of the neighborhood.
+-
+-      /// Return the name of the type.
+-      static std::string
+-      name()
++    template <typename E>
++    struct neighborhood: public dpoint_set<E>
+       {
+-	return std::string(\"neighborhood<\") + Exact::name() + \">\";
+-      }
+-
+-      /*!
+-      ** \\brief Test if the set of points contains this one.
+-      ** \\arg dp a dpoint (deplacement point).
+-      ** \\return True if the set of points contains this dpoint.
+-      */
+-      bool
+-      has(const abstract::dpoint<dpoint_type>& dp) const
+-      {
+-	return this->exact().has_(dp.exact());
+-      }
+-
+-      /*!
+-      ** \\brief Get the number of points.
+-      ** \\return The number of points.
+-      */
+-      unsigned
+-      card() const
+-      {
+-	return this->exact().card_();
+-      }
+-
+-      /*!
+-      ** \\brief Test if the neighborhood is centered.
+-      ** \\return True if it's centered.
+-      **
+-      ** Neighborhood are centered when they contains at least one
+-      ** element.
+-      */
+-      bool
+-      is_centered() const
+-      {
+-	return this->exact().is_centered_();
+-      }
+-
+-      /*!
+-      ** \\brief Get the nth element of the neighborhood.
+-      ** \\arg i The nth.
+-      ** \\return The nth dpoint.
+-      */
+-      const dpoint_type
+-      dp(unsigned i) const
+-      {
+-	return this->exact()[i];
+-      }
+-
+-      /*!
+-      ** \\brief Compare two sets of structuring elements.
+-      ** \\arg win The structuring elements to compare.
+-      ** \\return True if they are the same.
+-      */
+-      bool
+-      operator==(const self_type& win) const
+-      {
+-	return this->exact().is_equal(win.exact());
+-      }
+-
+-      /*!
+-      ** \\brief Get the delta of the neighborhood.
+-      ** \\return Delta.
+-      **
+-      ** Delta is the biggest element of the neighborhood.
+-      */
+-      coord
+-      delta() const
+-      {
+-	return this->exact().get_delta();
+-      }
+-
+-      /*!
+-      ** \\brief Get the nth element of the neighborhood.
+-      ** \\arg i The nth.
+-      ** \\return The nth dpoint.
+-      */
+-      const dpoint_type
+-      operator[](unsigned i) const
+-      {
+-	return this->exact().at(i);
+-      }
+-
+       /*!
+       ** \\brief Add a point to the neighborhood.
+       ** \\arg dp The new point.
++      ** \\pre !dp.is_centered().
+       **
+       ** Add a new member to the neighborhood.
+       */
+-      exact_type&
+-      add(const abstract::dpoint<dpoint_type>& dp)
++      E& add_impl(const oln_dpoint_type(E)& dp)
+       {
+-	this->exact().add_(dp.exact());
+-	return this->exact().add_(-dp.exact());
++	precondition(!dp.is_centered());
++	this->sdps_.insert(dp);
++	this->sdps_.insert(-dp);
++	this->change_ = true;
++	return this->exact();
+       }
+ 
+-
+-      // obsolete
+-//       exact_type
+-//       operator-() const
+-//       {
+-// 	return this->exact();
+-//       }
+-
+-    protected:
+-
+-      /*!
+-      ** \\brief Set neighborhood to opposite.
+-      **
+-      ** Each point of neighborhood is assigned to its opposite.
+-      **
+-      */
+-      void
+-      sym()
+-      {
+-	this->exact().sym_();
+-      }
+-
+-      /*!
+-      ** \\brief Do nothing, used only by sub-classes
+-      */
+-      neighborhood()
+-      {}
+-    };
+-
+-  } // end of abstract
+-
+-  /*!
+-  ** \\brief Compute intersection between two neighborhood
+-  */
+-  template<class E>
+-  inline E
+-  inter(const abstract::neighborhood<E> &lhs,
+-	const abstract::neighborhood<E> &rhs)
++      const oln_flat_se_type(E) flat_se() const
+   {
+-    E neighb;
+-    for (unsigned j = 0; j < rhs.card(); ++j)
+-      if (lhs.has(rhs.dp(j)) && ! neighb.has(rhs.dp(j)))
+-	neighb.add(rhs.dp(j));
+-    return neighb;
++	oln_flat_se_type(E) win;
++	win.clone(*this);
++	return win;
+   }
+ 
+-  /*!
+-  ** \\brief Compute union between two neighborhood
+-  */
+-  template<class E>
+-  inline E
+-  uni(const abstract::neighborhood<E> &lhs,
+-      const abstract::neighborhood<E> &rhs)
++      // backward compatibility
++      const oln_window_type(E) window() const
+   {
+-    E neighb;
+-    for (unsigned j = 0; j < rhs.card(); ++j)
+-	if (! neighb.has(rhs.dp(j)))
+-	  neighb.add(rhs.dp(j));
+-    for (unsigned j = 0; j < lhs.card(); ++j)
+-      if (! neighb.has(lhs.dp(j)))
+-	neighb.add(lhs.dp(j));
+-      return neighb;
++	return flat_se();
+   }
+ 
+-  /*!
+-  ** \\brief Construct a window from a neighborhood.
+-  */
+-  template<class E>
+-  inline typename struct_elt_traits<E>::win_type
+-  mk_win_from_neighb(const abstract::neighborhood<E>& n)
+-  {
+-    typename struct_elt_traits<E>::win_type win(n.card());
+-    for (unsigned i = 0; i < n.card(); ++i)
+-      win.add(n.dp(i));
+-    return win;
+-  }
+-
+-# define oln_neighb_type(Neighbable)		\\
+-typename Neighbable::neighb_type
++    protected:
++      neighborhood() {}
++    };
+ 
++  } // end of namespace abstract
+ 
+-} // end of oln
++} // end of namespace oln
+ 
+ 
+-#endif // OLENA_CORE_ABSTRACT_NEIGHBORHOOD_HH
++#endif // !OLN_CORE_ABSTRACT_NEIGHBORHOOD_HH
+Index: olena/oln/core/abstract/point.hh
+--- olena/oln/core/abstract/point.hh Mon, 13 Sep 2004 22:08:03 +0200 van-vl_n (oln/c/33_point.hh 1.16.2.1 600)
++++ olena/oln/core/abstract/point.hh Tue, 14 Sep 2004 10:02:23 +0200 palma_g (oln/c/33_point.hh 1.16.2.1 600)
+@@ -236,40 +236,40 @@
+ 
+ 
+ 
+-  namespace internal
+-  {
++//   namespace internal
++//   {
+ 
+-    /*! \\class default_less< abstract::point<Exact> >
+-    **
+-    ** The specialized version for abstract::point.
+-    */
+-    template<class Exact>
+-    struct default_less< abstract::point<Exact> >
+-    {
+-
+-      /*! \\brief Test if the coordinates of a point l
+-      ** are not greater than the coordinates of a point r.
+-      **
+-      ** \\arg l A point.
+-      **
+-      ** \\arg r Another point.
+-      **
+-      ** \\return True if the coordinates of l are not greater
+-      ** than the coordinates of r.
+-      */
+-
+-      bool operator()(const abstract::point<Exact>& l,
+-		      const abstract::point<Exact>& r) const
+-      {
+-	for (unsigned i = 0; i < oln_dim_val(Exact); ++i)
+-	  if (l.nth(i) < r.nth(i))
+-	    return true;
+-	  else if (l.nth(i) > r.nth(i))
+-	    return false;
+-	return false;
+-      }
+-    };
+-  } // internal
++//     /*! \\class default_less< abstract::point<Exact> >
++//     **
++//     ** The specialized version for abstract::point.
++//     */
++//     template<class Exact>
++//     struct default_less< abstract::point<Exact> >
++//     {
++
++//       /*! \\brief Test if the coordinates of a point l
++//       ** are not greater than the coordinates of a point r.
++//       **
++//       ** \\arg l A point.
++//       **
++//       ** \\arg r Another point.
++//       **
++//       ** \\return True if the coordinates of l are not greater
++//       ** than the coordinates of r.
++//       */
++
++//       bool operator()(const abstract::point<Exact>& l,
++// 		      const abstract::point<Exact>& r) const
++//       {
++// 	for (unsigned i = 0; i < oln_dim_val(Exact); ++i)
++// 	  if (l.nth(i) < r.nth(i))
++// 	    return true;
++// 	  else if (l.nth(i) > r.nth(i))
++// 	    return false;
++// 	return false;
++//       }
++//     };
++//   } // internal
+ } // end of oln
+ 
+ 
+Index: olena/oln/core/abstract/struct_elt.hh
+--- olena/oln/core/abstract/struct_elt.hh Mon, 29 Mar 2004 09:53:11 +0200 odou_s (oln/c/25_structelt. 1.24 600)
++++ olena/oln/core/abstract/struct_elt.hh Tue, 14 Sep 2004 11:10:52 +0200 palma_g (oln/c/25_structelt. 1.25 640)
+@@ -25,53 +25,21 @@
+ // reasons why the executable file might be covered by the GNU General
+ // Public License.
+ 
+-#ifndef OLENA_CORE_STRUCT_ELT_HH
+-# define OLENA_CORE_STRUCT_ELT_HH
++#ifndef OLN_CORE_ABSTRACT_STRUCT_ELT_HH
++# define OLN_CORE_ABSTRACT_STRUCT_ELT_HH
+ 
+-# include <mlc/type.hh>
+-# include <oln/core/coord.hh>
+-# include <oln/core/abstract/dpoint.hh>
+-
+-namespace oln {
+-
+-  namespace abstract {
+-    template<class Exact>
+-    struct struct_elt; // forwarding declaration
+-
+-  } // end of abstract
+-
+-  template<class Exact>
+-  struct struct_elt_traits;
+-
+-  /*!
+-  ** \\brief Traits for abstract::struct_elt.
+-  */
+-  template<class Exact>
+-  struct struct_elt_traits<abstract::struct_elt<Exact> >
++# include <oln/core/abstract/dpoint_set.hh>
++# include <oln/core/macros.hh>
++namespace oln
+   {
+-    typedef abstract::struct_elt<Exact> abstract_type;
+-    ///< Defines the abstract type of the structuring element.
+-  };
++  template <typename Exact>
++  struct props;
+ 
+-  namespace abstract {
+-
+-    /*!
+-    ** Structuring elements (set of dpoints).
+-    **
+-    ** This abstract class defines several virtual methods for its
+-    ** subclasses. Its goal is to deal with a set of 'move' points.
+-    */
++  namespace abstract
++  {
+     template<class Exact>
+-    struct struct_elt : public mlc_hierarchy::any< Exact >
++    struct struct_elt: public dpoint_set<Exact>
+     {
+-      enum { dim = struct_elt_traits<Exact>::dim };
+-      ///< Set the dim of the image from which points com.
+-
+-      typedef struct_elt<Exact> self_type;
+-      ///< Set the exact self type of the class.
+-      typedef typename struct_elt_traits<Exact>::abstract_type abstract_type;
+-      ///< Set the abstract type of hisself.
+-
+       /// Return the name of the type.
+       static std::string
+       name()
+@@ -79,33 +47,6 @@
+ 	return std::string(\"struct_elt<\") + Exact::name() + \">\";
+       }
+ 
+-      typedef typename struct_elt_traits<Exact>::point_type point_type;
+-      ///< Set the point type of the image from which points come.
+-      typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
+-      ///< Set the dpoint type.
+-      typedef Exact exact_type;
+-
+-      /*!
+-      ** \\brief Test if the set of points contains this one.
+-      ** \\arg dp a dpoint (deplacement point).
+-      ** \\return True if the set of points contains this dpoint.
+-      */
+-      bool
+-      has(const abstract::dpoint<dpoint_type>& dp) const
+-      {
+-	return this->exact().has_(dp.exact());
+-      }
+-
+-      /*!
+-      ** \\brief Get the number of points.
+-      ** \\return The number of points.
+-      */
+-      unsigned
+-      card() const
+-      {
+-	return this->exact().card_();
+-      }
+-
+       /*!
+       ** \\brief Test if the structuring elements is centered.
+       ** \\return True if it's centered.
+@@ -115,103 +56,50 @@
+       bool
+       is_centered() const
+       {
+-	return this->exact().is_centered_();
++	return dispatch(is_centered)();
+       }
+ 
+-      /*!
+-      ** \\brief Add a point to the structuring elements.
+-      **
+-      ** Add a new member to the structuring elements.
+-      **
+-      ** \\warning Here for convenience (see morpho algorithms).
+-      ** Work with w_windows (associate a default weight set to 1).
+-      */
+-      exact_type&
+-      add(const abstract::dpoint<dpoint_type>& dp)
++      oln_concrete_type(Exact) image() const
+       {
+-	return this->exact().add_dp(dp);
++	return oln_dispatch(image)();
+       }
+ 
+-      /*!
+-      ** \\brief Get the nth structuring element.
+-      ** \\arg i The nth.
+-      ** \\return The nth dpoint.
+-      */
+-      dpoint_type
+-      dp(unsigned i) const
+-      {
+-	return this->exact().at(i);
+-      }
+-
+-      /*!
+-      ** \\brief Compare two sets of structuring elements.
+-      ** \\arg win The structuring elements to compare.
+-      ** \\return True if they are the same.
+-      */
+-      bool
+-      operator==(const self_type& win) const
+-      {
+-	return this->exact().is_equal(win.exact());
+-      }
+-
+-      /*!
+-      ** \\brief Get the delta of the structuring elements.
+-      ** \\return Delta.
+-      **
+-      ** Delta is the biggest element of the structuring elements.
+-      */
+-      coord
+-      delta() const
+-      {
+-	return this->exact().get_delta();
+-      }
+-
+-      /*!
+-      ** \\brief Get the nth structuring element.
+-      ** \\arg i The nth.
+-      ** \\return The nth dpoint.
+-      */
+-      const dpoint_type
+-      operator[](unsigned i) const
+-      {
+-	return this->exact().at(i);
+-      }
++    };
+ 
+       /*!
+-      ** \\brief Set structuring elements to opposite.
+-      **
+-      ** Each point of structuring elements is assigned to its opposite.
++    ** \\brief Compute intersection between two se.
+       */
+-      exact_type
+-      operator-() const
+-      {
+-	exact_type win(this->exact());
+-	win.sym();
++    template<class E>
++    inline E
++    inter(const abstract::struct_elt<E>& lhs, const abstract::struct_elt<E>& rhs)
++    {
++      E win;
++      for (unsigned i = 0; i < lhs.card(); ++i)
++	if (rhs.has(lhs.dp(i)))
++	  win.add(lhs.dp(i));
++      for (unsigned j = 0; j < rhs.card(); ++j)
++	if (! win.has(rhs.dp(j)) && lhs.has(rhs.dp(j)))
++	  win.add(rhs.dp(j));
+ 	return win;
+       }
+ 
+-    protected:
+-
+       /*!
+-      ** \\brief Set structuring elements to opposite.
+-      **
+-      ** Each point of structuring elements is assigned to its opposite.
++    ** \\brief Compute union between two se.
+       */
+-      void
+-      sym()
+-      {
+-	return this->exact().sym_();
++    template<class E>
++    inline E
++    uni(const abstract::struct_elt<E>& lhs, const abstract::struct_elt<E>& rhs)
++    {
++      E win;
++      for (unsigned i = 0; i < lhs.card(); ++i)
++	win.add(lhs.dp(i));
++      for (unsigned j = 0; j < rhs.card(); ++j)
++	if (! win.has(rhs.dp(j)))
++	  win.add(rhs.dp(j));
++      return win;
+       }
+ 
+-      /*!
+-      ** \\brief Do nothing, used only by sub-classes
+-      */
+-      struct_elt()
+-      {}
+-
+-    };
+-  } // end of abstract
+-
+-} // end of oln
++  } // !abstract
++} // !oln
+ 
+-#endif // ! OLENA_CORE_STRUCT_ELT_HH
++#endif // ! OLN_CORE_STRUCT_ELT_HH
+Index: olena/oln/core/point_nd.hh
+--- olena/oln/core/point_nd.hh Mon, 13 Sep 2004 22:08:03 +0200 van-vl_n (oln/w/30_point_nd.h 1.1 644)
++++ olena/oln/core/point_nd.hh Tue, 14 Sep 2004 10:12:00 +0200 palma_g (oln/w/30_point_nd.h 1.1 644)
+@@ -18,7 +18,7 @@
+ #ifndef OLENA_CORE_POINT_HH
+ # define OLENA_CORE_POINT_HH
+ 
+-# include \"abstract/point.hh\"
++# include <oln/core/abstract/point.hh>
+ 
+ namespace oln {
+ 
+Index: olena/oln/core/dpoint_nd.hh
+--- olena/oln/core/dpoint_nd.hh Mon, 13 Sep 2004 22:08:03 +0200 van-vl_n (oln/w/31_dpoint_nd. 1.1 644)
++++ olena/oln/core/dpoint_nd.hh Tue, 14 Sep 2004 11:24:16 +0200 palma_g (oln/w/31_dpoint_nd. 1.1 644)
+@@ -18,7 +18,9 @@
+ #ifndef OLENA_CORE_DPOINT_HH
+ # define OLENA_CORE_DPOINT_HH
+ 
+-# include \"abstract/dpoint.hh\"
++# include <oln/core/abstract/dpoint.hh>
++# include <oln/core/default_props.hh>
++# include <oln/core/dim_nd.hh>
+ 
+ namespace oln {
+ 
+@@ -32,10 +34,8 @@
+   struct point; //fwd decl
+ 
+   template <unsigned Dim>
+-  struct prop<dpoint<Dim> >
++  struct props<dpoint<Dim> >: public default_props<dim<Dim> >
+   {
+-    enum {dim = Dim};
+-    typedef point<Dim> point_type;
+   };
+ 
+ 
+Index: olena/oln/core/dim3d.hh
+--- olena/oln/core/dim3d.hh Tue, 14 Sep 2004 12:53:38 +0200 palma_g ()
++++ olena/oln/core/dim3d.hh Mon, 13 Sep 2004 10:59:57 +0200 palma_g (oln/v/45_dim3d.hh 1.1 644)
+@@ -0,0 +1,66 @@
++#ifndef PROTO_OLN_CORE_DIM3D_HH
++# define PROTO_OLN_CORE_DIM3D_HH
++
++# include <oln/core/abstract/dim.hh>
++
++namespace oln {
++
++  // fwd decls:
++
++  template <typename T> struct image3d;
++  struct image3d_size;
++  struct point3d;
++  struct dpoint3d;
++  struct fwd_iter3d;
++  struct bkd_iter3d;
++  struct neighborhood3d;
++  struct window3d;
++  struct fwd_niter3d;
++  // FIXME: to be continued
++
++
++  struct dim3d;
++
++  template <typename E>
++  struct props;
++
++  template <>
++  struct props <dim3d>
++  {
++    template <typename T>
++    struct concrete_type {
++      typedef image3d<T> ret;
++    };
++
++    enum { linbuf_value = false };
++
++    enum { dim_value = 3 };
++    typedef dim3d dim_type;
++
++    typedef image3d_size image_size_type;
++
++    typedef point3d point_type;
++    typedef dpoint3d dpoint_type;
++
++    typedef fwd_iter3d iter_type;
++    typedef fwd_iter3d fwd_iter_type;
++    typedef bkd_iter3d bkd_iter_type;
++
++    typedef neighborhood3d neighborhood_type;
++    typedef window3d window_type;
++
++    typedef fwd_niter3d niter_type;
++    typedef fwd_niter3d fwd_niter_type;
++//     typedef bkd_niter3d bkd_niter_type;
++
++    // FIXME: to be continued
++  };
++
++  struct dim3d : public abstract::dim< dim3d >
++  {
++  };
++
++} // end of namespace oln
++
++
++#endif // ndef PROTO_OLN_CORE_DIM3D_HH
+Index: olena/oln/core/dim2d.hh
+--- olena/oln/core/dim2d.hh Tue, 14 Sep 2004 12:53:38 +0200 palma_g ()
++++ olena/oln/core/dim2d.hh Fri, 10 Sep 2004 18:18:59 +0200 palma_g (oln/v/46_dim2d.hh 1.1 600)
+@@ -0,0 +1,66 @@
++#ifndef PROTO_OLN_CORE_DIM2D_HH
++# define PROTO_OLN_CORE_DIM2D_HH
++
++# include <oln/core/abstract/dim.hh>
++
++namespace oln {
++
++  // fwd decls:
++
++  template <typename T> struct image2d;
++  struct image2d_size;
++  struct point2d;
++  struct dpoint2d;
++  struct fwd_iter2d;
++  struct bkd_iter2d;
++  struct neighborhood2d;
++  struct window2d;
++  struct fwd_niter2d;
++  // FIXME: to be continued
++
++
++  struct dim2d;
++
++  template <typename E>
++  struct props;
++
++  template <>
++  struct props <dim2d>
++  {
++    template <typename T>
++    struct concrete_type {
++      typedef image2d<T> ret;
++    };
++
++    enum { linbuf_value = false };
++
++    enum { dim_value = 2 };
++    typedef dim2d dim_type;
++
++    typedef image2d_size image_size_type;
++
++    typedef point2d point_type;
++    typedef dpoint2d dpoint_type;
++
++    typedef fwd_iter2d iter_type;
++    typedef fwd_iter2d fwd_iter_type;
++    typedef bkd_iter2d bkd_iter_type;
++
++    typedef neighborhood2d neighborhood_type;
++    typedef window2d window_type;
++
++    typedef fwd_niter2d niter_type;
++    typedef fwd_niter2d fwd_niter_type;
++//     typedef bkd_niter2d bkd_niter_type;
++
++    // FIXME: to be continued
++  };
++
++  struct dim2d : public abstract::dim< dim2d >
++  {
++  };
++
++} // end of namespace oln
++
++
++#endif // ndef PROTO_OLN_CORE_DIM2D_HH
+Index: olena/oln/core/dim1d.hh
+--- olena/oln/core/dim1d.hh Tue, 14 Sep 2004 12:53:38 +0200 palma_g ()
++++ olena/oln/core/dim1d.hh Tue, 14 Sep 2004 11:00:22 +0200 palma_g (oln/w/14_dim1d.hh 1.1 600)
+@@ -0,0 +1,38 @@
++// Copyright (C) 2004  EPITA Research and Development Laboratory
++//
++// This  file is  part of  the Olena  Library.  This  library  is free
++// software; you can redistribute it  and/or modify it under the terms
++// of the  GNU General  Public License version  2 as published  by the
++// Free Software Foundation.
++//
++// This library is distributed in the hope that it will be useful, but
++// WITHOUT  ANY  WARRANTY;  without   even  the  implied  warranty  of
++// MERCHANTABILITY or  FITNESS FOR A PARTICULAR PURPOSE.   See the GNU
++// General Public License for more details.
++//
++// You should have  received a copy of the  GNU General Public License
++// along with  this library; see the  file COPYING.  If  not, write to
++// the Free Software Foundation, 59  Temple Place - Suite 330, Boston,
++// MA 02111-1307, USA.
++//
++// As a  special exception, you  may use this  file as part of  a free
++// software library without restriction.  Specifically, if other files
++// instantiate templates  or use macros or inline  functions from this
++// file, or  you compile  this file  and link it  with other  files to
++// produce  an executable,  this file  does  not by  itself cause  the
++// resulting  executable  to be  covered  by  the  GNU General  Public
++// License.   This exception  does  not however  invalidate any  other
++// reasons why the executable file might be covered by the GNU General
++// Public License.
++
++#ifndef OLN_CORE_DIM1D_HH
++# define OLN_CORE_DIM1D_HH
++
++
++namespace oln
++{
++  typedef dim<1>	dim1d;
++} // end of namespace oln
++
++
++#endif // ndef OLN_CORE_DIM1D_HH
+Index: olena/oln/core/abstract/dim.hh
+--- olena/oln/core/abstract/dim.hh Tue, 14 Sep 2004 12:53:38 +0200 palma_g ()
++++ olena/oln/core/abstract/dim.hh Tue, 14 Sep 2004 10:50:36 +0200 palma_g (oln/w/23_dim.hh 1.1 600)
+@@ -0,0 +1,21 @@
++#ifndef OLN_CORE_ABSTRACT_DIM_HH
++# define OLN_CORE_ABSTRACT_DIM_HH
++
++# include <mlc/type.hh>
++
++
++namespace oln {
++  namespace abstract {
++
++    template <typename E>
++    struct dim : public mlc_hierarchy::any<E>
++    {
++    protected:
++      dim() {}
++    };
++
++  } // abstract
++} // oln
++
++
++#endif // !OLN_CORE_ABSTRACT_DIM_HH
+Index: olena/oln/core/default_props.hh
+--- olena/oln/core/default_props.hh Tue, 14 Sep 2004 12:53:38 +0200 palma_g ()
++++ olena/oln/core/default_props.hh Tue, 14 Sep 2004 11:39:05 +0200 palma_g (oln/w/34_default_pr  644)
+@@ -0,0 +1,62 @@
++// Copyright (C) 2004  EPITA Research and Development Laboratory
++//
++// This  file is  part of  the Olena  Library.  This  library  is free
++// software; you can redistribute it  and/or modify it under the terms
++// of the  GNU General  Public License version  2 as published  by the
++// Free Software Foundation.
++//
++// This library is distributed in the hope that it will be useful, but
++// WITHOUT  ANY  WARRANTY;  without   even  the  implied  warranty  of
++// MERCHANTABILITY or  FITNESS FOR A PARTICULAR PURPOSE.   See the GNU
++// General Public License for more details.
++//
++// You should have  received a copy of the  GNU General Public License
++// along with  this library; see the  file COPYING.  If  not, write to
++// the Free Software Foundation, 59  Temple Place - Suite 330, Boston,
++// MA 02111-1307, USA.
++//
++// As a  special exception, you  may use this  file as part of  a free
++// software library without restriction.  Specifically, if other files
++// instantiate templates  or use macros or inline  functions from this
++// file, or  you compile  this file  and link it  with other  files to
++// produce  an executable,  this file  does  not by  itself cause  the
++// resulting  executable  to be  covered  by  the  GNU General  Public
++// License.   This exception  does  not however  invalidate any  other
++// reasons why the executable file might be covered by the GNU General
++// Public License.
++
++#ifndef OLN_CORE_DEFAULT_PROPS
++# define OLN_CORE_DEFAULT_PROPS
++# include <oln/core/macros.hh>
++
++namespace oln {
++
++  template <class Dim>
++  struct default_props
++  {
++    //  enum { linbuf_value = oln_linbuf_value(Dim) };
++    enum { dim_value = oln_dim_val(Dim) };
++
++    typedef Dim				dim_type;
++    //    typedef oln_image_size_type(Dim) image_size_type;
++
++    typedef oln_point_type(Dim)		point_type;
++    typedef oln_dpoint_type(Dim)	dpoint_type;
++
++    //    typedef oln_iter_type(Dim) iter_type;
++    //    typedef oln_fwd_iter_type(Dim) fwd_iter_type;
++    //typedef oln_bkd_iter_type(Dim) bkd_iter_type;
++
++    typedef oln_neighborhood_type(Dim)	neighborhood_type;
++    typedef oln_window_type(Dim)	window_type;
++    typedef oln_flat_se_type(Dim)	flat_se_type;
++
++    typedef oln_concrete_type(Dim)	concrete_type;
++ //    typedef oln_niter_type(Dim) niter_type;
++//     typedef oln_fwd_niter_type(Dim) fwd_niter_type;
++//
++    // typedef oln_bkd_niter_type(Dim) bkd_niter_type;
++  };
++} // !oln
++
++#endif // OLN_CORE_DEFAULT_PROPS
+
+")
 (New-Version-Log "")
-(Checkin-Time "Mon, 13 Sep 2004 13:15:44 +0200")
+(Checkin-Time "Tue, 14 Sep 2004 12:55:37 +0200")
 (Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -112,7 +1911,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.16 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.47 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.43 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.26 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.27.1.2 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.17 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.39 640))
 
@@ -161,17 +1960,17 @@
   (olena/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.19 640))
   (olena/oln/arith/logic.hh (oln/b/24_logic.hh 1.6.1.4 640))
   (olena/oln/arith/ops.hh (oln/b/23_ops.hh 1.5.1.2.1.10 640))
-  (olena/oln/basics1d.hh (oln/d/41_basics1d.h 1.6 640))
-  (olena/oln/basics2d.hh (oln/b/7_basics2d.h 1.7 640))
-  (olena/oln/basics3d.hh (oln/28_basics3d.h 1.5 640))
-  (olena/oln/basics.hh (oln/d/42_basics.hh 1.15 640))
+  (olena/oln/basics1d.hh (oln/d/41_basics1d.h 1.5 640))
+  (olena/oln/basics2d.hh (oln/b/7_basics2d.h 1.6 640))
+  (olena/oln/basics3d.hh (oln/28_basics3d.h 1.4 640))
+  (olena/oln/basics.hh (oln/d/42_basics.hh 1.14 640))
 
 
   (olena/oln/config/system.hh (oln/7_system.hh 1.17 640))
   (olena/oln/convert/basics.hh (oln/23_basics.hh 1.7 640))
   (olena/oln/convert/bound.hh (oln/22_bound.hh 1.12 640))
   (olena/oln/convert/abstract/colorconv.hh (oln/18_colorconv. 1.11 640))
-  (olena/oln/convert/conversion.hh (oln/21_conversion 1.19 640))
+  (olena/oln/convert/conversion.hh (oln/21_conversion 1.18 640))
   (olena/oln/convert/conversion_ng_se.hh (oln/e/24_conversion 1.12 640))
   (olena/oln/convert/force.hh (oln/20_force.hh 1.13 640))
   
@@ -188,10 +1987,10 @@
   (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.6.1.9 640))
   (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.8.1.12 640))
   (olena/oln/core/accum.hh (oln/d/40_accum.hh 1.5 640))
-  (olena/oln/core/apply.hh (oln/d/39_apply.hh 1.18 640))
-  (olena/oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.21 640))
-  (olena/oln/core/bkd_iter2d.hh (oln/d/37_bkd_iter2d 1.21 640))
-  (olena/oln/core/bkd_iter3d.hh (oln/d/36_bkd_iter3d 1.21 640))
+  (olena/oln/core/apply.hh (oln/d/39_apply.hh 1.17 640))
+  (olena/oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.20 640))
+  (olena/oln/core/bkd_iter2d.hh (oln/d/37_bkd_iter2d 1.20 640))
+  (olena/oln/core/bkd_iter3d.hh (oln/d/36_bkd_iter3d 1.20 640))
   
   
   
@@ -200,29 +1999,29 @@
   (olena/oln/core/box.hxx (oln/p/0_box.hxx 1.4.1.1.1.5 640))
   (olena/oln/core/compose.hh (oln/c/22_compose.hh 1.7 640))
   (metalic/mlc/contract.hh (oln/d/31_contract.h 1.10 640))
-  (olena/oln/core/coord.hh (oln/d/29_coord.hh 1.5 640))
-  (olena/oln/core/dpoint1d.hh (oln/d/27_dpoint1d.h 1.15 640))
-  (olena/oln/core/dpoint1d.hxx (oln/d/26_dpoint1d.h 1.8 640))
-  (olena/oln/core/dpoint2d.hh (oln/d/25_dpoint2d.h 1.14 640))
-  (olena/oln/core/dpoint2d.hxx (oln/d/24_dpoint2d.h 1.6 640))
-  (olena/oln/core/dpoint3d.hh (oln/d/23_dpoint3d.h 1.14 640))
-  (olena/oln/core/dpoint3d.hxx (oln/d/22_dpoint3d.h 1.6 640))
-  (olena/oln/core/abstract/dpoint.hh (oln/d/28_dpoint.hh 1.21 640))
+  (olena/oln/core/coord.hh (oln/d/29_coord.hh 1.4 640))
+  (olena/oln/core/dpoint1d.hh (oln/d/27_dpoint1d.h 1.14.2.2 640))
   
-  (olena/oln/core/fold.hh (oln/c/7_fold.hh 1.15 640))
-  (olena/oln/core/fwd_iter1d.hh (oln/d/21_fwd_iter1d 1.18 640))
-  (olena/oln/core/fwd_iter2d.hh (oln/d/20_fwd_iter2d 1.18 640))
-  (olena/oln/core/fwd_iter3d.hh (oln/d/19_fwd_iter3d 1.18 640))
+  (olena/oln/core/dpoint2d.hh (oln/d/25_dpoint2d.h 1.13.2.1 640))
+  
+  (olena/oln/core/dpoint3d.hh (oln/d/23_dpoint3d.h 1.13.2.1 640))
+  
+  (olena/oln/core/abstract/dpoint.hh (oln/d/28_dpoint.hh 1.20.2.2 640))
+  
+  (olena/oln/core/fold.hh (oln/c/7_fold.hh 1.14 640))
+  (olena/oln/core/fwd_iter1d.hh (oln/d/21_fwd_iter1d 1.17 640))
+  (olena/oln/core/fwd_iter2d.hh (oln/d/20_fwd_iter2d 1.17 640))
+  (olena/oln/core/fwd_iter3d.hh (oln/d/19_fwd_iter3d 1.17 640))
   (olena/oln/core/generate.hh (oln/f/12_generate.h 1.18 640))
-  (olena/oln/core/image1d.hh (oln/c/47_image1d.hh 1.28.1.5 640))
-  (olena/oln/core/image1d_size.hh (oln/c/46_image1d_si 1.13 600))
-  (olena/oln/core/image2d.hh (oln/c/45_image2d.hh 1.30.1.5 640))
-  (olena/oln/core/image2d_size.hh (oln/c/44_image2d_si 1.13 600))
-  (olena/oln/core/image3d.hh (oln/c/43_image3d.hh 1.27.1.5 640))
-  (olena/oln/core/image3d_size.hh (oln/c/42_image3d_si 1.13 640))
+  (olena/oln/core/image1d.hh (oln/c/47_image1d.hh 1.28.1.4 640))
+  (olena/oln/core/image1d_size.hh (oln/c/46_image1d_si 1.12 600))
+  (olena/oln/core/image2d.hh (oln/c/45_image2d.hh 1.30.1.4 640))
+  (olena/oln/core/image2d_size.hh (oln/c/44_image2d_si 1.12 600))
+  (olena/oln/core/image3d.hh (oln/c/43_image3d.hh 1.27.1.4 640))
+  (olena/oln/core/image3d_size.hh (oln/c/42_image3d_si 1.12 640))
   (olena/oln/core/image.hh (oln/d/18_image.hh 1.20.2.2 640))
   
-  (olena/oln/core/abstract/image_size.hh (oln/c/41_image_size 1.13 640))
+  (olena/oln/core/abstract/image_size.hh (oln/c/41_image_size 1.12 640))
   (olena/oln/core/internal/fake.hh (oln/d/17_fake.hh 1.3 640))
   
   
@@ -232,7 +2031,7 @@
   
   (olena/oln/core/abstract/iter1d.hh (oln/d/10_iter1d.hh 1.21 640))
   (olena/oln/core/abstract/iter2d.hh (oln/d/9_iter2d.hh 1.21 640))
-  (olena/oln/core/abstract/iter3d.hh (oln/d/8_iter3d.hh 1.22 640))
+  (olena/oln/core/abstract/iter3d.hh (oln/d/8_iter3d.hh 1.21 640))
   
 
   
@@ -241,38 +2040,38 @@
   
   
   
-  (olena/oln/core/abstract/iter.hh (oln/c/40_iter.hh 1.24 640))
-  (olena/oln/core/macros.hh (oln/c/39_macros.hh 1.6 640))
-  (olena/oln/core/neighborhood1d.hh (oln/c/37_neighborho 1.21 640))
-  (olena/oln/core/neighborhood2d.hh (oln/c/36_neighborho 1.23 640))
-  (olena/oln/core/neighborhood3d.hh (oln/c/35_neighborho 1.21 640))
-  (olena/oln/core/abstract/neighborhood.hh (oln/c/38_neighborho 1.24 640))
+  (olena/oln/core/abstract/iter.hh (oln/c/40_iter.hh 1.23 640))
+  (olena/oln/core/macros.hh (oln/c/39_macros.hh 1.5.2.2 640))
+  (olena/oln/core/neighborhood1d.hh (oln/c/37_neighborho 1.22 640))
+  (olena/oln/core/neighborhood2d.hh (oln/c/36_neighborho 1.24 640))
+  (olena/oln/core/neighborhood3d.hh (oln/c/35_neighborho 1.22 640))
+  (olena/oln/core/abstract/neighborhood.hh (oln/c/38_neighborho 1.25 640))
   (metalic/mlc/objs.hh (oln/c/34_objs.hh 1.7 640))
-  (olena/oln/core/point1d.hh (oln/c/32_point1d.hh 1.16 640))
-  (olena/oln/core/point1d.hxx (oln/c/31_point1d.hx 1.6 640))
-  (olena/oln/core/point2d.hh (oln/c/30_point2d.hh 1.16 640))
-  (olena/oln/core/point2d.hxx (oln/c/29_point2d.hx 1.8 640))
-  (olena/oln/core/point3d.hh (oln/c/28_point3d.hh 1.18 640))
-  (olena/oln/core/point3d.hxx (oln/c/27_point3d.hx 1.7 640))
-  (olena/oln/core/abstract/point.hh (oln/c/33_point.hh 1.17 640))
+  (olena/oln/core/point1d.hh (oln/c/32_point1d.hh 1.15.2.1 640))
+  
+  (olena/oln/core/point2d.hh (oln/c/30_point2d.hh 1.15.2.1 640))
+  
+  (olena/oln/core/point3d.hh (oln/c/28_point3d.hh 1.17.2.1 640))
+  
+  (olena/oln/core/abstract/point.hh (oln/c/33_point.hh 1.16.2.2 640))
   
   (olena/oln/core/abstract/binary_image.hh (oln/c/24_pred_image 1.6 640))
   
-  (olena/oln/core/abstract/struct_elt.hh (oln/c/25_structelt. 1.25 640))
+  (olena/oln/core/abstract/struct_elt.hh (oln/c/25_structelt. 1.26 640))
   (olena/oln/core/traverse.hh (oln/d/30_traverse.h 1.12 640))
   (metalic/mlc/typeadj.hh (oln/e/25_typeadj.hh 1.6 640))
-  (metalic/mlc/type.hh (oln/c/21_type.hh 1.31 640))
-  (olena/oln/core/window1d.hh (oln/c/15_window1d.h 1.20 640))
-  (olena/oln/core/window2d.hh (oln/c/14_window2d.h 1.23 640))
+  (metalic/mlc/type.hh (oln/c/21_type.hh 1.32 640))
+  (olena/oln/core/window1d.hh (oln/c/15_window1d.h 1.19 640))
+  (olena/oln/core/window2d.hh (oln/c/14_window2d.h 1.22 640))
   (olena/oln/core/window3d.hh (oln/c/13_window3d.h 1.20 640))
-  (olena/oln/core/abstract/window.hh (oln/c/16_window.hh 1.22 640))
+  (olena/oln/core/abstract/window.hh (oln/c/16_window.hh 1.21 640))
   (olena/oln/core/winiter.hh (oln/c/12_winiter.hh 1.12 640))
   (olena/oln/core/winneighb.hh (oln/c/11_winneighb. 1.14 640))
   (olena/oln/core/w_window1d.hh (oln/c/19_w_window1d 1.20 640))
   (olena/oln/core/w_window2d.hh (oln/c/18_w_window2d 1.6.1.16 640))
   (olena/oln/core/w_window3d.hh (oln/c/17_w_window3d 1.20 640))
   (olena/oln/core/abstract/w_window.hh (oln/c/20_w_window.h 1.18 640))
-  (olena/oln/io/base.hh (oln/b/20_base.hh 1.11 640))
+  (olena/oln/io/base.hh (oln/b/20_base.hh 1.10 640))
   
   (olena/oln/io/basics.hh (oln/b/12_basics.hh 1.6 640))
   (olena/oln/io/file.hh (oln/b/17_file.hh 1.6 640))
@@ -286,7 +2085,7 @@
   (olena/oln/io/pnm_write_3d.hh (oln/b/9_pnm_write3 1.1.1.14 640))
   
   (olena/oln/io/pnm_write.hh (oln/b/15_pnm_write. 1.8.1.14 640))
-  (olena/oln/io/readable.hh (oln/b/13_readable.h 1.14 640))
+  (olena/oln/io/readable.hh (oln/b/13_readable.h 1.13 640))
   (olena/oln/io/se.hh (oln/i/45_se.hh 1.4 640))
   (olena/oln/io/se_neighborhood.hh (oln/i/47_se_neighbo 1.14 640))
   (olena/oln/io/se_window.hh (oln/i/46_se_window. 1.16 640))
@@ -339,7 +2138,7 @@
   (olena/oln/morpho/opening.inc (oln/40_opening.in 1.16 640))
   (olena/oln/morpho/reconstruction.hh (oln/35_reconstruc 1.13.1.14 640))
   (olena/oln/morpho/splitse.hh (oln/34_splitse.hh 1.8 640))
-  (olena/oln/morpho/stat.hh (oln/50_stat.hh 1.8.1.13 640))
+  (olena/oln/morpho/stat.hh (oln/50_stat.hh 1.8.1.12 640))
   (olena/oln/morpho/thickening.hh (oln/e/29_thickening 1.7 640))
   (olena/oln/morpho/thickening.inc (oln/e/28_thickening 1.12 640))
   (olena/oln/morpho/thinning.hh (oln/e/27_thinning.h 1.7 640))
@@ -384,7 +2183,7 @@
   (integre/ntg/real/optraits_real_defs.hh (oln/g/11_optraits_s 1.14.1.2 640))
   (integre/ntg/real/optraits_real.hh (oln/g/12_optraits_s 1.11.1.8.1.1 640))
 
-  (integre/ntg/core/predecls.hh (oln/g/10_predecls.h 1.10.1.3.1.3 640))
+  (integre/ntg/core/predecls.hh (oln/g/10_predecls.h 1.10.1.3.1.2 640))
   (integre/ntg/core/value.hh (oln/g/8_rec_value. 1.8.1.8.1.1 640))
   (integre/ntg/color/rgb.hh (oln/i/18_rgb.hh 1.3.1.4 640))
 
@@ -882,7 +2681,7 @@
   (integre/ntg/core/type_traits.hh (oln/s/18_type_trait 1.3 640))
   (integre/ntg/core/macros.hh (oln/s/19_macros.hh 1.13 640))
   (integre/ntg/core/abstract_hierarchy.hh (oln/s/20_abstract_h 1.2.1.2 640))
-  (integre/ntg/basics.hh (oln/s/21_basics.hh 1.3.1.2 640))
+  (integre/ntg/basics.hh (oln/s/21_basics.hh 1.3.1.1 640))
   (integre/ntg/vect/vect_value.hh (oln/s/22_vect_value 1.2.1.1 640))
   (integre/ntg/enum/enum_value.hh (oln/s/23_enum_value 1.1.1.1 640))
   (integre/tests/types/tests/range4 (oln/s/24_range4 1.2 640))
@@ -938,7 +2737,7 @@
   (olena/tests/core/image_print.sh (oln/t/24_image_prin 1.2 640))
 
 
-  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.33 640))
+  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.32 640))
   (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.22 600))
   (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.14.1.12 640))
   (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.12 640))
@@ -988,7 +2787,7 @@
   (olena/tests/utils/tests/stat (oln/u/28_stat.cc 1.3 600))
   (olena/tests/utils/tests/timer (oln/u/29_timer.cc 1.6 600))
   (olena/tests/topo/tests/tarjan (oln/u/30_test-tarja 1.3 600))
-  (olena/oln/convert/abstract/conversion.hh (oln/u/31_conversion 1.7 640))
+  (olena/oln/convert/abstract/conversion.hh (oln/u/31_conversion 1.6 640))
   (olena/tests/check/Makefile.runtests (oln/u/32_Makefile.r 1.3 600))
   (contrib/runtests (oln/u/33_runtests 1.4 700))
   (metalic/tests/check/Makefile.runtests (oln/u/34_Makefile.r 1.1 600))
@@ -1175,7 +2974,7 @@
   (olena/tests/convol/tests/uniform_gauss (oln/j/41_uniform_ga 1.3 644))
 
 
-  (olena/oln/convert/value_to_point.hh (oln/j/43_value_to_p 1.6 644))
+  (olena/oln/convert/value_to_point.hh (oln/j/43_value_to_p 1.5 644))
 
   (olena/tests/morpho/tests/area (oln/j/44_area 1.3 644))
 ;; Files added by populate at Fri, 06 Feb 2004 16:00:19 +0100,
@@ -1186,7 +2985,7 @@
 ;; Files added by populate at Tue, 10 Feb 2004 15:26:15 +0100,
 ;; to version 10.62(w), by palma_g:
 
-  (olena/oln/core/abstract/behavior.hh (oln/j/46_behavior.h 1.6 644))
+  (olena/oln/core/abstract/behavior.hh (oln/j/46_behavior.h 1.5 644))
 
 ;; Files added by populate at Tue, 10 Feb 2004 15:26:20 +0100,
 ;; to version 10.62(w), by palma_g:
@@ -1365,7 +3164,7 @@
   (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh11 (oln/m/8_md5_morpho 1.2 644))
   (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh10 (oln/m/9_md5_morpho 1.2 644))
   (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh1 (oln/m/10_md5_morpho 1.2 644))
-  (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh0 (oln/m/11_md5_morpho 1.3 644))
+  (olena/tests/morpho/tests/md5_morpho_attribute_closing_opening_hh0 (oln/m/11_md5_morpho 1.2 644))
 
 ;; Files added by populate at Tue, 23 Mar 2004 15:45:54 +0100,
 ;; to version 10.106(w), by palma_g:
@@ -1443,7 +3242,7 @@
   (olena/oln/utils/qsort.hh (oln/r/9_qsort.hh 1.3 644))
 
 
-  (olena/oln/transforms/shapelets.hh (oln/r/10_shapelets. 1.4 600))
+  (olena/oln/transforms/shapelets.hh (oln/r/10_shapelets. 1.5 600))
   (olena/tests/convol/tests/slow_gaussian (oln/r/11_slow_gauss 1.1 600))
   (olena/oln/convol/fast_convolution.hh (oln/r/12_fast_convo 1.4 600))
   (olena/tests/convol/tests/fast_convol (oln/r/13_fast_convo 1.2 600))
@@ -1487,7 +3286,7 @@
   (olena/oln/core/fwd_diter1d.hh (oln/v/44_fwd_diter1 1.1 600))
   (olena/oln/core/dim3d.hh (oln/v/45_dim3d.hh 1.1 644))
   (olena/oln/core/dim2d.hh (oln/v/46_dim2d.hh 1.1 600))
-  (olena/oln/core/dim1d.hh (oln/w/14_dim1d.hh 1.1 600))
+  (olena/oln/core/dim1d.hh (oln/w/14_dim1d.hh 1.2 600))
   (olena/oln/core/constants.hh (oln/w/15_constants. 1.1 600))
   (olena/oln/core/ch_value.hh (oln/w/16_ch_value.h 1.1 600))
 
@@ -1497,10 +3296,50 @@
   (olena/oln/core/abstract/point_like.hh (oln/w/17_point_like 1.1 600))
   (olena/oln/core/abstract/niter.hh (oln/w/18_niter.hh 1.1 600))
   (olena/oln/core/abstract/fun.hh (oln/w/19_fun.hh 1.1 600))
-  (olena/oln/core/abstract/dpoints.hh (oln/w/20_dpoints.hh 1.1 600))
-  (olena/oln/core/abstract/dpoint_like.hh (oln/w/21_dpoint_lik 1.1 600))
-  (olena/oln/core/abstract/diter.hh (oln/w/22_diter.hh 1.1 600))
-  (olena/oln/core/abstract/dim.hh (oln/w/23_dim.hh 1.1 600))
+  
+  
+  
+  (olena/oln/core/abstract/dim.hh (oln/w/23_dim.hh 1.2 600))
+
+
+  (olena/oln/core/point_nd.hh (oln/w/30_point_nd.h 1.2 644))
+  (olena/oln/core/dpoint_nd.hh (oln/w/31_dpoint_nd. 1.2 644))
+  (olena/oln/core/abstract/point.hxx (oln/w/32_point.hxx 1.1 644))
+  (olena/oln/core/abstract/dpoint.hxx (oln/w/33_dpoint.hxx 1.1 644))
+;; Files deleted by depopulate at Tue, 14 Sep 2004 12:43:58 +0200,
+;; from version oln_2004_paradigm.2(w), by palma_g:
+
+  ; (olena/oln/core/abstract/dpoints.hh ())
+
+;; Files deleted by depopulate at Tue, 14 Sep 2004 12:44:44 +0200,
+;; from version oln_2004_paradigm.2(w), by palma_g:
+
+  ; (olena/oln/core/abstract/dpoint_like.hh ())
+
+;; Files deleted by depopulate at Tue, 14 Sep 2004 12:44:55 +0200,
+;; from version oln_2004_paradigm.2(w), by palma_g:
+
+  ; (olena/oln/core/abstract/diter.hh ())
+
+;; Files added by populate at Tue, 14 Sep 2004 12:52:29 +0200,
+;; to version oln_2004_paradigm.2(w), by palma_g:
+
+  (olena/oln/core/default_props.hh (oln/w/35_default_pr 1.1 644))
 )
-(Merge-Parents)
+(Merge-Parents
+  (oln_2004_paradigm.2 complete)
+  (oln_2004_paradigm.3 complete
+    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (olena/oln/core/dpoint1d.hh olena/oln/core/dpoint1d.hh olena/oln/core/dpoint1d.hh r)
+    (olena/oln/core/dpoint1d.hxx olena/oln/core/dpoint1d.hxx () d) (olena/oln/core/dpoint2d.hh olena/oln/core/dpoint2d.hh olena/oln/core/dpoint2d.hh r)
+    (olena/oln/core/dpoint2d.hxx olena/oln/core/dpoint2d.hxx () d) (olena/oln/core/dpoint3d.hh olena/oln/core/dpoint3d.hh olena/oln/core/dpoint3d.hh r)
+    (olena/oln/core/dpoint3d.hxx olena/oln/core/dpoint3d.hxx () d) (olena/oln/core/abstract/dpoint.hh olena/oln/core/abstract/dpoint.hh olena/oln/core/abstract/dpoint.hh r)
+    (olena/oln/core/macros.hh olena/oln/core/macros.hh olena/oln/core/macros.hh r) (olena/oln/core/point1d.hh olena/oln/core/point1d.hh olena/oln/core/point1d.hh r)
+    (olena/oln/core/point1d.hxx olena/oln/core/point1d.hxx () d) (olena/oln/core/point2d.hh olena/oln/core/point2d.hh olena/oln/core/point2d.hh r)
+    (olena/oln/core/point2d.hxx olena/oln/core/point2d.hxx () d) (olena/oln/core/point3d.hh olena/oln/core/point3d.hh olena/oln/core/point3d.hh r)
+    (olena/oln/core/point3d.hxx olena/oln/core/point3d.hxx () d) (olena/oln/core/abstract/point.hh olena/oln/core/abstract/point.hh olena/oln/core/abstract/point.hh r)
+    (olena/oln/transforms/shapelets.hh olena/oln/transforms/shapelets.hh olena/oln/transforms/shapelets.hh r) (() () olena/oln/core/point_nd.hh a)
+    (() () olena/oln/core/dpoint_nd.hh a) (() () olena/oln/core/abstract/point.hxx a)
+    (() () olena/oln/core/abstract/dpoint.hxx a) 
+  )
+)
 (New-Merge-Parents)

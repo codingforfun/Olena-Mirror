@@ -1,266 +1,238 @@
-#ifndef PROTO_OLN_CORE_IMAGE2D_HH
-# define PROTO_OLN_CORE_IMAGE2D_HH
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
+//
+// This file is part of the Olena Library.  This library is free
+// software; you can redistribute it and/or modify it under the terms
+// of the GNU General Public License version 2 as published by the
+// Free Software Foundation.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this library; see the file COPYING.  If not, write to
+// the Free Software Foundation, 59 Temple Place - Suite 330, Boston,
+// MA 02111-1307, USA.
+//
+// As a special exception, you may use this file as part of a free
+// software library without restriction.  Specifically, if other files
+// instantiate templates or use macros or inline functions from this
+// file, or you compile this file and link it with other files to
+// produce an executable, this file does not by itself cause the
+// resulting executable to be covered by the GNU General Public
+// License.  This exception does not however invalidate any other
+// reasons why the executable file might be covered by the GNU General
+// Public License.
 
-# include <oln/core/abstract/image.hh>
-# include <oln/core/dim2d.hh>
-# include <oln/core/macros.hh>
-# include <oln/core/image2d_size.hh>
-# include <oln/core/constants.hh>
+#ifndef OLENA_CORE_IMAGE2D_HH
+# define OLENA_CORE_IMAGE2D_HH
+
 # include <oln/core/point2d.hh>
+# include <oln/core/dpoint2d.hh>
+# include <oln/core/fwd_iter2d.hh>
+# include <oln/core/bkd_iter2d.hh>
+# include <oln/core/impl/image_array2d.hh>
+# include <oln/core/image.hh>
+# include <oln/io/readable.hh>
+
+# include <iostream>
+# include <stdlib.h>
 
 namespace oln {
 
+  template<class T, class Exact = mlc::final>
+  class image2d; // fwd_decl
 
-  // fwd decls
+  /*! \class image_id<image2d<T, Exact> >
+  **
+  ** Helper class used by image_traits to retrieve
+  ** the typedef associated to an image.
+  */
 
-  template <typename T> struct image2d;
-
-  namespace io {
-    struct data;
-    template <typename T> void load(image2d<T>& target, const io::data& data);
-  }
-
-
-  // FIXME: for backward compatibility
-  namespace border {
-//     namespace impl {
-//       template <typename T>
-//       void set_width(image2d<T>& target, coord_t width);
-//     }
-//     template <typename I>
-//     void set_width(const abstract::image<I>& target, coord_t width);
-//     template <typename I>
-//     void assign(const abstract::image<I>& target, oln_value_type(I) value);
-  }
-
-
-  // image2d
-
-  template <typename T>
-  struct props < image2d<T> > : public default_props <dim2d>
+  template<class T, class Exact>
+  struct image_id<image2d<T, Exact> >
   {
+    enum{dim = 2};
     typedef T value_type;
-    enum { linbuf_value = true };
+    typedef typename mlc::exact_vt<image2d<T, Exact>, Exact>::ret exact_type;
+    typedef impl::image_array2d<T> impl_type;
+    typedef point2d point_type;
+    typedef image2d_size size_type;
   };
 
-  template <typename T>
-  struct image2d : public abstract::image_entry< image2d<T> >
+  /*! \class image_traits<image2d<T, Exact> >
+  **
+  ** Helper class usefull to retrieve all the type
+  ** relative to an image.
+  */
+
+  template<class T, class Exact>
+  struct image_traits<image2d<T, Exact> >:
+    public image_traits<image<image_id<image2d<T, Exact> >::dim,
+			      typename image_id<image2d<T, Exact> >::value_type,
+			      typename image_id<image2d<T, Exact> >::impl_type,
+			      typename image_id<image2d<T, Exact> >::exact_type> >
+  {};
+
+  // client can use image2d; instances are real images, that is,
+  // images with data ---conversely to proxy images
+
+  /*! \class image2d
+  **
+  ** To instantiate an image2d with oln::rgb_8 as value_type,
+  ** one can write:\n
+  ** oln::image2d<ntg::rgb_8> t = load("img.ppm");
+  */
+
+  template<class T, class Exact>
+  class image2d:
+    public image<image_id<image2d<T, Exact> >::dim,
+		 typename image_id<image2d<T, Exact> >::value_type,
+		 typename image_id<image2d<T, Exact> >::impl_type,
+		 typename image_id<image2d<T, Exact> >::exact_type>
   {
-    typedef abstract::image_entry< image2d<T> > super;
+
+  public:
+
+    typedef image2d<T, Exact> self_type;
+    typedef typename image_id<image2d<T, Exact> >::value_type value_type;
+    typedef typename image_id<image2d<T, Exact> >::exact_type exact_type;
+    typedef typename image_id<image2d<T, Exact> >::impl_type impl_type;
+    typedef oln::image<image_id<image2d<T, Exact> >::dim,
+		       value_type,
+		       impl_type,
+		       exact_type> super_type;
+
+    friend class abstract::image<exact_type>;
+
 
     image2d() :
-      super(this),
-      size_(0, 0),
-      border_(0),
-      buffer_(0),
-      array_(0)
+      super_type()
     {
-      this->exact_ptr = this;
+      mlc_init_static_hierarchy(Exact);
     }
 
-    image2d(const io::data& data) :
-      super(this),
-      size_(0, 0),
-      border_(0),
-      buffer_(0),
-      array_(0)
+
+    /*! \brief Allocate memory to contain
+    ** an image2d with \a ncols column and
+    ** \a nrows rows plus a border width
+    ** equal to 2 by default.
+    */
+
+    image2d(coord nrows, coord ncols, coord border = 2) :
+      super_type(new impl_type(image2d_size(nrows, ncols, border)))
     {
-      this->exact_ptr = this;
-      io::load(*this, this->data.filename);
+      mlc_init_static_hierarchy(Exact);
     }
 
-    image2d(coord nrows_, coord ncols_,
-	    coord border_ = constant::default_border) :
-      super(this),
-      size_(nrows_, ncols_),
-      border_(border_),
-      buffer_(0),
-      array_(0)
+    /*! \brief Allocate memory to contain an
+    ** image2d with a size equal to \a size.
+    */
+
+    image2d(const image2d_size& size) :
+      super_type(new impl_type(size))
     {
-      assert(nrows_ > 0 &&
-	     ncols_ > 0 &&
-	     border_ >= 0);
-      this->exact_ptr = this;
-      allocate();
+      mlc_init_static_hierarchy(Exact);
     }
 
-    image2d(const image2d_size& size_,
-	    coord border_ = constant::default_border) :
-      super(this),
-      size_(size_),
-      border_(border_),
-      buffer_(0),
-      array_(0)
+    /*! \brief Build a new image2d by performing
+    ** a shallow copy of \a rhs, the points are
+    ** not duplicated, but shared between \a rhs
+    ** and the new image.
+    **
+    ** \see abstract::image::clone()
+    */
+
+    image2d(self_type& rhs) : // shallow copy
+      super_type(rhs)
     {
-      assert(border_ >= 0);
-      this->exact_ptr = this;
-      allocate();
+      mlc_init_static_hierarchy(Exact);
     }
 
+    // io
+    /*! \brief Perform a shallow copy from \a r to
+    ** the new image, the points are not duplicated,
+    ** but shared between the two images.
+    **
+    ** \see abstract::image::clone()
+    */
 
-    // FIXME: hum...
-    image2d(const image2d& rhs) :
-      super(this),
-      size_(rhs.size_),
-      border_(rhs.border_),
-      buffer_(rhs.buffer_),
-      array_(rhs.array_)
+    image2d(const io::internal::anything& r)
+      : super_type()
     {
-      this->exact_ptr = this;
+      mlc_init_static_hierarchy(Exact);
+      r.assign(*this);
     }
 
-    // FIXME: hum...
-    void operator=(const image2d& rhs)
+    /*! \brief Perform a shallow copy from \a rhs to
+    ** the current image, the points are ot duplicated,
+    ** but shared between the two images.
+    **
+    ** \see abstract::image::clone()
+    */
+
+    image2d&
+    operator=(const io::internal::anything& r)
     {
-      this->size_ = rhs.size_;
-      this->border_ = rhs.border_;
-      this->buffer_ = rhs.buffer_;
-      this->array_ = rhs.array_;
+      return r.assign(*this);
     }
 
-    // FIXME: for backward compatibility
-    void border_adapt_assign(coord width, T value) const
+    /*! \brief Perform a shallow copy from \a r to
+    ** the current image, the points are not duplicated
+    ** but shared between the two images.
+    **
+    ** \see abstract::image::clone()
+    */
+
+    exact_type&
+    operator=(self_type rhs)
     {
-//       border::set_width(*this, width);
-//       border::assign(*this, value);
+      return this->exact().assign(rhs.exact());
     }
 
-    void resize(coord nrows_, coord ncols_,
-		coord border_ = constant::default_border)
+    static std::string
+    name()
     {
-      size_.nrows() = nrows_;
-      size_.ncols() = ncols_;
-
-      //FIXME: bug with g++-2.95 when abstract::image inherits from any__best_memory
-//       std::cout << "size_.nrows()=" << size_.nrows() << std::endl;
-//       std::cout << "size_impl().nrows()=" << this->size_impl().nrows() << std::endl;
-//       std::cout << "size().nrows()=" << this->size().nrows() << std::endl;
-
-      this->border_ = border_;
-      allocate();
-    }
-
-    const image2d_size& size_impl() const {
-      return size_;
-    }
-
-    const T op_square_brackets_impl(const point2d& p) const {
-      assert(this->hold_large(p));
-      assert(array_ != 0);
-      return array_[p.row()][p.col()];
-    }
-
-    T& op_square_brackets_impl(const point2d& p) {
-      assert(this->hold_large(p));
-      assert(array_ != 0);
-      return array_[p.row()][p.col()];
-    }
-
-    bool hold_impl(const point2d& p) const {
       return
-	p.row() >= 0 && p.row() < size_.nrows()
-	&& p.col() >= 0 && p.col() < size_.ncols();
+	std::string("image2d<")
+	+ ntg_name(T) + ","
+	+ Exact::name() + ">";
     }
 
-    bool hold_large_impl(const point2d& p) const {
-      return
-	p.row() >= - border_ && p.row() < size_.nrows() + border_
-	&& p.col() >= - border_ && p.col() < size_.ncols() + border_;
-    }
+    /// Define ret equal to image2d<U>.
 
-    size_t npoints_impl() const {
-      return size_t(size_.nrows()) * size_t(size_.ncols());
-    }
-
-    size_t buffer_size_impl() const {
-      return size_t(size_.nrows() + 2 * border_)
-	* size_t(size_.ncols() + 2 * border_);
-    }
-
-    // not _impl methods
-
-    coord border() const {
-      return border_;
-    }
-
-    const image2d<T> clone_impl() const
+    template<class U>
+    struct mute
     {
-      assert(array_ != 0);
-      image2d<T> output(this->nrows(), this->ncols(), border());
-      memcpy(output.buffer(), this->buffer(),
-	     this->buffer_size() * sizeof(T));
-      return output;
-    }
+      typedef image2d<U> ret;
+    };
 
-
-    // hooks (handle carefully!)
-
-    T* buffer_impl() { return buffer_; }
-    const T* buffer_impl() const { return buffer_; }
-
-    T** array() { return array_; }
-    T** const array() const { return array_; }
+    image2d(const self_type& rhs); // w/o impl
 
   protected:
 
-    image2d_size size_;
-    coord border_;
-    T* buffer_;
-    T** array_;
-
-  private:
-
-    void allocate(T*& buffer__, T**& array__,
-		  coord nrows__, coord ncols__,
-		  coord border__) {
-      coord nrows_eff = nrows__ + 2 * border__;
-      coord ncols_eff = ncols__ + 2 * border__;
-      array__ = new T*[nrows_eff];
-      buffer__ = new T[size_t(nrows_eff) * size_t(ncols_eff)];
-      T* buf = buffer__ + border__;
-      for (coord row = 0; row < nrows_eff; ++row)
-	{
-	  array__[row] = buf;
-	  buf += ncols_eff;
-	}
-      array__ += border__;
+    /// Return a deep copy of the current image.
+    exact_type
+    clone_() const
+    {
+      exact_type output(this->nrows(), this->ncols(), this->border());
+      clone_to(output.impl());
+      return output;
     }
 
-    void allocate() {
-      allocate(this->buffer_, this->array_,
-	       this->size_.nrows(), this->size_.ncols(),
-	       this->border_);
-//       coord_t nrows_eff = size_.nrows() + 2 * border_;
-//       coord_t ncols_eff = size_.ncols() + 2 * border_;
-//       array_ = new T*[nrows_eff];
-//       buffer_ = new T[size_t(nrows_eff) * size_t(ncols_eff)];
-//       T* buf = buffer_ + border_;
-//       for (coord_t row = 0; row < nrows_eff; ++row)
-// 	{
-// 	  array_[row] = buf;
-// 	  buf += ncols_eff;
-// 	}
-//       array_ += border_;
-    }
-
-    void desallocate() {
-      if (buffer_ == 0 || array_ == 0)
-	std::cerr << "pb" << std::endl;
-      // FIXME:
-      assert(buffer_ != 0 && array_ != 0);
-      delete[] buffer_;
-      buffer_ = 0; // safety
-      array_ -= border_;
-      delete[] array_;
-      array_ = 0;  // safety
-    }
-
-//     template <typename U>
-//     friend void border::impl::set_width(image2d<U>& target, coord width);
   };
 
-} // end of namespace oln
+  /*! \class dim_traits<2, T, Exact>
+  **
+  ** Define img_type equal to image2d<T, Exact>.
+  */
 
+  template <class T, class Exact>
+  struct dim_traits<2, T, Exact>
+  {
+    typedef image2d<T, Exact> img_type;
+  };
+} // end of oln
 
-
-#endif // ndef PROTO_OLN_CORE_IMAGE2D_HH
+#endif // ! OLENA_CORE_IMAGE2D_HH

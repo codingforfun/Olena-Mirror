@@ -25,14 +25,38 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_DIM1D_HH
-# define OLN_CORE_DIM1D_HH
+#ifndef OLN_CORE_DEFAULT_PROPS
+# define OLN_CORE_DEFAULT_PROPS
+# include <oln/core/macros.hh>
 
+namespace oln {
 
-namespace oln
-{
-  typedef dim<1>	dim1d;
-} // end of namespace oln
+  template <class Dim>
+  struct default_props
+  {
+    //  enum { linbuf_value = oln_linbuf_value(Dim) };
+    enum { dim_value = oln_dim_val(Dim) };
 
+    typedef Dim				dim_type;
+    //    typedef oln_image_size_type(Dim) image_size_type;
 
-#endif // ndef OLN_CORE_DIM1D_HH
+    typedef oln_point_type(Dim)		point_type;
+    typedef oln_dpoint_type(Dim)	dpoint_type;
+
+    //    typedef oln_iter_type(Dim) iter_type;
+    //    typedef oln_fwd_iter_type(Dim) fwd_iter_type;
+    //typedef oln_bkd_iter_type(Dim) bkd_iter_type;
+
+    typedef oln_neighborhood_type(Dim)	neighborhood_type;
+    typedef oln_window_type(Dim)	window_type;
+    typedef oln_flat_se_type(Dim)	flat_se_type;
+
+    typedef oln_concrete_type(Dim)	concrete_type;
+ //    typedef oln_niter_type(Dim) niter_type;
+//     typedef oln_fwd_niter_type(Dim) fwd_niter_type;
+//
+    // typedef oln_bkd_niter_type(Dim) bkd_niter_type;
+  };
+} // !oln
+
+#endif // OLN_CORE_DEFAULT_PROPS

@@ -24,205 +24,127 @@
 // License.  This exception does not however invalidate any other
 // reasons why the executable file might be covered by the GNU General
 // Public License.
-#ifndef PROTO_OLN_CORE_SIZE3D_HH
-# define PROTO_OLN_CORE_SIZE3D_HH
-
-
-namespace oln {
-
-
-  struct image3d_size;
-
-  template <>
-  struct props <image3d_size> : public default_props<dim3d>
-  {
-  };
-
-  struct image3d_size : public abstract::image_size< image3d_size >
-  {
-    image3d_size() {}
-
-    // FIXME nth ????
-    image3d_size(coord nslices, coord nrows, coord ncols)
-    {
-      this->nslices() = nslices;
-      this->nrows() = nrows;
-      this->ncols() = ncols;
-    }
-
-    image3d_size(const image3d_size& rhs)
-    {
-      this->nslices() = rhs.nslices();
-      this->nrows() = rhs.nrows();
-      this->ncols() = rhs.ncols();
-    }
-
-    void operator=(const image3d_size& rhs)
-    {
-      this->nslices() = rhs.nslices();
-      this->nrows() = rhs.nrows();
-      this->ncols() = rhs.ncols();
-    }
-
-    bool op_eq_impl(const image3d_size& rhs) const
-    {
-      return nslices() == rhs.nslices()
-	&& nrows() == rhs.nrows()
-	&& ncols() == rhs.ncols();
-    }
-
-    const coord nslices() const { return this->data_[0]; }
-    const coord nrows() const { return this->data_[1]; }
-    const coord ncols() const { return this->data_[2]; }
-
-    coord& nslices() { return this->data_[0]; }
-    coord& nrows() { return this->data_[1]; }
-    coord& ncols() { return this->data_[2]; }
-
-  };
-
-} // end of namespace oln
-
-
-#endif // ndef PROTO_OLN_CORE_SIZE3D_HH
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #ifndef OLENA_CORE_IMAGE3D_SIZE_HH
 # define OLENA_CORE_IMAGE3D_SIZE_HH
 
-// # include <mlc/contract.hh>
-// # include <oln/core/abstract/image_size.hh>
-// # include <oln/core/coord.hh>
+# include <mlc/contract.hh>
+# include <oln/core/abstract/image_size.hh>
+# include <oln/core/coord.hh>
 
-// namespace oln {
+namespace oln {
 
-//   struct image3d_size;
+  struct image3d_size;
 
-//   /*! \class image_size_traits<image3d_size>
-//   **
-//   ** The specialized version for image3d_size.
-//   */
-//   template<>
-//   struct image_size_traits<image3d_size>
-//   {
-//     enum { dim = 3 };
-//   };
+  /*! \class image_size_traits<image3d_size>
+  **
+  ** The specialized version for image3d_size.
+  */
+  template<>
+  struct image_size_traits<image3d_size>
+  {
+    enum { dim = 3 };
+  };
 
-//   /*! \class image3d_size
-//   **
-//   ** Size_type for image3d.
-//   */
+  /*! \class image3d_size
+  **
+  ** Size_type for image3d.
+  */
 
-//   struct image3d_size : public abstract::image_size<image3d_size >
-//   {
+  struct image3d_size : public abstract::image_size<image3d_size >
+  {
 
-//   public:
+  public:
 
-//     /*! \brief Image2d_size constructor.
-//     **
-//     ** \arg nslices The number of slices in
-//     ** the image is set to \a nslices
-//     **
-//     ** \arg nrows The number of rows in
-//     ** the image is set to \a nrows.
-//     **
-//     ** \arg ncols The number of columns in
-//     ** the image is set to \a ncols.
-//     **
-//     ** \arg border The border width of the image
-//     ** is set to border.
-//     */
+    /*! \brief Image2d_size constructor.
+    **
+    ** \arg nslices The number of slices in
+    ** the image is set to \a nslices
+    **
+    ** \arg nrows The number of rows in
+    ** the image is set to \a nrows.
+    **
+    ** \arg ncols The number of columns in
+    ** the image is set to \a ncols.
+    **
+    ** \arg border The border width of the image
+    ** is set to border.
+    */
 
 
-//     image3d_size(coord nslices, coord nrows, coord ncols, coord border)
-//     {
-//       nth(0) = nslices;
-//       nth(1) = nrows;
-//       nth(2) = ncols;
-//       border_ = border;
-//     }
+    image3d_size(coord nslices, coord nrows, coord ncols, coord border)
+    {
+      nth(0) = nslices;
+      nth(1) = nrows;
+      nth(2) = ncols;
+      border_ = border;
+    }
 
-//     image3d_size()
-//     {}
+    image3d_size()
+    {}
 
-//     /// Return the number of slices in the image.
+    /// Return the number of slices in the image.
 
-//     coord
-//     nslices() const
-//     {
-//       invariant(nth(0) > 0);
-//       return nth(0);
-//     }
+    coord
+    nslices() const
+    {
+      invariant(nth(0) > 0);
+      return nth(0);
+    }
 
-//     /// Return a reference to the number of slices in the image.
+    /// Return a reference to the number of slices in the image.
 
-//     coord&
-//     nslices()
-//     {
-//       invariant(nth(0) > 0);
-//       return nth(0);
-//     }
+    coord&
+    nslices()
+    {
+      invariant(nth(0) > 0);
+      return nth(0);
+    }
 
-//     /// Return the number of rows in the image.
+    /// Return the number of rows in the image.
 
-//     coord
-//     nrows() const
-//     {
-//       invariant(nth(1) > 0);
-//       return nth(1);
-//     }
+    coord
+    nrows() const
+    {
+      invariant(nth(1) > 0);
+      return nth(1);
+    }
 
-//     /// Return a reference to the number of rows in the image.
+    /// Return a reference to the number of rows in the image.
 
-//     coord&
-//     nrows()
-//     {
-//       invariant(nth(1) > 0);
-//       return nth(1);
-//     }
+    coord&
+    nrows()
+    {
+      invariant(nth(1) > 0);
+      return nth(1);
+    }
 
-//     /// Return the number of columns in the image.
+    /// Return the number of columns in the image.
 
-//     coord
-//     ncols() const
-//     {
-//       invariant(nth(2) > 0);
-//       return nth(2);
-//     }
+    coord
+    ncols() const
+    {
+      invariant(nth(2) > 0);
+      return nth(2);
+    }
 
-//     /// Return a reference to the number of columns in the image.
+    /// Return a reference to the number of columns in the image.
 
-//     coord&
-//     ncols()
-//     {
-//       invariant(nth(2) > 0);
-//       return nth(2);
-//     }
+    coord&
+    ncols()
+    {
+      invariant(nth(2) > 0);
+      return nth(2);
+    }
 
-//     static std::string
-//     name()
-//     {
-//       return "image3d_size";
-//     }
+    static std::string
+    name()
+    {
+      return "image3d_size";
+    }
 
-//   };
+  };
 
-// } // end of oln
+} // end of oln
 
 #endif // ! OLENA_CORE_IMAGE3D_SIZE_HH

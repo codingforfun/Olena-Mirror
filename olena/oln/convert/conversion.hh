@@ -29,11 +29,10 @@
 # define OLENA_CONVERT_CONVERSION_HH
 
 # include <mlc/type.hh>
-# include <oln/core/abstract/image.hh>
+# include <oln/core/image.hh>
 # include <oln/core/compose.hh>
 # include <ntg/utils/debug.hh>
 # include <oln/convert/abstract/conversion.hh>
-# include <oln/core/ch_value.hh>
 # include <functional>
 
 namespace oln {

@@ -1,3 +1,58 @@
+2004-09-14  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* olena/oln/core/dpoint1d.hh: Correct type definition problems.
+	* olena/oln/core/abstract/dpoint.hh: Likewise.
+	* olena/oln/core/point_nd.hh: Likewise.
+	* olena/oln/core/dpoint_nd.hh: Likewise.
+	* olena/oln/core/macros.hh: Add new macros.
+
+	* olena/oln/core/neighborhood1d.hh: Restart from scratch.
+	* olena/oln/core/neighborhood2d.hh: Likewise.
+	* olena/oln/core/neighborhood3d.hh: Likewise.
+	* olena/oln/core/abstract/neighborhood.hh: Likewise.
+	* olena/oln/core/abstract/point.hh: Likewise.
+	* olena/oln/core/abstract/struct_elt.hh: Likewise.
+	* olena/oln/core/dim3d.hh: Likewise.
+	* olena/oln/core/dim2d.hh: Likewise.
+	* olena/oln/core/dim1d.hh: Likewise.
+	* olena/oln/core/abstract/dim.hh: Likewise.
+
+	* olena/oln/core/default_props.hh: New file. Definition of default
+	properties.
+
+
+2004-09-13  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/core/abstract/point.hh: Restart from scratch.
+	abstract::point is the interface, abstract::point_nd is an
+	implementation, point<i> add syntactic sugar.
+	* olena/oln/core/abstract/point.hxx: New. Likewise.
+
+	* olena/oln/core/abstract/dpoint.hh: Likewise.
+	* olena/oln/core/abstract/dpoint.hxx: New. Likewise.
+
+	* olena/oln/core/dpoint1d.hh: Restart from scratch.
+	* olena/oln/core/dpoint2d.hh: Likewise.
+	* olena/oln/core/dpoint3d.hh: Likewise.
+	* olena/oln/core/point1d.hh:  Likewise.
+	* olena/oln/core/point2d.hh: Likewise.
+	* olena/oln/core/point3d.hh: Likewise.
+	* olena/oln/core/point_nd.hh: New. Likewise.
+	* olena/oln/core/dpoint_nd.hh: New. Likewise.
+
+	* olena/oln/core/dpoint1d.hh: Remove.
+	* olena/oln/core/dpoint2d.hh: Likewise.
+	* olena/oln/core/dpoint3d.hh: Likewise.
+	* olena/oln/core/point1d.hh:  Likewise.
+	* olena/oln/core/point2d.hh: Likewise.
+	* olena/oln/core/point3d.hh: Likewise.
+
+	* olena/oln/core/macros.hh: Add macros. FIXME: to be continue.
+
+2004-09-11  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* oln/transforms/shapelets.hh: Optimize Hermite polynomials
+	computation.
+
 2004-09-09  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* oln/makefile.src: Add morpho/abstract/attribute references.

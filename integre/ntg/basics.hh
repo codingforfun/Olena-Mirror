@@ -1,88 +1,61 @@
-#ifndef PROTO_NTG_BASICS_HH
-# define PROTO_NTG_BASICS_HH
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+//
+// This file is part of the Olena Library.  This library is free
+// software; you can redistribute it and/or modify it under the terms
+// of the GNU General Public License version 2 as published by the
+// Free Software Foundation.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this library; see the file COPYING.  If not, write to
+// the Free Software Foundation, 59 Temple Place - Suite 330, Boston,
+// MA 02111-1307, USA.
+//
+// As a special exception, you may use this file as part of a free
+// software library without restriction.  Specifically, if other files
+// instantiate templates or use macros or inline functions from this
+// file, or you compile this file and link it with other files to
+// produce an executable, this file does not by itself cause the
+// resulting executable to be covered by the GNU General Public
+// License.  This exception does not however invalidate any other
+// reasons why the executable file might be covered by the GNU General
+// Public License.
 
-# include <vector>
-# include <values.h>
+#ifndef NTG_BASICS_HH
+# define NTG_BASICS_HH
+
+/*
+  Basic header that regroup basic common headers every file
+  will certainely need.
+*/
+
+# include <ntg/config/system.hh>
 
 # include <ntg/core/predecls.hh>
-# include <ntg/real/int_u.hh>
-# include <ntg/real/int_s.hh>
 
+# include <ntg/core/abstract_hierarchy.hh>
+# include <ntg/real/behavior.hh>
+# include <ntg/core/contract.hh>
+# include <ntg/core/interval.hh>
+# include <ntg/real/builtin_properties.hh>
+# include <ntg/core/type.hh>
+# include <ntg/core/value.hh>
 
-namespace ntg {
+/*
+  These headers are included as builtins may be used anywhere, without
+  having previously included the corresponding integre headers.
+*/
+# include <ntg/enum/builtin_bool.hh>
+# include <ntg/real/builtin_int.hh>
+# include <ntg/real/builtin_float.hh>
 
-  enum { scalar_tag, binary_tag, vector_tag, label_tag, unknown_tag };
+# include <ntg/core/internal/global_ops.hh>
+# include <ntg/core/macros.hh>
 
-//   typedef unsigned char int_u8;
-//   typedef bool bin;
+# include <ntg/utils/cast.hh>
 
-  struct label_type
-  {
-    int i;
-    label_type() : i(0) {}
-    label_type(int i) : i(i) {}
-    operator int() const { return i; }
-    void operator=(int i) { this->i = i; }
-  };
-
-  template <typename E>
-  struct props
-  {
-    enum { tag_value = ntg::unknown_tag };
-  };
-
-
-  // built-in types
-
-  template <> struct props <float> {
-    enum { tag_value = ntg::scalar_tag };
-  };
-  template <> struct props <unsigned  int> {
-    enum { tag_value = ntg::scalar_tag };
-  };
-  template <> struct props <unsigned char> {
-    enum { tag_value = ntg::scalar_tag };
-  };
-  template <> struct props <bool> {
-    enum { tag_value = ntg::binary_tag };
-  };
-  template <typename T> struct props < std::vector<T> > {
-    enum { tag_value = ntg::vector_tag };
-  };
-
-  // ntg types
-
-//   template <> struct props <ntg::int_u8> { enum { tag_value = ntg::scalar_tag }; };
-//   template <> struct props <ntg::bin> { enum { tag_value = ntg::binary_tag }; };
-  template <> struct props <ntg::label_type> { enum { tag_value = ntg::label_tag }; };
-
-  // Already in macros.hh (ntg::typetraits)
-//   // min
-
-//   template <typename T>
-//   struct min;
-
-//   template<> struct min<unsigned int> { static const unsigned int value() { return 0; } };
-//   template<> struct min<int_u8> { static const int_u8 value() { return 0; } };
-//   template<> struct min<bool> { static const bool value() { return false; } };
-//   template<> struct min<float> { static const bool value() { return MINFLOAT; } };
-
-//   // max
-
-//   template <typename T>
-//   struct max;
-
-//   template<> struct max<unsigned int> { static const unsigned int value() { return MAXINT; } };
-//   template<> struct max<int_u8> { static const int_u8 value() { return 255; } };
-//   template<> struct max<bool> { static const bool value() { return true; } };
-//   template<> struct max<float> { static const bool value() { return MAXFLOAT; } };
-
-} // end of namespace ntg
-
-
-# define ntg_tag_value(T) ntg::props<T>::tag_value
-// # define ntg_min_value(T) ntg::min<T>::value()
-// # define ntg_max_value(T) ntg::max<T>::value()
-
-
-#endif // ndef PROTO_NTG_BASICS_HH
+#endif // !NTG_BASICS_HH

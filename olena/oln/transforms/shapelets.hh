@@ -18,12 +18,23 @@ namespace oln
     {
       T operator()(unsigned n, T x)
       {
+	T	a;
+       	T	b;
+	T	c;
 
 	if (n == 0)
-	  return 1;
+	  return 1.;
 	if (n == 1)
 	  return 2. * x;
-	return 2. * x * (*this)(n - 1, x) - 2. * T(n - 1) * (*this)(n - 2, x);
+	a = 1.;
+	b = 2. * x;
+	for (unsigned i = 2; i <= n; i++)
+	  {
+	    c = b;
+	    b = 2. * x * b - 2. * T(i - 1) * a;
+	    a = c;
+	  }
+	return b;
       }
     };
 

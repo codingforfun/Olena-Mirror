@@ -25,193 +25,81 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-// #ifndef OLENA_CORE_STRUCT_ELT_HH
-// # define OLENA_CORE_STRUCT_ELT_HH
+#ifndef OLN_CORE_ABSTRACT_STRUCT_ELT_HH
+# define OLN_CORE_ABSTRACT_STRUCT_ELT_HH
 
-// # include <mlc/type.hh>
-// # include <oln/core/coord.hh>
-// # include <oln/core/abstract/dpoints.hh>
+# include <oln/core/abstract/dpoint_set.hh>
+# include <oln/core/macros.hh>
+namespace oln
+{
+  template <typename Exact>
+  struct props;
 
-// namespace oln {
+  namespace abstract
+  {
+    template <class Exact>
+    struct struct_elt: public dpoint_set<Exact>
+    {
+      /// Return the name of the type.
+      static std::string
+      name()
+      {
+	return std::string("struct_elt<") + Exact::name() + ">";
+      }
 
-//   namespace abstract {
-//     template<class Exact>
-//     struct struct_elt; // forwarding declaration
+      /*!
+      ** \brief Test if the structuring elements is centered.
+      ** \return True if it's centered.
+      **
+      ** Structuring elements are centered when they contains 0.
+      */
+      bool
+      is_centered() const
+      {
+	return dispatch(is_centered)();
+      }
 
-//   } // end of abstract
+      oln_concrete_type(Exact) image() const
+      {
+	return oln_dispatch(image)();
+      }
 
-//   template<class Exact>
-//   struct struct_elt_traits;
+    };
 
-// //   /*!
-// //   ** \brief Traits for abstract::struct_elt.
-// //   */
-// //   template<class Exact>
-// //   struct struct_elt_traits<abstract::struct_elt<Exact> >
-// //   {
-// //     typedef abstract::struct_elt<Exact> abstract_type;
-// //     ///< Defines the abstract type of the structuring element.
-// //   };
+    /*!
+    ** \brief Compute intersection between two se.
+    */
+    template<class E>
+    inline E
+    inter(const abstract::struct_elt<E>& lhs, const abstract::struct_elt<E>& rhs)
+    {
+      E win;
+      for (unsigned i = 0; i < lhs.card(); ++i)
+	if (rhs.has(lhs.dp(i)))
+	  win.add(lhs.dp(i));
+      for (unsigned j = 0; j < rhs.card(); ++j)
+	if (! win.has(rhs.dp(j)) && lhs.has(rhs.dp(j)))
+	  win.add(rhs.dp(j));
+      return win;
+    }
 
-//   namespace abstract {
+    /*!
+    ** \brief Compute union between two se.
+    */
+    template<class E>
+    inline E
+    uni(const abstract::struct_elt<E>& lhs, const abstract::struct_elt<E>& rhs)
+    {
+      E win;
+      for (unsigned i = 0; i < lhs.card(); ++i)
+	win.add(lhs.dp(i));
+      for (unsigned j = 0; j < rhs.card(); ++j)
+	if (! win.has(rhs.dp(j)))
+	  win.add(rhs.dp(j));
+      return win;
+    }
 
-//     /*!
-//     ** Structuring elements (set of dpoints).
-//     **
-//     ** This abstract class defines several virtual methods for its
-//     ** subclasses. Its goal is to deal with a set of 'move' points.
-//     */
-//     template<class Exact>
-//     struct struct_elt : public dpoints< Exact >
-//     {
-//       enum { dim = struct_elt_traits<Exact>::dim };
-//       ///< Set the dim of the image from which points com.
+  } // !abstract
+} // !oln
 
-//       typedef struct_elt<Exact> self_type;
-//       ///< Set the exact self type of the class.
-// //       typedef typename struct_elt_traits<Exact>::abstract_type abstract_type;
-// //       ///< Set the abstract type of hisself.
-
-//       /// Return the name of the type.
-//       static std::string
-//       name()
-//       {
-// 	return std::string("struct_elt<") + Exact::name() + ">";
-//       }
-
-//       typedef typename struct_elt_traits<Exact>::point_type point_type;
-//       ///< Set the point type of the image from which points come.
-//       typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
-//       ///< Set the dpoint type.
-//       typedef Exact exact_type;
-
-//       /*!
-//       ** \brief Test if the set of points contains this one.
-//       ** \arg dp a dpoint (deplacement point).
-//       ** \return True if the set of points contains this dpoint.
-//       */
-//       bool
-//       has(const abstract::dpoint<dpoint_type>& dp) const
-//       {
-// 	return this->exact().has_(dp.exact());
-//       }
-
-//       /*!
-//       ** \brief Get the number of points.
-//       ** \return The number of points.
-//       */
-//       unsigned
-//       card() const
-//       {
-// 	return this->exact().card_();
-//       }
-
-//       /*!
-//       ** \brief Test if the structuring elements is centered.
-//       ** \return True if it's centered.
-//       **
-//       ** Structuring elements are centered when they contains 0.
-//       */
-//       bool
-//       is_centered() const
-//       {
-// 	return this->exact().is_centered_();
-//       }
-
-//       /*!
-//       ** \brief Add a point to the structuring elements.
-//       **
-//       ** Add a new member to the structuring elements.
-//       **
-//       ** \warning Here for convenience (see morpho algorithms).
-//       ** Work with w_windows (associate a default weight set to 1).
-//       */
-//       exact_type&
-//       add(const abstract::dpoint<dpoint_type>& dp)
-//       {
-// 	return this->exact().add_dp(dp);
-//       }
-
-//       /*!
-//       ** \brief Get the nth structuring element.
-//       ** \arg i The nth.
-//       ** \return The nth dpoint.
-//       */
-//       dpoint_type
-//       dp(unsigned i) const
-//       {
-// 	return this->exact().at(i);
-//       }
-
-//       /*!
-//       ** \brief Compare two sets of structuring elements.
-//       ** \arg win The structuring elements to compare.
-//       ** \return True if they are the same.
-//       */
-//       bool
-//       operator==(const self_type& win) const
-//       {
-// 	return this->exact().is_equal(win.exact());
-//       }
-
-//       /*!
-//       ** \brief Get the delta of the structuring elements.
-//       ** \return Delta.
-//       **
-//       ** Delta is the biggest element of the structuring elements.
-//       */
-//       coord
-//       delta() const
-//       {
-// 	return this->exact().get_delta();
-//       }
-
-//       /*!
-//       ** \brief Get the nth structuring element.
-//       ** \arg i The nth.
-//       ** \return The nth dpoint.
-//       */
-//       const dpoint_type
-//       operator[](unsigned i) const
-//       {
-// 	return this->exact().at(i);
-//       }
-
-//       /*!
-//       ** \brief Set structuring elements to opposite.
-//       **
-//       ** Each point of structuring elements is assigned to its opposite.
-//       */
-//       exact_type
-//       operator-() const
-//       {
-// 	exact_type win(this->exact());
-// 	win.sym();
-// 	return win;
-//       }
-
-//     protected:
-
-//       /*!
-//       ** \brief Set structuring elements to opposite.
-//       **
-//       ** Each point of structuring elements is assigned to its opposite.
-//       */
-//       void
-//       sym()
-//       {
-// 	return this->exact().sym_();
-//       }
-
-//       /*!
-//       ** \brief Do nothing, used only by sub-classes
-//       */
-//       struct_elt()
-//       {}
-
-//     };
-//   } // end of abstract
-
-// } // end of oln
-
-// #endif // ! OLENA_CORE_STRUCT_ELT_HH
+#endif // ! OLN_CORE_STRUCT_ELT_HH

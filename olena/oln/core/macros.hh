@@ -1,90 +1,67 @@
-#ifndef PROTO_OLN_CORE_MACROS_HH
-# define PROTO_OLN_CORE_MACROS_HH
+// Copyright (C) 2001, 2003, 2004  EPITA Research and Development Laboratory
+//
+// This file is part of the Olena Library.  This library is free
+// software; you can redistribute it and/or modify it under the terms
+// of the GNU General Public License version 2 as published by the
+// Free Software Foundation.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this library; see the file COPYING.  If not, write to
+// the Free Software Foundation, 59 Temple Place - Suite 330, Boston,
+// MA 02111-1307, USA.
+//
+// As a special exception, you may use this file as part of a free
+// software library without restriction.  Specifically, if other files
+// instantiate templates or use macros or inline functions from this
+// file, or you compile this file and link it with other files to
+// produce an executable, this file does not by itself cause the
+// resulting executable to be covered by the GNU General Public
+// License.  This exception does not however invalidate any other
+// reasons why the executable file might be covered by the GNU General
+// Public License.
 
+#ifndef OLENA_CORE_MACROS_HH
+# define OLENA_CORE_MACROS_HH
 
-namespace oln {
+/* This is called for_all, not for_each, otherwise calls to the
+   for_each() STL function would fail.  */
+# define for_all(p) for((p) = mlc::begin; (p) != mlc::end; ++(p))
 
-  template <class E>
-  struct props;
-
-} // end of namespace oln
-
-
-
-// type aliases
-
-# define oln_dim_type(E) typename oln::props<E>::dim_type
-# define oln_image_size_type(E) typename oln::props<E>::image_size_type
-
-# define oln_point_type(E) typename oln::props<E>::point_type
-# define oln_dpoint_type(E) typename oln::props<E>::dpoint_type
-
-# define oln_value_type(E) typename oln::props<E>::value_type
-
-# define oln_iter_type(E) typename oln::props<E>::iter_type
-# define oln_fwd_iter_type(E) typename oln::props<E>::fwd_iter_type
-# define oln_bkd_iter_type(E) typename oln::props<E>::bkd_iter_type
-
-# define oln_neighborhood_type(E) typename oln::props<E>::neighborhood_type
-# define oln_window_type(E) typename oln::props<E>::window_type
-
-# define oln_niter_type(E) typename oln::props<E>::niter_type
-# define oln_fwd_niter_type(E) typename oln::props<E>::fwd_niter_type
-
-// FIXME: ...
-
-
-
-// constant aliases
-
-# define oln_linbuf_value(E) oln::props<E>::linbuf_value
-# define oln_dim_value(E) oln::props<oln_dim_type(E)>::dim_value
-
-
-
-// others
-
-# define oln_return_type(F) typename oln::props<F>::return_type
-# define oln_arg_type(F) typename oln::props<F>::arg_type
-# define oln_arg1_type(F) typename oln::props<F>::arg1_type
-# define oln_arg2_type(F) typename oln::props<F>::arg2_type
-
-# define oln_concrete_type(I) \
-typename oln::props<oln_dim_type(I)>::template concrete_type<oln_value_type(I)>::ret
-
-# define oln_ch_value_type(I, T) typename oln::ch_value<I,T>::ret
+/* Same as for_all, but the iterattion has already begun.  We use 'if
+   (p == end) {} else', not 'if (p != end)' so that an 'else'
+   following the for_all_remaining macro will match the expected if.
+   */
+# define for_all_remaining(p) \
+  if (p == mlc::end) {} else while(++(p), ((p) != mlc::end))
 
 
 
-// default properties
+# define oln_point_type(E)		typename oln::props<E>::point_type
+# define oln_point_type_(E)		oln::props<E>::point_type
 
-namespace oln {
-
-  template <class Dim>
-  struct default_props
-  {
-    enum { linbuf_value = oln_linbuf_value(Dim) };
-    enum { dim_value = oln_dim_value(Dim) };
-
-    typedef Dim dim_type;
-    typedef oln_image_size_type(Dim) image_size_type;
-
-    typedef oln_point_type(Dim) point_type;
-    typedef oln_dpoint_type(Dim) dpoint_type;
-
-    typedef oln_iter_type(Dim) iter_type;
-    typedef oln_fwd_iter_type(Dim) fwd_iter_type;
-    typedef oln_bkd_iter_type(Dim) bkd_iter_type;
-
-    typedef oln_neighborhood_type(Dim) neighborhood_type;
-    typedef oln_window_type(Dim) window_type;
-
-    typedef oln_niter_type(Dim) niter_type;
-    typedef oln_fwd_niter_type(Dim) fwd_niter_type;
-//     typedef oln_bkd_niter_type(Dim) bkd_niter_type;
-  };
-
-} // end of namespace oln
+# define oln_dpoint_type(E)		typename oln::props<E>::dpoint_type
+# define oln_dpoint_type_(E)	        oln::props<E>::dpoint_type
 
 
-#endif // ndef PROTO_OLN_CORE_MACROS_HH
+# define oln_dim_val(E)			oln::props<E>::dim_value
+# define oln_dim_val_(E)	        oln::props<E>::dim_value
+
+# define oln_concrete_type(E)		typename oln::props<E>::concrete_type
+# define oln_concrete_type_(E)		oln::props<E>::concrete_type
+
+# define oln_neighborhood_type(E)	typename oln::props<E>::neighborhood_type
+# define oln_neighborhood_type_(E)	oln::props<E>::neighborhood_type
+
+# define oln_window_type(E)		typename oln::props<E>::window_type
+# define oln_window_type_(E)		oln::props<E>::window_type
+
+# define oln_flat_se_type(E)		typename oln::props<E>::window_type
+# define oln_flat_se_type_(E)		oln::props<E>::flat_se_type
+
+
+#endif // OLENA_CORE_MACROS_HH

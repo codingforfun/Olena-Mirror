@@ -1,90 +1,66 @@
-#ifndef PROTO_OLN_CORE_DPOINT1D_HH
-# define PROTO_OLN_CORE_DPOINT1D_HH
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
+//
+// This file is part of the Olena Library.  This library is free
+// software; you can redistribute it and/or modify it under the terms
+// of the GNU General Public License version 2 as published by the
+// Free Software Foundation.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this library; see the file COPYING.  If not, write to
+// the Free Software Foundation, 59 Temple Place - Suite 330, Boston,
+// MA 02111-1307, USA.
+//
+// As a special exception, you may use this file as part of a free
+// software library without restriction.  Specifically, if other files
+// instantiate templates or use macros or inline functions from this
+// file, or you compile this file and link it with other files to
+// produce an executable, this file does not by itself cause the
+// resulting executable to be covered by the GNU General Public
+// License.  This exception does not however invalidate any other
+// reasons why the executable file might be covered by the GNU General
+// Public License.
 
+#ifndef OLENA_CORE_DPOINT1D_HH
+# define OLENA_CORE_DPOINT1D_HH
+
+# include <oln/core/abstract/dpoint.hh>
+# include <oln/core/dpoint_nd.hh>
 
 namespace oln {
 
-  struct dpoint1d;
+  template<unsigned dim>
+  class dpoint; //fwd decl
 
+  /*! \class Concrete dpoint 1.
+  **
+  ** Provides syntactic sugar.
+  */
   template <>
-  struct props <dpoint1d>
+  struct dpoint<1>: public abstract::dpoint_nd<dpoint<1> >
   {
-    typedef dim1d dim_type;
-  };
-
-  struct dpoint1d : public abstract::dpoint< dpoint1d >
-  {
-    dpoint1d() :
-      index_(0)
+    dpoint()
+    {}
+    dpoint(coord col)
     {
-      this->exact_ptr = this;
+      coord_[0] = col;
     }
 
-    dpoint1d(coord_t index_) :
-      index_(index_)
-    {
-      this->exact_ptr = this;
-    }
-
-    dpoint1d(const dpoint1d& rhs) :
-      index_(rhs.index_)
-    {
-      this->exact_ptr = this;
-    }
-
-    dpoint1d& operator=(const dpoint1d& rhs)
-    {
-      if (&rhs == this)
-	return *this;
-      this->index_ = rhs.index_;
-      return *this;
-    }
-
-    coord_t delta_impl() const
-    {
-      return std::abs(index_);
-    }
-    
-    bool op_eq_impl(const dpoint1d& rhs) const
-    {
-      return this->index_ == rhs.index_;
-    }
-
-    bool op_less_impl(const dpoint1d& rhs) const
-    {
-      return this->index() < rhs.index();
-    }
-
-    const dpoint1d op_minus_impl() const
-    {
-      dpoint1d tmp(-index_);
-      return tmp;
-    }
-
-    const coord_t index() const { return index_; }
-
-    coord_t& index() { return index_; }
-
-  protected:
-    coord_t index_;
+    coord col() const		{ return coord_[0]; }
+    coord& col()		{ return coord_[0]; }
   };
 
 
-  inline
-  const point1d op_plus_impl(const point1d& p, const dpoint1d& dp)
-  {
-    point1d tmp(p.index() + dp.index());
-    return tmp;
-  }
 
 
-} // end of namespace oln
+  /// Depreciated. Use dpoint<1> instead.
+  typedef dpoint<1> dpoint1d;
+
+} // end of oln
 
 
-std::ostream& operator<<(std::ostream& ostr, const oln::dpoint1d& p)
-{
-  return ostr << '(' << p.index() << ')';
-}
-
-
-#endif // ndef PROTO_OLN_CORE_DPOINT1D_HH
+#endif // ! OLENA_CORE_DPOINT1D_HH
