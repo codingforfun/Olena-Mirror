@@ -1,64 +1,13 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 8 40)
-(Parent-Version oln 8 33)
-(Version-Log "Index: ChangeLog
-from  Raphaël Poss  <raph@lrde.epita.fr>
-
-        * configure.ac: Add more Makefile's to the Swilena component.
-
-        * bootstrap.sh: Invoke expand.sh in tools/swilena.
-
-Index: integre/ChangeLog
-from  Raphaël Poss  <raph@lrde.epita.fr>
-
-        * ntg/predecls.hh (ntg): Help SWIG parse the file.
-
-Index: olena/ChangeLog
-from  Raphaël Poss  <raph@lrde.epita.fr>
-
-        * oln/core/internal/real_image2d.hh (operator<<): Remove reference
-        to optraits<T>::max so that images of floats can print.
-
-        * oln/core/internal/real_image3d.hh (operator<<): Likewise.
-
-Index: tools/swilena/ChangeLog
-from  Raphaël Poss  <raph@lrde.epita.fr>
-
-        * doc/swilena.texi (Top): Add off-sync notice.
-
-        * meta/Makefile.am, meta/swilena_w_win.i, meta/swilena_point.i,
-        meta/swilena_morpho.i, meta/swilena_structelt.i,
-        meta/swilena_ntg.i, meta/swilena_ntg_cplx.i,
-        meta/swilena_ntg_int_u.i, meta/swilena_ntg_int_s.i,
-        meta/swilena_imagesize.i, meta/swilena_image.i,
-        meta/swilena_exception.i, meta/swilena_describe.i,
-        meta/swilena_decl.i, meta/swilena_core.i: Add.
-
-        * meta/attic: New directory. 
-
-        * src/swilena.i, src/swilena1d.i, src/swilena1d_convert.i,
-        src/swilena1d_morpho.i, src/swilena2d.i, src/swilena2d_convert.i,
-        src/swilena2d_morpho.i, src/swilena3d.i, src/swilena3d_convert.i,
-        src/swilena3d_morpho.i, src/swilena_conversions.i,
-        src/swilena_convert_dim.i, src/swilena_convoldefs.i,
-        src/swilena_dim.i, src/swilena_dpoint.i, src/swilena_exceptions.i,
-        src/swilena_image.i, src/swilena_meta_win.i,
-        src/swilena_morpho_dim.i, src/swilena_morphodefs.i,
-        src/swilena_neighborhood.i, src/swilena_point.i,
-        src/swilena_typedefs.i, src/swilena_types.i,
-        src/swilena_w_window.i, src/swilena_window.i: Move to `meta/attic'.
-
-        * expand.sh: Add. Most files are now generated from this script.
-
-        * TODO: Update.
-
-        * Makefile.am (SUBDIRS): Mention new directory `meta'.
+(Project-Version oln 8 41)
+(Parent-Version oln 8 40)
+(Version-Log "Add missing directory.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 06 May 2003 06:56:14 +0200")
+(Checkin-Time "Fri, 09 May 2003 17:00:17 +0200")
 (Checkin-Login raph)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -588,6 +537,7 @@ from  Raphaël Poss  <raph@lrde.epita.fr>
 ;  (tools/swilena/python/Makefile.am (oln/n/44_Makefile.a 1.4 640))
 ;  (tools/swilena/python/typedefs.hh (oln/n/43_typedefs.h 1.3 640))
   (tools/swilena/README (oln/n/35_README 1.1 640))
+  (tools/swilena/src () :directory)
 ;  (tools/swilena/src/lena128.pgm (oln/o/19_lena128.pg 1.1 640) :no-keywords)
 ;  (tools/swilena/src/lena2.pgm (oln/o/14_lena2.pgm 1.1 640) :no-keywords)
 ;  (tools/swilena/src/lena3.pgm (oln/o/5_lena3.pgm 1.1 640) :no-keywords)
@@ -915,16 +865,5 @@ from  Raphaël Poss  <raph@lrde.epita.fr>
   (tools/swilena/meta/swilena_decl.i (oln/s/39_swilena_de 1.1 664))
   (tools/swilena/meta/swilena_core.i (oln/s/40_swilena_co 1.1 664))
 )
-(Merge-Parents
-  (8.34 complete
-    (integre/ChangeLog integre/ChangeLog integre/ChangeLog m) (integre/ntg/global_ops_defs.hh integre/ntg/global_ops_defs.hh integre/ntg/global_ops_defs.hh r))
-  (8.39 complete
-    (ChangeLog ChangeLog ChangeLog r) (integre/ChangeLog integre/ChangeLog integre/ChangeLog m)
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog m) (configure.ac configure.ac configure.ac m)
-    (olena/oln/core/w_window1d.hh olena/oln/core/w_window1d.hh olena/oln/core/w_window1d.hh r) (olena/oln/core/w_window2d.hh olena/oln/core/w_window2d.hh olena/oln/core/w_window2d.hh r)
-    (olena/oln/core/w_window3d.hh olena/oln/core/w_window3d.hh olena/oln/core/w_window3d.hh r) (olena/oln/topo/inter-pixel/inter-pixel.hh olena/oln/topo/inter-pixel/inter-pixel.hh olena/oln/topo/inter-pixel/inter-pixel.hh r)
-    (olena/oln/topo/inter-pixel/internal/dir.hxx olena/oln/topo/inter-pixel/internal/dir.hxx olena/oln/topo/inter-pixel/internal/dir.hxx r) (() () integre/tests/types/tests/builtin1 a)
-    (() () olena/tests/core/tests/w_window a) (() () olena/tests/core/runtests a)
-    (() () olena/tests/core/Makefile.am a) (() () integre/tests/types/tests/int_u5c a))
-)
+(Merge-Parents)
 (New-Merge-Parents)
