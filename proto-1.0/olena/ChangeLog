@@ -1,5 +1,9 @@
 2005-03-19  Damien Thivolle  <damien@lrde.epita.fr>
 
+	* oln/core/abstract/piter.hh: Correct for_all.
+
+2005-03-19  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* tests/io/loadsave.hh: Adapt to integre.
 	* tests/core/tests/readonly_image: Likewise.
 	* tests/core/tests/image1d: Likewise.
