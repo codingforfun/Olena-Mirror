@@ -1,18 +1,27 @@
+# -*- shell-script -*-
+
 # User can set VERBOSE to see all output.
 test -z "$VERBOSE" && {
    exec > /dev/null 2>&1
 }
 
 CXX=@CXX@
+GXX=@GXX@
 abs_top_builddir="@abs_top_builddir@"
 abs_top_srcdir="@abs_top_srcdir@"
 OLN_INCLUDE_DIR="@OLN_INCLUDE_DIR@"
 
-CXXFLAGS="@CXXFLAGS@ @OLN_CXXFLAGS@ -Wall -W -pedantic"
+CXXFLAGS="@CXXFLAGS@ @OLN_CXXFLAGS@"
 CPPFLAGS="@CPPFLAGS@ @OLN_CPPFLAGS@ -I@abs_top_builddir@ -DHAVE_CONFIG_H"
+
+if test "$GXX" = yes; then
+  CXXFLAGS="$CXXFLAGS -Wall -W -pedantic"
+fi
 
 # Turn on shell traces when VERBOSE=x.
 if test "x$VERBOSE" = xx; then
   set -x
 fi
 
+# End with $? = 0.
+:

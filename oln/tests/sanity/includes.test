@@ -1,10 +1,14 @@
 #! /bin/sh
 
-# Check that each header is self contained.
+# Check that each header is self contained and generates no warning.
 
 : ${VERBOSE=1}
 
 . ../defs || exit 1
+
+if test "$GXX" = yes; then
+  CXXFLAGS="$CXXFLAGS -Werror"
+fi
 
 set -e
 
