@@ -1,5 +1,20 @@
 2005-01-21  Simon Odou  <simon@lrde.epita.fr>
 
+	* oln/basics1d.hh: Add size1d include.
+	* oln/core/1d/size1d.hh: New.
+	* oln/core/2d/size2d.hh: Fix a missing "this".
+	* oln/core/3d/size3d.hh: New.
+	* oln/basics3d.hh: Add size3d include.
+
+2005-01-21  Simon Odou  <simon@lrde.epita.fr>
+
+	* oln/basics1d.hh: Add size1d include.
+	* oln/core/1d/size1d.hh: New.
+	* oln/core/3d/size3d.hh: New.
+	* oln/basics3d.hh: Add size3d include.
+
+2005-01-21  Simon Odou  <simon@lrde.epita.fr>
+
 	* oln/basics1d.hh: New.
 	* oln/core/1d/point1d.hh: New.
 	* oln/core/3d: New.

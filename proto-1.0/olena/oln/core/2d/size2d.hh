@@ -49,7 +49,8 @@ namespace oln {
 
     bool impl_eq(const size2d& rhs) const
     {
-      return nrows_ == rhs.nrows_ and ncols_ == rhs.ncols_;
+      return this->nrows_ == rhs.nrows_ and
+             this->ncols_ == rhs.ncols_;
     }
 
     const coord_t nrows() const { return nrows_; }
