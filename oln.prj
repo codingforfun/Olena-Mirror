@@ -1,15 +1,11 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5_reconf 9)
-(Parent-Version oln 0_5_reconf 8)
-(Version-Log "2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
-
-        * doc/Makefile.am: cleanup search path for processing.tpl.
-
-")
+(Project-Version oln 0_5_reconf 10)
+(Parent-Version oln 0_5_reconf 9)
+(Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Wed, 04 Dec 2002 16:48:56 +0100")
+(Checkin-Time "Wed, 04 Dec 2002 16:49:29 +0100")
 (Checkin-Login raph)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -158,7 +154,7 @@
   (doc/doc/bin () :directory)
   (doc/doc/html () :directory)
   (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.19 660))
-  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.18 664))
+  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.19 664))
   (doc/doc/oln-ref.tex (oln/f/14_oln-ref.te 1.3 660))
   (doc/img/lena256.pgm (oln/e/21_lena256.pg 1.1 660) :no-keywords)
   (doc/img/object.pbm (oln/d/49_object.pbm 1.1 660) :no-keywords)

@@ -123,7 +123,7 @@
 (src/tests/data/se9.pbm 59 1037666135 i/50_se9.pbm 1.1)
 (oln/types/bin.hh 3048 1033408273 g/30_bin.hh 1.6)
 (src/aclocal.m4 33744 1039016373 j/19_aclocal.m4 1.2)
-(doc/doc/Makefile.in 11663 1039016421 e/6_Makefile.i 1.18)
+(doc/doc/Makefile.in 11686 1039016969 e/6_Makefile.i 1.19)
 (tools/mkinstalldirs 1988 1038435092 e/14_mkinstalld 1.4)
 (tools/depcomp 12123 1026981623 e/12_depcomp 1.6)
 (oln/convert/bound.hh 2131 1033408273 22_bound.hh 1.3)
