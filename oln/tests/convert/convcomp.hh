@@ -1,6 +1,7 @@
 #include <oln/basics2d.hh>
 #include <oln/utils/stat.hh>
 #include "check.hh"
+#include "data.hh"
 #include <iostream>
 
 using namespace oln;

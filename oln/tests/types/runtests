@@ -9,7 +9,7 @@ else
 fi
 
 exec 6>&2
-. $TOP_BUILDDIR/lib/check/defs
+. ../check/defs
 exec 2>&6
 
 failures=0

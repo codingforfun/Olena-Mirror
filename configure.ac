@@ -29,15 +29,13 @@ AC_WITH_CXX_FFTW
 AC_CXX_FLAGS
 
 AC_CONFIG_FILES([Makefile
-                 lib/Makefile
-                 lib/check/defs
-                 lib/check/Makefile
 		 integre/Makefile
 		 integre/ntg/Makefile
                  metalic/Makefile 
                  metalic/mlc/Makefile
                  metalic/tests/Makefile
                  metalic/tests/array/Makefile
+                 metalic/tests/check/Makefile
                  oln/Makefile 
 		 oln/img/Makefile 
 		 oln/oln/config/pconf.hh:oln/oln/config/pconf-hh.in])
@@ -103,7 +101,9 @@ OLN_COLLECTION([OLN_TOP],
 		  [oln_cv_build_tests], 
 		  [the testsuite], 
 		  [OLN_SRC], 
-	          [oln/tests/Makefile],
+	          [oln/tests/Makefile
+		   oln/tests/check/Makefile
+		   oln/tests/check/defs],
     [dnl Configuration for the testsuite
 
       OLN_TESTS_SUBDIRS=""

@@ -1,3 +1,16 @@
+2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/Makefile.am: Add check directory.
+
+	* tests/array/Makefile.am: Adapt to new tests location.
+	
+	* tests/array/gen_test.cc (write_postlude_and_test): Remove
+	useless paths.
+	
+	* tests/check/check.hh, tests/check/Makefile.am,
+	tests/check/Makefile.check, tests/check/Makefile.flags: Adapt to
+	tests split.
+
 2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/array/gen_test.cc (write_postlude_and_test): Temporarily

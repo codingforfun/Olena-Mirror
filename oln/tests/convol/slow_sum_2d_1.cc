@@ -8,6 +8,7 @@ using std::cout;
 using std::endl;
 
 #include "check.hh"
+#include "data.hh"
 
 using namespace oln;
 using namespace meta;

@@ -8,6 +8,7 @@
 #include <oln/level/fill.hh>
 
 #include "check.hh"
+#include "data.hh"
 
 using namespace oln;
 using namespace oln::level;

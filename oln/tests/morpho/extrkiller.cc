@@ -3,6 +3,7 @@
 #include <oln/morpho/extrema_killer.hh>
 
 #include "check.hh"
+#include "data.hh"
 
 using namespace oln;
 using namespace oln::level;

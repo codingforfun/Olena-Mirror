@@ -1,5 +1,0 @@
-# -*- Makefile -*-
-
-include $(top_srcdir)/lib/check/Makefile.flags
-LDADD = $(top_builddir)/lib/check/libcheck.a
-TESTS = $(check_PROGRAMS)

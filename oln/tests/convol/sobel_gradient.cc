@@ -3,6 +3,7 @@
 #include <oln/convert/basics.hh>
 
 #include "check.hh"
+#include "data.hh"
 
 #include <iostream>
 using std::cout;

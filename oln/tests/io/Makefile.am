@@ -1,6 +1,6 @@
 ## Process this file through Automake to create Makefile.in -*- Makefile -*-
 
-include $(top_srcdir)/lib/check/Makefile.check
+include ../check/Makefile.check
 
 # Tests in this directory make use of Zlib if present.
 LDADD += $(ZLIB_LDFLAGS)

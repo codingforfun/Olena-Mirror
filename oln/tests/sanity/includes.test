@@ -4,7 +4,7 @@
 
 : ${VERBOSE=1}
 
-. $TOP_BUILDDIR/lib/check/defs || exit 1
+. ../check/defs || exit 1
 
 set -e
 

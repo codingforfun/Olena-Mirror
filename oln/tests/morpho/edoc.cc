@@ -12,6 +12,7 @@
 #include <oln/level/compare.hh>
 
 #include "check.hh"
+#include "data.hh"
 
 using namespace oln;
 

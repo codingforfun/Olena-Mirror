@@ -1,3 +1,32 @@
+2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/check/defs.in, tests/check/Makefile.am,
+	tests/check/Makefile.check, tests/check/Makefile.flags: New
+	directory.
+
+	* tests/Makefile.am: Add check directory.
+
+	* tests/convol/slow_sum_2d_1.cc, tests/convol/slow_sum_2d_2.cc,
+	tests/convol/sobel_gradient.cc: Include data.hh.
+	
+	* tests/convert/convcomp.hh: Likewise.
+
+	* tests/io/loadsave.hh: Likewise.
+
+	* tests/morpho/edoc.cc, tests/morpho/extrkiller.cc,
+	tests/morpho/reconstruction.cc: Likewise.
+
+	* tests/transforms/fft.cc, tests/transforms/dwt.cc: Likewise.
+		
+	* tests/arith/Makefile.am, tests/convert/Makefile.am,
+	tests/convol/Makefile.am tests/io/Makefile.am,
+	tests/morpho/Makefile.am, tests/sanity/Makefile.am,
+	tests/transforms/Makefile.am, tests/types/Makefile.am : Adapt to
+	new tests location.
+
+	* tests/arith/runtests, tests/types/runtests,
+	tests/sanity/includes.test: Likewise.
+	
 2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/types/all.hh, oln/types/behaviour.hh, oln/types/bin.hh,

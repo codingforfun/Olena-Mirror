@@ -7,6 +7,7 @@
 #include <cstdlib>
 
 #include "check.hh"
+#include "data.hh"
 
 #define CHECK(Condition)			\
     if (Condition)				\

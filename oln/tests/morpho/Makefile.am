@@ -1,4 +1,4 @@
-include $(top_srcdir)/lib/check/Makefile.check
+include ../check/Makefile.check
 
 check_PROGRAMS = \
   edoc \

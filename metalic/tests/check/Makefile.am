@@ -2,8 +2,7 @@
 
 include Makefile.flags
 
-AM_CPPFLAGS = -DOLN_IMG_DIR=\"$(top_srcdir)/oln/img\" \
-   -DCXX=\""$(CXX)"\" \
+AM_CPPFLAGS += -DCXX=\""$(CXX)"\" \
    -DCPPFLAGS=\""$(CPPFLAGS)"\" \
    -DCXXFLAGS=\""$(CXXFLAGS)"\" \
    -DOLN_EXTRA_CPPFLAGS=\""$(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) -I$(OLN_LOCAL_SRC) -I$(OLN_LOCAL_BUILD) $(CPPFLAGS)"\" \
@@ -15,8 +14,6 @@ check_LIBRARIES = libcheck.a
 
 libcheck_a_SOURCES =				\
   check.hh					\
-  data.cc					\
-  data.hh					\
   main.cc					\
   srcdir.cc					\
   srcdir.hh					\

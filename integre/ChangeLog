@@ -1,0 +1,3 @@
+2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Makefile.am, ntg/Makefile.am: New files.

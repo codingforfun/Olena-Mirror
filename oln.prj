@@ -1,75 +1,67 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln cleanup 10)
-(Parent-Version oln cleanup 9)
-(Version-Log "2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+(Project-Version oln cleanup 11)
+(Parent-Version oln cleanup 10)
+(Version-Log "Index: ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* configure.ac, Makefile.am: Tweak for finding Intègre headers.
-2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	* lib/check/Makefile.am, lib/check/Makefile.check,
+	lib/check/Makefile.flags, lib/check/defs.in, lib/check/compile.cc,
+	lib/check/compile.hh, lib/check/check.hh, lib/check/main.cc,
+	lib/check/srcdir.cc, lib/check/srcdir.hh, lib/check/verbose.cc,
+	lib/check/verbose.hh: Move to metalic/tests/check.
 
-	* oln/types/all.hh, oln/types/behaviour.hh, oln/types/bin.hh,
-	oln/types/builtins_properties.hh, oln/types/cast.hh,
-	oln/types/color.hh, oln/types/cplx.hh,
-	oln/types/cplx_representation.hh, oln/types/cycle.hh,
-	oln/types/debug.hh, oln/types/global_ops.hh,
-	oln/types/global_ops_defs.hh, oln/types/global_ops_traits.hh,
-	oln/types/hsi.hh, oln/types/hsl.hh, oln/types/hsv.hh,
-	oln/types/int_s.hh, oln/types/int_u.hh, oln/types/interval.hh,
-	oln/types/nrgb.hh, oln/types/optraits.hh,
-	oln/types/optraits_bin.hh, oln/types/optraits_builtins.hh,
-	oln/types/optraits_builtins_bool.hh,
-	oln/types/optraits_builtins_float.hh,
-	oln/types/optraits_builtins_int.hh,
-	oln/types/optraits_builtins_int_defs.hh,
-	oln/types/optraits_cplx.hh, oln/types/optraits_cycle.hh,
-	oln/types/optraits_int_s.hh, oln/types/optraits_int_u.hh,
-	oln/types/optraits_range.hh, oln/types/optraits_scalar.hh,
-	oln/types/optraits_scalar_defs.hh, oln/types/optraits_vec.hh,
-	oln/types/predecls.hh, oln/types/range.hh,
-	oln/types/rec_value.hh, oln/types/rgb.hh, oln/types/to_oln.hh,
-	oln/types/type.hh, oln/types/typetraits.hh,
-	oln/types/typetraits_builtins.hh,
-	oln/types/typetraits_builtins_bool.hh,
-	oln/types/typetraits_builtins_float.hh,
-	oln/types/typetraits_builtins_int.hh, oln/types/vec.hh,
-	oln/types/xyz.hh, oln/types/yiq.hh, oln/types/yuv.hh: Move to
-	../integre/ntg.
+	* lib/check/data.cc, lib/check/data.hh: Move to oln/tests/check.
 
-	* oln/arith/logic.hh, oln/arith/ops.hh, oln/convert/bound.hh,
-	oln/convert/colorconv.hh, oln/convert/conversion.hh,
-	oln/convert/force.hh, oln/convert/nrgbhsi.hh,
-	oln/convert/nrgbhsl.hh, oln/convert/nrgbhsv.hh,
-	oln/convert/nrgbxyz.hh, oln/convert/nrgbyiq.hh,
-	oln/convert/nrgbyuv.hh, oln/convert/rgbnrgb.hh,
-	oln/convert/rgbxyz.hh, oln/convert/stretch.hh,
-	oln/convol/convolution.hh, oln/convol/fast_gaussian.hh,
-	oln/convol/fast_gaussian.hxx,
-	oln/convol/fast_gaussian_coefficient.hh, oln/core/dpoint1d.hh,
-	oln/core/dpointnd.hh, oln/core/image1d.hh,
-	oln/core/image2d.hh, oln/core/image3d.hh,
-	oln/core/imagend_size.hh, oln/core/internal/real_image2d.hh,
-	oln/core/internal/real_image3d.hh, oln/core/point1d.hh,
-	oln/core/point3d.hh, oln/core/pointnd.hh, oln/io/pnm_read.hxx,
-	oln/io/pnm_read_common.hxx, oln/io/pnm_write.hxx,
-	oln/io/pnm_write_common.hxx, oln/level/cc.hh,
-	oln/level/connected.hh, oln/level/invert.hh,
-	oln/level/threshold.hh, oln/math/macros.hh,
-	oln/morpho/extrema_killer.hh, oln/morpho/geodesic_dilation.hh,
-	oln/morpho/reconstruction.hh, oln/morpho/stat.hh,
-	oln/morpho/watershed.hxx, oln/topo/dmap.hxx,
-	oln/transforms/dwt.hh, oln/transforms/fft.hh,
-	oln/utils/histogram.hh, oln/utils/stat.hh: Update
-	\"<oln/types/\" to \"<ntg/\".
+	* configure.ac, Makefile.am: Adapt to new tests location.
 
-	* tests/arith/tests/min1, tests/io/loadsave.hh,
-	tests/morpho/edoc.cc, tests/transforms/dwt.cc,
-	tests/transforms/fft.cc, tests/types/runtests : Likewise.
+Index: metalic/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* conf/configure.ac: Likewise.
+	* tests/Makefile.am: Add check directory.
+
+	* tests/array/Makefile.am: Adapt to new tests location.
+
+	* tests/array/gen_test.cc (write_postlude_and_test): Remove
+	useless paths.
+
+	* tests/check/check.hh, tests/check/Makefile.am,
+	tests/check/Makefile.check, tests/check/Makefile.flags: Adapt to
+	tests split.
+
+Index: oln/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/check/defs.in, tests/check/Makefile.am,
+	tests/check/Makefile.check, tests/check/Makefile.flags: New
+	directory.
+
+	* tests/Makefile.am: Add check directory.
+
+	* tests/convol/slow_sum_2d_1.cc, tests/convol/slow_sum_2d_2.cc,
+	tests/convol/sobel_gradient.cc: Include data.hh.
+
+	* tests/convert/convcomp.hh: Likewise.
+
+	* tests/io/loadsave.hh: Likewise.
+
+	* tests/morpho/edoc.cc, tests/morpho/extrkiller.cc,
+	tests/morpho/reconstruction.cc: Likewise.
+
+	* tests/transforms/fft.cc, tests/transforms/dwt.cc: Likewise.
+
+	* tests/arith/Makefile.am, tests/convert/Makefile.am,
+	tests/convol/Makefile.am tests/io/Makefile.am,
+	tests/morpho/Makefile.am, tests/sanity/Makefile.am,
+	tests/transforms/Makefile.am, tests/types/Makefile.am : Adapt to
+	new tests location.
+
+	* tests/arith/runtests, tests/types/runtests,
+	tests/sanity/includes.test: Likewise.
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 28 Feb 2003 18:26:41 +0100")
+(Checkin-Time "Sat, 01 Mar 2003 14:07:38 +0100")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -152,10 +144,9 @@
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.1 640))
-  (lib/ChangeLog (oln/q/28_ChangeLog 1.1 640))
-  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.1 640))
-  (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.20.1.4.1.1 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.2 640))
+  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.2 640))
+  (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.20.1.4.1.2 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.24 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.2 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.2 640))
@@ -169,7 +160,7 @@
 
   (cleanup.sh (oln/o/29_cleanup.sh 1.4 750))
 
-  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.1 640))
+  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.2 640))
 
   (doc/demo/image.cc (oln/d/46_image.cc 1.3 640))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.14 640))
@@ -185,7 +176,7 @@
   (doc/Makefile.am (oln/e/0_Makefile.a 1.14 640))
   (doc/ref/processing.tpl (oln/d/48_processing 1.15 640))
 
-  (Makefile.am (oln/n/32_Makefile.a 1.17.1.2.1.1 640))
+  (Makefile.am (oln/n/32_Makefile.a 1.17.1.2.1.2 640))
   (NEWS (oln/0_NEWS 1.13 640))
 
   (oln/img/face_se.pbm (oln/n/17_face_se.pb 1.1 640) :no-keywords)
@@ -453,59 +444,59 @@
   (oln/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.1 640))
   (oln/oln/utils/timer.hh (oln/8_timer.hh 1.4 640))
   (oln/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.3 640))
-  (oln/tests/arith/runtests (oln/o/45_runtests 1.9 750))
+  (oln/tests/arith/runtests (oln/o/45_runtests 1.10 750))
   (oln/tests/arith/tests/min1 (oln/o/44_min1 1.1.1.1 640))
-  (lib/check/check.hh (oln/e/40_check.hh 1.3 640))
-  (lib/check/data.cc (oln/f/5_data.cc 1.8 640))
-  (lib/check/data.hh (oln/f/6_data.hh 1.4 640))
-  (lib/check/main.cc (oln/e/43_main.cc 1.1 640))
-  (lib/check/Makefile.am (oln/e/44_Makefile.a 1.8 640))
-  (lib/check/Makefile.check (oln/e/37_Makefile.c 1.7 640))
-  (lib/check/Makefile.flags (oln/e/36_Makefile.f 1.12.1.1 640))
-  (lib/check/srcdir.cc (oln/e/38_srcdir.cc 1.7 640))
-  (lib/check/srcdir.hh (oln/e/35_srcdir.hh 1.6 640))
-  (lib/check/verbose.cc (oln/e/41_verbose.cc 1.3 640))
-  (lib/check/verbose.hh (oln/e/42_verbose.hh 1.3 640))
+  (metalic/tests/check/check.hh (oln/e/40_check.hh 1.4 640))
+  (oln/tests/check/data.cc (oln/f/5_data.cc 1.8 640))
+  (oln/tests/check/data.hh (oln/f/6_data.hh 1.4 640))
+  (metalic/tests/check/main.cc (oln/e/43_main.cc 1.1 640))
+  (metalic/tests/check/Makefile.am (oln/e/44_Makefile.a 1.9 600))
+  (metalic/tests/check/Makefile.check (oln/e/37_Makefile.c 1.8 600))
+  (metalic/tests/check/Makefile.flags (oln/e/36_Makefile.f 1.12.1.2 600))
+  (metalic/tests/check/srcdir.cc (oln/e/38_srcdir.cc 1.7 640))
+  (metalic/tests/check/srcdir.hh (oln/e/35_srcdir.hh 1.6 640))
+  (metalic/tests/check/verbose.cc (oln/e/41_verbose.cc 1.3 640))
+  (metalic/tests/check/verbose.hh (oln/e/42_verbose.hh 1.3 640))
 
   (oln/tests/convert/convcomp.cc (oln/f/3_convcomp.c 1.6 640))
-  (oln/tests/convert/convcomp.hh (oln/f/1_convcomp.h 1.4 640))
-  (oln/tests/convert/Makefile.am (oln/f/0_Makefile.a 1.7 640))
+  (oln/tests/convert/convcomp.hh (oln/f/1_convcomp.h 1.5 640))
+  (oln/tests/convert/Makefile.am (oln/f/0_Makefile.a 1.8 640))
   (oln/tests/convol () :directory)
-  (oln/tests/convol/Makefile.am (oln/f/38_Makefile.a 1.10 640))
-  (oln/tests/convol/slow_sum_2d_1.cc (oln/f/41_slow_sum_2 1.2.1.2 640))
-  (oln/tests/convol/slow_sum_2d_2.cc (oln/f/40_slow_sum_2 1.2.1.2 640))
-  (oln/tests/convol/sobel_gradient.cc (oln/f/45_sobel_grad 1.3.1.2 640))
+  (oln/tests/convol/Makefile.am (oln/f/38_Makefile.a 1.11 640))
+  (oln/tests/convol/slow_sum_2d_1.cc (oln/f/41_slow_sum_2 1.2.1.3 640))
+  (oln/tests/convol/slow_sum_2d_2.cc (oln/f/40_slow_sum_2 1.2.1.3 640))
+  (oln/tests/convol/sobel_gradient.cc (oln/f/45_sobel_grad 1.3.1.3 640))
   (oln/tests/convol/sum_on_random.pgm (oln/f/42_sum_on_ran 1.1 640) :no-keywords)
-  (lib/check/defs.in (oln/f/49_defs.in 1.14 640))
+  (metalic/tests/check/defs.in (oln/f/49_defs.in 1.14 600))
   (oln/tests/io/2d.cc (oln/e/47_2d.cc 1.5 640))
-  (oln/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.7.1.1 640))
-  (oln/tests/io/Makefile.am (oln/e/49_Makefile.a 1.11 640))
+  (oln/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.7.1.2 640))
+  (oln/tests/io/Makefile.am (oln/e/49_Makefile.a 1.12 640))
   (oln/tests/io/pretty.cc (oln/i/42_pretty.cc 1.2 640))
   (oln/tests/io/se_fail.cc (oln/i/43_se_fail.cc 1.2 640))
   (oln/tests/io/se_pass.cc (oln/i/44_se_pass.cc 1.2 640))
-  (oln/tests/Makefile.am (oln/e/45_Makefile.a 1.19 640))
-  (metalic/tests/array/gen_test.cc (oln/f/34_gen_test.c 1.11.1.1 640))
+  (oln/tests/Makefile.am (oln/e/45_Makefile.a 1.20 640))
+  (metalic/tests/array/gen_test.cc (oln/f/34_gen_test.c 1.11.1.2 640))
   (metalic/tests/array/gen_test_utils/errors.cc (oln/f/33_errors.cc 1.1 640))
   (metalic/tests/array/gen_test_utils/errors.hh (oln/f/32_errors.hh 1.1 640))
   (metalic/tests/array/gen_test_utils/postlude (oln/f/31_postlude 1.1 640))
   (metalic/tests/array/gen_test_utils/prelude (oln/f/30_prelude 1.3 640))
-  (metalic/tests/array/Makefile.am (oln/f/27_Makefile.a 1.6.1.1 640))
+  (metalic/tests/array/Makefile.am (oln/f/27_Makefile.a 1.6.1.2 640))
   (metalic/tests/array/test_array1d.cc (oln/f/26_test_array 1.3 640))
   (metalic/tests/array/test_array2d.cc (oln/f/25_test_array 1.3 640))
   (metalic/tests/array/test_array3d.cc (oln/f/24_test_array 1.3 640))
-  (oln/tests/morpho/edoc.cc (oln/f/13_edoc.cc 1.4.1.1 640))
-  (oln/tests/morpho/extrkiller.cc (oln/e/31_extrkiller 1.5.1.2 640))
-  (oln/tests/morpho/Makefile.am (oln/e/32_Makefile.a 1.11 640))
-  (oln/tests/morpho/reconstruction.cc (oln/e/34_reconstruc 1.7 640))
+  (oln/tests/morpho/edoc.cc (oln/f/13_edoc.cc 1.4.1.2 640))
+  (oln/tests/morpho/extrkiller.cc (oln/e/31_extrkiller 1.5.1.3 640))
+  (oln/tests/morpho/Makefile.am (oln/e/32_Makefile.a 1.12 640))
+  (oln/tests/morpho/reconstruction.cc (oln/e/34_reconstruc 1.8 640))
   (oln/tests/README (oln/f/4_README 1.4 640))
-  (oln/tests/sanity/includes.test (oln/f/46_includes.t 1.9 750))
+  (oln/tests/sanity/includes.test (oln/f/46_includes.t 1.10 750))
   (oln/tests/sanity/Makefile.am (oln/f/48_Makefile.a 1.4.1.1 640))
-  (oln/tests/transforms/dwt.cc (oln/i/38_dwt.cc 1.8.1.1 640))
-  (oln/tests/transforms/fft.cc (oln/i/37_fft.cc 1.6.1.1 640))
-  (oln/tests/transforms/Makefile.am (oln/i/40_Makefile.a 1.7 640))
+  (oln/tests/transforms/dwt.cc (oln/i/38_dwt.cc 1.8.1.2 640))
+  (oln/tests/transforms/fft.cc (oln/i/37_fft.cc 1.6.1.2 640))
+  (oln/tests/transforms/Makefile.am (oln/i/40_Makefile.a 1.8 640))
 ;;  (oln/tests/transforms/output () :directory)
-  (oln/tests/types/Makefile.am (oln/h/5_Makefile.a 1.5 640))
-  (oln/tests/types/runtests (oln/h/3_runtests 1.14.1.1 750))
+  (oln/tests/types/Makefile.am (oln/h/5_Makefile.a 1.6 640))
+  (oln/tests/types/runtests (oln/h/3_runtests 1.14.1.2 750))
   (oln/tests/types/tests/bin1 (oln/i/28_bin1 1.1 640))
   (oln/tests/types/tests/bin2 (oln/o/42_bin2 1.2 640))
   (oln/tests/types/tests/bin3 (oln/o/46_bin3 1.1 640))
@@ -722,8 +713,8 @@
 ;; Files added by populate at Wed, 22 Jan 2003 18:36:01 +0100,
 ;; to version 7.33(w), by raph:
 
-  (lib/check/compile.hh (oln/p/35_compile.hh 1.1 640))
-  (lib/check/compile.cc (oln/p/36_compile.cc 1.1 640))
+  (metalic/tests/check/compile.hh (oln/p/35_compile.hh 1.1 640))
+  (metalic/tests/check/compile.cc (oln/p/36_compile.cc 1.1 640))
 
 ;; Files deleted by depopulate at Wed, 22 Jan 2003 18:58:45 +0100,
 ;; from version 7.33(w), by raph:
@@ -822,19 +813,10 @@
   (metalic/lib (../lib) :symlink)
   (oln/lib (../lib) :symlink)
 
-;; Files added by populate at Thu, 27 Feb 2003 19:48:40 +0100,
-;; to version cleanup.3(w), by raph:
-
-  (lib/Makefile.am (oln/q/29_Makefile.a 1.2 640))
-
-;; Files added by populate at Thu, 27 Feb 2003 19:48:43 +0100,
-;; to version cleanup.3(w), by raph:
-
-
 ;; Files added by populate at Thu, 27 Feb 2003 19:57:05 +0100,
 ;; to version cleanup.4(w), by raph:
 
-  (metalic/tests/Makefile.am (oln/q/31_Makefile.a 1.1 640))
+  (metalic/tests/Makefile.am (oln/q/31_Makefile.a 1.2 640))
   (metalic/Makefile.am (oln/q/32_Makefile.a 1.2 640))
 
 ;; Files added by populate at Thu, 27 Feb 2003 19:57:14 +0100,
@@ -855,6 +837,21 @@
 ;; to version cleanup.9(w), by burrus_n:
 
   (integre/ntg () :directory)
+
+;; Files added by populate at Sat, 01 Mar 2003 13:18:48 +0100,
+;; to version cleanup.10(w), by nes:
+
+  (integre/Makefile.am (oln/q/34_Makefile.a 1.1 640))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.1 640))
+  (integre/ntg/Makefile.am (oln/q/36_Makefile.a 1.1 640))
+
+;; Files added by populate at Sat, 01 Mar 2003 13:19:17 +0100,
+;; to version cleanup.10(w), by nes:
+
+  (oln/tests/check/defs.in (oln/q/37_defs.in 1.1 600))
+  (oln/tests/check/Makefile.am (oln/q/38_Makefile.a 1.1 600))
+  (oln/tests/check/Makefile.flags (oln/q/39_Makefile.f 1.1 600))
+  (oln/tests/check/Makefile.check (oln/q/40_Makefile.c 1.1 600))
 )
 (Merge-Parents)
 (New-Merge-Parents)

@@ -1,3 +1,15 @@
+2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* lib/check/Makefile.am, lib/check/Makefile.check,
+	lib/check/Makefile.flags, lib/check/defs.in, lib/check/compile.cc,
+	lib/check/compile.hh, lib/check/check.hh, lib/check/main.cc,
+	lib/check/srcdir.cc, lib/check/srcdir.hh, lib/check/verbose.cc,
+	lib/check/verbose.hh: Move to metalic/tests/check.
+	
+	* lib/check/data.cc, lib/check/data.hh: Move to oln/tests/check.
+
+	* configure.ac, Makefile.am: Adapt to new tests location.
+
 2003-02-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* configure.ac, Makefile.am: Tweak for finding Intègre headers.

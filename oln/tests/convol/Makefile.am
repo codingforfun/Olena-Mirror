@@ -1,6 +1,6 @@
-## PRocess this file through Automake to create Makefile.in -*- Makefile -*-
+## Process this file through Automake to create Makefile.in -*- Makefile -*-
 
-include $(top_srcdir)/lib/check/Makefile.check
+include ../check/Makefile.check
 
 check_PROGRAMS = slow_sum_2d_1 slow_sum_2d_2 sobel_gradient
 

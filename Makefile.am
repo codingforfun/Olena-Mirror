@@ -1,7 +1,7 @@
 ## Process this file through Automake to produce Makefile.in -*- Makefile -*-
 
 # OLN_TOP_SUBDIRS is set when "configure" is run.
-SUBDIRS = lib metalic integre oln $(OLN_TOP_SUBDIRS)
+SUBDIRS = metalic integre oln $(OLN_TOP_SUBDIRS)
 
 # "configure.ac" in this directory uses macros in m4 files.
 ACLOCAL_AMFLAGS = -I oln/config
