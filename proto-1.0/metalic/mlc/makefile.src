@@ -20,6 +20,7 @@ MLC_DEP =					\
   config/system.hh				\
   contract.hh					\
   is_a.hh					\
+  math.hh					\
   properties.hh					\
   tracked_ptr.hh				\
   traits.hh					\

@@ -1,5 +1,10 @@
 2005-03-19  Damien Thivolle  <damien@lrde.epita.fr>
 
+	* mlc/math.hh: Add power of 2 traits.
+	* mlc/makefile.src: Add new file.
+
+2005-03-19  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* mlc/makefile.src: Add new files.
 	* mlc/array: New.
 	* mlc/array/nd.hh: New.
