@@ -65,17 +65,17 @@ namespace oln {
     
     coord& col();
  
-    point1d operator+(const dpoint1d& dp) const;
+    point1d plus_dp(const dpoint1d& dp) const;
   
-    point1d operator-(const dpoint1d& dp) const;
+    point1d minus_dp(const dpoint1d& dp) const;
 
-    point1d& operator+=(const dpoint1d& dp);
+    point1d& plus_assign_dp(const dpoint1d& dp);
 
-    point1d& operator-=(const dpoint1d& dp);
+    point1d& minus_assign_dp(const dpoint1d& dp);
 
-    dpoint1d operator-(const point1d& p) const;
+    dpoint1d minus_p(const point1d& p) const;
 
-    point1d operator-() const;
+    point1d minus() const;
 
     static std::string name() { return "point1d"; }
   };

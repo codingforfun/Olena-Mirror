@@ -59,7 +59,8 @@ namespace oln
     public:
       
       typedef point<Exact> self_type;
-      
+      typedef Exact exact_type;      
+      typedef typename point_traits<Exact>::dpoint_type dpoint_type;
       enum { dim = point_traits<Exact>::dim };
       
       coord nth(const unsigned dim) const
@@ -72,6 +73,37 @@ namespace oln
 	return coord_[dim];
       }
       
+      exact_type& operator+=(const dpoint_type& dp)
+      {
+	return to_exact(this)->plus_assign_dp(dp);
+      }
+
+      exact_type& operator-=(const dpoint_type& dp)
+      {
+	return to_exact(this)->minus_assign_dp(dp);
+      }
+
+      dpoint_type operator-(const self_type& p) const
+      {
+	return to_exact(this)->minus_p(to_exact(p));
+      }
+
+      exact_type operator+(const dpoint_type& dp) const
+      {
+	return to_exact(this)->plus_dp(to_exact(dp));
+      }
+
+      exact_type operator-(const dpoint_type& dp) const
+      {
+	return to_exact(this)->minus_dp(to_exact(dp));
+      }
+
+      exact_type operator-() const
+      {
+	return to_exact(this)->minus();
+      }
+
+
       bool operator==(const self_type& p) const
       {
 	for (unsigned i = 0; i < dim; ++i)

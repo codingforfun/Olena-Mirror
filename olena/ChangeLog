@@ -1,3 +1,23 @@
+2003-07-28  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/abstract/dpoint.hh: Implement the interface.
+
+	* oln/core/dpoint1d.hh, oln/core/dpoint1d.hxx,
+	oln/core/dpoint2d.hh, oln/core/dpoint2d.hxx,
+	oln/core/dpoint3d.hh, oln/core/dpoint3d.hxx: Rename member
+	functions.
+
+	* oln/core/abstract/point.hh: Implement the interface.
+
+	* oln/core/point1d.hh, oln/core/point1d.hxx,
+	oln/core/point2d.hh, oln/core/point2d.hxx,
+	oln/core/point3d.hh, oln/core/point3d.hxx: Rename member
+	functions.
+	
+2003-07-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/io/2d.cc (check): Minor fix.
+
 2003-07-27  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/apply.hh, oln/core/fold.hh,

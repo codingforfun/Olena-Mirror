@@ -94,7 +94,7 @@ namespace oln {
   }
 
   inline point3d&
-  point3d::operator+=(const dpoint3d& dp)
+  point3d::plus_assign_dp(const dpoint3d& dp)
   {
     slice() += dp.slice();
     row() += dp.row();
@@ -103,7 +103,7 @@ namespace oln {
   }
 
   inline point3d&
-  point3d::operator-=(const dpoint3d& dp)
+  point3d::minus_assign_dp(const dpoint3d& dp)
   {
     slice() -= dp.slice();
     row() -= dp.row();
@@ -112,7 +112,7 @@ namespace oln {
   }
 
   inline dpoint3d
-  point3d::operator-(const point3d& p) const
+  point3d::minus_p(const point3d& p) const
   {
     dpoint3d dp(slice() - p.slice(),
 		row() - p.row(),
@@ -121,7 +121,7 @@ namespace oln {
   }
 
   inline point3d
-  point3d::operator+(const dpoint3d& dp) const
+  point3d::plus_dp(const dpoint3d& dp) const
   {
     point3d p = *this;
     p += dp;
@@ -129,7 +129,7 @@ namespace oln {
   }
 
   inline point3d
-  point3d::operator-(const dpoint3d& dp) const
+  point3d::minus_dp(const dpoint3d& dp) const
   {
     point3d p = *this;
     p -= dp;
@@ -137,7 +137,7 @@ namespace oln {
   }
 
   inline point3d
-  point3d::operator-() const
+  point3d::minus() const
   {
     point3d p(-slice(), -row(), -col());
     return p;

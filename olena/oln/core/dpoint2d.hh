@@ -65,15 +65,15 @@ namespace oln {
 
     coord& col();
 
-    dpoint2d operator+(const dpoint2d& dp) const;
+    dpoint2d plus_dp(const dpoint2d& dp) const;
 
-    dpoint2d operator-() const;
+    dpoint2d minus() const;
 
-    dpoint2d operator-(const dpoint2d& dp) const;
+    dpoint2d minus_dp(const dpoint2d& dp) const;
 
-    dpoint2d& operator+=(const dpoint2d& dp);
+    dpoint2d& plus_assign_dp(const dpoint2d& dp);
 
-    dpoint2d& operator-=(const dpoint2d& dp);
+    dpoint2d& minus_assign_dp(const dpoint2d& dp);
 
     static std::string name() { return "dpoint2d"; }
   };

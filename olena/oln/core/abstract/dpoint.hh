@@ -74,6 +74,31 @@ namespace oln {
 	return coord_[dim];
       }
 
+      exact_type operator-() const
+      {
+	return to_exact(this)->minus();
+      }
+
+      exact_type& operator+=(const self_type& dp)
+      {
+	return to_exact(this)->plus_assign_dp(to_exact(dp));
+      }
+
+      exact_type& operator-=(const self_type& dp)
+      {
+	return to_exact(this)->minus_assign_dp(to_exact(dp));
+      }
+
+      exact_type operator+(const self_type& dp)
+      {
+	return to_exact(this)->plus_dp(to_exact(dp));
+      }
+
+      exact_type operator-(const self_type& dp)
+      {
+	return to_exact(this)->minus_dp(to_exact(dp));
+      }
+
       bool operator==(const self_type& p) const
       {
 	for (unsigned i = 0; i < dim; ++i)
