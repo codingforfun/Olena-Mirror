@@ -2,8 +2,6 @@
 
 AC_PREREQ([2.57])
 
-m4_include(../oln-version.m4)
-
 AC_INIT([oln-doc], OLN_VERSION, OLN_CONTACT)
 AC_CONFIG_SRCDIR([ChangeLog])
 AM_INIT_AUTOMAKE([1.7.2 no-define foreign dist-bzip2])

@@ -13,7 +13,7 @@
 # AC_WITH_OLN. See oln/configure.ac or doc/configure.ac in the Olena
 # distribution for an example.
 
-AC_DEFUN(OLN_PATH_LOCAL, 
+AC_DEFUN([OLN_PATH_LOCAL], 
 [dnl
   advertised_oln_dir=ifelse([$1], [], [no], [$1])
   AC_CACHE_CHECK([for Olena in [$advertised_oln_dir]],
@@ -49,7 +49,7 @@ AC_DEFUN(OLN_PATH_LOCAL,
 # Checks for the location of Olena sources specified with the
 # user with the flag --with-oln.
 
-AC_DEFUN(OLN_PATH_USER, 
+AC_DEFUN([OLN_PATH_USER], 
 [dnl
   AC_CACHE_CHECK([for Olena in user-specified directory],
 		 [oln_cv_user_hint], 
@@ -68,7 +68,7 @@ AC_DEFUN(OLN_PATH_USER,
 # This macro checks the actual availability of Olena headers after
 # the other heuristics have tried setting OLN_INCLUDE_DIR and CPPFLAGS.
 
-AC_DEFUN(_OLN_CHECK_HEADERS, 
+AC_DEFUN([_OLN_CHECK_HEADERS], 
 [dnl
  AC_REQUIRE([AC_PROG_CXX])
  AC_LANG_PUSH([C++])
@@ -106,7 +106,7 @@ AC_DEFUN(_OLN_CHECK_HEADERS,
 # This macro sets, if needed, OLN_CPPFLAGS before proceeding with
 # _OLN_CHECK_HEADERS.
 
-AC_DEFUN(OLN_PATH_HEADERS,
+AC_DEFUN([OLN_PATH_HEADERS],
 [dnl 
   AC_REQUIRE([OLN_PATH_LOCAL])
   AC_REQUIRE([OLN_PATH_USER])
@@ -153,7 +153,7 @@ AC_DEFUN(OLN_PATH_HEADERS,
 # AC_WITH_OLN_IMGS. See oln/configure.ac or doc/configure.ac in the Olena
 # distribution for an example.
 
-AC_DEFUN(OLN_PATH_LOCAL_IMGS,
+AC_DEFUN([OLN_PATH_LOCAL_IMGS],
 [dnl
   advertised_oln_img_dir=ifelse([$1], [], [no], [$1])
   AC_CACHE_CHECK([for Olena images in [$advertised_oln_img_dir]],
@@ -190,7 +190,7 @@ AC_DEFUN(OLN_PATH_LOCAL_IMGS,
 # Checks for the location of Olena images specified with the
 # user with the flag --with-oln-imgs.
 
-AC_DEFUN(OLN_PATH_USER_IMGS, 
+AC_DEFUN([OLN_PATH_USER_IMGS], 
 [dnl
   AC_CACHE_CHECK([for Olena images in user-specified directory],
 		 [oln_cv_user_img_hint], 
@@ -209,7 +209,7 @@ AC_DEFUN(OLN_PATH_USER_IMGS,
 # Olena images around the current source directory, user flags, environment
 # variable.
 
-AC_DEFUN(OLN_PATH_IMGS,
+AC_DEFUN([OLN_PATH_IMGS],
 [dnl
   AC_REQUIRE([OLN_PATH_LOCAL_IMGS])
   AC_REQUIRE([OLN_PATH_USER_IMGS])
@@ -252,7 +252,7 @@ AC_DEFUN(OLN_PATH_IMGS,
 # - the compiler supports it 
 # - it provides the right effect when present
 
-AC_DEFUN(OLN_TEMPLATE_DEPTH,
+AC_DEFUN([OLN_TEMPLATE_DEPTH],
 [dnl
   AC_REQUIRE([AC_PROG_CXX])
   AC_LANG_PUSH([C++])
@@ -334,7 +334,7 @@ AC_DEFUN([AC_CXX_EXCEPTIONS],
 # Add -DOLN_EXCEPTIONS to OLN_CXXFLAGS when the flag --enable-oln-exceptions 
 # is given to configure and exceptions are available.
 
-AC_DEFUN(OLN_ENABLE_EXCEPTIONS,
+AC_DEFUN([OLN_ENABLE_EXCEPTIONS],
 [dnl
   AC_REQUIRE([AC_CXX_EXCEPTIONS])
   oln_exn_default=m4_ifselse([$1], , [yes], [$1])
@@ -357,7 +357,7 @@ AC_DEFUN(OLN_ENABLE_EXCEPTIONS,
 
   AC_SUBST([OLN_CPPFLAGS])
 ])
-AC_DEFUN(OLN_DISABLE_EXCEPTIONS, [OLN_ENABLE_EXCEPTIONS([no])])
+AC_DEFUN([OLN_DISABLE_EXCEPTIONS], [OLN_ENABLE_EXCEPTIONS([no])])
 
 # OLN_NUMERIC_LIMITS
 
@@ -368,7 +368,7 @@ AC_DEFUN(OLN_DISABLE_EXCEPTIONS, [OLN_ENABLE_EXCEPTIONS([no])])
 # limits are unavailable, in which case HUGE_VAL and HUGE_VALF are
 # used instead by Olena.
 
-AC_DEFUN(OLN_NUMERIC_LIMITS,
+AC_DEFUN([OLN_NUMERIC_LIMITS],
 [dnl
   AC_REQUIRE([AC_PROG_CXX])
   AC_LANG_PUSH([C++])
@@ -421,7 +421,7 @@ AC_DEFUN(OLN_NUMERIC_LIMITS,
 # OLN_CPPFLAGS, hoping that oln/config/math.hh will provide
 # an implementation.
 
-AC_DEFUN(OLN_MATH_FUNC,
+AC_DEFUN([OLN_MATH_FUNC],
 [dnl
   AC_REQUIRE([AC_PROG_CXX])
   AC_LANG_PUSH([C++])
@@ -451,7 +451,7 @@ AC_DEFUN(OLN_MATH_FUNC,
   AC_SUBST([OLN_CPPFLAGS])
 ])  
 
-AC_DEFUN(OLN_FLOAT_MATH,
+AC_DEFUN([OLN_FLOAT_MATH],
 [dnl
   OLN_MATH_FUNC([sqrtf], [SQRTF], [float f = sqrtf(0.1f);])
   OLN_MATH_FUNC([floorf], [FLOORF], [float f = floorf(0.1f);])
@@ -464,7 +464,7 @@ AC_DEFUN(OLN_FLOAT_MATH,
 # Invoke configuration code to test for Olena and set a collection
 # of appropriate flags.
 
-AC_DEFUN(AC_WITH_OLN,
+AC_DEFUN([AC_WITH_OLN],
 [dnl
   AC_REQUIRE([OLN_TEMPLATE_DEPTH])
   AC_REQUIRE([OLN_NUMERIC_LIMITS])
@@ -536,7 +536,7 @@ AC_DEFUN([AC_CXX_FLAGS],
       _CXXFLAGS_OPTIMIZE="-O3"
       _CXXFLAGS_DEBUG="-g"
       _CXXFLAGS_STRICT="-w2 -Wall"
-      _CXXFLAGS_STRICT_ERRORS="-w2 -Wall -Werror"
+      _CXXFLAGS_STRICT_ERRORS="-w2 -Wall"
       ;;
    esac
 
@@ -566,7 +566,7 @@ AC_DEFUN([AC_CXX_FLAGS],
 # This macro sets FFTW_CXXFLAGS and FFTW_LDFLAGS if the library is
 # found and its functions available from C++.
 
-AC_DEFUN(AC_WITH_CXX_FFTW,
+AC_DEFUN([AC_WITH_CXX_FFTW],
 [dnl
  AC_REQUIRE([AC_PROG_CXX])
  AC_LANG_PUSH([C++])
@@ -609,7 +609,7 @@ AC_DEFUN(AC_WITH_CXX_FFTW,
 # This macro sets ZLIB_CXXFLAGS and ZLIB_LDFLAGS if the library is
 # found and its functions available from C++.
 
-AC_DEFUN(AC_WITH_CXX_ZLIB,
+AC_DEFUN([AC_WITH_CXX_ZLIB],
 [dnl
  AC_REQUIRE([AC_PROG_CXX])
  AC_LANG_PUSH([C++])
@@ -643,5 +643,75 @@ AC_DEFUN(AC_WITH_CXX_ZLIB,
  AC_SUBST([ZLIB_LDFLAGS])
 
  AC_LANG_POP([C++])
+])
+
+###
+### Internal stuff for Olena
+###
+m4_define([OLN_VERSION], [0.7]) 
+m4_define([OLN_CONTACT], [olena-bugs@lrde.epita.fr])
+
+# OLN_COLLECTION([subdirs-variable-name],
+#                [component-list])
+
+AC_DEFUN([OLN_COLLECTION], [dnl
+$1_SUBDIRS=""
+AC_SUBST([$1_SUBDIRS])
+$2
+])
+
+# OLN_COMPONENT([DIRNAME], [WITHNAME], [VARNAME], [DESCRIPTION],
+#               [SUBDIRS-VARIABLE-NAME],
+#               [CONFIG-FILES],
+#               [EXTRA-ACTION-IF-SELECTED], [DIRNAME-FOR-SUBDIRS-IF-DIFFERENT-THAN-FIRST-DIRNAME])
+
+# This macro factorizes a pattern that occurs frequently in Olena
+# configuration files : the concept of optional directory associated
+# with a component elidable from the distribution.
+
+# A component is defined by the following characteristics :
+
+#   * DIRNAME: the elidable directory, relative to the current
+#   configuration directory,
+
+#   * WITHNAME: the name of the flag the user can use to exclude the
+#   component (--without-WITHNAME),
+
+#   * VARNAME: the name of the cached Autoconf variable representing
+#   the inclusion status of this component (usually oln_cv_DIRNAME),
+
+#   * DESCRIPTION: the name of the component, as mentioned in help
+#   messages from the "configure" script,
+
+#   * SUBDIRS-VARIABLE-NAME: the name of the variable that contains
+#   (or not) mention to DIRNAME and is AC_SUBST'ituted in Makefiles
+#   for use by $SUBDIRS,
+
+#   * CONFIG-FILES (optional): the name of files added to the list of
+#   generated files when the component is included,
+
+#   * EXTRA-ACTION-IF-SELECTED (optional): extra test code executed
+#   only when the component is included,
+
+#   * DIRNAME-FOR-SUBDIRS-IF-DIFFERENT-THAN-FIRST-DIRNAME (optional):
+#   if set, the name of the subdirectory inserted in
+#   $SUBDIRS-VARIABLE-NAME if different than DIRNAME (example in
+#   tools/configure.ac)
+
+AC_DEFUN([OLN_COMPONENT], [dnl
+AC_CACHE_CHECK([whether to build $4],
+               [$3],
+               [$3=no
+                if test -r "$srcdir/$1/Makefile.in"; then
+                   AC_ARG_WITH([$2],
+                               [AC_HELP_STRING([--without-$2], [disable building $4])],
+                               [$3=$withval],
+                               [$3=yes])
+                fi])
+if test x$[]$3 != xno; then
+   $5_SUBDIRS="$[]$5_SUBDIRS ifelse([$8], [], [$1], [$8])"
+   ifelse([$6], [], [], [AC_CONFIG_FILES([$6])])
+   $7
+fi
 ])
 

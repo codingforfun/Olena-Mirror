@@ -10,12 +10,8 @@ dist_m4data_DATA = oln.m4
 EXTRA_DIST = ISSUES
 
 # "configure.ac" in this directory uses macros in m4 files.
-ACLOCAL_AMFLAGS = -I . -I ..
-CONFIGURE_DEPENDENCIES = \
-	oln.m4 \
-	$(srcdir)/../oln-version.m4 \
-	$(srcdir)/../component.m4
-
+ACLOCAL_AMFLAGS = -I .
+CONFIGURE_DEPENDENCIES = oln.m4
 
 # Stuff pertaining to compiler-specific auto-configuration
 

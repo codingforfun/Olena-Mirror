@@ -1,3 +1,7 @@
+2003-01-22  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* Makefile.am (ACLOCAL_AMFLAGS, CONFIGURE_DEPENDENCIES): Simplify.
+
 2003-01-21  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* utilities/morpho/morpho_template.cc: Include getopt.hh instead

@@ -1,7 +1,6 @@
 # Process this file with autoconf to produce a configure script.
 AC_PREREQ([2.57])
 
-m4_include(../../oln-version.m4)
 AC_INIT([oln-conf], OLN_VERSION, OLN_CONTACT)
 AC_CONFIG_SRCDIR([oln-config.shin])
 

@@ -8,8 +8,5 @@ EXTRA_DIST = tpl/processing.tpl
 
 # "configure.ac" in this directory uses macros defined in m4
 # files in other directories. 
-ACLOCAL_AMFLAGS = -I ../oln -I ..
-CONFIGURE_DEPENDENCIES = \
-	 $(srcdir)/../oln/oln.m4 \
-	 $(srcdir)/../oln-version.m4 \
-	 $(srcdir)/../component.m4
+ACLOCAL_AMFLAGS = -I ../oln
+CONFIGURE_DEPENDENCIES = $(srcdir)/../oln/oln.m4 

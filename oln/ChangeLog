@@ -1,3 +1,14 @@
+2003-01-22  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* oln.m4: Quote macro names. Merge oln-version.m4 and
+	component.m4.  
+	* Makefile.am (ACLOCAL_AMFLAGS, CONFIGURE_DEPENDENCIES): Simplify
+	accordingly.
+
+2003-01-22  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln.m4: Change ICC default CXXFLAGS_STRICT_ERRORS.
+
 2003-01-21  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* tests/transforms/fft.cc (CHECK): Correct minor typo.

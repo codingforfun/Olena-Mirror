@@ -1,3 +1,10 @@
+2003-01-22  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* bootstrap.sh: Minor fix.
+
+	* oln-version.m4, component.m4: Remove (merged with oln/oln.m4).
+	* Makefile.am: Simplify accordingly.
+
 2003-01-21  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* component.m4 (OLN_COMPONENT): Test for `Makefile.in' in

@@ -1,157 +1,44 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 7 31)
-(Parent-Version oln 7 29)
+(Project-Version oln 7 33)
+(Parent-Version oln 7 31)
 (Version-Log "Index: ChangeLog
-from  +2003-01-21  Raphaël Poss  <raph@lrde.epita.fr>
+from  +2003-01-22  Raphaël Poss  <raph@lrde.epita.fr>
 
-   * component.m4 (OLN_COMPONENT): Test for `Makefile.in' in
-   directories instead of the directory existence itself, to prevent
-   problems due to empty directories.
+   * bootstrap.sh: Minor fix.
 
-   * oln/Makefile.am, tools/Makefile.am (maintainer-check): Move
-   indentation checker away to ...
-   * Makefile.am: ... here.
-
-   * NEWS: Mention changes in 0.6. Update changes for 0.7.
+   * oln-version.m4, component.m4: Remove (merged with oln/oln.m4).
+   * Makefile.am: Simplify accordingly.
 
 Index: oln/ChangeLog
-from  +2003-01-21  Raphaël Poss  <raph@lrde.epita.fr>
+from  +2003-01-22  Raphaël Poss  <raph@lrde.epita.fr>
 
-   * tests/transforms/fft.cc (CHECK): Correct minor typo.
+   * oln.m4: Quote macro names. Merge oln-version.m4 and
+   component.m4.  
+   * Makefile.am (ACLOCAL_AMFLAGS, CONFIGURE_DEPENDENCIES): Simplify
+   accordingly.
 
-   * Makefile.am: Temporarily disable rules to regenerate
-   conf/aclocal.m4 and conf/configure. (CLEANFILES): Cleanup conf/
-   completely.
-
-   * oln/types/builtins_properties.hh: Avoid static variables in
-   template members.
-
-+2003-01-20  Raphaël Poss  <raph@lrde.epita.fr>
++2003-01-22  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 +
-+  * Makefile.am (uninstall-hook): Remove installed oln-config-*.sh
-+  scripts.
++  * oln.m4: Change ICC default CXXFLAGS_STRICT_ERRORS.
 +
-+  * oln/transforms/fft.hh: Do not abord if FFTW is unavailable.
-+
-+  * oln/Makefile.am (nobase_pkginclude_HEADERS): Mention
-+  oln/config/math.hh.
-+
-+  * tests/transforms/fft.cc: Include oln/transforms/fft.hh only when
-+  HAVE_FFTW is defined. Test succeeds when FFTW is not available.
-+
-+  * oln.m4 (OLN_MATH_FUNC):  New macro. (OLN_FLOAT_MATH): New macro,
-+  which replaces OLN_C99_MATH. (AC_WITH_OLN): Modify accordingly.
-+
-+  * oln/config/system.hh: Move away tests pertaining to math.h ...
-+  * oln/config/math.hh: ... to this new file. Add optional
-+  replacements for sqrtf, floorf, round and roundf.
-+
-+  * oln/morpho/watershed.hxx: Rename more identifiers to avoid the
-+  _X form.
-+
-+2003-01-20  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-+
-+  * oln.m4: Allow CXXFLAGS_* variables to be overwritten. Change
-+  como default CXXFLAGS_STRICT and CXXFLAGS_STRICT_ERRORS
-+  variables.
-+
- 2003-01-20  Raphaël Poss  <raph@lrde.epita.fr>
+ 2003-01-21  Raphaël Poss  <raph@lrde.epita.fr>
  
-        * Makefile.am: Add a section pertaining to per-compiler
-@@ -7,44 +47,26 @@
-        conf/gen-scripts.sh,
-        conf/compilers.def: Add.
- 
--  * oln/convert/conversion.hh,
--  oln/convert/conversion_ng_se.hh,
--  oln/convol/convolution.hh,
--  oln/convol/fast_gaussian.hxx,
--  oln/core/apply.hh,
--  oln/core/border.hh,
--  oln/core/fold.hh,
--  oln/core/generate.hh,
--  oln/core/neighborhood.hh,
--  oln/core/traverse.hh,
--  oln/level/cc.hh,
--  oln/level/compare.hh,
--  oln/level/connected.hh,
--  oln/level/fill.hh,
--  oln/level/set_level.hh,
--  oln/meta/array1d.hh,
--  oln/meta/array2d.hh,
--  oln/meta/array3d.hh,
--  oln/morpho/dilation.hh,
--  oln/morpho/erosion.hh,
--  oln/morpho/extrema.hxx,
--  oln/morpho/extrema_killer.hh,
--  oln/morpho/fast_morpho.hxx,
--  oln/morpho/geodesic_dilation.hh,
--  oln/morpho/geodesic_erosion.hh,
--  oln/morpho/hit_or_miss.inc,
--  oln/morpho/opening.inc,
--  oln/morpho/reconstruction.hh,
--  oln/morpho/splitse.hh,
--  oln/morpho/stat.hh,
--  oln/morpho/thickening.inc,
--  oln/morpho/thinning.inc,
--  oln/morpho/watershed.hxx,
--  oln/topo/dmap.hh,
--  oln/topo/dmap.hxx,
--  oln/transforms/dwt.hh,
--  oln/utils/histogram.hh,
--  tests/convert/convcomp.hh: Rename _X template parameters to X_.
-+  * oln/convert/conversion.hh, oln/convert/conversion_ng_se.hh,
-+  oln/convol/convolution.hh, oln/convol/fast_gaussian.hxx,
-+  oln/core/apply.hh, oln/core/border.hh, oln/core/fold.hh,
-+  oln/core/generate.hh, oln/core/neighborhood.hh,
-+  oln/core/traverse.hh, oln/level/cc.hh, oln/level/compare.hh,
-+  oln/level/connected.hh, oln/level/fill.hh, oln/level/set_level.hh,
-+  oln/meta/array1d.hh, oln/meta/array2d.hh, oln/meta/array3d.hh,
-+  oln/morpho/dilation.hh, oln/morpho/erosion.hh,
-+  oln/morpho/extrema.hxx, oln/morpho/extrema_killer.hh,
-+  oln/morpho/fast_morpho.hxx, oln/morpho/geodesic_dilation.hh,
-+  oln/morpho/geodesic_erosion.hh, oln/morpho/hit_or_miss.inc,
-+  oln/morpho/opening.inc, oln/morpho/reconstruction.hh,
-+  oln/morpho/splitse.hh, oln/morpho/stat.hh,
-+  oln/morpho/thickening.inc, oln/morpho/thinning.inc,
-+  oln/morpho/watershed.hxx, oln/topo/dmap.hh, oln/topo/dmap.hxx,
-+  oln/transforms/dwt.hh, oln/utils/histogram.hh,
-+  tests/convert/convcomp.hh: Rename _X template parameters to X_,
-+  for single-letters identifiers prepended with an underscore are
-+  reserved for POSIX internal use, and actually are defined in
-+  ctype.h on BSD and cygwin systems.
-        * oln/core/type.hh: Correct `Exact_...()' accordingly.
- 
- 2003-01-19  Raphaël Poss  <raph@lrde.epita.fr>
+        * tests/transforms/fft.cc (CHECK): Correct minor typo.
+Index: doc/ChangeLog
+from  +2003-01-22  Raphaël Poss  <raph@lrde.epita.fr>
+
+   * Makefile.am (ACLOCAL_AMFLAGS, CONFIGURE_DEPENDENCIES): Simplify.
+
 Index: tools/ChangeLog
-from  +2003-01-21  Raphaël Poss  <raph@lrde.epita.fr>
+from  +2003-01-22  Raphaël Poss  <raph@lrde.epita.fr>
 
-   * utilities/morpho/morpho_template.cc: Include getopt.hh instead
-   of getopt.h, to prevent type errors due to bad prototyping
-   behavior of getopt.h.
-   * utilities/morpho/morpho_template_extrema.cc,
-   utilities/morpho/morpho_template_gaussian.cc,
-   utilities/morpho/morpho_template_watershed.cc,
-   utilities/morpho/morpho_template_with_functor.cc,
-   utilities/morpho/morpho_template_with_neighb.cc,
-   utilities/morpho/morpho_template_with_twowin.cc,
-   utilities/mosaic.cc: Likewise.
-
-   * utilities/Makefile.am (INCLUDES, LDADD): Link with
-   libolntools.a, which now provides, if necessary, getopt_long.
-   * utilities/morpho/Makefile.am: Likewise.
-
-   * configure.ac: Check for C compiler and ranlib, to help building
-   lib/libolntools.a.
-   * lib/Makefile.am, lib/getopt.h, lib/getopt1.c lib/getopt.c,
-   lib/getopt.hh, lib/gettext.h: Add.
-   * Makefile.am (SUBDIRS): Mention `lib'.
+   * Makefile.am (ACLOCAL_AMFLAGS, CONFIGURE_DEPENDENCIES): Simplify.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 21 Jan 2003 09:45:50 +0100")
+(Checkin-Time "Wed, 22 Jan 2003 13:38:20 +0100")
 (Checkin-Login raph)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -227,10 +114,10 @@ from  +2003-01-21  Raphaël Poss  <raph@lrde.epita.fr>
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.13 664))
-  (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.4 664))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.6 664))
-  (tools/ChangeLog (oln/o/32_ChangeLog 1.7 664))
+  (ChangeLog (oln/o/33_ChangeLog 1.14 664))
+  (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.6 664))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.7 664))
+  (tools/ChangeLog (oln/o/32_ChangeLog 1.8 664))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.1 664))
 
   (attic/oln-ChangeLog (oln/6_ChangeLog 1.50.1.98.1.5 660))
@@ -238,12 +125,12 @@ from  +2003-01-21  Raphaël Poss  <raph@lrde.epita.fr>
   (attic/doc-ChangeLog (oln/e/1_ChangeLog 1.31 660))
   (attic/tests-ChangeLog (oln/e/30_ChangeLog 1.52 660))
 
-  (bootstrap.sh (oln/j/16_bootstrap. 1.5 775))
+  (bootstrap.sh (oln/j/16_bootstrap. 1.6 775))
   (BUILD (oln/o/38_BUILD 1.2 664))
   (cleanup.sh (oln/o/29_cleanup.sh 1.3 775))
-  (component.m4 (oln/o/40_component. 1.5 664))
-  (configure.ac (oln/3_configure. 1.38 664))
-  (doc/configure.ac (oln/e/2_configure. 1.15 660))
+  
+  (configure.ac (oln/3_configure. 1.39 664))
+  (doc/configure.ac (oln/e/2_configure. 1.16 660))
   (doc/demo/image.cc (oln/d/46_image.cc 1.2 660))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.9 660))
   (doc/demo/morpholena.cc (oln/d/43_morpholena 1.10 660))
@@ -255,13 +142,13 @@ from  +2003-01-21  Raphaël Poss  <raph@lrde.epita.fr>
   (doc/doc/oln-dev.texi (oln/j/1_oln-dev.te 1.1 660))
   (doc/doc/oln-ref.tex (oln/f/14_oln-ref.te 1.3 660))
   (doc/doc/ref-types.tex (oln/g/34_ref-types. 1.5 660))
-  (doc/Makefile.am (oln/e/0_Makefile.a 1.11 660))
+  (doc/Makefile.am (oln/e/0_Makefile.a 1.12 660))
   (doc/tpl/processing.tpl (oln/d/48_processing 1.14 660))
   (FAQ (oln/j/31_FAQ 1.2 664))
   (INSTALL (oln/o/39_INSTALL 1.2 664))
-  (Makefile.am (oln/n/32_Makefile.a 1.7 664))
+  (Makefile.am (oln/n/32_Makefile.a 1.8 664))
   (NEWS (oln/0_NEWS 1.10 660))
-  (oln/configure.ac (oln/n/4_configure. 1.6 660))
+  (oln/configure.ac (oln/n/4_configure. 1.7 660))
   (oln/img/face_se.pbm (oln/n/17_face_se.pb 1.1 660) :no-keywords)
   (oln/img/lena256.pgm (oln/n/14_lena256.pg 1.1 660))
   (oln/img/lena_dark.pgm (oln/n/13_lena_dark. 1.1 660))
@@ -276,7 +163,7 @@ from  +2003-01-21  Raphaël Poss  <raph@lrde.epita.fr>
   (oln/img/se9.pbm (oln/n/5_se9.pbm 1.1 660) :no-keywords)
   (oln/img/se.pbm (oln/n/6_se.pbm 1.1 660) :no-keywords)
   (oln/ISSUES (oln/d/47_ISSUES 1.5 660))
-  (oln/Makefile.am (oln/2_Makefile.a 1.25 660))
+  (oln/Makefile.am (oln/2_Makefile.a 1.26 660))
   (oln/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.5 664))
   (oln/oln/arith/logic.hh (oln/b/24_logic.hh 1.6 664))
   (oln/oln/arith/ops.hh (oln/b/23_ops.hh 1.5.1.2 664))
@@ -417,7 +304,7 @@ from  +2003-01-21  Raphaël Poss  <raph@lrde.epita.fr>
   (oln/oln/level/lut.hh (oln/29_lut.hh 1.7 664))
   (oln/oln/level/set_level.hh (oln/p/1_set_level. 1.5 664))
   (oln/oln/level/threshold.hh (oln/f/15_threshold. 1.5 664))
-  (oln/oln.m4 (oln/j/15_oln.m4 1.9 664))
+  (oln/oln.m4 (oln/j/15_oln.m4 1.11 664))
   (oln/oln/Makefile.am (oln/27_Makefile.a 1.37 600))
   (oln/oln/math/macros.hh (oln/b/21_macros.hh 1.6 664))
   (oln/oln/meta/array1d.hh (oln/f/23_array1d.hh 1.4 664))
@@ -654,13 +541,13 @@ from  +2003-01-21  Raphaël Poss  <raph@lrde.epita.fr>
   (oln/tests/types/tests/vec5 (oln/h/45_vec5 1.2 660))
   (oln/tests/types/tests/vec6 (oln/h/44_vec6 1.1 660))
   (oln/tests/types/tests/vec7 (oln/h/50_vec7 1.1 660))
-  (oln-version.m4 (oln/m/48_oln-versio 1.3 664))
+  
   (prj (oln.prj) :symlink)
   (README (oln/1_README 1.7 664))
   (THANKS (oln/4_THANKS 1.5 660))
   (tools/configure.ac (oln/o/36_configure. 1.5 664))
   (tools () :directory)
-  (tools/Makefile.am (oln/o/37_Makefile.a 1.4 664))
+  (tools/Makefile.am (oln/o/37_Makefile.a 1.5 664))
   (tools/swilena/configure.ac (oln/o/26_configure. 1.1 664))
   (tools/swilena/doc/Makefile.am (oln/n/39_Makefile.a 1.1 664))
   (tools/swilena/doc/swilena.texi (oln/n/40_swilena.te 1.1 660))
@@ -756,7 +643,7 @@ from  +2003-01-21  Raphaël Poss  <raph@lrde.epita.fr>
 ;; Files added by populate at Mon, 20 Jan 2003 11:43:58 +0100,
 ;; to version 7.27(w), by raph:
 
-  (oln/conf/configure.ac (oln/p/23_configure. 1.2 664))
+  (oln/conf/configure.ac (oln/p/23_configure. 1.3 664))
   (oln/conf/gen-scripts.sh (oln/p/24_gen-script 1.2 775))
   (oln/conf/oln-config.shin (oln/p/25_oln-config 1.1 664))
   (oln/conf/compilers.def (oln/p/26_compilers. 1.1 664))
@@ -787,9 +674,15 @@ from  +2003-01-21  Raphaël Poss  <raph@lrde.epita.fr>
 ;; to version 7.29(w), by raph:
 
   (oln/oln/config/math.hh (oln/p/33_math.hh 1.1 664))
+
+;; Files deleted by depopulate at Wed, 22 Jan 2003 13:34:58 +0100,
+;; from version 7.31(w), by raph:
+
+  ; (component.m4 ())
+  ; (oln-version.m4 ())
 )
 (Merge-Parents
-  (7.30 complete
-    (oln/ChangeLog oln/ChangeLog oln/ChangeLog r) (oln/oln.m4 oln/oln.m4 oln/oln.m4 m))
+  (7.32 complete
+    (oln/ChangeLog oln/ChangeLog oln/ChangeLog r) (oln/oln.m4 oln/oln.m4 oln/oln.m4 r))
 )
 (New-Merge-Parents)

@@ -2,8 +2,6 @@
 
 AC_PREREQ([2.57])
 
-m4_include(oln-version.m4)
-
 AC_INIT([oln-meta], OLN_VERSION, OLN_CONTACT)
 AC_CONFIG_AUX_DIR([oln])
 AC_CONFIG_SRCDIR([oln-version.m4])

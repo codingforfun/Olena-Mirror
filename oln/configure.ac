@@ -1,7 +1,6 @@
 # Process this file with autoconf to produce a configure script.
 AC_PREREQ([2.57])
 
-m4_include(../oln-version.m4)
 AC_INIT([oln], OLN_VERSION, OLN_CONTACT)
 AC_CONFIG_SRCDIR([oln.m4])
 AM_INIT_AUTOMAKE([1.7.2 no-define foreign dist-bzip2])
