@@ -1,7 +1,8 @@
 2004-03-08  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* ref/out/exdoc.config.in: Move exdoc.config.in to out.
-	* ref/Makefile.am: Romove useless comments.
+	* ref/Makefile.am: Remove useless comments. Correct file distribution
+	bugs.
 
 2004-02-24  Giovanni Palma  <giovanni@lrde.epita.fr>
 

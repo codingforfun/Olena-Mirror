@@ -1,6 +1,7 @@
 # ###
 # ### General definitions
 # ###
+EXTRA_DIST = out/exdoc.config.in
 olnsrc = $(top_srcdir)/olena/oln
 DOXYGEN = doxygen
 EXDOC = $(srcdir)/exdoc.pl
@@ -11,7 +12,7 @@ IMG_CONV = $(srcdir)/img_conv.pl
 
 doc: html.tar.gz oln-ref.pdf
 
-html: exdoc.config
+html:
 	$(EXDOC) --config=$(OUT_DIR)/exdoc.config  --output-dir=$(OUT_DIR) --input-dir=$(top_srcdir)
 	mkdir -p img
 	cd $(OUT_DIR) && make -f makefile
