@@ -87,8 +87,8 @@ namespace oln {
     }
 
 
-    template<class T>
-    void adapt_assign(const image<T>& input, coord min_border, Value(T) val)
+    template<class _T>
+    void adapt_assign(const image<_T>& _input, coord min_border, Value(_T) val)
     {
       Exact_cref(T, input);
       adapt_width(input, min_border);
