@@ -1,5 +1,11 @@
 2005-04-06  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
+	* oln/core/abstract/niter.hh: New. Abstract neighborhood iterator class.
+	* oln/core/abstract/regular_niter.hh: New. Abstract neighborhood iterator for windows.
+	* oln/core/2d/fwd_regular_niter2d.hh: New. Concrete 2d neighborhood class
+
+2005-04-06  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
+
 	* oln/core/properties.hh: Change properties for neighborhood hierarchy.
 	* oln/core/abstract/image.hh: Add neigbh_type property.
 	* oln/core/abstract/image_neighbness.hh: New. Add neighborhood
