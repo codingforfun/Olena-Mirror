@@ -56,6 +56,8 @@ nobase_pkginclude_HEADERS =			\
   core/fwd_iter2d.hh				\
   core/fwd_iter3d.hh				\
   core/generate.hh				\
+  core/graph.hh					\
+  core/graph.hxx				\
   core/image.hh					\
   core/image1d.hh				\
   core/image1d_size.hh				\
@@ -66,6 +68,8 @@ nobase_pkginclude_HEADERS =			\
   core/image_size.hh				\
   core/imagend_size.hh				\
   core/internal/fake.hh				\
+  core/internal/graph_impl.hh			\
+  core/internal/graph_impl.hxx			\
   core/internal/image1d.hh			\
   core/internal/image1d_data.hh			\
   core/internal/image2d.hh			\

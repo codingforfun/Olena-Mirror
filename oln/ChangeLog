@@ -1,5 +1,9 @@
 2003-01-22  Yann Régis-Gianas  <yann@lrde.epita.fr>
 
+	* oln/Makefile.am: Distribute graph_impl.h[h,xx] and graph.h[h,xx]
+
+2003-01-22  Yann Régis-Gianas  <yann@lrde.epita.fr>
+
 	* oln/core/box.hh (box): 
 		- New constructor from main attributes ;
 		- inner_boxes_mean_dim and mass.
