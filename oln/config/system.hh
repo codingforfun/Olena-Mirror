@@ -38,6 +38,20 @@
 #  define M_PI 3.14159265358979323846264338327
 # endif
 
+# ifdef HAVE_LIMITS
+#  include <limits>
+#  define OLN_FLOAT_INFINITY (std::numeric_limits<float>::infinity())
+#  define OLN_DOUBLE_INFINITY (std::numeric_limits<double>::infinity())
+# else
+#  include <math.h>
+#  if defined HUGE_VAL && defined HUGE_VALF
+#   define OLN_FLOAT_INFINITY HUGE_VALF
+#   define OLN_DOUBLE_INFINITY HUGE_VAL
+#  else
+Do not know how to define infinity on this host.
+#  endif
+# endif
+
 /* The STL used by g++ versions < 3 have namespaces disabled,
    because these g++ versions do not honor `std::' (unless requested).
 

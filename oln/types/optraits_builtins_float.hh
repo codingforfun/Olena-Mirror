@@ -55,8 +55,11 @@ namespace oln
     typedef typetraits<self>::store store_type;
 
   public:
-    static store_type min() { return C_for_sfloat::min(); }
-    static store_type max() { return C_for_sfloat::max(); }
+    // Don't define min() and max() for float and double.
+    // This is error-prone because max()-1 == max().
+    // Furthermore max()-min() can't be computed.
+    static store_type sup() { return OLN_FLOAT_INFINITY; }
+    static store_type inf() { return - sup (); }
   };
 
   namespace internal
@@ -66,7 +69,7 @@ namespace oln
     {
       enum { commutative = true };
       typedef float ret;
-      typedef float impl;      
+      typedef float impl;
     };
 
     //
@@ -80,10 +83,10 @@ namespace oln
     struct operator_plus_traits<float, int_s<nbits, B> > : all_float_traits {};
 
     // We need this because to_oln<float> gives float.
-    // So when using cycle<float,..> + float, it searches 
-    // operator_plus_traits<float,float>    
+    // So when using cycle<float,..> + float, it searches
+    // operator_plus_traits<float,float>
     template <>
-    struct operator_plus_traits<float, float> : all_float_traits {};    
+    struct operator_plus_traits<float, float> : all_float_traits {};
 
     //
     // minus
@@ -134,7 +137,7 @@ namespace oln
 
     template <unsigned nbits, class B>
     struct operator_cmp_traits<float, int_s<nbits, B> > : all_float_traits {};
-    
+
 
     template <>
     struct operator_cmp_traits<float, float> : all_float_traits {};
@@ -156,8 +159,11 @@ namespace oln
     typedef typetraits<self>::store store_type;
 
   public:
-    static store_type min() { return C_for_dfloat::min(); }
-    static store_type max() { return C_for_dfloat::max(); }
+    // Don't define min() and max() for float and double.
+    // This is error-prone because max()-1 == max().
+    // Furthermore max()-min() can't be computed.
+    static store_type sup() { return OLN_DOUBLE_INFINITY; }
+    static store_type inf() { return - sup (); }
   };
 
   namespace internal
@@ -249,7 +255,7 @@ namespace oln
 
     template <>
     struct operator_cmp_traits<double, float> : all_double_traits {};
-    
+
 
   } // end of namespace internal
 

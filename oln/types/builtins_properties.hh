@@ -127,7 +127,7 @@
    //      FLT_MIN                 1.17549435E-38F
    //      FLT_MAX                 3.40282347E+38F
    //      FLT_EPSILON             1.19209290E-07F
- 
+
    //      DBL_MANT_DIG                         53
    //      DBL_DIG                              15
    //      DBL_MIN_EXP                       -1021
@@ -140,14 +140,14 @@
 
 
    struct C_for_sfloat
-   { 
+   {
      typedef float type;
      static type min() { return FLT_MIN; }
      static type max() { return FLT_MAX; }
    };
 
    struct C_for_dfloat
-   { 
+   {
      typedef double type;
      static type min() { return DBL_MIN; }
      static type max() { return DBL_MAX; }

@@ -1,5 +1,13 @@
 2002-09-03  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
+	* configure.ac: Check for limits.
+	* oln/config/system.h (OLN_FLOAT_INFINITY, OLN_DOUBLE_INFINITY):
+	New macros.
+	* oln/types/optraits_builtins_float.hh: Define inf() and sup()
+	instead of min() and max().
+
+2002-09-03  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
 	* oln/types/optraits_cycle.hh (optraits<cycle<T,interval> >::check):
 	Use std::abs(), not abs().
 

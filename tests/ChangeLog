@@ -1,3 +1,8 @@
+2002-09-03  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* types/tests/optrait3: Use OLN_FLOAT_INFINITY and
+	OLN_DOUBLE_INFINITY.  Check inf() too.
+
 2002-09-02  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* types/tests/optrait1a, types/tests/optrait1b,
