@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,19 +37,47 @@
 
 # include <sstream>
 
-/*--------------------------------------------------------------.
-| The formulas used here come from ``Digital Image Processing   |
-| Algorithms and Applications'', I. Pitas; Wiley-Interscience.  |
-`--------------------------------------------------------------*/
+/*! \file nrgbxyz.hh
+**
+** \ref The formulas used here come from ``Digital Image Processing
+** Algorithms and Applications'', I. Pitas; Wiley-Interscience.
+*/
 
 namespace oln {
 
+  // FIXME: should it be removed?
   using namespace ntg;
 
   namespace convert {
 
-    /*!
-    ** obsolete a composition should be performed with nrgb->rgb and rgb->xyz
+    /*! Functor for conversion from N-RGB to XYZ color space.
+    **
+    ** \obsolete A composition should be performed with nrgb->rgb and rgb->xyz. It has
+    ** not been replaced within the function because a double conversion 'reduces'
+    ** the color space. See the following example:
+    ** \code
+    ** // Obsolete:
+    ** //
+    ** // #include <oln/convert/nrgbxyz.hh>
+    ** // #include <ntg/all.hh>
+    ** // int main(int argc, char **argv)
+    ** // {
+    ** //   ntg::nrgb_8 in(100, 60, 64);
+    ** //   ntg::xyz_8 out = oln::convert::f_nrgb_to_xyz<8, 8>()(in);
+    ** // }
+    ** //
+    ** // Should be replaced by:
+    ** //
+    ** #include <oln/convert/rgbxyz.hh>
+    ** #include <oln/convert/rgbnrgb.hh>
+    ** #include <ntg/all.hh>
+    ** int main()
+    ** {
+    **   ntg::nrgb_8 in(100, 60, 64);
+    **   ntg::xyz_8 out = oln::convert::f_rgb_to_xyz<8, 8>()
+    **     (oln::convert::f_nrgb_to_rgb<8, 8>()(in));
+    ** }
+    ** \endcode
     */
     template <unsigned inbits, unsigned outbits>
     struct f_nrgb_to_xyz
@@ -82,6 +110,12 @@ namespace oln {
       }
     };
 
+    /*! Conversion from N-RGB to XYZ color space.
+    **
+    ** \obsolete A composition should be performed with nrgb->rgb and rgb->xyz.
+    **
+    ** \see f_nrgb_to_xyz for more information.
+    */
     template <unsigned inbits, unsigned outbits>
     color<3, outbits, xyz_traits>
     nrgb_to_xyz(const color<3, inbits, nrgb_traits>& v)
@@ -91,8 +125,11 @@ namespace oln {
       return f(v);
     }
 
-    /*!
-    ** obsolete a composition should be performed with xyz->rgb and rgb->nrgb
+    /*! Functor for conversion from XYZ to N-RGB color space.
+    **
+    ** \obsolete A composition should be performed with xyz->rgb and rgb->nrgb.
+    **
+    ** \see f_nrgb_to_xyz for more information.
     */
     template<unsigned inbits, unsigned outbits>
     struct f_xyz_to_nrgb
@@ -122,6 +159,13 @@ namespace oln {
       }
     };
 
+
+    /*! Conversion from XYZ to N-RGB color space.
+    **
+    ** \obsolete a composition should be performed with xyz->rgb and rgb->nrgb.
+    **
+    ** \see f_nrgb_to_xyz for more information.
+    */
     template <unsigned inbits, unsigned outbits>
     color<3, outbits, nrgb_traits>
     xyz_to_nrgb(const color<3, inbits, xyz_traits>& v)

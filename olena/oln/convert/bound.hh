@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,16 +35,17 @@
 namespace oln {
   namespace convert {
 
-    // FIXME: is this really useful with new types ?
-
-    /* Like convert::force, but with saturation.  */
+    /*! Like convert::force, but with saturation.
+    **
+    ** \note FIXME: is this really useful with new types ?
+    */
     template<class Output, class Exact = mlc::final>
     struct bound : public abstract::conversion_to_type< Output, typename mlc::exact_vt<bound<Output, Exact>, Exact>::ret >
     {
- 
+
       template< class Input >
-      Output 
-      doit(const Input& v) const 
+      Output
+      doit(const Input& v) const
       {
 	return ntg::cast::bound<Output>(v);
       }
@@ -58,7 +59,7 @@ namespace oln {
 	  + "FIXME: ntg_name(Exact)" + ">";
       }
     };
-    
+
   } // convert
 } // oln
 

@@ -1,4 +1,24 @@
 2004-03-13  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/convert/basics.hh: Add comments.
+	* olena/oln/convert/bound.hh: Likewise.
+	* olena/oln/convert/abstract/colorconv.hh: Likewise.
+	* olena/oln/convert/conversion.hh: Likewise.
+	* olena/oln/convert/conversion_ng_se.hh: Likewise.
+	* olena/oln/convert/force.hh: Likewise.
+	* olena/oln/convert/nrgbxyz.hh: Likewise.
+	* olena/oln/convert/rgbnrgb.hh: Likewise.
+	* olena/oln/convert/rgbxyz.hh: Likewise.
+	* olena/oln/convert/abstract/conversion.hh: Likewise.
+	* olena/oln/convert/cast.hh: Likewise.
+	* olena/oln/convert/rgbhsv.hh: Likewise.
+	* olena/oln/convert/rgbhsl.hh: Likewise.
+	* olena/oln/convert/rgbhsi.hh: Likewise.
+	* olena/oln/convert/rgbyuv.hh: Likewise.
+	* olena/oln/convert/rgbyiq.hh: Likewise.
+	* olena/oln/convert/value_to_point.hh: Likewise.
+	* olena/oln/convert/stretch.hh: Fix bug.
+
+2004-03-13  Niels Van Vliet  <niels@lrde.epita.fr>
 	* olena/oln/convert/stretch.hh: Add stretch_balance. Add comments.
 
 2004-03-12  Damien Thivolle  <damien@lrde.epita.fr>

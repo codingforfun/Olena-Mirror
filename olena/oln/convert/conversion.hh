@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,34 +32,44 @@
 # include <oln/core/image.hh>
 # include <oln/core/compose.hh>
 # include <ntg/utils/debug.hh>
-# include <oln/convert/abstract/conversion.hh> 
+# include <oln/convert/abstract/conversion.hh>
 # include <functional>
 
 namespace oln {
+  /*!
+  ** \brief Namespace for conversion (for example cast, color, or neighborhood to window).
+  */
   namespace convert {
 
-    /* ConvOutput queries the output type of conversion ConvType for
-       an input of type InputType.  This comes handy when computing
-       the return type of a function which takes a conversion function
-       in argument.  */
+    /*! Trait that returns the output of a conversion.
+    **
+    ** convoutput queries the output type of conversion ConvType for
+    ** an input of type InputType.  This comes handy when computing
+    ** the return type of a function which takes a conversion function
+    ** in argument.
+    **
+    ** \note convoutput is exported in the namespace oln for convenience.
+    */
     template<class ConvType, class Base, class InputType>
     struct convoutput
     {
       typedef typename abstract::conversion<ConvType, Base>::template output<InputType>::ret ret;
     };
 
+    /// namespace internal, should not be used by end user.
     namespace internal {
-      /* Compose a conversion C and an adaptable unary function UF,
-	 producing an adaptable unary function.  */
+      /*! Compose a conversion C and an adaptable unary function UF,
+      ** producing an adaptable unary function.
+      */
       template <class C, class UF>
       struct compconv1_ :
 	public std::unary_function <typename UF::argument_type,
 	  typename C::template output<typename UF::argument_type>::ret>
       {
 	typedef compconv1_ self_type;
-	
+
 	typename self_type::result_type
-	operator()(typename self_type::argument_type arg) const 
+	operator()(typename self_type::argument_type arg) const
 	{
 	  return conv_(func_(arg));
 	}
@@ -71,9 +81,10 @@ namespace oln {
 	const C conv_;
 	const UF func_;
       };
-      
-      /* Compose a conversion C and an adaptable binary function BF,
-	 producing an adaptable binary function.  */
+
+      /*! Compose a conversion C and an adaptable binary function BF,
+      ** producing an adaptable binary function.
+      */
       template <class C, class BF>
       struct compconv2_ :
 	public std::binary_function <typename BF::first_argument_type,
@@ -84,7 +95,7 @@ namespace oln {
 
 	typename self_type::result_type
 	operator()(typename self_type::first_argument_type arg1,
-		   typename self_type::second_argument_type arg2) const 
+		   typename self_type::second_argument_type arg2) const
 	{
 	  return conv_(func_(arg1, arg2));
 	}
@@ -99,27 +110,31 @@ namespace oln {
 
     } // end of internal
 
-    /* Friendly procedure that build an internal::compconv1_ with
-       type deduction.  */
+    /*! Friendly procedure that build an internal::compconv1_ with
+    ** type deduction.
+    */
     template <class C, class B, class UF>
     internal::compconv1_<C, UF>
-    compconv1(const abstract::conversion<C, B>& conv, const UF &func) 
+    compconv1(const abstract::conversion<C, B>& conv, const UF &func)
     {
       return internal::compconv1_<C, UF>(conv.exact(), func);
     }
 
-    /* Likewise for compconv2_.  */
+    /*! Likewise for compconv2_.  */
     template <class C, class B, class BF>
     internal::compconv2_<C, BF>
-    compconv2(const abstract::conversion<C, B>& conv, const BF &func) 
+    compconv2(const abstract::conversion<C, B>& conv, const BF &func)
     {
       return internal::compconv2_<C, BF>(conv.exact(), func);
     }
 
 
-    /* The core oln::apply function, cannot apply all conversion function,
-       because they do not all define result_type.  So we define another
-       apply function here, to apply conversions.  */
+    /*! Apply function that retrive the result type within the conversion class.
+    **
+    ** The core oln::apply function, cannot apply all conversion function,
+    ** because they do not all define result_type.  So we define another
+    ** apply function here, to apply conversions.
+    */
     template<class C, class B, class I> inline
     typename mute<I, typename convoutput<C, B, oln_value_type(I)>::ret>::ret
     apply(const abstract::conversion<C, B>& conv, const oln::abstract::image<I>& input)

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,16 +37,26 @@ namespace oln {
 
     namespace abstract {
 
+      /*! Base class for color conversion.
+      **
+      ** \param icomps Number of components in the input.
+      ** \param iqbits Number of bits per components in the input.
+      ** \param icolor Input color.
+      ** \param ocomps Number of components in the output.
+      ** \param oqbits Number of bits per components in the output.
+      ** \param ocolor Output color.
+      ** \param Exact Exact class.
+      */
       template< unsigned icomps,
 		unsigned iqbits,
 		template<unsigned> class icolor,
 		unsigned ocomps,
-		unsigned oqbits,		
+		unsigned oqbits,
 		template<unsigned> class ocolor,
 		class Exact = mlc::final >
-      struct color_conversion : 
-	public abstract::conversion_from_type_to_type< ntg::color<icomps, iqbits, icolor>, 
-						       ntg::color<ocomps, oqbits, ocolor>, 
+      struct color_conversion :
+	public abstract::conversion_from_type_to_type< ntg::color<icomps, iqbits, icolor>,
+						       ntg::color<ocomps, oqbits, ocolor>,
 						       typename mlc::exact_vt<color_conversion<icomps, iqbits, icolor, ocomps, oqbits, ocolor, Exact>, Exact>::ret >
       {
       };

@@ -36,6 +36,8 @@
 
 # include <set>
 
+# include <vector>
+
 namespace oln {
 
   namespace convert {
@@ -143,9 +145,9 @@ namespace oln {
     **    = oln::level::frontp_connected_component<ntg::int_u8>(light,
     ** 							  oln::neighb_c8(),
     ** 							  card);
-    **   oln::io::save(cc, "oln_convert_stretch_dark.pgm");
+    **   oln::io::save(cc, IMG_OUT "oln_convert_stretch_dark.pgm");
     **   oln::io::save(oln::convert::stretch_balance<ntg::int_u8>(cc),
-    ** 		"oln_convert_stretch_balance.pgm");
+    ** 		IMG_OUT "oln_convert_stretch_balance.pgm");
     ** }
     ** \endcode
     ** \image html face_se.png
@@ -173,7 +175,8 @@ namespace oln {
       typename mute<I, DestValue>::ret out(in.size());
 
       //FIXME: I would like to remove the static_cast.
-      ntg_cumul_type(DestValue) tab[static_cast<int>(max_in - min_in + 1)];
+      std::vector<ntg_cumul_type(DestValue)>
+	tab(static_cast<int>(max_in - min_in + 1));
       typedef typename std::set<oln_value_type(I)> set_type;
       set_type s;
       oln_iter_type(I) it(in);
