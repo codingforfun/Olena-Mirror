@@ -36,7 +36,7 @@
 */
 namespace oln
 {
-  
+
   namespace category
   {
     struct data_storage;
@@ -59,6 +59,7 @@ namespace oln
     struct point_type;
     struct dpoint_type;
     struct fwd_piter_type;
+    struct bkd_piter_type;
     struct iter_type;
     struct delegated_type;
     struct size_type;

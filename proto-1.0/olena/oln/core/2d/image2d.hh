@@ -34,6 +34,7 @@
 # include <oln/core/abstract/image_with_data.hh>
 # include <oln/core/2d/array2d.hh>
 # include <oln/core/2d/fwd_piter2d.hh>
+# include <oln/core/2d/bkd_piter2d.hh>
 
 
 /*! \namespace oln
@@ -80,6 +81,7 @@ namespace oln {
 
     typedef fwd_piter2d piter_type;
     typedef fwd_piter2d fwd_piter_type;
+    typedef bkd_piter2d bkd_piter_type;
 
     // please note that value_storage_type means data_type
     // since image2d is an image_with_data

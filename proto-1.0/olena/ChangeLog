@@ -1,5 +1,13 @@
 2005-03-20  Damien Thivolle  <damien@lrde.epita.fr>
 
+	* tests/core/tests/piter2d: Add a test for backward 2d iterators.
+	* oln/makefile.src: Add new file.
+	* oln/core/2d/image2d.hh: Include bkd_piter2d.hh.
+	* oln/core/2d/bkd_piter2d.hh: New. bkd_piter2d implementation.
+	* oln/core/properties.hh: Add bkd_piter_type property.
+
+2005-03-20  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* tests/core/tests/border2d: New.
 	* oln/core/abstract/image_with_data.hh: Add resize_border and
 	impl_hold_large methods.

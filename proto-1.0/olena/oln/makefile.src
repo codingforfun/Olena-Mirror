@@ -18,6 +18,7 @@ OLN_DEP =					\
   core/1d/point1d.hh				\
   core/1d/size1d.hh				\
   core/2d/array2d.hh				\
+  core/2d/bkd_piter2d.hh			\
   core/2d/dpoint2d.hh				\
   core/2d/fwd_piter2d.hh			\
   core/2d/image2d.hh				\
