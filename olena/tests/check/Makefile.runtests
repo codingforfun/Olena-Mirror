@@ -6,7 +6,7 @@ LDFLAGS_RUNTESTS = $(LDFLAGS) $(AM_LDFLAGS)
 CPPFLAGS_RUNTESTS = $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
 	-I$(top_builddir) -I$(srcdir) -I.
 CXXFLAGS_RUNTESTS = $(CXXFLAGS) $(AM_CXXFLAGS)
-LDADD_RUNTESTS = ../check/libolncheck.a
+LDADD_RUNTESTS = ../check/libolncheck.a $(ZLIB_LDFLAGS)
 
 check-runtests:
 	TOP_SRCDIR=$(top_srcdir) SRCDIR=$(srcdir) \

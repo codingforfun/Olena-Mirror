@@ -1,4 +1,4 @@
-Olena 0.10	Not yet
+Olena 0.10	April 15, 2004
 
 	* New documentaion system.
 	  Now any comment should use doxygen style (i.e. /*! ... */).
@@ -30,6 +30,15 @@ Olena 0.10	Not yet
 	  - CIE RGB is the main color system i.e. it can be converted
 	    directly into any other color system.
 	  - Conversion between 2 color systems should pass by the RGB one.
+
+	* Generic and concrete morphers are now implemented in Olena.
+	  - Five morphers are included in this release:
+		 Color morpher
+		 Sub quantifying morpher
+		 Piece morpher
+		 Iter morpher
+		 Slicing morpher
+	  - These morphers can be manipulated as if they were normal images.
 
 Olena 0.9	August 8, 2003
 

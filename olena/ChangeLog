@@ -1,5 +1,11 @@
 2004-04-15  Giovanni Palma  <giovanni@lrde.epita.fr>
 
+	* tests/check/Makefile.flags: Reorder flags.
+	* tests/check/Makefile.check: Likewise.
+	* tests/check/Makefile.runtests: Likewise.
+
+2004-04-15  Giovanni Palma  <giovanni@lrde.epita.fr>
+
 	* tests/morpho/tests/attr_op_cl: Disable dist closing/opening
 	tests.
 

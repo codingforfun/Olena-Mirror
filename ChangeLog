@@ -1,5 +1,9 @@
 2004-04-14  Damien Thivolle  <damien@lrde.epita.fr>
 
+	* NEWS: Update the file.
+
+2004-04-14  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* config/oln.m4: Correct the message that appears when doxygen is not
 	enough up to date.
 

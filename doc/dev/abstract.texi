@@ -14,18 +14,13 @@ Laboratory (@url{http://www.lrde.epita.fr}) since 1997.  We did numerous
 prototypes and throwaway experiments before settling into the kind of
 programming paradigm which is finally here.
 
-This version of Olena is quite young.  In fact most of the operators
-have been translated from the sources of Milena, an image processing
-library which works only on 2D images (Milena stands for "mini-Olena")
-and which is not publicly available.
-
-We haven't written a real documentation yet. In the @file{doc/}
-directory you will find the start of a reference manual which presently
-documents only the morphological operators, together with a developer's
-guide to the use of Olena from user projects.  In the @file{doc/demo/}
-directory lie a few sample programs.  The file @file{doc/demo/tour.cc}
-attempts to introduce you to the basics of Olena.  For the rest, we're
-afraid you will have to dig the code or e-mail us.
+The documentation does not cover the whole project.  In the @file{doc/}
+directory you will find the first draft of a reference manual.  It
+only documents the image hierarchy and image processing algorithms.
+In the @file{doc/demo/} directory lie a few sample programs.
+The file @file{doc/demo/tour.cc} attempts to introduce you to the basics
+of Olena.
+For the rest, we're afraid you will have to dig the code or e-mail us.
 
 Please direct any question or comments to @email{olena@@lrde.epita.fr},
 or @email{olena-bugs@@lrde.epita.fr}.

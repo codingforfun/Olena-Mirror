@@ -1,171 +1,54 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 170)
-(Parent-Version oln 10 169)
-(Version-Log "Index: doc/ChangeLog
+(Project-Version oln 10 173)
+(Parent-Version oln 10 170)
+(Version-Log "Index: olena/ChangeLog
 from  Giovanni Palma  <giovanni@lrde.epita.fr>
-	* dev/build.texi: Update the file.
-	* dev/srctree.texi: Likewise.
-	* dev/upgrading.texi: Likewise.
+	* tests/check/Makefile.flags: Reorder flags.
+	* tests/check/Makefile.check: Likewise.
+	* tests/check/Makefile.runtests: Likewise.
 
 +2004-04-15  Giovanni Palma  <giovanni@lrde.epita.fr>
 +
- 	* dev/thanks.texi: Update thanks.
+ 	* tests/morpho/tests/attr_op_cl: Disable dist closing/opening
+ 	tests.
  
- 2004-04-15  Niels Van Vliet  <niels@lrde.epita.fr>
-Index: doc/dev/build.texi
---- doc/dev/build.texi Fri, 08 Aug 2003 13:24:29 +0200 burrus_n (oln/p/42_build.texi 1.11 600)
-+++ doc/dev/build.texi Thu, 15 Apr 2004 17:47:14 +0200 palma_g (oln/p/42_build.texi 1.11 600)
-@@ -260,10 +260,11 @@
+Index: olena/tests/check/Makefile.flags
+--- olena/tests/check/Makefile.flags Fri, 01 Aug 2003 02:45:53 +0200 burrus_n (oln/q/39_Makefile.f 1.4.1.1 600)
++++ olena/tests/check/Makefile.flags Thu, 15 Apr 2004 18:22:28 +0200 palma_g (oln/q/39_Makefile.f 1.4.1.1 600)
+@@ -2,4 +2,4 @@
  
- @multitable @columnfractions .33 .66
- @item @strong{System} @tab @strong{Compiler}
--@item Linux @tab g++ 3.0 and 3.2
-+@item Linux @tab g++ 3.0, 3.1, 3.2 and 3.3
- @item Linux @tab icc (Intel's C++ Compiler) v7
- @item MacOS X @tab g++ 3.1
--@item NetBSD 1.6 @tab g++ 3.2
-+@item NetBSD 1.6 @tab g++ 3.2 and 3.3
-+@item FreeBSD 5.0 @tab g++ 3.2 and 3.3
- @item Cygwin @tab g++ 3.2
- @end multitable
+ AM_CXXFLAGS = $(CXXFLAGS_OPTIMIZE) $(CXXFLAGS_STRICT_ERRORS) $(ZLIB_CXXFLAGS)
+ AM_CPPFLAGS = -I$(top_srcdir)/metalic/tests/check -I$(top_srcdir)/olena/tests/check
+-AM_LDFLAGS = $(ZLIB_LDFLAGS)
++AM_LDFLAGS =
+Index: olena/tests/check/Makefile.check
+--- olena/tests/check/Makefile.check Fri, 01 Aug 2003 02:45:53 +0200 burrus_n (oln/q/40_Makefile.c 1.4 600)
++++ olena/tests/check/Makefile.check Thu, 15 Apr 2004 18:22:43 +0200 palma_g (oln/q/40_Makefile.c 1.4 600)
+@@ -2,5 +2,5 @@
  
-@@ -280,8 +281,7 @@
- code, especially with intensive inlining.
- @end itemize
+ # This Makefile is designed to be included by olena/tests/* directories.
  
--Actually Olena yet compiles with g++ 2.95, but some wrong code might
--be generated with data types.
-+Actually Olena does not compile with g++ 2.95 anymore.
+-LDADD = ../check/libolncheck.a
++LDADD = ../check/libolncheck.a $(ZLIB_LDFLAGS)
+ TESTS = $(check_PROGRAMS)
+Index: olena/tests/check/Makefile.runtests
+--- olena/tests/check/Makefile.runtests Tue, 05 Aug 2003 21:39:33 +0200 burrus_n (oln/u/32_Makefile.r 1.2 600)
++++ olena/tests/check/Makefile.runtests Thu, 15 Apr 2004 18:36:47 +0200 palma_g (oln/u/32_Makefile.r 1.2 600)
+@@ -6,7 +6,7 @@
+ CPPFLAGS_RUNTESTS = $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \\
+ 	-I$(top_builddir) -I$(srcdir) -I.
+ CXXFLAGS_RUNTESTS = $(CXXFLAGS) $(AM_CXXFLAGS)
+-LDADD_RUNTESTS = ../check/libolncheck.a
++LDADD_RUNTESTS = ../check/libolncheck.a $(ZLIB_LDFLAGS)
  
- Compilation time may have important differences between compilers, the
- following benchmark gives an idea of the time needed to complete a
-@@ -289,7 +289,6 @@
- 
- @multitable @columnfractions .5 .5
- @item @strong{Compiler} @tab @strong{Time}
--@item  g++-2.95 @tab 16m42s
- @item  g++-3.0 @tab 23m20s
- @item  g++-3.2 @tab 20m03s
- @item  icc-7 @tab 12m52s
-@@ -300,7 +299,6 @@
- 
- @multitable @columnfractions .25 .5 .25
- @item @strong{Compiler} @tab @strong{Options} @tab @strong{Time}
--@item g++-2.95 @tab @option{-O3 -finline-limit-1500} @tab 3m14s
- @item g++-3.0 @tab @option{-O3 -finline-limit-1500} @tab 2m08s
- @item g++-3.2 @tab @option{-O3 -finline-limit-1500} @tab 1m50s
- @item icc-7   @tab @option{-O3} @tab 5m41s
-Index: doc/dev/srctree.texi
---- doc/dev/srctree.texi Thu, 07 Aug 2003 15:22:47 +0200 burrus_n (oln/p/45_srctree.te 1.6 600)
-+++ doc/dev/srctree.texi Thu, 15 Apr 2004 18:04:54 +0200 palma_g (oln/p/45_srctree.te 1.6 600)
-@@ -111,6 +111,9 @@
- @item oln/morpho/
- Morphological operators.
- 
-+@item oln/morpher
-+Generic morphers.
-+
- @item oln/level/
- Level processing operators.
- 
-@@ -186,6 +189,10 @@
- @item morpho/
- Tests pertaining to morphological operators.
- 
-+@cindex @file{tests/morpher/}
-+@item morpho/
-+Tests pertaining to morphers.
-+
- @cindex @file{tests/sanity/}
- @item sanity/
- Tests that check that each Olena header can be separately included in
-@@ -338,43 +345,38 @@
- A directory containing Texinfo sources for the Olena Developer's Handbook.
- 
- @cindex @file{doc/ref/}
--@cindex @file{oln-ref.tex}
- @item doc/ref/
--A directory containing TeX sources and definitions to build the Reference
--Manual. It noticeably contains:
-+A directory  containing script  to extract documentation  and examples
-+from source code. It noticeably contains:
- 
- @table @file
--@item oln-ref.tex
--The master TeX file for the Reference Manual.
--
--@cindex @file{ref-types.tex}
--@item ref-types.tex
--Handwritten documentation about Olena value types, included in the
--Reference Manual.
--
--@cindex @file{ref-morpho.tex}
--@item ref-morpho.tex
--@cindex @file{ref-level.tex}
--@item ref-level.tex
--@cindex @file{processing.tpl}
--TeX sources describing Olena components. They are auto-generated by
--AutoGen from Olena C++ header files@footnote{more precisely, from C++
--comments}, using definitions in @file{processing.tpl}.
-+@cindex @file{exdoc.pl}
-+@item exdoc.pl
-+Main script to extract code example.
-+
-+@cindex @file{img_conv.pl}
-+@item img_conv.pl
-+Script to convert image used by extracted code.
-+
-+@cindex @file{doxygen.config}
-+@item doxygen.config
-+Configuration file used by doxygen.
- 
- @cindex @file{Makefile.am}
- @item Makefile.am
- Automake definitions that control the build process, which (as of 0.7)
- depends on GNU Make.
- 
--@item bin/
-+@item out/
- Auto-generated programs that create the pictures included in the
- Reference Manual.
- 
- @item html/
- The HTML version of the Reference Manual.
- 
--@item processing.tpl
--AutoGen parameters for generating parts of the Reference Manual.
-+@item latex/
-+The latex version of the Reference Manual.
-+
- @end table
- @end table
- 
-Index: doc/dev/upgrading.texi
---- doc/dev/upgrading.texi Fri, 22 Aug 2003 12:36:42 +0200 astrid (oln/r/50_upgrading. 1.3 600)
-+++ doc/dev/upgrading.texi Thu, 15 Apr 2004 17:51:52 +0200 palma_g (oln/r/50_upgrading. 1.3 600)
-@@ -4,10 +4,16 @@
- @chapter Upgrading from older versions
- 
- @menu
-+* Upgrading from 0.9 to 0.10::
- * Upgrading from 0.8 to 0.9::
- * Upgrading from 0.7 to 0.8::
- @end menu
- 
-+@node Upgrading from 0.9 to 0.10
-+@section Upgrading from 0.9 to 0.10
-+Nothing should be done since the this release only provide a new
-+documentation system and many bug fixes.
-+
- @node Upgrading from 0.8 to 0.9
- @section Upgrading from 0.8 to 0.9
- 
+ check-runtests:
+ 	TOP_SRCDIR=$(top_srcdir) SRCDIR=$(srcdir) \\
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 15 Apr 2004 18:09:53 +0200")
+(Checkin-Time "Thu, 15 Apr 2004 19:35:42 +0200")
 (Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -268,11 +151,11 @@ Index: doc/dev/upgrading.texi
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.7 600))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.7 600))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.8 600))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.9 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.42 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.40 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.88 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.89 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.13 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.34 600))
 
@@ -301,7 +184,7 @@ Index: doc/dev/upgrading.texi
   (doc/ref/processing.tpl (oln/d/48_processing 1.16 600))
 
   (Makefile.am (oln/n/32_Makefile.a 1.17.1.2.1.7 600))
-  (NEWS (oln/0_NEWS 1.21 600))
+  (NEWS (oln/0_NEWS 1.22 600))
 
   (olena/img/face_se.pbm (oln/n/17_face_se.pb 1.1 600) :no-keywords)
   (olena/img/lena256.pgm (oln/n/14_lena256.pg 1.1 600) :no-keywords)
@@ -882,9 +765,9 @@ Index: doc/dev/upgrading.texi
 ;; Files added by populate at Fri, 24 Jan 2003 11:03:53 +0100,
 ;; to version 7.40(w), by raph:
 
-  (doc/dev/biblio.texi (oln/p/39_biblio.tex 1.4 600))
+  (doc/dev/biblio.texi (oln/p/39_biblio.tex 1.5 600))
   (doc/dev/thanks.texi (oln/p/40_thanks.tex 1.7 600))
-  (doc/dev/abstract.texi (oln/p/41_abstract.t 1.7.1.2 600))
+  (doc/dev/abstract.texi (oln/p/41_abstract.t 1.7.1.3 600))
 
 ;; Files deleted by depopulate at Fri, 24 Jan 2003 11:04:25 +0100,
 ;; from version 7.40(w), by raph:
@@ -901,7 +784,7 @@ Index: doc/dev/upgrading.texi
 
   (doc/dev/install.texi (oln/p/43_install.te 1.3 600))
 
-  (doc/dev/faq.texi (oln/p/44_faq.texi 1.10 600))
+  (doc/dev/faq.texi (oln/p/44_faq.texi 1.11 600))
 
 ;; Files added by populate at Sat, 25 Jan 2003 19:02:34 +0100,
 ;; to version 7.45(w), by raph:
@@ -943,8 +826,8 @@ Index: doc/dev/upgrading.texi
   (integre/ntg/Makefile.am (oln/q/36_Makefile.a 1.8.1.3 600))
   (olena/tests/check/defs.in (oln/q/37_defs.in 1.1 600))
   (olena/tests/check/Makefile.am (oln/q/38_Makefile.a 1.4 600))
-  (olena/tests/check/Makefile.flags (oln/q/39_Makefile.f 1.4.1.1 600))
-  (olena/tests/check/Makefile.check (oln/q/40_Makefile.c 1.4 600))
+  (olena/tests/check/Makefile.flags (oln/q/39_Makefile.f 1.4.1.2 600))
+  (olena/tests/check/Makefile.check (oln/q/40_Makefile.c 1.5 600))
   (integre/tests/Makefile.am (oln/q/41_Makefile.a 1.4 600))
   (integre/tests/check/defs.in (oln/q/42_defs.in 1.1 600))
   (metalic/mlc/array/objs.hh (oln/q/45_objs.hh 1.3 600))
@@ -1149,7 +1032,7 @@ Index: doc/dev/upgrading.texi
   (olena/tests/utils/tests/timer (oln/u/29_timer.cc 1.4 600))
   (olena/tests/topo/tests/tarjan (oln/u/30_test-tarja 1.2 600))
   (olena/oln/convert/abstract/conversion.hh (oln/u/31_conversion 1.6 600))
-  (olena/tests/check/Makefile.runtests (oln/u/32_Makefile.r 1.2 600))
+  (olena/tests/check/Makefile.runtests (oln/u/32_Makefile.r 1.3 600))
   (contrib/runtests (oln/u/33_runtests 1.4 700))
   (metalic/tests/check/Makefile.runtests (oln/u/34_Makefile.r 1.1 600))
   (integre/tests/check/Makefile.runtests (oln/u/35_Makefile.r 1.2 600))
@@ -1613,6 +1496,10 @@ Index: doc/dev/upgrading.texi
   (olena/oln/makefile.src (oln/r/4_makefile.s 1.1 600))
 )
 (Merge-Parents
-  (10.169 complete)
+  (10.170 complete)
+  (10.172 complete
+    (ChangeLog ChangeLog ChangeLog r) (doc/ChangeLog doc/ChangeLog doc/ChangeLog r)
+    (NEWS NEWS NEWS r) (doc/dev/biblio.texi doc/dev/biblio.texi doc/dev/biblio.texi r)
+    (doc/dev/abstract.texi doc/dev/abstract.texi doc/dev/abstract.texi r) (doc/dev/faq.texi doc/dev/faq.texi doc/dev/faq.texi r))
 )
 (New-Merge-Parents)

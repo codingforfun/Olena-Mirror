@@ -48,6 +48,12 @@ Processing Algorithms}).
   Jérôme Darbon, Thierry Géraud, and Alexandre Duret-Lutz,
   submitted to International Symposium On Mathematical Morphology VI
   (ISMM 2002), April 3-5, 2002, Sydney, Australia.
+
+@item
+  @cite{Static C++ Object-Oriented Programming (SCOOP)}
+  Nicolas Burrus, Alexandre Duret-Lutz, Thierry Geraud, David Lesage,
+  and Raphaël Poss. In the Proceedings of the Workshop on Multiple
+  Paradigm with OO Languages (MPOOL'03) Anaheim, CA Oct. 2003.
 @end itemize
 
 You can download these papers and related materials from
