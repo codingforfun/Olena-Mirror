@@ -1,3 +1,8 @@
+2004-02-02  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* oln/utils/histogram.hh: Add revert sort.
+	* tests/utils/tests/histogram: Add tests.
+
 2004-02-30  Niels Van Vliet  <niels@lrde.epita.fr>
 
 	* oln/utils/histogram.hh: Store histograms in images. Support

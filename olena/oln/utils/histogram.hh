@@ -394,11 +394,36 @@ namespace oln {
       const ntg_cumul_type(val) card = ntg_max_val(val) - ntg_min_val(val) + 1;
       std::vector<oln_point_type(I)* > ptr(card);
       ptr[0] = &(v[0]);
-      for (ntg_cumul_type(val) i = 1; i < card; i++)
+      for (ntg_cumul_type(val) i = 1; i < card; ++i)
 	ptr[i] = ptr[i - 1] + histo[i - 1 + ntg_min_val(val)];
 
       // Now iterate on the image to sort point in the order of their
       // level
+      oln_iter_type(I) p(im);
+      for_all(p)
+	*(ptr[unsigned(im[p] - ntg_min_val(val))]++) = p;
+    }
+
+    template<class I>
+    void
+    distrib_sort_inv(const abstract::image<I>& im,
+		     std::vector<oln_point_type(I)> &v)
+    {
+      typedef oln_value_type(I) val;
+
+      typedef typename ntg_is_a(val, ntg::non_vectorial)::ensure_type ensure_type;
+
+      precondition(v.size() == im.npoints());
+
+      utils::histogram<val> histo(im);
+
+      const ntg_cumul_type(val) card = ntg_max_val(val) - ntg_min_val(val) + 1;
+      std::vector<oln_point_type(I)* > ptr(card);
+      ptr[card - 1] = &(v[0]);
+
+      for (ntg_signed_cumul_type(val) i = card - 2; i >= 0; --i)
+	ptr[i] = ptr[i + 1] + histo[i + 1 + ntg_min_val(val)];
+
       oln_iter_type(I) p(im);
       for_all(p)
 	*(ptr[unsigned(im[p] - ntg_min_val(val))]++) = p;
