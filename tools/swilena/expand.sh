@@ -33,8 +33,8 @@ EOF
 %include swilena_ntg_macros.i
 %import swilena_ntg.i
 EOF
-  # int_u8 int_u16 int_s8 int_s16 int_s8s int_s16s int_s32s 
-  # int_u8s int_u16s int_u32s 
+  # int_u8 int_u16 int_s8 int_s16 int_s8s int_s16s int_s32s
+  # int_u8s int_u16s int_u32s
   # float_s rgb_8 rgb_16 rgb_32
   cat >> "$SWILENA/src/swilena_image${dim}d.i" <<EOF
 make_image(image${dim}d_bin, $dim, ntg_bin, ntg_bin_value)
@@ -45,8 +45,12 @@ make_image(image${dim}d_s32, $dim, ntg_int_s32, ntg_int_s32_value)
 make_image(image${dim}d_float, $dim, ntg_float, ntg_float_value)
 EOF
 
+  TYPES="ntg_bin ntg_int_u8 ntg_int_u32 ntg_int_s8 ntg_int_s32 ntg_float"
+
   ## Morpho algorithms
-  MODULES="$MODULES morpho${dim}d"
+  for types in $TYPES; do
+      MODULES="$MODULES morpho${dim}d_${types}"
+  done
   $SWILENA/generate_morpho_instantiations.py $SWILENA/src
 
   ## Arith
@@ -88,18 +92,18 @@ dump_python()
       if [ `expr $ilist % 4` = 0 ]; then
          echo " \\"; echo -ne "\t"
       fi
-      echo -n " _swilena_$mod.so" 
+      echo -n " _swilena_$mod.so"
       ilist=`expr $ilist + 1`
     done
     echo; echo
     echo -n "python_PYTHON +="
     ilist=0
     for mod in $MODULES; do
-      if [ `expr $ilist % 4` = 0 ]; then 
-         echo " \\"; echo -ne "\t" 
-      fi 
+      if [ `expr $ilist % 4` = 0 ]; then
+         echo " \\"; echo -ne "\t"
+      fi
       echo -n " swilena_$mod.py"
-      ilist=`expr $ilist + 1` 
+      ilist=`expr $ilist + 1`
     done
     echo; echo
     for mod in $MODULES; do
@@ -108,13 +112,13 @@ dump_python()
     echo
     ilist=0
     for mod in $MODULES; do
-      if [ -r "$SWILENA/src/swilena_${mod}.i" ]; then 
+      if [ -r "$SWILENA/src/swilena_${mod}.i" ]; then
          sdir=src
       else
          sdir=meta
       fi
       echo "swilena_${mod}_wrap.cxx swilena_${mod}.py: \$(srcdir)/../$sdir/swilena_${mod}.i"
-      echo -e "\t\$(SWIG) -c -c++ -python -I\$(srcdir)/../src -I\$(srcdir)/../meta \$(CPPFLAGS) -o swilena_${mod}_wrap.cxx \$(srcdir)/../$sdir/swilena_${mod}.i"
+      echo -e "\t\$(SWIG) -noruntime -c++ -python -I\$(srcdir)/../src -I\$(srcdir)/../meta \$(CPPFLAGS) -o swilena_${mod}_wrap.cxx \$(srcdir)/../$sdir/swilena_${mod}.i"
       echo
     done
 }
@@ -131,7 +135,7 @@ cat <<EOF
 ##
 
 INCLUDES = \$(RUBY_CPPFLAGS) -I\$(srcdir)/../src
-AM_CPPFLAGS = -DOLN_EXCEPTIONS 
+AM_CPPFLAGS = -DOLN_EXCEPTIONS
 AM_CXXFLAGS = \$(CXXFLAGS_OPTIMIZE)
 AM_LDFLAGS = -shared -lswigrb \$(ZLIB_LDFLAGS)
 
@@ -146,7 +150,7 @@ dump_ruby()
       if [ `expr $ilist % 4` = 0 ]; then
          echo " \\"; echo -ne "\t"
       fi
-      echo -n " swilena_$mod.so" 
+      echo -n " swilena_$mod.so"
       ilist=`expr $ilist + 1`
     done
     echo; echo
@@ -156,7 +160,7 @@ dump_ruby()
     echo
     ilist=0
     for mod in $MODULES; do
-      if [ -r "$SWILENA/src/swilena_${mod}.i" ]; then 
+      if [ -r "$SWILENA/src/swilena_${mod}.i" ]; then
          sdir=src
       else
          sdir=meta
@@ -172,10 +176,10 @@ dump_ruby()
 header_src() {
     cat <<EOF
 ## Include this file in your Makefile.am
-## 
+##
 ## makefile.swig for swilena/src
 ## NOTE: this file was generated automatically by expand.sh
-## 
+##
 EOF
 }
 
@@ -183,7 +187,7 @@ dump_src() {
     echo -n "EXTRA_DIST ="
     ilist=0
     for mod in $MODULES; do
-      if [ -r "$SWILENA/src/swilena_${mod}.i" ]; then 
+      if [ -r "$SWILENA/src/swilena_${mod}.i" ]; then
          if [ `expr $ilist % 4` = 0 ]; then
 	    echo " \\"
             echo -ne "\t"

@@ -28,6 +28,7 @@
 #ifndef OLENA_CORE_POINT2D_HXX
 # define OLENA_CORE_POINT2D_HXX
 
+# include <oln/core/point1d.hh>
 # include <oln/core/dpoint2d.hh>
 # include <iostream>
 

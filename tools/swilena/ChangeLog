@@ -1,8 +1,17 @@
-2004-10-04  Niels Van Vliet  <niels@lrde.epita.fr>
+2004-04-11  Damien Thivolle  <damien@lrde.epita.fr>
 
-	* tools/swilena/meta/swilena_structelt.i: Fix a bug.
-	* tools/swilena/doc/swilena.texi: Fix a bug.
-	* tools/swilena/python/Makefile.am: Add clean_local.
+	* swilena/expand.sh: Split morpho modules to make the code compile
+	faster.
+	* swilena/generate_morpho_instantiations.py: Likewise.
+	* swilena/meta/swilena_ntg.i: Add `do_nothing' argument to empty SWIG
+	macros since the SWIG preprocessor does not support them.
+	* swilena/meta/swilena_morpho.i: Likewise.
+
+2004-04-10  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* swilena/meta/swilena_structelt.i: Fix a bug.
+	* swilena/doc/swilena.texi: Fix a bug.
+	* swilena/python/Makefile.am: Add clean_local.
 
 2004-01-26  Astrid Wang  <astrid@lrde.epita.fr>
 

@@ -1,3 +1,10 @@
+2004-04-11  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* olena/oln/core/point2d.hh: Add header include.
+	* olena/oln/core/point2d.hxx: Likewise.
+	* olena/oln/core/point3d.hh: Likewise.
+	* olena/oln/core/point3d.hxx: Likewise.
+
 2004-04-07  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* olena/oln/Makefile.am: Add forgotten files to the distribution.

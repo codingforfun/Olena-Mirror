@@ -416,7 +416,7 @@ AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
 	 AC_ARG_VAR([RUBY_CPPFLAGS], [Path to ruby.h])
 	 AC_ARG_WITH([ruby-includedir], [Include path for ruby.h],
 	             [RUBY_CPPFLAGS="-I$withval"],
-                     [RUBY_CPPFLAGS="-I/usr/lib/ruby/1.6/i386-linux"])
+                     [RUBY_CPPFLAGS="-I/usr/lib/ruby/1.6/i386-linux -I/usr/lib/ruby/1.7/i386-linux -I/usr/lib/ruby/1.8/i386-linux"])
 
 	 CPPFLAGS="$CPPFLAGS $RUBY_CPPFLAGS"
          AC_CHECK_HEADERS([ruby.h],,

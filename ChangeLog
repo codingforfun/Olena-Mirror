@@ -1,3 +1,7 @@
+2004-04-11  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* configure.ac: Add support for ruby-1.7, ruby-1.8.
+
 2004-04-09  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* cleanup.sh: Replace `-or' by `-o' to improve portability.

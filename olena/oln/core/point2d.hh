@@ -29,7 +29,7 @@
 # define OLENA_CORE_POINT2D_HH
 
 # include <oln/core/coord.hh>
-# include <oln/core/abstract/point.hh>
+# include <oln/core/point1d.hh>
 # include <iostream>
 namespace oln {
 
