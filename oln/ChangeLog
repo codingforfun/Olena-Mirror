@@ -1,5 +1,13 @@
 2003-02-14  Yann Régis-Gianas  <yann@lrde.epita.fr>
 
+	* oln/core/graph.hxx (neighbors_of): New.
+	* oln/core/graph.hh (neighbors_of) : New.
+	* oln/core/internal/graph_impl.hh (neighbors_of): New.
+		Use std::set<int> instead of std::list<int>		
+	* oln/core/internal/graph_impl.hxx: Implement it.
+
+2003-02-14  Yann Régis-Gianas  <yann@lrde.epita.fr>
+
 	* oln/core/box.hh (top_left, bottom_right): New.
 	* oln/core/box.hxx: Implement them.
 	* oln/level/invert.hh: Fix a 'return' in a void return function.

@@ -110,6 +110,21 @@ namespace oln {
   }
 
   template <class U>
+  const typename graph<U>::edges_of_node_set_t&
+  graph<U>::edges_of(hnode_t node) const
+  {
+    return self().edges_of(node);
+  }
+
+  template <class U>
+  const 
+  typename graph<U>::neighbors_of_node_t&
+  graph<U>::neighbors_of(hnode_t node) const
+  {
+    return self().neighbors_of(node);
+  }
+
+  template <class U>
   typename graph<U>::hedge_t graph<U>::edge_of(hnode_t from, hnode_t to)
   {
     const edges_of_node_set_t& edges = self().edges_of(from);

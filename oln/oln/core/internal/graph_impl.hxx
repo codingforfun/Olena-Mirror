@@ -128,6 +128,14 @@ namespace oln {
     }
 
     template <class NodeValue, class EdgeValue>
+    const typename heavy_graph<NodeValue, EdgeValue>::neighbors_of_node_t&
+    heavy_graph<NodeValue, EdgeValue>::neighbors_of(hnode_t n) const
+    {
+      precondition(hold(n));
+      return nodes_[n].neighbors;
+    }
+
+    template <class NodeValue, class EdgeValue>
     const typename heavy_graph<NodeValue, EdgeValue>::nodes_set_t&	
     heavy_graph<NodeValue, EdgeValue>::nodes() const
     {
@@ -179,7 +187,7 @@ namespace oln {
     {
       if (removed_nodes_.size() == 0)
 	{
-	  nodes_.push_back(t);
+	  nodes_.push_back(decorated_node_value_t(t));
 	  return nodes_.size() - 1;
 	}
       hnode_t n = *removed_nodes_.begin();
@@ -187,6 +195,7 @@ namespace oln {
       assertion(n < int(nodes_.size()));
       nodes_[n] = t;
       nodes_[n].edges.clear();
+      nodes_[n].neighbors.clear();
       postcondition(hold(n));
       return n;
     }
@@ -227,8 +236,10 @@ namespace oln {
 	  edges_[e].from() = h1;
 	  edges_[e].to() = h2;
 	}
-      nodes_[h1].edges.push_back(e);
-      nodes_[h2].edges.push_back(e);
+      nodes_[h1].edges.insert(e);
+      nodes_[h2].edges.insert(e);
+      nodes_[h1].neighbors.insert(h2);
+      nodes_[h2].neighbors.insert(h1);
       postcondition(hold(e));
       return e;
     }
@@ -241,8 +252,10 @@ namespace oln {
 	return;
       precondition(hold(e));
       const decorated_edge_value_t& ev = edges_[e];
-      nodes_[ev.from()].edges.remove(e);
-      nodes_[ev.to()].edges.remove(e);
+      nodes_[ev.from()].edges.erase(e);
+      nodes_[ev.to()].edges.erase(e);
+      nodes_[ev.to()].neighbors.erase(ev.from());
+      nodes_[ev.from()].neighbors.erase(ev.to());
       removed_edges_.insert(e);
       postcondition(! hold(e));
     }

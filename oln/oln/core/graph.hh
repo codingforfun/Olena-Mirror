@@ -28,6 +28,7 @@
 #ifndef OLENA_CORE_GRAPH_HH
 # define OLENA_CORE_GRAPH_HH
 
+# include <string>
 # include <oln/meta/basics.hh>
 
 namespace oln {
@@ -41,6 +42,7 @@ namespace oln {
     typedef meta::undefined nodes_set_t;
     typedef meta::undefined edges_set_t;
     typedef meta::undefined edges_of_node_set_t;
+    typedef meta::undefined neighbors_of_node_t;
     // hnode_t must be different to hedge_t.
     // handler are equivalent to unsigned.
     typedef meta::undefined hnode_t;
@@ -68,6 +70,9 @@ namespace oln {
     typedef typename graph_traits<U>::edges_set_t         edges_set_t;
     // set of edge linked to a node.
     typedef typename graph_traits<U>::edges_of_node_set_t edges_of_node_set_t;
+    // set of neighbour of a node.
+    typedef typename graph_traits<U>::neighbors_of_node_t 
+      neighbors_of_node_t;
     // const iterator on node values.
     typedef typename nodes_set_t::const_iterator     nodes_set_const_iterator;
     // const iterator on edge values.
@@ -123,7 +128,9 @@ namespace oln {
     // Return true if there exists an edge between from and to.
     bool		linked(hnode_t from, hnode_t to);
     // Set of edges that are linked to a node.
-    edges_of_node_set_t edges_of(hnode_t n) const;
+    const edges_of_node_set_t& edges_of(hnode_t n) const;
+    // Neighbors of a node.
+    const neighbors_of_node_t& neighbors_of(hnode_t n) const;
     // Node value accessor (mutable version).
     node_value_t&	operator[](hnode_t n);
     // Node value accessor (const version).

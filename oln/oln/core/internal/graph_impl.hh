@@ -30,7 +30,6 @@
 
 # include <oln/core/graph.hh>
 # include <vector>
-# include <list>
 # include <set>
 
 namespace oln {
@@ -81,7 +80,8 @@ namespace oln {
     {
       node_decorator(const NodeValue&);
       node_decorator();
-      std::list<hedge_t> edges;
+      std::set<hedge_t> edges;
+      std::set<hnode_t> neighbors;
     };
 
     // Fully connected implementation of graph.
@@ -98,7 +98,8 @@ namespace oln {
       typedef oln::internal::hnode_t		hnode_t;
       typedef oln::internal::hedge_t		hedge_t;
       typedef heavy_graph<NodeValue, EdgeValue> self_t;
-      typedef std::list<hedge_t>		edges_of_node_set_t;
+      typedef std::set<hedge_t>		edges_of_node_set_t;
+      typedef std::set<hnode_t>		neighbors_of_node_t;
       typedef typename nodes_set_t::const_iterator  nodes_set_const_iterator;
       typedef typename edges_set_t::const_iterator  edges_set_const_iterator;
       
@@ -124,7 +125,8 @@ namespace oln {
       hnode_t			to(hedge_t e2) const;
       hnode_t			from(edges_set_const_iterator e1) const;
       hnode_t			to(edges_set_const_iterator e2) const;
-      const edges_of_node_set_t&edges_of(hnode_t n) const;
+      const edges_of_node_set_t& edges_of(hnode_t n) const;
+      const neighbors_of_node_t& neighbors_of(hnode_t n) const;
       node_value_t&		operator[](hnode_t n);
       const node_value_t&	operator[](hnode_t n) const;
       edge_value_t&		operator[](hedge_t n);
@@ -154,7 +156,8 @@ namespace oln {
     typedef oln::internal::hnode_t			hnode_t;
     typedef oln::internal::hedge_t			hedge_t;
     typedef internal::heavy_graph<NodeValue, EdgeValue> self_t;
-    typedef std::list<hedge_t>				edges_of_node_set_t;
+    typedef std::set<hedge_t>				edges_of_node_set_t;
+    typedef std::set<hnode_t>				neighbors_of_node_t;
   };
 
 } // end of oln.
