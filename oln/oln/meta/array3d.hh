@@ -41,11 +41,11 @@ namespace oln {
 
     class not_implemented_yet{}; // FIXME
 
-    template<class _Info, class _T>
+    template<class _Info, class T_>
     struct array3d
     {
       typedef array3d self;
-      typedef _T T;
+      typedef T_ T;
       typedef _Info Info;
 
 

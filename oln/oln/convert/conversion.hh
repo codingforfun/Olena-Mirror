@@ -45,8 +45,8 @@ namespace oln {
        therefore the processings which accept a conversion usually
        looks as follow.
 
-       template< class _C, ...>
-       ... fubar(const converstion<_C>& _conv, ...)
+       template< class C_, ...>
+       ... fubar(const converstion<C_>& _conv, ...)
        {
           Exact_cref(C, conv);
 	  ...
@@ -209,17 +209,17 @@ namespace oln {
 
     /* Friendly procedure that build an internal::_compconv1 with
        type deduction.  */
-    template <class _C, class UF>
-    internal::_compconv1<Exact(_C), UF>
-    compconv1(const conversion<_C>& _conv, const UF &func) {
+    template <class C_, class UF>
+    internal::_compconv1<Exact(C_), UF>
+    compconv1(const conversion<C_>& _conv, const UF &func) {
       Exact_cref(C, conv);
       return internal::_compconv1<C, UF>(conv, func);
     }
 
     /* Likewise for _compconv2.  */
-    template <class _C, class BF>
-    internal::_compconv2<Exact(_C), BF>
-    compconv2(const conversion<_C>& _conv, const BF &func) {
+    template <class C_, class BF>
+    internal::_compconv2<Exact(C_), BF>
+    compconv2(const conversion<C_>& _conv, const BF &func) {
       Exact_cref(C, conv);
       return internal::_compconv2<C, BF>(conv, func);
     }

@@ -38,8 +38,8 @@ namespace oln {
   // traverse (unary)
 
 
-  template<class _I, class F>
-  const F& traverse(F& f, const image<_I>& _input)
+  template<class I_, class F>
+  const F& traverse(F& f, const image<I_>& _input)
   {
     Exact_cref(I, input);
     Iter(I) p(input);
@@ -85,9 +85,9 @@ namespace oln {
   // traverse2 (binary)
 
 
-  template<class _I1, class _I2, class F>
+  template<class I1_, class I2_, class F>
   const F& traverse2(F& f,
-		    const image<_I1>& _input1, const image<_I2>& _input2)
+		    const image<I1_>& _input1, const image<I2_>& _input2)
   {
     Exact_cref(I1, input1);
     Exact_cref(I2, input2);

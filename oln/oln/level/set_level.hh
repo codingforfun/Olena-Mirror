@@ -35,11 +35,11 @@ namespace oln {
 
   namespace level {
 
-    template <class _I>
-    void set_level(image<_I>&        _inout, 
-		   const Point(_I)&  p1,
-		   const Point(_I)&  p2, 
-		   Value(_I)         level)
+    template <class I_>
+    void set_level(image<I_>&        _inout, 
+		   const Point(I_)&  p1,
+		   const Point(I_)&  p2, 
+		   Value(I_)         level)
     {
       Exact_ref(I, inout);
 
@@ -91,10 +91,10 @@ namespace oln {
     }
 
 
-    template <class _I, class BoxType>
-    void set_level(image<_I>&          _inout, 
+    template <class I_, class BoxType>
+    void set_level(image<I_>&          _inout, 
  		   BoxType&              box,
- 		   const Value(_I)&      level)
+ 		   const Value(I_)&      level)
     {
       if (box.card() != 0)
 	{

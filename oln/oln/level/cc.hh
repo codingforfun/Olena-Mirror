@@ -71,16 +71,16 @@ namespace oln {
     // Number the connected components i.e label true. background(i.e
     // label false) has the label 0; in the output
     // FIXME: Should probably be turned into a class.
-    template <class DestType, class _I, class _E>
-    typename mute<_I, DestType>::ret
-    frontp_connected_component(const image<_I>& _input,
-			       const neighborhood<_E>& _se, 
+    template <class DestType, class I_, class E_>
+    typename mute<I_, DestType>::ret
+    frontp_connected_component(const image<I_>& _input,
+			       const neighborhood<E_>& _se, 
 			       unsigned& nb_label)
     {
       // FIXME: ensure the Value(I) is bin.
       Exact_cref(I, input);
       Exact_cref(E, se);
-      typename mute<_I, DestType>::ret output(input.size());
+      typename mute<I_, DestType>::ret output(input.size());
       level::fill(output, 0);
 
       typedef std::set<Point(I), oln::internal::default_less< Point(I) > > 
@@ -117,7 +117,7 @@ namespace oln {
 			     component.begin(), component.end(),
 			     inserter(points_to_process,
 				      points_to_process.begin()),
-			     oln::internal::default_less< Point(_I) >());
+			     oln::internal::default_less< Point(I_) >());
 	    }
 	  for (typename points_set::const_iterator i = component.begin();
 	       i != component.end();
@@ -132,23 +132,23 @@ namespace oln {
       return output;
     }
 
-    template <class DestType, class _I, class _E>
-    typename mute<_I, DestType>::ret
-    frontp_connected_component(const image<_I>& _input,
-			       const neighborhood<_E>& _se)
+    template <class DestType, class I_, class E_>
+    typename mute<I_, DestType>::ret
+    frontp_connected_component(const image<I_>& _input,
+			       const neighborhood<E_>& _se)
     {
       unsigned dummy;
       return frontp_connected_component(_input, _se, dummy);
     }
 
-    template <class _I>
-    typename mute<_I, bin>::ret
-    extract_i_cc(const image<_I>& _input,
-		 Value(_I) i)
+    template <class I_>
+    typename mute<I_, bin>::ret
+    extract_i_cc(const image<I_>& _input,
+		 Value(I_) i)
     {
       Exact_cref(I, input);
 
-      typename mute<_I, bin>::ret output(input.size());
+      typename mute<I_, bin>::ret output(input.size());
       level::fill(output, false);
       Iter(I) p(input);
       for_all(p)
@@ -157,8 +157,8 @@ namespace oln {
       return output;
     }
 
-    template <class _I>
-    Value(_I) get_n_cc(const image<_I>& _input)
+    template <class I_>
+    Value(I_) get_n_cc(const image<I_>& _input)
     {
       Exact_cref(I, input);
       return  fold(arith::f_max<Value(I)>(), input);

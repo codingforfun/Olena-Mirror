@@ -60,10 +60,10 @@ namespace oln {
      * exo: out.pgm
      * wontcompile: fixme
      =*/
-    template<class _I1, class _I2, class _N>
-    Concrete(_I1) geodesic_erosion(const image<_I1> & _marker,
-				   const image<_I2> & _mask,
-				   const neighborhood<_N>& _Ng)
+    template<class I1_, class I2_, class N_>
+    Concrete(I1_) geodesic_erosion(const image<I1_> & _marker,
+				   const image<I2_> & _mask,
+				   const neighborhood<N_>& _Ng)
     {
       Exact_cref(I1, marker);
       Exact_cref(I2, mask);
@@ -99,10 +99,10 @@ namespace oln {
        * exo: out.pgm
        * wontcompile: fixme
        =*/
-      template<class _I1, class _I2, class _N>
-      Concrete(_I1) geodesic_erosion(const image<_I1> & _marker,
-				     const image<_I2> & _mask,
-				     const neighborhood<_N>& _Ng)
+      template<class I1_, class I2_, class N_>
+      Concrete(I1_) geodesic_erosion(const image<I1_> & _marker,
+				     const image<I2_> & _mask,
+				     const neighborhood<N_>& _Ng)
       {
 	Exact_cref(I1, marker);
 	Exact_cref(I2, mask);

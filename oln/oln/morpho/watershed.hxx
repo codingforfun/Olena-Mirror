@@ -149,9 +149,9 @@ namespace oln {
       }
 
       // Algorithm by Vincent and Soille
-      template<class PointHandler, class DestValue, class _I, class _N>
-      typename mute<_I, DestValue>::ret
-      _soille_watershed(const image<_I>& _im_i, const neighborhood<_N>& _Ng)
+      template<class PointHandler, class DestValue, class I_, class N_>
+      typename mute<I_, DestValue>::ret
+      _soille_watershed(const image<I_>& _im_i, const neighborhood<N_>& _Ng)
       {
 	Exact_cref(I, im_i);
 	Exact_cref(N, Ng);
@@ -159,7 +159,7 @@ namespace oln {
 	_OLN_MORPHO_DECLARE_SOILLE_WATERSHED_CONSTS(DestValue);
 
 	// Initializations
-	typedef typename mute<_I, DestValue>::ret result_type;
+	typedef typename mute<I_, DestValue>::ret result_type;
 	result_type im_o(im_i.size());
 	level::fill(im_o, init);
 	std::queue< Point(I) > fifo;
@@ -298,11 +298,11 @@ namespace oln {
     };
 
     // version by D'Ornellas et al.
-    template<class _I1, class _I2, class _N> inline
-    Concrete (_I2)&
-    watershed_seg_or(const image<_I1>& _D,
-		     image<_I2>& _M,
-		     const neighborhood<_N>& _Ng)
+    template<class I1_, class I2_, class N_> inline
+    Concrete (I2_)&
+    watershed_seg_or(const image<I1_>& _D,
+		     image<I2_>& _M,
+		     const neighborhood<N_>& _Ng)
     {
       Exact_cref(I1, D);
       Exact_ref(I2, M);

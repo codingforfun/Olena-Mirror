@@ -328,8 +328,8 @@ namespace oln {
       return dr * dr + dc * dc;
     }
 
-    template <class _I>
-    image2d<float> exact_dmap(const image<_I>& _input)
+    template <class I_>
+    image2d<float> exact_dmap(const image<I_>& _input)
     {
       Exact_cref(I, input);
       image2d<float> output(input.size());

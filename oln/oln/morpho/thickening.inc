@@ -27,10 +27,10 @@
 // Public License.
 
 
-template<class _I, class _E1, class _E2>
-Concrete(_I) thickening(const image<_I>& _input,
-		       const struct_elt<_E1>& _se1,
-		       const struct_elt<_E2>& _se2)
+template<class I_, class E1_, class E2_>
+Concrete(I_) thickening(const image<I_>& _input,
+		       const struct_elt<E1_>& _se1,
+		       const struct_elt<E2_>& _se2)
 {
   Exact_cref(I, input);
   Exact_cref(E1, se1);

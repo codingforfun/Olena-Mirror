@@ -18,10 +18,10 @@ struct f_l2_vec3 : public std::binary_function<Input, Input, sfloat>
   }
 };
 
-template< class F, class Dist, class _I1, class _I2 >
+template< class F, class Dist, class I1_, class I2_ >
 F&
 compare_images(F& functor, Dist distance,
-	       const image<_I1>& _im1, const image<_I2>& _im2)
+	       const image<I1_>& _im1, const image<I2_>& _im2)
 {
   Exact_cref(I1, im1);
   Exact_cref(I2, im2);

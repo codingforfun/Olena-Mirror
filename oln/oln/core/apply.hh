@@ -41,9 +41,9 @@ namespace oln {
 
   /* Standard unary 'apply' procedure.  Apply function f to each
      element of _input.  */
-  template<class AdaptableUnaryFun, class _I> inline
-  typename mute<_I, typename AdaptableUnaryFun::result_type>::ret
-  apply(AdaptableUnaryFun f, const image<_I>& _input)
+  template<class AdaptableUnaryFun, class I_> inline
+  typename mute<I_, typename AdaptableUnaryFun::result_type>::ret
+  apply(AdaptableUnaryFun f, const image<I_>& _input)
   {
     Exact_cref (I, input);
     typename mute<I, typename AdaptableUnaryFun::result_type>::ret
@@ -85,10 +85,10 @@ namespace oln {
 
   /* Standard binary 'apply' procedure.  Apply function f to each
      element of _input1 and _inpu2.  */
-  template<class AdaptableBinaryFun, class _I1, class _I2> inline
-  typename mute<_I1, typename AdaptableBinaryFun::result_type>::ret
+  template<class AdaptableBinaryFun, class I1_, class I2_> inline
+  typename mute<I1_, typename AdaptableBinaryFun::result_type>::ret
   apply2(AdaptableBinaryFun f,
-	 const image<_I1>& _input1, const image<_I2>& _input2)
+	 const image<I1_>& _input1, const image<I2_>& _input2)
   {
     Exact_cref (I1, input1);
     Exact_cref (I2, input2);
@@ -144,8 +144,8 @@ namespace oln {
   /* Main apply_self() function.  Note we require a UnaryFun only,
      not a AdaptableUnaryFunc, because as we overwrite an image
      we already know the output type.  */
-  template<class UnaryFun, class _I> inline
-  image<_I>& apply_self(UnaryFun f, image<_I>& _input)
+  template<class UnaryFun, class I_> inline
+  image<I_>& apply_self(UnaryFun f, image<I_>& _input)
   {
     Exact_ref(I, input);
     Iter(I) p(input);
@@ -178,9 +178,9 @@ namespace oln {
   `------------*/
 
   /* Main apply2_self() function.  See also the comment for apply_self().  */
-  template<class UnaryFun, class _I1, class _I2>
-  image<_I1>& apply2_self(UnaryFun f,
-			  image<_I1>& _input1, const image<_I2>& _input2)
+  template<class UnaryFun, class I1_, class I2_>
+  image<I1_>& apply2_self(UnaryFun f,
+			  image<I1_>& _input1, const image<I2_>& _input2)
   {
     Exact_ref(I1, input1);
     Exact_ref(I2, input2);

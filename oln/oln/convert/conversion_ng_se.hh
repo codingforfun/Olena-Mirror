@@ -41,9 +41,9 @@
 namespace oln {
   namespace convert {
 
-    template<class _N>
-    typename get_se< _N::dim >::ret
-    ng_to_se(const neighborhood<_N>& _Ng)
+    template<class N_>
+    typename get_se< N_::dim >::ret
+    ng_to_se(const neighborhood<N_>& _Ng)
     {
       Exact_cref(N, Ng);
       typename get_se< N::dim >::ret output;
@@ -53,9 +53,9 @@ namespace oln {
       return output;
      }
 
-    template<class _N>
-    typename get_se< _N::dim >::ret
-    ng_to_cse(const neighborhood<_N>& _Ng)
+    template<class N_>
+    typename get_se< N_::dim >::ret
+    ng_to_cse(const neighborhood<N_>& _Ng)
     {
       Exact_cref(N, Ng);
       typename get_se< N::dim >::ret output;

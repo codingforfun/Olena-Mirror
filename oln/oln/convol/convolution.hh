@@ -45,16 +45,16 @@ namespace oln {
     namespace slow {
 
       //FIXME : we must always specify DestValue.
-      template<class DestValue, class _I, class _Win> 
-      typename mute<_I, DestValue>::ret
-      convolve(const image < _I >& _input, 
-	       const w_window< _Win >& _win)
+      template<class DestValue, class I_, class Win_> 
+      typename mute<I_, DestValue>::ret
+      convolve(const image < I_ >& _input, 
+	       const w_window< Win_ >& _win)
       {
 	Exact_cref(I, input);
 	Exact_cref(Win, win);
 	meta::eq<I::dim, Win::dim>::ensure();
 
-	typename mute<_I, DestValue>::ret output(input.size());
+	typename mute<I_, DestValue>::ret output(input.size());
 	border::adapt_copy(input, win.delta());
 	Iter(I) p_im(input);
 	for_all(p_im)
@@ -70,12 +70,12 @@ namespace oln {
       }
 
       //FIXME: don't use array1d, ..., arraynd.
-      template<class DestValue, class _I, class Info, class _Win> 
-      typename mute<_I, DestValue>::ret
-      convolve(const image < _I >& _input, 
-	       const meta::array2d<Info, _Win >& _arr)
+      template<class DestValue, class I_, class Info, class Win_> 
+      typename mute<I_, DestValue>::ret
+      convolve(const image < I_ >& _input, 
+	       const meta::array2d<Info, Win_ >& _arr)
       {
-	return convolve<DestValue>(_input, static_cast< w_window2d<_Win> >(_arr));
+	return convolve<DestValue>(_input, static_cast< w_window2d<Win_> >(_arr));
 	// FIXME: Should be w_window<_T_arr>.  Adjust #include once done.
       }
 

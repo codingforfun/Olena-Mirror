@@ -1,3 +1,45 @@
+2003-01-20  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* oln/convert/conversion.hh,
+	oln/convert/conversion_ng_se.hh,
+	oln/convol/convolution.hh,
+	oln/convol/fast_gaussian.hxx,
+	oln/core/apply.hh,
+	oln/core/border.hh,
+	oln/core/fold.hh,
+	oln/core/generate.hh,
+	oln/core/neighborhood.hh,
+	oln/core/traverse.hh,
+	oln/level/cc.hh,
+	oln/level/compare.hh,
+	oln/level/connected.hh,
+	oln/level/fill.hh,
+	oln/level/set_level.hh,
+	oln/meta/array1d.hh,
+	oln/meta/array2d.hh,
+	oln/meta/array3d.hh,
+	oln/morpho/dilation.hh,
+	oln/morpho/erosion.hh,
+	oln/morpho/extrema.hxx,
+	oln/morpho/extrema_killer.hh,
+	oln/morpho/fast_morpho.hxx,
+	oln/morpho/geodesic_dilation.hh,
+	oln/morpho/geodesic_erosion.hh,
+	oln/morpho/hit_or_miss.inc,
+	oln/morpho/opening.inc,
+	oln/morpho/reconstruction.hh,
+	oln/morpho/splitse.hh,
+	oln/morpho/stat.hh,
+	oln/morpho/thickening.inc,
+	oln/morpho/thinning.inc,
+	oln/morpho/watershed.hxx,
+	oln/topo/dmap.hh,
+	oln/topo/dmap.hxx,
+	oln/transforms/dwt.hh,
+	oln/utils/histogram.hh,
+	tests/convert/convcomp.hh: Rename _X template parameters to X_.
+	* oln/core/type.hh: Correct `Exact_...()' accordingly.
+
 2003-01-19  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* tests/morpho/Makefile.am (CXXFLAGS): append $(CXXFLAGS_OPTIMIZE)

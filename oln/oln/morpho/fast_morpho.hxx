@@ -43,11 +43,11 @@ namespace oln {
 
       // Find structuring elements to be added/removed from the histogram
       // when we move forward along each direction.
-      template<class _E1, class _E2, class _E3>
+      template<class E1_, class E2_, class E3_>
       void
-      find_struct_elts(const struct_elt<_E1>& _se,
-		       struct_elt<_E2> _se_add[type::exact<_E1>::ret::dim],
-		       struct_elt<_E3> _se_rem[type::exact<_E1>::ret::dim])
+      find_struct_elts(const struct_elt<E1_>& _se,
+		       struct_elt<E2_> _se_add[type::exact<E1_>::ret::dim],
+		       struct_elt<E3_> _se_rem[type::exact<E1_>::ret::dim])
       {
 	Exact_cref(E1, se);
 	Exact_ptr(E2, se_add);
@@ -98,13 +98,13 @@ namespace oln {
 
       // Update HIST by adding elements from _SE_ADD, and removing
       // those from _SE_REM.
-      template<class _I, class _E1, class _E2, class H>
+      template<class I_, class E1_, class E2_, class H>
       inline void
       hist_update(H& hist,
-		  const image<_I>& _input,
-		  const Point(_I)& p,
-		  const struct_elt<_E1>& _se_rem,
-		  const struct_elt<_E2>& _se_add)
+		  const image<I_>& _input,
+		  const Point(I_)& p,
+		  const struct_elt<E1_>& _se_rem,
+		  const struct_elt<E2_>& _se_add)
       {
 	Exact_cref(I, input);
 	{
@@ -234,10 +234,10 @@ namespace oln {
     } // internal
 
 
-    template<class _E>
+    template<class E_>
     struct sort_dimensions
     {
-      sort_dimensions(struct_elt<_E> se[type::exact<_E>::ret::dim])
+      sort_dimensions(struct_elt<E_> se[type::exact<E_>::ret::dim])
 	: _se(se) {}
 
       bool operator()(unsigned a, unsigned b)
@@ -247,14 +247,14 @@ namespace oln {
       }
 
     protected:
-      struct_elt<_E>* _se;
+      struct_elt<E_>* _se;
     };
 
 
-    template<class _I, class _E, template<typename, typename> class H>
-    Concrete(_I)
-    fast_morpho(const image<_I>& _input,
-		const struct_elt<_E>& _se)
+    template<class I_, class E_, template<typename, typename> class H>
+    Concrete(I_)
+    fast_morpho(const image<I_>& _input,
+		const struct_elt<E_>& _se)
     {
       Exact_cref(I, input);
       Exact_cref(E, se);
@@ -288,7 +288,7 @@ namespace oln {
       unsigned dims[dim];
       for (unsigned n = 0; n < dim; ++n)
 	dims[n] = n;
-      sort_dimensions<_E> s(se_add);
+      sort_dimensions<E_> s(se_add);
       std::sort(dims, dims + dim, s);
 
       const typename I::image_size size = input.size();
@@ -308,7 +308,7 @@ namespace oln {
 
       internal::fast_morpho_inner<1, E::dim, const I,
 	const typename I::image_size, H<Value(I),unsigned>,
-	const E, Point(I), Concrete(_I)>::doit(input, size, hist,					       
+	const E, Point(I), Concrete(I_)>::doit(input, size, hist,					       
 					       se_add, se_rem,
 					       se_add_back, se_rem_back,
 					       p, output, dims);

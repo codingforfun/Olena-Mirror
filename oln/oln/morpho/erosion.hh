@@ -65,8 +65,8 @@ namespace oln {
      * exi: object.pbm
      * exo: out.pbm
     =*/
-    template<class _I, class _E>
-    Concrete(_I) erosion(const image<_I>& _input, const struct_elt<_E>& _se)
+    template<class I_, class E_>
+    Concrete(I_) erosion(const image<I_>& _input, const struct_elt<E_>& _se)
     {
       Exact_cref(I, input);
       Exact_cref(E, se);
@@ -92,18 +92,18 @@ namespace oln {
      * see: morpho::n_dilation
     =*/
 
-    template<class _I, class _E>
-    Concrete(_I) n_erosion(const image<_I> & _input,
-			   const struct_elt<_E>& se,
+    template<class I_, class E_>
+    Concrete(I_) n_erosion(const image<I_> & _input,
+			   const struct_elt<E_>& se,
 			   unsigned n)
     {
-      //meta::eq<_I::dim, _E::dim>::ensure();
+      //meta::eq<I_::dim, E_::dim>::ensure();
       precondition(n > 0);
       Exact_cref(I, input);
-      Concrete(_I) output = input.clone();
+      Concrete(I_) output = input.clone();
       for (unsigned i = 0; i < n; ++i)
 	{
-	  Concrete(_I) work = erosion(output, se);
+	  Concrete(I_) work = erosion(output, se);
 	  output = work;
  	}
       return output;

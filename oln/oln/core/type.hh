@@ -227,19 +227,19 @@ to_exact(const type::any<T>& ref)
 typename type::exact<Type>::ret
 
 # define Exact_ptr(Type, Var)			\
-typedef Exact(_##Type) Type;			\
+typedef Exact(Type##_) Type;			\
 Type * Var = to_exact(_##Var);
 
 # define Exact_cptr(Type, Var)			\
-typedef Exact(_##Type) Type;			\
+typedef Exact(Type##_) Type;			\
 const Type * Var = to_exact(_##Var);
 							\
 # define Exact_ref(Type, Var)			\
-typedef Exact(_##Type) Type;			\
+typedef Exact(Type##_) Type;			\
 Type & Var = to_exact(_##Var);
 
 # define Exact_cref(Type, Var)			\
-typedef Exact(_##Type) Type;			\
+typedef Exact(Type##_) Type;			\
 const Type & Var = to_exact(_##Var);
 
 

@@ -48,16 +48,16 @@ namespace oln {
 
   namespace morpho {
 
-    template<class _I, class _N>
-    typename mute<_I, bin>::ret
-    internal_kill_cc_area(const image<_I>& _input,
+    template<class I_, class N_>
+    typename mute<I_, bin>::ret
+    internal_kill_cc_area(const image<I_>& _input,
 			  const unsigned int area,
-			  const neighborhood<_N>& _Ng)
+			  const neighborhood<N_>& _Ng)
     {
       Exact_cref(I, input);
       Exact_cref(N, Ng);
 
-      typename mute<_I, int_u<20> >::ret cc = level::connected_component<int_u<20> >(input, Ng);
+      typename mute<I_, int_u<20> >::ret cc = level::connected_component<int_u<20> >(input, Ng);
       // label 0 is background
       int_u<20> max_label = 0;
       image2d<int_u<20> >::iter p(cc);
@@ -103,15 +103,15 @@ namespace oln {
      * exo: out.pgm
      * wontcompile: fixme
      =*/
-    template<class _I, class _N>
-    Concrete(_I) sure_maxima_killer(const image<_I>& _input,
+    template<class I_, class N_>
+    Concrete(I_) sure_maxima_killer(const image<I_>& _input,
 				    const unsigned int area,
-				    const neighborhood<_N>& _Ng)
+				    const neighborhood<N_>& _Ng)
     {
       Exact_cref(I, input);
       Exact_cref(N, Ng);
-      meta::eq<_I::dim, _N::dim>::ensure();
-      typedef typename mute<_I, bin >::ret ima_bin_t;
+      meta::eq<I_::dim, N_::dim>::ensure();
+      typedef typename mute<I_, bin >::ret ima_bin_t;
 
       ima_bin_t* cc_level_sets = new (image2d<bin> [256]);
       for (unsigned int i=0; i <= 255; ++i)
@@ -160,14 +160,14 @@ namespace oln {
      * exo: out.pgm
      * wontcompile: fixme
      =*/
-    template<class _I, class _N>
-    image2d<int_u8> sure_minima_killer(const image<_I>& _input,
+    template<class I_, class N_>
+    image2d<int_u8> sure_minima_killer(const image<I_>& _input,
 				       const unsigned int area,
-				       const neighborhood<_N>& _Ng)
+				       const neighborhood<N_>& _Ng)
     {
       Exact_cref(I, input);
       Exact_cref(N, Ng);
-      meta::eq<_I::dim, _N::dim>::ensure();
+      meta::eq<I_::dim, N_::dim>::ensure();
 
       typedef image2d<bin> ima_bin_t;
 
@@ -203,18 +203,18 @@ namespace oln {
 
     // FAST VERSIONS
 
-    template<class _P, class _I, class _N>
+    template<class P_, class I_, class N_>
     inline
     static
-    bool is_a_strict_minimum(const point<_P>& _p,
-			     const image<_I>& _input,
-			     const neighborhood<_N>& _Ng)
+    bool is_a_strict_minimum(const point<P_>& _p,
+			     const image<I_>& _input,
+			     const neighborhood<N_>& _Ng)
     {
       Exact_cref(P, p);
       Exact_cref(I, input);
       Exact_cref(N, Ng);
-      meta::eq<_I::dim, _N::dim>::ensure();
-      meta::eq<_P::dim, _N::dim>::ensure();
+      meta::eq<I_::dim, N_::dim>::ensure();
+      meta::eq<P_::dim, N_::dim>::ensure();
 
       bool is_p_lower = true;
       bool is_p_at_least_one_stricly_lower = false;
@@ -230,18 +230,18 @@ namespace oln {
     }
 
 
-    template<class _P, class _I, class _N>
+    template<class P_, class I_, class N_>
     inline
     static
-    bool is_a_strict_maximum(const point<_P>& _p,
-			     const image<_I>& _input,
-			     const neighborhood<_N>& _Ng)
+    bool is_a_strict_maximum(const point<P_>& _p,
+			     const image<I_>& _input,
+			     const neighborhood<N_>& _Ng)
     {
       Exact_cref(P, p);
       Exact_cref(I, input);
       Exact_cref(N, Ng);
-      meta::eq<_I::dim, _N::dim>::ensure();
-      meta::eq<_P::dim, _N::dim>::ensure();
+      meta::eq<I_::dim, N_::dim>::ensure();
+      meta::eq<P_::dim, N_::dim>::ensure();
 
       bool is_p_upper = true;
       bool is_p_at_least_one_stricly_upper = false;
@@ -263,8 +263,8 @@ namespace oln {
      * what: Minima killer.
      * arg: const image<I1>&, marker, IN, marker image
      * arg: const unsigned int area, area, IN, area
-     * arg: const neighborhood<_N>&, Ng, IN, neighboorhood
-     * ret: Concrete(_I1)
+     * arg: const neighborhood<N_>&, Ng, IN, neighboorhood
+     * ret: Concrete(I1_)
      * doc: It removes the small (in area) connected components of the lower
      * level sets of \var{input} using \var{Ng} as neighboorhood. The implementation
      * is based on stak. Guichard and Morel, Image iterative smoothing and PDE's.
@@ -278,19 +278,19 @@ namespace oln {
      * wontcompile: fixme
      =*/
     // Guichard and Morel, Image iterative smoothing and PDE's. Book in preparation. p 265.
-    template<class _I, class _N>
-    Concrete(_I) fast_minima_killer(const image<_I>& _input,
+    template<class I_, class N_>
+    Concrete(I_) fast_minima_killer(const image<I_>& _input,
 				    const unsigned int area,
-				    const neighborhood<_N>& _Ng)
+				    const neighborhood<N_>& _Ng)
     {
       Exact_cref(I, input);
       Exact_cref(N, Ng);
-      meta::eq<_I::dim, _N::dim>::ensure();
+      meta::eq<I_::dim, N_::dim>::ensure();
 
       std::vector<Point(I)> cur_minimum;
       cur_minimum.reserve(15000);
       Concrete(I) working_input = input.clone();
-      typename mute<_I, bin>::ret not_processed_map(input.size());
+      typename mute<I_, bin>::ret not_processed_map(input.size());
       level::fill(not_processed_map, true);
 
       // STEP 2: search for a local miminum
@@ -304,7 +304,7 @@ namespace oln {
 	      Value(I) lambda = working_input[p];
 
 	      // FIXME: This should better be moved out of the loop.
-	      typename mute<_I, bin>::ret is_visited(input.size());
+	      typename mute<I_, bin>::ret is_visited(input.size());
 	      level::fill(is_visited, false);
 	      is_visited[p] = true;
 	      //STEP 3
@@ -370,8 +370,8 @@ namespace oln {
      * what: Maxima killer.
      * arg: const image<I1>&, marker, IN, marker image
      * arg: const unsigned int area, area, IN, area
-     * arg: const neighborhood<_N>&, Ng, IN, neighboorhood
-     * ret: Concrete(_I1)
+     * arg: const neighborhood<N_>&, Ng, IN, neighboorhood
+     * ret: Concrete(I1_)
      * doc: It removes the small (in area) connected components of the upper
      * level sets of \var{input} using \var{Ng} as neighboorhood. The implementation
      * is based on stak. Guichard and Morel, Image iterative smoothing and PDE's. Book in preparation. p 265.
@@ -384,18 +384,18 @@ namespace oln {
      * wontcompile: fixme
      =*/
     // Guichard and Morel, Image iterative smoothing and PDE's. Book in preparation. p 265.
-    template<class _I, class _N>
-    Concrete(_I) fast_maxima_killer(const image<_I>& _input,
+    template<class I_, class N_>
+    Concrete(I_) fast_maxima_killer(const image<I_>& _input,
 				    const unsigned int area,
-				    const neighborhood<_N>& _Ng)
+				    const neighborhood<N_>& _Ng)
     {
       Exact_cref(I, input);
       Exact_cref(N, Ng);
-      meta::eq<_I::dim, _N::dim>::ensure();
+      meta::eq<I_::dim, N_::dim>::ensure();
 
       std::vector<Point(I)> cur_maximum;
       Concrete(I) working_input = input.clone();
-      typename mute<_I, bin>::ret not_processed_map(input.size());
+      typename mute<I_, bin>::ret not_processed_map(input.size());
       level::fill(not_processed_map, true);
 
       // STEP 2: search for a local miminum
@@ -408,7 +408,7 @@ namespace oln {
 	      cur_maximum.push_back(p);
 	      Value(I) lambda = working_input[p];
 
-	      typename mute<_I, bin>::ret is_visited(input.size());
+	      typename mute<I_, bin>::ret is_visited(input.size());
 	      level::fill(is_visited, false);
 	      is_visited[p] = true;
 	      //STEP 3

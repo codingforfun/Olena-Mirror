@@ -33,8 +33,8 @@
 namespace oln {
   namespace morpho {
 
-    template<class _E>
-    Exact(_E) get_plus_se_only(const struct_elt<_E>& _se)
+    template<class E_>
+    Exact(E_) get_plus_se_only(const struct_elt<E_>& _se)
     {
       Exact_cref(E, se);
       Iter(E) dp(se);
@@ -54,8 +54,8 @@ namespace oln {
       return out;
     }
 
-    template<class _E>
-    Exact(_E) get_plus_se_p(const struct_elt<_E>& _se)
+    template<class E_>
+    Exact(E_) get_plus_se_p(const struct_elt<E_>& _se)
     {
       Exact_cref(E, se);
       Iter(E) dp(se);
@@ -78,8 +78,8 @@ namespace oln {
       return out;
     }
 
-    template<class _E>
-    Exact(_E) get_minus_se_only(const struct_elt<_E>& _se)
+    template<class E_>
+    Exact(E_) get_minus_se_only(const struct_elt<E_>& _se)
     {
       Exact_cref(E, se);
       Iter(E) dp(se);
@@ -99,8 +99,8 @@ namespace oln {
       return out;
     }
 
-    template<class _E>
-    Exact(_E) get_minus_se_p(const struct_elt<_E>& _se)
+    template<class E_>
+    Exact(E_) get_minus_se_p(const struct_elt<E_>& _se)
     {
       Exact_cref(E, se);
       Iter(E) dp(se);

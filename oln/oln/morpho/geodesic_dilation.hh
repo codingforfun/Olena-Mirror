@@ -62,15 +62,15 @@ namespace oln {
      * wontcompile: fixme
      =*/
 
-    template<class _I1, class _I2, class _N>
-    Concrete(_I1) geodesic_dilation(const image<_I1> & _marker,
-				    const image<_I2> & _mask,
-				    const neighborhood<_N>& _Ng)
+    template<class I1_, class I2_, class N_>
+    Concrete(I1_) geodesic_dilation(const image<I1_> & _marker,
+				    const image<I2_> & _mask,
+				    const neighborhood<N_>& _Ng)
     {
       Exact_cref(I1, marker);
       Exact_cref(I2, mask);
       Exact_cref(N, Ng);
-      meta::eq<_I1::dim, _I2::dim>::ensure();
+      meta::eq<I1_::dim, I2_::dim>::ensure();
       meta::eq<I1::dim, N::dim>::ensure();
       precondition(marker.size() == mask.size());
       precondition(level::is_greater_or_equal(mask, marker));
@@ -101,15 +101,15 @@ namespace oln {
        * exo: out.pgm
        * wontcompile: fixme
        =*/
-      template<class _I1, class _I2, class _N>
-      Concrete(_I1) geodesic_dilation(const image<_I1> & _marker,
-				      const image<_I2> & _mask,
-				      const neighborhood<_N>& _Ng)
+      template<class I1_, class I2_, class N_>
+      Concrete(I1_) geodesic_dilation(const image<I1_> & _marker,
+				      const image<I2_> & _mask,
+				      const neighborhood<N_>& _Ng)
       {
 	Exact_cref(I1, marker);
 	Exact_cref(I2, mask);
 	Exact_cref(N, Ng);
-	meta::eq<_I1::dim, _I2::dim>::ensure();
+	meta::eq<I1_::dim, I2_::dim>::ensure();
 	meta::eq<I1::dim, N::dim>::ensure();
 	precondition(marker.size() == mask.size());
 	precondition(level::is_greater_or_equal(mask, marker));

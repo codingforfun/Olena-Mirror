@@ -122,9 +122,9 @@ namespace oln {
 
     // _dwt_transform_step
 
-    template <class _I, class K>
-    void _dwt_transform_step(image<_I>& _im,
-			     const Point(Concrete(_I))& _p,
+    template <class I_, class K>
+    void _dwt_transform_step(image<I_>& _im,
+			     const Point(Concrete(I_))& _p,
 			     const unsigned d,
 			     const unsigned n,
 			     const K& coeffs)
@@ -167,9 +167,9 @@ namespace oln {
 
     // _dwt_transform_inv_step
 
-    template <class _I, class K>
-    void _dwt_transform_inv_step(image<_I>& _im,
-				 const Point(Concrete(_I))& _p,
+    template <class I_, class K>
+    void _dwt_transform_inv_step(image<I_>& _im,
+				 const Point(Concrete(I_))& _p,
 				 const unsigned d,
 				 const unsigned n,
 				 const K& coeffs)
@@ -224,9 +224,9 @@ namespace oln {
 	      unsigned current = dim>
     struct _dim_skip_iterate_rec
     {
-      template <class _I, class K>
-      static void doit(image<_I>& _im,
-		       Point(Concrete(_I))& p,
+      template <class I_, class K>
+      static void doit(image<I_>& _im,
+		       Point(Concrete(I_))& p,
 		       const unsigned l1,
 		       const unsigned l2,
 		       const K& coeffs,
@@ -249,9 +249,9 @@ namespace oln {
     template <unsigned dim, unsigned skip>
     struct _dim_skip_iterate_rec<dim, skip, 0>
     {
-      template <class _I, class K>
-      static void doit(image<_I>& _im,
-		       Point(Concrete(_I))& p,
+      template <class I_, class K>
+      static void doit(image<I_>& _im,
+		       Point(Concrete(I_))& p,
 		       const unsigned l1,
 		       const unsigned l2,
 		       const K& coeffs,
@@ -275,9 +275,9 @@ namespace oln {
     template <unsigned dim, unsigned skip>
     struct _dim_iterate_rec
     {
-      template <class _I, class K>
-      static void doit(image<_I>& _im,
-		       Point(Concrete(_I))& p,
+      template <class I_, class K>
+      static void doit(image<I_>& _im,
+		       Point(Concrete(I_))& p,
 		       const unsigned l1,
 		       const unsigned l2,
 		       const K& coeffs,
@@ -291,9 +291,9 @@ namespace oln {
     template <unsigned dim>
     struct _dim_iterate_rec<dim, 0>
     {
-      template <class _I, class K>
-      static void doit(image<_I>& ,
-		       Point(Concrete(_I))& ,
+      template <class I_, class K>
+      static void doit(image<I_>& ,
+		       Point(Concrete(I_))& ,
 		       const unsigned ,
 		       const unsigned ,
 		       const K& ,
@@ -303,8 +303,8 @@ namespace oln {
       }
     };
 
-    template <class _I, class K>
-    void _dwt_transform(image<_I>& _im,
+    template <class I_, class K>
+    void _dwt_transform(image<I_>& _im,
 			const unsigned l1,
 			const unsigned l2,	
 			const K& coeffs,
@@ -324,8 +324,8 @@ namespace oln {
       }
     }
 
-    template <class _I, class K>
-    void _dwt_transform_inv(image<_I>& _im,
+    template <class I_, class K>
+    void _dwt_transform_inv(image<I_>& _im,
 			    const unsigned l1,
 			    const unsigned l2,	
 			    const K& coeffs,
@@ -354,14 +354,14 @@ namespace oln {
     //
     //////////////////////////////////////
 
-    template <class _I, class K>
+    template <class I_, class K>
     class dwt
     {
     public:
 
-      typedef Concrete(_I)			original_im_t;
-      typedef Value(_I)				original_im_value_t;
-      typedef typename mute<_I, dfloat>::ret	trans_im_t;
+      typedef Concrete(I_)			original_im_t;
+      typedef Value(I_)				original_im_value_t;
+      typedef typename mute<I_, dfloat>::ret	trans_im_t;
       typedef typename K::self_t		coeffs_t;
 
       dwt(const original_im_t& im) : original_im(im)
@@ -451,12 +451,12 @@ namespace oln {
       }
 
       template <class T1>
-      typename mute<_I, T1>::ret transform_inv(unsigned l = 0)
+      typename mute<I_, T1>::ret transform_inv(unsigned l = 0)
       {
 	is_a(optraits<T1>, optraits_scalar)::ensure();
 
 	trans_im_t tmp_im = transform_inv(l);
-	typename mute<_I, T1>::ret new_im(tmp_im.size());
+	typename mute<I_, T1>::ret new_im(tmp_im.size());
 
 	Iter(trans_im_t) it(tmp_im);
 	for_all(it)

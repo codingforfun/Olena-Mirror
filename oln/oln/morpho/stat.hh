@@ -104,10 +104,10 @@ namespace oln {
 
     } // internal
 
-    template<class _I, class _E>
-    Value(_I) max(const image<_I>& _input,
-		  const Exact(_I)::point& p,
-		  const struct_elt<_E>& _se)
+    template<class I_, class E_>
+    Value(I_) max(const image<I_>& _input,
+		  const Exact(I_)::point& p,
+		  const struct_elt<E_>& _se)
     {
       Exact_cref(I, input);
       Exact_cref(E, se);
@@ -115,10 +115,10 @@ namespace oln {
       return internal::_stat<I, E>::max(input, p, se);
     }
 
-    template<class _I, class _E>
-    Value(_I) min(const image<_I>& _input,
-		  const Exact(_I)::point& p,
-		  const struct_elt<_E>& _se)
+    template<class I_, class E_>
+    Value(I_) min(const image<I_>& _input,
+		  const Exact(I_)::point& p,
+		  const struct_elt<E_>& _se)
     {
       Exact_cref(I, input);
       Exact_cref(E, se);

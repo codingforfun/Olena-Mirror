@@ -43,7 +43,7 @@ namespace oln {
      * what: Connected Component.
      * arg: const image<I1>&, marker, IN, marker image
      * arg: const struct_elt<E>&, se, IN, structural element
-     * ret: typename mute<_I, DestType>::ret
+     * ret: typename mute<I_, DestType>::ret
      * doc: It removes the small (in area) connected components of the upper
      * level sets of \var{input} using \var{se} as structural element. The
      * implementation comes from \emph{Cocquerez et Philipp, Analyse d'images,
@@ -59,17 +59,17 @@ namespace oln {
 
     // Number the connected components i.e label true. background(i.e
     // label false) has the label 0; This algorithm works only for 2D images
-    template <class DestType, class _I, class _N>
-    typename mute<_I, DestType>::ret
-    connected_component(const image<_I>& _input,
-			const neighborhood<_N>& _Ng)
+    template <class DestType, class I_, class N_>
+    typename mute<I_, DestType>::ret
+    connected_component(const image<I_>& _input,
+			const neighborhood<N_>& _Ng)
     {
       // FIXME: ensure the Value(I) is bin.
-      meta::eq<_I::dim, _N::dim>::ensure();
-      meta::eq<_I::dim, 2>::ensure();
+      meta::eq<I_::dim, N_::dim>::ensure();
+      meta::eq<I_::dim, 2>::ensure();
       Exact_cref(I, input);
       Exact_cref(N, Ng);
-      typename mute<_I, DestType>::ret output(input.size());
+      typename mute<I_, DestType>::ret output(input.size());
       level::hlut< DestType, DestType > T;
       DestType k = 1;
 

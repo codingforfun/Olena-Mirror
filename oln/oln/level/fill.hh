@@ -33,8 +33,8 @@
 namespace oln {
   namespace level {
 
-    template <class _I>
-    Concrete(_I) fill(image<_I>& _im, const Value(_I)& val)
+    template <class I_>
+    Concrete(I_) fill(image<I_>& _im, const Value(I_)& val)
     {
       Exact_ref(I, im);
       Iter(I) p(im);

@@ -40,11 +40,11 @@ namespace oln {
   namespace meta {
 
 
-    template<class _Info, class _T>
+    template<class _Info, class T_>
     struct array2d
     {
       typedef array2d self;
-      typedef _T T;
+      typedef T_ T;
       typedef _Info Info;
 
 

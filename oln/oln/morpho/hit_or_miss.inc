@@ -37,7 +37,7 @@
  * arg: const image<I>&, input, IN, input image
  * arg: const struct_elt<E>&, se1, IN, structural element
  * arg: const struct_elt<E>&, se2, IN, structural element
- * ret: typename mute<_I, typename convoutput<C, Value(_I)>::ret>::ret
+ * ret: typename mute<I_, typename convoutput<C, Value(I_)>::ret>::ret
  * doc:
  * Compute the hit_or_miss transform of \var{input} by the composite structural
  * element (\var{se1}, \var{se2}). Soille p.131.
@@ -60,12 +60,12 @@
  * exi: object.pbm
  * exo: out.pgm
 =*/
-template<class C, class _I, class _E1, class _E2>
-typename mute<_I, typename convoutput<C, Value(_I)>::ret>::ret
+template<class C, class I_, class E1_, class E2_>
+typename mute<I_, typename convoutput<C, Value(I_)>::ret>::ret
 hit_or_miss(const conversion<C>& c,
-	    const image<_I>& _input,
-	    const struct_elt<_E1>& _se1,
-	    const struct_elt<_E2>& _se2)
+	    const image<I_>& _input,
+	    const struct_elt<E1_>& _se1,
+	    const struct_elt<E2_>& _se2)
 {
   Exact_cref(I, input);
   Exact_cref(E1, se1);
@@ -137,10 +137,10 @@ Concrete(I) hit_or_miss(const image<I>& input,
  * exi: object.pbm
  * exo: out.pbm
 =*/
-template<class _I, class _E1, class _E2>
-Concrete(_I) hit_or_miss_opening(const image<_I>& _input,
-				 const struct_elt<_E1>& _se1,
-				 const struct_elt<_E2>& _se2)
+template<class I_, class E1_, class E2_>
+Concrete(I_) hit_or_miss_opening(const image<I_>& _input,
+				 const struct_elt<E1_>& _se1,
+				 const struct_elt<E2_>& _se2)
 {
   Exact_cref(I, input);
   Exact_cref(E1, se1);
@@ -229,10 +229,10 @@ Concrete(I) hit_or_miss_opening_bg(const image<I>& input,
  * exi: object.pbm
  * exo: out.pbm
 =*/
-template<class I, class _E1, class _E2>
+template<class I, class E1_, class E2_>
 Concrete(I) hit_or_miss_closing(const image<I>& input,
-				const struct_elt<_E1>& _se1,
-				const struct_elt<_E2>& _se2)
+				const struct_elt<E1_>& _se1,
+				const struct_elt<E2_>& _se2)
 {
   Exact_cref(E1, se1);
   Exact_cref(E2, se2);

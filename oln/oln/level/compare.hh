@@ -33,9 +33,9 @@
 namespace oln {
   namespace level {
 
-    template<class _I1, class _I2> inline
-    bool is_greater_or_equal(const image<_I1>& _input1,
-			     const image<_I2>& _input2)
+    template<class I1_, class I2_> inline
+    bool is_greater_or_equal(const image<I1_>& _input1,
+			     const image<I2_>& _input2)
     {
       Exact_cref(I1, input1);
       Exact_cref(I2, input2);
@@ -48,9 +48,9 @@ namespace oln {
       return true;
     }
 
-    template<class _I1, class _I2> inline
-    bool is_greater(const image<_I1>& _input1,
-		    const image<_I2>& _input2)
+    template<class I1_, class I2_> inline
+    bool is_greater(const image<I1_>& _input1,
+		    const image<I2_>& _input2)
     {
       Exact_cref(I1, input1);
       Exact_cref(I2, input2);
@@ -63,9 +63,9 @@ namespace oln {
       return true;
     }
 
-    template<class _I1, class _I2> inline
-    bool is_lower_or_equal(const image<_I1>& _input1,
-			   const image<_I2>& _input2)
+    template<class I1_, class I2_> inline
+    bool is_lower_or_equal(const image<I1_>& _input1,
+			   const image<I2_>& _input2)
     {
       Exact_cref(I1, input1);
       Exact_cref(I2, input2);
@@ -78,9 +78,9 @@ namespace oln {
       return true;
     }
 
-    template<class _I1, class _I2> inline
-    bool is_lower(const image<_I1>& _input1,
-		  const image<_I2>& _input2)
+    template<class I1_, class I2_> inline
+    bool is_lower(const image<I1_>& _input1,
+		  const image<I2_>& _input2)
     {
       Exact_cref(I1, input1);
       Exact_cref(I2, input2);
@@ -93,9 +93,9 @@ namespace oln {
       return true;
     }
 
-    template<class _I1, class _I2> inline
-    bool is_equal(const image<_I1>& _input1,
-		  const image<_I2>& _input2)
+    template<class I1_, class I2_> inline
+    bool is_equal(const image<I1_>& _input1,
+		  const image<I2_>& _input2)
     {
       Exact_cref(I1, input1);
       Exact_cref(I2, input2);

@@ -41,8 +41,8 @@ namespace oln {
 
     namespace internal {}
 
-    template<class _T>
-    void set_width(const image<_T>& _input, coord new_border,
+    template<class T_>
+    void set_width(const image<T_>& _input, coord new_border,
 		   bool copy_border = false)
     {
       Exact_cref(T, input);
@@ -57,9 +57,9 @@ namespace oln {
 
 
     /* Extend the border if needed, don't shrink it.  */
-    template<class _T>
+    template<class T_>
 
-    void adapt_width(const image<_T>& _input, coord min_border,
+    void adapt_width(const image<T_>& _input, coord min_border,
 		     bool copy_border = false)
     {
       Exact_cref(T, input);
@@ -71,8 +71,8 @@ namespace oln {
       set_width(input, min_border, copy_border);
     }
 
-    template<class _T>
-    void adapt_copy(const image<_T>& _input, coord min_border)
+    template<class T_>
+    void adapt_copy(const image<T_>& _input, coord min_border)
     {
       Exact_cref(T, input);
       adapt_width(input, min_border);
@@ -80,8 +80,8 @@ namespace oln {
     }
 
 
-    template<class _T>
-    void adapt_mirror(const image<_T>& _input, coord min_border)
+    template<class T_>
+    void adapt_mirror(const image<T_>& _input, coord min_border)
     {
       Exact_cref(T, input);
       adapt_width(input, min_border);
@@ -89,8 +89,8 @@ namespace oln {
     }
 
 
-    template<class _T>
-    void adapt_assign(const image<_T>& _input, coord min_border, Value(_T) val)
+    template<class T_>
+    void adapt_assign(const image<T_>& _input, coord min_border, Value(T_) val)
     {
       Exact_cref(T, input);
       adapt_width(input, min_border);

@@ -78,8 +78,8 @@ namespace oln {
       friend T min<T, U>(const histogram<T, U>& hist);
       friend T max<T, U>(const histogram<T, U>& hist);
 
-      template <class _I>
-      void init(const image<_I> &_img)
+      template <class I_>
+      void init(const image<I_> &_img)
       {
 	Exact_cref(I, img);
 	Iter(I) p(img);
@@ -292,8 +292,8 @@ namespace oln {
     }
 
 
-    template<class _I>
-    void distrib_sort(const image<_I>& _im, std::vector<Point(_I)> &v)
+    template<class I_>
+    void distrib_sort(const image<I_>& _im, std::vector<Point(I_)> &v)
     {
       Exact_cref(I, im);
       typedef Value(I) val;
