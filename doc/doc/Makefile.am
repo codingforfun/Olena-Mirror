@@ -12,7 +12,9 @@ oln_ref_TEX = \
   $(built_oln_ref_TEX) \
   ref-types.tex
 
-EXTRA_DIST = $(tex_TEX) $(oln_ref_TEX) html/*.png bin/*.eps bin/*.pgm bin/*.pdf
+EXTRA_DIST = $(tex_TEX) $(oln_ref_TEX) html bin
+dist-local:
+	rm -rf bin/*a.out$(EXEEXT)
 
 TEXI2PDF = $(TEXI2DVI) --pdf
 
@@ -26,18 +28,20 @@ html/oln-ref.html: $(tex_TEX) $(oln_ref_TEX)
 	$(HEVEA) -o html/oln-ref.html `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
 	$(HEVEA) -o html/oln-ref.html `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
 
-olnsrc = $(top_srcdir)/../oln/oln
+olnsrc = $(top_srcdir)/oln/oln
 
-# Bogus C++ entry to provoke the definition of CXXCOMPILE
-COMMONGETDEFSFLAGS =  --agarg=-DCXXCOMPILE="$(CXX) -I$(top_srcdir) -DHAVE_CONFIG_H $(CPPFLAGS) $(OLN_CPPFLAGS) $(CXXFLAGS) $(OLN_CXXFLAGS)" \
-	              --agarg=--templ-dirs=$(top_srcdir)/tpl \
-	              --agarg=-DIMGDIR=$(OLN_IMG_DIR)
+INCLUDES = -I$(top_srcdir)/oln -I$(top_builddir)/oln
+COMMONGETDEFSFLAGS =  --agarg=-DCXXCOMPILE="$(CXX) -I$(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(CPPFLAGS) $(OLN_CPPFLAGS) $(CXXFLAGS) $(OLN_CXXFLAGS)" \
+		      --agarg=-DEPSTOPDF="$(EPSTOPDF)" \
+		      --agarg=-DCONVERT="$(IMAGEMAGICK_CONVERT)" \
+	              --agarg=--templ-dirs=$(srcdir)/../tpl \
+	              --agarg=-DIMGDIR=$(top_srcdir)/oln/img
 PROCESSINGGETDEFSFLAGS = \
   --subblock=tpl=type,name,doc \
   --subblock=arg=type,name,mode,doc \
   --listattr=exh \
   --listattr=ns \
-  --template $(top_srcdir)/tpl/processing.tpl \
+  --template $(srcdir)/../tpl/processing.tpl \
   --srcfile
 
 morpho_files = $(shell fgrep -l '/*=' \
@@ -49,9 +53,9 @@ ref-morpho.tex: $(morpho_files) $(srcdir)/../tpl/processing.tpl
 
 level_files = $(shell fgrep -l '/*=' $(olnsrc)/level/*.hh)
 
-ref-level.tex: $(level_files) $(top_srcdir)/tpl/processing.tpl
+ref-level.tex: $(level_files) $(srcdir)/../tpl/processing.tpl
 	$(GETDEFS) $(COMMONGETDEFSFLAGS) $(PROCESSINGGETDEFSFLAGS) \
 	  $(GETDEFSFLAGS) --base-name=ref-level $(level_files)
 
-MAINTAINERCLEANFILES = $(built_oln_ref_TEX) $(dist_noinst_DATA) html/* bin/*
+MAINTAINERCLEANFILES = $(built_oln_ref_TEX) $(dist_noinst_DATA) html bin
 CLEANFILES = = *.tmp *.aux *.bbl *blg *.dvi *.lot *.log *.out *.toc  

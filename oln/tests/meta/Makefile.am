@@ -1,6 +1,6 @@
 ## Process this file through Automake to create Makefile.in -*- Makefile -*-
 
-include $(top_srcdir)/tests/check/Makefile.check
+include $(srcdir)/../check/Makefile.check
 
 check_PROGRAMS = test_array1d test_array2d test_array3d gen_test
 

@@ -13,36 +13,15 @@
 # AC_WITH_OLN. See oln/configure.ac or doc/configure.ac in the Olena
 # distribution for an example.
 
-AC_DEFUN([OLN_PATH_LOCAL], 
-[dnl
-  advertised_oln_dir=ifelse([$1], [], [no], [$1])
-  AC_CACHE_CHECK([for Olena in [$advertised_oln_dir]],
-                 [oln_cv_local_src],
-		 [oln_cv_local_src=no
-                  if test "x$advertised_oln_dir" != xno; then
-                     oln_dir=`pwd`
-                     advertised_oln_hdir=`cd "$srcdir" && \
-					  cd "$advertised_oln_dir" && pwd`
-                     cd "$oln_dir"
-                     if test -r "$advertised_oln_hdir/oln/config/system.hh"
-		     then
-                        oln_cv_local_src="$advertised_oln_hdir"
-                     fi
-                  fi])
-  if test "x$oln_cv_local_src" != xno; then
-     # If Olena is around us, find the build directory.
-     AC_CACHE_CHECK([for build-time Olena directory],
-                    [oln_cv_build_src],
-                    [oln_cv_build_src=no
-                     if test -r "$oln_cv_local_src/oln/config/pconf.hh"; then
-                        oln_cv_build_src="$oln_cv_local_src"
-                     else
-                        oln_dir=`pwd`
-                        oln_cv_build_src=`cd "$advertised_oln_dir" && pwd`
-                        cd "$oln_dir"
-                     fi])
-  fi
-])
+AC_DEFUN([OLN_PATH_LOCAL],
+[ifelse([$1], [], [oln_cv_local_src=no], [dnl
+    AC_CACHE_CHECK([for Olena sources in local distribution],
+                   [oln_cv_local_src],
+	           [oln_cv_local_src=no
+                    if test -r "$srcdir/$1/oln/config/system.hh"; then
+                       oln_cv_local_src="$1"
+                    fi])
+])])
 
 # OLN_PATH_USER
 
@@ -75,25 +54,14 @@ AC_DEFUN([_OLN_CHECK_HEADERS],
 
  have_olena=yes
  oln_save_CPPFLAGS="$CPPFLAGS"
- CPPFLAGS="$OLN_CPPFLAGS $CPPFLAGS"
+ CPPFLAGS="$OLN_EXTRA_CPPFLAGS $OLN_CPPFLAGS $CPPFLAGS"
  # At this point, we can be in a situation where pconf.hh does not
  # exist _yet_. In that particular case, we need a workaround.
  AC_CHECK_HEADER([oln/config/pconf.hh], [], 
           [CPPFLAGS="$CPPFLAGS -DIGNORE_PCONF_HH"])
  AC_CHECK_HEADER([oln/config/system.hh], [], [have_olena=no])
-
  CPPFLAGS="$oln_save_CPPFLAGS"
-  if test $have_olena = yes; then
-  if test "x$OLN_INCLUDE_DIR" != x; then
-   AC_MSG_NOTICE([using include path $OLN_INCLUDE_DIR to find Olena.])
-  else
-   # Here Olena was found in the standard search path. We do not have
-   # any portable way to retrieve the name of this directory.
-   AC_MSG_WARN([Olena found in the subether. Cannot set OLN_INCLUDE_DIR.])
-  fi
- else
-    AC_MSG_WARN([Olena source headers not found. Expect problems.])
- fi   
+
  AC_LANG_POP([C++])
 ])
 
@@ -119,18 +87,22 @@ AC_DEFUN([OLN_PATH_HEADERS],
      OLN_INCLUDE_DIR="$oln_cv_user_hint"
   else
     if test "x$oln_cv_local_src" != xno; then
-       OLN_INCLUDE_DIR="$oln_cv_local_src"
-       if test "x$oln_cv_build_src" != xno \
-            -a "x$oln_cv_local_src" != "x$oln_cv_build_src"; then
-          OLN_EXTRA_CPPFLAGS="-I$oln_cv_build_src"
-       fi
+      if test "x$OLN_INCLUDE_DIR" != x ; then
+        AC_MSG_WARN([using $oln_cv_user_hint instead of $OLN_INCLUDE_DIR])
+      fi
+      OLN_INCLUDE_DIR=''
+      OLN_EXTRA_CPPFLAGS="-I$oln_cv_local_src -I$srcdir/$oln_cv_local_src"
+      OLN_LOCAL_SRC='$(top_srcdir)/'"$oln_cv_local_src"
+      OLN_LOCAL_BUILD='$(top_builddir)/'"$oln_cv_local_src"
+      AC_SUBST([OLN_LOCAL_SRC])
+      AC_SUBST([OLN_LOCAL_BUILD])
     fi
   fi
 
   AC_ARG_VAR([OLN_INCLUDE_DIR], 
 	     [location of Olena (<include dir>, should be autodetected)])
   if test "x$OLN_INCLUDE_DIR" != x ; then
-     OLN_CPPFLAGS="-I$OLN_INCLUDE_DIR $OLN_EXTRA_CPPFLAGS $OLN_CPPFLAGS"
+     OLN_CPPFLAGS="-I$OLN_INCLUDE_DIR $OLN_CPPFLAGS"
   fi
   AC_SUBST([OLN_INCLUDE_DIR])
   AC_SUBST([OLN_CPPFLAGS])
@@ -154,36 +126,14 @@ AC_DEFUN([OLN_PATH_HEADERS],
 # distribution for an example.
 
 AC_DEFUN([OLN_PATH_LOCAL_IMGS],
-[dnl
-  advertised_oln_img_dir=ifelse([$1], [], [no], [$1])
-  AC_CACHE_CHECK([for Olena images in [$advertised_oln_img_dir]],
-                 [oln_cv_local_imgs],
-		 [oln_cv_local_imgs=no
-                  if test "x$advertised_oln_img_dir" != xno; then
-                    oln_dir=`pwd`
-                    advertised_oln_img_idir=`cd "$srcdir" && \
-			         cd "$advertised_oln_img_dir" && \
-				 pwd`
-                    cd "$oln_dir"
-                    if test -r "$advertised_oln_img_idir/lena.ppm"; then
-                       oln_cv_local_imgs="$advertised_oln_img_idir"
-                    fi
-                  fi])
-  if test "x$oln_cv_local_imgs" != xno; then
-     # If Olena is around us, find the build directory.
-     AC_CACHE_CHECK([for build-time Olena images directory],
-                    [oln_cv_build_imgs],
-                    [oln_cv_build_imgs=no
-                     if test -r "$oln_cv_local_imgs/lena.pgm"; then
-			oln_cv_build_imgs="$oln_cv_local_imgs"
-                     else
-                       oln_dir=`pwd`
-                       oln_cv_build_imgs=`mkdir -p "$advertised_oln_img_dir" && \
-			  	          cd "$advertised_oln_img_dir" && pwd`
-                       cd "$oln_dir"
-                     fi])
-  fi
-])
+[ifelse([$1], [], [oln_cv_local_imgs=no], [dnl
+    AC_CACHE_CHECK([for Olena images in local distribution],
+                   [oln_cv_local_imgs],
+	           [oln_cv_local_imgs=no
+                    if test -r "$srcdir/$1/lena.ppm"; then
+                       oln_cv_local_imgs="$1"
+                    fi])
+])])
 
 # OLN_PATH_USER
 
@@ -215,7 +165,6 @@ AC_DEFUN([OLN_PATH_IMGS],
   AC_REQUIRE([OLN_PATH_USER_IMGS])
 
   # User-specified directory overrides any other definition
-  OLN_IMG_AUX_DIR="."
   if test "x$oln_cv_user_img_hint" != xno; then
      if test "x$OLN_IMG_DIR" != x ; then
        AC_MSG_WARN([using $oln_cv_user_img_hint instead of $OLN_IMG_DIR])
@@ -223,18 +172,20 @@ AC_DEFUN([OLN_PATH_IMGS],
      OLN_IMG_DIR="$oln_cv_user_img_hint"
   else
     if test "x$oln_cv_local_imgs" != xno; then
-       OLN_IMG_DIR="$oln_cv_local_imgs"
-       if test "x$oln_cv_build_imgs" != xno; then
-          OLN_IMG_AUX_DIR="$oln_cv_build_imgs"
-       fi
+      if test "x$OLN_IMG_DIR" != x ; then
+        AC_MSG_WARN([using local images path instead of $OLN_IMG_DIR])
+      fi
+      OLN_IMG_DIR=''
+      OLN_LOCAL_IMGS='$(top_srcdir)/'"$oln_cv_local_imgs"
+      OLN_LOCAL_AUX_IMGS='$(top_builddir)/'"$oln_cv_local_imgs"
+      AC_SUBST([OLN_LOCAL_IMGS])
+      AC_SUBST([OLN_LOCAL_AUX_IMGS])
     fi
   fi
 
   AC_ARG_VAR([OLN_IMG_DIR], 
              [location of Olena images (<dir>, should be autodetected)])
   AC_SUBST([OLN_IMG_DIR])
-  AC_SUBST([OLN_IMG_AUX_DIR])
-  AC_SUBST([OLN_CPPFLAGS])
 ])
 
 
@@ -709,9 +660,11 @@ AC_CACHE_CHECK([whether to build $4],
                                [$3=yes])
                 fi])
 if test x$[]$3 != xno; then
-   $5_SUBDIRS="$[]$5_SUBDIRS ifelse([$8], [], [$1], [$8])"
-   ifelse([$6], [], [], [AC_CONFIG_FILES([$6])])
    $7
+   if test x$[]$3 != xno; then
+     ifelse([$6], [], [], [AC_CONFIG_FILES([$6])])
+     $5_SUBDIRS="$[]$5_SUBDIRS ifelse([$8], [], [$1], [$8])"
+   fi
 fi
 ])
 

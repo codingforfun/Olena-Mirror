@@ -4,16 +4,16 @@
 
 : ${VERBOSE=1}
 
-. ../defs || exit 1
+. ../check/defs || exit 1
 
 set -e
 
 rm -f failures
 
 if test $# = 0; then
-  find "$OLN_INCLUDE_DIR/oln" -name "${1-*}.hh" \
+  find "$PATH_TO_OLN_SRCDIR/oln" -name "${1-*}.hh" \
                       -a ! -path '*/obsolete/*' -type f -print |
-    sed "s,$OLN_INCLUDE_DIR/,,g"
+    sed "s,$PATH_TO_OLN_SRCDIR/,,g"
 else
   echo "$@"
 fi |

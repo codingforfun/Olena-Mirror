@@ -1,4 +1,5 @@
 #include "srcdir.hh"
+#include "data.hh"
 #include <unistd.h>
 
 // Try OLN_IMG_AUX_DIR/file, then OLN_IMG_DIR/file, 

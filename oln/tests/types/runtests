@@ -1,8 +1,6 @@
 #!/bin/sh
 
-if test "x$1" = "x-v"; then
-  shift
-  VERBOSE=v
+if "x$VERBOSE" != x; then
   verb='echo'
   quiet=''
 else
@@ -11,12 +9,12 @@ else
 fi
 
 exec 6>&2
-. ../defs
+. ../check/defs
 exec 2>&6
 
 failures=0
 
-indir=${SRCDIR-.}/tests
+indir="${SRCDIR-.}/tests"
 rundir=runs
 test -d $rundir || mkdir $rundir
 
@@ -45,29 +43,28 @@ EOF
   echo '}' >>$src
   # Build the compile script (using such a script make it easier
   # to debug failures);
-  try=$dir/try
-  cat >$try <<EOF
+  cat >./try <<EOF
 exec 6>&2
 if test "x\$1" = "x-q"; then
   exec 2>cxx.errors
 else
-  echo $CXX $CPPFLAGS $CXXFLAGS $LDFLAGS $test.cc
+  echo $CXX $CPPFLAGS $CXXFLAGS $LDFLAGS $dir/$test.cc
 fi
-$CXX $CPPFLAGS $CXXFLAGS $LDFLAGS $test.cc || exit 50
+$CXX $CPPFLAGS $CXXFLAGS $LDFLAGS "$dir/$test.cc" -o "$dir/test$EXEEXT" || exit 50
 
 if test "x\$1" = "x-q"; then
   exec 2>run.errors
 else
-  echo ./a.out
+  echo $dir/test$EXEEXT
 fi
-./a.out
+$dir/test$EXEEXT
 estatus=\$?
 
 exec 2>&6
 echo \$estatus > exit.status
 exit \$estatus
 EOF
-  chmod +x $try
+  chmod +x ./try
 
   # Do we expect a failure?
   expected=ok
@@ -80,7 +77,7 @@ EOF
 
   # Run the test.
   $verb ========== Running $test... >&2
-  (cd $dir && ./try $quiet)
+  ($SHELL ./try "$quiet" "$dir")
   estatus=$?
 
   msg="";
@@ -108,6 +105,8 @@ done
 echo ========================================>&2
 if test $failures = 0; then
   echo No failures. >&2
+  exit 0
 else
   echo $failures failures. >&2
+  exit 1
 fi

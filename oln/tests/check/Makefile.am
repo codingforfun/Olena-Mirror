@@ -2,6 +2,15 @@
 
 include Makefile.flags
 
+AM_CPPFLAGS += -DOLN_IMG_DIR=\"$(OLN_LOCAL_IMGS)\" -DOLN_IMG_AUX_DIR=\"$(OLN_LOCAL_AUX_IMGS)\" \
+   -DCXX=\""$(CXX)"\" \
+   -DCPPFLAGS=\""$(CPPFLAGS) $(OLN_CPPFLAGS)"\" \
+   -DCXXFLAGS=\""$(CXXFLAGS) $(OLN_CXXFLAGS)"\" \
+   -DOLN_EXTRA_CPPFLAGS=\""$(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) -I$(OLN_LOCAL_SRC) -I$(OLN_LOCAL_BUILD) $(CPPFLAGS)"\" \
+   -DCXXFLAGS_OPTIMIZE=\""$(CXXFLAGS_OPTIMIZE)"\" \
+   -DCXXFLAGS_STRICT=\""$(CXXFLAGS_STRICT)"\" \
+   -DCXXFLAGS_STRICT_ERRORS=\""$(CXXFLAGS_STRICT_ERRORS)"\"
+
 check_LIBRARIES = libcheck.a
 
 libcheck_a_SOURCES =				\
@@ -12,6 +21,8 @@ libcheck_a_SOURCES =				\
   srcdir.cc					\
   srcdir.hh					\
   verbose.cc					\
-  verbose.hh
+  verbose.hh					\
+  compile.cc					\
+  compile.hh
 
 EXTRA_DIST = Makefile.flags Makefile.check

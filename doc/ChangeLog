@@ -1,6 +1,23 @@
 2003-01-22  Raphaël Poss  <raph@lrde.epita.fr>
 
-	* Makefile.am (ACLOCAL_AMFLAGS, CONFIGURE_DEPENDENCIES): Simplify.
+	* doc/Makefile.am (COMMONGETDEFSFLAGS): Fix path to autogen
+	template.
+
+	* demo/Makefile.am (INCLUDES): Add, since OLN_CPPFLAGS do not set
+	-I for Olena headers any more. (AM_CPPFLAGS): Fix path to Olena
+	sample images.
+	* doc/Makefile.am (INCLUDES): Likewise.
+	(MAINTAINERCLEANFILES): Minor fix.
+	(EXTRA_DIST, dist-local): Fix distribution list.
+
+	* Makefile.am: Remove ACLOCAL_AMFLAGS and CONFIGURE_DEPENDENCIES. Users that modify
+	oln.m4 should run boostrap.sh explicitely.
+
+	* configure.ac: Remove. All configuration moved to top-level
+	configure.ac.
+
+	* tpl/processing.tpl: use $CONVERT and $EPSTOPDF instead of bare
+	command names.
 
 2003-01-19  Raphaël Poss  <raph@lrde.epita.fr>
 

@@ -1,4 +1,4 @@
-#include <string>
+#include "srcdir.hh"
 #include <cstdlib>
 
 std::string srcdir;

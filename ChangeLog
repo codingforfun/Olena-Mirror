@@ -1,5 +1,12 @@
 2003-01-22  Raphaël Poss  <raph@lrde.epita.fr>
 
+	* configure.ac: Propagate the location of the distribution to
+	subdirectories. Merge configuration code from subdirectories.
+	Leverage Autoconf/Automake version requirements to meet the
+	availability of these tools on MacOSX and Cygwin.
+
+2003-01-22  Raphaël Poss  <raph@lrde.epita.fr>
+
 	* bootstrap.sh: Minor fix.
 
 	* oln-version.m4, component.m4: Remove (merged with oln/oln.m4).

@@ -1,4 +1,4 @@
-include $(top_srcdir)/tests/check/Makefile.check
+include $(srcdir)/../check/Makefile.check
 
 CXXFLAGS += $(CXXFLAGS_OPTIMIZE)
 

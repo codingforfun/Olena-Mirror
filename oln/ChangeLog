@@ -1,5 +1,51 @@
 2003-01-22  Raphaël Poss  <raph@lrde.epita.fr>
 
+	* tests/arith/runtests: Run generated script with $SHELL and from
+	current directory, so that -I relative paths remain correct.
+	Change verbosity system.
+	* tests/types/runtests: Likewise.
+
+	* tests/check/Makefile.check (LDADD): Fix path to libcheck.
+
+	* tests/check/compile.hh,
+	tests/check/compile.cc: Add.
+
+	* tests/meta/gen_test.cc (write_postlude_and_test): Use
+	compile_cmd() instead of manual string construction.
+
+	* tests/check/srcdir.cc: Include `srcdir.hh'.
+	* tests/check/srcdir.hh: Remove bogus inclusion of `config.h'.
+	* tests/check/data.cc: Include `data.hh'.
+
+	* tests/check/Makefile.am (AM_CPPFLAGS): Instruct libcheck where
+	to find Olena bits. Compile `compile.cc' into libcheck.
+
+	* tests/arith/runtests: Fix invocation of defs.in.
+	* tests/sanity/includes.test: Likewise.
+	* tests/types/runtests: Likewise.
+
+	* tests/transforms/Makefile.am, tests/morpho/Makefile.am,
+	tests/meta/Makefile.am, tests/convert/Makefile.am,
+	tests/convol/Makefile.am, tests/io/Makefile.am: Fix path to
+	Makefile.check.
+
+	* tests/defs.in (CPPFLAGS): Fix path to Olena headers. Move to ...
+	* tests/check/defs.in: ... here, so that defs.in is at the same
+	directory depth as other test directories. Import $EXEEXT.
+
+	* tests/check/Makefile.flags (INCLUDES): Add, since OLN_CPPFLAGS
+	does not set the -I path to Olena any more.
+
+	* configure.ac: Remove. All configuration code moved to upper
+	directory.
+	* Makefile.am: Remove ACLOCAL_AMFLAGS and CONFIGURE_DEPENDENCIES
+	accordingly.
+
+	* oln.m4 (OLN_PATH_LOCAL, OLN_PATH_LOCAL_IMGS): Cleanup detection
+	of distribution files. Minor fix in OLN_COMPONENT.
+
+2003-01-22  Raphaël Poss  <raph@lrde.epita.fr>
+
 	* oln.m4: Quote macro names. Merge oln-version.m4 and
 	component.m4.  
 	* Makefile.am (ACLOCAL_AMFLAGS, CONFIGURE_DEPENDENCIES): Simplify

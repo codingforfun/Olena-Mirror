@@ -5,13 +5,9 @@ SUBDIRS = oln img $(OLN_SRC_SUBDIRS)
 
 # oln.m4 is for users, install it with other aclocal data.
 m4datadir = $(datadir)/aclocal
-dist_m4data_DATA = oln.m4
+dist_m4data_DATA = config/oln.m4
 
 EXTRA_DIST = ISSUES
-
-# "configure.ac" in this directory uses macros in m4 files.
-ACLOCAL_AMFLAGS = -I .
-CONFIGURE_DEPENDENCIES = oln.m4
 
 # Stuff pertaining to compiler-specific auto-configuration
 

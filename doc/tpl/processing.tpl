@@ -161,17 +161,17 @@ int main()
 	  (begin
 	    (if (> (system (string-append "test -f " (pdf b/exiname))) 0)
 	       (begin
-		  (psystem "convert " b/exiname " " (eps b/exiname))
-      	          (psystem "mkdir -p html ; convert " b/exiname " " (h/png exiname))
-      	          (psystem "epstopdf " (eps b/exiname) " > " (pdf b/exiname))
+		  (psystem "$CONVERT " b/exiname " " (eps b/exiname))
+      	          (psystem "mkdir -p html ; $CONVERT " b/exiname " " (h/png exiname))
+      	          (psystem "$EPSTOPDF " (eps b/exiname) " > " (pdf b/exiname))
 	        ))
 	    (psystem "rm " b/exiname)))
        (if (exist? ".exo")
 	  (begin
 	    (psystem "rm bin/" (get ".exo"))
-	    (psystem "convert " b/exoname " " (eps b/exoname))
-            (psystem "mkdir -p html ; convert " b/exoname " " (h/png exoname))
-       	    (psystem "epstopdf " (eps b/exoname) " > " (pdf b/exoname))
+	    (psystem "$CONVERT " b/exoname " " (eps b/exoname))
+            (psystem "mkdir -p html ; $CONVERT " b/exoname " " (h/png exoname))
+       	    (psystem "$EPSTOPDF " (eps b/exoname) " > " (pdf b/exoname))
 ))))
 ~][~ ENDIF ~][~ `rm -f .example example.cc` ~]
 \end{verbatim}[~

@@ -9,6 +9,7 @@
 #include <sstream>
 #include "gen_test_utils/errors.hh"
 #include "srcdir.hh"
+#include "compile.hh"
 
 using namespace std;
 
@@ -175,15 +176,11 @@ write_postlude_and_test (ofstream & ofs,
 	dup2 (fd[1], 2);
 	close (fd[0]);
 	close (fd[1]);
-	std::string cmdline =
-	  std::string (CXX) + ' '
-	  + CXXFLAGS + ' '
-	  + CPPFLAGS + ' '
-	  + OLN_CXXFLAGS + ' '
-	  + OLN_CPPFLAGS + ' '
-	  + CXXFLAGS_STRICT_ERRORS + ' '
-	  + Isrcdir ("../..") + ' '
-	  + Isrcdir ("../check") + ' ' + "-L../check -lcheck " + filename;
+	std::string cmdline = compile_cmd(filename, "",
+					  Isrcdir ("../..") + ' '
+					  + Isrcdir ("../check") + ' ' 
+					  + "-L../check -lcheck " +
+					  cxxflags_strict_errors());
 	int ret = system (cmdline.c_str ());
 	exit (WEXITSTATUS (ret));
       }

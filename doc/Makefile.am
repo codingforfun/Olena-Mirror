@@ -6,7 +6,3 @@ SUBDIRS = $(OLN_DOC_SUBDIRS)
 # Users can use the distribution to build the documentation anew.
 EXTRA_DIST = tpl/processing.tpl 
 
-# "configure.ac" in this directory uses macros defined in m4
-# files in other directories. 
-ACLOCAL_AMFLAGS = -I ../oln
-CONFIGURE_DEPENDENCIES = $(srcdir)/../oln/oln.m4 

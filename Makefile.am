@@ -4,8 +4,8 @@
 SUBDIRS = oln $(OLN_TOP_SUBDIRS)
 
 # "configure.ac" in this directory uses macros in m4 files.
-ACLOCAL_AMFLAGS = -I oln
-CONFIGURE_DEPENDENCIES = oln/oln.m4
+ACLOCAL_AMFLAGS = -I oln/config
+CONFIGURE_DEPENDENCIES = oln/config/oln.m4
 
 # This is totally experimental. Comments are welcome.
 maintainer-check:

@@ -1,6 +1,15 @@
 2003-01-22  Raphaël Poss  <raph@lrde.epita.fr>
 
-	* Makefile.am (ACLOCAL_AMFLAGS, CONFIGURE_DEPENDENCIES): Simplify.
+	* utilities/Makefile.am (INCLUDES): Add path to Olena, since -I
+	flags are not added any more to OLN_CPPFLAGS.
+	* utilities/morpho/Makefile.am: Likewise.
+
+	* Makefile.am: Remove ACLOCAL_AMFLAGS and
+	CONFIGURE_DEPENDENCIES. Users that modify oln.m4 should run
+	bootstrap.sh explicitely.
+
+	* configure.ac: Remove. All configuration moved to top-level
+	`configure.ac'.
 
 2003-01-21  Raphaël Poss  <raph@lrde.epita.fr>
 

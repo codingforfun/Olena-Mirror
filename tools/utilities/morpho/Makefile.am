@@ -5,7 +5,7 @@ AM_CXXFLAGS = $(OLN_CXXFLAGS) $(CXXFLAGS_STRICT) $(CXXFLAGS_OPTIMIZE) $(ZLIB_CXX
 
 EXTRA_DIST = generate_morpho.sh morpho-rules.make
 
-INCLUDES = -I$(srcdir)/../../lib
+INCLUDES = -I$(srcdir)/../../lib -I$(OLN_LOCAL_SRC) -I$(OLN_LOCAL_BUILD)
 LDADD = ../../lib/libolntools.a
 
 include $(srcdir)/morpho-rules.make
