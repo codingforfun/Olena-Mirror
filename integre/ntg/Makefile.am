@@ -3,6 +3,8 @@
 ntgdir = $(includedir)/ntg
 
 nobase_ntg_HEADERS =				\
+	config/system.hh			\
+	config/pconf.hh				\
 	all.hh					\
 	behaviour.hh				\
 	bin.hh					\

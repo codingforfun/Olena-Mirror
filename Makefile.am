@@ -1,45 +1,47 @@
 ## Process this file through Automake to produce Makefile.in -*- Makefile -*-
 
-# OLN_TOP_SUBDIRS is set when "configure" is run.
-SUBDIRS = oln $(OLN_TOP_SUBDIRS)
+# FIXME: determine subdirs by configure
+SUBDIRS = metalic integre
 
 # "configure.ac" in this directory uses macros in m4 files.
-ACLOCAL_AMFLAGS = -I oln/config
-CONFIGURE_DEPENDENCIES = oln/config/oln.m4
+ACLOCAL_AMFLAGS = -I m4
+CONFIGURE_DEPENDENCIES = m4/cxx.m4
 
-dist_noinst_DATA = README BUILD INSTALL THANKS FAQ
-MAINTAINERCLEANFILES = README BUILD INSTALL THANKS FAQ
+# FIXME: uncomment when ready
 
-if HAVE_DOC_DEV
+# dist_noinst_DATA = README BUILD INSTALL THANKS FAQ
+# MAINTAINERCLEANFILES = README BUILD INSTALL THANKS FAQ
 
-INFOTOTEXT = $(MAKEINFO) --enable-encoding --no-headers --no-validate
-devdoc = $(srcdir)/doc/dev
+# if HAVE_DOC_DEV
 
-README: $(devdoc)/abstract.texi $(devdoc)/biblio.texi
-	$(INFOTOTEXT) $(devdoc)/abstract.texi >$@
-	$(INFOTOTEXT) $(devdoc)/biblio.texi >>$@
+# INFOTOTEXT = $(MAKEINFO) --enable-encoding --no-headers --no-validate
+# devdoc = $(srcdir)/doc/dev
 
-BUILD: $(devdoc)/build.texi
-	$(INFOTOTEXT) $(devdoc)/build.texi >$@
+# README: $(devdoc)/abstract.texi $(devdoc)/biblio.texi
+# 	$(INFOTOTEXT) $(devdoc)/abstract.texi >$@
+# 	$(INFOTOTEXT) $(devdoc)/biblio.texi >>$@
 
-INSTALL: $(devdoc)/install.texi
-	$(INFOTOTEXT) $(devdoc)/install.texi >$@
+# BUILD: $(devdoc)/build.texi
+# 	$(INFOTOTEXT) $(devdoc)/build.texi >$@
 
-THANKS: $(devdoc)/thanks.texi
-	$(INFOTOTEXT) $(devdoc)/thanks.texi >$@
+# INSTALL: $(devdoc)/install.texi
+# 	$(INFOTOTEXT) $(devdoc)/install.texi >$@
 
-FAQ: $(devdoc)/faq.texi
-	$(INFOTOTEXT) $(devdoc)/faq.texi >$@
+# THANKS: $(devdoc)/thanks.texi
+# 	$(INFOTOTEXT) $(devdoc)/thanks.texi >$@
 
-endif
+# FAQ: $(devdoc)/faq.texi
+# 	$(INFOTOTEXT) $(devdoc)/faq.texi >$@
 
-DISTCHECK_CONFIGURE_FLAGS = --disable-manpages-regen
+# endif
 
-# This is totally experimental. Comments are welcome.
-maintainer-check:
-	if cppi --version >/dev/null 2>&1; then \
-	  find $(srcdir) -name '*.{cc,hh,hxx}' | \
-	    xargs cppi --check; \
-	else \
-	  echo "$@: GNU cppi is required" >&2; \
-	fi
+# DISTCHECK_CONFIGURE_FLAGS = --disable-manpages-regen
+
+# # This is totally experimental. Comments are welcome.
+# maintainer-check:
+# 	if cppi --version >/dev/null 2>&1; then \
+# 	  find $(srcdir) -name '*.{cc,hh,hxx}' | \
+# 	    xargs cppi --check; \
+# 	else \
+# 	  echo "$@: GNU cppi is required" >&2; \
+# 	fi

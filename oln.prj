@@ -1,13 +1,13 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln sourcequake 7)
-(Parent-Version oln sourcequake 6)
-(Version-Log "tools -> noclues
+(Project-Version oln sourcequake 8)
+(Parent-Version oln sourcequake 7)
+(Version-Log "First version of m4 files.
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 25 Feb 2003 17:42:48 +0100")
-(Checkin-Login raph)
+(Checkin-Time "Thu, 27 Feb 2003 08:16:29 +0100")
+(Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
 ;; diff-ignore doc/doc/ref-morpho.tex$
@@ -87,10 +87,10 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.24 640))
 
   (metalic () :directory)
-  (metalic/ChangeLog (oln/q/16_ChangeLog 1.1 664))
+  (metalic/ChangeLog (oln/q/16_ChangeLog 1.1 640))
 
   (integre () :directory)
-  (integre/ChangeLog (oln/q/17_ChangeLog 1.1 664))
+  (integre/ChangeLog (oln/q/17_ChangeLog 1.1 640))
 
   (olena () :directory)
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.20 640))
@@ -108,8 +108,8 @@
   (prj (oln.prj) :symlink)
   (bootstrap.sh (oln/j/16_bootstrap. 1.8 750))
   (cleanup.sh (oln/o/29_cleanup.sh 1.4 750))
-  (configure.ac (oln/3_configure. 1.47.1.1.1.1 640))
-  (Makefile.am (oln/n/32_Makefile.a 1.17 640))
+  (configure.ac (oln/3_configure. 1.47.1.1.1.2 640))
+  (Makefile.am (oln/n/32_Makefile.a 1.18 640))
   (NEWS (oln/0_NEWS 1.13 640))
  
   (config () :directory)
@@ -131,8 +131,8 @@
   (doc/dev/thanks.texi (oln/p/40_thanks.tex 1.3 640))
 
   (integre/m4 () :directory)
-  (integre/Makefile.am (oln/q/6_Makefile.a 1.1 640))
-  (integre/configure.ac (oln/q/7_configure. 1.1 640))
+  (integre/Makefile.am (oln/q/6_Makefile.a 1.2 640))
+  (integre/configure.ac (oln/q/7_configure. 1.2 640))
 
   (integre/doc () :directory)
   (integre/doc/Makefile.am (oln/q/8_Makefile.a 1.1 640))
@@ -140,7 +140,7 @@
   (integre/config (../config) :symlink)
 
   (integre/ntg () :directory)
-  (integre/ntg/Makefile.am (oln/q/11_Makefile.a 1.1 640))
+  (integre/ntg/Makefile.am (oln/q/11_Makefile.a 1.2 640))
   (integre/ntg/all.hh (oln/g/32_all.hh 1.10 640))
   (integre/ntg/behaviour.hh (oln/g/31_behaviour. 1.12 640))
   (integre/ntg/bin.hh (oln/g/30_bin.hh 1.9 640))
@@ -277,14 +277,14 @@
   (integre/tests/sanity () :directory)
 
   (metalic/Makefile.am (oln/q/12_Makefile.a 1.1 640))
-  (metalic/configure.ac (oln/q/13_configure. 1.1 640))
+  (metalic/configure.ac (oln/q/13_configure. 1.2 640))
 
   (metalic/m4 () :directory)
   (metalic/config (../config) :symlink)
   (metalic/doc () :directory)
 
   (metalic/mlc () :directory)
-  (metalic/mlc/Makefile.am (oln/q/15_Makefile.a 1.1 640))
+  (metalic/mlc/Makefile.am (oln/q/15_Makefile.a 1.2 640))
   (metalic/mlc/array.hh (oln/f/36_array.hh 1.4 640))
   (metalic/mlc/array1d.hh (oln/f/23_array1d.hh 1.4 640))
   (metalic/mlc/array1d.hxx (oln/f/22_array1d.hx 1.5 640))
@@ -319,7 +319,7 @@
 
   (metalic/tests/sanity () :directory)
 
-  (olena/Makefile.am (oln/2_Makefile.a 1.30.1.1 640))
+  (olena/Makefile.am (oln/2_Makefile.a 1.30.1.2 640))
   (olena/config (../config) :symlink)
   (olena/m4 () :directory)
 
@@ -726,8 +726,55 @@
 ;; Files added by populate at Tue, 25 Feb 2003 17:08:32 +0100,
 ;; to version sourcequake.3(w), by raph:
 
+
+;; Files added by populate at Thu, 27 Feb 2003 08:14:31 +0100,
+;; to version sourcequake.7(w), by burrus_n:
+
+  (integre/m4/integre.m4 (oln/q/18_integre.m4 1.1 640))
+  (integre/m4/metalic.m4 (../../metalic/m4/metalic.m4) :symlink)
+  (integre/m4/cxx.m4 (../../m4/cxx.m4) :symlink)
+
+;; Files added by populate at Thu, 27 Feb 2003 08:14:39 +0100,
+;; to version sourcequake.7(w), by burrus_n:
+
+  (integre/ntg/config/pconf-hh.in (oln/q/19_pconf-hh.i 1.1 600))
+  (integre/ntg/config/system.hh (oln/q/20_system.hh 1.1 600))
+
+;; Files added by populate at Thu, 27 Feb 2003 08:14:46 +0100,
+;; to version sourcequake.7(w), by burrus_n:
+
+  (metalic/m4/metalic.m4 (oln/q/21_metalic.m4 1.1 640))
+
+;; Files added by populate at Thu, 27 Feb 2003 08:14:55 +0100,
+;; to version sourcequake.7(w), by burrus_n:
+
+  (metalic/mlc/config/pconf-hh.in (oln/q/22_pconf-hh.i 1.1 640))
+  (metalic/mlc/config/system.hh (oln/q/23_system.hh 1.1 640))
+
+;; Files added by populate at Thu, 27 Feb 2003 08:15:12 +0100,
+;; to version sourcequake.7(w), by burrus_n:
+
+  (m4/cxx.m4 (oln/q/24_cxx.m4 1.1 640))
+
+;; Files added by populate at Thu, 27 Feb 2003 08:15:48 +0100,
+;; to version sourcequake.7(w), by burrus_n:
+
+  (olena/configure.ac (oln/q/25_configure. 1.1 600))
+
+;; Files added by populate at Thu, 27 Feb 2003 08:15:54 +0100,
+;; to version sourcequake.7(w), by burrus_n:
+
+  (olena/m4/cxx.m4 (../../m4/cxx.m4) :symlink)
+  (olena/m4/olena.m4 (oln/q/26_olena.m4 1.1 600))
+  (olena/m4/metalic.m4 (../../metalic/m4/metalic.m4) :symlink)
+  (olena/m4/integre.m4 (../../integre/m4/integre.m4) :symlink)
+
+;; Files added by populate at Thu, 27 Feb 2003 08:16:00 +0100,
+;; to version sourcequake.7(w), by burrus_n:
+
+  (olena/oln/Makefile.am (oln/q/27_Makefile.a 1.1 600))
 )
 (Merge-Parents
-  (sourcequake.6 complete)
+  (sourcequake.7 complete)
 )
 (New-Merge-Parents)

@@ -3,6 +3,8 @@
 mlcdir = $(includedir)/mlc
 
 nobase_mlc_HEADERS = 				\
+	config/system.hh			\
+	config/pconf.hh				\
 	array.hh				\
 	array1d.hh				\
 	array1d.hxx				\

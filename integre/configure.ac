@@ -5,16 +5,22 @@ AC_PREREQ([2.54])
 AC_INIT([Intègre], 0.1, INTEGRE_CONTACT, [integre])
 AC_CONFIG_AUX_DIR([config])
 #FIXME
-#AC_CONFIG_SRCDIR([m4])
+AC_CONFIG_SRCDIR([m4/metalic.m4])
 AM_INIT_AUTOMAKE([1.7 no-define foreign dist-bzip2])
 AC_CONFIG_HEADERS([config.h:config.hin])
 
 # FIXME: Insert stuff related to CXX FLAGS
 
+AC_WITH_MLC
+
+if test x$have_metalic = xno; then
+   AC_MSG_ERROR([The Metalic library is required. You can get from http://www.lrde.epita.fr])
+fi
+
 AC_CONFIG_FILES([Makefile
-		doc/Makefile	
-		m4/Makefile
+		doc/Makefile
 		ntg/Makefile
+		  ntg/config/pconf.hh:ntg/config/pconf-hh.in
 		tests/Makefile])
 
 AC_OUTPUT

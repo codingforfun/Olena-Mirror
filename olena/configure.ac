@@ -2,18 +2,22 @@
 
 AC_PREREQ([2.54])
 
-AC_INIT([Metalic], 0.1, OLN_CONTACT, [metalic])
+AC_INIT([Olena], 0.8, OLN_CONTACT, [olena])
 AC_CONFIG_AUX_DIR([config])
 #FIXME
-#AC_CONFIG_SRCDIR([oln/m4])
+AC_CONFIG_SRCDIR([m4/olena.m4])
 AM_INIT_AUTOMAKE([1.7 no-define foreign dist-bzip2])
 AC_CONFIG_HEADERS([config.h:config.hin])
 
 # FIXME: Insert stuff related to CXX FLAGS
 
-AC_CONFIG_FILES([Makefile
-		mlc/Makefile
-		  mlc/config/pconf.hh:mlc/config/pconf-hh.in
-		tests/Makefile])
+# AC_WITH_MLC
+AC_WITH_NTG
+
+if test x$have_integre = xno; then
+   AC_MSG_ERROR([The Intègre library is required. You can get from http://www.lrde.epita.fr])
+fi
+
+AC_CONFIG_FILES([Makefile])
 
 AC_OUTPUT
