@@ -1,3 +1,10 @@
+2002-11-27  Jean-Sébastien Mouret  <js@lrde.epita.fr>
+
+	* oln/morpho/fast_morpho.hxx: Sort iterated dimensions
+	according to the shape of the structuring element.
+	* oln/morpho/reconstruction.hh: Change min to std::min.
+	* oln/utils/histogram.hh (histogram_max): Support for bin.
+
 2002-11-27  Raphael Poss  <raph@lrde.epita.fr>
 
 	* oln/core/contract.hh (OLN_EXCEPTIONS): report errors by means of

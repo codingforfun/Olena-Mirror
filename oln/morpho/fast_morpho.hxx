@@ -92,7 +92,7 @@ namespace oln {
 	  }
 
 	for (unsigned n = 0; n < dim; ++n)
-	  postcondition(se_add[n].card() == se_add[n].card());
+	  postcondition(se_add[n].card() == se_rem[n].card());
       }
 
 
@@ -144,37 +144,37 @@ namespace oln {
 	static void
 	doit(I& input, S& size, H& hist,
 	     B* se_add, B* se_rem, B* se_add_back, B* se_rem_back,
-	     P& p, O& output)
+	     P& p, O& output, const unsigned* dims)
 	{
-	  enum { N = NP1 - 1 };
+	  const unsigned N = *dims;
 
 	  fast_morpho_inner<NP1 + 1, Dim,
 	    I, S, H, B, P, O>::doit(input, size, hist,
-				    se_add + 1, se_rem + 1,
-				    se_add_back + 1, se_rem_back + 1, p,
-				    output);
+				    se_add, se_rem,
+				    se_add_back, se_rem_back, p,
+				    output, dims + 1);
 	  if (p.nth(N) == 0) {	// Go forward
 	    for(++p.nth(N); p.nth(N) < size.nth(N); ++p.nth(N)) {
-	      hist_update(hist, input, p, *se_rem, *se_add);
+	      hist_update(hist, input, p, se_rem[N], se_add[N]);
 	      output[p] = hist.res();
 	      fast_morpho_inner<NP1 + 1, Dim,
 		I, S, H, B, P, O>::doit(input, size, hist,
-					se_add + 1, se_rem + 1,
-					se_add_back + 1,
-					se_rem_back + 1,
-					p, output);
+					se_add, se_rem,
+					se_add_back,
+					se_rem_back,
+					p, output, dims + 1);
 	    }
 	    --p.nth(N);
 	  } else {		// Go backward
 	    for(--p.nth(N); p.nth(N) >= 0; --p.nth(N)) {
-	      hist_update(hist, input, p, *se_rem_back, *se_add_back);
+	      hist_update(hist, input, p, se_rem_back[N], se_add_back[N]);
 	      output[p] = hist.res();
 	      fast_morpho_inner<NP1 + 1, Dim,
 		I, S, H, B, P, O>::doit(input, size, hist,
-					se_add + 1, se_rem + 1,
-					se_add_back + 1,
-					se_rem_back + 1,
-					p, output);
+					se_add, se_rem,
+					se_add_back,
+					se_rem_back,
+					p, output, dims + 1);
 	    }
 	    ++p.nth(N);
 	  }
@@ -193,43 +193,63 @@ namespace oln {
 	static void
 	doit(I& input, S& size, H& hist,
 	     B* se_add, B* se_rem, B* se_add_back, B* se_rem_back,
-	     P& p, O& output)
+	     P& p, O& output, const unsigned* dims)
 	{
-	  if (p.nth(Dim - 1) == 0) { // Go forward
+	  const unsigned N = *dims;
+
+	  if (p.nth(N) == 0) { // Go forward
 	    // Don't call hist_update because this would create new `dpr' and
 	    // `dpa' iterators for each points.
-	    Iter(B) dpr(*se_rem);
-	    Iter(B) dpa(*se_add);
-	    for(++p.nth(Dim - 1);
-		p.nth(Dim - 1) < size.nth(Dim - 1);
-		++p.nth(Dim - 1)) {
+	    Iter(B) dpr(se_rem[N]);
+	    Iter(B) dpa(se_add[N]);
+	    for(++p.nth(N);
+		p.nth(N) < size.nth(N);
+		++p.nth(N)) {
 	      for_all(dpr)
 		--hist[input[p + dpr]];
 	      for_all(dpa)
 		++hist[input[p + dpa]];
 	      output[p] = hist.res();
 	    }
-	    --p.nth(Dim - 1);
+	    --p.nth(N);
 	  } else {		// Go backward
 	    // Don't call hist_update because this would create new `dpr' and
 	    // `dpa' iterators for each points.
-	    Iter(B) dpr(*se_rem_back);
-	    Iter(B) dpa(*se_add_back);
-	    for(--p.nth(Dim - 1);
-		p.nth(Dim - 1) >= 0;
-		--p.nth(Dim - 1)) {
+	    Iter(B) dpr(se_rem_back[N]);
+	    Iter(B) dpa(se_add_back[N]);
+	    for(--p.nth(N);
+		p.nth(N) >= 0;
+		--p.nth(N)) {
 	      for_all(dpr)
 		--hist[input[p + dpr]];
 	      for_all(dpa)
 		++hist[input[p + dpa]];
 	      output[p] = hist.res();
 	    }
-	    ++p.nth(Dim - 1);
+	    ++p.nth(N);
 	  }
 	  return;
 	}
       };
     } // internal
+
+
+    template<class _E>
+    struct sort_dimensions
+    {
+      sort_dimensions(struct_elt<_E> se[type::exact<_E>::ret::dim])
+	: _se(se) {}
+
+      bool operator()(unsigned a, unsigned b)
+      {
+	Exact_ptr(E, se);
+	return se[a].card() > se[b].card(); 
+      }
+
+    protected:
+      struct_elt<_E>* _se;
+    };
+
 
     template<class _I, class _E, template<typename, typename> class H>
     Concrete(_I)
@@ -238,7 +258,7 @@ namespace oln {
     {
       Exact_cref(I, input);
       Exact_cref(E, se);
-      const unsigned dim = E::dim;
+      enum { dim = E::dim };
 
       // prepare output
       Concrete(I) output(input.size());
@@ -264,6 +284,13 @@ namespace oln {
 	  se_add_back[n].add(dp);
 	}
 
+      // Order dimensions
+      unsigned dims[dim];
+      for (unsigned n = 0; n < dim; ++n)
+	dims[n] = n;
+      sort_dimensions<_E> s(se_add);
+      std::sort(dims, dims + dim, s);
+
       const typename I::image_size size = input.size();
 
       // Initialize the histogram with the values around the first point.
@@ -281,10 +308,10 @@ namespace oln {
 
       internal::fast_morpho_inner<1, E::dim, const I,
 	const typename I::image_size, H<Value(I),unsigned>,
-	const E, Point(I), Concrete(_I)>::doit(input, size, hist,
+	const E, Point(I), Concrete(_I)>::doit(input, size, hist,					       
 					       se_add, se_rem,
 					       se_add_back, se_rem_back,
-					       p, output);
+					       p, output, dims);
       return output;
     }
 

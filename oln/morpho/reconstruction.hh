@@ -258,14 +258,14 @@ namespace oln {
 	typename I1::fwd_iter fwd_p(output);
 	typename I1::bkd_iter bkd_p(output);
 	for_all (fwd_p)
-	  output[fwd_p] = min(morpho::max(output, fwd_p, Ng_plus),
-			      mask[fwd_p]);
+	  output[fwd_p] = std::min(morpho::max(output, fwd_p, Ng_plus),
+				   mask[fwd_p]);
 
 	std::queue< Point(I1) > fifo;
 	for_all (bkd_p)
 	  {
-	    output[bkd_p] = min(morpho::max(output, bkd_p, Ng_minus),
-				mask[bkd_p]);
+	    output[bkd_p] = std::min(morpho::max(output, bkd_p, Ng_minus),
+				     mask[bkd_p]);
 	    if (exist_init_dilation(bkd_p.cur(), output, mask, Ng_minus))
 	      fifo.push(bkd_p);
 	  }
@@ -279,7 +279,7 @@ namespace oln {
 	      {
 		if ((output[q] < output[p]) && (mask[q] != output[q]))
 		  {
-		    output[q] = min(output[p], mask[q]);
+		    output[q] = std::min(output[p], mask[q]);
 		    fifo.push(q);
 		  }
 	      }

@@ -1,17 +1,18 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 91)
-(Parent-Version oln 0_5 90)
-(Version-Log "2002-11-27  Raphael Poss  <raph@lrde.epita.fr>
+(Project-Version oln 0_5 92)
+(Parent-Version oln 0_5 91)
+(Version-Log "2002-11-27  Jean-Sébastien Mouret  <js@lrde.epita.fr>
 
-        * oln/core/contract.hh (OLN_EXCEPTIONS): report errors by means of
-        throwing  std::runtime_error()   instead  of  aborting,  when  the
-        OLN_EXCEPTIONS macro is defined.
+	* oln/morpho/fast_morpho.hxx: Sort iterated dimensions
+	according to the shape of the structuring element.
+	* oln/morpho/reconstruction.hh: Change min to std::min.
+	* oln/utils/histogram.hh (histogram_max): Support for bin.
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 27 Nov 2002 01:34:44 +0100")
-(Checkin-Login raph)
+(Checkin-Time "Wed, 27 Nov 2002 04:05:49 +0100")
+(Checkin-Login js)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
 ;; diff-ignore Makefile\.in$
@@ -119,7 +120,7 @@
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.25 600))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.89 600))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.90 600))
   (configure.ac (oln/3_configure. 1.27 600))
   (configure (oln/e/7_configure 1.35 700))
   (README (oln/1_README 1.4 600))
@@ -318,7 +319,7 @@
   (oln/morpho/erosion.hh (oln/b/4_erosion.hh 1.6 600))
   (oln/morpho/extrema.hh (oln/38_extrema.hh 1.6 600))
   (oln/morpho/fast_morpho.hh (oln/46_fast_morph 1.2 600))
-  (oln/morpho/fast_morpho.hxx (oln/45_fast_morph 1.3 600))
+  (oln/morpho/fast_morpho.hxx (oln/45_fast_morph 1.4 600))
   (oln/morpho/geodesic_dilation.hh (oln/37_geodesic_d 1.7 600))
   (oln/morpho/geodesic_erosion.hh (oln/36_geodesic_e 1.6 600))
   (oln/morpho/gradient.hh (oln/b/3_gradient.h 1.3 600))
@@ -330,7 +331,7 @@
   (oln/morpho/minmax.hh (oln/b/0_minmax.hh 1.2 600))
   (oln/morpho/opening.hh (oln/51_opening.hh 1.3 600))
   (oln/morpho/opening.inc (oln/40_opening.in 1.4 600))
-  (oln/morpho/reconstruction.hh (oln/35_reconstruc 1.9 600))
+  (oln/morpho/reconstruction.hh (oln/35_reconstruc 1.10 600))
   (oln/morpho/splitse.hh (oln/34_splitse.hh 1.2 600))
   (oln/morpho/stat.hh (oln/50_stat.hh 1.5 600))
   (oln/morpho/thickening.hh (oln/e/29_thickening 1.3 600))
@@ -341,7 +342,7 @@
   (oln/morpho/top_hat.inc (oln/39_top_hat.in 1.4 600))
   (oln/morpho/watershed.hh (oln/48_watershed. 1.3 600))
   (oln/morpho/watershed.hxx (oln/47_watershed. 1.5 600))
-  (oln/utils/histogram.hh (oln/10_histogram. 1.3 600))
+  (oln/utils/histogram.hh (oln/10_histogram. 1.4 600))
   (oln/utils/stat.hh (oln/9_stat.hh 1.4 600))
   (oln/utils/timer.hh (oln/8_timer.hh 1.2 600))
   (tests/meta () :directory)

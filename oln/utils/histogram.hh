@@ -241,7 +241,7 @@ namespace oln {
 
       U& operator[](const T& i)
       {
-	unsigned idx = unsigned(i - optraits<T>::min());
+	unsigned idx = unsigned(unsigned(i) - unsigned(optraits<T>::min()));
 	adjust(idx);
 	return _values[idx];
       }
