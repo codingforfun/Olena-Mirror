@@ -83,6 +83,9 @@ namespace oln {
 			       ntg::cast::force<oln_value_type(I)>(value_));
       };
 
+      /// Empty constructor for any_with_diamond hierarchy.
+      value_behavior() {}
+
   protected:
     value_type	value_;
   };

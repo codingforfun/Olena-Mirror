@@ -1,3 +1,13 @@
+2004-06-15  Simon Odou  <simon@lrde.epita.fr>
+
+	* oln/basics.hh: Add behavior.hh.
+	* oln/core/behavior.hh: Add an empty constructor for any_with_diamond.
+	* oln/makefile.src: Add border morpher file.
+	* oln/convol/fast_convolution.hh: Use border morpher, fix the size problem.
+	* tests/convol/tests/fast_convol: Improve test comparing with slow version.
+	* oln/morpher/border_morpher.hh: Border morpher.
+	* tests/morpher/tests/border: Test border morpher.
+
 2004-06-15  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* oln/makefile.src: Add new files to the distribution.

@@ -33,6 +33,7 @@
 # include <mlc/array/all.hh>
 # include <oln/transforms/fft.hh>
 # include <oln/morpher/piece_morpher.hh>
+# include <oln/morpher/border_morpher.hh>
 
 namespace oln {
 
@@ -43,6 +44,34 @@ namespace oln {
     /*! \brief Convolution algorithms.
     */
     namespace fast {
+
+      /// Internal namespace
+      namespace internal {
+
+	inline const coord
+	center_dst(coord n)
+	{
+	  return n % 2 ? n / 2 + 1 : n / 2;
+	}
+
+	inline const coord
+	center_src(coord n)
+	{
+	  return n % 2 ? n / 2 : (n - 1) / 2;
+	}
+
+	template <class I, class J, class P>
+	const P
+	center(const abstract::image<I>& big_ima, const abstract::image<J>& ima)
+	{
+	  P p;
+	  for (unsigned i = 0; i < image_id<I>::dim; i++)
+	    p.nth(i) = internal::center_dst(big_ima.size().nth(0)) -
+	      internal::center_src(ima.size().nth(0)) - 1;
+	  return p;
+	}
+
+      } // end of namespace internal
 
       /*!
       ** \brief Perform a convolution of two images.
@@ -99,28 +128,43 @@ namespace oln {
       {
 	mlc::eq<I::dim, J::dim>::ensure();
 	mlc::eq<I::dim, 2>::ensure();
-	assert(input.npoints() >= k.npoints());
 
-	// We compute k with a size of input (k is centered in big_k).
-	image2d<oln_value_type(J)> big_k(input.size());
-#define CENTER_DST(I)						\
-((I) % 2 ? (I) / 2 + 1 : (I) / 2)
-#define CENTER_SRC(I)						\
-((I) % 2 ? (I) / 2 : ((I) - 1) / 2)
-	typedef morpher::piece_morpher< image2d<oln_value_type(J)> > piece_t;
-	piece_t piece_k(big_k,
-			dpoint2d(CENTER_DST(big_k.size().nrows()) -
-				 CENTER_SRC(k.size().nrows()) - 1,
-				 CENTER_DST(big_k.size().ncols()) -
-				 CENTER_SRC(k.size().ncols()) - 1),
-			oln::image2d_size(k.size().nrows(),
-					  k.size().ncols(),
-					  big_k.border()));
-	oln_iter_type(piece_t) i_k(piece_k);
-	for_all(i_k)
-	  piece_k[i_k] = k[i_k];
+	oln_size_type(I) big_size;
+	coord width_input = 0;
+	coord width_k = 0;
+	for (unsigned i = 0; i < I::dim; i++)
+	{
+	  big_size.nth(i) = input.size().nth(i) + k.size().nth(i) - 1;
+	  if (width_input < k.size().nth(i) - 1)
+	  {
+	    width_input = k.size().nth(i) - 1;
+	    width_k = input.size().nth(i) - 1;
+	  }
+	}
+	big_size.border() = input.border();
 
-	transforms::fft<oln_value_type(I), ntg::rect> tr_input(input.exact());
+	const morpher::border_morpher< const image2d<oln_value_type(I)>, replicate_behavior<> >
+	  big_input(input.exact(), (width_input + 1) / 2, replicate_bhv());
+
+	J big_k(big_size);
+	oln_iter_type(J) big_iter(big_k);
+	for_all(big_iter)
+	  big_k[big_iter] = 0;
+	oln_iter_type(J) k_iter(k);
+	oln_iter_type(J) input_iter(input);
+
+	morpher::piece_morpher<J>
+	  piece_k(big_k, internal::center<J, J, oln_dpoint_type(J)>(big_k, k), k.size());
+
+	for_all(k_iter)
+	  piece_k[k_iter] = k[k_iter];
+
+	/// \todo FIXME: unfortunately, fft does not support morphers for now.
+	I big_input_(big_input.size());
+	for_all(big_iter)
+	  big_input_[big_iter] = big_input[big_iter];
+
+	transforms::fft<oln_value_type(I), ntg::rect> tr_input(big_input_.exact());
 	transforms::fft<oln_value_type(J), ntg::rect> tr_k(big_k.exact());
 
 	tr_input.transform();
@@ -129,14 +173,19 @@ namespace oln {
 	const typename mute<J, ntg::cplx<ntg::rect, ntg::float_d> >::ret
 	  K = tr_k.transform();
 
-	oln_iter_type(I) i_input(Input);
-	for_all(i_input) {
-	  Input[i_input] *= K[i_input];
+	for_all(big_iter) {
+	  Input[big_iter] *= K[big_iter];
 	  // Scale.
-	  Input[i_input] *= Input.size().nrows() * Input.size().ncols();
+	  Input[big_iter] *= Input.nrows() * Input.ncols();
 	}
 
-	typename mute<I, DestValue>::ret output = tr_input.shift_transform_inv();
+	typename mute<I, DestValue>::ret big_output = tr_input.shift_transform_inv();
+	typename mute<I, DestValue>::ret output(input.size());
+
+	morpher::piece_morpher<J>
+	  piece_output(big_output, internal::center<J, J, oln_dpoint_type(J)>(big_input_, input), input.size());
+	for_all(input_iter)
+	    output[input_iter] = piece_output[input_iter];
 
 	return output;
       }

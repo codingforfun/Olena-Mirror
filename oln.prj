@@ -1,25 +1,21 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 194)
-(Parent-Version oln 10 193)
-(Version-Log "2004-06-15  Damien Thivolle  <damien@lrde.epita.fr>
-	* oln/makefile.src: Add new files to the distribution.
-	* oln/transforms/shapelets.hh: Small Changes.
-	* oln/morpher/func_morpher.hh: Add file, image can now be seen through
-	a functor.
-	* oln/core/fpoint2d.hh: Add file. Contain floating point
-	implementation.
-	* oln/core/fdpoint2d.hh: Add file. Contain floating dpoint
-	implementation.
-	* oln/geom/translate.hh: Add file. Implementation of image translation
-	using floating dpoint.
-	* oln/geom/rotate.hh: Add file. Implementation of image rotation using
-	floating point.
+(Project-Version oln 10 195)
+(Parent-Version oln 10 194)
+(Version-Log "2004-06-15  Simon Odou  <simon@lrde.epita.fr>
+
+	* oln/basics.hh: Add behavior.hh.
+	* oln/core/behavior.hh: Add an empty constructor for any_with_diamond.
+	* oln/makefile.src: Add border morpher file.
+	* oln/convol/fast_convolution.hh: Use border morpher, fix the size problem.
+	* tests/convol/tests/fast_convol: Improve test comparing with slow version.
+	* oln/morpher/border_morpher.hh: Border morpher.
+	* tests/morpher/tests/border: Test border morpher.
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 15 Jun 2004 19:50:21 +0200")
-(Checkin-Login thivol_d)
+(Checkin-Time "Tue, 15 Jun 2004 20:36:26 +0200")
+(Checkin-Login odou_s)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -125,7 +121,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.14 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.46 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.42 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.11 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.12 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.13 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.39 600))
 
@@ -177,7 +173,7 @@
   (olena/oln/basics1d.hh (oln/d/41_basics1d.h 1.5 600))
   (olena/oln/basics2d.hh (oln/b/7_basics2d.h 1.6 600))
   (olena/oln/basics3d.hh (oln/28_basics3d.h 1.4 600))
-  (olena/oln/basics.hh (oln/d/42_basics.hh 1.13 600))
+  (olena/oln/basics.hh (oln/d/42_basics.hh 1.14 600))
 
 
   (olena/oln/config/system.hh (oln/7_system.hh 1.17 600))
@@ -1204,7 +1200,7 @@
 ;; Files added by populate at Tue, 10 Feb 2004 15:26:20 +0100,
 ;; to version 10.62(w), by palma_g:
 
-  (olena/oln/core/behavior.hh (oln/j/47_behavior.h 1.4 600))
+  (olena/oln/core/behavior.hh (oln/j/47_behavior.h 1.5 600))
 
 
   (olena/oln/morpho/attribute_closing_opening_map.hxx (oln/j/48_attribute_ 1.2 600))
@@ -1446,7 +1442,7 @@
   (olena/tests/morpho/tests/gradient (oln/r/1_gradient 1.2 600))
   (integre/ntg/makefile.src (oln/r/2_makefile.s 1.1 600))
   (metalic/mlc/makefile.src (oln/r/3_makefile.s 1.1 600))
-  (olena/oln/makefile.src (oln/r/4_makefile.s 1.4 600))
+  (olena/oln/makefile.src (oln/r/4_makefile.s 1.5 600))
 
   (olena/oln/convol/slow_gaussian.hh (oln/r/7_slow_gauss 1.4 600))
   (olena/oln/convol/slow_gaussian.hxx (oln/r/8_slow_gauss 1.4 600))
@@ -1468,12 +1464,12 @@
 ;; Files added by populate at Mon, 14 Jun 2004 04:44:42 +0200,
 ;; to version 10.191(w), by simon:
 
-  (olena/oln/convol/fast_convolution.hh (oln/r/12_fast_convo 1.2 600))
+  (olena/oln/convol/fast_convolution.hh (oln/r/12_fast_convo 1.3 600))
 
 ;; Files added by populate at Mon, 14 Jun 2004 07:43:20 +0200,
 ;; to version 10.191(w), by simon:
 
-  (olena/tests/convol/tests/fast_convol (oln/r/13_fast_convo 1.1 600))
+  (olena/tests/convol/tests/fast_convol (oln/r/13_fast_convo 1.2 600))
 
 ;; Files added by populate at Tue, 15 Jun 2004 19:48:03 +0200,
 ;; to version 10.193(w), by thivol_d:
@@ -1491,6 +1487,16 @@
 
   (olena/oln/geom/translate.hh (oln/s/6_translate. 1.1 600))
   (olena/oln/geom/rotate.hh (oln/u/14_rotate.hh 1.1 600))
+
+;; Files added by populate at Tue, 15 Jun 2004 20:28:53 +0200,
+;; to version 10.194(w), by simon:
+
+  (olena/oln/morpher/border_morpher.hh (oln/u/15_border_mor 1.1 600))
+
+;; Files added by populate at Tue, 15 Jun 2004 20:29:02 +0200,
+;; to version 10.194(w), by simon:
+
+  (olena/tests/morpher/tests/border (oln/u/16_border 1.1 600))
 )
 (Merge-Parents)
 (New-Merge-Parents)

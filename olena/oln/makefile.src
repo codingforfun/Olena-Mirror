@@ -150,6 +150,7 @@ OLN_DEP =					\
   level/set_level.hh				\
   level/threshold.hh				\
   math/macros.hh				\
+  morpher/border_morpher.hh			\
   morpher/color_morpher.hh			\
   morpher/func_morpher.hh			\
   morpher/generic_morpher.hh			\
