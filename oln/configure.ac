@@ -1,12 +1,11 @@
 # Process this file with autoconf to produce a configure script.
-AC_PREREQ([2.54])
+AC_PREREQ([2.57])
 
 m4_include(../oln-version.m4)
 
 AC_INIT([oln], OLN_VERSION, OLN_CONTACT)
 AC_CONFIG_SRCDIR([oln.m4])
-AM_INIT_AUTOMAKE([1.7.1 no-define foreign dist-bzip2])
-AM_MAINTAINER_MODE
+AM_INIT_AUTOMAKE([1.7.2 no-define foreign dist-bzip2])
 
 # OLN_SOURCE_DIR back-tells Olena users where its headers are installed.
 real_includedir=`eval echo $includedir`

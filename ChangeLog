@@ -1,3 +1,9 @@
+2003-01-15  Akim Demaille  <akim@epita.fr>
+
+	* configure.ac: Require Autoconf 2.57, Automake 1.7.2.
+	(AM_MAINTAINER_MODE): Remove it, since it doesn't solve anything,
+	at the contrary.
+
 2003-01-07  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* bootstrap.sh: call generate_morpho.sh during boostrap.
@@ -9,7 +15,7 @@
 
 2003-01-04  Raphaël Poss  <raph@lrde.epita.fr>
 
-	* component.m4 (OLN_COMPONENT, OLN_COLLETION): add. 
+	* component.m4 (OLN_COMPONENT, OLN_COLLETION): add.
 
 	* NEWS: update.
 	* README: update.
@@ -39,7 +45,7 @@
 	* configure.ac: Make the doc/ and tools/ subdirectories optional.
 	Depend again on Automake 1.7.1. Document optional arguments pertaining
 	to subdirectories in the toplevel "configure" script.
-	
+
 	* oln-version.m4: Add (replaces oln-version). Use with more sanity.
 
 	* NEWS: Create entry for 0.7.
@@ -47,5 +53,3 @@
 	* oln/Changelog, attic/oln-ChangeLog: Fix typos. Rename.
 	* oln/test/ChangeLog, attic/tests-ChangeLog: Fix typos. Rename.
 	* doc/ChangeLog, attic/doc-ChangeLoog: Fix typos. Rename.
-	
-
