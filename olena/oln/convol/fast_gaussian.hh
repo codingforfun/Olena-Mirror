@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,7 +30,7 @@
 
 # include <oln/basics.hh>
 # include <oln/convert/basics.hh>
-# include <ntg/predecls.hh>
+# include <ntg/float.hh>
 
 //
 // Gaussian filter implementation from
@@ -45,34 +45,34 @@ namespace oln {
       template <class C, class I>
       typename mute<I, typename convoutput<C,Value(I)>::ret>::ret
       gaussian(const conversion<C>& input_conv,
-	       const image<I>& in, sfloat sigma);
+	       const image<I>& in, ntg::float_s sigma);
 
       template <class C, class I>
       typename mute<I, typename convoutput<C,Value(I)>::ret>::ret
       gaussian_derivative(const conversion<C>& input_conv,
-			  const image<I>& in, sfloat sigma);
+			  const image<I>& in, ntg::float_s sigma);
 
       template <class C, class I>
       typename mute<I, typename convoutput<C,Value(I)>::ret>::ret
       gaussian_second_derivative(const conversion<C>& input_conv,
-				 const image<I>& in, sfloat sigma);
+				 const image<I>& in, ntg::float_s sigma);
 
 
       /* Same functions, with a default conversion.  */
 
       template <class I> inline
       Concrete(I)
-      gaussian(const image<I>& in, sfloat sigma)
+      gaussian(const image<I>& in, ntg::float_s sigma)
       { return gaussian(convert::force<Value(I)>(), in, sigma); }
 
       template <class I> inline
       Concrete(I)
-      gaussian_derivative(const image<I>& in, sfloat sigma)
+      gaussian_derivative(const image<I>& in, ntg::float_s sigma)
       { return gaussian_derivative(convert::force<Value(I)>(), in, sigma); }
 
       template <class I> inline
       Concrete(I)
-      gaussian_second_derivative(const image<I>& in, sfloat sigma)
+      gaussian_second_derivative(const image<I>& in, ntg::float_s sigma)
       { return gaussian_second_derivative(convert::force<Value(I)>(),
 					  in, sigma); }
     }

@@ -30,7 +30,7 @@
 # define OLENA_CONVERT_BOUND_HH
 
 # include <oln/convert/conversion.hh>
-# include <ntg/cast.hh>
+# include <ntg/utils/cast.hh>
 
 namespace oln {
   namespace convert {
@@ -47,10 +47,13 @@ namespace oln {
 	return ntg::cast::bound<Output>(v);
       }
 
-      static std::string name() {
+      static std::string
+      name()
+      {
+	// FIXME: ntg_name(Exact) will not work for mlc::final !
 	return std::string("bound<")
-	  + ntg::typename_of<Output>() + ", "
-	  + ntg::typename_of<Exact>() + ">";
+	  + ntg_name(Output) + ", "
+	  + "FIXME: ntg_name(Exact)" + ">";
       }
     };
 

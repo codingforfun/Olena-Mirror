@@ -35,7 +35,7 @@
 #  include <fftw.h>
 #  include <rfftw.h>
 
-#  include <ntg/optraits.hh>
+#  include <ntg/basics.hh>
 #  include <ntg/all.hh>
 #  include <oln/basics2d.hh>
 
@@ -52,7 +52,7 @@ namespace oln {
     template <class T>
     struct fft_trait
     {
-      void ensure() { is_a(optraits<T>, optraits_scalar)::ensure(); }
+      void ensure() { ntg_is_a(T, ntg::real)::ensure(); }
 
       static const fft_dispatch		which = fft_real;
       typedef fftw_real			fftw_input;
@@ -75,12 +75,12 @@ namespace oln {
     {
     public:
 
-      const image2d<cplx<R, dfloat> > transformed_image() const
+      const image2d<cplx<R, float_d> > transformed_image() const
       {
 	return trans_im;
       }
 
-      image2d<cplx<R, dfloat> >& transformed_image()
+      image2d<cplx<R, float_d> >& transformed_image()
       {
 	return trans_im;
       }
@@ -88,7 +88,7 @@ namespace oln {
       template <class T1>
       image2d<T1> transformed_image_magn(bool ordered = true) const
       {
-	is_a(optraits<T1>, optraits_scalar)::ensure();
+	ntg_is_a(T1, ntg::real)::ensure();
 
 	image2d<T1> new_im(trans_im.size());
 
@@ -100,7 +100,7 @@ namespace oln {
 			 (col + trans_im.ncols() / 2) % trans_im.ncols()).magn();
 	else
 	  {
-	    typename image2d<cplx<R, dfloat> >::iter it(trans_im);
+	    typename image2d<cplx<R, float_d> >::iter it(trans_im);
 
 	    for_all(it)
 	      new_im[it] = trans_im[it].magn();
@@ -115,15 +115,15 @@ namespace oln {
       }
 
       template <class T1>
-      image2d<T1> transformed_image_clipped_magn(const dfloat clip,
+      image2d<T1> transformed_image_clipped_magn(const float_d clip,
 						 bool ordered = true) const
       {
-	is_a(optraits<T1>, optraits_scalar)::ensure();
+	ntg_is_a(T1, ntg::real)::ensure();
 
 	image2d<T1> new_im(trans_im.size());
-	range<dfloat, bounded_u<0, 1>, saturate> c(clip);
-	dfloat max = 0;
-	typename image2d<cplx<R, dfloat> >::iter it(trans_im);
+	range<float_d, bounded_u<0, 1>, saturate> c(clip);
+	float_d max = 0;
+	typename image2d<cplx<R, float_d> >::iter it(trans_im);
 
 	for_all(it)
 	  if (max < trans_im[it].magn())
@@ -136,10 +136,10 @@ namespace oln {
 		if (trans_im((row + trans_im.nrows() / 2) % trans_im.nrows(),
 			     (col + trans_im.ncols() / 2) %
 			     trans_im.ncols()).magn() >= max * c)
-		  new_im(row, col) = optraits<T>::max();
+		  new_im(row, col) = ntg_max_val(T);
 		else
 		  new_im(row, col) =
-		    optraits<T>::max() *
+		    ntg_max_val(T) *
 		    trans_im((row + trans_im.nrows() / 2) % trans_im.nrows(),
 			     (col + trans_im.ncols() / 2) %
 			     trans_im.ncols()).magn() / (max * c);
@@ -148,16 +148,16 @@ namespace oln {
 	  for_all(it)
 	      {
 		if (trans_im[it].magn() >= max * c)
-		  new_im[it] = optraits<T>::max();
+		  new_im[it] = ntg_max_val(T);
 		else 
-		  new_im[it] = optraits<T>::max() *
+		  new_im[it] = ntg_max_val(T) *
 		    trans_im[it].magn() / (max * c);
 	      }
       
 	return new_im;
       }
 
-      image2d<T> transformed_image_clipped_magn(const dfloat clip,
+      image2d<T> transformed_image_clipped_magn(const float_d clip,
 						bool ordered = true) const
       {
 	return transformed_image_clipped_magn<T>(clip, ordered);
@@ -176,19 +176,19 @@ namespace oln {
 
       // FIXME: Find a more elegant way to fix range interval on a and b.
       template <class T1>
-      image2d<T1> transformed_image_log_magn(const range<dfloat,
+      image2d<T1> transformed_image_log_magn(const range<float_d,
 					     bounded_u<0, 1000>,
 					     saturate> a,
-					     const range<dfloat,
+					     const range<float_d,
 					     bounded_u<0, 1000>,
 					     saturate> b,
 					     bool ordered = true) const
       {
-	is_a(optraits<T1>, optraits_scalar)::ensure();
+	ntg_is_a(T1, ntg::real)::ensure();
 
 	image2d<T1> new_im(trans_im.size());
-	dfloat max = 0;
-	typename image2d<cplx<R, dfloat> >::iter it(trans_im);
+	float_d max = 0;
+	typename image2d<cplx<R, float_d> >::iter it(trans_im);
 
 	for_all(it)
 	  if (max < trans_im[it].magn())
@@ -202,20 +202,20 @@ namespace oln {
 				     trans_im.nrows(),
 				     (col + trans_im.ncols() / 2) %
 				     trans_im.ncols()).magn()) /
-		log(a + b * max) * optraits<T>::max();
+		log(a + b * max) * ntg_max_val(T);
 	else
 	  for_all(it)
 	    new_im[it] = log(a + b * trans_im[it].magn()) /
-	    log(a + b * max) * optraits<T>::max();
+	    log(a + b * max) * ntg_max_val(T);
 
 	return new_im;
       }
 
       // FIXME: Find a more elegant way to fix boundaries of a and b.
-      image2d<T> transformed_image_log_magn(const range<dfloat,
+      image2d<T> transformed_image_log_magn(const range<float_d,
 					    bounded_u<0, 1000>,
 					    saturate> a,
-					    const range<dfloat,
+					    const range<float_d,
 					    bounded_u<0, 1000>,
 					    saturate> b,
 					    bool ordered = true) const
@@ -248,7 +248,7 @@ namespace oln {
       fftw_complex			*out;
       fftwnd_plan			p;
       fftwnd_plan			p_inv;
-      image2d<cplx<R, dfloat> >		trans_im;
+      image2d<cplx<R, float_d> >		trans_im;
 
     };
 
@@ -287,10 +287,10 @@ namespace oln {
 	p_inv = rfftw2d_create_plan(original_im.nrows(), original_im.ncols(),
 				    FFTW_COMPLEX_TO_REAL, FFTW_ESTIMATE);
 
-	trans_im = image2d<cplx<R, dfloat> >(original_im.size());
+	trans_im = image2d<cplx<R, float_d> >(original_im.size());
       }
 
-      image2d<cplx<R, dfloat> > transform()
+      image2d<cplx<R, float_d> > transform()
       {
 	rfftwnd_one_real_to_complex(p, in, out);
 
@@ -301,7 +301,7 @@ namespace oln {
 	    {
 	      out[i].re /= denom;
 	      out[i].im /= denom;
-	      trans_im(row, col) = cplx<rect, dfloat>(out[i].re, out[i].im);
+	      trans_im(row, col) = cplx<rect, float_d>(out[i].re, out[i].im);
 	      ++i;
 	    }
 	for (int row = 0; row < trans_im.nrows(); ++row)
@@ -314,7 +314,7 @@ namespace oln {
       template <class T1>
       image2d<T1> transform_inv()
       {
-	is_a(optraits<T1>, optraits_scalar)::ensure();
+	ntg_is_a(T1, ntg::real)::ensure();
 
 	for (int row = 0; row < trans_im.nrows(); ++row)
 	  for (int col = 0; col <= trans_im.ncols() / 2; ++col)
@@ -331,11 +331,11 @@ namespace oln {
 	for (int row = 0; row < trans_im.nrows(); ++row)
 	  for (int col = 0; col < trans_im.ncols(); ++col)
 	    {
-	      new_im(row, col) = (in[i] >= optraits<T1>::inf() ?
-				  (in[i] <= optraits<T1>::sup() ?
+	      new_im(row, col) = (in[i] >= ntg_inf_val(T1) ?
+				  (in[i] <= ntg_sup_val(T1) ?
 				   in [i] :
-				   optraits<T1>::sup()) :
-				  optraits<T1>::inf());
+				   ntg_sup_val(T1)) :
+				  ntg_inf_val(T1));
 	      ++i;
 	    }
 	return new_im;
@@ -379,10 +379,10 @@ namespace oln {
 	p_inv = fftw2d_create_plan(original_im.nrows(), original_im.ncols(),
 				   FFTW_BACKWARD, FFTW_ESTIMATE);
 
-	trans_im = image2d<cplx<rect, dfloat> >(original_im.size());
+	trans_im = image2d<cplx<rect, float_d> >(original_im.size());
       }
 
-      image2d<cplx<R, dfloat> > transform()
+      image2d<cplx<R, float_d> > transform()
       {
 	fftwnd_one(p, in, out);
 
@@ -393,7 +393,7 @@ namespace oln {
 	    {
 	      out[i].re /= denom;
 	      out[i].im /= denom;
-	      trans_im(row, col) = cplx<rect, dfloat>(out[i].re, out[i].im);
+	      trans_im(row, col) = cplx<rect, float_d>(out[i].re, out[i].im);
 	      ++i;
 	    }
 	return trans_im;

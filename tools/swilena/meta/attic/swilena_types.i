@@ -24,8 +24,8 @@
 %define ScalarOperators(Name, Interface)
   Name(Interface);
 %extend { 
-  Interface value() const { return (*self); }
-  void value(Interface x) { *self = ntg::Name(x); }
+  Interface val() const { return (*self); }
+  void val(Interface x) { *self = ntg::Name(x); }
   
   Name& operator+=(const Name& other)
     { return (*self) += other; }
@@ -157,8 +157,8 @@ namespace ntg
     bin(bool);
     
     %extend {
-      bool value() { return (*self); }
-      void value(bool v) { (*self) = v; }
+      bool val() { return (*self); }
+      void val(bool v) { (*self) = v; }
 
       bin operator&(const bin& other) const
 	{ return (*self) & other; }

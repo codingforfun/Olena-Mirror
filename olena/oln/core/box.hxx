@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,8 +37,8 @@ namespace oln {
 
   template <class PointType>
   box<PointType>::box() :
-    top_(ntg::optraits<int>::min(), ntg::optraits<int>::min()),
-    bottom_(ntg::optraits<int>::max(), ntg::optraits<int>::max())
+    top_(ntg_min_val(int), ntg_min_val(int)),
+    bottom_(ntg_max_val(int), ntg_max_val(int))
   {
     card_ = 0;
     not_consistent_ = true;

@@ -150,8 +150,8 @@ class cplx
   cplx(const T& p1 = 0, const T& p2 = 0);
   cplx(const ntg::cplx<repr, T>& other);
 
-  const dfloat real() const;
-  const dfloat imag() const;
+  const float_d real() const;
+  const float_d imag() const;
   const T magn() const;
   const T angle() const;
   const T first() const;
@@ -171,8 +171,8 @@ class cplx
 %enddef
 
 %define decl_ntg()
-%include <ntg/cplx_representation.hh>
-%include <ntg/predecls.hh>
+%include <ntg/vect/cplx_representation.hh>
+%include <ntg/core/predecls.hh>
 %{
 #include <ntg/all.hh>
 %}
@@ -182,17 +182,13 @@ class cplx
 namespace ntg
 {
 
-  namespace type_definitions 
-    {
-      decl_scalar_class(ntg::type_definitions, int_u, unsigned long)
-      decl_scalar_class(ntg::type_definitions, int_s, long)
-      decl_bin_class(ntg::type_definitions, bin, bool)
+  decl_scalar_class(ntg, int_u, unsigned long)
+  decl_scalar_class(ntg, int_s, long)
+  decl_bin_class(ntg, bin, bool)
 
-      decl_complex()
-    }
+  decl_complex()
+
 }
 %enddef
 
 decl_ntg()
-
-

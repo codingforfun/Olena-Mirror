@@ -23,8 +23,8 @@ MakeValue(int_s16s);
 MakeValue(int_u32s);
 MakeValue(int_s32s);
 
-MakeFloatValue(sfloat);
-MakeFloatValue(dfloat);
+MakeFloatValue(float_s);
+MakeFloatValue(float_d);
 
 MakeRgbValue(rgb_8);
 MakeRgbValue(rgb_16);

@@ -8,6 +8,11 @@ AC_CONFIG_SRCDIR([config/oln.m4])
 AM_INIT_AUTOMAKE([1.7 no-define foreign dist-bzip2])
 AC_CONFIG_HEADERS([config.h:config.hin])
 
+# FIXME: maybe not the best way to do this
+if test ! ${CXXFLAGS+set}; then
+   CXXFLAGS=""
+fi
+
 # Use included Olena version.
 NTG_PATH_LOCAL([integre])
 MLC_PATH_LOCAL([metalic])
@@ -165,7 +170,9 @@ OLN_COLLECTION([OLN_TOP],
       
 
       # NTG_TESTS defined in oln-local.m4
+      NTG_TESTS([sanity])
       NTG_TESTS([types])
+      NTG_TESTS([utils])
 
       AC_SUBST([NTG_TESTS_SUBDIRS])
 
@@ -205,6 +212,7 @@ OLN_COLLECTION([OLN_TOP],
       # MLC_TESTS defined in oln-local.m4
       MLC_TESTS([array])
       MLC_TESTS([main])
+      MLC_TESTS([sanity])
 
       AC_SUBST([MLC_TESTS_SUBDIRS])
 

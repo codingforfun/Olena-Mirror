@@ -1,3 +1,112 @@
+2003-06-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Merge from integre.28:
+	
+	2003-06-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/convert/Makefile.am: Tag 8-nrgb-hsl and 8-nrgb-hsv as XFAIL.
+
+	2003-05-14  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/convert/nrgbhsv.hh, oln/convert/nrgbhsl.hh: Add assertions.
+
+	2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/topo/inter-pixel/inter-pixel.hh: Fix includes.
+
+	* oln/convol/fast_gaussian.hh, oln/convol/fast_gaussian.hxx: Fix
+	includes and namespaces.
+
+	* oln/convert/stretch.hh, oln/convert/conversion.hh,
+	oln/convert/bound.hh, oln/convert/force.hh, oln/core/dpointnd.hh,
+	oln/core/imagend_size.hh, oln/core/pointnd.hh,
+	oln/level/threshold.hh: Adapt to integre's changes.
+
+	* oln/io/pnm_write_common.hxx, oln/convert/nrgbhsi.hh: Update
+	includes.
+
+	* oln/convert/nrgbhsv.hh, oln/convert/nrgbhsl.hh: Add FIXME.
+
+	2003-05-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/level/invert.hh: Adapt to integre's changes.
+
+	2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/io/pnm_read_common.hxx, oln/io/pnm_read.hxx,
+	oln/io/pnm_write_common.hxx, oln/io/pnm_write.hxx,
+	oln/level/cc.hh: Fix typos.
+
+	2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* oln/arith/internal/opdecls.hh, oln/math/macros.hh,
+	oln/morpho/geodesic_dilation.hh, oln/morpho/reconstruction.hh,
+	oln/utils/stat.hh: Modify according to integre's changes.
+
+	2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* oln/arith/ops.hh, oln/convert/nrgbhsi.hh,
+	oln/convert/nrgbhsl.hh, oln/convert/nrgbhsv.hh,
+	oln/convert/nrgbxyz.hh, oln/convert/nrgbyiq.hh,
+	oln/convert/nrgbyuv.hh, oln/convert/rgbnrgb.hh,
+	oln/convert/rgbxyz.hh, /oln/convert/stretch.hh, oln/core/box.hxx,
+	oln/core/image1d.hh, oln/core/image2d.hh, oln/core/image3d.hh,
+	oln/core/internal/real_image2d.hh,
+	oln/core/internal/real_image3d.hh, oln/io/pnm_write3d.hxx,
+	oln/io/pnm_write.hxx, oln/level/connected.hh, oln/level/invert.hh,
+	oln/math/macros.hh, oln/morpho/extrema.hxx,
+	oln/morpho/extrema_killer.hh, oln/morpho/watershed.hxx,
+	oln/topo/dmap.hxx, oln/transforms/dwt.hh, oln/transforms/fft.hh,
+	oln/utils/histogram.hh, oln/utils/stat.hh,
+	oln/topo/inter-pixel/inter-pixel.hh: Modify according to integre's
+	changes.
+
+	* tests/io/loadsave.hh: Minor fix.
+	
+	2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/math/macros.hh, 
+	oln/utils/histogram.hh: Rename real_value() calls.
+
+	2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* conf/configure.ac, oln/arith/internal/opdecls.hh,
+	oln/convol/fast_gaussian.hh, oln/convol/fast_gaussian.hxx,
+	oln/convol/fast_gaussian_coefficient.hh, oln/level/invert.hh,
+	oln/math/macros.hh, oln/transforms/dwt.hh,
+	oln/transforms/fft.hh, oln/transforms/wavelet_coeffs.hh,
+	oln/utils/stat.hh, tests/convert/convcomp.cc,
+	tests/convert/convcomp.hh, tests/transforms/dwt.cc,
+	tests/transforms/fft.cc: Rename sfloat and dfloat.
+
+	2003-04-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/io/pnm_write_common.hxx: Update includes.
+
+	2003-04-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/arith/ops.hh, oln/convert/bound.hh,
+	oln/convert/colorconv.hh, oln/convert/conversion.hh,
+	oln/convert/force.hh, oln/convert/nrgbhsi.hh,
+	oln/convert/nrgbhsl.hh, oln/convert/nrgbhsv.hh,
+	oln/convert/nrgbxyz.hh, oln/convert/nrgbyiq.hh,
+	oln/convert/nrgbyuv.hh, oln/convert/rgbnrgb.hh,
+	oln/convert/rgbxyz.hh, oln/convert/stretch.hh,
+	oln/convol/fast_gaussian_coefficient.hh,
+	oln/convol/fast_gaussian.hh, oln/convol/fast_gaussian.hxx,
+	oln/core/dpoint1d.hh, oln/core/dpointnd.hh,
+	oln/core/imagend_size.hh, oln/core/point1d.hh,
+	oln/core/point3d.hh, oln/core/pointnd.hh,
+	oln/io/pnm_read_common.hxx, oln/io/pnm_write_common.hxx,
+	oln/io/pnm_write.hxx, oln/level/connected.hh,
+	oln/level/invert.hh, oln/level/threshold.hh,
+	oln/math/macros.hh, oln/morpho/geodesic_dilation.hh,
+	oln/morpho/reconstruction.hh, oln/topo/dmap.hxx,
+	oln/transforms/dwt.hh, oln/transforms/fft.hh,
+	oln/utils/histogram.hh, oln/utils/stat.hh: Update includes.
+
+	* tests/io/loadsave.hh: Likewise.
+	
 2003-05-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* Makefile.am (CLEANFILES): Undo wrong changes.

@@ -30,7 +30,7 @@
 
 # include <oln/core/image_size.hh>
 # include <oln/core/coord.hh>
-# include <ntg/debug.hh>
+# include <ntg/utils/debug.hh>
 # include <sstream>
 
 namespace oln {
@@ -69,7 +69,7 @@ namespace oln {
     {
       std::ostringstream out;
       out << "imagend_size<" << dim << ","
-          << ntg::typename_of<Exact>() << ">" << std::ends;
+          << Exact::name() << ">" << std::ends;
       return out.str();
     }
 

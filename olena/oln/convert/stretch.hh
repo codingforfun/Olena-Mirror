@@ -29,42 +29,44 @@
 # define OLENA_CONVERT_STRETCH_HH
 
 # include <mlc/type.hh>
-# include <ntg/optraits.hh>
-# include <ntg/optraits_builtins.hh>
+
+# include <ntg/basics.hh>
+
 # include <oln/convert/conversion.hh>
 # include <oln/convert/force.hh>
 
 namespace oln {
   
-  using namespace ntg;
-
   namespace convert {
 
     template<class Output, class Exact = mlc::final>
-    struct stretch : public conversion_to_type<Output, typename mlc::exact_vt<force<Output, Exact>, Exact>::ret >
-    {
-  
+    struct stretch 
+      : public conversion_to_type<Output, typename mlc::exact_vt<force<Output, Exact>, Exact>::ret >
+    {  
       template< class Input >
       Output operator() (const Input& v) const {
 
-	return Output(cast::rbound<Output, float>
+	return Output(ntg::cast::rbound<Output, float>
 		      (
-		       double(v - optraits<Input>::min())
-		       / double(optraits<Input>::max() - optraits<Input>::min())
-		       * (optraits<Output>::max() - optraits<Output>::min())
-		       + optraits<Output>::min())
+		       double(v - ntg_min_val(Input))
+		       / double(ntg_max_val(Input) - ntg_min_val(Input))
+		       * (ntg_max_val(Output) - ntg_min_val(Output))
+		       + ntg_min_val(Output))
 		      );
       }
       
-      static std::string name() {
-        return std::string("stretch<") + typename_of<Output>() + ", "
-          + typename_of<Exact>() + ">";
+      static std::string
+      name()
+      {
+	// FIXME: Exact is not an integre type !
+        return std::string("stretch<") + ntg_name(Output) + ", "
+          + Exact::name() + ">";
       }
     };
 
 
-  } // end of namespace convert
+  } // end of convert.
 
-} // end of namespace oln
+} // end of oln.
 
 #endif // OLENA_CONVERT_STRETCH_HH

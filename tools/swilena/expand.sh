@@ -37,7 +37,7 @@ EOF
     int_s8 int_s16 int_s32 \
     int_u8s int_u16s int_u32s \
     int_s8s int_s16s int_s32s \
-    sfloat dfloat # rgb_8 rgb_16 rgb_32
+    float_s float_d # rgb_8 rgb_16 rgb_32
     do
     short=`echo $t | sed -e 's,int_,,g;s,_,,g'`
     echo "make_image(image${dim}d_$short, $dim, oln::$t)" >> "$SWILENA/src/swilena_image${dim}d.i"
@@ -140,4 +140,3 @@ header_src >"$SWILENA/src/Makefile.am"
 dump_src >>"$SWILENA/src/Makefile.am"
 header_python >"$SWILENA/python/Makefile.am"
 dump_python >>"$SWILENA/python/Makefile.am"
-

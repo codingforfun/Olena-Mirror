@@ -20,11 +20,11 @@ struct Convol
 	
 %define ExtendFastConvol(Img)
      ConvolFunc1(fast_gaussian, 
-		 fast::gaussian, Img, const Img&, oln::sfloat);
+		 fast::gaussian, Img, const Img&, oln::float_s);
      ConvolFunc1(fast_gaussian_derivative,
-		 fast::gaussian_derivative, Img, const Img&, oln::sfloat);
+		 fast::gaussian_derivative, Img, const Img&, oln::float_s);
      ConvolFunc1(fast_gaussian_second_derivative,
-		 fast::gaussian_second_derivative, Img, const Img&, oln::sfloat);
+		 fast::gaussian_second_derivative, Img, const Img&, oln::float_s);
 %enddef
 
 %define MakeConvol(Img, W)

@@ -31,10 +31,7 @@
 # include <oln/core/image.hh>
 # include <oln/core/iter.hh>
 # include <ntg/bin.hh>
-# include <ntg/optraits_int_u.hh>
-# include <ntg/int_u.hh>
-# include <ntg/optraits_int_s.hh>
-# include <ntg/int_s.hh>
+# include <ntg/int.hh>
 
 # include <oln/io/base.hh>
 
@@ -60,9 +57,9 @@ namespace oln {
 	  }
       }
 
-      template< unsigned N, class behaviour >
+      template< unsigned N, class behavior >
       inline void
-      readmany_plain(std::istream& in, int_u<N, behaviour>* elt, coord n)
+      readmany_plain(std::istream& in, int_u<N, behavior>* elt, coord n)
       {
 	for (; n; --n)
 	  {
@@ -72,9 +69,9 @@ namespace oln {
 	  }
       }
 
-      template< unsigned N, class behaviour >
+      template< unsigned N, class behavior >
       inline void
-      readmany_raw(std::istream& in, int_u<N, behaviour>* elt, coord n)
+      readmany_raw(std::istream& in, int_u<N, behavior>* elt, coord n)
       {
 	in.read((char*)elt, n * sizeof(*elt));
       }

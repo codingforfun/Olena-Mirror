@@ -190,7 +190,7 @@ struct id_ { typedef T ret; };
 
 
 // FIXME: can we get rid of mlc::wrap ?
-# define is_a(T, U) mlc::internal::wrap<typename mlc::internal::_is_a< id_of_typeform(U) >::check<T, U> >
-# define is_a_(T, U) mlc::internal::wrap<mlc::internal::_is_a< id_of_typeform(U) >::check<T, U> >
+# define mlc_is_a(T, U) mlc::internal::wrap<typename mlc::internal::_is_a< id_of_typeform(U) >::check<T, U> >
+# define mlc_is_a_(T, U) mlc::internal::wrap<mlc::internal::_is_a< id_of_typeform(U) >::check<T, U> >
 
 #endif // ndef METALIC_IS_A_HH

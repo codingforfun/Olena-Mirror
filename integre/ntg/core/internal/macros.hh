@@ -1,0 +1,87 @@
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+//
+// This file is part of the Olena Library.  This library is free
+// software; you can redistribute it and/or modify it under the terms
+// of the GNU General Public License version 2 as published by the
+// Free Software Foundation.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this library; see the file COPYING.  If not, write to
+// the Free Software Foundation, 59 Temple Place - Suite 330, Boston,
+// MA 02111-1307, USA.
+//
+// As a special exception, you may use this file as part of a free
+// software library without restriction.  Specifically, if other files
+// instantiate templates or use macros or inline functions from this
+// file, or you compile this file and link it with other files to
+// produce an executable, this file does not by itself cause the
+// resulting executable to be covered by the GNU General Public
+// License.  This exception does not however invalidate any other
+// reasons why the executable file might be covered by the GNU General
+// Public License.
+
+#ifndef NTG_CORE_INTERNAL_MACROS_HH
+# define NTG_CORE_INTERNAL_MACROS_HH
+
+/*
+  All internal macros starts have an ntgi prefix.
+*/
+
+/*----------------.
+| types accessors |
+`----------------*/
+
+/*
+  In come internal code, it is not always possible to use
+  type_traits<T>, especially within the code of the T class itself.
+  That's why ntgi_* macros exists.
+*/
+
+# define ntgi_storage_type(T) \
+typename ntg::internal::typetraits<T>::storage_type
+
+# define ntgi_abstract_type(T) \
+typename ntg::internal::typetraits<T>::abstract_type
+
+# define ntgi_optraits_type(T) \
+typename ntg::internal::typetraits<T>::optraits_type
+
+# define ntgi_behavior_type(T) \
+typename ntg::internal::typetraits<T>::behavior_type
+
+# define ntgi_base_type(T) \
+typename ntg::internal::typetraits<T>::base_type
+
+# define ntgi_signed_type(T) \
+typename ntg::internal::typetraits<T>::signed_type
+
+# define ntgi_unsigned_type(T) \
+typename ntg::internal::typetraits<T>::unsigned_type
+
+# define ntgi_cumul_type(T) \
+typename ntg::internal::typetraits<T>::cumul_type
+
+# define ntgi_largest_type(T) \
+typename ntg::internal::typetraits<T>::largest_type
+
+# define ntgi_signed_largest_type(T) \
+typename ntg::internal::typetraits<T>::signed_largest_type
+
+# define ntgi_signed_cumul_type(T) \
+typename ntg::internal::typetraits<T>::signed_cumul_type
+
+# define ntgi_unsigned_largest_type(T) \
+typename ntg::internal::typetraits<T>::unsigned_largest_type
+
+# define ntgi_unsigned_cumul_type(T) \
+typename ntg::internal::typetraits<T>::unsigned_cumul_type
+
+# define ntgi_integer_type(T) \
+typename ntg::internal::typetraits<T>::integer_type
+
+#endif // !NTG_CORE_INTERNAL_MACROS_HH

@@ -1,0 +1,13 @@
+// #define NTG_DEBUG
+
+#include <ntg/int.hh>
+
+using namespace ntg;
+
+ntg_debug_define_vars(true);
+
+int main()
+{
+  int_u32 u = 65537U * 65535U;
+  u = u - 1; // ABORT
+}

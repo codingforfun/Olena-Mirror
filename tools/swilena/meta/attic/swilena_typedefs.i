@@ -14,8 +14,8 @@ TypedefImage(Dim, image ## Dim ## d_s16, int_s16);
 TypedefImage(Dim, image ## Dim ## d_bin, bin);
 TypedefImage(Dim, image ## Dim ## d_rgb_8, rgb_8);
 TypedefImage(Dim, image ## Dim ## d_rgb_16, rgb_16);
-TypedefImage(Dim, image ## Dim ## d_sfloat, sfloat);
-TypedefImage(Dim, image ## Dim ## d_dfloat, dfloat);
+TypedefImage(Dim, image ## Dim ## d_float_s, float_s);
+TypedefImage(Dim, image ## Dim ## d_float_d, float_d);
 %enddef
 
 DimTypedefs(1);

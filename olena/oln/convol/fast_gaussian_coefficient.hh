@@ -42,7 +42,7 @@
 //// ------------------------------------------------------------ ////
 
 
-# include <ntg/predecls.hh>
+# include <ntg/core/predecls.hh>
 # include <vector>
 
 namespace oln {
@@ -61,7 +61,7 @@ namespace oln {
 			       FloatT b0, FloatT b1,
 			       FloatT c0, FloatT c1,
 			       FloatT w0, FloatT w1,
-			       ntg::dfloat s, FilterType filter_type);
+			       ntg::float_d s, FilterType filter_type);
 	  std::vector<FloatT>	n, d, nm, dm;
 	  FloatT		sumA, sumC;
 	};
@@ -74,7 +74,7 @@ namespace oln {
 			       FloatT b0, FloatT b1,
 			       FloatT c0, FloatT c1,
 			       FloatT w0, FloatT w1,
-			       ntg::dfloat s, FilterType filter_type)
+			       ntg::float_d s, FilterType filter_type)
 	{
 	  n.reserve(5);
 	  d.reserve(5);

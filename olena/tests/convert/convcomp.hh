@@ -8,9 +8,9 @@ using namespace oln;
 using namespace ntg;
 
 template< class Input >
-struct f_l2_vec3 : public std::binary_function<Input, Input, sfloat>
+struct f_l2_vec3 : public std::binary_function<Input, Input, float_s>
 {
-  sfloat operator()(Input l, Input r) const
+  float_s operator()(Input l, Input r) const
   {
     float v0 = (float) l[0] - r[0];
     float v1 = (float) l[1] - r[1];

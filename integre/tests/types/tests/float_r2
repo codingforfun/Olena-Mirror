@@ -1,3 +1,3 @@
-typedef range<sfloat, bounded_s<10, 20>, strict> sr;
+typedef range<float_s, bounded_s<10, 20>, strict> sr;
 sr f = 23.0; // ABORT
 (void) f;

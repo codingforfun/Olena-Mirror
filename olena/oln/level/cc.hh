@@ -43,7 +43,7 @@
 namespace oln {
   namespace level {
 
-    // optional behaviour for this algorithm.
+    // optional behavior for this algorithm.
     struct update_label;
 
     /*=processing frontp_connected_component

@@ -159,8 +159,9 @@ operator<<(std::ostream& o, const oln::internal::_real_image2d<T,I>& ima)
     {
       for (oln::coord col = 0; col < ima.ncols(); ++col)
 	{
-	  // FIXME: this does not work when optraits::max is not defined (eg floats)
-	  // o.width(unsigned(log10(double(ntg::optraits<T>::max()))+2));
+	  // FIXME: this does not work when ntg_max_val is not defined
+	  // (eg floats)
+	  // o.width(unsigned(log10(double(ntg_max_val(T)))+2));
 	  o << ima(row,col) << ' ';
 	}
       o << std::endl;
@@ -168,6 +169,4 @@ operator<<(std::ostream& o, const oln::internal::_real_image2d<T,I>& ima)
   return o;
 }
 
-
-
-#endif // ! OLENA_CORE_INTERNAL_REAL_IMAGE2D_HH
+#endif // !OLENA_CORE_INTERNAL_REAL_IMAGE2D_HH

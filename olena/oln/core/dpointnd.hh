@@ -31,7 +31,7 @@
 # include <oln/core/coord.hh>
 # include <oln/core/point.hh>
 # include <oln/core/dpoint.hh>
-# include <ntg/debug.hh>
+# include <ntg/utils/debug.hh>
 # include <iostream>
 # include <sstream>
 
@@ -97,11 +97,12 @@ namespace oln {
     }
 
 
-    static std::string name()
+    static std::string
+    name()
     {
       std::ostringstream out;
       out << "dpointnd<" << dim << ","
-	  << ntg::typename_of<Exact>() << ">" << std::endl;
+	  << Exact::name() << ">" << std::endl;
       return out.str();
     }
 

@@ -28,7 +28,7 @@
 #ifndef OLENA_CONVERT_COLORCONV_HH
 # define OLENA_CONVERT_COLORCONV_HH
 
-# include <ntg/color.hh>
+# include <ntg/color/color.hh>
 # include <oln/convert/conversion.hh>
 
 namespace oln {
@@ -36,7 +36,7 @@ namespace oln {
 
     namespace internal {
 
-      /* Define this specialization sperately to work around a bug
+      /* Define this specialization separately to work around a bug
 	 in gcc.  Specializing
 	   conv_output<icomps,icolors,ocomps,ocolors,I>::output<T>
          for T = ntg::color<icomps,Q,colors> (Q generic) does not work.

@@ -238,9 +238,9 @@ main(int argc, char *argv[])
       for_all(p)
 	{
 	  if (((p.row() / 8) ^ (p.col() / 8)) & 1)
-	    output[p] = optraits<TYPE>::min();
+	    output[p] = ntg_min_val(TYPE);
 	  else
-	    output[p] = optraits<TYPE>::max();
+	    output[p] = ntg_max_val(TYPE);
 	}
     }
 

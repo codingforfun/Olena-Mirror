@@ -1,5 +1,37 @@
-range<int_u8, bounded_u<10, 13>, strict> u = 10;
+typedef range<int_u8, bounded_u<10, 13>, strict> t1;
+typedef range<int, bounded_u<5, 72>, strict> t2;
+typedef range<float_s, bounded_s<-15, 28>, strict> t3;
+
+t1 u = 10;
+t2 v = 32U;
+t3 w = -5.8;
+
 u = 11;
 u = 12;
 u = 13;
-return u != 13;
+
+ntg_is_a_(t1, unsigned_integer)::ensure();
+mlc_is_a_(t1, uint_value)::ensure();
+
+ntg_is_a_(t2, signed_integer)::ensure();
+mlc_is_a_(t2, sint_value)::ensure();
+
+ntg_is_a_(t3, decimal)::ensure();
+mlc_is_a_(t3, float_value)::ensure();
+
+u + u;
+u + 5;
+5 + u;
+u + int_u16(5);
+int_u16(5) + u;
+
+u * v;
+v * 5U;
+u / v;
+
+u + w + v;
+u + w * v;
+
+w + 5;
+
+return (u + v * w) != -172.6f;

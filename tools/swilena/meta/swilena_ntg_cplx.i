@@ -7,7 +7,7 @@
 #include <ntg/all.hh>
 %}
 
-%template(cplx_rf) ntg::cplx<ntg::rect, ntg::sfloat>;
-%template(cplx_rd) ntg::cplx<ntg::rect, ntg::dfloat>;
-%template(cplx_pf) ntg::cplx<ntg::polar, ntg::sfloat>;
-%template(cplx_pd) ntg::cplx<ntg::polar, ntg::dfloat>;
+%template(cplx_rf) ntg::cplx<ntg::rect, ntg::float_s>;
+%template(cplx_rd) ntg::cplx<ntg::rect, ntg::float_d>;
+%template(cplx_pf) ntg::cplx<ntg::polar, ntg::float_s>;
+%template(cplx_pd) ntg::cplx<ntg::polar, ntg::float_d>;

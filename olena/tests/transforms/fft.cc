@@ -35,7 +35,7 @@ check()
 
   fft<int_u8> fourier(im1);
 
-  image2d<cplx<polar, dfloat> > im2 = fourier.transform();
+  image2d<cplx<polar, float_d> > im2 = fourier.transform();
 
   image2d<int_u8> im3 = fourier.transform_inv();
 

@@ -1,7 +1,7 @@
 #include <oln/basics2d.hh>
 #include <oln/level/compare.hh>
-#include <ntg/nrgb.hh>
-#include <ntg/debug.hh>
+#include <ntg/color/nrgb.hh>
+#include <ntg/utils/debug.hh>
 #if HAVE_ZLIB
 # include <oln/io/gz.hh>
 #endif
@@ -43,7 +43,7 @@ loadsave(const string& name, const string& savename)
 
   T im, im2;
 
-  cout << ntg::typename_of<T>() << endl;
+  cout << T::name() << endl;
   cout << "  load(" << name << ")" << flush;
   if (! io::load(im, name))
     {

@@ -31,8 +31,8 @@
 # include <oln/config/system.hh>
 # include <oln/basics.hh>
 
-# include <ntg/optraits.hh>
-# include <ntg/cast.hh>
+# include <ntg/basics.hh>
+# include <ntg/utils/cast.hh>
 # include <mlc/array/1d.hh>
 
 namespace oln {
@@ -66,7 +66,7 @@ namespace oln {
   namespace internal
   {
 
-    static const dfloat _ln_2 = 0.6931471805599453092;
+    static const float_d _ln_2 = 0.6931471805599453092;
 
     //
     // _wavelet_coeffs<T, N, Self>
@@ -137,7 +137,7 @@ namespace oln {
 
       const unsigned half = n >> 1;
       unsigned lim = n + 1 - coeffs.size();
-      dfloat* tmp = new dfloat[n];
+      float_d* tmp = new float_d[n];
       Point(I) p(_p);
       unsigned i, j, k;
 
@@ -182,7 +182,7 @@ namespace oln {
 
       const unsigned half = n >> 1;
       unsigned lim = coeffs.size() - 2;
-      dfloat* tmp = new dfloat[n];
+      float_d* tmp = new float_d[n];
       Point(I) p(_p), q(_p);
       unsigned i, j, k, l;
 
@@ -364,12 +364,12 @@ namespace oln {
 
       typedef Concrete(I_)			original_im_t;
       typedef Value(I_)				original_im_value_t;
-      typedef typename mute<I_, dfloat>::ret	trans_im_t;
+      typedef typename mute<I_, float_d>::ret	trans_im_t;
       typedef typename K::self_t		coeffs_t;
 
       dwt(const original_im_t& im) : original_im(im)
       {
-	is_a(optraits<original_im_value_t>, optraits_scalar)::ensure();
+	ntg_is_a(original_im_value_t, ntg::real)::ensure();
 
 	im_size = im.size().nth(0);
 	assertion(im_size >= coeffs.size());
@@ -456,19 +456,18 @@ namespace oln {
       template <class T1>
       typename mute<I_, T1>::ret transform_inv(unsigned l = 0)
       {
-	is_a(optraits<T1>, optraits_scalar)::ensure();
+	ntg_is_a(T1, ntg::real)::ensure();
 
 	trans_im_t tmp_im = transform_inv(l);
 	typename mute<I_, T1>::ret new_im(tmp_im.size());
 
 	Iter(trans_im_t) it(tmp_im);
 	for_all(it)
-	  new_im[it] = (tmp_im[it] >= optraits<T1>::inf() ?
-			(tmp_im[it] <= optraits<T1>::sup() ?
+	  new_im[it] = (tmp_im[it] >= ntg_inf_val(T1) ?
+			(tmp_im[it] <= ntg_sup_val(T1) ?
 			 tmp_im [it] :
-			 optraits<T1>::sup()) :
-			optraits<T1>::inf());
-
+			 ntg_sup_val(T1)) :
+			ntg_inf_val(T1));
 	return new_im;
       }
 
@@ -480,7 +479,7 @@ namespace oln {
       unsigned			im_size;
       unsigned			max_level;
       unsigned			current_level;
-      dfloat			norm;
+      float_d			norm;
       dwt_transform_type	transform_type;
     };
 
