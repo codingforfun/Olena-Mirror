@@ -1,29 +1,12 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 36)
-(Parent-Version oln 0_5 35)
-(Version-Log "Index: ChangeLog
-from  Alexandre Duret-Lutz  <duret_g@epita.fr>
-
-	* oln/types/predecls.hh: Move the types for which we
-	declare operator into namespace type_definitions.  Don't
-	export `bounded' in namespace type.
-	* oln/types/rec_value.hh: Include oln/types/predecls.hh.
-	* oln/types/range.hh, oln/types/interval.hh, oln/types/int_u.hh,
-	oln/types/int_s.hh, oln/types/global_ops.hh, oln/types/cycle.hh:
-	oln/types/bin.hh: Don't predeclare the type.  Move type and
-	operators definitions in namespace type_definitions.
-
-2002-09-10  Alexandre Duret-Lutz  <duret_g@epita.fr>
-
-Index: tests/ChangeLog
-from  Alexandre Duret-Lutz  <duret_g@epita.fr>
-
-	* types/runtests: Use namespace oln, not type.
+(Project-Version oln 0_5 37)
+(Parent-Version oln 0_5 36)
+(Version-Log "typo
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 10 Sep 2002 17:54:06 +0200")
+(Checkin-Time "Tue, 10 Sep 2002 17:59:51 +0200")
 (Checkin-Login duret_g)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -436,7 +419,7 @@ from  Alexandre Duret-Lutz  <duret_g@epita.fr>
   (oln/types/to_oln.hh (oln/g/7_to_oln.hh 1.1 640))
   (oln/types/rec_value.hh (oln/g/8_rec_value. 1.3 640))
   (oln/types/range.hh (oln/g/9_range.hh 1.2 640))
-  (oln/types/predecls.hh (oln/g/10_predecls.h 1.4 640))
+  (oln/types/predecls.hh (oln/g/10_predecls.h 1.5 640))
   (oln/types/optraits_scalar_defs.hh (oln/g/11_optraits_s 1.1 640))
   (oln/types/optraits_scalar.hh (oln/g/12_optraits_s 1.2 640))
   (oln/types/optraits_range.hh (oln/g/13_optraits_r 1.1 640))

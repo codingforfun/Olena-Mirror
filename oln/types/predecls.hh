@@ -39,7 +39,7 @@ namespace oln {
 
   // Put types and operators definitions in a subnamespace, then
   // important the types in oln::, and rely on Koenig lookup to find
-  // relevant operators.  This way out template operator do not
+  // relevant operators.  This way our template operators do not
   // supersede the build-in operator.
   namespace type_definitions {
     // intervals
