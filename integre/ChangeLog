@@ -1,5 +1,7 @@
 2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* ntg/builtins_properties.hh: Update includes.
+
 	* ntg/Makefile.am (nobase_ntg_HEADERS): Update.
 
 	* ntg/config/math.hh: Fix header guard.

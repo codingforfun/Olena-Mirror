@@ -146,7 +146,7 @@ namespace oln {
 
 	_next_elt_t operator,(T val)
 	{
-	  meta::eq<Info::card, _unknown>::ensure();
+	  is_true<Info::card == _unknown>::ensure();
 	  *ptr = val;
 	  return _next_elt_t(ptr + 1, arr);
 	}
@@ -156,7 +156,7 @@ namespace oln {
 
 	_eat_center_t operator,(oln::internal::_x<T> val)
 	{
-	  meta::eq<Info::center, _unknown>::ensure();
+	  is_true<Info::center == _unknown>::ensure();
 	  *ptr = val.ue; // FIXME : give a *name* to this variable !!
 	  return _eat_center_t(ptr+1, arr);
 	}
@@ -166,7 +166,7 @@ namespace oln {
 
 	_eat_center_t operator,(oln::internal::_x<void>)
 	{
-	  meta::eq<Info::center, _unknown>::ensure();
+	  is_true<Info::center == _unknown>::ensure();
 	  *ptr = T(0);
 	  return _eat_center_t(ptr+1, arr);
 	}
@@ -177,7 +177,7 @@ namespace oln {
 	_array1d_t operator,(oln::internal::_end)
 	{
 	  // array is well-formed :
-	  meta::eq< Info::well_formed, true >::ensure();
+	  is_true<Info::well_formed>::ensure();
 	  // centering is automatic or user-defined :
 	  // (commented out to allow automatic centering on even sized arrays)
 	  // meta::logical_or< meta::eq< Info::i % 2, 1 >::ret, meta::neq< Info::center, _unknown >::ret >::ensure();

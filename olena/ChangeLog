@@ -1,5 +1,7 @@
 2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* oln/morpho/stat.hh: Remove useless includes.
+
 	* oln/config/system.hh: Include ntg/config/system.hh.
 
 	* oln/config/math.hh: Move into $top_srcdir/integre/ntg/config/.

@@ -70,12 +70,18 @@ namespace oln {
     };
 
     template<class if_true_type, class if_false_type>
-    struct if_<false, if_true_type, if_false_type> {
+    struct if_<false, if_true_type, if_false_type> 
+    {
       typedef if_false_type ret_t;
+      typedef false_t ensure_t;
     };
 
     template<bool> struct is_true;
-    template<> struct is_true<true>   { static void ensure() {}; };
+    template<> struct is_true<true>
+    { 
+      static void ensure() {}; 
+      typedef true_t ensure_t;
+    };
 
     template<bool> struct is_false;
     template<> struct is_false<false> { static void ensure() {}; };

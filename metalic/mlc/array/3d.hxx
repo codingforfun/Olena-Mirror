@@ -179,7 +179,7 @@ namespace oln {
 
 	_next_elt_t operator,(T val)
 	{
-	  meta::eq<Info::nplanes, _unknown>::ensure();
+	  is_true<Info::nplanes == _unknown>::ensure();
 	  *ptr = val;
 	  return _next_elt_t(ptr + 1, arr);
 	}
@@ -189,7 +189,7 @@ namespace oln {
 
 	_eat_center_t operator,(oln::internal::_x<T> val)
 	{
-	  meta::eq<Info::center, _unknown>::ensure();
+	  is_true<Info::center == _unknown>::ensure();
 	  *ptr = val.ue; // FIXME : give a *name* to this variable !!
 	  return _eat_center_t(ptr + 1, arr);
 	}
@@ -199,7 +199,7 @@ namespace oln {
 
 	_eat_center_t operator,(oln::internal::_x<void>)
 	{
-	  meta::eq<Info::center, _unknown>::ensure();
+	  is_true<Info::center == _unknown>::ensure();
 	  *ptr = T(0);
 	  return _eat_center_t(ptr + 1, arr);
 	}
@@ -209,7 +209,7 @@ namespace oln {
 
 	_eat_lbrk_t operator,(oln::internal::_lbrk)
 	{
-	  meta::eq<Info::ncols, _unknown>::ensure();
+	  is_true<Info::ncols == _unknown>::ensure();
 	  return _eat_lbrk_t(ptr, arr);
 	}
 
@@ -217,7 +217,7 @@ namespace oln {
 	// elt, pbrk
 	_eat_pbrk_t operator,(oln::internal::_pbrk)
 	{
-	  meta::eq<Info::nplanes, _unknown>::ensure();
+	  is_true<Info::nplanes == _unknown>::ensure();
 	  return _eat_pbrk_t(ptr, arr);
 	}
 
@@ -230,31 +230,19 @@ namespace oln {
 	  enum { nplanes = (Info::i / (Info::ncols * Info::nrows)) };
 	  
 	  // array is well-formed :
-	  meta::eq< Info::well_formed, true >::ensure();
+	  is_true<Info::well_formed>::ensure();
 	  // centering is automatic or user-defined :
 
-	  meta::neq< Info::ncols, _unknown>::ensure();
-	  meta::neq< Info::nrows, _unknown>::ensure();
+	  is_true<Info::ncols != _unknown>::ensure();
+	  is_true<Info::nrows != _unknown>::ensure();
 
-	  
-	  meta::logical_or<
-	    // all of nplanes, nrows and ncols are odd...
-	    meta::logical_and
-	    <
+	  // all of nplanes, nrows and ncols are odd
+	  // or the center is user-defined
 
-	      meta::logical_and
-	      <
-	      meta::eq< Info::ncols % 2, 1 >::ret,
-	      meta::eq< Info::nrows % 2, 1 >::ret
-	      >::ret,
-	      
-	      meta::eq< nplanes % 2, 1>::ret
-	    >::ret,
-	    
-	    // ... or the center is user-defined
-	    meta::neq< Info::center, _unknown >::ret
-	    
-	    >::ensure();
+	  is_true<	    
+	    (Info::ncols % 2 == 1 && Info::nrows % 2 == 1 && nplanes % 2 == 1)
+	    || (Info::center != _unknown)
+	  >::ensure();
 	  
 	  return _array3d_t(arr->ptr);
 	}
@@ -271,7 +259,6 @@ namespace oln {
 	T* ptr;
 	_array3d_start<T>* arr;
       };
-
 
 
       //

@@ -1,5 +1,18 @@
 2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* mlc/bool.hh: Improve if_.
+
+	* mlc/math.hh: Do not use ucmp.
+
+	* mlc/ufuncs.hh: Rename as ...
+	* mlc/math.hh: ... this.
+
+	* mlc/Makefile.am: Adapt consequently.
+	
+	* mlc/ucmp.hh: Remove.
+
+	* mlc/array/1d.hxx, mlc/array/2d.hxx, mlc/array/3d.hxx: Simplify.
+
 	* tests/array/gen_test_utils/prelude: Fix includes.
 
 	* mlc/config/system.hh: Fix header guard.

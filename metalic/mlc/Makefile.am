@@ -17,8 +17,7 @@ nobase_mlc_HEADERS =				\
   contract.hh					\
   is_a.hh					\
   loop.hh					\
+  math.hh					\
   objs.hh					\
   optional.hh					\
-  type.hh					\
-  ucmp.hh					\
-  ufuncs.hh
+  type.hh

@@ -34,7 +34,6 @@ namespace oln {
 
   namespace meta {
 
-
     template<int i, int j>
     struct less
     {
@@ -77,8 +76,6 @@ namespace oln {
       static void ensure() { is_true<ret>::ensure(); };
     };
 
-
-
     template<int i, int j>
     struct min
     {
@@ -108,6 +105,5 @@ namespace oln {
   } // end of meta
 
 } // end of oln
-
 
 #endif // ! OLENA_META_CMP_HH

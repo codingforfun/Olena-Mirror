@@ -132,7 +132,6 @@ namespace oln {
       };
 
 
-
       //
       //  meta::internal::_array2d_elt
       //
@@ -171,7 +170,7 @@ namespace oln {
 
 	_next_elt_t operator,(T val)
 	{
-	  meta::eq<Info::nrows, _unknown>::ensure();
+	  is_true<Info::nrows == _unknown>::ensure();
 	  *ptr = val;
 	  return _next_elt_t(ptr + 1, arr);
 	}
@@ -181,7 +180,7 @@ namespace oln {
 
 	_eat_center_t operator,(oln::internal::_x<T> val)
 	{
-	  meta::eq<Info::center, _unknown>::ensure();
+	  is_true<Info::center == _unknown>::ensure();
 	  *ptr = val.ue; // FIXME : give a *name* to this variable !!
 	  return _eat_center_t(ptr + 1, arr);
 	}
@@ -191,7 +190,7 @@ namespace oln {
 
 	_eat_center_t operator,(oln::internal::_x<void>)
 	{
-	  meta::eq<Info::center, _unknown>::ensure();
+	  is_true<Info::center == _unknown>::ensure();
 	  *ptr = T(0);
 	  return _eat_center_t(ptr + 1, arr);
 	}
@@ -201,8 +200,8 @@ namespace oln {
 
 	_eat_lbrk_t operator,(oln::internal::_lbrk)
 	{
-	  meta::eq<Info::ncols, _unknown>::ensure();
-	  meta::neq<Info::ncols, 0>::ensure();
+	  is_true<Info::ncols == _unknown>::ensure();
+	  is_true<Info::ncols != 0>::ensure();
 	  return _eat_lbrk_t(ptr, arr);
 	}
 
@@ -214,22 +213,19 @@ namespace oln {
 	  enum { nrows = Info::i / Info::ncols };
 	  
 	  // array is well-formed :
-	  meta::eq< Info::well_formed, true >::ensure();
+	  is_true<Info::well_formed == true>::ensure();
 	  // centering is automatic or user-defined :
 	  
-	  meta::neq< Info::ncols, _unknown>::ensure();
+	  is_true<Info::ncols != _unknown>::ensure();
 
-	  
-	  meta::logical_or<
-	    // both nrows and ncols are odd...
-	    meta::logical_and<
-	    meta::eq< Info::ncols % 2, 1 >::ret,
-	    meta::eq< nrows % 2, 1 >::ret
-	    >::ret,
-	    // ... or the center is user-defined
-	    meta::neq< Info::center, _unknown >::ret
-	    
-	    >::ensure();
+
+	  // both nrows and ncols must be odd 
+	  // or the center must be user-defined
+
+	  is_true<	 
+	    ((Info::ncols % 2 == 1) && (nrows % 2 == 1)) 
+	    || (Info::center != _unknown)
+	  >::ensure();
 	  
 	  return _array2d_t(arr->ptr);
 	}

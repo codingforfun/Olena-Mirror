@@ -25,13 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_META_UFUNCS_HH
-# define OLENA_META_UFUNCS_HH
+#ifndef OLENA_META_MATH_HH
+# define OLENA_META_MATH_HH
 
 # include <mlc/bool.hh>
-# include <mlc/ucmp.hh>
 
 namespace oln {
+
   namespace meta {
 
     namespace internal {
@@ -65,7 +65,7 @@ namespace oln {
 	                          typename internal::is_pow2<N>::ret_t >::value
       };
     private:
-      typedef typename ucmp<N, 32>::is_lesseq_t::is_true_t precondition_t;
+      typedef typename is_true<N < 32>::ensure_t precondition_t;
     };
 
     // Various tests on N (actually, we tests only oddness.)
@@ -73,11 +73,11 @@ namespace oln {
     template<unsigned N>
     class utest {
     public:
-      typedef typename ucmp<N/2, (N+1)/2>::is_neq_t is_odd_t;
+      typedef typename is_true<N/2 == (N+1)/2>::ensure_t is_odd_t;
       static void ensure_odd()   { is_odd_t::is_true(); }
     };
 
   } // meta
 } // oln
 
-#endif  // OLENA_META_UFUNCS_HH
+#endif  // OLENA_META_MATH_HH

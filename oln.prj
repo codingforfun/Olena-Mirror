@@ -1,72 +1,33 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln cleanup 20)
-(Parent-Version oln cleanup 19)
-(Version-Log "Index: ChangeLog
+(Project-Version oln cleanup 21)
+(Parent-Version oln cleanup 20)
+(Version-Log "Index: integre/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	* ntg/builtins_properties.hh: Update includes.
 
-	* configure.ac: Update.
-
-Index: integre/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	* ntg/Makefile.am (nobase_ntg_HEADERS): Update.
-
-	* ntg/config/math.hh: Fix header guard.
-
-	* tests/types/Makefile.am (check-local): Remove useless Olena
-	headers path.
-
-	* ntg/all.hh, ntg/color.hh, ntg/cplx.hh, ntg/debug.hh,
-	ntg/int_s.hh, ntg/int_u.hh, interval.hh, ntg/optraits.hh,
-	ntg/optraits_builtins_float.hh, optraits_builtins_int.hh,
-	ntg/optraits_cycle.hh, optraits_int_s.hh,
-	ntg/optraits_int_u.hh: Update includes.
-
-	* ntg/config/system.hh: New file.
-
-	* ntg/Makefile.am: Adjust consequently.
-
-+2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-+	
- 	* ntg/vec.hh: Update includes.
- 
- 2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 Index: metalic/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	* tests/array/gen_test_utils/prelude: Fix includes.
+	* mlc/bool.hh: Improve if_.
 
-	* mlc/config/system.hh: Fix header guard.
+	* mlc/math.hh: Do not use ucmp.
 
-	* tests/check/Makefile.flags: Remove useless reference to Olena
-	headers path.
+	* mlc/ufuncs.hh: Rename as ...
+	* mlc/math.hh: ... this.
 
-+2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-+	
- 	* mlc/objs.hh: Move array related code ...
- 	* mlc/array/objs.hh: ... here.
- 
+	* mlc/Makefile.am: Adapt consequently.
+
+	* mlc/ucmp.hh: Remove.
+
+	* mlc/array/1d.hxx, mlc/array/2d.hxx, mlc/array/3d.hxx: Simplify.
+
 Index: olena/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	* oln/config/system.hh: Include ntg/config/system.hh.
-
-	* oln/config/math.hh: Move into $top_srcdir/integre/ntg/config/.
-
-	* oln/Makefile.am: Adjust consequently.
-
-+2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-+
-+	* Makefile.am: Move header list ...
-+	* oln/Makefile.am: ... here.
-+	
-+2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-+
- 	* oln/basics.hh, oln/core/internal/iter1d.hh,
- 	oln/core/internal/iter2d.hh, oln/core/internal/iter3d.hh,
- 	oln/core/winiter.hh, oln/core/winneighb.hh: Update includes.
+	* oln/morpho/stat.hh: Remove useless includes.
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 04 Mar 2003 13:57:40 +0100")
+(Checkin-Time "Tue, 04 Mar 2003 15:22:42 +0100")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -151,9 +112,9 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.5 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.26 640))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.7 640))
-  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.8 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.20.1.4.1.8 640))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.8 640))
+  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.9 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.20.1.4.1.9 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.4 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.4 640))
 
@@ -344,21 +305,21 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.1 640))
   (metalic/mlc/array/1d.hh (oln/f/23_array1d.hh 1.7 640))
-  (metalic/mlc/array/1d.hxx (oln/f/22_array1d.hx 1.7 640))
+  (metalic/mlc/array/1d.hxx (oln/f/22_array1d.hx 1.8 640))
   (metalic/mlc/array/2d.hh (oln/f/21_array2d.hh 1.7 640))
-  (metalic/mlc/array/2d.hxx (oln/f/20_array2d.hx 1.6 640))
+  (metalic/mlc/array/2d.hxx (oln/f/20_array2d.hx 1.7 640))
   (metalic/mlc/array/3d.hh (oln/f/19_array3d.hh 1.8 640))
-  (metalic/mlc/array/3d.hxx (oln/f/18_array3d.hx 1.7 640))
+  (metalic/mlc/array/3d.hxx (oln/f/18_array3d.hx 1.8 640))
   (metalic/mlc/array/all.hh (oln/f/36_array.hh 1.6 640))
   (metalic/mlc/array/nd.hh (oln/f/35_arraynd.hh 1.2 640))
-  (metalic/mlc/bool.hh (oln/c/4_basics.hh 1.8 640))
-  (metalic/mlc/cmp.hh (oln/c/3_cmp.hh 1.6 640))
+  (metalic/mlc/bool.hh (oln/c/4_basics.hh 1.9 640))
+  (metalic/mlc/cmp.hh (oln/c/3_cmp.hh 1.7 640))
   (metalic/mlc/is_a.hh (oln/g/33_type.hh 1.8 640))
   ;;(metalic/mlc/logic.hh (oln/c/1_logic.hh 1.7 640))
   (metalic/mlc/loop.hh (oln/c/2_control.hh 1.6 640))
+  (metalic/mlc/math.hh (oln/b/51_ufuncs.hh 1.8 640))
   (metalic/mlc/optional.hh (oln/o/41_optional.h 1.4 640))
-  (metalic/mlc/ucmp.hh (oln/c/0_ucmp.hh 1.8 640))
-  (metalic/mlc/ufuncs.hh (oln/b/51_ufuncs.hh 1.7 640))
+  ;;(metalic/mlc/ucmp.hh (oln/c/0_ucmp.hh 1.8 640))
   (olena/oln/morpho/closing.hh (oln/b/6_closing.hh 1.6 640))
   (olena/oln/morpho/closing.inc (oln/44_closing.in 1.6 640))
   (olena/oln/morpho/dilation.hh (oln/b/5_dilation.h 1.10 640))
@@ -381,7 +342,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/morpho/opening.inc (oln/40_opening.in 1.6 640))
   (olena/oln/morpho/reconstruction.hh (oln/35_reconstruc 1.13.1.1 640))
   (olena/oln/morpho/splitse.hh (oln/34_splitse.hh 1.4 640))
-  (olena/oln/morpho/stat.hh (oln/50_stat.hh 1.8.1.1 640))
+  (olena/oln/morpho/stat.hh (oln/50_stat.hh 1.8.1.2 640))
   (olena/oln/morpho/thickening.hh (oln/e/29_thickening 1.7 640))
   (olena/oln/morpho/thickening.inc (oln/e/28_thickening 1.4 640))
   (olena/oln/morpho/thinning.hh (oln/e/27_thinning.h 1.7 640))
@@ -398,7 +359,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (integre/ntg/all.hh (oln/g/32_all.hh 1.10.1.2 640))
   (integre/ntg/behaviour.hh (oln/g/31_behaviour. 1.13.1.3 640))
   (integre/ntg/bin.hh (oln/g/30_bin.hh 1.9.1.2 640))
-  (integre/ntg/builtins_properties.hh (oln/g/29_builtins_p 1.7 640))
+  (integre/ntg/builtins_properties.hh (oln/g/29_builtins_p 1.8 640))
   (integre/ntg/cast.hh (oln/i/26_cast.hh 1.3.1.1 640))
   (integre/ntg/color.hh (oln/i/17_color.hh 1.7.1.2 640))
   (integre/ntg/cplx.hh (oln/i/4_cplx.hh 1.9.1.3 640))
@@ -831,7 +792,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 ;; Files added by populate at Thu, 27 Feb 2003 20:06:47 +0100,
 ;; to version cleanup.5(w), by raph:
 
-  (metalic/mlc/Makefile.am (oln/q/33_Makefile.a 1.5 640))
+  (metalic/mlc/Makefile.am (oln/q/33_Makefile.a 1.6 640))
 
 ;; Files added by populate at Fri, 28 Feb 2003 18:02:09 +0100,
 ;; to version cleanup.9(w), by burrus_n:
