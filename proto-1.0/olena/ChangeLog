@@ -1,3 +1,9 @@
+2005-03-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Use the compiler's debug flags in the test suite.
+
+	* tests/check/Makefile.flags (AM_CXXFLAGS): Add $(CXXFLAGS_DEBUG).
+	
 2005-03-14  Thierry Geraud  <theo@lrde.epita.fr>
 
 	* oln/core/3d/fwd_piter3d.hh: New.
