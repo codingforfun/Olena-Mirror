@@ -1,3 +1,7 @@
+2003-11-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/Makefile.am: Include convert/cast.hh.
+
 2003-11-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/utils/timer.hh: Improve. Can give the elapsed time since the
