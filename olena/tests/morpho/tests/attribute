@@ -28,7 +28,7 @@ check_algo()
   bool fail(false);
 
   typedef image2d<int_u8> img_type;
-  typedef oln::morpho::area_type<unsigned> area_type;
+  typedef oln::morpho::cart_type<unsigned> area_type;
   const area_type::lambda_type area = 100;
   const neighborhood2d nb = neighb_c8();
   //  const oln::morpho::NullEnv env;
@@ -43,8 +43,8 @@ check_algo()
   std::cerr << "testing tarjan_map..." << std::endl;
 //   lena_tst_closing = morpho::slow::tarjan_map<area_type,ntg::int_u8,img_type>(true, lena,  nb, area, env);
 //   lena_tst_opening= morpho::slow::tarjan_map<area_type,ntg::int_u8,img_type>(false, lena,  nb, area, env);
-  lena_tst_closing = morpho::slow::area_closing(lena, nb, area);
-  lena_tst_opening = morpho::slow::area_opening(lena, nb, area);
+  lena_tst_closing = morpho::slow::card_closing(lena, nb, area);
+  lena_tst_opening = morpho::slow::card_opening(lena, nb, area);
 
   fail = fail ||
     !level::is_equal(lena_sure_closing, lena_tst_closing)||
@@ -60,8 +60,8 @@ check_algo()
   std::cerr << "fail:" << fail << std::endl;
 
   std::cerr << "testing area_closin and area_opeing..." << std::endl;
-  lena_tst_closing = morpho::fast::area_closing(lena, nb, area);
-  lena_tst_opening = morpho::fast::area_opening(lena, nb, area);
+  lena_tst_closing = morpho::fast::card_closing(lena, nb, area);
+  lena_tst_opening = morpho::fast::card_opening(lena, nb, area);
   fail = fail ||
     !level::is_equal(lena_sure_closing, lena_tst_closing)||
     !level::is_equal(lena_sure_opening, lena_tst_opening);

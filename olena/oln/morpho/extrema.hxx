@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,8 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-
+/*!
+** \brief  internal namespace
+*/
 namespace internal {
+
+  /*!
+  ** \brief Create extremum image from another one.
+  **
+  ** \param DestType: type of data in the wanted image.
+  ** \param I: Exact type of the input image.
+  **
+  ** \arg input: input image.
+  */
   template <class DestType, class I>
   typename mute<I, DestType>::ret
   create_minima_image_from_bin_(const abstract::non_vectorial_image<I>& input)
@@ -43,7 +54,13 @@ namespace internal {
     return output;
   }
 
-
+  /*!
+  ** \brief Create binary image from another one.
+  **
+  ** \param I: exact type of the image.
+  **
+  ** \arg input: input image.
+  */
   template <class I>
   typename mute<I, ntg::bin>::ret
   ima_to_bin_(const abstract::non_vectorial_image<I>& input)
@@ -61,28 +78,50 @@ namespace internal {
 
 // Minima Imposition
 
-
-
-/*=processing sure_minima_imposition
- * ns: morpho
- * what: Minima Imposition.
- * arg: const abstract::non_vectorial_image<I1>&, input, IN, input image
- * arg: const abstract::non_vectorial_image<I2>&, minima_map, IN, bin image
- * arg: const abstract::neighborhood<N>& Ng, IN, neighborhood
- * ret:oln_concrete_type(I)
- * doc:
- * Impose minima defined by \var{minima_map} on \var{input}
- * using \var{Ng} as neighborhood. \var{minima_map} must
- * be a bin image (true for a minimum, false for a non minimum).
- * Soille p.172.
- * see: morpho::sure_geodesic_reconstruction_erosion
- * ex:
- * $ image2d<int_u8> light = load("lena.pgm");
- * $ image2d<ntg::bin> minima = load("map.pbm");
- * $ save(morpho::sure_minima_imposition(light, minima, neighb_c4()), "out.pgm");
- * exi: lena.pgm map.pbm
- * exo: out.pgm
- =*/
+/*!
+** \brief Perform a minima imposition.
+**
+** Impose  minima   defined  by  minima_map  on  input   using  Ng  as
+** neighborhood. minima_map must  be a bin image (true  for a minimum,
+** false for a non minimum).  Soille p.172.
+**
+** \param I: exact type of the first image.
+** \param I2: exact type of the second image.
+** \param N: exact type of the neighborhood.
+**
+** \arg input: input image.
+** \arg minima_map: minima map image.
+** \arg Ng: neighborhood to use.
+**
+** \ref foototo
+** \code
+** #include <oln/basics2d.hh>
+** #include <oln/morpho/extrema.hh>
+** #include <ntg/all.hh>
+** #include <iostream>
+** int main()
+** {
+**   typedef oln::image2d<ntg::int_u8>	im_type;
+**   typedef oln::image2d<ntg::bin>	bin_im_type;
+**
+**   im_type		light(oln::load(IMG_IN "lena.pgm"));
+**   bin_im_type	minima(oln::load(IMG_IN "map.pbm"));
+**
+**   oln::save(oln::morpho::sequential::minima_imposition(light, minima, oln::neighb_c4()),
+**             IMG_OUT "oln_morpho_sequential_minima_imposition.pgm");
+**   return  0;
+** }
+** \endcode
+** \image html lena.png
+** \image latex lena.png
+** and
+** \image html map.png
+** \image latex map.png
+** =>
+** \image html oln_morpho_sequential_minima_imposition.png
+** \image latex oln_morpho_sequential_minima_imposition.png
+**
+*/
 template<class I, class I2, class N>
 oln_concrete_type(I)
   minima_imposition(const abstract::non_vectorial_image<I>& input,
@@ -104,27 +143,40 @@ oln_concrete_type(I)
 
 // Regional minima
 
-
-/*=processing sure_regional_minima
- * ns: morpho
- * what: Regional minima.
- * arg: const abstract::non_vectorial_image<I1>&, input, IN, input image
- * arg: const abstract::struct_elt<E>&, se, IN, structural element
- * ret: typename mute<I, ntg::bin>::ret
- * doc:
- * Extract regional minima of \var{input}
- * using \var{Ng}
- *   as neighborhhod. Soille p.169.  The algorithm uses
- * sure_geodesic_reconstruction_erosion.
- * see: morpho::sure_geodesic_reconstruction_erosion
- * ex:
- * $ image2d<int_u8> light = load("lena.pgm");
- * $ save(morpho::sure_regional_minima(lena,neighb_c4()), "out.pgm");
- * exi: lena.pgm
- * exo: out.pgm
- =*/
+/*!
+** \brief Extract regional minima.
+**
+** \param I: Exact type of input image.
+** \param Exact type of neighborhood.
+**
+** \arg input: input image.
+** \arg Ng: neighborhood to use.
+**
+** \code
+** #include <oln/basics2d.hh>
+** #include <oln/morpho/extrema.hh>
+** #include <ntg/all.hh>
+** #include <iostream>
+** int main()
+** {
+**   typedef oln::image2d<ntg::int_u8>	im_type;
+**
+**   im_type		im(oln::load(IMG_IN "lena.pgm"));
+**
+**   oln::save(oln::morpho::sequential::regional_minima(im, oln::neighb_c4()),
+**             IMG_OUT "oln_morpho_sequential_regional_minima.pgm");
+**   return  0;
+** }
+** \endcode
+** \image html lena.png
+** \image latex lena.png
+** =>
+** \image html oln_morpho_sequential_regional_minima.png
+** \image latex oln_morpho_sequential_regional_minima.png
+**
+*/
 template<class I, class N>
-typename mute<I, ntg::bin>::ret 
+typename mute<I, ntg::bin>::ret
 regional_minima(const abstract::non_vectorial_image<I>& input,
 		const abstract::neighborhood<N>& Ng)
 {

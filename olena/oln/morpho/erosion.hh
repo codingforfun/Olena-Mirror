@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -36,38 +36,54 @@
 namespace oln {
 
   namespace morpho {
-
-    /*=processing erosion
-     * ns: morpho, morpho::fast
-     * what: Morphological erosion.
-     * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
-     * arg: const abstract::struct_elt<E>&, se, IN, structural element
-     * ret:oln_concrete_type(I)
-     * doc:
-     *   Compute the morphological erosion of \var{input} using \var{se}
-     *   as structural element.
-     *
-     *   On grey-scale images, each point is replaced by the minimum value
-     *   of its neighbors, as indicated by \var{se}.  On binary images,
-     *   a logical \code{and} is performed between neighbors.
-     *   The \code{morpho::fast} version of this function use a different
-     *   algorithm: an
-     *
-     *   histogram of the value of the neighborhood indicated by
-     *   \var{se} is updated while iterating over all point of the
-     *   image.  Doing so is more efficient  when the
-     *   structural element is large.
-     * see: morpho::n_erosion
-     * see: morpho::dilation
-     * ex:
-     * $ image2d<ntg::bin> im = load("object.pbm");
-     * $ save(morpho::erosion(im, win_c8p()), "out.pbm");
-     * exi: object.pbm
-     * exo: out.pbm
-    =*/
+    /*!
+    ** \brief Perform a morphological erosion.
+    **
+    **   Compute the morphological erosion of input using se
+    **   as structural element.
+    **
+    **   On grey-scale  images, each point is replaced  by the minimum
+    **   value  of  its neighbors,  as  indicated  by  se.  On  binary
+    **   images, a  logical and  is performed between  neighbors.  The
+    **   morpho::fast  version  of   this  function  use  a  different
+    **   algorithm:  an histogram  of  the value  of the  neighborhood
+    **   indicated by se is updated  while iterating over all point of
+    **   the image.   Doing so is  more efficient when  the structural
+    **   element is large.
+    **
+    ** \param I: exact type of the input image.
+    ** \param E: exact type of the structural element.
+    **
+    **
+    ** \arg input: input image.
+    ** \arg se: structural element to use.
+    **
+    ** \code
+    ** #include <oln/basics2d.hh>
+    ** #include <oln/morpho/erosion.hh>
+    ** #include <oln/level/compare.hh>
+    ** #include <ntg/all.hh>
+    ** int main()
+    ** {
+    **   typedef oln::image2d<ntg::bin>	im_type;
+    **
+    **   im_type im1(oln::load(IMG_IN "object.pbm"));
+    **   save(oln::morpho::erosion(im1, oln::win_c8p()), IMG_OUT "oln_morpho_erosion.pbm");
+    **   return  0;
+    ** }
+    ** \endcode
+    **
+    ** \image html object.png
+    ** \image latex object.png
+    ** =>
+    ** \image html oln_morpho_erosion.png
+    ** \image latex oln_morpho_erosion.png
+    **
+    ** \see oln::morpho::fast::erosion()
+    */
     template<class I, class E>
-    oln_concrete_type(I) 
-      erosion(const abstract::non_vectorial_image<I>& input, 
+    oln_concrete_type(I)
+      erosion(const abstract::non_vectorial_image<I>& input,
 	      const abstract::struct_elt<E>& se)
     {
       mlc::eq<I::dim, E::dim>::ensure();
@@ -80,21 +96,41 @@ namespace oln {
       return output;
     }
 
-    /*=processing n_erosion
-     * ns: morpho
-     * what: Morphological erosion itered n times.
-     * arg: const abstract::non_vectorial_image<I>&, input, IN, input image
-     * arg: const abstract::struct_elt<E>&, se, IN, structural element
-     * arg: unsigned, n, IN, number of iterations
-     * ret:oln_concrete_type(I)
-     * doc:
-     *   Apply \code{morpho::erosion} \var{n} times.
-     * see: morpho::erosion
-     * see: morpho::n_dilation
-    =*/
-
+    /*!
+    ** \brief Perform morphological erosion itered n times.
+    **
+    **
+    ** \param I: exact type of the input image.
+    ** \param E: exact type of the structural element.
+    **
+    ** \arg input: input image.
+    ** \arg se: structural element to use.
+    ** \arg n: number of iterations.
+    **
+    ** \code
+    ** #include <oln/basics2d.hh>
+    ** #include <oln/morpho/erosion.hh>
+    ** #include <oln/level/compare.hh>
+    ** #include <ntg/all.hh>
+    ** int main()
+    ** {
+    **   typedef oln::image2d<ntg::bin>	im_type;
+    **
+    **   im_type im1(oln::load(IMG_IN "object.pbm"));
+    **   save(oln::morpho::n_erosion(im1, oln::win_c8p(), 5), IMG_OUT "oln_morpho_n_erosion.pbm");
+    **   return  0;
+    ** }
+    ** \endcode
+    **
+    ** \image html object.png
+    ** \image latex object.png
+    ** =>
+    ** \image html oln_morpho_n_erosion.png
+    ** \image latex oln_morpho_n_erosion.png
+    **
+    */
     template<class I, class E>
-    oln_concrete_type(I) 
+    oln_concrete_type(I)
       n_erosion(const abstract::non_vectorial_image<I> & input,
 		const abstract::struct_elt<E>& se,
 		unsigned n)
@@ -111,9 +147,44 @@ namespace oln {
     }
 
     namespace fast {
+      /*!
+      ** \brief Perform a morphological erosion.
+      **
+      **   Compute the morphological erosion of input using se
+      **   as structural element.
+      **
+      ** \param I: exact type of the input image.
+      ** \param E: exact type of the structural element.
+      **
+      **
+      ** \arg input: input image.
+      ** \arg se: structural element to use.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/erosion.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::bin>	im_type;
+      **
+      **   im_type im1(oln::load(IMG_IN "object.pbm"));
+      **   save(oln::morpho::erosion(im1, oln::win_c8p()), IMG_OUT "oln_morpho_fast_erosion.pbm");
+      **   return  0;
+      ** }
+      ** \endcode
+      **
+      ** \image html object.png
+      ** \image latex object.png
+      ** =>
+      ** \image html oln_morpho_fast_erosion.png
+      ** \image latex oln_morpho_fast_erosion.png
+      ** \todo FIXME: Correct this function and make the example use it.
+      */
       template<class I, class E>
-      oln_concrete_type(I) 
-	erosion(const abstract::non_vectorial_image<I>& input, 
+      oln_concrete_type(I)
+	erosion(const abstract::non_vectorial_image<I>& input,
 		const abstract::struct_elt<E>& se)
       {
         return fast_morpho<I, E, utils::histogram_min>(input, se);

@@ -1,5 +1,5 @@
 // -*- c++ -*-
-// Copyright (C) 2001, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -44,8 +44,43 @@
  * exi: object.pbm
  * exo: out.pbm
  =*/
+/*!
+** \brief Processing closing.
+**
+** Compute the  morphological closing of input using  se as structural
+** element.
+**
+** \param I: exact type of the input image.
+** \param E: exact type of the structural element.
+**
+** \arg input: input image to close.
+** \arg se: structural element to use.
+**
+** \warning  This  code  is  the  same  for  morpho  and  morpho::fast
+** namespaces.
+**
+** \code
+** #include <oln/basics2d.hh>
+** #include <oln/morpho/closing.hh>
+** #include <oln/level/compare.hh>
+** #include <ntg/all.hh>
+** int main()
+** {
+**   typedef oln::image2d<ntg::bin>	im_type;
+**
+**   im_type im1(oln::load(IMG_IN "object.pbm"));
+**   save(oln::morpho::closing(im1, oln::win_c8p()), IMG_OUT "oln_morpho_closing.pbm");
+**   return  0;
+** }
+** \endcode
+** \image html object.png
+** \image latex object.png
+** =>
+** \image html oln_morpho_closing.png
+** \image latex oln_morpho_closing.png
+*/
 template<class I, class E>
-oln_concrete_type(I) 
+oln_concrete_type(I)
   closing(const abstract::non_vectorial_image<I>& input,
 	  const abstract::struct_elt<E>& se)
 {

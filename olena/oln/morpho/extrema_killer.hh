@@ -1,4 +1,4 @@
-// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -48,6 +48,16 @@ namespace oln {
 
   namespace morpho {
 
+    /*!
+    ** \brief Kill connex components smaller than a given area.
+    **
+    ** \param I: exact type of the input image.
+    ** \param N: exact type of the neighborhood.
+    **
+    ** \arg input: the input image.
+    ** \arg area: the threshold to use.
+    ** \arg Ng: the neighborhood to use.
+    */
     template<class I, class N>
     typename mute<I, ntg::bin>::ret
     internal_kill_cc_area(const abstract::non_vectorial_image<I>& input,
@@ -77,31 +87,48 @@ namespace oln {
 	  output[p] = false;
       return output;
     }
-    
-    
+
+
     // SURE VERSIONS
-    
-    /*=processing sure_maxima_killer
-     * ns: morpho
-     * what: Maxima killer.
-     * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
-     * arg: const unsigned int area, area, IN, area
-     * arg: const abstract::struct_elt<E>&, se, IN, structural element
-     * ret:oln_concrete_type(I1)
-     * doc: It removes the small (in area) connected components of the upper
-     * level sets of \var{input} using \var{se} as structual element. The implementation
-     * uses the threshold superposition principle; so it is very slow ! it works only for
-     * int_u8 images.
-     * see: morpho::fast_maxima_killer
-     * ex:
-     * $ image2d<int_u8> light = load("light.pgm");
-     * $ save(morpho::sure_maxima_killer(light, 20, win_c8p()), "out.pgm");
-     * exi: light.pgm
-     * exo: out.pgm
-     * wontcompile: fixme
-     =*/
+
+    /*!
+    ** \brief Maxima killer.
+    **
+    ** It removes the small (in area) connected components of the upper
+    ** level sets of input using se as structual element. The implementation
+    ** uses the threshold superposition principle; so it is very slow ! it works only for
+    ** int_u8 images.
+    **
+    ** \param I: image exact type.
+    ** \param N: neighborhood exact type.
+    **
+    ** \arg input: the input image.
+    ** \arg area: threshold to use.
+    ** \arg Ng: the neighborhood to use.
+    **
+    ** \code
+    ** #include <oln/basics2d.hh>
+    ** #include <oln/morpho/extrema_killer.hh>
+    ** #include <ntg/all.hh>
+    ** int main()
+    ** {
+    **   typedef oln::image2d<ntg::int_u8>	im_type;
+    **
+    **   im_type		im(oln::load(IMG_IN "lena128.pgm"));
+    **
+    **   oln::save(oln::morpho::sure_maxima_killer(im, 200,  oln::neighb_c4()),
+    **             IMG_OUT "oln_morpho_sure_maxima_killer.pgm");
+    **   return  0;
+    ** }
+    ** \endcode
+    ** \image html lena128.png
+    ** \image latex lena128.png
+    ** =>
+    ** \image html oln_morpho_sure_maxima_killer.png
+    ** \image latex oln_morpho_sure_maxima_killer.png
+    */
     template<class I, class N>
-    oln_concrete_type(I) 
+    oln_concrete_type(I)
       sure_maxima_killer(const abstract::non_vectorial_image<I>& input,
 			 const unsigned int area,
 			 const abstract::neighborhood<N>& Ng)
@@ -132,38 +159,55 @@ namespace oln {
 	    }
 	}
       delete[] cc_level_sets;
-      
+
       return output;
     }
 
 
-    /*=processing sure_minima_killer
-     * ns: morpho
-     * what: Minima killer.
-     * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
-     * arg: const unsigned int area, area, IN, area
-     * arg: const abstract::struct_elt<E>&, se, IN, structural element
-     * ret:oln_concrete_type(I1)
-     * doc: It removes the small (in area) connected components of the lower
-     * level sets of \var{input} using \var{se} as structual element. The implementation
-     * uses the threshold superposition principle; so it is very slow ! it works only for
-     * int_u8 images.
-     * see: morpho::fast_maxima_killer
-     * ex:
-     * $ image2d<int_u8> light = load("light.pgm");
-     * $ save(morpho::sure_minima_killer(light, 20, win_c8p()), "out.pgm");
-     * exi: light.pgm
-     * exo: out.pgm
-     * wontcompile: fixme
-     =*/
+    /*!
+    ** \brief Minima killer.
+    **
+    ** It removes the small (in area) connected components of the lower
+    ** level sets of input using se as structual element. The implementation
+    ** uses the threshold superposition principle; so it is very slow ! it works only for
+    ** int_u8 images.
+    **
+    ** \param I: image exact type.
+    ** \param N: neighborhood exact type.
+    **
+    ** \arg input: the input image.
+    ** \arg area: threshold to use.
+    ** \arg Ng: the neighborhood to use.
+    **
+    ** \code
+    ** #include <oln/basics2d.hh>
+    ** #include <oln/morpho/extrema_killer.hh>
+    ** #include <ntg/all.hh>
+    ** int main()
+    ** {
+    **   typedef oln::image2d<ntg::int_u8>	im_type;
+    **
+    **   im_type		im(oln::load(IMG_IN "lena128.pgm"));
+    **
+    **   oln::save(oln::morpho::sure_minima_killer(im, 200,  oln::neighb_c4()),
+    **             IMG_OUT "oln_morpho_sure_minima_killer.pgm");
+    **   return  0;
+    ** }
+    ** \endcode
+    ** \image html lena128.png
+    ** \image latex lena128.png
+    ** =>
+    ** \image html oln_morpho_sure_minima_killer.png
+    ** \image latex oln_morpho_sure_minima_killer.png
+    */
     template<class I, class N>
-    image2d<ntg::int_u8> 
+    image2d<ntg::int_u8>
     sure_minima_killer(const abstract::non_vectorial_image<I>& input,
 		       const unsigned int area,
 		       const abstract::neighborhood<N>& Ng)
     {
       mlc::eq<I::dim, N::dim>::ensure();
-      
+
       typedef image2d<ntg::bin> ima_bin_type;
 
       ima_bin_type* cc_level_sets = new (image2d<ntg::bin> [256]);
@@ -198,9 +242,21 @@ namespace oln {
 
     // FAST VERSIONS
 
+    /*!
+    ** \brief Check if a point is a strict minimum.
+    **
+    ** \param P: exact type of the point.
+    ** \param I: exact type of the image.
+    ** \param N: exact type of the neighborhood.
+    **
+    ** \arg p: the point to consider.
+    ** \arg input: the image where to  get the value of the point to
+    ** consider.
+    ** \arg Ng: type of neighborhood to use.
+    */
     template<class P, class I, class N>
     //    inline
-    static bool 
+    static bool
     is_a_strict_minimum(const abstract::point<P>& p,
 			const abstract::non_vectorial_image<I>& input,
 			const abstract::neighborhood<N>& Ng)
@@ -221,10 +277,21 @@ namespace oln {
       return (is_p_lower && is_p_at_least_one_stricly_lower);
     }
 
-
+    /*!
+    ** \brief Check if a point is a strict maximum.
+    **
+    ** \param P: exact type of the point.
+    ** \param I: exact type of the image.
+    ** \param N: exact type of the neighborhood.
+    **
+    ** \arg p: the point to consider.
+    ** \arg input: the image where to  get the value of the point to
+    ** consider.
+    ** \arg Ng: type of neighborhood to use.
+    */
     template<class P, class I, class N>
     // inline
-    static bool 
+    static bool
     is_a_strict_maximum(const abstract::point<P>& p,
 			const abstract::non_vectorial_image<I>& input,
 			const abstract::neighborhood<N>& Ng)
@@ -246,29 +313,47 @@ namespace oln {
     }
 
 
-
-    /*=processing fast_minima_killer
-     * ns: morpho
-     * what: Minima killer.
-     * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
-     * arg: const unsigned int area, area, IN, area
-     * arg: const abstract::neighborhood<N>&, Ng, IN, neighboorhood
-     * ret:oln_concrete_type(I1)
-     * doc: It removes the small (in area) connected components of the lower
-     * level sets of \var{input} using \var{Ng} as neighboorhood. The implementation
-     * is based on stak. Guichard and Morel, Image iterative smoothing and PDE's.
-     * Book in preparation. p 265.
-     * see: morpho::sure_minima_killer
-     * ex:
-     * $ image2d<int_u8> light = load("light.pgm");
-     * $ save(morpho::fast_minima_killer(light, 20, win_c8p()), "out.pgm");
-     * exi: light.pgm
-     * exo: out.pgm
-     * wontcompile: fixme
-     =*/
-    // Guichard and Morel, Image iterative smoothing and PDE's. Book in preparation. p 265.
+    /*!
+    ** \brief Minima killer.
+    **
+    ** It  removes the  small (in  area) connected  components  of the
+    ** lower  level  sets of  input  using  Ng  as neighboorhood.  The
+    ** implementation  is based  on  stak. Guichard  and Morel,  Image
+    ** iterative smoothing and PDE's.  Book in preparation. p 265.
+    **
+    ** \param I: image exact type.
+    ** \param N: neighborhood exact type.
+    **
+    ** \arg input: the input image.
+    ** \arg area: threshold to use.
+    ** \arg Ng: the neighborhood to use.
+    **
+    ** \code
+    ** #include <oln/basics2d.hh>
+    ** #include <oln/morpho/extrema_killer.hh>
+    ** #include <ntg/all.hh>
+    ** int main()
+    ** {
+    **   typedef oln::image2d<ntg::int_u8>	im_type;
+    **
+    **   im_type		im(oln::load(IMG_IN "lena128.pgm"));
+    **
+    **   oln::save(oln::morpho::fast_minima_killer(im, 200,  oln::neighb_c4()),
+    **             IMG_OUT "oln_morpho_fast_minima_killer.pgm");
+    **   return  0;
+    ** }
+    ** \endcode
+    ** \image html lena128.png
+    ** \image latex lena128.png
+    ** =>
+    ** \image html oln_morpho_fast_minima_killer.png
+    ** \image latex oln_morpho_fast_minima_killer.png
+    **
+    ** \warning Even if it is  called fast minima killer, this algorithm
+    ** is slow. Please use card opening instead.
+    */
     template<class I, class N>
-    oln_concrete_type(I) 
+    oln_concrete_type(I)
       fast_minima_killer(const abstract::non_vectorial_image<I>& input,
 			 const unsigned int area,
 			 const abstract::neighborhood<N>& Ng)
@@ -353,33 +438,53 @@ namespace oln {
       return working_input;
     }
 
-    /*=processing fast_maxima_killer
-     * ns: morpho
-     * what: Maxima killer.
-     * arg: const abstract::non_vectorial_image<I1>&, marker, IN, marker image
-     * arg: const unsigned int area, area, IN, area
-     * arg: const abstract::neighborhood<N>&, Ng, IN, neighboorhood
-     * ret:oln_concrete_type(I1)
-     * doc: It removes the small (in area) connected components of the upper
-     * level sets of \var{input} using \var{Ng} as neighboorhood. The implementation
-     * is based on stak. Guichard and Morel, Image iterative smoothing and PDE's. Book in preparation. p 265.
-     * see: morpho::sure_maxima_killer
-     * ex:
-     * $ image2d<int_u8> light = load("light.pgm");
-     * $ save(morpho::fast_maxima_killer(light, 20, win_c8p()), "out.pgm");
-     * exi: light.pgm
-     * exo: out.pgm
-     * wontcompile: fixme
-     =*/
-    // Guichard and Morel, Image iterative smoothing and PDE's. Book in preparation. p 265.
+    /*!
+    ** \brief Maxima killer.
+    **
+    ** It  removes the  small (in  area) connected  components  of the
+    ** upper  level  sets of  input  using  Ng  as neighboorhood.  The
+    ** implementation  is based  on  stak. Guichard  and Morel,  Image
+    ** iterative smoothing and PDE's.  Book in preparation. p 265.
+    **
+    ** \param I: image exact type.
+    ** \param N: neighborhood exact type.
+    **
+    ** \arg input: the input image.
+    ** \arg area: threshold to use.
+    ** \arg Ng: the neighborhood to use.
+    **
+    ** \code
+    ** #include <oln/basics2d.hh>
+    ** #include <oln/morpho/extrema_killer.hh>
+    ** #include <ntg/all.hh>
+    ** int main()
+    ** {
+    **   typedef oln::image2d<ntg::int_u8>	im_type;
+    **
+    **   im_type		im(oln::load(IMG_IN "lena128.pgm"));
+    **
+    **   oln::save(oln::morpho::fast_maxima_killer(im, 200,  oln::neighb_c4()),
+    **             IMG_OUT "oln_morpho_fast_maxima_killer.pgm");
+    **   return  0;
+    ** }
+    ** \endcode
+    ** \image html lena128.png
+    ** \image latex lena128.png
+    ** =>
+    ** \image html oln_morpho_fast_maxima_killer.png
+    ** \image latex oln_morpho_fast_maxima_killer.png
+    **
+    ** \warning Even if it is  called fast maxima killer, this algorithm
+    ** is slow. Please use card closing instead.
+    */
     template<class I, class N>
-    oln_concrete_type(I) 
+    oln_concrete_type(I)
       fast_maxima_killer(const abstract::non_vectorial_image<I>& input,
 			 const unsigned int area,
 			 const abstract::neighborhood<N>& Ng)
     {
       mlc::eq<I::dim, N::dim>::ensure();
-      
+
       std::vector<oln_point_type(I)> cur_maximum;
       oln_concrete_type(I) working_input = input.clone();
       typename mute<I, ntg::bin>::ret not_processed_map(input.size());

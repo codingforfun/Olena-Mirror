@@ -73,6 +73,7 @@ check()
   test_op_cl(int_u8, cube, lena, 50);
 
   ntg::vec<2, unsigned, mlc::final>	lambda;
+  lambda[0] = lambda[1] = 50;
   test_op_cl(int_u8, box, lena, lambda);
 
   return fail;

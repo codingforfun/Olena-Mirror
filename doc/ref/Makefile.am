@@ -12,7 +12,7 @@ IMG_CONV = $(srcdir)/img_conv.pl
 
 doc: html.tar.gz oln-ref.pdf
 
-html:
+doxy:
 	$(EXDOC) --config=$(OUT_DIR)/exdoc.config  --output-dir=$(OUT_DIR) --input-dir=$(top_srcdir)
 	mkdir -p img
 	cd $(OUT_DIR) && make -f makefile
@@ -20,10 +20,10 @@ html:
 	$(IMG_CONV) img img
 	$(DOXYGEN) doxygen.config
 
-html.tar.gz:
+html.tar.gz: doxy
 	$(TAR) -czf $@ html
 
-oln-ref.pdf: html
+oln-ref.pdf: doxy
 	cd latex && make && cp refman.pdf ../$@
 
 dist_noinst_DATA = oln-ref.pdf html.tar.gz $(srcdir)/exdoc.pl $(srcdir)/img_conv.pl

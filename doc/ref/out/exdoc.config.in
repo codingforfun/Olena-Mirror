@@ -4,7 +4,7 @@
   TAG_CLOSE = endcode
   CAPTIONS = cxx	# We want to run cxx on the extracted files (see line below)
   ALIAS cxx = @CXX@	# Here, cxx means g++ but you can choose other compilers
-  OPTIONS = @CXXFLAGS@ -I@top_srcdir@/integre  -I@top_srcdir@/olena  -I@top_srcdir@/metalic $1 -o $2 -DIMG_OUT=\"../img/\" -DIMG_IN=\"@top_srcdir@/olena/img/\"		# tell how to use the soft, i.e. where to put input and output arguments (default if not overriden) ($1: input, $2: output) FIXME: $* should have explicit name, chek flags
+  OPTIONS = @CXXFLAGS_OPTIMIZE@ @CXXFLAGS_STRICT_ERRORS@ -I@top_srcdir@/integre  -I@top_srcdir@/olena  -I@top_srcdir@/metalic $1 -o $2 -DIMG_OUT=\"../img/\" -DIMG_IN=\"@top_srcdir@/olena/img/\"		# tell how to use the soft, i.e. where to put input and output arguments (default if not overriden) ($1: input, $2: output) FIXME: $* should have explicit name, chek flags
   OUT = out		# FIXME: should be obsolete
   EXT = cc		# Extension of generated file
   STD_OUT_EXT = std	# Extension of generated file standard output

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,12 +35,29 @@
 
 namespace oln {
   namespace morpho {
+    /*!
+    ** \brief oln::morpho::sure namespace.
+    **
+    ** Here come algorithms that are sure.
+    */
     namespace sure {
 # include <oln/morpho/extrema.hxx>
     }
+
+    /*!
+    ** \brief oln::morpho::sequential namespace.
+    **
+    ** Here come algorithms that are sequential.
+    */
     namespace sequential {
 # include <oln/morpho/extrema.hxx>
     }
+
+    /*!
+    ** \brief oln::morpho::hybrid namespace.
+    **
+    ** Here come algorithms that are hybrid.
+    */
     namespace hybrid {
 # include <oln/morpho/extrema.hxx>
     }

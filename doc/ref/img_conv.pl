@@ -31,7 +31,7 @@ sub conv($ $)
     opendir DIR, "$d" or die "Unable to open $d.\n";
     foreach $file(readdir DIR)
     {
-	if ($file =~ /(.*)\.(pgm|ppm|ppgm|pppgm)$/)
+	if ($file =~ /(.*)\.(pgm|ppm|ppgm|pppgm|pbm)$/)
 	{
 	    print "convert $d/$file to $o/$1.png\n";
 	    system "convert $d/$file $o/$1.png";

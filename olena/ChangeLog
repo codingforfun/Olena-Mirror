@@ -1,3 +1,17 @@
+2004-03-10  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* tests/morpho/tests/attr_op_cl: Initialize uninitialized variable.
+	* tests/morpho/tests/attribute: Correct name of called functions.
+	* oln/morpho/extrema.hh: Add comments.
+	* oln/morpho/attribute_closing_opening_map.hh: Likewise.
+	* oln/morpho/attributes.hh: Likewise.
+	* oln/morpho/attribute_union_find.hh: Likewise.
+	* oln/morpho/attribute_closing_opening.hh: Likewise.
+	* oln/morpho/extrema_killer.hh: Likewise.
+	* oln/morpho/extrema.hxx: Likewise.
+	* oln/morpho/erosion.hh: Likewise.
+	* oln/morpho/closing.inc: Likewise.
+
 2004-03-08  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* tests/morpho/tests/attr_op_cl: Change tests to make them taking

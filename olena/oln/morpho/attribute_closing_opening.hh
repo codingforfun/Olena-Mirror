@@ -38,19 +38,35 @@ namespace oln {
   ** \brief oln::morpho namespace
   */
   namespace morpho {
-    /*! \namespace oln::morpho::fast
+    /*!
     ** \brief oln::morpho::fast namespace
+    **
+    ** In this namespace, you will find fast algorithms, but with intensive memory usage
     */
     namespace fast {
-      /*! \namespace oln::morpho::fast::tarjan
+      /*!
       ** \brief oln::morpho::fast::tarjan namespace
       */
       namespace tarjan {
-	/*! \namespace oln::morpho::fast::tarjan::internal
+	/*!
 	** \brief oln::morpho::fast::tarjan::internal namespace
+	**
+	** Internal usage only.
 	*/
 	namespace internal {
 
+	  /*!
+	  ** \brief Perform an attribute closing.
+	  **
+	  ** \param I: image exact type.
+	  ** \param N: neighborhood exact type.
+	  ** \param A: Attribute exact type.
+	  **
+	  ** \arg input: input image.
+	  ** \arg Ng: neighborhood to use.
+	  ** \arg lambda: threshold to use.
+	  ** \arg env: environment.
+	  */
 	  template<class I, class N, class A>
 	  oln_concrete_type(I)
 	    attr_closing_(const abstract::non_vectorial_image<I>& input,
@@ -63,7 +79,18 @@ namespace oln {
 	    return attr_closing.template get_comptute<true>(lambda, Ng);
 	  }
 
-	  // attribute opening
+	  /*!
+	  ** \brief Perform an attribute opening.
+	  **
+	  ** \param I: image exact type.
+	  ** \param N: neighborhood exact type.
+	  ** \param A: Attribute exact type.
+	  **
+	  ** \arg input: input image.
+	  ** \arg Ng: neighborhood to use.
+	  ** \arg lambda: threshold to use.
+	  ** \arg env: environment.
+	  */
 	  template<class I, class N, class A>
 	  oln_concrete_type(I)
 	    attr_opening_(const abstract::non_vectorial_image<I>& input,
@@ -129,19 +156,18 @@ namespace oln {
       ** #include <oln/morpho/attribute_closing_opening.hh>
       ** #include <oln/level/compare.hh>
       ** #include <ntg/all.hh>
-      ** #include <iostream>
       ** int main()
       ** {
       **   typedef oln::image2d<ntg::int_u8>	im_type;
       **
-      **   im_type im1(oln::load(IMG_IN "lena256.pgm"));
+      **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::fast::card_closing(im1, oln::neighb_c4(), 200);
       **   oln::save(im1, IMG_OUT "oln_morpho_fast_card_closing.ppm");
       **   return  0;
       ** }
       ** \endcode
-      ** \image html lena256.png
-      ** \image latex lena256.png
+      ** \image html lena128.png
+      ** \image latex lena128.png
       ** =>
       ** \image html oln_morpho_fast_card_closing.png
       ** \image latex oln_morpho_fast_card_closing.png
@@ -157,19 +183,18 @@ namespace oln {
       ** #include <oln/morpho/attribute_closing_opening.hh>
       ** #include <oln/level/compare.hh>
       ** #include <ntg/all.hh>
-      ** #include <iostream>
       ** int main()
       ** {
       **   typedef oln::image2d<ntg::int_u8>	im_type;
       **
-      **   im_type im1(oln::load(IMG_IN "lena256.pgm"));
+      **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::fast::card_opening(im1, oln::neighb_c4(), 200);
       **   oln::save(im1, IMG_OUT "oln_morpho_fast_card_opening.ppm");
       **   return  0;
       ** }
       ** \endcode
-      ** \image html lena256.png
-      ** \image latex lena256.png
+      ** \image html lena128.png
+      ** \image latex lena128.png
       ** =>
       ** \image html oln_morpho_fast_card_opening.png
       ** \image latex oln_morpho_fast_card_opening.png
@@ -185,22 +210,21 @@ namespace oln {
       ** #include <oln/morpho/attribute_closing_opening.hh>
       ** #include <oln/level/compare.hh>
       ** #include <ntg/all.hh>
-      ** #include <iostream>
       ** int main()
       ** {
       **   typedef oln::image2d<ntg::int_u8>	im_type;
       **
-      **   im_type im1(oln::load(IMG_IN "lena256.pgm"));
+      **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::fast::integral_closing(im1, oln::neighb_c4(), 200);
-      **   oln::save(im1, IMG_OUT "olena_attribute_closing_opening_hh_integral_clo.ppm");
+      **   oln::save(im1, IMG_OUT "oln_morpho_fast_integral_closing.ppm");
       **   return  0;
       ** }
       ** \endcode
-      ** \image html lena256.png
-      ** \image latex lena256.png
+      ** \image html lena128.png
+      ** \image latex lena128.png
       ** =>
-      ** \image html olena_attribute_closing_opening_hh_integral_clo.png
-      ** \image latex olena_attribute_closing_opening_hh_integral_clo.png
+      ** \image html oln_morpho_fast_integral_closing.png
+      ** \image latex oln_morpho_fast_integral_closing.png
       **
       */
       xxx_closing_decl(integral);
@@ -213,22 +237,21 @@ namespace oln {
       ** #include <oln/morpho/attribute_closing_opening.hh>
       ** #include <oln/level/compare.hh>
       ** #include <ntg/all.hh>
-      ** #include <iostream>
       ** int main()
       ** {
       **   typedef oln::image2d<ntg::int_u8>	im_type;
       **
-      **   im_type im1(oln::load(IMG_IN "lena256.pgm"));
+      **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::fast::integral_opening(im1, oln::neighb_c4(), 200);
-      **   oln::save(im1, IMG_OUT "olena_attribute_closing_opening_hh_integral_op.ppm");
+      **   oln::save(im1, IMG_OUT "oln_morpho_fast_integral_opening.ppm");
       **   return  0;
       ** }
       ** \endcode
-      ** \image html lena256.png
-      ** \image latex lena256.png
+      ** \image html lena128.png
+      ** \image latex lena128.png
       ** =>
-      ** \image html olena_attribute_closing_opening_hh_integral_op.png
-      ** \image latex olena_attribute_closing_opening_hh_integral_op.png
+      ** \image html oln_morpho_fast_integral_opening.png
+      ** \image latex oln_morpho_fast_integral_opening.png
       **
       */
       xxx_opening_decl(integral);
@@ -241,22 +264,21 @@ namespace oln {
       ** #include <oln/morpho/attribute_closing_opening.hh>
       ** #include <oln/level/compare.hh>
       ** #include <ntg/all.hh>
-      ** #include <iostream>
       ** int main()
       ** {
       **   typedef oln::image2d<ntg::int_u8>	im_type;
       **
-      **   im_type im1(oln::load(IMG_IN "lena256.pgm"));
+      **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::fast::height_opening(im1, oln::neighb_c4(), 5);
-      **   oln::save(im1, IMG_OUT "olena_attribute_closing_opening_hh_height_op.ppm");
+      **   oln::save(im1, IMG_OUT "oln_morpho_fast_height_opening.ppm");
       **   return  0;
       ** }
       ** \endcode
-      ** \image html lena256.png
-      ** \image latex lena256.png
+      ** \image html lena128.png
+      ** \image latex lena128.png
       ** =>
-      ** \image html olena_attribute_closing_opening_hh_height_op.png
-      ** \image latex olena_attribute_closing_opening_hh_height_op.png
+      ** \image html oln_morpho_fast_height_opening.png
+      ** \image latex oln_morpho_fast_height_opening.png
       **
       */
       xxx_opening_decl(height);
@@ -274,31 +296,358 @@ namespace oln {
       ** {
       **   typedef oln::image2d<ntg::int_u8>	im_type;
       **
-      **   im_type im1(oln::load(IMG_IN "lena256.pgm"));
+      **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   im1 = oln::morpho::fast::height_closing(im1, oln::neighb_c4(), 5);
-      **   oln::save(im1, IMG_OUT "olena_attribute_closing_opening_hh_height_clo.ppm");
+      **   oln::save(im1, IMG_OUT "oln_morpho_fast_height_closing.ppm");
       **   return  0;
       ** }
       ** \endcode
-      ** \image html lena256.png
-      ** \image latex lena256.png
+      ** \image html lena128.png
+      ** \image latex lena128.png
       ** =>
-      ** \image html olena_attribute_closing_opening_hh_height_clo.png
-      ** \image latex olena_attribute_closing_opening_hh_height_clo.png
+      ** \image html oln_morpho_fast_height_closing.png
+      ** \image latex oln_morpho_fast_height_closing.png
       **
       */
       xxx_closing_decl(height);
-      xxx_opening_decl(maxvalue);
+
+
+      /*!
+      ** \brief Perform a maxvalue closing.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/attribute_closing_opening.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** #include <iostream>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
+      **   im1 = oln::morpho::fast::maxvalue_closing(im1, oln::neighb_c4(), 5);
+      **   oln::save(im1, IMG_OUT "oln_morpho_fast_maxvalue_closing.png.ppm");
+      **   return  0;
+      ** }
+      ** \endcode
+      ** \image html lena128.png
+      ** \image latex lena128.png
+      ** =>
+      ** \image html oln_morpho_fast_maxvalue_closing.png
+      ** \image latex oln_morpho_fast_maxvalue_closing.png
+      **
+      */
       xxx_closing_decl(maxvalue);
+
+      /*!
+      ** \brief Perform a maxvalue opening.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/attribute_closing_opening.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** #include <iostream>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
+      **   im1 = oln::morpho::fast::maxvalue_opening(im1, oln::neighb_c4(), 5);
+      **   oln::save(im1, IMG_OUT "oln_morpho_fast_maxvalue_opening.ppm");
+      **   return  0;
+      ** }
+      ** \endcode
+      ** \image html lena128.png
+      ** \image latex lena128.png
+      ** =>
+      ** \image html oln_morpho_fast_maxvalue_opening.png
+      ** \image latex oln_morpho_fast_maxvalue_opening.png
+      **
+      */
+      xxx_opening_decl(maxvalue);
+
+      /*!
+      ** \brief Perform a minvalue opening.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/attribute_closing_opening.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** #include <iostream>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
+      **   im1 = oln::morpho::fast::minvalue_opening(im1, oln::neighb_c4(), 5);
+      **   oln::save(im1, IMG_OUT "oln_morpho_fast_minvalue_opening.ppm");
+      **   return  0;
+      ** }
+      ** \endcode
+      ** \image html lena128.png
+      ** \image latex lena128.png
+      ** =>
+      ** \image html oln_morpho_fast_minvalue_opening.png
+      ** \image latex oln_morpho_fast_minvalue_opening.png
+      **
+      */
       xxx_opening_decl(minvalue);
+
+      /*!
+      ** \brief Perform a minvalue closing.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/attribute_closing_opening.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** #include <iostream>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
+      **   im1 = oln::morpho::fast::minvalue_closing(im1, oln::neighb_c4(), 5);
+      **   oln::save(im1, IMG_OUT "oln_morpho_fast_minvalue_closing.ppm");
+      **   return  0;
+      ** }
+      ** \endcode
+      ** \image html lena128.png
+      ** \image latex lena128.png
+      ** =>
+      ** \image html oln_morpho_fast_minvalue_closing.png
+      ** \image latex oln_morpho_fast_minvalue_closing.png
+      **
+      */
       xxx_closing_decl(minvalue);
+
+      /*!
+      ** \brief Perform a ball opening.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/attribute_closing_opening.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** #include <iostream>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
+      **   im1 = oln::morpho::fast::ball_opening(im1, oln::neighb_c4(), 5);
+      **   oln::save(im1, IMG_OUT "oln_morpho_fast_ball_opening.ppm");
+      **   return  0;
+      ** }
+      ** \endcode
+      ** \image html lena128.png
+      ** \image latex lena128.png
+      ** =>
+      ** \image html oln_morpho_fast_ball_opening.png
+      ** \image latex oln_morpho_fast_ball_opening.png
+      **
+      */
       xxx_opening_im_decl(ball);
+
+      /*!
+      ** \brief Perform a ball closing.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/attribute_closing_opening.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** #include <iostream>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
+      **   im1 = oln::morpho::fast::ball_closing(im1, oln::neighb_c4(), 5);
+      **   oln::save(im1, IMG_OUT "oln_morpho_fast_ball_closing.ppm");
+      **   return  0;
+      ** }
+      ** \endcode
+      ** \image html lena128.png
+      ** \image latex lena128.png
+      ** =>
+      ** \image html oln_morpho_fast_ball_closing.png
+      ** \image latex oln_morpho_fast_ball_closing.png
+      **
+      */
       xxx_closing_im_decl(ball);
+
+      /*!
+      ** \brief Perform a dist opening.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/attribute_closing_opening.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** #include <iostream>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
+      **   im1 = oln::morpho::fast::dist_opening(im1, oln::neighb_c4(), 5);
+      **   oln::save(im1, IMG_OUT "oln_morpho_fast_dist_opening.ppm");
+      **   return  0;
+      ** }
+      ** \endcode
+      ** \image html lena128.png
+      ** \image latex lena128.png
+      ** =>
+      ** \image html oln_morpho_fast_dist_opening.png
+      ** \image latex oln_morpho_fast_dist_opening.png
+      **
+      */
       xxx_opening_im_decl(dist);
+
+      /*!
+      ** \brief Perform a dist closing.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/attribute_closing_opening.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** #include <iostream>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
+      **   im1 = oln::morpho::fast::dist_closing(im1, oln::neighb_c4(), 5);
+      **   oln::save(im1, IMG_OUT "oln_morpho_fast_dist_closing.ppm");
+      **   return  0;
+      ** }
+      ** \endcode
+      ** \image html lena128.png
+      ** \image latex lena128.png
+      ** =>
+      ** \image html oln_morpho_fast_dist_closing.png
+      ** \image latex oln_morpho_fast_dist_closing.png
+      **
+      */
       xxx_closing_im_decl(dist);
+
+      /*!
+      ** \brief Perform a cube closing.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/attribute_closing_opening.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** #include <iostream>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
+      **   im1 = oln::morpho::fast::cube_closing(im1, oln::neighb_c4(), 5);
+      **   oln::save(im1, IMG_OUT "oln_morpho_fast_cube_closing.ppm");
+      **   return  0;
+      ** }
+      ** \endcode
+      ** \image html lena128.png
+      ** \image latex lena128.png
+      ** =>
+      ** \image html oln_morpho_fast_cube_closing.png
+      ** \image latex oln_morpho_fast_cube_closing.png
+      **
+      */
       xxx_closing_im_decl(cube);
+
+      /*!
+      ** \brief Perform a cube opening.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/attribute_closing_opening.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** #include <iostream>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **
+      **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
+      **   im1 = oln::morpho::fast::cube_opening(im1, oln::neighb_c4(), 5);
+      **   oln::save(im1, IMG_OUT "oln_morpho_fast_cube_opening.ppm");
+      **   return  0;
+      ** }
+      ** \endcode
+      ** \image html lena128.png
+      ** \image latex lena128.png
+      ** =>
+      ** \image html oln_morpho_fast_cube_opening.png
+      ** \image latex oln_morpho_fast_cube_opening.png
+      **
+      */
       xxx_opening_im_decl(cube);
+
+      /*!
+      ** \brief Perform a box closing.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/attribute_closing_opening.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** #include <iostream>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **   ntg::vec<2, unsigned, mlc::final>	lambda;
+      **   lambda[0] = lambda[1] = 50;
+      **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
+      **   im1 = oln::morpho::fast::box_closing(im1, oln::neighb_c4(), lambda);
+      **   oln::save(im1, IMG_OUT "oln_morpho_fast_box_closing.ppm");
+      **   return  0;
+      ** }
+      ** \endcode
+      ** \image html lena128.png
+      ** \image latex lena128.png
+      ** =>
+      ** \image html oln_morpho_fast_box_closing.png
+      ** \image latex oln_morpho_fast_box_closing.png
+      **
+      */
       xxx_closing_im_decl(box);
+
+      /*!
+      ** \brief Perform a box opening.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/morpho/attribute_closing_opening.hh>
+      ** #include <oln/level/compare.hh>
+      ** #include <ntg/all.hh>
+      ** #include <iostream>
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8>	im_type;
+      **   ntg::vec<2, unsigned, mlc::final>	lambda;
+      **   lambda[0] = lambda[1] = 50;
+      **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
+      **   im1 = oln::morpho::fast::box_opening(im1, oln::neighb_c4(), lambda);
+      **   oln::save(im1, IMG_OUT "oln_morpho_fast_box_opening.ppm");
+      **   return  0;
+      ** }
+      ** \endcode
+      ** \image html lena128.png
+      ** \image latex lena128.png
+      ** =>
+      ** \image html oln_morpho_fast_box_opening.png
+      ** \image latex oln_morpho_fast_box_opening.png
+      **
+      */
       xxx_opening_im_decl(box);
 
     } // !fast

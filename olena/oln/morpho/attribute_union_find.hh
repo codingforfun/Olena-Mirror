@@ -41,50 +41,28 @@ namespace oln {
     namespace fast {
       namespace tarjan {
 
+	/*!
+	** \brief  Struct  that  contains  everything  to  compute  an
+	** attribute opening or closing
+	**
+	** \param T: exact type of images to process.
+	** \param ATTRIBUTE: exact type of attribute to use.
+	** \param Env: type of environment to use.
+	*/
 	template<class T, class ATTRIBUTE, class Env = attr_env_type(ATTRIBUTE)>
 	struct tarjan_set
 	{
-	  typedef oln_point_type(T) point_type;
-	  typedef oln_value_type(T) data_type;
-	  typedef oln_concrete_type(T) image_type;
-	  typedef typename ATTRIBUTE::lambda_type	lambda_type;
-	  typedef Env	env_type;
+	  typedef oln_point_type(T)			point_type; ///< Associated point type.
+	  typedef oln_value_type(T)			data_type; ///< Associated data_type.
+	  typedef oln_concrete_type(T)			image_type; ///< Image type to open/close
+	  typedef typename ATTRIBUTE::lambda_type	lambda_type; ///< Threshold type.
+	  typedef Env					env_type; ///< Environment type.
 
-	  // ACTIVE and INACTIVE are defined with a hook to be static
-	  // and initialized ionly once.
-	  static const point_type&
-	  ACTIVE()
-	  {
-	    static struct foo_def
-	    {
-	      point_type elt;
-	      foo_def()
-	      {
-		const unsigned dim = point_type::dim;
-		for (unsigned i = 0; i < dim; ++i )
-		  elt.nth(i) = -1;
-	      }
-	    } tmp;
-
-	    return tmp.elt;
-	  }
-
-	  static const point_type&
-	  INACTIVE()
-	  {
-	    static struct foo_def
-	    {
-	      point_type elt;
-	      foo_def() {
-		const unsigned dim = point_type::dim;
-		for (unsigned i = 0; i < dim; ++i )
-		  elt.nth(i) = -2;
-	      }
-	    } tmp;
-
-	    return tmp.elt;
-	  }
-
+	  /*!
+	  ** \brief tarjan_set constructor.
+	  ** \param ima: image to open/close.
+	  ** \param env: environment to use to compute attributes.
+	  */
 	  tarjan_set(const image_type& ima, const env_type &env) : input_(ima),
 								   parent_(ima.size()),
 								   aux_data_(ima.size()),
@@ -93,52 +71,14 @@ namespace oln {
 	    level::fill(parent_, INACTIVE());
 	  }
 
-	  void
-	  make_set(const point_type& x)
-	  {
-	    precondition(parent_[x] == INACTIVE());
-	    parent_[x] = ACTIVE();
-	    aux_data_[x] = ATTRIBUTE(input_, x, env_);
-	  }
-
-	  point_type
-	  find_root(const point_type& x)
-	  {
-	    if ((parent_[x] != ACTIVE()) && (parent_[x] != INACTIVE()))
-	      {
-		parent_[x] = find_root(parent_[x]);
-		return parent_[x];
-	      }
-	    else
-	      return x;
-	  }
-
-	  bool
-	  criterion(const point_type& x, const point_type& y)
-	  {
-	    precondition((parent_[x] == ACTIVE()) || (parent_[x] == INACTIVE()));
-	    precondition((parent_[y] == ACTIVE()) || (parent_[y] == INACTIVE()));
-	    return ( (input_[x] == input_[y]) || (aux_data_[x] < *lambda_));
-	  }
-
-	  void
-	  uni(const point_type& n, const point_type& p)
-	  {
-	    point_type r = find_root(n);
-	    if (r != p)
-	      if (criterion(r,p))
-		{
-		  aux_data_[p] += aux_data_[r];
-		  parent_[r] = p;
-		}
-	      else
-		{
-		  aux_data_[p] = *lambda_;
-		}
-	  }
-
-	  // bool closing = true -> a closing is performed,
-	  // an opening otherwise.
+	  /*!
+	  ** \brief Main method to perform an attribute opening/closing.
+	  ** \param closing: true -> a closing is performed, an opening otherwise.
+	  **
+	  ** \param lambda: threshold to use for attribute growing.
+	  ** \param Ng: neighborhood to use in the algorithm.
+	  ** \return the resulting image.
+	  */
 	  template<bool closing, class N>
 	  image_type
 	  get_comptute(const lambda_type & lambda,
@@ -181,23 +121,126 @@ namespace oln {
 	  }
 
 	protected:
-	  // tells if a point has been proceded
+	  /*!
+	  ** \brief Return the value of an active point.
+	  */
+	  static const point_type&
+	  ACTIVE()
+	  {
+	    static struct foo_def
+	    {
+	      point_type elt;
+	      foo_def()
+	      {
+		const unsigned dim = point_type::dim;
+		for (unsigned i = 0; i < dim; ++i )
+		  elt.nth(i) = -1;
+	      }
+	    } tmp;
+
+	    return tmp.elt;
+	  }
+
+	  /*!
+	  ** \brief Return the value of an inactive point.
+	  */
+	  static const point_type&
+	  INACTIVE()
+	  {
+	    static struct foo_def
+	    {
+	      point_type elt;
+	      foo_def() {
+		const unsigned dim = point_type::dim;
+		for (unsigned i = 0; i < dim; ++i )
+		  elt.nth(i) = -2;
+	      }
+	    } tmp;
+
+	    return tmp.elt;
+	  }
+
+	  /*!
+	  ** \brief Make a new component from a point.
+	  ** \arg x: root of the component.
+	  */
+	  void
+	  make_set(const point_type& x)
+	  {
+	    precondition(parent_[x] == INACTIVE());
+	    parent_[x] = ACTIVE();
+	    aux_data_[x] = ATTRIBUTE(input_, x, env_);
+	  }
+
+	  /*!
+	  ** \brief find the root of a component.
+	  ** \arg x: a point of the component.
+	  */
+	  point_type
+	  find_root(const point_type& x)
+	  {
+	    if ((parent_[x] != ACTIVE()) && (parent_[x] != INACTIVE()))
+	      {
+		parent_[x] = find_root(parent_[x]);
+		return parent_[x];
+	      }
+	    else
+	      return x;
+	  }
+
+	  /*!
+	  ** \brief Check if two components should be merged.
+	  ** \arg x: a point of the first component.
+	  ** \arg y: a point of the second component.
+	  */
+	  bool
+	  criterion(const point_type& x, const point_type& y)
+	  {
+	    precondition((parent_[x] == ACTIVE()) || (parent_[x] == INACTIVE()));
+	    precondition((parent_[y] == ACTIVE()) || (parent_[y] == INACTIVE()));
+	    return ( (input_[x] == input_[y]) || (aux_data_[x] < *lambda_));
+	  }
+
+	  /*!
+	  ** \brief Do union of two components.
+	  ** \arg n: a point of the first component.
+	  ** \arg p: a point of the second component.
+	  */
+	  void
+	  uni(const point_type& n, const point_type& p)
+	  {
+	    point_type r = find_root(n);
+	    if (r != p)
+	      if (criterion(r,p))
+		{
+		  aux_data_[p] += aux_data_[r];
+		  parent_[r] = p;
+		}
+	      else
+		{
+		  aux_data_[p] = *lambda_;
+		}
+	  }
+
+	  /*!
+	  ** \brief Tells if a point has been proceded.
+	  */
 	  bool is_proc(const point_type &p) const
 	  {
 	    //FIXME: odd way to call !=,  but it is to help the compiler
 	    //to find the good one  when ATTRIBUTE is templeted by types
-	    //in other namepaces.
+	    //in other namespaces.
 
 	    // return aux_data_[p] != ntg_max_val(lambda_type);
 	    return aux_data_[p].operator!=(ntg_sup_val(lambda_type));
 	  };
 
 
-	  const image_type & input_;
-	  typename mute<T, point_type>::ret parent_;
-	  typename mute<T, ATTRIBUTE>::ret aux_data_;
-	  const lambda_type *lambda_;
-	  const env_type	env_;
+	  const image_type			&input_; ///< Input image.
+	  typename mute<T, point_type>::ret	parent_; ///< Give a parent of a point.
+	  typename mute<T, ATTRIBUTE>::ret	aux_data_; ///< Image to store attributes.
+	  const lambda_type			*lambda_; ///< Threshold.
+	  const env_type			env_; ///< Environment.
 	};
       } // !tarjan
     } // !fast
