@@ -30,6 +30,8 @@
 
 # include <ntg/cycle.hh>
 
+# include <oln/basics2d.hh>
+
 # include <map>
 # include <set>
 

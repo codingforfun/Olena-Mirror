@@ -1,3 +1,7 @@
+2003-03-23  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/topo/inter-pixel.hh: Fix includes.
+
 2003-03-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/check/Makefile.am: Import sources from metalic/tests/check
