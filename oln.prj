@@ -1,20 +1,11 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 178)
-(Parent-Version oln 10 177)
-(Version-Log "2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
-	* tools/swilena/expand.sh (generation of makefile.swig): Add cxx
-	files to CLEANFILES.
-	* tools/swilena/python/Makefile.am (CLEANFILES): Remove.
-	* olena/tests/sanity/Makefile.am: Replace maintainer-check by check.
-
-
-	* metalic/tests/sanity/Makefile.am: Replace maintainer-check by check.
-	* integre/tests/sanity/Makefile.am: Replace maintainer-check by check.
-")
+(Project-Version oln 10 179)
+(Parent-Version oln 10 178)
+(Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Tue, 20 Apr 2004 18:09:05 +0200")
+(Checkin-Time "Tue, 20 Apr 2004 18:18:10 +0200")
 (Checkin-Login van-vl_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -1064,7 +1055,7 @@
 ;; Files added by populate at Sat, 27 Sep 2003 18:32:26 +0200,
 ;; to version 10.24(w), by burrus_n:
 
-  (tools/swilena/generate_morpho_instantiations.py (oln/v/24_generate_m 1.9 700))
+  (tools/swilena/generate_morpho_instantiations.py (oln/v/24_generate_m 1.10 700))
 
 ;; Files deleted by populate at Sat, 27 Sep 2003 18:33:27 +0200,
 ;; from version 10.24(w), by nes:
@@ -1115,8 +1106,8 @@
   (tools/swilena/python/tests/morpho.py (oln/v/47_morpho.py 1.2 700))
   (tools/swilena/meta/swilena_arith.i (oln/v/48_swilena_ar 1.1 600))
   (tools/swilena/meta/swilena_conversions.i (oln/v/49_swilena_co 1.1 600))
-  (tools/swilena/generate_conversions_instantiations.py (oln/v/50_generate_c 1.2 700))
-  (tools/swilena/generate_arith_instantiations.py (oln/v/51_generate_a 1.2 700))
+  (tools/swilena/generate_conversions_instantiations.py (oln/v/50_generate_c 1.3 700))
+  (tools/swilena/generate_arith_instantiations.py (oln/v/51_generate_a 1.3 700))
 
 ;; Files added by populate at Mon, 10 Nov 2003 14:06:22 +0100,
 ;; to version 10.39(w), by burrus_n:
