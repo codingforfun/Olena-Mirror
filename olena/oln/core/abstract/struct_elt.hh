@@ -30,6 +30,7 @@
 
 # include <mlc/type.hh>
 # include <oln/core/coord.hh>
+# include <oln/core/abstract/dpoint.hh>
 
 namespace oln {
 
@@ -68,9 +69,9 @@ namespace oln {
       typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
       typedef Exact exact_type;
       
-      bool has(const dpoint_type& dp) const
+      bool has(const abstract::dpoint<dpoint_type>& dp) const
       {
-	return to_exact(this)->has_(dp);
+	return to_exact(this)->has_(to_exact(dp));
       }
       
       unsigned card() const

@@ -30,6 +30,7 @@
 
 # include <mlc/type.hh>
 # include <oln/core/coord.hh>
+# include <oln/core/abstract/point.hh>
 
 namespace oln {
   namespace abstract {
@@ -71,14 +72,14 @@ namespace oln {
 
       enum { dim = image_traits<Exact>::dim };
 
-      const value_type& operator[](const point_type& p) const
+      const value_type& operator[](const abstract::point<point_type>& p) const
       {
-  	return to_exact(this)->at(p);
+  	return to_exact(this)->at(to_exact(p));
       }
 
-      value_type& operator[](const point_type& p)
+      value_type& operator[](const abstract::point<point_type>& p)
       {
-	return to_exact(this)->at(p);
+	return to_exact(this)->at(to_exact(p));
       }
 
       exact_type clone() const
@@ -86,10 +87,10 @@ namespace oln {
 	return to_exact(this)->clone_();
       }
 
-      bool hold(const point_type& p) const
+      bool hold(const abstract::point<point_type>& p) const
       {
 	assertion(has_impl_());
-	return to_exact(this)->impl()->hold(p);
+	return to_exact(this)->impl()->hold(to_exact(p));
       }
 
       const size_type& size() const

@@ -1,17 +1,18 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 37)
-(Parent-Version oln 2003paradigm 36)
+(Project-Version oln 2003paradigm 38)
+(Parent-Version oln 2003paradigm 37)
 (Version-Log "2003-07-28  David Lesage  <david@lrde.epita.fr>
 
-	* oln/core/abstract/neighborhood.hh, 
-	oln/core/abstract/struct_elt.hh: Add typedefs.
-
-	* oln/core/winiter.hh, oln/core/winneighb.hh: Adapt constructor..
+	* oln/core/abstract/dpoint.hh, oln/core/abstract/iter.hh,
+	oln/core/abstract/neighborhood.hh, oln/core/abstract/point.hh,
+	oln/core/abstract/struct_elt.hh, oln/core/abstract/window.hh,
+	oln/core/abstract/w_window.hh, oln/core/abstract/image.hh: Adapt
+	interfaces..
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 28 Jul 2003 13:33:01 +0200")
+(Checkin-Time "Mon, 28 Jul 2003 14:03:24 +0200")
 (Checkin-Login david)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -101,7 +102,7 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.8 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.21 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.22 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.37 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.10 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.4 640))
@@ -198,7 +199,7 @@
   (olena/oln/core/dpoint2d.hxx (oln/d/24_dpoint2d.h 1.6 640))
   (olena/oln/core/dpoint3d.hh (oln/d/23_dpoint3d.h 1.8 640))
   (olena/oln/core/dpoint3d.hxx (oln/d/22_dpoint3d.h 1.6 640))
-  (olena/oln/core/abstract/dpoint.hh (oln/d/28_dpoint.hh 1.8 640))
+  (olena/oln/core/abstract/dpoint.hh (oln/d/28_dpoint.hh 1.9 640))
   
   (olena/oln/core/fold.hh (oln/c/7_fold.hh 1.10 640))
   (olena/oln/core/fwd_iter1d.hh (oln/d/21_fwd_iter1d 1.10 640))
@@ -231,12 +232,12 @@
   
   
   
-  (olena/oln/core/abstract/iter.hh (oln/c/40_iter.hh 1.10 640))
+  (olena/oln/core/abstract/iter.hh (oln/c/40_iter.hh 1.11 640))
   (olena/oln/core/macros.hh (oln/c/39_macros.hh 1.4 640))
   (olena/oln/core/neighborhood1d.hh (oln/c/37_neighborho 1.11 640))
   (olena/oln/core/neighborhood2d.hh (oln/c/36_neighborho 1.12 640))
   (olena/oln/core/neighborhood3d.hh (oln/c/35_neighborho 1.11 640))
-  (olena/oln/core/abstract/neighborhood.hh (oln/c/38_neighborho 1.11 640))
+  (olena/oln/core/abstract/neighborhood.hh (oln/c/38_neighborho 1.12 640))
   (metalic/mlc/objs.hh (oln/c/34_objs.hh 1.6 640))
   (olena/oln/core/point1d.hh (oln/c/32_point1d.hh 1.10 640))
   (olena/oln/core/point1d.hxx (oln/c/31_point1d.hx 1.4 640))
@@ -244,24 +245,24 @@
   (olena/oln/core/point2d.hxx (oln/c/29_point2d.hx 1.4 640))
   (olena/oln/core/point3d.hh (oln/c/28_point3d.hh 1.10 640))
   (olena/oln/core/point3d.hxx (oln/c/27_point3d.hx 1.4 640))
-  (olena/oln/core/abstract/point.hh (oln/c/33_point.hh 1.9 640))
+  (olena/oln/core/abstract/point.hh (oln/c/33_point.hh 1.10 640))
   
   (olena/oln/core/abstract/binary_image.hh (oln/c/24_pred_image 1.6 640))
   
-  (olena/oln/core/abstract/struct_elt.hh (oln/c/25_structelt. 1.9 640))
+  (olena/oln/core/abstract/struct_elt.hh (oln/c/25_structelt. 1.10 640))
   (olena/oln/core/traverse.hh (oln/d/30_traverse.h 1.9 640))
   (metalic/mlc/typeadj.hh (oln/e/25_typeadj.hh 1.5 640))
   (metalic/mlc/type.hh (oln/c/21_type.hh 1.16 640))
   (olena/oln/core/window1d.hh (oln/c/15_window1d.h 1.9 640))
   (olena/oln/core/window2d.hh (oln/c/14_window2d.h 1.11 640))
   (olena/oln/core/window3d.hh (oln/c/13_window3d.h 1.10 640))
-  (olena/oln/core/abstract/window.hh (oln/c/16_window.hh 1.11 640))
+  (olena/oln/core/abstract/window.hh (oln/c/16_window.hh 1.12 640))
   (olena/oln/core/winiter.hh (oln/c/12_winiter.hh 1.7 640))
   (olena/oln/core/winneighb.hh (oln/c/11_winneighb. 1.9 640))
   (olena/oln/core/w_window1d.hh (oln/c/19_w_window1d 1.10 640))
   (olena/oln/core/w_window2d.hh (oln/c/18_w_window2d 1.6.1.5 640))
   (olena/oln/core/w_window3d.hh (oln/c/17_w_window3d 1.10 640))
-  (olena/oln/core/abstract/w_window.hh (oln/c/20_w_window.h 1.8 640))	
+  (olena/oln/core/abstract/w_window.hh (oln/c/20_w_window.h 1.9 640))	
   (olena/oln/io/base.hh (oln/b/20_base.hh 1.7 640))
   
   (olena/oln/io/basics.hh (oln/b/12_basics.hh 1.3 640))
@@ -875,7 +876,7 @@
 ;; Files added by populate at Wed, 16 Jul 2003 16:58:47 +0200,
 ;; to version 2003paradigm.7(w), by burrus_n:
 
-  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.8 640))
+  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.9 640))
   (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.8 640))
   (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.9 640))
   (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.3 640))

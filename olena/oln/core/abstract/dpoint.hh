@@ -36,6 +36,9 @@ namespace oln {
   namespace abstract {
     template<class Exact>
     struct dpoint; // fwd_decl
+
+    template<class Exact>
+    struct point;
   } // end of abstract
 
   template<class Exact>
@@ -57,11 +60,10 @@ namespace oln {
       enum { dim = dpoint_traits<exact_type>::dim };
       typedef typename dpoint_traits<exact_type>::point_type point_type;
 
-      explicit dpoint(const point_type& p)
+      explicit dpoint(const abstract::point<point_type>& p)
       {
-	
 	for (unsigned i = 0; i < dim; ++i)
-	  nth(i) = p.nth(i);
+	  nth(i) = to_exact(p).nth(i);
       }
       
       coord nth(const unsigned dim) const
@@ -99,18 +101,18 @@ namespace oln {
 	return to_exact(this)->minus_dp(to_exact(dp));
       }
 
-      bool operator==(const self_type& p) const
+      bool operator==(const self_type& dp) const
       {
 	for (unsigned i = 0; i < dim; ++i)
-	  if (p.nth(i) != nth(i))
+	  if (dp.nth(i) != nth(i))
 	    return false;
 	return true;
       }
       
-      bool operator!=(const self_type& p) const
+      bool operator!=(const self_type& dp) const
       {
 	for (unsigned i = 0; i < dim; ++i)
-	  if (p.nth(i) != nth(i))
+	  if (dp.nth(i) != nth(i))
 	    return true;
 	return false;
       }

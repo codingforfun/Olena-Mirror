@@ -1,5 +1,13 @@
 2003-07-28  David Lesage  <david@lrde.epita.fr>
 
+	* oln/core/abstract/dpoint.hh, oln/core/abstract/iter.hh,
+	oln/core/abstract/neighborhood.hh, oln/core/abstract/point.hh,
+	oln/core/abstract/struct_elt.hh, oln/core/abstract/window.hh,
+	oln/core/abstract/w_window.hh, oln/core/abstract/image.hh: Adapt
+	interfaces.
+	
+2003-07-28  David Lesage  <david@lrde.epita.fr>
+
 	* oln/core/abstract/neighborhood.hh, 
 	oln/core/abstract/struct_elt.hh: Add typedefs.
 

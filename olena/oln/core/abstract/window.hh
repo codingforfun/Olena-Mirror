@@ -30,6 +30,7 @@
 
 # include <oln/core/abstract/struct_elt.hh>
 # include <oln/core/winneighb.hh>
+# include <oln/core/abstract/dpoint.hh>
 
 namespace oln 
 {
@@ -62,9 +63,9 @@ namespace oln
 	return std::string("window<") + Exact::name() + ">";
       }
 
-      exact_type& add(const dpoint_type& dp)
+      exact_type& add(const abstract::dpoint<dpoint_type>& dp)
       {
-	return to_exact(this)->add_(dp);
+	return to_exact(this)->add_(to_exact(dp));
       }
 
     protected:
