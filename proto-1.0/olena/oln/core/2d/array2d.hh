@@ -108,7 +108,7 @@ namespace oln {
       invariant_();
     }
 
-    const size2d& size() const
+    const size2d& impl_size() const
     {
       return size_;
     }

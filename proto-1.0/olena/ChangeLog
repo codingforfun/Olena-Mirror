@@ -1,3 +1,10 @@
+2005-02-08  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* oln/core/value_box.hh: Unbox image attribute.
+	* oln/core/abstract/image_with_data.hh: Clean up in ctors.
+	* oln/core/abstract/data_storage.hh: Fix bug in size().
+	* oln/core/2d/array2d.hh: Fix name of size impl.
+
 2005-01-26  Simon Odou  <simon@lrde.epita.fr>
 
 	* oln/fancy/print.hh: Add copyright.

@@ -54,7 +54,7 @@ namespace oln {
 
       const oln_size_type(E)& size() const
       {
-	return this->exact().impl_size(this->s);
+	return this->exact().impl_size();
       }
 
       void resize(const oln_size_type(E)& s)

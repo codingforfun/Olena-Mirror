@@ -137,18 +137,18 @@ namespace oln {
       /*! \brief Constructor (protected) with no memory allocation for
       ** data.
       */
-      image_with_data()
+      image_with_data() :
+	data_(0)
       {
-	data_ = 0;
       }
 
 
       /*! \brief Constructor (protected) with memory allocation for
       ** data.
       */
-      image_with_data(const oln_size_type(E)& size)
+      image_with_data(const oln_size_type(E)& size) :
+	data_(new oln_value_container_type(E)(size))
       {
-	data_ = new oln_value_container_type(E)(size);
       }
 
 

@@ -32,7 +32,7 @@
 
 
 
-// abrev
+// abbrev
 #define any_mem(E) any <E, dispatch_policy::best_memory>
 
 
@@ -46,14 +46,13 @@ namespace mlc
   {
     struct best_speed;
     struct best_memory;
-    struct compromise;
+    struct simple;
   };
 
 
   // any
 
-  template <typename E,
-	    typename Dispatch_Policy = dispatch_policy::best_memory>
+  template <typename E, typename Dispatch_Policy = dispatch_policy::simple>
   struct any;
 
 
@@ -71,11 +70,33 @@ namespace mlc
       precondition(exact_ptr != 0);
       return *exact_ptr;
     }
+    
+    /// Assignment (op=).
+
+    any& operator=(const any& rhs)
+    {
+      // do nothing
+      // so that "this->exact_ptr" is unchanged
+      return *this;
+    }
+
+    /// Copy Ctor.
+
+    any(const any& rhs) :
+      exact_ptr(0) // safety
+    {
+      // this->exact_ptr is *not* copied
+      // its value has to be set in subclasses copy ctors.
+    }
+
   protected:
     any(E* exact_ptr) : exact_ptr(exact_ptr) {}
     virtual ~any() {}
+
+    /// Only attribute.
     E* exact_ptr;
   };
+
 
   template <typename E>
   struct any__best_speed : public any<E, dispatch_policy::best_speed>
@@ -104,8 +125,8 @@ namespace mlc
   
   protected:
     any() {}
-    any(E* exact_ptr); // safety: w/o impl
-    virtual ~any() {}
+    any(E* exact_ptr_does_not_exist_in_this_version); // safety
+    virtual ~any() {} // FIXME: virtual for a "best memory" version!?
   };
 
   template <typename E>
@@ -123,11 +144,22 @@ namespace mlc
                                        - (const char*)(void*)(&any_mem(E)::exact_obj);
 
 
-  // "compromise" version of 'any'
+  // "simple" version of 'any'
 
   template <typename E>
   struct any <E,
-              dispatch_policy::compromise>; // FIXME: not yet impled
+              dispatch_policy::simple>
+  {
+    E& exact() {
+      return *(E*)(void*)this;
+    }
+    const E& exact() const {
+      return *(const E*)(const void*)this;
+    }
+  protected:
+    any() {}
+    any(E* exact_ptr_does_not_exist_in_this_version); // safety
+  };
 
 
 } // end of namespace mlc

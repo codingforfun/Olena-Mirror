@@ -28,10 +28,11 @@
 #ifndef METALIC_TRACKED_PTR_HH
 # define METALIC_TRACKED_PTR_HH
 
-# include <ostream>
+# include <iostream>
 # include <set>
 # include <map>
 
+# include <mlc/contract.hh>
 
 namespace mlc {
 
@@ -42,78 +43,133 @@ namespace mlc {
   namespace internal {
 
 
+    /*! \class tracked_ptr_proxy<T>
+    **
+    ** Class that effectively holds a pointer.  For use in class
+    ** tracked_ptr.
+    **
+    ** Parameter T is the type of pointed data.
+    */
+    
     template <class T>
-    class tracked_ptr_proxy
+    struct /* HERE: class */ tracked_ptr_proxy
     {
 
       friend class tracked_ptr<T>;
 
-      // attributes
+
+      /// Attributes.
 
       T* ptr_;
       std::set<const tracked_ptr<T>*> holders_;
 
-      // w/o impl
 
+      /// Cpy ctor is not impled.
       tracked_ptr_proxy(const tracked_ptr_proxy&);
+
+      /// Assignmt op is not impled.
       void operator=(const tracked_ptr_proxy&);
 
-      // methods
 
-      tracked_ptr_proxy() :
-	ptr_(0)
-      {
-      }
-
+      /*! \brief Ctor.
+      **
+      ** We have a new proxy so we have to make sure that the pointer,
+      ** if not null, was not already proxified, meaning that this new
+      ** proxy handles 'new' data.
+      */
       tracked_ptr_proxy(T* ptr) :
-	ptr_(0)
+	ptr_(0),
+	holders_()
       {
-	set_ptr(ptr);
+	if (ptr != 0)
+	  {
+	    invariant(proxy_of()[ptr] == 0);
+	    this->ptr_ = ptr;
+	    proxy_of()[this->ptr_] = this;
+	  }
+	else
+	  this->ptr_ = 0;
       }
 
-      void set_ptr(T* new_ptr)
+
+      /*! \brief Change data pointer.
+      **
+      ** If the change is effective, former data are deleted.
+      */
+      void set_ptr(T* ptr)
       {
-	if (new_ptr == this->ptr_)
-	  return;
-	T* old_ptr = this->ptr_;
-	if (old_ptr != 0)
+	if (ptr == this->ptr_)
 	  {
-	    assert(proxy_of()[old_ptr] == this);
-	    proxy_of().erase(old_ptr);
-	  };
-	this->ptr_ = new_ptr;
-	if (new_ptr != 0)
+	    // nothing to be done
+	    return;
+	  }
+
+	if (this->ptr_ != 0)
 	  {
-	    assert(proxy_of()[new_ptr] == 0);
-	    proxy_of()[new_ptr] = this;
+	    invariant(proxy_of()[this->ptr_] == this);
+	    proxy_of().erase(this->ptr_);
+	    delete this->ptr_;
+	    this->ptr_ = 0; // safety
 	  };
+
+	// same code as ctor:
+	if (ptr != 0)
+	  {
+	    invariant(proxy_of()[ptr] == 0);
+	    this->ptr_ = ptr;
+	    proxy_of()[this->ptr_] = this;
+	  }
+	else
+	  this->ptr_ = 0;
       }
 
+
+      /*! \brief Register a new holder.
+      **
+      ** \precondition Test that it is effectively a new holder.
+      */
       void register_holder(const tracked_ptr<T>* holder)
       {
-	assert(holder != 0);
-	assert(holders_.find(holder) == holders_.end());
+	precondition(holder != 0);
+	precondition(holders_.find(holder) == holders_.end());
 	holders_.insert(holder);
       }
 
+
+      /*! \brief Unregister a holder.
+      **
+      ** If it is the last holder and if data is not null, data are
+      ** deleted.  In that case, the return value (true) allows the
+      ** tracked_pointer to know that the proxy has to be deleted.
+      **
+      ** \precondition Test that it is effectively a holder.
+      ** \return True if data is deleted, false otherwise
+      */
+
       bool unregister_holder(const tracked_ptr<T>* holder)
       {
-	assert(holder != 0);
-	assert(holders_.size() > 0);
+	// "simple" tests:
+	precondition(holder != 0);
+	precondition(holders_.size() > 0);
 
-	typename std::set<const tracked_ptr<T>*>::iterator e = holders_.find(holder);
-	assert(e != holders_.end());
-	holders_.erase(e);
+	// "main" test:
+	// note that the couple of "simple" tests above are subtests of the following one
+	typename std::set<const tracked_ptr<T>*>::iterator h = holders_.find(holder);
+	precondition(h != holders_.end());
 
-	if (holders_.size() == 0)
+	holders_.erase(h);
+
+	if (holders_.size() == 0 && this->ptr_ != 0)
 	  {
-	    proxy_of()[ptr_] = 0;
-	    delete ptr_;
-	    ptr_ = 0;
+	    proxy_of()[this->ptr_] = 0;
+	    delete this->ptr_;
+	    this->ptr_ = 0; // safety
 	    return true;
 	  }
+
 	return false;
       }
+
 
       // procedures
 
@@ -121,14 +177,14 @@ namespace mlc {
 
       static map_type& proxy_of()
       {
-	static map_type proxy_of_;
-	return proxy_of_;
+	static map_type* proxy_of_ = new map_type;
+	return *proxy_of_;
       }
 
       friend
       std::ostream& operator<<(std::ostream& ostr, const tracked_ptr_proxy& proxy)
       {
-	ostr << "[ptr=" << proxy.ptr_ << " holders=(";
+	ostr << "proxy " << &proxy << " [ptr=" << proxy.ptr_ << " holders=(";
 	typename std::set<const tracked_ptr<T>*>::const_iterator i = proxy.holders_.begin();
 	bool ok = i != proxy.holders_.end();
 	while (ok)
@@ -143,7 +199,7 @@ namespace mlc {
 
     };
 
-  } // end of namspace internal
+  } // end of namespace internal
 
 
 
@@ -154,154 +210,184 @@ namespace mlc {
   {
   public:
 
+    /*! \brief Mimics the behavior of op* for a pointer in the const case.
+    **
+    ** \invariant Pointer proxy exists.
+    ** \precondition Data exists (is not null).
+    */
     const T& operator*() const
     {
-      assert(proxy_ != 0 and proxy_->ptr_ != 0);
+      invariant(proxy_ != 0);
+      precondition(proxy_->ptr_ != 0);
       return *(proxy_->ptr_);
     }
 
+    /*! \brief Mimics the behavior of op* for a pointer in the mutable case.
+    **
+    ** \invariant Pointer proxy exists.
+    ** \precondition Data exists (is not null).
+    */
     T& operator*()
     {
-      assert(proxy_ != 0 and proxy_->ptr_ != 0);
+      invariant(proxy_ != 0);
+      precondition(proxy_->ptr_ != 0);
       return *(proxy_->ptr_);
     }
 
+    /*! \brief Mimics the behavior of op-> for a pointer in the const case.
+    **
+    ** \invariant Pointer proxy exists.
+    */
     const T*const operator->() const
     {
-      assert(proxy_ != 0);
+      invariant(proxy_ != 0);
       return proxy_->ptr_;
     }
 
+    /*! \brief Mimics the behavior of op-> for a pointer in the mutable case.
+    **
+    ** \invariant Pointer proxy exists.
+    */
     T*const operator->()
     {
-      assert(proxy_ != 0);
+      invariant(proxy_ != 0);
       return proxy_->ptr_;
     }
 
+    /// Coercion towards Boolean (for arithmetical tests).
     operator bool() const
     {
-      return proxy_ != 0 and proxy_->ptr_ != 0;
+      invariant(proxy_ != 0);
+      return proxy_->ptr_ != 0;
     }
 
-    bool operator not() const
+    /// Negation (for arithmetical tests).
+    bool operator !() const
     {
-      return not bool(*this);
+      invariant(proxy_ != 0);
+      return ! bool(*this);
     }
 
+    /// Comparison 'equal to' (for arithmetical tests).
     bool operator==(int b) const
     {
+      invariant(proxy_ != 0);
       return bool(*this) == bool(b);
     }
 
+    /// Comparison 'not equal to' (for arithmetical tests).
     bool operator!=(int b) const
     {
+      invariant(proxy_ != 0);
       return bool(*this) != bool(b);
     }
 
 
-    // hook:
-    const internal::tracked_ptr_proxy<T>* proxy() const { return proxy_; }
+    /// Hook that gives access to the data proxy.
+    const internal::tracked_ptr_proxy<T>* proxy() const { return this->proxy_; }
+          internal::tracked_ptr_proxy<T>* proxy()       { return this->proxy_; }
 
 
-    // ctors
 
-    tracked_ptr() :
-      proxy_(0)
-    {
-      invariant_();
-    }
-
-    tracked_ptr(T* ptr) :
+    /*! \brief Ctor.
+    **
+    ** Creates a proxy that knows the target data pointer.  This
+    ** pointer can be null (0).
+    */
+    tracked_ptr(T* ptr = 0) :
       proxy_(new internal::tracked_ptr_proxy<T>(ptr))
     {
-      proxy_->register_holder(this);
+      this->proxy_->register_holder(this);
       invariant_();
     }
 
-    // shallow copy
 
+    /*! \brief Cpy ctor performs a shallow copy.
+    **
+    ** The data proxy of \a rhs is shared with the constructed
+    ** tracked_ptr.
+    */
     tracked_ptr(const tracked_ptr& rhs) :
       proxy_(rhs.proxy_)
     {
-      if (proxy_ != 0)
-	proxy_->register_holder(this);
+      precondition(rhs.proxy_ != 0);
+      this->proxy_->register_holder(this);
       invariant_();
     }
 
-    // assignment
 
+    /*! \brief Assignment operator with rhs being a tracked pointer.
+    **
+    ** The lhs proxy unregisters its data and registers the rhs data.
+    ** In the case of both pointers have the same value, no action is
+    ** performed and a warning is produced.  The unregistration
+    ** process may desallocate data if the target pointer was the only
+    ** access to those data.
+    */
     tracked_ptr& operator=(const tracked_ptr& rhs)
     {
-      invariant_();
-      if (rhs == 0)
-	return *this;
+      invariant(this->proxy_ != 0);
+      precondition(rhs.proxy_ != 0);
+
+      invariant_(); // safety
+
       if (rhs.proxy_ == this->proxy_)
-	return *this;
-      if (this->release_proxy_())
-	delete this->proxy_;
+	{
+	  std::cerr << "warning: nothing done cause both objects share the same data!" << std::endl;
+	  // FIXME: say more
+	  // e.g.: ima1 = ima2; ima2 = ima1;
+	  return *this;
+	}
+
+      if (this->proxy_->unregister_holder(this))
+	{
+	  // the current 'tracked pointer' was the only access to
+	  // some data (this->proxy_->ptr_); data has been
+	  // desallocated, so it goes the same for the proxy:
+	  delete this->proxy_;
+	}
+
       this->proxy_ = rhs.proxy_;
       this->proxy_->register_holder(this);
+
       invariant_();
       return *this;
     }
 
+
+    /*! \brief Assignment operator with rhs being a data pointer.
+    **
+    ** This assignment just changes the pointed data.
+    */
     tracked_ptr& operator=(T* ptr)
     {
-      if (proxy_ != 0)
-	{
-	  assert(proxy_->holders_.size() <= 1);
-	  this->release_proxy_();
-	}
-      else
-	proxy_ = new internal::tracked_ptr_proxy<T>(ptr);
-      this->proxy_->register_holder(this);
+      invariant(this->proxy_ != 0);
+      this->proxy_->set_ptr(ptr);
       return *this;
     }
 
-    // dtor
+
+    // Dtor.
 
     ~tracked_ptr()
     {
-      invariant_();
-      if (release_proxy_())
-	delete proxy_;
-      proxy_ = 0;
-    }
-
-    // dangerous! (?)
-
-    void reset_()
-    {
-      invariant_();
-      if (proxy_ == 0 or proxy_->ptr_ == 0)
-	return;
-      T* ptr = proxy_->ptr_;
-      std::set<const tracked_ptr<T>*>& holders = proxy_->holders_;
-      typename std::set<const tracked_ptr<T>*>::iterator i;
-      for (i = holders.begin(); i != holders.end(); ++i)
+      invariant(this->proxy_ != 0);
+      if (this->proxy_->unregister_holder(this))
 	{
-	  if (*i == this)
-	    continue;
-	  tracked_ptr<T>* holder = const_cast<tracked_ptr<T>*>(*i);
-	  holder->proxy_ = 0;
+	  // the current 'tracked pointer' was the only access to
+	  // some data (this->proxy_->ptr_); data has been
+	  // desallocated, so it goes the same for the proxy:
+	  delete this->proxy_;
 	}
-      delete this->proxy_->ptr_;
-      delete this->proxy_;
-      this->proxy_ = 0;
+      this->proxy_ = 0; // safety
     }
 
 
   private:
 
-    internal::tracked_ptr_proxy<T>* proxy_;
+    /// Only attribute.
 
-    bool release_proxy_()
-    {
-      invariant_();
-      if (proxy_ == 0)
-	return false;
-      return proxy_->unregister_holder(this);
-    }
+    internal::tracked_ptr_proxy<T>* proxy_;
 
     void invariant_() const
     {
@@ -313,8 +399,14 @@ namespace mlc {
 	assert((*i)->proxy_ == this->proxy_);
     }
 
+    friend
+    std::ostream& operator<<(std::ostream& ostr, const tracked_ptr& ptr)
+    {
+      invariant(ptr.proxy_ != 0);
+      return ostr << "tracked_ptr " << &ptr << " --> " << *(ptr.proxy_);
+    }
   };
-
+  
 
 } // end of namespace mlc
 

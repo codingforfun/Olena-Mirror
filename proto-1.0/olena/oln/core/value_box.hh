@@ -30,10 +30,6 @@
 
 # include <ostream>
 
-// for mlc::box<T>:
-
-# include <mlc/box.hh>
-
 # include <oln/core/macros.hh>
 
 // the proper macro:
@@ -91,7 +87,7 @@ namespace oln {
     template <typename V>
     value_box& operator=(const V& value)
     {
-      ima_->set(p_, value);
+      ima_.set(p_, value);
       return *this;
     }
 
@@ -107,7 +103,7 @@ namespace oln {
     template <typename II>
     value_box& operator=(const value_box<II>& rhs)
     {
-      ima_->set(p_, rhs); // automatic conversion from rhs to oln_value_type(I)
+      ima_.set(p_, rhs); // automatic conversion from rhs to oln_value_type(I)
       return *this;
     }
 
@@ -122,7 +118,7 @@ namespace oln {
     template <typename A, typename V>
     value_box& set(void (I::*method)(A), const V& value)
     {
-      ima_->set(p_, method, value);
+      ima_.set(p_, method, value);
       return *this;
     }
 
@@ -137,13 +133,13 @@ namespace oln {
     template <typename V>
     operator const V() const
     {
-      const V value = ima_->get(p_);
+      const V value = ima_.get(p_);
       return value;
     }
 
     operator const oln_value_type(I)() const
     {
-      return ima_->get(p_);
+      return ima_.get(p_);
     }
 
 
@@ -160,7 +156,7 @@ namespace oln {
 
     const oln_value_type(I) value() const
     {
-      return ima_->get(p_);
+      return ima_.get(p_);
     }
 
 
@@ -174,8 +170,8 @@ namespace oln {
 
     /// Ctor (restricted access).
 
-    value_box(I& ima, const oln_point_type(I)& p) :
-      ima_(ima),
+    value_box(abstract::image<I>& ima, const oln_point_type(I)& p) :
+      ima_(ima.exact()),
       p_(p)
     {
     }
@@ -192,7 +188,7 @@ namespace oln {
      ! attributes !
      *------------*/
 
-    mlc::box<I>       ima_;
+    I& ima_;
     oln_point_type(I) p_;
 
   };
@@ -216,9 +212,8 @@ namespace oln {
 
   public:
 
-
-    // FIXME: no operator= was provided here so 'self = self' was possible...
-    // FIXME: below, a single decl has been added; to be tested...
+    /*! \brief Assignment (op=) is declared but undefined.
+    */
 
     template <typename V>
     void operator=(const V&) const;
@@ -232,13 +227,13 @@ namespace oln {
     template <typename V>
     operator const V() const
     {
-      const V value = ima_->get(p_);
+      const V value = ima_.get(p_);
       return value;
     }
 
     operator const oln_value_type(I)() const
     {
-      return ima_->get(p_);
+      return ima_.get(p_);
     }
 
 
@@ -255,7 +250,7 @@ namespace oln {
 
     const oln_value_type(I) value() const
     {
-      return ima_->get(p_);
+      return ima_.get(p_);
     }
 
     // IDEA: provide op->
@@ -270,8 +265,8 @@ namespace oln {
 
     /// Ctor (restricted access).
 
-    value_box(const I& ima, const oln_point_type(I)& p) :
-      ima_(ima),
+    value_box(const abstract::image<I>& ima, const oln_point_type(I)& p) :
+      ima_(ima.exact()),
       p_(p)
     {
     }
@@ -288,7 +283,7 @@ namespace oln {
      ! attributes !
      *------------*/
 
-    mlc::box<const I> ima_;
+    const I& ima_;
     oln_point_type(I) p_;
 
   };
