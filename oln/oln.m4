@@ -536,7 +536,7 @@ AC_DEFUN([AC_CXX_FLAGS],
       _CXXFLAGS_OPTIMIZE="-O3"
       _CXXFLAGS_DEBUG="-g"
       _CXXFLAGS_STRICT="-w2 -Wall"
-      _CXXFLAGS_STRICT_ERRORS="-w2 -Wall -Werror"
+      _CXXFLAGS_STRICT_ERRORS="-w2 -Wall"
       ;;
    esac
 

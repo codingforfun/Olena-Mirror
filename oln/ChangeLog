@@ -1,3 +1,7 @@
+2003-01-22  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln.m4: Change ICC default CXXFLAGS_STRICT_ERRORS.
+
 2003-01-21  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* tests/transforms/fft.cc (CHECK): Correct minor typo.
