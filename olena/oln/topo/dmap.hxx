@@ -28,9 +28,9 @@
 #ifndef OLENA_TOPO_DMAP_HXX
 # define OLENA_TOPO_DMAP_HXX
 
-# include <mlc/array/2d.hh>
-# include <ntg/float.hh>
 # include <oln/arith/ops.hh>
+# include <ntg/float.hh>
+# include <mlc/array/2d.hh>
 
 namespace oln {
 
@@ -43,7 +43,7 @@ namespace oln {
     template <class T>
     chamfer<T>::chamfer(const w_window2d<T>& fwd,
 			const w_window2d<T>& bkd,
-			float		   coef) :
+			float coef) :
       fwd(fwd),
       bkd(bkd),
       coef(coef)
@@ -69,12 +69,12 @@ namespace oln {
       static const w_window2d<int> w_win_bkd = ( mlc::ints_2d =
 					       0, x(),  d10, lbrk,
 					       d11, d10,  d11, end );
-      static const chamfer<int> _ch = chamfer<int>(w_win_fwd, w_win_bkd, coef);
-      return _ch;
+      static const chamfer<int> ch_ = chamfer<int>(w_win_fwd, w_win_bkd, coef);
+      return ch_;
     }
 
     inline // FIXME: how to define float by parameters?
-    const chamfer<float>& mk_chamfer_3x3(float d10, float d11) 
+    const chamfer<float>& mk_chamfer_3x3(float d10, float d11)
       // FIXME: add (?)  , float coef = 1.f
     {
       static const w_window2d<float> w_win_fwd = ( mlc::floats_2d =
@@ -83,9 +83,9 @@ namespace oln {
       static const w_window2d<float> w_win_bkd = ( mlc::floats_2d =
 						 0.f, x(),  d10, lbrk,
 						 d11, d10,  d11, end );
-      static const chamfer<float> _ch = 
+      static const chamfer<float> ch_ =
 	chamfer<float>(w_win_fwd, w_win_bkd, 1.f);
-      return _ch;
+      return ch_;
     }
 
     template<int d10, int d11, int d21> inline
@@ -99,8 +99,8 @@ namespace oln {
 					       0,   0, x(), d10,   0, lbrk,
 					       d21, d11, d10, d11, d21,
 					       0, d21,   0, d21,   0, end );
-      static const chamfer<int> _ch = chamfer<int>(w_win_fwd, w_win_bkd, coef);
-      return _ch;
+      static const chamfer<int> ch_ = chamfer<int>(w_win_fwd, w_win_bkd, coef);
+      return ch_;
     }
 
     inline
@@ -115,9 +115,9 @@ namespace oln {
 						 O,   O, x(), d10,   O, lbrk,
 						 d21, d11, d10, d11, d21,
 						 O, d21,   O, d21,   O, end );
-      static const chamfer<float> _ch = 
+      static const chamfer<float> ch_ =
 	chamfer<float>(w_win_fwd, w_win_bkd, 1.f);
-      return _ch;
+      return ch_;
     }
 
     // REF: B.J.H. Verwer, Local distances for distance transformations
@@ -146,14 +146,14 @@ namespace oln {
     CHAMFER2(chamfer,  5,   7,  3, 5.2474);
     CHAMFER2(chamfer, 12,  17,  3, 12.6684);
 
-    inline const chamfer<int>& chessboard()    
-    { 
-      return chamfer_1_1(); 
+    inline const chamfer<int>& chessboard()
+    {
+      return chamfer_1_1();
     }
 
-    inline const chamfer<int>& cityblock()     
-    { 
-      return chamfer_1_2(); 
+    inline const chamfer<int>& cityblock()
+    {
+      return chamfer_1_2();
     }
 
     CHAMFER3(chamfer, 4,  6, 9, 5, 4.1203);
@@ -161,9 +161,9 @@ namespace oln {
     CHAMFER3(chamfer, 9,  13, 20, 5, 9.1409);
     CHAMFER3(chamfer, 16, 23, 36, 5, 16.3351);
 
-    inline const chamfer<float>& best_set_3x3() 
+    inline const chamfer<float>& best_set_3x3()
     { return mk_chamfer_3x3(0.9481, 1.3408); }
-    inline const chamfer<float>& best_set_5x5() 
+    inline const chamfer<float>& best_set_5x5()
     { return mk_chamfer_5x5(0.9801, 1.4060, 2.2044); }
 
 
@@ -198,131 +198,129 @@ namespace oln {
     template <class T, class T2>
     dmap<T, T2>::dmap(const image2d_size&  size,
 		      const chamfer<T2>& ch) :
-      _imap(size),
-      _ch(ch)
+      imap_(size),
+      ch_(ch)
     {
       // FIXME: if T is float then precondition(ch.coef == 1.f)
     }
 
     template <class T, class T2>
     template <class V>
-    void dmap<T, T2>::compute(const image2d<V>&   input, 
+    void dmap<T, T2>::compute(const image2d<V>&   input,
 			      float		  infty)
     {
-      image2d<point> dummy;
+      image2d<point_type> dummy(input.size());
       compute(input, dummy, infty);
     }
 
     template <class T, class T2>
     template <class V>
-    void dmap<T, T2>::compute(const image2d<V>&     input, 
-			      image2d<point>&       nearest_point_map,
+    void dmap<T, T2>::compute(const image2d<V>&     input,
+			      image2d<point_type>&  nearest_point_map,
 			      float		    infty)
     {
-      precondition(input.size() == _imap.size());
+      imap_(0,0) = T(0);
+      precondition(input.size() == imap_.size());
       if (infty == 0.f)
 	{
-	  _inFty = 1e4;
-	  _infTy = 1e4; // FIXME: !!!
+	  inFty_ = ntg_max_val(T);
+	  infTy_ = ntg_max_val(T);
 	}
       else
 	{
-	  _inFty = infty;
-	  _infTy = T(infty); // FIXME: use ceil if T is integer!
+	  inFty_ = infty;
+	  infTy_ = T(infty); // FIXME: use ceil if T is integer!
 	}
-
       // init
       {
-	typename image2d<V>::iter p(input);
+	typename image2d<V>::iter_type p(input);
 	for (p = begin; p != end; ++p)
-	  if (input[p] != ntg_zero_val(T))
+	  if (input[p] != ntg_zero_val(V))
 	    {
-	      _imap[p] = T(0);
+	      imap_[p] = T(0);
 	      nearest_point_map[p] = p;
 	    }
 	  else
-	    _imap[p] = _infTy;
-	border::adapt_copy(_imap, _ch.delta()); // FIXME: this is geodesic only!
+	    imap_[p] = infTy_;
+	imap_.border_adapt_copy(ch_.delta()); // FIXME: this is geodesic only!
       }
-
       // fwd
       {
-	typename image2d<V>::fwd_iter p(input);
+	typename image2d<V>::fwd_iter_type p(input);
 	for (p = begin; p != end; ++p)
 	  {
-	    if (_imap[p] == T(0))
+	    if (imap_[p] == T(0))
 	      continue;
-	    T min = _imap[p];
-	    for (unsigned i = 0; i < _ch.fwd.card(); ++i)
+	    T min = imap_[p];
+	    for (unsigned i = 0; i < ch_.fwd.card(); ++i)
 	      {
-		point q = p + _ch.fwd.dp(i);
-		if (_imap[q] == _infTy) // FIXME: || _imap[q] >= min
+		point_type q = p + ch_.fwd.dp(i);
+		if (imap_[q] == infTy_) // FIXME: || imap_[q] >= min
 		  continue;
-		if (_imap[q] + _ch.fwd.w(i) < min)
-		  {
-		    nearest_point_map[p] = nearest_point_map[q];		    
-		    min = _imap[q] + _ch.fwd.w(i);
-		  }
-	      }
-	    _imap[p] = min;
-	  }
-      }
-
-      // bkd
-      {
-	typename image2d<V>::bkd_iter p(input);
-	for_all(p)
-	  {
-	    if (_imap[p] == T(0))
-	      continue;
-	    T min = _imap[p];
-	    for (unsigned i = 0; i < _ch.bkd.card(); ++i)
-	      {
-		point q = p + _ch.bkd.dp(i);
-		if (_imap[q] == _infTy) // FIXME: || _imap[q] >= min
-		  continue;
-		if (_imap[q] + _ch.bkd.w(i) < min)
+		if (imap_[q] + ch_.fwd.w(i) < min)
 		  {
 		    nearest_point_map[p] = nearest_point_map[q];
-		    min = _imap[q] + _ch.bkd.w(i);
+		    min = imap_[q] + ch_.fwd.w(i);
 		  }
 	      }
-	    _imap[p] = min;
+	    imap_[p] = min;
+	  }
+      }
+      // bkd
+      {
+	typename image2d<V>::bkd_iter_type p(input);
+	for_all(p)
+	  {
+	    if (imap_[p] == T(0))
+	      continue;
+	    T min = imap_[p];
+	    for (unsigned i = 0; i < ch_.bkd.card(); ++i)
+	      {
+		point_type q = p + ch_.bkd.dp(i);
+		if (imap_[q] == infTy_) // FIXME: || imap_[q] >= min
+		  continue;
+		if (imap_[q] + ch_.bkd.w(i) < min)
+		  {
+		    nearest_point_map[p] = nearest_point_map[q];
+		    min = imap_[q] + ch_.bkd.w(i);
+		  }
+	      }
+	    imap_[p] = min;
 	  }
       }
     }
 
     template <class T, class T2>
-    const image2d<T>& dmap<T, T2>::imap() const 
-    { 
-      return _imap; 
+    const image2d<T>& dmap<T, T2>::imap() const
+    {
+      return imap_;
     }
 
     template <class T, class T2>
     image2d<float> dmap<T, T2>::to_image() const
     {
-      // FIXME: if T is float, call invariant(_ch.coef == 1.f);
+      // FIXME: if T is float, call invariant(ch_.coef == 1.f);
       // and then return imap();
-      // otherwise: 	return arith::div(_imap, _ch.coef);
-      image2d<float> output(_imap.size());
-      typename image2d<float>::iter p(_imap);
+      // otherwise: 	return arith::div(imap_, ch_.coef);
+      image2d<float> output(imap_.size());
+      typename image2d<float>::iter_type p(imap_);
       for_all(p)
-	output[p] = (_imap[p] == _infTy ?
-		     _inFty :
-		     _imap[p] / _ch.coef);
+	output[p] = (imap_[p] == infTy_ ?
+		     inFty_ :
+		     imap_[p] / ch_.coef);
       return output;
     }
 
     template <class T, class T2>
-    const T& dmap<T, T2>::operator[](const point& p) const
+    const T& dmap<T, T2>::operator[](const point_type& p) const
     {
-      return _imap[p] / _ch.coef;
+      return imap_[p] / ch_.coef;
     }
 
     template <class T, class T2>
     const T& dmap<T, T2>::operator()(coord row, coord col) const
     {
-      return _imap(row, col) / _ch.coef;
+      return imap_(row, col) / ch_.coef;
     }
 
     inline float euclidian_dist2(const point2d& p1, const point2d& p2)
@@ -333,11 +331,10 @@ namespace oln {
     }
 
     template <class I_>
-    image2d<float> exact_dmap(const image<I_>& _input)
+    image2d<float> exact_dmap(const abstract::image<I_>& _input)
     {
-      Exact_cref(I, input);
       image2d<float> output(input.size());
-      image2d<float>::fwd_iter p(input);
+      image2d<float>::fwd_iter_type p(input);
       for_all(p)
 	{
 	  if (input[p] == true)
@@ -345,7 +342,7 @@ namespace oln {
 	      output[p] = 0.f;
 	      continue;
 	    }
-	  image2d<float>::fwd_iter q(input);
+	  image2d<float>::fwd_iter_type q(input);
 	  bool found = false;
 	  float d = 0.f;
 	  for_all(q)

@@ -1,5 +1,5 @@
+#include <ntg/int.hh>
 #include <oln/basics2d.hh>
-#include <ntg/all.hh>
 #include <oln/topo/inter-pixel/inter-pixel.hh>
 
 #include <iostream>
@@ -11,6 +11,14 @@ using namespace oln;
 using namespace ntg;
 using namespace topo::inter_pixel;
 
+#define OK_OR_FAIL				\
+      std::cout << "OK" << std::endl;		\
+    else					\
+      {						\
+	std::cout << "FAIL" << std::endl;	\
+	fail = true;				\
+      }
+
 bool
 check()
 {
@@ -18,12 +26,10 @@ check()
 
   image2d<int_u8> src = load(rdata("test-cmap.pgm"));
 
-  std::cerr << "building inter-pixel representation ... " << std::endl;
+  std::cout << "building inter-pixel representation...";
   interpixel< image2d<int_u8> > ip(src);
 
-  std::cerr << ip << std::endl;
-
-  std::cerr << "OK" << std::endl;
+  std::cout << "OK" << std::endl;
 
   return fail;
 }
