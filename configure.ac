@@ -205,11 +205,7 @@ OLN_COLLECTION([OLN_TOP],
 
       AC_SUBST([MLC_TESTS_SUBDIRS])
 
-    ], [])dnl End of OLN_COMPONENT([metalic/tests])
-    # FIXME:
-    # No directory specified here, as we always need to go inside metalic/tests.
-    # Indeed, common testing tools may have to be compiled even if
-    # metalic testsuite was disabled.
+    ], [tests])dnl End of OLN_COMPONENT([metalic/tests])
 
   ])dnl End of OLN_COLLECTION([MLC_SRC])
 
