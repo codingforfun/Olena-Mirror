@@ -1,3 +1,7 @@
+2004-03-19  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* ntg/core/macros.hh: Add ntg_nbits macro.
+
 2004-03-19  Niels Van Vliet  <niels@lrde.epita.fr>
 
 	* integre/ntg/core/pred_succ.hh: Add file.

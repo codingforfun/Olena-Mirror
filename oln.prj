@@ -1,133 +1,1033 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 97)
-(Parent-Version oln 10 94)
-(Version-Log "Index: olena/ChangeLog
+(Project-Version oln 10 98)
+(Parent-Version oln 10 97)
+(Version-Log "Index: integre/ChangeLog
 from  Giovanni Palma  <giovanni@lrde.epita.fr>
 
-	* oln/convol/fast_gaussian.hh: Correct comments.
-	* oln/io/se_window.hh: Likewise.
-	* oln/transforms/dwt.hh: Likewise.
-	* oln/transforms/fft.hh: Likewise.
+	* ntg/core/macros.hh: Add ntg_nbits macro.
 
-Index: olena/oln/convol/fast_gaussian.hh
---- olena/oln/convol/fast_gaussian.hh Mon, 15 Mar 2004 17:40:54 +0100 van-vl_n (oln/26_fast_gauss 1.6.1.6.1.6 640)
-+++ olena/oln/convol/fast_gaussian.hh Wed, 17 Mar 2004 11:35:39 +0100 palma_g (oln/26_fast_gauss 1.6.1.6.1.6 640)
-@@ -32,11 +32,12 @@
- # include <oln/convert/basics.hh>
- # include <ntg/float.hh>
- # include <oln/core/behavior.hh>
--//
--// Gaussian filter implementation from
--// \"Recursively implementing the gaussian and its derivatives\"
--// Deriche 93 INRIA REPORT
--//
-+/*!
-+** \\file olena/oln/convol/fast_gaussian.hh
-+** Gaussian filter implementation from
-+** \"Recursively implementing the gaussian and its derivatives\"
-+** Deriche 93 INRIA REPORT.
-+*/
+Index: olena/ChangeLog
+from  Giovanni Palma  <giovanni@lrde.epita.fr>
+	* oln/utils/buffer.hxx:  Add file.
+	* oln/utils/buffer.hh: Likewise.
+	* oln/utils/key.hh: Likewise.
+	* oln/utils/key.hxx: Likewise.
+	* oln/utils/md5.hh: Likewise.
+	* oln/utils/md5.hxx: Likewise.
+
++2004-03-19  Giovanni Palma  <giovanni@lrde.epita.fr>
++
+ 	* oln/convol/fast_gaussian.hh: Correct comments.
+ 	* oln/io/se_window.hh: Likewise.
+ 	* oln/transforms/dwt.hh: Likewise.
+Index: integre/ntg/core/macros.hh
+--- integre/ntg/core/macros.hh Sat, 03 Jan 2004 17:25:53 +0100 burrus_n (oln/s/19_macros.hh 1.9 640)
++++ integre/ntg/core/macros.hh Fri, 19 Mar 2004 15:03:05 +0100 palma_g (oln/s/19_macros.hh 1.9 640)
+@@ -154,4 +154,10 @@
+ // FIXME: reimplement when variadic macros will be allowed.
+ # define ntg_get_value_type(T, E) ntg::type_traits<T>::build_value_type<E>
  
- namespace oln {
-   namespace convol {
-@@ -122,7 +123,7 @@
- 
-       /* Same functions, with a default conversion.  */
- 
--      /*
++
++/* ----.
++| Misc |
++`-----*/
++#define ntg_nbits(T)		ntg::internal::typetraits<T>::size
++
+ #endif // !NTG_CORE_MACROS_HH
+Index: olena/oln/utils/buffer.hxx
+--- olena/oln/utils/buffer.hxx Fri, 19 Mar 2004 15:52:00 +0100 palma_g ()
++++ olena/oln/utils/buffer.hxx Fri, 19 Mar 2004 15:48:04 +0100 palma_g (oln/k/9_buffer.hxx  644)
+@@ -0,0 +1,167 @@
++// Copyright (C) 2004  EPITA Research and Development Laboratory
++//
++// This  file is  part of  the Olena  Library.  This  library  is free
++// software; you can redistribute it  and/or modify it under the terms
++// of the  GNU General  Public License version  2 as published  by the
++// Free Software Foundation.
++//
++// This library is distributed in the hope that it will be useful, but
++// WITHOUT  ANY  WARRANTY;  without   even  the  implied  warranty  of
++// MERCHANTABILITY or  FITNESS FOR A PARTICULAR PURPOSE.   See the GNU
++// General Public License for more details.
++//
++// You should have  received a copy of the  GNU General Public License
++// along with  this library; see the  file COPYING.  If  not, write to
++// the Free Software Foundation, 59  Temple Place - Suite 330, Boston,
++// MA 02111-1307, USA.
++//
++// As a  special exception, you  may use this  file as part of  a free
++// software library without restriction.  Specifically, if other files
++// instantiate templates  or use macros or inline  functions from this
++// file, or  you compile  this file  and link it  with other  files to
++// produce  an executable,  this file  does  not by  itself cause  the
++// resulting  executable  to be  covered  by  the  GNU General  Public
++// License.   This exception  does  not however  invalidate any  other
++// reasons why the executable file might be covered by the GNU General
++// Public License.
++
++#ifndef OLENA_OLN_UTILS_BUFFER_HXX
++# define OLENA_OLN_UTILS_BUFFER_HXX
++
++// Ctor implementation
++inline
++buffer::buffer(): current_bit_(0),
++		  data_(),
++		  len1_(ntg_zero_val(value_type)),
++		  len2_(ntg_zero_val(value_type)),
++		  padding_appended_(false),
++		  length_appended_(false)
++{
++  data_.reserve(length_);
++  data_.push_back(ntg_zero_val(value_type));
++};
++
++// add implementation
++template <class E>
++inline
++void buffer::add(const E &e, bool count)
++{
++  ntg_storage_type(E)	mask = 1 << (ntg_nbits(E) - 1);
++  ntg_storage_type(E) e_cast = e;
++
++  while (mask)
++    {
++      push_back(e_cast & mask, !count);
++      mask >>= 1;
++    }
++};
++
++// push_back implementation
++inline
++void buffer::push_back(bool bit, bool is_padding)
++{
++  precondition(current_bit_ < 32);
++
++  current_bit_ += 1;
++  data_.back() *= 2;
++  if (bit)
++    data_.back() += ntg_unit_val(value_type);
++  if (current_bit_ == 32)
++    {
++      if (data_.size() == data_.capacity())
++	data_.reserve(data_.capacity() + length_);
++      current_bit_ = 0;
++      data_.push_back(ntg_zero_val(value_type));
++    }
++  if (!is_padding)
++    {
++      if (len1_ == ntg_max_val(value_type))
++	{
++	  if (len2_ == ntg_max_val(value_type))
++	    len2_ = ntg_unit_val(value_type);
++	  else
++	    len2_ += ntg_unit_val(value_type);
++	}
++      len1_ += ntg_unit_val(value_type);
++    }
++}
++
++// reorder implementation
++inline
++buffer::value_type buffer::reorder(value_type x) const
++{
++  ntg_storage_type_(value_type)	r = 0;
++  ntg_storage_type_(value_type)	mask = 0xFF;
++
++  for (unsigned i = 0; i < (sizeof(ntg_storage_type_(value_type))); ++i)
++    {
++      r <<= 8;
++      r |= (mask & ntg_storage_type_(value_type)(x)) >> (i * 8);
++      mask <<= 8;
++    }
++  return r;
++}
++
++// [] operator implementation
++inline
++ntg::int_u32 buffer::operator[] (unsigned n) const
++{
++  precondition(n < data_.size());
++
++  return reorder(data_[n]);
++};
++
++// append padding implementation
++inline
++void buffer::append_padding()
++{
++  push_back(true, true);
++  while (((data_.size() * 32) % 512) != 448)
++    push_back(false, true);
++  padding_appended_ = true;
++};
++
++// append_length implementation
++inline
++void buffer::append_length()
++{
++  precondition(padding_appended_);
++
++  add(reorder(len2_), false);
++  add(reorder(len1_), false);
++  std::cout << len2_ << len1_<< std::endl;
++  std::cout << (*this)[data_.size()-2] << (*this)[data_.size()-1] << std::endl;
++  std::cout << data_.size() - 1<< std::endl;
++  std::cout << (*this)[14]<< std::endl;
++  length_appended_ = true;
++};
++
++// size implementation.
++inline
++unsigned buffer::size() const
++{
++  return data_.size();
++};
++
++// bit len implementation.
++inline
++unsigned buffer::bit_len() const
++{
++  return data_.size() * 32;
++}
++
++// is_append_padding implementation.
++inline
++bool buffer::is_append_padding() const
++{
++  return padding_appended_;
++}
++
++// is append_length implementation.
++inline
++bool buffer::is_append_length() const
++{
++  return length_appended_;
++}
++
++#endif // !OLENA_OLN_UTILS_BUFFER_HXX
+Index: olena/oln/utils/buffer.hh
+--- olena/oln/utils/buffer.hh Fri, 19 Mar 2004 15:52:00 +0100 palma_g ()
++++ olena/oln/utils/buffer.hh Fri, 19 Mar 2004 15:47:36 +0100 palma_g (oln/k/10_buffer.hh  644)
+@@ -0,0 +1,125 @@
++// Copyright (C) 2004  EPITA Research and Development Laboratory
++//
++// This  file is  part of  the Olena  Library.  This  library  is free
++// software; you can redistribute it  and/or modify it under the terms
++// of the  GNU General  Public License version  2 as published  by the
++// Free Software Foundation.
++//
++// This library is distributed in the hope that it will be useful, but
++// WITHOUT  ANY  WARRANTY;  without   even  the  implied  warranty  of
++// MERCHANTABILITY or  FITNESS FOR A PARTICULAR PURPOSE.   See the GNU
++// General Public License for more details.
++//
++// You should have  received a copy of the  GNU General Public License
++// along with  this library; see the  file COPYING.  If  not, write to
++// the Free Software Foundation, 59  Temple Place - Suite 330, Boston,
++// MA 02111-1307, USA.
++//
++// As a  special exception, you  may use this  file as part of  a free
++// software library without restriction.  Specifically, if other files
++// instantiate templates  or use macros or inline  functions from this
++// file, or  you compile  this file  and link it  with other  files to
++// produce  an executable,  this file  does  not by  itself cause  the
++// resulting  executable  to be  covered  by  the  GNU General  Public
++// License.   This exception  does  not however  invalidate any  other
++// reasons why the executable file might be covered by the GNU General
++// Public License.
++
++
++#ifndef OLENA_OLN_UTILS_BUFFER_HH
++# define OLENA_OLN_UTILS_BUFFER_HH
++
++
++namespace oln {
++  namespace utils {
++    /*!
++    ** \\brief Buffer used for MD5 data type abstraction.
++    */
++    class buffer
++    {
++    public:
++      typedef ntg::int_u32		value_type; ///< Used data type.
++
 +      /*!
-       ** \\brief Gaussian filter with a default conversion.
-       **
-       ** Gaussian filter implementation from \"Recursively implementing
-Index: olena/oln/io/se_window.hh
---- olena/oln/io/se_window.hh Mon, 15 Mar 2004 19:40:09 +0100 odou_s (oln/i/46_se_window. 1.15 640)
-+++ olena/oln/io/se_window.hh Tue, 16 Mar 2004 12:38:47 +0100 palma_g (oln/i/46_se_window. 1.15 640)
-@@ -46,7 +46,7 @@
- 
-     namespace internal {
- 
--      ///< \\todo FIXME: this code should be factorized.
-+      /// \\todo FIXME: this code should be factorized.
- 
-       /*!
-       ** \\brief Read a window (1 dimension) from a file.
-Index: olena/oln/transforms/dwt.hh
---- olena/oln/transforms/dwt.hh Tue, 16 Mar 2004 12:11:53 +0100 palma_g (oln/i/35_dwt.hh 1.2.1.4.1.11 640)
-+++ olena/oln/transforms/dwt.hh Tue, 16 Mar 2004 15:24:31 +0100 palma_g (oln/i/35_dwt.hh 1.2.1.4.1.11 640)
-@@ -95,15 +95,15 @@
-     public:
- 
-       // accessors
--      /// \\brief Accessor to ith element of g.
-+      /// Accessor to ith element of g.
-       const value_t getG(unsigned i) const { return g[i]; }
--      /// \\brief Accessor to ith element of ig.
-+      /// Accessor to ith element of ig.
-       const value_t getInvG(unsigned i) const { return ig[i]; }
--      /// \\brief Accessor to ith element of h.
-+      /// Accessor to ith element of h.
-       const value_t getH(unsigned i) const { return h[i]; }
--      /// \\brief Accessor to ith element of ih.
-+      /// Accessor to ith element of ih.
-       const value_t getInvH(unsigned i) const { return ih[i]; }
--      /// \\brief Give the size of the arrays.
-+      /// Give the size of the arrays.
-       const unsigned size() const { return size_; }
- 
-     protected:
-@@ -139,14 +139,14 @@
- 	mlc::is_false<N % 2>::ensure();
-       }
- 
--      mlc::array1d< mlc::array1d_info<N>, value_t>	h; /// \\brief array of value_t.
--      mlc::internal::array1d_start_<value_t>		wc_start; /// \\brief First coefficient.
-+      mlc::array1d< mlc::array1d_info<N>, value_t>	h; ///< array of value_t.
-+      mlc::internal::array1d_start_<value_t>		wc_start; ///< First coefficient.
- 
-     private:
- 
--      value_t	g[N]; /// \\brief array of value_t.
--      value_t	ih[N]; /// \\brief array of value_t.
--      value_t	ig[N]; /// \\brief array of value_t.
-+      value_t	g[N]; ///< Array of value_t.
-+      value_t	ih[N]; ///< Array of value_t.
-+      value_t	ig[N]; /// Array of value_t.
-       enum {
- 	size_ = N
-       };
-@@ -474,10 +474,10 @@
-     {
-     public:
- 
--      typedef I						original_im_t; ///< \\brief Exact of the image.
--      typedef oln_value_type(I)				original_im_value_t; ///< \\brief Original data type of the image.
--      typedef typename mute<I, ntg::float_d>::ret	trans_im_t; ///< \\brief Type of the transformed image.
--      typedef typename K::self_t			coeffs_t; ///< \\brief Data type of coefficients.
-+      typedef I						original_im_t; ///< Exact of the image.
-+      typedef oln_value_type(I)				original_im_value_t; ///< Original data type of the image.
-+      typedef typename mute<I, ntg::float_d>::ret	trans_im_t; ///< Type of the transformed image.
-+      typedef typename K::self_t			coeffs_t; ///< Data type of coefficients.
- 
-       /*!
-       ** \\brief Constructor from an image.
-Index: olena/oln/transforms/fft.hh
---- olena/oln/transforms/fft.hh Tue, 16 Mar 2004 12:11:53 +0100 palma_g (oln/i/36_fft.hh 1.4.1.9 640)
-+++ olena/oln/transforms/fft.hh Tue, 16 Mar 2004 15:25:00 +0100 palma_g (oln/i/36_fft.hh 1.4.1.9 640)
-@@ -46,7 +46,7 @@
- 
-   namespace internal {
- 
--    /// \\brief dispatch traits for fftw
-+    /// Dispatch traits for fftw
-     enum fft_dispatch { fft_cplx, fft_real };
- 
-     /*!
++      ** \\brief Initialization of data.
++      */
++      buffer();
++
++      /*!
++      ** \\brief Add every bits of e in data.
++      **
++      ** \\arg e Element to work on.
++      ** \\arg count Tell if you want to count e size in the buffer size.
++      */
++      template <class E>
++      void add(const E &e, bool count = true);
++
++      /*!
++      ** \\brief Push back a bit at the end of the buffer.
++      **
++      ** true -> push back a 1\\n
++      ** false -> push back a 0\\n
++      **
++      ** \\arg bit Bit to push.
++      ** \\arg is_padding Are you adding padding bytes ?
++      */
++      void push_back(bool bit, bool is_padding = false);
++
++      /*!
++      ** \\brief Return the nth word.
++      */
++      ntg::int_u32 operator[] (unsigned n) const;
++
++      /*!
++      ** \\brief Append padding bits.
++      */
++      void append_padding();
++
++      /*!
++      ** \\brief Append length.
++      */
++      void append_length();
++
++      /*!
++      ** \\brief Return the number of words.
++      */
++      unsigned size() const;
++
++      /*!
++      ** \\brief Return the length in bits.
++      */
++      unsigned bit_len() const;
++
++      /*!
++      ** \\brief Tell if the buffer has already been padded.
++      */
++      bool is_append_padding() const;
++
++      /*!
++      ** \\brief Tell if the length has already been appended.
++      */
++      bool is_append_length() const;
++
++    protected:
++      /*!
++      ** \\brief Change order of data in a word.
++      **
++      ** \\arg x Data to reorder.
++      */
++      value_type reorder(value_type x) const;
++
++      static const unsigned		length_ = 100; ///< Capacity chunk.
++      /// Number of the current bit in the current word.
++      unsigned char			current_bit_;
++      std::vector<value_type>	data_; ///< The buffer data.
++      value_type			len1_; ///< first word length
++      value_type			len2_; ///< second word length
++      bool				padding_appended_; ///< Status of padding.
++      bool				length_appended_; ///< Status of length appending.
++    };
++
++# include <oln/utils/buffer.hxx>
++
++  } // !utils
++} // !oln
++#endif // !OLENA_OLN_UTILS_BUFFER_HH
+Index: olena/oln/utils/key.hxx
+--- olena/oln/utils/key.hxx Fri, 19 Mar 2004 15:52:00 +0100 palma_g ()
++++ olena/oln/utils/key.hxx Fri, 19 Mar 2004 15:45:46 +0100 palma_g (oln/k/11_key.hxx  644)
+@@ -0,0 +1,72 @@
++// Copyright (C) 2004  EPITA Research and Development Laboratory
++//
++// This  file is  part of  the Olena  Library.  This  library  is free
++// software; you can redistribute it  and/or modify it under the terms
++// of the  GNU General  Public License version  2 as published  by the
++// Free Software Foundation.
++//
++// This library is distributed in the hope that it will be useful, but
++// WITHOUT  ANY  WARRANTY;  without   even  the  implied  warranty  of
++// MERCHANTABILITY or  FITNESS FOR A PARTICULAR PURPOSE.   See the GNU
++// General Public License for more details.
++//
++// You should have  received a copy of the  GNU General Public License
++// along with  this library; see the  file COPYING.  If  not, write to
++// the Free Software Foundation, 59  Temple Place - Suite 330, Boston,
++// MA 02111-1307, USA.
++//
++// As a  special exception, you  may use this  file as part of  a free
++// software library without restriction.  Specifically, if other files
++// instantiate templates  or use macros or inline  functions from this
++// file, or  you compile  this file  and link it  with other  files to
++// produce  an executable,  this file  does  not by  itself cause  the
++// resulting  executable  to be  covered  by  the  GNU General  Public
++// License.   This exception  does  not however  invalidate any  other
++// reasons why the executable file might be covered by the GNU General
++// Public License.
++
++#ifndef OLENA_OLN_UTILS_KEY_HXX
++# define OLENA_OLN_UTILS_KEY_HXX
++
++// Ctor implementation.
++inline
++key::key(const std::vector<value_type> &data)
++{
++  for (unsigned i = 0; i < 16; ++i)
++    data_[i] = data[i];
++}
++
++// [] operator implementation
++inline
++key::value_type &key::operator[](unsigned i)
++{
++  precondition(i < 16);
++  return data_[i];
++};
++
++// [] operator
++inline
++const key::value_type &key::operator[](unsigned i) const
++{
++  precondition(i < 16);
++  return data_[i];
++};
++
++// == operator
++inline
++bool key::operator ==(const key &k)
++{
++  for (unsigned i = 0; i < 16; ++i)
++    if (data_[i] != k[i])
++      return false;
++  return true;
++}
++
++// != operator
++inline
++bool key::operator !=(const key &k)
++{
++  return !(*this == k);
++}
++
++#endif // !OLENA_OLN_UTILS_KEY_HXX
+Index: olena/oln/utils/key.hh
+--- olena/oln/utils/key.hh Fri, 19 Mar 2004 15:52:00 +0100 palma_g ()
++++ olena/oln/utils/key.hh Fri, 19 Mar 2004 15:35:37 +0100 palma_g (oln/k/12_key.hh  644)
+@@ -0,0 +1,112 @@
++// Copyright (C) 2004  EPITA Research and Development Laboratory
++//
++// This  file is  part of  the Olena  Library.  This  library  is free
++// software; you can redistribute it  and/or modify it under the terms
++// of the  GNU General  Public License version  2 as published  by the
++// Free Software Foundation.
++//
++// This library is distributed in the hope that it will be useful, but
++// WITHOUT  ANY  WARRANTY;  without   even  the  implied  warranty  of
++// MERCHANTABILITY or  FITNESS FOR A PARTICULAR PURPOSE.   See the GNU
++// General Public License for more details.
++//
++// You should have  received a copy of the  GNU General Public License
++// along with  this library; see the  file COPYING.  If  not, write to
++// the Free Software Foundation, 59  Temple Place - Suite 330, Boston,
++// MA 02111-1307, USA.
++//
++// As a  special exception, you  may use this  file as part of  a free
++// software library without restriction.  Specifically, if other files
++// instantiate templates  or use macros or inline  functions from this
++// file, or  you compile  this file  and link it  with other  files to
++// produce  an executable,  this file  does  not by  itself cause  the
++// resulting  executable  to be  covered  by  the  GNU General  Public
++// License.   This exception  does  not however  invalidate any  other
++// reasons why the executable file might be covered by the GNU General
++// Public License.
++
++#ifndef OLENA_OLN_UTILS_KEY_HH
++# define OLENA_OLN_UTILS_KEY_HH
++# include <ntg/all.hh>
++# include <vector>
++# include <iostream>
++
++namespace oln {
++  namespace utils {
++    /*!
++    ** \\brief 16 bytes key
++    **
++    ** Object to have a nice representation of a MD5 result.
++    */
++    class key
++    {
++    public:
++      typedef ntg::int_u8	value_type; ///< Used data type.
++
++      /*!
++      ** \\brief Constructor used to initialize the key.
++      **
++      ** \\pre There must at least 16 elements in data.
++      ** \\arg data Inuput data.
++      */
++      explicit key(const std::vector<value_type> &data);
++
++      /*!
++      ** \\brief [] operator.
++      **
++      ** \\return the ith byte of the key.
++      **
++      ** \\arg i Index of the byte wanted.
++      **
++      ** This is the non const version of the operator.
++      */
++      value_type &operator[](unsigned i);
++
++      /*!
++      ** \\brief [] operator.
++      **
++      ** \\return the ith byte of the key.
++      **
++      ** \\arg i Index of the byte wanted.
++      **
++      ** This is the const version of the operator.
++      */
++      const value_type &operator[](unsigned i) const;
++
++      /*!
++      ** \\brief Check equality between two keys.
++      **
++      ** \\arg k Key to be compared with.
++      */
++      bool operator ==(const key &k);
++
++      /*!
++      ** \\brief Check whether two key are different.
++      **
++      ** \\arg k Key to be compared with.
++      */
++      bool operator !=(const key &k);
++
++      /*!
++      ** \\brief Write of representation of the key on a stream.
++      **
++      ** stream Stream to put the key on.
++      ** k Key to represent.
++      */
++      friend std::ostream &operator<<(std::ostream &stream, const key &k)
++      {
++	for (unsigned i = 0; i < 16; ++i)
++	  stream << std::hex << k[i];
++	return stream;
++      }
++
++
++    protected:
++      value_type	data_[16]; ///< Internal data.
++    };
++
++# include <oln/utils/key.hxx>
++
++  } // !utils
++} // !oln
++#endif // !OLENA_OLN_UTILS_KEY_HH
+Index: olena/oln/utils/md5.hxx
+--- olena/oln/utils/md5.hxx Fri, 19 Mar 2004 15:52:00 +0100 palma_g ()
++++ olena/oln/utils/md5.hxx Fri, 19 Mar 2004 15:35:26 +0100 palma_g (oln/k/13_md5.hxx  644)
+@@ -0,0 +1,284 @@
++// Copyright (C) 2004  EPITA Research and Development Laboratory
++//
++// This  file is  part of  the Olena  Library.  This  library  is free
++// software; you can redistribute it  and/or modify it under the terms
++// of the  GNU General  Public License version  2 as published  by the
++// Free Software Foundation.
++//
++// This library is distributed in the hope that it will be useful, but
++// WITHOUT  ANY  WARRANTY;  without   even  the  implied  warranty  of
++// MERCHANTABILITY or  FITNESS FOR A PARTICULAR PURPOSE.   See the GNU
++// General Public License for more details.
++//
++// You should have  received a copy of the  GNU General Public License
++// along with  this library; see the  file COPYING.  If  not, write to
++// the Free Software Foundation, 59  Temple Place - Suite 330, Boston,
++// MA 02111-1307, USA.
++//
++// As a  special exception, you  may use this  file as part of  a free
++// software library without restriction.  Specifically, if other files
++// instantiate templates  or use macros or inline  functions from this
++// file, or  you compile  this file  and link it  with other  files to
++// produce  an executable,  this file  does  not by  itself cause  the
++// resulting  executable  to be  covered  by  the  GNU General  Public
++// License.   This exception  does  not however  invalidate any  other
++// reasons why the executable file might be covered by the GNU General
++// Public License.
++
++#ifndef OLENA_OLN_UTILS_MD5_HXX
++# define OLENA_OLN_UTILS_MD5_HXX
++
++// Ctor.
++inline
++MD5::MD5(buffer b): buffer_(b),
++		    X(16),
++		    T(),
++		    current_(0),
++		    a(0x67452301),
++		    b(0xefcdab89),
++		    c(0x98badcfe),
++		    d(0x10325476)
++  // 		 a(0x01234567),
++  // 		 b(0x89abcdef),
++  // 		 c(0xfedcba98),
++  // 		 d(0x76543210)
++{
++  precondition(buffer_.is_append_padding());
++  precondition(buffer_.is_append_length());
++  T.reserve(64);
++  T.push_back(0xd76aa478); /* 1 */
++  T.push_back(0xe8c7b756); /* 2 */
++  T.push_back(0x242070db); /* 3 */
++  T.push_back(0xc1bdceee); /* 4 */
++  T.push_back(0xf57c0faf); /* 5 */
++  T.push_back(0x4787c62a); /* 6 */
++  T.push_back(0xa8304613); /* 7 */
++  T.push_back(0xfd469501); /* 8 */
++  T.push_back(0x698098d8); /* 9 */
++  T.push_back(0x8b44f7af); /* 10 */
++  T.push_back(0xffff5bb1); /* 11 */
++  T.push_back(0x895cd7be); /* 12 */
++  T.push_back(0x6b901122); /* 13 */
++  T.push_back(0xfd987193); /* 14 */
++  T.push_back(0xa679438e); /* 15 */
++  T.push_back(0x49b40821); /* 16 */
++  T.push_back(0xf61e2562); /* 17 */
++  T.push_back(0xc040b340); /* 18 */
++  T.push_back(0x265e5a51); /* 19 */
++  T.push_back(0xe9b6c7aa); /* 20 */
++  T.push_back(0xd62f105d); /* 21 */
++  T.push_back(0x2441453); /* 22 */
++  T.push_back(0xd8a1e681); /* 23 */
++  T.push_back(0xe7d3fbc8); /* 24 */
++  T.push_back(0x21e1cde6); /* 25 */
++  T.push_back(0xc33707d6); /* 26 */
++  T.push_back(0xf4d50d87); /* 27 */
++  T.push_back(0x455a14ed); /* 28 */
++  T.push_back(0xa9e3e905); /* 29 */
++  T.push_back(0xfcefa3f8); /* 30 */
++  T.push_back(0x676f02d9); /* 31 */
++  T.push_back(0x8d2a4c8a); /* 32 */
++  T.push_back(0xfffa3942); /* 33 */
++  T.push_back(0x8771f681); /* 34 */
++  T.push_back(0x6d9d6122); /* 35 */
++  T.push_back(0xfde5380c); /* 36 */
++  T.push_back(0xa4beea44); /* 37 */
++  T.push_back(0x4bdecfa9); /* 38 */
++  T.push_back(0xf6bb4b60); /* 39 */
++  T.push_back(0xbebfbc70); /* 40 */
++  T.push_back(0x289b7ec6); /* 41 */
++  T.push_back(0xeaa127fa); /* 42 */
++  T.push_back(0xd4ef3085); /* 43 */
++  T.push_back(0x4881d05); /* 44 */
++  T.push_back(0xd9d4d039); /* 45 */
++  T.push_back(0xe6db99e5); /* 46 */
++  T.push_back(0x1fa27cf8); /* 47 */
++  T.push_back(0xc4ac5665); /* 48 */
++  T.push_back(0xf4292244); /* 49 */
++  T.push_back(0x432aff97); /* 50 */
++  T.push_back(0xab9423a7); /* 51 */
++  T.push_back(0xfc93a039); /* 52 */
++  T.push_back(0x655b59c3); /* 53 */
++  T.push_back(0x8f0ccc92); /* 54 */
++  T.push_back(0xffeff47d); /* 55 */
++  T.push_back(0x85845dd1); /* 56 */
++  T.push_back(0x6fa87e4f); /* 57 */
++  T.push_back(0xfe2ce6e0); /* 58 */
++  T.push_back(0xa3014314); /* 59 */
++  T.push_back(0x4e0811a1); /* 60 */
++  T.push_back(0xf7537e82); /* 61 */
++  T.push_back(0xbd3af235); /* 62 */
++  T.push_back(0x2ad7d2bb); /* 63 */
++  T.push_back(0xeb86d391); /* 64 */
++};
++
++// sav() implementation.
++inline
++void MD5::sav()
++{
++  for (unsigned i = 0; i < 16; ++i)
++    X[i] = buffer_[current_ + i];
++  current_ += 16;
++  aa = a;
++  bb = b;
++  cc = c;
++  dd = d;
++}
++
++// round1() implementation.
++inline
++void MD5::round1()
++{
++  sub_step(F, a, b, c, d, 0, 7, 1);
++  sub_step(F, d, a, b, c, 1, 12, 2);
++  sub_step(F, c, d, a, b, 2, 17, 3);
++  sub_step(F, b, c, d, a, 3, 22, 4);
++  sub_step(F, a, b, c, d, 4, 7, 5);
++  sub_step(F, d, a, b, c, 5, 12, 6);
++  sub_step(F, c, d, a, b, 6, 17, 7);
++  sub_step(F, b, c, d, a, 7, 22, 8);
++  sub_step(F, a, b, c, d, 8, 7, 9);
++  sub_step(F, d, a, b, c, 9, 12, 10);
++  sub_step(F, c, d, a, b, 10, 17, 11);
++  sub_step(F, b, c, d, a, 11, 22, 12);
++  sub_step(F, a, b, c, d, 12, 7, 13);
++  sub_step(F, d, a, b, c, 13, 12, 14);
++  sub_step(F, c, d, a, b, 14, 17, 15);
++  sub_step(F, b, c, d, a, 15, 22, 16);
++}
++
++// round2() implementation.
++inline
++void MD5::round2()
++{
++  sub_step(G, a, b, c, d, 1, 5, 17);
++  sub_step(G, d, a, b, c, 6, 9, 18);
++  sub_step(G, c, d, a, b, 11, 14, 19);
++  sub_step(G, b, c, d, a, 0, 20, 20);
++  sub_step(G, a, b, c, d, 5, 5, 21);
++  sub_step(G, d, a, b, c, 10, 9, 22);
++  sub_step(G, c, d, a, b, 15, 14, 23);
++  sub_step(G, b, c, d, a, 4, 20, 24);
++  sub_step(G, a, b, c, d, 9, 5, 25);
++  sub_step(G, d, a, b, c, 14, 9, 26);
++  sub_step(G, c, d, a, b, 3, 14, 27);
++  sub_step(G, b, c, d, a, 8, 20, 28);
++  sub_step(G, a, b, c, d, 13, 5, 29);
++  sub_step(G, d, a, b, c, 2, 9, 30);
++  sub_step(G, c, d, a, b, 7, 14, 31);
++  sub_step(G, b, c, d, a, 12, 20, 32);
++}
++
++// round3() implementation.
++inline
++void MD5::round3()
++{
++  sub_step(H, a, b, c, d,  5,  4, 33);
++  sub_step(H, d, a, b, c,  8, 11, 34);
++  sub_step(H, c, d, a, b, 11, 16, 35);
++  sub_step(H, b, c, d, a, 14, 23, 36);
++  sub_step(H, a, b, c, d,  1,  4, 37);
++  sub_step(H, d, a, b, c,  4, 11, 38);
++  sub_step(H, c, d, a, b,  7, 16, 39);
++  sub_step(H, b, c, d, a, 10, 23, 40);
++  sub_step(H, a, b, c, d, 13,  4, 41);
++  sub_step(H, d, a, b, c,  0, 11, 42);
++  sub_step(H, c, d, a, b,  3, 16, 43);
++  sub_step(H, b, c, d, a,  6, 23, 44);
++  sub_step(H, a, b, c, d,  9,  4, 45);
++  sub_step(H, d, a, b, c, 12, 11, 46);
++  sub_step(H, c, d, a, b, 15, 16, 47);
++  sub_step(H, b, c, d, a,  2, 23, 48);
++}
++
++// round 4() implementation.
++inline
++void MD5::round4()
++{
++  sub_step(I, a, b, c, d,  0,  6, 49);
++  sub_step(I, d, a, b, c,  7, 10, 50);
++  sub_step(I, c, d, a, b, 14, 15, 51);
++  sub_step(I, b, c, d, a,  5, 21, 52);
++  sub_step(I, a, b, c, d, 12,  6, 53);
++  sub_step(I, d, a, b, c,  3, 10, 54);
++  sub_step(I, c, d, a, b, 10, 15, 55);
++  sub_step(I, b, c, d, a,  1, 21, 56);
++  sub_step(I, a, b, c, d,  8,  6, 57);
++  sub_step(I, d, a, b, c, 15, 10, 58);
++  sub_step(I, c, d, a, b,  6, 15, 59);
++  sub_step(I, b, c, d, a, 13, 21, 60);
++  sub_step(I, a, b, c, d,  4,  6, 61);
++  sub_step(I, d, a, b, c, 11, 10, 62);
++  sub_step(I, c, d, a, b,  2, 15, 63);
++  sub_step(I, b, c, d, a,  9, 21, 64);
++}
++
++// step  implementation.
++inline
++void MD5::step()
++{
++  sav();
++  round1();
++  round2();
++  round3();
++  round4();
++  a += aa;
++  b += bb;
++  c += cc;
++  d += dd;
++};
++
++// sub step implementation.
++template <class Fun>
++inline
++void MD5::sub_step(const Fun &fun,
++		   storage_type &a,
++		   const storage_type &b,
++		   const storage_type &c,
++		   const storage_type &d,
++		   unsigned k,
++		   unsigned s,
++		   unsigned i)
++{
++  a += fun(b, c, d) + (X[k] + T[i - 1]);
++  a = a<<s | a>>(32-s);
++  a += b;
++  //a = b + ((a + fun(b, c, d) + X[k] + T[i - 1]) << s);
++}
++
++// gen_sub_key implementation.
++inline
++void MD5::gen_sub_key(std::vector<key::value_type> &v,
++		      storage_type x,
++		      unsigned base)
++{
++  base *= sizeof(value_type);
++
++  for (unsigned i = 0; i < sizeof(value_type); ++i)
++    v[base + i] = (x & (0xFF << (i * 8))) >> (i * 8);
++}
++
++// gen_key implementation.
++
++inline
++key MD5::gen_key()
++{
++  std::vector<key::value_type>	k;
++
++  k.reserve(16);
++  gen_sub_key(k, a, 0);
++  gen_sub_key(k, b, 1);
++  gen_sub_key(k, c, 2);
++  gen_sub_key(k, d, 3);
++  return key(k);
++}
++
++// execute implementation.
++inline
++key MD5::execute()
++{
++  while (buffer_.size() > current_)
++    step();
++  return gen_key();
++}
++#endif // !OLENA_OLN_UTILS_MD5_HXX
+Index: olena/oln/utils/md5.hh
+--- olena/oln/utils/md5.hh Fri, 19 Mar 2004 15:52:00 +0100 palma_g ()
++++ olena/oln/utils/md5.hh Fri, 19 Mar 2004 15:35:12 +0100 palma_g (oln/k/14_md5.hh  644)
+@@ -0,0 +1,204 @@
++// Copyright (C) 2004  EPITA Research and Development Laboratory
++//
++// This  file is  part of  the Olena  Library.  This  library  is free
++// software; you can redistribute it  and/or modify it under the terms
++// of the  GNU General  Public License version  2 as published  by the
++// Free Software Foundation.
++//
++// This library is distributed in the hope that it will be useful, but
++// WITHOUT  ANY  WARRANTY;  without   even  the  implied  warranty  of
++// MERCHANTABILITY or  FITNESS FOR A PARTICULAR PURPOSE.   See the GNU
++// General Public License for more details.
++//
++// You should have  received a copy of the  GNU General Public License
++// along with  this library; see the  file COPYING.  If  not, write to
++// the Free Software Foundation, 59  Temple Place - Suite 330, Boston,
++// MA 02111-1307, USA.
++//
++// As a  special exception, you  may use this  file as part of  a free
++// software library without restriction.  Specifically, if other files
++// instantiate templates  or use macros or inline  functions from this
++// file, or  you compile  this file  and link it  with other  files to
++// produce  an executable,  this file  does  not by  itself cause  the
++// resulting  executable  to be  covered  by  the  GNU General  Public
++// License.   This exception  does  not however  invalidate any  other
++// reasons why the executable file might be covered by the GNU General
++// Public License.
++
++#ifndef OLENA_OLN_UTILS_MD5_HH
++# define OLENA_OLN_UTILS_MD5_HH
++
++# include <ntg/all.hh>
++# include <vector>
++
++# include <oln/utils/key.hh>
++# include <oln/utils/buffer.hh>
++
++namespace oln {
++  namespace utils {
++    /*!
++    ** \\brief Class used to compute a MD5 digest.
++    */
++    class MD5
++    {
++    public:
++      typedef ntg::int_u32			value_type; ///< Value to work on.
++      typedef ntg_storage_type_(value_type)	storage_type; ///< Representation type of value type.
++
++      /*!
++      ** \\brief Constructor.
++      **
++      ** Initialization from a buffer.
++      **
++      ** \\arg The buffer to use.
++      */
++      explicit MD5(buffer b);
++
++      /*!
++      ** \\brief Compute the digest.
++      */
++      key execute();
++
++      /*!
++      ** \\brief Generate the key.
++      **
++      ** \\pre To avoid meaningless result, you should call execute before.
++      */
++      key gen_key();
++
++    protected:
++      /*!
++      ** \\brief initialization of a MD5 algorithm step.
++      */
++      void sav();
++
++      /*!
++      ** \\brief Round 1 of the algorithm.
++      */
++      void round1();
++
++      /*!
++      ** \\brief Round 2 of the algorithm.
++      */
++      void round2();
++
++      /*!
++      ** \\brief Round 3 of the algorithm.
++      */
++      void round3();
++
++      /*!
++      ** \\brief Round 4 of the algorithm.
++      */
++      void round4();
++
++      /*!
++      ** \\brief A step of the algorithm.
++      */
++      void step();
++
++      /*!
++      ** \\brief Sub step to update a register value.
++      */
++      template <class Fun>
++      void sub_step(const Fun &fun,
++		    storage_type &a,
++		    const storage_type &b,
++		    const storage_type &c,
++		    const storage_type &d,
++		    unsigned k,
++		    unsigned s,
++		    unsigned i);
++
++      /*!
++      ** \\brief Generate a sub part of the key.
++      **
++      ** \\arg v Vector of values (output).
++      ** \\arg x Data to put in v.
++      ** \\arg base Where to put x in v.
++      */
++      void gen_sub_key(std::vector<key::value_type> &v,
++		       storage_type x,
++		       unsigned base);
++
++
++      buffer			buffer_; ///< The buffer to process.
++      std::vector<storage_type>	X; ///< Vector of 16 words.
++      std::vector<storage_type>	T; ///< Vector of 64 words.
++      unsigned			current_; ///< Current position in the buffer.
++      storage_type			aa; ///< Save of a.
++      storage_type			bb; ///< Save of b.
++      storage_type			cc; ///< Save of c.
++      storage_type			dd; ///< Save of d.
++      storage_type			a; ///< A register.
++      storage_type			b; ///< B register.
++      storage_type			c; ///< C register.
++      storage_type			d; ///< D register.
++
++      /*!
++      ** \\brief Functor for bit operations.
++      **
++      ** F(X,Y,Z) = XY v not(X) Z
++      */
++      struct
++      {
++	storage_type operator()(const storage_type &x,
++				const storage_type &y,
++				const storage_type &z) const
++	{
++	  //      return z ^ (x & (y ^ z));
++	  return x & y | ~x & z;
++	}
++      }				F;
++
++      /*!
++      ** \\brief Functor for bit operations.
++      **
++      ** G(X,Y,Z) = XZ v Y not(Z)
++      */
++      struct
++      {
++	storage_type operator()(const storage_type &x,
++				const storage_type &y,
++				const storage_type &z) const
++	{
++	  return x & z | y & ~z;
++	}
++      }				G;
++
++      /*!
++      ** \\brief Functor for bit operations.
++      **
++      ** H(X,Y,Z) = X xor Y xor Z
++      */
++      struct
++      {
++	storage_type operator()(const storage_type &x,
++				const storage_type &y,
++				const storage_type &z) const
++	{
++	  return x ^ y ^ z;
++	}
++      }				H;
++
++      /*!
++      ** \\brief Functor for bit operations.
++      **
++      ** I(X,Y,Z) = Y xor (X v not(Z))
++      */
++      struct
++      {
++	storage_type operator()(const storage_type &x,
++				const storage_type &y,
++				const storage_type &z) const
++	{
++	  return y ^ (x | ~z);
++	}
++      }				I;
++    };
++
++#include <oln/utils/md5.hxx>
++
++  } // !utils
++} // !oln
++#endif // !OLENA_OLN_UTILS_MD5_HH
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 19 Mar 2004 14:01:37 +0100")
+(Checkin-Time "Fri, 19 Mar 2004 15:52:57 +0100")
 (Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -232,9 +1132,9 @@ Index: olena/oln/transforms/fft.hh
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.15 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.8 640))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.36 640))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.37 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.38 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.39 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 640))
 
@@ -1002,7 +1902,7 @@ Index: olena/oln/transforms/fft.hh
   (integre/ntg/core/internal/traits.hh (oln/s/16_traits.hh 1.4.1.1 640))
   (integre/ntg/core/internal/macros.hh (oln/s/17_macros.hh 1.2 640))
   (integre/ntg/core/type_traits.hh (oln/s/18_type_trait 1.3 640))
-  (integre/ntg/core/macros.hh (oln/s/19_macros.hh 1.9 640))
+  (integre/ntg/core/macros.hh (oln/s/19_macros.hh 1.10 640))
   (integre/ntg/core/abstract_hierarchy.hh (oln/s/20_abstract_h 1.2.1.2 640))
   (integre/ntg/basics.hh (oln/s/21_basics.hh 1.3.1.1 640))
   (integre/ntg/vect/vect_value.hh (oln/s/22_vect_value 1.2.1.1 640))
@@ -1347,20 +2247,18 @@ Index: olena/oln/transforms/fft.hh
   ; (doc/ref/html () :directory)
 
 
-  (integre/ntg/core/pred_succ.hh (oln/k/8_pred_succ. 1.1 644)))
+  (integre/ntg/core/pred_succ.hh (oln/k/8_pred_succ. 1.1 644))
+;; Files added by populate at Fri, 19 Mar 2004 15:49:20 +0100,
+;; to version 10.97(w), by palma_g:
+
+  (olena/oln/utils/buffer.hxx (oln/k/9_buffer.hxx 1.1 644))
+  (olena/oln/utils/buffer.hh (oln/k/10_buffer.hh 1.1 644))
+  (olena/oln/utils/key.hxx (oln/k/11_key.hxx 1.1 644))
+  (olena/oln/utils/key.hh (oln/k/12_key.hh 1.1 644))
+  (olena/oln/utils/md5.hxx (oln/k/13_md5.hxx 1.1 644))
+  (olena/oln/utils/md5.hh (oln/k/14_md5.hh 1.1 644))
+)
 (Merge-Parents
-  (10.94 complete)
-  (10.96 complete
-    (integre/ChangeLog integre/ChangeLog integre/ChangeLog r) (olena/ChangeLog olena/ChangeLog olena/ChangeLog r)
-    (olena/oln/morpho/closing.inc olena/oln/morpho/closing.inc olena/oln/morpho/closing.inc r) (olena/oln/morpho/dilation.hh olena/oln/morpho/dilation.hh olena/oln/morpho/dilation.hh r)
-    (olena/oln/morpho/erosion.hh olena/oln/morpho/erosion.hh olena/oln/morpho/erosion.hh r) (olena/oln/morpho/extrema.hxx olena/oln/morpho/extrema.hxx olena/oln/morpho/extrema.hxx r)
-    (olena/oln/morpho/extrema_killer.hh olena/oln/morpho/extrema_killer.hh olena/oln/morpho/extrema_killer.hh r) (olena/oln/morpho/fast_morpho.hxx olena/oln/morpho/fast_morpho.hxx olena/oln/morpho/fast_morpho.hxx r)
-    (olena/oln/morpho/hit_or_miss.inc olena/oln/morpho/hit_or_miss.inc olena/oln/morpho/hit_or_miss.inc r) (olena/oln/morpho/opening.inc olena/oln/morpho/opening.inc olena/oln/morpho/opening.inc r)
-    (olena/oln/morpho/top_hat.inc olena/oln/morpho/top_hat.inc olena/oln/morpho/top_hat.inc r) (integre/ntg/real/behavior.hh integre/ntg/real/behavior.hh integre/ntg/real/behavior.hh r)
-    (integre/ntg/utils/cast.hh integre/ntg/utils/cast.hh integre/ntg/utils/cast.hh r) (olena/oln/utils/histogram.hh olena/oln/utils/histogram.hh olena/oln/utils/histogram.hh r)
-    (olena/tests/morpho/tests/edoc olena/tests/morpho/tests/edoc olena/tests/morpho/tests/edoc r) (integre/ntg/Makefile.am integre/ntg/Makefile.am integre/ntg/Makefile.am r)
-    (olena/oln/convert/value_to_point.hh olena/oln/convert/value_to_point.hh olena/oln/convert/value_to_point.hh r) (olena/oln/morpho/attribute_closing_opening_map.hh olena/oln/morpho/attribute_closing_opening_map.hh olena/oln/morpho/attribute_closing_opening_map.hh r)
-    (() () integre/ntg/core/pred_succ.hh a) 
-  )
+  (10.97 complete)
 )
 (New-Merge-Parents)

@@ -154,4 +154,10 @@
 // FIXME: reimplement when variadic macros will be allowed.
 # define ntg_get_value_type(T, E) ntg::type_traits<T>::build_value_type<E>
 
+
+/* ----.
+| Misc |
+`-----*/
+#define ntg_nbits(T)		ntg::internal::typetraits<T>::size
+
 #endif // !NTG_CORE_MACROS_HH

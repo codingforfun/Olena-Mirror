@@ -1,5 +1,14 @@
 2004-03-19  Giovanni Palma  <giovanni@lrde.epita.fr>
 
+	* oln/utils/buffer.hxx:  Add file.
+	* oln/utils/buffer.hh: Likewise.
+	* oln/utils/key.hh: Likewise.
+	* oln/utils/key.hxx: Likewise.
+	* oln/utils/md5.hh: Likewise.
+	* oln/utils/md5.hxx: Likewise.
+
+2004-03-19  Giovanni Palma  <giovanni@lrde.epita.fr>
+
 	* oln/convol/fast_gaussian.hh: Correct comments.
 	* oln/io/se_window.hh: Likewise.
 	* oln/transforms/dwt.hh: Likewise.
