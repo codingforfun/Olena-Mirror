@@ -1,3 +1,9 @@
+2004-08-03  Roland Levillain  <roland@lrde.epita.fr>
+
+	* oln/core/apply.hh (apply2_self): Rename template parameter
+	UnaryFun as BinaryFun.
+	Cut lines so that they do not exceed 80 characters in width.
+
 2004-07-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	* oln/level/threshold.hh: Fix argument description in ctor
