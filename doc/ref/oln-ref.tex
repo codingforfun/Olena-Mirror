@@ -5,11 +5,14 @@
 \usepackage{listings}
 \usepackage{float}
 
+\newcommand{\includeimage}[2]{\ifhevea\imgsrc{#1-html.png}\else\begin{center}\includegraphics[#2]{#1}\end{center}\fi}
 \newcommand\var\textit
+\newcommand{\integre}{Int\`egre}
 %\newcommand\code\texttt
 %BEGIN latex
 \lstset{language=C++,basicstyle=\ttfamily}
 \newcommand{\code}[1]{{\lstinline$#1$}}
+
 %END latex
 %HEVEA \let\code\texttt
 %HEVEA \newenvironment{lstlisting}[1]{\verbatim}{\endverbatim}
@@ -31,7 +34,7 @@
 
 This manual documents Olena, a generic image processing library.
 
-Copyright 2001, 2002, 2003  Laboratoire de Recherche et D\'eveloppement de l'\'Epita.
+Copyright 2001, 2002, 2003  Laboratoire de Recherche et D\'eveloppement de l'Epita.
 
 Permission is granted to make and distribute verbatim
 copies of this manual provided the copyright notice and
@@ -56,24 +59,26 @@ translation approved by the Free Software Foundation.
 
 \newpage
 
+\tableofcontents
+
+\newpage
+
 \chapter{Introduction}
 
 This reference manual will eventually document any public class and
-functions available in Olena.  Sadly, it only covers the morphological
-processing presently.
+functions available in Olena. Sadly, it only covers \integre\ and the
+morphological processing presently.
 
 The \texttt{demo/} directory contains a few sample programs that may be
 worth looking at before digging the source or sending us an email
 (\texttt{olena@lrde.epita.fr}).
 
-
 \chapter{Core library}
 
-This chapter documents the core of the Olena library.
+This chapter will documents the core of the Olena library.
 
-\section{Basic types}
-
-\input{ref-types.tex}
+\chapter{{\integre}: basic data types}
+\input{integre-ref.tex}
 
 \chapter{Processings}
 

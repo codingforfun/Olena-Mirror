@@ -1,3 +1,58 @@
+2003-06-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Merge from integre.28:
+
+	2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* src/swilena_types.i, doc/swilena.texi: Rename value().
+
+	2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* doc/swilena.texi, python/typedefs.hh, src/swilena.i,
+	src/swilena_convert_dim.i, src/swilena_convoldefs.i,
+	src/swilena_dim.i, src/swilena_morpho_dim.i,
+	src/swilena_typedefs.i: Rename sfloat and dfloat.
+
+2003-05-12  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* expand.sh: Make checks less strict.
+
+2003-05-06  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* doc/swilena.texi (Top): Add off-sync notice.
+
+	* meta/Makefile.am, meta/swilena_w_win.i, meta/swilena_point.i,
+	meta/swilena_morpho.i, meta/swilena_structelt.i,
+	meta/swilena_ntg.i, meta/swilena_ntg_cplx.i,
+	meta/swilena_ntg_int_u.i, meta/swilena_ntg_int_s.i,
+	meta/swilena_imagesize.i, meta/swilena_image.i,
+	meta/swilena_exception.i, meta/swilena_describe.i,
+	meta/swilena_decl.i, meta/swilena_core.i: Add.
+
+	* meta/attic: New directory. 
+
+	* src/swilena.i, src/swilena1d.i, src/swilena1d_convert.i,
+	src/swilena1d_morpho.i, src/swilena2d.i, src/swilena2d_convert.i,
+	src/swilena2d_morpho.i, src/swilena3d.i, src/swilena3d_convert.i,
+	src/swilena3d_morpho.i, src/swilena_conversions.i,
+	src/swilena_convert_dim.i, src/swilena_convoldefs.i,
+	src/swilena_dim.i, src/swilena_dpoint.i, src/swilena_exceptions.i,
+	src/swilena_image.i, src/swilena_meta_win.i,
+	src/swilena_morpho_dim.i, src/swilena_morphodefs.i,
+	src/swilena_neighborhood.i, src/swilena_point.i,
+	src/swilena_typedefs.i, src/swilena_types.i,
+	src/swilena_w_window.i, src/swilena_window.i: Move to `meta/attic'.
+
+	* expand.sh: Add. Most files are now generated from this script.
+	
+	* TODO: Update.
+	
+	* Makefile.am (SUBDIRS): Mention new directory `meta'.
+
+2003-04-24  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* src/swilena_types.i: Ajust namespace of data types.
+
 2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* python/Makefile.am: Remove useless flags.

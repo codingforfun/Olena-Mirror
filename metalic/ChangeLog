@@ -1,3 +1,29 @@
+2003-06-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Merge from integre.28:
+
+	2003-05-14  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/main/is_a1: Adapt to is_a renaming.
+
+	2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/sanity/Makefile.am, 
+	tests/sanity/includes.test: New files.
+
+	2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* mlc/type.hh: Minor update.
+
+	2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* mlc/is_a.hh: Rename is_a macro.
+	* mlc/type.hh: Rename Exact macro.
+
+2003-03-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Makefile.am: Adjust.
+
 2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/Makefile.am: Adjust with components.

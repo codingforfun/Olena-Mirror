@@ -3,54 +3,58 @@
 ntgdir = $(includedir)/ntg
 nobase_ntg_HEADERS =				\
   all.hh					\
-  behaviour.hh					\
+  basics.hh					\
   bin.hh					\
-  builtins_properties.hh			\
-  cast.hh					\
   color.hh					\
+  color/color.hh				\
+  color/hsi.hh					\
+  color/hsl.hh					\
+  color/hsv.hh					\
+  color/nrgb.hh					\
+  color/rgb.hh					\
+  color/xyz.hh					\
+  color/yiq.hh					\
+  color/yuv.hh					\
   config/math.hh				\
   config/system.hh				\
+  core/abstract_hierarchy.hh			\
+  core/behavior.hh				\
+  core/contract.hh				\
+  core/internal/global_ops.hh			\
+  core/internal/global_ops_defs.hh		\
+  core/internal/global_ops_traits.hh		\
+  core/internal/macros.hh			\
+  core/internal/traits.hh			\
+  core/interval.hh				\
+  core/macros.hh				\
+  core/predecls.hh				\
+  core/type.hh					\
+  core/type_traits.hh				\
+  core/value.hh					\
   cplx.hh					\
-  cplx_representation.hh			\
   cycle.hh					\
-  debug.hh					\
-  global_ops.hh					\
-  global_ops_defs.hh				\
-  global_ops_traits.hh				\
-  hsi.hh					\
-  hsl.hh					\
-  hsv.hh					\
-  int_s.hh					\
-  int_u.hh					\
-  interval.hh					\
-  nrgb.hh					\
-  optraits.hh					\
-  optraits_bin.hh				\
-  optraits_builtins.hh				\
-  optraits_builtins_bool.hh			\
-  optraits_builtins_float.hh			\
-  optraits_builtins_int.hh			\
-  optraits_builtins_int_defs.hh			\
-  optraits_cplx.hh				\
-  optraits_cycle.hh				\
-  optraits_int_s.hh				\
-  optraits_int_u.hh				\
-  optraits_range.hh				\
-  optraits_scalar.hh				\
-  optraits_scalar_defs.hh			\
-  optraits_vec.hh				\
-  predecls.hh					\
+  enum/bin.hh					\
+  enum/builtin_bool.hh				\
+  enum/enum_value.hh				\
+  float.hh					\
+  int.hh					\
   range.hh					\
-  rec_value.hh					\
-  rgb.hh					\
-  to_oln.hh					\
-  type.hh					\
-  typetraits.hh					\
-  typetraits_builtins.hh			\
-  typetraits_builtins_bool.hh			\
-  typetraits_builtins_float.hh			\
-  typetraits_builtins_int.hh			\
+  real/builtin_int.hh				\
+  real/builtin_float.hh				\
+  real/builtin_properties.hh			\
+  real/cycle.hh					\
+  real/int_s.hh					\
+  real/int_u.hh					\
+  real/optraits_builtin_int.hh			\
+  real/optraits_scalar.hh			\
+  real/optraits_scalar_defs.hh			\
+  real/range.hh					\
+  real/real_value.hh				\
+  real/typetraits_builtin_int.hh		\
+  utils/cast.hh					\
+  utils/debug.hh				\
   vec.hh					\
-  xyz.hh					\
-  yiq.hh					\
-  yuv.hh
+  vect/cplx.hh					\
+  vect/cplx_representation.hh			\
+  vect/vec.hh					\
+  vect/vect_value.hh

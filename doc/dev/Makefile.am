@@ -6,7 +6,7 @@ dist_noinst_DATA = oln-dev.pdf oln-dev.dvi
 
 oln_dev_TEXINFOS = thanks.texi abstract.texi biblio.texi \
 	build.texi design.texi install.texi faq.texi \
-	srctree.texi conf.texi
+	srctree.texi conf.texi upgrading.texi
 
 ###
 ### What gets installed

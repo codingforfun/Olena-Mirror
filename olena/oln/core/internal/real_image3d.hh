@@ -160,7 +160,7 @@ operator<<(std::ostream& o, const oln::internal::_real_image3d<T,I>& ima)
     for (oln::coord row = 0; row < ima.nrows(); ++row) {
       for (oln::coord col = 0; col < ima.ncols(); ++col)
 	{
-	  o.width(unsigned(log10(double(ntg::optraits<T>::max()))+2));
+	  o.width(ntg_max_print_width(T));
 	  o << ima(slice, row, col) << ' ';
 	}
       o << std::endl;
@@ -169,5 +169,4 @@ operator<<(std::ostream& o, const oln::internal::_real_image3d<T,I>& ima)
   return o;
 }
 
-
-#endif // ! OLENA_CORE_INTERNAL_REAL_IMAGE3D_HH
+#endif // !OLENA_CORE_INTERNAL_REAL_IMAGE3D_HH

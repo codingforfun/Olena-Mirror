@@ -1,0 +1,3 @@
+int_u8 i = 11;
+unsigned long l = 12;
+return l < i;

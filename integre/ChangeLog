@@ -1,3 +1,376 @@
+2003-07-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/enum/bin.hh, ntg/enum/builtin_bool.hh: Add max_print_width.
+
+2003-07-11  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/real/optraits_scalar.hh, ntg/core/macros.hh,
+	ntg/vect/vec.hh, ntg/vect/cplx.hh, ntg/color/color.hh: Add
+	max_print_width feature.
+
+2003-07-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/core/type.hh: Use reinterpret_cast instead of static_cast to
+	workaround g++-3.3.1's bug (PR# 11431).
+
+2003-06-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/types/tests/int_sc5: Fix warning.
+
+2003-06-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/utils/Makefile.am (CLEANFILES): Add test.core.
+
+2003-06-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Merge from integre.28:
+
+	2003-06-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/core/behavior.hh: Fix bug BuiltinToCycleAssignment.
+
+	* tests/types/int_sc5: New test.
+	
+	2003-05-15  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/utils/tests/debug1: Fix warning.
+
+	2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/real/int_u.hh, ntg/real_int_s.hh: Add a constructor 
+	from bin type.
+
+	2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* ntg/all.hh, ntg/basics.hh, ntg/bin.hh, ntg/color.hh,
+	ntg/color/color.hh, ntg/color/hsi.hh, ntg/color/hsl.hh,
+	ntg/color/hsv.hh, ntg/color/nrgb.hh, ntg/color/rgb.hh,
+	ntg/color/xyz.hh, ntg/color/yiq.hh, ntg/color/yuv.hh,
+	ntg/config/math.hh, ntg/config/system.hh,
+	ntg/core/abstract_hierarchy.hh, ntg/core/behavior.hh,
+	ntg/core/contract.hh,
+	ntg/core/internal/builtins_properties.hh,
+	ntg/core/internal/global_ops.hh,
+	ntg/core/internal/global_ops_defs.hh,
+	ntg/core/internal/global_ops_traits.hh,
+	ntg/core/internal/macros.hh,
+	ntg/core/internal/optraits_builtins.hh,
+	ntg/core/internal/traits.hh,
+	ntg/core/internal/typetraits_builtins.hh,
+	ntg/core/interval.hh, ntg/core/macros.hh,
+	ntg/core/predecls.hh, ntg/core/type.hh,
+	ntg/core/type_traits.hh, ntg/core/value.hh, ntg/cplx.hh,
+	ntg/cycle.hh, ntg/enum/bin.hh, ntg/enum/builtin_bool.hh,
+	ntg/enum/optraits_builtins_bool.hh,
+	ntg/enum/typetraits_builtins_bool.hh, ntg/float.hh,
+	ntg/int.hh, ntg/range.hh, ntg/real/builtin_float.hh,
+	ntg/real/builtin_int.hh, ntg/real/builtin_properties.hh,
+	ntg/real/cycle.hh, ntg/real/int_s.hh, ntg/real/int_u.hh,
+	ntg/real/optraits_builtin_int.hh,
+	ntg/real/optraits_builtins_float.hh,
+	ntg/real/optraits_builtins_int_defs.hh, ntg/real/range.hh,
+	ntg/real/typetraits_builtin_int.hh,
+	ntg/real/typetraits_builtins_float.hh, ntg/utils/cast.hh,
+	ntg/utils/debug.hh, ntg/vect/cplx.hh,
+	ntg/vect/cplx_representation.hh, ntg/vect/vec.hh: Important
+	cleanup: adapt to Olena coding style, add comments, fix
+	headers guards, rename minor things, use new macros when
+	possible.
+
+	2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/core/internal/macros.hh: Many new macros.
+
+	* ntg/color/color.hh: Move name() into optraits.
+
+	* ntg/real/builtin_int.hh: New file.
+	* ntg/color.hh: New file.
+	
+	* ntg/core/internal/builtins_properties.hh: Rename as ...
+	* ntg/real/builtin_properties.hh: ... this.
+	
+	* ntg/real/optraits_builtins_float.hh,
+	ntg/real/typetraits_builtins_float.hh: Merge into
+	ntg/real/builtin_float.hh.
+
+	* ntg/enum/optraits_builtins_bool.hh,
+	ntg/enum/typetraits_builtins_bool.hh: Merge into
+	ntg/enum/builtin_bool.hh.
+
+	* ntg/core/internal/optraits_builtins.hh,
+	ntg/core/internal/typetraits_builtins.hh: Remove.
+
+	* ntg/Makefile.am: Update consequently.
+	
+	2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/config/system.hh: Remove g++-2.95 specific directives.
+	
+	* ntg/utils/cast.hh: Remove wrong behaviors. Don't cast into
+	storage_type before returning values.
+
+	* ntg/core/internal/global_ops_traits.hh: Important changes.
+	
+	2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/sanity/Makefile.am, 
+	tests/sanity/includes.test: New files.
+	
+	2003-05-10  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/core/behavior.hh: Rename apply methods as check.
+
+	2003-05-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/config/system.hh: Remove g++-2.95 related code.
+
+	2003-05-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/all.hh: Remove useless includes.
+
+	* ntg/color.hh: New file.
+
+	2003-05-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* ntg/basics.hh: Add new includes.
+
+	* ntg/real/optraits_builtins_float.hh: Add name() methods.
+	* ntg/core/internal/traits.hh: Remove default name() method.
+	* ntg/core/interval.hh: Make name() methods public.
+	
+	* ntg/real/typetraits_builtins_float.hh,
+	ntg/real/typetraits_builtins_int.hh: Remove useless typedefs.
+
+	* all.hh: Remove useless includes.
+	* ntg/real/int_s.hh, ntg/real/int_u.hh: Update includes.
+	
+	* ntg/core/contract.hh: New file.
+	* ntg/Makefile.am: Update consequently.
+	* ntg/utils/debug.hh: New utilities.
+	* ntg/core/behavior.hh: Use ntg_assert.
+	* ntg/core/internal/global_ops.hh Update includes.
+	* ntg/core/internal/global_ops_defs.hh: Add an example of use 
+	of the new utilities of debug.
+
+	* tests/utils/runtests, tests/utils/Makefile.am: New files.
+	* tests/utils/tests/debug1: New test.
+
+	2003-05-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* ntg/real/int_s.hh, ntg/real/int_u.hh: Minor fix.
+
+	2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/core/internal/global_ops_traits.hh: Minor update.
+	* ntg/vect/vec.hh: Minor update.
+	* ntg/real/optraits_scalar_defs.hh, ntg/core/predecls.hh: Fix
+	typos.
+
+	* ntg/real/real_value.hh: New classes.
+	* ntg/core/macros.hh: New macros.
+	
+	* ntg/enum/bin.hh, ntg/real/int_s.hh, ntg/real/int_u.hh,
+	ntg/real/typetraits_builtins_int.hh,
+	ntg/real/typetraits_builtins_float.hh, ntg/vect/vec.hh,
+	ntg/vect/cplx.hh: Make decorators's integration more precise.
+	* ntg/real/cycle.hh, ntg/real/range.hh: Modify accordingly.
+
+	* tests/types/tests/range1: More checks.
+	
+	2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* ntg/core/internal/global_ops_traits.hh: Rewrite the traits
+	deduction system.
+	
+	* ntg/core/internal/global_ops.hh,
+	ntg/core/internal/global_ops_defs.hh, ntg/core/macros.hh,
+	ntg/enum/bin.hh, ntg/real/cycle.hh, ntg/real/int_s.hh,
+	ntg/real/int_u.hh, ntg/real/optraits_builtins_float.hh,
+	ntg/real/optraits_scalar_defs.hh, ntg/real/range.hh,
+	ntg/vect/cplx.hh, ntg/vect/vec.hh: Modify accordingly.
+
+	2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/types/tests/range4: New test.
+	
+	2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/utils/to_oln.hh: Remove file.
+	* ntg/utils/cast.hh: Add to_ntg.
+
+	* ntg/core/builtins_properties.hh: Move ...
+	* ntg/core/internal/builtins_properties.hh: ... here.
+	* ntg/core/optraits_builtins.hh: Move ...
+	* ntg/core/internal/optraits_builtins.hh: ... here.
+	* ntg/core/typetraits_builtins.hh: Move ...
+	* ntg/core/internal/typetraits_builtins.hh: ... here.	
+	* ntg/core/global_ops.hh: Move ...
+	* ntg/core/internal/global_ops.hh: ... here.
+	* ntg/core/global_ops_traits.hh: Move ...
+	* ntg/core/internal/global_ops_traits.hh: ... here.
+
+	* ntg/basics.hh: New file.
+	* ntg/core/abstract_hierarchy.hh: New file.
+	* ntg/core/internal/macros.hh: New file.
+	* ntg/core/type_traits.hh: New file.
+
+	* ntg/core/macros.hh: New macros.
+
+	* ntg/core/type.hh: Minor update.
+	
+	* ntg/core/optraits.hh, ntg/core/typetraits.hh: Merge into ...
+	* ntg/core/internal/traits.hh: ... this.
+	* ntg/core/traits.hh: Move optraits into namespace internal.
+
+	* ntg/real/real.hh: Rename as ...
+	* ntg/real/real_value.hh: ... this.
+	* ntg/vect/vectorial.hh: Rename as ...
+	* ntg/vect/vect_value.hh: ... this.
+	* ntg/enum/enumerated.hh: Rename as ...
+	* ntg/enum/enum_value.hh: ... this.
+	
+	* ntg/Makefile.am: Adjust accordingly.
+	* ntg/all.hh: Likewise.
+	
+	* ntg/core/behavior.hh, ntg/enum/bin.hh, ntg/color/color.hh,
+	ntg/vect/cplx.hh, ntg/real/cycle.hh, ntg/utils/debug.hh,
+	ntg/core/internal/global_ops.hh,
+	ntg/core/internal/global_ops_traits.hh, ntg/core/interval.hh,
+	ntg/real/int_s.hh, ntg/real/int_u.hh,
+	ntg/enum/optraits_builtins_bool.hh,
+	ntg/real/optraits_builtins_float.hh,
+	ntg/real/optraits_builtins_int.hh,
+	ntg/real/optraits_scalar_defs.hh, ntg/real/optraits_scalar.hh,
+	ntg/real/range.hh, ntg/core/value.hh,
+	ntg/enum/typetraits_builtins_bool.hh,
+	ntg/real/typetraits_builtins_float.hh,
+	ntg/real/typetraits_builtins_int.hh, ntg/vect/vec.hh: Modify
+	accordingly.
+
+	* tests/types/tests/optrait1a, tests/types/tests/optrait1b,
+	tests/types/tests/optrait2a, tests/types/tests/optrait2b,
+	tests/types/tests/optrait3: Modify accordingly.
+	
+	2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/core/macros.hh: New file.
+
+	* ntg/core/behavior.hh, ntg/core/global_ops.hh, 
+	ntg/core/value.hh: Update using new macros.
+
+	2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* ntg/core/builtins_properties.hh, ntg/core/predecls.hh,
+	ntg/float.hh, ntg/utils/cast.hh, ntg/vect/cplx.hh,
+	tests/types/tests/conv1, tests/types/tests/conv2,
+	tests/types/tests/cplx1, tests/types/tests/cplx2,
+	tests/types/tests/cplx3, tests/types/tests/cplx4,
+	tests/types/tests/cplx6, tests/types/tests/float1,
+	tests/types/tests/float2, tests/types/tests/float_c1,
+	tests/types/tests/float_r1, tests/types/tests/float_r2,
+	tests/types/tests/optrait2a, tests/types/tests/optrait2b,
+	tests/types/tests/optrait3: Rename sfloat and dfloat.
+
+	2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* ntg/enum/bin.hh, ntg/color/color.hh, ntg/vect/cplx.hh,
+	ntg/vect/cplx_representation.hh, ntg/real/cycle.hh,
+	ntg/core/global_ops_defs.hh, ntg/core/global_ops.hh,
+	ntg/core/interval.hh, ntg/real/int_s.hh, ntg/real/int_u.hh,
+	ntg/core/predecls.hh, ntg/real/range.hh, ntg/vect/vec.hh,
+	ntg/real/real.hh, ntg/vect/vectorial.hh,
+	ntg/enum/enumerated.hh: Remove namespace type_definitions.
+
+	* ntg/core/rec_value.hh: Rename as ...
+	* ntg/core/value.hh: ... this.
+	* ntg/core/value.hh: Rename rec_value as value.
+
+	* ntg/enum/enumerated.hh, ntg/real/real.hh, 
+	ntg/vect/vectorial.hh: New files.
+
+	* ntg/core/behavior.hh: Update includes.
+
+	2003-04-15  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/bin.hh, ntg/cplx.hh, ntg/cycle.hh, ntg/float.hh, ntg/int.hh,
+	ntg/range.hh, ntg/vec.hh: Update includes.
+
+	2003-04-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/enum/optraits_bin.hh: Merge into ntg/enum/bin.hh
+	* ntg/real/optraits_cycle.hh: Merge into ntg/real/cycle.hh.
+	* ntg/real/optraits_int_u.hh: Merge into ntg/real/int_u.hh.
+	* ntg/real/optraits_int_s.hh: Merge into ntg/real/int_s.hh.
+	* ntg/real/optraits_range.hh: Merge into ntg/real/range.hh.
+	
+	* Makefile.am: Update consequently.
+	
+	2003-04-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* ntg/core/behaviour.hh: Rename as ...
+	* ntg/core/behavior.hh: ... this.
+	* Makefile.am: Update consequently.
+	
+	2003-04-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/all.hh: Update includes.
+	
+	* ntg/bin.hh, ntg/cplx.hh, ntg/cycle.hh, ntg/float.hh, ntg/int.hh,
+	ntg/range.hh, ntg/vec.hh: New files.
+	
+	* ntg/cycle.hh, ntg/int_s.hh, ntg/int_u.hh,
+	ntg/optraits_builtins_float.hh, ntg/optraits_builtins_int.hh,
+	ntg/optraits_builtins_int_defs.hh, ntg/optraits_cycle.hh,
+	ntg/optraits_int_s.hh, ntg/optraits_int_u.hh,
+	ntg/optraits_range.hh, ntg/optraits_scalar.hh,
+	ntg/optraits_scalar_defs.hh, ntg/range.hh,
+	ntg/typetraits_builtins_float.hh, 
+	ntg/typetraits_builtins_int.hh:	Move ...
+	* ntg/real/: ... here.
+
+	* ntg/color.hh, ntg/hsi.hh, ntg/hsl.hh, ntg/hsv.hh,
+	ntg/nrgb.hh, ntg/rgb.hh, ntg/xyz.hh, ntg/yiq.hh, ntg/yuv.hh: Move ...
+	* ntg/color/: ... here.
+
+	* ntg/behaviour.hh, ntg/builtins_properties.hh,
+	ntg/global_ops.hh, ntg/global_ops_defs.hh,
+	ntg/global_ops_traits.hh, ntg/interval.hh, ntg/optraits.hh,
+	ntg/optraits_builtins.hh, ntg/predecls.hh, ntg/rec_value.hh,
+	ntg/type.hh, ntg/typetraits.hh, 
+	ntg/typetraits_builtins.hh: Move ...
+	* ntg/core/: ... here.
+	
+	* ntg/bin.hh,ntg/optraits_bin.hh, ntg/optraits_builtins_bool.hh,
+	ntg/typetraits_builtins_bool.hh: Move ...
+	* ntg/enum/: ... here.
+
+	* ntg/cast.hh, ntg/debug.hh, ntg/to_oln.hh: Move ...
+	* ntg/utils/: ... here.
+
+	* ntg/cplx.hh, ntg/cplx_representation.hh,
+	ntg/optraits_cplx.hh, ntg/optraits_vec.hh, 
+	ntg/vec.hh: Move ...
+	* ntg/vect: ... here.
+	
+	* Makefile.am: Update consequently.
+
+2003-05-10  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/types/Makefile.am (CLEANFILES): Add test.core.
+
+2003-05-06  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* ntg/predecls.hh (ntg): Help SWIG parse the file.
+
+2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+ 	* tests/types/tests/int_u5c: New test.
+
+2003-04-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/global_ops_defs.hh: Add missing builtin specializations.
+	* tests/types/tests/builtin1: New test.
+
 2003-03-14  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* Makefile.am: Adjust.

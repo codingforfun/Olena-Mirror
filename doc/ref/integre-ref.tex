@@ -1,0 +1,382 @@
+\section{Global overview}
+
+\subsection{What is {\integre} ?}
+
+{\integre} is a safe and efficient data types library, designed for
+generic algorithm writing. Even if it is now independent from Olena,
+it was initially developed to provide value types for images'
+pixels. {\integre} implements basics types such as integers, floats,
+complexes, vectors but also more evolved types such as range (in the
+same spirit than Ada) or cycle.
+
+By safe we wean that all operations (arithmetic, assignments, etc.)
+are checked. If there is an overflow, the user is noticed, at compile
+time if possible, at runtime otherwise.
+
+By efficient we mean that using {\integre} additional checks and
+features should not decrease too much the overall performances. This
+is why {\integre} relies intensively on template code and meta
+programming.
+
+\subsection{Interactions with builtin types}
+
+{\integre} is designed to simplify generic algorithms writing (generic
+in the sense of data type). But sometimes, one may want to use builtin
+type too in its algorithms, such as \code{int} for example. {\integre}
+provides commodities to accept both {\integre}'s types and builtin or
+external types.
+
+\subsection{Generic algorithms support}
+
+Suppose you want to implement a sum which works on several data types:
+
+% FIXME: does this compile ?
+
+\begin{lstlisting}{}
+
+template <class DataType>
+ResultType Sum(DataType vals[10])
+{
+  ResultType s = zero_for_ResultType();
+  for (unsigned i = 0; i < 10; ++i)
+    s += vals[i];
+  return s;
+}
+
+\end{lstlisting}
+
+You know that the sum of ten values will certainly not fit into the
+same data type, so you would like to store the result into a larger
+data type. The same problem stands for the initial value of the
+result, \code{0} is not expressed the same way if we are dealing with
+integers, complexes or vectors.
+
+{\integre} provides an handy way to solve these problems:
+
+\begin{lstlisting}{}
+
+template <class DataType>
+ntg_cumul_type(DataType) Sum(DataType vals[10])
+{
+  ntg_cumul_type(DataType) s = ntg_zero_val(DataType);
+  for (unsigned i = 0; i < 10; ++i)
+    s += vals[i];
+  return s;
+}
+
+\end{lstlisting}
+
+This algorithm will work with almost all {\integre}'s data types
+supporting arithmetic addition, but also with c++ builtin types.
+
+You can refer to the following chapters for more informations.
+
+\subsection{Available types}
+
+Here is a list of available types, you can refer to the type reference
+section for more details about each type.
+
+\begin{itemize}
+
+  \item Reals
+  \begin{itemize}
+    \item unsigned integer (\ahrefloc{ref-intu}{\code{int_u}})
+    \item signed integer (\ahrefloc{ref-ints}{\code{int_s}})
+    \item float with single precision (\ahrefloc{ref-floats}{\code{float_s}})
+    \item float with double precision (\ahrefloc{ref-floatd}{\code{float_d}})
+  \end{itemize}
+
+  \item Enumerated
+  \begin{itemize}
+    \item binary type (\ahrefloc{ref-bin}{\code{bin}})
+  \end{itemize}
+
+  \item Vectorials
+  \begin{itemize}
+    \item Static vectors (\ahrefloc{ref-vec}{\code{vec}})
+    \item Complexes (\ahrefloc{ref-cplx}{\code{cplx}})
+  \end{itemize}
+
+  \item Decorators
+  \begin{itemize}
+    \item Bounding type (\ahrefloc{ref-range}{\code{range}})
+    \item Cycling type (\ahrefloc{ref-cycle}{\code{cycle}})
+  \end{itemize}
+
+\end{itemize}
+
+%%
+
+\section{Using \integre}
+
+\subsection{Compilation}
+
+\integre\ is an active library, and does not provide any object
+file. It only provides headers containing generic types and
+functions. So one just have to add a compilation flag to make the
+compiler find \integre\ headers.
+
+\subsection{Namespace}
+
+All \integre\ public services are in the \code{ntg} namespace.
+
+\subsection{Includes}
+
+Special include files:
+
+\begin{itemize}
+  \item \code{<ntg/all.hh>}: include all \integre\ features.
+
+  \item \code{<ntg/basics.hh>}: include all \integre\ mecanisms, but 
+  does not include any particular \integre\ type.
+\end{itemize}
+
+Other useful include files are mentioned in the documentation of the
+concerned features.
+
+%%
+
+\section{Types properties}
+
+To simplify generic algorithms implementation, we need a way to get
+types properties by a generic way. Traits are defined to do this. As
+they are implemented using traits, it is possible to define properties
+for builtin or external types. So one can get properties for non
+{\integre} native types.
+
+\subsection{Naming scheme and conventions}
+
+Properties associated to types can take two forms: types or values.
+
+\subsection{Properties which are types}
+
+They are suffixed by \code{_type}, for example: \code{larger_type},
+\code{cumul_type}, \code{abstract_type}, etc.
+
+Here is the list of common properties:
+
+\subsubsection{\code{abstract_type}} 
+
+Empty classes representing the kind of the type. This is useful since
+builtin can have associated abstract type. As these classes are
+organized by a hierarchical way, their main interest is
+\ahrefloc{ref-concept-checking}{static concept checking}.
+
+Here are the available abstract types:
+
+\includeimage{abstract-types-hierarchy}{width=0.9\textwidth}
+
+\subsubsection{\code{ntg_type}}
+
+{\integre} provides a good interaction with builtin types, but
+sometimes it is useful to get the {\integre}'s type associated with a
+builtin one (if it exists). For example, \code{ntg_type} for
+\code{unsigned char} is \code{int_u8}.
+
+\subsubsection{\code{base_type}}
+
+When using decorators types, such as \code{range} or \code{cycle}, one
+may needs to know the original undecorated type. \code{base_type}
+represent this type.
+
+\subsubsection{\code{storage_type}}
+
+{\integre}'s types generally use builtin types to store their
+value. For example, \code{int_u8} uses \code{unsigned char} to store
+its actual value. \code{storage_type} represent the type used to store
+values.
+
+\subsection{Properties which are values}
+
+Values properties are implemented by static functions, to ensure a
+compile time evaluation and to avoid any useless memory usage.
+
+\subsubsection{\code{name()}}
+
+Returns a \code{string} with the name of the type. This can be useful
+for debugging purposes.
+
+\subsection{Accessing types properties}
+
+To access to the properties describe above, there is two ways, using
+directly \code{type_traits} or using macros hiding the access.
+
+\subsubsection{\code{type_traits<T>}}
+
+This is the universal way to access properties. For example, use
+\code{type_traits<int_u8>::name()} or 
+\code{type_traits<unsigned char>::abstract_type} to get the name of 
+\code{int_u8} and the \code{abstract_type} representing the builtin 
+type \code{unsigned char}.
+
+Using \code{type_traits} can be rather fastidious (it generally
+requires a \code{typename} keyword), so macros have been defined to
+simplify accesses. You should use \code{type_traits} only when it is
+not possible to use macros (for example when there is a comma in the
+name of the type).
+
+\subsubsection{Macros}
+
+Macros are defined to every possible property. The naming scheme is
+simple: \code{ntg_property_type(Type)} is one wants to access to a
+type property, \code{ntg_property_val} for a value property. Here are
+a few examples: \code{ntg_max_val(int_u8)},
+\code{ntg_abstract_type(float_s)}, etc.
+
+\section{Ensuring programs safety}
+
+\subsection{\aname{ref-concept-checking}{Concept checking}}
+
+One may want to write an algorithm working only on integers, whatever
+its exact type. To accept both builtin types and {\integre} types, he
+has to write something like that:
+
+\begin{lstlisting}{}
+
+template <class T>
+void algorithm_on_integer(const T& my_int)
+{
+  // ...
+}
+
+\end{lstlisting}
+
+There is no way to put a constraints on \code{T} since we want to
+accept builtin types. A good solution to ensure program integrity is
+to insert a structucal check using the \code{ntg_is_a(T, U)} macro. It
+checks whether the abstract type of \code{T} is a subclass of U, and
+return a metalic boolean (refer to metalic documentation). 
+
+So here the user should write:
+
+\begin{lstlisting}{}
+
+template <class T>
+void algorithm_on_integer(const T& my_int)
+{
+  ntg_is_a(T, integer)::ensure();
+  // ...
+}
+
+\end{lstlisting}
+
+If \code{ntg_abstract_type(T)} is not an \code{integer}, compilation
+will fail with a clear error message.
+
+\subsection{Overflow checking}
+
+\integre\ is designed to be a safe data types library. It tries to
+make programs safer checking and noticing wrong computations. We want
+to prevent implicit side effects, often really difficult to find
+out. Here is an example with builtin types:
+
+\begin{lstlisting}{}
+
+  int i = 256;
+  unsigned char foo = i; // foo == 0
+
+\end{lstlisting}
+
+Another one pointing out arithmetic problems:
+
+\begin{lstlisting}{}
+
+  unsigned int i = UINT_MAX;
+  unsigned int j = 5;
+  unsigned long long k = i + j; // k == 4
+
+\end{lstlisting}
+
+These behaviors can be really painful for the programmer, and mostly
+are overflow problems. This is why \integre\ introduces various
+overflow checks for assignments and arithmetic operations.
+
+Sometimes checks have to be dynamic, for example assigning an
+\code{int_u16} into an \code{int_u8} may be valid, depending on the
+value of the \code{int_u16}. This can only be performed at execution
+time, when we know the actual value.
+
+Some checks can be avoided however, for example assigning an
+\code{int_u8} into an \code{int_u16} is always safe. This is the main
+justification of \integre\ strong typed paradigm, we want to avoid a
+maximal quantity of checks at runtime.
+
+\subsubsection{Strong typing and growing types}
+
+To keep a maximal amount of static information about variables
+range of values, arithmetical operations make types growing. For
+example, adding 2 \code{int_u8} returns an \code{int_u9}. Growing
+rules for each type is detailed in the \ahrefloc{sec-ref}{types
+reference section}.
+
+This results in the avoidance of a lot of dynamic checks.
+
+\subsubsection{Disabling dynamic checks}
+
+If you know that your programs works, you can disable dynamic checks
+defining the macro \code{NDEBUG} at compile time.
+
+\subsection{Behaviors}
+
+\integre\ can detect overflow problems. But what should it do when it
+detects one ? Here is the reason to live of behaviors.
+
+\subsubsection{strict}
+
+Stops the program with an error message when a problem is detected.
+
+\subsubsection{saturate}
+
+Bounds toward the \code{max} or the \code{min} value of the type,
+depending on which is the nearest.
+
+Example: \code{int_u<8, saturate> u = 350; // u == 255}.
+
+\subsubsection{cycle}
+
+Assign the value modulo the value range of the type.
+
+Example: \code{int_u<8, saturate> u = 257; // u == 1}.
+
+\subsubsection{unsafe}
+
+Does nothing. Behaves almost the same way than builtin types. You
+should not use this behavior, but it might be useful in a few special
+cases.
+
+%%
+
+% FIXME: document when ready
+% \section{Adding new types}
+
+%%
+
+\section{\aname{sec-ref}{Types reference}}
+
+\subsection{Hierarchy}
+
+\integre\ types are organized hierarchically:
+
+\includeimage{data-hierarchy}{width=0.9\textwidth}
+
+\subsection{\aname{ref-bin}{\code{bin}}}
+
+\subsection{\aname{ref-cplx}{\code{cplx}}}
+
+\subsection{\aname{ref-cycle}{\code{cycle}}}
+
+\subsection{\aname{ref-floatd}{\code{float_d}}}
+
+\subsection{\aname{ref-floats}{\code{float_s}}}
+
+\subsection{\aname{ref-ints}{\code{int_s}}}
+
+\subsection{\aname{ref-intu}{\code{int_u}}}
+
+\subsection{\aname{ref-range}{\code{range}}}
+
+\subsection{\aname{ref-vec}{\code{vec}}}
+
+%%
+
+\section{FAQ}

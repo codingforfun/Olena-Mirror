@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,41 +28,23 @@
 #ifndef NTG_ALL_HH
 # define NTG_ALL_HH
 
-# include <ntg/config/system.hh>
+/*
+  Include all Integre's features.
+*/
 
-# include <ntg/type.hh>
-# include <ntg/predecls.hh>
+# include <ntg/basics.hh>
 
-# include <ntg/builtins_properties.hh>
-# include <ntg/to_oln.hh>
-
-# include <ntg/behaviour.hh>
-# include <ntg/interval.hh>
-
-# include <ntg/int_u.hh>
-# include <ntg/int_s.hh>
-# include <ntg/range.hh>
-# include <ntg/cycle.hh>
 # include <ntg/bin.hh>
+
+# include <ntg/int.hh>
+# include <ntg/cycle.hh>
+# include <ntg/range.hh>
+
 # include <ntg/vec.hh>
 # include <ntg/cplx.hh>
 
 # include <ntg/color.hh>
-# include <ntg/rgb.hh>
-# include <ntg/nrgb.hh>
-# include <ntg/hsi.hh>
-# include <ntg/hsl.hh>
-# include <ntg/hsv.hh>
-# include <ntg/xyz.hh>
-# include <ntg/yiq.hh>
-# include <ntg/yuv.hh>
 
-# include <ntg/typetraits_builtins.hh>
-# include <ntg/optraits_builtins.hh>
+# include <ntg/utils/cast.hh>
 
-# include <ntg/global_ops_traits.hh>
-# include <ntg/global_ops.hh>
-
-# include <ntg/cast.hh>
-
-#endif // ndef NTG_ALL_HH
+#endif // !NTG_ALL_HH

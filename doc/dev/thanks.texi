@@ -26,7 +26,6 @@ not be what it is today without their work.
 @item Akim Demaille
 for his help with the configuration system
 
-
 @item Anthony Pinagot
 @itemize @minus
 @item for his work on Olena I/O,
@@ -38,7 +37,10 @@ for his help with the configuration system
 for her work on static arrays
 
 @item David Lesage
-for his work on the type system
+@itemize @minus
+@item for his work on the type system,
+@item for his work on the new paradigm.
+@end itemize
 
 @item Dimitri Papadopoulos-Orfanos
 for his work on the type system
@@ -93,8 +95,11 @@ for his work on data types and the new (0.6) data type system
 @item Qu@^oc Peyrot
 for his work on the watershed algorithm
 
-@item Renaud Fran@,cois
-for his bibliographic research
+@item Rapha@"el Poss
+@itemize @minus
+@item for his work on the source tree and configuration system,
+@item for his work on the documentation.
+@end itemize
 
 @item R@'emi Coupet
 @itemize @minus
@@ -103,6 +108,15 @@ for his bibliographic research
 @item for his work on the Olena core,
 @item for his bibliographic research.
 @end itemize
+
+@item Reda Dehak
+for managing the project
+
+@item Renaud Fran@,cois
+for his bibliographic research
+
+@item Sylvain Berlemont
+for his work on combinatorial maps
 
 @item Yann R@'egis-Gianas
 @itemize @minus
@@ -113,15 +127,12 @@ for his bibliographic research
 @item Yoann Fabre
 for his work on the type system
 
-@item Rapha@"el Poss
-for his work on the source tree and configuration system
-
 @item Vincent Berruchon
 
 @end table
 
 @sp 2
 
-In addition, we would like to thank EPITA  and its user groups EpX and
+In addition, we would like to thank EPITA and its user groups EpX and
 Prologin for giving us access to Solaris, FreeBSD, NetBSD, OpenBSD and
 CygWin machines.

@@ -8,6 +8,11 @@ AC_CONFIG_SRCDIR([config/oln.m4])
 AM_INIT_AUTOMAKE([1.7 no-define foreign dist-bzip2])
 AC_CONFIG_HEADERS([config.h:config.hin])
 
+# FIXME: maybe not the best way to do this
+if test ! ${CXXFLAGS+set}; then
+   CXXFLAGS=""
+fi
+
 # Use included Olena version.
 NTG_PATH_LOCAL([integre])
 MLC_PATH_LOCAL([metalic])
@@ -30,9 +35,6 @@ AC_CONFIG_FILES([Makefile
 		 integre/ntg/Makefile
                  metalic/Makefile
                  metalic/mlc/Makefile
-                 metalic/tests/Makefile
-                 metalic/tests/check/Makefile
-		 metalic/tests/check/defs
 		 olena/Makefile
 		 olena/img/Makefile
 		 olena/oln/Makefile
@@ -62,6 +64,8 @@ OLN_COLLECTION([OLN_TOP],
      AC_CHECK_PROGS([PGMTOPBM], [pgmtopbm], [$am_aux_dir/missing pgmtopbm])
      AC_ARG_VAR([PNMTOPLAINPNM], [program to convert Portable Anymaps to plain text])
      AC_CHECK_PROGS([PNMTOPLAINPNM], [pnmtoplainpnm], [$am_aux_dir/missing pnmtoplainpnm])
+     AC_ARG_VAR([PNMDEPTH], [program to change depth of Portable Anymaps])
+     AC_CHECK_PROGS([PNMDEPTH], [pnmdepth], [$am_aux_dir/missing pnmdepth])
      AC_ARG_VAR([IMAGEMAGICK_CONVERT], [the `convert' utility from ImageMagick])
      AC_CHECK_PROGS([IMAGEMAGICK_CONVERT], [convert], [$am_aux_dir/missing convert])
 
@@ -103,8 +107,7 @@ OLN_COLLECTION([OLN_TOP],
 		  [oln_cv_build_tests], 
 		  [the olena's testsuite], 
 		  [OLN_SRC], 
-	          [
-		   olena/tests/Makefile
+	          [olena/tests/Makefile
 		   olena/tests/check/Makefile
 		   olena/tests/check/defs],
     [dnl Configuration for the testsuite
@@ -125,9 +128,11 @@ OLN_COLLECTION([OLN_TOP],
       OLN_TESTS([arith])
       OLN_TESTS([convert])
       OLN_TESTS([convol])
+      OLN_TESTS([core])
       OLN_TESTS([io])
       OLN_TESTS([morpho])
       OLN_TESTS([sanity])
+      OLN_TESTS([topo])
       OLN_TESTS([transforms])
 
       AC_SUBST([OLN_TESTS_SUBDIRS])
@@ -148,8 +153,7 @@ OLN_COLLECTION([OLN_TOP],
 		  [ntg_cv_build_tests], 
 		  [the integre's testsuite], 
 		  [NTG_SRC], 
-	          [
-		   integre/tests/Makefile
+	          [integre/tests/Makefile
 		   integre/tests/check/defs],
     [dnl Configuration for the testsuite
 
@@ -166,7 +170,9 @@ OLN_COLLECTION([OLN_TOP],
       
 
       # NTG_TESTS defined in oln-local.m4
+      NTG_TESTS([sanity])
       NTG_TESTS([types])
+      NTG_TESTS([utils])
 
       AC_SUBST([NTG_TESTS_SUBDIRS])
 
@@ -186,7 +192,9 @@ OLN_COLLECTION([OLN_TOP],
 		  [mlc_cv_build_tests], 
 		  [the metalic's testsuite], 
 		  [MLC_SRC], 
-	          [],
+	          [metalic/tests/Makefile
+                   metalic/tests/check/Makefile
+		   metalic/tests/check/defs],
     [dnl Configuration for the testsuite
 
       MLC_TESTS_SUBDIRS=""
@@ -204,14 +212,11 @@ OLN_COLLECTION([OLN_TOP],
       # MLC_TESTS defined in oln-local.m4
       MLC_TESTS([array])
       MLC_TESTS([main])
+      MLC_TESTS([sanity])
 
       AC_SUBST([MLC_TESTS_SUBDIRS])
 
-    ], [])dnl End of OLN_COMPONENT([metalic/tests])
-    # FIXME:
-    # No directory specified here, as we always need to go inside metalic/tests.
-    # Indeed, common testing tools may have to be compiled even if
-    # metalic testsuite was disabled.
+    ], [tests])dnl End of OLN_COMPONENT([metalic/tests])
 
   ])dnl End of OLN_COLLECTION([MLC_SRC])
 
@@ -250,6 +255,8 @@ OLN_COLLECTION([OLN_TOP],
      AC_CHECK_PROGS([GETDEFS], [getdefs], [$am_aux_dir/missing getdefs])
      AC_ARG_VAR([HEVEA], [program to make HTML pages from TeX])
      AC_CHECK_PROGS([HEVEA], [hevea], [$am_aux_dir/missing hevea])
+     AC_ARG_VAR([HACHA], [program to make split HTML pages from TeX])
+     AC_CHECK_PROGS([HACHA], [hacha], [$am_aux_dir/missing hacha])
      AC_ARG_VAR([EPSTOPDF], [program to convert Encapsulated Postscript images to PDF])
      AC_CHECK_PROGS([EPSTOPDF], [epstopdf], [$am_aux_dir/missing epstopdf])
 
@@ -327,7 +334,10 @@ OLN_COLLECTION([OLN_TOP],
                   [oln_cv_build_swilena],
 	          [the SWIG interface to Olena],
                   [OLN_TOOLS],
-                  [tools/swilena/Makefile tools/swilena/src/Makefile tools/swilena/doc/Makefile],
+                  [tools/swilena/Makefile 
+	           tools/swilena/meta/Makefile
+	           tools/swilena/src/Makefile	
+	           tools/swilena/doc/Makefile],
     [OLN_COLLECTION([OLN_SWILENA], dnl ... and a collection.
     [dnl
        

@@ -23,7 +23,7 @@ bool check()
   tmp  = convert::apply(convert::CONC(CONC(SRC,_to_),DEST)(), orig);
   res  = convert::apply(convert::CONC(CONC(DEST,_to_),SRC)(), tmp);
 
-  utils::f_moments<sfloat> fm;
+  utils::f_moments<float_s> fm;
   compare_images(fm, f_l2_vec3<CONC(SRC,_8)>(), orig, res);
 
   float m = fm.mean();

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,7 +34,9 @@
 # include <oln/convert/conversion_ng_se.hh>
 # include <oln/level/compare.hh>
 # include <oln/arith/ops.hh>
-# include <ntg/global_ops_traits.hh>
+
+# include <ntg/basics.hh>
+
 # include <mlc/cmp.hh>
 
 namespace oln {

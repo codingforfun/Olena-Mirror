@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_POINTND_HH
 # define OLENA_CORE_POINTND_HH
 
-# include <ntg/debug.hh>
+# include <ntg/utils/debug.hh>
 # include <oln/core/coord.hh>
 # include <oln/core/point.hh>
 
@@ -84,7 +84,7 @@ namespace oln {
     {
       std::ostringstream out;
       out << "pointnd<" << dim << ","
-	  << ntg::typename_of<Exact>() << ">" << std::ends;
+	  << Exact::name() << ">" << std::ends;
       return out.str();
     }
 

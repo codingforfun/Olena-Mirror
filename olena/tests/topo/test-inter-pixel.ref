@@ -1,0 +1,9 @@
+building inter-pixel representation ... 
+(5,0): east north south
+(5,5): north west south
+(7,5): east north west
+(10,9): east north west
+(10,11): north west south
+(11,14): north west south
+
+OK

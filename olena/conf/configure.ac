@@ -12,7 +12,7 @@ if test "x$have_olena" = xyes; then
   AC_LINK_IFELSE([@%:@include <ntg/all.hh>
                   int main()
                   {
-	              oln::sfloat f = 3.14;
+	              oln::float_s f = 3.14;
                       oln::int_u8 i = f;
                       return (int)i;
                   }],

@@ -1,3 +1,77 @@
+2003-06-25  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Look for hacha.
+
+2003-06-10  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* config/oln.m4: Fix version.
+
+2003-06-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Merge from integre.28:
+
+	2003-06-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Clean CXXFLAGS detection.
+
+	2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* configure.ac: Add a test entry for integre/tests/sanity.
+	* configure.ac: Add a test entry for metalic/tests/sanity.
+	* config/oln.m4: Add local macros for integre and metalic.
+
+	2003-05-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Add a test entry for integre/tests/utils.
+	
+	2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Make CXXFLAGS empty by default.
+
+	* config/oln.m4: Change icc default flags.
+
+2003-05-15  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* config/oln.m4: Fix comments.
+
+2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* config/oln.m4: Bump version.
+	* doc/dev/build.texi: Likewise.
+
+2003-05-06  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* configure.ac: Add more Makefile's to the Swilena component.
+
+	* bootstrap.sh: Invoke expand.sh in tools/swilena.
+
+2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Add olena/tests/core directory.
+
+2003-04-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Makefile.am: Generate UPGRADING.
+
+	* NEWS: Update.
+
+2003-04-06  Jean-Sébastien Mouret  <js@lrde.epita.fr>
+
+	* configure.ac: Check for pnmdepth.
+
+2003-03-23  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Fix a bug with metalic/tests.
+
+2003-03-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Don't go into metalic/tests when
+	--without-mlc-testsuite was specified.
+
+2003-03-19  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
+
+	* configure.ac: Add test entry for topo.
+
 2003-03-14  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* configure.ac: New collections.
@@ -9,7 +83,7 @@
 	* config/oln.m4: Minor fix.
 
 2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* config/oln.m4: Add new macros. Simplify flags.
 	* configure.ac, Makefile.am, bootstrap.sh: Adapt to m4 changes.
 
@@ -33,7 +107,7 @@
 
 	* bootstrap.sh, cleanup.sh, configure.ac, Makefile.am: Adapt
 	consequently.
-	
+
 	2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* configure.ac: Adapt to types tests move.
@@ -45,7 +119,7 @@
 	lib/check/compile.hh, lib/check/check.hh, lib/check/main.cc,
 	lib/check/srcdir.cc, lib/check/srcdir.hh, lib/check/verbose.cc,
 	lib/check/verbose.hh: Move to metalic/tests/check.
-	
+
 	* lib/check/data.cc, lib/check/data.hh: Move to oln/tests/check.
 
 	* configure.ac, Makefile.am: Adapt to new tests location.

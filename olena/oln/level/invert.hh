@@ -29,20 +29,19 @@
 # define OLENA_LEVEL_INVERT_HH
 
 # include <oln/basics.hh>
-# include <ntg/rec_value.hh>
+
 # include <ntg/bin.hh>
+
 # include <functional>
 
 namespace oln {
-
-  using namespace ntg;
 
   namespace level {
 
     // ftors
 
     template<class T>
-    struct f_invert : public std::unary_function<const rec_value<T>&, T>
+    struct f_invert : public std::unary_function<const ntg::value<T>&, T>
     {
       typedef f_invert self;
 
@@ -55,23 +54,29 @@ namespace oln {
       // Inversion ought to be an operation defined on value types and
       // specialized there. -- adl
 
-      template<class V> static
-      const V doit(const rec_int_s<V>& val) {
+      template<unsigned N, class B> static
+      const ntg::int_s<N, B> doit(const ntg::int_s<N, B>& val) {
 	return - val.self();
-      }
-
-      template<class V> static
-      const V doit(const rec_float<V>& val) {
-	return - val.self();
-      }
-
-      template<class V> static
-      const V doit(const rec_int_u<V>& val) {
-	return optraits<V>::max() - val.value();
       }
 
       static
-      const bin doit(bin val) {
+      const ntg::float_d doit(const ntg::float_d& val) {
+	return - val.self();
+      }
+
+      static
+      const ntg::float_s doit(const ntg::float_s& val) {
+	return - val.self();
+      }
+
+      template<unsigned N, class B> static
+      const ntg::int_u<N, B> doit(const ntg::int_u<N, B>& val) {
+	typedef ntg::int_u<N, B> tmp;
+	return ntg_max_val(tmp) - val;
+      }
+
+      static
+      const ntg::bin doit(ntg::bin val) {
 	return val == true ? false : true;
       }
     };

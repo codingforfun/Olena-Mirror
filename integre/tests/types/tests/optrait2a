@@ -1,2 +1,2 @@
-sfloat s = optraits<sfloat>::max(); // COMPFAIL
+float_s s = ntg_max_val(float_s); // COMPFAIL
 (void) s;

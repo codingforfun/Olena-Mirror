@@ -1,0 +1,2 @@
+cycle<int_u8, bounded_u<0,5> > c1 = 1U;
+return !c1;

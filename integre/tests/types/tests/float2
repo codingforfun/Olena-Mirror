@@ -1,4 +1,4 @@
-sfloat f = 0.25;
+float_s f = 0.25;
 int_u8 a = 2;
 f *= a; // f == 0.5
 f += a; // f == 2.5

@@ -53,7 +53,7 @@ main (void)
   // Olena ships with a set of basic value types such as
   //   int_u8, int_u16, int_u32,   (common unsigned integer types)
   //   int_s8, int_s16, int_s32,   (common signed integer types)
-  //   sfloat, dfloat,             (common float types)
+  //   float_s, float_d,             (common float types)
   //   bin			   (binary type: false|true)
   //
   // These value are defined in the value/ subdirectory.  Actually
@@ -65,8 +65,8 @@ main (void)
 
   // For instance the max() and min() class methods
   // will return the maximum value of a type.
-  std::cout << "optraits<int_u8>::max() = " 
-	    << optraits<int_u8>::max() << std::endl;
+  std::cout << "ntg_max_val(int_u8) = " 
+	    << ntg_max_val(int_u8) << std::endl;
 
   // You can combine these values with the standard operators
   // as expected.

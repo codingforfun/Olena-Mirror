@@ -28,99 +28,10 @@
 #ifndef NTG_BIN_HH
 # define NTG_BIN_HH
 
-# include <mlc/contract.hh>
+/*
+  Proxy header for bin type.
+*/
 
-# include <ntg/global_ops.hh>
-# include <ntg/rec_value.hh>
-# include <ntg/typetraits.hh>
+# include <ntg/enum/bin.hh>
 
-// FIXME: optraits_bin.hh is included at the end of the file.
-
-namespace ntg
-{
-
-  //
-  //  Typetraits
-  //
-  ///////////////
-
-  template <>
-  struct typetraits<bin>
-  {
-    typedef bin				self;
-    typedef optraits<self>		optraits;
-
-    typedef self			base_type;
-    typedef bool			storage_type;
-    typedef bin				signed_type;
-    typedef bin				unsigned_type;
-    typedef bin				cumul_type;
-    typedef bin				largest_type;
-    typedef bin				signed_largest_type;
-    typedef bin				signed_cumul_type;
-    typedef bin				unsigned_largest_type;
-    typedef bin				unsigned_cumul_type;
-    typedef unsigned int		integer_type;
-
-    typedef self op_traits;
-  };
-
-
-  namespace type_definitions
-  {
-    //
-    //  Class bin
-    //
-    //////////////
-
-
-    class bin : public rec_enum<bin>
-    {
-    public:
-      bin () { _value = 0; }
-
-      bin (unsigned char val)
-      {
-	precondition (val < 2);
-	_value = val;
-      }
-
-      bin& operator=(unsigned char val)
-      {
-	precondition (val < 2);
-	_value = val;
-	return *this;
-      }
-
-      template <class T>
-      bin (const rec_scalar<T>& val)
-      {
-	precondition (val < 2);
-	_value = val;
-      }
-      template <class T>
-      bin& operator=(const rec_scalar<T>& val)
-      {
-	precondition (val < 2);
-	_value = val;
-	return *this;
-      }
-
-      operator unsigned char() const { return _value; }
-    };
-
-    inline std::ostream&
-    operator<<(std::ostream& stream, const bin& rhs)
-    {
-      stream << (unsigned int) rhs.value();
-      return stream;
-    }
-
-  } // type_definitions
-
-} // end of ntg
-
-// FIXME: find another solution to allow self contained bin.hh
-# include <ntg/optraits_bin.hh>
-
-#endif // ndef NTG_BIN_HH
+#endif // !NTG_BIN_HH

@@ -117,6 +117,10 @@ AC_DEFUN([OLN_PATH_HEADERS],
       # This is useful for sanity checks.
       OLN_LOCAL_SRC='$(top_srcdir)/'$oln_cv_local_src
       OLN_LOCAL_BUILD='$(top_builddir)/'$oln_cv_local_src
+      NTG_LOCAL_SRC='$(top_srcdir)/'$ntg_cv_local_src
+      NTG_LOCAL_BUILD='$(top_builddir)/'$ntg_cv_local_src
+      MLC_LOCAL_SRC='$(top_srcdir)/'$mlc_cv_local_src
+      MLC_LOCAL_BUILD='$(top_builddir)/'$mlc_cv_local_src
 
       #
       OLN_EXTRA_CPPFLAGS="-I$oln_cv_local_src -I$srcdir/$oln_cv_local_src"
@@ -129,6 +133,10 @@ AC_DEFUN([OLN_PATH_HEADERS],
       CPPFLAGS="$MLC_LOCAL_CPPFLAGS $NTG_LOCAL_CPPFLAGS $OLN_LOCAL_CPPFLAGS $CPPFLAGS"
       AC_SUBST([OLN_LOCAL_SRC])
       AC_SUBST([OLN_LOCAL_BUILD])
+      AC_SUBST([NTG_LOCAL_SRC])
+      AC_SUBST([NTG_LOCAL_BUILD])
+      AC_SUBST([MLC_LOCAL_SRC])
+      AC_SUBST([MLC_LOCAL_BUILD])
     fi
   fi
 
@@ -147,7 +155,7 @@ AC_DEFUN([OLN_PATH_HEADERS],
 ###
 
 
-# OLN_TEMPLATE_DEPTH([MINIMUM-DEPTH])
+# AC_CXX_TEMPLATE_DEPTH([MINIMUM-DEPTH])
 
 # Check for deep template recursion upto MINIMUM-DEPTH.
 
@@ -263,12 +271,12 @@ AC_DEFUN([OLN_ENABLE_EXCEPTIONS],
 ])
 AC_DEFUN([OLN_DISABLE_EXCEPTIONS], [OLN_ENABLE_EXCEPTIONS([no])])
 
-# OLN_NUMERIC_LIMITS
+# AC_CXX_NUMERIC_LIMITS
 
 # Checks for the availability of std::numeric_limits::infinity()
 # from C++.
 
-# This tests adds -DOLN_USE_C_LIMITS to OLN_CPPFLAGS if the numeric
+# This tests adds -DUSE_C_LIMITS to CPPFLAGS if the numeric
 # limits are unavailable, in which case HUGE_VAL and HUGE_VALF are
 # used instead by Olena.
 
@@ -311,7 +319,7 @@ AC_DEFUN([AC_CXX_NUMERIC_LIMITS],
   AC_LANG_POP([C++])
 ])
 
-# OLN_MATH_FUNC([FUNCTION], [MACRO_NAME], [TEST])
+# AC_CXX_CHECK_MATH([FUNCTION], [MACRO_NAME], [TEST])
 
 # Checks for the availability of a particular math function
 # from C++.
@@ -319,8 +327,8 @@ AC_DEFUN([AC_CXX_NUMERIC_LIMITS],
 # This test attempts to use the function without flags
 # at first, then with -D_ISOC99_SOURCE which is known to
 # activate C99 declarations in the GNU libc headers.
-# If the latter works, the flag is added to OLN_CPPFLAGS.
-# In the default case, it adds -DOLN_NEED_XXX to
+# If the latter works, the flag is added to CPPFLAGS.
+# In the default case, it adds -DNEED_XXX to
 # OLN_CPPFLAGS, hoping that oln/config/math.hh will provide
 # an implementation.
 
@@ -474,8 +482,8 @@ AC_DEFUN([AC_CXX_FLAGS],
      Intel)
       _CXXFLAGS_OPTIMIZE="-O3"
       _CXXFLAGS_DEBUG="-g"
-      _CXXFLAGS_STRICT="-w1 -Wall"
-      _CXXFLAGS_STRICT_ERRORS="-w1 -Wall"
+      _CXXFLAGS_STRICT="-w1"
+      _CXXFLAGS_STRICT_ERRORS="-w1"
       ;;
    esac
 
@@ -589,7 +597,7 @@ AC_DEFUN([AC_WITH_CXX_ZLIB],
 ###
 # $Format: "m4_define([OLN_VERSION], [0.$ProjectMajorVersion$])"$
 m4_define([OLN_VERSION], [0.2003paradigm])
-m4_define([OLN_VERSION], [0.8])
+m4_define([OLN_VERSION], [0.9])
 m4_define([OLN_CONTACT], [olena-bugs@lrde.epita.fr])
 
 # OLN_COLLECTION([subdirs-variable-name],
@@ -657,4 +665,3 @@ if test x$[]$3 != xno; then
    fi
 fi
 ])
-

@@ -315,7 +315,7 @@ namespace oln {
 		{
 		  typedef Value(I) I_type;
 		  Point(I) arg_min = p;
-		  Value(I) min =  optraits<I_type>::max();
+		  Value(I) min =  ntg_max_val(I_type);
 		  for (unsigned i = 0; i < cur_minimum.size(); ++i)
 		    {
 		      Neighb(N) p_prime(Ng, cur_minimum[i]);
@@ -419,7 +419,7 @@ namespace oln {
 		{
 		  typedef Value(I) I_type;
 		  Point(I) arg_max = p;
-		  Value(I) max =  optraits<I_type>::min();
+		  Value(I) max =  ntg_min_val(I_type);
 		  for (unsigned i = 0; i < cur_maximum.size(); ++i)
 		    {
 		      Neighb(N) p_prime(Ng, cur_maximum[i]);
