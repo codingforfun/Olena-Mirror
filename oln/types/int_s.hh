@@ -30,6 +30,7 @@
 
 # include <oln/config/system.hh>
 # include <oln/meta/cmp.hh>
+# include <oln/types/builtins_properties.hh>
 
 # include <oln/types/rec_value.hh>
 # include <oln/types/behaviour.hh>

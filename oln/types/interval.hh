@@ -28,6 +28,9 @@
 #ifndef OLENA_VALUE_INTERVAL_HH
 # define OLENA_VALUE_INTERVAL_HH
 
+# include <oln/config/system.hh>
+# include <oln/types/optraits.hh>
+
 # include <string>
 # include <sstream>
 

@@ -1,0 +1,9 @@
+cplx<rect, int> rect1(42, 51);
+cplx<polar, float> polar1(rect1);
+vec<2, int_u8> v1(rect1);
+cplx<rect, sfloat> rect2(v1);
+
+polar1 = rect2;
+rect1 += 69;
+
+std::cout << rect1 << " | " << polar1 << " | " << rect2 << std::endl;

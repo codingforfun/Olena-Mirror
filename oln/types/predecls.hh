@@ -28,6 +28,8 @@
 #ifndef OLENA_VALUE_PREDECLS_HH
 # define OLENA_VALUE_PREDECLS_HH
 
+# include <oln/types/cplx_representation.hh>
+
 namespace oln {
 
   struct non_sense;
@@ -38,7 +40,7 @@ namespace oln {
   class saturate;
 
   // Put types and operators definitions in a subnamespace, then
-  // important the types in oln::, and rely on Koenig lookup to find
+  // the important types in oln::, and rely on Koenig lookup to find
   // relevant operators.  This way our template operators do not
   // supersede the build-in operator.
   namespace type_definitions {
@@ -70,11 +72,26 @@ namespace oln {
   }
   using type_definitions::bin;
 
+  //
   // vectorial types
+  //
+
+  // vec
+
   namespace type_definitions {
     template <unsigned N, class T> class vec;
   }
   using type_definitions::vec;
+
+  // cplx
+
+  using type_definitions::cplx_representation;
+  namespace type_definitions {
+    template <cplx_representation R, class T> class cplx;
+  }
+  using type_definitions::cplx;
+  using type_definitions::rect;
+  using type_definitions::polar;
 
   // int_u
 

@@ -126,21 +126,21 @@ namespace oln
 
       int_u (const float rhs)
       {
-	_value = optraits_type::check(truncf(rhs));
+	_value = optraits_type::check(roundf(rhs));
       }
       self& operator=(const float rhs)
       {
-	_value = optraits_type::check(truncf(rhs));
+	_value = optraits_type::check(roundf(rhs));
 	return *this;
       }
 
       int_u (const double rhs)
       {
-	_value = optraits_type::check(trunc(rhs));
+	_value = optraits_type::check(round(rhs));
       }
       self& operator=(const double rhs)
       {
-	_value = optraits_type::check(trunc(rhs));
+	_value = optraits_type::check(round(rhs));
 	return *this;
       }
 

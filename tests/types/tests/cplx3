@@ -1,0 +1,16 @@
+cplx<rect, float> rect1(4, 5);
+cplx<rect, float> rect2(rect1);
+cplx<polar, sfloat> polar1(rect1);
+cplx<polar, sfloat> polar2(polar1);
+
+rect1 += polar2;
+rect1 *= polar2;
+rect1 -= polar2;
+rect1 /= polar2;
+
+polar1 += rect2;
+polar1 *= rect2;
+polar1 -= rect2;
+polar1 /= rect2;
+
+std::cout << rect1 << " | " << polar1.to_rect() << std::endl;

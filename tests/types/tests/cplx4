@@ -1,0 +1,11 @@
+vec<2, int_u16> v;
+v[0] = 51;
+v[1] = 69;
+cplx<rect, int_u16> rect1(v);
+cplx<rect, sfloat> rect2(rect1[0], rect1[1]);
+cplx<polar, double> polar1(rect1);
+cplx<polar, double> polar2(rect2);
+rect1 = 3 + polar1 + 2;
+polar1 = 2 * (rect1 + 3 * polar1 / rect2.conj()) / 3;
+
+std::cout << rect1 << " | " << polar1.to_rect() << std::endl;

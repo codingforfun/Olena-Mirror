@@ -25,49 +25,21 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_VALUE_ALL_HH
-# define OLENA_VALUE_ALL_HH
+#ifndef OLENA_VALUE_CPLX_REPRESENTATION_HH
+# define OLENA_VALUE_CPLX_REPRESENTATION_HH
 
-# include <oln/config/system.hh>
+namespace oln {
 
-# include <oln/types/type.hh>
+  namespace type_definitions {
 
-# include <oln/types/to_oln.hh>
-# include <oln/types/predecls.hh>
+    // Different representations of cplx :
+    typedef enum {
+      rect,
+      polar
+    } cplx_representation;
 
-# include <oln/types/builtins_properties.hh>
+  } // end of namespace type_definitions
 
-# include <oln/types/rec_value.hh>
+} // end of namespace oln
 
-# include <oln/types/behaviour.hh>
-# include <oln/types/interval.hh>
-
-# include <oln/types/typetraits.hh>
-# include <oln/types/typetraits_builtins_int.hh>
-# include <oln/types/typetraits_builtins_float.hh>
-
-# include <oln/types/optraits.hh>
-
-# include <oln/types/int_u.hh>
-# include <oln/types/int_s.hh>
-# include <oln/types/range.hh>
-# include <oln/types/cycle.hh>
-# include <oln/types/bin.hh>
-# include <oln/types/vec.hh>
-# include <oln/types/cplx.hh>
-
-
-# include <oln/types/optraits_int_u.hh>
-# include <oln/types/optraits_int_s.hh>
-# include <oln/types/optraits_range.hh>
-# include <oln/types/optraits_cycle.hh>
-# include <oln/types/optraits_builtins_int.hh>
-# include <oln/types/optraits_builtins_float.hh>
-# include <oln/types/optraits_bin.hh>
-# include <oln/types/optraits_vec.hh>
-# include <oln/types/optraits_cplx.hh>
-
-# include <oln/types/global_ops_traits.hh>
-# include <oln/types/global_ops.hh>
-
-#endif // ndef OLENA_VALUE_ALL_HH
+#endif // OLENA_VALUE_CPLX_REPRESENTATION_HH

@@ -135,7 +135,7 @@
   }										\
 										\
   template <class T1, class T2>							\
-  static T1& Name##_impl(rec_int<T1>& lhs, const type::any_class<T2>& rhs)	\
+  static T1& Name##_impl(rec_int<T1>& lhs, const type::any_const_class<T2>& rhs) \
   {										\
     lhs.self() = lhs.self().value() Op rhs.self();				\
     return lhs.self();								\

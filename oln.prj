@@ -1,28 +1,12 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 47)
-(Parent-Version oln 0_5 46)
-(Version-Log "Index: ChangeLog
-from  Alexandre Duret-Lutz  <duret_g@epita.fr>
-
-	* oln/types/optraits.hh (optraits_vector): New class.
-	* oln/types/predecls.hh (vec): Predeclare.
-	* oln/types/optraits_vec.hh, oln/types/vec.hh: New files.
-	* oln/types/all.hh: Include them.
-	* oln/Makefile.am (nobase_oln_HEADERS): Add types/vec.hh and
-	types/optraits_vec.hh.
-
-Index: tests/ChangeLog
-from  Alexandre Duret-Lutz  <duret_g@epita.fr>
-
-	* types/tests/vec1, types/tests/vec2, types/tests/vec3,
-	types/tests/vec4, types/tests/vec5, types/tests/vec6: New files.
-
-")
+(Project-Version oln 0_5 54)
+(Parent-Version oln 0_5 47)
+(Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Mon, 16 Sep 2002 19:52:22 +0200")
-(Checkin-Login duret_g)
+(Checkin-Time "Thu, 19 Sep 2002 20:14:39 +0200")
+(Checkin-Login ender)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
 ;; diff-ignore Makefile\.in$
@@ -44,58 +28,97 @@ from  Alexandre Duret-Lutz  <duret_g@epita.fr>
                   "\\.deps/"
                   "Makefile$"
                   "/stamp-h"
-		  "CVS/"
-		  ".cvsignore$"
-		  "/obsolete/"
-		  "demo/.*\\.p.m$"
-		  "demo/tour$"
-		  "demo/morpholena$"
-		  "demo/image$"
-		  "autom4te.cache"
-		  "\\.html$"
-		  "\\.png$"
-		  "\\.pdf$"
-		  "\\.eps$"
-		  "doc/doc/.*\\.pbm$"
-		  "doc/doc/oln-ref.toc$"
-		  "doc/doc/oln-ref.pg$"
-		  "doc/doc/oln-ref.ky$"
-		  "doc/doc/oln-ref.tp$"
-		  "doc/doc/oln-ref.vr$"
-		  "doc/doc/oln-ref.fn$"
-		  "doc/doc/oln-ref.cp$"
-		  "doc/doc/oln-ref.cps$"
-		  "doc/doc/oln-ref.aux$"
-		  "doc/doc/oln-ref.info$"
-		  "doc/doc/ref-morpho.texi$"
-		  "doc/doc/stamp-vti$"
-		  "doc/doc/version.texi$"
-		  "src/config/pconf.hh$"
-		  "src/config/extrconf.sh$"
-		  "src/config/config.h$"
-		  "tests/morpho/reconstruction$"
-		  "tests/morpho/extrkiller$"
-		  "tests/io/savetmp$"
-		  "tests/io/2d$"
-		  "tests/data/lena.pppm$"
-		  "tests/data/lena.ppgm$"
-		  "tests/data/lena.ppbm$"
-		  "tests/data/lena.pbm$"
-		  "tests/data/lena.pgm$"
-		  "tests/data/lena128.pgm$"
-		  "tests/convert/.*-.*-.*$"
+                  "CVS/"
+                  ".cvsignore$"
+                  "/obsolete/"
+                  "demo/.*\\.p.m$"
+                  "demo/tour$"
+                  "demo/morpholena$"
+                  "demo/image$"
+                  "autom4te.cache"
+                  "\\.html$"
+                  "\\.png$"
+                  "\\.pdf$"
+                  "\\.eps$"
+                  "doc/doc/.*\\.pbm$"
+                  "doc/doc/oln-ref.toc$"
+                  "doc/doc/oln-ref.pg$"
+                  "doc/doc/oln-ref.ky$"
+                  "doc/doc/oln-ref.tp$"
+                  "doc/doc/oln-ref.vr$"
+                  "doc/doc/oln-ref.fn$"
+                  "doc/doc/oln-ref.cp$"
+                  "doc/doc/oln-ref.cps$"
+                  "doc/doc/oln-ref.aux$"
+                  "doc/doc/oln-ref.info$"
+                  "doc/doc/ref-morpho.texi$"
+                  "doc/doc/stamp-vti$"
+                  "doc/doc/version.texi$"
+                  "src/config/pconf.hh$"
+                  "src/config/extrconf.sh$"
+                  "src/config/config.h$"
+                  "tests/morpho/reconstruction$"
+                  "tests/morpho/extrkiller$"
+                  "tests/io/savetmp$"
+                  "tests/io/2d$"
+                  "tests/data/lena128.pgm$"
+                  "tests/convert/.*-.*-.*$"
                   "\\.#"
-                  "^#"))
+                  "^#"
+                  "tests/\\(data\\|io\\)/lena\\.\\(pppm\\|ppgm\\|ppbm\\|pbm\\|pgm\\)$"
+                  "tests/types/runs/int_sc4/int_sc4.cc$"
+                  "oln/core/pred.hh$"
+                  "tests/defs$"
+                  "tests/convol/slow_sum_2d_2$"
+                  "tests/array/test_array1d.cc$"
+                  "tests/array/test_array2d$"
+                  "oln/config/extrconf.sh$"
+                  "tests/sanity/log$"
+                  "demo/test-reconstruction$"
+                  "utilities/oln-mosaic-u8$"
+                  "tests/sanity/incltest.cc$"
+                  "tests/array/gen_test_utils/postlude$"
+                  "tests/types/runs/int_sc4/run.errors$"
+                  "tests/meta/test_array3d$"
+                  "tests/io/lena$"
+                  "tests/array/Makefile.in$"
+                  "tests/types/runs/int_sc4/cxx.errors$"
+                  "oln/config/config.h$"
+                  "tests/meta/test_array1d$"
+                  "tests/array/gen_test_utils/.dirstamp$"
+                  "oln/config/pconf.hh$"
+                  "tests/array/gen_test$"
+                  "tests/array/test_array3d$"
+                  "tests/array/gen_test_utils/errors.cc$"
+                  "tests/array/test_array2d.cc$"
+                  "tests/meta/gen_test_utils/.dirstamp$"
+                  "tests/meta/test_array2d$"
+                  "tests/array/test_array3d.cc$"
+                  "tests/meta/gen_test$"
+                  "tests/convol/lena-sobel.pgm$"
+                  "tests/io/lena.ppm$"
+                  "tests/types/runs/int_sc4/try$"
+                  "tests/array/gen_test_utils/errors.hh$"
+                  "tests/convol/sobel_gradient$"
+                  "tests/array/Makefile.am$"
+                  "\\(TAGS\\|tags\\)$"
+                  "tests/morpho/edoc$"
+                  "tests/convol/slow_sum_2d_1$"
+                  "tests/array/gen_test.cc$"
+                  "tests/array/test_array1d$"
+                  "tests/array/gen_test_utils/prelude$"
+                  "diffs.patch$"
+                  "utilities/oln-mosaic-u16$"))
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.20 640))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.49 600))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.56 600))
   (configure.ac (oln/3_configure. 1.21 600))
-  (configure (oln/e/7_configure 1.25 700))
+  (configure (oln/e/7_configure 1.26 700))
   (README (oln/1_README 1.4 600))
   (ISSUES (oln/d/47_ISSUES 1.3 600))
   (Makefile.am (oln/2_Makefile.a 1.10 600))
-  (Makefile.in (oln/e/9_Makefile.i 1.28 644))
+  (Makefile.in (oln/e/9_Makefile.i 1.28 640))
   (NEWS (oln/0_NEWS 1.7 600))
 
   (demo/image.cc (oln/d/46_image.cc 1.2 600))
@@ -229,7 +252,7 @@ from  Alexandre Duret-Lutz  <duret_g@epita.fr>
   (oln/core/structelt.hh (oln/c/25_structelt. 1.2 600))
   (oln/core/traverse.hh (oln/d/30_traverse.h 1.3 600))
   (oln/core/typeadj.hh (oln/e/25_typeadj.hh 1.1 600))
-  (oln/core/type.hh (oln/c/21_type.hh 1.6 600))
+  (oln/core/type.hh (oln/c/21_type.hh 1.7 600))
   (oln/core/window1d.hh (oln/c/15_window1d.h 1.5 600))
   (oln/core/window2d.hh (oln/c/14_window2d.h 1.5 600))
   (oln/core/window3d.hh (oln/c/13_window3d.h 1.5 600))
@@ -263,19 +286,19 @@ from  Alexandre Duret-Lutz  <duret_g@epita.fr>
   (oln/level/invert.hh (oln/33_invert.hh 1.3 600))
   (oln/level/lut.hh (oln/29_lut.hh 1.6 600))
   (oln/level/threshold.hh (oln/f/15_threshold. 1.3 600))
-  (oln/Makefile.am (oln/27_Makefile.a 1.20 600))
-  (oln/Makefile.in (oln/e/17_Makefile.i 1.26 644))
+  (oln/Makefile.am (oln/27_Makefile.a 1.21 600))
+  (oln/Makefile.in (oln/e/17_Makefile.i 1.27 644))
   (oln/math/macros.hh (oln/b/21_macros.hh 1.3 600))
-  (oln/meta/array1d.hh (oln/f/23_array1d.hh 1.2 644))
-  (oln/meta/array1d.hxx (oln/f/22_array1d.hx 1.2 644))
-  (oln/meta/array2d.hh (oln/f/21_array2d.hh 1.2 644))
-  (oln/meta/array2d.hxx (oln/f/20_array2d.hx 1.2 644))
-  (oln/meta/array3d.hh (oln/f/19_array3d.hh 1.3 644))
-  (oln/meta/array3d.hxx (oln/f/18_array3d.hx 1.3 644))
+  (oln/meta/array1d.hh (oln/f/23_array1d.hh 1.2 600))
+  (oln/meta/array1d.hxx (oln/f/22_array1d.hx 1.2 600))
+  (oln/meta/array2d.hh (oln/f/21_array2d.hh 1.2 600))
+  (oln/meta/array2d.hxx (oln/f/20_array2d.hx 1.2 600))
+  (oln/meta/array3d.hh (oln/f/19_array3d.hh 1.3 600))
+  (oln/meta/array3d.hxx (oln/f/18_array3d.hx 1.3 600))
   ; (oln/meta/array.hh ())
   (oln/meta/array.hh (oln/f/36_array.hh 1.2 600))
   ; (oln/meta/array.hxx ())
-  (oln/meta/arraynd.hh (oln/f/35_arraynd.hh 1.1 644))
+  (oln/meta/arraynd.hh (oln/f/35_arraynd.hh 1.1 600))
   (oln/meta/basics.hh (oln/c/4_basics.hh 1.5 600))
   (oln/meta/cmp.hh (oln/c/3_cmp.hh 1.3 600))
   (oln/meta/control.hh (oln/c/2_control.hh 1.4 600))
@@ -353,7 +376,7 @@ from  Alexandre Duret-Lutz  <duret_g@epita.fr>
   (tests/meta/test_array1d.cc (oln/f/26_test_array 1.2 644))
   (tests/meta/test_array2d.cc (oln/f/25_test_array 1.2 644))
   (tests/meta/test_array3d.cc (oln/f/24_test_array 1.2 644))
-  (tests/ChangeLog (oln/e/30_ChangeLog 1.33 600))
+  (tests/ChangeLog (oln/e/30_ChangeLog 1.35 600))
   (tests/check/check.hh (oln/e/40_check.hh 1.2 600))
   (tests/check/data.cc (oln/f/5_data.cc 1.2 600))
   (tests/check/data.hh (oln/f/6_data.hh 1.1 600))
@@ -373,17 +396,17 @@ from  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 
   (tests/convol () :directory)
-  (tests/convol/Makefile.am (oln/f/38_Makefile.a 1.3 644))
+  (tests/convol/Makefile.am (oln/f/38_Makefile.a 1.3 640))
   (tests/convol/Makefile.in (oln/f/44_Makefile.i 1.5 644))
   ; (tests/convol/slow.cc ())
-  (tests/convol/slow_sum_2d_1.cc (oln/f/41_slow_sum_2 1.2 644))
-  (tests/convol/slow_sum_2d_2.cc (oln/f/40_slow_sum_2 1.2 644))
+  (tests/convol/slow_sum_2d_1.cc (oln/f/41_slow_sum_2 1.2 640))
+  (tests/convol/slow_sum_2d_2.cc (oln/f/40_slow_sum_2 1.2 640))
   (tests/convol/sobel_gradient.cc (oln/f/45_sobel_grad 1.3 600))
-  (tests/convol/sum_on_random.pgm (oln/f/42_sum_on_ran 1.1 644))
+  (tests/convol/sum_on_random.pgm (oln/f/42_sum_on_ran 1.1 600))
 
 
   (tests/data/lena.ppm (oln/e/51_lena.ppm 1.1 600) :no-keywords)
-  (tests/data/random.pgm (oln/f/43_random.pgm 1.1 644) :no-keywords)
+  (tests/data/random.pgm (oln/f/43_random.pgm 1.1 600) :no-keywords)
   (tests/io/2d.cc (oln/e/47_2d.cc 1.4 600))
   (tests/io/loadsave.hh (oln/e/48_loadsave.h 1.3 600))
   (tests/io/Makefile.am (oln/e/49_Makefile.a 1.4 600))
@@ -398,12 +421,12 @@ from  Alexandre Duret-Lutz  <duret_g@epita.fr>
   (tests/README (oln/f/4_README 1.2 600))
   (THANKS (oln/4_THANKS 1.2 600))
   (tools/ChangeLog (oln/e/18_ChangeLog 1.1 600))
-  (tools/depcomp (oln/e/12_depcomp 1.6 755))
+  (tools/depcomp (oln/e/12_depcomp 1.6 700))
   (tools () :directory)
-  (tools/install-sh (oln/e/15_install-sh 1.5 755))
+  (tools/install-sh (oln/e/15_install-sh 1.5 750))
   (tools/mdate-sh (oln/e/11_mdate-sh 1.1 700))
-  (tools/missing (oln/e/13_missing 1.5 755))
-  (tools/mkinstalldirs (oln/e/14_mkinstalld 1.3 755) :no-keywords)
+  (tools/missing (oln/e/13_missing 1.5 700))
+  (tools/mkinstalldirs (oln/e/14_mkinstalld 1.3 750) :no-keywords)
   (tools/scandefs.pl (oln/f/7_scandefs.p 1.1 700))
   (tools/texinfo.tex (oln/e/10_texinfo.te 1.2 600))
 
@@ -412,12 +435,12 @@ from  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
   (tests/sanity/includes.test (oln/f/46_includes.t 1.2 755))
   (tests/sanity/Makefile.in (oln/f/47_Makefile.i 1.2 644))
-  (tests/sanity/Makefile.am (oln/f/48_Makefile.a 1.1 644))
+  (tests/sanity/Makefile.am (oln/f/48_Makefile.a 1.1 600))
 
 ;; Files added by populate at Thu, 18 Jul 2002 20:30:39 +0200,
 ;; to version 0_4.26(w), by duret_g:
 
-  (tests/defs.in (oln/f/49_defs.in 1.1 644))
+  (tests/defs.in (oln/f/49_defs.in 1.1 600))
 
 ;; Files added by populate at Thu, 18 Jul 2002 21:13:31 +0200,
 ;; to version 0_4.28(w), by astrid:
@@ -428,40 +451,40 @@ from  Alexandre Duret-Lutz  <duret_g@epita.fr>
 ;; to version 0_5.2(w), by burrus_n:
 
   (oln/types/typetraits_builtins_int.hh (oln/g/3_typetraits 1.5 640))
-  (oln/types/typetraits_builtins_float.hh (oln/g/4_typetraits 1.6 640))
+  (oln/types/typetraits_builtins_float.hh (oln/g/4_typetraits 1.7 640))
   (oln/types/typetraits.hh (oln/g/5_typetraits 1.2 640))
   (oln/types/type.hh (oln/g/6_type.hh 1.3 640))
   (oln/types/to_oln.hh (oln/g/7_to_oln.hh 1.4 640))
   (oln/types/rec_value.hh (oln/g/8_rec_value. 1.5 640))
   (oln/types/range.hh (oln/g/9_range.hh 1.5 640))
-  (oln/types/predecls.hh (oln/g/10_predecls.h 1.7 640))
-  (oln/types/optraits_scalar_defs.hh (oln/g/11_optraits_s 1.2 640))
+  (oln/types/predecls.hh (oln/g/10_predecls.h 1.8 640))
+  (oln/types/optraits_scalar_defs.hh (oln/g/11_optraits_s 1.3 640))
   (oln/types/optraits_scalar.hh (oln/g/12_optraits_s 1.6 640))
   (oln/types/optraits_range.hh (oln/g/13_optraits_r 1.3 640))
   (oln/types/optraits_int_u.hh (oln/g/14_optraits_i 1.5 640))
   (oln/types/optraits_int_s.hh (oln/g/15_optraits_i 1.4 640))
-  (oln/types/optraits_cycle.hh (oln/g/16_optraits_c 1.7 640))
+  (oln/types/optraits_cycle.hh (oln/g/16_optraits_c 1.8 640))
   (oln/types/optraits_builtins_int_defs.hh (oln/g/17_optraits_b 1.2 640))
   (oln/types/optraits_builtins_int.hh (oln/g/18_optraits_b 1.2 640))
   (oln/types/optraits_builtins_float.hh (oln/g/19_optraits_b 1.7 640))
   (oln/types/optraits_bin.hh (oln/g/20_optraits_b 1.2 640))
   (oln/types/optraits.hh (oln/g/21_optraits.h 1.2 640))
-  (oln/types/interval.hh (oln/g/22_interval.h 1.4 640))
-  (oln/types/int_u.hh (oln/g/23_int_u.hh 1.10 640))
-  (oln/types/int_s.hh (oln/g/24_int_s.hh 1.8 640))
-  (oln/types/global_ops_traits.hh (oln/g/25_global_ops 1.1 640))
+  (oln/types/interval.hh (oln/g/22_interval.h 1.5 640))
+  (oln/types/int_u.hh (oln/g/23_int_u.hh 1.11 640))
+  (oln/types/int_s.hh (oln/g/24_int_s.hh 1.9 640))
+  (oln/types/global_ops_traits.hh (oln/g/25_global_ops 1.2 640))
   (oln/types/global_ops_defs.hh (oln/g/26_global_ops 1.2 640))
   (oln/types/global_ops.hh (oln/g/27_global_ops 1.6 640))
-  (oln/types/cycle.hh (oln/g/28_cycle.hh 1.6 640))
+  (oln/types/cycle.hh (oln/g/28_cycle.hh 1.7 640))
   (oln/types/builtins_properties.hh (oln/g/29_builtins_p 1.3 640))
   (oln/types/bin.hh (oln/g/30_bin.hh 1.4 640))
   (oln/types/behaviour.hh (oln/g/31_behaviour. 1.5 640))
-  (oln/types/all.hh (oln/g/32_all.hh 1.3 640))
+  (oln/types/all.hh (oln/g/32_all.hh 1.4 640))
 
 
-  (utilities/mosaic.cc (oln/g/0_mosaic.cc 1.1 644))
+  (utilities/mosaic.cc (oln/g/0_mosaic.cc 1.1 640))
   (utilities/Makefile.in (oln/g/1_Makefile.i 1.2 644))
-  (utilities/Makefile.am (oln/g/2_Makefile.a 1.1 644))
+  (utilities/Makefile.am (oln/g/2_Makefile.a 1.1 640))
 ;; Files added by populate at Mon, 29 Jul 2002 16:23:03 +0200,
 ;; to version 0_5.4(w), by burrus_n:
 
@@ -570,18 +593,54 @@ from  Alexandre Duret-Lutz  <duret_g@epita.fr>
 ;; Files added by populate at Mon, 16 Sep 2002 19:47:02 +0200,
 ;; to version 0_5.46(w), by adl:
 
-  (oln/types/optraits_vec.hh (oln/h/42_optraits_v 1.1 644))
+  (oln/types/optraits_vec.hh (oln/h/42_optraits_v 1.5 644))
   (oln/types/vec.hh (oln/h/43_vec.hh 1.1 644))
 
 ;; Files added by populate at Mon, 16 Sep 2002 19:47:21 +0200,
 ;; to version 0_5.46(w), by adl:
 
   (tests/types/tests/vec6 (oln/h/44_vec6 1.1 644))
-  (tests/types/tests/vec5 (oln/h/45_vec5 1.1 644))
+  (tests/types/tests/vec5 (oln/h/45_vec5 1.2 644))
   (tests/types/tests/vec4 (oln/h/46_vec4 1.1 644))
   (tests/types/tests/vec3 (oln/h/47_vec3 1.1 644))
   (tests/types/tests/vec2 (oln/h/48_vec2 1.1 644))
   (tests/types/tests/vec1 (oln/h/49_vec1 1.1 644))
+
+
+  (prj (oln.prj) :symlink)
+  (tests/types/tests/vec7 (oln/h/50_vec7 1.1 644))
+;; Files added by populate at Thu, 19 Sep 2002 20:12:45 +0200,
+;; to version 0_5.47(w), by ender:
+
+  (tests/types/tests/cplx4 (oln/h/51_cplx4 1.1 644))
+  (tests/types/tests/cplx3 (oln/i/0_cplx3 1.1 644))
+  (tests/types/tests/cplx2 (oln/i/1_cplx2 1.1 644))
+  (tests/types/tests/cplx1 (oln/i/2_cplx1 1.1 644))
+
+;; Files added by populate at Thu, 19 Sep 2002 20:13:02 +0200,
+;; to version 0_5.47(w), by ender:
+
+  (oln/types/cplx_representation.hh (oln/i/3_cplx_repre 1.1 644))
+  (oln/types/cplx.hh (oln/i/4_cplx.hh 1.1 644))
+
+;; Files added by populate at Thu, 19 Sep 2002 20:13:11 +0200,
+;; to version 0_5.47(w), by ender:
+
+  (oln/types/optraits_cplx.hh (oln/i/5_optraits_c 1.1 644))
 )
-(Merge-Parents)
+(Merge-Parents
+  (0_5.52 complete
+    (ChangeLog ChangeLog ChangeLog r) (configure configure configure r)
+    (oln/core/type.hh oln/core/type.hh oln/core/type.hh r) (tests/ChangeLog tests/ChangeLog tests/ChangeLog r)
+    (oln/types/typetraits_builtins_float.hh oln/types/typetraits_builtins_float.hh oln/types/typetraits_builtins_float.hh r) (oln/types/optraits_cycle.hh oln/types/optraits_cycle.hh oln/types/optraits_cycle.hh r)
+    (oln/types/interval.hh oln/types/interval.hh oln/types/interval.hh r) (oln/types/int_s.hh oln/types/int_s.hh oln/types/int_s.hh r)
+    (oln/types/cycle.hh oln/types/cycle.hh oln/types/cycle.hh r) (oln/types/optraits_vec.hh oln/types/optraits_vec.hh oln/types/optraits_vec.hh r)
+    (tests/types/tests/vec5 tests/types/tests/vec5 tests/types/tests/vec5 r) (() () prj a)
+    (() () tests/types/tests/vec7 a) 
+  )
+  (0_5.53 complete
+    (ChangeLog ChangeLog ChangeLog r) (oln/types/global_ops_traits.hh oln/types/global_ops_traits.hh oln/types/global_ops_traits.hh r)
+    (oln/types/optraits_vec.hh oln/types/optraits_vec.hh oln/types/optraits_vec.hh r) 
+  )
+)
 (New-Merge-Parents)

@@ -30,6 +30,7 @@
 
 # include <oln/types/typetraits.hh>
 # include <oln/types/optraits.hh>
+# include <oln/types/behaviour.hh>
 
 namespace oln
 {

@@ -34,6 +34,7 @@
 # include <oln/types/typetraits.hh>
 # include <oln/types/optraits_scalar.hh>
 # include <oln/types/interval.hh>
+# include <oln/types/behaviour.hh>
 
 namespace oln
 {
