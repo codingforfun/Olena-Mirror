@@ -8,6 +8,7 @@ MLC_DEP =					\
   bool.hh					\
   box.hh					\
   cmp.hh					\
+  config/system.hh				\
   contract.hh					\
   tracked_ptr.hh				\
   traits.hh					\

@@ -20,8 +20,6 @@ namespace mlc {
   class unknown_type { private: unknown_type(); };
   class no_type      { private: no_type(); };
 
-  class true_type  { private: true_type(); };
-  class false_type { private: false_type(); };
 
 } // end of namespace mlc
 

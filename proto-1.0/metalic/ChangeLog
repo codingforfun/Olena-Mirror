@@ -1,0 +1,7 @@
+2005-01-21  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* ChangeLog: New.
+	* mlc/types.hh: Remove already defined struct.
+	* mlc/makefile.src: Add config/system.hh.
+	* mlc/bool.hh: Add meta-if and meta-switch.
+
