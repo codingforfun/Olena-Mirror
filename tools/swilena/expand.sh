@@ -125,7 +125,7 @@ dump_python()
          sdir=meta
       fi
       echo "swilena_${mod}_wrap.cxx swilena_${mod}.py: \$(srcdir)/../$sdir/swilena_${mod}.i"
-      echo -e "\t\$(SWIG) -noruntime -c++ -python -I\$(srcdir)/../src -I\$(srcdir)/../meta \$(CPPFLAGS) -o swilena_${mod}_wrap.cxx \$(srcdir)/../$sdir/swilena_${mod}.i"
+      echo -e "\t\$(SWIG) \$(SWIG_FLAGS) -c++ -python -I\$(srcdir)/../src -I\$(srcdir)/../meta \$(CPPFLAGS) -o swilena_${mod}_wrap.cxx \$(srcdir)/../$sdir/swilena_${mod}.i"
       echo
     done
 }
@@ -173,7 +173,7 @@ dump_ruby()
          sdir=meta
       fi
       echo "swilena_${mod}_wrap.cxx: \$(srcdir)/../$sdir/swilena_${mod}.i"
-      echo -e "\t\$(SWIG) -c -c++ -ruby -I\$(srcdir)/../src -I\$(srcdir)/../meta \$(CPPFLAGS) -o swilena_${mod}_wrap.cxx \$(srcdir)/../$sdir/swilena_${mod}.i"
+      echo -e "\t\$(SWIG) \$(SWIG_FLAGS) -c++ -ruby -I\$(srcdir)/../src -I\$(srcdir)/../meta \$(CPPFLAGS) -o swilena_${mod}_wrap.cxx \$(srcdir)/../$sdir/swilena_${mod}.i"
       echo
     done
 }
