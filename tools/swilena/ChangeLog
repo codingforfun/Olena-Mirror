@@ -1,5 +1,10 @@
 2004-04-14  Damien Thivolle  <damien@lrde.epita.fr>
 
+	* swilena/python/tests/Makefile.am: Add tests to the distribution.
+	* swilena/ruby/tests/Makefile.am: Likewise.
+
+2004-04-14  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* swilena/python/tests/Makefile.am: Readd tests for swilena.
 	* swilena/ruby/Makefile.am: Likewise.
 	* swilena/ruby/tests/Makefile.am: Likewise.

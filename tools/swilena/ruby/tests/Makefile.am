@@ -9,3 +9,5 @@ TESTS_ENVIRONMENT = \
 
 
 TESTS = simple1.rb
+
+dist_noinst_DATA = simple1.rb
