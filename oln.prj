@@ -1,17 +1,16 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 182)
-(Parent-Version oln 10 181)
-(Version-Log "* doc/dev/thanks.texi: Rewording.
-        * doc/dev/abstract.texi: Change olena web page adresse.
-        * doc/dev/oln-dev.texi, doc/dev/build.texi,
-        doc/dev/install.texi, doc/dev/faq.texi,
-        doc/dev/srctree.texi, doc/dev/conf.texi: Spell checking..
+(Project-Version oln 10 183)
+(Parent-Version oln 10 182)
+(Version-Log "2004-05-12  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/core/neighborhood3d.hh: Add some common neighborhoods.
+	* olena/oln/convol/slow_gaussian.hh: Add file.
+	* olena/oln/convol/slow_gaussian.hxx: Add file.
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 12 May 2004 11:18:13 +0200")
-(Checkin-Login reda)
+(Checkin-Time "Wed, 12 May 2004 23:10:18 +0200")
+(Checkin-Login van-vl_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -117,7 +116,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.12 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.45 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.42 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.92 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.13 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.39 600))
 
@@ -250,7 +249,7 @@
   (olena/oln/core/macros.hh (oln/c/39_macros.hh 1.5 600))
   (olena/oln/core/neighborhood1d.hh (oln/c/37_neighborho 1.19 600))
   (olena/oln/core/neighborhood2d.hh (oln/c/36_neighborho 1.21 600))
-  (olena/oln/core/neighborhood3d.hh (oln/c/35_neighborho 1.19 600))
+  (olena/oln/core/neighborhood3d.hh (oln/c/35_neighborho 1.20 600))
   (olena/oln/core/abstract/neighborhood.hh (oln/c/38_neighborho 1.23 600))
   (metalic/mlc/objs.hh (oln/c/34_objs.hh 1.7 600))
   (olena/oln/core/point1d.hh (oln/c/32_point1d.hh 1.15 600))
@@ -1456,6 +1455,16 @@
   (integre/ntg/makefile.src (oln/r/2_makefile.s 1.1 600))
   (metalic/mlc/makefile.src (oln/r/3_makefile.s 1.1 600))
   (olena/oln/makefile.src (oln/r/4_makefile.s 1.1 600))
+
+;; Files added by populate at Wed, 12 May 2004 23:01:46 +0200,
+;; to version 10.182(w), by van-vl_n:
+
+  (olena/oln/convol/slow_gaussian.hh (oln/r/7_slow_gauss 1.1 644))
+
+;; Files added by populate at Wed, 12 May 2004 23:01:47 +0200,
+;; to version 10.182(w), by van-vl_n:
+
+  (olena/oln/convol/slow_gaussian.hxx (oln/r/8_slow_gauss 1.1 644))
 )
 (Merge-Parents)
 (New-Merge-Parents)
