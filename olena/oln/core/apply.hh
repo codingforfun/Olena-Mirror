@@ -239,9 +239,10 @@ namespace oln {
   **
   ** \see apply_self()
   */
-  template<class UnaryFun, class I1, class I2>
-  abstract::image<I1>& apply2_self(UnaryFun f,
-			  abstract::image<I1>& input1, const abstract::image<I2>& input2)
+  template<class BinaryFun, class I1, class I2>
+  abstract::image<I1>& apply2_self(BinaryFun f,
+				   abstract::image<I1>& input1,
+				   const abstract::image<I2>& input2)
   {
     precondition(input1.size() == input2.size());
     oln_iter_type(I1) p(input1);
@@ -254,10 +255,11 @@ namespace oln {
   **
   ** \see apply_self()
   */
-  template<class UnaryFun, class I1, class I2> inline
-  abstract::image<I1>& apply2_self(abstract::image<I1>& input1, const abstract::image<I1>& input2)
+  template<class BinaryFun, class I1, class I2> inline
+  abstract::image<I1>& apply2_self(abstract::image<I1>& input1,
+				   const abstract::image<I1>& input2)
   {
-    return apply_self(UnaryFun(), input1, input2);
+    return apply_self(BinaryFun(), input1, input2);
   }
 
 
@@ -266,24 +268,26 @@ namespace oln {
   **
   ** \see apply_self()
   */
-  template<template<class, class> class UnaryFun, class I1, class I2> inline
-  abstract::image<I1>& apply2_self(abstract::image<I1>& input1, const abstract::image<I2>& input2)
+  template<template<class, class> class BinaryFun, class I1, class I2> inline
+  abstract::image<I1>& apply2_self(abstract::image<I1>& input1,
+				   const abstract::image<I2>& input2)
   {
     // Workaround for g++-2.95 bug.
-    UnaryFun<oln_value_type(I1),oln_value_type(I2)> tmp;
+    BinaryFun<oln_value_type(I1),oln_value_type(I2)> tmp;
     return apply2_self(tmp, input1, input2);
   }
 
   
-  /*! \brief If \a I1 == \a I2 and the UnaryFun has only one parameter.
+  /*! \brief If \a I1 == \a I2 and the BinaryFun has only one parameter.
   **
   ** \see apply_self()
   */
-  template<template<class> class UnaryFun, class I> inline
-  abstract::image<I>& apply2_self(abstract::image<I>& input1, const abstract::image<I>& input2)
+  template<template<class> class BinaryFun, class I> inline
+  abstract::image<I>& apply2_self(abstract::image<I>& input1,
+				  const abstract::image<I>& input2)
   {
     // Workaround for g++-2.95 bug.
-    UnaryFun<oln_value_type(I)> tmp;
+    BinaryFun<oln_value_type(I)> tmp;
     return apply2_self(tmp, input1, input2);
   }
 

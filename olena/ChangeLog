@@ -1,6 +1,35 @@
+2004-08-16  Roland Levillain  <roland@lrde.epita.fr>
+
+	* oln/utils/timer.hh (timer::restart): Fix method to allow a
+	running timer to be restarted.
+	(timer::resume): Fix documentation.
+
+	* tests/utils/tests/timer (check): Add a test case to check the
+	behavior of restart() on a running timer.
+
+2004-08-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	* oln/core/neighborhood1d.hh (mk_win_from_neighb): Swap
+	inverted argument and return value in the documentation.
+	* oln/core/neighborhood2d.hh (mk_win_from_neighb): Likewise.
+	* oln/core/neighborhood3d.hh (mk_win_from_neighb): Likewise.
+
+2004-08-03  Roland Levillain  <roland@lrde.epita.fr>
+
+	* oln/core/apply.hh (apply2_self): Rename template parameter
+	UnaryFun as BinaryFun.
+	Cut lines so that they do not exceed 80 characters in width.
+
+2004-07-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	* oln/level/threshold.hh: Fix argument description in ctor
+	documentation.
+	* oln/level/cc.hh: Typos in documentation.
+
 2004-07-16  Giovanni Palma  <giovanni@lrde.epita.fr>
 
-	* tests/md5_morpho_attribute_closing_opening_light_hh5: Remove file.
+	* tests/md5_morpho_attribute_closing_opening_light_hh5:   Remove
+	file because the test already exists.
 	* tests/md5_morpho_attribute_closing_opening_light_hh4: Likewise.
 	* tests/md5_morpho_attribute_closing_opening_light_hh3: Likewise.
 	* tests/md5_morpho_attribute_closing_opening_light_hh2: Likewise.
