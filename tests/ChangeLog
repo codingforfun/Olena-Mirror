@@ -1,3 +1,9 @@
+2002-09-02  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* types/tests/optrait1a, types/tests/optrait1b,
+	types/tests/optrait2a, types/tests/optrait2a,
+	tests/types/tests/optrait3: New files.
+
 2002-08-28  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* types/tests/int_u2d, types/tests/int_u2a, types/tests/int_u3a,

@@ -1,0 +1,4 @@
+sfloat s = oln::optraits<sfloat>::sup();
+dfloat d = oln::optraits<dfloat>::sup();
+return s != numeric_limits<float>::infinity()
+    || d != numeric_limits<double>::infinity();
