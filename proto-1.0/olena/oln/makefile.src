@@ -4,6 +4,8 @@
 ##
 
 OLN_DEP =					\
+  config/pconf.hh				\
+  config/system.hh				\
   core/2d/array2d.hh				\
   core/2d/image2d.hh				\
   core/2d/iter2d.hh				\

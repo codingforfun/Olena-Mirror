@@ -1,5 +1,10 @@
 2005-01-21  Damien Thivolle  <damien@lrde.epita.fr>
 
+	* oln/makefile.src: Update file dependencies.
+	* oln/core/2d/iter2d.hh: Fix a bad file inclusion.
+
+2005-01-21  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* ChangeLog: New.
 	* oln/makefile.src: Adds file dependencies.
 	* oln/core/abstract/iter.hh: New.

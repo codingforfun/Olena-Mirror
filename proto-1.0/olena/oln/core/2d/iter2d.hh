@@ -2,7 +2,6 @@
 # define PROTO_OLN_CORE_2D_ITER2D_HH
 
 # include <mlc/contract.hh>
-# include <mlc/objs.hh>
 
 # include <oln/core/abstract/iter.hh>
 # include <oln/core/2d/point2d.hh>
@@ -96,4 +95,4 @@ namespace oln {
 }
 
 
-#endif // ndef PROTO_OLN_CORE_ABSTRACT_ITER_HH
+#endif // ndef PROTO_OLN_CORE_2D_ITER2D_HH
