@@ -1,6 +1,10 @@
+2003-05-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Makefile.am (CLEANFILES): Undo wrong changes.
+
 2003-05-10  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* Makefile.am (MAINTAINERCLEANFILES): Add configure.lineno.
+	* Makefile.am (CLEANFILES): Add configure.lineno.
 
 2003-05-06  Raphaël Poss  <raph@lrde.epita.fr>
 
