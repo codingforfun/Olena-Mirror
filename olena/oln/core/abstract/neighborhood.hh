@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,7 +32,7 @@
 # include <oln/core/abstract/dpoint.hh>
 # include <oln/core/abstract/struct_elt.hh>
 
-namespace oln 
+namespace oln
 {
 
   namespace abstract
@@ -42,12 +42,12 @@ namespace oln
   } // end of abstract
 
   template<class Exact>
-  struct struct_elt_traits<abstract::neighborhood<Exact> > 
+  struct struct_elt_traits<abstract::neighborhood<Exact> >
   {
     typedef abstract::neighborhood<Exact> abstract_type;
   };
 
-  namespace abstract 
+  namespace abstract
   {
 
     template<class Exact>
@@ -58,89 +58,89 @@ namespace oln
       typedef typename struct_elt_traits<Exact>::iter_type iter_type;
       typedef typename struct_elt_traits<Exact>::neighb_type neighb_type;
       typedef typename struct_elt_traits<Exact>::win_type win_type;
-      
+
       typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
       typedef typename struct_elt_traits<Exact>::abstract_type abstract_type;
       enum { dim = struct_elt_traits<Exact>::dim };
- 
-      static std::string 
+
+      static std::string
       name()
       {
 	return std::string("neighborhood<") + Exact::name() + ">";
       }
-      
-      bool 
+
+      bool
       has(const abstract::dpoint<dpoint_type>& dp) const
       {
 	return this->exact().has_(dp.exact());
       }
-      
-      unsigned 
+
+      unsigned
       card() const
       {
 	return this->exact().card_();
       }
-      
-      bool 
+
+      bool
       is_centered() const
       {
 	return this->exact().is_centered_();
       }
-      
-      const dpoint_type 
+
+      const dpoint_type
       dp(unsigned i) const
       {
 	return this->exact()[i];
       }
 
-      bool 
+      bool
       operator==(const self_type& win) const
       {
 	return this->exact().is_equal(win.exact());
       }
 
-      coord 
+      coord
       delta() const
       {
 	return this->exact().get_delta();
       }
 
-      const dpoint_type 
+      const dpoint_type
       operator[](unsigned i) const
       {
 	return this->exact().at(i);
       }
 
-      exact_type& 
+      exact_type&
       add(const abstract::dpoint<dpoint_type>& dp)
       {
 	this->exact().add_(dp.exact());
 	return this->exact().add_(-dp.exact());
       }
       // obsolete
-      exact_type 
+      exact_type
       operator-() const
       {
 	return this->exact();
       }
 
     protected:
-      
-      void 
+
+      void
       sym()
       {
 	this->exact().sym_();
       }
 
-      neighborhood() 
+      neighborhood()
       {}
     };
-   
-  } // end of abstract  
+
+  } // end of abstract
 
     template<class E>
-    inline E 
-    inter(const abstract::neighborhood<E> &lhs, 
+    inline E
+    inter(const abstract::neighborhood<E> &lhs,
 	  const abstract::neighborhood<E> &rhs)
     {
       E neighb;
@@ -149,10 +149,10 @@ namespace oln
 	  neighb.add(rhs.dp(j));
       return neighb;
     }
-  
+
     template<class E>
-    inline E 
-    uni(const abstract::neighborhood<E> &lhs, 
+    inline E
+    uni(const abstract::neighborhood<E> &lhs,
 	const abstract::neighborhood<E> &rhs)
     {
       E neighb;
@@ -166,7 +166,7 @@ namespace oln
     }
 
   template<class E>
-  inline typename struct_elt_traits<E>::win_type 
+  inline typename struct_elt_traits<E>::win_type
   mk_win_from_neighb(const abstract::neighborhood<E>& n)
   {
     typename struct_elt_traits<E>::win_type win(n.card());
@@ -175,8 +175,11 @@ namespace oln
     return win;
   }
 
-  
+# define oln_neighb_type(Neighbable)		\
+typename Neighbable::neighb_type
+
+
 } // end of oln
-  
+
 
 #endif // OLENA_CORE_ABSTRACT_NEIGHBORHOOD_HH

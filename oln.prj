@@ -1,120 +1,686 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 64)
-(Parent-Version oln 10 63)
+(Project-Version oln 10 67)
+(Parent-Version oln 10 64)
 (Version-Log "Index: olena/ChangeLog
 from  Giovanni Palma  <giovanni@lrde.epita.fr>
-	* oln/morpho/attribute_closing_opening.hh: Make the
-	opening/closing choice at compile time.
-	* oln/morpho/attribute_union_find.hh: Likewise.
 
-	* oln/utils/histogram.hh: Add a distrib sort functor.
+	* tests/morpho/tests/attribute: Fix function call problems.
+	* tests/morpho/tests/attr_op_cl: Add attribute opening/closing
+	tests.
+	* oln/morpho/attribute_closing_opening_map.hh: Add slow
+	namespace. Correct type problems.
+	* oln/morpho/attribute_closing_opening_map.hxx: Likewise.
+	* oln/morpho/attributes.hh: Fix bugs.
+	* oln/morpho/attribute_union_find.hh: Add fast namespace.
+	* oln/morpho/attribute_closing_opening.hh: Likewise.
 
-Index: NEWS
---- NEWS Tue, 10 Feb 2004 15:35:04 +0100 palma_g (oln/0_NEWS 1.18 640)
-+++ NEWS Tue, 10 Feb 2004 17:19:37 +0100 palma_g (oln/0_NEWS 1.18 640)
-@@ -11,7 +11,7 @@
-             rectangle, volume, height, maxvalue, minvalue).
- 
- 	* Change the color conversion system
--	  - CIE RGB is the main color system e.g. it can be converted
-+	  - CIE RGB is the main color system i.e. it can be converted
- 	    directly into any other color system.
- 	  - Conversion between 2 color systems should pass by the RGB one.
- 
-Index: olena/oln/utils/histogram.hh
---- olena/oln/utils/histogram.hh Fri, 06 Feb 2004 16:02:37 +0100 palma_g (oln/10_histogram. 1.6.1.14.1.4 640)
-+++ olena/oln/utils/histogram.hh Tue, 10 Feb 2004 17:13:39 +0100 palma_g (oln/10_histogram. 1.6.1.14.1.4 640)
-@@ -523,6 +523,30 @@
- 	*(ptr[unsigned(im[p] - ntg_min_val(val))]++) = p;
-     }
- 
-+    // to select staticly the good distrib_sort
-+    template <bool reverse>
-+    struct select_distrib_sort
-+    {
-+      template <class I>
-+      void
-+      operator ()(const oln::abstract::image<I>& im,
-+		  std::vector<oln_point_type(I)> &v)
-+      {
-+	distrib_sort_inv(im, v);
-+      }
-+    };
-+
-+    template <>
-+    struct select_distrib_sort<true>
-+    {
-+      template <class I>
-+      void
-+      operator ()(const oln::abstract::image<I>& im,
-+		  std::vector<oln_point_type(I)> &v)
-+      {
-+	distrib_sort(im, v);
-+      }
-+    };
-   } // end of namespace utils
- 
- } // end of namespace oln
 Index: olena/oln/morpho/attribute_closing_opening.hh
---- olena/oln/morpho/attribute_closing_opening.hh Mon, 09 Feb 2004 18:57:03 +0100 palma_g (oln/q/49_attribute_ 1.12 640)
-+++ olena/oln/morpho/attribute_closing_opening.hh Tue, 10 Feb 2004 16:52:24 +0100 palma_g (oln/q/49_attribute_ 1.12 640)
-@@ -43,9 +43,10 @@
+--- olena/oln/morpho/attribute_closing_opening.hh Tue, 10 Feb 2004 17:32:17 +0100 palma_g (oln/q/49_attribute_ 1.13 640)
++++ olena/oln/morpho/attribute_closing_opening.hh Mon, 16 Feb 2004 08:38:59 +0100 palma_g (oln/q/49_attribute_ 1.13 640)
+@@ -32,8 +32,8 @@
+ 
+ namespace oln {
+   namespace morpho {
++    namespace fast {
+     namespace tarjan {
+-
+       namespace internal {
+ 
+ 	// attribute closing
+@@ -43,7 +43,6 @@
  			const abstract::neighborhood<N>& Ng,
  			const attr_lambda_type(A) &lambda)
  	{
-+	  typedef N	toto;
+-	  typedef N	toto;
  	  typedef tarjan::tarjan_set<oln_concrete_type(I), A > tarjan_set_type;
--	  tarjan_set_type area_closing(input.exact(), attr_env_type(A)());
--	  return area_closing.get_comptute(lambda, Ng, true);
-+	  tarjan_set_type attr_closing(input.exact(), attr_env_type(A)());
-+	  return attr_closing.template get_comptute<true>(lambda, Ng);
- 	}
- 
- 	// attribute opening
-@@ -56,8 +57,8 @@
- 			const attr_lambda_type(A) &lambda)
- 	{
- 	  typedef tarjan::tarjan_set<oln_concrete_type(I), A > tarjan_set_type;
--	  tarjan_set_type area_opening(input.exact(), attr_env_type(A)());
--	  return area_opening.get_comptute(lambda , Ng, false);
-+	  tarjan_set_type attr_opening(input.exact(), attr_env_type(A)());
-+	  return attr_opening.template get_comptute<false>(lambda, Ng);
+ 	  tarjan_set_type attr_closing(input.exact(), attr_env_type(A)());
+ 	  return attr_closing.template get_comptute<true>(lambda, Ng);
+@@ -62,7 +61,7 @@
  	}
  
        } // !internal
+-
++    } // !tarjan
+ // macro for some attribute opening/closing declarations
+ # define xxx_opening_decl(T) \\
+       template<class I, class N> \\
+@@ -71,7 +70,7 @@
+ 		       const abstract::neighborhood<N>& Ng, \\
+ 		       const attr_lambda_type(T##_type<unsigned>) &lambda) \\
+       { \\
+-	return internal::attr_opening_<I, N, T##_type<unsigned> >(input, Ng, lambda); \\
++	return tarjan::internal::attr_opening_<I, N, T##_type<unsigned> >(input, Ng, lambda); \\
+       }
+ 
+ # define xxx_closing_decl(T) \\
+@@ -81,7 +80,7 @@
+ 		       const abstract::neighborhood<N>& Ng, \\
+ 		       const attr_lambda_type(T##_type<unsigned>) &lambda) \\
+       { \\
+-	return internal::attr_closing_<I, N, T##_type<unsigned> >(input, Ng, lambda); \\
++	return tarjan::internal::attr_closing_<I, N, T##_type<unsigned> >(input, Ng, lambda); \\
+       }
+ 
+ 
+@@ -93,7 +92,7 @@
+ 		       const abstract::neighborhood<N>& Ng, \\
+ 		       const attr_lambda_type(T##_type<I>) &lambda) \\
+       { \\
+-	return internal::attr_opening_<I, N, T##_type<I> >(input, Ng, lambda); \\
++	return tarjan::internal::attr_opening_<I, N, T##_type<I> >(input, Ng, lambda); \\
+       }
+ 
+ # define xxx_closing_im_decl(T) \\
+@@ -103,7 +102,7 @@
+ 		       const abstract::neighborhood<N>& Ng, \\
+ 		       const attr_lambda_type(T##_type<I>) &lambda) \\
+       { \\
+-	return internal::attr_closing_<I, N, T##_type<I> >(input, Ng, lambda); \\
++	return tarjan::internal::attr_closing_<I, N, T##_type<I> >(input, Ng, lambda); \\
+       }
+ 
+       /*=processing area_closing
+@@ -124,7 +123,7 @@
+        * exi: lena256.pgm
+        * exo: out.pgm
+        =*/
+-      xxx_closing_decl(area)
++      xxx_closing_decl(area);
+ 
+       /*=processing area_opening
+        * ns: morpho
+@@ -144,27 +143,27 @@
+        * exi: lena256.pgm
+        * exo: out.pgm
+        =*/
+-	xxx_opening_decl(area)
+-
+-	xxx_opening_decl(volume)
+-	xxx_closing_decl(volume)
+-	xxx_opening_decl(height)
+-	xxx_closing_decl(height)
+-	xxx_opening_decl(maxvalue)
+-	xxx_closing_decl(maxvalue)
+-	xxx_opening_decl(minvalue)
+-	xxx_closing_decl(minvalue)
+-	xxx_opening_im_decl(disk)
+-	xxx_closing_im_decl(disk)
+-	xxx_opening_im_decl(dist)
+-	xxx_closing_im_decl(dist)
+-	xxx_closing_im_decl(square)
+-	xxx_opening_im_decl(square)
+-	xxx_closing_im_decl(rectangle)
+-	xxx_opening_im_decl(rectangle)
++      xxx_opening_decl(area);
+ 
+-    }
+-  }
+-}
++      xxx_opening_decl(volume);
++      xxx_closing_decl(volume);
++      xxx_opening_decl(height);
++      xxx_closing_decl(height);
++      xxx_opening_decl(maxvalue);
++      xxx_closing_decl(maxvalue);
++      xxx_opening_decl(minvalue);
++      xxx_closing_decl(minvalue);
++      xxx_opening_im_decl(disk);
++      xxx_closing_im_decl(disk);
++      xxx_opening_im_decl(dist);
++      xxx_closing_im_decl(dist);
++      xxx_closing_im_decl(square);
++      xxx_opening_im_decl(square);
++      xxx_closing_im_decl(rectangle);
++      xxx_opening_im_decl(rectangle);
++
++    } // !fast
++  } // !morpho
++} // !oln
+ 
+ #endif
 Index: olena/oln/morpho/attribute_union_find.hh
---- olena/oln/morpho/attribute_union_find.hh Mon, 09 Feb 2004 18:57:03 +0100 palma_g (oln/q/50_attribute_ 1.10 640)
-+++ olena/oln/morpho/attribute_union_find.hh Tue, 10 Feb 2004 17:15:02 +0100 palma_g (oln/q/50_attribute_ 1.10 640)
-@@ -171,20 +171,16 @@
+--- olena/oln/morpho/attribute_union_find.hh Tue, 10 Feb 2004 17:32:17 +0100 palma_g (oln/q/50_attribute_ 1.11 640)
++++ olena/oln/morpho/attribute_union_find.hh Thu, 12 Feb 2004 14:14:57 +0100 palma_g (oln/q/50_attribute_ 1.11 640)
+@@ -38,6 +38,7 @@
  
- 	// bool closing = true -> a closing is performed,
- 	// an opening otherwise.
--	template<class N>
-+	template<bool closing, class N>
- 	image_type
- 	get_comptute(const lambda_type & lambda,
--		     const abstract::neighborhood<N>& Ng,
--		     const bool closing)
-+		     const abstract::neighborhood<N>& Ng)
+ namespace oln {
+   namespace morpho {
++    namespace fast {
+     namespace tarjan {
+ 
+       template< class T>
+@@ -231,7 +232,8 @@
+ 	const lambda_type *lambda_;
+ 	const env_type	env_;
+       };
+-    }
+-  }
+-}
++      } // !tarjan
++    } // !fast
++  } // !morph
++} // !oln
+ #endif
+Index: olena/oln/morpho/attributes.hh
+--- olena/oln/morpho/attributes.hh Tue, 10 Feb 2004 15:35:04 +0100 palma_g (oln/j/45_attributes 1.3 644)
++++ olena/oln/morpho/attributes.hh Mon, 16 Feb 2004 18:57:01 +0100 palma_g (oln/j/45_attributes 1.3 644)
+@@ -31,9 +31,9 @@
+ # include <vector>
+ 
+ // attribute dedicated macros
+-# define attr_lambda_type(T)	typename attr_traits<T>::lambda_type
+-# define attr_env_type(T)	typename attr_traits<T>::env_type
+-# define attr_value_type(T)	typename attr_traits<T>::value_type
++# define attr_lambda_type(T)	typename oln::morpho::attr_traits<T>::lambda_type
++# define attr_env_type(T)	typename oln::morpho::attr_traits<T>::env_type
++# define attr_value_type(T)	typename oln::morpho::attr_traits<T>::value_type
+ 
+ # define attr_type_decl(slef_type) \\
+       typedef mlc_exact_vt_type(self_type, Exact)	exact_type; \\
+@@ -43,7 +43,6 @@
+ 
+ namespace oln {
+   namespace morpho {
+-    namespace tarjan {
+       namespace tools {
+ 	// should be moved elsewhere
+ 	template <class T>
+@@ -51,8 +50,8 @@
  	{
- 	  lambda_ = &lambda;
+ 	  return v1 > v2 ? v1 - v2 : v2 - v1;
+ 	}
++      } // !tools
  
- 	  std::vector<point_type>	I(input_.npoints());
+-      }
+       // environment herarchy
+       // not used yet
+       template <class Exact>
+@@ -265,7 +264,10 @@
+ 	  {
+ 	  };
  
--	  if (closing)
--	    oln::utils::distrib_sort(input_, I);
--	  else
--	    oln::utils::distrib_sort_inv(input_, I);
-+	  oln::utils::select_distrib_sort<closing>()(input_, I);
+-	height_type(const lambda_type &lambda): value_(lambda)
++	height_type(const lambda_type &lambda):
++	  value_(lambda),
++	  min_(ntg_zero_val(value_type)),
++	  max_(lambda)
+ 	  {
+ 	  };
  
- 	  level::fill(aux_data_, ntg_sup_val(lambda_type));
- 	  aux_data_.border_adapt_assign(Ng.delta(), ntg_sup_val(lambda_type));
+@@ -273,25 +275,38 @@
+ 	  height_type(const abstract::image<I> &input,
+ 		      const oln_point_type(I) &p,
+ 		      const env_type&):
+-	  reflevel_(input[p]),
+-	  value_(ntg_zero_val(value_type))
++	  value_(ntg_zero_val(value_type)),
++	  min_(input[p]),
++	  max_(input[p])
+ 	  {
+ 	  };
+ 
+-	const value_type &getReflevel() const
++
++	const value_type &getMin() const
+ 	  {
+-	    mlc_dispatch(getReflevel)();
++	    mlc_dispatch(getMin)();
+ 	  };
+ 
++	const value_type &getMax() const
++	  {
++	    mlc_dispatch(getMax)();
++	  };
+ 	// impl part
+-	const value_type &getReflevel_impl() const
++	const value_type &getMin_impl() const
+ 	  {
+-	    return reflevel_;
++	    return min_;
++	  };
++
++	const value_type &getMax_impl() const
++	  {
++	    return max_;
+ 	  };
+ 
+ 	void pe_impl(const height_type &rhs)
+ 	  {
+-	    value_ = tools::diffabs(reflevel_, rhs.getReflevel());
++	    min_ = ntg::min(min_, rhs.getMin());
++	    max_ = ntg::max(max_, rhs.getMax());
++	    value_ = max_ - min_;
+ 	  };
+ 
+ 	bool less_impl(const lambda_type &lambda) const
+@@ -305,8 +320,9 @@
+ 	  };
+ 
+       protected:
+-	value_type reflevel_;
+ 	value_type value_;
++	value_type	min_;
++	value_type	max_;
+     };
+ 
+ 
+@@ -413,7 +429,7 @@
+ 
+       bool less_impl(const lambda_type &lambda) const
+ 	{
+-	  return value_ < lambda;
++	  return value_ > lambda;
+ 	};
+ 
+       bool ne_impl(const lambda_type &lambda) const
+@@ -452,17 +468,27 @@
+ 	  };
+ 
+ 	disk_type(const im_type&, const point_type &p, const env_type &) :
+-	  value_(1), pts_()
++	  value_(ntg_zero_val(value_type)), pts_()
++
+ 	{
+ 	  pts_.push_back(p);
+ 	};
+ 
++	const value_type &getValue() const
++	  {
++	    mlc_dispatch(getValue)();
++	  };
++
+ 	const pts_type &getPts() const
+ 	  {
+ 	    mlc_dispatch(getPts)();
+ 	  };
+ 
+ 	// impl
++	const value_type &getValue_impl() const
++	  {
++	    return value_;
++	  };
+ 
+ 	const pts_type &getPts_impl() const
+ 	  {
+@@ -471,7 +497,10 @@
+ 
+ 	void pe_impl(const disk_type &rhs)
+ 	{
+-	  std::copy(rhs.getPts().begin(), rhs.getPts().end(), std::back_inserter(pts_));
++	    value_type	last = value_;
++	    std::copy(rhs.getPts().begin(),
++		      rhs.getPts().end(),
++		      std::back_inserter(pts_));
+ 	  value_ = ntg_zero_val(value_type);
+ 	  for (cst_iter_type p1 = pts_.begin(); p1 != pts_.end(); ++p1)
+ 	    for (cst_iter_type p2 = pts_.begin(); p2 != pts_.end(); ++p2)
+@@ -484,6 +513,8 @@
+ 		  value_ = d;
+ 	      }
+ 	  value_ /= 2;
++	    value_ = ntg::max(value_, last);
++	    value_ = ntg::max(value_, rhs.getValue());
+ 	};
+ 
+ 	bool less_impl(const lambda_type &lambda) const
+@@ -530,6 +561,11 @@
+ 	{
+ 	};
+ 
++	const value_type &getValue() const
++	  {
++	    mlc_dispatch(getValue)();
++	  };
++
+ 	dist_type(const lambda_type lambda): value_(lambda)
+ 	  {
+ 	  };
+@@ -545,14 +581,22 @@
+ 	    return center_;
+ 	  };
+ 
++	const value_type &getValue_impl() const
++	  {
++	    return value_;
++	  };
++
+ 	void pe_impl(const dist_type &rhs)
+ 	{
++	  value_type	last = value_;
+ 	  dpoint_type	p = center_ - rhs.getCenter();
+ 
+ 	  value_ = ntg_zero_val(value_type);
+ 	  for (int i = 0; i < point_traits<point_type>::dim; ++i)
+ 	    value_ += p.nth(i) * p.nth(i);
+ 	  value_ = sqrt(value_);
++	  value_ = ntg::max(value_, last);
++	  value_ = ntg::max(value_, rhs.getValue());
+ 	};
+ 
+ 	bool less_impl(const lambda_type &lambda) const
+@@ -841,9 +885,8 @@
+ 	typedef ntg::vec<I::dim, value_type, mlc::final>	lambda_type;
+ 	typedef NullEnv						env_type;
+       };
+-    }
+-  }
+-}
++  } // !morpho
++} //!oln
+ 
+ /*-----------*
+   |  diamond  |
+Index: olena/oln/morpho/attribute_closing_opening_map.hxx
+--- olena/oln/morpho/attribute_closing_opening_map.hxx Tue, 10 Feb 2004 19:49:03 +0100 van-vl_n (oln/j/48_attribute_ 1.1 644)
++++ olena/oln/morpho/attribute_closing_opening_map.hxx Thu, 12 Feb 2004 14:05:43 +0100 palma_g (oln/j/48_attribute_ 1.1 644)
+@@ -30,6 +30,8 @@
+ {
+   namespace morpho
+   {
++    namespace slow
++    {
+     template <class I, class D, class Env>
+     template <class N>
+     f_tarjan_map<I, D, Env>::f_tarjan_map(bool is_closing,
+@@ -189,6 +191,7 @@
+ 	      }
+ 	}
+     }
++    } // end of namespace slow
+   } // end of namespace morpho
+ } // end of namespace oln
+ 
+Index: olena/oln/morpho/attribute_closing_opening_map.hh
+--- olena/oln/morpho/attribute_closing_opening_map.hh Tue, 10 Feb 2004 19:49:03 +0100 van-vl_n (oln/j/49_attribute_ 1.1 600)
++++ olena/oln/morpho/attribute_closing_opening_map.hh Mon, 16 Feb 2004 08:39:58 +0100 palma_g (oln/j/49_attribute_ 1.1 600)
+@@ -33,6 +33,7 @@
+ # include <ntg/int.hh>
+ # include <oln/utils/histogram.hh>
+ # include <oln/utils/special_points.hh>
++# include <oln/morpho/attributes.hh>
+ 
+ # include <iterator>
+ # include <vector>
+@@ -45,14 +46,15 @@
+ {
+   namespace morpho
+   {
+-
++    namespace slow
++    {
+     /*! Attribute closing using map. Smaller memory usage, but
+      *  slower computation than the attribute_closing_opening
+      *
+      * See \"Fast morphological attribute operations using Tarjan's union-find
+      * algorithm\" by Michael H. F. Wilkinson and Jos B. T. M. Roerdink
+      */
+-    template <class I, class D, class Env = morpho::tarjan::NullEnv>
++      template <class I, class D, class Env = morpho::NullEnv>
+     struct f_tarjan_map
+     {
+     public:
+@@ -63,7 +65,7 @@
+       typedef oln_value_type(input_type) value_type;
+       typedef typename mute<input_type, point_type>::ret parent_type;
+       typedef typename mute<input_type, bool>::ret is_proc_type;
+-      typedef typename D::lambda_type lambda_type;
++	typedef attr_lambda_type(D)			lambda_type;
+ 
+       // e.g.,
+       // when I is image2d<int_u8> and D is area_type, we've got:
+@@ -82,8 +84,7 @@
+ 		   const lambda_type& lambda,
+ 		   const Env & env = Env());
+ 
+-      template<typename DestValue>
+-      typename mute<I, DestValue>::ret
++	oln_concrete_type(I)
+       res()
+       {
+ 	return output;
+@@ -128,21 +129,92 @@
+      * See \"Fast morphological attribute operations using Tarjan's union-find
+      * algorithm\" by Michael H. F. Wilkinson and Jos B. T. M. Roerdink
+      */
+-    template <typename DestValue, class I, class D, class Env, class N>
+-    typename mute<I, DestValue>::ret
++      template <class D, class I, class N>
++      oln_concrete_type(I)
+     tarjan_map(bool is_closing,
+ 	       const abstract::image<I>& input,
+ 	       const abstract::neighborhood<N>& ng,
+-	       const typename D::lambda_type& lambda,
+-	       const Env & env = Env())
++		   const attr_lambda_type(D)& lambda,
++		   const attr_env_type(D)& env/* = Env()*/)
+     {
+-      oln::morpho::f_tarjan_map<I, D, Env > t(is_closing,
++	oln::morpho::slow::f_tarjan_map<I, D, attr_env_type(D) > t(is_closing,
+ 					      input,
+ 					      ng,
+ 					      lambda,
+ 					      env);
+-      return t. template res<DestValue>();
++	return t.res();
++      }
++
++      /*! Some macro to declare friendly function for different attributes
++       * opening/closing
++       */
++# define xxx_opening_map_decl(T)						\\
++template <class I, class N>							\\
++oln_concrete_type(I)								\\
++T##_opening(const abstract::image<I>& input,					\\
++	    const abstract::neighborhood<N>& ng,				\\
++	    const attr_lambda_type(T##_type<>)& lambda)				\\
++    {										\\
++      return tarjan_map<T##_type<>, I, N>(false, input, ng, lambda,		\\
++						    attr_env_type(T##_type<>)()); \\
++    }
++
++      // same but attribute take care of the image type
++# define xxx_opening_im_map_decl(T)						\\
++template <class I, class N>							\\
++oln_concrete_type(I)								\\
++T##_opening(const abstract::image<I>& input,					\\
++	    const abstract::neighborhood<N>& ng,				\\
++	    const attr_lambda_type(T##_type<I>)& lambda)			\\
++    {										\\
++      return tarjan_map<T##_type<I>, I, N>(false, input, ng, lambda,		\\
++						    attr_env_type(T##_type<I>)()); \\
+     }
++
++      //return input;
++      //      return tarjan_map<T##_type, I, N>(false, input, ng, lambda, attr_env_type(T##_type<>)());
++# define xxx_closing_map_decl(T)						\\
++template <class I, class N>							\\
++oln_concrete_type(I)								\\
++T##_closing(const abstract::image<I>& input,					\\
++	    const abstract::neighborhood<N>& ng,				\\
++	    const attr_lambda_type(T##_type<>)& lambda)				\\
++    {										\\
++      return tarjan_map<T##_type<>, I, N>(true, input, ng, lambda, attr_env_type(T##_type<>)()); \\
++    }
++
++      // same but attribute take care of the image type
++# define xxx_closing_im_map_decl(T)						\\
++template <class I, class N>							\\
++oln_concrete_type(I)								\\
++T##_closing(const abstract::image<I>& input,					\\
++	    const abstract::neighborhood<N>& ng,				\\
++	    const attr_lambda_type(T##_type<I>)& lambda)				\\
++    {										\\
++      return tarjan_map<T##_type<I>, I, N>(true, input, ng, lambda, attr_env_type(T##_type<I>)()); \\
++    }
++
++      xxx_opening_map_decl(area);
++      xxx_closing_map_decl(area);
++      xxx_opening_map_decl(volume);
++      xxx_closing_map_decl(volume);
++      xxx_opening_map_decl(height);
++      xxx_closing_map_decl(height);
++      xxx_opening_map_decl(maxvalue);
++      xxx_closing_map_decl(maxvalue);
++      xxx_opening_map_decl(minvalue);
++      xxx_closing_map_decl(minvalue);
++      xxx_opening_im_map_decl(disk);
++      xxx_closing_im_map_decl(disk);
++      xxx_opening_im_map_decl(dist);
++      xxx_closing_im_map_decl(dist);
++      xxx_closing_im_map_decl(square);
++      xxx_opening_im_map_decl(square);
++      xxx_closing_im_map_decl(rectangle);
++      xxx_opening_im_map_decl(rectangle);
++
++
++    } // end of namespace slow
+   } // end of namespace morpho
+ } // end of namespace oln
+ 
+Index: olena/tests/morpho/tests/attribute
+--- olena/tests/morpho/tests/attribute Tue, 10 Feb 2004 19:49:03 +0100 van-vl_n (oln/j/51_attribute 1.1 644)
++++ olena/tests/morpho/tests/attribute Mon, 16 Feb 2004 08:40:49 +0100 palma_g (oln/j/51_attribute 1.1 644)
+@@ -28,10 +28,10 @@
+   bool fail(false);
+ 
+   typedef image2d<int_u8> img_type;
+-  typedef oln::morpho::tarjan::area_type<unsigned> area_type;
++  typedef oln::morpho::area_type<unsigned> area_type;
+   const area_type::lambda_type area = 100;
+   const neighborhood2d nb = neighb_c8();
+-  const oln::morpho::tarjan::NullEnv env;
++  //  const oln::morpho::NullEnv env;
+ 
+   img_type lena = load(rdata(\"lena.pgm\"));
+   img_type lena_sure_closing = oln::morpho::sure_minima_killer(lena, area, nb);
+@@ -41,9 +41,10 @@
+   img_type lena_tst_closing;
+ 
+   std::cerr << \"testing tarjan_map...\" << std::endl;
+-  lena_tst_closing = morpho::tarjan_map<ntg::int_u8,img_type,area_type>(true, lena,  nb, area, env);
+-  lena_tst_opening= morpho::tarjan_map<ntg::int_u8,img_type,area_type>(false, lena,  nb, area, env);
+-
++//   lena_tst_closing = morpho::slow::tarjan_map<area_type,ntg::int_u8,img_type>(true, lena,  nb, area, env);
++//   lena_tst_opening= morpho::slow::tarjan_map<area_type,ntg::int_u8,img_type>(false, lena,  nb, area, env);
++  lena_tst_closing = morpho::slow::area_closing(lena, nb, area);
++  lena_tst_opening = morpho::slow::area_opening(lena, nb, area);
+ 
+   fail = fail ||
+     !level::is_equal(lena_sure_closing, lena_tst_closing)||
+@@ -59,8 +60,8 @@
+   std::cerr << \"fail:\" << fail << std::endl;
+ 
+   std::cerr << \"testing area_closin and area_opeing...\" << std::endl;
+-  lena_tst_closing = morpho::tarjan::area_closing(lena, nb, area);
+-  lena_tst_opening = morpho::tarjan::area_opening(lena, nb, area);
++  lena_tst_closing = morpho::fast::area_closing(lena, nb, area);
++  lena_tst_opening = morpho::fast::area_opening(lena, nb, area);
+   fail = fail ||
+     !level::is_equal(lena_sure_closing, lena_tst_closing)||
+     !level::is_equal(lena_sure_opening, lena_tst_opening);
+@@ -70,12 +71,13 @@
+   return fail;
+ }
+ 
+-
+ bool
+ check_attribute()
+ {
++  bool fail = false;
++
+   //FIXME attributes should be checked
+-  return false;
++  return fail;
+ }
+ 
+ 
+Index: olena/tests/morpho/tests/attr_op_cl
+--- olena/tests/morpho/tests/attr_op_cl Mon, 16 Feb 2004 19:05:52 +0100 palma_g ()
++++ olena/tests/morpho/tests/attr_op_cl Mon, 16 Feb 2004 18:48:30 +0100 palma_g (oln/k/0_attr_op_cl  644)
+@@ -0,0 +1,77 @@
++//								    -*- c++ -*-
++
++#include <oln/basics2d.hh>
++#include <oln/morpho/attribute_closing_opening.hh>
++#include <oln/morpho/attribute_closing_opening_map.hh>
++#include <oln/level/compare.hh>
++#include <ntg/all.hh>
++
++#include \"check.hh\"
++#include \"data.hh\"
++
++using namespace oln;
++using namespace ntg;
++
++#define OK_OR_FAIL				\\
++      std::cout << \"OK\" << std::endl;		\\
++    else					\\
++      {						\\
++	std::cout << \"FAIL\" << std::endl;	\\
++	fail = true;				\\
++      }
++
++# define test_op_cl(T, A, im, lambda) \\
++{ \\
++  bool	last_fail = fail; \\
++  fail = false; \\
++  { \\
++    image2d<T> im2 = oln::morpho::slow::A##_opening(im, neighb_c4(), lambda); \\
++    image2d<T> im1 = oln::morpho::fast::A##_opening(im, neighb_c4(), lambda); \\
++    image2d<T>::iter_type	it(lena); \\
++    std::cout << #A << \" opening: \"; \\
++    for_all(it) \\
++      { \\
++	if (im1[it] != im2[it]) \\
++          fail = true; \\
++      } \\
++    if (!fail) \\
++      OK_OR_FAIL \\
++  } \\
++  { \\
++    image2d<T> im2 = oln::morpho::slow::A##_closing(im, neighb_c4(), lambda); \\
++    image2d<T> im1 = oln::morpho::fast::A##_closing(im, neighb_c4(), lambda); \\
++    image2d<T>::iter_type	it(lena); \\
++    std::cout << #A <<\" closing: \"; \\
++    for_all(it) \\
++      { \\
++	if (im1[it] != im2[it]) \\
++          fail = true; \\
++      } \\
++    if (!fail) \\
++      OK_OR_FAIL \\
++  } \\
++ fail = last_fail || fail; \\
++}
++
++
++bool
++check()
++{
++  bool fail = false;
++
++  image2d<int_u8> lena(rdata(\"lena256.pgm\"));
++  std::cout << std::endl;
++  test_op_cl(int_u8, area, lena, 200)
++  test_op_cl(int_u8, volume, lena, 200)
++  test_op_cl(int_u8, height, lena, 4)
++  test_op_cl(int_u8, maxvalue, lena, 100)
++  test_op_cl(int_u8, minvalue, lena, 100)
++  test_op_cl(int_u8, dist, lena, 100)
++  test_op_cl(int_u8, disk, lena, 100)
++  test_op_cl(int_u8, square, lena, 50)
++
++  ntg::vec<2, unsigned, mlc::final>	lambda;
++  test_op_cl(int_u8, rectangle, lena, lambda)
++
++  return fail;
++}
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 10 Feb 2004 17:32:17 +0100")
+(Checkin-Time "Mon, 16 Feb 2004 19:06:24 +0100")
 (Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -221,7 +787,7 @@ Index: olena/oln/morpho/attribute_union_find.hh
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.2 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.35 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.7 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.10 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 640))
 
@@ -355,7 +921,7 @@ Index: olena/oln/morpho/attribute_union_find.hh
   (olena/oln/core/neighborhood1d.hh (oln/c/37_neighborho 1.15 640))
   (olena/oln/core/neighborhood2d.hh (oln/c/36_neighborho 1.16 640))
   (olena/oln/core/neighborhood3d.hh (oln/c/35_neighborho 1.15 640))
-  (olena/oln/core/abstract/neighborhood.hh (oln/c/38_neighborho 1.18 640))
+  (olena/oln/core/abstract/neighborhood.hh (oln/c/38_neighborho 1.19 640))
   (metalic/mlc/objs.hh (oln/c/34_objs.hh 1.7 640))
   (olena/oln/core/point1d.hh (oln/c/32_point1d.hh 1.14 640))
   (olena/oln/core/point1d.hxx (oln/c/31_point1d.hx 1.6 640))
@@ -507,7 +1073,7 @@ Index: olena/oln/morpho/attribute_union_find.hh
   (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.7 640))
   (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.7 640))
   (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.7 640))
-  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.5 640))
+  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.6 640))
   (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.9 640))
   (olena/oln/utils/timer.hh (oln/8_timer.hh 1.8 640))
   (olena/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.5.1.1 640))
@@ -872,8 +1438,8 @@ Index: olena/oln/morpho/attribute_union_find.hh
 ;; Files added by populate at Tue, 04 Mar 2003 19:30:28 +0100,
 ;; to version 8.9(w), by jerome:
 
-  (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.13 640))
-  (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.11 640))
+  (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.14 640))
+  (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.12 640))
 
   (olena/tests/convol () :directory)
   (metalic/config (../config) :symlink)
@@ -1047,7 +1613,7 @@ Index: olena/oln/morpho/attribute_union_find.hh
   (olena/tests/core/image_print.sh (oln/t/24_image_prin 1.2 640))
 
 
-  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.19 640))
+  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.20 640))
   (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.18 640))
   (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.14.1.8 640))
   (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.11 640))
@@ -1290,7 +1856,7 @@ Index: olena/oln/morpho/attribute_union_find.hh
 ;; Files added by populate at Fri, 06 Feb 2004 16:00:19 +0100,
 ;; to version 10.57(w), by palma_g:
 
-  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.3 644))
+  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.4 644))
 
 ;; Files added by populate at Tue, 10 Feb 2004 15:26:15 +0100,
 ;; to version 10.62(w), by palma_g:
@@ -1301,8 +1867,23 @@ Index: olena/oln/morpho/attribute_union_find.hh
 ;; to version 10.62(w), by palma_g:
 
   (olena/oln/core/behavior.hh (oln/j/47_behavior.h 1.1 644))
+
+
+  (olena/oln/morpho/attribute_closing_opening_map.hxx (oln/j/48_attribute_ 1.2 644))
+  (olena/oln/morpho/attribute_closing_opening_map.hh (oln/j/49_attribute_ 1.2 600))
+  (olena/oln/utils/special_points.hh (oln/j/50_special_po 1.1 644))
+  (olena/tests/morpho/tests/attribute (oln/j/51_attribute 1.2 644))
+;; Files added by populate at Mon, 16 Feb 2004 18:59:27 +0100,
+;; to version 10.64(w), by palma_g:
+
+  (olena/tests/morpho/tests/attr_op_cl (oln/k/0_attr_op_cl 1.1 644))
 )
 (Merge-Parents
-  (10.63 complete)
+  (10.64 complete)
+  (10.66 complete
+    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (olena/oln/core/abstract/neighborhood.hh olena/oln/core/abstract/neighborhood.hh olena/oln/core/abstract/neighborhood.hh r)
+    (olena/oln/utils/histogram.hh olena/oln/utils/histogram.hh olena/oln/utils/histogram.hh r) (olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh r)
+    (() () olena/oln/morpho/attribute_closing_opening_map.hxx a) (() () olena/oln/morpho/attribute_closing_opening_map.hh a)
+    (() () olena/oln/utils/special_points.hh a) (() () olena/tests/morpho/tests/attribute a))
 )
 (New-Merge-Parents)

@@ -31,9 +31,9 @@
 # include <vector>
 
 // attribute dedicated macros
-# define attr_lambda_type(T)	typename attr_traits<T>::lambda_type
-# define attr_env_type(T)	typename attr_traits<T>::env_type
-# define attr_value_type(T)	typename attr_traits<T>::value_type
+# define attr_lambda_type(T)	typename oln::morpho::attr_traits<T>::lambda_type
+# define attr_env_type(T)	typename oln::morpho::attr_traits<T>::env_type
+# define attr_value_type(T)	typename oln::morpho::attr_traits<T>::value_type
 
 # define attr_type_decl(slef_type) \
       typedef mlc_exact_vt_type(self_type, Exact)	exact_type; \
@@ -43,7 +43,6 @@
 
 namespace oln {
   namespace morpho {
-    namespace tarjan {
       namespace tools {
 	// should be moved elsewhere
 	template <class T>
@@ -51,8 +50,8 @@ namespace oln {
 	{
 	  return v1 > v2 ? v1 - v2 : v2 - v1;
 	}
+      } // !tools
 
-      }
       // environment herarchy
       // not used yet
       template <class Exact>
@@ -265,7 +264,10 @@ namespace oln {
 	  {
 	  };
 
-	height_type(const lambda_type &lambda): value_(lambda)
+	height_type(const lambda_type &lambda):
+	  value_(lambda),
+	  min_(ntg_zero_val(value_type)),
+	  max_(lambda)
 	  {
 	  };
 
@@ -273,25 +275,38 @@ namespace oln {
 	  height_type(const abstract::image<I> &input,
 		      const oln_point_type(I) &p,
 		      const env_type&):
-	  reflevel_(input[p]),
-	  value_(ntg_zero_val(value_type))
+	  value_(ntg_zero_val(value_type)),
+	  min_(input[p]),
+	  max_(input[p])
 	  {
 	  };
 
-	const value_type &getReflevel() const
+
+	const value_type &getMin() const
 	  {
-	    mlc_dispatch(getReflevel)();
+	    mlc_dispatch(getMin)();
 	  };
 
+	const value_type &getMax() const
+	  {
+	    mlc_dispatch(getMax)();
+	  };
 	// impl part
-	const value_type &getReflevel_impl() const
+	const value_type &getMin_impl() const
 	  {
-	    return reflevel_;
+	    return min_;
+	  };
+
+	const value_type &getMax_impl() const
+	  {
+	    return max_;
 	  };
 
 	void pe_impl(const height_type &rhs)
 	  {
-	    value_ = tools::diffabs(reflevel_, rhs.getReflevel());
+	    min_ = ntg::min(min_, rhs.getMin());
+	    max_ = ntg::max(max_, rhs.getMax());
+	    value_ = max_ - min_;
 	  };
 
 	bool less_impl(const lambda_type &lambda) const
@@ -305,8 +320,9 @@ namespace oln {
 	  };
 
       protected:
-	value_type reflevel_;
-	value_type value_;
+ 	value_type	value_;
+	value_type	min_;
+	value_type	max_;
     };
 
 
@@ -413,7 +429,7 @@ namespace oln {
 
       bool less_impl(const lambda_type &lambda) const
 	{
-	  return value_ < lambda;
+	  return value_ > lambda;
 	};
 
       bool ne_impl(const lambda_type &lambda) const
@@ -452,10 +468,16 @@ namespace oln {
 	  };
 
 	disk_type(const im_type&, const point_type &p, const env_type &) :
-	  value_(1), pts_()
-	{
-	  pts_.push_back(p);
-	};
+	  value_(ntg_zero_val(value_type)), pts_()
+
+	  {
+	    pts_.push_back(p);
+	  };
+
+	const value_type &getValue() const
+	  {
+	    mlc_dispatch(getValue)();
+	  };
 
 	const pts_type &getPts() const
 	  {
@@ -463,6 +485,10 @@ namespace oln {
 	  };
 
 	// impl
+	const value_type &getValue_impl() const
+	  {
+	    return value_;
+	  };
 
 	const pts_type &getPts_impl() const
 	  {
@@ -470,26 +496,31 @@ namespace oln {
 	  };
 
 	void pe_impl(const disk_type &rhs)
-	{
-	  std::copy(rhs.getPts().begin(), rhs.getPts().end(), std::back_inserter(pts_));
-	  value_ = ntg_zero_val(value_type);
-	  for (cst_iter_type p1 = pts_.begin(); p1 != pts_.end(); ++p1)
-	    for (cst_iter_type p2 = pts_.begin(); p2 != pts_.end(); ++p2)
-	      {
-		unsigned d = 0;
-		dpoint_type	p = *p1 - *p2;
-		for (int i = 0; i < point_traits<point_type>::dim; ++i)
-		  d += p.nth(i) * p.nth(i);
-		if (d > value_)
-		  value_ = d;
-	      }
-	  value_ /= 2;
-	};
+	  {
+	    value_type	last = value_;
+	    std::copy(rhs.getPts().begin(),
+		      rhs.getPts().end(),
+		      std::back_inserter(pts_));
+	    value_ = ntg_zero_val(value_type);
+	    for (cst_iter_type p1 = pts_.begin(); p1 != pts_.end(); ++p1)
+	      for (cst_iter_type p2 = pts_.begin(); p2 != pts_.end(); ++p2)
+		{
+		  unsigned d = 0;
+		  dpoint_type	p = *p1 - *p2;
+		  for (int i = 0; i < point_traits<point_type>::dim; ++i)
+		    d += p.nth(i) * p.nth(i);
+		  if (d > value_)
+		    value_ = d;
+		}
+	    value_ /= 2;
+	    value_ = ntg::max(value_, last);
+	    value_ = ntg::max(value_, rhs.getValue());
+	  };
 
 	bool less_impl(const lambda_type &lambda) const
-	{
-	  return value_ < lambda;
-	};
+	  {
+	    return value_ < lambda;
+	  };
 
 	bool ne_impl(const lambda_type &lambda) const
 	  {
@@ -530,6 +561,11 @@ namespace oln {
 	{
 	};
 
+	const value_type &getValue() const
+	  {
+	    mlc_dispatch(getValue)();
+	  };
+
 	dist_type(const lambda_type lambda): value_(lambda)
 	  {
 	  };
@@ -545,20 +581,28 @@ namespace oln {
 	    return center_;
 	  };
 
+	const value_type &getValue_impl() const
+	  {
+	    return value_;
+	  };
+
 	void pe_impl(const dist_type &rhs)
 	{
+	  value_type	last = value_;
 	  dpoint_type	p = center_ - rhs.getCenter();
 
 	  value_ = ntg_zero_val(value_type);
 	  for (int i = 0; i < point_traits<point_type>::dim; ++i)
 	    value_ += p.nth(i) * p.nth(i);
 	  value_ = sqrt(value_);
+	  value_ = ntg::max(value_, last);
+	  value_ = ntg::max(value_, rhs.getValue());
 	};
 
 	bool less_impl(const lambda_type &lambda) const
-	{
-	  return value_ < lambda;
-	};
+	  {
+	    return value_ < lambda;
+	  };
 
 	bool ne_impl(const lambda_type &lambda) const
 	  {
@@ -841,9 +885,8 @@ namespace oln {
 	typedef ntg::vec<I::dim, value_type, mlc::final>	lambda_type;
 	typedef NullEnv						env_type;
       };
-    }
-  }
-}
+  } // !morpho
+} //!oln
 
 /*-----------*
   |  diamond  |

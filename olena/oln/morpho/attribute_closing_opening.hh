@@ -32,9 +32,9 @@
 
 namespace oln {
   namespace morpho {
-    namespace tarjan {
-
-      namespace internal {
+    namespace fast {
+      namespace tarjan {
+	namespace internal {
 
 	// attribute closing
 	template<class I, class N, class A>
@@ -43,7 +43,6 @@ namespace oln {
 			const abstract::neighborhood<N>& Ng,
 			const attr_lambda_type(A) &lambda)
 	{
-	  typedef N	toto;
 	  typedef tarjan::tarjan_set<oln_concrete_type(I), A > tarjan_set_type;
 	  tarjan_set_type attr_closing(input.exact(), attr_env_type(A)());
 	  return attr_closing.template get_comptute<true>(lambda, Ng);
@@ -62,7 +61,7 @@ namespace oln {
 	}
 
       } // !internal
-
+    } // !tarjan
 // macro for some attribute opening/closing declarations
 # define xxx_opening_decl(T) \
       template<class I, class N> \
@@ -71,7 +70,7 @@ namespace oln {
 		       const abstract::neighborhood<N>& Ng, \
 		       const attr_lambda_type(T##_type<unsigned>) &lambda) \
       { \
-	return internal::attr_opening_<I, N, T##_type<unsigned> >(input, Ng, lambda); \
+	return tarjan::internal::attr_opening_<I, N, T##_type<unsigned> >(input, Ng, lambda); \
       }
 
 # define xxx_closing_decl(T) \
@@ -81,7 +80,7 @@ namespace oln {
 		       const abstract::neighborhood<N>& Ng, \
 		       const attr_lambda_type(T##_type<unsigned>) &lambda) \
       { \
-	return internal::attr_closing_<I, N, T##_type<unsigned> >(input, Ng, lambda); \
+	return tarjan::internal::attr_closing_<I, N, T##_type<unsigned> >(input, Ng, lambda); \
       }
 
 
@@ -93,7 +92,7 @@ namespace oln {
 		       const abstract::neighborhood<N>& Ng, \
 		       const attr_lambda_type(T##_type<I>) &lambda) \
       { \
-	return internal::attr_opening_<I, N, T##_type<I> >(input, Ng, lambda); \
+	return tarjan::internal::attr_opening_<I, N, T##_type<I> >(input, Ng, lambda); \
       }
 
 # define xxx_closing_im_decl(T) \
@@ -103,7 +102,7 @@ namespace oln {
 		       const abstract::neighborhood<N>& Ng, \
 		       const attr_lambda_type(T##_type<I>) &lambda) \
       { \
-	return internal::attr_closing_<I, N, T##_type<I> >(input, Ng, lambda); \
+	return tarjan::internal::attr_closing_<I, N, T##_type<I> >(input, Ng, lambda); \
       }
 
       /*=processing area_closing
@@ -124,7 +123,7 @@ namespace oln {
        * exi: lena256.pgm
        * exo: out.pgm
        =*/
-      xxx_closing_decl(area)
+      xxx_closing_decl(area);
 
       /*=processing area_opening
        * ns: morpho
@@ -144,27 +143,27 @@ namespace oln {
        * exi: lena256.pgm
        * exo: out.pgm
        =*/
-	xxx_opening_decl(area)
+      xxx_opening_decl(area);
 
-	xxx_opening_decl(volume)
-	xxx_closing_decl(volume)
-	xxx_opening_decl(height)
-	xxx_closing_decl(height)
-	xxx_opening_decl(maxvalue)
-	xxx_closing_decl(maxvalue)
-	xxx_opening_decl(minvalue)
-	xxx_closing_decl(minvalue)
-	xxx_opening_im_decl(disk)
-	xxx_closing_im_decl(disk)
-	xxx_opening_im_decl(dist)
-	xxx_closing_im_decl(dist)
-	xxx_closing_im_decl(square)
-	xxx_opening_im_decl(square)
-	xxx_closing_im_decl(rectangle)
-	xxx_opening_im_decl(rectangle)
+      xxx_opening_decl(volume);
+      xxx_closing_decl(volume);
+      xxx_opening_decl(height);
+      xxx_closing_decl(height);
+      xxx_opening_decl(maxvalue);
+      xxx_closing_decl(maxvalue);
+      xxx_opening_decl(minvalue);
+      xxx_closing_decl(minvalue);
+      xxx_opening_im_decl(disk);
+      xxx_closing_im_decl(disk);
+      xxx_opening_im_decl(dist);
+      xxx_closing_im_decl(dist);
+      xxx_closing_im_decl(square);
+      xxx_opening_im_decl(square);
+      xxx_closing_im_decl(rectangle);
+      xxx_opening_im_decl(rectangle);
 
-    }
-  }
-}
+    } // !fast
+  } // !morpho
+} // !oln
 
 #endif

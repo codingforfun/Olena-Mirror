@@ -1,3 +1,30 @@
+2004-02-16  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* tests/morpho/tests/attribute: Fix function call problems.
+	* tests/morpho/tests/attr_op_cl: Add attribute opening/closing
+	tests.
+	* oln/morpho/attribute_closing_opening_map.hh: Add slow
+	namespace. Correct type problems.
+	* oln/morpho/attribute_closing_opening_map.hxx: Likewise.
+	* oln/morpho/attributes.hh: Fix bugs.
+	* oln/morpho/attribute_union_find.hh: Add fast namespace.
+	* oln/morpho/attribute_closing_opening.hh: Likewise.
+
+2004-02-10  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* oln/core/abstract/image.hh: Remove macro oln_neighb_type.
+	* oln/core/abstract/neighborhood.hh: Add macro oln_neighb_type.
+	* oln/core/utils/histogram.hh: Add a FIXME.
+
+2004-02-10  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* oln/morpho/attribute_closing_opening_map.hh: Add file.
+	Attribute closing and opening using std::map.
+	* oln/morpho/attribute_closing_opening_map.hxx: Add file.
+	* oln/utils/special_points.hh: Add file. Point used as a state.
+	* tests/morpho/attributes: Add file. Add tests on attribute
+	closing and opening.
+
 2004-02-10  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* oln/morpho/attribute_closing_opening.hh: Make the
