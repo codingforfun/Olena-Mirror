@@ -53,7 +53,9 @@ namespace oln {
     ** \brief Neighborhood N dimensions.
     **
     ** It looks like structuring elements but here, when
-    ** you add an element, you add its opposite.
+    ** you add an element, you add its opposite:
+    ** \f$$\forall d \in N, -d \in N$\f$
+    **
     ** Points have N dimensions.
     **
     */
@@ -74,12 +76,7 @@ namespace oln {
 
       friend class neighborhood<exact_type>;
 
-      /*!
-      ** \brief Return its type in a string.
-      ** \return The type in a string.
-      **
-      ** Very useful to debug.
-      */
+      ///< Return the name of the type.
       static std::string
       name()
       {

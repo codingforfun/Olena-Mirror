@@ -56,8 +56,7 @@ namespace oln {
     ** \brief Neighborhood.
     **
     ** It looks like structuring elements but here, when
-    ** you add an element, you add its opposite (cf mathematical
-    ** definition to know more about).
+    ** you add an element, you add its opposite.
     ** This abstract class defines several virtual methods for his
     ** subclasses. Its goal is to deal with a set of deplacement points.
     **
@@ -93,12 +92,7 @@ namespace oln {
       enum { dim = struct_elt_traits<Exact>::dim };
       ///< Set the dim of the points of the neighborhood.
 
-      /*!
-      ** \brief Return its type in a string.
-      ** \return The type in a string.
-      **
-      ** Very useful to debug.
-      */
+      ///< Return the name of the type.
       static std::string
       name()
       {

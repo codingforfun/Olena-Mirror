@@ -56,7 +56,7 @@ namespace oln {
   namespace abstract {
 
     /*!
-    ** Structuring elements (set of points).
+    ** Structuring elements (set of dpoints).
     **
     ** This abstract class defines several virtual methods for its
     ** subclasses. Its goal is to deal with a set of 'move' points.
@@ -72,12 +72,7 @@ namespace oln {
       typedef typename struct_elt_traits<Exact>::abstract_type abstract_type;
       ///< Set the abstract type of hisself.
 
-      /*!
-      ** \brief Return its type in a string.
-      ** \return The type in a string.
-      **
-      ** Very useful to debug.
-      */
+      ///< Return the name of the type.
       static std::string
       name()
       {

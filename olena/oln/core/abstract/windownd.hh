@@ -72,12 +72,7 @@ namespace oln {
 
       friend class window<exact_type>;
 
-      /*!
-      ** \brief Return its type in a string.
-      ** \return The type in a string.
-      **
-      ** Very useful to debug.
-      */
+      ///< Return the name of the type.
       static std::string
       name()
       {
