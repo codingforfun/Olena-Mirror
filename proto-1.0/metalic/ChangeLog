@@ -1,3 +1,11 @@
+2005-03-09  Simon Odou  <simon@lrde.epita.fr>
+
+	* mlc/is_a.hh: New. Test inheritance between two classes.
+	* tests/main/tests/is_a1: New. Add test for `is_a'.
+	* tests/main: New. Add new test suite `main'.
+	* tests/main/tests: New.
+	* tests/main/Makefile.am: New.
+
 2005-02-24  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* mlc/any.hh: Fix.
