@@ -1,3 +1,7 @@
+2002-06-18  Quôc Peyrot  <chojin@lrde.epita.fr>
+
+	* src/level/threshold.hh: new functor
+
 2002-06-17  Quôc Peyrt  <chojin@lrde.epita.fr>
 
 	* src/core/internal/image3d.hh (nslices): Typo.
