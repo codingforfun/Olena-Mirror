@@ -32,9 +32,6 @@
 # include <oln/core/w_window2d.hh>
 # include <oln/core/w_window3d.hh>
 
-//! SIGMA_COEF times sigma is the size of the kernel.
-# define SIGMA_COEF 3
-
 namespace oln {
   namespace convol {
     namespace slow {
@@ -44,14 +41,15 @@ namespace oln {
 	   and w_windownd does not supprot concrete_type, etc
 	*/
 	template<class T>
-	T
+	inline T
 	normalise(const T &in)
 	{
 	  T w = in;
-	  double sum = 0;
+	  ntg::float_d sum = 0.;
 	  for (unsigned i = 0; i < in.card(); ++i)
 	    sum += in.w(i);
 	  sum = 1. / sum;
+	  assert(finite(sum));
 	  for (unsigned i = 0; i < in.card(); ++i)
 	    w.set(w.dp(i), in.w(i) * sum);
 	  return w;
@@ -63,26 +61,38 @@ namespace oln {
       template<>
       struct gaussian_kernel<1>
       {
-	typedef oln::w_window1d<double> ret;
+	typedef oln::w_window1d<ntg::float_d> ret;
 	enum {dim = 1};
 
-	static w_window1d<double>
-	kernel_norm(double sigma, const point1d & mu = point1d(0))
+	//! Return a discrete Gaussian kernel, that is equal to zero
+	// at a distance of radius_factor * sigma.
+	static w_window1d<ntg::float_d>
+	kernel(ntg::float_d sigma,
+	       ntg::float_d radius_factor)
 	{
-	  return internal::normalise(kernel(sigma, mu));
+	  precondition(sigma > 0.);
+	  precondition(radius_factor >= 0.);
+	  return internal::normalise(kernel_values(sigma, radius_factor));
 	}
 
-	w_window1d<double>
-	static kernel(double sigma, const point1d & mu = point1d(0))
+	//! Return values of the Gaussian kernel at discrete points.
+	//
+	// Note: the integral is not equal to 1 (discrete grid and 0 outside
+	// radius_factor * sigma). You should use kernel(sigma, radius_factor).
+	static w_window1d<ntg::float_d>
+	kernel_values(ntg::float_d sigma,
+		      ntg::float_d radius_factor)
 	{
-	  assert(sigma >= 0);
-	  w_window1d<double> w;
+	  precondition(sigma > 0.);
+	  precondition(radius_factor >= 0.);
 
-	  const int size = int(sigma * SIGMA_COEF);
-	  const double inv_sigma_sqrt_2pi = 1. / (sigma * sqrt(M_PI * 2.));
+	  w_window1d<ntg::float_d> w;
+
+	  const int size = int(sigma * radius_factor);
+	  const ntg::float_d inv_sigma_sqrt_2pi
+	    = 1. / (sigma * sqrt(M_PI * 2.));
 	  for (int x = -size; x <= +size; ++x)
-	    w.add(x, inv_sigma_sqrt_2pi * exp( -(x - mu.nth(0)) * (x - mu.nth(0)) / (2 * sigma * sigma))
-		  );
+	    w.add(x, inv_sigma_sqrt_2pi * exp(-x * x /(2 * sigma * sigma)));
 	  return w;
 	}
       };
@@ -91,29 +101,44 @@ namespace oln {
       template<>
       struct gaussian_kernel<2>
       {
-	typedef w_window2d<double> ret;
+	typedef w_window2d<ntg::float_d> ret;
 	enum {dim = 2};
 
-	static w_window2d<double>
-	kernel_norm(double sigma, const point2d & mu = point2d(0, 0))
+	//! Return a discrete Gaussian kernel, that is equal to zero at a
+	// distance of radius_factor * sigma.
+	static w_window2d<ntg::float_d>
+	kernel(ntg::float_d sigma,
+	       ntg::float_d radius_factor)
 	{
-	  return internal::normalise(kernel(sigma, mu));
+	  precondition(sigma > 0.);
+	  precondition(radius_factor >= 0.);
+
+	  return internal::normalise(kernel_values(sigma, radius_factor));
 	}
-	w_window2d<double>
-	static kernel(double sigma, const point2d & mu = point2d(0, 0))
+
+	//! Return values of the Gaussian kernel at discrete points.
+	//
+	// Note: the integral is not equal to 1 (discrete grid and 0 outside
+	// radius_factor * sigma). You should use kernel(sigma, radius_factor).
+	static w_window2d<ntg::float_d>
+	kernel_values(ntg::float_d sigma,
+	       ntg::float_d radius_factor)
 	{
-	  assert(sigma >= 0);
-	  w_window2d<double> w;
-	  const int size = int(sigma * SIGMA_COEF);
-	  const double inv_sigma_sigma_pi_2 = 1. / (sigma * sigma * M_PI * 2.);
+	  precondition(sigma > 0.);
+	  precondition(radius_factor >= 0.);
+	  w_window2d<ntg::float_d> w;
+
+	  const int size = int(sigma * radius_factor);
+	  const ntg::float_d inv_sigma_sigma_pi_2 = 1. / (sigma * sigma *
+							  M_PI * 2.);
 
 	  for (int x = -size; x <= +size; ++x)
 	    for (int y = -size; y <= +size; ++y)
-	      w.add(x, y, inv_sigma_sigma_pi_2
-		    *  exp(- ((x - mu.nth(0)) * (x - mu.nth(0)) + (y - mu.nth(1)) * (y - mu.nth(1))
-			      )
-			   / ( 2. * sigma * sigma)
-			   )
+	      if (x * x + y * y <= size * size)
+		w.add(x, y, inv_sigma_sigma_pi_2
+		      *  exp(- (x * x +	y * y)
+			     / ( 2. * sigma * sigma)
+			     )
 		    );
 	  return w;
 	}
@@ -123,31 +148,47 @@ namespace oln {
       template<>
       struct gaussian_kernel<3>
       {
-	typedef w_window3d<double> ret;
+	typedef w_window3d<ntg::float_d> ret;
 	enum {dim = 3};
 
-	static w_window3d<double>
-	kernel_norm(double sigma, const point3d & mu = point3d(0, 0, 0))
+	//! Return a discrete Gaussian kernel, that is equal to zero at a
+	// distance of radius_factor * sigma.
+	static w_window3d<ntg::float_d>
+	kernel(ntg::float_d sigma,
+		    ntg::float_d radius_factor)
 	{
-	  return internal::normalise(kernel(sigma, mu));
-	}
-	static w_window3d<double>
-	kernel(double sigma, const point3d & mu = point3d(0, 0, 0))
-	{
-	  assert(sigma >= 0);
-	  w_window3d<double> w;
+	  precondition(sigma > 0.);
+	  precondition(radius_factor >= 0.);
 
-	  const int size = int(sigma * SIGMA_COEF);
-	  const double k = 1. / (sigma * sigma * sigma * sqrt((M_PI * 2.) * (M_PI * 2.) * (M_PI * 2.)));
+	  return internal::normalise(kernel_values(sigma, radius_factor));
+	}
+
+
+	//! Return values of the Gaussian kernel at discrete points.
+	//
+	// Note: the integral is not equal to 1 (discrete grid and 0 outside
+	// radius_factor * sigma). You should use kernel(sigma, radius_factor).
+	static w_window3d<ntg::float_d>
+	kernel_values(ntg::float_d sigma,
+	       ntg::float_d radius_factor)
+	{
+	  precondition(sigma > 0.);
+	  precondition(radius_factor >= 0.);
+
+	  w_window3d<ntg::float_d> w;
+
+	  const int size = int(sigma * radius_factor);
+	  const ntg::float_d k = 1. / (sigma * sigma * sigma *
+				       sqrt((M_PI * 2.) * (M_PI * 2.) *
+					    (M_PI * 2.)));
 
 	  for (int x = -size; x <= +size; ++x)
 	    for (int y = -size; y <= +size; ++y)
 	      for (int z = -size; z <= +size; ++z)
-		w.add(x, y, z,  k *
-		      exp(-((x - mu.nth(0)) * (x - mu.nth(0)) +
-			    (y - mu.nth(1)) * (y - mu.nth(1)) +
-			    (z - mu.nth(2)) * (z - mu.nth(2))
-			    ) / (2. * sigma * sigma)));
+		if (x * x + y * y + z * z <= size)
+		  w.add(x, y, z,  k *
+			exp(-(x * x + y * y + z * z)
+			    ) / (2. * sigma * sigma));
 	  return w;
 	}
       };

@@ -1,3 +1,13 @@
+2004-06-09  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/core/abstract/behavior.hh (adapt_border): Change
+	constness of the image modified to const.
+	* olena/oln/core/behavior.hh: Likewise.
+	* olena/oln/convol/slow_gaussian.hh: Add behavior. Remove parameter
+	mu. Add doc and example. Add radius_factor.
+	* olena/oln/convol/slow_gaussian.hxx: Clean code. Remove parameter
+	mu. Add radius_factor.
+	* olena/oln/morpho/gradient.inc: Fix doc.
+
 2004-07-06  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* oln/transforms/shapelets.hh: Change functions to functors,

@@ -47,9 +47,9 @@ namespace oln {
     class behavior: public mlc_hierarchy::any<Exact>
     {
     public:
-      typedef behavior<Exact>				self_type; 
+      typedef behavior<Exact>				self_type;
       /*!< The self type.*/
-      typedef mlc_exact_vt_type(self_type, Exact)	exact_type; 
+      typedef mlc_exact_vt_type(self_type, Exact)	exact_type;
       /*!< The exact type.*/
 
       /*!
@@ -58,7 +58,7 @@ namespace oln {
       ** Adapt the border of an image regarding the kind of behavior wanted.
       */
       template <class I>
-      void adapt_border(oln::abstract::image<I> &im, coord border_size) const
+      void adapt_border(const oln::abstract::image<I> &im, coord border_size) const
       {
 	mlc_dispatch(adapt_border)(im, border_size);
       };

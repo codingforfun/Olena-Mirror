@@ -1,15 +1,21 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 189)
-(Parent-Version oln 10 188)
-(Version-Log "Damien Thivolle  <damien@lrde.epita.fr>
-* oln/transforms/shapelets.hh: Change functions to functors,
-bug fixes.
+(Project-Version oln 10 190)
+(Parent-Version oln 10 189)
+(Version-Log "2004-06-09  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/core/abstract/behavior.hh (adapt_border): Change
+	constness of the image modified to const.
+	* olena/oln/core/behavior.hh: Likewise.
+	* olena/oln/convol/slow_gaussian.hh: Add behavior. Remove parameter
+	mu. Add doc and example. Add radius_factor.
+	* olena/oln/convol/slow_gaussian.hxx: Clean code. Remove parameter
+	mu. Add radius_factor.
+	* olena/oln/morpho/gradient.inc: Fix doc.
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 07 Jun 2004 19:41:27 +0200")
-(Checkin-Login thivol_d)
+(Checkin-Time "Wed, 09 Jun 2004 20:13:57 +0200")
+(Checkin-Login van-vl_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -115,7 +121,7 @@ bug fixes.
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.12 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.45 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.42 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.6 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.93.1.7 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.13 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.39 600))
 
@@ -323,7 +329,7 @@ bug fixes.
   (olena/oln/morpho/closing.hh (oln/b/6_closing.hh 1.6 600))
   (olena/oln/morpho/closing.inc (oln/44_closing.in 1.18 600))
   (olena/oln/morpho/dilation.hh (oln/b/5_dilation.h 1.20 600))
-  (olena/oln/morpho/erosion.hh (oln/b/4_erosion.hh 1.22 600))
+  (olena/oln/morpho/erosion.hh (oln/b/4_erosion.hh 1.22 640))
   (olena/oln/morpho/extrema.hh (oln/38_extrema.hh 1.14 600))
   (olena/oln/morpho/extrema.hxx (oln/j/4_extrema.hx 1.18 600))
   (olena/oln/morpho/extrema_killer.hh (oln/e/19_extrema_ki 1.7.1.4.1.15 600))
@@ -332,7 +338,7 @@ bug fixes.
   (olena/oln/morpho/geodesic_dilation.hh (oln/37_geodesic_d 1.11.1.13 600))
   (olena/oln/morpho/geodesic_erosion.hh (oln/36_geodesic_e 1.20 600))
   (olena/oln/morpho/gradient.hh (oln/b/3_gradient.h 1.6 600))
-  (olena/oln/morpho/gradient.inc (oln/43_gradient.i 1.16 600))
+  (olena/oln/morpho/gradient.inc (oln/43_gradient.i 1.17 600))
   (olena/oln/morpho/hit_or_miss.hh (oln/b/2_hit_or_mis 1.7 600))
   (olena/oln/morpho/hit_or_miss.inc (oln/42_hit_or_mis 1.23 600))
   (olena/oln/morpho/laplacian.hh (oln/b/1_laplacian. 1.6 600))
@@ -401,7 +407,7 @@ bug fixes.
   (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.7 600))
   (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.7 600))
   (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.9 600))
-  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.14 600))
+  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.14 640))
   (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.10 600))
   (olena/oln/utils/timer.hh (oln/8_timer.hh 1.9 600))
   (olena/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.5.1.1 600))
@@ -767,7 +773,7 @@ bug fixes.
 ;; to version 8.9(w), by jerome:
 
   (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.23 600))
-  (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.19 600))
+  (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.19 640))
 
   (olena/tests/convol () :directory)
   (metalic/config (../config) :symlink)
@@ -1184,17 +1190,17 @@ bug fixes.
 ;; Files added by populate at Fri, 06 Feb 2004 16:00:19 +0100,
 ;; to version 10.57(w), by palma_g:
 
-  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.13.1.3 600))
+  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.13.1.3 644))
 
 ;; Files added by populate at Tue, 10 Feb 2004 15:26:15 +0100,
 ;; to version 10.62(w), by palma_g:
 
-  (olena/oln/core/abstract/behavior.hh (oln/j/46_behavior.h 1.3 600))
+  (olena/oln/core/abstract/behavior.hh (oln/j/46_behavior.h 1.4 600))
 
 ;; Files added by populate at Tue, 10 Feb 2004 15:26:20 +0100,
 ;; to version 10.62(w), by palma_g:
 
-  (olena/oln/core/behavior.hh (oln/j/47_behavior.h 1.3 600))
+  (olena/oln/core/behavior.hh (oln/j/47_behavior.h 1.4 600))
 
 
   (olena/oln/morpho/attribute_closing_opening_map.hxx (oln/j/48_attribute_ 1.2 600))
@@ -1438,12 +1444,12 @@ bug fixes.
   (metalic/mlc/makefile.src (oln/r/3_makefile.s 1.1 600))
   (olena/oln/makefile.src (oln/r/4_makefile.s 1.2 600))
 
-  (olena/oln/convol/slow_gaussian.hh (oln/r/7_slow_gauss 1.1 600))
-  (olena/oln/convol/slow_gaussian.hxx (oln/r/8_slow_gauss 1.1 600))
+  (olena/oln/convol/slow_gaussian.hh (oln/r/7_slow_gauss 1.2 644))
+  (olena/oln/convol/slow_gaussian.hxx (oln/r/8_slow_gauss 1.2 644))
 ;; Files added by populate at Sun, 23 May 2004 13:50:56 +0200,
 ;; to version 10.186(w), by palma_g:
 
-  (olena/oln/utils/qsort.hh (oln/r/9_qsort.hh 1.1 600))
+  (olena/oln/utils/qsort.hh (oln/r/9_qsort.hh 1.1 644))
 
 ;; Files added by populate at Sun, 06 Jun 2004 23:11:34 +0200,
 ;; to version 10.187(w), by thivol_d:

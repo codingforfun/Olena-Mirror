@@ -47,14 +47,15 @@ namespace oln {
     typedef mlc_exact_vt_type(self_type, Exact)	exact_type;
 
     template <class I>
-      void adapt_border_impl(oln::abstract::image<I> &im, coord border_size) const
+      void adapt_border_impl(const oln::abstract::image<I> &im,
+			     coord border_size) const
       {
 	im.border_adapt_mirror(border_size);
       };
   };
 
   // set the border to a specific value
-  
+
   /*! \class value_behavior
   **
   ** Set the border to a specific value.
@@ -75,9 +76,11 @@ namespace oln {
       };
 
       template <class I>
-      void adapt_border_impl(abstract::image<I> &im, coord border_size) const
+      void adapt_border_impl(const abstract::image<I> &im,
+			     coord border_size) const
       {
-	im.border_adapt_assign(border_size, ntg::cast::force<oln_value_type(I)>(value_));
+	im.border_adapt_assign(border_size,
+			       ntg::cast::force<oln_value_type(I)>(value_));
       };
 
   protected:
@@ -101,7 +104,8 @@ namespace oln {
     typedef mlc_exact_vt_type(self_type, Exact)	exact_type;
 
     template <class I>
-      void adapt_border_impl(abstract::image<I> &im, coord border_size) const
+      void adapt_border_impl(const abstract::image<I> &im,
+			     coord border_size) const
       {
 	im.border_adapt_copy(border_size);
       };
