@@ -4,8 +4,8 @@
 @section Aknowledgements
 
 The following people contributed to Olena, maybe indirectly through
-one of the numerous prototypes Olena has uprisen from.  Olena would
-not be what it is today without their work.
+one of the numerous prototypes Olena has uprisen from. Olena would not
+be what it is today without their work.
 
 @table @sc
 @item Thierry G@'eraud
@@ -20,11 +20,22 @@ not be what it is today without their work.
 @item for having maintained the source tree for several years,
 @item for his work on the type system,
 @item for his work on the test system,
+@item for his work on the documentation system,
 @item for his numerous hours spent on Olena to make it better.
 @end itemize
 
+@item Reda Dehak
+@itemize @minus
+@item for managing the project,
+@item for his work on the color conversions,
+@item for his contributions to cleanup the sources.
+@end itemize
+
 @item Akim Demaille
-for his help with the configuration system
+@itemize @minus
+@item for his help with the configuration system,
+@item for his help to keep things clean.
+@end itemize
 
 @item Anthony Pinagot
 @itemize @minus
@@ -34,25 +45,32 @@ for his help with the configuration system
 @end itemize
 
 @item Astrid Wang
-for her work on static arrays
+for her work on static arrays.
 
 @item David Lesage
 @itemize @minus
 @item for his work on the type system,
-@item for his work on the new paradigm.
+@item for his work on the new paradigm,
+@item for his contributions to cleanup the sources.
 @end itemize
 
 @item Dimitri Papadopoulos-Orfanos
 for his work on the type system
 
 @item Emmanuel Turquin
-for implementing transforms
+@itemize @minus
+@item for implementing transforms,
+@item for his work on integre.
+@end itemize
+
+@item Giovanni Palma
+@item for his contributions to cleanup the sources.
 
 @item Heru Xue
-for his work on the color system
+for his work on the color system.
 
 @item Ignacy Gawedzki
-for his work on the color system
+for his work on the color system.
 
 @item Jean Chalard
 @itemize @minus
@@ -70,10 +88,10 @@ for his work on the color system
 @end itemize
 
 @item J@'er@^ome Darbon
-for his work on image morphology and Olena morpho
+for his work on image morphology and Olena morpho.
 
 @item Ludovic Perrine
-for his study of fuzzy types
+for his study of fuzzy types.
 
 @item Micha@"el Strauss
 @itemize @minus
@@ -85,7 +103,7 @@ for his study of fuzzy types
 @item Nicolas Burrus
 @itemize @minus
 @item for his work on integre,
-@item for his work on the images I/O,
+@item for his work on Olena I/O,
 @item for his work on the source tree.
 @end itemize
 
@@ -97,18 +115,12 @@ for his study of fuzzy types
 @end itemize
 
 @item Qu@^oc Peyrot
-for his work on the watershed algorithm
+for his work on the watershed algorithm.
 
 @item Rapha@"el Poss
 @itemize @minus
 @item for his work on the source tree and configuration system,
 @item for his work on the documentation.
-@end itemize
-
-@item Reda Dehak
-@itemize @minus
-@item for managing the project
-@item for his work on the color conversions
 @end itemize
 
 @item R@'emi Coupet
@@ -120,19 +132,23 @@ for his work on the watershed algorithm
 @end itemize
 
 @item Renaud Fran@,cois
-for his bibliographic research
+for his bibliographic research.
 
 @item Sylvain Berlemont
-for his work on combinatorial maps
+@itemize @minus
+@item for his work on combinatorial maps,
+@item for his contributions to cleanup the sources.
+@end itemize
 
 @item Yann R@'egis-Gianas
 @itemize @minus
 @item for his work on the type system,
+@item for his work on graphs,
 @item for his numerous contributions to various parts of Olena.
 @end itemize
 
 @item Yoann Fabre
-for his work on the type system
+for his work on the type system.
 
 @item Vincent Berruchon
 
