@@ -12,3 +12,4 @@ check-local:
 
 distclean-local:
 	rm -rf runs
+	rm -f test.core

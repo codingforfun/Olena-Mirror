@@ -13,7 +13,7 @@ EXTRA_DIST = oln/config/pconf-hh.in
 ### Stuff pertaining to compiler-specific auto-configuration
 ###
 
-CLEANFILES = conf/config.log* conf/configure.log* conf/*.log conf/config.status conf/oln-config*.sh conf/*.1
+CLEANFILES = conf/config.log* conf/configure.log* conf/*.log conf/config.status conf/oln-config*.sh conf/*.1 configure.lineno
 MAINTAINERCLEANFILES = conf/aclocal.m4 conf/autom4te.cache
 EXTRA_DIST += conf/configure.ac \
 	conf/compilers.def \

@@ -1,3 +1,7 @@
+2003-05-10  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/types/Makefile.am (distclean-local): Remove test.core.
+
 2003-05-06  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* ntg/predecls.hh (ntg): Help SWIG parse the file.
