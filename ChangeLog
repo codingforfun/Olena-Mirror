@@ -1,5 +1,10 @@
 2003-01-16  Akim Demaille  <akim@epita.fr>
 
+	Make sure all the file display the "(C)" after "Copyright".
+	Emacs' copyright-update is now usable.
+
+2003-01-16  Akim Demaille  <akim@epita.fr>
+
 	* doc/doc/Makefile.am, doc/Makefile.am, oln/tests/Makefile.am,
 	* tools/utilities/Makefile.am, Makefile.am: Use $(FOO), not @FOO@:
 	's/\@(\w+)\@/\$($1)/g'.

@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -45,7 +45,7 @@
 
 //
 //  Behaviours for data_types int_u, int_s, etc ...
-// 
+//
 //  <WARNING>
 //  Don't forget behaviour are checked on assignements and contruction of
 //  types, and use comparison, so create only vars with unsafe bahaviour
@@ -53,8 +53,8 @@
 //
 /////////////////////////////////////////////////////////////////////////
 
-// FIXME : there is maybe simpler a way to write that, but we want it to 
-// be compatible with icc, so the behaviours must stay class, not 
+// FIXME : there is maybe simpler a way to write that, but we want it to
+// be compatible with icc, so the behaviours must stay class, not
 // template <class>
 
 namespace oln
@@ -106,7 +106,7 @@ namespace oln
 
       template <class T1, class T2>
       static T check_plus_equal (T1 lhs, T2 rhs)
-      {	
+      {
 	T ret = lhs + rhs;
 	if (rhs > 0)
 	  postcondition(TO_OLN_CAST(T, ret) > lhs);
@@ -117,7 +117,7 @@ namespace oln
 
       template <class T1, class T2>
       static T check_minus_equal (T1 lhs, T2 rhs)
-      {	
+      {
 	T ret = lhs - rhs;
 	if (rhs > 0)
 	  postcondition(TO_OLN_CAST(T, ret) < lhs);
@@ -129,7 +129,7 @@ namespace oln
       // FIXME: this check is very slow ! find another solution
       template <class T1, class T2>
       static T check_times_equal (T1 lhs, T2 rhs)
-      {		
+      {
 	T ret = lhs * rhs;
 	if (rhs != 0)
 	  postcondition ((ret / rhs) == lhs);
@@ -145,8 +145,8 @@ namespace oln
       {
 	typedef typename internal::to_oln<P>::ret p_oln_type;
 
-	precondition(static_cast<p_oln_type>(p) <= optraits<T>::max());
-	precondition(static_cast<p_oln_type>(p) >= optraits<T>::min());
+	precondition(TO_OLN_CAST (P, p) <= optraits<T>::max());
+	precondition(TO_OLN_CAST (P, p) >= optraits<T>::min());
 
 	return static_cast<storage_type>(p);
       }
@@ -168,7 +168,7 @@ namespace oln
 
       template <class T1, class T2>
       static T check_plus_equal (T1 lhs, T2 rhs)
-      {	
+      {
 	T ret = lhs + rhs;
 	if (rhs > 0)
 	  {
@@ -182,7 +182,7 @@ namespace oln
 
       template <class T1, class T2>
       static T check_minus_equal (T1 lhs, T2 rhs)
-      {	
+      {
 	T ret = lhs - rhs;
 	if (rhs > 0)
 	  {
@@ -193,21 +193,21 @@ namespace oln
 	  ret = optraits<T>::max();
 	return ret;
       }
-      
+
       // FIXME: this check is very slow ! find another solution ...
       template <class T1, class T2>
       static T check_times_equal (T1 lhs, T2 rhs)
-      {	
+      {
 	T ret = lhs * rhs;
 	if ((ret / rhs) != lhs)
 	  {
-	    // if lhs and rhs signs are equal, we wanted to grow	    
+	    // if lhs and rhs signs are equal, we wanted to grow
 	    if ((lhs > 0 && rhs > 0) || (-lhs > 0 && -rhs > 0))
 	      ret = optraits<T>::max();
 	    else
 	      ret = optraits<T>::min();
 	  }
-	return ret;	
+	return ret;
       }
 
       template <class T1, class T2>
@@ -221,10 +221,10 @@ namespace oln
 
 	if (static_cast<p_oln_type>(p) > optraits<T>::max())
 	  return optraits<T>::max();
-	
+
 	if (static_cast<p_oln_type>(p) < optraits<T>::min())
 	  return optraits<T>::min();
-	
+
 	return static_cast<storage_type>(p);
       }
     };
@@ -234,7 +234,7 @@ namespace oln
   };
 
   //
-  // This behaviour is not really useful, but implement cycle<> internal 
+  // This behaviour is not really useful, but implement cycle<> internal
   // calculus.
   //
   struct cycle_behaviour
@@ -261,7 +261,7 @@ namespace oln
       template <class T1, class T2>
       static T check_div_equal (T1 lhs, T2 rhs)
       {	return lhs / rhs; }
-      
+
       // Assignation check
 
       struct cycle_fmod
@@ -269,14 +269,14 @@ namespace oln
 	static double exec (double lhs, double rhs)
 	{ return fmod(lhs, rhs); }
       };
-      
+
       struct cycle_mod
       {
 	template <class T1, class T2>
 	static T1 exec (const T1& lhs, const T2& rhs)
 	{ return lhs % rhs; }
       };
-      
+
       // FIXME: optimize ?
       template <class P>
       static storage_type apply (const P& rhs)
@@ -284,18 +284,18 @@ namespace oln
 	typedef typename meta::if_<is_a(optraits<P>, optraits_float)::ret,
 	  cycle_fmod,
 	  cycle_mod>::ret_t cycle_op;
-	
+
 	typename internal::to_oln<P>::ret
 	  tmp = cycle_op::exec(std::abs(SIGNED_CAST(P, rhs)),
 			       optraits<T>::max() - optraits<T>::min());
-	
+
 	if (rhs < 0) tmp = -tmp;
-	
+
 	if (tmp < optraits<T>::min())
 	  return optraits<T>::max() - optraits<T>::min() + tmp;
 	else if (tmp >= optraits<T>::max())
 	  return optraits<T>::min() - optraits<T>::max() + tmp;
-	
+
 	return tmp;
       }
     };
@@ -305,17 +305,17 @@ namespace oln
   };
 
   namespace internal {
-    
+
     template <class B1, class B2>
     struct deduce_op_behaviour
     { typedef strict ret; };
-    
+
     template <class B>
     struct deduce_op_behaviour<B, B>
     { typedef B ret; };
 
   }
-    
+
 } // end of namespace oln
 
 #endif // ndef OLENA_VALUE_BEHAVIOUR_HH

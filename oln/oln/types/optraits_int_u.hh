@@ -1,4 +1,4 @@
-// Copyright 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,7 +35,7 @@
 # include <oln/types/typetraits.hh>
 # include <oln/types/predecls.hh>
 # include <oln/types/behaviour.hh>
-# include <oln/types/global_ops_traits.hh>
+# include <oln/types/global_ops.hh>
 # include <oln/types/int_u.hh>
 # include <oln/types/int_s.hh>
 
@@ -187,7 +187,7 @@ namespace oln
     struct operator_min_traits<int_u<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_u<(unsigned) meta::min<nbits, mbits>::ret, 
+      typedef int_u<(unsigned) meta::min<nbits, mbits>::ret,
 		    typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_u<nbits, B1> impl;
     };
@@ -203,7 +203,7 @@ namespace oln
     struct operator_max_traits<int_u<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_u<(unsigned) meta::max<nbits, mbits>::ret, 
+      typedef int_u<(unsigned) meta::max<nbits, mbits>::ret,
 		    typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_u<nbits, B1> impl;
     };

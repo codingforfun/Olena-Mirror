@@ -1,5 +1,12 @@
 2003-01-16  Akim Demaille  <akim@epita.fr>
 
+	* tests/sanity/includes.test: Support arguments on command line.
+	* oln/types/behaviour.hh (strict::get::apply): Use TO_OLN_CAST.
+	* oln/oln/types/optraits_int_u.hh: Include oln/types/global_ops.hh,
+	not oln/types/global_ops_traits.hh.
+
+2003-01-16  Akim Demaille  <akim@epita.fr>
+
 	* tests/configure.ac: Require Autoconf 2.57, Automake 1.7.2.
 	(AM_MAINTAINER_MODE): Remove it, since it doesn't solve anything,
 	at the contrary.
