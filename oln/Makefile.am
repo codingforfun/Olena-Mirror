@@ -234,6 +234,7 @@ nobase_oln_HEADERS =				\
   types/optraits_range.hh			\
   types/optraits_scalar.hh			\
   types/optraits_scalar_defs.hh			\
+  types/optraits_vec.hh				\
   types/predecls.hh				\
   types/range.hh				\
   types/rec_value.hh				\
@@ -241,7 +242,8 @@ nobase_oln_HEADERS =				\
   types/type.hh					\
   types/typetraits.hh				\
   types/typetraits_builtins_float.hh		\
-  types/typetraits_builtins_int.hh
+  types/typetraits_builtins_int.hh		\
+  types/vec.hh
 
 
 

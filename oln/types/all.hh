@@ -53,6 +53,7 @@
 # include <oln/types/range.hh>
 # include <oln/types/cycle.hh>
 # include <oln/types/bin.hh>
+# include <oln/types/vec.hh>
 
 # include <oln/types/optraits_int_u.hh>
 # include <oln/types/optraits_int_s.hh>
@@ -61,6 +62,7 @@
 # include <oln/types/optraits_builtins_int.hh>
 # include <oln/types/optraits_builtins_float.hh>
 # include <oln/types/optraits_bin.hh>
+# include <oln/types/optraits_vec.hh>
 
 # include <oln/types/global_ops_traits.hh>
 # include <oln/types/global_ops.hh>

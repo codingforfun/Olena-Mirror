@@ -1,0 +1,6 @@
+vec<1, int_u16> v1;
+v1[0] = 20;
+vec<1, int_u32> v2 = v1;
+v2 = v2;
+v1 = int_u8(2) * v1 / int_u8(2);
+return v2 != v1;

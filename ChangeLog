@@ -1,50 +1,59 @@
+2002-09-16  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* oln/types/optraits.hh (optraits_vector): New class.
+	* oln/types/predecls.hh (vec): Predeclare.
+	* oln/types/optraits_vec.hh, oln/types/vec.hh: New files.
+	* oln/types/all.hh: Include them.
+	* oln/Makefile.am (nobase_oln_HEADERS): Add types/vec.hh and
+	types/optraits_vec.hh.
+
 2002-09-16  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/types/behaviour.hh: Add multiplication check.
 	* oln/types/to_oln.hh: Rename OLN_TYPE macro.
 	* oln/types/optraits_scalar.hh: Add misc macros.
-	
+
 2002-09-15  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/types/global_ops_defs.hh: Add inline keyword.
-	* oln/types/behaviour.hh, oln/types/optraits_cycle.hh: Move modulo 
+	* oln/types/behaviour.hh, oln/types/optraits_cycle.hh: Move modulo
 	calculus.
 	* oln/types/int_u.hh, oln/types/int_s.hh: Disable checks when useless
 	in constructors.
-	* oln/types/int_u.hh, oln/types/int_s.hh, oln/types/cycle.hh, 
+	* oln/types/int_u.hh, oln/types/int_s.hh, oln/types/cycle.hh,
 	oln/types/range.hh, oln/types/bin.hh: Add stream operator.
 
 2002-09-14  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* oln/types/int_u.hh, oln/types/int_s.hh, oln/types/range.hh, 
-	oln/types/cycle.hh, oln/types/typetraits_builtin_int.hh, 
+	* oln/types/int_u.hh, oln/types/int_s.hh, oln/types/range.hh,
+	oln/types/cycle.hh, oln/types/typetraits_builtin_int.hh,
 	oln/types/typetraits_builtin_float.hh: Add behaviour_type typedef.
-	* oln/types/optraits_scalar_defs.hh, oln/types/behaviour.hh: Add 
+	* oln/types/optraits_scalar_defs.hh, oln/types/behaviour.hh: Add
 	arithmetic checks.
-	* oln/types/behaviour.hh, oln/types/optraits_int_u.hh, 
-	oln/types/optraits_int_s.hh, oln/types/optraits_cycle.hh, 
-	oln/types/optraits_range.hh, oln/types/interval.hh, 
+	* oln/types/behaviour.hh, oln/types/optraits_int_u.hh,
+	oln/types/optraits_int_s.hh, oln/types/optraits_cycle.hh,
+	oln/types/optraits_range.hh, oln/types/interval.hh,
 	oln/types/optraits_bin.hh: Add debug code.
 	* oln/types/to_oln.hh: Add OLN_TYPE macro.
 
 2002-09-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/types/predecls.hh: Remove namespace types.
-	* oln/types/behaviour.hh, oln/types/bin.hh, oln/types/cycle.hh, 
+	* oln/types/behaviour.hh, oln/types/bin.hh, oln/types/cycle.hh,
 	oln/types/int_s.hh, oln/types/int_u.hh, oln/types/optraits_bin.hh,
-	oln/types/optraits_builtins_int.hh, 
-	oln/types/optraits_builtin_float.hh, oln/types/optraits_cycle.hh, 
-	oln/types/optraits_int_s.hh, oln/types/optraits_int_u.hh, 
-	oln/types/optraits_range.hh, oln/types/optraits_scalar.hh, 
-	oln/types/range.hh, oln/types/typetraits_builtins_float.hh, 
+	oln/types/optraits_builtins_int.hh,
+	oln/types/optraits_builtin_float.hh, oln/types/optraits_cycle.hh,
+	oln/types/optraits_int_s.hh, oln/types/optraits_int_u.hh,
+	oln/types/optraits_range.hh, oln/types/optraits_scalar.hh,
+	oln/types/range.hh, oln/types/typetraits_builtins_float.hh,
 	oln/types/typetraits_builtins_int.hh: Complete typetraits.
 
 
 2002-09-11  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/types/global_ops.hh: Fix unary minus.
-	* oln/types/int_u.hh, oln/types/int_s.hh, 
-	oln/types/typetraits_builtin_int.hh, 
+	* oln/types/int_u.hh, oln/types/int_s.hh,
+	oln/types/typetraits_builtin_int.hh,
 	oln/types/typetraits_builtin_float.hh: Add signed_type.
 
 2002-09-10  Nicolas Burrus  <burrus_n@lrde.epita.fr>

@@ -30,7 +30,7 @@
 
 namespace oln
 {
-  
+
   template <class T> struct optraits;
 
   // top of hierarchy
@@ -39,6 +39,10 @@ namespace oln
   // enumerated types
   template <class T>
   class optraits_enum : public optraits_top {};
+
+  // vectorial types
+  template <class T>
+  class optraits_vector : public optraits_top {};
 
 } // end of namespace oln
 

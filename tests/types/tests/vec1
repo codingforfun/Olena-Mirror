@@ -1,0 +1,5 @@
+vec<3, int> foo;
+foo[0] = 5;
+foo[1] = 7;
+foo[2] = 13;
+return foo[0] + foo[1] + foo[2] != 25;

@@ -1,0 +1,6 @@
+vec<3, int> v1;
+v1[0] = 5;
+v1[1] = 7;
+v1[2] = 13;
+vec<3, int> v2 = v1;
+return v2 != v1;

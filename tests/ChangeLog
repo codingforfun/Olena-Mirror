@@ -1,10 +1,15 @@
+2002-09-16  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* types/tests/vec1, types/tests/vec2, types/tests/vec3,
+	types/tests/vec4, types/tests/vec5, types/tests/vec6: New files.
+
 2002-09-16  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* tests/types/tests/int_u2f, tests/types/tests/float2: New files.
+	* types/tests/int_u2f, types/tests/float2: New files.
 
 2002-09-15  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* tests/types/tests/int_u2e, tests/types/tests/int_sc4: New files.
+	* types/tests/int_u2e, types/tests/int_sc4: New files.
 
 2002-09-11  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 

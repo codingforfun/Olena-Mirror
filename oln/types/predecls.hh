@@ -70,6 +70,12 @@ namespace oln {
   }
   using type_definitions::bin;
 
+  // vectorial types
+  namespace type_definitions {
+    template <unsigned N, class T> class vec;
+  }
+  using type_definitions::vec;
+
   // int_u
 
   typedef int_u<8, strict>	int_u8;

@@ -108,6 +108,15 @@ namespace oln
   class rec_enum : public rec_value<Self>
   {};
 
+  //
+  //  Vector branch
+  //
+  /////////////////////
+
+  template <class Self>
+  class rec_vector : public rec_value<Self>
+  {};
+
 } // namespace oln
 
 #endif // ndef OLENA_VALUE_REC_VALUE_HH_
