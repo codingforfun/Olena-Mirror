@@ -140,10 +140,10 @@ namespace oln {
       _fill (internal::zero_value_traits<T>::zero());
     }
 
-    template<int b_col, int e_col, class T2>
-    vec(const oln::meta::array2d<0,1,b_col,e_col,T2>& arr)
+    template<int ncols, class T2>
+    vec(const oln::meta::array2d< oln::meta::array2d_info< 1, ncols >, T2 >& arr)
     {
-      meta::eq<e_col-b_col,N>::ensure();
+      meta::eq< ncols, N >::ensure();
       for (unsigned i = 0; i < N; ++i)
 	_value[i] = arr[i];
     }

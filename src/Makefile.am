@@ -139,7 +139,13 @@ nobase_oln_HEADERS =				\
   level/threshold.hh				\
   math/macros.hh				\
   meta/array.hh					\
-  meta/array.hxx				\
+  meta/array1d.hh				\
+  meta/array1d.hxx				\
+  meta/array2d.hh				\
+  meta/array2d.hxx				\
+  meta/array3d.hh				\
+  meta/array3d.hxx				\
+  meta/arraynd.hh				\
   meta/basics.hh				\
   meta/cmp.hh					\
   meta/control.hh				\

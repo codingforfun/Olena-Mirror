@@ -2,6 +2,7 @@
 # Process the check directory next, because it contains functions
 # needed by other directories.
 SUBDIRS = . check \
+  array \
   convert \
   io \
   morpho

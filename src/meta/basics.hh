@@ -78,6 +78,39 @@ namespace oln {
     template<> struct is_false<false> { static void ensure() {}; };
 
 
+    //
+    // or
+    //
+    
+    template<bool b1, bool b2>
+    struct logical_or {
+      enum { ret = (b1 || b2) };
+      static void ensure() {}
+    };
+
+    template<>
+    struct logical_or<false, false> {
+      enum { ret = false };
+    };
+
+
+    //
+    // and
+    //
+    
+    template<bool b1, bool b2>
+    struct logical_and {
+      enum { ret = (b1 && b2) };
+    };
+
+    template<>
+    struct logical_and<true, true> {
+      enum { ret = true };
+      static void ensure() {}
+    };
+
+
+    
   } // meta
 
 } // oln

@@ -13,10 +13,6 @@
 # PARTICULAR PURPOSE.
 
 @SET_MAKE@
-
-# -*- Makefile -*-
-
-# -*- Makefile -*-
 SHELL = @SHELL@
 
 srcdir = @srcdir@
@@ -40,7 +36,7 @@ oldincludedir = /usr/include
 pkgdatadir = $(datadir)/@PACKAGE@
 pkglibdir = $(libdir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
-top_builddir = ../..
+top_builddir = ../../..
 
 ACLOCAL = @ACLOCAL@
 AUTOCONF = @AUTOCONF@
@@ -80,35 +76,18 @@ ZLIB_LDFLAGS = @ZLIB_LDFLAGS@
 am__include = @am__include@
 am__quote = @am__quote@
 install_sh = @install_sh@
-
-AM_CXXFLAGS = -Wall -W -ftemplate-depth-50 -ansi -pedantic
-AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/tests/check
-
-LDADD = $(top_builddir)/tests/check/libcheck.a
-TESTS = $(check_PROGRAMS)
-
-AM_LDFLAGS = $(ZLIB_LDFLAGS)
-AM_CFLAGS = $(ZLIB_CFLAGS)
-
-check_PROGRAMS = 2d
-2d_SOURCES = 2d.cc loadsave.hh
-
-CLEANFILES = \
-  lena \
-  lena.ppm lena.pgm lena.pbm \
-  lena.pppm lena.ppgm lena.ppbm \
-  lena.ppm.gz lena.pgm.gz lena.pbm.gz
-
-subdir = tests/io
+liberrors_a_SOURCES = errors.cc errors.hh
+noinst_LIBRARIES = liberrors.a
+subdir = tests/array/gen_test_utils
 mkinstalldirs = $(SHELL) $(top_srcdir)/tools/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/src/config/config.h
 CONFIG_CLEAN_FILES =
-check_PROGRAMS = 2d$(EXEEXT)
-am_2d_OBJECTS = 2d.$(OBJEXT)
-2d_OBJECTS = $(am_2d_OBJECTS)
-2d_LDADD = $(LDADD)
-2d_DEPENDENCIES = $(top_builddir)/tests/check/libcheck.a
-2d_LDFLAGS =
+LIBRARIES = $(noinst_LIBRARIES)
+
+liberrors_a_AR = $(AR) cru
+liberrors_a_LIBADD =
+am_liberrors_a_OBJECTS = errors.$(OBJEXT)
+liberrors_a_OBJECTS = $(am_liberrors_a_OBJECTS)
 
 DEFS = @DEFS@
 DEFAULT_INCLUDES =  -I. -I$(srcdir) -I$(top_builddir)/src/config
@@ -117,7 +96,7 @@ LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
 depcomp = $(SHELL) $(top_srcdir)/tools/depcomp
 am__depfiles_maybe = depfiles
-@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/2d.Po
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/errors.Po
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
@@ -129,25 +108,28 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-DIST_SOURCES = $(2d_SOURCES)
+DIST_SOURCES = $(liberrors_a_SOURCES)
 DIST_COMMON = Makefile.am Makefile.in
-SOURCES = $(2d_SOURCES)
+SOURCES = $(liberrors_a_SOURCES)
 
 all: all-am
 
 .SUFFIXES:
 .SUFFIXES: .cc .o .obj
-$(srcdir)/Makefile.in:  Makefile.am $(top_srcdir)/tests/check/Makefile.check $(top_srcdir)/tests/check/Makefile.flags $(top_srcdir)/configure.ac $(ACLOCAL_M4)
+$(srcdir)/Makefile.in:  Makefile.am  $(top_srcdir)/configure.ac $(ACLOCAL_M4)
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  tests/io/Makefile
+	  $(AUTOMAKE) --gnu  tests/array/gen_test_utils/Makefile
 Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
 
-clean-checkPROGRAMS:
-	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
-2d$(EXEEXT): $(2d_OBJECTS) $(2d_DEPENDENCIES) 
-	@rm -f 2d$(EXEEXT)
-	$(CXXLINK) $(2d_LDFLAGS) $(2d_OBJECTS) $(2d_LDADD) $(LIBS)
+AR = ar
+
+clean-noinstLIBRARIES:
+	-test -z "$(noinst_LIBRARIES)" || rm -f $(noinst_LIBRARIES)
+liberrors.a: $(liberrors_a_OBJECTS) $(liberrors_a_DEPENDENCIES) 
+	-rm -f liberrors.a
+	$(liberrors_a_AR) liberrors.a $(liberrors_a_OBJECTS) $(liberrors_a_LIBADD)
+	$(RANLIB) liberrors.a
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT) core *.core
@@ -155,7 +137,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/2d.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/errors.Po@am__quote@
 
 distclean-depend:
 	-rm -rf ./$(DEPDIR)
@@ -209,64 +191,9 @@ GTAGS:
 
 distclean-tags:
 	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH
-
-check-TESTS: $(TESTS)
-	@failed=0; all=0; xfail=0; xpass=0; \
-	srcdir=$(srcdir); export srcdir; \
-	list='$(TESTS)'; \
-	if test -n "$$list"; then \
-	  for tst in $$list; do \
-	    if test -f ./$$tst; then dir=./; \
-	    elif test -f $$tst; then dir=; \
-	    else dir="$(srcdir)/"; fi; \
-	    if $(TESTS_ENVIRONMENT) $${dir}$$tst; then \
-	      all=`expr $$all + 1`; \
-	      case " $(XFAIL_TESTS) " in \
-	      *" $$tst "*) \
-	        xpass=`expr $$xpass + 1`; \
-	        failed=`expr $$failed + 1`; \
-	        echo "XPASS: $$tst"; \
-	      ;; \
-	      *) \
-	        echo "PASS: $$tst"; \
-	      ;; \
-	      esac; \
-	    elif test $$? -ne 77; then \
-	      all=`expr $$all + 1`; \
-	      case " $(XFAIL_TESTS) " in \
-	      *" $$tst "*) \
-	        xfail=`expr $$xfail + 1`; \
-	        echo "XFAIL: $$tst"; \
-	      ;; \
-	      *) \
-	        failed=`expr $$failed + 1`; \
-	        echo "FAIL: $$tst"; \
-	      ;; \
-	      esac; \
-	    fi; \
-	  done; \
-	  if test "$$failed" -eq 0; then \
-	    if test "$$xfail" -eq 0; then \
-	      banner="All $$all tests passed"; \
-	    else \
-	      banner="All $$all tests behaved as expected ($$xfail expected failures)"; \
-	    fi; \
-	  else \
-	    if test "$$xpass" -eq 0; then \
-	      banner="$$failed of $$all tests failed"; \
-	    else \
-	      banner="$$failed of $$all tests did not behave as expected ($$xpass unexpected passes)"; \
-	    fi; \
-	  fi; \
-	  dashes=`echo "$$banner" | sed s/./=/g`; \
-	  echo "$$dashes"; \
-	  echo "$$banner"; \
-	  echo "$$dashes"; \
-	  test "$$failed" -eq 0; \
-	else :; fi
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 
-top_distdir = ../..
+top_distdir = ../../..
 distdir = $(top_distdir)/$(PACKAGE)-$(VERSION)
 
 distdir: $(DISTFILES)
@@ -291,10 +218,8 @@ distdir: $(DISTFILES)
 	  fi; \
 	done
 check-am: all-am
-	$(MAKE) $(AM_MAKEFLAGS) $(check_PROGRAMS)
-	$(MAKE) $(AM_MAKEFLAGS) check-TESTS
 check: check-am
-all-am: Makefile
+all-am: Makefile $(LIBRARIES)
 
 installdirs:
 
@@ -315,7 +240,6 @@ install-strip:
 mostlyclean-generic:
 
 clean-generic:
-	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 
 distclean-generic:
 	-rm -f Makefile $(CONFIG_CLEAN_FILES) stamp-h stamp-h[0-9]*
@@ -325,7 +249,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-checkPROGRAMS clean-generic mostlyclean-am
+clean-am: clean-generic clean-noinstLIBRARIES mostlyclean-am
 
 distclean: distclean-am
 
@@ -360,8 +284,8 @@ mostlyclean-am: mostlyclean-compile mostlyclean-generic
 
 uninstall-am: uninstall-info-am
 
-.PHONY: GTAGS all all-am check check-TESTS check-am clean \
-	clean-checkPROGRAMS clean-generic distclean distclean-compile \
+.PHONY: GTAGS all all-am check check-am clean clean-generic \
+	clean-noinstLIBRARIES distclean distclean-compile \
 	distclean-depend distclean-generic distclean-tags distdir dvi \
 	dvi-am info info-am install install-am install-data \
 	install-data-am install-exec install-exec-am install-info \

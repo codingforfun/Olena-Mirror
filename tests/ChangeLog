@@ -1,3 +1,16 @@
+2002-07-09  Astrid Wang  <astrid@ljubljana.lrde.epita.fr>
+
+	* array/Makefile.am: New file.
+	* array/test_array1d.cc, array/test_array2d.cc, array/test_array3d.cc:
+	New files.
+	* array/gen_test.cc, array/gen_test_utils/Makefile.am,
+	array/gen_test_utils/prelude, array/gen_test_utils/postlude, 
+	array/gen_test_utils/errors.hh, array/gen_test_utils/errors.cc:
+	New files.
+	* Makefile.am (SUBDIRS): Add array.
+	* configure.ac: Output tests/array/Makefile and
+	tests/array/gen_test_utils/Makefile.
+	
 2002-07-02  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* Makefile.am (BUILTDATA): Add data/lena.pbm.gz,

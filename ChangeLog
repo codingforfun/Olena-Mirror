@@ -1,3 +1,23 @@
+2002-07-09  Astrid Wang  <astrid@ljubljana.lrde.epita.fr>
+	
+	* src/meta/array.hh, src/meta/array.hxx: Remove (obsolete).
+	* src/meta/array1d.hh, src/meta/array1d.hxx,
+	src/meta/array2d.hh, src/meta/array2d.hxx,
+	src/meta/array3d.hh, src/meta/array3d.hxx,
+	src/meta/array.hh, src/meta/arraynd.hh: Add.
+	* src/Makefile.am (nobase_oln_HEADERS): Remove meta/array.hh,
+	meta/array.hxx. Add meta/array1d.hh, meta/array1d.hxx,
+	meta/array2d.hh, meta/array2d.hxx, meta/array3d.hh, meta/array3d.hxx,
+	meta/array.hh, meta/arraynd.hh.
+	* src/meta/basics.hh: New function logical_or and logical_and.
+	* src/core/internal/objs.hxx: Define new class _pbrk for 3D arrays.
+	* src/core/objs.hh: Instantiate such an object. 
+
+	* src/core/w_window2d.hh: Adapt the constructor with the new
+	syntax of the array.
+	* src/value/vec.hh: Likewise.
+
+	
 2002-07-09  jean-sebastien mouret  <js@lrde.epita.fr>
 
 	* src/io/pnm_write3d.hxx (mosaic): Add inline.

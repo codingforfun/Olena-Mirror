@@ -64,15 +64,16 @@ namespace oln {
       return *this;
     }
 
-    template<int b_row, int e_row, int b_col, int e_col, class T2>
-    w_window2d(const meta::array2d<b_row,e_row,b_col,e_col,T2>& arr) :
-      super(arr.size()), _delta(0)
+    template<class I, class T2>
+    w_window2d(const meta::array2d<I, T2 >& arr) :
+      super(I::card), _delta(0)
     {
       unsigned i = 0;
-      for (coord row = b_row; row < e_row; ++row)
-        for (coord col = b_col; col < e_col; ++col)
+      for (coord row = -I::center_row; I::row < I::nrows - I::center_row - 1; ++row)
+	for (coord col = -I::center_col; col < I::ncols - I::center_col - 1; ++col)
           add(row, col, arr[i++]);
     }
+    
 
     T& set(const dpoint2d& dp)
     {

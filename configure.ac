@@ -44,6 +44,8 @@ AC_CONFIG_FILES([
   src/Makefile
   demo/Makefile
   tests/Makefile
+  tests/array/Makefile
+  tests/array/gen_test_utils/Makefile
   tests/check/Makefile
   tests/convert/Makefile
   tests/io/Makefile

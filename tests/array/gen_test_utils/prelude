@@ -1,0 +1,20 @@
+#include <iostream>
+#include "check.hh"
+
+#include "meta/array.hh"
+
+using namespace oln;
+using namespace meta;
+
+#define OK_OR_FAIL                              \
+      std::cout << "OK" << std::endl;           \
+    else                                        \
+      {                                         \
+        std::cout << "FAIL" << std::endl;       \
+        fail = true;                            \
+      }
+
+bool
+check()
+{
+  bool fail = false;
