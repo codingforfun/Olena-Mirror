@@ -93,19 +93,19 @@ namespace oln {
   {
     typedef typename mlc::bool_switch_<
 
-        mlc::bool_case_<ntg_is_a(T, ntg::binary)::ret,
+        mlc::bool_case_<ntg_is_a(T, ntg::binary)::val,
 			is_a<abstract::binary_image>,
 
-        mlc::bool_case_<ntg_is_a(T, ntg::integer)::ret,
+        mlc::bool_case_<ntg_is_a(T, ntg::integer)::val,
 			is_a<abstract::integer_image>,
 
-        mlc::bool_case_<ntg_is_a(T, ntg::decimal)::ret,
+        mlc::bool_case_<ntg_is_a(T, ntg::decimal)::val,
 			is_a<abstract::decimal_image>,
 
-        mlc::bool_case_<ntg_is_a(T, ntg::vectorial)::ret,
+        mlc::bool_case_<ntg_is_a(T, ntg::vectorial)::val,
 			is_a<abstract::vectorial_image>,
 
-        mlc::bool_case_<ntg_is_a(T, ntg::non_vectorial)::ret,
+        mlc::bool_case_<ntg_is_a(T, ntg::non_vectorial)::val,
 			is_a<abstract::non_vectorial_image>,
 			
         mlc::bool_case_<true,

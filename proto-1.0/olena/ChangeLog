@@ -1,3 +1,7 @@
+2005-04-06  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* oln/core/abstract/image_vectorialness.hh: Conform to mlc.
+
 2005-04-06  Roland Levillain  <roland@lrde.epita.fr>
 
 	Introduce oln::apply for binary functions.
