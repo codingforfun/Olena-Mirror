@@ -164,7 +164,7 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
 		   metalic/tests/check/defs],
     [dnl Configuration for the testsuite
 
-      MLC_TESTS_SUBDIRS=""
+      MLC_TESTS_SUBDIRS="main"
 
       AC_CACHE_CHECK([for selection of tests],
                      [mlc_cv_tests_selection],
@@ -177,6 +177,7 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
 
 
       # MLC_TESTS defined in oln-local.m4
+      MLC_TESTS([main])
       MLC_TESTS([sanity])
 
       AC_SUBST([MLC_TESTS_SUBDIRS])
