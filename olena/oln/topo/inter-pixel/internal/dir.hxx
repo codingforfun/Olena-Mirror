@@ -28,6 +28,8 @@
 #ifndef OLENA_TOPO_INTER_PIXEL_INTERNAL_DIR_HXX
 # define OLENA_TOPO_INTER_PIXEL_INTERNAL_DIR_HXX
 
+# include <iostream>
+
 using namespace oln::topo::inter_pixel::internal;
 
 std::ostream & operator<<(std::ostream & o, dir_traits<2>::ret i)

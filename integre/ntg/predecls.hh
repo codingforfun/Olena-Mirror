@@ -106,9 +106,12 @@ namespace ntg
 
   namespace type_definitions
   {
-    template <unsigned ncomps, unsigned qbits, template <unsigned>
-    class color_system>
+#ifndef SWIG
+    template <unsigned ncomps, unsigned qbits, template <unsigned> class color_system>
     struct color;
+#else
+    struct color;
+#endif
 
     template<int lval, int uval>
     struct interval;

@@ -1,18 +1,69 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 8 33)
-(Parent-Version oln 8 32)
-(Version-Log "Index: tools/swilena/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+(Project-Version oln 8 40)
+(Parent-Version oln 8 33)
+(Version-Log "Index: ChangeLog
+from  Raphaël Poss  <raph@lrde.epita.fr>
 
-	* src/swilena_types.i: Ajust namespace of data types.
+        * configure.ac: Add more Makefile's to the Swilena component.
+
+        * bootstrap.sh: Invoke expand.sh in tools/swilena.
+
+Index: integre/ChangeLog
+from  Raphaël Poss  <raph@lrde.epita.fr>
+
+        * ntg/predecls.hh (ntg): Help SWIG parse the file.
+
+Index: olena/ChangeLog
+from  Raphaël Poss  <raph@lrde.epita.fr>
+
+        * oln/core/internal/real_image2d.hh (operator<<): Remove reference
+        to optraits<T>::max so that images of floats can print.
+
+        * oln/core/internal/real_image3d.hh (operator<<): Likewise.
+
+Index: tools/swilena/ChangeLog
+from  Raphaël Poss  <raph@lrde.epita.fr>
+
+        * doc/swilena.texi (Top): Add off-sync notice.
+
+        * meta/Makefile.am, meta/swilena_w_win.i, meta/swilena_point.i,
+        meta/swilena_morpho.i, meta/swilena_structelt.i,
+        meta/swilena_ntg.i, meta/swilena_ntg_cplx.i,
+        meta/swilena_ntg_int_u.i, meta/swilena_ntg_int_s.i,
+        meta/swilena_imagesize.i, meta/swilena_image.i,
+        meta/swilena_exception.i, meta/swilena_describe.i,
+        meta/swilena_decl.i, meta/swilena_core.i: Add.
+
+        * meta/attic: New directory. 
+
+        * src/swilena.i, src/swilena1d.i, src/swilena1d_convert.i,
+        src/swilena1d_morpho.i, src/swilena2d.i, src/swilena2d_convert.i,
+        src/swilena2d_morpho.i, src/swilena3d.i, src/swilena3d_convert.i,
+        src/swilena3d_morpho.i, src/swilena_conversions.i,
+        src/swilena_convert_dim.i, src/swilena_convoldefs.i,
+        src/swilena_dim.i, src/swilena_dpoint.i, src/swilena_exceptions.i,
+        src/swilena_image.i, src/swilena_meta_win.i,
+        src/swilena_morpho_dim.i, src/swilena_morphodefs.i,
+        src/swilena_neighborhood.i, src/swilena_point.i,
+        src/swilena_typedefs.i, src/swilena_types.i,
+        src/swilena_w_window.i, src/swilena_window.i: Move to `meta/attic'.
+
+        * expand.sh: Add. Most files are now generated from this script.
+
+        * TODO: Update.
+
+        * Makefile.am (SUBDIRS): Mention new directory `meta'.
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 24 Apr 2003 13:53:13 +0200")
-(Checkin-Login burrus_n)
+(Checkin-Time "Tue, 06 May 2003 06:56:14 +0200")
+(Checkin-Login raph)
 ;; diff-ignore tests/data/.*pbm$
-;; diff-ignore img/.*pbm$
+;; diff-ignore .*\.pbm$
+;; diff-ignore .*\.pgm$
+;; diff-ignore .*\.pnm$
 ;; diff-ignore doc/doc/ref-morpho.tex$
 ;; diff-ignore doc/doc/ref-level.tex$
 ;; diff-ignore oln/oln/config/pconf-inc.in$
@@ -87,27 +138,30 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
                   "olena/img/lena.pppm"
                   "olena/img/lena128.pgm"
                   "olena/img/lena.ppbm"
-                  "olena/img/neighbor9.ppbm"))
+                  "olena/img/neighbor9.ppbm"
+                  "^CODING_STYLE$"
+                  "olena/img/lena16b.ppgm"
+                  "olena/img/lena16b.pgm"))
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.15 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.1 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.31 640))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12 640))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.1 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.15 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.2 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.7 640))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7 640))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.1 640))
 
   (attic/oln-ChangeLog (oln/6_ChangeLog 1.50.1.98.1.5 640))
   (attic/doc-ChangeLog (oln/e/1_ChangeLog 1.31 640))
   (attic/tests-ChangeLog (oln/e/30_ChangeLog 1.52 640))
 
-  (bootstrap.sh (oln/j/16_bootstrap. 1.10 750))
+  (bootstrap.sh (oln/j/16_bootstrap. 1.11 750))
 
   (cleanup.sh (oln/o/29_cleanup.sh 1.5 750))
 
-  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.14 640))
+  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.1 640))
 
   (doc/demo/image.cc (oln/d/46_image.cc 1.5 640))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.16 640))
@@ -219,8 +273,8 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/core/internal/neighborhood.hh (oln/d/7_neighborho 1.6 640))
   
   (olena/oln/core/internal/real_image1d.hh (oln/d/5_real_image 1.5 640))
-  (olena/oln/core/internal/real_image2d.hh (oln/d/4_real_image 1.6 640))
-  (olena/oln/core/internal/real_image3d.hh (oln/d/3_real_image 1.6 640))
+  (olena/oln/core/internal/real_image2d.hh (oln/d/4_real_image 1.6.1.1 640))
+  (olena/oln/core/internal/real_image3d.hh (oln/d/3_real_image 1.6.1.1 640))
   (olena/oln/core/internal/rec_operable.hh (oln/d/2_rec_operab 1.2 640))
   (olena/oln/core/internal/window.hh (oln/d/0_window.hh 1.10 640))
   (olena/oln/core/internal/w_window.hh (oln/d/1_w_window.h 1.9 640))
@@ -251,9 +305,9 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/core/window.hh (oln/c/16_window.hh 1.7 640))
   (olena/oln/core/winiter.hh (oln/c/12_winiter.hh 1.4 640))
   (olena/oln/core/winneighb.hh (oln/c/11_winneighb. 1.5 640))
-  (olena/oln/core/w_window1d.hh (oln/c/19_w_window1d 1.7 640))
-  (olena/oln/core/w_window2d.hh (oln/c/18_w_window2d 1.6.1.2 640))
-  (olena/oln/core/w_window3d.hh (oln/c/17_w_window3d 1.7 640))
+  (olena/oln/core/w_window1d.hh (oln/c/19_w_window1d 1.9 640))
+  (olena/oln/core/w_window2d.hh (oln/c/18_w_window2d 1.6.1.4 640))
+  (olena/oln/core/w_window3d.hh (oln/c/17_w_window3d 1.9 640))
   (olena/oln/core/w_window.hh (oln/c/20_w_window.h 1.6 640))
   (olena/oln/io/base.hh (oln/b/20_base.hh 1.5 640))
   (olena/oln/io/base.hxx (oln/b/18_base.hxx 1.4 640))
@@ -346,7 +400,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (integre/ntg/cplx_representation.hh (oln/i/3_cplx_repre 1.3 640))
   (integre/ntg/cycle.hh (oln/g/28_cycle.hh 1.11.1.3 640))
   (integre/ntg/debug.hh (oln/i/8_debug.hh 1.2.1.3 640))
-  (integre/ntg/global_ops_defs.hh (oln/g/26_global_ops 1.7 640))
+  (integre/ntg/global_ops_defs.hh (oln/g/26_global_ops 1.8 640))
   (integre/ntg/global_ops.hh (oln/g/27_global_ops 1.11.1.4 640))
   (integre/ntg/global_ops_traits.hh (oln/g/25_global_ops 1.7.1.3 640))
   (integre/ntg/hsi.hh (oln/i/20_hsi.hh 1.3.1.2 640))
@@ -371,7 +425,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (integre/ntg/optraits_scalar_defs.hh (oln/g/11_optraits_s 1.8 640))
   (integre/ntg/optraits_scalar.hh (oln/g/12_optraits_s 1.11.1.3 640))
   (integre/ntg/optraits_vec.hh (oln/h/42_optraits_v 1.10.1.3 640))
-  (integre/ntg/predecls.hh (oln/g/10_predecls.h 1.10.1.3 640))
+  (integre/ntg/predecls.hh (oln/g/10_predecls.h 1.10.1.3.1.1 640))
   (integre/ntg/range.hh (oln/g/9_range.hh 1.9.1.3 640))
   (integre/ntg/rec_value.hh (oln/g/8_rec_value. 1.8.1.2 640))
   (integre/ntg/rgb.hh (oln/i/18_rgb.hh 1.3.1.2 640))
@@ -527,47 +581,49 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (tools/Makefile.am (oln/o/37_Makefile.a 1.6 640))
   (tools/swilena/configure.ac (oln/o/26_configure. 1.2 640))
   (tools/swilena/doc/Makefile.am (oln/n/39_Makefile.a 1.2 640))
-  (tools/swilena/doc/swilena.texi (oln/n/40_swilena.te 1.1 640))
+  (tools/swilena/doc/swilena.texi (oln/n/40_swilena.te 1.1.1.1 640))
   (tools/swilena/java/Makefile.am (oln/n/42_Makefile.a 1.1 640))
   ; (tools/swilena/java/Makefile.in ())
-  (tools/swilena/Makefile.am (oln/o/25_Makefile.a 1.3 640))
-  (tools/swilena/python/Makefile.am (oln/n/44_Makefile.a 1.4 640))
-  (tools/swilena/python/typedefs.hh (oln/n/43_typedefs.h 1.3 640))
+  (tools/swilena/Makefile.am (oln/o/25_Makefile.a 1.4 640))
+;  (tools/swilena/python/Makefile.am (oln/n/44_Makefile.a 1.4 640))
+;  (tools/swilena/python/typedefs.hh (oln/n/43_typedefs.h 1.3 640))
   (tools/swilena/README (oln/n/35_README 1.1 640))
-  (tools/swilena/src/lena128.pgm (oln/o/19_lena128.pg 1.1 640) :no-keywords)
-  (tools/swilena/src/lena2.pgm (oln/o/14_lena2.pgm 1.1 640) :no-keywords)
-  (tools/swilena/src/lena3.pgm (oln/o/5_lena3.pgm 1.1 640) :no-keywords)
-  (tools/swilena/src/lena3.pnm (oln/o/4_lena3.pnm 1.1 640) :no-keywords)
-  (tools/swilena/src/lena.pgm (oln/o/20_lena.pgm 1.1 640) :no-keywords)
-  (tools/swilena/src/Makefile.am (oln/o/23_Makefile.a 1.1 640))
-  (tools/swilena/src/swilena1d_convert.i (oln/n/48_swilena1d_ 1.1 640))
-  (tools/swilena/src/swilena1d.i (oln/o/17_swilena1d. 1.1 640))
-  (tools/swilena/src/swilena1d_morpho.i (oln/o/0_swilena1d_ 1.1 640))
-  (tools/swilena/src/swilena2d_convert.i (oln/n/47_swilena2d_ 1.1 640))
-  (tools/swilena/src/swilena2d.i (oln/o/2_swilena2d. 1.1 640))
-  (tools/swilena/src/swilena2d_morpho.i (oln/n/51_swilena2d_ 1.1 640))
-  (tools/swilena/src/swilena3d_convert.i (oln/n/46_swilena3d_ 1.1 640))
-  (tools/swilena/src/swilena3d.i (oln/o/1_swilena3d. 1.1 640))
-  (tools/swilena/src/swilena3d_morpho.i (oln/n/45_swilena3d_ 1.1 640))
-  (tools/swilena/src/swilena_conversions.i (oln/o/15_swilena_co 1.1 640))
-  (tools/swilena/src/swilena_convert_dim.i (oln/n/49_swilena_co 1.1 640))
-  (tools/swilena/src/swilena_convoldefs.i (oln/o/10_swilena_co 1.1 640))
-  (tools/swilena/src/swilena_dim.i (oln/o/22_swilena_di 1.2 640))
-  (tools/swilena/src/swilena_dpoint.i (oln/o/13_swilena_dp 1.1 640))
-  (tools/swilena/src/swilena_exceptions.i (oln/o/21_swilena_ex 1.1 640))
-  (tools/swilena/src/swilena_image.i (oln/o/12_swilena_im 1.1 640))
-  (tools/swilena/src/swilena.i (oln/o/24_swilena.i 1.1 640))
-  (tools/swilena/src/swilena_meta_win.i (oln/o/7_swilena_me 1.1 640))
-  (tools/swilena/src/swilena_morphodefs.i (oln/o/18_swilena_mo 1.2 640))
-  (tools/swilena/src/swilena_morpho_dim.i (oln/n/50_swilena_mo 1.2 640))
-  (tools/swilena/src/swilena_neighborhood.i (oln/o/8_swilena_ne 1.1 640))
-  (tools/swilena/src/swilena_point.i (oln/o/11_swilena_po 1.1 640))
-  (tools/swilena/src/swilena_typedefs.i (oln/o/16_swilena_ty 1.1 640))
-  (tools/swilena/src/swilena_types.i (oln/o/3_swilena_ty 1.3 640))
-  (tools/swilena/src/swilena_window.i (oln/o/9_swilena_wi 1.1 640))
-  (tools/swilena/src/swilena_w_window.i (oln/o/6_swilena_w_ 1.1 640))
-  (tools/swilena/swilena.prj (oln/n/38_swilena.pr 1.1 640))
-  (tools/swilena/TODO (oln/n/36_TODO 1.1 640))
+;  (tools/swilena/src/lena128.pgm (oln/o/19_lena128.pg 1.1 640) :no-keywords)
+;  (tools/swilena/src/lena2.pgm (oln/o/14_lena2.pgm 1.1 640) :no-keywords)
+;  (tools/swilena/src/lena3.pgm (oln/o/5_lena3.pgm 1.1 640) :no-keywords)
+;  (tools/swilena/src/lena3.pnm (oln/o/4_lena3.pnm 1.1 640) :no-keywords)
+;  (tools/swilena/src/lena.pgm (oln/o/20_lena.pgm 1.1 640) :no-keywords)
+;  (tools/swilena/src/Makefile.am (oln/o/23_Makefile.a 1.1 640))
+  (tools/swilena/meta () :directory)
+  (tools/swilena/meta/attic () :directory)
+  (tools/swilena/meta/attic/swilena1d_convert.i (oln/n/48_swilena1d_ 1.1 640))
+  (tools/swilena/meta/attic/swilena1d.i (oln/o/17_swilena1d. 1.1 640))
+  (tools/swilena/meta/attic/swilena1d_morpho.i (oln/o/0_swilena1d_ 1.1 640))
+  (tools/swilena/meta/attic/swilena2d_convert.i (oln/n/47_swilena2d_ 1.1 640))
+  (tools/swilena/meta/attic/swilena2d.i (oln/o/2_swilena2d. 1.1 640))
+  (tools/swilena/meta/attic/swilena2d_morpho.i (oln/n/51_swilena2d_ 1.1 640))
+  (tools/swilena/meta/attic/swilena3d_convert.i (oln/n/46_swilena3d_ 1.1 640))
+  (tools/swilena/meta/attic/swilena3d.i (oln/o/1_swilena3d. 1.1 640))
+  (tools/swilena/meta/attic/swilena3d_morpho.i (oln/n/45_swilena3d_ 1.1 640))
+  (tools/swilena/meta/attic/swilena_conversions.i (oln/o/15_swilena_co 1.1 640))
+  (tools/swilena/meta/attic/swilena_convert_dim.i (oln/n/49_swilena_co 1.1 640))
+  (tools/swilena/meta/attic/swilena_convoldefs.i (oln/o/10_swilena_co 1.1 640))
+  (tools/swilena/meta/attic/swilena_dim.i (oln/o/22_swilena_di 1.2 640))
+  (tools/swilena/meta/attic/swilena_dpoint.i (oln/o/13_swilena_dp 1.1 640))
+  (tools/swilena/meta/attic/swilena_exceptions.i (oln/o/21_swilena_ex 1.1 640))
+  (tools/swilena/meta/attic/swilena_image.i (oln/o/12_swilena_im 1.1 640))
+  (tools/swilena/meta/attic/swilena.i (oln/o/24_swilena.i 1.1 640))
+  (tools/swilena/meta/attic/swilena_meta_win.i (oln/o/7_swilena_me 1.1 640))
+  (tools/swilena/meta/attic/swilena_morphodefs.i (oln/o/18_swilena_mo 1.2 640))
+  (tools/swilena/meta/attic/swilena_morpho_dim.i (oln/n/50_swilena_mo 1.2 640))
+  (tools/swilena/meta/attic/swilena_neighborhood.i (oln/o/8_swilena_ne 1.1 640))
+  (tools/swilena/meta/attic/swilena_point.i (oln/o/11_swilena_po 1.1 640))
+  (tools/swilena/meta/attic/swilena_typedefs.i (oln/o/16_swilena_ty 1.1 640))
+  (tools/swilena/meta/attic/swilena_types.i (oln/o/3_swilena_ty 1.3 640))
+  (tools/swilena/meta/attic/swilena_window.i (oln/o/9_swilena_wi 1.1 640))
+  (tools/swilena/meta/attic/swilena_w_window.i (oln/o/6_swilena_w_ 1.1 640))
+;  (tools/swilena/swilena.prj (oln/n/38_swilena.pr 1.1 640))
+  (tools/swilena/TODO (oln/n/36_TODO 1.2 640))
   (tools/utilities/configure.ac (oln/o/27_configure. 1.2 640))
   (tools/utilities/Makefile.am (oln/g/2_Makefile.a 1.12.1.4 640))
   (tools/utilities/morpho/generate_morpho.sh (oln/i/30_generate_m 1.3.1.5.1.2 750))
@@ -797,7 +853,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/topo/inter-pixel/inter-pixel.hxx (oln/r/31_inter-pixe 1.3 600))
   (olena/oln/topo/combinatorial-map/cmap.hxx (oln/r/32_cmap.hxx 1.3 600))
   (olena/oln/topo/tarjan/union.hh (oln/r/33_union.hh 1.2 600))
-  (olena/oln/topo/inter-pixel/inter-pixel.hh (oln/r/34_inter-pixe 1.4 600))
+  (olena/oln/topo/inter-pixel/inter-pixel.hh (oln/r/34_inter-pixe 1.5 600))
   (olena/oln/topo/tarjan/flat-zone.hh (oln/r/35_flat-zone. 1.3 600))
   (olena/oln/topo/combinatorial-map/cmap.hh (oln/r/36_cmap.hh 1.3 600))
 
@@ -818,14 +874,57 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/topo/inter-pixel/node.hh (oln/r/46_node.hh 1.1 600))
   (olena/oln/topo/inter-pixel/internal/dir-iter.hh (oln/r/47_dir-iter.h 1.1 600))
   (olena/oln/topo/inter-pixel/internal/dir.hh (oln/r/48_dir.hh 1.1 600))
-  (olena/oln/topo/inter-pixel/internal/dir.hxx (oln/r/49_dir.hxx 1.1 600))
+  (olena/oln/topo/inter-pixel/internal/dir.hxx (oln/r/49_dir.hxx 1.2 600))
 
 ;; Files added by populate at Wed, 09 Apr 2003 22:18:27 +0200,
 ;; to version 8.31(w), by nes:
 
   (doc/dev/upgrading.texi (oln/r/50_upgrading. 1.1 600))
+
+
+  (integre/tests/types/tests/builtin1 (oln/s/7_builtin1 1.1 640))
+  (olena/tests/core/tests/w_window (oln/s/8_w_window 1.1 640))
+  (olena/tests/core/runtests (oln/s/9_runtests 1.1 750))
+  (olena/tests/core/Makefile.am (oln/s/10_Makefile.a 1.1 640))
+  (integre/tests/types/tests/int_u5c (oln/s/11_int_u5c 1.1 640))
+;; Files added by populate at Tue, 06 May 2003 06:05:19 +0200,
+;; to version 8.33(w), by raph:
+
+  (tools/swilena/expand.sh (oln/s/25_expand.sh 1.1 775))
+
+;; Files added by populate at Tue, 06 May 2003 06:05:41 +0200,
+;; to version 8.33(w), by raph:
+
+  (tools/swilena/meta/Makefile.am (oln/s/26_Makefile.a 1.1 664))
+
+;; Files added by populate at Tue, 06 May 2003 06:05:43 +0200,
+;; to version 8.33(w), by raph:
+
+  (tools/swilena/meta/swilena_w_win.i (oln/s/27_swilena_w_ 1.1 664))
+  (tools/swilena/meta/swilena_structelt.i (oln/s/28_swilena_st 1.1 664))
+  (tools/swilena/meta/swilena_point.i (oln/s/29_swilena_po 1.1 664))
+  (tools/swilena/meta/swilena_ntg_int_u.i (oln/s/30_swilena_nt 1.1 664))
+  (tools/swilena/meta/swilena_ntg_int_s.i (oln/s/31_swilena_nt 1.1 664))
+  (tools/swilena/meta/swilena_ntg_cplx.i (oln/s/32_swilena_nt 1.1 664))
+  (tools/swilena/meta/swilena_ntg.i (oln/s/33_swilena_nt 1.1 664))
+  (tools/swilena/meta/swilena_morpho.i (oln/s/34_swilena_mo 1.1 664))
+  (tools/swilena/meta/swilena_imagesize.i (oln/s/35_swilena_im 1.1 664))
+  (tools/swilena/meta/swilena_image.i (oln/s/36_swilena_im 1.1 664))
+  (tools/swilena/meta/swilena_exception.i (oln/s/37_swilena_ex 1.1 664))
+  (tools/swilena/meta/swilena_describe.i (oln/s/38_swilena_de 1.1 664))
+  (tools/swilena/meta/swilena_decl.i (oln/s/39_swilena_de 1.1 664))
+  (tools/swilena/meta/swilena_core.i (oln/s/40_swilena_co 1.1 664))
 )
 (Merge-Parents
-  (8.32 complete)
+  (8.34 complete
+    (integre/ChangeLog integre/ChangeLog integre/ChangeLog m) (integre/ntg/global_ops_defs.hh integre/ntg/global_ops_defs.hh integre/ntg/global_ops_defs.hh r))
+  (8.39 complete
+    (ChangeLog ChangeLog ChangeLog r) (integre/ChangeLog integre/ChangeLog integre/ChangeLog m)
+    (olena/ChangeLog olena/ChangeLog olena/ChangeLog m) (configure.ac configure.ac configure.ac m)
+    (olena/oln/core/w_window1d.hh olena/oln/core/w_window1d.hh olena/oln/core/w_window1d.hh r) (olena/oln/core/w_window2d.hh olena/oln/core/w_window2d.hh olena/oln/core/w_window2d.hh r)
+    (olena/oln/core/w_window3d.hh olena/oln/core/w_window3d.hh olena/oln/core/w_window3d.hh r) (olena/oln/topo/inter-pixel/inter-pixel.hh olena/oln/topo/inter-pixel/inter-pixel.hh olena/oln/topo/inter-pixel/inter-pixel.hh r)
+    (olena/oln/topo/inter-pixel/internal/dir.hxx olena/oln/topo/inter-pixel/internal/dir.hxx olena/oln/topo/inter-pixel/internal/dir.hxx r) (() () integre/tests/types/tests/builtin1 a)
+    (() () olena/tests/core/tests/w_window a) (() () olena/tests/core/runtests a)
+    (() () olena/tests/core/Makefile.am a) (() () integre/tests/types/tests/int_u5c a))
 )
 (New-Merge-Parents)

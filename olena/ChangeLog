@@ -1,3 +1,27 @@
+2003-05-06  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* oln/core/internal/real_image2d.hh (operator<<): Remove reference
+	to optraits<T>::max so that images of floats can print.
+
+	* oln/core/internal/real_image3d.hh (operator<<): Likewise.
+
+2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/topo/inter-pixel/inter-pixel.hh: Minor fixes.
+
+2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/core/w_window1d.hh, oln/core/w_window2d.hh,
+	oln/core/w_window3d.hh: Restore a corrected version of set
+	methods.
+	* tests/core/Makefile.am, tests/core/runtests: New files.
+	* tests/core/tests/w_window: New test.
+
+2003-04-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/core/w_window1d.hh, oln/core/w_window2d.hh,
+	oln/core/w_window3d.hh: Remove useless and broken set methods.
+
 2003-04-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/io/Makefile.am: Add lena16b.pgm and lena16b.ppgm to

@@ -123,6 +123,7 @@ OLN_COLLECTION([OLN_TOP],
       OLN_TESTS([arith])
       OLN_TESTS([convert])
       OLN_TESTS([convol])
+      OLN_TESTS([core])
       OLN_TESTS([io])
       OLN_TESTS([morpho])
       OLN_TESTS([sanity])
@@ -323,7 +324,10 @@ OLN_COLLECTION([OLN_TOP],
                   [oln_cv_build_swilena],
 	          [the SWIG interface to Olena],
                   [OLN_TOOLS],
-                  [tools/swilena/Makefile tools/swilena/src/Makefile tools/swilena/doc/Makefile],
+                  [tools/swilena/Makefile 
+	           tools/swilena/meta/Makefile
+	           tools/swilena/src/Makefile	
+	           tools/swilena/doc/Makefile],
     [OLN_COLLECTION([OLN_SWILENA], dnl ... and a collection.
     [dnl
        

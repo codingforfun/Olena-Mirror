@@ -28,9 +28,12 @@
 #ifndef OLENA_TOPO_INTER_PIXEL_INTER_PIXEL_HH
 # define OLENA_TOPO_INTER_PIXEL_INTER_PIXEL_HH
 
+# include <oln/basics.hh>
 # include <oln/topo/inter-pixel/node.hh>
 # include <oln/topo/inter-pixel/fwd-dir-iter.hh>
 # include <oln/topo/inter-pixel/bkd-dir-iter.hh>
+
+# include <ntg/optraits.hh>
 
 namespace oln {
 
@@ -61,7 +64,7 @@ typename mute< ImgType, Node(ImgType) >::ret
 	{
 	  // FIXME: assume there is no boundary pixel with a max value.
 	  // pearhaps we should clone img with a higher type.
-	  border::adapt_assign(img, 1, optraits< Value(_I) >::max());
+	  border::adapt_assign(img, 1, ntg::optraits< Value(_I) >::max());
 
 	  Iter(inter_pixel_t) p(_data);
 	  fwd_dir_iter_t it;

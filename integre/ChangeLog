@@ -1,3 +1,16 @@
+2003-05-06  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* ntg/predecls.hh (ntg): Help SWIG parse the file.
+
+2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+ 	* tests/types/tests/int_u5c: New test.
+
+2003-04-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/global_ops_defs.hh: Add missing builtin specializations.
+	* tests/types/tests/builtin1: New test.
+
 2003-03-14  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* Makefile.am: Adjust.

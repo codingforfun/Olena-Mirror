@@ -1,0 +1,23 @@
+#include <oln/core/w_window1d.hh>
+#include <oln/core/w_window2d.hh>
+#include <oln/core/w_window3d.hh>
+
+#include <ntg/all.hh>
+
+#include <cassert>
+
+using namespace oln;
+using namespace ntg;
+
+int main()
+{
+  w_window1d<int> w1d;
+  w_window2d<int_u8> w2d;
+  w_window3d<int_s32> w3d;
+  int x1d = w1d.set(dpoint1d(0), 5);
+  int x2d = w2d.set(dpoint2d(0, 5), 4);
+  assert(x2d == 4);
+  x2d = w2d.set(dpoint2d(0, 5), 5);
+  int x3d = w3d.set(dpoint3d(0, 2, 4), 5);
+  return !(x1d == x2d && x2d == x3d);
+}
