@@ -1,5 +1,9 @@
 2002-09-10  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
+	* oln/types/optraits_builtins_float.hh: Include oln/config/system.hh.
+
+2002-09-10  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
 	* oln/types/predecls.hh: Move the types for which we
 	declare operator into namespace type_definitions.  Don't
 	export `bounded' in namespace type.
