@@ -182,7 +182,7 @@ namespace oln {
 			non_vectorial_image_with_dim<Dim, Exact>,
 			
         mlc::bool_case_<true,
-	      	        data_type_image<Exact> >
+	      	        data_type_image_with_dim<Dim, Exact> >
 
       > > > > > >::ret ret;
     };

@@ -163,7 +163,7 @@ namespace oln {
     template <class I>
     oln_value_type(I) get_n_cc(const abstract::image<I>& input)
     {
-      return  fold(arith::f_max<oln_value_type(I)>(), input);
+      return fold(arith::default_f_max<oln_value_type(I)>(), input);
     }
     
   } // end of namespace level

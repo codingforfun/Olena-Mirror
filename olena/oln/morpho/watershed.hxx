@@ -267,7 +267,8 @@ namespace oln {
     // Algorithm by Vincent and Soille
     template<class DestValue, class I, class N>
     typename mute<I, DestValue>::ret
-    watershed_seg(const abstract::non_vectorial_image<I>& im_i, const abstract::neighborhood<N>& Ng)
+    watershed_seg(const abstract::non_vectorial_image<I>& im_i,
+		  const abstract::neighborhood<N>& Ng)
     {
       return internal::soille_watershed_<
 	internal::watershed_seg_point_handler_, DestValue> (im_i, Ng);
@@ -275,7 +276,8 @@ namespace oln {
     
     template<class DestValue, class I, class N>
     typename mute<I, DestValue>::ret
-    watershed_con(const abstract::non_vectorial_image<I>& im_i, const abstract::neighborhood<N>& Ng)
+    watershed_con(const abstract::non_vectorial_image<I>& im_i, 
+		  const abstract::neighborhood<N>& Ng)
     {
       return internal::soille_watershed_<
 	internal::watershed_con_point_handler_, DestValue> (im_i, Ng);

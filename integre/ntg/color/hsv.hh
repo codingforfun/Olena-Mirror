@@ -33,7 +33,7 @@
 namespace ntg
 {
 
-  enum hsv_comp 
+  enum hsv_comp
     {
       hsv_H = 0,
       hsv_S = 1,

@@ -18,20 +18,22 @@ nobase_oln_HEADERS =				\
   config/pconf.hh				\
   convert/basics.hh				\
   convert/bound.hh				\
+  convert/cast.hh				\
   convert/abstract/colorconv.hh			\
   convert/abstract/conversion.hh		\
   convert/conversion.hh				\
   convert/conversion_ng_se.hh			\
   convert/force.hh				\
   convert/nrgbxyz.hh				\
-  convert/nrgbyiq.hh				\
-  convert/nrgbyuv.hh				\
-  convert/nrgbhsi.hh				\
-  convert/nrgbhsl.hh				\
-  convert/nrgbhsv.hh				\
+  convert/rgbyiq.hh				\
+  convert/rgbyuv.hh				\
+  convert/rgbhsi.hh				\
+  convert/rgbhsl.hh				\
+  convert/rgbhsv.hh				\
   convert/rgbnrgb.hh				\
   convert/rgbxyz.hh				\
   convert/stretch.hh				\
+  convert/value_to_point.hh			\
   convol/convolution.hh				\
   convol/fast_gaussian.hh			\
   convol/fast_gaussian.hxx			\

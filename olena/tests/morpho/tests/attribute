@@ -1,0 +1,111 @@
+//								    -*- c++ -*-
+
+#include <oln/basics2d.hh>
+#include <oln/morpho/attribute_closing_opening.hh>
+#include <oln/morpho/attribute_closing_opening_map.hh>
+#include <oln/level/compare.hh>
+#include <ntg/all.hh>
+#include <oln/morpho/extrema_killer.hh>
+
+#include "check.hh"
+#include "data.hh"
+
+using namespace oln;
+using namespace ntg;
+
+#define OK_OR_FAIL				\
+      std::cout << "OK" << std::endl;		\
+    else					\
+      {						\
+	std::cout << "FAIL" << std::endl;	\
+	fail = true;				\
+      }
+
+//FIXME some algo are already checked.
+bool
+check_algo()
+{
+  bool fail(false);
+
+  typedef image2d<int_u8> img_type;
+  typedef oln::morpho::area_type<unsigned> area_type;
+  const area_type::lambda_type area = 100;
+  const neighborhood2d nb = neighb_c8();
+  //  const oln::morpho::NullEnv env;
+
+  img_type lena = load(rdata("lena.pgm"));
+  img_type lena_sure_closing = oln::morpho::sure_minima_killer(lena, area, nb);
+  img_type lena_sure_opening = oln::morpho::sure_maxima_killer(lena, area, nb);
+
+  img_type lena_tst_opening;
+  img_type lena_tst_closing;
+
+  std::cerr << "testing tarjan_map..." << std::endl;
+//   lena_tst_closing = morpho::slow::tarjan_map<area_type,ntg::int_u8,img_type>(true, lena,  nb, area, env);
+//   lena_tst_opening= morpho::slow::tarjan_map<area_type,ntg::int_u8,img_type>(false, lena,  nb, area, env);
+  lena_tst_closing = morpho::slow::area_closing(lena, nb, area);
+  lena_tst_opening = morpho::slow::area_opening(lena, nb, area);
+
+  fail = fail ||
+    !level::is_equal(lena_sure_closing, lena_tst_closing)||
+    !level::is_equal(lena_sure_opening, lena_tst_opening);
+
+  std::cerr << "fail:" << fail << std::endl;
+
+  std::cerr << "testing fast_minima_killer..." << std::endl;
+  lena_tst_closing = oln::morpho::fast_minima_killer(lena, area, nb);
+
+  fail = fail ||
+    !level::is_equal(lena_sure_closing, lena_tst_closing);
+  std::cerr << "fail:" << fail << std::endl;
+
+  std::cerr << "testing area_closin and area_opeing..." << std::endl;
+  lena_tst_closing = morpho::fast::area_closing(lena, nb, area);
+  lena_tst_opening = morpho::fast::area_opening(lena, nb, area);
+  fail = fail ||
+    !level::is_equal(lena_sure_closing, lena_tst_closing)||
+    !level::is_equal(lena_sure_opening, lena_tst_opening);
+  std::cerr << "fail:" << fail << std::endl;
+  //FIXME at least 1 other algo should be checked
+
+  return fail;
+}
+
+bool
+check_attribute()
+{
+  bool fail = false;
+
+  //FIXME attributes should be checked
+  return fail;
+}
+
+
+bool
+check_env()
+{
+  //FIXME env should be checked
+  return false;
+}
+bool
+check()
+{
+  bool fail = false;
+
+  std::cerr << "FIXME: check_attribute and check_env are empty."
+	    << std::endl;
+
+  std::cout << "check algo... " << std::flush;
+  if (check_algo() == false)
+    OK_OR_FAIL;
+
+  std::cout << "check attribute... " << std::flush;
+  if (check_attribute() == false)
+    OK_OR_FAIL;
+
+  std::cout << "check env... " << std::flush;
+  if (check_env() == false)
+    OK_OR_FAIL;
+
+  return fail;
+}

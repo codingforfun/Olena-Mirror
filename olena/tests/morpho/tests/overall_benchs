@@ -1,0 +1,99 @@
+//								    -*- c++ -*-
+
+#include <oln/basics2d.hh>
+#include <oln/morpho/watershed.hh>
+#include <oln/morpho/extrema_killer.hh>
+#include <oln/morpho/opening.hh>
+#include <oln/morpho/geodesic_dilation.hh>
+#include <oln/morpho/geodesic_erosion.hh>
+#include <oln/morpho/reconstruction.hh>
+#include <oln/morpho/extrema.hh>
+#include <oln/utils/timer.hh>
+
+#include <ntg/all.hh>
+
+#include "check.hh"
+#include "data.hh"
+
+#include <iostream>
+
+using namespace oln;
+using namespace oln::morpho;
+using namespace ntg;
+
+void bench_extrema()
+{
+  image2d<int_u8> lena = load(rdata("lena128.pgm"));
+
+  unsigned size = 20;
+  sure_minima_killer(lena, size, neighb_c4());
+  fast_minima_killer(lena, size, neighb_c4());
+  sure_maxima_killer(lena, size, neighb_c4());
+  fast_maxima_killer(lena, size, neighb_c4());
+}
+
+void bench_reconstruction()
+{
+  image2d<int_u8> lena = load(rdata("lena128.pgm"));
+  image2d<int_u8> lena_open = morpho::opening(lena, win_c4p());
+  image2d<ntg::bin> minima_map(lena.size());
+  image2d<int_u8> max_map(lena.size());
+
+  level::fill (minima_map, false);
+  level::fill (max_map, 255);
+  minima_map(10,10) = true;
+  minima_map(100,100) = true;
+
+  morpho::sure::regional_minima(lena, neighb_c4());
+  morpho::sequential::regional_minima(lena, neighb_c4());
+  morpho::hybrid::regional_minima(lena, neighb_c4());
+  
+  morpho::sure::minima_imposition(lena, minima_map, neighb_c4());
+  morpho::geodesic_erosion(lena, lena_open, neighb_c4());
+  morpho::sure::geodesic_dilation(lena_open, lena, neighb_c4());
+  
+  morpho::sequential::geodesic_reconstruction_erosion
+    (max_map, lena_open, neighb_c4());
+  morpho::sure::geodesic_reconstruction_dilation
+    (lena_open, lena, neighb_c4());
+}
+
+void bench_watershed()
+{
+  image2d<int_u8> lena = load(rdata("lena128.pgm"));
+
+  for (int i = 0; i < 200; ++i)
+    watershed_seg<int_u16>(lena, neighb_c4());
+}
+
+void print_info(const oln::utils::timer& t, std::string name)
+{
+  std::cout << t.total_time() << "\t\t(" << name << ": " 
+	    << t.last_time() << ")" << std::endl;
+}
+
+bool check()
+{
+  bool fail = false;
+	
+  oln::utils::timer t;
+
+  bench_extrema();
+
+  t.start();
+  bench_extrema();
+  print_info(t, "extrema killers");
+  t.stop();
+
+  t.resume();
+  bench_watershed();
+  print_info(t, "wastershed");
+  t.stop();
+
+  t.resume();
+  bench_reconstruction();
+  print_info(t, "reconstructions");
+  t.stop();
+
+  return fail;
+}

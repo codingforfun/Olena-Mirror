@@ -1,0 +1,38 @@
+//								    -*- c++ -*-
+
+#include "loadsave.hh"
+
+#include <fstream>
+#include <sstream>
+
+template <class T>
+bool check_type()
+{
+  image2d<T> ima (5, 5);
+  io::save(ima, "headers.pgm");
+
+  // Read the actual maximal value in the header of the written file
+  std::fstream f ("headers.pgm");
+  assert(f);
+  std::string line;
+  for (unsigned i = 0; i < 4; ++i)
+    std::getline(f, line);
+  f.close();
+  
+  // It should be the same value as ntg_max_val(T)
+  std::istringstream s (line);
+  unsigned value;
+  s >> value;
+  return value != ntg_max_val(T);
+}
+
+bool
+check(void)
+{
+  bool fail = false;
+
+  fail |= check_type<int_u8>();
+  fail |= check_type<int_u16>();
+
+  return fail;
+}

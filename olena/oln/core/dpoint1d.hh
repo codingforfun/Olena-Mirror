@@ -56,7 +56,7 @@ namespace oln {
 
     typedef abstract::dpoint<dpoint1d> super_type;
 
-    friend class super_type;
+    friend class abstract::dpoint<dpoint1d>;
 
     dpoint1d();
 

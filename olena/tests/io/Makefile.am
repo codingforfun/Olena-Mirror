@@ -6,6 +6,7 @@ noinst_HEADERS = loadsave.hh
 
 CLEANFILES +=					\
   black-test.pbm white-test.pbm			\
+  headers.pgm					\
   lena						\
   lena.ppm lena.pgm lena.pbm			\
   lena.pppm lena.ppgm lena.ppbm			\

@@ -64,7 +64,7 @@ namespace oln {
   {
     for (unsigned i = 0; i < dim(); ++i)
       {
-	top_.nth(i) = std::max(top_.nth(i), p.nth(i));
+	top_.nth(i) = ntg::max(top_.nth(i), p.nth(i));
 	bottom_.nth(i) = std::min(bottom_.nth(i), p.nth(i));
 	mass_[i] += p.nth(i);
       }

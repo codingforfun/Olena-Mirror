@@ -29,7 +29,7 @@
 # define NTG_ENUM_BUILTIN_BOOL_HH
 
 # include <ntg/core/abstract_hierarchy.hh>
-# include <ntg/core/behavior.hh>
+# include <ntg/real/behavior.hh>
 # include <ntg/core/predecls.hh>
 # include <ntg/core/type_traits.hh>
 

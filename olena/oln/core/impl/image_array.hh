@@ -84,7 +84,7 @@ namespace oln {
 
       enum { dim = impl_traits<Exact>::dim };
 
-      friend class super_type;
+      friend class image_impl<Exact>;
 
       image_array(const size_type& s): super_type(s), buffer_(0)
       {

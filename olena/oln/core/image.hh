@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -121,6 +121,11 @@ namespace oln {
     typedef typename mlc::exact<I>::ret::template mute<T>::ret ret;
   };
 
+  //define img_type equals to the image of dim Dim
+  template <unsigned Dim, class T, class Exact = mlc::final>
+  struct dim_traits
+  {
+  };
 } // end of oln
 
 #endif // ! OLENA_CORE_IMAGE_HH

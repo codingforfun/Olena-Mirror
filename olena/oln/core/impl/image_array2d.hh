@@ -98,7 +98,7 @@ namespace oln {
  
 
       friend class image_impl<image_array2d<T> >;
-      friend class super_type;
+      friend class image_array<T, image_array2d<T> >;
 
       image_array2d(const size_type& s): super_type(s) 
       {

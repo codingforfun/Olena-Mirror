@@ -28,42 +28,30 @@
 #ifndef NTG_REAL_REAL_VALUE_HH
 # define NTG_REAL_REAL_VALUE_HH
 
+# include <ntg/core/type_traits.hh>
 # include <ntg/core/value.hh>
+
+# define declare_real_value_type__(Type, Parent)			\
+  template <class E> 							\
+  class Type : public Parent<E>						\
+  {};									\
+									\
+  namespace internal {							\
+									\
+    template <class E>							\
+    struct typetraits<Type<E> > : public typetraits<Parent<E> > 	\
+    {};									\
+									\
+  }
 
 namespace ntg
 {
 
-  /*-----------.
-  | real_value |
-  `-----------*/
-
-  template <class E> 
-  class real_value : public value<E>
-  {};
-
-  /*----------.
-  | int_value |
-  `----------*/
-  
-  template <class E> 
-  class int_value : public real_value<E>
-  {};
-
-  template <class E>
-  class uint_value : public int_value<E>
-  {};
-
-  template <class E>
-  class sint_value : public int_value<E>
-  {};
-
-  /*------------.
-  | float_value |
-  `------------*/
-
-  template <class E>
-  class float_value : public real_value<E>
-  {};
+  declare_real_value_type__(real_value, value)
+  declare_real_value_type__(float_value, real_value)
+  declare_real_value_type__(int_value, real_value)
+  declare_real_value_type__(uint_value, int_value)
+  declare_real_value_type__(sint_value, int_value)
 
 } // end of ntg.
 

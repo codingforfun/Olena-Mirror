@@ -1,15 +1,1237 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln doc 3)
-(Parent-Version oln doc 1)
-(Version-Log "2003-09-29  Giovanni Palma  <palma_g@headache>
+(Project-Version oln 10 68)
+(Parent-Version oln doc 3)
+(Version-Log "Index: ChangeLog
+from  Giovanni Palma  <giovanni@lrde.epita.fr>
 
-	* ref/exdoc.pl: Correct the regexps.
-	* ref/exdoc.config: Add comment style entry.
+	* NEWS: Describe new way to document.
+	* configure.ac: Add configuration files for doc.
+
+Index: doc/ChangeLog
+from  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* ref/img_conv.pl: Add script for image conversion.
+	* ref/exdoc.mk.in: Add exdoc config file.
+	* ref/exdoc.config.in: Likewise.
+	* ref/doxygen.config.in: Add doxygen config file.
+	* ref/exdoc.pl: Add script to extract code from comments.
+	* ref/Makefile.am: Make Makefile use new doc tools.
+
+Index: olena/ChangeLog
+from  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* oln/morpho/attribute_closing_opening.hh: Add comments.
+	* oln/core/abstract/behavior.hh: Likewise.
+	* oln/core/behavior.hh: Likewise.
+
+Index: configure.ac
+--- configure.ac Sun, 21 Sep 2003 23:54:00 +0200 burrus_n (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.13 640)
++++ configure.ac Mon, 23 Feb 2004 16:59:35 +0100 palma_g (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.13 640)
+@@ -231,6 +231,17 @@
+ ### Stuff pertaining to the documentation
+ ###
+ 
++### The reference manual uses Doxygen
++### FIXME: could be much better.
++
++AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
++## if test -z \"$DOXYGEN\"; then
++##   AC_MSG_WARN([`doxygen' not found -- `doxygen' must be installed to generate the documentation])
++AC_CONFIG_FILES([doc/ref/doxygen.config
++		 doc/ref/exdoc.config
++		 doc/ref/exdoc.mk])
++## fi
++
+ ### The documentation tree is both a component...
+ 
+   OLN_COMPONENT([doc],
+Index: doc/ref/Makefile.am
+--- doc/ref/Makefile.am Mon, 11 Aug 2003 15:35:58 +0200 burrus_n (oln/d/51_Makefile.a 1.27.1.8 640)
++++ doc/ref/Makefile.am Tue, 24 Feb 2004 15:44:53 +0100 palma_g (oln/d/51_Makefile.a 1.27.1.8 640)
+@@ -1,106 +1,142 @@
+-###
+-### General definitions
+-###
++# ###
++# ### General definitions
++# ###
+ 
+-TEXI2PDF = $(TEXI2DVI) --pdf
+-TEXI2PDF_FLAGS = --batch -I $(srcdir)/graphics
++# TEXI2PDF = $(TEXI2DVI) --pdf
++# TEXI2PDF_FLAGS = --batch -I $(srcdir)/graphics
+ 
+-TEXI2DVI_FLAGS = --batch -I $(srcdir)/graphics
++# TEXI2DVI_FLAGS = --batch -I $(srcdir)/graphics
+ 
+ olnsrc = $(top_srcdir)/olena/oln
+ 
+-include $(srcdir)/filelists.make
++# include $(srcdir)/filelists.make
+ 
+-$(srcdir)/filelists.make: $(srcdir)/gen_filelists.sh
+-	$(SHELL) $@ $(olnsrc)
++# $(srcdir)/filelists.make: $(srcdir)/gen_filelists.sh
++# 	$(SHELL) $@ $(olnsrc)
+ 
+-$(srcdir)/Makefile.in: $(srcdir)/filelists.make
++# $(srcdir)/Makefile.in: $(srcdir)/filelists.make
+ 
+-###
+-### Auto-generation of TeX files.
+-###
+-
+-AM_LDFLAGS = $(LDFLAGS) $(ZLIB_LDFLAGS)
+-AM_CXXFLAGS = $(CXXFLAGS) $(ZLIB_CXXFLAGS)
+-
+-INCLUDES = -I$(top_srcdir)/olena -I$(top_builddir)/olena
+-COMMONGETDEFSFLAGS =  --agarg=-DCXXCOMPILE=\"$(CXX) -I$(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(CPPFLAGS) $(AM_CXXFLAGS) $(AM_LDFLAGS)\" \\
+-		      --agarg=-DEPSTOPDF=\"$(EPSTOPDF)\" \\
+-		      --agarg=-DCONVERT=\"$(IMAGEMAGICK_CONVERT)\" \\
+-	              --agarg=--templ-dirs=$(srcdir) \\
+-	              --agarg=-DIMGDIR=$(top_srcdir)/olena/img
+-PROCESSINGGETDEFSFLAGS = \\
+-  --subblock=tpl=type,name,doc \\
+-  --subblock=arg=type,name,mode,doc \\
+-  --listattr=exh \\
+-  --listattr=ns \\
+-  --template $(srcdir)/processing.tpl \\
+-  --srcfile
+-
+-ref-morpho.tex: $(morpho_files) $(srcdir)/processing.tpl
+-	$(GETDEFS) $(COMMONGETDEFSFLAGS) $(PROCESSINGGETDEFSFLAGS) \\
+-	  $(GETDEFSFLAGS) --base-name=ref-morpho $(morpho_files)
+-
+-ref-level.tex: $(level_files) $(srcdir)/processing.tpl
+-	$(GETDEFS) $(COMMONGETDEFSFLAGS) $(PROCESSINGGETDEFSFLAGS) \\
+-	  $(GETDEFSFLAGS) --base-name=ref-level $(level_files)
+-
+-###
+-### Rules to build the manuals.
+-###
+-
+-tex_TEX = oln-ref.tex
+-
+-built_oln_ref_TEX = ref-morpho.tex ref-level.tex
+-oln_ref_TEX = $(built_oln_ref_TEX) integre-ref.tex
+-
+-oln-ref.dvi: $(tex_TEX) $(oln_ref_TEX) $(graphics_DIA)
+-	$(TEXI2DVI) $(TEXI2DVI_FLAGS) \\
+-	  `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
+-
+-oln-ref.pdf: $(tex_TEX) $(oln_ref_TEX) $(graphics_DIA)
+-	$(TEXI2PDF) $(TEXI2PDF_FLAGS) \\
+-	  `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
+-
+-# This rule is not activated by default since the generated files cannot
+-# be easily distributed (automake barks loudly when the filenames are
+-# not known at the time Makefile.in is generated)
+-
+-# FIXME: uncomment when ready
+-# cp $(srcdir)/graphics/*-html.png html/
+-
+-html.tar.gz: $(tex_TEX) $(oln_ref_TEX) $(graphics_DIA)
+-	$(HEVEA) -fix -o html/oln-ref.html -I $(srcdir) -I $(srcdir)/graphics `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
+-	cd html && $(HACHA) -tocbis -o index.html oln-ref.html; cd ..
+-	$(TAR) -czf $@ html
++# ###
++# ### Auto-generation of TeX files.
++# ###
++
++# AM_LDFLAGS = $(LDFLAGS) $(ZLIB_LDFLAGS)
++# AM_CXXFLAGS = $(CXXFLAGS) $(ZLIB_CXXFLAGS)
++
++# INCLUDES = -I$(top_srcdir)/olena -I$(top_builddir)/olena
++# COMMONGETDEFSFLAGS =  --agarg=-DCXXCOMPILE=\"$(CXX) -I$(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(CPPFLAGS) $(AM_CXXFLAGS) $(AM_LDFLAGS)\" \\
++# 		      --agarg=-DEPSTOPDF=\"$(EPSTOPDF)\" \\
++# 		      --agarg=-DCONVERT=\"$(IMAGEMAGICK_CONVERT)\" \\
++# 	              --agarg=--templ-dirs=$(srcdir) \\
++# 	              --agarg=-DIMGDIR=$(top_srcdir)/olena/img
++# PROCESSINGGETDEFSFLAGS = \\
++#   --subblock=tpl=type,name,doc \\
++#   --subblock=arg=type,name,mode,doc \\
++#   --listattr=exh \\
++#   --listattr=ns \\
++#   --template $(srcdir)/processing.tpl \\
++#   --srcfile
++
++# ref-morpho.tex: $(morpho_files) $(srcdir)/processing.tpl
++# 	$(GETDEFS) $(COMMONGETDEFSFLAGS) $(PROCESSINGGETDEFSFLAGS) \\
++# 	  $(GETDEFSFLAGS) --base-name=ref-morpho $(morpho_files)
++
++# ref-level.tex: $(level_files) $(srcdir)/processing.tpl
++# 	$(GETDEFS) $(COMMONGETDEFSFLAGS) $(PROCESSINGGETDEFSFLAGS) \\
++# 	  $(GETDEFSFLAGS) --base-name=ref-level $(level_files)
++
++# ###
++# ### Rules to build the manuals.
++# ###
++
++# tex_TEX = oln-ref.tex
++
++# built_oln_ref_TEX = ref-morpho.tex ref-level.tex
++# oln_ref_TEX = $(built_oln_ref_TEX) integre-ref.tex
++
++# oln-ref.dvi: $(tex_TEX) $(oln_ref_TEX) $(graphics_DIA)
++# 	$(TEXI2DVI) $(TEXI2DVI_FLAGS) \\
++# 	  `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
++
++DOXYGEN = doxygen
++EXDOC = $(srcdir)/exdoc.pl
++OUT_DIR = \"out\"
++IMG_CONV = $(srcdir)/img_conv.pl
++code:
++	$(EXDOC) --config=exdoc.config  --output-dir=$(OUT_DIR) --input-dir=$(top_srcdir)
++
++execute: code
++	mkdir -p img
++	cd $(OUT_DIR) && make -f makefile
++
++images: execute
++	$(IMG_CONV) $(top_srcdir)/olena/img img
++	$(IMG_CONV) img img
+ 
+-###
+-### What gets distributed.
+-###
++doxygen: images
++	$(DOXYGEN) doxygen.config
+ 
+-dist_noinst_DATA = oln-ref.pdf oln-ref.dvi bin.tar.gz html.tar.gz
++html: doxygen
+ 
+-EXTRA_DIST = $(tex_TEX) $(oln_ref_TEX) \\
+-	processing.tpl filelists.make gen_filelists.sh
+ 
+-bin.tar.gz: oln-ref.pdf oln-ref.dvi
+-	$(TAR) -czf $@ `test -f bin/lena256.pdf || echo '$(srcdir)/'`bin
++doc: html pdf
+ 
+-###
+-### What gets cleaned.
+-###
++
++oln-ref.pdf: doxygen
++	cd latex && make && cp refman.pdf ../$@
++
++
++# oln-ref.pdf: $(tex_TEX) $(oln_ref_TEX) $(graphics_DIA)
++# 	$(TEXI2PDF) $(TEXI2PDF_FLAGS) \\
++# 	  `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
++
++# # This rule is not activated by default since the generated files cannot
++# # be easily distributed (automake barks loudly when the filenames are
++# # not known at the time Makefile.in is generated)
++
++# # FIXME: uncomment when ready
++# # cp $(srcdir)/graphics/*-html.png html/
++
++# html.tar.gz: $(tex_TEX) $(oln_ref_TEX) $(graphics_DIA)
++# 	$(HEVEA) -fix -o html/oln-ref.html -I $(srcdir) -I $(srcdir)/graphics `test -f '$(tex_TEX)' || echo '$(srcdir)/'`$(tex_TEX)
++# 	cd html && $(HACHA) -tocbis -o index.html oln-ref.html; cd ..
++# 	$(TAR) -czf $@ html
++
++html.tar.gz: html
++	$(TAR) -czf $@ html
++
++# ###
++# ### What gets distributed.
++# ###
++
++dist_noinst_DATA = oln-ref.pdf html.tar.gz
++
++# EXTRA_DIST = $(tex_TEX) $(oln_ref_TEX) \\
++# 	processing.tpl filelists.make gen_filelists.sh
++
++# bin.tar.gz: oln-ref.pdf oln-ref.dvi
++# 	$(TAR) -czf $@ `test -f bin/lena256.pdf || echo '$(srcdir)/'`bin
++
++# ###
++# ### What gets cleaned.
++# ###
++# dist-local:
++# 	rm -f bin/*a.out$(EXEEXT)
+ dist-local:
+-	rm -f bin/*a.out$(EXEEXT)
++	rm -f img/*
+ 
+-MAINTAINERCLEANFILES = $(built_oln_ref_TEX) $(dist_noinst_DATA) \\
+-	$(srcdir)/html/* $(srcdir)/bin/* \\
+-	$(srcdir)/filelists.make
++# MAINTAINERCLEANFILES = $(built_oln_ref_TEX) $(dist_noinst_DATA) \\
++# 	$(srcdir)/html/* $(srcdir)/bin/* \\
++# 	$(srcdir)/filelists.make
+ 
+-CLEANFILES = = *.tmp *.aux *.bbl *blg *.lot *.log *.out *.toc  
++MAINTAINERCLEANFILES = $(dist_noinst_DATA) \\
++	./html/* ./img/* $(OUT_DIR)/*
+ 
+-###
+-### What gets installed.
+-###
++# CLEANFILES = = *.tmp *.aux *.bbl *blg *.lot *.log *.out *.toc
++
++# ###
++# ### What gets installed.
++# ###
+ 
+ docdir = $(datadir)/doc/@PACKAGE_TARNAME@
+ 
+@@ -120,3 +156,4 @@
+ 	  echo \" rm -f $(DESTDIR)$(docdir)/$$p1\"; \\
+ 	  rm -f $(DESTDIR)$(docdir)/$$p1; \\
+ 	done
++
+Index: NEWS
+--- NEWS Tue, 10 Feb 2004 17:32:17 +0100 palma_g (oln/0_NEWS 1.19 640)
++++ NEWS Tue, 24 Feb 2004 15:21:04 +0100 palma_g (oln/0_NEWS 1.19 640)
+@@ -1,5 +1,22 @@
+ Olena 0.10	Not yet
+ 
++	* New documentaion system.
++	  Now any comment should use doxygen style (i.e. /*! ... */).
++	  You can also put some code in comments to make them
++          compile at documentation generation time. It is useful to
++          illustrate some algorithm with concrete input and output. To
++ 	  use this feature the only thing to be done is to put the
++	  code into \\code and \\endcode tags. If you produce an image,
++	  you can include it in the comments with the \\image command,
++ 	  using the same name you used to produce it, but with the png
++	  extension. To make sure your image will not overwrite
++	  another existing one, you should name it with taking care of
++	  the name of the file you are writing in: e.g. if you comment the
++	  file oln/core/behavior.hh, an image should be named
++	  oln_core_behavior_hh_whatever_you_want.ppm It can be added that
++	  two macros are provided to make abstraction of input and
++	  output direcectories, they are named IMG_IN and IMG_OUT.
++
+ 	* Border behavior can be controlled with the behavior hierarchy.
+ 	  If an algorithm support it, you can choose the way the image
+           border will be seen. Three behaviors are available: mirror,
+Index: olena/oln/morpho/attribute_closing_opening.hh
+--- olena/oln/morpho/attribute_closing_opening.hh Mon, 16 Feb 2004 19:06:24 +0100 palma_g (oln/q/49_attribute_ 1.14 640)
++++ olena/oln/morpho/attribute_closing_opening.hh Tue, 24 Feb 2004 16:20:46 +0100 palma_g (oln/q/49_attribute_ 1.14 640)
+@@ -30,13 +30,50 @@
+ 
+ #include <oln/morpho/attribute_union_find.hh>
+ 
++/*! \\namespace oln
++** \\brief oln namespace
++*/
+ namespace oln {
++  /*! \\namespace oln::morpho
++  ** \\brief oln::morpho namespace
++  */
+   namespace morpho {
++    /*! \\namespace oln::morpho::fast
++    ** \\brief oln::morpho::fast namespace
++    */
+     namespace fast {
++      /*! \\namespace oln::morpho::fast::tarjan
++      ** \\brief oln::morpho::fast::tarjan namespace
++      */
+       namespace tarjan {
++	/*! \\namespace oln::morpho::fast::tarjan::internal
++	** \\brief oln::morpho::fast::tarjan::internal namespace
++	*/
+ 	namespace internal {
+ 
+-	// attribute closing
++	  /*!
++	  ** \\brief perform an attribute closing
++	  **
++	  ** FIXME: ONLY A TEST
++	  ** \\code
++	  ** #include <oln/basics2d.hh>
++	  ** #include <oln/morpho/attribute_closing_opening.hh>
++	  ** #include <oln/level/compare.hh>
++	  ** #include <ntg/all.hh>
++	  ** #include <iostream>
++	  ** int main()
++	  ** {
++	  **   typedef oln::image2d<ntg::int_u8>	im_type;
++	  **
++	  **   im_type im1(oln::load(IMG_IN \"lena256.pgm\"));
++	  **   im1 = oln::morpho::fast::area_closing(im1, oln::neighb_c4(), 200);
++	  **   oln::save(im1, IMG_OUT \"olena_attribute_closing_opening_hh_attr_clo.ppm\");
++	  **   return  0;
++	  ** }
++	  ** \\endcode
++	  ** \\image html lena256.png \\image latex lena256.png => \\image html olena_attribute_closing_opening_hh_attr_clo.png \\image latex olena_attribute_closing_opening_hh_attr_clo.png
++	  **
++	  */
+ 	template<class I, class N, class A>
+ 	oln_concrete_type(I)
+ 	  attr_closing_(const abstract::non_vectorial_image<I>& input,
+Index: olena/oln/core/abstract/behavior.hh
+--- olena/oln/core/abstract/behavior.hh Tue, 10 Feb 2004 15:35:04 +0100 palma_g (oln/j/46_behavior.h 1.1 644)
++++ olena/oln/core/abstract/behavior.hh Mon, 23 Feb 2004 17:32:31 +0100 palma_g (oln/j/46_behavior.h 1.1 644)
+@@ -31,24 +31,44 @@
+ # include <oln/core/abstract/image.hh>
+ # include <oln/core/coord.hh>
+ 
++/*! \\namespace oln
++** \\brief oln namespace
++*/
+ namespace oln {
++  /*! \\namespace abstract
++  ** \\brief abstract namespace
++  */
+     namespace abstract {
+-      // behavior hierarchy
+-      //the aim of this one is to describe how an algorithm should work
+-      //on borders
++
++    /*! \\class behavior
++    ** behavior hierarchy
++    **
++    ** the aim of this one is to describe how an algorithm should work
++    ** on borders
++    */
+       template <class Exact>
+       class behavior: public mlc_hierarchy::any<Exact>
+       {
+       public:
+-	typedef behavior<Exact>				self_type;
+-	typedef mlc_exact_vt_type(self_type, Exact)	exact_type;
++      typedef behavior<Exact>				self_type; /*!< the self type*/
++      typedef mlc_exact_vt_type(self_type, Exact)	exact_type; /*!< the exact type*/
+ 
++      /*!
++      ** \\brief Adapt the border of an image
++      **
++      ** Adapt the border of an image regarding the kind of behavior wanted.
++      */
+ 	template <class I>
+ 	void adapt_border(oln::abstract::image<I> &im, coord border_size) const
+ 	{
+ 	  mlc_dispatch(adapt_border)(im, border_size);
+ 	};
+       protected:
++      /*!
++      ** \\brief CTor
++      **
++      ** Do nothing, used only by sub-classes
++      */
+ 	behavior() {};
+       };
+     } // !abstract
+Index: olena/oln/core/behavior.hh
+--- olena/oln/core/behavior.hh Tue, 10 Feb 2004 15:35:04 +0100 palma_g (oln/j/47_behavior.h 1.1 644)
++++ olena/oln/core/behavior.hh Tue, 24 Feb 2004 11:03:29 +0100 palma_g (oln/j/47_behavior.h 1.1 644)
+@@ -31,6 +31,10 @@
+ # include <mlc/type.hh>
+ 
+ namespace oln {
++  /*! \\class mirror_behavior
++  **
++  ** make the border be a mirror of the image
++  */
+   // mirror the image content into the border
+   template <class Exact = mlc::final>
+   class mirror_behavior:
+Index: doc/ref/exdoc.pl
+--- doc/ref/exdoc.pl Tue, 24 Feb 2004 16:30:39 +0100 palma_g ()
++++ doc/ref/exdoc.pl Mon, 23 Feb 2004 19:58:25 +0100 palma_g (oln/v/26_exdoc.pl 1.2 755)
+@@ -0,0 +1,447 @@
++#! /usr/bin/perl -w
++# Extract all examples from the manual source.
++
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 2 of the License, or
++# (at your option) any later version.
++#
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++#
++# You should have received a copy of the GNU General Public License
++# along with this program; if not, write to the Free Software
++# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
++# 02111-1307  USA
++
++use strict;
++use IO::File;
++use Text::Wrap;
++use File::Basename;
++use Getopt::Long qw(GetOptions);
++use Pod::Usage qw(pod2usage);
++
++## WARNING SOME PIECE OF CODE  WORKING ON TEXI FILES SHOULD BE REMOVED
++## BOFORE  DOING THIS,  MAKE SURE  THE SAME  JOB IS  PERFORMED  BY THE
++## CONFIGURATION DEPENDANT WAY
++
++my $me = basename ($0);
++
++# Array of hash tables holding the information from the config file
++my @config;
++
++# Print the usage method
++sub print_usage()
++{
++  print \"Usage:\\n\";
++  print \"$me --configfile=[cfg] --default-name=[default name] --srcdir=[dir to find includes file] --output-dir=[dir to put result]\\n\";
++  exit(1);
++}
++
++# &parse_config ($FILE)
++# ---------------------
++# Parse the config file.
++sub parse_config($)
++{
++  open (CONFIGFILE, $_[0]) or die \"$me: Can't open $_[0]: $!\";
++
++  # Number of entries
++  my $entries = -1;
++
++  while (<CONFIGFILE>)
++    {
++      if (/\\[ENTRY\\]/) { $entries++ }
++      else
++	{
++	SWITCH:
++	  {
++	    last SWITCH if (/^\\s*(\\#+.*)*$/);
++	    $config[$entries]{\"command_prefix\"} = $1 and last SWITCH if (/\\s*COMMAND_PREFIX\\s*=\\s*([^\\#]*[^\\s])\\s*(\\#+.*)*$/);
++	    $config[$entries]{\"tag_open\"} = $1 and last SWITCH if (/\\s*TAG_OPEN\\s*=\\s*([^\\#]*[^\\s])\\s*(\\#+.*)*$/);
++	    $config[$entries]{\"tag_close\"} = $1 and last SWITCH if (/\\s*TAG_CLOSE\\s*=\\s*([^\\#]*[^\\s])\\s*(\\#+.*)*$/);
++	    $config[$entries]{\"captions\"} = $1 and last SWITCH if (/\\s*CAPTIONS\\s*=\\s*([^\\#]*[^\\s])\\s*(\\#+.*)*$/);
++	    $config[$entries]{\"options\"} = $1 and last SWITCH if (/\\s*OPTIONS\\s*=\\s*([^\\#]*[^\\s])\\s*(\\#+.*)*$/);
++	    $config[$entries]{\"out\"} = $1 and last SWITCH if (/\\s*OUT\\s*=\\s*([^\\#]*[^\\s])\\s*(\\#+.*)*$/);
++	    $config[$entries]{\"std_out\"} = $1 and last SWITCH if (/\\s*STD_OUT_EXT\\s*=\\s*([^\\#]*[^\\s])\\s*(\\#+.*)*$/);
++	    $config[$entries]{\"err_out\"} = $1 and last SWITCH if (/\\s*ERR_OUT_EXT\\s*=\\s*([^\\#]*[^\\s])\\s*(\\#+.*)*$/);
++	    $config[$entries]{\"ext\"} = $1 and last SWITCH if (/\\s*EXT\\s*=\\s*([^\\#]*[^\\s])\\s*(\\#+.*)*$/);
++	    $config[$entries]{\"$1\"} = $2 and last SWITCH if (/\\s*ALIAS\\s*([^\\s]*)\\s*=\\s*([^\\#]*[^\\s])\\s*(\\#+.*)*$/);
++	    $config[$entries]{\"comment_style\"} = $1 and last SWITCH if (/\\s*COMMENT_STYLE\\s*=\\s*([^\\#]*[^\\s])\\s*(\\#+.*)*$/);
++	    die \"$0: Error: Unmatching entry: $_\";
++	  }
++	}
++    }
++  close CONFIGFILE;
++  die \"$me: Invalid config file `$_[0]'\" if ($entries == -1); # FIXME: not strict enough.
++
++  for (my $i = 0; $i < @config; $i++)
++    {
++      $config[$i]{\"tag_open\"} = $config[$i]{\"command_prefix\"} . $config[$i]{\"tag_open\"};
++      $config[$i]{\"tag_close\"} = $config[$i]{\"command_prefix\"} . $config[$i]{\"tag_close\"};
++    }
++
++  for my $i ( 0 .. $#config )
++    {
++      for my $role ( keys %{ $config[$i] } )
++	{
++	  print \"elt $i $role is $config[$i]{$role}\\n\";
++	}
++    }
++}
++
++# get the real value of a field
++# $i: the current entry number
++# $name: the alias name
++sub get_alias($ $)
++{
++  my ($i, $name) = @_;
++  while (defined($config[$i]{$name}))
++    {
++      $name = $config[$i]{$name};
++    }
++  return $name;
++}
++
++# create the cmd line to be executed
++# $i: the current entry number
++sub gen_cmd($ $)
++{
++  my ($i, $prog) = @_;
++  my $cmd = get_alias $i, $config[$i]{\"captions\"};
++  $cmd = \"$cmd \".$config[$i]{\"options\"};
++  return $cmd.\" && ./$prog > $prog.\".$config[$i]{\"std_out\"}.\" 2> $prog.\".$config[$i]{\"err_out\"}.\"\\nexit \\$?\\n\";
++}
++
++# Dependencies of KEY as a simple string.
++my %dependency;
++# Set to 1 if KEY is not to keep as a dependency.
++my %ignore;
++
++# &DEPEND ($TARGET, @DEPENDENCY)
++# ------------------------------
++sub depend ($@)
++{
++  my ($target, @dependency) = @_;
++  @dependency = (grep { !exists $ignore{$_} } @dependency);
++  push @{$dependency{$target}}, @dependency
++    if @dependency;
++}
++
++# List of files already opened.  $FILE{FILE} is where FILE was
++# first defined.
++my %file;
++
++# &register ($FILE)
++# -----------------
++# Make sure the $FILE name is used only once (as input or output), to
++# avoid clashes.
++sub register ($)
++{
++  my ($file2) = @_;
++  if (defined $file{$file2})
++    {
++      die \"$file2 already in use\\n\";
++    }
++  $file{$file2} = $file2;
++}
++
++
++# example_to_verbatim(CODE)
++# -------------------------
++# content: txt
++# style: comment style
++sub example_to_verbatim ($ $)
++{
++  my ($contents, $style) = @_;
++
++  $contents =~ s/^\\@(c |comment|dots|end (ignore|group)|ignore|group).*$//gm;
++  # Remove the Texinfo tags.
++  $contents =~ s/^\\@(error|result)\\{\\}//gsm;
++  $contents =~ s/\\@([{@}])/$1/gsm;
++  $contents =~ s/^\\@comment.*//gm;
++  # remove the comment style sequence
++  $contents =~ s/^\\s*$style//gm;
++
++  return $contents;
++}
++
++
++# &REPORT (@MESSAGE)
++# ------------------
++# Report some @MESSAGE to the user.
++sub message (@)
++{
++  print STDERR \"$me: \", @_, \"\\n\";
++}
++
++
++# &STORE ($FILE, $CONTENTS)
++# -------------------------
++# Save the $CONTENTS in the $FILE, unless it already contains $WHAT.
++sub store ($$)
++{
++  my ($file, $contents) = @_;
++  if (-f $file)
++    {
++      local $/;			# Turn on slurp-mode.
++      my $f = new IO::File \"< $file\"
++	or die \"$me: cannot open $file for reading: $!\\n\";
++      my $old_contents = $f->getline;
++      if ($old_contents eq $contents)
++	{
++	  message \"$file: unchanged\";
++	  return ;
++	}
++    }
++  my $out = new IO::File (\">$file\")
++    or die \"$me: cannot create $file: $!\\n\";
++  print $out $contents;
++  message \"$file: new\";
++}
++
++# The directory where to store the extracted results.
++# Parse our options, trying to retain backwards compatibility with pod2man but
++# allowing short forms as well.  --lax is currently ignored.
++my %option;
++Getopt::Long::config ('bundling_override');
++
++my $odir = \"extract\";
++my $idir = \".\";
++my $srcdir = \".\";
++my $default_name;
++GetOptions (\\%option,
++	    'configfile|c=s',
++#	    'default-name|n=s' => \\$default_name,
++	    'srcdir|s=s' => \\$srcdir,
++	    'input-dir|I=s' => \\$idir,
++	    'output-dir|O=s' => \\$odir,
++	    'help|h') or exit 1;
++pod2usage (0) if $option{help};
++
++#print_usage() unless (defined($default_name));
++
++##my $default_name = $option{\"default-name\"}; ## | for auto generated file name
++my $current_file_no;
++
++
++if (! -d $odir)
++{
++  mkdir $odir or die \"$me: cannot create $odir: $!\\n\";
++}
++my $makefile = new IO::File \"> $odir/makefile\"
++  or die \"$me: cannot create $odir/makefile: $!\\n\";
++my $all_mk = new IO::File \"> $odir/all.mk\"
++  or die \"$me: cannot create $odir/all.mk: $!\\n\";
++print $makefile \"include $srcdir/../exdoc.mk\\n\";
++print $makefile \".PHONY: all dvi eps html pdf txt\\n\";
++# print $makefile \"all: txt\\n\";
++my $example;
++my $last_file;
++
++parse_config ($option{\"configfile\"});
++print $all_mk \"all:\";
++print $makefile \"include all.mk\\n\";
++for (my $i = 0; $i < @config; $i++)
++{
++  print $makefile \".\";
++  print $makefile $config[$i]{\"ext\"};
++  print $makefile \":\\n\\t\";
++  print $makefile \"chmod 700 ./\\$<.cmd \";
++  print $makefile \"&& eval ./\\$@.\";
++  print $makefile $config[$i]{\"ext\"};
++  print $makefile \".cmd \\$< \\$@\";
++  print $makefile \"\\n\\n\";
++}
++
++sub parse($)
++{
++  $current_file_no = 0;
++  open (FILE, $_[0]) or die \"$me: Can't open $_[0]: $!\";
++  while (<FILE>)
++    {
++      ## @dotcaption{ord, file}
++      ## ======================
++      if (/^\\@dotcaption{([-.\\w]+),\\s*([^\\}]+)}/)
++	{
++	  my $ord = $1;
++	  my $file = $2;
++	  register $ord;
++	  register $file;
++	  store \"$odir/$ord.file\", \"$file.dot\";
++	  depend \"html\", \"$ord.jpg\";
++	  depend \"pdf\", \"$ord.pdf\";
++	  depend \"txt\", \"$ord.txt\";
++	  depend \"dvi\", \"$ord.eps\";
++	}
++
++      ## @example/@end example
++      ## =====================
++      ## Memoize the contents.
++      else
++	{
++	  my $i = 0;
++
++	  for ($i = 0; ($i < @config)
++	       && not ((/^\\s*$config[$i]{\"comment_style\"}\\s*$config[$i]{\"tag_open\"}\\s*$/ .. /^\\s*$config[$i]{\"comment_style\"}\\s*$config[$i]{\"tag_close\"}\\s*$/)); $i++)
++	    {
++	    }
++
++	  if ($i < @config)
++	    {
++	      if (/^\\s*$config[$i]{\"comment_style\"}\\s*$config[$i]{\"tag_open\"}\\s*$/)
++		{
++		  # Nothing.
++		  undef $example;
++		}
++	      elsif (/^\\s*$config[$i]{\"comment_style\"}\\s*$config[$i]{\"tag_close\"}\\s*$/)
++		{
++		  my $fname;
++		  my $cmdname;
++		  my $ext = $config[$i]{\"ext\"};
++
++		  $ext = \".$ext\";
++		  if (not defined $last_file)
++		    {
++		      $last_file = \"$default_name$current_file_no\";
++		      $current_file_no = $current_file_no + 1;
++		    }
++		  # Output as a verbatim file.
++		  $fname = \"$odir/$last_file$ext\";
++		  $cmdname = \"$odir/$last_file$ext.cmd\";
++		  register $fname;
++		  register $cmdname;
++		  store $fname, example_to_verbatim ($example, $config[$i]{\"comment_style\"});
++		  store $cmdname, gen_cmd ($i, $last_file);
++		  depend $last_file, \"$last_file$ext\", \"$last_file$ext.cmd\";
++		  print $all_mk \"$last_file \";
++		  undef $last_file;
++		}
++	      ## @filecaption{ord, filename}
++	      ## Outputting the previous @example as a file.
++	      elsif (/^\\s*$config[$i]{\"comment_style\"}\\s*$config[$i]{\"command_prefix\"}filecaption{([-.\\w]+),\\s*([^\\}]+)}/)
++		{
++		  my ($ord, $file) = ($1, \"$2\");
++#		  register $file;
++		  $last_file = $file;
++		}
++	      else
++		{
++		  $example = $example . $_;
++		}
++	    }
++
++
++	  ## @c extdoc-ignore: file
++	  ##       ## A file that we should not depend upon (e.g., it does not exist).
++	  elsif (/^\\@c extdoc-ignore: (.*)$/)
++	    {
++	      message \"ignoring $1\";
++	      $ignore{$1} = 1;
++	    }
++
++
++	  ## @havmcaption{ord, args}
++	  ## @mipsycaption{ord, args}
++	  ## @tccaption{ord, args}
++	  ## @sedcaption{ord, args}
++	  ##       ## Running `havm', `mipsy', `tc', or `sed' on the ARGS.
++	  else
++	    {
++	      my $i = 0;
++	      for ($i = 0; ($i < @config) &&
++		   not (/^\\s*$config[$i]{\"comment_style\"}\\s*$config[$i]{\"command_prefix\"}($config[$i]{\"captions\"})caption{([-.\\w]+),\\s*([^\\}]+)}/); $i++)
++		{}
++	      if ($i < @config && /^\\s*$config[$i]{\"comment_style\"}\\s*$config[$i]{\"command_prefix\"}($config[$i]{\"captions\"})caption{([-.\\w]+),\\s*([^\\}]+)}/)
++		{
++		  my $prog;
++
++
++		  if (defined $config[$i]{$1})
++		    {
++		      $prog = $config[$i]{$1};
++
++		      print $prog;
++		    }
++		  else
++		    {
++		      $prog = $1;
++		    }
++		  my $ord = $2;
++		  my $args = $3;
++		  my $out = \"$ord.$config[$i]{out}\";
++#		  register $out;
++		  store \"$odir/$ord.cmd\", \"$prog $args\";
++		  depend \"pdf\", $out;
++		  depend \"html\", $out;
++		  depend \"txt\", $out;
++		  depend \"dvi\", $out;
++
++		  # Dependencies: args except options and output redirections.
++		  depend $out, grep { !/^[->]/ } split (' ', $args);
++		}
++	    }
++	}
++    }
++  close FILE;
++}
++# go through all rep and sub rep and make stuff on matching file
++sub scanDir
++{
++    my $file;
++    my ($d, $name) = @_;#$_[0];
++    opendir DIR, \"$d\" or print <STDERR>, \"unable to open $d: skipping\\n\";
++    foreach $file(readdir DIR)
++    {
++	if ((-d \"$d/$file\") && ($file ne \".\") && ($file ne \"..\"))
++	{
++	    &scanDir(\"$d/$file\", \"$name\".\"_$file\");
++	}
++ 	else
++	{
++	    if ($file =~ /(.*)\\.(h(h|xx)|cc|inc)$/)
++	    {
++		$file = \"$file\";
++#		compileAndExecute(\"$d/$file\");
++		print \"parsing $d/$file as \";
++		print \"$name\".\"_$1_$2\\n\";
++		$default_name = \"$name\".\"_$1_$2\";
++
++		parse \"$d/$file\";
++	    }
++	}
++    }
++ #   closedir DIR or print(\"unable to close $d: skipping\\n\"); # to be fixed
++}
++
++scanDir $idir, \"out\";
++
++for my $target (sort keys %dependency)
++{
++  print $makefile \"$target: \";
++  my @dep = @{$dependency{$target}};
++  for (my $k=0; $k != $#dep; $k++)
++    {
++      print $makefile \" \".$dep[$k];
++    }
++  print $makefile \"\\n\";
++}
++print $all_mk \"\\n\";
++### Setup \"GNU\" style for perl-mode and cperl-mode.
++## Local Variables:
++## perl-indent-level: 2
++## perl-continued-statement-offset: 2
++## perl-continued-brace-offset: 0
++## perl-brace-offset: 0
++## perl-brace-imaginary-offset: 0
++## perl-label-offset: -2
++## cperl-indent-level: 2
++## cperl-brace-offset: 0
++## cperl-continued-brace-offset: 0
++## cperl-label-offset: -2
++## cperl-extra-newline-before-brace: t
++## cperl-merge-trailing-else: nil
++## cperl-continued-statement-offset: 2
++## End:
++
+Index: doc/ref/doxygen.config.in
+--- doc/ref/doxygen.config.in Tue, 24 Feb 2004 16:30:39 +0100 palma_g ()
++++ doc/ref/doxygen.config.in Tue, 24 Feb 2004 13:33:45 +0100 palma_g (oln/v/29_doxygen.co 1.1 644)
+@@ -0,0 +1,214 @@
++# Doxyfile 1.3.2
++
++#---------------------------------------------------------------------------
++# General configuration options
++#---------------------------------------------------------------------------
++PROJECT_NAME           = @PACKAGE_NAME@
++PROJECT_NUMBER         = @PACKAGE_VERSION@
++OUTPUT_DIRECTORY       = .
++OUTPUT_LANGUAGE        = English
++USE_WINDOWS_ENCODING   = NO
++EXTRACT_ALL            = NO
++EXTRACT_PRIVATE        = NO
++EXTRACT_STATIC         = YES
++EXTRACT_LOCAL_CLASSES  = NO
++HIDE_UNDOC_MEMBERS     = NO
++HIDE_UNDOC_CLASSES     = NO
++HIDE_FRIEND_COMPOUNDS  = NO
++HIDE_IN_BODY_DOCS      = NO
++BRIEF_MEMBER_DESC      = YES
++REPEAT_BRIEF           = YES
++ALWAYS_DETAILED_SEC    = NO
++INLINE_INHERITED_MEMB  = NO
++FULL_PATH_NAMES        = NO
++STRIP_FROM_PATH        =
++INTERNAL_DOCS          = NO
++CASE_SENSE_NAMES       = NO
++SHORT_NAMES            = NO
++HIDE_SCOPE_NAMES       = NO
++SHOW_INCLUDE_FILES     = YES
++JAVADOC_AUTOBRIEF      = NO
++MULTILINE_CPP_IS_BRIEF = NO
++DETAILS_AT_TOP         = NO
++INHERIT_DOCS           = YES
++INLINE_INFO            = YES
++SORT_MEMBER_DOCS       = YES
++DISTRIBUTE_GROUP_DOC   = NO
++TAB_SIZE               = 8
++GENERATE_TODOLIST      = YES
++GENERATE_TESTLIST      = YES
++GENERATE_BUGLIST       = YES
++GENERATE_DEPRECATEDLIST= YES
++ALIASES                = pouetcaption=
++ENABLED_SECTIONS       =
++MAX_INITIALIZER_LINES  = 30
++OPTIMIZE_OUTPUT_FOR_C  = NO
++OPTIMIZE_OUTPUT_JAVA   = NO
++SHOW_USED_FILES        = YES
++#---------------------------------------------------------------------------
++# configuration options related to warning and progress messages
++#---------------------------------------------------------------------------
++QUIET                  = NO
++WARNINGS               = YES
++WARN_IF_UNDOCUMENTED   = YES
++WARN_IF_DOC_ERROR      = YES
++WARN_FORMAT            = \"$file:$line: $text\"
++WARN_LOGFILE           =
++#---------------------------------------------------------------------------
++# configuration options related to the input files
++#---------------------------------------------------------------------------
++INPUT                  = @top_srcdir@/
++FILE_PATTERNS          = *.hh \\
++                         *.hxx \\
++                         *.cc
++RECURSIVE              = YES
++EXCLUDE                = @top_srcdir@/doc \\
++			 @top_srcdir@/olena/tests \\
++			 @top_srcdir@/integre/tests \\
++			 @top_srcdir@/metalic/tests
++EXCLUDE_SYMLINKS       = NO
++EXCLUDE_PATTERNS       =
++EXAMPLE_PATH           =
++EXAMPLE_PATTERNS       =
++EXAMPLE_RECURSIVE      = NO
++IMAGE_PATH             = @top_builddir@doc/ref/img/
++INPUT_FILTER           =
++FILTER_SOURCE_FILES    = NO
++#---------------------------------------------------------------------------
++# configuration options related to source browsing
++#---------------------------------------------------------------------------
++SOURCE_BROWSER         = YES
++INLINE_SOURCES         = YES
++STRIP_CODE_COMMENTS    = YES
++REFERENCED_BY_RELATION = YES
++REFERENCES_RELATION    = YES
++VERBATIM_HEADERS       = YES
++#---------------------------------------------------------------------------
++# configuration options related to the alphabetical class index
++#---------------------------------------------------------------------------
++ALPHABETICAL_INDEX     = YES
++COLS_IN_ALPHA_INDEX    = 5
++IGNORE_PREFIX          =
++#---------------------------------------------------------------------------
++# configuration options related to the HTML output
++#---------------------------------------------------------------------------
++GENERATE_HTML          = YES
++HTML_OUTPUT            = html
++HTML_FILE_EXTENSION    = .html
++HTML_HEADER            =
++HTML_FOOTER            =
++HTML_STYLESHEET        =
++HTML_ALIGN_MEMBERS     = YES
++GENERATE_HTMLHELP      = NO
++CHM_FILE               =
++HHC_LOCATION           =
++GENERATE_CHI           = NO
++BINARY_TOC             = NO
++TOC_EXPAND             = NO
++DISABLE_INDEX          = NO
++ENUM_VALUES_PER_LINE   = 4
++GENERATE_TREEVIEW      = YES
++TREEVIEW_WIDTH         = 250
++#---------------------------------------------------------------------------
++# configuration options related to the LaTeX output
++#---------------------------------------------------------------------------
++GENERATE_LATEX         = YES
++LATEX_OUTPUT           = latex
++LATEX_CMD_NAME         = latex
++MAKEINDEX_CMD_NAME     = makeindex
++COMPACT_LATEX          = NO
++PAPER_TYPE             = a4wide
++EXTRA_PACKAGES         =
++LATEX_HEADER           =
++PDF_HYPERLINKS         = YES
++USE_PDFLATEX           = YES
++LATEX_BATCHMODE        = NO
++LATEX_HIDE_INDICES     = NO
++#---------------------------------------------------------------------------
++# configuration options related to the RTF output
++#---------------------------------------------------------------------------
++GENERATE_RTF           = NO
++RTF_OUTPUT             = rtf
++COMPACT_RTF            = NO
++RTF_HYPERLINKS         = NO
++RTF_STYLESHEET_FILE    =
++RTF_EXTENSIONS_FILE    =
++#---------------------------------------------------------------------------
++# configuration options related to the man page output
++#---------------------------------------------------------------------------
++GENERATE_MAN           = NO
++MAN_OUTPUT             = man
++MAN_EXTENSION          = .3
++MAN_LINKS              = NO
++#---------------------------------------------------------------------------
++# configuration options related to the XML output
++#---------------------------------------------------------------------------
++GENERATE_XML           = NO
++XML_OUTPUT             = xml
++XML_SCHEMA             =
++XML_DTD                =
++#---------------------------------------------------------------------------
++# configuration options for the AutoGen Definitions output
++#---------------------------------------------------------------------------
++GENERATE_AUTOGEN_DEF   = NO
++#---------------------------------------------------------------------------
++# configuration options related to the Perl module output
++#---------------------------------------------------------------------------
++GENERATE_PERLMOD       = NO
++PERLMOD_LATEX          = NO
++PERLMOD_PRETTY         = YES
++PERLMOD_MAKEVAR_PREFIX =
++#---------------------------------------------------------------------------
++# Configuration options related to the preprocessor
++#---------------------------------------------------------------------------
++ENABLE_PREPROCESSING   = YES
++MACRO_EXPANSION        = YES
++EXPAND_ONLY_PREDEF     = NO
++SEARCH_INCLUDES        = YES
++INCLUDE_PATH           =  @top_srcdir@/olena/ \\
++			  @top_srcdir@/integre/ \\
++			  @top_srcdir@/metalic/
++INCLUDE_FILE_PATTERNS  =
++PREDEFINED             =
++EXPAND_AS_DEFINED      =
++SKIP_FUNCTION_MACROS   = YES
++#---------------------------------------------------------------------------
++# Configuration::addtions related to external references
++#---------------------------------------------------------------------------
++TAGFILES               =
++GENERATE_TAGFILE       =
++ALLEXTERNALS           = NO
++EXTERNAL_GROUPS        = YES
++PERL_PATH              = /usr/bin/perl
++#---------------------------------------------------------------------------
++# Configuration options related to the dot tool
++#---------------------------------------------------------------------------
++CLASS_DIAGRAMS         = YES
++HIDE_UNDOC_RELATIONS   = YES
++HAVE_DOT               = YES
++CLASS_GRAPH            = YES
++COLLABORATION_GRAPH    = YES
++UML_LOOK               = YES
++TEMPLATE_RELATIONS     = YES
++INCLUDE_GRAPH          = YES
++INCLUDED_BY_GRAPH      = YES
++CALL_GRAPH             = NO
++GRAPHICAL_HIERARCHY    = YES
++DOT_IMAGE_FORMAT       = png
++DOT_PATH               =
++DOTFILE_DIRS           =
++MAX_DOT_GRAPH_WIDTH    = 1024
++MAX_DOT_GRAPH_HEIGHT   = 1024
++MAX_DOT_GRAPH_DEPTH    = 0
++GENERATE_LEGEND        = YES
++DOT_CLEANUP            = YES
++#---------------------------------------------------------------------------
++# Configuration::addtions related to the search engine
++#---------------------------------------------------------------------------
++SEARCHENGINE           = YES
++CGI_NAME               = search.cgi
++CGI_URL                =
++DOC_URL                =
++DOC_ABSPATH            =
++BIN_ABSPATH            = /usr/local/bin/
++EXT_DOC_PATHS          =
+Index: doc/ref/exdoc.mk.in
+--- doc/ref/exdoc.mk.in Tue, 24 Feb 2004 16:30:39 +0100 palma_g ()
++++ doc/ref/exdoc.mk.in Mon, 29 Sep 2003 21:50:01 +0200 palma_g (oln/k/1_exdoc.mk.i  644)
+@@ -0,0 +1,56 @@
++%.dot: %.file
++	cp $$(cat $<) $@
++
++%.texi: %.cmd
++## Eval the cmd to preserve embedded redirections.
++	eval $$(cat $<) >$*.out 2>$*.err; \\
++	echo $$? >$*.sta
++	rm -f $@
++	echo '@example'            >> $@
++	echo \"$$ @kbd{$$(cat $<)}\" >> $@
++	if test -s $*.err; then \\
++	  sed -n -e 's/\\([{@}]\\)/@\\1/g' \\
++		  -e '/./s/.*/@error{}&/p' $*.err >> $@;\\
++	fi
++	if test -s $*.out; then \\
++	  expand $*.out | \\
++	    sed -e 's/\\([{@}]\\)/@\\1/g' \\
++		-e \"s/é/@'e/g\" \\
++		-e 's/è/@`e/g' \\
++		-e 's/ê/@^e/g' \\
++		-e 's/ë/@\"e/g' \\
++		-e 's/î/@^i/g' \\
++		-e 's/ï/@\"i/g' \\
++		-e 's/ô/@^o/g' \\
++		 >>$@;\\
++	fi
++## Display the exit status only if not 0, as it confuses the
++## students to see so many `=> 0'.  But, if there is nothing output
++## at all, it is even more confusing, so output `=> 0' only when
++## needed.
++	if test ! -e $@ \\
++	   || test $$(cat $*.sta) -ne 0; then \\
++	  sed 's/.*/@result{}&/' $*.sta >> $@; \\
++	fi
++	echo \"@strong{Example $*}: @kbd{$$(cat $<)}\" >> $@
++	echo '@end example' >> $@
++
++## Once for PDF.
++## ratio = 2 makes it wider.
++## size (in Inches) makes it fit into A4.
++%.eps: %.dot
++	dot -Gratio=2 -Gsize=8,8 -Tps2 $*.dot -o $*.ps
++	ps2epsi $*.ps $*.eps
++
++%.pdf: %.eps
++	epstopdf $*.eps -o $*.pdf
++
++## Another for HTML (JPG), using natural size.
++%.jpg: %.dot
++	dot -Tps2 $*.dot -o $*.j.ps
++	ps2epsi $*.j.ps $*.j.eps
++	convert $*.j.eps $*.jpg
++
++## And the text...
++%.txt: %.dot
++	cp $< $@
+Index: doc/ref/exdoc.config.in
+--- doc/ref/exdoc.config.in Tue, 24 Feb 2004 16:30:39 +0100 palma_g ()
++++ doc/ref/exdoc.config.in Tue, 24 Feb 2004 15:01:50 +0100 palma_g (oln/k/2_exdoc.conf  644)
+@@ -0,0 +1,12 @@
++[ENTRY]
++  COMMAND_PREFIX = \\\\	# In Doxygen, commands begin with a `\\'
++  TAG_OPEN = code
++  TAG_CLOSE = endcode
++  CAPTIONS = cxx	# We want to run cxx on the extracted files (see line below)
++  ALIAS cxx = @CXX@	# Here, cxx means g++ but you can choose other compilers
++  OPTIONS = @CXXFLAGS@ -I@top_srcdir@/integre  -I@top_srcdir@/olena  -I@top_srcdir@/metalic $1 -o $2 -DIMG_OUT=\\\"../img/\\\" -DIMG_IN=\\\"@top_srcdir@/olena/img/\\\"		# tell how to use the soft, i.e. where to put input and output arguments (default if not overriden) ($1: input, $2: output) FIXME: $* should have explicit name, chek flags
++  OUT = out		# FIXME: should be obsolete
++  EXT = cc		# Extension of generated file
++  STD_OUT_EXT = std	# Extension of generated file standard output
++  ERR_OUT_EXT = err	# Extension of generated file error output
++  COMMENT_STYLE	= \\*\\*	# begining of comment line
+Index: doc/ref/img_conv.pl
+--- doc/ref/img_conv.pl Tue, 24 Feb 2004 16:30:39 +0100 palma_g ()
++++ doc/ref/img_conv.pl Tue, 24 Feb 2004 15:57:37 +0100 palma_g (oln/k/3_img_conv.p  644)
+@@ -0,0 +1,47 @@
++#! /usr/bin/perl -w
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 2 of the License, or
++# (at your option) any later version.
++#
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++#
++# You should have received a copy of the GNU General Public License
++# along with this program; if not, write to the Free Software
++# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
++# 02111-1307  USA
++
++
++use strict;
++use IO::File;
++use Text::Wrap;
++use File::Basename;
++use Getopt::Long qw(GetOptions);
++use Pod::Usage qw(pod2usage);
++
++
++sub conv($ $)
++{
++    my $file;
++    my $d = $_[0];
++    my $o = $_[1];
++    opendir DIR, \"$d\" or die \"Unable to open $d.\\n\";
++    foreach $file(readdir DIR)
++    {
++	if ($file =~ /(.*)\\.(pgm|ppm|ppgm|pppgm)$/)
++	{
++	    print \"convert $d/$file to $o/$1.png\\n\";
++	    system \"convert $d/$file $o/$1.png\";
++	}
++    }
++    closedir DIR or die \"unable to close $d.\";
++}
++my $argc=@ARGV;
++if ($argc != 2)
++{
++   die \"usage: img_conv.pl input-dir output-dir\\n\";
++}
++conv $ARGV[0], $ARGV[1];
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 29 Sep 2003 23:24:51 +0200")
+(Checkin-Time "Tue, 24 Feb 2004 16:33:38 +0100")
 (Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -93,8 +1315,6 @@
                   "^CODING_STYLE$"
                   "olena/img/lena16b.ppgm"
                   "olena/img/lena16b.pgm"
-                  "^tools/swilena/src/Makefile.am"
-                  "^tools/swilena/python/Makefile.am"
                   "^tools/swilena/src/.*\\.i"
                   "olena/img/lena1d.ppbm"
                   "olena/img/lena1d128.pgm"
@@ -108,17 +1328,19 @@
                   "olena/img/lena1d.pbm"
                   "olena/img/lena1d16b.ppbm"
                   "\\.xvpics/"
-                  "old/"))
+                  "old/"
+                  "/makefile.swig"
+                  "\\.pyc$"))
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.7.1.1 640))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.7 640))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.25 640))
-  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.35 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.28 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.14 640))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.3 640))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.35 640))
+  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.11 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.7 640))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 640))
 
   (olena/ChangeLog.0 (oln/6_ChangeLog 1.50.1.98.1.5 640))
   (doc/ChangeLog.0 (oln/e/1_ChangeLog 1.31 640))
@@ -128,24 +1350,24 @@
 
   (cleanup.sh (oln/o/29_cleanup.sh 1.5 750))
 
-  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.10.1.1 640))
+  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.14 640))
 
   (doc/demo/image.cc (oln/d/46_image.cc 1.8 640))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.16.1.2 640))
   (doc/demo/morpholena.cc (oln/d/43_morpholena 1.11 640))
   (olena/tests/morpho/tests/test-reconstruction (oln/e/22_test-recon 1.7.1.3.1.2 640))
-  (doc/demo/tour.cc (oln/d/45_tour.cc 1.12 640))
+  (doc/demo/tour.cc (oln/d/45_tour.cc 1.13 640))
   (doc/ref/bin () :directory)
   (doc/ref/html () :directory)
-  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.8 640))
+  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.9 640))
   (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.6.1.5 640))
   (doc/ref/oln-ref.tex (oln/f/14_oln-ref.te 1.3.1.3 640))
-  (doc/ref/integre-ref.tex (oln/g/34_ref-types. 1.11 640))
+  (doc/ref/integre-ref.tex (oln/g/34_ref-types. 1.12 640))
   (doc/Makefile.am (oln/e/0_Makefile.a 1.14 640))
   (doc/ref/processing.tpl (oln/d/48_processing 1.16 640))
 
   (Makefile.am (oln/n/32_Makefile.a 1.17.1.2.1.7 640))
-  (NEWS (oln/0_NEWS 1.16 640))
+  (NEWS (oln/0_NEWS 1.20 640))
 
   (olena/img/face_se.pbm (oln/n/17_face_se.pb 1.1 640) :no-keywords)
   (olena/img/lena256.pgm (oln/n/14_lena256.pg 1.1 640) :no-keywords)
@@ -162,9 +1384,9 @@
   (olena/img/se.pbm (oln/n/6_se.pbm 1.1 640) :no-keywords)
 
   (olena/Makefile.am (oln/2_Makefile.a 1.30.1.1.1.2.1.10 640))
-  (olena/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.13 640))
+  (olena/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.15 640))
   (olena/oln/arith/logic.hh (oln/b/24_logic.hh 1.6.1.3 640))
-  (olena/oln/arith/ops.hh (oln/b/23_ops.hh 1.5.1.2.1.7 640))
+  (olena/oln/arith/ops.hh (oln/b/23_ops.hh 1.5.1.2.1.8 640))
   (olena/oln/basics1d.hh (oln/d/41_basics1d.h 1.5 640))
   (olena/oln/basics2d.hh (oln/b/7_basics2d.h 1.6 640))
   (olena/oln/basics3d.hh (oln/28_basics3d.h 1.4 640))
@@ -172,25 +1394,25 @@
 
 
   (olena/oln/config/system.hh (oln/7_system.hh 1.17 640))
-  (olena/oln/convert/basics.hh (oln/23_basics.hh 1.5 640))
+  (olena/oln/convert/basics.hh (oln/23_basics.hh 1.6 640))
   (olena/oln/convert/bound.hh (oln/22_bound.hh 1.10 640))
   (olena/oln/convert/abstract/colorconv.hh (oln/18_colorconv. 1.10 640))
   (olena/oln/convert/conversion.hh (oln/21_conversion 1.16 640))
   (olena/oln/convert/conversion_ng_se.hh (oln/e/24_conversion 1.11 640))
-  (olena/oln/convert/force.hh (oln/20_force.hh 1.11 640))
-  (olena/oln/convert/nrgbhsi.hh (oln/15_nrgbhsi.hh 1.12 640))
-  (olena/oln/convert/nrgbhsl.hh (oln/12_nrgbhsl.hh 1.16 640))
-  (olena/oln/convert/nrgbhsv.hh (oln/11_nrgbhsv.hh 1.14 640))
-  (olena/oln/convert/nrgbxyz.hh (oln/16_nrgbxyz.hh 1.11 640))
-  (olena/oln/convert/nrgbyiq.hh (oln/14_nrgbyiq.hh 1.11 640))
-  (olena/oln/convert/nrgbyuv.hh (oln/13_nrgbyuv.hh 1.12 640))
+  (olena/oln/convert/force.hh (oln/20_force.hh 1.12 640))
+  
+  
+  
+  (olena/oln/convert/nrgbxyz.hh (oln/16_nrgbxyz.hh 1.12 640))
+  
+  
   (olena/oln/convert/rgbnrgb.hh (oln/17_rgbnrgb.hh 1.11 640))
-  (olena/oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.11 640))
+  (olena/oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.12 640))
   (olena/oln/convert/stretch.hh (oln/f/51_stretch.hh 1.13 640))
   (olena/oln/convol/convolution.hh (oln/f/39_convolutio 1.4.1.4.1.6.1.1 640))
   (olena/oln/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.5.1.6 640))
-  (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.6.1.3 640))
-  (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.8.1.4 640))
+  (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.6.1.4 640))
+  (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.8.1.6 640))
   (olena/oln/core/accum.hh (oln/d/40_accum.hh 1.4 640))
   (olena/oln/core/apply.hh (oln/d/39_apply.hh 1.14 640))
   (olena/oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.16 640))
@@ -201,30 +1423,30 @@
   
   
   (olena/oln/core/box.hh (oln/o/51_box.hh 1.3.1.3 640))
-  (olena/oln/core/box.hxx (oln/p/0_box.hxx 1.4.1.1.1.4 640))
+  (olena/oln/core/box.hxx (oln/p/0_box.hxx 1.4.1.1.1.5 640))
   (olena/oln/core/compose.hh (oln/c/22_compose.hh 1.5 640))
   (metalic/mlc/contract.hh (oln/d/31_contract.h 1.10 640))
   (olena/oln/core/coord.hh (oln/d/29_coord.hh 1.3 640))
-  (olena/oln/core/dpoint1d.hh (oln/d/27_dpoint1d.h 1.12 640))
+  (olena/oln/core/dpoint1d.hh (oln/d/27_dpoint1d.h 1.13 640))
   (olena/oln/core/dpoint1d.hxx (oln/d/26_dpoint1d.h 1.8 640))
-  (olena/oln/core/dpoint2d.hh (oln/d/25_dpoint2d.h 1.11 640))
+  (olena/oln/core/dpoint2d.hh (oln/d/25_dpoint2d.h 1.12 640))
   (olena/oln/core/dpoint2d.hxx (oln/d/24_dpoint2d.h 1.6 640))
-  (olena/oln/core/dpoint3d.hh (oln/d/23_dpoint3d.h 1.11 640))
+  (olena/oln/core/dpoint3d.hh (oln/d/23_dpoint3d.h 1.12 640))
   (olena/oln/core/dpoint3d.hxx (oln/d/22_dpoint3d.h 1.6 640))
-  (olena/oln/core/abstract/dpoint.hh (oln/d/28_dpoint.hh 1.16 640))
+  (olena/oln/core/abstract/dpoint.hh (oln/d/28_dpoint.hh 1.18 640))
   
   (olena/oln/core/fold.hh (oln/c/7_fold.hh 1.13 640))
   (olena/oln/core/fwd_iter1d.hh (oln/d/21_fwd_iter1d 1.13 640))
   (olena/oln/core/fwd_iter2d.hh (oln/d/20_fwd_iter2d 1.13 640))
   (olena/oln/core/fwd_iter3d.hh (oln/d/19_fwd_iter3d 1.13 640))
   (olena/oln/core/generate.hh (oln/f/12_generate.h 1.18 640))
-  (olena/oln/core/image1d.hh (oln/c/47_image1d.hh 1.28 640))
+  (olena/oln/core/image1d.hh (oln/c/47_image1d.hh 1.28.1.1 640))
   (olena/oln/core/image1d_size.hh (oln/c/46_image1d_si 1.10 640))
-  (olena/oln/core/image2d.hh (oln/c/45_image2d.hh 1.30 640))
+  (olena/oln/core/image2d.hh (oln/c/45_image2d.hh 1.30.1.1 640))
   (olena/oln/core/image2d_size.hh (oln/c/44_image2d_si 1.10 640))
-  (olena/oln/core/image3d.hh (oln/c/43_image3d.hh 1.27 640))
+  (olena/oln/core/image3d.hh (oln/c/43_image3d.hh 1.27.1.1 640))
   (olena/oln/core/image3d_size.hh (oln/c/42_image3d_si 1.10 640))
-  (olena/oln/core/image.hh (oln/d/18_image.hh 1.21 640))
+  (olena/oln/core/image.hh (oln/d/18_image.hh 1.20.2.1 640))
   
   (olena/oln/core/abstract/image_size.hh (oln/c/41_image_size 1.10 640))
   (olena/oln/core/internal/fake.hh (oln/d/17_fake.hh 1.3 640))
@@ -234,9 +1456,9 @@
   
   
   
-  (olena/oln/core/abstract/iter1d.hh (oln/d/10_iter1d.hh 1.15 640))
-  (olena/oln/core/abstract/iter2d.hh (oln/d/9_iter2d.hh 1.15 640))
-  (olena/oln/core/abstract/iter3d.hh (oln/d/8_iter3d.hh 1.15 640))
+  (olena/oln/core/abstract/iter1d.hh (oln/d/10_iter1d.hh 1.16 640))
+  (olena/oln/core/abstract/iter2d.hh (oln/d/9_iter2d.hh 1.16 640))
+  (olena/oln/core/abstract/iter3d.hh (oln/d/8_iter3d.hh 1.16 640))
   
 
   
@@ -250,13 +1472,13 @@
   (olena/oln/core/neighborhood1d.hh (oln/c/37_neighborho 1.15 640))
   (olena/oln/core/neighborhood2d.hh (oln/c/36_neighborho 1.16 640))
   (olena/oln/core/neighborhood3d.hh (oln/c/35_neighborho 1.15 640))
-  (olena/oln/core/abstract/neighborhood.hh (oln/c/38_neighborho 1.18 640))
+  (olena/oln/core/abstract/neighborhood.hh (oln/c/38_neighborho 1.19 640))
   (metalic/mlc/objs.hh (oln/c/34_objs.hh 1.7 640))
-  (olena/oln/core/point1d.hh (oln/c/32_point1d.hh 1.13 640))
+  (olena/oln/core/point1d.hh (oln/c/32_point1d.hh 1.14 640))
   (olena/oln/core/point1d.hxx (oln/c/31_point1d.hx 1.6 640))
-  (olena/oln/core/point2d.hh (oln/c/30_point2d.hh 1.11 640))
-  (olena/oln/core/point2d.hxx (oln/c/29_point2d.hx 1.5 640))
-  (olena/oln/core/point3d.hh (oln/c/28_point3d.hh 1.13 640))
+  (olena/oln/core/point2d.hh (oln/c/30_point2d.hh 1.12 640))
+  (olena/oln/core/point2d.hxx (oln/c/29_point2d.hx 1.6 640))
+  (olena/oln/core/point3d.hh (oln/c/28_point3d.hh 1.14 640))
   (olena/oln/core/point3d.hxx (oln/c/27_point3d.hx 1.5 640))
   (olena/oln/core/abstract/point.hh (oln/c/33_point.hh 1.15 640))
   
@@ -265,7 +1487,7 @@
   (olena/oln/core/abstract/struct_elt.hh (oln/c/25_structelt. 1.20 640))
   (olena/oln/core/traverse.hh (oln/d/30_traverse.h 1.11 640))
   (metalic/mlc/typeadj.hh (oln/e/25_typeadj.hh 1.6 640))
-  (metalic/mlc/type.hh (oln/c/21_type.hh 1.26 640))
+  (metalic/mlc/type.hh (oln/c/21_type.hh 1.28 640))
   (olena/oln/core/window1d.hh (oln/c/15_window1d.h 1.15 640))
   (olena/oln/core/window2d.hh (oln/c/14_window2d.h 1.17 640))
   (olena/oln/core/window3d.hh (oln/c/13_window3d.h 1.16 640))
@@ -290,11 +1512,11 @@
   (olena/oln/io/pnm_write_3d.hh (oln/b/9_pnm_write3 1.1.1.13 640))
   
   (olena/oln/io/pnm_write.hh (oln/b/15_pnm_write. 1.8.1.13 640))
-  (olena/oln/io/readable.hh (oln/b/13_readable.h 1.11 640))
+  (olena/oln/io/readable.hh (oln/b/13_readable.h 1.12 640))
   (olena/oln/io/se.hh (oln/i/45_se.hh 1.4 640))
   (olena/oln/io/se_neighborhood.hh (oln/i/47_se_neighbo 1.13 640))
   (olena/oln/io/se_window.hh (oln/i/46_se_window. 1.14 640))
-  (olena/oln/level/cc.hh (oln/e/20_cc.hh 1.11.1.8 640))
+  (olena/oln/level/cc.hh (oln/e/20_cc.hh 1.11.1.9 640))
   (olena/oln/level/compare.hh (oln/31_compare.hh 1.8 640))
   (olena/oln/level/connected.hh (oln/30_connected. 1.9.1.11 640))
   (olena/oln/level/fill.hh (oln/32_fill.hh 1.9 640))
@@ -305,11 +1527,11 @@
   (config/oln.m4 (oln/j/15_oln.m4 1.36 640))
 
   (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.11 640))
-  (metalic/mlc/array/1d.hh (oln/f/23_array1d.hh 1.10 640))
+  (metalic/mlc/array/1d.hh (oln/f/23_array1d.hh 1.11 640))
   (metalic/mlc/array/1d.hxx (oln/f/22_array1d.hx 1.10 640))
-  (metalic/mlc/array/2d.hh (oln/f/21_array2d.hh 1.10 640))
+  (metalic/mlc/array/2d.hh (oln/f/21_array2d.hh 1.11 640))
   (metalic/mlc/array/2d.hxx (oln/f/20_array2d.hx 1.9 640))
-  (metalic/mlc/array/3d.hh (oln/f/19_array3d.hh 1.11 640))
+  (metalic/mlc/array/3d.hh (oln/f/19_array3d.hh 1.12 640))
   (metalic/mlc/array/3d.hxx (oln/f/18_array3d.hx 1.10 640))
   (metalic/mlc/array/all.hh (oln/f/36_array.hh 1.7 640))
   (metalic/mlc/array/nd.hh (oln/f/35_arraynd.hh 1.4 640))
@@ -326,12 +1548,12 @@
   (olena/oln/morpho/dilation.hh (oln/b/5_dilation.h 1.16 640))
   (olena/oln/morpho/erosion.hh (oln/b/4_erosion.hh 1.17 640))
   (olena/oln/morpho/extrema.hh (oln/38_extrema.hh 1.11 640))
-  (olena/oln/morpho/extrema.hxx (oln/j/4_extrema.hx 1.10 640))
+  (olena/oln/morpho/extrema.hxx (oln/j/4_extrema.hx 1.11 640))
   (olena/oln/morpho/extrema_killer.hh (oln/e/19_extrema_ki 1.7.1.4.1.10 640))
   (olena/oln/morpho/fast_morpho.hh (oln/46_fast_morph 1.8 640))
   (olena/oln/morpho/fast_morpho.hxx (oln/45_fast_morph 1.18 640))
-  (olena/oln/morpho/geodesic_dilation.hh (oln/37_geodesic_d 1.11.1.9 640))
-  (olena/oln/morpho/geodesic_erosion.hh (oln/36_geodesic_e 1.16 640))
+  (olena/oln/morpho/geodesic_dilation.hh (oln/37_geodesic_d 1.11.1.10 640))
+  (olena/oln/morpho/geodesic_erosion.hh (oln/36_geodesic_e 1.17 640))
   (olena/oln/morpho/gradient.hh (oln/b/3_gradient.h 1.6 640))
   (olena/oln/morpho/gradient.inc (oln/43_gradient.i 1.13 640))
   (olena/oln/morpho/hit_or_miss.hh (oln/b/2_hit_or_mis 1.7 640))
@@ -341,7 +1563,7 @@
   (olena/oln/morpho/minmax.hh (oln/b/0_minmax.hh 1.5 640))
   (olena/oln/morpho/opening.hh (oln/51_opening.hh 1.6 640))
   (olena/oln/morpho/opening.inc (oln/40_opening.in 1.13 640))
-  (olena/oln/morpho/reconstruction.hh (oln/35_reconstruc 1.13.1.10 640))
+  (olena/oln/morpho/reconstruction.hh (oln/35_reconstruc 1.13.1.11 640))
   (olena/oln/morpho/splitse.hh (oln/34_splitse.hh 1.7 640))
   (olena/oln/morpho/stat.hh (oln/50_stat.hh 1.8.1.11 640))
   (olena/oln/morpho/thickening.hh (oln/e/29_thickening 1.7 640))
@@ -350,61 +1572,61 @@
   (olena/oln/morpho/thinning.inc (oln/e/26_thinning.i 1.11 640))
   (olena/oln/morpho/top_hat.hh (oln/49_top_hat.hh 1.4 640))
   (olena/oln/morpho/top_hat.inc (oln/39_top_hat.in 1.13 640))
-  (olena/oln/morpho/watershed.hh (oln/48_watershed. 1.10 640))
-  (olena/oln/morpho/watershed.hxx (oln/47_watershed. 1.9.1.5.1.4 640))
+  (olena/oln/morpho/watershed.hh (oln/48_watershed. 1.11 640))
+  (olena/oln/morpho/watershed.hxx (oln/47_watershed. 1.9.1.5.1.5 640))
   (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.7 640))
-  (olena/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.7.1.8 640))
+  (olena/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.7.1.9 640))
   (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.10 640))
   (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.8 640))
   (olena/oln/transforms/wavelet_coeffs.hh (oln/i/34_wavelet_co 1.7 640))
   (integre/ntg/all.hh (oln/g/32_all.hh 1.10.1.8 640))
-  (integre/ntg/core/behavior.hh (oln/g/31_behaviour. 1.13.1.15 640))
+  (integre/ntg/real/behavior.hh (oln/g/31_behaviour. 1.13.1.15.1.1 640))
 
-  (integre/ntg/utils/cast.hh (oln/i/26_cast.hh 1.3.1.9 640))
+  (integre/ntg/utils/cast.hh (oln/i/26_cast.hh 1.3.1.12 640))
   (integre/ntg/vect/cplx_representation.hh (oln/i/3_cplx_repre 1.5 640))
   (integre/ntg/utils/debug.hh (oln/i/8_debug.hh 1.2.1.8 640))
   (integre/ntg/core/internal/global_ops_defs.hh (oln/g/26_global_ops 1.17 640))
-  (integre/ntg/core/internal/global_ops.hh (oln/g/27_global_ops 1.11.1.13 640))
+  (integre/ntg/core/internal/global_ops.hh (oln/g/27_global_ops 1.11.1.14 640))
   (integre/ntg/core/internal/global_ops_traits.hh (oln/g/25_global_ops 1.7.1.10 640))
-  (integre/ntg/color/hsi.hh (oln/i/20_hsi.hh 1.3.1.6 640))
+  (integre/ntg/color/hsi.hh (oln/i/20_hsi.hh 1.3.1.7 640))
   (integre/ntg/color/hsl.hh (oln/i/21_hsl.hh 1.3.1.4 640))
-  (integre/ntg/color/hsv.hh (oln/i/22_hsv.hh 1.3.1.4 640))
+  (integre/ntg/color/hsv.hh (oln/i/22_hsv.hh 1.3.1.5 640))
   (integre/ntg/core/interval.hh (oln/g/22_interval.h 1.6.1.8 640))
-  (integre/ntg/real/int_s.hh (oln/g/24_int_s.hh 1.16.1.16 640))
-  (integre/ntg/real/int_u.hh (oln/g/23_int_u.hh 1.19.1.16 640))
-  (integre/ntg/color/nrgb.hh (oln/i/19_nrgb.hh 1.5.1.5 640))
+  (integre/ntg/real/int_s.hh (oln/g/24_int_s.hh 1.16.1.16.1.1 640))
+  (integre/ntg/real/int_u.hh (oln/g/23_int_u.hh 1.19.1.16.1.1 640))
+  (integre/ntg/color/nrgb.hh (oln/i/19_nrgb.hh 1.5.1.6 640))
 
 
 
 
 
-  (integre/ntg/real/optraits_builtin_int.hh (oln/g/18_optraits_b 1.6.1.8 640))
+  (integre/ntg/real/optraits_builtin_int.hh (oln/g/18_optraits_b 1.6.1.8.1.1 640))
 
 
 
 
 
 
-  (integre/ntg/real/optraits_scalar_defs.hh (oln/g/11_optraits_s 1.14 640))
-  (integre/ntg/real/optraits_scalar.hh (oln/g/12_optraits_s 1.11.1.8 640))
+  (integre/ntg/real/optraits_real_defs.hh (oln/g/11_optraits_s 1.14.1.1 640))
+  (integre/ntg/real/optraits_real.hh (oln/g/12_optraits_s 1.11.1.8.1.1 640))
 
   (integre/ntg/core/predecls.hh (oln/g/10_predecls.h 1.10.1.3.1.2 640))
-  (integre/ntg/core/value.hh (oln/g/8_rec_value. 1.8.1.8 640))
+  (integre/ntg/core/value.hh (oln/g/8_rec_value. 1.8.1.8.1.1 640))
   (integre/ntg/color/rgb.hh (oln/i/18_rgb.hh 1.3.1.4 640))
 
   (integre/ntg/core/type.hh (oln/g/6_type.hh 1.10 640))
 
 
 
-  (integre/ntg/real/typetraits_builtin_int.hh (oln/g/3_typetraits 1.7.1.11 640))
+  (integre/ntg/real/typetraits_builtin_int.hh (oln/g/3_typetraits 1.7.1.11.1.1 640))
 
-  (integre/ntg/color/xyz.hh (oln/i/24_xyz.hh 1.3.1.6 640))
-  (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.6 640))
-  (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.6 640))
+  (integre/ntg/color/xyz.hh (oln/i/24_xyz.hh 1.3.1.7 640))
+  (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.7 640))
+  (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.7 640))
   (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.7 640))
-  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.12 640))
+  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.6 640))
   (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.9 640))
-  (olena/oln/utils/timer.hh (oln/8_timer.hh 1.7 640))
+  (olena/oln/utils/timer.hh (oln/8_timer.hh 1.8 640))
   (olena/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.5.1.1 640))
   
   (olena/tests/arith/tests/min1 (oln/o/44_min1 1.1.1.8 640))
@@ -422,7 +1644,7 @@
 
   (olena/tests/convert/convcomp.cc (oln/f/3_convcomp.c 1.9 640))
   (olena/tests/convert/convcomp.hh (oln/f/1_convcomp.h 1.10 640))
-  (olena/tests/convert/Makefile.am (oln/f/0_Makefile.a 1.13 640))
+  (olena/tests/convert/Makefile.am (oln/f/0_Makefile.a 1.14 640))
 
   (olena/tests/convol/Makefile.am (oln/f/38_Makefile.a 1.13 640))
   (olena/tests/convol/tests/slow_sum_2d_1 (oln/f/41_slow_sum_2 1.2.1.5 640))
@@ -432,7 +1654,7 @@
 
   (olena/tests/io/tests/2d (oln/e/47_2d.cc 1.7.1.7 640))
   (olena/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.7.1.10 640))
-  (olena/tests/io/Makefile.am (oln/e/49_Makefile.a 1.23 640))
+  (olena/tests/io/Makefile.am (oln/e/49_Makefile.a 1.24 640))
   (olena/tests/io/tests/pretty (oln/i/42_pretty.cc 1.2 640))
   (olena/tests/io/tests/se_fail (oln/i/43_se_fail.cc 1.3 640))
   (olena/tests/io/tests/se_pass (oln/i/44_se_pass.cc 1.2 640))
@@ -450,16 +1672,16 @@
   (olena/tests/morpho/tests/edoc (oln/f/13_edoc.cc 1.4.1.5 640))
   (olena/tests/morpho/tests/extrkiller (oln/e/31_extrkiller 1.5.1.7 640))
   (olena/tests/morpho/Makefile.am (oln/e/32_Makefile.a 1.13 640))
-  (olena/tests/morpho/tests/reconstruction (oln/e/34_reconstruc 1.10 640))
+  (olena/tests/morpho/tests/reconstruction (oln/e/34_reconstruc 1.12 640))
   (olena/tests/README (oln/f/4_README 1.6 640))
   (olena/tests/sanity/includes.test (oln/f/46_includes.t 1.8 750))
   (olena/tests/sanity/Makefile.am (oln/f/48_Makefile.a 1.4.1.2 640))
   (olena/tests/transforms/tests/dwt (oln/i/38_dwt.cc 1.8.1.5 640))
   (olena/tests/transforms/tests/fft (oln/i/37_fft.cc 1.6.1.4 640))
-  (olena/tests/transforms/Makefile.am (oln/i/40_Makefile.a 1.11 640))
+  (olena/tests/transforms/Makefile.am (oln/i/40_Makefile.a 1.12 640))
 ;;  (oln/tests/transforms/output () :directory)
   (integre/tests/types/Makefile.am (oln/h/5_Makefile.a 1.11 640))
-  (integre/tests/types/runtests (oln/h/3_runtests 1.14.1.6 750))
+  (integre/tests/types/runtests (oln/h/3_runtests 1.14.1.7 750))
   (integre/tests/types/tests/bin1 (oln/i/28_bin1 1.1 640))
   (integre/tests/types/tests/bin2 (oln/o/42_bin2 1.2 640))
   (integre/tests/types/tests/bin3 (oln/o/46_bin3 1.1 640))
@@ -541,9 +1763,9 @@
   (tools () :directory)
   (tools/Makefile.am (oln/o/37_Makefile.a 1.7 640))
   (tools/swilena/configure.ac (oln/o/26_configure. 1.2 640))
-  (tools/swilena/doc/Makefile.am (oln/n/39_Makefile.a 1.2 640))
-  (tools/swilena/doc/swilena.texi (oln/n/40_swilena.te 1.1.1.2 640))
-  (tools/swilena/java/Makefile.am (oln/n/42_Makefile.a 1.1 640))
+  (tools/swilena/doc/Makefile.am (oln/n/39_Makefile.a 1.3 640))
+  (tools/swilena/doc/swilena.texi (oln/n/40_swilena.te 1.1.1.4 640))
+  
   ; (tools/swilena/java/Makefile.in ())
   (tools/swilena/Makefile.am (oln/o/25_Makefile.a 1.5 640))
 ;  (tools/swilena/python/Makefile.am (oln/n/44_Makefile.a 1.4 640))
@@ -585,7 +1807,7 @@
   (tools/swilena/meta/attic/swilena_window.i (oln/o/9_swilena_wi 1.1 640))
   (tools/swilena/meta/attic/swilena_w_window.i (oln/o/6_swilena_w_ 1.1 640))
 ;  (tools/swilena/swilena.prj (oln/n/38_swilena.pr 1.1 640))
-  (tools/swilena/TODO (oln/n/36_TODO 1.2 640))
+  (tools/swilena/TODO (oln/n/36_TODO 1.3 640))
   (tools/utilities/configure.ac (oln/o/27_configure. 1.2 640))
   (tools/utilities/Makefile.am (oln/g/2_Makefile.a 1.12.1.5 640))
   (tools/utilities/morpho/generate_morpho.sh (oln/i/30_generate_m 1.3.1.5.1.2 750))
@@ -611,7 +1833,7 @@
   (doc/demo/morpholena-ops.cc (oln/p/11_morpholena 1.3 640))
   (doc/demo/morpholena-minima.cc (oln/p/12_morpholena 1.4 640))
 
-  (doc/demo/convol-gaussian.cc (oln/p/14_morpholena 1.6 640))
+  (doc/demo/convol-gaussian.cc (oln/p/14_morpholena 1.7 640))
   (doc/demo/morpholena-wshed-beucher.cc (oln/p/15_morpholena 1.3 640))
 
 
@@ -700,7 +1922,7 @@
 ;; Files added by populate at Thu, 23 Jan 2003 14:26:31 +0100,
 ;; to version 7.36(w), by raph:
 
-  (config/oln-local.m4 (oln/p/37_oln-local. 1.6 640))
+  (config/oln-local.m4 (oln/p/37_oln-local. 1.7 640))
 
 ;; Files deleted by depopulate at Thu, 23 Jan 2003 14:57:33 +0100,
 ;; from version 7.37(w), by raph:
@@ -767,8 +1989,8 @@
 ;; Files added by populate at Tue, 04 Mar 2003 19:30:28 +0100,
 ;; to version 8.9(w), by jerome:
 
-  (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.10 640))
-  (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.8 640))
+  (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.15 640))
+  (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.12 640))
 
   (olena/tests/convol () :directory)
   (metalic/config (../config) :symlink)
@@ -784,7 +2006,7 @@
   (integre () :directory)
   (integre/ntg () :directory)
   (integre/Makefile.am (oln/q/34_Makefile.a 1.3 640))
-  (integre/ntg/Makefile.am (oln/q/36_Makefile.a 1.8 640))
+  (integre/ntg/Makefile.am (oln/q/36_Makefile.a 1.8.1.1 640))
   (olena/tests/check/defs.in (oln/q/37_defs.in 1.1 640))
   (olena/tests/check/Makefile.am (oln/q/38_Makefile.a 1.4 640))
   (olena/tests/check/Makefile.flags (oln/q/39_Makefile.f 1.4.1.1 640))
@@ -793,7 +2015,7 @@
   (integre/tests/check/defs.in (oln/q/42_defs.in 1.1 640))
   (metalic/mlc/array/objs.hh (oln/q/45_objs.hh 1.3 640))
   (metalic/mlc/config/system.hh (oln/q/46_system.hh 1.2 640))
-  (olena/oln/Makefile.am (oln/q/47_Makefile.a 1.3.1.1.1.6.1.5 640))
+  (olena/oln/Makefile.am (oln/q/47_Makefile.a 1.3.1.1.1.6.1.7.1.1 640))
   (integre/ntg/config/system.hh (oln/q/48_system.hh 1.2 640))
   (metalic/tests/main/tests/is_a1 (oln/r/17_is_a1 1.3 640))
   (metalic/tests/main/tests/ensure3 (oln/r/18_ensure3 1.3 640))
@@ -847,48 +2069,48 @@
   (integre/tests/types/tests/builtin1 (oln/s/7_builtin1 1.1 640))
   (olena/tests/core/tests/w_window (oln/s/8_w_window 1.1 640))
   
-  (olena/tests/core/Makefile.am (oln/s/10_Makefile.a 1.7.1.1 640))
+  (olena/tests/core/Makefile.am (oln/s/10_Makefile.a 1.7.1.2 640))
   (integre/tests/types/tests/int_u5c (oln/s/11_int_u5c 1.1 640))
 ;; Files added by populate at Tue, 06 May 2003 06:05:19 +0200,
 ;; to version 8.33(w), by raph:
 
-  (tools/swilena/expand.sh (oln/s/25_expand.sh 1.6 750))
+  (tools/swilena/expand.sh (oln/s/25_expand.sh 1.12 750))
 
 ;; Files added by populate at Tue, 06 May 2003 06:05:41 +0200,
 ;; to version 8.33(w), by raph:
 
-  (tools/swilena/meta/Makefile.am (oln/s/26_Makefile.a 1.1 640))
+  (tools/swilena/meta/Makefile.am (oln/s/26_Makefile.a 1.3 640))
 
 ;; Files added by populate at Tue, 06 May 2003 06:05:43 +0200,
 ;; to version 8.33(w), by raph:
 
   (tools/swilena/meta/swilena_w_win.i (oln/s/27_swilena_w_ 1.2 640))
-  (tools/swilena/meta/swilena_structelt.i (oln/s/28_swilena_st 1.2 640))
+  (tools/swilena/meta/swilena_structelt.i (oln/s/28_swilena_st 1.3 640))
   (tools/swilena/meta/swilena_point.i (oln/s/29_swilena_po 1.3 640))
-  (tools/swilena/meta/swilena_ntg_int_u.i (oln/s/30_swilena_nt 1.1 640))
-  (tools/swilena/meta/swilena_ntg_int_s.i (oln/s/31_swilena_nt 1.1 640))
-  (tools/swilena/meta/swilena_ntg_cplx.i (oln/s/32_swilena_nt 1.2 640))
-  (tools/swilena/meta/swilena_ntg.i (oln/s/33_swilena_nt 1.2 640))
-  (tools/swilena/meta/swilena_morpho.i (oln/s/34_swilena_mo 1.1 640))
+  
+  
+  
+  (tools/swilena/meta/swilena_ntg.i (oln/s/33_swilena_nt 1.7 640))
+  (tools/swilena/meta/swilena_morpho.i (oln/s/34_swilena_mo 1.2 640))
   (tools/swilena/meta/swilena_imagesize.i (oln/s/35_swilena_im 1.2 640))
-  (tools/swilena/meta/swilena_image.i (oln/s/36_swilena_im 1.3 640))
-  (tools/swilena/meta/swilena_exception.i (oln/s/37_swilena_ex 1.1 640))
-  (tools/swilena/meta/swilena_describe.i (oln/s/38_swilena_de 1.1 640))
-  (tools/swilena/meta/swilena_decl.i (oln/s/39_swilena_de 1.1 640))
+  (tools/swilena/meta/swilena_image.i (oln/s/36_swilena_im 1.7 640))
+  (tools/swilena/meta/swilena_exception.i (oln/s/37_swilena_ex 1.2 640))
+  (tools/swilena/meta/swilena_describe.i (oln/s/38_swilena_de 1.3 640))
+  (tools/swilena/meta/swilena_decl.i (oln/s/39_swilena_de 1.2 640))
   (tools/swilena/meta/swilena_core.i (oln/s/40_swilena_co 1.1 640))
 
 
   (integre/ntg/int.hh (oln/s/0_int.hh 1.3 640))
   (integre/ntg/float.hh (oln/s/1_float.hh 1.3 640))
-  (integre/ntg/real/real_value.hh (oln/s/15_real_value 1.2 640))
-  (integre/ntg/core/internal/traits.hh (oln/s/16_traits.hh 1.4 640))
+  (integre/ntg/real/real_value.hh (oln/s/15_real_value 1.2.1.1 640))
+  (integre/ntg/core/internal/traits.hh (oln/s/16_traits.hh 1.4.1.1 640))
   (integre/ntg/core/internal/macros.hh (oln/s/17_macros.hh 1.2 640))
-  (integre/ntg/core/type_traits.hh (oln/s/18_type_trait 1.2 640))
-  (integre/ntg/core/macros.hh (oln/s/19_macros.hh 1.7 640))
+  (integre/ntg/core/type_traits.hh (oln/s/18_type_trait 1.3 640))
+  (integre/ntg/core/macros.hh (oln/s/19_macros.hh 1.9 640))
   (integre/ntg/core/abstract_hierarchy.hh (oln/s/20_abstract_h 1.2.1.2 640))
-  (integre/ntg/basics.hh (oln/s/21_basics.hh 1.3 640))
-  (integre/ntg/vect/vect_value.hh (oln/s/22_vect_value 1.2 640))
-  (integre/ntg/enum/enum_value.hh (oln/s/23_enum_value 1.1 640))
+  (integre/ntg/basics.hh (oln/s/21_basics.hh 1.3.1.1 640))
+  (integre/ntg/vect/vect_value.hh (oln/s/22_vect_value 1.2.1.1 640))
+  (integre/ntg/enum/enum_value.hh (oln/s/23_enum_value 1.1.1.1 640))
   (integre/tests/types/tests/range4 (oln/s/24_range4 1.1 640))
   (integre/tests/utils/tests/debug1 (oln/s/41_debug1 1.3 640))
   
@@ -896,9 +2118,9 @@
 
   (integre/ntg/core/contract.hh (oln/s/45_contract.h 1.3 640))
   (integre/ntg/real/builtin_int.hh (oln/s/46_builtin_in 1.1 640))
-  (integre/ntg/real/builtin_float.hh (oln/s/47_builtin_fl 1.2 640))
+  (integre/ntg/real/builtin_float.hh (oln/s/47_builtin_fl 1.2.1.2 640))
   (integre/ntg/real/builtin_properties.hh (oln/s/48_builtin_pr 1.1 640))
-  (integre/ntg/enum/builtin_bool.hh (oln/s/50_builtin_bo 1.4 640))
+  (integre/ntg/enum/builtin_bool.hh (oln/s/50_builtin_bo 1.4.1.1 640))
   (integre/tests/sanity/includes.test (oln/s/51_includes.t 1.1 750))
   (integre/tests/sanity/Makefile.am (oln/t/0_Makefile.a 1.1 640))
   (metalic/tests/sanity/includes.test (oln/t/1_includes.t 1.1 750))
@@ -918,12 +2140,12 @@
 ;; Files added by populate at Mon, 02 Jun 2003 17:25:14 +0200,
 ;; to version 9.7(w), by burrus_n:
 
-  (integre/ntg/real/range.hh (oln/t/16_range.hh 1.3 640))
-  (integre/ntg/real/cycle.hh (oln/t/17_cycle.hh 1.2 640))
-  (integre/ntg/vect/vec.hh (oln/t/18_vec.hh 1.7 640))
+  (integre/ntg/real/range.hh (oln/t/16_range.hh 1.3.1.1 640))
+  (integre/ntg/real/cycle.hh (oln/t/17_cycle.hh 1.2.1.1 640))
+  (integre/ntg/vect/vec.hh (oln/t/18_vec.hh 1.7.1.2 640))
   (integre/ntg/vect/cplx.hh (oln/t/19_cplx.hh 1.5 640))
-  (integre/ntg/color/color.hh (oln/t/20_color.hh 1.5 640))
-  (integre/ntg/enum/bin.hh (oln/t/21_bin.hh 1.4 640))
+  (integre/ntg/color/color.hh (oln/t/20_color.hh 1.6 640))
+  (integre/ntg/enum/bin.hh (oln/t/21_bin.hh 1.5.1.1 640))
 
 ;; Files deleted by populate at Mon, 30 Jun 2003 20:01:55 +0200,
 ;; from version 9.10(w), by nes:
@@ -942,16 +2164,16 @@
   (olena/tests/core/image_print.sh (oln/t/24_image_prin 1.2 640))
 
 
-  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.19 640))
+  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.20 640))
   (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.18 640))
   (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.14.1.8 640))
   (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.11 640))
   (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.16 640))
-  (olena/oln/core/impl/image_array.hh (oln/t/30_image_arra 1.13 640))
+  (olena/oln/core/impl/image_array.hh (oln/t/30_image_arra 1.14 640))
   (olena/tests/core/tests/image1 (oln/t/31_image1 1.4 640))
-  (olena/oln/core/impl/image_array3d.hh (oln/t/32_image_arra 1.9 640))
-  (olena/oln/core/impl/image_array2d.hh (oln/t/33_image_arra 1.10 640))
-  (olena/oln/core/impl/image_array1d.hh (oln/t/34_image_arra 1.11 640))
+  (olena/oln/core/impl/image_array3d.hh (oln/t/32_image_arra 1.10 640))
+  (olena/oln/core/impl/image_array2d.hh (oln/t/33_image_arra 1.11 640))
+  (olena/oln/core/impl/image_array1d.hh (oln/t/34_image_arra 1.12 640))
   (olena/tests/core/tests/borders (oln/t/35_borders 1.3 640))
   (olena/tests/core/tests/clone (oln/t/36_clone 1.1 640))
   (olena/tests/core/tests/ref (oln/t/37_ref 1.3 640))
@@ -988,9 +2210,9 @@
   (olena/tests/core/multiple_sources_2.cc (oln/u/24_multiple_s 1.1 640))
   (olena/tests/core/multiple_sources_1.cc (oln/u/25_multiple_s 1.1 640))
   (olena/tests/utils/Makefile.am (oln/u/26_Makefile.a 1.2 600))
-  (olena/tests/utils/tests/histogram (oln/u/27_histogram. 1.2 600))
+  (olena/tests/utils/tests/histogram (oln/u/27_histogram. 1.2.1.3 600))
   (olena/tests/utils/tests/stat (oln/u/28_stat.cc 1.2 600))
-  (olena/tests/utils/tests/timer (oln/u/29_timer.cc 1.3 600))
+  (olena/tests/utils/tests/timer (oln/u/29_timer.cc 1.4 600))
   (olena/tests/topo/tests/tarjan (oln/u/30_test-tarja 1.1 600))
   (olena/oln/convert/abstract/conversion.hh (oln/u/31_conversion 1.4 640))
   (olena/tests/check/Makefile.runtests (oln/u/32_Makefile.r 1.2 600))
@@ -1005,7 +2227,7 @@
   (olena/tests/core/tests/image_list (oln/u/41_image_list 1.1 600))
   (olena/tests/io/tests/3d (oln/u/42_3d 1.2 600))
   (olena/oln/io/pnm_read_2d.hh (oln/u/43_pnm_read_2 1.4 600))
-  (olena/oln/io/pnm_write_2d.hh (oln/u/44_pnm_write_ 1.3 600))
+  (olena/oln/io/pnm_write_2d.hh (oln/u/44_pnm_write_ 1.5 600))
   (olena/img/lena3d.ppm (oln/u/45_lena3d.ppm 1.1 600))
   (olena/tests/io/tests/se_3d (oln/u/46_se_3d 1.1 600))
   (olena/tests/io/tests/se_1d (oln/u/47_se_1d 1.1 600))
@@ -1021,7 +2243,7 @@
   (olena/oln/topo/combinatorial-map/internal/lambda.hh (oln/v/6_lambda.hh 1.2 600))
   (olena/oln/topo/combinatorial-map/internal/level.hh (oln/v/7_level.hh 1.2 600))
   (olena/oln/topo/combinatorial-map/internal/sigma.hh (oln/v/9_sigma.hh 1.2 600))
-  (olena/oln/core/abstract/image_with_type_with_dim.hh (oln/v/11_image_with 1.3 600))
+  (olena/oln/core/abstract/image_with_type_with_dim.hh (oln/v/11_image_with 1.4 600))
   (olena/tests/core/tests/image2 (oln/v/12_image2 1.2 600))
   (olena/tests/utils/tests/copy (oln/v/13_copy 1.1 600))
 ;; Files added by populate at Mon, 25 Aug 2003 13:48:55 +0200,
@@ -1030,16 +2252,192 @@
   (olena/conf/README (oln/v/14_README 1.1 640))
 
 
-  (doc/ref/exdoc.pl (oln/v/26_exdoc.pl 1.2 755))
-  (doc/ref/exdoc.mk (oln/v/27_exdoc.mk 1.1 644))
-  (doc/ref/exdoc.config (oln/v/28_exdoc.conf 1.2 644))
-  (doc/ref/doxygen.config.in (oln/v/29_doxygen.co 1.1 644)))
+  (doc/ref/exdoc.pl (oln/v/26_exdoc.pl 1.3 755))
+  
+  
+  (doc/ref/doxygen.config.in (oln/v/29_doxygen.co 1.2 644))
+
+  (tools/swilena/python/tests/Makefile.am (oln/v/15_Makefile.a 1.2 600))
+  (tools/swilena/python/tests/simple1.py (oln/v/16_simple1.py 1.4 700))
+  (tools/swilena/ruby/Makefile.am (oln/v/17_Makefile.a 1.2 600))
+  (tools/swilena/ruby/tests/Makefile.am (oln/v/18_Makefile.a 1.1 600))
+  (tools/swilena/ruby/tests/simple1.rb (oln/v/19_simple1.rb 1.4 700))
+  (tools/swilena/python/swilena_display.py (oln/v/20_swilena_di 1.1 600))
+  (tools/swilena/ruby/swilena_display.rb (oln/v/21_swilena_di 1.1 700))
+  (tools/swilena/doc/examples/ruby/simple.rb (oln/v/22_simple.rb 1.4 710))
+  (tools/swilena/doc/examples/python/simple.py (oln/v/23_simple.py 1.4 710))
+  (tools/swilena/generate_morpho_instantiations.py (oln/v/24_generate_m 1.4 700))
+  (tools/swilena/src/Makefile.am (oln/v/25_Makefile.a 1.1 640))
+  (olena/tests/morpho/tests/builtin_types (oln/v/30_builtin_ty 1.2 640))
+  (olena/tests/core/tests/without_ntg (oln/v/31_without_nt 1.1 600))
+  (olena/tests/io/tests/headers (oln/v/32_headers 1.1 600))
+  (olena/oln/convert/cast.hh (oln/v/35_cast.hh 1.1 600))
+  (olena/tests/morpho/tests/overall_benchs (oln/v/36_overall_be 1.1 640))
+  (olena/tests/core/tests/benchs (oln/v/37_benchs 1.1 600))
+  (tools/swilena/meta/swilena_ntg_macros.i (oln/v/39_swilena_nt 1.1 600))
+  (tools/swilena/python/tests/morpho.py (oln/v/47_morpho.py 1.1 700))
+  (tools/swilena/meta/swilena_arith.i (oln/v/48_swilena_ar 1.1 640))
+  (tools/swilena/meta/swilena_conversions.i (oln/v/49_swilena_co 1.1 600))
+  (tools/swilena/generate_conversions_instantiations.py (oln/v/50_generate_c 1.1 700))
+  (tools/swilena/generate_arith_instantiations.py (oln/v/51_generate_a 1.1 700))
+  (tools/swilena/python/tests/arith.py (oln/w/0_arith.py 1.1 750))
+  (tools/swilena/python/tests/conversions.py (oln/w/1_conversion 1.1 750))
+  (tools/swilena/python/Makefile.am (oln/w/2_Makefile.a 1.1 640))
+  (tools/swilena/python/swilena_all1d.py (oln/w/3_swilena_al 1.1 640))
+  (tools/swilena/python/swilena_all2d.py (oln/w/4_swilena_al 1.1 640))
+  (tools/swilena/python/swilena_all3d.py (oln/w/5_swilena_al 1.1 640))
+  (integre/tests/types/tests/int_u8 (oln/w/6_int_u8 1.1 640))
+  (doc/hierarchies/structelt.dia (oln/w/7_structelt. 1.1 640) :no-keywords)
+  (doc/hierarchies/point.dia (oln/w/8_point.dia 1.1 640) :no-keywords)
+  (doc/hierarchies/new_olena_model.dia (oln/w/9_new_olena_ 1.1 640) :no-keywords)
+  (doc/hierarchies/misc.dia (oln/w/10_misc.dia 1.1 640) :no-keywords)
+  (doc/hierarchies/labels.dia (oln/w/11_labels.dia 1.1 640) :no-keywords)
+  (doc/hierarchies/iter.dia (oln/w/12_iter.dia 1.1 640) :no-keywords)
+  (doc/hierarchies/implementation.dia (oln/w/13_implementa 1.1 640))
+  (olena/oln/convert/rgbhsv.hh (oln/j/35_rgbhsv.hh 1.1 644))
+  (olena/oln/convert/rgbhsl.hh (oln/j/36_rgbhsl.hh 1.1 644))
+  (olena/oln/convert/rgbhsi.hh (oln/j/37_rgbhsi.hh 1.1 644))
+  (olena/oln/convert/rgbyuv.hh (oln/j/38_rgbyuv.hh 1.1 644))
+  (olena/oln/convert/rgbyiq.hh (oln/j/39_rgbyiq.hh 1.1 644))
+  (olena/oln/snakes/snakes_base.hxx (oln/f/11_snakes_bas 1.1 644))
+  (olena/oln/snakes/snakes_base.hh (oln/f/50_snakes_bas 1.1 644))
+  (olena/oln/snakes/energies.hxx (oln/j/21_energies.h 1.1 644))
+  (olena/oln/snakes/energies.hh (oln/j/22_energies.h 1.1 644))
+  (olena/oln/snakes/segment.hxx (oln/j/23_segment.hx 1.1 644))
+  (olena/oln/snakes/greedy.hxx (oln/j/24_greedy.hxx 1.1 644))
+  (olena/oln/snakes/greedy.hh (oln/j/25_greedy.hh 1.1 644))
+  (olena/oln/snakes/node.hh (oln/j/32_node.hh 1.1 644))
+  (olena/oln/snakes/node.hxx (oln/j/33_node.hxx 1.1 644))
+  (olena/oln/snakes/segment.hh (oln/j/34_segment.hh 1.1 644))
+  (olena/tests/convol/tests/uniform2_gauss (oln/j/40_uniform2_g 1.1 644))
+  (olena/tests/convol/tests/uniform_gauss (oln/j/41_uniform_ga 1.2 644))
+  (olena/oln/convert/value_to_point.hh (oln/j/43_value_to_p 1.2 644))
+  (olena/tests/morpho/tests/area (oln/j/44_area 1.1 644))
+  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.4 644))
+  (olena/oln/core/abstract/behavior.hh (oln/j/46_behavior.h 1.2 644))
+  (olena/oln/core/behavior.hh (oln/j/47_behavior.h 1.2 644))
+  (olena/oln/morpho/attribute_closing_opening_map.hxx (oln/j/48_attribute_ 1.2 644))
+  (olena/oln/morpho/attribute_closing_opening_map.hh (oln/j/49_attribute_ 1.2 600))
+  (olena/oln/utils/special_points.hh (oln/j/50_special_po 1.1 644))
+  (olena/tests/morpho/tests/attribute (oln/j/51_attribute 1.2 644))
+  (olena/tests/morpho/tests/attr_op_cl (oln/k/0_attr_op_cl 1.1 644))
+;; Files added by populate at Mon, 23 Feb 2004 17:08:41 +0100,
+;; to version doc.3(w), by palma_g:
+
+  (doc/ref/exdoc.mk.in (oln/k/4_exdoc.mk.i 1.1 644))
+  (doc/ref/exdoc.config.in (oln/k/5_exdoc.conf 1.1 644))
+
+;; Files added by populate at Tue, 24 Feb 2004 14:39:49 +0100,
+;; to version doc.3(w), by palma_g:
+
+  (doc/ref/img_conv.pl (oln/k/6_img_conv.p 1.1 700))
+
+;; Files deleted by depopulate at Tue, 24 Feb 2004 15:22:06 +0100,
+;; from version doc.3(w), by palma_g:
+
+  ; (doc/ref/exdoc.mk ())
+
+;; Files deleted by depopulate at Tue, 24 Feb 2004 15:22:16 +0100,
+;; from version doc.3(w), by palma_g:
+
+  ; (doc/ref/exdoc.config ())
+)
 (Merge-Parents
-  (doc.1 complete)
-  (doc.2 complete
+  (doc.3 complete)
+  (10.67 incomplete
     (ChangeLog ChangeLog ChangeLog r) (doc/ChangeLog doc/ChangeLog doc/ChangeLog r)
-    (configure.ac configure.ac configure.ac r) (olena/oln/core/image.hh olena/oln/core/image.hh olena/oln/core/image.hh r)
-    (() () doc/ref/exdoc.pl a) (() () doc/ref/exdoc.mk a)
-    (() () doc/ref/exdoc.config a) (() () doc/ref/doxygen.config.in a))
+    (integre/ChangeLog integre/ChangeLog integre/ChangeLog r) (metalic/ChangeLog metalic/ChangeLog metalic/ChangeLog r)
+    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (tools/swilena/ChangeLog tools/swilena/ChangeLog tools/swilena/ChangeLog r)
+    (configure.ac configure.ac configure.ac m) (doc/demo/tour.cc doc/demo/tour.cc doc/demo/tour.cc r)
+    (doc/ref/integre-ref.tex doc/ref/integre-ref.tex doc/ref/integre-ref.tex r) (NEWS NEWS NEWS r)
+    (olena/oln/arith/internal/opdecls.hh olena/oln/arith/internal/opdecls.hh olena/oln/arith/internal/opdecls.hh r) (olena/oln/arith/ops.hh olena/oln/arith/ops.hh olena/oln/arith/ops.hh r)
+    (olena/oln/convert/basics.hh olena/oln/convert/basics.hh olena/oln/convert/basics.hh r) (olena/oln/convert/force.hh olena/oln/convert/force.hh olena/oln/convert/force.hh r)
+    (olena/oln/convert/nrgbhsi.hh olena/oln/convert/nrgbhsi.hh () d) (olena/oln/convert/nrgbhsl.hh olena/oln/convert/nrgbhsl.hh () d)
+    (olena/oln/convert/nrgbhsv.hh olena/oln/convert/nrgbhsv.hh () d) (olena/oln/convert/nrgbxyz.hh olena/oln/convert/nrgbxyz.hh olena/oln/convert/nrgbxyz.hh r)
+    (olena/oln/convert/nrgbyiq.hh olena/oln/convert/nrgbyiq.hh () d) (olena/oln/convert/nrgbyuv.hh olena/oln/convert/nrgbyuv.hh () d)
+    (olena/oln/convert/rgbxyz.hh olena/oln/convert/rgbxyz.hh olena/oln/convert/rgbxyz.hh r) (olena/oln/convol/fast_gaussian.hh olena/oln/convol/fast_gaussian.hh olena/oln/convol/fast_gaussian.hh r)
+    (olena/oln/convol/fast_gaussian.hxx olena/oln/convol/fast_gaussian.hxx olena/oln/convol/fast_gaussian.hxx r) (olena/oln/core/box.hxx olena/oln/core/box.hxx olena/oln/core/box.hxx r)
+    (olena/oln/core/dpoint1d.hh olena/oln/core/dpoint1d.hh olena/oln/core/dpoint1d.hh r) (olena/oln/core/dpoint2d.hh olena/oln/core/dpoint2d.hh olena/oln/core/dpoint2d.hh r)
+    (olena/oln/core/dpoint3d.hh olena/oln/core/dpoint3d.hh olena/oln/core/dpoint3d.hh r) (olena/oln/core/abstract/dpoint.hh olena/oln/core/abstract/dpoint.hh olena/oln/core/abstract/dpoint.hh r)
+    (olena/oln/core/image1d.hh olena/oln/core/image1d.hh olena/oln/core/image1d.hh r) (olena/oln/core/image2d.hh olena/oln/core/image2d.hh olena/oln/core/image2d.hh r)
+    (olena/oln/core/image3d.hh olena/oln/core/image3d.hh olena/oln/core/image3d.hh r) (olena/oln/core/image.hh olena/oln/core/image.hh olena/oln/core/image.hh m)
+    (olena/oln/core/abstract/iter1d.hh olena/oln/core/abstract/iter1d.hh olena/oln/core/abstract/iter1d.hh r) (olena/oln/core/abstract/iter2d.hh olena/oln/core/abstract/iter2d.hh olena/oln/core/abstract/iter2d.hh r)
+    (olena/oln/core/abstract/iter3d.hh olena/oln/core/abstract/iter3d.hh olena/oln/core/abstract/iter3d.hh r) (olena/oln/core/abstract/neighborhood.hh olena/oln/core/abstract/neighborhood.hh olena/oln/core/abstract/neighborhood.hh r)
+    (olena/oln/core/point1d.hh olena/oln/core/point1d.hh olena/oln/core/point1d.hh r) (olena/oln/core/point2d.hh olena/oln/core/point2d.hh olena/oln/core/point2d.hh r)
+    (olena/oln/core/point2d.hxx olena/oln/core/point2d.hxx olena/oln/core/point2d.hxx r) (olena/oln/core/point3d.hh olena/oln/core/point3d.hh olena/oln/core/point3d.hh r)
+    (metalic/mlc/type.hh metalic/mlc/type.hh metalic/mlc/type.hh r) (olena/oln/io/readable.hh olena/oln/io/readable.hh olena/oln/io/readable.hh r)
+    (olena/oln/level/cc.hh olena/oln/level/cc.hh olena/oln/level/cc.hh r) (metalic/mlc/array/1d.hh metalic/mlc/array/1d.hh metalic/mlc/array/1d.hh r)
+    (metalic/mlc/array/2d.hh metalic/mlc/array/2d.hh metalic/mlc/array/2d.hh r) (metalic/mlc/array/3d.hh metalic/mlc/array/3d.hh metalic/mlc/array/3d.hh r)
+    (olena/oln/morpho/extrema.hxx olena/oln/morpho/extrema.hxx olena/oln/morpho/extrema.hxx r) (olena/oln/morpho/geodesic_dilation.hh olena/oln/morpho/geodesic_dilation.hh olena/oln/morpho/geodesic_dilation.hh r)
+    (olena/oln/morpho/geodesic_erosion.hh olena/oln/morpho/geodesic_erosion.hh olena/oln/morpho/geodesic_erosion.hh r) (olena/oln/morpho/reconstruction.hh olena/oln/morpho/reconstruction.hh olena/oln/morpho/reconstruction.hh r)
+    (olena/oln/morpho/watershed.hh olena/oln/morpho/watershed.hh olena/oln/morpho/watershed.hh r) (olena/oln/morpho/watershed.hxx olena/oln/morpho/watershed.hxx olena/oln/morpho/watershed.hxx r)
+    (olena/oln/topo/dmap.hxx olena/oln/topo/dmap.hxx olena/oln/topo/dmap.hxx r) (integre/ntg/real/behavior.hh integre/ntg/core/behavior.hh integre/ntg/real/behavior.hh r)
+    (integre/ntg/utils/cast.hh integre/ntg/utils/cast.hh integre/ntg/utils/cast.hh r) (integre/ntg/core/internal/global_ops.hh integre/ntg/core/internal/global_ops.hh integre/ntg/core/internal/global_ops.hh r)
+    (integre/ntg/color/hsi.hh integre/ntg/color/hsi.hh integre/ntg/color/hsi.hh r) (integre/ntg/color/hsv.hh integre/ntg/color/hsv.hh integre/ntg/color/hsv.hh r)
+    (integre/ntg/real/int_s.hh integre/ntg/real/int_s.hh integre/ntg/real/int_s.hh r) (integre/ntg/real/int_u.hh integre/ntg/real/int_u.hh integre/ntg/real/int_u.hh r)
+    (integre/ntg/color/nrgb.hh integre/ntg/color/nrgb.hh integre/ntg/color/nrgb.hh r) (integre/ntg/real/optraits_builtin_int.hh integre/ntg/real/optraits_builtin_int.hh integre/ntg/real/optraits_builtin_int.hh r)
+    (integre/ntg/real/optraits_real_defs.hh integre/ntg/real/optraits_scalar_defs.hh integre/ntg/real/optraits_real_defs.hh r) (integre/ntg/real/optraits_real.hh integre/ntg/real/optraits_scalar.hh integre/ntg/real/optraits_real.hh r)
+    (integre/ntg/core/value.hh integre/ntg/core/value.hh integre/ntg/core/value.hh r) (integre/ntg/real/typetraits_builtin_int.hh integre/ntg/real/typetraits_builtin_int.hh integre/ntg/real/typetraits_builtin_int.hh r)
+    (integre/ntg/color/xyz.hh integre/ntg/color/xyz.hh integre/ntg/color/xyz.hh r) (integre/ntg/color/yiq.hh integre/ntg/color/yiq.hh integre/ntg/color/yiq.hh r)
+    (integre/ntg/color/yuv.hh integre/ntg/color/yuv.hh integre/ntg/color/yuv.hh r) (olena/oln/utils/histogram.hh olena/oln/utils/histogram.hh olena/oln/utils/histogram.hh r)
+    (olena/oln/utils/timer.hh olena/oln/utils/timer.hh olena/oln/utils/timer.hh r) (olena/tests/convert/Makefile.am olena/tests/convert/Makefile.am olena/tests/convert/Makefile.am r)
+    (olena/tests/io/Makefile.am olena/tests/io/Makefile.am olena/tests/io/Makefile.am r) (olena/tests/morpho/tests/reconstruction olena/tests/morpho/tests/reconstruction olena/tests/morpho/tests/reconstruction r)
+    (olena/tests/transforms/Makefile.am olena/tests/transforms/Makefile.am olena/tests/transforms/Makefile.am r) (integre/tests/types/runtests integre/tests/types/runtests integre/tests/types/runtests r)
+    (tools/swilena/doc/Makefile.am tools/swilena/doc/Makefile.am tools/swilena/doc/Makefile.am r) (tools/swilena/doc/swilena.texi tools/swilena/doc/swilena.texi tools/swilena/doc/swilena.texi r)
+    (tools/swilena/java/Makefile.am tools/swilena/java/Makefile.am () d) (tools/swilena/TODO tools/swilena/TODO tools/swilena/TODO r)
+    (doc/demo/convol-gaussian.cc doc/demo/convol-gaussian.cc doc/demo/convol-gaussian.cc r) (config/oln-local.m4 config/oln-local.m4 config/oln-local.m4 r)
+    (olena/oln/morpho/attribute_closing_opening.hh olena/oln/morpho/attribute_closing_opening.hh olena/oln/morpho/attribute_closing_opening.hh r) (olena/oln/morpho/attribute_union_find.hh olena/oln/morpho/attribute_union_find.hh olena/oln/morpho/attribute_union_find.hh r)
+    (integre/ntg/Makefile.am integre/ntg/Makefile.am integre/ntg/Makefile.am r) (olena/oln/Makefile.am olena/oln/Makefile.am olena/oln/Makefile.am r)
+    (olena/tests/core/Makefile.am olena/tests/core/Makefile.am olena/tests/core/Makefile.am r) (tools/swilena/expand.sh tools/swilena/expand.sh tools/swilena/expand.sh r)
+    (tools/swilena/meta/Makefile.am tools/swilena/meta/Makefile.am tools/swilena/meta/Makefile.am r) (tools/swilena/meta/swilena_structelt.i tools/swilena/meta/swilena_structelt.i tools/swilena/meta/swilena_structelt.i r)
+    (tools/swilena/meta/swilena_ntg_int_u.i tools/swilena/meta/swilena_ntg_int_u.i () d) (tools/swilena/meta/swilena_ntg_int_s.i tools/swilena/meta/swilena_ntg_int_s.i () d)
+    (tools/swilena/meta/swilena_ntg_cplx.i tools/swilena/meta/swilena_ntg_cplx.i () d) (tools/swilena/meta/swilena_ntg.i tools/swilena/meta/swilena_ntg.i tools/swilena/meta/swilena_ntg.i r)
+    (tools/swilena/meta/swilena_morpho.i tools/swilena/meta/swilena_morpho.i tools/swilena/meta/swilena_morpho.i r) (tools/swilena/meta/swilena_image.i tools/swilena/meta/swilena_image.i tools/swilena/meta/swilena_image.i r)
+    (tools/swilena/meta/swilena_exception.i tools/swilena/meta/swilena_exception.i tools/swilena/meta/swilena_exception.i r) (tools/swilena/meta/swilena_describe.i tools/swilena/meta/swilena_describe.i tools/swilena/meta/swilena_describe.i r)
+    (tools/swilena/meta/swilena_decl.i tools/swilena/meta/swilena_decl.i tools/swilena/meta/swilena_decl.i r) (integre/ntg/real/real_value.hh integre/ntg/real/real_value.hh integre/ntg/real/real_value.hh r)
+    (integre/ntg/core/internal/traits.hh integre/ntg/core/internal/traits.hh integre/ntg/core/internal/traits.hh r) (integre/ntg/core/type_traits.hh integre/ntg/core/type_traits.hh integre/ntg/core/type_traits.hh r)
+    (integre/ntg/core/macros.hh integre/ntg/core/macros.hh integre/ntg/core/macros.hh r) (integre/ntg/basics.hh integre/ntg/basics.hh integre/ntg/basics.hh r)
+    (integre/ntg/vect/vect_value.hh integre/ntg/vect/vect_value.hh integre/ntg/vect/vect_value.hh r) (integre/ntg/enum/enum_value.hh integre/ntg/enum/enum_value.hh integre/ntg/enum/enum_value.hh r)
+    (integre/ntg/real/builtin_float.hh integre/ntg/real/builtin_float.hh integre/ntg/real/builtin_float.hh r) (integre/ntg/enum/builtin_bool.hh integre/ntg/enum/builtin_bool.hh integre/ntg/enum/builtin_bool.hh r)
+    (integre/ntg/real/range.hh integre/ntg/real/range.hh integre/ntg/real/range.hh r) (integre/ntg/real/cycle.hh integre/ntg/real/cycle.hh integre/ntg/real/cycle.hh r)
+    (integre/ntg/vect/vec.hh integre/ntg/vect/vec.hh integre/ntg/vect/vec.hh r) (integre/ntg/color/color.hh integre/ntg/color/color.hh integre/ntg/color/color.hh r)
+    (integre/ntg/enum/bin.hh integre/ntg/enum/bin.hh integre/ntg/enum/bin.hh r) (olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh r)
+    (olena/oln/core/impl/image_array.hh olena/oln/core/impl/image_array.hh olena/oln/core/impl/image_array.hh r) (olena/oln/core/impl/image_array3d.hh olena/oln/core/impl/image_array3d.hh olena/oln/core/impl/image_array3d.hh r)
+    (olena/oln/core/impl/image_array2d.hh olena/oln/core/impl/image_array2d.hh olena/oln/core/impl/image_array2d.hh r) (olena/oln/core/impl/image_array1d.hh olena/oln/core/impl/image_array1d.hh olena/oln/core/impl/image_array1d.hh r)
+    (olena/tests/utils/tests/histogram olena/tests/utils/tests/histogram olena/tests/utils/tests/histogram r) (olena/tests/utils/tests/timer olena/tests/utils/tests/timer olena/tests/utils/tests/timer r)
+    (olena/oln/io/pnm_write_2d.hh olena/oln/io/pnm_write_2d.hh olena/oln/io/pnm_write_2d.hh r) (olena/oln/core/abstract/image_with_type_with_dim.hh olena/oln/core/abstract/image_with_type_with_dim.hh olena/oln/core/abstract/image_with_type_with_dim.hh r)
+    (() () tools/swilena/python/tests/Makefile.am a) (() () tools/swilena/python/tests/simple1.py a)
+    (() () tools/swilena/ruby/Makefile.am a) (() () tools/swilena/ruby/tests/Makefile.am a)
+    (() () tools/swilena/ruby/tests/simple1.rb a) (() () tools/swilena/python/swilena_display.py a)
+    (() () tools/swilena/ruby/swilena_display.rb a) (() () tools/swilena/doc/examples/ruby/simple.rb a)
+    (() () tools/swilena/doc/examples/python/simple.py a) (() () tools/swilena/generate_morpho_instantiations.py a)
+    (() () tools/swilena/src/Makefile.am a) (() () olena/tests/morpho/tests/builtin_types a)
+    (() () olena/tests/core/tests/without_ntg a) (() () olena/tests/io/tests/headers a)
+    (() () olena/oln/convert/cast.hh a) (() () olena/tests/morpho/tests/overall_benchs a)
+    (() () olena/tests/core/tests/benchs a) (() () tools/swilena/meta/swilena_ntg_macros.i a)
+    (() () tools/swilena/python/tests/morpho.py a) (() () tools/swilena/meta/swilena_arith.i a)
+    (() () tools/swilena/meta/swilena_conversions.i a) (() () tools/swilena/generate_conversions_instantiations.py a)
+    (() () tools/swilena/generate_arith_instantiations.py a) (() () tools/swilena/python/tests/arith.py a)
+    (() () tools/swilena/python/tests/conversions.py a) (() () tools/swilena/python/Makefile.am a)
+    (() () tools/swilena/python/swilena_all1d.py a) (() () tools/swilena/python/swilena_all2d.py a)
+    (() () tools/swilena/python/swilena_all3d.py a) (() () integre/tests/types/tests/int_u8 a)
+    (() () doc/hierarchies/structelt.dia a) (() () doc/hierarchies/point.dia a)
+    (() () doc/hierarchies/new_olena_model.dia a) (() () doc/hierarchies/misc.dia a)
+    (() () doc/hierarchies/labels.dia a) (() () doc/hierarchies/iter.dia a)
+    (() () doc/hierarchies/implementation.dia a) (() () olena/oln/convert/rgbhsv.hh a)
+    (() () olena/oln/convert/rgbhsl.hh a) (() () olena/oln/convert/rgbhsi.hh a)
+    (() () olena/oln/convert/rgbyuv.hh a) (() () olena/oln/convert/rgbyiq.hh a)
+    (() () olena/oln/snakes/snakes_base.hxx a) (() () olena/oln/snakes/snakes_base.hh a)
+    (() () olena/oln/snakes/energies.hxx a) (() () olena/oln/snakes/energies.hh a)
+    (() () olena/oln/snakes/segment.hxx a) (() () olena/oln/snakes/greedy.hxx a)
+    (() () olena/oln/snakes/greedy.hh a) (() () olena/oln/snakes/node.hh a)
+    (() () olena/oln/snakes/node.hxx a) (() () olena/oln/snakes/segment.hh a)
+    (() () olena/tests/convol/tests/uniform2_gauss a) (() () olena/tests/convol/tests/uniform_gauss a)
+    (() () olena/oln/convert/value_to_point.hh a) (() () olena/tests/morpho/tests/area a)
+    (() () olena/oln/morpho/attributes.hh a) (() () olena/oln/core/abstract/behavior.hh a)
+    (() () olena/oln/core/behavior.hh a) (() () olena/oln/morpho/attribute_closing_opening_map.hxx a)
+    (() () olena/oln/morpho/attribute_closing_opening_map.hh a) (() () olena/oln/utils/special_points.hh a)
+    (() () olena/tests/morpho/tests/attribute a) (() () olena/tests/morpho/tests/attr_op_cl a))
+  (10.67 complete)
 )
 (New-Merge-Parents)

@@ -84,7 +84,7 @@ namespace internal {
  * exo: out.pgm
  =*/
 template<class I, class I2, class N>
-oln_concrete_type(I) 
+oln_concrete_type(I)
   minima_imposition(const abstract::non_vectorial_image<I>& input,
 		    const abstract::non_vectorial_image<I2>& minima_map,
 		    const abstract::neighborhood<N>& Ng)

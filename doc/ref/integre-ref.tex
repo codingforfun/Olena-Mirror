@@ -4,10 +4,10 @@
 
 {\integre} is a safe and efficient data types library, designed for
 generic algorithm writing. Even if it is now independent from Olena,
-it was initially developed to provide value types for images'
-pixels. {\integre} implements basics types such as integers, floats,
+it was initially developed to provide value types for image pixels.
+{\integre} implements basics types such as integers, floats,
 complexes, vectors but also more evolved types such as range (in the
-same spirit than Ada) or cycle.
+same spirit as Ada) or cycle.
 
 By safe we wean that all operations (arithmetic, assignments, etc.)
 are checked. If there is an overflow, the user is noticed, at compile
@@ -15,8 +15,8 @@ time if possible, at runtime otherwise.
 
 By efficient we mean that using {\integre} additional checks and
 features should not decrease too much the overall performances. This
-is why {\integre} relies intensively on template code and meta
-programming.
+is why {\integre} relies intensively on template code and
+metaprogramming.
 
 \subsection{Interactions with builtin types}
 
@@ -80,10 +80,10 @@ section for more details about each type.
 
   \item Reals
   \begin{itemize}
-    \item unsigned integer (\ahrefloc{ref-intu}{\code{int_u}})
-    \item signed integer (\ahrefloc{ref-ints}{\code{int_s}})
-    \item float with single precision (\ahrefloc{ref-floats}{\code{float_s}})
-    \item float with double precision (\ahrefloc{ref-floatd}{\code{float_d}})
+    \item unsigned integer (\ahrefloc{ref-reals}{\code{int_u}})
+    \item signed integer (\ahrefloc{ref-reals}{\code{int_s}})
+    \item float with single precision (\ahrefloc{ref-reals}{\code{float_s}})
+    \item float with double precision (\ahrefloc{ref-reals}{\code{float_d}})
   \end{itemize}
 
   \item Enumerated
@@ -153,7 +153,7 @@ Properties associated to types can take two forms: types or values.
 They are suffixed by \code{_type}, for example: \code{larger_type},
 \code{cumul_type}, \code{abstract_type}, etc.
 
-Here is the list of common properties:
+Here is the list of the properties which almost all types have:
 
 \subsubsection{\code{abstract_type}}
 
@@ -164,7 +164,8 @@ organized by a hierarchical way, their main interest is
 
 Here are the available abstract types:
 
-%\includeimage{abstract-types-hierarchy}{width=0.9\textwidth}
+%% FIXME: uncomment when dia files will be converted automatically.
+%%\includeimage{abstract-types-hierarchy}{width=0.9\textwidth}
 
 \subsubsection{\code{ntg_type}}
 
@@ -332,12 +333,6 @@ depending on which is the nearest.
 
 Example: \code{int_u<8, saturate> u = 350; // u == 255}.
 
-\subsubsection{cycle}
-
-Assign the value modulo the value range of the type.
-
-Example: \code{int_u<8, saturate> u = 257; // u == 1}.
-
 \subsubsection{unsafe}
 
 Does nothing. Behaves almost the same way than builtin types. You
@@ -351,32 +346,173 @@ cases.
 
 %%
 
-\section{\aname{sec-ref}{Types reference}}
+\section{\aname{sec-ref}{Type reference}}
 
 \subsection{Hierarchy}
 
 \integre\ types are organized hierarchically:
 
-%\includeimage{data-hierarchy}{width=0.9\textwidth}
+%% FIXME: uncomment when dia files will be converted automatically.
+%%\includeimage{data-hierarchy}{width=0.9\textwidth}
 
 \subsection{\aname{ref-bin}{\code{bin}}}
 
-\subsection{\aname{ref-cplx}{\code{cplx}}}
+\code{bin} is a binary type whose values are \code{0} and \code{1}.
+Thus, it can be constructed from usual numerical values.  Arithmetic
+operations are forbidden, and usual logical operations are defined
+(the same as builtin types).  It can interact freely with \code{bool}.
+
+\subsection{\aname{ref-reals}{Real types (\code{int_u}, \code{int_s}, \code{float_s}, \code{float_d})}}
+
+Real types behave almost like their builtin equivalent.  Arithmetic
+operators are defined between all of them, etc.  
+
+\code{int_u} and \code{int_s} take two parameters, the first is the
+number of bits and the second the behavior.  To define the range of
+possible values more precisely, you should consider the \code{range}
+type.  Aliases have been defined for usual values:
+
+\begin{itemize}
+\item \code{int_uX} with \code{X} being a value of \code{8, 16, 32}
+  corresponds to \code{int_u<X, strict>}.
+\item \code{int_uXu} corresponds to \code{int_u<X, unsafe}.
+\item \code{int_uXs} corresponds to \code{int_u<X, saturate}.
+\end{itemize}
+
+The same aliases have been defined for \code{int_s}.
+
+\code{float_s} and \code{float_d} are actually aliases toward the
+corresponding builtin types.  However, this should change in future
+releases of \integre.
+
+Here is an example using real types:
+
+\begin{lstlisting}{}
+#include <ntg/int.hh> // int_u and int_s
+#include <ntg/float.hh> // float_s and float_d
+
+using namespace ntg;
+
+int main()
+{
+  int_u8s a = 350; // actual value is 2^8 - 1 = 255
+  int_s16 b = 258;
+  int_u<6, saturate> c = 25;
+
+  float_s d = a + b + c;
+  float_d e = d + (a * b * c);
+}
+\end{lstlisting}
 
 \subsection{\aname{ref-cycle}{\code{cycle}}}
 
-\subsection{\aname{ref-floatd}{\code{float_d}}}
+\code{cycle} is a decorator type.  Giving a real type and an interval,
+\code{cycle} variables will ensure that their values remains in the
+given interval cycling around the bounds.  An interval is either
+\code{bounded_u} or \code{bounded_s}, both taking two parameters, the
+lower and the upper bounds, the first accepting unsigned values and
+the second signed values.  Float bounds cannot be defined since floats
+are not accepted as template parameters.  The lower bound is inclusive
+whereas the upper bound is exclusive.
 
-\subsection{\aname{ref-floats}{\code{float_s}}}
+Arithmetic operations are performed on the underlying types, in the
+same way as if the type was not decorated by \code{cycle}.
 
-\subsection{\aname{ref-ints}{\code{int_s}}}
+Example:
 
-\subsection{\aname{ref-intu}{\code{int_u}}}
+\begin{lstlisting}{}
+#include <ntg/float.hh>
+#include <ntg/cycle.hh>
+
+using namespace ntg;
+
+int main()
+{
+  cycle<float_s, bounded_u<0, 360> > c1 = 360; // c1 == 0
+}
+\end{lstlisting}
 
 \subsection{\aname{ref-range}{\code{range}}}
 
+\code{range} behaves almost like \code{cycle}, but its takes 3
+parameters, the decorated type, the interval and the behavior to use
+when a value is not in the interval.
+
+Example:
+
+\begin{lstlisting}{}
+#include <ntg/int.hh>
+#include <ntg/range.hh>
+
+using namespace ntg;
+
+int main()
+{
+  // fails at runtime
+  range<int_u8, bounded_u<0, 10>, strict> a = 11;
+}
+\end{lstlisting}
+
 \subsection{\aname{ref-vec}{\code{vec}}}
+
+\integre\ provides vectors with a static length.  \code{vec} takes two
+parameters, the size and the type of the elements.
+
+Usual arithmetic operations are defined both between two vectors and
+between a vector and one element.  Arithmetic operations between a
+vector and one element apply the operator on each element of the
+vector.  The multiplication of two vectors is the dot product.
+
+Example:
+
+\begin{lstlisting}{}
+#include <iostream>
+#include <ntg/vec.hh>
+#include <ntg/int.hh>
+
+using namespace ntg;
+
+int main()
+{
+  vec<10, int_u8> v1;
+  for (unsigned i = 0; i < 10; ++i)
+    v1[i] = i;
+  std::cout << v1 << std::endl;
+}
+\end{lstlisting}
+
+\subsection{\aname{ref-cplx}{\code{cplx}}}
+
+There are two kinds of representation for complexes, rectangular ($a +
+i * b$) and polar ($r * exp(i\theta)$).  Conversions are implicit
+between the representations.  A complex is rectangular representation
+is actually a vector of two elements, the real part and the imaginary
+part.  So \code{cplx} takes two arguments, the representation and the
+type of the elements.
+
+Example:
+
+\begin{lstlisting}{}
+#include <iostream>
+#include <ntg/cplx.hh>
+
+using namespace ntg;
+
+int main()
+{
+  cplx<rect, int_u8> c1 (5, 12);
+  cplx<polar, float_s> c2 (5.2, 0.8);
+  c1 = c2;
+  std::cout << c1 << std::endl;
+  std::cout << c1 + c2 << std::endl;
+}
+\end{lstlisting}
 
 %%
 
 \section{FAQ}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "oln-ref"
+%%% End: 

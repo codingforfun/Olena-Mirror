@@ -45,14 +45,14 @@ namespace ntg
 
   template<> struct yiq_traits<yiq_I>
   {
-    static float lower_bound() { return -.6; }
-    static float upper_bound() { return .6; }
+    static float lower_bound() { return -.4192; }
+    static float upper_bound() { return .5346; }
   };
 
-  template<> struct yiq_traits<yiq_Q> 
+  template<> struct yiq_traits<yiq_Q>
   {
-    static float lower_bound() { return -.6; }
-    static float upper_bound() { return .6; }
+    static float lower_bound() { return -.6783; }
+    static float upper_bound() { return .6527; }
   };
 
   typedef color<3,8,yiq_traits>  yiq_8;

@@ -40,7 +40,7 @@ namespace ntg
   `------------*/
 
   //! Associates properties and methods to types.
-  /*!  
+  /*!
     type_traits gives a variable set of properties, depending on
     the type considered. For example, type_traits<int_u8> can give
     larger_type, max(), ...

@@ -30,10 +30,117 @@
 
 #include <oln/morpho/attribute_union_find.hh>
 
+/*! \namespace oln
+** \brief oln namespace
+*/
 namespace oln {
+  /*! \namespace oln::morpho
+  ** \brief oln::morpho namespace
+  */
   namespace morpho {
-    namespace tarjan {
+    /*! \namespace oln::morpho::fast
+    ** \brief oln::morpho::fast namespace
+    */
+    namespace fast {
+      /*! \namespace oln::morpho::fast::tarjan
+      ** \brief oln::morpho::fast::tarjan namespace
+      */
+      namespace tarjan {
+	/*! \namespace oln::morpho::fast::tarjan::internal
+	** \brief oln::morpho::fast::tarjan::internal namespace
+	*/
+	namespace internal {
 
+	  /*!
+	  ** \brief perform an attribute closing
+	  **
+	  ** FIXME: ONLY A TEST
+	  ** \code
+	  ** #include <oln/basics2d.hh>
+	  ** #include <oln/morpho/attribute_closing_opening.hh>
+	  ** #include <oln/level/compare.hh>
+	  ** #include <ntg/all.hh>
+	  ** #include <iostream>
+	  ** int main()
+	  ** {
+	  **   typedef oln::image2d<ntg::int_u8>	im_type;
+	  **
+	  **   im_type im1(oln::load(IMG_IN "lena256.pgm"));
+	  **   im1 = oln::morpho::fast::area_closing(im1, oln::neighb_c4(), 200);
+	  **   oln::save(im1, IMG_OUT "olena_attribute_closing_opening_hh_attr_clo.ppm");
+	  **   return  0;
+	  ** }
+	  ** \endcode
+	  ** \image html lena256.png \image latex lena256.png => \image html olena_attribute_closing_opening_hh_attr_clo.png \image latex olena_attribute_closing_opening_hh_attr_clo.png
+	  **
+	  */
+	  template<class I, class N, class A>
+	  oln_concrete_type(I)
+	    attr_closing_(const abstract::non_vectorial_image<I>& input,
+			  const abstract::neighborhood<N>& Ng,
+			  const attr_lambda_type(A) &lambda)
+	  {
+	    typedef tarjan::tarjan_set<oln_concrete_type(I), A > tarjan_set_type;
+	    tarjan_set_type attr_closing(input.exact(), attr_env_type(A)());
+	    return attr_closing.template get_comptute<true>(lambda, Ng);
+	  }
+
+	  // attribute opening
+	  template<class I, class N, class A>
+	  oln_concrete_type(I)
+	    attr_opening_(const abstract::non_vectorial_image<I>& input,
+			  const abstract::neighborhood<N>& Ng,
+			  const attr_lambda_type(A) &lambda)
+	  {
+	    typedef tarjan::tarjan_set<oln_concrete_type(I), A > tarjan_set_type;
+	    tarjan_set_type attr_opening(input.exact(), attr_env_type(A)());
+	    return attr_opening.template get_comptute<false>(lambda, Ng);
+	  }
+
+	} // !internal
+      } // !tarjan
+      // macro for some attribute opening/closing declarations
+# define xxx_opening_decl(T) \
+      template<class I, class N> \
+      oln_concrete_type(I) \
+	T##_opening(const abstract::non_vectorial_image<I>& input, \
+		       const abstract::neighborhood<N>& Ng, \
+		       const attr_lambda_type(T##_type<unsigned>) &lambda) \
+      { \
+	return tarjan::internal::attr_opening_<I, N, T##_type<unsigned> >(input, Ng, lambda); \
+      }
+
+# define xxx_closing_decl(T) \
+      template<class I, class N> \
+      oln_concrete_type(I) \
+	T##_closing(const abstract::non_vectorial_image<I>& input, \
+		       const abstract::neighborhood<N>& Ng, \
+		       const attr_lambda_type(T##_type<unsigned>) &lambda) \
+      { \
+	return tarjan::internal::attr_closing_<I, N, T##_type<unsigned> >(input, Ng, lambda); \
+      }
+
+
+      // same as previous, but for attribute based on image types
+# define xxx_opening_im_decl(T) \
+      template<class I, class N> \
+      oln_concrete_type(I) \
+	T##_opening(const abstract::non_vectorial_image<I>& input, \
+		       const abstract::neighborhood<N>& Ng, \
+		       const attr_lambda_type(T##_type<I>) &lambda) \
+      { \
+	return tarjan::internal::attr_opening_<I, N, T##_type<I> >(input, Ng, lambda); \
+      }
+
+# define xxx_closing_im_decl(T) \
+      template<class I, class N> \
+      oln_concrete_type(I) \
+	T##_closing(const abstract::non_vectorial_image<I>& input, \
+		       const abstract::neighborhood<N>& Ng, \
+		       const attr_lambda_type(T##_type<I>) &lambda) \
+      { \
+	return tarjan::internal::attr_closing_<I, N, T##_type<I> >(input, Ng, lambda); \
+      }
 
       /*=processing area_closing
        * ns: morpho
@@ -53,19 +160,7 @@ namespace oln {
        * exi: lena256.pgm
        * exo: out.pgm
        =*/
-      template<class I, class N>
-      oln_concrete_type(I) 
-	area_closing(const abstract::non_vectorial_image<I>& input,
-		     const abstract::neighborhood<N>& Ng,
-		     const unsigned int area)
-      {
-	typedef T_attribute<unsigned int> area_type;
-
-	typedef tarjan::tarjan_set<oln_concrete_type(I), area_type > tarjan_set_type;
-	tarjan_set_type area_closing(input.exact());
-	return area_closing.get_comptute(area_type(area) , Ng, true);
-      }
-
+      xxx_closing_decl(area);
 
       /*=processing area_opening
        * ns: morpho
@@ -85,21 +180,27 @@ namespace oln {
        * exi: lena256.pgm
        * exo: out.pgm
        =*/
-      template<class I, class N>
-      oln_concrete_type(I) 
-	area_opening(const abstract::non_vectorial_image<I>& input,
-		     const abstract::neighborhood<N>& Ng,
-		     const unsigned int area)
-      {
-	typedef T_attribute<unsigned int> area_type;
+      xxx_opening_decl(area);
 
-	typedef tarjan::tarjan_set<oln_concrete_type(I), T_attribute<unsigned int> > tarjan_set_type;
-	tarjan_set_type area_closing(input.exact());
-	return area_closing.get_comptute(area_type(area) , Ng, false);
-      }
+      xxx_opening_decl(volume);
+      xxx_closing_decl(volume);
+      xxx_opening_decl(height);
+      xxx_closing_decl(height);
+      xxx_opening_decl(maxvalue);
+      xxx_closing_decl(maxvalue);
+      xxx_opening_decl(minvalue);
+      xxx_closing_decl(minvalue);
+      xxx_opening_im_decl(disk);
+      xxx_closing_im_decl(disk);
+      xxx_opening_im_decl(dist);
+      xxx_closing_im_decl(dist);
+      xxx_closing_im_decl(square);
+      xxx_opening_im_decl(square);
+      xxx_closing_im_decl(rectangle);
+      xxx_opening_im_decl(rectangle);
 
-    }
-  }
-}
+    } // !fast
+  } // !morpho
+} // !oln
 
 #endif

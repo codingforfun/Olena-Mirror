@@ -89,7 +89,7 @@ namespace ntg {
     `----------------*/
 
     template <unsigned N, class T, class Self>
-    struct typetraits<vec<N, T, Self> >
+    struct typetraits<vec<N, T, Self> > : public typetraits<vect_value<vec<N, T, Self> > >
     {
       enum { nb_comp = N };
 
@@ -105,6 +105,23 @@ namespace ntg {
       typedef self				 base_type;
       typedef T					 storage_type[N];
       typedef typename typetraits<T>::cumul_type cumul_type[N];
+
+      static const self &sup()
+      {
+	static self tmp = mkSup();
+
+	return tmp;
+      };
+
+    protected:
+      static self mkSup()
+      {
+	self tmp;
+
+	for (unsigned i = 0; i < N; ++i)
+	  tmp[i] = ntg_sup_val(T);
+	return tmp;
+      };
     };
 
   } // end of internal.
@@ -114,7 +131,7 @@ namespace ntg {
   `----------*/
 
   template <unsigned N, class T, class E>
-  class vec : 
+  class vec :
     public vect_value<typename mlc::exact_vt<vec<N, T, mlc::final>, E>::ret>
   {
   public :
@@ -186,7 +203,7 @@ namespace ntg {
     `--------------*/
 
     template <unsigned N, class T, class E>
-    class optraits<vec<N, T, E> > : public optraits_vector<vec<N, T, E> >
+    class optraits<vec<N, T, E> > : public optraits<vect_value<vec<N, T, E> > >
     {
       typedef vec<N, T, E> self;
       typedef ntgi_storage_type(self) storage_type_;
@@ -225,7 +242,7 @@ namespace ntg {
       // division
 
       template <class T1, class T2>
-      inline static 
+      inline static
       ntg_return_type(div, T1, T2)
       div(const T1& lhs, const T2& rhs)
       {
@@ -257,8 +274,8 @@ namespace ntg {
       // dot-product
       template <unsigned M, class T1, class T2>
       inline static typename
-      internal::deduce_from_traits<internal::operator_times, 
-				   vec<M, T1>, 
+      internal::deduce_from_traits<internal::operator_times,
+				   vec<M, T1>,
 				   vec<M, T2> >::ret
       times(const vec<M, T1>& lhs, const vec<M, T2>& rhs)
       {

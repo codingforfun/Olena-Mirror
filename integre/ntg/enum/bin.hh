@@ -49,7 +49,7 @@ namespace ntg {
     `----------------*/
 
     template <>
-    struct typetraits<bin>
+    struct typetraits<bin> : typetraits<enum_value<bin> >
     {
       typedef binary			abstract_type;
       typedef bin			self;
@@ -105,14 +105,14 @@ namespace ntg {
     bin (const real_value<T>& val)
     {
       ntg_assert(val < 2);
-      this->val_ = val;
+      this->val_ = val.val();
     }
     template <class T>
     bin&
     operator=(const real_value<T>& val)
     {
       ntg_assert(val < 2);
-      this->val_ = val;
+      this->val_ = val.val();
       return *this;
     }
 
@@ -133,7 +133,7 @@ namespace ntg {
     `--------------*/
   
     template <>
-    struct optraits<bin> : public optraits_enum<bin>
+    struct optraits<bin> : public optraits<enum_value<bin> >
     {
     private:
       typedef typetraits<bin>::storage_type storage_type_;

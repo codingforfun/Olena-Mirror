@@ -1,3 +1,247 @@
+2004-02-24  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* oln/morpho/attribute_closing_opening.hh: Add comments.
+	* oln/core/abstract/behavior.hh: Likewise.
+	* oln/core/behavior.hh: Likewise.
+
+2004-02-16  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* tests/morpho/tests/attribute: Fix function call problems.
+	* tests/morpho/tests/attr_op_cl: Add attribute opening/closing
+	tests.
+	* oln/morpho/attribute_closing_opening_map.hh: Add slow
+	namespace. Correct type problems.
+	* oln/morpho/attribute_closing_opening_map.hxx: Likewise.
+	* oln/morpho/attributes.hh: Fix bugs.
+	* oln/morpho/attribute_union_find.hh: Add fast namespace.
+	* oln/morpho/attribute_closing_opening.hh: Likewise.
+
+2004-02-10  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* oln/core/abstract/image.hh: Remove macro oln_neighb_type.
+	* oln/core/abstract/neighborhood.hh: Add macro oln_neighb_type.
+	* oln/core/utils/histogram.hh: Add a FIXME.
+
+2004-02-10  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* oln/morpho/attribute_closing_opening_map.hh: Add file.
+	Attribute closing and opening using std::map.
+	* oln/morpho/attribute_closing_opening_map.hxx: Add file.
+	* oln/utils/special_points.hh: Add file. Point used as a state.
+	* tests/morpho/attributes: Add file. Add tests on attribute
+	closing and opening.
+
+2004-02-10  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* oln/morpho/attribute_closing_opening.hh: Make the
+	opening/closing choice at compile time.
+	* oln/morpho/attribute_union_find.hh: Likewise.
+
+	* oln/utils/histogram.hh: Add a distrib sort functor.
+
+	* oln/core/abstract/behavior.hh: Add behavior hierarchy (abstract
+	part).
+	* oln/core/behavior.hh: Add behavior hierarchy content.
+
+	* oln/morpho/attributes.hh: Correct 'ifndef' macros.
+
+	* tests/convol/tests/uniform_gauss: Improve tests.
+
+	* oln/convol/fast_gaussian.hh: Make the gaussian take care of the
+	behavior hierarchy.
+	* oln/convol/fast_gaussian.hxx: Likewise.
+
+2004-02-09  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* oln/morpho/attributes.hh: Add new attributes. Correct the olders.
+
+	* oln/morpho/attribute_union_find.hh: Change lambda type from ref
+	to pointer.
+	* oln/morpho/attribute_closing_opening.hh: Fix some argument
+	types. Add new declarations.
+
+2004-02-06  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* oln/morpho/attributes.hh: Add file. Add new atributes.
+	* oln/morpho/attribute_union_find.hh: Correct genericity errors.
+	* oln/morpho/attribute_closing_opening.hh: Add some prototypes for
+	attribute opening/closing.
+
+	* oln/utils/histogram.hh: Add comments.
+
+2004-02-05  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* oln/utils/histogram.hh: Inherit from mlc_hierarchy::any.
+	* value_to_point.hh: Inherit from conversion_from_type_to_type.
+	* tests/utils/tests/histogram: Add namespace.
+	* tests/morpho/tests/area: Add file.
+
+2004-02-02  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* oln/utils/histogram.hh: Add revert sort.
+	* tests/utils/tests/histogram: Add tests.
+
+2004-02-30  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* oln/utils/histogram.hh: Store histograms in images. Support
+	histograms of non-scalar types (ie. rgb_8). Fix bugs.
+	* oln/convert/value_to_point: Add file. Add conversions from values
+	to points.
+	* tests/utils/tests/histogram: Add tests.
+	* oln/core/image.hh: Add dim_traits.
+	* oln/core/image1.hh: Likewise.
+	* oln/core/image2.hh: Likewise.
+	* oln/core/image3.hh: Likewise.
+	* Makefile.am: Include convert/value_to_point.hh
+
+
+2004-01-30  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* tests/convol/tests/uniform_gauss:  Add test to make sure
+	fast_gaussian take care of the borders.
+	* tests/convol/tests/uniform2_gauss: Add test to make sure
+	fast_gaussian take care of the borders.
+
+2004-01-28  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* oln/convol/fast_gaussian.hxx: Make the gaussian take care of the
+	borders.
+
+2004-01-23  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* oln/topo/dmap.hxx: Fix type of a zero value.
+
+2004-01-23  Astrid Wang  <astrid@lrde.epita.fr>
+
+	* oln/core/abstract/dpoint.hh: Fix headers. Add member function
+	sqr_norm2().
+
+2004-01-22  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* oln/convert/nrgbhsi.hh: Remove file.
+	* oln/convert/nrgbhsl.hh: Remove file.
+	* oln/convert/nrgbhsv.h: Remove file.
+	* oln/convert/nrgbyiq.hh: Remove file.
+	* oln/convert/nrgbyuv.hh: Remove file.
+
+	* oln/convert/rgbyiq.hh: Add file. Add RGB to YIQ conversion code.
+	* oln/convert/rgbyuv.hh: Add file. Add RGB to YUV conversion code.
+	* oln/convert/rgbhsi.hh: Add file. Add RGB to HSI conversion code.
+	* oln/convert/rgbhsl.hh: Add file. Add RGB to HSL conversion code.
+	* oln/convert/rgbhsv.hh: Add file. Add RGB to HSV conversion code.
+
+	* Makefile.am: Make new file Referenced.
+
+	* tests/convert/Makefile.am: Remove tests on obsolete
+	functions. Add test on new functions.
+
+	* oln/convert/rgbxyz.hh: Correct the RGB to XYZ conversion.
+	* oln/convert/nrgbxyz.hh: Make it obsolete.
+
+2004-01-21  Astrid Wang  <astrid@lrde.epita.fr>
+
+	* oln/snakes/snakes_base.hh,
+	* oln/snakes/snakes_base.hxx,
+	* oln/snakes/segment.hh,
+	* oln/snakes/segment.hxx,
+	* oln/snakes/node.hh,
+	* oln/snakes/node.hxx,
+	* oln/snakes/energies.hh,
+	* oln/snakes/energies.hxx,
+	* oln/snakes/greedy.hh,
+	* oln/snakes/greedy.hxx: New.
+
+2004-01-19  Astrid Wang  <astrid@lrde.epita.fr>
+
+	* oln/core/point2d.hxx: Fix member function minus().
+	* oln/core/abstract/dpoint.hh: Add member function norm2().
+
+2003-12-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/core/Makefile.am: Put fftw libraries in LDADD instead of
+	LDFLAGS.
+	* tests/transforms/Makefile.am: Likewise.
+
+2003-11-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/Makefile.am: Include convert/cast.hh.
+
+2003-11-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/utils/timer.hh: Improve. Can give the elapsed time since the
+	last resume.
+	* tests/utils/tests/timer: Adjust consequently.
+
+	* tests/morpho/tests/overall_benchs: New test.
+	* tests/core/tests/benchs: New test.
+
+2003-11-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/arith/internal/opdecls.hh: Add missing default functors.
+	* oln/level/cc.hh: Use default arithmetic functor.
+
+	* oln/convert/cast.hh: New.
+	* oln/convert/basics.hh: Include it.
+
+2003-11-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/io/pnm_write_2d.hh: Store in the header the maximal value of
+	the encoding, not of the actual image values.
+
+	* tests/io/tests/headers: New test.
+	* tests/io/Makefile.am: Remove headers.pgm.
+
+2003-11-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/core/abstract/image_with_type_with_dim.hh
+	(image_with_type_with_dim_swith): Select data_type_image_with_dim
+	by default, not data_type_image.
+
+	* tests/core/tests/without_ntg:
+	New test.
+
+2003-10-14  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/core/dpoint1d.hh, oln/core/dpoint2d.hh,
+	* oln/core/dpoint3d.hh, oln/core/abstract/iter1d.hh,
+	* oln/core/abstract/iter2d.hh, oln/core/abstract/iter3d.hh,
+	* oln/core/point1d.hh, oln/core/point2d.hh, oln/core/point3d.hh,
+	* oln/core/impl/image_array.hh, oln/core/impl/image_array3d.hh,
+	* oln/core/impl/image_array2d.hh, oln/core/impl/image_array1d.h:
+	Don't use typedefs with the friend specifier.
+
+2003-10-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/io/readable.hh: Add default constructors for SWIG.
+
+2003-10-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/utils/histogram.hh: Temporary fix for ntg::bin type.
+
+2003-10-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/arith/internal/opdecls.hh: Support builtin types. Document.
+	* oln/arith/ops.hh: Support builtin types.
+
+	* oln/utils/histogram.hh: Support builtin types.
+
+	* oln/convert/nrgbhsl.hh: Use ntg::{min,max} instead of
+	std::{min,max}.
+	* oln/core/box.hxx: Likewise.
+	* oln/morpho/reconstruction.hh: Likewise.
+
+	* oln/morpho/geodesic_dilation.hh: Force the output type of
+	arith::min. Use ntg::min instead of std::min.
+	* oln/morpho/geodesic_erosion.hh: Likewise with s/min/max/.
+
+2003-10-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/morpho/tests/builtin_types: New test.
+
+2003-09-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/io/pnm_write_2d.hh: Fix int_u32 images writing.
+
 2003-09-09  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* oln/level/threshold.hh: Correct the threshold construtor.

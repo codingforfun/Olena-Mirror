@@ -33,7 +33,7 @@
 */
 
 # include <ntg/config/system.hh>
-# include <ntg/real/optraits_scalar.hh>
+# include <ntg/real/optraits_real.hh>
 # include <ntg/real/typetraits_builtin_int.hh>
 
 // FIXME: this should be included by system.hh.
@@ -47,7 +47,7 @@
 
 # define OPTRAITS_BUILTIN_INT_U(Name, Max)			\
   template <>							\
-  struct optraits<Name> : public optraits_int_u<Name>		\
+  struct optraits<Name> : public optraits<uint_value<Name> >	\
   {								\
     static Name max() { return Max; }				\
     static std::string name() { return std::string(#Name); }	\
@@ -55,7 +55,7 @@
 
 # define OPTRAITS_BUILTIN_INT_S(Name, Min, Max)			\
   template <>							\
-  struct optraits<Name> : public optraits_int_s<Name>		\
+  struct optraits<Name> : public optraits<sint_value<Name> >	\
   {								\
     static Name min() { return Min; }				\
     static Name max() { return Max; }				\

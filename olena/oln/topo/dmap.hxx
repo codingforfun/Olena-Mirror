@@ -240,7 +240,7 @@ namespace oln {
       {
 	typename image2d<V>::iter_type p(input);
 	for (p = begin; p != end; ++p)
-	  if (input[p] != ntg_zero_val(T))
+	  if (input[p] != ntg_zero_val(V))
 	    {
 	      imap_[p] = T(0);
 	      nearest_point_map[p] = p;

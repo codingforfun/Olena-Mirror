@@ -1,3 +1,5 @@
+//							            -*- c++ -*-
+
 #include <oln/basics2d.hh>
 
 #include <oln/morpho/opening.hh>
@@ -21,6 +23,10 @@ using namespace ntg;
 	std::cout << "FAIL" << std::endl;	\
 	fail = true;				\
       }
+
+// FIXME: reference images are several times computed twice, this
+// should be factorized! For example,
+// morpho::sure::regional_minima(lena, ...) is computed twice.
 
 bool
 check()

@@ -48,6 +48,9 @@ namespace oln {
 
   namespace convert {
 
+    /*!
+    ** obsolete a composition should be performed with nrgb->rgb and rgb->xyz
+    */
     template <unsigned inbits, unsigned outbits>
     struct f_nrgb_to_xyz
       : public abstract::color_conversion<3, inbits, nrgb_traits,
@@ -60,7 +63,7 @@ namespace oln {
 	vec<3, float> out;
 	out[xyz_X] =
 	  0.606734 * in[nrgb_R] + 0.173564 * in[nrgb_G] + 0.200112 * in[nrgb_B];
-	
+
 	out[xyz_Y] =
 	  0.298839 * in[nrgb_R] + 0.586811 * in[nrgb_G] + 0.114350 * in[nrgb_B];
 
@@ -70,11 +73,11 @@ namespace oln {
 	return out;
       }
 
-      static std::string 
+      static std::string
       name()
-      { 
+      {
 	std::ostringstream s;
-	s << "f_nrgb_to_xyz<" << inbits << ", " << outbits << '>'; 
+	s << "f_nrgb_to_xyz<" << inbits << ", " << outbits << '>';
 	s.str();
       }
     };
@@ -88,6 +91,9 @@ namespace oln {
       return f(v);
     }
 
+    /*!
+    ** obsolete a composition should be performed with xyz->rgb and rgb->nrgb
+    */
     template<unsigned inbits, unsigned outbits>
     struct f_xyz_to_nrgb
       : public abstract::color_conversion<3, inbits, xyz_traits,
@@ -107,11 +113,11 @@ namespace oln {
 	return out;
       }
 
-      static std::string 
+      static std::string
       name()
-      { 
+      {
 	std::ostringstream s;
-	s << "f_xyz_to_nrgb<" << inbits << ", " << outbits << '>'; 
+	s << "f_xyz_to_nrgb<" << inbits << ", " << outbits << '>';
 	s.str();
       }
     };

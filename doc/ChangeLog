@@ -1,18 +1,30 @@
-2003-09-29  Giovanni Palma  <palma_g@headache>
+2004-02-24  Giovanni Palma  <giovanni@lrde.epita.fr>
 
-	* ref/exdoc.pl: Correct the regexps.
-	* ref/exdoc.config: Add comment style entry.
+	* ref/img_conv.pl: Add script for image conversion.
+	* ref/exdoc.mk.in: Add exdoc config file.
+	* ref/exdoc.config.in: Likewise.
+	* ref/doxygen.config.in: Add doxygen config file.
+	* ref/exdoc.pl: Add script to extract code from comments.
+	* ref/Makefile.am: Make Makefile use new doc tools.
 
-2003-09-29  Astrid Wang  <astrid@lrde.epita.fr>
+2004-01-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* ref/exdoc.pl,
-	* ref/exdoc.config,
-	* ref/exdoc.mk: New.
-	* ref/doxygen.config.in: New.
+	* ref/integre-ref.tex: Update.
 
-2003-09-16  Astrid Wang  <astrid@lrde.epita.fr>
+	* demo/tour.cc (main): Check i/o errors.
 
-	* ref/doxygen.config.in: New file.
+2003-12-08  David Lesage  <david@lrde.epita.fr>
+
+	Add Dia UML hierarchies.
+
+	* hierarchies/,
+	* hierarchies/structelt.dia,
+	* hierarchies/point.dia,
+	* hierarchies/new_olena_model.dia,
+	* hierarchies/misc.dia,
+	* hierarchies/labels.dia,
+	* hierarchies/iter.dia,
+	* hierarchies/implementation.dia: New.
 
 2003-08-26  Geoffroy Fouquier  <Geoffroy.Fouquier@lrde.epita.fr>
 

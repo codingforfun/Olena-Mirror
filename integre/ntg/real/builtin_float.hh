@@ -29,11 +29,11 @@
 # define NTG_REAL_BUILTIN_FLOAT_HH
 
 # include <ntg/config/system.hh>
-# include <ntg/core/behavior.hh>
+# include <ntg/real/behavior.hh>
 # include <ntg/core/internal/global_ops_traits.hh>
 # include <ntg/core/internal/traits.hh>
 # include <ntg/real/builtin_properties.hh>
-# include <ntg/real/optraits_scalar.hh>
+# include <ntg/real/optraits_real.hh>
 # include <ntg/core/predecls.hh>
 
 # include <mlc/cmp.hh>
@@ -47,16 +47,17 @@ namespace ntg {
     `------------------*/
 
     template <>
-    struct typetraits<float>
+    struct typetraits<float> : public typetraits<float_value<float> >
     {
       typedef float	self;
       typedef decimal	abstract_type;
       typedef self	ntg_type;
 
       ntg_build_value_type(float_value<E>);
-      
+
       typedef optraits<self>	optraits_type;
-      typedef unsafe::get<self>	behavior_type;     
+      typedef unsafe::get<self>	behavior_type;
+      typedef unsafe		abstract_behavior_type;
 
       typedef self base_type;
       typedef self storage_type;
@@ -76,7 +77,7 @@ namespace ntg {
     `-------------------*/
 
     template <>
-    struct typetraits<double>
+    struct typetraits<double> : public typetraits<float_value<double> >
     {
       typedef double	self;
       typedef decimal	abstract_type;
@@ -86,6 +87,7 @@ namespace ntg {
 
       typedef optraits<self>	optraits_type;
       typedef unsafe::get<self> behavior_type;
+      typedef unsafe		abstract_behavior_type;
 
       typedef self base_type;
       typedef self storage_type;
@@ -105,7 +107,7 @@ namespace ntg {
     `----------------*/
 
     template <>
-    struct optraits<float> : public optraits_float<float>
+    struct optraits<float> : public optraits<float_value<float> >
     {
     private:
       typedef float self;
@@ -147,7 +149,7 @@ namespace ntg {
     // So when using cycle<float,..> + float, it searches
     // operator_traits<operator_plus, float,float>
     template <>
-    struct operator_traits<operator_plus, float, float> 
+    struct operator_traits<operator_plus, float, float>
       : all_float_traits {};
 
     //
@@ -251,7 +253,7 @@ namespace ntg {
     `-----------------*/
 
     template <>
-    struct optraits<double> : public optraits_float<double>
+    struct optraits<double> : public optraits<float_value<double> >
     {
     private:
       // shortcuts
@@ -397,7 +399,7 @@ namespace ntg {
     template <>
     struct operator_traits<operator_max, double, float>
       : all_double_traits {};
-   
+
     //
     // Comparison
     //

@@ -2,6 +2,10 @@
 
 %include exception.i
 
+%{
+#include <exception>
+%}
+
 // Olena uses classes that derive from std::exception. Declare it.
 namespace std { class exception { public: const char *what() const; }; }
 

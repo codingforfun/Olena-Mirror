@@ -1,6 +1,29 @@
-2003-09-29  Astrid Wang  <astrid@lrde.epita.fr>
+2004-02-24  Giovanni Palma  <giovanni@lrde.epita.fr>
 
-	* configure.ac: Check for doxygen.
+	* NEWS: Describe new way to document.
+	* configure.ac: Add configuration files for doc.
+
+2004-02-10  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* NEWS: Describe behavior hierarchy.
+
+2004-02-09  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* NEWS: Describe color and attributes improvement.
+
+2003-09-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* config/oln-local.m4: Fix swig detection.
+	* configure.ac: Stop if ruby is not found. Stop if swig is not
+	found.
+
+2003-09-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Generate makefiles for swilena tests.
+
+2003-09-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Add ruby support.
 
 2003-09-15  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 

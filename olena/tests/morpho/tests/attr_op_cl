@@ -1,0 +1,77 @@
+//								    -*- c++ -*-
+
+#include <oln/basics2d.hh>
+#include <oln/morpho/attribute_closing_opening.hh>
+#include <oln/morpho/attribute_closing_opening_map.hh>
+#include <oln/level/compare.hh>
+#include <ntg/all.hh>
+
+#include "check.hh"
+#include "data.hh"
+
+using namespace oln;
+using namespace ntg;
+
+#define OK_OR_FAIL				\
+      std::cout << "OK" << std::endl;		\
+    else					\
+      {						\
+	std::cout << "FAIL" << std::endl;	\
+	fail = true;				\
+      }
+
+# define test_op_cl(T, A, im, lambda) \
+{ \
+  bool	last_fail = fail; \
+  fail = false; \
+  { \
+    image2d<T> im2 = oln::morpho::slow::A##_opening(im, neighb_c4(), lambda); \
+    image2d<T> im1 = oln::morpho::fast::A##_opening(im, neighb_c4(), lambda); \
+    image2d<T>::iter_type	it(lena); \
+    std::cout << #A << " opening: "; \
+    for_all(it) \
+      { \
+	if (im1[it] != im2[it]) \
+          fail = true; \
+      } \
+    if (!fail) \
+      OK_OR_FAIL \
+  } \
+  { \
+    image2d<T> im2 = oln::morpho::slow::A##_closing(im, neighb_c4(), lambda); \
+    image2d<T> im1 = oln::morpho::fast::A##_closing(im, neighb_c4(), lambda); \
+    image2d<T>::iter_type	it(lena); \
+    std::cout << #A <<" closing: "; \
+    for_all(it) \
+      { \
+	if (im1[it] != im2[it]) \
+          fail = true; \
+      } \
+    if (!fail) \
+      OK_OR_FAIL \
+  } \
+ fail = last_fail || fail; \
+}
+
+
+bool
+check()
+{
+  bool fail = false;
+
+  image2d<int_u8> lena(rdata("lena256.pgm"));
+  std::cout << std::endl;
+  test_op_cl(int_u8, area, lena, 200)
+  test_op_cl(int_u8, volume, lena, 200)
+  test_op_cl(int_u8, height, lena, 4)
+  test_op_cl(int_u8, maxvalue, lena, 100)
+  test_op_cl(int_u8, minvalue, lena, 100)
+  test_op_cl(int_u8, dist, lena, 100)
+  test_op_cl(int_u8, disk, lena, 100)
+  test_op_cl(int_u8, square, lena, 50)
+
+  ntg::vec<2, unsigned, mlc::final>	lambda;
+  test_op_cl(int_u8, rectangle, lena, lambda)
+
+  return fail;
+}

@@ -6,7 +6,8 @@ EXTRA_DIST += image_print.sh
 check_PROGRAMS = multiple_sources
 
 multiple_sources_SOURCES = multiple_sources_1.cc multiple_sources_2.cc
-multiple_sources_LDFLAGS = $(AM_LDFLAGS) $(FFTW_LDFLAGS)
+multiple_sources_LDFLAGS = $(AM_LDFLAGS)
+multiple_sources_LDADD = $(LDADD) $(FFTW_LDFLAGS)
 multiple_sources_CXXFLAGS = $(AM_CXXFLAGS) $(FFTW_CFLAGS)
 
 check-image-print:

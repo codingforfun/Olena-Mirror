@@ -1,0 +1,197 @@
+//								    -*- c++ -*-
+
+#include <oln/basics2d.hh>
+#include <oln/basics1d.hh>
+#include <oln/morpho/attribute_closing_opening.hh>
+#include <ntg/all.hh>
+
+#include "check.hh"
+#include "data.hh"
+
+using namespace oln;
+using namespace ntg;
+
+#define OK_OR_FAIL				\
+      std::cout << "OK" << std::endl;		\
+    else					\
+      {						\
+	std::cout << "FAIL" << std::endl;	\
+	fail = true;				\
+      }
+
+bool
+check_opening1d()
+{
+  bool fail(false);
+
+  image1d<int_u8> im(11);
+  image1d<int_u8>::iter_type it(im);
+  for_all(it)
+    im[it] = ntg_min_val(int_u8);
+  im(0) =      0;
+  im(1) =     1 ;
+  im(2) =     1 ;
+  im(3) =      0;
+  im(4) =     1 ;
+  im(5) =    2  ;
+  im(6) =   3   ;
+  im(7) =   3   ;
+  im(8) = 5     ;
+  im(9) =     1 ;
+  im(10) =     0;
+
+  image1d<int_u8> im2 =
+    morpho::tarjan::area_opening(im, neighb_c2(), 2);
+
+  fail = fail ||
+    im2(0) !=      0 ||
+    im2(1) !=     1  ||
+    im2(2) !=     1  ||
+    im2(3) !=      0 ||
+    im2(4) !=     1  ||
+    im2(5) !=    2   ||
+    im2(6) !=   3    ||
+    im2(7) !=   3    ||
+    im2(8) !=   3    ||
+    im2(9) !=     1  ||
+    im2(10)!=      0;
+
+  image1d<int_u8> im3 =
+    morpho::tarjan::area_opening(im, neighb_c2(), 3);
+  fail = fail ||
+    im3(0) !=      0 ||
+    im3(1) !=      0 ||
+    im3(2) !=      0 ||
+    im3(3) !=      0 ||
+    im3(4) !=     1  ||
+    im3(5) !=    2   ||
+    im3(6) !=   3    ||
+    im3(7) !=   3    ||
+    im3(8) !=   3    ||
+    im3(9) !=     1  ||
+    im3(10)!=      0;
+
+  image1d<int_u8> im4 =
+    morpho::tarjan::area_opening(im, neighb_c2(), 4);
+  fail = fail ||
+    im4(0) !=      0 ||
+    im4(1) !=      0 ||
+    im4(2) !=      0 ||
+    im4(3) !=      0 ||
+    im4(4) !=     1  ||
+    im4(5) !=    2   ||
+    im4(6) !=    2   ||
+    im4(7) !=    2   ||
+    im4(8) !=    2   ||
+    im4(9) !=     1  ||
+    im4(10)!=      0;
+  return fail;
+}
+
+
+bool
+check_opening1d_s()
+{
+  bool fail(false);
+
+  image1d<int_s<3> > im(11);
+  image1d<int_s<3> >::iter_type it(im);
+  for_all(it)
+    im[it] = ntg_min_val(int_s<3> );
+  im(0) =      -4;
+  im(1) =     -2 ;
+  im(2) =     -2 ;
+  im(3) =      -4;
+  im(4) =     -2 ;
+  im(5) =    0  ;
+  im(6) =   2   ;
+  im(7) =   2   ;
+  im(8) = 3     ;
+  im(9) =     -2 ;
+  im(10) =     -4;
+
+  image1d<int_s<3> > im2 =
+    morpho::tarjan::area_opening(im, neighb_c2(), 2);
+
+  fail = fail ||
+    im2(0) !=       -4 ||
+    im2(1) !=     -2  ||
+    im2(2) !=     -2  ||
+    im2(3) !=       -4 ||
+    im2(4) !=     -2  ||
+    im2(5) !=    0   ||
+    im2(6) !=   2    ||
+    im2(7) !=   2    ||
+    im2(8) !=   2    ||
+    im2(9) !=     -2  ||
+    im2(10)!=      -4;
+
+  image1d<int_s<3> > im3 =
+    morpho::tarjan::area_opening(im, neighb_c2(), 3);
+  fail = fail ||
+    im3(0) !=      -4 ||
+    im3(1) !=      -4 ||
+    im3(2) !=      -4 ||
+    im3(3) !=      -4 ||
+    im3(4) !=     -2  ||
+    im3(5) !=    0   ||
+    im3(6) !=   2    ||
+    im3(7) !=   2    ||
+    im3(8) !=   2    ||
+    im3(9) !=     -2  ||
+    im3(10)!=      -4;
+
+  image1d<int_s<3> > im4 =
+    morpho::tarjan::area_opening(im, neighb_c2(), 4);
+  fail = fail ||
+    im4(0) !=      -4 ||
+    im4(1) !=      -4 ||
+    im4(2) !=      -4 ||
+    im4(3) !=      -4 ||
+    im4(4) !=     -2  ||
+    im4(5) !=    0   ||
+    im4(6) !=    0   ||
+    im4(7) !=    0   ||
+    im4(8) !=    0   ||
+    im4(9) !=     -2  ||
+    im4(10)!=      -4;
+
+  return fail;
+}
+
+bool
+check_lena()
+{
+  bool fail(false);
+
+ image2d<int_u8> lena = load(rdata("lena.pgm"));
+ image2d<int_u8> lena5 = morpho::tarjan::area_closing(lena, neighb_c8(), 100);
+
+ unsigned l = 0;
+ image2d<int_u8>::iter_type it_l(lena5);
+ for_all(it_l)
+   l += lena5[it_l];
+ fail = fail ||
+   l != 31472398;
+ return fail;
+}
+
+bool
+check()
+{
+  bool fail = false;
+
+  std::cout << "area opening 1d ... " << std::flush;
+  if (check_opening1d() == false)
+    OK_OR_FAIL;
+
+    std::cout << "area opening with int_s<3> ... " << std::flush;
+  if (check_opening1d_s() == false)
+    OK_OR_FAIL;
+
+  std::cout << "area closing 2d on lena.pgm ... " << std::flush;
+  if (check_lena() == false)
+    OK_OR_FAIL;
+
+  return fail;
+}

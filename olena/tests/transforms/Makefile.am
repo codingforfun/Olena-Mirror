@@ -1,6 +1,6 @@
 include ../check/Makefile.runtests
 
-LDFLAGS_RUNTESTS += $(FFTW_LDFLAGS)
+LDADD_RUNTESTS += $(FFTW_LDFLAGS)
 CXXFLAGS_RUNTESTS += $(FFTW_CFLAGS)
 
 CLEANFILES += fft_trans_clipped.pgm \

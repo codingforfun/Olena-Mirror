@@ -28,7 +28,7 @@
 #ifndef NTG_REAL_TYPETRAITS_BUILTIN_INT_HH
 # define NTG_REAL_TYPETRAITS_BUILTIN_INT_HH
 
-# include <ntg/core/behavior.hh>
+# include <ntg/real/behavior.hh>
 # include <ntg/core/predecls.hh>
 # include <ntg/core/type_traits.hh>
 
@@ -36,9 +36,9 @@
 | macros |
 `-------*/
 
-# define TYPETRAITS_BUILTIN_INT(Name)						\
+# define TYPETRAITS_BUILTIN_INT(Name, Value)					\
   template<>									\
-  struct typetraits<Name>							\
+  struct typetraits<Name> : public typetraits<Value<Name> >			\
   {										\
     typedef Name self;								\
     typedef builtin::to_ntg<Name>::ret ntg_type;				\
@@ -51,6 +51,7 @@
 										\
     typedef optraits<self> optraits;						\
     typedef unsafe::get<self> behavior_type;					\
+    typedef unsafe abstract_behavior_type;					\
 										\
     typedef self				       base_type;		\
     typedef self				       storage_type;		\
@@ -152,18 +153,18 @@ namespace ntg {
 
   namespace internal {
 
-    TYPETRAITS_BUILTIN_INT(unsigned long)
-    TYPETRAITS_BUILTIN_INT(  signed long)
+    TYPETRAITS_BUILTIN_INT(unsigned long, uint_value)
+    TYPETRAITS_BUILTIN_INT(signed long, sint_value)
     
-    TYPETRAITS_BUILTIN_INT(unsigned int)
-    TYPETRAITS_BUILTIN_INT(  signed int)
+    TYPETRAITS_BUILTIN_INT(unsigned int, uint_value)
+    TYPETRAITS_BUILTIN_INT(signed int, sint_value)
     
-    TYPETRAITS_BUILTIN_INT(unsigned short)
-    TYPETRAITS_BUILTIN_INT(  signed short)
+    TYPETRAITS_BUILTIN_INT(unsigned short, uint_value)
+    TYPETRAITS_BUILTIN_INT(signed short, sint_value)
 
-    TYPETRAITS_BUILTIN_INT(unsigned char)
-    TYPETRAITS_BUILTIN_INT(  signed char)
-    TYPETRAITS_BUILTIN_INT(         char)
+    TYPETRAITS_BUILTIN_INT(unsigned char, uint_value)
+    TYPETRAITS_BUILTIN_INT(signed char, sint_value)
+    TYPETRAITS_BUILTIN_INT(char, sint_value)
 
   } // end of internal.
 

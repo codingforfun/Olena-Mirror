@@ -114,7 +114,7 @@ namespace oln {
   inline point2d
   point2d::minus() const
   {
-    point2d p(row(), col());
+    point2d p(-row(), -col());
     return p;
   }
 

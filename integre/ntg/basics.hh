@@ -38,7 +38,7 @@
 # include <ntg/core/predecls.hh>
 
 # include <ntg/core/abstract_hierarchy.hh>
-# include <ntg/core/behavior.hh>
+# include <ntg/real/behavior.hh>
 # include <ntg/core/contract.hh>
 # include <ntg/core/interval.hh>
 # include <ntg/real/builtin_properties.hh>

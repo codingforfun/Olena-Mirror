@@ -238,7 +238,8 @@ AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
 ## if test -z "$DOXYGEN"; then
 ##   AC_MSG_WARN([`doxygen' not found -- `doxygen' must be installed to generate the documentation])
 AC_CONFIG_FILES([doc/ref/doxygen.config
-		 doc/ref/configfile.in])
+		 doc/ref/exdoc.config
+		 doc/ref/exdoc.mk])
 ## fi
 
 ### The documentation tree is both a component...
@@ -360,6 +361,12 @@ AC_CONFIG_FILES([doc/ref/doxygen.config
 
       AC_CHECK_SWIG13 dnl definition in oln-local.m4
 
+     # We cannot enable swilena without swig because we need the dynamic 
+     # library (swig{py,rb}).
+     if test "x$oln_cv_recent_swig" != "xyes"; then
+       AC_MSG_ERROR([You need swig >= 1.3 to compile swilena. You can disable swilena by specifying --without-swilena to configure.])
+     fi
+
       AC_ARG_VAR([DVIPS], [program to make Postscript from TeX DVI files])
       AC_CHECK_PROGS([DVIPS], [dvips], [$am_aux_dir/missing dvips])
       AC_ARG_VAR([TEXI2DVI], [program to create DVI from Texinfo files])
@@ -370,7 +377,8 @@ AC_CONFIG_FILES([doc/ref/doxygen.config
                     [oln_cv_build_pylena],
                     [the Python interface to Olena],
                     [OLN_SWILENA],
-                    [tools/swilena/python/Makefile],
+                    [tools/swilena/python/Makefile
+		     tools/swilena/python/tests/Makefile],
       [
          AM_PATH_PYTHON([2.1])
 	 save_CPPFLAGS=$CPPFLAGS
@@ -383,10 +391,36 @@ AC_CONFIG_FILES([doc/ref/doxygen.config
 	 CPPFLAGS="$CPPFLAGS $PYTHON_CPPFLAGS"
          AC_CHECK_HEADERS([Python.h],,
 	                  AC_MSG_ERROR(
-			  [You need Python development files to compile the Python interface. Specify --with-python-includedir to set it manually or --without-swilena to disable it.]))
+			  [You need Python development files to compile the Python interface. Specify --with-python-includedir to set it manually or --without-pylena to disable it.]))
 
 	 CPPFLAGS=$save_CPPFLAGS
       ], [python])dnl End of OLN_COMPONENT([tools/swilena/python])
+
+      OLN_COMPONENT([tools/swilena/ruby],
+                    [rblena],
+                    [oln_cv_build_rblena],
+                    [the Ruby interface to Olena],
+                    [OLN_SWILENA],
+                    [tools/swilena/ruby/Makefile
+		     tools/swilena/ruby/tests/Makefile],
+      [
+         AC_CHECK_PROGS([RUBY], [ruby], [$am_aux_dir/missing ruby])
+	 if test "x$RUBY" = "x$am_aux_dir/missing ruby"; then
+	   AC_MSG_ERROR([You need ruby to compile the ruby interface. Specify --without-rblena to disable the ruby interface.])
+         fi
+
+	 AC_ARG_VAR([RUBY_CPPFLAGS], [Path to ruby.h])
+	 AC_ARG_WITH([ruby-includedir], [Include path for ruby.h], 
+	             [RUBY_CPPFLAGS="-I$withval"],
+                     [RUBY_CPPFLAGS="-I/usr/lib/ruby/1.6/i386-linux"])
+	
+	 CPPFLAGS="$CPPFLAGS $RUBY_CPPFLAGS"
+         AC_CHECK_HEADERS([ruby.h],,
+	                  AC_MSG_ERROR(
+			  [You need Ruby development files to compile the Ruby interface. Specify --with-ruby-includedir to set it manually or --without-rblena to disable it.]))
+
+	 CPPFLAGS=$save_CPPFLAGS
+      ], [ruby])dnl End of OLN_COMPONENT([tools/swilena/ruby])
 
     ])dnl End of OLN_COLLECTION([OLN_SWILENA])
     ], [swilena])dnl End of OLN_COMPONENT([tools/swilena])

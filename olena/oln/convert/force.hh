@@ -35,8 +35,6 @@
 namespace oln {
   namespace convert {
 
-    // FIXME: is this really useful with new types ?
-
     /* Like cast::force, but as a conversion functor.  */
     template<class Output, class Exact = mlc::final>
     struct force : public abstract::conversion_to_type< Output, typename mlc::exact_vt<force<Output, Exact>, Exact>::ret >

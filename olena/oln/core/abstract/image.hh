@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -74,63 +74,63 @@ namespace oln {
 
       enum { dim = image_traits<Exact>::dim };
 
-      const value_type& 
+      const value_type&
       operator[](const abstract::point<point_type>& p) const
       {
   	return this->exact().at(p.exact());
       }
 
-      value_type& 
+      value_type&
       operator[](const abstract::point<point_type>& p)
       {
 	return this->exact().at(p.exact());
       }
 
-      bool 
+      bool
       has_impl() const
       {
 	return this->exact().impl() != 0;
       }
 
-      exact_type 
+      exact_type
       clone() const
       {
 	return this->exact().clone_();
       }
 
-      bool 
+      bool
       hold(const abstract::point<point_type>& p) const
       {
 	assertion(has_impl());
 	return this->exact().impl()->hold(p.exact());
       }
 
-      const size_type& 
+      const size_type&
       size() const
       {
 	assertion(has_impl());
 	return this->exact().impl()->size();
       }
 
-      coord 
+      coord
       border() const
       {
 	return size().border();
       }
 
-      size_t 
+      size_t
       npoints() const
       {
 	return this->exact().npoints_();
       }
 
-      exact_type& 
+      exact_type&
       operator=(self_type rhs)
       {
 	return this->exact().assign(rhs.exact());
       }
 
-      static std::string 
+      static std::string
       name()
       {
 	return
@@ -140,29 +140,29 @@ namespace oln {
 
       // borders
 
-      void 
+      void
       border_set_width(coord new_border, bool copy_border = false) const
       {
 	precondition(new_border >= 0);
 	precondition(has_impl());
 	if (border() == new_border)
 	  return; // Nothing to do.
-	
+
 	const_cast<impl_type *>(this->exact().impl())->border_reallocate_and_copy(new_border, copy_border);
       }
 
-      void 
+      void
       border_adapt_width(coord min_border, bool copy_border =
 			 false) const
       {
 	precondition(min_border >= 0);
 	if (border() >= min_border)
 	  return;			// Don't shrink.
-	
+
 	this->exact().border_set_width(min_border, copy_border);
       }
 
-      void 
+      void
       border_adapt_copy(coord min_border) const
       {
 	border_adapt_width(min_border);
@@ -170,14 +170,14 @@ namespace oln {
       }
 
 
-      void 
+      void
       border_adapt_mirror(coord min_border) const
       {
 	border_adapt_width(min_border);
 	const_cast<impl_type *>(this->exact().impl())->border_mirror();
       }
 
-      void 
+      void
       border_adapt_assign(coord min_border, value_type val) const
       {
 	border_adapt_width(min_border);
@@ -187,8 +187,8 @@ namespace oln {
     protected:
       image()
       {}
-      
-      image(self_type& rhs) 
+
+      image(self_type& rhs)
       {};
     };
 
@@ -208,9 +208,6 @@ mlc_exact_type(Pointable)::point_type
 
 # define oln_dpoint_type(DPointable)		\
 mlc_exact_type(DPointable)::dpoint_type
-
-# define oln_neighb_type(Neighbable)		\
-typename Neighbable::neighb_type
 
 } // end of namespace oln
 

@@ -1,0 +1,44 @@
+//								    -*- c++ -*-
+
+#include <iostream>
+
+#include <oln/basics1d.hh>
+#include <oln/basics2d.hh>
+#include <oln/basics3d.hh>
+
+#include <oln/utils/timer.hh>
+
+#include <ntg/all.hh>
+
+using namespace oln;
+using namespace ntg;
+
+template <class I>
+void abstract_fill_image(abstract::image<I>& ima)
+{
+  oln_iter_type(I) p (ima.exact());
+  for_all(p)
+    ima[p] = p.row() + p.col();
+}
+
+template <class I>
+void concrete_fill_image(I& ima)
+{
+  oln_iter_type(I) p (ima);
+  for_all(p)
+    ima[p] = p.row() + p.col();
+}
+
+int main()
+{
+  oln::image2d<int_u32> ima(10000, 10000);
+  oln::utils::timer t;
+  t.start();
+  abstract_fill_image(ima);
+  t.stop();
+  std::cout << "With abstract: " << t.total_time() << std::endl;
+  t.restart();
+  concrete_fill_image(ima);
+  t.stop();
+  std::cout << "With concrete: " << t.total_time() << std::endl;
+}

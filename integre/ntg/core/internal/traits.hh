@@ -57,25 +57,10 @@ namespace ntg {
     {
       typedef data_type abstract_type;
     };
-    
+
     /*---------.
     | optraits |
     `---------*/
-
-    // top of hierarchy
-    template <class T>
-    struct optraits_top
-    {};
-
-    // enumerated types
-    template <class T>
-    class optraits_enum : public optraits_top<T>
-    {};
-
-    // vectorial types
-    template <class T>
-    class optraits_vector : public optraits_top<T>
-    {};
 
     //! Associates functions to types.
     /*
