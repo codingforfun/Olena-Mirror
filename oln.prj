@@ -1,17 +1,15 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_2 4)
-(Parent-Version oln 0_2 3)
+(Project-Version oln 0_2 5)
+(Parent-Version oln 0_2 4)
 (Version-Log "2002-01-12  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-	* src/core/neighborhood3d.hh (mk_win_from_neighb): New function.
-	* src/core/neighborhood2d.hh (mk_win_from_neighb): New function.
-	* src/core/neighborhood1d.hh (mk_win_from_neighb): New function.
-
+	* ChangeLog, Makefile.am, doc/Makefile.am, doc/oln-ref.texi,
+	img/object.pbm, tpl/processing.tpl: Initial revision.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sat, 12 Jan 2002 17:03:08 +0100")
+(Checkin-Time "Sat, 12 Jan 2002 17:26:03 +0100")
 (Checkin-Login adl)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
@@ -259,6 +257,16 @@
 ;; to version 0_2.1(w), by adl:
 
   (ISSUES (oln/d/47_ISSUES 1.1 644))
+
+;; Files added by populate at Sat, 12 Jan 2002 17:25:43 +0100,
+;; to version 0_2.4(w), by adl:
+
+  (doc/tpl/processing.tpl (oln/d/48_processing 1.1 644))
+  (doc/img/object.pbm (oln/d/49_object.pbm 1.1 644))
+  (doc/doc/oln-ref.texi (oln/d/50_oln-ref.te 1.1 644))
+  (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.1 644))
+  (doc/Makefile.am (oln/e/0_Makefile.a 1.1 644))
+  (doc/ChangeLog (oln/e/1_ChangeLog 1.1 644))
 )
 (Merge-Parents)
 (New-Merge-Parents)
