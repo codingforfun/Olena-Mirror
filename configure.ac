@@ -350,6 +350,12 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
 
       AC_CHECK_SWIG13 dnl definition in oln-local.m4
 
+     # We cannot enable swilena without swig because we need the dynamic 
+     # library (swig{py,rb}).
+     if test "x$oln_cv_recent_swig" != "xyes"; then
+       AC_MSG_ERROR([You need swig >= 1.3 to compile swilena. You can disable swilena by specifying --without-swilena to configure.])
+     fi
+
       AC_ARG_VAR([DVIPS], [program to make Postscript from TeX DVI files])
       AC_CHECK_PROGS([DVIPS], [dvips], [$am_aux_dir/missing dvips])
       AC_ARG_VAR([TEXI2DVI], [program to create DVI from Texinfo files])
@@ -387,15 +393,20 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
                     [tools/swilena/ruby/Makefile
 		     tools/swilena/ruby/tests/Makefile],
       [
+         AC_CHECK_PROGS([RUBY], [ruby], [$am_aux_dir/missing ruby])
+	 if test "x$RUBY" = "x$am_aux_dir/missing ruby"; then
+	   AC_MSG_ERROR([You need ruby to compile the ruby interface. Specify --without-rblena to disable the ruby interface.])
+         fi
+
 	 AC_ARG_VAR([RUBY_CPPFLAGS], [Path to ruby.h])
-	 AC_ARG_WITH([python-includedir], [Include path for ruby.h], 
+	 AC_ARG_WITH([ruby-includedir], [Include path for ruby.h], 
 	             [RUBY_CPPFLAGS="-I$withval"],
                      [RUBY_CPPFLAGS="-I/usr/lib/ruby/1.6/i386-linux"])
 	
 	 CPPFLAGS="$CPPFLAGS $RUBY_CPPFLAGS"
          AC_CHECK_HEADERS([ruby.h],,
 	                  AC_MSG_ERROR(
-			  [You need Ruby development files to compile the Ruby interface. Specify --with-python-includedir to set it manually or --without-rblena to disable it.]))
+			  [You need Ruby development files to compile the Ruby interface. Specify --with-ruby-includedir to set it manually or --without-rblena to disable it.]))
 
 	 CPPFLAGS=$save_CPPFLAGS
       ], [ruby])dnl End of OLN_COMPONENT([tools/swilena/ruby])

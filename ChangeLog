@@ -1,6 +1,12 @@
 2003-09-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* configure.ac: Generate makefiles for swilena tests.
+	* config/oln-local.m4: Fix swig detection.
+	* configure.ac: Stop if ruby is not found. Stop if swig is not
+	found.
+
+2003-09-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Generate makefiles for swilena tests.	
 
 2003-09-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
