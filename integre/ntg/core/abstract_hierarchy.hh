@@ -64,8 +64,10 @@ namespace ntg
   | enumerated |
   `-----------*/
 
-  // bin, bool, etc.
   class enumerated : public data_type {};
+
+  // bin, bool, etc.
+  class binary : public enumerated {};
 
   /*----------.
   | vectorial |
