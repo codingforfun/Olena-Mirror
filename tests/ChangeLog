@@ -1,3 +1,9 @@
+2002-04-22  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* morpho/edoc.cc: New file.
+	* morpho/Makefile.am (check_PROGRAMS): Add edoc.
+	* morpho/reconstruction.cc: Remove useless includes.
+
 2002-04-10  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* convert/convcomp.cc: Fix the include statment.

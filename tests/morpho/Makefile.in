@@ -86,17 +86,25 @@ LDADD = $(top_builddir)/tests/check/libcheck.a
 TESTS = $(check_PROGRAMS)
 
 check_PROGRAMS = \
-  extrkiller					\
+  edoc \
+  extrkiller \
   reconstruction
 
 
+edoc_SOURCES = edoc.cc
 extrkiller_SOURCES = extrkiller.cc
 reconstruction_SOURCES = reconstruction.cc
 subdir = tests/morpho
 mkinstalldirs = $(SHELL) $(top_srcdir)/tools/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/src/config/config.h
 CONFIG_CLEAN_FILES =
-check_PROGRAMS = extrkiller$(EXEEXT) reconstruction$(EXEEXT)
+check_PROGRAMS = edoc$(EXEEXT) extrkiller$(EXEEXT) \
+	reconstruction$(EXEEXT)
+am_edoc_OBJECTS = edoc.$(OBJEXT)
+edoc_OBJECTS = $(am_edoc_OBJECTS)
+edoc_LDADD = $(LDADD)
+edoc_DEPENDENCIES = $(top_builddir)/tests/check/libcheck.a
+edoc_LDFLAGS =
 am_extrkiller_OBJECTS = extrkiller.$(OBJEXT)
 extrkiller_OBJECTS = $(am_extrkiller_OBJECTS)
 extrkiller_LDADD = $(LDADD)
@@ -115,7 +123,7 @@ LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
 depcomp = $(SHELL) $(top_srcdir)/tools/depcomp
 am__depfiles_maybe = depfiles
-@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/extrkiller.Po \
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/edoc.Po ./$(DEPDIR)/extrkiller.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/reconstruction.Po
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -123,9 +131,10 @@ CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 	-o $@
 CXXFLAGS = @CXXFLAGS@
-DIST_SOURCES = $(extrkiller_SOURCES) $(reconstruction_SOURCES)
+DIST_SOURCES = $(edoc_SOURCES) $(extrkiller_SOURCES) \
+	$(reconstruction_SOURCES)
 DIST_COMMON = Makefile.am Makefile.in
-SOURCES = $(extrkiller_SOURCES) $(reconstruction_SOURCES)
+SOURCES = $(edoc_SOURCES) $(extrkiller_SOURCES) $(reconstruction_SOURCES)
 
 all: all-am
 
@@ -139,6 +148,9 @@ Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
 
 clean-checkPROGRAMS:
 	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
+edoc$(EXEEXT): $(edoc_OBJECTS) $(edoc_DEPENDENCIES) 
+	@rm -f edoc$(EXEEXT)
+	$(CXXLINK) $(edoc_LDFLAGS) $(edoc_OBJECTS) $(edoc_LDADD) $(LIBS)
 extrkiller$(EXEEXT): $(extrkiller_OBJECTS) $(extrkiller_DEPENDENCIES) 
 	@rm -f extrkiller$(EXEEXT)
 	$(CXXLINK) $(extrkiller_LDFLAGS) $(extrkiller_OBJECTS) $(extrkiller_LDADD) $(LIBS)
@@ -152,6 +164,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/edoc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/extrkiller.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reconstruction.Po@am__quote@
 

@@ -1,18 +1,17 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_3 30)
-(Parent-Version oln 0_3 29)
+(Project-Version oln 0_3 31)
+(Parent-Version oln 0_3 30)
 (Version-Log "2002-04-22  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-	* demo/Makefile.am (noinst_PROGRAMS): Rename as ...
-	(check_PROGRAMS): ... this.
-	(demo): New phony rule.
-	* README: Adjust instruction to build the demo programs.
-	Mention the testsuite.
+	* morpho/edoc.cc: New file.
+	* morpho/Makefile.am (check_PROGRAMS): Add edoc.
+	* morpho/reconstruction.cc: Remove useless includes.
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 22 Apr 2002 15:11:09 +0200")
+(Checkin-Time "Mon, 22 Apr 2002 17:25:18 +0200")
 (Checkin-Login adl)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
@@ -373,11 +372,11 @@
 ;; Files added by populate at Thu, 28 Mar 2002 19:27:57 +0100,
 ;; to version 0_3.17(w), by adl:
 
-  (tests/ChangeLog (oln/e/30_ChangeLog 1.4 644))
+  (tests/ChangeLog (oln/e/30_ChangeLog 1.5 644))
   (tests/morpho/extrkiller.cc (oln/e/31_extrkiller 1.3 644))
-  (tests/morpho/Makefile.am (oln/e/32_Makefile.a 1.2 644))
-  (tests/morpho/Makefile.in (oln/e/33_Makefile.i 1.5 644))
-  (tests/morpho/reconstruction.cc (oln/e/34_reconstruc 1.3 644))
+  (tests/morpho/Makefile.am (oln/e/32_Makefile.a 1.3 644))
+  (tests/morpho/Makefile.in (oln/e/33_Makefile.i 1.6 644))
+  (tests/morpho/reconstruction.cc (oln/e/34_reconstruc 1.4 644))
   (tests/check/srcdir.hh (oln/e/35_srcdir.hh 1.2 644))
   (tests/check/Makefile.flags (oln/e/36_Makefile.f 1.1 644))
   (tests/check/Makefile.check (oln/e/37_Makefile.c 1.3 644))
@@ -435,6 +434,11 @@
 ;; to version 0_3.23(w), by chojin:
 
   (src/core/generate.hh (oln/f/12_generate.h 1.2 600))
+
+;; Files added by populate at Mon, 22 Apr 2002 17:19:54 +0200,
+;; to version 0_3.30(w), by adl:
+
+  (tests/morpho/edoc.cc (oln/f/13_edoc.cc 1.1 644))
 )
 (Merge-Parents)
 (New-Merge-Parents)
