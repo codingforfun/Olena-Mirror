@@ -110,8 +110,14 @@ namespace oln {
       return std::string("window2d");
     }
 
-  protected:
-
+    coord_t
+    impl_delta_update(const dpoint_type& dp)
+    {
+      delta_(abs(dp.row()));
+      delta_(abs(dp.col()));
+      return delta_;
+    }
+ 
   };
 
 

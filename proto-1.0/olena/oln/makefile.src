@@ -11,6 +11,9 @@ OLN_DEP =					\
   basics3d.hh					\
   config/pconf.hh				\
   config/system.hh				\
+  convert/value_to_point.hh			\
+  morpho/stat.hh				\
+  morpho/erosion.hh				\
   core/1d/array1d.hh				\
   core/1d/dpoint1d.hh				\
   core/1d/fwd_piter1d.hh			\
@@ -50,6 +53,7 @@ OLN_DEP =					\
   core/abstract/size.hh				\
   core/abstract/neighborhood.hh			\
   core/abstract/struct_elt.hh			\
+  core/accum.hh					\
   core/coord.hh					\
   core/compose.hh				\
   core/properties.hh				\

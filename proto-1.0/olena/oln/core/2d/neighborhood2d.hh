@@ -31,7 +31,7 @@
 # include <oln/core/2d/dpoint2d.hh>
 # include <oln/core/2d/size2d.hh>
 # include <oln/core/coord.hh>
-# include <oln/core/abstract/struct_elt.hh>
+# include <oln/core/abstract/neighborhood.hh>
 
 namespace oln {
 
@@ -39,29 +39,30 @@ namespace oln {
 
   // category
   template <>
-  struct set_category< neighborhood2d > { typedef category::struct_elt ret; };
+  struct set_category< neighborhood2d > 
+  { typedef category::neighborhood ret; };
 
   // super_type
   template <>
   struct set_super_type< neighborhood2d >
   {
-    typedef abstract::struct_elt< neighborhood2d > ret;
+    typedef abstract::neighborhood< neighborhood2d > ret;
   };
 
   template <>
-  struct set_props< category::struct_elt, neighborhood2d > 
-  : public props_of<category::struct_elt>
+  struct set_props< category::neighborhood, neighborhood2d > 
+  : public props_of<category::neighborhood>
   {
     typedef dpoint2d    dpoint_type;
     typedef size2d      size_type;
   };
 
-  class neighborhood2d : public abstract::struct_elt<neighborhood2d>
+  class neighborhood2d : public abstract::neighborhood<neighborhood2d>
   {
 
   public:
    
-    typedef abstract::struct_elt<neighborhood2d>      super_type;
+    typedef abstract::neighborhood<neighborhood2d>      super_type;
 
     /*!
     ** \brief Construct a neighborhood of 2 dimensions.
@@ -108,8 +109,14 @@ namespace oln {
       return std::string("neighborhood2d");
     }
 
-  protected:
-
+    coord_t
+    impl_delta_update(const dpoint_type& dp)
+    {
+      delta_(abs(dp.row()));
+      delta_(abs(dp.col()));
+      return delta_;
+    }
+ 
   };
 
   inline const neighborhood2d&

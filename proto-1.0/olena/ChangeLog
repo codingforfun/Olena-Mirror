@@ -1,5 +1,14 @@
 2005-03-20  Simon Odou  <simon@lrde.epita.fr>
 
+	* oln/core/abstract/struct_elt.hh: Add delta to stucturing element..
+	* oln/core/2d/window2d.hh: Likewise.
+	* oln/core/abstract/neighborhood.hh: Add delta to neighborhood.
+	* oln/core/2d/neighborhood2d.hh: Likewise.
+	* oln/core/accum.hh: New. Accumulator needed for delta computation.
+	* oln/makefile.src: Add missing files.
+
+2005-03-20  Simon Odou  <simon@lrde.epita.fr>
+
 	* oln/convert/value_to_point.hh: New.
 	Conversion of value to point. This is temporary: waiting for a 
 	coherent `convert' in this prototype.

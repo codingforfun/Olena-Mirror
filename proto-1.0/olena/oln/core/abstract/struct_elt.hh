@@ -32,6 +32,7 @@
 # include <oln/core/properties.hh>
 # include <oln/core/coord.hh>
 # include <oln/core/abstract/dpoint.hh>
+# include <oln/core/accum.hh>
 # include <vector>
 # include <utility>
 # include <iostream>
@@ -132,6 +133,18 @@ namespace oln {
 	return this->exact().impl_at(i);
       }
 
+      coord_t
+      get_delta() const
+      {
+	return this->exact().impl_get_delta();
+      } 
+
+      coord_t
+      delta_update(const dpoint_type& dp)
+      {
+	return this->exact().impl_delta_update(dp);
+      }
+
     protected:
 
       bool
@@ -145,7 +158,14 @@ namespace oln {
       {
 	if (!(impl_has(dp)))
 	  this->dp_.push_back(dp);
+        this->delta_update(dp);
 	return this->exact();
+      }
+
+      coord_t
+      impl_get_delta() const
+      {
+        return delta_;
       }
 
       unsigned
@@ -161,15 +181,16 @@ namespace oln {
 	return dp_[i];
       } 
 
-      struct_elt() : dp_()
+      struct_elt() : dp_(), delta_(0)
       {};
 
-      struct_elt(unsigned size) : dp_()
+      struct_elt(unsigned size) : dp_(), delta_(0)
       {
         dp_.reserve(size);
       };
 
       std::vector<dpoint_type> dp_;
+      max_accumulator<coord_t> delta_;
 
     };
   } // end of abstract
