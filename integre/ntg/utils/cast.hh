@@ -88,10 +88,10 @@ namespace ntg {
     bound(const Tsrc& val)
     {
       if (ntg_max_val(Tsrc) > ntg_max_val(Tdest))
-	if (val > Tsrc(ntg_max_val(Tdest)))
+	if (val > Tsrc(Tdest(ntg_max_val(Tdest))))
 	  return ntg_max_val(Tdest);
       if (ntg_min_val(Tsrc) < ntg_min_val(Tdest))
-	if (val < Tsrc(ntg_min_val(Tdest)))
+	if (val < Tsrc(Tdest(ntg_min_val(Tdest))))
 	  return ntg_min_val(Tdest);
       return val;
     }
@@ -220,9 +220,9 @@ namespace ntg {
     template<class Tdest, class Tsrc> inline
     const Tdest rbound(const Tsrc& val)
     {
-      if (val > ntg_cast(ntg_max_val(Tdest)))
+      if (val > Tsrc(Tdest(ntg_max_val(Tdest))))
 	return ntg_max_val(Tdest);
-      if (val < ntg_cast(ntg_min_val(Tdest)))
+      if (val < Tsrc(Tdest(ntg_min_val(Tdest))))
 	return ntg_min_val(Tdest);
       return cast::round<Tdest>(val);
     }

@@ -1,3 +1,11 @@
+2003-11-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/arith/internal/opdecls.hh: Add missing default functors.
+	* oln/level/cc.hh: Use default arithmetic functor.
+	
+	* oln/convert/cast.hh: New.
+	* oln/convert/basics.hh: Include it.
+	
 2003-11-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/io/pnm_write_2d.hh: Store in the header the maximal value of

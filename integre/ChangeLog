@@ -1,3 +1,7 @@
+2003-11-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/utils/cast.hh: Fix comparison casts.
+
 2003-10-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/core/internal/global_ops.hh: Import min and max into

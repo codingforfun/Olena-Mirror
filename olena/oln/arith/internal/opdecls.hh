@@ -63,7 +63,12 @@
       {									\
 	return OPCODE;							\
       }									\
-    } /* no ; */
+    };									\
+									\
+    template <class T1, class T2 = T1>					\
+    struct default_f_##OPNAME 						\
+      : public f_##OPNAME< T1, T2, ntg_return_type(OPNAME, T1, T2) >	\
+    {}  /* no ; */
 
 // Functor used by operations between an image and a constant
 
