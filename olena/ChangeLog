@@ -1,5 +1,7 @@
 2004-03-29  Simon Odou  <simon@lrde.epita.fr>
 
+	* oln/morpher/iter_morpher.hh: To have a specific default iterator.
+
 	* oln/morpher/piece_morpher.hh: To use a piece of image like a real one.
 	* oln/core/abstract/image_with_impl.hh:
 	* oln/core/point2d.hh: Able to construct a point2d from a point1d.

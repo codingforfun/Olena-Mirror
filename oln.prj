@@ -1,19 +1,12 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 117)
-(Parent-Version oln 10 116)
-(Version-Log "	* oln/morpher/piece_morpher.hh: To use a piece of image like a real one.
-	* oln/core/abstract/image_with_impl.hh:
-	* oln/core/point2d.hh: Able to construct a point2d from a point1d.
-	* oln/core/point2d.hxx: Likewise.
-	* oln/core/point3d.hh: Able to construct a point3d from a point2d.
-	* oln/core/point3d.hxx: Likewise.
-	* oln/core/abstract/image_with_dim.hh: Fix a bug.
-	* oln/core/abstract/image_with_impl.hh: Fix (same).
+(Project-Version oln 10 118)
+(Parent-Version oln 10 117)
+(Version-Log "	* oln/morpher/iter_morpher.hh: To have a specific default iterator.
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 29 Mar 2004 09:26:50 +0200")
+(Checkin-Time "Mon, 29 Mar 2004 09:31:34 +0200")
 (Checkin-Login odou_s)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -120,7 +113,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.9 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.39 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.58 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.59 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 600))
 
@@ -1467,6 +1460,11 @@
 ;; to version 10.116(w), by odou_s:
 
   (olena/oln/morpher/piece_morpher.hh (oln/m/40_piece_morp 1.1 600))
+
+;; Files added by populate at Mon, 29 Mar 2004 09:28:54 +0200,
+;; to version 10.117(w), by odou_s:
+
+  (olena/oln/morpher/iter_morpher.hh (oln/m/41_iter_morph 1.1 600))
 )
 (Merge-Parents)
 (New-Merge-Parents)
