@@ -12,11 +12,11 @@ namespace oln {
 
     namespace impl {
       template <typename T> 
-      void iota(image1d<T>& inout); // FIXME: abstract::image1d<I>...
+      void iota(abstract::image1d<T>& inout);
       template <typename T> 
-      void iota(image2d<T>& inout); // FIXME: abstract::image2d<I>...
+      void iota(abstract::image2d<T>& inout);
       template <typename T> 
-      void iota(image3d<T>& inout); // FIXME: abstract::image2d<I>...
+      void iota(abstract::image3d<T>& inout);
     } // end of namespace impl
 
 
@@ -39,7 +39,7 @@ namespace oln {
       // iterators and we just want to test.
 
       template <typename T>
-      void iota(image2d<T>& inout)
+      void iota(abstract::image2d<T>& inout)
       {
 	unsigned counter = 0;
         // FIXME: lacks cleaning
@@ -49,7 +49,7 @@ namespace oln {
       }
 
       template <typename T>
-      void iota(image1d<T>& inout)
+      void iota(abstract::image1d<T>& inout)
       {
 	unsigned counter = 0;
         // FIXME: lacks cleaning
@@ -58,7 +58,7 @@ namespace oln {
       } 
 
       template <typename T>
-      void iota(image3d<T>& inout)
+      void iota(abstract::image3d<T>& inout)
       {
 	unsigned counter = 0;
         // FIXME: lacks cleaning

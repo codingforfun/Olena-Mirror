@@ -48,6 +48,7 @@ namespace oln {
 
     // tags
     typedef tag::readwrite constness_tag;
+    typedef tag::dimension2 dimension_tag;
 
     // functions
 

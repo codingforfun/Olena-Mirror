@@ -1,5 +1,18 @@
 2005-01-21  Simon Odou  <simon@lrde.epita.fr>
 
+	* oln/core/tags.hh: The abstract entry point is a big switch which
+          must now inherits an image dimension.
+	* oln/fancy/print.hh: Use abstraction for image with dimension 
+          (image_with_dim in Olena).
+	* oln/fancy/iota.hh: Likewise.
+	* oln/makefile.src: Add image_dimension.hh.
+	* oln/core/abstract/image_dimension.hh: New.
+	* oln/core/1d/image1d.hh: Add a property for dimension.
+	* oln/core/2d/image2d.hh: Likewise.
+	* oln/core/3d/image3d.hh: Likewise.
+
+2005-01-21  Simon Odou  <simon@lrde.epita.fr>
+
 	* oln/makefile.src: Fix missing files.
 
 2005-01-21  Simon Odou  <simon@lrde.epita.fr>

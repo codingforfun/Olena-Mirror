@@ -2,6 +2,7 @@
 # define OLENA_CORE_TAGS_HH
 
 # include <oln/core/abstract/image_constness.hh>
+# include <oln/core/abstract/image_dimension.hh>
 
 #define oln_tag_decl(TAG)			\
 						\
@@ -60,6 +61,10 @@ namespace oln {
     oln_tag_decl_case( constness, readonly,  abstract::readonly_image )
     oln_tag_decl_case( constness, readwrite, abstract::readwrite_image )
 
+    oln_tag_decl ( dimension );
+    oln_tag_decl_case( dimension, dimension1, abstract::image1d)
+    oln_tag_decl_case( dimension, dimension2, abstract::image2d)
+    oln_tag_decl_case( dimension, dimension3, abstract::image3d)
 
     namespace internal {
 
@@ -70,8 +75,17 @@ namespace oln {
 	// test if ret derives from constness_tag
       };
 
+      template <typename E>
+      struct retrieve < tag::dimension, E >
+      {
+	typedef typename props<cat::image,E>::dimension_tag ret; // FIXME: ok?
+	// test if ret derives from constness_tag
+      };
+ 
+
       template <typename TAG, typename E>
-      struct image_switch : public image_case< typename retrieve<TAG,E>::ret, E>
+      struct image_switch : 
+              public image_case< typename retrieve<TAG,E>::ret, E>
       {
       protected:
 	image_switch() {}
@@ -86,8 +100,10 @@ namespace oln {
   namespace abstract {
 
     template <typename E>
-    struct image_entry : public tag::internal::image_switch < tag::constness, E >
-                         // ...
+    struct image_entry : 
+            public tag::internal::image_switch < tag::constness, E >,
+            public tag::internal::image_switch < tag::dimension, E >
+            // ...
     {
     protected:
       image_entry() {}

@@ -22,13 +22,12 @@ namespace oln {
 
     namespace impl {
 
-      template <typename T>
-      void print(const image1d<T>& input, std::ostream& ostr);
-      template <typename T>
-      void print(const image2d<T>& input, std::ostream& ostr);
-      template <typename T>
-      void print(const image3d<T>& input, std::ostream& ostr);
-      // FIXME: it should be abstract::image2d<I>...
+      template <typename E>
+      void print(const abstract::image1d<E>& input, std::ostream& ostr);
+      template <typename E>
+      void print(const abstract::image2d<E>& input, std::ostream& ostr);
+      template <typename E>
+      void print(const abstract::image3d<E>& input, std::ostream& ostr);
 
     } // end of namespace impl
 
@@ -73,31 +72,31 @@ namespace oln {
 
       }
 
-      template <typename T>
-      void print(const image1d<T>& input, std::ostream& ostr)
+      template <typename E>
+      void print(const abstract::image1d<E>& input, std::ostream& ostr)
       {
 	// FIXME: lacks cleaning
 	for (coord_t index = 0; index < input.size().nindices(); ++index)
 	  {
-	    ostr << internal::pp<T>(input[point1d(index)]) << ' ';
+	    ostr << internal::pp<oln_value_type(E)>(input[point1d(index)]) << ' ';
 	  }
 	ostr << std::endl;
       } 
  
-      template <typename T>
-      void print(const image2d<T>& input, std::ostream& ostr)
+      template <typename E>
+      void print(const abstract::image2d<E>& input, std::ostream& ostr)
       {
 	// FIXME: lacks cleaning
 	for (coord_t row = 0; row < input.size().nrows(); ++row)
 	  {
 	    for (coord_t col = 0; col < input.size().ncols(); ++col)
-	      ostr << internal::pp<T>(input[point2d(row,col)]) << ' ';
+	      ostr << internal::pp<oln_value_type(E)>(input[point2d(row,col)]) << ' ';
 	    ostr << std::endl;
 	  }
       }
 
-      template <typename T>
-      void print(const image3d<T>& input, std::ostream& ostr)
+      template <typename E>
+      void print(const abstract::image3d<E>& input, std::ostream& ostr)
       {
 	// FIXME: lacks cleaning
 	for (coord_t slice = 0; slice < input.size().nslices(); ++slice)
@@ -105,7 +104,8 @@ namespace oln {
 	  for (coord_t row = 0; row < input.size().nrows(); ++row)
 	  {
 	    for (coord_t col = 0; col < input.size().ncols(); ++col)
-	      ostr << internal::pp<T>(input[point3d(slice,row,col)]) << ' ';
+	      ostr << internal::pp<oln_value_type(E)>(input[point3d(slice,row,col)]) 
+                   << ' ';
             ostr << ", ";
 	  }
 	  ostr << std::endl;
