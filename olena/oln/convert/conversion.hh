@@ -118,7 +118,7 @@ namespace oln {
        apply function here, to apply conversions.  */
     template<class C, class B, class I> inline
     typename mute<I, typename convoutput<C, B, Value(I)>::ret>::ret
-    apply(const abstract::conversion<C, B>& conv, const ::oln::abstract::image<I>& input)
+    apply(const abstract::conversion<C, B>& conv, const oln::abstract::image<I>& input)
     {
       /* CONV can now be wrapped as an Adaptable Unary Function
 	 because we know the input type.  Composing CONV with the

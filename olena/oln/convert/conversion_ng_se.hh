@@ -43,7 +43,7 @@ namespace oln {
 
     template<class N>
     typename get_se< N::dim >::ret
-    ng_to_se(const abstract::neighborhood<N>& Ng)
+    ng_to_se(const oln::abstract::neighborhood<N>& Ng)
     {
       typename get_se< N::dim >::ret output;
       Iter(N) p(Ng);
@@ -54,7 +54,7 @@ namespace oln {
 
     template<class N>
     typename get_se< N::dim >::ret
-    ng_to_cse(const abstract::neighborhood<N>& Ng)
+    ng_to_cse(const oln::abstract::neighborhood<N>& Ng)
     {
       typename get_se< N::dim >::ret output;
       Iter(N) p(Ng);

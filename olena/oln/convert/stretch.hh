@@ -32,7 +32,7 @@
 
 # include <ntg/basics.hh>
 
-# include <oln/convert/abstract::conversion.hh>
+# include <oln/convert/abstract/conversion.hh>
 
 namespace oln {
   
@@ -43,7 +43,7 @@ namespace oln {
       : public abstract::conversion_to_type<Output, typename mlc::exact_vt<force<Output, Exact>, Exact>::ret >
     {  
       template< class Input >
-      Output doit() (const Input& v) const {
+      Output doit(const Input& v) const {
 
 	return Output(ntg::cast::rbound<Output, float>
 		      (

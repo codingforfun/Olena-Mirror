@@ -124,7 +124,7 @@
     typename mute<I1,							   \
       typename convoutput<C, B,						   \
         typename f_##OPNAME<Value(I1), Value(I2)>::result_type>::ret>::ret \
-    OPNAME(const abstract::conversion<C, B>& conv,			   \
+    OPNAME(const convert::abstract::conversion<C, B>& conv,			   \
 	 const abstract::image<I1>& input1, const abstract::image<I2>& input2)	   \
     {									   \
       return apply2(convert::compconv2(conv,				   \
@@ -147,7 +147,7 @@
     typename mute<I,							  \
       typename convoutput<C, B,						  \
         typename f_##OPNAME##_cst<Value(I), T>::result_type>::ret>::ret	  \
-    OPNAME##_cst(const abstract::conversion<C, B>& conv, const abstract::image<I>& input, T val) \
+    OPNAME##_cst(const convert::abstract::conversion<C, B>& conv, const abstract::image<I>& input, T val) \
     {									  \
       return apply(convert::compconv1(conv,				  \
 				   f_##OPNAME##_cst<Value(I),T>(val)),	  \
@@ -176,7 +176,7 @@
     typename mute<I1,							\
       typename convoutput<C, B,						\
         typename f_##OPNAME<Value(I1)>::result_type>::ret>::ret		\
-    OPNAME(const abstract::conversion<C, B>& conv,				\
+    OPNAME(const convert::abstract::conversion<C, B>& conv,				\
 	 const abstract::image<I1>& input1, const abstract::image<I2>& input2)		\
     {									\
       return apply2(convert::compconv2(conv, f_##OPNAME<Value(I1)>()),	\
@@ -198,7 +198,7 @@
     template<class C, class B, class I1, class I2> inline			  \
     typename mute<I1,							  \
       typename convoutput<C, B, typename f_##OPNAME::result_type>::ret>::ret \
-    OPNAME(const abstract::conversion<C, B>& conv,			  \
+    OPNAME(const convert::abstract::conversion<C, B>& conv,			  \
 	 const abstract::image<I1>& input1, const abstract::image<I2>& input2)	  \
     {									  \
       return apply2(convert::compconv2(conv, f_##OPNAME()),		  \
@@ -221,7 +221,7 @@
     typename mute<I,							    \
       typename convoutput<C, B,						    \
         typename f_##OPNAME##_cst::result_type>::ret>::ret		    \
-    OPNAME##_cst(const abstract::conversion<C, B>& conv, const abstract::image<I>& input, T val)   \
+    OPNAME##_cst(const convert::abstract::conversion<C, B>& conv, const abstract::image<I>& input, T val)   \
     {									    \
       return apply(convert::compconv1(conv, f_##OPNAME##_cst(val)),	    \
 		   input);						    \
@@ -261,7 +261,7 @@
     template<class C, class B, class I> inline				  \
     typename mute<I,							  \
       typename convoutput<C, B, typename f_##OPNAME::result_type>::ret>::ret \
-    OPNAME(const abstract::conversion<C, B>& conv, const abstract::image<I>& input1)  \
+    OPNAME(const convert::abstract::conversion<C, B>& conv, const abstract::image<I>& input1)  \
     {									  \
       return apply(convert::compconv2(conv, f_##OPNAME()), input1);	  \
     }
@@ -280,7 +280,7 @@
     typename mute<I,							      \
       typename convoutput<C, B,						      \
         typename f_##OPNAME<Value(I)>::result_type>::ret>::ret		      \
-    OPNAME(const abstract::conversion<C>& conv, const abstract::image<I>& input1)      \
+    OPNAME(const convert::abstract::conversion<C>& conv, const abstract::image<I>& input1)      \
     {									      \
       return apply(convert::compconv2(conv, f_##OPNAME<Value(I)>()), input1); \
     }

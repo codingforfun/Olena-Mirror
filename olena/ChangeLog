@@ -1,5 +1,15 @@
 2003-07-31  Reda Dehak  <reda@lrde.epita.fr>
 
+	* olena/oln/arith/internal/opdecls.hh,
+	olena/oln/convert/conversion.hh,
+	olena/oln/convert/conversion_ng_se.hh: Fix namespaces.
+
+	* olena/oln/convert/force.hh, 
+	olena/oln/convert/stretch.hh: Minor update.
+
+
+2003-07-31  Reda Dehak  <reda@lrde.epita.fr>
+
 	* oln/convert/basics.hh,
 	oln/convert/bound.hh,
 	oln/convert/conversion.hh,
@@ -12,7 +22,8 @@
 	oln/convert/nrgbyuv.hh,
 	oln/convert/rgbnrgb.hh,
 	oln/convert/rgbxyz.hh,
-	oln/convert/stretch.hh: Rewrite using the new design to avoid use of exact_cref. 
+	oln/convert/stretch.hh: Rewrite using the new design to avoid 
+				use of exact_cref. 
 
 	* oln/convert/abstract/conversion.hh: New.
 		
