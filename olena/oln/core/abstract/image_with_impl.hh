@@ -90,16 +90,23 @@ namespace oln {
 	impl_->ref();
       }
 
+      exact_type& operator=(self_type rhs)
+      {
+	return to_exact(this)->assign(to_exact(rhs));
+      }
+
       exact_type& assign(exact_type rhs) // shallow assignment
       {
+	assertion(rhs.impl() != 0);
+	assertion(impl_ != 0);
 	if ( &rhs == this )
-	  return *this;
-	if (impl_ != 0)
-	  impl_->unref();
-	impl_ = rhs.impl();
-	if (impl_ != 0)
-	  impl_->ref();
-	return *this;
+	  return to_exact(*this);
+	if (this->impl() != 0)
+	  this->impl()->unref();
+	this->impl_ = rhs.impl();
+	if (this->impl() != 0)
+	  this->impl()->ref();
+	return to_exact(*this);
       }
 
       ~image_with_impl()

@@ -40,7 +40,7 @@ namespace oln {
 
   } // end of namespace abstract
 
-  template<class E>
+  template<class Exact>
   struct image_id;
 
   template<class Ima>
@@ -106,11 +106,12 @@ namespace oln {
 	return to_exact(this)->npoints_();
       }
 
-      // beware of the "assign" member function
-      exact_type& operator=(exact_type rhs)
+      exact_type& operator=(self_type rhs)
       {
-	return rhs.assign(to_exact(*this));
+	return to_exact(this)->assign(to_exact(rhs));
       }
+
+     
 
       static std::string name()
       {
@@ -170,6 +171,8 @@ namespace oln {
 
   } // end of namespace abstract
 
+
+  
 
 
 } // end of namespace oln

@@ -32,14 +32,14 @@
 
 namespace oln {
 
-  template<class E = mlc::final>
-  class bkd_iter1d : public internal::_iter1d<typename mlc::exact_vt<bkd_iter1d<E>, E>::ret>, 
-                     public bkd_iter<typename mlc::exact_vt<bkd_iter1d<E>, E>::ret>
+  template<class Exact = mlc::final>
+  class bkd_iter1d : public internal::_iter1d<typename mlc::exact_vt<bkd_iter1d<Exact>, Exact>::ret>, 
+                     public bkd_iter<typename mlc::exact_vt<bkd_iter1d<Exact>, Exact>::ret>
   {
   public:
 
-    typedef internal::_iter1d<typename mlc::exact_vt<bkd_iter1d<E>, E>::ret> super;
-    typedef bkd_iter<typename mlc::exact_vt<bkd_iter1d<E>, E>::ret> super2;
+    typedef internal::_iter1d<typename mlc::exact_vt<bkd_iter1d<Exact>, Exact>::ret> super;
+    typedef bkd_iter<typename mlc::exact_vt<bkd_iter1d<Exact>, Exact>::ret> super2;
 
     enum { dim = 1 };
     typedef point1d point;
@@ -72,7 +72,7 @@ namespace oln {
       --_p.col();
     }
 
-    static std::string name() { return std::string("bkd_iter1d<") + E::name() + ">"; }
+    static std::string name() { return std::string("bkd_iter1d<") + Exact::name() + ">"; }
 
   };
 

@@ -33,51 +33,58 @@
 
 namespace oln {
 
-  template<unsigned Dim, class T, class Impl, class E = mlc::final>
+  template<unsigned Dim, class T, class Impl, class Exact = mlc::final>
   class image; //fwd_decl
 
-  template<unsigned Dim, class T, class Impl, class E>
-  struct image_id<image<Dim, T, Impl, E> >
+  template<unsigned Dim, class T, class Impl, class Exact>
+  struct image_id<image<Dim, T, Impl, Exact> >
   {
     enum{dim = Dim};
     typedef T value_type;
     typedef Impl impl_type;
-    typedef typename mlc::exact_vt<image<Dim, T, Impl, E>, E>::ret exact_type;
+    typedef typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret exact_type;
   };
 
-  template<unsigned Dim, class T, class Impl, class E>
-  struct image_traits<image<Dim, T, Impl, E> >: 
+  template<unsigned Dim, class T, class Impl, class Exact>
+  struct image_traits<image<Dim, T, Impl, Exact> >: 
     public image_traits<abstract::image_with_impl<Impl, 
-						  typename mlc::exact_vt<image<Dim, T, Impl, E>, E>::ret> >
+						  typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret> >
   {
     
   };
 
   // image
 
-  template<unsigned Dim, class T, class Impl, class E>
+  template<unsigned Dim, class T, class Impl, class Exact>
   class image: 
     public abstract::image_with_impl<Impl, 
-				     typename mlc::exact_vt<image<Dim, T, Impl, E>, E>::ret>
+				     typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret>
   {
   public:
-    typedef typename image_traits<E>::point_type point_type;
-    typedef typename image_traits<E>::dpoint_type dpoint_type;
-    typedef typename image_traits<E>::iter_type iter_type;
-    typedef typename image_traits<E>::fwd_iter_type fwd_iter_type;
-    typedef typename image_traits<E>::bkd_iter_type bkd_iter_type;
-    typedef typename image_traits<E>::value_type value_type;
-    typedef typename image_traits<E>::size_type size_type;
-    typedef typename image_traits<E>::impl_type impl_type;
+    typedef typename image_traits<Exact>::point_type point_type;
+    typedef typename image_traits<Exact>::dpoint_type dpoint_type;
+    typedef typename image_traits<Exact>::iter_type iter_type;
+    typedef typename image_traits<Exact>::fwd_iter_type fwd_iter_type;
+    typedef typename image_traits<Exact>::bkd_iter_type bkd_iter_type;
+    typedef typename image_traits<Exact>::value_type value_type;
+    typedef typename image_traits<Exact>::size_type size_type;
+    typedef typename image_traits<Exact>::impl_type impl_type;
 
-    typedef image<Dim, T, Impl, E> self_type;
-    typedef typename mlc::exact_vt<image<Dim, T, Impl, E>, E>::ret exact_type;
+    typedef image<Dim, T, Impl, Exact> self_type;
+    typedef typename mlc::exact_vt<image<Dim, T, Impl, Exact>, Exact>::ret exact_type;
     typedef typename abstract::image_with_impl<Impl, 
-					       typename mlc::exact_vt<image<Dim, T, Impl, E>, E>::ret> super_type;
+					       exact_type> super_type;
 
     image(self_type& rhs): super_type(rhs) {}
 
-    static std::string name() { return std::string("image<") + Dim + ", " + T::name() + ", " + Impl::name() + ", " +  E::name() + ">"; }
+    static std::string name() 
+    { 
+      return std::string("image<") + Dim + ", " 
+	+ T::name() + ", " 
+	+ Impl::name() + ", " 
+	+ Exact::name() + ">"; 
+    }
+
     image(impl_type* i) : super_type(i) {}    
   };
 

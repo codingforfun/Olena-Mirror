@@ -1,0 +1,20 @@
+//								    -*- c++ -*-
+
+#include <iostream>
+
+#include <oln/basics1d.hh>
+#include <oln/basics2d.hh>
+#include <oln/basics3d.hh>
+
+#include <ntg/all.hh>
+
+using namespace oln;
+using namespace ntg;
+
+int main()
+{
+  image2d<int_u8> im1(5, 5);
+  std::cout << im1 << std::endl;
+  im1 = image2d<int_u8>(10, 10);
+  std::cout << im1;
+}

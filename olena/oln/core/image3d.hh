@@ -38,24 +38,24 @@
 
 namespace oln {
 
-  template<class T, class E = mlc::final>
+  template<class T, class Exact = mlc::final>
   class image3d; // fwd_decl
 
-  template<class T, class E>
-  struct image_id<image3d<T, E> >
+  template<class T, class Exact>
+  struct image_id<image3d<T, Exact> >
   {
     enum{dim = 3};
     typedef T value_type;
-    typedef typename mlc::exact_vt<image3d<T, E>, E>::ret exact_type;
+    typedef typename mlc::exact_vt<image3d<T, Exact>, Exact>::ret exact_type;
     typedef impl::image_array3d<T, exact_type> impl_type;
   };
 
-  template<class T, class E>
-  struct image_traits<image3d<T, E> >: 
-    public image_traits<image<image_id<image3d<T, E> >::dim, 
-			      typename image_id<image3d<T, E> >::value_type, 
-			      typename image_id<image3d<T, E> >::impl_type, 
-			      typename image_id<image3d<T, E> >::exact_type> >
+  template<class T, class Exact>
+  struct image_traits<image3d<T, Exact> >: 
+    public image_traits<image<image_id<image3d<T, Exact> >::dim, 
+			      typename image_id<image3d<T, Exact> >::value_type, 
+			      typename image_id<image3d<T, Exact> >::impl_type, 
+			      typename image_id<image3d<T, Exact> >::exact_type> >
   {};
 
 
@@ -63,20 +63,20 @@ namespace oln {
   // client can use image3d; instances are real images, that is,
   // images with data ---conversely to proxy images
 
-  template<class T, class E>
+  template<class T, class Exact>
   class image3d: 
-    public image<image_id<image3d<T, E> >::dim, 
-		 typename image_id<image3d<T, E> >::value_type, 
-		 typename image_id<image3d<T, E> >::impl_type, 
-		 typename image_id<image3d<T, E> >::exact_type>
+    public image<image_id<image3d<T, Exact> >::dim, 
+		 typename image_id<image3d<T, Exact> >::value_type, 
+		 typename image_id<image3d<T, Exact> >::impl_type, 
+		 typename image_id<image3d<T, Exact> >::exact_type>
   {
   public:
 
-    typedef image3d<T, E> self_type;
-    typedef typename image_id<image3d<T, E> >::value_type value_type;
-    typedef typename image_id<image3d<T, E> >::exact_type exact_type;
-    typedef typename image_id<image3d<T, E> >::impl_type impl_type;
-    typedef image<image_id<image3d<T, E> >::dim, 
+    typedef image3d<T, Exact> self_type;
+    typedef typename image_id<image3d<T, Exact> >::value_type value_type;
+    typedef typename image_id<image3d<T, Exact> >::exact_type exact_type;
+    typedef typename image_id<image3d<T, Exact> >::impl_type impl_type;
+    typedef image<image_id<image3d<T, Exact> >::dim, 
 		  value_type, 
 		  impl_type, 
 		  exact_type> super_type;
@@ -112,6 +112,11 @@ namespace oln {
 //       return r.assign(*this);
 //     }
 
+    exact_type& operator=(self_type rhs)
+    {
+      return to_exact(this)->assign(to_exact(rhs));
+    }
+
     self_type clone_() const // deep copy
     {
       self_type output(nslices(), nrows(), ncols(), this->border());
@@ -124,7 +129,7 @@ namespace oln {
       return
 	std::string("image3d<")
 	+ T::name() + ","
-	+ E::name() + ">";
+	+ Exact::name() + ">";
     }
 
     template<class U>

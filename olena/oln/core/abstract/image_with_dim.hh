@@ -160,6 +160,11 @@ namespace oln {
 	return hold(point_type(col));
       }
 
+      exact_type& operator=(self_type rhs)
+      {
+	return to_exact(this)->assign(to_exact(rhs));
+      }
+
       static std::string name()
       {
 	return
@@ -222,6 +227,11 @@ namespace oln {
       bool hold(coord row, coord col) const
       {
 	return hold(point_type(row, col));
+      }
+
+      exact_type& operator=(self_type rhs)
+      {
+	return to_exact(this)->assign(to_exact(rhs));
       }
 
       static std::string name()
@@ -291,6 +301,11 @@ namespace oln {
       bool hold(coord slice, coord row, coord col) const
       {
 	return hold(point_type(slice, row, col));
+      }
+
+      exact_type& operator=(self_type rhs)
+      {
+	return to_exact(this)->assign(to_exact(rhs));
       }
 
       static std::string name()
