@@ -1,3 +1,10 @@
+2004-08-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	* oln/core/neighborhood1d.hh (mk_win_from_neighb): Swap
+	inverted argument and return value in the documention.
+	* oln/core/neighborhood2d.hh (mk_win_from_neighb): Likewise.
+	* oln/core/neighborhood3d.hh (mk_win_from_neighb): Likewise.
+
 2004-08-03  Roland Levillain  <roland@lrde.epita.fr>
 
 	* oln/core/apply.hh (apply2_self): Rename template parameter

@@ -201,7 +201,7 @@ namespace oln {
   }
 
   /*!
-  ** \brief Convert a window (1 dimension) to a neighborhood (1 dimension).
+  ** \brief Convert a neighborhood (1 dimension) to a window (1 dimension).
   ** \arg n The neighborhood to convert.
   ** \return The new window.
   */

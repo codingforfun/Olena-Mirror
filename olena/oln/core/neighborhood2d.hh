@@ -239,7 +239,7 @@ namespace oln {
   }
 
   /*!
-  ** \brief Convert a window (2 dimensions) to a neighborhood (2 dimensions).
+  ** \brief Convert a neighborhood (2 dimensions) to a window (2 dimensions).
   ** \arg n The neighborhood to convert.
   ** \return The new window.
   */
