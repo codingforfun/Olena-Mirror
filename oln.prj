@@ -1,17 +1,12 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 40)
-(Parent-Version oln 0_5 39)
-(Version-Log "2002-09-10  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-        * oln/types/int_s.hh: Fix typetraits.
-        * oln/types/optraits_int_u.hh: Change int_u - int_u return type.
-        * oln/types/optraits_builtin_int.hh: Change long to int.
-        * oln/types/builtins_properties: Change long to int.
+(Project-Version oln 0_5 41)
+(Parent-Version oln 0_5 40)
+(Version-Log "tests/types/tests/int_u6: New file.
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 11 Sep 2002 09:55:28 +0200")
+(Checkin-Time "Wed, 11 Sep 2002 11:03:27 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -85,7 +80,7 @@
   (README (oln/1_README 1.4 600))
   (ISSUES (oln/d/47_ISSUES 1.3 600))
   (Makefile.am (oln/2_Makefile.a 1.10 600))
-  (Makefile.in (oln/e/9_Makefile.i 1.26 640))
+  (Makefile.in (oln/e/9_Makefile.i 1.27 640))
   (NEWS (oln/0_NEWS 1.7 600))
 
   (demo/image.cc (oln/d/46_image.cc 1.2 600))
@@ -97,7 +92,7 @@
 
 
   (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.9 640))
-  (doc/ChangeLog (oln/e/1_ChangeLog 1.22 600))
+  (doc/ChangeLog (oln/e/1_ChangeLog 1.23 600))
   (doc/configure.ac (oln/e/2_configure. 1.5 600))
   (doc/configure (oln/e/3_configure 1.9 700))
   (doc/doc/bin () :directory)
@@ -343,7 +338,7 @@
   (tests/meta/test_array1d.cc (oln/f/26_test_array 1.2 640))
   (tests/meta/test_array2d.cc (oln/f/25_test_array 1.2 640))
   (tests/meta/test_array3d.cc (oln/f/24_test_array 1.2 640))
-  (tests/ChangeLog (oln/e/30_ChangeLog 1.27 600))
+  (tests/ChangeLog (oln/e/30_ChangeLog 1.28 600))
   (tests/check/check.hh (oln/e/40_check.hh 1.2 600))
   (tests/check/data.cc (oln/f/5_data.cc 1.2 600))
   (tests/check/data.hh (oln/f/6_data.hh 1.1 600))
@@ -460,7 +455,7 @@
 ;; Files added by populate at Thu, 01 Aug 2002 15:28:28 +0200,
 ;; to version 0_5.11(w), by adl:
 
-  (doc/doc/ref-types.tex (oln/g/34_ref-types. 1.4 640))
+  (doc/doc/ref-types.tex (oln/g/34_ref-types. 1.5 640))
 
 ;; Files added by populate at Mon, 26 Aug 2002 17:10:21 +0200,
 ;; to version 0_5.18(w), by duret_g:
@@ -535,6 +530,11 @@
   (tests/types/tests/range1 (oln/h/34_range1 1.1 640))
   (tests/types/tests/int4b (oln/h/35_int4b 1.1 640))
   (tests/types/tests/range2b (oln/h/36_range2b 1.1 640))
+
+;; Files added by populate at Wed, 11 Sep 2002 11:02:59 +0200,
+;; to version 0_5.40(w), by burrus_n:
+
+  (tests/types/tests/int_u6 (oln/h/37_int_u6 1.1 640))
 )
 (Merge-Parents)
 (New-Merge-Parents)

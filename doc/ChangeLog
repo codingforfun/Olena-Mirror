@@ -1,3 +1,7 @@
+2002-09-11  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* doc/ref-types.tex (range): Adjust to new syntax.
+
 2002-09-10  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* doc/ref-types.tex (range, cycle): Remove documentation for

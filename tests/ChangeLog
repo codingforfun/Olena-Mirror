@@ -1,6 +1,6 @@
 2002-09-10  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* types/tests/int_s3: New file.
+	* types/tests/int_s3, types/tests/int_u6: New file.
 
 2002-09-10  Alexandre Duret-Lutz  <duret_g@epita.fr>
 

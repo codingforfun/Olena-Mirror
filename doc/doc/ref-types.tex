@@ -25,23 +25,23 @@ implemented hierarchically in the C++ code.
     \item Signed
       \begin{list}{--}{}
       \item C built-in types:
-	\begin{list}{--}{}
-	\item \code{signed long}
-	\item \code{signed int}
-	\item \code{signed short}
-	\item \code{signed char}
-	\end{list}
+        \begin{list}{--}{}
+        \item \code{signed long}
+        \item \code{signed int}
+        \item \code{signed short}
+        \item \code{signed char}
+        \end{list}
       \item Olena types: \code{int_s<BITS, BEHAVIOR>}
       \end{list}
     \item Unsigned
       \begin{list}{--}{}
       \item C built-in types
-	\begin{list}{--}{}
-	\item \code{unsigned long}
-	\item \code{unsigned int}
-	\item \code{unsigned short}
-	\item \code{unsigned char}
-	\end{list}
+        \begin{list}{--}{}
+        \item \code{unsigned long}
+        \item \code{unsigned int}
+        \item \code{unsigned short}
+        \item \code{unsigned char}
+        \end{list}
       \item Olena types: \code{int_u<BITS, BEHAVIOR>}
       \end{list}
     \end{list}
@@ -49,13 +49,13 @@ implemented hierarchically in the C++ code.
     \begin{list}{--}{}
     \item C built-in types
       \begin{list}{--}{}
-	\item \code{float}
-	\item \code{double}
+        \item \code{float}
+        \item \code{double}
       \end{list}
     \item Olena types
       \begin{list}{--}{}
-	\item \code{sfloat}
-	\item \code{dfloat}
+        \item \code{sfloat}
+        \item \code{dfloat}
       \end{list}
     \end{list}
   \end{list}
@@ -143,7 +143,7 @@ Assigning a value larger (resp. smaller) than the maximum
 
 \begin{lstlisting}{}
 int_u<7,saturate> i = 130; // i equals 127
-i += 10;	           // i still equals 127
+i += 10;                   // i still equals 127
 i -= 10;                   // i equals 117
 \end{lstlisting}
 
@@ -253,12 +253,12 @@ overflow do not occur.
 
 The following frequently used types are given shortands.
 \begin{lstlisting}{}
-typedef int_u<8,  strict>	int_u8;
-typedef int_u<16, strict>	int_u16;
-typedef int_u<32, strict>	int_u32;
-typedef int_u<8,  saturate>	int_u8s;
-typedef int_u<16, saturate>	int_u16s;
-typedef int_u<32, saturate>	int_u32s;
+typedef int_u<8,  strict>       int_u8;
+typedef int_u<16, strict>       int_u16;
+typedef int_u<32, strict>       int_u32;
+typedef int_u<8,  saturate>     int_u8s;
+typedef int_u<16, saturate>     int_u16s;
+typedef int_u<32, saturate>     int_u32s;
 \end{lstlisting}
 
 \subsection{\code{int_s<N, BEHAVIOR=strict>}}
@@ -272,12 +272,12 @@ unsigned and signed integers.
 
 The following \code{typedef}s are defined.
 \begin{lstlisting}{}
-typedef int_s<8,  strict>	int_s8;
-typedef int_s<16, strict>	int_s16;
-typedef int_s<32, strict>	int_s32;
-typedef int_s<8,  saturate>	int_s8s;
-typedef int_s<16, saturate>	int_s16s;
-typedef int_s<32, saturate>	int_s32s;
+typedef int_s<8,  strict>       int_s8;
+typedef int_s<16, strict>       int_s16;
+typedef int_s<32, strict>       int_s32;
+typedef int_s<8,  saturate>     int_s8s;
+typedef int_s<16, saturate>     int_s16s;
+typedef int_s<32, saturate>     int_s32s;
 \end{lstlisting}
 
 \subsection{\code{sfloat} and \code{dfloat}}
@@ -420,7 +420,7 @@ All the following members of \code{typetraits<T>} are typedefs.
 \begin{description}
 \item[\code{base_type}] The base type for \code{T}, i.e., \code{T} without
 any decoration.  For instance
-\code{typetraits< range<int_u8,10,25> >::base_type}
+\code{typetraits< range<int_u8, bounded_u<10,25>, strict> >::base_type}
 is \code{int_u8}.
 
 Ada programmers will probably recognize the \code{T'Base} attribute.
