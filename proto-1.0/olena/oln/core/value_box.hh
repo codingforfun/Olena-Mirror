@@ -29,7 +29,6 @@
 # define OLENA_CORE_VALUE_BOX_HH
 
 # include <iostream>
-
 # include <oln/core/properties.hh>
 
 
@@ -79,57 +78,41 @@ namespace oln {
     typedef oln_type_of(I, point) point_type;
 
 
-    /// op==
-
-    bool operator==(const value_box<I>& rhs) const
+    /// Operator == (rhs is a value_box).
+    template <typename II>
+    bool operator==(const value_box<II>& rhs) const
     {
       return this->value() == rhs.value();
     }
 
-    template <typename II>
-    bool operator==(const value_box<II>& rhs) const
-    {
-      return this->value() < rhs.value();
-    }
-
+    /// Operator == (rhs is a value).
     template <typename V>
     bool operator==(const V& rhs) const
     {
       return this->value() == rhs;
     }
 
+    /// Operator !=.
     template <typename V>
     bool operator!=(const V& rhs) const
     {
       return ! this->operator==(rhs);
     }
 
-    /*! \brief operator <
-    **
-    ** Define the main comparison operator for value_box. <= >= and >
-    ** are computed using integre operators \see ntg/core/global_ops.hh:138.
-    */
-
-    template <typename V>
-    bool operator<(const V& rhs) const
-    {
-      return this->value() < rhs;
-    }
-
+    /// Operator < (rhs is a value_box).
     template <typename II>
     bool operator<(const value_box<II>& rhs) const
     {
       return this->value() < rhs.value();
     }
 
-    /*! \brief specialized version for value_box<I>
-    **
-    ** FIXME: why do we need this class ???
-    */
-    bool operator<(const value_box<I>& rhs) const
+    /// Operator < (rhs is a value).
+    template <typename V>
+    bool operator<(const V& rhs) const
     {
-      return this->value() < rhs.value();
+      return this->value() < rhs;
     }
+
 
     /*! \brief op=
     ** FIXME:...
@@ -277,46 +260,41 @@ namespace oln {
     typedef oln_type_of(I, point) point_type;
 
 
-    /// op==
-    bool operator==(const value_box<const I>& rhs) const
+    /// Operator == (rhs is a value_box).
+    template <typename II>
+    bool operator==(const value_box<II>& rhs) const
     {
       return this->value() == rhs.value();
     }
 
-    template <typename II>
-    bool operator==(const value_box<const II>& rhs) const
-    {
-      return this->value() < rhs.value();
-    }
-
+    /// Operator == (rhs is a value).
     template <typename V>
     bool operator==(const V& rhs) const
     {
       return this->value() == rhs;
     }
 
+    /// Operator !=.
     template <typename V>
     bool operator!=(const V& rhs) const
     {
       return ! this->operator==(rhs);
     }
 
+    /// Operator < (rhs is a value_box).
+    template <typename II>
+    bool operator<(const value_box<II>& rhs) const
+    {
+      return this->value() < rhs.value();
+    }
+
+    /// Operator < (rhs is a value).
     template <typename V>
     bool operator<(const V& rhs) const
     {
       return this->value() < rhs;
     }
 
-    template <typename II>
-    bool operator<(const value_box<const II>& rhs) const
-    {
-      return this->value() < rhs.value();
-    }
-
-    bool operator<(const value_box<const I>& rhs) const
-    {
-      return this->value() < rhs.value();
-    }
 
     /*! \brief Assignment (op=) is declared but undefined.
     */
@@ -400,13 +378,12 @@ namespace oln {
 } // end of namespace oln
 
 
-
+/// Operator <<.
 template <typename I>
 std::ostream& operator<<(std::ostream& ostr, const oln::value_box<I>& vb)
 {
   return ostr << vb.value();
 }
-
 
 
 #endif // ! OLENA_CORE_VALUE_BOX_HH
