@@ -80,7 +80,7 @@ namespace mlc
 
     // these reinterpret_casts allow for diamond hierarchies
     // whereas *static_cast<const E*>(this) is forbiden
-    // in such cases; if a bug occurs because one of these
+    // in such cases; if a bug occurs because of one of these
     // casts, please submit a bug report!
 
           E& exact()       { return reinterpret_cast<E&>(*this); }
@@ -90,7 +90,6 @@ namespace mlc
     // please now use exact() instead of self()
     inline       E& self();
     inline const E& self() const;
-
 
     static std::string name() { return std::string("any<") + E::name() + ">"; }
   protected:

@@ -1,5 +1,9 @@
 2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* ref/processing.tpl: Fix namespaces.
+
+2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* Merge from cleanup:
 
 	2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
