@@ -1,11 +1,11 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_7_reconf 1)
-(Parent-Version oln 0_5 104)
+(Project-Version oln 0_7_reconf 2)
+(Parent-Version oln 0_7_reconf 1)
 (Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Wed, 11 Dec 2002 19:11:32 +0100")
+(Checkin-Time "Wed, 11 Dec 2002 19:20:50 +0100")
 (Checkin-Login raph)
 ;; diff-ignore configure$
 ;; diff-ignore aclocal\.m4$
@@ -83,7 +83,7 @@
 (Project-Keywords)
 (Files
   
-  (oln/ChangeLog (oln/6_ChangeLog 1.50.1.98.1.3 660))
+  (attic/oln-ChangeLog (oln/6_ChangeLog 1.50.1.98.1.3 660))
   (configure.ac (oln/3_configure. 1.33 644))
   
   (attic/README (oln/1_README 1.5 660))
@@ -99,7 +99,7 @@
   (doc/demo/test-reconstruction.cc (oln/e/22_test-recon 1.7 660))
   (doc/demo/tour.cc (oln/d/45_tour.cc 1.5 660))
 
-  (doc/ChangeLog (oln/e/1_ChangeLog 1.31 660))
+  (attic/doc-ChangeLog (oln/e/1_ChangeLog 1.31 660))
   (doc/configure.ac (oln/e/2_configure. 1.10 660))
   (doc/configure (oln/e/3_configure 1.16 775))
   (doc/doc/bin () :directory)
@@ -310,7 +310,7 @@
   (oln/tests/meta/test_array1d.cc (oln/f/26_test_array 1.2 660))
   (oln/tests/meta/test_array2d.cc (oln/f/25_test_array 1.2 660))
   (oln/tests/meta/test_array3d.cc (oln/f/24_test_array 1.2 660))
-  (oln/tests/ChangeLog (oln/e/30_ChangeLog 1.51 660))
+  (attic/tests-ChangeLog (oln/e/30_ChangeLog 1.51 660))
   (oln/tests/check/check.hh (oln/e/40_check.hh 1.2 660))
   (oln/tests/check/data.cc (oln/f/5_data.cc 1.3 660))
   (oln/tests/check/data.hh (oln/f/6_data.hh 1.1 660))
@@ -763,17 +763,11 @@
   (tools/utilities/configure.ac (oln/o/27_configure. 1.1 664))
   (aclocal.m4 (oln/o/28_aclocal.m4 1.1 664))
 
+
+;; Files added by populate at Wed, 11 Dec 2002 19:17:58 +0100,
+;; to version 0_7_reconf.1(w), by raph:
+
+  (cleanup.sh (oln/o/29_cleanup.sh 1.1 775))
 )
-(Merge-Parents
-  (0_5.104 complete
-    (() doc/img/lena256.pgm doc/img/lena256.pgm n) (() doc/img/object.pbm doc/img/object.pbm n)
-    (() img/lena128.pgm img/lena128.pgm n) (() img/lena.pgm img/lena.pgm n)
-    (() src/tests/meta src/tests/meta n) (() src/tests/convol src/tests/convol n)
-    (() src/tests/data-src/lena.ppm src/tests/data-src/lena.ppm n) (() src/tests/data-src/random.pgm src/tests/data-src/random.pgm n)
-    (() src/tests/transforms/output src/tests/transforms/output n) (() src/tests/data-src/neighbor.pbm src/tests/data-src/neighbor.pbm n)
-    (() src/tests/data-src/neighbor9.pbm src/tests/data-src/neighbor9.pbm n) (() src/tests/data-src/se9.pbm src/tests/data-src/se9.pbm n)
-    (() src/tests/data-src/se.pbm src/tests/data-src/se.pbm n) (() img/face_se.pbm img/face_se.pbm n)
-    (() img/lena_dark.pgm img/lena_dark.pgm n) (() img/map.pbm img/map.pbm n)
-    (() src/configure.ac src/configure.ac n) (() src/Makefile.am src/Makefile.am n))
-)
+(Merge-Parents)
 (New-Merge-Parents)
