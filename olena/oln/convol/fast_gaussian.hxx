@@ -50,7 +50,7 @@ namespace oln {
 			      const oln_point_type(I)& start,
 			      const oln_point_type(I)& finish,
 			      coord len,
-			      constoln_dpoint_type(I)& d)
+			      const oln_dpoint_type(I)& d)
 	{
 	  std::vector<WorkType>	tmp1(len);
 	  std::vector<WorkType>	tmp2(len);

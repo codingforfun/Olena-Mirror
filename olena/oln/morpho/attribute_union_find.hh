@@ -114,7 +114,7 @@ namespace oln {
       {
 	typedef oln_point_type(T) point_t;
 	typedef oln_value_type(T) data_t;
-	typedefoln_concrete_type(T) image_t;
+	typedef oln_concrete_type(T) image_t;
 
 
 	// ACTIVE and INACTIVE are defined with a hook to be static

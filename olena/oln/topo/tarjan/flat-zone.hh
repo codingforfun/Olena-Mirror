@@ -49,7 +49,7 @@ namespace oln {
       {
 	typedef oln_point_type(I) point_t;
 	typedef oln_value_type(I)  data_t;
-	typedefoln_concrete_type(I) image_t;
+	typedef oln_concrete_type(I) image_t;
 
 	typedef tarjan::tarjan_set<image_t, tarjan::EMPTY_CLASS> tarjan_cc;
 

@@ -47,7 +47,7 @@ namespace oln {
       {
 	typedef oln_point_type(I) point_t;
 	typedef oln_value_type(I) data_t;
-	typedefoln_concrete_type(I) image_t;
+	typedef oln_concrete_type(I) image_t;
 
 	typedef typename mute<I, point_t>::ret ima_parent_t;
 	typedef typename mute<I, aux_data_t>::ret ima_aux_data_t;

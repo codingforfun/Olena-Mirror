@@ -48,7 +48,7 @@ typename mute< ImgType, Node(ImgType) >::ret
       class interpixel
       {
       public:
-	typedefoln_dpoint_type(I)	dpoint_t;
+	typedef oln_dpoint_type(I)	dpoint_t;
 	typedef oln_point_type(I)	point_t;
 	typedef Node(I)		node_t;
 	typedef FwdDirIter(I)	fwd_dir_iter_t;

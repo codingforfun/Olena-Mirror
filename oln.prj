@@ -1,78 +1,12 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 107)
-(Parent-Version oln 2003paradigm 105)
-(Version-Log "Index: olena/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-        * oln/arith/internal/opdecls.hh: Fix coding style.
-        * oln/convert/conversion.hh: Likewise.
-        * oln/convert/conversion_ng_se.hh: Likewise.
-        * oln/convol/convolution.hh: Likewise.
-        * oln/convol/fast_gaussian.hh: Likewise.
-        * oln/convol/fast_gaussian.hxx: Likewise.
-        * oln/core/apply.hh: Likewise.
-        * oln/core/fold.hh: Likewise.
-        * oln/core/generate.hh: Likewise.
-        * oln/core/traverse.hh: Likewise.
-        * oln/core/winneighb.hh: Likewise.
-        * oln/io/pnm_read_3d.hh: Likewise.
-        * oln/io/pnm_write_3d.hh: Likewise.
-        * oln/level/cc.hh: Likewise.
-        * oln/level/compare.hh: Likewise.
-        * oln/level/connected.hh: Likewise.
-        * oln/level/fill.hh: Likewise.
-        * oln/level/invert.hh: Likewise.
-        * oln/level/set_level.hh: Likewise.
-        * oln/morpho/closing.inc: Likewise.
-        * oln/morpho/dilation.hh: Likewise.
-        * oln/morpho/erosion.hh: Likewise.
-        * oln/morpho/extrema.hxx: Likewise.
-        * oln/morpho/extrema_killer.hh: Likewise.
-        * oln/morpho/fast_morpho.hh: Likewise.
-        * oln/morpho/fast_morpho.hxx: Likewise.
-        * oln/morpho/geodesic_dilation.hh: Likewise.
-        * oln/morpho/geodesic_erosion.hh: Likewise.
-        * oln/morpho/gradient.inc: Likewise.
-        * oln/morpho/hit_or_miss.inc: Likewise.
-        * oln/morpho/laplacian.inc: Likewise.
-        * oln/morpho/opening.inc: Likewise.
-        * oln/morpho/reconstruction.hh: Likewise.
-        * oln/morpho/splitse.hh: Likewise.
-        * oln/morpho/stat.hh: Likewise.
-        * oln/morpho/thickening.inc: Likewise.
-        * oln/morpho/thinning.inc: Likewise.
-        * oln/morpho/top_hat.inc: Likewise.
-        * oln/morpho/watershed.hh: Likewise.
-        * oln/morpho/watershed.hxx: Likewise.
-        * oln/transforms/dwt.hh: Likewise.
-        * oln/utils/histogram.hh: Likewise.
-        * tests/convert/convcomp.hh: Likewise.
-        * oln/morpho/attribute_closing_opening.hh: Likewise.
-        * oln/morpho/attribute_union_find.hh: Likewise.
-        * oln/topo/inter-pixel/inter-pixel.hxx: Likewise.
-        * oln/topo/tarjan/union.hh: Likewise.
-        * oln/topo/inter-pixel/inter-pixel.hh: Likewise.
-        * oln/topo/tarjan/flat-zone.hh: Likewise.
-        * oln/topo/combinatorial-map/cmap.hh: Likewise.
-        * oln/topo/inter-pixel/node.hh: Likewise.
-        * oln/core/abstract/image.hh: Likewise.
-        * oln/io/pnm_common.hh: Likewise.
-        * oln/io/image_write.hh: Likewise.
-        * oln/io/image_read.hh: Likewise.
-        * oln/io/pnm_read_data.hh: Likewise.
-        * oln/io/pnm_write_data.hh: Likewise.
-        * oln/io/pnm_read_2d.hh: Likewise.
-        * oln/io/pnm_write_2d.hh: Likewise.
-
-Index: metalic/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-        * mlc/type.hh: Fix coding style.
-
+(Project-Version oln 2003paradigm 108)
+(Parent-Version oln 2003paradigm 107)
+(Version-Log "Minor fixes.
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 06 Aug 2003 16:41:58 +0200")
+(Checkin-Time "Wed, 06 Aug 2003 16:56:36 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -252,7 +186,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/convol/convolution.hh (oln/f/39_convolutio 1.4.1.4.1.6 640))
   (olena/oln/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.5.1.5 640))
   (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.6.1.2 640))
-  (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.8.1.2 640))
+  (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.8.1.3 640))
   (olena/oln/core/accum.hh (oln/d/40_accum.hh 1.3 640))
   (olena/oln/core/apply.hh (oln/d/39_apply.hh 1.13 640))
   (olena/oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.15 640))
@@ -830,7 +764,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 
   (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.9 640))
-  (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.6 640))
+  (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.7 640))
   (olena/tests/convol () :directory)
   (metalic/config (../config) :symlink)
   (metalic/m4 () :directory)
@@ -876,10 +810,10 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (olena/oln/topo/inter-pixel/inter-pixel.hxx (oln/r/31_inter-pixe 1.5 640))
   (olena/oln/topo/combinatorial-map/cmap.hxx (oln/r/32_cmap.hxx 1.5 640))
-  (olena/oln/topo/tarjan/union.hh (oln/r/33_union.hh 1.5 640))
-  (olena/oln/topo/inter-pixel/inter-pixel.hh (oln/r/34_inter-pixe 1.10 640))
-  (olena/oln/topo/tarjan/flat-zone.hh (oln/r/35_flat-zone. 1.7 640))
-  (olena/oln/topo/combinatorial-map/cmap.hh (oln/r/36_cmap.hh 1.8 640))
+  (olena/oln/topo/tarjan/union.hh (oln/r/33_union.hh 1.6 640))
+  (olena/oln/topo/inter-pixel/inter-pixel.hh (oln/r/34_inter-pixe 1.11 640))
+  (olena/oln/topo/tarjan/flat-zone.hh (oln/r/35_flat-zone. 1.8 640))
+  (olena/oln/topo/combinatorial-map/cmap.hh (oln/r/36_cmap.hh 1.9 640))
 
 
 
@@ -1159,16 +1093,5 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (olena/tests/core/tests/image2 (oln/v/12_image2 1.2 600))
 )
-(Merge-Parents
-  (2003paradigm.106 complete
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (metalic/ChangeLog metalic/ChangeLog metalic/ChangeLog r)
-    (doc/demo/image.cc doc/demo/image.cc doc/demo/image.cc r) (olena/oln/core/box.hh olena/oln/core/box.hh olena/oln/core/box.hh r)
-    (olena/oln/core/box.hxx olena/oln/core/box.hxx olena/oln/core/box.hxx r) (olena/oln/core/dpoint1d.hxx olena/oln/core/dpoint1d.hxx olena/oln/core/dpoint1d.hxx r)
-    (olena/oln/core/image1d.hh olena/oln/core/image1d.hh olena/oln/core/image1d.hh r) (olena/oln/core/image2d.hh olena/oln/core/image2d.hh olena/oln/core/image2d.hh r)
-    (olena/oln/core/image3d.hh olena/oln/core/image3d.hh olena/oln/core/image3d.hh r) (olena/oln/core/image.hh olena/oln/core/image.hh olena/oln/core/image.hh r)
-    (metalic/mlc/type.hh metalic/mlc/type.hh metalic/mlc/type.hh m) (olena/oln/core/abstract/image_with_impl.hh olena/oln/core/abstract/image_with_impl.hh olena/oln/core/abstract/image_with_impl.hh r)
-    (olena/oln/core/impl/image_impl.hh olena/oln/core/impl/image_impl.hh olena/oln/core/impl/image_impl.hh r) (olena/oln/core/impl/image_array.hh olena/oln/core/impl/image_array.hh olena/oln/core/impl/image_array.hh r)
-    (olena/oln/core/impl/image_array3d.hh olena/oln/core/impl/image_array3d.hh olena/oln/core/impl/image_array3d.hh r) (olena/oln/core/impl/image_array2d.hh olena/oln/core/impl/image_array2d.hh olena/oln/core/impl/image_array2d.hh r)
-    (olena/oln/core/impl/image_array1d.hh olena/oln/core/impl/image_array1d.hh olena/oln/core/impl/image_array1d.hh r) (olena/tests/core/tests/image2 olena/tests/core/tests/image2 olena/tests/core/tests/image2 r))
-)
+(Merge-Parents)
 (New-Merge-Parents)

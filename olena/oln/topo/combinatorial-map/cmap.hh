@@ -50,7 +50,7 @@ namespace oln {
       class cmap
       {
       public:
-	typedefoln_dpoint_type(I)	dpoint_t;
+	typedef oln_dpoint_type(I)	dpoint_t;
 	typedef oln_point_type(I)	point_t;
 	typedef FwdDirIter(I)	fwd_dir_iter_t;
 	typedef BkdDirIter(I)	bkd_dir_iter_t;
