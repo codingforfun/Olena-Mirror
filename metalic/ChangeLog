@@ -1,3 +1,11 @@
+2004-01-19  Astrid Wang  <astrid@lrde.epita.fr>
+
+	* mlc/array/1d.hh: Add member function name(). Fix types in member
+	function normalize(). Add basic arithmetic operators.
+	* mlc/array/2d.hh: Likewise.
+	* mlc/array/3d.hh: Likewise.
+
+
 2003-11-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* mlc/type.hh (any_with_diamond): Use the static offset technique.
@@ -5,7 +13,7 @@
 2003-09-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* mlc/type.hh (any_with_diamond): Use a static offset instead of
-	an pointer member to find the exact type instance.	
+	an pointer member to find the exact type instance.
 	(mlc_init_static_hierarchy): Adjust consequently.
 
 2003-08-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
@@ -37,7 +45,7 @@
 	* mlc/optional.hh: Disable non tested code.
 
 2003-08-06  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* mlc/type.hh: Fix coding style.
 
 2003-08-06  Nicolas Burrus  <burrus_n@lrde.epita.fr>
@@ -45,7 +53,7 @@
 	* mlc/type.hh: Fix mlc_init_static_hierarchy.
 
 2003-08-05  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* mlc/type.hh: Add class any_with_diamond. Add new macro
 	mlc_init_static_hierarchy.
 
@@ -53,7 +61,7 @@
 
 	* mlc/type.hh: Remove deprecated self(). Remove deprecated class
 	bottom.
-	
+
 2003-08-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* mlc/bool.hh(returns_bool_<true>): Add ensure_type.
@@ -74,11 +82,11 @@
 	* mlc/type.hh(self): Use static_cast.
 
 2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* tests/main/runtests: Don't test directories and temporary files.
 
 2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* mlc/contract.hh: Use assert to save compilation time.
 
 2003-07-29  Nicolas Burrus  <burrus_n@lrde.epita.fr>
@@ -108,7 +116,7 @@
 
 	2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* tests/sanity/Makefile.am, 
+	* tests/sanity/Makefile.am,
 	tests/sanity/includes.test: New files.
 
 	2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
@@ -116,7 +124,7 @@
 	* mlc/type.hh: Minor update.
 
 	2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* mlc/is_a.hh: Rename is_a macro.
 	* mlc/type.hh: Rename Exact macro.
 
@@ -129,7 +137,7 @@
 	* tests/Makefile.am: Adjust with components.
 
 2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* tests/check/Makefile.am: Remove useless flags.
 
 2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
@@ -155,14 +163,14 @@
 	* tests/main: New directory.
 	* tests/main/Makefile.am, tests/main/runtests: New files.
 
-	* tests/Makefile.am: Adapt consequetly.	
+	* tests/Makefile.am: Adapt consequetly.
 
 	* tests/check/defs.in: New file.
-	
+
 	* tests/main/tests/ensure1, tests/main/tests/ensure2,
 	tests/main/tests/ensure3, tests/main/tests/is_a1,
 	tests/main/tests/pow2sup1, tests/main/tests/pow2sup2: New tests.
-	
+
 2003-03-05  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* mlc/is_a.hh: Add is_a_ macro.
@@ -174,7 +182,7 @@
 
 2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* mlc/bool.hh: Improve if_.	
+	* mlc/bool.hh: Improve if_.
 
 	* mlc/math.hh: Do not use ucmp.
 
@@ -182,7 +190,7 @@
 	* mlc/math.hh: ... this.
 
 	* mlc/Makefile.am: Adapt consequently.
-	
+
 	* mlc/ucmp.hh: Remove.
 
 	* mlc/array/1d.hxx, mlc/array/2d.hxx, mlc/array/3d.hxx: Simplify.
@@ -195,7 +203,7 @@
 	headers path.
 
 2003-03-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* mlc/objs.hh: Move array related code ...
 	* mlc/array/objs.hh: ... here.
 
@@ -217,10 +225,10 @@
 	* mlc/array/1d.hh, mlc/array/1d.hh, mlc/array/2d.hh,
 	mlc/array/3d.hh, mlc/array/all.hh: Update includes.
 
-	* mlc/config/system.hh: New file.  
+	* mlc/config/system.hh: New file.
 
 	* mlc/Makefile.am: Adjust consequently.
-	
+
 	* mlc/contract.hh, mlc/type.hh: Use mlc/config/system.hh instead of
 	oln/config/system.hh.
 
@@ -236,10 +244,10 @@
 2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* mlc/logic.hh: Remove.
-	
+
 	* mlc/basics.hh: Rename as ...
 	* mlc/bool.hh: ... this.
-	
+
 	* mlc/type.hh: Rename as ...
 	* mlc/is_a.hh: ... this.
 
@@ -262,10 +270,10 @@
 	* tests/Makefile.am: Add check directory.
 
 	* tests/array/Makefile.am: Adapt to new tests location.
-	
+
 	* tests/array/gen_test.cc (write_postlude_and_test): Remove
 	useless paths.
-	
+
 	* tests/check/check.hh, tests/check/Makefile.am,
 	tests/check/Makefile.check, tests/check/Makefile.flags: Adapt to
 	tests split.
@@ -286,5 +294,5 @@
 	* Makefile.am,
 	tests/Makefile.am,
 	tests/array/Makefile.am: New files.
-	
+
 	* ChangeLog: New file.

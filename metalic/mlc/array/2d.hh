@@ -31,6 +31,7 @@
 # include <mlc/array/objs.hh>
 # include <mlc/contract.hh>
 # include <mlc/cmp.hh>
+# include <ntg/basics.hh>
 
 # include <iostream>
 
@@ -78,19 +79,30 @@ namespace mlc
       return *this;
     }
 
+
+    // Name
+
+    static std::string
+    name()
+    {
+      return std::string("array2d< Info, ") + ntg_name(T) + " >";
+    }
+
+
+
     //
     // Operations on array
     //
 
-    typedef array2d<Info_, float> to_float; // FIXME : argh
 
     // Normalize (absolute values -> relative values)
 
-    to_float normalize()
+    array2d<Info_, ntg::float_s>
+    normalize()
     {
-      to_float tmp;
-      float sum = 0.f; // FIXME: float only?
-      const float epsilon = 0.01f; // FIXME : epsilon should be global
+      array2d<Info_, ntg::float_s> tmp;
+      ntg::float_s sum = 0.f;
+      const ntg::float_s epsilon = 0.01f; // FIXME : epsilon should be global
       unsigned i;
       for (i = 0; i < Info_::card; ++i)
 	sum += this->buffer_[i];
@@ -137,6 +149,60 @@ namespace mlc
 	tmp[i] = this->operator[]((i * Info_::ncols + i / Info_::nrows) % Info_::card);
       return tmp;
     }
+
+    // Operators
+
+    // FIXME: This code should be factorized between 1d, 2d and 3d.
+    // Think of a mechanism similar to apply() and apply2().
+
+    template <class U>
+    array2d< Info, ntg_return_type(times, T, U) >
+    operator*(U w)
+    {
+      array2d< Info, ntg_return_type(times, T, U) > tmp;
+      for (unsigned i = 0; i < Info::card; ++i)
+	tmp[i] = this->buffer_[i] * w;
+      return tmp;
+    }
+
+    template <class U>
+    array2d< Info, ntg_return_type(div, T, U) >
+    operator/(U w)
+    {
+      array2d< Info, ntg_return_type(div, T, U) > tmp;
+      for (unsigned i = 0; i < Info::card; ++i)
+	tmp[i] = this->buffer_[i] / w;
+      return tmp;
+    }
+
+    self operator+(const self& rhs) const
+    {
+      self tmp;
+      for (unsigned i = 0; i < Info::card; ++i)
+	tmp[i] = this->buffer_[i] + rhs.buffer_[i];
+      return tmp;
+    }
+    self& operator+=(const self& rhs)
+    {
+      for (unsigned i = 0; i < Info::card; ++i)
+	this->buffer_[i] += rhs.buffer_[i];
+      return *this;
+    }
+
+    self operator-(const self& rhs) const
+    {
+      self tmp;
+      for (unsigned i = 0; i < Info::card; ++i)
+	tmp[i] = this->buffer_[i] - rhs.buffer_[i];
+      return tmp;
+    }
+    self& operator-=(const self& rhs)
+    {
+      for (unsigned i = 0; i < Info::card; ++i)
+	this->buffer_[i] -= rhs.buffer_[i];
+      return *this;
+    }
+
 
     //
     // Accessors
@@ -200,8 +266,6 @@ namespace mlc
       lesseq< nrow, Info_::nrows - Info_::center_row - 1 >::ensure();
       lesseq< -Info_::center_col, ncol >::ensure();
       lesseq< ncol, Info_::ncols - Info_::center_col - 1 >::ensure();
-
-      // FIXME: return *(buffer_ + Info_::center + (row * Info_::ncols) + col);
       return *(buffer_ + Info_::center + (nrow * Info_::ncols) + ncol);
     }
 
@@ -228,8 +292,17 @@ namespace mlc
 
   // starter objects
 
-  static internal::array2d_start_<int>   ints_2d   = internal::array2d_start_<int>();
-  static internal::array2d_start_<float> floats_2d = internal::array2d_start_<float>();
+  // FIXME: what about other types? Replace this by a function
+  // returning a starter.
+
+# define array2d_starter(T) \
+  static internal::array2d_start_<T>   T##s_2d   = internal::array2d_start_<T>()
+
+  array2d_starter(int);		// ints_2d
+  array2d_starter(float);	// floats_2d
+
+
+  // print
 
   template<class Info, class T>
   std::ostream& operator<<(std::ostream& ostr, const array2d<Info, T>& rhs)
