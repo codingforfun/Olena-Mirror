@@ -28,6 +28,7 @@
 #ifndef OLENA_VALUE_INT_U_HH
 # define OLENA_VALUE_INT_U_HH
 
+# include <oln/config/system.hh>
 # include <oln/meta/cmp.hh>
 
 # include <oln/types/rec_value.hh>
@@ -38,7 +39,7 @@
 
 // Macros //
 
-# define INT_U_CTOR_FROM_BUILTIN(Builtin)       \
+# define INT_U_CTOR_FROM_BUILTIN_INT(Builtin)   \
 int_u (const Builtin rhs)			\
 {						\
   _value = optraits_type::check(rhs);		\
@@ -102,20 +103,38 @@ namespace oln
 
     // We define ctor for each builtin to avoid implicit builtin promotion
 
-    INT_U_CTOR_FROM_BUILTIN(unsigned long);
-    INT_U_CTOR_FROM_BUILTIN(signed   long);
+    INT_U_CTOR_FROM_BUILTIN_INT(unsigned long);
+    INT_U_CTOR_FROM_BUILTIN_INT(signed   long);
 
-    INT_U_CTOR_FROM_BUILTIN(unsigned int);
-    INT_U_CTOR_FROM_BUILTIN(signed   int);
+    INT_U_CTOR_FROM_BUILTIN_INT(unsigned int);
+    INT_U_CTOR_FROM_BUILTIN_INT(signed   int);
 
-    INT_U_CTOR_FROM_BUILTIN(unsigned short);
-    INT_U_CTOR_FROM_BUILTIN(signed   short);
+    INT_U_CTOR_FROM_BUILTIN_INT(unsigned short);
+    INT_U_CTOR_FROM_BUILTIN_INT(signed   short);
 
-    INT_U_CTOR_FROM_BUILTIN(unsigned char);
-    INT_U_CTOR_FROM_BUILTIN(signed   char);
+    INT_U_CTOR_FROM_BUILTIN_INT(unsigned char);
+    INT_U_CTOR_FROM_BUILTIN_INT(signed   char);
 
-    INT_U_CTOR_FROM_BUILTIN(float);
-    INT_U_CTOR_FROM_BUILTIN(double);
+    int_u (const float rhs)
+    {
+      _value = optraits_type::check(truncf(rhs));
+    }
+    self& operator=(const float rhs)
+    {
+      _value = optraits_type::check(truncf(rhs));
+      return *this;
+    }    
+
+    int_u (const double rhs)
+    {
+      _value = optraits_type::check(trunc(rhs));
+    }
+    self& operator=(const double rhs)
+    {
+      _value = optraits_type::check(trunc(rhs));
+      return *this;
+    }    
+
 
     // FIXME: add int_u<mbits> here, and check only if mbits > nbits
     int_u (const self& rhs)

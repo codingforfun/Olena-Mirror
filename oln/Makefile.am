@@ -151,6 +151,7 @@ nobase_oln_HEADERS =				\
   meta/cmp.hh					\
   meta/control.hh				\
   meta/logic.hh					\
+  meta/type.hh					\
   meta/ucmp.hh					\
   meta/ufuncs.hh				\
   morpho/closing.hh				\

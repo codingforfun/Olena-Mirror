@@ -1,5 +1,7 @@
 2002-08-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+        * oln/Makefile.am: Add oln/meta/type.hh.
+	* oln/types/int_u.hh: Fix float/double conversion.
 	* oln/meta/type.hh: Add workaround for g++ > 3.1 bug, add GPL header.
 
 2002-08-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
