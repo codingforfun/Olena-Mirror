@@ -1,5 +1,11 @@
 2005-04-03  Simon Odou  <simon@lrde.epita.fr>
 
+	* oln/core/properties.hh: Add missing property declaration for
+	backward point iterator and point iterator.
+	* oln/core/abstract/image.hh: Likewise.
+
+2005-04-03  Simon Odou  <simon@lrde.epita.fr>
+
 	* oln/core/pw/times.hh: Add missing header.
 	* oln/core/pw/div.hh: Likewise.
 	* oln/core/pw/plus.hh: Likewise.

@@ -64,7 +64,9 @@ namespace oln {
     mlc_decl_prop(category::image, value_type);
     mlc_decl_prop(category::image, point_type);
     mlc_decl_prop(category::image, size_type);
+    mlc_decl_prop(category::image, piter_type);
     mlc_decl_prop(category::image, fwd_piter_type);
+    mlc_decl_prop(category::image, bkd_piter_type);
     mlc_decl_prop_with_default(category::image, value_storage_type, mlc::no_type);
     mlc_decl_prop_with_default(category::image, storage_type, mlc::no_type);
     mlc_decl_prop_with_default(category::image, delegated_type, mlc::no_type);
@@ -101,7 +103,9 @@ namespace oln {
   mlc_register_prop(category::image, value_type);
   mlc_register_prop(category::image, point_type); 
   mlc_register_prop(category::image, size_type); 
+  mlc_register_prop(category::image, piter_type); 
   mlc_register_prop(category::image, fwd_piter_type); 
+  mlc_register_prop(category::image, bkd_piter_type); 
   mlc_register_prop(category::image, value_storage_type);
   mlc_register_prop(category::image, storage_type);
   mlc_register_prop(category::image, delegated_type);

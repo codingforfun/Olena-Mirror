@@ -60,6 +60,7 @@ namespace oln
     struct point_type;
     struct concrete_type;
     struct dpoint_type;
+    struct piter_type;
     struct fwd_piter_type;
     struct bkd_piter_type;
     struct fwd_witer_type;
