@@ -129,10 +129,6 @@ void buffer::append_length()
 
   add(reorder(len2_), false);
   add(reorder(len1_), false);
-  std::cout << len2_ << len1_<< std::endl;
-  std::cout << (*this)[data_.size()-2] << (*this)[data_.size()-1] << std::endl;
-  std::cout << data_.size() - 1<< std::endl;
-  std::cout << (*this)[14]<< std::endl;
   length_appended_ = true;
 };
 

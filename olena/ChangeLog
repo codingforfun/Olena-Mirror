@@ -1,5 +1,14 @@
 2004-03-19  Giovanni Palma  <giovanni@lrde.epita.fr>
 
+	* tests/utils/tests/md5: Add file
+	* oln/utils/key.hxx: Add constructor.
+	* oln/utils/key.hh: Likewise.
+	* oln/utils/buffer.hxx: Correct code.
+	* oln/Makefile.am: Add md5 files reference.
+
+
+2004-03-19  Giovanni Palma  <giovanni@lrde.epita.fr>
+
 	* oln/utils/md5.hh: Add function for md5 calls.
 	* oln/utils/md5.hxx: Likewise.
 

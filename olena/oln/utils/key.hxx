@@ -36,6 +36,14 @@ key::key(const std::vector<value_type> &data)
     data_[i] = data[i];
 }
 
+// Ctor implementation.
+inline
+key::key(const value_type *data)
+{
+  for (unsigned i = 0; i < 16; ++i)
+    data_[i] = data[i];
+}
+
 // [] operator implementation
 inline
 key::value_type &key::operator[](unsigned i)

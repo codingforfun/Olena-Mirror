@@ -1,0 +1,51 @@
+//								    -*- c++ -*-
+
+#include <ntg/int.hh>
+#include <oln/basics2d.hh>
+#include <oln/utils/md5.hh>
+
+#include <iostream>
+
+#include "check.hh"
+#include "data.hh"
+
+using namespace oln;
+using namespace ntg;
+using namespace utils;
+
+#define OK_OR_FAIL				\
+      std::cout << "OK" << std::endl;		\
+    else					\
+      {						\
+	std::cout << "FAIL" << std::endl;	\
+	fail = true;				\
+      }
+
+bool
+check()
+{
+  bool				fail = false;
+  oln::utils::key::value_type	data_ppm[16] = {0x47, 0xa5, 0xb6, 0xa2, 0xc8,
+					    0xf1, 0x4d, 0xb8, 0x90, 0x67,
+					    0xaa, 0x19, 0x3d, 0x43, 0xb6,
+					    0xe0};
+  key				lena_ppm(data_ppm);
+  oln::utils::key::value_type	data_pgm[16] = {0xc7, 0xe4, 0x4, 0x4c, 0x32,
+						0x1d, 0x2e, 0x3e, 0x5c, 0xbf,
+						0x89, 0x8d, 0x3f, 0x94, 0x16,
+						0xd5};
+  key				lena_pgm(data_pgm);
+
+  image2d<rgb_8>		src = load(rdata("lena.ppm"));
+  image2d<int_u8>		src2 = load(rdata("lena.pgm"));
+
+
+  std::cout << "MD5 on vectorial images: ";
+  if (lena_ppm == md5(src))
+    OK_OR_FAIL;
+  std::cout << "MD5 on non vectorial images: ";
+  if (lena_pgm == md5(src2))
+    OK_OR_FAIL;
+
+  return fail;
+}

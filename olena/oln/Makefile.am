@@ -205,6 +205,12 @@ nobase_oln_HEADERS =				\
   transforms/dwt.hh				\
   transforms/wavelet_coeffs.hh			\
   utils/copy.hh					\
+  utils/key.hh					\
+  utils/key.hxx					\
+  utils/md5.hh					\
+  utils/md5.hxx					\
+  utils/buffer.hh				\
+  utils/buffer.hxx				\
   utils/histogram.hh				\
   utils/stat.hh					\
   utils/special_points.hh			\

@@ -1,113 +1,160 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 99)
-(Parent-Version oln 10 98)
+(Project-Version oln 10 100)
+(Parent-Version oln 10 99)
 (Version-Log "Index: olena/ChangeLog
 from  Giovanni Palma  <giovanni@lrde.epita.fr>
-	* oln/utils/md5.hh: Add function for md5 calls.
-	* oln/utils/md5.hxx: Likewise.
+	* tests/utils/tests/md5: Add file
+	* oln/utils/key.hxx: Add constructor.
+	* oln/utils/key.hh: Likewise.
+	* oln/utils/buffer.hxx: Correct code.
+	* oln/Makefile.am: Add md5 files reference.
+
 
 +2004-03-19  Giovanni Palma  <giovanni@lrde.epita.fr>
 +
- 	* oln/utils/buffer.hxx:  Add file.
- 	* oln/utils/buffer.hh: Likewise.
- 	* oln/utils/key.hh: Likewise.
-Index: olena/oln/utils/md5.hxx
---- olena/oln/utils/md5.hxx Fri, 19 Mar 2004 15:52:57 +0100 palma_g (oln/k/13_md5.hxx 1.1 644)
-+++ olena/oln/utils/md5.hxx Fri, 19 Mar 2004 16:49:29 +0100 palma_g (oln/k/13_md5.hxx 1.1 644)
-@@ -281,4 +281,44 @@
-     step();
-   return gen_key();
+ 	* oln/utils/md5.hh: Add function for md5 calls.
+ 	* oln/utils/md5.hxx: Likewise.
+ 
+Index: olena/oln/Makefile.am
+--- olena/oln/Makefile.am Mon, 08 Mar 2004 08:12:15 +0100 palma_g (oln/q/47_Makefile.a 1.3.1.1.1.6.1.7.1.2 640)
++++ olena/oln/Makefile.am Fri, 19 Mar 2004 17:24:16 +0100 palma_g (oln/q/47_Makefile.a 1.3.1.1.1.6.1.7.1.2 640)
+@@ -205,6 +205,12 @@
+   transforms/dwt.hh				\\
+   transforms/wavelet_coeffs.hh			\\
+   utils/copy.hh					\\
++  utils/key.hh					\\
++  utils/key.hxx					\\
++  utils/md5.hh					\\
++  utils/md5.hxx					\\
++  utils/buffer.hh				\\
++  utils/buffer.hxx				\\
+   utils/histogram.hh				\\
+   utils/stat.hh					\\
+   utils/special_points.hh			\\
+Index: olena/oln/utils/buffer.hxx
+--- olena/oln/utils/buffer.hxx Fri, 19 Mar 2004 15:52:57 +0100 palma_g (oln/k/9_buffer.hxx 1.1 644)
++++ olena/oln/utils/buffer.hxx Fri, 19 Mar 2004 16:58:18 +0100 palma_g (oln/k/9_buffer.hxx 1.1 644)
+@@ -129,10 +129,6 @@
+ 
+   add(reorder(len2_), false);
+   add(reorder(len1_), false);
+-  std::cout << len2_ << len1_<< std::endl;
+-  std::cout << (*this)[data_.size()-2] << (*this)[data_.size()-1] << std::endl;
+-  std::cout << data_.size() - 1<< std::endl;
+-  std::cout << (*this)[14]<< std::endl;
+   length_appended_ = true;
+ };
+ 
+Index: olena/oln/utils/key.hxx
+--- olena/oln/utils/key.hxx Fri, 19 Mar 2004 15:52:57 +0100 palma_g (oln/k/11_key.hxx 1.1 644)
++++ olena/oln/utils/key.hxx Fri, 19 Mar 2004 17:05:24 +0100 palma_g (oln/k/11_key.hxx 1.1 644)
+@@ -36,6 +36,14 @@
+     data_[i] = data[i];
  }
-+
-+
-+// md5 implementation.
-+template <class I>
+ 
++// Ctor implementation.
 +inline
-+key md5(const abstract::non_vectorial_image<I> &im)
++key::key(const value_type *data)
 +{
-+  oln_iter_type(I)	p(im);
-+  buffer	b;
-+
-+  for_all(p)
-+    b.add(im[p]);
-+  b.append_padding();
-+  b.append_length();
-+
-+  oln::utils::MD5	md5(b);
-+  return md5.execute();
++  for (unsigned i = 0; i < 16; ++i)
++    data_[i] = data[i];
 +}
 +
-+// md5 implementation.
-+template <class I>
-+inline
-+key md5(const abstract::vectorial_image<I> &im)
+ // [] operator implementation
+ inline
+ key::value_type &key::operator[](unsigned i)
+Index: olena/oln/utils/key.hh
+--- olena/oln/utils/key.hh Fri, 19 Mar 2004 15:52:57 +0100 palma_g (oln/k/12_key.hh 1.1 644)
++++ olena/oln/utils/key.hh Fri, 19 Mar 2004 17:11:43 +0100 palma_g (oln/k/12_key.hh 1.1 644)
+@@ -52,6 +52,14 @@
+       explicit key(const std::vector<value_type> &data);
+ 
+       /*!
++      ** \\brief Constructor used to initialize the key.
++      **
++      ** \\pre There must at least 16 elements in data.
++      ** \\arg data Inuput data.
++      */
++      explicit key(const value_type *data);
++
++      /*!
+       ** \\brief [] operator.
+       **
+       ** \\return the ith byte of the key.
+@@ -95,8 +103,10 @@
+       */
+       friend std::ostream &operator<<(std::ostream &stream, const key &k)
+       {
+-	for (unsigned i = 0; i < 16; ++i)
+-	  stream << std::hex << k[i];
++	stream << \"{\";
++	for (unsigned i = 0; i < 15; ++i)
++	  stream << \"0x\" << std::hex << k[i] << \", \";
++	stream << \"0x\" << std::hex << k[15] << \"}\";
+ 	return stream;
+       }
+ 
+Index: olena/tests/utils/tests/md5
+--- olena/tests/utils/tests/md5 Fri, 19 Mar 2004 17:28:06 +0100 palma_g ()
++++ olena/tests/utils/tests/md5 Fri, 19 Mar 2004 17:23:10 +0100 palma_g (oln/k/15_md5  644)
+@@ -0,0 +1,51 @@
++//								    -*- c++ -*-
++
++#include <ntg/int.hh>
++#include <oln/basics2d.hh>
++#include <oln/utils/md5.hh>
++
++#include <iostream>
++
++#include \"check.hh\"
++#include \"data.hh\"
++
++using namespace oln;
++using namespace ntg;
++using namespace utils;
++
++#define OK_OR_FAIL				\\
++      std::cout << \"OK\" << std::endl;		\\
++    else					\\
++      {						\\
++	std::cout << \"FAIL\" << std::endl;	\\
++	fail = true;				\\
++      }
++
++bool
++check()
 +{
-+  oln_iter_type(I)	p(im);
-+  buffer	b;
-+  //  unsigned nb =
++  bool				fail = false;
++  oln::utils::key::value_type	data_ppm[16] = {0x47, 0xa5, 0xb6, 0xa2, 0xc8,
++					    0xf1, 0x4d, 0xb8, 0x90, 0x67,
++					    0xaa, 0x19, 0x3d, 0x43, 0xb6,
++					    0xe0};
++  key				lena_ppm(data_ppm);
++  oln::utils::key::value_type	data_pgm[16] = {0xc7, 0xe4, 0x4, 0x4c, 0x32,
++						0x1d, 0x2e, 0x3e, 0x5c, 0xbf,
++						0x89, 0x8d, 0x3f, 0x94, 0x16,
++						0xd5};
++  key				lena_pgm(data_pgm);
 +
-+  for_all(p)
-+    {
-+      for (unsigned i = 0; i < ntg_nb_comp(oln_value_type(I)); ++i)
-+	b.add(im[p][i]);
-+    }
-+  b.append_padding();
-+  b.append_length();
++  image2d<rgb_8>		src = load(rdata(\"lena.ppm\"));
++  image2d<int_u8>		src2 = load(rdata(\"lena.pgm\"));
 +
-+  oln::utils::MD5	md5(b);
-+  return md5.execute();
++
++  std::cout << \"MD5 on vectorial images: \";
++  if (lena_ppm == md5(src))
++    OK_OR_FAIL;
++  std::cout << \"MD5 on non vectorial images: \";
++  if (lena_pgm == md5(src2))
++    OK_OR_FAIL;
++
++  return fail;
 +}
-+
- #endif // !OLENA_OLN_UTILS_MD5_HXX
-Index: olena/oln/utils/md5.hh
---- olena/oln/utils/md5.hh Fri, 19 Mar 2004 15:52:57 +0100 palma_g (oln/k/14_md5.hh 1.1 644)
-+++ olena/oln/utils/md5.hh Fri, 19 Mar 2004 16:38:39 +0100 palma_g (oln/k/14_md5.hh 1.1 644)
-@@ -31,6 +31,8 @@
- # include <ntg/all.hh>
- # include <vector>
- 
-+# include <oln/core/abstract/image_with_type_with_dim.hh>
-+
- # include <oln/utils/key.hh>
- # include <oln/utils/buffer.hh>
- 
-@@ -199,6 +201,30 @@
- 
- #include <oln/utils/md5.hxx>
- 
-+    /*!
-+    ** \\brief Compute The Md5 value of an image.
-+    **
-+    ** \\param I Exact type of the image.
-+    **
-+    ** \\arg im Image to process.
-+    **
-+    ** Non vectorial image version.
-+    */
-+    template <class I>
-+    key md5(const abstract::non_vectorial_image<I> &im);
-+
-+    /*!
-+    ** \\brief Compute The Md5 value of an image.
-+    **
-+    ** \\param I Exact type of the image.
-+    **
-+    ** \\arg im Image to process.
-+    **
-+    ** Vectorial image version.
-+    */
-+    template <class I>
-+    key md5(const abstract::vectorial_image<I> &im);
-+
-   } // !utils
- } // !oln
- #endif // !OLENA_OLN_UTILS_MD5_HH
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 19 Mar 2004 16:54:46 +0100")
+(Checkin-Time "Fri, 19 Mar 2004 17:28:35 +0100")
 (Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -214,7 +261,7 @@ Index: olena/oln/utils/md5.hh
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.8 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.37 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.40 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.41 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 640))
 
@@ -891,7 +938,7 @@ Index: olena/oln/utils/md5.hh
   (integre/tests/check/defs.in (oln/q/42_defs.in 1.1 640))
   (metalic/mlc/array/objs.hh (oln/q/45_objs.hh 1.3 640))
   (metalic/mlc/config/system.hh (oln/q/46_system.hh 1.2 640))
-  (olena/oln/Makefile.am (oln/q/47_Makefile.a 1.3.1.1.1.6.1.7.1.2 640))
+  (olena/oln/Makefile.am (oln/q/47_Makefile.a 1.3.1.1.1.6.1.7.1.3 640))
   (integre/ntg/config/system.hh (oln/q/48_system.hh 1.2 640))
   (metalic/tests/main/tests/is_a1 (oln/r/17_is_a1 1.3 640))
   (metalic/tests/main/tests/ensure3 (oln/r/18_ensure3 1.3 640))
@@ -1331,14 +1378,19 @@ Index: olena/oln/utils/md5.hh
 ;; Files added by populate at Fri, 19 Mar 2004 15:49:20 +0100,
 ;; to version 10.97(w), by palma_g:
 
-  (olena/oln/utils/buffer.hxx (oln/k/9_buffer.hxx 1.1 644))
+  (olena/oln/utils/buffer.hxx (oln/k/9_buffer.hxx 1.2 644))
   (olena/oln/utils/buffer.hh (oln/k/10_buffer.hh 1.1 644))
-  (olena/oln/utils/key.hxx (oln/k/11_key.hxx 1.1 644))
-  (olena/oln/utils/key.hh (oln/k/12_key.hh 1.1 644))
+  (olena/oln/utils/key.hxx (oln/k/11_key.hxx 1.2 644))
+  (olena/oln/utils/key.hh (oln/k/12_key.hh 1.2 644))
   (olena/oln/utils/md5.hxx (oln/k/13_md5.hxx 1.2 644))
   (olena/oln/utils/md5.hh (oln/k/14_md5.hh 1.2 644))
+
+;; Files added by populate at Fri, 19 Mar 2004 17:25:06 +0100,
+;; to version 10.99(w), by palma_g:
+
+  (olena/tests/utils/tests/md5 (oln/k/15_md5 1.1 644))
 )
 (Merge-Parents
-  (10.98 complete)
+  (10.99 complete)
 )
 (New-Merge-Parents)

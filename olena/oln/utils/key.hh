@@ -52,6 +52,14 @@ namespace oln {
       explicit key(const std::vector<value_type> &data);
 
       /*!
+      ** \brief Constructor used to initialize the key.
+      **
+      ** \pre There must at least 16 elements in data.
+      ** \arg data Inuput data.
+      */
+      explicit key(const value_type *data);
+
+      /*!
       ** \brief [] operator.
       **
       ** \return the ith byte of the key.
@@ -95,8 +103,10 @@ namespace oln {
       */
       friend std::ostream &operator<<(std::ostream &stream, const key &k)
       {
-	for (unsigned i = 0; i < 16; ++i)
-	  stream << std::hex << k[i];
+	stream << "{";
+	for (unsigned i = 0; i < 15; ++i)
+	  stream << "0x" << std::hex << k[i] << ", ";
+	stream << "0x" << std::hex << k[15] << "}";
 	return stream;
       }
 
