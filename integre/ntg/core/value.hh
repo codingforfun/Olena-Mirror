@@ -88,7 +88,7 @@ namespace ntg {
     This class actually store the real value (usually a builtin). The
     value type is determined from the exact type.
 
-    For example, int_u8::value() returns an "unsigned char".
+    For example, int_u8::val() returns an "unsigned char".
   */
 
   template <class E>

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -72,7 +72,7 @@ namespace oln {
 
       U& operator[](const T& i)
       {
-	return _values[unsigned(i.value() - ntg::optraits<T>::min())];
+	return _values[unsigned(i.val() - ntg::optraits<T>::min())];
       }
 
       friend T min<T, U>(const histogram<T, U>& hist);
@@ -85,7 +85,7 @@ namespace oln {
 	Iter(I) p(img);
 
 	for_all (p)
-	  _values[unsigned(img[p].value())]++;
+	  _values[unsigned(img[p].val())]++;
       }
     protected:
       U *_values;
@@ -155,7 +155,7 @@ namespace oln {
 
       U& operator[](const T& i)
       {
-	unsigned idx = unsigned(i.value() - ntg::optraits<T>::min());
+	unsigned idx = unsigned(i.val() - ntg::optraits<T>::min());
 	adjust(idx);
 	return _values[idx];
       }
@@ -200,7 +200,7 @@ namespace oln {
 
       U& operator[](const T& i)
       {
-	unsigned idx = unsigned(i.value() - ntg::optraits<T>::min());
+	unsigned idx = unsigned(i.val() - ntg::optraits<T>::min());
 	adjust(idx);
 	return _values[idx];
       }
@@ -318,7 +318,7 @@ namespace oln {
       // level
       Iter(I) p(im);
       for_all(p)
-	*(ptr[unsigned(im[p].value())]++) = p;
+	*(ptr[unsigned(im[p].val())]++) = p;
     }
 
   } // utils

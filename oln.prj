@@ -1,60 +1,24 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln integre 10)
-(Parent-Version oln integre 9)
-(Version-Log "Index: doc/ChangeLog
+(Project-Version oln integre 11)
+(Parent-Version oln integre 10)
+(Version-Log "Index: olena/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* demo/convol-gaussian.cc, demo/tour.cc,
-	ref/ref-types.tex: Rename sfloat and dfloat.
-
-Index: integre/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	* ntg/core/builtins_properties.hh, ntg/core/predecls.hh,
-	ntg/float.hh, ntg/utils/cast.hh, ntg/vect/cplx.hh,
-	tests/types/tests/conv1, tests/types/tests/conv2,
-	tests/types/tests/cplx1, tests/types/tests/cplx2,
-	tests/types/tests/cplx3, tests/types/tests/cplx4,
-	tests/types/tests/cplx6, tests/types/tests/float1,
-	tests/types/tests/float2, tests/types/tests/float_c1,
-	tests/types/tests/float_r1, tests/types/tests/float_r2,
-	tests/types/tests/optrait2a, tests/types/tests/optrait2b,
-	tests/types/tests/optrait3: Rename sfloat and dfloat.
+	* oln/math/macros.hh, 
+	oln/utils/histogram.hh: Rename real_value() calls.
 
 +2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 +	
- 	* ntg/enum/bin.hh, ntg/color/color.hh, ntg/vect/cplx.hh,
- 	ntg/vect/cplx_representation.hh, ntg/real/cycle.hh,
- 	ntg/core/global_ops_defs.hh, ntg/core/global_ops.hh,
-Index: olena/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* conf/configure.ac, oln/arith/internal/opdecls.hh,
-	oln/convol/fast_gaussian.hh, oln/convol/fast_gaussian.hxx,
-	oln/convol/fast_gaussian_coefficient.hh, oln/level/invert.hh,
-	oln/math/macros.hh, oln/transforms/dwt.hh,
-	oln/transforms/fft.hh, oln/transforms/wavelet_coeffs.hh,
-	oln/utils/stat.hh, tests/convert/convcomp.cc,
-	tests/convert/convcomp.hh, tests/transforms/dwt.cc,
-	tests/transforms/fft.cc: Rename sfloat and dfloat.
-
-Index: tools/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* utilities/morpho/morpho_template_gaussian.cc: Rename sfloat and
-	dfloat.
-
+ 	* conf/configure.ac, oln/arith/internal/opdecls.hh,
+ 	oln/convol/fast_gaussian.hh, oln/convol/fast_gaussian.hxx,
+ 	oln/convol/fast_gaussian_coefficient.hh, oln/level/invert.hh,
 Index: tools/swilena/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* doc/swilena.texi, python/typedefs.hh, src/swilena.i,
-	src/swilena_convert_dim.i, src/swilena_convoldefs.i,
-	src/swilena_dim.i, src/swilena_morpho_dim.i,
-	src/swilena_typedefs.i: Rename sfloat and dfloat..
+	* src/swilena_types.i, doc/swilena.texi: Rename value().
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 02 May 2003 23:12:39 +0200")
+(Checkin-Time "Fri, 02 May 2003 23:24:45 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -143,9 +107,9 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (doc/ChangeLog (oln/o/31_ChangeLog 1.32 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.5 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.15 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.5 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.6 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.8 640))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.8 640))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.9 640))
 
   (attic/oln-ChangeLog (oln/6_ChangeLog 1.50.1.98.1.5 600))
   (attic/doc-ChangeLog (oln/e/1_ChangeLog 1.31 600))
@@ -325,13 +289,13 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/level/compare.hh (oln/31_compare.hh 1.4 640))
   (olena/oln/level/connected.hh (oln/30_connected. 1.9.1.3 640))
   (olena/oln/level/fill.hh (oln/32_fill.hh 1.4 640))
-  (olena/oln/level/invert.hh (oln/33_invert.hh 1.5.2.2.1.2 640))
+  (olena/oln/level/invert.hh (oln/33_invert.hh 1.5.2.2.1.3 640))
   (olena/oln/level/lut.hh (oln/29_lut.hh 1.7 640))
   (olena/oln/level/set_level.hh (oln/p/1_set_level. 1.5 640))
   (olena/oln/level/threshold.hh (oln/f/15_threshold. 1.8 640))
   (config/oln.m4 (oln/j/15_oln.m4 1.27 640))
 
-  (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.4 640))
+  (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.5 640))
   (metalic/mlc/array/1d.hh (oln/f/23_array1d.hh 1.8 640))
   (metalic/mlc/array/1d.hxx (oln/f/22_array1d.hx 1.9 640))
   (metalic/mlc/array/2d.hh (oln/f/21_array2d.hh 1.8 640))
@@ -425,7 +389,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   
   (integre/ntg/core/predecls.hh (oln/g/10_predecls.h 1.10.1.6 640))
   (integre/ntg/real/range.hh (oln/g/9_range.hh 1.9.1.7 640))
-  (integre/ntg/core/value.hh (oln/g/8_rec_value. 1.8.1.4 640))
+  (integre/ntg/core/value.hh (oln/g/8_rec_value. 1.8.1.5 640))
   (integre/ntg/utils/to_oln.hh (oln/g/7_to_oln.hh 1.7.1.3 640))
   (integre/ntg/core/type.hh (oln/g/6_type.hh 1.6 640))
   (integre/ntg/enum/typetraits_builtins_bool.hh (oln/i/9_typetraits 1.4.1.4 640))
@@ -435,7 +399,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (integre/ntg/core/typetraits.hh (oln/g/5_typetraits 1.7 640))
   (integre/ntg/vect/vec.hh (oln/h/43_vec.hh 1.7.1.7 640))
   (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.5 640))
-  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.3 640))
+  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.4 640))
   (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.4 640))
   (olena/oln/utils/timer.hh (oln/8_timer.hh 1.5 640))
   (olena/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.4 640))
@@ -575,7 +539,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (tools/Makefile.am (oln/o/37_Makefile.a 1.6 640))
   (tools/swilena/configure.ac (oln/o/26_configure. 1.2 640))
   (tools/swilena/doc/Makefile.am (oln/n/39_Makefile.a 1.2 640))
-  (tools/swilena/doc/swilena.texi (oln/n/40_swilena.te 1.2 600))
+  (tools/swilena/doc/swilena.texi (oln/n/40_swilena.te 1.3 600))
   (tools/swilena/java/Makefile.am (oln/n/42_Makefile.a 1.1 600))
   ; (tools/swilena/java/Makefile.in ())
   (tools/swilena/Makefile.am (oln/o/25_Makefile.a 1.3 640))
@@ -611,7 +575,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (tools/swilena/src/swilena_neighborhood.i (oln/o/8_swilena_ne 1.1 600))
   (tools/swilena/src/swilena_point.i (oln/o/11_swilena_po 1.1 600))
   (tools/swilena/src/swilena_typedefs.i (oln/o/16_swilena_ty 1.2 600))
-  (tools/swilena/src/swilena_types.i (oln/o/3_swilena_ty 1.3 640))
+  (tools/swilena/src/swilena_types.i (oln/o/3_swilena_ty 1.4 640))
   (tools/swilena/src/swilena_window.i (oln/o/9_swilena_wi 1.1 600))
   (tools/swilena/src/swilena_w_window.i (oln/o/6_swilena_w_ 1.1 600))
   (tools/swilena/swilena.prj (oln/n/38_swilena.pr 1.1 600))

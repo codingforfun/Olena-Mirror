@@ -15,7 +15,7 @@ This document is intended to describe the Simplified Wrappers for
 Interfacing Olena (Swilena) both in terms of usage and provided
 functionality.
 
-Copyright @copyright{} 2002 @strong{L.R.D.E.}
+Copyright @copyright{} 2002, 2003 @strong{L.R.D.E.}
 
 @end copying
 
@@ -684,7 +684,7 @@ method:
 @example
 >>> @kbd{i.load("lena.pgm")}
 1
->>> @kbd{i.at(3,3).value()}
+>>> @kbd{i.at(3,3).val()}
 162
 >>>
 @end example
@@ -715,7 +715,7 @@ Also it hasn't been demonstrated yet, the @samp{at} method is polymorphic,
 and accepts a @samp{point} instead of coordinates as a pixel location:
 
 @example
->>> @kbd{i.at(point2d(3, 3)).value()}
+>>> @kbd{i.at(point2d(3, 3)).val()}
 162
 >>>
 @end example
@@ -798,7 +798,7 @@ In addition, scalar (integer, floating) pixel types share
 the following interface:
 
 @table @code
-@item value()
+@item val()
 Get the scalar value of the pixel.
 @item value(integer or float)
 Set the value of the pixel.
