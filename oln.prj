@@ -1,29 +1,18 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 40)
-(Parent-Version oln 10 39)
+(Project-Version oln 10 41)
+(Parent-Version oln 10 40)
 (Version-Log "Index: tools/swilena/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* meta/swilena_arith.i: New.
-	* generate_arith_instantiations.py: New.
-	* python/tests/arith.py: New test.
-
-	* meta/swilena_conversions.i: New.
-	* generate_conversions_instantiations.py: New.
-	* python/tests/conversions.py: New test.
-
-	* generate_morpho_instantiations.py: Update.
-	* python/tests/morpho.py: New test.
-
-	* expand.sh: Adjust consequently.
-	* meta/Makefile.am: Likewise.
-	* python/tests/Makefile.am: Likewise.
+	* python/swilena_all1d.py: New.
+	* python/swilena_all2d.py: New.
+	* python/swilena_all2d.py: New.	
+	* python/Makefile.am: New.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 10 Nov 2003 14:09:27 +0100")
+(Checkin-Time "Mon, 10 Nov 2003 14:12:17 +0100")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -132,7 +121,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.36 640))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.38 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.18 640))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.19 640))
 
   (olena/ChangeLog.0 (oln/6_ChangeLog 1.50.1.98.1.5 640))
   (doc/ChangeLog.0 (oln/e/1_ChangeLog 1.31 640))
@@ -1132,6 +1121,14 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (tools/swilena/python/tests/arith.py (oln/w/0_arith.py 1.1 750))
   (tools/swilena/python/tests/conversions.py (oln/w/1_conversion 1.1 750))
+
+;; Files added by populate at Mon, 10 Nov 2003 14:10:01 +0100,
+;; to version 10.40(w), by burrus_n:
+
+  (tools/swilena/python/Makefile.am (oln/w/2_Makefile.a 1.1 640))
+  (tools/swilena/python/swilena_all1d.py (oln/w/3_swilena_al 1.1 640))
+  (tools/swilena/python/swilena_all2d.py (oln/w/4_swilena_al 1.1 640))
+  (tools/swilena/python/swilena_all3d.py (oln/w/5_swilena_al 1.1 640))
 )
 (Merge-Parents)
 (New-Merge-Parents)

@@ -1,5 +1,12 @@
 2003-11-10  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* python/swilena_all1d.py: New.
+	* python/swilena_all2d.py: New.
+	* python/swilena_all2d.py: New.	
+	* python/Makefile.am: New.
+
+2003-11-10  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* meta/swilena_arith.i: New.
 	* generate_arith_instantiations.py: New.
 	* python/tests/arith.py: New test.
