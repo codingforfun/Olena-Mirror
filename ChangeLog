@@ -1,3 +1,18 @@
+2002-12-11  Quoc Peyrot  <chojin@lrde.epita.fr>
+
+	* oln/Makefile.am (nobase_oln_HEADERS): add morpho/extrema.hxx.
+	move level/extrema_killer.hh to morpho/extrema_killer.hh.
+
+	* oln/morpho/extrema_killer.hh: change namespace.
+	* demo/test-reconstruction.cc: change accordingly.
+
+2002-12-11  Reda Dehak  <reda@lrde.epita.fr>
+
+	* oln/convol/convolution.hh: Fix convolve function.
+	* test/convol/slow_sum_2d_1.hh: modify accordingly.
+	* test/convol/slow_sum_2d_2.hh: modify accordingly.
+	* test/convol/sobel_gradient.hh: modify accordingly.
+
 2002-12-11  Quoc Peyrot <chojin@lrde.epita.fr>
 
 	* Branch for olena 0.6 stable

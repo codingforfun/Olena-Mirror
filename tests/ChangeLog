@@ -1,3 +1,8 @@
+2002-12-11  Quoc Peyrot  <chojin@lrde.epita.fr>
+
+	* morpho/extrkiller.cc: use morpho namespace instead of level for
+	extrema killer functions.
+
 2002-12-01  Emmanuel Turquin  <turqui_e@epita.fr>
 
 	* transforms/dwt.cc: Fix.
@@ -37,7 +42,7 @@
 	* types/tests/conv1: Add XFAIL.
 	* types/tests/int_sc4: Likewise.
 	* tests/types/tests/bin1: New file.
-	
+
 2002-09-27  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* types/tests/cplx6: Fix typo.
@@ -64,7 +69,7 @@
 2002-09-20  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* types/tests/cplx5: New file.
-	
+
 2002-09-19  Emmanuel Turquin  <turqui_e@epita.fr>
 
 	* types/tests/cplx[1-4]: New files.
