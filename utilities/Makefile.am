@@ -1,5 +1,9 @@
 ## Process this file with Automake to produce Makefile.in -*-Makefile-*-
 
+SUBDIRS = morpho
+
+EXTRA_DIST = generate_morpho.sh
+
 AM_CPPFLAGS = -I$(top_builddir) -I$(top_srcdir)
 AM_CXXFLAGS = -Wall -W -ftemplate-depth-50 -ansi -pedantic
 

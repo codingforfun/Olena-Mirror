@@ -80,5 +80,6 @@ AC_CONFIG_FILES([
   tests/transform/Makefile
   tests/types/Makefile
   utilities/Makefile
+  utilities/morpho/Makefile
 ])
 AC_OUTPUT
