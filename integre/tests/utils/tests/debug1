@@ -8,8 +8,6 @@ ntg_debug_define_vars(true);
 
 int main()
 {
-  int_u8 i = 256;
-
   int_u32 u = 65537U * 65535U;
   u = u - 1; // ABORT
 }

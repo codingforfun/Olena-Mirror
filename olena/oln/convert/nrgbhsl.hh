@@ -29,11 +29,15 @@
 #ifndef OLENA_CONVERT_NRGBHSL_HH
 # define OLENA_CONVERT_NRGBHSL_HH
 
+# include <oln/basics.hh>
 # include <oln/convert/colorconv.hh>
 
+# include <ntg/basics.hh>
 # include <ntg/color/nrgb.hh>
 # include <ntg/color/hsl.hh>
-# include <ntg/basics.hh>
+
+# include <mlc/contract.hh>
+
 # include <cstdlib>
 
 /*------------------------------------------------------------------.
@@ -71,7 +75,8 @@ namespace oln {
 	else
 	  out[hsl_S] = diff / (2 - max_in - min_in);
 
-	// FIXME: what if diff is 0 ??
+	// FIXME: what if diff is 0 ?
+	precondition(diff != 0);
 
 	float r_dist = (max_in - in[nrgb_R]) / diff;
 	float g_dist = (max_in - in[nrgb_G]) / diff;

@@ -1,3 +1,7 @@
+2003-05-15  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/utils/tests/debug1: Fix warning.
+
 2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/real/int_u.hh, ntg/real_int_s.hh: Add a constructor 

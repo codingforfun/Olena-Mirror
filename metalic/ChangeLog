@@ -1,3 +1,7 @@
+2003-05-14  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/main/is_a1: Adapt to is_a renaming.
+
 2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/sanity/Makefile.am, 

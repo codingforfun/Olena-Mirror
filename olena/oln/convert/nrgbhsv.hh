@@ -29,11 +29,14 @@
 #ifndef OLENA_CONVERT_NRGBHSV_HH
 # define OLENA_CONVERT_NRGBHSV_HH
 
+# include <oln/basics.hh>
 # include <oln/convert/colorconv.hh>
 
+# include <ntg/basics.hh>
 # include <ntg/color/nrgb.hh>
 # include <ntg/color/hsv.hh>
-# include <ntg/basics.hh>
+
+# include <mlc/contract.hh>
 
 /*-----------------------------------------------------------------.
 | The formulas used here come from ``Color Conversion Algorithms'' |
@@ -60,6 +63,7 @@ namespace oln {
 	float delta = max_in - min_in;
 
 	// FIXME: what if delta is 0 ?
+	precondition(delta != 0);
 
 	out[hsv_V] = max_in;
 
