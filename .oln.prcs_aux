@@ -244,6 +244,7 @@
 (oln/io/readable.hh 1941 1027017573 b/13_readable.h 1.2)
 (tests/types/tests/cplx4 328 1032459279 h/51_cplx4 1.1)
 (tests/types/tests/conv2 51 1030375252 g/42_conv2 1.1)
+(tests/types/tests/cplx5 234 1032539759 i/7_cplx5 1.1)
 (tests/types/tests/cplx6 220 1032537337 i/6_cplx6 1.1)
 (tests/sanity/includes.test 639 1027355740 f/46_includes.t 1.2)
 (tests/check/srcdir.cc 373 1026316442 e/38_srcdir.cc 1.4)

@@ -1,17 +1,12 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 57)
-(Parent-Version oln 0_5 56)
-(Version-Log "2002-09-20  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* oln/types/global_ops_traits.hh: Allow instantiation of undefined 
-	deduce_from_traits.
-	* oln/types/behaviour.hh: Fix check in minus_equal for strict 
-	behaviour.
+(Project-Version oln 0_5 58)
+(Parent-Version oln 0_5 57)
+(Version-Log "tests/types/tests/cplx5: Add file.
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 20 Sep 2002 18:19:36 +0200")
+(Checkin-Time "Fri, 20 Sep 2002 18:35:59 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -638,6 +633,11 @@
 ;; to version 0_5.54(w), by ender:
 
   (tests/types/tests/cplx6 (oln/i/6_cplx6 1.1 640))
+
+;; Files added by populate at Fri, 20 Sep 2002 18:35:24 +0200,
+;; to version 0_5.57(w), by burrus_n:
+
+  (tests/types/tests/cplx5 (oln/i/7_cplx5 1.1 640))
 )
 (Merge-Parents)
 (New-Merge-Parents)
