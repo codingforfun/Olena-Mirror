@@ -35,7 +35,7 @@
 // Olena is organized in a namespace hierarchy.  Every thing is
 // declared by Olena under the 'oln::' namespace, and possibly un a
 // sub namespace such as 'oln::arith::' (arithmetic operations on
-// images), 'oln::morho::' (morphological operations), etc.
+// images), 'oln::morpho::' (morphological operations), etc.
 // For the sake of simplicity, we will neglect the 'oln::' prefix
 // in this file.
 using namespace oln;

@@ -1,14 +1,29 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 8 4)
-(Parent-Version oln 8 3)
-(Version-Log "Nicolas Burrus  <burrus_n@lrde.epita.fr>
+(Project-Version oln 8 5)
+(Parent-Version oln 8 4)
+(Version-Log "ndex: oln/ChangeLog
+from  +2003-02-18  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-        * configure.ac: Fix manpages regeneration tests.
+        * oln/core/image2d.hh: Remove useless include.
+
+Index: doc/ChangeLog
+from  +2003-02-18  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+        * dev/Makefile.am (oln_Index: oln/ChangeLog
+from  +2003-02-18  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+        * oln/core/image2d.hh: Remove useless include.
+
+Index: doc/ChangeLog
+from  +2003-02-18  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+        * dev/Makefile.am (oln_dev_TEXINFOS): Add missing design.texi.
+        * demo/tour.cc: Fix typo.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sun, 16 Feb 2003 21:26:23 +0100")
+(Checkin-Time "Tue, 18 Feb 2003 03:20:45 +0100")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -88,8 +103,8 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.32 640))
-  (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.17 640))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.23 640))
+  (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.18 640))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.24 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.1 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.1 640))
 
@@ -108,7 +123,7 @@
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.13 640))
   (doc/demo/morpholena.cc (oln/d/43_morpholena 1.11 640))
   (doc/demo/test-reconstruction.cc (oln/e/22_test-recon 1.7.1.2 640))
-  (doc/demo/tour.cc (oln/d/45_tour.cc 1.7 640))
+  (doc/demo/tour.cc (oln/d/45_tour.cc 1.8 640))
   (doc/ref/bin () :directory)
   (doc/ref/html () :directory)
   (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.1 640))
@@ -195,7 +210,7 @@
   (oln/oln/core/generate.hh (oln/f/12_generate.h 1.8 640))
   (oln/oln/core/image1d.hh (oln/c/47_image1d.hh 1.5 640))
   (oln/oln/core/image1d_size.hh (oln/c/46_image1d_si 1.4 640))
-  (oln/oln/core/image2d.hh (oln/c/45_image2d.hh 1.6 640))
+  (oln/oln/core/image2d.hh (oln/c/45_image2d.hh 1.7 640))
   (oln/oln/core/image2d_size.hh (oln/c/44_image2d_si 1.4 640))
   (oln/oln/core/image3d.hh (oln/c/43_image3d.hh 1.5 640))
   (oln/oln/core/image3d_size.hh (oln/c/42_image3d_si 1.4 640))
@@ -694,7 +709,7 @@
 ;; Files added by populate at Thu, 23 Jan 2003 15:43:23 +0100,
 ;; to version 7.39(w), by raph:
 
-  (doc/dev/Makefile.am (oln/p/38_Makefile.a 1.6.1.1 640))
+  (doc/dev/Makefile.am (oln/p/38_Makefile.a 1.6.1.2 640))
 
 ;; Files deleted by depopulate at Fri, 24 Jan 2003 10:54:23 +0100,
 ;; from version 7.40(w), by raph:

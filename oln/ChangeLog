@@ -1,3 +1,7 @@
+2003-02-18  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/core/image2d.hh: Remove useless include.
+
 2003-02-11  Raphaël Poss  <raph@lrde.epita.fr>
 
 	(Changes from 0.7)
