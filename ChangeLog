@@ -1,3 +1,7 @@
+2002-03-14  Ignacy Gawedzki  <ig@lrde.epita.fr>
+
+	* src/value/color.h (value_traits, real_value_traits): Typo.
+
 2002-03-07  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* src/Makefile.am (nobase_oln_HEADERS): Add
