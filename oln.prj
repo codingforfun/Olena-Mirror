@@ -1,22 +1,29 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 39)
-(Parent-Version oln 10 38)
-(Version-Log "Index: integre/ChangeLog
+(Project-Version oln 10 40)
+(Parent-Version oln 10 39)
+(Version-Log "Index: tools/swilena/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-        * ntg/enum/bin.hh: Fix assignment from a real_value.
+	* meta/swilena_arith.i: New.
+	* generate_arith_instantiations.py: New.
+	* python/tests/arith.py: New test.
 
-Index: tools/swilena/ChangeLog
-from  Nicolas Burrus  <burrus_n@epita.fr>
+	* meta/swilena_conversions.i: New.
+	* generate_conversions_instantiations.py: New.
+	* python/tests/conversions.py: New test.
 
-        * meta/swilena_ntg_macros.i: New.
-        * meta/swilena_ntg.i: Include it.
+	* generate_morpho_instantiations.py: Update.
+	* python/tests/morpho.py: New test.
+
+	* expand.sh: Adjust consequently.
+	* meta/Makefile.am: Likewise.
+	* python/tests/Makefile.am: Likewise.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 10 Nov 2003 11:19:49 +0100")
+(Checkin-Time "Mon, 10 Nov 2003 14:09:27 +0100")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -102,7 +109,6 @@ from  Nicolas Burrus  <burrus_n@epita.fr>
                   "^CODING_STYLE$"
                   "olena/img/lena16b.ppgm"
                   "olena/img/lena16b.pgm"
-                  "^tools/swilena/python/Makefile.am"
                   "^tools/swilena/src/.*\\.i"
                   "olena/img/lena1d.ppbm"
                   "olena/img/lena1d128.pgm"
@@ -126,7 +132,7 @@ from  Nicolas Burrus  <burrus_n@epita.fr>
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.36 640))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.38 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.17 640))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.18 640))
 
   (olena/ChangeLog.0 (oln/6_ChangeLog 1.50.1.98.1.5 640))
   (doc/ChangeLog.0 (oln/e/1_ChangeLog 1.31 640))
@@ -860,12 +866,12 @@ from  Nicolas Burrus  <burrus_n@epita.fr>
 ;; Files added by populate at Tue, 06 May 2003 06:05:19 +0200,
 ;; to version 8.33(w), by raph:
 
-  (tools/swilena/expand.sh (oln/s/25_expand.sh 1.11 750))
+  (tools/swilena/expand.sh (oln/s/25_expand.sh 1.12 750))
 
 ;; Files added by populate at Tue, 06 May 2003 06:05:41 +0200,
 ;; to version 8.33(w), by raph:
 
-  (tools/swilena/meta/Makefile.am (oln/s/26_Makefile.a 1.2 640))
+  (tools/swilena/meta/Makefile.am (oln/s/26_Makefile.a 1.3 640))
 
 ;; Files added by populate at Tue, 06 May 2003 06:05:43 +0200,
 ;; to version 8.33(w), by raph:
@@ -1045,7 +1051,7 @@ from  Nicolas Burrus  <burrus_n@epita.fr>
 ;; Files added by populate at Sun, 21 Sep 2003 22:59:15 +0200,
 ;; to version 10.19(w), by nes:
 
-  (tools/swilena/python/tests/Makefile.am (oln/v/15_Makefile.a 1.1 600))
+  (tools/swilena/python/tests/Makefile.am (oln/v/15_Makefile.a 1.2 600))
   (tools/swilena/python/tests/simple1.py (oln/v/16_simple1.py 1.4 700))
   (tools/swilena/ruby/Makefile.am (oln/v/17_Makefile.a 1.2 600))
   (tools/swilena/ruby/tests/Makefile.am (oln/v/18_Makefile.a 1.1 600))
@@ -1067,7 +1073,7 @@ from  Nicolas Burrus  <burrus_n@epita.fr>
 ;; Files added by populate at Sat, 27 Sep 2003 18:32:26 +0200,
 ;; to version 10.24(w), by burrus_n:
 
-  (tools/swilena/generate_morpho_instantiations.py (oln/v/24_generate_m 1.3 700))
+  (tools/swilena/generate_morpho_instantiations.py (oln/v/24_generate_m 1.4 700))
 
 ;; Files deleted by populate at Sat, 27 Sep 2003 18:33:27 +0200,
 ;; from version 10.24(w), by nes:
@@ -1111,6 +1117,21 @@ from  Nicolas Burrus  <burrus_n@epita.fr>
 ;; to version 10.38(w), by burrus_n:
 
   (tools/swilena/meta/swilena_ntg_macros.i (oln/v/39_swilena_nt 1.1 600))
+
+;; Files added by populate at Mon, 10 Nov 2003 11:23:59 +0100,
+;; to version 10.39(w), by burrus_n:
+
+  (tools/swilena/python/tests/morpho.py (oln/v/47_morpho.py 1.1 700))
+  (tools/swilena/meta/swilena_arith.i (oln/v/48_swilena_ar 1.1 640))
+  (tools/swilena/meta/swilena_conversions.i (oln/v/49_swilena_co 1.1 600))
+  (tools/swilena/generate_conversions_instantiations.py (oln/v/50_generate_c 1.1 700))
+  (tools/swilena/generate_arith_instantiations.py (oln/v/51_generate_a 1.1 700))
+
+;; Files added by populate at Mon, 10 Nov 2003 14:06:22 +0100,
+;; to version 10.39(w), by burrus_n:
+
+  (tools/swilena/python/tests/arith.py (oln/w/0_arith.py 1.1 750))
+  (tools/swilena/python/tests/conversions.py (oln/w/1_conversion 1.1 750))
 )
 (Merge-Parents)
 (New-Merge-Parents)

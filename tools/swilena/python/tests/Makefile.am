@@ -4,7 +4,7 @@
 ##
 
 TESTS_ENVIRONMENT = \
-	PYTHONPATH="$(PYTHONPATH):.." \
+	PYTHONPATH="$(PYTHONPATH):..:$(srcdir)/.." \
 	IMGDIR="$(top_srcdir)/olena/img"
 
-TESTS = simple1.py
+TESTS = arith.py conversions.py simple1.py morpho.py

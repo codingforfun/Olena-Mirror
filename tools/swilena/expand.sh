@@ -9,7 +9,7 @@ mkdir -p "$SWILENA/src"
 mkdir -p "$SWILENA/python"
 mkdir -p "$SWILENA/ruby"
 
-MODULES="$MODULES ntg morpho"
+MODULES="$MODULES ntg"
 for dim in 1 2 3; do
 
   ## {1d,2d,3d} families
@@ -30,6 +30,7 @@ EOF
 
   ## Image instances
   cat >>"$SWILENA/src/swilena_image${dim}d.i" <<EOF
+%include swilena_ntg_macros.i
 %import swilena_ntg.i
 EOF
   # int_u8 int_u16 int_s8 int_s16 int_s8s int_s16s int_s32s 
@@ -43,9 +44,18 @@ make_image(image${dim}d_s8, $dim, ntg_int_s8, ntg_int_s8_value)
 make_image(image${dim}d_s32, $dim, ntg_int_s32, ntg_int_s32_value)
 make_image(image${dim}d_float, $dim, ntg_float, ntg_float_value)
 EOF
+
   ## Morpho algorithms
   MODULES="$MODULES morpho${dim}d"
-  cd "$SWILENA/src" && ../generate_morpho_instantiations.py && cd ..
+  $SWILENA/generate_morpho_instantiations.py $SWILENA/src
+
+  ## Arith
+  MODULES="$MODULES arith${dim}d"
+  $SWILENA/generate_arith_instantiations.py $SWILENA/src
+
+  ## Conversions
+  MODULES="$MODULES conversions${dim}d"
+  $SWILENA/generate_conversions_instantiations.py $SWILENA/src
 done # for dim ...
 
 #################### Python stuff #######################

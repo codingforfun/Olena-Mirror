@@ -1,3 +1,20 @@
+2003-11-10  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* meta/swilena_arith.i: New.
+	* generate_arith_instantiations.py: New.
+	* python/tests/arith.py: New test.
+	
+	* meta/swilena_conversions.i: New.
+	* generate_conversions_instantiations.py: New.
+	* python/tests/conversions.py: New test.
+	
+	* generate_morpho_instantiations.py: Update.
+	* python/tests/morpho.py: New test.
+	
+	* expand.sh: Adjust consequently.
+	* meta/Makefile.am: Likewise.
+	* python/tests/Makefile.am: Likewise.
+
 2003-11-09  Nicolas Burrus  <burrus_n@epita.fr>
 
 	* meta/swilena_ntg_macros.i: New.

@@ -123,13 +123,13 @@ def write_algorithms():
                     instantiate(dim, "top_hat_contrast_op", img_type, img_type, win_type)
                     instantiate(dim, "fast_top_hat_contrast_op", img_type, img_type, win_type)
 
-	    # FIXME: watershed only works with ntg_int_u8
-	    if type == "ntg_int_u32":
+	    # FIXME: fix this when available
+	    #if type == "ntg_int_u8":
 		# Watershed
-		img_ret_type = "::oln::image%(dim)sd< ntg_int_u32 >" % vars()
-		instantiate(dim, "watershed_seg", img_ret_type, img_type, neighb_type)
-		instantiate(dim, "watershed_con", img_ret_type, img_type, neighb_type)
-		instantiate(dim, "watershed_seg_or", img_type, img_type, img_ret_type, neighb_type)
+		#img_ret_type = "::oln::image%(dim)sd< ntg_int_u32 >" % vars()
+		#instantiate(dim, "watershed_seg", img_ret_type, img_type, neighb_type)
+		#instantiate(dim, "watershed_con", img_ret_type, img_type, neighb_type)
+		#instantiate(dim, "watershed_seg_or", img_type, img_type, img_ret_type, neighb_type)
 
 	    # FIXME: this is broken
 	    # instantiate(dim, "laplacian", img_type, img_type, win_type)
