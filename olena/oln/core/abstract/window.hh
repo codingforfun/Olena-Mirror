@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_ABSTRACT_WINDOW_HH
 # define OLENA_CORE_ABSTRACT_WINDOW_HH
 
-# include <oln/core/abstract/structelt.hh>
+# include <oln/core/abstract/struct_elt.hh>
 # include <oln/core/winneighb.hh>
 
 namespace oln 

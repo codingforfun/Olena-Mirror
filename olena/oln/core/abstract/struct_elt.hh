@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_STRUCTELT_HH
-# define OLENA_CORE_STRUCTELT_HH
+#ifndef OLENA_CORE_STRUCT_ELT_HH
+# define OLENA_CORE_STRUCT_ELT_HH
 
 # include <mlc/type.hh>
 # include <oln/core/coord.hh>
@@ -122,4 +122,4 @@ namespace oln {
   
 } // end of oln
 
-#endif // ! OLENA_CORE_STRUCTELT_HH
+#endif // ! OLENA_CORE_STRUCT_ELT_HH

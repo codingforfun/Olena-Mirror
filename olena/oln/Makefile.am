@@ -49,7 +49,7 @@ nobase_oln_HEADERS =					\
   core/abstract/neighborhood.hh				\
   core/abstract/neighborhoodnd.hh			\
   core/abstract/point.hh				\
-  core/abstract/structelt.hh				\
+  core/abstract/struct_elt.hh				\
   core/abstract/w_window.hh				\
   core/abstract/w_windownd.hh				\
   core/abstract/window.hh				\

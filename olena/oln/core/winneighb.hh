@@ -30,24 +30,18 @@
 
 # include <mlc/objs.hh>
 # include <oln/core/image.hh>
-# include <oln/core/abstract/window.hh>
+# include <oln/core/abstract/struct_elt.hh>
 # include <string>
 
 namespace oln
 {
-  namespace abstract 
-  {
-    template<class Exact>
-    struct window; // fwd_decl
-  } // end of abstract
-
   template< class Win >
   struct winneighb {
     typedef Point(Win) point;
     typedef DPoint(Win) dpoint;
 
     template< class T >
-    winneighb(const abstract::window<Win>& win, const T& anchor) :
+    winneighb(const abstract::struct_elt<Win>& win, const T& anchor) :
       win_(to_exact(win)), pos_(0), anchor_(anchor.point_ref()) {}
 
     const point& point_ref() const

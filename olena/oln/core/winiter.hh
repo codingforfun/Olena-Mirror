@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_WINITER_HH
 # define OLENA_CORE_WINITER_HH
 
-# include <oln/core/abstract/window.hh>
+# include <oln/core/abstract/struct_elt.hh>
 # include <mlc/objs.hh>
 # include <string>
 
@@ -37,7 +37,7 @@ namespace oln {
   template< class Win >
   struct winiter {
 
-    winiter(const abstract::window<Win>& win) : win_(to_exact(win)), pos_(0) {}
+    winiter(const abstract::struct_elt<Win>& win) : win_(to_exact(win)), pos_(0) {}
 
     mlc::_begin
     operator=(mlc::_begin)
