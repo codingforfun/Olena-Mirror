@@ -1,3 +1,7 @@
+2002-06-17  Quôc Peyrt  <chojin@lrde.epita.fr>
+
+	* src/core/internal/image3d.hh (nslices): Typo.
+
 2002-06-05  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* Makefile.am (EXTRA_DIST): Remove doc/doc/oln-ref.info.

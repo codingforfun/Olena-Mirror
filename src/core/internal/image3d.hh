@@ -75,7 +75,7 @@ namespace oln {
       coord nslices() const
       {
 	assertion(_has_data());
-	return to_exact(this)->data()->nrows();
+	return to_exact(this)->data()->nslices();
       }
 
       coord nrows() const
