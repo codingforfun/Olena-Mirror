@@ -1,0 +1,6 @@
+# -*- Makefile -*-
+
+# This Makefile is designed to be included by olena/tests/* directories.
+
+LDADD = ../check/libolncheck.a $(ZLIB_LDFLAGS)
+TESTS = $(check_PROGRAMS)

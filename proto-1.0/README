@@ -1,0 +1,198 @@
+	-*- outline -*-
+
+
+* About this file
+
+This file gives information about this present prototype of
+olena-1.0; it explains:
+- the reasons why this prototype exists
+- the changes between 0.10 and 1.0 are
+- the motivation of every changes
+- etc.
+
+
+* Birth of this prototype
+
+** SCOOP is great
+
+mixing (classical) OOP with GP gives interesting features
+
+*** from OOP
+- benefits from classes (encapsulation, info hidding, etc.)
+- abstractions are really mapped into types
+  so they exist with their names
+  that's better than structural typing (shot => soccer player or cowboy?)
+- inheritance
+  so organization
+- overloading
+  a way of having code disjunction for free and in a transparent manner
+  for the client
+
+*** from GP
+- genericity through parameterization
+- efficiency
+- some sugar cubes
+  ex: traits
+- (advanced) meta-programming techniques => powerfull stuff
+  ex: inherits_from(T1,T2)
+- type aliases part of type definition
+  families of classes are more explicit than with OOP
+
+*** additional features
+- type-safe covariance
+- multi-methods
+- virtual types (VT)
+
+however there are limitations; they are due to compilation
+requirements or they are intrinsic to the OO paradigm
+
+*** explicit inheritance
+
+FIXME: sometimes we cannot write "class b : public a"
+
+*** recursivity
+
+FIXME: VTs traits break recursivity but...
+
+
+* About directories
+
+** Focus on olena/oln/core
+
+*** Main goal
+
+The main goal of that prototype is to design olena's core set of
+classes.  We want to show the capabilities of a library, not to
+provide the use with many image processing (IP) operators (ops).
+From our point of view, capabilities are much more valuable than
+"functionalities" (list of IP ops).  In a sense the capability of
+extending the library in a given way also is a functionality but
+this functionality is greater (or meta) as regard to just adding
+a new op dedicated to particular input.
+
+*** Core
+
+Capabilities come from oln/core so we focus on that part of the
+library.  Just consider that this prototype is only the core library
+with the fewer additional code as possible to prove the capabilities.
+
+*** A new archive
+
+We do not want to pay the price of having 1.0 compatible with 0.10.
+
+Not ex nihilo cause 1.0 really is a re-birth of 0.10.
+But incremental process ex nihilo by importing existing code of 0.10
+with cleaning, more pertinent naming, etc.
+
+** Overview
+
+"Kept organized down there..."
+
+*** Overall structure
+
+The overall structure is kept:
+
+shuttle% ls *
+readme
+
+doc:
+demo/
+
+integre:
+ntg/
+
+metalic:
+mlc/
+
+olena:
+img/  oln/  tests/
+
+*** Some details
+
+They are in olena/oln/core
+
+*** A real project
+
+no cause I don't know the how-to-of-a-real-project
+(I just know the how-to-of-design-n-code)
+
+*** A FIXME:complete project
+
+definitely no; just a re-birth so a that's a beginning
+
+
+* Modus operandi
+
+** First step: define tasks
+
+The to-do list of this prototype was the following
+
+*** Provide an image hierarchy
+
+warning: the first couple of points are strongly linked
+
+- provide property-based inheritance, so provide...
+
+  = some abstractions (at least two orthogonal hierarchies)
+      -> discriminant is support dimension:
+         abstract::image2d, etc.
+         so we can display (std::cout) some results for visual testing
+         purpose
+      -> discriminant is data constness
+         abstract::readonly_image or abstract::readwrite_image
+	 crucial for having a proper "op[]/set/get" mecanism
+      -> other relevant ones:
+	 FIXME: which ones?
+
+  = corresponding proper definitions
+      -> an extendable list of properties
+      -> well-defined interfaces (list of typedefs and methods)
+
+  = an inheritance mecanism
+      -> internal's stuff to handle properties and inheritance meta-code
+      -> keypoint: adding a new property and its related inheritance
+	 should be easy
+
+- provide strong decoupling between image and <a notion>
+
+  = with <a notion> being
+      -> a storage class
+      -> a data class
+      -> a topology (set of points, neighborhood, etc.)
+      -> think about "etc." !
+
+  = storage_type:
+    only deals with storage, access, resizing
+    ex: storage2d<T>
+
+  = data class:
+    as seen by the client
+    so (IDEA) this type can be different than the corresponding
+    storage_value_type
+    ex: value_type = int_u8, storage_value_type = uchar, and
+	storage_type = storage2d (or storage2d<T>)
+	can lead to storage2d<uchar> instead of storage2d<int_u8>
+	advantages:
+	 o quicker conversions
+	 o less instantiated classes
+	 o it is more explicit that storage types do not handle
+	   arithmetics
+
+      FIXME: ici, on a qqch qui a avoir / n'a rien à voir avec
+      l'orthogonalisation des hiérarchies d'images => qu'est-ce qui
+      fait qu'on est dans un cadre différent ? ou dans le même cadre ?
+      ou des sous-cadres (IDEE) ?
+
+      FIXME: veut-on ajouter dans la liste des données de "topologies"
+      comme le fait qu'on attache un voisinage particulier ?
+
+  = so answer to "how is it possible"
+
+** For each task
+
+1.  give explicit (clear) explanations in this file
+2a. write fewest code as possible to illustrate every mechanism
+    in doc/clues/*.n.cc
+2b. add an entry in doc/clues/readme
+3a. code in oln/*
+3b. instrument code with documentation

@@ -1,0 +1,29 @@
+include ../check/Makefile.flags
+
+EXTRA_DIST = tests
+
+LDFLAGS_RUNTESTS = $(LDFLAGS) $(AM_LDFLAGS)
+CPPFLAGS_RUNTESTS = $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	-I$(top_builddir) -I$(srcdir) -I.
+CXXFLAGS_RUNTESTS = $(CXXFLAGS) $(AM_CXXFLAGS)
+
+check-runtests:
+	TOP_SRCDIR=$(top_srcdir) SRCDIR=$(srcdir) \
+	TOP_BUILDDIR=$(top_builddir) \
+	LDFLAGS="$(LDFLAGS_RUNTESTS)" \
+	CPPFLAGS="$(CPPFLAGS_RUNTESTS)" \
+	CXXFLAGS="$(CXXFLAGS_RUNTESTS)" \
+	LDADD="$(LDADD_RUNTESTS)" \
+	  $(SHELL) $(top_srcdir)/contrib/runtests
+
+distclean-runtests:
+	rm -rf runs
+
+CLEANFILES = test.core
+
+# Default rules, one may want to override these and call
+# check-runtests and distclean-runtests manually
+
+check-local: check-runtests
+
+distclean-local: distclean-runtests

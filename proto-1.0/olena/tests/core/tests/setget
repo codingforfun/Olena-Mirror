@@ -1,0 +1,64 @@
+
+#include <oln/basics.hh>
+
+
+namespace oln {
+
+  struct dummy_image;
+
+  template <>
+  struct category_type< dummy_image >
+  {
+    typedef cat::image ret;
+  };
+
+  template <>
+  struct props <cat::image, dummy_image>
+  {
+    typedef int size_type;
+    typedef int point_type;
+    typedef int value_type;
+    typedef mlc::no_type delegated_type;
+  };
+
+  struct dummy_image : public abstract::readwrite_image< dummy_image >
+  {
+    int data;
+
+    dummy_image()
+    {
+      data = 3;
+      exact_ptr = this;
+    }
+
+    int impl_size() const { return 1; }
+    unsigned long impl_npoints() const { return 1; }
+    bool impl_hold(int p) const { return true; }
+
+    const int impl_get(int p) const
+    {
+      std::cout << "get" << std::endl;
+      return data;
+    }
+    void impl_set(int p, int v)
+    {
+      std::cout << "set" << std::endl;
+      data = v;
+    }
+
+  };
+
+} // end of namespace test
+
+
+bool check()
+{
+  oln::dummy_image ima;
+  int p;
+
+// COMPFAIL
+  ima[p] = 51;
+  std::cout << ima[p] << std::endl;
+
+  return false;
+}

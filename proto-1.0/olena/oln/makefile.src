@@ -1,0 +1,25 @@
+##
+## List of headers in olena
+## Include this file to have access to their name.
+##
+
+OLN_DEP =					\
+  core/2d/array2d.hh				\
+  core/2d/image2d.hh				\
+  core/2d/point2d.hh				\
+  core/2d/size2d.hh				\
+  core/abstract/data_storage.hh			\
+  core/abstract/image.hh			\
+  core/abstract/image_constness.hh		\
+  core/abstract/image_with_data.hh		\
+  core/abstract/images.hh			\
+  core/abstract/internal/image_impl.hh		\
+  core/abstract/point.hh			\
+  core/abstract/size.hh				\
+  core/cats.hh					\
+  core/coord.hh					\
+  core/macros.hh				\
+  core/props.hh					\
+  core/tags.hh					\
+  core/value_box.hh
+

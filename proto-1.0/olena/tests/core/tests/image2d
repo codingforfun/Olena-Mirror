@@ -1,0 +1,40 @@
+
+#include <iostream>
+
+#include <ntg/real/int_u8.hh>
+#include <oln/basics2d.hh>
+
+#include <oln/fancy/iota.hh>
+#include <oln/fancy/print.hh>
+
+#include "check.hh"
+#include "data.hh"
+
+
+
+template <typename I>
+void foo(oln::abstract::image<I>& input, const oln_point_type(I)& p)
+{
+  // FIXME: dummy code below
+//   struct dummy {};
+//   oln_typeof(I,value) tmp = (dummy*)0;
+  input[p] = 7;
+}
+
+
+bool check()
+{
+  oln::point2d p(0,0);
+
+  typedef oln::image2d<ntg::int_u8> image_type;
+  image_type ima(3, 3);
+  oln::fancy::iota(ima);
+  oln::fancy::println(ima);
+
+  image_type ima2;
+  ima2 = ima;
+
+  foo(ima, p);
+  oln::fancy::println(ima2);
+  return false;
+}

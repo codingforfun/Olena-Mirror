@@ -1,0 +1,15 @@
+##
+## List of headers in metalic
+## Include this file to have access to their name.
+##
+
+MLC_DEP =					\
+  any.hh					\
+  bool.hh					\
+  box.hh					\
+  cmp.hh					\
+  contract.hh					\
+  tracked_ptr.hh				\
+  traits.hh					\
+  types.hh
+

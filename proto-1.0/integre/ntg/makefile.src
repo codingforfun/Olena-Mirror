@@ -1,0 +1,63 @@
+##
+## List of headers in integre
+## Include this file to have access to their name.
+##
+
+NTG_DEP =					\
+  all.hh					\
+  basics.hh					\
+  bin.hh					\
+  color.hh					\
+  color/color.hh				\
+  color/hsi.hh					\
+  color/hsl.hh					\
+  color/hsv.hh					\
+  color/nrgb.hh					\
+  color/rgb.hh					\
+  color/xyz.hh					\
+  color/yiq.hh					\
+  color/yuv.hh					\
+  config/math.hh				\
+  config/system.hh				\
+  core/abstract_hierarchy.hh			\
+  real/behavior.hh				\
+  core/contract.hh				\
+  core/internal/global_ops.hh			\
+  core/internal/global_ops_defs.hh		\
+  core/internal/global_ops_traits.hh		\
+  core/internal/macros.hh			\
+  core/internal/traits.hh			\
+  core/interval.hh				\
+  core/macros.hh				\
+  core/pred_succ.hh				\
+  core/predecls.hh				\
+  core/type.hh					\
+  core/type_traits.hh				\
+  core/value.hh					\
+  cplx.hh					\
+  cycle.hh					\
+  enum/bin.hh					\
+  enum/builtin_bool.hh				\
+  enum/enum_value.hh				\
+  float.hh					\
+  int.hh					\
+  range.hh					\
+  real/builtin_int.hh				\
+  real/builtin_float.hh				\
+  real/builtin_properties.hh			\
+  real/cycle.hh					\
+  real/int_s.hh					\
+  real/int_u.hh					\
+  real/optraits_builtin_int.hh			\
+  real/optraits_real.hh			\
+  real/optraits_real_defs.hh			\
+  real/range.hh					\
+  real/real_value.hh				\
+  real/typetraits_builtin_int.hh		\
+  utils/cast.hh					\
+  utils/debug.hh				\
+  vec.hh					\
+  vect/cplx.hh					\
+  vect/cplx_representation.hh			\
+  vect/vec.hh					\
+  vect/vect_value.hh

@@ -1,0 +1,25 @@
+---
+
+Mini Vcs HOWTO:
+
+  Checkout Vcs:
+    svn co https://svn.lrde.epita.fr/svn/lrdetools/trunk/vcs
+
+  Update your PATH:
+    export PATH=$PATH:the_path_to_vcs/bin
+    rehash # with zsh
+
+  Check Vcs:
+    vcs --help
+
+  Make aliases:
+    `vcs --mk-alias`
+
+  Check the transparent mode:
+    svn status!
+
+  Commit in Olena:
+    svn oln_commit 'Your news subject'
+  or:
+    svn olnci 'Your news subject'
+

@@ -1,0 +1,45 @@
+		-*- outline -*-
+
+* setget
+
+image data access mechanism
+
+** entities
+
+value_box:
+a class to box a value (to represent a value)
+
+operator[](point_type):
+method for the client to access image data
+
+value_type get(point_type):
+effective read-only accessor used in value_box
+
+set(point_type, value_type):
+effective write-only accessor used in value_box
+
+** setget.1
+
+shows the ping-pong mechanism that distinguish read-only and
+write-only accessor
+
+** setget.2
+
+introduces the intermediate abstract classes, readonly_image and
+readwrite_image
+
+shows the difference between value_box<I> and value_box<const I>
+
+hides the get and set methods from the client
+
+provides a couple of classes, image2d and const_image2d, to depict
+both behaviors
+
+
+* refcount
+
+reference counting mechanism
+
+** entities
+
+FIXME
