@@ -127,7 +127,7 @@ Special include files:
 \begin{itemize}
   \item \code{<ntg/all.hh>}: include all \integre\ features.
 
-  \item \code{<ntg/basics.hh>}: include all \integre\ mecanisms, but 
+  \item \code{<ntg/basics.hh>}: include all \integre\ mecanisms, but
   does not include any particular \integre\ type.
 \end{itemize}
 
@@ -155,7 +155,7 @@ They are suffixed by \code{_type}, for example: \code{larger_type},
 
 Here is the list of common properties:
 
-\subsubsection{\code{abstract_type}} 
+\subsubsection{\code{abstract_type}}
 
 Empty classes representing the kind of the type. This is useful since
 builtin can have associated abstract type. As these classes are
@@ -164,7 +164,7 @@ organized by a hierarchical way, their main interest is
 
 Here are the available abstract types:
 
-\includeimage{abstract-types-hierarchy}{width=0.9\textwidth}
+%\includeimage{abstract-types-hierarchy}{width=0.9\textwidth}
 
 \subsubsection{\code{ntg_type}}
 
@@ -204,9 +204,9 @@ directly \code{type_traits} or using macros hiding the access.
 \subsubsection{\code{type_traits<T>}}
 
 This is the universal way to access properties. For example, use
-\code{type_traits<int_u8>::name()} or 
-\code{type_traits<unsigned char>::abstract_type} to get the name of 
-\code{int_u8} and the \code{abstract_type} representing the builtin 
+\code{type_traits<int_u8>::name()} or
+\code{type_traits<unsigned char>::abstract_type} to get the name of
+\code{int_u8} and the \code{abstract_type} representing the builtin
 type \code{unsigned char}.
 
 Using \code{type_traits} can be rather fastidious (it generally
@@ -245,7 +245,7 @@ There is no way to put a constraints on \code{T} since we want to
 accept builtin types. A good solution to ensure program integrity is
 to insert a structucal check using the \code{ntg_is_a(T, U)} macro. It
 checks whether the abstract type of \code{T} is a subclass of U, and
-return a metalic boolean (refer to metalic documentation). 
+return a metalic boolean (refer to metalic documentation).
 
 So here the user should write:
 
@@ -357,7 +357,7 @@ cases.
 
 \integre\ types are organized hierarchically:
 
-\includeimage{data-hierarchy}{width=0.9\textwidth}
+%\includeimage{data-hierarchy}{width=0.9\textwidth}
 
 \subsection{\aname{ref-bin}{\code{bin}}}
 

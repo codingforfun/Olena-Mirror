@@ -205,7 +205,7 @@ namespace oln {
 	// an opening otherwise.
 	template<class N>
 	image_t get_comptute(const ATTRIBUTE & lambda,
-			     const neighborhood<N>& Ng,
+			     const abstract::neighborhood<N>& Ng,
 			     const bool closing)
 	{
 	  typedef std::pair<point_t, data_t> pixel_t;

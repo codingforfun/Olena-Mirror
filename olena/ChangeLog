@@ -1,3 +1,39 @@
+2003-07-29  Reda Dehak  <reda@lrde.epita.fr>
+
+	* oln/convol/convolution.hh, oln/convol/fast_gaussian.hh,
+	oln/convol/fast_gaussian.hxx, oln/transforms/dwt.hh, 
+	oln/transforms/fft.hh: Adapt to new paradigm.
+
+	* tests/transforms/Makefile.am: Replace = by += in AM_LDFLAGS and
+	AM_CXXFLAGS definitionsi.
+
+2003-07-29  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/abstract/w_window.hh: Add w(i) member function.
+
+2003-07-29  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/accum.hh, oln/core/compose.hh: Adapt coding style.
+	
+2003-07-29  Giovanni Palma  <giovanni.palma@lrde.epita.fr>
+
+	* doc/ref/integre-ref.tex: Remove includeimage.
+
+	* oln/morpho/gradient.inc,
+	oln/morpho/laplacian.inc,
+	oln/morpho/top_hat.inc,
+	oln/morpho/attribute_union_find.hh: Add some "abstract".
+
+	* oln/morpho/hit_or_miss.inc: Add some "abstract".
+	Add to_exact to "inter" calls.
+
+	* oln/morpho/attribute_closing_opening.hh: Add some "abstract".
+	Add to_exact to "tarjan" calls.
+
+	* oln/morpho/attribute_union_find.hh
+
+	* oln/core/impl/image_array.hh: Add ntg/all.hh include.
+
 2003-07-29  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
@@ -37,10 +73,10 @@
 
 	* oln/core/abstract/struct_elt.hh: Fix operator-(). Fix copy
 	constructor.
-	
+
 	* oln/morpho/fast_morpho.hxx: Fix.
 
-	* oln/core/impl/image_impl.hh, 
+	* oln/core/impl/image_impl.hh,
 	oln/core/impl/image_array.hh,
 	oln/core/impl/image_array3d.hh,
 	oln/core/impl/image_array2d.hh,
@@ -57,7 +93,7 @@
 	* oln/convert/nrgbhsi.hh: Rename nrgb_to_hsi functor as f_nrgb_to_hsi,
 	Add nrgb_to_hsi function, fix bug in the conversion algorithm.
 
-	* oln/convert/nrgbhsl, oln/convert/nrgbxyz, oln/convert/nrgbyiq.h, 
+	* oln/convert/nrgbhsl, oln/convert/nrgbxyz, oln/convert/nrgbyiq.h,
 	rgbnrgb.hh, oln/convert/rgbxyz.hh: Likewise.
 
 	* tests/convert/convcomp.cc: Adjust according to previous changes.
@@ -71,13 +107,13 @@
 
 	* oln/io/stream_wrapper.hh: Fix compilation when zlib is not
 	available.
-	
+
 	* tests/check/Makefile.flags: Add zlib to compilation flags.
 	* tests/core/Makefile.am, tests/arith/Makefile.am,
 	tests/io/Makefile.am: Fix flags.
 
 2003-07-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* oln/io/pnm_write.hh, oln/io/se_neighborhood.hh,
 	oln/io/se_window.hh, oln/io/image_write.hh, oln/io/image_read.hh:
 	Disable output on std::clog.
@@ -128,7 +164,7 @@
 	* oln/basics2d.hh: Fix includes.
 
 2003-07-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* tests/arith/runtests, tests/core/runtests: Don't check temporary
 	files.
 

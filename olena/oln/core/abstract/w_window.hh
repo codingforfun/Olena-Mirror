@@ -76,6 +76,11 @@ namespace oln
 	return to_exact(this)->set_(to_exact(dp), weight);
       }
 
+      weight_type w(unsigned i) const
+      {
+	return to_exact(this)->get_weight(i);
+      }
+
     protected:
       w_window() : super_type() {}
     };

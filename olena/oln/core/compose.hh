@@ -35,85 +35,85 @@ namespace oln {
   namespace internal {
 
     template< class F1, class F2 >
-    struct _compose_uu :
+    struct compose_uu_ :
       public std::unary_function <typename F2::argument_type,
 				  typename F1::result_type>
     {
-      typedef _compose_uu self;
+      typedef compose_uu_ self_type;
 
-      typename self::result_type
-      operator()(typename self::argument_type arg) const {
-	return _f1(_f2(arg));
+      typename self_type::result_type
+      operator()(typename self_type::argument_type arg) const {
+	return f1_(f2_(arg));
       }
 
-      _compose_uu(const F1& f1, const F2& f2) : _f1(f1), _f2(f2) {}
+      compose_uu_(const F1& f1, const F2& f2) : f1_(f1), f2_(f2) {}
       private:
-      const F1 _f1;
-      const F2 _f2;
+      const F1 f1_;
+      const F2 f2_;
     };
 
     template< class F1, class F2 >
-    struct _compose_ub :
+    struct compose_ub_ :
       public std::binary_function <typename F2::first_argument_type,
 				   typename F2::second_argument_type,
 				   typename F1::result_type>
     {
-      typedef _compose_ub self;
+      typedef compose_ub_ self_type;
 
-      typename self::result_type
-      operator()(typename self::first_argument_type arg1,
-		 typename self::second_argument_type arg2) const {
-	return _f1(_f2(arg1, arg2));
+      typename self_type::result_type
+      operator()(typename self_type::first_argument_type arg1,
+		 typename self_type::second_argument_type arg2) const {
+	return f1_(f2_(arg1, arg2));
       }
 
-      _compose_ub(const F1& f1, const F2& f2) : _f1(f1), _f2(f2) {}
+      compose_ub_(const F1& f1, const F2& f2) : f1_(f1), f2_(f2) {}
       private:
-      const F1 _f1;
-      const F2 _f2;
+      const F1 f1_;
+      const F2 f2_;
     };
 
     template< class F1, class F2 >
-    struct _compose_bu :
+    struct compose_bu_ :
       public std::binary_function <typename F2::argument_type,
 				   typename F2::argument_type,
 				   typename F1::result_type>
     {
-      typedef _compose_bu self;
+      typedef compose_bu_ self_type;
 
-      typename self::result_type
-      operator()(typename self::first_argument_type arg1,
-		 typename self::second_argument_type arg2) const {
-	return _f1(_f2(arg1), _f2(arg2));
+      typename self_type::result_type
+      operator()(typename self_type::first_argument_type arg1,
+		 typename self_type::second_argument_type arg2) const {
+	return f1_(f2_(arg1), f2_(arg2));
       }
 
-      _compose_bu(const F1& f1, const F2& f2) : _f1(f1), _f2(f2) {}
+      compose_bu_(const F1& f1, const F2& f2) : f1_(f1), f2_(f2) {}
       private:
-      const F1 _f1;
-      const F2 _f2;
+      const F1 f1_;
+      const F2 f2_;
     };
 
   }
 
 
   template<class UF1, class UF2>
-  internal::_compose_uu<UF1, UF2>
+  internal::compose_uu_<UF1, UF2>
   compose_uu(const UF1& f1, const UF2& f2)
   {
-    return internal::_compose_uu<UF1, UF2>(f1, f2);
+    return internal::compose_uu_<UF1, UF2>(f1, f2);
   }
 
   template<class UF1, class BF2>
-  internal::_compose_ub<UF1, BF2>
+  internal::compose_ub_<UF1, BF2>
   compose_ub(const UF1& f1, const BF2& f2)
   {
-    return internal::_compose_ub<UF1, BF2>(f1, f2);
+    return internal::compose_ub_<UF1, BF2>(f1, f2);
   }
 
   template<class BF1, class UF2>
-  internal::_compose_bu<BF1, UF2>
+  internal::compose_bu_<BF1, UF2>
   compose_bu(const BF1& f1, const UF2& f2)
   {
-    return internal::_compose_bu<BF1, UF2>(f1, f2);
+    return internal::compose_bu_<BF1, UF2>(f1, f2);
   }
 
 

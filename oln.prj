@@ -1,37 +1,12 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 51)
-(Parent-Version oln 2003paradigm 50)
-(Version-Log "Index: olena/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-        * oln/core/bkd_iter1d.hh, oln/core/bkd_iter2d.hh,
-        oln/core/bkd_iter3d.hh, oln/core/fwd_iter1d.hh,
-        oln/core/fwd_iter2d.hh, oln/core/fwd_iter3d.hh,
-        oln/core/image1d.hh, oln/core/image2d.hh, oln/core/image3d.hh,
-        oln/core/image.hh, oln/core/abstract/iter1d.hh,
-        oln/core/abstract/iter2d.hh, oln/core/abstract/iter3d.hh,
-        oln/core/window1d.hh, oln/core/window2d.hh,
-        oln/core/window3d.hh, oln/core/winneighb.hh,
-        oln/core/w_window1d.hh, oln/core/w_window2d.hh,
-        oln/core/w_window3d.hh, oln/utils/stat.hh,
-        oln/core/abstract/image_with_dim.hh,
-        oln/core/impl/image_array.hh, oln/core/impl/image_array3d.hh,
-        oln/core/impl/image_array2d.hh,
-        oln/core/impl/image_array1d.hh,
-        oln/core/abstract/window_base.hh,
-        oln/core/abstract/windownd.hh,
-        oln/core/abstract/w_windownd.hh,
-        oln/core/abstract/neighborhoodnd.hh: Fix problems raised by
-        g++-3.4.
-
-        * tests/core/tests/image1: Test size accessors.
-
-")
+(Project-Version oln 2003paradigm 55)
+(Parent-Version oln 2003paradigm 51)
+(Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Tue, 29 Jul 2003 10:53:19 +0200")
-(Checkin-Login burrus_n)
+(Checkin-Time "Tue, 29 Jul 2003 16:36:45 +0200")
+(Checkin-Login reda)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
 ;; diff-ignore doc/doc/ref-morpho.tex$
@@ -120,7 +95,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.8 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.35 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.39 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.10 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.4 640))
@@ -146,7 +121,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.7 640))
   (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.6.1.2 640))
   (doc/ref/oln-ref.tex (oln/f/14_oln-ref.te 1.3.1.3 640))
-  (doc/ref/integre-ref.tex (oln/g/34_ref-types. 1.10 640))
+  (doc/ref/integre-ref.tex (oln/g/34_ref-types. 1.11 640))
   (doc/Makefile.am (oln/e/0_Makefile.a 1.14 640))
   (doc/ref/processing.tpl (oln/d/48_processing 1.16 640))
 
@@ -193,11 +168,11 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/convert/rgbnrgb.hh (oln/17_rgbnrgb.hh 1.9 640))
   (olena/oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.9 640))
   (olena/oln/convert/stretch.hh (oln/f/51_stretch.hh 1.9 640))
-  (olena/oln/convol/convolution.hh (oln/f/39_convolutio 1.4.1.4.1.3 640))
+  (olena/oln/convol/convolution.hh (oln/f/39_convolutio 1.4.1.4.1.4 640))
   (olena/oln/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.5.1.4 640))
-  (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.4 640))
-  (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.5 640))
-  (olena/oln/core/accum.hh (oln/d/40_accum.hh 1.2 640))
+  (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.5 640))
+  (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.6 640))
+  (olena/oln/core/accum.hh (oln/d/40_accum.hh 1.3 640))
   (olena/oln/core/apply.hh (oln/d/39_apply.hh 1.10 640))
   (olena/oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.14 640))
   (olena/oln/core/bkd_iter2d.hh (oln/d/37_bkd_iter2d 1.14 640))
@@ -208,7 +183,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   
   (olena/oln/core/box.hh (oln/o/51_box.hh 1.3 640))
   (olena/oln/core/box.hxx (oln/p/0_box.hxx 1.4.1.1.1.1 640))
-  (olena/oln/core/compose.hh (oln/c/22_compose.hh 1.3 640))
+  (olena/oln/core/compose.hh (oln/c/22_compose.hh 1.4 640))
   (metalic/mlc/contract.hh (oln/d/31_contract.h 1.8 640))
   (olena/oln/core/coord.hh (oln/d/29_coord.hh 1.2 640))
   (olena/oln/core/dpoint1d.hh (oln/d/27_dpoint1d.h 1.10 640))
@@ -267,7 +242,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   
   (olena/oln/core/abstract/binary_image.hh (oln/c/24_pred_image 1.6 640))
   
-  (olena/oln/core/abstract/struct_elt.hh (oln/c/25_structelt. 1.14 640))
+  (olena/oln/core/abstract/struct_elt.hh (oln/c/25_structelt. 1.15 640))
   (olena/oln/core/traverse.hh (oln/d/30_traverse.h 1.9 640))
   (metalic/mlc/typeadj.hh (oln/e/25_typeadj.hh 1.5 640))
   (metalic/mlc/type.hh (oln/c/21_type.hh 1.16 640))
@@ -280,7 +255,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/core/w_window1d.hh (oln/c/19_w_window1d 1.11 640))
   (olena/oln/core/w_window2d.hh (oln/c/18_w_window2d 1.6.1.6 640))
   (olena/oln/core/w_window3d.hh (oln/c/17_w_window3d 1.11 640))
-  (olena/oln/core/abstract/w_window.hh (oln/c/20_w_window.h 1.9 640))	
+  (olena/oln/core/abstract/w_window.hh (oln/c/20_w_window.h 1.10 640))	
   (olena/oln/io/base.hh (oln/b/20_base.hh 1.7 640))
   
   (olena/oln/io/basics.hh (oln/b/12_basics.hh 1.5 640))
@@ -338,11 +313,11 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/morpho/geodesic_dilation.hh (oln/37_geodesic_d 1.11.1.5 640))
   (olena/oln/morpho/geodesic_erosion.hh (oln/36_geodesic_e 1.12 640))
   (olena/oln/morpho/gradient.hh (oln/b/3_gradient.h 1.6 640))
-  (olena/oln/morpho/gradient.inc (oln/43_gradient.i 1.5 640))
+  (olena/oln/morpho/gradient.inc (oln/43_gradient.i 1.6 640))
   (olena/oln/morpho/hit_or_miss.hh (oln/b/2_hit_or_mis 1.7 640))
-  (olena/oln/morpho/hit_or_miss.inc (oln/42_hit_or_mis 1.10 640))
+  (olena/oln/morpho/hit_or_miss.inc (oln/42_hit_or_mis 1.11 640))
   (olena/oln/morpho/laplacian.hh (oln/b/1_laplacian. 1.6 640))
-  (olena/oln/morpho/laplacian.inc (oln/41_laplacian. 1.5 640))
+  (olena/oln/morpho/laplacian.inc (oln/41_laplacian. 1.6 640))
   (olena/oln/morpho/minmax.hh (oln/b/0_minmax.hh 1.4 640))
   (olena/oln/morpho/opening.hh (oln/51_opening.hh 1.6 640))
   (olena/oln/morpho/opening.inc (oln/40_opening.in 1.8 640))
@@ -354,13 +329,13 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/morpho/thinning.hh (oln/e/27_thinning.h 1.7 640))
   (olena/oln/morpho/thinning.inc (oln/e/26_thinning.i 1.7 640))
   (olena/oln/morpho/top_hat.hh (oln/49_top_hat.hh 1.4 640))
-  (olena/oln/morpho/top_hat.inc (oln/39_top_hat.in 1.5 640))
+  (olena/oln/morpho/top_hat.inc (oln/39_top_hat.in 1.6 640))
   (olena/oln/morpho/watershed.hh (oln/48_watershed. 1.6 640))
   (olena/oln/morpho/watershed.hxx (oln/47_watershed. 1.9.1.4 640))
   (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.5 640))
   (olena/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.7.1.4 640))
-  (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.6 640))
-  (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.5 640))
+  (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.7 640))
+  (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.6 640))
   (olena/oln/transforms/wavelet_coeffs.hh (oln/i/34_wavelet_co 1.5 640))
   (integre/ntg/all.hh (oln/g/32_all.hh 1.10.1.8 640))
   (integre/ntg/core/behavior.hh (oln/g/31_behaviour. 1.13.1.13 640))
@@ -458,16 +433,16 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (metalic/tests/array/test_array1d.cc (oln/f/26_test_array 1.5 640))
   (metalic/tests/array/test_array2d.cc (oln/f/25_test_array 1.5 640))
   (metalic/tests/array/test_array3d.cc (oln/f/24_test_array 1.5 640))
-  (olena/tests/morpho/edoc.cc (oln/f/13_edoc.cc 1.4.1.3 640))
+  (olena/tests/morpho/edoc.cc (oln/f/13_edoc.cc 1.4.1.4 640))
   (olena/tests/morpho/extrkiller.cc (oln/e/31_extrkiller 1.5.1.6 640))
   (olena/tests/morpho/Makefile.am (oln/e/32_Makefile.a 1.12 640))
   (olena/tests/morpho/reconstruction.cc (oln/e/34_reconstruc 1.10 640))
   (olena/tests/README (oln/f/4_README 1.4 640))
   (olena/tests/sanity/includes.test (oln/f/46_includes.t 1.8 750))
   (olena/tests/sanity/Makefile.am (oln/f/48_Makefile.a 1.4.1.2 640))
-  (olena/tests/transforms/dwt.cc (oln/i/38_dwt.cc 1.8.1.4 640))
+  (olena/tests/transforms/dwt.cc (oln/i/38_dwt.cc 1.8.1.5 640))
   (olena/tests/transforms/fft.cc (oln/i/37_fft.cc 1.6.1.4 640))
-  (olena/tests/transforms/Makefile.am (oln/i/40_Makefile.a 1.8 640))
+  (olena/tests/transforms/Makefile.am (oln/i/40_Makefile.a 1.9 640))
 ;;  (oln/tests/transforms/output () :directory)
   (integre/tests/types/Makefile.am (oln/h/5_Makefile.a 1.11 640))
   (integre/tests/types/runtests (oln/h/3_runtests 1.14.1.4 750))
@@ -775,8 +750,8 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.18 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.23 640))
-  (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.4 640))
-  (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.3 640))
+  (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.5 640))
+  (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.4 640))
   (olena/tests/convol () :directory)
   (metalic/config (../config) :symlink)
   (metalic/m4 () :directory)
@@ -899,7 +874,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.9 640))
   (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.3 640))
   (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.7 640))
-  (olena/oln/core/impl/image_array.hh (oln/t/30_image_arra 1.7 640))
+  (olena/oln/core/impl/image_array.hh (oln/t/30_image_arra 1.8 640))
   (olena/tests/core/tests/image1 (oln/t/31_image1 1.4 640))
 
 ;; Files deleted by populate at Wed, 16 Jul 2003 17:00:53 +0200,
@@ -1052,6 +1027,20 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/tests/convert/conv.cc (oln/u/12_conv.cc 1.1 640))
   (olena/tests/convert/conv.hh (oln/u/13_conv.hh 1.1 640)))
 (Merge-Parents
-  (2003paradigm.50 complete)
+  (2003paradigm.53 complete
+    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (doc/ref/integre-ref.tex doc/ref/integre-ref.tex doc/ref/integre-ref.tex r)
+    (olena/oln/core/accum.hh olena/oln/core/accum.hh olena/oln/core/accum.hh r) (olena/oln/core/compose.hh olena/oln/core/compose.hh olena/oln/core/compose.hh r)
+    (olena/oln/core/abstract/struct_elt.hh olena/oln/core/abstract/struct_elt.hh olena/oln/core/abstract/struct_elt.hh r) (olena/oln/morpho/gradient.inc olena/oln/morpho/gradient.inc olena/oln/morpho/gradient.inc r)
+    (olena/oln/morpho/hit_or_miss.inc olena/oln/morpho/hit_or_miss.inc olena/oln/morpho/hit_or_miss.inc r) (olena/oln/morpho/laplacian.inc olena/oln/morpho/laplacian.inc olena/oln/morpho/laplacian.inc r)
+    (olena/oln/morpho/top_hat.inc olena/oln/morpho/top_hat.inc olena/oln/morpho/top_hat.inc r) (olena/tests/morpho/edoc.cc olena/tests/morpho/edoc.cc olena/tests/morpho/edoc.cc r)
+    (olena/oln/morpho/attribute_closing_opening.hh olena/oln/morpho/attribute_closing_opening.hh olena/oln/morpho/attribute_closing_opening.hh r) (olena/oln/morpho/attribute_union_find.hh olena/oln/morpho/attribute_union_find.hh olena/oln/morpho/attribute_union_find.hh r)
+    (olena/oln/core/impl/image_array.hh olena/oln/core/impl/image_array.hh olena/oln/core/impl/image_array.hh r) 
+  )
+  (2003paradigm.54 incomplete
+    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) 
+  )
+  (2003paradigm.54 complete
+    (olena/oln/core/abstract/w_window.hh olena/oln/core/abstract/w_window.hh olena/oln/core/abstract/w_window.hh r) 
+  )
 )
 (New-Merge-Parents)

@@ -48,7 +48,8 @@
 template<class C, class I, class E>
 typename mute<I, typename convoutput<C, Value(I)>::ret>::ret
 laplacian(const conversion<C>& c,
-	  const image<I>& input, const struct_elt<E>& se)
+	  const abstract::image<I>& input,
+	  const abstract::struct_elt<E>& se)
 {
   return arith::minus(c,
 		      arith::minus(dilation(input, se), input),
@@ -64,7 +65,7 @@ laplacian(const conversion<C>& c,
 =*/
 template<class I, class E>
 typename mute<I, Value(I)::slarger_t>::ret
-laplacian(const image<I>& input, const struct_elt<E>& se)
+laplacian(const abstract::image<I>& input, const abstract::struct_elt<E>& se)
 {
   return laplacian(convert::force<Value(I)::slarger_t>(), input, se);
 }
