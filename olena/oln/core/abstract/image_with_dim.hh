@@ -490,7 +490,6 @@ namespace oln {
       }
        
       /// Return the number of columns in the image.
-      */
       
       coord 
       ncols() const
