@@ -80,7 +80,7 @@ namespace oln {
        * See A. Meijster and M. Wilkinson. A Comparison of Algorithms For Connected
        * Set Openings and Closings. PAMI 24(2), p484--494
        * see: morpho::simple_geodesic_dilation
-       * ex: area_opening
+       * ex:
        * $ image2d<int_u8> im = load("lena256.pgm");
        * $ save(morpho::tarjan::area_opening(im, neighb_c4(),500), "out.pgm");
        * exi: lena256.pgm

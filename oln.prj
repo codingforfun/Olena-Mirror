@@ -1,14 +1,12 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 8 14)
-(Parent-Version oln 8 13)
-(Version-Log "2003-03-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* oln/morpho/attribute_closing_opening.hh: Fix example.
+(Project-Version oln 8 15)
+(Parent-Version oln 8 14)
+(Version-Log "Forgot a fix.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sat, 08 Mar 2003 00:56:27 +0100")
+(Checkin-Time "Sun, 09 Mar 2003 11:32:33 +0100")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -745,7 +743,7 @@
 ;; Files added by populate at Tue, 04 Mar 2003 19:30:28 +0100,
 ;; to version 8.9(w), by jerome:
 
-  (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.2 640))
+  (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.3 640))
   (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.2 640))
 
 
