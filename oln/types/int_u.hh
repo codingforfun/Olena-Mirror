@@ -84,7 +84,6 @@ namespace oln
   namespace type_definitions
   {
 
-    //
     //  Class int_u<Nbits, Behaviour>
     //
     //////////////////////////////////
@@ -99,10 +98,7 @@ namespace oln
       typedef typename typetraits<self>::optraits optraits_type;
 
     public:
-      int_u ()
-      {
-	_value = 0;
-      }
+      int_u () { _value = 0; }
 
       // We define ctor for each builtin to avoid implicit builtin promotion
 

@@ -52,10 +52,10 @@ namespace oln
   OPTRAITS_BUILTIN_INT_U(unsigned short, USHRT_MAX);
   OPTRAITS_BUILTIN_INT_U(unsigned char,  UCHAR_MAX);
 
-  OPTRAITS_BUILTIN_INT_S(signed long,  LONG_MAX);
-  OPTRAITS_BUILTIN_INT_S(signed int,   INT_MAX);
-  OPTRAITS_BUILTIN_INT_S(signed short, SHRT_MAX);
-  OPTRAITS_BUILTIN_INT_S(signed char,  CHAR_MAX);
+  OPTRAITS_BUILTIN_INT_S(signed long,  LONG_MIN, LONG_MAX);
+  OPTRAITS_BUILTIN_INT_S(signed int,   INT_MIN,  INT_MAX);
+  OPTRAITS_BUILTIN_INT_S(signed short, SHRT_MIN, SHRT_MAX);
+  OPTRAITS_BUILTIN_INT_S(signed char,  CHAR_MIN, CHAR_MAX);
 
 } // end of namespace oln
 

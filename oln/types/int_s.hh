@@ -66,10 +66,10 @@ namespace oln
     typedef optraits<self> optraits;
 
     typedef self base;
-    // FIXME : calculate it from nbits
-    typedef signed store;
-    typedef signed cumul;
 
+    typedef typename C_for_int_s<nbits>::type store;
+    typedef int_s<32, strict> cumul;
+    
     // internal use, useful for decorators
     typedef self op_traits;
 
@@ -95,10 +95,7 @@ namespace oln
 
     public:
 
-      int_s ()
-      {
-	_value = 0;
-      }
+      int_s () { _value = 0; }
 
       // We define ctor for each builtin to avoid implicit builtin promotion
 

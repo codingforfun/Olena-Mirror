@@ -35,10 +35,11 @@
     static Name max() { return Max; } 			\
   };
 
-# define OPTRAITS_BUILTIN_INT_S(Name, Max)		\
+# define OPTRAITS_BUILTIN_INT_S(Name, Min, Max)		\
   template <>						\
   struct optraits<Name> : public optraits_int_s<Name>	\
   { 							\
+    static Name min() { return Min; }			\
     static Name max() { return Max; } 			\
   };
 

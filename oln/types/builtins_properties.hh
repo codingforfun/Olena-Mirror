@@ -102,16 +102,16 @@
    template<>
    struct C_for_int_u<32>
    {
-     typedef unsigned long type;
-     static type max() { return ULONG_MAX; }
+     typedef unsigned int type;
+     static type max() { return UINT_MAX; }
    };
 
    template<>
    struct C_for_int_s<32>
    {
-     typedef signed long type;
-     static type min() { return LONG_MIN; }
-     static type max() { return LONG_MAX; }
+     typedef signed int type;
+     static type min() { return INT_MIN; }
+     static type max() { return INT_MAX; }
    };
 
 

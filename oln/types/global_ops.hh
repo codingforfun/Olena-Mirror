@@ -35,6 +35,7 @@
 # include <oln/types/rec_value.hh>
 # include <oln/types/global_ops_traits.hh>
 # include <oln/types/optraits.hh>
+# include <oln/types/typetraits.hh>
 
 // macros defs
 # include <oln/types/global_ops_defs.hh>
@@ -171,7 +172,7 @@ namespace oln
 
     template <class T> inline
     const T operator-(const T& val)
-    {
+    { 
       return optraits<T>::zero() - val;
     }
 
@@ -181,7 +182,7 @@ namespace oln
       val -= optraits<T>::unit();
       return val;
     }
-
+    
     template<class T> inline
     T operator--(T& val, int)
     {

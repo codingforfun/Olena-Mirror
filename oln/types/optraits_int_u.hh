@@ -104,8 +104,7 @@ namespace oln
     struct operator_minus_traits<int_u<nbits, B1>, int_u<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_s<(unsigned) meta::maxN<nbits + 1, mbits + 1, 32>::ret,
-		    typename deduce_op_behaviour<B1, B2>::ret> ret;
+      typedef int_u<nbits, typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_u<nbits, B1> impl;
     };
 
