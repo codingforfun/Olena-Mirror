@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,7 +28,13 @@
 #ifndef OLENA_META_UCMP_HH
 # define OLENA_META_UCMP_HH
 
-# include <mlc/basics.hh>
+# include <mlc/bool.hh>
+
+//
+//  FIXME: Is it really useful ?  It should be at least renamed, as
+//  there is already "less" structs dealing with bools instead of
+//  types in the same namespace.
+//
 
 // Comparison functions.
 

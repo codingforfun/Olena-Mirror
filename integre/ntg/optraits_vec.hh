@@ -28,8 +28,8 @@
 #ifndef OLENA_VALUE_OPTRAITS_VEC_HH
 # define OLENA_VALUE_OPTRAITS_VEC_HH
 
-# include <mlc/basics.hh>
-# include <mlc/type.hh>
+# include <mlc/bool.hh>
+# include <mlc/is_a.hh>
 
 # include <ntg/predecls.hh>
 # include <ntg/builtins_properties.hh>

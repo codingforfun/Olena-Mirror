@@ -1,3 +1,17 @@
+2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* integre/ntg/behaviour.hh, integre/ntg/global_ops_traits.hh,
+	integre/ntg/optraits_cplx.hh, integre/ntg/optraits_int_s.hh,
+	integre/ntg/optraits_vec.hh: Update includes.
+
+	* integre/ntg/cycle.hh, integre/ntg/global_ops.hh,
+	integre/ntg/optraits_cplx.hh, integre/ntg/optraits_cycle.hh,
+	integre/ntg/optraits_int_s.hh, integre/ntg/range.hh,
+	integre/ntg/behaviour.hh, integre/ntg/cplx.hh,
+	integre/ntg/optraits_scalar.hh, integre/ntg/optraits_vec.hh:
+	Likewise.
+
+
 2003-03-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/Makefile.am: Add check/defs.in into EXTRA_DIST.

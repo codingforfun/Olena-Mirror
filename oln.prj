@@ -1,50 +1,50 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln cleanup 15)
-(Parent-Version oln cleanup 14)
-(Version-Log "Index: ChangeLog
+(Project-Version oln cleanup 16)
+(Parent-Version oln cleanup 15)
+(Version-Log "Index: integre/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* configure.ac: Change the tarball name.
+	* integre/ntg/behaviour.hh, integre/ntg/global_ops_traits.hh,
+	integre/ntg/optraits_cplx.hh, integre/ntg/optraits_int_s.hh,
+	integre/ntg/optraits_vec.hh: Update includes.
 
-	* oln: Rename into olena.
+	* integre/ntg/cycle.hh, integre/ntg/global_ops.hh,
+	integre/ntg/optraits_cplx.hh, integre/ntg/optraits_cycle.hh,
+	integre/ntg/optraits_int_s.hh, integre/ntg/range.hh,
+	integre/ntg/behaviour.hh, integre/ntg/cplx.hh,
+	integre/ntg/optraits_scalar.hh, integre/ntg/optraits_vec.hh:
+	Likewise.
 
-	* bootstrap.sh, cleanup.sh, configure.ac, Makefile.am: Adapt
-	consequently.
 
 Index: metalic/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	* mlc/logic.hh: Remove.
 
-	* tests/array/gen_test.cc (write_postlude_and_test): Adapt to new
-	oln location.
+	* mlc/basics.hh: Rename as ...
+	* mlc/bool.hh: ... this.
 
+	* mlc/type.hh: Rename as ...
+	* mlc/is_a.hh: ... this.
+
+	* mlc/control.hh: Rename as ...
+	* mlc/loop.hh: ... this.
+
+	* mlc/is_a.hh, mlc/ufuncs.hh: Update includes consequently.
+
++2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
++
+ 	* tests/array/gen_test.cc (write_postlude_and_test): Adapt to new
+ 	oln location.
+ 
 Index: olena/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* config/oln.m4, config/oln-local.m4, tests/check/Makefile.am,
-	tests/check/Makefile.flags, tests/check/Makefile.check: Adapt to
-	new oln location.
-Index: doc/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* demo/Makefile.am, ref/Makefile.am: Adapt to new oln location.
-
-	* dev/srctree.texi: Update.
-
-Index: tools/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* utilities/configure.ac: Adapt to new oln location.
-
-Index: tools/swilena/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* swilena/configure.ac: Adapt to new oln location.
-
+	* oln/core/generate.hh: Do not use wrap workaround (for g++-2.95
+	compatibility) anymore. Update includes.
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 03 Mar 2003 18:06:54 +0100")
+(Checkin-Time "Mon, 03 Mar 2003 22:38:43 +0100")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -128,9 +128,10 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.4 640))
-  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.4 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.20.1.4.1.4 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.26 640))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.4 640))
+  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.5 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.20.1.4.1.5 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.4 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.4 640))
 
@@ -232,7 +233,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/core/fwd_iter1d.hh (oln/d/21_fwd_iter1d 1.4 640))
   (olena/oln/core/fwd_iter2d.hh (oln/d/20_fwd_iter2d 1.4 640))
   (olena/oln/core/fwd_iter3d.hh (oln/d/19_fwd_iter3d 1.4 640))
-  (olena/oln/core/generate.hh (oln/f/12_generate.h 1.9 640))
+  (olena/oln/core/generate.hh (oln/f/12_generate.h 1.10 640))
   (olena/oln/core/image1d.hh (oln/c/47_image1d.hh 1.5.2.1 640))
   (olena/oln/core/image1d_size.hh (oln/c/46_image1d_si 1.4 640))
   (olena/oln/core/image2d.hh (oln/c/45_image2d.hh 1.7.2.1 640))
@@ -328,14 +329,14 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (metalic/mlc/array3d.hxx (oln/f/18_array3d.hx 1.6 640))
   (metalic/mlc/array.hh (oln/f/36_array.hh 1.5 640))
   (metalic/mlc/arraynd.hh (oln/f/35_arraynd.hh 1.2 640))
-  (metalic/mlc/basics.hh (oln/c/4_basics.hh 1.7 640))
-  (metalic/mlc/cmp.hh (oln/c/3_cmp.hh 1.5 640))
-  (metalic/mlc/control.hh (oln/c/2_control.hh 1.6 640))
-  (metalic/mlc/logic.hh (oln/c/1_logic.hh 1.7 640))
+  (metalic/mlc/bool.hh (oln/c/4_basics.hh 1.8 640))
+  (metalic/mlc/cmp.hh (oln/c/3_cmp.hh 1.6 640))
+  (metalic/mlc/is_a.hh (oln/g/33_type.hh 1.7 640))
+  ;;(metalic/mlc/logic.hh (oln/c/1_logic.hh 1.7 640))
+  (metalic/mlc/loop.hh (oln/c/2_control.hh 1.6 640))
   (metalic/mlc/optional.hh (oln/o/41_optional.h 1.4 640))
-  (metalic/mlc/type.hh (oln/g/33_type.hh 1.6 640))
-  (metalic/mlc/ucmp.hh (oln/c/0_ucmp.hh 1.7 640))
-  (metalic/mlc/ufuncs.hh (oln/b/51_ufuncs.hh 1.6 640))
+  (metalic/mlc/ucmp.hh (oln/c/0_ucmp.hh 1.8 640))
+  (metalic/mlc/ufuncs.hh (oln/b/51_ufuncs.hh 1.7 640))
   (olena/oln/morpho/closing.hh (oln/b/6_closing.hh 1.6 640))
   (olena/oln/morpho/closing.inc (oln/44_closing.in 1.6 640))
   (olena/oln/morpho/dilation.hh (oln/b/5_dilation.h 1.10 640))
@@ -373,18 +374,18 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.1 640))
   (olena/oln/transforms/wavelet_coeffs.hh (oln/i/34_wavelet_co 1.3 640))
   (integre/ntg/all.hh (oln/g/32_all.hh 1.10.1.1 640))
-  (integre/ntg/behaviour.hh (oln/g/31_behaviour. 1.13.1.1 640))
+  (integre/ntg/behaviour.hh (oln/g/31_behaviour. 1.13.1.2 640))
   (integre/ntg/bin.hh (oln/g/30_bin.hh 1.9.1.1 640))
   (integre/ntg/builtins_properties.hh (oln/g/29_builtins_p 1.7 640))
   (integre/ntg/cast.hh (oln/i/26_cast.hh 1.3.1.1 640))
   (integre/ntg/color.hh (oln/i/17_color.hh 1.7.1.1 640))
-  (integre/ntg/cplx.hh (oln/i/4_cplx.hh 1.9.1.1 640))
+  (integre/ntg/cplx.hh (oln/i/4_cplx.hh 1.9.1.2 640))
   (integre/ntg/cplx_representation.hh (oln/i/3_cplx_repre 1.2 640))
-  (integre/ntg/cycle.hh (oln/g/28_cycle.hh 1.11.1.1 640))
+  (integre/ntg/cycle.hh (oln/g/28_cycle.hh 1.11.1.2 640))
   (integre/ntg/debug.hh (oln/i/8_debug.hh 1.2.1.1 640))
   (integre/ntg/global_ops_defs.hh (oln/g/26_global_ops 1.6 640))
-  (integre/ntg/global_ops.hh (oln/g/27_global_ops 1.11.1.1 640))
-  (integre/ntg/global_ops_traits.hh (oln/g/25_global_ops 1.7.1.1 640))
+  (integre/ntg/global_ops.hh (oln/g/27_global_ops 1.11.1.2 640))
+  (integre/ntg/global_ops_traits.hh (oln/g/25_global_ops 1.7.1.2 640))
   (integre/ntg/hsi.hh (oln/i/20_hsi.hh 1.3.1.1 640))
   (integre/ntg/hsl.hh (oln/i/21_hsl.hh 1.3.1.1 640))
   (integre/ntg/hsv.hh (oln/i/22_hsv.hh 1.3.1.1 640))
@@ -398,17 +399,17 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (integre/ntg/optraits_builtins.hh (oln/i/16_optraits_b 1.2.1.1 640))
   (integre/ntg/optraits_builtins_int_defs.hh (oln/g/17_optraits_b 1.4 640))
   (integre/ntg/optraits_builtins_int.hh (oln/g/18_optraits_b 1.6.1.1 640))
-  (integre/ntg/optraits_cplx.hh (oln/i/5_optraits_c 1.7.1.1 640))
-  (integre/ntg/optraits_cycle.hh (oln/g/16_optraits_c 1.11.1.1 640))
+  (integre/ntg/optraits_cplx.hh (oln/i/5_optraits_c 1.7.1.2 640))
+  (integre/ntg/optraits_cycle.hh (oln/g/16_optraits_c 1.11.1.2 640))
   (integre/ntg/optraits.hh (oln/g/21_optraits.h 1.6 640))
-  (integre/ntg/optraits_int_s.hh (oln/g/15_optraits_i 1.9.1.1 640))
+  (integre/ntg/optraits_int_s.hh (oln/g/15_optraits_i 1.9.1.2 640))
   (integre/ntg/optraits_int_u.hh (oln/g/14_optraits_i 1.10.1.1 640))
   (integre/ntg/optraits_range.hh (oln/g/13_optraits_r 1.5.1.1 640))
   (integre/ntg/optraits_scalar_defs.hh (oln/g/11_optraits_s 1.7 640))
-  (integre/ntg/optraits_scalar.hh (oln/g/12_optraits_s 1.11.1.1 640))
-  (integre/ntg/optraits_vec.hh (oln/h/42_optraits_v 1.10.1.1 640))
+  (integre/ntg/optraits_scalar.hh (oln/g/12_optraits_s 1.11.1.2 640))
+  (integre/ntg/optraits_vec.hh (oln/h/42_optraits_v 1.10.1.2 640))
   (integre/ntg/predecls.hh (oln/g/10_predecls.h 1.10.1.1 640))
-  (integre/ntg/range.hh (oln/g/9_range.hh 1.9.1.1 640))
+  (integre/ntg/range.hh (oln/g/9_range.hh 1.9.1.2 640))
   (integre/ntg/rec_value.hh (oln/g/8_rec_value. 1.8.1.1 640))
   (integre/ntg/rgb.hh (oln/i/18_rgb.hh 1.3.1.1 640))
   (integre/ntg/to_oln.hh (oln/g/7_to_oln.hh 1.7.1.1 640))
@@ -808,7 +809,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 ;; Files added by populate at Thu, 27 Feb 2003 20:06:47 +0100,
 ;; to version cleanup.5(w), by raph:
 
-  (metalic/mlc/Makefile.am (oln/q/33_Makefile.a 1.1 640))
+  (metalic/mlc/Makefile.am (oln/q/33_Makefile.a 1.2 640))
 
 ;; Files added by populate at Fri, 28 Feb 2003 18:02:09 +0100,
 ;; to version cleanup.9(w), by burrus_n:
@@ -824,7 +825,6 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 ;; to version cleanup.10(w), by nes:
 
   (integre/Makefile.am (oln/q/34_Makefile.a 1.2 640))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.3 640))
   (integre/ntg/Makefile.am (oln/q/36_Makefile.a 1.1 640))
 
 ;; Files added by populate at Sat, 01 Mar 2003 13:19:17 +0100,

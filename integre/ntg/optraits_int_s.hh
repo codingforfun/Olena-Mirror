@@ -30,8 +30,8 @@
 
 # include <oln/config/system.hh>
 
-# include <mlc/basics.hh>
-# include <mlc/type.hh>
+# include <mlc/bool.hh>
+# include <mlc/is_a.hh>
 # include <mlc/cmp.hh>
 
 # include <ntg/builtins_properties.hh>

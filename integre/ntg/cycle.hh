@@ -28,7 +28,7 @@
 #ifndef OLENA_VALUE_CYCLE_HH
 # define OLENA_VALUE_CYCLE_HH
 
-# include <mlc/type.hh>
+# include <mlc/is_a.hh>
 
 # include <ntg/behaviour.hh>
 # include <ntg/global_ops.hh>

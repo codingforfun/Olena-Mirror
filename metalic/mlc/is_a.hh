@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,7 +30,7 @@
 
 
 # include <oln/core/type.hh>
-# include <mlc/basics.hh>
+# include <mlc/bool.hh>
 
 
 // private macro so do _not_ use it
@@ -40,17 +40,20 @@ sizeof(helper<T,U>::check( (T*) helper<T,U>::makeT() )) == sizeof(type::internal
 
 namespace type {
 
-  //
-  //  wrap
-  //
-  //  FIXME: This type is a workaround for g++-2.95 problem with implicit 
-  //  typename in <foo<T>::ret::dim>, 
-  //  write <wrap<typename foo<T>::ret>::dim instead.
-  //
-  ///////////////////////////////////////////////////////////////////////
-    
-  template <class T> struct wrap : public T {};
+  namespace internal {
 
+    //
+    //  wrap
+    //
+    //  FIXME: This type is a workaround for g++-2.95 problem with implicit 
+    //  typename in <foo<T>::ret::dim>, 
+    //  write <wrap<typename foo<T>::ret>::dim instead.
+    //
+    ///////////////////////////////////////////////////////////////////////
+    
+    template <class T> struct wrap : public T {};
+
+  } // internal
 
   //
   //  is_a 
@@ -185,6 +188,7 @@ template <class T>
 struct id_ { typedef T ret; };
 
 
-# define is_a(T, U) type::wrap<typename type::internal::_is_a< id_of_typeform(U) >::check<T, U> >
+// FIXME: can we get rid of type::wrap ?
+# define is_a(T, U) type::internal::wrap<typename type::internal::_is_a< id_of_typeform(U) >::check<T, U> >
 
 #endif // ndef OLENA_META_TYPE_HH

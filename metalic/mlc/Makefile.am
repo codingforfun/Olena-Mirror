@@ -10,11 +10,10 @@ nobase_mlc_HEADERS =			\
   array3d.hh				\
   array3d.hxx				\
   arraynd.hh				\
-  basics.hh				\
+  bool.hh				\
   cmp.hh				\
-  control.hh				\
-  logic.hh				\
+  is_a.hh				\
+  loop.hh				\
   optional.hh				\
-  type.hh				\
   ucmp.hh				\
   ufuncs.hh

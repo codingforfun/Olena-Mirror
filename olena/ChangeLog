@@ -1,5 +1,10 @@
 2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* oln/core/generate.hh: Do not use wrap workaround (for g++-2.95
+	compatibility) anymore. Update includes.
+
+2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
 	* config/oln.m4, config/oln-local.m4, tests/check/Makefile.am,
 	tests/check/Makefile.flags, tests/check/Makefile.check: Adapt to
 	new oln location.

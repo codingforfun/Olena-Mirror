@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -48,6 +48,7 @@ namespace oln {
 
     struct false_t;
 
+    // FIXME: Move this elsewhere
     struct undefined {};
 
     struct true_t  {
@@ -79,8 +80,7 @@ namespace oln {
     template<bool> struct is_false;
     template<> struct is_false<false> { static void ensure() {}; };
 
-    
-    // FIXME: waiting for an unified meta package
+    // FIXME: find a good name for this struct.
 
     // base class for meta-types returning Boolean values
 
@@ -98,6 +98,13 @@ namespace oln {
     {
       static const bool ret = false;
     };
+
+    //
+    // FIXME: remove these logical operators.
+    //
+    // They can easily be replaced by is_true<b1 OP b2>::ensure()
+    //
+    /////////////////////////////////////////////////////////////
 
     //
     // or

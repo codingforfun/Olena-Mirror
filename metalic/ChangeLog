@@ -1,5 +1,20 @@
 2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* mlc/logic.hh: Remove.
+	
+	* mlc/basics.hh: Rename as ...
+	* mlc/bool.hh: ... this.
+	
+	* mlc/type.hh: Rename as ...
+	* mlc/is_a.hh: ... this.
+
+	* mlc/control.hh: Rename as ...
+	* mlc/loop.hh: ... this.
+
+	* mlc/is_a.hh, mlc/ufuncs.hh: Update includes consequently.
+
+2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
 	* tests/array/gen_test.cc (write_postlude_and_test): Adapt to new
 	oln location.
 

@@ -31,7 +31,7 @@
 # include <oln/config/system.hh>
 
 # include <mlc/cmp.hh>
-# include <mlc/type.hh>
+# include <mlc/is_a.hh>
 
 # include <ntg/cplx_representation.hh>
 # include <ntg/global_ops.hh>

@@ -30,7 +30,7 @@
 
 # include <typeinfo>
 
-# include <mlc/type.hh>
+# include <mlc/is_a.hh>
 
 # include <ntg/rec_value.hh>
 # include <ntg/optraits.hh>
