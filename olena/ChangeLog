@@ -1,7 +1,11 @@
 2003-08-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* tests/morpho/tests/test-reconstruction(main): Use rdata.
+
 	* tests/io/Makefile.am (EXTRA_DIST): Distribute loadsave.hh.
 
+2003-08-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	Reorganize the testsuite.
 
 	* tests/check/Makefile.runtests: New.

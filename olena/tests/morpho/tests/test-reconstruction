@@ -10,6 +10,8 @@
 
 #include <oln/utils/timer.hh>
 
+#include "data.hh"
+
 #include <iostream>
 
 using namespace oln;
@@ -20,7 +22,7 @@ using std::endl;
 
 int main()
 {
-  image2d<int_u8> lena = load(IMGDIR "/lena128.pgm");
+  image2d<int_u8> lena = load(rdata("lena128.pgm"));
   image2d<int_u8> lena_open = morpho::opening(lena, win_c4p());
 
   utils::timer t;

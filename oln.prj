@@ -1,15 +1,24 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 86)
-(Parent-Version oln 2003paradigm 85)
-(Version-Log "Index: olena/ChangeLog
+(Project-Version oln 2003paradigm 87)
+(Parent-Version oln 2003paradigm 86)
+(Version-Log "Index: ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-        * tests/io/Makefile.am (EXTRA_DIST): Distribute loadsave.hh.
+        * contrib/runtests: Check if the current test is present. Fix
+        the TESTS variable handling.
+
+Index: olena/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+        * tests/morpho/tests/test-reconstruction(main): Use rdata.
+
+Index: integre/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+        * tests/types/runtests: Handle the TESTS variable.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 01 Aug 2003 10:59:48 +0200")
+(Checkin-Time "Fri, 01 Aug 2003 11:42:33 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -98,9 +107,9 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.10 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.2 640))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.20 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.11 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.3 640))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.21 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.29 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.1 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.11 640))
@@ -119,7 +128,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (doc/demo/image.cc (oln/d/46_image.cc 1.5 640))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.16.1.1 640))
   (doc/demo/morpholena.cc (oln/d/43_morpholena 1.11 640))
-  (olena/tests/morpho/tests/test-reconstruction (oln/e/22_test-recon 1.7.1.3.1.1 640))
+  (olena/tests/morpho/tests/test-reconstruction (oln/e/22_test-recon 1.7.1.3.1.2 640))
   (doc/demo/tour.cc (oln/d/45_tour.cc 1.12 640))
   (doc/ref/bin () :directory)
   (doc/ref/html () :directory)
@@ -424,7 +433,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (olena/tests/io/tests/2d (oln/e/47_2d.cc 1.7.1.5 640))
   (olena/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.7.1.7 640))
-  (olena/tests/io/Makefile.am (oln/e/49_Makefile.a 1.19 640))
+  (olena/tests/io/Makefile.am (oln/e/49_Makefile.a 1.20 640))
   (olena/tests/io/tests/pretty (oln/i/42_pretty.cc 1.2 640))
   (olena/tests/io/tests/se_fail (oln/i/43_se_fail.cc 1.3 640))
   (olena/tests/io/tests/se_pass (oln/i/44_se_pass.cc 1.2 640))
@@ -451,7 +460,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/tests/transforms/Makefile.am (oln/i/40_Makefile.a 1.10 640))
 ;;  (oln/tests/transforms/output () :directory)
   (integre/tests/types/Makefile.am (oln/h/5_Makefile.a 1.11 640))
-  (integre/tests/types/runtests (oln/h/3_runtests 1.14.1.5 750))
+  (integre/tests/types/runtests (oln/h/3_runtests 1.14.1.6 750))
   (integre/tests/types/tests/bin1 (oln/i/28_bin1 1.1 640))
   (integre/tests/types/tests/bin2 (oln/o/42_bin2 1.2 640))
   (integre/tests/types/tests/bin3 (oln/o/46_bin3 1.1 640))
@@ -991,7 +1000,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 ;; to version 2003paradigm.83(w), by nes:
 
   (olena/tests/check/Makefile.runtests (oln/u/32_Makefile.r 1.1 600))
-  (contrib/runtests (oln/u/33_runtests 1.1 700))
+  (contrib/runtests (oln/u/33_runtests 1.2 700))
 
 ;; Files deleted by populate at Fri, 01 Aug 2003 02:03:16 +0200,
 ;; from version 2003paradigm.843(w), by nes:

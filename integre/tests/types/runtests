@@ -18,6 +18,10 @@ indir=${SRCDIR-.}/tests
 rundir=runs
 test -d $rundir || mkdir $rundir
 
+if test "$# = 0 -a ${TESTS+set}"; then
+  set $TESTS
+fi
+
 # If no tests were given on the command line, get the list from $indir.
 if test $# = 0; then
   set dummy $indir/*
@@ -32,6 +36,10 @@ for test; do
   fail=0
   dir=$rundir/$test
   input=$indir/$test
+  test -f $input || { 
+    echo "FAIL: $test (does not exist)" >&2
+    failures=`expr $failures + 1`
+    continue; }
   rm -rf $dir
   mkdir $dir
   # Build the source code to compile.
@@ -84,7 +92,11 @@ EOF
 
   msg="";
   case $expected:$estatus in
-    ok:0 | compfail:50 | abort:134) rm -rf "$dir" ;;
+    ok:0 | compfail:50 | abort:134) 
+      if test ! x"$KEEP_RUN" = x"1"; then
+        rm -rf "$dir";
+      fi
+      msg="(ok)" ;;
     *:50) msg="(doesn't compile)" ;;
     *:134) msg="(aborts at run-time)" ;;
     compfail:*) msg="(compiles!)" ;;
@@ -92,7 +104,7 @@ EOF
     ok:*) msg="(exits with \$?=$estatus)" ;;
     *) ;;
   esac
-  if test -d $dir; then
+  if test x"$msg" != x"(ok)"; then
     if test "$xfail" = "no"; then
       echo "FAIL: $test $msg" >&2
       failures=`expr $failures + 1`

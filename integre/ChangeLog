@@ -1,5 +1,9 @@
 2003-08-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* tests/types/runtests: Handle the TESTS variable.
+
+2003-08-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* tests/check/Makefile.runtests: New.
 	* tests/check/Makefile.flags: New.
 	* tests/Makefile.am: Adjust.

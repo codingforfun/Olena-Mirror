@@ -2,7 +2,7 @@
 
 include ../check/Makefile.runtests
 
-EXTRA_DIST += loadsave.hh
+noinst_HEADERS = loadsave.hh
 
 CLEANFILES =					\
   black-test.pbm white-test.pbm			\

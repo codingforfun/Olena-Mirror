@@ -18,7 +18,7 @@ indir=${SRCDIR-.}/tests
 rundir=runs
 test -d $rundir || mkdir $rundir
 
-if test ${TESTS+set}; then
+if test "$# = 0 -a ${TESTS+set}"; then
   set $TESTS
 fi
 
@@ -29,13 +29,17 @@ if test $# = 0; then
 fi
 
 for test; do
-  # We want only the basename of $test.
   if test -d $test; then continue; fi
   echo $test | grep '~$' && continue;
+  # We want only the basename of $test.
   test=`basename "$test"`
   fail=0
   dir=$rundir/$test
   input=$indir/$test
+  test -f $input || { 
+    echo "FAIL: $test (does not exist)" >&2
+    failures=`expr $failures + 1`
+    continue; }
   rm -rf $dir
   mkdir $dir
   # Build the source code to compile.

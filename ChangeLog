@@ -1,5 +1,10 @@
 2003-08-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* contrib/runtests: Check if the current test is present. Fix
+	the TESTS variable handling.
+	
+2003-08-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
 	* contrib/runtests: New.
 	* Makefile.am (EXTRA_DIST): Adjust.
 	
