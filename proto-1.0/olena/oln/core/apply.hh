@@ -28,6 +28,8 @@
 #ifndef OLENA_CORE_APPLY_HH
 # define OLENA_CORE_APPLY_HH
 
+# include <mlc/fun.hh>
+
 # include <oln/basics.hh>
 # include <oln/core/abstract/op.hh>
 # include <oln/core/ch_value_type.hh>
@@ -38,44 +40,45 @@ namespace oln {
   | Unary.  |
   `--------*/
 
-  // fwd decl
+  // Fwd decl.
   namespace impl {
-    template <typename AdaptableUnaryFun, typename I> struct apply_type;
+    template <typename F, typename I>
+    struct apply1_type;
   }
 
-  // category
-  template <typename AdaptableUnaryFun, typename I>
-  struct set_category< impl::apply_type<AdaptableUnaryFun, I> >
+  // Category.
+  template <typename F, typename I>
+  struct set_category< impl::apply1_type<F, I> >
   {
     typedef category::image ret;
   };
 
-  // super_type
-  template <typename AdaptableUnaryFun, typename I>
-  struct set_super_type< impl::apply_type<AdaptableUnaryFun, I> >
+  // Super type.
+  template <typename F, typename I>
+  struct set_super_type< impl::apply1_type<F, I> >
   {
-    typedef typename abstract::op<I, impl::apply_type<AdaptableUnaryFun, I> >
-    ret;
+    typedef typename ch_value_type<I,
+				   typename F::result_type>::ret output_type;
+    typedef typename abstract::op<output_type, impl::apply1_type<F, I> > ret;
   };
 
   namespace impl {
 
-    template <typename AdaptableUnaryFun, typename I>
-    struct apply_type :
+    template <typename F, typename I>
+    struct apply1_type :
       public abstract::op<
-        typename ch_value_type<
-          I, typename AdaptableUnaryFun::result_type>::ret,
-        apply_type<AdaptableUnaryFun, I> >
+        typename ch_value_type<I, typename F::result_type>::ret,
+        apply1_type<F, I> >
     {
-      typedef typename
-        ch_value_type<I, typename AdaptableUnaryFun::result_type>::ret
+      typedef typename ch_value_type<I, typename F::result_type>::ret
         output_type;
 
-      AdaptableUnaryFun f_;
+      F f_;
       box<const I> input_;
 
-      apply_type(AdaptableUnaryFun f, const abstract::image<I>& input) :
-	f_(f),
+      apply1_type(const mlc::abstract::unary_function<F>& f,
+		  const abstract::image<I>& input) :
+	f_(f.exact ()),
 	input_(input.exact())
       {
       }
@@ -98,40 +101,97 @@ namespace oln {
   ** Apply a function \a f to each element of \a input, the function
   ** is passed as a type and is instantiated.
   */
-  template <class AdaptableUnaryFun, typename I>
-  impl::apply_type<AdaptableUnaryFun, I>
-  apply(AdaptableUnaryFun f, const abstract::image<I>& input)
+  template <typename F, typename I>
+  impl::apply1_type<F, I>
+  apply(const mlc::abstract::unary_function<F>& f,
+	const abstract::image<I>& input)
   {
-    impl::apply_type<AdaptableUnaryFun, I> tmp(f, input);
+    impl::apply1_type<F, I> tmp(f, input);
     tmp.run();
     return tmp;
   }
 
-  /*! \brief Standard unary \a apply procedure.
-  **
-  ** Apply a function \a f to each element of \a input, the function
-  ** is passed as a type and is instantiated.
-  */
-  template<class AdaptableUnaryFun, class I>
-  impl::apply_type<AdaptableUnaryFun, I>
-  apply(const abstract::image<I>& input)
-  {
-    return apply(AdaptableUnaryFun(), input);
+
+  /*---------.
+  | Binary.  |
+  `---------*/
+
+  // Fwd decl.
+  namespace impl {
+    template <typename F, typename I1, typename I2>
+    struct apply2_type;
   }
 
-  /*! \brief Standard unary \a apply procedure.
-  **
-  ** Apply function \a f to each element of \a input, the function is
-  ** passed as a type and is instantiated.  For template functions
-  ** passed as template-id, one need to instantiate the function for
-  ** the type of the abstract::image.
-  */
-  template<template<class> class AdaptableUnaryFun, class I>
-  typename impl::apply_type<AdaptableUnaryFun<oln_type_of(I, value)>, I>
-  apply(const abstract::image<I>& input)
+  // Category.
+  template <typename F, typename I1, typename I2>
+  struct set_category< impl::apply2_type<F, I1, I2> >
   {
-    AdaptableUnaryFun<oln_type_of(I, value)> tmp;
-    return apply(tmp, input);
+    typedef category::image ret;
+  };
+
+  // Super type.
+  template <typename F, typename I1, typename I2>
+  struct set_super_type< impl::apply2_type<F, I1, I2> >
+  {
+    typedef typename ch_value_type<I1,
+				   typename F::result_type>::ret output_type;
+    typedef typename abstract::op<output_type,
+				  impl::apply2_type<F, I1, I2> > ret;
+  };
+
+  namespace impl {
+
+    template <typename F, typename I1, typename I2>
+    struct apply2_type :
+      public abstract::op<
+        typename ch_value_type<I1, typename F::result_type>::ret,
+        apply2_type<F, I1, I2> >
+    {
+      typedef typename ch_value_type<I1, typename F::result_type>::ret
+        output_type;
+
+      F f_;
+      box<const I1> input1_;
+      box<const I2> input2_;
+
+      apply2_type(const mlc::abstract::binary_function<F>& f,
+		  const abstract::image<I1>& input1,
+		  const abstract::image<I2>& input2) :
+	f_(f.exact ()),
+	input1_(input1.exact()),
+	input2_(input2.exact())
+      {
+	assertion (input1_.size() == input2_.size());
+      }
+
+      void impl_run()
+      {
+	output_type output(input1_.size());
+	oln_type_of(I1, fwd_piter) p(input1_.size());
+	for_all(p)
+	  output[p] = f_(input1_[p], input2_[p]);
+	this->image_ = output;
+      }
+    };
+
+  } // end of namespace impl
+
+
+  /*! \brief Standard binary \a apply procedure.
+  **
+  ** Apply a function \a f to each pair of elements of
+  ** \a input1 x \a input2.
+  */
+  template <typename F, typename I1, typename I2>
+  impl::apply2_type<F, I1, I2>
+  apply(const mlc::abstract::binary_function<F>& f,
+	const abstract::image<I1>& input1,
+	const abstract::image<I2>& input2)
+  {
+    assertion (input1.size() == input2.size());
+    impl::apply2_type<F, I1, I2> tmp(f, input1, input2);
+    tmp.run();
+    return tmp;
   }
 
 } // end of namespace oln

@@ -1,3 +1,21 @@
+2005-04-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Introduce oln::apply for binary functions.
+	Use mlc::abstract::unary_function and
+	mlc::abstract::binary_function to enforce onstraints on signatures
+	of applied functions.
+
+	* oln/core/apply.hh: s/apply_type/apply1_type/g.
+	(apply (const abstract::image<I>&)): Remove functions.
+	(apply2_type): New class.
+	(apply(const mlc::abstract::binary_function<F>&,
+	const abstract::image<I>&, const abstract::image<I>&)): New
+	function.
+	* tests/core/tests/apply: Adjust tests.
+	Rename as...
+	* tests/core/tests/apply-unary: ...this.
+	* tests/core/tests/apply-binary: New test.
+
 2005-04-06  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* oln/convert/ng_to_se.hh: Remove.
