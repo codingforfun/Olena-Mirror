@@ -1,3 +1,7 @@
+2003-04-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/Makefile.am: Add missing includes.
+
 2003-03-31  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
 	* oln/topo/inter-pixel/internal/dir.hxx,

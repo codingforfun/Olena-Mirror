@@ -1,5 +1,5 @@
 // -*- c++ -*-
-// Copyright (C) 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,7 +39,7 @@ Concrete(I_) thinning(const image<I_>& _input,
   mlc::eq<I::dim, E2::dim>::ensure();
 
   Concrete(I) dilated = dilation(input, se2);
-  Concrete(I) eroded =  erosion(input, se1);
+  Concrete(I) eroded = erosion(input, se1);
   Concrete(I) output(input.size());
   Iter(I) p(input);
   for_all(p)
