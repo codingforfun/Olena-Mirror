@@ -63,6 +63,7 @@ namespace oln {
   {
     point2d()
     {
+      // no initialization here so that row_ and col_ are 'undef'
     }
 
     point2d(coord_t row_, coord_t col_) :

@@ -65,6 +65,7 @@ namespace oln {
   {
     point1d()
     {
+      // no initialization here so that index_ is 'undef'
     }
 
     point1d(coord_t index_) :

@@ -39,7 +39,9 @@ namespace oln {
   struct size2d : public abstract::size< size2d >
   {
     size2d()
-    {}
+    {
+      // no initialization here so that members are 'undef'
+    }
 
     size2d(coord_t nrows_, coord_t ncols_) :
       nrows_(nrows_),

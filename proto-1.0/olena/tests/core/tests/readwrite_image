@@ -11,23 +11,26 @@ namespace oln {
   struct dummy_image;
 
   template <>
-  struct category_type< dummy_image > { typedef cat::image ret; };
+  struct set_category< dummy_image > { typedef category::image ret; };
 
   template <>
-  struct props <cat::image, dummy_image> : 
-         public default_props < cat::image >
+  struct set_super_type< dummy_image > {
+    typedef abstract::image_with_data< dummy_image > ret;
+  };
+
+  template <>
+  struct set_props <category::image, dummy_image> : 
+         	public props_of < category::image >
   {
-    typedef prop_of<abstract::readwrite_image> image_constness;
-    typedef prop_of<abstract::image2d> image_dimension;
+    typedef is_a<abstract::readwrite_image> image_constness;
+    typedef is_a<abstract::image2d> image_dimension_type;
 
     typedef size2d size_type;
     typedef point2d point_type;
     typedef ntg::int_u8 value_type;
 
-    typedef mlc_encoding_type_(value_type) value_storage_type;
-    typedef array2d<value_storage_type> value_container_type;
-
-    typedef mlc::no_type delegated_type;
+    typedef value_type value_storage_type;
+    typedef array2d<value_storage_type> storage_type;
   };
 
   struct dummy_image : public abstract::image_with_data< dummy_image >
@@ -55,7 +58,8 @@ namespace oln {
 bool check()
 {
   oln::dummy_image ima(3, 3);
-  ima[oln::point2d(0,0)] = 42;
-  std::cout << ima[oln::point2d(0,0)].value() << std::endl;
+  oln::point2d p(0,0);
+  ima[p] = 51;
+  std::cout << int(ima[p]) << std::endl;
   return false;
 }

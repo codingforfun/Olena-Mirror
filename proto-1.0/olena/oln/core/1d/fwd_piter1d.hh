@@ -88,9 +88,7 @@ namespace oln {
     void impl_next()
     {
       precondition(this->p_.index().is_defined());
-      precondition(this->p_.index() >= 0 and this->p_.index() <= this->s_.nindices());
-      if (this->p_.index() == this->s_.nindices())
-	return;
+      precondition(this->p_.index() >= 0 && this->p_.index() < this->s_.nindices());
       ++this->p_.index();
       postcondition(this->p_.index().is_defined());
     }

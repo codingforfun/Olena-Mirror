@@ -57,11 +57,9 @@ namespace oln {
 
   struct point3d : public abstract::point< point3d >
   {
-    point3d() :
-      slice_(0),
-      row_(0),
-      col_(0)
+    point3d()
     {
+      // no initialization here so that slice_, row_, and col_ are 'undef'
     }
 
     point3d(coord_t slice_, coord_t row_, coord_t col_) :

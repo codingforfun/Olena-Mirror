@@ -71,6 +71,10 @@ namespace oln {
 
     bool operator==(value_type rhs) const
     {
+      if (! this->is_defined())
+	{
+	  std::cerr << "oops" << std::endl;
+	}
       precondition(this->is_defined());
       return value_ == rhs;
     }

@@ -1,7 +1,6 @@
 #include <oln/core/abstract/image_identity.hh>
 #include <oln/core/2d/image2d.hh>
 #include <ntg/real/int_u8.hh>
-#include <oln/core/cats.hh>
 
 
 template <typename I>

@@ -116,7 +116,7 @@ namespace oln {
 
     void impl_resize(const size1d& s)
     {
-      precondition(s.nindices() > 0 and
+      precondition(s.nindices() > 0 &&
 		   s.border() >= 0);
       invariant_();
       this->clear_data();
@@ -134,14 +134,14 @@ namespace oln {
     bool impl_hold(const point1d& p) const
     {
       return
-	p.index() >= 0 and
+	p.index() >= 0 &&
 	p.index() < size_.nindices();
     }
 
     bool impl_hold_large(const point1d& p) const
     {
       return
-	p.index() >= - size_.border() and
+	p.index() >= - size_.border() &&
 	p.index() < size_.nindices() + size_.border();
     }
 
@@ -173,13 +173,13 @@ namespace oln {
 
     void invariant_() const
     {
-      invariant((buffer_ != 0 and
-		 size_.nindices() > 0 and
+      invariant((buffer_ != 0 &&
+		 size_.nindices() > 0 &&
 		 size_.border() >= 0)
-		or
-		(buffer_ == 0 and
-		 size_.nindices() == 0 and
-		 size_.border() == 0));
+		||
+		(buffer_ == 0 &&
+		 size_.nindices().is_undefined() &&
+		 size_.border().is_undefined()));
     }
 
   };

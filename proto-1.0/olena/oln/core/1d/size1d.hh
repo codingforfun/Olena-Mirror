@@ -39,7 +39,9 @@ namespace oln {
   struct size1d : public abstract::size< size1d >
   {
     size1d()
-    {}
+    {
+      // no initialization here so that members are 'undef'
+    }
 
     size1d(coord_t nindices_) :
       nindices_(nindices_),

@@ -1,3 +1,22 @@
+2005-03-14  Thierry Geraud  <theo@lrde.epita.fr>
+
+	* oln/core/3d/fwd_piter3d.hh: New.
+	* tests/core/tests/readwrite_image: Fix to pass make check.
+	* tests/core/tests/image_identity: Likewise.
+	* oln/fancy/print.hh: Likewise.
+	* oln/core/1d/array1d.hh: Likewise.
+	* oln/core/1d/fwd_piter1d.hh: Likewise.
+	* oln/core/1d/point1d.hh: Likewise.
+	* oln/core/1d/size1d.hh: Likewise.
+	* oln/core/coord.hh: Likewise.
+	* oln/core/2d/fwd_piter2d.hh: Likewise.
+	* oln/core/2d/point2d.hh: Likewise.
+	* oln/core/2d/size2d.hh: Likewise.
+	* oln/core/3d/size3d.hh: Likewise.
+	* oln/core/3d/array3d.hh: Likewise.
+	* oln/core/3d/image3d.hh: Likewise.
+	* oln/core/3d/point3d.hh: Likewise.
+
 2005-03-10  Thierry Geraud  <theo@lrde.epita.fr>
 
 	* oln/core/entry.hh: Move to...

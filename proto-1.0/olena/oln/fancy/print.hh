@@ -38,6 +38,7 @@
 # include <oln/core/abstract/image_dimension.hh>
 # include <oln/core/1d/point1d.hh>
 # include <oln/core/2d/point2d.hh>
+# include <oln/core/3d/point3d.hh>
 # include <oln/core/coord.hh>
 
 
@@ -104,18 +105,15 @@ namespace oln {
       template <typename E>
       void print(const abstract::image1d<E>& input, std::ostream& ostr)
       {
-	// FIXME: lacks cleaning
 	for (coord_t index = 0; index < input.size().nindices(); ++index)
-	  {
-	    ostr << internal::pp<oln_type_of(E, value)>(input[point1d(index)]) << ' ';
-	  }
+	  ostr << internal::pp<oln_type_of(E, value)>(input[point1d(index)])
+	       << ' ';
 	ostr << std::endl;
       }
 
       template <typename E>
       void print(const abstract::image2d<E>& input, std::ostream& ostr)
       {
-	// FIXME: lacks cleaning
 	for (coord_t row = 0; row < input.size().nrows(); ++row)
 	  {
 	    for (coord_t col = 0; col < input.size().ncols(); ++col)
@@ -124,24 +122,22 @@ namespace oln {
 	  }
       }
 
-      // FIXME: remove comments when dpoint3d are available.
 
-//       template <typename E>
-//       void print(const abstract::image3d<E>& input, std::ostream& ostr)
-//       {
-// 	// FIXME: lacks cleaning
-// 	for (coord_t slice = 0; slice < input.size().nslices(); ++slice)
-//         {
-// 	  for (coord_t row = 0; row < input.size().nrows(); ++row)
-// 	  {
-// 	    for (coord_t col = 0; col < input.size().ncols(); ++col)
-// 	      ostr << internal::pp<oln_value_type(E)>(input[point3d(slice,row,col)])
-//                    << ' ';
-//             ostr << ", ";
-// 	  }
-// 	  ostr << std::endl;
-// 	}
-//       }
+      template <typename E>
+      void print(const abstract::image3d<E>& input, std::ostream& ostr)
+      {
+	for (coord_t slice = 0; slice < input.size().nslices(); ++slice)
+        {
+	  for (coord_t row = 0; row < input.size().nrows(); ++row)
+	  {
+	    for (coord_t col = 0; col < input.size().ncols(); ++col)
+	      ostr << internal::pp<oln_type_of(E, value)>(input[point3d(slice,row,col)])
+                   << ' ';
+            ostr << std::endl;
+	  }
+	  ostr << "---" << std::endl;
+	}
+      }
 
 
     } // end of namespace impl

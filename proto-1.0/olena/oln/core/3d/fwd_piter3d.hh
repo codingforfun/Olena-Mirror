@@ -25,42 +25,42 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_2D_FWD_PITER2D_HH
-# define OLENA_CORE_2D_FWD_PITER2D_HH
+#ifndef OLENA_CORE_3D_FWD_PITER3D_HH
+# define OLENA_CORE_3D_FWD_PITER3D_HH
 
 # include <mlc/contract.hh>
 
 # include <oln/core/abstract/piter.hh>
-# include <oln/core/2d/point2d.hh>
-# include <oln/core/2d/size2d.hh>
+# include <oln/core/3d/point3d.hh>
+# include <oln/core/3d/size3d.hh>
 
 
 namespace oln {
 
   // fwd decl
-  struct fwd_piter2d;
+  struct fwd_piter3d;
 
   // category
   template <>
-  struct set_category<fwd_piter2d> { typedef category::piter ret; };
+  struct set_category<fwd_piter3d> { typedef category::piter ret; };
 
 
   // props
   template <>
-  struct set_props < category::piter, fwd_piter2d > : public props_of<category::piter>
+  struct set_props < category::piter, fwd_piter3d > : public props_of<category::piter>
   {
-    typedef point2d point_type;
-    typedef size2d  size_type;
+    typedef point3d point_type;
+    typedef size3d  size_type;
   };
 
 
 
-  struct fwd_piter2d : public abstract::piter< fwd_piter2d >
+  struct fwd_piter3d : public abstract::piter< fwd_piter3d >
   {
 
-    typedef abstract::piter<fwd_piter2d> super_type;
+    typedef abstract::piter<fwd_piter3d> super_type;
 
-    fwd_piter2d(const size2d& size) :
+    fwd_piter3d(const size3d& size) :
       super_type(size)
     {
       this->exact_ptr = this;
@@ -68,7 +68,7 @@ namespace oln {
     }
 
 # if defined __GNUC__ && __GNUC__ >= 3
-    friend class abstract::piter< fwd_piter2d >;
+    friend class abstract::piter< fwd_piter3d >;
   protected:
 # endif
 
@@ -76,42 +76,54 @@ namespace oln {
     {
       this->p_.row() = 0;
       this->p_.col() = 0;
+      this->p_.slice() = 0;
       postcondition(this->p_.row().is_defined() &&
-		    this->p_.col().is_defined());
+		    this->p_.col().is_defined() &&
+		    this->p_.slice().is_defined());
     }
 
     bool impl_is_valid() const
     {
       precondition(this->p_.row().is_defined() &&
-		   this->p_.col().is_defined());
-      return this->p_.row() < this->s_.nrows();
+		   this->p_.col().is_defined() &&
+		   this->p_.slice().is_defined());
+      return this->p_.slice() < this->s_.nslices();
     }
 
     void impl_next()
     {
       precondition(this->p_.row().is_defined() &&
-		   this->p_.col().is_defined());
+		   this->p_.col().is_defined() &&
+		   this->p_.slice().is_defined());
       precondition(this->p_.row() >= 0 && this->p_.row() < this->s_.nrows() &&
-		   this->p_.col() >= 0 && this->p_.col() < this->s_.ncols());
+		   this->p_.col() >= 0 && this->p_.col() < this->s_.ncols() &&
+		   this->p_.slice() >= 0 && this->p_.slice() < this->s_.nslices());
       ++this->p_.col();
       if (this->p_.col() != this->s_.ncols())
 	return;
       this->p_.col() = 0;
       ++this->p_.row();
+      if (this->p_.row() != this->s_.nrows())
+	return;
+      this->p_.row() = 0;
+      ++this->p_.slice();
       postcondition(this->p_.row().is_defined() &&
-		    this->p_.col().is_defined());
+		    this->p_.col().is_defined() &&
+		    this->p_.slice().is_defined());
     }
 
     void impl_invalidate()
     {
       this->p_.row() = this->s_.nrows();
       this->p_.col() = this->s_.ncols();
+      this->p_.slice() = this->s_.nslices();
       postcondition(this->p_.row().is_defined() &&
-		    this->p_.col().is_defined());
+		    this->p_.col().is_defined() &&
+		    this->p_.slice().is_defined());
     }
 
   };
 }
 
 
-#endif // ! OLENA_CORE_2D_FWD_PITER2D_HH
+#endif // ! OLENA_CORE_3D_FWD_PITER3D_HH

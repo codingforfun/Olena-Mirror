@@ -32,6 +32,7 @@
 
 # include <oln/core/abstract/image_with_data.hh>
 # include <oln/core/3d/array3d.hh>
+# include <oln/core/3d/fwd_piter3d.hh>
 
 /*! \namespace oln
 ** \brief oln namespace.
@@ -67,8 +68,8 @@ namespace oln {
     typedef point3d point_type;
     typedef T       value_type;
 
-//     typedef fwd_piter3d piter_type;
-//     typedef fwd_piter3d fwd_piter_type;
+    typedef fwd_piter3d piter_type;
+    typedef fwd_piter3d fwd_piter_type;
 
     // please note that value_storage_type means data_type
     // since image3d is an image_with_data

@@ -39,12 +39,10 @@ namespace oln {
 
   struct size3d : public abstract::size< size3d >
   {
-    size3d() :
-      nslices_(0),
-      nrows_(0),
-      ncols_(0),
-      border_(0)
-    {}
+    size3d()
+    {
+      // no initialization here so that members are 'undef'
+    }
 
     size3d(coord_t nslices_, coord_t nrows_, coord_t ncols_) :
       nslices_(nslices_),
@@ -84,8 +82,8 @@ namespace oln {
 
     bool impl_eq(const size3d& rhs) const
     {
-      return this->nslices_ == rhs.nslices_   and
-             this->nrows_ == rhs.nrows_       and
+      return this->nslices_ == rhs.nslices_ &&
+             this->nrows_ == rhs.nrows_ &&
              this->ncols_ == rhs.ncols_;
     }
 
