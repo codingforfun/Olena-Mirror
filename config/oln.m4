@@ -348,7 +348,7 @@ AC_DEFUN([AC_CHECK_DOXYGEN_VERSION],
 [dnl
   AC_CACHE_CHECK([for doxygen >= 1.3.4],
                   [ac_cv_doxygen_version],
-                  [if $DOXYGEN --version 2>&1 | grep ['1.3.[456]'] > /dev/null 2>&1; then
+                  [if $DOXYGEN --version 2>&1 | grep ['1.3.[4567]'] > /dev/null 2>&1; then
 			ac_cv_doxygen_version=recent
                       else
                         ac_cv_doxygen_version=old

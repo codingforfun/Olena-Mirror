@@ -1,3 +1,10 @@
+2004-06-06  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* oln/transforms/shapelets.hh: Add file, it contains the shapelets
+	transforms implementation for olena.
+	* oln/makefile.src: Add oln/transforms/shapelets.hh to the
+	distribution's files.
+
 2004-05-23  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* oln/utils/qsort.hh: Add file.

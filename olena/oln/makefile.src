@@ -212,6 +212,7 @@ OLN_DEP =					\
   transforms/fft.hh				\
   transforms/dwt.hh				\
   transforms/wavelet_coeffs.hh			\
+  transforms/shapelets.hh			\
   utils/copy.hh					\
   utils/key.hh					\
   utils/key.hxx					\
