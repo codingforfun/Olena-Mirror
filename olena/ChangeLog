@@ -1,4 +1,38 @@
+2003-08-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/convol/tests/sobel_gradient: Add an abort tag.
+	* tests/core/tests/image_list: New test.
+
+	Add i/o support for 3d images.
+	
+	* oln/io/pnm_read3d.hxx: Rename as...
+	* oln/io/pnm_read_3d.hh: ...this. Rewrite.
+	* oln/io/pnm_write3d.hxx: Rename as...
+	* oln/io/pnm_write_3d.hh: ...this. Rewrite.
+	* oln/io/pnm_read.hh: Move 2d handling...
+	* oln/io/pnm_read_2d.hh: ...here. New.
+	* oln/io/pnm_write.hh: Move 2d handling...
+	* oln/io/pnm_write_2d.hh: ...here. New.
+	* oln/io/pnm3d.hh: Remove.
+	
+	* oln/io/readable.hh: Don't exit on failure.
+	* oln/io/pnm_write_data.hh: Minor fix.
+
+	* oln/io/image_base.hh: Minor fix.
+	* oln/io/image_read.hh: Fix includes.
+	* oln/io/image_write.hh: Fix includes.
+	* oln/basics3d.hh: Ajust.
+	* oln/core/image1d.hh: Enable i/o constructor.
+	* oln/core/image3d.hh: Likewise.
+	* tests/io/Makefile.am: Adjust.
+	
+	* tests/io/tests/3d: New test.
+	* img/lena3d.ppm: New image.
+	* img/Makefile.am: Adjust.
+
 2003-08-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/basics1d.hh: Fix includes.
 
 	* oln/core/image1d.hh(name): Fix.
 	* oln/core/image_with_impl.hh: Fix method visibility.

@@ -33,7 +33,7 @@
 # include <oln/core/fwd_iter3d.hh>
 # include <oln/core/bkd_iter3d.hh>
 # include <oln/core/impl/image_array3d.hh>
-// # include <oln/io/readable.hh>
+# include <oln/io/readable.hh>
 # include <oln/core/image.hh>
 
 # include <iostream>
@@ -107,15 +107,15 @@ namespace oln {
       super_type(rhs)
     {}
 
-//     // io
-//     image3d(const io::internal::anything& r) : super_image(), super()
-//     {
-//       r.assign(*this);
-//     }
-//     image3d& operator=(const io::internal::anything& r)
-//     {
-//       return r.assign(*this);
-//     }
+    // io
+    image3d(const io::internal::anything& r) : super_type((impl_type*) 0)
+    {
+      r.assign(*this);
+    }
+    image3d& operator=(const io::internal::anything& r)
+    {
+      return r.assign(*this);
+    }
 
     exact_type& operator=(self_type rhs)
     {
@@ -126,7 +126,7 @@ namespace oln {
     {
       return
 	std::string("image3d<")
-	+ T::name() + ","
+	+ ntg_name(T) + ","
 	+ Exact::name() + ">";
     }
 

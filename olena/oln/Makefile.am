@@ -117,13 +117,14 @@ nobase_oln_HEADERS =					\
   io/image_base.hh					\
   io/image_read.hh					\
   io/image_write.hh					\
-  io/pnm3d.hh						\
   io/pnm_common.hh					\
   io/pnm_read.hh					\
-  io/pnm_read3d.hxx					\
+  io/pnm_read_2d.hh					\
+  io/pnm_read_3d.hh					\
   io/pnm_read_data.hh					\
   io/pnm_write.hh					\
-  io/pnm_write3d.hxx					\
+  io/pnm_write_2d.hh					\
+  io/pnm_write_3d.hh					\
   io/pnm_write_data.hh					\
   io/readable.hh					\
   io/se.hh						\

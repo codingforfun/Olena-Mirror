@@ -6,6 +6,7 @@ SOURCE_IMGS =			\
   face_se.pbm			\
   lena.ppm			\
   lena1d.ppm			\
+  lena3d.ppm			\
   lena256.pgm			\
   lena_dark.pgm			\
   map.pbm			\
@@ -40,6 +41,11 @@ BUILT_IMGS =			\
   lena1d128.pgm			\
   lena1d16b.pgm			\
   lena1d16b.ppgm		\
+  lena3d.pbm			\
+  lena3d.pbm.gz			\
+  lena3d.pgm			\
+  lena3d.pgm.gz			\
+  lena3d.ppm.gz			\
   se.ppbm			\
   se9.ppbm			\
   se9.pbm.gz			\
@@ -70,6 +76,11 @@ SRC_BUILT_IMGS =			\
   $(srcdir)/lena1d128.pgm		\
   $(srcdir)/lena1d16b.pgm		\
   $(srcdir)/lena1d16b.ppgm		\
+  $(srcdir)/lena3d.pbm			\
+  $(srcdir)/lena3d.pbm.gz		\
+  $(srcdir)/lena3d.pgm			\
+  $(srcdir)/lena3d.pgm.gz		\
+  $(srcdir)/lena3d.ppm.gz		\
   $(srcdir)/se.ppbm			\
   $(srcdir)/se9.ppbm			\
   $(srcdir)/se9.pbm.gz			\
@@ -79,7 +90,6 @@ SRC_BUILT_IMGS =			\
 
 dist_pkgdata_DATA = $(SOURCE_IMGS) $(SRC_BUILT_IMGS)
 MAINTAINERCLEANFILES = $(SRC_BUILT_IMGS)
-
 
 # Conversion rules.
 

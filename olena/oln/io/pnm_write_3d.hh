@@ -25,74 +25,67 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_IO_IMAGE_BASE_HH_
-# define OLENA_IO_IMAGE_BASE_HH_
+#ifndef OLENA_IO_PNM_WRITE_3D_HH_
+# define OLENA_IO_PNM_WRITE_3D_HH_
 
-# include <oln/config/system.hh>
+# include <ntg/bin.hh>
+# include <oln/core/image2d.hh>
+# include <oln/io/pnm_write_2d.hh>
 
+# include <list>
 # include <iostream>
-# include <string>
+# include <cstdio>
 
 namespace oln {
 
   namespace io {
 
-    namespace internal {
+    namespace internal {      
 
-      /*---------------------.
-      | image default reader |
-      `---------------------*/
-      
-      enum reader_id { ReadNone     = 0,
-		       ReadPnmPlain = 1,
-		       ReadPnmRaw   = 2,
-		       ReadAny      = 2 };
+      /*-------------------.
+      | pnm_writer3d (Any) |
+      `-------------------*/
 
-      
-      // Default reader
-      
-      template<reader_id F, class I>
-      struct image_reader
+      // Only PnmRaw images can store more than one 2d image. The
+      // format is simple: each slice is stored as a bi-dimensional
+      // image.
+
+      template <pnm_type P, class I>
+      struct pnm_writer<WritePnmRaw, 3, P, I>
       {
-	static const std::string& name()
-	{ static const std::string _name("-"); return _name; }
+	typedef pnm_writer<WritePnmRaw, 2, P, image2d<Value(I)> > writer_2d;
+	typedef image2d<Value(I)> image2d_type;
 
-	static bool knows_ext(const std::string&)
-	{ return false; }
+	static std::string name()
+	{ 
+	  return writer_2d::name();
+	}
 
-	static bool read(std::istream&, I&)
-	{ return false; }
+	static bool knows_ext(const std::string& ext)
+	{ 
+	  return writer_2d::knows_ext(ext);
+	}
+
+	static bool write(std::ostream& out, const I& im)
+	{
+	  for (int slice = 0; slice < im.nslices(); ++slice)
+	    {
+	      image2d_type tmp_2d (im.nrows(), im.ncols());
+	      for (int row = 0; row < im.nrows(); ++row)
+		for (int col = 0; col < im.ncols(); ++col)
+		  tmp_2d(row,col) = im(slice, row, col);
+	      if (!writer_2d::write(out, tmp_2d))
+		return false;
+	    }
+	  return true;
+	}
       };
 
-      /*---------------------.
-      | image default writer |
-      `---------------------*/
-
-      enum writer_id { WriteNone     = 0,
-		       WritePnmPlain = 1,
-		       WritePnmRaw   = 2,
-		       WriteAny      = 2 };
-      
-      
-      // Default writer
-      
-      template<writer_id F, class I>
-      struct image_writer
-      {
-	static const std::string& name()
-	{ static const std::string _name("-"); return _name; }
-
-	static bool knows_ext(const std::string&)
-	{ return false; }
-
-	static bool write(std::ostream&, const I&)
-	{ return false; }
-      };      
-
     } // end of internal
-    
+
   } // end of io
-  
+
 } // end of oln
 
-#endif // ! OLENA_IO_IMAGE_BASE_HH_
+
+#endif // ! OLENA_IO_PNM_WRITE_3D_HH_

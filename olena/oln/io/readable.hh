@@ -52,8 +52,8 @@ namespace oln {
 	template< typename T >
 	T& assign(T& output) const
 	{
-	  if (!read_any(output, _str))
-            std::exit(EXIT_FAILURE);
+	  read_any(output, _str);
+	  // FIXME: call output.clear()?
 	  return output;
 	}
 	

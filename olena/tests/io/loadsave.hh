@@ -1,4 +1,6 @@
+#include <oln/basics1d.hh>
 #include <oln/basics2d.hh>
+#include <oln/basics3d.hh>
 #include <oln/level/compare.hh>
 #include <ntg/all.hh>
 

@@ -28,12 +28,16 @@
 #ifndef OLENA_IO_IMAGE_READ_HH_
 # define OLENA_IO_IMAGE_READ_HH_
 
+# include <mlc/bool.hh>
+
 # include <oln/config/system.hh>
 # include <oln/core/abstract/image_with_dim.hh>
 # include <oln/core/image2d.hh>
 
 # include <oln/io/image_base.hh>
 # include <oln/io/pnm_read.hh>
+# include <oln/io/pnm_read_2d.hh>
+# include <oln/io/pnm_read_3d.hh>
 # include <oln/io/stream_wrapper.hh>
 # include <oln/io/utils.hh>
 
@@ -59,8 +63,8 @@ namespace oln {
 	static bool by_extension(T& output, std::istream& in, 
 				 const std::string& ext)
 	{
-	  if (reader<R,T>::knows_ext(ext))
-	    if (reader<R,T>::read(in, output))
+	  if (image_reader<R,T>::knows_ext(ext))
+	    if (image_reader<R,T>::read(in, output))
 	      return true;
 	  in.seekg(0, std::ios::beg);
 	  return try_readers<reader_id(unsigned(R)-1), T>
@@ -70,7 +74,7 @@ namespace oln {
 	// Try to match the file format referring to the data only
 	static bool by_data(T& output, std::istream& in)
 	{
-	  if (reader<R,T>::read(in, output))
+	  if (image_reader<R,T>::read(in, output))
 	    return true;
 	  in.seekg(0, std::ios::beg);
 	  return try_readers<reader_id(unsigned(R)-1), T>::by_data(output, in);
@@ -107,10 +111,12 @@ namespace oln {
 
       // Read images
 
-      template <class E>
+      template <unsigned N, class E>
       inline bool
-      read(abstract::image_with_dim<2,E>& output, const std::string& name)
+      read(abstract::image_with_dim<N,E>& output, const std::string& name)
       {
+	mlc::is_true<N == 2 || N == 3>::ensure();
+
 	// FIXME: E or abstract::image<E> ?
 	// E is convenient.
 	typedef try_stream_wrappers_in<StreamAny, E, readers_trier> 

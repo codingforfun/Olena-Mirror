@@ -28,13 +28,16 @@
 #ifndef OLENA_IO_IMAGE_WRITE_HH_
 # define OLENA_IO_IMAGE_WRITE_HH_
 
+# include <mlc/bool.hh>
+
 # include <oln/config/system.hh>
 # include <oln/core/abstract/image_with_dim.hh>
 # include <oln/core/image2d.hh>
 # include <oln/core/image1d.hh>
 
 # include <oln/io/image_base.hh>
-# include <oln/io/pnm_write.hh>
+# include <oln/io/pnm_write_2d.hh>
+# include <oln/io/pnm_write_3d.hh>
 # include <oln/io/stream_wrapper.hh>
 # include <oln/io/utils.hh>
 
@@ -60,8 +63,8 @@ namespace oln {
 	static bool by_extension(const T& input, std::ostream& out, 
 				 const std::string& ext)
 	{
-	  if (writer<W,T>::knows_ext(ext))
-	    if (writer<W,T>::write(out, input))
+	  if (image_writer<W,T>::knows_ext(ext))
+	    if (image_writer<W,T>::write(out, input))
 	      return true;
 	  return try_writers<writer_id(unsigned(W)-1), T>
                    ::by_extension(input, out, ext);
@@ -72,10 +75,10 @@ namespace oln {
 			    std::ostream& out, 
 			    const std::string& ext)
 	{
-	  if (writer<W,T>::write(out, input))
+	  if (image_writer<W,T>::write(out, input))
 	    {
 	      // std::clog << "[ambiguous extension '" << ext
-	      //	<< "' wrote as " << writer<W,T>::name() << "] " 
+	      //	<< "' wrote as " << image_writer<W,T>::name() << "] " 
 	      //	<< std::flush;
 	      return true;
 	    }
@@ -118,11 +121,13 @@ namespace oln {
 
       // Write images
 
-      template <class E>
+      template <class E, unsigned N>
       inline bool
-      write(const abstract::image_with_dim<2, E>& input, 
+      write(const abstract::image_with_dim<N, E>& input, 
 	    const std::string& name)
       {
+	mlc::is_true<N == 2 || N == 3>::ensure();
+
 	typedef try_stream_wrappers_out<StreamAny, E, writers_trier> 
 	  stream_trier;
 
@@ -133,6 +138,9 @@ namespace oln {
 	// std::clog << "[unable to write '" << name << "'] " << std::endl;
 	return false;
       }
+
+      // Mono-dimensional images is a special case of bi-dimensional
+      // images.
 
       template <class E>
       inline bool

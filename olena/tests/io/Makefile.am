@@ -11,6 +11,11 @@ CLEANFILES =					\
   lena.pppm lena.ppgm lena.ppbm			\
   lena.ppm.gz lena.pgm.gz lena.pbm.gz		\
   lena16b.pgm lena16b.ppgm			\
+  lena1d					\
+  lena1d.ppm lena1d.pgm lena1d.pbm		\
+  lena1d.pppm lena1d.ppgm lena1d.ppbm		\
+  lena1d.ppm.gz lena1d.pgm.gz lena1d.pbm.gz	\
+  lena1d16b.pgm lena1d16b.ppgm			\
   neighbor.pbm neighbor.ppbm			\
   neighbor9.pbm neighbor9.ppbm			\
   se.pbm se.ppbm se9.pbm se9.ppbm		\

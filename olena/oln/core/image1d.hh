@@ -34,6 +34,7 @@
 # include <oln/core/bkd_iter1d.hh>
 # include <oln/core/impl/image_array1d.hh>
 # include <oln/core/image.hh>
+# include <oln/io/readable.hh>
 
 # include <iostream>
 # include <stdlib.h>
@@ -108,6 +109,18 @@ namespace oln {
     exact_type& operator=(self_type rhs)
     {
       return this->exact().assign(rhs.exact());
+    }
+
+    // io
+    image1d(const io::internal::anything& r) 
+      : super_type((impl_type*) 0)
+    {
+      r.assign(*this);
+    }
+
+    image1d& operator=(const io::internal::anything& r)
+    {
+      return r.assign(*this);
     }
 
     static std::string name()

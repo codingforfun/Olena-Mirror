@@ -7,8 +7,6 @@ check(void)
 {
   bool fail = false;
 
-  fail |= loadsave< image2d<nrgb_8> >(rdata("lena.pppm"), "lena.pppm");
-
   typedef image2d<range<int_u8, bounded_u<0, 255>, strict > > ima_range_int_u8;
   typedef image2d<int_u<6, strict> > ima_int_u6;
 
@@ -20,7 +18,7 @@ check(void)
   fail |= loadsave< ima_range_int_u8       >(rdata("lena"), "lena");
   fail |= loadsave< image2d<nrgb_8>        >(rdata("lena"), "lena");
   fail |= loadsave< image2d<xyz_8>         >(rdata("lena"), "lena");
-  fail |= loadsave< image2d<vec<3, int_u8> > >(rdata("lena"), "lena-vec");
+  fail |= loadsave< image2d<vec<3, int_u8> > >(rdata("lena"), "lena");
 
   fail |= loadsave< image2d<bin>           >(rdata("lena.pbm"), "lena.pbm");
   fail |= loadsave< image2d<int_u8>        >(rdata("lena.pgm"), "lena.pgm");
