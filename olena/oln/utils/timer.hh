@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,10 +34,16 @@
 namespace oln {
 
   namespace utils {
-
+    /*! Timer class.
+     */
     class timer
     {
     public:
+      /*! Constructor.
+      **
+      ** \note The timer is not stopped, it is in a so-called 'unknown state'.
+      ** Therefor, Restart can not be called.
+      */
       timer()
       {
 	status_ = e_unknown;
@@ -45,6 +51,10 @@ namespace oln {
 	start_time_ = clock();
       }
 
+      /*! Start the timer.
+      **
+      ** \pre The timer should not be running.
+      */
       void
       start()
       {
@@ -54,7 +64,10 @@ namespace oln {
 	status_ = e_running;
 	start_time_ = clock();
       }
-
+      /*! Restart the timer.
+      **
+      ** \pre The timer should have been start at least one time.
+      */
       float
       restart()
       {
@@ -64,6 +77,10 @@ namespace oln {
 	return val;
       }
 
+      /*! Resume the timer.
+      **
+      ** \pre The timer should be running.
+      */
       void
       resume()
       {
@@ -72,6 +89,10 @@ namespace oln {
 	start_time_ = clock();
       }
 
+      /*! Stop the timer.
+      **
+      ** \pre The timer should be running.
+      */
       float
       stop()
       {
@@ -82,7 +103,7 @@ namespace oln {
 	return total_time();
       }
 
-      // Time since the last resume() or start()
+      /// Time since the last resume() or start().
       float
       last_time() const
       {
@@ -93,6 +114,7 @@ namespace oln {
 	  float((clock() - start_time_)) / CLOCKS_PER_SEC;
       }
 
+      /// Total time elapsed.
       float
       total_time() const
       {

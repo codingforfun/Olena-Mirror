@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,15 +28,18 @@
 #ifndef OLENA_UTILS_COPY_HH
 # define OLENA_UTILS_COPY_HH
 
-// This file contains implementations of image's copy constructors
-//
-//   / \    NEVER include this file unless you understand what
-//  / ! \    it does and why you need it.
-// `-----'
-//
-// FIXME: should be replaced soon by a correct const image handling.
-// a detailed problem description can be found on:
-// http://www.lrde.epita.fr/cgi-bin/twiki/view/Projects/OlenaConstImages
+/* \file copy.hh
+**
+** \warning This file contains implementations of image's copy constructors.
+**\verbatim
+**   / \    NEVER include this file unless you understand what
+**  / ! \    it does and why you need it.
+** `-----'
+**\endverbatim
+** \todo FIXME: should be replaced soon by a correct const image handling.
+** a detailed problem description can be found on:
+** http://www.lrde.epita.fr/cgi-bin/twiki/view/Projects/OlenaConstImages
+*/
 
 namespace oln {
 

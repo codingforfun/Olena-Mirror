@@ -1,17 +1,17 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 82)
-(Parent-Version oln 10 81)
+(Project-Version oln 10 83)
+(Parent-Version oln 10 82)
 (Version-Log "2004-03-13  Niels Van Vliet  <niels@lrde.epita.fr>
-	* olena/oln/arith/internal/opdecls.hh
-	* olena/oln/arith/logic.hh
-	* olena/oln/arith/ops.hh
-	* olena/oln/math/macros.hh
-	* olena/oln/config/pconf-hh.in
+	* olena/oln/utils/copy.hh: Add comments.
+	* olena/oln/utils/histogram.hh: Likewise.
+	* olena/oln/utils/stat.hh: Likewise.
+	* olena/oln/utils/timer.hh: Likewise.
+	* olena/oln/utils/special_points.hh: Likewise.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sat, 13 Mar 2004 17:58:18 +0100")
+(Checkin-Time "Sat, 13 Mar 2004 21:28:08 +0100")
 (Checkin-Login van-vl_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -118,7 +118,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.6 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.35 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.24 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.25 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 640))
 
@@ -403,10 +403,10 @@
   (integre/ntg/color/xyz.hh (oln/i/24_xyz.hh 1.3.1.7 640))
   (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.7 640))
   (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.7 640))
-  (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.7 640))
-  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.6 640))
-  (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.9 640))
-  (olena/oln/utils/timer.hh (oln/8_timer.hh 1.8 640))
+  (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.8 640))
+  (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.14.1.7 640))
+  (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.10 640))
+  (olena/oln/utils/timer.hh (oln/8_timer.hh 1.9 640))
   (olena/tests/arith/Makefile.am (oln/o/43_Makefile.a 1.5.1.1 640))
   
   (olena/tests/arith/tests/min1 (oln/o/44_min1 1.1.1.8 640))
@@ -1202,7 +1202,7 @@
 
   (olena/oln/morpho/attribute_closing_opening_map.hxx (oln/j/48_attribute_ 1.2 644))
   (olena/oln/morpho/attribute_closing_opening_map.hh (oln/j/49_attribute_ 1.6 600))
-  (olena/oln/utils/special_points.hh (oln/j/50_special_po 1.1 644))
+  (olena/oln/utils/special_points.hh (oln/j/50_special_po 1.2 644))
   (olena/tests/morpho/tests/attribute (oln/j/51_attribute 1.3 644))
 ;; Files added by populate at Mon, 16 Feb 2004 18:59:27 +0100,
 ;; to version 10.64(w), by palma_g:

@@ -33,7 +33,7 @@
 namespace oln {
 
   namespace utils {
-
+    /// oln::utils::internal
     namespace internal {
       /*! Creates a point that is used as a state.
        *

@@ -39,11 +39,12 @@
 # include <vector>
 
 namespace oln {
-
+  /// Namespace for utilities, such as statistic.
   namespace utils {
 
+    /// Function within this namespace should not be used outside this file.
     namespace internal {
-      //! Return the size of the space needed to explore the type T
+      //! Return the size of the space needed to explore the type T.
       template <typename T>
       struct img_max_size
       {
@@ -82,11 +83,13 @@ namespace oln {
       };
     } // end of namespace internal
 
+    /// Namespace for abstract utilities.
     namespace abstract
     {
-      // FIXME: An image is inside the histogram. This is incorrect
-      // because it is not exactly an image (we do not need any
-      // border).
+      /*! Abstract base class for historgram.
+      **
+      ** \see oln::histogram
+      */
       template<class T,
 	       typename CPT,
 	       class Exact = mlc::final>
@@ -96,25 +99,28 @@ namespace oln {
 	typedef histogram<T, CPT, Exact> self_type;
 	typedef Exact exact_type;
 	typedef CPT cpt_type;
-
+	/// Put the number of occurrence of every value to zero.
 	void
 	clear()
 	{
 	  this->exact().clear_impl();
 	}
-
+	/// Read the number of occurrence of \a v.
 	const CPT&
 	operator[](const T &v)const
 	{
 	  return this->exact().at(v);
 	}
-
+	/// Read or write the number of occurrence of \a v.
 	CPT&
 	operator[](const T &v)
 	{
 	  return this->exact().at(v);
 	}
-
+	/*! Build the histogram of an image.
+	**
+	** \attention The histogram is not cleared.
+	*/
 	template <class I>
 	void
 	init(const oln::abstract::image<I> &img)
@@ -124,6 +130,43 @@ namespace oln {
       };
     } // end of namespace abstract
 
+    /*! Histogram.
+    **
+    ** This histogram uses an image of unsigned to store the value.
+    ** For example the histogram of an image<int_u8> will store the
+    ** number of occurrences in an image1d; an image<rgb_8> will store the
+    ** number of occurrences an image3d (because rgb_8 has 3 components).
+    **
+    ** \note FIXME:  An image is inside the histogram. This is incorrect
+    **  because it is not exactly an image (we do not need any border).
+    **
+    ** \param T Type of the image.
+    ** \param CPT Type use to count the occurrences (unsinged).
+    ** \param V2P Concersion class to convert a value T to a point.
+    ** \param Exact Exact type of the histogram.
+    **
+    ** \see oln::abstract::histogram
+    **
+    ** \code
+    **  #include <oln/basics2d.hh>
+    **  #include <oln/utils/histogram.hh>
+    **  #include <ntg/all.hh>
+    **  #include <iostream>
+    **
+    **  int main()
+    **  {
+    **    oln::image2d<ntg::rgb_8> in = oln::io::load(IMG_IN "lena.ppm");
+    **
+    **    oln::utils::histogram<ntg::rgb_8> h(in);
+    **
+    **    ntg::rgb_8 pink(215, 129, 113);
+    **
+    **    // h[pink] = 14
+    **    std::cout << "Number of occurrences of the color (213, 129, 135): "
+    **  	    <<  h[pink] << std::endl;
+    **  }
+    ** \endcode
+    */
     template<typename T,
 	     typename CPT = unsigned,
 	     class V2P = oln::convert::value_to_point<T>,
@@ -142,12 +185,14 @@ namespace oln {
       typedef abstract::histogram<T, CPT, self_type> upper_type;
       typedef typename dim_traits<dim, CPT>::img_type img_type;
 
+      /// Empty histogram. The function Init(image) should be used after this constructor.
       histogram(const value_to_point_type & c2p = value_to_point_type()):
 	v2p_(c2p), img_(internal::img_max_size<input_type>()())
       {
 	clear();
       }
 
+      /// This compute the histogram of an image.
       template <class I>
       histogram(const oln::abstract::image<I> & input,
 		const value_to_point_type & v2p = value_to_point_type()):
@@ -157,6 +202,7 @@ namespace oln {
 	init(input);
       }
 
+      /// clear() should be called.
       void
       clear_impl()
       {
@@ -165,18 +211,19 @@ namespace oln {
 	img_[it] = ntg_zero_val(CPT);
       }
 
+      /// operator[] should be called.
       const CPT&
       at(const T &v)const
       {
 	return img_[v2p_(v)];
       }
-
+      /// operator[] should be called.
       CPT&
       at(const T &v)
       {
 	return img_[v2p_(v)];
       }
-
+      /// impl() should be called.
       template <class I>
       void
       init_impl(const oln::abstract::image<I> &img)
@@ -187,6 +234,7 @@ namespace oln {
 	++img_[v2p_(img[it_img])];
       }
 
+      /// Return the image of occurrence.
       const img_type &
       image() const
       {
@@ -198,7 +246,16 @@ namespace oln {
       img_type img_;
     };
 
-    //Note: If there is no min an assertion will fail at the end of the loop.
+    /*! Minimum value of an histogram.
+    **
+    ** It return the smaller value within the image used to build the histogram.
+    **
+    ** \warning If there is no min an assertion will fail at the end of the loop.
+    **
+    ** \note It can be slow when the histogram is sparse because it iterate over a
+    **  large range of 0. Use histogram_min or histogram_minmax instead.
+    ** \see histogram_min
+    */
     template< typename T, typename CPT, class Exact>
     inline T
     min(const abstract::histogram<T, CPT, Exact>& hist)
@@ -211,7 +268,16 @@ namespace oln {
 	  break;
       return i;
     }
-    //Note: If there is no max an assertion will fail at the end of the loop.
+    /*! Maximum value of an histogram.
+    **
+    ** It return the higher value within the image used to build the histogram.
+    **
+    ** \warning If there is no min an assertion will fail at the end of the loop.
+    **
+    ** \note It can be slow when the histogram is sparse because it iterate over a
+    **  large range of 0. Use histogram_max or histogram_minmax instead.
+    ** \see histogram_max
+    */
     template< typename T, typename CPT, class Exact>
     inline T
     max(const abstract::histogram<T, CPT, Exact>& hist)
@@ -225,26 +291,21 @@ namespace oln {
       return i;
     }
 
-/* The two functions above can be slow when the histogram is sparse
-   because they iterate over a large range of 0.
-
-   It's inefficient to call them repeatedly while updating the
-   histogram (that's typically the case in the morpho::fast::
-   algorithms).  Better use the specialized histograms below.
-
-   ---
-
-   The idea behind the min- and max-specialized histogram is to
-   maintain worst min and max bounds while updating histogram.  We
-   don't maintain _exact_ min and max bounds, because this would
-   involve some costly computation when removing values from the
-   histogram and maybe this time will be lost if the removed value is
-   reinsterted before max() or min() is called.
-
-   So we update the _worst_ min and max bounds whenever the histogram
-   value are accessed, and delay the _real_ min and max compuation
-   until min() or max() is called.  */
-
+    /*! Build the histogram and has quick min and max functions.
+    **
+    ** The idea behind the min- and max-specialized histogram is to
+    ** maintain worst min and max bounds while updating histogram.  We
+    ** don't maintain _exact_ min and max bounds, because this would
+    ** involve some costly computation when removing values from the
+    ** histogram and maybe this time will be lost if the removed value is
+    ** reinserted before max() or min() is called.\n
+    ** So we update the _worst_ min and max bounds whenever the histogram
+    ** value are accessed, and delay the _real_ min and max computation
+    ** until min() or max() is called.
+    ** \see histogram
+    ** \see histogram_min
+    ** \see histogram_max
+    */
     template< typename T,
 	      typename CPT = unsigned,
 	      class V2P = convert::value_to_point<T>,
@@ -256,6 +317,7 @@ namespace oln {
     private:
       typedef typename ntg_is_a(T, ntg::non_vectorial)::ensure_type ensure_type;
     protected:
+      /// Maintain the worst min and max.
       void
       adjust(const T &idx)
       {
@@ -280,7 +342,7 @@ namespace oln {
 	upper_type(input, v2p),
 	min_(ntg_min_val(T)), max_(ntg_max_val(T)) {}
 
-
+      /// operator[] should be called.
       const CPT&
       at(const T& i) const
       {
@@ -288,6 +350,7 @@ namespace oln {
 	return img_[v2p_(i)];
       }
 
+      /// operator[] should be called.
       CPT&
       at(const T& i)
       {
@@ -295,6 +358,7 @@ namespace oln {
 	return img_[v2p_(i)];
       }
 
+      /// Quick function min.
       T
       min()
       {
@@ -303,7 +367,7 @@ namespace oln {
      	    break;
 	return min_;
       }
-
+      /// Quick function max.
       T
       max()
       {
@@ -314,9 +378,12 @@ namespace oln {
       }
 
     protected:
-      T min_, max_;	// indices of min and max elements
+      T min_, max_;	///< Indices of min and max elements.
     };
-
+    /*! Build the histogram and has quick min function.
+    **
+    ** \see histogram_minmax
+    */
     template< typename T,
 	      typename CPT = unsigned,
 	      class V2P = convert::value_to_point<T>,
@@ -328,6 +395,7 @@ namespace oln {
     private:
       typedef typename ntg_is_a(T, ntg::non_vectorial)::ensure_type ensure_type;
     protected:
+       /// Maintain the worst min.
       void
       adjust(const T& idx)
       {
@@ -349,20 +417,21 @@ namespace oln {
 		    const value_to_point_type & v2p = value_to_point_type()) :
 	upper_type(input, v2p), min_(ntg_min_val(T)) {}
 
-
+      /// operator[] should be called.
       const CPT&
       at(const T& i) const
       {
 	return img_[v2p_(i)];
       }
 
+      /// operator[] should be called.
       CPT&
       at(const T& i)
       {
 	adjust(i);
 	return img_[v2p_(i)];
       }
-
+      /// Quick function min.
       T
       min()
       {
@@ -371,7 +440,7 @@ namespace oln {
    	    break;
 	return min_;
       }
-
+      /// Return the min.
       T
       res()
       {
@@ -379,9 +448,13 @@ namespace oln {
       }
 
     protected:
-      T min_;	// index of min element
+      T min_;	///< Index of the worst min element.
     };
 
+    /*! Build the histogram and has quick max function.
+    **
+    ** \see histogram_minmax
+    */
     template< typename T,
 	      typename CPT = unsigned,
 	      class V2P = convert::value_to_point<T> ,
@@ -391,6 +464,7 @@ namespace oln {
 				 Exact>::ret>
     {
     protected:
+      /// Maintain the worst max.
       void
       adjust(const T& idx)
       {
@@ -412,19 +486,21 @@ namespace oln {
 		    const value_to_point_type & v2p = value_to_point_type()) :
 	upper_type(input, v2p),max_(ntg_max_val(T)) {}
 
+      /// operator[] should be called.
       const CPT&
       at(const T& i) const
       {
 	return img_[v2p_(i)];
       }
 
+      /// operator[] should be called.
       CPT&
       at(const T& i)
       {
 	adjust(i);
 	return img_[v2p_(i)];
       }
-
+      /// Quick function max.
       T
       max()
       {
@@ -433,7 +509,7 @@ namespace oln {
   	    break;
 	return max_;
       }
-
+      /// Return the max.
       T
       res()
       {
@@ -441,34 +517,45 @@ namespace oln {
       }
 
     protected:
-      T max_;	// index of max element
+      T max_;	///< Index of the worst max element.
     };
 
+    /// Minimum non-zero value of an histogram.
     template< typename T, typename CPT, class V2P, class Exact >
     inline T
     min(histogram_minmax<T, CPT, V2P, Exact>& hist)
     {
       return hist.min();
     }
+    /// Minimum non-zero value of an histogram.
     template< typename T, typename CPT, class V2P, class Exact >
     inline T
     min(histogram_min<T, CPT, V2P, Exact>& hist)
     {
       return hist.min();
     }
+    /// Maximum non-zero value of an histogram.
     template< typename T, typename CPT, class V2P, class Exact >
     inline T
     max(histogram_minmax<T, CPT, V2P, Exact>& hist)
     {
       return hist.max();
     }
+    /// Maximum non-zero value of an histogram.
     template< typename T, typename CPT, class V2P, class Exact >
     inline T
     max(histogram_max<T, CPT, V2P, Exact>& hist)
     {
       return hist.max();
     }
-
+    /*! Sort the values of an image, and store the result in a vector
+    **
+    ** This sort is efficient.
+    ** \arg im Image non_vectorial.
+    ** \arg v sorted vector at the end of the function.
+    ** \pre precondition(v.size() == im.npoints());
+    ** \pre A histogram of the image has to be possible.
+    */
     template<class I>
     void
     distrib_sort(const oln::abstract::image<I>& im,
@@ -501,6 +588,14 @@ namespace oln {
 	*(ptr[unsigned(im[p] - ntg_min_val(val))]++) = p;
     }
 
+    /*! Inverted sort of the values of an image, and store the result in a vector
+    **
+    ** This sort is efficient.
+    ** \arg im Image non_vectorial.
+    ** \arg v sorted vector at the end of the function.
+    ** \pre precondition(v.size() == im.npoints());
+    ** \pre A histogram of the image has to be possible.
+    */
     template<class I>
     void
     distrib_sort_inv(const oln::abstract::image<I>& im,
@@ -526,7 +621,10 @@ namespace oln {
 	*(ptr[unsigned(im[p] - ntg_min_val(val))]++) = p;
     }
 
-    // to select staticly the good distrib_sort
+    /*! Select staticly the good distrib_sort.
+    **
+    ** \param reverse If the sort should be reverted or not.
+    */
     template <bool reverse>
     struct select_distrib_sort
     {

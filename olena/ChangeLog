@@ -1,9 +1,16 @@
 2004-03-13  Niels Van Vliet  <niels@lrde.epita.fr>
-	* olena/oln/arith/internal/opdecls.hh
-	* olena/oln/arith/logic.hh
-	* olena/oln/arith/ops.hh
-	* olena/oln/math/macros.hh
-	* olena/oln/config/pconf-hh.in
+	* olena/oln/utils/copy.hh: Add comments.
+	* olena/oln/utils/histogram.hh: Likewise.
+	* olena/oln/utils/stat.hh: Likewise.
+	* olena/oln/utils/timer.hh: Likewise.
+	* olena/oln/utils/special_points.hh: Likewise.
+
+2004-03-13  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/arith/internal/opdecls.hh: Add comments.
+	* olena/oln/arith/logic.hh: Likewise.
+	* olena/oln/arith/ops.hh: Likewise.
+	* olena/oln/math/macros.hh: Likewise.
+	* olena/oln/config/pconf-hh.in: Likewise.
 
 2004-03-13  Niels Van Vliet  <niels@lrde.epita.fr>
 	* olena/oln/convert/basics.hh: Add comments.
