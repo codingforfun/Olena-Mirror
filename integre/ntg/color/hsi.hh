@@ -44,14 +44,14 @@ namespace ntg
   template<> struct hsi_traits<hsi_H> : public interval<0,360> {};
   template<> struct hsi_traits<hsi_S> 
   {
-    static const float lower_bound = 0.;
-    static const float upper_bound = 1.0801234; //sqrt(7. / 6)
+    static float lower_bound() { return 0.; }
+    static float upper_bound() { return 1.0801234; } //sqrt(7. / 6)
   };
 
   template<> struct hsi_traits<hsi_I>
   {
-    static const float lower_bound = 0.;
-    static const float upper_bound = 1.7320508; //sqrt(3)
+    static float lower_bound() { return 0.; }
+    static float upper_bound() { return 1.7320508; } //sqrt(3)
   };
 
   typedef color<3,8,hsi_traits>  hsi_8;

@@ -28,51 +28,51 @@ XFAIL_TESTS = 8-rgb-nrgb$(EXEEXT)
 ## but this triggers a bug in Automake 1.6.
 
 8_nrgb_hsi_SOURCES = conv.cc conv.hh
-8_nrgb_hsi_CXXFLAGS = -DSRC=nrgb -DDEST=hsi -DEM=5
+8_nrgb_hsi_CPPFLAGS = $(AM_CPPFLAGS) -DSRC=nrgb -DDEST=hsi -DEM=5
 
 8_nrgb_hsl_SOURCES = conv.cc conv.hh
-8_nrgb_hsl_CXXFLAGS = -DSRC=nrgb -DDEST=hsl -DEM=5 
+8_nrgb_hsl_CPPFLAGS = $(AM_CPPFLAGS) -DSRC=nrgb -DDEST=hsl -DEM=5 
 
 8_nrgb_hsv_SOURCES = conv.cc conv.hh
-8_nrgb_hsv_CXXFLAGS = -DSRC=nrgb -DDEST=hsv -DEM=3
+8_nrgb_hsv_CPPFLAGS = $(AM_CPPFLAGS) -DSRC=nrgb -DDEST=hsv -DEM=3
 
 8_nrgb_xyz_SOURCES = conv.cc conv.hh
-8_nrgb_xyz_CXXFLAGS = -DSRC=nrgb -DDEST=xyz -DEM=5
+8_nrgb_xyz_CPPFLAGS = $(AM_CPPFLAGS) -DSRC=nrgb -DDEST=xyz -DEM=5
 
 8_nrgb_yiq_SOURCES = conv.cc conv.hh
-8_nrgb_yiq_CXXFLAGS = -DSRC=nrgb -DDEST=yiq -DEM=5
+8_nrgb_yiq_CPPFLAGS = $(AM_CPPFLAGS) -DSRC=nrgb -DDEST=yiq -DEM=5
 
 8_nrgb_yuv_SOURCES = conv.cc conv.hh
-8_nrgb_yuv_CXXFLAGS = -DSRC=nrgb -DDEST=yuv -DEM=6
+8_nrgb_yuv_CPPFLAGS = $(AM_CPPFLAGS) -DSRC=nrgb -DDEST=yuv -DEM=6
 
 8_rgb_nrgb_SOURCES = conv.cc conv.hh
-8_rgb_nrgb_CXXFLAGS = -DSRC=rgb -DDEST=nrgb -DEM=6
+8_rgb_nrgb_CPPFLAGS = $(AM_CPPFLAGS) -DSRC=rgb -DDEST=nrgb -DEM=6
 
 8_rgb_xyz_SOURCES = conv.cc conv.hh
-8_rgb_xyz_CXXFLAGS = -DSRC=rgb -DDEST=xyz -DEM=4
+8_rgb_xyz_CPPFLAGS = $(AM_CPPFLAGS) -DSRC=rgb -DDEST=xyz -DEM=4
 
 f_8_nrgb_hsi_SOURCES = convcomp.cc convcomp.hh
-f_8_nrgb_hsi_CXXFLAGS = -DSRC=nrgb -DDEST=hsi -DEM=17.8723 -DEV=1099.78
+f_8_nrgb_hsi_CPPFLAGS = $(AM_CPPFLAGS) -DSRC=nrgb -DDEST=hsi -DEM=17.8723 -DEV=1099.78
 
 f_8_nrgb_hsl_SOURCES = convcomp.cc convcomp.hh
-f_8_nrgb_hsl_CXXFLAGS = -DSRC=nrgb -DDEST=hsl -DEM=5.90563 -DEV=152.583
+f_8_nrgb_hsl_CPPFLAGS = $(AM_CPPFLAGS) -DSRC=nrgb -DDEST=hsl -DEM=5.90563 -DEV=152.583
 
 f_8_nrgb_hsv_SOURCES = convcomp.cc convcomp.hh
-f_8_nrgb_hsv_CXXFLAGS = -DSRC=nrgb -DDEST=hsv -DEM=1.10193 -DEV=74.3924
+f_8_nrgb_hsv_CPPFLAGS = $(AM_CPPFLAGS) -DSRC=nrgb -DDEST=hsv -DEM=1.10193 -DEV=74.3924
 
 f_8_nrgb_xyz_SOURCES = convcomp.cc convcomp.hh
-f_8_nrgb_xyz_CXXFLAGS = -DSRC=nrgb -DDEST=xyz -DEM=0.952448 -DEV=4.04194
+f_8_nrgb_xyz_CPPFLAGS = $(AM_CPPFLAGS) -DSRC=nrgb -DDEST=xyz -DEM=0.952448 -DEV=4.04194
 
 f_8_nrgb_yiq_SOURCES = convcomp.cc convcomp.hh
-f_8_nrgb_yiq_CXXFLAGS = -DSRC=nrgb -DDEST=yiq -DEM=2.11554 -DEV=18.7004
+f_8_nrgb_yiq_CPPFLAGS = $(AM_CPPFLAGS) -DSRC=nrgb -DDEST=yiq -DEM=2.11554 -DEV=18.7004
 
 f_8_nrgb_yuv_SOURCES = convcomp.cc convcomp.hh
-f_8_nrgb_yuv_CXXFLAGS = -DSRC=nrgb -DDEST=yuv -DEM=5.20401 -DEV=1.36447
+f_8_nrgb_yuv_CPPFLAGS = $(AM_CPPFLAGS) -DSRC=nrgb -DDEST=yuv -DEM=5.20401 -DEV=1.36447
 
 f_8_rgb_nrgb_SOURCES = convcomp.cc convcomp.hh
-f_8_rgb_nrgb_CXXFLAGS = -DSRC=rgb -DDEST=nrgb -DEM=0.426287 -DEV=1.97667
+f_8_rgb_nrgb_CPPFLAGS = $(AM_CPPFLAGS) -DSRC=rgb -DDEST=nrgb -DEM=0.426287 -DEV=1.97667
 
 f_8_rgb_xyz_SOURCES = convcomp.cc convcomp.hh
-f_8_rgb_xyz_CXXFLAGS = -DSRC=rgb -DDEST=xyz -DEM=0.865949 -DEV=0.356157
+f_8_rgb_xyz_CPPFLAGS = $(AM_CPPFLAGS) -DSRC=rgb -DDEST=xyz -DEM=0.865949 -DEV=0.356157
 
 

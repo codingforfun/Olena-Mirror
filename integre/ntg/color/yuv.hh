@@ -44,14 +44,14 @@ namespace ntg
   template<> struct yuv_traits<yuv_Y> : public interval<0,1> {};
   template<> struct yuv_traits<yuv_U> 
   {
-    static const float lower_bound = -0.45;
-    static const float upper_bound = 0.45;
+    static float lower_bound() { return -0.45; }
+    static float upper_bound() { return 0.45; }
   };
 
   template<> struct yuv_traits<yuv_V> 
   {
-    static const float lower_bound = -0.62;
-    static const float upper_bound = 0.62;
+    static float lower_bound() { return -0.62; }
+    static float upper_bound() { return 0.62; }
   };
 
   typedef color<3,8,yuv_traits>  yuv_8;

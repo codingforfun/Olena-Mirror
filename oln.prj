@@ -1,23 +1,23 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 46)
-(Parent-Version oln 2003paradigm 44)
-(Version-Log "       * oln/io/stream_wrapper.hh: Fix compilation when zlib is not
-        available.
-
-        * tests/check/Makefile.flags: Add zlib to compilation flags.
-        * tests/core/Makefile.am, tests/arith/Makefile.am,
-        tests/io/Makefile.am: Fix flags.
-
-Index: doc/ChangeLog
+(Project-Version oln 2003paradigm 47)
+(Parent-Version oln 2003paradigm 46)
+(Version-Log "Index: olena/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-        * ref/Makefile.am: Fix compilation flags.
+        * tests/convert/Makefile.am: Fix compilation flags.
+
+Index: integre/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+        * ntg/color/hsi.hh, ntg/color/xyz.hh, ntg/color/yiq.hh,
+        ntg/color/yuv.hh, ntg/color/color.hh: Make lower_bound and
+        upper_bound functions to be able to return float values.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 28 Jul 2003 17:56:05 +0200")
+(Checkin-Time "Mon, 28 Jul 2003 18:24:48 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -107,8 +107,8 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.8 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.30 640))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.17 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.31 640))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.18 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.23 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.10 640))
@@ -364,7 +364,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (integre/ntg/core/internal/global_ops_defs.hh (oln/g/26_global_ops 1.15 640))
   (integre/ntg/core/internal/global_ops.hh (oln/g/27_global_ops 1.11.1.12 640))
   (integre/ntg/core/internal/global_ops_traits.hh (oln/g/25_global_ops 1.7.1.8 640))
-  (integre/ntg/color/hsi.hh (oln/i/20_hsi.hh 1.3.1.5 640))
+  (integre/ntg/color/hsi.hh (oln/i/20_hsi.hh 1.3.1.6 640))
   (integre/ntg/color/hsl.hh (oln/i/21_hsl.hh 1.3.1.4 640))
   (integre/ntg/color/hsv.hh (oln/i/22_hsv.hh 1.3.1.4 640))
   (integre/ntg/core/interval.hh (oln/g/22_interval.h 1.6.1.8 640))
@@ -398,9 +398,9 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (integre/ntg/real/typetraits_builtin_int.hh (oln/g/3_typetraits 1.7.1.10 640))
   
   (integre/ntg/vec.hh (oln/t/10_vec.hh 1.1 640))
-  (integre/ntg/color/xyz.hh (oln/i/24_xyz.hh 1.3.1.5 640))
-  (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.5 640))
-  (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.5 640))
+  (integre/ntg/color/xyz.hh (oln/i/24_xyz.hh 1.3.1.6 640))
+  (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.6 640))
+  (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.6 640))
   (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.5 640))
   (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.6 640))
   (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.6 640))
@@ -422,7 +422,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (olena/tests/convert/convcomp.cc (oln/f/3_convcomp.c 1.8 640))
   (olena/tests/convert/convcomp.hh (oln/f/1_convcomp.h 1.8 640))
-  (olena/tests/convert/Makefile.am (oln/f/0_Makefile.a 1.11 640))
+  (olena/tests/convert/Makefile.am (oln/f/0_Makefile.a 1.12 640))
   
   (olena/tests/convol/Makefile.am (oln/f/38_Makefile.a 1.11 640))
   (olena/tests/convol/slow_sum_2d_1.cc (oln/f/41_slow_sum_2 1.2.1.4 640))
@@ -874,7 +874,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (integre/ntg/real/cycle.hh (oln/t/17_cycle.hh 1.2 640))
   (integre/ntg/vect/vec.hh (oln/t/18_vec.hh 1.4 640))
   (integre/ntg/vect/cplx.hh (oln/t/19_cplx.hh 1.4 640))
-  (integre/ntg/color/color.hh (oln/t/20_color.hh 1.4 640))
+  (integre/ntg/color/color.hh (oln/t/20_color.hh 1.5 640))
   (integre/ntg/enum/bin.hh (oln/t/21_bin.hh 1.4 640))
   (olena/tests/core/tests/print_image (oln/t/22_print_imag 1.2 640))
 ;; Files added by populate at Wed, 16 Jul 2003 16:58:47 +0200,
@@ -1046,18 +1046,5 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (olena/tests/convert/conv.cc (oln/u/12_conv.cc 1.1 640))
   (olena/tests/convert/conv.hh (oln/u/13_conv.hh 1.1 640)))
-(Merge-Parents
-  (2003paradigm.45 complete
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog m) (integre/ChangeLog integre/ChangeLog integre/ChangeLog r)
-    (olena/oln/convert/nrgbhsi.hh olena/oln/convert/nrgbhsi.hh olena/oln/convert/nrgbhsi.hh r) (olena/oln/convert/nrgbhsl.hh olena/oln/convert/nrgbhsl.hh olena/oln/convert/nrgbhsl.hh r)
-    (olena/oln/convert/nrgbhsv.hh olena/oln/convert/nrgbhsv.hh olena/oln/convert/nrgbhsv.hh r) (olena/oln/convert/nrgbxyz.hh olena/oln/convert/nrgbxyz.hh olena/oln/convert/nrgbxyz.hh r)
-    (olena/oln/convert/nrgbyiq.hh olena/oln/convert/nrgbyiq.hh olena/oln/convert/nrgbyiq.hh r) (olena/oln/convert/nrgbyuv.hh olena/oln/convert/nrgbyuv.hh olena/oln/convert/nrgbyuv.hh r)
-    (olena/oln/convert/rgbnrgb.hh olena/oln/convert/rgbnrgb.hh olena/oln/convert/rgbnrgb.hh r) (olena/oln/convert/rgbxyz.hh olena/oln/convert/rgbxyz.hh olena/oln/convert/rgbxyz.hh r)
-    (integre/ntg/color/hsi.hh integre/ntg/color/hsi.hh integre/ntg/color/hsi.hh r) (integre/ntg/color/xyz.hh integre/ntg/color/xyz.hh integre/ntg/color/xyz.hh r)
-    (integre/ntg/color/yiq.hh integre/ntg/color/yiq.hh integre/ntg/color/yiq.hh r) (integre/ntg/color/yuv.hh integre/ntg/color/yuv.hh integre/ntg/color/yuv.hh r)
-    (olena/tests/convert/convcomp.cc olena/tests/convert/convcomp.cc olena/tests/convert/convcomp.cc r) (olena/tests/convert/convcomp.hh olena/tests/convert/convcomp.hh olena/tests/convert/convcomp.hh r)
-    (olena/tests/convert/Makefile.am olena/tests/convert/Makefile.am olena/tests/convert/Makefile.am r) (() () olena/tests/convert/conv.cc a)
-    (() () olena/tests/convert/conv.hh a) 
-  )
-)
+(Merge-Parents)
 (New-Merge-Parents)

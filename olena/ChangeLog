@@ -1,3 +1,7 @@
+2003-07-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/convert/Makefile.am: Fix compilation flags.
+
 2003-07-28  Reda Dehak  <reda@lrde.epita.fr>
 
 	* oln/convert/nrgbhsi.hh: Rename nrgb_to_hsi functor as f_nrgb_to_hsi,
