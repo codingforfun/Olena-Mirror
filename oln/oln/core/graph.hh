@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -91,9 +91,9 @@ namespace oln {
     // Set of edge values accessor (mutable version).
     edges_set_t&	edges();
     // Return the node handler associated with a particular node value.
-    hnode_t		handler_of(nodes_set_const_iterator) const;
+    hnode_t		hnode_of(nodes_set_const_iterator) const;
     // Return the edge handler associated with a particular edge value.
-    hedge_t		handler_of(edges_set_const_iterator) const;
+    hedge_t		hedge_of(edges_set_const_iterator) const;
     // Add a new node optionally initialized with a node value.
     hnode_t		add_node(const node_value_t& t = node_value_t());
     // Remove a node.  The coherence maintenance of the graph is

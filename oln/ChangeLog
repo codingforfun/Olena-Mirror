@@ -1,3 +1,17 @@
+2003-01-22  Yann Régis-Gianas  <yann@lrde.epita.fr>
+
+	* oln/core/box.hh (box): 
+		- New constructor from main attributes ;
+		- inner_boxes_mean_dim and mass.
+	* oln/core/box.hxx: Implement them.
+	* oln/core/graph.hh: 'handler_of' renamed to 'hnode_of'/'hedge_of'
+		because of overloading problems.
+	* oln/core/graph.hxx: Implement them.
+	* oln/core/internal/graph_impl.hh: 
+		- Fix bug: operator T() must be const ;
+		- Implement new 'hnode_of' and 'hedge_of' methods.
+	* oln/topo/dist.hh: Update Copyright.
+
 2003-01-21  Yann Régis-Gianas  <yann@lrde.epita.fr>
 
 	* oln/topo/dist.hh: New.

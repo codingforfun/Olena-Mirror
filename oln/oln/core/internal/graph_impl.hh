@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,7 +43,7 @@ namespace oln {
       handler();
       handler(T v);
       T		value;
-      operator T();
+      operator T() const;
       bool operator==(const handler<Tag, T>&) const;
     };
 
@@ -111,8 +111,8 @@ namespace oln {
       const edges_set_t&	edges() const;
       nodes_set_t&		nodes();
       edges_set_t&		edges();
-      hnode_t			handler_of(nodes_set_const_iterator) const;
-      hedge_t			handler_of(edges_set_const_iterator) const;
+      hnode_t			hnode_of(nodes_set_const_iterator) const;
+      hedge_t			hedge_of(edges_set_const_iterator) const;
       hnode_t			add_node(const node_value_t& t);
       void			del_node(hnode_t n);
       hedge_t			add_edge(hnode_t h1, hnode_t h2, 

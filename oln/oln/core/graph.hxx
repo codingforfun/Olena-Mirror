@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -77,14 +77,14 @@ namespace oln {
 
   template <class U>
   typename graph<U>::hedge_t
-  graph<U>::handler_of(edges_set_const_iterator i) const
+  graph<U>::hedge_of(edges_set_const_iterator i) const
   {
     return self().handler_of(i);
   }
 
   template <class U>
   typename graph<U>::hnode_t
-  graph<U>::handler_of(nodes_set_const_iterator i) const
+  graph<U>::hnode_of(nodes_set_const_iterator i) const
   {
     return self().handler_of(i);
   }

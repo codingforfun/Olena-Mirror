@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,6 +43,12 @@ namespace oln {
     enum { d = point::dim };
     
     box();
+    box(point		top,
+	point		bottom,
+	unsigned	card,
+	unsigned	box_card,
+	const float*	inner,
+	const float*	mass);
     unsigned    dim() const;
     void	add(point p);
     void	add(const box<PointType>& p);
@@ -64,7 +70,10 @@ namespace oln {
     unsigned	area() const;
     float	density() const;
     float	square_ratio() const;
-    
+    bool	is_consistent() const;
+    const float* inner_boxes_mean_dim () const;
+    const float* mass () const;
+
   private:
     bool	not_consistent_;
     point	top_;

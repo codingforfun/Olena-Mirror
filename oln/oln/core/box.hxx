@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,6 +34,24 @@ namespace oln {
 
   // FIXME: despite of it usefulness, this box classes is not good
   // FIXME: since it is not generic.
+  template <class PointType>
+  box<PointType>::box(point top,
+		      point bottom,
+		      unsigned card,
+		      unsigned box_card,
+		      const float* inner,
+		      const float* mass) :
+    top_ (top),
+    bottom_ (bottom),
+    card_ (card),
+    box_card_ (box_card)
+  {
+    for (unsigned i = 0; i < d; ++i)
+      {
+	inner_boxes_mean_dim_[i] = inner[i];
+	mass_[i] = mass[i];
+      }
+  }
 
   template <class PointType>
   box<PointType>::box() :
@@ -99,7 +117,7 @@ namespace oln {
   {
     return 
       ((top().nth(dim) > b.bottom().nth(dim))
-      && (bottom().nth(dim) < b.top().nth(dim)));
+       && (bottom().nth(dim) < b.top().nth(dim)));
   }
 
   template <class PointType>
@@ -216,6 +234,26 @@ namespace oln {
     return width() > height() ?
       float(height()) / float(width()) :
       float(width()) / float(height());
+  }
+
+  template <class PointType>
+  bool box<PointType>::is_consistent() const
+  {
+    return !not_consistent_;
+  }
+
+  template <class PointType>
+  const float* 
+  box<PointType>::inner_boxes_mean_dim () const 
+  { 
+    return inner_boxes_mean_dim_; 
+  }
+  
+  template <class PointType>
+  const float* 
+  box<PointType>::mass () const 
+  { 
+    return mass_; 
   }
 
 } // end of oln.

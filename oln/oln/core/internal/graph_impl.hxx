@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -47,7 +47,7 @@ namespace oln {
     {}
     
     template <class Tag, class T>
-    handler<Tag, T>::operator T()
+    handler<Tag, T>::operator T() const
     {
       return value;
     }
@@ -158,7 +158,7 @@ namespace oln {
     template <class NodeValue, class EdgeValue>
     typename heavy_graph<NodeValue, EdgeValue>::hedge_t
     heavy_graph<NodeValue, EdgeValue>::
-    handler_of(edges_set_const_iterator i) const
+    hedge_of(edges_set_const_iterator i) const
     {
       precondition(i != edges_.end());
       return i - edges_.begin();
@@ -167,7 +167,7 @@ namespace oln {
     template <class NodeValue, class EdgeValue>
     typename heavy_graph<NodeValue, EdgeValue>::hnode_t
     heavy_graph<NodeValue, EdgeValue>::
-    handler_of(nodes_set_const_iterator i) const
+    hnode_of(nodes_set_const_iterator i) const
     {
       precondition(i != nodes_.end());
       return i - nodes_.begin();
@@ -183,7 +183,7 @@ namespace oln {
 	  return nodes_.size() - 1;
 	}
       hnode_t n = removed_nodes_.front();
-      removed_nodes.pop_front();
+      removed_nodes_.pop_front();
       assertion(n < nodes_.size());
       nodes_[n] = t;
       return n;

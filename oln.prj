@@ -1,15 +1,26 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln features 4)
-(Parent-Version oln features 3)
+(Project-Version oln features 5)
+(Parent-Version oln features 4)
 (Version-Log "
-2003-01-21  Yann Régis-Gianas  <yann@lrde.epita.fr>
+2003-01-22  Yann Régis-Gianas  <yann@lrde.epita.fr>
 
-	* oln/topo/dist.hh: New.
+	* oln/core/box.hh (box): 
+		- New constructor from main attributes ;
+		- inner_boxes_mean_dim and mass.
+	* oln/core/box.hxx: Implement them.
+	* oln/core/graph.hh: 'handler_of' renamed to 'hnode_of'/'hedge_of'
+		because of overloading problems.
+	* oln/core/graph.hxx: Implement them.
+	* oln/core/internal/graph_impl.hh: 
+		- Fix bug: operator T() must be const ;
+		- Implement new 'hnode_of' and 'hedge_of' methods.
+	* oln/topo/dist.hh: Update Copyright.
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 21 Jan 2003 14:26:19 +0100")
+(Checkin-Time "Wed, 22 Jan 2003 12:10:17 +0100")
 (Checkin-Login yann)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -132,7 +143,7 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.10 600))
-  (oln/ChangeLog (oln/o/30_ChangeLog 1.30 600))
+  (oln/ChangeLog (oln/o/30_ChangeLog 1.31 600))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.5 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.6 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.1 600))
@@ -219,8 +230,8 @@
   (oln/oln/core/border2d.hh (oln/d/33_border2d.h 1.4 600))
   (oln/oln/core/border3d.hh (oln/d/32_border3d.h 1.4 600))
   (oln/oln/core/border.hh (oln/d/35_border.hh 1.7 600))
-  (oln/oln/core/box.hh (oln/o/51_box.hh 1.3 600))
-  (oln/oln/core/box.hxx (oln/p/0_box.hxx 1.4 600))
+  (oln/oln/core/box.hh (oln/o/51_box.hh 1.4 600))
+  (oln/oln/core/box.hxx (oln/p/0_box.hxx 1.5 600))
   (oln/oln/core/compose.hh (oln/c/22_compose.hh 1.3 600))
   (oln/oln/core/contract.hh (oln/d/31_contract.h 1.5 600))
   (oln/oln/core/coord.hh (oln/d/29_coord.hh 1.2 600))
@@ -661,15 +672,15 @@
 ;; to version features.1(w), by yann:
 
   (oln/oln/basics_graph.hh (oln/p/18_basics_gra 1.1 600))
-  (oln/oln/core/graph.hxx (oln/p/19_graph.hxx 1.2 600))
-  (oln/oln/core/graph.hh (oln/p/20_graph.hh 1.2 600))
-  (oln/oln/core/internal/graph_impl.hxx (oln/p/21_graph_impl 1.2 600))
-  (oln/oln/core/internal/graph_impl.hh (oln/p/22_graph_impl 1.2 600))
+  (oln/oln/core/graph.hxx (oln/p/19_graph.hxx 1.3 600))
+  (oln/oln/core/graph.hh (oln/p/20_graph.hh 1.3 600))
+  (oln/oln/core/internal/graph_impl.hxx (oln/p/21_graph_impl 1.3 600))
+  (oln/oln/core/internal/graph_impl.hh (oln/p/22_graph_impl 1.3 600))
 
 ;; Files added by populate at Tue, 21 Jan 2003 14:24:50 +0100,
 ;; to version features.3(w), by yann:
 
-  (oln/oln/topo/dist.hh (oln/p/34_dist.hh 1.1 600))
+  (oln/oln/topo/dist.hh (oln/p/34_dist.hh 1.2 600))
 )
 (Merge-Parents)
 (New-Merge-Parents)
