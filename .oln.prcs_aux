@@ -24,7 +24,7 @@
 (oln/meta/control.hh 2724 1026899980 c/2_control.hh 1.4)
 (oln/types/yuv.hh 1923 1033408273 i/25_yuv.hh 1.1)
 (tests/transforms/dwt.cc 2710 1037184049 i/38_dwt.cc 1.1)
-(tests/ChangeLog 9363 1037666135 e/30_ChangeLog 1.44)
+(tests/ChangeLog 9501 1037668879 e/30_ChangeLog 1.45)
 (oln/io/gz_stream.hh 8188 1026993830 f/17_gz_stream. 1.3)
 (tests/types/tests/int_s1 73 1030375252 g/40_int_s1 1.1)
 (tests/types/tests/int_s2 76 1030375252 g/39_int_s2 1.1)

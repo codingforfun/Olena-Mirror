@@ -1,27 +1,12 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 88)
-(Parent-Version oln 0_5 87)
-(Version-Log "2002-11-19  Jean-Sébastien Mouret  <js@lrde.epita.fr>
-
-	* oln/io/se.hh, oln/io/se_window.hxx, 
-	oln/io/se_neighborhood.hxx: New files.
-	* oln/basics2d.hh: Include io/se.hh
-	* oln/core/internal/window.hh: Add operator==.
-	* oln/core/neighborhood2d.hh: Make it readable.	
-	* oln/core/window2d.hh: Likewise.
-
-	* oln/io/pnm_write.hxx, oln/io/pnm_read.hxx: Bug fix.
-	Tiny binary images in raw pbm format was not correctly
-	read nor written.
-
-	* demo/morpholena.cc (main): Add window2d loading example.
-	* img/face_se.pbm : New image.
-	* Makefile.am (EXTRA_DIST): Modify accordingly.
+(Project-Version oln 0_5 89)
+(Parent-Version oln 0_5 88)
+(Version-Log "* previous checkin tail
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 19 Nov 2002 01:35:35 +0100")
+(Checkin-Time "Tue, 19 Nov 2002 02:21:19 +0100")
 (Checkin-Login js)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -368,7 +353,7 @@
   (tests/meta/test_array1d.cc (oln/f/26_test_array 1.2 600))
   (tests/meta/test_array2d.cc (oln/f/25_test_array 1.2 600))
   (tests/meta/test_array3d.cc (oln/f/24_test_array 1.2 600))
-  (tests/ChangeLog (oln/e/30_ChangeLog 1.44 600))
+  (tests/ChangeLog (oln/e/30_ChangeLog 1.45 600))
   (tests/check/check.hh (oln/e/40_check.hh 1.2 600))
   (tests/check/data.cc (oln/f/5_data.cc 1.2 600))
   (tests/check/data.hh (oln/f/6_data.hh 1.1 600))

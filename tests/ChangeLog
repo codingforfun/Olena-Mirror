@@ -1,10 +1,14 @@
 2002-11-19  Jean-Sébastien Mouret  <js@lrde.epita.fr>
 
+	* io/loadsave.hh (compare): New functions.
+	(loadsave): Use compare functions instead of level::is_equal
+	to handle window2d and neighborhood2d equality checks.
+
 	* io/se_pass.cc, io/se_fail.cc, io/pretty.cc: New tests.
 	* io/Makefile.am: Modify accordingly.
 
-	* tests/data/neigbor.pbm, tests/data/neighbor9.pbm,
-	tests/data/se.pbm, tests/data/se9.pbm : New test images.
+	* data/neigbor.pbm, data/neighbor9.pbm, data/se.pbm,
+	data/se9.pbm: New test images.
 	* Makefile.am: Modify accordingly.
 
 2002-11-13  Emmanuel Turquin  <turqui_e@epita.fr>
