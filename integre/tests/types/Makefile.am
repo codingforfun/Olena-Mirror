@@ -1,4 +1,4 @@
-## Process this file with Automake to produce Makefile.in -*- Makefile -*- 
+## Process this file with Automake to produce Makefile.in -*- Makefile -*-
 
 EXTRA_DIST = tests runtests
 

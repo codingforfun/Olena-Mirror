@@ -17,4 +17,11 @@ int main()
   std::cout << im1 << std::endl;
   im1 = image2d<int_u8>(10, 10);
   std::cout << im1;
+
+  im1(0, 0) = 12;
+  std::cout << im1 << std::endl;
+
+  image2d<int_u8> im2(2, 2);
+  im2 = im1;
+  std::cout << im2 << std::endl;
 }

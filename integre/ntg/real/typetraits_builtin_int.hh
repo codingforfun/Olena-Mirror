@@ -155,6 +155,7 @@ namespace ntg {
 
     TYPETRAITS_BUILTIN_INT(unsigned char);
     TYPETRAITS_BUILTIN_INT(  signed char);
+    TYPETRAITS_BUILTIN_INT(         char);
 
   } // end of internal.
 

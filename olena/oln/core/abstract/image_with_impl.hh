@@ -98,14 +98,12 @@ namespace oln {
       exact_type& assign(exact_type rhs) // shallow assignment
       {
 	assertion(rhs.impl() != 0);
-	assertion(impl_ != 0);
 	if ( &rhs == this )
 	  return to_exact(*this);
 	if (this->impl() != 0)
 	  this->impl()->unref();
 	this->impl_ = rhs.impl();
-	if (this->impl() != 0)
-	  this->impl()->ref();
+	this->impl()->ref();
 	return to_exact(*this);
       }
 

@@ -47,13 +47,13 @@ namespace oln {
     class _window : public Window< Exact >
     {
     public:
-  
+
       enum { dim = Dim };
-      typedef typename point_for_dim<Dim>::ret      point;
-      typedef typename dpoint_for_dim<Dim>::ret     dpoint;
+      typedef typename point_for_dim<Dim>::ret      point_type;
+      typedef typename dpoint_for_dim<Dim>::ret     dpoint_type;
       typedef _window self;
 
-      bool has(const dpoint& dp) const
+      bool has(const dpoint_type& dp) const
       {
 	return std::find(_dp.begin(), _dp.end(), dp) != _dp.end();
       }
@@ -68,7 +68,7 @@ namespace oln {
 	return _centered;
       }
 
-      dpoint dp(unsigned i) const
+      dpoint_type dp(unsigned i) const
       {
 	return (*this)[i];
       }
@@ -77,28 +77,28 @@ namespace oln {
       {
 	return std::string("_window<") + Exact::name() + ">";
       }
-      
+
       bool operator==(const self& win) const
       {
-	for (typename std::vector<dpoint>::const_iterator it = _dp.begin(); it != _dp.end(); ++it)
+	for (typename std::vector<dpoint_type>::const_iterator it = _dp.begin(); it != _dp.end(); ++it)
 	  if (std::find(win._dp.begin(), win._dp.end(), *it) == win._dp.end())
 	    return false;
 	return true;
       }
-      
+
     protected:
       _window()
       {
 	_centered = false;
       }
-      
+
       _window(unsigned size)
       {
 	_dp.reserve(size);
 	_centered = false;
       }
 
-      void add(const dpoint& dp)
+      void add(const dpoint_type& dp)
       {
 	if (dp.is_centered())
 	  _centered = true;
@@ -106,7 +106,7 @@ namespace oln {
 	  _dp.push_back(dp);
       }
 
-      const dpoint operator[](unsigned i) const
+      const dpoint_type operator[](unsigned i) const
       {
 	precondition(i < card());
 	return _dp[i];
@@ -118,7 +118,7 @@ namespace oln {
 	  _dp[i] = - _dp[i];
       }
 
-      std::vector<dpoint> _dp;
+      std::vector<dpoint_type> _dp;
       bool _centered;
     };
 

@@ -63,18 +63,38 @@ namespace ntg
     `------------------------*/
 
     GLOBAL_ASSIGN_OP(operator+=, plus_equal);
+    GLOBAL_ASSIGN_OP_BUILTIN_INT(operator+=, plus_equal);
+    GLOBAL_ASSIGN_OP_BUILTIN_FLOAT(operator+=, plus_equal);
+
     GLOBAL_ASSIGN_OP(operator-=, minus_equal);
+    GLOBAL_ASSIGN_OP_BUILTIN_INT(operator-=, minus_equal);
+    GLOBAL_ASSIGN_OP_BUILTIN_FLOAT(operator-=, minus_equal);
+
     GLOBAL_ASSIGN_OP(operator*=, times_equal);
+    GLOBAL_ASSIGN_OP_BUILTIN_INT(operator*=, times_equal);
+    GLOBAL_ASSIGN_OP_BUILTIN_FLOAT(operator*=, times_equal);
+
     GLOBAL_ASSIGN_OP(operator/=, div_equal);
+    GLOBAL_ASSIGN_OP_BUILTIN_INT(operator/=, div_equal);
+    GLOBAL_ASSIGN_OP_BUILTIN_FLOAT(operator/=, div_equal);
+
     GLOBAL_ASSIGN_OP(operator%=, mod_equal);
+    GLOBAL_ASSIGN_OP_BUILTIN_INT(operator%=, mod_equal);
 
     /*---------------------.
     | Logical assignements |
     `---------------------*/
 
+    // FIXME: implement |=, &= and ^= in optraits<bool>.
+
     GLOBAL_ASSIGN_OP(operator|=, logical_or_equal);
+    //    GLOBAL_ASSIGN_OP_BUILTIN_BOOL(operator|=, logical_or_equal);
+
     GLOBAL_ASSIGN_OP(operator&=, logical_and_equal);
+    //    GLOBAL_ASSIGN_OP_BUILTIN_BOOL(operator&=, logical_and_equal);
+
     GLOBAL_ASSIGN_OP(operator^=, logical_xor_equal);
+    //    GLOBAL_ASSIGN_OP_BUILTIN_BOOL(operator^=, logical_xor_equal);
 
     /*----------------------.
     | Arithmetic operations |

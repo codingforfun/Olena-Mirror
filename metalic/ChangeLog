@@ -1,3 +1,15 @@
+2003-07-24  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* mlc/bool.hh: Add a meta switch.
+
+2003-07-21  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* mlc/array/1d.hh, mlc/array/2d.hh, mlc/array/3d.hh: Prefix
+	  abs() with std::.
+
+	* mlc/array/2d.hh, mlc/array/3d.hh: Fix problems raised by g++
+	3.4.
+
 2003-06-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* Merge from integre.28:

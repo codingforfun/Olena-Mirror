@@ -39,7 +39,13 @@ namespace oln {
   namespace io {
     namespace internal {
 
+      bool read(neighborhood2d& output, const std::string& name)
+      {
+	// FIXME: implement
+	return false;
+      }
 
+#if 0
       template<>
       struct reader<ReadPnmPlain, neighborhood2d >
       {
@@ -170,11 +176,10 @@ namespace oln {
 	}
       };
 
+#endif
 
     } // internal
   } // io
 } // oln
-
-
 
 #endif // OLENA_IO_SE_NEIGHBORHOOD_HXX_

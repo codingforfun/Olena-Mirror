@@ -38,7 +38,14 @@ namespace oln {
 
   namespace io {
     namespace internal {
+      
+      bool read(window2d& output, const std::string& name)
+      {
+	// FIXME: implement
+	return false;
+      }
 
+#if 0
 
       template<>
       struct reader<ReadPnmPlain, window2d >
@@ -142,6 +149,7 @@ namespace oln {
 	}
       };
 
+#endif
 
     } // internal
   } // io

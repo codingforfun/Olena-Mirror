@@ -82,7 +82,7 @@ namespace oln {
 		  exact_type> super_type;
 
     image3d() :
-      super_type()
+      super_type((impl_type*) 0)
     {}
 
     image3d(coord nslices, coord nrows, coord ncols, coord border = 2) :

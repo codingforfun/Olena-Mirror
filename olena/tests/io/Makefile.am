@@ -6,8 +6,9 @@ include ../check/Makefile.check
 LDADD += $(ZLIB_LDFLAGS)
 AM_CXXFLAGS += $(ZLIB_CXXFLAGS)
 
-check_PROGRAMS = 2d se_pass se_fail pretty
+check_PROGRAMS = 2d simple2d se_pass se_fail pretty
 2d_SOURCES = 2d.cc loadsave.hh
+simple2d_SOURCES = simple2d.cc
 se_pass_SOURCES = se_pass.cc loadsave.hh
 se_fail_SOURCES = se_pass.cc loadsave.hh
 pretty_SOURCES = pretty.cc loadsave.hh

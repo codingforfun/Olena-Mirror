@@ -238,47 +238,47 @@ namespace ntg {
 
     cplx(const T& re = 0, const T& im = 0)
     {
-      val_[0] = re;
-      val_[1] = im;
+      this->val_[0] = re;
+      this->val_[1] = im;
     }
 
     cplx<rect, T>&
     operator=(const T& r)
     {
-      val_[0] = r;
-      val_[1] = 0;
+      this->val_[0] = r;
+      this->val_[1] = 0;
       return *this;
     }
 
     template<cplx_representation R, class T2>
     cplx(const cplx<R, T2>& rhs)
     {
-      val_[0] = (T)rhs.real();
-      val_[1] = (T)rhs.imag();
+      this->val_[0] = (T)rhs.real();
+      this->val_[1] = (T)rhs.imag();
     }
 
     template<cplx_representation R, class T2>
     cplx<rect, T>&
     operator=(const cplx<R, T2>& rhs)
     {
-      val_[0] = (T)rhs.real();
-      val_[1] = (T)rhs.imag();
+      this->val_[0] = (T)rhs.real();
+      this->val_[1] = (T)rhs.imag();
       return *this;
     }
 
     template<class T2>
     cplx(const vec<2, T2>& rhs)
     {
-      val_[0] = (T)rhs[0];
-      val_[1] = (T)rhs[1];
+      this->val_[0] = (T)rhs[0];
+      this->val_[1] = (T)rhs[1];
     }
 
     template<class T2>
     cplx<rect, T>&
     operator=(const vec<2, T2>& rhs)
     {
-      val_[0] = (T)rhs[0];
-      val_[1] = (T)rhs[1];
+      this->val_[0] = (T)rhs[0];
+      this->val_[1] = (T)rhs[1];
       return *this;
     }
 
@@ -289,42 +289,42 @@ namespace ntg {
 
     // accessors
 
-    const T real() const { return val_[0]; }
-    T& real() { return val_[0]; }
+    const T real() const { return this->val_[0]; }
+    T& real() { return this->val_[0]; }
 
-    const T imag() const { return val_[1]; }
-    T& imag() { return val_[1]; }
+    const T imag() const { return this->val_[1]; }
+    T& imag() { return this->val_[1]; }
 
-    const T first() const { return val_[0]; }
-    T& first() { return val_[0]; }
+    const T first() const { return this->val_[0]; }
+    T& first() { return this->val_[0]; }
 
-    const T second() const { return val_[1]; }
-    T& second() { return val_[1]; }
+    const T second() const { return this->val_[1]; }
+    T& second() { return this->val_[1]; }
 
     // methods
 
     const float_d
     magn() const
     {
-      return sqrt(val_[0] * val_[0] + val_[1] * val_[1]);
+      return sqrt(this->val_[0] * this->val_[0] + this->val_[1] * this->val_[1]);
     }
 
     const float_d
     angle() const
     {
-      return atan2(val_[1], val_[0]);
+      return atan2(this->val_[1], this->val_[0]);
     }
 
     const cplx<rect, T>
     conj() const
     {
-      return cplx<rect, T>(val_[0], -val_[1]);
+      return cplx<rect, T>(this->val_[0], -this->val_[1]);
     }
 
     const cplx<rect, T>
     invert() const
     {
-      return cplx<rect, T>(-val_[0], -val_[1]);
+      return cplx<rect, T>(-this->val_[0], -this->val_[1]);
     }
 
     const cplx<polar, float_d>
@@ -347,29 +347,29 @@ namespace ntg {
     cplx(const T& ma = 0, const T& an = 0)
     {
       ntg_assert(ma >= 0);
-      val_[0] = ma;
-      val_[1] = an;
+      this->val_[0] = ma;
+      this->val_[1] = an;
     }
 
     cplx<polar, T>& operator=(const T& r)
     {
-      val_[0] = r;
-      val_[1] = 0;
+      this->val_[0] = r;
+      this->val_[1] = 0;
       return *this;
     }
 
     template<cplx_representation R, class T2>
     cplx(const cplx<R, T2>& rhs)
     {
-      val_[0] = (T)rhs.magn();
-      val_[1] = (T)rhs.angle();
+      this->val_[0] = (T)rhs.magn();
+      this->val_[1] = (T)rhs.angle();
     }
 
     template<cplx_representation R, class T2>
     cplx<polar, T>& operator=(const cplx<R, T2>& rhs)
     {
-      val_[0] = (T)rhs.magn();
-      val_[1] = (T)rhs.angle();
+      this->val_[0] = (T)rhs.magn();
+      this->val_[1] = (T)rhs.angle();
       return *this;
     }
 
@@ -380,42 +380,42 @@ namespace ntg {
 
     // accessors
 
-    const T magn() const { return val_[0]; }
-    T& magn() { return val_[0]; }
+    const T magn() const { return this->val_[0]; }
+    T& magn() { return this->val_[0]; }
 
-    const T angle() const { return val_[1]; }
-    T& angle() { return val_[1]; }
+    const T angle() const { return this->val_[1]; }
+    T& angle() { return this->val_[1]; }
 
-    const T first() const { return val_[0]; }
-    T& first() { return val_[0]; }
+    const T first() const { return this->val_[0]; }
+    T& first() { return this->val_[0]; }
 
-    const T second() const { return val_[1]; }
-    T& second() { return val_[1]; }
+    const T second() const { return this->val_[1]; }
+    T& second() { return this->val_[1]; }
 
     // methods
 
     const float_d
     real() const
     {
-      return val_[0] * cos(val_[1]);
+      return this->val_[0] * cos(this->val_[1]);
     }
 
     const float_d
     imag() const
     {
-      return val_[0] * sin(val_[1]);
+      return this->val_[0] * sin(this->val_[1]);
     }
 
     const cplx<polar, T>
     conj() const
     {
-      return cplx<polar, T>(val_[0], -val_[1]);
+      return cplx<polar, T>(this->val_[0], -this->val_[1]);
     }
 
     const cplx<rect, T>
     invert() const
     {
-      return cplx<rect, T>(val_[0], val_[1] + M_PI);
+      return cplx<rect, T>(this->val_[0], this->val_[1] + M_PI);
     }
 
     const cplx<rect, float_d>

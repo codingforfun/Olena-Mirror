@@ -29,9 +29,8 @@
 # define OLENA_CORE_IMAGE1D_HH
 
 # include <oln/core/impl/image_array1d.hh>
-// # include <oln/io/readable.hh>
 # include <oln/core/image.hh>
-// # include <oln/core/abstract/image_with_impl.hh>
+
 # include <iostream>
 # include <stdlib.h>
 
@@ -81,7 +80,7 @@ namespace oln {
 		  exact_type> super_type;
  
     image1d() :
-      super_type()
+      super_type((impl_type*) 0)
     {}
 
     image1d(coord ncols, coord border = 2) :

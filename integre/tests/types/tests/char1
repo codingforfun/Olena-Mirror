@@ -1,0 +1,5 @@
+int a = ntg_max_val(char);
+a = ntg_max_val(signed char);
+a = ntg_max_val(unsigned char);
+
+return !a;
