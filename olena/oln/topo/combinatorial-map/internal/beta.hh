@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -38,19 +38,20 @@ namespace oln {
 
       namespace internal {
 
+	/// This function must be built using assign.
 	template<class U, class V = U>
 	class beta : public anyfunc<U, V, beta<U, V> >
 	{
 	public:
 	  static std::string
-	  name() 
-	  { 
+	  name()
+	  {
 	    return "beta";
 	  }
 
 	  beta(unsigned n) : anyfunc< U, V, beta<U, V> >(n) {}
 
-	  void 
+	  void
 	  assign_(const U & i, const V & e)
 	  {
 	    f_[i] = e;
@@ -64,11 +65,11 @@ namespace oln {
 	};
 
       } // end of namespace internal
-      
+
     } // end of namespace combinatorial_map
-    
+
   } // end of namespace topo
-  
+
 } // end of namespace oln
 
 #endif // ! OLENA_TOPO_COMBINATORIAL_MAP_INTERNAL_BETA_HH

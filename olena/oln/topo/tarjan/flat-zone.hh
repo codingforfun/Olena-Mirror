@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,10 +39,30 @@ namespace oln {
 
     namespace tarjan {
 
-      /*----------.
-      | flat_zone |
-      `----------*/
-
+      /*! Create an image of label of the flat zones.
+      **
+      ** \todo FIXME: many assertions are missing.
+      **
+      ** \code
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/topo/tarjan/flat-zone.hh>
+      ** #include <oln/convert/stretch.hh>
+      **
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8> img_type;
+      **   img_type in = oln::load(IMG_IN "test-cmap.pgm");
+      **   oln::topo::tarjan::flat_zone<img_type> z(in);
+      **   save(oln::convert::stretch_balance<ntg::int_u8>(z.label, 0, 255),
+      **        IMG_OUT "oln_topo_flat_zone.pgm");
+      **  }
+      ** \endcode
+      ** \image html test-cmap.png width=6cm
+      ** \image latex test-cmap.png width=6cm
+      ** =>
+      ** \image html oln_topo_flat_zone.png width=6cm
+      ** \image latex oln_topo_flat_zone.png width=6cm
+      */
       template <class I>
       struct flat_zone
       {
@@ -54,6 +74,7 @@ namespace oln {
 
 	const image_type &input;
 	tarjan_cc cc;
+	/// output image.
 	image2d<unsigned> label;
 
 	std::vector<point_type> look_up_table;
@@ -61,7 +82,10 @@ namespace oln {
 	image2d< std::vector<oln::point2d> > ima_region;
 
 	unsigned nlabels_;
-
+	/*! Initialize the flat-zone with an image.
+	**
+	** \a doit is called.
+	*/
 	flat_zone(const image_type& input_) : input(input_), cc(input_),
 					      label(input_.size()),
 					      ima_region(input_.size()),
@@ -69,7 +93,7 @@ namespace oln {
 	{
 	  doit();
 	}
-
+	/// Compute the image of label.
 	void
 	doit()
 	{
@@ -86,7 +110,7 @@ namespace oln {
 		  if (input[p] == input[p_prime])
 		    cc.uni(p_prime.cur(), p);
 	      }
-	    
+
 	    cc.make_set(point_type(input.nrows(), input.ncols()));
 
 	    // bottom-right corner -> bottom-left corner
@@ -129,11 +153,11 @@ namespace oln {
 
 	    // Push_back because no label = 0;
 	    look_up_table.push_back(point_type());
-	    
+
 	    label.border_adapt_assign(1, ++nlabels_);
-	    
+
 	    look_up_table.push_back(cc.find_root(point_type(-1, -1)));
-	    
+
 	    for_all(p)
 	      {
 		if (cc.is_root(p))
@@ -144,7 +168,7 @@ namespace oln {
 		else
 		  label[p] = label[cc.parent[p]];
 	      }
-	    
+
 	    {
 	      typename image_type::fwd_iter_type p(input);
 	      for_all(p)
@@ -155,28 +179,32 @@ namespace oln {
 		    ima_region[cc.parent[p]].push_back(p);
 		}
 	    }
-	    
+
 	  }
 	}
-
+	/// Get the label of a point \a p.
 	const unsigned
 	get_label(const point_type & p) const
 	{
 	  return label[p];
 	}
-
+	/// Get the root point of a label \a l.
 	const point_type&
 	get_root(unsigned l) const
 	{
 	  return look_up_table[l];
 	}
-
+	/// Number of label.
 	const unsigned
 	nlabels() const
 	{
 	  return nlabels_;
 	}
 
+	/*! Merge two flat zone.
+	**
+	** \note FIMXE: should be protected, shouldn't it?
+	*/
 	void
 	merge(const int l1, const int l2)
 	{

@@ -1,17 +1,33 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 83)
-(Parent-Version oln 10 82)
-(Version-Log "2004-03-13  Niels Van Vliet  <niels@lrde.epita.fr>
-	* olena/oln/utils/copy.hh: Add comments.
-	* olena/oln/utils/histogram.hh: Likewise.
-	* olena/oln/utils/stat.hh: Likewise.
-	* olena/oln/utils/timer.hh: Likewise.
-	* olena/oln/utils/special_points.hh: Likewise.
+(Project-Version oln 10 84)
+(Parent-Version oln 10 83)
+(Version-Log "2004-03-14  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/core/abstract/iter1d.hh: Fix a bug.
+	* olena/oln/core/abstract/iter2d.hh: Fix a bug.
+	* olena/oln/core/abstract/iter3d.hh: Fix a bug.
+	* olena/oln/morpho/attribute_union_find.hh: Add a FIXME.
+	* olena/oln/topo/dmap.hh: Add comments.
+	* olena/oln/topo/tarjan/union.hh: Likewise.
+	* olena/oln/topo/inter-pixel/inter-pixel.hh: Likewise.
+	* olena/oln/topo/tarjan/flat-zone.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/cmap.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/internal/zeta.hh: Likewise.
+	* olena/oln/topo/inter-pixel/fwd-dir-iter.hh: Likewise.
+	* olena/oln/topo/inter-pixel/bkd-dir-iter.hh: Likewise.
+	* olena/oln/topo/inter-pixel/node.hh: Likewise.
+	* olena/oln/topo/inter-pixel/internal/dir-iter.hh: Likewise.
+	* olena/oln/topo/inter-pixel/internal/dir.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/internal/alpha.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/internal/anyfunc.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/internal/beta.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/internal/lambda.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/internal/level.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/internal/sigma.hh : Likewise.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sat, 13 Mar 2004 21:28:08 +0100")
+(Checkin-Time "Sun, 14 Mar 2004 18:15:46 +0100")
 (Checkin-Login van-vl_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -118,7 +134,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.6 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.35 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.25 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.26 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 640))
 
@@ -236,9 +252,9 @@
   
   
   
-  (olena/oln/core/abstract/iter1d.hh (oln/d/10_iter1d.hh 1.17 640))
-  (olena/oln/core/abstract/iter2d.hh (oln/d/9_iter2d.hh 1.17 640))
-  (olena/oln/core/abstract/iter3d.hh (oln/d/8_iter3d.hh 1.17 640))
+  (olena/oln/core/abstract/iter1d.hh (oln/d/10_iter1d.hh 1.18 640))
+  (olena/oln/core/abstract/iter2d.hh (oln/d/9_iter2d.hh 1.18 640))
+  (olena/oln/core/abstract/iter3d.hh (oln/d/8_iter3d.hh 1.18 640))
   
 
   
@@ -354,7 +370,7 @@
   (olena/oln/morpho/top_hat.inc (oln/39_top_hat.in 1.14 640))
   (olena/oln/morpho/watershed.hh (oln/48_watershed. 1.12 640))
   (olena/oln/morpho/watershed.hxx (oln/47_watershed. 1.9.1.5.1.6 640))
-  (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.7 640))
+  (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.8 640))
   (olena/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.7.1.9 640))
   (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.10 640))
   (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.8 640))
@@ -770,7 +786,7 @@
 ;; to version 8.9(w), by jerome:
 
   (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.19 640))
-  (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.15 640))
+  (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.16 640))
 
   (olena/tests/convol () :directory)
   (metalic/config (../config) :symlink)
@@ -816,10 +832,10 @@
   
   
   
-  (olena/oln/topo/tarjan/union.hh (oln/r/33_union.hh 1.8 640))
-  (olena/oln/topo/inter-pixel/inter-pixel.hh (oln/r/34_inter-pixe 1.12 640))
-  (olena/oln/topo/tarjan/flat-zone.hh (oln/r/35_flat-zone. 1.9 640))
-  (olena/oln/topo/combinatorial-map/cmap.hh (oln/r/36_cmap.hh 1.11 640))
+  (olena/oln/topo/tarjan/union.hh (oln/r/33_union.hh 1.9 640))
+  (olena/oln/topo/inter-pixel/inter-pixel.hh (oln/r/34_inter-pixe 1.13 640))
+  (olena/oln/topo/tarjan/flat-zone.hh (oln/r/35_flat-zone. 1.10 640))
+  (olena/oln/topo/combinatorial-map/cmap.hh (oln/r/36_cmap.hh 1.12 640))
 
 ;; Files added by populate at Thu, 20 Mar 2003 18:06:35 +0100,
 ;; to version 8.22(w), by sylvain:
@@ -832,12 +848,12 @@
 ;; Files added by populate at Mon, 31 Mar 2003 15:17:00 +0200,
 ;; to version 8.26(w), by sylvain:
 
-  (olena/oln/topo/combinatorial-map/internal/zeta.hh (oln/r/43_zeta.hh 1.3 640))
-  (olena/oln/topo/inter-pixel/fwd-dir-iter.hh (oln/r/44_fwd-dir-it 1.4 640))
-  (olena/oln/topo/inter-pixel/bkd-dir-iter.hh (oln/r/45_bkd-dir-it 1.4 640))
-  (olena/oln/topo/inter-pixel/node.hh (oln/r/46_node.hh 1.4 640))
-  (olena/oln/topo/inter-pixel/internal/dir-iter.hh (oln/r/47_dir-iter.h 1.5 640))
-  (olena/oln/topo/inter-pixel/internal/dir.hh (oln/r/48_dir.hh 1.2 640))
+  (olena/oln/topo/combinatorial-map/internal/zeta.hh (oln/r/43_zeta.hh 1.4 640))
+  (olena/oln/topo/inter-pixel/fwd-dir-iter.hh (oln/r/44_fwd-dir-it 1.5 640))
+  (olena/oln/topo/inter-pixel/bkd-dir-iter.hh (oln/r/45_bkd-dir-it 1.5 640))
+  (olena/oln/topo/inter-pixel/node.hh (oln/r/46_node.hh 1.5 640))
+  (olena/oln/topo/inter-pixel/internal/dir-iter.hh (oln/r/47_dir-iter.h 1.6 640))
+  (olena/oln/topo/inter-pixel/internal/dir.hh (oln/r/48_dir.hh 1.3 640))
   
 
 ;; Files added by populate at Wed, 09 Apr 2003 22:18:27 +0200,
@@ -1017,12 +1033,12 @@
   (olena/img/se9_1d.pbm (oln/u/51_se9_1d.pbm 1.1 600))
   (olena/tests/core/tests/label_images (oln/v/0_label_imag 1.1 600))
   (olena/oln/topo/combinatorial-map/internal/allfunc.hh (oln/v/1_allfunc.hh 1.2 600))
-  (olena/oln/topo/combinatorial-map/internal/alpha.hh (oln/v/2_alpha.hh 1.2 600))
-  (olena/oln/topo/combinatorial-map/internal/anyfunc.hh (oln/v/3_anyfunc.hh 1.2 600))
-  (olena/oln/topo/combinatorial-map/internal/beta.hh (oln/v/5_beta.hh 1.2 600))
-  (olena/oln/topo/combinatorial-map/internal/lambda.hh (oln/v/6_lambda.hh 1.2 600))
-  (olena/oln/topo/combinatorial-map/internal/level.hh (oln/v/7_level.hh 1.2 600))
-  (olena/oln/topo/combinatorial-map/internal/sigma.hh (oln/v/9_sigma.hh 1.2 600))
+  (olena/oln/topo/combinatorial-map/internal/alpha.hh (oln/v/2_alpha.hh 1.3 600))
+  (olena/oln/topo/combinatorial-map/internal/anyfunc.hh (oln/v/3_anyfunc.hh 1.3 600))
+  (olena/oln/topo/combinatorial-map/internal/beta.hh (oln/v/5_beta.hh 1.3 600))
+  (olena/oln/topo/combinatorial-map/internal/lambda.hh (oln/v/6_lambda.hh 1.3 600))
+  (olena/oln/topo/combinatorial-map/internal/level.hh (oln/v/7_level.hh 1.3 600))
+  (olena/oln/topo/combinatorial-map/internal/sigma.hh (oln/v/9_sigma.hh 1.3 600))
   (olena/oln/core/abstract/image_with_type_with_dim.hh (oln/v/11_image_with 1.5 600))
   (olena/tests/core/tests/image2 (oln/v/12_image2 1.2 600))
   (olena/tests/utils/tests/copy (oln/v/13_copy 1.1 600))

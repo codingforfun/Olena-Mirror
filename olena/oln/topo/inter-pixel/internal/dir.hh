@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,53 +37,61 @@ namespace oln {
   namespace topo {
 
     namespace inter_pixel {
-
+      /// oln::topo::inter_pixel Internal namespace.
       namespace internal {
-
+	/// Provides the enum dir.
 	template<unsigned Dim>
 	struct dir_traits
 	{};
-
+	/// Provides the enum dir for 2D.
 	template<>
 	struct dir_traits<2>
 	{
+	  //// Direction in 2D.
 	  typedef enum dir { east, north, west, south } ret;
 
+	  /// First direction.
 	  static ret
 	  first()
-	  { 
-	    return east; 
+	  {
+	    return east;
 	  }
 
+	  /// Last direction.
 	  static ret
 	  last()
-	  { 
-	    return south; 
+	  {
+	    return south;
 	  }
-
+	  /// Prev direction (with Prev(first()) == last()).
 	  static ret
 	  prev(ret i)
 	  {
 	    return i == first() ? last() : ret(i - 1);
 	  }
 
+	  /// Next direction (with next(last()) == first()).
 	  static ret
 	  next(ret i)
 	  {
 	    return i == last() ? first() : ret(i + 1);
 	  }
 
-	  // FIXME: no modulus
+	  /*! Opposit direction.
+	  **
+	  ** \note FIXME: no modulus.
+	  */
 	  static ret
 	  opposite(ret i)
 	  {
 	    return ret((i + 2) % 4);
 	  }
 	};
-
+/// Direction trait for an image \a ImgType.
 # define oln_dir_traits_type(ImgType)				\
 oln::topo::inter_pixel::internal::dir_traits< ImgType::dim >
 
+/// Direction for an image \a ImgType.
 # define oln_dir_type(ImgType)			\
 typename oln_dir_traits_type(ImgType)::ret
 
@@ -95,7 +103,7 @@ typename oln_dir_traits_type(ImgType)::ret
 
 } // end of namespace oln
 
-std::ostream & operator<<(std::ostream& o, 
+std::ostream & operator<<(std::ostream& o,
 			  oln::topo::inter_pixel::internal::dir_traits<2>::ret i)
 {
   typedef oln::topo::inter_pixel::internal::dir_traits<2> traits;

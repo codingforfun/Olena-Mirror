@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -38,7 +38,13 @@ namespace oln {
     namespace combinatorial_map {
 
       namespace internal {
-
+	/* Node of a tree
+	**
+	** \var node::lb left brother.
+	** \var node::rb right brother.
+	** \var node::fchild first child.
+	** \var node::father father.
+	*/
 	template <class U>
 	struct node
 	{
@@ -47,6 +53,10 @@ namespace oln {
 	  U fchild, lb, rb, father;
 	};
 
+	/* Level function.
+	**
+	** \todo FIXME: add doc.
+	*/
 	template <class U>
 	class level
 	{

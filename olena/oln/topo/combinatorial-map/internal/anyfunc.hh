@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,16 +31,19 @@
 # include <mlc/contract.hh>
 
 # include <vector>
-
 namespace oln {
 
   namespace topo {
 
     namespace combinatorial_map {
 
+      /// oln::combinatorial_map::internal
       namespace internal {
 
-	// any
+	/*! any
+	**
+	** \deprecated FIXME: totally obsolete.
+	*/
 	template <class Inf>
 	class any
 	{
@@ -49,37 +52,46 @@ namespace oln {
 	  Inf & self() { return static_cast<Inf &>(*this); }
 	};
 
+	/*! Function stored in a vector.
+	**
+	**
+	** \warning FIXME: It has nothing to do there.
+	*/
 	template <class U, class V, class Inf>
 	class anyfunc : public any<Inf>
 	{
 	protected:
 	  anyfunc() : f_(1) {}
+	  /// Construct a function on [0..n].
 	  anyfunc(unsigned n) : f_(n+1) { assertion(n); }
 
 	public:
+	  /// Retrieve the value f(e).
 	  V operator()(const U & e) const
 	  {
 	    assertion(e < f_.size());
 	    return f_[e];
 	  }
 
+	  /// Resize the domain of f.
 	  void resize(unsigned n)
 	  {
 	    self().resize_(n);
 	  }
-
+	  /// Assign a value \e to f(i).
 	  void assign(const U & i, const V & e)
 	  {
 	    assertion(i < f_.size());
 	    self().assign_(i, e);
 	  }
 
+	  /// f(i) = 0.
 	  void erase(const U & i)
 	  {
 	    assertion(i < f_.size());
 	    self().erase_(i);
 	  }
-
+	  /// Print the function.
 	  std::ostream & print(std::ostream & ostr) const
 	  {
 	    for (unsigned i = 1; i < f_.size(); ++i)

@@ -134,6 +134,12 @@ namespace oln {
       }
 
       /*!
+      ** \brief Constructor
+      */
+      iter2d() : super_type(), nrows_(0), ncols_(0)
+      {}
+
+      /*!
       ** \brief Construct an iterator (2d) on an inamge (2d).
       ** \arg size The size of the image to iterate.
       ** \pre size.ncols() > 0.

@@ -119,6 +119,12 @@ namespace oln {
 
       /*!
       ** \brief Constructor
+      */
+      iter1d() : super_type(), ncols_(0)
+      {}
+
+      /*!
+      ** \brief Constructor
       ** \arg size The size of the image to iterate.
       ** \pre size.ncols() > 0.
       **

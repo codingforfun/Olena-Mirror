@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -40,10 +40,36 @@ namespace oln {
   namespace topo {
 
     namespace inter_pixel {
-
+ /// Return the inter pixel type of an image type.
 # define oln_interpixel_type(ImgType)		\
 typename oln::mute< ImgType, oln_node_type(ImgType) >::ret
 
+      /*! Inter pixel class.
+      **
+      ** This example give the node of the black connected component (bottom left).
+      ** \code
+      ** #include <ntg/int.hh>
+      ** #include <oln/basics2d.hh>
+      ** #include <oln/topo/inter-pixel/inter-pixel.hh>
+      ** #include <iostream>
+      ** using namespace oln::topo::inter_pixel;
+      **
+      ** int main()
+      ** {
+      **   typedef oln::image2d<ntg::int_u8> img_type;
+      **   img_type in = oln::load(IMG_IN "test-cmap.pgm");
+      **   interpixel<oln::image2d<ntg::int_u8> > ip(in);
+      **   std::cout << ip << std::endl;
+      **   // Print:
+      **   //  (5,0): east north south
+      **   //  (5,5): north west south
+      **   //  (7,5): east north west
+      **   //  (10,9): east north west
+      **   //  (10,11): north west south
+      **   //  (11,14): north west south
+      ** }
+      ** \todo FIXME: Test the output values in the tests.
+      */
       template <class I>
       class interpixel
       {
@@ -59,6 +85,7 @@ typename oln::mute< ImgType, oln_node_type(ImgType) >::ret
 	typedef oln_interpixel_type(I)		inter_pixel_type;
 
       public:
+	/// Construct an inter pixel map of the image \a img.
 	interpixel(const I & img) :
 	  data_(img.nrows() + 1, img.ncols() + 1)
 	{
@@ -68,7 +95,7 @@ typename oln::mute< ImgType, oln_node_type(ImgType) >::ret
 
 	  oln_iter_type(inter_pixel_type) p(data_);
 	  fwd_dir_iter_type it;
-	  
+
 	  for_all(p)
 	    {
 	      for_all(it)
@@ -77,12 +104,17 @@ typename oln::mute< ImgType, oln_node_type(ImgType) >::ret
 	    }
 	}
 
+	/// FIXME: add doc.
 	const node_type&
 	operator[](const point_type & p) const
 	{
 	  return data_[p];
 	}
 
+	/*! FIXME: add doc.
+	**
+	** \pre precondition(data_[in.first].get(in.second) == true)
+	*/
 	head_type
 	folw(const head_type& in) const
 	{
@@ -111,11 +143,12 @@ typename oln::mute< ImgType, oln_node_type(ImgType) >::ret
 	  return out;
 	}
 
+	/// Print the inter pixel map.
 	std::ostream&
 	print(std::ostream & ostr) const
 	{
 	  oln_iter_type(inter_pixel_type) p(data_);
-	  
+
 	  for_all(p)
 	    if (data_[p].rank() > 2)
 	      {
@@ -134,14 +167,14 @@ typename oln::mute< ImgType, oln_node_type(ImgType) >::ret
 
       private:
 	inter_pixel_type	data_;
-	
+
       public:
 	static const dpoint_type neighb_[4];
 	static const dpoint_type inter_neighb_[4];
       };
 
     } // end of namespace inter_pixel
-    
+
   } // end of namespace topo
 
 } // end of namespace oln
@@ -160,7 +193,7 @@ const oln_dpoint_type(I)
 						       oln_dpoint_type(I)(-1,-1),
 						       oln_dpoint_type(I)(0,-1)};
 template <class I>
-const oln_dpoint_type(I) 
+const oln_dpoint_type(I)
   oln::topo::inter_pixel::interpixel<I>::inter_neighb_[4] = {oln_dpoint_type(I)(0,1),
 							     oln_dpoint_type(I)(-1,0),
 							     oln_dpoint_type(I)(0,-1),

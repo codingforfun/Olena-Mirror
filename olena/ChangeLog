@@ -1,3 +1,26 @@
+2004-03-14  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/core/abstract/iter1d.hh: Fix a bug.
+	* olena/oln/core/abstract/iter2d.hh: Fix a bug.
+	* olena/oln/core/abstract/iter3d.hh: Fix a bug.
+	* olena/oln/morpho/attribute_union_find.hh: Add a FIXME.
+	* olena/oln/topo/dmap.hh: Add comments.
+	* olena/oln/topo/tarjan/union.hh: Likewise.
+	* olena/oln/topo/inter-pixel/inter-pixel.hh: Likewise.
+	* olena/oln/topo/tarjan/flat-zone.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/cmap.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/internal/zeta.hh: Likewise.
+	* olena/oln/topo/inter-pixel/fwd-dir-iter.hh: Likewise.
+	* olena/oln/topo/inter-pixel/bkd-dir-iter.hh: Likewise.
+	* olena/oln/topo/inter-pixel/node.hh: Likewise.
+	* olena/oln/topo/inter-pixel/internal/dir-iter.hh: Likewise.
+	* olena/oln/topo/inter-pixel/internal/dir.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/internal/alpha.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/internal/anyfunc.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/internal/beta.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/internal/lambda.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/internal/level.hh: Likewise.
+	* olena/oln/topo/combinatorial-map/internal/sigma.hh : Likewise.
+
 2004-03-13  Niels Van Vliet  <niels@lrde.epita.fr>
 	* olena/oln/utils/copy.hh: Add comments.
 	* olena/oln/utils/histogram.hh: Likewise.

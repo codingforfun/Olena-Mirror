@@ -48,6 +48,9 @@ namespace oln {
 	** \param T Exact type of images to process.
 	** \param ATTRIBUTE Exact type of attribute to use.
 	** \param Env Type of environment to use.
+	**
+	** \Note FIXME: a similar class is defined in oln/topo/tarjan/union.hh
+	** (oln::topo::tarjan::tarjan_set).
 	*/
 	template<class T, class ATTRIBUTE, class Env = attr_env_type(ATTRIBUTE)>
 	struct tarjan_set

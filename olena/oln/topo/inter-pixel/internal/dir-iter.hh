@@ -47,6 +47,7 @@ namespace oln {
     }
   }
 
+  /// Traits for iterator for 1D directions.
   template<class Exact>
   struct iter_traits<topo::inter_pixel::internal::dir_iter_<1, Exact> >
     : public iter_traits<abstract::iter1d<Exact> >
@@ -56,6 +57,7 @@ namespace oln {
     typedef dpoint1d dpoint_type;
   };
 
+  /// Traits for iterator for 2D directions.
   template<class Exact>
   struct iter_traits<topo::inter_pixel::internal::dir_iter_<2, Exact> >
     : public iter_traits<abstract::iter2d<Exact> >
@@ -65,6 +67,7 @@ namespace oln {
     typedef dpoint2d dpoint_type;
   };
 
+  /// Traits for iterator for 3D directions.
   template<class Exact>
   struct iter_traits<topo::inter_pixel::internal::dir_iter_<3, Exact> >
     : public iter_traits<abstract::iter3d<Exact> >
@@ -152,7 +155,7 @@ namespace oln {
 } // end of namespace oln
 
 template<unsigned Dim, class Exact>
-inline 
+inline
 std::ostream&
 operator<<(std::ostream& o, const oln::topo::inter_pixel::internal::dir_iter_<Dim, Exact>& it)
 {

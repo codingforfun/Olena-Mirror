@@ -150,6 +150,12 @@ namespace oln {
       }
 
       /*!
+      ** \brief Constructor
+      */
+      iter3d() : super_type(), nslices_(0), nrows_(0), ncols_(0)
+      {}
+
+      /*!
       ** \brief Construct an iterator (3d) on an image (3d).
       ** \arg size The size of the image to iterate.
       ** \pre size.ncols() > 0.

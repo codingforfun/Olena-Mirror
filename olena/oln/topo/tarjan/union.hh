@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,12 +35,19 @@
 namespace oln {
 
   namespace topo {
-
+    /// Namespace Tarjan
     namespace tarjan {
 
       struct empty_class
       {};
 
+      /*! Tarjan set.
+      **
+      ** \attention FIXME: a similar class is defined in
+      ** oln/morpho/attribute_union_find.hh (oln::morpho::tarjan::tarjan_set).
+      ** The one in morpho is more general. I think that this class should
+      ** be removed.
+      */
       template< class I, class aux_data_type>
       struct tarjan_set
       {

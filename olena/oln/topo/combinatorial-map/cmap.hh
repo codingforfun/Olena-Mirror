@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,16 +37,27 @@
 # include <algorithm>
 # include <iterator>
 
+/*! \file cmap.hh
+**
+** \attention FIXME: There is some problems in the directory topo/combinatorial-map/,
+** such as non static functions, or the redefinition of the class any.\n
+** FIXME: The documentation is not good enough.\n
+** FIXME: Real test are missing.
+** FIXME: Some part of this file are inside "#if 0" comments.
+*/
+
 namespace oln {
 
   namespace topo {
-
+    /// Namespace for combinatorial map.
     namespace combinatorial_map {
 
-      // REF: Braquelaire, J. P. and Brun, L. Image Segmentation with
-      // Topological Maps and Inter-pixel Representation}, Journal of
-      // Visual Communication and Image representation, 1998, vol. 9
-
+      /*! Combinatorial map.
+      **
+      ** \ref Braquelaire, J. P. and Brun, L. Image Segmentation with
+      ** Topological Maps and Inter-pixel Representation}, Journal of
+      ** Visual Communication and Image representation, 1998, vol. 9
+      */
       template <class I>
       class cmap
       {
@@ -135,10 +146,7 @@ namespace oln {
 
 # endif
 
-	/*------------------.
-	| merging algorithm |
-	`------------------*/
-
+	/// Merging algorithm.
 	void
 	merge(const unsigned l1, const unsigned l2)
 	{
@@ -167,10 +175,7 @@ namespace oln {
 	  inter.clear();
 	}
 
-	/*------.
-	| print |
-	`------*/
-
+	/// Print
 	std::ostream&
 	print(std::ostream & ostr) const
 	{
@@ -185,10 +190,7 @@ namespace oln {
 
       private:
 
-	/*---------------------------.
-	| building combinatorial map |
-	`---------------------------*/
-
+	/// Building combinatorial map.
 	void
 	build_zeta_(const inter_pixel::interpixel<I> & ip)
 	{
@@ -272,10 +274,8 @@ namespace oln {
 	    }
 	}
 
-	/*---------------------------.
-	| Internal methods for merge |
-	`---------------------------*/
 
+	///Internal methods for merge
 	bool
 	make_inter1_(const unsigned l1,
 		     const unsigned l2,
