@@ -1,3 +1,16 @@
+2003-07-28  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/arith/runtests, tests/core/runtests: Don't check temporary
+	files.
+
+2003-07-28  David Lesage  <david@lrde.epita.fr>
+
+	* oln/core/winiter.hh: Fix bugs.
+
+	* oln/core/abstract/struct_elt.hh: Add add(dp) member function. 
+
+	* oln/core/abstract/window.hh: Rename add(dp) member function.
+
 2003-07-28  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/abstract/point.hh: Implement point_ref.
