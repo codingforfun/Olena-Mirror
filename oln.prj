@@ -1,19 +1,12 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 15)
-(Parent-Version oln 0_5 14)
-(Version-Log "2002-08-05  Alexandre Duret-Lutz  <duret_g@epita.fr>
-
-	* doc/oln-ref.tex (\\lstset): Set basicstyle=\\ttfamily.
-	(\\code): Redefine using \\lstinline.
-	(lstlisting): Define as `verbatim' for HeVeA.
-	* doc/ref-type.tex: Replace all uses of \\lstinline by \\code.
-
-")
+(Project-Version oln 0_5 16)
+(Parent-Version oln 0_5 15)
+(Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Mon, 05 Aug 2002 15:37:30 +0200")
-(Checkin-Login duret_g)
+(Checkin-Time "Wed, 21 Aug 2002 13:22:38 +0200")
+(Checkin-Login burrus_n)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
 ;; diff-ignore Makefile\.in$
@@ -80,36 +73,36 @@
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.17 640))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.27 600))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.28 600))
   (configure.ac (oln/3_configure. 1.18 600))
   (configure (oln/e/7_configure 1.22 700))
   (README (oln/1_README 1.4 600))
   (ISSUES (oln/d/47_ISSUES 1.3 600))
   (Makefile.am (oln/2_Makefile.a 1.10 600))
-  (Makefile.in (oln/e/9_Makefile.i 1.23 644))
+  (Makefile.in (oln/e/9_Makefile.i 1.23 640))
   (NEWS (oln/0_NEWS 1.7 600))
 
   (demo/image.cc (oln/d/46_image.cc 1.2 600))
   (demo/Makefile.am (oln/d/44_Makefile.a 1.4 600))
-  (demo/Makefile.in (oln/e/16_Makefile.i 1.16 644))
+  (demo/Makefile.in (oln/e/16_Makefile.i 1.16 640))
   (demo/morpholena.cc (oln/d/43_morpholena 1.4 600))
   (demo/test-reconstruction.cc (oln/e/22_test-recon 1.4 600))
   (demo/tour.cc (oln/d/45_tour.cc 1.3 600))
 
 
-  (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.8 644))
+  (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.8 640))
   (doc/ChangeLog (oln/e/1_ChangeLog 1.19 600))
   (doc/configure.ac (oln/e/2_configure. 1.5 600))
   (doc/configure (oln/e/3_configure 1.9 700))
   (doc/doc/bin () :directory)
   (doc/doc/html () :directory)
   (doc/doc/Makefile.am (oln/d/51_Makefile.a 1.11 600))
-  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.14 644))
+  (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.14 640))
   (doc/doc/oln-ref.tex (oln/f/14_oln-ref.te 1.3 600))
   (doc/img/lena256.pgm (oln/e/21_lena256.pg 1.1 600) :no-keywords)
   (doc/img/object.pbm (oln/d/49_object.pbm 1.1 600) :no-keywords)
   (doc/Makefile.am (oln/e/0_Makefile.a 1.1 600))
-  (doc/Makefile.in (oln/e/5_Makefile.i 1.9 644))
+  (doc/Makefile.in (oln/e/5_Makefile.i 1.9 640))
   (doc/tpl/processing.tpl (oln/d/48_processing 1.9 600))
 
   (img/lena128.pgm (oln/e/23_lena128.pg 1.1 600) :no-keywords)
@@ -122,7 +115,7 @@
   (oln/basics2d.hh (oln/b/7_basics2d.h 1.1 600))
   (oln/basics3d.hh (oln/28_basics3d.h 1.1 600))
   (oln/basics.hh (oln/d/42_basics.hh 1.5 600))
-  (oln/config/config.hin (oln/f/10_config.hin 1.6 644))
+  (oln/config/config.hin (oln/f/10_config.hin 1.6 640))
   (oln/config/README (oln/f/9_README 1.1 600))
   (oln/config/system.hh (oln/7_system.hh 1.5 600))
   (oln/convert/basics.hh (oln/23_basics.hh 1.3 600))
@@ -255,18 +248,18 @@
   (oln/level/lut.hh (oln/29_lut.hh 1.6 600))
   (oln/level/threshold.hh (oln/f/15_threshold. 1.3 600))
   (oln/Makefile.am (oln/27_Makefile.a 1.18 600))
-  (oln/Makefile.in (oln/e/17_Makefile.i 1.24 644))
+  (oln/Makefile.in (oln/e/17_Makefile.i 1.24 640))
   (oln/math/macros.hh (oln/b/21_macros.hh 1.3 600))
-  (oln/meta/array1d.hh (oln/f/23_array1d.hh 1.2 644))
-  (oln/meta/array1d.hxx (oln/f/22_array1d.hx 1.2 644))
-  (oln/meta/array2d.hh (oln/f/21_array2d.hh 1.2 644))
-  (oln/meta/array2d.hxx (oln/f/20_array2d.hx 1.2 644))
-  (oln/meta/array3d.hh (oln/f/19_array3d.hh 1.3 644))
-  (oln/meta/array3d.hxx (oln/f/18_array3d.hx 1.3 644))
+  (oln/meta/array1d.hh (oln/f/23_array1d.hh 1.2 640))
+  (oln/meta/array1d.hxx (oln/f/22_array1d.hx 1.2 640))
+  (oln/meta/array2d.hh (oln/f/21_array2d.hh 1.2 640))
+  (oln/meta/array2d.hxx (oln/f/20_array2d.hx 1.2 640))
+  (oln/meta/array3d.hh (oln/f/19_array3d.hh 1.3 640))
+  (oln/meta/array3d.hxx (oln/f/18_array3d.hx 1.3 640))
   ; (oln/meta/array.hh ())
   (oln/meta/array.hh (oln/f/36_array.hh 1.2 600))
   ; (oln/meta/array.hxx ())
-  (oln/meta/arraynd.hh (oln/f/35_arraynd.hh 1.1 644))
+  (oln/meta/arraynd.hh (oln/f/35_arraynd.hh 1.1 640))
   (oln/meta/basics.hh (oln/c/4_basics.hh 1.5 600))
   (oln/meta/cmp.hh (oln/c/3_cmp.hh 1.3 600))
   (oln/meta/control.hh (oln/c/2_control.hh 1.4 600))
@@ -332,18 +325,18 @@
   (oln/value/yiq.hh (oln/b/29_yiq.hh 1.2 600))
   (oln/value/yuv.hh (oln/b/27_yuv.hh 1.2 600))
   (tests/array () :directory)
-  (tests/array/gen_test.cc (oln/f/34_gen_test.c 1.4 644))
-  (tests/array/gen_test_utils/errors.cc (oln/f/33_errors.cc 1.1 644))
-  (tests/array/gen_test_utils/errors.hh (oln/f/32_errors.hh 1.1 644))
+  (tests/array/gen_test.cc (oln/f/34_gen_test.c 1.4 640))
+  (tests/array/gen_test_utils/errors.cc (oln/f/33_errors.cc 1.1 640))
+  (tests/array/gen_test_utils/errors.hh (oln/f/32_errors.hh 1.1 640))
   ; (tests/array/gen_test_utils/Makefile.am ())
   ; (tests/array/gen_test_utils/Makefile.in ())
-  (tests/array/gen_test_utils/postlude (oln/f/31_postlude 1.1 644))
-  (tests/array/gen_test_utils/prelude (oln/f/30_prelude 1.2 644))
-  (tests/array/Makefile.am (oln/f/27_Makefile.a 1.2 644))
-  (tests/array/Makefile.in (oln/f/37_Makefile.i 1.5 644))
-  (tests/array/test_array1d.cc (oln/f/26_test_array 1.2 644))
-  (tests/array/test_array2d.cc (oln/f/25_test_array 1.2 644))
-  (tests/array/test_array3d.cc (oln/f/24_test_array 1.2 644))
+  (tests/array/gen_test_utils/postlude (oln/f/31_postlude 1.1 640))
+  (tests/array/gen_test_utils/prelude (oln/f/30_prelude 1.2 640))
+  (tests/array/Makefile.am (oln/f/27_Makefile.a 1.2 640))
+  (tests/array/Makefile.in (oln/f/37_Makefile.i 1.5 640))
+  (tests/array/test_array1d.cc (oln/f/26_test_array 1.2 640))
+  (tests/array/test_array2d.cc (oln/f/25_test_array 1.2 640))
+  (tests/array/test_array3d.cc (oln/f/24_test_array 1.2 640))
   (tests/ChangeLog (oln/e/30_ChangeLog 1.17 600))
   (tests/check/check.hh (oln/e/40_check.hh 1.2 600))
   (tests/check/data.cc (oln/f/5_data.cc 1.2 600))
@@ -352,7 +345,7 @@
   (tests/check/Makefile.am (oln/e/44_Makefile.a 1.3 600))
   (tests/check/Makefile.check (oln/e/37_Makefile.c 1.3 600))
   (tests/check/Makefile.flags (oln/e/36_Makefile.f 1.3 600))
-  (tests/check/Makefile.in (oln/e/39_Makefile.i 1.14 644))
+  (tests/check/Makefile.in (oln/e/39_Makefile.i 1.14 640))
   (tests/check/srcdir.cc (oln/e/38_srcdir.cc 1.4 600))
   (tests/check/srcdir.hh (oln/e/35_srcdir.hh 1.3 600))
   (tests/check/verbose.cc (oln/e/41_verbose.cc 1.2 600))
@@ -360,55 +353,55 @@
   (tests/convert/convcomp.cc (oln/f/3_convcomp.c 1.4 600))
   (tests/convert/convcomp.hh (oln/f/1_convcomp.h 1.2 600))
   (tests/convert/Makefile.am (oln/f/0_Makefile.a 1.2 600))
-  (tests/convert/Makefile.in (oln/f/2_Makefile.i 1.13 644))
+  (tests/convert/Makefile.in (oln/f/2_Makefile.i 1.13 640))
 
 
   (tests/convol () :directory)
-  (tests/convol/Makefile.am (oln/f/38_Makefile.a 1.3 644))
-  (tests/convol/Makefile.in (oln/f/44_Makefile.i 1.4 644))
+  (tests/convol/Makefile.am (oln/f/38_Makefile.a 1.3 640))
+  (tests/convol/Makefile.in (oln/f/44_Makefile.i 1.4 640))
   ; (tests/convol/slow.cc ())
-  (tests/convol/slow_sum_2d_1.cc (oln/f/41_slow_sum_2 1.2 644))
-  (tests/convol/slow_sum_2d_2.cc (oln/f/40_slow_sum_2 1.2 644))
+  (tests/convol/slow_sum_2d_1.cc (oln/f/41_slow_sum_2 1.2 640))
+  (tests/convol/slow_sum_2d_2.cc (oln/f/40_slow_sum_2 1.2 640))
   (tests/convol/sobel_gradient.cc (oln/f/45_sobel_grad 1.3 600))
-  (tests/convol/sum_on_random.pgm (oln/f/42_sum_on_ran 1.1 644))
+  (tests/convol/sum_on_random.pgm (oln/f/42_sum_on_ran 1.1 640))
 
 
   (tests/data/lena.ppm (oln/e/51_lena.ppm 1.1 600) :no-keywords)
-  (tests/data/random.pgm (oln/f/43_random.pgm 1.1 644) :no-keywords)
+  (tests/data/random.pgm (oln/f/43_random.pgm 1.1 640) :no-keywords)
   (tests/io/2d.cc (oln/e/47_2d.cc 1.4 600))
   (tests/io/loadsave.hh (oln/e/48_loadsave.h 1.3 600))
   (tests/io/Makefile.am (oln/e/49_Makefile.a 1.4 600))
-  (tests/io/Makefile.in (oln/e/50_Makefile.i 1.14 644))
+  (tests/io/Makefile.in (oln/e/50_Makefile.i 1.14 640))
   (tests/Makefile.am (oln/e/45_Makefile.a 1.7 600))
-  (tests/Makefile.in (oln/e/46_Makefile.i 1.15 644))
+  (tests/Makefile.in (oln/e/46_Makefile.i 1.15 640))
   (tests/morpho/edoc.cc (oln/f/13_edoc.cc 1.2 600))
   (tests/morpho/extrkiller.cc (oln/e/31_extrkiller 1.4 600))
   (tests/morpho/Makefile.am (oln/e/32_Makefile.a 1.3 600))
-  (tests/morpho/Makefile.in (oln/e/33_Makefile.i 1.15 644))
+  (tests/morpho/Makefile.in (oln/e/33_Makefile.i 1.15 640))
   (tests/morpho/reconstruction.cc (oln/e/34_reconstruc 1.5 600))
   (tests/README (oln/f/4_README 1.2 600))
   (THANKS (oln/4_THANKS 1.2 600))
   (tools/ChangeLog (oln/e/18_ChangeLog 1.1 600))
-  (tools/depcomp (oln/e/12_depcomp 1.6 755))
+  (tools/depcomp (oln/e/12_depcomp 1.6 750))
   (tools () :directory)
-  (tools/install-sh (oln/e/15_install-sh 1.4 755))
+  (tools/install-sh (oln/e/15_install-sh 1.4 750))
   (tools/mdate-sh (oln/e/11_mdate-sh 1.1 700))
-  (tools/missing (oln/e/13_missing 1.5 755))
-  (tools/mkinstalldirs (oln/e/14_mkinstalld 1.2 755) :no-keywords)
+  (tools/missing (oln/e/13_missing 1.5 750))
+  (tools/mkinstalldirs (oln/e/14_mkinstalld 1.2 750) :no-keywords)
   (tools/scandefs.pl (oln/f/7_scandefs.p 1.1 700))
   (tools/texinfo.tex (oln/e/10_texinfo.te 1.2 600))
 
 ;; Files added by populate at Thu, 18 Jul 2002 20:26:30 +0200,
 ;; to version 0_4.26(w), by adl:
 
-  (tests/sanity/includes.test (oln/f/46_includes.t 1.2 755))
-  (tests/sanity/Makefile.in (oln/f/47_Makefile.i 1.1 644))
-  (tests/sanity/Makefile.am (oln/f/48_Makefile.a 1.1 644))
+  (tests/sanity/includes.test (oln/f/46_includes.t 1.2 750))
+  (tests/sanity/Makefile.in (oln/f/47_Makefile.i 1.1 640))
+  (tests/sanity/Makefile.am (oln/f/48_Makefile.a 1.1 640))
 
 ;; Files added by populate at Thu, 18 Jul 2002 20:30:39 +0200,
 ;; to version 0_4.26(w), by duret_g:
 
-  (tests/defs.in (oln/f/49_defs.in 1.1 644))
+  (tests/defs.in (oln/f/49_defs.in 1.1 640))
 
 ;; Files added by populate at Thu, 18 Jul 2002 21:13:31 +0200,
 ;; to version 0_4.28(w), by astrid:
@@ -450,18 +443,18 @@
   (oln/types/all.hh (oln/g/32_all.hh 1.1 640))
 
 
-  (utilities/mosaic.cc (oln/g/0_mosaic.cc 1.1 644))
-  (utilities/Makefile.in (oln/g/1_Makefile.i 1.1 644))
-  (utilities/Makefile.am (oln/g/2_Makefile.a 1.1 644))
+  (utilities/mosaic.cc (oln/g/0_mosaic.cc 1.1 640))
+  (utilities/Makefile.in (oln/g/1_Makefile.i 1.1 640))
+  (utilities/Makefile.am (oln/g/2_Makefile.a 1.1 640))
 ;; Files added by populate at Mon, 29 Jul 2002 16:23:03 +0200,
 ;; to version 0_5.4(w), by burrus_n:
 
-  (oln/meta/type.hh (oln/g/33_type.hh 1.2 600))
+  (oln/meta/type.hh (oln/g/33_type.hh 1.3 600))
 
 ;; Files added by populate at Thu, 01 Aug 2002 15:28:28 +0200,
 ;; to version 0_5.11(w), by adl:
 
-  (doc/doc/ref-types.tex (oln/g/34_ref-types. 1.2 644))
+  (doc/doc/ref-types.tex (oln/g/34_ref-types. 1.2 640))
 )
 (Merge-Parents)
 (New-Merge-Parents)
