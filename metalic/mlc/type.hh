@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -239,10 +239,10 @@ namespace mlc
 
 // Return the exact virtual type of two given types (inheritance determination).
 
-# define mlc_exact_vt_type(T, Exact)		typename mlc::exact_vt<T, Exact>::ret
-# define mlc_2_exact_vt_type(self, T, Exact)	typename mlc::exact_vt<self<T, Exact>, Exact>::ret
-# define mlc_exact_vt_type_(T, Exact)		mlc::exact_vt<T, Exact>::ret
-# define mlc_2_exact_vt_type_(self, T, Exact)	mlc::exact_vt<self<T, Exact>, Exact>::ret
+# define mlc_exact_vt_type(T, Exact)		typename mlc::exact_vt<T, Exact >::ret
+# define mlc_2_exact_vt_type(self, T, Exact)	typename mlc::exact_vt<self<T, Exact >, Exact >::ret
+# define mlc_exact_vt_type_(T, Exact)		mlc::exact_vt<T, Exact >::ret
+# define mlc_2_exact_vt_type_(self, T, Exact)	mlc::exact_vt<self<T, Exact >, Exact >::ret
 
 namespace mlc
 {

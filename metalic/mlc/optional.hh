@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,7 +33,7 @@
 
 # if 0
 
-namespace mlc 
+namespace mlc
 {
 
   // This class is used as a static tag for specialization of certain
@@ -54,40 +54,40 @@ namespace mlc
   // Optional is meant to enable optional static argument with variant
   // types. The 'Decl' argument must have a free template argument to
   // permit the substitution of the class 'none' to it when no
-  // argument is given. 
-  // example: 
-  // 
+  // argument is given.
+  // example:
+  //
   // template <class U, class T>
   // void foo(U arg1, Optional(T& arg2)) // here T is free.
-  // {} 
+  // {}
   //
   // Then, you can write:
   // foo(1);         // T = none
   // foo(1, 2);      // T = int
   // foo(1, "bar");  // T = char *
-# define Optional(T, v)  ((Option<T> v) = none())
+# define Optional(T, v)  ((Option<T > v) = none())
 
   // Depending on the presence of optional argument, we have different
   // specialization of the algorithm. Here are several helper classes
   // and macros.
- 
+
   // Do nothing in the general case.
   template <class Behaviour, class OptionalArgument>
   struct optional_behavior
   {
     static inline void do_it()
     {}
-    
+
     template <class T>
-    static inline void do_it(T) 
+    static inline void do_it(T)
     {}
 
     template <class T, class U>
-    static inline void do_it(T, U) 
+    static inline void do_it(T, U)
     {}
 
     template <class T, class U, class V>
-    static inline void do_it(T, U, V) 
+    static inline void do_it(T, U, V)
     {}
   };
 

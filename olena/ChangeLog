@@ -1,3 +1,14 @@
+2004-04-13  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* oln/arith/internal/opdecls.hh: Add white space after variables of
+	macros used as template parameters (ICC error).
+	* oln/morpho/watershed.hxx: Likewise.
+	* oln/topo/dmap.hxx: Likewise.
+	* oln/transforms/dwt.hh: Likewise.
+	* oln/core/abstract/image.hh: Likewise.
+	* oln/morpho/attributes.hh: Likewise.
+	* oln/topo/tarjan/tarjan.hh: Likewise.
+
 2004-04-13  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* tests/convol/tests/nagao: Disable test.

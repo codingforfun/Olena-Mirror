@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -47,7 +47,7 @@
 
 # define OPTRAITS_BUILTIN_INT_U(Name, Max)			\
   template <>							\
-  struct optraits<Name> : public optraits<uint_value<Name> >	\
+  struct optraits<Name > : public optraits<uint_value<Name > >	\
   {								\
     static Name max() { return Max; }				\
     static std::string name() { return std::string(#Name); }	\
@@ -55,7 +55,7 @@
 
 # define OPTRAITS_BUILTIN_INT_S(Name, Min, Max)			\
   template <>							\
-  struct optraits<Name> : public optraits<sint_value<Name> >	\
+  struct optraits<Name > : public optraits<sint_value<Name > >	\
   {								\
     static Name min() { return Min; }				\
     static Name max() { return Max; }				\
@@ -71,16 +71,16 @@ namespace ntg {
       called when there is an operator_xxx_traits defined, else
       builtin are converted into oln type.
     */
-    
+
     OPTRAITS_BUILTIN_INT_U(unsigned long,  ULONG_MAX);
     OPTRAITS_BUILTIN_INT_U(unsigned int,   UINT_MAX);
     OPTRAITS_BUILTIN_INT_U(unsigned short, USHRT_MAX);
     OPTRAITS_BUILTIN_INT_U(unsigned char,  UCHAR_MAX);
-    
+
     OPTRAITS_BUILTIN_INT_S(signed long,  LONG_MIN, LONG_MAX);
     OPTRAITS_BUILTIN_INT_S(signed int,   INT_MIN,  INT_MAX);
     OPTRAITS_BUILTIN_INT_S(signed short, SHRT_MIN, SHRT_MAX);
-    // char is not the same as signed char. 
+    // char is not the same as signed char.
     OPTRAITS_BUILTIN_INT_S(signed char,  CHAR_MIN, CHAR_MAX);
     // FIXME: whether char is signed or not is implementation defined.
     OPTRAITS_BUILTIN_INT_S(char,         CHAR_MIN, CHAR_MAX);

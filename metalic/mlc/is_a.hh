@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,24 +32,25 @@
 # include <mlc/bool.hh>
 
 // private macro so do _not_ use it
-# define is_a__check_result_ \
-sizeof(helper<T,U>::check( (T*) helper<T,U>::makeT() )) == sizeof(mlc::internal::yes_)
+# define is_a__check_result_					\
+sizeof(helper<T ,U >::check( (T *) helper<T,U >::makeT() ))	\
+== sizeof(mlc::internal::yes_)
 
 
-namespace mlc 
+namespace mlc
 {
 
-  namespace internal 
+  namespace internal
   {
 
     //
     //  wrap
     //
-    //  FIXME: This type is a workaround for g++-2.95 problem with implicit 
-    //  typename in <foo<T>::ret::dim>, 
+    //  FIXME: This type is a workaround for g++-2.95 problem with implicit
+    //  typename in <foo<T>::ret::dim>,
     //  write <wrap<typename foo<T>::ret>::dim instead.
     //
-    
+
     template <class T> struct wrap : public T {};
 
   } // internal
@@ -70,7 +71,7 @@ namespace mlc
       //      template_l_unsigned_class_g_class_    = 4
       // ...
     };
-  
+
     template<unsigned id>
     struct desc
     { char dummy[id]; };
@@ -92,7 +93,7 @@ namespace mlc
 
   namespace internal
   {
-    
+
     typedef char yes_;
     struct no_ { char dummy[2]; };
 
@@ -104,8 +105,8 @@ namespace mlc
     struct is_a_;
 
     // _class_
-    
-  
+
+
     template<>
     struct is_a_< form::class_ >
     {
@@ -118,14 +119,14 @@ namespace mlc
 	static no_  check(...);
 	static T* makeT();
       };
-      
+
       template<class T, class U>
       struct check
 	: public mlc::returns_bool_<( is_a__check_result_ )>
       {
       };
     };
-    
+
     // template_l_class_g_class_
 
     template<>
@@ -176,17 +177,17 @@ namespace mlc
 } // end of mlc
 
 // private macros: do _not_ use them
-# define is_a__2nd_is_meta(T,U) mlc::internal::is_a_< id_of_typeform(U) >::check<T, U>
+# define is_a__2nd_is_meta(T,U) mlc::internal::is_a_< id_of_typeform(U) >::check<T, U >
 
 // client macros
 
-# define id_of_typeform(T) sizeof(mlc::form::get<T>())
+# define id_of_typeform(T) sizeof(mlc::form::get<T >())
 
 template <class T>
 struct id_ { typedef T ret; };
 
 // FIXME: can we get rid of mlc::wrap ?
-# define mlc_is_a(T, U) mlc::internal::wrap<typename mlc::internal::is_a_< id_of_typeform(U) >::check<T, U> >
-# define mlc_is_a_(T, U) mlc::internal::wrap<mlc::internal::is_a_< id_of_typeform(U) >::check<T, U> >
+# define mlc_is_a(T, U) mlc::internal::wrap<typename mlc::internal::is_a_< id_of_typeform(U) >::check<T, U > >
+# define mlc_is_a_(T, U) mlc::internal::wrap<mlc::internal::is_a_< id_of_typeform(U) >::check<T, U > >
 
 #endif // ndef METALIC_IS_A_HH

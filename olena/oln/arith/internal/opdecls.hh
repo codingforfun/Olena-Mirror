@@ -69,7 +69,7 @@
 									\
     template <class T1, class T2 = T1>					\
     struct default_f_##OPNAME 						\
-      : public f_##OPNAME< T1, T2, ntg_return_type(OPNAME, T1, T2) >	\
+      : public f_##OPNAME< T1, T2, ntg_return_type(OPNAME, T1, T2)>	\
     {}  /* no ; */
 
 
@@ -136,7 +136,7 @@
 ** \arg TYPE Type that can be used.
 */
 # define oln_arith_declare_binfixedtypecst_functor_(OPNAME, OPCODE_CST, TYPE) \
-    struct f_##OPNAME##_cst: std::unary_function<const TYPE, TYPE>	     \
+    struct f_##OPNAME##_cst: std::unary_function<const TYPE, TYPE >	     \
     {									     \
       f_##OPNAME##_cst(TYPE cst) : cst_(cst) {}				     \
 									     \
@@ -278,7 +278,7 @@
     typename mute<I1, typename f_##OPNAME::result_type>::ret				\
     OPNAME(const abstract::image<I1>& input1, const abstract::image<I2>& input2)	\
     {											\
-      return apply2<f_##OPNAME>(input1, input2);					\
+      return apply2<f_##OPNAME >(input1, input2);					\
     }											\
 											\
     /* Same as above, plus conversion.  */						\
@@ -342,7 +342,7 @@
     typename mute<I, typename f_##OPNAME::result_type>::ret					\
     OPNAME(const abstract::image<I>& input1)							\
     {												\
-      return apply<f_##OPNAME>(input1);								\
+      return apply<f_##OPNAME >(input1);							\
     }												\
 												\
     /* Same as above, plus conversion.  */							\
@@ -386,7 +386,7 @@
       typename f_##OPNAME<oln_value_type(I1), oln_value_type(I1)>::result_type>::ret	\
     OPNAME(const abstract::image<I1>& input1, const abstract::image<I2>& input2)	\
     {											\
-      return apply2<f_##OPNAME>(input1, input2);					\
+      return apply2<f_##OPNAME >(input1, input2);					\
     }											\
 											\
     /* Same as above, plus conversion.  */						\

@@ -33,13 +33,13 @@
 # include <oln/morpho/environments.hh>
 
 // attribute dedicated macros
-# define attr_lambda_type(T)	typename oln::morpho::attr::attr_traits<T>::lambda_type
-# define attr_env_type(T)	typename oln::morpho::attr::attr_traits<T>::env_type
-# define attr_value_type(T)	typename oln::morpho::attr::attr_traits<T>::value_type
+# define attr_lambda_type(T)	typename oln::morpho::attr::attr_traits< T >::lambda_type
+# define attr_env_type(T)	typename oln::morpho::attr::attr_traits< T >::env_type
+# define attr_value_type(T)	typename oln::morpho::attr::attr_traits< T >::value_type
 
-# define attr_lambda_type_(T)	 oln::morpho::attr::attr_traits<T>::lambda_type
-# define attr_env_type_(T)	 oln::morpho::attr::attr_traits<T>::env_type
-# define attr_value_type_(T)	 oln::morpho::attr::attr_traits<T>::value_type
+# define attr_lambda_type_(T)	 oln::morpho::attr::attr_traits< T >::lambda_type
+# define attr_env_type_(T)	 oln::morpho::attr::attr_traits< T >::env_type
+# define attr_value_type_(T)	 oln::morpho::attr::attr_traits< T >::value_type
 
 
 # define attr_type_decl(self_type) \
