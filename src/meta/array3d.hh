@@ -172,36 +172,24 @@ namespace oln {
 
       T operator()(int plane, int row, int col) const		// Relative position
       {
-	enum {
-	  center_plane = Info::center / (Info::nrows * Info::ncols),
-	  center_row = (Info::center % (Info::nrows * Info::ncols)) / Info::ncols,
-	  center_col = (Info::center % (Info::nrows * Info::ncols)) % Info::ncols
-	};
-	
-	precondition(-center_plane <= plane);
-	precondition(plane <= Info::nplanes - center_plane - 1);
-	precondition(-center_row <= row);
-	precondition(row <= Info::nrows - center_row - 1);
-	precondition(-center_col <= col);
-	precondition(col <= Info::ncols - center_col - 1);
+	precondition(-_Info::center_plane <= plane);
+	precondition(plane <= Info::nplanes - _Info::center_plane - 1);
+	precondition(-_Info::center_row <= row);
+	precondition(row <= _Info::nrows - _Info::center_row - 1);
+	precondition(-_Info::center_col <= col);
+	precondition(col <= _Info::ncols - _Info::center_col - 1);
 
 	return *(_buffer + _Info::center + (plane * Info::nrows * Info::ncols) + (row * Info::ncols) + col);
       }
 
       T& operator()(int plane, int row, int col)
       {
-	enum {
-	  center_plane = Info::center / (Info::nrows * Info::ncols),
-	  center_row = (Info::center % (Info::nrows * Info::ncols)) / Info::ncols,
-	  center_col = (Info::center % (Info::nrows * Info::ncols)) % Info::ncols
-	};
-
-	precondition(-center_plane <= plane);
-	precondition(plane <= Info::nplanes - center_plane - 1);
-	precondition(-center_row <= row);
-	precondition(row <= Info::nrows - center_row - 1);
-	precondition(-center_col <= col);
-	precondition(col <= Info::ncols - center_col - 1);
+	precondition(-_Info::center_plane <= plane);
+	precondition(plane <= Info::nplanes - _Info::center_plane - 1);
+	precondition(-_Info::center_row <= row);
+	precondition(row <= _Info::nrows - _Info::center_row - 1);
+	precondition(-_Info::center_col <= col);
+	precondition(col <= _Info::ncols - _Info::center_col - 1);
 	
 	return *(_buffer + _Info::center + (plane * Info::nrows * Info::ncols) + (row * Info::ncols) + col);
       }
@@ -215,22 +203,16 @@ namespace oln {
 	return *(_buffer + i);
       }
 
-      template<int plane, int nrow, int ncol>
+      template<int nplane, int nrow, int ncol>
       T _get() const {
-	enum {
-	  center_plane = Info::center / (Info::nrows * Info::ncols),
-	  center_row = (Info::center % (Info::nrows * Info::ncols)) / Info::ncols,
-	  center_col = (Info::center % (Info::nrows * Info::ncols)) % Info::ncols
-	};
+	meta::lesseq< -_Info::center_plane, nplane >::ensure();
+	meta::lesseq< nplane, Info::nplanes - _Info::center_plane - 1 >::ensure();
+	meta::lesseq< -_Info::center_row, nrow >::ensure();
+	meta::lesseq< nrow, _Info::nrows - _Info::center_row - 1 >::ensure();
+	meta::lesseq< -_Info::center_col, ncol >::ensure();
+	meta::lesseq< ncol, _Info::ncols - _Info::center_col - 1 >::ensure();
 
-	meta::lesseq< -center_plane, nplane >::ensure();
-	meta::lesseq< nplane, Info::nplanes - center_plane - 1 >::ensure();
-	meta::lesseq< -center_row, nrow >::ensure();
-	meta::lesseq< nrow, Info::nrows - center_row - 1 >::ensure();
-	meta::lesseq< -center_col, ncol >::ensure();
-	meta::lesseq< ncol, Info::ncols - center_col - 1 >::ensure();
-
-	return *(_buffer + _Info::center + (plane * Info::nrows * Info::ncols) + (row * Info::ncols) + col);
+	return *(_buffer + _Info::center + (nplane * Info::nrows * Info::ncols) + (row * Info::ncols) + col);
       }
 
       

@@ -19,5 +19,5 @@ srcdir_setup ()
 // Returns `-I${srcdir}ARG'.
 std::string Isrcdir (const std::string& arg)
 {
-  return string("-I") + srcdir + arg;
+  return std::string("-I") + srcdir + arg;
 }
