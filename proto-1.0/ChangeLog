@@ -1,3 +1,7 @@
+2005-03-14  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* configure.ac: Add i/o test suite.
+
 2005-03-09  Simon Odou  <simon@lrde.epita.fr>
 
 	* configure.ac: Add test suite `main' for Integre.
