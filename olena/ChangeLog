@@ -1,3 +1,20 @@
+2004-03-15  Damien Thivolle  <damien@lrde.epita.fr>
+	* olena/oln/core/apply.hh: Correct comments.
+	* olena/oln/core/compose.hh: Correct comments.
+	* olena/oln/io/file.hh: Add comments.
+	* olena/oln/io/gz.hh: Likewise.
+	* olena/oln/io/gz_stream.hh: Likewise.
+	* olena/oln/io/pnm_read_3d.hh: Likewise.
+	* olena/oln/io/pnm_read.hh: Likewise.
+	* olena/oln/io/pnm_write_3d.hh: Likewise.
+	* olena/oln/io/pnm_write.hh: Likewise.
+	* olena/oln/io/pnm_common.hh: Likewise.
+	* olena/oln/io/stream_wrapper.hh: Likewise.
+	* olena/oln/io/pnm_read_data.hh: Likewise. 
+	* olena/oln/io/pnm_write_data.hh: Likewise.
+	* olena/oln/io/pnm_read_2d.hh: Likewise.
+	* olena/oln/io/pnm_write_2d.hh: Likewise.
+	
 2004-03-15  Simon Odou  <simon@lrde.epita.fr>
 	* olena/oln/io/base.hh: Add comments.
 	* olena/oln/io/readable.hh: Likewise.

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,6 +43,12 @@ namespace oln {
       | pnm_read_header2d |
       `------------------*/
 
+      /*! \brief Return true if the headers from \a s are valid,
+      ** false otherwise.
+      **
+      ** \todo FIXME: should be in a .cc file ?
+      */
+
       // FIXME: should be in a .cc file ?
       static bool 
       pnm_read_header2d(std::istream& s, char type, pnm2d_info& info)
@@ -80,6 +86,12 @@ namespace oln {
       | pnm_reader (Binary) |
       `--------------------*/
 
+      
+      /*! \class pnm_reader<R, 2, PnmBinary, I>
+      **
+      ** Specialized version for PnmBinary (pbm image format).
+      */
+
       template <reader_id R, class I>
       struct pnm_reader<R, 2, PnmBinary, I>
       {
@@ -100,6 +112,10 @@ namespace oln {
 	  return ext == "pbm";
 	}
 
+	/*! \brief Initialize im and return true if the headers from \a in are valid, 
+	** return false otherwise.
+	*/
+	
 	static bool
 	read(std::istream& in, I& im)
 	{
@@ -118,6 +134,11 @@ namespace oln {
       | pnm_reader (Integer) |
       `---------------------*/
 
+      /*! \class pnm_reader<R, 2, PnmInteger, I>
+      **
+      ** Specialized version for PnmInteger (pgm image format).
+      */
+      
       template <reader_id R, class I>
       struct pnm_reader<R, 2, PnmInteger, I>
       {
@@ -138,6 +159,11 @@ namespace oln {
 	  return ext == "pgm";
 	}
 
+	/*! \brief Initialize \a im and return true if \a in is a valid pgm file stream,
+	** return false otherwise.
+	*/
+
+	
 	static bool
 	read(std::istream& in, I& im)
 	{
@@ -161,6 +187,11 @@ namespace oln {
       | pnm_reader (Vectorial) |
       `-----------------------*/
 
+      /*! \brief class pnm_reader<R, 2, PnmVectorial, I>
+      **
+      ** Specialized version for pnm_reader<R, 2, PnmVectorial, I> (ppm image format).
+      */
+
       template <reader_id R, class I>
       struct pnm_reader<R, 2, PnmVectorial, I>
       {
@@ -181,6 +212,10 @@ namespace oln {
 	  return ext == "ppm";
 	}
 
+	/*! \brief Initialize \a im and return true if \a in is a valid ppm file stream,
+	** return false otherwise.
+	*/
+	
 	static bool
 	read(std::istream& in, I& im)
 	{

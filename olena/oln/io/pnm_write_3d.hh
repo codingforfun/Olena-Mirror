@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -46,9 +46,13 @@ namespace oln {
       | pnm_writer3d (Any) |
       `-------------------*/
 
-      // Only PnmRaw images can store more than one 2d image. The
-      // format is simple: each slice is stored as a bi-dimensional
-      // image.
+      /*! \class pnm_writer<WritePnmRaw, 3, P, I>
+      **
+      ** Specialized version for image 3d.
+      ** Only PnmRaw images can store more than one 2d image. The
+      ** format is simple: each slice is stored as a bi-dimensional
+      ** image.
+      */
 
       template <pnm_type P, class I>
       struct pnm_writer<WritePnmRaw, 3, P, I>
@@ -68,7 +72,9 @@ namespace oln {
 	{ 
 	  return writer_2d::knows_ext(ext);
 	}
-
+	
+	/// Write \a im on \a out, then return true.
+	
 	static bool
 	write(std::ostream& out, const I& im)
 	{

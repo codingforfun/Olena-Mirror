@@ -40,9 +40,36 @@ namespace oln {
   | Unary |
   `------*/
 
-  /*! \brief Standard unary \a apply procedure. Apply function f to each
-  ** element of input.
+  /*! \brief Standard unary \a apply procedure. Apply a function \a f to each
+  ** element of \a input.
+  **
+  ** Sample of code : Threshold the value of the image.
+  **
+  ** \code
+  ** #include <oln/basics2d.hh>
+  ** #include <oln/level/threshold.hh>
+  ** #include <ntg/all.hh>
+  ** using namespace ntg;
+  ** int main()
+  ** {
+  **   oln::image2d<int_u8> in = oln::load(IMG_IN "lena256.pgm");
+  **   int_u8 th	= 127;
+  **   rgb_8 low	= rgb_8(100, 0, 0);
+  **   rgb_8 height	= rgb_8(0, 200, 255);
+  **
+  **   oln::image2d<rgb_8> out
+  **     = apply(oln::level::threshold<int_u8, rgb_8 >(th, low, height),
+  ** 	    in);
+  **   save(out, IMG_OUT "oln_level_threshold.ppm");
+  ** }
+  ** \endcode
+  ** \image html lena256_pgm.png
+  ** \image latex lena256_pgm.png
+  ** =>
+  ** \image html oln_level_threshold.png
+  ** \image latex oln_level_threshold.png
   */
+
   template<class AdaptableUnaryFun, class I> inline
   typename mute<I, typename AdaptableUnaryFun::result_type>::ret
   apply(AdaptableUnaryFun f, const abstract::image<I>& input)
@@ -55,9 +82,9 @@ namespace oln {
   }
 
 
-  /*! \brief Standard unary \a apply procedure. Apply function f to each
-  ** element of input, the function is passed as a type
-  ** and we build it ourself. 
+  /*! \brief Standard unary \a apply procedure. Apply a function \a f to each
+  ** element of \a input, the function is passed as a type
+  ** and is instantiated.
   */
   template<class AdaptableUnaryFun, class I> inline
   typename mute<I, typename AdaptableUnaryFun::result_type>::ret
@@ -67,10 +94,10 @@ namespace oln {
   }
 
 
-  /*! \brief Standard unary \a apply procedure. Apply function f to each
-  ** element of input, the function is passed as a type
-  ** and we build it ourself. For template functions passed as template-id,
-  ** we need to instantiate the function for the type of the abstract::image.
+  /*! \brief Standard unary \a apply procedure. Apply function \a f to each
+  ** element of \a input, the function is passed as a type
+  ** and is instantiated. For template functions passed as template-id,
+  ** one need to instantiate the function for the type of the abstract::image.
   */
   template<template<class> class AdaptableUnaryFun,
 	   class I> inline
@@ -91,8 +118,8 @@ namespace oln {
   ** \todo FIXME: Don't we want to name these functions 'apply()' too? 
   */
   
-  /*! \brief Standard binary \a apply procedure. Apply function f to each
-  ** element of input1 and input2. 
+  /*! \brief Standard binary \a apply procedure. Apply function \a f to each
+  ** element of \a input1 and \a input2. 
   **
   ** \todo FIXME: Don't we want to name these functions 'apply()' too?
   */
@@ -110,9 +137,9 @@ namespace oln {
   }
 
 
-  /*! \brief Standard binary \a apply procedure. Apply function f to each
-  ** element of input1 and input2. The function is passed as a type
-  ** and we build it ourself.
+  /*! \brief Standard binary \a apply procedure. Apply function \a f to each
+  ** element of \a input1 and \a input2. The function is passed as a type
+  ** and is instantiated.
   **
   ** \todo FIXME: Don't we want to name these functions 'apply()' too?
   */
@@ -123,10 +150,10 @@ namespace oln {
     return apply2(AdaptableBinaryFun(), input1, input2);
   }
   
-  /*! \brief Standard binary \a apply procedure. Apply function f to each
-  ** element of input1 and input2. The function is passed as a type
-  ** and we build it ourself. For template functions passed as template-id,
-  ** we need to instantiate the function for the type of the 
+  /*! \brief Standard binary \a apply procedure. Apply function \a f to each
+  ** element of \a input1 and \a input2. The function is passed as a type
+  ** and is instantiated. For template functions passed as template-id,
+  ** one need to instantiate the function for the type of the 
   ** abstract::images.
   **
   ** \todo FIXME: Don't we want to name these functions 'apply()' too?
@@ -143,14 +170,13 @@ namespace oln {
   }
   
   
-  /*! \brief Standard binary \a apply procedure. Apply function f to each
-  ** element of input1 and input2. The function is passed as a type
-  ** and we build it ourself. For template functions passed as template-id,
-  ** we need to instantiate the function for the type of the 
+  /*! \brief Standard binary \a apply procedure. Apply function \a f to each
+  ** element of \a input1 and \a input2. The function is passed as a type
+  ** and is instantiated. For template functions passed as template-id,
+  ** one need to instantiate the function for the type of the 
   ** abstract::images.
   **
   ** \todo FIXME: Don't we want to name these functions 'apply()' too?\n
-  ** FIXME: Workaround for g++-2.95 bug.
   */
   template<template <class> class AdaptableBinaryFun,
            class I> inline
@@ -168,9 +194,9 @@ namespace oln {
   | self unary |
   `-----------*/
 
-  /*! \brief Main apply_self() function. Note we require a UnaryFun only,
-  ** not a AdaptableUnaryFunc, because as we overwrite an abstract::image
-  ** we already know the output type.
+  /*! \brief Main \a apply_self() function. Note only a UnaryFun is required,
+  ** not a AdaptableUnaryFunc, because as an abstract::image is overwritten,
+  ** the output type is already known.
   */
   template<class UnaryFun, class I> inline
   abstract::image<I>& apply_self(UnaryFun f, abstract::image<I>& input)
@@ -181,9 +207,9 @@ namespace oln {
   }
 
 
-  /*! \brief Main apply_self() function. Note we require a UnaryFun only,
-  ** not a AdaptableUnaryFunc, because as we overwrite an abstract::image
-  ** we already know the output type. We instantiate the function ourself.
+  /*! \brief Only a UnaryFun is required,
+  ** not a AdaptableUnaryFunc, because as an abstract::image is overwritten,
+  ** the output type is already known. The function is instantiated.
   */
   template<class UnaryFun, class I> inline
   abstract::image<I>& apply_self(abstract::image<I>& input)
@@ -192,11 +218,9 @@ namespace oln {
   }
 
 
-  /*! \brief Main apply_self() function. Note we require a UnaryFun only,
-  ** not a AdaptableUnaryFunc, because as we overwrite an abstract::image
-  ** we already know the output type. We instantiate the function ourself.
-  **
-  ** \todo FIXME: Workaround for g++-2.95 bug.
+  /*! \brief Only a UnaryFun is required,
+  ** not a AdaptableUnaryFunc, because as an abstract::image is overwritten,
+  ** the output type is already know. The function is instantiated.
   */
   template<template<class> class UnaryFun, class I> inline
   abstract::image<I>& apply_self(abstract::image<I>& input)
@@ -211,7 +235,7 @@ namespace oln {
   | self binary |
   `------------*/
 
-  /*! \brief Main apply2_exact() function.
+  /*! \brief Main \a apply2_exact() function.
   **
   ** \see apply_self()
   */
@@ -226,7 +250,7 @@ namespace oln {
   }
 
 
-  /*! \brief We instantiate the function ourself.
+  /*! \brief The function is instantiated.
   **
   ** \see apply_self()
   */
@@ -237,10 +261,8 @@ namespace oln {
   }
 
 
-  /*! \brief If the function is passed as a template-id, we 
-  ** Instantiate it for the type of the input elements.
-  **
-  ** \todo FIXME: Workaround for g++-2.95 bug.
+  /*! \brief If the function is passed as a template-id, it is 
+  ** instantiated for the type of the input elements.
   **
   ** \see apply_self()
   */
@@ -252,10 +274,8 @@ namespace oln {
     return apply2_self(tmp, input1, input2);
   }
 
-
-  /*! apply2_self() if I1==I2 and the UnaryFun has only one parameter.
-  **
-  ** \todo FIXME: Workaround for g++-2.95 bug.
+  
+  /*! \brief If \a I1 == \a I2 and the UnaryFun has only one parameter.
   **
   ** \see apply_self()
   */

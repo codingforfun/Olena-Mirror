@@ -52,6 +52,16 @@ namespace oln {
 		       StreamGz   = 2,
 		       StreamAny  = 2 };
 
+      /*! \class stream_wrapper
+      **
+      ** Default version, if you instantiate one, all the 
+      ** operations on the stream will fail
+      **
+      ** \see stream_wrapper<StreamFile>
+      **
+      ** \see stream_wrapper<StreamGz>
+      **
+      */
       template< stream_id W >
       struct stream_wrapper
       {
