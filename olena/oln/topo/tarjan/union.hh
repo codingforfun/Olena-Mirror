@@ -43,10 +43,7 @@ namespace oln {
 
       /*! Tarjan set.
       **
-      ** \todo FIXME: a similar class is defined in
-      ** oln/morpho/attribute_union_find.hh (oln::morpho::tarjan::tarjan_set).
-      ** The one in morpho is more general. I think that this class should
-      ** be removed.
+      ** \todo FIXME: Obsolete since only obsolete::flat_zone use it.
       */
       template< class I, class aux_data_type>
       struct tarjan_set

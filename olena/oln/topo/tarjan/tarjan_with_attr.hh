@@ -1,27 +1,27 @@
-// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
+// Copyright (C) 2004  EPITA Research and Development Laboratory
 //
-// This file is part of the Olena Library.  This library is free
-// software; you can redistribute it and/or modify it under the terms
-// of the GNU General Public License version 2 as published by the
+// This  file is  part of  the Olena  Library.  This  library  is free
+// software; you can redistribute it  and/or modify it under the terms
+// of the  GNU General  Public License version  2 as published  by the
 // Free Software Foundation.
 //
-// This library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// This library is distributed in the hope that it will be useful, but
+// WITHOUT  ANY  WARRANTY;  without   even  the  implied  warranty  of
+// MERCHANTABILITY or  FITNESS FOR A PARTICULAR PURPOSE.   See the GNU
 // General Public License for more details.
 //
-// You should have received a copy of the GNU General Public License
-// along with this library; see the file COPYING.  If not, write to
-// the Free Software Foundation, 59 Temple Place - Suite 330, Boston,
+// You should have  received a copy of the  GNU General Public License
+// along with  this library; see the  file COPYING.  If  not, write to
+// the Free Software Foundation, 59  Temple Place - Suite 330, Boston,
 // MA 02111-1307, USA.
 //
-// As a special exception, you may use this file as part of a free
+// As a  special exception, you  may use this  file as part of  a free
 // software library without restriction.  Specifically, if other files
-// instantiate templates or use macros or inline functions from this
-// file, or you compile this file and link it with other files to
-// produce an executable, this file does not by itself cause the
-// resulting executable to be covered by the GNU General Public
-// License.  This exception does not however invalidate any other
+// instantiate templates  or use macros or inline  functions from this
+// file, or  you compile  this file  and link it  with other  files to
+// produce  an executable,  this file  does  not by  itself cause  the
+// resulting  executable  to be  covered  by  the  GNU General  Public
+// License.   This exception  does  not however  invalidate any  other
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
@@ -42,22 +42,57 @@ namespace oln {
   namespace topo {
     /// \brief Implementation of tarjan set.
     namespace tarjan {
+
       /// Abstract classes for tarjan based algorithms.
       namespace abstract {
 
+	/*!
+	** \brief Abstract  class to perform a tarjan  algorithm on an
+	** image with attribute computing .
+	**
+	** \param Exact Exact type of the class.
+	*/
 	template<class Exact>
 	struct tarjan_with_attr: public tarjan<mlc_exact_vt_type(tarjan_with_attr<Exact>, Exact) >
 	{
-	  typedef oln_tarjan_input_type(Exact)		input_type;
-	  typedef oln_point_type(input_type)		point_type;
-	  typedef oln_value_type(input_type)		data_type;
+	  typedef oln_tarjan_input_type(Exact)		input_type; ///< Type of input image.
+	  typedef oln_point_type(input_type)		point_type; ///< Point type of image to process.
+	  typedef oln_value_type(input_type)		data_type; ///< Data type of the input image.
 
-	  typedef oln_concrete_type(input_type)		image_type;
-	  typedef oln_tarjan_output_type(Exact)		image_out_type;
-	  typedef oln_tarjan_attr_type(Exact)		attr_type;
-	  typedef attr_env_type(attr_type)		env_type;
-	  typedef oln_value_type(image_out_type)	comp_type;
+	  typedef oln_concrete_type(input_type)		image_type; ///< Concrete type of the input image.
+	  typedef oln_tarjan_output_type(Exact)		image_out_type; ///< Type of output image.
+	  typedef oln_tarjan_attr_type(Exact)		attr_type; ///< Type of attribute to use.
+	  typedef attr_env_type(attr_type)		env_type; ///< Environment associated to attribute type.
+	  typedef oln_value_type(image_out_type)	comp_type; ///< Type of components.
 
+	  typedef mlc_exact_vt_type(tarjan_with_attr<Exact>,
+				    Exact)		exact_type; ///< Exact type of the class.
+	  typedef tarjan<exact_type>			super_type; ///< Type of parent class.
+
+	  // Make parent class able to call implementations.
+	  friend class super_type;
+
+	  /*!
+	  ** \brief Return the attribute value associated to a
+	  ** component \a i.
+	  */
+	  const attr_type &get_attr(const comp_type &i) const
+	    {
+	      return data_[find_root(i)];
+	    }
+
+	protected:
+
+	  /*! \brief Constructor.
+	  **
+	  ** Initialization of data structures.
+	  **
+	  ** \arg ima Image to process.
+	  ** \arg env Environment to use.
+	  **
+	  ** \warning  This  constructor  is protected,  because  this
+	  ** class is abstract.
+	  */
 	  tarjan_with_attr(const image_type &ima,
 			   const env_type &env):
 	    capacity_chunk((ima.npoints() < 100) ? ima.npoints() : (ima.npoints() / 100)),
@@ -73,30 +108,26 @@ namespace oln {
 	    data_.reserve(capacity);
 	  }
 
-	  // abstract methods
-	  std::vector<point_type> get_processing_order()
-	  {
-	    mlc_dispatch(get_processing_order)();
-	  }
-
-	  void
-	  mark_set(const point_type &x)
-	  {
-	    mlc_dispatch(mark_set)(x);
-	  }
-
-	  void
-	  uni(const point_type& n, const point_type& p)
-	  {
-	    mlc_dispatch(uni)(n, p);
-	  }
-
-	  // tells if a point has been proceded
-	  bool is_proc(const point_type &p) const
+	  /*!
+	  ** \brief Implementation of is_proc().
+	  **
+	  ** \arg p Point you want to check.
+	  **
+	  ** \warning Do not call this method, use is_proc() instead.
+	  */
+	  bool is_proc_impl(const point_type &p) const
 	  {
 	    return to_comp_[p] != ntg_sup_val(comp_type);
 	  };
 
+	  /*!
+	  ** \brief Implementation of find_root().
+	  **
+	  ** \arg x The component you want to find the root.
+	  **
+	  ** \warning  Do  not   call  this  method,  use  find_root()
+	  ** instead.
+	  */
 	  comp_type
 	  find_root(const comp_type& x) const
 	  {
@@ -105,11 +136,17 @@ namespace oln {
 	    return x;
 	  }
 
-	  // bool closing = true -> a closing is performed,
-	  // an opening otherwise.
+	  /*!
+	  ** \brief Implementation of get_compute().
+	  **
+	  ** \arg Ng Neighborhood to use.
+	  **
+	  ** \warning  Do  not  call  this method,  use  get_compute()
+	  ** instead.
+	  */
 	  template<class N>
 	  image_out_type
-	  get_compute(const oln::abstract::neighborhood<N> &Ng)
+	  get_compute_impl(const oln::abstract::neighborhood<N> &Ng)
 	  {
 	    std::vector<point_type>	I(get_processing_order());
 
@@ -167,19 +204,15 @@ namespace oln {
 	    return output;
 	  }
 
-	  // access to attributes
-	  // i index of component
-	  const attr_type &get_attr(const comp_type &i) const
-	  {
-	    return data_[find_root(i)];
-	  }
-
-	  comp_type ncomps() const
+	  /*!
+	  ** \brief Implementation of ncomps_impl().
+	  **
+	  ** \warning Do not call this method, use ncomps() instead.
+	  */
+	  comp_type ncomps_impl() const
 	  {
 	    return ncomps_;
 	  }
-
-	protected:
 
 	  unsigned					capacity_chunk;
 	  unsigned					capacity;
@@ -192,99 +225,6 @@ namespace oln {
 	  env_type					env_;
 	};
       } // !abstract
-
-
-
-      template<class T, class DestType, class A, class Exact = mlc::final>
-      struct cc:
-	public abstract::tarjan_with_attr<typename mlc::exact_vt<cc<T, DestType, A, Exact>,
-								 Exact>::ret>
-      {
-
-	typedef oln_point_type(T)			point_type;
-	typedef oln_value_type(T)			data_type;
-	//    typedef abstract::image<T>		image_type;
-	typedef oln_concrete_type(T) image_type;
-
-	typedef unsigned			comp_type;
-
-	typedef cc<T, DestType, A, Exact>			self_type; /*< Self type of the class.*/
-	typedef mlc_exact_vt_type(self_type, Exact)		exact_type;
-	typedef abstract::tarjan_with_attr<exact_type>		super_type;
-
-	cc(const image_type &ima,
-	   const attr_env_type(A) &env): super_type(ima, env)
-	{
-	}
-
-	std::vector<point_type> get_processing_order_impl()
-	{
-	  std::vector<point_type>	res;
-	  oln_iter_type(image_type)	it(input_);
-
-	  res.reserve(input_.npoints());
-	  for_all(it)
-	    res.push_back(it);
-	  return res;
-	}
-
-	void
-	mark_set_impl(const point_type &x)
-	{
-	  if (parent_.size() == parent_.capacity())
-	    {
-	      capacity = parent_.capacity() + capacity_chunk;
-	      parent_.reserve(capacity);
-	      comp_value_.reserve(capacity);
-	    }
-	  to_comp_[x] = ncomps_ + 1;
-	  data_.push_back(A(input_, x, env_));
-	  parent_.push_back(ncomps_ + 1);
-	  //comp_value_.push_back(input_[x]);
-	  comp_value_.push_back(ncomps_ + 1);
-	}
-
-	void
-	uni_impl(const point_type& n, const point_type& p)
-	{
-	  comp_type		r = find_root(to_comp_[n]);
-	  precondition(to_comp_[n] <= ncomps_);
-	  precondition(to_comp_[p] <= (ncomps_ + 1));
-	  if (r != to_comp_[p])
-	    if (input_[n] == input_[p])
-	      {
-		if (to_comp_[p] == (ncomps_ + 1)) // first merge of p component
-		  {
-		    precondition(r < comp_value_.capacity());
-		    //comp_value_[r] = input_[p];
-		    //		comp_value_[to_comp_[p]] = comp_value_[r];
-		    data_[r] += data_[to_comp_[p]];
-		    precondition(r <= ncomps_);
-		    to_comp_[p] = r;
-		  }
-		else
-		  {
-		    precondition(r < parent_.capacity());
-		    data_[parent_[to_comp_[p]]] += data_[parent_[r]];
-		    // 		comp_value_[parent_[to_comp_[p]]] = ntg::min(comp_value_[parent_[r]],
-		    // 							     comp_value_[parent_[to_comp_[p]]]);
-		    parent_[r] = parent_[to_comp_[p]];
-
-		  }
-	      }
-	  //      precondition(comp_value_[parent_[r]] <= 255);
-	}
-      };
-
-      // traits specialization
-      template <typename T, typename DestType, typename A, typename Exact>
-      struct tarjan_traits<cc<T, DestType, A, Exact> >
-      {
-	typedef T					input_type;
-	typedef typename  mute<T, DestType>::ret	output_type;
-	typedef A					attr_type;
-      };
-
 
     } // end of namespace tarjan
 

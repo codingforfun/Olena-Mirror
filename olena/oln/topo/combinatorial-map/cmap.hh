@@ -44,6 +44,7 @@
 ** FIXME: The documentation is not good enough.\n
 ** FIXME: Real test are missing.
 ** FIXME: Some part of this file are inside "#if 0" comments.
+** FIXME: This file force to keep an obsolete version of flat-zone.
 */
 
 namespace oln {
@@ -72,7 +73,7 @@ namespace oln {
       public:
 	cmap(const I& input,
 	     const inter_pixel::interpixel<I>& ip,
-	     tarjan::flat_zone<I>& cc) :
+	     tarjan::obsolete::flat_zone<I>& cc) :
 	  ndarts_(0),
 	  zeta_(input.nrows() + 1, input.ncols() + 1),
 	  cc_(cc),
@@ -358,7 +359,7 @@ namespace oln {
       private:
 	unsigned			ndarts_;
 	zeta_type			zeta_;
-	tarjan::flat_zone<I> &		cc_;
+	tarjan::obsolete::flat_zone<I> &cc_;
 	internal::level<unsigned>	level_;
 
 	internal::beta<unsigned>	beta_;

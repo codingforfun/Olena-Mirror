@@ -141,22 +141,10 @@ namespace oln {
 	add(dpoint_type(crd[i], crd[i+1]));
     }
 
-    // io
-    /*!
-    ** \todo FIXME: it doesn't seem useful. We may remove it
-    */
+    // Constructor used in io functions.
     neighborhood2d(const io::internal::anything& r) : super_type()
     {
       r.assign(*this);
-    }
-
-    /*!
-    ** \todo FIXME: it doesn't seem useful. We may remove it
-    */
-    neighborhood2d&
-    operator=(const io::internal::anything& r)
-    {
-      return r.assign(*this);
     }
 
     /// Return the name of the type.

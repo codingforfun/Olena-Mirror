@@ -32,19 +32,12 @@
   Connected components.
 */
 
-# include <oln/basics.hh>
-// FIXME: really need all ?
 # include <oln/arith/ops.hh>
-# include <mlc/optional.hh>
-# include <ntg/all.hh>
+# include <oln/core/image.hh>
 # include <oln/level/fill.hh>
-# include <oln/level/invert.hh>
-# include <oln/level/compare.hh>
 
 # include <set>
-# include <ntg/core/macros.hh>
 
-# include <mlc/is_a.hh>
 namespace oln {
 
   /*! \brief Level algorithm implementation.

@@ -34,7 +34,7 @@ check()
 
   interpixel<input_t> ip(src);
 
-  flat_zone<input_t> cc(src);
+  obsolete::flat_zone<input_t> cc(src);
 
   cmap<input_t> cm(src, ip, cc);
 
