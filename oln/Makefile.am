@@ -27,6 +27,7 @@ nobase_oln_HEADERS =				\
   convert/nrgbhsv.hh				\
   convert/rgbnrgb.hh				\
   convert/rgbxyz.hh				\
+  convol/convolution.hh				\
   convol/fast_gaussian.hh			\
   convol/fast_gaussian.hxx			\
   convol/fast_gaussian_coefficient.hh		\

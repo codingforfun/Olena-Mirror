@@ -45,6 +45,9 @@ namespace oln {
     w_window() {}
   };
 
+# define Weight(WinType)                               \
+Exact(WinType)::weight
+
 } // end of oln
 
 #endif // ! OLENA_CORE_W_WINDOW_HH

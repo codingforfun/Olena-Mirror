@@ -1,3 +1,21 @@
+2002-07-18  Astrid Wang  <astrid@lrde.epita.fr>
+
+	* oln/core/w_window2d.hh: Fix the constructor taking an array2d.
+	* oln/Makefile.am (nobase_oln_HEADERS): Add convol/convolution.hh.
+
+2002-07-17  Astrid Wang  <astrid@lrde.epita.fr>
+
+	* oln/convol/convolution.hh: New file.
+	* oln/core/internal/w_window.hh: Fixed the function: name().
+	* oln/core/type.hh (type): Add a specialization of name_of for
+	the builtin-type 'int'.
+	* oln/core/w_window.hh (Weight): Add the macro Weight.
+	* oln/core/w_window1d.hh: Add class Inferior as template argument for
+	class w_window1d, and add typedef Inferior inferior.
+	* oln/core/w_window2d.hh: Likewise.
+	* oln/core/w_window3d.hh: Likewise.
+	* configure.ac (AC_CONFIG_FILES): Add tests/convol/Makefile.
+	
 2002-07-16  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* Makefile.am, configure.ac: Rename `src/' to `oln/'.

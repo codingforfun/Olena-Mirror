@@ -35,11 +35,12 @@
 
 namespace oln {
 
-  template<class T>
+  template<class T, class Inferior = type::bottom>
   class w_window2d : public internal::_w_window< 2, T, w_window2d<T> >
   {
     typedef internal::_w_window< 2, T, w_window2d<T> > super;
   public:
+    typedef Inferior inferior;
     typedef w_window2d self;
 
     typedef winiter< self >   iter;
@@ -69,8 +70,8 @@ namespace oln {
       super(I::card), _delta(0)
     {
       unsigned i = 0;
-      for (coord row = -I::center_row; I::row < I::nrows - I::center_row - 1; ++row)
-	for (coord col = -I::center_col; col < I::ncols - I::center_col - 1; ++col)
+      for (coord row = -I::center_row; row <= I::nrows - I::center_row - 1; ++row)
+	for (coord col = -I::center_col; col <= I::ncols - I::center_col - 1; ++col)
           add(row, col, arr[i++]);
     }
     

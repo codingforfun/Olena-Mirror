@@ -1,3 +1,8 @@
+2002-07-18  Astrid Wang  <astrid@lrde.epita.fr>
+
+	* doc/Makefile.am (olnsrc): Change olnsrc = $(top_srcdir)/../src/
+	to olnsrc = $(top_srcdir)/../oln/.
+
 2002-06-05  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* doc/Makefile.am (noinst_DATA): Add oln-ref.pdf and oln-ref.ps,

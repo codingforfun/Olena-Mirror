@@ -34,11 +34,12 @@
 
 namespace oln {
 
-  template<class T>
+  template<class T, class Inferior = type::bottom>
   class w_window3d : public internal::_w_window< 3, T, w_window3d<T> >
   {
     typedef internal::_w_window< 3, T, w_window3d<T> > super;
   public:
+    typedef Inferior inferior;
     typedef w_window3d self;
 
     typedef winiter< self >   iter;

@@ -18,7 +18,7 @@ html/oln-ref.html: $(tex_TEX) $(oln_ref_TEX)
 	$(HEVEA) $(tex_TEX) -o html/oln-ref.html
 	$(HEVEA) $(tex_TEX) -o html/oln-ref.html
 
-olnsrc = $(top_srcdir)/../src/
+olnsrc = $(top_srcdir)/../oln/
 
 COMMONGETDEFSFLAGS = --agarg=--templ-dirs=../tpl
 PROCESSINGGETDEFSFLAGS = \

@@ -4,6 +4,7 @@
 SUBDIRS = . check \
   array \
   convert \
+  convol \
   io \
   morpho
 

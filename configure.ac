@@ -48,6 +48,7 @@ AC_CONFIG_FILES([
   tests/array/Makefile
   tests/check/Makefile
   tests/convert/Makefile
+  tests/convol/Makefile
   tests/io/Makefile
   tests/morpho/Makefile
 ])

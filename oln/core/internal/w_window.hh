@@ -79,7 +79,7 @@ namespace oln {
       static std::string name()
       {
 	return std::string("_w_window<") + type::name_of<dpoint>() + "," +
-	  + type::name_of<Weight>() + "," + inferior::name() + ">" ;
+	  type::name_of<Weight>() + "," + inferior::name() + ">" ;
       }
 
     protected:
