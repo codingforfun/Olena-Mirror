@@ -23,8 +23,6 @@
 	* configure.ac: Adjust Olena source path. Use AC_CXX_FLAGS instead
 	of AC_WITH_CXX_WARNINGS. Use AC_CONFIG_FILES again.
 
-2003-01-09  Raphaël Poss  <raph@lrde.epita.fr>
-
 	* Makefile.am: Comment. Correct @OLN_DOC_SUBDIRS@ to $(OLN_DOC_SUBDIRS).
 
 2003-01-15  Akim Demaille  <akim@epita.fr>

@@ -72,8 +72,6 @@
 	* tests/check/data.cc: use OLN_IMG_DIR and OLN_IMG_AUX_DIR instead
 	of RDATADIR and WDATADIR.
 	
-2003-01-15  Raphaël Poss  <raph@lrde.epita.fr>
-
 	* oln/Makefile.am (EXTRA_DIST): Mention
 	`config/pconf-hh.in'. FIXME: this should not be necessary since
 	configure.ac mentions in it AC_CONFIG_FILES. To investigate.
@@ -85,15 +83,11 @@
 	(AC_CXX_EXCEPTIONS):  Add,  as  a sanity  check   for users  using
 	OLN_ENABLE_EXCEPTIONS.
 
-2003-01-12  Raphaël Poss  <raph@lrde.epita.fr>
-
 	* tests/convol/Makefile.am: Adjust src directory.
 	* tests/morpho/Makefile.am: Likewise.
 	* tests/meta/Makefile.am: Likewise.
 	* tests/convert/Makefile.am: Likewise.
 	* tests/io/Makefile.am: Likewise.
-
-2003-01-11  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* oln/config/system.hh: Add explicit tests for numeric limits.
 	* oln/config/pconf-inc.in: Remove.
@@ -109,8 +103,6 @@
 	* configure.ac: Merge tests/configure.ac. Use AC_CONFIG_FILES
 	instead of AC_CONFIG_HEADERS for pconf.inc.
 	* tests/defs.in (CXXFLAGS): Remove warning options (added by "configure")
-
-2003-01-09  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* tests/Makefile.am (SUBDIRS): Correct @OLN_TESTS_SUBDIRS@ to
 	$(OLN_TESTS_SUBDIRS). Add comments.

@@ -13,24 +13,10 @@
 
 	* README: Fix indentation.
 	* component.m4 (OLN_COMPONENT, OLN_COLLECTION): Simplify.
-
-2003-01-15  Raphaël Poss  <raph@lrde.epita.fr>
-
-	* cleanup.sh: Add `pconf.hh' as a candidate to deletion.
-
-2003-01-12  Raphaël Poss  <raph@lrde.epita.fr>
-
+	* cleanup.sh: Simplify. Add `pconf.hh' as a candidate to deletion.
 	* configure.ac: Rename package to "olena-meta".
-
-2003-01-09  Raphaël Poss  <raph@lrde.epita.fr>
-
-	* cleanup.sh: Simplify.
-
 	* Makefile.am (EXTRA_DIST): Add component.m4.  Add
 	comments.
-
-2003-01-07  Raphaël Poss  <raph@lrde.epita.fr>
-
 	* bootstrap.sh: Call generate_morpho.sh during boostrap.
 
 2003-01-16  Akim Demaille  <akim@epita.fr>
