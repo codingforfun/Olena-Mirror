@@ -1,3 +1,45 @@
+2005-01-26  Simon Odou  <simon@lrde.epita.fr>
+
+	* oln/fancy/print.hh: Add copyright.
+	* oln/fancy/iota.hh: Likewise.
+	* oln/basics.hh: Likewise.
+	* oln/basics1d.hh: Likewise.
+	* oln/core/props.hh: Likewise.
+	* oln/core/macros.hh: Likewise.
+	* oln/core/value_box.hh: Likewise.
+	* oln/core/abstract/image_constness.hh: Likewise.
+	* oln/core/abstract/image.hh: Likewise.
+	* oln/core/abstract/piter.hh: Likewise.
+	* oln/core/abstract/images.hh: Likewise.
+	* oln/core/abstract/image_with_data.hh: Likewise.
+	* oln/core/abstract/image_dimension.hh: Likewise.
+	* oln/core/abstract/point.hh: Likewise.
+	* oln/core/abstract/size.hh: Likewise.
+	* oln/core/abstract/data_storage.hh: Likewise.
+	* oln/core/abstract/dpoint.hh: Likewise.
+	* oln/core/abstract/internal/image_impl.hh: Likewise.
+	* oln/core/1d/dpoint1d.hh: Likewise.
+	* oln/core/1d/array1d.hh: Likewise.
+	* oln/core/1d/image1d.hh: Likewise.
+	* oln/core/1d/fwd_piter1d.hh: Likewise.
+	* oln/core/1d/point1d.hh: Likewise.
+	* oln/core/1d/size1d.hh: Likewise.
+	* oln/core/coord.hh: Likewise.
+	* oln/core/2d/dpoint2d.hh: Likewise.
+	* oln/core/2d/array2d.hh: Likewise.
+	* oln/core/2d/image2d.hh: Likewise.
+	* oln/core/2d/fwd_piter2d.hh: Likewise.
+	* oln/core/2d/point2d.hh: Likewise.
+	* oln/core/2d/size2d.hh: Likewise.
+	* oln/core/3d/size3d.hh: Likewise.
+	* oln/core/3d/array3d.hh: Likewise.
+	* oln/core/3d/image3d.hh: Likewise.
+	* oln/core/3d/point3d.hh: Likewise.
+	* oln/core/cats.hh: Likewise.
+	* oln/core/tags.hh: Likewise.
+	* oln/basics2d.hh: Likewise.
+	* oln/basics3d.hh: Likewise.
+
 2005-01-24  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* oln/core/abstract/dpoint.hh: New.
