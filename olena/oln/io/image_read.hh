@@ -168,7 +168,6 @@ namespace oln {
 	output.exact() = E(tmp.ncols());
 	for_all(it)
 	  output(it.col()) = tmp[it];
-	std::cout << output << std::endl;
 	return true;
       }
 

@@ -595,7 +595,7 @@
 (olena/img/black.pbm 57 1059566159 u/21_black.pbm 1.1)
 (tools/swilena/meta/swilena_imagesize.i 1243 1059495682 s/35_swilena_im 1.2)
 (olena/tests/level/tests/cc 2570 1059127220 t/47_cc.cc 1.1)
-(olena/oln/io/image_read.hh 5259 1059755333 t/45_image_read 1.4)
+(olena/oln/io/image_read.hh 5224 1059755442 t/45_image_read 1.5)
 (olena/tests/core/tests/image1 1088 1059468799 t/31_image1 1.4)
 (tools/swilena/meta/swilena_exception.i 557 1052196974 s/37_swilena_ex 1.1)
 (olena/oln/morpho/thickening.hh 1721 1046369269 e/29_thickening 1.7)
