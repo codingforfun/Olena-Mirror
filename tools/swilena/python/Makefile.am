@@ -7,8 +7,8 @@ python_PYTHON = swilena.py swilena2d.py swilena3d.py swilena1d.py \
 	swilena2d_morpho.py swilena1d_morpho.py swilena3d_morpho.py
 
 INCLUDES = -I/usr/include/python2.2 -I$(srcdir)/../src -I$(OLN_LOCAL_SRC) -I$(OLN_LOCAL_BUILD)
-AM_CPPFLAGS = -DOLN_EXCEPTIONS $(OLN_CPPFLAGS)
-AM_CXXFLAGS = $(OLN_CXXFLAGS) $(CXXFLAGS_OPTIMIZE)
+AM_CPPFLAGS = -DOLN_EXCEPTIONS 
+AM_CXXFLAGS = $(CXXFLAGS_OPTIMIZE)
 
 _swilena_so_SOURCES = swilena_wrap.cxx
 _swilena_so_LDFLAGS = -shared -lswigpy

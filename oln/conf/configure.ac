@@ -9,10 +9,6 @@ AC_WITH_OLN
 if test "x$have_olena" = xyes; then
   AC_MSG_CHECKING([whether Olena works with the selected development environment])
   AC_LANG_PUSH([C++])
-  oln_save_CPPFLAGS="$CPPFLAGS"
-  oln_save_CXXFLAGS="$CXXFLAGS"
-  CPPFLAGS="$CPPFLAGS $OLN_CPPFLAGS"
-  CXXFLAGS="$CXXFLAGS $OLN_CXXFLAGS"
   AC_LINK_IFELSE([@%:@include <oln/types/all.hh>
                   int main()
                   {
@@ -23,8 +19,6 @@ if test "x$have_olena" = xyes; then
                   [AC_MSG_RESULT([yes])], 
                   [AC_MSG_RESULT([no])
                    have_olena=no])
-  CPPFLAGS="$oln_save_CPPFLAGS"
-  CXXFLAGS="$oln_save_CXXFLAGS"
   AC_LANG_POP([C++])
 fi
 

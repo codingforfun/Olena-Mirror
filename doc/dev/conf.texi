@@ -58,9 +58,9 @@ In particular, GCC 2.95 is known to need the flag
 
 @unnumberedsubsubsec Check and workaround in @file{oln.m4}
 
-@cindex @code{OLN_TEMPLATE_DEPTH}
+@cindex @code{AC_CXX_TEMPLATE_DEPTH}
 
-The provided Autoconf macro @code{OLN_TEMPLATE_DEPTH} takes an optional
+The provided Autoconf macro @code{AC_CXX_TEMPLATE_DEPTH} takes an optional
 numeric argument N (default value 50) and works as follows:
 
 @enumerate
@@ -71,8 +71,8 @@ if it works, stop the check, no workaround required.
 @item 
 add @option{-ftemplate-depth-N} to @env{CXXFLAGS}, and try again;
 @item
-@cindex @env{OLN_CXXFLAGS}
-if it works, add @option{-ftemplate-depth-N} to @env{OLN_CXXFLAGS}, then
+@cindex @env{CXXFLAGS}
+if it works, add @option{-ftemplate-depth-N} to @env{CXXFLAGS}, then
 stop.
 @item
 if it does not work, warn the user.
@@ -117,14 +117,14 @@ satisfying because they are do not really represent infinity.
 
 Therefore, the Olena header @file{oln/config/math.hh} works as follows:
 
-@cindex @code{OLN_USE_C_LIMITS}
+@cindex @code{USE_C_LIMITS}
 
 @enumerate
 @item
-if the macro @code{OLN_USE_C_LIMITS} is not defined, use
+if the macro @code{USE_C_LIMITS} is not defined, use
 @code{std::numeric_limits}.
 @item
-if the macro @code{OLN_USE_C_LIMITS} is defined, then:
+if the macro @code{USE_C_LIMITS} is defined, then:
 @enumerate a
 @item
 include @file{cmath};
@@ -143,12 +143,12 @@ if it is not, use @code{HUGE_VAL} casted to @code{float} instead.
 
 @unnumberedsubsubsec Check and workaround in @file{oln.m4}
 
-@cindex @code{OLN_NUMERIC_LIMITS}
+@cindex @code{AC_CXX_NUMERIC_LIMITS}
 
-The provided Autoconf macro @code{OLN_NUMERIC_LIMITS} works as follows:
+The provided Autoconf macro @code{AC_CXX_NUMERIC_LIMITS} works as follows:
 
-@cindex @code{OLN_USE_C_LIMITS}
-@cindex @env{OLN_CPPFLAGS}
+@cindex @code{USE_C_LIMITS}
+@cindex @env{CPPFLAGS}
 
 @enumerate
 @item
@@ -156,7 +156,7 @@ attemt to compile a program using @code{std::numeric_limits};
 @item
 if it works, do nothing.
 @item
-if it does not, add @option{-DOLN_USE_C_LIMITS} to @env{OLN_CPPFLAGS}.
+if it does not, add @option{-DUSE_C_LIMITS} to @env{CPPFLAGS}.
 @end enumerate
 
 @c ************************************************************************
@@ -179,18 +179,18 @@ available from C++.
 @item
 Replacements for (as of 0.7) @code{sqrtf}, @code{floorf}, @code{round}
 or @code{roundf} can be enabled by defining macros of the form
-@env{OLN_USE_xxx}, where xxx is the function name.
+@env{NEED_xxx}, where xxx is the function name.
 @end itemize
 
 @unnumberedsubsubsec Check and workaround in @file{oln.m4}
 
 @cindex @code{OLN_FLOAT_MATH}
-@cindex @code{OLN_MATH_FUNC}
+@cindex @code{AC_CXX_CHECK_MATH}
 
-The provided Autoconf macro @code{OLN_FLOAT_MATH} invokes @code{OLN_MATH_FUNC}
+The provided Autoconf macro @code{OLN_FLOAT_MATH} invokes @code{AC_CXX_CHECK_MATH}
 successively for @code{sqrtf}, @code{floorf}, @code{round} and @code{roundf}. 
 
-@code{OLN_MATH_FUNC} takes the name of the function to test and works as follows:
+@code{AC_CXX_CHECK_MATH} takes the name of the function to test and works as follows:
 
 @enumerate
 @item
@@ -200,9 +200,9 @@ if it works, do nothing.
 @item
 else, try again to compile the program with @option{-D_ISOC99_SOURCE=1};
 @item
-if it works, add @option{-D_ISOC99_SOURCE=1} to @env{OLN_CPPFLAGS}.
+if it works, add @option{-D_ISOC99_SOURCE=1} to @env{CPPFLAGS}.
 @item
-if it does not work, add @option{-DOLN_NEED_function} to @env{OLN_CPPFLAGS}.
+if it does not work, add @option{-DNEED_function} to @env{CPPFLAGS}.
 @end enumerate
 
 
@@ -319,7 +319,7 @@ set to ``no'', do nothing.
 @item
 check for the availability of exceptions with @code{AC_CXX_EXCEPTIONS} (described below);
 @item
-if exceptions are available, add @option{-DOLN_EXCEPTIONS} to @env{OLN_CPPFLAGS}.
+if exceptions are available, add @option{-DOLN_EXCEPTIONS} to @env{CPPFLAGS}.
 @end enumerate
 
 @cindex @code{AC_CXX_EXCEPTIONS}
@@ -342,11 +342,11 @@ Programs using Olena with the provided @file{oln.m4} have to take
 the following @file{Makefile} variables into consideration:
 
 @table @env
-@item OLN_CPPFLAGS
-C++ preprocessor flags specific to Olena. @xref{Values for OLN_CPPFLAGS}.
+@item CPPFLAGS
+C++ preprocessor flags specific to Olena. @xref{Values for CPPFLAGS}.
 
-@item OLN_CXXFLAGS
-C++ compiler flags specific to Olena. @xref{Values for OLN_CXXFLAGS}.
+@item CXXFLAGS
+C++ compiler flags specific to Olena. @xref{Values for CXXFLAGS}.
 
 @item FFTW_CXXFLAGS
 C++ compiler flags to use the FFTW library. @xref{Using the FFTW library}.
@@ -363,18 +363,18 @@ C++ linker flags to user the Zlib library. @xref{Using the Zlib library}.
 @end table
 
 @menu
-* Values for OLN_CPPFLAGS::     
-* Values for OLN_CXXFLAGS::     
+* Values for CPPFLAGS::     
+* Values for CXXFLAGS::     
 @end menu
 
 @c ************************************************************************
-@node Values for OLN_CPPFLAGS
-@subsection Values for @env{OLN_CPPFLAGS}
+@node Values for CPPFLAGS
+@subsection Values for @env{CPPFLAGS}
 
-@cindex @env{OLN_CPPFLAGS}
+@cindex @env{CPPFLAGS}
 
 @table @option
-@item -DOLN_USE_C_LIMITS
+@item -DUSE_C_LIMITS
 @xref{Numeric limits}.
 
 @item -DHAVE_FFTW=1
@@ -389,10 +389,10 @@ C++ linker flags to user the Zlib library. @xref{Using the Zlib library}.
 @end table
 
 @c ************************************************************************
-@node Values for OLN_CXXFLAGS
-@subsection Values for @env{OLN_CXXFLAGS}
+@node Values for CXXFLAGS
+@subsection Values for @env{CXXFLAGS}
 
-@cindex @env{OLN_CXXFLAGS}
+@cindex @env{CXXFLAGS}
 
 @table @option
 @item -ftemplate-depth

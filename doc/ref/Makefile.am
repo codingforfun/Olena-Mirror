@@ -18,7 +18,7 @@ $(srcdir)/Makefile.in: $(srcdir)/filelists.make
 ###
 
 INCLUDES = -I$(top_srcdir)/oln -I$(top_builddir)/oln
-COMMONGETDEFSFLAGS =  --agarg=-DCXXCOMPILE="$(CXX) -I$(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(CPPFLAGS) $(OLN_CPPFLAGS) $(CXXFLAGS) $(OLN_CXXFLAGS)" \
+COMMONGETDEFSFLAGS =  --agarg=-DCXXCOMPILE="$(CXX) -I$(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(CPPFLAGS) $(CXXFLAGS)" \
 		      --agarg=-DEPSTOPDF="$(EPSTOPDF)" \
 		      --agarg=-DCONVERT="$(IMAGEMAGICK_CONVERT)" \
 	              --agarg=--templ-dirs=$(srcdir) \

@@ -32,7 +32,7 @@
 
 # include <cmath>
 
-# ifndef OLN_USE_C_LIMITS
+# ifndef USE_C_LIMITS
 #  include <limits>
 #  define OLN_DOUBLE_INFINITY (std::numeric_limits<double>::infinity())
 #  define OLN_FLOAT_INFINITY (std::numeric_limits<float>::infinity())
@@ -55,27 +55,27 @@
 
 namespace oln {
 
-# ifdef OLN_NEED_SQRTF
+# ifdef NEED_SQRTF
 static inline float sqrtf(float f)
 {
   return (float)sqrt((double)f);
 }
 # endif
 
-# ifdef OLN_NEED_FLOORF
+# ifdef NEED_FLOORF
 static inline float floorf(float f)
 {
   return (float)floor((double)f);
 }
 # endif
 
-# ifdef OLN_NEED_ROUND
+# ifdef NEED_ROUND
 static inline double round(double f)
 {
   return (f < 0.) ? -floor(-f + 0.5) : floor(f + 0.5);
 }
 # endif
-# ifdef OLN_NEED_ROUNDF
+# ifdef NEED_ROUNDF
 static inline float roundf(float f)
 {
   return (f < 0.f) ? -floorf(-f + 0.5f) : floorf(f + 0.5f);

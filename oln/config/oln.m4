@@ -54,7 +54,7 @@ AC_DEFUN([_OLN_CHECK_HEADERS],
 
  have_olena=yes
  oln_save_CPPFLAGS=$CPPFLAGS
- CPPFLAGS="$OLN_EXTRA_CPPFLAGS $OLN_CPPFLAGS $CPPFLAGS"
+ CPPFLAGS="$OLN_EXTRA_CPPFLAGS $CPPFLAGS"
  # At this point, we can be in a situation where pconf.hh does not
  # exist _yet_. In that particular case, we need a workaround.
  AC_CHECK_HEADER([oln/config/pconf.hh], [], 
@@ -102,10 +102,9 @@ AC_DEFUN([OLN_PATH_HEADERS],
   AC_ARG_VAR([OLN_INCLUDE_DIR], 
 	     [location of Olena (<include dir>, should be autodetected)])
   if test "x$OLN_INCLUDE_DIR" != x ; then
-     OLN_CPPFLAGS="-I$OLN_INCLUDE_DIR $OLN_CPPFLAGS"
+     CPPFLAGS="-I$OLN_INCLUDE_DIR $CPPFLAGS"
   fi
   AC_SUBST([OLN_INCLUDE_DIR])
-  AC_SUBST([OLN_CPPFLAGS])
 
   _OLN_CHECK_HEADERS
 ])
@@ -124,19 +123,18 @@ AC_DEFUN([OLN_PATH_HEADERS],
 # - the compiler supports it 
 # - it provides the right effect when present
 
-AC_DEFUN([OLN_TEMPLATE_DEPTH],
+AC_DEFUN([AC_CXX_TEMPLATE_DEPTH],
 [dnl
   AC_REQUIRE([AC_PROG_CXX])
   AC_LANG_PUSH([C++])
 
   cxx_tdepth=ifelse([$1], , 50, [$1])
   AC_CACHE_CHECK([for C++ template recursion upto $cxx_tdepth levels],
-                 [oln_cv_template_flags],
-                 [oln_cv_template_flags=direct
+                 [ac_cv_cxx_template_flags],
+                 [ac_cv_cxx_template_flags=direct
                   oln_save_CPPFLAGS=$CPPFLAGS
                   oln_save_CXXFLAGS=$CXXFLAGS
-                  CPPFLAGS="$CPPFLAGS $OLN_CPPFLAGS -DTDEPTH=$cxx_tdepth"
-                  CXXFLAGS="$CXXFLAGS $OLN_CXXFLAGS"
+                  CPPFLAGS="$CPPFLAGS -DTDEPTH=$cxx_tdepth"
                   AC_LINK_IFELSE([template<unsigned n> 
 				  struct rec { 
 			             typedef typename rec<n-1>::ret ret; 
@@ -155,25 +153,24 @@ AC_DEFUN([OLN_TEMPLATE_DEPTH],
                                       { typedef int ret; };
                                       int main(void) 
                                       { rec<TDEPTH>::ret i = 0; return i; }],
-                       [oln_cv_template_flags="-ftemplate-depth-$cxx_tdepth"], 
-                       [oln_cv_template_flags=unsupported])])
+                       [ac_cv_cxx_template_flags="-ftemplate-depth-$cxx_tdepth"], 
+                       [ac_cv_cxx_template_flags=unsupported])])
                   CPPFLAGS=$oln_save_CPPFLAGS
                   CXXFLAGS=$oln_save_CXXFLAGS])
 
 
   AC_LANG_POP([C++])
 
-  case "$oln_cv_template_flags" in
+  case "$ac_cv_cxx_template_flags" in
      unsupported )
        AC_MSG_WARN([C++ compiler does not handle template recursion upto $cxx_tdepth. Expect problems.])
        ;;
      direct ) ;;
      * )
-       OLN_CXXFLAGS="$OLN_CXXFLAGS $oln_cv_template_flags"
+       CXXFLAGS="$CXXFLAGS $ac_cv_cxx_template_flags"
        ;;
   esac
 
-  AC_SUBST([OLN_CXXFLAGS])
 ])
 
 ## The following macro (AC_CXX_EXCEPTIONS) is courtesy
@@ -224,13 +221,12 @@ AC_DEFUN([OLN_ENABLE_EXCEPTIONS],
 
   if test x$oln_cv_use_exceptions != xno; then
      if test x$ac_cv_cxx_exceptions != xno; then
-        OLN_CPPFLAGS="$OLN_CPPFLAGS -DOLN_EXCEPTIONS"
+        CPPFLAGS="$CPPFLAGS -DOLN_EXCEPTIONS"
      else
         AC_MSG_WARN([exceptions disabled in C++, cannot use Olena exceptions])
      fi
   fi
 
-  AC_SUBST([OLN_CPPFLAGS])
 ])
 AC_DEFUN([OLN_DISABLE_EXCEPTIONS], [OLN_ENABLE_EXCEPTIONS([no])])
 
@@ -243,7 +239,7 @@ AC_DEFUN([OLN_DISABLE_EXCEPTIONS], [OLN_ENABLE_EXCEPTIONS([no])])
 # limits are unavailable, in which case HUGE_VAL and HUGE_VALF are
 # used instead by Olena.
 
-AC_DEFUN([OLN_NUMERIC_LIMITS],
+AC_DEFUN([AC_CXX_NUMERIC_LIMITS],
 [dnl
   AC_REQUIRE([AC_PROG_CXX])
   AC_LANG_PUSH([C++])
@@ -276,8 +272,7 @@ AC_DEFUN([OLN_NUMERIC_LIMITS],
 
   if test x$ac_cv_have_limits_infinity = xno; then
      # Usable std::numeric_limits were *not* found in <limits>.
-     OLN_CPPFLAGS="-DOLN_USE_C_LIMITS $OLN_CPPFLAGS"
-     AC_SUBST([OLN_CPPFLAGS])
+     CPPFLAGS="-DUSE_C_LIMITS $CPPFLAGS"
   fi
 
   AC_LANG_POP([C++])
@@ -296,16 +291,13 @@ AC_DEFUN([OLN_NUMERIC_LIMITS],
 # OLN_CPPFLAGS, hoping that oln/config/math.hh will provide
 # an implementation.
 
-AC_DEFUN([OLN_MATH_FUNC],
+AC_DEFUN([AC_CXX_CHECK_MATH],
 [dnl
   AC_REQUIRE([AC_PROG_CXX])
   AC_LANG_PUSH([C++])
   AC_CACHE_CHECK([for flags to enable $1() from C++],
                  [oln_cv_$1_flags],
                  [oln_save_CPPFLAGS=$CPPFLAGS
-                  oln_save_CXXFLAGS=$CXXFLAGS
-		  CPPFLAGS="$OLN_CPPFLAGS $CPPFLAGS"
-		  CXXFLAGS="$OLN_CXXFLAGS $CXXFLAGS"
                   AC_LINK_IFELSE([@%:@include <cmath>
                                   int main() { $3 }],
                                  [oln_cv_$1_flags=unneeded],
@@ -314,24 +306,21 @@ AC_DEFUN([OLN_MATH_FUNC],
                                                   int main() { $3 }],
                                        [oln_cv_$1_flags=isodef],
                                        [oln_cv_$1_flags=redef])])
-                  CPPFLAGS=$oln_save_CPPFLAGS
-                  CXXFLAGS=$oln_save_CXXFLAGS])
+                  CPPFLAGS=$oln_save_CPPFLAGS])
   if test "x$[]oln_cv_$1_flags" = xredef; then
-     OLN_CPPFLAGS="$OLN_CPPFLAGS -DOLN_NEED_$2"
+     CPPFLAGS="$CPPFLAGS -DNEED_$2"
   elif test "x$[]oln_cv_$1_flags" = xisodef; then
-     OLN_CPPFLAGS="$OLN_CPPFLAGS -D_ISOC99_SOURCE=1"
+     CPPFLAGS="$CPPFLAGS -D_ISOC99_SOURCE=1"
   fi
   AC_LANG_POP([C++])
-
-  AC_SUBST([OLN_CPPFLAGS])
 ])  
 
-AC_DEFUN([OLN_FLOAT_MATH],
+AC_DEFUN([AC_CXX_FLOAT_MATH],
 [dnl
-  OLN_MATH_FUNC([sqrtf], [SQRTF], [float f = sqrtf(0.1f);])
-  OLN_MATH_FUNC([floorf], [FLOORF], [float f = floorf(0.1f);])
-  OLN_MATH_FUNC([round], [ROUND], [double f = round(0.1);])
-  OLN_MATH_FUNC([roundf], [ROUNDF], [float f = roundf(0.1f);])
+  AC_CXX_CHECK_MATH([sqrtf], [SQRTF], [float f = sqrtf(0.1f);])
+  AC_CXX_CHECK_MATH([floorf], [FLOORF], [float f = floorf(0.1f);])
+  AC_CXX_CHECK_MATH([round], [ROUND], [double f = round(0.1);])
+  AC_CXX_CHECK_MATH([roundf], [ROUNDF], [float f = roundf(0.1f);])
 ])
 
 # OLN_WARN_CXXFLAGS
@@ -373,9 +362,9 @@ AC_DEFUN([OLN_WARN_CXXFLAGS],
 
 AC_DEFUN([AC_WITH_OLN],
 [dnl
-  AC_REQUIRE([OLN_TEMPLATE_DEPTH])
-  AC_REQUIRE([OLN_NUMERIC_LIMITS])
-  AC_REQUIRE([OLN_FLOAT_MATH])
+  AC_REQUIRE([AC_CXX_TEMPLATE_DEPTH])
+  AC_REQUIRE([AC_CXX_NUMERIC_LIMITS])
+  AC_REQUIRE([AC_CXX_FLOAT_MATH])
   AC_REQUIRE([OLN_PATH_HEADERS])
   AC_REQUIRE([OLN_WARN_CXXFLAGS])
 ])
@@ -402,30 +391,30 @@ AC_DEFUN([AC_CXX_FLAGS],
    AC_REQUIRE([AC_PROG_CXX])
    AC_LANG_PUSH([C++])
    AC_CACHE_CHECK([for C++ compiler-specific extra flags],
-                  [oln_cv_cxx_style],
-                  [oln_cv_cxx_style=unknown
+                  [ac_cv_cxx_style],
+                  [ac_cv_cxx_style=unknown
                    if test "x$ac_compiler_gnu" != xno; then
 		      if $CXX --version | grep '^2\.' >/dev/null ; then
-			oln_cv_cxx_style=weakGNU
+			ac_cv_cxx_style=weakGNU
                       else
-                        oln_cv_cxx_style=GNU
+                        ac_cv_cxx_style=GNU
                       fi
                    elif $CXX -V 2>&1 | grep -i "WorkShop">/dev/null 2>&1; then 
-		      oln_cv_cxx_style=Sun
+		      ac_cv_cxx_style=Sun
                    elif $CXX -V 2>&1 | grep -i "Intel(R) C++">/dev/null 2>&1;
                    then
-                      oln_cv_cxx_style=Intel
+                      ac_cv_cxx_style=Intel
                    else
                       echo "int main() {}" >conftest.cc
                       if $CXX --version conftest.cc 2>&1 \
 		         | grep -i "Comeau C/C++" >/dev/null 2>&1; then       
-                         oln_cv_cxx_style=Comeau
+                         ac_cv_cxx_style=Comeau
 		      fi
                       rm -f conftest.*
                    fi])
    AC_LANG_POP([C++])
 
-   case "$oln_cv_cxx_style" in
+   case "$ac_cv_cxx_style" in
      GNU)
       _CXXFLAGS_DEBUG="-g"
       _CXXFLAGS_OPTIMIZE="-O3 -finline-limit-1500"
