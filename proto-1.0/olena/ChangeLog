@@ -1,5 +1,10 @@
 2005-03-19  Simon Odou  <simon@lrde.epita.fr>
 
+	* oln/makefile.src: Add neighborhood and structuring element files
+        to makefile.src.
+
+2005-03-19  Simon Odou  <simon@lrde.epita.fr>
+
 	* tests/core/tests/neighborhood2d: New.
 	* oln/core/abstract/neighborhood.hh: New.
 	* oln/core/2d/neighborhood2d.hh: New.

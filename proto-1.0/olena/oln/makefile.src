@@ -23,6 +23,8 @@ OLN_DEP =					\
   core/2d/image2d.hh				\
   core/2d/point2d.hh				\
   core/2d/size2d.hh				\
+  core/2d/neighborhood2d.hh			\
+  core/2d/window2d.hh				\
   core/3d/array3d.hh				\
   core/3d/fwd_piter3d.hh			\
   core/3d/image3d.hh				\
@@ -42,6 +44,8 @@ OLN_DEP =					\
   core/abstract/piter.hh			\
   core/abstract/point.hh			\
   core/abstract/size.hh				\
+  core/abstract/neighborhood.hh			\
+  core/abstract/window.hh			\
   core/coord.hh					\
   core/properties.hh				\
   core/value_box.hh				\
