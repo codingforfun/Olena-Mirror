@@ -188,6 +188,9 @@ namespace oln {
 #endif
       }
 
+      // Although this is a "const" accessor, it really needs
+      // to return a reference.  The I/O routines now khow images
+      // are stored and uses this returned address to output raw rows.
       const T& at(coord slice, coord row, coord col) const
       {
 	invariant(_buffer != 0);

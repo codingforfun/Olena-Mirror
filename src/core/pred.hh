@@ -66,7 +66,7 @@ namespace oln {
 
     bool hold(const point& p) const { return _image.hold(p); }
 
-    bin operator[](const point& p) const { return _pred(p, _image); }
+    const bin operator[](const point& p) const { return _pred(p, _image); }
 
     static std::string name()
     {

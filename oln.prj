@@ -1,17 +1,30 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_3 10)
-(Parent-Version oln 0_3 9)
-(Version-Log "Add missing ChangeLog entry.
+(Project-Version oln 0_3 11)
+(Parent-Version oln 0_3 10)
+(Version-Log "2002-03-25  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-2002-03-14  Ignacy Gawedzki  <ig@lrde.epita.fr>
+	Change const accessors to return const temporary values, so that
+	e.g. image[p] = v; fails to compile when image is const.
 
-	* src/value/color.h (value_traits, real_value_traits): Typo.
+	* src/core/pred.hh (operator[] const): Return a const value.
+	* src/core/internal/window.hh (operator[] const): Likewise.
+	* src/core/internal/w_window.hh (operator[] const): Likewise.
+	* src/core/internal/image1d.hh (size const, operator[] const,
+	operator() const): Likewise.
+	* src/core/internal/image2d.hh (size const, operator[] const,
+	operator() const): Likewise.
+	* src/core/internal/image3d.hh (size const, operator[] const,
+	operator() const): Likewise.
+
+	* src/core/internal/image1d_data.hh,
+	src/core/internal/image2d_data.hh,
+	src/core/internal/image3d_data.hh: More comments.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 25 Mar 2002 16:03:20 +0100")
+(Checkin-Time "Mon, 25 Mar 2002 16:48:43 +0100")
 (Checkin-Login adl)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
@@ -68,7 +81,7 @@
   (configure.ac (oln/3_configure. 1.2 644))
   (THANKS (oln/4_THANKS 1.1 644))
   (img/lena.pgm (oln/5_lena.pgm 1.1 640) :no-keywords)
-  (ChangeLog (oln/6_ChangeLog 1.19 644))
+  (ChangeLog (oln/6_ChangeLog 1.20 644))
   (src/config/system.hh (oln/7_system.hh 1.1 644))
   (src/utils/timer.hh (oln/8_timer.hh 1.1 644))
   (src/utils/stat.hh (oln/9_stat.hh 1.2 644))
@@ -192,7 +205,7 @@
   (src/core/regular_image.hh (oln/c/23_regular_im 1.1 644))
   (src/core/pred_image.hh (oln/c/24_pred_image 1.1 644))
   (src/core/structelt.hh (oln/c/25_structelt. 1.1 644))
-  (src/core/pred.hh (oln/c/26_pred.hh 1.1 644))
+  (src/core/pred.hh (oln/c/26_pred.hh 1.2 644))
   (src/core/point3d.hxx (oln/c/27_point3d.hx 1.1 644))
   (src/core/point3d.hh (oln/c/28_point3d.hh 1.1 644))
   (src/core/point2d.hxx (oln/c/29_point2d.hx 1.1 644))
@@ -218,8 +231,8 @@
   (src/core/old/image2d_bin.hxx (oln/c/49_image2d_bi 1.1 644))
   (src/core/old/image2d_bin.hh (oln/c/50_image2d_bi 1.1 644))
   (src/core/old/image2d.hxx (oln/c/51_image2d.hx 1.1 644))
-  (src/core/internal/window.hh (oln/d/0_window.hh 1.1 644))
-  (src/core/internal/w_window.hh (oln/d/1_w_window.h 1.1 644))
+  (src/core/internal/window.hh (oln/d/0_window.hh 1.2 644))
+  (src/core/internal/w_window.hh (oln/d/1_w_window.h 1.2 644))
   (src/core/internal/rec_operable.hh (oln/d/2_rec_operab 1.1 644))
   (src/core/internal/real_image3d.hh (oln/d/3_real_image 1.1 644))
   (src/core/internal/real_image2d.hh (oln/d/4_real_image 1.1 644))
@@ -229,12 +242,12 @@
   (src/core/internal/iter3d.hh (oln/d/8_iter3d.hh 1.1 644))
   (src/core/internal/iter2d.hh (oln/d/9_iter2d.hh 1.1 644))
   (src/core/internal/iter1d.hh (oln/d/10_iter1d.hh 1.1 644))
-  (src/core/internal/image3d_data.hh (oln/d/11_image3d_da 1.1 644))
-  (src/core/internal/image3d.hh (oln/d/12_image3d.hh 1.1 644))
-  (src/core/internal/image2d_data.hh (oln/d/13_image2d_da 1.1 644))
-  (src/core/internal/image2d.hh (oln/d/14_image2d.hh 1.1 644))
-  (src/core/internal/image1d_data.hh (oln/d/15_image1d_da 1.1 644))
-  (src/core/internal/image1d.hh (oln/d/16_image1d.hh 1.1 644))
+  (src/core/internal/image3d_data.hh (oln/d/11_image3d_da 1.2 644))
+  (src/core/internal/image3d.hh (oln/d/12_image3d.hh 1.2 644))
+  (src/core/internal/image2d_data.hh (oln/d/13_image2d_da 1.2 644))
+  (src/core/internal/image2d.hh (oln/d/14_image2d.hh 1.2 644))
+  (src/core/internal/image1d_data.hh (oln/d/15_image1d_da 1.2 644))
+  (src/core/internal/image1d.hh (oln/d/16_image1d.hh 1.2 644))
   (src/core/internal/fake.hh (oln/d/17_fake.hh 1.1 644))
   (src/core/image.hh (oln/d/18_image.hh 1.1 644))
   (src/core/fwd_iter3d.hh (oln/d/19_fwd_iter3d 1.1 644))

@@ -83,7 +83,7 @@ namespace oln {
 	return to_exact(this)->data()->border();
       }
 
-      image1d_size size() const
+      const image1d_size size() const
       {
 	assertion(_has_data());
 	return image1d_size(to_exact(this)->data()->ncols());
@@ -105,7 +105,7 @@ namespace oln {
 	return hold(p.col());
       }
 
-      T operator[](const point1d& p) const
+      const T operator[](const point1d& p) const
       {
 	assertion(_has_data());
 	return to_exact(this)->data()->at(p.col());
@@ -117,7 +117,7 @@ namespace oln {
 	return to_exact(this)->data()->at(p.col());
       }
 
-      T operator()(coord col) const
+      const T operator()(coord col) const
       {
 	assertion(_has_data());
 	return to_exact(this)->data()->at(col);

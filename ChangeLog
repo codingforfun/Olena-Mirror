@@ -1,3 +1,22 @@
+2002-03-25  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	Change const accessors to return const temporary values, so that
+	e.g. image[p] = v; fails to compile when image is const.
+
+	* src/core/pred.hh (operator[] const): Return a const value.
+	* src/core/internal/window.hh (operator[] const): Likewise.
+	* src/core/internal/w_window.hh (operator[] const): Likewise.
+	* src/core/internal/image1d.hh (size const, operator[] const,
+	operator() const): Likewise.
+	* src/core/internal/image2d.hh (size const, operator[] const,
+	operator() const): Likewise.
+	* src/core/internal/image3d.hh (size const, operator[] const,
+	operator() const): Likewise.
+
+	* src/core/internal/image1d_data.hh,
+	src/core/internal/image2d_data.hh,
+	src/core/internal/image3d_data.hh: More comments.
+
 2002-03-14  Ignacy Gawedzki  <ig@lrde.epita.fr>
 
 	* src/value/color.h (value_traits, real_value_traits): Typo.

@@ -96,7 +96,7 @@ namespace oln {
 	return to_exact(this)->data()->border();
       }
 
-      image3d_size size() const
+      const image3d_size size() const
       {
 	assertion(_has_data());
 	return image3d_size(to_exact(this)->data()->nslices(),
@@ -120,7 +120,7 @@ namespace oln {
 	return hold(p.slice(), p.row(), p.col());
       }
 
-      T operator[](const point3d& p) const
+      const T operator[](const point3d& p) const
       {
 	assertion(_has_data());
 	return to_exact(this)->data()->at(p.slice(), p.row(), p.col());
@@ -132,7 +132,7 @@ namespace oln {
 	return to_exact(this)->data()->at(p.slice(), p.row(), p.col());
       }
 
-      T operator()(coord slice, coord row, coord col) const
+      const T operator()(coord slice, coord row, coord col) const
       {
 	assertion(_has_data());
 	return to_exact(this)->data()->at(slice, row, col);

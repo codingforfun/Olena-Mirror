@@ -104,7 +104,7 @@ namespace oln {
 	_w.push_back(w);
       }
 
-      dpoint operator[](unsigned i) const
+      const dpoint operator[](unsigned i) const
       {
 	precondition(i < card());
 	return _dp[i];

@@ -163,14 +163,17 @@ namespace oln {
 #endif
       }
 
-      const T& at(coord row, coord col) const // should really return a &
+      // Although this is a "const" accessor, it really needs
+      // to return a reference.  The I/O routines know how images
+      // are stored and uses this returned address to output raw rows.
+      const T& at(coord row, coord col) const
       {
 	invariant(_buffer != 0);
 	precondition_hold_large(row, col);
 	return _array[row][col];
       }
 
-      T& at(coord row, coord col) // should really return a &
+      T& at(coord row, coord col)
       {
 	invariant(_buffer != 0);
 	precondition_hold_large(row, col);
