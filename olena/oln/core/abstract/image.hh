@@ -356,7 +356,7 @@ mlc_exact_type_(Iterable)::iter_type
 # define oln_fwd_iter_type(Fwd_Iterable)	\
 mlc_exact_type(Fwd_Iterable)::fwd_iter_type
 # define oln_fwd_iter_type_(Fwd_Iterable)	\
-mlc_exact_type_(Fwd_Iterable)
+mlc_exact_type_(Fwd_Iterable)::fwd_iter_type
 
 # define oln_bkd_iter_type(Bkd_Iterable)	\
 mlc_exact_type(Bkd_Iterable)::bkd_iter_type
