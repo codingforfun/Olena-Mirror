@@ -1,3 +1,7 @@
+2002-06-26  Jerome Darbon  <jerome@epita.fr>
+
+	* src/level/lut.hh Change hash_map to map
+
 2002-06-24  Quôc Peyrot  <chojin@lrde.epita.fr>
 
 	* src/Makefile.am (nobase_oln_HEADERS): Add core/threshold.hh.

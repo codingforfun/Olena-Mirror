@@ -28,8 +28,9 @@
 #ifndef OLENA_LEVEL_LUT_HH
 # define OLENA_LEVEL_LUT_HH
 
+# include <map>
 # include "basics.hh"
-# include "config/hash_map.hh"
+
 
 namespace oln {
   namespace level {
@@ -40,7 +41,7 @@ namespace oln {
     template<class T, class T2 = T>
     class hlut
     {
-      typedef std::hash_map<T,T2> hmap_t;
+      typedef std::map<T,T2> hmap_t;
     public:
       typedef T2 output_t;
       hlut()
@@ -68,7 +69,7 @@ namespace oln {
     template<class T, class T2 = T>
     class hlut_def
     {
-      typedef std::hash_map<T,T2> hmap_t;
+      typedef std::map<T,T2> hmap_t;
     public:
       typedef T2 output_t;
       hlut_def()
