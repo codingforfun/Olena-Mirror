@@ -29,6 +29,7 @@
 # define OLENA_CORE_PW_PLUS_HH
 
 # include <oln/core/pw/abstract/function.hh>
+# include <oln/core/pw/literal.hh>
 # include <ntg/all.hh>
 
 

@@ -29,6 +29,7 @@
 # define OLENA_CORE_ANY_DPOINT_HH
 
 # include <oln/core/abstract/dpoint.hh>
+# include <oln/core/any/point.hh>
 
 
 namespace oln {

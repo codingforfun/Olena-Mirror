@@ -39,6 +39,7 @@ namespace oln {
   struct any_dpoint;
 
   // category
+  template <>
   struct set_category< any_point > { typedef category::point ret; };
 
   // props

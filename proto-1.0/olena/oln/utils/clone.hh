@@ -72,12 +72,12 @@ namespace oln {
 
 	void impl_run()
 	{
-	  I tmp(input.size()); // FIXME: trick
-	  output = tmp;
+	  I tmp(this->input.size()); // FIXME: trick
+	  this->output = tmp;
 
-	  oln_type_of(I, fwd_piter) p(input.size());
+	  oln_type_of(I, fwd_piter) p(this->input.size());
 	  for_all(p)
-	    output[p] = input[p];
+	    this->output[p] = this->input[p];
 	}
       };
 

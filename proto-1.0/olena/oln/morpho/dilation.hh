@@ -172,12 +172,12 @@ namespace oln {
 	  mlc::is_true<mlc::type::eq<oln_type_of(I, size),
 	                             oln_type_of(S, size)>::ret>::ensure();
 
-	  output_type tmp(input.size()); // FIXME: trick
-	  output = tmp;
+	  output_type tmp(this->input.size()); // FIXME: trick
+	  this->output = tmp;
 
-	  oln_type_of(I, fwd_piter) p(input.size());
+	  oln_type_of(I, fwd_piter) p(this->input.size());
 	  for_all (p)
-	    output[p] = morpho::max(input, p, se);
+	    this->output[p] = morpho::max(this->input, p, this->se);
 	}
       };
 
