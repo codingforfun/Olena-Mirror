@@ -1,12 +1,11 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5_reconf 7)
-(Parent-Version oln 0_5_reconf 6)
-(Version-Log "        * oln/config/pconf.hh: fix bug. 
-")
+(Project-Version oln 0_5_reconf 8)
+(Parent-Version oln 0_5_reconf 7)
+(Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Wed, 04 Dec 2002 16:41:54 +0100")
+(Checkin-Time "Wed, 04 Dec 2002 16:43:16 +0100")
 (Checkin-Login raph)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -773,7 +772,7 @@
 ;; Files added by populate at Wed, 04 Dec 2002 15:48:52 +0100,
 ;; to version 0_5_reconf.1(w), by raph:
 
-  (oln/config/pconf.inc (oln/j/11_pconf.inc 1.1 664))
+  (oln/config/pconf.inc (oln/j/11_pconf.inc 1.2 664))
 
 ;; Files added by populate at Wed, 04 Dec 2002 15:49:00 +0100,
 ;; to version 0_5_reconf.1(w), by raph:
