@@ -18,6 +18,7 @@
 	* tests/check/Makefile.flags, tests/morpho/Makefile.am: Allow
 	flags redefinition. This is a temporary fix, flags should be
 	entierely defined at configure time.
+	* tests/defs.in: Replace -DHAVE_CONFIG_H by @DEFS@.
 
 2003-01-17  Akim Demaille  <akim@epita.fr>
 

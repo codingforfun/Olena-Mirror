@@ -1,40 +1,14 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 7 23)
-(Parent-Version oln 7 22)
+(Project-Version oln 7 24)
+(Parent-Version oln 7 23)
 (Version-Log "2003-01-18  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* oln/convert/nrgbhsl.hh: Remove std:: prefix before abs() C
-	function, it is not standard.
-	* oln/io/readable.hh: Likewise for exit().
-	* tests/transforms/dwt.cc: Likewise for rand().
-	* oln/io/gz_stream.hh: Replace NULL by 0. Add missing forward
-	declaration.
-	* oln/topo/dmap.hxx: Fix function default parameter redefinition.
-	* oln/types/behaviour.hh: Remove useless typedef.
-	* oln/types/global_ops_traits.hh: Fix traits members accessibility
-	problems.
-	* tests/io/loadsave.hh: Remove static keyword before function
-	definitions.
-	
-	* tests/arith/runtest, tests/types/runtests, tests/defs.in: Add
-	LDFLAGS support.
-	* tests/check/Makefile.flags, tests/morpho/Makefile.am: Allow
-	flags redefinition. This is a temporary fix, flags should be
-	entierely defined at configure time.
-2003-01-18  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* utilities/morpho/morpho_template.cc,
-	utilities/morpho/morpho_template_extrema.cc,
-	utilities/morpho/morpho_template_gaussian.cc,
-	utilities/morpho/morpho_template_watershed.cc,
-	utilities/morpho/morpho_template_with_functor.cc,
-	utilities/morpho/morpho_template_with_neighb.cc,
-	utilities/morpho/morpho_template_with_twowin.cc: Replace NULL by 0.
+	* tests/defs.in: Replace -DHAVE_CONFIG_H by @DEFS@.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sat, 18 Jan 2003 23:34:34 +0100")
+(Checkin-Time "Sun, 19 Jan 2003 00:02:43 +0100")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -156,7 +130,7 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.9 640))
-  (oln/ChangeLog (oln/o/30_ChangeLog 1.23 640))
+  (oln/ChangeLog (oln/o/30_ChangeLog 1.24 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.4 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.5 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.1 640))
@@ -478,7 +452,7 @@
   (oln/tests/convol/slow_sum_2d_2.cc (oln/f/40_slow_sum_2 1.2.1.1 640))
   (oln/tests/convol/sobel_gradient.cc (oln/f/45_sobel_grad 1.3.1.1 640))
   (oln/tests/convol/sum_on_random.pgm (oln/f/42_sum_on_ran 1.1 640))
-  (oln/tests/defs.in (oln/f/49_defs.in 1.6 640))
+  (oln/tests/defs.in (oln/f/49_defs.in 1.7 640))
   (oln/tests/io/2d.cc (oln/e/47_2d.cc 1.4 640))
   (oln/tests/io/loadsave.hh (oln/e/48_loadsave.h 1.7 640))
   (oln/tests/io/Makefile.am (oln/e/49_Makefile.a 1.8 640))
