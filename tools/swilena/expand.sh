@@ -109,7 +109,14 @@ dump_python()
     for mod in $MODULES; do
       echo "_swilena_${mod}_so_SOURCES = swilena_${mod}_wrap.cxx"
     done
-    echo
+    echo; echo
+    echo -ne "CLEANFILES= "
+    for mod in $MODULES; do
+	echo -e "\\"
+	echo -ne "\t swilena_$mod.py"
+    done
+    echo; echo
+
     ilist=0
     for mod in $MODULES; do
       if [ -r "$SWILENA/src/swilena_${mod}.i" ]; then

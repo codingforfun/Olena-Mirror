@@ -1,3 +1,10 @@
+2004-04-12  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* swilena/expand.sh: Add `CLEANFILES' variables to
+	python/makefile.swig.
+	* swilena/ruby/Makefile.am: Add `clean-local' rule.
+	* swilena/src/Makefile.am: Add `distclean-local' rule.
+
 2004-04-12  Niels Van Vliet  <niels@lrde.epita.fr>
 
 	* tools/swilena/generate_morpho_instantiations.py: Fix and add
