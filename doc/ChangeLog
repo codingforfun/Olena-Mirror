@@ -1,3 +1,11 @@
+2003-08-11  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ref/Makefile.am (CLEANFILES): Don't remove dvi files.
+
+2003-08-08  David Lesage  <david@lrde.epita.fr>
+
+	* dev/upgrading.texi: Update.
+
 2003-08-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* dev/thanks.texi: Update.	

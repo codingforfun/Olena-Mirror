@@ -1,14 +1,15 @@
 Olena 0.9	August 8, 2003
 
         * New static hierarchy paradigm
-          - Multiple inheritance and diamond hierarchies made
-            possible.
+	  - Complete rewrite of the image hierarchy. 
+          - The new hierarchy benefits from multiple inheritance and
+	    diamond constructs.
           - Objects' abstract interfaces made available, leading to
             safer and easier algorithm writing.
 	  - Label images such as binary_image or vectorial_image added.
 
         * Partial rewrite of images I/O
-          - Support for 1d and 3d images and windows.
+          - Support for 1d, 3d images and windows.
           - Better handling of built-in types.
 
         * Color conversions fixed and improved.

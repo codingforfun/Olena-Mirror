@@ -1,12 +1,16 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 9 23)
-(Parent-Version oln 9 22)
-(Version-Log "* doc/dev/thanks.texi: Update again.
+(Project-Version oln 9 25)
+(Parent-Version oln 9 23)
+(Version-Log "Index: doc/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+        * ref/Makefile.am (CLEANFILES): Don't remove dvi files.
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 07 Aug 2003 20:10:12 +0200")
+(Checkin-Time "Mon, 11 Aug 2003 15:35:58 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -109,8 +113,8 @@
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17 640))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.6 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.1 640))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.1 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.25 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.34 640))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.24 640))
@@ -134,7 +138,7 @@
   (doc/demo/tour.cc (oln/d/45_tour.cc 1.12 640))
   (doc/ref/bin () :directory)
   (doc/ref/html () :directory)
-  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.7 640))
+  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.8 640))
   (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.6.1.3 640))
   (doc/ref/oln-ref.tex (oln/f/14_oln-ref.te 1.3.1.3 640))
   (doc/ref/integre-ref.tex (oln/g/34_ref-types. 1.11 640))
@@ -142,7 +146,7 @@
   (doc/ref/processing.tpl (oln/d/48_processing 1.16 640))
 
   (Makefile.am (oln/n/32_Makefile.a 1.17.1.2.1.6 640))
-  (NEWS (oln/0_NEWS 1.15 640))
+  (NEWS (oln/0_NEWS 1.16 640))
 
   (olena/img/face_se.pbm (oln/n/17_face_se.pb 1.1 640) :no-keywords)
   (olena/img/lena256.pgm (oln/n/14_lena256.pg 1.1 640) :no-keywords)
@@ -838,7 +842,7 @@
 ;; Files added by populate at Wed, 09 Apr 2003 22:18:27 +0200,
 ;; to version 8.31(w), by nes:
 
-  (doc/dev/upgrading.texi (oln/r/50_upgrading. 1.1 640))
+  (doc/dev/upgrading.texi (oln/r/50_upgrading. 1.2 640))
 
 
   (integre/tests/types/tests/builtin1 (oln/s/7_builtin1 1.1 640))
@@ -1021,5 +1025,9 @@
   (olena/oln/core/abstract/image_with_type_with_dim.hh (oln/v/11_image_with 1.3 600))
   (olena/tests/core/tests/image2 (oln/v/12_image2 1.2 600))
   (olena/tests/utils/tests/copy (oln/v/13_copy 1.1 600)))
-(Merge-Parents)
+(Merge-Parents
+  (9.24 complete
+    (ChangeLog ChangeLog ChangeLog r) (doc/ChangeLog doc/ChangeLog doc/ChangeLog r)
+    (NEWS NEWS NEWS r) (doc/dev/upgrading.texi doc/dev/upgrading.texi doc/dev/upgrading.texi r))
+)
 (New-Merge-Parents)

@@ -96,7 +96,7 @@ MAINTAINERCLEANFILES = $(built_oln_ref_TEX) $(dist_noinst_DATA) \
 	$(srcdir)/html/* $(srcdir)/bin/* \
 	$(srcdir)/filelists.make
 
-CLEANFILES = = *.tmp *.aux *.bbl *blg *.dvi *.lot *.log *.out *.toc  
+CLEANFILES = = *.tmp *.aux *.bbl *blg *.lot *.log *.out *.toc  
 
 ###
 ### What gets installed.
