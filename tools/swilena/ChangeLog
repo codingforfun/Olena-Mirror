@@ -1,3 +1,10 @@
+2004-04-11  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* tools/swilena/meta/swilena_ntg.i: Remove "(do_nothing)".
+	* tools/swilena/meta/swilena_morpho.i: Likewise.
+	* tools/swilena/meta/swilena_exception.i: Likewise.
+	* tools/swilena/generate_morpho_instantiations.py: Remove debug info.
+
 2004-04-11  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* swilena/expand.sh: Split morpho modules to make the code compile

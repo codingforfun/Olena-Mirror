@@ -182,7 +182,7 @@ static Img my_ ## Func(const Img& a1, unsigned area, const Neighb& a3)
   Declare generic functions for classical algorithms
 */
 
-%define decl_classical_family(do_nothing)
+%define decl_classical_family
   decl_morpho_2(<oln/morpho/erosion.hh>, erosion, 1)
   decl_morpho_2(<oln/morpho/dilation.hh>, dilation, 1)
   decl_morpho_2(<oln/morpho/opening.hh>, opening, 1)
@@ -237,7 +237,7 @@ static Img my_ ## Func(const Img& a1, unsigned area, const Neighb& a3)
 | Extrema killer family |
 `----------------------*/
 
-%define decl_extrema_killer_family(do_nothing)
+%define decl_extrema_killer_family
   decl_morpho_extrema_killer(<oln/morpho/extrema_killer.hh>,
 			     sure_maxima_killer)
   decl_morpho_extrema_killer(<oln/morpho/extrema_killer.hh>,
@@ -252,12 +252,12 @@ static Img my_ ## Func(const Img& a1, unsigned area, const Neighb& a3)
 | Watershed family |
 `-----------------*/
 
-%define decl_watershed_family(do_nothing)
+%define decl_watershed_family
      decl_morpho_watershed(watershed_seg)
      decl_morpho_watershed(watershed_con)
      decl_morpho_3(<oln/morpho/watershed.hh>, watershed_seg_or, 0)
 %enddef
 
-decl_classical_family(do_nothing)
-decl_watershed_family(do_nothing)
-decl_extrema_killer_family(do_nothing)
+decl_classical_family
+decl_watershed_family
+decl_extrema_killer_family

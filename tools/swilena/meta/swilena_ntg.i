@@ -157,7 +157,7 @@ class Name
 };
 %enddef
 
-%define decl_complex(do_nothing)
+%define decl_complex
 template<typename repr, typename T>
 class cplx
 {
@@ -186,7 +186,7 @@ class cplx
 %enddef
 
 // Swig preprocessor does not understand empty call to macros.
-%define decl_ntg(do_nothing)
+%define decl_ntg
 %include <ntg/vect/cplx_representation.hh>
 %include <ntg/core/predecls.hh>
 %{
@@ -202,12 +202,12 @@ namespace ntg
   decl_scalar_class(ntg, int_s, long)
   decl_bin_class(ntg, bin, bool)
 
-  decl_complex(do_nothing)
+  decl_complex
 
 }
 %enddef
 
-decl_ntg(do_nothing)
+decl_ntg
 
 /*
    Macro are defined for every type and should be used in all modules

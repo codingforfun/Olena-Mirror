@@ -61,7 +61,6 @@ def write_algorithms():
 
             idx = (dim - 1) * 6 + dict_num_type[type]
 
-            print idx
 	    # FIXME: these algorithms do not work with floats
             if type != "ntg_float":
 		instantiate(idx, "erosion", img_type, img_type, win_type)
