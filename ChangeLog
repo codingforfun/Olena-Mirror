@@ -1,3 +1,16 @@
+2002-09-14  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/types/int_u.hh, oln/types/int_s.hh, oln/types/range.hh, 
+	oln/types/cycle.hh, oln/types/typetraits_builtin_int.hh, 
+	oln/types/typetraits_builtin_float.hh: Add behaviour_type typedef.
+	* oln/types/optraits_scalar_defs.hh, oln/types/behaviour.hh: Add 
+	arithmetic checks.
+	* oln/types/behaviour.hh, oln/types/optraits_int_u.hh, 
+	oln/types/optraits_int_s.hh, oln/types/optraits_cycle.hh, 
+	oln/types/optraits_range.hh, oln/types/interval.hh, 
+	oln/types/optraits_bin.hh: Add debug code.
+	* oln/types/to_oln.hh: Add OLN_TYPE macro.
+
 2002-09-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/types/predecls.hh: Remove namespace types.

@@ -34,6 +34,12 @@
 # include <oln/types/rec_value.hh>
 # include <oln/types/optraits.hh>
 # include <oln/types/typetraits.hh>
+# include <oln/types/to_oln.hh>
+
+# include <string>
+# include <sstream>
+
+# define ABS(X) ((X) >= 0 ? (X) : (std::abs(X)))
 
 //
 //  Behaviours for data_types int_u, int_s, etc ...
@@ -61,10 +67,29 @@ namespace oln
     {
       typedef typename typetraits<T>::storage_type storage_type;
 
+      template <class T1, class T2>
+      static T check_plus_equal (T1 lhs, T2 rhs)
+      {	return lhs + rhs; }
+
+      template <class T1, class T2>
+      static T check_minus_equal (T1 lhs, T2 rhs)
+      {	return lhs - rhs; }
+
+      template <class T1, class T2>
+      static T check_times_equal (T1 lhs, T2 rhs)
+      {	return lhs * rhs; }
+
+      template <class T1, class T2>
+      static T check_div_equal (T1 lhs, T2 rhs)
+      {	return lhs / rhs; }
+
       template <class P>
       static storage_type apply (const P& p)
       { return static_cast<storage_type>(p); }
     };
+
+    // debug
+    static std::string name() { return "unsafe"; }
   };
 
 
@@ -77,6 +102,39 @@ namespace oln
     {
       typedef typename typetraits<T>::storage_type storage_type;
 
+      template <class T1, class T2>
+      static T check_plus_equal (T1 lhs, T2 rhs)
+      {	
+	T ret = lhs + rhs;
+	if (rhs > 0)
+	  precondition(OLN_TYPE(T, ret) > lhs);
+	else
+	  precondition(OLN_TYPE(T, ret) <= lhs);
+	return ret;
+      }
+
+      template <class T1, class T2>
+      static T check_minus_equal (T1 lhs, T2 rhs)
+      {	
+	T ret = lhs - rhs;
+	if (rhs > 0)
+	  precondition(OLN_TYPE(T, ret) <= lhs);
+	else
+	  precondition(OLN_TYPE(T, ret) > lhs);
+	return ret;
+      }
+
+      template <class T1, class T2>
+      static T check_times_equal (T1 lhs, T2 rhs)
+      {		
+	// FIXME: add checks
+	return lhs * rhs;
+      }
+
+      template <class T1, class T2>
+      static T check_div_equal (T1 lhs, T2 rhs)
+      {	return lhs / rhs; }
+
       template <class P>
       static storage_type apply (const P& p)
       {
@@ -88,6 +146,9 @@ namespace oln
 	return static_cast<storage_type>(p);
       }
     };
+
+    // debug
+    static std::string name() { return "strict"; }
   };
 
 
@@ -99,6 +160,25 @@ namespace oln
     struct get
     {
       typedef typename typetraits<T>::storage_type storage_type;
+
+      // FIXME: Calculate real values
+
+      template <class T1, class T2>
+      static T check_plus_equal (T1 lhs, T2 rhs)
+      {	return lhs + rhs; }
+
+      template <class T1, class T2>
+      static T check_minus_equal (T1 lhs, T2 rhs)
+      {	return lhs - rhs; }
+
+      template <class T1, class T2>
+      static T check_times_equal (T1 lhs, T2 rhs)
+      {	return lhs * rhs; }
+
+      template <class T1, class T2>
+      static T check_div_equal (T1 lhs, T2 rhs)
+      {	return lhs / rhs; }
+
       template <class P>
       static storage_type apply (const P& p)
       {
@@ -113,6 +193,45 @@ namespace oln
 	return static_cast<storage_type>(p);
       }
     };
+
+    // debug
+    static std::string name() { return "saturate"; }
+  };
+
+  //
+  // This behaviour is not really useful, but implement cycle<> internal 
+  // calculus.
+  //
+  struct cycle_behaviour
+  {
+    template <class T>
+    struct get
+    {
+      typedef typename typetraits<T>::storage_type storage_type;
+
+      // FIXME: calculate real values
+
+      template <class T1, class T2>
+      static T check_plus_equal (T1 lhs, T2 rhs)
+      {	return lhs + rhs; }
+
+      template <class T1, class T2>
+      static T check_minus_equal (T1 lhs, T2 rhs)
+      {	return lhs - rhs; }
+
+      template <class T1, class T2>
+      static T check_times_equal (T1 lhs, T2 rhs)
+      {	return lhs * rhs; }
+
+      template <class T1, class T2>
+      static T check_div_equal (T1 lhs, T2 rhs)
+      {	return lhs / rhs; }
+
+      // FIXME: insert apply
+    };
+
+    // debug
+    static std::string name() { return "cycle_behaviour"; }
   };
 
   namespace internal {

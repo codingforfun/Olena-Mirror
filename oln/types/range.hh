@@ -47,6 +47,7 @@ namespace oln
   {
     typedef range<T, interval, behaviour> self;
     typedef optraits<self> optraits;
+    typedef typename behaviour::get<self> behaviour_type;
 
     typedef typename typetraits<T>::base_type		base_type;
     typedef T						storage_type;

@@ -32,6 +32,9 @@
 # include <oln/types/optraits.hh>
 # include <oln/types/bin.hh>
 
+# include <string>
+# include <sstream>
+
 namespace oln
 {
   
@@ -99,6 +102,8 @@ namespace oln
       return lhs.value() == rhs.value();
     }
 
+    // debug
+    static std::string name() { return "bin"; }
   };
 
 

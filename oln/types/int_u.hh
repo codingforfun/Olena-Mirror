@@ -66,8 +66,9 @@ namespace oln
   template <unsigned nbits, class behaviour>
   struct typetraits<int_u<nbits, behaviour> >
   {
-    typedef int_u<nbits, behaviour> self;
-    typedef optraits<self> optraits;
+    typedef int_u<nbits, behaviour>		self;
+    typedef optraits<self>			optraits;
+    typedef typename behaviour::get<self>	behaviour_type;
 
     typedef self					base_type;
     typedef typename C_for_int_u<nbits>::type		storage_type;

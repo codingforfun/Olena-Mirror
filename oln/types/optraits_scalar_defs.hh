@@ -46,21 +46,24 @@
   template <class T1, class T2>	inline							\
   static T1& Name##_impl(rec_scalar<T1>& lhs, const rec_scalar<T2>& rhs)		\
   {											\
-    lhs.self() = lhs.self().value() Op rhs.self().value();				\
+    typedef typename typetraits<T1>::behaviour_type behaviour_type;			\
+    lhs.self() = behaviour_type::check_##Name(lhs.self().value(), rhs.self().value());	\
     return lhs.self();									\
   }											\
 											\
   template <class T1, class T2>	inline							\
   static T1& Name##_impl(rec_scalar<T1>& lhs, const type::any_const_class<T2> rhs)	\
   {											\
-    lhs.self() = lhs.self().value() Op rhs.self();					\
+    typedef typename typetraits<T1>::behaviour_type behaviour_type;			\
+    lhs.self() = behaviour_type::check_##Name(lhs.self().value(), rhs.self());		\
     return lhs.self();									\
   }											\
 											\
   template <class T1, class T2>	inline							\
   static T1& Name##_impl(type::any_class<T1> lhs, const rec_scalar<T2>& rhs)		\
   {											\
-    lhs.self() = lhs.self() Op rhs.self().value();					\
+    typedef typename typetraits<T1>::behaviour_type behaviour_type;			\
+    lhs.self() = behaviour_type::check_##Name(lhs.self(), rhs.self().value());		\
     return lhs.self();									\
   }
 

@@ -36,6 +36,9 @@
 # include <oln/types/typetraits.hh>
 # include <oln/types/global_ops_traits.hh>
 
+# include <string>
+# include <sstream>
+
 namespace oln
 {
 
@@ -71,18 +74,14 @@ namespace oln
     struct cycle_fmod
     {
       static double exec (double lhs, double rhs)
-      {
-	return fmod(lhs, rhs);
-      }
+      {	return fmod(lhs, rhs); }
     };
 
-    template <class U>
     struct cycle_mod
     {
-      static U exec (const U& lhs, const U& rhs)
-      {
-	return lhs % rhs;
-      }
+      template <class T1, class T2>
+      static T1 exec (const T1& lhs, const T2& rhs)
+      {	return lhs % rhs; }
     };
 
     // behaviour's check
@@ -92,16 +91,26 @@ namespace oln
     {
       typedef typename meta::if_<is_a(optraits<P>, optraits_float)::ret,
 	                         cycle_fmod,
-	                         cycle_mod<P> >::ret_t cycle_op;;
+	                         cycle_mod>::ret_t cycle_op;
+
       typename internal::to_oln<P>::ret
 	tmp = cycle_op::exec(std::abs(rhs), max() - min());
+
       if (rhs < 0) tmp = -tmp;
 
       if (tmp < min())
 	return max() - min() + tmp;
       else if (tmp >= max())
 	return min() - max() + tmp;
+
       return tmp;
+    }
+
+    // debug
+    static std::string name() {
+      std::ostringstream out;
+      out << "cycle<" << optraits<T>::name() << ", " << interval::name() << ">"<< std::ends;
+      return out.str();
     }
   };
 

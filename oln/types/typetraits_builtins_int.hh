@@ -38,6 +38,7 @@
   {										\
     typedef Name self;								\
     typedef optraits<self> optraits;						\
+    typedef unsafe::get<self> behaviour_type;					\
 										\
     typedef self					base_type;		\
     typedef self					storage_type;		\

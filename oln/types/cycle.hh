@@ -48,6 +48,7 @@ namespace oln
   {
     typedef cycle<T, interval> self;
     typedef optraits<self> optraits;
+    typedef cycle_behaviour::get<self> behaviour_type;
 
     typedef typename typetraits<T>::base_type		base_type;
     typedef T						storage_type;

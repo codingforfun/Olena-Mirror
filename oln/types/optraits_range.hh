@@ -33,6 +33,9 @@
 # include <oln/types/typetraits.hh>
 # include <oln/types/global_ops_traits.hh>
 
+# include <string>
+# include <sstream>
+
 namespace oln
 {
 
@@ -71,8 +74,16 @@ namespace oln
     static interval_type sup()
     { return interval::sup(); }
     
+    // debug
+    static std::string name() 
+    {
+      std::ostringstream out;
+      out << "range<" << optraits<T>::name() << ", " << interval::name() 
+	  << ", " << behaviour::name() << ">"<< std::ends;
+      return out.str();
+    }
   };
-
+  
 
   //
   //  dev note
@@ -80,7 +91,7 @@ namespace oln
   //  Arithmetic and other binary operators use base_type, 
   //  check typetraits<range>::op_traits
   //
-
+  
 } // end of namespace oln
 
 #endif // ndef OLENA_VALUE_OPTRAITS_RANGE_HH

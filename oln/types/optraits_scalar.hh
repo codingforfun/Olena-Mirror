@@ -62,6 +62,8 @@ namespace oln
     // dev note : the goal in those default operators is to check the kind
     // of operands (rec_value or not), and then call the good function.
     //
+    // ASSIGN_SCALAR_OPERATOR includes default check_xxx_equal functions
+    //
 
     ASSIGN_SCALAR_OPERATOR(plus_equal,  +);
     ASSIGN_SCALAR_OPERATOR(minus_equal, -);

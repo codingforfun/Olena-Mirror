@@ -30,6 +30,8 @@
 
 # include <oln/types/predecls.hh>
 
+# define OLN_TYPE(T, Val) (static_cast<typename oln::internal::to_oln<T>::ret>(Val))
+
 namespace oln {
 
   namespace internal {

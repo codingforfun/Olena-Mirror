@@ -1,0 +1,3 @@
+int_u32 u = 65536;
+u *= 65537;  // ABORT
+std::cout << u << std::endl;

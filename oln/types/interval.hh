@@ -28,6 +28,9 @@
 #ifndef OLENA_VALUE_INTERVAL_HH
 # define OLENA_VALUE_INTERVAL_HH
 
+# include <string>
+# include <sstream>
+
 namespace oln
 {
   namespace type_definitions
@@ -42,16 +45,36 @@ namespace oln
       static T max() { return i_max; }
       static T inf() { return i_min; }
       static T sup() { return i_max; }
+
+      static std::string name()
+      {
+	std::ostringstream out;
+	out << "bounded<" << optraits<T>::name() << ", " << i_min 
+	    << ", " << i_max << ">"<< std::ends;
+	return out.str();
+      }
     };
 
     template <unsigned i_min, unsigned i_max>
     class bounded_u : public bounded<unsigned, i_min, i_max>
     {
+      static std::string name()
+      {
+	std::ostringstream out;
+	out << "bounded_u<" << i_min << ", " << i_max << ">"<< std::ends;
+	return out.str();
+      }
     };
 
     template <signed i_min, signed i_max>
     class bounded_s : public bounded<signed, i_min, i_max>
     {
+      static std::string name()
+      {
+	std::ostringstream out;
+	out << "bounded_s<" << i_min << ", " << i_max << ">"<< std::ends;
+	return out.str();
+      }
     };
   } // type_definitions
 } // end of namespace oln

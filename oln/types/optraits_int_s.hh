@@ -41,6 +41,9 @@
 
 # include <oln/meta/cmp.hh>
 
+# include <sstream>
+# include <string>
+
 namespace oln
 {
   //
@@ -147,6 +150,13 @@ namespace oln
     static bool
     cmp_lt(const T1& lhs, const T2& rhs)
     { return optraits_scalar<self>::cmp_lt(lhs, rhs); }
+
+    // debug
+    static std::string name() {
+      std::ostringstream out;
+      out << "int_s<" << int(nbits) << ", " << behaviour::name() << ">"<< std::ends;
+      return out.str();
+    }
   };
 
 

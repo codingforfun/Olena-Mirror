@@ -37,6 +37,9 @@
 
 # include <oln/meta/cmp.hh>
 
+# include <string>
+# include <sstream>
+
 namespace oln
 {
 
@@ -69,6 +72,13 @@ namespace oln
 
     static storage_type max()
     { return C_for_int_u<nbits>::max(); }
+
+    // debug
+    static std::string name() {
+      std::ostringstream out;
+      out << "int_u<" << int(nbits) << ", " << behaviour::name() << ">"<< std::ends;
+      return out.str();
+    }
   };
 
   namespace internal
