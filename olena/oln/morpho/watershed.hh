@@ -65,28 +65,44 @@ namespace oln {
     ** \code
     ** #include <oln/basics2d.hh>
     ** #include <oln/morpho/watershed.hh>
-    ** #include <oln/level/compare.hh>
     ** #include <ntg/all.hh>
+    **
+    ** #include <oln/morpho/attribute_closing_opening.hh>
+    ** #include <oln/morpho/gradient.hh>
+    ** #include <oln/convert/stretch.hh>
     ** int main()
     ** {
     **   typedef oln::image2d<ntg::int_u8>	im_type;
     **
-    **   im_type	im1(oln::load(IMG_IN "lena256.pgm"));
+    **   im_type im1(oln::load(IMG_IN "lena256.pgm"));
     **
-    **   oln::save(oln::morpho::watershed_seg<ntg::int_u16>(im1,
-    **                                                      oln::neighb_c4()),
-    **             IMG_OUT "oln_morpho_watershed_seg.pbm");
-    **   return  0;
+    **   // Gradient of the image
+    **   im1 = oln::morpho::beucher_gradient(im1, oln::win_c8p());
+    **
+    **   // Remove local minima smaller than 200 pixels
+    **   im1 = oln::morpho::fast::card_closing(im1, oln::neighb_c8(),
+    ** 					200);
+    **
+    **   oln::save(im1, IMG_OUT "oln_morpho_watershed_seg_tmp.pgm");
+    **
+    **   // Use the watershed to segment the image
+    **   im_type w = oln::morpho::watershed_seg<ntg::int_u8>(im1,
+    ** 						      oln::neighb_c8());
+    **
+    **   oln::save(oln::convert::stretch_balance<ntg::int_u8>(w),
+    ** 	    IMG_OUT "oln_morpho_watershed_seg.pgm");
     ** }
     ** \endcode
     **
     ** \image html lena256_pgm.png
     ** \image latex lena256_pgm.png
     ** =>
+    ** \image html oln_morpho_watershed_seg_tmp.png
+    ** \image latex oln_morpho_watershed_seg_tmp.png
+    ** =>
     ** \image html oln_morpho_watershed_seg.png
     ** \image latex oln_morpho_watershed_seg.png
     **
-    ** \todo Find a more pertinent example.
     */
     template<class DestValue, class I, class N>
     typename mute<I, DestValue>::ret
@@ -127,28 +143,43 @@ namespace oln {
     ** \code
     ** #include <oln/basics2d.hh>
     ** #include <oln/morpho/watershed.hh>
-    ** #include <oln/level/compare.hh>
     ** #include <ntg/all.hh>
+    **
+    ** #include <oln/morpho/attribute_closing_opening.hh>
+    ** #include <oln/morpho/gradient.hh>
+    ** #include <oln/convert/stretch.hh>
     ** int main()
     ** {
     **   typedef oln::image2d<ntg::int_u8>	im_type;
     **
-    **   im_type	im1(oln::load(IMG_IN "lena256.pgm"));
+    **   im_type im1(oln::load(IMG_IN "lena256.pgm"));
     **
-    **   oln::save(oln::morpho::watershed_con<ntg::int_u16>(im1,
-    **                                                      oln::neighb_c4()),
-    **             IMG_OUT "oln_morpho_watershed_con.pbm");
-    **   return  0;
+    **   // Gradient of the image
+    **   im1 = oln::morpho::beucher_gradient(im1, oln::win_c8p());
+    **
+    **   // Remove local minima smaller than 200 pixels
+    **   im1 = oln::morpho::fast::card_closing(im1, oln::neighb_c8(),
+    ** 					200);
+    **
+    **   oln::save(im1, IMG_OUT "oln_morpho_watershed_con_tmp.pgm");
+    **
+    **   // Use the watershed to conment the image
+    **   im_type w = oln::morpho::watershed_con<ntg::int_u8>(im1,
+    ** 						      oln::neighb_c8());
+    **
+    **   oln::save(oln::convert::stretch_balance<ntg::int_u8>(w),
+    ** 	    IMG_OUT "oln_morpho_watershed_con.pgm");
     ** }
     ** \endcode
     **
     ** \image html lena256_pgm.png
     ** \image latex lena256_pgm.png
     ** =>
+    ** \image html oln_morpho_watershed_con_tmp.png
+    ** \image latex oln_morpho_watershed_con_tmp.png
+    ** =>
     ** \image html oln_morpho_watershed_con.png
     ** \image latex oln_morpho_watershed_con.png
-    **
-    ** \todo Find a more pertinent example.
     */
     template<class DestValue, class I, class N>
     typename mute<I, DestValue>::ret
