@@ -1,3 +1,12 @@
+2003-02-11  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* oln/Makefile.am: Remove file.
+	
+	* config/oln.m4 (OLN_VERSION, OLN_MAJOR_VERSION): Put under
+	version control.
+
+	* conf/oln-config.shin (Usage): Minor fixes.
+
 2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* conf/compilers.def: Do not test for GCC 2 any more.

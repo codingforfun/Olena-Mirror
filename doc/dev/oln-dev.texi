@@ -13,7 +13,7 @@
 This document is intended to describe the Olena source tree layout and
 how to use Olena from another software project.
 
-Copyright @copyright{} 2002,2003 @strong{L.R.D.E.}
+Copyright @copyright{} 2002,2003 @strong{Laboratoire de Recherche et D\'eveloppement de l'EPITA}
 
 @end copying
 

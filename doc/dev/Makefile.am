@@ -12,7 +12,7 @@ oln_dev_TEXINFOS = thanks.texi abstract.texi biblio.texi \
 ### What gets installed
 ###
 
-docdir = $(datadir)/doc/@PACKAGE_NAME@-@PACKAGE_VERSION@
+docdir = $(datadir)/doc/@PACKAGE_TARNAME@
 
 install-data-hook:
 	$(mkinstalldirs) $(DESTDIR)$(docdir)

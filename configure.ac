@@ -2,7 +2,7 @@
 
 AC_PREREQ([2.54])
 
-AC_INIT([oln], OLN_VERSION, OLN_CONTACT)
+AC_INIT([Olena], OLN_VERSION, OLN_CONTACT, [oln])
 AC_CONFIG_AUX_DIR([oln/config])
 AC_CONFIG_SRCDIR([oln/config/oln.m4])
 AM_INIT_AUTOMAKE([1.7 no-define foreign dist-bzip2])
@@ -25,7 +25,6 @@ AC_CXX_FLAGS
 
 AC_CONFIG_FILES([Makefile
                  oln/Makefile 
-		 oln/oln/Makefile 
 		 oln/img/Makefile 
 		 oln/oln/config/pconf.hh:oln/oln/config/pconf-hh.in])
 
@@ -43,12 +42,37 @@ OLN_COLLECTION([OLN_TOP],
 
 ### Checks pertaining to the generation of auxiliary images
 
+     AC_ARG_VAR([GZIP], [the gzip program])
      AC_CHECK_PROGS([GZIP], [gzip], [$am_aux_dir/missing gzip])
+     AC_ARG_VAR([PNGTOPNM], [program to convert Portable Network Graphics files to Portable Anymaps])
      AC_CHECK_PROGS([PNGTOPNM], [pngtopnm], [$am_aux_dir/missing pngtopnm])
+     AC_ARG_VAR([PPMTOPGM], [program to convert Portable Pixmaps to Portable Greymaps])
      AC_CHECK_PROGS([PPMTOPGM], [ppmtopgm], [$am_aux_dir/missing ppmtopgm])
+     AC_ARG_VAR([PGMTOPBM], [program to convert Portable Greymaps to Portable Bitmaps])
      AC_CHECK_PROGS([PGMTOPBM], [pgmtopbm], [$am_aux_dir/missing pgmtopbm])
+     AC_ARG_VAR([PNMTOPLAINPNM], [program to convert Portable Anymaps to plain text])
      AC_CHECK_PROGS([PNMTOPLAINPNM], [pnmtoplainpnm], [$am_aux_dir/missing pnmtoplainpnm])
+     AC_ARG_VAR([IMAGEMAGICK_CONVERT], [the `convert' utility from ImageMagick])
      AC_CHECK_PROGS([IMAGEMAGICK_CONVERT], [convert], [$am_aux_dir/missing convert])
+
+### Checks pertaining to the generation of man pages
+
+     AC_ARG_VAR([HELP2MAN], [utility to make man pages from program options])
+     AC_CHECK_PROGS([HELP2MAN], [help2man], [$am_aux_dir/missing help2man])
+     AC_CACHE_CHECK([whether to re-generate manual pages from programs],
+                    [oln_cv_regen_manpages],
+                    [oln_cv_regen_manpages=no
+                     if test "x$ac_cv_prog_HELP2MAN" != xno; then
+                        oln_cv_regen_manpages=yes
+                     fi
+                     AC_ARG_ENABLE([manpages-regen],
+                                   [AC_HELP_STRING([--disable-manpages-regen],
+                                                   [disable regeneration of manual pages])],
+                                   [oln_cv_regen_manpages=$enableval])
+                    ])
+                     
+
+     AM_CONDITIONAL([HAVE_HELP2MAN], [test "x$oln_cv_regen_manpages" != xno])
 
 ### Compiler-specific auto-configuration
     AC_CACHE_CHECK([whether to enable auto-configuration for multiple compilers],
@@ -127,12 +151,17 @@ OLN_COLLECTION([OLN_TOP],
 		  [doc/ref/Makefile],
     [dnl Configuration for the manuals directory.
 
+     AC_ARG_VAR([TAR], [the tape archiver program])
      AC_CHECK_PROGS([TAR], [tar], [$am_aux_dir/missing tar])
+     AC_ARG_VAR([DVIPS], [program to make Postscript from TeX DVI files])
      AC_CHECK_PROGS([DVIPS], [dvips], [$am_aux_dir/missing dvips])
+     AC_ARG_VAR([TEXI2DVI], [program to create DVI from Texinfo files])
      AC_CHECK_PROGS([TEXI2DVI], [texi2dvi], [$am_aux_dir/missing texi2dvi])
+     AC_ARG_VAR([GETDEFS], [the `getdefs' utility from Autogen])
      AC_CHECK_PROGS([GETDEFS], [getdefs], [$am_aux_dir/missing getdefs])
+     AC_ARG_VAR([HEVEA], [program to make HTML pages from TeX])
      AC_CHECK_PROGS([HEVEA], [hevea], [$am_aux_dir/missing hevea])
-     AC_CHECK_PROGS([IMAGEMAGICK_CONVERT], [convert], [$am_aux_dir/missing convert])
+     AC_ARG_VAR([EPSTOPDF], [program to convert Encapsulated Postscript images to PDF])
      AC_CHECK_PROGS([EPSTOPDF], [epstopdf], [$am_aux_dir/missing epstopdf])
 
     ], [ref])dnl End of OLN_COMPONENT([doc/ref])
@@ -147,7 +176,9 @@ OLN_COLLECTION([OLN_TOP],
 		  [doc/dev/Makefile],
     [dnl Configuration for the dev directory.
 
+     AC_ARG_VAR([DVIPS], [program to make Postscript from TeX DVI files])
      AC_CHECK_PROGS([DVIPS], [dvips], [$am_aux_dir/missing dvips])
+     AC_ARG_VAR([TEXI2DVI], [program to create DVI from Texinfo files])
      AC_CHECK_PROGS([TEXI2DVI], [texi2dvi], [$am_aux_dir/missing texi2dvi])
 
     ], [dev])dnl End of OLN_COMPONENT([doc/dev])

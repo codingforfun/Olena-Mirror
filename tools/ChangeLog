@@ -1,3 +1,22 @@
+2003-02-12  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* utilities/Makefile.am: Auto-generate manpages. Fix small
+	dependency problem.
+	* utilities/morpho/Makefile.am: Likewise.
+
+	* utilities/morpho/generate_morpho.sh: Add copyright information.
+
+	* utilities/mosaic.cc: Add copyright information. Modify to use
+	with help2man.
+	* utilities/morpho/morpho_template.cc,
+	utilities/morpho/morpho_template_extrema.cc,
+	utilities/morpho/morpho_template_gaussian.cc,
+	utilities/morpho/morpho_template_watershed.cc,
+	utilities/morpho/morpho_template_with_twowin.cc, 
+	utilities/morpho/morpho_template_with_neighb.cc, 
+	utilities/morpho/morpho_template_with_functor.cc: Likewise.
+
+
 2003-02-07  Raphaël Poss  <raph@lrde.epita.fr>
 
 	* utilities/morpho/Makefile.am (MAINTAINERCLEANFILES): Add. Fix

@@ -1,7 +1,7 @@
 #!/bin/sh
-# generate_toolbox.sh
+# generate_morpho.sh
 #
-# $Id: generate_morpho.sh 1.3.1.5 Sun, 09 Feb 2003 16:56:18 +0100 raph $
+# Copyright (C) 2001, 2002, 2003 EPITA Research and Development Laboratory
 
 if [ "x$1" = "x" ]; then
    echo "usage: $0 <source directory>" >&2
@@ -45,95 +45,118 @@ lf() {
    echo -n "  $1 "
 }
 
+flatten() {
+    name=`echo "$@" | sed -e 's,::,_,g'`
+    echo "${name}_$suffix"
+}
+
 echo -n "bin_PROGRAMS = " >"$FILE"
 for dim in $DIM_TYPE_LIST; do
   for data in $DATA_TYPE_LIST; do
 
+    suffix=${dim}_$data
+
     for fct in $FCT_LIST; do
-      lf `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"
+      lf `flatten "$fct"`
     done
 
-    lf "laplacian"_"$dim"_"$data" 
-    lf "fast_laplacian"_"$dim"_"$data" 
-    lf "top_hat_contrast_op"_"$dim"_"$data" 
-    lf "fast_top_hat_contrast_op"_"$dim"_"$data" 
+    lf laplacian_$suffix
+    lf fast_laplacian_$suffix
+    lf top_hat_contrast_op_$suffix 
+    lf fast_top_hat_contrast_op_$suffix 
 
-    for fct in $FCT_LIST_TWOWIN; do
-      lf `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"
+    for fct in $FCT_LIST_TWOWIN; do lf `flatten "$fct"`; done
+    for fct in $FCT_LIST_WATERSHED; do lf `flatten "$fct"`; done
+    for fct in $FCT_LIST_GAUSSIAN; do lf `flatten "$fct"`; done
+    for fct in $FCT_LIST_NEIGHB; do  lf `flatten "$fct"`; done
+    for fct in $FCT_LIST_EXTREMA; do  lf `flatten "$fct"`; done
+  done
+done >> "$FILE"
+echo >> "$FILE"
+
+echo -n "dist_man_MANS = " >>"$FILE"
+for dim in $DIM_TYPE_LIST; do
+  for data in $DATA_TYPE_LIST; do
+
+    suffix=${dim}_$data.1
+
+    for fct in $FCT_LIST; do
+      lf `flatten "$fct"`
     done
 
-    for fct in $FCT_LIST_WATERSHED; do
-      lf `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data" 
-    done
+    lf laplacian_$suffix
+    lf fast_laplacian_$suffix
+    lf top_hat_contrast_op_$suffix 
+    lf fast_top_hat_contrast_op_$suffix 
 
-    for fct in $FCT_LIST_GAUSSIAN; do
-      lf `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data" 
-    done
-
-    for fct in $FCT_LIST_NEIGHB; do
-      lf `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data" 
-    done
-
-    for fct in $FCT_LIST_EXTREMA; do
-      lf `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data" 
-    done
- 
+    for fct in $FCT_LIST_TWOWIN; do lf `flatten "$fct"`; done
+    for fct in $FCT_LIST_WATERSHED; do lf `flatten "$fct"`; done
+    for fct in $FCT_LIST_GAUSSIAN; do lf `flatten "$fct"`; done
+    for fct in $FCT_LIST_NEIGHB; do  lf `flatten "$fct"`; done
+    for fct in $FCT_LIST_EXTREMA; do  lf `flatten "$fct"`; done
   done
 done >> "$FILE"
  
 echo >> $FILE;
 echo >> $FILE;
 
+print_man()
+{
+  echo "if HAVE_HELP2MAN"
+  echo "${prog}.1: ${prog}\$(EXEEXT)"
+  printf '\t'; echo "PATH=.:\$\$PATH \$(HELP2MAN) \$< >\$@"
+  echo "endif"
+}
+get_flags()
+{
+  common_flags="\$(AM_CXXFLAGS) -DDATA_TYPE=$data -DIMAGE_TYPE=image$dim -DFUNC='$1'"
+}
+common()
+{
+  prog=`flatten "$1"`
+  get_flags "$1"
+  echo "${prog}_SOURCES = $2"
+  echo "${prog}_CXXFLAGS = $common_flags $3"
+  print_man 
+  echo
+}
+
 for dim in $DIM_TYPE_LIST; do
   for data in $DATA_TYPE_LIST; do
+    suffix=${dim}_$data
+
     for fct in $FCT_LIST; do
-      echo `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"_"SOURCES = morpho_template.cc" 
-      echo `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"_"CXXFLAGS = \$(AM_CXXFLAGS) -DDATA_TYPE=$data -DIMAGE_TYPE=image$dim -DWINDOW_TYPE=window$dim -DFUNC='$fct'" 
-      echo 
+      common "$fct" morpho_template.cc "-DWINDOW_TYPE=window$dim"
     done
 
-    echo "laplacian"_"$dim"_"$data"_"SOURCES = morpho_template_with_functor.cc" 
-    echo "laplacian"_"$dim"_"$data"_"CXXFLAGS = \$(AM_CXXFLAGS) -DDATA_TYPE=$data -DIMAGE_TYPE=image$dim -DWINDOW_TYPE=window$dim -DFUNC='laplacian' -DFUNCTOR='convert::force<$data>()'"
-    echo 
-    echo "fast_laplacian"_"$dim"_"$data"_"SOURCES = morpho_template_with_functor.cc" 
-    echo "fast_laplacian"_"$dim"_"$data"_"CXXFLAGS = \$(AM_CXXFLAGS) -DDATA_TYPE=$data -DIMAGE_TYPE=image$dim -DWINDOW_TYPE=window$dim -DFUNC='fast::laplacian' -DFUNCTOR='convert::force<$data>()'" 
-    echo 
-
-    echo "top_hat_contrast_op"_"$dim"_"$data"_"SOURCES = morpho_template_with_functor.cc" 
-    echo "top_hat_contrast_op"_"$dim"_"$data"_"CXXFLAGS = \$(AM_CXXFLAGS) -DDATA_TYPE=$data -DIMAGE_TYPE=image$dim -DWINDOW_TYPE=window$dim -DFUNC='top_hat_contrast_op' -DFUNCTOR='convert::bound<$data>()'" 
-    echo 
-    echo "fast_top_hat_contrast_op"_"$dim"_"$data"_"SOURCES = morpho_template_with_functor.cc" 
-    echo "fast_top_hat_contrast_op"_"$dim"_"$data"_"CXXFLAGS = \$(AM_CXXFLAGS) -DDATA_TYPE=$data -DIMAGE_TYPE=image$dim -DWINDOW_TYPE=window$dim -DFUNC='fast::top_hat_contrast_op' -DFUNCTOR='convert::bound<$data>()'" 
-    echo 
-
+    for fields in \
+        "laplacian/convert::force<$data>" \
+        "fast::laplacian/convert::force<$data>" \
+        "top_hat_contrast_op/convert::bound<$data>" \
+	"fast::top_hat_contrast_op/convert::bound<$data>"; do
+	func=`echo "$fields" | cut -d/ -f1`
+	functor=`echo "$fields" | cut -d/ -f2`
+        common "$func" morpho_template_with_functor.cc "-DWINDOW_TYPE=window$dim -DFUNCTOR='$functor()'"
+    done
+ 
     for fct in $FCT_LIST_TWOWIN; do
-      echo `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"_"SOURCES = morpho_template_with_twowin.cc" 
-      echo `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"_"CXXFLAGS = \$(AM_CXXFLAGS) -DDATA_TYPE=$data -DIMAGE_TYPE=image$dim -DWINDOW_TYPE=window$dim -DFUNC='$fct'" 
-      echo 
+      common "$fct" morpho_template_with_twowin.cc "-DWINDOW_TYPE=window$dim" 
     done
 
     for fct in $FCT_LIST_WATERSHED; do
-      echo `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"_"SOURCES = morpho_template_watershed.cc"
-      echo `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"_"CXXFLAGS = \$(AM_CXXFLAGS) -DDATA_TYPE=$data -DIMAGE_TYPE=image$dim -DNEIGHBORHOOD_TYPE=neighborhood$dim -DFUNC='$fct'"
-      echo 
+      common "$fct" morpho_template_watershed.cc "-DNEIGHBORHOOD_TYPE=neighborhood$dim"
     done
 
     for fct in $FCT_LIST_GAUSSIAN; do
-      echo `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"_"SOURCES = morpho_template_gaussian.cc" 
-      echo `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"_"CXXFLAGS = \$(AM_CXXFLAGS) -DDATA_TYPE=$data -DIMAGE_TYPE=image$dim -DFUNC='$fct'" 
-      echo 
+      common "$fct" morpho_template_gaussian.cc 
     done
 
     for fct in $FCT_LIST_NEIGHB; do
-      echo `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"_"SOURCES = morpho_template_with_neighb.cc" 
-      echo `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"_"CXXFLAGS = \$(AM_CXXFLAGS) -DDATA_TYPE=$data -DIMAGE_TYPE=image$dim -DNEIGHBORHOOD_TYPE=neighborhood$dim -DFUNC='$fct'" 
-      echo 
+      common "$fct" morpho_template_with_neighb.cc "-DNEIGHBORHOOD_TYPE=neighborhood$dim" 
     done
 
     for fct in $FCT_LIST_EXTREMA; do
-      echo `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"_"SOURCES = morpho_template_extrema.cc"
-      echo `echo "$fct" | sed -e 's,::,_,g'`_"$dim"_"$data"_"CXXFLAGS = \$(AM_CXXFLAGS) -DDATA_TYPE=$data -DIMAGE_TYPE=image$dim -DNEIGHBORHOOD_TYPE=neighborhood$dim -DFUNC='$fct'" 
-      echo 
+      common "$fct" morpho_template_extrema.cc "-DNEIGHBORHOOD_TYPE=neighborhood$dim" 
     done
 
   done
