@@ -1,5 +1,9 @@
 2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
 
+	* oln/config/pconf.hh: add (useful for initial builds).
+
+2002-12-04  Raphael Poss  <raph@lrde.epita.fr>
+
 	* src/oln.m4: add. New Autoconf macros: 
 	AM_PATH_OLN, AC_WITH_OLN, AC_WITH_FFTW, AC_WITH_ZLIB
 	* bootstrap.sh: add. aclocal must be informed of the location of
