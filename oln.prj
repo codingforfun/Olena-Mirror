@@ -1,26 +1,15 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_3 28)
-(Parent-Version oln 0_3 27)
-(Version-Log "2002-04-10  Alexandre Duret-Lutz  <duret_g@epita.fr>
+(Project-Version oln 0_3 29)
+(Parent-Version oln 0_3 28)
+(Version-Log "2002-04-17  Jerome Darbon  <jerome@epita.fr>
 
-	* src/core/generate.hh: Fix enum member deduction.
-	* src/arith/ops.hh: Use std::max() and std::min() instead of
-	max() and min().
-	* src/convert/nrgbhsv.hh: Likewise.
-	* src/convert/nrgbhsl.hh: Likewise. Include <cstdlib> for abs(float).
-
-2002-04-10  Alexandre Duret-Lutz  <duret_g@epita.fr>
-
-	* convert/convcomp.cc: Fix the include statment.
-	* morpho/extrkiller.cc, morpho/reconstruction.cc: Use std:: as
-	appropriate.
-
+	* src/level/lut.hh: Include config/hash_map.hh.
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 10 Apr 2002 16:20:35 +0200")
-(Checkin-Login duret_g)
+(Checkin-Time "Wed, 17 Apr 2002 14:31:10 +0200")
+(Checkin-Login jerome)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
                   "\\.o$"
@@ -90,7 +79,7 @@
   (configure.ac (oln/3_configure. 1.5 644))
   (THANKS (oln/4_THANKS 1.1 644))
   (img/lena.pgm (oln/5_lena.pgm 1.1 640) :no-keywords)
-  (ChangeLog (oln/6_ChangeLog 1.32 644))
+  (ChangeLog (oln/6_ChangeLog 1.33 644))
   (src/config/system.hh (oln/7_system.hh 1.2 644))
   (src/utils/timer.hh (oln/8_timer.hh 1.1 644))
   (src/utils/stat.hh (oln/9_stat.hh 1.2 644))
@@ -113,7 +102,7 @@
   (src/convol/fast_gaussian.hh (oln/26_fast_gauss 1.1 644))
   (src/Makefile.am (oln/27_Makefile.a 1.7 644))
   (src/basics3d.hh (oln/28_basics3d.h 1.1 644))
-  (src/level/lut.hh (oln/29_lut.hh 1.2 644))
+  (src/level/lut.hh (oln/29_lut.hh 1.3 644))
   (src/level/connected.hh (oln/30_connected. 1.4 644))
   (src/level/compare.hh (oln/31_compare.hh 1.1 644))
   (src/level/fill.hh (oln/32_fill.hh 1.1 644))
