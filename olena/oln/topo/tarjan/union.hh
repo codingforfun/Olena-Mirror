@@ -55,17 +55,17 @@ namespace oln {
 	tarjan_set(const image_type & ima) : input(ima)
 	{
 	  parent = typename mute<I, point_type>::ret(ima.size());
-	  level::fill(parent, INACTIVE());
+	  level::fill(parent, inactive());
 
-	  parent.border_adapt_assign(1, INACTIVE());
+	  parent.border_adapt_assign(1, inactive());
 	}
 
 	// FIXME: these macros do not respect the coding style!
 
-	// ACTIVE and INACTIVE are defined with a hook to be static
+	// active and inactive are defined with a hook to be static
 	// and initialized only once.
 	static const point_type&
-	ACTIVE()
+	active()
 	{
 	  static struct foo_def{
 	    point_type elt;
@@ -81,7 +81,7 @@ namespace oln {
 	}
 
 	static const point_type&
-	INACTIVE()
+	inactive()
 	{
 	  static struct foo_def {
 	    point_type elt;
@@ -95,12 +95,11 @@ namespace oln {
 	  return tmp.elt;
 	}
 
-
 	void
 	make_set(const point_type& x)
 	{
-	  precondition(parent[x] == INACTIVE());
-	  parent[x] = ACTIVE();
+	  precondition(parent[x] == inactive());
+	  parent[x] = active();
 	}
 
 	void
@@ -112,7 +111,7 @@ namespace oln {
 	unsigned int
 	attribute(const point_type& x)
 	{
-	  precondition(parent[x] == ACTIVE());
+	  precondition(parent[x] == active());
 	  precondition(aux_data[x] != 0);
 	  return aux_data[x];
 	}
@@ -136,7 +135,7 @@ namespace oln {
 	find_root(const point_type& x)
 	{
 	  //FIXME do it iteratively
-	  if ((parent[x] != ACTIVE()) && (parent[x] != INACTIVE()))
+	  if ((parent[x] != active()) && (parent[x] != inactive()))
 	    {
 	      parent[x] = find_root(parent[x]);
 	      return parent[x];
@@ -148,7 +147,7 @@ namespace oln {
 	const point_type&
 	sure_find_root(const point_type& x)
 	{
-	  if ((parent[x] != ACTIVE()) && (parent[x] != INACTIVE()))
+	  if ((parent[x] != active()) && (parent[x] != inactive()))
 	    return parent[x];
 	  else
 	    return x;
@@ -157,7 +156,7 @@ namespace oln {
 	const bool
 	is_root(const point_type& x)
 	{
-	  if ((parent[x] != ACTIVE()) && (parent[x] != INACTIVE()))
+	  if ((parent[x] != active()) && (parent[x] != inactive()))
 	    return false;
 	  return true;
 	}

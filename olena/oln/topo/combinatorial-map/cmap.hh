@@ -43,6 +43,10 @@ namespace oln {
 
     namespace combinatorial_map {
 
+      // REF: Braquelaire, J. P. and Brun, L. Image Segmentation with
+      // Topological Maps and Inter-pixel Representation}, Journal of
+      // Visual Communication and Image representation, 1998, vol. 9
+
       template <class I>
       class cmap
       {
@@ -55,8 +59,8 @@ namespace oln {
 	typedef oln_zeta_type(I)		zeta_type;
 
       public:
-	cmap(const I& input, 
-	     const inter_pixel::interpixel<I>& ip, 
+	cmap(const I& input,
+	     const inter_pixel::interpixel<I>& ip,
 	     tarjan::flat_zone<I>& cc) :
 	  ndarts_(0),
 	  zeta_(input.nrows() + 1, input.ncols() + 1),
@@ -237,7 +241,7 @@ namespace oln {
 	{
 	  oln_iter_type(zeta_type) it(zeta_);
 	  fwd_dir_iter_type i;
-	  
+
 	  for_all(it)
 	    {
 	      if (!zeta_[it].empty())
@@ -272,7 +276,7 @@ namespace oln {
 	| Internal methods for merge |
 	`---------------------------*/
 
-	bool 
+	bool
 	make_inter1_(const unsigned l1,
 		     const unsigned l2,
 		     std::vector<unsigned> & inter)
