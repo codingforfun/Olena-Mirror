@@ -1,5 +1,95 @@
+2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/all.hh, ntg/basics.hh, ntg/bin.hh, ntg/color.hh,
+	ntg/color/color.hh, ntg/color/hsi.hh, ntg/color/hsl.hh,
+	ntg/color/hsv.hh, ntg/color/nrgb.hh, ntg/color/rgb.hh,
+	ntg/color/xyz.hh, ntg/color/yiq.hh, ntg/color/yuv.hh,
+	ntg/config/math.hh, ntg/config/system.hh,
+	ntg/core/abstract_hierarchy.hh, ntg/core/behavior.hh,
+	ntg/core/contract.hh,
+	ntg/core/internal/builtins_properties.hh,
+	ntg/core/internal/global_ops.hh,
+	ntg/core/internal/global_ops_defs.hh,
+	ntg/core/internal/global_ops_traits.hh,
+	ntg/core/internal/macros.hh,
+	ntg/core/internal/optraits_builtins.hh,
+	ntg/core/internal/traits.hh,
+	ntg/core/internal/typetraits_builtins.hh,
+	ntg/core/interval.hh, ntg/core/macros.hh,
+	ntg/core/predecls.hh, ntg/core/type.hh,
+	ntg/core/type_traits.hh, ntg/core/value.hh, ntg/cplx.hh,
+	ntg/cycle.hh, ntg/enum/bin.hh, ntg/enum/builtin_bool.hh,
+	ntg/enum/optraits_builtins_bool.hh,
+	ntg/enum/typetraits_builtins_bool.hh, ntg/float.hh,
+	ntg/int.hh, ntg/range.hh, ntg/real/builtin_float.hh,
+	ntg/real/builtin_int.hh, ntg/real/builtin_properties.hh,
+	ntg/real/cycle.hh, ntg/real/int_s.hh, ntg/real/int_u.hh,
+	ntg/real/optraits_builtin_int.hh,
+	ntg/real/optraits_builtins_float.hh,
+	ntg/real/optraits_builtins_int_defs.hh, ntg/real/range.hh,
+	ntg/real/typetraits_builtin_int.hh,
+	ntg/real/typetraits_builtins_float.hh, ntg/utils/cast.hh,
+	ntg/utils/debug.hh, ntg/vect/cplx.hh,
+	ntg/vect/cplx_representation.hh, ntg/vect/vec.hh: Important
+	cleanup: adapt to Olena coding style, add comments, fix
+	headers guards, rename minor things, use new macros when
+	possible.
+
+2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/core/internal/macros.hh: Many new macros.
+
+	* ntg/color/color.hh: Move name() into optraits.
+
+	* ntg/real/builtin_int.hh: New file.
+	* ntg/color.hh: New file.
+	
+	* ntg/core/internal/builtins_properties.hh: Rename as ...
+	* ntg/real/builtin_properties.hh: ... this.
+	
+	* ntg/real/optraits_builtins_float.hh,
+	ntg/real/typetraits_builtins_float.hh: Merge into
+	ntg/real/builtin_float.hh.
+
+	* ntg/enum/optraits_builtins_bool.hh,
+	ntg/enum/typetraits_builtins_bool.hh: Merge into
+	ntg/enum/builtin_bool.hh.
+
+	* ntg/core/internal/optraits_builtins.hh,
+	ntg/core/internal/typetraits_builtins.hh: Remove.
+
+	* ntg/Makefile.am: Update consequently.
+	
+2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/config/system.hh: Remove g++-2.95 specific directives.
+	
+	* ntg/utils/cast.hh: Remove wrong behaviors. Don't cast into
+	storage_type before returning values.
+
+	* ntg/core/internal/global_ops_traits.hh: Important changes.
+	
+2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/sanity/Makefile.am, 
+	tests/sanity/includes.test: New files.
+	
+2003-05-10  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/core/behavior.hh: Rename apply methods as check.
+
+2003-05-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/config/system.hh: Remove g++-2.95 related code.
+
 2003-05-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* ntg/all.hh: Remove useless includes.
+
+	* ntg/color.hh: New file.
+
+2003-05-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* ntg/basics.hh: Add new includes.
 
 	* ntg/real/optraits_builtins_float.hh: Add name() methods.

@@ -69,7 +69,7 @@ namespace oln {
     {
       std::ostringstream out;
       out << "imagend_size<" << dim << ","
-          << ntg::typename_of<Exact>() << ">" << std::ends;
+          << Exact::name() << ">" << std::ends;
       return out.str();
     }
 

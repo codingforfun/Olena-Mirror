@@ -28,11 +28,11 @@
 #ifndef NTG_FLOAT_HH
 # define NTG_FLOAT_HH
 
-// Proxy header for float types (float_s and float_d).
+/*
+  Proxy header for float types (float_s and float_d).
+*/
 
-# include <ntg/core/predecls.hh>
-
-# include <ntg/real/typetraits_builtins_float.hh>
-# include <ntg/real/optraits_builtins_float.hh>
+# include <ntg/basics.hh>
+# include <ntg/real/builtin_float.hh>
 
 #endif // !NTG_FLOAT_HH

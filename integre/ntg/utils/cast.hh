@@ -25,17 +25,20 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_CAST_HH
-# define NTG_CAST_HH
+#ifndef NTG_UTILS_CAST_HH
+# define NTG_UTILS_CAST_HH
 
 # include <ntg/core/macros.hh>
-# include <ntg/core/internal/optraits_builtins.hh>
+# include <ntg/core/predecls.hh>
 # include <ntg/core/type_traits.hh>
-# include <ntg/core/internal/typetraits_builtins.hh>
-# include <ntg/core/value.hh>
+# include <ntg/real/real_value.hh>
 
 // FIXME: this file is completely broken, taking float_value as
 // parameter does not make sense.
+
+/*-------.
+| macros |
+`-------*/
 
 # define TO_NTG_CAST(Dest)				\
   template<class T>					\
@@ -46,6 +49,10 @@
 
 namespace ntg {
 
+  /*---------.
+  | to_ntg() |
+  `---------*/
+
   template<class T>
   inline ntg_type(T) to_ntg(T val)
   {
@@ -54,18 +61,30 @@ namespace ntg {
   
   TO_NTG_CAST(signed);
 
-  namespace cast {    
+  namespace cast {
+
+    // FIXME: force does not seem to have any reason to live.
+
+    /*------.
+    | force |
+    `------*/
 
     template<class Tdest, class Tsrc> inline
-    const Tdest force(const Tsrc& val)
+    const Tdest
+    force(const Tsrc& val)
     {
       Tdest tmp(static_cast<ntg_storage_type(Tdest)>(val));
       return tmp;
     }
 
-    /* Like cast::force, but with saturation.  */
+    /*------.
+    | bound |
+    `------*/
+
+    // Like cast::force, but with saturation.
     template<class Tdest, class Tsrc> inline
-    const Tdest bound(const Tsrc& val)
+    const Tdest
+    bound(const Tsrc& val)
     {
       if (ntg_max_val(Tsrc) > ntg_max_val(Tdest))
 	if (val > Tsrc(ntg_max_val(Tdest)))
@@ -73,8 +92,12 @@ namespace ntg {
       if (ntg_min_val(Tsrc) < ntg_min_val(Tdest))
 	if (val < Tsrc(ntg_min_val(Tdest)))
 	  return ntg_min_val(Tdest);
-      return cast::force<Tdest>(val);
+      return val;
     }
+
+    /*------.
+    | round |
+    `------*/
 
     namespace internal {
       template<class Tdest, class Tsrc>
@@ -82,105 +105,123 @@ namespace ntg {
 	// By default we don't define any function.
 	// This cast does only work on float input.
       };
-      template<class Tdest, class Tsrc>
-      struct _round<Tdest, float_value<Tsrc> > {
-	static const Tdest doit(const float_value<Tsrc>& val)
-	{
-	  // FIXME: update comments
 
+      template<class Tdest, class Tsrc>
+      struct _round<Tdest, float_value<Tsrc> >
+      {
+	static const Tdest
+	doit(const float_value<Tsrc>& val)
+	{
+	  // FIXME: this code seems out of date.
+
+#if 0
 	  // KLUDGE: Cast the rounded value to Tdest::value_t before
 	  // returning it as Tdest. Otherwise g++-3.0 complains there
 	  // is no Tdest constructor taking a float argument.
 	  return (ntg_storage_type(Tdest)) round(val.self());
+#endif
+	  return round(val.self());
 	}
       };
-      template<class Tdest>
-      struct _round<Tdest, float_s > {
-	static const Tdest doit(const float_s& val)
-	{
-	  // FIXME: update comments
 
+      template<class Tdest>
+      struct _round<Tdest, float_s >
+      {
+	static const Tdest
+	doit(const float_s& val)
+	{
+	  // FIXME: this code seems out of date.
+#if 0
 	  // KLUDGE: Cast the rounded value to Tdest::value_t before
 	  // returning it as Tdest. Otherwise g++-3.0 complains there
 	  // is no Tdest constructor taking a float argument.
-	  return (ntg_storage_type(Tdest)) roundf(val);
+	  //	  return (ntg_storage_type(Tdest)) roundf(val);
+#endif
+	  return roundf(val);
 	}
       };
-      template<class Tdest>
-      struct _round<Tdest, double> {
-	static const Tdest doit(const double& val)
-	{
-	  // FIXME: update comments
 
+      template<class Tdest>
+      struct _round<Tdest, double>
+      {
+	static const Tdest
+	doit(const float_d& val)
+	{
+	  // FIXME: this code seems out of date.
+#if 0
 	  // KLUDGE: Cast the rounded value to Tdest::value_t before
 	  // returning it as Tdest. Otherwise g++-3.0 complains there
 	  // is no Tdest constructor taking a float argument.
 	  return (ntg_storage_type(Tdest)) round(val);
+#endif
+	  return round(val);
 	}
       };
-# if 0 // useless as float_s == float alias
-      template<class Tdest>
-      struct _round<Tdest, float> {
-	static const Tdest doit(const float& val)
-	{
-	  // FIXME: update comments
 
-	  // KLUDGE: Cast the rounded value to Tdest::value_t before
-	  // returning it as Tdest. Otherwise g++-3.0 complains there
-	  // is no Tdest constructor taking a float argument.
-	  return (ntg_storage_type(Tdest)) roundf(val);
-	}
-      };
-# endif
       template<class Tdest, class Tsrc>
-      struct _round<float_value<Tdest>, float_value<Tsrc> > {
-	static const Tdest doit(const float_value<Tsrc>& val)
+      struct _round<float_value<Tdest>, float_value<Tsrc> >
+      {
+	static const Tdest
+	doit(const float_value<Tsrc>& val)
 	{
 	  return val.self();
 	}
       };
+
       template<class Tsrc>
-      struct _round<float, float_value<Tsrc> > {
-	static float doit(const float_value<Tsrc>& val)
+      struct _round<float_s, float_value<Tsrc> >
+      {
+	static float_s
+	doit(const float_value<Tsrc>& val)
 	{
 	  return val.self();
 	}
       };
+
       template<class Tsrc>
-      struct _round<double, float_value<Tsrc> > {
-	static double doit(const float_value<Tsrc>& val)
+      struct _round<float_d, float_value<Tsrc> >
+      {
+	static float_d
+	doit(const float_value<Tsrc>& val)
 	{
 	  return val.self();
 	}
       };
+
       template<>
-      struct _round<float, double> {
-	static float doit(const double& val)
+      struct _round<float_s, float_d>
+      {
+	static float
+	doit(const double& val)
 	{
 	  return val;
 	}
       };
+
       template<>
-      struct _round<double, float> {
-	static double doit(const float& val)
+      struct _round<float_d, float_s>
+      {
+	static float_d
+	doit(const float& val)
 	{
 	  return val;
 	}
       };
-    } // internal
+    } // end of internal.
 
     template<class Tdest, class Tsrc> inline
-    const Tdest round(const Tsrc& val) {
-      return internal::_round<Tdest,Tsrc>::doit(val);
+    const Tdest round(const Tsrc& val)
+    {
+      return internal::_round<Tdest, Tsrc>::doit(val);
     }
 
     /* Like cast::round, but with saturation.  */
     template<class Tdest, class Tsrc> inline
     const Tdest rbound(const Tsrc& val)
     {
-      if (val > Tsrc(ntg_max_val(Tdest)))
+      if (val > ntg_cast(ntg_max_val(Tdest)))
 	return ntg_max_val(Tdest);
-      if (val < Tsrc(ntg_min_val(Tdest)))
+      if (val < ntg_cast(ntg_min_val(Tdest)))
 	return ntg_min_val(Tdest);
       return cast::round<Tdest>(val);
     }
@@ -189,4 +230,4 @@ namespace ntg {
 
 } // end of ntg.
 
-#endif // NTG_CAST_HH
+#endif // NTG_UTILS_CAST_HH

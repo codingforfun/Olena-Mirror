@@ -97,11 +97,12 @@ namespace oln {
     }
 
 
-    static std::string name()
+    static std::string
+    name()
     {
       std::ostringstream out;
       out << "dpointnd<" << dim << ","
-	  << ntg::typename_of<Exact>() << ">" << std::endl;
+	  << Exact::name() << ">" << std::endl;
       return out.str();
     }
 

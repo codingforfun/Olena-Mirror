@@ -40,13 +40,13 @@ namespace oln {
   namespace convert {
 
     template<class Output, class Exact = mlc::final>
-    struct stretch : public conversion_to_type<Output, typename mlc::exact_vt<force<Output, Exact>, Exact>::ret >
-    {
-  
+    struct stretch 
+      : public conversion_to_type<Output, typename mlc::exact_vt<force<Output, Exact>, Exact>::ret >
+    {  
       template< class Input >
       Output operator() (const Input& v) const {
 
-	return Output(cast::rbound<Output, float>
+	return Output(ntg::cast::rbound<Output, float>
 		      (
 		       double(v - ntg_min_val(Input))
 		       / double(ntg_max_val(Input) - ntg_min_val(Input))
@@ -55,9 +55,12 @@ namespace oln {
 		      );
       }
       
-      static std::string name() {
-        return std::string("stretch<") + typename_of<Output>() + ", "
-          + typename_of<Exact>() + ">";
+      static std::string
+      name()
+      {
+	// FIXME: Exact is not an integre type !
+        return std::string("stretch<") + ntg_name(Output) + ", "
+          + Exact::name() + ">";
       }
     };
 

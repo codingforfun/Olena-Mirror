@@ -57,7 +57,9 @@ namespace oln {
     struct conversion : public mlc::any< Exact >
     {
    
-      static std::string name() {
+      static std::string
+      name()
+      {
 	return std::string("conversion<") + Exact::name() + ">";
       }
 
@@ -101,10 +103,12 @@ namespace oln {
 	 this typedef is not used very much.)  */
       typedef Result_Type result_type;
 
-      static std::string name() {
+      static std::string name()
+      {
+	// FIXME: Exact is not an integre type !
 	return std::string("conversion_to_type<")
-	  + ntg::typename_of<Result_Type>() + ", "
-	  + ntg::typename_of<Exact>() + ">";
+	  + ntg_name(Result_Type) + ", "
+	  + Exact::name() + ">";
       }
     };
 
@@ -122,10 +126,11 @@ namespace oln {
       typedef Argument_Type argument_type;
 
       static std::string name() {
+	// FIXME: Exact is not an integre type !
 	return std::string("conversion_from_type_to_type<")
-	  + ntg::typename_of<Argument_Type>() + ", "
-	  + ntg::typename_of<Result_Type>() + ", "
-	  + ntg::typename_of<Exact>() + ">";
+	  + ntg_name(Argument_Type) + ", "
+	  + ntg_name(Result_Type) + ", "
+	  + "FIXME: ntg_name(Exact)" + ">";
       }
     };
 

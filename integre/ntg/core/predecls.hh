@@ -29,62 +29,73 @@
 # define NTG_CORE_PREDECLS_HH
 
 # include <mlc/type.hh>
+
 # include <ntg/vect/cplx_representation.hh>
+
+/*
+  Forward declarations of every available types.
+*/
 
 namespace ntg
 {
 
-  struct non_sense;
+  /*----------.
+  | behaviors |
+  `----------*/
 
-  // behaviors
   class unsafe;
   class strict;
   class saturate;
 
-  // intervals
+  /*----------.
+  | intervals |
+  `----------*/
+
   template <class T, T i_min, T i_max> class		bounded;
   template <unsigned i_min, unsigned i_max> class	bounded_u;
   template <signed i_min, signed i_max> class		bounded_s;
 
-  // scalar types
+  /*------.
+  | reals |
+  `------*/
+
   template <unsigned nbits, class behavior = strict>		class int_u;
   template <unsigned nbits, class behavior = strict>		class int_s;
   template <class T, class interval, class behavior = strict>	class range;
   template <class T, class interval>				class cycle;
 
-  // floats
   typedef float		float_s;
   typedef double	float_d;
 
-  // enumerated types
+  /*-----------.
+  | enumerated |
+  `-----------*/
+
   class bin;
 
-  //
-  // vectorial types
-  //
+  /*----------.
+  | vectorial |
+  `----------*/
 
-  // vec
   template <unsigned N, class T, class Self = mlc::final> class vec;
 
-  // cplx
   template <cplx_representation R, class T> class cplx;
 
-  //
-  // Colors
-  //
+  /*-------.
+  | colors |
+  `-------*/
 
-  template <unsigned ncomps, unsigned qbits, template <unsigned>
-  class color_system>
+  template <unsigned ncomps, 
+	    unsigned qbits, 
+	    template <unsigned> class color_system>
   struct color;
   
   template<int lval, int uval>
   struct interval;
-
-  //
-  // Scalar types
-  //
-
-  // int_u
+  
+  /*--------------------.
+  | shortcuts for int_u |
+  `--------------------*/
 
   typedef int_u<8, strict>	int_u8;
   typedef int_u<8, unsafe>	int_u8u;
@@ -98,10 +109,9 @@ namespace ntg
   typedef int_u<32, unsafe>	int_u32u;
   typedef int_u<32, saturate>	int_u32s;
 
-
-  // int_s
-
-  typedef non_sense		int_s1;
+  /*--------------------.
+  | shortcuts for int_s |
+  `--------------------*/
 
   typedef int_s<8, strict>	int_s8;
   typedef int_s<8, unsafe>	int_s8u;
@@ -117,4 +127,4 @@ namespace ntg
 
 } // end of ntg.
 
-#endif // ndef NTG_CORE_PREDECLS_HH
+#endif // !NTG_CORE_PREDECLS_HH

@@ -28,12 +28,21 @@
 #ifndef NTG_CORE_TYPE_HH
 # define NTG_CORE_TYPE_HH
 
+/*
+  Utility classes.
+*/
+
 namespace ntg
 {
 
   // FIXME: see comments in ntg/core/value.hh about this duplicate of
   // metalic's code.
 
+  /*-------.
+  | any<E> |
+  `-------*/
+
+  //! Top of static hierarchy.
   template <class E>
   class any
   {
@@ -47,7 +56,14 @@ namespace ntg
     const E& self() const { return static_cast<const E&>(*this); }
   };
 
-  // classes used to disambiguate overloading
+  /*------------------.
+  | any_(const_)class |
+  `------------------*/
+
+  /*
+    Classes used to disambiguate overloading. They can store an
+    instance of any object and restore it later.
+  */
 
   template <class T>
   class any_class
@@ -73,6 +89,6 @@ namespace ntg
     const T& _target;
   };
 
-} // end of ntg
+} // end of ntg.
 
-#endif // ndef NTG_CORE_TYPE_HH
+#endif // !NTG_CORE_TYPE_HH

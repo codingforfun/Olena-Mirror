@@ -28,26 +28,24 @@
 #ifndef NTG_VECT_VEC_HH
 # define NTG_VECT_VEC_HH
 
+# include <ntg/basics.hh>
+# include <ntg/core/internal/macros.hh>
+# include <ntg/vect/vect_value.hh>
+
 # include <mlc/array/all.hh>
 # include <mlc/type.hh>
 
-# include <ntg/vect/vect_value.hh>
-
-// --
-
-# include <ntg/core/internal/global_ops.hh>
-# include <ntg/core/type_traits.hh>
-# include <ntg/core/predecls.hh>
-# include <ntg/core/type_traits.hh>
-
-// FIXME: move these macros and document them.
+/*--------------------.
+| assignements macros |
+`--------------------*/
 
 # define ASSIGN_VECTOR_VECTOR_OPERATOR(Name, Op)	\
 template <class T1, class T2> inline			\
-static T1& Name(T1& lhs, const T2& rhs)			\
+static T1&						\
+Name(T1& lhs, const T2& rhs)				\
 {							\
-  ntg_is_a(T1, ntg::vectorial)::ensure();	\
-  ntg_is_a(T2, ntg::vectorial)::ensure();	\
+  ntg_is_a(T1, ntg::vectorial)::ensure();		\
+  ntg_is_a(T2, ntg::vectorial)::ensure();		\
   precondition(lhs.size() == rhs.size());		\
   unsigned s = lhs.size();				\
   for (unsigned i = 0; i < s; ++i)			\
@@ -57,56 +55,63 @@ static T1& Name(T1& lhs, const T2& rhs)			\
 
 # define ASSIGN_VECTOR_SCALAR_OPERATOR(Name, Op)	\
 template <class T1, class T2> inline			\
-static T1& Name(T1& lhs, const T2& rhs)			\
+static T1&						\
+Name(T1& lhs, const T2& rhs)				\
 {							\
-  ntg_is_a(T1, ntg::vectorial)::ensure();	\
-  ntg_is_a(T2, ntg::real)::ensure();	\
+  ntg_is_a(T1, ntg::vectorial)::ensure();		\
+  ntg_is_a(T2, ntg::real)::ensure();			\
   unsigned s = lhs.size();				\
   for (unsigned i = 0; i < s; ++i)			\
     lhs[i] Op rhs;					\
   return lhs;						\
 }
 
-# define ARITH_VECTOR_VECTOR_OPERATOR(Name, Op) 			\
-template <class T1, class T2>          					\
-inline static           					\
-ntg_return_type(Name,T1, T2)   				\
-Name(const T1& lhs, const T2& rhs)					\
-{									\
-  ntg_is_a(T1, ntg::vectorial)::ensure();			\
-  ntg_is_a(T2, ntg::vectorial)::ensure();			\
-  typedef ntg_return_type(Name,T1, T2) return_type; 						\
-  return_type result(lhs); 						\
-  result Op rhs;            						\
-  return result;							\
+# define ARITH_VECTOR_VECTOR_OPERATOR(Name, Op)		\
+template <class T1, class T2>				\
+inline static						\
+ntg_return_type(Name,T1, T2)				\
+Name(const T1& lhs, const T2& rhs)			\
+{							\
+  ntg_is_a(T1, ntg::vectorial)::ensure();		\
+  ntg_is_a(T2, ntg::vectorial)::ensure();		\
+  typedef ntg_return_type(Name,T1, T2) return_type;	\
+  return_type result(lhs);				\
+  result Op rhs;					\
+  return result;					\
 }
 
 namespace ntg {
 
   namespace internal {
 
+    /*----------------.
+    | typetraits<vec> |
+    `----------------*/
+
     template <unsigned N, class T, class Self>
     struct typetraits<vec<N, T, Self> >
     {
-      typedef vec<N, T, Self> self;
-      typedef vectorial abstract_type;
-      typedef self ntg_type;
+      typedef vec<N, T, Self>	self;
+      typedef vectorial		abstract_type;
+      typedef self		ntg_type;
+      typedef optraits<self>	optraits_type;
+
       ntg_build_value_type(vect_value<E>);
 
-      typedef optraits<self> optraits;
-
       typedef typename typetraits<T>::base_type  base_type[N];
-      typedef T storage_type[N];
+      typedef T					 storage_type[N];
       typedef typename typetraits<T>::cumul_type cumul_type[N];
-
-      typedef self op_traits;
     };
 
   } // end of internal.
 
-  template <unsigned N, class T, class Self>
+  /*----------.
+  | vec<N, T> |
+  `----------*/
+
+  template <unsigned N, class T, class E>
   class vec : 
-    public vect_value<typename mlc::select_self<vec<N, T, mlc::final>, Self>::ret>
+    public vect_value<typename mlc::select_self<vec<N, T, mlc::final>, E>::ret>
   {
   public :
 
@@ -117,23 +122,22 @@ namespace ntg {
 
     /* A vector can be built from a 1xM array.  */
     template<int ncols, class T2>
-    vec(const mlc::array2d< mlc::array2d_info<1, ncols>, T2>&
-	arr)
+    vec(const mlc::array2d< mlc::array2d_info<1, ncols>, T2>& arr)
     {
-      mlc::eq< ncols, N >::ensure();
+      mlc::is_true< ncols == N >::ensure();
       for (unsigned i = 0; i < N; ++i)
 	val_[i] = arr[i];
     }
 
-    template<class U, class Self2>
-    vec(const vec<N, U, Self2>& v)
+    template<class U, class E2>
+    vec(const vec<N, U, E2>& v)
     {
       for (unsigned i = 0; i < N; ++i)
 	val_[i] = v[i];
     }
 
-    template<class U, class Self2>
-    vec<N, T>& operator=(const vec<N, U, Self2>& v)
+    template<class U, class E2>
+    vec<N, T>& operator=(const vec<N, U, E2>& v)
     {
       for (unsigned i = 0; i < N; ++i)
 	val_[i] = v[i];
@@ -141,13 +145,14 @@ namespace ntg {
     }
 
     // accessor
-    T &     operator[](unsigned i) 	   { return val_[i]; }
+    T &     operator[](unsigned i) 	 { return val_[i]; }
     const T operator[](unsigned i) const { return val_[i]; }
 
     unsigned size() const { return N; }
 
     static const vec<N,T> zero() { return vec(); }
     // There is no unit() for vec<>.
+
     ~vec() {}
 
   protected:
@@ -160,7 +165,8 @@ namespace ntg {
   };
 
   template<unsigned N,class T> inline
-  std::ostream& operator<<(std::ostream& ostr, const vec<N,T>& rhs)
+  std::ostream&
+  operator<<(std::ostream& ostr, const vec<N,T>& rhs)
   {
     ostr << "[";
     for (unsigned i = 0; i < N; ++i)
@@ -171,28 +177,27 @@ namespace ntg {
   namespace internal
   {
 
-    //
-    //  optraits for vec<N,T>
-    //
-    /////////////////////////
+    /*--------------.
+    | optraits<vec> |
+    `--------------*/
 
-    template <unsigned N, class T, class Self>
-    class optraits<vec<N, T, Self> >: public optraits_vector<vec<N, T, Self> >
+    template <unsigned N, class T, class E>
+    class optraits<vec<N, T, E> > : public optraits_vector<vec<N, T, E> >
     {
-      typedef vec<N, T, Self> self;
-      typedef typename typetraits<self>::storage_type storage_type_;
-    public:
+      typedef vec<N, T, E> self;
+      typedef ntgi_storage_type(self) storage_type_;
 
+    public:
       static self zero ()
       {
 	// A vectorial type MUST return a zero initialized value.
 	return self();
       }
 
-      // debug
-      static std::string name() {
+      static std::string
+      name() {
 	std::ostringstream out;
-	out << "vec<" << N << ", " << optraits<T>::name() << ">"<< std::ends;
+	out << "vec<" << N << ", " << ntg_name(T) << ">"<< std::ends;
 	return out.str();
       }
 
@@ -290,11 +295,12 @@ namespace ntg {
 
 
       template <class T1, class T2>
-      inline static bool cmp_eq (const T1& lhs, const T2& rhs)
+      inline static bool
+      cmp_eq (const T1& lhs, const T2& rhs)
       {
 	ntg_is_a(T1, ntg::vectorial)::ensure();
 	ntg_is_a(T2, ntg::vectorial)::ensure();
-	precondition(lhs.size() == rhs.size());
+	ntg_assert(lhs.size() == rhs.size());
 
 	typedef ntg_return_type(cmp, T1, T2) tmp_type;
 
@@ -306,11 +312,9 @@ namespace ntg {
       }
     };
 
-    //
-    // Operators traits
-    //
-    ////////////////////
-
+    /*----------------.
+    | operator traits |
+    `----------------*/
 
     //
     // plus
@@ -325,7 +329,6 @@ namespace ntg {
       typedef vec<N, ntg_return_type(plus, T1, T2)> ret;
       typedef vec<N, T1> impl;
     };
-
 
     //
     // minus
@@ -412,4 +415,4 @@ namespace ntg {
 
 } // end of ntg.
 
-#endif // ! NTG_VECT_VEC_HH
+#endif // !NTG_VECT_VEC_HH

@@ -28,6 +28,10 @@
 #ifndef NTG_ENUM_BIN_HH
 # define NTG_ENUM_BIN_HH
 
+/*
+  Binary type. Possible values are 0 and 1 (not true and false).
+*/
+
 # include <ntg/basics.hh>
 # include <ntg/enum/enum_value.hh>
 
@@ -39,10 +43,9 @@ namespace ntg {
 
   namespace internal {
 
-    //
-    //  Typetraits
-    //
-    ///////////////
+    /*----------------.
+    | typetraits<bin> |
+    `----------------*/
 
     template <>
     struct typetraits<bin>
@@ -50,9 +53,10 @@ namespace ntg {
       typedef enumerated		abstract_type;
       typedef bin			self;
       typedef self			ntg_type;
+
       ntg_build_value_type(enum_value<E>);
 
-      typedef optraits<self>		optraits;
+      typedef optraits<self>		optraits_type;
 
       typedef self			base_type;
       typedef bool			storage_type;
@@ -69,28 +73,29 @@ namespace ntg {
 
   } // end of internal.
 
-  //
-  //  Class bin
-  //
-  //////////////
+  /*----.
+  | bin |
+  `----*/
 
   class bin : public enum_value<bin>
   {
   public:
-    bin () { val_ = 0; }
+    bin ()
+    { val_ = 0; }
 
     // FIXME: create a template constructor and check into it if T
-    // is_a real or whatever ?
+    // is a real or whatever ?
     
     bin (unsigned char val)
     {
-      precondition (val < 2);
+      ntg_assert(val < 2);
       val_ = val;
     }
 
-    bin& operator=(unsigned char val)
+    bin&
+    operator=(unsigned char val)
     {
-      precondition (val < 2);
+      ntg_assert(val < 2);
       val_ = val;
       return *this;
     }
@@ -98,13 +103,14 @@ namespace ntg {
     template <class T>
     bin (const real_value<T>& val)
     {
-      precondition (val < 2);
+      ntg_assert(val < 2);
       val_ = val;
     }
     template <class T>
-    bin& operator=(const real_value<T>& val)
+    bin&
+    operator=(const real_value<T>& val)
     {
-      precondition (val < 2);
+      ntg_assert(val < 2);
       val_ = val;
       return *this;
     }
@@ -121,10 +127,9 @@ namespace ntg {
 
   namespace internal {
   
-    //
-    //  optraits for bin
-    //
-    /////////////////////
+    /*--------------.
+    | optraits<bin> |
+    `--------------*/
   
     template <>
     struct optraits<bin> : public optraits_enum<bin>
@@ -142,19 +147,22 @@ namespace ntg {
 
       // logical assignement operators
 
-      static bin& logical_or_equal(bin& lhs, const bin& rhs)
+      static bin&
+      logical_or_equal(bin& lhs, const bin& rhs)
       {
 	lhs = lhs.val() | rhs.val();
 	return lhs;
       }
 
-      static bin& logical_and_equal(bin& lhs, const bin& rhs)
+      static bin&
+      logical_and_equal(bin& lhs, const bin& rhs)
       {
 	lhs = lhs.val() & rhs.val();
 	return lhs;
       }
 
-      static bin& logical_xor_equal(bin& lhs, const bin& rhs)
+      static bin&
+      logical_xor_equal(bin& lhs, const bin& rhs)
       {
 	lhs = lhs.val() ^ rhs.val();
 	return lhs;
@@ -162,53 +170,52 @@ namespace ntg {
 
       // logical binary ops
 
-      static bin logical_or(const bin& lhs, const bin& rhs)
+      static bin
+      logical_or(const bin& lhs, const bin& rhs)
       {
 	bin tmp(lhs);
 	tmp |= rhs;
 	return tmp;
       }
 
-      static bin logical_and(const bin& lhs, const bin& rhs)
+      static bin
+      logical_and(const bin& lhs, const bin& rhs)
       {
 	bin tmp(lhs);
 	tmp &= rhs;
 	return tmp;
       }
 
-      static bin logical_xor(const bin& lhs, const bin& rhs)
+      static bin
+      logical_xor(const bin& lhs, const bin& rhs)
       {
 	bin tmp(lhs);
 	tmp ^= rhs;
 	return tmp;
       }
 
-
       // comparisons
 
-      static bool cmp_lt(const bin& lhs, const bin& rhs)
+      static bool
+      cmp_lt(const bin& lhs, const bin& rhs)
       {
 	return lhs.val() < rhs.val();
       }
 
-      static bool cmp_eq(const bin& lhs, const bin& rhs)
+      static bool
+      cmp_eq(const bin& lhs, const bin& rhs)
       {
 	return lhs.val() == rhs.val();
       }
 
-      // debug
       static std::string name() { return "bin"; }
     };
 
-    //
-    //
-    //  Operators traits
-    //
-    /////////////////////
+    /*-----------------.
+    | operators traits |
+    `-----------------*/
 
-    //
     //  Logical operators
-    //
 
     template <class T>
     struct operator_traits<operator_logical, bin, T>
@@ -218,9 +225,7 @@ namespace ntg {
       typedef bin impl;
     };
 
-    //
     //  Comparison operators
-    //
 
     template <>
     struct operator_traits<operator_cmp, bin, bin>
@@ -230,10 +235,8 @@ namespace ntg {
       typedef bin impl;
     };
     
-    //
     //  Max
-    //
-
+    
     template <>
     struct operator_traits<operator_max, bin, bin>
     {
@@ -242,10 +245,8 @@ namespace ntg {
       typedef bin impl;
     };
 
-    //
     //  Min
-    //
-
+    
     template <>
     struct operator_traits<operator_min, bin, bin>
     {
@@ -258,4 +259,4 @@ namespace ntg {
 
 } // end of ntg.
 
-#endif // ndef NTG_ENUM_BIN_HH
+#endif // !NTG_ENUM_BIN_HH

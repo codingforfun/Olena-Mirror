@@ -84,7 +84,7 @@ namespace oln {
     {
       std::ostringstream out;
       out << "pointnd<" << dim << ","
-	  << ntg::typename_of<Exact>() << ">" << std::ends;
+	  << Exact::name() << ">" << std::ends;
       return out.str();
     }
 

@@ -25,21 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_RGB_HH
-# define NTG_RGB_HH
+#ifndef NTG_COLOR_RGB_HH
+# define NTG_COLOR_RGB_HH
 
 # include <ntg/color/color.hh>
 
 namespace ntg
 {
     
-  /* CIE RGB */
+  /*!
+    CIE RGB format.
+  */
 
-  enum rgb_comp {
-    rgb_R = 0,
-    rgb_G = 1,
-    rgb_B = 2
-  };
+  enum rgb_comp
+    {
+      rgb_R = 0,
+      rgb_G = 1,
+      rgb_B = 2
+    };
 
   template<unsigned icomp> struct rgb_traits;
   template<> struct rgb_traits<rgb_R> : public interval<0,1> {};
@@ -50,6 +53,6 @@ namespace ntg
   typedef color<3,16,rgb_traits> rgb_16;
   typedef color<3,32,rgb_traits> rgb_32;  
 
-} // end of ntg
+} // end of ntg.
 
-#endif // NTG_RGB_HH
+#endif // !NTG_COLOR_RGB_HH

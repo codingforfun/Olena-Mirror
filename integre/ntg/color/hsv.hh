@@ -25,19 +25,20 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_HSV_HH
-# define NTG_HSV_HH
+#ifndef NTG_COLOR_HSV_HH
+# define NTG_COLOR_HSV_HH
 
 # include <ntg/color/color.hh>
 
 namespace ntg
 {
 
-  enum hsv_comp {
-    hsv_H = 0,
-    hsv_S = 1,
-    hsv_V = 2
-  };
+  enum hsv_comp 
+    {
+      hsv_H = 0,
+      hsv_S = 1,
+      hsv_V = 2
+    };
 
   template<unsigned icomp> struct hsv_traits;
   template<> struct hsv_traits<hsv_H> : public interval<0,360> {};
@@ -49,6 +50,6 @@ namespace ntg
   typedef color<3,16,hsv_traits> hsv_16;
   typedef color<3,32,hsv_traits> hsv_32;
 
-} // end of ntg
+} // end of ntg.
 
-#endif // NTG_HSV_HH
+#endif // !NTG_COLOR_HSV_HH

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,13 +25,55 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_TYPETRAITS_BUILTINS_HH
-# define NTG_TYPETRAITS_BUILTINS_HH
+#ifndef NTG_ENUM_BUILTIN_BOOL_HH
+# define NTG_ENUM_BUILTIN_BOOL_HH
 
-// shortcut for builtins typetraits
+# include <ntg/core/abstract_hierarchy.hh>
+# include <ntg/core/behavior.hh>
+# include <ntg/core/predecls.hh>
+# include <ntg/core/type_traits.hh>
 
-# include <ntg/real/typetraits_builtins_int.hh>
-# include <ntg/real/typetraits_builtins_float.hh>
-# include <ntg/enum/typetraits_builtins_bool.hh>
+namespace ntg {
 
-#endif // ndef NTG_TYPETRAITS_BUILTINS_HH
+  namespace internal {
+
+    /*-----------------.
+    | typetraits<bool> |
+    `-----------------*/
+
+    template <>
+    struct typetraits<bool>
+    {
+      typedef bool		self;
+      typedef enumerated	abstract_type;	
+      typedef bin		ntg_type;
+      typedef optraits<self>	optraits_type;
+      typedef unsafe::get<self>	behavior_type;
+
+      typedef self		base_type;
+      typedef self		storage_type;
+      typedef self		cumul_type;
+      typedef self		largest_type;
+      typedef self		signed_largest_type;
+      typedef self		signed_cumul_type;
+      typedef self		unsigned_largest_type;
+      typedef self		unsigned_cumul_type;
+      typedef unsigned int	integer_type;
+    };
+
+    /*---------------.
+    | optraits<bool> |
+    `---------------*/
+
+    template<>
+    struct optraits<bool>
+    {
+      static bool min() { return 0; }
+      static bool max() { return 1; }
+    };
+    
+  } // end of internal.
+
+} // end of ntg.
+
+#endif // !NTG_ENUM_BUILTIN_BOOL_HH

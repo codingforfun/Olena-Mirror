@@ -28,32 +28,23 @@
 #ifndef NTG_ALL_HH
 # define NTG_ALL_HH
 
+/*
+  Include all Integre's features.
+*/
+
 # include <ntg/basics.hh>
 
-# include <ntg/real/int_u.hh>
-# include <ntg/real/int_s.hh>
-# include <ntg/real/range.hh>
-# include <ntg/real/cycle.hh>
-# include <ntg/enum/bin.hh>
-# include <ntg/vect/vec.hh>
-# include <ntg/vect/cplx.hh>
+# include <ntg/bin.hh>
 
-# include <ntg/color/color.hh>
-# include <ntg/color/rgb.hh>
-# include <ntg/color/nrgb.hh>
-# include <ntg/color/hsi.hh>
-# include <ntg/color/hsl.hh>
-# include <ntg/color/hsv.hh>
-# include <ntg/color/xyz.hh>
-# include <ntg/color/yiq.hh>
-# include <ntg/color/yuv.hh>
+# include <ntg/int.hh>
+# include <ntg/cycle.hh>
+# include <ntg/range.hh>
 
-# include <ntg/core/internal/typetraits_builtins.hh>
-# include <ntg/core/internal/optraits_builtins.hh>
+# include <ntg/vec.hh>
+# include <ntg/cplx.hh>
 
-# include <ntg/core/internal/global_ops_traits.hh>
-# include <ntg/core/internal/global_ops.hh>
+# include <ntg/color.hh>
 
 # include <ntg/utils/cast.hh>
 
-#endif // ndef NTG_ALL_HH
+#endif // !NTG_ALL_HH

@@ -1,3 +1,18 @@
+2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/convol/fast_gaussian.hh, oln/convol/fast_gaussian.hxx: Fix
+	includes and namespaces.
+
+	* oln/convert/stretch.hh, oln/convert/conversion.hh,
+	oln/convert/bound.hh, oln/convert/force.hh, oln/core/dpointnd.hh,
+	oln/core/imagend_size.hh, oln/core/pointnd.hh,
+	oln/level/threshold.hh: Adapt to integre's changes.
+
+	* oln/io/pnm_write_common.hxx, oln/convert/nrgbhsi.hh: Update
+	includes.
+
+	* oln/convert/nrgbhsv.hh, oln/convert/nrgbhsl.hh: Add FIXME.
+
 2003-05-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/level/invert.hh: Adapt to integre's changes.

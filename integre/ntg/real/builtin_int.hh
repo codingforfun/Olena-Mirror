@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,45 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OPTRAITS_BUILTINS_INT_HH
-# define OPTRAITS_BUILTINS_INT_HH
+#ifndef NTG_CORE_BUILTIN_INT_HH
+# define NTG_CORE_BUILTIN_INT_HH
 
-# include <ntg/config/system.hh>
+/*
+  Proxy header for integer builtin types.
+*/
 
-# include <ntg/real/optraits_scalar.hh>
-# include <ntg/real/optraits_builtins_int_defs.hh>
-# include <ntg/real/typetraits_builtins_int.hh>
+# include <ntg/real/typetraits_builtin_int.hh>
+# include <ntg/real/optraits_builtin_int.hh>
 
-// FIXME: isn't this included by system.hh ?
-# include <limits.h>
-
-# include <string>
-
-//
-//  optraits for builtins
-//
-//  dev note : optraits<builtins> artihmetic operators are only called
-//  when there is an operator_xxx_traits defined, else buitlins are
-//  converted into oln type.
-//
-///////////////////////////////////////////////////////////////////////////////
-
-namespace ntg {
-
-  namespace internal {
-
-  OPTRAITS_BUILTIN_INT_U(unsigned long,  ULONG_MAX);
-  OPTRAITS_BUILTIN_INT_U(unsigned int,   UINT_MAX);
-  OPTRAITS_BUILTIN_INT_U(unsigned short, USHRT_MAX);
-  OPTRAITS_BUILTIN_INT_U(unsigned char,  UCHAR_MAX);
-
-  OPTRAITS_BUILTIN_INT_S(signed long,  LONG_MIN, LONG_MAX);
-  OPTRAITS_BUILTIN_INT_S(signed int,   INT_MIN,  INT_MAX);
-  OPTRAITS_BUILTIN_INT_S(signed short, SHRT_MIN, SHRT_MAX);
-  OPTRAITS_BUILTIN_INT_S(signed char,  CHAR_MIN, CHAR_MAX);
-
-  } // end of internal.
-
-} // end of ntg.
-
-#endif // ndef OPTRAITS_BUILTINS_INT_HH
+#endif // !NTG_CORE_BUILTIN_INT_HH

@@ -33,13 +33,16 @@
 namespace ntg
 {
 
-  /* NTSC RGB */
+  /*! 
+    NTSC RGB format.
+  */
   
-  enum nrgb_comp {
-    nrgb_R = 0,
-    nrgb_G = 1,
-    nrgb_B = 2
-  };
+  enum nrgb_comp
+    {
+      nrgb_R = 0,
+      nrgb_G = 1,
+      nrgb_B = 2
+    };
 
   template<unsigned icomp> struct nrgb_traits;
   template<> struct nrgb_traits<nrgb_R> : public interval<0,1> {};
@@ -100,8 +103,8 @@ namespace ntg
     DEFINE_COLOR(nrgb_32, cyan,  0,   255, 255);
     DEFINE_COLOR(nrgb_32, pink,  255, 0,   255);
     
-  } // end of nrgb_32_color
+  } // end of nrgb_32_color.
     
-} // end of ntg
+} // end of ntg.
 
-#endif // NTG_NRGB_HH
+#endif // !NTG_COLOR_NRGB_HH

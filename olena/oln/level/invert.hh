@@ -29,8 +29,9 @@
 # define OLENA_LEVEL_INVERT_HH
 
 # include <oln/basics.hh>
-# include <ntg/core/value.hh>
+
 # include <ntg/bin.hh>
+
 # include <functional>
 
 namespace oln {
@@ -75,7 +76,7 @@ namespace oln {
       }
 
       static
-      const bin doit(bin val) {
+      const ntg::bin doit(ntg::bin val) {
 	return val == true ? false : true;
       }
     };

@@ -32,9 +32,6 @@
 # include <oln/core/iter.hh>
 # include <oln/io/base.hh>
 
-// FIXME: these includes sounds bad.
-# include <ntg/real/typetraits_builtins_int.hh>
-# include <ntg/enum/typetraits_builtins_bool.hh>
 # include <ntg/bin.hh>
 # include <ntg/int.hh>
 

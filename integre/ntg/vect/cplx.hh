@@ -25,25 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_CPLX_HH
-# define NTG_CPLX_HH
-
-# include <ntg/config/system.hh>
-
-# include <mlc/cmp.hh>
-# include <mlc/is_a.hh>
+#ifndef NTG_VECT_CPLX_HH
+# define NTG_VECT_CPLX_HH
 
 # include <ntg/basics.hh>
 # include <ntg/vect/cplx_representation.hh>
 # include <ntg/vect/vec.hh>
 
-// FIXME: move these macros elsewhere and document them.
+# include <mlc/cmp.hh>
+# include <mlc/is_a.hh>
 
-// Assignement operators macros
+/*------------------------------.
+| Assignements operators macros |
+`------------------------------*/
 
 # define ASSIGN_CPLX_SCALAR_OPERATOR_SINGLE(Rep, Name, Op)	\
 template <class T1, class T2> inline				\
-static cplx<Rep, T1>& Name(cplx<Rep, T1>& lhs, const T2& rhs)	\
+static cplx<Rep, T1>&						\
+Name(cplx<Rep, T1>& lhs, const T2& rhs)				\
 {								\
   ntg_is_a(T2, real)::ensure();					\
   lhs.first() Op rhs;						\
@@ -52,7 +51,8 @@ static cplx<Rep, T1>& Name(cplx<Rep, T1>& lhs, const T2& rhs)	\
 
 # define ASSIGN_CPLX_SCALAR_OPERATOR_BOTH(Rep, Name, Op)	\
 template <class T1, class T2> inline				\
-static cplx<Rep, T1>& Name(cplx<Rep, T1>& lhs, const T2& rhs)	\
+static cplx<Rep, T1>&						\
+Name(cplx<Rep, T1>& lhs, const T2& rhs)				\
 {								\
   ntg_is_a(T2, real)::ensure();					\
   lhs.first() Op rhs;						\
@@ -60,165 +60,176 @@ static cplx<Rep, T1>& Name(cplx<Rep, T1>& lhs, const T2& rhs)	\
   return lhs;							\
 }
 
-# define ASSIGN_CPLX_POLAR_SCALAR_OPERATOR(Name, Op)			\
-template <class T1, class T2> inline					\
-static cplx<polar, T1>& Name(cplx<polar, T1>& lhs, const T2& rhs)	\
+# define ASSIGN_CPLX_POLAR_SCALAR_OPERATOR(Name, Op)	\
+template <class T1, class T2> inline			\
+static cplx<polar, T1>&					\
+Name(cplx<polar, T1>& lhs, const T2& rhs)		\
+{							\
+  ntg_is_a(T2, real)::ensure();				\
+  cplx<rect, float_d> tmp(lhs);				\
+  tmp.real() Op rhs;					\
+  lhs = tmp;						\
+  return lhs;						\
+}
+
+# define ASSIGN_CPLX_RECT_CPLX_OPERATOR_MULT(Name, Op1, Op2)	\
+template <class T1, cplx_representation R2, class T2> inline	\
+static cplx<rect, T1>&						\
+Name(cplx<rect, T1>& lhs, const cplx<R2, T2>& rhs)		\
+{								\
+  cplx<polar, float_d> tmp(lhs);				\
+  tmp.magn() Op1 (float_d)rhs.magn();				\
+  tmp.angle() Op2 (float_d)rhs.angle();				\
+  lhs = tmp;							\
+  return lhs;							\
+}
+
+# define ASSIGN_CPLX_RECT_CPLX_OPERATOR_ADD(Name, Op1, Op2)	\
+template <cplx_representation R, class T1, class T2> inline	\
+static cplx<rect, T1>& 						\
+Name(cplx<rect, T1>& lhs, const cplx<R, T2>& rhs)		\
+{								\
+  lhs.first() Op1 rhs.real();					\
+  lhs.second() Op2 rhs.imag();					\
+  return lhs;							\
+}
+
+# define ASSIGN_CPLX_POLAR_CPLX_OPERATOR_MULT(Name, Op1, Op2)	\
+template <cplx_representation R, class T1, class T2> inline	\
+static cplx<polar, T1>&						\
+Name(cplx<polar, T1>& lhs, const cplx<R, T2>& rhs)		\
+{								\
+  lhs.magn() Op1 rhs.magn();					\
+  lhs.angle() Op2 rhs.angle();					\
+  return lhs;							\
+}
+
+# define ASSIGN_CPLX_POLAR_CPLX_OPERATOR_ADD(Name, Op)		\
+template <cplx_representation R, class T1, class T2> inline	\
+static cplx<polar, T1>&						\
+Name(cplx<polar, T1>& lhs, const cplx<R, T2>& rhs)		\
+{								\
+  cplx<rect, float_d> tmp(lhs);					\
+  tmp.real() Op (float_d)rhs.real();				\
+  tmp.imag() Op (float_d)rhs.imag();				\
+  lhs = tmp;							\
+  return lhs;							\
+}
+
+# define ASSIGN_CPLX_VECTOR_OPERATOR(Rep, Name, Op)	\
+template <class T1, class T2> inline			\
+static cplx<Rep, T1>&					\
+Name(cplx<Rep, T1>& lhs, const vec<2, T2>& rhs)		\
+{							\
+  lhs.first() Op rhs[0];				\
+  lhs.second() Op rhs[1];				\
+  return lhs;						\
+}
+
+/*-----------------------------.
+| Arithemetic operators macros |
+`-----------------------------*/
+
+# define ARITH_CPLX_CPLX_OPERATOR(Rep1, Rep2, Name, Op)			\
+template <class T1, class T2>						\
+inline static								\
+cplx<Rep1, ntg_return_type(Name, T1, T2)>				\
+Name(const cplx<Rep1, T1>& lhs, const cplx<Rep2, T2>& rhs)		\
 {									\
-  ntg_is_a(T2, real)::ensure();						\
-  cplx<rect, float_d> tmp(lhs);						\
-  tmp.real() Op rhs;							\
-  lhs = tmp;								\
-  return lhs;								\
+  typedef cplx<Rep1, ntg_return_type(Name, T1, T2)> return_type;	\
+  return_type result(lhs);						\
+  result Op rhs;							\
+  return result;							\
 }
 
-# define ASSIGN_CPLX_RECT_CPLX_OPERATOR_MULT(Name, Op1, Op2)			\
-template <class T1, cplx_representation R2, class T2> inline			\
-static cplx<rect, T1>& Name(cplx<rect, T1>& lhs, const cplx<R2, T2>& rhs)	\
-{										\
-  cplx<polar, float_d> tmp(lhs);						\
-  tmp.magn() Op1 (float_d)rhs.magn();						\
-  tmp.angle() Op2 (float_d)rhs.angle();						\
-  lhs = tmp;									\
-  return lhs;									\
+# define ARITH_CPLX_SCALAR_OPERATOR(Rep, Name, Op)		\
+template <class T1, class T2>					\
+inline static							\
+cplx<Rep, ntg_return_type(Name, T1, T2)>			\
+Name(const cplx<Rep, T1>& lhs, const T2& rhs)			\
+{								\
+  ntg_is_a(T2, real)::ensure();					\
+  typedef cplx<Rep, ntg_return_type(Name, T1, T2)> return_type;	\
+  return_type result(lhs);					\
+  result Op rhs;						\
+  return result;						\
 }
 
-# define ASSIGN_CPLX_RECT_CPLX_OPERATOR_ADD(Name, Op1, Op2)			\
-template <cplx_representation R, class T1, class T2> inline			\
-static cplx<rect, T1>& Name(cplx<rect, T1>& lhs, const cplx<R, T2>& rhs)	\
-{										\
-  lhs.first() Op1 rhs.real();							\
-  lhs.second() Op2 rhs.imag();							\
-  return lhs;									\
+# define ARITH_CPLX_SCALAR_OPERATOR_COMMUTE(Rep, Name, Op)	\
+template <class T1, class T2>					\
+inline static							\
+cplx<Rep, ntg_return_type(Name, T1, T2)>			\
+Name(const T1& lhs, const cplx<Rep, T2>& rhs)			\
+{								\
+  return Name(rhs, lhs);					\
 }
 
-# define ASSIGN_CPLX_POLAR_CPLX_OPERATOR_MULT(Name, Op1, Op2)			\
-template <cplx_representation R, class T1, class T2> inline			\
-static cplx<polar, T1>& Name(cplx<polar, T1>& lhs, const cplx<R, T2>& rhs)	\
-{										\
-  lhs.magn() Op1 rhs.magn();							\
-  lhs.angle() Op2 rhs.angle();							\
-  return lhs;									\
+# define ARITH_CPLX_VECTOR_OPERATOR(Rep, Name, Op);		\
+template <class T1, class T2>					\
+inline static							\
+cplx<Rep, ntg_return_type(Name, T1, T2)>			\
+Name(const cplx<Rep, T1>& lhs, const vec<2, T2>& rhs)		\
+{								\
+  typedef cplx<Rep, ntg_return_type(Name, T1, T2)> return_type;	\
+  return_type result(lhs);					\
+  result Op rhs;						\
+  return result;						\
 }
 
-# define ASSIGN_CPLX_POLAR_CPLX_OPERATOR_ADD(Name, Op)				\
-template <cplx_representation R, class T1, class T2> inline			\
-static cplx<polar, T1>& Name(cplx<polar, T1>& lhs, const cplx<R, T2>& rhs)	\
-{										\
-  cplx<rect, float_d> tmp(lhs);							\
-  tmp.real() Op (float_d)rhs.real();						\
-  tmp.imag() Op (float_d)rhs.imag();						\
-  lhs = tmp;									\
-  return lhs;									\
+# define ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_PLUS(Rep, Name, Op);	\
+template <class T1, class T2>						\
+inline static								\
+cplx<Rep, ntg_return_type(Name, T1, T2)>				\
+Name(const vec<2, T1>& lhs, const cplx<Rep, T2>& rhs)			\
+{									\
+  return Name(rhs, lhs);						\
 }
 
-# define ASSIGN_CPLX_VECTOR_OPERATOR(Rep, Name, Op)				\
-template <class T1, class T2> inline						\
-static cplx<Rep, T1>& Name(cplx<Rep, T1>& lhs, const vec<2, T2>& rhs)		\
-{										\
-  lhs.first() Op rhs[0];							\
-  lhs.second() Op rhs[1];							\
-  return lhs;									\
-}
-
-// Arithmetic operators macros
-
-# define ARITH_CPLX_CPLX_OPERATOR(Rep1, Rep2, Name, Op)						\
-template <class T1, class T2>									\
-inline static											\
-cplx<Rep1, ntg_return_type(Name, T1, T2)>							\
-Name(const cplx<Rep1, T1>& lhs, const cplx<Rep2, T2>& rhs)					\
-{												\
-  typedef cplx<Rep1, ntg_return_type(Name, T1, T2)> return_type;									\
-  return_type result(lhs);									\
-  result Op rhs;										\
-  return result;										\
-}
-
-# define ARITH_CPLX_SCALAR_OPERATOR(Rep, Name, Op)					\
-template <class T1, class T2>								\
-inline static										\
-cplx<Rep, ntg_return_type(Name, T1, T2)>						\
-Name(const cplx<Rep, T1>& lhs, const T2& rhs)						\
-{											\
-  ntg_is_a(T2, real)::ensure();								\
-  typedef cplx<Rep, ntg_return_type(Name, T1, T2)> return_type;				\
-  return_type result(lhs);								\
-  result Op rhs;									\
-  return result;									\
-}
-
-# define ARITH_CPLX_SCALAR_OPERATOR_COMMUTE(Rep, Name, Op)					\
-template <class T1, class T2>									\
-inline static											\
-cplx<Rep, ntg_return_type(Name, T1, T2)>							\
-Name(const T1& lhs, const cplx<Rep, T2>& rhs)							\
-{												\
-  return Name(rhs, lhs);									\
-}
-
-# define ARITH_CPLX_VECTOR_OPERATOR(Rep, Name, Op);						\
-template <class T1, class T2>									\
-inline static											\
-cplx<Rep, ntg_return_type(Name, T1, T2)>							\
-Name(const cplx<Rep, T1>& lhs, const vec<2, T2>& rhs)						\
-{												\
-  typedef cplx<Rep, ntg_return_type(Name, T1, T2)> return_type;									\
-  return_type result(lhs);									\
-  result Op rhs;										\
-  return result;										\
-}
-
-# define ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_PLUS(Rep, Name, Op);				\
-template <class T1, class T2>									\
-inline static											\
-cplx<Rep, ntg_return_type(Name, T1, T2)>							\
-Name(const vec<2, T1>& lhs, const cplx<Rep, T2>& rhs)						\
-{												\
-  return Name(rhs, lhs);									\
-}
-
-# define ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_MINUS(Rep, Name, Op);				\
-template <class T1, class T2>									\
-inline static											\
-cplx<Rep, ntg_return_type(Name, T1, T2)>							\
-Name(const vec<2, T1>& lhs, const cplx<Rep, T2>& rhs)						\
-{												\
-  return Name(rhs, lhs).invert();								\
+# define ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_MINUS(Rep, Name, Op);	\
+template <class T1, class T2>						\
+inline static								\
+cplx<Rep, ntg_return_type(Name, T1, T2)>				\
+Name(const vec<2, T1>& lhs, const cplx<Rep, T2>& rhs)			\
+{									\
+  return Name(rhs, lhs).invert();					\
 }
 
 namespace ntg {
 
   namespace internal {
 
+    /*-----------------.
+    | typetraits<cplx> |
+    `-----------------*/
+
     template <cplx_representation R, class T>
     struct typetraits<cplx<R, T> >
     {
-      typedef cplx<R, T> self;
-      typedef vectorial abstract_type;
-      typedef self ntg_type;
+      typedef cplx<R, T>	self;
+      typedef vectorial		abstract_type;
+      typedef self		ntg_type;
+      typedef optraits<self>	optraits_type;
+
       ntg_build_value_type(vect_value<E>);
 
-      typedef optraits<self> optraits;
-
       typedef typename typetraits<T>::base_type  base_type[2];
-      typedef T storage_type[2];
+      typedef T					 storage_type[2];
       typedef typename typetraits<T>::cumul_type cumul_type[2];
-
-      typedef self op_traits;
     };
 
   } // end of internal.
 
-  //
-  // Non-specialized cplx class (declared in predecls.hh) :
-  // template <cplx_representation R, class T> class cplx;
-  //
-  //////////////////////////////////////
-    
-  //
-  // cplx<rect, T>
-  //
-  //////////////////////////////////////
+  /*-----------.
+  | cplx<R, T> |
+  `-----------*/
+
+  //! No default implementation.
+  template <cplx_representation R, class T>
+  class cplx;
+
+  /*--------------.
+  | cplx<rect, T> |
+  `--------------*/
 
   template <class T>
   class cplx<rect, T> : public vec<2, T, cplx<rect, T> >
@@ -231,7 +242,8 @@ namespace ntg {
       val_[1] = im;
     }
 
-    cplx<rect, T>& operator=(const T& r)
+    cplx<rect, T>&
+    operator=(const T& r)
     {
       val_[0] = r;
       val_[1] = 0;
@@ -246,7 +258,8 @@ namespace ntg {
     }
 
     template<cplx_representation R, class T2>
-    cplx<rect, T>& operator=(const cplx<R, T2>& rhs)
+    cplx<rect, T>&
+    operator=(const cplx<R, T2>& rhs)
     {
       val_[0] = (T)rhs.real();
       val_[1] = (T)rhs.imag();
@@ -261,7 +274,8 @@ namespace ntg {
     }
 
     template<class T2>
-    cplx<rect, T>& operator=(const vec<2, T2>& rhs)
+    cplx<rect, T>&
+    operator=(const vec<2, T2>& rhs)
     {
       val_[0] = (T)rhs[0];
       val_[1] = (T)rhs[1];
@@ -289,37 +303,41 @@ namespace ntg {
 
     // methods
 
-    const float_d magn() const
+    const float_d
+    magn() const
     {
       return sqrt(val_[0] * val_[0] + val_[1] * val_[1]);
     }
 
-    const float_d angle() const
+    const float_d
+    angle() const
     {
       return atan2(val_[1], val_[0]);
     }
 
-    const cplx<rect, T> conj() const
+    const cplx<rect, T>
+    conj() const
     {
       return cplx<rect, T>(val_[0], -val_[1]);
     }
 
-    const cplx<rect, T> invert() const
+    const cplx<rect, T>
+    invert() const
     {
       return cplx<rect, T>(-val_[0], -val_[1]);
     }
 
-    const cplx<polar, float_d> to_polar() const
+    const cplx<polar, float_d>
+    to_polar() const
     {
       return cplx<polar, float_d>(magn(), angle());
     }
 
   };
 
-  //
-  // cplx<polar, T>
-  //
-  //////////////////////////////////////
+  /*---------------.
+  | cplx<polar, T> |
+  `---------------*/
 
   template <class T>
   class cplx<polar, T> : public vect_value<cplx<polar, T> >
@@ -328,7 +346,7 @@ namespace ntg {
 
     cplx(const T& ma = 0, const T& an = 0)
     {
-      precondition (ma >= 0);
+      ntg_assert(ma >= 0);
       val_[0] = ma;
       val_[1] = an;
     }
@@ -376,27 +394,32 @@ namespace ntg {
 
     // methods
 
-    const float_d real() const
+    const float_d
+    real() const
     {
       return val_[0] * cos(val_[1]);
     }
 
-    const float_d imag() const
+    const float_d
+    imag() const
     {
       return val_[0] * sin(val_[1]);
     }
 
-    const cplx<polar, T> conj() const
+    const cplx<polar, T>
+    conj() const
     {
       return cplx<polar, T>(val_[0], -val_[1]);
     }
 
-    const cplx<rect, T> invert() const
+    const cplx<rect, T>
+    invert() const
     {
       return cplx<rect, T>(val_[0], val_[1] + M_PI);
     }
 
-    const cplx<rect, float_d> to_rect() const
+    const cplx<rect, float_d>
+    to_rect() const
     {
       return cplx<rect, float_d>(real(), imag());
     }
@@ -404,16 +427,16 @@ namespace ntg {
   };
 
   template<class T>
-  inline
-  std::ostream& operator<<(std::ostream& ostr, const cplx<rect, T>& rhs)
+  inline std::ostream&
+  operator<<(std::ostream& ostr, const cplx<rect, T>& rhs)
   {
     return ostr << rhs.real() << " + "
 		<< rhs.imag() << "i";
   }
 
   template<class T>
-  inline
-  std::ostream& operator<<(std::ostream& ostr, const cplx<polar, T>& rhs)
+  inline std::ostream&
+  operator<<(std::ostream& ostr, const cplx<polar, T>& rhs)
   {
     return ostr << rhs.magn() << " * exp("
 		<< rhs.angle() << "i)";
@@ -422,10 +445,9 @@ namespace ntg {
   namespace internal 
   {
 
-    //
-    //  optraits for cplx<rect, T>
-    //
-    //////////////////////////////////////
+    /*-------------------------.
+    | optraits<cplx<rect, T> > |
+    `-------------------------*/
   
     template <class T>
     class optraits<cplx<rect, T> >: public optraits<vec<2, T> >
@@ -434,7 +456,6 @@ namespace ntg {
       typedef typename typetraits<self>::storage_type storage_type_;
     
     public:
-    
       static self zero ()
       {
 	return self();
@@ -445,8 +466,9 @@ namespace ntg {
 	return self(1);
       }
     
-      // debug
-      static std::string name() {
+      static std::string
+      name()
+      {
 	std::ostringstream out;
 	out << "cplx<rect, " <<  optraits<T>::name() << ">" << std::ends;
 	return out.str();
@@ -488,8 +510,8 @@ namespace ntg {
       ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_MINUS(rect, minus, -=);
 
       template <class T1, cplx_representation R2, class T2>
-      inline static bool cmp_eq (const cplx<rect, T1>& lhs,
-				 const cplx<R2, T2>& rhs)
+      inline static bool
+      cmp_eq (const cplx<rect, T1>& lhs, const cplx<R2, T2>& rhs)
       {
 	if (lhs.real() != rhs.real() || lhs.imag() != rhs.imag())
 	  return false;
@@ -498,19 +520,17 @@ namespace ntg {
 
     };
 
-    //
-    //  optraits for cplx<polar, T>
-    //
-    ////////////////////////////////////
+    /*--------------------------.
+    | optraits<cplx<polar, T> > |
+    `--------------------------*/
 
     template <class T>
     class optraits<cplx<polar, T> >: public optraits_top<cplx<polar, T> >
     {
       typedef cplx<polar, T> self;
-      typedef typename typetraits<self>::storage_type storage_type_;
+      typedef ntgi_storage_type(self) storage_type_;
     
     public:
-    
       static self zero ()
       {
 	return self();
@@ -521,8 +541,9 @@ namespace ntg {
 	return self(1);
       }
     
-      // debug
-      static std::string name() {
+      static std::string
+      name()
+      {
 	std::ostringstream out;
 	out << "cplx<polar, " <<  optraits<T>::name() << ">" << std::ends;
 	return out.str();
@@ -556,8 +577,8 @@ namespace ntg {
       ARITH_CPLX_CPLX_OPERATOR(polar, rect, div, /=);
 
       template <class T1, cplx_representation R2, class T2>
-      inline static bool cmp_eq (const cplx<polar, T1>& lhs,
-				 const cplx<R2, T2>& rhs)
+      inline static bool
+      cmp_eq (const cplx<polar, T1>& lhs, const cplx<R2, T2>& rhs)
       {
 	if (lhs.magn() != rhs.magn() || lhs.angle() != rhs.angle())
 	  return false;
@@ -566,41 +587,47 @@ namespace ntg {
 
     };
     
-    // Operators traits macros
+    /*-----------------------.
+    | operator traits macros |
+    `-----------------------*/
 
-    // FIXME: I think there is an easy way to simplify this. -- nes
+    // FIXME: I think there should be an easy way to simplify this. 
+    // -- nes
 
-# define CPLX_SCALAR_OPERATORS_TRAITS(Name, CommuteBool)							\
-    template <cplx_representation R1, class T1, class T2>							\
-    struct operator_traits<operator_##Name, cplx<R1, T1>, T2>								\
-    {														\
-      enum { commutative = CommuteBool };									\
+# define CPLX_SCALAR_OPERATORS_TRAITS(Name, CommuteBool)	\
+    template <cplx_representation R1, class T1, class T2>	\
+    struct operator_traits<operator_##Name, cplx<R1, T1>, T2>	\
+    {								\
+      enum { commutative = CommuteBool };			\
       typedef cplx<R1, ntg_return_type(Name, T1, T2)> ret;	\
-      typedef cplx<R1, T1> impl;										\
+      typedef cplx<R1, T1> impl;				\
     }
 
-# define CPLX_CPLX_OPERATORS_TRAITS(Name, CommuteBool)								\
-    template <cplx_representation R1, class T1, cplx_representation R2, class T2>				\
-    struct operator_traits<operator_##Name, cplx<R1, T1>, cplx<R2, T2> >					\
-    {														\
-      enum { commutative = CommuteBool };									\
+# define CPLX_CPLX_OPERATORS_TRAITS(Name, CommuteBool)		\
+    template <cplx_representation R1,				\
+              class T1,						\
+	      cplx_representation R2, class T2>			\
+    struct operator_traits<operator_##Name, 			\
+                           cplx<R1, T1>, cplx<R2, T2> >		\
+    {								\
+      enum { commutative = CommuteBool };			\
       typedef cplx<R1, ntg_return_type(Name, T1, T2)> ret;	\
-      typedef cplx<R1, T1> impl;										\
+      typedef cplx<R1, T1> impl;				\
     }
 
-# define CPLX_VECTOR_OPERATORS_TRAITS(Rep, Name, CommuteBool)							\
-    template <class T1, class T2>										\
-    struct operator_traits<operator_##Name, cplx<Rep, T1>, vec<2, T2> >						\
-    {														\
-      enum { commutative = CommuteBool };									\
+# define CPLX_VECTOR_OPERATORS_TRAITS(Rep, Name, CommuteBool)	\
+    template <class T1, class T2>				\
+    struct operator_traits<operator_##Name,			\
+                           cplx<Rep, T1>, vec<2, T2> >		\
+    {								\
+      enum { commutative = CommuteBool };			\
       typedef cplx<Rep, ntg_return_type(Name, T1, T2)> ret;	\
-      typedef cplx<Rep, T1> impl;										\
+      typedef cplx<Rep, T1> impl;				\
     }
 
-    //
-    // Operators traits
-    //
-    ////////////////////
+    /*----------------.
+    | operator traits |
+    `----------------*/
     
     CPLX_SCALAR_OPERATORS_TRAITS(plus, true);
     CPLX_SCALAR_OPERATORS_TRAITS(minus, true);
@@ -615,7 +642,8 @@ namespace ntg {
     CPLX_VECTOR_OPERATORS_TRAITS(rect, plus, true);
     CPLX_VECTOR_OPERATORS_TRAITS(rect, minus, true);
 
-    template<cplx_representation R1, class T1, cplx_representation R2, class T2>
+    template<cplx_representation R1, class T1, 
+	     cplx_representation R2, class T2>
     struct operator_traits<operator_cmp, cplx<R1, T1>, cplx<R2, T2> >
     {
       enum { commutative = true };
@@ -627,4 +655,4 @@ namespace ntg {
 
 } // end of ntg.
 
-#endif // ! NTG_CPLX_HH
+#endif // !NTG_VECT_CPLX_HH

@@ -28,7 +28,9 @@
 #ifndef NTG_CPLX_HH
 # define NTG_CPLX_HH
 
-// Proxy header for cplx type.
+/*
+  Proxy header for cplx type.
+*/
 
 # include <ntg/vect/cplx.hh>
 

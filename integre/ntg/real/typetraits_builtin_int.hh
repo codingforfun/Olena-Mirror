@@ -25,12 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_TYPETRAITS_BUILTINS_INT_HH
-# define NTG_TYPETRAITS_BUILTINS_INT_HH
+#ifndef NTG_REAL_TYPETRAITS_BUILTIN_INT_HH
+# define NTG_REAL_TYPETRAITS_BUILTIN_INT_HH
 
+# include <ntg/core/behavior.hh>
 # include <ntg/core/predecls.hh>
 # include <ntg/core/type_traits.hh>
-# include <ntg/core/behavior.hh>
+
+/*-------.
+| macros |
+`-------*/
 
 # define TYPETRAITS_BUILTIN_INT(Name)						\
   template<>									\
@@ -48,24 +52,22 @@
     typedef optraits<self> optraits;						\
     typedef unsafe::get<self> behavior_type;					\
 										\
-    typedef self					base_type;		\
-    typedef self					storage_type;		\
-    typedef builtin::signed_trait<Name>::ret		signed_type;		\
-    typedef builtin::unsigned_trait<Name>::ret		unsigned_type;		\
-    typedef builtin::cumul_trait<Name>::ret		cumul_type;		\
-    typedef builtin::largest_trait<Name>::ret		largest_type;		\
-    typedef builtin::signed_largest_trait<Name>::ret	signed_largest_type;	\
-    typedef builtin::signed_cumul_trait<Name>::ret	signed_cumul_type;	\
-    typedef builtin::unsigned_largest_trait<Name>::ret	unsigned_largest_type;	\
-    typedef builtin::unsigned_cumul_trait<Name>::ret	unsigned_cumul_type;	\
-    typedef self					integer_type;		\
+    typedef self				       base_type;		\
+    typedef self				       storage_type;		\
+    typedef builtin::signed_trait<Name>::ret	       signed_type;		\
+    typedef builtin::unsigned_trait<Name>::ret	       unsigned_type;		\
+    typedef builtin::cumul_trait<Name>::ret	       cumul_type;		\
+    typedef builtin::largest_trait<Name>::ret	       largest_type;		\
+    typedef builtin::signed_largest_trait<Name>::ret   signed_largest_type;	\
+    typedef builtin::signed_cumul_trait<Name>::ret     signed_cumul_type;	\
+    typedef builtin::unsigned_largest_trait<Name>::ret unsigned_largest_type;	\
+    typedef builtin::unsigned_cumul_trait<Name>::ret   unsigned_cumul_type;	\
+    typedef self				       integer_type;		\
   };
 
-namespace ntg
-{
+namespace ntg {
 
-  namespace builtin
-  {
+  namespace builtin  {
 
     template <class T>
     struct abstract_trait { typedef unsigned_integer ret; };
@@ -158,4 +160,4 @@ namespace ntg
 
 } // end of ntg.
 
-#endif // ndef NTG_TYPETRAITS_BUILTINS_INT_HH
+#endif // !NTG_REAL_TYPETRAITS_BUILTIN_INT_HH

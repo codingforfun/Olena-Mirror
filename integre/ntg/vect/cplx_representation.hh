@@ -25,18 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_CPLX_REPRESENTATION_HH
-# define NTG_CPLX_REPRESENTATION_HH
+#ifndef NTG_VECT_CPLX_REPRESENTATION_HH
+# define NTG_VECT_CPLX_REPRESENTATION_HH
 
 namespace ntg
 {
 
   // Different representations of cplx :
-  typedef enum {
-    rect,
-    polar
-  } cplx_representation;
+  typedef enum 
+    {
+      rect,
+      polar
+    } cplx_representation;
   
-} // end of ntg
+} // end of ntg.
 
-#endif // NTG_CPLX_REPRESENTATION_HH
+#endif // !NTG_VECT_CPLX_REPRESENTATION_HH

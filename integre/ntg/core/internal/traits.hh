@@ -25,8 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_CORE_TRAITS_HH
-# define NTG_CORE_TRAITS_HH
+#ifndef NTG_CORE_INTERNAL_TRAITS_HH
+# define NTG_CORE_INTERNAL_TRAITS_HH
+
+/*
+  Traits used internally, encapsulated in type_traits for external
+  use.
+*/
 
 namespace ntg {
 
@@ -35,8 +40,9 @@ namespace ntg {
     /*-----------.
     | typetraits |
     `-----------*/
+
     //! Associates types to types.
-    /*!  
+    /*!
       Not defined by default, as accessing to undefined properties
       does not make sense. Specialize it for every types.
 
@@ -44,22 +50,14 @@ namespace ntg {
       methods. This is necessary to handle mutual instanciation
       problems, as optraits usually needs typetraits to be
       instanciated.
-    */
-    
+    */    
     template <class T>
     class typetraits;
     
     /*---------.
     | optraits |
     `---------*/
-    //! Associates functions to types.
-    /*!  
-      Not defined by default, it has to be specialized for every
-      types.
-    */
 
-    // FIXME: remove these useless classes.
-    
     // top of hierarchy
     template <class T>
     class optraits_top
@@ -75,13 +73,16 @@ namespace ntg {
     class optraits_vector : public optraits_top<T>
     {};
 
-    // default impl
+    //! Associates functions to types.
+    /*
+      Not defined by default, it has to be specialized for every
+      types.
+    */
     template <class T>
-    struct optraits : public optraits_top<T>
-    {};
+    class optraits;
 
   } // end of internal.
 
 } // end of ntg.
 
-#endif // ndef NTG_CORE_TRAITS_HH
+#endif // !NTG_CORE_INTERNAL_TRAITS_HH

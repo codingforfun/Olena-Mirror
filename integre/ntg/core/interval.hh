@@ -25,17 +25,38 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_INTERVAL_HH
-# define NTG_INTERVAL_HH
+#ifndef NTG_CORE_INTERVAL_HH
+# define NTG_CORE_INTERVAL_HH
 
 # include <ntg/config/system.hh>
+# include <ntg/core/macros.hh>
 # include <ntg/core/type_traits.hh>
 
 # include <string>
 # include <sstream>
 
+/*
+  Classes to define intervals. The problem with static intervals is
+  that you cannot specify it easily:
+
+  template <T lower, T upper>
+  struct foo {}
+  
+  What do you specify for T ? If you use unsigned, you cannot handle
+  negative values, if you use signed, you won't be able to use the max
+  of an unsigned. That's why you have to specify the type of the
+  bounds. Interval is an handy way to do this.
+
+  Note: it is not possible to define float intervals, as floats cannot
+  be template parameters.
+*/
+
 namespace ntg
 {
+
+  /*-------------------------.
+  | bounded<T, i_min, i_max> |
+  `-------------------------*/
 
   template <class T, T i_min, T i_max>
   class bounded
@@ -48,20 +69,26 @@ namespace ntg
     static T inf() { return i_min; }
     static T sup() { return i_max; }
 
-    static std::string name()
+    static std::string
+    name()
     {
       std::ostringstream out;
-      out << "bounded<" << type_traits<T>::name() << ", " << i_min 
+      out << "bounded<" << ntg_name(T) << ", " << i_min
 	  << ", " << i_max << ">"<< std::ends;
       return out.str();
     }
   };
 
+  /*------------------------.
+  | bounded_u<i_min, i_max> |
+  `------------------------*/
+
   template <unsigned i_min, unsigned i_max>
   class bounded_u : public bounded<unsigned, i_min, i_max>
   {
   public:
-    static std::string name()
+    static std::string
+    name()
     {
       std::ostringstream out;
       out << "bounded_u<" << i_min << ", " << i_max << ">"<< std::ends;
@@ -69,11 +96,16 @@ namespace ntg
     }
   };
 
+  /*------------------------.
+  | bounded_s<i_min, i_max> |
+  `------------------------*/
+
   template <signed i_min, signed i_max>
   class bounded_s : public bounded<signed, i_min, i_max>
   {
   public:
-    static std::string name()
+    static std::string
+    name()
     {
       std::ostringstream out;
       out << "bounded_s<" << i_min << ", " << i_max << ">"<< std::ends;
@@ -81,6 +113,6 @@ namespace ntg
     }
   };
 
-} // end of ntg
+} // end of ntg.
 
-#endif // ndef NTG_INTERVAL_HH
+#endif // !NTG_CORE_INTERVAL_HH

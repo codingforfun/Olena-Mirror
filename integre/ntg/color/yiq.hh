@@ -25,19 +25,20 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_YIQ_HH
-# define NTG_YIQ_HH
+#ifndef NTG_COLOR_YIQ_HH
+# define NTG_COLOR_YIQ_HH
 
 # include <ntg/color/color.hh>
 
 namespace ntg
 {
 
-  enum yiq_comp {
-    yiq_Y = 0,
-    yiq_I = 1,
-    yiq_Q = 2
-  };
+  enum yiq_comp
+    {
+      yiq_Y = 0,
+      yiq_I = 1,
+      yiq_Q = 2
+    };
 
   template<unsigned icomp> struct yiq_traits;
   template<> struct yiq_traits<yiq_Y> : public interval<0,1> {};
@@ -48,6 +49,6 @@ namespace ntg
   typedef color<3,16,yiq_traits> yiq_16;
   typedef color<3,32,yiq_traits> yiq_32;
 
-} // end of ntg
+} // end of ntg.
 
-#endif // NTG_YIQ_HH
+#endif // !NTG_COLOR_YIQ_HH

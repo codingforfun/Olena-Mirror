@@ -25,18 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_RANGE_HH
-# define NTG_RANGE_HH
+#ifndef NTG_REAL_RANGE_HH
+# define NTG_REAL_RANGE_HH
 
 # include <mlc/is_a.hh>
 
-# include <ntg/core/behavior.hh>
-# include <ntg/core/internal/global_ops.hh>
-# include <ntg/core/predecls.hh>
-# include <ntg/core/value.hh>
-# include <ntg/core/type_traits.hh>
+# include <ntg/basics.hh>
+# include <ntg/core/internal/macros.hh>
 # include <ntg/real/optraits_scalar.hh>
-# include <ntg/core/abstract_hierarchy.hh>
 
 # include <string>
 # include <sstream>
@@ -45,41 +41,44 @@ namespace ntg {
 
   namespace internal {
 
-    //
-    // Typetraits
-    //
-    //////////////
+    /*------------------.
+    | typetraits<range> |
+    `------------------*/
 
     template <class T, class interval, class behavior>
     struct typetraits<range<T, interval, behavior> >
     {
-      typedef range<T, interval, behavior> self;
-      typedef typename typetraits<T>::abstract_type abstract_type;
-      typedef self ntg_type;
-      typedef optraits<self> optraits;
-      typedef typename behavior::get<self> behavior_type;
+      typedef range<T, interval, behavior>	self;
+      typedef ntgi_abstract_type(T)		abstract_type;
+      typedef self				ntg_type;
+      typedef optraits<self>			optraits_type;
+      typedef typename behavior::get<self>	behavior_type;
 
-      typedef typename typetraits<T>::base_type base_type;
-      typedef T	storage_type;
-      typedef typename typetraits<T>::signed_type signed_type;
-      typedef typename typetraits<T>::unsigned_type unsigned_type;
-      typedef typename typetraits<T>::cumul_type cumul_type;
-      typedef typename typetraits<T>::largest_type largest_type;
-      typedef typename typetraits<T>::signed_largest_type signed_largest_type;
-      typedef typename typetraits<T>::signed_cumul_type	signed_cumul_type;
-      typedef 
-      typename typetraits<T>::unsigned_largest_type unsigned_largest_type;
-      typedef typename typetraits<T>::unsigned_cumul_type unsigned_cumul_type;
-      typedef typename typetraits<T>::integer_type integer_type;
+      typedef ntgi_base_type(T)			base_type;
+      typedef T					storage_type;
+      typedef ntgi_signed_type(T)		signed_type;
+      typedef ntgi_unsigned_type(T)		unsigned_type;
+      typedef ntgi_cumul_type(T)		cumul_type;
+      typedef ntgi_largest_type(T)		largest_type;
+      typedef ntgi_signed_largest_type(T)	signed_largest_type;
+      typedef ntgi_signed_cumul_type(T)		signed_cumul_type;
+      typedef ntgi_unsigned_largest_type(T)	unsigned_largest_type;
+      typedef ntgi_unsigned_cumul_type(T)	unsigned_cumul_type;
+      typedef ntgi_integer_type(T)		integer_type;
     };
 
   } // end of internal.
 
-  //
-  //  Class range<DecoratedType, Interval, Behavior>
-  //
-  ///////////////////////////////////////////////////
+  /*-----------------------------.
+  | range<T, Interval, Behavior> |
+  `-----------------------------*/
 
+  //! Restrict the interval of a type.
+  /*
+    Range is a decorator. Thanks to the build_value_type helper in
+    typetraits, it can insert into a precise place of the hierarchy,
+    depending on T.
+  */
   template <class T, class interval, class behavior>
   class range : 
     public type_traits<T>::build_value_type<range<T, interval, behavior> >::ret
@@ -88,10 +87,9 @@ namespace ntg {
     typedef range<T, interval, behavior> self;
 
   private:
-    // shortcuts
-    typedef typename internal::typetraits<self>::optraits optraits_type;
-    typedef ntg_base_type(self) base_type;
-    typedef ntg_storage_type(base_type) base_storage_type;
+    typedef ntgi_optraits_type(self)	optraits_type;
+    typedef ntg_base_type(self)		base_type;
+    typedef ntg_storage_type(base_type)	base_storage_type;
 
   public:
     range () { val_ = 0; }
@@ -103,13 +101,13 @@ namespace ntg {
       val_ = optraits_type::check(u);
     }
     template <class U>
-    self& operator=(const U& u)
+    self&
+    operator=(const U& u)
     {
       val_ = optraits_type::check(u);
       return *this;
     }
 
-    // cast
     operator base_storage_type() const { return val_; }
   };
 
@@ -124,6 +122,10 @@ namespace ntg {
 
   namespace internal {
 
+    /*----------------.
+    | optraits<range> |
+    `----------------*/
+
     template<class T, class interval, class behavior>
     struct optraits<range<T, interval, behavior> > : public optraits<T>
     {
@@ -131,21 +133,14 @@ namespace ntg {
       typedef range<T, interval, behavior> self;
 
     private:
-      typedef typename typetraits<self>::storage_type storage_type_;
-      typedef typename behavior::get<self> behavior_type_;
-      typedef typename interval::storage_type interval_type_;
+      typedef typename typetraits<self>::storage_type	storage_type_;
+      typedef typename behavior::get<self>		behavior_type_;
+      typedef typename interval::storage_type		interval_type_;
 
     public:
-      // behavior's check
-
       template <class P>
       static storage_type_ check(const P& rhs)
-      { return behavior_type_::apply(rhs); }
-
-      //
-      //  Properties
-      //
-      ////
+      { return behavior_type_::check(rhs); }
 
       static interval_type_ min()
       { return interval::min(); }
@@ -159,8 +154,8 @@ namespace ntg {
       static interval_type_ sup()
       { return interval::sup(); }
     
-      // debug
-      static std::string name() 
+      static std::string
+      name() 
       {
 	std::ostringstream out;
 	out << "range<" << optraits<T>::name() << ", " << interval::name() 
@@ -168,6 +163,10 @@ namespace ntg {
 	return out.str();
       }
     };
+
+    /*----------------.
+    | operator traits |
+    `----------------*/
 
     // Inherit operator traits from the base type.
     template <class Op, class T, class I, class B, class U>
@@ -193,4 +192,4 @@ namespace ntg {
   
 } // end of ntg.
 
-#endif // ndef NTG_RANGE_HH
+#endif // !NTG_REAL_RANGE_HH

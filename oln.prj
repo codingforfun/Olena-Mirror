@@ -1,52 +1,133 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln integre 19)
-(Parent-Version oln integre 18)
+(Project-Version oln integre 20)
+(Parent-Version oln integre 19)
 (Version-Log "Index: ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* configure.ac: Add a test entry for integre/tests/utils.
-
-Index: doc/ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-	* ref/ref-types.tex: Rename as ...
-	* ref/integre-ref.tex: ... this.
-	* ref/integre-ref.tex: Update.
-
-	* ref/oln-ref.tex: Minor changes.	
-
-	* ref/Makefile.am: Fix html generation.
+	* configure.ac: Add a test entry for integre/tests/sanity.
+	* configure.ac: Add a test entry for metalic/tests/sanity.
+	* config/oln.m4: Add local macros for integre and metalic.
 
 Index: integre/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	* ntg/basics.hh: Add new includes.
 
-	* ntg/real/optraits_builtins_float.hh: Add name() methods.
-	* ntg/core/internal/traits.hh: Remove default name() method.
-	* ntg/core/interval.hh: Make name() methods public.
+	* ntg/all.hh, ntg/basics.hh, ntg/bin.hh, ntg/color.hh,
+	ntg/color/color.hh, ntg/color/hsi.hh, ntg/color/hsl.hh,
+	ntg/color/hsv.hh, ntg/color/nrgb.hh, ntg/color/rgb.hh,
+	ntg/color/xyz.hh, ntg/color/yiq.hh, ntg/color/yuv.hh,
+	ntg/config/math.hh, ntg/config/system.hh,
+	ntg/core/abstract_hierarchy.hh, ntg/core/behavior.hh,
+	ntg/core/contract.hh,
+	ntg/core/internal/builtins_properties.hh,
+	ntg/core/internal/global_ops.hh,
+	ntg/core/internal/global_ops_defs.hh,
+	ntg/core/internal/global_ops_traits.hh,
+	ntg/core/internal/macros.hh,
+	ntg/core/internal/optraits_builtins.hh,
+	ntg/core/internal/traits.hh,
+	ntg/core/internal/typetraits_builtins.hh,
+	ntg/core/interval.hh, ntg/core/macros.hh,
+	ntg/core/predecls.hh, ntg/core/type.hh,
+	ntg/core/type_traits.hh, ntg/core/value.hh, ntg/cplx.hh,
+	ntg/cycle.hh, ntg/enum/bin.hh, ntg/enum/builtin_bool.hh,
+	ntg/enum/optraits_builtins_bool.hh,
+	ntg/enum/typetraits_builtins_bool.hh, ntg/float.hh,
+	ntg/int.hh, ntg/range.hh, ntg/real/builtin_float.hh,
+	ntg/real/builtin_int.hh, ntg/real/builtin_properties.hh,
+	ntg/real/cycle.hh, ntg/real/int_s.hh, ntg/real/int_u.hh,
+	ntg/real/optraits_builtin_int.hh,
+	ntg/real/optraits_builtins_float.hh,
+	ntg/real/optraits_builtins_int_defs.hh, ntg/real/range.hh,
+	ntg/real/typetraits_builtin_int.hh,
+	ntg/real/typetraits_builtins_float.hh, ntg/utils/cast.hh,
+	ntg/utils/debug.hh, ntg/vect/cplx.hh,
+	ntg/vect/cplx_representation.hh, ntg/vect/vec.hh: Important
+	cleanup: adapt to Olena coding style, add comments, fix
+	headers guards, rename minor things, use new macros when
+	possible.
 
-	* ntg/real/typetraits_builtins_float.hh,
-	ntg/real/typetraits_builtins_int.hh: Remove useless typedefs.
++2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
++
++	* ntg/core/internal/macros.hh: Many new macros.
++
++	* ntg/color/color.hh: Move name() into optraits.
++
++	* ntg/real/builtin_int.hh: New file.
++	* ntg/color.hh: New file.
++	
++	* ntg/core/internal/builtins_properties.hh: Rename as ...
++	* ntg/real/builtin_properties.hh: ... this.
++	
++	* ntg/real/optraits_builtins_float.hh,
++	ntg/real/typetraits_builtins_float.hh: Merge into
++	ntg/real/builtin_float.hh.
++
++	* ntg/enum/optraits_builtins_bool.hh,
++	ntg/enum/typetraits_builtins_bool.hh: Merge into
++	ntg/enum/builtin_bool.hh.
++
++	* ntg/core/internal/optraits_builtins.hh,
++	ntg/core/internal/typetraits_builtins.hh: Remove.
++
++	* ntg/Makefile.am: Update consequently.
++	
++2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
++
++	* ntg/config/system.hh: Remove g++-2.95 specific directives.
++	
++	* ntg/utils/cast.hh: Remove wrong behaviors. Don't cast into
++	storage_type before returning values.
++
++	* ntg/core/internal/global_ops_traits.hh: Important changes.
++	
++2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
++
++	* tests/sanity/Makefile.am, 
++	tests/sanity/includes.test: New files.
++	
++2003-05-10  Nicolas Burrus  <burrus_n@lrde.epita.fr>
++
++	* ntg/core/behavior.hh: Rename apply methods as check.
++
++2003-05-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
++
++	* ntg/config/system.hh: Remove g++-2.95 related code.
++
++2003-05-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
++
++	* ntg/all.hh: Remove useless includes.
++
++	* ntg/color.hh: New file.
++
+ 2003-05-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+ 
+ 	* ntg/basics.hh: Add new includes.
+Index: metalic/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* all.hh: Remove useless includes.
-	* ntg/real/int_s.hh, ntg/real/int_u.hh: Update includes.
+	* tests/sanity/Makefile.am, 
+	tests/sanity/includes.test: New files.
 
-	* ntg/core/contract.hh: New file.
-	* ntg/Makefile.am: Update consequently.
-	* ntg/utils/debug.hh: New utilities.
-	* ntg/core/behavior.hh: Use ntg_assert.
-	* ntg/core/internal/global_ops.hh Update includes.
-	* ntg/core/internal/global_ops_defs.hh: Add an example of use 
-	of the new utilities of debug.
+Index: olena/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* tests/utils/runtests, tests/utils/Makefile.am: New files.
-	* tests/utils/tests/debug1: New test.
+	* oln/convol/fast_gaussian.hh, oln/convol/fast_gaussian.hxx: Fix
+	includes and namespaces.
 
+	* oln/convert/stretch.hh, oln/convert/conversion.hh,
+	oln/convert/bound.hh, oln/convert/force.hh, oln/core/dpointnd.hh,
+	oln/core/imagend_size.hh, oln/core/pointnd.hh,
+	oln/level/threshold.hh: Adapt to integre's changes.
+
+	* oln/io/pnm_write_common.hxx, oln/convert/nrgbhsi.hh: Update
+	includes.
+
+	* oln/convert/nrgbhsv.hh, oln/convert/nrgbhsl.hh: Add FIXME.
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 08 May 2003 20:43:44 +0200")
+(Checkin-Time "Tue, 13 May 2003 21:32:45 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -131,11 +212,11 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.19 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.20 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.34 640))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.11 640))
-  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.18 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.10 640))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.12 640))
+  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.19 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.11 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.8 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.9 640))
 
@@ -147,7 +228,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (cleanup.sh (oln/o/29_cleanup.sh 1.5 750))
 
-  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.17 640))
+  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.18 640))
 
   (doc/demo/image.cc (oln/d/46_image.cc 1.5 640))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.16 640))
@@ -180,7 +261,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/img/se9.pbm (oln/n/5_se9.pbm 1.1 640) :no-keywords)
   (olena/img/se.pbm (oln/n/6_se.pbm 1.1 640) :no-keywords)
 
-  (olena/Makefile.am (oln/2_Makefile.a 1.30.1.1.1.2.1.5 640))
+  (olena/Makefile.am (oln/2_Makefile.a 1.30.1.1.1.2.1.5.1.1 640))
   (olena/oln/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.8 640))
   (olena/oln/arith/logic.hh (oln/b/24_logic.hh 1.6.1.2 640))
   (olena/oln/arith/ops.hh (oln/b/23_ops.hh 1.5.1.2.1.3 640))
@@ -192,24 +273,24 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (olena/oln/config/system.hh (oln/7_system.hh 1.17 640))
   (olena/oln/convert/basics.hh (oln/23_basics.hh 1.4 640))
-  (olena/oln/convert/bound.hh (oln/22_bound.hh 1.7 640))
+  (olena/oln/convert/bound.hh (oln/22_bound.hh 1.8 640))
   (olena/oln/convert/colorconv.hh (oln/18_colorconv. 1.8 640))
-  (olena/oln/convert/conversion.hh (oln/21_conversion 1.9 640))
+  (olena/oln/convert/conversion.hh (oln/21_conversion 1.10 640))
   (olena/oln/convert/conversion_ng_se.hh (oln/e/24_conversion 1.5 640))
-  (olena/oln/convert/force.hh (oln/20_force.hh 1.7 640))
-  (olena/oln/convert/nrgbhsi.hh (oln/15_nrgbhsi.hh 1.8 640))
-  (olena/oln/convert/nrgbhsl.hh (oln/12_nrgbhsl.hh 1.11 640))
-  (olena/oln/convert/nrgbhsv.hh (oln/11_nrgbhsv.hh 1.9 640))
+  (olena/oln/convert/force.hh (oln/20_force.hh 1.8 640))
+  (olena/oln/convert/nrgbhsi.hh (oln/15_nrgbhsi.hh 1.9 640))
+  (olena/oln/convert/nrgbhsl.hh (oln/12_nrgbhsl.hh 1.12 640))
+  (olena/oln/convert/nrgbhsv.hh (oln/11_nrgbhsv.hh 1.10 640))
   (olena/oln/convert/nrgbxyz.hh (oln/16_nrgbxyz.hh 1.8 640))
   (olena/oln/convert/nrgbyiq.hh (oln/14_nrgbyiq.hh 1.8 640))
   (olena/oln/convert/nrgbyuv.hh (oln/13_nrgbyuv.hh 1.8 640))
   (olena/oln/convert/rgbnrgb.hh (oln/17_rgbnrgb.hh 1.8 640))
   (olena/oln/convert/rgbxyz.hh (oln/19_rgbxyz.hh 1.8 640))
-  (olena/oln/convert/stretch.hh (oln/f/51_stretch.hh 1.8 640))
+  (olena/oln/convert/stretch.hh (oln/f/51_stretch.hh 1.9 640))
   (olena/oln/convol/convolution.hh (oln/f/39_convolutio 1.4.1.4.1.3 640))
   (olena/oln/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.5.1.4 640))
-  (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.3 640))
-  (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.4 640))
+  (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.4 640))
+  (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.5 640))
   (olena/oln/core/accum.hh (oln/d/40_accum.hh 1.2 640))
   (olena/oln/core/apply.hh (oln/d/39_apply.hh 1.7 640))
   (olena/oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.8 640))
@@ -231,7 +312,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/core/dpoint3d.hh (oln/d/23_dpoint3d.h 1.6 640))
   (olena/oln/core/dpoint3d.hxx (oln/d/22_dpoint3d.h 1.4 640))
   (olena/oln/core/dpoint.hh (oln/d/28_dpoint.hh 1.6 640))
-  (olena/oln/core/dpointnd.hh (oln/c/9_dpointnd.h 1.8 640))
+  (olena/oln/core/dpointnd.hh (oln/c/9_dpointnd.h 1.9 640))
   (olena/oln/core/fold.hh (oln/c/7_fold.hh 1.7 640))
   (olena/oln/core/fwd_iter1d.hh (oln/d/21_fwd_iter1d 1.7 640))
   (olena/oln/core/fwd_iter2d.hh (oln/d/20_fwd_iter2d 1.7 640))
@@ -244,7 +325,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/core/image3d.hh (oln/c/43_image3d.hh 1.8 640))
   (olena/oln/core/image3d_size.hh (oln/c/42_image3d_si 1.6 640))
   (olena/oln/core/image.hh (oln/d/18_image.hh 1.7 640))
-  (olena/oln/core/imagend_size.hh (oln/c/8_imagend_si 1.8 640))
+  (olena/oln/core/imagend_size.hh (oln/c/8_imagend_si 1.9 640))
   (olena/oln/core/image_size.hh (oln/c/41_image_size 1.6 640))
   (olena/oln/core/internal/fake.hh (oln/d/17_fake.hh 1.3 640))
   (olena/oln/core/internal/image1d_data.hh (oln/d/15_image1d_da 1.7 640))
@@ -265,7 +346,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/core/internal/window.hh (oln/d/0_window.hh 1.10 640))
   (olena/oln/core/internal/w_window.hh (oln/d/1_w_window.h 1.9 640))
   (olena/oln/core/iter.hh (oln/c/40_iter.hh 1.6 640))
-  (olena/oln/core/macros.hh (oln/c/39_macros.hh 1.3 640))
+  (olena/oln/core/macros.hh (oln/c/39_macros.hh 1.4 640))
   (olena/oln/core/neighborhood1d.hh (oln/c/37_neighborho 1.10 640))
   (olena/oln/core/neighborhood2d.hh (oln/c/36_neighborho 1.11 640))
   (olena/oln/core/neighborhood3d.hh (oln/c/35_neighborho 1.10 640))
@@ -278,7 +359,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/core/point3d.hh (oln/c/28_point3d.hh 1.8 640))
   (olena/oln/core/point3d.hxx (oln/c/27_point3d.hx 1.3 640))
   (olena/oln/core/point.hh (oln/c/33_point.hh 1.7 640))
-  (olena/oln/core/pointnd.hh (oln/c/10_pointnd.hh 1.9 640))
+  (olena/oln/core/pointnd.hh (oln/c/10_pointnd.hh 1.10 640))
   (olena/oln/core/pred_image.hh (oln/c/24_pred_image 1.5 640))
   (olena/oln/core/regular_image.hh (oln/c/23_regular_im 1.6 640))
   (olena/oln/core/structelt.hh (oln/c/25_structelt. 1.5 640))
@@ -307,7 +388,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/io/pnm_read_common.hxx (oln/b/10_pnm_read_c 1.7.1.5 640))
   (olena/oln/io/pnm_read.hxx (oln/b/16_pnm_read.h 1.9.1.4 640))
   (olena/oln/io/pnm_write3d.hxx (oln/b/9_pnm_write3 1.1.1.9 640))
-  (olena/oln/io/pnm_write_common.hxx (oln/b/8_pnm_write_ 1.8.1.5 640))
+  (olena/oln/io/pnm_write_common.hxx (oln/b/8_pnm_write_ 1.8.1.6 640))
   (olena/oln/io/pnm_write.hxx (oln/b/15_pnm_write. 1.8.1.5 640))
   (olena/oln/io/readable.hh (oln/b/13_readable.h 1.8 640))
   (olena/oln/io/se.hh (oln/i/45_se.hh 1.2 640))
@@ -317,11 +398,11 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/level/compare.hh (oln/31_compare.hh 1.4 640))
   (olena/oln/level/connected.hh (oln/30_connected. 1.9.1.4 640))
   (olena/oln/level/fill.hh (oln/32_fill.hh 1.4 640))
-  (olena/oln/level/invert.hh (oln/33_invert.hh 1.5.2.2.1.5 640))
+  (olena/oln/level/invert.hh (oln/33_invert.hh 1.5.2.2.1.6 640))
   (olena/oln/level/lut.hh (oln/29_lut.hh 1.7 640))
   (olena/oln/level/set_level.hh (oln/p/1_set_level. 1.5 640))
-  (olena/oln/level/threshold.hh (oln/f/15_threshold. 1.8 640))
-  (config/oln.m4 (oln/j/15_oln.m4 1.28 640))
+  (olena/oln/level/threshold.hh (oln/f/15_threshold. 1.9 640))
+  (config/oln.m4 (oln/j/15_oln.m4 1.29 640))
 
   (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.7 640))
   (metalic/mlc/array/1d.hh (oln/f/23_array1d.hh 1.8 640))
@@ -332,7 +413,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (metalic/mlc/array/3d.hxx (oln/f/18_array3d.hx 1.9 640))
   (metalic/mlc/array/all.hh (oln/f/36_array.hh 1.7 640))
   (metalic/mlc/array/nd.hh (oln/f/35_arraynd.hh 1.3 640))
-  (metalic/mlc/bool.hh (oln/c/4_basics.hh 1.11 640))
+  (metalic/mlc/bool.hh (oln/c/4_basics.hh 1.12 640))
   (metalic/mlc/cmp.hh (oln/c/3_cmp.hh 1.8 640))
   (metalic/mlc/loop.hh (oln/c/2_control.hh 1.7 640))
   
@@ -376,36 +457,36 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/transforms/dwt.hh (oln/i/35_dwt.hh 1.2.1.4.1.6 640))
   (olena/oln/transforms/fft.hh (oln/i/36_fft.hh 1.4.1.5 640))
   (olena/oln/transforms/wavelet_coeffs.hh (oln/i/34_wavelet_co 1.5 640))
-  (integre/ntg/all.hh (oln/g/32_all.hh 1.10.1.7 640))
-  (integre/ntg/core/behavior.hh (oln/g/31_behaviour. 1.13.1.10 640))
-  (integre/ntg/enum/bin.hh (oln/g/30_bin.hh 1.9.1.10 640))
-  (integre/ntg/core/internal/builtins_properties.hh (oln/g/29_builtins_p 1.10 640))
-  (integre/ntg/utils/cast.hh (oln/i/26_cast.hh 1.3.1.6 640))
-  (integre/ntg/color/color.hh (oln/i/17_color.hh 1.7.1.8 640))
-  (integre/ntg/color/hsi.hh (oln/i/20_hsi.hh 1.3.1.3 640))
-  (integre/ntg/color/hsl.hh (oln/i/21_hsl.hh 1.3.1.3 640))
-  (integre/ntg/color/hsv.hh (oln/i/22_hsv.hh 1.3.1.3 640))
-  (integre/ntg/color/nrgb.hh (oln/i/19_nrgb.hh 1.5.1.3 640))
-  (integre/ntg/color/rgb.hh (oln/i/18_rgb.hh 1.3.1.3 640))
-  (integre/ntg/color/xyz.hh (oln/i/24_xyz.hh 1.3.1.3 640))
-  (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.3 640))
-  (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.3 640))
-  (integre/ntg/vect/cplx.hh (oln/i/4_cplx.hh 1.9.1.11 640))
-  (integre/ntg/vect/cplx_representation.hh (oln/i/3_cplx_repre 1.4 640))
-  (integre/ntg/real/cycle.hh (oln/g/28_cycle.hh 1.11.1.10 640))
-  (integre/ntg/utils/debug.hh (oln/i/8_debug.hh 1.2.1.6 640))
-  (integre/ntg/core/internal/global_ops_defs.hh (oln/g/26_global_ops 1.12 640))
-  (integre/ntg/core/internal/global_ops.hh (oln/g/27_global_ops 1.11.1.10 640))
-  (integre/ntg/core/internal/global_ops_traits.hh (oln/g/25_global_ops 1.7.1.7 640))
-  (integre/ntg/core/interval.hh (oln/g/22_interval.h 1.6.1.7 640))
-  (integre/ntg/real/int_s.hh (oln/g/24_int_s.hh 1.16.1.12 640))
-  (integre/ntg/real/int_u.hh (oln/g/23_int_u.hh 1.19.1.12 640))
+  (integre/ntg/all.hh (oln/g/32_all.hh 1.10.1.8 640))
+  (integre/ntg/core/behavior.hh (oln/g/31_behaviour. 1.13.1.11 640))
+  (integre/ntg/enum/bin.hh (oln/g/30_bin.hh 1.9.1.11 640))
   
-  (integre/ntg/enum/optraits_builtins_bool.hh (oln/i/10_optraits_b 1.3.1.4 640))
-  (integre/ntg/real/optraits_builtins_float.hh (oln/g/19_optraits_b 1.10.1.7 640))
-  (integre/ntg/core/internal/optraits_builtins.hh (oln/i/16_optraits_b 1.2.1.3 640))
-  (integre/ntg/real/optraits_builtins_int_defs.hh (oln/g/17_optraits_b 1.4 640))
-  (integre/ntg/real/optraits_builtins_int.hh (oln/g/18_optraits_b 1.6.1.5 640))
+  (integre/ntg/utils/cast.hh (oln/i/26_cast.hh 1.3.1.7 640))
+  (integre/ntg/color/color.hh (oln/i/17_color.hh 1.7.1.9 640))
+  (integre/ntg/color/hsi.hh (oln/i/20_hsi.hh 1.3.1.4 640))
+  (integre/ntg/color/hsl.hh (oln/i/21_hsl.hh 1.3.1.4 640))
+  (integre/ntg/color/hsv.hh (oln/i/22_hsv.hh 1.3.1.4 640))
+  (integre/ntg/color/nrgb.hh (oln/i/19_nrgb.hh 1.5.1.4 640))
+  (integre/ntg/color/rgb.hh (oln/i/18_rgb.hh 1.3.1.4 640))
+  (integre/ntg/color/xyz.hh (oln/i/24_xyz.hh 1.3.1.4 640))
+  (integre/ntg/color/yiq.hh (oln/i/23_yiq.hh 1.3.1.4 640))
+  (integre/ntg/color/yuv.hh (oln/i/25_yuv.hh 1.3.1.4 640))
+  (integre/ntg/vect/cplx.hh (oln/i/4_cplx.hh 1.9.1.12 640))
+  (integre/ntg/vect/cplx_representation.hh (oln/i/3_cplx_repre 1.5 640))
+  (integre/ntg/real/cycle.hh (oln/g/28_cycle.hh 1.11.1.11 640))
+  (integre/ntg/utils/debug.hh (oln/i/8_debug.hh 1.2.1.7 640))
+  (integre/ntg/core/internal/global_ops_defs.hh (oln/g/26_global_ops 1.13 640))
+  (integre/ntg/core/internal/global_ops.hh (oln/g/27_global_ops 1.11.1.11 640))
+  (integre/ntg/core/internal/global_ops_traits.hh (oln/g/25_global_ops 1.7.1.8 640))
+  (integre/ntg/core/interval.hh (oln/g/22_interval.h 1.6.1.8 640))
+  (integre/ntg/real/int_s.hh (oln/g/24_int_s.hh 1.16.1.13 640))
+  (integre/ntg/real/int_u.hh (oln/g/23_int_u.hh 1.19.1.13 640))
+  
+  
+  
+  
+  
+  (integre/ntg/real/optraits_builtin_int.hh (oln/g/18_optraits_b 1.6.1.6 640))
   
   
   
@@ -415,17 +496,17 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (integre/ntg/real/optraits_scalar_defs.hh (oln/g/11_optraits_s 1.12 640))
   (integre/ntg/real/optraits_scalar.hh (oln/g/12_optraits_s 1.11.1.6 640))
   
-  (integre/ntg/core/predecls.hh (oln/g/10_predecls.h 1.10.1.7 640))
-  (integre/ntg/real/range.hh (oln/g/9_range.hh 1.9.1.10 640))
-  (integre/ntg/core/value.hh (oln/g/8_rec_value. 1.8.1.7 640))
+  (integre/ntg/core/predecls.hh (oln/g/10_predecls.h 1.10.1.8 640))
+  (integre/ntg/real/range.hh (oln/g/9_range.hh 1.9.1.11 640))
+  (integre/ntg/core/value.hh (oln/g/8_rec_value. 1.8.1.8 640))
   
-  (integre/ntg/core/type.hh (oln/g/6_type.hh 1.7 640))
-  (integre/ntg/enum/typetraits_builtins_bool.hh (oln/i/9_typetraits 1.4.1.6 640))
-  (integre/ntg/real/typetraits_builtins_float.hh (oln/g/4_typetraits 1.8.1.7 640))
-  (integre/ntg/core/internal/typetraits_builtins.hh (oln/i/27_typetraits 1.2.1.3 640))
-  (integre/ntg/real/typetraits_builtins_int.hh (oln/g/3_typetraits 1.7.1.7 640))
+  (integre/ntg/core/type.hh (oln/g/6_type.hh 1.8 640))
   
-  (integre/ntg/vect/vec.hh (oln/h/43_vec.hh 1.7.1.10 640))
+  
+  
+  (integre/ntg/real/typetraits_builtin_int.hh (oln/g/3_typetraits 1.7.1.8 640))
+  
+  (integre/ntg/vect/vec.hh (oln/h/43_vec.hh 1.7.1.11 640))
   (olena/oln/utils/copy.hh (oln/i/29_copy.hh 1.5 640))
   (olena/oln/utils/histogram.hh (oln/10_histogram. 1.6.1.5 640))
   (olena/oln/utils/stat.hh (oln/9_stat.hh 1.5.1.6 640))
@@ -540,7 +621,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (integre/tests/types/tests/optrait1b (oln/h/26_optrait1b 1.3 640))
   (integre/tests/types/tests/optrait2a (oln/h/28_optrait2a 1.4 640))
   (integre/tests/types/tests/optrait2b (oln/h/27_optrait2b 1.3 640))
-  (integre/tests/types/tests/optrait3 (oln/h/24_optrait3 1.5 640))
+  (integre/tests/types/tests/optrait3 (oln/h/24_optrait3 1.6 640))
   (integre/tests/types/tests/range1 (oln/h/34_range1 1.2 640))
   (integre/tests/types/tests/range2b (oln/h/36_range2b 1.1 640))
   (integre/tests/types/tests/range2 (oln/h/33_range2 1.1 640))
@@ -690,7 +771,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 ;; Files added by populate at Tue, 21 Jan 2003 09:12:30 +0100,
 ;; to version 7.29(w), by raph:
 
-  (integre/ntg/config/math.hh (oln/p/33_math.hh 1.5 640))
+  (integre/ntg/config/math.hh (oln/p/33_math.hh 1.6 640))
 
 ;; Files deleted by depopulate at Wed, 22 Jan 2003 13:34:58 +0100,
 ;; from version 7.31(w), by raph:
@@ -806,7 +887,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (integre () :directory)
   (integre/ntg () :directory)
   (integre/Makefile.am (oln/q/34_Makefile.a 1.3 640))
-  (integre/ntg/Makefile.am (oln/q/36_Makefile.a 1.7 640))
+  (integre/ntg/Makefile.am (oln/q/36_Makefile.a 1.8 640))
   (olena/tests/check/defs.in (oln/q/37_defs.in 1.1 600))
   (olena/tests/check/Makefile.am (oln/q/38_Makefile.a 1.3 600))
   (olena/tests/check/Makefile.flags (oln/q/39_Makefile.f 1.3 600))
@@ -816,7 +897,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (metalic/mlc/array/objs.hh (oln/q/45_objs.hh 1.2 640))
   (metalic/mlc/config/system.hh (oln/q/46_system.hh 1.2 640))
   (olena/oln/Makefile.am (oln/q/47_Makefile.a 1.3.1.1 640))
-  (integre/ntg/config/system.hh (oln/q/48_system.hh 1.1 640))
+  (integre/ntg/config/system.hh (oln/q/48_system.hh 1.2 640))
   (metalic/tests/main/tests/is_a1 (oln/r/17_is_a1 1.2 640))
   (metalic/tests/main/tests/ensure3 (oln/r/18_ensure3 1.2 640))
   (metalic/tests/main/tests/ensure2 (oln/r/19_ensure2 1.2 640))
@@ -855,16 +936,16 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 ;; to version integre.3(w), by nes:
 
   (integre/ntg/vec.hh (oln/r/51_vec.hh 1.2 600))
-  (integre/ntg/int.hh (oln/s/0_int.hh 1.2 600))
-  (integre/ntg/float.hh (oln/s/1_float.hh 1.2 600))
-  (integre/ntg/cplx.hh (oln/s/2_cplx.hh 1.2 600))
-  (integre/ntg/bin.hh (oln/s/3_bin.hh 1.2 600))
+  (integre/ntg/int.hh (oln/s/0_int.hh 1.3 600))
+  (integre/ntg/float.hh (oln/s/1_float.hh 1.3 600))
+  (integre/ntg/cplx.hh (oln/s/2_cplx.hh 1.3 600))
+  (integre/ntg/bin.hh (oln/s/3_bin.hh 1.3 600))
 
 ;; Files added by populate at Sat, 12 Apr 2003 18:59:50 +0200,
 ;; to version integre.3(w), by nes:
 
-  (integre/ntg/cycle.hh (oln/s/4_cycle.hh 1.2 600))
-  (integre/ntg/range.hh (oln/s/5_range.hh 1.2 600))
+  (integre/ntg/cycle.hh (oln/s/4_cycle.hh 1.3 600))
+  (integre/ntg/range.hh (oln/s/5_range.hh 1.3 600))
 
 ;; Files deleted by populate at Mon, 14 Apr 2003 15:06:35 +0200,
 ;; from version integre.6(w), by burrus_n:
@@ -890,12 +971,12 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 ;; to version integre.12(w), by nes:
 
   (integre/ntg/real/real_value.hh (oln/s/15_real_value 1.2 600))
-  (integre/ntg/core/internal/traits.hh (oln/s/16_traits.hh 1.2 600))
-  (integre/ntg/core/internal/macros.hh (oln/s/17_macros.hh 1.1 600))
-  (integre/ntg/core/type_traits.hh (oln/s/18_type_trait 1.1 600))
-  (integre/ntg/core/macros.hh (oln/s/19_macros.hh 1.4 600))
-  (integre/ntg/core/abstract_hierarchy.hh (oln/s/20_abstract_h 1.1 600))
-  (integre/ntg/basics.hh (oln/s/21_basics.hh 1.2 600))
+  (integre/ntg/core/internal/traits.hh (oln/s/16_traits.hh 1.3 600))
+  (integre/ntg/core/internal/macros.hh (oln/s/17_macros.hh 1.2 600))
+  (integre/ntg/core/type_traits.hh (oln/s/18_type_trait 1.2 600))
+  (integre/ntg/core/macros.hh (oln/s/19_macros.hh 1.5 600))
+  (integre/ntg/core/abstract_hierarchy.hh (oln/s/20_abstract_h 1.2 600))
+  (integre/ntg/basics.hh (oln/s/21_basics.hh 1.3 600))
   (integre/ntg/vect/vect_value.hh (oln/s/22_vect_value 1.1 600))
   (integre/ntg/enum/enum_value.hh (oln/s/23_enum_value 1.1 600))
 
@@ -918,7 +999,44 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (integre/tests/utils/runtests (oln/s/42_runtests 1.1 700))
   (integre/tests/utils/Makefile.am (oln/s/43_Makefile.a 1.1 600))
   (integre/tests/types/tests/debug1 (oln/s/44_debug1 1.1 600))
-  (integre/ntg/core/contract.hh (oln/s/45_contract.h 1.1 600))
+  (integre/ntg/core/contract.hh (oln/s/45_contract.h 1.2 600))
+
+;; Files added by populate at Tue, 13 May 2003 19:10:31 +0200,
+;; to version integre.19(w), by nes:
+
+  (integre/ntg/real/builtin_int.hh (oln/s/46_builtin_in 1.1 600))
+  (integre/ntg/real/builtin_float.hh (oln/s/47_builtin_fl 1.1 600))
+  (integre/ntg/real/builtin_properties.hh (oln/s/48_builtin_pr 1.1 640))
+  (integre/ntg/color.hh (oln/s/49_color.hh 1.1 600))
+  (integre/ntg/enum/builtin_bool.hh (oln/s/50_builtin_bo 1.1 600))
+
+;; Files deleted by populate at Tue, 13 May 2003 19:10:31 +0200,
+;; from version integre.19(w), by nes:
+
+  ; (integre/ntg/core/internal/typetraits_builtins.hh ())
+  ; (integre/ntg/real/typetraits_builtins_float.hh ())
+  ; (integre/ntg/enum/typetraits_builtins_bool.hh ())
+  ; (integre/ntg/real/optraits_builtins_int_defs.hh ())
+  ; (integre/ntg/core/internal/optraits_builtins.hh ())
+  ; (integre/ntg/real/optraits_builtins_float.hh ())
+  ; (integre/ntg/enum/optraits_builtins_bool.hh ())
+
+;; Files added by populate at Tue, 13 May 2003 20:45:11 +0200,
+;; to version integre.19(w), by nes:
+
+  (integre/tests/sanity/includes.test (oln/s/51_includes.t 1.1 700))
+  (integre/tests/sanity/Makefile.am (oln/t/0_Makefile.a 1.1 600))
+
+;; Files deleted by populate at Tue, 13 May 2003 20:45:11 +0200,
+;; from version integre.19(w), by nes:
+
+  ; (integre/ntg/real/real_to_builtin_map.hh ())
+
+;; Files added by populate at Tue, 13 May 2003 21:23:12 +0200,
+;; to version integre.19(w), by nes:
+
+  (metalic/tests/sanity/includes.test (oln/t/1_includes.t 1.1 700))
+  (metalic/tests/sanity/Makefile.am (oln/t/2_Makefile.a 1.1 600))
 )
 (Merge-Parents)
 (New-Merge-Parents)

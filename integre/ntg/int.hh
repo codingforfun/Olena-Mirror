@@ -28,11 +28,13 @@
 #ifndef NTG_INT_HH
 # define NTG_INT_HH
 
-// Proxy header for integer types (u_int and s_int).
+/* 
+   Proxy header for integer types (int_u and int_s).
+*/
 
 // Note: these two types are included together as it is quite
-// impossible to use only u_int. For example, doing u_int + 1 needs
-// s_int as 1 is a signed int builtin type.
+// impossible to use only int_u. For example, doing int_u + 1 needs
+// int_s as 1 is a signed int builtin type.
 
 # include <ntg/real/int_u.hh>
 # include <ntg/real/int_s.hh>

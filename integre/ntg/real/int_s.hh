@@ -25,23 +25,23 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_INT_S_HH
-# define NTG_INT_S_HH
-
-# include <ntg/config/system.hh>
-
-# include <mlc/bool.hh>
-# include <mlc/is_a.hh>
-# include <mlc/cmp.hh>
+#ifndef NTG_CORE_INT_S_HH
+# define NTG_CORE_INT_S_HH
 
 # include <ntg/basics.hh>
 # include <ntg/real/optraits_scalar.hh>
 # include <ntg/real/real_value.hh>
 
+# include <mlc/bool.hh>
+# include <mlc/cmp.hh>
+# include <mlc/is_a.hh>
+
 # include <string>
 # include <sstream>
 
-// Macros //
+/*-------.
+| macros |
+`-------*/
 
 // FIXME: add bits number comparison to avoid useless checks.
 
@@ -56,16 +56,13 @@ self& operator=(const Builtin rhs)	        \
   return *this;					\
 }
 
-// --- //
-
 namespace ntg {
 
   namespace internal {
 
-    //
-    //  Typetraits
-    //
-    ///////////////
+    /*------------------.
+    | typetraits<int_s> |
+    `------------------*/
 
     template <unsigned nbits, class behavior>
     struct typetraits<int_s<nbits, behavior> >
@@ -73,9 +70,10 @@ namespace ntg {
       typedef int_s<nbits, behavior>		self;
       typedef signed_integer			abstract_type;
       typedef self				ntg_type;
+
       ntg_build_value_type(sint_value<E>);
 
-      typedef optraits<self>			optraits;
+      typedef optraits<self>			optraits_type;
       typedef typename behavior::get<self>	behavior_type;
 
       typedef self				base_type;
@@ -89,32 +87,28 @@ namespace ntg {
       typedef int_s<32, behavior>		signed_cumul_type;
       typedef int_u<32, behavior>		unsigned_largest_type;
       typedef int_u<32, behavior>		unsigned_cumul_type;
-      typedef signed int				integer_type;
-
-      // internal use, useful for decorators
-      typedef self op_traits;
+      typedef signed int			integer_type;
     };
 
   } // end of internal.
 
-  //
-  //  Class int_s<Nbits, Behaviour>
-  //
-  //////////////////////////////////
-
+  /*-----------------------.
+  | int_s<nbits, behavior> |
+  `-----------------------*/
 
   template <unsigned nbits, class behavior>
   class int_s : public sint_value<int_s<nbits, behavior> >
   {
     typedef int_s<nbits, behavior> self;
     typedef ntgi_storage_type(self) storage_type;
-    typedef typename internal::typetraits<self>::optraits optraits_type;
+    typedef ntgi_optraits_type(self) optraits_type;
 
   public:
 
     int_s () { val_ = 0; }
 
-    // We define ctor for each builtin to avoid implicit builtin promotion
+    // We define ctor for each builtin to avoid implicit builtin
+    // promotion.
 
     INT_S_CTOR_FROM_BUILTIN(unsigned long);
     INT_S_CTOR_FROM_BUILTIN(signed   long);
@@ -137,7 +131,8 @@ namespace ntg {
 	val_ = optraits_type::check(rhs.val());
     }
     template <unsigned mbits, class B2>
-    self& operator=(const int_s<mbits, B2>& rhs)
+    self&
+    operator=(const int_s<mbits, B2>& rhs)
     {
       if (mbits <= nbits)
 	val_ = rhs.val();
@@ -152,11 +147,14 @@ namespace ntg {
       val_ = optraits_type::check(rhs.val());
     }
     template <class T>
-    self& operator=(const real_value<T>& rhs)
+    self&
+    operator=(const real_value<T>& rhs)
     {
       val_ = optraits_type::check(rhs.val());
       return *this;
     }
+
+    // FIXME: do we really want float to int conversions ?
 
     int_s (const float_s rhs)
     {
@@ -196,13 +194,10 @@ namespace ntg {
   namespace internal
   {
 
-    //
-    //  optraits for int_s
-    //
-    //  Implement interactions with int_u
-    //
-    //////////////////////////////////////
-  
+    /*----------------.
+    | optraits<int_s> |
+    `----------------*/
+
     template <unsigned nbits, class behavior>
     struct optraits<int_s<nbits, behavior> > :
       public optraits_int_s<int_s<nbits, behavior> >
@@ -211,22 +206,15 @@ namespace ntg {
       typedef int_s<nbits, behavior> self;
 
     private:
-      // shortcuts
-      typedef typename typetraits<self>::base_type base_type_;
-      typedef typename typetraits<self>::storage_type storage_type_;
-      typedef typename behavior::get<self> behavior_type_;
+      typedef typename typetraits<self>::base_type	base_type_;
+      typedef typename typetraits<self>::storage_type	storage_type_;
+      typedef typename behavior::get<self>		behavior_type_;
 
     public:
-      // behavior's check
-
       template <class P>
-      static storage_type_ check(const P& rhs)
-      { return behavior_type_::apply(rhs); }
-
-      //
-      //  Properties
-      //
-      ////
+      static storage_type_
+      check(const P& rhs)
+      { return behavior_type_::check(rhs); }
 
       static storage_type_ max()
       { return C_for_int_s<nbits>::max(); }
@@ -235,13 +223,13 @@ namespace ntg {
       { return C_for_int_s<nbits>::min(); }
 
       //
-      //
       //  Comparison operators
       //
+      /////////////////////////
+
       //  As int_x32 cannot grow, there is a problem with comparisons when a
       //  int_u32 is present, as we cannot convert it to a signed type safely.
       //
-      ////////////////////////////////////////////////////////////////////////
 
       //
       // cmp_eq
@@ -268,7 +256,6 @@ namespace ntg {
       static bool
       cmp_eq(const T1& lhs, const T2& rhs)
       { return optraits_scalar<self>::cmp_eq(lhs, rhs); }
-
 
       //
       // cmp_lt
@@ -310,11 +297,9 @@ namespace ntg {
     };
 
 
-    //
-    // Operators traits
-    //
-    ////////////////////
-
+    /*----------------.
+    | operator traits |
+    `----------------*/
 
     //
     // plus
@@ -398,7 +383,6 @@ namespace ntg {
       typedef int_s<nbits, B1> impl;
     };
 
-
     //
     // div
     //
@@ -412,7 +396,6 @@ namespace ntg {
       typedef int_s<nbits, typename deduce_op_behavior<B1, B2>::ret> ret;
       typedef int_s<nbits, B1> impl;
     };
-
 
     // int_s / int_u ; int_u / int_s
 
@@ -471,7 +454,7 @@ namespace ntg {
     // Min
     //
 
-    // MIN(int_s, int_s)
+    // min(int_s, int_s)
 
     template<unsigned nbits, class B1, unsigned mbits, class B2>
     struct operator_traits<operator_min, int_s<nbits, B1>, int_s<mbits, B2> >
@@ -486,7 +469,7 @@ namespace ntg {
     // Max
     //
 
-    // MAX(int_s, int_s)
+    // max(int_s, int_s)
 
     template<unsigned nbits, class B1, unsigned mbits, class B2>
     struct operator_traits<operator_max, int_s<nbits, B1>, int_s<mbits, B2> >
@@ -526,4 +509,4 @@ namespace ntg {
 
 } // end of ntg.
 
-#endif // ndef NTG_INT_S_HH
+#endif // !NTG_CORE_INT_S_HH

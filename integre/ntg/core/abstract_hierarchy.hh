@@ -31,20 +31,49 @@
 namespace ntg
 {
 
+  /*
+    Abstract hierarchy is useful to easily check the properties of
+    each types. type_traits<T>::abstract_type gives the abstract type
+    associated to T. The macro ntg_is_a(T, abstract_type) is a simple
+    way to ensure a given type has good properties.
+
+    Examples:
+    
+    ntg_is_a(int, integer)::ensure();
+    mlc_is_a(type_traits<int_u8>::abstract_type, unsigned_integer)::ensure();
+  */
+  
+  //! Top of the hierarchy.
   class data_type {};
+
+  /*------.
+  | reals |
+  `------*/
 
   class real : public data_type {};
 
+  // int, unsigned, int_u, int_s, etc.
   class integer : public real {};
   class unsigned_integer : public integer {};
   class signed_integer : public integer {};
 
+  // float_s, float_d, etc.
   class decimal : public real {};
 
+  /*-----------.
+  | enumerated |
+  `-----------*/
+
+  // bin, bool, etc.
   class enumerated : public data_type {};
 
+  /*----------.
+  | vectorial |
+  `----------*/
+
+  // vec, cplx, etc.
   class vectorial : public data_type {};
 
 } // end of ntg.
 
-#endif // ndef NTG_CORE_ABSTRACT_HIERARCHY_HH
+#endif // !NTG_CORE_ABSTRACT_HIERARCHY_HH

@@ -75,7 +75,7 @@ namespace mlc
   template<bool> struct is_true;
   template<> struct is_true<true>
   { 
-    static void ensure() {}; 
+    static void ensure() {};
     typedef true_t ensure_t;
   };
 

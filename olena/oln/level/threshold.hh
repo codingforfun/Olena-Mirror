@@ -54,9 +54,9 @@ namespace oln {
 
       static std::string name() {
 	return std::string("threshold<")
-	  + ntg::typename_of<Output>() + ", "
-	  + ntg::typename_of<Input>() + ", "
-	  + ntg::typename_of<Exact>() + ">";
+	  + ntg_name(Output) + ", "
+	  + ntg_name(Input) + ", "
+	  + Exact::name() + ">";
       }
 
     private:

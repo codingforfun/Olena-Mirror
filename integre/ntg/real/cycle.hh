@@ -25,15 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_CYCLE_HH
-# define NTG_CYCLE_HH
-
-# include <ntg/config/system.hh>
-
-# include <mlc/is_a.hh>
+#ifndef NTG_REAL_CYCLE_HH
+# define NTG_REAL_CYCLE_HH
 
 # include <ntg/basics.hh>
+# include <ntg/core/internal/macros.hh>
 # include <ntg/core/interval.hh>
+
+# include <mlc/is_a.hh>
 
 # include <string>
 # include <sstream>
@@ -42,19 +41,18 @@ namespace ntg {
 
   namespace internal {
 
-    //
-    //  Typetraits
-    //
-    ///////////////
+    /*------------------.
+    | typetraits<cycle> |
+    `------------------*/
 
     template <class T, class interval>
     struct typetraits<cycle<T, interval> >
     {
-      typedef cycle<T, interval> self;
-      typedef typename typetraits<T>::abstract_type abstract_type;
-      typedef self ntg_type;
-      typedef optraits<self> optraits;
-      typedef cycle_behavior::get<self> behavior_type;
+      typedef cycle<T, interval>			self;
+      typedef typename typetraits<T>::abstract_type	abstract_type;
+      typedef self					ntg_type;
+      typedef optraits<self>				optraits_type;
+      typedef cycle_behavior::get<self>			behavior_type;
 
       typedef typename typetraits<T>::base_type		base_type;
       typedef T						storage_type;
@@ -71,12 +69,9 @@ namespace ntg {
 
   } // end of internal.
 
-  //
-  //  Class cycle<DecoratedType, class interval>
-  //
-  //  The interval has 0
-  //
-  ////////////////////////////////////////////////////
+  /*-------------------.
+  | cycle<T, interval> |
+  `-------------------*/
 
   template <class T,
 	    class interval>
@@ -87,11 +82,9 @@ namespace ntg {
     typedef cycle<T, interval> self;
 
   private:
-    // shortcuts
-    typedef typename internal::typetraits<self>::optraits optraits_type;
-    typedef ntg_base_type(self) base_type;
-    //    typedef ntg_storage_type(base_type) base_storage_type;
-    typedef typename type_traits<base_type>::storage_type base_storage_type;
+    typedef ntgi_optraits_type(self)		optraits_type;
+    typedef ntg_base_type(self)			base_type;
+    typedef ntgi_storage_type(base_type)	base_storage_type;
 
   public:
     cycle () { val_ = 0; }
@@ -103,13 +96,13 @@ namespace ntg {
       val_ = optraits_type::check(u);
     }
     template <class U>
-    self& operator=(const U& u)
+    self&
+    operator=(const U& u)
     {
       val_ = optraits_type::check(u);
       return *this;
     }
 
-    // cast
     operator base_storage_type() const { return val_; }
   };
 
@@ -117,12 +110,16 @@ namespace ntg {
   inline std::ostream&
   operator<<(std::ostream& stream, const cycle<T, interval>& rhs)
   {
-    // Cast useful for cycle<unsigned char, ...>
+    // FIXME: cast needed for cycle<unsigned char, ...>.
     stream << (ntg_largest_type(T))(rhs.val());
     return stream;
   }
 
   namespace internal {
+
+    /*----------------.
+    | optraits<cycle> |
+    `----------------*/
 
     template<class T,
 	     class interval>
@@ -132,16 +129,11 @@ namespace ntg {
       typedef cycle<T, interval> self;
     
     private:
-      typedef typename typetraits<self>::storage_type storage_type_;
-      typedef typename interval::storage_type interval_type_;
-      typedef typename typetraits<self>::behavior_type behavior_type_;
+      typedef typename typetraits<self>::storage_type	storage_type_;
+      typedef typename interval::storage_type		interval_type_;
+      typedef typename typetraits<self>::behavior_type	behavior_type_;
 
     public:
-      //
-      //  Properties
-      //
-      ////
-
       static interval_type_ min()
       { return interval::min(); }
 
@@ -154,15 +146,14 @@ namespace ntg {
       static interval_type_ sup()
       { return interval::sup(); }
 
-
-      // behavior's check
-
       template <class P>
-      static storage_type_ check(const P& rhs)
-      { return behavior_type_::apply(rhs); }
+      static storage_type_
+      check(const P& rhs)
+      { return behavior_type_::check(rhs); }
 
-      // debug
-      static std::string name() {
+      static std::string
+      name()
+      {
 	std::ostringstream out;
 	out << "cycle<" << optraits<T>::name() << ", " 
 	    << interval::name() << ">"<< std::ends;
@@ -192,4 +183,4 @@ namespace ntg {
 
 } // end of ntg.
 
-#endif // ndef NTG_CYCLE_HH
+#endif // !NTG_REAL_CYCLE_HH

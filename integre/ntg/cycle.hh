@@ -28,7 +28,9 @@
 #ifndef NTG_CYCLE_HH
 # define NTG_CYCLE_HH
 
-// Proxy header for cycle.
+/*
+  Proxy header for cycle.
+*/
 
 # include <ntg/real/cycle.hh>
 

@@ -71,6 +71,8 @@ namespace oln {
 	else
 	  out[hsl_S] = diff / (2 - max_in - min_in);
 
+	// FIXME: what if diff is 0 ??
+
 	float r_dist = (max_in - in[nrgb_R]) / diff;
 	float g_dist = (max_in - in[nrgb_G]) / diff;
 	float b_dist = (max_in - in[nrgb_B]) / diff;
@@ -81,10 +83,10 @@ namespace oln {
 	  out[hsl_H] = 2 + r_dist - b_dist;
 	else if(in[nrgb_B] = max_in)
 	  out[hsl_H] = 4 + g_dist - r_dist;
+
 	out[hsl_H] *= 60;
 	if(out[hsl_H] < 0)
 	  out[hsl_H] += 360;
-
 	return out;
       }
 

@@ -25,37 +25,52 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_OPS_DEFS_HH
-# define NTG_OPS_DEFS_HH
+#ifndef NTG_CORE_INTERNAL_GLOBAL_OPS_DEFS_HH
+# define NTG_CORE_INTERNAL_GLOBAL_OPS_DEFS_HH
 
-//
-//  Macros to factorize global_ops definition
-//
-//////////////////////////////////////////////
+/*
+  Global operators macros, used to factorize global operators
+  definitions.
+*/
 
-// --------------------------------------------------------------------//
+/*
+  For every operator, we need a specialization for every builtin type
+  to avoid overloading problems. So here are the defined operators: 
 
-// 
-//  Define global assignements for a builtin
-//  Internal use only.
-//
-////////////////////////////////////////////
+  operatorX(ntg_type, T2) (1)
+  operatorX(builtin1, T2) (2)
+  operatorX(builtin2, T2)
+  ...
+  
+  This handles all cases without ambiguity: 
+  
+  ntg_type X ntg_type ==> (1)
+  ntg_type X builtin  ==> (1)
+  builtin1 X ntg_type ==> (2)
+*/
 
-# define GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, Builtin)		\
-template <class T2>						\
-inline Builtin& Op(Builtin& lhs, const value<T2>& rhs)		\
+/*-------------.
+| ASSIGNEMENTS |
+`-------------*/
+
+/*---------------------------------.
+| Global assignements for builtins |
+`---------------------------------*/
+
+# define GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, Builtin)	\
+template <class T2> inline				\
+Builtin&						\
+Op(Builtin& lhs, const value<T2>& rhs)			\
 { return optraits<Builtin>::Name(lhs, rhs.self()); }
 
-
-// 
-//  Define global assignements for both value and builtins
-//
-///////////////////////////////////////////////////////////////
-
+/*----------------------------------------------------.
+| Global assignements for both ntg_types and builtins |
+`----------------------------------------------------*/
 
 # define GLOBAL_ASSIGN_OP(Op, Name)			\
-template <class T1, class T2>				\
-inline T1& Op(value<T1>& lhs, const T2& rhs)		\
+template <class T1, class T2> inline			\
+T1&							\
+Op(value<T1>& lhs, const T2& rhs)			\
 { return optraits<T1>::Name(lhs.self(), rhs); }		\
 							\
 GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, signed   long);	\
@@ -70,92 +85,87 @@ GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, float);		\
 GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, double);		\
 GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, bool);
 
-// --------------------------------------------------------------------//
+/*---------------------.
+| ARITHMETIC OPERATORS |
+`---------------------*/
 
-// 
-//  Define global arithmetic operators for a builtin
-//  Internal use only.
-//
-/////////////////////////////////////////////////////
+/*-----------------------------------------.
+| Global arithmetic operators for builtins |
+`-----------------------------------------*/
 
-# define GLOBAL_ARITH_OP_BUILTIN(Op, Name, Builtin)					\
-template <class T2>									\
-inline											\
-ntg_return_type(Name, Builtin, T2)							\
-Op(Builtin lhs, const value<T2>& rhs)							\
-{											\
-  typedef ntg_deduced_traits_type(Name, Builtin, T2) deduced_type;			\
-											\
-  typedef typename deduced_type::impl impl;						\
-  typedef typename deduced_type::lhs_type lhs_type;					\
-  typedef typename deduced_type::rhs_type rhs_type;					\
-											\
-  return optraits<impl>::Name(static_cast<lhs_type>(lhs),				\
-	    	              static_cast<rhs_type>(rhs.self()));			\
+# define GLOBAL_ARITH_OP_BUILTIN(Op, Name, Builtin)			\
+template <class T2> inline						\
+ntg_return_type(Name, Builtin, T2)					\
+Op(Builtin lhs, const value<T2>& rhs)					\
+{									\
+  typedef ntg_deduced_traits_type(Name, Builtin, T2) deduced_type;	\
+									\
+  typedef typename deduced_type::impl impl;				\
+  typedef typename deduced_type::lhs_type lhs_type;			\
+  typedef typename deduced_type::rhs_type rhs_type;			\
+									\
+  return optraits<impl>::Name(static_cast<lhs_type>(lhs),		\
+	    	              static_cast<rhs_type>(rhs.self()));	\
 }
 
-// 
-//  Define global arithmetic operators for both values and builtins
-//
-////////////////////////////////////////////////////////////////////////
+/*------------------------------------------------------------.
+| Global arithmetic operators for both ntg_types and builtins |
+`------------------------------------------------------------*/
 
-
-
-# define GLOBAL_ARITH_OP(Op, Name)						\
-template <class T1, class T2>							\
-inline										\
-ntg_return_type(Name, T1, T2)							\
-Op(const value<T1>& lhs, const T2& rhs)						\
-{										\
- /* This code is an example of debugging information, disabled until a good     \
-  * way to handle debug is found.						\
-  */										\
- /*										\
- if (ntg_is_debug_active)							\
- {										\
-     std::ostringstream s;							\
-     s << typename_of<ntg_return_type(Name, T1, T2)>() << " "			\
-	       << #Op << "(" << typename_of<T1>() << " lhs, "			\
-	    << typename_of<T2>() << " rhs)"  << std::endl			\
-     << "\twith lhs = " << lhs.exact() << " and rhs = " << rhs;			\
-     ntg_debug_context_set(s.str());						\
- }										\
- */										\
-										\
-  typedef ntg_deduced_traits_type(Name, T1, T2) deduced_type;			\
-										\
-  typedef typename deduced_type::impl impl;					\
-  typedef typename deduced_type::lhs_type lhs_type;				\
-  typedef typename deduced_type::rhs_type rhs_type;				\
-										\
-  return optraits<impl>::Name(static_cast<lhs_type>(lhs.self()),		\
-			      static_cast<rhs_type>(rhs));			\
-}										\
-										\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   long);				\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned long);				\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   int);				\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned int);				\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   short);				\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned short);				\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   char);				\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned char);				\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, float);					\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, double);					\
+# define GLOBAL_ARITH_OP(Op, Name)					\
+template <class T1, class T2> inline					\
+ntg_return_type(Name, T1, T2)						\
+Op(const value<T1>& lhs, const T2& rhs)					\
+{									\
+ /* 									\
+   This code is an example of debugging information, disabled until	\
+   a good way to handle debug is found.					\
+  */									\
+									\
+ /*									\
+ if (ntg_is_debug_active)						\
+ {									\
+     std::ostringstream s;						\
+     s << typename_of<ntg_return_type(Name, T1, T2)>() << " "		\
+	       << #Op << "(" << typename_of<T1>() << " lhs, "		\
+	    << typename_of<T2>() << " rhs)"  << std::endl		\
+     << "\twith lhs = " << lhs.exact() << " and rhs = " << rhs;		\
+     ntg_debug_context_set(s.str());					\
+ }									\
+ */									\
+									\
+  typedef ntg_deduced_traits_type(Name, T1, T2) deduced_type;		\
+									\
+  typedef typename deduced_type::impl impl;				\
+  typedef typename deduced_type::lhs_type lhs_type;			\
+  typedef typename deduced_type::rhs_type rhs_type;			\
+									\
+  return optraits<impl>::Name(static_cast<lhs_type>(lhs.self()),	\
+			      static_cast<rhs_type>(rhs));		\
+}									\
+									\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   long);			\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned long);			\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   int);			\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned int);			\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   short);			\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned short);			\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   char);			\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned char);			\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, float);				\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, double);				\
 GLOBAL_ARITH_OP_BUILTIN(Op, Name, bool);
 
+/*------------------.
+| LOGICAL OPERATORS |
+`------------------*/
 
-// --------------------------------------------------------------------//
-
-// 
-//  Define global logical operators for a builtin
-//  Internal use only.
-//
-//////////////////////////////////////////////////
+/*--------------------------------------.
+| Global logical operators for builtins |
+`--------------------------------------*/
 
 # define GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, Builtin)			\
-template <class T2>							\
-inline									\
+template <class T2> inline						\
 ntg_return_type(logical, Builtin, T2)					\
 Op(const Builtin& lhs, const value<T2>& rhs)				\
 {									\
@@ -169,47 +179,51 @@ Op(const Builtin& lhs, const value<T2>& rhs)				\
 			      static_cast<rhs_type>(rhs.self()));	\
 }
 
-// 
-//  Define global logical operators for both values and builtins
-//
-////////////////////////////////////////////////////////////////////
+/*----------------------------------------------------.
+| Global logical operators for ntg_types and builtins |
+`----------------------------------------------------*/
 
-# define GLOBAL_LOGICAL_OP(Op, Name)						\
-template <class T1, class T2>							\
-inline								\
-ntg_return_type(logical, T1, T2) \
+# define GLOBAL_LOGICAL_OP(Op, Name)					\
+template <class T1, class T2> inline					\
+ntg_return_type(logical, T1, T2)					\
 Op(const value<T1>& lhs, const T2& rhs)					\
-{										\
-  typedef ntg_deduced_traits_type(logical, T1, T2) deduced_type;			\
-										\
-  typedef typename deduced_type::impl impl;					\
-  typedef typename deduced_type::lhs_type lhs_type;				\
-  typedef typename deduced_type::rhs_type rhs_type;				\
-										\
-  return optraits<impl>::Name(static_cast<lhs_type>(lhs.self()),		\
-			      static_cast<rhs_type>(rhs));			\
-}										\
-										\
-GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, signed   long);				\
-GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, unsigned long);				\
-GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, signed   int);				\
-GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, unsigned int);				\
-GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, signed   short);				\
-GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, unsigned short);				\
-GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, signed   char);				\
-GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, unsigned char);				\
-GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, float);					\
-GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, double);					\
+{									\
+  typedef ntg_deduced_traits_type(logical, T1, T2) deduced_type;	\
+									\
+  typedef typename deduced_type::impl impl;				\
+  typedef typename deduced_type::lhs_type lhs_type;			\
+  typedef typename deduced_type::rhs_type rhs_type;			\
+									\
+  return optraits<impl>::Name(static_cast<lhs_type>(lhs.self()),	\
+			      static_cast<rhs_type>(rhs));		\
+}									\
+									\
+GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, signed   long);			\
+GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, unsigned long);			\
+GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, signed   int);			\
+GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, unsigned int);			\
+GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, signed   short);			\
+GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, unsigned short);			\
+GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, signed   char);			\
+GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, unsigned char);			\
+GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, float);				\
+GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, double);				\
 GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, bool);
 
+/*---------------------.
+| COMPARISON OPERATORS |
+`---------------------*/
 
-// --------------------------------------------------------------------//
+/*-----------------------------------------.
+| Global comparison operators for builtins |
+`-----------------------------------------*/
 
 # define GLOBAL_CMP_OP_BUILTIN(Op, Name, Builtin)			\
-template <class T2>							\
-inline bool Op(const Builtin& lhs, const value<T2>& rhs)		\
+template <class T2> inline						\
+bool									\
+Op(const Builtin& lhs, const value<T2>& rhs)				\
 {									\
-  typedef ntg_deduced_traits_type(cmp, Builtin, T2) deduced_type;		\
+  typedef ntg_deduced_traits_type(cmp, Builtin, T2) deduced_type;	\
 									\
   typedef typename deduced_type::impl impl;				\
   typedef typename deduced_type::lhs_type lhs_type;			\
@@ -219,32 +233,35 @@ inline bool Op(const Builtin& lhs, const value<T2>& rhs)		\
 			      static_cast<rhs_type>(rhs.self()));	\
 }
 
+/*------------------------------------------------------------.
+| Global comparison operators for both ntg_types and builtins |
+`------------------------------------------------------------*/
 
-# define GLOBAL_CMP_OP(Op, Name)					\
-template <class T1, class T2>						\
-inline bool Op(const value<T1>& lhs, const T2& rhs)			\
-{									\
-  typedef ntg_deduced_traits_type(cmp, T1, T2) deduced_type;			\
-									\
-  typedef typename deduced_type::impl impl;				\
-  typedef typename deduced_type::lhs_type lhs_type;			\
-  typedef typename deduced_type::rhs_type rhs_type;			\
-									\
- return optraits<impl>::Name(static_cast<lhs_type>(lhs.self()),		\
-			      static_cast<rhs_type>(rhs));		\
-}									\
-									\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   long);				\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned long);				\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   int);				\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned int);				\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   short);			\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned short);			\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   char);				\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned char);				\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, float);					\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, double);				\
+# define GLOBAL_CMP_OP(Op, Name)				\
+template <class T1, class T2> inline				\
+bool								\
+Op(const value<T1>& lhs, const T2& rhs)				\
+{								\
+  typedef ntg_deduced_traits_type(cmp, T1, T2) deduced_type;	\
+								\
+  typedef typename deduced_type::impl impl;			\
+  typedef typename deduced_type::lhs_type lhs_type;		\
+  typedef typename deduced_type::rhs_type rhs_type;		\
+								\
+ return optraits<impl>::Name(static_cast<lhs_type>(lhs.self()),	\
+			      static_cast<rhs_type>(rhs));	\
+}								\
+								\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   long);			\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned long);			\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   int);			\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned int);			\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   short);		\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned short);		\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   char);			\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned char);			\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, float);				\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, double);			\
 GLOBAL_CMP_OP_BUILTIN(Op, Name, bool);
 
-
-#endif // ndef NTG_OPS_DEFS_HH
+#endif // !NTG_CORE_INTERNAL_GLOBAL_OPS_DEFS_HH

@@ -28,24 +28,34 @@
 #ifndef NTG_BASICS_HH
 # define NTG_BASICS_HH
 
-/*!
-  Utility header that regroup basic common headers every file
-  should need.
+/*
+  Basic header that regroup basic common headers every file
+  will certainely need.
 */
 
 # include <ntg/config/system.hh>
 
+# include <ntg/core/predecls.hh>
+
 # include <ntg/core/abstract_hierarchy.hh>
 # include <ntg/core/behavior.hh>
+# include <ntg/core/contract.hh>
 # include <ntg/core/interval.hh>
+# include <ntg/real/builtin_properties.hh>
+# include <ntg/core/type.hh>
+# include <ntg/core/value.hh>
+
+/*
+  These headers are included as builtins may be used anywhere, without
+  having previously included the corresponding integre headers.
+*/
+# include <ntg/enum/builtin_bool.hh>
+# include <ntg/real/builtin_int.hh>
+# include <ntg/real/builtin_float.hh>
+
 # include <ntg/core/internal/global_ops.hh>
 # include <ntg/core/macros.hh>
-# include <ntg/core/predecls.hh>
-# include <ntg/core/type.hh>
-# include <ntg/core/internal/typetraits_builtins.hh>
-# include <ntg/core/internal/builtins_properties.hh>
-# include <ntg/core/value.hh>
 
 # include <ntg/utils/cast.hh>
 
-#endif // ndef NTG_BASICS_HH
+#endif // !NTG_BASICS_HH

@@ -28,14 +28,22 @@
 #ifndef NTG_CORE_CONTRACT_HH
 # define NTG_CORE_CONTRACT_HH
 
+# include <mlc/contract.hh>
+
+/*
+  Custom version of assert, which can print a context string if
+  NTG_DEBUG is defined. The context string should be filled by
+  operators.
+*/
+
 # ifdef NDEBUG
 #  define ntg_assert(expr) ((void) 0)
 # else
 #  ifdef NTG_DEBUG
 #   define ntg_assert(expr)					\
-  if ((expr) == 0)						\
+  if (!(expr))							\
   {								\
-    if (!ntg::debug_context.empty())			\
+    if (!ntg::debug_context.empty())				\
       std::cerr << "In context: " << ntg::debug_context 	\
                 << std::endl;					\
     assertion(expr);						\

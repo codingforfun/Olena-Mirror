@@ -28,7 +28,7 @@
 #ifndef NTG_CORE_INTERNAL_MACROS_HH
 # define NTG_CORE_INTERNAL_MACROS_HH
 
-/*!
+/*
   All internal macros starts have an ntgi prefix.
 */
 
@@ -36,12 +36,52 @@
 | types accessors |
 `----------------*/
 
-/*! 
+/*
   In come internal code, it is not always possible to use
   type_traits<T>, especially within the code of the T class itself.
   That's why ntgi_* macros exists.
 */
 
-# define ntgi_storage_type(T) typename ntg::internal::typetraits<T>::storage_type
+# define ntgi_storage_type(T) \
+typename ntg::internal::typetraits<T>::storage_type
 
-#endif // ndef NTG_CORE_INTERNAL_MACROS_HH
+# define ntgi_abstract_type(T) \
+typename ntg::internal::typetraits<T>::abstract_type
+
+# define ntgi_optraits_type(T) \
+typename ntg::internal::typetraits<T>::optraits_type
+
+# define ntgi_behavior_type(T) \
+typename ntg::internal::typetraits<T>::behavior_type
+
+# define ntgi_base_type(T) \
+typename ntg::internal::typetraits<T>::base_type
+
+# define ntgi_signed_type(T) \
+typename ntg::internal::typetraits<T>::signed_type
+
+# define ntgi_unsigned_type(T) \
+typename ntg::internal::typetraits<T>::unsigned_type
+
+# define ntgi_cumul_type(T) \
+typename ntg::internal::typetraits<T>::cumul_type
+
+# define ntgi_largest_type(T) \
+typename ntg::internal::typetraits<T>::largest_type
+
+# define ntgi_signed_largest_type(T) \
+typename ntg::internal::typetraits<T>::signed_largest_type
+
+# define ntgi_signed_cumul_type(T) \
+typename ntg::internal::typetraits<T>::signed_cumul_type
+
+# define ntgi_unsigned_largest_type(T) \
+typename ntg::internal::typetraits<T>::unsigned_largest_type
+
+# define ntgi_unsigned_cumul_type(T) \
+typename ntg::internal::typetraits<T>::unsigned_cumul_type
+
+# define ntgi_integer_type(T) \
+typename ntg::internal::typetraits<T>::integer_type
+
+#endif // !NTG_CORE_INTERNAL_MACROS_HH

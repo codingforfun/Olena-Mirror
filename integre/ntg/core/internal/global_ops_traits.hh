@@ -25,31 +25,28 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_GLOBAL_OPS_TRAITS_HH
-# define NTG_GLOBAL_OPS_TRAITS_HH
+#ifndef NTG_CORE_INTERNAL_GLOBAL_OPS_TRAITS_HH
+# define NTG_CORE_INTERNAL_GLOBAL_OPS_TRAITS_HH
+
+/*
+  Tools to determine return type of operators given the parameters
+  types. For each type, one has to specialize the traits
+  operator_xxx, and then use deduce_from_traits<operator_xxx, T1, T2>
+  as return type for operatorxxx(T1, T2) functions.
+*/
+
+# include <ntg/core/macros.hh>
+# include <ntg/core/type_traits.hh>
 
 # include <mlc/bool.hh>
 
-# include <ntg/core/type_traits.hh>
+namespace ntg {
 
-//
-//  Operators traits : give return type, etc ..
-// 
-//  An operator traits must define : 
-//   - ret  ==> return type of the operator
-//   - impl ==> implementation type, the type from which 
-//              optraits<type>::operator is implemented
-//
-//  <WARNING>
-//  Do not use operator_xxx_traits directly, use deduce_from_traits
-//
-////////////////////////////////////////////////////////////////////
+  namespace internal {
 
-namespace ntg
-{
-
-  namespace internal
-  {
+    /*-----------.
+    | Meta tools |
+    `-----------*/
 
     struct undefined_traits {};
 
@@ -63,68 +60,18 @@ namespace ntg
       typedef undefined_traits traits_rhs_type;
     };
 
-    //
-    //  Operators traits declaration
-    //  DO NOT USE DIRECTLY, USE DEDUCE_FROM_TRAITS
-    //
-    ////////////////////////////////////////////////
-    
-
-    template <class Op, class T, class U>
-    struct operator_traits
-    {
-      enum { commutative = false };
-      typedef undefined_traits ret; 
-      typedef undefined_traits impl; 
-    };
-
-    // plus    
-    struct operator_plus {};
-
-    // minus    
-    struct operator_minus {};  
-
-    // times    
-    struct operator_times {};
-
-    // div
-    struct operator_div {};
-
-    // mod
-    struct operator_mod {};
-    
-    // logical ops
-    struct operator_logical {};
-
-    // comparison
-    struct operator_cmp {};
-
-    // min
-    struct operator_min {};
-
-    // max
-    struct operator_max {};
-
-    //
-    //  Traits deduction algorithm:
-    //
-    //  1) Convert T1 and T2 to ntg types.
-    //  2) Check if traits<T1, T2> is ok.
-    //  3) Else, check if traits<T2, T1> ok AND traits<T2, T1>::commutative 
-    //     is true.
-    //
-    //////////////////////////////////////////////////////////////////////////
-
     template <class T>
     struct is_defined { enum { ret = true }; };
     template <>
     struct is_defined<undefined_traits> { enum { ret = false }; };
     
-    //
-    //  Struct get_order and get_order_inv
-    //
-    //  traits_xhs_type : types for traits use
-    //  xhs_type : needed to say if we need to cast into oln_type
+    /*
+      get_order, get_order_inv
+
+      These structs are used to inverse input types (if the operator
+      is commutative) and to specify whether input types should be
+      converted into another type (eg. the corresponding ntg_type).
+    */
   
     template <class T1, class T2>
     struct get_order
@@ -145,37 +92,122 @@ namespace ntg
       typedef T1 lhs_type;
       typedef T2 rhs_type;
     };
+
+    /*---------------------------.
+    | Operator traits definition |
+    `---------------------------*/
+    //! Give return type for operators, depending on the input types.
+    /*! 
+       operator_traits traits should not be used directly. Instead one
+       should use deduce_from_traits, see comments below for more
+       details.
+
+       These traits defines 3 properties: 
+
+       * commutative (enum): Tells whether the operator is commutative 
+         or not.
+
+       * ret (typedef): Specifies the return type.
+
+       * impl (typedef): Specifies the type which implement the
+         operator, that is, the type T such as optraits<T>::operatorX
+         is the good implementation.
+
+	 To specify the concerned operator, one empty class represent
+	 each operator. For example, to specify the traits associated
+	 to the + operator with T1 and T2 as arguments:
+
+	 template <class T1, class T2>
+	 struct operator_traits<operator_plus, T1, T2>
+	 {
+	   ...
+	 }
+    */
+    
+    template <class Op, class T, class U>
+    struct operator_traits
+    {
+      enum { commutative = false };
+      typedef undefined_traits ret; 
+      typedef undefined_traits impl; 
+    };
+
+    struct operator_plus {};
+    struct operator_minus {};  
+    struct operator_times {};
+    struct operator_div {};
+    struct operator_mod {};
+    struct operator_logical {};
+    struct operator_cmp {};
+    struct operator_min {};
+    struct operator_max {};
+
+    /*-----------------------------------.
+    | deduce_from_traits<operator, T, U> |
+    `-----------------------------------*/
+    //! Find the good operator_traits, following a simple algorithm.
+    /*!
+      deduce_from_traits should generally be used instead of
+      operator_traits. Indeed, it has a handy algorithm to find return
+      types:
+
+      1) Convert T1 and T2 to ntg types.
+      2) Check if traits<T1, T2> is defined.
+      3) Else, check if traits<T2, T1> is defined 
+         AND traits<T2, T1>::commutative is true.
+
+      deduce_from_traits defines several types:
+      
+      - lhs_type and rhs_type: The types into which the first and
+        second paramaters should be converted before called the
+        implementation.
+
+      - ret: The return type.
+
+      - impl: The implementation type.
+
+      - deduced_traits: A pointer to the good operator_traits<>
+        specialization. This can be useful sometimes.
+    */
    
     template <class Op, class T, class U>
     struct deduce_from_traits
     {
+    private:
       typedef ntg_type(T) T1;
       typedef ntg_type(U) T2;
 
       typedef typename operator_traits<Op, T1, T2>::ret traits;
       typedef typename operator_traits<Op, T2, T1>::ret rev_traits;
 
+      enum { can_invert = (operator_traits<Op, T2, T1>::commutative 
+			   && is_defined<rev_traits>::ret) };
+
       typedef typename
       mlc::if_<is_defined<traits>::ret,
 		get_order<T1, T2>, typename
-		mlc::if_<operator_traits<Op, T2, T1>::commutative && is_defined<rev_traits>::ret,
+		mlc::if_<can_invert,
 			 get_order_inv<T1, T2>,
 			 meta_undefined_traits<undefined_traits>
                         >::ret_t
               >::ret_t deduced_type;
 				    
-      typedef typename deduced_type::lhs_type lhs_type;
-      typedef typename deduced_type::rhs_type rhs_type;
       typedef typename deduced_type::traits_lhs_type traits_lhs_type;
       typedef typename deduced_type::traits_rhs_type traits_rhs_type;
 
-      typedef typename operator_traits<Op, traits_lhs_type, traits_rhs_type>::ret ret;
-      typedef typename operator_traits<Op, traits_lhs_type, traits_rhs_type>::impl impl;
-      typedef operator_traits<Op, traits_lhs_type, traits_rhs_type> deduced_traits;
+    public:
+      typedef operator_traits<Op, 
+			      traits_lhs_type, 
+			      traits_rhs_type> deduced_traits;
+
+      typedef typename deduced_type::lhs_type lhs_type;
+      typedef typename deduced_type::rhs_type rhs_type;
+      typedef typename deduced_traits::ret ret;
+      typedef typename deduced_traits::impl impl;
     };
 
   } // end of internal.
 
 } // end of ntg.
 
-#endif // ndef NTG_GLOBAL_OPS_TRAITS_HH
+#endif // !NTG_CORE_INTERNAL_GLOBAL_OPS_TRAITS_HH

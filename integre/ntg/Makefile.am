@@ -5,6 +5,7 @@ nobase_ntg_HEADERS =				\
   all.hh					\
   basics.hh					\
   bin.hh					\
+  color.hh					\
   color/color.hh				\
   color/hsi.hh					\
   color/hsl.hh					\
@@ -19,14 +20,11 @@ nobase_ntg_HEADERS =				\
   core/abstract_hierarchy.hh			\
   core/behavior.hh				\
   core/contract.hh				\
-  core/internal/builtins_properties.hh		\
   core/internal/global_ops.hh			\
   core/internal/global_ops_defs.hh		\
   core/internal/global_ops_traits.hh		\
   core/internal/macros.hh			\
-  core/internal/optraits_builtins.hh		\
   core/internal/traits.hh			\
-  core/internal/typetraits_builtins.hh		\
   core/interval.hh				\
   core/macros.hh				\
   core/predecls.hh				\
@@ -36,24 +34,23 @@ nobase_ntg_HEADERS =				\
   cplx.hh					\
   cycle.hh					\
   enum/bin.hh					\
+  enum/builtin_bool.hh				\
   enum/enum_value.hh				\
-  enum/optraits_builtins_bool.hh		\
-  enum/typetraits_builtins_bool.hh		\
   float.hh					\
   int.hh					\
   range.hh					\
+  real/builtin_int.hh				\
+  real/builtin_float.hh				\
+  real/builtin_properties.hh			\
   real/cycle.hh					\
   real/int_s.hh					\
   real/int_u.hh					\
-  real/optraits_builtins_float.hh		\
-  real/optraits_builtins_int.hh			\
-  real/optraits_builtins_int_defs.hh		\
+  real/optraits_builtin_int.hh			\
   real/optraits_scalar.hh			\
   real/optraits_scalar_defs.hh			\
   real/range.hh					\
   real/real_value.hh				\
-  real/typetraits_builtins_float.hh		\
-  real/typetraits_builtins_int.hh		\
+  real/typetraits_builtin_int.hh		\
   utils/cast.hh					\
   utils/debug.hh				\
   vec.hh					\

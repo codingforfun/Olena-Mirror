@@ -30,9 +30,6 @@
 
 # include <ntg/core/macros.hh>
 # include <ntg/core/type.hh>
-
-// --
-
 # include <ntg/core/type_traits.hh>
 
 namespace ntg {
@@ -42,6 +39,13 @@ namespace ntg {
     /*---------.
     | any_ntg_ |
     `---------*/
+
+    // FIXME: it is not possible to inherit from mlc::any, because it
+    // gives all subtypes an implicit access to the mlc
+    // namespace. This is problematic since min or max for example are
+    // defined in mlc and ntg::internal namespaces, and it creates
+    // conflicts with g++ (3.2, 3.3, 3.4).
+
     //! Bridge to internal for ntg type hierarchy.
     /*!
       This class is a bridge with the internal namespace. Indeed,
@@ -54,13 +58,6 @@ namespace ntg {
       
       See comments in <ntg/config/system.hh>.
     */
-
-    // FIXME: it is not possible to inherit from mlc::any, because it
-    // gives all subtypes an implicit access to the mlc
-    // namespace. This is problematic since min or max for example are
-    // defined in mlc and ntg::internal namespaces, and it creates
-    // conflicts with g++ (3.2, 3.3, 3.4).
-
     template <class E>
     class any_ntg_ : public ntg::any<E>
     {};
@@ -70,11 +67,11 @@ namespace ntg {
   /*--------.
   | any_ntg |
   `--------*/
+
   //! Top of the ntg types hierarchy.
   /*!
     Just an abstraction.
   */
-  
   template <class E>
   class any_ntg : public internal::any_ntg_<E>
   {};
@@ -82,6 +79,7 @@ namespace ntg {
   /*------.
   | value |
   `------*/
+
   //! Concrete value storage class.
   /*!
     This class actually store the real value (usually a builtin). The
@@ -89,7 +87,6 @@ namespace ntg {
 
     For example, int_u8::val() returns an "unsigned char".
   */
-
   template <class E>
   class value : public any_ntg<E>
   {
@@ -106,6 +103,6 @@ namespace ntg {
     storage_type val_;
   };
 
-} // namespace ntg
+} // end of ntg.
 
-#endif // ndef NTG_CORE_VALUE_HH
+#endif // !NTG_CORE_VALUE_HH

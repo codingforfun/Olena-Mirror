@@ -1,4 +1,4 @@
-// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,24 +25,20 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_OPTRAITS_BUILTINS_BIN_HH
-# define NTG_OPTRAITS_BUILTINS_BIN_HH
+#ifndef NTG_COLOR_HH
+# define NTG_COLOR_HH
 
-# include <ntg/core/type_traits.hh>
+/*
+  Proxy header for color types.
+*/
 
-namespace ntg {
+# include <ntg/color/rgb.hh>
+# include <ntg/color/nrgb.hh>
+# include <ntg/color/hsi.hh>
+# include <ntg/color/hsl.hh>
+# include <ntg/color/hsv.hh>
+# include <ntg/color/xyz.hh>
+# include <ntg/color/yiq.hh>
+# include <ntg/color/yuv.hh>
 
-  namespace internal {
-
-    template<>
-    struct optraits<bool>
-    {
-      static bool min() { return 0; }
-      static bool max() { return 1; }
-    };
-    
-  } // end of internal.
-
-} // end of ntg.
-
-#endif // ndef NTG_OPTRAITS_BUILTINS_BIN_HH
+#endif // !NTG_COLOR_HH

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CONFIG_MATH_HH
-# define OLENA_CONFIG_MATH_HH
+#ifndef NTG_CONFIG_MATH_HH
+# define NTG_CONFIG_MATH_HH
 
 # include <ntg/config/system.hh>
 
@@ -34,15 +34,15 @@
 
 # ifndef USE_C_LIMITS
 #  include <limits>
-#  define OLN_DOUBLE_INFINITY (std::numeric_limits<double>::infinity())
-#  define OLN_FLOAT_INFINITY (std::numeric_limits<float>::infinity())
+#  define NTG_DOUBLE_INFINITY (std::numeric_limits<double>::infinity())
+#  define NTG_FLOAT_INFINITY (std::numeric_limits<float>::infinity())
 # else
 #  ifdef HUGE_VAL
-#   define OLN_DOUBLE_INFINITY HUGE_VAL
+#   define NTG_DOUBLE_INFINITY HUGE_VAL
 #   ifdef HUGE_VALF
-#    define OLN_FLOAT_INFINITY HUGE_VALF
+#    define NTG_FLOAT_INFINITY HUGE_VALF
 #   else
-#    define OLN_FLOAT_INFINITY ((float)HUGE_VAL)
+#    define NTG_FLOAT_INFINITY ((float)HUGE_VAL)
 #   endif
 #  else
 #   error Cannot define Infinity in this configuration.
@@ -80,4 +80,4 @@ static inline float roundf(float f)
 }
 # endif
 
-#endif // !OLENA_CONFIG_MATH_HH
+#endif // !NTG_CONFIG_MATH_HH

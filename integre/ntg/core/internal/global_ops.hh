@@ -25,41 +25,42 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_CORE_GLOBAL_OPS_HH
-# define NTG_CORE_GLOBAL_OPS_HH
+#ifndef NTG_CORE_INTERNAL_GLOBAL_OPS_HH
+# define NTG_CORE_INTERNAL_GLOBAL_OPS_HH
+
+/*
+  This header defines global operators (arithmetic, logical, and
+  comparison). They are examined when at least one ntg type is
+  involved. They are required to have a precise dispatch, you can
+  check the documentation for more details.
+*/
 
 # include <mlc/contract.hh>
 # include <mlc/is_a.hh>
 
-# include <ntg/core/value.hh>
-# include <ntg/core/macros.hh>
 # include <ntg/core/internal/global_ops_traits.hh>
-# include <ntg/core/internal/optraits_builtins.hh>
-# include <ntg/core/internal/typetraits_builtins.hh>
+# include <ntg/core/macros.hh>
+# include <ntg/core/value.hh>
 # include <ntg/utils/debug.hh>
 
 // macros defs
 # include <ntg/core/internal/global_ops_defs.hh>
 
-//
-//  Global ops
-//  These operators cannot be called if one value_type is not involved,
-//  as there are uncapsulated in a namespace
-//
-///////////////////////////////////////////////////////////////////////
-
-
 namespace ntg
 {
+
+  /*
+    Global operators are defined in the internal namespace to avoid
+    any possible clash, even when "using namespace ntg" directive is
+    used.
+  */
 
   namespace internal
   {
 
-    //
-    // Arithmetic assignements
-    //
-    ///////////////////////////    
-
+    /*------------------------.
+    | Arithmetic assignements |
+    `------------------------*/
 
     GLOBAL_ASSIGN_OP(operator+=, plus_equal);
     GLOBAL_ASSIGN_OP(operator-=, minus_equal);
@@ -67,21 +68,17 @@ namespace ntg
     GLOBAL_ASSIGN_OP(operator/=, div_equal);
     GLOBAL_ASSIGN_OP(operator%=, mod_equal);
 
-
-    //
-    //  Logical assignements
-    //
-    /////////////////////////
+    /*---------------------.
+    | Logical assignements |
+    `---------------------*/
 
     GLOBAL_ASSIGN_OP(operator|=, logical_or_equal);
     GLOBAL_ASSIGN_OP(operator&=, logical_and_equal);
     GLOBAL_ASSIGN_OP(operator^=, logical_xor_equal);
 
-
-    //
-    //  Arithmetic operations
-    //
-    //////////////////////////
+    /*----------------------.
+    | Arithmetic operations |
+    `----------------------*/
 			    
     GLOBAL_ARITH_OP(operator+, plus);
     GLOBAL_ARITH_OP(operator-, minus);
@@ -89,84 +86,72 @@ namespace ntg
     GLOBAL_ARITH_OP(operator/, div);
     GLOBAL_ARITH_OP(operator%, mod);
 
-
-    //
-    //  Logical operators
-    //
-    ///////////////////////
+    /*------------------.
+    | Logical operators |
+    `------------------*/
 
     GLOBAL_LOGICAL_OP(operator|, logical_or);
     GLOBAL_LOGICAL_OP(operator&, logical_and);
     GLOBAL_LOGICAL_OP(operator^, logical_xor);
 
-
-    //
-    //  Comparison operators
-    //
-    /////////////////////////
-
-    // eq
+    /*---------------------.
+    | Comparison operators |
+    `---------------------*/
 
     GLOBAL_CMP_OP(operator==, cmp_eq);
 
-    // neq
-
-    template <class T1, class T2>
-    inline bool operator!=(const T1& lhs, const T2& rhs)
+    template <class T1, class T2> inline
+    bool 
+    operator!=(const T1& lhs, const T2& rhs)
     { return !(lhs == rhs); }
 
-
-    // cmp_lt
+    // >, >= and <= operators are defined using <. They are not
+    // implicitely defined so we have to do so by hand.
 
     GLOBAL_CMP_OP(operator<, cmp_lt);
 
-
-    // cmp_gt
-
-    template <class T1, class T2> inline 
-    bool operator>(const T1& lhs, const T2& rhs)
+    template <class T1, class T2> inline
+    bool
+    operator>(const T1& lhs, const T2& rhs)
     { return rhs < lhs; }
 
-
-    // cmp_ge
-
-    template <class T1, class T2> inline 
-    bool operator>=(const T1& lhs, const T2& rhs)
+    template <class T1, class T2> inline
+    bool
+    operator>=(const T1& lhs, const T2& rhs)
     { return !(lhs < rhs); }
 
-
-    // cmp_le
-
-    template <class T1, class T2> inline 
-    bool operator<=(const T1& lhs, const T2& rhs)
+    template <class T1, class T2> inline
+    bool
+    operator<=(const T1& lhs, const T2& rhs)
     { return !(rhs < lhs); }
 
-
-    //
-    //  Arithmetical unary operators
-    //
-    /////////////////////////////////
+    /*-----------------------------.
+    | Arithmetical unary operators |
+    `-----------------------------*/
 
     // plus
 
     template <class T> inline
-    const T& operator+(const T& val)
+    const T&
+    operator+(const T& val)
     {
       return val;
     }
 
     template<class T> inline
-    const T& operator++(T& val)
+    const T&
+    operator++(T& val)
     {
-      val += optraits<T>::unit();
+      val += ntg_unit_val(T);
       return val;
     }
 
     template<class T> inline
-    T operator++(T& val, int)
+    T
+    operator++(T& val, int)
     {
       T tmp(val);
-      val += optraits<T>::unit();
+      val += ntg_unit_val(T);
       return tmp;
     }
 
@@ -195,12 +180,10 @@ namespace ntg
       return tmp;
     }
 
-    //
-    //  Min/Max operators
-    //
-    ///////////////////////
+    /*------------------.
+    | Min/Max operators |
+    `------------------*/
 
-    // min
     template <class T1, class T2> inline
     ntg_return_type(min, T1, T2)
     min (const T1& lhs, const T2& rhs)
@@ -209,12 +192,11 @@ namespace ntg
       return (lhs < rhs) ? result_type(lhs) : result_type(rhs);
     }
     
-    // max
     template <class T1, class T2> inline
     ntg_return_type(max, T1, T2)
     max (const T1& lhs, const T2& rhs)
     {
-      typedef ntg_return_type(max, T1, T2) result_type;     
+      typedef ntg_return_type(max, T1, T2) result_type;
       return (lhs > rhs) ? result_type(lhs) : result_type(rhs);
     }
 
@@ -222,4 +204,4 @@ namespace ntg
 
 } // end of ntg.
 
-#endif // ndef NTG_CORE_GLOBAL_OPS_HH
+#endif // ndef NTG_CORE_INTERNAL_GLOBAL_OPS_HH

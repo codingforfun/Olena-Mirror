@@ -117,6 +117,10 @@ AC_DEFUN([OLN_PATH_HEADERS],
       # This is useful for sanity checks.
       OLN_LOCAL_SRC='$(top_srcdir)/'$oln_cv_local_src
       OLN_LOCAL_BUILD='$(top_builddir)/'$oln_cv_local_src
+      NTG_LOCAL_SRC='$(top_srcdir)/'$ntg_cv_local_src
+      NTG_LOCAL_BUILD='$(top_builddir)/'$ntg_cv_local_src
+      MLC_LOCAL_SRC='$(top_srcdir)/'$mlc_cv_local_src
+      MLC_LOCAL_BUILD='$(top_builddir)/'$mlc_cv_local_src
 
       #
       OLN_EXTRA_CPPFLAGS="-I$oln_cv_local_src -I$srcdir/$oln_cv_local_src"
@@ -129,6 +133,10 @@ AC_DEFUN([OLN_PATH_HEADERS],
       CPPFLAGS="$MLC_LOCAL_CPPFLAGS $NTG_LOCAL_CPPFLAGS $OLN_LOCAL_CPPFLAGS $CPPFLAGS"
       AC_SUBST([OLN_LOCAL_SRC])
       AC_SUBST([OLN_LOCAL_BUILD])
+      AC_SUBST([NTG_LOCAL_SRC])
+      AC_SUBST([NTG_LOCAL_BUILD])
+      AC_SUBST([MLC_LOCAL_SRC])
+      AC_SUBST([MLC_LOCAL_BUILD])
     fi
   fi
 

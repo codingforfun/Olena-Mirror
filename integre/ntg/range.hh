@@ -28,7 +28,9 @@
 #ifndef NTG_RANGE_HH
 # define NTG_RANGE_HH
 
-// Proxy header for range.
+/*
+  Proxy header for range.
+*/
 
 # include <ntg/real/range.hh>
 

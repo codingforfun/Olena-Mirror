@@ -47,10 +47,13 @@ namespace oln {
 	return ntg::cast::force<Output>(v);
       }
 
-      static std::string name() {
+      static std::string
+      name()
+      {
+	// FIXME: Exact is not an integre type !
 	return std::string("force<")
-	  + ntg::typename_of<Output>() + ", "
-	  + ntg::typename_of<Exact>() + ">";
+	  + ntg_name(Output) + ", "
+	  + Exact::name() + ">";
       }
     };
 

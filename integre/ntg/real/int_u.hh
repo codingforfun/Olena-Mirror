@@ -37,7 +37,9 @@
 # include <string>
 # include <sstream>
 
-// Macros //
+/*-------.
+| macros |
+`-------*/
 
 # define INT_U_CTOR_FROM_BUILTIN_INT(Builtin)   \
 int_u (const Builtin rhs)			\
@@ -50,16 +52,13 @@ self& operator=(const Builtin rhs)	        \
   return *this;					\
 }
 
-// --- //
-
 namespace ntg {
 
   namespace internal {
 
-    //
-    //  Typetraits
-    //
-    ///////////////
+    /*------------------.
+    | typetraits<int_u> |
+    `------------------*/
 
     template <unsigned nbits, class behavior>
     struct typetraits<int_u<nbits, behavior> >
@@ -67,9 +66,10 @@ namespace ntg {
       typedef int_u<nbits, behavior>		self;
       typedef unsigned_integer			abstract_type;
       typedef self				ntg_type;
+
       ntg_build_value_type(uint_value<E>);
 
-      typedef optraits<self>			optraits;
+      typedef optraits<self>			optraits_type;
       typedef typename behavior::get<self>	behavior_type;
 
 
@@ -90,10 +90,9 @@ namespace ntg {
 
   } // end of internal.
 
-  //
-  //  Class int_u<Nbits, Behaviour>
-  //
-  //////////////////////////////////
+  /*-----------------------.
+  | int_u<nbits, behavior> |
+  `-----------------------*/
 
   template <unsigned nbits, class behavior>
   class int_u : public uint_value<int_u<nbits, behavior> >
@@ -102,12 +101,13 @@ namespace ntg {
     typedef ntgi_storage_type(self) storage_type;
     // dev note : should be directly optraits<self_t>, but with g++ this
     // breaks inheritance in optraits herarchy ...
-    typedef typename internal::typetraits<self>::optraits optraits_type;
+    typedef ntgi_optraits_type(self) optraits_type;
 
   public:
     int_u () { val_ = 0; }
 
-    // We define ctor for each builtin to avoid implicit builtin promotion
+    // We define ctor for each builtin to avoid implicit builtin
+    // promotion.
 
     INT_U_CTOR_FROM_BUILTIN_INT(unsigned long);
     INT_U_CTOR_FROM_BUILTIN_INT(signed   long);
@@ -125,7 +125,8 @@ namespace ntg {
     {
       val_ = optraits_type::check(roundf(rhs));
     }
-    self& operator=(const float rhs)
+    self&
+    operator=(const float rhs)
     {
       val_ = optraits_type::check(roundf(rhs));
       return *this;
@@ -135,7 +136,8 @@ namespace ntg {
     {
       val_ = optraits_type::check(round(rhs));
     }
-    self& operator=(const double rhs)
+    self&
+    operator=(const double rhs)
     {
       val_ = optraits_type::check(round(rhs));
       return *this;
@@ -150,7 +152,8 @@ namespace ntg {
 	val_ = optraits_type::check(rhs.val());
     }
     template <unsigned mbits, class B2>
-    self& operator=(const int_u<mbits, B2>& rhs)
+    self&
+    operator=(const int_u<mbits, B2>& rhs)
     {
       if (mbits <= nbits)
 	val_ = rhs.val();
@@ -165,13 +168,13 @@ namespace ntg {
       val_ = optraits_type::check(rhs.val());
     }
     template <class T>
-    self& operator=(const real_value<T>& rhs)
+    self&
+    operator=(const real_value<T>& rhs)
     {
       val_ = optraits_type::check(rhs.val());
       return *this;
     }
 
-    // Cast
     operator storage_type () const { return val_; }
 
   private:
@@ -190,36 +193,30 @@ namespace ntg {
   namespace internal
   {
 
-    //
-    //  optraits for int_u
-    //
-    /////////////////////////////////////////////////////
+    /*----------------.
+    | optraits<int_u> |
+    `----------------*/
 
     template <unsigned nbits, class behavior>
     struct optraits<int_u<nbits, behavior> > :
       public optraits_int_u<int_u<nbits, behavior> >
     {
     private:
-      // shortcuts
-      typedef int_u<nbits, behavior> self;
-      typedef typename typetraits<self>::storage_type storage_type_;
-      typedef typename behavior::get<self> behavior_type_;
+      typedef int_u<nbits, behavior>			self;
+      typedef typename typetraits<self>::storage_type	storage_type_;
+      typedef typename behavior::get<self>		behavior_type_;
 
     public:
-      // behavior's check
       template <class P>
       static storage_type_ check(const P& rhs)
-      { return behavior_type_::apply(rhs); }
-
-      //
-      // Properties
-      //
+      { return behavior_type_::check(rhs); }
 
       static storage_type_ max()
       { return C_for_int_u<nbits>::max(); }
 
-      // debug
-      static std::string name() {
+      static std::string
+      name()
+      {
 	std::ostringstream out;
 	out << "int_u<" << int(nbits) << ", " << behavior::name() << ">"
 	    << std::ends;
@@ -227,10 +224,9 @@ namespace ntg {
       }
     };
 
-    //
-    // Operators traits
-    //
-    ////////////////////
+    /*----------------.
+    | operator traits |
+    `----------------*/
 
     //
     // plus
@@ -263,7 +259,7 @@ namespace ntg {
     };
 
     // int_u32 - int_u : we do not convert result to int_s because we
-    // want to access (UINT_MAX - 1)
+    // want to access (UINT_MAX - 1).
 
     template<class B1, unsigned mbits, class B2>
     struct operator_traits<operator_minus, int_u<32, B1>, int_u<mbits, B2> >
@@ -316,12 +312,11 @@ namespace ntg {
       typedef int_u<nbits, B1> impl;
     };
 
-
     //
     // Min
     //
 
-    // MIN(int_u, int_u)
+    // min(int_u, int_u)
 
     template<unsigned nbits, class B1, unsigned mbits, class B2>
     struct operator_traits<operator_min, int_u<nbits, B1>, int_u<mbits, B2> >
@@ -337,7 +332,7 @@ namespace ntg {
     // Max
     //
 
-    // MAX(int_u, int_u)
+    // max(int_u, int_u)
 
     template<unsigned nbits, class B1, unsigned mbits, class B2>
     struct operator_traits<operator_max, int_u<nbits, B1>, int_u<mbits, B2> >
@@ -367,4 +362,4 @@ namespace ntg {
 
 } // end of ntg.
 
-#endif // ndef NTG_REAL_INT_U_HH
+#endif // !NTG_REAL_INT_U_HH

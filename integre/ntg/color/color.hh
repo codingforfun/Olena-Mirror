@@ -25,17 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_COLOR_HH
-# define NTG_COLOR_HH
+#ifndef NTG_COLOR_COLOR_HH
+# define NTG_COLOR_COLOR_HH
 
-# include <ntg/config/system.hh>
-
-# include <mlc/cmp.hh>
+/*
+  Header for generic color type, from which real color types are defined.
+*/
 
 # include <ntg/basics.hh>
-# include <ntg/utils/cast.hh>
-# include <ntg/real/int_u.hh>
+# include <ntg/int.hh>
 # include <ntg/vect/vec.hh>
+
+# include <mlc/cmp.hh>
 
 # include <iostream>
 # include <sstream>
@@ -45,8 +46,13 @@ namespace ntg {
 
   namespace internal {
 
-    template <unsigned ncomps, unsigned qbits, template <unsigned>
-    class color_system>
+    /*------------------.
+    | typetraits<color> |
+    `------------------*/
+
+    template <unsigned ncomps, 
+	      unsigned qbits, 
+	      template <unsigned> class color_system>
     struct typetraits<color<ncomps, qbits, color_system> >
     {
       typedef data_type					abstract_type;
@@ -55,23 +61,31 @@ namespace ntg {
       typedef vec<ncomps, int_u<qbits> >		storage_type;
     };
   
-    // Helper struct to convert vec<N,T> to vec<N,float>,
-    // taking color_system into account.
-    template <unsigned n, unsigned ncomps, unsigned qbits, template <unsigned>
-    class color_system>
+    /*-------------------------.
+    | Helper structs for float |
+    `-------------------------*/
+
+    /*!
+      Helper struct to convert vec<N,T> to vec<N,float>, 
+      taking color_system into account.
+    */
+    template <unsigned n, 
+	      unsigned ncomps, 
+	      unsigned qbits, 
+	      template <unsigned> class color_system>
     struct _to_float
     {
-      typedef int_u<qbits> T;
-      typedef vec<ncomps, T >      in_type;
-      typedef vec<ncomps, float > out_type;
+      typedef int_u<qbits>		T;
+      typedef vec<ncomps, T>		in_type;
+      typedef vec<ncomps, float>	out_type;
 
       static void
       doit (const in_type& in, out_type& out)
       {
-	float in_range = float(optraits<T>::max()) - float(optraits<T>::min());
+	float in_range = float(ntg_max_val(T)) - float(ntg_min_val(T));
 	float out_range = float(color_system<n>::upper_bound)
 	  - float(color_system<n>::lower_bound);
-	out[n] = ((float(in[n]) - float(optraits<T>::min()))
+	out[n] = ((float(in[n]) - float(ntg_min_val(T)))
 		  * out_range / in_range
 		  + float(color_system<n>::lower_bound));
 
@@ -80,24 +94,28 @@ namespace ntg {
       }
     };
 
-    // stop recursion when n == ncomps.
-    template <unsigned ncomps, unsigned qbits, template <unsigned>
-    class color_system>
+    // Stop recursion when n == ncomps.
+    template <unsigned ncomps, 
+	      unsigned qbits, 
+	      template <unsigned> class color_system>
     struct _to_float<ncomps, ncomps, qbits, color_system>
     {
-      typedef vec<ncomps, int_u<qbits> > in_type;
-      typedef vec<ncomps, float >	out_type;
+      typedef vec<ncomps, int_u<qbits> >	in_type;
+      typedef vec<ncomps, float>		out_type;
 
       static void
       doit (const in_type&, out_type&)
-      {
-      }
+      {}
     };
 
-    // Helper struct to convert vec<N,float> to vec<N,T>,
-    // taking color_system into account.
-    template <unsigned n, unsigned ncomps, unsigned qbits, template <unsigned>
-    class color_system>
+    /*!
+      Helper struct to convert vec<N,float> to vec<N,T>,
+      taking color_system into account.
+    */
+    template <unsigned n, 
+	      unsigned ncomps, 
+	      unsigned qbits, 
+	      template <unsigned> class color_system>
     struct _from_float
     {
       typedef int_u<qbits>		T;
@@ -123,24 +141,39 @@ namespace ntg {
     };
 
     // stop recursion when n == ncomps.
-    template <unsigned ncomps, unsigned qbits, template <unsigned>
-    class color_system>
+    template <unsigned ncomps, 
+	      unsigned qbits, 
+	      template <unsigned> class color_system>
     struct _from_float<ncomps, ncomps, qbits, color_system>
     {
-      typedef vec<ncomps, float >	  in_type;
-      typedef vec<ncomps, int_u<qbits> > out_type;
+      typedef vec<ncomps, float>		in_type;
+      typedef vec<ncomps, int_u<qbits> >	out_type;
 
       static void
       doit (const in_type&, out_type&)
-      {
-      }
+      {}
     };
 
   } // end of internal.
 
+  /*-----------------------------------.
+  | color<ncomps, qbits, color_system> |
+  `-----------------------------------*/
 
-  template <unsigned ncomps, unsigned qbits, template <unsigned>
-  class color_system>
+  //! Generic type for color.
+  /*! 
+    Specific color types (such as rgb, xyz, etc.) are defined by
+    specifying ncomps, qbits and a color_system trait.
+
+    ncomps: number of components.
+    qbits: number of bits of each unsigned integer component.
+    color_system: traits defining the intervals of each component.
+
+    Colors are implemented and seen as a vector of components.
+  */
+  template <unsigned ncomps, 
+	    unsigned qbits, 
+	    template <unsigned> class color_system>
   struct color : public value<color<ncomps, qbits, color_system> >
   {
     template<unsigned icomp>
@@ -148,9 +181,9 @@ namespace ntg {
     template<unsigned icomp>
     struct upper_bound { enum { ret = color_system<icomp>::upper_bound }; };
 
-    typedef int_u<qbits> comp_type;
-    typedef vec<ncomps, comp_type > vec_type;
-    typedef vec<ncomps, float > float_vec_type;
+    typedef int_u<qbits>		comp_type;
+    typedef vec<ncomps, comp_type>	vec_type;
+    typedef vec<ncomps, float>		float_vec_type;
 
     color() {};
     color(const vec_type& vec) { val_ = vec; };
@@ -161,37 +194,34 @@ namespace ntg {
 
     color(const comp_type& c1, const comp_type& c2, const comp_type& c3)
     {
-      mlc::eq<ncomps, 3>::ensure();
+      mlc::is_true<ncomps == 3>::ensure();
       val_[0] = c1;
       val_[1] = c2;
       val_[2] = c3;
     }
 
-    comp_type&       operator[](unsigned i)	    { return val_[i]; }
-    const comp_type  operator[](unsigned i) const { return val_[i]; }
+    comp_type&		operator[](unsigned i)	     { return val_[i]; }
+    const comp_type	operator[](unsigned i) const { return val_[i]; }
 
-    vec_type&       as_vec()       { return val_; }
-    const vec_type& as_vec() const { return val_; }
+    vec_type&		as_vec()       { return val_; }
+    const vec_type&	as_vec() const { return val_; }
 
-    float_vec_type to_float() const
+    float_vec_type 
+    to_float() const
     {
       float_vec_type tmp;
       internal::_to_float<0,ncomps,qbits,color_system>::doit(val_, tmp);
       return tmp;
     }
 
-    bool operator==(const color& r) const { return val_ == r.val_; }
-
-    static std::string name() {
-      std::ostringstream out;
-      // FIXME: Output color_system somehow.
-      out << "color<" << ncomps << "," << qbits <<  ",...>" << std::ends;
-      return out.str();
-    }
+    bool 
+    operator==(const color& r) const
+    { return val_ == r.val_; }
   };
 
-
-  // Helper function to complete color_system (by inheritance).
+  /*!
+    Helper function to complete color_system (by inheritance).
+  */
   template<int lval, int uval>
   struct interval
   {
@@ -201,15 +231,41 @@ namespace ntg {
     };
   };
 
-  template <unsigned ncomps, unsigned qbits, template <unsigned>
-  class color_system> inline
-  std::ostream& operator<<(std::ostream& o,
-			   const color<ncomps, qbits, color_system>& r)
+  template <unsigned ncomps, 
+	    unsigned qbits, 
+	    template <unsigned> class color_system> 
+  inline std::ostream& 
+  operator<<(std::ostream& o,
+	     const color<ncomps, qbits, color_system>& r)
   {
     o << r.as_vec();
     return o;
   }
 
+  namespace internal
+  {
+
+    /*----------------.
+    | optraits<color> |
+    `----------------*/
+
+    template <unsigned ncomps, 
+	      unsigned qbits, 
+	      template <unsigned> class color_system>
+    struct optraits<color<ncomps, qbits, color_system> >
+    {
+      static std::string
+      name()
+      {
+	std::ostringstream out;
+	// FIXME: Output color_system somehow.
+	out << "color<" << ncomps << "," << qbits <<  ",...>" << std::ends;
+	return out.str();
+      }
+    };
+
+  } // end of internal.
+
 } // end of ntg.
 
-#endif // NTG_COLOR_HH
+#endif // !NTG_COLOR_COLOR_HH

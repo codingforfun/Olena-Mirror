@@ -59,6 +59,8 @@ namespace oln {
 	float min_in = std::min(in[nrgb_R], std::min(in[nrgb_B], in[nrgb_G]));
 	float delta = max_in - min_in;
 
+	// FIXME: what if delta is 0 ?
+
 	out[hsv_V] = max_in;
 
 	if (max_in != 0)

@@ -169,6 +169,7 @@ OLN_COLLECTION([OLN_TOP],
       
 
       # NTG_TESTS defined in oln-local.m4
+      NTG_TESTS([sanity])
       NTG_TESTS([types])
       NTG_TESTS([utils])
 
@@ -210,6 +211,7 @@ OLN_COLLECTION([OLN_TOP],
       # MLC_TESTS defined in oln-local.m4
       MLC_TESTS([array])
       MLC_TESTS([main])
+      MLC_TESTS([sanity])
 
       AC_SUBST([MLC_TESTS_SUBDIRS])
 

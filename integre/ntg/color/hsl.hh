@@ -25,19 +25,20 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_HSL_HH
-# define NTG_HSL_HH
+#ifndef NTG_COLOR_HSL_HH
+# define NTG_COLOR_HSL_HH
 
 # include <ntg/color/color.hh>
 
 namespace ntg
 {
 
-  enum hsl_comp {
-    hsl_H = 0,
-    hsl_S = 1,
-    hsl_L = 2
-  };
+  enum hsl_comp
+    {
+      hsl_H = 0,
+      hsl_S = 1,
+      hsl_L = 2
+    };
 
   template<unsigned icomp> struct hsl_traits;
   template<> struct hsl_traits<hsl_H> : public interval<0,360> {};
@@ -50,4 +51,4 @@ namespace ntg
 
 } // end of ntg
 
-#endif // NTG_HSL_HH
+#endif // !NTG_COLOR_HSL_HH

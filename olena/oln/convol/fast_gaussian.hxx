@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -243,17 +243,17 @@ namespace oln {
 	  Exact_cref(C, c);
 	  Exact_cref(I, in);
 
-	  typename mute<I_, float_s>::ret work_img(in.size());
+	  typename mute<I_, ntg::float_s>::ret work_img(in.size());
 
 	  Iter(I) it(in);
 	  for_all(it)
-	    work_img[it] = ntg::cast::force<float_s>(in[it]);
+	    work_img[it] = ntg::cast::force<ntg::float_s>(in[it]);
 
 	  _gaussian<I::dim>::doit(work_img, coef);
 
 	  /* Convert the result image to the user-requested datatype.
 	     FIXME: We are making an unnecessary copy in case the
-	     user expects a float_s image.  */
+	     user expects a ntg::float_s image.  */
 	  typename mute<I_, typename convoutput<C_,Value(I_)>::ret>::ret
 	    out_img(in.size());
 	  for_all(it)
@@ -267,7 +267,7 @@ namespace oln {
       template <class C, class I_>
       typename mute<I_, typename convoutput<C,Value(I_)>::ret>::ret
       gaussian(const conversion<C>& c,
-	       const image<I_>& _in, float_s sigma)
+	       const image<I_>& _in, ntg::float_s sigma)
       {
 	Exact_cref(I, in);
 
@@ -285,7 +285,7 @@ namespace oln {
       template <class C, class I_>
       typename mute<I_, typename convoutput<C,Value(I_)>::ret>::ret
       gaussian_derivative(const conversion<C>& c,
-			  const image<I_>& _in, float_s sigma)
+			  const image<I_>& _in, ntg::float_s sigma)
       {
 	Exact_cref(I, in);
 
@@ -304,7 +304,7 @@ namespace oln {
       template <class C, class I_>
       typename mute<I_, typename convoutput<C,Value(I_)>::ret>::ret
       gaussian_second_derivative(const conversion<C>& c,
-				 const image<I_>& _in, float_s sigma)
+				 const image<I_>& _in, ntg::float_s sigma)
       {
 	Exact_cref(I, in);
 

@@ -28,7 +28,9 @@
 #ifndef NTG_BIN_HH
 # define NTG_BIN_HH
 
-// Proxy header for bin type.
+/*
+  Proxy header for bin type.
+*/
 
 # include <ntg/enum/bin.hh>
 

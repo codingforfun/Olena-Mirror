@@ -38,6 +38,7 @@ namespace ntg
   /*------------.
   | type_traits |
   `------------*/
+
   //! Associates properties and methods to types.
   /*!  
     type_traits gives a variable set of properties, depending on
@@ -51,6 +52,10 @@ namespace ntg
     works, this is the main advantage on T::xxx approach to define
     properties.
   */
+
+  // FIXME: should inherit from *traits<mlc_exact_type(T)> instead of
+  // optraits<T> directly. This makes things like
+  // type_traits<int_value<int_u<..> > >::max() possible.
 
   template <class T>
   class type_traits : 

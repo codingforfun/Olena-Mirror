@@ -25,45 +25,57 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_BEHAVIOUR_HH
-# define NTG_BEHAVIOUR_HH
+#ifndef NTG_CORE_BEHAVIOUR_HH
+# define NTG_CORE_BEHAVIOUR_HH
 
-# include <mlc/contract.hh>
+/*
+  Behaviors for data_types int_u, int_s, etc ...
+  
+  <WARNING> Don't forget that behaviors are checked on assignements
+  and contruction of types, and use comparison, so create only vars
+  with unsafe behaviors in comparison operators implementation.
+*/
+
 # include <mlc/bool.hh>
+# include <mlc/contract.hh>
 # include <mlc/is_a.hh>
 
+# include <ntg/core/contract.hh>
 # include <ntg/core/macros.hh>
-# include <ntg/core/internal/macros.hh>
+# include <ntg/core/type_traits.hh>
 # include <ntg/core/value.hh>
+# include <ntg/core/internal/macros.hh>
 # include <ntg/real/optraits_scalar.hh>
 # include <ntg/real/real_value.hh>
-# include <ntg/core/type_traits.hh>
-# include <ntg/core/contract.hh>
-
 # include <ntg/utils/debug.hh>
 
 # include <string>
 # include <sstream>
 
-//
-//  Behaviors for data_types int_u, int_s, etc ...
-//
-//  <WARNING>
-//  Don't forget behavior are checked on assignements and contruction of
-//  types, and use comparison, so create only vars with unsafe bahaviour
-//  in comparison operators
-//
-/////////////////////////////////////////////////////////////////////////
 
-// FIXME : there is maybe simpler a way to write that, but we want it to
-// be compatible with icc, so the behaviors must stay class, not
-// template <class>
+// FIXME: there is maybe simpler a way to write that, but we want it
+// to be compatible with icc, so the behaviors must stay classes, not
+// meta classes.
 
 namespace ntg
 {
+  
+  /*
+    Behaviors work by callbacks. When an operator has some side effect
+    to apply, it calls the corresponding behavior functions to wrap
+    the new value to be assigned.
 
-  // unsafe : no check performed
+    Example in the constructor of int_u taking an unsigned in parameter:
+    real_data_value = behavior_type<get<int_u> >::check(value_to_assign);
+  */
 
+  /*-------.
+  | unsafe |
+  `-------*/
+  //! No check performed. 
+  /*!
+    Same behavior as the underlying builtin type.
+  */
   struct unsafe
   {
     template <class T>
@@ -72,78 +84,98 @@ namespace ntg
       typedef ntgi_storage_type(T) storage_type;
 
       template <class T1, class T2>
-      static T check_plus_equal (T1 lhs, T2 rhs)
+      static T
+      check_plus_equal (T1 lhs, T2 rhs)
       {	return lhs + rhs; }
 
       template <class T1, class T2>
-      static T check_minus_equal (T1 lhs, T2 rhs)
+      static T
+      check_minus_equal (T1 lhs, T2 rhs)
       {	return lhs - rhs; }
 
       template <class T1, class T2>
-      static T check_times_equal (T1 lhs, T2 rhs)
+      static T
+      check_times_equal (T1 lhs, T2 rhs)
       {	return lhs * rhs; }
 
       template <class T1, class T2>
-      static T check_div_equal (T1 lhs, T2 rhs)
+      static T
+      check_div_equal (T1 lhs, T2 rhs)
       {	return lhs / rhs; }
 
       template <class P>
-      static storage_type apply (const P& p)
+      static storage_type
+      check (const P& p)
       { return static_cast<storage_type>(p); }
     };
 
-    // debug
-    static std::string name() { return "unsafe"; }
+    static std::string
+    name()
+    { return "unsafe"; }
   };
 
-
-  // strict
-
+  /*-------.
+  | strict |
+  `-------*/
+  //! Strict checking, abort in there is a problem.
   struct strict
   {
     template <class T>
     struct get
     {
-      typedef ntgi_storage_type(T) storage_type;    
+      typedef ntgi_storage_type(T) storage_type;
+
+      // FIXME: These checks are not always useful. We can determine
+      // in advance the types which can raise overflow
+      // (eg. int_u<32>), the tests should be performed only in those
+      // cases!
+
+      // FIXME: check that conditions leading to empty code when
+      // -DNDEBUG is defined does not have any runtime cost.
 
       template <class T1, class T2>
-      static T check_plus_equal (T1 lhs, T2 rhs)
+      static T
+      check_plus_equal (T1 lhs, T2 rhs)
       {
 	T ret = lhs + rhs;
 	if (rhs > 0)
-	  postcondition(ntg_cast(ret) > lhs);
+	  ntg_assert(ntg_cast(ret) > lhs);
 	else
-	  postcondition(ntg_cast(ret) <= lhs);
+	  ntg_assert(ntg_cast(ret) <= lhs);
 	return ret;
       }
 
       template <class T1, class T2>
-      static T check_minus_equal (T1 lhs, T2 rhs)
+      static T
+      check_minus_equal (T1 lhs, T2 rhs)
       {
 	T ret = lhs - rhs;
 	if (rhs > 0)
-	  postcondition(ntg_cast(ret) < lhs);
+	  ntg_assert(ntg_cast(ret) < lhs);
 	else
-	  postcondition(ntg_cast(ret) >= lhs);
+	  ntg_assert(ntg_cast(ret) >= lhs);
 	return ret;
       }
 
-      // FIXME: this check is very slow ! find another solution
+      // FIXME: this check is very slow! Find another solution.
       template <class T1, class T2>
-      static T check_times_equal (T1 lhs, T2 rhs)
+      static T
+      check_times_equal (T1 lhs, T2 rhs)
       {
 	T ret = lhs * rhs;
 	if (rhs != 0)
-	  postcondition ((ret / rhs) == lhs);
+	  ntg_assert((ret / rhs) == lhs);
 	return ret;
       }
 
       template <class T1, class T2>
-      static T check_div_equal (T1 lhs, T2 rhs)
+      static T
+      check_div_equal (T1 lhs, T2 rhs)
       {	return lhs / rhs; }
 
       template <class P>
-      static storage_type apply (const P& p)
+      static storage_type
+      check (const P& p)
       {
 	ntg_assert(ntg_cast(p) <= ntg_max_val(T));
 	ntg_assert(ntg_cast(p) >= ntg_min_val(T));
@@ -152,13 +184,15 @@ namespace ntg
       }
     };
 
-    // debug
-    static std::string name() { return "strict"; }
+    static std::string
+    name()
+    { return "strict"; }
   };
 
-
-  // saturate
-
+  /*---------.
+  | saturate |
+  `---------*/
+  //! Bound values to the nearest limit when an overflow occurs.
   struct saturate
   {
     template <class T>
@@ -167,7 +201,8 @@ namespace ntg
       typedef ntgi_storage_type(T) storage_type;
 
       template <class T1, class T2>
-      static T check_plus_equal (T1 lhs, T2 rhs)
+      static T
+      check_plus_equal (T1 lhs, T2 rhs)
       {
 	T ret = lhs + rhs;
 	if (rhs > 0)
@@ -181,7 +216,8 @@ namespace ntg
       }
 
       template <class T1, class T2>
-      static T check_minus_equal (T1 lhs, T2 rhs)
+      static T
+      check_minus_equal (T1 lhs, T2 rhs)
       {
 	T ret = lhs - rhs;
 	if (rhs > 0)
@@ -196,7 +232,8 @@ namespace ntg
 
       // FIXME: this check is very slow ! find another solution ...
       template <class T1, class T2>
-      static T check_times_equal (T1 lhs, T2 rhs)
+      static T
+      check_times_equal (T1 lhs, T2 rhs)
       {
 	T ret = lhs * rhs;
 	if ((ret / rhs) != lhs)
@@ -211,11 +248,13 @@ namespace ntg
       }
 
       template <class T1, class T2>
-      static T check_div_equal (T1 lhs, T2 rhs)
+      static T
+      check_div_equal (T1 lhs, T2 rhs)
       {	return lhs / rhs; }
 
       template <class P>
-      static storage_type apply (const P& p)
+      static storage_type
+      check (const P& p)
       {
 	if (ntg_cast(p) > ntg_max_val(T))
 	  return ntg_max_val(T);
@@ -227,14 +266,21 @@ namespace ntg
       }
     };
 
-    // debug
-    static std::string name() { return "saturate"; }
+    static std::string
+    name()
+    { return "saturate"; }
   };
 
-  //
-  // This behavior is not really useful, but implement cycle<> internal
-  // calculus.
-  //
+  /*---------------.
+  | cycle_behavior |
+  `---------------*/
+  //! Apply a modulus when an overflow occurs.
+  /*! 
+    This behavior is not really useful, but implement cycle<>
+    internal calculus. You should note that a range<int_u, ...,
+    cycle_behavior> is different than cycle<int_u, ...>. Refer to the
+    documentation for more details.
+  */
   struct cycle_behavior
   {
     template <class T>
@@ -242,7 +288,7 @@ namespace ntg
     {
       typedef ntgi_storage_type(T) storage_type;
 
-      // FIXME: calculate real values
+      // FIXME: calculate real values!
 
       template <class T1, class T2>
       static T check_plus_equal (T1 lhs, T2 rhs)
@@ -260,24 +306,27 @@ namespace ntg
       static T check_div_equal (T1 lhs, T2 rhs)
       {	return lhs / rhs; }
 
-      // Assignation check
-
+      // float modulus
       struct cycle_fmod
       {
-	static double exec (double lhs, double rhs)
+	static double
+	exec(double lhs, double rhs)
 	{ return fmod(lhs, rhs); }
       };
 
+      // integer modulus
       struct cycle_mod
       {
 	template <class T1, class T2>
-	static T1 exec (const T1& lhs, const T2& rhs)
+	static T1 
+	exec(const T1& lhs, const T2& rhs)
 	{ return lhs % rhs; }
       };
 
-      // FIXME: optimize ?
+      // FIXME: optimize!
       template <class P>
-      static storage_type apply (const P& rhs)
+      static storage_type
+      check (const P& rhs)
       {
 	typedef typename mlc::if_<ntg_is_a(P, decimal)::ret,
 	  cycle_fmod,
@@ -286,7 +335,8 @@ namespace ntg
 	ntg_type(P) tmp = cycle_op::exec(std::abs(ntg_signed_cast(rhs)),
 					 ntg_max_val(T) - ntg_min_val(T));
 
-	if (rhs < 0) tmp = -tmp;
+	if (rhs < 0)
+	  tmp = -tmp;
 
 	if (tmp < ntg_min_val(T))
 	  return ntg_max_val(T) - ntg_min_val(T) + tmp;
@@ -297,12 +347,22 @@ namespace ntg
       }
     };
 
-    // debug
-    static std::string name() { return "cycle_behavior"; }
+    static std::string
+    name() { return "cycle_behavior"; }
   };
 
   namespace internal {
 
+    /*-------------------.
+    | deduce_op_behavior |
+    `-------------------*/
+
+    //! Determine the resulting behavior of an operator return type.
+    /*! 
+      The algorithm is quite simple and arbitrary, is the two
+      behaviors are identicals, then use it for the return type. Else
+      use a strict behavior.
+    */
     template <class B1, class B2>
     struct deduce_op_behavior
     { typedef strict ret; };
@@ -315,4 +375,4 @@ namespace ntg
 
 } // end of ntg.
 
-#endif // ndef NTG_BEHAVIOUR_HH
+#endif // !NTG_CORE_BEHAVIOUR_HH

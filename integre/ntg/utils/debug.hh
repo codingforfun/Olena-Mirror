@@ -25,32 +25,46 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef NTG_DEBUG_HH
-# define NTG_DEBUG_HH
+#ifndef NTG_UTILS_DEBUG_HH
+# define NTG_UTILS_DEBUG_HH
 
-# include <ntg/config/system.hh>
-# include <ntg/basics.hh>
+# include <ntg/core/macros.hh>
+# include <ntg/core/type_traits.hh>
 
 # include <string>
 
 namespace ntg
 {
 
-  //
-  //  usage: typename_of_var(obj)
-  //
-  /////////////////////////////////
+  /*---------------------.
+  | typename_of_var(obj) |
+  `---------------------*/
 
   template<class T> inline
-  std::string typename_of_var(const T&) { return type_traits<T>::name(); }
+  std::string
+  typename_of_var(const T&)
+  { return ntg_name(T); }
 
-  //
-  //  typename_of<T>()
-  //
-  /////////////////////////////////
+  /*-----------------.
+  | typename_of<T>() |
+  `-----------------*/
+
+  /* 
+     This function is handy then there are commas in the type
+     expression. Else ntg_name(T) is shorter.
+   */
 
   template<class T> inline
-  std::string typename_of() { return type_traits<T>::name(); }
+  std::string
+  typename_of()
+  { return ntg_name(T); }
+
+  /*
+    Debug context. The idea is to keep a context string to simplify
+    debugging when an assert fails somewhere in a hidden operator.  As
+    this can be slow, a dynamic boolean specifies wheter the context
+    has to be maintained or not.
+  */
 
 #ifdef NTG_DEBUG
   extern bool debug_active;
@@ -77,4 +91,4 @@ namespace ntg
 #  define ntg_debug_context_clear(Context)
 # endif
 
-#endif // ndef NTG_DEBUG_HH
+#endif // !NTG_UTILS_DEBUG_HH
