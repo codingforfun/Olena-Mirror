@@ -1,3 +1,17 @@
+2004-02-10  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* oln/core/abstract/behavior.hh: Add behavior hierarchy (abstract
+	part).
+	* oln/core/behavior.hh: Add behavior hierarchy content.
+
+	* oln/morpho/attributes.hh: Correct 'ifndef' macros.
+
+	* tests/convol/tests/uniform_gauss: Improve tests.
+
+	* oln/convol/fast_gaussian.hh: Make the gaussian take care of the
+	behavior hierarchy.
+	* oln/convol/fast_gaussian.hxx: Likewise.
+
 2004-02-09  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* oln/morpho/attributes.hh: Add new attributes. Correct the olders.

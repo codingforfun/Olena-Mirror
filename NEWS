@@ -1,11 +1,18 @@
 Olena 0.10	Not yet
 
+	* Border behavior can be controlled with the behavior hierarchy.
+	  If an algorithm support it, you can choose the way the image
+          border will be seen. Three behaviors are available: mirror,
+	  replicate or user defined value.
+
 	* Attribute opening/closing enhancement
-	  - Make the algothim more generic.
-	  - Add a lot of attributes.
+	  - Make the algorithm more generic.
+	  - Add a lot of attributes (area, disk, square, dist,
+            rectangle, volume, height, maxvalue, minvalue).
 
 	* Change the color conversion system
-	  - CIE RGB is the main color system.
+	  - CIE RGB is the main color system e.g. it can be converted
+	    directly into any other color system.
 	  - Conversion between 2 color systems should pass by the RGB one.
 
 Olena 0.9	August 8, 2003

@@ -31,7 +31,7 @@
 # include <oln/basics.hh>
 # include <oln/convert/basics.hh>
 # include <ntg/float.hh>
-
+# include <oln/core/behavior.hh>
 //
 // Gaussian filter implementation from
 // "Recursively implementing the gaussian and its derivatives"
@@ -44,39 +44,66 @@ namespace oln {
 
       // FIXME: add tests!
 
-      template <class C, class B, class I>
+      template <class C, class B, class I, class BE>
       typename mute<I, typename convoutput<C, B, oln_value_type(I)>::ret>::ret
       gaussian(const convert::abstract::conversion<C, B>& input_conv,
-	       const abstract::image<I>& in, ntg::float_s sigma);
+	       const abstract::image<I>& in, ntg::float_s sigma,
+	       const abstract::behavior<BE> &behavior);
 
-      template <class C, class B, class I>
+      template <class C, class B, class I, class BE>
       typename mute<I, typename convoutput<C, B, oln_value_type(I)>::ret>::ret
       gaussian_derivative(const convert::abstract::conversion<C, B>& input_conv,
-			  const abstract::image<I>& in, ntg::float_s sigma);
-      template <class C, class B, class I>
+			  const abstract::image<I>& in, ntg::float_s sigma,
+			  const abstract::behavior<BE> &behavior);
+      template <class C, class B, class I, class BE>
       typename mute<I, typename convoutput<C, B, oln_value_type(I)>::ret>::ret
       gaussian_second_derivative(const convert::abstract::conversion<C, B>& input_conv,
 				 const abstract::image<I>& in,
-				 ntg::float_s sigma);
+				 ntg::float_s sigma,
+				 const abstract::behavior<BE> &behavior);
 
       /* Same functions, with a default conversion.  */
 
-      template <class I> inline
+      template <class I, class BE> inline
       oln_concrete_type(I)
-      gaussian(const abstract::image<I>& in, ntg::float_s sigma)
-      { return gaussian(convert::force<oln_value_type(I)>(), in, sigma); }
+      gaussian(const abstract::image<I>& in, ntg::float_s sigma,
+	       const abstract::behavior<BE> &behavior)
+      { return gaussian(convert::force<oln_value_type(I)>(), in, sigma,
+			behavior); }
 
-      template <class I> inline
+      template <class I, class BE> inline
       oln_concrete_type(I)
-      gaussian_derivative(const abstract::image<I>& in, ntg::float_s sigma)
-      { return gaussian_derivative(convert::force<oln_value_type(I)>(), in, sigma); }
+      gaussian_derivative(const abstract::image<I>& in, ntg::float_s sigma,
+			  const abstract::behavior<BE> &behavior)
+      { return gaussian_derivative(convert::force<oln_value_type(I)>(), in, sigma,
+				   behavior); }
 
-      template <class I> inline
+      template <class I, class BE> inline
       oln_concrete_type(I)
       gaussian_second_derivative(const abstract::image<I>& in,
-				 ntg::float_s sigma)
+				 ntg::float_s sigma,
+				 const abstract::behavior<BE> &behavior = mirror_behavior<>())
       { return gaussian_second_derivative(convert::force<oln_value_type(I)>(),
-					  in, sigma); }
+					  in, sigma, behavior); }
+
+      /* Same functions, with a default behavior (mirror_behavior). */
+      template <class I> inline
+      oln_concrete_type(I)
+	gaussian(const abstract::image<I>& in, ntg::float_s sigma)
+      { return gaussian(convert::force<oln_value_type(I)>(), in, sigma,
+			mirror_bhv()); }
+
+      template <class I> inline
+      oln_concrete_type(I)
+	gaussian_derivative(const abstract::image<I>& in, ntg::float_s sigma)
+      { return gaussian_derivative(convert::force<oln_value_type(I)>(), in, sigma,
+				   mirror_bhv()); }
+
+      template <class I> inline
+      oln_concrete_type(I)
+	gaussian_second_derivative(const abstract::image<I>& in, ntg::float_s sigma)
+      { return gaussian_second_derivative(convert::force<oln_value_type(I)>(), in, sigma,
+					  mirror_bhv()); }
     }
   }
 }

@@ -1,861 +1,453 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 62)
-(Parent-Version oln 10 61)
+(Project-Version oln 10 63)
+(Parent-Version oln 10 62)
 (Version-Log "Index: ChangeLog
 from  Giovanni Palma  <giovanni@lrde.epita.fr>
 
-	* NEWS: Describe color and attributes improvement.
-
-Index: integre/ChangeLog
-from  Giovanni Palma  <giovanni@lrde.epita.fr>
-
-	* ntg/vect/vec.hh: Add sup() function to vec traits.
-
-Index: metalic/ChangeLog
-from  Giovanni Palma  <giovanni@lrde.epita.fr>
-
-	* mlc/type.hh: Add some useful macros.
+	* NEWS: Describe behavior hierarchy.
 
 Index: olena/ChangeLog
 from  Giovanni Palma  <giovanni@lrde.epita.fr>
 
-	* oln/morpho/attributes.hh: Add new attributes. Correct the olders.
+	* oln/core/abstract/behavior.hh: Add behavior hierarchy (abstract
+	part).
+	* oln/core/behavior.hh: Add behavior hierarchy content.
 
-	* oln/morpho/attribute_union_find.hh: Change lambda type from ref
-	to pointer.
-	* oln/morpho/attribute_closing_opening.hh: Fix some argument
-	types. Add new declarations.
+	* oln/morpho/attributes.hh: Correct 'ifndef' macros.
+
+	* tests/convol/tests/uniform_gauss: Improve tests.
+
+	* oln/convol/fast_gaussian.hh: Make the gaussian take care of the
+	behavior hierarchy.
+	* oln/convol/fast_gaussian.hxx: Likewise.
 
 Index: NEWS
---- NEWS Fri, 08 Aug 2003 16:27:13 +0200 david (oln/0_NEWS 1.16 640)
-+++ NEWS Mon, 09 Feb 2004 18:44:40 +0100 palma_g (oln/0_NEWS 1.16 640)
-@@ -1,3 +1,13 @@
-+Olena 0.10	Not yet
+--- NEWS Mon, 09 Feb 2004 18:57:03 +0100 palma_g (oln/0_NEWS 1.17 640)
++++ NEWS Tue, 10 Feb 2004 15:25:07 +0100 palma_g (oln/0_NEWS 1.17 640)
+@@ -1,11 +1,18 @@
+ Olena 0.10	Not yet
+ 
++	* Border behavior can be controlled with the behavior hierarchy.
++	  If an algorithm support it, you can choose the way the image
++          border will be seen. Three behaviors are available: mirror,
++	  replicate or user defined value.
 +
-+	* Attribute opening/closing enhancement
-+	  - Make the algothim more generic.
-+	  - Add a lot of attributes.
-+
-+	* Change the color conversion system
-+	  - CIE RGB is the main color system.
-+	  - Conversion between 2 color systems should pass by the RGB one.
-+
+ 	* Attribute opening/closing enhancement
+-	  - Make the algothim more generic.
+-	  - Add a lot of attributes.
++	  - Make the algorithm more generic.
++	  - Add a lot of attributes (area, disk, square, dist,
++            rectangle, volume, height, maxvalue, minvalue).
+ 
+ 	* Change the color conversion system
+-	  - CIE RGB is the main color system.
++	  - CIE RGB is the main color system e.g. it can be converted
++	    directly into any other color system.
+ 	  - Conversion between 2 color systems should pass by the RGB one.
+ 
  Olena 0.9	August 8, 2003
+Index: olena/oln/convol/fast_gaussian.hh
+--- olena/oln/convol/fast_gaussian.hh Thu, 07 Aug 2003 02:08:21 +0200 david (oln/26_fast_gauss 1.6.1.6.1.3 640)
++++ olena/oln/convol/fast_gaussian.hh Tue, 10 Feb 2004 14:56:04 +0100 palma_g (oln/26_fast_gauss 1.6.1.6.1.3 640)
+@@ -31,7 +31,7 @@
+ # include <oln/basics.hh>
+ # include <oln/convert/basics.hh>
+ # include <ntg/float.hh>
+-
++# include <oln/core/behavior.hh>
+ //
+ // Gaussian filter implementation from
+ // \"Recursively implementing the gaussian and its derivatives\"
+@@ -44,39 +44,66 @@
  
-         * New static hierarchy paradigm
-Index: metalic/mlc/type.hh
---- metalic/mlc/type.hh Fri, 07 Nov 2003 17:19:10 +0100 burrus_n (oln/c/21_type.hh 1.27 640)
-+++ metalic/mlc/type.hh Mon, 09 Feb 2004 18:14:34 +0100 palma_g (oln/c/21_type.hh 1.27 640)
-@@ -237,6 +237,13 @@
- # define mlc_exact_type(T) typename mlc::exact< T >::ret
- # define mlc_exact_type_(T) mlc::exact< T >::ret
+       // FIXME: add tests!
  
-+// Return the exact virtual type of two given types (inheritance determination).
-+
-+# define mlc_exact_vt_type(T, Exact)		typename mlc::exact_vt<T, Exact>::ret
-+# define mlc_2_exact_vt_type(self, T, Exact)	typename mlc::exact_vt<self<T, Exact>, Exact>::ret
-+# define mlc_exact_vt_type_(T, Exact)		mlc::exact_vt<T, Exact>::ret
-+# define mlc_2_exact_vt_type_(self, T, Exact)	mlc::exact_vt<self<T, Exact>, Exact>::ret
-+
- namespace mlc
- {
-   
-@@ -299,4 +306,10 @@
+-      template <class C, class B, class I>
++      template <class C, class B, class I, class BE>
+       typename mute<I, typename convoutput<C, B, oln_value_type(I)>::ret>::ret
+       gaussian(const convert::abstract::conversion<C, B>& input_conv,
+-	       const abstract::image<I>& in, ntg::float_s sigma);
++	       const abstract::image<I>& in, ntg::float_s sigma,
++	       const abstract::behavior<BE> &behavior);
  
- # define mlc_init_static_hierarchy(Exact)
+-      template <class C, class B, class I>
++      template <class C, class B, class I, class BE>
+       typename mute<I, typename convoutput<C, B, oln_value_type(I)>::ret>::ret
+       gaussian_derivative(const convert::abstract::conversion<C, B>& input_conv,
+-			  const abstract::image<I>& in, ntg::float_s sigma);
+-      template <class C, class B, class I>
++			  const abstract::image<I>& in, ntg::float_s sigma,
++			  const abstract::behavior<BE> &behavior);
++      template <class C, class B, class I, class BE>
+       typename mute<I, typename convoutput<C, B, oln_value_type(I)>::ret>::ret
+       gaussian_second_derivative(const convert::abstract::conversion<C, B>& input_conv,
+ 				 const abstract::image<I>& in,
+-				 ntg::float_s sigma);
++				 ntg::float_s sigma,
++				 const abstract::behavior<BE> &behavior);
  
-+/*---------.
-+| dispatch |
-+`---------*/
+       /* Same functions, with a default conversion.  */
+ 
++      template <class I, class BE> inline
++      oln_concrete_type(I)
++      gaussian(const abstract::image<I>& in, ntg::float_s sigma,
++	       const abstract::behavior<BE> &behavior)
++      { return gaussian(convert::force<oln_value_type(I)>(), in, sigma,
++			behavior); }
 +
-+# define mlc_dispatch(Fun)			return exact().Fun##_impl
++      template <class I, class BE> inline
++      oln_concrete_type(I)
++      gaussian_derivative(const abstract::image<I>& in, ntg::float_s sigma,
++			  const abstract::behavior<BE> &behavior)
++      { return gaussian_derivative(convert::force<oln_value_type(I)>(), in, sigma,
++				   behavior); }
 +
- #endif // ! METALIC_TYPE_HH
-Index: olena/oln/morpho/attribute_closing_opening.hh
---- olena/oln/morpho/attribute_closing_opening.hh Fri, 06 Feb 2004 16:02:37 +0100 palma_g (oln/q/49_attribute_ 1.11 640)
-+++ olena/oln/morpho/attribute_closing_opening.hh Fri, 06 Feb 2004 17:44:37 +0100 palma_g (oln/q/49_attribute_ 1.11 640)
-@@ -41,7 +41,7 @@
- 	oln_concrete_type(I)
- 	  attr_closing_(const abstract::non_vectorial_image<I>& input,
- 			const abstract::neighborhood<N>& Ng,
--			const attr_lambda_type(A) lambda)
-+			const attr_lambda_type(A) &lambda)
- 	{
- 	  typedef tarjan::tarjan_set<oln_concrete_type(I), A > tarjan_set_type;
- 	  tarjan_set_type area_closing(input.exact(), attr_env_type(A)());
-@@ -53,7 +53,7 @@
- 	oln_concrete_type(I)
- 	  attr_opening_(const abstract::non_vectorial_image<I>& input,
- 			const abstract::neighborhood<N>& Ng,
--			const attr_lambda_type(A) lambda)
-+			const attr_lambda_type(A) &lambda)
- 	{
- 	  typedef tarjan::tarjan_set<oln_concrete_type(I), A > tarjan_set_type;
- 	  tarjan_set_type area_opening(input.exact(), attr_env_type(A)());
-@@ -68,7 +68,7 @@
-       oln_concrete_type(I) \\
- 	T##_opening(const abstract::non_vectorial_image<I>& input, \\
- 		       const abstract::neighborhood<N>& Ng, \\
--		       const attr_lambda_type(T##_type<unsigned>) lambda) \\
-+		       const attr_lambda_type(T##_type<unsigned>) &lambda) \\
-       { \\
- 	return internal::attr_opening_<I, N, T##_type<unsigned> >(input, Ng, lambda); \\
-       }
-@@ -78,7 +78,7 @@
-       oln_concrete_type(I) \\
- 	T##_closing(const abstract::non_vectorial_image<I>& input, \\
- 		       const abstract::neighborhood<N>& Ng, \\
--		       const attr_lambda_type(T##_type<unsigned>) lambda) \\
-+		       const attr_lambda_type(T##_type<unsigned>) &lambda) \\
-       { \\
- 	return internal::attr_closing_<I, N, T##_type<unsigned> >(input, Ng, lambda); \\
-       }
-@@ -90,7 +90,7 @@
-       oln_concrete_type(I) \\
- 	T##_opening(const abstract::non_vectorial_image<I>& input, \\
- 		       const abstract::neighborhood<N>& Ng, \\
--		       const attr_lambda_type(T##_type<I>) lambda) \\
-+		       const attr_lambda_type(T##_type<I>) &lambda) \\
-       { \\
- 	return internal::attr_opening_<I, N, T##_type<I> >(input, Ng, lambda); \\
-       }
-@@ -100,7 +100,7 @@
-       oln_concrete_type(I) \\
- 	T##_closing(const abstract::non_vectorial_image<I>& input, \\
- 		       const abstract::neighborhood<N>& Ng, \\
--		       const attr_lambda_type(T##_type<I>) lambda) \\
-+		       const attr_lambda_type(T##_type<I>) &lambda) \\
-       { \\
- 	return internal::attr_closing_<I, N, T##_type<I> >(input, Ng, lambda); \\
-       }
-@@ -159,6 +159,9 @@
- 	xxx_closing_im_decl(dist)
- 	xxx_closing_im_decl(square)
- 	xxx_opening_im_decl(square)
-+	xxx_closing_im_decl(rectangle)
-+	xxx_opening_im_decl(rectangle)
++      template <class I, class BE> inline
++      oln_concrete_type(I)
++      gaussian_second_derivative(const abstract::image<I>& in,
++				 ntg::float_s sigma,
++				 const abstract::behavior<BE> &behavior = mirror_behavior<>())
++      { return gaussian_second_derivative(convert::force<oln_value_type(I)>(),
++					  in, sigma, behavior); }
 +
++      /* Same functions, with a default behavior (mirror_behavior). */
+       template <class I> inline
+       oln_concrete_type(I)
+       gaussian(const abstract::image<I>& in, ntg::float_s sigma)
+-      { return gaussian(convert::force<oln_value_type(I)>(), in, sigma); }
++      { return gaussian(convert::force<oln_value_type(I)>(), in, sigma,
++			mirror_bhv()); }
+ 
+       template <class I> inline
+       oln_concrete_type(I)
+       gaussian_derivative(const abstract::image<I>& in, ntg::float_s sigma)
+-      { return gaussian_derivative(convert::force<oln_value_type(I)>(), in, sigma); }
++      { return gaussian_derivative(convert::force<oln_value_type(I)>(), in, sigma,
++				   mirror_bhv()); }
+ 
+       template <class I> inline
+       oln_concrete_type(I)
+-      gaussian_second_derivative(const abstract::image<I>& in,
+-				 ntg::float_s sigma)
+-      { return gaussian_second_derivative(convert::force<oln_value_type(I)>(),
+-					  in, sigma); }
++	gaussian_second_derivative(const abstract::image<I>& in, ntg::float_s sigma)
++      { return gaussian_second_derivative(convert::force<oln_value_type(I)>(), in, sigma,
++					  mirror_bhv()); }
      }
    }
  }
-Index: olena/oln/morpho/attribute_union_find.hh
---- olena/oln/morpho/attribute_union_find.hh Fri, 06 Feb 2004 16:02:37 +0100 palma_g (oln/q/50_attribute_ 1.9 640)
-+++ olena/oln/morpho/attribute_union_find.hh Fri, 06 Feb 2004 17:55:37 +0100 palma_g (oln/q/50_attribute_ 1.9 640)
-@@ -150,7 +150,7 @@
+Index: olena/oln/convol/fast_gaussian.hxx
+--- olena/oln/convol/fast_gaussian.hxx Wed, 28 Jan 2004 16:28:44 +0100 palma_g (oln/25_fast_gauss 1.7.1.8.1.5 640)
++++ olena/oln/convol/fast_gaussian.hxx Tue, 10 Feb 2004 13:09:29 +0100 palma_g (oln/25_fast_gauss 1.7.1.8.1.5 640)
+@@ -230,12 +230,13 @@
+ 	  }
+ 	};
+ 
+-	template <class C, class B, class I, class F>
++	template <class C, class B, class I, class F, class BE>
+ 	typename mute<I, typename convoutput<C,B,oln_value_type(I)>::ret>::ret
+ 	gaussian_common_(const convert::abstract::conversion<C,B>& c,
+ 			 const abstract::image<I>& in,
+ 			 const F& coef,
+-			 ntg::float_s sigma)
++			 ntg::float_s sigma,
++			 const abstract::behavior<BE> &behavior)
  	{
- 	  precondition((parent_[x] == ACTIVE()) || (parent_[x] == INACTIVE()));
- 	  precondition((parent_[y] == ACTIVE()) || (parent_[y] == INACTIVE()));
--	  return ( (input_[x] == input_[y]) || (aux_data_[x] < lambda_));
-+	  return ( (input_[x] == input_[y]) || (aux_data_[x] < *lambda_));
- 	}
+ 	  typename mute<I, ntg::float_s>::ret work_img(in.size());
  
- 	void
-@@ -165,7 +165,7 @@
- 	      }
- 	    else
- 	      {
--		aux_data_[p] = lambda_;
-+		aux_data_[p] = *lambda_;
- 	      }
- 	}
+@@ -247,7 +248,7 @@
+ 	     be linear, so when sigma is big enougth, the signal may
+ 	     be parasitized by the non signal values.
+ 	   */
+-	  work_img.border_adapt_mirror(ntg::cast::round<coord>(5 * sigma));
++	  behavior.adapt_border(work_img, ntg::cast::round<coord>(5 * sigma));
  
-@@ -177,7 +177,7 @@
- 		     const abstract::neighborhood<N>& Ng,
- 		     const bool closing)
- 	{
--	  lambda_ = lambda;
-+	  lambda_ = &lambda;
+ 	  gaussian_<I::dim>::doit(work_img, coef);
  
- 	  std::vector<point_type>	I(input_.npoints());
+@@ -265,10 +266,11 @@
  
-@@ -232,7 +232,7 @@
- 	const image_type & input_;
- 	typename mute<T, point_type>::ret parent_;
- 	typename mute<T, ATTRIBUTE>::ret aux_data_;
--	lambda_type lambda_;
-+	const lambda_type *lambda_;
- 	const env_type	env_;
-       };
-     }
-Index: integre/ntg/vect/vec.hh
---- integre/ntg/vect/vec.hh Thu, 27 Nov 2003 11:26:27 +0100 burrus_n (oln/t/18_vec.hh 1.7.1.1 640)
-+++ integre/ntg/vect/vec.hh Mon, 09 Feb 2004 18:32:07 +0100 palma_g (oln/t/18_vec.hh 1.7.1.1 640)
-@@ -105,6 +105,23 @@
-       typedef self				 base_type;
-       typedef T					 storage_type[N];
-       typedef typename typetraits<T>::cumul_type cumul_type[N];
-+
-+      static const self &sup()
-+      {
-+	static self tmp = mkSup();
-+
-+	return tmp;
-+      };
-+
-+    protected:
-+      static self mkSup()
-+      {
-+	self tmp;
-+
-+	for (unsigned i = 0; i < N; ++i)
-+	  tmp[i] = ntg_sup_val(T);
-+	return tmp;
-+      };
-     };
+       } // internal
  
-   } // end of internal.
+-      template <class C, class B, class I>
++      template <class C, class B, class I, class BE>
+       typename mute<I, typename convoutput<C,B,oln_value_type(I)>::ret>::ret
+       gaussian(const convert::abstract::conversion<C,B>& c,
+-	       const abstract::image<I>& in, ntg::float_s sigma)
++	       const abstract::image<I>& in, ntg::float_s sigma,
++	       const abstract::behavior<BE> &behavior)
+       {
+ 	internal::recursivefilter_coef_<float>
+ 	  coef(1.68f, 3.735f,
+@@ -278,13 +280,14 @@
+ 	       sigma,
+ 	       internal::recursivefilter_coef_<float>::DericheGaussian);
+ 
+-	return internal::gaussian_common_(c, in, coef, sigma);
++	return internal::gaussian_common_(c, in, coef, sigma, behavior);
+       }
+ 
+-      template <class C, class B, class I>
++      template <class C, class B, class I, class BE>
+       typename mute<I, typename convoutput<C,B,oln_value_type(I)>::ret>::ret
+       gaussian_derivative(const convert::abstract::conversion<C,B>& c,
+-			  const abstract::image<I>& in, ntg::float_s sigma)
++			  const abstract::image<I>& in, ntg::float_s sigma,
++			  const abstract::behavior<BE> &behavior)
+       {
+ 	internal::recursivefilter_coef_<float>
+ 	  coef(-0.6472f, -4.531f,
+@@ -295,13 +298,14 @@
+ 	       internal::recursivefilter_coef_<float>
+ 	       ::DericheGaussianFirstDerivative);
+ 
+-	return internal::gaussian_common_(c, in, coef, sigma);
++	return internal::gaussian_common_(c, in, coef, sigma, behavior);
+       }
+ 
+-      template <class C, class B, class I>
++      template <class C, class B, class I, class BE>
+       typename mute<I, typename convoutput<C,B,oln_value_type(I)>::ret>::ret
+       gaussian_second_derivative(const convert::abstract::conversion<C,B>& c,
+-				 const abstract::image<I>& in, ntg::float_s sigma)
++				 const abstract::image<I>& in, ntg::float_s sigma,
++				 const abstract::behavior<BE> &behavior)
+       {
+ 	internal::recursivefilter_coef_<float>
+ 	  coef(-1.331f, 3.661f,
+@@ -312,7 +316,7 @@
+ 	       internal::recursivefilter_coef_<float>
+ 	       ::DericheGaussianSecondDerivative);
+ 
+-	return internal::gaussian_common_(c, in, coef, sigma);
++	return internal::gaussian_common_(c, in, coef, sigma, behavior);
+       }
+ 
+     } // fast
+Index: olena/tests/convol/tests/uniform_gauss
+--- olena/tests/convol/tests/uniform_gauss Fri, 30 Jan 2004 10:25:13 +0100 palma_g (oln/j/41_uniform_ga 1.1 644)
++++ olena/tests/convol/tests/uniform_gauss Tue, 10 Feb 2004 15:17:49 +0100 palma_g (oln/j/41_uniform_ga 1.1 644)
+@@ -23,9 +23,10 @@
+   for_all(it)
+     img[it] = 42;
+   image2d<int_u8>		img2 = convol::fast::gaussian(img, 5);
++  image2d<int_u8>		img3 = convol::fast::gaussian(img, 5, replicate_bhv());
+ 
+   for_all(it)
+-    if (img[it] != img2[it])
++    if ((img[it] != img2[it]) || (img[it] != img3[it]))
+       return true;
+   return false;
+ }
 Index: olena/oln/morpho/attributes.hh
---- olena/oln/morpho/attributes.hh Fri, 06 Feb 2004 16:02:37 +0100 palma_g (oln/j/45_attributes 1.1 644)
-+++ olena/oln/morpho/attributes.hh Mon, 09 Feb 2004 18:37:42 +0100 palma_g (oln/j/45_attributes 1.1 644)
-@@ -27,12 +27,15 @@
+--- olena/oln/morpho/attributes.hh Mon, 09 Feb 2004 18:57:03 +0100 palma_g (oln/j/45_attributes 1.2 644)
++++ olena/oln/morpho/attributes.hh Tue, 10 Feb 2004 14:59:24 +0100 palma_g (oln/j/45_attributes 1.2 644)
+@@ -25,18 +25,11 @@
+ // reasons why the executable file might be covered by the GNU General
+ // Public License.
  
- #ifndef ATTRIBUTES_HH
- # define ATTRIBUTES_HH
-+# include <mlc/type.hh>
-+# include <vector>
-+
- // some usefull macros
+-#ifndef ATTRIBUTES_HH
+-# define ATTRIBUTES_HH
++#ifndef OLN_MORPHO_ATTRIBUTES_HH
++# define OLN_MORPHO_ATTRIBUTES_HH
+ # include <mlc/type.hh>
+ # include <vector>
  
- // those macros should be moved into mlc
--# define oln_exact_vt_type(T, Exact)	typename mlc::exact_vt<T, Exact>::ret
--# define oln_2_exact_vt_type(self, T, Exact)	typename mlc::exact_vt<self<T, Exact>, Exact>::ret
--# define dispatch(Fun)			return exact().Fun##_impl
-+// # define mlc_exact_vt_type(T, Exact)	typename mlc::exact_vt<T, Exact>::ret
-+// # define oln_2_exact_vt_type(self, T, Exact)	typename mlc::exact_vt<self<T, Exact>, Exact>::ret
-+// # define dispatch(Fun)			return exact().Fun##_impl
- 
+-// some usefull macros
+-
+-// those macros should be moved into mlc
+-// # define mlc_exact_vt_type(T, Exact)	typename mlc::exact_vt<T, Exact>::ret
+-// # define oln_2_exact_vt_type(self, T, Exact)	typename mlc::exact_vt<self<T, Exact>, Exact>::ret
+-// # define dispatch(Fun)			return exact().Fun##_impl
+-
  // attribute dedicated macros
  # define attr_lambda_type(T)	typename attr_traits<T>::lambda_type
-@@ -40,38 +43,23 @@
- # define attr_value_type(T)	typename attr_traits<T>::value_type
+ # define attr_env_type(T)	typename attr_traits<T>::env_type
+@@ -859,5 +852,5 @@
+ // FIXME: to be written...
  
- # define attr_type_decl(slef_type) \\
--      typedef oln_exact_vt_type(self_type, Exact)	exact_type; \\
-+      typedef mlc_exact_vt_type(self_type, Exact)	exact_type; \\
-       typedef attr_value_type(exact_type)		value_type; \\
-       typedef attr_env_type(exact_type)			env_type; \\
-       typedef attr_lambda_type(exact_type)		lambda_type
  
--
--
--// misc
--namespace my {
--
--  int diffabs(int v1, int v2)
+-#endif // ndef ATTRIBUTES_HH
++#endif // !OLN_MORPHO_ATTRIBUTES
+ 
+Index: olena/oln/core/abstract/behavior.hh
+--- olena/oln/core/abstract/behavior.hh Tue, 10 Feb 2004 15:33:34 +0100 palma_g ()
++++ olena/oln/core/abstract/behavior.hh Tue, 10 Feb 2004 14:54:58 +0100 palma_g (oln/j/46_behavior.h  644)
+@@ -0,0 +1,57 @@
++// Copyright (C) 2004  EPITA Research and Development Laboratory
++//
++// This  file is  part of  the Olena  Library.  This  library  is free
++// software; you can redistribute it  and/or modify it under the terms
++// of the  GNU General  Public License version  2 as published  by the
++// Free Software Foundation.
++//
++// This library is distributed in the hope that it will be useful, but
++// WITHOUT  ANY  WARRANTY;  without   even  the  implied  warranty  of
++// MERCHANTABILITY or  FITNESS FOR A PARTICULAR PURPOSE.   See the GNU
++// General Public License for more details.
++//
++// You should have  received a copy of the  GNU General Public License
++// along with  this library; see the  file COPYING.  If  not, write to
++// the Free Software Foundation, 59  Temple Place - Suite 330, Boston,
++// MA 02111-1307, USA.
++//
++// As a  special exception, you  may use this  file as part of  a free
++// software library without restriction.  Specifically, if other files
++// instantiate templates  or use macros or inline  functions from this
++// file, or  you compile  this file  and link it  with other  files to
++// produce  an executable,  this file  does  not by  itself cause  the
++// resulting  executable  to be  covered  by  the  GNU General  Public
++// License.   This exception  does  not however  invalidate any  other
++// reasons why the executable file might be covered by the GNU General
++// Public License.
++
++#ifndef OLENA_CORE_ABSTRACT_BEHAVIOR_HH
++# define OLENA_CORE_ABSTRACT_BEHAVIOR_HH
++# include <mlc/type.hh>
++# include <oln/core/abstract/image.hh>
++# include <oln/core/coord.hh>
++
 +namespace oln {
-+  namespace morpho {
-+    namespace tarjan {
-+      namespace tools {
-+	// should be moved elsewhere
-+	template <class T>
-+	T diffabs(const T &v1, const T &v2)
-   {
-     return v1 > v2 ? v1 - v2 : v2 - v1;
-   }
- 
--  template <class T>
--  T max(T v1, T v2)
--  {
--    return v1 > v2 ? v1 : v2;
-   }
--
--  template <class T>
--  T min(T v1, T v2)
--  {
--    return v1 < v2 ? v1 : v2;
--  }
--
--} // end of namespace my
--
--namespace oln {
--  namespace morpho {
--    namespace tarjan {
-       // environment herarchy
-       // not used yet
-       template <class Exact>
-@@ -104,22 +92,28 @@
- 
- 	void operator+=(const exact_type& rhs)
- 	{
--	  dispatch(pe)(rhs);
-+	  mlc_dispatch(pe)(rhs);
- 	};
- 
--	void operator=(lambda_type lambda)
-+	bool operator>=(const lambda_type &lambda) const
- 	{
--	  dispatch(equal)(lambda);
-+	  mlc_dispatch(ge)(lambda);
- 	};
- 
- 	bool operator<(const lambda_type& lambda) const
- 	{
--	  dispatch(less)(lambda);
-+	  mlc_dispatch(less)(lambda);
- 	};
- 
- 	bool operator!=(const lambda_type& lambda) const
- 	{
--	  dispatch(ne)(lambda);
-+	  mlc_dispatch(ne)(lambda);
-+	};
-+
-+	// impl
-+	bool ge_impl(const lambda_type &lambda) const
-+	{
-+	  return !(*this < lambda);
- 	};
- 
-       protected:
-@@ -131,9 +125,9 @@
- 	|   area    |
- 	*-----------*/
- 
--      template <class T, class Exact = mlc::final>
-+      template <class T = unsigned, class Exact = mlc::final>
-       class area_type:
--	public attribute<oln_2_exact_vt_type(area_type, T, Exact)>
-+	public attribute<mlc_2_exact_vt_type(area_type, T, Exact)>
-       {
-       public:
- 	typedef area_type<T, Exact>			self_type;
-@@ -160,11 +154,6 @@
- 	    value_ += rhs.value_;
- 	  };
- 
--	void equal_impl(lambda_type lambda)
--	  {
--	    value_ = lambda;
--	  };
--
- 	bool less_impl(const lambda_type& lambda) const
- 	  {
- 	    return value_ < lambda;
-@@ -186,9 +175,9 @@
- 	|  volume   |
- 	*-----------*/
- 
--      template <class T, class Exact = mlc::final>
-+      template <class T = unsigned, class Exact = mlc::final>
-       class volume_type:
--	public attribute<oln_2_exact_vt_type(volume_type, T, Exact)>
-+	public attribute<mlc_2_exact_vt_type(volume_type, T, Exact)>
-       {
-       public:
- 	typedef volume_type<T, Exact>			self_type;
-@@ -216,17 +205,17 @@
- 	// interface part
- 	const value_type &getValue() const
- 	  {
--	    dispatch(getValue)();
-+	    mlc_dispatch(getValue)();
- 	  };
- 
- 	const value_type &getReflevel() const
- 	  {
--	    dispatch(getReflevel)();
-+	    mlc_dispatch(getReflevel)();
- 	  };
- 
- 	const value_type &getArea() const
- 	  {
--	    dispatch(getArea)();
-+	    mlc_dispatch(getArea)();
- 	  };
- 
- 	// impl part
-@@ -245,14 +234,9 @@
- 	    return area_;
- 	  };
- 
--	void equal_impl(lambda_type lambda)
--	  {
--	    value_ = lambda;
--	  };
--
- 	void pe_impl(const volume_type& rhs)
- 	  {
--	    value_ += rhs.getValue() + area_ * my::diffabs(reflevel_, rhs.getReflevel());
-+	    value_ += rhs.getValue() + area_ * tools::diffabs(reflevel_, rhs.getReflevel());
- 	    area_ += rhs.getArea();
- 	  };
- 
-@@ -276,9 +260,9 @@
- 	|  height   |
- 	*-----------*/
- 
--      template <class T, class Exact = mlc::final>
-+      template <class T = unsigned, class Exact = mlc::final>
-       class height_type:
--	public attribute<oln_2_exact_vt_type(height_type, T, Exact)>
-+	public attribute<mlc_2_exact_vt_type(height_type, T, Exact)>
-       {
-       public:
- 	typedef height_type<T, Exact>			self_type;
-@@ -297,13 +281,13 @@
- 		      const oln_point_type(I)& p,
- 		      const env_type&):
- 	  reflevel_(input[p]),
--	  value_(0)
-+	  value_(ntg_zero_val(value_type))
- 	  {
- 	  };
- 
- 	const value_type &getReflevel() const
- 	  {
--	    dispatch(getReflevel)();
-+	    mlc_dispatch(getReflevel)();
- 	  };
- 
- 	// impl part
-@@ -312,14 +296,9 @@
- 	    return reflevel_;
- 	  };
- 
--	void equal_impl(lambda_type lambda)
--	  {
--	    value_ = lambda;
--	  };
--
- 	void pe_impl(const height_type& rhs)
- 	  {
--	    value_ = my::diffabs(reflevel_, rhs.getReflevel());
-+	    value_ = tools::diffabs(reflevel_, rhs.getReflevel());
- 	  };
- 
- 	bool less_impl(const lambda_type& lambda) const
-@@ -342,9 +321,9 @@
-       | maxvalue  |
-       *-----------*/
- 
--    template <class T, class Exact = mlc::final>
-+    template <class T = unsigned, class Exact = mlc::final>
-     class maxvalue_type:
--      public attribute<oln_2_exact_vt_type(maxvalue_type, T, Exact)>
-+      public attribute<mlc_2_exact_vt_type(maxvalue_type, T, Exact)>
-     {
-     public:
-       typedef maxvalue_type<T, Exact>			self_type;
-@@ -368,7 +347,7 @@
- 
-       const value_type &getValue() const
- 	{
--	  dispatch(getValue)();
-+	  mlc_dispatch(getValue)();
- 	};
- 
-       const value_type &getValue_impl() const
-@@ -378,7 +357,7 @@
- 
-       void pe_impl(const maxvalue_type& rhs)
- 	{
--	  value_ = my::max(value_, rhs.getValue());
-+	  value_ = ntg::max(value_, rhs.getValue());
- 	};
- 
-       bool less_impl(const lambda_type& lambda) const
-@@ -400,9 +379,9 @@
-       | minvalue  |
-       *-----------*/
- 
--    template <class T, class Exact = mlc::final>
-+    template <class T = unsigned, class Exact = mlc::final>
-     class minvalue_type:
--      public attribute<oln_2_exact_vt_type(minvalue_type, T, Exact)>
-+      public attribute<mlc_2_exact_vt_type(minvalue_type, T, Exact)>
-     {
-     public:
-       typedef minvalue_type<T, Exact>			self_type;
-@@ -426,7 +405,7 @@
- 
-       const value_type &getValue() const
- 	{
--	  dispatch(getValue)();
-+	  mlc_dispatch(getValue)();
- 	};
- 
-       const value_type &getValue_impl() const
-@@ -436,7 +415,7 @@
- 
-       void pe_impl(const minvalue_type& rhs)
- 	{
--	  value_ = my::min(value_, rhs.getValue());
-+	  value_ = ntg::min(value_, rhs.getValue());
- 	};
- 
-       bool less_impl(const lambda_type& lambda) const
-@@ -460,7 +439,7 @@
- 
-       template <class I, class Exact = mlc::final>
-       class disk_type:
--	public attribute<oln_2_exact_vt_type(disk_type, I, Exact)>
-+	public attribute<mlc_2_exact_vt_type(disk_type, I, Exact)>
-       {
-       public:
- 	typedef disk_type<I, Exact>			self_type;
-@@ -487,7 +466,7 @@
- 
- 	const pts_type &getPts() const
- 	  {
--	    dispatch(getPts)();
-+	    mlc_dispatch(getPts)();
- 	  };
- 
- 	// impl
-@@ -500,7 +479,7 @@
- 	void pe_impl(const disk_type& rhs)
- 	{
- 	  std::copy(rhs.getPts().begin(), rhs.getPts().end(), std::back_inserter(pts_));
--	  value_ = 0;
-+	  value_ = ntg_zero_val(value_type);
- 	  for (cst_iter_type p1 = pts_.begin(); p1 != pts_.end(); ++p1)
- 	    for (cst_iter_type p2 = pts_.begin(); p2 != pts_.end(); ++p2)
- 	      {
-@@ -537,7 +516,7 @@
- 
-       template <class I, class Exact = mlc::final>
-       class dist_type:
--	public attribute<oln_2_exact_vt_type(dist_type, I, Exact)>
-+	public attribute<mlc_2_exact_vt_type(dist_type, I, Exact)>
-       {
-       public:
- 	typedef dist_type<I, Exact>			self_type;
-@@ -546,9 +525,6 @@
- 	typedef oln_point_type(im_type)			point_type;
- 	typedef oln_dpoint_type(im_type)		dpoint_type;
- 
--// 	typedef float value_type;
--// 	typedef value_type lambda_type;
--
- 	dist_type()
- 	{
- 	};
-@@ -556,7 +532,7 @@
- 	dist_type(const im_type&,
- 		  const point_type& p,
- 		  const env_type &) :
--	  value_(0),
-+	  value_(ntg_zero_val(value_type)),
- 	  center_(p)
- 	{
- 	};
-@@ -567,7 +543,7 @@
- 
- 	const point_type &getCenter() const
- 	  {
--	    dispatch(getCenter)();
-+	    mlc_dispatch(getCenter)();
- 	  };
- 
- 	// impl
-@@ -580,7 +556,7 @@
- 	{
- 	  dpoint_type	p = center_ - rhs.getCenter();
- 
--	  value_ = 0;
-+	  value_ = ntg_zero_val(value_type);
- 	  for (int i = 0; i < point_traits<point_type>::dim; ++i)
- 	    value_ += p.nth(i) * p.nth(i);
- 	  value_ = sqrt(value_);
-@@ -610,7 +586,7 @@
- 
-       template <class I, class Exact = mlc::final>
-       class square_type:
--	public attribute<oln_2_exact_vt_type(square_type, I, Exact)>
-+	public attribute<mlc_2_exact_vt_type(square_type, I, Exact)>
-       {
-       public:
- 	typedef square_type<I, Exact>			self_type;
-@@ -619,139 +595,177 @@
- 	typedef oln_point_type(im_type)			point_type;
- 	typedef oln_dpoint_type(im_type)		dpoint_type;
- 
--// 	typedef unsigned value_type;
--// 	typedef value_type lambda_type;
-+	enum {dim = point_traits<point_type>::dim};
- 
- 	square_type()
- 	{
- 	}
- 
--	square_type(const lambda_type &lambda) : value_(lambda)
-+	square_type(const lambda_type &lambda):
-+	  mins_(dim),
-+	  maxs_(dim),
-+	  value_(lambda)
-+	  {
-+	    for (int i = 0; i < point_traits<point_type>::dim; ++i)
- 	  {
-+		maxs_[i] = lambda;
-+		mins_[i] = ntg_zero_val(coord);
-+	      }
- 	  };
- 
- 	square_type(const im_type&,
- 		    const point_type& p,
- 		    const env_type &) :
--	  value_(0)
-+	  mins_(dim), maxs_(dim), value_(ntg_zero_val(value_type))
- 	{
--	  min_row_ = max_row_ = p.row();
--	  min_col_ = max_col_ = p.col();
-+	  for (int i = 0; i < dim; ++i)
-+	    mins_[i] = maxs_[i] = p.nth(i);
- 	}
- 
--	int getMinRow() const
-+	int getMin(int i) const
- 	  {
--	    dispatch(getMinRow)();
-+	    mlc_dispatch(getMin)(i);
- 	  };
- 
--	int getMaxRow() const
-+	int getMax(int i) const
- 	  {
--	    dispatch(getMaxRow)();
-+	    mlc_dispatch(getMax)(i);
- 	  };
- 
--	int getMaxCol() const
-+	// impl
-+	int getMin_impl(int i) const
- 	  {
--	    dispatch(getMaxCol)();
-+	    precondition(i < dim);
-+	    return mins_[i];
- 	  };
- 
--	int getMinCol() const
-+	int getMax_impl(int i) const
- 	  {
--	    dispatch(getMinCol)();
-+	    precondition(i < dim);
-+	    return maxs_[i];
- 	  };
- 
--	// impl
--	int getMinRow_impl() const
-+	void pe_impl(const square_type &rhs)
-+	{
-+	  for (int i = 0; i < dim; ++i)
-+	    {
-+	      mins_[i] = ntg::min(mins_[i], rhs.getMin(i));
-+	      maxs_[i] = ntg::max(maxs_[i], rhs.getMax(i));
-+	    }
-+	  value_ = maxs_[0] - mins_[0];
-+	  for (int i = 1; i < dim; ++i)
-+	    if (value_ < value_type(maxs_[i] - mins_[i]))
-+	      value_ = maxs_[i] - mins_[i];
-+	}
-+
-+	bool less_impl(const lambda_type &lambda) const
-+	{
-+	  return value_ < lambda;
-+	}
-+
-+	bool ne_impl(const lambda_type &lambda) const
- 	  {
--	    return min_row_;
-+	    return value_ != lambda;
- 	  };
- 
--	int getMaxRow_impl() const
-+      protected:
-+	std::vector<coord>	mins_;
-+	std::vector<coord>	maxs_;
-+	value_type		value_;
-+      };
-+
-+
-+
-+      /*-----------*
-+	| rectangle |
-+	*-----------*/
-+      template <class I, class Exact = mlc::final>
-+      class rectangle_type:
-+	public attribute<mlc_2_exact_vt_type(rectangle_type, I, Exact)>
- 	  {
--	    return max_row_;
-+      public:
-+	typedef rectangle_type<I, Exact>		self_type;
-+	attr_type_decl(self_type);
-+	typedef abstract::image<mlc_exact_type(I)>	im_type;
-+	typedef oln_point_type(im_type)			point_type;
-+	typedef oln_dpoint_type(im_type)		dpoint_type;
-+	enum {dim = point_traits<point_type>::dim };
-+
-+	rectangle_type(const lambda_type &lambda): maxs_(dim), mins_(dim)
-+	  {
-+	    for (int i = 0; i < dim; ++i)
-+	      {
-+		mins_[i] = ntg_zero_val(value_type);
-+		maxs_[i] = lambda[i];
-+	      }
- 	  };
- 
--	int getMaxCol_impl() const
-+	rectangle_type()
-+	{
-+	}
-+
-+	rectangle_type(const im_type&, const point_type &p, const env_type &): maxs_(dim), mins_(dim)
-+	{
-+	  for (int i = 0; i < dim; ++i)
-+	    mins_[i] = maxs_[i] = p.nth(i);
-+	}
-+
-+	value_type getMin(int i) const
- 	  {
--	    return max_col_;
-+	    mlc_dispatch(getMin)(i);
- 	  };
- 
--	int getMinCol_impl() const
-+	value_type getMax(int i) const
- 	  {
--	    return min_col_;
-+	    mlc_dispatch(getMax)(i);
- 	  };
- 
--	void pe_impl(const square_type& rhs)
-+	// impl
-+	value_type getMin_impl(int i) const
-+	  {
-+	    precondition(i < point_traits<point_type>::dim);
-+	    return mins_[i];
-+	  };
-+
-+	value_type getMax_impl(int i) const
-+	  {
-+	    precondition(i < point_traits<point_type>::dim);
-+	    return maxs_[i];
-+	  };
-+
-+	void pe_impl(const rectangle_type &rhs)
-+	{
-+	  for (int i = 0; i < dim; ++i)
- 	{
--	  min_row_ = my::min(min_row_, rhs.getMinRow());
--	  min_col_ = my::min(min_col_, rhs.getMinCol());
--	  max_row_ = my::max(max_row_, rhs.getMaxRow());
--	  max_col_ = my::max(max_col_, rhs.getMaxCol());
--	  value_ = my::max(max_row_ - min_row_, max_col_ - min_col_);
-+	      mins_[i] = ntg::min(mins_[i], rhs.getMin(i));
-+	      maxs_[i] = ntg::max(maxs_[i], rhs.getMax(i));
-+	    }
- 	}
- 
- 	bool less_impl(const lambda_type& lambda) const
- 	{
--	  return value_ < lambda;
-+	  for (int i = 0; i < dim; ++i)
-+	    if ((maxs_[i] - mins_[i]) >= lambda[i])
-+	      return false;
-+	  return true;
- 	}
- 
- 	bool ne_impl(const lambda_type &lambda) const
- 	  {
--	    return value_ != lambda;
-+	    for (int i = 0; i < dim; ++i)
-+	      if ((maxs_[i] - mins_[i]) == lambda[i])
-+		return false;
-+	    return true;
- 	  };
- 
-       protected:
--	value_type	value_;
--	int		min_row_;
--	int		max_row_;
--	int		min_col_;
--	int		max_col_;
-+	std::vector<value_type>	maxs_;
-+	std::vector<value_type>	mins_;
-       };
- 
--
--
--//       /*-----------*
--// 	| rectangle |
--// 	*-----------*/
--//       template <class I, class Exact = mlc::final>
--//       struct rectangle_type
--//       {
--// 	typedef unsigned value_type;
--// 	typedef std::pair<value_type,value_type> lambda_type;
--
--// 	value_type drow, dcol;
--// 	int min_row, max_row, min_col, max_col;
--
--// 	rectangle_type()
--// 	{
--// 	}
--
--// 	template <class T>
--// 	rectangle_type(const image2d<T>&, const point2d& p) :
--// 	  drow(0),
--// 	  dcol(0)
--// 	{
--// 	  min_row = max_row = p.row();
--// 	  min_col = max_col = p.col();
--// 	}
--
--// 	void operator+=(const rectangle_type& rhs)
--// 	{
--// 	  min_row = my::min(min_row, rhs.min_row);
--// 	  min_col = my::min(min_col, rhs.min_col);
--// 	  max_row = my::max(max_row, rhs.max_row);
--// 	  max_col = my::max(max_col, rhs.max_col);
--// 	  drow = max_row - min_row;
--// 	  dcol = max_col - min_col;
--// 	}
--
--// 	bool operator>=(const lambda_type& lambda) const
--// 	{
--// 	  return drow >= lambda.first || dcol >= lambda.second;
--// 	}
--//       };
--
--
--// traits specialisations
-+      /*-------------------------
-+	| traits specialisations |
-+	\\------------------------*/
- 
- 
-       // volume traits
-@@ -826,16 +840,18 @@
- 	typedef NullEnv		env_type;
-       };
- 
--//       // rectangle traits
--//       tempalte <class Exact>
--// 	typedef unsigned value_type;
--// 	typedef std::pair<value_type,value_type> lambda_type;
--
-+      // rectangle traits
-+      template <class I, class Exact>
-+      struct attr_traits<rectangle_type<I, Exact> >
++    namespace abstract {
++      // behavior hierarchy
++      //the aim of this one is to describe how an algorithm should work
++      //on borders
++      template <class Exact>
++      class behavior: public mlc_hierarchy::any<Exact>
 +      {
-+	typedef unsigned					value_type;
-+	typedef ntg::vec<I::dim, value_type, mlc::final>	lambda_type;
-+	typedef NullEnv						env_type;
++      public:
++	typedef behavior<Exact>				self_type;
++	typedef mlc_exact_vt_type(self_type, Exact)	exact_type;
++
++	template <class I>
++	void adapt_border(oln::abstract::image<I> &im, coord border_size) const
++	{
++	  mlc_dispatch(adapt_border)(im, border_size);
++	};
++      protected:
++	behavior() {};
 +      };
-     }
-   }
- }
- 
--
- /*-----------*
-   |  diamond  |
-   *-----------*/
-
++    } // !abstract
++}
++
++#endif // !OLENA_CORE_ABSTRACT_BEHAVIOR_HH
+Index: olena/oln/core/behavior.hh
+--- olena/oln/core/behavior.hh Tue, 10 Feb 2004 15:33:34 +0100 palma_g ()
++++ olena/oln/core/behavior.hh Tue, 10 Feb 2004 15:12:48 +0100 palma_g (oln/j/47_behavior.h  644)
+@@ -0,0 +1,108 @@
++// Copyright (C) 2004 EPITA Research and Development Laboratory
++//
++// This  file is  part of  the Olena  Library.  This  library  is free
++// software; you can redistribute it  and/or modify it under the terms
++// of the  GNU General  Public License version  2 as published  by the
++// Free Software Foundation.
++//
++// This library is distributed in the hope that it will be useful, but
++// WITHOUT  ANY  WARRANTY;  without   even  the  implied  warranty  of
++// MERCHANTABILITY or  FITNESS FOR A PARTICULAR PURPOSE.   See the GNU
++// General Public License for more details.
++//
++// You should have  received a copy of the  GNU General Public License
++// along with  this library; see the  file COPYING.  If  not, write to
++// the Free Software Foundation, 59  Temple Place - Suite 330, Boston,
++// MA 02111-1307, USA.
++//
++// As a  special exception, you  may use this  file as part of  a free
++// software library without restriction.  Specifically, if other files
++// instantiate templates  or use macros or inline  functions from this
++// file, or  you compile  this file  and link it  with other  files to
++// produce  an executable,  this file  does  not by  itself cause  the
++// resulting  executable  to be  covered  by  the  GNU General  Public
++// License.   This exception  does  not however  invalidate any  other
++// reasons why the executable file might be covered by the GNU General
++// Public License.
++
++#ifndef OLENA_CORE_BEHAVIOR_HH
++# define OLENA_CORE_BEHAVIOR_HH
++# include <oln/core/abstract/behavior.hh>
++# include <mlc/type.hh>
++
++namespace oln {
++  // mirror the image content into the border
++  template <class Exact = mlc::final>
++  class mirror_behavior:
++    public abstract::behavior<mlc_exact_vt_type(mirror_behavior<Exact>, Exact)>
++  {
++  public:
++    typedef mirror_behavior<Exact>			self_type;
++    typedef mlc_exact_vt_type(self_type, Exact)	exact_type;
++
++    template <class I>
++      void adapt_border_impl(oln::abstract::image<I> &im, coord border_size) const
++      {
++	im.border_adapt_mirror(border_size);
++      };
++  };
++
++  // set the border to a specific value
++  template <class T, class Exact = mlc::final>
++  class value_behavior:
++    public abstract::behavior<mlc_2_exact_vt_type(value_behavior, T, Exact)>
++  {
++  public:
++    typedef value_behavior<T, Exact>		self_type;
++    typedef mlc_exact_vt_type(self_type, Exact)	exact_type;
++    typedef T					value_type;
++
++    explicit value_behavior(value_type value): value_(value)
++      {
++      };
++
++    template <class I>
++      void adapt_border_impl(abstract::image<I> &im, coord border_size) const
++      {
++	im.border_adapt_assign(border_size, ntg::cast::force<oln_value_type(I)>(value_));
++      };
++
++  protected:
++    value_type	value_;
++  };
++
++  // replicate the border
++  template <class Exact = mlc::final>
++  class replicate_behavior:
++    public abstract::behavior<mlc_exact_vt_type(replicate_behavior<Exact>, Exact)>
++  {
++  public:
++    typedef replicate_behavior<Exact>		self_type;
++    typedef mlc_exact_vt_type(self_type, Exact)	exact_type;
++
++    template <class I>
++      void adapt_border_impl(abstract::image<I> &im, coord border_size) const
++      {
++	im.border_adapt_copy(border_size);
++      };
++  };
++
++  // tools to call ctors with type inference
++  inline mirror_behavior<> mirror_bhv()
++  {
++    return mirror_behavior<>();
++  }
++
++  template <class T>
++  inline value_behavior<T> value_bhv(const T &value)
++  {
++    return value_behavior<T>(value);
++  }
++
++  inline replicate_behavior<> replicate_bhv()
++  {
++    return replicate_behavior<>();
++  }
++} // !oln
++
++#endif // !OLN_CORE_BEHAVIOR_HH
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 09 Feb 2004 18:57:03 +0100")
+(Checkin-Time "Tue, 10 Feb 2004 15:35:04 +0100")
 (Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -958,11 +550,11 @@ Index: olena/oln/morpho/attributes.hh
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.12 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.13 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.2 640))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.35 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.5 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.6 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 640))
 
@@ -991,7 +583,7 @@ Index: olena/oln/morpho/attributes.hh
   (doc/ref/processing.tpl (oln/d/48_processing 1.16 640))
 
   (Makefile.am (oln/n/32_Makefile.a 1.17.1.2.1.7 640))
-  (NEWS (oln/0_NEWS 1.17 640))
+  (NEWS (oln/0_NEWS 1.18 640))
 
   (olena/img/face_se.pbm (oln/n/17_face_se.pb 1.1 640) :no-keywords)
   (olena/img/lena256.pgm (oln/n/14_lena256.pg 1.1 640) :no-keywords)
@@ -1035,8 +627,8 @@ Index: olena/oln/morpho/attributes.hh
   (olena/oln/convert/stretch.hh (oln/f/51_stretch.hh 1.13 640))
   (olena/oln/convol/convolution.hh (oln/f/39_convolutio 1.4.1.4.1.6.1.1 640))
   (olena/oln/convol/fast_gaussian_coefficient.hh (oln/24_fast_gauss 1.5.1.6 640))
-  (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.6.1.3 640))
-  (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.8.1.5 640))
+  (olena/oln/convol/fast_gaussian.hh (oln/26_fast_gauss 1.6.1.6.1.4 640))
+  (olena/oln/convol/fast_gaussian.hxx (oln/25_fast_gauss 1.7.1.8.1.6 640))
   (olena/oln/core/accum.hh (oln/d/40_accum.hh 1.4 640))
   (olena/oln/core/apply.hh (oln/d/39_apply.hh 1.14 640))
   (olena/oln/core/bkd_iter1d.hh (oln/d/38_bkd_iter1d 1.16 640))
@@ -2022,7 +1614,7 @@ Index: olena/oln/morpho/attributes.hh
 ;; to version 10.56(w), by palma_g:
 
   (olena/tests/convol/tests/uniform2_gauss (oln/j/40_uniform2_g 1.1 644))
-  (olena/tests/convol/tests/uniform_gauss (oln/j/41_uniform_ga 1.1 644))
+  (olena/tests/convol/tests/uniform_gauss (oln/j/41_uniform_ga 1.2 644))
 
 
   (olena/oln/convert/value_to_point.hh (oln/j/43_value_to_p 1.2 644))
@@ -2031,9 +1623,19 @@ Index: olena/oln/morpho/attributes.hh
 ;; Files added by populate at Fri, 06 Feb 2004 16:00:19 +0100,
 ;; to version 10.57(w), by palma_g:
 
-  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.2 644))
+  (olena/oln/morpho/attributes.hh (oln/j/45_attributes 1.3 644))
+
+;; Files added by populate at Tue, 10 Feb 2004 15:26:15 +0100,
+;; to version 10.62(w), by palma_g:
+
+  (olena/oln/core/abstract/behavior.hh (oln/j/46_behavior.h 1.1 644))
+
+;; Files added by populate at Tue, 10 Feb 2004 15:26:20 +0100,
+;; to version 10.62(w), by palma_g:
+
+  (olena/oln/core/behavior.hh (oln/j/47_behavior.h 1.1 644))
 )
 (Merge-Parents
-  (10.61 complete)
+  (10.62 complete)
 )
 (New-Merge-Parents)

@@ -25,17 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef ATTRIBUTES_HH
-# define ATTRIBUTES_HH
+#ifndef OLN_MORPHO_ATTRIBUTES_HH
+# define OLN_MORPHO_ATTRIBUTES_HH
 # include <mlc/type.hh>
 # include <vector>
-
-// some usefull macros
-
-// those macros should be moved into mlc
-// # define mlc_exact_vt_type(T, Exact)	typename mlc::exact_vt<T, Exact>::ret
-// # define oln_2_exact_vt_type(self, T, Exact)	typename mlc::exact_vt<self<T, Exact>, Exact>::ret
-// # define dispatch(Fun)			return exact().Fun##_impl
 
 // attribute dedicated macros
 # define attr_lambda_type(T)	typename attr_traits<T>::lambda_type
@@ -859,5 +852,5 @@ namespace oln {
 // FIXME: to be written...
 
 
-#endif // ndef ATTRIBUTES_HH
+#endif // !OLN_MORPHO_ATTRIBUTES
 

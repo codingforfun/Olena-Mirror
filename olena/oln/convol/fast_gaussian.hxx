@@ -94,7 +94,7 @@ namespace oln {
 		  c.n[0]*image[current]
 		+ c.n[1]*image[current - d]
 		+ c.n[2]*image[current - d - d]
-		+ c.n[3]*image[current - d - d - d]
+ 		+ c.n[3]*image[current - d - d - d]
 		- c.d[1]*tmp1[i - 1] - c.d[2]*tmp1[i - 2]
 		- c.d[3]*tmp1[i - 3] - c.d[4]*tmp1[i - 4];
 	      current += d;
@@ -230,12 +230,13 @@ namespace oln {
 	  }
 	};
 
-	template <class C, class B, class I, class F>
+	template <class C, class B, class I, class F, class BE>
 	typename mute<I, typename convoutput<C,B,oln_value_type(I)>::ret>::ret
 	gaussian_common_(const convert::abstract::conversion<C,B>& c,
 			 const abstract::image<I>& in,
 			 const F& coef,
-			 ntg::float_s sigma)
+			 ntg::float_s sigma,
+			 const abstract::behavior<BE> &behavior)
 	{
 	  typename mute<I, ntg::float_s>::ret work_img(in.size());
 
@@ -247,7 +248,7 @@ namespace oln {
 	     be linear, so when sigma is big enougth, the signal may
 	     be parasitized by the non signal values.
 	   */
-	  work_img.border_adapt_mirror(ntg::cast::round<coord>(5 * sigma));
+	  behavior.adapt_border(work_img, ntg::cast::round<coord>(5 * sigma));
 
 	  gaussian_<I::dim>::doit(work_img, coef);
 
@@ -265,10 +266,11 @@ namespace oln {
 
       } // internal
 
-      template <class C, class B, class I>
+      template <class C, class B, class I, class BE>
       typename mute<I, typename convoutput<C,B,oln_value_type(I)>::ret>::ret
       gaussian(const convert::abstract::conversion<C,B>& c,
-	       const abstract::image<I>& in, ntg::float_s sigma)
+	       const abstract::image<I>& in, ntg::float_s sigma,
+	       const abstract::behavior<BE> &behavior)
       {
 	internal::recursivefilter_coef_<float>
 	  coef(1.68f, 3.735f,
@@ -278,13 +280,14 @@ namespace oln {
 	       sigma,
 	       internal::recursivefilter_coef_<float>::DericheGaussian);
 
-	return internal::gaussian_common_(c, in, coef, sigma);
+	return internal::gaussian_common_(c, in, coef, sigma, behavior);
       }
 
-      template <class C, class B, class I>
+      template <class C, class B, class I, class BE>
       typename mute<I, typename convoutput<C,B,oln_value_type(I)>::ret>::ret
       gaussian_derivative(const convert::abstract::conversion<C,B>& c,
-			  const abstract::image<I>& in, ntg::float_s sigma)
+			  const abstract::image<I>& in, ntg::float_s sigma,
+			  const abstract::behavior<BE> &behavior)
       {
 	internal::recursivefilter_coef_<float>
 	  coef(-0.6472f, -4.531f,
@@ -295,13 +298,14 @@ namespace oln {
 	       internal::recursivefilter_coef_<float>
 	       ::DericheGaussianFirstDerivative);
 
-	return internal::gaussian_common_(c, in, coef, sigma);
+	return internal::gaussian_common_(c, in, coef, sigma, behavior);
       }
 
-      template <class C, class B, class I>
+      template <class C, class B, class I, class BE>
       typename mute<I, typename convoutput<C,B,oln_value_type(I)>::ret>::ret
       gaussian_second_derivative(const convert::abstract::conversion<C,B>& c,
-				 const abstract::image<I>& in, ntg::float_s sigma)
+				 const abstract::image<I>& in, ntg::float_s sigma,
+				 const abstract::behavior<BE> &behavior)
       {
 	internal::recursivefilter_coef_<float>
 	  coef(-1.331f, 3.661f,
@@ -312,7 +316,7 @@ namespace oln {
 	       internal::recursivefilter_coef_<float>
 	       ::DericheGaussianSecondDerivative);
 
-	return internal::gaussian_common_(c, in, coef, sigma);
+	return internal::gaussian_common_(c, in, coef, sigma, behavior);
       }
 
     } // fast

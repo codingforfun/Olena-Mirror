@@ -23,9 +23,10 @@ bool check()
   for_all(it)
     img[it] = 42;
   image2d<int_u8>		img2 = convol::fast::gaussian(img, 5);
+  image2d<int_u8>		img3 = convol::fast::gaussian(img, 5, replicate_bhv());
 
   for_all(it)
-    if (img[it] != img2[it])
+    if ((img[it] != img2[it]) || (img[it] != img3[it]))
       return true;
   return false;
 }
