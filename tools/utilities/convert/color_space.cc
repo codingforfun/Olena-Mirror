@@ -149,20 +149,20 @@ from_rgb_to_x(const oln::image2d<ntg::rgb_8>		&in)
   }
 
 
-FROM_X_TO_RGB(hsi);
-FROM_RGB_TO_X(hsi);
-FROM_X_TO_RGB(hsl);
-FROM_RGB_TO_X(hsl);
-FROM_X_TO_RGB(hsv);
-FROM_RGB_TO_X(hsv);
-FROM_X_TO_RGB(nrgb);
-FROM_RGB_TO_X(nrgb);
-FROM_X_TO_RGB(xyz);
-FROM_RGB_TO_X(xyz);
-FROM_X_TO_RGB(yiq);
-FROM_RGB_TO_X(yiq);
-FROM_X_TO_RGB(yuv);
-FROM_RGB_TO_X(yuv);
+FROM_X_TO_RGB(hsi)
+FROM_RGB_TO_X(hsi)
+FROM_X_TO_RGB(hsl)
+FROM_RGB_TO_X(hsl)
+FROM_X_TO_RGB(hsv)
+FROM_RGB_TO_X(hsv)
+FROM_X_TO_RGB(nrgb)
+FROM_RGB_TO_X(nrgb)
+FROM_X_TO_RGB(xyz)
+FROM_RGB_TO_X(xyz)
+FROM_X_TO_RGB(yiq)
+FROM_RGB_TO_X(yiq)
+FROM_X_TO_RGB(yuv)
+FROM_RGB_TO_X(yuv)
 
 
 

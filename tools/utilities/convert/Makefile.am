@@ -1,4 +1,4 @@
-AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_OPTIMIZE)
+AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_OPTIMIZE) -lz
 INCLUDES = -I$(srcdir)/../../lib
 LDADD = ../../lib/libolntools.a
 bin_PROGRAMS = color_space

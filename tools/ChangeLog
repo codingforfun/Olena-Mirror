@@ -1,3 +1,10 @@
+2004-06-28  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* tools/utilities/convert/color_space.cc: Make the file compliant with
+	g++-3.4.
+	* tools/utilities/convert/Makefile.am: Add missing library include to
+	the compilation flags.
+
 2004-06-23  Niels Van Vliet  <niels@lrde.epita.fr>
 
 	* tools/utilities/convert/color_space.cc: New file. Convert

@@ -1,3 +1,7 @@
+Olena 0.11	unknown date
+
+	* Olena now compiles with g++ 3.4.
+
 Olena 0.10	April 15, 2004
 
 	* New documentation system.
