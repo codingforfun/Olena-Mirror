@@ -227,6 +227,7 @@ OLN_DEP =					\
   utils/md5.hxx					\
   utils/buffer.hh				\
   utils/buffer.hxx				\
+  utils/qsort.hh				\
   utils/histogram.hh				\
   utils/se_stat.hh				\
   utils/se_stat.hxx				\

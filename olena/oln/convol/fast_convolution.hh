@@ -126,6 +126,7 @@ namespace oln {
       convolve(const abstract::image< I >& input,
 	       const abstract::image< J >& k)
       {
+# ifdef HAVE_LIBfft
 	mlc::eq<I::dim, J::dim>::ensure();
 	mlc::eq<I::dim, 2>::ensure();
 
@@ -188,6 +189,9 @@ namespace oln {
 	    output[input_iter] = piece_output[input_iter];
 
 	return output;
+# else
+	assert(0);
+# endif // !HAVE_LIBfft
       }
 
       /*!

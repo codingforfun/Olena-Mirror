@@ -270,7 +270,7 @@ namespace oln {
       xxx_opening_decl(integral)
 
       /*!
-      ** \brief Perform an integral closing.
+      ** \brief Perform a volume closing.
       **
       ** \code
       ** #include <oln/basics2d.hh>
@@ -283,7 +283,7 @@ namespace oln {
       **
       **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
       **   oln::morpho::env::OtherImageEnv<im_type>	env(im1);
-      **   im1 = oln::morpho::fast::integral_closing(im1, oln::neighb_c4(), 200, env);
+      **   im1 = oln::morpho::fast::volume_closing(im1, oln::neighb_c4(), 200, env);
       **   oln::save(im1, IMG_OUT "oln_morpho_fast_volume_closing.ppm");
       **   return  0;
       ** }
@@ -291,15 +291,15 @@ namespace oln {
       ** \image html lena128_pgm.png
       ** \image latex lena128_pgm.png
       ** =>
-      ** \image html oln_morpho_fast_integral_closing.png
-      ** \image latex oln_morpho_fast_integral_closing.png
+      ** \image html oln_morpho_fast_volume_closing.png
+      ** \image latex oln_morpho_fast_volume_closing.png
       **
       */
-	xxx_closing_im_env_decl(volume)
+      xxx_closing_im_env_decl(volume)
 
 
       /*!
-      ** \brief Perform an integral opening.
+      ** \brief Perform a volume opening.
       **
       ** \code
       ** #include <oln/basics2d.hh>
@@ -311,16 +311,17 @@ namespace oln {
       **   typedef oln::image2d<ntg::int_u8>	im_type;
       **
       **   im_type im1(oln::load(IMG_IN "lena128.pgm"));
-      **   im1 = oln::morpho::fast::integral_opening(im1, oln::neighb_c4(), 200);
-      **   oln::save(im1, IMG_OUT "oln_morpho_fast_integral_opening.ppm");
+      **   oln::morpho::env::OtherImageEnv<im_type>	env(im1);
+      **   im1 = oln::morpho::fast::volume_opening(im1, oln::neighb_c4(), 200, env);
+      **   oln::save(im1, IMG_OUT "oln_morpho_fast_volume_opening.ppm");
       **   return  0;
       ** }
       ** \endcode
       ** \image html lena128_pgm.png
       ** \image latex lena128_pgm.png
       ** =>
-      ** \image html oln_morpho_fast_integral_opening.png
-      ** \image latex oln_morpho_fast_integral_opening.png
+      ** \image html oln_morpho_fast_volume_opening.png
+      ** \image latex oln_morpho_fast_volume_opening.png
       **
       */
       xxx_opening_im_env_decl(volume)
