@@ -97,6 +97,14 @@ namespace oln {
 	return this->data_->set(p, v);
       }
 
+      /*! \brief True if the image contains data.
+      */
+      bool has_data() const
+      {
+        return data_ != 0;
+      }
+ 
+
     protected:
 
       /*! \brief Constructor (protected) with no memory allocation for
@@ -106,6 +114,7 @@ namespace oln {
       {
 	data_ = 0;
       }
+
 
       /*! \brief Constructor (protected) with memory allocation for
       ** data.
@@ -122,7 +131,6 @@ namespace oln {
       {
 	this->data_ = rhs.data_;
       }
-
 
       /*! \brief Data storage.
       */

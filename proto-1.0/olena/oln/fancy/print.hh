@@ -8,6 +8,7 @@
 
 # include <ntg/real/int_u8.hh> // FIXME: no coupling like that!
 
+# include <oln/core/1d/image1d.hh>
 # include <oln/core/2d/image2d.hh>
 
 namespace oln {
@@ -20,6 +21,8 @@ namespace oln {
 
     namespace impl {
 
+      template <typename T>
+      void print(const image1d<T>& input, std::ostream& ostr);
       template <typename T>
       void print(const image2d<T>& input, std::ostream& ostr);
       // FIXME: it should be abstract::image2d<I>...
@@ -78,6 +81,17 @@ namespace oln {
 	    ostr << std::endl;
 	  }
       }
+
+      template <typename T>
+      void print(const image1d<T>& input, std::ostream& ostr)
+      {
+	// FIXME: lacks cleaning
+	for (coord_t index = 0; index < input.size().nindices(); ++index)
+	  {
+	    ostr << internal::pp<T>(input[point1d(index)]) << ' ';
+	  }
+	ostr << std::endl;
+      } 
 
     } // end of namespace impl
 

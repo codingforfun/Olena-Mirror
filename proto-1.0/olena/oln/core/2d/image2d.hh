@@ -109,11 +109,6 @@ namespace oln {
 
     // FIXME: idem with abstract::image2d<E> (?)
 
-    bool has_data() const // FIXME: should be defined in abstract::something_image...
-    {
-      return this->data_ != 0;
-    }
-
   };
 
 

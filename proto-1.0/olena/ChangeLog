@@ -1,5 +1,17 @@
 2005-01-21  Simon Odou  <simon@lrde.epita.fr>
 
+	* tests/core/tests/image1d: New.
+	* oln/fancy/print.hh: Add print for image1d.
+	* oln/fancy/iota.hh: Add iota for image1d.
+	* oln/basics1d.hh: Add image1d include.
+	* oln/core/2d/image2d.hh: Move the has_data method to...
+	* oln/core/abstract/image_with_data.hh: here.
+	* oln/core/1d/image1d.hh: New.
+	* oln/core/1d/size1d.hh: Fix a forgotten initialization in
+          constructor.
+
+2005-01-21  Simon Odou  <simon@lrde.epita.fr>
+
 	* oln/core/1d/array1d.hh: New.
 	* oln/core/2d/array2d.hh: Fix a missing destructor.
 	* oln/core/3d/array3d.hh: New.
@@ -11,21 +23,6 @@
 	* oln/core/2d/size2d.hh: Fix a missing "this".
 	* oln/core/3d/size3d.hh: New.
 	* oln/basics3d.hh: Add size3d include.
-
-2005-01-21  Simon Odou  <simon@lrde.epita.fr>
-
-	* oln/basics1d.hh: Add size1d include.
-	* oln/core/1d/size1d.hh: New.
-	* oln/core/3d/size3d.hh: New.
-	* oln/basics3d.hh: Add size3d include.
-
-2005-01-21  Simon Odou  <simon@lrde.epita.fr>
-
-	* oln/basics1d.hh: New.
-	* oln/core/1d/point1d.hh: New.
-	* oln/core/3d: New.
-	* oln/core/3d/point3d.hh: New.
-	* oln/basics3d.hh: New.
 
 2005-01-21  Simon Odou  <simon@lrde.epita.fr>
 
