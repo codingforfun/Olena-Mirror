@@ -25,6 +25,8 @@ check(void)
   fail |= loadsave< image3d<unsigned char> >(rdata("lena3d.pgm"), "lena3d.pgm");
   fail |= loadsave< image3d<nrgb_8>        >(rdata("lena3d.ppm"), "lena3d.ppm");
 
+  fail |= ! loadsave< image3d<bin>           >(rdata("wrong_3d"), "wrong_3d");
+
 #if HAVE_ZLIB
   fail |= loadsave< image3d<bin>    >(rdata("lena3d.pbm.gz"), "lena3d.pbm.gz");
   fail |= loadsave< image3d<int_u8> >(rdata("lena3d.pgm.gz"), "lena3d.pgm.gz");

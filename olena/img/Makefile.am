@@ -16,6 +16,9 @@ SOURCE_IMGS =			\
   random.pgm			\
   se.pbm			\
   se9.pbm			\
+  se_1d.pbm			\
+  se9_1d.pbm			\
+  se_3d.pbm			\
   test-cmap.pgm
 
 BUILT_IMGS =			\
@@ -51,7 +54,8 @@ BUILT_IMGS =			\
   se9.pbm.gz			\
   neighbor.ppbm			\
   neighbor9.ppbm		\
-  neighbor9.pbm.gz
+  neighbor9.pbm.gz		\
+  wrong_3d.pbm
 
 SRC_BUILT_IMGS =			\
   $(srcdir)/lena.pbm			\

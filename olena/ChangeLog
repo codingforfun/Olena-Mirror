@@ -1,5 +1,18 @@
 2003-08-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* oln/io/se_window.hh: Handle 1d and 3d windows.
+	* oln/io/pnm_read_3d.hh: Fix wrong images detection.
+	* tests/io/loadsave.hh: Fix compare.
+
+	* tests/io/tests/se_1d: New test.
+	* tests/io/tests/se_3d: Likewise.
+	* img/wrong_3d.pbm: New image.
+	* img/se_3d.pbm: Likewise.
+	* img/se_1d.pbm: Likewise.
+	* img/se9_1d.pbm: Likewise.
+
+2003-08-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* tests/convol/tests/sobel_gradient: Add an abort tag.
 	* tests/core/tests/image_list: New test.
 

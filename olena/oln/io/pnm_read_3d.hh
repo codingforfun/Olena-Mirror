@@ -71,9 +71,9 @@ namespace oln {
 	  typedef typename std::list<image2d_type*>::iterator iterator_type;
 	  std::list<image2d_type*> image2d_list;
 	  bool fail = false;	  
+	  coord ncols = -1, nrows = -1;
 	  while (in.peek() != EOF)
 	    {
-	      coord ncols = -1, nrows = -1;
 	      image2d_type* new_ima = new image2d_type();
 	      image2d_list.push_back(new_ima);
 	      if (!reader_2d::read(in, *new_ima))
