@@ -1,0 +1,33 @@
+#include "basics2d.hh"
+#include "utils/stat.hh"
+#include "check.hh"
+#include <iostream>
+
+using namespace oln;
+
+template< class Input >
+struct f_l2_vec3 : public std::binary_function<Input, Input, sfloat>
+{
+  sfloat operator()(Input l, Input r) const
+  {
+    float v0 = l[0] - r[0];
+    float v1 = l[1] - r[1];
+    float v2 = l[2] - r[2];
+
+    return sqrt(v0 * v0 + v1 * v1 + v2 * v2);
+  }
+};
+
+template< class F, class Dist, class _I1, class _I2 >
+F&
+compare_images(F& functor, Dist distance,
+	       const image<_I1>& _im1, const image<_I2>& _im2)
+{
+  Exact_cref(I1, im1);
+  Exact_cref(I2, im2);
+  precondition(im1.size() == im2.size());
+  Iter(I1) p(im1);
+  for_all(p)
+    functor(distance(im1[p], im2[p]));
+  return functor;
+}

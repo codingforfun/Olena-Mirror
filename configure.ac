@@ -15,6 +15,7 @@ AC_CONFIG_FILES([
   demo/Makefile
   tests/Makefile
   tests/check/Makefile
+  tests/convert/Makefile
   tests/io/Makefile
   tests/morpho/Makefile
 ])

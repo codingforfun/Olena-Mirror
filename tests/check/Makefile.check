@@ -1,6 +1,4 @@
 # -*- Makefile -*-
 
 include $(top_srcdir)/tests/check/Makefile.flags
-
-# Automake 1.6 complains about AM_LDADD.  See PR automake/311.
-LDADD = ../check/libcheck.a
+LDADD = $(top_builddir)/tests/check/libcheck.a

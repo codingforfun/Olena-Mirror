@@ -82,8 +82,7 @@ install_sh = @install_sh@
 AM_CXXFLAGS = -Wall -W -ftemplate-depth-50 -ansi -pedantic
 AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/tests/check
 
-# Automake 1.6 complains about AM_LDADD.  See PR automake/311.
-LDADD = ../check/libcheck.a
+LDADD = $(top_builddir)/tests/check/libcheck.a
 
 check_PROGRAMS = 2d
 2d_SOURCES = 2d.cc loadsave.hh
@@ -96,7 +95,7 @@ check_PROGRAMS = 2d$(EXEEXT)
 am_2d_OBJECTS = 2d.$(OBJEXT)
 2d_OBJECTS = $(am_2d_OBJECTS)
 2d_LDADD = $(LDADD)
-2d_DEPENDENCIES = ../check/libcheck.a
+2d_DEPENDENCIES = $(top_builddir)/tests/check/libcheck.a
 2d_LDFLAGS =
 
 DEFS = @DEFS@

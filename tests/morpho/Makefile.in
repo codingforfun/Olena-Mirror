@@ -82,8 +82,7 @@ install_sh = @install_sh@
 AM_CXXFLAGS = -Wall -W -ftemplate-depth-50 -ansi -pedantic
 AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/tests/check
 
-# Automake 1.6 complains about AM_LDADD.  See PR automake/311.
-LDADD = ../check/libcheck.a
+LDADD = $(top_builddir)/tests/check/libcheck.a
 
 check_PROGRAMS = \
   extrkiller					\
@@ -101,12 +100,12 @@ check_PROGRAMS = extrkiller$(EXEEXT) reconstruction$(EXEEXT)
 am_extrkiller_OBJECTS = extrkiller.$(OBJEXT)
 extrkiller_OBJECTS = $(am_extrkiller_OBJECTS)
 extrkiller_LDADD = $(LDADD)
-extrkiller_DEPENDENCIES = ../check/libcheck.a
+extrkiller_DEPENDENCIES = $(top_builddir)/tests/check/libcheck.a
 extrkiller_LDFLAGS =
 am_reconstruction_OBJECTS = reconstruction.$(OBJEXT)
 reconstruction_OBJECTS = $(am_reconstruction_OBJECTS)
 reconstruction_LDADD = $(LDADD)
-reconstruction_DEPENDENCIES = ../check/libcheck.a
+reconstruction_DEPENDENCIES = $(top_builddir)/tests/check/libcheck.a
 reconstruction_LDFLAGS =
 
 DEFS = @DEFS@

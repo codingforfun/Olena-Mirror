@@ -1,20 +1,22 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_3 19)
-(Parent-Version oln 0_3 18)
-(Version-Log "2002-03-28  Alexandre Duret-Lutz  <duret_g@epita.fr>
+(Project-Version oln 0_3 20)
+(Parent-Version oln 0_3 19)
+(Version-Log "2002-04-02  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-	* demo/morpholena.cc: Include morpho/thinning.hh and
-	morpho/thickening.hh.
-	* src/Makefile.am (nobase_oln_HEADERS): Add
-	morpho/thinning.hh, morpho/thinning.inc, morpho/thickening.hh,
-	and morpho/thickening.inc.
+	* configure.ac: Output tests/convert/Makefile.
+
+2002-04-02  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* Makefile.am (SUBDIRS): Add convert.
+	* convert/Makefile.am, convert/convcomp.hh, convert/convomp.cc:
+	New files.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 28 Mar 2002 19:37:54 +0100")
-(Checkin-Login adl)
+(Checkin-Time "Tue, 02 Apr 2002 16:58:01 +0200")
+(Checkin-Login duret_g)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
                   "\\.o$"
@@ -67,6 +69,7 @@
 		  "tests/data/lena.pbm$"
 		  "tests/data/lena.pgm$"
 		  "tests/data/lena128.pgm$"
+		  "tests/convert/.*-.*-.*$"
                   "\\.#"
                   "^#"))
 (Project-Keywords)
@@ -77,10 +80,10 @@
   (NEWS (oln/0_NEWS 1.2 644))
   (README (oln/1_README 1.2 644))
   (Makefile.am (oln/2_Makefile.a 1.6 644))
-  (configure.ac (oln/3_configure. 1.3 644))
+  (configure.ac (oln/3_configure. 1.4 644))
   (THANKS (oln/4_THANKS 1.1 644))
   (img/lena.pgm (oln/5_lena.pgm 1.1 640) :no-keywords)
-  (ChangeLog (oln/6_ChangeLog 1.27 644))
+  (ChangeLog (oln/6_ChangeLog 1.28 644))
   (src/config/system.hh (oln/7_system.hh 1.1 644))
   (src/utils/timer.hh (oln/8_timer.hh 1.1 644))
   (src/utils/stat.hh (oln/9_stat.hh 1.2 644))
@@ -306,7 +309,7 @@
   (doc/aclocal.m4 (oln/e/4_aclocal.m4 1.2 644))
   (doc/Makefile.in (oln/e/5_Makefile.i 1.3 644))
   (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.6 644))
-  (configure (oln/e/7_configure 1.4 755))
+  (configure (oln/e/7_configure 1.5 755))
   (aclocal.m4 (oln/e/8_aclocal.m4 1.4 644))
   (Makefile.in (oln/e/9_Makefile.i 1.7 644))
   (tools/texinfo.tex (oln/e/10_texinfo.te 1.2 644))
@@ -370,14 +373,14 @@
 ;; Files added by populate at Thu, 28 Mar 2002 19:27:57 +0100,
 ;; to version 0_3.17(w), by adl:
 
-  (tests/ChangeLog (oln/e/30_ChangeLog 1.1 644))
+  (tests/ChangeLog (oln/e/30_ChangeLog 1.2 644))
   (tests/morpho/extrkiller.cc (oln/e/31_extrkiller 1.1 644))
   (tests/morpho/Makefile.am (oln/e/32_Makefile.a 1.1 644))
-  (tests/morpho/Makefile.in (oln/e/33_Makefile.i 1.1 644))
+  (tests/morpho/Makefile.in (oln/e/33_Makefile.i 1.2 644))
   (tests/morpho/reconstruction.cc (oln/e/34_reconstruc 1.1 644))
   (tests/check/srcdir.hh (oln/e/35_srcdir.hh 1.1 644))
   (tests/check/Makefile.flags (oln/e/36_Makefile.f 1.1 644))
-  (tests/check/Makefile.check (oln/e/37_Makefile.c 1.1 644))
+  (tests/check/Makefile.check (oln/e/37_Makefile.c 1.2 644))
   (tests/check/srcdir.cc (oln/e/38_srcdir.cc 1.1 644))
   (tests/check/Makefile.in (oln/e/39_Makefile.i 1.1 644))
   (tests/check/check.hh (oln/e/40_check.hh 1.1 644))
@@ -385,13 +388,21 @@
   (tests/check/verbose.hh (oln/e/42_verbose.hh 1.1 644))
   (tests/check/main.cc (oln/e/43_main.cc 1.1 644))
   (tests/check/Makefile.am (oln/e/44_Makefile.a 1.1 644))
-  (tests/Makefile.am (oln/e/45_Makefile.a 1.1 644))
-  (tests/Makefile.in (oln/e/46_Makefile.i 1.1 644))
+  (tests/Makefile.am (oln/e/45_Makefile.a 1.2 644))
+  (tests/Makefile.in (oln/e/46_Makefile.i 1.2 644))
   (tests/io/2d.cc (oln/e/47_2d.cc 1.1 644))
   (tests/io/loadsave.hh (oln/e/48_loadsave.h 1.1 644))
   (tests/io/Makefile.am (oln/e/49_Makefile.a 1.1 644))
-  (tests/io/Makefile.in (oln/e/50_Makefile.i 1.1 644))
+  (tests/io/Makefile.in (oln/e/50_Makefile.i 1.2 644))
   (tests/data/lena.ppm (oln/e/51_lena.ppm 1.1 600) :no-keywords)
+
+;; Files added by populate at Tue, 02 Apr 2002 16:54:37 +0200,
+;; to version 0_3.19(w), by duret_g:
+
+  (tests/convert/Makefile.am (oln/f/0_Makefile.a 1.1 644))
+  (tests/convert/convcomp.hh (oln/f/1_convcomp.h 1.1 644))
+  (tests/convert/Makefile.in (oln/f/2_Makefile.i 1.1 644))
+  (tests/convert/convcomp.cc (oln/f/3_convcomp.c 1.1 644))
 )
 (Merge-Parents)
 (New-Merge-Parents)

@@ -1,5 +1,10 @@
 # Process current dir first to built the data.
-SUBDIRS = . check io morpho
+# Process the check directory next, because it contains functions
+# needed by other directories.
+SUBDIRS = . check \
+  convert \
+  io \
+  morpho
 
 # SOURCEDATA should never be erased, they are needed to generate
 # BUILTDATA.  SOURCEDATA are the only data files worth to keep under
