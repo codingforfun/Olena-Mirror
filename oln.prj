@@ -1,12 +1,12 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 9 7)
-(Parent-Version oln 9 6)
+(Project-Version oln 9 8)
+(Parent-Version oln 9 7)
 (Version-Log "prcs problems !
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 02 Jun 2003 17:24:10 +0200")
+(Checkin-Time "Mon, 02 Jun 2003 17:25:21 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -899,6 +899,16 @@
   (integre/ntg/cplx.hh (oln/t/13_cplx.hh 1.1 600))
   (integre/ntg/color.hh (oln/t/14_color.hh 1.1 600))
   (integre/ntg/bin.hh (oln/t/15_bin.hh 1.1 600))
+
+;; Files added by populate at Mon, 02 Jun 2003 17:25:14 +0200,
+;; to version 9.7(w), by burrus_n:
+
+  (integre/ntg/real/range.hh (oln/t/16_range.hh 1.1 640))
+  (integre/ntg/real/cycle.hh (oln/t/17_cycle.hh 1.1 640))
+  (integre/ntg/vect/vec.hh (oln/t/18_vec.hh 1.1 640))
+  (integre/ntg/vect/cplx.hh (oln/t/19_cplx.hh 1.1 640))
+  (integre/ntg/color/color.hh (oln/t/20_color.hh 1.1 640))
+  (integre/ntg/enum/bin.hh (oln/t/21_bin.hh 1.1 640))
 )
 (Merge-Parents)
 (New-Merge-Parents)
