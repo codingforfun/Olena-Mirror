@@ -8,7 +8,8 @@ AC_CONFIG_SRCDIR([config/oln.m4])
 AM_INIT_AUTOMAKE([1.7 no-define foreign dist-bzip2])
 AC_CONFIG_HEADERS([config.h:config.hin])
 
-if test "x$CXXFLAGS" = x; then
+# FIXME: maybe not the best way to do this
+if test ! ${CXXFLAGS+set}; then
    CXXFLAGS=""
 fi
 

@@ -1,3 +1,7 @@
+2003-06-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* configure.ac: Clean CXXFLAGS detection.
+
 2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 	
 	* configure.ac: Add a test entry for integre/tests/sanity.
