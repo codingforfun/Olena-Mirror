@@ -1,0 +1,97 @@
+Q: My source tree behaves strangely.
+
+R: Make sure you have many development tools installed, and then run:
+
+     make maintainer-clean
+     ./bootstrap.sh
+
+    (from the toplevel source directory)
+
+    This will clear anything that can be regenerated back, and
+    re-generate the project control files (autoreconf)
+
+---
+
+Q: I do not want to involve the  documentation in my build process (it
+   takes too long and/or I do not have the tools to  build it). How can I
+   disable it ?
+
+R: run the toplevel configure with the following flags:
+
+    --disable-doc-build
+
+---
+
+Q: the toplevel configure script does not show all options when passed
+   --help. What is happening ?
+
+R: Some options (most of the feature-related ones, in fact) only
+   pertain to the doc/ and src/ subdirectories. Run:
+ 
+      configure --help=recursive
+
+   to see them all.
+
+---
+
+Q: I know that automake-generated Makefiles can re-run configure and
+   re-generate themselves when I change Makefile.am. How can I activate
+   this feature ?
+
+R: run configure with the following flags:
+  
+    --enable-maintainer-mode --enable-dependency-tracking
+
+Q: This does not work.
+R: Oh, in fact, do not forget setting your environment variable ACLOCAL:
+
+   export ACLOCAL="aclocal -I `pwd`/src"
+
+   so that aclocal can find oln.m4 in the src/ subdirectory.
+
+---
+
+Q: How can I use Olena in my projects ?
+
+Option 1: add -Ipath_to_installed_headers to your compile flags.
+     This is simple, however works poorly as soon as you do not use
+     the exactly same compiler configuration as used to install
+     Olena. For a more general approach, use options 2 or 3.
+
+Option 2: Use autoconf and the provided oln.m4. Several macros can be
+     used:
+
+     - AM_PATH_OLN
+
+         Require configure to look for Olena, and set OLN_INCLUDEDIR
+         and OLN_SOURCE_DIR accordingly.
+	 This macro can be passed a directory as a "hint".
+
+     - AC_WITH_OLN
+
+	 Implies AM_PATH_OLN.
+	 Checks compiler  features and add necessary AC_DEFINEs (stuff
+	 in your config.h) and flags to CXXFLAGS.
+
+     - OLN_ENABLE_EXCEPTIONS
+
+	 Enable the raise of C++ exceptions instead of aborting on
+	 errors. This breaks some optimizations, so do not use unless
+	 required.
+
+     See the file src/configure.ac for an example invocation of these
+     macros.
+
+Options 3 (not yet available): Use olenize.
+
+     After you run "olenize" in a directory, two files appear there:
+ 
+         - oln-config.h
+         - oln-config.sh
+
+     Then, add calls to oln-config.sh to retrieve compile flags:
+
+         c++ -c `./oln-config.sh --cxxflags` file.cc -o file.o
+
+     To compile with exceptions enabled, use -DOLN_EXCEPTIONS.
+

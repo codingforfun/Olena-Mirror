@@ -1,74 +1,22 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5_reconf 12)
-(Parent-Version oln 0_5_reconf 11)
+(Project-Version oln 0_5_reconf 13)
+(Parent-Version oln 0_5_reconf 12)
 (Version-Log "Index: ChangeLog
-from  Raphael Poss  <raph@lrde.epita.fr>
+from  Raphael Poss  <raph@sandrock>
 
-        * Makefile.am: tweak.
-        * configure.ac (OLN_SOURCE_DIR): new AC_DEFINE. tweak.
-
-        * src/oln.m4 (OLN_ENABLE_EXCEPTIONS, OLN_DISABLE_EXCEPTIONS): new
-        macros.
-
-        * src/Makefile.am (ACLOCAL_FLAGS): add.
-        (CONFIGURE_DEPENDENCIES): depend on oln.m4.
-
-        * src/oln.m4 (CPPFLAGS, CXXFLAGS): now user-defined CXXFLAGS and
-        CPPFLAGS are never totally overriden. (AC_TEMPLATE_DEPTH) Add
-        checks for deep template recursion.
-
-        * src/configure.ac (CXX, CXXFLAGS, OLN_INCLUDEDIR): AC_DEFINE more
-        variables.
-
-        * src/utilities/generate_morpho.sh (AM_CPPFLAGS, AM_CXXFLAGS): be
-        nice to the new configuration system.
-        * src/utilities/Makefile.am (AM_CXXFLAGS): likewise.
-
-        * oln/config/system.hh: include config.h if HAVE_CONFIG_H is defined.
-
+   * FAQ: add.
 
 Index: src/tests/ChangeLog
-from  Raphael Poss  <raph@lrde.epita.fr>
+from  Raphael Poss  <raph@sandrock>
 
-   * transforms/fft.cc, transforms/dwt.cc (check): create OUTPUT_DIR
-   before using it.
+   * types/runtests (rundir): add $CPPFLAGS to compilation flags and
+   cross fingers.
 
-   * types/tests/conv2: mark XFAIL for seemingly obvious reasons.
-
-   * morpho/Makefile.am (CXXFLAGS): do not override CXXFLAGS
-   completely.
-
-   * meta/gen_test.cc (write_postlude_and_test): be nice to the new
-   configuration system. Report exit status of commands.
-   * check/Makefile.flags: likewise.
-
-   * Makefile.am: make things work when Olena is 'configure'd from
-   another directory than its sources.  (BUILTDATA, SOURCEDATA,
-   SOURCEIMGS, BUILTIMGS) macro name changes.
-
-   * data-src: renamed from data.
-
-   * check/data.cc: remove a small glitch.
-
-2002-12-05  Raphael Poss  <raph@lrde.epita.fr> 
- 
-        * configure.ac: fix so that now olena-doc can be an independant 
-        package. 
-         
-        * doc/Makefile.am (EXTRA_DIST): include some generated files in 
-        the distribution. Pass CXXCOMPILE to processing.tpl. 
-        * tpl/processing.tpl: use CXXCOMPILE instead of a custom 
-        compilation command. Now processing.tpl is properly autoconf'ed. 
- 
-        * Makefile.am (ACLOCAL_FLAGS): add. 
-        (CONFIGURE_DEPENDENCIES): depend on ../src/oln.m4. 
-        (EXTRA_DIST): add. 
- 
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 05 Dec 2002 17:25:05 +0100")
+(Checkin-Time "Thu, 05 Dec 2002 18:06:28 +0100")
 (Checkin-Login raph)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -192,7 +140,7 @@ from  Raphael Poss  <raph@lrde.epita.fr>
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.26 660))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.104 660))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.105 660))
   (configure.ac (oln/3_configure. 1.32 660))
   (configure (oln/e/7_configure 1.41 770))
   (README (oln/1_README 1.5 660))
@@ -430,7 +378,7 @@ from  Raphael Poss  <raph@lrde.epita.fr>
   (src/tests/meta/test_array1d.cc (oln/f/26_test_array 1.2 660))
   (src/tests/meta/test_array2d.cc (oln/f/25_test_array 1.2 660))
   (src/tests/meta/test_array3d.cc (oln/f/24_test_array 1.2 660))
-  (src/tests/ChangeLog (oln/e/30_ChangeLog 1.50 660))
+  (src/tests/ChangeLog (oln/e/30_ChangeLog 1.51 660))
   (src/tests/check/check.hh (oln/e/40_check.hh 1.2 660))
   (src/tests/check/data.cc (oln/f/5_data.cc 1.3 660))
   (src/tests/check/data.hh (oln/f/6_data.hh 1.1 660))
@@ -572,7 +520,7 @@ from  Raphael Poss  <raph@lrde.epita.fr>
   (src/tests/types/tests/int2 (oln/h/0_int2 1.1 660))
   (src/tests/types/tests/int1 (oln/h/1_int1 1.1 660))
   (src/tests/types/tests/unsafe1 (oln/h/2_unsafe1 1.1 660))
-  (src/tests/types/runtests (oln/h/3_runtests 1.4 770))
+  (src/tests/types/runtests (oln/h/3_runtests 1.5 770))
   (src/tests/types/Makefile.in (oln/h/4_Makefile.i 1.13 664))
   (src/tests/types/Makefile.am (oln/h/5_Makefile.a 1.3 660))
 
@@ -896,6 +844,13 @@ from  Raphael Poss  <raph@lrde.epita.fr>
 ;; from version 0_5_reconf.11(w), by raph:
 
   ; (tools/ChangeLog ())
+
+;; Files added by populate at Thu, 05 Dec 2002 18:01:07 +0100,
+;; to version 0_5_reconf.12(w), by raph:
+
+  (FAQ (oln/j/31_FAQ 1.1 664))
 )
-(Merge-Parents)
+(Merge-Parents
+  (0_5_reconf.12 complete)
+)
 (New-Merge-Parents)

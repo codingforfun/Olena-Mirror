@@ -1,3 +1,8 @@
+2002-12-05  Raphael Poss  <raph@sandrock>
+
+	* types/runtests (rundir): add $CPPFLAGS to compilation flags and
+	cross fingers.
+
 2002-12-05  Raphael Poss  <raph@lrde.epita.fr>
 
 	* transforms/fft.cc, transforms/dwt.cc (check): create OUTPUT_DIR
