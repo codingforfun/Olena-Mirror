@@ -178,11 +178,11 @@ namespace oln {
 
       /// Return a reference to the image size.
 
-      const size_type&
+      const size_type
       size() const
       {
 	assertion(has_impl());
-	return this->exact().impl()->size();
+	return this->exact().size();
       }
 
       /// Return the value of the border width.
@@ -341,7 +341,7 @@ mlc_exact_type(ImgType)::value_type
 mlc_exact_type_(ImgType)::value_type
 
 # define oln_concrete_type(ImgType)		\
-typename mute<ImgType>::ret
+typename oln::mute<ImgType>::ret
 
 # define oln_exact_type(ImgType)		\
 mlc_exact_type(ImgType)

@@ -1,3 +1,37 @@
+2004-04-13  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* ref/Makefile.am: Make the doc have good dependencies.
+
+2004-04-09  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* doc/ref/Makefile.am: Use `clean-local' and `distclean-local' to delete
+	files.
+	* doc/ref/out/exdoc.config.in: Add `DOC_CPPFLAGS' to the compilation
+	flags.
+
+2004-04-09  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* ref/out/exdoc.config.in: Add include directory.
+
+2004-04-03  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* doc/ref/Makefile.am: Add `CLEANFILES' variable to delete all the
+	created files.
+
+2004-04-03  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* doc/ref/out/exdoc.config.in: Remove -DNEED_ROUND -DNEED_ROUNDF flags.
+
+2004-04-03  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* doc/ref/Makefile.am: Replace `make' by $(MAKE).
+	* doc/ref/out/exdoc.config.in: Add -DNEED_ROUND -DNEED_ROUNDF flags
+	to examples compilation.
+
+2004-04-03  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* ref/Makefile.am: Correct install-data-hook rule.
+
 2004-03-25  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* ref/doxygen.config.in: Remove deprecated entries.

@@ -36,6 +36,7 @@
 # include <oln/basics2d.hh>
 # include <oln/basics3d.hh>
 
+
 namespace oln {
 
   /// Contain all the morpher relative declarations and functions.
@@ -46,36 +47,49 @@ namespace oln {
 
     namespace abstract {
 
-      /*! Traits for conditionnal inheritance used by the \a generic_morpher
-      **
-      ** It changes the exact type of the image in the input (the exact
-      ** type becomes the concrete morpher).
-      **
-      ** \see oln::morpher::generic_morpher
-      */
-      template <class T, class Exact>
-      struct gm_inherit;
+      template <class SrcType, class Exact>
+      class generic_morpher;
 
-      /// Return \a image1d with an \a exact_type of \a Exact.
-      template <class T, class Exact>
-      struct gm_inherit<oln::image1d<T>, Exact >
+    }
+  }
+
+  template <class Exact, class SrcType>
+  struct image_traits<morpher::abstract::generic_morpher<SrcType, Exact> >:
+    public image_traits<abstract::image_with_impl<typename image_id<Exact>::impl_type,
+						  typename image_id<Exact>::exact_type> >
+  {
+
+  };
+
+  namespace morpher {
+
+    namespace abstract {
+
+      template <unsigned Dim, class T>
+      struct dest_type;
+
+      template <class T>
+      struct dest_type<1, T>
       {
-	typedef oln::image1d<T, Exact> ret;
+	typedef image1d<T> ret;
       };
 
-      /// Return \a image2d with an \a exact_type of \a Exact.
-      template <class T, class Exact>
-      struct gm_inherit<oln::image2d<T>, Exact >
+
+      template <class T>
+      struct dest_type<2, T>
       {
-	typedef oln::image2d<T, Exact> ret;
+	typedef image2d<T> ret;
       };
 
-      /// Return \a image3d with an \a exact_type of \a Exact.
-      template <class T, class Exact>
-      struct gm_inherit<oln::image3d<T>, Exact >
+
+      template <class T>
+      struct dest_type<3, T>
       {
-	typedef oln::image3d<T, Exact> ret;
+	typedef image3d<T> ret;
       };
+
+
+
 
       /*! The Abstract morpher class.
       **
@@ -89,10 +103,10 @@ namespace oln {
       ** \param Exact Exact type
       */
 
-      template <class DestType, class SrcType, class Exact>
-      class generic_morpher : public gm_inherit<
-	DestType,
-	Exact>::ret
+      template <class SrcType, class Exact>
+      class generic_morpher :
+	public oln::abstract::image_with_impl<typename image_id<Exact>::impl_type,
+					      Exact>
       {
       protected:
 
@@ -110,27 +124,28 @@ namespace oln {
       public:
 
 	/// The self type.
-	typedef generic_morpher<DestType, SrcType, Exact> self_type;
+	typedef generic_morpher<SrcType, Exact> self_type;
 
 	/// The exact type of the morpher.
 	typedef Exact exact_type;
 	/// The morpher point type.
-	typedef oln_point_type(DestType) point_type;
-	/// The morpher dpoint type.
-	typedef oln_dpoint_type(DestType) dpoint_type;
-	/// The morpher iterator type.
-	typedef oln_iter_type(DestType) iter_type;
+	typedef typename image_traits<exact_type>::point_type point_type;
+ 	/// The morpher dpoint type.
+	typedef typename image_traits<exact_type>::dpoint_type dpoint_type;
+ 	/// The morpher iterator type.
+	typedef typename image_traits<exact_type>::iter_type iter_type;
 	/// The morpher forward iterator type.
-	typedef oln_fwd_iter_type(DestType) fwd_iter_type;
+	typedef typename image_traits<exact_type>::fwd_iter_type fwd_iter_type;
 	/// The morpher backward iterator type.
-	typedef oln_bkd_iter_type(DestType) bkd_iter_type;
-	/// The morpher value type.
-	typedef oln_value_type(DestType) value_type;
+	typedef typename image_traits<exact_type>::bkd_iter_type bkd_iter_type;
+ 	/// The morpher value type.
+	typedef typename image_traits<exact_type>::value_type value_type;
 	/// The morpher size type.
-	typedef oln_size_type(DestType) size_type;
-	/// The morpher underlying implementation.
-	typedef oln_impl_type(DestType) impl_type;
+	typedef typename image_traits<exact_type>::size_type size_type;
+ 	/// The morpher underlying implementation.
+	typedef typename image_traits<exact_type>::impl_type impl_type;
 
+	typedef typename dest_type<image_traits<exact_type>::dim, value_type>::ret DestType;
 
 	/// Type of the decorated image.
 	typedef SrcType src_self_type;
@@ -155,7 +170,10 @@ namespace oln {
 	typedef oln_exact_type(SrcType) src_exact_type;
 
 	/// The upper class.
-	typedef typename gm_inherit<DestType, Exact>::ret super_type;
+	typedef oln::abstract::image_with_impl<impl_type,
+					       exact_type>
+	super_type;
+
 
 	/// Return the decorated image.
 	const SrcType&
@@ -164,17 +182,18 @@ namespace oln {
 	  return ima_;
 	}
 
-	/// Instantiate and return the image that the morpher simulates.
-	DestType*
+	/// Instantiate and return the image that the morpher is simulating.
+	DestType
 	unmorph() const
 	{
-	  DestType*			im = new DestType(to_exact(*this).size());
-	  oln_iter_type(DestType)	it(*im);
+	  DestType			res(to_exact(*this).size());
+	  oln_iter_type(DestType)	it(res);
 
 	  for_all(it)
-	    (*im)[it] = to_exact(*this).operator[](it);
-	  return im;
+	    res[it] = (*this)[it];
+	  return res;
 	}
+
 
 	/*! Default implementation of at.
 	**
@@ -186,7 +205,7 @@ namespace oln {
 	const src_value_type
 	at(const src_point_type& p) const
 	{
-	  return to_exact(ima_).at(p);
+	  return ima_[p];
 	}
 
 	/*! Default implementation of at.
@@ -199,31 +218,31 @@ namespace oln {
 	src_value_type&
 	at(const src_point_type& p)
 	{
-	  return to_exact(ima_).at(p);
+	  return ima_[p];
 	}
 
 	/// Default implementation of impl.
 	const src_impl_type*
 	impl() const
 	{
-	  return to_exact(ima_).impl();
+	  return ima_.impl();
 	}
 
 	/// Default implementation of impl.
 	src_impl_type*
 	impl()
 	{
-	  return to_exact(ima_).impl();
+	  return ima_.impl();
 	}
 
 	/*! Default implementation of clone_.
 	**
 	** Return a copy of the decorated image.
 	*/
-	src_self_type
+	src_exact_type
 	clone_() const
 	{
-	  return to_exact(ima_).clone_();
+	  return to_exact(ima_).clone();
 	}
 
 	/*! Default implementation of npoints_.
@@ -233,7 +252,7 @@ namespace oln {
 	size_t
 	npoints_()
 	{
-	  return to_exact(ima_).npoints_();
+	  return to_exact(ima_).npoints();
 	}
 
 	/*! Default implementation of assign.

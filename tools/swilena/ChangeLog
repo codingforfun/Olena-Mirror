@@ -1,3 +1,43 @@
+2004-04-12  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* tools/swilena/generate_morpho_instantiations.py: Remove
+	maxima_killer minima_killer from swilena_morpho1d_* and
+	swilena_morpho3d_*.
+
+2004-04-12  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* swilena/expand.sh: Add `CLEANFILES' variables to
+	python/makefile.swig.
+	* swilena/ruby/Makefile.am: Add `clean-local' rule.
+	* swilena/src/Makefile.am: Add `distclean-local' rule.
+
+2004-04-12  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* tools/swilena/generate_morpho_instantiations.py: Fix and add
+	some algorithms.
+
+2004-04-11  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* tools/swilena/meta/swilena_ntg.i: Remove "(do_nothing)".
+	* tools/swilena/meta/swilena_morpho.i: Likewise.
+	* tools/swilena/meta/swilena_exception.i: Likewise.
+	* tools/swilena/generate_morpho_instantiations.py: Remove debug info.
+
+2004-04-11  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* swilena/expand.sh: Split morpho modules to make the code compile
+	faster.
+	* swilena/generate_morpho_instantiations.py: Likewise.
+	* swilena/meta/swilena_ntg.i: Add `do_nothing' argument to empty SWIG
+	macros since the SWIG preprocessor does not support them.
+	* swilena/meta/swilena_morpho.i: Likewise.
+
+2004-04-10  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* swilena/meta/swilena_structelt.i: Fix a bug.
+	* swilena/doc/swilena.texi: Fix a bug.
+	* swilena/python/Makefile.am: Add clean_local.
+
 2004-01-26  Astrid Wang  <astrid@lrde.epita.fr>
 
 	* doc/swilena.texi: Fix body.

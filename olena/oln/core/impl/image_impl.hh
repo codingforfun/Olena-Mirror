@@ -81,6 +81,7 @@ namespace oln {
 
       image_impl(const size_type s): refcount_(0), size_(s) {}
 
+      image_impl() {}
 
       /// Notice that there is a new reference to the object.
 

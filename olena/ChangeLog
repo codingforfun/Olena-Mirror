@@ -1,3 +1,77 @@
+2004-04-13  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* tests/convol/tests/md5_convol_fast_gaussian_hh3: Correct the
+	test to make it success on mac.
+
+	* tests/convol/tests/md5_convol_fast_gaussian_hh0: Likewise.
+
+2004-04-13  Giovanni Palma  <giovanni@lrde.epita.fr>
+
+	* oln/makefile.src: Add file.
+
+	* oln/Makefile.am: Move source listing into 'makefile.src'.
+
+2004-04-12  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* olena/oln/core/abstract/image.hh: Fix macro oln_concrete_type.
+	* olena/tests/morpho/tests/gradient: New.
+
+2004-04-12  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* olena/oln/morpho/laplacian.inc: Add a FIXME.
+	* olena/oln/morpho/watershed.hh: Add a FIXME.
+
+2004-04-11  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* olena/oln/core/point2d.hh: Add header include.
+	* olena/oln/core/point2d.hxx: Likewise.
+	* olena/oln/core/point3d.hh: Likewise.
+	* olena/oln/core/point3d.hxx: Likewise.
+
+2004-04-07  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* olena/oln/Makefile.am: Add forgotten files to the distribution.
+
+2004-04-04  Simon Odou  <simon@lrde.epita.fr>
+
+	* oln/core/image1d.hh: Add informations to image_id.
+	* oln/core/image2d.hh: Likewise
+        * oln/core/image3d.hh: Likewise
+	* oln/core/impl/image_array1d.hh: Add empty constructor for any_with_diamond.
+	* oln/core/impl/image_array.hh: Likewise.
+	* oln/core/impl/image_array2d.hh: Likewise.
+	* oln/core/impl/image_array3d.hh: Likewise.
+	* oln/core/impl/image_impl.hh: Likewise.
+	* oln/core/abstract/image_size.hh: Likewise.
+	* oln/core/image1d_size.hh: Likewise.
+	* oln/core/image2d_size.hh: Likewise.
+	* oln/core/image3d_size.hh: Likewise.
+	* tests/morpher/tests/piece: New.
+	* tests/morpher/tests/iter: New.
+	* tests/morpher/tests/slicing: New.
+	* oln/core/abstract/image.hh: Size() returns const inside of const &.
+	* oln/morpher/piece_morpher.hh: Adapt to new version of generic morpher.
+	Respect 80 columns.
+	* oln/morpher/slicing_morpher.hh: Likewise.
+	* oln/morpher/iter_morpher.hh: Likewise.
+	Better example for documentation.
+	* oln/Makefile.am: Add files.
+	* oln/morpher/generic_morpher.hh: Fix a bug.
+
+2004-04-03  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* olena/oln/Makefile.am: Add files.
+	* olena/oln/morpher/generic_morpher.hh: Repair unmorph().
+	* olena/oln/morpher/color_morpher.hh: Correct comments.
+	* olena/tests/morpher/tests/color_morph: Readd a test.
+
+2004-04-03  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* olena/oln/morpher/generic_morpher.hh: Inherit directly from oln::image.
+	* olena/oln/morpher/subq_morpher.hh: Change inheritance system.
+	* olena/oln/morpher/color_morpher.hh: Likewise.
+	* olena/tests/morpher/tests/color_morph: Remove a test.
+
 2004-04-02  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* tests/topo/tests/tarjan: Correct test.

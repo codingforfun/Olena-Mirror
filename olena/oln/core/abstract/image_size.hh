@@ -39,9 +39,9 @@
 namespace oln {
 
   namespace abstract {
-    
-    
-    
+
+
+
     template<class Exact>
     struct image_size; // fwd_decl
 
@@ -56,76 +56,76 @@ namespace oln {
   ** which gives the dimension of the template
   ** parameter.
   */
-  
+
   template<class Exact>
   struct image_size_traits<abstract::image_size<Exact> >
   {
   };
 
-  
+
   namespace abstract {
 
-    
+
     /*! \class image_size
     **
     ** The class that defines the image size
     ** according to its dimension.
     */
-    
+
     template<class Exact>
     struct image_size : public mlc_hierarchy::any< Exact >
     {
-      
+
     public:
-      
+
       enum { dim = image_size_traits<Exact>::dim };
-      
+
       /*! \brief Return the number of coordinates
       ** in the nth section of the image.
       */
-      
-      coord 
+
+      coord
       nth(unsigned n) const
       {
 	assertion(n < dim);
 	return coord_[n];
       }
-      
+
       /*! \brief Return a reference to the number of coordinates
       ** in the nth section of the image.
       */
-      
 
-      coord& 
+
+      coord&
       nth(unsigned n)
       {
 	assertion(n < dim);
 	return coord_[n];
       }
-      
+
       /// Return the value border width of the current image.
-      coord 
+      coord
       border() const
       {
 	return border_;
       }
-      
+
       /// Return a reference to  the border width of the current image.
-      
-      coord& 
+
+      coord&
       border()
       {
 	return border_;
       }
 
-      /*! \brief Test if two images 
+      /*! \brief Test if two images
       ** have compatible size.
-      ** 
+      **
       ** \return True if the two images have compatible size, false otherwise.
       */
 
       template< class S >
-      bool 
+      bool
       operator==(const image_size<S>& size) const
       {
 	for (unsigned i = 0; i < dim; ++i)
@@ -133,14 +133,14 @@ namespace oln {
 	    return false;
 	return true;
       }
-      
+
       /*! \brief Test if two images do not have compatible size
       **
       ** \return False if the two images have compatible size, true otherwise.
       */
-      
+
       template< class S >
-      bool 
+      bool
       operator!=(const image_size<S>& size) const
       {
 	for (unsigned i = 0; i < dim; ++i)
@@ -148,28 +148,27 @@ namespace oln {
 	    return true;
 	return false;
       }
-      
-      
-      
-      static std::string 
-      name() 
-      { 
+
+
+
+      static std::string
+      name()
+      {
 	return std::string("image_size<") +
-	  Exact::name() + ">"; 
+	  Exact::name() + ">";
       }
 
-    protected:
-      
-      
-      image_size() 
+      image_size()
       {}
-      
+
+    protected:
+
       /*! border_ represents the width of the image border
       ** such a mecanism allow algorithm to perform operation
-      ** on the points at the edge of the image as if they were 
+      ** on the points at the edge of the image as if they were
       ** normally surrounded by points
       */
-      
+
       coord border_;
 
     private:
@@ -178,11 +177,11 @@ namespace oln {
       /*! \brief An array that contains the number
       ** of coordinates for each dimension.
       */
-      
+
       coord coord_[dim];
 
     };
-    
+
   } // end of abstract
 
 } // end of oln

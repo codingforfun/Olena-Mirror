@@ -1,0 +1,66 @@
+//                                                                  -*- c++ -*-
+#include <oln/morpher/piece_morpher.hh>
+#include <oln/basics2d.hh>
+#include <ntg/all.hh>
+
+#include <oln/utils/md5.hh>
+#include "data.hh"
+#include "check.hh"
+
+// Try to read from the morpher.
+template <class E, class F>
+void foo(const oln::abstract::image<E>& src, oln::abstract::image<F>& dst)
+{
+  oln_iter_type(oln::abstract::image<E>) it(src);
+  for_all(it)
+      dst[it] = src[it];
+}
+
+// Try to write inside the morpher.
+template <class E, class F>
+void foo(oln::abstract::image<E>& src, oln::abstract::image<F>& dst)
+{
+  oln_iter_type(oln::abstract::image<E>) it_src(src);
+
+  for_all(it_src)
+      src[it_src] = dst[it_src];
+}
+
+int main()
+{
+  bool fail (false);
+
+  oln::utils::key::value_type data_key[16]
+    = {0x2b, 0x8b, 0x3c, 0x8e, 0x92, 0x90, 0xc8, 0x9,
+       0xba, 0xfd, 0xc5, 0x52, 0x7c, 0xde, 0xa5, 0x6c};
+
+  oln::image2d<ntg::rgb_8> im = oln::load(rdata("lena.ppm"));
+  const oln::image2d<ntg::rgb_8> im_const = oln::load(rdata("lena.ppm"));
+  oln::image2d<ntg::rgb_8> im_out(oln::image2d_size(30, 60, im.border()));
+  oln::image2d<ntg::rgb_8> im_const_out(oln::image2d_size(30, 60, im.border()));
+
+  oln::morpher::piece_morpher< oln::image2d<ntg::rgb_8> > im_nonconst_out(im,
+									  oln::dpoint2d(246, 244),
+									  oln::image2d_size(30, 60, im.border()));
+
+  foo(im_nonconst_out, im);
+  foo(oln::morpher::piece_morph(im,
+				oln::dpoint2d(246, 244),
+				oln::image2d_size(30, 60, im.border())),
+      im_out);
+  foo(oln::morpher::piece_morph(im_const,
+				oln::dpoint2d(246, 244),
+				oln::image2d_size(30, 60, im.border())),
+      im_const_out);
+
+  fail = fail | (oln::utils::md5(im_out) != oln::utils::md5(im_nonconst_out));
+  fail = fail | (oln::utils::md5(im_const_out) != oln::utils::key(data_key));
+
+  if (!fail)
+    std::cout << "OK" << std::endl;
+  else
+  {
+    std::cout << "FAIL" << std::endl;
+    return true;
+  }
+}

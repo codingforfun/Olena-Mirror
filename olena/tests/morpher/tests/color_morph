@@ -36,7 +36,8 @@ int main()
   fail = fail | (oln::utils::md5(oln::morpher::gmorph(imc)) != oln::utils::key(data_key_c_g));
   fail = fail | (oln::utils::md5(oln::morpher::bmorph(imc)) != oln::utils::key(data_key_c_b));
   fail = fail | (oln::utils::md5(oln::morpher::rmorph(imc_const)) != oln::utils::key(data_key_c_r));
-  fail = fail | (oln::utils::md5(*(oln::morpher::rmorph(imc).unmorph())) != oln::utils::key(data_key_c_r));
+  fail = fail | (oln::utils::md5(mimd) != oln::utils::md5(mimc));
+  fail = fail | (oln::utils::md5(oln::morpher::rmorph(imc).unmorph()) != oln::utils::key(data_key_c_r));
 
 
   if (!fail)

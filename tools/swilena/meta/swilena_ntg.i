@@ -16,7 +16,7 @@ class Name
   %extend {
     ValueType value() const
       { return (*self); }
-    void value(ValueType x) 
+    void value(ValueType x)
       { *self = Ns::Name<nbits, behavior>(x); }
 
 #if defined(SWIGPYTHON) || defined(SWIGRUBY)
@@ -94,7 +94,7 @@ class Name
   }
 
   EXTEND_DESCRIBE2(Ns::Name<nbits, behavior>);
-};  
+};
 %enddef
 
 /****** Generic class declaration for booleans *****/
@@ -108,7 +108,7 @@ class Name
   %extend {
     ValueType value() const
       { return (*self); }
-    void value(ValueType x) 
+    void value(ValueType x)
       { *self = Ns::Name(x); }
 
 #if defined(SWIGPYTHON)
@@ -154,10 +154,10 @@ class Name
   }
 
   EXTEND_DESCRIBE(Ns::Name);
-};  
+};
 %enddef
-    
-%define decl_complex()
+
+%define decl_complex
 template<typename repr, typename T>
 class cplx
 {
@@ -171,7 +171,7 @@ class cplx
   const T angle() const;
   const T first() const;
   const T second() const;
-  
+
   ntg::cplx<repr, T> conj() const;
 
   %extend {
@@ -185,7 +185,8 @@ class cplx
 };
 %enddef
 
-%define decl_ntg()
+// Swig preprocessor does not understand empty call to macros.
+%define decl_ntg
 %include <ntg/vect/cplx_representation.hh>
 %include <ntg/core/predecls.hh>
 %{
@@ -201,20 +202,20 @@ namespace ntg
   decl_scalar_class(ntg, int_s, long)
   decl_bin_class(ntg, bin, bool)
 
-  decl_complex()
+  decl_complex
 
 }
 %enddef
 
-decl_ntg()
+decl_ntg
 
-/* 
+/*
    Macro are defined for every type and should be used in all modules
    Using ntg::int_u32 (the typedef in predecls.hh) directly leads to
    type matching problems:
 
   - it is a typedef never used in module swilena_ntg
-    => no type correspondence is created between ntg::int_u32 
+    => no type correspondence is created between ntg::int_u32
        and ntg::int_u<32, ntg::strict>.
 
   - if another module use ntg::int_u32, operations on it won't be

@@ -22,13 +22,6 @@
 
      // accessors & operations
 
-     T operator-() const; // senseless for neighborhoods
-     %extend
-     {
-	T neg() const // senseless for neighborhoods
-	  { return -(*self); }
-     }
-
     EXTEND_DESCRIBE(T)
 
 %enddef
@@ -42,7 +35,7 @@
      T(unsigned n, const coord crd[]);
 
      // set operations
-     %extend 
+     %extend
      {
         T uni(const T& other) const
 	  { return oln::uni(*self, other); }
@@ -69,7 +62,7 @@ T& add(coord, coord, coord);
      {
        bool load(const char *name)
 	 { return oln::load(*self, name); }
-       
+
        bool save(const char *name) const
 	 { return oln::save(*self, name); }
      }

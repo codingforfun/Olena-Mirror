@@ -30,7 +30,7 @@
 
 # include <ntg/core/predecls.hh>
 # include <oln/core/coord.hh>
-# include <oln/core/abstract/point.hh>
+# include <oln/core/point2d.hh>
 # include <iostream>
 
 

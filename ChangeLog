@@ -1,3 +1,30 @@
+2004-04-11  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* configure.ac: Check the swig version to choose between -c and
+	-noruntime flag.
+	Make the python and ruby libraries path detection more efficient.
+	* config/oln.m4: Add `AC_CHECK_SWIG_FLAGS' macros.
+	* tools/swilena/expand.sh: Use `SWIG_FLAGS' variable.
+
+2004-04-11  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* configure.ac: Add support for ruby-1.7, ruby-1.8.
+
+2004-04-09  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* cleanup.sh: Replace `-or' by `-o' to improve portability.
+	* configure.ac: Add `DOC_CPPFLAGS' substitution.
+	* config/oln.m4: Add `DOC_CPPFLAGS' variable.
+	Improve portability.
+
+2004-04-07  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* config/oln.m4: Fix compiler detection.
+
+2004-04-03  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* config/oln.m4: Remove `-Werror' flag for g++-3.2.
+
 2004-03-29  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* configure.ac: Add morphers test suite.

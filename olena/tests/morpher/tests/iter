@@ -1,0 +1,71 @@
+//                                                                  -*- c++ -*-
+#include <oln/morpher/iter_morpher.hh>
+#include <oln/basics2d.hh>
+#include <ntg/all.hh>
+
+#include <oln/utils/md5.hh>
+#include "data.hh"
+#include "check.hh"
+
+// Try to read from the morpher.
+template <class E, class F>
+void foo(const oln::abstract::image<E>& src, oln::abstract::image<F>& dst)
+{
+  oln_iter_type(oln::abstract::image<E>) it_src(src);
+  oln_iter_type(oln::abstract::image<F>) it_dst(dst);
+
+  it_dst = mlc::begin;
+  for_all(it_src)
+    {
+      dst[it_dst] = src[it_src];
+      ++it_dst;
+    }
+}
+
+// Try to write inside the morpher.
+template <class E, class F>
+void foo(oln::abstract::image<E>& src, oln::abstract::image<F>& dst)
+{
+  oln_iter_type(oln::abstract::image<E>) it_src(src);
+  oln_iter_type(oln::abstract::image<F>) it_dst(dst);
+
+  it_dst = mlc::begin;
+  for_all(it_src)
+    {
+      src[it_src] = dst[it_dst];
+      ++it_dst;
+    }
+}
+
+int main()
+{
+  bool fail (false);
+
+  oln::utils::key::value_type data_key_inv[16]
+    = {0xd4, 0x2a, 0xe0, 0xc7, 0xc4, 0xea, 0xbc, 0xe4,
+       0x10, 0x6, 0x52, 0x12, 0xba, 0x8d, 0xa4, 0x4c};
+
+  oln::image2d<ntg::rgb_8> im = oln::load(rdata("lena.ppm"));
+  oln::image2d<ntg::rgb_8> im_out(im.size());
+
+  const oln::image2d<ntg::rgb_8> im_const = oln::load(rdata("lena.ppm"));
+  oln::image2d<ntg::rgb_8> im_const_out(im_const.size());
+
+  oln::morpher::iter_morpher< oln::image2d<ntg::rgb_8>,
+    oln_bkd_iter_type_(oln::image2d<ntg::rgb_8>) > it_nonconst(im);
+
+  foo(it_nonconst, im);
+  foo(oln::morpher::iter_morph<oln_bkd_iter_type_(oln::image2d<ntg::rgb_8>)>(im), im_out);
+  foo(oln::morpher::iter_morph<oln_bkd_iter_type_(oln::image2d<ntg::rgb_8>)>(im_const), im_const_out);
+
+  fail = fail | (oln::utils::md5(im_out) != oln::utils::md5(it_nonconst));
+  fail = fail | (oln::utils::md5(im_const_out) != oln::utils::key(data_key_inv));
+
+  if (!fail)
+    std::cout << "OK" << std::endl;
+  else
+  {
+    std::cout << "FAIL" << std::endl;
+    return true;
+  }
+}

@@ -216,6 +216,9 @@ namespace oln {
     ** \arg D Input image.
     ** \arg M Image of labels.
     ** \arg Ng Neighborhood to consider.
+    **
+    ** \todo FIXME: Not instantiated in swilena (see
+    ** tools/swilena/generate_morpho_instantiations.py)
     */
     template<class I1, class I2, class N>
     oln_concrete_type(I2)&

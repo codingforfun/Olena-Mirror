@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef ITER_MORPHER_HH
-# define ITER_MORPHER_HH
+#ifndef OLN_MORPHER_ITER_MORPHER_HH
+# define OLN_MORPHER_ITER_MORPHER_HH
 
 # include <oln/morpher/generic_morpher.hh>
 
@@ -39,30 +39,38 @@ namespace oln {
 
   } // end of namespace morpher
 
-  /// Inherits identification's informations about the iter morpher.
+  /// Informations about the iter morpher.
   template <class SrcType, class IterType, class Exact>
-  struct image_id< morpher::iter_morpher<SrcType, IterType, Exact> > : public image_id<SrcType>
-  {};
-
-  /// Inherits identification's informations about the const iter morpher.
-  template <class SrcType, class IterType, class Exact>
-  struct image_id< morpher::iter_morpher<const SrcType, IterType, Exact> > : public image_id<SrcType>
-  {};
-
-  /// Traits for iter morpher.
-  template <class SrcType, class IterType>
-  struct image_traits < morpher::iter_morpher<SrcType, IterType> > :
-    public image_traits<abstract::image_with_impl<oln_impl_type(SrcType),
-						  morpher::iter_morpher<SrcType, IterType> > >
+  struct image_id< morpher::iter_morpher<SrcType, IterType, Exact> >
   {
+    enum {dim = SrcType::dim}; ///< The Image dimension.
+    typedef oln_impl_type(SrcType) impl_type;
+    ///< Underlying implementation.
+    typedef oln_value_type(SrcType) value_type;
+    ///< The value type of the decorated image.
+    typedef typename mlc::exact_vt<
+        morpher::iter_morpher<SrcType, IterType, Exact>,
+        Exact
+      >::ret exact_type;
+    ///< Retrieve the exact type of the image.
+    typedef oln_point_type(SrcType) point_type;
+    typedef oln_dpoint_type(SrcType) dpoint_type;
+    typedef oln_size_type(SrcType) size_type;
     typedef IterType iter_type;
   };
 
-  /// Traits for const iter morpher.
-  template <class SrcType, class IterType>
-  struct image_traits < morpher::iter_morpher<const SrcType, IterType> > :
-    public image_traits<abstract::image_with_impl<oln_impl_type(SrcType),
-						  morpher::iter_morpher<const SrcType, IterType> > >
+  /// Traits for iter morpher.
+  template <class SrcType, class IterType, class Exact>
+  struct image_traits < morpher::iter_morpher<SrcType, IterType, Exact> >
+    : public
+  image_traits<
+    morpher::abstract::generic_morpher<
+      SrcType,
+      typename image_id<morpher::iter_morpher<SrcType,
+					      IterType,
+					      Exact> >::exact_type
+    >
+  >
   {
     typedef IterType iter_type;
   };
@@ -71,13 +79,20 @@ namespace oln {
 
     template <class SrcType, class IterType, class Exact>
     struct iter_morpher
-      : public abstract::generic_morpher< SrcType, SrcType, iter_morpher<SrcType, IterType, Exact> >
+      : public abstract::generic_morpher<
+          SrcType,
+          typename image_id<iter_morpher<SrcType,
+					 IterType,
+					 Exact> >::exact_type
+        >
     {
-      /// The type of the object instantiated. iter morpher can be derived.
-      typedef typename image_id< iter_morpher<SrcType, IterType, Exact> >::exact_type exact_type;
       typedef iter_morpher<SrcType, IterType, Exact> self_type;
-      typedef IterType iter_type;
-      typedef abstract::generic_morpher< SrcType, SrcType, iter_morpher<SrcType, IterType, Exact> > super_type;
+      typedef typename image_id<self_type>::exact_type exact_type;
+      typedef abstract::generic_morpher<SrcType, exact_type> super_type;
+
+      typedef typename image_id<exact_type>::iter_type iter_type;
+      typedef typename image_id<exact_type>::value_type value_type;
+      typedef typename image_id<exact_type>::point_type point_type;
 
       /// Construct the iter morpher with an image \a ima.
       iter_morpher(const SrcType &ima)
@@ -110,8 +125,32 @@ namespace oln {
         return this->exact();
       }
 
+      /*!
+      ** \brief Return the stored value at the point.
+      ** \arg p The point.
+      ** \return The stored value.
+      */
+      value_type&
+      at(const point_type& p)
+      {
+	return const_cast<value_type &>
+	  ( const_cast<SrcType &>(this->ima_)[p] );
+      }
+
+      /*!
+      ** \brief Return the stored value at the point.
+      ** \arg p The point.
+      ** \return The stored value.
+      */
+      const value_type
+      at(const point_type& p) const
+      {
+	return this->ima_[p];
+      }
+
       /// Useful to debug.
-      static std::string name()
+      static std::string
+      name()
       {
 	return "iter_morpher<" + super_type::name() + ">";
       }
@@ -121,13 +160,22 @@ namespace oln {
     /// The specialized version for `const' declared images.
     template <class SrcType, class IterType, class Exact>
     struct iter_morpher<const SrcType, IterType, Exact>
-      : public abstract::generic_morpher< SrcType, SrcType, iter_morpher<const SrcType, IterType, Exact> >
+      : public
+    abstract::generic_morpher<
+      const SrcType,
+      typename image_id<iter_morpher<const SrcType,
+				     IterType,
+				     Exact> >::exact_type
+    >
     {
-      /// The type of the object instantiated. iter morpher can be derived.
-      typedef typename image_id< iter_morpher<SrcType, IterType, Exact> >::exact_type exact_type;
       typedef iter_morpher<const SrcType, IterType, Exact> self_type;
-      typedef IterType iter_type;
-      typedef abstract::generic_morpher<SrcType, SrcType, iter_morpher<const SrcType, IterType, Exact> > super_type;
+      typedef typename image_id<self_type>::exact_type exact_type;
+      typedef abstract::generic_morpher<const SrcType, exact_type>
+      super_type;
+
+      typedef typename image_id<exact_type>::iter_type iter_type;
+      typedef typename image_id<exact_type>::value_type value_type;
+      typedef typename image_id<exact_type>::point_type point_type;
 
       /// Construct the iter morpher with an image \a ima.
       iter_morpher(const SrcType &ima)
@@ -135,19 +183,45 @@ namespace oln {
       {}
 
       /// Construct the iter morpher with another iter morpher.
-      iter_morpher(const iter_morpher<const SrcType, IterType>& r)
-	: super_type(r.get_ima()) {}
+      iter_morpher(const self_type& r)
+	: super_type(r.get_ima())
+      {}
 
       /*!
       ** \brief Empty constructor.
       **
       ** Needed by mlc_hierarchy::any_with_diamond.
       */
-      iter_morpher()
-      {}
+      iter_morpher() {}
 
-     /// Useful to debug.
-      static std::string name()
+      /*! Perform a shallow copy from the decorated image of \a rhs
+      ** to the current decorated image. The points will be shared
+      ** by the two images.
+      */
+      self_type&
+      assign(self_type& rhs)
+      {
+        oln_iter_type(SrcType)	it(rhs);
+
+        for_all(it)
+          this->at(it) = rhs[it];
+        return this->exact();
+      }
+
+      /*!
+      ** \brief Return the stored value at the point.
+      ** \arg p The point.
+      ** \return The stored value.
+      */
+      const value_type
+      at(const point_type& p) const
+      {
+	return this->ima_[p];
+      }
+
+      /// Useful to debug.
+      static std::string
+      name()
       {
 	return "iter_morpher<" + super_type::name() + ">";
       }
@@ -158,33 +232,45 @@ namespace oln {
     ** \brief Instantiate a temporary read-only iter morpher.
     **
     ** The image will be viewed according to its iterator type.
-    ** For example, the foo function will print the size of the picture
-    ** (the bkd_iter_type is used transparently).
+    ** So the resulting image will be reversed.
     **
     ** \code
     ** #include <oln/morpher/iter_morpher.hh>
     ** #include <oln/basics2d.hh>
     ** #include <ntg/all.hh>
-    ** template <class E>
-    ** void foo(const oln::abstract::image<E>& img)
+    ** template <class E, class F>
+    ** void foo(const oln::abstract::image<E>& src,
+    **          oln::abstract::image<F>& dst)
     ** {
-    **   oln_iter_type(oln::abstract::image<E>) it(img);
-    **   for_all(it)
-    **   {
-    **     std::cout << it.row() << " " << it.col() << std::endl;
-    **     break;
-    **   }
+    **   oln_iter_type(oln::abstract::image<E>) it_src(src);
+    **   oln_iter_type(oln::abstract::image<F>) it_dst(dst);
+    **
+    **   it_dst = mlc::begin;
+    **   for_all(it_src)
+    **     {
+    **       dst[it_dst] = src[it_src];
+    **       ++it_dst;
+    **     }
     ** }
     ** int main()
     ** {
-    **   const oln::image2d<ntg::rgb_8> imc = oln::load(IMG_IN "lena.ppm");
-    **   assert(imc.has_impl());
-    **   foo(oln::morpher::iter_morph<oln_bkd_iter_type_(oln::image2d<ntg::rgb_8>)>(imc));
+    **   const oln::image2d<ntg::rgb_8> im = oln::load(IMG_IN "lena.ppm");
+    **   oln::image2d<ntg::rgb_8> im_out(im.size());
+    **
+    **   foo(oln::morpher::iter_morph<
+    **     oln_bkd_iter_type_(oln::image2d<ntg::rgb_8>)>(im), im_out);
+    **   oln::save(im_out, IMG_OUT "oln_morpher_iter.pgm");
     ** }
     ** \endcode
+    ** \image html lena_ppm.png
+    ** \image latex lena_ppm.png
+    ** =>
+    ** \image html oln_morpher_iter.png
+    ** \image latex oln_morpher_iter.png
     */
     template <class IterType, class I>
-    const iter_morpher<I, IterType> iter_morph(I &ima)
+    const iter_morpher<I, IterType>
+    iter_morph(I &ima)
     {
       return iter_morpher<I, IterType>(ima);
     }

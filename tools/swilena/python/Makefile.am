@@ -8,3 +8,6 @@ SUBDIRS = . tests
 python_PYTHON = swilena_display.py swilena_all1d.py swilena_all2d.py swilena_all3d.py
 
 include makefile.swig
+
+clean-local:
+	rm -f *.pyc *.cxx

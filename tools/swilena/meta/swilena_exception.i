@@ -9,11 +9,11 @@
 // Olena uses classes that derive from std::exception. Declare it.
 namespace std { class exception { public: const char *what() const; }; }
 
-%define START_PROTECT()
+%define START_PROTECT
 %exception {
   try {
     $action
-      } 
+      }
   catch(std::exception &e)
     {
       // FIXME: do we need to copy the string here ?
@@ -26,8 +26,8 @@ namespace std { class exception { public: const char *what() const; }; }
 }
 %enddef
 
-%define END_PROTECT()
+%define END_PROTECT
 %exception;
 %enddef
 
-START_PROTECT()
+START_PROTECT

@@ -40,7 +40,7 @@ namespace oln {
   **
   ** The specialized version for image1d_size.
   */
-  
+
   template<>
   struct image_size_traits<image1d_size>
   {
@@ -51,15 +51,15 @@ namespace oln {
   **
   ** Size_type for image1d.
   */
-  
+
   struct image1d_size : public abstract::image_size<image1d_size >
   {
-    
+
     /*! \brief Image1d_size constructor.
     **
     ** \arg ncols The number of columns in
     ** the image is set to \a ncols.
-    ** 
+    **
     ** \arg border The border width of the image
     ** is set to border.
     */
@@ -70,30 +70,33 @@ namespace oln {
       border_ = border;
     }
 
+    image1d_size()
+    {}
+
     /// Return the number of columns in the image.
-    
-    coord 
+
+    coord
     ncols() const
     {
       invariant(nth(0) > 0);
       return nth(0);
     }
-    
-    /*! \brief Return a reference to the number 
+
+    /*! \brief Return a reference to the number
     ** of columns in the image.
     */
 
-    coord& 
+    coord&
     ncols()
     {
       invariant(nth(0) > 0);
       return nth(0);
     }
 
-    static std::string 
-    name() 
-    { 
-      return "image1d_size"; 
+    static std::string
+    name()
+    {
+      return "image1d_size";
     }
 
   };

@@ -122,9 +122,12 @@ namespace oln {
 	pretreat_2d_data_(this->buffer_, array_, s);
       }
 
+      image_array2d() : array_(0) {}
+
       ~image_array2d()
       {
-	desallocate_2d_data_(array_, this->size_);
+	if (array_)
+	  desallocate_2d_data_(array_, this->size_);
       }
 
     protected:

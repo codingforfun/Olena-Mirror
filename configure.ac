@@ -371,6 +371,8 @@ AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
        AC_MSG_ERROR([You need swig >= 1.3 to compile swilena. You can disable swilena by specifying --without-swilena to configure.])
      fi
 
+      AC_CHECK_SWIG_FLAGS
+
       AC_ARG_VAR([DVIPS], [program to make Postscript from TeX DVI files])
       AC_CHECK_PROGS([DVIPS], [dvips], [$am_aux_dir/missing dvips])
       AC_ARG_VAR([TEXI2DVI], [program to create DVI from Texinfo files])
@@ -389,8 +391,8 @@ AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
 
 	 AC_ARG_VAR([PYTHON_CPPFLAGS], [Path to Python.h])
 	 AC_ARG_WITH([python-includedir], [Include path for Python.h],
-	             [PYTHON_CPPFLAGS="-I $withval"],
-                     [PYTHON_CPPFLAGS="-I/usr/include/python$PYTHON_VERSION"])
+	             [PYTHON_CPPFLAGS="-I$withval"],
+                     [PYTHON_CPPFLAGS="-I"`echo "import sys; print sys.prefix" | python`"/include/python$PYTHON_VERSION"])
 
 	 CPPFLAGS="$CPPFLAGS $PYTHON_CPPFLAGS"
          AC_CHECK_HEADERS([Python.h],,
@@ -416,8 +418,11 @@ AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
 	 AC_ARG_VAR([RUBY_CPPFLAGS], [Path to ruby.h])
 	 AC_ARG_WITH([ruby-includedir], [Include path for ruby.h],
 	             [RUBY_CPPFLAGS="-I$withval"],
-                     [RUBY_CPPFLAGS="-I/usr/lib/ruby/1.6/i386-linux"])
-
+                     [RUBY_CPPFLAGS="-I`ruby -e 'puts $:.join("\n")' | while read line; do
+    				if [[ -f ${line}/ruby.h ]]; then
+					echo $line
+    				fi
+			done`"])
 	 CPPFLAGS="$CPPFLAGS $RUBY_CPPFLAGS"
          AC_CHECK_HEADERS([ruby.h],,
 	                  AC_MSG_ERROR(
@@ -435,6 +440,8 @@ AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
    AM_CONDITIONAL([HAVE_DOC_DEV], [test "x$oln_cv_build_doc" != xno -a "x$oln_cv_build_devdoc" != xno])
 
 ])dnl End of OLN_COLLECTION([OLN_TOP])
+
+AC_SUBST([DOC_CPPFLAGS])
 
 AC_OUTPUT
 

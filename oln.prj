@@ -1,90 +1,76 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 131)
-(Parent-Version oln 10 128)
+(Project-Version oln 10 149)
+(Parent-Version oln 10 131)
 (Version-Log "Index: olena/ChangeLog
 from  Giovanni Palma  <giovanni@lrde.epita.fr>
+	* tests/convol/tests/md5_convol_fast_gaussian_hh3: Correct the
+	test to make it success on mac.
 
-	* tests/topo/tests/tarjan: Correct test.
-	* tests/topo/tests/md5_topo_tarjan_flat-zone_hh0: Correct test.
-	* oln/topo/tarjan/tarjan_with_attr.hh: Correct code.
+	* tests/convol/tests/md5_convol_fast_gaussian_hh0: Likewise.
 
-Index: olena/tests/topo/tests/tarjan
---- olena/tests/topo/tests/tarjan Thu, 31 Jul 2003 11:12:56 +0200 sylvain (oln/u/30_test-tarja 1.1 600)
-+++ olena/tests/topo/tests/tarjan Fri, 02 Apr 2004 18:23:33 +0200 palma_g (oln/u/30_test-tarja 1.1 600)
-@@ -29,8 +29,8 @@
-   input_t src = load(rdata(\"object\"));
++2004-04-13  Giovanni Palma  <giovanni@lrde.epita.fr>
++
+ 	* oln/makefile.src: Add file.
  
-   flat_zone<input_t> cc(src);
--
--  if (cc.nlabels() == 79)
-+  cc.get_compute(oln::neighb_c4());
-+  if (cc.ncomps() == 78)
-     OK_OR_FAIL;
+ 	* oln/Makefile.am: Move source listing into 'makefile.src'.
+Index: olena/tests/convol/tests/md5_convol_fast_gaussian_hh3
+--- olena/tests/convol/tests/md5_convol_fast_gaussian_hh3 Mon, 29 Mar 2004 15:45:23 +0200 palma_g (oln/k/25_md5_convol 1.2 600)
++++ olena/tests/convol/tests/md5_convol_fast_gaussian_hh3 Fri, 09 Apr 2004 15:23:15 +0200 palma_g (oln/k/25_md5_convol 1.2 644)
+@@ -10,16 +10,16 @@
  
-   return fail;
-Index: olena/tests/topo/tests/md5_topo_tarjan_flat-zone_hh0
---- olena/tests/topo/tests/md5_topo_tarjan_flat-zone_hh0 Tue, 23 Mar 2004 15:48:17 +0100 palma_g (oln/m/12_md5_topo_t 1.1 644)
-+++ olena/tests/topo/tests/md5_topo_tarjan_flat-zone_hh0 Fri, 02 Apr 2004 18:31:24 +0200 palma_g (oln/m/12_md5_topo_t 1.1 644)
-@@ -9,16 +9,18 @@
-  
- int main() 
+ int main()
  {
--oln::utils::key::value_type   data_key[16] = {0x23, 0x57, 0x37, 0xc5, 0xf5, 0xd1, 0x56, 0x6b, 0x6a, 0x2b, 0x6b, 0xe6, 0x59, 0x5b, 0xbb, 0x57};
-+  oln::utils::key::value_type   data_key[16] = {0xd2, 0x7, 0xe9, 0x82, 0xdc,
-+						0x89, 0x54, 0x89, 0x14, 0xc,
-+						0xa5, 0xaa, 0x45, 0x2, 0x79,
-+						0xdc};
+-  oln::utils::key::value_type   data_key[16] = {0xf5, 0x37, 0xe0, 0xad, 0x5f,
+-						0xcc, 0x7f, 0x44, 0x32, 0x53,
+-						0x2a, 0x37, 0x80, 0x38, 0x3f,
+-						0xbb};
++  oln::utils::key::value_type   data_key[16] = {0x46, 0x11, 0x5, 0x21, 0x93,
++						0x3a, 0xd6, 0x15, 0x1e, 0xf0,
++						0x8a, 0x1, 0xf0, 0x32, 0x27,
++						0x9e};
+   oln::utils::key		   key(data_key);
  
- oln::utils::key		   key(data_key);
+    typedef oln::image2d<ntg::int_u8>	im_type;
+    im_type	im1(oln::load(rdata(\"lena256.pgm\")));
  
--   typedef oln::image2d<ntg::
--int_u8> img_type;
-+  typedef oln::image2d<ntg::int_u8> img_type;
-    img_type in = oln::load(rdata(\"test-cmap.pgm\"));
-    oln::topo::tarjan::flat_zone<img_type> z(in);
--   if (oln::utils::md5(oln::convert::stretch_balance<ntg::
--int_u8>(z.label, 0, 255)) == key)
-+
-+  if (oln::utils::md5(oln::convert::stretch_balance<ntg::int_u8>(z.get_compute(oln::neighb_c4()), 0, 255)) == key)
-   std::cout << \"OK\" << std::endl;
- else
-   {
-Index: olena/oln/topo/tarjan/tarjan_with_attr.hh
---- olena/oln/topo/tarjan/tarjan_with_attr.hh Fri, 02 Apr 2004 16:53:54 +0200 palma_g (oln/m/46_tarjan_wit 1.2 644)
-+++ olena/oln/topo/tarjan/tarjan_with_attr.hh Fri, 02 Apr 2004 18:06:54 +0200 palma_g (oln/m/46_tarjan_wit 1.2 644)
-@@ -179,22 +179,17 @@
+-   if (oln::utils::md5(oln::convol::fast::gaussian(im1, 0.5)) == key)
++   if (oln::utils::md5(oln::convol::fast::gaussian(im1, 0.2)) == key)
+      std::cout << \"OK\" << std::endl;
+    else
+      {
+Index: olena/tests/convol/tests/md5_convol_fast_gaussian_hh0
+--- olena/tests/convol/tests/md5_convol_fast_gaussian_hh0 Mon, 29 Mar 2004 15:45:23 +0200 palma_g (oln/k/28_md5_convol 1.2 600)
++++ olena/tests/convol/tests/md5_convol_fast_gaussian_hh0 Fri, 09 Apr 2004 15:25:37 +0200 palma_g (oln/k/28_md5_convol 1.2 644)
+@@ -10,10 +10,10 @@
  
- 	    // Resolving phase
- 	    std::map<comp_type, comp_type>		cmps;
--	    comp_type				nc = 0;
- 	    ncomps_ = 0;
--	    //	unsigned i = 0;
- 	    for (int p = I.size() - 1; p >= 0; --p)
- 	      {
- 		point_type p_p = I[p];
--		if (cmps.find(comp_value_[find_root(to_comp_[p_p])]) == cmps.end())
-+		if (cmps.find(find_root(to_comp_[p_p])) == cmps.end())
- 		  {
--		    ++ncomps_;
--		    //		++i;
--		    //		std::cout << \"new component\\n\";
--		    cmps[comp_value_[find_root(to_comp_[p_p])]] = nc;
--		    comp_value_[find_root(to_comp_[p_p])] = nc++;
-+		    cmps[comp_value_[find_root(to_comp_[p_p])]] = ncomps_;
-+		    comp_value_[find_root(to_comp_[p_p])] = ncomps_++;
- 		  }
- 	      }
--	    //	std::cout << i << \" components\\n\";
-+
- 	    image_out_type output(input_.size());
- 	    for (int p = I.size() - 1; p >= 0; --p)
- 	      {
+ int main()
+ {
+-  oln::utils::key::value_type   data_key[16] = {0xcd, 0x87, 0xa8, 0x95, 0xa3,
+-						0x44, 0x2f, 0x0, 0xc4, 0x39,
+-						0x30, 0x77, 0x67, 0xa8, 0xb7,
+-						0x36};
++  oln::utils::key::value_type   data_key[16] = {0x46, 0x11, 0x5, 0x21, 0x93,
++						0x3a, 0xd6, 0x15, 0x1e, 0xf0,
++						0x8a, 0x1, 0xf0, 0x32, 0x27,
++						0x9e};
+ 
+   oln::utils::key		   key(data_key);
+ 
+@@ -21,7 +21,7 @@
+   im_type	im1(oln::load(rdata(\"lena256.pgm\")));
+ 
+   if (oln::utils::md5(oln::convol::fast::gaussian(im1,
+-						  0.5,
++						  0.2,
+ 						  oln::value_behavior<oln_value_type_(im_type)>(0)))
+       == key)
+     std::cout << \"OK\" << std::endl;
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Fri, 02 Apr 2004 18:35:46 +0200")
+(Checkin-Time "Tue, 13 Apr 2004 13:53:26 +0200")
 (Checkin-Login palma_g)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
@@ -187,13 +173,13 @@ Index: olena/oln/topo/tarjan/tarjan_with_attr.hh
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.16 640))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.9 640))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.40 640))
-  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.71 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.3 600))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.2 600))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.41 640))
+  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.39 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.80 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 640))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 640))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.27 640))
 
   (olena/ChangeLog.0 (oln/6_ChangeLog 1.50.1.98.1.5 640))
   (doc/ChangeLog.0 (oln/e/1_ChangeLog 1.31 640))
@@ -201,9 +187,9 @@ Index: olena/oln/topo/tarjan/tarjan_with_attr.hh
 
   (bootstrap.sh (oln/j/16_bootstrap. 1.11 750))
 
-  (cleanup.sh (oln/o/29_cleanup.sh 1.5 750))
+  (cleanup.sh (oln/o/29_cleanup.sh 1.6 750))
 
-  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.16 640))
+  (configure.ac (oln/3_configure. 1.47.1.1.1.1.1.4.1.15.1.16.1.3 600))
 
   (doc/demo/image.cc (oln/d/46_image.cc 1.8 640))
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.16.1.2 640))
@@ -212,7 +198,7 @@ Index: olena/oln/topo/tarjan/tarjan_with_attr.hh
   (doc/demo/tour.cc (oln/d/45_tour.cc 1.13 640))
   (doc/ref/bin () :directory)
   
-  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.14 640))
+  (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.17.1.2 600))
   (doc/dev/oln-dev.texi (oln/j/1_oln-dev.te 1.6.1.5 640))
   (doc/ref/oln-ref.tex (oln/f/14_oln-ref.te 1.3.1.3 640))
   (doc/ref/integre-ref.tex (oln/g/34_ref-types. 1.12 640))
@@ -293,15 +279,15 @@ Index: olena/oln/topo/tarjan/tarjan_with_attr.hh
   (olena/oln/core/fwd_iter2d.hh (oln/d/20_fwd_iter2d 1.17 640))
   (olena/oln/core/fwd_iter3d.hh (oln/d/19_fwd_iter3d 1.17 640))
   (olena/oln/core/generate.hh (oln/f/12_generate.h 1.18 640))
-  (olena/oln/core/image1d.hh (oln/c/47_image1d.hh 1.28.1.3 640))
-  (olena/oln/core/image1d_size.hh (oln/c/46_image1d_si 1.11 640))
-  (olena/oln/core/image2d.hh (oln/c/45_image2d.hh 1.30.1.3 640))
-  (olena/oln/core/image2d_size.hh (oln/c/44_image2d_si 1.11 640))
-  (olena/oln/core/image3d.hh (oln/c/43_image3d.hh 1.27.1.3 640))
-  (olena/oln/core/image3d_size.hh (oln/c/42_image3d_si 1.11 640))
+  (olena/oln/core/image1d.hh (oln/c/47_image1d.hh 1.28.1.4 640))
+  (olena/oln/core/image1d_size.hh (oln/c/46_image1d_si 1.12 640))
+  (olena/oln/core/image2d.hh (oln/c/45_image2d.hh 1.30.1.4 640))
+  (olena/oln/core/image2d_size.hh (oln/c/44_image2d_si 1.12 640))
+  (olena/oln/core/image3d.hh (oln/c/43_image3d.hh 1.27.1.4 640))
+  (olena/oln/core/image3d_size.hh (oln/c/42_image3d_si 1.12 640))
   (olena/oln/core/image.hh (oln/d/18_image.hh 1.20.2.2 640))
   
-  (olena/oln/core/abstract/image_size.hh (oln/c/41_image_size 1.11 640))
+  (olena/oln/core/abstract/image_size.hh (oln/c/41_image_size 1.12 640))
   (olena/oln/core/internal/fake.hh (oln/d/17_fake.hh 1.3 640))
   
   
@@ -329,10 +315,10 @@ Index: olena/oln/topo/tarjan/tarjan_with_attr.hh
   (metalic/mlc/objs.hh (oln/c/34_objs.hh 1.7 640))
   (olena/oln/core/point1d.hh (oln/c/32_point1d.hh 1.15 640))
   (olena/oln/core/point1d.hxx (oln/c/31_point1d.hx 1.6 640))
-  (olena/oln/core/point2d.hh (oln/c/30_point2d.hh 1.14 640))
-  (olena/oln/core/point2d.hxx (oln/c/29_point2d.hx 1.7 640))
-  (olena/oln/core/point3d.hh (oln/c/28_point3d.hh 1.16 640))
-  (olena/oln/core/point3d.hxx (oln/c/27_point3d.hx 1.6 640))
+  (olena/oln/core/point2d.hh (oln/c/30_point2d.hh 1.15 640))
+  (olena/oln/core/point2d.hxx (oln/c/29_point2d.hx 1.8 640))
+  (olena/oln/core/point3d.hh (oln/c/28_point3d.hh 1.17 640))
+  (olena/oln/core/point3d.hxx (oln/c/27_point3d.hx 1.7 640))
   (olena/oln/core/abstract/point.hh (oln/c/33_point.hh 1.16 640))
   
   (olena/oln/core/abstract/binary_image.hh (oln/c/24_pred_image 1.6 640))
@@ -377,7 +363,7 @@ Index: olena/oln/topo/tarjan/tarjan_with_attr.hh
   (olena/oln/level/lut.hh (oln/29_lut.hh 1.10 640))
   (olena/oln/level/set_level.hh (oln/p/1_set_level. 1.11 640))
   (olena/oln/level/threshold.hh (oln/f/15_threshold. 1.14 640))
-  (config/oln.m4 (oln/j/15_oln.m4 1.36 640))
+  (config/oln.m4 (oln/j/15_oln.m4 1.38.1.2 640))
 
   (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.15 640))
   (metalic/mlc/array/1d.hh (oln/f/23_array1d.hh 1.11 640))
@@ -412,7 +398,7 @@ Index: olena/oln/topo/tarjan/tarjan_with_attr.hh
   (olena/oln/morpho/hit_or_miss.hh (oln/b/2_hit_or_mis 1.7 640))
   (olena/oln/morpho/hit_or_miss.inc (oln/42_hit_or_mis 1.23 640))
   (olena/oln/morpho/laplacian.hh (oln/b/1_laplacian. 1.6 640))
-  (olena/oln/morpho/laplacian.inc (oln/41_laplacian. 1.16 640))
+  (olena/oln/morpho/laplacian.inc (oln/41_laplacian. 1.17 640))
   (olena/oln/morpho/minmax.hh (oln/b/0_minmax.hh 1.6 640))
   (olena/oln/morpho/opening.hh (oln/51_opening.hh 1.6 640))
   (olena/oln/morpho/opening.inc (oln/40_opening.in 1.16 640))
@@ -425,7 +411,7 @@ Index: olena/oln/topo/tarjan/tarjan_with_attr.hh
   (olena/oln/morpho/thinning.inc (oln/e/26_thinning.i 1.13 640))
   (olena/oln/morpho/top_hat.hh (oln/49_top_hat.hh 1.4 640))
   (olena/oln/morpho/top_hat.inc (oln/39_top_hat.in 1.17 640))
-  (olena/oln/morpho/watershed.hh (oln/48_watershed. 1.14 640))
+  (olena/oln/morpho/watershed.hh (oln/48_watershed. 1.15 640))
   (olena/oln/morpho/watershed.hxx (oln/47_watershed. 1.9.1.5.1.6 640))
   (olena/oln/topo/dmap.hh (oln/p/2_dmap.hh 1.11 640))
   (olena/oln/topo/dmap.hxx (oln/p/3_dmap.hxx 1.7.1.9 640))
@@ -617,7 +603,7 @@ Index: olena/oln/topo/tarjan/tarjan_with_attr.hh
   (tools/Makefile.am (oln/o/37_Makefile.a 1.7 640))
   (tools/swilena/configure.ac (oln/o/26_configure. 1.2 640))
   (tools/swilena/doc/Makefile.am (oln/n/39_Makefile.a 1.3 640))
-  (tools/swilena/doc/swilena.texi (oln/n/40_swilena.te 1.1.1.4 600))
+  (tools/swilena/doc/swilena.texi (oln/n/40_swilena.te 1.1.1.5 600))
   
   ; (tools/swilena/java/Makefile.in ())
   (tools/swilena/Makefile.am (oln/o/25_Makefile.a 1.5 640))
@@ -855,11 +841,11 @@ Index: olena/oln/topo/tarjan/tarjan_with_attr.hh
   (olena/lib (../lib) :symlink)
   (metalic/tests/Makefile.am (oln/q/31_Makefile.a 1.4 640))
   (metalic/Makefile.am (oln/q/32_Makefile.a 1.3 640))
-  (metalic/mlc/Makefile.am (oln/q/33_Makefile.a 1.7 640))
+  (metalic/mlc/Makefile.am (oln/q/33_Makefile.a 1.7.1.1 640))
   (integre () :directory)
   (integre/ntg () :directory)
   (integre/Makefile.am (oln/q/34_Makefile.a 1.3 640))
-  (integre/ntg/Makefile.am (oln/q/36_Makefile.a 1.8.1.2 640))
+  (integre/ntg/Makefile.am (oln/q/36_Makefile.a 1.8.1.2.1.1 640))
   (olena/tests/check/defs.in (oln/q/37_defs.in 1.1 640))
   (olena/tests/check/Makefile.am (oln/q/38_Makefile.a 1.4 640))
   (olena/tests/check/Makefile.flags (oln/q/39_Makefile.f 1.4.1.1 640))
@@ -868,7 +854,7 @@ Index: olena/oln/topo/tarjan/tarjan_with_attr.hh
   (integre/tests/check/defs.in (oln/q/42_defs.in 1.1 640))
   (metalic/mlc/array/objs.hh (oln/q/45_objs.hh 1.3 640))
   (metalic/mlc/config/system.hh (oln/q/46_system.hh 1.2 640))
-  (olena/oln/Makefile.am (oln/q/47_Makefile.a 1.3.1.1.1.6.1.7.1.4 640))
+  (olena/oln/Makefile.am (oln/q/47_Makefile.a 1.3.1.1.1.6.1.7.1.7.1.1 640))
   (integre/ntg/config/system.hh (oln/q/48_system.hh 1.2 640))
   (metalic/tests/main/tests/is_a1 (oln/r/17_is_a1 1.3 640))
   (metalic/tests/main/tests/ensure3 (oln/r/18_ensure3 1.3 640))
@@ -927,7 +913,7 @@ Index: olena/oln/topo/tarjan/tarjan_with_attr.hh
 ;; Files added by populate at Tue, 06 May 2003 06:05:19 +0200,
 ;; to version 8.33(w), by raph:
 
-  (tools/swilena/expand.sh (oln/s/25_expand.sh 1.12 750))
+  (tools/swilena/expand.sh (oln/s/25_expand.sh 1.15 750))
 
 ;; Files added by populate at Tue, 06 May 2003 06:05:41 +0200,
 ;; to version 8.33(w), by raph:
@@ -938,16 +924,16 @@ Index: olena/oln/topo/tarjan/tarjan_with_attr.hh
 ;; to version 8.33(w), by raph:
 
   (tools/swilena/meta/swilena_w_win.i (oln/s/27_swilena_w_ 1.2 640))
-  (tools/swilena/meta/swilena_structelt.i (oln/s/28_swilena_st 1.3 640))
+  (tools/swilena/meta/swilena_structelt.i (oln/s/28_swilena_st 1.4 640))
   (tools/swilena/meta/swilena_point.i (oln/s/29_swilena_po 1.3 640))
   
   
   
-  (tools/swilena/meta/swilena_ntg.i (oln/s/33_swilena_nt 1.7 640))
-  (tools/swilena/meta/swilena_morpho.i (oln/s/34_swilena_mo 1.2 640))
+  (tools/swilena/meta/swilena_ntg.i (oln/s/33_swilena_nt 1.9 640))
+  (tools/swilena/meta/swilena_morpho.i (oln/s/34_swilena_mo 1.4 640))
   (tools/swilena/meta/swilena_imagesize.i (oln/s/35_swilena_im 1.2 640))
   (tools/swilena/meta/swilena_image.i (oln/s/36_swilena_im 1.7 640))
-  (tools/swilena/meta/swilena_exception.i (oln/s/37_swilena_ex 1.2 640))
+  (tools/swilena/meta/swilena_exception.i (oln/s/37_swilena_ex 1.4 640))
   (tools/swilena/meta/swilena_describe.i (oln/s/38_swilena_de 1.3 640))
   (tools/swilena/meta/swilena_decl.i (oln/s/39_swilena_de 1.2 640))
   (tools/swilena/meta/swilena_core.i (oln/s/40_swilena_co 1.1 640))
@@ -1017,16 +1003,16 @@ Index: olena/oln/topo/tarjan/tarjan_with_attr.hh
   (olena/tests/core/image_print.sh (oln/t/24_image_prin 1.2 640))
 
 
-  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.29 640))
+  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.31 640))
   (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.22 600))
   (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.14.1.11 640))
   (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.12 640))
-  (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.18 640))
-  (olena/oln/core/impl/image_array.hh (oln/t/30_image_arra 1.16 640))
+  (olena/oln/core/impl/image_impl.hh (oln/t/29_image_impl 1.19 640))
+  (olena/oln/core/impl/image_array.hh (oln/t/30_image_arra 1.17 640))
   (olena/tests/core/tests/image1 (oln/t/31_image1 1.4 640))
-  (olena/oln/core/impl/image_array3d.hh (oln/t/32_image_arra 1.11 640))
-  (olena/oln/core/impl/image_array2d.hh (oln/t/33_image_arra 1.13 640))
-  (olena/oln/core/impl/image_array1d.hh (oln/t/34_image_arra 1.13 640))
+  (olena/oln/core/impl/image_array3d.hh (oln/t/32_image_arra 1.12 640))
+  (olena/oln/core/impl/image_array2d.hh (oln/t/33_image_arra 1.14 640))
+  (olena/oln/core/impl/image_array1d.hh (oln/t/34_image_arra 1.14 640))
   (olena/tests/core/tests/borders (oln/t/35_borders 1.3 640))
   (olena/tests/core/tests/clone (oln/t/36_clone 1.1 640))
   (olena/tests/core/tests/ref (oln/t/37_ref 1.3 640))
@@ -1114,7 +1100,7 @@ Index: olena/oln/topo/tarjan/tarjan_with_attr.hh
 
   (tools/swilena/python/tests/Makefile.am (oln/v/15_Makefile.a 1.2 600))
   (tools/swilena/python/tests/simple1.py (oln/v/16_simple1.py 1.4 700))
-  (tools/swilena/ruby/Makefile.am (oln/v/17_Makefile.a 1.2 600))
+  (tools/swilena/ruby/Makefile.am (oln/v/17_Makefile.a 1.3 600))
   (tools/swilena/ruby/tests/Makefile.am (oln/v/18_Makefile.a 1.1 600))
   (tools/swilena/ruby/tests/simple1.rb (oln/v/19_simple1.rb 1.4 700))
 
@@ -1134,7 +1120,7 @@ Index: olena/oln/topo/tarjan/tarjan_with_attr.hh
 ;; Files added by populate at Sat, 27 Sep 2003 18:32:26 +0200,
 ;; to version 10.24(w), by burrus_n:
 
-  (tools/swilena/generate_morpho_instantiations.py (oln/v/24_generate_m 1.4 700))
+  (tools/swilena/generate_morpho_instantiations.py (oln/v/24_generate_m 1.8 700))
 
 ;; Files deleted by populate at Sat, 27 Sep 2003 18:33:27 +0200,
 ;; from version 10.24(w), by nes:
@@ -1146,7 +1132,7 @@ Index: olena/oln/topo/tarjan/tarjan_with_attr.hh
 ;; Files added by populate at Mon, 29 Sep 2003 19:17:53 +0200,
 ;; to version 10.26(w), by nes:
 
-  (tools/swilena/src/Makefile.am (oln/v/25_Makefile.a 1.1 640))
+  (tools/swilena/src/Makefile.am (oln/v/25_Makefile.a 1.3 640))
 
 ;; Files added by populate at Wed, 08 Oct 2003 11:13:23 +0200,
 ;; to version 10.27(w), by burrus_n:
@@ -1197,7 +1183,7 @@ Index: olena/oln/topo/tarjan/tarjan_with_attr.hh
 ;; Files added by populate at Mon, 10 Nov 2003 14:10:01 +0100,
 ;; to version 10.40(w), by burrus_n:
 
-  (tools/swilena/python/Makefile.am (oln/w/2_Makefile.a 1.1 640))
+  (tools/swilena/python/Makefile.am (oln/w/2_Makefile.a 1.2 640))
   (tools/swilena/python/swilena_all1d.py (oln/w/3_swilena_al 1.1 640))
   (tools/swilena/python/swilena_all2d.py (oln/w/4_swilena_al 1.1 640))
   (tools/swilena/python/swilena_all3d.py (oln/w/5_swilena_al 1.1 640))
@@ -1283,8 +1269,8 @@ Index: olena/oln/topo/tarjan/tarjan_with_attr.hh
   (olena/tests/morpho/tests/attr_op_cl (oln/k/0_attr_op_cl 1.3 644))
 
 
-  (doc/ref/exdoc.pl (oln/v/26_exdoc.pl 1.4 755))
-  (doc/ref/doxygen.config.in (oln/v/29_doxygen.co 1.4 644))
+  (doc/ref/exdoc.pl (oln/v/26_exdoc.pl 1.6 755))
+  (doc/ref/doxygen.config.in (oln/v/29_doxygen.co 1.5 644))
   (doc/ref/exdoc.mk.in (oln/k/4_exdoc.mk.i 1.1 644))
   
   (doc/ref/img_conv.pl (oln/k/6_img_conv.p 1.3 700))
@@ -1296,7 +1282,7 @@ Index: olena/oln/topo/tarjan/tarjan_with_attr.hh
 ;; Files added by populate at Wed, 25 Feb 2004 16:41:16 +0100,
 ;; to version 10.67(w), by palma_g:
 
-  (doc/ref/out/exdoc.config.in (oln/k/7_exdoc.conf 1.2 644))
+  (doc/ref/out/exdoc.config.in (oln/k/7_exdoc.conf 1.7 644))
 
 ;; Files deleted by depopulate at Tue, 09 Mar 2004 10:41:51 +0100,
 ;; from version 10.70(w), by palma_g:
@@ -1350,10 +1336,10 @@ Index: olena/oln/topo/tarjan/tarjan_with_attr.hh
 
   (olena/tests/convol/tests/md5_convol_fast_gaussian_hh5 (oln/k/23_md5_convol 1.2 644))
   (olena/tests/convol/tests/md5_convol_fast_gaussian_hh4 (oln/k/24_md5_convol 1.2 644))
-  (olena/tests/convol/tests/md5_convol_fast_gaussian_hh3 (oln/k/25_md5_convol 1.2 644))
+  (olena/tests/convol/tests/md5_convol_fast_gaussian_hh3 (oln/k/25_md5_convol 1.3 644))
   (olena/tests/convol/tests/md5_convol_fast_gaussian_hh2 (oln/k/26_md5_convol 1.2 644))
   (olena/tests/convol/tests/md5_convol_fast_gaussian_hh1 (oln/k/27_md5_convol 1.2 644))
-  (olena/tests/convol/tests/md5_convol_fast_gaussian_hh0 (oln/k/28_md5_convol 1.2 644))
+  (olena/tests/convol/tests/md5_convol_fast_gaussian_hh0 (oln/k/28_md5_convol 1.3 644))
 
 ;; Files added by populate at Tue, 23 Mar 2004 14:29:08 +0100,
 ;; to version 10.105(w), by palma_g:
@@ -1469,15 +1455,15 @@ Index: olena/oln/topo/tarjan/tarjan_with_attr.hh
   (olena/oln/morpho/environments.hh (oln/m/17_environmen 1.1 644))
 
 
-  (olena/oln/morpher/generic_morpher.hh (oln/m/18_generic_mo 1.4 600))
+  (olena/oln/morpher/generic_morpher.hh (oln/m/18_generic_mo 1.6 600))
   (olena/tests/convol/tests/nagao (oln/m/19_nagao 1.1 600))
   (integre/tests/types/tests/ntg_compare_nb_comp (oln/m/20_ntg_compar 1.1 600))
   (olena/oln/convol/nagao.hxx (oln/m/21_nagao.hxx 1.1 600))
   (olena/oln/convol/nagao.hh (oln/m/22_nagao.hh 1.3 600))
   (olena/oln/utils/se_stat.hh (oln/m/23_se_stat.hh 1.2 600))
   (olena/oln/utils/se_stat.hxx (oln/m/24_se_stat.hx 1.2 600))
-  (olena/oln/morpher/subq_morpher.hh (oln/m/25_subq_morph 1.2 600))
-  (olena/oln/morpher/color_morpher.hh (oln/m/26_color_morp 1.2 600))
+  (olena/oln/morpher/subq_morpher.hh (oln/m/25_subq_morph 1.3 600))
+  (olena/oln/morpher/color_morpher.hh (oln/m/26_color_morp 1.4 600))
   (olena/tests/morpher/Makefile.am (oln/m/27_Makefile.a 1.1 600))
   
   
@@ -1491,28 +1477,89 @@ Index: olena/oln/topo/tarjan/tarjan_with_attr.hh
   
   
   
-  (olena/oln/morpher/piece_morpher.hh (oln/m/40_piece_morp 1.1 600))
-  (olena/oln/morpher/iter_morpher.hh (oln/m/41_iter_morph 1.1 600))
-  (olena/oln/morpher/slicing_morpher.hh (oln/m/42_slicing_mo 1.2 600))
+  (olena/oln/morpher/piece_morpher.hh (oln/m/40_piece_morp 1.2 600))
+  (olena/oln/morpher/iter_morpher.hh (oln/m/41_iter_morph 1.2 600))
+  (olena/oln/morpher/slicing_morpher.hh (oln/m/42_slicing_mo 1.3 600))
 
   (olena/tests/morpher/tests/compose_morph (oln/m/43_compose_mo 1.1 600))
   (olena/tests/morpher/tests/sq_morph (oln/m/44_sq_morph 1.1 600))
-  (olena/tests/morpher/tests/color_morph (oln/m/45_color_morp 1.1 600))
+  (olena/tests/morpher/tests/color_morph (oln/m/45_color_morp 1.3 600))
 ;; Files added by populate at Wed, 31 Mar 2004 19:07:28 +0200,
 ;; to version 10.123(w), by palma_g:
 
   (olena/oln/topo/tarjan/tarjan_with_attr.hh (oln/m/46_tarjan_wit 1.3 644))
   (olena/oln/topo/tarjan/tarjan.hh (oln/m/47_tarjan.hh 1.2 644))
-)
+
+
+  (olena/tests/morpher/tests/iter (oln/q/3_iter 1.1 600))
+  (olena/tests/morpher/tests/piece (oln/q/43_piece 1.1 600))
+  (olena/tests/morpher/tests/slicing (oln/q/44_slicing 1.1 600))
+
+  (olena/tests/morpho/tests/gradient (oln/r/1_gradient 1.1 600))
+  (integre/ntg/makefile.src (oln/r/2_makefile.s 1.1 644))
+  (metalic/mlc/makefile.src (oln/r/3_makefile.s 1.1 644))
+  (olena/oln/makefile.src (oln/r/4_makefile.s 1.1 644)))
 (Merge-Parents
-  (10.128 complete)
-  (10.129 complete
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (olena/oln/morpho/laplacian.inc olena/oln/morpho/laplacian.inc olena/oln/morpho/laplacian.inc r)
-    (olena/oln/morpho/watershed.hh olena/oln/morpho/watershed.hh olena/oln/morpho/watershed.hh r) (olena/tests/morpho/tests/md5_morpho_laplacian_inc1 olena/tests/morpho/tests/md5_morpho_laplacian_inc1 olena/tests/morpho/tests/md5_morpho_laplacian_inc1 r))
-  (10.130 complete
-    (olena/ChangeLog olena/ChangeLog olena/ChangeLog m) (olena/oln/io/gz_stream.hh olena/oln/io/gz_stream.hh olena/oln/io/gz_stream.hh r)
-    (olena/oln/morpho/extrema.hxx olena/oln/morpho/extrema.hxx olena/oln/morpho/extrema.hxx r) (olena/oln/transforms/dwt.hh olena/oln/transforms/dwt.hh olena/oln/transforms/dwt.hh r)
-    (olena/oln/convol/nagao.hh olena/oln/convol/nagao.hh olena/oln/convol/nagao.hh r) 
+  (10.131 complete)
+  (10.135 complete
+    (ChangeLog ChangeLog ChangeLog r) (doc/ChangeLog doc/ChangeLog doc/ChangeLog r)
+    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (doc/ref/Makefile.am doc/ref/Makefile.am doc/ref/Makefile.am r)
+    (olena/oln/core/image1d.hh olena/oln/core/image1d.hh olena/oln/core/image1d.hh r) (olena/oln/core/image1d_size.hh olena/oln/core/image1d_size.hh olena/oln/core/image1d_size.hh r)
+    (olena/oln/core/image2d.hh olena/oln/core/image2d.hh olena/oln/core/image2d.hh r) (olena/oln/core/image2d_size.hh olena/oln/core/image2d_size.hh olena/oln/core/image2d_size.hh r)
+    (olena/oln/core/image3d.hh olena/oln/core/image3d.hh olena/oln/core/image3d.hh r) (olena/oln/core/image3d_size.hh olena/oln/core/image3d_size.hh olena/oln/core/image3d_size.hh r)
+    (olena/oln/core/abstract/image_size.hh olena/oln/core/abstract/image_size.hh olena/oln/core/abstract/image_size.hh r) (config/oln.m4 config/oln.m4 config/oln.m4 r)
+    (olena/oln/Makefile.am olena/oln/Makefile.am olena/oln/Makefile.am r) (olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh r)
+    (olena/oln/core/impl/image_impl.hh olena/oln/core/impl/image_impl.hh olena/oln/core/impl/image_impl.hh r) (olena/oln/core/impl/image_array.hh olena/oln/core/impl/image_array.hh olena/oln/core/impl/image_array.hh r)
+    (olena/oln/core/impl/image_array3d.hh olena/oln/core/impl/image_array3d.hh olena/oln/core/impl/image_array3d.hh r) (olena/oln/core/impl/image_array2d.hh olena/oln/core/impl/image_array2d.hh olena/oln/core/impl/image_array2d.hh r)
+    (olena/oln/core/impl/image_array1d.hh olena/oln/core/impl/image_array1d.hh olena/oln/core/impl/image_array1d.hh r) (olena/oln/morpher/generic_morpher.hh olena/oln/morpher/generic_morpher.hh olena/oln/morpher/generic_morpher.hh r)
+    (olena/oln/morpher/subq_morpher.hh olena/oln/morpher/subq_morpher.hh olena/oln/morpher/subq_morpher.hh r) (olena/oln/morpher/color_morpher.hh olena/oln/morpher/color_morpher.hh olena/oln/morpher/color_morpher.hh r)
+    (olena/oln/morpher/piece_morpher.hh olena/oln/morpher/piece_morpher.hh olena/oln/morpher/piece_morpher.hh r) (olena/oln/morpher/iter_morpher.hh olena/oln/morpher/iter_morpher.hh olena/oln/morpher/iter_morpher.hh r)
+    (olena/oln/morpher/slicing_morpher.hh olena/oln/morpher/slicing_morpher.hh olena/oln/morpher/slicing_morpher.hh r) (olena/tests/morpher/tests/color_morph olena/tests/morpher/tests/color_morph olena/tests/morpher/tests/color_morph r)
+    (() () olena/tests/morpher/tests/iter a) (() () olena/tests/morpher/tests/piece a)
+    (() () olena/tests/morpher/tests/slicing a) 
+  )
+  (10.137 complete
+    (ChangeLog ChangeLog ChangeLog r) (doc/ChangeLog doc/ChangeLog doc/ChangeLog r)
+    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (doc/ref/Makefile.am doc/ref/Makefile.am doc/ref/Makefile.am r)
+    (config/oln.m4 config/oln.m4 config/oln.m4 r) (olena/oln/Makefile.am olena/oln/Makefile.am olena/oln/Makefile.am r)
+    (doc/ref/out/exdoc.config.in doc/ref/out/exdoc.config.in doc/ref/out/exdoc.config.in r) 
+  )
+  (10.138 complete
+    (ChangeLog ChangeLog ChangeLog r) (doc/ChangeLog doc/ChangeLog doc/ChangeLog r)
+    (cleanup.sh cleanup.sh cleanup.sh r) (doc/ref/Makefile.am doc/ref/Makefile.am doc/ref/Makefile.am r)
+    (config/oln.m4 config/oln.m4 config/oln.m4 r) (doc/ref/exdoc.pl doc/ref/exdoc.pl doc/ref/exdoc.pl r)
+    (doc/ref/out/exdoc.config.in doc/ref/out/exdoc.config.in doc/ref/out/exdoc.config.in r) 
+  )
+  (10.139 complete
+    (ChangeLog ChangeLog ChangeLog r) (doc/ChangeLog doc/ChangeLog doc/ChangeLog r)
+    (configure.ac configure.ac configure.ac r) (doc/ref/Makefile.am doc/ref/Makefile.am doc/ref/Makefile.am r)
+    (config/oln.m4 config/oln.m4 config/oln.m4 r) (doc/ref/exdoc.pl doc/ref/exdoc.pl doc/ref/exdoc.pl r)
+    (doc/ref/out/exdoc.config.in doc/ref/out/exdoc.config.in doc/ref/out/exdoc.config.in r) 
+  )
+  (10.140 complete
+    (ChangeLog ChangeLog ChangeLog m) (doc/ChangeLog doc/ChangeLog doc/ChangeLog m)
+    (configure.ac configure.ac configure.ac m) (doc/ref/Makefile.am doc/ref/Makefile.am doc/ref/Makefile.am m))
+  (10.145 complete
+    (ChangeLog ChangeLog ChangeLog r) (olena/ChangeLog olena/ChangeLog olena/ChangeLog r)
+    (tools/swilena/ChangeLog tools/swilena/ChangeLog tools/swilena/ChangeLog r) (configure.ac configure.ac configure.ac r)
+    (olena/oln/core/point2d.hh olena/oln/core/point2d.hh olena/oln/core/point2d.hh r) (olena/oln/core/point2d.hxx olena/oln/core/point2d.hxx olena/oln/core/point2d.hxx r)
+    (olena/oln/core/point3d.hh olena/oln/core/point3d.hh olena/oln/core/point3d.hh r) (olena/oln/core/point3d.hxx olena/oln/core/point3d.hxx olena/oln/core/point3d.hxx r)
+    (olena/oln/morpho/laplacian.inc olena/oln/morpho/laplacian.inc olena/oln/morpho/laplacian.inc r) (olena/oln/morpho/watershed.hh olena/oln/morpho/watershed.hh olena/oln/morpho/watershed.hh r)
+    (tools/swilena/doc/swilena.texi tools/swilena/doc/swilena.texi tools/swilena/doc/swilena.texi r) (tools/swilena/expand.sh tools/swilena/expand.sh tools/swilena/expand.sh r)
+    (tools/swilena/meta/swilena_structelt.i tools/swilena/meta/swilena_structelt.i tools/swilena/meta/swilena_structelt.i r) (tools/swilena/meta/swilena_ntg.i tools/swilena/meta/swilena_ntg.i tools/swilena/meta/swilena_ntg.i r)
+    (tools/swilena/meta/swilena_morpho.i tools/swilena/meta/swilena_morpho.i tools/swilena/meta/swilena_morpho.i r) (tools/swilena/meta/swilena_exception.i tools/swilena/meta/swilena_exception.i tools/swilena/meta/swilena_exception.i r)
+    (tools/swilena/ruby/Makefile.am tools/swilena/ruby/Makefile.am tools/swilena/ruby/Makefile.am r) (tools/swilena/generate_morpho_instantiations.py tools/swilena/generate_morpho_instantiations.py tools/swilena/generate_morpho_instantiations.py r)
+    (tools/swilena/src/Makefile.am tools/swilena/src/Makefile.am tools/swilena/src/Makefile.am r) (tools/swilena/python/Makefile.am tools/swilena/python/Makefile.am tools/swilena/python/Makefile.am r))
+  (10.148 complete
+    (ChangeLog ChangeLog ChangeLog r) (doc/ChangeLog doc/ChangeLog doc/ChangeLog r)
+    (integre/ChangeLog integre/ChangeLog integre/ChangeLog r) (metalic/ChangeLog metalic/ChangeLog metalic/ChangeLog r)
+    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (tools/swilena/ChangeLog tools/swilena/ChangeLog tools/swilena/ChangeLog r)
+    (configure.ac configure.ac configure.ac r) (doc/ref/Makefile.am doc/ref/Makefile.am doc/ref/Makefile.am r)
+    (config/oln.m4 config/oln.m4 config/oln.m4 r) (tools/swilena/expand.sh tools/swilena/expand.sh tools/swilena/expand.sh r)
+    (olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh olena/oln/core/abstract/image.hh r) (tools/swilena/generate_morpho_instantiations.py tools/swilena/generate_morpho_instantiations.py tools/swilena/generate_morpho_instantiations.py r)
+    (doc/ref/doxygen.config.in doc/ref/doxygen.config.in doc/ref/doxygen.config.in r) (() () olena/tests/morpho/tests/gradient a)
+    (() () integre/ntg/makefile.src a) (() () metalic/mlc/makefile.src a)
+    (() () olena/oln/makefile.src a) 
   )
 )
 (New-Merge-Parents)
