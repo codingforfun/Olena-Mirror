@@ -77,11 +77,11 @@ namespace oln
   //
   //////////////////////////
 
-//   GLOBAL_ARITH_OP(operator+, plus);
-//   GLOBAL_ARITH_OP(operator-, minus);
-//   GLOBAL_ARITH_OP(operator*, times);
-//   GLOBAL_ARITH_OP(operator/, div);
-//   GLOBAL_ARITH_OP(operator%, mod);
+  GLOBAL_ARITH_OP(operator+, plus);
+  GLOBAL_ARITH_OP(operator-, minus);
+  GLOBAL_ARITH_OP(operator*, times);
+  GLOBAL_ARITH_OP(operator/, div);
+  GLOBAL_ARITH_OP(operator%, mod);
 
   
   //
