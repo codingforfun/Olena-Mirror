@@ -30,7 +30,10 @@
 
 # include <oln/core/coord.hh>
 # include <oln/core/point.hh>
+# include <oln/core/dpoint.hh>
+# include <oln/value/debug.hh>
 # include <iostream>
+# include <sstream>
 
 namespace oln {
 

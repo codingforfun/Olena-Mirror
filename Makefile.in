@@ -248,7 +248,7 @@ distcleancheck_listfiles = find . -type f -print
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkinstalldirs) $(distdir)/././oln/config $(distdir)/./oln/config $(distdir)/doc/doc $(distdir)/img $(distdir)/tools
+	$(mkinstalldirs) $(distdir)/././oln/config $(distdir)/./oln/config $(distdir)/doc/doc $(distdir)/img $(distdir)/tests $(distdir)/tools
 	@list='$(DISTFILES)'; for file in $$list; do \
 	  if test -f $$file || test -d $$file; then d=.; else d=$(srcdir); fi; \
 	  dir=`echo "$$file" | sed -e 's,/[^/]*$$,,'`; \

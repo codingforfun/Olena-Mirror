@@ -39,8 +39,6 @@
 
 # include <map>
 # include <iostream>
-# include <cmath> // FIXME: why?
-
 
 namespace oln {
 

@@ -31,8 +31,7 @@
 # include <oln/core/contract.hh>
 # include <oln/core/image.hh>
 # include <oln/core/iter.hh>
-
-
+# include <oln/core/macros.hh>
 
 namespace oln {
 

@@ -28,10 +28,14 @@
 #ifndef OLENA_CORE_W_WINDOW2D_HH
 # define OLENA_CORE_W_WINDOW2D_HH
 
-# include <algorithm>
 # include <oln/core/internal/w_window.hh>
 # include <oln/meta/array.hh>
 # include <oln/core/accum.hh>
+# include <oln/core/winiter.hh>
+# include <oln/core/winneighb.hh>
+# include <oln/core/dpoint2d.hh>
+# include <oln/core/window2d.hh>
+# include <algorithm>
 
 namespace oln {
 
@@ -74,7 +78,7 @@ namespace oln {
 	for (coord col = -I::center_col; col <= I::ncols - I::center_col - 1; ++col)
           add(row, col, arr[i++]);
     }
-    
+
 
     T& set(const dpoint2d& dp)
     {

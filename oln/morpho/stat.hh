@@ -28,9 +28,9 @@
 #ifndef OLENA_MORPHO_STAT_HH
 # define OLENA_MORPHO_STAT_HH
 
-# include <oln/core/image.hh>
-# include <oln/core/winiter.hh>
-# include <oln/core/structelt.hh>
+# include <oln/basics.hh>
+# include <oln/meta/ucmp.hh>
+# include <oln/value/bin.hh>
 
 namespace oln {
 

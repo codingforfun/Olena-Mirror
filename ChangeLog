@@ -1,5 +1,29 @@
 2002-07-18  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
+	* configure.ac: Output tests/defs and tests/sanity/Makefile.
+	* oln/basics.hh: Don't include oln/convert/basics.hh, this causes
+	loops.
+	* oln/arith/logic.hh, oln/arith/ops.hh, oln/config/system.hh,
+	oln/convert/conversion.hh,
+	oln/convol/fast_gaussian_coefficient.hh,
+	oln/convol/fast_gaussian.hh, oln/core/apply.hh,
+	oln/core/border.hh, oln/core/contract.hh, oln/core/dpointnd.hh,
+	oln/core/fold.hh, oln/core/generate.hh, oln/core/image1d_size.hh,
+	oln/core/image2d_size.hh, oln/core/image3d_size.hh,
+	oln/core/imagend_size.hh, oln/core/internal/image3d.hh,
+	oln/core/internal/w_window.hh, oln/core/neighborhood.hh,
+	oln/core/pointnd.hh, oln/core/pred.hh, oln/core/regular_image.hh,
+	oln/core/traverse.hh, oln/core/window1d.hh, oln/core/window2d.hh,
+	oln/core/window3d.hh, oln/core/window.hh, oln/core/winneighb.hh,
+	oln/core/w_window1d.hh, oln/core/w_window2d.hh,
+	oln/core/w_window3d.hh, oln/io/pnm_read3d.hxx,
+	oln/io/pnm_read.hxx, oln/io/readable.hh, oln/level/threshold.hh,
+	oln/math/macros.hh, oln/meta/logic.hh, oln/morpho/stat.hh,
+	oln/value/cast.hh, oln/value/debug.hh, oln/value/float_p.hh,
+	oln/value/int_u.hh: Include required headers.
+
+2002-07-18  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
 	* oln/io/gz_stream.hh (zfilebuf::inbuf, zfilebuf::outbuf,
 	zfilebuf::lenbuf): New member.
 	(zfilebuf::zfilebuf): Allocate inbuf and outbug.

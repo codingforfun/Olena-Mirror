@@ -1,4 +1,4 @@
-// Copyright 2001  EPITA Research and Development Laboratory
+// Copyright 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,11 +31,12 @@
 /* The GNU libc will not declare round, roundf, etc. unless this is set...  */
 # define _ISOC99_SOURCE 1
 
+# include "pconf.hh"
+# include <cmath>
+
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846264338327
 # endif
-
-# include "pconf.hh"
 
 /* The STL used by g++ versions < 3 have namespaces disabled,
    because these g++ versions do not honor `std::' (unless requested).

@@ -30,6 +30,8 @@
 
 # include <oln/core/image.hh>
 # include <oln/core/iter.hh>
+# include <oln/core/typeadj.hh>
+# include <oln/core/macros.hh>
 
 namespace oln {
 

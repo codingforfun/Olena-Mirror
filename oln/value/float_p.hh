@@ -33,7 +33,7 @@
 # include <oln/value/rec_float.hh>
 # include <oln/value/rec_int.hh>
 # include <oln/value/predefs.hh>
-
+# include <oln/value/built_in.hh>
 
 namespace oln
 {

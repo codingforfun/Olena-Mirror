@@ -1,0 +1,32 @@
+#! /bin/sh
+
+# Check that each header is self contained.
+
+: ${VERBOSE=1}
+
+. ../defs || exit 1
+
+set -e
+
+rm -f failures
+
+find $abs_top_srcdir/oln -name "${1-*}.hh" \
+                    -a ! -path '*/old/*' \
+                    -a ! -path '*/obsolete/*' -type f -print |
+while read file; do
+   name=`expr $file : "$abs_top_srcdir/\(.*\)"`
+   echo "#include <$name>" > incltest.cc
+   if $CXX $CXXFLAGS incltest.cc -c -O0 -o /dev/null; then
+      echo "  PASS: $name"
+   else
+      echo "  FAIL: $name"
+      echo "  $name" >> failures
+   fi
+done
+
+if test -f failures; then
+   echo "Failled files:"
+   cat failures
+   rm failures
+   exit 1;
+fi

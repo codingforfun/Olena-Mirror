@@ -29,6 +29,7 @@
 # define OLENA_CORE_WINDOW_HH
 
 # include <oln/core/structelt.hh>
+# include <oln/core/winneighb.hh>
 
 namespace oln {
 

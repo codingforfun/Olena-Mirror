@@ -28,6 +28,9 @@
 #ifndef OLENA_IO_PNM_READ_HXX_
 # define OLENA_IO_PNM_READ_HXX_
 
+# include <oln/core/image2d.hh>
+# include <oln/core/fwd_iter2d.hh>
+# include <oln/value/bin.hh>
 # include <oln/io/pnm_read_common.hxx>
 
 namespace oln {

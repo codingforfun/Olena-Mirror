@@ -29,6 +29,7 @@
 # define OLENA_CORE_REGULAR_IMAGE_HH
 
 # include <oln/core/image.hh>
+# include <oln/core/image_size.hh>
 # include <oln/core/point.hh>
 # include <oln/core/dpoint.hh>
 

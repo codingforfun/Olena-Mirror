@@ -28,9 +28,10 @@
 #ifndef OLENA_CORE_WINDOW3D_HH
 # define OLENA_CORE_WINDOW3D_HH
 
+# include <oln/core/point3d.hh>
+# include <oln/core/dpoint3d.hh>
 # include <oln/core/internal/window.hh>
 # include <oln/core/winiter.hh>
-# include <oln/core/winneighb.hh>
 # include <oln/core/accum.hh>
 # include <algorithm>
 

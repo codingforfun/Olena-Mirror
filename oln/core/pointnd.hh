@@ -28,9 +28,10 @@
 #ifndef OLENA_CORE_POINTND_HH
 # define OLENA_CORE_POINTND_HH
 
-# include <iostream>
+# include <oln/value/debug.hh>
 # include <oln/core/coord.hh>
 # include <oln/core/point.hh>
+# include <iostream>
 
 namespace oln {
 

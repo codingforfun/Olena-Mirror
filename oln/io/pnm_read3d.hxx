@@ -28,6 +28,7 @@
 #ifndef OLENA_IO_PNM_READ3D_HXX_
 # define OLENA_IO_PNM_READ3D_HXX_
 
+# include <oln/core/image3d.hh>
 # include <oln/io/pnm_read_common.hxx>
 # include <cstdio>
 

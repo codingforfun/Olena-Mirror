@@ -44,6 +44,7 @@ AC_CONFIG_FILES([
   Makefile
   oln/Makefile
   demo/Makefile
+  tests/defs
   tests/Makefile
   tests/array/Makefile
   tests/check/Makefile
@@ -51,5 +52,6 @@ AC_CONFIG_FILES([
   tests/convol/Makefile
   tests/io/Makefile
   tests/morpho/Makefile
+  tests/sanity/Makefile
 ])
 AC_OUTPUT

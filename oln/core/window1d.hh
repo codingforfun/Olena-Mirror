@@ -28,9 +28,10 @@
 #ifndef OLENA_CORE_WINDOW1D_HH
 # define OLENA_CORE_WINDOW1D_HH
 
+# include <oln/core/point1d.hh>
+# include <oln/core/dpoint1d.hh>
 # include <oln/core/internal/window.hh>
 # include <oln/core/winiter.hh>
-# include <oln/core/winneighb.hh>
 # include <oln/core/accum.hh>
 # include <algorithm>
 

@@ -30,7 +30,6 @@
 
 # include <oln/meta/basics.hh>
 
-
 namespace oln {
 
   namespace meta {
@@ -39,34 +38,34 @@ namespace oln {
     // What's the point of writing
     //   l_not<l_and<A, B>::ret>::ensure()
     // when one can simply do
-    //   is_true<!(A && B)>::ensure ()
+    //   is_true<!(A && B)>::ensure()
     // ? -- adl.
 
     template<bool b>
     struct l_not
     {
-      enum { ret = not b };
+      enum { ret = ! b };
       static void ensure() { is_true<ret>::ensure(); };
     };
 
     template<bool b1, bool b2>
     struct l_and
     {
-      enum { ret = (b1 and b2) };
+      enum { ret = (b1 & b2) };
       static void ensure() { is_true<ret>::ensure(); };
     };
 
     template<bool b1, bool b2>
     struct l_or
     {
-      enum { ret = (b1 or b2) };
+      enum { ret = (b1 | b2) };
       static void ensure() { is_true<ret>::ensure(); };
     };
 
     template<bool b1, bool b2>
     struct l_xor
     {
-      enum { ret = (b1 xor b2) };
+      enum { ret = (b1 ^ b2) };
       static void ensure() { is_true<ret>::ensure(); };
     };
 

@@ -30,7 +30,6 @@
 
 # include <oln/basics.hh>
 # include <oln/value/cast.hh>
-# include <cmath>
 
 namespace oln {
 

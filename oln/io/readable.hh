@@ -1,4 +1,4 @@
-// Copyright 2001  EPITA Research and Development Laboratory
+// Copyright 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,6 +28,7 @@
 #ifndef OLENA_IO_READABLE_HH_
 # define OLENA_IO_READABLE_HH_
 
+# include <oln/config/system.hh>
 # include <string>
 
 namespace oln {
@@ -38,19 +39,19 @@ namespace oln {
 
       template<typename T>
       bool read_any(T& output, const std::string& name);
-      
+
       class anything
       {
       public:
 	anything(const std::string& str) : _str(str) {}
-	
+
 	template< typename T >
 	T& assign(T& output) const
 	{
 	  read_any(output, _str);
 	  return output;
 	}
-	
+
       private:
 	std::string _str;
       };
@@ -63,5 +64,3 @@ namespace oln {
 
 
 #endif // OLENA_IO_READABLE_HH_
-
-

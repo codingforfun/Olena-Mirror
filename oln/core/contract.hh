@@ -1,4 +1,4 @@
-// Copyright 2001  EPITA Research and Development Laboratory
+// Copyright 2001, 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_CONTRACT_HH
 # define OLENA_CORE_CONTRACT_HH
 
-
+#  include <oln/config/system.hh>
 
 # ifdef NDEBUG
 

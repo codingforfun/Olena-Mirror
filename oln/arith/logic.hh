@@ -29,6 +29,8 @@
 # define OLENA_ARITH_LOGIC_HH
 
 # include <oln/basics.hh>
+# include <oln/value/bin.hh>
+# include <oln/convert/basics.hh>
 # include <oln/arith/internal/opdecls.hh>
 # include <functional>
 

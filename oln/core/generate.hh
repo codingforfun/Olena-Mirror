@@ -32,6 +32,7 @@
 # include <oln/core/image.hh>
 # include <oln/core/image_size.hh>
 # include <oln/core/iter.hh>
+# include <oln/core/macros.hh>
 
 namespace oln {
 

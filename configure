@@ -3035,7 +3035,7 @@ cat >>confdefs.h <<_ACEOF
 _ACEOF
 
 
-ac_config_files="$ac_config_files Makefile oln/Makefile demo/Makefile tests/Makefile tests/array/Makefile tests/check/Makefile tests/convert/Makefile tests/convol/Makefile tests/io/Makefile tests/morpho/Makefile"
+ac_config_files="$ac_config_files Makefile oln/Makefile demo/Makefile tests/defs tests/Makefile tests/array/Makefile tests/check/Makefile tests/convert/Makefile tests/convol/Makefile tests/io/Makefile tests/morpho/Makefile tests/sanity/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -3528,6 +3528,7 @@ do
   "Makefile" ) CONFIG_FILES="$CONFIG_FILES Makefile" ;;
   "oln/Makefile" ) CONFIG_FILES="$CONFIG_FILES oln/Makefile" ;;
   "demo/Makefile" ) CONFIG_FILES="$CONFIG_FILES demo/Makefile" ;;
+  "tests/defs" ) CONFIG_FILES="$CONFIG_FILES tests/defs" ;;
   "tests/Makefile" ) CONFIG_FILES="$CONFIG_FILES tests/Makefile" ;;
   "tests/array/Makefile" ) CONFIG_FILES="$CONFIG_FILES tests/array/Makefile" ;;
   "tests/check/Makefile" ) CONFIG_FILES="$CONFIG_FILES tests/check/Makefile" ;;
@@ -3535,6 +3536,7 @@ do
   "tests/convol/Makefile" ) CONFIG_FILES="$CONFIG_FILES tests/convol/Makefile" ;;
   "tests/io/Makefile" ) CONFIG_FILES="$CONFIG_FILES tests/io/Makefile" ;;
   "tests/morpho/Makefile" ) CONFIG_FILES="$CONFIG_FILES tests/morpho/Makefile" ;;
+  "tests/sanity/Makefile" ) CONFIG_FILES="$CONFIG_FILES tests/sanity/Makefile" ;;
   "depfiles" ) CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
   "oln/config/config.h" ) CONFIG_HEADERS="$CONFIG_HEADERS oln/config/config.h:oln/config/config.hin" ;;
   *) { { echo "$as_me:$LINENO: error: invalid argument: $ac_config_target" >&5

@@ -32,6 +32,7 @@
 # include <oln/math/macros.hh>
 # include <oln/value/op_traits.hh>
 # include <oln/arith/internal/opdecls.hh>
+# include <oln/convert/basics.hh>
 # include <functional>
 
 namespace oln {

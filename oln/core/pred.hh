@@ -29,9 +29,6 @@
 # define OLENA_CORE_PRED_IMAGE_HH
 
 # include <oln/core/image.hh>
-# include <oln/core/predicate.hh>
-
-
 
 namespace oln {
 

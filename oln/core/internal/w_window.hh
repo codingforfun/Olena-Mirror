@@ -30,6 +30,7 @@
 
 # include <oln/core/contract.hh>
 # include <oln/core/w_window.hh>
+# include <oln/core/point.hh>
 # include <oln/core/dpoint.hh>
 # include <iostream>
 # include <vector>

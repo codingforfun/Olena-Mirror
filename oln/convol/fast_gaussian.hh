@@ -29,6 +29,7 @@
 # define OLENA_CONVOL_FAST_GAUSSIAN_FILTER_HH__
 
 #include <oln/basics.hh>
+#include <oln/convert/basics.hh>
 
 //
 // Gaussian filter implementation from

@@ -28,6 +28,7 @@
 #ifndef OLENA_VALUE_DEBUG_HH
 # define OLENA_VALUE_DEBUG_HH
 
+# include <oln/config/system.hh>
 # include <oln/value/predefs.hh>
 
 # include <iostream>

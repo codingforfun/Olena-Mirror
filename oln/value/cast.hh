@@ -29,7 +29,6 @@
 # define OLENA_VALUE_CAST_HH
 
 # include <oln/value/rec_value.hh>
-# include <cmath>
 
 namespace oln {
   namespace cast {

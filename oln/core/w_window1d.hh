@@ -28,10 +28,13 @@
 #ifndef OLENA_CORE_W_WINDOW1D_HH
 # define OLENA_CORE_W_WINDOW1D_HH
 
-# include <algorithm>
 # include <oln/core/internal/w_window.hh>
-# include <oln/meta/array.hh>
 # include <oln/core/accum.hh>
+# include <oln/core/winiter.hh>
+# include <oln/core/winneighb.hh>
+# include <oln/core/dpoint1d.hh>
+# include <oln/core/window1d.hh>
+# include <algorithm>
 
 namespace oln {
 

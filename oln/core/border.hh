@@ -30,6 +30,7 @@
 
 # include <oln/core/contract.hh>
 # include <oln/core/image.hh>
+# include <oln/core/coord.hh>
 # include <oln/core/type.hh>
 # include <iostream>
 # include <string.h>
@@ -57,6 +58,7 @@ namespace oln {
 
     /* Extend the border if needed, don't shrink it.  */
     template<class _T>
+
     void adapt_width(const image<_T>& _input, coord min_border,
 		     bool copy_border = false)
     {

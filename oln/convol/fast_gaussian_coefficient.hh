@@ -44,7 +44,6 @@
 
 # include <oln/value/float_p.hh>
 # include <vector>
-# include <cmath>
 
 namespace oln {
   namespace convol {
