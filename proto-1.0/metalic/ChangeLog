@@ -1,3 +1,7 @@
+2005-03-19  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* mlc/cmp.hh: Add comparison traits (greatereq, greater, neq, ...).
+
 2005-03-16  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* mlc/properties.hh: Undo previous change.

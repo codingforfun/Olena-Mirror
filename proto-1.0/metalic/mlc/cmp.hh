@@ -32,10 +32,15 @@
 # include <mlc/bool.hh>
 
 
-namespace mlc 
+namespace mlc
 {
 
   namespace type {
+
+    /*-----------------.
+    | Type comparisons |
+    `-----------------*/
+
 
     template <typename T, typename U>
     struct eq : returns_bool_<false> {};
@@ -44,6 +49,81 @@ namespace mlc
     struct eq<T, T> : returns_bool_<true> {};
 
   } // end of namespace type
+
+  /*-------------------.
+  | Values comparisons |
+  `-------------------*/
+
+  // These struct are quite handy since constructions like
+  // is_true<a < b>::ensure() cannot be parsed.
+
+  template<int i, int j>
+  struct less
+  {
+    enum { ret = (i < j) };
+    static void ensure() { is_true<ret>::ensure(); };
+  };
+
+  template<int i, int j>
+  struct lesseq
+  {
+    enum { ret = (i <= j) };
+    static void ensure() { is_true<ret>::ensure(); };
+  };
+
+  template<int i, int j>
+  struct eq
+  {
+    enum { ret = (i == j) };
+    static void ensure() { is_true<ret>::ensure(); };
+  };
+
+  template<int i, int j>
+  struct neq
+  {
+    enum { ret = (i != j) };
+    static void ensure() { is_true<ret>::ensure(); };
+  };
+
+  template<int i, int j>
+  struct greater
+  {
+    enum { ret = (i > j) };
+    static void ensure() { is_true<ret>::ensure(); };
+  };
+
+  template<int i, int j>
+  struct greatereq
+  {
+    enum { ret = (i >= j) };
+    static void ensure() { is_true<ret>::ensure(); };
+  };
+
+  template<int i, int j>
+  struct min
+  {
+    enum { ret = (i < j ? i : j) };
+  };
+
+  template<int i, int j>
+  struct max
+  {
+    enum { ret = (i > j ? i : j) };
+  };
+
+  template<int i, int j, int N>
+  struct maxN
+  {
+    enum { ret = (i > j ?
+		  (i > N ? N : i) :
+		  (j > N ? N : j)) };
+  };
+
+  template<int i, int N>
+  struct saturateN
+  {
+    enum { ret = (i > N ? N : i) };
+  };
 
 
 } // end of namespace mlc
