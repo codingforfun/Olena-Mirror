@@ -1,3 +1,9 @@
+2004-11-02  Roland Levillain  <roland@lrde.epita.fr>
+
+	* oln/level/cc.hh (frontp_connected_component): Use the
+	imperative in documentation.
+	Use Doxygen's \param instead of \arg to document arguments.
+
 2004-10-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	* oln/level/cc.hh (frontp_connected_component): Be more precise

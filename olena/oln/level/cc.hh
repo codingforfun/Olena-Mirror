@@ -57,11 +57,11 @@ namespace oln {
     **
     ** \pre the input must be a binary image.
     **
-    ** \arg input Image of markers.
-    ** \arg se Neighborhood.
-    ** \arg nb_label Optional.  Returns the number of labels
-    **      (including the background); i.e. connected components are
-    **      labelled from 1 to \f$nb\_label - 1\f$ (included).
+    ** \param input Image of markers.
+    ** \param se Neighborhood.
+    ** \param nb_label Optional.  Return the number of labels
+    **        (including the background); i.e. connected components
+    **        are labelled from 1 to \f$nb\_label - 1\f$ (included).
     **
     ** \return An image of type \a DestType.
     **
