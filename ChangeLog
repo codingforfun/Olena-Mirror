@@ -1,3 +1,9 @@
+2002-06-27  jean-sebastien mouret  <js@lrde.epita.fr>
+
+	* src/io/base.hh: Added inline to allow separate compilation.
+	* src/core/window{1,2,3}d.hh: Likewise.
+	* src/core/neighborhood{1,2,3}d.hh: Likewise.
+
 2002-06-27  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* configure.ac: Don't check for hash_map and ext/hash_map.

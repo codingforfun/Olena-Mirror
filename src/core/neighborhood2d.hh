@@ -88,6 +88,7 @@ namespace oln {
     max_accumulator<coord> _delta;
   };
 
+  inline
   neighborhood2d inter(const neighborhood2d& lhs, const neighborhood2d& rhs)
   {
     neighborhood2d neighb;
@@ -100,6 +101,7 @@ namespace oln {
     return neighb;
   }
 
+  inline
   neighborhood2d uni(const neighborhood2d& lhs, const neighborhood2d& rhs)
   {
     neighborhood2d neighb;
@@ -114,7 +116,7 @@ namespace oln {
 
   // std neighbs
 
-  const neighborhood2d&
+  inline const neighborhood2d&
   neighb_c4()
   {
     static const coord crd[] = { -1,0,  0,-1, 0,1,  1,0 };
@@ -122,7 +124,7 @@ namespace oln {
     return neighb;
   }
 
-  const neighborhood2d&
+  inline const neighborhood2d&
   neighb_c8()
   {
     static const coord crd[] = { -1,-1, -1,0, -1,1,  0,-1, 0,1,  1,-1,  1,0,  1,1 };
@@ -132,7 +134,7 @@ namespace oln {
 
   // mk_neighb's
 
-  neighborhood2d
+  inline neighborhood2d
   mk_neighb_rectangle(unsigned nrows, unsigned ncols)
   {
     precondition(nrows >= 3 && (nrows % 2) == 1);
@@ -146,12 +148,13 @@ namespace oln {
     return neighb;
   }
 
-  neighborhood2d
+  inline neighborhood2d
   mk_neighb_square(unsigned width)
   {
     return mk_neighb_rectangle(width, width);
   }
 
+  inline
   window2d mk_win_from_neighb(const neighborhood2d& n)
   {
     window2d win(n.card());

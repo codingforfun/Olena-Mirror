@@ -88,6 +88,7 @@ namespace oln {
   };
 
 
+  inline
   window2d inter(const window2d& lhs, const window2d& rhs)
   {
     window2d win;
@@ -100,6 +101,7 @@ namespace oln {
     return win;
   }
 
+  inline
   window2d uni(const window2d& lhs, const window2d& rhs)
   {
     window2d win;
@@ -114,7 +116,7 @@ namespace oln {
 
   // std win
 
-  const window2d&
+  inline const window2d&
   win_c4_only()
   {
     static const coord crd[] = { -1,0,  0,-1, 0,1,  1,0 };
@@ -122,7 +124,7 @@ namespace oln {
     return win;
   }
 
-  const window2d&
+  inline const window2d&
   win_c4p()
   {
     static const coord crd[] = { -1,0,  0,-1, 0,0, 0,1,  1,0 };
@@ -130,7 +132,7 @@ namespace oln {
     return win;
   }
 
-  const window2d&
+  inline const window2d&
   win_c8_only()
   {
     static const coord crd[] = { -1,-1, -1,0, -1,1,  0,-1, 0,1,  1,-1,  1,0,  1,1 };
@@ -138,7 +140,7 @@ namespace oln {
     return win;
   }
 
-  const window2d&
+  inline const window2d&
   win_c8p()
   {
     static const coord crd[] = { -1,-1, -1,0, -1,1,  0,-1, 0,0, 0,1,  1,-1,  1,0,  1,1 };
@@ -148,7 +150,7 @@ namespace oln {
 
   // mk_win's
 
-  window2d
+  inline window2d
   mk_win_rectangle(unsigned nrows, unsigned ncols)
   {
     precondition(nrows >= 3 && (nrows % 2) == 1);
@@ -161,7 +163,7 @@ namespace oln {
     return win;
   }
 
-  window2d
+  inline window2d
   mk_win_ellipse(float yradius, float xradius)
   {
     precondition(yradius > 0);
@@ -187,13 +189,13 @@ namespace oln {
     return win;
   }
 
-  window2d
+  inline window2d
   mk_win_square(unsigned width)
   {
     return mk_win_rectangle(width, width);
   }
 
-  window2d
+  inline window2d
   mk_win_disc(float radius)
   {
     return mk_win_ellipse(radius, radius);

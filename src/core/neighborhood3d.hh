@@ -89,6 +89,7 @@ namespace oln {
   };
 
 
+  inline
   neighborhood3d inter(const neighborhood3d& lhs, const neighborhood3d& rhs)
   {
     neighborhood3d neighb;
@@ -101,6 +102,7 @@ namespace oln {
     return neighb;
   }
 
+  inline
   neighborhood3d uni(const neighborhood3d& lhs, const neighborhood3d& rhs)
   {
     neighborhood3d neighb;
@@ -115,7 +117,7 @@ namespace oln {
 
   // std neighb
 
-  const neighborhood3d&
+  inline const neighborhood3d&
   neighb_c6()
   {
     static const coord crd[] = { -1,  0,  0,
@@ -128,7 +130,7 @@ namespace oln {
     return neighb;
   }
 
-  const neighborhood3d&
+  inline const neighborhood3d&
   neighb_c18()
   {
     static const coord crd[] = { -1, -1,  0,
@@ -153,7 +155,7 @@ namespace oln {
     return neighb;
   }
 
-  const neighborhood3d&
+  inline const neighborhood3d&
   neighb_c26()
   {
     static const coord crd[] = { -1, -1, -1
@@ -188,7 +190,7 @@ namespace oln {
 
   // mk_neighb's
 
-  neighborhood3d
+  inline neighborhood3d
   mk_neighb_block(unsigned nslices, unsigned nrows, unsigned ncols)
   {
     precondition(nslices >= 3 && (nslices % 2) == 1);
@@ -206,12 +208,13 @@ namespace oln {
     return neighb;
   }
 
-  neighborhood3d
+  inline neighborhood3d
   mk_neighb_cube(unsigned width)
   {
     return mk_neighb_block(width, width, width);
   }
 
+  inline
   window3d mk_win_from_neighb(const neighborhood3d& n)
   {
     window3d win(n.card());

@@ -87,6 +87,7 @@ namespace oln {
   };
 
 
+  inline
   window1d inter(const window1d& lhs, const window1d& rhs)
   {
     window1d win;
@@ -99,6 +100,7 @@ namespace oln {
     return win;
   }
 
+  inline
   window1d uni(const window1d& lhs, const window1d& rhs)
   {
     window1d win;
@@ -113,7 +115,7 @@ namespace oln {
 
   // std win
 
-  const window1d&
+  inline const window1d&
   win_c2_only()
   {
     static const coord crd[] = { -1, 1 };
@@ -121,7 +123,7 @@ namespace oln {
     return win;
   }
 
-  const window1d&
+  inline const window1d&
   win_c2p()
   {
     static const coord crd[] = { -1, 0, 1 };
@@ -129,7 +131,7 @@ namespace oln {
     return win;
   }
 
-  window1d
+  inline window1d
   mk_win_segment(unsigned width)
   {
     precondition(width>= 3 && (width % 2) == 1);

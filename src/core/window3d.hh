@@ -88,6 +88,7 @@ namespace oln {
   };
 
 
+  inline 
   window3d inter(const window3d& lhs, const window3d& rhs)
   {
     window3d win;
@@ -100,6 +101,7 @@ namespace oln {
     return win;
   }
 
+  inline
   window3d uni(const window3d& lhs, const window3d& rhs)
   {
     window3d win;
@@ -114,7 +116,7 @@ namespace oln {
 
   // std win
 
-  const window3d&
+  inline const window3d&
   win_c6_only()
   {
     static const coord crd[] = { -1,  0,  0,
@@ -127,7 +129,7 @@ namespace oln {
     return win;
   }
 
-  const window3d&
+  inline const window3d&
   win_c6p()
   {
     static const coord crd[] = { -1,  0,  0,
@@ -141,7 +143,7 @@ namespace oln {
     return win;
   }
 
-  const window3d&
+  inline const window3d&
   win_c18_only()
   {
     static const coord crd[] = { -1, -1,  0,
@@ -166,7 +168,7 @@ namespace oln {
     return win;
   }
 
-  const window3d&
+  inline const window3d&
   win_c18p()
   {
     static const coord crd[] = { -1, -1,  0,
@@ -192,7 +194,7 @@ namespace oln {
     return win;
   }
 
-  const window3d&
+  inline const window3d&
   win_c26_only()
   {
     static const coord crd[] = { -1, -1, -1,
@@ -225,7 +227,7 @@ namespace oln {
     return win;
   }
 
-  const window3d&
+  inline const window3d&
   win_c26p()
   {
     static const coord crd[] = { -1, -1, -1,
@@ -261,7 +263,7 @@ namespace oln {
 
   // mk_win's
 
-  window3d
+  inline window3d
   mk_win_block(unsigned nslices, unsigned nrows, unsigned ncols)
   {
     precondition(nslices >= 3 && (nslices % 2) == 1);
@@ -278,7 +280,7 @@ namespace oln {
     return win;
   }
 
-  window3d
+  inline window3d
   mk_win_ellipsoid(float zradius, float yradius, float xradius)
   {
     precondition(zradius > 0);
@@ -313,13 +315,13 @@ namespace oln {
     return win;
   }
 
-  window3d
+  inline window3d
   mk_win_cube(unsigned width)
   {
     return mk_win_block(width, width, width);
   }
 
-  window3d
+  inline window3d
   mk_win_ball(float radius)
   {
     return mk_win_ellipsoid(radius, radius, radius);

@@ -1,19 +1,18 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_4 14)
-(Parent-Version oln 0_4 13)
-(Version-Log "2002-06-27  Alexandre Duret-Lutz  <duret_g@epita.fr>
+(Project-Version oln 0_4 15)
+(Parent-Version oln 0_4 14)
+(Version-Log "2002-06-27  jean-sebastien mouret  <js@lrde.epita.fr>
 
-	* configure.ac: Don't check for hash_map and ext/hash_map.
-	* src/config/hash_map.hh: Delete.
-	* src/Makefile.am (nobase_oln_HEADERS, PCONF_OCCURS): Remove
-	config/hash_map.hh.
+	* src/io/base.hh: Added inline to allow separate compilation.
+	* src/core/window{1,2,3}d.hh: Likewise.
+	* src/core/neighborhood{1,2,3}d.hh: Likewise.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 27 Jun 2002 09:33:21 +0200")
-(Checkin-Login duret_g)
+(Checkin-Time "Thu, 27 Jun 2002 16:05:23 +0200")
+(Checkin-Login js)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
                   "\\.o$"
@@ -83,7 +82,7 @@
   (configure.ac (oln/3_configure. 1.9 600))
   (THANKS (oln/4_THANKS 1.1 600))
   (img/lena.pgm (oln/5_lena.pgm 1.1 600) :no-keywords)
-  (ChangeLog (oln/6_ChangeLog 1.47 600))
+  (ChangeLog (oln/6_ChangeLog 1.48 600))
   (src/config/system.hh (oln/7_system.hh 1.3 600))
   (src/utils/timer.hh (oln/8_timer.hh 1.1 600))
   (src/utils/stat.hh (oln/9_stat.hh 1.2 600))
@@ -149,7 +148,7 @@
   (src/io/file.hh (oln/b/17_file.hh 1.1 600))
   (src/io/base.hxx (oln/b/18_base.hxx 1.1 600))
   (src/io/pnm.hh (oln/b/19_pnm.hh 1.1 600))
-  (src/io/base.hh (oln/b/20_base.hh 1.1 600))
+  (src/io/base.hh (oln/b/20_base.hh 1.2 600))
   (src/math/macros.hh (oln/b/21_macros.hh 1.1 600))
   (src/arith/internal/opdecls.hh (oln/b/22_opdecls.hh 1.2 600))
   (src/arith/ops.hh (oln/b/23_ops.hh 1.2 600))
@@ -194,9 +193,9 @@
   (src/core/pointnd.hh (oln/c/10_pointnd.hh 1.1 600))
   (src/core/winneighb.hh (oln/c/11_winneighb. 1.1 600))
   (src/core/winiter.hh (oln/c/12_winiter.hh 1.1 600))
-  (src/core/window3d.hh (oln/c/13_window3d.h 1.2 600))
-  (src/core/window2d.hh (oln/c/14_window2d.h 1.2 600))
-  (src/core/window1d.hh (oln/c/15_window1d.h 1.2 600))
+  (src/core/window3d.hh (oln/c/13_window3d.h 1.3 600))
+  (src/core/window2d.hh (oln/c/14_window2d.h 1.3 600))
+  (src/core/window1d.hh (oln/c/15_window1d.h 1.3 600))
   (src/core/window.hh (oln/c/16_window.hh 1.2 600))
   (src/core/w_window3d.hh (oln/c/17_w_window3d 1.1 600))
   (src/core/w_window2d.hh (oln/c/18_w_window2d 1.1 600))
@@ -216,9 +215,9 @@
   (src/core/point1d.hh (oln/c/32_point1d.hh 1.1 600))
   (src/core/point.hh (oln/c/33_point.hh 1.1 600))
   (src/core/objs.hh (oln/c/34_objs.hh 1.1 600))
-  (src/core/neighborhood3d.hh (oln/c/35_neighborho 1.2 600))
-  (src/core/neighborhood2d.hh (oln/c/36_neighborho 1.2 600))
-  (src/core/neighborhood1d.hh (oln/c/37_neighborho 1.2 600))
+  (src/core/neighborhood3d.hh (oln/c/35_neighborho 1.3 600))
+  (src/core/neighborhood2d.hh (oln/c/36_neighborho 1.3 600))
+  (src/core/neighborhood1d.hh (oln/c/37_neighborho 1.3 600))
   (src/core/neighborhood.hh (oln/c/38_neighborho 1.1 600))
   (src/core/macros.hh (oln/c/39_macros.hh 1.1 600))
   (src/core/iter.hh (oln/c/40_iter.hh 1.1 600))
@@ -311,15 +310,15 @@
   (doc/doc/Makefile.in (oln/e/6_Makefile.i 1.11 600))
   (configure (oln/e/7_configure 1.12 700))
   (aclocal.m4 (oln/e/8_aclocal.m4 1.8 600))
-  (Makefile.in (oln/e/9_Makefile.i 1.12 644))
+  (Makefile.in (oln/e/9_Makefile.i 1.12 600))
   (tools/texinfo.tex (oln/e/10_texinfo.te 1.2 600))
   (tools/mdate-sh (oln/e/11_mdate-sh 1.1 700))
   (tools/depcomp (oln/e/12_depcomp 1.2 700))
   (tools/missing (oln/e/13_missing 1.2 700))
   (tools/mkinstalldirs (oln/e/14_mkinstalld 1.1 700))
   (tools/install-sh (oln/e/15_install-sh 1.2 700))
-  (demo/Makefile.in (oln/e/16_Makefile.i 1.9 644))
-  (src/Makefile.in (oln/e/17_Makefile.i 1.14 644))
+  (demo/Makefile.in (oln/e/16_Makefile.i 1.9 600))
+  (src/Makefile.in (oln/e/17_Makefile.i 1.14 600))
 
 ;; Files added by populate at Sun, 13 Jan 2002 12:33:06 +0100,
 ;; to version 0_2.7(w), by adl:
@@ -376,24 +375,24 @@
   (tests/ChangeLog (oln/e/30_ChangeLog 1.7 600))
   (tests/morpho/extrkiller.cc (oln/e/31_extrkiller 1.3 600))
   (tests/morpho/Makefile.am (oln/e/32_Makefile.a 1.3 600))
-  (tests/morpho/Makefile.in (oln/e/33_Makefile.i 1.8 644))
+  (tests/morpho/Makefile.in (oln/e/33_Makefile.i 1.8 600))
   (tests/morpho/reconstruction.cc (oln/e/34_reconstruc 1.4 600))
   (tests/check/srcdir.hh (oln/e/35_srcdir.hh 1.2 600))
   (tests/check/Makefile.flags (oln/e/36_Makefile.f 1.1 600))
   (tests/check/Makefile.check (oln/e/37_Makefile.c 1.3 600))
   (tests/check/srcdir.cc (oln/e/38_srcdir.cc 1.2 600))
-  (tests/check/Makefile.in (oln/e/39_Makefile.i 1.7 644))
+  (tests/check/Makefile.in (oln/e/39_Makefile.i 1.7 600))
   (tests/check/check.hh (oln/e/40_check.hh 1.2 600))
   (tests/check/verbose.cc (oln/e/41_verbose.cc 1.1 600))
   (tests/check/verbose.hh (oln/e/42_verbose.hh 1.2 600))
   (tests/check/main.cc (oln/e/43_main.cc 1.1 600))
   (tests/check/Makefile.am (oln/e/44_Makefile.a 1.3 600))
   (tests/Makefile.am (oln/e/45_Makefile.a 1.2 600))
-  (tests/Makefile.in (oln/e/46_Makefile.i 1.6 644))
+  (tests/Makefile.in (oln/e/46_Makefile.i 1.6 600))
   (tests/io/2d.cc (oln/e/47_2d.cc 1.2 600))
   (tests/io/loadsave.hh (oln/e/48_loadsave.h 1.1 600))
   (tests/io/Makefile.am (oln/e/49_Makefile.a 1.3 600))
-  (tests/io/Makefile.in (oln/e/50_Makefile.i 1.7 644))
+  (tests/io/Makefile.in (oln/e/50_Makefile.i 1.7 600))
   (tests/data/lena.ppm (oln/e/51_lena.ppm 1.1 600) :no-keywords)
 
 ;; Files added by populate at Tue, 02 Apr 2002 16:54:37 +0200,
@@ -401,7 +400,7 @@
 
   (tests/convert/Makefile.am (oln/f/0_Makefile.a 1.2 600))
   (tests/convert/convcomp.hh (oln/f/1_convcomp.h 1.1 600))
-  (tests/convert/Makefile.in (oln/f/2_Makefile.i 1.6 644))
+  (tests/convert/Makefile.in (oln/f/2_Makefile.i 1.6 600))
   (tests/convert/convcomp.cc (oln/f/3_convcomp.c 1.3 600))
 
 ;; Files added by populate at Wed, 03 Apr 2002 11:58:24 +0200,

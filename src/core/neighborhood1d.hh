@@ -88,6 +88,7 @@ namespace oln {
   };
 
 
+  inline 
   neighborhood1d inter(const neighborhood1d& lhs, const neighborhood1d& rhs)
   {
     neighborhood1d neighb;
@@ -100,6 +101,8 @@ namespace oln {
     return neighb;
   }
 
+  
+  inline 
   neighborhood1d uni(const neighborhood1d& lhs, const neighborhood1d& rhs)
   {
     neighborhood1d neighb;
@@ -114,7 +117,7 @@ namespace oln {
 
   // std neighb
 
-  const
+  inline const
   neighborhood1d& neighb_c2()
   {
     static const coord crd[] = { -1, 1 };
@@ -122,6 +125,7 @@ namespace oln {
     return neighb;
   }
 
+  inline 
   neighborhood1d mk_neighb_segment(unsigned width)
   {
     precondition(width>= 3 && (width % 2) == 1);
@@ -133,6 +137,7 @@ namespace oln {
     return neighb;
   }
 
+  inline 
   window1d mk_win_from_neighb(const neighborhood1d& n)
   {
     window1d win(n.card());

@@ -50,6 +50,7 @@ namespace oln {
 
     // aliases
 
+    inline
     internal::anything load(const std::string& name)
     {	return internal::anything(name); }
 
