@@ -29,6 +29,7 @@
 # define PROTO_OLN_CORE_ABSTRACT_INTERNAL_IMAGE_IMPL_HH
 
 # include <mlc/any.hh>
+# include <mlc/types.hh>
 
 # include <oln/core/properties.hh>
 

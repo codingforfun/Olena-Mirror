@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CONVERT_NG_TO_SE_HH
-# define OLENA_CONVERT_NG_TO_SE_HH
+#ifndef OLENA_CONVERT_NBH_TO_SE_HH
+# define OLENA_CONVERT_NBH_TO_SE_HH
 
 # include <oln/basics.hh>
 
@@ -42,16 +42,16 @@ namespace oln {
   namespace convert {
     /*! Convert a neighborhood to a window.
     **
-    ** \see ng_to_cse
+    ** \see nbh_to_cse
     */
     template<class N>
     oln_type_of(N, window)
-    ng_to_se(const oln::abstract::neighborhood<N>& ng)
+    nbh_to_se(const oln::abstract::neighborhood<N>& nbh)
     {
       oln_type_of(N, window) output;
 
-      for (unsigned i = 0; i < ng.card(); i++)
-	output.add(ng[i]);
+      for (unsigned i = 0; i < nbh.card(); i++)
+	output.add(nbh[i]);
       return output;
     }
 
@@ -63,16 +63,16 @@ namespace oln {
 
     /*! Convert a neighborhood to a window and add the center.
     **
-    ** \see ng_to_cs
+    ** \see nbh_to_cs
     */
     template<class N>
     oln_type_of(N, window)
-    ng_to_cse(const oln::abstract::neighborhood<N>& ng)
+    nbh_to_cse(const oln::abstract::neighborhood<N>& nbh)
     {
       oln_type_of(N, window) output;
 
-      for (unsigned i = 0; i < ng.card(); i++)
-	output.add(ng[i]);
+      for (unsigned i = 0; i < nbh.card(); i++)
+	output.add(nbh[i]);
 
       oln_type_of(N, dpoint) zero;
       dpoint_zero(zero);
@@ -85,4 +85,4 @@ namespace oln {
 } // oln
 
 
-#endif // OLENA_CONVERT_NG_TO_SE_HH
+#endif // OLENA_CONVERT_NBH_TO_SE_HH

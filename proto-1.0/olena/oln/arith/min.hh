@@ -29,7 +29,8 @@
 # define OLENA_ARITH_MIN_HH
 
 # include <oln/basics.hh>
-# include <oln/core/abstract/op.hh>
+# include <oln/core/abstract/image_operator.hh>
+
 # include <ntg/all.hh>
 
 namespace oln {
@@ -53,7 +54,7 @@ namespace oln {
   template <typename I>
   struct set_super_type< arith::impl::min_type<I> >
   {
-    typedef abstract::op<I, arith::impl::min_type<I> > ret;
+    typedef abstract::image_binary_operator<I, I, I, arith::impl::min_type<I> > ret;
   };
 
   namespace arith {
@@ -61,27 +62,25 @@ namespace oln {
     namespace impl {
 
       template <class I>
-      struct min_type : public abstract::op<I, min_type<I> >
+      struct min_type : public abstract::image_binary_operator<I, I, I, min_type<I> >
       {
-	box<const I> input1_;
-	box<const I> input2_;
+	typedef abstract::image_binary_operator<I, I, I, min_type<I> > super_type;
 
 	min_type(const abstract::non_vectorial_image<I>& input1,
 		 const abstract::non_vectorial_image<I>& input2) :
-	  input1_(input1.exact()),
-	  input2_(input2.exact())
+	  super_type(input1.exact(), input2.exact())
 	{}
 
 	void impl_run()
 	{
-	  precondition(input1_.size() == input2_.size());
-	  I output(input1_.size());
-	  oln_type_of(I, fwd_piter) p(input1_.size());
+	  precondition(this->input1.size() == this->input2.size());
+	  I output(this->input1.size());
+	  oln_type_of(I, fwd_piter) p(this->input1.size());
 
 	  for_all(p)
-	    output[p] = ntg::min(input1_[p].value(), input2_[p].value());
+	    output[p] = ntg::min(this->input1[p].value(), this->input2[p].value());
 
-	  this->image_ = output;
+	  this->output = output;
 	}
 
       };

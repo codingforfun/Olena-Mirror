@@ -53,7 +53,7 @@ namespace oln {
 
   // category
   template <typename T, typename I, typename E>
-  struct set_category< morpho::cc_tarjan_ret<T,I,E> > 
+  struct set_category< morpho::cc_tarjan_ret<T,I,E> >
   { typedef category::image ret; };
 
   // super_type
@@ -61,7 +61,7 @@ namespace oln {
   struct set_super_type< morpho::cc_tarjan_ret<T,I,E> >
   {
     typedef abstract::image_unary_operator
-              <tmp_mute(I, T), I, morpho::cc_tarjan_ret<T, I, E> > 
+              <tmp_mute(I, T), I, morpho::cc_tarjan_ret<T, I, E> >
             ret;
   };
 
@@ -69,24 +69,24 @@ namespace oln {
   namespace morpho {
 
     template <typename T, typename I, typename E>
-    struct cc_tarjan_ret 
+    struct cc_tarjan_ret
       : public abstract::image_unary_operator
                  <tmp_mute(I, T), I, cc_tarjan_ret<T, I, E> >
     {
       typedef abstract::image_unary_operator
-                <tmp_mute(I, T), I, cc_tarjan_ret<T, I, E> > 
+                <tmp_mute(I, T), I, cc_tarjan_ret<T, I, E> >
               super_type;
       typedef typename super_type::output_type output_type;
 
       const E ng;
-      
+
       cc_tarjan_ret(const abstract::image<I>& input,
 	            const abstract::neighborhood<E>& ng) :
 	super_type(input),
 	ng(ng.exact())
 	{
 	}
-      
+
     };
 
 
@@ -123,7 +123,7 @@ namespace oln {
         }
 
      } // end of misc namespace
-      
+
 
       template <typename T, typename I, typename N>
       struct generic_cc_tarjan : public cc_tarjan_ret<T, I, N>
@@ -143,8 +143,7 @@ namespace oln {
 
 	void impl_run()
 	{
-	  mlc::is_true<mlc::type::eq<oln_type_of(I, size),
-	                             oln_type_of(N, size)>::ret>::ensure();
+	  mlc::eq<oln_type_of(I, size), oln_type_of(N, size)>::ensure();
 
 	  output_type tmp(this->input.size()); // FIXME: trick
 	  this->output = tmp;
@@ -167,20 +166,20 @@ namespace oln {
                 if (this->input[n])
                   do_union(n, p);
               }
-            } 
+            }
         }
 
         void second_pass()
         {
           oln_type_of(I, fwd_piter) p(this->input.size());
-          level::fill(output, 0);
+          level::fill(this->output, 0);
           ncomps = 0;
           for_all(p)
             if (this->input[p])
-            { 
+            {
 	      oln_type_of(I, point) q = parent[p];
               // FIXME: test if ncomps > T::max()
-	      output[p] = (q == p ? ++ncomps : output[q]); 
+	      this->output[p] = (q == p ? ++ncomps : this->output[q]);
             }
         }
 
@@ -198,16 +197,16 @@ namespace oln {
             }
           return x;
         }
- 
-        void do_union(const oln_type_of(I, point)& n, 
+
+        void do_union(const oln_type_of(I, point)& n,
                       const oln_type_of(I, point)& p)
         {
           oln_type_of(I, point) r = find_root(n);
           if (r != p)
             parent[r] = p;
         }
- 
-  
+
+
       };
 
     } // end of namespace oln::morpho::impl

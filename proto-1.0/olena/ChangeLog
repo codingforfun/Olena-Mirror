@@ -1,3 +1,14 @@
+2005-04-06  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* oln/convert/ng_to_se.hh: Remove.
+	* oln/convert/nbh_to_se.hh: New.
+	* oln/core/abstract/internal/image_impl.hh: Add missing inclusion.
+	* oln/makefile.src: Commit name change for ng_to_se.hh.
+	* oln/morpho/reconstruction.hh: Factor code.
+	* oln/morpho/cc_tarjan.hh: Conform to mlc macros.
+	* oln/arith/min.hh: Conform to image_operator.
+	* oln/arith/max.hh: Conform to image_operator.
+
 2005-04-05  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* oln/core/pw/image.hh: Conform to mlc macros.

@@ -14,7 +14,7 @@ OLN_DEP =					\
   basics3d.hh					\
   config/pconf.hh				\
   config/system.hh				\
-  convert/ng_to_se.hh				\
+  convert/nbh_to_se.hh				\
   convert/value_to_point.hh			\
   core/1d/array1d.hh				\
   core/1d/dpoint1d.hh				\
