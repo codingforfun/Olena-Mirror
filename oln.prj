@@ -1,34 +1,15 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 167)
-(Parent-Version oln 10 165)
-(Version-Log "Index: tools/ChangeLog
-from  Giovanni Palma  <giovanni@lrde.epita.fr>
-
-	* utilities/morpho/Makefile.am: Change flags order.
-
-Index: tools/utilities/morpho/Makefile.am
---- tools/utilities/morpho/Makefile.am Tue, 29 Jul 2003 18:21:22 +0200 david (oln/i/32_Makefile.a 1.9.1.5 600)
-+++ tools/utilities/morpho/Makefile.am Thu, 15 Apr 2004 15:21:50 +0200 palma_g (oln/i/32_Makefile.a 1.9.1.5 600)
-@@ -1,10 +1,10 @@
- ## Process this file with Automake to produce Makefile.in -*- Makefile -*-
- 
- AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_OPTIMIZE) $(ZLIB_CXXFLAGS)
--AM_LDFLAGS = $(LDFLAGS) $(ZLIB_LDFLAGS)
-+AM_LDFLAGS = $(LDFLAGS)
- 
- INCLUDES = -I$(srcdir)/../../lib
--LDADD = ../../lib/libolntools.a
-+LDADD = ../../lib/libolntools.a $(ZLIB_LDFLAGS)
- 
- $(srcdir)/morpho-rules.make: $(srcdir)/generate_morpho.sh
- 	$(SHELL) $(srcdir)/generate_morpho.sh $(srcdir)
-
+(Project-Version oln 10 168)
+(Parent-Version oln 10 167)
+(Version-Log "from  Niels Van Vliet  <niels@lrde.epita.fr>
+	* tools/swilena/meta/Makefile.am: Add swilena_ntg_macros.i to
+	the dist.
 ")
 (New-Version-Log "")
-(Checkin-Time "Thu, 15 Apr 2004 15:28:19 +0200")
-(Checkin-Login palma_g)
+(Checkin-Time "Thu, 15 Apr 2004 15:40:44 +0200")
+(Checkin-Login van-vl_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -131,12 +112,12 @@ Index: tools/utilities/morpho/Makefile.am
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.17.1.19.1.7 600))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.4 600))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.14.1.5 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.42 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.40 600))
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.88 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.13 600))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.33 600))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.34 600))
 
   (olena/ChangeLog.0 (oln/6_ChangeLog 1.50.1.98.1.5 600))
   (doc/ChangeLog.0 (oln/e/1_ChangeLog 1.31 600))
@@ -875,7 +856,7 @@ Index: tools/utilities/morpho/Makefile.am
 ;; Files added by populate at Tue, 06 May 2003 06:05:41 +0200,
 ;; to version 8.33(w), by raph:
 
-  (tools/swilena/meta/Makefile.am (oln/s/26_Makefile.a 1.3 600))
+  (tools/swilena/meta/Makefile.am (oln/s/26_Makefile.a 1.4 600))
 
 ;; Files added by populate at Tue, 06 May 2003 06:05:43 +0200,
 ;; to version 8.33(w), by raph:
@@ -1474,9 +1455,5 @@ Index: tools/utilities/morpho/Makefile.am
   (metalic/mlc/makefile.src (oln/r/3_makefile.s 1.1 600))
   (olena/oln/makefile.src (oln/r/4_makefile.s 1.1 600))
 )
-(Merge-Parents
-  (10.165 complete)
-  (10.166 complete
-    (doc/ChangeLog doc/ChangeLog doc/ChangeLog r) (doc/ref/Makefile.am doc/ref/Makefile.am doc/ref/Makefile.am r))
-)
+(Merge-Parents)
 (New-Merge-Parents)
