@@ -1,15 +1,12 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 7 56)
-(Parent-Version oln 7 55)
-(Version-Log "Index: ChangeLog
-from   2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
-        * Makefile.am: do not mention ISSUES any more.
-
+(Project-Version oln 7 57)
+(Parent-Version oln 7 56)
+(Version-Log "Commit files ^_^
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 10 Feb 2003 11:01:16 +0100")
+(Checkin-Time "Mon, 10 Feb 2003 11:02:14 +0100")
 (Checkin-Login raph)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -119,7 +116,7 @@ from   2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
   (doc/ref/processing.tpl (oln/d/48_processing 1.15 660))
   
   (INSTALL (oln/o/39_INSTALL 1.2 664))
-  (Makefile.am (oln/n/32_Makefile.a 1.13 664))
+  (Makefile.am (oln/n/32_Makefile.a 1.14 664))
   (NEWS (oln/0_NEWS 1.10 660))
   
   (oln/img/face_se.pbm (oln/n/17_face_se.pb 1.1 660) :no-keywords)
