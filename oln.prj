@@ -1,18 +1,28 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_3 31)
-(Parent-Version oln 0_3 30)
-(Version-Log "2002-04-22  Alexandre Duret-Lutz  <duret_g@epita.fr>
+(Project-Version oln 0_3 32)
+(Parent-Version oln 0_3 31)
+(Version-Log "2002-04-23  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
-	* morpho/edoc.cc: New file.
-	* morpho/Makefile.am (check_PROGRAMS): Add edoc.
-	* morpho/reconstruction.cc: Remove useless includes.
+	* NEWS update for 0.4.
+	* src/morpho/reconstruction.hh, src/morpho/geodesic_erosion.hh,
+	src/morpho/geodesic_dilation.hh, src/morpho/watershed.hxx,
+	src/value/color.hh, src/meta/ufuncs.hh, src/meta/ucmp.hh,
+	src/meta/logic.hh, src/meta/control.hh, src/meta/basics.hh,
+	src/core/pred.hh, src/core/internal/window.hh,
+	src/core/internal/w_window.hh, src/core/internal/image3d_data.hh,
+	src/core/internal/image3d.hh, src/core/internal/image2d_data.hh,
+	src/core/internal/image2d.hh, src/core/internal/image1d_data.hh,
+	src/core/internal/image1d.hh, src/convert/conversion_ng_se.hh,
+	src/morpho/thinning.inc, src/morpho/thinning.hh,
+	src/morpho/thickening.inc, src/morpho/thickening.hh,
+	src/level/lut.hh: Update copyright years.
 
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 22 Apr 2002 17:25:18 +0200")
-(Checkin-Login adl)
+(Checkin-Time "Tue, 23 Apr 2002 15:40:27 +0200")
+(Checkin-Login duret_g)
 (Populate-Ignore ("~$"
                   "\\.\\(bak\\|old\\|rej\\|orig\\)$"
                   "\\.o$"
@@ -76,13 +86,13 @@
 ;; Files added by populate at Mon, 31 Dec 2001 19:32:30 +0100,
 ;; to version 0_2.0(w), by adl:
 
-  (NEWS (oln/0_NEWS 1.2 644))
+  (NEWS (oln/0_NEWS 1.3 644))
   (README (oln/1_README 1.3 644))
   (Makefile.am (oln/2_Makefile.a 1.7 644))
   (configure.ac (oln/3_configure. 1.5 644))
   (THANKS (oln/4_THANKS 1.1 644))
   (img/lena.pgm (oln/5_lena.pgm 1.1 640) :no-keywords)
-  (ChangeLog (oln/6_ChangeLog 1.34 644))
+  (ChangeLog (oln/6_ChangeLog 1.35 644))
   (src/config/system.hh (oln/7_system.hh 1.2 644))
   (src/utils/timer.hh (oln/8_timer.hh 1.1 644))
   (src/utils/stat.hh (oln/9_stat.hh 1.2 644))
@@ -105,15 +115,15 @@
   (src/convol/fast_gaussian.hh (oln/26_fast_gauss 1.1 644))
   (src/Makefile.am (oln/27_Makefile.a 1.7 644))
   (src/basics3d.hh (oln/28_basics3d.h 1.1 644))
-  (src/level/lut.hh (oln/29_lut.hh 1.3 644))
+  (src/level/lut.hh (oln/29_lut.hh 1.4 644))
   (src/level/connected.hh (oln/30_connected. 1.4 644))
   (src/level/compare.hh (oln/31_compare.hh 1.1 644))
   (src/level/fill.hh (oln/32_fill.hh 1.1 644))
   (src/level/invert.hh (oln/33_invert.hh 1.1 644))
   (src/morpho/splitse.hh (oln/34_splitse.hh 1.1 644))
-  (src/morpho/reconstruction.hh (oln/35_reconstruc 1.4 644))
-  (src/morpho/geodesic_erosion.hh (oln/36_geodesic_e 1.3 644))
-  (src/morpho/geodesic_dilation.hh (oln/37_geodesic_d 1.3 644))
+  (src/morpho/reconstruction.hh (oln/35_reconstruc 1.5 644))
+  (src/morpho/geodesic_erosion.hh (oln/36_geodesic_e 1.4 644))
+  (src/morpho/geodesic_dilation.hh (oln/37_geodesic_d 1.4 644))
   (src/morpho/extrema.hh (oln/38_extrema.hh 1.3 644))
   (src/morpho/top_hat.inc (oln/39_top_hat.in 1.3 644))
   (src/morpho/opening.inc (oln/40_opening.in 1.3 644))
@@ -123,7 +133,7 @@
   (src/morpho/closing.inc (oln/44_closing.in 1.3 644))
   (src/morpho/fast_morpho.hxx (oln/45_fast_morph 1.1 644))
   (src/morpho/fast_morpho.hh (oln/46_fast_morph 1.1 644))
-  (src/morpho/watershed.hxx (oln/47_watershed. 1.2 644))
+  (src/morpho/watershed.hxx (oln/47_watershed. 1.3 644))
   (src/morpho/watershed.hh (oln/48_watershed. 1.1 644))
   (src/morpho/top_hat.hh (oln/49_top_hat.hh 1.1 644))
   (src/morpho/stat.hh (oln/50_stat.hh 1.2 644))
@@ -159,7 +169,7 @@
   (src/value/nrgb.hh (oln/b/28_nrgb.hh 1.1 644))
   (src/value/yiq.hh (oln/b/29_yiq.hh 1.1 644))
   (src/value/hsi.hh (oln/b/30_hsi.hh 1.1 644))
-  (src/value/color.hh (oln/b/31_color.hh 1.2 600))
+  (src/value/color.hh (oln/b/31_color.hh 1.3 600))
   (src/value/xyz.hh (oln/b/32_xyz.hh 1.1 644))
   (src/value/rgb.hh (oln/b/33_rgb.hh 1.1 644))
   (src/value/vec.hh (oln/b/34_vec.hh 1.1 644))
@@ -179,12 +189,12 @@
   (src/value/built_in.hh (oln/b/48_built_in.h 1.1 644))
   (src/value/bin.hh (oln/b/49_bin.hh 1.1 644))
   (src/value/all.hh (oln/b/50_all.hh 1.1 644))
-  (src/meta/ufuncs.hh (oln/b/51_ufuncs.hh 1.2 644))
-  (src/meta/ucmp.hh (oln/c/0_ucmp.hh 1.2 644))
-  (src/meta/logic.hh (oln/c/1_logic.hh 1.2 644))
-  (src/meta/control.hh (oln/c/2_control.hh 1.2 644))
+  (src/meta/ufuncs.hh (oln/b/51_ufuncs.hh 1.3 644))
+  (src/meta/ucmp.hh (oln/c/0_ucmp.hh 1.3 644))
+  (src/meta/logic.hh (oln/c/1_logic.hh 1.3 644))
+  (src/meta/control.hh (oln/c/2_control.hh 1.3 644))
   (src/meta/cmp.hh (oln/c/3_cmp.hh 1.1 644))
-  (src/meta/basics.hh (oln/c/4_basics.hh 1.2 644))
+  (src/meta/basics.hh (oln/c/4_basics.hh 1.3 644))
   (src/meta/array.hxx (oln/c/5_array.hxx 1.1 644))
   (src/meta/array.hh (oln/c/6_array.hh 1.1 644))
   (src/core/fold.hh (oln/c/7_fold.hh 1.2 644))
@@ -206,7 +216,7 @@
   (src/core/regular_image.hh (oln/c/23_regular_im 1.1 644))
   (src/core/pred_image.hh (oln/c/24_pred_image 1.1 644))
   (src/core/structelt.hh (oln/c/25_structelt. 1.1 644))
-  (src/core/pred.hh (oln/c/26_pred.hh 1.2 644))
+  (src/core/pred.hh (oln/c/26_pred.hh 1.3 644))
   (src/core/point3d.hxx (oln/c/27_point3d.hx 1.1 644))
   (src/core/point3d.hh (oln/c/28_point3d.hh 1.1 644))
   (src/core/point2d.hxx (oln/c/29_point2d.hx 1.1 644))
@@ -232,8 +242,8 @@
   (src/core/old/image2d_bin.hxx (oln/c/49_image2d_bi 1.1 644))
   (src/core/old/image2d_bin.hh (oln/c/50_image2d_bi 1.1 644))
   (src/core/old/image2d.hxx (oln/c/51_image2d.hx 1.1 644))
-  (src/core/internal/window.hh (oln/d/0_window.hh 1.2 644))
-  (src/core/internal/w_window.hh (oln/d/1_w_window.h 1.2 644))
+  (src/core/internal/window.hh (oln/d/0_window.hh 1.3 644))
+  (src/core/internal/w_window.hh (oln/d/1_w_window.h 1.3 644))
   (src/core/internal/rec_operable.hh (oln/d/2_rec_operab 1.1 644))
   (src/core/internal/real_image3d.hh (oln/d/3_real_image 1.1 644))
   (src/core/internal/real_image2d.hh (oln/d/4_real_image 1.1 644))
@@ -243,12 +253,12 @@
   (src/core/internal/iter3d.hh (oln/d/8_iter3d.hh 1.1 644))
   (src/core/internal/iter2d.hh (oln/d/9_iter2d.hh 1.1 644))
   (src/core/internal/iter1d.hh (oln/d/10_iter1d.hh 1.1 644))
-  (src/core/internal/image3d_data.hh (oln/d/11_image3d_da 1.2 644))
-  (src/core/internal/image3d.hh (oln/d/12_image3d.hh 1.2 644))
-  (src/core/internal/image2d_data.hh (oln/d/13_image2d_da 1.2 644))
-  (src/core/internal/image2d.hh (oln/d/14_image2d.hh 1.2 644))
-  (src/core/internal/image1d_data.hh (oln/d/15_image1d_da 1.2 644))
-  (src/core/internal/image1d.hh (oln/d/16_image1d.hh 1.2 644))
+  (src/core/internal/image3d_data.hh (oln/d/11_image3d_da 1.3 644))
+  (src/core/internal/image3d.hh (oln/d/12_image3d.hh 1.3 644))
+  (src/core/internal/image2d_data.hh (oln/d/13_image2d_da 1.3 644))
+  (src/core/internal/image2d.hh (oln/d/14_image2d.hh 1.3 644))
+  (src/core/internal/image1d_data.hh (oln/d/15_image1d_da 1.3 644))
+  (src/core/internal/image1d.hh (oln/d/16_image1d.hh 1.3 644))
   (src/core/internal/fake.hh (oln/d/17_fake.hh 1.1 644))
   (src/core/image.hh (oln/d/18_image.hh 1.2 644))
   (src/core/fwd_iter3d.hh (oln/d/19_fwd_iter3d 1.1 644))
@@ -354,7 +364,7 @@
 ;; Files added by populate at Mon, 18 Feb 2002 16:09:38 +0100,
 ;; to version 0_3.6(w), by jerome:
 
-  (src/convert/conversion_ng_se.hh (oln/e/24_conversion 1.1 644))
+  (src/convert/conversion_ng_se.hh (oln/e/24_conversion 1.2 644))
 
 ;; Files added by populate at Wed, 27 Mar 2002 12:29:30 +0100,
 ;; to version 0_3.13(w), by adl:
@@ -364,10 +374,10 @@
 ;; Files added by populate at Thu, 28 Mar 2002 17:10:11 +0100,
 ;; to version 0_3.16(w), by jerome:
 
-  (src/morpho/thinning.inc (oln/e/26_thinning.i 1.1 644))
-  (src/morpho/thinning.hh (oln/e/27_thinning.h 1.1 644))
-  (src/morpho/thickening.inc (oln/e/28_thickening 1.1 644))
-  (src/morpho/thickening.hh (oln/e/29_thickening 1.1 644))
+  (src/morpho/thinning.inc (oln/e/26_thinning.i 1.2 644))
+  (src/morpho/thinning.hh (oln/e/27_thinning.h 1.2 644))
+  (src/morpho/thickening.inc (oln/e/28_thickening 1.2 644))
+  (src/morpho/thickening.hh (oln/e/29_thickening 1.2 644))
 
 ;; Files added by populate at Thu, 28 Mar 2002 19:27:57 +0100,
 ;; to version 0_3.17(w), by adl:

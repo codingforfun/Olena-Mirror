@@ -1,10 +1,25 @@
+2002-04-23  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* NEWS update for 0.4.
+	* src/morpho/reconstruction.hh, src/morpho/geodesic_erosion.hh,
+	src/morpho/geodesic_dilation.hh, src/morpho/watershed.hxx,
+	src/value/color.hh, src/meta/ufuncs.hh, src/meta/ucmp.hh,
+	src/meta/logic.hh, src/meta/control.hh, src/meta/basics.hh,
+	src/core/pred.hh, src/core/internal/window.hh,
+	src/core/internal/w_window.hh, src/core/internal/image3d_data.hh,
+	src/core/internal/image3d.hh, src/core/internal/image2d_data.hh,
+	src/core/internal/image2d.hh, src/core/internal/image1d_data.hh,
+	src/core/internal/image1d.hh, src/convert/conversion_ng_se.hh,
+	src/morpho/thinning.inc, src/morpho/thinning.hh,
+	src/morpho/thickening.inc, src/morpho/thickening.hh,
+	src/level/lut.hh: Update copyright years.
+
 2002-04-22  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* demo/Makefile.am (noinst_PROGRAMS): Rename as ...
 	(check_PROGRAMS): ... this.
-	(demo): New phony rule.
-	* README: Adjust instruction to build the demo programs.
-	Mention the testsuite.
+	(demo): New phony rule.  * README: Adjust instruction to build the
+	demo programs.  Mention the testsuite.
 
 2002-04-17  Jerome Darbon  <jerome@epita.fr>
 

@@ -1,3 +1,14 @@
+Olena 0.4	April 23, 2002
+
+	* New morho:: operators:
+	  - thinning
+	  - thickening
+	* New convert:: operators:
+	  - ng_to_se
+	  - ng_to_cse
+	* First sketch of a test suite.
+	* Many bug fixes.
+
 Olena 0.3	January 14, 2002
 
 	* fast_morpho() speeded-up.
