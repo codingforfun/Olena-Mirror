@@ -4,6 +4,7 @@
 ##
 
 OLN_DEP =					\
+  all.hh					\
   basics.hh					\
   basics1d.hh					\
   basics2d.hh					\
