@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,6 +39,8 @@
 # include <oln/types/behaviour.hh>
 # include <oln/types/global_ops_traits.hh>
 
+# include <oln/meta/cmp.hh>
+
 namespace oln
 {
   //
@@ -49,7 +51,7 @@ namespace oln
   //////////////////////////////////////
 
   template <unsigned nbits, class behaviour>
-  struct optraits<int_s<nbits, behaviour> > : 
+  struct optraits<int_s<nbits, behaviour> > :
     public optraits_int_s<int_s<nbits, behaviour> >
   {
   public:
@@ -100,13 +102,13 @@ namespace oln
     {
       if (lhs.value() < 0)
 	return false;
-      
+
       return static_cast<int_u<32, B2> >(lhs).value() == rhs.value();
     }
     template <class B1>
     static bool cmp_eq(const int_u<32, B1>& lhs, const self& rhs)
     { return cmp_eq(rhs, lhs); }
-    
+
     // <T1> == <T2>
 
     template <class T1, class T2>
@@ -127,15 +129,15 @@ namespace oln
     {
       if (lhs.value() < 0)
 	return true;
-      
+
       return static_cast<int_u<32, B2> >(lhs).value() < rhs.value();
     }
     template <class B1>
     static bool cmp_lt(const int_u<32, B1>& lhs, const self& rhs)
-    { 
+    {
       if (rhs.value() < 0)
 	return false;
-      
+
       return lhs.value() < static_cast<int_u<32, B1> >(rhs.value());
     }
 
@@ -154,7 +156,7 @@ namespace oln
     // Operators traits
     //
     ////////////////////
-    
+
 
     //
     // plus
@@ -166,7 +168,7 @@ namespace oln
     struct operator_plus_traits<int_s<nbits, B1>, int_s<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_s<(unsigned)meta::maxN<nbits + 1,mbits + 1, 32>::ret, 
+      typedef int_s<(unsigned)meta::maxN<nbits + 1,mbits + 1, 32>::ret,
 		    typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_s<nbits, B1> impl;
     };
@@ -194,7 +196,7 @@ namespace oln
     struct operator_minus_traits<int_s<nbits, B1>, int_s<mbits, B2> >
     {
       enum { commutative = true };
-      typedef int_s<(unsigned)meta::maxN<nbits + 1, mbits + 1, 32>::ret, 
+      typedef int_s<(unsigned)meta::maxN<nbits + 1, mbits + 1, 32>::ret,
 		    typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_s<nbits, B1> impl;
     };
@@ -236,7 +238,7 @@ namespace oln
       typedef int_s<(unsigned)meta::saturateN<nbits + mbits+1, 32>::ret,
 		    typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_s<nbits, B1> impl;
-    };    
+    };
 
 
     //
@@ -326,13 +328,13 @@ namespace oln
 
     template <unsigned nbits, class B1, unsigned mbits, class B2>
     struct operator_cmp_traits<int_s<nbits, B1>, int_u<mbits, B2> >
-    { 
+    {
       enum { commutative = true };
       typedef int_s<(unsigned)meta::maxN<nbits,mbits+1, 32>::ret, unsafe> ret;
       typedef int_s<nbits, B1> impl;
     };
-   
-  } // end of namespace internal    
+
+  } // end of namespace internal
 } // namespace oln
 
 #endif // ndef OLENA_VALUE_OPTRAITS_INT_S_HH

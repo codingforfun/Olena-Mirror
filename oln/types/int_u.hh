@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,6 +34,7 @@
 # include <oln/types/behaviour.hh>
 # include <oln/types/optraits.hh>
 # include <oln/types/typetraits.hh>
+# include <oln/types/builtins_properties.hh>
 
 // Macros //
 
@@ -52,7 +53,7 @@ self& operator=(const Builtin rhs)	        \
 
 namespace oln
 {
-  
+
   template <unsigned nbits, class behaviour> class int_u; // fwd_decl
 
   //
@@ -65,7 +66,7 @@ namespace oln
   {
     typedef int_u<nbits, behaviour> self;
     typedef optraits<self> optraits;
-    
+
     typedef self base;
     // FIXME: calculate it from nbits
     typedef typename C_for_int_u<nbits>::type store;
@@ -77,7 +78,7 @@ namespace oln
 
     // FIXME: add missing
   };
-  
+
 
   //
   //  Class int_u<Nbits, Behaviour>
@@ -93,7 +94,7 @@ namespace oln
     // breaks inheritance in optraits herarchy ...
     typedef typename typetraits<self>::optraits optraits_type;
 
-  public:  
+  public:
     int_u ()
     {
       _value = 0;
@@ -146,7 +147,7 @@ namespace oln
     // We want to prevent this
     int_u(bool);
   };
-    
+
 } // end of namespace oln
 
 #endif // ndef OLENA_VALUE_INT_U_HH

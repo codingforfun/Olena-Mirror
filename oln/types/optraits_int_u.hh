@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,6 +35,8 @@
 # include <oln/types/behaviour.hh>
 # include <oln/types/global_ops_traits.hh>
 
+# include <oln/meta/cmp.hh>
+
 namespace oln
 {
 
@@ -46,7 +48,7 @@ namespace oln
   /////////////////////////////////////////////////////
 
   template <unsigned nbits, class behaviour>
-  struct optraits<int_u<nbits, behaviour> > : 
+  struct optraits<int_u<nbits, behaviour> > :
     public optraits_int_u<int_u<nbits, behaviour> >
   {
   private:
@@ -60,7 +62,7 @@ namespace oln
     template <class P>
     static store_type check(const P& rhs)
     { return behaviour_type::apply(rhs); }
-    
+
     //
     // Properties
     //
@@ -71,7 +73,7 @@ namespace oln
 
   namespace internal
   {
-    
+
     //
     // Operators traits
     //
@@ -100,9 +102,9 @@ namespace oln
 
     template<unsigned nbits, class B1, unsigned mbits, class B2>
     struct operator_minus_traits<int_u<nbits, B1>, int_u<mbits, B2> >
-    { 
+    {
       enum { commutative = true };
-      typedef int_s<(unsigned) meta::maxN<nbits + 1, mbits + 1, 32>::ret, 
+      typedef int_s<(unsigned) meta::maxN<nbits + 1, mbits + 1, 32>::ret,
 		    typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_u<nbits, B1> impl;
     };
@@ -115,7 +117,7 @@ namespace oln
 
     template<unsigned nbits, class B1, unsigned mbits, class B2>
     struct operator_times_traits<int_u<nbits, B1>, int_u<mbits, B2> >
-    { 
+    {
       enum { commutative = true };
       typedef int_u<(unsigned) meta::saturateN<nbits + mbits, 32>::ret,
 	typename deduce_op_behaviour<B1, B2>::ret> ret;
@@ -130,7 +132,7 @@ namespace oln
 
     template<unsigned nbits, class B1, unsigned mbits, class B2>
     struct operator_div_traits<int_u<nbits, B1>, int_u<mbits, B2> >
-    { 
+    {
       enum { commutative = true };
       typedef int_u<nbits, typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_u<nbits, B1> impl;
@@ -144,7 +146,7 @@ namespace oln
 
     template<unsigned nbits, class B1, unsigned mbits, class B2>
     struct operator_mod_traits<int_u<nbits, B1>, int_u<mbits, B2> >
-    { 
+    {
       enum { commutative = false };
       typedef int_u<mbits, typename deduce_op_behaviour<B1, B2>::ret> ret;
       typedef int_u<nbits, B1> impl;
@@ -159,7 +161,7 @@ namespace oln
 
     template<unsigned nbits, class B1, unsigned mbits, class B2>
     struct operator_cmp_traits<int_u<nbits, B1>, int_u<mbits, B2> >
-    { 
+    {
       enum { commutative = true };
       typedef int_u<(unsigned) meta::maxN<nbits, mbits, 32>::ret, unsafe> ret;
       typedef int_u<nbits, B1> impl;

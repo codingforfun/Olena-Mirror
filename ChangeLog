@@ -1,8 +1,16 @@
+2002-07-29  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* oln/types/optraits_int_u.hh, oln/types/optraits_int_s.hh:
+	Include meta/cmp.hh.
+	* oln/types/int_u.hh: Include oln/types/builtins_properties.hh.
+	* oln/types/typetraits_builtins_float.hh,
+	oln/types/typetraits_builtins_int.hh: Include oln/types/optraits.hh.
+
 2002-07-29  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/types/rec_value.hh, oln/types/type.hh: Rename any.
 	* oln/core/generate.hh: Include meta/type.hh.
-	* oln/meta/cmp.hh: Add maxN and saturateN.  
+	* oln/meta/cmp.hh: Add maxN and saturateN.
 	* oln/meta/basics.hh: Add returns_bool_.
 	* oln/meta/type.hh: New file.
 	* oln/core/type.hh: Move wrap into oln/meta/type.hh.
@@ -35,7 +43,7 @@
 	* oln/value/cast.hh: Remove const preceding builtin return type.
 	* oln/core/internal/neighborhood.hh: Add comeau compatibility.
 	* oln/core/type.hh: Add wrap type.
-	* oln/core/generate.hh: Add wrap call for compatibility with comeau 
+	* oln/core/generate.hh: Add wrap call for compatibility with comeau
 	and icc.
 	* oln/io/pnm_read3d.hxx: Fix unexistent N problem.
 	* oln/meta/ucmp.h: Rewrite less, lesseq and eq.

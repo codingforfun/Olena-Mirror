@@ -55,8 +55,8 @@ namespace oln
     static store_type zero () { return 0; }
     static store_type unit () { return 1; }
     static store_type default_value() { return zero(); }
-    
-    // 
+
+    //
     // dev note : the goal in those default operators is to check the kind
     // of operands (rec_value or not), and then call the good function.
     //
@@ -75,7 +75,7 @@ namespace oln
     CMP_SCALAR_OPERATOR(cmp_lt, <);
   };
 
-  
+
   //
   //  optraits_float
   //
@@ -95,7 +95,7 @@ namespace oln
   class optraits_int : public optraits_scalar<Self>
   {
     typedef typename typetraits<Self>::store store_type;
-    
+
   public:
     static store_type inf () { return optraits<Self>::min(); }
     static store_type sup () { return optraits<Self>::max(); }
@@ -115,7 +115,7 @@ namespace oln
   {
   private:
     typedef typename typetraits<Self>::store store_type;
-    
+
   public:
     static store_type min () { return 0; }
   };

@@ -1,4 +1,4 @@
-// Copyright 2001, 2002  EPITA Research and Development Laboratory
+// Copyright 2002  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,10 +29,11 @@
 # define OLENA_VALUE_TYPETRAITS_BUILTINS_FLOAT_HH
 
 # include <oln/types/typetraits.hh>
+# include <oln/types/optraits.hh>
 
 namespace oln
 {
-  
+
   template <>
   struct typetraits<float>
   {
@@ -51,5 +52,3 @@ namespace oln
 } // end of namespace oln
 
 #endif // ndef OLENA_VALUE_TYPETRAITS_BUILTINS_FLOAT_HH
-
-
