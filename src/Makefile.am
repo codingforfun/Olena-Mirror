@@ -135,6 +135,7 @@ nobase_oln_HEADERS =				\
   level/fill.hh					\
   level/invert.hh				\
   level/lut.hh					\
+  level/threshold.hh				\
   math/macros.hh				\
   meta/array.hh					\
   meta/array.hxx				\

@@ -1,3 +1,8 @@
+2002-06-24  Quôc Peyrot  <chojin@lrde.epita.fr>
+
+	* src/Makefile.am (nobase_oln_HEADERS): Add core/threshold.hh.
+
+
 2002-06-18  Quôc Peyrot  <chojin@lrde.epita.fr>
 
 	* src/level/threshold.hh: new functor
