@@ -1,22 +1,15 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 10 74)
-(Parent-Version oln 10 73)
-(Version-Log "2004-03-11  Damien Thivolle  <damien@lrde.epita.fr>
-   * olena/oln/core/abstract/dpoint.hh: Add comments.
-   * olena/oln/core/abstract/image_size.hh: Add comments.
-   * olena/oln/core/abstract/point.hh: Add comments.
-   * olena/oln/core/abstract/image.hh: Add comments.
-   * olena/oln/core/abstract/image_with_dim.hh: Add comments.
-   * olena/oln/core/abstract/image_with_impl.hh: Add comments.
-   * olena/oln/core/abstract/image_with_type.hh: Add comments.
-   * olena/oln/core/abstract/image_with_type_with_dim.hh: Add comments.
-   * olena/oln/core/abstract/behavior.hh: Add comments.
-")
+(Project-Version oln 10 75)
+(Parent-Version oln 10 74)
+(Version-Log "2004-03-11  Simon Odou  <simon@lrde.epita.fr>
+
+	* olena/oln/core/abstract/image.hh: Add same macros without the
+	'template' keyword.")
 (New-Version-Log "")
-(Checkin-Time "Thu, 11 Mar 2004 17:12:19 +0100")
-(Checkin-Login thivol_d)
+(Checkin-Time "Thu, 11 Mar 2004 17:41:14 +0100")
+(Checkin-Login odou_s)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore .*\.pbm$
 ;; diff-ignore .*\.pgm$
@@ -122,7 +115,7 @@
   (doc/ChangeLog (oln/o/31_ChangeLog 1.38.1.7.1.5.1.6 600))
   (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.35 600))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.38 600))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.16 600))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.11.1.5.1.64.1.47.1.17 600))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.12 600))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.21 600))
 
@@ -948,7 +941,7 @@
   (olena/tests/core/image_print.sh (oln/t/24_image_prin 1.2 600))
 
 
-  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.21 600))
+  (olena/oln/core/abstract/image.hh (oln/t/25_image.hh 1.22 600))
   (olena/oln/core/abstract/image_with_dim.hh (oln/t/26_image_with 1.19 600))
   (olena/oln/core/abstract/image_with_impl.hh (oln/t/27_image_with 1.14.1.9 600))
   (olena/oln/core/abstract/image_with_type.hh (oln/t/28_image_with 1.12 600))
