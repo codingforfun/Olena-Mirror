@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,6 +35,7 @@
 # include <ntg/basics.hh>
 # include <ntg/int.hh>
 # include <ntg/vect/vec.hh>
+# include <ntg/core/pred_succ.hh>
 
 # include <mlc/cmp.hh>
 
@@ -268,6 +269,38 @@ namespace ntg {
       }
     };
 
+
+    template <typename T> struct default_less;
+
+    /*! The specialized version of default_less for colors.
+    **
+    ** \warning This class is only provided to build classes
+    ** that need a less class, it does not correspond to
+    ** the reality. \n
+    ** Example of a std::set of RGB colors:
+    ** \verbatim
+    ** std::set<ntg:rgb_8,
+    **          ntg::internal::default_less<ntg::rgb8> > s;
+    ** s.insert(ntg::rgb_8(10, 16, 64));
+    ** \endverbatim
+    */
+    template <unsigned ncomps,
+	      unsigned qbits,
+	      template <unsigned> class color_system>
+    struct default_less< ntg::color<ncomps, qbits, color_system> >
+    {
+      typedef ntg::color<ncomps, qbits, color_system> arg_type;
+      bool operator()(const arg_type& l,
+		      const arg_type& r) const
+      {
+	for (unsigned i = 0; i < ntg_nb_comp(arg_type); ++i)
+	  if (l[i] < r[i])
+	    return true;
+	  else if (l[i] > r[i])
+	    return false;
+	return false;
+      }
+    };
   } // end of internal.
 
 } // end of ntg.
