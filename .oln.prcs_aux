@@ -11,7 +11,7 @@
 (olena/oln/convert/force.hh 2185 1052854365 20_force.hh 1.8)
 (doc/dev/thanks.texi 3332 1049920315 p/40_thanks.tex 1.4)
 (olena/oln/morpho/reconstruction.hh 16493 1052067937 35_reconstruc 1.13.1.4)
-(config/oln.m4 22282 1054566645 j/15_oln.m4 1.30)
+(config/oln.m4 22314 1055219838 j/15_oln.m4 1.31)
 (integre/ntg/color/nrgb.hh 3658 1052854365 i/19_nrgb.hh 1.5.1.4)
 (integre/tests/types/tests/float_c1 121 1051909959 h/13_float_c1 1.2)
 (doc/dev/srctree.texi 10446 1049920315 p/45_srctree.te 1.5)
