@@ -1,0 +1,9 @@
+2005-01-21  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* ChangeLog: New.
+	* ntg/real/int_u8.hh: Fix unauthorized access to private attribute.
+	* ntg/real/bin.hh: New. Binary data type.
+	* ntg/makefile.src: Adds file dependencies.
+	* ntg/color: New.
+	* ntg/color/rgb_8.hh: New. RGB 8-bit quantified data type.
+
