@@ -30,6 +30,7 @@
 
 # include <mlc/traits.hh>
 
+# include <oln/core/abstract/image_identity.hh>
 # include <oln/core/abstract/image_with_data.hh>
 # include <oln/core/2d/array2d.hh>
 # include <oln/core/2d/fwd_piter2d.hh>
@@ -135,12 +136,17 @@ namespace oln {
       return *this;
     };
 
-//     template <typename I>
-//     image2d& operator=(const I& rhs)
-//     {
-//       assign(*this, rhs);
-//       return *this;
-//     }
+    template <typename I, typename E>
+    image2d& operator=(const abstract::image_identity<I, E>& rhs)
+    {
+      return *this = rhs.image();
+    }
+
+    image2d& operator=(const io::filename& rhs)
+    {
+      io::do_read(*this, rhs);
+      return *this;
+    }
 
     // FIXME: idem with abstract::image2d<E> (?)
 

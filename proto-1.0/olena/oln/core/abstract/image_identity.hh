@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_MORPHER_HH
-# define OLENA_CORE_ABSTRACT_MORPHER_HH
+#ifndef OLENA_CORE_ABSTRACT_IMAGE_IDENTITY_HH
+# define OLENA_CORE_ABSTRACT_IMAGE_IDENTITY_HH
 
 # include <mlc/box.hh>
 
@@ -37,30 +37,59 @@ namespace oln {
   namespace abstract {
 
     template <typename I, typename E>
-    struct morpher: public abstract::image_entry<E>
+    struct image_identity: public abstract::image_entry<E>
     {
-      mlc::box<I> ref;
-      morpher(abstract::image<I>& ref) : ref(ref.exact()) {}
-      morpher(const morpher& rhs) : ref(rhs.ref)
+    protected:
+
+      image_identity () {}
+
+      image_identity(abstract::image<I>& image) : image_(image.exact())
+      {}
+
+      image_identity(const image_identity& rhs) : image_(rhs.image())
       {
 	this->exact_ptr = (E*)(void*)(this);
       }
-      I& impl_delegate() { return *ref; }
-      const I& impl_delegate() const { return *ref; }
+
+      mlc::box<I> image_;
+
+    public:
+
+      I& image () const
+      {
+	return const_cast<I&>(*image_);
+      }
+
+      I& impl_delegate() { return *image_; }
+      const I& impl_delegate() const { return *image_; }
     };
 
 
     template <typename I, typename E>
-    struct morpher<const I, E>: public abstract::image_entry<E>
+    struct image_identity<const I, E>: public abstract::image_entry<E>
     {
-      mlc::box<const I> ref;
-      morpher(const abstract::image<I>& ref) : ref(ref.exact()) {}
-      morpher(const morpher& rhs) : ref(rhs.ref)
+    protected:
+
+      image_identity() {}
+
+      image_identity(const abstract::image<I>& image_) : image_(image.exact())
+      {}
+
+      image_identity(const image_identity& rhs) : image_(rhs.image())
       {
 	this->exact_ptr = (E*)(void*)(this);
       }
-      I& impl_delegate() { return *ref; }
-      const I& impl_delegate() const { return *ref; }
+
+      mlc::box<const I> image_;
+
+    public:
+      const I& image () const
+      {
+	return *image_;
+      }
+
+      I& impl_delegate() { return *image_; }
+      const I& impl_delegate() const { return *image_; }
     };
 
   }
@@ -68,4 +97,4 @@ namespace oln {
 }
 
 
-#endif // ! OLENA_CORE_ABSTRACT_MORPHER_HH
+#endif // ! OLENA_CORE_ABSTRACT_IMAGE_IDENTITY_HH

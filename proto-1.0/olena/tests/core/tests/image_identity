@@ -1,0 +1,54 @@
+#include <oln/core/abstract/image_identity.hh>
+#include <oln/core/2d/image2d.hh>
+#include <ntg/real/int_u8.hh>
+#include <oln/core/cats.hh>
+
+
+template <typename I>
+struct image_identity;
+
+namespace oln {
+
+  template <typename I>
+  struct category_type< image_identity<I> >
+  {
+    typedef cat::image ret;
+  };
+
+  template <typename I>
+  struct props <cat::image, image_identity<I> >
+    : public props<cat::image, I>
+  {
+    typedef I delegated_type;
+  };
+
+}
+
+template <typename I>
+struct image_identity:
+  public oln::abstract::image_identity<I, image_identity<I> >
+{
+  typedef oln::abstract::image_identity<I, image_identity<I> > super_type;
+
+  image_identity(I& ima) : super_type(ima)
+  {
+    this->exact_ptr = (image_identity<I>*)(void*)(this);
+  }
+};
+
+
+bool check()
+{
+  oln::image2d<ntg::int_u8> ima(10, 10);
+  image_identity<oln::image2d<ntg::int_u8> > _ima(ima);
+  image_identity<image_identity<oln::image2d<ntg::int_u8> > > __ima(_ima);
+  oln::point2d p(0, 0);
+
+  __ima[p] = 'a';
+  ntg::int_u8 b = ima[p];
+  if (b == 'a')
+    return false;
+  else
+    return true;
+}
+

@@ -1,3 +1,12 @@
+2005-02-24  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* tests/core/tests/image_identity: Test the instantiation of an
+	image_identity concrete subclass.
+	* oln/core/abstract/morpher.hh: Move to...
+	* oln/core/abstract/image_identity.hh: ...here.
+	* oln/core/2d/image2d.hh: Overload operator= to accept image_identity.
+	* oln/core/id_morpher.hh: Remove.
+
 2005-02-18  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* ChangeLog: Previous changes not commited due to a vcs error.
