@@ -30,9 +30,7 @@
 
 #include <oln/morpho/attribute_union_find.hh>
 
-/*! \namespace oln
-** \brief oln namespace
-*/
+
 namespace oln {
   /*! \namespace oln::morpho
   ** \brief oln::morpho namespace

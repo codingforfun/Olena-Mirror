@@ -61,7 +61,7 @@ namespace oln {
     ** the connected components.
     **
     ** It removes the small (in area) connected components of the upper
-    ** level sets of \var{input} using \var{se} as structural element.
+    ** level sets of \a input using \a se as structural element.
     **
     ** \ref The implementation uses front propagation.
     **

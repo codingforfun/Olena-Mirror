@@ -53,7 +53,7 @@ namespace oln {
   ** Specialized version for impl::image_impl<Exact>. Retrieve
   ** associated types.
   */
-  
+
   template<class Exact>
   struct impl_traits<impl::image_impl<Exact> >
   {
@@ -65,8 +65,8 @@ namespace oln {
     /*! \class image_impl
     **
     ** Data array implementation for image
-    */ 
-    
+    */
+
     template<class Exact>
     class image_impl : public mlc_hierarchy::any<Exact>
     {
@@ -81,20 +81,20 @@ namespace oln {
 
       image_impl(const size_type s): refcount_(0), size_(s) {}
 
-      
+
       /// Notice that there is a new reference to the object.
-      
-      void 
+
+      void
       ref() const
       {
 	++refcount_;
       }
-      
+
       /*! \brief Notice that there a reference to the object has disappeared.
       ** When there is no reference left, the object is deleted.
       */
-      
-      void 
+
+      void
       unref() const
       {
 	invariant(refcount_ > 0);
@@ -104,40 +104,40 @@ namespace oln {
       }
 
       /// Return a constant reference to the value stored at \a p.
-      
-      const value_type& 
+
+      const value_type&
       at(const point_type& p) const
       {
 	return this->exact().at_(p);
       }
 
-      /// Return a reference to the value stored at \p.
-      
-      value_type& 
-      at(const point_type& p) 
+      /// Return a reference to the value stored at \a p.
+
+      value_type&
+      at(const point_type& p)
       {
 	return this->exact().at_(p);
       }
 
       /// Return true if \a p belongs to the image.
-      
-      bool 
+
+      bool
       hold(const point_type& p) const
       {
 	return this->exact().hold_(p);
       }
-      
+
       /// Return true if \a p belongs to the image or the image border.
-      
-      bool 
+
+      bool
       hold_large(const point_type& p) const
       {
 	return this->exact().hold_large_(p);
       }
-      
+
       /// Use the function for debugging purpose.
 
-      void 
+      void
       precondition_hold_large(const point_type& p) const
       {
 # ifndef NDEBUG
@@ -151,45 +151,45 @@ namespace oln {
 
       /// Perform a deep copy from the data array to output_data.
 
-      void 
+      void
       clone_to(exact_type* output_data) const
       {
 	return this->exact().clone_to_(output_data);
       }
-      
+
       /// Return the number of point in the image.
-      
-      const 
+
+      const
       size_type& size() const
       {
 	return size_;
       }
 
-      size_type& 
+      size_type&
       size()
       {
 	return size_;
       }
 
       // borders
-      
+
       /*! \brief Reallocate the border regarding to the value of \a
       ** new_border.
       */
-            
-      void 
+
+      void
       border_reallocate_and_copy(coord new_border, bool
-				 copy_border) 
+				 copy_border)
       {
 	this->exact().border_reallocate_and_copy_(new_border, copy_border);
       }
-      
-      /*! \brief The border points are all set to 
+
+      /*! \brief The border points are all set to
       ** the value of the closest image point.
       */
-      
-      void 
-      border_replicate(void) 
+
+      void
+      border_replicate(void)
       {
 	this->exact().border_replicate_();
       }
@@ -197,17 +197,17 @@ namespace oln {
       /*! \brief The border points are set by mirroring
       ** the image edges.
       */
-      
-      void 
-      border_mirror(void) 
+
+      void
+      border_mirror(void)
       {
 	this->exact().border_mirror_();
       }
-      
+
       /// The border points are set to \a val.
-      
-      void 
-      border_assign(value_type val) 
+
+      void
+      border_assign(value_type val)
       {
 	this->exact().border_assign_(val);
       }

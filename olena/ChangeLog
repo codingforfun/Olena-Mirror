@@ -1,3 +1,17 @@
+2004-03-14  Niels Van Vliet  <niels@lrde.epita.fr>
+	* olena/oln/convert/nrgbxyz.hh: Correct comments.
+	* olena/oln/convert/stretch.hh: Likewise.
+	* olena/oln/level/cc.hh: Likewise.
+	* olena/oln/morpho/gradient.inc: Likewise.
+	* olena/oln/morpho/attribute_closing_opening.hh: Likewise.
+	* olena/oln/morpho/attribute_union_find.hh: Likewise.
+	* olena/oln/topo/inter-pixel/inter-pixel.hh: Likewise.
+	* olena/oln/topo/inter-pixel/node.hh: Likewise.
+	* olena/oln/core/abstract/image_with_dim.hh: Likewise.
+	* olena/oln/core/impl/image_impl.hh: Likewise.
+	* olena/oln/morpho/attributes.hh: Likewise.
+	* olena/oln/utils/special_points.hh: Likewise.
+
 2004-03-14  Giovanni Palma  <giovanni@lrde.epita.fr>
 
 	* oln/convol/convolution.hh: Add comments.

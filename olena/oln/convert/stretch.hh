@@ -92,7 +92,7 @@ namespace oln {
     /*! Stretch the value of an image.
     **
     ** This function stretches values between \a min_in and \a max_in
-    ** of an image \in, to a range that goes from \a min_out to \a max_out.
+    ** of an image \a in, to a range that goes from \a min_out to \a max_out.
     ** \arg in Input image, must be have scalar values
     ** \arg min_in Lower bound of the range in the input. All values smaller
     ** than min_in are converted to \a min_out.
