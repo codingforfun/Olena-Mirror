@@ -1,5 +1,4 @@
-// -*- c++ -*-
-// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,28 +25,21 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+#ifndef OLENA_TOPO_INTER_PIXEL_INTERNAL_DIR_HXX
+# define OLENA_TOPO_INTER_PIXEL_INTERNAL_DIR_HXX
 
-template<class I_, class E1_, class E2_>
-Concrete(I_) thinning(const image<I_>& _input,
-		      const struct_elt<E1_>& _se1,
-		      const struct_elt<E2_>& _se2)
+using namespace oln::topo::inter_pixel::internal;
+
+std::ostream & operator<<(std::ostream & o, dir_traits<2>::ret i)
 {
-  Exact_cref(I, input);
-  Exact_cref(E1, se1);
-  Exact_cref(E2, se2);
-  mlc::eq<I::dim, E1::dim>::ensure();
-  mlc::eq<I::dim, E2::dim>::ensure();
-
-  Concrete(I) dilated = dilation(input, se2);
-  Concrete(I) eroded = erosion(input, se1);
-  Concrete(I) output(input.size());
-  Iter(I) p(input);
-  for_all(p)
+  switch (i)
     {
-      if ((dilated[p] < input[p]) && (input[p] == eroded[p]))
-	output[p] = dilated[p];
-      else
-	output[p] = input[p];
+    case dir_traits<2>::east: return o << "east";
+    case dir_traits<2>::north: return o << "north";
+    case dir_traits<2>::west: return o << "west";
+    case dir_traits<2>::south: return o << "south";
+    default: return o;
     }
-  return output;
 }
+
+#endif // !OLENA_TOPO_INTER_PIXEL_INTERNAL_DIR_HXX

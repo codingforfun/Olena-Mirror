@@ -1,3 +1,13 @@
+2003-04-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* dev/oln-dev.texi: Include upgrading.texi.
+	* Makefile.am: Adjust consequently.
+	* dev/upgrading.texi: New file.
+
+	* dev/thanks.texi, dev/srctree.texi: Update.
+	
+	* ref/ref-types.tex: Fix typos.
+
 2003-03-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* demo/Makefile.am: Remove useless flags.

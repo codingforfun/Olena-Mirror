@@ -1,0 +1,41 @@
+@documentencoding ISO-8859-1
+
+@node Upgrading from older versions
+@chapter Upgrading from older versions
+
+@menu
+* Upgrading from 0.7 to 0.8::
+@end menu
+
+@node Upgrading from 0.7 to 0.8
+@section Upgrading from 0.7 to 0.8
+
+Olena has been massively reorganized between versions 0.7 and 0.8. The
+idea was to split the library into three distinct components:
+
+@itemize @minus
+@item Image processing
+@item Basic data types
+@item Meta programming tools
+@end itemize
+
+Thus, two additional directories and namespaces have been created:
+
+@itemize @minus
+@item @file{mlc/} directory and @code{mlc} namespace for 
+      meta-programming tools
+@item @file{ntg/} directory and @code{ntg} namespace for data types
+@end itemize
+
+Here is the list of general renaming rules for header files: 
+
+@itemize @minus
+@item @file{<oln/types/*.hh>} => @file{<ntg/*.hh>}
+@item @file{<oln/meta/*.hh>} => @file{<mlc/*.hh>}
+@item @file{<oln/core/type.hh>} => @file{<mlc/type.hh>}
+@item @file{<oln/core/contract.hh>} => @file{<mlc/contract.hh>}
+@end itemize
+
+Namespaces changes can be deduced from files renaming. Indeed, each
+file moved into @file{mlc/} has seen its member moved into the
+@code{mlc} namespace. The same rule stands for @code{ntg}.

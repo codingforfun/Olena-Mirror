@@ -60,9 +60,9 @@ namespace oln {
 	  }
       }
 
-      template< class behaviour >
+      template< unsigned N, class behaviour >
       inline void
-      readmany_plain(std::istream& in, int_u<8, behaviour>* elt, coord n)
+      readmany_plain(std::istream& in, int_u<N, behaviour>* elt, coord n)
       {
 	for (; n; --n)
 	  {

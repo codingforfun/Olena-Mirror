@@ -1,5 +1,5 @@
 
-This section describes the basic types available in Olena.  By
+This section describes the basic types available with Olena. By
 \emph{basic types} we roughly mean any type that can be used as pixel
 value in an image, such as \code{int}, \code{float}, etc.  This also
 includes composite types like complexes, points, vectors, and colors.
@@ -228,7 +228,7 @@ variables will yield another \code{int_u<32>} variable (on 32bits
 hosts) because no larger type is available.
 
 Because of this, overflow checking has to occur during operations too.
-This means that the behavior of the temporary variables is imporant.
+This means that the behavior of the temporary variables is important.
 The choice is based on the behavior of the operands.
 
 \begin{tabular}{c|c|c}
@@ -251,7 +251,7 @@ Please bear in mind that the behavior chosen for temporary variable
 only rarely matters because the type is usually extended so that
 overflow do not occur.
 
-The following frequently used types are given shortands.
+The following frequently used types are given shorthands.
 \begin{lstlisting}{}
 typedef int_u<8,  strict>       int_u8;
 typedef int_u<16, strict>       int_u16;
@@ -356,7 +356,7 @@ defines a type which is useful to represent angles in degrees.
 For the purpose of cycling, the upper bound of the range, \code{MAX},
 is excluded.  \code{deg d = 360.0} will set \code{d} to \code{0.0}.
 
-Any value implicitely convertible to \code{T} can be involved in an
+Any value implicitly convertible to \code{T} can be involved in an
 arithmetic operation with \code{cycle<T, INTERVAL>}.
 
 Any conversion from \code{cycle<T, bounded_x<A, B> >} to
@@ -408,7 +408,7 @@ FIXME: This documentation is out of date.  We've decided to split
 
 \code{label<T, BEHAVIOR=cycle>} is used to label images.
 
-Although it is not stricly correct to define an order on labels,
+Although it is not strictly correct to define an order on labels,
 we do.  This is useful (FIXME: Ask Jerome for an example).
 
 \subsection{The \code{typetraits<T>} trait}
@@ -445,7 +445,7 @@ value.  E.g., \code{typetraits< int_u<9> >::storage_type} is
 %% is still \code{range<sfloat, 0, 1>}.
 
 \item[\code{signed_type}]
-The smallest signed type that can countain the values of \code{T}, if possible.
+The smallest signed type that can contain the values of \code{T}, if possible.
 For instance
 \code{typetraits< int_u8 >::signed_type} is \code{int_s<10>}.
 (\code{int_s<9>} is not large enough to hold the value 256.)
@@ -453,7 +453,7 @@ For instance
 However \code{typetraits< int_u32 >::signed_type} is \code{int_s<32>}.
 
 \item[\code{unsigned_type}]
-The smalled unsigned type that can countain the non negative values of
+The smallest unsigned type that can contain the non negative values of
 \code{T}.
 For instance,
 \code{typetraits< int_s<9> >::unsigned_type} is \code{int_u8}.

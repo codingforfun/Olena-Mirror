@@ -30,9 +30,6 @@ AC_CONFIG_FILES([Makefile
 		 integre/ntg/Makefile
                  metalic/Makefile
                  metalic/mlc/Makefile
-                 metalic/tests/Makefile
-                 metalic/tests/check/Makefile
-		 metalic/tests/check/defs
 		 olena/Makefile
 		 olena/img/Makefile
 		 olena/oln/Makefile
@@ -62,6 +59,8 @@ OLN_COLLECTION([OLN_TOP],
      AC_CHECK_PROGS([PGMTOPBM], [pgmtopbm], [$am_aux_dir/missing pgmtopbm])
      AC_ARG_VAR([PNMTOPLAINPNM], [program to convert Portable Anymaps to plain text])
      AC_CHECK_PROGS([PNMTOPLAINPNM], [pnmtoplainpnm], [$am_aux_dir/missing pnmtoplainpnm])
+     AC_ARG_VAR([PNMDEPTH], [program to change depth of Portable Anymaps])
+     AC_CHECK_PROGS([PNMDEPTH], [pnmdepth], [$am_aux_dir/missing pnmdepth])
      AC_ARG_VAR([IMAGEMAGICK_CONVERT], [the `convert' utility from ImageMagick])
      AC_CHECK_PROGS([IMAGEMAGICK_CONVERT], [convert], [$am_aux_dir/missing convert])
 
@@ -103,8 +102,7 @@ OLN_COLLECTION([OLN_TOP],
 		  [oln_cv_build_tests], 
 		  [the olena's testsuite], 
 		  [OLN_SRC], 
-	          [
-		   olena/tests/Makefile
+	          [olena/tests/Makefile
 		   olena/tests/check/Makefile
 		   olena/tests/check/defs],
     [dnl Configuration for the testsuite
@@ -128,6 +126,7 @@ OLN_COLLECTION([OLN_TOP],
       OLN_TESTS([io])
       OLN_TESTS([morpho])
       OLN_TESTS([sanity])
+      OLN_TESTS([topo])
       OLN_TESTS([transforms])
 
       AC_SUBST([OLN_TESTS_SUBDIRS])
@@ -148,8 +147,7 @@ OLN_COLLECTION([OLN_TOP],
 		  [ntg_cv_build_tests], 
 		  [the integre's testsuite], 
 		  [NTG_SRC], 
-	          [
-		   integre/tests/Makefile
+	          [integre/tests/Makefile
 		   integre/tests/check/defs],
     [dnl Configuration for the testsuite
 
@@ -186,7 +184,9 @@ OLN_COLLECTION([OLN_TOP],
 		  [mlc_cv_build_tests], 
 		  [the metalic's testsuite], 
 		  [MLC_SRC], 
-	          [],
+	          [metalic/tests/Makefile
+                   metalic/tests/check/Makefile
+		   metalic/tests/check/defs],
     [dnl Configuration for the testsuite
 
       MLC_TESTS_SUBDIRS=""
@@ -207,11 +207,7 @@ OLN_COLLECTION([OLN_TOP],
 
       AC_SUBST([MLC_TESTS_SUBDIRS])
 
-    ], [])dnl End of OLN_COMPONENT([metalic/tests])
-    # FIXME:
-    # No directory specified here, as we always need to go inside metalic/tests.
-    # Indeed, common testing tools may have to be compiled even if
-    # metalic testsuite was disabled.
+    ], [tests])dnl End of OLN_COMPONENT([metalic/tests])
 
   ])dnl End of OLN_COLLECTION([MLC_SRC])
 

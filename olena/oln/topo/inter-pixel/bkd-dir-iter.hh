@@ -1,5 +1,5 @@
-// -*- c++ -*-
-// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
+
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,28 +26,47 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+#ifndef OLENA_TOPO_INTER_PIXEL_BKD_DIR_ITERHH
+# define OLENA_TOPO_INTER_PIXEL_INTERNAL_BKD_DIR_ITER_HH
 
-template<class I_, class E1_, class E2_>
-Concrete(I_) thinning(const image<I_>& _input,
-		      const struct_elt<E1_>& _se1,
-		      const struct_elt<E2_>& _se2)
-{
-  Exact_cref(I, input);
-  Exact_cref(E1, se1);
-  Exact_cref(E2, se2);
-  mlc::eq<I::dim, E1::dim>::ensure();
-  mlc::eq<I::dim, E2::dim>::ensure();
+# include <oln/core/iter.hh>
+# include <oln/topo/inter-pixel/internal/dir-iter.hh>
 
-  Concrete(I) dilated = dilation(input, se2);
-  Concrete(I) eroded = erosion(input, se1);
-  Concrete(I) output(input.size());
-  Iter(I) p(input);
-  for_all(p)
-    {
-      if ((dilated[p] < input[p]) && (input[p] == eroded[p]))
-	output[p] = dilated[p];
-      else
-	output[p] = input[p];
-    }
-  return output;
-}
+namespace oln {
+
+  namespace topo {
+
+    namespace inter_pixel {
+
+      template<unsigned Dim, class Exact = mlc::final>
+      class bkd_dir_iter : public internal::_dir_iter<Dim, typename mlc::exact_vt<bkd_dir_iter<Dim, Exact>, Exact>::ret>,
+			   public bkd_iter<typename mlc::exact_vt<bkd_dir_iter<Dim, Exact>, Exact>::ret>
+      {
+      private:
+	typedef internal::_dir_iter<Dim, typename mlc::exact_vt<bkd_dir_iter<Dim, Exact>, Exact>::ret> super;
+	typedef typename super::dir_t dir_t;
+
+      public:
+	bkd_dir_iter() : super(), _begin(internal::dir_traits<Dim>::last()) {}
+	bkd_dir_iter(dir_t i) : super(i), _begin(i) {}
+
+	template<class U> U operator=(U u) { return super::operator=(u); }
+
+	dir_t next() { return internal::dir_traits<Dim>::prev(_cur); }
+
+	dir_t begin() { return _begin; }
+
+      private:
+	dir_t _begin;
+      };
+
+# define BkdDirIter(ImgType)		\
+bkd_dir_iter< ImgType::dim >
+
+    } // end inter_pixel
+
+  } // end topo
+
+} // end oln
+
+#endif // !OLENA_TOPO_INTER_PIXEL_BKD_DIR_ITER_HH

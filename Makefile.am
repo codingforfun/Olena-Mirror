@@ -25,8 +25,8 @@ EXTRA_DIST = config/oln-local.m4
 ### Basic doc files generation.
 ###
 
-dist_noinst_DATA = README BUILD INSTALL THANKS FAQ
-MAINTAINERCLEANFILES = README BUILD INSTALL THANKS FAQ
+dist_noinst_DATA = README BUILD INSTALL THANKS FAQ UPGRADING
+MAINTAINERCLEANFILES = README BUILD INSTALL THANKS FAQ UPGRADING
 
 if HAVE_DOC_DEV
 
@@ -48,6 +48,9 @@ THANKS: $(devdoc)/thanks.texi
 
 FAQ: $(devdoc)/faq.texi
 	$(INFOTOTEXT) $(devdoc)/faq.texi >$@
+
+UPGRADING: $(devdoc)/upgrading.texi
+	$(INFOTOTEXT) $(devdoc)/upgrading.texi >$@
 
 endif
 

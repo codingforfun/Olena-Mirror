@@ -34,6 +34,7 @@ Copyright @copyright{} 2002,2003 @strong{Laboratoire de Recherche et D\'eveloppe
 @menu
 * Abstract::
 * Olena fast installation guide::
+* Upgrading from older versions::
 * The Olena configuration system::
 * Using Olena from another project::
 * The Olena source tree::
@@ -65,6 +66,11 @@ Copyright @copyright{} 2002,2003 @strong{Laboratoire de Recherche et D\'eveloppe
 
 @include build.texi
 @include install.texi
+
+@c ************************************************************************
+@c Chapter Upgrading from older versions
+
+@include upgrading.texi
 
 @c ************************************************************************
 @c Chapter The Olena configuration system

@@ -1,5 +1,4 @@
-// -*- c++ -*-
-// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,28 +25,59 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+#ifndef OLENA_TOPO_INTER_PIXEL_NODE_HH
+# define OLENA_TOPO_INTER_PIXEL_NODE_HH
 
-template<class I_, class E1_, class E2_>
-Concrete(I_) thinning(const image<I_>& _input,
-		      const struct_elt<E1_>& _se1,
-		      const struct_elt<E2_>& _se2)
-{
-  Exact_cref(I, input);
-  Exact_cref(E1, se1);
-  Exact_cref(E2, se2);
-  mlc::eq<I::dim, E1::dim>::ensure();
-  mlc::eq<I::dim, E2::dim>::ensure();
+# include <oln/topo/inter-pixel/internal/dir.hh>
 
-  Concrete(I) dilated = dilation(input, se2);
-  Concrete(I) eroded = erosion(input, se1);
-  Concrete(I) output(input.size());
-  Iter(I) p(input);
-  for_all(p)
-    {
-      if ((dilated[p] < input[p]) && (input[p] == eroded[p]))
-	output[p] = dilated[p];
-      else
-	output[p] = input[p];
-    }
-  return output;
-}
+namespace oln {
+
+  namespace topo {
+
+    namespace inter_pixel {
+
+      template<class _I>
+      class node
+      {
+      public:
+	enum { dim = _I::dim };
+
+	typedef Dir(_I) dir_t;
+
+      public:
+	node() : _rank(0)
+	{
+	  for (unsigned i = 0; i < 2 * dim; ++i)
+	    _data[i] = false;
+	}
+
+	void set(dir_t i)
+	{
+	  if (_data[i] == false)
+	    ++_rank;
+
+	  _data[i] = true;
+	}
+
+	bool get(dir_t i) const { return _data[i]; }
+
+	unsigned rank() const { return _rank; }
+
+      private:
+	unsigned _rank;
+	bool _data[dim * 2];
+      };
+
+# define Node(ImgType)					\
+node< ImgType >
+
+# define Head(ImgType)					\
+typename std::pair< Point(ImgType), Dir(ImgType) >
+
+    } // end inter_pixel
+
+  } // end topo
+
+} // end oln
+
+#endif // !OLENA_TOPO_INTER_PIXEL_NODE_HH

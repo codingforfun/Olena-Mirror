@@ -1,17 +1,18 @@
 ## Process this file with Automake to produce Makefile.in -*-Makefile-*-
 
-SOURCE_IMGS = \
-	face_se.pbm \
-	lena.ppm \
-	lena256.pgm \
-	lena_dark.pgm \
-	map.pbm \
-	neighbor.pbm \
-	neighbor9.pbm \
-	object.pbm \
-	random.pgm \
-	se.pbm \
-	se9.pbm
+SOURCE_IMGS =			\
+  face_se.pbm			\
+  lena.ppm			\
+  lena256.pgm			\
+  lena_dark.pgm			\
+  map.pbm			\
+  neighbor.pbm			\
+  neighbor9.pbm			\
+  object.pbm			\
+  random.pgm			\
+  se.pbm			\
+  se9.pbm			\
+  test-cmap.pgm
 
 BUILT_IMGS =			\
   lena.pbm			\
@@ -23,6 +24,8 @@ BUILT_IMGS =			\
   lena.ppm.gz			\
   lena.pppm			\
   lena128.pgm			\
+  lena16b.pgm			\
+  lena16b.ppgm			\
   se.ppbm			\
   se9.ppbm			\
   se9.pbm.gz			\
@@ -40,6 +43,8 @@ SRC_BUILT_IMGS =			\
   $(srcdir)/lena.ppm.gz			\
   $(srcdir)/lena.pppm			\
   $(srcdir)/lena128.pgm			\
+  $(srcdir)/lena16b.pgm			\
+  $(srcdir)/lena16b.ppgm		\
   $(srcdir)/se.ppbm			\
   $(srcdir)/se9.ppbm			\
   $(srcdir)/se9.pbm.gz			\
@@ -80,4 +85,7 @@ mm.gz:
 
 $(srcdir)/lena128.pgm: lena.pgm
 	$(IMAGEMAGICK_CONVERT) -scale 25% `test -f '$<' || echo '$(srcdir)/'`$< $@
+
+$(srcdir)/lena16b.pgm: lena.pgm
+	$(PNMDEPTH) 65535 `test -f '$<' || echo '$(srcdir)/'`$< > $@
 

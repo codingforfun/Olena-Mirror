@@ -1,5 +1,4 @@
-// -*- c++ -*-
-// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,28 +25,60 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+#ifndef OLENA_TOPO_INTER_PIXEL_INTERNAL_DIR_HH
+# define OLENA_TOPO_INTER_PIXEL_INTERNAL_DIR_HH
 
-template<class I_, class E1_, class E2_>
-Concrete(I_) thinning(const image<I_>& _input,
-		      const struct_elt<E1_>& _se1,
-		      const struct_elt<E2_>& _se2)
-{
-  Exact_cref(I, input);
-  Exact_cref(E1, se1);
-  Exact_cref(E2, se2);
-  mlc::eq<I::dim, E1::dim>::ensure();
-  mlc::eq<I::dim, E2::dim>::ensure();
+namespace oln {
 
-  Concrete(I) dilated = dilation(input, se2);
-  Concrete(I) eroded = erosion(input, se1);
-  Concrete(I) output(input.size());
-  Iter(I) p(input);
-  for_all(p)
-    {
-      if ((dilated[p] < input[p]) && (input[p] == eroded[p]))
-	output[p] = dilated[p];
-      else
-	output[p] = input[p];
-    }
-  return output;
-}
+  namespace topo {
+
+    namespace inter_pixel {
+
+      namespace internal {
+
+	template<unsigned Dim>
+	struct dir_traits
+	{
+	};
+
+	template<>
+	struct dir_traits<2>
+	{
+	  typedef enum dir { east, north, west, south } ret;
+
+	  static ret first() { return east; }
+	  static ret last() { return south; }
+
+	  static ret prev(ret i)
+	  {
+	    return i == first() ? last() : ret(i - 1);
+	  }
+	  static ret next(ret i)
+	  {
+	    return i == last() ? first() : ret(i + 1);
+	  }
+
+	  // FIXME: no modulus
+	  static ret opposite(ret i)
+	  {
+	    return ret((i + 2) % 4);
+	  }
+	};
+
+# define DirTraits(ImgType)			\
+dir_traits< ImgType::dim >
+
+# define Dir(ImgType)				\
+typename dir_traits< ImgType::dim >::ret
+
+      } // end internal
+
+    } // end inter_pixel
+
+  } // end topo
+
+} // end oln
+
+# include <oln/topo/inter-pixel/internal/dir.hxx>
+
+#endif // !OLENA_TOPO_INTER_PIXEL_INTERNAL_DIR_HH

@@ -1,5 +1,4 @@
-// -*- c++ -*-
-// Copyright (C) 2002, 2003  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,28 +25,27 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+#ifndef OLENA_TOPO_INTER_PIXEL_INTER_PIXEL_HXX
+# define OLENA_TOPO_INTER_PIXEL_INTER_PIXEL_HXX
 
-template<class I_, class E1_, class E2_>
-Concrete(I_) thinning(const image<I_>& _input,
-		      const struct_elt<E1_>& _se1,
-		      const struct_elt<E2_>& _se2)
+using namespace oln::topo::inter_pixel;
+
+template <class _I>
+inline std::ostream & operator<<(std::ostream & ostr,
+				 const interpixel<_I> & ip)
 {
-  Exact_cref(I, input);
-  Exact_cref(E1, se1);
-  Exact_cref(E2, se2);
-  mlc::eq<I::dim, E1::dim>::ensure();
-  mlc::eq<I::dim, E2::dim>::ensure();
-
-  Concrete(I) dilated = dilation(input, se2);
-  Concrete(I) eroded = erosion(input, se1);
-  Concrete(I) output(input.size());
-  Iter(I) p(input);
-  for_all(p)
-    {
-      if ((dilated[p] < input[p]) && (input[p] == eroded[p]))
-	output[p] = dilated[p];
-      else
-	output[p] = input[p];
-    }
-  return output;
+  return ip.print(ostr);
 }
+
+template <class _I>
+const DPoint(_I) interpixel<_I>::_neighb[4] = {DPoint(_I)(0,0),
+					       DPoint(_I)(-1,0),
+					       dpoint_t(-1,-1),
+					       dpoint_t(0,-1)};
+template <class _I>
+const DPoint(_I) interpixel<_I>::_inter_neighb[4] = {DPoint(_I)(0,1),
+						     DPoint(_I)(-1,0),
+						     DPoint(_I)(0,-1),
+						     DPoint(_I)(1,0)};
+
+#endif // !OLENA_TOPO_INTER_PIXEL_INTER_PIXEL_HXX
