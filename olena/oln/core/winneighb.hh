@@ -30,7 +30,6 @@
 
 # include <mlc/objs.hh>
 # include <oln/core/image.hh>
-# include <oln/core/abstract/struct_elt.hh>
 # include <string>
 
 namespace oln
@@ -41,7 +40,7 @@ namespace oln
     typedef DPoint(Win) dpoint;
 
     template< class T >
-    winneighb(const abstract::struct_elt<Win>& win, const T& anchor) :
+    winneighb(const typename Win::abstract_type& win, const T& anchor) :
       win_(to_exact(win)), pos_(0), anchor_(anchor.point_ref()) {}
 
     const point& point_ref() const

@@ -42,7 +42,7 @@ namespace oln
   template<class Exact>
   struct struct_elt_traits<abstract::neighborhood<Exact> > 
   {
-
+    typedef abstract::neighborhood<Exact> abstract_type;
   };
 
   namespace abstract 
@@ -58,6 +58,7 @@ namespace oln
       typedef typename struct_elt_traits<Exact>::win_type win_type;
       
       typedef typename struct_elt_traits<Exact>::dpoint_type dpoint_type;
+      typedef typename struct_elt_traits<Exact>::abstract_type abstract_type;
       enum { dim = struct_elt_traits<Exact>::dim };
  
       static std::string name()

@@ -1,5 +1,12 @@
 2003-07-28  David Lesage  <david@lrde.epita.fr>
 
+	* oln/core/abstract/neighborhood.hh, 
+	oln/core/abstract/struct_elt.hh: Add typedefs.
+
+	* oln/core/winiter.hh, oln/core/winneighb.hh: Adapt constructor.
+
+2003-07-28  David Lesage  <david@lrde.epita.fr>
+
 	* oln/core/abstract/structelt.hh: Rename as...
 
 	* oln/core/abstract/struct_elt.hh: ...this.
@@ -7,8 +14,6 @@
 	* oln/core/abstract/window.hh, 
 	oln/core/abstract/w_window.hh,
 	oln/Makefile.am: Adapt in consequence.
-
-	* oln/core/winiter.hh, oln/core/winneighb.hh: Adapt constructor.
 
 2003-07-28  David Lesage  <david@lrde.epita.fr>
 

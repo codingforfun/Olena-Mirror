@@ -44,7 +44,7 @@ namespace oln
   struct struct_elt_traits<abstract::window<Exact> > : public
   struct_elt_traits<abstract::struct_elt<Exact> >
   {
-
+    
   };
 
   namespace abstract 

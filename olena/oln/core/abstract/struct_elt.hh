@@ -46,7 +46,7 @@ namespace oln {
   template<class Exact>
   struct struct_elt_traits<abstract::struct_elt<Exact> >
   {
-
+    typedef abstract::struct_elt<Exact> abstract_type; 
   };
 
   namespace abstract {
@@ -57,6 +57,7 @@ namespace oln {
       enum { dim = struct_elt_traits<Exact>::dim };      
 
       typedef struct_elt<Exact> self_type;
+      typedef typename struct_elt_traits<Exact>::abstract_type abstract_type;
 
       static std::string name()
       {
