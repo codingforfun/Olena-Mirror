@@ -1,3 +1,8 @@
+2003-04-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/core/w_window1d.hh, oln/core/w_window2d.hh,
+	oln/core/w_window3d.hh: Remove useless and broken set methods.
+
 2003-04-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/io/Makefile.am: Add lena16b.pgm and lena16b.ppgm to

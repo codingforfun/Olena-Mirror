@@ -69,23 +69,6 @@ namespace oln {
       return *this;
     }
 
-    T& set(const dpoint3d& dp)
-    {
-      // if the dp exists, return a ref to the existing entry
-      for (unsigned i = 0; i < card(); ++i)
-	if (_dp[i] == dp)
-	  return _w[i];
-
-      // otherwise, create new entry
-      super::add(dp, T());
-      return _w.back();
-    }
-
-    T& set(coord slice, coord row, coord col)
-    {
-      return set(dpoint3d(slice, row, col));
-    }
-
     coord delta() const
     {
       return _delta;
