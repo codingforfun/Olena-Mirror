@@ -1,19 +1,23 @@
 2003-06-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* Merge from integre.28:
+
+	2003-06-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
 	* ntg/core/behavior.hh: Fix bug BuiltinToCycleAssignment.
 
 	* tests/types/int_sc5: New test.
 	
-2003-05-15  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-05-15  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/utils/tests/debug1: Fix warning.
 
-2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/real/int_u.hh, ntg/real_int_s.hh: Add a constructor 
 	from bin type.
 
-2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 	
 	* ntg/all.hh, ntg/basics.hh, ntg/bin.hh, ntg/color.hh,
 	ntg/color/color.hh, ntg/color/hsi.hh, ntg/color/hsl.hh,
@@ -50,7 +54,7 @@
 	headers guards, rename minor things, use new macros when
 	possible.
 
-2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/core/internal/macros.hh: Many new macros.
 
@@ -75,7 +79,7 @@
 
 	* ntg/Makefile.am: Update consequently.
 	
-2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/config/system.hh: Remove g++-2.95 specific directives.
 	
@@ -84,26 +88,26 @@
 
 	* ntg/core/internal/global_ops_traits.hh: Important changes.
 	
-2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/sanity/Makefile.am, 
 	tests/sanity/includes.test: New files.
 	
-2003-05-10  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-05-10  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/core/behavior.hh: Rename apply methods as check.
 
-2003-05-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-05-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/config/system.hh: Remove g++-2.95 related code.
 
-2003-05-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-05-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/all.hh: Remove useless includes.
 
 	* ntg/color.hh: New file.
 
-2003-05-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-05-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 	
 	* ntg/basics.hh: Add new includes.
 
@@ -128,11 +132,11 @@
 	* tests/utils/runtests, tests/utils/Makefile.am: New files.
 	* tests/utils/tests/debug1: New test.
 
-2003-05-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-05-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 	
 	* ntg/real/int_s.hh, ntg/real/int_u.hh: Minor fix.
 
-2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/core/internal/global_ops_traits.hh: Minor update.
 	* ntg/vect/vec.hh: Minor update.
@@ -150,7 +154,7 @@
 
 	* tests/types/tests/range1: More checks.
 	
-2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 	
 	* ntg/core/internal/global_ops_traits.hh: Rewrite the traits
 	deduction system.
@@ -162,11 +166,11 @@
 	ntg/real/optraits_scalar_defs.hh, ntg/real/range.hh,
 	ntg/vect/cplx.hh, ntg/vect/vec.hh: Modify accordingly.
 
-2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/types/tests/range4: New test.
 	
-2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/utils/to_oln.hh: Remove file.
 	* ntg/utils/cast.hh: Add to_ntg.
@@ -224,14 +228,14 @@
 	tests/types/tests/optrait2a, tests/types/tests/optrait2b,
 	tests/types/tests/optrait3: Modify accordingly.
 	
-2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/core/macros.hh: New file.
 
 	* ntg/core/behavior.hh, ntg/core/global_ops.hh, 
 	ntg/core/value.hh: Update using new macros.
 
-2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 	
 	* ntg/core/builtins_properties.hh, ntg/core/predecls.hh,
 	ntg/float.hh, ntg/utils/cast.hh, ntg/vect/cplx.hh,
@@ -244,7 +248,7 @@
 	tests/types/tests/optrait2a, tests/types/tests/optrait2b,
 	tests/types/tests/optrait3: Rename sfloat and dfloat.
 
-2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 	
 	* ntg/enum/bin.hh, ntg/color/color.hh, ntg/vect/cplx.hh,
 	ntg/vect/cplx_representation.hh, ntg/real/cycle.hh,
@@ -263,12 +267,12 @@
 
 	* ntg/core/behavior.hh: Update includes.
 
-2003-04-15  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-04-15  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/bin.hh, ntg/cplx.hh, ntg/cycle.hh, ntg/float.hh, ntg/int.hh,
 	ntg/range.hh, ntg/vec.hh: Update includes.
 
-2003-04-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-04-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/enum/optraits_bin.hh: Merge into ntg/enum/bin.hh
 	* ntg/real/optraits_cycle.hh: Merge into ntg/real/cycle.hh.
@@ -278,13 +282,13 @@
 	
 	* Makefile.am: Update consequently.
 	
-2003-04-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-04-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 	
 	* ntg/core/behaviour.hh: Rename as ...
 	* ntg/core/behavior.hh: ... this.
 	* Makefile.am: Update consequently.
 	
-2003-04-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-04-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/all.hh: Update includes.
 	
@@ -326,7 +330,19 @@
 	* ntg/vect: ... here.
 	
 	* Makefile.am: Update consequently.
-	
+
+2003-05-10  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* tests/types/Makefile.am (CLEANFILES): Add test.core.
+
+2003-05-06  Raphaël Poss  <raph@lrde.epita.fr>
+
+	* ntg/predecls.hh (ntg): Help SWIG parse the file.
+
+2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+ 	* tests/types/tests/int_u5c: New test.
+
 2003-04-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/global_ops_defs.hh: Add missing builtin specializations.

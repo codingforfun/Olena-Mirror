@@ -1,8 +1,12 @@
-2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+2003-06-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Merge from integre.28:
+
+	2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* demo/tour.cc: Adapt to integre's changes.
 
-2003-05-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-05-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ref/ref-types.tex: Rename as ...
 	* ref/integre-ref.tex: ... this.
@@ -12,16 +16,16 @@
 
 	* ref/Makefile.am: Fix html generation.
 
-2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ref/ref-types.tex: Fix typo.
 	* doc/dev/faq.texi: Likewise.
 
-2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* demo/convol-gaussian.cc, demo/tour.cc,
 	ref/ref-types.tex: Rename sfloat and dfloat.
-
+	
 2003-04-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* dev/oln-dev.texi: Include upgrading.texi.

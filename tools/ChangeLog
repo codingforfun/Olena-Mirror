@@ -1,8 +1,12 @@
-2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+2003-06-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* Merge from integre.28:
+
+	2003-05-13  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* utilities/mosaic.cc: Adapt to integre's changes.
 
-2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* utilities/morpho/morpho_template_gaussian.cc: Rename sfloat and
 	dfloat.

@@ -1,16 +1,12 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln integre 28)
-(Parent-Version oln integre 27)
-(Version-Log "Index: ChangeLog
-from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-
-        * configure.ac: Clean CXXFLAGS detection.
-
+(Project-Version oln integre 29)
+(Parent-Version oln integre 28)
+(Version-Log "Merge from main head.
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 02 Jun 2003 13:33:23 +0200")
+(Checkin-Time "Mon, 02 Jun 2003 19:58:41 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -91,17 +87,20 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
                   "integre/tests/check/defs$"
                   "^CODING_STYLE$"
                   "olena/img/lena16b.ppgm"
-                  "olena/img/lena16b.pgm"))
+                  "olena/img/lena16b.pgm"
+                  "^tools/swilena/src/Makefile.am"
+                  "^tools/swilena/src/.*\\.i"
+                  "^tools/swilena/python/Makefile.am"))
 (Project-Keywords)
 (Files
 
-  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.3 640))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.35 640))
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.7 640))
-  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.20 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.8 640))
-  (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.9 640))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.3 640))
+  (ChangeLog (oln/o/33_ChangeLog 1.37.1.16.1.4 640))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.36 640))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.12.1.2.1.8 640))
+  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.21 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.36.1.3.1.9 640))
+  (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.10 640))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.7.1.4 640))
 
   (attic/oln-ChangeLog (oln/6_ChangeLog 1.50.1.98.1.5 600))
   (attic/doc-ChangeLog (oln/e/1_ChangeLog 1.31 600))
@@ -285,7 +284,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (olena/oln/level/lut.hh (oln/29_lut.hh 1.7 640))
   (olena/oln/level/set_level.hh (oln/p/1_set_level. 1.5 640))
   (olena/oln/level/threshold.hh (oln/f/15_threshold. 1.9 640))
-  (config/oln.m4 (oln/j/15_oln.m4 1.29 640))
+  (config/oln.m4 (oln/j/15_oln.m4 1.30 640))
 
   (olena/oln/math/macros.hh (oln/b/21_macros.hh 1.6.1.7 640))
   (metalic/mlc/array/1d.hh (oln/f/23_array1d.hh 1.8 640))
@@ -724,7 +723,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 ;; Files added by populate at Fri, 24 Jan 2003 14:34:30 +0100,
 ;; to version 7.40(w), by raph:
 
-  (doc/dev/build.texi (oln/p/42_build.texi 1.9 640))
+  (doc/dev/build.texi (oln/p/42_build.texi 1.10 640))
 
 ;; Files added by populate at Fri, 24 Jan 2003 14:34:47 +0100,
 ;; to version 7.40(w), by raph:
@@ -946,5 +945,13 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
   (integre/tests/types/tests/int_sc5 (oln/t/3_int_sc5 1.1 600))
 )
-(Merge-Parents)
+(Merge-Parents
+  (9.8 complete
+    (ChangeLog ChangeLog ChangeLog r) (doc/ChangeLog doc/ChangeLog doc/ChangeLog r)
+    (integre/ChangeLog integre/ChangeLog integre/ChangeLog r) (metalic/ChangeLog metalic/ChangeLog metalic/ChangeLog r)
+    (olena/ChangeLog olena/ChangeLog olena/ChangeLog r) (tools/ChangeLog tools/ChangeLog tools/ChangeLog r)
+    (tools/swilena/ChangeLog tools/swilena/ChangeLog tools/swilena/ChangeLog r) (config/oln.m4 config/oln.m4 config/oln.m4 r)
+    (doc/dev/build.texi doc/dev/build.texi doc/dev/build.texi r) 
+  )
+)
 (New-Merge-Parents)
