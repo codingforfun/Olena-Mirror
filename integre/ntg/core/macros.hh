@@ -110,6 +110,10 @@
 
 # define ntg_min_val(T) ntg::type_traits< T >::min()
 
+# define ntg_sup_val(T) ntg::type_traits< T >::sup()
+
+# define ntg_inf_val(T) ntg::type_traits< T >::inf()
+
 # define ntg_inf_val(T) ntg::type_traits< T >::inf()
 
 # define ntg_sup_val(T) ntg::type_traits< T >::sup()

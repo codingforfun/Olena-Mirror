@@ -1,5 +1,13 @@
 2004-06-14  Simon Odou  <simon@lrde.epita.fr>
 
+	* oln/convol/fast_convolution.hh: Clean code.
+	* oln/convol/slow_gaussian.hxx: Fix too generic parameter.
+	* oln/convol/slow_gaussian.hh: Fix delta computation.
+	* oln/convol/fast_gaussian.hxx: Use cast::bound instead of cast::force.
+	* oln/convol/slow_convolution.hh: Clean code.
+
+2004-06-14  Simon Odou  <simon@lrde.epita.fr>
+
 	* oln/convol/convolution.hh: Move to ...
 	* oln/convol/slow_convolution.hh: ... Here. Convolve two images
 	(convolution between image and w_window does not make sense).

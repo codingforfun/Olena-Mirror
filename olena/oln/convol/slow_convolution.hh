@@ -26,8 +26,8 @@
 // Public License.
 
 
-#ifndef OLENA_CONVOL_SLOW_CONVOLUTION_HH__
-# define OLENA_CONVOL_SLOW_CONVOLUTION_HH__
+#ifndef OLENA_CONVOL_SLOW_CONVOLUTION_HH
+# define OLENA_CONVOL_SLOW_CONVOLUTION_HH
 
 # include <oln/basics.hh>
 # include <oln/basics2d.hh>
@@ -71,10 +71,10 @@ namespace oln {
 	oln_iter_type(I) p_im(input);
 	for_all(p_im)
 	  {
-	    DestValue sum = ntg_zero_val(DestValue);
+	    ntg::float_d sum = ntg_zero_val(ntg::float_d);
 	    for (unsigned i = 0; i < win.card(); ++i)
-	      sum += static_cast<DestValue> (win.w(i)) *
-		     static_cast<DestValue> (input[p_im - win.dp(i)]);
+	      sum += ntg::cast::bound<ntg::float_d>(win.w(i)) *
+		ntg::cast::bound<ntg::float_d>(input[p_im - win.dp(i)]);
 	    output[p_im] = sum;
 	  }
 
@@ -96,7 +96,7 @@ namespace oln {
       template<class DestValue, class I, class J>
       typename mute<I, DestValue>::ret
       convolve(const abstract::non_vectorial_image< I >& input,
-	       const abstract::image< J >& k)
+	       const abstract::non_vectorial_image< J >& k)
       {
 	mlc::eq<I::dim, J::dim>::ensure();
 
@@ -108,26 +108,23 @@ namespace oln {
 	for (unsigned i = 0; i < J::dim; i++)
 	  if (k.size().nth(i) > delta)
 	    delta = k.size().nth(i);
+	delta = (delta + 1) / 2;
 	input.border_adapt_copy(delta);
 
 	// Computer center of the kernel.
 	// \todo FIXME: should be in the image hierarchy.
-	oln_iter_type(I) p_im(input);
-	oln_iter_type(I) p_k(k);
 	oln_point_type(I) center;
-	unsigned i_center = 0;
-	unsigned real_center = k.npoints() % 2 ? k.npoints() / 2 + 1 :
-	  k.npoints() / 2;
-	for_all(p_k)
-	  if (++i_center == real_center)
-	    center = p_k;
+	for (unsigned i = 0; i < J::dim; i++)
+	  center.nth(i) = (k.size().nth(i) - 1) / 2;
 
+	oln_iter_type(I) p_im(input);
+	oln_iter_type(J) p_k(k);
 	for_all(p_im)
 	  {
-	    DestValue sum = ntg_zero_val(DestValue);
+	    ntg::float_d sum = ntg_zero_val(ntg::float_d);
 	    for_all(p_k)
-	      sum += static_cast<DestValue> (k[p_k]) *
-	      static_cast<DestValue> (input[p_im - (center - p_k)]);
+	      sum += ntg::cast::bound<ntg::float_d>(k[p_k]) *
+	      ntg::cast::bound<ntg::float_d>(input[p_im - (center - p_k)]);
 	    output[p_im] = sum;
 	  }
 	return output;
@@ -161,4 +158,4 @@ namespace oln {
 
 } // end namespace oln
 
-#endif // OLENA_CONVOL_SLOW_CONVOLUTION_HH__
+#endif // OLENA_CONVOL_SLOW_CONVOLUTION_HH

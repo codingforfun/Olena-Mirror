@@ -94,6 +94,7 @@ namespace oln {
 	for (unsigned i = 0; i < I::dim; i++)
 	  if (in.size().nth(i) > delta)
 	    delta = in.size().nth(i);
+	delta = (delta + 1) / 2;
 	behavior.adapt_border(in, delta);
 
 	typename mute<I, ntg::float_d>::ret im =

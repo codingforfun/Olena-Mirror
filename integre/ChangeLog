@@ -1,3 +1,8 @@
+2004-06-14  Simon Odou  <simon@lrde.epita.fr>
+
+	* ntg/core/macros.hh: Add value accessors (sup() and inf()).
+	* ntg/utils/cast.hh: Fix a bug in cast::bound().
+
 2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
 
 	* integre/tests/sanity/Makefile.am: Replace maintainer-check by check.

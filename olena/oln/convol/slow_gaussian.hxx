@@ -42,7 +42,7 @@ namespace oln {
 	*/
 	template<class T>
 	inline T
-	normalise(const T &in)
+	normalise(const oln::abstract::non_vectorial_image<T> &in)
 	{
 	  T w(in.size());
 	  ntg::float_d sum = 0.;

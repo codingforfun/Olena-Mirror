@@ -26,12 +26,9 @@
 // Public License.
 
 
-#ifndef OLENA_CONVOL_FAST_CONVOLUTION_HH__
-# define OLENA_CONVOL_FAST_CONVOLUTION_HH__
+#ifndef OLENA_CONVOL_FAST_CONVOLUTION_HH
+# define OLENA_CONVOL_FAST_CONVOLUTION_HH
 
-# include <oln/basics.hh>
-# include <oln/basics2d.hh>
-# include <ntg/all.hh>
 # include <mlc/cmp.hh>
 # include <mlc/array/all.hh>
 # include <oln/transforms/fft.hh>
@@ -72,6 +69,7 @@ namespace oln {
       ** using namespace ntg;
       **
       ** int main() {
+      ** #ifdef HAVE_LIBfft
       **   image2d<int_u8> src(IMG_IN "lena.pgm");
       **   float_d sigma = 2.5;
       **   float_d radius = 3;
@@ -84,6 +82,7 @@ namespace oln {
       **   for_all(i)
       **     src[i] = int_u8(tmp[i]);
       **   save(src, IMG_OUT "oln_convol_fast_convolve.pgm");
+      ** #endif
       ** }
       ** \endcode
       ** \image html lena_pgm.png
@@ -100,7 +99,7 @@ namespace oln {
       {
 	mlc::eq<I::dim, J::dim>::ensure();
 	mlc::eq<I::dim, 2>::ensure();
-	assert(input.npoints() > k.npoints());
+	assert(input.npoints() >= k.npoints());
 
 	// We compute k with a size of input (k is centered in big_k).
 	image2d<oln_value_type(J)> big_k(input.size());
@@ -170,4 +169,4 @@ namespace oln {
 
 } // end namespace oln
 
-#endif // OLENA_CONVOL_FAST_CONVOLUTION_HH__
+#endif // OLENA_CONVOL_FAST_CONVOLUTION_HH

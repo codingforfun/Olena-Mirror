@@ -89,12 +89,12 @@ namespace ntg {
     const Tdest
     bound(const Tsrc& val)
     {
-      if (ntg_max_val(Tsrc) > ntg_max_val(Tdest))
-	if (val > Tsrc(Tdest(ntg_max_val(Tdest))))
-	  return ntg_max_val(Tdest);
-      if (ntg_min_val(Tsrc) < ntg_min_val(Tdest))
-	if (val < Tsrc(Tdest(ntg_min_val(Tdest))))
-	  return ntg_min_val(Tdest);
+      if (ntg_sup_val(Tsrc) > ntg_sup_val(Tdest))
+	if (val > Tsrc(Tdest(ntg_sup_val(Tdest))))
+	  return ntg_sup_val(Tdest);
+      if (ntg_inf_val(Tsrc) < ntg_inf_val(Tdest))
+	if (val < Tsrc(Tdest(ntg_inf_val(Tdest))))
+	  return ntg_inf_val(Tdest);
       return val;
     }
 

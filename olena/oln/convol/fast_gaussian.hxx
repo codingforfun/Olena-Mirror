@@ -155,7 +155,7 @@ namespace oln {
 	  current = start;
 	  for (coord i = 0; i < len; ++i)
 	    {
-	      image[current] = ntg::cast::force<oln_value_type(I)>(tmp1[i] + tmp2[i]);
+	      image[current] = ntg::cast::bound<oln_value_type(I)>(tmp1[i] + tmp2[i]);
 	      current += d;
 	    }
 	}
@@ -304,7 +304,7 @@ namespace oln {
 
 	  oln_iter_type(I) it(in);
 	  for_all(it)
-	    work_img[it] = ntg::cast::force<ntg::float_s>(in[it]);
+	    work_img[it] = ntg::cast::bound<ntg::float_s>(in[it]);
 
 	  // On tiny sigma, Derich algorithm doesn't work.
 	  // It is the same thing that to convolve with a Dirac.
