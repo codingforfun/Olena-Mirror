@@ -1,3 +1,11 @@
+2005-03-22  Simon Odou  <simon@lrde.epita.fr>
+
+	* tests/convert/tests/value_to_point: Fix a wrong instruction.
+	* oln/io/read_image_2d_pnm.hh: Move static variables inside an 
+	inline function to attributes.
+	* img/object.pbm: New. Add missing image for dilation and erosion
+	tests.
+
 2005-03-20  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* tests/morpho/tests/dilation: New.

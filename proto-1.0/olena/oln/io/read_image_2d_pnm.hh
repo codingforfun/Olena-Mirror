@@ -84,6 +84,8 @@ namespace oln {
 	mlc::box<I> image_;
 	std::istream& istr_;
 	internal::pnm_info& info_;
+	char v;
+	int offset;
 
 	read_image_2d_raw(I& image,
 			  std::istream &istr,
@@ -91,7 +93,8 @@ namespace oln {
 	  super_type(image),
 	  image_(image),
 	  istr_(istr),
-	  info_(info)
+	  info_(info),
+          offset(-1)
 	{}
 
 
@@ -163,8 +166,6 @@ namespace oln {
 
 	void read_value_type(ntg::bin &c)
 	{
-	  static char v;
-	  static int offset = -1;
 
 	  if (offset == -1)
 	    {
