@@ -1,16 +1,12 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 7 59)
-(Parent-Version oln 7 58)
-(Version-Log "Index: doc/ChangeLog
-from   2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
-   * dev/faq.texi (Frequently Asked Questions): Use cleaner layout
-   for Troubleshooting.
-
+(Project-Version oln 8 1)
+(Parent-Version oln 7 59)
+(Version-Log "New major version.
 ")
 (New-Version-Log "")
-(Checkin-Time "Mon, 10 Feb 2003 17:16:38 +0100")
+(Checkin-Time "Mon, 10 Feb 2003 17:37:17 +0100")
 (Checkin-Login raph)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -785,6 +781,6 @@ from   2003-02-10  Raphaël Poss  <raph@lrde.epita.fr>
   ; (ISSUES ())
 )
 (Merge-Parents
-  (7.58 complete)
+  (7.59 complete)
 )
 (New-Merge-Parents)
