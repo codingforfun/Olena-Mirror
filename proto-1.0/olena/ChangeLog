@@ -1,5 +1,9 @@
 2005-03-20  Simon Odou  <simon@lrde.epita.fr>
 
+	* oln/core/2d/fwd_witer2d.hh: New. Forward window iterator in 2d.
+
+2005-03-20  Simon Odou  <simon@lrde.epita.fr>
+
 	* tests/core/tests/fwd_witer2d: New. Test for forward window
         iterator in 2d.
 	* oln/makefile.src: Add new headers.
