@@ -1,5 +1,9 @@
 2005-03-19  Damien Thivolle  <damien@lrde.epita.fr>
 
+	* oln/io/utils.hh: Add a traits for g++-3.3.
+
+2005-03-19  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* oln/makefile.src: Add missing files.
 
 2005-03-19  Damien Thivolle  <damien@lrde.epita.fr>

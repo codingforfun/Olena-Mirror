@@ -150,20 +150,22 @@ namespace oln {
       }
 
       template <bool b>
-      struct pnm_io_helper
+      struct pnm_io_helper_bool
       {
-	enum { size = 1};
 	typedef unsigned char type;
       };
 
       template <>
-      struct pnm_io_helper<false>
+      struct pnm_io_helper_bool<false>
       {
-	enum { size = 2};
 	typedef unsigned short type;
       };
 
-
+      template <unsigned N>
+      struct pnm_io_helper
+      {
+	typedef typename pnm_io_helper_bool<N <= 8>::type type;
+      };
 
     } // end of namespace internal
 
@@ -171,8 +173,8 @@ namespace oln {
 
 } // end of namespace oln
 
-# define oln_io_type(N) typename oln::io::internal::pnm_io_helper<N <= 8>::type
-# define oln_io_type_(N) oln::io::internal::pnm_io_helper<N <= 8>::type
+# define oln_io_type(N) typename oln::io::internal::pnm_io_helper<N>::type
+# define oln_io_type_(N) oln::io::internal::pnm_io_helper<N>::type
 
 
 #endif // ! OLENA_IO_UTILS_HH
