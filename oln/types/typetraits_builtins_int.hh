@@ -31,22 +31,32 @@
 # include <oln/types/typetraits.hh>
 # include <oln/types/optraits.hh>
 
-# define TYPETRAITS_BUILTIN_INT(Name)		\
-  template<>					\
-  struct typetraits<Name>			\
-  {						\
-    typedef Name self;				\
-    typedef optraits<self> optraits;		\
-    						\
-    typedef self store;				\
-    typedef self base;				\
-    typedef self cumul;				\
-    typedef self op_traits;			\
+# define TYPETRAITS_BUILTIN_INT(Name)				\
+  template<>							\
+  struct typetraits<Name>					\
+  {								\
+    typedef Name self;						\
+    typedef optraits<self> optraits;				\
+								\
+    typedef self store;						\
+    typedef self base;						\
+    typedef self cumul;						\
+    typedef self op_traits;					\
+    typedef builtin::signed_trait<Name>::ret signed_type;	\
   };
 
 namespace oln
 {
 
+  namespace builtin {
+
+    template <class T>
+    struct signed_trait { typedef T ret; };
+    template <> struct signed_trait<unsigned long> { typedef signed long  ret; };
+    template <> struct signed_trait<unsigned int>  { typedef signed int   ret; };
+    template <> struct signed_trait<unsigned char> { typedef signed short ret; };
+
+  }
 
   TYPETRAITS_BUILTIN_INT(unsigned long);
   TYPETRAITS_BUILTIN_INT(  signed long);

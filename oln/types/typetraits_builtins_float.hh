@@ -45,7 +45,7 @@ namespace oln
     typedef self cumul;
 
     typedef self op_traits;
-
+    typedef self signed_type;
     // FIXME : add missing
   };
 
@@ -60,7 +60,7 @@ namespace oln
     typedef self cumul;
 
     typedef self op_traits;
-
+    typedef self signed_type;
     // FIXME : add missing
   };
 

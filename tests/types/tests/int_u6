@@ -1,4 +1,4 @@
 int_u8 a = 5;
 int_s8 b = -a;
 
-return (a == -b);
+return a != -b;

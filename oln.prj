@@ -1,12 +1,17 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 0_5 41)
-(Parent-Version oln 0_5 40)
-(Version-Log "tests/types/tests/int_u6: New file.
+(Project-Version oln 0_5 42)
+(Parent-Version oln 0_5 41)
+(Version-Log "2002-09-11  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+   * oln/types/global_ops.hh: Fix unary minus.
+   * oln/types/int_u.hh, oln/types/int_s.hh, 
+   oln/types/typetraits_builtin_int.hh, 
+   oln/types/typetraits_builtin_float.hh: Add signed_type.
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 11 Sep 2002 11:03:27 +0200")
+(Checkin-Time "Wed, 11 Sep 2002 18:41:26 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore ^configure$
 ;; diff-ignore aclocal\.m4$
@@ -74,7 +79,7 @@
 (Project-Keywords)
 (Files
   (aclocal.m4 (oln/e/8_aclocal.m4 1.19 640))
-  (ChangeLog (oln/6_ChangeLog 1.50.1.43 600))
+  (ChangeLog (oln/6_ChangeLog 1.50.1.44 600))
   (configure.ac (oln/3_configure. 1.21 600))
   (configure (oln/e/7_configure 1.25 700))
   (README (oln/1_README 1.4 600))
@@ -338,7 +343,7 @@
   (tests/meta/test_array1d.cc (oln/f/26_test_array 1.2 640))
   (tests/meta/test_array2d.cc (oln/f/25_test_array 1.2 640))
   (tests/meta/test_array3d.cc (oln/f/24_test_array 1.2 640))
-  (tests/ChangeLog (oln/e/30_ChangeLog 1.28 600))
+  (tests/ChangeLog (oln/e/30_ChangeLog 1.29 600))
   (tests/check/check.hh (oln/e/40_check.hh 1.2 600))
   (tests/check/data.cc (oln/f/5_data.cc 1.2 600))
   (tests/check/data.hh (oln/f/6_data.hh 1.1 600))
@@ -412,8 +417,8 @@
 ;; Files added by populate at Mon, 29 Jul 2002 15:53:36 +0200,
 ;; to version 0_5.2(w), by burrus_n:
 
-  (oln/types/typetraits_builtins_int.hh (oln/g/3_typetraits 1.2 640))
-  (oln/types/typetraits_builtins_float.hh (oln/g/4_typetraits 1.3 640))
+  (oln/types/typetraits_builtins_int.hh (oln/g/3_typetraits 1.3 640))
+  (oln/types/typetraits_builtins_float.hh (oln/g/4_typetraits 1.4 640))
   (oln/types/typetraits.hh (oln/g/5_typetraits 1.1 640))
   (oln/types/type.hh (oln/g/6_type.hh 1.3 640))
   (oln/types/to_oln.hh (oln/g/7_to_oln.hh 1.1 640))
@@ -432,11 +437,11 @@
   (oln/types/optraits_bin.hh (oln/g/20_optraits_b 1.1 640))
   (oln/types/optraits.hh (oln/g/21_optraits.h 1.1 640))
   (oln/types/interval.hh (oln/g/22_interval.h 1.2 640))
-  (oln/types/int_u.hh (oln/g/23_int_u.hh 1.6 640))
-  (oln/types/int_s.hh (oln/g/24_int_s.hh 1.4 640))
+  (oln/types/int_u.hh (oln/g/23_int_u.hh 1.7 640))
+  (oln/types/int_s.hh (oln/g/24_int_s.hh 1.5 640))
   (oln/types/global_ops_traits.hh (oln/g/25_global_ops 1.1 640))
   (oln/types/global_ops_defs.hh (oln/g/26_global_ops 1.1 640))
-  (oln/types/global_ops.hh (oln/g/27_global_ops 1.5 640))
+  (oln/types/global_ops.hh (oln/g/27_global_ops 1.6 640))
   (oln/types/cycle.hh (oln/g/28_cycle.hh 1.3 640))
   (oln/types/builtins_properties.hh (oln/g/29_builtins_p 1.3 640))
   (oln/types/bin.hh (oln/g/30_bin.hh 1.2 640))
@@ -534,7 +539,7 @@
 ;; Files added by populate at Wed, 11 Sep 2002 11:02:59 +0200,
 ;; to version 0_5.40(w), by burrus_n:
 
-  (tests/types/tests/int_u6 (oln/h/37_int_u6 1.1 640))
+  (tests/types/tests/int_u6 (oln/h/37_int_u6 1.2 640))
 )
 (Merge-Parents)
 (New-Merge-Parents)

@@ -56,6 +56,7 @@ namespace oln
 {
 
   template <unsigned nbits, class behaviour> class int_u; // fwd_decl
+  template <unsigned nbits, class behaviour> class int_s; // fwd_decl
 
   //
   //  Typetraits
@@ -77,6 +78,7 @@ namespace oln
     // internal use, useful for decorators
     typedef self op_traits;
 
+    typedef int_s<meta::saturateN<nbits+1, 32>::ret, behaviour> signed_type;
     // FIXME: add missing
   };
 

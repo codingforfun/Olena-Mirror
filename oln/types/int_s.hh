@@ -73,6 +73,7 @@ namespace oln
     // internal use, useful for decorators
     typedef self op_traits;
 
+    typedef self signed_type;
     // FIXME : add missing
   };
 

@@ -171,9 +171,11 @@ namespace oln
     // minus
 
     template <class T> inline
-    const T operator-(const T& val)
-    { 
-      return optraits<T>::zero() - val;
+    const typename typetraits<T>::signed_type 
+    operator-(const T& val)
+    {       
+      typedef typename typetraits<T>::signed_type signed_type;
+      return static_cast<signed_type>(optraits<T>::zero()) - val;
     }
 
     template<class T> inline

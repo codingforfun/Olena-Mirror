@@ -1,3 +1,10 @@
+2002-09-11  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/types/global_ops.hh: Fix unary minus.
+	* oln/types/int_u.hh, oln/types/int_s.hh, 
+	oln/types/typetraits_builtin_int.hh, 
+	oln/types/typetraits_builtin_float.hh: Add signed_type.
+
 2002-09-10  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
         * oln/types/int_s.hh: Fix typetraits.
