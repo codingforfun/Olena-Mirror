@@ -10,7 +10,7 @@
 //#include <oln/basics3d.hh>
 
 // Let's include all types, for simplicity.
-#include <oln/types/all.hh>
+#include <ntg/all.hh>
 
 // Some algorithms...
 #include <oln/morpho/erosion.hh>

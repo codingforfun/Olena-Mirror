@@ -1,3 +1,8 @@
+2003-03-01  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* demo/tour.cc: Replace <oln/types/ by ntg/.
+	* dev/srctree.texi: Remove reference to oln/types.
+
 2003-02-18  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* dev/Makefile.am (oln_dev_TEXINFOS): Add missing design.texi.

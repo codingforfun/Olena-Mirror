@@ -1,6 +1,6 @@
 #ifndef SWILENA_TYPEDEFS_HH
 # define SWILENA_TYPEDEFS_HH
-# include <oln/types/all.hh>
+# include <ntg/all.hh>
 # include <oln/basics1d.hh>
 # include <oln/basics2d.hh>
 # include <oln/basics3d.hh>

@@ -4,7 +4,7 @@
 
 // Headers must be re-imported at this point
 %{
-#include <oln/types/all.hh>
+#include <ntg/all.hh>
 %}
 
 /*-------.

@@ -1,67 +1,34 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln cleanup 11)
-(Parent-Version oln cleanup 10)
-(Version-Log "Index: ChangeLog
+(Project-Version oln cleanup 12)
+(Parent-Version oln cleanup 11)
+(Version-Log "Index: doc/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* lib/check/Makefile.am, lib/check/Makefile.check,
-	lib/check/Makefile.flags, lib/check/defs.in, lib/check/compile.cc,
-	lib/check/compile.hh, lib/check/check.hh, lib/check/main.cc,
-	lib/check/srcdir.cc, lib/check/srcdir.hh, lib/check/verbose.cc,
-	lib/check/verbose.hh: Move to metalic/tests/check.
+	* demo/tour.cc: Replace <oln/types/ by ntg/.
+	* dev/srctree.texi: Remove reference to oln/types.
 
-	* lib/check/data.cc, lib/check/data.hh: Move to oln/tests/check.
-
-	* configure.ac, Makefile.am: Adapt to new tests location.
-
-Index: metalic/ChangeLog
+Index: tools/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* tests/Makefile.am: Add check directory.
+	* utilities/morpho/morpho_template.cc,
+	utilities/morpho/morpho_template_extrema.cc,
+	utilities/morpho/morpho_template_gaussian.cc,
+	utilities/morpho/morpho_template_watershed.cc,
+	utilities/morpho/morpho_template_with_functor.cc,
+	utilities/morpho/morpho_template_with_neighb.cc,
+	utilities/morpho/morpho_template_with_twowin.cc,
+	utilities/mosaic.cc: Replace <oln/types by <ntg/.
 
-	* tests/array/Makefile.am: Adapt to new tests location.
-
-	* tests/array/gen_test.cc (write_postlude_and_test): Remove
-	useless paths.
-
-	* tests/check/check.hh, tests/check/Makefile.am,
-	tests/check/Makefile.check, tests/check/Makefile.flags: Adapt to
-	tests split.
-
-Index: oln/ChangeLog
+Index: tools/swilena/ChangeLog
 from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* tests/check/defs.in, tests/check/Makefile.am,
-	tests/check/Makefile.check, tests/check/Makefile.flags: New
-	directory.
-
-	* tests/Makefile.am: Add check directory.
-
-	* tests/convol/slow_sum_2d_1.cc, tests/convol/slow_sum_2d_2.cc,
-	tests/convol/sobel_gradient.cc: Include data.hh.
-
-	* tests/convert/convcomp.hh: Likewise.
-
-	* tests/io/loadsave.hh: Likewise.
-
-	* tests/morpho/edoc.cc, tests/morpho/extrkiller.cc,
-	tests/morpho/reconstruction.cc: Likewise.
-
-	* tests/transforms/fft.cc, tests/transforms/dwt.cc: Likewise.
-
-	* tests/arith/Makefile.am, tests/convert/Makefile.am,
-	tests/convol/Makefile.am tests/io/Makefile.am,
-	tests/morpho/Makefile.am, tests/sanity/Makefile.am,
-	tests/transforms/Makefile.am, tests/types/Makefile.am : Adapt to
-	new tests location.
-
-	* tests/arith/runtests, tests/types/runtests,
-	tests/sanity/includes.test: Likewise.
+	* swilena/python/typedefs.hh, swilena/src/swilena_dim.i,
+	swilena/src/swilena_types.i: Replace <oln/types by <ntg/.
 ")
 (New-Version-Log "")
-(Checkin-Time "Sat, 01 Mar 2003 14:07:38 +0100")
+(Checkin-Time "Sat, 01 Mar 2003 14:32:04 +0100")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -147,9 +114,9 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.2 640))
   (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.2 640))
   (oln/ChangeLog (oln/o/30_ChangeLog 1.27.1.20.1.4.1.2 640))
-  (doc/ChangeLog (oln/o/31_ChangeLog 1.24 640))
-  (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.2 640))
-  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.2 640))
+  (doc/ChangeLog (oln/o/31_ChangeLog 1.25 640))
+  (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.3 640))
+  (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.3 640))
 
   (attic/oln-ChangeLog (oln/6_ChangeLog 1.50.1.98.1.5 640))
 
@@ -166,7 +133,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (doc/demo/Makefile.am (oln/d/44_Makefile.a 1.14 640))
   (doc/demo/morpholena.cc (oln/d/43_morpholena 1.11 640))
   (doc/demo/test-reconstruction.cc (oln/e/22_test-recon 1.7.1.2 640))
-  (doc/demo/tour.cc (oln/d/45_tour.cc 1.8 640))
+  (doc/demo/tour.cc (oln/d/45_tour.cc 1.9 640))
   (doc/ref/bin () :directory)
   (doc/ref/html () :directory)
   (doc/ref/Makefile.am (oln/d/51_Makefile.a 1.27.1.2 640))
@@ -584,7 +551,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   ; (tools/swilena/java/Makefile.in ())
   (tools/swilena/Makefile.am (oln/o/25_Makefile.a 1.2 640))
   (tools/swilena/python/Makefile.am (oln/n/44_Makefile.a 1.3 640))
-  (tools/swilena/python/typedefs.hh (oln/n/43_typedefs.h 1.2 640))
+  (tools/swilena/python/typedefs.hh (oln/n/43_typedefs.h 1.3 640))
   (tools/swilena/README (oln/n/35_README 1.1 640))
   (tools/swilena/src/lena128.pgm (oln/o/19_lena128.pg 1.1 640) :no-keywords)
   (tools/swilena/src/lena2.pgm (oln/o/14_lena2.pgm 1.1 640) :no-keywords)
@@ -604,7 +571,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (tools/swilena/src/swilena_conversions.i (oln/o/15_swilena_co 1.1 640))
   (tools/swilena/src/swilena_convert_dim.i (oln/n/49_swilena_co 1.1 640))
   (tools/swilena/src/swilena_convoldefs.i (oln/o/10_swilena_co 1.1 640))
-  (tools/swilena/src/swilena_dim.i (oln/o/22_swilena_di 1.1 640))
+  (tools/swilena/src/swilena_dim.i (oln/o/22_swilena_di 1.2 640))
   (tools/swilena/src/swilena_dpoint.i (oln/o/13_swilena_dp 1.1 640))
   (tools/swilena/src/swilena_exceptions.i (oln/o/21_swilena_ex 1.1 640))
   (tools/swilena/src/swilena_image.i (oln/o/12_swilena_im 1.1 640))
@@ -615,7 +582,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (tools/swilena/src/swilena_neighborhood.i (oln/o/8_swilena_ne 1.1 640))
   (tools/swilena/src/swilena_point.i (oln/o/11_swilena_po 1.1 640))
   (tools/swilena/src/swilena_typedefs.i (oln/o/16_swilena_ty 1.1 640))
-  (tools/swilena/src/swilena_types.i (oln/o/3_swilena_ty 1.1 640))
+  (tools/swilena/src/swilena_types.i (oln/o/3_swilena_ty 1.2 640))
   (tools/swilena/src/swilena_window.i (oln/o/9_swilena_wi 1.1 640))
   (tools/swilena/src/swilena_w_window.i (oln/o/6_swilena_w_ 1.1 640))
   (tools/swilena/swilena.prj (oln/n/38_swilena.pr 1.1 640))
@@ -624,14 +591,14 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
   (tools/utilities/Makefile.am (oln/g/2_Makefile.a 1.12.1.3 640))
   (tools/utilities/morpho/generate_morpho.sh (oln/i/30_generate_m 1.3.1.5.1.2 750))
   (tools/utilities/morpho/Makefile.am (oln/i/32_Makefile.a 1.9.1.3 640))
-  (tools/utilities/morpho/morpho_template.cc (oln/i/33_morpho_tem 1.5.1.2.1.1 640))
-  (tools/utilities/morpho/morpho_template_extrema.cc (oln/j/5_morpho_tem 1.1.1.2.1.1 640))
-  (tools/utilities/morpho/morpho_template_gaussian.cc (oln/j/8_morpho_tem 1.1.1.2.1.1 640))
-  (tools/utilities/morpho/morpho_template_watershed.cc (oln/j/6_morpho_tem 1.1.1.2.1.1 640))
-  (tools/utilities/morpho/morpho_template_with_functor.cc (oln/j/10_morpho_tem 1.1.1.2.1.1 640))
-  (tools/utilities/morpho/morpho_template_with_neighb.cc (oln/j/7_morpho_tem 1.1.1.2.1.1 640))
-  (tools/utilities/morpho/morpho_template_with_twowin.cc (oln/j/9_morpho_tem 1.1.1.2.1.1 640))
-  (tools/utilities/mosaic.cc (oln/g/0_mosaic.cc 1.5.1.1 640))
+  (tools/utilities/morpho/morpho_template.cc (oln/i/33_morpho_tem 1.5.1.2.1.2 640))
+  (tools/utilities/morpho/morpho_template_extrema.cc (oln/j/5_morpho_tem 1.1.1.2.1.2 640))
+  (tools/utilities/morpho/morpho_template_gaussian.cc (oln/j/8_morpho_tem 1.1.1.2.1.2 640))
+  (tools/utilities/morpho/morpho_template_watershed.cc (oln/j/6_morpho_tem 1.1.1.2.1.2 640))
+  (tools/utilities/morpho/morpho_template_with_functor.cc (oln/j/10_morpho_tem 1.1.1.2.1.2 640))
+  (tools/utilities/morpho/morpho_template_with_neighb.cc (oln/j/7_morpho_tem 1.1.1.2.1.2 640))
+  (tools/utilities/morpho/morpho_template_with_twowin.cc (oln/j/9_morpho_tem 1.1.1.2.1.2 640))
+  (tools/utilities/mosaic.cc (oln/g/0_mosaic.cc 1.5.1.2 640))
 
 ;; Files added by populate at Sun, 19 Jan 2003 21:48:10 +0100,
 ;; to version 7.25(w), by raph:
@@ -784,7 +751,7 @@ from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 ;; Files added by populate at Sat, 25 Jan 2003 19:02:34 +0100,
 ;; to version 7.45(w), by raph:
 
-  (doc/dev/srctree.texi (oln/p/45_srctree.te 1.2 640))
+  (doc/dev/srctree.texi (oln/p/45_srctree.te 1.3 640))
   (doc/dev/conf.texi (oln/q/2_conf.texi 1.3 640))
 
 ;; Files added by populate at Sat, 08 Feb 2003 13:38:09 +0100,
