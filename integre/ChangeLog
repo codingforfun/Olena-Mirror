@@ -1,3 +1,7 @@
+2003-03-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/config/math.hh: Remove namespace.
+
 2003-03-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/all.hh, ntg/behaviour.hh, ntg/bin.hh,

@@ -81,7 +81,7 @@ namespace oln {
       bool operator==(const self& win) const
       {
 	for (typename std::vector<dpoint>::const_iterator it = _dp.begin(); it != _dp.end(); ++it)
-	  if (find(win._dp.begin(), win._dp.end(), *it) == win._dp.end())
+	  if (std::find(win._dp.begin(), win._dp.end(), *it) == win._dp.end())
 	    return false;
 	return true;
       }

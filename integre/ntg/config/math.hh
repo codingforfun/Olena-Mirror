@@ -53,8 +53,6 @@
 #  define M_PI 3.14159265358979323846264338327
 # endif
 
-namespace oln {
-
 # ifdef NEED_SQRTF
 static inline float sqrtf(float f)
 {
@@ -81,7 +79,5 @@ static inline float roundf(float f)
   return (f < 0.f) ? -floorf(-f + 0.5f) : floorf(f + 0.5f);
 }
 # endif
-
-}
 
 #endif // !OLENA_CONFIG_MATH_HH

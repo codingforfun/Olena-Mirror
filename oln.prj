@@ -1,12 +1,21 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 8 15)
-(Parent-Version oln 8 14)
-(Version-Log "Forgot a fix.
+(Project-Version oln 8 16)
+(Parent-Version oln 8 15)
+(Version-Log "Index: integre/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+        * ntg/config/math.hh: Remove namespace.
+
+Index: olena/ChangeLog
+from  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+        * oln/core/internal/window.hh: Add missing std:: prefix to find.
+
 ")
 (New-Version-Log "")
-(Checkin-Time "Sun, 09 Mar 2003 11:32:33 +0100")
+(Checkin-Time "Sun, 09 Mar 2003 16:10:39 +0100")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -87,13 +96,14 @@
 (Files
 
   (ChangeLog (oln/o/33_ChangeLog 1.37.1.7 640))
-  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.25 640))
   (doc/ChangeLog (oln/o/31_ChangeLog 1.29 640))
+  (integre/ChangeLog (oln/q/35_ChangeLog 1.10 640))
+  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.12 640))
+  (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.26 640))
   (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.6 640))
   (tools/swilena/ChangeLog (oln/n/37_ChangeLog 1.5 640))
 
   (attic/oln-ChangeLog (oln/6_ChangeLog 1.50.1.98.1.5 640))
-
   (attic/doc-ChangeLog (oln/e/1_ChangeLog 1.31 640))
   (attic/tests-ChangeLog (oln/e/30_ChangeLog 1.52 640))
 
@@ -216,7 +226,7 @@
   (olena/oln/core/internal/real_image2d.hh (oln/d/4_real_image 1.6 640))
   (olena/oln/core/internal/real_image3d.hh (oln/d/3_real_image 1.6 640))
   (olena/oln/core/internal/rec_operable.hh (oln/d/2_rec_operab 1.2 640))
-  (olena/oln/core/internal/window.hh (oln/d/0_window.hh 1.9 640))
+  (olena/oln/core/internal/window.hh (oln/d/0_window.hh 1.10 640))
   (olena/oln/core/internal/w_window.hh (oln/d/1_w_window.h 1.9 640))
   (olena/oln/core/iter.hh (oln/c/40_iter.hh 1.6 640))
   (olena/oln/core/macros.hh (oln/c/39_macros.hh 1.3 640))
@@ -644,7 +654,7 @@
 ;; Files added by populate at Tue, 21 Jan 2003 09:12:30 +0100,
 ;; to version 7.29(w), by raph:
 
-  (integre/ntg/config/math.hh (oln/p/33_math.hh 1.4 640))
+  (integre/ntg/config/math.hh (oln/p/33_math.hh 1.5 640))
 
 ;; Files deleted by depopulate at Wed, 22 Jan 2003 13:34:58 +0100,
 ;; from version 7.31(w), by raph:
@@ -746,9 +756,6 @@
   (olena/oln/morpho/attribute_closing_opening.hh (oln/q/49_attribute_ 1.3 640))
   (olena/oln/morpho/attribute_union_find.hh (oln/q/50_attribute_ 1.2 640))
 
-
-  (integre/ChangeLog (oln/q/35_ChangeLog 1.9 640))
-  (metalic/ChangeLog (oln/q/30_ChangeLog 1.3.1.12 640))
   (olena/tests/convol () :directory)
   (metalic/config (../config) :symlink)
   (metalic/m4 () :directory)

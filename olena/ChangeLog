@@ -1,3 +1,7 @@
+2003-03-09  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/core/internal/window.hh: Add missing std:: prefix to find.
+
 2003-03-08  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/morpho/attribute_closing_opening.hh: Fix example.
