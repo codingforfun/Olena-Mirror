@@ -1,12 +1,12 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln sourcequake 6)
-(Parent-Version oln sourcequake 5)
-(Version-Log "Minor changes
+(Project-Version oln sourcequake 7)
+(Parent-Version oln sourcequake 6)
+(Version-Log "tools -> noclues
 ")
 (New-Version-Log "")
-(Checkin-Time "Tue, 25 Feb 2003 17:11:07 +0100")
+(Checkin-Time "Tue, 25 Feb 2003 17:42:48 +0100")
 (Checkin-Login raph)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -95,8 +95,8 @@
   (olena () :directory)
   (olena/ChangeLog (oln/o/30_ChangeLog 1.27.1.20 640))
 
-  (tools () :directory)
-  (tools/ChangeLog (oln/o/32_ChangeLog 1.10.1.2 640))
+  (noclues () :directory)
+  (noclues/ChangeLog (oln/o/32_ChangeLog 1.10.1.2 640))
 
   (swilena () :directory)
   (swilena/ChangeLog (oln/n/37_ChangeLog 1.2 640))
@@ -689,33 +689,33 @@
   (swilena/src/swilena_w_window.i (oln/o/6_swilena_w_ 1.1 640))
   (swilena/src/swilena_window.i (oln/o/9_swilena_wi 1.1 640))
 
-  (tools/config () :directory)
-  (tools/m4 () :directory)
-  (tools/Makefile.am (oln/o/37_Makefile.a 1.6 640))
+  (noclues/config () :directory)
+  (noclues/m4 () :directory)
+  (noclues/Makefile.am (oln/o/37_Makefile.a 1.6 640))
 
-  (tools/lib () :directory)
-  (tools/lib/Makefile.am (oln/p/27_Makefile.a 1.1 640))
-  (tools/lib/getopt.c (oln/p/30_getopt.c 1.1 640))
-  (tools/lib/getopt.h (oln/p/29_getopt.h 1.1 640))
-  (tools/lib/getopt.hh (oln/p/32_getopt.hh 1.1 640))
-  (tools/lib/getopt1.c (oln/p/28_getopt1.c 1.1 640))
-  (tools/lib/gettext.h (oln/p/31_gettext.h 1.1 640))
+  (noclues/lib () :directory)
+  (noclues/lib/Makefile.am (oln/p/27_Makefile.a 1.1 640))
+  (noclues/lib/getopt.c (oln/p/30_getopt.c 1.1 640))
+  (noclues/lib/getopt.h (oln/p/29_getopt.h 1.1 640))
+  (noclues/lib/getopt.hh (oln/p/32_getopt.hh 1.1 640))
+  (noclues/lib/getopt1.c (oln/p/28_getopt1.c 1.1 640))
+  (noclues/lib/gettext.h (oln/p/31_gettext.h 1.1 640))
 
-  (tools/src () :directory)
-  (tools/src/Makefile.am (oln/g/2_Makefile.a 1.12.1.2 640))
-  (tools/src/configure.ac (oln/o/27_configure. 1.1 640))
-  (tools/src/mosaic.cc (oln/g/0_mosaic.cc 1.5.1.1 640))
+  (noclues/src () :directory)
+  (noclues/src/Makefile.am (oln/g/2_Makefile.a 1.12.1.2 640))
+  (noclues/src/configure.ac (oln/o/27_configure. 1.1 640))
+  (noclues/src/mosaic.cc (oln/g/0_mosaic.cc 1.5.1.1 640))
 
-  (tools/src/morpho () :directory)
-  (tools/src/morpho/Makefile.am (oln/i/32_Makefile.a 1.9.1.2 640))
-  (tools/src/morpho/generate_morpho.sh (oln/i/30_generate_m 1.3.1.5.1.2 750))
-  (tools/src/morpho/morpho_template.cc (oln/i/33_morpho_tem 1.5.1.2.1.1 640))
-  (tools/src/morpho/morpho_template_extrema.cc (oln/j/5_morpho_tem 1.1.1.2.1.1 640))
-  (tools/src/morpho/morpho_template_gaussian.cc (oln/j/8_morpho_tem 1.1.1.2.1.1 640))
-  (tools/src/morpho/morpho_template_watershed.cc (oln/j/6_morpho_tem 1.1.1.2.1.1 640))
-  (tools/src/morpho/morpho_template_with_functor.cc (oln/j/10_morpho_tem 1.1.1.2.1.1 640))
-  (tools/src/morpho/morpho_template_with_neighb.cc (oln/j/7_morpho_tem 1.1.1.2.1.1 640))
-  (tools/src/morpho/morpho_template_with_twowin.cc (oln/j/9_morpho_tem 1.1.1.2.1.1 640))
+  (noclues/src/morpho () :directory)
+  (noclues/src/morpho/Makefile.am (oln/i/32_Makefile.a 1.9.1.2 640))
+  (noclues/src/morpho/generate_morpho.sh (oln/i/30_generate_m 1.3.1.5.1.2 750))
+  (noclues/src/morpho/morpho_template.cc (oln/i/33_morpho_tem 1.5.1.2.1.1 640))
+  (noclues/src/morpho/morpho_template_extrema.cc (oln/j/5_morpho_tem 1.1.1.2.1.1 640))
+  (noclues/src/morpho/morpho_template_gaussian.cc (oln/j/8_morpho_tem 1.1.1.2.1.1 640))
+  (noclues/src/morpho/morpho_template_watershed.cc (oln/j/6_morpho_tem 1.1.1.2.1.1 640))
+  (noclues/src/morpho/morpho_template_with_functor.cc (oln/j/10_morpho_tem 1.1.1.2.1.1 640))
+  (noclues/src/morpho/morpho_template_with_neighb.cc (oln/j/7_morpho_tem 1.1.1.2.1.1 640))
+  (noclues/src/morpho/morpho_template_with_twowin.cc (oln/j/9_morpho_tem 1.1.1.2.1.1 640))
 
 
 ;; Files added by populate at Tue, 25 Feb 2003 16:25:45 +0100,
@@ -727,5 +727,7 @@
 ;; to version sourcequake.3(w), by raph:
 
 )
-(Merge-Parents)
+(Merge-Parents
+  (sourcequake.6 complete)
+)
 (New-Merge-Parents)
