@@ -219,8 +219,7 @@ namespace oln {
 	{
 	  coord mrows;
 	  coord mcols;
-	  if (!pnm_write_header3d<color<3, 8,
-	      color_system> >(out, im, '6', mrows, mcols))
+	  if (!pnm_write_header3d<int_u8>(out, im, '6', mrows, mcols))
 	    return false;
 	  color<3, 8, color_system>* empty_row =
 	    new color<3, 8, color_system>[im.ncols()];
