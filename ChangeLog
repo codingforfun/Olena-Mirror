@@ -1,3 +1,8 @@
+2002-03-07  Alexandre Duret-Lutz  <duret_g@epita.fr>
+
+	* src/Makefile.am (nobase_oln_HEADERS): Add
+	src/convert/conversion_ng_se.hh.
+
 2002-02-18  Jerome Darbon  <jerome@epita.fr>
 
 	For all files in morpho:

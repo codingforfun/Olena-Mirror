@@ -14,6 +14,7 @@ nobase_oln_HEADERS =				\
   convert/bound.hh				\
   convert/colorconv.hh				\
   convert/conversion.hh				\
+  convert/conversion_ng_se.hh			\
   convert/force.hh				\
   convert/nrgbxyz.hh				\
   convert/nrgbyiq.hh				\
