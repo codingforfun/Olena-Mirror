@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_INTERNAL_W_WINDOW_HH
 # define OLENA_CORE_INTERNAL_W_WINDOW_HH
 
-# include <oln/core/contract.hh>
+# include <mlc/contract.hh>
 # include <oln/core/w_window.hh>
 # include <oln/core/point.hh>
 # include <oln/core/dpoint.hh>

@@ -1,19 +1,21 @@
 ## Process this file with Automake to produce Makefile.in -*- Makefile -*- 
 
 mlcdir = $(includedir)/mlc
-nobase_mlc_HEADERS =			\
-  array.hh				\
-  array1d.hh				\
-  array1d.hxx				\
-  array2d.hh				\
-  array2d.hxx				\
-  array3d.hh				\
-  array3d.hxx				\
-  arraynd.hh				\
-  bool.hh				\
-  cmp.hh				\
-  is_a.hh				\
-  loop.hh				\
-  optional.hh				\
-  ucmp.hh				\
+nobase_mlc_HEADERS =				\
+  array.hh					\
+  array1d.hh					\
+  array1d.hxx					\
+  array2d.hh					\
+  array2d.hxx					\
+  array3d.hh					\
+  array3d.hxx					\
+  arraynd.hh					\
+  bool.hh					\
+  cmp.hh					\
+  contract.hh					\
+  is_a.hh					\
+  loop.hh					\
+  optional.hh					\
+  type.hh					\
+  ucmp.hh					\
   ufuncs.hh

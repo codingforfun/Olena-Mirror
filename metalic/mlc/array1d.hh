@@ -29,7 +29,7 @@
 # define OLENA_META_ARRAY1D_HH
 
 # include <oln/core/objs.hh>
-# include <oln/core/contract.hh>
+# include <mlc/contract.hh>
 # include <mlc/cmp.hh>
 # include <mlc/array1d.hxx>
 

@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_APPLY_HH
 # define OLENA_CORE_APPLY_HH
 
-# include <oln/core/contract.hh>
+# include <mlc/contract.hh>
 # include <oln/core/image.hh>
 # include <oln/core/iter.hh>
 # include <oln/core/macros.hh>

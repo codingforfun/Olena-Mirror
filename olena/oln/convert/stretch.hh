@@ -28,7 +28,7 @@
 #ifndef OLENA_CONVERT_STRETCH_HH
 # define OLENA_CONVERT_STRETCH_HH
 
-# include <oln/core/type.hh>
+# include <mlc/type.hh>
 # include <ntg/optraits.hh>
 # include <ntg/optraits_builtins.hh>
 # include <oln/convert/conversion.hh>

@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_IMAGE3D_SIZE_HH
 # define OLENA_CORE_IMAGE3D_SIZE_HH
 
-# include <oln/core/contract.hh>
+# include <mlc/contract.hh>
 # include <oln/core/imagend_size.hh>
 # include <oln/core/coord.hh>
 

@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_IMAGE_SIZE_HH
 # define OLENA_CORE_IMAGE_SIZE_HH
 
-# include <oln/core/type.hh>
+# include <mlc/type.hh>
 
 
 namespace oln {

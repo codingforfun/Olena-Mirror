@@ -30,9 +30,9 @@
 
 # include <oln/config/system.hh>
 
-# include <oln/core/contract.hh>
+# include <mlc/contract.hh>
 # include <oln/core/macros.hh>
-# include <oln/core/type.hh>
+# include <mlc/type.hh>
 # include <oln/core/typeadj.hh>
 
 # include <oln/core/objs.hh>

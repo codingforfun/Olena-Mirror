@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_INTERNAL_IMAGE3D_HH
 # define OLENA_CORE_INTERNAL_IMAGE3D_HH
 
-# include <oln/core/contract.hh>
+# include <mlc/contract.hh>
 # include <oln/core/image.hh>
 # include <oln/core/coord.hh>
 # include <oln/core/point3d.hh>

@@ -29,7 +29,7 @@
 # define OLENA_CORE_INTERNAL_IMAGE2D_DATA_HH
 
 # include <oln/core/internal/fake.hh>
-# include <oln/core/contract.hh>
+# include <mlc/contract.hh>
 # include <oln/core/coord.hh>
 # include <iostream>
 

@@ -28,10 +28,10 @@
 #ifndef OLENA_CORE_BORDER_HH
 # define OLENA_CORE_BORDER_HH
 
-# include <oln/core/contract.hh>
+# include <mlc/contract.hh>
 # include <oln/core/image.hh>
 # include <oln/core/coord.hh>
-# include <oln/core/type.hh>
+# include <mlc/type.hh>
 # include <iostream>
 # include <string.h>
 

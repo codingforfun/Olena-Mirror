@@ -28,7 +28,7 @@
 #ifndef OLENA_VALUE_PREDECLS_HH
 # define OLENA_VALUE_PREDECLS_HH
 
-# include <oln/core/type.hh>
+# include <mlc/type.hh>
 # include <ntg/cplx_representation.hh>
 
 namespace oln {

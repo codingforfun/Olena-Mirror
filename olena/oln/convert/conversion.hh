@@ -28,7 +28,7 @@
 #ifndef OLENA_CONVERT_CONVERSION_HH
 # define OLENA_CONVERT_CONVERSION_HH
 
-# include <oln/core/type.hh>
+# include <mlc/type.hh>
 # include <oln/core/image.hh>
 # include <oln/core/compose.hh>
 # include <ntg/debug.hh>

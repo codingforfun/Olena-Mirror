@@ -28,7 +28,7 @@
 #ifndef OLENA_VALUE_VEC_HH
 # define OLENA_VALUE_VEC_HH
 
-# include <oln/core/type.hh>
+# include <mlc/type.hh>
 
 # include <mlc/array.hh>
 

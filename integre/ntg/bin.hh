@@ -28,7 +28,7 @@
 #ifndef OLENA_VALUE_BIN_HH
 # define OLENA_VALUE_BIN_HH
 
-# include <oln/core/contract.hh>
+# include <mlc/contract.hh>
 
 # include <ntg/global_ops.hh>
 # include <ntg/rec_value.hh>

@@ -29,7 +29,7 @@
 # define OLENA_META_TYPE_HH
 
 
-# include <oln/core/type.hh>
+# include <mlc/type.hh>
 # include <mlc/bool.hh>
 
 

@@ -28,8 +28,8 @@
 #ifndef OLENA_CORE_INTERNAL_ITER2D_HH
 # define OLENA_CORE_INTERNAL_ITER2D_HH
 
-# include <oln/core/contract.hh>
-# include <oln/core/type.hh>
+# include <mlc/contract.hh>
+# include <mlc/type.hh>
 # include <oln/core/coord.hh>
 # include <oln/core/point2d.hh>
 # include <oln/core/dpoint2d.hh>

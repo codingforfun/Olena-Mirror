@@ -1,5 +1,34 @@
 2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* oln/core/type.hh, oln/core/contract.hh: Move into
+	$top_srcdir/metalic/mlc/.
+
+	* Makefile.am: Adapt consequently.
+
+	* oln/basics.hh, oln/core/apply.hh, oln/core/border.hh,
+	oln/core/generate.hh, oln/core/image1d_size.hh,
+	oln/core/image2d_size.hh, oln/core/image3d_size.hh,
+	oln/core/internal/image1d.hh,
+	oln/core/internal/image1d_data.hh,
+	oln/core/internal/image2d.hh,
+	oln/core/internal/image2d_data.hh,
+	oln/core/internal/image3d.hh,
+	oln/core/internal/image3d_data.hh,
+	oln/core/internal/iter1d.hh, oln/core/internal/iter2d.hh,
+	oln/core/internal/iter3d.hh, oln/core/internal/w_window.hh,
+	oln/core/internal/window.hh, oln/core/traverse.hh,
+	oln/utils/timer.hh: Update includes.
+
+	* oln/basics.hh, oln/convert/conversion.hh,
+	oln/convert/stretch.hh, oln/core/border.hh,
+	oln/core/dpoint.hh, oln/core/image.hh, oln/core/image_size.hh,
+	oln/core/internal/iter1d.hh, oln/core/internal/iter2d.hh,
+	oln/core/internal/iter3d.hh, oln/core/iter.hh,
+	oln/core/neighborhood.hh, oln/core/point.hh,
+	oln/core/pred_image.hh, oln/core/structelt.hh: Likewise.
+
+2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* oln/core/generate.hh: Do not use wrap workaround (for g++-2.95
 	compatibility) anymore. Update includes.
 

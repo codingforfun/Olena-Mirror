@@ -1,5 +1,14 @@
 2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* mlc/array1d.hh, mlc/array2d.hh, mlc/array3d.hh: Update
+          includes.
+
+	* mlc/is_a.hh: Likewise.
+
+	* Makefile.am: Update.
+
+2003-03-03  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
 	* mlc/logic.hh: Remove.
 	
 	* mlc/basics.hh: Rename as ...

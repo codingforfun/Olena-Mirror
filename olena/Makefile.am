@@ -49,7 +49,6 @@ nobase_include_HEADERS =			\
   oln/core/border2d.hh				\
   oln/core/border3d.hh				\
   oln/core/compose.hh				\
-  oln/core/contract.hh				\
   oln/core/coord.hh				\
   oln/core/dpoint.hh				\
   oln/core/dpoint1d.hh				\
@@ -110,7 +109,6 @@ nobase_include_HEADERS =			\
   oln/core/regular_image.hh			\
   oln/core/structelt.hh				\
   oln/core/traverse.hh				\
-  oln/core/type.hh				\
   oln/core/typeadj.hh				\
   oln/core/w_window.hh				\
   oln/core/w_window1d.hh			\
