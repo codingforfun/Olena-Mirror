@@ -76,7 +76,7 @@ namespace oln {
 
       friend class neighborhood<exact_type>;
 
-      ///< Return the name of the type.
+      /// Return the name of the type.
       static std::string
       name()
       {

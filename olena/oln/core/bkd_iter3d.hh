@@ -95,7 +95,7 @@ namespace oln {
       return super_iter_type::operator=(u);
     }
 
-    ///< Return the name of the type.
+    /// Return the name of the type.
     static std::string name()
     {
       return std::string("bkd_iter3d<") + Exact::name() + ">";

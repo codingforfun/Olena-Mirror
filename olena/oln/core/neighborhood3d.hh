@@ -140,7 +140,7 @@ namespace oln {
 	add(dpoint_type(crd[i], crd[i+1], crd[i+2]));
     }
 
-    ///< Return the name of the type.
+    /// Return the name of the type.
     static std::string
     name()
     {

@@ -160,7 +160,7 @@ namespace oln {
       return r.assign(*this);
     }
 
-    ///< Return the name of the type.
+    /// Return the name of the type.
     static std::string
     name()
     {

@@ -163,7 +163,7 @@ namespace oln {
       return set(dpoint_type(col), weight);
     }
 
-    ///< Return the name of the type.
+    /// Return the name of the type.
     static std::string
     name()
     {

@@ -74,7 +74,7 @@ namespace oln {
 
       friend class w_window<exact_type>;
 
-      ///< Return the name of the type.
+      /// Return the name of the type.
       static std::string
       name()
       {

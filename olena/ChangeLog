@@ -1,5 +1,32 @@
 2004-03-29  Simon Odou  <simon@lrde.epita.fr>
 
+	* olena/oln/core/bkd_iter1d.hh: Fix comments.
+	* olena/oln/core/bkd_iter2d.hh: Likewise.
+	* olena/oln/core/bkd_iter3d.hh: Likewise.
+	* olena/oln/core/fwd_iter1d.hh: Likewise.
+	* olena/oln/core/fwd_iter2d.hh: Likewise.
+	* olena/oln/core/fwd_iter3d.hh: Likewise.
+	* olena/oln/core/abstract/iter1d.hh: Likewise.
+	* olena/oln/core/abstract/iter2d.hh: Likewise.
+	* olena/oln/core/abstract/iter3d.hh: Likewise.
+	* olena/oln/core/abstract/iter.hh: Likewise.
+	* olena/oln/core/neighborhood1d.hh: Likewise.
+	* olena/oln/core/neighborhood2d.hh: Likewise.
+	* olena/oln/core/neighborhood3d.hh: Likewise.
+	* olena/oln/core/abstract/neighborhood.hh: Likewise.
+	* olena/oln/core/window1d.hh: Likewise.
+	* olena/oln/core/window2d.hh: Likewise.
+	* olena/oln/core/window3d.hh: Likewise.
+	* olena/oln/core/abstract/window.hh: Likewise.
+	* olena/oln/core/w_window1d.hh: Likewise.
+	* olena/oln/core/w_window2d.hh: Likewise.
+	* olena/oln/core/w_window3d.hh: Likewise.
+	* olena/oln/core/abstract/w_window.hh: Likewise.
+	* olena/oln/core/abstract/window_base.hh: Likewise.
+	* olena/oln/core/abstract/windownd.hh: Likewise.
+	* olena/oln/core/abstract/w_windownd.hh: Likewise.
+	* olena/oln/core/abstract/neighborhoodnd.hh: Likewise.
+
 	* oln/morpher/slicing_morpher.hh: To have a slice of an image.
 
 	* oln/morpher/iter_morpher.hh: To have a specific default iterator.

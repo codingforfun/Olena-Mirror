@@ -73,7 +73,7 @@ namespace oln {
 
       friend class struct_elt<exact_type>;
 
-      ///< Return the name of the type.
+      /// Return the name of the type.
       static std::string
       name()
       {
