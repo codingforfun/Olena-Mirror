@@ -88,19 +88,19 @@ namespace oln {
 
       exact_type& operator=(self_type rhs)
       {
-	return exact().assign(rhs.exact());
+	return this->exact().assign(rhs.exact());
       }
 
       exact_type& assign(exact_type rhs) // shallow assignment
       {
 	assertion(rhs.impl() != 0);
 	if ( &rhs == this )
-	  return exact();
+	  return this->exact();
 	if (this->impl() != 0)
 	  this->impl()->unref();
 	this->impl_ = rhs.impl();
 	this->impl()->ref();
-	return exact();
+	return this->exact();
       }
 
       ~image_with_impl()

@@ -65,7 +65,7 @@ namespace oln
 
       exact_type& add_dp(const abstract::dpoint<dpoint_type>& dp)
       {
-	return exact().add_(dp.exact());
+	return this->exact().add_(dp.exact());
       }
 
     protected:

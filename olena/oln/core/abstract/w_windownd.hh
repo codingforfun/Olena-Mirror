@@ -71,13 +71,13 @@ namespace oln
       {
 	precondition(! has_(dp));
 	if (w == 0)		// Don't add 0 weighted entries
-	  return exact();
+	  return this->exact();
 	if (dp.is_centered())
 	  this->centered_ = true;
 	this->dp_.push_back(dp);
 	delta_update(dp);
 	w_.push_back(w);
-	return exact();
+	return this->exact();
       }
 
       const weight_type& set_(const dpoint_type& dp, const weight_type& w)

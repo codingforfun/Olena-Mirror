@@ -68,7 +68,7 @@ namespace oln
       
       const exact_type& point_ref() const
       {
-	return exact();
+	return this->exact();
       }
 
       coord nth(const unsigned dim) const
@@ -83,32 +83,32 @@ namespace oln
       
       exact_type& operator+=(const abstract::dpoint<dpoint_type>& dp)
       {
-	return exact().plus_assign_dp(dp.exact());
+	return this->exact().plus_assign_dp(dp.exact());
       }
 
       exact_type& operator-=(const abstract::dpoint<dpoint_type>& dp)
       {
-	return exact().minus_assign_dp(dp.exact());
+	return this->exact().minus_assign_dp(dp.exact());
       }
 
       dpoint_type operator-(const self_type& p) const
       {
-	return exact().minus_p(p.exact());
+	return this->exact().minus_p(p.exact());
       }
 
       exact_type operator+(const abstract::dpoint<dpoint_type>& dp) const
       {
-	return exact().plus_dp(dp.exact());
+	return this->exact().plus_dp(dp.exact());
       }
 
       exact_type operator-(const abstract::dpoint<dpoint_type>& dp) const
       {
-	return exact().minus_dp(dp.exact());
+	return this->exact().minus_dp(dp.exact());
       }
 
       exact_type operator-() const
       {
-	return exact().minus();
+	return this->exact().minus();
       }
 
 

@@ -71,49 +71,49 @@ namespace oln {
 
       bool has(const abstract::dpoint<dpoint_type>& dp) const
       {
-	return exact().has_(dp.exact());
+	return this->exact().has_(dp.exact());
       }
 
       unsigned card() const
       {
-	return exact().card_();
+	return this->exact().card_();
       }
 
       bool is_centered() const
       {
-	return exact().is_centered_();
+	return this->exact().is_centered_();
       }
 
       // FIXME: only here for convenience (see morpho algorithms),
       // should not work with w_windows
       exact_type& add(const abstract::dpoint<dpoint_type>& dp)
       {
-	return exact().add_dp(dp);
+	return this->exact().add_dp(dp);
       }
 
       dpoint_type dp(unsigned i) const
       {
-	return exact().at(i);
+	return this->exact().at(i);
       }
 
       bool operator==(const self_type& win) const
       {
-	return exact().is_equal(win.exact());
+	return this->exact().is_equal(win.exact());
       }
 
       coord delta() const
       {
-	return exact().get_delta();
+	return this->exact().get_delta();
       }
 
       const dpoint_type operator[](unsigned i) const
       {
-	return exact().at(i);
+	return this->exact().at(i);
       }
 
       exact_type operator-() const
       {
-	exact_type win(exact());
+	exact_type win(this->exact());
 	win.sym();
 	return win;
       }
@@ -122,7 +122,7 @@ namespace oln {
 
       void sym()
       {
-	return exact().sym_();
+	return this->exact().sym_();
       }
 
       struct_elt() {}

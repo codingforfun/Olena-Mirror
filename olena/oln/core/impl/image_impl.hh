@@ -65,27 +65,27 @@ namespace oln {
 	invariant(refcount_ > 0);
 	--refcount_;
 	if (refcount_ == 0)
-	  delete &exact();
+	  delete to_exact(this);
       }
 
       const value_type& at(const point_type& p) const
       {
-	return exact().at_(p);
+	return this->exact().at_(p);
       }
 
       value_type& at(const point_type& p) 
       {
-	return exact().at_(p);
+	return this->exact().at_(p);
       }
 
       bool hold(const point_type& p) const
       {
-	return exact().hold_(p);
+	return this->exact().hold_(p);
       }
 
       bool hold_large(const point_type& p) const
       {
-	return exact().hold_large_(p);
+	return this->exact().hold_large_(p);
       }
 
       void precondition_hold_large(const point_type& p) const
@@ -100,7 +100,7 @@ namespace oln {
 
       void clone_to(exact_type* output_data) const
       {
-	return exact().clone_to_(output_data);
+	return this->exact().clone_to_(output_data);
       }
 
       const size_type& size() const
@@ -118,22 +118,22 @@ namespace oln {
       void border_reallocate_and_copy(coord new_border, bool
 				      copy_border) 
       {
-	exact().border_reallocate_and_copy_(new_border, copy_border);
+	this->exact().border_reallocate_and_copy_(new_border, copy_border);
       }
 
       void border_replicate(void) 
       {
-	exact().border_replicate_();
+	this->exact().border_replicate_();
       }
 
       void border_mirror(void) 
       {
-	exact().border_mirror_();
+	this->exact().border_mirror_();
       }
 
       void border_assign(value_type val) 
       {
-	exact().border_assign_(val);
+	this->exact().border_assign_(val);
       }
 
     private:

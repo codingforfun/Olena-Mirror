@@ -66,7 +66,7 @@ namespace oln {
 
       exact_type& operator=(self_type rhs)
       {
-	return exact().assign(rhs.exact());
+	return this->exact().assign(rhs.exact());
       }
 
       static std::string name()

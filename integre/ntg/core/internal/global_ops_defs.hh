@@ -68,22 +68,22 @@ Op(Builtin& lhs, const value<T2>& rhs)			\
 `------------------------------------------------*/
 
 # define GLOBAL_ASSIGN_OP_BUILTIN_INT(Op, Name)		\
-GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, signed   long);	\
-GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, unsigned long);	\
-GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, signed   int);	\
-GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, unsigned int);	\
-GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, signed   short);	\
-GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, unsigned short);	\
-GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, char);		\
-GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, signed   char);	\
-GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, unsigned char);
+GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, signed   long)	\
+GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, unsigned long)	\
+GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, signed   int)	\
+GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, unsigned int)	\
+GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, signed   short)	\
+GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, unsigned short)	\
+GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, char)		\
+GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, signed   char)	\
+GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, unsigned char)
 
 # define GLOBAL_ASSIGN_OP_BUILTIN_FLOAT(Op, Name)	\
-GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, float);	        \
-GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, double);
+GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, float)	        \
+GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, double)
 
 # define GLOBAL_ASSIGN_OP_BUILTIN_BOOL(Op, Name)	\
-GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, bool);
+GLOBAL_ASSIGN_OP_BUILTIN(Op, Name, bool)
 
 # define GLOBAL_ASSIGN_OP(Op, Name)		\
 template <class T1, class T2> inline		\
@@ -150,18 +150,18 @@ Op(const value<T1>& lhs, const T2& rhs)					\
 			      static_cast<rhs_type>(rhs));		\
 }									\
 									\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   long);			\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned long);			\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   int);			\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned int);			\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   short);			\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned short);			\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   char);			\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned char);			\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, char);				\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, float);				\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, double);				\
-GLOBAL_ARITH_OP_BUILTIN(Op, Name, bool);
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   long)			\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned long)			\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   int)			\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned int)			\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   short)			\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned short)			\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, signed   char)			\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, unsigned char)			\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, char)				\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, float)				\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, double)				\
+GLOBAL_ARITH_OP_BUILTIN(Op, Name, bool)
 
 /*------------------.
 | LOGICAL OPERATORS |
@@ -205,17 +205,17 @@ Op(const value<T1>& lhs, const T2& rhs)					\
 			      static_cast<rhs_type>(rhs));		\
 }									\
 									\
-GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, signed   long);			\
-GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, unsigned long);			\
-GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, signed   int);			\
-GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, unsigned int);			\
-GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, signed   short);			\
-GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, unsigned short);			\
-GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, signed   char);			\
-GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, unsigned char);			\
-GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, float);				\
-GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, double);				\
-GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, bool);
+GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, signed   long)			\
+GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, unsigned long)			\
+GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, signed   int)			\
+GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, unsigned int)			\
+GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, signed   short)			\
+GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, unsigned short)			\
+GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, signed   char)			\
+GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, unsigned char)			\
+GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, float)				\
+GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, double)				\
+GLOBAL_LOGICAL_OP_BUILTIN(Op, Name, bool)
 
 /*---------------------.
 | COMPARISON OPERATORS |
@@ -259,16 +259,16 @@ Op(const value<T1>& lhs, const T2& rhs)				\
 			      static_cast<rhs_type>(rhs));	\
 }								\
 								\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   long);			\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned long);			\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   int);			\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned int);			\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   short);		\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned short);		\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   char);			\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned char);			\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, float);				\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, double);			\
-GLOBAL_CMP_OP_BUILTIN(Op, Name, bool);
+GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   long)			\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned long)			\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   int)			\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned int)			\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   short)			\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned short)			\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, signed   char)			\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, unsigned char)			\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, float)				\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, double)				\
+GLOBAL_CMP_OP_BUILTIN(Op, Name, bool)
 
 #endif // !NTG_CORE_INTERNAL_GLOBAL_OPS_DEFS_HH

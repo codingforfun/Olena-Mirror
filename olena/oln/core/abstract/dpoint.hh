@@ -78,27 +78,27 @@ namespace oln {
 
       exact_type operator-() const
       {
-	return exact().minus();
+	return this->exact().minus();
       }
 
       exact_type& operator+=(const self_type& dp)
       {
-	return exact().plus_assign_dp(dp.exact());
+	return this->exact().plus_assign_dp(dp.exact());
       }
 
       exact_type& operator-=(const self_type& dp)
       {
-	return exact().minus_assign_dp(dp.exact());
+	return this->exact().minus_assign_dp(dp.exact());
       }
 
       exact_type operator+(const self_type& dp) const
       {
-	return exact().plus_dp(dp.exact());
+	return this->exact().plus_dp(dp.exact());
       }
 
       exact_type operator-(const self_type& dp) const
       {
-	return exact().minus_dp(dp.exact());
+	return this->exact().minus_dp(dp.exact());
       }
 
       bool operator==(const self_type& dp) const

@@ -111,7 +111,7 @@ namespace oln {
 	precondition(size.nslices() > 0
 		     && size.nrows() > 0
 		     && size.ncols() > 0);
-	exact().goto_begin_();
+	this->exact().goto_begin_();
       }
     };
 

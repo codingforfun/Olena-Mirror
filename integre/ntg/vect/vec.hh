@@ -213,14 +213,14 @@ namespace ntg {
       // No unit() for vector.
       // static storage_type_ unit ();
 
-      ASSIGN_VECTOR_VECTOR_OPERATOR(plus_equal,  +=);
-      ASSIGN_VECTOR_VECTOR_OPERATOR(minus_equal, -=);
-      ASSIGN_VECTOR_SCALAR_OPERATOR(times_equal, *=);
-      ASSIGN_VECTOR_SCALAR_OPERATOR(div_equal,   /=);
-      ASSIGN_VECTOR_SCALAR_OPERATOR(mod_equal,   %=);
+      ASSIGN_VECTOR_VECTOR_OPERATOR(plus_equal,  +=)
+      ASSIGN_VECTOR_VECTOR_OPERATOR(minus_equal, -=)
+      ASSIGN_VECTOR_SCALAR_OPERATOR(times_equal, *=)
+      ASSIGN_VECTOR_SCALAR_OPERATOR(div_equal,   /=)
+      ASSIGN_VECTOR_SCALAR_OPERATOR(mod_equal,   %=)
 
-      ARITH_VECTOR_VECTOR_OPERATOR(plus, +=);
-      ARITH_VECTOR_VECTOR_OPERATOR(minus, -=);
+      ARITH_VECTOR_VECTOR_OPERATOR(plus, +=)
+      ARITH_VECTOR_VECTOR_OPERATOR(minus, -=)
 
       // division
 

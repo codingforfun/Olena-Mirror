@@ -164,7 +164,7 @@ Name(const T1& lhs, const cplx<Rep, T2>& rhs)			\
   return Name(rhs, lhs);					\
 }
 
-# define ARITH_CPLX_VECTOR_OPERATOR(Rep, Name, Op);		\
+# define ARITH_CPLX_VECTOR_OPERATOR(Rep, Name, Op)		\
 template <class T1, class T2>					\
 inline static							\
 cplx<Rep, ntg_return_type(Name, T1, T2)>			\
@@ -176,7 +176,7 @@ Name(const cplx<Rep, T1>& lhs, const vec<2, T2>& rhs)		\
   return result;						\
 }
 
-# define ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_PLUS(Rep, Name, Op);	\
+# define ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_PLUS(Rep, Name, Op)		\
 template <class T1, class T2>						\
 inline static								\
 cplx<Rep, ntg_return_type(Name, T1, T2)>				\
@@ -185,7 +185,7 @@ Name(const vec<2, T1>& lhs, const cplx<Rep, T2>& rhs)			\
   return Name(rhs, lhs);						\
 }
 
-# define ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_MINUS(Rep, Name, Op);	\
+# define ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_MINUS(Rep, Name, Op)	\
 template <class T1, class T2>						\
 inline static								\
 cplx<Rep, ntg_return_type(Name, T1, T2)>				\
@@ -472,40 +472,40 @@ namespace ntg {
 	return out.str();
       }
 
-      ASSIGN_CPLX_SCALAR_OPERATOR_SINGLE(rect, plus_equal, +=);
-      ASSIGN_CPLX_SCALAR_OPERATOR_SINGLE(rect, minus_equal, -=);
-      ASSIGN_CPLX_SCALAR_OPERATOR_BOTH(rect, times_equal, *=);
-      ASSIGN_CPLX_SCALAR_OPERATOR_BOTH(rect, div_equal, /=);
+      ASSIGN_CPLX_SCALAR_OPERATOR_SINGLE(rect, plus_equal, +=)
+      ASSIGN_CPLX_SCALAR_OPERATOR_SINGLE(rect, minus_equal, -=)
+      ASSIGN_CPLX_SCALAR_OPERATOR_BOTH(rect, times_equal, *=)
+      ASSIGN_CPLX_SCALAR_OPERATOR_BOTH(rect, div_equal, /=)
     
-      ASSIGN_CPLX_RECT_CPLX_OPERATOR_ADD(plus_equal, +=, +=);
-      ASSIGN_CPLX_RECT_CPLX_OPERATOR_ADD(minus_equal, -=, -=);
-      ASSIGN_CPLX_RECT_CPLX_OPERATOR_MULT(times_equal, *=, +=);
-      ASSIGN_CPLX_RECT_CPLX_OPERATOR_MULT(div_equal, /=, -=);
+      ASSIGN_CPLX_RECT_CPLX_OPERATOR_ADD(plus_equal, +=, +=)
+      ASSIGN_CPLX_RECT_CPLX_OPERATOR_ADD(minus_equal, -=, -=)
+      ASSIGN_CPLX_RECT_CPLX_OPERATOR_MULT(times_equal, *=, +=)
+      ASSIGN_CPLX_RECT_CPLX_OPERATOR_MULT(div_equal, /=, -=)
 
-      ASSIGN_CPLX_VECTOR_OPERATOR(rect, plus_equal, +=);
-      ASSIGN_CPLX_VECTOR_OPERATOR(rect, minus_equal, -=);
+      ASSIGN_CPLX_VECTOR_OPERATOR(rect, plus_equal, +=)
+      ASSIGN_CPLX_VECTOR_OPERATOR(rect, minus_equal, -=)
 
-      ARITH_CPLX_SCALAR_OPERATOR(rect, plus, +=);
-      ARITH_CPLX_SCALAR_OPERATOR_COMMUTE(rect, plus, +=);
-      ARITH_CPLX_SCALAR_OPERATOR(rect, minus, -=);
-      ARITH_CPLX_SCALAR_OPERATOR(rect, times, *=);
-      ARITH_CPLX_SCALAR_OPERATOR_COMMUTE(rect, times, *=);
-      ARITH_CPLX_SCALAR_OPERATOR(rect, div, /=);
+      ARITH_CPLX_SCALAR_OPERATOR(rect, plus, +=)
+      ARITH_CPLX_SCALAR_OPERATOR_COMMUTE(rect, plus, +=)
+      ARITH_CPLX_SCALAR_OPERATOR(rect, minus, -=)
+      ARITH_CPLX_SCALAR_OPERATOR(rect, times, *=)
+      ARITH_CPLX_SCALAR_OPERATOR_COMMUTE(rect, times, *=)
+      ARITH_CPLX_SCALAR_OPERATOR(rect, div, /=)
 
-      ARITH_CPLX_CPLX_OPERATOR(rect, rect, plus, +=);
-      ARITH_CPLX_CPLX_OPERATOR(rect, rect, minus, -=);
-      ARITH_CPLX_CPLX_OPERATOR(rect, rect, times, *=);
-      ARITH_CPLX_CPLX_OPERATOR(rect, rect, div, /=);
+      ARITH_CPLX_CPLX_OPERATOR(rect, rect, plus, +=)
+      ARITH_CPLX_CPLX_OPERATOR(rect, rect, minus, -=)
+      ARITH_CPLX_CPLX_OPERATOR(rect, rect, times, *=)
+      ARITH_CPLX_CPLX_OPERATOR(rect, rect, div, /=)
 
-      ARITH_CPLX_CPLX_OPERATOR(rect, polar, plus, +=);
-      ARITH_CPLX_CPLX_OPERATOR(rect, polar, minus, -=);
-      ARITH_CPLX_CPLX_OPERATOR(rect, polar, times, *=);
-      ARITH_CPLX_CPLX_OPERATOR(rect, polar, div, /=);
+      ARITH_CPLX_CPLX_OPERATOR(rect, polar, plus, +=)
+      ARITH_CPLX_CPLX_OPERATOR(rect, polar, minus, -=)
+      ARITH_CPLX_CPLX_OPERATOR(rect, polar, times, *=)
+      ARITH_CPLX_CPLX_OPERATOR(rect, polar, div, /=)
 
-      ARITH_CPLX_VECTOR_OPERATOR(rect, plus, +=);
-      ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_PLUS(rect, plus, +=);
-      ARITH_CPLX_VECTOR_OPERATOR(rect, minus, -=);
-      ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_MINUS(rect, minus, -=);
+      ARITH_CPLX_VECTOR_OPERATOR(rect, plus, +=)
+      ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_PLUS(rect, plus, +=)
+      ARITH_CPLX_VECTOR_OPERATOR(rect, minus, -=)
+      ARITH_CPLX_VECTOR_OPERATOR_COMMUTE_MINUS(rect, minus, -=)
 
       template <class T1, cplx_representation R2, class T2>
       inline static bool
@@ -546,32 +546,32 @@ namespace ntg {
 	return out.str();
       }
 
-      ASSIGN_CPLX_POLAR_SCALAR_OPERATOR(plus_equal, +=);
-      ASSIGN_CPLX_POLAR_SCALAR_OPERATOR(minus_equal, -=);
-      ASSIGN_CPLX_SCALAR_OPERATOR_SINGLE(polar, times_equal, *=);
-      ASSIGN_CPLX_SCALAR_OPERATOR_SINGLE(polar, div_equal, /=);
+      ASSIGN_CPLX_POLAR_SCALAR_OPERATOR(plus_equal, +=)
+      ASSIGN_CPLX_POLAR_SCALAR_OPERATOR(minus_equal, -=)
+      ASSIGN_CPLX_SCALAR_OPERATOR_SINGLE(polar, times_equal, *=)
+      ASSIGN_CPLX_SCALAR_OPERATOR_SINGLE(polar, div_equal, /=)
 
-      ASSIGN_CPLX_POLAR_CPLX_OPERATOR_ADD(plus_equal, +=);
-      ASSIGN_CPLX_POLAR_CPLX_OPERATOR_ADD(minus_equal, -=);
-      ASSIGN_CPLX_POLAR_CPLX_OPERATOR_MULT(times_equal, *=, +=);
-      ASSIGN_CPLX_POLAR_CPLX_OPERATOR_MULT(div_equal, /=, -=);
+      ASSIGN_CPLX_POLAR_CPLX_OPERATOR_ADD(plus_equal, +=)
+      ASSIGN_CPLX_POLAR_CPLX_OPERATOR_ADD(minus_equal, -=)
+      ASSIGN_CPLX_POLAR_CPLX_OPERATOR_MULT(times_equal, *=, +=)
+      ASSIGN_CPLX_POLAR_CPLX_OPERATOR_MULT(div_equal, /=, -=)
 
-      ARITH_CPLX_SCALAR_OPERATOR(polar, plus, +=);
-      ARITH_CPLX_SCALAR_OPERATOR_COMMUTE(polar, plus, +=);
-      ARITH_CPLX_SCALAR_OPERATOR(polar, minus, -=);
-      ARITH_CPLX_SCALAR_OPERATOR(polar, times, *=);
-      ARITH_CPLX_SCALAR_OPERATOR_COMMUTE(polar, times, *=);
-      ARITH_CPLX_SCALAR_OPERATOR(polar, div, /=);
+      ARITH_CPLX_SCALAR_OPERATOR(polar, plus, +=)
+      ARITH_CPLX_SCALAR_OPERATOR_COMMUTE(polar, plus, +=)
+      ARITH_CPLX_SCALAR_OPERATOR(polar, minus, -=)
+      ARITH_CPLX_SCALAR_OPERATOR(polar, times, *=)
+      ARITH_CPLX_SCALAR_OPERATOR_COMMUTE(polar, times, *=)
+      ARITH_CPLX_SCALAR_OPERATOR(polar, div, /=)
 
-      ARITH_CPLX_CPLX_OPERATOR(polar, polar, plus, +=);
-      ARITH_CPLX_CPLX_OPERATOR(polar, polar, minus, -=);
-      ARITH_CPLX_CPLX_OPERATOR(polar, polar, times, *=);
-      ARITH_CPLX_CPLX_OPERATOR(polar, polar, div, /=);
+      ARITH_CPLX_CPLX_OPERATOR(polar, polar, plus, +=)
+      ARITH_CPLX_CPLX_OPERATOR(polar, polar, minus, -=)
+      ARITH_CPLX_CPLX_OPERATOR(polar, polar, times, *=)
+      ARITH_CPLX_CPLX_OPERATOR(polar, polar, div, /=)
 
-      ARITH_CPLX_CPLX_OPERATOR(polar, rect, plus, +=);
-      ARITH_CPLX_CPLX_OPERATOR(polar, rect, minus, -=);
-      ARITH_CPLX_CPLX_OPERATOR(polar, rect, times, *=);
-      ARITH_CPLX_CPLX_OPERATOR(polar, rect, div, /=);
+      ARITH_CPLX_CPLX_OPERATOR(polar, rect, plus, +=)
+      ARITH_CPLX_CPLX_OPERATOR(polar, rect, minus, -=)
+      ARITH_CPLX_CPLX_OPERATOR(polar, rect, times, *=)
+      ARITH_CPLX_CPLX_OPERATOR(polar, rect, div, /=)
 
       template <class T1, cplx_representation R2, class T2>
       inline static bool
@@ -625,7 +625,7 @@ namespace ntg {
     /*----------------.
     | operator traits |
     `----------------*/
-    
+ 
     CPLX_SCALAR_OPERATORS_TRAITS(plus, true);
     CPLX_SCALAR_OPERATORS_TRAITS(minus, true);
     CPLX_SCALAR_OPERATORS_TRAITS(times, true);

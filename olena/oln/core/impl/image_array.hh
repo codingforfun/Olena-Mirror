@@ -108,7 +108,7 @@ namespace oln {
 
       size_t len(const size_type& s) const
       {
-	return exact().len_(s);
+	return this->exact().len_(s);
       }
 
       ~image_array()

@@ -97,7 +97,7 @@ namespace oln
 
       operator point_type() const
       {
-	return exact().to_point();
+	return this->exact().to_point();
       }
 
       // it's convenient to type `it.cur()' instead of `(point)it' when
@@ -116,31 +116,31 @@ namespace oln
 
       mlc::_begin operator=(mlc::_begin b)
       {
-	exact().goto_begin_();
+	this->exact().goto_begin_();
 	return b;
       }
 
       mlc::_end operator=(mlc::_end e)
       {
-	exact().goto_end_();
+	this->exact().goto_end_();
 	return e;
       }
 
       bool operator==(mlc::_end) const
       {
-	return exact().is_at_end_();
+	return this->exact().is_at_end_();
       }
 
       void operator++()
       {
 	precondition(*this != end);
-	exact().goto_next_();
+	this->exact().goto_next_();
       }
 
 //       typename mlc::exact<self>::ret operator++(int)
 //       {
 // 	precondition(*this != end);
-// 	typename mlc::exact<self>::ret tmp = to_exact(*this);
+// 	typename mlc::exact<self>::ret tmp = this->exact();
 // 	this->operator++();
 // 	return tmp;
 //       }

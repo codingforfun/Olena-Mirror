@@ -67,7 +67,7 @@ namespace oln
 	if (!(has_(dp)))
 	  this->dp_.push_back(dp);
 	this->delta_update(dp);
-	return exact();
+	return this->exact();
       }
 
     protected:

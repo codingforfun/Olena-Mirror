@@ -1,5 +1,50 @@
 2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+        * oln/arith/ops.hh: Fix compilation with g++ 3.4.
+        * oln/core/abstract/dpoint.hh: Likewise.
+        * oln/core/image1d.hh: Likewise.
+        * oln/core/image2d.hh: Likewise.
+        * oln/core/image3d.hh: Likewise.
+        * oln/core/abstract/iter1d.hh: Likewise.
+        * oln/core/abstract/iter2d.hh: Likewise.
+        * oln/core/abstract/iter3d.hh: Likewise.
+        * oln/core/abstract/iter.hh: Likewise.
+        * oln/core/neighborhood1d.hh: Likewise.
+        * oln/core/neighborhood2d.hh: Likewise.
+        * oln/core/neighborhood3d.hh: Likewise.
+        * oln/core/abstract/neighborhood.hh: Likewise.
+        * oln/core/abstract/point.hh: Likewise.
+        * oln/core/abstract/struct_elt.hh: Likewise.
+        * oln/core/window1d.hh: Likewise.
+        * oln/core/window2d.hh: Likewise.
+        * oln/core/window3d.hh: Likewise.
+        * oln/core/abstract/window.hh: Likewise.
+        * oln/core/w_window1d.hh: Likewise.
+        * oln/core/w_window2d.hh: Likewise.
+        * oln/core/w_window3d.hh: Likewise.
+        * oln/core/abstract/w_window.hh: Likewise.
+        * oln/level/invert.hh: Likewise.
+        * oln/morpho/erosion.hh: Likewise.
+        * tests/morpho/extrkiller.cc: Likewise.
+        * oln/topo/inter-pixel/internal/dir-iter.hh: Likewise.
+        * oln/core/abstract/image.hh: Likewise.
+        * oln/core/abstract/image_with_dim.hh: Likewise.
+        * oln/core/abstract/image_with_impl.hh: Likewise.
+        * oln/core/abstract/image_with_type.hh: Likewise.
+        * oln/core/impl/image_impl.hh: Likewise.
+        * oln/core/impl/image_array.hh: Likewise.
+        * oln/core/abstract/window_base.hh: Likewise.
+        * oln/core/abstract/windownd.hh: Likewise.
+        * oln/core/abstract/w_windownd.hh: Likewise.
+        * oln/core/abstract/neighborhoodnd.hh: Likewise.
+
+2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
+	* oln/level/invert.hh: Don't call self() on non-class types.
+	* oln/morpho/extrema_killer.hh: Remove use namespace directive.
+
+2003-07-30  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+	
 	* oln/io/pnm_write_data.hh: Fix includes.
 
 2003-07-30  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>

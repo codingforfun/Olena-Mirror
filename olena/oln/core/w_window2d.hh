@@ -95,12 +95,12 @@ namespace oln {
 
     w_window2d<T>& add(const dpoint_type& dp, const weight_type& w)
     {
-      return exact().add_(dp, w);
+      return this->exact().add_(dp, w);
     }
 
     const weight_type& set(const dpoint_type& dp, const weight_type& weight)
     {
-      return exact().set_(dp, weight);
+      return this->exact().set_(dp, weight);
     }
 
     const weight_type& set(coord row, coord col, const weight_type& weight)

@@ -102,7 +102,7 @@ namespace oln
 
       coord delta_update(const dpoint_type& dp)
       {
-	return exact().delta_update_(dp);
+	return this->exact().delta_update_(dp);
       }
 
       void sym_()

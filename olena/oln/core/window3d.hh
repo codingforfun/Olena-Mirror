@@ -73,7 +73,7 @@ namespace oln {
 
     window3d& add(const dpoint_type& dp)
     {
-      return exact().add_(dp);
+      return this->exact().add_(dp);
     }
 
     window3d& add(coord slice, coord row, coord col)

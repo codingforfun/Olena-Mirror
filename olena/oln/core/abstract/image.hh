@@ -75,29 +75,29 @@ namespace oln {
 
       const value_type& operator[](const abstract::point<point_type>& p) const
       {
-  	return exact().at(p.exact());
+  	return this->exact().at(p.exact());
       }
 
       value_type& operator[](const abstract::point<point_type>& p)
       {
-	return exact().at(p.exact());
+	return this->exact().at(p.exact());
       }
 
       exact_type clone() const
       {
-	return exact().clone_();
+	return this->exact().clone_();
       }
 
       bool hold(const abstract::point<point_type>& p) const
       {
 	assertion(has_impl_());
-	return exact().impl()->hold(p.exact());
+	return this->exact().impl()->hold(p.exact());
       }
 
       const size_type& size() const
       {
 	assertion(has_impl_());
-	return exact().impl()->size();
+	return this->exact().impl()->size();
       }
 
       coord border() const
@@ -107,12 +107,12 @@ namespace oln {
 
       size_t npoints() const
       {
-	return exact().npoints_();
+	return this->exact().npoints_();
       }
 
       exact_type& operator=(self_type rhs)
       {
-	return exact().assign(rhs.exact());
+	return this->exact().assign(rhs.exact());
       }
 
       static std::string name()
@@ -131,7 +131,7 @@ namespace oln {
 	if (border() == new_border)
 	  return;			// Nothing to do.
 	
-	const_cast<impl_type *>(exact().impl())->border_reallocate_and_copy(new_border, copy_border);
+	const_cast<impl_type *>(this->exact().impl())->border_reallocate_and_copy(new_border, copy_border);
       }
 
       void border_adapt_width(coord min_border, bool copy_border =
@@ -141,26 +141,26 @@ namespace oln {
 	if (border() >= min_border)
 	  return;			// Don't shrink.
 	
-	exact().border_set_width(min_border, copy_border);
+	this->exact().border_set_width(min_border, copy_border);
       }
 
       void border_adapt_copy(coord min_border) const
       {
 	border_adapt_width(min_border);
-	const_cast<impl_type *>(exact().impl())->border_replicate();
+	const_cast<impl_type *>(this->exact().impl())->border_replicate();
       }
 
 
       void border_adapt_mirror(coord min_border) const
       {
 	border_adapt_width(min_border);
-	const_cast<impl_type *>(exact().impl())->border_mirror();
+	const_cast<impl_type *>(this->exact().impl())->border_mirror();
       }
 
       void border_adapt_assign(coord min_border, value_type val) const
       {
 	border_adapt_width(min_border);
-	const_cast<impl_type *>(exact().impl())->border_assign(val);
+	const_cast<impl_type *>(this->exact().impl())->border_assign(val);
       }
     protected:
       image() {}
@@ -168,7 +168,7 @@ namespace oln {
 
       bool has_impl_() const
       {
-	return exact().impl() != 0;
+	return this->exact().impl() != 0;
       }
     };
 

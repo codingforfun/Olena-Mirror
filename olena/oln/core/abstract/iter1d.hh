@@ -87,7 +87,7 @@ namespace oln {
 	super_type(), ncols_(size.ncols())
       {
 	precondition(size.ncols() > 0);
-	exact().goto_begin_();
+	this->exact().goto_begin_();
       }
     };
 

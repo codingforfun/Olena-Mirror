@@ -138,13 +138,13 @@ namespace oln {
 
       const value_type operator()(coord col) const
       {
-	return exact()[point_type(col)];
+	return this->exact()[point_type(col)];
 	//          super_type::operator[](point_type(col));
       }
 
       value_type& operator()(coord col)
       {
-	return exact()[point_type(col)];
+	return this->exact()[point_type(col)];
 	//return super_type::operator[](point_type(col));
       }
 
@@ -157,7 +157,7 @@ namespace oln {
 
       exact_type& operator=(self_type rhs)
       {
-	return exact().assign(rhs.exact());
+	return this->exact().assign(rhs.exact());
       }
 
       static std::string name()
@@ -207,13 +207,13 @@ namespace oln {
 
       const value_type operator()(coord row, coord col) const
       {
-	return exact()[point_type(row, col)];
+	return this->exact()[point_type(row, col)];
 	//return super_type::operator[](point_type(row, col));
       }
 
       value_type& operator()(coord row, coord col)
       {
-	return exact()[point_type(row, col)];
+	return this->exact()[point_type(row, col)];
 	//return super_type::operator[](point_type(row, col));
       }
 
@@ -226,7 +226,7 @@ namespace oln {
 
       exact_type& operator=(self_type rhs)
       {
-	return exact().assign(rhs.exact());
+	return this->exact().assign(rhs.exact());
       }
 
       static std::string name()
@@ -281,13 +281,13 @@ namespace oln {
 
       const value_type operator()(coord slice, coord row, coord col) const
       {
-	return exact()[point_type(slice, row, col)];
+	return this->exact()[point_type(slice, row, col)];
 	// return super_type::operator[](point_type(slice, row, col));
       }
 
       value_type& operator()(coord slice, coord row, coord col)
       {
-	return exact()[point_type(slice, row, col)];
+	return this->exact()[point_type(slice, row, col)];
 	// return super_type::operator[](point_type(slice, row, col));
       }
 
@@ -300,7 +300,7 @@ namespace oln {
 
       exact_type& operator=(self_type rhs)
       {
-	return exact().assign(rhs.exact());
+	return this->exact().assign(rhs.exact());
       }
 
       static std::string name()

@@ -51,7 +51,7 @@
   {								\
     static Name max() { return Max; }				\
     static std::string name() { return std::string(#Name); }	\
-  };
+  }
 
 # define OPTRAITS_BUILTIN_INT_S(Name, Min, Max)			\
   template <>							\
@@ -60,7 +60,7 @@
     static Name min() { return Min; }				\
     static Name max() { return Max; }				\
     static std::string name() { return std::string(#Name); }	\
-  };
+  }
 
 namespace ntg {
 

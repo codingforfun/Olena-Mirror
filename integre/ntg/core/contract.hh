@@ -37,9 +37,10 @@
 */
 
 # ifdef NDEBUG
-#  define ntg_assert(expr) ((void) 0)
+#  define ntg_assert(expr) (static_cast<void>(0))
 # else
-#  ifdef NTG_DEBUG
+// FIXME: repair NTG_DEBUG
+#  if 0 // ifdef NTG_DEBUG
 #   define ntg_assert(expr)					\
   if (!(expr))							\
   {								\
