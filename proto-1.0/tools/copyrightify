@@ -1,0 +1,86 @@
+#!/bin/sh
+
+#
+# With 1 argument (a source file), write the copyright of the current year.
+# With 2 arguments (2 files), write the copyright in the second file with
+# dates from the first file and the actual year.
+#
+
+compute_date_from_file() {
+  file="$1"
+  cat $file | sed -ne "1 s/^[^0-9]\+*\([0-9 ,]\+[0-9]\).*$/\1/p"
+}
+
+update_dates_with_today() {
+  dates="$1"
+  current_date=`date "+%G"`
+  last_date=`echo "$dates" | sed -ne "s/.* \([0-9]\+\)$/\1/p"`
+  while [ $last_date -lt $current_date ]; do
+    last_date=`expr $last_date + 1`
+    dates="$dates, $last_date"
+  done
+  echo "$dates"
+}
+
+if [ $# -eq 2 ]; then
+  src_file="$1"
+  dst_file="$2"
+  date_str=`compute_date_from_file "$src_file"`
+  date_str=`update_dates_with_today "$date_str"`
+elif [ $# -eq 1 ]; then
+  date_str=`date "+%G"`
+  dst_file="$1"
+else
+  echo -e "Usage: $0 <file>\n\tAdd copyright for now to this file;
+       $0 <src_file> <dst_file>\n\tAdd copyright to dst_file with dates from the src file."
+  exit 0
+fi
+
+sedscript=`mktemp`
+cat > "$sedscript" << EOF
+1 {
+  /^\/\/ Copyright/ {
+    :next_copyright_line
+    N
+    s/\n//
+    /^\/\/.*/ b found_copyright_line
+    b add_copyright
+    :found_copyright_line 
+    s/^\/\/.*//
+    b next_copyright_line
+  }
+  b add_copyright
+
+  :add_copyright
+  i // Copyright (C) $date_str EPITA Research and Development Laboratory\\
+//\\
+// This file is part of the Olena Library.  This library is free\\
+// software; you can redistribute it and/or modify it under the terms\\
+// of the GNU General Public License version 2 as published by the\\
+// Free Software Foundation.\\
+//\\
+// This library is distributed in the hope that it will be useful,\\
+// but WITHOUT ANY WARRANTY; without even the implied warranty of\\
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\\
+// General Public License for more details.\\
+//\\
+// You should have received a copy of the GNU General Public License\\
+// along with this library; see the file COPYING.  If not, write to\\
+// the Free Software Foundation, 59 Temple Place - Suite 330, Boston,\\
+// MA 02111-1307, USA.\\
+//\\
+// As a special exception, you may use this file as part of a free\\
+// software library without restriction.  Specifically, if other files\\
+// instantiate templates or use macros or inline functions from this\\
+// file, or you compile this file and link it with other files to\\
+// produce an executable, this file does not by itself cause the\\
+// resulting executable to be covered by the GNU General Public\\
+// License.  This exception does not however invalidate any other\\
+// reasons why the executable file might be covered by the GNU General\\
+// Public License.\\
+
+}
+EOF
+ 
+sed -i -f "$sedscript" "$dst_file"
+rm "$sedscript"
