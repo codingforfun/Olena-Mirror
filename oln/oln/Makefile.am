@@ -189,6 +189,8 @@ nobase_pkginclude_HEADERS =			\
   morpho/top_hat.inc				\
   morpho/watershed.hh				\
   morpho/watershed.hxx				\
+  topo/dmap.hh					\
+  topo/dmap.hxx					\
   transforms/fft.hh				\
   transforms/dwt.hh				\
   transforms/wavelet_coeffs.hh			\

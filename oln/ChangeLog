@@ -1,3 +1,11 @@
+2003-01-10  Yann Régis-Gianas  <yann@lrde.epita.fr>
+
+	* oln/oln/topo/dmap.hh: new.
+	* oln/oln/topo/dmap.hxx: likewise.	
+	* oln/oln/Makefile.am: add dmap.h[xx,h]
+	* oln/oln/types/nrgb.hh: use a singleton for classic color.
+	* oln/oln/core/box.hxx(make_consistent): test the flag.
+
 2003-01-09  Yann Régis-Gianas  <yann@lrde.epita.fr>
 
 	* oln/oln/level/cc.hh: fix a bug.

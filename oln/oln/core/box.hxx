@@ -73,12 +73,13 @@ namespace oln {
   template <class I>
   void box<I>::make_consistent()
   {
-    for (unsigned i = 0; i < dim(); ++i)
-      {
-	mass_center_.nth(i) = int(mass_[i] / card_);
-	dimension_.nth(i) = top_.nth(i) - bottom_.nth(i) + 1;
-	box_center_.nth(i) = (top_.nth(i) + bottom_.nth(i)) / 2;
-      }
+    if (not_consistent)
+      for (unsigned i = 0; i < dim(); ++i)
+	{
+	  mass_center_.nth(i) = int(mass_[i] / card_);
+	  dimension_.nth(i) = top_.nth(i) - bottom_.nth(i) + 1;
+	  box_center_.nth(i) = (top_.nth(i) + bottom_.nth(i)) / 2;
+	}
   }
 
   template <class I>

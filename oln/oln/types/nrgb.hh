@@ -49,8 +49,12 @@ namespace oln {
   typedef color<3,16,nrgb_traits> nrgb_16;
   typedef color<3,32,nrgb_traits> nrgb_32;
 
-#define DEFINE_COLOR(Type, Name, V1, V2, V3) \
-  Type Name() { return Type(V1, V2, V3); }
+  // FIXME: not thread safe !
+#define DEFINE_COLOR(Type, Name, V1, V2, V3)	\
+  inline const Type& Name() {			\
+    static const Type tmp(V1, V2, V3);		\
+    return tmp;					\
+  }
 
   namespace nrgb_8_color {
 
