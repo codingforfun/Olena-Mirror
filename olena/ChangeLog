@@ -1,5 +1,9 @@
 2004-06-26  Damien Thivolle  <damien@lrde.epita.fr>
 
+	* oln/morpher/border_morpher.hh: Make compliant to g++-3.4.
+
+2004-06-26  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* oln/convert/rgbnrgb.hh: Make compliant to g++-3.4.
 	* oln/convert/rgbxyz.hh: Likewise.
 	* oln/topo/dmap.hxx: Likewise.

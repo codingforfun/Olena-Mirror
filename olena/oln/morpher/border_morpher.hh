@@ -117,13 +117,13 @@ namespace oln {
 			   const BehaviorType& be)
 	: super_type(ima), width(width), be(be)
       {
-	be.adapt_border(ima, width + get_ima().border());
+	be.adapt_border(ima, width + this->get_ima().border());
 	for (unsigned i = 0; i < image_id<exact_type>::dim; ++i)
 	{
-	  size_.nth(i) = get_ima().size().nth(i) + 2 * width;
+	  size_.nth(i) = this->get_ima().size().nth(i) + 2 * width;
 	  dp_.nth(i) = -width;
 	}
- 	size_.border() = get_ima().size().border();
+ 	size_.border() = this->get_ima().size().border();
       }
 
       const coord width; ///< The width of the border.
@@ -232,7 +232,7 @@ namespace oln {
       at(const point_type& p)
       {
 	return const_cast<value_type &>
-	  ( const_cast<SrcType &>(this->ima_)[p + get_dp()] );
+	  ( const_cast<SrcType &>(this->ima_)[p + this->get_dp()] );
       }
 
       /*!
@@ -243,7 +243,7 @@ namespace oln {
       const value_type
       at(const point_type& p) const
       {
-	return this->ima_[p + get_dp()];
+	return this->ima_[p + this->get_dp()];
       }
 
       /*! Perform a shallow copy from the decorated image of \a rhs
@@ -329,7 +329,7 @@ namespace oln {
       const value_type
       at(const point_type &p) const
       {
-	return this->ima_[p + get_dp()];
+	return this->ima_[p + this->get_dp()];
       }
 
       /// Useful to debug.
