@@ -1,3 +1,10 @@
+2003-08-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* dev/thanks.texi: Update.
+	* dev/srctree.texi: Likewise.
+
+	* dev/oln-dev.texi: Comment out design.texi.
+
 2003-08-04  David Lesage  <david@lrde.epita.fr>
 
 	* demo/image.cc: Fix.

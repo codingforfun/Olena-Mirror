@@ -1,7 +1,7 @@
 @node Abstract
 @chapter Abstract
 
-This is the eighth public release of Olena, a generic image
+This is the nineth public release of Olena, a generic image
 processing library in C++.
 
 @ifplaintext

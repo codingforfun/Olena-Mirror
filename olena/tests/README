@@ -1,7 +1,5 @@
 * The Olena test suite
 
-%% FIXME: update!
-
 ** Structure
 
 For each directory X in the source tree (oln/), we should have a
@@ -75,11 +73,25 @@ the TESTS variable as follow:
 
   make TESTS='test1 test2' check
 
-Finally, running one test manually can be done as follow
+*** runtests specific flags
 
-  make extrkiller   # if it doesn't exist yet
-  ./extrkiller
+Many tests use contrib/runtests. These tests are located in a
+subdirectory tests/ or the actual test directory.  All the
+explanations above are still correct for runtests based tests. But a
+few more options are available.
 
+It a test fails, you can run it again by using:
+
+  ./runs/test_name/try
+
+This will recompile and run again the test. runs/ directory are erased
+by default when a test succeeds, to keep it, use the flags KEEP_RUNS:
+
+  make KEEP_RUNS=1 check
+
+If you want to compile the tests, do:
+
+  make COMPILE_ONLY=1 check
 
 ** Adding new tests
 
@@ -116,15 +128,15 @@ test is run manually)
 **** data()
 
 Try not to bloat the test suite with many different data files, if
-possible reuse the files already present in tests/data/.
+possible reuse the files already present in olena/img/.
 
-When reading a file from tests/data/, use the data(string) function to
+When reading a file from olena/img/, use the data(string) function to
 compute the filename (data() is supplied by libcheck.a).  For
 instance:
 
   image2d<int_u8> img(data("lena.ppm"));
 
-Using data() in preference to a relative path to tests/data/ is
+Using data() in preference to a relative path to olena/img/ is
 required to support the so called VPATH configurations, where built
 files lie in a directory separate from the source.  Moreover this
 helps keeping the test cases independent from the location if the data
@@ -141,11 +153,37 @@ In the special event where you detect that your test cannot run (e.g.,
 because it tries to check an unsupported functionality), and should
 be skipped, call the skip() function.
 
+**** runtests based tests
+
+They can use the features above. They should be located in a tests/
+subdirectory without extension. 
+
+Example: olena/tests/morpho/tests/extrkiller
+
+Several comments can influence the result of the test:
+
+// ABORT specifies that the test should abort
+// COMPFAIL specifies that the test should not compile
+// XFAIL specifies that the test shouldn't fail, but it actually does
+because of bugs or wring code. This permits one to add tests known to
+fail which will be fixed in a future release without breaking the make
+check process.
 
 *** Makefiles
 
-Begin each Makefile.am with
+**** Using runtests
 
+Begin Makefile.am with
+
+  include $(top_srcdir)/check/Makefile.runtests
+
+and that's all.
+
+**** Using hand-written tests
+
+Begin Makefile.am with
+
+  include $(top_srcdir)/check/Makefile.flags
   include $(top_srcdir)/check/Makefile.check
 
 lists all your test programs in a check_PROGRAMS variable:
@@ -168,6 +206,14 @@ directory to the SUBDIRS declaration of ../Makefile.am, update
 configure.ac to output the Makefile in your new directory, and run
 autoreconf.
 
+**** Mixing both
+
+Begin Makefile.am with
+
+  include ../check/Makefile.runtests
+  include ../check/Makefile.check
+
+to enable the use of hand-written tests and runtests tests.
 
 Local Variables:
 mode: outline

@@ -1,3 +1,7 @@
+2003-08-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* NEWS: Update for 0.9.
+
 2003-08-05  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* config/oln.m4: Remove -W for gnu compilers since they have

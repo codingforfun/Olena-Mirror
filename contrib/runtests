@@ -92,7 +92,7 @@ EOF
   msg="";
   case $expected:$estatus in
     ok:0 | compfail:50 | abort:134) 
-      if test ! x"$KEEP_RUN" = x"1"; then
+      if test ! x"$KEEP_RUNS" = x"1"; then
         rm -rf "$dir";
       fi
       msg="(ok)" ;;

@@ -1,5 +1,15 @@
 2003-08-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
+	* tests/README: Update.
+
+2003-08-07  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
+
+	* oln/topo/combinatorial-map/cmap.hh: Add references.
+
+	* oln/topo/tarjan/union.hh: Fix coding style.
+
+2003-08-07  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
 	* oln/core/abstract/iter.hh: Fix coding style.
 	* oln/core/winiter.hh: Likewise.
 	* oln/core/winneighb.hh: Likewise.
@@ -89,10 +99,10 @@
 	* tests/topo/tests/tarjan: ... this.
 	* tests/topo/tests/test-inter-pixel: Rename as...
 	* tests/topo/tests/inter-pixel: ... this.
-	
+
 	* oln/utils/copy.hh: Adjust to the new paradigm.
 	* tests/utils/tests/copy: New test.
-	
+
 2003-08-07  David Lesage  <david@lrde.epita.fr>
 
 	* oln/arith/internal/opdecls.hh: Fix coding style.
@@ -196,7 +206,7 @@
 	* oln/core/abstract/neighborhoodnd.hh: Likewise.
 	* oln/convert/abstract/conversion.hh: Likewise.
 	* oln/core/abstract/image_with_type_with_dim.hh: Likewise.
-	
+
 2003-08-06  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/arith/internal/opdecls.hh: Fix coding style.
@@ -261,24 +271,24 @@
 
 2003-08-06  David Lesage  <david@lrde.epita.fr>
 
-	* oln/core/impl/image_impl.hh, 
+	* oln/core/impl/image_impl.hh,
 	oln/core/impl/image_array.hh,
-	oln/core/impl/image_array1d.hh, 
+	oln/core/impl/image_array1d.hh,
 	oln/core/impl/image_array2d.hh,
 	oln/core/impl/image_array3d.hh: Remove image type
-	parameterization.  
+	parameterization.
 
 	* oln/core/image1d.hh,
 	oln/core/image2d.hh,
 	oln/core/image3d.hh: Adjust consequently. Move calls to
 	data->ref()...
-	
+
 	* oln/core/abstract/image_with_impl.hh: ...here.
 
 	* olena/oln/core/image.hh: Fix constructors.
 
 	* tests/core/tests/image2: Adapt and fix.
-	
+
 2003-08-06  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/core/image.hh: Use exact_type instead of Exact for accessing
@@ -305,9 +315,9 @@
 	* tests/io/Makefile.am: Likewise.
 	* tests/level/Makefile.am: Likewise.
 	* tests/transforms/Makefile.am: Likewise.
-	
+
 	* oln/Makefile.am: Fix modified files in topo/.
-	
+
 2003-08-05  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/arith/ops.hh: Don't use deprecated self() method.
