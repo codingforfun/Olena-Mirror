@@ -1,3 +1,8 @@
+2004-04-28  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* doc/ref/Makefile.am: Move "out/out* out/makefile out/all.mk" from
+	clean-local to CLEANFILES. Replace distclean-local by DISTCLEANFILES.
+
 2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
 
 	* doc/dev/build.texi: Replace '@item @strong[...]' by '@headitem'.

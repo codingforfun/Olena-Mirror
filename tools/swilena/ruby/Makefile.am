@@ -9,5 +9,4 @@ rubydir = $(libdir)/ruby
 
 include makefile.swig
 
-clean-local:
-	rm -f *.cxx
+CLEANFILES = *.cxx

@@ -1,3 +1,9 @@
+2004-04-28  Niels Van Vliet  <niels@lrde.epita.fr>
+
+	* tools/swilena/ruby/Makefile.am: Replace clean-local by CLEANFILES.
+	* tools/swilena/src/Makefile.am: Replace distclean-local by
+	DISTCLEANFILES.
+
 2004-04-20  Niels Van Vliet  <niels@lrde.epita.fr>
 
 	* tools/swilena/expand.sh (generation of makefile.swig): Add cxx
