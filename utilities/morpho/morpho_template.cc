@@ -50,7 +50,7 @@ void usage(const char * progname)
   std::cerr << "filename_out                  : destination file" << std::endl;
   std::cerr << std::endl;
   std::cerr << "example: " << progname
-            << " -&w my_win.pbm"
+            << " -w my_win.pbm"
             << " lena.pgm lena_out.pgm"
             << std::endl;
   exit(1);
