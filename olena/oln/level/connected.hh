@@ -61,7 +61,7 @@ namespace oln {
     // label false) has the label 0; This algorithm works only for 2D images
     template <class DestType, class I_, class N_>
     typename mute<I_, DestType>::ret
-    connected_component(const image<I_>& _input,
+    connected_component(const abstract::image<I_>& _input,
 			const neighborhood<N_>& _Ng)
     {
       // FIXME: ensure the Value(I) is bin.

@@ -54,13 +54,13 @@ namespace oln {
      * arg: numeric_value&, nb, IN, nb_label (optional)
      * ret: typename mute<I, DestType>::ret
      * doc: It removes the small (in area) connected components of the upper
-     * level sets of \var{input} using \var{se} as structural element. 
+     * level sets of \var{input} using \var{se} as structural element.
      * The implementation
      * uses front propagation.
      * see: level::connected_component
      * ex:
      * $ image2d<int_u8> light = load("light.pgm");
-     * $ save(level::frontp_connected_component<int_u16>(light, win_c8p()), 
+     * $ save(level::frontp_connected_component<int_u16>(light, win_c8p()),
      * $ "out.pgm");
      * exi: light.pgm
      * exo: out.pgm
@@ -73,8 +73,8 @@ namespace oln {
     // FIXME: Should probably be turned into a class.
     template <class DestType, class I_, class E_>
     typename mute<I_, DestType>::ret
-    frontp_connected_component(const image<I_>& _input,
-			       const neighborhood<E_>& _se, 
+    frontp_connected_component(const abstract::image<I_>& _input,
+			       const neighborhood<E_>& _se,
 			       unsigned& nb_label)
     {
       // FIXME: ensure the Value(I) is ntg::bin.
@@ -83,7 +83,7 @@ namespace oln {
       typename mute<I_, DestType>::ret output(input.size());
       level::fill(output, 0);
 
-      typedef std::set<Point(I), oln::internal::default_less< Point(I) > > 
+      typedef std::set<Point(I), oln::internal::default_less< Point(I) > >
 	points_set;
 
       I is_processed(input.size());
@@ -101,7 +101,7 @@ namespace oln {
 	    {
 	      //set label and net neighbors
 	      points_set next;
-	      for (typename points_set::const_iterator i = 
+	      for (typename points_set::const_iterator i =
 		     points_to_process.begin();
 		   i != points_to_process.end();
 		   ++i)
@@ -134,7 +134,7 @@ namespace oln {
 
     template <class DestType, class I_, class E_>
     typename mute<I_, DestType>::ret
-    frontp_connected_component(const image<I_>& _input,
+    frontp_connected_component(const abstract::image<I_>& _input,
 			       const neighborhood<E_>& _se)
     {
       unsigned dummy;
@@ -143,7 +143,7 @@ namespace oln {
 
     template <class I_>
     typename mute<I_, ntg::bin>::ret
-    extract_i_cc(const image<I_>& _input,
+    extract_i_cc(const abstract::image<I_>& _input,
 		 Value(I_) i)
     {
       Exact_cref(I, input);
@@ -158,7 +158,7 @@ namespace oln {
     }
 
     template <class I_>
-    Value(I_) get_n_cc(const image<I_>& _input)
+    Value(I_) get_n_cc(const abstract::image<I_>& _input)
     {
       Exact_cref(I, input);
       return  fold(arith::f_max<Value(I)>(), input);

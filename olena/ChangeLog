@@ -1,8 +1,21 @@
+2003-07-25  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
+
+	* tests/topo/test-inter-pixel.cc, tests/topo/test-cmap.cc, : Fix tests suite.
+
+	* oln/basics2d.hh: Uncomment io files includes.
+
+	* oln/arith/internal/opdecls.hh, oln/level/cc.hh,
+	oln/level/compare.hh, oln/level/connected.hh, oln/level/fill.hh,
+	oln/level/invert.hh, oln/level/set_level.hh,
+	oln/level/threshold.hh, oln/topo/tarjan/union.hh,
+	oln/topo/inter-pixel/inter-pixel.hh, oln/topo/tarjan/flat-zone.hh,
+	oln/topo/combinatorial-map/cmap.hh, : Fix files to match new paradigm.
+
 2003-07-24  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* oln/core/image1d.hh, oln/core/image2d.hh, oln/core/image3d.hh:
-	Fix default constructor.	
-	
+	Fix default constructor.
+
 	* oln/core/image2d.hh: Uncomment io constructor.
 
 	* oln/core/abstract/image_with_impl.hh(assign): Fix assertions.
@@ -10,9 +23,9 @@
 	* tests/core/Makefile.am: Split check-local.
 
 	* tests/core/tests/image1, tests/core/tests/ref: Add test cases.
-	
+
 2003-07-24  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	Partial rewrite of oln/io.
 
 	* oln/io/pnm_read.hxx: Rename as...
@@ -24,13 +37,13 @@
 	oln/io/image_read.hh, oln/io/image_write.hh: New.
 
 	* oln/io/pnm_read_common.hxx, oln/io/pnm_write_common.hxx: Merge
-	into...  
+	into...
 	* oln/io/pnm_data.hh: ...this. New file.
-	
+
 	* oln/io/stream_wrapper.hh, oln/io/utils: New.
 
 	* oln/io/base.hxx: Remove.
-	
+
 	* oln/io/pnm_read.hh, oln/io/pnm_write.hh: Adapt to the new image
 	hierarchy. Add more flexibility on data types.
 
@@ -42,7 +55,7 @@
 
 	* tests/io/simple2d.cc: New test.
 	* tests/io/Makefile.am: Adjust.
-	
+
 2003-07-24  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
 
 	* oln/core/abstract/image_with_dim.hh: Add upper hold function.

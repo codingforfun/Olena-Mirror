@@ -1,5 +1,5 @@
+#include <ntg/int.hh>
 #include <oln/basics2d.hh>
-#include <ntg/all.hh>
 #include <oln/topo/combinatorial-map/cmap.hh>
 
 #include <iostream>

@@ -36,9 +36,9 @@ namespace oln {
   namespace level {
 
     template <class I_>
-    void set_level(image<I_>&        _inout, 
+    void set_level(abstract::image<I_>& _inout,
 		   const Point(I_)&  p1,
-		   const Point(I_)&  p2, 
+		   const Point(I_)&  p2,
 		   Value(I_)         level)
     {
       Exact_ref(I, inout);
@@ -56,7 +56,7 @@ namespace oln {
       int i, e;
       int iRow = iRow1;
       int iCol = iCol1;
-      
+
       if ( dCol > dRow )
 	{
 	  e = ddRow - dCol;
@@ -92,7 +92,7 @@ namespace oln {
 
 
     template <class I_, class BoxType>
-    void set_level(image<I_>&          _inout, 
+    void set_level(abstract::image<I_>&  _inout,
  		   BoxType&              box,
  		   const Value(I_)&      level)
     {

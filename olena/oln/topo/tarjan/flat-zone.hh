@@ -1,4 +1,3 @@
-
 // Copyright (C) 2001, 2002, 2003  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -51,6 +50,7 @@ namespace oln {
 	typedef Point(I) point_t;
 	typedef Value(I)  data_t;
 	typedef Concrete(I) image_t;
+
 	typedef tarjan::tarjan_set<image_t, tarjan::EMPTY_CLASS> tarjan_cc;
 
 	const image_t &input;
@@ -77,7 +77,7 @@ namespace oln {
 	  {
 	    window2d c4;
 	    c4.add(0,1).add(1,0);
-	    typename image_t::bkd_iter p(input);
+	    typename image_t::bkd_iter_type p(input);
 	    for_all(p)
 	      {
 		cc.make_set(p);
@@ -125,12 +125,12 @@ namespace oln {
 
 	  // COMPUTE LABEL MAP
 	  {
-	    typename image_t::fwd_iter p(input);
+	    typename image_t::fwd_iter_type p(input);
 
 	    // Push_back because no label = 0;
 	    look_up_table.push_back(point_t());
 
-	    border::adapt_assign(label, 1, ++_nlabels);
+	    label.border_adapt_assign(1, ++_nlabels);
 
 	    look_up_table.push_back(cc.find_root(point_t(-1, -1)));
 
@@ -146,7 +146,7 @@ namespace oln {
 	      }
 
 	    {
-	      typename image_t::fwd_iter p(input);
+	      typename image_t::fwd_iter_type p(input);
 	      for_all(p)
 		{
 		  if (cc.is_root(p))

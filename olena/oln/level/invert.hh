@@ -84,15 +84,15 @@ namespace oln {
     // procs
 
     template<class I> inline
-    Concrete(I) invert(const image<I>& input)
+    Concrete(I) invert(const abstract::image<I>& input)
     {
       return apply(f_invert<Value(I)>(), input);
     }
 
     template<class I> inline
-    void invert_self(image<I>& input)
+    void invert_self(abstract::image<I>& input)
     {
-      return apply_self(f_invert<Value(I)>(), input);
+      apply_self(f_invert<Value(I)>(), input);
     }
 
   } // end of level
