@@ -242,7 +242,7 @@
 (olena/oln/core/abstract/image_with_type_with_dim.hh 5604 1060112373 v/11_image_with 1.1)
 (integre/ntg/utils/debug.hh 3028 1059583756 i/8_debug.hh 1.2.1.8)
 (olena/oln/core/abstract/w_windownd.hh 3665 1059667269 u/5_w_windownd 1.5)
-(olena/oln/morpho/stat.hh 3640 1060180918 50_stat.hh 1.8.1.8)
+(olena/oln/morpho/stat.hh 3642 1060182034 50_stat.hh 1.8.1.9)
 (olena/oln/convert/abstract/colorconv.hh 2167 1059665584 18_colorconv. 1.10)
 (metalic/tests/array/test_array1d.cc 542 1047049040 f/26_test_array 1.5)
 (doc/demo/morpholena-minima.cc 957 1047049040 p/12_morpholena 1.4)

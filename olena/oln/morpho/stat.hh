@@ -78,10 +78,10 @@ namespace oln {
       struct stat_<I, E, ntg::bin> {
 
 	static ntg::bin
-	max(const I& input, const oln_value_type(I)& p, const E& se)
+	max(const I& input, const oln_point_type(I)& p, const E& se)
 	{
 	  mlc::eq<I::dim, E::dim>::ensure();
-	 oln_iter_type(E) dp(se);
+	  oln_iter_type(E) dp(se);
 	  for_all (dp)
 	    if (input[p + dp] == true)
 	      return true;
@@ -89,10 +89,10 @@ namespace oln {
 	}
 
 	static ntg::bin
-	min(const I& input, const oln_value_type(I)& p, const E& se)
+	min(const I& input, const oln_point_type(I)& p, const E& se)
 	{
 	  mlc::eq<I::dim, E::dim>::ensure();
-	 oln_iter_type(E) dp(se);
+	  oln_iter_type(E) dp(se);
 	  for_all (dp)
 	    if (input[p + dp] == false)
 	      return false;

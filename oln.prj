@@ -1,12 +1,12 @@
  ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "Olena")
-(Project-Version oln 2003paradigm 108)
-(Parent-Version oln 2003paradigm 107)
-(Version-Log "Minor fixes.
+(Project-Version oln 2003paradigm 109)
+(Parent-Version oln 2003paradigm 108)
+(Version-Log "Minor fixes about coding style.
 ")
 (New-Version-Log "")
-(Checkin-Time "Wed, 06 Aug 2003 16:56:36 +0200")
+(Checkin-Time "Wed, 06 Aug 2003 17:00:34 +0200")
 (Checkin-Login burrus_n)
 ;; diff-ignore tests/data/.*pbm$
 ;; diff-ignore img/.*pbm$
@@ -339,7 +339,7 @@
   (olena/oln/morpho/opening.inc (oln/40_opening.in 1.11 640))
   (olena/oln/morpho/reconstruction.hh (oln/35_reconstruc 1.13.1.9 640))
   (olena/oln/morpho/splitse.hh (oln/34_splitse.hh 1.6 640))
-  (olena/oln/morpho/stat.hh (oln/50_stat.hh 1.8.1.8 640))
+  (olena/oln/morpho/stat.hh (oln/50_stat.hh 1.8.1.9 640))
   (olena/oln/morpho/thickening.hh (oln/e/29_thickening 1.7 640))
   (olena/oln/morpho/thickening.inc (oln/e/28_thickening 1.9 640))
   (olena/oln/morpho/thinning.hh (oln/e/27_thinning.h 1.7 640))
