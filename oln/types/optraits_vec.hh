@@ -142,7 +142,7 @@ namespace oln
     inline static typename
     internal::deduce_from_traits<internal::operator_mod_traits,
 				 T1, T2>::ret
-    div(const T1& lhs, const T2& rhs)
+    mod(const T1& lhs, const T2& rhs)
     {
       is_a(optraits<T1>, oln::optraits_vector)::ensure();
       is_a(optraits<T2>, oln::optraits_scalar)::ensure();
