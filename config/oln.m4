@@ -599,7 +599,7 @@ AC_DEFUN([AC_WITH_CXX_ZLIB],
 ###
 # $Format: "m4_define([OLN_VERSION], [0.$ProjectMajorVersion$])"$
 m4_define([OLN_VERSION], [0.10])
-m4_define([OLN_VERSION], [0.9])
+m4_define([OLN_VERSION], [0.10])
 m4_define([OLN_CONTACT], [olena-bugs@lrde.epita.fr])
 
 # OLN_COLLECTION([subdirs-variable-name],
