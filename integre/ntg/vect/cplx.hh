@@ -430,16 +430,20 @@ namespace ntg {
   inline std::ostream&
   operator<<(std::ostream& ostr, const cplx<rect, T>& rhs)
   {
-    return ostr << rhs.real() << " + "
-		<< rhs.imag() << "i";
+    // Using an ostringstream is necessary to pretty print.
+    std::ostringstream str;
+    str << rhs.real() << " + " << rhs.imag() << "i";
+    return ostr << str.str();
   }
 
   template<class T>
   inline std::ostream&
   operator<<(std::ostream& ostr, const cplx<polar, T>& rhs)
   {
-    return ostr << rhs.magn() << " * exp("
-		<< rhs.angle() << "i)";
+    // Using an ostringstream is necessary to pretty print.
+    std::ostringstream str;
+    str << rhs.magn() << " * exp(" << rhs.angle() << "i)";
+    return ostr << str.str();
   }
 
   namespace internal 
@@ -456,14 +460,12 @@ namespace ntg {
       typedef typename typetraits<self>::storage_type storage_type_;
     
     public:
-      static self zero ()
+      static self zero () { return self(); }
+      static self unit () { return self(1); }
+
+      static unsigned max_print_width() 
       {
-	return self();
-      }
-    
-      static self unit ()
-      {
-	return self(1);
+	return 2 * ntg_max_print_width(T) + 4;
       }
     
       static std::string
@@ -531,16 +533,15 @@ namespace ntg {
       typedef ntgi_storage_type(self) storage_type_;
     
     public:
-      static self zero ()
-      {
-	return self();
-      }
+      static self zero () { return self(); }
     
-      static self unit ()
-      {
-	return self(1);
-      }
+      static self unit () { return self(1); }
     
+      static unsigned max_print_width() 
+      {
+	return 2 * ntg_max_print_width(T) + 4;
+      }
+
       static std::string
       name()
       {

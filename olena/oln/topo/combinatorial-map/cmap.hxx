@@ -37,8 +37,8 @@ inline std::ostream & operator<<(std::ostream & ostr, const labels_t & l)
   return ostr;
 }
 
-template<class _I>
-inline std::ostream & operator<<(std::ostream & ostr, const cmap<_I> & cm)
+template<class I>
+inline std::ostream & operator<<(std::ostream & ostr, const cmap<I> & cm)
 {
   return cm.print(ostr);
 }

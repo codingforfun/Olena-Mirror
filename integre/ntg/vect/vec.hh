@@ -168,9 +168,15 @@ namespace ntg {
   std::ostream&
   operator<<(std::ostream& ostr, const vec<N,T>& rhs)
   {
-    ostr << "[";
+    // dev note: we use an ostringstream to make only one output
+    // on the ostream. This allows calling procedures to consider
+    // data type printing as atomic, thus ostr.width(...) can
+    // work.
+    std::ostringstream str;
+    str << "[";
     for (unsigned i = 0; i < N; ++i)
-      ostr << rhs[i] << ((i < N-1) ? "," : "]");
+      str << rhs[i] << ((i < N-1) ? "," : "]");
+    ostr << str.str();
     return ostr;
   }
 
@@ -192,6 +198,11 @@ namespace ntg {
       {
 	// A vectorial type MUST return a zero initialized value.
 	return self();
+      }
+
+      static unsigned max_print_width ()
+      {
+	return (N * ntg_max_print_width(T)) + (N - 1) + 2;
       }
 
       static std::string

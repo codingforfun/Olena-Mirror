@@ -144,8 +144,6 @@ namespace oln {
 
 } // end of oln
 
-
-
 template<class T, class I> inline std::ostream&
 operator<<(std::ostream& o, const oln::internal::_real_image1d<T,I>& ima)
 {
@@ -156,7 +154,5 @@ operator<<(std::ostream& o, const oln::internal::_real_image1d<T,I>& ima)
   o << std::endl;
   return o;
 }
-
-
 
 #endif // ! OLENA_CORE_INTERNAL_REAL_IMAGE1D_HH

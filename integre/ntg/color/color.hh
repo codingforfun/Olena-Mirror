@@ -254,6 +254,16 @@ namespace ntg {
 	      template <unsigned> class color_system>
     struct optraits<color<ncomps, qbits, color_system> >
     {
+    private:
+      typedef color<ncomps, qbits, color_system> self;
+      typedef typename typetraits<self>::storage_type storage_type;
+
+    public:
+      static unsigned max_print_width ()
+      {
+	return ntg_max_print_width(storage_type);
+      }
+
       static std::string
       name()
       {

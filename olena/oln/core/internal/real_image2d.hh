@@ -32,7 +32,6 @@
 # include <oln/core/internal/image2d_data.hh>
 # include <ntg/all.hh>
 # include <iostream>
-# include <cmath>
 
 namespace oln
 {
@@ -148,20 +147,17 @@ namespace oln
 
 } // end of oln
 
-
-
 template<class T, class I> inline std::ostream&
 operator<<(std::ostream& o, const oln::internal::_real_image2d<T,I>& ima)
 {
   if (ima.data() == 0)
     return o << "null";
+
   for (oln::coord row = 0; row < ima.nrows(); ++row)
     {
       for (oln::coord col = 0; col < ima.ncols(); ++col)
 	{
-	  // FIXME: this does not work when ntg_max_val is not defined
-	  // (eg floats)
-	  // o.width(unsigned(log10(double(ntg_max_val(T)))+2));
+	  o.width(ntg_max_print_width(T));
 	  o << ima(row,col) << ' ';
 	}
       o << std::endl;

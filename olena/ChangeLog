@@ -1,7 +1,23 @@
+2003-07-11  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* oln/core/internal/real_image2d.hh,
+	oln/core/internal/real_image3d.hh: Fix pretty print.
+
+	* tests/core/tests/print_image: New test.
+	
+2003-07-05  Sylvain Berlemont  <Sylvain.Berlemont@lrde.epita.fr>
+
+	* oln/topo/inter-pixel/inter-pixel.hxx,
+	oln/topo/inter-pixel/inter-pixel.hh,
+	oln/topo/combinatorial-map/cmap.hxx, oln/topo/tarjan/union.hh,
+	olena/oln/topo/tarjan/flat-zone.hh,
+	olena/oln/topo/combinatorial-map/cmap.hh,
+	olena/oln/topo/inter-pixel/node.hh: Fix MacOSX complilation bug.
+
 2003-06-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* Merge from integre.28:
-	
+
 	2003-06-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* tests/convert/Makefile.am: Tag 8-nrgb-hsl and 8-nrgb-hsv as XFAIL.
@@ -38,13 +54,13 @@
 	oln/level/cc.hh: Fix typos.
 
 	2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* oln/arith/internal/opdecls.hh, oln/math/macros.hh,
 	oln/morpho/geodesic_dilation.hh, oln/morpho/reconstruction.hh,
 	oln/utils/stat.hh: Modify according to integre's changes.
 
 	2003-05-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* oln/arith/ops.hh, oln/convert/nrgbhsi.hh,
 	oln/convert/nrgbhsl.hh, oln/convert/nrgbhsv.hh,
 	oln/convert/nrgbxyz.hh, oln/convert/nrgbyiq.hh,
@@ -62,14 +78,14 @@
 	changes.
 
 	* tests/io/loadsave.hh: Minor fix.
-	
+
 	2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
-	* oln/math/macros.hh, 
+	* oln/math/macros.hh,
 	oln/utils/histogram.hh: Rename real_value() calls.
 
 	2003-05-02  Nicolas Burrus  <burrus_n@lrde.epita.fr>
-	
+
 	* conf/configure.ac, oln/arith/internal/opdecls.hh,
 	oln/convol/fast_gaussian.hh, oln/convol/fast_gaussian.hxx,
 	oln/convol/fast_gaussian_coefficient.hh, oln/level/invert.hh,
@@ -106,7 +122,7 @@
 	oln/utils/histogram.hh, oln/utils/stat.hh: Update includes.
 
 	* tests/io/loadsave.hh: Likewise.
-	
+
 2003-05-12  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* Makefile.am (CLEANFILES): Undo wrong changes.

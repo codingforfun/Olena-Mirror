@@ -1,0 +1,58 @@
+#include <oln/basics1d.hh>
+#include <oln/basics2d.hh>
+#include <oln/basics3d.hh>
+
+#include <ntg/int.hh>
+#include <ntg/color/rgb.hh>
+#include <ntg/cplx.hh>
+#include <ntg/range.hh>
+
+#include <iostream>
+
+using namespace oln;
+using namespace ntg;
+
+// FIXME: generate tests for all types.
+// There should be a framework to generate and test programs.
+
+int main()
+{
+  image1d<int_u8> ima1d_int (3);
+  image1d<float> ima1d_float (3);
+  image1d<rgb_8> ima1d_rgb (3);
+
+  image2d<int_u8> ima2d_int (3, 5);
+  image2d<float> ima2d_float (3, 5);
+  image2d<range<int_u8, bounded_u<0, 155>, strict> > ima2d_range (3, 5);
+  image2d<rgb_8> ima2d_rgb (3, 5);
+  image2d<cplx<rect, int_u8> > ima2d_cplx (3, 5);
+
+  ima2d_int(0, 0) = 253;
+  ima2d_int(0, 1) = 155;
+  ima2d_range(0, 0) = 123;
+  ima2d_range(0, 1) = 115;
+  ima2d_rgb(0, 0) = rgb_8(112, 255, 128);
+  ima2d_rgb(0, 1) = rgb_8(112, 255, 128);
+  ima2d_float(0, 0) = 4546545.123165456456456465;
+  ima2d_float(0, 1) = 546546545466545.1245465 * 456788941987564654.456465464;
+  ima2d_cplx(0, 0) = cplx<rect, int_u8>(253, 128);
+  ima2d_cplx(0, 1) = cplx<rect, int_u8>(126, 201);
+
+  image3d<int_u8> ima3d_int (3, 5, 10);
+  image3d<float> ima3d_float (3, 5, 10);
+  image3d<rgb_8> ima3d_rgb (3, 5, 10);
+
+  std::cout << ima1d_int << std::endl;
+  std::cout << ima1d_float << std::endl;
+  std::cout << ima1d_rgb << std::endl;
+
+  std::cout << ima2d_int << std::endl;
+  std::cout << ima2d_float << std::endl;
+  std::cout << ima2d_range << std::endl;
+  std::cout << ima2d_rgb << std::endl;
+  std::cout << ima2d_cplx << std::endl;
+
+  std::cout << ima3d_int << std::endl;
+  std::cout << ima3d_float << std::endl;
+  std::cout << ima3d_rgb << std::endl;
+}

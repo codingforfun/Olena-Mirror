@@ -36,13 +36,13 @@ namespace oln {
 
     namespace inter_pixel {
 
-      template<class _I>
+      template<class I>
       class node
       {
       public:
-	enum { dim = _I::dim };
+	enum { dim = I::dim };
 
-	typedef Dir(_I) dir_t;
+	typedef Dir(I) dir_t;
 
       public:
 	node() : _rank(0)

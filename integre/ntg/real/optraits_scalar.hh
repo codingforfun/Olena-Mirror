@@ -28,7 +28,7 @@
 #ifndef NTG_OPTRAITS_SCALAR_HH_
 # define NTG_OPTRAITS_SCALAR_HH_
 
-# include <typeinfo>
+# include <cmath>
 
 # include <mlc/is_a.hh>
 
@@ -49,11 +49,11 @@ namespace ntg {
 
   namespace internal {
 
-    //
-    //  class optraits_scalar : implement common operators for scalars
-    //
-    ///////////////////////////////////////////////////////////////////
+    /*----------------.
+    | optraits_scalar |
+    `----------------*/
 
+    //! Implement common operators for scalars
     template <class Self>
     class optraits_scalar : public optraits_top<Self>
     {
@@ -86,21 +86,21 @@ namespace ntg {
       CMP_SCALAR_OPERATOR(cmp_lt, <);
     };
 
-
-    //
-    //  optraits_float
-    //
-    ///////////////////
+    /*---------------.
+    | optraits_float |
+    `---------------*/
 
     template <class Self>
     class optraits_float : public optraits_scalar<Self>
-    {};
+    {
+    public:
+      // This is the standard size for float on std::ostream.
+      static unsigned max_print_width () { return 11U; }
+    };
 
-
-    //
-    //  optraits_int
-    //
-    /////////////////
+    /*-------------.
+    | optraits_int |
+    `-------------*/
 
     template <class Self>
     class optraits_int : public optraits_scalar<Self>
@@ -111,15 +111,18 @@ namespace ntg {
       static storage_type_ inf () { return optraits<Self>::min(); }
       static storage_type_ sup () { return optraits<Self>::max(); }
 
+      static unsigned max_print_width ()
+      { 
+	return (unsigned) log10(double(optraits<Self>::max())) + 1;
+      }
+
       ASSIGN_INT_OPERATOR(mod_equal,  %);
       ARITH_INT_OPERATOR(mod,  %=);
     };
 
-
-    //
-    //  optraits_int_u
-    //
-    ///////////////////
+    /*---------------.
+    | optraits_int_u |
+    `---------------*/
 
     template <class Self>
     class optraits_int_u : public optraits_int<Self>
@@ -131,18 +134,16 @@ namespace ntg {
       static storage_type_ min () { return 0; }
     };
 
-
-    //
-    //  optraits_int_s
-    //
-    ///////////////////
+    /*---------------.
+    | optraits_int_s |
+    `---------------*/
 
     template <class Self>
     class optraits_int_s : public optraits_int<Self>
     {};
 
-  } // end of internal.
+  } // end of internal
 
-} // end of ntg.
+} // end of ntg
 
 #endif // ndef NTG_OPTRAITS_SCALAR_HH_

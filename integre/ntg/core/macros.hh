@@ -103,6 +103,8 @@
 
 # define ntg_sup_val(T) ntg::type_traits<T>::sup()
 
+# define ntg_max_print_width(T) ntg::type_traits<T>::max_print_width()
+
 /*--------------------------.
 | operator traits accessors |
 `--------------------------*/

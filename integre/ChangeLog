@@ -1,3 +1,9 @@
+2003-07-11  Nicolas Burrus  <burrus_n@lrde.epita.fr>
+
+	* ntg/real/optraits_scalar.hh, ntg/core/macros.hh,
+	ntg/vect/vec.hh, ntg/vect/cplx.hh, ntg/color/color.hh: Add
+	max_print_width feature.
+
 2003-07-04  Nicolas Burrus  <burrus_n@lrde.epita.fr>
 
 	* ntg/core/type.hh: Use reinterpret_cast instead of static_cast to

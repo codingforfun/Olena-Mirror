@@ -30,22 +30,22 @@
 
 using namespace oln::topo::inter_pixel;
 
-template <class _I>
+template <class I>
 inline std::ostream & operator<<(std::ostream & ostr,
-				 const interpixel<_I> & ip)
+				 const interpixel<I> & ip)
 {
   return ip.print(ostr);
 }
 
-template <class _I>
-const DPoint(_I) interpixel<_I>::_neighb[4] = {DPoint(_I)(0,0),
-					       DPoint(_I)(-1,0),
-					       dpoint_t(-1,-1),
-					       dpoint_t(0,-1)};
-template <class _I>
-const DPoint(_I) interpixel<_I>::_inter_neighb[4] = {DPoint(_I)(0,1),
-						     DPoint(_I)(-1,0),
-						     DPoint(_I)(0,-1),
-						     DPoint(_I)(1,0)};
+template <class I>
+const DPoint(I) interpixel<I>::_neighb[4] = {DPoint(I)(0,0),
+					     DPoint(I)(-1,0),
+					     DPoint(I)(-1,-1),
+					     DPoint(I)(0,-1)};
+template <class I>
+const DPoint(I) interpixel<I>::_inter_neighb[4] = {DPoint(I)(0,1),
+						   DPoint(I)(-1,0),
+						   DPoint(I)(0,-1),
+						   DPoint(I)(1,0)};
 
 #endif // !OLENA_TOPO_INTER_PIXEL_INTER_PIXEL_HXX
