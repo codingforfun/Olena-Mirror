@@ -125,7 +125,7 @@ namespace oln {
       }
 
       struct_elt() {}
-      struct_elt(const struct_elt&) {}
+
     };
   } // end of abstract
   

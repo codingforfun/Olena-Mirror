@@ -1,3 +1,8 @@
+2003-07-28  David Lesage  <daivd@lrde.epita.fr>
+
+	* oln/core/abstract/struct_elt.hh: Remove copy constructor for -W
+	compliance.
+
 2003-07-28  David Lesage  <david@lrde.epita.fr>
 
 	* oln/core/abstract/dpoint.hh: Minor change.
