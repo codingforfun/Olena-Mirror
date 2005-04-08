@@ -66,8 +66,8 @@ namespace oln {
       {
 	typedef abstract::image_binary_operator<I, I, I, max_type<I> > super_type;
 
-	max_type(const abstract::non_vectorial_image<I>& input1,
-		 const abstract::non_vectorial_image<I>& input2) :
+	max_type(const abstract::image<I>& input1,
+		 const abstract::image<I>& input2) :
 	  super_type(input1.exact(), input2.exact())
 	{}
 
@@ -88,8 +88,8 @@ namespace oln {
     }
 
     template <typename I>
-    impl::max_type<I> max(const abstract::non_vectorial_image<I>& input1,
-			  const abstract::non_vectorial_image<I>& input2)
+    impl::max_type<I> max(const abstract::image<I>& input1,
+			  const abstract::image<I>& input2)
     {
       impl::max_type<I> tmp(input1, input2);
       tmp.run();

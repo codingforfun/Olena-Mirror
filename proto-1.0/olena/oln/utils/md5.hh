@@ -31,8 +31,7 @@
 # include <ntg/all.hh>
 # include <vector>
 
-# include <oln/core/abstract/image_vectorialness.hh>
-# include <oln/core/properties.hh>
+# include <oln/core/abstract/images.hh>
 # include <oln/core/abstract/piter.hh>
 
 # include <oln/utils/key.hh>
@@ -218,11 +217,9 @@ namespace oln {
     ** \param I Exact type of the image.
     **
     ** \arg im Image to process.
-    **
-    ** Non vectorial image version.
     */
     template <class I>
-    key md5(const oln::abstract::non_vectorial_image<I> &im);
+    key md5(const oln::abstract::image<I> &im);
 
     /*!
     ** \brief Compute The Md5 value of an image.
@@ -231,10 +228,10 @@ namespace oln {
     **
     ** \arg im Image to process.
     **
-    ** Vectorial image version.
+    ** For vector-valued images.
     */
     template <class I>
-    key md5(const oln::abstract::vectorial_image<I> &im);
+    key md5(const oln::abstract::vector_valued_image<I> &im);
 
   } // !utils
 } // !oln

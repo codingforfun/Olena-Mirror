@@ -1,5 +1,15 @@
 2005-04-08  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	* oln/core/pw/logic.hh: Fix include.
+	* oln/core/pw/cmp.hh: Cosmetic change.
+	* oln/utils/md5.hh: Conform to image_valuedness.
+	* oln/utils/md5.hxx: Likewise.
+	* oln/morpho/reconstruction.hh: Likewise.
+	* oln/arith/min.hh: Likewise.
+	* oln/arith/max.hh: Likewise.
+
+2005-04-08  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	* oln/core/pw/logic.hh: New file.
 	* oln/core/abstract/image_valuedness.hh: New file.
 	* oln/core/abstract/image_vectorialness.hh: Remove.

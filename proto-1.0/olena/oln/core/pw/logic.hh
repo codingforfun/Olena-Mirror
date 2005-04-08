@@ -30,6 +30,7 @@
 
 # include <oln/core/abstract/image_typeness.hh>
 # include <oln/core/pw/abstract/function.hh>
+# include <oln/core/pw/cmp.hh>
 
 
 namespace oln {

@@ -129,12 +129,12 @@ namespace oln {
 
 # define oln_pw_decl_cmp_op(NAME, SYMBOL)			\
 template <typename L, typename R>				\
-oln::pw::cmp<L, R, oln::pw::internal::NAME>			\
+oln::pw::cmp<L, R, oln::pw::internal:: NAME >			\
 operator SYMBOL (const oln::pw::abstract::function<L>& lhs,	\
 		 const oln::pw::abstract::function<R>& rhs)	\
 {								\
   precondition(lhs.size() == rhs.size());			\
-  oln::pw::cmp<L, R, oln::pw::internal::NAME> tmp(lhs, rhs);	\
+  oln::pw::cmp<L, R, oln::pw::internal:: NAME > tmp(lhs, rhs);	\
   return tmp;							\
 }
 

@@ -66,8 +66,8 @@ namespace oln {
       {
 	typedef abstract::image_binary_operator<I, I, I, min_type<I> > super_type;
 
-	min_type(const abstract::non_vectorial_image<I>& input1,
-		 const abstract::non_vectorial_image<I>& input2) :
+	min_type(const abstract::image<I>& input1,
+		 const abstract::image<I>& input2) :
 	  super_type(input1.exact(), input2.exact())
 	{}
 
@@ -87,11 +87,9 @@ namespace oln {
 
     }
 
-    // FIXME: replace non_vectorial_image by scalar_image
-    // FIXME: cause arithmetics is not defined for Booleans and labels...
     template <typename I>
-    impl::min_type<I> min(const abstract::non_vectorial_image<I>& input1,
-			  const abstract::non_vectorial_image<I>& input2)
+    impl::min_type<I> min(const abstract::image<I>& input1,
+			  const abstract::image<I>& input2)
     {
       impl::min_type<I> tmp(input1, input2);
       tmp.run();

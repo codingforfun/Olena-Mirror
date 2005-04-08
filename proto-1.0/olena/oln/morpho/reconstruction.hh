@@ -80,8 +80,8 @@ namespace oln {
 
       const N nbh;
 
-      reconstruction_ret(const abstract::non_vectorial_image<I>& input1,
-			 const abstract::non_vectorial_image<I>& input2,
+      reconstruction_ret(const abstract::image<I>& input1,
+			 const abstract::image<I>& input2,
 			 const abstract::neighborhood<N>& nbh) :
 	super_type(input1.exact(), input2.exact()),
 	nbh(nbh.exact())
@@ -139,8 +139,8 @@ namespace oln {
 	  }
 
 	protected:
-	  reconstruction_sequential_ret(const abstract::non_vectorial_image<I>& input1, //marker
-					const abstract::non_vectorial_image<I>& input2, //mask
+	  reconstruction_sequential_ret(const abstract::image<I>& input1, //marker
+					const abstract::image<I>& input2, //mask
 					const abstract::neighborhood<N>& nbh)
 	    : super_type(input1, input2, nbh)
 	  {}
@@ -154,8 +154,8 @@ namespace oln {
 	{
 	  typedef reconstruction_sequential_ret<I, N> super_type;
 
-	  reconstruction_dilation_ret(const abstract::non_vectorial_image<I>& input1, //marker
-				      const abstract::non_vectorial_image<I>& input2, //mask
+	  reconstruction_dilation_ret(const abstract::image<I>& input1, //marker
+				      const abstract::image<I>& input2, //mask
 				      const abstract::neighborhood<N>& nbh)
 
 	    : super_type(input1, input2, nbh)
@@ -177,8 +177,8 @@ namespace oln {
 	{
 	  typedef reconstruction_sequential_ret<I, N> super_type;
 
-	  reconstruction_erosion_ret(const abstract::non_vectorial_image<I>& input1, //marker
-				     const abstract::non_vectorial_image<I>& input2, //mask
+	  reconstruction_erosion_ret(const abstract::image<I>& input1, //marker
+				     const abstract::image<I>& input2, //mask
 				     const abstract::neighborhood<N>& nbh)
 
 	    : super_type(input1, input2, nbh)
@@ -197,8 +197,8 @@ namespace oln {
 
       template<class I, class N>
       reconstruction_ret<I, N>
-      geodesic_reconstruction_dilation(const abstract::non_vectorial_image<I> & marker,
-				       const abstract::non_vectorial_image<I> & mask,
+      geodesic_reconstruction_dilation(const abstract::image<I> & marker,
+				       const abstract::image<I> & mask,
 				       const abstract::neighborhood<N>& nbh)
       {
 	impl::reconstruction_dilation_ret<I, N> tmp(marker, mask, nbh);
@@ -208,8 +208,8 @@ namespace oln {
 
       template<class I, class N>
       reconstruction_ret<I, N>
-      geodesic_reconstruction_erosion(const abstract::non_vectorial_image<I> & marker,
-				      const abstract::non_vectorial_image<I> & mask,
+      geodesic_reconstruction_erosion(const abstract::image<I> & marker,
+				      const abstract::image<I> & mask,
 				      const abstract::neighborhood<N>& nbh)
       {
 	impl::reconstruction_erosion_ret<I, N> tmp(marker, mask, nbh);
@@ -229,8 +229,8 @@ namespace oln {
 	{
 	  typedef reconstruction_ret<I, N> super_type;
 
-	  reconstruction_hybrid_ret(const abstract::non_vectorial_image<I>& input1, //marker
-				    const abstract::non_vectorial_image<I>& input2, //mask
+	  reconstruction_hybrid_ret(const abstract::image<I>& input1, //marker
+				    const abstract::image<I>& input2, //mask
 				    const abstract::neighborhood<N>& nbh)
 
 	    : super_type(input1, input2, nbh)
@@ -312,8 +312,8 @@ namespace oln {
 	{
 	  typedef reconstruction_hybrid_ret<I, N> super_type;
 
-	  reconstruction_dilation_ret(const abstract::non_vectorial_image<I>& input1, //marker
-				      const abstract::non_vectorial_image<I>& input2, //mask
+	  reconstruction_dilation_ret(const abstract::image<I>& input1, //marker
+				      const abstract::image<I>& input2, //mask
 				      const abstract::neighborhood<N>& nbh)
 
 	    : super_type(input1, input2, nbh)
@@ -371,8 +371,8 @@ namespace oln {
 	{
 	  typedef reconstruction_hybrid_ret<I, N> super_type;
 
-	  reconstruction_erosion_ret(const abstract::non_vectorial_image<I>& input1, //marker
-				      const abstract::non_vectorial_image<I>& input2, //mask
+	  reconstruction_erosion_ret(const abstract::image<I>& input1, //marker
+				      const abstract::image<I>& input2, //mask
 				      const abstract::neighborhood<N>& nbh)
 
 	    : super_type(input1, input2, nbh)
@@ -428,8 +428,8 @@ namespace oln {
 
       template<class I, class N>
       reconstruction_ret<I, N>
-      geodesic_reconstruction_dilation(const abstract::non_vectorial_image<I> & marker,
-				       const abstract::non_vectorial_image<I> & mask,
+      geodesic_reconstruction_dilation(const abstract::image<I> & marker,
+				       const abstract::image<I> & mask,
 				       const abstract::neighborhood<N>& nbh)
       {
 	impl::reconstruction_dilation_ret<I, N> tmp(marker, mask, nbh);
@@ -439,8 +439,8 @@ namespace oln {
 
       template<class I, class N>
       reconstruction_ret<I, N>
-      geodesic_reconstruction_erosion(const abstract::non_vectorial_image<I> & marker,
-				      const abstract::non_vectorial_image<I> & mask,
+      geodesic_reconstruction_erosion(const abstract::image<I> & marker,
+				      const abstract::image<I> & mask,
 				      const abstract::neighborhood<N>& nbh)
       {
 	impl::reconstruction_erosion_ret<I, N> tmp(marker, mask, nbh);
