@@ -1,3 +1,7 @@
+2005-04-08  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* oln/morpho/reconstruction.hh: Improve factorization.
+
 2005-04-08  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* oln/core/pw/logic.hh: Fix include.

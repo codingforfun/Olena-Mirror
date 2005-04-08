@@ -93,47 +93,44 @@ namespace oln {
 
       namespace impl {
 
-	template <typename I, typename N>
+	template <typename I, typename N, typename E>
 	struct reconstruction_sequential_ret : public reconstruction_ret<I, N>
 	{
 	  typedef reconstruction_ret<I, N> super_type;
 
-
-	  virtual const oln_type_of(I, value) process(const I& work,
-						      const oln_type_of(I, point)& p,
-						      const oln_type_of(N, window)& se,
-						      const oln_type_of(I, value)& v)
+	  void fwd_loop_body()
 	  {
-	    std::cerr << "oops in " << __func__ << std::endl;
-	    return oln_type_of(I, value)();
+	    static_cast<E*>((void*)this)->fwd_loop_body_impl();
+	  }
+
+	  void bkd_loop_body()
+	  {
+	    static_cast<E*>((void*)this)->bkd_loop_body_impl();
+	  }
+
+	  void preconditions()
+	  {
+	    precondition(this->input1.size() == this->input2.size());
+	    static_cast<E*>((void*)this)->preconditions_impl();
 	  }
 
 	  void impl_run()
 	  {
 	    mlc::eq<oln_type_of(I, size), oln_type_of(N, size)>::ensure();
-	    precondition(this->input1.size() == this->input2.size());
-	    precondition(level::is_greater_or_equal(this->input2, this->input1));
-
-	    // Conversion of neighborhood into a SE.
-	    oln_type_of(N, window) se_plus = get_plus_se_p(convert::nbh_to_cse(this->nbh));
-	    oln_type_of(N, window) se_minus = get_minus_se_p(convert::nbh_to_cse(this->nbh));
 
 	    I output;
 	    output = utils::clone(this->input1);
 	    bool non_stability = true;
-	    oln_type_of(I, fwd_piter) fwd_p(output.size());
-	    oln_type_of(I, bkd_piter) bkd_p(output.size());
 	    while (non_stability)
 	      {
-		I work;
-		work = utils::clone(output);
+		work.unbox() = utils::clone(output);
 		for_all (fwd_p)
-		  work[fwd_p] = this->process(work, fwd_p, se_plus, this->input2[fwd_p].value());
+		  fwd_loop_body();
 		for_all (bkd_p)
-		  work[bkd_p] = this->process(work, bkd_p, se_minus, this->input2[bkd_p].value());
+		  bkd_loop_body();
 
 		non_stability = !(level::is_equal(work, output));
-		output = work;
+		output = work.unbox();
 	      }
 	    this->output = output;
 	  }
@@ -142,17 +139,27 @@ namespace oln {
 	  reconstruction_sequential_ret(const abstract::image<I>& input1, //marker
 					const abstract::image<I>& input2, //mask
 					const abstract::neighborhood<N>& nbh)
-	    : super_type(input1, input2, nbh)
-	  {}
+	    : super_type(input1, input2, nbh),
+	      fwd_p(input1.size()),
+	      bkd_p(input1.size())
+	  {
+	    se_plus = get_plus_se_p(convert::nbh_to_cse(this->nbh));
+	    se_minus = get_minus_se_p(convert::nbh_to_cse(this->nbh));
+	  }
 
+	  oln_type_of(N, window) se_plus;
+	  oln_type_of(N, window) se_minus;
+	  oln_type_of(I, fwd_piter) fwd_p;
+	  oln_type_of(I, bkd_piter) bkd_p;
+	  box<I> work;
 
 	};
 
-
 	template <typename I, typename N>
-	struct reconstruction_dilation_ret : public reconstruction_sequential_ret<I, N>
+	struct reconstruction_dilation_ret :
+	public reconstruction_sequential_ret<I, N, reconstruction_dilation_ret<I, N> >
 	{
-	  typedef reconstruction_sequential_ret<I, N> super_type;
+	  typedef reconstruction_sequential_ret<I, N, reconstruction_dilation_ret<I, N> > super_type;
 
 	  reconstruction_dilation_ret(const abstract::image<I>& input1, //marker
 				      const abstract::image<I>& input2, //mask
@@ -161,21 +168,35 @@ namespace oln {
 	    : super_type(input1, input2, nbh)
 	  {}
 
-	  const oln_type_of(I, value) process(const I& work,
-					      const oln_type_of(I, point)& p,
-					      const oln_type_of(N, window)& se,
-					      const oln_type_of(I, value)& v)
+	  void fwd_loop_body_impl()
 	  {
-	    return ntg::min(morpho::max(work, p, se), v);
+	    this->work[this->fwd_p] = ntg::min(morpho::max(this->work.unbox(),
+							   this->fwd_p,
+							   this->se_plus),
+					       this->input2[this->fwd_p].value());
+	  }
+
+	  void bkd_loop_body_impl()
+	  {
+	    this->work[this->bkd_p] = ntg::min(morpho::max(this->work.unbox(),
+							   this->bkd_p,
+							   this->se_minus),
+					       this->input2[this->bkd_p].value());
+	  }
+
+	  void preconditions_impl()
+	  {
+	    precondition(level::is_greater_or_equal(this->input2, this->input1));
 	  }
 
 	};
 
 
 	template <typename I, typename N>
-	struct reconstruction_erosion_ret : public reconstruction_sequential_ret<I, N>
+	struct reconstruction_erosion_ret :
+	public reconstruction_sequential_ret<I, N, reconstruction_erosion_ret<I, N> >
 	{
-	  typedef reconstruction_sequential_ret<I, N> super_type;
+	  typedef reconstruction_sequential_ret<I, N, reconstruction_erosion_ret<I, N> > super_type;
 
 	  reconstruction_erosion_ret(const abstract::image<I>& input1, //marker
 				     const abstract::image<I>& input2, //mask
@@ -184,13 +205,27 @@ namespace oln {
 	    : super_type(input1, input2, nbh)
 	  {}
 
-	  const oln_type_of(I, value) process(const I& work,
-					      const oln_type_of(I, point)& p,
-					      const oln_type_of(N, window)& se,
-					      const oln_type_of(I, value)& v) const
+	  void fwd_loop_body_impl()
 	  {
-	    return ntg::max(morpho::min(work, p, se), v);
+	    this->work[this->fwd_p] = ntg::max(morpho::min(this->work.unbox(),
+							   this->fwd_p,
+							   this->se_plus),
+					       this->input2[this->fwd_p].value());
 	  }
+
+	  void bkd_loop_body_impl()
+	  {
+	    this->work[this->bkd_p] = ntg::max(morpho::min(this->work.unbox(),
+							   this->bkd_p,
+							   this->se_minus),
+					       this->input2[this->bkd_p].value());
+	  }
+
+	  void preconditions_impl()
+	  {
+	    precondition(level::is_greater_or_equal(this->input1, this->input2));
+	  }
+
 	};
 
       }
@@ -224,93 +259,113 @@ namespace oln {
 
       namespace impl {
 
-	template <typename I, typename N>
+	template <typename I, typename N, typename E>
 	struct reconstruction_hybrid_ret : public reconstruction_ret<I, N>
 	{
 	  typedef reconstruction_ret<I, N> super_type;
+
+	  bool exist_init()
+	  {
+	    typedef oln_type_of(N, window) se_type;
+	    oln_type_of(se_type, fwd_witer) dp(se_minus);
+	    for_all (dp)
+	      {
+		q = (oln_type_of(se_type, dpoint))dp +
+		  (oln_type_of(I, point))bkd_p;
+		if (static_cast<E*>((void*)this)->exist_init_impl())
+		  return true;
+	      }
+	    return false;
+	  }
+
+	  void fwd_loop_body()
+	  {
+	    static_cast<E*>((void*)this)->fwd_loop_body_impl();
+	  }
+
+	  void bkd_loop_body()
+	  {
+	    static_cast<E*>((void*)this)->bkd_loop_body_impl();
+	  }
+
+	  void fifo_loop_body()
+	  {
+	    static_cast<E*>((void*)this)->fifo_loop_body_impl();
+	  }
+
+	  void preconditions()
+	  {
+	    precondition(this->input1.size() == this->input2.size());
+	    static_cast<E*>((void*)this)->preconditions_impl();
+	  }
+
+	  void impl_run()
+	  {
+	    mlc::eq<oln_type_of(I, size), oln_type_of(N, size)>::ensure();
+	    preconditions();
+
+	    this->output.unbox() = utils::clone(this->input1);
+
+	    std::cout << "for_all (fwd_p)" << std::endl;
+	    for_all (fwd_p)
+	      fwd_loop_body();
+
+	    std::cout << "for_all (bkd_p)" << std::endl;
+	    for_all (bkd_p)
+	      {
+		bkd_loop_body();
+		if (exist_init())
+		  fifo.push(bkd_p);
+	      }
+	      // Propagation Step
+	    while (!fifo.empty())
+	      {
+		p = fifo.front();
+		fifo.pop();
+		typedef oln_type_of(N, window) window_type;
+		window_type w = convert::nbh_to_se(this->nbh);
+		oln_type_of(window_type, fwd_witer) dp(w);
+
+		for_all (dp)
+		  {
+		    q = (oln_type_of(window_type, dpoint))dp + p;
+		    if (this->output.hold(q))
+		      fifo_loop_body();
+		  }
+	      }
+	  }
+
+	protected:
 
 	  reconstruction_hybrid_ret(const abstract::image<I>& input1, //marker
 				    const abstract::image<I>& input2, //mask
 				    const abstract::neighborhood<N>& nbh)
 
-	    : super_type(input1, input2, nbh)
-	  {}
-
-	  virtual const oln_type_of(I, value) process(const I& work,
-						      const oln_type_of(I, point)& p,
-						      const oln_type_of(N, window)& se,
-						      const oln_type_of(I, value)& v) const
+	    : super_type(input1, input2, nbh),
+	      fwd_p(input1.size()),
+	      bkd_p(input1.size())
 	  {
-	    std::cerr << "oops in " << __func__ << std::endl;
-	    return oln_type_of(I, value)();
+	    se_plus = get_plus_se_p(convert::nbh_to_cse(this->nbh));
+	    se_minus = get_minus_se_p(convert::nbh_to_cse(this->nbh));
 	  }
 
-	  virtual void loop_body(const oln_type_of(I, point)& p,
-				 const oln_type_of(I, point)& q,
-				 oln_type_of(I, concrete)& output,
-				 std::queue<oln_type_of(I, point) >& fifo)
-	  {
-	    std::cerr << "oops in " << __func__ << std::endl;
-	  }
-
-	  virtual bool exist_init(const oln_type_of(I, point)& p,
-				  const oln_type_of(I, concrete)& output,
-				  const oln_type_of(N, window)& se) const
-	  {
-	    std::cerr << "oops in " << __func__ << std::endl;
-	    return true;
-	  }
+	  oln_type_of(N, window) se_plus;
+	  oln_type_of(N, window) se_minus;
+	  oln_type_of(I, fwd_piter) fwd_p;
+	  oln_type_of(I, bkd_piter) bkd_p;
+	  oln_type_of(I, point) p;
+	  oln_type_of(I, point) q;
+	  std::queue<oln_type_of(I, point) > fifo;
 
 
-	  void impl_run()
-	  {
-	    mlc::eq<oln_type_of(I, size), oln_type_of(N, size)>::ensure();
-	    precondition(this->input1.size() == this->input2.size());
-	    precondition(level::is_greater_or_equal(this->input2, this->input1));
-
-	    oln_type_of(I, concrete) output;
-	    output = utils::clone(this->input1);
-	    {
-	      oln_type_of(N, window) se_plus = get_plus_se_p(convert::nbh_to_cse(this->nbh));
-	      oln_type_of(N, window) se_minus = get_minus_se_p(convert::nbh_to_cse(this->nbh));
-	      oln_type_of(I, fwd_piter) fwd_p(output.size());
-	      oln_type_of(I, fwd_piter) bkd_p(output.size());
-
-	      for_all (fwd_p)
-		output[fwd_p] = this->process(output, fwd_p, se_plus, this->input2[fwd_p].value());
-
-	      std::queue<oln_type_of(I, point) > fifo;
-	      for_all (bkd_p)
-		{
-		  output[bkd_p] = this->process(output, bkd_p, se_minus, this->input2[bkd_p].value());
-		  if (this->exist_init((oln_type_of(I, point))bkd_p, output, se_minus))
-		    fifo.push(bkd_p);
-		}
-	      // Propagation Step
-	      while (!fifo.empty())
-		{
-		  oln_type_of(I, point) p = fifo.front();
-		  fifo.pop();
-		  typedef oln_type_of(N, window) window_type;
-		  window_type w = convert::nbh_to_se(this->nbh);
-		  oln_type_of(window_type, fwd_witer) dp(w);
-
-		  for_all (dp)
-		    {
-		      oln_type_of(I, point) q = (oln_type_of(window_type, dpoint))dp + p;
-		      this->loop_body(p, q, output, fifo);
-		    }
-		}
-	    }
-	    this->output = output;
-	  }
 	};
 
 
 	template <typename I, typename N>
-	struct reconstruction_dilation_ret : public reconstruction_hybrid_ret<I, N>
+	struct reconstruction_dilation_ret :
+	  public reconstruction_hybrid_ret<I, N, reconstruction_dilation_ret<I, N> >
 	{
-	  typedef reconstruction_hybrid_ret<I, N> super_type;
+	  typedef reconstruction_hybrid_ret<I, N, reconstruction_dilation_ret<I, N> > super_type;
 
 	  reconstruction_dilation_ret(const abstract::image<I>& input1, //marker
 				      const abstract::image<I>& input2, //mask
@@ -319,47 +374,43 @@ namespace oln {
 	    : super_type(input1, input2, nbh)
 	  {}
 
-	  const oln_type_of(I, value) process(const I& work,
-					      const oln_type_of(I, point)& p,
-					      const oln_type_of(N, window)& se,
-					      const oln_type_of(I, value)& v) const
+	  void fwd_loop_body_impl()
 	  {
-	    return ntg::min(morpho::max(work, p, se), v);
+	    this->output[this->fwd_p] = ntg::min(morpho::max(this->output.unbox(),
+							     this->fwd_p,
+							     this->se_plus),
+						 this->input2[this->fwd_p].value());
 	  }
 
-	  virtual void loop_body(const oln_type_of(I, point)& p,
-				 const oln_type_of(I, point)& q,
-				 oln_type_of(I, concrete)& output,
-				 std::queue<oln_type_of(I, point) >& fifo)
+	  void bkd_loop_body_impl()
 	  {
-	    if (output.hold(q))
-	      {
-		if ((output[q] < output[p]) &&
-		    (this->input2[q] != output[q]))
-		  {
-		    output[q] = ntg::min(output[p].value(),
-					 this->input2[q].value());
-		    fifo.push(q);
-		  }
-	      }
-
+	    this->output[this->bkd_p] = ntg::min(morpho::max(this->output.unbox(),
+							     this->bkd_p,
+							     this->se_minus),
+						 this->input2[this->bkd_p].value());
 	  }
 
-
-	  virtual bool exist_init(const oln_type_of(I, point)& p,
-				  const oln_type_of(I, concrete)& marker,
-				  const oln_type_of(N, window)& se) const
+	  void fifo_loop_body_impl()
 	  {
-	    typedef oln_type_of(N, window) se_type;
-	    oln_type_of(se_type, fwd_witer) dp(se);
-	    for_all (dp)
+	    if ((this->output[this->q] < this->output[this->p]) &&
+		(this->input2[this->q] != this->output[this->q]))
 	      {
-		oln_type_of(I, point) q = (oln_type_of(se_type, dpoint))dp + p;
-		if (marker.hold(q) && (marker[q] < marker[p]) &&
-		    (marker[q] < this->input2[q]))
-		  return true;
+		this->output[this->q] = ntg::min(this->output[this->p].value(),
+						 this->input2[this->q].value());
+		this->fifo.push(this->q);
 	      }
-	    return false;
+	  }
+
+	  bool exist_init_impl()
+	  {
+	    return this->output.hold(this->q) &&
+	      (this->output[this->q] < this->output[this->bkd_p]) &&
+	      (this->output[this->q] < this->input2[this->q]);
+	  }
+
+	  void preconditions_impl()
+	  {
+	    precondition(level::is_greater_or_equal(this->input2, this->input1));
 	  }
 
 	};
@@ -367,9 +418,10 @@ namespace oln {
 
 
 	template <typename I, typename N>
-	struct reconstruction_erosion_ret : public reconstruction_hybrid_ret<I, N>
+	struct reconstruction_erosion_ret :
+	  public reconstruction_hybrid_ret<I, N, reconstruction_erosion_ret<I, N> >
 	{
-	  typedef reconstruction_hybrid_ret<I, N> super_type;
+	  typedef reconstruction_hybrid_ret<I, N, reconstruction_erosion_ret<I, N> > super_type;
 
 	  reconstruction_erosion_ret(const abstract::image<I>& input1, //marker
 				      const abstract::image<I>& input2, //mask
@@ -378,51 +430,46 @@ namespace oln {
 	    : super_type(input1, input2, nbh)
 	  {}
 
-	  const oln_type_of(I, value) process(const I& work,
-					      const oln_type_of(I, point)& p,
-					      const oln_type_of(N, window)& se,
-					      const oln_type_of(I, value)& v) const
+	  void fwd_loop_body_impl()
 	  {
-	    return ntg::max(morpho::min(work, p, se), v);
+	    this->output[this->fwd_p] = ntg::max(morpho::min(this->output.unbox(),
+							     this->fwd_p,
+							     this->se_plus),
+						 this->input2[this->fwd_p].value());
 	  }
 
-	  virtual void loop_body(const oln_type_of(I, point)& p,
-				 const oln_type_of(I, point)& q,
-				 oln_type_of(I, concrete)& output,
-				 std::queue<oln_type_of(I, point) >& fifo)
+	  void bkd_loop_body_impl()
 	  {
-	    if (output.hold(q))
+	    this->output[this->bkd_p] = ntg::max(morpho::min(this->output.unbox(),
+							     this->bkd_p,
+							     this->se_minus),
+						 this->input2[this->bkd_p].value());
+	  }
+
+	  void fifo_loop_body_impl()
+	  {
+	    if ((this->output[this->q] > this->output[this->p]) &&
+		(this->input2[this->q] != this->output[this->q]))
 	      {
-		if ((output[q] > output[p]) &&
-		    (this->input2[q] != output[q]))
-		  {
-		    output[q] = ntg::max(output[p].value(),
-					 this->input2[q].value());
-		    fifo.push(q);
-		  }
+		this->output[this->q] = ntg::max(this->output[this->p].value(),
+						 this->input2[this->q].value());
+		this->fifo.push(this->q);
 	      }
 	  }
 
-
-	  virtual bool exist_init(const oln_type_of(I, point)& p,
-				  const oln_type_of(I, concrete)& marker,
-				  const oln_type_of(N, window)& se) const
+	  bool exist_init_impl()
 	  {
-	    typedef oln_type_of(N, window) se_type;
-	    oln_type_of(se_type, fwd_witer) dp(se);
-	    for_all (dp)
-	      {
-		oln_type_of(I, point) q = (oln_type_of(se_type, dpoint))dp + p;
-		if (marker.hold(q) && (marker[q] > marker[p]) &&
-		    (marker[q] > this->input2[q]))
-		  return true;
-	      }
-	    return false;
+	    return this->output.hold(this->q) &&
+		    (this->output[this->q] > this->output[this->bkd_p]) &&
+		    (this->output[this->q] > this->input2[this->q]);
+	  }
+
+	  void preconditions_impl()
+	  {
+	    precondition(level::is_greater_or_equal(this->input1, this->input2));
 	  }
 
 	};
-
-
 
       }
 
