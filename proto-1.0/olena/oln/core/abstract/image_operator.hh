@@ -56,6 +56,22 @@ namespace oln {
   struct set_super_type< abstract::image_binary_operator<O, I1, I2, E> > { typedef abstract::image_operator<O, E> ret; };
 
 
+  // FIXME: an extension of props; remove (test purpose!)
+  template <typename O, typename E>
+  struct set_props < category::image, abstract::image_operator<O, E> > : public props_of<category::image>
+  {
+    typedef float dummy_type;
+  };
+  template <typename O, typename E>
+  struct set_type_of < category::image,
+		       abstract::image_operator<O, E>,
+		       target::dummy_type >
+  {
+    typedef double ret;
+  };
+  // end of FIXME: remove (test purpose!)
+
+
   namespace abstract {
 
 

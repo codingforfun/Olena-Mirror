@@ -25,10 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_PW_CMP_HH
-# define OLENA_CORE_PW_CMP_HH
+#ifndef OLENA_CORE_PW_LOGIC_HH
+# define OLENA_CORE_PW_LOGIC_HH
 
-# include <oln/core/pw/abstract/binary_function.hh>
+# include <oln/core/abstract/image_typeness.hh>
+# include <oln/core/pw/abstract/function.hh>
 
 
 namespace oln {
@@ -40,40 +41,46 @@ namespace oln {
     // FIXME: move somewhere else
     namespace internal
     {
-      struct eq {
-	template <typename L, typename R>
-	bool operator()(const L& lhs, const R& rhs) const {
-	  return lhs == rhs;
+      struct not_ {
+	template <typename T>
+	bool operator()(const T& rhs) const {
+	  return !rhs;
 	}
       };
-      struct neq {
+      struct and_ {
 	template <typename L, typename R>
 	bool operator()(const L& lhs, const R& rhs) const {
-	  return lhs != rhs;
+	  return lhs && rhs;
 	}
       };
-      struct geq {
+      struct nand_ {
 	template <typename L, typename R>
 	bool operator()(const L& lhs, const R& rhs) const {
-	  return lhs >= rhs;
+	  return !(lhs && rhs);
 	}
       };
-      struct leq {
+      struct or_ {
 	template <typename L, typename R>
 	bool operator()(const L& lhs, const R& rhs) const {
-	  return lhs <= rhs;
+	  return lhs || rhs;
 	}
       };
-      struct g {
+      struct nor_ {
 	template <typename L, typename R>
 	bool operator()(const L& lhs, const R& rhs) const {
-	  return lhs > rhs;
+	  return !(lhs || rhs);
 	}
       };
-      struct l {
+      struct xor_ {
 	template <typename L, typename R>
 	bool operator()(const L& lhs, const R& rhs) const {
-	  return lhs < rhs;
+	  return (lhs && !rhs) || (!lhs && rhs);
+	}
+      };
+      struct xnor_ {
+	template <typename L, typename R>
+	bool operator()(const L& lhs, const R& rhs) const {
+	  return (lhs && rhs) || (!lhs && !rhs);
 	}
       };
     } // end of oln::pw::internal
@@ -81,42 +88,70 @@ namespace oln {
 
 
     // fwd decl
-    template <typename L, typename R, typename C> struct cmp;
+    template <typename R> struct not_;
 
-    template <typename L, typename R, typename C>
-    struct traits < cmp<L, R, C> >
+    template <typename R>
+    struct traits < not_<R> >
     {
-      typedef abstract::binary_function<L, R, cmp<L, R, C> > super_type;
-      typedef typename traits<super_type>::point_type point_type;
-      typedef typename traits<super_type>::size_type  size_type;
+      typedef oln_pw_point_type(R) point_type;
+      typedef oln_pw_size_type(R) size_type;
       typedef bool value_type;
     };
 
-
-    template <typename L, typename R, typename C>
-    struct cmp : public abstract::binary_function < L, R, cmp<L, R, C> >
+    template <typename R>
+    struct not_ : public abstract::function < not_<R> >
     {
-      typedef cmp<L, R, C> self_type;
+      typedef not_<R> self_type;
 
       typedef oln_pw_point_type(self_type) point_type;
-      typedef oln_pw_size_type(self_type)  size_type;
       typedef oln_pw_value_type(self_type) value_type;
+      typedef oln_pw_size_type(self_type)  size_type;
 
-      typedef abstract::binary_function < L, R, self_type > super_type;
+      R right;
 
-      cmp(const abstract::function<L>& left,
-	  const abstract::function<R>& right) :
-	super_type(left, right)
+      not_(const abstract::function<R>& right) :
+	right(right.exact())
       {
       }
 
       const bool impl_get(const point_type& p) const
       {
-	static const C cmpfun = C();
-	return cmpfun(this->left(p), this->right(p));
+	return ! this->right(p);
+      }
+
+      const size_type& impl_size() const
+      {
+	return this->right.size();
+      }
+
+      bool impl_hold(const point_type& p) const
+      {
+	return this->right.hold(p);
+      }
+
+      bool impl_hold_large(const point_type& p) const
+      {
+	return this->right.hold_large(p);
       }
 
     };
+    
+
+    // impl of abstract::function<E>::operator!()
+
+    namespace abstract {
+
+      template <typename E>
+      not_<E>
+      function<E>::operator!() const
+      {
+	mlc::eq< oln_typeness_of(oln_pw_value_type(E)), typeness::binary_tag >::ensure();
+	not_<E> tmp(this->exact());
+	return tmp;
+      }
+
+    } // end of namespace oln::pw::abstract
+
 
   } // end of namespace oln::pw
 
@@ -127,28 +162,11 @@ namespace oln {
 
 /// Ops on pwf
 
-# define oln_pw_decl_cmp_op(NAME, SYMBOL)			\
-template <typename L, typename R>				\
-oln::pw::cmp<L, R, oln::pw::internal::NAME>			\
-operator SYMBOL (const oln::pw::abstract::function<L>& lhs,	\
-		 const oln::pw::abstract::function<R>& rhs)	\
-{								\
-  precondition(lhs.size() == rhs.size());			\
-  oln::pw::cmp<L, R, oln::pw::internal::NAME> tmp(lhs, rhs);	\
-  return tmp;							\
-}
+oln_pw_decl_cmp_op(and_, &&)
+oln_pw_decl_cmp_op(or_,  ||)
 
-oln_pw_decl_cmp_op(eq,  ==)
-oln_pw_decl_cmp_op(neq, !=)
-oln_pw_decl_cmp_op(geq, >=)
-oln_pw_decl_cmp_op(leq, <=)
-oln_pw_decl_cmp_op(g, >)
-oln_pw_decl_cmp_op(l, <)
-
-oln_pw_cmp_operators(int)
-oln_pw_cmp_operators(float)
-oln_pw_cmp_operators(double)
+oln_pw_cmp_operator(and_, &&, bool)
+oln_pw_cmp_operator(or_,  ||, bool)
 
 
-
-#endif // ! OLENA_CORE_PW_CMP_HH
+#endif // ! OLENA_CORE_PW_LOGIC_HH

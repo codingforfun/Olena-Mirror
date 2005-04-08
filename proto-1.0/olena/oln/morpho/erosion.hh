@@ -120,6 +120,33 @@ namespace oln {
   };
 
 
+
+  // FIXME: remove (test purpose!)
+  // fwd decl
+  namespace morpho {
+    namespace impl {
+      template <typename I, typename S> struct generic_erosion;
+    }
+  }
+  // category
+  template <typename I, typename S>
+  struct set_category< morpho::impl::generic_erosion<I,S> > { typedef category::image ret; };
+  // super_type
+  template <typename I, typename S>
+  struct set_super_type< morpho::impl::generic_erosion<I,S> >
+  {
+    typedef morpho::erosion_ret<I,S> ret;
+  };
+  template <typename I, typename S>
+  struct set_type_of< category::image, morpho::impl::generic_erosion<I,S>, target::dummy_type >
+  {
+    typedef S ret;
+  };
+  // end of FIXME: remove (test purpose!)
+
+
+
+
   namespace morpho {
 
     /// Erosion return.
@@ -140,6 +167,7 @@ namespace oln {
 	}
 
     };
+
 
 
     namespace impl {

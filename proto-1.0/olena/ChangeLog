@@ -1,3 +1,41 @@
+2005-04-08  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* oln/core/pw/logic.hh: New file.
+	* oln/core/abstract/image_valuedness.hh: New file.
+	* oln/core/abstract/image_vectorialness.hh: Remove.
+	* oln/core/abstract/image_typeness.hh: New file.
+	* oln/arith/logic.hh: New file.
+	* oln/core/pw/image.hh (image_vectorialness_type): Remove.
+	(for_all_p): Update.
+	* oln/core/pw/macros.hh (oln_pw_cmp_operator): New macro.
+	(oln_pw_cmp_operators): New macro.
+	* oln/core/pw/abstract/function.hh (operator!): New method.
+	* oln/core/pw/all.hh (oln/core/pw/logic.hh): New include. 
+	* oln/core/pw/minus.hh: Cosmetic change.
+	* oln/core/pw/cmp.hh: Derive from pw::abstract::binary_function.
+	* oln/core/pw/logic.hh: New file.
+	* oln/core/properties.hh (image_typeness_type): New target.
+	(image_valuedness_type): Likewise.
+	(dummy_type): New target for temporary dummy tests.
+	* oln/core/abstract/image_constness.hh: Fix include.
+	* oln/core/abstract/image_neighbness.hh: Likewise.
+	* oln/core/abstract/image.hh (image_vectorialness_type): Remove.
+	* oln/core/abstract/image_operator.hh (abstract::image_operator):
+	New props and set_type_of for temporary dummy tests.
+	* oln/core/abstract/entry.hh (typeness::inheritance_switch): New
+	inheritance.
+	(valuedness::inheritance_switch): Likewise.	
+	* oln/core/abstract/images.hh: Update.
+	* oln/core/abstract/image_with_data.hh: Cosmetic change.
+	* oln/core/1d/image1d.hh (image_vectorialness_type): Remove.
+	* oln/core/2d/image2d.hh: Likewise.
+	* oln/core/3d/image3d.hh: Likewise.
+	* oln/makefile.src: Update.
+	* oln/morpho/stat.hh (min, max): Change sig.
+	* oln/morpho/erosion.hh (morpho::impl::generic_erosion): Add
+	code for temporary dummy tests.
+	* oln/arith/ops.hh (operator+): Add erroneous overloading. 
+
 2005-04-06  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
 	* oln/core/abstract/niter.hh: New. Abstract neighborhood iterator class.

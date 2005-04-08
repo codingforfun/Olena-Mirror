@@ -35,23 +35,51 @@
 # define oln_pw_size_type(F)  typename oln::pw::traits<F>::size_type
 
 
-// FIXME: rename
+// FIXME: rename?
 # define oln_pw_operator(NAME, SYMBOL, TYPE)			\
 template <typename L>						\
 oln::pw::NAME<L, oln::pw::literal<TYPE> >			\
 operator SYMBOL (const oln::pw::abstract::function<L>& lhs,	\
-		 TYPE value)					\
+		 const TYPE& value)				\
 {								\
   return lhs SYMBOL oln::pw::literal<TYPE>(value);		\
 }								\
 template <typename R>						\
 oln::pw::NAME<oln::pw::literal<TYPE>, R>			\
-operator SYMBOL (TYPE value,					\
+operator SYMBOL (const TYPE& value,				\
 		 const oln::pw::abstract::function<R>& rhs)	\
 {								\
   return oln::pw::literal<TYPE>(value) SYMBOL rhs;		\
 }
 
+
+
+// FIXME: rename?
+# define oln_pw_cmp_operator(NAME, SYMBOL, TYPE)			\
+template <typename L>							\
+oln::pw::cmp<L, oln::pw::literal<TYPE>, oln::pw::internal::NAME>	\
+operator SYMBOL (const oln::pw::abstract::function<L>& lhs,		\
+		 const TYPE& value)					\
+{									\
+  return lhs SYMBOL oln::pw::literal<TYPE>(value);			\
+}									\
+template <typename R>							\
+oln::pw::cmp<oln::pw::literal<TYPE>, R, oln::pw::internal::NAME>	\
+operator SYMBOL (const TYPE& value,					\
+		 const oln::pw::abstract::function<R>& rhs)		\
+{									\
+  return oln::pw::literal<TYPE>(value) SYMBOL rhs;			\
+}
+
+
+// FIXME: rename?
+# define oln_pw_cmp_operators(TYPE)		\
+oln_pw_cmp_operator(eq, ==, TYPE)		\
+oln_pw_cmp_operator(neq, !=, TYPE)		\
+oln_pw_cmp_operator(geq, >=, TYPE)		\
+oln_pw_cmp_operator(leq, <=, TYPE)		\
+oln_pw_cmp_operator(g, >, TYPE)			\
+oln_pw_cmp_operator(l, <, TYPE)
 
 
 #endif // ! OLENA_CORE_PW_MACROS_HH

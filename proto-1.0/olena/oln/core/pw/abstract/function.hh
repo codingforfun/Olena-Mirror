@@ -47,7 +47,7 @@ namespace oln {
     }
     template <typename L, typename R> struct minus;
     template <typename T> struct literal;
-
+    template <typename F> struct not_;
 
 
     template <typename E>
@@ -87,7 +87,8 @@ namespace oln {
 	  return this->exact().impl_hold_large(p);
 	}
 
-	minus< literal<value_type>, E> operator-() const;
+	minus<literal<value_type>, E> operator-() const;
+	not_<E> operator!() const;
 
       protected:
 	function() {}

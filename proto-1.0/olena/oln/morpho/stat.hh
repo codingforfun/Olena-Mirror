@@ -154,7 +154,7 @@ namespace oln {
     */
     template<class I, class E>
     oln_type_of(I, value)
-    max(const abstract::non_vectorial_image<I>& input,
+    max(const abstract::image<I>& input,
 	const oln_type_of(I, point)& p,
 	const abstract::struct_elt<E>& se)
     {
@@ -176,7 +176,7 @@ namespace oln {
     */
     template<class I, class E>
     oln_type_of(I, value)
-    min(const abstract::non_vectorial_image<I>& input,
+    min(const abstract::image<I>& input,
 	const oln_type_of(I, point)& p,
 	//		 const mlc_exact_type(I)::iter_type& p,
 	const abstract::struct_elt<E>& se)

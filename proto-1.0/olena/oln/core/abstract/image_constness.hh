@@ -28,7 +28,6 @@
 #ifndef OLENA_CORE_ABSTRACT_IMAGE_CONSTNESS_HH
 # define OLENA_CORE_ABSTRACT_IMAGE_CONSTNESS_HH
 
-# include <oln/core/abstract/internal/image_impl.hh>
 # include <oln/core/abstract/image.hh>
 
 /*! \namespace oln

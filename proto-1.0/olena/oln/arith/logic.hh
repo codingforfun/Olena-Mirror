@@ -1,4 +1,4 @@
-// Copyright (C) 2005 EPITA Research and Development Laboratory
+// Copyright (C) 2005  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,23 +25,47 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_PW_ALL_HH
-# define OLENA_CORE_PW_ALL_HH
+#ifndef OLENA_LOGIC_OPS_HH
+# define OLENA_LOGIC_OPS_HH
+
+# include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/image_typeness.hh>
+# include <oln/core/pw/all.hh>
 
 
-# include <oln/core/pw/abstract/function.hh>
-# include <oln/core/pw/image.hh>
-# include <oln/core/pw/literal.hh>
+/// Operator 'and' between 2 binary images.
 
-# include <oln/core/pw/cmp.hh>
-# include <oln/core/pw/logic.hh>
-
-# include <oln/core/pw/plus.hh>
-# include <oln/core/pw/minus.hh>
-# include <oln/core/pw/times.hh>
-# include <oln/core/pw/div.hh>
-
-// FIXME: xor mod...
+template <typename L, typename R>
+oln::image_from_pw< oln::pw::cmp< oln::pw::image<L>,
+				  oln::pw::image<R>, oln::pw::internal::and_ > >
+operator && (const oln::abstract::binary_image<L>& lhs,
+	     const oln::abstract::binary_image<R>& rhs)
+{
+  return oln::for_all_p(oln::p_value(lhs) && oln::p_value(rhs));
+}
 
 
-#endif // ! OLENA_CORE_PW_ALL_HH
+/// Operator 'or' between 2 binary images.
+
+template <typename L, typename R>
+oln::image_from_pw< oln::pw::cmp< oln::pw::image<L>,
+				  oln::pw::image<R>, oln::pw::internal::or_ > >
+operator || (const oln::abstract::binary_image<L>& lhs,
+	     const oln::abstract::binary_image<R>& rhs)
+{
+  return oln::for_all_p(oln::p_value(lhs) || oln::p_value(rhs));
+}
+
+
+/// Unary operator 'not' on a binary image.
+
+template <typename I>
+oln::image_from_pw< oln::pw::not_< oln::pw::image<I> > >
+operator ! (const oln::abstract::binary_image<I>& rhs)
+{
+  return oln::for_all_p(!oln::p_value(rhs));
+}
+
+
+
+#endif // ! OLENA_LOGIC_OPS_HH

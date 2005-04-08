@@ -28,13 +28,9 @@
 #ifndef OLENA_CORE_ABSTRACT_ENTRY_HH
 # define OLENA_CORE_ABSTRACT_ENTRY_HH
 
-# include <oln/core/abstract/image_constness.hh>
-# include <oln/core/abstract/image_dimension.hh>
-# include <oln/core/abstract/image_vectorialness.hh>
-# include <oln/core/abstract/image_neighbness.hh>
+# include <oln/core/abstract/images.hh>
 
 
-// FIXME: this file should move to oln/core/abstract/
 
 
 namespace oln {
@@ -52,19 +48,7 @@ namespace oln {
     typedef category::image ret;
   };
 
-
-
   namespace abstract {
-
-//     namespace internal {
-
-//       template < typename isa, typename E >
-//       struct inherits
-//       {
-// 	typedef typename isa::template instantiated_with<E>::ret ret;
-//       };
-
-//     }
 
     template <typename E>
     struct image_entry :
@@ -72,8 +56,9 @@ namespace oln {
       public oln_type_of_(E, image_constness) ::template instantiated_with<E>::ret,
       public oln_type_of_(E, image_dimension) ::template instantiated_with<E>::ret,
       public oln_type_of_(E, image_neighbness) ::template instantiated_with<E>::ret,
-      public oln_type_of_(E, image_vectorialness) ::template instantiated_with<E>::ret
-    // ...
+      // ...
+      public typeness::inheritance_switch<E>,
+      public valuedness::inheritance_switch<E>
     {
     protected:
       image_entry() {}

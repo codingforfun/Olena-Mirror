@@ -31,6 +31,7 @@
 # include <mlc/any.hh>
 # include <mlc/cmp.hh>
 # include <oln/core/box.hh>
+# include <oln/core/abstract/image_typeness.hh>
 # include <oln/core/abstract/entry.hh>
 # include <oln/core/pw/abstract/function.hh>
 
@@ -130,7 +131,6 @@ namespace oln {
 
     // FIXME: AWFUL we do not know if it is 2d...
     typedef is_a<abstract::image2d> image_dimension_type;
-    typedef vectorialness_from_valuetype(value_type) image_vectorialness_type;
 
     typedef fwd_piter2d piter_type;
     typedef fwd_piter2d fwd_piter_type;
@@ -199,7 +199,7 @@ namespace oln {
   };
 
 
-  /// Routine
+  /// Routine for_all_p.
 
   template <typename F>
   image_from_pw<F> for_all_p(const pw::abstract::function<F>& fun)
@@ -208,6 +208,16 @@ namespace oln {
     return tmp;
   }
 
+
+  // FIXME: below, produce an error instead of correcting the client code (?)
+
+  /// Specialization of for_all_p (so that "for_all_p(p_value(ima)) == ima").
+
+  template <typename I>
+  const I& for_all_p(const pw::image<I>& pv)
+  {
+    return pv.ima.unbox();
+  }
 
   /// Specialization of p_value (so that "p_value(for_all_p(fun)) == fun").
 
@@ -220,21 +230,19 @@ namespace oln {
 
 
 
+
+
   /// Routine check.
-  // FIXME: this should be an algorithm (pred = binary_image)
 
   template <typename I>
-  bool check(const abstract::image<I>& pred)
+  bool check(const abstract::binary_image<I>& pred)
   {
-    // FIXME: input should be binary
     oln_type_of(I, fwd_piter) p(pred.size());
     for_all (p)
       if (! pred[p])
 	return false;
     return true;
   }
-
-
 
   namespace pw {
 
@@ -243,11 +251,31 @@ namespace oln {
     template <typename F>
     bool check(const pw::abstract::function<F>& pred)
     {
-      mlc::eq< oln_pw_value_type(F), bool >::ensure();
+      mlc::eq< oln_typeness_of(oln_pw_value_type(F)), typeness::binary_tag >::ensure();
       return oln::check(for_all_p(pred));
     }
 
   } // end of namespace oln::pw
+
+
+
+
+  /// Specialization of for_all_p that gives a compile-time error.
+
+  template <typename I>
+  void for_all_p(const abstract::image<I>&)
+  {
+    struct OLENA_ERROR__arg_of__for_all_p__should_not_be_an_image();
+  }
+
+  /// Specialization of for_all_p that gives a compile-time error.
+
+  template <typename P>
+  void for_all_p(const abstract::point<P>&)
+  {
+    struct OLENA_ERROR__arg_of__for_all_p__should_not_be_a_point();
+  }
+
 
 
 } // end of namespace oln

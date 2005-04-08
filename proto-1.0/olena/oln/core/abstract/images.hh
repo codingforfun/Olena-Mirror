@@ -29,11 +29,19 @@
 # define OLENA_CORE_ABSTRACT_IMAGES_HH
 
 
-# include <oln/core/abstract/internal/image_impl.hh>
-
-
 # include <oln/core/abstract/image.hh>
+
+// hierarchies:
 # include <oln/core/abstract/image_constness.hh>
+# include <oln/core/abstract/image_dimension.hh>
+# include <oln/core/abstract/image_neighbness.hh>
+# include <oln/core/abstract/image_typeness.hh>
+# include <oln/core/abstract/image_valuedness.hh>
+
+
+// hierarchy entry
+# include <oln/core/abstract/entry.hh>
+
 
 
 #endif // ! OLENA_CORE_ABSTRACT_IMAGES_HH

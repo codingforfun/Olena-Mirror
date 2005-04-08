@@ -28,10 +28,6 @@
 #ifndef OLENA_CORE_ABSTRACT_IMAGE_NEIGHBNESS_HH
 # define OLENA_CORE_ABSTRACT_IMAGE_NEIGHBNESS_HH
 
-# include <mlc/bool.hh>
-
-# include <ntg/basics.hh>
-
 # include <oln/core/abstract/image.hh>
 
 /*! \namespace oln

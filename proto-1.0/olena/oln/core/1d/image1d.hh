@@ -31,9 +31,8 @@
 # include <mlc/traits.hh>
 
 # include <oln/core/abstract/image_with_data.hh>
-# include <oln/core/abstract/image_vectorialness.hh>
+# include <oln/core/abstract/image_like_.hh>
 # include <oln/core/1d/array1d.hh>
-# include <oln/core/1d/fwd_piter1d.hh>
 
 
 
@@ -44,7 +43,8 @@ namespace oln {
 
 
 
-  // fwd decl
+  // fwd decls
+  struct fwd_piter1d;
   template <typename T> class image1d;
 
   // category
@@ -65,7 +65,6 @@ namespace oln {
     // intrusive property:
     typedef is_a<abstract::image1d> image_dimension_type;
     // FIXME: should be generalized
-    typedef vectorialness_from_valuetype(T) image_vectorialness_type;
 
     typedef mlc::no_type delegated_type;
 

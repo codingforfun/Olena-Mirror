@@ -75,8 +75,11 @@ namespace oln
     struct image_neighbness_type;
     struct image_constness_type;
     struct image_dimension_type;
-    struct image_vectorialness_type;
+    struct image_typeness_type;
+    struct image_valuedness_type;
     // FIXME: ...
+
+    struct dummy_type; // FIXME: remove (test purpose!)
   }
 
   mlc_equip_namespace_for_properties();

@@ -77,7 +77,6 @@ namespace oln {
     mlc_decl_prop_with_default(category::image, image_neighbness_type, is_a<abstract::image_without_nbh>);
     mlc_decl_prop_with_default(category::image, image_constness_type, is_a<abstract::readonly_image>);
     mlc_decl_prop(category::image, image_dimension_type);
-    mlc_decl_prop(category::image, image_vectorialness_type);
 
     //...
 
@@ -97,7 +96,6 @@ namespace oln {
 
 	   << "  image_constness_type = " << typeid(image_constness_type).name()
 	   << "  image_dimension_type = " << typeid(image_dimension_type).name()
-	   << "  image_vectorialness_type = " << typeid(image_vectorialness_type).name()
 	   << "  image_neighbness_type = " << typeid(image_neighbness_type).name()
 
 	   << "  }" << std::endl;
@@ -119,7 +117,6 @@ namespace oln {
 
   mlc_register_prop(category::image, image_constness_type);
   mlc_register_prop(category::image, image_dimension_type);
-  mlc_register_prop(category::image, image_vectorialness_type);
   mlc_register_prop(category::image, image_neighbness_type);
 
 

@@ -77,12 +77,12 @@ namespace oln {
     };
 
 
-    // FIXME: uncomment?
+    // impl of abstract::function<E>::operator-()
 
     namespace abstract {
 
       template <typename E>
-      minus< literal<oln_pw_value_type(E)>, E>
+      minus<literal<oln_pw_value_type(E)>, E>
       function<E>::operator-() const
       {
 	typedef literal<oln_pw_value_type(E)> lit_type;
@@ -91,7 +91,7 @@ namespace oln {
 	return tmp;
       }
 
-    }
+    } // end of namespace oln::pw::abstract
 
 
   } // end of namespace oln::pw

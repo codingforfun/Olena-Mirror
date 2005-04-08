@@ -30,7 +30,6 @@
 
 
 # include <mlc/tracked_ptr.hh>
-
 # include <oln/core/abstract/entry.hh>
 
 

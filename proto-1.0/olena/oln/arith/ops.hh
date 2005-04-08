@@ -29,6 +29,7 @@
 # define OLENA_ARITH_OPS_HH
 
 # include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/image_typeness.hh>
 # include <oln/core/pw/all.hh>
 
 
@@ -128,6 +129,21 @@ oln_decl_binary_operator(div, /, int)
 oln_decl_binary_operator(div, /, float)
 oln_decl_binary_operator(div, /, double)
 
+
+
+template <typename I, typename F>
+void operator + (const oln::abstract::image<I>&,
+		 const oln::pw::abstract::function<F>&)
+{
+  struct OLENA_ERROR__args_are_not_compatible();
+}
+template <typename F, typename I>
+void operator + (const oln::pw::abstract::function<F>&,
+		 const oln::abstract::image<I>&)
+{
+  struct OLENA_ERROR__args_are_not_compatible();
+}
+// FIXME: to be continued...
 
 
 #endif // ! OLENA_ARITH_OPS_HH
