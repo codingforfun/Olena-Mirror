@@ -1,3 +1,7 @@
+2005-04-08  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* ntg/decls.hh: New file.
+
 2005-04-06  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* ntg/real/int_s.hh: Conform to mlc.
