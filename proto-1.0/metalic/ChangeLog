@@ -1,3 +1,7 @@
+2005-04-08  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* mlc/bool.hh: Extend.
+
 2005-04-06  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* mlc/int.hh: Remove (redundant with mlc/arith.hh).

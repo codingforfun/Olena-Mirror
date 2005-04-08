@@ -85,10 +85,12 @@ namespace mlc
 
   /// Logical binary operators between a couple of Boolean types
 
-  template <typename L, typename R> struct and_  : public value <bool, (L::b && R::b)> {};
-  template <typename L, typename R> struct or_   : public value <bool, (L::b || R::b)> {};
-  template <typename L, typename R> struct nand_ : public value <bool, (L::b && !R::b)> {}; 
-  template <typename L, typename R> struct xor_  : public value <bool, ((L::b && !R::b) || (!L::b && R::b))> {};
+  template <typename L, typename R> struct and_  : public value <bool,   (L::b && R::b) > {};
+  template <typename L, typename R> struct nand_ : public value <bool, (!(L::b && R::b))> {}; 
+  template <typename L, typename R> struct or_   : public value <bool,   (L::b || R::b) > {};
+  template <typename L, typename R> struct nor_  : public value <bool, (!(L::b || R::b))> {};
+  template <typename L, typename R> struct xor_  : public value <bool,   (L::b != R::b) > {};
+  template <typename L, typename R> struct xnor_ : public value <bool, (!(L::b != R::b))> {};
 
 } // end of namespace mlc
 
