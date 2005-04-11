@@ -1,3 +1,12 @@
+2005-04-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Update the test machinery.
+
+	* tests/sanity/includes.test: Ignore files whose path contains an
+	`internal' subdirectory.
+	* oln/makefile.src (OLN_DEP): Add core/abstract/image_entry.hh,
+	core/abstract/qiter.hh and core/typedefs.hh.
+
 2005-04-11  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* oln/core/value_box.hh: Move to...
