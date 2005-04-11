@@ -42,16 +42,16 @@ namespace mlc
   {
 
     template <bool b, typename then_type, typename else_type>
-    struct if_;
+    struct fun_if_;
 
     template <typename then_type, typename else_type>
-    struct if_ <true, then_type, else_type>
+    struct fun_if_ <true, then_type, else_type>
     {
       typedef then_type ret;
     };
     
     template <typename then_type, typename else_type>
-    struct if_ <false, then_type, else_type>
+    struct fun_if_ <false, then_type, else_type>
     {
       typedef else_type ret;
     };
@@ -60,7 +60,7 @@ namespace mlc
 
 
   template <typename cond_type, typename then_type, typename else_type>
-  struct if_ : public internal::if_ < cond_type::b, then_type, else_type >
+  struct if_ : public internal::fun_if_ < mlc_bool(cond_type), then_type, else_type >
   {
   };
 

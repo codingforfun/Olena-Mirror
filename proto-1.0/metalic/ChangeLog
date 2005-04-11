@@ -1,3 +1,22 @@
+2005-04-11  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* mlc/typedef.hh: New file.
+	* mlc/implies.hh: New file.
+	* mlc/to_string.hh: New file.
+	* mlc/bool.hh (Boolean_value): Remove.
+	(value): Add inheritance.
+	(b): Rename as...
+	(Boolean_value): ... this.
+	(mlc_bool, internal::helper_get_bool): New.
+	(T::b): Update to mlc_bool(T).
+	* mlc/properties.hh: Rewrite.
+	* mlc/if.hh (internal::if_): Rename as...
+	(internal::fun_if_): ...this.
+	(::b): Update with mlc_bool.
+	* mlc/types.hh (internal::not_found): New type.
+	* mlc/cmp.hh (eq, neq): Add inheritance.
+	(is_found, is_not_found): New.
+
 2005-04-08  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* mlc/bool.hh: Extend.

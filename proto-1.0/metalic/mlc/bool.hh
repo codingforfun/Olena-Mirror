@@ -31,19 +31,19 @@
 # include <mlc/value.hh>
 
 
+/// Macro that retrieves a Boolean value from a static type representing a Boolean.
+# define mlc_bool(Type)  mlc::internal::helper_get_bool< Type >::ret
+
+
 namespace mlc
 {
-
-  struct Boolean_value
-  {
-  };
 
   /// Specializations of mlc::value for T = bool; when v = true, ensure() is provided.
 
   template <>
-  struct value <bool, true> : public Boolean_value
+  struct value <bool, true>
   {
-    static const bool b   = true;
+    static const bool Boolean_value = true;
     static const bool val = true;
     static void ensure() {}
   protected:
@@ -51,9 +51,9 @@ namespace mlc
   };
 
   template <>
-  struct value <bool, false> : public Boolean_value
+  struct value <bool, false>
   {
-    static const bool b   = false;
+    static const bool Boolean_value = false;
     static const bool val = false;
   protected:
     value() {}
@@ -65,7 +65,21 @@ namespace mlc
   typedef value<bool, false> false_type;
 
 
-  /// Classes is_true<b> and is_false<b> (provided for bkd compability).
+  namespace internal
+  {
+
+    template <typename T>
+    struct helper_get_bool
+    {
+      // FIXME: static check that T dderives from either true_type or false_type...
+      static const bool ret = T::Boolean_value;
+    };
+
+  } // end of namespace mlc::internal
+
+  
+
+  /// Classes is_true<b> and is_false<b> (only provided for bkd compability).
 
   template <bool b> struct is_true {};
   template <> struct is_true <true> { static void ensure() {} };
@@ -78,19 +92,19 @@ namespace mlc
   /// Logical unary not of a Boolean type
 
   template <typename T>
-  struct not_ : public value<bool, !T::b>
+  struct not_ : public value<bool, !mlc_bool(T)>
   {
     // FIXME: static assert here and below s.a. ~not_() { mlc_is_a(not_<T>, Boolean_value); }
   };
 
   /// Logical binary operators between a couple of Boolean types
 
-  template <typename L, typename R> struct and_  : public value <bool,   (L::b && R::b) > {};
-  template <typename L, typename R> struct nand_ : public value <bool, (!(L::b && R::b))> {}; 
-  template <typename L, typename R> struct or_   : public value <bool,   (L::b || R::b) > {};
-  template <typename L, typename R> struct nor_  : public value <bool, (!(L::b || R::b))> {};
-  template <typename L, typename R> struct xor_  : public value <bool,   (L::b != R::b) > {};
-  template <typename L, typename R> struct xnor_ : public value <bool, (!(L::b != R::b))> {};
+  template <typename L, typename R> struct and_  : public value <bool,   (mlc_bool(L) && mlc_bool(R)) > {};
+  template <typename L, typename R> struct nand_ : public value <bool, (!(mlc_bool(L) && mlc_bool(R)))> {}; 
+  template <typename L, typename R> struct or_   : public value <bool,   (mlc_bool(L) || mlc_bool(R)) > {};
+  template <typename L, typename R> struct nor_  : public value <bool, (!(mlc_bool(L) || mlc_bool(R)))> {};
+  template <typename L, typename R> struct xor_  : public value <bool,   (mlc_bool(L) != mlc_bool(R)) > {};
+  template <typename L, typename R> struct xnor_ : public value <bool, (!(mlc_bool(L) != mlc_bool(R)))> {};
 
 } // end of namespace mlc
 

@@ -52,6 +52,13 @@ namespace mlc {
   class default_type { private: default_type(); };
 
 
+  namespace internal
+  {
+    class not_found { private: not_found(); };
+
+  } // end of namespace mlc::internal
+
+
 } // end of namespace mlc
 
 

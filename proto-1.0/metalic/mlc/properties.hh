@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005 EPITA Research and Development Laboratory
+// Copyright (C) 2005 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,195 +28,205 @@
 #ifndef METALIC_PROPERTIES_HH
 # define METALIC_PROPERTIES_HH
 
-# include <iostream>
-# include <typeinfo>
-
-# include <mlc/if.hh>
-# include <mlc/cmp.hh>
 # include <mlc/types.hh>
+# include <mlc/typedef.hh>
+# include <mlc/bool.hh>
+# include <mlc/implies.hh>
+# include <mlc/cmp.hh>
+# include <mlc/if.hh>
+# include <mlc/is_a.hh>
+
+
+// this is an internal macro
+# define mlc_internal_get_typedef_(FromType, TypedefType) \
+  typename internal::get_typedef <FromType, TypedefType> ::ret
 
 
 
-/// macro to equip a namespace for properties:
-
-# define mlc_equip_namespace_for_properties()					\
+# define mlc_equip_namespace_with_properties()					\
 										\
-  template <typename T>								\
-  struct set_category								\
+  mlc_equip_namespace_with_typedef();						\
+  mlc_decl_typedef(ret);							\
+										\
+  template <template <typename> class abstraction>				\
+  struct is_a									\
   {										\
-    typedef mlc::undefined_type ret;						\
+    template <typename E>							\
+    struct instantiated_with							\
+    {										\
+      typedef abstraction<E> ret;						\
+    };										\
   };										\
 										\
-  template <typename T>								\
+  template <typename type, unsigned i = 0>					\
   struct set_super_type								\
   {										\
     typedef mlc::no_type ret;							\
   };										\
 										\
+  template <typename type, unsigned i = 0>					\
+  struct set_category								\
+  {										\
+    typedef mlc::no_type ret;							\
+  };										\
+										\
+  template <typename category>							\
+  struct set_default_props							\
+  {										\
+  };										\
+										\
   template <typename category, typename type>					\
   struct set_props								\
   {										\
-    typedef mlc::false_type user_defined_;					\
-  };										\
-										\
-  template <typename category, typename kind = mlc::no_type>			\
-  struct props_of								\
-  {										\
   };										\
 										\
   template <typename category, typename type>					\
-  struct get_props : public props_of <category, type>				\
+  struct get_props								\
   {										\
   };										\
 										\
-  template <typename category, typename from_type, typename target>		\
-  struct set_type_of								\
-  {										\
-    typedef mlc::undefined_type ret;						\
-  };										\
-										\
-  template <typename category, typename from_type, typename target>		\
-  struct get_type_of : public set_type_of <category, from_type, target>		\
+  template <typename category, typename from_type, typename typedef_type>	\
+  struct set_type								\
   {										\
   };										\
 										\
   namespace internal								\
   {										\
-    template <typename T>							\
-    struct get_category : public set_category <T>				\
+										\
+    template <typename type, unsigned i = 0>					\
+    struct get_super_type : public set_super_type <type, i>			\
     {										\
     };										\
-    template <typename T>							\
-    struct get_super_type : public set_super_type <T>				\
+										\
+    template <typename type, unsigned i = 0>					\
+    struct get_category : public set_category <type, i>				\
+    {										\
+    };										\
+										\
+    template <typename category>						\
+    struct get_default_props : public set_default_props <category>		\
     {										\
     };										\
 										\
     template <typename category, typename type>					\
     struct get_props : public set_props <category, type>			\
     {										\
-      /* FIXME: test that user_defined_ is ok */				\
     };										\
 										\
-    template <typename category, typename type, typename target>		\
-    struct get_prop								\
+    template <typename category, typename from_type, typename typedef_type>	\
+    struct get_type : public set_type <category, from_type, typedef_type>	\
     {										\
-      typedef mlc::undefined_type ret;						\
+      ~get_type()								\
+      {										\
+	typedef set_type <category, from_type, typedef_type> super_type;	\
+	typedef mlc_internal_get_typedef_(get_default_props<category>,		\
+					  typedef_type) prop_type;		\
+										\
+	mlc::implies< mlc::neq< mlc_typedef_of(super_type, ret),		\
+	                   mlc::internal::not_found >,				\
+	         mlc::eq< prop_type,						\
+	                  mlc::internal::not_found > >::ensure();		\
+      }										\
     };										\
 										\
-    template <typename category, typename type, typename target,		\
-	      typename is_no_type__type, typename is_user_defined__type>	\
-    struct get_prop_helper							\
+										\
+    template <typename category, typename from_type, typename typedef_type>	\
+    struct f_rec_get_prop							\
     {										\
-      typedef mlc::undefined_type ret;						\
+      typedef get_props<category, from_type> props;				\
+      typedef mlc_internal_get_typedef_(props, typedef_type) prop;		\
+										\
+      typedef typename								\
+      mlc::if_< mlc::neq< prop, mlc::internal::not_found >,			\
+	        prop,								\
+	   typename f_rec_get_prop< category,					\
+				typename get_super_type<from_type, 0>::ret,	\
+				typedef_type >::ret				\
+      >::ret ret;								\
+    };										\
+										\
+    template <typename category, typename typedef_type>				\
+    struct f_rec_get_prop <category, mlc::no_type, typedef_type>		\
+    {										\
+      typedef mlc_internal_get_typedef_(get_default_props<category>,		\
+					typedef_type) ret;			\
+      ~f_rec_get_prop()								\
+      {										\
+	mlc::and_< mlc::neq< ret, mlc::internal::not_found >,			\
+	           mlc::neq< ret, mlc::undefined_type > >::ensure();		\
+      }										\
+    };										\
+										\
+										\
+    template <typename category, typename from_type, typename typedef_type>	\
+    struct f_rec_get_type							\
+    {										\
+      typedef get_type<category, from_type, typedef_type> client_type;		\
+      typedef mlc_typedef_of(client_type, ret) type;				\
+										\
+      typedef typename								\
+      mlc::if_< mlc::neq< type, mlc::internal::not_found >,			\
+	   type,								\
+	   typename f_rec_get_type< category,					\
+				typename get_super_type<from_type, 0>::ret,	\
+				typedef_type >::ret				\
+      >::ret ret;								\
+    };										\
+										\
+    template <typename category, typename typedef_type>				\
+    struct f_rec_get_type <category, mlc::no_type, typedef_type>		\
+    {										\
+      typedef mlc::internal::not_found ret;					\
+    };										\
+										\
+    template <typename category, typename from_type, typename typedef_type>	\
+    struct f_get_type								\
+    {										\
+      typedef									\
+      mlc_internal_get_typedef_(get_default_props<category>, typedef_type)	\
+      default_prop;								\
+										\
+      typedef									\
+      typename f_rec_get_prop<category, from_type, typedef_type>::ret		\
+      prop;									\
+										\
+      typedef									\
+      typename f_rec_get_type<category, from_type, typedef_type>::ret		\
+      type;									\
+ 										\
+      ~f_get_type()								\
+      {										\
+	mlc::implies< mlc::is_found<default_prop>,				\
+	              mlc::is_not_found<type> >::ensure();			\
+	mlc::xor_< mlc::is_found<prop>,						\
+	           mlc::is_found<type> >::ensure();				\
+      }										\
+										\
+      typedef typename mlc::if_< mlc::is_found<prop>, prop, type>::ret ret;	\
     };										\
 										\
   }										\
-void namespace_is_equiped_for_properties()
+										\
+struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 
 
 
-/// macro to register a property in a props_of<..>:
+# define mlc_type_of_(Namespace, Category, FromType, Alias)				\
+  Namespace::internal::f_get_type<Category,						\
+                                     FromType,						\
+                                     Namespace::internal::typedef_::Alias##_type>::ret
 
-# define mlc_register_prop(CATEGORY, TARGET)						\
-											\
-namespace internal									\
-{											\
-											\
-  template <>										\
-  struct get_prop < CATEGORY, mlc::no_type, target::TARGET >				\
-  {											\
-    typedef props_of<CATEGORY, mlc::default_type>:: TARGET ret;				\
-  };											\
-											\
-  template <typename type>								\
-  struct get_prop < CATEGORY, type, target::TARGET >					\
-  {											\
-    typedef get_prop_helper<CATEGORY, type, target::TARGET,				\
-			      mlc_eq(type, mlc::no_type),				\
-			      typename get_props<CATEGORY, type>::user_defined_		\
-			      > helper_type;						\
-    typedef typename helper_type::ret ret;						\
-  };											\
-  template <typename type>								\
-  struct get_prop_helper < CATEGORY, type, target::TARGET, mlc::false_type,		\
-			     mlc::true_type >						\
-  {											\
-    typedef typename get_props<CATEGORY, type>:: TARGET prop_type;			\
-    typedef typename get_prop<CATEGORY,							\
-                              typename get_super_type<type>::ret,			\
-                              target::TARGET>::ret super_prop_type;			\
-											\
-    typedef typename mlc::if_< typename mlc::eq<prop_type, mlc::unknown_type>::ret,	\
-			      super_prop_type,						\
-			      prop_type >::ret ret;					\
-  };											\
-  template <typename type>								\
-  struct get_prop_helper < CATEGORY, type, target::TARGET, mlc::false_type,		\
-			     mlc::false_type >						\
-  {											\
-    typedef typename get_prop<CATEGORY,							\
-                              typename get_super_type<type>::ret,			\
-                              target::TARGET>::ret ret;					\
-  };											\
-}											\
-											\
-template <typename type>								\
-struct set_type_of < CATEGORY, type, target::TARGET >					\
-{											\
-  typedef typename internal::get_prop<CATEGORY, type, target::TARGET>::ret ret;		\
-}
+# define mlc_type_of(Namespace, Category, FromType, Alias) \
+typename mlc_type_of_(Namespace, Category, FromType, Alias)
 
 
 
-/// internal macro:
-
-# define mlc_internal_retrieve_prop(CATEGORY, TYPE, TARGET)		\
- typename internal::get_prop<CATEGORY, TYPE, target::TARGET>::ret
-
-
-
-/// macros to declare a property:
-
-# define mlc_decl_prop_with_default(CATEGORY, NAME, DEFAULT)					\
-  typedef typename mlc::if_<typename mlc::eq<type, mlc::default_type>::ret,			\
-			    DEFAULT,								\
-			    typename mlc::if_<typename mlc::eq<type, mlc::no_type>::ret,	\
-					      mlc::unknown_type,				\
-					      mlc_internal_retrieve_prop(CATEGORY, type, NAME)	\
-                                             >::ret						\
-                           >::ret  NAME
-
-# define mlc_decl_prop(CATEGORY, NAME)								\
-  typedef typename mlc::if_<typename mlc::eq<type, mlc::default_type>::ret,			\
-			    mlc::undefined_type,						\
-			    typename mlc::if_<typename mlc::eq<type, mlc::no_type>::ret,	\
-					      mlc::unknown_type,				\
-					      mlc_internal_retrieve_prop(CATEGORY, type, NAME)	\
-                                             >::ret						\
-		           >::ret  NAME
-
-
-
-/// macro to retrieve a type (TARGET) from a class (NAMESPACE::TYPE)
-
-# define mlc_type_of(NAMESPACE, TYPE, TARGET)						\
-typename NAMESPACE::get_type_of<typename NAMESPACE::internal::get_category<TYPE>::ret,	\
-                           TYPE,							\
-                           NAMESPACE::target::TARGET##_type>::ret
-
-# define mlc_type_of_(NAMESPACE, TYPE, TARGET)					\
-NAMESPACE::get_type_of<typename NAMESPACE::internal::get_category<TYPE>::ret,	\
-                           TYPE,						\
-                           NAMESPACE::target::TARGET##_type>::ret
-
-
-/// useful printing macro to debug
-
-# define mlc_print_props(NAMESPACE, TYPE, OSTREAM) \
-NAMESPACE::props_of<typename NAMESPACE::internal::get_category<TYPE>::ret, TYPE>::echo(OSTREAM)
-
-# define mlc_print_props_(NAMESPACE, TYPE, OSTREAM) \
-NAMESPACE::props_of<NAMESPACE::internal::get_category<TYPE>::ret, TYPE>::echo(OSTREAM)
+// FIXME: TODO-list
+//
+// f_get_type lance d'une part f_rec_get_prop et d'autre part f_rec_get_type
+// fusion des résultats: si 2 not_found err, si 1 ok + 1 not_found -> ok
+//
+// f_rec_get_prop et f_rec_get_type examine plusieurs super (i=0,1,2)
 
 
 #endif // ! METALIC_PROPERTIES_HH

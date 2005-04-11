@@ -25,61 +25,45 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_CMP_HH
-# define METALIC_CMP_HH
+#ifndef METALIC_TO_STRING_HH
+# define METALIC_TO_STRING_HH
 
-# include <mlc/bool.hh>
-# include <mlc/types.hh>
+# include <iostream>
+# include <string>
+# include <typeinfo>
 
 
-/// Macros mlc_eq and mlc_neq.
-# define mlc_eq(T1, T2) mlc::eq<(T1), (T2)>
-# define mlc_neq(T1, T2) mlc::neq<(T1), (T2)>
-
-# define mlc_is_found(T) mlc::is_found<(T)>
-# define mlc_is_not_found(T) mlc::is_not_found<(T)>
+/// Macro
+# define mlc_to_string(Type)  mlc::internal::demangle(typeid(Type).name())
 
 
 namespace mlc
 {
 
-  /// Equality test between a couple of types.
-
-  template <typename T1, typename T2>
-  struct eq : public value<bool, false>
+  namespace internal
   {
-  };
 
-  template <typename T>
-  struct eq <T, T> : public value<bool, true>
-  {
-  };
+    const std::string demangle(const std::string& str)
+    {
+      if (str == "v") return "void";
+      if (str == "b") return "bool";
+      if (str == "c") return "char";
+      if (str == "h") return "unsigned char";
+      if (str == "s") return "short";
+      if (str == "t") return "unsigned short";
+      if (str == "i") return "int";
+      if (str == "j") return "unsigned int";
+      if (str == "l") return "long";
+      if (str == "m") return "unsigned long";
+      if (str == "f") return "float";
+      if (str == "d") return "double";
+      return str;
+    }
 
-  /// Inequality test between a couple of types.
+  } // end of mlc::internal
 
-  template <typename T1, typename T2>
-  struct neq : public value<bool, true>
-  {
-  };
-
-  template <typename T>
-  struct neq <T, T> : public value<bool, false>
-  {
-  };
-
-  /// Tests is_found and is_not_found (sugar) upon a type.
-
-  template <typename T>
-  struct is_found : public neq <T, internal::not_found>
-  {
-  };
-
-  template <typename T>
-  struct is_not_found : public eq <T, internal::not_found>
-  {
-  };
-
-} // end of namespace mlc
+}
 
 
-#endif // ! METALIC_CMP_HH
+
+#endif // ! METALIC_TO_STRING_HH
