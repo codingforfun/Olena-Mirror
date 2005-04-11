@@ -1,5 +1,9 @@
 2005-04-11  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	* mlc/makefile.src: Update.
+
+2005-04-11  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	* mlc/typedef.hh: New file.
 	* mlc/implies.hh: New file.
 	* mlc/to_string.hh: New file.

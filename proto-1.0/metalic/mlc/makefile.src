@@ -22,11 +22,14 @@ MLC_DEP =					\
   contract.hh					\
   fun.hh					\
   if.hh						\
+  implies.hh					\
   is_a.hh					\
   math.hh					\
   properties.hh					\
   switch.hh					\
+  to_string.hh					\
   tracked_ptr.hh				\
   traits.hh					\
+  typedef.hh					\
   types.hh					\
   value.hh
