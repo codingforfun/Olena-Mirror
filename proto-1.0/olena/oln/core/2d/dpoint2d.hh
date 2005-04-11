@@ -35,7 +35,14 @@
 
 namespace oln {
 
+  // fwd decls
+  struct dpoint2d;
   struct point2d;
+
+  // super type
+  template <>
+  struct set_super_type < dpoint2d > { typedef abstract::dpoint< dpoint2d > ret; };
+
 
   struct dpoint2d : public abstract::dpoint < dpoint2d >
   {

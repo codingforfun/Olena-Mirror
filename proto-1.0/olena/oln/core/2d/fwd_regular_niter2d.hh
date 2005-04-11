@@ -38,7 +38,6 @@
 # include <oln/core/gen/image_with_nbh.hh>
 # include <oln/core/abstract/point.hh>
 # include <oln/core/abstract/dpoint.hh>
-# include <oln/core/properties.hh>
 # include <oln/core/abstract/image.hh>
 # include <oln/core/abstract/neighborhood.hh>
 # include <oln/core/abstract/image_neighbness.hh>

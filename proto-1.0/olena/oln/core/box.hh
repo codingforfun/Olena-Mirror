@@ -28,8 +28,7 @@
 #ifndef OLENA_CORE_BOX_HH
 # define OLENA_CORE_BOX_HH
 
-# include <oln/core/properties.hh>
-# include <oln/core/abstract/entry.hh>
+# include <oln/core/abstract/image_entry.hh>
 
 namespace oln {
 

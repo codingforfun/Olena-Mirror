@@ -28,8 +28,9 @@
 #ifndef OLENA_CORE_ABSTRACT_DPOINT_HH
 # define OLENA_CORE_ABSTRACT_DPOINT_HH
 
-# include <oln/core/coord.hh>
 # include <mlc/any.hh>
+# include <oln/core/coord.hh>
+# include <oln/core/typedefs.hh>
 
 
 /*! \namespace oln
@@ -51,7 +52,7 @@ namespace oln {
     ** Parameter E is the exact type of dpoint.
     */
     template <typename E>
-    struct dpoint : public mlc::any__best_memory<E>
+    struct dpoint : public mlc::any<E>
     {
 
       /// Test equality of two dpoints.

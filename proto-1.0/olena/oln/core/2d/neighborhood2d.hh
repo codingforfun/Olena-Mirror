@@ -28,70 +28,68 @@
 #ifndef OLENA_CORE_NEIGHBORHOOD2D_HH
 # define OLENA_CORE_NEIGHBORHOOD2D_HH
 
+# include <oln/core/coord.hh>
+# include <oln/core/abstract/neighborhood.hh>
 # include <oln/core/2d/dpoint2d.hh>
 # include <oln/core/2d/size2d.hh>
 # include <oln/core/2d/window2d.hh>
-# include <oln/core/coord.hh>
-# include <oln/core/abstract/neighborhood.hh>
+
 
 namespace oln {
 
   class neighborhood2d; // forward declaration
 
-  // category
-  template <>
-  struct set_category< neighborhood2d >
-  { typedef category::neighborhood ret; };
-
   // super_type
   template <>
-  struct set_super_type< neighborhood2d >
-  {
-    typedef abstract::neighborhood< neighborhood2d > ret;
-  };
+  struct set_super_type< neighborhood2d > { typedef abstract::neighborhood< neighborhood2d > ret; };
 
   template <>
   struct set_props< category::neighborhood, neighborhood2d >
-  : public props_of<category::neighborhood>
   {
-    typedef dpoint2d    dpoint_type;
-    typedef size2d      size_type;
-    typedef window2d    window_type;
+    typedef dpoint2d dpoint_type;
+    typedef size2d   size_type;
+    typedef window2d window_type;
   };
 
-  class neighborhood2d : public abstract::neighborhood<neighborhood2d>
+
+  class neighborhood2d : public abstract::neighborhood< neighborhood2d >
   {
 
   public:
 
-    typedef abstract::neighborhood<neighborhood2d>      super_type;
+    typedef abstract::neighborhood< neighborhood2d > super_type;
 
     /*!
     ** \brief Construct a neighborhood of 2 dimensions.
     */
-    neighborhood2d() : super_type()
-    {}
+    neighborhood2d() :
+      super_type()
+    {
+    }
 
     /*!
     ** \brief Construct a neighborhood of 2 dimensions.
     ** \arg size The number of element.
     */
-    neighborhood2d(unsigned size) : super_type(size)
-    {}
+    neighborhood2d(unsigned size) :
+      super_type(size)
+    {
+    }
 
     /*!
     ** \brief Construct a neighborhood of 2 dimensions from several points.
     ** \arg n The number of element.
     ** \arg crd The coordinates of the elements
     */
-    neighborhood2d(unsigned n, const coord_t crd[]) : super_type(n)
+    neighborhood2d(unsigned n, const coord_t crd[]) :
+      super_type(n)
     {
       for (unsigned i = 0; i < 2 * n; i += 2)
-        this->add(dpoint_type(crd[i], crd[i+1]));
+        this->add(dpoint2d(crd[i], crd[i+1]));
     }
 
     neighborhood2d&
-    add(const dpoint_type& dp)
+    add(const dpoint2d& dp)
     {
       return this->exact().impl_add(dp);
     }
@@ -99,7 +97,7 @@ namespace oln {
     neighborhood2d&
     add(coord_t row, coord_t col)
     {
-      dpoint_type dp(row, col);
+      dpoint2d dp(row, col);
       return add(dp);
     }
 
@@ -112,7 +110,7 @@ namespace oln {
     }
 
     coord_t
-    impl_delta_update(const dpoint_type& dp)
+    impl_delta_update(const dpoint2d& dp)
     {
       delta_(abs(dp.row()));
       delta_(abs(dp.col()));
@@ -120,6 +118,7 @@ namespace oln {
     }
 
   };
+
 
   inline const neighborhood2d&
   neighb_c4()

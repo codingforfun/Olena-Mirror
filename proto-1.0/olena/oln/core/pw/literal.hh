@@ -35,19 +35,26 @@
 
 namespace oln {
 
-
-  namespace pw { // means "point-wise"
-
-    // fwd decl
+  // fwd decl
+  namespace pw {
     template <typename T> struct literal;
+  }
 
-    template <typename T>
-    struct traits < literal<T> >
-    {
-      typedef any_point point_type;
-      typedef T         value_type;
-      typedef any_size  size_type;
-    };
+  // super type
+  template <typename T>
+  struct set_super_type < pw::literal<T> > { typedef pw::abstract::function< pw::literal<T> > ret; };
+
+  // props
+  template <typename T>
+  struct set_props < category::pw, pw::literal<T> >
+  {
+    typedef any_point point_type;
+    typedef T         value_type;
+    typedef any_size  size_type;
+  };
+
+
+  namespace pw {
 
     template <typename T>
     struct literal : public abstract::function < literal<T> >

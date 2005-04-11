@@ -28,14 +28,22 @@
 #ifndef OLENA_CORE_1D_DPOINT1D_HH
 # define OLENA_CORE_1D_DPOINT1D_HH
 
-# include <ostream>
+# include <iostream>
+
 # include <oln/core/coord.hh>
 # include <oln/core/abstract/dpoint.hh>
 
 
 namespace oln {
 
+  // fwd decls
+  struct dpoint1d;
   struct point1d;
+
+  // super type
+  template <>
+  struct set_super_type < dpoint1d > { typedef abstract::dpoint< dpoint1d > ret; };
+
 
   struct dpoint1d : public abstract::dpoint < dpoint1d >
   {

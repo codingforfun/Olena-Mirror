@@ -29,8 +29,7 @@
 # define OLENA_CORE_ABSTRACT_IMAGE_BY_DELEGATION_HH
 
 # include <oln/core/box.hh>
-# include <oln/core/properties.hh>
-# include <oln/core/abstract/entry.hh>
+# include <oln/core/abstract/image_entry.hh>
 
 
 namespace oln {
@@ -41,17 +40,12 @@ namespace oln {
     template <typename I, typename E> struct image_by_delegation;
   }
 
-  // category
+  // super type
 
   template <typename I, typename E>
-  struct set_category< abstract::image_by_delegation<I, E> > {
-    typedef category::image ret;
-  };
-
+  struct set_super_type < abstract::image_by_delegation<      I, E> > { typedef abstract::image_entry<E> ret; };
   template <typename I, typename E>
-  struct set_category< abstract::image_by_delegation<const I, E> > {
-    typedef category::image ret;
-  };
+  struct set_super_type < abstract::image_by_delegation<const I, E> > { typedef abstract::image_entry<E> ret; };
 
   // props
 

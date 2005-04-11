@@ -28,42 +28,37 @@
 #ifndef OLENA_CORE_WINDOW2D_HH
 # define OLENA_CORE_WINDOW2D_HH
 
+# include <oln/core/abstract/window.hh>
 # include <oln/core/2d/dpoint2d.hh>
 # include <oln/core/2d/size2d.hh>
 # include <oln/core/coord.hh>
-# include <oln/core/abstract/struct_elt.hh>
+
 
 namespace oln {
 
-  class window2d; // forward declaration
-  class fwd_witer2d;
-
-  // category
-  template <>
-  struct set_category< window2d > { typedef category::struct_elt ret; };
+  // fwd decls
+  class window2d;
+  class fwd_qiter2d;
 
   // super_type
-  template <>
-  struct set_super_type< window2d >
-  {
-    typedef abstract::struct_elt< window2d > ret;
-  };
+  template <> struct set_super_type< window2d > { typedef abstract::window< window2d > ret; };
 
+  // props
   template <>
-  struct set_props< category::struct_elt, window2d > 
-  : public props_of<category::struct_elt>
+  struct set_props< category::window, window2d > 
   {
     typedef dpoint2d    dpoint_type;
     typedef size2d      size_type;
-    typedef fwd_witer2d fwd_witer_type;
+    typedef fwd_qiter2d fwd_qiter_type;
   };
 
-  class window2d : public abstract::struct_elt<window2d>
+
+  class window2d : public abstract::window< window2d >
   {
 
   public:
    
-    typedef abstract::struct_elt<window2d>      super_type;
+    typedef abstract::window< window2d > super_type;
 
     /*!
     ** \brief Construct a window of 2 dimensions.

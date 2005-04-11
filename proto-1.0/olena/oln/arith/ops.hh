@@ -60,7 +60,7 @@ operator - (const oln::abstract::image<L>& lhs,
 /// Operator - (unary) on image.
 
 template <typename R>
-oln::image_from_pw< oln::pw::minus< oln::pw::literal< oln_pw_value_type(R) >,
+oln::image_from_pw< oln::pw::minus< oln::pw::literal< oln_pw_type_of(R, value) >,
 				    oln::pw::image<R> > >
 operator - (const oln::abstract::image<R>& rhs)
 {

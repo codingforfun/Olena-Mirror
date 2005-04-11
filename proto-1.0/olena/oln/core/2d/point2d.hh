@@ -30,7 +30,6 @@
 
 # include <iostream>
 
-# include <oln/core/properties.hh>
 # include <oln/core/abstract/point.hh>
 # include <oln/core/coord.hh>
 
@@ -39,20 +38,17 @@
 
 namespace oln {
 
+  // fwd decls
   struct point2d;
   struct dpoint2d;
 
-  // category
+  // super type
   template <>
-  struct set_category< point2d > { typedef category::point ret; };
-
-  // super_type
-  template <>
-  struct set_super_type< point2d > { typedef abstract::point< point2d > ret; };
+  struct set_super_type < point2d > { typedef abstract::point< point2d > ret; };
 
   // props
   template <>
-  struct set_props < category::point, point2d > : public props_of<category::point>
+  struct set_props < category::point, point2d >
   {
     typedef dpoint2d dpoint_type;
   };
@@ -93,10 +89,9 @@ namespace oln {
     coord_t& row() { return row_; }
     coord_t& col() { return col_; }
 
-# if defined __GNUC__ && __GNUC__ >= 3
     friend class abstract::point< point2d >;
+
   protected:
-# endif
 
     const point2d impl_plus(const dpoint2d& rhs) const;
 

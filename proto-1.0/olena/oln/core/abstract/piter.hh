@@ -33,7 +33,7 @@
 # include <mlc/contract.hh>
 
 # include <oln/core/abstract/point.hh>
-# include <oln/core/properties.hh>
+# include <oln/core/typedefs.hh>
 
 
 
@@ -44,55 +44,58 @@
   for(; p.is_valid(); p.next())
 
 
+
+# define oln_pit_type_of(PiterType, Alias) \
+mlc_type_of(oln, oln::category::piter, PiterType, Alias)
+
+
+
 namespace oln {
 
-  // fwd decl
-  namespace abstract {
-    template <typename E> struct piter;
+
+
+  namespace category
+  {
+    struct piter;
   }
 
-  // category
-  template <typename E>
-  struct set_category< abstract::piter<E> > { typedef category::piter ret; };
 
-
-  /// properties of any type in category::piter
-
-  template <typename type>
-  struct props_of < category::piter, type >
+  template <>
+  struct set_default_props < category::piter >
   {
-    typedef mlc::true_type user_defined_;
-    
-    mlc_decl_prop(category::piter, size_type);
-    mlc_decl_prop(category::piter, point_type);
+    typedef mlc::undefined_type point_type;
+    typedef mlc::undefined_type size_type;
+  };
+
+
+  template <typename P>
+  struct get_props < category::piter, P >
+  {
+    typedef oln_pit_type_of(P, point) point_type;
+    typedef oln_pit_type_of(P, size)  size_type;
 
     static void echo(std::ostream& ostr)
     {
-      ostr << "props_of( category::piter, "
-	   << typeid(type).name() << ") = {"
-	   << "  size_type = " << typeid(size_type).name()
-	   << "  point_type = " << typeid(point_type).name() << "  }" << std::endl;
+      ostr << "props_of( oln::category::piter, " << mlc_to_string(P) << " ) =" << std::endl
+	   << "\t point_type = " << mlc_to_string(point_type) << std::endl
+	   << "\t size_type  = " << mlc_to_string(size_type)  << std::endl
+	   << std::endl;
     }
-
   };
-
-  mlc_register_prop(category::piter, size_type); 
-  mlc_register_prop(category::piter, point_type); 
-
 
 
   namespace abstract {
 
     template <typename E>
-    struct piter : public mlc::any__best_speed<E>
+    struct piter : public mlc::any<E>
     {
 
       /// typedefs
 
       typedef piter<E> self_type;
 
-      typedef oln_type_of(E, size)  size_type;
-      typedef oln_type_of(E, point) point_type;
+      typedef oln_pit_type_of(E, size)  size_type;
+      typedef oln_pit_type_of(E, point) point_type;
 
 
       void start()

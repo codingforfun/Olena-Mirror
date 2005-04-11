@@ -31,35 +31,40 @@
 # include <oln/core/pw/abstract/binary_function.hh>
 # include <oln/core/pw/literal.hh>
 # include <ntg/all.hh>
+# include <oln/core/pw/macros.hh>
 
 
 namespace oln {
 
-
-  namespace pw { // means "point-wise"
-
-    // fwd decl
+  // fwd decl
+  namespace pw {
     template <typename L, typename R> struct minus;
+  }
 
-    template <typename L, typename R>
-    struct traits < minus<L, R> >
-    {
-      typedef abstract::binary_function<L, R, minus<L, R> > super_type;
-      typedef typename traits<super_type>::point_type point_type;
-      typedef typename traits<super_type>::size_type  size_type;
-      typedef ntg_return_type(minus,
-			      oln_pw_value_type(L),
-			      oln_pw_value_type(R)) value_type;
-    };
+  // super type
+  template <typename L, typename R>
+  struct set_super_type < pw::minus<L, R> > { typedef pw::abstract::binary_function<L, R, pw::minus<L, R> > ret; };
+
+  // props
+  template <typename L, typename R>
+  struct set_props < category::pw, pw::minus<L, R> >
+  {
+    typedef ntg_return_type(minus,
+			    oln_pw_type_of(L, value),
+			    oln_pw_type_of(R, value)) value_type;
+  };
+
+
+  namespace pw {
 
     template <typename L, typename R>
     struct minus : public abstract::binary_function < L, R, minus<L, R> >
     {
       typedef minus<L, R> self_type;
 
-      typedef oln_pw_point_type(self_type) point_type;
-      typedef oln_pw_value_type(self_type) value_type;
-      typedef oln_pw_size_type(self_type)  size_type;
+      typedef oln_pw_type_of(self_type, point) point_type;
+      typedef oln_pw_type_of(self_type, value) value_type;
+      typedef oln_pw_type_of(self_type, size)  size_type;
 
       typedef abstract::binary_function<L, R, self_type > super_type;
 
@@ -82,10 +87,10 @@ namespace oln {
     namespace abstract {
 
       template <typename E>
-      minus<literal<oln_pw_value_type(E)>, E>
+      minus<literal<oln_pw_type_of(E, value)>, E>
       function<E>::operator-() const
       {
-	typedef literal<oln_pw_value_type(E)> lit_type;
+	typedef literal<oln_pw_type_of(E, value)> lit_type;
 	static const lit_type lhs = 0;
 	minus< lit_type, E> tmp(lhs, this->exact());
 	return tmp;

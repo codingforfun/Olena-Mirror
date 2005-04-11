@@ -38,7 +38,6 @@
 # include <oln/core/gen/image_with_nbh.hh>
 # include <oln/core/abstract/point.hh>
 # include <oln/core/abstract/dpoint.hh>
-# include <oln/core/properties.hh>
 # include <oln/core/abstract/image.hh>
 # include <oln/core/abstract/neighborhood.hh>
 # include <oln/core/abstract/image_neighbness.hh>
@@ -46,26 +45,14 @@
 
 namespace oln {
 
-  // fwd decls
-
+  // fwd decl
   namespace abstract {
     template <typename E> struct regular_niter;
   }
 
-  // category
-
-  template <typename E>
-  struct set_category< abstract::regular_niter<E> > {
-    typedef category::niter ret;
-  };
-
   // super type
-
   template <typename E>
-  struct set_super_type < abstract::regular_niter<E> >
-  {
-    typedef abstract::niter<E> ret;
-  };
+  struct set_super_type < abstract::regular_niter<E> > { typedef abstract::niter<E> ret; };
 
 
   namespace abstract {
@@ -73,11 +60,8 @@ namespace oln {
     template <typename E>
     struct regular_niter : public niter<E>
     {
-
-      /// typedefs
-      typedef oln_type_of(E, point) point_type;
+      typedef oln_type_of(E, point)  point_type;
       typedef oln_type_of(E, dpoint) dpoint_type;
-      typedef regular_niter<E> self_type;
 
       void impl_start()
       {
@@ -86,8 +70,7 @@ namespace oln {
 
       void impl_next()
       {
-	precondition(this->is_valid());
-	dp_cur_ ++;
+	++dp_cur_;
       }
 
       void impl_center_at(const point_type& pt)
@@ -104,7 +87,6 @@ namespace oln {
 
       const point_type impl_cast_point() const
       {
-	precondition(this->is_valid());
 	return *dp_cur_ + this->p_;
       }
 
@@ -122,17 +104,21 @@ namespace oln {
 	  dp_.push_back(this->nbh_[i]);
       }
 
-      template <typename T>
-      regular_niter(const abstract::image_with_nbh<T>& ima) :
-	niter<E>(ima)
+      typedef niter<E> super_type;
+
+      template <typename I>
+      regular_niter(const abstract::image_with_nbh<I>& ima) :
+	super_type(ima)
       {
       }
 
-      typename std::vector<dpoint_type>::iterator dp_cur_;
       std::vector<dpoint_type> dp_;
+      typename std::vector<dpoint_type>::const_iterator dp_cur_;
     };
-  }
-}
+
+  } // end of namespace oln::abstract
+
+} // end of namespace oln
 
 
 #endif // ! OLENA_CORE_ABSTRACT_REGULAR_NITER_HH

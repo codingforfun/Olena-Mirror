@@ -78,7 +78,7 @@ namespace oln {
     E
     get_plus_se_only(const abstract::struct_elt<E>& se)
     {
-      oln_type_of(E, fwd_witer) dp(se.exact());
+      oln_type_of(E, fwd_qiter) dp(se.exact());
       E out;
 
       for_all (dp)
@@ -112,7 +112,7 @@ namespace oln {
     E
     get_plus_se_p(const abstract::struct_elt<E>& se)
     {
-      oln_type_of(E, fwd_witer) dp(se.exact());
+      oln_type_of(E, fwd_qiter) dp(se.exact());
       E out;
 
       for_all (dp)
@@ -148,7 +148,7 @@ namespace oln {
     E
     get_minus_se_only(const abstract::struct_elt<E>& se)
     {
-      oln_type_of(E, fwd_witer) dp(se.exact());
+      oln_type_of(E, fwd_qiter) dp(se.exact());
       E out;
 
       for_all (dp)
@@ -182,7 +182,7 @@ namespace oln {
     E
     get_minus_se_p(const abstract::struct_elt<E>& se)
     {
-      oln_type_of(E, fwd_witer) dp(se.exact());
+      oln_type_of(E, fwd_qiter) dp(se.exact());
       E out;
 
       for_all (dp)

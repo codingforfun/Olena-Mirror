@@ -50,7 +50,6 @@
 // oln::
 
 # include <oln/core/coord.hh>
-# include <oln/core/properties.hh>
 # include <oln/core/value_box.hh>
 # include <oln/core/box.hh>
 
@@ -63,14 +62,13 @@
 
 # include <oln/core/pw/all.hh>
 
-# include <oln/core/abstract/piter.hh>
-# include <oln/core/abstract/witer.hh>
-// # include <oln/core/abstract/niter.hh>
 
-# include <oln/core/abstract/struct_elt.hh>
+# include <oln/core/abstract/window.hh>
 # include <oln/core/abstract/neighborhood.hh>
 
-
+# include <oln/core/abstract/piter.hh>
+# include <oln/core/abstract/qiter.hh>
+# include <oln/core/abstract/niter.hh>
 
 
 #endif // ! OLENA_BASICS_HH

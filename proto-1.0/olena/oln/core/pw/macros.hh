@@ -30,11 +30,6 @@
 
 
 
-# define oln_pw_point_type(F) typename oln::pw::traits<F>::point_type
-# define oln_pw_value_type(F) typename oln::pw::traits<F>::value_type
-# define oln_pw_size_type(F)  typename oln::pw::traits<F>::size_type
-
-
 // FIXME: rename?
 # define oln_pw_operator(NAME, SYMBOL, TYPE)			\
 template <typename L>						\

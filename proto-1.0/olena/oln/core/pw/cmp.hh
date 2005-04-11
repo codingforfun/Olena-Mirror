@@ -29,12 +29,13 @@
 # define OLENA_CORE_PW_CMP_HH
 
 # include <oln/core/pw/abstract/binary_function.hh>
+# include <oln/core/pw/macros.hh>
 
 
 namespace oln {
 
 
-  namespace pw { // means "point-wise"
+  namespace pw {
 
 
     // FIXME: move somewhere else
@@ -80,29 +81,41 @@ namespace oln {
 
 
 
-    // fwd decl
+  } // end of namespace pw
+
+
+  // fwd decl
+  namespace pw {
     template <typename L, typename R, typename C> struct cmp;
+  }
 
-    template <typename L, typename R, typename C>
-    struct traits < cmp<L, R, C> >
-    {
-      typedef abstract::binary_function<L, R, cmp<L, R, C> > super_type;
-      typedef typename traits<super_type>::point_type point_type;
-      typedef typename traits<super_type>::size_type  size_type;
-      typedef bool value_type;
-    };
+  // super type
+  template <typename L, typename R, typename C>
+  struct set_super_type < pw::cmp<L, R, C> > { typedef pw::abstract::binary_function<L, R, pw::cmp<L, R, C> > ret; };
 
+  // props
+  template <typename L, typename R, typename C>
+  struct set_props < category::pw, pw::cmp<L, R, C> >
+  {
+    typedef bool value_type;
+  };
+
+
+
+  
+  namespace pw
+  {
 
     template <typename L, typename R, typename C>
     struct cmp : public abstract::binary_function < L, R, cmp<L, R, C> >
     {
       typedef cmp<L, R, C> self_type;
 
-      typedef oln_pw_point_type(self_type) point_type;
-      typedef oln_pw_size_type(self_type)  size_type;
-      typedef oln_pw_value_type(self_type) value_type;
+      typedef oln_pw_type_of(self_type, point) point_type;
+      typedef oln_pw_type_of(self_type, value) value_type;
+      typedef oln_pw_type_of(self_type, size)  size_type;
 
-      typedef abstract::binary_function < L, R, self_type > super_type;
+      typedef abstract::binary_function<L, R, self_type> super_type;
 
       cmp(const abstract::function<L>& left,
 	  const abstract::function<R>& right) :

@@ -36,7 +36,7 @@
 # include <oln/core/2d/image2d.hh>
 # include <oln/core/2d/fwd_piter2d.hh>
 # include <oln/core/2d/bkd_piter2d.hh>
-# include <oln/core/2d/fwd_witer2d.hh>
+# include <oln/core/2d/fwd_qiter2d.hh>
 # include <oln/core/2d/window2d.hh>
 # include <oln/core/2d/neighborhood2d.hh>
 

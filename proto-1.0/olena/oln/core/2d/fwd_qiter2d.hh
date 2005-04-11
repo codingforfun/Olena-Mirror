@@ -1,4 +1,4 @@
-// Copyright (C) 2005 EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2003, 2005  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,48 +25,81 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_ENTRY_HH
-# define OLENA_CORE_ABSTRACT_ENTRY_HH
+#ifndef OLENA_CORE_FWD_QITER2D_HH
+# define OLENA_CORE_FWD_QITER2D_HH
 
-# include <oln/core/abstract/images.hh>
+# include <string>
 
-
+# include <oln/core/abstract/qiter.hh>
+# include <oln/core/2d/dpoint2d.hh>
+# include <oln/core/2d/window2d.hh>
 
 
 namespace oln {
 
-
   // fwd decl
-  namespace abstract {
-    template <typename E> struct image_entry;
-  }
+  struct fwd_qiter2d;
 
   // category
-  template <typename E>
-  struct set_category < abstract::image_entry<E> >
+  template <>
+  struct set_super_type< fwd_qiter2d > { typedef abstract::qiter< fwd_qiter2d > ret; };
+
+  // props
+  template <>
+  struct set_props < category::qiter, fwd_qiter2d >
   {
-    typedef category::image ret;
+    typedef dpoint2d dpoint_type; // FIXME: !!!
+    typedef window2d window_type; // FIXME: !!!
   };
 
-  namespace abstract {
 
-    template <typename E>
-    struct image_entry :
-      // intrusive:
-      public oln_type_of_(E, image_constness) ::template instantiated_with<E>::ret,
-      public oln_type_of_(E, image_dimension) ::template instantiated_with<E>::ret,
-      public oln_type_of_(E, image_neighbness) ::template instantiated_with<E>::ret,
-      // ...
-      public typeness::inheritance_switch<E>,
-      public valuedness::inheritance_switch<E>
+  struct fwd_qiter2d : public abstract::qiter< fwd_qiter2d >
+  {
+    typedef abstract::qiter<fwd_qiter2d> super_type;
+
+    fwd_qiter2d(const window2d& se) :
+      se_(se),
+      pos_(0)
     {
-    protected:
-      image_entry() {}
-    };
+      this->invalidate();
+    }
 
-  }
+    coord_t impl_nth(unsigned i)
+    {
+      return se_[pos_].nth(i);
+    }
+
+    dpoint2d impl_cast_dpoint() const
+    {
+      precondition(this->is_valid());
+      return se_[pos_];
+    }
+
+    void impl_start()
+    {
+      pos_ = 0;
+    }
+
+    void impl_next()
+    {
+      ++pos_;
+    }
+
+    bool impl_is_valid() const
+    {
+      return pos_ != se_.card();
+    }
+
+    void impl_invalidate()
+    {
+      pos_ = se_.card();
+    }
+
+    const window2d& se_;
+    unsigned pos_;
+
+  };
 
 } // end of namespace oln
 
-
-#endif // ! OLENA_CORE_ABSTRACT_ENTRY_HH
+#endif // OLENA_CORE_FWD_QITER2D_HH

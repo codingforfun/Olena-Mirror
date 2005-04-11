@@ -40,14 +40,9 @@ namespace oln {
   // fwd decl
   struct fwd_piter3d;
 
-  // category
-  template <>
-  struct set_category<fwd_piter3d> { typedef category::piter ret; };
-
-
   // props
   template <>
-  struct set_props < category::piter, fwd_piter3d > : public props_of<category::piter>
+  struct set_props < category::piter, fwd_piter3d >
   {
     typedef point3d point_type;
     typedef size3d  size_type;
@@ -58,19 +53,17 @@ namespace oln {
   struct fwd_piter3d : public abstract::piter< fwd_piter3d >
   {
 
-    typedef abstract::piter<fwd_piter3d> super_type;
+    typedef abstract::piter< fwd_piter3d > super_type;
 
     fwd_piter3d(const size3d& size) :
       super_type(size)
     {
-      this->exact_ptr = this;
       this->invalidate();
     }
 
-# if defined __GNUC__ && __GNUC__ >= 3
     friend class abstract::piter< fwd_piter3d >;
+
   protected:
-# endif
 
     void impl_start()
     {

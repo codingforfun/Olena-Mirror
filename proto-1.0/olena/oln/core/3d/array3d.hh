@@ -39,17 +39,13 @@ namespace oln {
   // fwd decl
   template <typename T> struct array3d;
 
-  // category
-  template <typename T> 
-  struct set_category< array3d<T> > { typedef category::data_storage ret; };
-
   // super_type
   template <typename T> 
   struct set_super_type< array3d<T> > { typedef abstract::data_storage< array3d<T> > ret; };
   
   // props
   template <typename T>
-  struct set_props < category::data_storage, array3d<T> > : public props_of<category::data_storage>
+  struct set_props < category::data_storage, array3d<T> >
   {
     typedef size3d  size_type;
     typedef point3d point_type;

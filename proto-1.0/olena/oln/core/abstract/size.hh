@@ -31,6 +31,7 @@
 # include <mlc/any.hh>
 # include <mlc/if.hh>
 # include <mlc/cmp.hh>
+# include <oln/core/typedefs.hh>
 
 
 // fwd decl

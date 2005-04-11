@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2003, 2005  EPITA Research and Development Laboratory
+// Copyright (C) 2005 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,44 +25,46 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_FWD_WITER2D_HH
-# define OLENA_CORE_FWD_WITER2D_HH
+#ifndef OLENA_CORE_ABSTRACT_IMAGE_ENTRY_HH
+# define OLENA_CORE_ABSTRACT_IMAGE_ENTRY_HH
 
-# include <oln/core/abstract/witer.hh>
-# include <oln/core/2d/window2d.hh>
+# include <oln/core/abstract/images.hh>
 
-# include <string>
+
+
 
 namespace oln {
 
   // fwd decl
-  struct fwd_witer2d;
+  namespace abstract {
+    template <typename E> struct image_entry;
+  }
 
-  // category
-  template <>
-  struct set_category<fwd_witer2d> { typedef category::witer ret; };
+  // entry => no super type but a category
 
-  // props
-  template <>
-  struct set_props < category::witer, fwd_witer2d > : public props_of<category::witer>
-  {
-    typedef window2d se_type;
-  };
+  template <typename E>
+  struct set_category < abstract::image_entry<E> > { typedef category::image ret; };
 
-  struct fwd_witer2d : public abstract::witer< fwd_witer2d >
-  {
 
-    typedef abstract::witer<fwd_witer2d> super_type;
+  namespace abstract {
 
-    fwd_witer2d(const window2d& se) :
-        super_type(se)
+    template <typename E>
+    struct image_entry :
+      // intrusive:
+      public oln_type_of_(E, image_constness) ::template instantiated_with<E>::ret,
+      public oln_type_of_(E, image_dimension) ::template instantiated_with<E>::ret,
+      public oln_type_of_(E, image_neighbness) ::template instantiated_with<E>::ret,
+      // ...
+      public typeness::inheritance_switch<E>,
+      public valuedness::inheritance_switch<E>
     {
-      this->exact_ptr = this;
-      this->invalidate();
-    }
+    protected:
+      image_entry() {}
+    };
 
-  };
+  }
 
-} // oln
+} // end of namespace oln
 
-#endif // OLENA_CORE_FWD_WITER2D_HH
+
+#endif // ! OLENA_CORE_ABSTRACT_IMAGE_ENTRY_HH

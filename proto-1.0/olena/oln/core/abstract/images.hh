@@ -40,7 +40,7 @@
 
 
 // hierarchy entry
-# include <oln/core/abstract/entry.hh>
+# include <oln/core/abstract/image_entry.hh>
 
 
 

@@ -29,7 +29,6 @@
 # define OLENA_CORE_2D_BKD_PITER2D_HH
 
 # include <mlc/contract.hh>
-
 # include <oln/core/abstract/piter.hh>
 # include <oln/core/2d/point2d.hh>
 # include <oln/core/2d/size2d.hh>
@@ -40,14 +39,13 @@ namespace oln {
   // fwd decl
   struct bkd_piter2d;
 
-  // category
+  // super type
   template <>
-  struct set_category<bkd_piter2d> { typedef category::piter ret; };
-
+  struct set_super_type < bkd_piter2d > { typedef abstract::piter< bkd_piter2d > ret; };
 
   // props
   template <>
-  struct set_props < category::piter, bkd_piter2d > : public props_of<category::piter>
+  struct set_props < category::piter, bkd_piter2d >
   {
     typedef point2d point_type;
     typedef size2d  size_type;
@@ -58,19 +56,17 @@ namespace oln {
   struct bkd_piter2d : public abstract::piter< bkd_piter2d >
   {
 
-    typedef abstract::piter<bkd_piter2d> super_type;
+    typedef abstract::piter< bkd_piter2d > super_type;
 
     bkd_piter2d(const size2d& size) :
       super_type(size)
     {
-      this->exact_ptr = this;
       this->invalidate();
     }
 
-# if defined __GNUC__ && __GNUC__ >= 3
-    friend class abstract::piter< bkd_piter2d >;
+    friend class abstract::piter< bkd_piter2d >; // FIXME: replace by super_type (?)
+
   protected:
-# endif
 
     void impl_start()
     {

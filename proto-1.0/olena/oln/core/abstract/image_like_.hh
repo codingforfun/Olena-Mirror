@@ -39,25 +39,15 @@ namespace oln {
     template <typename I, typename E> struct image_like_;
   }
 
-  // category
-
-  template <typename I, typename E>
-  struct set_category< abstract::image_like_<I, E> > {
-    typedef category::image ret;
-  };
-
   // super type
 
   template <typename I, typename E>
-  struct set_super_type < abstract::image_like_<I, E> >
-  {
-    typedef abstract::image_by_delegation<I, E> ret;
-  };
+  struct set_super_type < abstract::image_like_<I, E> > { typedef abstract::image_by_delegation<I, E> ret; };
 
   // props
 
   template <typename I, typename E>
-  struct set_props < category::image, abstract::image_like_<I, E> > : public props_of<category::image>
+  struct set_props < category::image, abstract::image_like_<I, E> >
   {
     typedef oln_type_of(I, concrete) concrete_type;
   };

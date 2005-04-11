@@ -29,17 +29,52 @@
 # define OLENA_CORE_PW_ABSTRACT_FUNCTION_HH
 
 # include <mlc/any.hh>
-# include <oln/core/properties.hh>
-# include <oln/core/pw/macros.hh>
+# include <oln/core/abstract/image.hh>
+# include <oln/core/typedefs.hh>
+
+
+# define oln_pw_type_of(PointWiseType, Alias) \
+mlc_type_of(oln, oln::category::pw, PointWiseType, Alias)
 
 
 namespace oln {
 
 
-  namespace pw { // means "point-wise"
+  namespace category
+  {
+    struct pw; // means "point-wise"
+  }
 
-    template <typename T> struct traits;
 
+  template <>
+  struct set_default_props < category::pw >
+  {
+    typedef mlc::undefined_type point_type;
+    typedef mlc::undefined_type value_type;
+    typedef mlc::undefined_type size_type;
+  };
+
+
+  template <typename PWF>
+  struct get_props < category::pw, PWF >
+  {
+    typedef oln_pw_type_of(PWF, point) point_type;
+    typedef oln_pw_type_of(PWF, value) value_type;
+    typedef oln_pw_type_of(PWF, size)  size_type;
+
+    static void echo(std::ostream& ostr)
+    {
+      ostr << "props_of( oln::category::pw, " << mlc_to_string(PWF) << " ) =" << std::endl
+	   << "{" << std::endl
+	   << "\t point_type = " << mlc_to_string(point_type) << std::endl
+	   << "\t value_type = " << mlc_to_string(value_type) << std::endl
+	   << "\t size_type  = " << mlc_to_string(size_type)  << std::endl
+	   << "}" << std::endl;
+    }
+  };
+
+
+  namespace pw {
 
     // fwd decls
     namespace abstract {
@@ -50,22 +85,14 @@ namespace oln {
     template <typename F> struct not_;
 
 
-    template <typename E>
-    struct traits < abstract::function<E> >
-    {
-      typedef oln_pw_point_type(E) point_type;
-      typedef oln_pw_value_type(E) value_type;
-      typedef oln_pw_size_type(E)  size_type;
-    };
-
     namespace abstract {
 
       template <typename E>
       struct function : public mlc::any<E>
       {
-	typedef oln_pw_point_type(E) point_type;
-	typedef oln_pw_value_type(E) value_type;
-	typedef oln_pw_size_type(E)  size_type;
+	typedef oln_pw_type_of(E, point) point_type;
+	typedef oln_pw_type_of(E, value) value_type;
+	typedef oln_pw_type_of(E, size)  size_type;
 
 	const size_type& size() const
 	{

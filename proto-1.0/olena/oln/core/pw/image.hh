@@ -32,7 +32,7 @@
 # include <mlc/cmp.hh>
 # include <oln/core/box.hh>
 # include <oln/core/abstract/image_typeness.hh>
-# include <oln/core/abstract/entry.hh>
+# include <oln/core/abstract/image_entry.hh>
 # include <oln/core/pw/abstract/function.hh>
 
 // FIXME: remove
@@ -43,18 +43,26 @@
 namespace oln {
 
 
-  namespace pw { // means "point-wise"
-
-    // fwd decl
+  // fwd decl
+  namespace pw {
     template <typename I> struct image;
-    
-    template <typename I>
-    struct traits < image<I> >
-    {
-      typedef oln_type_of(I, point) point_type;
-      typedef oln_type_of(I, value) value_type;
-      typedef oln_type_of(I, size)  size_type;
-    };
+  }    
+
+  // super type
+  template <typename I>
+  struct set_super_type < pw::image<I> > { typedef pw::abstract::function< pw::image<I> > ret; };
+
+  // props
+  template <typename I>
+  struct set_props < category::pw, pw::image<I> >
+  {
+    typedef oln_type_of(I, point) point_type;
+    typedef oln_type_of(I, value) value_type;
+    typedef oln_type_of(I, size)  size_type;
+  };
+
+
+  namespace pw { // means "point-wise"
 
     template <typename I>
     struct image : public abstract::function < image<I> >
@@ -107,25 +115,18 @@ namespace oln {
 
   // fwd decl
   template <typename F> class image_from_pw;
-  
-  // category
-  template <typename F>
-  struct set_category< image_from_pw<F> > { typedef category::image ret; };
 
   // super
   template <typename F>
-  struct set_super_type < image_from_pw<F> >
-  {
-    typedef abstract::image_entry< image_from_pw<F> > ret;
-  };
+  struct set_super_type < image_from_pw<F> > { typedef abstract::image_entry< image_from_pw<F> > ret; };
 
   // props
   template <typename F>
-  struct set_props < category::image, image_from_pw<F> > : public props_of <category::image>
+  struct set_props < category::image, image_from_pw<F> >
   {
-    typedef oln_pw_point_type(F) point_type;
-    typedef oln_pw_value_type(F) value_type;
-    typedef oln_pw_size_type(F)  size_type;
+    typedef oln_pw_type_of(F, point) point_type;
+    typedef oln_pw_type_of(F, value) value_type;
+    typedef oln_pw_type_of(F, size)  size_type;
 
     typedef mlc::no_type delegated_type;
 
@@ -159,13 +160,9 @@ namespace oln {
       this->exact_ptr = this;
     }
 
-    /// typedefs
-
-    typedef image_from_pw<F> self_type;
-
-    typedef oln_type_of(self_type, size)  size_type;
-    typedef oln_type_of(self_type, value) value_type;
-    typedef oln_type_of(self_type, point) point_type;
+    typedef oln_pw_type_of(F, point) point_type;
+    typedef oln_pw_type_of(F, value) value_type;
+    typedef oln_pw_type_of(F, size)  size_type;
 
     const size_type& impl_size() const
     {
@@ -251,7 +248,7 @@ namespace oln {
     template <typename F>
     bool check(const pw::abstract::function<F>& pred)
     {
-      mlc::eq< oln_typeness_of(oln_pw_value_type(F)), typeness::binary_tag >::ensure();
+      mlc::eq< oln_typeness_of(oln_pw_type_of(F, value)), typeness::binary_tag >::ensure();
       return oln::check(for_all_p(pred));
     }
 

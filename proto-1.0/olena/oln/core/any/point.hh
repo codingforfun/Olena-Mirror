@@ -28,6 +28,7 @@
 #ifndef OLENA_CORE_ANY_POINT_HH
 # define OLENA_CORE_ANY_POINT_HH
 
+# include <iostream> 
 # include <oln/core/abstract/point.hh>
 # include <oln/core/abstract/dpoint.hh>
 
@@ -38,13 +39,9 @@ namespace oln {
   struct any_point;
   struct any_dpoint;
 
-  // category
-  template <>
-  struct set_category< any_point > { typedef category::point ret; };
-
   // props
   template <>
-  struct set_props < category::point, any_point > : public props_of<category::point>
+  struct set_props < category::point, any_point >
   {
     typedef any_dpoint dpoint_type;
   };

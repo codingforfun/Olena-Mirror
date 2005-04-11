@@ -28,8 +28,6 @@
 #ifndef OLENA_CORE_IMAGE2D_HH
 # define OLENA_CORE_IMAGE2D_HH
 
-# include <mlc/traits.hh>
-
 # include <oln/core/abstract/image_with_data.hh>
 # include <oln/core/abstract/image_like_.hh>
 # include <oln/core/2d/array2d.hh>
@@ -55,20 +53,13 @@ namespace oln {
   struct bkd_piter2d;
   template <typename T> class image2d;
 
-  // category
-  template <typename T>
-  struct set_category< image2d<T> > { typedef category::image ret; };
-
   // super
   template <typename T>
-  struct set_super_type < image2d<T> >
-  {
-    typedef abstract::image_with_data< image2d<T> > ret;
-  };
+  struct set_super_type < image2d<T> > { typedef abstract::image_with_data< image2d<T> > ret; };
 
-
+  // props
   template <typename T>
-  struct set_props < category::image, image2d<T> > : public props_of<category::image>
+  struct set_props < category::image, image2d<T> >
   {
     // intrusive property:
     typedef is_a<abstract::image2d> image_dimension_type;

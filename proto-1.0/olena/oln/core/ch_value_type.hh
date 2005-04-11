@@ -28,7 +28,7 @@
 #ifndef OLENA_CORE_CH_VALUE_TYPE_HH
 # define OLENA_CORE_CH_VALUE_TYPE_HH
 
-# include <oln/core/properties.hh>
+# include <oln/core/abstract/image.hh>
 
 namespace oln {
 

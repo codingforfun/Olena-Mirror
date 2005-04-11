@@ -29,78 +29,61 @@
 # define OLENA_CORE_GEN_IMAGE_WITH_NBH_HH
 
 # include <oln/core/abstract/image_with_extension.hh>
-# include <oln/core/abstract/image.hh>
 # include <oln/core/abstract/neighborhood.hh>
-# include <oln/core/properties.hh>
 
 namespace oln {
 
-  // fwd decls
-
-  namespace internal {
-    template <typename I, typename N> struct image_with_nbh;
-  }
-
-  // category
-
-  template <typename I, typename N>
-  struct set_category< internal::image_with_nbh<I, N> > {
-    typedef category::image ret;
-  };
+  // fwd decl
+  template <typename I, typename N> struct image_with_nbh;
 
   // super type
-
   template <typename I, typename N>
-  struct set_super_type < internal::image_with_nbh<I, N> >
+  struct set_super_type < image_with_nbh<I, N> >
   {
-    typedef abstract::image_with_extension_ < I, internal::image_with_nbh<I, N> > ret;
+    typedef abstract::image_with_extension< I, image_with_nbh<I, N> > ret;
   };
 
   template <typename I, typename N>
-  struct set_props < category::image, internal::image_with_nbh<I, N> > : public props_of<category::image>
+  struct set_props < category::image, image_with_nbh<I, N> >
   {
     typedef is_a<abstract::image_with_nbh> image_neighbness_type;
     typedef N neighb_type;
   };
 
-  namespace internal
+  template <typename I, typename N>
+  struct image_with_nbh : public abstract::image_with_extension < I, image_with_nbh<I, N> >
   {
+    typedef image_with_nbh<I, N> self_type;
+    typedef abstract::image_with_extension < I, self_type > super_type;
 
-    template <typename I, typename N>
-    struct image_with_nbh : public oln::abstract::image_with_extension_ < I, image_with_nbh<I, N> >
+  public:
+
+    image_with_nbh(const abstract::image<I>& image,
+		   const abstract::neighborhood<N>& nbh) :
+      super_type(image),
+      nbh_(nbh.exact())
     {
-      typedef image_with_nbh<I, N> self_type;
-      typedef oln::abstract::image_with_extension_ < I, self_type > super_type;
+    }
 
-    public:
+    const N& impl_nbh_get() const
+    {
+      return nbh_;
+    }
 
-      image_with_nbh(abstract::image<I>& rhs,
-		     abstract::neighborhood<N>& nbh) :
-	super_type(rhs), nbh_(nbh.exact())
-      {
-      }
+  protected:
 
-      const N& impl_nbh_get() const
-      {
-	return nbh_;
-      }
-
-    protected:
-      N& nbh_;
-    };
-
-  } // end of namespace oln::internal
-
+    N& nbh_;
+  };
 
 
   /// the 'image_with_nbh' method for images
 
   template <typename I, typename N>
-  internal::image_with_nbh<I, N>
-  join(abstract::image<I>& ima,
-       abstract::neighborhood<N>& nbh)
+  image_with_nbh<I, N>
+  join(const abstract::image<I>& image,
+       const abstract::neighborhood<N>& nbh)
   {
-    internal::image_with_nbh<I, N> tmp(ima, nbh);
+    image_with_nbh<I, N> tmp(image, nbh);
     return tmp;
   }
 

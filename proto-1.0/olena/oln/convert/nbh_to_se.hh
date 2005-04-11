@@ -28,15 +28,9 @@
 #ifndef OLENA_CONVERT_NBH_TO_SE_HH
 # define OLENA_CONVERT_NBH_TO_SE_HH
 
-# include <oln/basics.hh>
+# include <oln/core/abstract/neighborhood.hh>
+# include <oln/core/2d/dpoint2d.hh>
 
-// because of the internal function in this file
-//# include <oln/basics1d.hh>
-# include <oln/basics2d.hh>
-//# include <oln/basics3d.hh>
-//# include <oln/core/1d/neighborhood1d.hh>
-# include <oln/core/2d/neighborhood2d.hh>
-//# include <oln/core/3d/neighborhood3d.hh>
 
 namespace oln {
   namespace convert {
@@ -45,10 +39,10 @@ namespace oln {
     ** \see nbh_to_cse
     */
     template<class N>
-    oln_type_of(N, window)
+    oln_nbh_type_of(N, window)
     nbh_to_se(const oln::abstract::neighborhood<N>& nbh)
     {
-      oln_type_of(N, window) output;
+      oln_nbh_type_of(N, window) output;
 
       for (unsigned i = 0; i < nbh.card(); i++)
 	output.add(nbh[i]);
@@ -66,15 +60,15 @@ namespace oln {
     ** \see nbh_to_cs
     */
     template<class N>
-    oln_type_of(N, window)
+    oln_nbh_type_of(N, window)
     nbh_to_cse(const oln::abstract::neighborhood<N>& nbh)
     {
-      oln_type_of(N, window) output;
+      oln_nbh_type_of(N, window) output;
 
       for (unsigned i = 0; i < nbh.card(); i++)
 	output.add(nbh[i]);
 
-      oln_type_of(N, dpoint) zero;
+      oln_nbh_type_of(N, dpoint) zero;
       dpoint_zero(zero);
       output.add(zero);
       return output;

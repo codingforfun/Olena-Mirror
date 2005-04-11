@@ -28,33 +28,25 @@
 #ifndef OLENA_CORE_1D_POINT1D_HH
 # define OLENA_CORE_1D_POINT1D_HH
 
-# include <ostream>
-
+# include <iostream>
 # include <oln/core/abstract/point.hh>
 # include <oln/core/coord.hh>
-# include <oln/core/properties.hh>
 
-// FIXME: doc
 
-// FIXME: test that coords are defined
 
 namespace oln {
 
-
+  // fwd decls
   struct point1d;
   struct dpoint1d;
 
-  // category
+  // super type
   template <>
-  struct set_category< point1d > { typedef category::point ret; };
-
-  // super_type
-  template <>
-  struct set_super_type< point1d > { typedef abstract::point< point1d > ret; };
+  struct set_super_type < point1d > { typedef abstract::point< point1d > ret; };
 
   // props
   template <>
-  struct set_props < category::point, point1d > : public props_of<category::point>
+  struct set_props < category::point, point1d >
   {
     typedef dpoint1d dpoint_type;
   };
@@ -89,10 +81,9 @@ namespace oln {
     const coord_t index() const { return index_; }
     coord_t& index() { return index_; }
 
-# if defined __GNUC__ && __GNUC__ >= 3
     friend class abstract::point< point1d >;
+
   protected:
-# endif
 
     const point1d impl_plus(const dpoint1d& rhs) const;
 

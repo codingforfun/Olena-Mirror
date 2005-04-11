@@ -43,13 +43,6 @@ namespace oln {
 
   }
 
-  // category
-  template <typename I>
-  struct set_category< arith::impl::min_type<I> >
-  {
-    typedef category::image ret;
-  };
-
   // super_type
   template <typename I>
   struct set_super_type< arith::impl::min_type<I> >

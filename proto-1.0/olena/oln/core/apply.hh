@@ -31,7 +31,7 @@
 # include <mlc/fun.hh>
 
 # include <oln/basics.hh>
-# include <oln/core/abstract/op.hh>
+# include <oln/core/abstract/image_operator.hh>
 # include <oln/core/ch_value_type.hh>
 
 namespace oln {
@@ -46,27 +46,20 @@ namespace oln {
     struct apply1_type;
   }
 
-  // Category.
-  template <typename F, typename I>
-  struct set_category< impl::apply1_type<F, I> >
-  {
-    typedef category::image ret;
-  };
-
   // Super type.
   template <typename F, typename I>
   struct set_super_type< impl::apply1_type<F, I> >
   {
     typedef typename ch_value_type<I,
 				   typename F::result_type>::ret output_type;
-    typedef typename abstract::op<output_type, impl::apply1_type<F, I> > ret;
+    typedef typename abstract::image_operator<output_type, impl::apply1_type<F, I> > ret;
   };
 
   namespace impl {
 
     template <typename F, typename I>
     struct apply1_type :
-      public abstract::op<
+      public abstract::image_operator<
         typename ch_value_type<I, typename F::result_type>::ret,
         apply1_type<F, I> >
     {
@@ -122,20 +115,13 @@ namespace oln {
     struct apply2_type;
   }
 
-  // Category.
-  template <typename F, typename I1, typename I2>
-  struct set_category< impl::apply2_type<F, I1, I2> >
-  {
-    typedef category::image ret;
-  };
-
   // Super type.
   template <typename F, typename I1, typename I2>
   struct set_super_type< impl::apply2_type<F, I1, I2> >
   {
     typedef typename ch_value_type<I1,
 				   typename F::result_type>::ret output_type;
-    typedef typename abstract::op<output_type,
+    typedef typename abstract::image_operator<output_type,
 				  impl::apply2_type<F, I1, I2> > ret;
   };
 
@@ -143,7 +129,7 @@ namespace oln {
 
     template <typename F, typename I1, typename I2>
     struct apply2_type :
-      public abstract::op<
+      public abstract::image_operator<
         typename ch_value_type<I1, typename F::result_type>::ret,
         apply2_type<F, I1, I2> >
     {

@@ -31,8 +31,6 @@
 # include <mlc/any.hh>
 # include <mlc/types.hh>
 
-# include <oln/core/properties.hh>
-
 
 namespace oln {
 

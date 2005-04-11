@@ -68,7 +68,7 @@ namespace oln {
           // FIXME: test dim I == dim
 	  mlc::eq<oln_type_of(I, size), oln_type_of(E, size)>::ensure();
 
-          oln_type_of(E, fwd_witer) dp(se);
+          oln_type_of(E, fwd_qiter) dp(se);
 	  dp.start();
 	  V val = input[p + dp];
           for_all_remaining (dp)
@@ -94,7 +94,7 @@ namespace oln {
           // FIXME: test dim I == dim E
 	  mlc::eq<oln_type_of(I, size), oln_type_of(E, size)>::ensure();
 
-	  oln_type_of(E, fwd_witer) dp(se);
+	  oln_type_of(E, fwd_qiter) dp(se);
 	  dp.start();
 	  V val = input[p + dp];
 	  for_all_remaining (dp)
@@ -115,7 +115,7 @@ namespace oln {
 	max(const I& input, const oln_type_of(I, point)& p, const E& se)
 	{
 	  mlc::eq<oln_type_of(I, size), oln_type_of(E, size)>::ensure();
-	  oln_type_of(E, fwd_witer) dp(se);
+	  oln_type_of(E, fwd_qiter) dp(se);
 	  for_all (dp)
 	    if (input.hold(p + dp))
 	      if (input[p + dp] == true)
@@ -127,7 +127,7 @@ namespace oln {
 	min(const I& input, const oln_type_of(I, point)& p, const E& se)
 	{
 	  mlc::eq<oln_type_of(I, size), oln_type_of(E, size)>::ensure();
-	  oln_type_of(E, fwd_witer) dp(se);
+	  oln_type_of(E, fwd_qiter) dp(se);
 	  for_all (dp)
 	    if (input.hold(p + dp))
 	      if (input[p + dp] == false)

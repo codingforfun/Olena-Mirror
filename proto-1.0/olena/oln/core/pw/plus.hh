@@ -30,36 +30,41 @@
 
 # include <oln/core/pw/abstract/binary_function.hh>
 # include <oln/core/pw/literal.hh>
+# include <oln/core/pw/macros.hh>
 # include <ntg/all.hh>
 
 
 namespace oln {
 
-
-  namespace pw { // means "point-wise"
-
-    // fwd decl
+  // fwd decl
+  namespace pw {
     template <typename L, typename R> struct plus;
+  }
 
-    template <typename L, typename R>
-    struct traits < plus<L, R> >
-    {
-      typedef abstract::binary_function<L, R, plus<L, R> > super_type;
-      typedef typename traits<super_type>::point_type point_type;
-      typedef typename traits<super_type>::size_type  size_type;
-      typedef ntg_return_type(plus,
-			      oln_pw_value_type(L),
-			      oln_pw_value_type(R)) value_type;
-    };
+  // super type
+  template <typename L, typename R>
+  struct set_super_type < pw::plus<L, R> > { typedef pw::abstract::binary_function<L, R, pw::plus<L, R> > ret; };
+
+  // props
+  template <typename L, typename R>
+  struct set_props < category::pw, pw::plus<L, R> >
+  {
+    typedef ntg_return_type(plus,
+			    oln_pw_type_of(L, value),
+			    oln_pw_type_of(R, value)) value_type;
+  };
+
+
+  namespace pw {
 
     template <typename L, typename R>
     struct plus : public abstract::binary_function < L, R, plus<L, R> >
     {
       typedef plus<L, R> self_type;
 
-      typedef oln_pw_point_type(self_type) point_type;
-      typedef oln_pw_value_type(self_type) value_type;
-      typedef oln_pw_size_type(self_type)  size_type;
+      typedef oln_pw_type_of(self_type, point) point_type;
+      typedef oln_pw_type_of(self_type, value) value_type;
+      typedef oln_pw_type_of(self_type, size)  size_type;
 
       typedef abstract::binary_function<L, R, self_type> super_type;
 

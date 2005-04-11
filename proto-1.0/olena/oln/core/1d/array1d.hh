@@ -28,33 +28,29 @@
 #ifndef OLENA_CORE_1D_ARRAY1D_HH
 # define OLENA_CORE_1D_ARRAY1D_HH
 
-
 # include <oln/core/abstract/data_storage.hh>
 # include <oln/core/1d/size1d.hh>
 # include <oln/core/1d/point1d.hh>
 
-namespace oln {
 
+namespace oln {
 
   // fwd decl
   template <typename T> struct array1d;
 
-  // category
-  template <typename T> 
-  struct set_category< array1d<T> > { typedef category::data_storage ret; };
-
-  // super_type
-  template <typename T> 
-  struct set_super_type< array1d<T> > { typedef abstract::data_storage< array1d<T> > ret; };
+  // super type
+  template <typename T>
+  struct set_super_type < array1d<T> > { typedef abstract::data_storage< array1d<T> > ret; };
   
   // props
   template <typename T>
-  struct set_props < category::data_storage, array1d<T> > : public props_of<category::data_storage>
+  struct set_props < category::data_storage, array1d<T> >
   {
     typedef size1d  size_type;
     typedef point1d point_type;
     typedef T       data_type;
   };
+
 
 
   template <typename T>

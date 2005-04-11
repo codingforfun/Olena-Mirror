@@ -29,7 +29,6 @@
 # define OLENA_CORE_2D_FWD_PITER2D_HH
 
 # include <mlc/contract.hh>
-
 # include <oln/core/abstract/piter.hh>
 # include <oln/core/2d/point2d.hh>
 # include <oln/core/2d/size2d.hh>
@@ -40,14 +39,13 @@ namespace oln {
   // fwd decl
   struct fwd_piter2d;
 
-  // category
+  // super type
   template <>
-  struct set_category<fwd_piter2d> { typedef category::piter ret; };
-
+  struct set_super_type < fwd_piter2d > { typedef abstract::piter< fwd_piter2d > ret; };
 
   // props
   template <>
-  struct set_props < category::piter, fwd_piter2d > : public props_of<category::piter>
+  struct set_props < category::piter, fwd_piter2d >
   {
     typedef point2d point_type;
     typedef size2d  size_type;
@@ -63,14 +61,12 @@ namespace oln {
     fwd_piter2d(const size2d& size) :
       super_type(size)
     {
-      this->exact_ptr = this;
       this->invalidate();
     }
 
-# if defined __GNUC__ && __GNUC__ >= 3
     friend class abstract::piter< fwd_piter2d >;
+
   protected:
-# endif
 
     void impl_start()
     {

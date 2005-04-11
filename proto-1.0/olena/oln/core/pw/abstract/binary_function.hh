@@ -37,32 +37,40 @@
 namespace oln {
 
 
-  namespace pw { // means "point-wise"
-
-
-    // fwd decls
+  // fwd decl
+  namespace pw {
     namespace abstract {
       template <typename L, typename R, typename E> struct binary_function;
     }
+  }
+
+  // super type
+  template <typename L, typename R, typename E>
+  struct set_super_type < pw::abstract::binary_function<L, R, E> > { typedef pw::abstract::function<E> ret; };
+
+  // props
+  template <typename L, typename R, typename E>
+  struct set_props < category::pw, pw::abstract::binary_function<L, R, E> >
+  {
+    typedef oln_pw_type_of(L, point) left_point_type;
+    typedef oln_pw_type_of(R, point) right_point_type;
+    
+    typedef oln_point_type_from_2(left_point_type, right_point_type) point_type;
+    
+    typedef oln_pw_type_of(L, size) left_size_type;
+    typedef oln_pw_type_of(R, size) right_size_type;
+    
+    typedef oln_size_type_from_2(left_size_type, right_size_type) size_type;
+  };
 
 
-    template <typename L, typename R, typename E>
-    struct traits < abstract::binary_function<L, R, E> >
-    {
-      typedef oln_pw_point_type(L) left_point_type;
-      typedef oln_pw_point_type(R) right_point_type;
 
-      typedef oln_point_type_from_2(left_point_type, right_point_type) point_type;
-
-      typedef oln_pw_size_type(L) left_size_type;
-      typedef oln_pw_size_type(R) right_size_type;
-
-      typedef oln_size_type_from_2(left_size_type, right_size_type) size_type;
-    };
-
+  namespace pw {
 
     namespace abstract {
 
+
+      // internals
       namespace internal {
 
 	template <typename T1, typename T2>
@@ -95,6 +103,8 @@ namespace oln {
       } // end of namespace oln::pw::abstract::internal
 
 
+
+
       template <typename L, typename R, typename E>
       struct binary_function : public function<E>
       {
@@ -112,11 +122,11 @@ namespace oln {
 	}
 
 	typedef abstract::binary_function<L, R, E> self_type;
-	typedef oln_pw_point_type(self_type) point_type;
-	typedef oln_pw_size_type(self_type)  size_type;
+	typedef oln_pw_type_of(self_type, point) point_type;
+	typedef oln_pw_type_of(self_type, size)  size_type;
 
-	typedef internal::binary_function_helper<oln_pw_size_type(L),
-						 oln_pw_size_type(R) > _helper_type;
+	typedef internal::binary_function_helper<oln_pw_type_of(L, size),
+						 oln_pw_type_of(R, size) > _helper_type;
 
 	const size_type& impl_size() const
 	{

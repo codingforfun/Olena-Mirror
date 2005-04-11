@@ -36,8 +36,7 @@
 namespace oln {
 
 
-  namespace pw { // means "point-wise"
-
+  namespace pw {
 
     // FIXME: move somewhere else
     namespace internal
@@ -86,27 +85,39 @@ namespace oln {
       };
     } // end of oln::pw::internal
 
+  } // end of namespace oln::pw
 
 
-    // fwd decl
+  // fwd decl
+  namespace pw {
     template <typename R> struct not_;
+  }
 
-    template <typename R>
-    struct traits < not_<R> >
-    {
-      typedef oln_pw_point_type(R) point_type;
-      typedef oln_pw_size_type(R) size_type;
-      typedef bool value_type;
-    };
+  // super type
+  template <typename R>
+  struct set_super_type < pw::not_<R> > { typedef pw::abstract::function < pw::not_<R> > ret; };
+
+  // props
+  template <typename R>
+  struct set_props < category::pw, pw::not_<R> >
+  {
+    typedef oln_pw_type_of(R, point) point_type;
+    typedef oln_pw_type_of(R, size)  size_type;
+    typedef bool value_type;
+  };
+
+
+  namespace pw
+  {
 
     template <typename R>
     struct not_ : public abstract::function < not_<R> >
     {
       typedef not_<R> self_type;
 
-      typedef oln_pw_point_type(self_type) point_type;
-      typedef oln_pw_value_type(self_type) value_type;
-      typedef oln_pw_size_type(self_type)  size_type;
+      typedef oln_pw_type_of(R, point) point_type;
+      typedef oln_pw_type_of(R, size)  size_type;
+      typedef oln_pw_type_of(R, value) value_type;
 
       R right;
 
@@ -146,7 +157,7 @@ namespace oln {
       not_<E>
       function<E>::operator!() const
       {
-	mlc::eq< oln_typeness_of(oln_pw_value_type(E)), typeness::binary_tag >::ensure();
+	mlc::eq< oln_typeness_of(oln_pw_type_of(E, value)), typeness::binary_tag >::ensure();
 	not_<E> tmp(this->exact());
 	return tmp;
       }

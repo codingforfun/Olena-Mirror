@@ -30,7 +30,7 @@
 
 
 # include <mlc/tracked_ptr.hh>
-# include <oln/core/abstract/entry.hh>
+# include <oln/core/abstract/image_entry.hh>
 
 
 /*! \namespace oln
@@ -44,23 +44,13 @@ namespace oln {
     template <typename E> class image_with_data;
   }
 
-  // category
-  template <typename E>
-  struct set_category < abstract::image_with_data<E> >
-  {
-    typedef category::image ret;
-  };
-
   // super_type
   template <typename E>
-  struct set_super_type < abstract::image_with_data<E> >
-  {
-    typedef abstract::image_entry<E> ret;
-  };
+  struct set_super_type < abstract::image_with_data<E> > { typedef abstract::image_entry<E> ret; };
 
   // props
   template <typename E>
-  struct set_props < category::image, abstract::image_with_data<E> > : public props_of<category::image>
+  struct set_props < category::image, abstract::image_with_data<E> >
   {
     // intrusive property:
     typedef is_a<abstract::readwrite_image> image_constness_type;

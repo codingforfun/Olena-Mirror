@@ -29,57 +29,61 @@
 # define OLENA_CORE_ABSTRACT_DATA_STORAGE_HH
 
 # include <mlc/any.hh>
+# include <mlc/to_string.hh>
+# include <oln/core/typedefs.hh>
 
-# include <oln/core/properties.hh>
+
+# define oln_ds_type_of(DataStorageType, Alias) \
+mlc_type_of(oln, oln::category::data_storage, DataStorageType, Alias)
+
 
 
 namespace oln {
 
-  // fwd decl
-  namespace abstract {
-    template <typename E> struct data_storage;
+
+  namespace category
+  {
+    struct data_storage;
   }
 
-  // category
-  template <typename E>
-  struct set_category< abstract::data_storage<E> > { typedef category::data_storage ret; };
 
-
-  template <typename type>
-  struct props_of < category::data_storage, type >
+  template <>
+  struct set_default_props < category::data_storage >
   {
-    typedef mlc::true_type user_defined_;
+    typedef mlc::undefined_type size_type;
+    typedef mlc::undefined_type point_type;
+    typedef mlc::undefined_type data_type;
+  };
 
-    mlc_decl_prop(category::data_storage, size_type);
-    mlc_decl_prop(category::data_storage, point_type);
-    mlc_decl_prop(category::data_storage, data_type);
+
+  template <typename S>
+  struct get_props < category::data_storage, S >
+  {
+    typedef oln_ds_type_of(S, size)  size_type;
+    typedef oln_ds_type_of(S, point) point_type;
+    typedef oln_ds_type_of(S, data)  data_type;
 
     static void echo(std::ostream& ostr)
     {
-      ostr << "props_of( category::data_storage, "
-	   << typeid(type).name() << " ) = {"
-	   << "  size_type = " << typeid(size_type).name()
-	   << "  point_type = " << typeid(point_type).name()
-	   << "  data_type = " << typeid(data_type).name() << "  }" << std::endl;
+      ostr << "props_of( oln::category::data_storage, " << mlc_to_string(S) << " ) =" << std::endl
+	   << "\t size_type  = " << mlc_to_string(size_type)  << std::endl
+	   << "\t point_type = " << mlc_to_string(point_type) << std::endl
+	   << "\t data_type  = " << mlc_to_string(data_type)  << std::endl
+	   << std::endl;
     }
-
   };
-
-  mlc_register_prop(category::data_storage, size_type);
-  mlc_register_prop(category::data_storage, point_type);
-  mlc_register_prop(category::data_storage, data_type);
 
 
   namespace abstract {
 
     template <typename E>
-    struct data_storage : public mlc::any__best_speed<E>
+    struct data_storage : public mlc::any<E>
     {
       // typedefs
 
-      typedef oln_type_of(E, size) size_type;
-      typedef oln_type_of(E, point) point_type;
-      typedef oln_type_of(E, data) data_type;
+      typedef oln_ds_type_of(E, size) size_type;
+      typedef oln_ds_type_of(E, point) point_type;
+      typedef oln_ds_type_of(E, data) data_type;
 
       // abstract methods
 

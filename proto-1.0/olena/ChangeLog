@@ -1,3 +1,79 @@
+2005-04-11  Thierry Geraud  <theo@shuttle>
+
+	Update files with a 2nd version of property system.
+
+	* oln/convert/nbh_to_se.hh: Update.
+	* oln/basics2d.hh: Likewise.
+	* oln/core/value_box.hh: Likewise.
+	* oln/core/apply.hh: Likewise.
+	* oln/core/ch_value_type.hh: Likewise.
+	* oln/core/box.hh: Likewise.
+	* oln/core/pw/times.hh: Likewise.
+	* oln/core/pw/image.hh: Likewise.
+	* oln/core/pw/div.hh: Likewise.
+	* oln/core/pw/plus.hh: Likewise.
+	* oln/core/pw/macros.hh: Likewise.
+	* oln/core/pw/abstract/function.hh: Likewise.
+	* oln/core/pw/abstract/binary_function.hh: Likewise.
+	* oln/core/pw/minus.hh: Likewise.
+	* oln/core/pw/literal.hh: Likewise.
+	* oln/core/pw/logic.hh: Likewise.
+	* oln/core/pw/cmp.hh: Likewise.
+	* oln/core/any/point.hh: Likewise.
+	* oln/core/abstract/niter.hh: Likewise.
+	* oln/core/abstract/image.hh: Likewise.
+	* oln/core/abstract/piter.hh: Likewise.
+	* oln/core/abstract/image_like_.hh: Likewise.
+	* oln/core/abstract/point.hh: Likewise.
+	* oln/core/abstract/image_operator.hh: Likewise.
+	* oln/core/abstract/data_storage.hh: Likewise.
+	* oln/core/abstract/dpoint.hh: Likewise.
+	* oln/core/abstract/regular_niter.hh: Likewise.
+	* oln/core/abstract/images.hh: Likewise.
+	* oln/core/abstract/image_with_data.hh: Likewise.
+	* oln/core/abstract/neighborhood.hh: Likewise.
+	* oln/core/abstract/image_by_delegation.hh: Likewise.
+	* oln/core/abstract/image_with_extension.hh: Likewise.
+	* oln/core/abstract/size.hh: Likewise.
+	* oln/core/abstract/internal/image_impl.hh: Likewise.
+	* oln/core/1d/dpoint1d.hh: Likewise.
+	* oln/core/1d/array1d.hh: Likewise.
+	* oln/core/1d/image1d.hh: Likewise.
+	* oln/core/1d/fwd_piter1d.hh: Likewise.
+	* oln/core/1d/point1d.hh: Likewise.
+	* oln/core/1d/size1d.hh: Likewise.
+	* oln/core/2d/dpoint2d.hh: Likewise.
+	* oln/core/2d/array2d.hh: Likewise.
+	* oln/core/2d/image2d.hh: Likewise.
+	* oln/core/2d/fwd_regular_niter2d.hh: Likewise.
+	* oln/core/2d/bkd_piter2d.hh: Likewise.
+	* oln/core/2d/fwd_piter2d.hh: Likewise.
+	* oln/core/2d/neighborhood2d.hh: Likewise.
+	* oln/core/2d/window2d.hh: Likewise.
+	* oln/core/2d/point2d.hh: Likewise.
+	* oln/core/2d/size2d.hh: Likewise.
+	* oln/core/3d/array3d.hh: Likewise.
+	* oln/core/3d/image3d.hh: Likewise.
+	* oln/core/3d/fwd_piter3d.hh: Likewise.
+	* oln/core/3d/point3d.hh: Likewise.
+	* oln/core/gen/image_with_nbh.hh: Likewise.
+	* oln/basics.hh: Likewise.
+	* oln/morpho/reconstruction.hh: Likewise.
+	* oln/morpho/splitse.hh: Likewise.
+	* oln/morpho/stat.hh: Likewise.
+	* oln/arith/ops.hh: Likewise.
+	* oln/arith/min.hh: Likewise.
+	* oln/arith/max.hh: Likewise.
+	* oln/io/read_image.hh: Likewise.
+	* oln/core/abstract/witer.hh: Update and rename as...
+	* oln/core/abstract/qiter.hh: ...this.
+	* oln/core/abstract/entry.hh: Update and rename as...
+	* oln/core/abstract/image_entry.hh: ...this.
+	* oln/core/2d/fwd_witer2d.hh: Update and rename as...
+	* oln/core/2d/fwd_qiter2d.hh: ...this.
+	* oln/core/properties.hh: Update and rename as...
+	* oln/core/typedefs.hh: ...this.
+
 2005-04-08  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* oln/morpho/reconstruction.hh: Improve factorization.

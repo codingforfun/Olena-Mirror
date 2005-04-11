@@ -46,20 +46,13 @@ namespace oln {
   struct fwd_piter3d;
   template <typename T> class image3d;
 
-  // category
-  template <typename T>
-  struct set_category< image3d<T> > { typedef category::image ret; };
-
   // super
   template <typename T>
-  struct set_super_type < image3d<T> >
-  {
-    typedef abstract::image_with_data< image3d<T> > ret;
-  };
+  struct set_super_type < image3d<T> > { typedef abstract::image_with_data< image3d<T> > ret; };
 
 
   template <typename T>
-  struct set_props < category::image, image3d<T> > : public props_of<category::image>
+  struct set_props < category::image, image3d<T> >
   {
     // intrusive property:
     typedef is_a<abstract::image3d> image_dimension_type;

@@ -28,99 +28,123 @@
 #ifndef OLENA_CORE_ABSTRACT_IMAGE_HH
 # define OLENA_CORE_ABSTRACT_IMAGE_HH
 
-# include <mlc/types.hh>
-
-# include <oln/core/abstract/internal/image_impl.hh>
-# include <oln/core/properties.hh>
-# include <oln/core/value_box.hh>
+# include <oln/core/typedefs.hh>
 
 
-/*! \namespace oln
-** \brief oln namespace.
-*/
+# define oln_type_of_(ImageType, Alias) \
+mlc_type_of_(oln, oln::category::image, ImageType, Alias)
+
+# define oln_type_of(ImageType, Alias) \
+mlc_type_of(oln, oln::category::image, ImageType, Alias)
+
+
+
 namespace oln {
 
 
-  // fwd decl
-  namespace abstract {
-    template <typename E> struct image;
-    template <typename E> struct readonly_image;
-    template <typename E> struct image_without_nbh;
+  // fwd decls
+  namespace abstract
+  {
+    template <typename I> class image_without_nbh;
+    template <typename I> class readonly_image;
   }
 
-  // category
-  template <typename E>
-  struct set_category< abstract::image<E> > { typedef category::image ret; };
 
-
-
-  /// properties of any type in category::image
-
-  template <typename type>
-  struct props_of <category::image, type>
+  namespace category
   {
-    typedef mlc::true_type user_defined_;
-    
-    mlc_decl_prop(category::image, concrete_type);
-    mlc_decl_prop(category::image, value_type);
-    mlc_decl_prop(category::image, point_type);
-    mlc_decl_prop(category::image, size_type);
-    mlc_decl_prop(category::image, piter_type);
-    mlc_decl_prop(category::image, fwd_piter_type);
-    mlc_decl_prop(category::image, bkd_piter_type);
-    mlc_decl_prop_with_default(category::image, value_storage_type, mlc::no_type);
-    mlc_decl_prop_with_default(category::image, storage_type, mlc::no_type);
-    mlc_decl_prop_with_default(category::image, delegated_type, mlc::no_type);
-    mlc_decl_prop_with_default(category::image, neighb_type, mlc::no_type);
+    struct image;
+  }
 
 
-    mlc_decl_prop_with_default(category::image, image_neighbness_type, is_a<abstract::image_without_nbh>);
-    mlc_decl_prop_with_default(category::image, image_constness_type, is_a<abstract::readonly_image>);
-    mlc_decl_prop(category::image, image_dimension_type);
+  /// Default properties of any image type.
+
+  template <>
+  struct set_default_props < category::image >
+  {
+    typedef mlc::undefined_type concrete_type;
+    typedef mlc::undefined_type value_type;
+    typedef mlc::undefined_type point_type;
+    typedef mlc::undefined_type size_type;
+    typedef mlc::undefined_type piter_type;
+    typedef mlc::undefined_type fwd_piter_type;
+    typedef mlc::undefined_type bkd_piter_type;
+
+    typedef mlc::no_type value_storage_type;
+    typedef mlc::no_type storage_type;
+    typedef mlc::no_type delegated_type;
+    typedef mlc::no_type neighb_type;
+
+
+    typedef is_a<abstract::image_without_nbh> image_neighbness_type;
+    typedef is_a<abstract::readonly_image> image_constness_type;
+    typedef mlc::undefined_type image_dimension_type;
+
+    //...
+
+  };
+
+
+  /// Retrieval of any image type properties (FIXME: say 'packing').
+
+  template <typename I>
+  struct get_props < category::image, I >
+  {
+    typedef oln_type_of(I, concrete) concrete_type;
+    typedef oln_type_of(I, value) value_type;
+    typedef oln_type_of(I, point) point_type;
+    typedef oln_type_of(I, size) size_type;
+
+    typedef oln_type_of(I, piter) piter_type;
+    typedef oln_type_of(I, fwd_piter) fwd_piter_type;
+    typedef oln_type_of(I, bkd_piter) bkd_piter_type;
+
+    typedef oln_type_of(I, value_storage) value_storage_type;
+    typedef oln_type_of(I, storage) storage_type;
+    typedef oln_type_of(I, delegated) delegated_type;
+    typedef oln_type_of(I, neighb) neighb_type;
+
+
+    typedef oln_type_of(I, image_neighbness) image_neighbness_type;
+    typedef oln_type_of(I, image_constness) image_constness_type;
+    typedef oln_type_of(I, image_dimension) image_dimension_type;
 
     //...
 
     static void echo(std::ostream& ostr)
     {
-      ostr << "props_of(" // FIXME: << typeid(oln::category::image).name()
-	   << ", " << typeid(type).name() << ") = {"
-	   << "  concrete_type = " << typeid(concrete_type).name()
-	   << "  value_type = " << typeid(value_type).name()
-	   << "  neighb_type = " << typeid(neighb_type).name()
-	   << "  point_type = " << typeid(point_type).name()
-	   << "  size_type = " << typeid(size_type).name()
-	   << "  fwd_piter_type = " << typeid(fwd_piter_type).name()
-	   << "  value_storage_type = " << typeid(value_storage_type).name()
-	   << "  storage_type = " << typeid(storage_type).name()
-	   << "  delegated_type = " << typeid(delegated_type).name()
+      ostr << "props_of( oln::category::image, " << mlc_to_string(I) << " ) =" << std::endl
+	   << "\t concrete_type = " << mlc_to_string(concrete_type) << std::endl
+	   << "\t value_type = " << mlc_to_string(value_type) << std::endl
+	   << "\t point_type = " << mlc_to_string(point_type) << std::endl
+	   << "\t size_type = " << mlc_to_string(size_type) << std::endl
 
-	   << "  image_constness_type = " << typeid(image_constness_type).name()
-	   << "  image_dimension_type = " << typeid(image_dimension_type).name()
-	   << "  image_neighbness_type = " << typeid(image_neighbness_type).name()
+	   << "\t piter_type = " << mlc_to_string(piter_type) << std::endl
+	   << "\t fwd_piter_type = " << mlc_to_string(fwd_piter_type) << std::endl
+	   << "\t bkd_piter_type = " << mlc_to_string(bkd_piter_type) << std::endl
 
-	   << "  }" << std::endl;
+	   << "\t value_storage_type = " << mlc_to_string(value_storage_type) << std::endl
+	   << "\t storage_type = " << mlc_to_string(storage_type) << std::endl
+	   << "\t delegated_type = " << mlc_to_string(delegated_type) << std::endl
+	   << "\t neighb_type = " << mlc_to_string(neighb_type) << std::endl
+
+	   << "\t image_neighbness_type = " << mlc_to_string(image_neighbness_type)  << std::endl
+	   << "\t image_constness_type = " << mlc_to_string(image_constness_type) << std::endl
+	   << "\t image_dimension_type = " << mlc_to_string(image_dimension_type) << std::endl
+
+	   << std::endl;
     }
 
   };
 
-  mlc_register_prop(category::image, neighb_type);
-  mlc_register_prop(category::image, concrete_type);
-  mlc_register_prop(category::image, value_type);
-  mlc_register_prop(category::image, point_type); 
-  mlc_register_prop(category::image, size_type); 
-  mlc_register_prop(category::image, piter_type); 
-  mlc_register_prop(category::image, fwd_piter_type); 
-  mlc_register_prop(category::image, bkd_piter_type); 
-  mlc_register_prop(category::image, value_storage_type);
-  mlc_register_prop(category::image, storage_type);
-  mlc_register_prop(category::image, delegated_type);
-
-  mlc_register_prop(category::image, image_constness_type);
-  mlc_register_prop(category::image, image_dimension_type);
-  mlc_register_prop(category::image, image_neighbness_type);
+} // end of namespace oln
 
 
+# include <oln/core/abstract/internal/image_impl.hh>
+# include <oln/core/value_box.hh>
 
+
+namespace oln
+{
 
   /*! \namespace oln::abstract
   ** \brief oln::abstract namespace.

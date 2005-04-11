@@ -28,20 +28,16 @@
 #ifndef OLENA_CORE_3D_POINT3D_HH
 # define OLENA_CORE_3D_POINT3D_HH
 
-# include <ostream>
+# include <iostream>
 
 # include <oln/core/abstract/point.hh>
 # include <oln/core/coord.hh>
 
 namespace oln {
 
-
+  // fwd decls
   struct point3d;
   struct dpoint3d;
-
-  // category
-  template <>
-  struct set_category< point3d > { typedef category::point ret; };
 
   // super_type
   template <>
@@ -49,7 +45,7 @@ namespace oln {
 
   // props
   template <>
-  struct set_props < category::point, point3d > : public props_of<category::point>
+  struct set_props < category::point, point3d >
   {
     typedef dpoint3d dpoint_type;
   };

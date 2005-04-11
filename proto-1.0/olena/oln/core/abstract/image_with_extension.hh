@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_IMAGE_WITH_EXTENSION__HH
-# define OLENA_CORE_ABSTRACT_IMAGE_WITH_EXTENSION__HH
+#ifndef OLENA_CORE_ABSTRACT_IMAGE_WITH_EXTENSION_HH
+# define OLENA_CORE_ABSTRACT_IMAGE_WITH_EXTENSION_HH
 
 # include <oln/core/abstract/image_by_delegation.hh>
 
@@ -36,28 +36,18 @@ namespace oln {
 
   // fwd decl
   namespace abstract {
-    template <typename I, typename E> struct image_with_extension_;
+    template <typename I, typename E> struct image_with_extension;
   }
-
-  // category
-
-  template <typename I, typename E>
-  struct set_category< abstract::image_with_extension_<I, E> > {
-    typedef category::image ret;
-  };
 
   // super type
 
   template <typename I, typename E>
-  struct set_super_type < abstract::image_with_extension_<I, E> >
-  {
-    typedef abstract::image_by_delegation<I, E> ret;
-  };
+  struct set_super_type < abstract::image_with_extension<I, E> > { typedef abstract::image_by_delegation<I, E> ret; };
 
   // props
 
   template <typename I, typename E>
-  struct set_props < category::image, abstract::image_with_extension_<I, E> > : public props_of<category::image>
+  struct set_props < category::image, abstract::image_with_extension<I, E> >
   {
     typedef oln_type_of(I, concrete) concrete_type;
   };
@@ -65,20 +55,20 @@ namespace oln {
 
   namespace abstract {
 
-    /// Mutable version of image_with_extension_.
+    /// Mutable version of image_with_extension.
 
     template <typename I, typename E>
-    struct image_with_extension_ : public image_by_delegation<I, E>
+    struct image_with_extension : public image_by_delegation<I, E>
     {
       typedef image_by_delegation<I, E> super_type;
 
     public:
 
-      image_with_extension_ ()
+      image_with_extension ()
       {
       }
 
-      image_with_extension_(abstract::image<I>& image) :
+      image_with_extension(const abstract::image<I>& image) :
 	super_type(image)
       {
       }
@@ -93,7 +83,7 @@ namespace oln {
 	return this->image_.unbox();
       }
 
-      ~image_with_extension_ ()
+      ~image_with_extension ()
       {
 	// FIXME : This class must check all properties
 
@@ -115,4 +105,4 @@ namespace oln {
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_IMAGE_WITH_EXTENSION__HH
+#endif // ! OLENA_CORE_ABSTRACT_IMAGE_WITH_EXTENSION_HH

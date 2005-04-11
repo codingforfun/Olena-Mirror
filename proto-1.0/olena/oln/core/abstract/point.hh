@@ -33,7 +33,7 @@
 # include <mlc/cmp.hh>
 
 # include <oln/core/coord.hh>
-# include <oln/core/properties.hh>
+# include <oln/core/typedefs.hh>
 
 
 // fwd decl
@@ -43,7 +43,11 @@ namespace oln {
 
 
 
-# define oln_point_type_from_2(P1, P2)   typename mlc::if_< typename mlc::eq< P2, oln::any_point >::ret, P1, P2 >::ret
+# define oln_point_type_from_2(P1, P2)   typename mlc::if_< mlc::eq< P2, oln::any_point >, P1, P2 >::ret
+
+
+# define oln_pt_type_of(PointType, Alias) \
+mlc_type_of(oln, oln::category::point, PointType, Alias)
 
 
 
@@ -53,35 +57,31 @@ namespace oln {
 namespace oln {
 
 
-  // fwd decl
-  namespace abstract {
-    template <typename E> struct point;
+  namespace category
+  {
+    struct point;
   }
 
-  // category
-  template <typename E>
-  struct set_category< abstract::point<E> > { typedef category::point ret; };
 
-
-  /// properties of any type in category::point
-
-  template <typename type>
-  struct props_of < category::point, type >
+  template <>
+  struct set_default_props < category::point >
   {
-    typedef mlc::true_type user_defined_;
-    
-    mlc_decl_prop(category::point, dpoint_type);
+    typedef mlc::undefined_type dpoint_type;
+  };
+
+
+  template <typename P>
+  struct get_props < category::point, P >
+  {
+    typedef oln_pt_type_of(P, dpoint) dpoint_type;
 
     static void echo(std::ostream& ostr)
     {
-      ostr << "props_of( category::point, "
-	   << typeid(type).name() << ") = {"
-	   << "  dpoint_type = " << typeid(dpoint_type).name() << "  }" << std::endl;
+      ostr << "props_of( oln::category::point, " << mlc_to_string(P) << " ) =" << std::endl
+	   << "\t dpoint_type = " << mlc_to_string(dpoint_type) << std::endl
+	   << std::endl;
     }
-
   };
-
-  mlc_register_prop(category::point, dpoint_type); 
 
 
   /*! \namespace oln::abstract
@@ -97,7 +97,7 @@ namespace oln {
     ** Parameter E is the exact type of point.
     */
     template <typename E>
-    struct point : public mlc::any__best_memory<E>
+    struct point : public mlc::any<E>
     {
 
       typedef E exact_type;
@@ -135,7 +135,7 @@ namespace oln {
 
       // FIXME: doc...
 
-      typedef oln_type_of(E, dpoint) dpoint_type;
+      typedef oln_pt_type_of(E, dpoint) dpoint_type;
 
       const exact_type operator+(const dpoint_type& dp) const
       {

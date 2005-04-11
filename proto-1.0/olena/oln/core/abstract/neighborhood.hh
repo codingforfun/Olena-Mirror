@@ -28,54 +28,59 @@
 #ifndef OLENA_CORE_NEIGHBORHOOD_HH
 # define OLENA_CORE_NEIGHBORHOOD_HH
 
-# include <mlc/types.hh>
-# include <oln/core/properties.hh>
-# include <oln/core/coord.hh>
-# include <oln/core/abstract/dpoint.hh>
-# include <oln/core/accum.hh>
 # include <vector>
 # include <utility>
 # include <iostream>
 
+# include <oln/core/typedefs.hh>
+# include <oln/core/coord.hh>
+# include <oln/core/abstract/dpoint.hh>
+# include <oln/core/accum.hh>
+
+
+# define oln_nbh_type_of(NeighborhoodType, Alias)  \
+mlc_type_of(oln, oln::category::neighborhood, NeighborhoodType, Alias)
+
+
 namespace oln {
 
-  // fwd decl
-  namespace abstract {
-    template<class Exact>
+  namespace category
+  {
     struct neighborhood;
   }
 
-  // category
-  template <typename E>
-  struct set_category< abstract::neighborhood<E> >
+  /// Default properties of any neighborhood type.
+
+  template <>
+  struct set_default_props < category::neighborhood >
   {
-    typedef category::neighborhood ret;
+    typedef mlc::undefined_type dpoint_type;
+    typedef mlc::undefined_type size_type;
+    typedef mlc::undefined_type window_type;
   };
 
-  /// properties of any type in category::neighborhood
 
-  template <typename type>
-  struct props_of <category::neighborhood, type>
+  /// Retrieval of any image type properties (FIXME: say 'packing').
+
+  template <typename N>
+  struct get_props < category::neighborhood, N >
   {
-    typedef mlc::true_type user_defined_;
-
-    mlc_decl_prop(category::neighborhood, dpoint_type);
-    mlc_decl_prop(category::neighborhood, size_type);
-    mlc_decl_prop(category::neighborhood, window_type);
+    typedef oln_nbh_type_of(N, dpoint) dpoint_type;
+    typedef oln_nbh_type_of(N, size)   size_type;
+    typedef oln_nbh_type_of(N, window) window_type;
 
     static void echo(std::ostream& ostr)
     {
-      ostr << "props_of( category::neighborhood, "
-	   << typeid(type).name() << ") = {"
-	   << "  size_type = " << typeid(size_type).name() << "," << std::endl
-	   << "  dpoint_type = " << typeid(dpoint_type).name() << "  }" << std::endl;
+      ostr << "props_of( oln::category::neighborhood, " << mlc_to_string(N) << " ) =" << std::endl
+	   << "\t dpoint_type = " << mlc_to_string(dpoint_type) << std::endl
+	   << "\t size_type   = " << mlc_to_string(size_type)   << std::endl
+	   << "\t window_type = " << mlc_to_string(window_type) << std::endl
+	   << std::endl;
     }
 
   };
 
-  mlc_register_prop(category::neighborhood, dpoint_type);
-  mlc_register_prop(category::neighborhood, size_type);
-  mlc_register_prop(category::neighborhood, window_type);
+
 
 
   namespace abstract {
@@ -92,7 +97,7 @@ namespace oln {
 
     public:
 
-      typedef oln_type_of(E, dpoint) dpoint_type;
+      typedef oln_nbh_type_of(E, dpoint) dpoint_type;
 
       typedef E exact_type;
 

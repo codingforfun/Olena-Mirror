@@ -35,7 +35,6 @@
 
 # include <ntg/core/macros.hh>
 
-# include <oln/core/properties.hh>
 # include <oln/io/read_image_2d_pnm.hh>
 # include <oln/io/utils.hh>
 # include <oln/io/gz_stream.hh>

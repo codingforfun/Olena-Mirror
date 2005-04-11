@@ -29,7 +29,7 @@
 # define OLENA_CORE_VALUE_BOX_HH
 
 # include <iostream>
-# include <oln/core/properties.hh>
+# include <oln/core/abstract/image.hh>
 
 
 

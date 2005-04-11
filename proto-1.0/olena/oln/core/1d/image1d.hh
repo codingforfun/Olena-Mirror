@@ -28,10 +28,7 @@
 #ifndef OLENA_CORE_1D_IMAGE1D_HH
 # define OLENA_CORE_1D_IMAGE1D_HH
 
-# include <mlc/traits.hh>
-
 # include <oln/core/abstract/image_with_data.hh>
-# include <oln/core/abstract/image_like_.hh>
 # include <oln/core/1d/array1d.hh>
 
 
@@ -42,25 +39,17 @@
 namespace oln {
 
 
-
   // fwd decls
   struct fwd_piter1d;
   template <typename T> class image1d;
 
-  // category
+  // super type
   template <typename T>
-  struct set_category< image1d<T> > { typedef category::image ret; };
+  struct set_super_type < image1d<T> > { typedef abstract::image_with_data< image1d<T> > ret; };
 
-  // super
+  // props
   template <typename T>
-  struct set_super_type < image1d<T> >
-  {
-    typedef abstract::image_with_data< image1d<T> > ret;
-  };
-
-
-  template <typename T>
-  struct set_props < category::image, image1d<T> > : public props_of<category::image>
+  struct set_props < category::image, image1d<T> >
   {
     // intrusive property:
     typedef is_a<abstract::image1d> image_dimension_type;
@@ -78,7 +67,7 @@ namespace oln {
     // please note that value_storage_type means data_type
     // since image1d is an image_with_data
     typedef T value_storage_type;
-//     typedef mlc_encoding_type(T) value_storage_type;
+    // FIXME: above, that should be mlc_encoding_type(T)
 
     // please note that value_container_type means
     // data_container_type (or value_storage_container_type)

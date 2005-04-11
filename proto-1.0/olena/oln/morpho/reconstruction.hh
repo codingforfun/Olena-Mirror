@@ -37,7 +37,6 @@
 
 # include <oln/core/abstract/image_operator.hh>
 # include <oln/core/abstract/neighborhood.hh>
-# include <oln/core/properties.hh>
 
 # include <oln/level/compare.hh>
 
@@ -267,7 +266,7 @@ namespace oln {
 	  bool exist_init()
 	  {
 	    typedef oln_type_of(N, window) se_type;
-	    oln_type_of(se_type, fwd_witer) dp(se_minus);
+	    oln_type_of(se_type, fwd_qiter) dp(se_minus);
 	    for_all (dp)
 	      {
 		q = (oln_type_of(se_type, dpoint))dp +
@@ -324,7 +323,7 @@ namespace oln {
 		fifo.pop();
 		typedef oln_type_of(N, window) window_type;
 		window_type w = convert::nbh_to_se(this->nbh);
-		oln_type_of(window_type, fwd_witer) dp(w);
+		oln_type_of(window_type, fwd_qiter) dp(w);
 
 		for_all (dp)
 		  {

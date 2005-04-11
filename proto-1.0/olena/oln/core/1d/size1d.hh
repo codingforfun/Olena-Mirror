@@ -35,6 +35,13 @@
 
 namespace oln {
 
+  // fwd decl
+  struct size1d;
+
+  // super type
+  template <>
+  struct set_super_type < size1d > { typedef abstract::size< size1d > ret; };
+
 
   struct size1d : public abstract::size< size1d >
   {
