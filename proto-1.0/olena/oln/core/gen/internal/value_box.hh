@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_VALUE_BOX_HH
-# define OLENA_CORE_VALUE_BOX_HH
+#ifndef OLENA_CORE_GEN_INTERNAL_VALUE_BOX_HH
+# define OLENA_CORE_GEN_INTERNAL_VALUE_BOX_HH
 
 # include <iostream>
 # include <oln/core/abstract/image.hh>
@@ -386,4 +386,4 @@ std::ostream& operator<<(std::ostream& ostr, const oln::value_box<I>& vb)
 }
 
 
-#endif // ! OLENA_CORE_VALUE_BOX_HH
+#endif // ! OLENA_CORE_GEN_INTERNAL_VALUE_BOX_HH

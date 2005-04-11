@@ -28,6 +28,7 @@
 #ifndef OLENA_CORE_ABSTRACT_IMAGE_OPERATOR_HH
 # define OLENA_CORE_ABSTRACT_IMAGE_OPERATOR_HH
 
+# include <oln/basics.hh>
 # include <oln/core/abstract/image_like_.hh>
 
 namespace oln {

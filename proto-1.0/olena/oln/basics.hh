@@ -50,14 +50,13 @@
 // oln::
 
 # include <oln/core/coord.hh>
-# include <oln/core/value_box.hh>
 # include <oln/core/box.hh>
 
 # include <oln/core/abstract/size.hh>
 # include <oln/core/abstract/point.hh>
 # include <oln/core/any/all.hh>
 # include <oln/core/abstract/images.hh>
-# include <oln/core/abstract/entry.hh>
+# include <oln/core/abstract/image_entry.hh>
 # include <oln/core/abstract/image_operator.hh>
 
 # include <oln/core/pw/all.hh>

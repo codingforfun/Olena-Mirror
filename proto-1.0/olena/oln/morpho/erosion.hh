@@ -28,10 +28,11 @@
 #ifndef OLENA_MORPHO_EROSION_HH
 # define OLENA_MORPHO_EROSION_HH
 
-# include <oln/basics.hh>
-# include <oln/morpho/stat.hh>
-# include <oln/core/abstract/image_operator.hh>
 # include <mlc/cmp.hh>
+
+# include <oln/core/abstract/image_operator.hh>
+# include <oln/morpho/stat.hh>
+
 
 namespace oln {
 
@@ -42,14 +43,14 @@ namespace oln {
 
       /// Erosion as a procedure (do not use it; prefer morpho::erosion).
 
-      template<typename I, typename S>
+      template<typename I, typename W>
       oln_type_of(I, concrete) erosion(const abstract::image<I>& input,
-					const abstract::struct_elt<S>& se)
+				       const abstract::window<W>& win)
       {
 	oln_type_of(I, concrete) output(input.size());
 	oln_type_of(I, fwd_piter) p(input.size());
 	for_all (p)
-	  output[p] = morpho::min(input, p, se);
+	  output[p] = morpho::min(input, p, win);
 	return output;
       }
 
@@ -60,24 +61,24 @@ namespace oln {
     /*!
     ** \brief Perform a morphological erosion.
     **
-    **   Compute the morphological erosion of input using se
+    **   Compute the morphological erosion of input using win
     **   as structuring element.
     **
     **   On grey-scale  images, each point is replaced  by the minimum
-    **   value  of  its neighbors,  as  indicated  by  se.  On  binary
+    **   value  of  its neighbors,  as  indicated  by  win.  On  binary
     **   images, a  logical and  is performed between  neighbors.  The
     **   morpho::fast  version  of   this  function  use  a  different
     **   algorithm:  an histogram  of  the value  of the  neighborhood
-    **   indicated by se is updated  while iterating over all point of
+    **   indicated by win is updated  while iterating over all point of
     **   the image.   Doing so is  more efficient when  the structuring
     **   element is large.
     **
     ** \param I Exact type of the input image.
-    ** \param E Exact type of the structuring element.
+    ** \param W Exact type of the structuring element.
     **
     **
     ** \arg input Input image.
-    ** \arg se Structuring element to use.
+    ** \arg win Structuring element to use.
     **
     ** \code
     ** #include <oln/basics2d.hh>
@@ -104,45 +105,16 @@ namespace oln {
     */
 
     // fwd decl
-    template <typename I, typename E> struct erosion_ret;
+    template <typename I, typename W> struct erosion_ret;
 
   }
 
-  // category
-  template <typename I, typename E>
-  struct set_category< morpho::erosion_ret<I,E> > { typedef category::image ret; };
-
   // super_type
-  template <typename I, typename E>
-  struct set_super_type< morpho::erosion_ret<I,E> >
+  template <typename I, typename W>
+  struct set_super_type< morpho::erosion_ret<I,W> >
   {
-    typedef abstract::image_unary_operator<oln_type_of(I, concrete), I, morpho::erosion_ret<I, E> > ret;
+    typedef abstract::image_unary_operator<oln_type_of(I, concrete), I, morpho::erosion_ret<I,W> > ret;
   };
-
-
-
-  // FIXME: remove (test purpose!)
-  // fwd decl
-  namespace morpho {
-    namespace impl {
-      template <typename I, typename S> struct generic_erosion;
-    }
-  }
-  // category
-  template <typename I, typename S>
-  struct set_category< morpho::impl::generic_erosion<I,S> > { typedef category::image ret; };
-  // super_type
-  template <typename I, typename S>
-  struct set_super_type< morpho::impl::generic_erosion<I,S> >
-  {
-    typedef morpho::erosion_ret<I,S> ret;
-  };
-  template <typename I, typename S>
-  struct set_type_of< category::image, morpho::impl::generic_erosion<I,S>, target::dummy_type >
-  {
-    typedef S ret;
-  };
-  // end of FIXME: remove (test purpose!)
 
 
 
@@ -151,18 +123,18 @@ namespace oln {
 
     /// Erosion return.
 
-    template <typename I, typename E>
-    struct erosion_ret : public abstract::image_unary_operator<oln_type_of(I, concrete), I, erosion_ret<I, E> >
+    template <typename I, typename W>
+    struct erosion_ret : public abstract::image_unary_operator<oln_type_of(I, concrete), I, erosion_ret<I,W> >
     {
-      typedef abstract::image_unary_operator<oln_type_of(I, concrete), I, erosion_ret<I, E> > super_type;
+      typedef abstract::image_unary_operator<oln_type_of(I, concrete), I, erosion_ret<I,W> > super_type;
       typedef typename super_type::output_type output_type;
 
-      const E se;
+      const W win;
 
       erosion_ret(const abstract::image<I>& input,
-		  const abstract::struct_elt<E>& se) :
+		  const abstract::window<W>& win) :
 	super_type(input),
-	se(se.exact())
+	win(win.exact())
 	{
 	}
 
@@ -174,28 +146,28 @@ namespace oln {
 
       /// Erosion generic implementation.
 
-      template <typename I, typename S>
-      struct generic_erosion : public erosion_ret<I, S>
+      template <typename I, typename W>
+      struct generic_erosion : public erosion_ret<I,W>
       {
-	typedef erosion_ret<I, S> super_type;
+	typedef erosion_ret<I,W> super_type;
 	typedef typename super_type::output_type output_type;
 
 	generic_erosion(const abstract::image<I>& input,
-			const abstract::struct_elt<S>& se) :
-	  super_type(input, se)
+			const abstract::window<W>& win) :
+	  super_type(input, win)
 	{
 	}
 
 	void impl_run()
 	{
-	  mlc::eq<oln_type_of(I, size), oln_type_of(S, size)>::ensure();
+	  mlc::eq<oln_type_of(I, size), oln_type_of(W, size)>::ensure();
 
 	  output_type tmp(this->input.size()); // FIXME: trick
 	  this->output = tmp;
 
 	  oln_type_of(I, fwd_piter) p(this->input.size());
 	  for_all (p)
-	    this->output[p] = morpho::min(this->input, p, this->se);
+	    this->output[p] = morpho::min(this->input, p, this->win);
 	}
       };
 
@@ -204,11 +176,11 @@ namespace oln {
 
     /// Erosion generic routine.
 
-    template<typename I, typename S>
-    erosion_ret<I, S> erosion(const abstract::image<I>& input,
-			      const abstract::struct_elt<S>& se)
+    template<typename I, typename W>
+    erosion_ret<I,W> erosion(const abstract::image<I>& input,
+			     const abstract::window<W>& win)
     {
-      impl::generic_erosion<I, S> tmp(input, se);
+      impl::generic_erosion<I,W> tmp(input, win);
       tmp.run();
       return tmp;
     }

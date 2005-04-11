@@ -140,7 +140,7 @@ namespace oln {
 
 
 # include <oln/core/abstract/internal/image_impl.hh>
-# include <oln/core/value_box.hh>
+# include <oln/core/gen/internal/value_box.hh>
 
 
 namespace oln

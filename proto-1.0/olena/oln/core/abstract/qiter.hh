@@ -25,57 +25,61 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_WITER_HH
-# define OLENA_CORE_ABSTRACT_WITER_HH
+#ifndef OLENA_CORE_ABSTRACT_QITER_HH
+# define OLENA_CORE_ABSTRACT_QITER_HH
 
 # include <mlc/any.hh>
-# include <mlc/types.hh>
 # include <oln/core/coord.hh>
-# include <oln/core/properties.hh>
+# include <oln/core/typedefs.hh>
+# include <oln/core/abstract/window.hh>
 
-# include <string>
+
+# define oln_qit_type_of(QiterType, Alias) \
+mlc_type_of(oln, oln::category::qiter, QiterType, Alias)
+
 
 namespace oln {
 
-  // fwd decl
-  namespace abstract {
-    template <typename E> struct witer;
+  namespace category
+  {
+    struct qiter;
   }
 
-  // category
-  template <typename E>
-  struct set_category< abstract::witer<E> > { typedef category::witer ret; };
+  /// Default properties of any type in category::qiter.
 
-  /// properties of any type in category::witer
-  //
-  template <typename type>
-  struct props_of < category::witer, type >
+  struct set_default_props < category::qiter >
   {
-    typedef mlc::true_type user_defined_;
+    typedef mlc::undefined_type window_type;
+  };
 
-    mlc_decl_prop(category::witer, se_type);
+  // props
+
+  template <typename Q>
+  struct get_props < category::qiter, Q >
+  {
+    typedef oln_qit_type_of(Q, window) window_type;
 
     static void echo(std::ostream& ostr)
     {
-      ostr << "props_of( category::witer, "
-	   << typeid(type).name() << ") = {"
-           << "  se_type = " << typeid(se_type).name()
-           << "  }" << std::endl;
+      ostr << "props_of( oln::category::qiter, " << mlc_to_string(Q) << " ) =" << std::endl
+	   << "{" << std::endl
+	   << "\t window_type = " << mlc_to_string(window_type) << std::endl
+	   << "}" << std::endl;
     }
   };
 
-  mlc_register_prop(category::witer, se_type);
+
 
   namespace abstract {
 
     template <typename E>
-    struct witer : public mlc::any__best_speed<E>
+    struct qiter : public mlc::any__best_speed<E>
     {
 
-      typedef witer<E> self_type;
+      typedef qiter<E> self_type;
 
-      typedef oln_type_of(E, se)  se_type;
-      typedef oln_type_of(se_type, dpoint)  dpoint_type;
+      typedef oln_qit_type_of(E, window)  window_type;
+      typedef oln_wn_type_of(window_type, dpoint)  dpoint_type;
 
       void start()
       {
@@ -96,7 +100,7 @@ namespace oln {
       operator dpoint_type() const
       {
         precondition(this->is_valid());
-        return this->se_[pos_];
+        return this->win_[pos_];
       }
 
       void invalidate()
@@ -107,7 +111,7 @@ namespace oln {
 
       coord_t nth(unsigned i)
       {
-	return this->se_[this->pos_].nth(i);
+	return this->win_[this->pos_].nth(i);
       }
 
     protected:
@@ -124,19 +128,19 @@ namespace oln {
 
       bool impl_is_valid() const
       {
-        return pos_ != se_.card();
+        return pos_ != win_.card();
       }
 
       void impl_invalidate()
       {
-        pos_ = se_.card();
+        pos_ = win_.card();
       }
 
-      witer(const se_type& se)
-        : se_(se), pos_(0)
+      qiter(const window_type& se)
+        : win_(se), pos_(0)
       {}
 
-      const se_type& se_;
+      const window_type& win_;
       unsigned pos_;
     };
 
@@ -144,4 +148,4 @@ namespace oln {
 
 } // oln
 
-#endif // OLENA_CORE_ABSTRACT_WITER_HH
+#endif // ! OLENA_CORE_ABSTRACT_QITER_HH

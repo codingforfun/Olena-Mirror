@@ -61,30 +61,30 @@ namespace oln {
     };
 
     /*!
-    ** \brief Get a sub part of a structuring element.
+    ** \brief Get a sub part of a window.
     **
-    ** \param E Exact type of the structuring element.
+    ** \param E Exact type of the window.
     **
-    ** \arg se The structuring element.
+    ** \arg win The window.
     **
-    ** A point p take part of the new structuring element if it exists
+    ** A point p take part of the new window if it exists
     ** a i  that belongs to [[0..dim-1]] like  p(i) < 0 and  for all j
     ** that belongs to [[0..i-1]] p(j) = 0.
     **
     */
 
 
-    template<class E>
-    E
-    get_plus_se_only(const abstract::struct_elt<E>& se)
+    template<class W>
+    W
+    get_plus_win_only(const abstract::window<W>& win)
     {
-      oln_type_of(E, fwd_qiter) dp(se.exact());
-      E out;
+      oln_wn_type_of(W, fwd_qiter) dp(win.exact());
+      W out;
 
       for_all (dp)
 	{
 	  unsigned n;
-	  for (n = 0; n < dim_traits<oln_type_of(E, size)>::dim; ++n)
+	  for (n = 0; n < dim_traits<oln_wn_type_of(W, size)>::dim; ++n)
 	    if (dp.nth(n) < 0) {
 	      out.add(dp);
 	      break;
@@ -96,29 +96,29 @@ namespace oln {
     }
 
     /*!
-    ** \brief Get a sub part of a structuring element.
+    ** \brief Get a sub part of a window.
     **
-    ** \param E Exact type of the structuring element.
+    ** \param W Exact type of the window.
     **
-    ** \arg se The structuring element.
+    ** \arg win The window.
     **
-    ** A point p take part of the new structuring element if it exists
+    ** A point p take part of the new window if it exists
     ** a i  that belongs to [[0..dim-1]] like  p(i) < 0 and  for all j
     ** that  belongs to  [[0..i-1]] p(j)  =  0 or  if for  all i  that
     ** belongs to [[0..dim-1]] p(i) = 0.
     **
     */
-    template<class E>
-    E
-    get_plus_se_p(const abstract::struct_elt<E>& se)
+    template<class W>
+    W
+    get_plus_win_p(const abstract::window<W>& win)
     {
-      oln_type_of(E, fwd_qiter) dp(se.exact());
-      E out;
+      oln_wn_type_of(W, fwd_qiter) dp(win.exact());
+      W out;
 
       for_all (dp)
 	{
 	  unsigned n;
-	  for (n = 0; n < dim_traits<oln_type_of(E, size)>::dim; ++n)
+	  for (n = 0; n < dim_traits<oln_wn_type_of(W, size)>::dim; ++n)
 	    if (dp.nth(n) < 0) {
 	      out.add(dp);
 	      break;
@@ -126,35 +126,35 @@ namespace oln {
 	      break;
 	    }
 	  // All p.nth(n) are 0.
-	  if (n == dim_traits<oln_type_of(E, size)>::dim)
+	  if (n == dim_traits<oln_wn_type_of(W, size)>::dim)
 	    out.add(dp);
 	}
       return out;
     }
 
     /*!
-    ** \brief Get a sub part of a structuring element.
+    ** \brief Get a sub part of a window.
     **
-    ** \param E Exact type of the structuring element.
+    ** \param W Exact type of the window.
     **
-    ** \arg se The structuring element.
+    ** \arg win The window.
     **
-    ** A point p take part of the new structuring element if it exists
+    ** A point p take part of the new window if it exists
     ** a i  that belongs to [[0..dim-1]] like  p(i) > 0 and  for all j
     ** that  belongs to  [[0..i-1]] p(j)  =  0.
     **
     */
-    template<class E>
-    E
-    get_minus_se_only(const abstract::struct_elt<E>& se)
+    template<class W>
+    W
+    get_minus_win_only(const abstract::window<W>& win)
     {
-      oln_type_of(E, fwd_qiter) dp(se.exact());
-      E out;
+      oln_wn_type_of(W, fwd_qiter) dp(win.exact());
+      W out;
 
       for_all (dp)
 	{
 	  unsigned n;
-	  for (n = 0; n < dim_traits<oln_type_of(E, size)>::dim; ++n)
+	  for (n = 0; n < dim_traits<oln_wn_type_of(W, size)>::dim; ++n)
 	    if (dp.nth(n) > 0) {
 	      out.add(dp);
 	      break;
@@ -166,29 +166,29 @@ namespace oln {
     }
 
     /*!
-    ** \brief Get a sub part of a structuring element.
+    ** \brief Get a sub part of a window.
     **
-    ** \param E Exact type of the structuring element.
+    ** \param W Exact type of the window.
     **
-    ** \arg se The structuring element.
+    ** \arg win The window.
     **
-    ** A point p take part of the new structuring element if it exists
+    ** A point p take part of the new window if it exists
     ** a i  that belongs to [[0..dim-1]] like  p(i) > 0 and  for all j
     ** that  belongs to  [[0..i-1]] p(j)  =  0 or  if for  all i  that
     ** belongs to [[0..dim-1]] p(i) = 0.
     **
     */
-    template<class E>
-    E
-    get_minus_se_p(const abstract::struct_elt<E>& se)
+    template<class W>
+    W
+    get_minus_win_p(const abstract::window<W>& win)
     {
-      oln_type_of(E, fwd_qiter) dp(se.exact());
-      E out;
+      oln_wn_type_of(W, fwd_qiter) dp(win.exact());
+      W out;
 
       for_all (dp)
 	{
 	  unsigned n;
-	  for (n = 0; n < dim_traits<oln_type_of(E, size)>::dim; ++n)
+	  for (n = 0; n < dim_traits<oln_wn_type_of(W, size)>::dim; ++n)
 	    if (dp.nth(n) > 0) {
 	      out.add(dp);
 	      break;
@@ -196,13 +196,14 @@ namespace oln {
 	      break;
 	    }
 	  // All p.nth(n) are 0.
-	  if (n == dim_traits<oln_type_of(E, size)>::dim)
+	  if (n == dim_traits<oln_wn_type_of(W, size)>::dim)
 	    out.add(dp);
 	}
       return out;
     }
 
-  } // morpho
-} // oln
+  } // end of namespace oln::morpho
 
-#endif // OLENA_MORPHO_SPLITSE_HH
+} // end of namespace oln
+
+#endif // ! OLENA_MORPHO_SPLITSE_HH

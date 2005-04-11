@@ -25,82 +25,83 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_STRUCT_ELT_HH
-# define OLENA_CORE_STRUCT_ELT_HH
+#ifndef OLENA_CORE_ABSTRACT_WINDOW_HH
+# define OLENA_CORE_ABSTRACT_WINDOW_HH
 
-# include <mlc/types.hh>
-# include <oln/core/properties.hh>
-# include <oln/core/coord.hh>
-# include <oln/core/abstract/dpoint.hh>
-# include <oln/core/accum.hh>
 # include <vector>
 # include <utility>
 # include <iostream>
 
+# include <mlc/types.hh>
+# include <oln/core/typedefs.hh>
+# include <oln/core/coord.hh>
+# include <oln/core/abstract/dpoint.hh>
+# include <oln/core/accum.hh>
+
+
+# define oln_wn_type_of(WindowType, Alias) \
+mlc_type_of(oln, oln::category::window, WindowType, Alias)
+
+
+
 namespace oln {
 
-  // fwd decl
-  namespace abstract {
-    template<class Exact>
-    struct struct_elt;
+  namespace category
+  {
+    struct window;
   }
 
-  // category
-  template <typename E>
-  struct set_category< abstract::struct_elt<E> >
+  template <>
+  struct set_default_props < category::window >
   {
-    typedef category::struct_elt ret;
+    typedef mlc::undefined_type dpoint_type;
+    typedef mlc::undefined_type size_type;
+    typedef mlc::undefined_type fwd_qiter_type;
   };
 
-  /// properties of any type in category::struct_elt
-
-  template <typename type>
-  struct props_of <category::struct_elt, type>
+  template <typename W>
+  struct get_props < category::window, W >
   {
-    typedef mlc::true_type user_defined_;
-
-    mlc_decl_prop(category::struct_elt, dpoint_type);
-    mlc_decl_prop(category::struct_elt, size_type);
-    mlc_decl_prop(category::struct_elt, fwd_witer_type);
+    typedef oln_wn_type_of(W, dpoint)    dpoint_type;
+    typedef oln_wn_type_of(W, size)      size_type;
+    typedef oln_wn_type_of(W, fwd_qiter) fwd_qiter_type;
 
     static void echo(std::ostream& ostr)
     {
-      ostr << "props_of( category::struct_elt, "
-	   << typeid(type).name() << ") = {"
-	   << "  size_type = " << typeid(size_type).name() << "," << std::endl
-	   << "  fwd_witer_type = " << typeid(fwd_witer_type).name() << "," << std::endl
-	   << "  dpoint_type = " << typeid(dpoint_type).name() << "  }" << std::endl;
+      ostr << "props_of( oln::category::window, " << mlc_to_string(W) << " ) =" << std::endl
+	   << "{" << std::endl
+	   << "\t dpoint_type    = " << mlc_to_string(dpoint_type)    << std::endl
+	   << "\t size_type      = " << mlc_to_string(size_type)      << std::endl
+	   << "\t fwd_qiter_type = " << mlc_to_string(fwd_qiter_type) << std::endl
+	   << "}" << std::endl;
     }
-
   };
 
-  mlc_register_prop(category::struct_elt, dpoint_type);
-  mlc_register_prop(category::struct_elt, size_type);
-  mlc_register_prop(category::struct_elt, fwd_witer_type);
 
 
   namespace abstract {
 
     /*!
-    ** Structuring elements (set of dpoints).
+    ** FIXME: Structuring elements (set of dpoints).
     **
-    ** This abstract class defines several virtual methods for its
-    ** subclasses. Its goal is to deal with a set of 'move' points.
+    ** FIXME: This abstract class defines several virtual methods for
+    ** its subclasses. Its goal is to deal with a set of 'move'
+    ** points.
     */
-    template<class E>
-    class struct_elt : public mlc::any__best_memory<E>
+    template<class W>
+    class window : public mlc::any<W>
     {
 
     public:
 
-      typedef oln_type_of(E, dpoint) dpoint_type;
+      typedef oln_wn_type_of(W, dpoint) dpoint_type;
 
-      typedef E exact_type;
+      typedef W exact_type;
 
       static std::string
       name()
       {
-	return std::string("struct_elt<") + exact_type::name() + ">";
+	return std::string("window<") + exact_type::name() + ">";
       }
 
       bool
@@ -203,10 +204,10 @@ namespace oln {
 	return dp_[i];
       }
 
-      struct_elt() : dp_(), delta_(0)
+      window() : dp_(), delta_(0)
       {};
 
-      struct_elt(unsigned size) : dp_(), delta_(0)
+      window(unsigned size) : dp_(), delta_(0)
       {
         dp_.reserve(size);
       };
@@ -219,9 +220,9 @@ namespace oln {
 
 } // end of oln
 
-template<class E>
+template<class W>
 std::ostream&
-operator<<(std::ostream& o, const oln::abstract::struct_elt<E>& se)
+operator<<(std::ostream& o, const oln::abstract::window<W>& se)
 {
   unsigned c = se.card();
   o << "[";
@@ -232,4 +233,4 @@ operator<<(std::ostream& o, const oln::abstract::struct_elt<E>& se)
 }
 
 
-#endif // ! OLENA_CORE_STRUCT_ELT_HH
+#endif // ! OLENA_CORE_ABSTRACT_WINDOW_HH

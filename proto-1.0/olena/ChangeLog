@@ -1,3 +1,21 @@
+2005-04-11  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* oln/core/value_box.hh: Move to...
+	* oln/core/gen/internal/value_box.hh: ...this.
+	* oln/core/abstract/struct_elt.hh: Rename as...
+	* oln/core/abstract/window.hh: ...this.
+	* oln/core/abstract/op.hh: Remove.
+	* oln/core/abstract/image.hh: Update.
+	* oln/core/abstract/piter.hh: Likewise.
+	* oln/core/abstract/qiter.hh: Likewise.
+	* oln/core/abstract/image_operator.hh: Likewise.
+	* oln/basics.hh: Likewise.
+	* oln/makefile.src: Likewise.
+	* oln/morpho/dilation.hh: Likewise.
+	* oln/morpho/splitse.hh: Likewise.
+	* oln/morpho/stat.hh: Likewise.
+	* oln/morpho/erosion.hh: Likewise.
+
 2005-04-11  Thierry Geraud  <theo@shuttle>
 
 	Update files with a 2nd version of property system.

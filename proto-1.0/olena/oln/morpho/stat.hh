@@ -28,9 +28,9 @@
 #ifndef OLENA_MORPHO_STAT_HH
 # define OLENA_MORPHO_STAT_HH
 
-# include <oln/basics.hh>
-# include <ntg/bin.hh>
 # include <mlc/cmp.hh>
+# include <ntg/bin.hh>
+# include <oln/basics.hh>
 
 
 namespace oln {
@@ -40,35 +40,35 @@ namespace oln {
     namespace internal {
 
       /*!
-      ** \brief Min and Max on a structuring element.
+      ** \brief Min and Max on a window.
       **
       ** We need to use this inner definition in order to specialize
       ** max and min on binary images.
       **
       ** \param I Image exact type.
-      ** \param E Structuring element type.
+      ** \param W Window type.
       ** \param V Associated value type.
       */
-      template <class I, class E, class V = oln_type_of(I, value)>
+      template <class I, class W, class V = oln_type_of(I, value)>
       struct stat_
       {
 	/*!
-	** \brief Maximum of a structuring element.
+	** \brief Maximum of a window.
 	**
-	** Look for  the maximum in the structuring  element se disposed
+	** Look for  the maximum in the window win disposed
 	** on the image input, at the point p.
 	**
 	** \arg input Input image.
-	** \arg p Point of the image to move the structuring element on.
-	** \arg se The structuring element to use.
+	** \arg p Point of the image to move the window on.
+	** \arg win The window to use.
 	*/
 	static V
-	max(const I& input, const oln_type_of(I, point)& p, const E& se)
+	max(const I& input, const oln_type_of(I, point)& p, const W& win)
 	{
           // FIXME: test dim I == dim
-	  mlc::eq<oln_type_of(I, size), oln_type_of(E, size)>::ensure();
+	  mlc::eq<oln_type_of(I, size), oln_wn_type_of(W, size)>::ensure();
 
-          oln_type_of(E, fwd_qiter) dp(se);
+          oln_wn_type_of(W, fwd_qiter) dp(win);
 	  dp.start();
 	  V val = input[p + dp];
           for_all_remaining (dp)
@@ -79,22 +79,22 @@ namespace oln {
 	}
 
 	/*!
-	** \brief Minimum of a structuring element.
+	** \brief Minimum of a window.
 	**
-	** Look for  the minimum in the structuring  element se disposed
+	** Look for  the minimum in the window win disposed
 	** on the image input, at the point p.
 	**
 	** \arg input Input image.
-	** \arg p Point of the image to move the structuring element on.
-	** \arg se The structuring element to use.
+	** \arg p Point of the image to move the window on.
+	** \arg win The window to use.
 	*/
 	static V
-	min(const I& input, const oln_type_of(I, point)& p, const E& se)
+	min(const I& input, const oln_type_of(I, point)& p, const W& win)
 	{
-          // FIXME: test dim I == dim E
-	  mlc::eq<oln_type_of(I, size), oln_type_of(E, size)>::ensure();
+          // FIXME: test dim I == dim W
+	  mlc::eq<oln_type_of(I, size), oln_wn_type_of(W, size)>::ensure();
 
-	  oln_type_of(E, fwd_qiter) dp(se);
+	  oln_wn_type_of(W, fwd_qiter) dp(win);
 	  dp.start();
 	  V val = input[p + dp];
 	  for_all_remaining (dp)
@@ -108,14 +108,14 @@ namespace oln {
 
       /* Binary specialization.  */
 
-      template <class I, class E>
-      struct stat_<I, E, ntg::bin>
+      template <class I, class W>
+      struct stat_<I, W, ntg::bin>
       {
 	static ntg::bin
-	max(const I& input, const oln_type_of(I, point)& p, const E& se)
+	max(const I& input, const oln_type_of(I, point)& p, const W& win)
 	{
-	  mlc::eq<oln_type_of(I, size), oln_type_of(E, size)>::ensure();
-	  oln_type_of(E, fwd_qiter) dp(se);
+	  mlc::eq<oln_type_of(I, size), oln_wn_type_of(W, size)>::ensure();
+	  oln_wn_type_of(W, fwd_qiter) dp(win);
 	  for_all (dp)
 	    if (input.hold(p + dp))
 	      if (input[p + dp] == true)
@@ -124,10 +124,10 @@ namespace oln {
 	}
 
 	static ntg::bin
-	min(const I& input, const oln_type_of(I, point)& p, const E& se)
+	min(const I& input, const oln_type_of(I, point)& p, const W& win)
 	{
-	  mlc::eq<oln_type_of(I, size), oln_type_of(E, size)>::ensure();
-	  oln_type_of(E, fwd_qiter) dp(se);
+	  mlc::eq<oln_type_of(I, size), oln_wn_type_of(W, size)>::ensure();
+	  oln_wn_type_of(W, fwd_qiter) dp(win);
 	  for_all (dp)
 	    if (input.hold(p + dp))
 	      if (input[p + dp] == false)
@@ -140,49 +140,49 @@ namespace oln {
     } // internal
 
     /*!
-    ** \brief Maximum of a structuring element.
+    ** \brief Maximum of a window.
     **
-    ** Look for  the maximum in the structuring  element se disposed
+    ** Look for  the maximum in the window win disposed
     ** on the image input, at the point p.
     **
     ** \param I Image exact type.
-    ** \param E Structuring element type.
+    ** \param W Window type.
     **
     ** \arg input Input image.
-    ** \arg p Point of the image to move the structuring element on.
-    ** \arg se The structuring element to use.
+    ** \arg p Point of the image to move the window on.
+    ** \arg win The window to use.
     */
-    template<class I, class E>
+    template<class I, class W>
     oln_type_of(I, value)
     max(const abstract::image<I>& input,
 	const oln_type_of(I, point)& p,
-	const abstract::struct_elt<E>& se)
+	const abstract::window<W>& win)
     {
-      // FIXME: test dim I == dim E
-      return internal::stat_<I, E>::max(input.exact(), p, se.exact());
+      // FIXME: test dim I == dim W
+      return internal::stat_<I, W>::max(input.exact(), p, win.exact());
     }
 
-    /*! ** \brief Minimum of a structuring element.
+    /*! ** \brief Minimum of a window.
     **
-    ** Look for  the minimum in the structuring  element se disposed
+    ** Look for  the minimum in the window win disposed
     ** on the image input, at the point p.
     **
     ** \param I Image exact type.
-    ** \param E Structuring element type.
+    ** \param W Window type.
     **
     ** \arg input Input image.
-    ** \arg p Point of the image to move the structuring element on.
-    ** \arg se The structuring element to use.
+    ** \arg p Point of the image to move the window on.
+    ** \arg win The window to use.
     */
-    template<class I, class E>
+    template<class I, class W>
     oln_type_of(I, value)
     min(const abstract::image<I>& input,
 	const oln_type_of(I, point)& p,
 	//		 const mlc_exact_type(I)::iter_type& p,
-	const abstract::struct_elt<E>& se)
+	const abstract::window<W>& win)
     {
-      // FIXME: test dim I == dim E
-      return internal::stat_<I, E>::min(input.exact(), p, se.exact());
+      // FIXME: test dim I == dim W
+      return internal::stat_<I, W>::min(input.exact(), p, win.exact());
     }
 
   } // end of namespace morpho

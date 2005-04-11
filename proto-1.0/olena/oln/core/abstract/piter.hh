@@ -77,9 +77,10 @@ namespace oln {
     static void echo(std::ostream& ostr)
     {
       ostr << "props_of( oln::category::piter, " << mlc_to_string(P) << " ) =" << std::endl
+	   << "{" << std::endl
 	   << "\t point_type = " << mlc_to_string(point_type) << std::endl
 	   << "\t size_type  = " << mlc_to_string(size_type)  << std::endl
-	   << std::endl;
+	   << "}" << std::endl;
     }
   };
 

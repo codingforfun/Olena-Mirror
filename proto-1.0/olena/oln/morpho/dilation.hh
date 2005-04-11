@@ -28,10 +28,10 @@
 #ifndef OLENA_MORPHO_DILATION_HH
 # define OLENA_MORPHO_DILATION_HH
 
-# include <oln/basics.hh>
-# include <oln/morpho/stat.hh>
-# include <oln/core/abstract/image_operator.hh>
 # include <mlc/cmp.hh>
+
+# include <oln/core/abstract/image_operator.hh>
+# include <oln/morpho/stat.hh>
 
 
 namespace oln {
@@ -44,14 +44,14 @@ namespace oln {
 
       /// Dilation as a procedure (do not use it; prefer morpho::dilation).
 
-      template<typename I, typename S>
+      template<typename I, typename W>
       oln_type_of(I, concrete) dilation(const abstract::image<I>& input,
-					const abstract::struct_elt<S>& se)
+					const abstract::window<W>& win)
       {
 	oln_type_of(I, concrete) output(input.size());
 	oln_type_of(I, fwd_piter) p(input.size());
 	for_all (p)
-	  output[p] = morpho::max(input, p, se);
+	  output[p] = morpho::max(input, p, win);
 	return output;
       }
 
@@ -62,11 +62,11 @@ namespace oln {
     /*!
     ** \brief Processing dilation.
     **
-    ** Compute the morphological dilation of input using se
+    ** Compute the morphological dilation of input using win
     ** as structural element.\n
     **
     ** On grey-scale images, each point is replaced by the maximum value
-    ** of its neighbors, as indicated by se.  On binary images,
+    ** of its neighbors, as indicated by win.  On binary images,
     ** a logical or is performed between neighbors.\n
     **
     ** The morpho::fast version of this function use a different
@@ -78,7 +78,7 @@ namespace oln {
     ** 17(14):1451-1460, 1996.\n
     **
     ** An histogram of the value of the neighborhood indicated by
-    ** se is updated while iterating over all point of the
+    ** win is updated while iterating over all point of the
     ** image.  Doing so is more efficient  when the
     ** structural element is large.\n
     **
@@ -86,7 +86,7 @@ namespace oln {
     ** \param E Exact type of the neighborhood.
     **
     ** \arg input The input image.
-    ** \arg se Structuring element to use.
+    ** \arg win Structuring element to use.
     **
     ** \code
     ** #include <oln/basics2d.hh>
@@ -132,18 +132,18 @@ namespace oln {
 
     /// Dilatation return.
 
-    template <typename I, typename S>
-    struct dilation_ret : public abstract::image_unary_operator<oln_type_of(I, concrete), I, dilation_ret<I, S> >
+    template <typename I, typename W>
+    struct dilation_ret : public abstract::image_unary_operator<oln_type_of(I, concrete), I, dilation_ret<I,W> >
     {
-      typedef abstract::image_unary_operator<oln_type_of(I, concrete), I, dilation_ret<I, S> > super_type;
+      typedef abstract::image_unary_operator<oln_type_of(I, concrete), I, dilation_ret<I,W> > super_type;
       typedef typename super_type::output_type output_type;
 
-      const S se;
+      const W win;
 
       dilation_ret(const abstract::image<I>& input,
-		   const abstract::struct_elt<S>& se) :
+		   const abstract::window<W>& win) :
 	super_type(input.exact()),
-	se(se.exact())
+	win(win.exact())
 	{
 	}
 
@@ -156,28 +156,28 @@ namespace oln {
 
       /// Dilation generic implementation.
 
-      template <typename I, typename S>
-      struct generic_dilation : public dilation_ret<I, S>
+      template <typename I, typename W>
+      struct generic_dilation : public dilation_ret<I,W>
       {
-	typedef dilation_ret<I, S> super_type;
+	typedef dilation_ret<I,W> super_type;
 	typedef typename super_type::output_type output_type;
 
 	generic_dilation(const abstract::image<I>& input,
-			 const abstract::struct_elt<S>& se) :
-	  super_type(input, se)
+			 const abstract::window<W>& win) :
+	  super_type(input, win)
 	{
 	}
 
 	void impl_run()
 	{
-	  mlc::eq<oln_type_of(I, size), oln_type_of(S, size)>::ensure();
+	  mlc::eq<oln_type_of(I, size), oln_type_of(W, size)>::ensure();
 
 	  output_type tmp(this->input.size()); // FIXME: trick
 	  this->output = tmp;
 
 	  oln_type_of(I, fwd_piter) p(this->input.size());
 	  for_all (p)
-	    this->output[p] = morpho::max(this->input, p, this->se);
+	    this->output[p] = morpho::max(this->input, p, this->win);
 	}
       };
 
@@ -186,11 +186,11 @@ namespace oln {
 
     /// Dilation generic routine.
 
-    template<typename I, typename S>
-    dilation_ret<I, S> dilation(const abstract::image<I>& input,
-				const abstract::struct_elt<S>& se)
+    template<typename I, typename W>
+    dilation_ret<I,W> dilation(const abstract::image<I>& input,
+				const abstract::window<W>& win)
     {
-      impl::generic_dilation<I, S> tmp(input, se);
+      impl::generic_dilation<I,W> tmp(input, win);
       tmp.run();
       return tmp;
     }

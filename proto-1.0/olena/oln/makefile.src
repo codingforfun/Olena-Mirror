@@ -16,17 +16,20 @@ OLN_DEP =					\
   config/system.hh				\
   convert/nbh_to_se.hh				\
   convert/value_to_point.hh			\
+
   core/1d/array1d.hh				\
   core/1d/dpoint1d.hh				\
   core/1d/fwd_piter1d.hh			\
   core/1d/image1d.hh				\
   core/1d/point1d.hh				\
   core/1d/size1d.hh				\
+
   core/2d/array2d.hh				\
   core/2d/bkd_piter2d.hh			\
   core/2d/dpoint2d.hh				\
   core/2d/fwd_piter2d.hh			\
-  core/2d/fwd_witer2d.hh			\
+  core/2d/fwd_qiter2d.hh			\
+  core/2d/fwd_regular_niter2d.hh		\
   core/2d/image2d.hh				\
   core/2d/neighborhood2d.hh			\
   core/2d/point2d.hh				\
@@ -40,25 +43,28 @@ OLN_DEP =					\
   core/3d/size3d.hh				\
   core/abstract/data_storage.hh			\
   core/abstract/dpoint.hh			\
-  core/abstract/entry.hh			\
   core/abstract/image.hh			\
   core/abstract/image_by_delegation.hh		\
   core/abstract/image_constness.hh		\
   core/abstract/image_dimension.hh		\
+  core/abstract/image_entry.hh			\
   core/abstract/image_like_.hh			\
+  core/abstract/image_neighbness.hh		\
   core/abstract/image_operator.hh		\
   core/abstract/image_typeness.hh		\
   core/abstract/image_valuedness.hh		\
   core/abstract/image_with_data.hh		\
+  core/abstract/image_with_extension.hh		\
   core/abstract/images.hh			\
   core/abstract/internal/image_impl.hh		\
   core/abstract/neighborhood.hh			\
-  core/abstract/op.hh				\
+  core/abstract/niter.hh			\
   core/abstract/piter.hh			\
   core/abstract/point.hh			\
+  core/abstract/qiter.hh			\
+  core/abstract/regular_niter.hh		\
   core/abstract/size.hh				\
-  core/abstract/struct_elt.hh			\
-  core/abstract/witer.hh			\
+  core/abstract/window.hh			\
   core/accum.hh					\
   core/any/all.hh				\
   core/any/dpoint.hh				\
@@ -70,7 +76,8 @@ OLN_DEP =					\
   core/compose.hh				\
   core/coord.hh					\
   core/gen/identity.hh				\
-  core/properties.hh				\
+  core/gen/image_with_nbh.hh			\
+  core/gen/internal/value_box.hh		\
   core/pw/abstract/binary_function.hh		\
   core/pw/abstract/function.hh			\
   core/pw/all.hh				\
@@ -82,7 +89,7 @@ OLN_DEP =					\
   core/pw/minus.hh				\
   core/pw/plus.hh				\
   core/pw/times.hh				\
-  core/value_box.hh				\
+  core/typedefs.hh				\
   fancy/iota.hh					\
   fancy/print.hh				\
   io/gz_stream.hh				\
