@@ -1,5 +1,10 @@
 2005-04-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	* tests/sanity/check.in: New file.
+	* tests/sanity/Makefile.am (EXTRA_DIST): Add check.in.
+
+2005-04-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update the test machinery.
 
 	* tests/sanity/includes.test: Ignore files whose path contains an

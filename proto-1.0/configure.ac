@@ -39,8 +39,9 @@ AC_CONFIG_FILES([Makefile
 		 olena/Makefile
 		 olena/oln/Makefile
                  olena/img/Makefile
-		 olena/oln/config/pconf.hh:olena/oln/config/pconf-hh.in])
-
+		 olena/oln/config/pconf.hh:olena/oln/config/pconf-hh.in
+		 olena/tests/sanity/check],
+		 [chmod +x olena/tests/sanity/check])
 
 ### Olena components.
 

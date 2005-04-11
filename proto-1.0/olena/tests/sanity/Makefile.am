@@ -1,4 +1,4 @@
-EXTRA_DIST = includes.test
+EXTRA_DIST = check.in includes.test
 
 check:
 	TOP_SRCDIR=$(top_srcdir) SRCDIR=$(srcdir) \
