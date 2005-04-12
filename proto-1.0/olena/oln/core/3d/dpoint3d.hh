@@ -29,6 +29,7 @@
 # define OLENA_CORE_3D_DPOINT3D_HH
 
 # include <iostream>
+# include <mlc/contract.hh>
 # include <oln/core/coord.hh>
 # include <oln/core/abstract/dpoint.hh>
 
@@ -99,9 +100,12 @@ namespace oln {
     coord_t& col() { return col_; }
     coord_t& slice() { return slice_; }
 
-    coord_t impl_nth(unsigned i) const
+    friend class abstract::dpoint<dpoint3d>;
+
+  protected:
+
+    const coord_t impl_nth(unsigned i) const
     {
-      // FIXME: remove when add in abstract::point
       precondition(i < 3);
       // FIXME: replace by meta-prog when a meta-vec is attribute
       switch (i) {
@@ -116,7 +120,23 @@ namespace oln {
       return 0;
     }
 
-  protected:
+    coord_t& impl_nth(unsigned i)
+    {
+      static coord_t dummy = coord_t();
+      precondition(i < 3);
+      // FIXME: replace by meta-prog when a meta-vec is attribute
+      switch (i) {
+      case 0:
+	return slice_;
+      case 1:
+	return row_;
+      case 2:
+	return col_;
+      }
+      postcondition(0);
+      return dummy;
+    }
+
     coord_t slice_, row_, col_;
   };
 

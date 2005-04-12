@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005 EPITA Research and Development Laboratory
+// Copyright (C) 2005 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,94 +25,68 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_REGULAR_NITER_HH
-# define OLENA_CORE_ABSTRACT_REGULAR_NITER_HH
+#ifndef OLENA_CORE_GEN_REGULAR_NITER_HH
+# define OLENA_CORE_GEN_REGULAR_NITER_HH
 
 # include <vector>
 
-# include <mlc/any.hh>
-# include <mlc/types.hh>
 # include <mlc/contract.hh>
-
 # include <oln/core/abstract/niter.hh>
-# include <oln/core/gen/image_with_nbh.hh>
+# include <oln/core/abstract/grid.hh>
 # include <oln/core/abstract/point.hh>
 # include <oln/core/abstract/dpoint.hh>
-# include <oln/core/abstract/image.hh>
-# include <oln/core/abstract/neighborhood.hh>
-# include <oln/core/abstract/image_neighbness.hh>
 
 
 namespace oln {
 
   // fwd decl
   namespace abstract {
-    template <typename E> struct regular_niter;
+    template <typename G, typename E> struct regular_niter;
   }
 
   // super type
-  template <typename E>
-  struct set_super_type < abstract::regular_niter<E> > { typedef abstract::niter<E> ret; };
+  template <typename G, typename E>
+  struct set_super_type < abstract::regular_niter<G,E> > { typedef abstract::niter<E> ret; };
+
+  // props
+  template <typename G, typename E>
+  struct set_props < category::niter, abstract::regular_niter<G,E> >
+  {
+    typedef G                            grid_type;
+    typedef oln_grd_type_of(G, point)    point_type;
+    typedef oln_grd_type_of(G, dpoint)   dpoint_type;
+
+    // FIXME: uncomment when class exists
+//     typedef regular_neighborhood<G>      neighb_type;
+  };
 
 
+  
   namespace abstract {
 
-    template <typename E>
+    template <typename G, typename E>
     struct regular_niter : public niter<E>
     {
-      typedef oln_type_of(E, point)  point_type;
-      typedef oln_type_of(E, dpoint) dpoint_type;
 
-      void impl_start()
-      {
-	dp_cur_ = dp_.begin();
-      }
-
-      void impl_next()
-      {
-	++dp_cur_;
-      }
-
-      void impl_center_at(const point_type& pt)
-      {
-	this->p_ = pt;
-	dp_.clear();
-	this->exact().impl_determine_neighb();
-      }
-
-      bool impl_is_valid() const
-      {
-	return dp_cur_ != dp_.end();
-      }
+      /// typedefs
+      typedef niter<E>                   super_type;
+      typedef oln_nit_type_of(E, point)  point_type;
+      typedef oln_nit_type_of(E, dpoint) dpoint_type;
+      typedef oln_nit_type_of(E, neighb) neighb_type;
 
       const point_type impl_cast_point() const
       {
-	return *dp_cur_ + this->p_;
-      }
-
-      void impl_invalidate()
-      {
-	dp_cur_ = dp_.end();
-	postcondition(! this->is_valid());
+	precondition(this->is_valid());
+	return this->p_ + *(this->dp_cur_);
       }
 
     protected:
 
-      void impl_determine_neighb()
-      {
-	for (unsigned i = 0; i < this->nbh_.card(); ++i)
-	  dp_.push_back(this->nbh_[i]);
-      }
-
-      typedef niter<E> super_type;
-
-      template <typename I>
-      regular_niter(const abstract::image_with_nbh<I>& ima) :
-	super_type(ima)
+      regular_niter(const neighb_type& nbh) :
+	super_type(nbh)
       {
       }
 
-      std::vector<dpoint_type> dp_;
       typename std::vector<dpoint_type>::const_iterator dp_cur_;
     };
 
@@ -121,4 +95,4 @@ namespace oln {
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_REGULAR_NITER_HH
+#endif // ! OLENA_CORE_GEN_REGULAR_NITER_HH

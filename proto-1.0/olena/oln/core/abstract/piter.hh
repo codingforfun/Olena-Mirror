@@ -32,16 +32,17 @@
 # include <mlc/types.hh>
 # include <mlc/contract.hh>
 
+# include <oln/core/abstract/iter.hh>
 # include <oln/core/abstract/point.hh>
 # include <oln/core/typedefs.hh>
 
 
 
-# define for_all(p) \
-  for(p.start(); p.is_valid(); p.next())
+# define for_all_p( p ) \
+  for(p.ensure_is_piter(), p.start(); p.is_valid(); p.next())
 
-# define for_all_remaining(p) \
-  for(; p.is_valid(); p.next())
+# define for_all_remaining_p( p ) \
+  for(p.ensure_is_piter(); p.is_valid(); p.next())
 
 
 
@@ -51,7 +52,6 @@ mlc_type_of(oln, oln::category::piter, PiterType, Alias)
 
 
 namespace oln {
-
 
 
   namespace category
@@ -88,7 +88,7 @@ namespace oln {
   namespace abstract {
 
     template <typename E>
-    struct piter : public mlc::any<E>
+    struct piter : public iter<E>
     {
 
       /// typedefs
@@ -97,34 +97,13 @@ namespace oln {
 
       typedef oln_pit_type_of(E, size)  size_type;
       typedef oln_pit_type_of(E, point) point_type;
-
-
-      void start()
-      {
-	this->exact().impl_start();
-      }
-
-      void next()
-      {
-	precondition(this->is_valid());
-	this->exact().impl_next();
-      }
-
-      bool is_valid() const
-      {
-	return this->exact().impl_is_valid();
-      }
+      
+      void ensure_is_piter() {}
 
       operator point_type() const
       {
 	precondition(this->is_valid());
 	return this->p_;
-      }
-
-      void invalidate()
-      {
-	this->exact().impl_invalidate();
-	postcondition(! this->is_valid());
       }
 
     protected:
@@ -139,8 +118,10 @@ namespace oln {
       point_type p_;
 
     };
-  }
-}
+
+  } // end of namespace oln::abstract
+
+} // end of namespace oln
 
 
 #endif // ! OLENA_CORE_ABSTRACT_PITER_HH

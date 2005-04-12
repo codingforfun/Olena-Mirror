@@ -121,9 +121,8 @@ namespace oln {
 	{
 	}
 
-	typedef abstract::binary_function<L, R, E> self_type;
-	typedef oln_pw_type_of(self_type, point) point_type;
-	typedef oln_pw_type_of(self_type, size)  size_type;
+	typedef oln_pw_type_of(E, point) point_type;
+	typedef oln_pw_type_of(E, size)  size_type;
 
 	typedef internal::binary_function_helper<oln_pw_type_of(L, size),
 						 oln_pw_type_of(R, size) > _helper_type;

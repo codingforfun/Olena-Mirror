@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2003, 2005  EPITA Research and Development Laboratory
+// Copyright (C) 2005 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,81 +25,46 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_FWD_QITER2D_HH
-# define OLENA_CORE_FWD_QITER2D_HH
+#ifndef OLENA_CORE_1D_GRID1D_HH
+# define OLENA_CORE_1D_GRID1D_HH
 
-# include <string>
-
-# include <oln/core/abstract/qiter.hh>
-# include <oln/core/2d/dpoint2d.hh>
-# include <oln/core/2d/window2d.hh>
+# include <mlc/value.hh>
+# include <oln/core/abstract/grid.hh>
 
 
 namespace oln {
 
-  // fwd decl
-  struct fwd_qiter2d;
+  // fwd decls
+  struct grid1d;
+  struct point1d;
+  struct dpoint1d;
+  struct coord_t;
 
-  // category
+  // super type
   template <>
-  struct set_super_type< fwd_qiter2d > { typedef abstract::qiter< fwd_qiter2d > ret; };
+  struct set_super_type < grid1d > { typedef abstract::grid< grid1d > ret; };
 
   // props
   template <>
-  struct set_props < category::qiter, fwd_qiter2d >
+  struct set_props < category::grid, grid1d >
   {
-    typedef dpoint2d dpoint_type; // FIXME: !!!
-    typedef window2d window_type; // FIXME: !!!
+    typedef point1d  point_type;
+    typedef dpoint1d dpoint_type;
+    typedef coord_t  coord_type;
+    typedef mlc::value<unsigned,1> dimvalue_type;
   };
 
 
-  struct fwd_qiter2d : public abstract::qiter< fwd_qiter2d >
+
+  struct grid1d : public abstract::grid< grid1d >
   {
-    typedef abstract::qiter<fwd_qiter2d> super_type;
-
-    fwd_qiter2d(const window2d& se) :
-      se_(se),
-      pos_(0)
-    {
-      this->invalidate();
-    }
-
-    coord_t impl_nth(unsigned i)
-    {
-      return se_[pos_].nth(i);
-    }
-
-    dpoint2d impl_cast_dpoint() const
-    {
-      precondition(this->is_valid());
-      return se_[pos_];
-    }
-
-    void impl_start()
-    {
-      pos_ = 0;
-    }
-
-    void impl_next()
-    {
-      ++pos_;
-    }
-
-    bool impl_is_valid() const
-    {
-      return pos_ != se_.card();
-    }
-
-    void impl_invalidate()
-    {
-      pos_ = se_.card();
-    }
-
-    const window2d& se_;
-    unsigned pos_;
-
+  protected:
+    grid1d()
+    {}
   };
 
 } // end of namespace oln
 
-#endif // OLENA_CORE_FWD_QITER2D_HH
+
+
+#endif // ! OLENA_CORE_1D_GRID1D_HH

@@ -49,25 +49,27 @@
 
 // oln::
 
-# include <oln/core/coord.hh>
+# include <oln/core/typedefs.hh>
 # include <oln/core/box.hh>
+
+# include <oln/core/coord.hh>
 
 # include <oln/core/abstract/size.hh>
 # include <oln/core/abstract/point.hh>
-# include <oln/core/any/all.hh>
-# include <oln/core/abstract/images.hh>
-# include <oln/core/abstract/image_entry.hh>
-# include <oln/core/abstract/image_operator.hh>
-
-# include <oln/core/pw/all.hh>
-
-
+# include <oln/core/abstract/dpoint.hh>
 # include <oln/core/abstract/window.hh>
 # include <oln/core/abstract/neighborhood.hh>
+
+# include <oln/core/abstract/images.hh>
+# include <oln/core/abstract/image_operator.hh>
 
 # include <oln/core/abstract/piter.hh>
 # include <oln/core/abstract/qiter.hh>
 # include <oln/core/abstract/niter.hh>
+
+# include <oln/core/any/all.hh>
+# include <oln/core/pw/all.hh>
+
 
 
 #endif // ! OLENA_BASICS_HH

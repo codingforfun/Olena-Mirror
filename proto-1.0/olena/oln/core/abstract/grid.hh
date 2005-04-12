@@ -25,48 +25,72 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_IMAGE_NEIGHBNESS_HH
-# define OLENA_CORE_ABSTRACT_IMAGE_NEIGHBNESS_HH
+#ifndef OLENA_CORE_ABSTRACT_GRID_HH
+# define OLENA_CORE_ABSTRACT_GRID_HH
 
-# include <oln/core/abstract/image.hh>
+# include <mlc/any.hh>
+# include <oln/core/typedefs.hh>
 
-/*! \namespace oln
-** \brief oln namespace.
-*/
+
+# define oln_grd_type_of(GridType, Alias) \
+mlc_type_of(oln, oln::category::grid, GridType, Alias)
+
+
+
 namespace oln {
 
-  /*! \namespace oln::abstract
-  ** \brief oln::abstract namespace.
-  */
+
+  namespace category
+  {
+    struct grid;
+  }
+
+
+  template <>
+  struct set_default_props < category::grid >
+  {
+    typedef mlc::undefined_type point_type;
+    typedef mlc::undefined_type dpoint_type;
+    typedef mlc::undefined_type coord_type;
+    typedef mlc::undefined_type dimvalue_type;
+  };
+
+
+  template <typename G>
+  struct get_props < category::grid, G >
+  {
+    typedef oln_grd_type_of(G, point)    point_type;
+    typedef oln_grd_type_of(G, dpoint)   dpoint_type;
+    typedef oln_grd_type_of(G, coord)    coord_type;
+    typedef oln_grd_type_of(G, dimvalue) dimvalue_type;
+
+    static void echo(std::ostream& ostr)
+    {
+      ostr << "props_of( oln::category::grid, " << mlc_to_string(G) << " ) =" << std::endl
+	   << "{" << std::endl
+	   << "\t point_type    = " << mlc_to_string(point_type)    << std::endl
+	   << "\t dpoint_type   = " << mlc_to_string(dpoint_type)   << std::endl
+	   << "\t coord_type    = " << mlc_to_string(coord_type)    << std::endl
+	   << "\t dimvalue_type = " << mlc_to_string(dimvalue_type) << std::endl
+	   << "}" << std::endl;
+    }
+  };
+
+
   namespace abstract {
 
-
     template <typename E>
-    struct image_with_nbh : public virtual image<E>
-    {
-    public:
-
-      typedef oln_type_of(E, neighb) neighb_type;
-
-      const neighb_type& nbh_get() const // FIXME: rename (?)
-      {
-	return this->exact().impl_nbh_get();
-      }
-
-    protected:
-      image_with_nbh() {}
-    };
-
-    template <typename E>
-    struct image_without_nbh : public virtual image<E>
+    struct grid : public mlc::any<E>
     {
     protected:
-      image_without_nbh() {}
-    };
+      grid()
+      {}
 
+    };
 
   } // end of namespace oln::abstract
 
 } // end of namespace oln
 
-#endif // ! OLENA_CORE_ABSTRACT_IMAGE_NEIGHBNESS_HH
+
+#endif // ! OLENA_CORE_ABSTRACT_GRID_HH

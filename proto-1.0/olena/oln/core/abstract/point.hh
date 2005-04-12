@@ -34,6 +34,7 @@
 
 # include <oln/core/coord.hh>
 # include <oln/core/typedefs.hh>
+# include <oln/core/abstract/grid.hh>
 
 
 // fwd decl
@@ -43,7 +44,8 @@ namespace oln {
 
 
 
-# define oln_point_type_from_2(P1, P2)   typename mlc::if_< mlc::eq< P2, oln::any_point >, P1, P2 >::ret
+# define oln_point_type_from_2(P1, P2) \
+typename mlc::if_< mlc::eq< P2, oln::any_point >, P1, P2 >::ret
 
 
 # define oln_pt_type_of(PointType, Alias) \
@@ -67,6 +69,7 @@ namespace oln {
   struct set_default_props < category::point >
   {
     typedef mlc::undefined_type dpoint_type;
+    typedef mlc::undefined_type grid_type;
   };
 
 
@@ -74,12 +77,15 @@ namespace oln {
   struct get_props < category::point, P >
   {
     typedef oln_pt_type_of(P, dpoint) dpoint_type;
+    typedef oln_pt_type_of(P, grid)   grid_type;
 
     static void echo(std::ostream& ostr)
     {
       ostr << "props_of( oln::category::point, " << mlc_to_string(P) << " ) =" << std::endl
+	   << "{" << std::endl
 	   << "\t dpoint_type = " << mlc_to_string(dpoint_type) << std::endl
-	   << std::endl;
+	   << "\t grid_type   = " << mlc_to_string(grid_type)   << std::endl
+	   << "}" << std::endl;
     }
   };
 
@@ -147,9 +153,19 @@ namespace oln {
 	return this->exact().impl_minus(rhs);
       }
 
-      coord_t nth(unsigned i) const
+      typedef oln_pt_type_of(E, grid)              grid_type;
+      typedef oln_grd_type_of(grid_type, dimvalue) dimvalue_type;
+      typedef oln_grd_type_of(grid_type, coord)    coord_type;
+
+      const coord_type nth(unsigned i) const
       {
-	// FIXME: add precondition
+	precondition(i < dimvalue_type::val);
+	return this->exact().impl_nth(i);
+      }
+
+      coord_type& nth(unsigned i)
+      {
+	precondition(i < dimvalue_type::val);
 	return this->exact().impl_nth(i);
       }
 
@@ -157,11 +173,37 @@ namespace oln {
 
       point() {}
 
-      /*! \brief Cpy constructor (protected, empty).
-      */
-      point(const exact_type& pt) {}
+      ~point()
+      {
+	{ // impl_eq
+	  typedef bool (E::*meth)(const exact_type&) const;
+	  meth adr = &E::impl_eq;
+	  adr = 0;
+	}
+	{ // impl_plus
+	  typedef const exact_type (E::*meth)(const dpoint_type&) const;
+	  meth adr = &E::impl_plus;
+	  adr = 0;
+	}
+	{ // impl_minus
+	  typedef const dpoint_type (E::*meth)(const exact_type&) const;
+	  meth adr = &E::impl_minus;
+	  adr = 0;
+	}
+	{ // impl_nth const
+	  typedef const coord_type (E::*meth)(unsigned) const;
+	  meth adr = &E::impl_nth;
+	  adr = 0;
+	}
+	{ // impl_nth
+	  typedef coord_type& (E::*meth)(unsigned);
+	  meth adr = &E::impl_nth;
+	  adr = 0;
+	}
+      }
 
     };
+
 
   } // end of namespace abstract
 

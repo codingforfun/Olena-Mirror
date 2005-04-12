@@ -55,8 +55,8 @@ namespace oln {
 
   struct fwd_piter2d : public abstract::piter< fwd_piter2d >
   {
-
-    typedef abstract::piter<fwd_piter2d> super_type;
+    typedef fwd_piter2d self_type;
+    typedef abstract::piter<self_type> super_type;
 
     fwd_piter2d(const size2d& size) :
       super_type(size)
@@ -64,7 +64,8 @@ namespace oln {
       this->invalidate();
     }
 
-    friend class abstract::piter< fwd_piter2d >;
+    friend class abstract::iter<self_type>;
+    friend class abstract::piter<self_type>;
 
   protected:
 

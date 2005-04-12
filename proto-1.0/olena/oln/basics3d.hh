@@ -28,9 +28,9 @@
 #ifndef OLENA_BASICS3D_HH
 # define OLENA_BASICS3D_HH
 
-
 # include <oln/basics.hh>
 
+# include <oln/core/3d/grid3d.hh>
 # include <oln/core/3d/size3d.hh>
 # include <oln/core/3d/point3d.hh>
 # include <oln/core/3d/dpoint3d.hh>

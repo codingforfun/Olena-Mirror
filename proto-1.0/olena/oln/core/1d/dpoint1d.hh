@@ -29,7 +29,7 @@
 # define OLENA_CORE_1D_DPOINT1D_HH
 
 # include <iostream>
-
+# include <mlc/contract.hh>
 # include <oln/core/coord.hh>
 # include <oln/core/abstract/dpoint.hh>
 
@@ -96,14 +96,22 @@ namespace oln {
     const coord_t index() const { return index_; }
     coord_t& index() { return index_; }
 
-    coord_t impl_nth(unsigned i) const
+    friend class abstract::dpoint<dpoint1d>;
+
+  protected:
+
+    const coord_t impl_nth(unsigned i) const
     {
-      // FIXME: remove when add in abstract::point
       precondition(i == 0);
       return index_;
     }
 
-  protected:
+    coord_t& impl_nth(unsigned i)
+    {
+      precondition(i == 0);
+      return index_;
+    }
+
     coord_t index_;
   };
 

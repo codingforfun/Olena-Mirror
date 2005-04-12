@@ -5,15 +5,19 @@
 
 OLN_DEP =					\
   all.hh					\
+						\
   arith/max.hh					\
   arith/min.hh					\
   arith/ops.hh					\
+						\
   basics.hh					\
   basics1d.hh					\
   basics2d.hh					\
   basics3d.hh					\
+						\
   config/pconf.hh				\
   config/system.hh				\
+						\
   convert/nbh_to_se.hh				\
   convert/value_to_point.hh			\
 						\
@@ -27,9 +31,9 @@ OLN_DEP =					\
   core/2d/array2d.hh				\
   core/2d/bkd_piter2d.hh			\
   core/2d/dpoint2d.hh				\
+  core/2d/fwd_niter2d.hh			\
   core/2d/fwd_piter2d.hh			\
   core/2d/fwd_qiter2d.hh			\
-  core/2d/fwd_regular_niter2d.hh		\
   core/2d/image2d.hh				\
   core/2d/neighborhood2d.hh			\
   core/2d/point2d.hh				\
@@ -60,28 +64,37 @@ OLN_DEP =					\
   core/abstract/image_with_extension.hh		\
   core/abstract/images.hh			\
   core/abstract/internal/image_impl.hh		\
+  core/abstract/iter.hh				\
   core/abstract/neighborhood.hh			\
   core/abstract/niter.hh			\
   core/abstract/piter.hh			\
   core/abstract/point.hh			\
   core/abstract/qiter.hh			\
-  core/abstract/qiter.hh			\
   core/abstract/regular_niter.hh		\
   core/abstract/size.hh				\
   core/abstract/window.hh			\
+						\
   core/accum.hh					\
+						\
   core/any/all.hh				\
   core/any/dpoint.hh				\
   core/any/point.hh				\
   core/any/size.hh				\
+						\
   core/apply.hh					\
   core/box.hh					\
   core/ch_value_type.hh				\
   core/compose.hh				\
   core/coord.hh					\
+						\
   core/gen/identity.hh				\
   core/gen/image_with_nbh.hh			\
   core/gen/internal/value_box.hh		\
+  core/gen/regular_fwd_niter.hh.hh		\
+  core/gen/regular_fwd_qiter.hh.hh		\
+  core/gen/regular_niter.hh.hh			\
+  core/gen/regular_window.hh			\
+						\
   core/pw/abstract/binary_function.hh		\
   core/pw/abstract/function.hh			\
   core/pw/all.hh				\
@@ -93,24 +106,29 @@ OLN_DEP =					\
   core/pw/minus.hh				\
   core/pw/plus.hh				\
   core/pw/times.hh				\
+						\
   core/typedefs.hh				\
-  core/typedefs.hh				\
+						\
   fancy/iota.hh					\
   fancy/print.hh				\
+						\
   io/gz_stream.hh				\
   io/read_image.hh				\
   io/read_image_2d_pnm.hh			\
   io/utils.hh					\
   io/write_image.hh				\
   io/write_image_2d_pnm.hh			\
+						\
   level/compare.hh				\
   level/fill.hh					\
+						\
   morpho/cc_tarjan.hh				\
   morpho/dilation.hh				\
   morpho/erosion.hh				\
   morpho/reconstruction.hh			\
   morpho/splitse.hh				\
   morpho/stat.hh				\
+						\
   utils/buffer.hh				\
   utils/clone.hh				\
   utils/key.hh					\

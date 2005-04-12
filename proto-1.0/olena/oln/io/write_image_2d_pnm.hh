@@ -37,7 +37,9 @@
 # include <ntg/all.hh>
 
 # include <oln/core/2d/image2d.hh>
-# include <oln/core/abstract/op.hh>
+
+// commented cause 'void_op' was removed
+//# include <oln/core/abstract/op.hh>
 
 # include <oln/io/utils.hh>
 
@@ -49,7 +51,8 @@ namespace oln {
 
       template <typename I>
       struct write_image_2d_raw
-	: public oln::abstract::void_op<write_image_2d_raw<I> >
+      // commented below cause 'void_op' was removed
+// 	: public oln::abstract::void_op<write_image_2d_raw<I> >
       {
 	typedef oln_type_of(I, value) value_type;
 

@@ -101,14 +101,6 @@ namespace oln {
       return add(dp);
     }
 
-
-    /// Return the name of the type.
-    static std::string
-    name()
-    {
-      return std::string("neighborhood2d");
-    }
-
     coord_t
     impl_delta_update(const dpoint2d& dp)
     {

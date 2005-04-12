@@ -34,6 +34,7 @@
 # include <oln/core/3d/point3d.hh>
 
 // FIXME: waiting for a coherent convert.
+// FIXME: this is file is awful...
 
 namespace oln {
 

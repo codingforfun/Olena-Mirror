@@ -41,7 +41,7 @@ oln::image_from_pw< oln::pw::plus< oln::pw::image<L>,
 operator + (const oln::abstract::image<L>& lhs,
 	    const oln::abstract::image<R>& rhs)
 {
-  return oln::for_all_p(oln::p_value(lhs) + oln::p_value(rhs));
+  return oln::image_for_all_p(oln::p_value(lhs) + oln::p_value(rhs));
 }
 
 
@@ -53,7 +53,7 @@ oln::image_from_pw< oln::pw::minus< oln::pw::image<L>,
 operator - (const oln::abstract::image<L>& lhs,
 	    const oln::abstract::image<R>& rhs)
 {
-  return oln::for_all_p(oln::p_value(lhs) - oln::p_value(rhs));
+  return oln::image_for_all_p(oln::p_value(lhs) - oln::p_value(rhs));
 }
 
 
@@ -64,7 +64,7 @@ oln::image_from_pw< oln::pw::minus< oln::pw::literal< oln_pw_type_of(R, value) >
 				    oln::pw::image<R> > >
 operator - (const oln::abstract::image<R>& rhs)
 {
-  return oln::for_all_p( - oln::p_value(rhs));
+  return oln::image_for_all_p( - oln::p_value(rhs));
 }
 
 
@@ -76,7 +76,7 @@ oln::image_from_pw< oln::pw::times< oln::pw::image<L>,
 operator * (const oln::abstract::image<L>& lhs,
 	    const oln::abstract::image<R>& rhs)
 {
-  return oln::for_all_p(oln::p_value(lhs) * oln::p_value(rhs));
+  return oln::image_for_all_p(oln::p_value(lhs) * oln::p_value(rhs));
 }
 
 
@@ -88,7 +88,7 @@ oln::image_from_pw< oln::pw::div< oln::pw::image<L>,
 operator / (const oln::abstract::image<L>& lhs,
 	    const oln::abstract::image<R>& rhs)
 {
-  return oln::for_all_p(oln::p_value(lhs) / oln::p_value(rhs));
+  return oln::image_for_all_p(oln::p_value(lhs) / oln::p_value(rhs));
 }
 
 
@@ -100,7 +100,7 @@ oln::image_from_pw< oln::pw::NAME< oln::pw::image<L>,			\
 operator SYMBOL (const oln::abstract::image<L>& lhs,			\
 		 TYPE value)						\
 {									\
-  return oln::for_all_p(oln::p_value(lhs) SYMBOL oln::p_lit(value));	\
+  return oln::image_for_all_p(oln::p_value(lhs) SYMBOL oln::p_lit(value));	\
 }									\
 template <typename R>							\
 oln::image_from_pw< oln::pw::NAME< oln::pw::literal<TYPE>,		\
@@ -108,7 +108,7 @@ oln::image_from_pw< oln::pw::NAME< oln::pw::literal<TYPE>,		\
 operator SYMBOL (TYPE value,						\
 		 const oln::abstract::image<R>& rhs)			\
 {									\
-  return oln::for_all_p(oln::p_lit(value) SYMBOL oln::p_value(rhs));	\
+  return oln::image_for_all_p(oln::p_lit(value) SYMBOL oln::p_value(rhs));	\
 }
 
 

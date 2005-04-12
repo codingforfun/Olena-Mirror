@@ -25,74 +25,47 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_WINDOW2D_HH
-# define OLENA_CORE_WINDOW2D_HH
+#ifndef OLENA_CORE_WINDOW1D_HH
+# define OLENA_CORE_WINDOW1D_HH
 
 # include <oln/core/gen/regular_window.hh>
-# include <oln/core/2d/dpoint2d.hh>
-# include <oln/core/2d/grid2d.hh>
+# include <oln/core/1d/grid1d.hh>
+# include <oln/core/1d/dpoint1d.hh>
 
 
-namespace oln
-{
+namespace oln {
 
-  typedef  regular_window< grid2d >  window2d;
+  typedef  regular_window< grid1d >  window1d;
 
-  // classical 2d windows
+  // classical 1d windows
 
   /*!
-  ** \brief Create a window (2 dimensions) of 4 elements.
+  ** \brief Create a window (1 dimension) of 2 elements.
   ** \return The new window.
   */
-  inline const window2d&
-  win_c4_only()
+  inline const window1d&
+  win_c2_only()
   {
-    static const coord_t crd[] = { -1,0,  0,-1, 0,1,  1,0 };
-    static const window2d win(4, crd);
+    static const coord_t crd[2 * 1] = { -1, 1 };
+    static const window1d win(2, crd);
     return win;
   }
 
   /*!
-  ** \brief Create a window (2 dimensions) of 5 elements.
+  ** \brief Create a window (1 dimension) of 3 elements.
   ** \return The new window.
   **
-  ** It's the same than win_c4_only() plus the 0,0 point.
+  ** It's the same than win_c2_only() plus the (0) point.
   */
-  inline const window2d&
-  win_c4p()
+  inline const window1d&
+  win_c2p()
   {
-    static const coord_t crd[] = { -1,0,  0,-1, 0,0, 0,1,  1,0 };
-    static const window2d win(5, crd);
-    return win;
-  }
-
-  /*!
-  ** \brief Create a window (2 dimensions) of 8 elements.
-  ** \return The new window.
-  */
-  inline const window2d&
-  win_c8_only()
-  {
-    static const coord_t crd[] = { -1,-1, -1,0, -1,1,  0,-1, 0,1,  1,-1,  1,0,  1,1 };
-    static const window2d win(8, crd);
-    return win;
-  }
-
-  /*!
-  ** \brief Create a window (2 dimensions) of 9 elements.
-  ** \return The new window.
-  **
-  ** It's the same than win_c8_only more the 0,0 point.
-  */
-  inline const window2d&
-  win_c8p()
-  {
-    static const coord_t crd[] = { -1,-1, -1,0, -1,1,  0,-1, 0,0, 0,1,  1,-1,  1,0,  1,1 };
-    static const window2d win(9, crd);
+    static const coord_t crd[3 * 1] = { -1, 0, 1 };
+    static const window1d win(3, crd);
     return win;
   }
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_WINDOW2D_HH
+#endif // ! OLENA_CORE_WINDOW1D_HH

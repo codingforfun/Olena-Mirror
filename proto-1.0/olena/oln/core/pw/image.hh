@@ -196,10 +196,10 @@ namespace oln {
   };
 
 
-  /// Routine for_all_p.
+  /// Routine image_for_all_p.
 
   template <typename F>
-  image_from_pw<F> for_all_p(const pw::abstract::function<F>& fun)
+  image_from_pw<F> image_for_all_p(const pw::abstract::function<F>& fun)
   {
     image_from_pw<F> tmp(fun);
     return tmp;
@@ -208,15 +208,15 @@ namespace oln {
 
   // FIXME: below, produce an error instead of correcting the client code (?)
 
-  /// Specialization of for_all_p (so that "for_all_p(p_value(ima)) == ima").
+  /// Specialization of image_for_all_p (so that "image_for_all_p(p_value(ima)) == ima").
 
   template <typename I>
-  const I& for_all_p(const pw::image<I>& pv)
+  const I& image_for_all_p(const pw::image<I>& pv)
   {
     return pv.ima.unbox();
   }
 
-  /// Specialization of p_value (so that "p_value(for_all_p(fun)) == fun").
+  /// Specialization of p_value (so that "p_value(image_for_all_p(fun)) == fun").
 
   template <typename F>
   F p_value(const image_from_pw<F>& ima)
@@ -249,7 +249,7 @@ namespace oln {
     bool check(const pw::abstract::function<F>& pred)
     {
       mlc::eq< oln_typeness_of(oln_pw_type_of(F, value)), typeness::binary_tag >::ensure();
-      return oln::check(for_all_p(pred));
+      return oln::check(image_for_all_p(pred));
     }
 
   } // end of namespace oln::pw
@@ -257,20 +257,20 @@ namespace oln {
 
 
 
-  /// Specialization of for_all_p that gives a compile-time error.
+  /// Specialization of image_for_all_p that gives a compile-time error.
 
   template <typename I>
-  void for_all_p(const abstract::image<I>&)
+  void image_for_all_p(const abstract::image<I>&)
   {
-    struct OLENA_ERROR__arg_of__for_all_p__should_not_be_an_image();
+    struct OLENA_ERROR__arg_of__image_for_all_p__should_not_be_an_image();
   }
 
-  /// Specialization of for_all_p that gives a compile-time error.
+  /// Specialization of image_for_all_p that gives a compile-time error.
 
   template <typename P>
-  void for_all_p(const abstract::point<P>&)
+  void image_for_all_p(const abstract::point<P>&)
   {
-    struct OLENA_ERROR__arg_of__for_all_p__should_not_be_a_point();
+    struct OLENA_ERROR__arg_of__image_for_all_p__should_not_be_a_point();
   }
 
 

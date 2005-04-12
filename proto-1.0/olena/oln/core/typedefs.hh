@@ -46,6 +46,8 @@ namespace oln
 
   // category::image
 
+  mlc_decl_typedef(grid_type);
+
   mlc_decl_typedef(data_type);
   mlc_decl_typedef(value_type);
   mlc_decl_typedef(neighb_type);
@@ -56,14 +58,14 @@ namespace oln
   mlc_decl_typedef(image_type);
   mlc_decl_typedef(concrete_type);
 
+  mlc_decl_typedef(iter_type);
   mlc_decl_typedef(piter_type);
   mlc_decl_typedef(fwd_piter_type);
   mlc_decl_typedef(bkd_piter_type);
-  mlc_decl_typedef(iter_type);
+  mlc_decl_typedef(fwd_niter_type);
 
   mlc_decl_typedef(delegated_type);
   mlc_decl_typedef(size_type);
-  mlc_decl_typedef(se_type);
   mlc_decl_typedef(window_type);
 
   mlc_decl_typedef(image_neighbness_type);
@@ -83,25 +85,13 @@ namespace oln
   mlc_decl_typedef(fwd_qiter_type);
   mlc_decl_typedef(bkd_qiter_type);
 
+  // category::grid
+
+  mlc_decl_typedef(dimvalue_type);
+  mlc_decl_typedef(coord_type);
 
 
 } // end of namespace oln
-
-
-
-// FIXME: memo...
-
-//   namespace category
-//   {
-//     struct data_storage;
-//     struct struct_elt;
-//     struct neighborhood;
-//     struct point;
-//     struct size;
-//     struct piter;
-//     struct niter;
-//     // FIXME: ...
-//   }
 
 
 #endif // ! OLENA_CORE_TYPEDEFS_HH

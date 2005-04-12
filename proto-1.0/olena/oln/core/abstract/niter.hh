@@ -28,35 +28,18 @@
 #ifndef OLENA_CORE_ABSTRACT_NITER_HH
 # define OLENA_CORE_ABSTRACT_NITER_HH
 
-# include <vector>
-
-# include <mlc/any.hh>
-# include <mlc/types.hh>
 # include <mlc/contract.hh>
-
 # include <oln/core/typedefs.hh>
-
-# include <oln/core/gen/image_with_nbh.hh>
+# include <oln/core/abstract/iter.hh>
 # include <oln/core/abstract/point.hh>
-# include <oln/core/abstract/image.hh>
 # include <oln/core/abstract/neighborhood.hh>
-# include <oln/core/abstract/image_neighbness.hh>
 
 
-# define for_all_n(n) \
-  for(n.start(); n.is_valid(); n.next())
+# define for_all_n_of_p(n, p) \
+  for(n.ensure_is_niter(), n.center_at(p), n.start(); n.is_valid(); n.next())
 
 # define for_all_remaining_n(n) \
-  for(; n.is_valid(); n.next())
-
-
-// FIXME : bad place
-# include <oln/core/abstract/piter.hh>
-
-# define for_all_n_of_p(p, n) \
-  for(p.start(); p.is_valid(); p.next()) \
-  for(n.center_at(p), n.start(); n.is_valid(); n.next())
-
+  for(n.ensure_is_niter(); n.is_valid(); n.next())
 
 
 # define oln_nit_type_of(NiterType, Alias) \
@@ -84,15 +67,16 @@ namespace oln {
   template <typename N>
   struct get_props < category::niter, N >
   {
-    typedef oln_nit_type_of(N, point) point_type;
+    typedef oln_nit_type_of(N, point)  point_type;
     typedef oln_nit_type_of(N, neighb) neighb_type;
 
     static void echo(std::ostream& ostr)
     {
       ostr << "props_of( oln::category::niter, " << mlc_to_string(N) << " ) =" << std::endl
-	   << "\t point_type  = " << mlc_to_string(point_type) << std::endl
+	   << "{" << std::endl
+	   << "\t point_type  = " << mlc_to_string(point_type)  << std::endl
 	   << "\t neighb_type = " << mlc_to_string(neighb_type) << std::endl
-	   << std::endl;
+	   << "}" << std::endl;
     }
   };
 
@@ -101,26 +85,14 @@ namespace oln {
   namespace abstract {
 
     template <typename E>
-    struct niter : public mlc::any<E>
+    struct niter : public iter<E>
     {
 
-      /// typedefs
-
-      typedef niter<E> self_type;
-
-      typedef oln_nit_type_of(E, point) point_type;
+      typedef oln_nit_type_of(E, point)  point_type;
       typedef oln_nit_type_of(E, neighb) neighb_type;
-      typedef oln_nit_type_of(E, image) image_type;
 
-      void start()
+      void ensure_is_niter() const
       {
-	this->exact().impl_start();
-      }
-
-      void next()
-      {
-	precondition(this->is_valid());
-	this->exact().impl_next();
       }
 
       operator point_type() const
@@ -131,29 +103,29 @@ namespace oln {
 
       void center_at(const point_type& p)
       {
-	this->exact().impl_center_at(p);
-      }
-
-      bool is_valid() const
-      {
-	return this->exact().impl_is_valid();
-      }
-
-      void invalidate()
-      {
-	this->exact().impl_invalidate();
+	this->p_ = p;
       }
 
     protected:
 
-      template <typename I>
-      niter(const abstract::image_with_nbh<I>& ima) :
-	nbh_(ima.nbh_get())
+      niter(const neighb_type& ima) :
+	nbh_(nbh),
+	p_()
       {
       }
 
       const neighb_type& nbh_;
       point_type p_;
+
+      ~niter()
+      {
+	{ // impl_cast_point
+	  typedef const point_type (E::*meth)() const;
+	  meth adr = &E::impl_cast_point;
+	  adr = 0;
+	}
+      }
+
     };
 
   } // end of namespace oln::abstract

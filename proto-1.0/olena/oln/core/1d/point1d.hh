@@ -30,6 +30,7 @@
 
 # include <iostream>
 # include <oln/core/abstract/point.hh>
+# include <oln/core/1d/grid1d.hh>
 # include <oln/core/coord.hh>
 
 
@@ -49,6 +50,7 @@ namespace oln {
   struct set_props < category::point, point1d >
   {
     typedef dpoint1d dpoint_type;
+    typedef grid1d   grid_type;
   };
 
 
@@ -94,9 +96,14 @@ namespace oln {
       return this->index_ == rhs.index_;
     }
 
-    coord_t impl_nth(unsigned i) const
+    const coord_t impl_nth(unsigned i) const
     {
-      // FIXME: remove when add in abstract::point
+      precondition(i == 0);
+      return index_;
+    }
+
+    coord_t& impl_nth(unsigned i)
+    {
       precondition(i == 0);
       return index_;
     }

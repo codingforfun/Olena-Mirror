@@ -41,7 +41,7 @@ oln::image_from_pw< oln::pw::cmp< oln::pw::image<L>,
 operator && (const oln::abstract::binary_image<L>& lhs,
 	     const oln::abstract::binary_image<R>& rhs)
 {
-  return oln::for_all_p(oln::p_value(lhs) && oln::p_value(rhs));
+  return oln::image_for_all_p(oln::p_value(lhs) && oln::p_value(rhs));
 }
 
 
@@ -53,7 +53,7 @@ oln::image_from_pw< oln::pw::cmp< oln::pw::image<L>,
 operator || (const oln::abstract::binary_image<L>& lhs,
 	     const oln::abstract::binary_image<R>& rhs)
 {
-  return oln::for_all_p(oln::p_value(lhs) || oln::p_value(rhs));
+  return oln::image_for_all_p(oln::p_value(lhs) || oln::p_value(rhs));
 }
 
 
@@ -63,7 +63,7 @@ template <typename I>
 oln::image_from_pw< oln::pw::not_< oln::pw::image<I> > >
 operator ! (const oln::abstract::binary_image<I>& rhs)
 {
-  return oln::for_all_p(!oln::p_value(rhs));
+  return oln::image_for_all_p(!oln::p_value(rhs));
 }
 
 

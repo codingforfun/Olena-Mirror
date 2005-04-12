@@ -25,79 +25,74 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_1D_FWD_PITER1D_HH
-# define OLENA_CORE_1D_FWD_PITER1D_HH
+#ifndef OLENA_CORE_GEN_REGULAR_FWD_NITER_HH
+# define OLENA_CORE_GEN_REGULAR_FWD_NITER_HH
 
-# include <mlc/contract.hh>
-# include <oln/core/abstract/piter.hh>
-# include <oln/core/1d/point1d.hh>
-# include <oln/core/1d/size1d.hh>
+# include <oln/core/gen/regular_niter.hh>
+
+# include <oln/core/2d/neighborhood2d.hh>
+# include <oln/core/gen/image_with_nbh.hh>
 
 
 namespace oln {
 
-
   // fwd decl
-  struct fwd_piter1d;
+  template <typename G> struct regular_fwd_niter;
 
   // super type
-  template <>
-  struct set_super_type < fwd_piter1d > { typedef abstract::piter< fwd_piter1d > ret; };
+  template <typename G>
+  struct set_super_type < regular_fwd_niter<G> > { typedef abstract::regular_niter< G, regular_fwd_niter<G> > ret; };
 
   // props
-  template <>
-  struct set_props < category::piter, fwd_piter1d >
+  template <typename G>
+  struct set_props < category::niter, regular_fwd_niter<G> >
   {
-    typedef point1d point_type;
-    typedef size1d  size_type;
+    typedef neighborhood2d neighb_type; // FIXME: see FIXME in regular_niter
   };
 
 
-
-  struct fwd_piter1d : public abstract::piter< fwd_piter1d >
+  template <typename G>
+  struct regular_fwd_niter : public abstract::regular_niter< G, regular_fwd_niter<G> >
   {
-    typedef fwd_piter1d self_type;
-    typedef abstract::piter<self_type> super_type;
+    typedef regular_fwd_niter<G> self_type;
+    typedef abstract::regular_niter< G, self_type > super_type;
 
-    fwd_piter1d(const size1d& size) :
-      super_type(size)
+    template <typename I>
+    regular_fwd_niter(const abstract::image_with_nbh<I>& image) :
+      super_type(image.nbh_get())
     {
-      this->invalidate();
     }
 
     friend class abstract::iter<self_type>;
-    friend class abstract::piter<self_type>;
 
   protected:
 
     void impl_start()
     {
-      this->p_.index() = 0;
-      postcondition(this->p_.index().is_defined());
-    }
-
-    bool impl_is_valid() const
-    {
-      precondition(this->p_.index().is_defined());
-      return this->p_.index() < this->s_.nindices();
+      this->dp_cur_ = this->dp_.begin();
     }
 
     void impl_next()
     {
-      precondition(this->p_.index().is_defined());
-      precondition(this->p_.index() >= 0 && this->p_.index() < this->s_.nindices());
-      ++this->p_.index();
-      postcondition(this->p_.index().is_defined());
+      precondition(this->is_valid());
+      ++(this->dp_cur_);
+    }
+
+    bool impl_is_valid() const
+    {
+      return this->dp_cur_ != this->dp_.end();
     }
 
     void impl_invalidate()
     {
-      this->p_.index() = this->s_.nindices();
-      postcondition(this->p_.index().is_defined());
+      this->dp_cur_ = this->dp_.end();
+      postcondition(! this->is_valid());
     }
 
   };
-}
 
 
-#endif // ! OLENA_CORE_1D_FWD_PITER1D_HH
+} // end of namespace oln
+
+
+#endif // ! OLENA_CORE_GEN_REGULAR_FWD_NITER_HH

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2004, 2005  EPITA Research and Development Laboratory
+// Copyright (C) 2005 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,45 +25,46 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ACCUM_HH
-# define OLENA_CORE_ACCUM_HH
+#ifndef OLENA_CORE_2D_GRID2D_HH
+# define OLENA_CORE_2D_GRID2D_HH
+
+# include <mlc/value.hh>
+# include <oln/core/abstract/grid.hh>
 
 
-/*! \class max_accumulator
-**
-** This is a \a functor. It saves the maximum T value
-** that has been passed as an argument of its operator()
-** method. To retrieve the value saved, just use the
-** max_accumulator as a T instance.
-*/
+namespace oln {
 
+  // fwd decls
+  struct grid2d;
+  struct point2d;
+  struct dpoint2d;
+  struct coord_t;
 
-// FIXME: no namespace !!!
-// FIXME: move this file !!!
+  // super type
+  template <>
+  struct set_super_type < grid2d > { typedef abstract::grid< grid2d > ret; };
 
-template <class T>
-struct max_accumulator
-{
-  
-  max_accumulator (T t) : acc_(t) 
-  {}
-
-  void 
-  operator()(T t)
+  // props
+  template <>
+  struct set_props < category::grid, grid2d >
   {
-    if (t > acc_)
-      acc_ = t;
-  }
-  
-  operator T() const
+    typedef point2d  point_type;
+    typedef dpoint2d dpoint_type;
+    typedef coord_t  coord_type;
+    typedef mlc::value<unsigned,2> dimvalue_type;
+  };
+
+
+
+  struct grid2d : public abstract::grid< grid2d >
   {
-    return acc_;
-  }
+  protected:
+    grid2d()
+    {}
+  };
 
-private:
-  
-  T acc_;
-  
-};
+} // end of namespace oln
 
-#endif // OLENA_CORE_ACCUM_HH
+
+
+#endif // ! OLENA_CORE_2D_GRID2D_HH

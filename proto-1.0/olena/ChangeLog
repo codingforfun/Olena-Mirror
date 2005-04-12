@@ -1,3 +1,56 @@
+2005-04-12  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* oln/core/abstract/regular_niter.hh: Move to...
+	* oln/core/gen/regular_niter.hh: ...this.
+	* oln/core/2d/fwd_regular_niter2d.hh: Split into...
+	* oln/core/gen/regular_fwd_niter.hh: ...this.
+	* oln/core/2d/fwd_niter2d.hh: ...and this.
+	* oln/core/2d/fwd_qiter2d.hh: New file.
+	* oln/core/gen/regular_window.hh: New file.
+	* oln/core/gen/regular_fwd_qiter.hh: New file.
+	* oln/core/abstract/grid.hh: New file.
+	* oln/core/abstract/iter.hh: New file.
+	* oln/core/1d/grid1d.hh: New file.
+	* oln/core/1d/window1d.hh: New file.
+	* oln/core/2d/grid2d.hh: New file.
+	* oln/core/3d/grid3d.hh: New file.
+	* oln/core/3d/window3d.hh: New file.
+	* oln/convert/value_to_point.hh: Update:
+	* oln/basics1d.hh: Likewise.
+	* oln/core/typedefs.hh: Likewise.
+	* oln/core/abstract/niter.hh: Likewise.
+	* oln/core/abstract/piter.hh: Likewise.
+	* oln/core/abstract/qiter.hh: Likewise.
+	* oln/core/abstract/image_neighbness.hh: Likewise.
+	* oln/core/abstract/point.hh: Likewise.
+	* oln/core/abstract/dpoint.hh: Likewise.
+	* oln/core/abstract/window.hh: Likewise.
+	* oln/core/abstract/internal/image_impl.hh: Likewise.
+	* oln/core/1d/dpoint1d.hh: Likewise.
+	* oln/core/1d/fwd_piter1d.hh: Likewise.
+	* oln/core/1d/point1d.hh: Likewise.
+	* oln/core/2d/dpoint2d.hh: Likewise.
+	* oln/core/2d/image2d.hh: Likewise.
+	* oln/core/2d/fwd_piter2d.hh: Likewise.
+	* oln/core/2d/bkd_piter2d.hh: Likewise.
+	* oln/core/2d/window2d.hh: Likewise.
+	* oln/core/2d/neighborhood2d.hh: Likewise.
+	* oln/core/2d/point2d.hh: Likewise.
+	* oln/core/accum.hh: Likewise.
+	* oln/core/pw/image.hh: Likewise.
+	* oln/core/pw/abstract/binary_function.hh: Likewise.
+	* oln/core/3d/dpoint3d.hh: Likewise.
+	* oln/core/3d/fwd_piter3d.hh: Likewise.
+	* oln/core/3d/point3d.hh: Likewise.
+	* oln/basics2d.hh: Likewise.
+	* oln/basics3d.hh: Likewise.
+	* oln/basics.hh: Likewise.
+	* oln/makefile.src: Likewise.
+	* oln/io/write_image_2d_pnm.hh: Likewise.
+	* oln/io/read_image_2d_pnm.hh: Likewise.
+	* oln/arith/ops.hh: Likewise.
+	* oln/arith/logic.hh: Likewise.
+
 2005-04-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	* tests/sanity/check.in: New file.

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2004, 2005  EPITA Research and Development Laboratory
+// Copyright (C) 2005 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,45 +25,22 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ACCUM_HH
-# define OLENA_CORE_ACCUM_HH
+#ifndef OLENA_CORE_2D_FWD_NITER2D_HH
+# define OLENA_CORE_2D_FWD_NITER2D_HH
+
+# include <oln/core/2d/grid2d.hh>
+# include <oln/core/2d/point2d.hh>
+# include <oln/core/2d/dpoint2d.hh>
+# include <oln/core/2d/neighborhood2d.hh>
+
+# include <oln/core/gen/regular_fwd_niter.hh>
 
 
-/*! \class max_accumulator
-**
-** This is a \a functor. It saves the maximum T value
-** that has been passed as an argument of its operator()
-** method. To retrieve the value saved, just use the
-** max_accumulator as a T instance.
-*/
+namespace oln {
+
+  typedef regular_fwd_niter<grid2d> fwd_niter2d;
+
+}
 
 
-// FIXME: no namespace !!!
-// FIXME: move this file !!!
-
-template <class T>
-struct max_accumulator
-{
-  
-  max_accumulator (T t) : acc_(t) 
-  {}
-
-  void 
-  operator()(T t)
-  {
-    if (t > acc_)
-      acc_ = t;
-  }
-  
-  operator T() const
-  {
-    return acc_;
-  }
-
-private:
-  
-  T acc_;
-  
-};
-
-#endif // OLENA_CORE_ACCUM_HH
+#endif // ! OLENA_CORE_2D_FWD_NITER2D_HH

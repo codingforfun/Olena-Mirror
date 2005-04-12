@@ -31,7 +31,9 @@
 # include <iostream>
 
 # include <oln/core/abstract/point.hh>
+# include <oln/core/3d/grid3d.hh>
 # include <oln/core/coord.hh>
+
 
 namespace oln {
 
@@ -48,6 +50,7 @@ namespace oln {
   struct set_props < category::point, point3d >
   {
     typedef dpoint3d dpoint_type;
+    typedef grid3d   grid_type;
   };
 
 
@@ -82,15 +85,6 @@ namespace oln {
       return *this;
     }
 
-    bool impl_eq(const point3d& rhs) const
-    {
-      return this->slice_ == rhs.slice_ and
-             this->row_ == rhs.row_     and
-             this->col_ == rhs.col_;
-    }
-    const point3d impl_plus(const dpoint3d& rhs) const;
-    const dpoint3d impl_minus(const point3d& rhs) const;
-
     const coord_t slice() const { return slice_; }
     const coord_t row() const { return row_; }
     const coord_t col() const { return col_; }
@@ -99,10 +93,24 @@ namespace oln {
     coord_t& row() { return row_; }
     coord_t& col() { return col_; }
 
-    coord_t impl_nth(unsigned i) const
+    friend class abstract::point< point3d >;
+
+  protected:
+
+    bool impl_eq(const point3d& rhs) const
     {
-      // FIXME: remove when add in abstract::point
+      return this->slice_ == rhs.slice_ and
+             this->row_ == rhs.row_     and
+             this->col_ == rhs.col_;
+    }
+
+    const point3d impl_plus(const dpoint3d& rhs) const;
+    const dpoint3d impl_minus(const point3d& rhs) const;
+
+    const coord_t impl_nth(unsigned i) const
+    {
       precondition(i < 3);
+      static coord_t dummy = coord_t();
       // FIXME: replace by meta-prog when a meta-vec is attribute
       switch (i) {
       case 0:
@@ -113,10 +121,26 @@ namespace oln {
 	return col_;
       }
       postcondition(0);
-      return 0;
+      return dummy;
     }
 
-  protected:
+    coord_t& impl_nth(unsigned i)
+    {
+      precondition(i < 3);
+      static coord_t dummy = coord_t();
+      // FIXME: replace by meta-prog when a meta-vec is attribute
+      switch (i) {
+      case 0:
+	return slice_;
+      case 1:
+	return row_;
+      case 2:
+	return col_;
+      }
+      postcondition(0);
+      return dummy;
+    }
+
     coord_t slice_, row_, col_;
   };
 

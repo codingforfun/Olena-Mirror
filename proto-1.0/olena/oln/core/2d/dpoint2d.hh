@@ -29,6 +29,7 @@
 # define OLENA_CORE_2D_DPOINT2D_HH
 
 # include <iostream>
+# include <mlc/contract.hh>
 # include <oln/core/coord.hh>
 # include <oln/core/abstract/dpoint.hh>
 
@@ -97,32 +98,32 @@ namespace oln {
 
     const coord_t row() const { return row_; }
     const coord_t col() const { return col_; }
-    //FIXME : name it impl_nth when dpoint2d derives from abstract::dpoint
-    const coord_t nth(unsigned i) const
-    {
-      assert(i < 2);
-
-      if (i == 0)
-	return row_;
-      else
-	return col_;
-    }
-
 
     coord_t& row() { return row_; }
     coord_t& col() { return col_; }
 
-    coord_t& impl_nth(unsigned i)
-    {
-      assert(i < 2);
+    friend class abstract::dpoint<dpoint2d>;
 
+  protected:
+
+    const coord_t impl_nth(unsigned i) const
+    {
+      precondition(i < 2);
       if (i == 0)
 	return row_;
       else
 	return col_;
     }
 
-  protected:
+    coord_t& impl_nth(unsigned i)
+    {
+      precondition(i < 2);
+      if (i == 0)
+	return row_;
+      else
+	return col_;
+    }
+
     coord_t row_, col_;
   };
 

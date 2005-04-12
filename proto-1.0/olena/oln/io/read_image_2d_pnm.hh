@@ -37,7 +37,8 @@
 # include <ntg/all.hh>
 
 # include <oln/core/2d/image2d.hh>
-# include <oln/core/abstract/op.hh>
+
+# include <oln/core/abstract/image_operator.hh>
 
 # include <oln/io/utils.hh>
 
@@ -54,18 +55,11 @@ namespace oln {
     }
   }
 
-  // category
-  template <typename I>
-  struct set_category < io::impl::read_image_2d_raw<I> >
-  {
-    typedef category::image ret;
-  };
-
   // super_type
   template <typename I>
   struct set_super_type < io::impl::read_image_2d_raw<I> >
   {
-    typedef abstract::op<I, io::impl::read_image_2d_raw<I> > ret;
+    typedef abstract::image_operator<I, io::impl::read_image_2d_raw<I> > ret;
   };
 
 
@@ -74,13 +68,15 @@ namespace oln {
     namespace impl {
 
       template <typename I>
-      struct read_image_2d_raw : public oln::abstract::op<I, read_image_2d_raw<I> >
+      struct read_image_2d_raw : public oln::abstract::image_operator<I, read_image_2d_raw<I> >
       {
 
-	typedef oln::abstract::op<I, read_image_2d_raw<I> > super_type;
+	typedef oln::abstract::image_operator<I, read_image_2d_raw<I> > super_type;
 	typedef oln_type_of(I, value) value_type;
 
-	mlc::box<I> image_;
+	// commented below cause 'image_' is inherited
+// 	mlc::box<I> image_;
+
 	std::istream& istr_;
 	internal::pnm_info& info_;
 	char v;
@@ -90,16 +86,17 @@ namespace oln {
 			  std::istream &istr,
 			  internal::pnm_info &info) :
 	  super_type(image),
-	  image_(image),
 	  istr_(istr),
 	  info_(info),
           offset(-1)
-	{}
+	{
+	  this->image_ = image;
+	}
 
 
 	read_image_2d_raw<I>& output(I& output)
 	{
-	  output = *image_;
+	  output = this->image_;
 	  return *this;
 	}
 
@@ -137,7 +134,7 @@ namespace oln {
 		read_value_type(c);
 		tmp[p] = c;
 	      }
-	  *image_ = tmp;
+	  this->image_ = tmp;
 	}
 
 	//FIXME: Should work with builtin types.

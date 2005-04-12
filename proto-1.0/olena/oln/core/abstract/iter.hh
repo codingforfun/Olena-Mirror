@@ -1,4 +1,4 @@
-// Copyright (C) 2005 EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004, 2005 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,58 +25,88 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_INTERNAL_IMAGE_IMPL_HH
-# define OLENA_CORE_ABSTRACT_INTERNAL_IMAGE_IMPL_HH
+#ifndef OLENA_CORE_ABSTRACT_ITER_HH
+# define OLENA_CORE_ABSTRACT_ITER_HH
 
 # include <mlc/any.hh>
-# include <mlc/types.hh>
+# include <mlc/contract.hh>
+
+# include <oln/core/typedefs.hh>
+
+
+
+# define for_all(i) \
+  for(i.start(); i.is_valid(); i.next())
+
+# define for_all_remaining(i) \
+  for(; i.is_valid(); i.next())
+
+
 
 
 namespace oln {
 
   namespace abstract {
 
-    namespace internal {
+    template <typename E>
+    struct iter : public mlc::any<E>
+    {
 
-      // FIXME: doc!
-
-      template <typename A, typename D, typename E>
-      struct get_image_impl_helper;
-
-      // entry point:
-      template <typename A, typename E>
-      struct get_image_impl : public get_image_impl_helper <A, oln_type_of(E, delegated), E>
+      void start()
       {
-      };
+	this->exact().impl_start();
+      }
 
-      template <typename A, typename E>
-      struct get_image_impl_helper <A, mlc::no_type, E> : public virtual mlc::any__best_speed<E>
+      void next()
       {
-	// no impl
-      };
+	precondition(this->is_valid());
+	this->exact().impl_next();
+      }
 
-      template <typename A, typename E>
-      struct set_image_impl; // to be specialized...
-
-      template <typename A, typename D, typename E>
-      struct get_image_impl_helper : public set_image_impl <A, E>
+      bool is_valid() const
       {
-	// impl comes from  internal::set_image_impl <A, E>
-      };
+	return this->exact().impl_is_valid();
+      }
 
-      template <typename E>
-      struct image_impl : public mlc::any__best_speed<E>
+      void invalidate()
       {
-	typedef oln_type_of(E, delegated) D;
-	D& delegate() { return this->exact().impl_delegate(); }
-	const D& delegate() const { return this->exact().impl_delegate(); }
-      };
+	this->exact().impl_invalidate();
+	postcondition(! this->is_valid());
+      }
 
-    } // end of namespace internal
+    protected:
 
-  } // end of namespace abstract
+      iter() {}
+
+      ~iter()
+      {
+	{ // impl_start
+	  typedef void (E::*meth)();
+	  meth adr = &E::impl_start;
+	  adr = 0;
+	}
+	{ // impl_next
+	  typedef void (E::*meth)();
+	  meth adr = &E::impl_next;
+	  adr = 0;
+	}
+	{ // impl_is_valid
+	  typedef bool (E::*meth)() const;
+	  meth adr = &E::impl_is_valid;
+	  adr = 0;
+	}
+	{ // impl_invalidate
+	  typedef void (E::*meth)();
+	  meth adr = &E::impl_invalidate;
+	  adr = 0;
+	}
+      }
+
+    };
+
+  } // end of namespace oln::abstract
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_INTERNAL_IMAGE_IMPL_HH
+#endif // ! OLENA_CORE_ABSTRACT_ITER_HH

@@ -28,14 +28,21 @@
 #ifndef OLENA_CORE_ABSTRACT_QITER_HH
 # define OLENA_CORE_ABSTRACT_QITER_HH
 
-# include <mlc/any.hh>
-# include <oln/core/coord.hh>
-# include <oln/core/typedefs.hh>
+# include <oln/core/abstract/iter.hh>
 # include <oln/core/abstract/window.hh>
+# include <oln/core/typedefs.hh>
+
+
+# define for_all_q( q ) \
+  for(q.ensure_is_qiter(), q.start(); q.is_valid(); q.next())
+
+# define for_all_remaining_q( q ) \
+  for(q.ensure_is_piter(); q.is_valid(); q.next())
 
 
 # define oln_qit_type_of(QiterType, Alias) \
 mlc_type_of(oln, oln::category::qiter, QiterType, Alias)
+
 
 
 namespace oln {
@@ -73,79 +80,26 @@ namespace oln {
   namespace abstract {
 
     template <typename E>
-    struct qiter : public mlc::any__best_speed<E>
+    struct qiter : public iter<E>
     {
 
-      typedef qiter<E> self_type;
+      typedef oln_qit_type_of(E, window) window_type;
 
-      typedef oln_qit_type_of(E, window)  window_type;
-      typedef oln_wn_type_of(window_type, dpoint)  dpoint_type;
-
-      void start()
-      {
-        this->exact().impl_start();
-      }
-
-      void next()
-      {
-        precondition(this->is_valid());
-        this->exact().impl_next();
-      }
-
-      bool is_valid() const
-      {
-        return this->exact().impl_is_valid();
-      }
-
-      operator dpoint_type() const
-      {
-        precondition(this->is_valid());
-        return this->win_[pos_];
-      }
-
-      void invalidate()
-      {
-        this->exact().impl_invalidate();
-        postcondition(! this->is_valid());
-      }
-
-      coord_t nth(unsigned i)
-      {
-	return this->win_[this->pos_].nth(i);
-      }
+      void ensure_is_qiter() {}
 
     protected:
 
-      void impl_start()
+      qiter(const window_type& win) :
+        win_(win)
       {
-        pos_ = 0;
       }
-
-      void impl_next()
-      {
-        ++pos_;
-      }
-
-      bool impl_is_valid() const
-      {
-        return pos_ != win_.card();
-      }
-
-      void impl_invalidate()
-      {
-        pos_ = win_.card();
-      }
-
-      qiter(const window_type& se)
-        : win_(se), pos_(0)
-      {}
 
       const window_type& win_;
-      unsigned pos_;
     };
 
-  } // abstract
+  } // end of namespace oln::abstract
 
-} // oln
+} // end of namespace oln
+
 
 #endif // ! OLENA_CORE_ABSTRACT_QITER_HH

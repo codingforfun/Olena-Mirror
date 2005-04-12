@@ -31,6 +31,7 @@
 # include <iostream>
 
 # include <oln/core/abstract/point.hh>
+# include <oln/core/2d/grid2d.hh>
 # include <oln/core/coord.hh>
 
 
@@ -51,6 +52,7 @@ namespace oln {
   struct set_props < category::point, point2d >
   {
     typedef dpoint2d dpoint_type;
+    typedef grid2d   grid_type;
   };
 
 
@@ -102,15 +104,19 @@ namespace oln {
       return this->row_ == rhs.row_ && this->col_ == rhs.col_;
     }
 
-    coord_t impl_nth(unsigned i) const
+    const coord_t impl_nth(unsigned i) const
     {
-      // FIXME: remove when add in abstract::point
       precondition(i < 2);
       // FIXME: replace by meta-prog when a meta-vec is attribute
       return i == 0 ? row_ : col_;
     }
 
-  protected:
+    coord_t& impl_nth(unsigned i)
+    {
+      precondition(i < 2);
+      // FIXME: replace by meta-prog when a meta-vec is attribute
+      return i == 0 ? row_ : col_;
+    }
 
     coord_t row_, col_;
   };

@@ -68,7 +68,13 @@ namespace oln {
 	return not this->operator==(rhs);
       }
 
-      coord_t nth(unsigned i) const
+      const coord_t nth(unsigned i) const
+      {
+	// FIXME: add precondition
+	return this->exact().impl_nth(i);
+      }
+
+      coord_t& nth(unsigned i)
       {
 	// FIXME: add precondition
 	return this->exact().impl_nth(i);

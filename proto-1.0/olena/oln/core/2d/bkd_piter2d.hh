@@ -55,7 +55,7 @@ namespace oln {
 
   struct bkd_piter2d : public abstract::piter< bkd_piter2d >
   {
-
+    typedef bkd_piter2d self_type;
     typedef abstract::piter< bkd_piter2d > super_type;
 
     bkd_piter2d(const size2d& size) :
@@ -64,9 +64,10 @@ namespace oln {
       this->invalidate();
     }
 
-    friend class abstract::piter< bkd_piter2d >; // FIXME: replace by super_type (?)
+//     friend class abstract::iter<self_type>;
+//     friend class abstract::piter<self_type>;
 
-  protected:
+//   protected:
 
     void impl_start()
     {
