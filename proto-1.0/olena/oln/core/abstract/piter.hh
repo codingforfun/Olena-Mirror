@@ -82,6 +82,12 @@ namespace oln {
 	   << "\t size_type  = " << mlc_to_string(size_type)  << std::endl
 	   << "}" << std::endl;
     }
+
+    static void ensure()
+    {
+      mlc::is_ok< point_type >::ensure();
+      mlc::is_ok< size_type >::ensure();
+    }
   };
 
 
@@ -117,6 +123,10 @@ namespace oln {
       const size_type s_;
       point_type p_;
 
+      ~piter()
+      {
+	get_props<category::piter, E>::ensure();
+      }
     };
 
   } // end of namespace oln::abstract

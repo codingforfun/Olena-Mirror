@@ -71,6 +71,13 @@ namespace oln {
 	   << "\t data_type  = " << mlc_to_string(data_type)  << std::endl
 	   << std::endl;
     }
+
+    static void ensure()
+    {
+      mlc::is_ok< size_type >::ensure();
+      mlc::is_ok< point_type >::ensure();
+      mlc::is_ok< data_type >::ensure();
+    }
   };
 
 
@@ -164,7 +171,25 @@ namespace oln {
       }
 
     protected:
+
       data_storage() {}
+
+      ~data_storage()
+      {
+	get_props<category::data_storage, E>::ensure();
+
+        mlc_check_method_impl(E, bool,             has_data,   ,                  const);
+        mlc_check_method_impl(E, void,             clear_data, ,                       );
+        mlc_check_method_impl(E, const size_type&, size,       ,                  const);
+        mlc_check_method_impl(E, void,             resize,     const size_type&,       );
+        mlc_check_method_impl(E, unsigned long,    npoints,    ,                  const);
+	mlc_check_method_impl(E, bool,             hold,       const point_type&, const);
+	mlc_check_method_impl(E, const data_type,  get,        const point_type&, const);
+	mlc_check_method_impl(E, void,             set_data,   const data_type&,       );
+	mlc_check_method_impl(E, bool,             hold_large, const point_type&, const);
+	mlc_check_method_impl_2(E, void, resize_border, size_t,            bool,             );
+	mlc_check_method_impl_2(E, void, set,           const point_type&, const data_type&, );
+      }
     };
 
   } // end of namespace abstract

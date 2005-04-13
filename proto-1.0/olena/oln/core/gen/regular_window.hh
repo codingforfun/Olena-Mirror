@@ -51,6 +51,7 @@ namespace oln {
   {
     typedef oln_grd_type_of(G, point)  point_type;
     typedef oln_grd_type_of(G, dpoint) dpoint_type;
+    typedef oln_grd_type_of(G, size)   size_type;
     typedef regular_fwd_qiter<G>       fwd_qiter_type;
 //     typedef regular_fwd_dpiter<G>      fwd_dpiter_type; // FIXME: later...
   };
@@ -174,6 +175,8 @@ std::ostream& operator<<(std::ostream& ostr, const oln::regular_window<G>& win)
   return ostr;
 }
 
+
+# include <oln/core/gen/regular_fwd_qiter.hh>
 
 
 #endif // OLENA_CORE_GEN_REGULAR_WINDOW_HH

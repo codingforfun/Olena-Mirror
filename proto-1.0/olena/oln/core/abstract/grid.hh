@@ -50,7 +50,8 @@ namespace oln {
   struct set_default_props < category::grid >
   {
     typedef mlc::undefined_type point_type;
-    typedef mlc::undefined_type dpoint_type;
+    typedef mlc::no_type        dpoint_type;
+    typedef mlc::undefined_type size_type;
     typedef mlc::undefined_type coord_type;
     typedef mlc::undefined_type dimvalue_type;
   };
@@ -62,6 +63,7 @@ namespace oln {
     typedef oln_grd_type_of(G, point)    point_type;
     typedef oln_grd_type_of(G, dpoint)   dpoint_type;
     typedef oln_grd_type_of(G, coord)    coord_type;
+    typedef oln_grd_type_of(G, size)     size_type;
     typedef oln_grd_type_of(G, dimvalue) dimvalue_type;
 
     static void echo(std::ostream& ostr)
@@ -71,8 +73,18 @@ namespace oln {
 	   << "\t point_type    = " << mlc_to_string(point_type)    << std::endl
 	   << "\t dpoint_type   = " << mlc_to_string(dpoint_type)   << std::endl
 	   << "\t coord_type    = " << mlc_to_string(coord_type)    << std::endl
+	   << "\t size_type     = " << mlc_to_string(size_type)     << std::endl
 	   << "\t dimvalue_type = " << mlc_to_string(dimvalue_type) << std::endl
 	   << "}" << std::endl;
+    }
+
+    static void ensure()
+    {
+      mlc::is_ok< point_type >::ensure();
+      mlc::is_ok< dpoint_type >::ensure();
+      mlc::is_ok< coord_type >::ensure();
+      mlc::is_ok< size_type >::ensure();
+      mlc::is_ok< dimvalue_type >::ensure();
     }
   };
 
@@ -86,6 +98,10 @@ namespace oln {
       grid()
       {}
 
+      ~grid()
+      {
+	get_props<category::grid, E>::ensure();
+      }
     };
 
   } // end of namespace oln::abstract

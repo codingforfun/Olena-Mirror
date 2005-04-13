@@ -54,18 +54,18 @@ namespace oln {
     template <typename E>
     struct dpoint : public mlc::any<E>
     {
+      typedef E exact_type;
 
       /// Test equality of two dpoints.
-      // FIXME: doc...
-      bool operator==(const dpoint& rhs) const
+      bool operator==(const exact_type& rhs) const
       {
 	return this->exact().impl_eq(rhs.exact());
       }
 
       /// Test difference between two dpoints.
-      bool operator!=(const dpoint& rhs) const
+      bool operator!=(const exact_type& rhs) const
       {
-	return not this->operator==(rhs);
+	return ! this->operator==(rhs);
       }
 
       const coord_t nth(unsigned i) const
@@ -83,12 +83,19 @@ namespace oln {
     protected:
 
       dpoint() {}
+
+      ~dpoint()
+      {
+	mlc_check_method_impl(E, bool,          eq,  const exact_type&, const);
+	mlc_check_method_impl(E, const coord_t, nth, unsigned,          const);
+	mlc_check_method_impl(E, coord_t&,      nth, unsigned,               );
+      }
     };
+
 
   } // end of namespace abstract
 
 } // end of namespace oln
-
 
 
 #endif // ! OLENA_CORE_ABSTRACT_DPOINT_HH

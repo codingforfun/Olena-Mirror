@@ -31,6 +31,7 @@
 # include <mlc/any.hh>
 # include <mlc/if.hh>
 # include <mlc/cmp.hh>
+# include <mlc/contract.hh>
 
 # include <oln/core/coord.hh>
 # include <oln/core/typedefs.hh>
@@ -86,6 +87,12 @@ namespace oln {
 	   << "\t dpoint_type = " << mlc_to_string(dpoint_type) << std::endl
 	   << "\t grid_type   = " << mlc_to_string(grid_type)   << std::endl
 	   << "}" << std::endl;
+    }
+
+    static void ensure()
+    {
+      mlc::is_ok< dpoint_type >::ensure();
+      mlc::is_ok< grid_type >::ensure();
     }
   };
 
@@ -175,33 +182,14 @@ namespace oln {
 
       ~point()
       {
-	{ // impl_eq
-	  typedef bool (E::*meth)(const exact_type&) const;
-	  meth adr = &E::impl_eq;
-	  adr = 0;
-	}
-	{ // impl_plus
-	  typedef const exact_type (E::*meth)(const dpoint_type&) const;
-	  meth adr = &E::impl_plus;
-	  adr = 0;
-	}
-	{ // impl_minus
-	  typedef const dpoint_type (E::*meth)(const exact_type&) const;
-	  meth adr = &E::impl_minus;
-	  adr = 0;
-	}
-	{ // impl_nth const
-	  typedef const coord_type (E::*meth)(unsigned) const;
-	  meth adr = &E::impl_nth;
-	  adr = 0;
-	}
-	{ // impl_nth
-	  typedef coord_type& (E::*meth)(unsigned);
-	  meth adr = &E::impl_nth;
-	  adr = 0;
-	}
-      }
+	get_props<category::point, E>::ensure();
 
+	mlc_check_method_impl(E, bool,              eq,    const exact_type&,  const);
+	mlc_check_method_impl(E, const exact_type,  plus,  const dpoint_type&, const);
+	mlc_check_method_impl(E, const dpoint_type, minus, const exact_type&,  const);
+	mlc_check_method_impl(E, const coord_type,  nth,   unsigned,           const);
+	mlc_check_method_impl(E, coord_type&,       nth,   unsigned,                );
+      }
     };
 
 

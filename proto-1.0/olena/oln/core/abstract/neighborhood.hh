@@ -78,6 +78,12 @@ namespace oln {
 	   << std::endl;
     }
 
+    static void ensure()
+    {
+      mlc::is_ok< dpoint_type >::ensure();
+      mlc::is_ok< size_type >::ensure();
+      mlc::is_ok< window_type >::ensure();
+    }
   };
 
 
@@ -95,17 +101,13 @@ namespace oln {
     class neighborhood : public mlc::any__best_memory<E>
     {
 
+	// FIXME: rewrite this class
+
     public:
 
       typedef oln_nbh_type_of(E, dpoint) dpoint_type;
 
       typedef E exact_type;
-
-      static std::string
-      name()
-      {
-	return std::string("neighborhood<") + exact_type::name() + ">";
-      }
 
       bool
       has(const dpoint_type& dp) const
@@ -196,10 +198,27 @@ namespace oln {
         dp_.reserve(size);
       };
 
+      /// Attributes
+
       std::vector<dpoint_type> dp_;
       max_accumulator<coord_t> delta_;
 
+      /// Destructor.
+
+      ~neighborhood()
+      {
+	get_props<category::neighborhood, E>::ensure();
+// 	bool has(const dpoint_type& dp) const
+// 	  unsigned card() const
+// 	  exact_type& add(const dpoint_type& dp)
+// 	  dpoint_type dp(unsigned i) const
+// 	  const dpoint_type operator[](unsigned i) const
+// 	  coord_t get_delta() const
+// 	  coord_t delta_update(const dpoint_type& dp)
+      }
+
     };
+
   } // end of abstract
 
 } // end of oln

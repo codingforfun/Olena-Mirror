@@ -69,16 +69,6 @@ namespace oln {
       return *this;
     }
 
-    bool operator==(const dpoint1d& rhs) const
-    {
-      return this->index_ == rhs.index_;
-    }
-
-    bool operator!=(const dpoint1d& rhs) const
-    {
-      return this->index_ != rhs.index_;
-    }
-
     const dpoint1d operator+(const dpoint1d& rhs) const
     {
       dpoint1d tmp(this->index() + rhs.index());
@@ -99,6 +89,11 @@ namespace oln {
     friend class abstract::dpoint<dpoint1d>;
 
   protected:
+
+    bool impl_eq(const dpoint1d& rhs) const
+    {
+      return this->index_ == rhs.index_;
+    }
 
     const coord_t impl_nth(unsigned i) const
     {

@@ -54,8 +54,15 @@ namespace oln {
       }
 
     protected:
+
       image_with_nbh() {}
+
+      ~image_with_nbh()
+      {
+// 	mlc_check_method_impl(E, const neighb_type&, nbh_get, , const);
+      }
     };
+
 
     template <typename E>
     struct image_without_nbh : public virtual image<E>

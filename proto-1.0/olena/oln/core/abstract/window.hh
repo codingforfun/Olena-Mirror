@@ -59,6 +59,7 @@ namespace oln {
     typedef mlc::undefined_type fwd_qiter_type;
   };
 
+
   template <typename W>
   struct get_props < category::window, W >
   {
@@ -74,6 +75,13 @@ namespace oln {
 	   << "\t size_type      = " << mlc_to_string(size_type)      << std::endl
 	   << "\t fwd_qiter_type = " << mlc_to_string(fwd_qiter_type) << std::endl
 	   << "}" << std::endl;
+    }
+
+    static void ensure()
+    {
+      mlc::is_ok< dpoint_type >::ensure();
+      mlc::is_ok< size_type >::ensure();
+      mlc::is_ok< fwd_qiter_type >::ensure();
     }
   };
 
@@ -93,8 +101,14 @@ namespace oln {
     struct window : public mlc::any<W>
     {
     protected:
+
       window()
       {}
+
+      ~window()
+      {
+	get_props<category::window, W>::ensure();
+      }
     };
 
 

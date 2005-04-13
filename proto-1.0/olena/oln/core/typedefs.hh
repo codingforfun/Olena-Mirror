@@ -32,6 +32,7 @@
 
 
 # include <mlc/types.hh>
+# include <mlc/cmp.hh>
 # include <mlc/typedef.hh>
 # include <mlc/properties.hh>
 # include <mlc/to_string.hh>

@@ -89,6 +89,7 @@ namespace oln {
       /// typedef
 
       typedef oln_type_of(E, point) point_type;
+      typedef oln_type_of(E, value) value_type;
 
 
       /*! \brief Write the value \a v at \a p in the current image.
@@ -99,8 +100,7 @@ namespace oln {
       ** \see value_box, abstract::image<I>::operator[](point)
       */
 
-      template <typename V>
-      void set(const point_type& p, const V& v)
+      void set(const point_type& p, const value_type& v)
       {
 	return this->exact().impl_set(p, v);
       }
@@ -122,6 +122,10 @@ namespace oln {
       */
       readwrite_image() {}
 
+      ~readwrite_image()
+      {
+// 	mlc_check_method_impl_2(E, void, set, const point_type&, const value_type&, );
+      }
     };
 
 
@@ -133,9 +137,9 @@ namespace oln {
 	/// typedefs
 	typedef typename image_impl<E>::D D;
 	typedef oln_type_of(D, point) point_type;
+	typedef oln_type_of(D, value) value_type;
 
-	template <typename V>
-	void impl_set(const point_type& p, const V& v)
+	void impl_set(const point_type& p, const value_type& v)
 	{
 	  this->exact().impl_set_ante(p, v);
 	  this->delegate().impl_set(p, v);
@@ -144,11 +148,8 @@ namespace oln {
 
 	// extra code; default is 'do nothing':
 
-	template <typename V>
-	void impl_set_ante(const point_type&, const V&) {}
-
-	template <typename V>
-	void impl_set_post(const point_type&, const V&) {}
+	void impl_set_ante(const point_type&, const value_type&) {}
+	void impl_set_post(const point_type&, const value_type&) {}
       };
 
     } // end of namespace oln::abstract::internal

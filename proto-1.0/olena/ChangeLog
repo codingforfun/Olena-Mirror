@@ -1,3 +1,36 @@
+2005-04-13  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* oln/core/typedefs.hh: New include.
+	* oln/core/abstract/niter.hh: Add static checks of properties and impls.
+	* oln/core/abstract/image_constness.hh (set): Change signature.
+	* oln/core/abstract/image.hh: Likewise.
+	* oln/core/abstract/piter.hh: Likewise.
+	* oln/core/abstract/qiter.hh: Likewise.
+	* oln/core/abstract/image_neighbness.hh: Likewise.
+	* oln/core/abstract/point.hh: Likewise.
+	(~point): Remove obsolete static checks.
+	* oln/core/abstract/data_storage.hh: Likewise.
+	* oln/core/abstract/iter.hh: Likewise.
+	(~iter): Remove obsolete static checks.
+	* oln/core/abstract/neighborhood.hh: Likewise.
+	(name): Remove.
+	* oln/core/abstract/window.hh: Likewise.
+	* oln/core/abstract/size.hh: Likewise.
+	* oln/core/abstract/dpoint.hh: Likewise.
+	(operator==, operator!=): Change signature.
+	* oln/core/1d/dpoint1d.hh: Likewise.
+	* oln/core/2d/dpoint2d.hh: Likewise.
+	* oln/core/3d/dpoint3d.hh: Likewise.
+	* oln/core/abstract/grid.hh: Likewise.
+	(dpoint_type, size_type): New properties.
+	* oln/core/1d/grid1d.hh: Likewise.
+	* oln/core/2d/grid2d.hh: Likewise.
+	* oln/core/3d/grid3d.hh: Likewise.
+	* oln/core/any/dpoint.hh: Likewise.
+	* oln/core/gen/regular_window.hh (size_type): Update.
+	* oln/morpho/dilation.hh: Fix macro.
+	* oln/morpho/erosion.hh: Likewise.
+
 2005-04-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix oln::apply.

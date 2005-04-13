@@ -68,16 +68,6 @@ namespace oln {
       return *this;
     }
 
-    bool operator==(const dpoint3d& rhs) const
-    {
-      return this->row_ == rhs.row_ && this->col_ == rhs.col_ && this->slice_ == rhs.slice_;
-    }
-
-    bool operator!=(const dpoint3d& rhs) const
-    {
-      return ! this->operator==(rhs);
-    }
-
     const dpoint3d operator+(const dpoint3d& rhs) const
     {
       dpoint3d tmp(this->slice() + rhs.slice(), this->row() + rhs.row(), this->col() + rhs.col());
@@ -103,6 +93,11 @@ namespace oln {
     friend class abstract::dpoint<dpoint3d>;
 
   protected:
+
+    bool impl_eq(const dpoint3d& rhs) const
+    {
+      return this->row_ == rhs.row_ && this->col_ == rhs.col_ && this->slice_ == rhs.slice_;
+    }
 
     const coord_t impl_nth(unsigned i) const
     {

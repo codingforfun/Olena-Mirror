@@ -113,6 +113,8 @@ namespace oln {
     static void echo(std::ostream& ostr)
     {
       ostr << "props_of( oln::category::image, " << mlc_to_string(I) << " ) =" << std::endl
+	   << "{" << std::endl
+
 	   << "\t concrete_type = " << mlc_to_string(concrete_type) << std::endl
 	   << "\t value_type = " << mlc_to_string(value_type) << std::endl
 	   << "\t point_type = " << mlc_to_string(point_type) << std::endl
@@ -131,9 +133,28 @@ namespace oln {
 	   << "\t image_constness_type = " << mlc_to_string(image_constness_type) << std::endl
 	   << "\t image_dimension_type = " << mlc_to_string(image_dimension_type) << std::endl
 
-	   << std::endl;
+	   << "}" << std::endl;
     }
 
+    static void ensure()
+    {
+      mlc::is_ok< concrete_type >::ensure();
+      mlc::is_ok< value_type >::ensure();
+      mlc::is_ok< point_type >::ensure();
+      mlc::is_ok< size_type >::ensure();
+      mlc::is_ok< piter_type >::ensure();
+      mlc::is_ok< fwd_piter_type >::ensure();
+      mlc::is_ok< bkd_piter_type >::ensure();
+
+      mlc::is_ok< value_storage_type >::ensure();
+      mlc::is_ok< storage_type >::ensure();
+      mlc::is_ok< delegated_type >::ensure();
+      mlc::is_ok< neighb_type >::ensure();
+
+      mlc::is_ok< image_neighbness_type >::ensure();
+      mlc::is_ok< image_constness_type >::ensure();
+      mlc::is_ok< image_dimension_type >::ensure();
+    }
   };
 
 } // end of namespace oln
@@ -303,10 +324,20 @@ namespace oln
       }
 
 
-      /*! \brief Destructor (empty).
+      /*! \brief Destructor.
       */
 
-      virtual ~image() {}
+      virtual ~image()
+      {
+	get_props<category::image, E>::ensure();
+	// FIXME: static check fails because "pointer to member conversion via virtual base"...
+// 	mlc_check_method_impl(E, const size_type&, size,       ,                  const);
+// 	mlc_check_method_impl(E, unsigned long,    npoints,    ,                  const);
+// 	mlc_check_method_impl(E, bool,             hold,       const point_type&, const);
+// 	mlc_check_method_impl(E, bool,             hold_large, const point_type&, const);
+// 	mlc_check_method_impl(E, const value_type, get,        const point_type&, const);
+// 	mlc_check_method_impl_2(E, void,           resize_border, size_t, bool,   const);
+      }
 
 
 

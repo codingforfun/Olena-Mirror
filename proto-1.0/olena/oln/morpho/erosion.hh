@@ -160,7 +160,7 @@ namespace oln {
 
 	void impl_run()
 	{
-	  mlc::eq<oln_type_of(I, size), oln_type_of(W, size)>::ensure();
+	  mlc::eq<oln_type_of(I, size), oln_wn_type_of(W, size)>::ensure();
 
 	  output_type tmp(this->input.size()); // FIXME: trick
 	  this->output = tmp;

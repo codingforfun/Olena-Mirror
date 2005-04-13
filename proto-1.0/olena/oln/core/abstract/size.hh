@@ -76,7 +76,14 @@ namespace oln {
       }
 
     protected:
+
       size() {}
+
+      ~size()
+      {
+	// FIXME: how to check a templated method?
+      }
+
     };
 
 

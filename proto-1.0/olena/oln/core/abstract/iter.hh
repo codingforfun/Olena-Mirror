@@ -80,26 +80,10 @@ namespace oln {
 
       ~iter()
       {
-	{ // impl_start
-	  typedef void (E::*meth)();
-	  meth adr = &E::impl_start;
-	  adr = 0;
-	}
-	{ // impl_next
-	  typedef void (E::*meth)();
-	  meth adr = &E::impl_next;
-	  adr = 0;
-	}
-	{ // impl_is_valid
-	  typedef bool (E::*meth)() const;
-	  meth adr = &E::impl_is_valid;
-	  adr = 0;
-	}
-	{ // impl_invalidate
-	  typedef void (E::*meth)();
-	  meth adr = &E::impl_invalidate;
-	  adr = 0;
-	}
+	mlc_check_method_impl(E, void, start, , );
+	mlc_check_method_impl(E, void, next, , );
+	mlc_check_method_impl(E, bool, is_valid, , const);
+	mlc_check_method_impl(E, void, invalidate, , );
       }
 
     };

@@ -47,18 +47,6 @@ namespace oln {
   {
 
     template <typename D>
-    bool operator==(const abstract::dpoint<D>& rhs) const
-    {
-      return true;
-    }
-
-    template <typename D>
-    bool operator!=(const abstract::dpoint<D>& rhs) const
-    {
-      return false;
-    }
-
-    template <typename D>
     const any_dpoint operator+(const abstract::dpoint<D>& rhs) const
     {
       return any_dpoint();
@@ -72,6 +60,28 @@ namespace oln {
       return any_dpoint();
     }
 
+    friend class abstract::dpoint<any_dpoint>;
+
+  protected:
+
+    bool impl_eq(const any_dpoint& rhs) const
+    {
+      return true;
+    }
+
+    const coord_t impl_nth(unsigned i) const
+    {
+      precondition(0);
+      return 0;
+    }
+
+    coord_t& impl_nth(unsigned i)
+    {
+      static coord_t dummy = coord_t();
+      precondition(0);
+      return dummy;
+    }
+
   };
 
 } // end of namespace oln
@@ -80,6 +90,20 @@ namespace oln {
 std::ostream& operator<<(std::ostream& ostr, const oln::any_dpoint&)
 {
   return ostr << "any";
+}
+
+template <typename D>
+bool operator==(const oln::abstract::dpoint<D>& lhs,
+		const oln::any_dpoint& rhs)
+{
+  return true;
+}
+
+template <typename D>
+bool operator!=(const oln::abstract::dpoint<D>& lhs,
+		const oln::any_dpoint& rhs)
+{
+  return false;
 }
 
 

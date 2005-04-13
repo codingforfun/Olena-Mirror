@@ -74,6 +74,11 @@ namespace oln {
 	   << "\t window_type = " << mlc_to_string(window_type) << std::endl
 	   << "}" << std::endl;
     }
+
+    static void ensure()
+    {
+      mlc::is_ok< window_type >::ensure();
+    }
   };
 
 
@@ -96,6 +101,11 @@ namespace oln {
       }
 
       const window_type& win_;
+
+      ~qiter()
+      {
+	get_props<category::qiter, E>::ensure();
+      }
     };
 
   } // end of namespace oln::abstract

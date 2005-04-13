@@ -76,16 +76,6 @@ namespace oln {
       return *this;
     }
 
-    bool operator==(const dpoint2d& rhs) const
-    {
-      return this->row_ == rhs.row_ && this->col_ == rhs.col_;
-    }
-
-    bool operator!=(const dpoint2d& rhs) const
-    {
-      return ! this->operator==(rhs);
-    }
-
     const dpoint2d operator+(const dpoint2d& rhs) const
     {
       dpoint2d tmp(this->row() + rhs.row(), this->col() + rhs.col());
@@ -109,6 +99,11 @@ namespace oln {
     friend class abstract::dpoint<dpoint2d>;
 
   protected:
+
+    bool impl_eq(const dpoint2d& rhs) const
+    {
+      return this->row_ == rhs.row_ && this->col_ == rhs.col_;
+    }
 
     const coord_t impl_nth(unsigned i) const
     {

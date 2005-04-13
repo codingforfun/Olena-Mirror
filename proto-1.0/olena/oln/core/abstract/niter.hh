@@ -78,6 +78,12 @@ namespace oln {
 	   << "\t neighb_type = " << mlc_to_string(neighb_type) << std::endl
 	   << "}" << std::endl;
     }
+
+    static void ensure()
+    {
+      mlc::is_ok< point_type >::ensure();
+      mlc::is_ok< neighb_type >::ensure();
+    }
   };
 
 
@@ -119,11 +125,8 @@ namespace oln {
 
       ~niter()
       {
-	{ // impl_cast_point
-	  typedef const point_type (E::*meth)() const;
-	  meth adr = &E::impl_cast_point;
-	  adr = 0;
-	}
+	get_props<category::niter, E>::ensure();
+	mlc_check_method_impl(E, const point_type, cast_point, , const);
       }
 
     };
