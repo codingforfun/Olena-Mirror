@@ -1,5 +1,18 @@
 2005-04-13  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add apply on point-wise functions.
+
+	* oln/core/pw/apply.hh: New file.
+	* tests/pw/Makefile.am: New file.
+	* tests/pw/tests/apply: New test.
+
+	* oln/core/any/grid.hh: New file.
+	* oln/core/any/point.hh: Conform to abstract::point constraints.
+	* oln/makefile.src (OLN_DEP): Add core/any/grid.hh and
+	core/pw/apply.hh.
+
+2005-04-13  Roland Levillain  <roland@lrde.epita.fr>
+
 	Repair the I/O routines.
 
 	* oln/io/read_image_2d_pnm.hh: Use output_ instead of image_.

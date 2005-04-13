@@ -1,3 +1,8 @@
+2005-04-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac: Add olena/tests/pw to the lists of test
+	directories.
+
 2005-04-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	* configure.ac (AC_CONFIG_FILES): Add

@@ -77,6 +77,7 @@ OLN_DEP =					\
 						\
   core/any/all.hh				\
   core/any/dpoint.hh				\
+  core/any/grid.hh				\
   core/any/point.hh				\
   core/any/size.hh				\
 						\
@@ -96,6 +97,7 @@ OLN_DEP =					\
 						\
   core/pw/abstract/binary_function.hh		\
   core/pw/abstract/function.hh			\
+  core/pw/apply.hh				\
   core/pw/all.hh				\
   core/pw/cmp.hh				\
   core/pw/div.hh				\

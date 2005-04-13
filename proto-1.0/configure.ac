@@ -106,6 +106,7 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
       OLN_TESTS([io])
       OLN_TESTS([level])
       OLN_TESTS([morpho])
+      OLN_TESTS([pw])
       OLN_TESTS([utils]) 
       
       AC_SUBST([OLN_TESTS_SUBDIRS])

@@ -1,0 +1,18 @@
+							// -*- C++ -*-
+#include <iostream>
+
+#include <cmath>
+#include <oln/core/pw/apply.hh>
+#include <oln/core/pw/literal.hh>
+#include <oln/core/any/point.hh>
+
+using namespace oln;
+
+bool check()
+{
+  any_point p;
+  pw::literal<int> pv1 (p_lit(42));
+
+  int res = p_apply(mlc::make_unary_fun(std::negate<int>()), pv1)(p);
+  return !(res == -42);
+}

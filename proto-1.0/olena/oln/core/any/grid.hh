@@ -25,90 +25,47 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ANY_POINT_HH
-# define OLENA_CORE_ANY_POINT_HH
+#ifndef OLENA_CORE_ANY_GRID_HH
+# define OLENA_CORE_ANY_GRID_HH
 
-# include <iostream> 
-# include <oln/core/abstract/point.hh>
-# include <oln/core/abstract/dpoint.hh>
-# include <oln/core/any/grid.hh>
+# include <mlc/value.hh>
+# include <oln/core/abstract/grid.hh>
 
 
 namespace oln {
 
   // fwd decls
+  struct any_grid;
   struct any_point;
   struct any_dpoint;
-  struct any_grid;
+  struct any_coord;
+
+  // super type
+  template <>
+  struct set_super_type < any_grid >
+  {
+    typedef abstract::grid< any_grid > ret;
+  };
 
   // props
   template <>
-  struct set_props < category::point, any_point >
+  struct set_props < category::grid, any_grid >
   {
+    typedef any_point  point_type;
     typedef any_dpoint dpoint_type;
-    typedef any_grid grid_type;
-    typedef any_coord coord_type;
+    typedef any_coord  coord_type;
+    typedef mlc::value<unsigned,0> dimvalue_type;
   };
 
-
-  struct any_point : public abstract::point < any_point >
+  struct any_grid : public abstract::grid< any_grid >
   {
-    bool impl_eq(const exact_type& rhs) const
-    {
-      return this->exact().impl_eq(rhs.exact());
-    }
-
-    const any_point impl_plus(const any_dpoint& rhs) const;
-
-    template <typename D>
-    const any_point impl_plus(const abstract::dpoint<D>& rhs) const
-    {
-      return any_point();
-    }
-
-    const any_dpoint impl_minus(const any_point& rhs) const;
-
-    template <typename P>
-    const any_dpoint impl_minus(const abstract::point<P>& rhs) const;
-
-    const any_coord impl_nth(unsigned i) const;
-
-    any_coord& impl_nth(unsigned i);
+  protected:
+    any_grid()
+    {}
   };
-
-
-  namespace abstract {
-
-    template <typename E>
-    point<E>::operator any_point() const
-    {
-      return any_point();
-    }
-
-  } // end of namespace oln::abstract
-
 
 } // end of namespace oln
 
 
-std::ostream& operator<<(std::ostream& ostr, const oln::any_point&)
-{
-  return ostr << "any";
-}
 
-
-# include <oln/core/any/dpoint.hh>
-
-
-namespace oln {
-
-  template <typename P>
-  const any_dpoint any_point::impl_minus(const abstract::point<P>& rhs) const
-  {
-    return any_dpoint();
-  }
-
-} // end of namespace oln
-
-
-#endif // ! OLENA_CORE_ANY_POINT_HH
+#endif // ! OLENA_CORE_ANY_GRID_HH
