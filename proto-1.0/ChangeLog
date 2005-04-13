@@ -1,3 +1,8 @@
+2005-04-13  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* configure.ac: Add a CONFIG_FILES entry for olena/tests/sanity/check
+	so that chmod is only run once.
+
 2005-04-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	* configure.ac: Add olena/tests/pw to the lists of test
