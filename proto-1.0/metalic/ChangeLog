@@ -1,3 +1,10 @@
+2005-04-13  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* mlc/properties.hh (f_get_type): Better version.
+	* mlc/types.hh (not_ok): New type.
+	* mlc/contract.hh (mlc_check_method_impl): New macro. 
+	* mlc/cmp.hh (is_ok): New meta-function. 
+
 2005-04-11  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* mlc/makefile.src: Update.

@@ -79,6 +79,16 @@ namespace mlc
   {
   };
 
+
+
+  template <typename T>
+  struct is_ok : public and_< and_< neq<T, internal::not_found>,
+				    neq<T, internal::not_ok> >,
+			      neq<T, undefined_type> >
+  {
+  };
+
+
 } // end of namespace mlc
 
 

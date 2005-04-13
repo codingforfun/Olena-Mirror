@@ -193,7 +193,7 @@
       typedef									\
       typename f_rec_get_type<category, from_type, typedef_type>::ret		\
       type;									\
- 										\
+										\
       ~f_get_type()								\
       {										\
 	mlc::implies< mlc::is_found<default_prop>,				\
@@ -202,7 +202,13 @@
 	           mlc::is_found<type> >::ensure();				\
       }										\
 										\
-      typedef typename mlc::if_< mlc::is_found<prop>, prop, type>::ret ret;	\
+      typedef typename mlc::if_< mlc::is_ok<prop>,				\
+				 prop,						\
+				 typename mlc::if_< mlc::is_ok<type>,		\
+						    type,			\
+						    mlc::internal::not_ok	\
+                                                  > ::ret			\
+                               > ::ret ret;					\
     };										\
 										\
   }										\
@@ -215,6 +221,7 @@ struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
   Namespace::internal::f_get_type<Category,						\
                                      FromType,						\
                                      Namespace::internal::typedef_::Alias##_type>::ret
+
 
 # define mlc_type_of(Namespace, Category, FromType, Alias) \
 typename mlc_type_of_(Namespace, Category, FromType, Alias)
