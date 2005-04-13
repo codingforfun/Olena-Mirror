@@ -38,14 +38,14 @@ check(void)
   typedef oln::image2d<ntg::rgb_8> ima_rgb_8;
   typedef oln::image2d<ntg::bin> ima_bin;
 
-  fail |= loadsave< ima_int_u8		>(rdata("lena.pgm"), "lena.pgm");
-  fail |= loadsave< ima_bin		>(rdata("lena.pbm"), "lena.pbm");
-  fail |= loadsave< ima_rgb_8		>(rdata("lena.ppm"), "lena.ppm");
+  fail |= loadsave< ima_int_u8		>(rdata("16x16.pgm"), "16x16.pgm");
+  fail |= loadsave< ima_bin		>(rdata("16x16.pbm"), "16x16.pbm");
+  fail |= loadsave< ima_rgb_8		>(rdata("16x16.ppm"), "16x16.ppm");
 
 #if HAVE_ZLIB
-  fail |= loadsave< ima_bin		>(rdata("lena.pbm.gz"), "lena.pbm.gz");
-  fail |= loadsave< ima_int_u8		>(rdata("lena.pgm.gz"), "lena.pgm.gz");
-  fail |= loadsave< ima_rgb_8		>(rdata("lena.ppm.gz"), "lena.ppm.gz");
+  fail |= loadsave< ima_bin		>(rdata("16x16.pbm.gz"), "16x16.pbm.gz");
+  fail |= loadsave< ima_int_u8		>(rdata("16x16.pgm.gz"), "16x16.pgm.gz");
+  fail |= loadsave< ima_rgb_8		>(rdata("16x16.ppm.gz"), "16x16.ppm.gz");
 #endif
 
   return fail;

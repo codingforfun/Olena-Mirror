@@ -17,7 +17,9 @@ bool check()
 
   typedef oln::image2d<ntg::bin>	im_type;
   im_type ima;
-  ima = oln::io::read(rdata("object.pbm"));
+  ima = oln::io::read(rdata("16x16.pbm"));
+
+  std::cout << oln::utils::md5(oln::morpho::dilation(ima, oln::win_c8p())) << std::endl;
   if (oln::utils::md5(oln::morpho::erosion(ima, oln::win_c8p())) == key)
     {
       std::cout << "OK" << std::endl;

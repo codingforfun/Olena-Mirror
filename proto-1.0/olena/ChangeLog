@@ -1,3 +1,17 @@
+2005-04-13  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* tests/morpho/tests/dilation: Perform tests on small images.
+	* tests/morpho/tests/erosion: Perform tests on small images.
+	* tests/level/runs: Remove.
+	* tests/io/tests/2d: Perform tests on small images.
+	* tests/check/Makefile.flags: Remove optimization flags.
+	* img/16x16.ppm: New.
+	* img/16x16.pbm.gz: New.
+	* img/16x16.pgm.gz: New.
+	* img/16x16.ppm.gz: New.
+	* img/16x16.pbm: New.
+	* img/16x16.pgm: New.
+
 2005-04-13  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* oln/core/typedefs.hh: New include.
