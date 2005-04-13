@@ -47,17 +47,21 @@ namespace oln {
 
   struct dpoint2d : public abstract::dpoint < dpoint2d >
   {
+    typedef abstract::dpoint< dpoint2d > super_type;
+    
     dpoint2d()
     {
     }
 
     dpoint2d(coord_t row_, coord_t col_) :
+      super_type(),
       row_(row_),
       col_(col_)
     {
     }
 
     dpoint2d(const dpoint2d& rhs) :
+      super_type(),
       row_(rhs.row_),
       col_(rhs.col_)
     {

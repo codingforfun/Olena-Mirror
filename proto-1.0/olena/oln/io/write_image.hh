@@ -89,7 +89,8 @@ namespace oln {
     void write(const abstract::image<I>& ima, const std::string& name)
     {
       std::string ext;
-      oln_type_of(I, value) t;
+      // FIXME: Unused?
+      // oln_type_of(I, value) t;
 
       ext = internal::utils::extension(name);
 

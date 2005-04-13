@@ -59,18 +59,22 @@ namespace oln {
 
   struct point2d : public abstract::point< point2d >
   {
+    typedef abstract::point< point2d > super_type;
+
     point2d()
     {
       // no initialization here so that row_ and col_ are 'undef'
     }
 
     point2d(coord_t row_, coord_t col_) :
+      super_type(),
       row_(row_),
       col_(col_)
     {
     }
 
     point2d(const point2d& rhs) :
+      super_type(),
       row_(rhs.row_),
       col_(rhs.col_)
     {

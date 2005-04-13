@@ -1,3 +1,31 @@
+2005-04-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Repair the I/O routines.
+
+	* oln/io/read_image_2d_pnm.hh: Use output_ instead of image_.
+	(output): Remove method.
+	(read): Use the semantics of real image operator: return a
+	read_image_2d_raw instead of an image.
+	* oln/io/read_image.hh: Adjust.
+	* oln/io/write_image_2d_pnm.hh (impl_run): Rename as...
+	(run): ...this.
+	* oln/core/2d/array2d.hh: Do not set exact_ptr, since this class
+	not longer inherits from mlc::any__best_speed, but from mlc::any.
+
+
+	Please G++ and clean up.
+
+	* oln/core/abstract/qiter.hh (set_default_props): Add template <>
+	qualifier.
+	* oln/core/any/point.hh (operator<<): Do not name the second
+	argument.
+	* oln/core/any/dpoint.hh (operator<<): Likewise.
+	* oln/core/2d/point2d.hh (super_type): New typedef.
+	Explicitely call the super type ctor in ctors.
+	* oln/core/2d/dpoint2d.hh Likewise.
+	* oln/core/2d/size2d.hh: Likewise.
+	* oln/makefile.src (OLN_DEP): Remove core/2d/fwd_qiter2d.hh.
+
 2005-04-12  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* oln/core/abstract/regular_niter.hh: Move to...

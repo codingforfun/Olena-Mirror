@@ -77,7 +77,7 @@ namespace oln {
 } // end of namespace oln
 
 
-std::ostream& operator<<(std::ostream& ostr, const oln::any_dpoint& dp)
+std::ostream& operator<<(std::ostream& ostr, const oln::any_dpoint&)
 {
   return ostr << "any";
 }

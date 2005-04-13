@@ -46,24 +46,29 @@ namespace oln {
 
   struct size2d : public abstract::size< size2d >
   {
+    typedef abstract::size< size2d > super_type;
+
     size2d()
     {
       // no initialization here so that members are 'undef'
     }
 
     size2d(coord_t nrows_, coord_t ncols_) :
+      super_type(),
       nrows_(nrows_),
       ncols_(ncols_),
       border_(2) // FIXME: 2!
     {}
 
     size2d(coord_t nrows_, coord_t ncols_, coord_t border_) :
+      super_type(),
       nrows_(nrows_),
       ncols_(ncols_),
       border_(border_)
     {}
 
     size2d(const size2d& rhs) :
+      super_type(),
       nrows_(rhs.nrows_),
       ncols_(rhs.ncols_),
       border_(rhs.border_)

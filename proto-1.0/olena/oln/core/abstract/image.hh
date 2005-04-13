@@ -163,11 +163,10 @@ namespace oln
 
 
     template <typename E>
-    struct image : public internal::get_image_impl < image<E>, E>
+    struct image : public internal::get_image_impl < image<E>, E >
     {
 
       /// typedefs
-
       typedef oln_type_of(E, size)  size_type;
       typedef oln_type_of(E, value) value_type;
       typedef oln_type_of(E, point) point_type;

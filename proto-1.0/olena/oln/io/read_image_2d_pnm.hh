@@ -68,36 +68,25 @@ namespace oln {
     namespace impl {
 
       template <typename I>
-      struct read_image_2d_raw : public oln::abstract::image_operator<I, read_image_2d_raw<I> >
+      struct read_image_2d_raw :
+	public oln::abstract::image_operator<I, read_image_2d_raw<I> >
       {
-
-	typedef oln::abstract::image_operator<I, read_image_2d_raw<I> > super_type;
+	typedef oln::abstract::image_operator<I, read_image_2d_raw<I> >
+	  super_type;
 	typedef oln_type_of(I, value) value_type;
-
-	// commented below cause 'image_' is inherited
-// 	mlc::box<I> image_;
 
 	std::istream& istr_;
 	internal::pnm_info& info_;
 	char v;
 	int offset;
 
-	read_image_2d_raw(I& image,
-			  std::istream &istr,
+	read_image_2d_raw(std::istream &istr,
 			  internal::pnm_info &info) :
-	  super_type(image),
+	  super_type(),
 	  istr_(istr),
 	  info_(info),
           offset(-1)
 	{
-	  this->image_ = image;
-	}
-
-
-	read_image_2d_raw<I>& output(I& output)
-	{
-	  output = this->image_;
-	  return *this;
 	}
 
 	template <typename E>
@@ -110,7 +99,8 @@ namespace oln {
 	template <typename E>
 	void precond(ntg::vect_value<E>& c)
 	{
-	  precondition(ntg_max_val(ntg_comp_type(value_type)) <= info_.max_val);
+	  precondition(ntg_max_val(ntg_comp_type(value_type)) <=
+		       info_.max_val);
 	  precondition(info_.type == "P6");
 	  precondition(ntg_nb_comp(value_type) == 3);
 	}
@@ -134,7 +124,7 @@ namespace oln {
 		read_value_type(c);
 		tmp[p] = c;
 	      }
-	  this->image_ = tmp;
+	  this->output = tmp;
 	}
 
 	//FIXME: Should work with builtin types.
@@ -175,16 +165,13 @@ namespace oln {
 	}
       };
 
-
-
       template <typename I>
-      void read(abstract::image2d<I>& ima,
-		std::istream& istr,
-		internal::pnm_info info)
+      read_image_2d_raw<I>
+      read(std::istream& istr, internal::pnm_info info)
       {
-	read_image_2d_raw<I> tmp(ima.exact(), istr, info);
+	read_image_2d_raw<I> tmp(istr, info);
 	tmp.run();
-	tmp.output(ima.exact());
+	return tmp;
       }
 
     }

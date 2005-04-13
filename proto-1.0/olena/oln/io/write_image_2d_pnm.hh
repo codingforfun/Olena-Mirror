@@ -70,7 +70,7 @@ namespace oln {
 	  bin_v = 0;
 	}
 
-	void impl_run()
+	void run()
 	{
 	  point2d p;
 	  value_type c;

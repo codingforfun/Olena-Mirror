@@ -54,6 +54,7 @@ namespace oln {
 
   /// Default properties of any type in category::qiter.
 
+  template <>
   struct set_default_props < category::qiter >
   {
     typedef mlc::undefined_type window_type;

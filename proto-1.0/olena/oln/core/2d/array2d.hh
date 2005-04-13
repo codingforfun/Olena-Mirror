@@ -79,7 +79,6 @@ namespace oln {
       array_(0),
       size_()
     {
-      this->exact_ptr = this;
       invariant_();
     }
 
@@ -93,7 +92,6 @@ namespace oln {
       array_(0),
       size_()
     {
-      this->exact_ptr = this;
       this->resize(s);
     }
 

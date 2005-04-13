@@ -76,17 +76,17 @@ namespace oln {
 
 	  if (internal::read_pnm_header(istr, info))
 	    if ((ext == "ppm" || ext == "pnm") && info.type == "P6")
-	      impl::read(ima.exact(), istr, info);
+	      ima.exact() = impl::read<I>(istr, info);
 	    else if ((ext == "ppm" || ext == "pnm") && info.type == "P3")
 	      std::cerr << "error: read_image_2d_ppm_ascii not implemented"
 			<< std::endl;
 	    else if ((ext == "pbm" || ext == "pnm") && info.type == "P4")
-	      impl::read(ima.exact(), istr, info);
+	      ima.exact() = impl::read<I>(istr, info);
 	    else if ((ext == "pbm" || ext == "pnm") && info.type == "P1")
 	      std::cerr << "error: read_image_2d_ppm_ascii not implemented"
 			<< std::endl;
 	    else if ((ext == "pgm" || ext == "pnm") && info.type == "P5")
-	      impl::read(ima.exact(), istr, info);
+	      ima.exact() = impl::read<I>(istr, info);
 	    else if ((ext == "pgm" || ext == "pnm") && info.type == "P2")
 	      std::cerr << "error: read_image_2d_ppm_ascii not implemented"
 			<< std::endl;
