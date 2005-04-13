@@ -78,11 +78,11 @@ namespace oln {
 
       void impl_run()
       {
-	output_type output(input_.size());
+	output_type tmp(input_.size());
 	oln_type_of(I, fwd_piter) p(input_.size());
 	for_all(p)
-	  output[p] = f_(input_[p]);
-	this->image_ = output;
+	  tmp[p] = f_(input_[p]);
+	this->output = tmp;
       }
     };
 
@@ -152,11 +152,11 @@ namespace oln {
 
       void impl_run()
       {
-	output_type output(input1_.size());
+	output_type tmp(input1_.size());
 	oln_type_of(I1, fwd_piter) p(input1_.size());
 	for_all(p)
-	  output[p] = f_(input1_[p], input2_[p]);
-	this->image_ = output;
+	  tmp[p] = f_(input1_[p], input2_[p]);
+	this->output = tmp;
       }
     };
 

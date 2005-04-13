@@ -1,5 +1,16 @@
 2005-04-13  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix oln::apply.
+
+	* oln/core/apply.hh (apply1_type::impl_run)
+	(apply2_type::impl_run): Catch up with the new image_operator
+	definition.
+	* tests/core/tests/apply-unary, tests/core/tests/apply-binary: Fix
+	tests.
+	Conform to Olena coding standard.
+
+2005-04-13  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add apply on point-wise functions.
 
 	* oln/core/pw/apply.hh: New file.

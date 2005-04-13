@@ -23,7 +23,7 @@ namespace mlc {
 struct f_mult_3 : public mlc::abstract::unary_function<f_mult_3>
 {
   result_type
-  impl_op_paren (const argument_type& x) const
+  impl_op_paren(const argument_type& x) const
   {
     return 3 * x;
   }
@@ -31,7 +31,7 @@ struct f_mult_3 : public mlc::abstract::unary_function<f_mult_3>
 
 
 int
-mult_3 (int x)
+mult_3(int x)
 {
   return 3 * x;
 }
@@ -50,8 +50,8 @@ bool check()
   {
     oln::image2d<int> ima;
     ima = oln::apply(f_mult_3(), ima1);
-    if (oln::level::is_equal(ima, ima2))
-      return false;
+    if (!oln::level::is_equal(ima, ima2))
+      return true;
   }
 
   // oln::apply, with a mlc::unary_function built using the helper
@@ -59,17 +59,17 @@ bool check()
   {
     oln::image2d<int> ima;
     ima = oln::apply(mlc::make_unary_fun(mult_3), ima1);
-    if (oln::level::is_equal(ima, ima2))
-      return false;
+    if (!oln::level::is_equal(ima, ima2))
+      return true;
   }
 
   // oln::apply, with a mlc::unary_function built using the helper
   // function mlc::make_unary_fun on a std::unary_function.
   {
     oln::image2d<int> ima;
-    ima = oln::apply (mlc::make_unary_fun(std::negate<int>()), ima1);
-    if (oln::level::is_equal(ima, ima3))
-      return false;
+    ima = oln::apply(mlc::make_unary_fun(std::negate<int>()), ima1);
+    if (!oln::level::is_equal(ima, ima3))
+      return true;
   }
 
   // oln::apply, with a (more complex) mlc::unary_function built using
@@ -77,11 +77,11 @@ bool check()
   {
     oln::image2d<int> ima;
     ima =
-      oln::apply (mlc::make_unary_fun(std::bind2nd(std::multiplies<int>(), 3)),
-		  ima1);
-    if (oln::level::is_equal(ima, ima2))
-      return false;
+      oln::apply(mlc::make_unary_fun(std::bind2nd(std::multiplies<int>(), 3)),
+		 ima1);
+    if (!oln::level::is_equal(ima, ima2))
+      return true;
   }
 
-  return true;
+  return false;
 }

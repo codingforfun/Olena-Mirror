@@ -24,7 +24,7 @@ namespace mlc {
 struct f_mult : public mlc::abstract::binary_function<f_mult>
 {
   result_type
-  impl_op_paren (const argument1_type& x, const argument1_type& y) const
+  impl_op_paren(const argument1_type& x, const argument1_type& y) const
   {
     return x * y;
   }
@@ -32,7 +32,7 @@ struct f_mult : public mlc::abstract::binary_function<f_mult>
 
 
 int
-mult (int x, int y)
+mult(int x, int y)
 {
   return x * y;
 }
@@ -50,19 +50,17 @@ bool check()
   // oln::apply, with a hand-made mlc::abstract::binary_function.
   {
     oln::image2d<int> ima;
-
     ima = oln::apply(f_mult(), ima1, ima2);
-    if (oln::level::is_equal(ima, ima3))
-      return false;
+    if (!oln::level::is_equal(ima, ima3))
+      return true;
   }
-
   // oln::apply, with a mlc::binary_function built using the helper
   // function mlc::make_binary_fun on a classic function.
   {
     oln::image2d<int> ima;
     ima = oln::apply(mlc::make_binary_fun(mult), ima1, ima2);
-    if (oln::level::is_equal(ima, ima3))
-      return false;
+    if (!oln::level::is_equal(ima, ima3))
+      return true;
   }
 
   // oln::apply, with a mlc::binary_function built using the helper
@@ -70,10 +68,10 @@ bool check()
   {
     oln::image2d<int> ima;
     ima =
-      oln::apply (mlc::make_binary_fun(std::multiplies<int>()), ima1, ima2);
-    if (oln::level::is_equal(ima, ima3))
-      return false;
+      oln::apply(mlc::make_binary_fun(std::multiplies<int>()), ima1, ima2);
+    if (!oln::level::is_equal(ima, ima3))
+      return true;
   }
 
-  return true;
+  return false;
 }
