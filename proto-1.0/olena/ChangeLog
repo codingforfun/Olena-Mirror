@@ -1,3 +1,10 @@
+2005-04-13  Christophe Berger  <christophe@lrde.epita.fr>
+
+	* oln/morpho/geodesic_dilation.hh: New. Safe implementation.
+	* tests/morpho/tests/geodesic_dilation: New. Corresponding test.
+	* oln/morpho/geodesic_erosion.hh: New. Safe implementation.
+	* tests/morpho/tests/geodesic_erosion: New. Corresponding test.
+
 2005-04-13  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* tests/morpho/tests/dilation: Perform tests on small images.
