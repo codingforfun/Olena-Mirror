@@ -1,5 +1,13 @@
 2005-04-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix remaining tests in tests/core.
+
+	* tests/core/tests/readwrite_image, tests/core/tests/setget
+	(set_props <category::image, dummy_image>): Add missing
+	properties.
+
+2005-04-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix core/image_valuedness test.
 
 	* tests/core/tests/image_vectorialness: Rename file as...

@@ -1,4 +1,4 @@
-
+							// -*- C++ -*-
 #include <oln/basics.hh>
 
 
@@ -13,12 +13,19 @@ namespace oln {
   };
 
   template <>
-  struct set_props < category::image, dummy_image > : public props_of <category::image>
+  struct set_props < category::image, dummy_image >
   {
+    typedef int concrete_type;
+    typedef int image_dimension_type;
+
     typedef int size_type;
     typedef int point_type;
     typedef int value_type;
     typedef mlc::no_type delegated_type;
+
+    typedef fwd_piter2d piter_type;
+    typedef fwd_piter2d fwd_piter_type;
+    typedef bkd_piter2d bkd_piter_type;
   };
 
   struct dummy_image : public abstract::readwrite_image< dummy_image >

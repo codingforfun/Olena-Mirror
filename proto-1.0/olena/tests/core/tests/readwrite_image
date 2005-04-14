@@ -29,6 +29,10 @@ namespace oln {
     typedef point2d point_type;
     typedef ntg::int_u8 value_type;
 
+    typedef fwd_piter2d piter_type;
+    typedef fwd_piter2d fwd_piter_type;
+    typedef bkd_piter2d bkd_piter_type;
+
     typedef value_type value_storage_type;
     typedef array2d<value_storage_type> storage_type;
   };
