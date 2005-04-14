@@ -31,6 +31,7 @@
 # include <oln/core/abstract/image_with_data.hh>
 # include <oln/core/abstract/image_like_.hh>
 # include <oln/core/2d/array2d.hh>
+# include <oln/core/2d/niter2d.hh>
 
 
 /*! \namespace oln
@@ -51,7 +52,6 @@ namespace oln {
   // fwd decls
   struct fwd_piter2d;
   struct bkd_piter2d;
-  struct fwd_niter2d;
   template <typename T> class image2d;
 
   // super
@@ -164,6 +164,10 @@ namespace oln {
 
 
 } // end of namespace oln
+
+
+# include <oln/core/2d/fwd_piter2d.hh>
+# include <oln/core/2d/bkd_piter2d.hh>
 
 
 #endif // ! OLENA_CORE_IMAGE2D_HH

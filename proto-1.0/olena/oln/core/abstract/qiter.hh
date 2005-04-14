@@ -29,12 +29,13 @@
 # define OLENA_CORE_ABSTRACT_QITER_HH
 
 # include <oln/core/abstract/iter.hh>
+# include <oln/core/abstract/grid.hh>
 # include <oln/core/abstract/window.hh>
 # include <oln/core/typedefs.hh>
 
 
-# define for_all_q( q ) \
-  for(q.ensure_is_qiter(), q.start(); q.is_valid(); q.next())
+# define for_all_q_of_p(q, p) \
+  for(q.ensure_is_qiter(), q.center_at(p), q.start(); q.is_valid(); q.next())
 
 # define for_all_remaining_q( q ) \
   for(q.ensure_is_piter(); q.is_valid(); q.next())
@@ -57,6 +58,7 @@ namespace oln {
   template <>
   struct set_default_props < category::qiter >
   {
+    typedef mlc::undefined_type grid_type;
     typedef mlc::undefined_type window_type;
   };
 
@@ -65,18 +67,21 @@ namespace oln {
   template <typename Q>
   struct get_props < category::qiter, Q >
   {
+    typedef oln_qit_type_of(Q, grid)   grid_type;
     typedef oln_qit_type_of(Q, window) window_type;
 
     static void echo(std::ostream& ostr)
     {
       ostr << "props_of( oln::category::qiter, " << mlc_to_string(Q) << " ) =" << std::endl
 	   << "{" << std::endl
+	   << "\t grid_type   = " << mlc_to_string(grid_type)   << std::endl
 	   << "\t window_type = " << mlc_to_string(window_type) << std::endl
 	   << "}" << std::endl;
     }
 
     static void ensure()
     {
+      mlc::is_ok< grid_type >::ensure();
       mlc::is_ok< window_type >::ensure();
     }
   };
@@ -89,22 +94,46 @@ namespace oln {
     struct qiter : public iter<E>
     {
 
+      typedef oln_qit_type_of(E, grid)   grid_type;
       typedef oln_qit_type_of(E, window) window_type;
+
+      typedef oln_grd_type_of(grid_type, point) point_type;
 
       void ensure_is_qiter() {}
 
-    protected:
-
-      qiter(const window_type& win) :
-        win_(win)
+      operator point_type() const
       {
+	precondition(this->is_valid());
+	return this->exact().impl_cast_point();
       }
 
-      const window_type& win_;
+      void start_at_p(const point_type& p)
+      {
+	this->center_at(p);
+	this->start();
+      }
+
+      void center_at(const point_type& p)
+      {
+	this->p_ = p;
+      }
+
+    protected:
+
+      const window_type win_; // copy is safe
+      point_type p_;
+
+      qiter(const window_type& win) :
+        win_(win),
+	p_()
+      {
+	mlc::eq< grid_type, oln_wn_type_of(window_type, grid) >::ensure();
+      }
 
       ~qiter()
       {
 	get_props<category::qiter, E>::ensure();
+	mlc_check_method_impl(E, const point_type, cast_point, , const);
       }
     };
 

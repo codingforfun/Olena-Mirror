@@ -34,5 +34,7 @@
 # include <oln/core/1d/size1d.hh>
 # include <oln/core/1d/point1d.hh>
 # include <oln/core/1d/image1d.hh>
+# include <oln/core/1d/window1d.hh>
+# include <oln/core/1d/neighborhood1d.hh>
 
 #endif // ! OLENA_BASICS1D_HH

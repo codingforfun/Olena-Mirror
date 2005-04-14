@@ -29,6 +29,7 @@
 # define OLENA_CORE_ABSTRACT_DPOINT_HH
 
 # include <mlc/any.hh>
+# include <mlc/contract.hh>
 # include <oln/core/coord.hh>
 # include <oln/core/typedefs.hh>
 
@@ -62,22 +63,49 @@ namespace oln {
 	return this->exact().impl_eq(rhs.exact());
       }
 
+      /// Anteriority w.r.t. to a fwd image browsing.
+      bool fwd_less(const exact_type& rhs) const
+      {
+	return this->exact().impl_fwd_less(rhs.exact());
+      }
+ 
+      /// Anteriority w.r.t. to a bkd image browsing.
+      bool bkd_less(const exact_type& rhs) const
+      {
+	return ! *this == rhs && ! this->fwd_less(rhs);
+      }
+ 
+      const coord_t nth(unsigned i) const
+      {
+	precondition(i < this->dim());
+	return this->exact().impl_nth(i);
+      }
+
+      coord_t& nth(unsigned i)
+      {
+	precondition(i < this->dim());
+	return this->exact().impl_nth(i);
+      }
+
+      unsigned dim() const
+      {
+	return this->exact().impl_dim();
+      }
+
+
       /// Test difference between two dpoints.
       bool operator!=(const exact_type& rhs) const
       {
 	return ! this->operator==(rhs);
       }
 
-      const coord_t nth(unsigned i) const
+      /// Unarity minus.
+      const exact_type operator-() const
       {
-	// FIXME: add precondition
-	return this->exact().impl_nth(i);
-      }
-
-      coord_t& nth(unsigned i)
-      {
-	// FIXME: add precondition
-	return this->exact().impl_nth(i);
+	exact_type tmp;
+	for (unsigned c = 0; c < this->dim(); ++c)
+	  tmp.nth(c) = - this->nth(c);
+	return tmp;
       }
 
     protected:
@@ -86,14 +114,27 @@ namespace oln {
 
       ~dpoint()
       {
-	mlc_check_method_impl(E, bool,          eq,  const exact_type&, const);
-	mlc_check_method_impl(E, const coord_t, nth, unsigned,          const);
-	mlc_check_method_impl(E, coord_t&,      nth, unsigned,               );
+	mlc_check_method_impl(E, bool,          eq,       const exact_type&, const);
+	mlc_check_method_impl(E, bool,          fwd_less, const exact_type&, const);
+	mlc_check_method_impl(E, const coord_t, nth,      unsigned,          const);
+	mlc_check_method_impl(E, coord_t&,      nth,      unsigned,               );
+	mlc_check_method_impl(E, unsigned,      dim,      ,                  const);
       }
     };
 
 
   } // end of namespace abstract
+
+
+  struct fwd_less_dpoint
+  {
+    template <typename D>
+    bool operator()(const abstract::dpoint<D>& lhs, const abstract::dpoint<D>& rhs) const
+    {
+      return lhs.fwd_less(rhs.exact());
+    }
+  };
+
 
 } // end of namespace oln
 

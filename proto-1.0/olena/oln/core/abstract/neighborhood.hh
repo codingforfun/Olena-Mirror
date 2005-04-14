@@ -28,14 +28,7 @@
 #ifndef OLENA_CORE_NEIGHBORHOOD_HH
 # define OLENA_CORE_NEIGHBORHOOD_HH
 
-# include <vector>
-# include <utility>
-# include <iostream>
-
 # include <oln/core/typedefs.hh>
-# include <oln/core/coord.hh>
-# include <oln/core/abstract/dpoint.hh>
-# include <oln/core/accum.hh>
 
 
 # define oln_nbh_type_of(NeighborhoodType, Alias)  \
@@ -60,7 +53,7 @@ namespace oln {
   };
 
 
-  /// Retrieval of any image type properties (FIXME: say 'packing').
+  /// Retrieval of any neighborhood type properties.
 
   template <typename N>
   struct get_props < category::neighborhood, N >
@@ -72,10 +65,11 @@ namespace oln {
     static void echo(std::ostream& ostr)
     {
       ostr << "props_of( oln::category::neighborhood, " << mlc_to_string(N) << " ) =" << std::endl
+	   << "{" << std::endl
 	   << "\t dpoint_type = " << mlc_to_string(dpoint_type) << std::endl
 	   << "\t size_type   = " << mlc_to_string(size_type)   << std::endl
 	   << "\t window_type = " << mlc_to_string(window_type) << std::endl
-	   << std::endl;
+	   << "}" << std::endl;
     }
 
     static void ensure()
@@ -92,148 +86,31 @@ namespace oln {
   namespace abstract {
 
     /*!
-    ** Structuring elements (set of dpoints).
+    ** Class for neighborhoods.
     **
-    ** This abstract class defines several virtual methods for its
-    ** subclasses. Its goal is to deal with a set of 'move' points.
     */
-    template<class E>
-    class neighborhood : public mlc::any__best_memory<E>
+    template <typename E>
+    struct neighborhood : public mlc::any<E>
     {
 
-	// FIXME: rewrite this class
-
-    public:
-
-      typedef oln_nbh_type_of(E, dpoint) dpoint_type;
-
-      typedef E exact_type;
-
-      bool
-      has(const dpoint_type& dp) const
-      {
-	return this->exact().impl_has(dp.exact());
-      }
-
-      unsigned
-      card() const
-      {
-	return this->exact().impl_card();
-      }
-
-      exact_type&
-      add(const dpoint_type& dp)
-      {
-        return this->exact().impl_add(dp);
-      }
-
-      dpoint_type
-      dp(unsigned i) const
-      {
-	return this->exact().impl_at(i);
-      }
-
-      const dpoint_type
-      operator[](unsigned i) const
-      {
-	return this->exact().impl_at(i);
-      }
-
-      coord_t
-      get_delta() const
-      {
-	return this->exact().impl_get_delta();
-      }
-
-      coord_t
-      delta_update(const dpoint_type& dp)
-      {
-	return this->exact().impl_delta_update(dp);
-      }
-
     protected:
-
-      bool
-      impl_has(const dpoint_type& dp) const
-      {
-	return std::find(dp_.begin(), dp_.end(), dp) != dp_.end();
-      }
-
-      exact_type&
-      impl_add(const dpoint_type& dp)
-      {
-	if (!(impl_has(dp)))
-        {
-	  this->dp_.push_back(dp);
-	  this->dp_.push_back(-dp);
-        }
-        this->delta_update(dp);
-	return this->exact();
-      }
-
-      coord_t
-      impl_get_delta() const
-      {
-        return delta_;
-      }
-
-      unsigned
-      impl_card() const
-      {
-	return dp_.size();
-      }
-
-      const dpoint_type
-      impl_at(unsigned i) const
-      {
-	precondition(i < this->card());
-	return dp_[i];
-      }
-
-      neighborhood() : dp_(), delta_(0)
-      {};
-
-      neighborhood(unsigned size) : dp_(), delta_(0)
-      {
-        dp_.reserve(size);
-      };
-
-      /// Attributes
-
-      std::vector<dpoint_type> dp_;
-      max_accumulator<coord_t> delta_;
-
-      /// Destructor.
+      
+      neighborhood()
+      {}
 
       ~neighborhood()
       {
 	get_props<category::neighborhood, E>::ensure();
-// 	bool has(const dpoint_type& dp) const
-// 	  unsigned card() const
-// 	  exact_type& add(const dpoint_type& dp)
-// 	  dpoint_type dp(unsigned i) const
-// 	  const dpoint_type operator[](unsigned i) const
-// 	  coord_t get_delta() const
-// 	  coord_t delta_update(const dpoint_type& dp)
       }
 
     };
 
-  } // end of abstract
+  } // end of namespace abstract::oln
 
-} // end of oln
+} // end of namespace oln
 
-template<class E>
-std::ostream&
-operator<<(std::ostream& o, const oln::abstract::neighborhood<E>& se)
-{
-  unsigned c = se.card();
-  o << "[";
-  for (unsigned i = 0; i < c; ++i)
-    o << se.dp(i);
-  o << "]";
-  return o;
-}
+
+# include <oln/core/abstract/niter.hh>
 
 
 #endif // ! OLENA_CORE_NEIGHBORHOOD_HH

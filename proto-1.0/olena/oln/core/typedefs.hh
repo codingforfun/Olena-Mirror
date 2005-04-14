@@ -28,9 +28,9 @@
 #ifndef OLENA_CORE_TYPEDEFS_HH
 # define OLENA_CORE_TYPEDEFS_HH
 
-// FIXME: rename this present file (?)
+# include <iostream>
 
-
+# include <mlc/contract.hh>
 # include <mlc/types.hh>
 # include <mlc/cmp.hh>
 # include <mlc/typedef.hh>
@@ -45,9 +45,15 @@ namespace oln
 
   mlc_equip_namespace_with_properties();
 
-  // category::image
+  // general
 
   mlc_decl_typedef(grid_type);
+
+  mlc_decl_typedef(iter_type);
+  mlc_decl_typedef(fwd_iter_type);
+  mlc_decl_typedef(bkd_iter_type);
+
+  // category::image
 
   mlc_decl_typedef(data_type);
   mlc_decl_typedef(value_type);
@@ -59,7 +65,6 @@ namespace oln
   mlc_decl_typedef(image_type);
   mlc_decl_typedef(concrete_type);
 
-  mlc_decl_typedef(iter_type);
   mlc_decl_typedef(piter_type);
   mlc_decl_typedef(fwd_piter_type);
   mlc_decl_typedef(bkd_piter_type);

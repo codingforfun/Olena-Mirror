@@ -25,22 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_2D_FWD_NITER2D_HH
-# define OLENA_CORE_2D_FWD_NITER2D_HH
+#ifndef OLENA_CORE_3D_NITER3D_HH
+# define OLENA_CORE_3D_NITER3D_HH
 
-# include <oln/core/2d/grid2d.hh>
-# include <oln/core/2d/point2d.hh>
-# include <oln/core/2d/dpoint2d.hh>
-# include <oln/core/2d/neighborhood2d.hh>
+# include <oln/core/3d/grid3d.hh>
+# include <oln/core/3d/point3d.hh>
+# include <oln/core/3d/dpoint3d.hh>
+# include <oln/core/3d/neighborhood3d.hh>
 
 # include <oln/core/gen/regular_fwd_niter.hh>
+# include <oln/core/gen/regular_bkd_niter.hh>
 
 
 namespace oln {
 
-  typedef regular_fwd_niter<grid2d> fwd_niter2d;
+  typedef regular_fwd_niter<grid3d> fwd_niter3d;
+  typedef regular_bkd_niter<grid3d> bkd_niter3d;
 
 }
 
 
-#endif // ! OLENA_CORE_2D_FWD_NITER2D_HH
+#endif // ! OLENA_CORE_3D_NITER3D_HH

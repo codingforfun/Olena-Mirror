@@ -30,7 +30,8 @@
 
 # include <mlc/cmp.hh>
 # include <ntg/bin.hh>
-# include <oln/basics.hh>
+# include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/window.hh>
 
 
 namespace oln {
@@ -63,18 +64,19 @@ namespace oln {
 	** \arg win The window to use.
 	*/
 	static V
-	max(const I& input, const oln_type_of(I, point)& p, const W& win)
+	max(const abstract::image<I>& input,
+	    const oln_type_of(I, point)& p,
+	    const abstract::window<W>& win)
 	{
-          // FIXME: test dim I == dim
-	  mlc::eq<oln_type_of(I, size), oln_wn_type_of(W, size)>::ensure();
+	  mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
 
-          oln_wn_type_of(W, fwd_qiter) dp(win);
-	  dp.start();
-	  V val = input[p + dp];
-          for_all_remaining (dp)
-	    if (input.hold(p + dp))
-	      if (val < input[p + dp].value())
-		val = input[p + dp].value();
+          oln_wn_type_of(W, fwd_iter) q(win);
+	  q.start_at_p(p);
+	  V val = input[q];
+          for_all_remaining_q (q)
+	    if (input.hold(q))
+	      if (val < input[q].value())
+		val = input[q].value();
 	  return val;
 	}
 
@@ -89,18 +91,19 @@ namespace oln {
 	** \arg win The window to use.
 	*/
 	static V
-	min(const I& input, const oln_type_of(I, point)& p, const W& win)
+	min(const abstract::image<I>& input,
+	    const oln_type_of(I, point)& p,
+	    const abstract::window<W>& win)
 	{
-          // FIXME: test dim I == dim W
-	  mlc::eq<oln_type_of(I, size), oln_wn_type_of(W, size)>::ensure();
+	  mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
 
-	  oln_wn_type_of(W, fwd_qiter) dp(win);
-	  dp.start();
-	  V val = input[p + dp];
-	  for_all_remaining (dp)
-	    if (input.hold(p + dp))
-	      if (val > input[p + dp].value())
-		val = input[p + dp].value();
+	  oln_wn_type_of(W, fwd_iter) q(win);
+	  q.start_at(p);
+	  V val = input[q];
+	  for_all_remaining (q)
+	    if (input.hold(q))
+	      if (val > input[q].value())
+		val = input[q].value();
 	  return val;
 	}
 
@@ -112,25 +115,29 @@ namespace oln {
       struct stat_<I, W, ntg::bin>
       {
 	static ntg::bin
-	max(const I& input, const oln_type_of(I, point)& p, const W& win)
+	max(const abstract::image<I>& input,
+	    const oln_type_of(I, point)& p,
+	    const abstract::window<W>& win)
 	{
-	  mlc::eq<oln_type_of(I, size), oln_wn_type_of(W, size)>::ensure();
-	  oln_wn_type_of(W, fwd_qiter) dp(win);
-	  for_all (dp)
-	    if (input.hold(p + dp))
-	      if (input[p + dp] == true)
+	  mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
+	  oln_wn_type_of(W, fwd_iter) q(win);
+	  for_all_q_of_p (q, p)
+	    if (input.hold(q))
+	      if (input[q] == true)
 		return true;
 	  return false;
 	}
 
 	static ntg::bin
-	min(const I& input, const oln_type_of(I, point)& p, const W& win)
+	min(const abstract::image<I>& input,
+	    const oln_type_of(I, point)& p,
+	    const abstract::window<W>& win)
 	{
-	  mlc::eq<oln_type_of(I, size), oln_wn_type_of(W, size)>::ensure();
-	  oln_wn_type_of(W, fwd_qiter) dp(win);
-	  for_all (dp)
-	    if (input.hold(p + dp))
-	      if (input[p + dp] == false)
+	  mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
+	  oln_wn_type_of(W, fwd_iter) q(win);
+	  for_all_q_of_p (q, p)
+	    if (input.hold(q))
+	      if (input[q] == false)
 		return false;
 	  return true;
 	}

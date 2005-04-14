@@ -29,6 +29,7 @@
 # define OLENA_CORE_ANY_POINT_HH
 
 # include <iostream> 
+# include <mlc/contract.hh>
 # include <oln/core/abstract/point.hh>
 # include <oln/core/abstract/dpoint.hh>
 # include <oln/core/any/grid.hh>
@@ -53,6 +54,19 @@ namespace oln {
 
   struct any_point : public abstract::point < any_point >
   {
+    any_point()
+    {}
+
+    friend class abstract::point<any_point>;
+
+  protected:
+
+    bool impl_fwd_less(const any_point& rhs) const
+    {
+      precondition(0);
+      return false;
+    }
+
     bool impl_eq(const exact_type& rhs) const
     {
       return this->exact().impl_eq(rhs.exact());

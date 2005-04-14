@@ -95,6 +95,11 @@ namespace oln {
       return this->index_ == rhs.index_;
     }
 
+    bool impl_fwd_less(const dpoint1d& rhs) const
+    {
+      return this->index_ < rhs.index_;
+    }
+
     const coord_t impl_nth(unsigned i) const
     {
       precondition(i == 0);
@@ -105,6 +110,11 @@ namespace oln {
     {
       precondition(i == 0);
       return index_;
+    }
+
+    unsigned impl_dim() const
+    {
+      return 1;
     }
 
     coord_t index_;

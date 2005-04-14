@@ -28,15 +28,7 @@
 #ifndef OLENA_CORE_ABSTRACT_WINDOW_HH
 # define OLENA_CORE_ABSTRACT_WINDOW_HH
 
-# include <vector>
-# include <utility>
-# include <iostream>
-
-# include <mlc/types.hh>
 # include <oln/core/typedefs.hh>
-# include <oln/core/coord.hh>
-# include <oln/core/abstract/dpoint.hh>
-# include <oln/core/accum.hh>
 
 
 # define oln_wn_type_of(WindowType, Alias) \
@@ -54,34 +46,38 @@ namespace oln {
   template <>
   struct set_default_props < category::window >
   {
+    typedef mlc::undefined_type grid_type;
     typedef mlc::undefined_type dpoint_type;
     typedef mlc::undefined_type size_type;
-    typedef mlc::undefined_type fwd_qiter_type;
+    typedef mlc::undefined_type fwd_iter_type;
   };
 
 
   template <typename W>
   struct get_props < category::window, W >
   {
-    typedef oln_wn_type_of(W, dpoint)    dpoint_type;
-    typedef oln_wn_type_of(W, size)      size_type;
-    typedef oln_wn_type_of(W, fwd_qiter) fwd_qiter_type;
+    typedef oln_wn_type_of(W, grid)     grid_type;
+    typedef oln_wn_type_of(W, dpoint)   dpoint_type;
+    typedef oln_wn_type_of(W, size)     size_type;
+    typedef oln_wn_type_of(W, fwd_iter) fwd_iter_type;
 
     static void echo(std::ostream& ostr)
     {
       ostr << "props_of( oln::category::window, " << mlc_to_string(W) << " ) =" << std::endl
 	   << "{" << std::endl
-	   << "\t dpoint_type    = " << mlc_to_string(dpoint_type)    << std::endl
-	   << "\t size_type      = " << mlc_to_string(size_type)      << std::endl
-	   << "\t fwd_qiter_type = " << mlc_to_string(fwd_qiter_type) << std::endl
+	   << "\t grid_type     = " << mlc_to_string(grid_type)     << std::endl
+	   << "\t dpoint_type   = " << mlc_to_string(dpoint_type)   << std::endl
+	   << "\t size_type     = " << mlc_to_string(size_type)     << std::endl
+	   << "\t fwd_iter_type = " << mlc_to_string(fwd_iter_type) << std::endl
 	   << "}" << std::endl;
     }
 
     static void ensure()
     {
-      mlc::is_ok< dpoint_type >::ensure();
-      mlc::is_ok< size_type >::ensure();
-      mlc::is_ok< fwd_qiter_type >::ensure();
+      mlc::is_ok< grid_type     >::ensure();
+      mlc::is_ok< dpoint_type   >::ensure();
+      mlc::is_ok< size_type     >::ensure();
+      mlc::is_ok< fwd_iter_type >::ensure();
     }
   };
 
@@ -116,6 +112,8 @@ namespace oln {
 
 } // end of namespace oln
 
+
+# include <oln/core/abstract/qiter.hh>
 
 
 #endif // ! OLENA_CORE_ABSTRACT_WINDOW_HH

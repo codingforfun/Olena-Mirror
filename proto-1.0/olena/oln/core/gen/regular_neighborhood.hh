@@ -25,48 +25,39 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_GEN_REGULAR_WINDOW_HH
-# define OLENA_CORE_GEN_REGULAR_WINDOW_HH
+#ifndef OLENA_CORE_GEN_REGULAR_NEIGHBORHOOD_HH
+# define OLENA_CORE_GEN_REGULAR_NEIGHBORHOOD_HH
 
-# include <iostream>
-# include <algorithm>
-# include <iterator>
-# include <vector>
-# include <set>
- 
-# include <mlc/contract.hh>
-# include <oln/core/abstract/grid.hh>
-# include <oln/core/abstract/dpoint.hh>
-# include <oln/core/abstract/window.hh>
+# include <oln/core/abstract/neighborhood.hh>
+# include <oln/core/gen/regular_window.hh>
 
 
 namespace oln {
 
-  // fwd decls
-  template <typename G> class regular_window;
-  template <typename G> class regular_fwd_qiter;
+  // fwd decl
+  template <typename G> class regular_neighborhood;
 
   // super_type
-  template <typename G> struct set_super_type< regular_window<G> > { typedef abstract::window< regular_window<G> > ret; };
+  template <typename G> struct set_super_type< regular_neighborhood<G> > { typedef abstract::neighborhood< regular_neighborhood<G> > ret; };
 
   // props
   template <typename G>
-  struct set_props< category::window, regular_window<G> > 
+  struct set_props< category::neighborhood, regular_neighborhood<G> > 
   {
-    typedef G                          grid_type;
     typedef oln_grd_type_of(G, dpoint) dpoint_type;
     typedef oln_grd_type_of(G, size)   size_type;
-    typedef regular_fwd_qiter<G>       fwd_iter_type;
-//     typedef regular_fwd_dpiter<G>      fwd_dpiter_type; // FIXME: later...
+    typedef regular_window<G>          window_type;
   };
-  
+
+
+
   template <typename G>
-  class regular_window : public abstract::window< regular_window<G> >
+  class regular_neighborhood : public abstract::neighborhood< regular_neighborhood<G> >
   {
 
   public:
    
-    typedef regular_window<G> self_type;
+    typedef regular_neighborhood<G> self_type;
 
     typedef oln_grd_type_of(G, coord)    coord_type;
     typedef oln_grd_type_of(G, dpoint)   dpoint_type;
@@ -74,15 +65,17 @@ namespace oln {
 
     static const unsigned dim = dimvalue_type::val;
 
-    regular_window() :
-      dp_(),
-      delta_(0)
+    regular_neighborhood()
     {
     }
 
-    regular_window(unsigned n, const coord_type crd[]) :
-      dp_(),
-      delta_(0)
+    regular_neighborhood(const regular_window<G>& win)
+    {
+      for (unsigned i = 0; i < win.card(); ++i)
+	this->add(win.dp(i));
+    }
+
+    regular_neighborhood(unsigned n, const coord_type crd[])
     {
       precondition(n != 0);
       // FIXME: size of crd wrt n
@@ -97,60 +90,42 @@ namespace oln {
 
     self_type& add(const dpoint_type& dp)
     {
-      this->dpset_.insert(dp);
-      this->dp_.clear();
-      std::copy(this->dpset_.begin(), this->dpset_.end(),
-		std::back_inserter(this->dp_));
-      this->delta_update_(dp);
+      precondition(dp != -dp); // means dp is not (0)
+      this->win_.add(dp);
+      this->win_.add(-dp);
       return *this;
     }
 
     coord_type delta() const
     {
-      return this->delta_;
+      return this->win_.delta();
     }
 
     unsigned card() const
     {
-      return this->dp_.size();
+      return this->win_.card();
     }
 
     const dpoint_type dp(unsigned i) const
     {
       precondition(i < this->card());
-      return this->dp_[i];
-    }
-
-    const self_type operator-() const
-    {
-      self_type tmp;
-      for (unsigned i = 0; i < this->card(); ++i)
-	tmp.add(- this->dp_[i]);
-      return tmp;
-    }
-
-    void sym()
-    {
-      *this = - *this;
+      return this->win_.dp(i);
     }
 
     const std::vector<dpoint_type>& get_dp() const
     {
-      return this->dp_;
+      return this->win_.get_dp();
+    }
+
+    const regular_neighborhood<G>& get_win() const
+    {
+      return this->win_;
     }
 
   private:
- 
-    std::set<dpoint_type, fwd_less_dpoint> dpset_;
-    std::vector<dpoint_type> dp_;
-    coord_type delta_;
 
-    void delta_update_(const dpoint_type& dp)
-    {
-      for (unsigned c = 0; c < dim; ++c)
-	if (abs(dp.nth(c)) > this->delta_)
-	  this->delta_ = abs(dp.nth(c));
-    }
+    /// Only attribute (to delegate to).
+    regular_window<G> win_;
 
   };
 
@@ -160,14 +135,10 @@ namespace oln {
 
 
 template<class G>
-std::ostream& operator<<(std::ostream& ostr, const oln::regular_window<G>& win)
+std::ostream& operator<<(std::ostream& ostr, const oln::regular_neighborhood<G>& nbh)
 {
-  ostr << "[";
-  for (unsigned i = 0; i < win.card(); ++i)
-    ostr << win.dp(i);
-  ostr << "]";
-  return ostr;
+  return ostr << nbh.get_win();
 }
 
 
-#endif // ! OLENA_CORE_GEN_REGULAR_WINDOW_HH
+#endif // OLENA_CORE_GEN_REGULAR_NEIGHBORHOOD_HH

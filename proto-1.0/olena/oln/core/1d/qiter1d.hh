@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005  EPITA Research and Development Laboratory
+// Copyright (C) 2005 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,34 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_NEIGHBORHOOD2D_HH
-# define OLENA_CORE_NEIGHBORHOOD2D_HH
+#ifndef OLENA_CORE_1D_QITER1D_HH
+# define OLENA_CORE_1D_QITER1D_HH
 
-# include <oln/core/2d/window2d.hh>
-# include <oln/core/gen/regular_neighborhood.hh>
-# include <oln/core/2d/niter2d.hh>
+# include <oln/core/1d/grid1d.hh>
+# include <oln/core/1d/point1d.hh>
+# include <oln/core/1d/dpoint1d.hh>
+# include <oln/core/1d/window1d.hh>
+
+# include <oln/core/gen/regular_fwd_qiter.hh>
+# include <oln/core/gen/regular_bkd_qiter.hh>
 
 
 namespace oln {
 
-  typedef  regular_neighborhood< grid2d >  neighborhood2d;
+  typedef regular_fwd_qiter<grid1d> fwd_qiter1d;
+  typedef regular_bkd_qiter<grid1d> bkd_qiter1d;
 
-  inline const neighborhood2d&
-  neighb_c4()
-  {
-    static const neighborhood2d neighb(win_c4_only());
-    return neighb;
-  }
-
-  inline const neighborhood2d&
-  neighb_c8()
-  {
-    static const neighborhood2d neighb(win_c8_only());
-    return neighb;
-  }
+}
 
 
-} // end of namespace oln
-
-
-#endif // OLENA_CORE_NEIGHBORHOOD2D_HH
+#endif // ! OLENA_CORE_1D_QITER1D_HH

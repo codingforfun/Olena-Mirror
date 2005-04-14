@@ -1,3 +1,67 @@
+2005-04-14  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* oln/core/2d/fwd_niter2d.hh: Remove (obsolete; replaced by
+	niter2d.hh).
+	* oln/core/1d/niter1d.hh: New file.
+	* oln/core/1d/bkd_piter1d.hh: New file.
+	* oln/core/1d/qiter1d.hh: New file.
+	* oln/core/1d/neighborhood1d.hh: New file.
+	* oln/core/2d/niter2d.hh: New file.
+	* oln/core/2d/qiter2d.hh: New file.
+	* oln/core/3d/niter3d.hh: New file.
+	* oln/core/3d/bkd_piter3d.hh: New file.
+	* oln/core/3d/qiter3d.hh: New file.
+	* oln/core/3d/neighborhood3d.hh: New file.
+	* oln/core/gen/regular_bkd_niter.hh: New file.
+	* oln/core/gen/regular_bkd_qiter.hh: New file.
+	* oln/core/gen/regular_qiter.hh: New file.
+	* oln/core/gen/regular_neighborhood.hh: New file.
+	* oln/makefile.src: Update.
+	* oln/basics1d.hh: Add includes.
+	* oln/basics2d.hh: Likewise.
+	* oln/basics3d.hh: Likewise.
+	* oln/core/typedefs.hh: Add typedef decls.
+	* oln/core/abstract/niter.hh (start_at_p): New method.
+	(nbh_): Remove reference in type.
+	* oln/core/abstract/qiter.hh (for_all_q): Rename as...
+	(for_all_q_of_p): ...this.
+	(grid_type): New property.
+	(qiter): Rewrite.
+	* oln/core/abstract/point.hh (fwd_less, bkd_less): New methods.
+	* oln/core/abstract/dpoint.hh (fwd_less, bkd_less): New methods.
+	(dim): New method. 
+	(operator!=, operator-): New operators.
+	(fwd_less_dpoint): New function object type.
+	* oln/core/abstract/neighborhood.hh: Rewrite.
+	* oln/core/abstract/window.hh (grid_type): New property.
+	(fwd_qiter_type): Rename as...
+	(fwd_iter_type): ...this.
+	(qiter.hh): New include.
+	* oln/core/1d/dpoint1d.hh: Update.
+	* oln/core/1d/image1d.hh: Likewise.
+	* oln/core/1d/window1d.hh: Likewise.
+	* oln/core/1d/point1d.hh: Likewise.
+	* oln/core/2d/dpoint2d.hh: Likewise.
+	* oln/core/2d/image2d.hh: Likewise.
+	* oln/core/2d/window2d.hh: Likewise.
+	* oln/core/2d/neighborhood2d.hh: Likewise.
+	* oln/core/2d/point2d.hh: Likewise.
+	* oln/core/3d/dpoint3d.hh: Likewise.
+	* oln/core/3d/image3d.hh: Likewise.
+	* oln/core/3d/window3d.hh: Likewise.
+	* oln/core/3d/point3d.hh: Likewise.
+	* oln/core/any/grid.hh: Likewise.
+	* oln/core/any/point.hh: Likewise.
+	* oln/core/any/dpoint.hh: Likewise.
+	* oln/core/gen/regular_niter.hh: Likewise.
+	* oln/core/gen/regular_fwd_niter.hh: Likewise.
+	* oln/core/gen/regular_fwd_qiter.hh: Likewise.
+	* oln/core/gen/regular_window.hh: Likewise.
+	* oln/morpho/cc_tarjan.hh: Likewise.
+	* oln/morpho/stat.hh: Likewise.
+	* oln/morpho/geodesic_dilation.hh: Likewise.
+	* oln/morpho/geodesic_erosion.hh: Add file and update.
+
 2005-04-13  Christophe Berger  <christophe@lrde.epita.fr>
 
 	* oln/morpho/geodesic_dilation.hh: New. Safe implementation.

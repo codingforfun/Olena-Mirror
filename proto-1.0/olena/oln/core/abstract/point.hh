@@ -130,11 +130,17 @@ namespace oln {
 	return this->exact().impl_eq(rhs.exact());
       }
 
-//       // FIXME: compiler error (cannot be overloaded)
-//       bool operator==(const any_point& rhs) const
-//       {
-// 	return true;
-//       }
+      /// Anteriority w.r.t. to a fwd image browsing.
+      bool fwd_less(const exact_type& rhs) const
+      {
+	return this->exact().impl_fwd_less(rhs.exact());
+      }
+ 
+      /// Anteriority w.r.t. to a bkd image browsing.
+      bool bkd_less(const exact_type& rhs) const
+      {
+	return not *this == rhs and not this->fwd_less(rhs);
+      }
 
       /*! \brief Test difference of two points.  Nota bene: this method
       ** is concrete (and based on abstract::point::operator==).
@@ -143,7 +149,7 @@ namespace oln {
       */
       bool operator!=(const exact_type& rhs) const
       {
-	return ! this->operator==(rhs);
+	return not this->operator==(rhs);
       }
 
       // FIXME: doc...
@@ -184,11 +190,12 @@ namespace oln {
       {
 	get_props<category::point, E>::ensure();
 
-	mlc_check_method_impl(E, bool,              eq,    const exact_type&,  const);
-	mlc_check_method_impl(E, const exact_type,  plus,  const dpoint_type&, const);
-	mlc_check_method_impl(E, const dpoint_type, minus, const exact_type&,  const);
-	mlc_check_method_impl(E, const coord_type,  nth,   unsigned,           const);
-	mlc_check_method_impl(E, coord_type&,       nth,   unsigned,                );
+	mlc_check_method_impl(E, bool,              eq,       const exact_type&,  const);
+	mlc_check_method_impl(E, bool,              fwd_less, const exact_type&,  const);
+	mlc_check_method_impl(E, const exact_type,  plus,     const dpoint_type&, const);
+	mlc_check_method_impl(E, const dpoint_type, minus,    const exact_type&,  const);
+	mlc_check_method_impl(E, const coord_type,  nth,      unsigned,           const);
+	mlc_check_method_impl(E, coord_type&,       nth,      unsigned,                );
       }
     };
 

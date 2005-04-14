@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005 EPITA Research and Development Laboratory
+// Copyright (C) 2005 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,8 @@
 #ifndef OLENA_CORE_GEN_REGULAR_FWD_NITER_HH
 # define OLENA_CORE_GEN_REGULAR_FWD_NITER_HH
 
-# include <oln/core/gen/regular_niter.hh>
-
-# include <oln/core/2d/neighborhood2d.hh>
 # include <oln/core/gen/image_with_nbh.hh>
+# include <oln/core/gen/regular_niter.hh>
 
 
 namespace oln {
@@ -43,19 +41,12 @@ namespace oln {
   template <typename G>
   struct set_super_type < regular_fwd_niter<G> > { typedef abstract::regular_niter< G, regular_fwd_niter<G> > ret; };
 
-  // props
-  template <typename G>
-  struct set_props < category::niter, regular_fwd_niter<G> >
-  {
-    typedef neighborhood2d neighb_type; // FIXME: see FIXME in regular_niter
-  };
-
 
   template <typename G>
   struct regular_fwd_niter : public abstract::regular_niter< G, regular_fwd_niter<G> >
   {
     typedef regular_fwd_niter<G> self_type;
-    typedef abstract::regular_niter< G, self_type > super_type;
+    typedef abstract::regular_niter<G, self_type> super_type;
 
     template <typename I>
     regular_fwd_niter(const abstract::image_with_nbh<I>& image) :
@@ -69,24 +60,22 @@ namespace oln {
 
     void impl_start()
     {
-      this->dp_cur_ = this->dp_.begin();
+      this->pos_ = 0;
     }
 
     void impl_next()
     {
-      precondition(this->is_valid());
-      ++(this->dp_cur_);
+      ++(this->pos_);
     }
 
     bool impl_is_valid() const
     {
-      return this->dp_cur_ != this->dp_.end();
+      return this->pos_ != this->nbh_.card();
     }
 
     void impl_invalidate()
     {
-      this->dp_cur_ = this->dp_.end();
-      postcondition(! this->is_valid());
+      this->pos_ = this->nbh_.card();
     }
 
   };

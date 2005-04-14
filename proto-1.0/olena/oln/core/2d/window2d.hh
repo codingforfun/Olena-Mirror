@@ -28,9 +28,10 @@
 #ifndef OLENA_CORE_WINDOW2D_HH
 # define OLENA_CORE_WINDOW2D_HH
 
-# include <oln/core/gen/regular_window.hh>
 # include <oln/core/2d/dpoint2d.hh>
 # include <oln/core/2d/grid2d.hh>
+# include <oln/core/gen/regular_window.hh>
+# include <oln/core/2d/qiter2d.hh>
 
 
 namespace oln

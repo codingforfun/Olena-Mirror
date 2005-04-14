@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005  EPITA Research and Development Laboratory
+// Copyright (C) 2005  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,34 +25,62 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_NEIGHBORHOOD2D_HH
-# define OLENA_CORE_NEIGHBORHOOD2D_HH
+#ifndef OLENA_CORE_REGULAR_BKD_QITER_HH
+# define OLENA_CORE_REGULAR_BKD_QITER_HH
 
-# include <oln/core/2d/window2d.hh>
-# include <oln/core/gen/regular_neighborhood.hh>
-# include <oln/core/2d/niter2d.hh>
+# include <oln/core/gen/regular_qiter.hh>
 
 
 namespace oln {
 
-  typedef  regular_neighborhood< grid2d >  neighborhood2d;
+  // bkd decl
+  template <typename G>
+  struct regular_bkd_qiter;
 
-  inline const neighborhood2d&
-  neighb_c4()
+  // category
+  template <typename G>
+  struct set_super_type< regular_bkd_qiter<G> > { typedef abstract::regular_qiter< G, regular_bkd_qiter<G> > ret; };
+
+
+  template <typename G>
+  struct regular_bkd_qiter : public abstract::regular_qiter< G, regular_bkd_qiter<G> >
   {
-    static const neighborhood2d neighb(win_c4_only());
-    return neighb;
-  }
+    typedef regular_bkd_qiter<G> self_type;
+    typedef abstract::regular_qiter<G, self_type> super_type;
 
-  inline const neighborhood2d&
-  neighb_c8()
-  {
-    static const neighborhood2d neighb(win_c8_only());
-    return neighb;
-  }
+    regular_bkd_qiter(const regular_window<G>& win) :
+      super_type(win)
+    {
+      this->invalidate();
+    }
 
+    friend class abstract::iter<self_type>;
+
+  protected:
+
+    void impl_start()
+    {
+      this->pos_ = this->win_.card() - 1;
+    }
+
+    void impl_next()
+    {
+      --(this->pos_);
+    }
+
+    bool impl_is_valid() const
+    {
+      return this->pos_ != -1;
+    }
+
+    void impl_invalidate()
+    {
+      this->pos_ = -1;
+    }
+
+  };
 
 } // end of namespace oln
 
 
-#endif // OLENA_CORE_NEIGHBORHOOD2D_HH
+#endif // OLENA_CORE_REGULAR_BKD_QITER_HH

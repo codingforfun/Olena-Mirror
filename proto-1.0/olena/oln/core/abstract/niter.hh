@@ -107,6 +107,12 @@ namespace oln {
 	return this->exact().impl_cast_point();
       }
 
+      void start_at_p(const point_type& p)
+      {
+	this->center_at(p);
+	this->start();
+      }
+
       void center_at(const point_type& p)
       {
 	this->p_ = p;
@@ -114,14 +120,14 @@ namespace oln {
 
     protected:
 
-      niter(const neighb_type& ima) :
+      const neighb_type nbh_; // copy is safe
+      point_type p_;
+
+      niter(const neighb_type& nbh) :
 	nbh_(nbh),
 	p_()
       {
       }
-
-      const neighb_type& nbh_;
-      point_type p_;
 
       ~niter()
       {

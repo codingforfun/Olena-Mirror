@@ -105,6 +105,13 @@ namespace oln {
       return this->row_ == rhs.row_ && this->col_ == rhs.col_;
     }
 
+    bool impl_fwd_less(const dpoint2d& rhs) const
+    {
+      return
+	this->row_ < rhs.row_
+	|| (this->row_ == rhs.row_ && this->col_ < rhs.col_);
+    }
+
     const coord_t impl_nth(unsigned i) const
     {
       precondition(i < 2);
@@ -121,6 +128,11 @@ namespace oln {
 	return row_;
       else
 	return col_;
+    }
+
+    unsigned impl_dim() const
+    {
+      return 2;
     }
 
     coord_t row_, col_;

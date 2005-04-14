@@ -29,6 +29,7 @@
 # define OLENA_CORE_ANY_DPOINT_HH
 
 # include <iostream>
+# include <mlc/contract.hh>
 # include <oln/core/abstract/dpoint.hh>
 # include <oln/core/any/point.hh>
 
@@ -45,6 +46,8 @@ namespace oln {
 
   struct any_dpoint : public abstract::dpoint < any_dpoint >
   {
+    any_dpoint()
+    {}
 
     template <typename D>
     const any_dpoint operator+(const abstract::dpoint<D>& rhs) const
@@ -64,6 +67,12 @@ namespace oln {
 
   protected:
 
+    bool impl_fwd_less(const any_dpoint& rhs) const
+    {
+      precondition(0);
+      return false;
+    }
+
     bool impl_eq(const any_dpoint& rhs) const
     {
       return true;
@@ -80,6 +89,11 @@ namespace oln {
       static coord_t dummy = coord_t();
       precondition(0);
       return dummy;
+    }
+
+    unsigned impl_dim() const
+    {
+      return 0;
     }
 
   };

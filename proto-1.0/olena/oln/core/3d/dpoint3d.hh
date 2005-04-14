@@ -99,6 +99,15 @@ namespace oln {
       return this->row_ == rhs.row_ && this->col_ == rhs.col_ && this->slice_ == rhs.slice_;
     }
 
+    bool impl_fwd_less(const dpoint3d& rhs) const
+    {
+      return
+	this->slice_ < rhs.slice_
+	|| (this->slice_ == rhs.slice_
+	    && (this->row_ < rhs.row_
+		|| (this->row_ == rhs.row_ && this->col_ < rhs.col_)));
+    }
+
     const coord_t impl_nth(unsigned i) const
     {
       precondition(i < 3);
@@ -130,6 +139,11 @@ namespace oln {
       }
       postcondition(0);
       return dummy;
+    }
+
+    unsigned impl_dim() const
+    {
+      return 3;
     }
 
     coord_t slice_, row_, col_;

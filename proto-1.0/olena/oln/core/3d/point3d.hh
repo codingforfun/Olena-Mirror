@@ -104,6 +104,15 @@ namespace oln {
              this->col_ == rhs.col_;
     }
 
+    bool impl_fwd_less(const point3d& rhs) const
+    {
+      return
+	this->slice_ < rhs.slice_
+	|| (this->slice_ == rhs.slice_
+	    && (this->row_ < rhs.row_
+		|| (this->row_ == rhs.row_ && this->col_ < rhs.col_)));
+    }
+
     const point3d impl_plus(const dpoint3d& rhs) const;
     const dpoint3d impl_minus(const point3d& rhs) const;
 

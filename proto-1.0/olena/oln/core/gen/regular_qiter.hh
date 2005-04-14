@@ -1,4 +1,4 @@
-// Copyright (C) 2005 EPITA Research and Development Laboratory
+// Copyright (C) 2005  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,41 +25,41 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_GEN_REGULAR_NITER_HH
-# define OLENA_CORE_GEN_REGULAR_NITER_HH
+#ifndef OLENA_CORE_GEN_REGULAR_QITER_HH
+# define OLENA_CORE_GEN_REGULAR_QITER_HH
 
-# include <mlc/contract.hh>
-# include <oln/core/abstract/niter.hh>
-# include <oln/core/gen/regular_neighborhood.hh>
+# include <oln/core/abstract/grid.hh>
+# include <oln/core/abstract/qiter.hh>
+# include <oln/core/gen/regular_window.hh>
 
 
 namespace oln {
 
   // fwd decl
   namespace abstract {
-    template <typename G, typename E> struct regular_niter;
+    template <typename G, typename E> struct regular_qiter;
   }
 
-  // super type
+  // category
   template <typename G, typename E>
-  struct set_super_type < abstract::regular_niter<G,E> > { typedef abstract::niter<E> ret; };
+  struct set_super_type< abstract::regular_qiter<G,E> > { typedef abstract::qiter<E> ret; };
 
   // props
   template <typename G, typename E>
-  struct set_props < category::niter, abstract::regular_niter<G,E> >
+  struct set_props < category::qiter, abstract::regular_qiter<G,E> >
   {
-    typedef oln_grd_type_of(G, point) point_type;
-    typedef regular_neighborhood<G>   neighb_type;
+    typedef G                 grid_type;
+    typedef regular_window<G> window_type;
   };
 
 
-  
-  namespace abstract {
+  namespace abstract
+  {
 
     template <typename G, typename E>
-    struct regular_niter : public niter<E>
+    struct regular_qiter : public qiter<E>
     {
-      typedef niter<E> super_type;
+      typedef qiter<E> super_type;
 
       typedef oln_grd_type_of(G, coord)  coord_type;
       typedef oln_grd_type_of(G, point)  point_type;
@@ -68,8 +68,8 @@ namespace oln {
       typedef oln_grd_type_of(G, dimvalue) dimvalue_type;
       static const unsigned dim = dimvalue_type::val;
 
-      regular_niter(const regular_neighborhood<G>& nbh) :
-	super_type(nbh)
+      regular_qiter(const regular_window<G>& win) :
+	super_type(win)
       {
       }
 
@@ -87,14 +87,14 @@ namespace oln {
       const point_type impl_cast_point() const
       {
 	precondition(this->is_valid());
-	return this->p_ + this->nbh_.dp(this->pos_);
+	return this->p_ + this->win_.dp(this->pos_);
       }
 
     };
 
-  } // end of namespace oln::abstract
+  } // end of namespace abstract::oln
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_GEN_REGULAR_NITER_HH
+#endif // OLENA_CORE_GEN_REGULAR_QITER_HH

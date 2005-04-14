@@ -22,28 +22,39 @@ OLN_DEP =					\
   convert/value_to_point.hh			\
 						\
   core/1d/array1d.hh				\
+  core/1d/bkd_piter1d.hh			\
   core/1d/dpoint1d.hh				\
   core/1d/fwd_piter1d.hh			\
   core/1d/image1d.hh				\
+  core/1d/neighborhood1d.hh			\
+  core/1d/niter1d.hh				\
   core/1d/point1d.hh				\
+  core/1d/qiter1d.hh				\
   core/1d/size1d.hh				\
 						\
   core/2d/array2d.hh				\
   core/2d/bkd_piter2d.hh			\
   core/2d/dpoint2d.hh				\
-  core/2d/fwd_niter2d.hh			\
   core/2d/fwd_piter2d.hh			\
   core/2d/image2d.hh				\
   core/2d/neighborhood2d.hh			\
+  core/2d/niter2d.hh				\
   core/2d/point2d.hh				\
+  core/2d/qiter2d.hh				\
   core/2d/size2d.hh				\
   core/2d/window2d.hh				\
 						\
   core/3d/array3d.hh				\
+  core/3d/bkd_piter3d.hh			\
   core/3d/dpoint3d.hh				\
+  core/3d/fwd_niter3d.hh			\
   core/3d/fwd_piter3d.hh			\
+  core/3d/fwd_qiter3d.hh			\
   core/3d/image3d.hh				\
+  core/3d/neighborhood3d.hh			\
+  core/3d/niter3d.hh				\
   core/3d/point3d.hh				\
+  core/3d/qiter3d.hh				\
   core/3d/size3d.hh				\
 						\
   core/abstract/data_storage.hh			\
@@ -90,9 +101,13 @@ OLN_DEP =					\
   core/gen/identity.hh				\
   core/gen/image_with_nbh.hh			\
   core/gen/internal/value_box.hh		\
-  core/gen/regular_fwd_niter.hh.hh		\
-  core/gen/regular_fwd_qiter.hh.hh		\
-  core/gen/regular_niter.hh.hh			\
+  core/gen/regular_bkd_niter.hh			\
+  core/gen/regular_bkd_qiter.hh			\
+  core/gen/regular_fwd_niter.hh			\
+  core/gen/regular_fwd_qiter.hh			\
+  core/gen/regular_neighborhood.hh		\
+  core/gen/regular_niter.hh			\
+  core/gen/regular_qiter.hh			\
   core/gen/regular_window.hh			\
 						\
   core/pw/abstract/binary_function.hh		\

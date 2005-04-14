@@ -96,6 +96,11 @@ namespace oln {
       return this->index_ == rhs.index_;
     }
 
+    bool impl_fwd_less(const point1d& rhs) const
+    {
+      return this->index_ < rhs.index_;
+    }
+
     const coord_t impl_nth(unsigned i) const
     {
       precondition(i == 0);

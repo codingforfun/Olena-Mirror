@@ -131,4 +131,8 @@ namespace oln {
 } // end of namespace oln
 
 
+# include <oln/core/1d/fwd_piter1d.hh>
+# include <oln/core/1d/bkd_piter1d.hh>
+
+
 #endif // ! OLENA_CORE_1D_IMAGE1D_HH

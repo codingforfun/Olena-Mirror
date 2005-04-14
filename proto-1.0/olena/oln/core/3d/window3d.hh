@@ -28,9 +28,10 @@
 #ifndef OLENA_CORE_WINDOW3D_HH
 # define OLENA_CORE_WINDOW3D_HH
 
-# include <oln/core/gen/regular_window.hh>
 # include <oln/core/3d/dpoint3d.hh>
 # include <oln/core/3d/grid3d.hh>
+# include <oln/core/gen/regular_window.hh>
+# include <oln/core/3d/qiter3d.hh>
 
 
 namespace oln {

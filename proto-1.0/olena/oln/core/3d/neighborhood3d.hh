@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005  EPITA Research and Development Laboratory
+// Copyright (C) 2005  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,29 +25,36 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_NEIGHBORHOOD2D_HH
-# define OLENA_CORE_NEIGHBORHOOD2D_HH
+#ifndef OLENA_CORE_NEIGHBORHOOD3D_HH
+# define OLENA_CORE_NEIGHBORHOOD3D_HH
 
-# include <oln/core/2d/window2d.hh>
+# include <oln/core/3d/window3d.hh>
 # include <oln/core/gen/regular_neighborhood.hh>
-# include <oln/core/2d/niter2d.hh>
+# include <oln/core/3d/niter3d.hh>
 
 
 namespace oln {
 
-  typedef  regular_neighborhood< grid2d >  neighborhood2d;
+  typedef  regular_neighborhood< grid3d >  neighborhood3d;
 
-  inline const neighborhood2d&
-  neighb_c4()
+  inline const neighborhood3d&
+  neighb_c6()
   {
-    static const neighborhood2d neighb(win_c4_only());
+    static const neighborhood3d neighb(win_c6_only());
     return neighb;
   }
 
-  inline const neighborhood2d&
-  neighb_c8()
+  inline const neighborhood3d&
+  neighb_c18()
   {
-    static const neighborhood2d neighb(win_c8_only());
+    static const neighborhood3d neighb(win_c18_only());
+    return neighb;
+  }
+
+  inline const neighborhood3d&
+  neighb_c26()
+  {
+    static const neighborhood3d neighb(win_c26_only());
     return neighb;
   }
 
@@ -55,4 +62,4 @@ namespace oln {
 } // end of namespace oln
 
 
-#endif // OLENA_CORE_NEIGHBORHOOD2D_HH
+#endif // OLENA_CORE_NEIGHBORHOOD3D_HH

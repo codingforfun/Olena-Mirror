@@ -156,7 +156,7 @@ namespace oln {
         {
           std::vector<dpoint2d> neighb = misc::get_inferior(this->ng);
           oln_type_of(I, bkd_piter) p(this->input.size());
-          for_all(p)
+          for_all_p (p)
             if (this->input[p])
             {
               make_set(p);
@@ -174,7 +174,7 @@ namespace oln {
           oln_type_of(I, fwd_piter) p(this->input.size());
           level::fill(this->output, 0);
           ncomps = 0;
-          for_all(p)
+          for_all_p (p)
             if (this->input[p])
             {
 	      oln_type_of(I, point) q = parent[p];

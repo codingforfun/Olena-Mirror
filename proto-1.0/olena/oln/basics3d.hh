@@ -33,7 +33,8 @@
 # include <oln/core/3d/grid3d.hh>
 # include <oln/core/3d/size3d.hh>
 # include <oln/core/3d/point3d.hh>
-# include <oln/core/3d/dpoint3d.hh>
 # include <oln/core/3d/image3d.hh>
+# include <oln/core/3d/window3d.hh>
+# include <oln/core/3d/neighborhood3d.hh>
 
 #endif // ! OLENA_BASICS3D_HH

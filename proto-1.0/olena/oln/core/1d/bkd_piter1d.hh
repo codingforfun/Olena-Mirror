@@ -1,4 +1,4 @@
-// Copyright (C) 2005  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004, 2005 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,61 +25,79 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_GEN_REGULAR_FWD_QITER_HH
-# define OLENA_CORE_GEN_REGULAR_FWD_QITER_HH
+#ifndef OLENA_CORE_1D_BKD_PITER1D_HH
+# define OLENA_CORE_1D_BKD_PITER1D_HH
 
-# include <oln/core/gen/regular_qiter.hh>
+# include <mlc/contract.hh>
+# include <oln/core/abstract/piter.hh>
+# include <oln/core/1d/point1d.hh>
+# include <oln/core/1d/size1d.hh>
 
 
 namespace oln {
 
+
   // fwd decl
-  template <typename G> struct regular_fwd_qiter;
+  struct bkd_piter1d;
 
-  // category
-  template <typename G>
-  struct set_super_type< regular_fwd_qiter<G> > { typedef abstract::regular_qiter< G, regular_fwd_qiter<G> > ret; };
+  // super type
+  template <>
+  struct set_super_type < bkd_piter1d > { typedef abstract::piter< bkd_piter1d > ret; };
 
-
-  template <typename G>
-  struct regular_fwd_qiter : public abstract::regular_qiter< G, regular_fwd_qiter<G> >
+  // props
+  template <>
+  struct set_props < category::piter, bkd_piter1d >
   {
-    typedef regular_fwd_qiter<G> self_type;
-    typedef abstract::regular_qiter<G, self_type> super_type;
+    typedef point1d point_type;
+    typedef size1d  size_type;
+  };
 
-    regular_fwd_qiter(const regular_window<G>& win) :
-      super_type(win)
+
+
+  struct bkd_piter1d : public abstract::piter< bkd_piter1d >
+  {
+    typedef bkd_piter1d self_type;
+    typedef abstract::piter<self_type> super_type;
+
+    bkd_piter1d(const size1d& size) :
+      super_type(size)
     {
       this->invalidate();
     }
 
     friend class abstract::iter<self_type>;
+    friend class abstract::piter<self_type>;
 
   protected:
 
     void impl_start()
     {
-      this->pos_ = 0;
-    }
-
-    void impl_next()
-    {
-      ++(this->pos_);
+      this->p_.index() = this->s_.nindices() - 1;
+      postcondition(this->p_.index().is_defined());
     }
 
     bool impl_is_valid() const
     {
-      return this->pos_ != this->win_.card();
+      precondition(this->p_.index().is_defined());
+      return this->p_.index() >= 0;
+    }
+
+    void impl_next()
+    {
+      precondition(this->p_.index().is_defined());
+      precondition(this->p_.index() >= 0 && this->p_.index() < this->s_.nindices());
+      --this->p_.index();
+      postcondition(this->p_.index().is_defined());
     }
 
     void impl_invalidate()
     {
-      this->pos_ = this->win_.card();
+      this->p_.index() = -1;
+      postcondition(this->p_.index().is_defined());
     }
 
   };
+}
 
-} // end of namespace oln
 
-
-#endif // ! OLENA_CORE_GEN_REGULAR_FWD_QITER_HH
+#endif // ! OLENA_CORE_1D_BKD_PITER1D_HH

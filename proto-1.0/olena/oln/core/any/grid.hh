@@ -38,6 +38,7 @@ namespace oln {
   struct any_grid;
   struct any_point;
   struct any_dpoint;
+  struct any_size;
   struct any_coord;
 
   // super type
@@ -54,6 +55,7 @@ namespace oln {
     typedef any_point  point_type;
     typedef any_dpoint dpoint_type;
     typedef any_coord  coord_type;
+    typedef any_size   size_type;
     typedef mlc::value<unsigned,0> dimvalue_type;
   };
 
