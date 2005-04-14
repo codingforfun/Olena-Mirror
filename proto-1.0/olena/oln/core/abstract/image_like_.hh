@@ -74,12 +74,7 @@ namespace oln {
       {
       }
 
-      const I& real() const
-      {
-	return this->image_.unbox();
-      }
-
-      I& real()
+      I& real() const
       {
 	return this->image_.unbox();
       }
@@ -89,8 +84,27 @@ namespace oln {
   } // end of namespace oln::abstract
 
 
+} // end of namespace oln
+
+
+# include <oln/core/box.hh>
+
+
+namespace oln
+{
+
+
+  template <typename I>
+  template <typename E>
+  box<I>& box<I>::operator=(const abstract::image_like_<I, E>& rhs)
+  {
+    this->image_ = rhs.real();
+    return *this;
+  }
+  
 
 } // end of namespace oln
+
 
 
 #endif // ! OLENA_CORE_ABSTRACT_IMAGE_LIKE__HH

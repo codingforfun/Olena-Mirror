@@ -55,9 +55,23 @@ namespace oln
 
   mlc_decl_typedef(grid_type);
 
+  // iterators
+
   mlc_decl_typedef(iter_type);
   mlc_decl_typedef(fwd_iter_type);
   mlc_decl_typedef(bkd_iter_type);
+
+  mlc_decl_typedef(piter_type);
+  mlc_decl_typedef(fwd_piter_type);
+  mlc_decl_typedef(bkd_piter_type);
+
+  mlc_decl_typedef(qiter_type);
+  mlc_decl_typedef(fwd_qiter_type);
+  mlc_decl_typedef(bkd_qiter_type);
+
+  mlc_decl_typedef(niter_type);
+  mlc_decl_typedef(fwd_niter_type);
+  mlc_decl_typedef(bkd_niter_type);
 
   // category::image
 
@@ -70,11 +84,6 @@ namespace oln
   mlc_decl_typedef(dpoint_type);
   mlc_decl_typedef(image_type);
   mlc_decl_typedef(concrete_type);
-
-  mlc_decl_typedef(piter_type);
-  mlc_decl_typedef(fwd_piter_type);
-  mlc_decl_typedef(bkd_piter_type);
-  mlc_decl_typedef(fwd_niter_type);
 
   mlc_decl_typedef(delegated_type);
   mlc_decl_typedef(size_type);
@@ -92,10 +101,7 @@ namespace oln
   mlc_decl_typedef(input1_type);
   mlc_decl_typedef(input2_type);
 
-  // category::window
 
-  mlc_decl_typedef(fwd_qiter_type);
-  mlc_decl_typedef(bkd_qiter_type);
 
   // category::grid
 

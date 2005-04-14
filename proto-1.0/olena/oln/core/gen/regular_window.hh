@@ -178,5 +178,8 @@ std::ostream& operator<<(std::ostream& ostr, const oln::abstract::regular_window
   return ostr;
 }
 
+# include <oln/core/gen/regular_fwd_qiter.hh>
+# include <oln/core/gen/regular_bkd_qiter.hh>
+
 
 #endif // ! OLENA_CORE_GEN_REGULAR_WINDOW_HH

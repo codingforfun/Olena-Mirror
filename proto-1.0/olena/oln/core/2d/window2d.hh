@@ -37,6 +37,9 @@
 namespace oln
 {
 
+
+  //-------------------------------------------  window2d
+
   // fwd decl
   struct window2d;
 
@@ -63,6 +66,9 @@ namespace oln
     }
 
   };
+
+
+  //------------------------------------  win_rectangle2d
 
 
   // fwd decl
@@ -100,8 +106,77 @@ namespace oln
   };
 
 
+  //------------------------------------  win_hline2d
 
-  // classical 2d windows
+
+  // fwd decl
+  struct win_hline2d;
+
+  // super type
+  template <>
+  struct set_super_type< win_hline2d > { typedef abstract::regular_window< grid2d, win_hline2d > ret; };
+
+
+  /// Class win_hline2d.
+  struct win_hline2d : public oln_super_of_(win_hline2d)
+  {
+    typedef oln_super_of_(win_hline2d) super_type;
+
+    win_hline2d(unsigned length) :
+      length(length)
+    {
+      int
+	min_dcol = (1 - int(length)) / 2,
+	max_dcol = int(length) / 2;
+      for (int dcol = min_dcol; dcol <= max_dcol; ++dcol)
+	{
+	  dpoint2d dp(0, dcol);
+	  this->add_(dp);
+	}
+    }
+
+    const unsigned length;
+  };
+
+
+
+  //------------------------------------  win_vline2d
+
+
+  // fwd decl
+  struct win_vline2d;
+
+  // super type
+  template <>
+  struct set_super_type< win_vline2d > { typedef abstract::regular_window< grid2d, win_vline2d > ret; };
+
+
+  /// Class win_vline2d.
+  struct win_vline2d : public oln_super_of_(win_vline2d)
+  {
+    typedef oln_super_of_(win_vline2d) super_type;
+
+    win_vline2d(unsigned length) :
+      length(length)
+    {
+      int
+	min_drow = (1 - int(length)) / 2,
+	max_drow = int(length) / 2;
+      for (int drow = min_drow; drow <= max_drow; ++drow)
+	{
+	  dpoint2d dp(drow, 0);
+	  this->add_(dp);
+	}
+    }
+
+    const unsigned length;
+  };
+
+
+
+
+  //-------------------------------  classical 2d windows
+
 
   /*!
   ** \brief Create a window (2 dimensions) of 4 elements.

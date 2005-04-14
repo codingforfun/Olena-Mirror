@@ -81,8 +81,6 @@ OLN_DEP =					\
   core/abstract/size.hh				\
   core/abstract/window.hh			\
 						\
-  core/accum.hh					\
-						\
   core/any/all.hh				\
   core/any/dpoint.hh				\
   core/any/grid.hh				\
@@ -125,6 +123,8 @@ OLN_DEP =					\
 						\
   fancy/iota.hh					\
   fancy/print.hh				\
+						\
+  funobj/accum.hh				\
 						\
   io/gz_stream.hh				\
   io/read_image.hh				\

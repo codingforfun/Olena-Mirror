@@ -55,6 +55,8 @@ namespace oln {
   template <typename T>
   struct set_props < category::image, image3d<T> >
   {
+    typedef grid3d grid_type;
+
     // intrusive property:
     typedef is_a<abstract::image3d> image_dimension_type;
     // FIXME: should be generalized

@@ -62,10 +62,13 @@ namespace oln {
   template <>
   struct set_default_props < category::image >
   {
+    typedef mlc::undefined_type grid_type;
+
     typedef mlc::undefined_type concrete_type;
     typedef mlc::undefined_type value_type;
     typedef mlc::undefined_type point_type;
     typedef mlc::undefined_type size_type;
+
     typedef mlc::undefined_type piter_type;
     typedef mlc::undefined_type fwd_piter_type;
     typedef mlc::undefined_type bkd_piter_type;
@@ -90,6 +93,8 @@ namespace oln {
   template <typename I>
   struct get_props < category::image, I >
   {
+    typedef oln_type_of(I, grid) grid_type;
+
     typedef oln_type_of(I, concrete) concrete_type;
     typedef oln_type_of(I, value) value_type;
     typedef oln_type_of(I, point) point_type;
@@ -116,6 +121,8 @@ namespace oln {
       ostr << "props_of( oln::category::image, " << mlc_to_string(I) << " ) =" << std::endl
 	   << "{" << std::endl
 
+	   << "\t grid_type = " << mlc_to_string(grid_type) << std::endl
+
 	   << "\t concrete_type = " << mlc_to_string(concrete_type) << std::endl
 	   << "\t value_type = " << mlc_to_string(value_type) << std::endl
 	   << "\t point_type = " << mlc_to_string(point_type) << std::endl
@@ -139,6 +146,7 @@ namespace oln {
 
     static void ensure()
     {
+      mlc::is_ok< grid_type >::ensure();
       mlc::is_ok< concrete_type >::ensure();
       mlc::is_ok< value_type >::ensure();
       mlc::is_ok< point_type >::ensure();

@@ -54,7 +54,7 @@ namespace oln {
     typedef regular_fwd_qiter<G,W> self_type;
     typedef abstract::regular_qiter<G, self_type> super_type;
 
-    regular_fwd_qiter(const abstract::regular_window<G,W>& win) :
+    regular_fwd_qiter(const abstract::window<W>& win) :
       super_type(win)
     {
       this->invalidate();

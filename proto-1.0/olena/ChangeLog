@@ -1,3 +1,30 @@
+2005-04-14  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* oln/core/accum.hh: Rewrite and move...
+	* oln/funobj/accum.hh: ...here.
+	* tests/morpho/tests/geodesic_erosion: Add include.
+	* tests/morpho/tests/geodesic_dilation: Likewise.
+	* tests/morpho/tests/erosion: Fix bug.
+	* oln/core/typedefs.hh: Add decls for iterators.
+	* oln/core/abstract/image.hh (grid_type): New property.
+	* oln/core/1d/image1d.hh: Update.
+	* oln/core/2d/image2d.hh: Likewise.
+	* oln/core/3d/image3d.hh: Likewise.
+	* oln/core/abstract/qiter.hh: Fix bug.
+	* oln/core/abstract/image_like_.hh (real const): Remove 'const' in
+	return since an image-like behaves as a mutable.
+	(real): Remove.
+	(box<I>): Add operator= for image_like_.
+	* oln/core/2d/window2d.hh (win_hline2d, win_vline2d): New types.
+	* oln/core/box.hh: Clean up and add new methods.
+	* oln/core/gen/regular_fwd_qiter.hh: Fix ctor signature.
+	* oln/core/gen/regular_bkd_qiter.hh: Likewise.
+	* oln/core/gen/regular_qiter.hh: Likewise.
+	* oln/core/gen/regular_window.hh: Add includes.
+	* oln/makefile.src: Update.
+	* oln/morpho/stat.hh: Update.
+	* oln/morpho/erosion.hh: 
+
 2005-04-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add unary point-wise function (PWF).
@@ -36,7 +63,7 @@
 	* oln/core/gen/regular_window.hh: Update.
 	* oln/core/gen/regular_neighborhood.hh: Update.
 	* oln/morpho/stat.hh (stat_): Remove.
-	* oln/morpho/erosion.hh: Rewrite.
+	* oln/morpho/erosion.hh: Update.
 
 2005-04-14  Roland Levillain  <roland@lrde.epita.fr>
 

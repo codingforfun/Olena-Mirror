@@ -54,7 +54,7 @@ namespace oln {
     typedef regular_bkd_qiter<G,W> self_type;
     typedef abstract::regular_qiter<G, self_type> super_type;
 
-    regular_bkd_qiter(const abstract::regular_window<G,W>& win) :
+    regular_bkd_qiter(const abstract::window<W>& win) :
       super_type(win)
     {
       this->invalidate();

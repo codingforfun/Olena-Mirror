@@ -30,7 +30,7 @@
 
 # include <oln/core/abstract/grid.hh>
 # include <oln/core/abstract/qiter.hh>
-# include <oln/core/gen/regular_window.hh>
+# include <oln/core/abstract/window.hh>
 
 
 namespace oln {
@@ -67,7 +67,7 @@ namespace oln {
       typedef oln_grd_type_of(G, dimvalue) dimvalue_type;
       static const unsigned dim = dimvalue_type::val;
 
-      regular_qiter(const regular_window<G, oln_qit_type_of(E, window)>& win) :
+      regular_qiter(const abstract::window<oln_qit_type_of(E, window)>& win) :
 	super_type(win.exact())
       {
       }

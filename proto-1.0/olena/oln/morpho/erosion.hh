@@ -29,6 +29,7 @@
 # define OLENA_MORPHO_EROSION_HH
 
 # include <mlc/cmp.hh>
+# include <mlc/to_string.hh>
 
 # include <oln/core/abstract/images.hh>
 # include <oln/core/abstract/image_operator.hh>
@@ -164,13 +165,13 @@ namespace oln {
 
 	void impl_run()
 	{
-	  oln_type_of(super_type, output) temp(input.size()); // FIXME: trick
+	  oln_type_of(super_type, output) temp;
 
-	  win_rectangle2d hline(1, win.width);
-	  win_rectangle2d vline(win.height, 1);
+	  win_hline2d hline(win.width);
+	  win_vline2d vline(win.height);
 	  
 	  temp = morpho::erosion(input, hline);
-	  output = morpho::erosion(temp, vline);
+ 	  output = morpho::erosion(temp, vline);
 	}
       };
 

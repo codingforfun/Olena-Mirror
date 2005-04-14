@@ -28,13 +28,19 @@
 #ifndef OLENA_CORE_BOX_HH
 # define OLENA_CORE_BOX_HH
 
+# include <mlc/bool.hh>
 # include <oln/core/abstract/image_entry.hh>
+
+
 
 namespace oln {
 
 
-  // fwd decl
+  // fwd decls
   template <typename I> struct box;
+  namespace abstract {
+    template <typename I, typename E> struct image_like_;
+  }
 
   // category
 
@@ -65,7 +71,7 @@ namespace oln {
   };
 
 
-  /// Class oln::box...
+  /// Class oln::box<I> encapsulating a mutable image.
 
   template <typename I>
   struct box : public abstract::image_entry< box<I> >
@@ -84,22 +90,47 @@ namespace oln {
       this->exact_ptr = this;
     }
 
-    box<I>& operator=(abstract::image<I>& rhs)
-    {
-      this->image_ = rhs.exact();
-      return *this;
-    }
-
     box(const box<I>& rhs) :
       image_(const_cast<I&>(rhs.image_))
     {
       this->exact_ptr = this;
     }
 
-    box<I> operator=(const box<I>& rhs)
+    // operator= that are ok
+
+    box<I>& operator=(abstract::image<I>& rhs)
+    {
+      this->image_ = rhs.exact();
+      return *this;
+    }
+
+    box<I>& operator=(const box<I>& rhs)
     {
       this->image_ = const_cast<I&>(rhs.image_);
       return *this;
+    }
+
+    template <typename E>
+    box<I>& operator=(const abstract::image_like_<I, E>& rhs); // impl in image_like_.hh
+
+    // operator= that are not ok
+
+    template <typename II>
+    void operator=(const box<II>& rhs)
+    {
+      mlc::false_type::ensure();
+    }
+
+    template <typename II, typename E>
+    void operator=(const abstract::image_like_<II, E>& rhs)
+    {
+      mlc::false_type::ensure();
+    }
+
+    template <typename II>
+    void operator=(const abstract::image<II>& rhs)
+    {
+      mlc::false_type::ensure();
     }
 
     // FIXME: add versions for I2 (neq I) to produce explicit errors
@@ -116,15 +147,15 @@ namespace oln {
 
     /// Hooks.
 
-    I& unbox()
+    I& unbox() const
     {
-      return this->image_;
+      return const_cast<I&>(this->image_);
     }
 
-    const I& unbox() const
-    {
-      return this->image_;
-    }
+//     const I& unbox() const
+//     {
+//       return this->image_;
+//     }
 
   private:
 
@@ -133,6 +164,8 @@ namespace oln {
 
   };
 
+
+  /// Class oln::box<const I> encapsulating a constant image.
 
   template <typename I>
   struct box<const I> : public abstract::image_entry< box<const I> >

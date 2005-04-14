@@ -32,6 +32,7 @@
 # include <ntg/bin.hh>
 # include <oln/core/abstract/images.hh>
 # include <oln/core/abstract/window.hh>
+# include <oln/funobj/accum.hh>
 
 
 namespace oln {
@@ -49,16 +50,13 @@ namespace oln {
       mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
 
       oln_wn_type_of(W, fwd_iter) q(win);
-      oln_type_of(I, value) val;
-
-      q.start_at_p(p);
-      val = input[q];
+      funobj::min_accumulator<oln_type_of(I, value)> minval;
       
-      for_all_remaining_q (q)
-	if (input.hold(q) and input[q].value() < val)
-	  val = input[q].value();
+      for_all_q_of_p (q, p)
+	if (input.hold(q))
+	  minval(input[q]);
 
-      return val;
+      return minval;
     }
 
 
@@ -89,16 +87,13 @@ namespace oln {
       mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
 
       oln_wn_type_of(W, fwd_iter) q(win);
-      oln_type_of(I, value) val;
+      funobj::max_accumulator<oln_type_of(I, value)> maxval;
+      
+      for_all_q_of_p (q, p)
+	if (input.hold(q))
+	  maxval(input[q]);
 
-      q.start_at_p(p);
-      val = input[q];
-
-      for_all_remaining_q (q)
-	if (input.hold(q) and input[q].value() > val)
-	  val = input[q].value();
-
-      return val;
+      return maxval;
     }
 
 

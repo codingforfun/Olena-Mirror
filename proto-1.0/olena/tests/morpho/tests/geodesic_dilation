@@ -1,6 +1,6 @@
 #include "data.hh"
 //#include <oln/utils/md5.hh>
-
+#include <iostream>
 //#include <oln/io/read_image.hh>
 //#include <oln/basics2d.hh>
 //#include <oln/core/abstract/image_with_nbh.hh>

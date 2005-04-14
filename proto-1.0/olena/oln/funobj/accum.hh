@@ -25,45 +25,93 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ACCUM_HH
-# define OLENA_CORE_ACCUM_HH
+#ifndef OLENA_CORE_FUNOBJ_ACCUM_HH
+# define OLENA_CORE_FUNOBJ_ACCUM_HH
+
+# include <mlc/contract.hh>
 
 
-/*! \class max_accumulator
-**
-** This is a \a functor. It saves the maximum T value
-** that has been passed as an argument of its operator()
-** method. To retrieve the value saved, just use the
-** max_accumulator as a T instance.
-*/
-
-
-// FIXME: no namespace !!!
-// FIXME: move this file !!!
-
-template <class T>
-struct max_accumulator
+namespace oln
 {
-  
-  max_accumulator (T t) : acc_(t) 
-  {}
 
-  void 
-  operator()(T t)
+  namespace funobj
   {
-    if (t > acc_)
-      acc_ = t;
-  }
-  
-  operator T() const
-  {
-    return acc_;
-  }
 
-private:
-  
-  T acc_;
-  
-};
+    /// Max accumulator.
 
-#endif // OLENA_CORE_ACCUM_HH
+    template <class T>
+    struct max_accumulator
+    {
+  
+      max_accumulator() :
+	ok_(false) 
+      {}
+      
+      void operator()(const T& t)
+      {
+	if (not ok_)
+	  {
+	    ok_ = true;
+	    acc_ = t;
+	    return;
+	  }
+	if (t > acc_)
+	  acc_ = t;
+      }
+      
+      operator T() const
+      {
+	precondition(ok_);
+	return acc_;
+      }
+      
+    private:
+      
+      bool ok_;
+      T acc_;
+
+    };
+
+
+    /// Min accumulator.
+
+    template <class T>
+    struct min_accumulator
+    {
+  
+      min_accumulator() :
+	ok_(false) 
+      {}
+      
+      void operator()(const T& t)
+      {
+	if (not ok_)
+	  {
+	    ok_ = true;
+	    acc_ = t;
+	    return;
+	  }
+	if (t < acc_)
+	  acc_ = t;
+      }
+      
+      operator T() const
+      {
+	precondition(ok_);
+	return acc_;
+      }
+      
+    private:
+      
+      bool ok_;
+      T acc_;
+
+    };
+
+
+  } // end of namespace oln::funobj
+
+} // end of namespace oln
+
+
+#endif // ! OLENA_CORE_FUNOBJ_ACCUM_HH
