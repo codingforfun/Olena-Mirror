@@ -1,5 +1,34 @@
 2005-04-14  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	* oln/core/abstract/niter.hh (start): Rename as...
+	(start_): ...this.
+	(center_at): Add invalidate call.
+	* oln/core/abstract/iter.hh (start): Move to...
+	* oln/core/abstract/piter.hh (start): ...here.
+	* oln/core/abstract/qiter.hh: ...and here.
+	* oln/core/apply.hh: Update.
+	* oln/core/pw/image.hh: Likewise.
+	* oln/core/gen/regular_fwd_niter.hh: Likewise.
+	* oln/core/gen/regular_bkd_niter.hh: Likewise.
+	* oln/core/gen/regular_fwd_qiter.hh: Likewise.
+	* oln/core/gen/regular_bkd_qiter.hh: Likewise.
+	* oln/utils/md5.hxx: Likewise.
+	* oln/utils/clone.hh: Likewise.
+	* oln/fancy/iota.hh: Likewise.
+	* oln/morpho/reconstruction.hh: Likewise.
+	* oln/morpho/dilation.hh: Likewise.
+	* oln/morpho/splitse.hh: Likewise.
+	* oln/morpho/geodesic_dilation.hh: Likewise.
+	* oln/morpho/stat.hh: Likewise.
+	* oln/morpho/erosion.hh: Likewise.
+	* oln/morpho/geodesic_erosion.hh: Likewise.
+	* oln/level/fill.hh: Likewise.
+	* oln/level/compare.hh: Likewise.
+	* oln/arith/min.hh: Likewise.
+	* oln/arith/max.hh: Likewise.
+
+2005-04-14  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	* oln/core/2d/fwd_niter2d.hh: Remove (obsolete; replaced by
 	niter2d.hh).
 	* oln/core/1d/niter1d.hh: New file.

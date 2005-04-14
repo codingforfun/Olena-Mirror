@@ -100,7 +100,7 @@ namespace oln {
 	  oln_wn_type_of(W, fwd_iter) q(win);
 	  q.start_at(p);
 	  V val = input[q];
-	  for_all_remaining (q)
+	  for_all_remaining_q (q)
 	    if (input.hold(q))
 	      if (val > input[q].value())
 		val = input[q].value();

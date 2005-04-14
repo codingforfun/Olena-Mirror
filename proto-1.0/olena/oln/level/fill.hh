@@ -34,16 +34,18 @@ namespace oln {
 
   namespace level {
 
+    // FIXME: AWFUL in place!!!
+
     /*! \brief Fill the image with a value.
      */
     template <class I>
     I
-    fill(abstract::image<I>& im, const oln_type_of(I, value)& val)
+    fill(abstract::image<I>& input, const oln_type_of(I, value)& val)
     {
-      oln_type_of(I, fwd_piter) p(im.size());
-      for_all(p)
-	im[p] = val;
-      return im.exact();
+      oln_type_of(I, fwd_piter) p(input.size());
+      for_all_p (p)
+	input[p] = val;
+      return input.exact();
     }
 
   } // end of namespace level

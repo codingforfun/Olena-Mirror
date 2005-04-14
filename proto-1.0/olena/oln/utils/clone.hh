@@ -77,7 +77,7 @@ namespace oln {
 	  this->output = tmp;
 
 	  oln_type_of(I, fwd_piter) p(this->input.size());
-	  for_all(p)
+	  for_all_p (p)
 	    this->output[p] = this->input[p];
 	}
       };

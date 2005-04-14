@@ -59,7 +59,7 @@ namespace oln {
         oln_type_of(I1, concrete) output(marker.size());
 	marker.border_adapt_copy(marker.nbh_get().delta());
         oln_type_of(I1, piter) p(marker);
-        for_all (p)
+        for_all_p (p)
           output[p] = arith::min(morpho::max(marker, p, convert::nbh_to_cse(marker.nbh_get())),
 				 mask[p]);
         return output;

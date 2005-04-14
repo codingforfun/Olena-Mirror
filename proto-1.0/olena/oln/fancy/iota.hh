@@ -43,7 +43,7 @@ namespace oln {
     {
       unsigned counter = 0;
       oln_type_of(I, fwd_piter) p(inout.size());
-      for_all(p)
+      for_all_p (p)
 	inout[p] = ++counter;
     }
 

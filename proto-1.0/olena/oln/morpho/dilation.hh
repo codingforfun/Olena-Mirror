@@ -50,7 +50,7 @@ namespace oln {
       {
 	oln_type_of(I, concrete) output(input.size());
 	oln_type_of(I, fwd_piter) p(input.size());
-	for_all (p)
+	for_all_p (p)
 	  output[p] = morpho::max(input, p, win);
 	return output;
       }
@@ -176,7 +176,7 @@ namespace oln {
 	  this->output = tmp;
 
 	  oln_type_of(I, fwd_piter) p(this->input.size());
-	  for_all (p)
+	  for_all_p (p)
 	    this->output[p] = morpho::max(this->input, p, this->win);
 	}
       };

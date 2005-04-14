@@ -112,6 +112,11 @@ namespace oln {
 	return this->p_;
       }
 
+      void start()
+      {
+	this->exact().impl_start();
+      }
+
     protected:
 
       piter(const size_type& s) :
@@ -126,6 +131,7 @@ namespace oln {
       ~piter()
       {
 	get_props<category::piter, E>::ensure();
+	mlc_check_method_impl(E, void, start, , );
       }
     };
 

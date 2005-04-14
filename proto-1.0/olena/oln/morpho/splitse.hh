@@ -78,20 +78,20 @@ namespace oln {
     W
     get_plus_win_only(const abstract::window<W>& win)
     {
-      oln_wn_type_of(W, fwd_qiter) dp(win.exact());
+      oln_wn_type_of(W, fwd_iter) q(win.exact());
       W out;
-
-      for_all (dp)
-	{
-	  unsigned n;
-	  for (n = 0; n < dim_traits<oln_wn_type_of(W, size)>::dim; ++n)
-	    if (dp.nth(n) < 0) {
-	      out.add(dp);
-	      break;
-	    } else if (dp.nth(n) > 0) {
-	      break;
-	    }
-	}
+      // FIXME: too many changes: rewrite!
+//       for_all (q)
+// 	{
+// 	  unsigned n;
+// 	  for (n = 0; n < dim_traits<oln_wn_type_of(W, size)>::dim; ++n)
+// 	    if (dp.nth(n) < 0) {
+// 	      out.add(dp);
+// 	      break;
+// 	    } else if (dp.nth(n) > 0) {
+// 	      break;
+// 	    }
+// 	}
       return out;
     }
 
@@ -112,23 +112,24 @@ namespace oln {
     W
     get_plus_win_p(const abstract::window<W>& win)
     {
-      oln_wn_type_of(W, fwd_qiter) dp(win.exact());
+      oln_wn_type_of(W, fwd_iter) q(win.exact());
       W out;
 
-      for_all (dp)
-	{
-	  unsigned n;
-	  for (n = 0; n < dim_traits<oln_wn_type_of(W, size)>::dim; ++n)
-	    if (dp.nth(n) < 0) {
-	      out.add(dp);
-	      break;
-	    } else if (dp.nth(n) > 0) {
-	      break;
-	    }
-	  // All p.nth(n) are 0.
-	  if (n == dim_traits<oln_wn_type_of(W, size)>::dim)
-	    out.add(dp);
-	}
+      // FIXME: too many changes: rewrite!
+//       for_all (dp)
+// 	{
+// 	  unsigned n;
+// 	  for (n = 0; n < dim_traits<oln_wn_type_of(W, size)>::dim; ++n)
+// 	    if (dp.nth(n) < 0) {
+// 	      out.add(dp);
+// 	      break;
+// 	    } else if (dp.nth(n) > 0) {
+// 	      break;
+// 	    }
+// 	  // All p.nth(n) are 0.
+// 	  if (n == dim_traits<oln_wn_type_of(W, size)>::dim)
+// 	    out.add(dp);
+// 	}
       return out;
     }
 
@@ -148,20 +149,21 @@ namespace oln {
     W
     get_minus_win_only(const abstract::window<W>& win)
     {
-      oln_wn_type_of(W, fwd_qiter) dp(win.exact());
+      oln_wn_type_of(W, fwd_iter) q(win.exact());
       W out;
 
-      for_all (dp)
-	{
-	  unsigned n;
-	  for (n = 0; n < dim_traits<oln_wn_type_of(W, size)>::dim; ++n)
-	    if (dp.nth(n) > 0) {
-	      out.add(dp);
-	      break;
-	    } else if (dp.nth(n) < 0) {
-	      break;
-	    }
-	}
+      // FIXME: too many changes: rewrite!
+//       for_all (dp)
+// 	{
+// 	  unsigned n;
+// 	  for (n = 0; n < dim_traits<oln_wn_type_of(W, size)>::dim; ++n)
+// 	    if (dp.nth(n) > 0) {
+// 	      out.add(dp);
+// 	      break;
+// 	    } else if (dp.nth(n) < 0) {
+// 	      break;
+// 	    }
+// 	}
       return out;
     }
 
@@ -182,23 +184,24 @@ namespace oln {
     W
     get_minus_win_p(const abstract::window<W>& win)
     {
-      oln_wn_type_of(W, fwd_qiter) dp(win.exact());
+      oln_wn_type_of(W, fwd_iter) q(win.exact());
       W out;
 
-      for_all (dp)
-	{
-	  unsigned n;
-	  for (n = 0; n < dim_traits<oln_wn_type_of(W, size)>::dim; ++n)
-	    if (dp.nth(n) > 0) {
-	      out.add(dp);
-	      break;
-	    } else if (dp.nth(n) < 0) {
-	      break;
-	    }
-	  // All p.nth(n) are 0.
-	  if (n == dim_traits<oln_wn_type_of(W, size)>::dim)
-	    out.add(dp);
-	}
+      // FIXME: too many changes: rewrite!
+//       for_all (dp)
+// 	{
+// 	  unsigned n;
+// 	  for (n = 0; n < dim_traits<oln_wn_type_of(W, size)>::dim; ++n)
+// 	    if (dp.nth(n) > 0) {
+// 	      out.add(dp);
+// 	      break;
+// 	    } else if (dp.nth(n) < 0) {
+// 	      break;
+// 	    }
+// 	  // All p.nth(n) are 0.
+// 	  if (n == dim_traits<oln_wn_type_of(W, size)>::dim)
+// 	    out.add(dp);
+// 	}
       return out;
     }
 

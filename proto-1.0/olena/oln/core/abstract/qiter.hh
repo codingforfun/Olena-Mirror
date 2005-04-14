@@ -110,12 +110,13 @@ namespace oln {
       void start_at_p(const point_type& p)
       {
 	this->center_at(p);
-	this->start();
+	this->start_();
       }
 
       void center_at(const point_type& p)
       {
 	this->p_ = p;
+	this->invalidate();
       }
 
     protected:
@@ -130,10 +131,16 @@ namespace oln {
 	mlc::eq< grid_type, oln_wn_type_of(window_type, grid) >::ensure();
       }
 
+      void start_()
+      {
+	this->exact().impl_start_();
+      }
+
       ~qiter()
       {
 	get_props<category::qiter, E>::ensure();
 	mlc_check_method_impl(E, const point_type, cast_point, , const);
+	mlc_check_method_impl(E, void, start_, , );
       }
     };
 

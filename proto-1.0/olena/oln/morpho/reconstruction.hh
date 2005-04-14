@@ -123,9 +123,9 @@ namespace oln {
 	    while (non_stability)
 	      {
 		work.unbox() = utils::clone(output);
-		for_all (fwd_p)
+		for_all_p (fwd_p)
 		  fwd_loop_body();
-		for_all (bkd_p)
+		for_all_p (bkd_p)
 		  bkd_loop_body();
 
 		non_stability = !(level::is_equal(work, output));
@@ -265,15 +265,16 @@ namespace oln {
 
 	  bool exist_init()
 	  {
-	    typedef oln_type_of(N, window) se_type;
-	    oln_type_of(se_type, fwd_qiter) dp(se_minus);
-	    for_all (dp)
-	      {
-		q = (oln_type_of(se_type, dpoint))dp +
-		  (oln_type_of(I, point))bkd_p;
-		if (static_cast<E*>((void*)this)->exist_init_impl())
-		  return true;
-	      }
+	    // FIXME: to many changes => rewrite!
+// 	    typedef oln_type_of(N, window) se_type;
+// 	    oln_type_of(se_type, fwd_qiter) dp(se_minus);
+// 	    for_all (dp)
+// 	      {
+// 		q = (oln_type_of(se_type, dpoint))dp +
+// 		  (oln_type_of(I, point))bkd_p;
+// 		if (static_cast<E*>((void*)this)->exist_init_impl())
+// 		  return true;
+// 	      }
 	    return false;
 	  }
 
@@ -305,12 +306,10 @@ namespace oln {
 
 	    this->output.unbox() = utils::clone(this->input1);
 
-	    std::cout << "for_all (fwd_p)" << std::endl;
-	    for_all (fwd_p)
+	    for_all_p (fwd_p)
 	      fwd_loop_body();
 
-	    std::cout << "for_all (bkd_p)" << std::endl;
-	    for_all (bkd_p)
+	    for_all_p (bkd_p)
 	      {
 		bkd_loop_body();
 		if (exist_init())
@@ -321,16 +320,16 @@ namespace oln {
 	      {
 		p = fifo.front();
 		fifo.pop();
-		typedef oln_type_of(N, window) window_type;
-		window_type w = convert::nbh_to_se(this->nbh);
-		oln_type_of(window_type, fwd_qiter) dp(w);
+		// FIXME: AWFUL commented cause too many changes!
+// 		typedef oln_type_of(N, window) window_type;
+// 		window_type w = convert::nbh_to_se(this->nbh);
+// 		oln_wn_type_of(window_type, fwd_iter) q(w);
 
-		for_all (dp)
-		  {
-		    q = (oln_type_of(window_type, dpoint))dp + p;
-		    if (this->output.hold(q))
-		      fifo_loop_body();
-		  }
+// 		for_all_q_of_p (q)
+// 		  {
+// 		    if (this->output.hold(q))
+// 		      fifo_loop_body();
+// 		  }
 	      }
 	  }
 

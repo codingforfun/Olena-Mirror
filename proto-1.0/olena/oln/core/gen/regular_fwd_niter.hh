@@ -58,7 +58,7 @@ namespace oln {
 
   protected:
 
-    void impl_start()
+    void impl_start_()
     {
       this->pos_ = 0;
     }

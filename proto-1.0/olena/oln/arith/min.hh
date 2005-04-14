@@ -70,7 +70,7 @@ namespace oln {
 	  I output(this->input1.size());
 	  oln_type_of(I, fwd_piter) p(this->input1.size());
 
-	  for_all(p)
+	  for_all_p (p)
 	    output[p] = ntg::min(this->input1[p].value(), this->input2[p].value());
 
 	  this->output = output;

@@ -291,7 +291,7 @@ key md5(const oln::abstract::image<I> &im)
   buffer	b;
   oln_type_of(I, fwd_piter)	p(im.size());
 
-  for_all(p)
+  for_all_p (p)
     b.add(im[p].value());
   b.append_padding();
   b.append_length();
@@ -309,7 +309,7 @@ key md5(const oln::abstract::vector_valued_image<I> &im)
   buffer	b;
   //  unsigned nb =
 
-  for_all(p)
+  for_all_p (p)
     {
       for (unsigned i = 0; i < ntg_nb_comp(oln_type_of(I, value)); ++i)
 	b.add(im[p].value()[i]);

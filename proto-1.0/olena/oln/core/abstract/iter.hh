@@ -34,16 +34,6 @@
 # include <oln/core/typedefs.hh>
 
 
-
-# define for_all(i) \
-  for(i.start(); i.is_valid(); i.next())
-
-# define for_all_remaining(i) \
-  for(; i.is_valid(); i.next())
-
-
-
-
 namespace oln {
 
   namespace abstract {
@@ -51,11 +41,6 @@ namespace oln {
     template <typename E>
     struct iter : public mlc::any<E>
     {
-
-      void start()
-      {
-	this->exact().impl_start();
-      }
 
       void next()
       {
@@ -80,7 +65,6 @@ namespace oln {
 
       ~iter()
       {
-	mlc_check_method_impl(E, void, start, , );
 	mlc_check_method_impl(E, void, next, , );
 	mlc_check_method_impl(E, bool, is_valid, , const);
 	mlc_check_method_impl(E, void, invalidate, , );

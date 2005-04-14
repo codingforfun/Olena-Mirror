@@ -46,7 +46,7 @@ namespace oln {
       precondition(input1.size() == input2.size());
       oln_type_of(I1, fwd_piter) p(input1.size());
 
-      for_all (p)
+      for_all_p (p)
 	if (!(input1[p] >= input2[p]))
 	  return false;
       return true;
@@ -64,7 +64,7 @@ namespace oln {
       precondition(input1.size() == input2.size());
       oln_type_of(I1, fwd_piter) p(input1.size());
 
-      for_all (p)
+      for_all_p (p)
 	if (!(input1[p] > input2[p]))
 	  return false;
       return true;
@@ -82,7 +82,7 @@ namespace oln {
       precondition(input1.size() == input2.size());
       oln_type_of(I1, fwd_piter) p(input1.size());
 
-      for_all (p)
+      for_all_p (p)
 	if (!(input1[p] <= input2[p]))
 	  return false;
       return true;
@@ -100,7 +100,7 @@ namespace oln {
       precondition(input1.size() == input2.size());
       oln_type_of(I1, fwd_piter) p(input1.size());
 
-      for_all (p)
+      for_all_p (p)
 	if (!(input1[p] < input2[p]))
 	  return false;
       return true;
@@ -119,7 +119,7 @@ namespace oln {
       precondition(input1.size() == input2.size());
       oln_type_of(I1, fwd_piter) p(input1.size());
 
-      for_all (p)
+      for_all_p (p)
 	if (!(input1[p] == input2[p]))
 	  return false;
       return true;

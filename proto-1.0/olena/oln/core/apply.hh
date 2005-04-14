@@ -80,7 +80,7 @@ namespace oln {
       {
 	output_type tmp(input_.size());
 	oln_type_of(I, fwd_piter) p(input_.size());
-	for_all(p)
+	for_all_p (p)
 	  tmp[p] = f_(input_[p]);
 	this->output = tmp;
       }
@@ -154,7 +154,7 @@ namespace oln {
       {
 	output_type tmp(input1_.size());
 	oln_type_of(I1, fwd_piter) p(input1_.size());
-	for_all(p)
+	for_all_p (p)
 	  tmp[p] = f_(input1_[p], input2_[p]);
 	this->output = tmp;
       }

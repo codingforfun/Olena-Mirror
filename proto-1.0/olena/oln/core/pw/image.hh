@@ -235,7 +235,7 @@ namespace oln {
   bool check(const abstract::binary_image<I>& pred)
   {
     oln_type_of(I, fwd_piter) p(pred.size());
-    for_all (p)
+    for_all_p (p)
       if (! pred[p])
 	return false;
     return true;
