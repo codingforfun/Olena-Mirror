@@ -1,0 +1,49 @@
+							// -*- C++ -*-
+#include <string>
+
+#include <ntg/bin.hh>
+#include <ntg/int.hh>
+#include <ntg/cplx.hh>
+#include <oln/basics2d.hh>
+
+#include "check.hh"
+#include "data.hh"
+
+
+template <typename I>
+void foo_scalar(const oln::abstract::scalar_valued_image<I>& input)
+{}
+
+template <typename I>
+void foo_vector(const oln::abstract::vector_valued_image<I>& input)
+{}
+
+template <typename I>
+void foo_label(const oln::abstract::label_valued_image<I>& input)
+{}
+
+template <typename I>
+void foo_data(const oln::abstract::data_valued_image<I>& input)
+{}
+
+
+bool check()
+{
+  // Scalar.
+  oln::image2d<ntg::int_u8> ima_i;
+  foo_scalar(ima_i);
+
+  // Vector.
+  oln::image2d<ntg::cplx<ntg::rect, float> > ima_v;
+  foo_vector(ima_v);
+
+  // Label.
+  oln::image2d<ntg::bin> ima_l;
+  foo_label(ima_l);
+
+  // Other data.
+  oln::image2d<std::string> ima_d;
+  foo_data(ima_d);
+
+  return false;
+}

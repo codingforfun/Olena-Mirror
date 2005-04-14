@@ -1,5 +1,14 @@
 2005-04-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix core/image_valuedness test.
+
+	* tests/core/tests/image_vectorialness: Rename file as...
+	* tests/core/tests/image_valuedness: ...this.
+	Catch up with the new oln/abstract/image_valuedness.hh, and
+	augment the test case.
+
+2005-04-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix core/fwd_qiter2d test.
 
 	* tests/core/tests/fwd_witer2d: Rename file as...
