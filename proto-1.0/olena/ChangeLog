@@ -1,5 +1,19 @@
 2005-04-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix core/fwd_qiter2d test.
+
+	* tests/core/tests/fwd_witer2d: Rename file as...
+	* tests/core/tests/fwd_qiter2d: ...this.
+	Adjust to the new interface of q-iterators.
+	* oln/core/gen/regular_fwd_qiter.hh (abstract::qiter<self_type>):
+	Make it a friend.
+	(impl_invalidate): Explicitely cast to avoid comparisons between
+	signed and unsigned values.
+	* oln/core/gen/regular_qiter.hh (abstract::qiter<E>): Make it a
+	friend.
+
+2005-04-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix some 1D and 3D classes and have more tests pass.
 
 	* oln/basics1d.hh (oln/core/1d/fwd_piter1d.hh)

@@ -80,6 +80,8 @@ namespace oln {
 	return point_type(*this).nth(i);
       }
 
+      friend class abstract::qiter<E>;
+
     protected:
 
       int pos_;

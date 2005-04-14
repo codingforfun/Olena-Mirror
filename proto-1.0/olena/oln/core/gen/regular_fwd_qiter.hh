@@ -54,6 +54,7 @@ namespace oln {
     }
 
     friend class abstract::iter<self_type>;
+    friend class abstract::qiter<self_type>;
 
   protected:
 
@@ -69,12 +70,12 @@ namespace oln {
 
     bool impl_is_valid() const
     {
-      return this->pos_ != this->win_.card();
+      return this->pos_ != int(this->win_.card());
     }
 
     void impl_invalidate()
     {
-      this->pos_ = this->win_.card();
+      this->pos_ = int(this->win_.card());
     }
 
   };

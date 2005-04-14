@@ -35,7 +35,7 @@
 
 
 # define for_all_q_of_p(q, p) \
-  for(q.ensure_is_qiter(), q.center_at(p), q.start(); q.is_valid(); q.next())
+  for(q.ensure_is_qiter(), q.start_at_p(p); q.is_valid(); q.next())
 
 # define for_all_remaining_q( q ) \
   for(q.ensure_is_piter(); q.is_valid(); q.next())

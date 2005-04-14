@@ -1,20 +1,17 @@
 							// -*- C++ -*-
-#include <oln/core/2d/fwd_witer2d.hh>
-#include <oln/core/abstract/piter.hh>
-
-#include <ntg/all.hh>
+#include <oln/core/2d/window2d.hh>
 
 #include <cassert>
 
 using namespace oln;
-using namespace ntg;
 
 template <typename E>
 bool foo(const E& w)
 {
-  oln_type_of(E, fwd_witer) i(w);
+  oln_wn_type_of(E, fwd_iter) q(w);
   unsigned cpt = 0;
-  for_all(i)
+  point2d p;
+  for_all_q_of_p(q, p)
     ++cpt;
   return not (cpt == w.card());
 }
