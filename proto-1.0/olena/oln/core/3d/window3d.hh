@@ -36,7 +36,36 @@
 
 namespace oln {
 
-  typedef  regular_window< grid3d >  window3d;
+
+  // fwd decl
+  struct window3d;
+
+  // super type
+  template <>
+  struct set_super_type< window3d > { typedef abstract::regular_window< grid3d, window3d > ret; };
+
+
+  struct window3d : public abstract::regular_window< grid3d, window3d >
+  {
+    typedef abstract::regular_window< grid3d, window3d > super_type;
+
+    window3d()
+    {}
+
+    window3d(unsigned n, const coord_t crd[]) :
+      super_type(n, crd)
+    {}
+
+    window3d& add(const dpoint3d& dp)
+    {
+      this->add_(dp);
+      return *this;
+    }
+
+  };
+
+
+
 
   // classical 3d windows
 

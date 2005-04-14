@@ -36,7 +36,36 @@
 
 namespace oln {
 
-  typedef  regular_window< grid1d >  window1d;
+
+  // fwd decl
+  struct window1d;
+
+  // super type
+  template <>
+  struct set_super_type< window1d > { typedef abstract::regular_window< grid1d, window1d > ret; };
+
+
+  struct window1d : public abstract::regular_window< grid1d, window1d >
+  {
+    typedef abstract::regular_window< grid1d, window1d > super_type;
+
+    window1d()
+    {}
+
+    window1d(unsigned n, const coord_t crd[]) :
+      super_type(n, crd)
+    {}
+
+    window1d& add(const dpoint1d& dp)
+    {
+      this->add_(dp);
+      return *this;
+    }
+
+  };
+
+
+
 
   // classical 1d windows
 

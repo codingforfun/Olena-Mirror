@@ -30,23 +30,50 @@
 
 # include <mlc/cmp.hh>
 
+# include <oln/core/abstract/images.hh>
 # include <oln/core/abstract/image_operator.hh>
 # include <oln/morpho/stat.hh>
+
+# include <oln/core/2d/window2d.hh>
 
 
 namespace oln {
 
+
+  // fwd decl
+
+  namespace morpho {
+    template <typename I> struct erosion_ret;
+  }
+
+  // super_type
+
+  template <typename I>
+  struct set_super_type< morpho::erosion_ret<I> >
+  {
+    typedef oln_type_of(I, concrete) output_type;
+
+    typedef morpho::erosion_ret<I> self_type;
+    typedef abstract::image_unary_operator<output_type, I, self_type > ret;
+  };
+
+
+
+
   namespace morpho {
 
 
-    namespace proc {
 
-      /// Erosion as a procedure (do not use it; prefer morpho::erosion).
+    // Erosion as a 'classical' procedure returning an image (do not
+    // use it; prefer morpho::erosion).
+
+    namespace proc {
 
       template<typename I, typename W>
       oln_type_of(I, concrete) erosion(const abstract::image<I>& input,
 				       const abstract::window<W>& win)
       {
+	mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
 	oln_type_of(I, concrete) output(input.size());
 	oln_type_of(I, fwd_piter) p(input.size());
 	for_all_p (p)
@@ -58,135 +85,126 @@ namespace oln {
 
 
 
-    /*!
-    ** \brief Perform a morphological erosion.
-    **
-    **   Compute the morphological erosion of input using win
-    **   as structuring element.
-    **
-    **   On grey-scale  images, each point is replaced  by the minimum
-    **   value  of  its neighbors,  as  indicated  by  win.  On  binary
-    **   images, a  logical and  is performed between  neighbors.  The
-    **   morpho::fast  version  of   this  function  use  a  different
-    **   algorithm:  an histogram  of  the value  of the  neighborhood
-    **   indicated by win is updated  while iterating over all point of
-    **   the image.   Doing so is  more efficient when  the structuring
-    **   element is large.
-    **
-    ** \param I Exact type of the input image.
-    ** \param W Exact type of the structuring element.
-    **
-    **
-    ** \arg input Input image.
-    ** \arg win Structuring element to use.
-    **
-    ** \code
-    ** #include <oln/basics2d.hh>
-    ** #include <oln/morpho/erosion.hh>
-    ** #include <oln/level/compare.hh>
-    ** #include <ntg/all.hh>
-    ** int main()
-    ** {
-    **   typedef oln::image2d<ntg::bin>	im_type;
-    **
-    **   im_type im1(oln::load(IMG_IN "object.pbm"));
-    **   save(oln::morpho::erosion(im1, oln::win_c8p()),
-    **        IMG_OUT "oln_morpho_erosion.pbm");
-    ** }
-    ** \endcode
-    **
-    ** \image html object_pbm.png
-    ** \image latex object_pbm.png
-    ** =>
-    ** \image html oln_morpho_erosion.png
-    ** \image latex oln_morpho_erosion.png
-    **
-    ** \see oln::morpho::fast::erosion()
-    */
+    /// Erosion return type.
 
-    // fwd decl
-    template <typename I, typename W> struct erosion_ret;
-
-  }
-
-  // super_type
-  template <typename I, typename W>
-  struct set_super_type< morpho::erosion_ret<I,W> >
-  {
-    typedef abstract::image_unary_operator<oln_type_of(I, concrete), I, morpho::erosion_ret<I,W> > ret;
-  };
-
-
-
-
-  namespace morpho {
-
-    /// Erosion return.
-
-    template <typename I, typename W>
-    struct erosion_ret : public abstract::image_unary_operator<oln_type_of(I, concrete), I, erosion_ret<I,W> >
+    template <typename I>
+    struct erosion_ret : public oln_super_of_(erosion_ret<I>)
     {
-      typedef abstract::image_unary_operator<oln_type_of(I, concrete), I, erosion_ret<I,W> > super_type;
-      typedef typename super_type::output_type output_type;
+      typedef oln_super_of(erosion_ret<I>) super_type;
 
-      const W win;
-
-      erosion_ret(const abstract::image<I>& input,
-		  const abstract::window<W>& win) :
-	super_type(input),
-	win(win.exact())
+      erosion_ret(const abstract::image<I>& input) :
+	super_type(input)
 	{
 	}
 
     };
 
 
+    // Various implementation.
+
 
     namespace impl {
 
-      /// Erosion generic implementation.
+
+      /// Generic implementation of erosion (type).
 
       template <typename I, typename W>
-      struct generic_erosion : public erosion_ret<I,W>
+      struct generic_erosion : public erosion_ret<I>
       {
-	typedef erosion_ret<I,W> super_type;
-	typedef typename super_type::output_type output_type;
+	typedef erosion_ret<I> super_type;
+
+	const W& win;
 
 	generic_erosion(const abstract::image<I>& input,
 			const abstract::window<W>& win) :
-	  super_type(input, win)
+	  super_type(input),
+	  win(win.exact())
 	{
 	}
 
 	void impl_run()
 	{
-	  mlc::eq<oln_type_of(I, size), oln_wn_type_of(W, size)>::ensure();
+	  oln_type_of(super_type, output) tmp(input.size()); // FIXME: trick
+	  output = tmp;
 
-	  output_type tmp(this->input.size()); // FIXME: trick
-	  this->output = tmp;
-
-	  oln_type_of(I, fwd_piter) p(this->input.size());
+	  oln_type_of(I, fwd_piter) p(input.size());
 	  for_all_p (p)
-	    this->output[p] = morpho::min(this->input, p, this->win);
+	    output[p] = morpho::min(input, p, win);
 	}
       };
+
+      // Generic implementation of erosion (routine).
+
+      template<typename I, typename W>
+      erosion_ret<I> erosion(const abstract::image<I>& input,
+			     const abstract::window<W>& win)
+      {
+	impl::generic_erosion<I,W> tmp(input, win);
+	tmp.run();
+	return tmp;
+      }
+      
+
+
+
+      /// Rectangle2d implementation of erosion (type).
+
+      template <typename I>
+      struct rectangle2d_erosion : public erosion_ret<I>
+      {
+	typedef erosion_ret<I> super_type;
+
+	const win_rectangle2d& win;
+
+	rectangle2d_erosion(const abstract::image<I>& input,
+			    const win_rectangle2d& win) :
+	  super_type(input),
+	  win(win)
+	{}
+
+	void impl_run()
+	{
+	  oln_type_of(super_type, output) temp(input.size()); // FIXME: trick
+
+	  win_rectangle2d hline(1, win.width);
+	  win_rectangle2d vline(win.height, 1);
+	  
+	  temp = morpho::erosion(input, hline);
+	  output = morpho::erosion(temp, vline);
+	}
+      };
+
+      // Rectangle2d implementation of erosion (routine).
+
+      template<typename I>
+      erosion_ret<I> erosion(const abstract::image<I>& input,
+			     const win_rectangle2d& win)
+      {
+	impl::rectangle2d_erosion<I> tmp(input, win);
+	tmp.run();
+	return tmp;
+      }
+
+      
+
 
     } // end of namespace oln::morpho::impl
 
 
-    /// Erosion generic routine.
+
+    /// Generic erosion (facade).
 
     template<typename I, typename W>
-    erosion_ret<I,W> erosion(const abstract::image<I>& input,
-			     const abstract::window<W>& win)
+    erosion_ret<I> erosion(const abstract::image<I>& input,
+			   const abstract::window<W>& win)
     {
-      impl::generic_erosion<I,W> tmp(input, win);
-      tmp.run();
-      return tmp;
+      mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
+      return impl::erosion(input.exact(), win.exact());
     }
 
 
   } // end of namespace oln::morpho
+
 
 } // end of namespace oln
 

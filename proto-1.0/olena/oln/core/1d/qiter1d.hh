@@ -31,18 +31,11 @@
 # include <oln/core/1d/grid1d.hh>
 # include <oln/core/1d/point1d.hh>
 # include <oln/core/1d/dpoint1d.hh>
+
 # include <oln/core/1d/window1d.hh>
 
 # include <oln/core/gen/regular_fwd_qiter.hh>
 # include <oln/core/gen/regular_bkd_qiter.hh>
-
-
-namespace oln {
-
-  typedef regular_fwd_qiter<grid1d> fwd_qiter1d;
-  typedef regular_bkd_qiter<grid1d> bkd_qiter1d;
-
-}
 
 
 #endif // ! OLENA_CORE_1D_QITER1D_HH

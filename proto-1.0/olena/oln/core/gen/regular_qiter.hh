@@ -48,8 +48,7 @@ namespace oln {
   template <typename G, typename E>
   struct set_props < category::qiter, abstract::regular_qiter<G,E> >
   {
-    typedef G                 grid_type;
-    typedef regular_window<G> window_type;
+    typedef G grid_type;
   };
 
 
@@ -68,8 +67,8 @@ namespace oln {
       typedef oln_grd_type_of(G, dimvalue) dimvalue_type;
       static const unsigned dim = dimvalue_type::val;
 
-      regular_qiter(const regular_window<G>& win) :
-	super_type(win)
+      regular_qiter(const regular_window<G, oln_qit_type_of(E, window)>& win) :
+	super_type(win.exact())
       {
       }
 

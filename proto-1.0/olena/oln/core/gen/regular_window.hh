@@ -43,124 +43,133 @@
 namespace oln {
 
   // fwd decls
-  template <typename G> class regular_window;
-  template <typename G> class regular_fwd_qiter;
+  template <typename G, typename W> class regular_fwd_qiter;
+  namespace abstract {
+    template <typename G, typename E> class regular_window;
+  }
 
   // super_type
-  template <typename G> struct set_super_type< regular_window<G> > { typedef abstract::window< regular_window<G> > ret; };
+  template <typename G, typename E> struct set_super_type< abstract::regular_window<G, E> > { typedef abstract::window<E> ret; };
 
   // props
-  template <typename G>
-  struct set_props< category::window, regular_window<G> > 
+  template <typename G, typename E>
+  struct set_props< category::window, abstract::regular_window<G, E> > 
   {
     typedef G                          grid_type;
     typedef oln_grd_type_of(G, dpoint) dpoint_type;
     typedef oln_grd_type_of(G, size)   size_type;
-    typedef regular_fwd_qiter<G>       fwd_iter_type;
-//     typedef regular_fwd_dpiter<G>      fwd_dpiter_type; // FIXME: later...
+    typedef regular_fwd_qiter<G,E>     fwd_iter_type;
+    //     typedef regular_fwd_dpiter<G>      fwd_dpiter_type; // FIXME: later...
   };
   
-  template <typename G>
-  class regular_window : public abstract::window< regular_window<G> >
+
+
+  namespace abstract
   {
 
-  public:
+    template <typename G, typename E>
+    class regular_window : public window<E>
+    {
+
+    public:
    
-    typedef regular_window<G> self_type;
+      typedef regular_window<G, E> self_type;
 
-    typedef oln_grd_type_of(G, coord)    coord_type;
-    typedef oln_grd_type_of(G, dpoint)   dpoint_type;
-    typedef oln_grd_type_of(G, dimvalue) dimvalue_type;
+      typedef oln_grd_type_of(G, coord)    coord_type;
+      typedef oln_grd_type_of(G, dpoint)   dpoint_type;
+      typedef oln_grd_type_of(G, dimvalue) dimvalue_type;
 
-    static const unsigned dim = dimvalue_type::val;
+      static const unsigned dim = dimvalue_type::val;
 
-    regular_window() :
-      dp_(),
-      delta_(0)
-    {
-    }
+      coord_type delta() const
+      {
+	return this->delta_;
+      }
 
-    regular_window(unsigned n, const coord_type crd[]) :
-      dp_(),
-      delta_(0)
-    {
-      precondition(n != 0);
-      // FIXME: size of crd wrt n
-      for (unsigned i = 0; i < n; ++i)
-	{
-	  dpoint_type dp;
-	  for (unsigned c = 0; c < dim; ++c)
-	    dp.nth(c) = crd[i * dim + c];
-	  this->add(dp);
-	}
-    }
+      unsigned card() const
+      {
+	return this->dp_.size();
+      }
 
-    self_type& add(const dpoint_type& dp)
-    {
-      this->dpset_.insert(dp);
-      this->dp_.clear();
-      std::copy(this->dpset_.begin(), this->dpset_.end(),
-		std::back_inserter(this->dp_));
-      this->delta_update_(dp);
-      return *this;
-    }
+      const dpoint_type dp(unsigned i) const
+      {
+	precondition(i < this->card());
+	return this->dp_[i];
+      }
 
-    coord_type delta() const
-    {
-      return this->delta_;
-    }
+      const self_type operator-() const
+      {
+	self_type tmp;
+	for (unsigned i = 0; i < this->card(); ++i)
+	  tmp.add_(- this->dp_[i]);
+	return tmp;
+      }
 
-    unsigned card() const
-    {
-      return this->dp_.size();
-    }
+      void sym()
+      {
+	*this = - *this;
+      }
 
-    const dpoint_type dp(unsigned i) const
-    {
-      precondition(i < this->card());
-      return this->dp_[i];
-    }
+      const std::vector<dpoint_type>& get_dp() const
+      {
+	return this->dp_;
+      }
 
-    const self_type operator-() const
-    {
-      self_type tmp;
-      for (unsigned i = 0; i < this->card(); ++i)
-	tmp.add(- this->dp_[i]);
-      return tmp;
-    }
+    protected:
 
-    void sym()
-    {
-      *this = - *this;
-    }
+      regular_window() :
+	dp_(),
+	delta_(0)
+      {
+      }
 
-    const std::vector<dpoint_type>& get_dp() const
-    {
-      return this->dp_;
-    }
+      regular_window(unsigned n, const coord_type crd[]) :
+	dp_(),
+	delta_(0)
+      {
+	precondition(n != 0);
+	// FIXME: size of crd wrt n
+	for (unsigned i = 0; i < n; ++i)
+	  {
+	    dpoint_type dp;
+	    for (unsigned c = 0; c < dim; ++c)
+	      dp.nth(c) = crd[i * dim + c];
+	    this->add_(dp);
+	  }
+      }
 
-  private:
+      void add_(const dpoint_type& dp)
+      {
+	this->dpset_.insert(dp);
+	this->dp_.clear();
+	std::copy(this->dpset_.begin(), this->dpset_.end(),
+		  std::back_inserter(this->dp_));
+	this->delta_update_(dp);
+      }
+
+    private:
  
-    std::set<dpoint_type, fwd_less_dpoint> dpset_;
-    std::vector<dpoint_type> dp_;
-    coord_type delta_;
+      std::set<dpoint_type, fwd_less_dpoint> dpset_;
+      std::vector<dpoint_type> dp_;
+      coord_type delta_;
 
-    void delta_update_(const dpoint_type& dp)
-    {
-      for (unsigned c = 0; c < dim; ++c)
-	if (abs(dp.nth(c)) > this->delta_)
-	  this->delta_ = abs(dp.nth(c));
-    }
+      void delta_update_(const dpoint_type& dp)
+      {
+	for (unsigned c = 0; c < dim; ++c)
+	  if (abs(dp.nth(c)) > this->delta_)
+	    this->delta_ = abs(dp.nth(c));
+      }
 
-  };
+    };
 
+  } // end of namespace oln::abstract
 
 } // end of namespace oln
 
 
 
-template<class G>
-std::ostream& operator<<(std::ostream& ostr, const oln::regular_window<G>& win)
+template<typename G, typename E>
+std::ostream& operator<<(std::ostream& ostr, const oln::abstract::regular_window<G, E>& win)
 {
   ostr << "[";
   for (unsigned i = 0; i < win.card(); ++i)

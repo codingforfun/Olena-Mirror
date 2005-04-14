@@ -31,18 +31,11 @@
 # include <oln/core/3d/grid3d.hh>
 # include <oln/core/3d/point3d.hh>
 # include <oln/core/3d/dpoint3d.hh>
+
 # include <oln/core/3d/window3d.hh>
 
 # include <oln/core/gen/regular_fwd_qiter.hh>
 # include <oln/core/gen/regular_bkd_qiter.hh>
-
-
-namespace oln {
-
-  typedef regular_fwd_qiter<grid3d> fwd_qiter3d;
-  typedef regular_bkd_qiter<grid3d> bkd_qiter3d;
-
-}
 
 
 #endif // ! OLENA_CORE_3D_QITER3D_HH

@@ -1,3 +1,25 @@
+2005-04-14  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* oln/core/typedefs.hh (oln_super_of): New macro.
+	* oln/core/abstract/image_operator.hh (set_props): Declare
+	output_type.
+	* oln/core/1d/qiter1d.hh: Remove typedefs.
+	* oln/core/2d/qiter2d.hh: Likewise.
+	* oln/core/3d/qiter3d.hh: Likewise.
+	* oln/core/1d/window1d.hh: Use inheritance.
+	* oln/core/2d/window2d.hh: Likewise.
+	(win_rectangle2d): New class.
+	* oln/core/3d/window3d.hh: Likewise.
+	* oln/core/any/dpoint.hh (operator+): Move to...
+	* oln/core/any/point.hh: ...here.
+	* oln/core/gen/regular_fwd_qiter.hh: Add parameter W.
+	* oln/core/gen/regular_bkd_qiter.hh: Likewise.
+	* oln/core/gen/regular_qiter.hh: Update.
+	* oln/core/gen/regular_window.hh: Update.
+	* oln/core/gen/regular_neighborhood.hh: Update.
+	* oln/morpho/stat.hh (stat_): Remove.
+	* oln/morpho/erosion.hh: Rewrite.
+
 2005-04-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add binary apply on point-wise functions.

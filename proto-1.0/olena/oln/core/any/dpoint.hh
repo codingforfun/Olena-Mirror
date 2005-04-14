@@ -31,7 +31,6 @@
 # include <iostream>
 # include <mlc/contract.hh>
 # include <oln/core/abstract/dpoint.hh>
-# include <oln/core/any/point.hh>
 
 
 namespace oln {
@@ -124,14 +123,5 @@ bool operator!=(const oln::abstract::dpoint<D>& lhs,
 # include <oln/core/any/point.hh>
 
 
-namespace oln {
-
-  template <typename P>
-  const any_point any_dpoint::operator+(const abstract::point<P>& rhs) const
-  {
-    return any_point();
-  }
-
-}
 
 #endif // ! OLENA_CORE_ANY_DPOINT_HH

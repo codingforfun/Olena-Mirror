@@ -48,6 +48,16 @@ namespace oln {
   template <typename O, typename I1, typename I2, typename E>
   struct set_super_type< abstract::image_binary_operator<O, I1, I2, E> > { typedef abstract::image_operator<O, E> ret; };
 
+  // props
+
+  template <typename O, typename E>
+  struct set_props < category::image, abstract::image_operator<O, E> >
+  {
+    typedef O output_type;
+  };
+
+
+
 
 
   namespace abstract {

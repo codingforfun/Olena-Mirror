@@ -40,13 +40,27 @@ namespace oln {
   // super_type
   template <typename G> struct set_super_type< regular_neighborhood<G> > { typedef abstract::neighborhood< regular_neighborhood<G> > ret; };
 
+
+  // FIXME: temporary code to get a window type from a grid type
+  struct grid1d; struct window1d;
+  struct grid2d; struct window2d;
+  struct grid3d; struct window3d;
+  namespace internal {
+    template <typename grid_type> struct to_window;
+    template <> struct to_window <grid1d> { typedef window1d ret; };
+    template <> struct to_window <grid2d> { typedef window2d ret; };
+    template <> struct to_window <grid3d> { typedef window3d ret; };
+  }  
+  // FIXME: end of temporary code
+
+
   // props
   template <typename G>
   struct set_props< category::neighborhood, regular_neighborhood<G> > 
   {
     typedef oln_grd_type_of(G, dpoint) dpoint_type;
     typedef oln_grd_type_of(G, size)   size_type;
-    typedef regular_window<G>          window_type;
+    typedef typename internal::to_window<G>::ret window_type;
   };
 
 
@@ -58,6 +72,7 @@ namespace oln {
   public:
    
     typedef regular_neighborhood<G> self_type;
+    typedef oln_nbh_type_of(self_type, window)   window_type;
 
     typedef oln_grd_type_of(G, coord)    coord_type;
     typedef oln_grd_type_of(G, dpoint)   dpoint_type;
@@ -69,7 +84,7 @@ namespace oln {
     {
     }
 
-    regular_neighborhood(const regular_window<G>& win)
+    regular_neighborhood(const window_type& win)
     {
       for (unsigned i = 0; i < win.card(); ++i)
 	this->add(win.dp(i));
@@ -117,7 +132,7 @@ namespace oln {
       return this->win_.get_dp();
     }
 
-    const regular_neighborhood<G>& get_win() const
+    const window_type& get_win() const
     {
       return this->win_;
     }
@@ -125,7 +140,7 @@ namespace oln {
   private:
 
     /// Only attribute (to delegate to).
-    regular_window<G> win_;
+    window_type win_;
 
   };
 

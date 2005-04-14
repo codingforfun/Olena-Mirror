@@ -38,6 +38,12 @@
 # include <mlc/to_string.hh>
 
 
+# define oln_super_of_(Type) \
+oln::internal::get_super_type<Type>::ret
+
+# define oln_super_of(Type) \
+typename oln_super_of_(Type)
+
 
 
 namespace oln

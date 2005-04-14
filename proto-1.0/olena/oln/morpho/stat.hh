@@ -30,7 +30,7 @@
 
 # include <mlc/cmp.hh>
 # include <ntg/bin.hh>
-# include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/images.hh>
 # include <oln/core/abstract/window.hh>
 
 
@@ -38,159 +38,86 @@ namespace oln {
 
   namespace morpho {
 
-    namespace internal {
 
-      /*!
-      ** \brief Min and Max on a window.
-      **
-      ** We need to use this inner definition in order to specialize
-      ** max and min on binary images.
-      **
-      ** \param I Image exact type.
-      ** \param W Window type.
-      ** \param V Associated value type.
-      */
-      template <class I, class W, class V = oln_type_of(I, value)>
-      struct stat_
-      {
-	/*!
-	** \brief Maximum of a window.
-	**
-	** Look for  the maximum in the window win disposed
-	** on the image input, at the point p.
-	**
-	** \arg input Input image.
-	** \arg p Point of the image to move the window on.
-	** \arg win The window to use.
-	*/
-	static V
-	max(const abstract::image<I>& input,
-	    const oln_type_of(I, point)& p,
-	    const abstract::window<W>& win)
-	{
-	  mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
+    /// Local min on a function.
 
-          oln_wn_type_of(W, fwd_iter) q(win);
-	  q.start_at_p(p);
-	  V val = input[q];
-          for_all_remaining_q (q)
-	    if (input.hold(q))
-	      if (val < input[q].value())
-		val = input[q].value();
-	  return val;
-	}
+    template <typename I, typename W>
+    oln_type_of(I, value) min(const abstract::image<I>&    input,
+			      const oln_type_of(I, point)& p,
+			      const abstract::window<W>&   win)
+    {
+      mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
 
-	/*!
-	** \brief Minimum of a window.
-	**
-	** Look for  the minimum in the window win disposed
-	** on the image input, at the point p.
-	**
-	** \arg input Input image.
-	** \arg p Point of the image to move the window on.
-	** \arg win The window to use.
-	*/
-	static V
-	min(const abstract::image<I>& input,
-	    const oln_type_of(I, point)& p,
-	    const abstract::window<W>& win)
-	{
-	  mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
+      oln_wn_type_of(W, fwd_iter) q(win);
+      oln_type_of(I, value) val;
 
-	  oln_wn_type_of(W, fwd_iter) q(win);
-	  q.start_at(p);
-	  V val = input[q];
-	  for_all_remaining_q (q)
-	    if (input.hold(q))
-	      if (val > input[q].value())
-		val = input[q].value();
-	  return val;
-	}
+      q.start_at_p(p);
+      val = input[q];
+      
+      for_all_remaining_q (q)
+	if (input.hold(q) and input[q].value() < val)
+	  val = input[q].value();
 
-      };
+      return val;
+    }
 
-      /* Binary specialization.  */
 
-      template <class I, class W>
-      struct stat_<I, W, ntg::bin>
-      {
-	static ntg::bin
-	max(const abstract::image<I>& input,
-	    const oln_type_of(I, point)& p,
-	    const abstract::window<W>& win)
-	{
-	  mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
-	  oln_wn_type_of(W, fwd_iter) q(win);
-	  for_all_q_of_p (q, p)
-	    if (input.hold(q))
-	      if (input[q] == true)
-		return true;
+    /// Local min on a set.
+
+    template <typename I, typename W>
+    bool min(const abstract::binary_image<I>& input,
+	     const oln_type_of(I, point)&     p,
+	     const abstract::window<W>&       win)
+    {
+      mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
+
+      oln_wn_type_of(W, fwd_iter) q(win);
+      for_all_q_of_p (q, p)
+	if (input.hold(q) and not input[q])
 	  return false;
-	}
+      return true;
+    }
 
-	static ntg::bin
-	min(const abstract::image<I>& input,
-	    const oln_type_of(I, point)& p,
-	    const abstract::window<W>& win)
-	{
-	  mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
-	  oln_wn_type_of(W, fwd_iter) q(win);
-	  for_all_q_of_p (q, p)
-	    if (input.hold(q))
-	      if (input[q] == false)
-		return false;
+
+    /// Local max on a function.
+
+    template <typename I, typename W>
+    oln_type_of(I, value) max(const abstract::image<I>&    input,
+			      const oln_type_of(I, point)& p,
+			      const abstract::window<W>&   win)
+    {
+      mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
+
+      oln_wn_type_of(W, fwd_iter) q(win);
+      oln_type_of(I, value) val;
+
+      q.start_at_p(p);
+      val = input[q];
+
+      for_all_remaining_q (q)
+	if (input.hold(q) and input[q].value() > val)
+	  val = input[q].value();
+
+      return val;
+    }
+
+
+    /// Local max on a set.
+
+    template <typename I, typename W>
+    bool max(const abstract::binary_image<I>&  input,
+	     const oln_type_of(I, point)&      p,
+	     const abstract::window<W>&        win)
+    {
+      mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
+
+      oln_wn_type_of(W, fwd_iter) q(win);
+      for_all_q_of_p (q, p)
+	if (input.hold(q) and input[q])
 	  return true;
-	}
-
-      };
-
-    } // internal
-
-    /*!
-    ** \brief Maximum of a window.
-    **
-    ** Look for  the maximum in the window win disposed
-    ** on the image input, at the point p.
-    **
-    ** \param I Image exact type.
-    ** \param W Window type.
-    **
-    ** \arg input Input image.
-    ** \arg p Point of the image to move the window on.
-    ** \arg win The window to use.
-    */
-    template<class I, class W>
-    oln_type_of(I, value)
-    max(const abstract::image<I>& input,
-	const oln_type_of(I, point)& p,
-	const abstract::window<W>& win)
-    {
-      // FIXME: test dim I == dim W
-      return internal::stat_<I, W>::max(input.exact(), p, win.exact());
+      return false;
     }
 
-    /*! ** \brief Minimum of a window.
-    **
-    ** Look for  the minimum in the window win disposed
-    ** on the image input, at the point p.
-    **
-    ** \param I Image exact type.
-    ** \param W Window type.
-    **
-    ** \arg input Input image.
-    ** \arg p Point of the image to move the window on.
-    ** \arg win The window to use.
-    */
-    template<class I, class W>
-    oln_type_of(I, value)
-    min(const abstract::image<I>& input,
-	const oln_type_of(I, point)& p,
-	//		 const mlc_exact_type(I)::iter_type& p,
-	const abstract::window<W>& win)
-    {
-      // FIXME: test dim I == dim W
-      return internal::stat_<I, W>::min(input.exact(), p, win.exact());
-    }
 
   } // end of namespace morpho
 

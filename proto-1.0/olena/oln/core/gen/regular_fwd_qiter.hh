@@ -34,20 +34,27 @@
 namespace oln {
 
   // fwd decl
-  template <typename G> struct regular_fwd_qiter;
+  template <typename G, typename W> struct regular_fwd_qiter;
 
   // category
-  template <typename G>
-  struct set_super_type< regular_fwd_qiter<G> > { typedef abstract::regular_qiter< G, regular_fwd_qiter<G> > ret; };
+  template <typename G, typename W>
+  struct set_super_type< regular_fwd_qiter<G,W> > { typedef abstract::regular_qiter< G, regular_fwd_qiter<G,W> > ret; };
 
-
-  template <typename G>
-  struct regular_fwd_qiter : public abstract::regular_qiter< G, regular_fwd_qiter<G> >
+  // props
+  template <typename G, typename W>
+  struct set_props < category::qiter, regular_fwd_qiter<G,W> >
   {
-    typedef regular_fwd_qiter<G> self_type;
+    typedef W window_type;
+  };
+
+
+  template <typename G, typename W>
+  struct regular_fwd_qiter : public abstract::regular_qiter< G, regular_fwd_qiter<G,W> >
+  {
+    typedef regular_fwd_qiter<G,W> self_type;
     typedef abstract::regular_qiter<G, self_type> super_type;
 
-    regular_fwd_qiter(const regular_window<G>& win) :
+    regular_fwd_qiter(const abstract::regular_window<G,W>& win) :
       super_type(win)
     {
       this->invalidate();

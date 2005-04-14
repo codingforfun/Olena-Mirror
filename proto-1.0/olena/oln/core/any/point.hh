@@ -127,7 +127,14 @@ std::ostream& operator<<(std::ostream& ostr, const oln::any_point&)
 # include <oln/core/any/dpoint.hh>
 
 
+
 namespace oln {
+
+  template <typename P>
+  const any_point any_dpoint::operator+(const abstract::point<P>& rhs) const
+  {
+    return any_point();
+  }
 
   const any_dpoint any_point::impl_minus(const any_point& rhs) const
   {

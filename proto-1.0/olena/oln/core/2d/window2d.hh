@@ -37,7 +37,69 @@
 namespace oln
 {
 
-  typedef  regular_window< grid2d >  window2d;
+  // fwd decl
+  struct window2d;
+
+  // super type
+  template <>
+  struct set_super_type< window2d > { typedef abstract::regular_window< grid2d, window2d > ret; };
+
+
+  struct window2d : public oln_super_of_(window2d)
+  {
+    typedef oln_super_of_(window2d) super_type;
+
+    window2d()
+    {}
+
+    window2d(unsigned n, const coord_t crd[]) :
+      super_type(n, crd)
+    {}
+
+    window2d& add(const dpoint2d& dp)
+    {
+      this->add_(dp);
+      return *this;
+    }
+
+  };
+
+
+  // fwd decl
+  struct win_rectangle2d;
+
+  // super type
+  template <>
+  struct set_super_type< win_rectangle2d > { typedef abstract::regular_window< grid2d, win_rectangle2d > ret; };
+
+
+  /// Class win_rectangle2d.
+  struct win_rectangle2d : public oln_super_of_(win_rectangle2d)
+  {
+    typedef oln_super_of_(win_rectangle2d) super_type;
+
+    win_rectangle2d(unsigned height, unsigned width) :
+      height(height),
+      width(width)
+    {
+      int
+	min_drow = (1 - int(height)) / 2,
+	max_drow = int(height) / 2,
+	min_dcol = (1 - int(width)) / 2,
+	max_dcol = int(width) / 2;
+      for (int drow = min_drow; drow <= max_drow; ++drow)
+	for (int dcol = min_dcol; dcol <= max_dcol; ++dcol)
+	  {
+	    dpoint2d dp(drow, dcol);
+	    this->add_(dp);
+	  }
+    }
+
+    const unsigned height;
+    const unsigned width;
+  };
+
+
 
   // classical 2d windows
 
