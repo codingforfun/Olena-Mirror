@@ -39,7 +39,8 @@ namespace oln {
   struct any_point;
   struct any_dpoint;
   struct any_size;
-  struct any_coord;
+  // Dummy coord type.
+  struct any_coord {};
 
   // super type
   template <>

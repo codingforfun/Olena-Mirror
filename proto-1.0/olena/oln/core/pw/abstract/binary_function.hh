@@ -100,6 +100,14 @@ namespace oln {
 	  }
 	};
 
+	template <>
+	struct binary_function_helper < any_size, any_size > {
+	  template <typename L, typename R>
+	  static const L& select(const L& l, R) {
+	    return l;
+	  }
+	};
+
       } // end of namespace oln::pw::abstract::internal
 
 

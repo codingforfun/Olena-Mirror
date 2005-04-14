@@ -63,7 +63,7 @@ namespace oln {
 
     bool impl_fwd_less(const any_point& rhs) const
     {
-      precondition(0);
+      precondition(false);
       return false;
     }
 
@@ -72,7 +72,11 @@ namespace oln {
       return this->exact().impl_eq(rhs.exact());
     }
 
-    const any_point impl_plus(const any_dpoint& rhs) const;
+    const any_point impl_plus(const any_dpoint& rhs) const
+    {
+      precondition(false);
+      return any_point();
+    }
 
     template <typename D>
     const any_point impl_plus(const abstract::dpoint<D>& rhs) const
@@ -85,9 +89,18 @@ namespace oln {
     template <typename P>
     const any_dpoint impl_minus(const abstract::point<P>& rhs) const;
 
-    const any_coord impl_nth(unsigned i) const;
+    const any_coord impl_nth(unsigned i) const
+    {
+      precondition(false);
+      return any_coord();
+    }
 
-    any_coord& impl_nth(unsigned i);
+    any_coord& impl_nth(unsigned i)
+    {
+      static any_coord dummy = any_coord();
+      precondition(false);
+      return dummy;
+    }
   };
 
 
@@ -116,9 +129,16 @@ std::ostream& operator<<(std::ostream& ostr, const oln::any_point&)
 
 namespace oln {
 
+  const any_dpoint any_point::impl_minus(const any_point& rhs) const
+  {
+    precondition(false);
+    return any_dpoint();
+  }
+
   template <typename P>
   const any_dpoint any_point::impl_minus(const abstract::point<P>& rhs) const
   {
+    precondition(false);
     return any_dpoint();
   }
 

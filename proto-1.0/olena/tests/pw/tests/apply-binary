@@ -1,0 +1,20 @@
+							// -*- C++ -*-
+#include <iostream>
+
+#include <cmath>
+#include <oln/core/pw/apply.hh>
+#include <oln/core/pw/literal.hh>
+#include <oln/core/any/point.hh>
+
+using namespace oln;
+
+bool check()
+{
+  any_point p;
+
+  pw::literal<int> pv1 (p_lit(1));
+  pw::literal<int> pv2 (p_lit(2));
+
+  int res = p_apply(mlc::make_binary_fun(std::plus<int>()), pv1, pv2)(p);
+  return not (res == 3);
+}

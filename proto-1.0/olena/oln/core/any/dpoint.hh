@@ -69,7 +69,7 @@ namespace oln {
 
     bool impl_fwd_less(const any_dpoint& rhs) const
     {
-      precondition(0);
+      precondition(false);
       return false;
     }
 
@@ -80,14 +80,14 @@ namespace oln {
 
     const coord_t impl_nth(unsigned i) const
     {
-      precondition(0);
+      precondition(false);
       return 0;
     }
 
     coord_t& impl_nth(unsigned i)
     {
       static coord_t dummy = coord_t();
-      precondition(0);
+      precondition(false);
       return dummy;
     }
 

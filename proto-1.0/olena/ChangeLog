@@ -1,5 +1,27 @@
 2005-04-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add binary apply on point-wise functions.
+
+	* oln/core/pw/apply.hh (apply2): New class.
+	(p_apply): New helper for binary point-wise apply.
+	* tests/pw/tests/apply-binary: New test.
+	* oln/core/abstract/size.hh (oln_size_type_from_2): Adjust macro
+	to new Metalic logic system.
+	* oln/core/pw/abstract/binary_function.hh
+	(binary_function_helper < any_size, any_size >): New
+	specialization.
+
+	* oln/core/any/point.hh (impl_plus, impl_minus, impl_nth):
+	Implement (as dummies).
+	* oln/core/any/grid.hh (any_coord): Define this type.
+	* oln/core/any/dpoint.hh: Aesthetic changes.
+
+	* oln/makefile.src (OLN_DEP): Remove
+	core/abstract/regular_niter.hh, core/3d/fwd_niter3d.hh and
+	core/3d/fwd_qiter3d.hh.
+
+2005-04-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix remaining tests in tests/core.
 
 	* tests/core/tests/readwrite_image, tests/core/tests/setget

@@ -47,9 +47,7 @@ OLN_DEP =					\
   core/3d/array3d.hh				\
   core/3d/bkd_piter3d.hh			\
   core/3d/dpoint3d.hh				\
-  core/3d/fwd_niter3d.hh			\
   core/3d/fwd_piter3d.hh			\
-  core/3d/fwd_qiter3d.hh			\
   core/3d/image3d.hh				\
   core/3d/neighborhood3d.hh			\
   core/3d/niter3d.hh				\
@@ -80,7 +78,6 @@ OLN_DEP =					\
   core/abstract/piter.hh			\
   core/abstract/point.hh			\
   core/abstract/qiter.hh			\
-  core/abstract/regular_niter.hh		\
   core/abstract/size.hh				\
   core/abstract/window.hh			\
 						\

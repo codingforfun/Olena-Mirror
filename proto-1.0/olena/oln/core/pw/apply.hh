@@ -30,6 +30,7 @@
 
 # include <mlc/fun.hh>
 # include <oln/core/pw/abstract/function.hh>
+# include <oln/core/pw/abstract/binary_function.hh>
 # include <oln/core/pw/macros.hh>
 
 
@@ -41,8 +42,7 @@ namespace oln {
 
   // fwd decl
   namespace pw {
-    template <typename F, typename T>
-    struct apply;
+    template <typename F, typename T> struct apply;
   }
 
   // super type
@@ -110,16 +110,84 @@ namespace oln {
 
   } // end of namespace oln::pw
 
+
+  /*---------.
+  | Binary.  |
+  `---------*/
+
+  // fwd decl
+  namespace pw {
+    template <typename F, typename T1, typename T2> struct apply2;
+  }
+
+  // super type
+  template <typename F, typename T1, typename T2>
+  struct set_super_type < pw::apply2<F, T1, T2> >
+  {
+    typedef pw::abstract::binary_function<T1, T2, pw::apply2<F, T1, T2> > ret;
+  };
+
+  // props
+  template <typename F, typename T1, typename T2>
+  struct set_props < category::pw, pw::apply2<F, T1, T2> >
+  {
+    typedef typename F::result_type value_type;
+  };
+
+  namespace pw {
+
+    template <typename F, typename T1, typename T2>
+    struct apply2 :
+      public abstract::binary_function <T1, T2, apply2<F, T1, T2> >
+    {
+      typedef apply2<F, T1, T2> self_type;
+
+      typedef oln_pw_type_of(self_type, point) point_type;
+      typedef oln_pw_type_of(self_type, value) value_type;
+      typedef oln_pw_type_of(self_type, size)  size_type;
+
+      typedef
+	abstract::binary_function <T1, T2, apply2<F, T1, T2> > super_type;
+
+      F f_;
+
+      apply2(const mlc::abstract::binary_function<F>& f,
+	     const abstract::function<T1>& left,
+	     const abstract::function<T2>& right) :
+	super_type(left, right),
+	f_(f.exact())
+      {
+      }
+
+      const value_type impl_get(const point_type& p) const
+      {
+	return f_(this->left(p), this->right(p));
+      }
+    };
+
+  } // end of namespace oln::pw
+
 } // end of namespace oln
 
 
 /// apply function on pwf
 
 template <typename F, typename T>
-oln::pw::apply<F, T> p_apply (const mlc::abstract::unary_function<F>& f,
-			      const oln::pw::abstract::function<T>& x)
+oln::pw::apply<F, T>
+p_apply (const mlc::abstract::unary_function<F>& f,
+	 const oln::pw::abstract::function<T>& x)
 {
   oln::pw::apply<F, T> tmp(f, x);
+  return tmp;
+}
+
+template <typename F, typename T1, typename T2>
+oln::pw::apply2<F, T1, T2>
+p_apply (const mlc::abstract::binary_function<F>& f,
+	 const oln::pw::abstract::function<T1>& x,
+	 const oln::pw::abstract::function<T2>& y)
+{
+  oln::pw::apply2<F, T1, T2> tmp(f, x, y);
   return tmp;
 }
 
