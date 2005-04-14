@@ -1,4 +1,4 @@
-
+							// -*- C++ -*-
 #include <iostream>
 
 #include <ntg/all.hh>
@@ -16,7 +16,7 @@ bool check()
   int cpt = 0;
 
   oln::fwd_piter2d fwd_it(ima.size());
-  for_all (fwd_it)
+  for_all_p (fwd_it)
   {
     ima[fwd_it] = 0;
     cpt++;
@@ -28,7 +28,7 @@ bool check()
 
   cpt = 0;
   oln::bkd_piter2d bkd_it(ima.size());
-  for_all (bkd_it)
+  for_all_p (bkd_it)
   {
     ima[bkd_it] = 0;
     cpt++;

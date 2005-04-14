@@ -1,3 +1,4 @@
+							// -*- C++ -*-
 #include <oln/core/2d/fwd_witer2d.hh>
 #include <oln/core/abstract/piter.hh>
 

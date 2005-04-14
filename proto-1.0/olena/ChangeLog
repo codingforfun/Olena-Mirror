@@ -1,3 +1,40 @@
+2005-04-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix some 1D and 3D classes and have more tests pass.
+
+	* oln/basics1d.hh (oln/core/1d/fwd_piter1d.hh)
+	(oln/core/1d/bkd_piter1d.hh): Include them.
+	* oln/core/1d/image1d.hh (bkd_piter_type) New typedef.
+	* oln/core/1d/array1d.hh: Do not set exact_ptr, since this class
+	not longer inherits from mlc::any__best_speed, but from mlc::any.
+	* oln/core/1d/array1d.hh (alloc_and_init): New function.
+	(resize, impl_clear_data): Handle the border.
+	(size): Rename method as...
+	(impl_size): ...this.
+	(~array1d): Call clear_data() instead of impl_clear_data().
+	(impl_resize_border): New method.
+
+	* oln/core/2d/array2d.hh (alloc_and_init): Remove useless
+	assignment.
+	(~array2d): Call clear_data() instead of impl_clear_data().
+
+	* oln/basics3d.hh (oln/core/3d/fwd_piter3d.hh)
+	* oln/core/3d/image3d.hh (bkd_piter_type) New typedef.
+	* oln/core/3d/array3d.hh: Do not set exact_ptr, since this class
+	(oln/core/3d/bkd_piter3d.hh): Include them.
+	not longer inherits from mlc::any__best_speed, but from mlc::any.
+	(size): Rename method as...
+	(impl_size): ...this.
+	(~array3d): Call clear_data() instead of impl_clear_data().
+	(impl_resize): Move allocation code...
+	(alloc_and_init): ...here (new function).
+	(impl_resize_border): New method.
+	
+	* tests/core/tests/readwrite_image: Catch up with the new property
+	system.
+	* tests/core/tests/piter1d (check): Test bkd_piter1d too.
+	* tests/core/tests/piter3d (check): Test bkd_piter3d too.
+
 2005-04-14  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* oln/core/abstract/niter.hh (start): Rename as...

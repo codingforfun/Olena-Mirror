@@ -41,7 +41,7 @@ namespace oln {
   // super type
   template <typename T>
   struct set_super_type < array1d<T> > { typedef abstract::data_storage< array1d<T> > ret; };
-  
+
   // props
   template <typename T>
   struct set_props < category::data_storage, array1d<T> >
@@ -51,6 +51,14 @@ namespace oln {
     typedef T       data_type;
   };
 
+
+  template<class T>
+  void alloc_and_init(T*& buffer, const size1d& s)
+  {
+    size_t nelts_eff = s.nindices() + 2 * s.border();
+    buffer = new T[nelts_eff];
+    buffer += s.border();
+  }
 
 
   template <typename T>
@@ -63,7 +71,6 @@ namespace oln {
       buffer_(0),
       size_()
     {
-      this->exact_ptr = this;
       invariant_();
     }
 
@@ -76,13 +83,12 @@ namespace oln {
       buffer_(0),
       size_()
     {
-      this->exact_ptr = this;
       this->resize(s);
     }
 
     ~array1d()
     {
-      this->impl_clear_data();
+      this->clear_data();
     }
 
     bool impl_has_data() const
@@ -97,6 +103,7 @@ namespace oln {
       if (this->has_data())
 	{
 	  // buffer
+	  buffer_ -= size_.border();
 	  delete[] buffer_;
 	  buffer_ = 0;
 	  // size
@@ -105,7 +112,7 @@ namespace oln {
       invariant_();
     }
 
-    const size1d& size() const
+    const size1d& impl_size() const
     {
       return size_;
     }
@@ -117,8 +124,41 @@ namespace oln {
       invariant_();
       this->clear_data();
       size_ = s;
-      size_t nelts_eff = size_.nindices() + 2 * size_.border();
-      buffer_ = new T[nelts_eff];
+
+      alloc_and_init(buffer_, s);
+      invariant_();
+    }
+
+    void impl_resize_border(size_t new_border, bool copy_border)
+    {
+      invariant_();
+      T* new_buffer_;
+      size1d new_size_(this->size_.nindices(), new_border);
+
+      alloc_and_init(new_buffer_, new_size_);
+
+      if (buffer_ != 0)
+	{
+	  size_t border = this->size_.border();
+
+	  if (border > new_border)
+	    border = new_border;
+
+	  coord_t indice_min = copy_border ? -border : 0;
+	  coord_t indice_max = int(this->size_.nindices())
+	    + (copy_border ? border : 0);
+	  size_t nindices = int(this->size_.nindices()) +
+	    (copy_border ? (border * 2) : 0);
+
+	  memcpy(new_buffer_ + indice_min, this->buffer_ + indice_min,
+		 nindices * sizeof (T));
+
+	  this->clear_data();
+	}
+
+      buffer_ = new_buffer_;
+      size_ = new_size_;
+
       invariant_();
     }
 

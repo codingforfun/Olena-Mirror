@@ -44,6 +44,7 @@ namespace oln {
 
   // fwd decls
   struct fwd_piter3d;
+  struct bkd_piter3d;
   template <typename T> class image3d;
 
   // super
@@ -66,6 +67,7 @@ namespace oln {
 
     typedef fwd_piter3d piter_type;
     typedef fwd_piter3d fwd_piter_type;
+    typedef bkd_piter3d bkd_piter_type;
 
     // please note that value_storage_type means data_type
     // since image3d is an image_with_data

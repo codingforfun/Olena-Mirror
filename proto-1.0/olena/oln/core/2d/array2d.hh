@@ -58,7 +58,6 @@ namespace oln {
     buffer = new T[nelts_eff];
     array = new T*[nrows_eff];
 
-    buffer = buffer;
     T* buf = buffer + s.border();
     for (size_t row = 0; row < nrows_eff; ++row)
       {
@@ -97,7 +96,7 @@ namespace oln {
 
     ~array2d()
     {
-      this->impl_clear_data();
+      this->clear_data();
     }
 
     bool impl_has_data() const
