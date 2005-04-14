@@ -13,7 +13,7 @@
 2005-04-05  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Conform to mlc.
-	
+
 	* ntg/core/math.hh: Delete cause redundant with mlc/arith.hh.
 	* ntg/real/int_s.hh: Update.
 	* ntg/real/int_u.hh: Likewise.
@@ -232,4 +232,3 @@
 	* ntg/makefile.src: Adds file dependencies.
 	* ntg/color: New.
 	* ntg/color/rgb_8.hh: New. RGB 8-bit quantified data type.
-

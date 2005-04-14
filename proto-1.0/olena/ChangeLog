@@ -29,7 +29,7 @@
 	(impl_resize): Move allocation code...
 	(alloc_and_init): ...here (new function).
 	(impl_resize_border): New method.
-	
+
 	* tests/core/tests/readwrite_image: Catch up with the new property
 	system.
 	* tests/core/tests/piter1d (check): Test bkd_piter1d too.
@@ -95,7 +95,7 @@
 	(qiter): Rewrite.
 	* oln/core/abstract/point.hh (fwd_less, bkd_less): New methods.
 	* oln/core/abstract/dpoint.hh (fwd_less, bkd_less): New methods.
-	(dim): New method. 
+	(dim): New method.
 	(operator!=, operator-): New operators.
 	(fwd_less_dpoint): New function object type.
 	* oln/core/abstract/neighborhood.hh: Rewrite.
@@ -152,7 +152,8 @@
 2005-04-13  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* oln/core/typedefs.hh: New include.
-	* oln/core/abstract/niter.hh: Add static checks of properties and impls.
+	* oln/core/abstract/niter.hh: Add static checks of properties and
+	impls.
 	* oln/core/abstract/image_constness.hh (set): Change signature.
 	* oln/core/abstract/image.hh: Likewise.
 	* oln/core/abstract/piter.hh: Likewise.
@@ -421,7 +422,7 @@
 	* oln/core/pw/macros.hh (oln_pw_cmp_operator): New macro.
 	(oln_pw_cmp_operators): New macro.
 	* oln/core/pw/abstract/function.hh (operator!): New method.
-	* oln/core/pw/all.hh (oln/core/pw/logic.hh): New include. 
+	* oln/core/pw/all.hh (oln/core/pw/logic.hh): New include.
 	* oln/core/pw/minus.hh: Cosmetic change.
 	* oln/core/pw/cmp.hh: Derive from pw::abstract::binary_function.
 	* oln/core/pw/logic.hh: New file.
@@ -435,7 +436,7 @@
 	New props and set_type_of for temporary dummy tests.
 	* oln/core/abstract/entry.hh (typeness::inheritance_switch): New
 	inheritance.
-	(valuedness::inheritance_switch): Likewise.	
+	(valuedness::inheritance_switch): Likewise.
 	* oln/core/abstract/images.hh: Update.
 	* oln/core/abstract/image_with_data.hh: Cosmetic change.
 	* oln/core/1d/image1d.hh (image_vectorialness_type): Remove.
@@ -445,7 +446,7 @@
 	* oln/morpho/stat.hh (min, max): Change sig.
 	* oln/morpho/erosion.hh (morpho::impl::generic_erosion): Add
 	code for temporary dummy tests.
-	* oln/arith/ops.hh (operator+): Add erroneous overloading. 
+	* oln/arith/ops.hh (operator+): Add erroneous overloading.
 
 2005-04-06  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
@@ -623,7 +624,7 @@
 	* oln/basics2d.hh: Include core/2d/fwd_piter2d and core/2d/bkd_piter2d.
 	* oln/basics.hh: Include core/any/all.hh and core/pw/all.hh.
 	* oln/makefile.src (OLN_DEP): Add new files.
-	
+
 2005-04-01  Roland Levillain  <roland@lrde.epita.fr>
 
 	First version of oln::apply, for Adaptable Unary Functions.
@@ -652,7 +653,7 @@
 	(dilation_type_classic): Rename as...
 	(generic_dilation): ...this.
 	* oln/morpho/erosion.hh: Likewise.
-	
+
 2005-03-31  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* oln/core/abstract/image_like_.hh: New.
@@ -705,7 +706,7 @@
 2005-03-22  Simon Odou  <simon@lrde.epita.fr>
 
 	* tests/convert/tests/value_to_point: Fix a wrong instruction.
-	* oln/io/read_image_2d_pnm.hh: Move static variables inside an 
+	* oln/io/read_image_2d_pnm.hh: Move static variables inside an
 	inline function to attributes.
 	* img/object.pbm: New. Add missing image for dilation and erosion
 	tests.
@@ -758,7 +759,7 @@
 2005-03-20  Simon Odou  <simon@lrde.epita.fr>
 
 	* oln/convert/value_to_point.hh: New.
-	Conversion of value to point. This is temporary: waiting for a 
+	Conversion of value to point. This is temporary: waiting for a
 	coherent `convert' in this prototype.
 	* tests/convert/tests/value_to_point: New.
 	* tests/convert: New.
@@ -784,7 +785,7 @@
 2005-03-20  Simon Odou  <simon@lrde.epita.fr>
 
 	* tests/core/tests/fwd_witer2d: New. Test for forward window
-        iterator in 2d.
+	iterator in 2d.
 	* oln/makefile.src: Add new headers.
 	* oln/core/abstract/struct_elt.hh: Fix a bad prototype.
 	* oln/core/abstract/neighborhood.hh: Likewise.
@@ -850,7 +851,7 @@
 2005-03-19  Simon Odou  <simon@lrde.epita.fr>
 
 	* oln/makefile.src: Add neighborhood and structuring element files
-        to makefile.src.
+	to makefile.src.
 
 2005-03-19  Simon Odou  <simon@lrde.epita.fr>
 
@@ -954,7 +955,7 @@
 	Use the compiler's debug flags in the test suite.
 
 	* tests/check/Makefile.flags (AM_CXXFLAGS): Add $(CXXFLAGS_DEBUG).
-	
+
 2005-03-14  Thierry Geraud  <theo@lrde.epita.fr>
 
 	* oln/core/3d/fwd_piter3d.hh: New.
@@ -1040,7 +1041,7 @@
 2005-03-02  simon odou  <simon@lrde.epita.fr>
 
 	* oln/core/entry.hh: New.
-        Just a basic and temporary property inheritance system.
+	Just a basic and temporary property inheritance system.
 	* oln/core/abstract/images.hh: Likewise.
 	* oln/core/abstract/image_with_data.hh: Likewiwe.
 	* oln/core/abstract/image_identity.hh: Likewiwe.
@@ -1050,7 +1051,7 @@
 	* tests/core/tests/readonly_image: Likewiwe.
 	* tests/core/tests/readwrite_image: Likewiwe.
 	* oln/core/tags.hh: Remove.
-        Old inheritance system.
+	Old inheritance system.
 	* oln/makefile.src: Remove tags.hh, add entry.hh.
 
 2005-02-24  Damien Thivolle  <damien@lrde.epita.fr>
@@ -1238,9 +1239,9 @@
 2005-01-21  Simon Odou  <simon@lrde.epita.fr>
 
 	* oln/core/tags.hh: The abstract entry point is a big switch which
-          must now inherits an image dimension.
-	* oln/fancy/print.hh: Use abstraction for image with dimension 
-          (image_with_dim in Olena).
+	  must now inherits an image dimension.
+	* oln/fancy/print.hh: Use abstraction for image with dimension
+	  (image_with_dim in Olena).
 	* oln/fancy/iota.hh: Likewise.
 	* oln/makefile.src: Add image_dimension.hh.
 	* oln/core/abstract/image_dimension.hh: New.
@@ -1273,7 +1274,7 @@
 	* oln/core/abstract/image_with_data.hh: here.
 	* oln/core/1d/image1d.hh: New.
 	* oln/core/1d/size1d.hh: Fix a forgotten initialization in
-          constructor.
+	  constructor.
 
 2005-01-21  Simon Odou  <simon@lrde.epita.fr>
 
@@ -1309,4 +1310,3 @@
 	* oln/core/abstract/iter.hh: New.
 	* oln/core/abstract/size.hh: Adapts to coding style.
 	* oln/core/2d/iter2d.hh: New.
-

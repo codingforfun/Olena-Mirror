@@ -2,8 +2,8 @@
 
 	* mlc/properties.hh (f_get_type): Better version.
 	* mlc/types.hh (not_ok): New type.
-	* mlc/contract.hh (mlc_check_method_impl): New macro. 
-	* mlc/cmp.hh (is_ok): New meta-function. 
+	* mlc/contract.hh (mlc_check_method_impl): New macro.
+	* mlc/cmp.hh (is_ok): New meta-function.
 
 2005-04-11  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
@@ -65,7 +65,7 @@
 2005-04-05  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Cleaning.
-	
+
 	* mlc/types.hh: Rewrite and split into...
 	* mlc/bool.hh: Likewise.
 	* mlc/if.hh: ... this new file.
@@ -84,7 +84,7 @@
 	* mlc/array/1d.hxx: Likewise.
 	* mlc/array/2d.hxx: Likewise.
 	* mlc/array/3d.hxx: Likewise.
-	
+
 2005-03-22  Simon Odou  <simon@lrde.epita.fr>
 
 	* mlc/any.hh: Make the `any__best_memory' fast when using gcc-3.
@@ -168,7 +168,7 @@
 	* mlc/any.hh (operator=, any): New in any<E,dispatch_policy::best_speed>.
 	(compromise): Rename as...
 	(simple): this.
-	
+
 2005-01-26  Simon Odou  <simon@lrde.epita.fr>
 
 	* mlc/tracked_ptr.hh: Add copyright.
@@ -190,4 +190,3 @@
 	* mlc/types.hh: Remove already defined struct.
 	* mlc/makefile.src: Add config/system.hh.
 	* mlc/bool.hh: Add meta-if and meta-switch.
-

@@ -47,12 +47,12 @@
 
 	* tools: New.
 	* tools/copyrightify: New. Used to add copyright from Olena to this
-          prototype.
+	  prototype.
 
 2005-01-26  Simon Odou  <simon@lrde.epita.fr>
 
 	* configure.ac: Perl is needed by Doxygen.
-        Doxygen is needed for reference manual, not for documentation.
+	Doxygen is needed for reference manual, not for documentation.
 	* doc/ref/doxygen.config.in: Autoconf sets the perl path.
 
 2005-01-26  Simon Odou  <simon@lrde.epita.fr>
@@ -75,4 +75,3 @@
 2004-12-28  Thierry Geraud  <theo@shuttle>
 
 	* oln.prj: New project.
-
