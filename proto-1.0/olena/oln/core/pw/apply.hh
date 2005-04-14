@@ -29,7 +29,7 @@
 # define OLENA_CORE_PW_APPLY_HH
 
 # include <mlc/fun.hh>
-# include <oln/core/pw/abstract/function.hh>
+# include <oln/core/pw/abstract/unary_function.hh>
 # include <oln/core/pw/abstract/binary_function.hh>
 # include <oln/core/pw/macros.hh>
 
@@ -42,19 +42,19 @@ namespace oln {
 
   // fwd decl
   namespace pw {
-    template <typename F, typename T> struct apply;
+    template <typename F, typename T> struct apply1;
   }
 
   // super type
   template <typename F, typename T>
-  struct set_super_type < pw::apply<F, T> >
+  struct set_super_type < pw::apply1<F, T> >
   {
-    typedef pw::abstract::function< pw::apply<F, T> > ret;
+    typedef pw::abstract::unary_function< T, pw::apply1<F, T> > ret;
   };
 
   // props
   template <typename F, typename T>
-  struct set_props < category::pw, pw::apply<F, T> >
+  struct set_props < category::pw, pw::apply1<F, T> >
   {
     typedef oln_pw_type_of(T, point) point_type;
     typedef typename F::result_type value_type;
@@ -65,45 +65,28 @@ namespace oln {
   namespace pw {
 
     template <typename F, typename T>
-    struct apply : public abstract::function < apply<F, T> >
+    struct apply1 : public abstract::unary_function < T, apply1<F, T> >
     {
-      typedef apply<F, T> self_type;
+      typedef apply1<F, T> self_type;
 
       typedef oln_pw_type_of(self_type, point) point_type;
       typedef oln_pw_type_of(self_type, value) value_type;
       typedef oln_pw_type_of(self_type, size)  size_type;
 
-      typedef abstract::function<self_type> super_type;
+      typedef abstract::unary_function<T, self_type> super_type;
 
       F f_;
-      T input_;
 
-      apply(const mlc::abstract::unary_function<F>& f,
+      apply1(const mlc::abstract::unary_function<F>& f,
 	    const abstract::function<T>& input) :
-	super_type(),
-	f_(f.exact()),
-	input_(input.exact())
+	super_type(input),
+	f_(f.exact())
       {
-      }
-
-      const size_type& impl_size() const
-      {
-	return input_.size();
       }
 
       const value_type impl_get(const point_type& p) const
       {
-	return f_(input_(p));
-      }
-
-      bool impl_hold(const point_type& p) const
-      {
-	return input_.hold(p);
-      }
-
-      bool impl_hold_large(const point_type& p) const
-      {
-	return input_.hold_large(p);
+	return f_(this->input(p));
       }
     };
 
@@ -173,11 +156,11 @@ namespace oln {
 /// apply function on pwf
 
 template <typename F, typename T>
-oln::pw::apply<F, T>
+oln::pw::apply1<F, T>
 p_apply (const mlc::abstract::unary_function<F>& f,
 	 const oln::pw::abstract::function<T>& x)
 {
-  oln::pw::apply<F, T> tmp(f, x);
+  oln::pw::apply1<F, T> tmp(f, x);
   return tmp;
 }
 

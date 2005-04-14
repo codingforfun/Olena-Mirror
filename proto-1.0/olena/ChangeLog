@@ -1,3 +1,21 @@
+2005-04-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add unary point-wise function (PWF).
+	Use it to simplify unary apply on PWF.
+
+	* oln/core/pw/abstract/unary_function.hh: New file.
+	* oln/core/pw/apply.hh: Use it to rewrite pw::apply.
+	(apply): Inherit from pw::abstract::unary_function.
+	Rename as ...
+	(apply1): ...this.
+	(apply1::input_): Remove attribute.
+	(apply1::apply1): Adjust ctor.
+	(apply1::impl_get): Adjust method.
+	(apply1::impl_size, apply1::impl_hold, apply1::impl_hold_large):
+	Remove methods.
+	* oln/makefile.src (OLN_DEP): Add
+	core/pw/abstract/unary_function.hh.
+
 2005-04-14  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* oln/core/typedefs.hh (oln_super_of): New macro.

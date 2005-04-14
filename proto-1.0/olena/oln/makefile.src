@@ -109,6 +109,7 @@ OLN_DEP =					\
 						\
   core/pw/abstract/binary_function.hh		\
   core/pw/abstract/function.hh			\
+  core/pw/abstract/unary_function.hh		\
   core/pw/apply.hh				\
   core/pw/all.hh				\
   core/pw/cmp.hh				\
