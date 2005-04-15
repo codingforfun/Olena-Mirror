@@ -1,0 +1,27 @@
+							// -*- C++ -*-
+#include "data.hh"
+#include <oln/utils/md5.hh>
+
+#include <oln/io/read_image.hh>
+#include <oln/basics2d.hh>
+#include <oln/morpho/closing.hh>
+#include <oln/level/compare.hh>
+#include <ntg/all.hh>
+
+bool check()
+{
+  // MD5 sum of object.pbm's geodesic dilation result.
+  oln::utils::key::value_type   data_key[16] =
+    {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+  oln::utils::key key(data_key);
+
+  typedef oln::image2d<ntg::bin> im_type;
+  im_type ima;
+  ima = oln::io::read(rdata("16x16.pbm"));
+
+  if (oln::utils::md5(oln::morpho::closing(ima, oln::win_c8p())) != key)
+    return true;
+
+  return false;
+}

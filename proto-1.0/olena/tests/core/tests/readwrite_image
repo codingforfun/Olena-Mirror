@@ -22,6 +22,7 @@ namespace oln {
   template <>
   struct set_props <category::image, dummy_image>
   {
+    typedef grid2d grid_type;
     typedef is_a<abstract::readwrite_image> image_constness;
     typedef is_a<abstract::image2d> image_dimension_type;
 

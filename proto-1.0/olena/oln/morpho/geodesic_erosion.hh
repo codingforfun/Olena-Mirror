@@ -57,11 +57,13 @@ namespace oln {
 	precondition(marker.size() == mask.size());
 	precondition(level::is_greater_or_equal(marker, mask));
         oln_type_of(I1, concrete) output(marker.size());
-	marker.border_adapt_copy(marker.nbh_get().delta());
+	// FIXME: Useless?
+	// marker.border_adapt_copy(marker.nbh_get().delta());
         oln_type_of(I1, piter) p(marker);
         for_all_p (p)
-          output[p] = arith::max(morpho::min(marker, p, convert::nbh_to_cse(marker.nbh_get())),
-				 mask[p]);
+          output[p] =
+	    arith::max(morpho::min(marker, p, marker.nbh_get().get_win()),
+		       mask[p]);
         return output;
       }
 
@@ -108,8 +110,11 @@ namespace oln {
 	{
 	  mlc::eq<oln_type_of(I1, size), oln_type_of(I2, size)>::ensure();
 	  precondition((this->input1).size() == (this->input2).size());
-	  precondition(level::is_greater_or_equal(this->input2, this->input1));
-	  this->output = arith::max(erosion(this->input1.unbox(), this->input1.unbox().nbh_get()).output.unbox(), this->input2.unbox()).output;
+	  precondition(level::is_greater_or_equal(this->input1, this->input2));
+	  this->output =
+	    arith::max(erosion(this->input1.unbox(),
+			       this->input1.unbox().nbh_get().get_win()).output.unbox(),
+		       this->input2.unbox()).output;
 	}
       };
 

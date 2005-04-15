@@ -68,7 +68,7 @@ namespace oln {
       {
       }
 
-      image_with_extension(const abstract::image<I>& image) :
+      image_with_extension(abstract::image<I>& image) :
 	super_type(image)
       {
       }

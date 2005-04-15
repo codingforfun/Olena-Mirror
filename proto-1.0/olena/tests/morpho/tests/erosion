@@ -1,3 +1,4 @@
+							// -*- C++ -*-
 #include "data.hh"
 #include <oln/utils/md5.hh>
 

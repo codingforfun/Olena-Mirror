@@ -58,7 +58,7 @@ namespace oln {
 
   public:
 
-    image_with_nbh(const abstract::image<I>& image,
+    image_with_nbh(abstract::image<I>& image,
 		   const abstract::neighborhood<N>& nbh) :
       super_type(image),
       nbh_(nbh.exact())
@@ -72,7 +72,7 @@ namespace oln {
 
   protected:
 
-    N& nbh_;
+    const N& nbh_;
   };
 
 
@@ -80,7 +80,7 @@ namespace oln {
 
   template <typename I, typename N>
   image_with_nbh<I, N>
-  join(const abstract::image<I>& image,
+  join(abstract::image<I>& image,
        const abstract::neighborhood<N>& nbh)
   {
     image_with_nbh<I, N> tmp(image, nbh);

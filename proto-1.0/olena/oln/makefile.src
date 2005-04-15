@@ -137,8 +137,10 @@ OLN_DEP =					\
   level/fill.hh					\
 						\
   morpho/cc_tarjan.hh				\
+  morpho/closing.hh				\
   morpho/dilation.hh				\
   morpho/erosion.hh				\
+  morpho/opening.hh				\
   morpho/reconstruction.hh			\
   morpho/splitse.hh				\
   morpho/stat.hh				\

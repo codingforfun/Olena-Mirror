@@ -1,3 +1,27 @@
+2005-04-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add generic morphological opening and closing.
+	Repair geodesic erosion and dilation.
+
+	* oln/morpho/closing.hh, oln/morpho/opening.hh: New files.
+	* oln/makefile.src (OLN_DEP): Add morpho/closing.hh and
+	morpho/opening.hh.
+	* tests/morpho/tests/closing, tests/morpho/tests/opening: New
+	tests.
+	* tests/core/tests/readwrite_image, tests/core/tests/setget:
+	Update tests.
+
+	* oln/morpho/geodesic_dilation.hh (impl_run): Fix access to window.
+	* oln/morpho/geodesic_erosion.hh (impl_run): Likewise.
+	Fix precondition.
+
+	* oln/core/abstract/image_with_extension.hh
+	(image_with_extension::image_with_extension): Remove const before
+	reference of the first argument.
+	* oln/core/gen/image_with_nbh.hh
+	(image_with_nbh::image_with_nbh, join): Likewise.
+	(nbh_): Make it non const.
+
 2005-04-15  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* oln/core/box.hh (operator=(box<II>)): Add impl.
