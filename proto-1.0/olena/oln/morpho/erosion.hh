@@ -113,6 +113,7 @@ namespace oln {
       struct generic_erosion : public erosion_ret<I>
       {
 	typedef erosion_ret<I> super_type;
+	// FIXME: typedef oln_type_of(super_type, output) output_type;
 
 	const W& win;
 
@@ -127,6 +128,7 @@ namespace oln {
 	{
 	  oln_type_of(super_type, output) tmp(input.size()); // FIXME: trick
 	  output = tmp;
+	  // FIXME: output.resize(input.size);
 
 	  oln_type_of(I, fwd_piter) p(input.size());
 	  for_all_p (p)
@@ -154,6 +156,7 @@ namespace oln {
       struct rectangle2d_erosion : public erosion_ret<I>
       {
 	typedef erosion_ret<I> super_type;
+	// FIXME: typedef oln_type_of(super_type, output) output_type;
 
 	const win_rectangle2d& win;
 
@@ -165,7 +168,8 @@ namespace oln {
 
 	void impl_run()
 	{
-	  oln_type_of(super_type, output) temp;
+	  box<oln_type_of(super_type, output)> temp; // FIXME: box?
+	  // FIXME: output_type temp;
 
 	  win_hline2d hline(win.width);
 	  win_vline2d vline(win.height);

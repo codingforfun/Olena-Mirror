@@ -1,3 +1,10 @@
+2005-04-15  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* oln/core/box.hh (operator=(box<II>)): Add impl.
+	(operator=(image_like_<II>)): Likewise.
+	* oln/core/abstract/image_like_.hh: Update.
+	* oln/morpho/erosion.hh: Add FIXMEs.
+
 2005-04-14  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* oln/core/accum.hh: Rewrite and move...

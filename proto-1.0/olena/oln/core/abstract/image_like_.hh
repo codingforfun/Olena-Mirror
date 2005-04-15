@@ -101,7 +101,15 @@ namespace oln
     this->image_ = rhs.real();
     return *this;
   }
-  
+
+  template <typename I>
+  template <typename II, typename E>
+  box<I>& box<I>::operator=(const abstract::image_like_<II, E>& rhs)
+  {
+    this->image_ = rhs.real();
+    return *this;
+  }
+
 
 } // end of namespace oln
 

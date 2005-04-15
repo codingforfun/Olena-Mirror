@@ -116,16 +116,16 @@ namespace oln {
     // operator= that are not ok
 
     template <typename II>
-    void operator=(const box<II>& rhs)
+    box<I>& operator=(const box<II>& rhs)
     {
-      mlc::false_type::ensure();
+      *this = rhs.unbox();
+      return *this;
+//       mlc::false_type::ensure();
     }
 
     template <typename II, typename E>
-    void operator=(const abstract::image_like_<II, E>& rhs)
-    {
-      mlc::false_type::ensure();
-    }
+    box<I>& operator=(const abstract::image_like_<II, E>& rhs); // impl in image_like_.hh
+//       { mlc::false_type::ensure(); }
 
     template <typename II>
     void operator=(const abstract::image<II>& rhs)
