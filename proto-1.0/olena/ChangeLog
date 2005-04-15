@@ -1,5 +1,9 @@
 2005-04-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	* tests/morpho/tests/elementary_dilation: Typo.
+
+2005-04-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add tests for elementary dilation/erosion.
 
 	* tests/morpho/tests/elementary_dilation,

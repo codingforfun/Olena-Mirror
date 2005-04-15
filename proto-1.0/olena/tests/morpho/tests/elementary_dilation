@@ -21,7 +21,7 @@ bool check()
   im_type ima;
   ima = oln::io::read(rdata("16x16.pbm"));
 
-  if (oln::utils::md5(oln::morpho::elementary_erosiont(ima) != key)
+  if (oln::utils::md5(oln::morpho::elementary_dilation(ima) != key)
     return true;
 
   return false;
