@@ -33,7 +33,6 @@
 # include <oln/core/abstract/image_operator.hh>
 # include <oln/morpho/stat.hh>
 # include <oln/level/compare.hh>
-# include <oln/convert/nbh_to_se.hh>
 # include <oln/arith/min.hh>
 
 # include <oln/core/abstract/neighborhood.hh>
@@ -59,11 +58,15 @@ namespace oln {
         oln_type_of(I1, concrete) output(marker.size());
 	// FIXME: Useless?
 	// marker.border_adapt_copy(marker.nbh_get().delta());
-        oln_type_of(I1, piter) p(marker);
+        oln_type_of(I1, piter) p(marker.size());
         for_all_p (p)
-          output[p] =
-	    arith::min(morpho::max(marker, p, marker.nbh_get().get_win()),
-		       mask[p]);
+	  {
+	    oln_type_of(I1, value) a =
+	      morpho::max(marker, p, marker.nbh_get().get_win());
+	    oln_type_of(I2, value) b = mask[p];
+	    // Min.
+	    output[p] = a < b ? a : b;
+	  }
         return output;
       }
 

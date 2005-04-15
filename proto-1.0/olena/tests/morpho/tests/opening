@@ -8,19 +8,22 @@
 #include <oln/level/compare.hh>
 #include <ntg/all.hh>
 
+using namespace oln;
+
 bool check()
 {
-  // MD5 sum of object.pbm's geodesic dilation result.
-  oln::utils::key::value_type   data_key[16] =
+  // MD5 sum of object.pbm's opening result.
+  // FIXME: Replace this fake with the actual result.
+  utils::key::value_type   data_key[16] =
     {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-  oln::utils::key key(data_key);
+  utils::key key(data_key);
 
-  typedef oln::image2d<ntg::bin> im_type;
+  typedef image2d<ntg::bin> im_type;
   im_type ima;
-  ima = oln::io::read(rdata("16x16.pbm"));
+  ima = io::read(rdata("16x16.pbm"));
 
-  if (oln::utils::md5(oln::morpho::opening(ima, oln::win_c8p())) != key)
+  if (utils::md5(morpho::opening(ima, win_c8p())) != key)
     return true;
 
   return false;

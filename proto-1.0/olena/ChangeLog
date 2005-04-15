@@ -1,5 +1,20 @@
 2005-04-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Repair geodesic erosion and dilation (cont.).
+
+	* oln/morpho/geodesic_dilation.hh
+	(morpho::proc::geodesic_dilation)
+	* oln/morpho/geodesic_erosion.hh
+	(morpho::proc::geodesic_erosion): Fix iterator definition, as well
+	as min/max operation.
+	* olena/tests/morpho/tests/closing
+	* olena/tests/morpho/tests/erosion
+	* olena/tests/morpho/tests/geodesic_dilation,
+	* olena/tests/morpho/tests/geodesic_erosion,
+	* olena/tests/morpho/tests/opening: Aesthetic changes.
+
+2005-04-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add generic morphological opening and closing.
 	Repair geodesic erosion and dilation.
 
