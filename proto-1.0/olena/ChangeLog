@@ -1,5 +1,12 @@
 2005-04-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add tests for elementary dilation/erosion.
+
+	* tests/morpho/tests/elementary_dilation,
+	* tests/morpho/tests/elementary_erosion: New tests.
+
+2005-04-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	Repair geodesic erosion and dilation (cont.).
 
 	* oln/morpho/geodesic_dilation.hh
