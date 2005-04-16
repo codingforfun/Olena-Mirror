@@ -1,0 +1,38 @@
+#include "data.hh"
+
+#include <ntg/all.hh>
+
+#include <oln/basics2d.hh>
+#include <oln/utils/invert.hh>
+#include <oln/io/read_image.hh>
+#include <oln/level/compare.hh>
+
+
+bool check()
+{
+  oln::image2d<ntg::bin> ima_bin;
+  oln::image2d<ntg::int_u8> ima_int;
+  oln::image2d<ntg::rgb_8> ima_rgb;
+
+  ima_bin = oln::io::read(rdata("16x16.pbm"));
+  ima_int = oln::io::read(rdata("16x16.pgm"));
+  ima_rgb = oln::io::read(rdata("16x16.ppm"));
+
+  if (oln::level::is_equal(ima_bin,
+			   oln::utils::invert(oln::utils::invert(ima_bin))) &&
+      oln::level::is_equal(ima_int,
+			   oln::utils::invert(oln::utils::invert(ima_int))) &&
+      oln::level::is_equal(ima_rgb,
+			   oln::utils::invert(oln::utils::invert(ima_rgb))))
+    {
+      std::cout << "OK" << std::endl;
+      return false;
+    }
+  else
+    {
+      std::cout << "FAIL" << std::endl;
+      return true;
+    }
+}
+
+

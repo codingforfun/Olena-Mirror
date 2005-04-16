@@ -96,6 +96,7 @@ namespace oln {
 
     public:
 
+      I& image() { return this->image_.unbox(); }
       I& impl_delegate() { return this->image_.unbox(); }
       const I& impl_delegate() const { return this->image_.unbox(); }
     };
@@ -128,6 +129,7 @@ namespace oln {
 
     public:
 
+      const I& image() const { return this->image_.unbox(); }
       const I& impl_delegate() const { return this->image_.unbox(); }
     };
 

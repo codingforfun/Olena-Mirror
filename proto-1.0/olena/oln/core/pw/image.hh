@@ -46,7 +46,7 @@ namespace oln {
   // fwd decl
   namespace pw {
     template <typename I> struct image;
-  }    
+  }
 
   // super type
   template <typename I>
@@ -192,7 +192,7 @@ namespace oln {
     void impl_resize_border(size_t new_border, bool copy_border) const
     {
     }
-    
+
   };
 
 
@@ -256,22 +256,22 @@ namespace oln {
 
 
 
-
+  // FIXME: Does not work with g++-3.4.
   /// Specialization of image_for_all_p that gives a compile-time error.
 
-  template <typename I>
-  void image_for_all_p(const abstract::image<I>&)
-  {
-    struct OLENA_ERROR__arg_of__image_for_all_p__should_not_be_an_image();
-  }
+//   template <typename I>
+//   void image_for_all_p(const abstract::image<I>&)
+//   {
+//     struct OLENA_ERROR__arg_of__image_for_all_p__should_not_be_an_image();
+//   }
 
-  /// Specialization of image_for_all_p that gives a compile-time error.
+//   /// Specialization of image_for_all_p that gives a compile-time error.
 
-  template <typename P>
-  void image_for_all_p(const abstract::point<P>&)
-  {
-    struct OLENA_ERROR__arg_of__image_for_all_p__should_not_be_a_point();
-  }
+//   template <typename P>
+//   void image_for_all_p(const abstract::point<P>&)
+//   {
+//     struct OLENA_ERROR__arg_of__image_for_all_p__should_not_be_a_point();
+//   }
 
 
 

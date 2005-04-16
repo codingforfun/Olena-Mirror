@@ -45,6 +45,10 @@ namespace oln {
 
   namespace morpho {
     template <typename I> struct erosion_ret;
+
+    template<typename I, typename W>
+    erosion_ret<I> erosion(const abstract::image<I>& input,
+			   const abstract::window<W>& win);
   }
 
   // super_type
@@ -126,13 +130,13 @@ namespace oln {
 
 	void impl_run()
 	{
-	  oln_type_of(super_type, output) tmp(input.size()); // FIXME: trick
-	  output = tmp;
+	  oln_type_of(super_type, output) tmp(this->input.size()); // FIXME: trick
+	  this->output = tmp;
 	  // FIXME: output.resize(input.size);
 
-	  oln_type_of(I, fwd_piter) p(input.size());
+	  oln_type_of(I, fwd_piter) p(this->input.size());
 	  for_all_p (p)
-	    output[p] = morpho::min(input, p, win);
+	    this->output[p] = morpho::min(this->input, p, this->win);
 	}
       };
 
@@ -146,7 +150,7 @@ namespace oln {
 	tmp.run();
 	return tmp;
       }
-      
+
 
 
 
@@ -171,11 +175,11 @@ namespace oln {
 	  box<oln_type_of(super_type, output)> temp; // FIXME: box?
 	  // FIXME: output_type temp;
 
-	  win_hline2d hline(win.width);
-	  win_vline2d vline(win.height);
-	  
-	  temp = morpho::erosion(input, hline);
- 	  output = morpho::erosion(temp, vline);
+	  win_hline2d hline(this->win.width);
+	  win_vline2d vline(this->win.height);
+
+	  temp = oln::morpho::erosion(this->input, hline);
+ 	  this->output = oln::morpho::erosion(temp, vline);
 	}
       };
 
@@ -190,7 +194,7 @@ namespace oln {
 	return tmp;
       }
 
-      
+
 
 
     } // end of namespace oln::morpho::impl

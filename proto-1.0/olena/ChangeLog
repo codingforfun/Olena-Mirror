@@ -1,3 +1,15 @@
+2005-04-16  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* tests/utils/tests/invert: New.
+	* oln/funobj/invert.hh: Invert functor.
+	* oln/core/abstract/image_by_delegation.hh (image): Add missing method.
+	* oln/core/box.hh: Comment code that prevents from compiling with
+	g++-3.4.
+	* oln/core/pw/image.hh: Likewise.
+	* oln/utils/invert.hh: Inverted images implentation.
+	* oln/morpho/erosion.hh: Add a forward declaration to allow compilation
+	with g++-3.4.
+
 2005-04-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	* tests/morpho/tests/elementary_dilation: Typo.

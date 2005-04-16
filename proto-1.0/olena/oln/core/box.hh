@@ -1,3 +1,4 @@
+
 // Copyright (C) 2005 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -130,7 +131,8 @@ namespace oln {
     template <typename II>
     void operator=(const abstract::image<II>& rhs)
     {
-      mlc::false_type::ensure();
+      // FIXME: Does not work with g++-3.4.
+//       mlc::false_type::ensure();
     }
 
     // FIXME: add versions for I2 (neq I) to produce explicit errors
@@ -218,7 +220,7 @@ namespace oln {
       return *this;
     }
 
-    /// Delegation relies on a constant image. 
+    /// Delegation relies on a constant image.
     const I& impl_delegate() const
     {
       return this->image_;
