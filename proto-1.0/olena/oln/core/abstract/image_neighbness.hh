@@ -53,6 +53,12 @@ namespace oln {
 	return this->exact().impl_nbh_get();
       }
 
+      //FIXME: is it the right way ?
+      const neighb_type& impl_nbh_get() const
+      {
+	return this->exact().delegate().nbh_get();
+      }
+
     protected:
 
       image_with_nbh() {}

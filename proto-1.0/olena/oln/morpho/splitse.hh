@@ -34,6 +34,10 @@
 # include <oln/core/2d/size2d.hh>
 # include <oln/core/3d/size3d.hh>
 
+# include <oln/core/abstract/window.hh>
+# include <oln/core/abstract/window.hh>
+
+
 namespace oln {
   namespace morpho {
 
@@ -76,22 +80,21 @@ namespace oln {
 
     template<class W>
     W
-    get_plus_win_only(const abstract::window<W>& win)
+    get_plus_win_only(const W& win) // FIXME: abstract::window<W>& win)
     {
-      oln_wn_type_of(W, fwd_iter) q(win.exact());
       W out;
-      // FIXME: too many changes: rewrite!
-//       for_all (q)
-// 	{
-// 	  unsigned n;
-// 	  for (n = 0; n < dim_traits<oln_wn_type_of(W, size)>::dim; ++n)
-// 	    if (dp.nth(n) < 0) {
-// 	      out.add(dp);
-// 	      break;
-// 	    } else if (dp.nth(n) > 0) {
-// 	      break;
-// 	    }
-// 	}
+      for (unsigned i = 0; i < win.card(); ++i)
+	{
+	  const oln_wn_type_of(W, dpoint)& dp = win.get_dp()[i];
+	  unsigned n;
+	  for (n = 0; n < dim_traits<oln_wn_type_of(W, size)>::dim; ++n)
+	    if (dp.nth(n) < 0) {
+	      out.add(dp);
+	      break;
+	    } else if (dp.nth(n) > 0) {
+	      break;
+	    }
+	}
       return out;
     }
 
@@ -110,26 +113,24 @@ namespace oln {
     */
     template<class W>
     W
-    get_plus_win_p(const abstract::window<W>& win)
+    get_plus_win_p(const W& win) // abstract::window<W>& win)
     {
-      oln_wn_type_of(W, fwd_iter) q(win.exact());
       W out;
-
-      // FIXME: too many changes: rewrite!
-//       for_all (dp)
-// 	{
-// 	  unsigned n;
-// 	  for (n = 0; n < dim_traits<oln_wn_type_of(W, size)>::dim; ++n)
-// 	    if (dp.nth(n) < 0) {
-// 	      out.add(dp);
-// 	      break;
-// 	    } else if (dp.nth(n) > 0) {
-// 	      break;
-// 	    }
-// 	  // All p.nth(n) are 0.
-// 	  if (n == dim_traits<oln_wn_type_of(W, size)>::dim)
-// 	    out.add(dp);
-// 	}
+      for (unsigned i = 0; i < win.card(); ++i)
+	{
+	  const oln_wn_type_of(W, dpoint)& dp = win.get_dp()[i];
+	  unsigned n;
+	  for (n = 0; n < dim_traits<oln_wn_type_of(W, size)>::dim; ++n)
+	    if (dp.nth(n) < 0) {
+	      out.add(dp);
+	      break;
+	    } else if (dp.nth(n) > 0) {
+	      break;
+	    }
+	  // All p.nth(n) are 0.
+	  if (n == dim_traits<oln_wn_type_of(W, size)>::dim)
+	    out.add(dp);
+	}
       return out;
     }
 
@@ -147,23 +148,21 @@ namespace oln {
     */
     template<class W>
     W
-    get_minus_win_only(const abstract::window<W>& win)
+    get_minus_win_only(const W& win) // abstract::window<W>& win)
     {
-      oln_wn_type_of(W, fwd_iter) q(win.exact());
       W out;
-
-      // FIXME: too many changes: rewrite!
-//       for_all (dp)
-// 	{
-// 	  unsigned n;
-// 	  for (n = 0; n < dim_traits<oln_wn_type_of(W, size)>::dim; ++n)
-// 	    if (dp.nth(n) > 0) {
-// 	      out.add(dp);
-// 	      break;
-// 	    } else if (dp.nth(n) < 0) {
-// 	      break;
-// 	    }
-// 	}
+      for (unsigned i = 0; i < win.card(); ++i)
+	{
+	  const oln_wn_type_of(W, dpoint)& dp = win.get_dp()[i];
+	  unsigned n;
+	  for (n = 0; n < dim_traits<oln_wn_type_of(W, size)>::dim; ++n)
+	    if (dp.nth(n) > 0) {
+	      out.add(dp);
+	      break;
+	    } else if (dp.nth(n) < 0) {
+	      break;
+	    }
+	}
       return out;
     }
 
@@ -182,26 +181,24 @@ namespace oln {
     */
     template<class W>
     W
-    get_minus_win_p(const abstract::window<W>& win)
+    get_minus_win_p(const W& win) // abstract::window<W>& win)
     {
-      oln_wn_type_of(W, fwd_iter) q(win.exact());
       W out;
-
-      // FIXME: too many changes: rewrite!
-//       for_all (dp)
-// 	{
-// 	  unsigned n;
-// 	  for (n = 0; n < dim_traits<oln_wn_type_of(W, size)>::dim; ++n)
-// 	    if (dp.nth(n) > 0) {
-// 	      out.add(dp);
-// 	      break;
-// 	    } else if (dp.nth(n) < 0) {
-// 	      break;
-// 	    }
-// 	  // All p.nth(n) are 0.
-// 	  if (n == dim_traits<oln_wn_type_of(W, size)>::dim)
-// 	    out.add(dp);
-// 	}
+      for (unsigned i = 0; i < win.card(); ++i)
+	{
+	  const oln_wn_type_of(W, dpoint)& dp = win.get_dp()[i];
+	  unsigned n;
+	  for (n = 0; n < dim_traits<oln_wn_type_of(W, size)>::dim; ++n)
+	    if (dp.nth(n) > 0) {
+	      out.add(dp);
+	      break;
+	    } else if (dp.nth(n) < 0) {
+	      break;
+	    }
+	  // All p.nth(n) are 0.
+	  if (n == dim_traits<oln_wn_type_of(W, size)>::dim)
+	    out.add(dp);
+	}
       return out;
     }
 

@@ -49,453 +49,181 @@
 
 namespace oln {
 
+
+  namespace tag {
+
+    template <typename Op> struct oper {};
+
+    struct by_dilation : public oper< by_dilation > {};
+    struct by_erosion  : public oper< by_erosion > {};
+
+
+    template <typename A> struct algo {};
+
+    struct sequential : public algo< sequential > {};
+    struct hybrid     : public algo< hybrid > {};
+
+  } // end of namespace oln::morpho::tag
+
+
+
   namespace morpho {
-
-    // fwd decl
-    template <typename I, typename E> struct reconstruction_ret;
-
-  }
-
-  // category
-  template <typename I, typename E>
-  struct set_category< morpho::reconstruction_ret<I,E> > { typedef category::image ret; };
+    template <typename I1, typename I2> struct reconstruction_ret;
+  } // end of namespace oln::morpho
 
   // super_type
-  template <typename I, typename E>
-  struct set_super_type< morpho::reconstruction_ret<I,E> >
-  {
-    typedef abstract::image_binary_operator<I, I, I, morpho::reconstruction_ret<I, E> > ret;
-    // FIXME: see below
-  };
 
+  template <typename I1, typename I2>
+  struct set_super_type< morpho::reconstruction_ret<I1, I2> >
+  {
+    typedef oln_type_of(I1, concrete) output_type;
+
+    typedef morpho::reconstruction_ret<I1,I2> self_type;
+    typedef abstract::image_binary_operator<output_type, I1, I2, self_type > ret;
+  };
 
   namespace morpho {
 
-    template <typename I, typename N>
-    struct reconstruction_ret : public abstract::image_binary_operator<I, I, I, reconstruction_ret<I, N> >
-      // FIXME: abstract::image_binary_operator<oln_type_of(I, concrete), ...
+    // Reconstruction as a 'classical' procedure returning an image (do not
+    // use it; prefer morpho::reconstruction).
+
+    namespace proc {
+
+      // FIXME: ...
+
+    } // end of namespace oln::morpho::proc
+
+
+    template <typename I1, typename I2>
+    struct reconstruction_ret :
+      // FIXME: oln_super_of_
+      public oln::internal::get_super_type< reconstruction_ret<I1,I2> >::ret
     {
-      typedef abstract::image_binary_operator<I, I, I, reconstruction_ret<I, N> > super_type;
+      typedef reconstruction_ret<I1, I2> self_type;
+      typedef typename oln::internal::get_super_type<self_type>::ret super_type;
 
-      const N nbh;
+      box<const I1> marker;
+      box<const I2> mask;
 
-      reconstruction_ret(const abstract::image<I>& input1,
-			 const abstract::image<I>& input2,
-			 const abstract::neighborhood<N>& nbh) :
-	super_type(input1.exact(), input2.exact()),
-	nbh(nbh.exact())
-      {}
+      reconstruction_ret(const abstract::image_with_nbh<I1>& marker,
+			 const abstract::image<I2>& mask) :
+	super_type(marker, mask),
+	marker(marker),
+	mask(mask)
+      {
+      }
+
+      const oln_type_of(I1, neighb)& impl_nbh_get() const
+      {
+	return marker.nbh_get();
+      }
 
     };
 
-    namespace sequential {
+  } // end of namespace morpho
 
-      namespace impl {
+} // end of namespace oln
 
-	template <typename I, typename N, typename E>
-	struct reconstruction_sequential_ret : public reconstruction_ret<I, N>
-	{
-	  typedef reconstruction_ret<I, N> super_type;
+# include <oln/morpho/reconstruction_canvas.inc>
 
-	  void fwd_loop_body()
-	  {
-	    static_cast<E*>((void*)this)->fwd_loop_body_impl();
-	  }
+namespace oln {
 
-	  void bkd_loop_body()
-	  {
-	    static_cast<E*>((void*)this)->bkd_loop_body_impl();
-	  }
+  namespace morpho {
 
-	  void preconditions()
-	  {
-	    precondition(this->input1.size() == this->input2.size());
-	    static_cast<E*>((void*)this)->preconditions_impl();
-	  }
+    namespace impl {
 
-	  void impl_run()
-	  {
-	    mlc::eq<oln_type_of(I, size), oln_type_of(N, size)>::ensure();
+      template<typename Op, typename A, typename I1, typename I2>
+      struct generic_reconstruction;
 
-	    I output;
-	    output = utils::clone(this->input1);
-	    bool non_stability = true;
-	    while (non_stability)
-	      {
-		work.unbox() = utils::clone(output);
-		for_all_p (fwd_p)
-		  fwd_loop_body();
-		for_all_p (bkd_p)
-		  bkd_loop_body();
+    } // end of namespace impl
 
-		non_stability = !(level::is_equal(work, output));
-		output = work.unbox();
-	      }
-	    this->output = output;
-	  }
+  } // end of namespace morpho
 
-	protected:
-	  reconstruction_sequential_ret(const abstract::image<I>& input1, //marker
-					const abstract::image<I>& input2, //mask
-					const abstract::neighborhood<N>& nbh)
-	    : super_type(input1, input2, nbh),
-	      fwd_p(input1.size()),
-	      bkd_p(input1.size())
-	  {
-	    se_plus = get_plus_se_p(convert::nbh_to_cse(this->nbh));
-	    se_minus = get_minus_se_p(convert::nbh_to_cse(this->nbh));
-	  }
+} // end of namespace oln
 
-	  oln_type_of(N, window) se_plus;
-	  oln_type_of(N, window) se_minus;
-	  oln_type_of(I, fwd_piter) fwd_p;
-	  oln_type_of(I, bkd_piter) bkd_p;
-	  box<I> work;
+# include <oln/morpho/reconstruction_by_dilation.inc>
+# include <oln/morpho/reconstruction_by_erosion.inc>
 
-	};
+namespace oln {
 
-	template <typename I, typename N>
-	struct reconstruction_dilation_ret :
-	public reconstruction_sequential_ret<I, N, reconstruction_dilation_ret<I, N> >
-	{
-	  typedef reconstruction_sequential_ret<I, N, reconstruction_dilation_ret<I, N> > super_type;
+  namespace morpho {
 
-	  reconstruction_dilation_ret(const abstract::image<I>& input1, //marker
-				      const abstract::image<I>& input2, //mask
-				      const abstract::neighborhood<N>& nbh)
+    namespace impl {
 
-	    : super_type(input1, input2, nbh)
-	  {}
+      // Generic implementation of reconstruction (routine).
 
-	  void fwd_loop_body_impl()
-	  {
-	    this->work[this->fwd_p] = ntg::min(morpho::max(this->work.unbox(),
-							   this->fwd_p,
-							   this->se_plus),
-					       this->input2[this->fwd_p].value());
-	  }
-
-	  void bkd_loop_body_impl()
-	  {
-	    this->work[this->bkd_p] = ntg::min(morpho::max(this->work.unbox(),
-							   this->bkd_p,
-							   this->se_minus),
-					       this->input2[this->bkd_p].value());
-	  }
-
-	  void preconditions_impl()
-	  {
-	    precondition(level::is_greater_or_equal(this->input2, this->input1));
-	  }
-
-	};
-
-
-	template <typename I, typename N>
-	struct reconstruction_erosion_ret :
-	public reconstruction_sequential_ret<I, N, reconstruction_erosion_ret<I, N> >
-	{
-	  typedef reconstruction_sequential_ret<I, N, reconstruction_erosion_ret<I, N> > super_type;
-
-	  reconstruction_erosion_ret(const abstract::image<I>& input1, //marker
-				     const abstract::image<I>& input2, //mask
-				     const abstract::neighborhood<N>& nbh)
-
-	    : super_type(input1, input2, nbh)
-	  {}
-
-	  void fwd_loop_body_impl()
-	  {
-	    this->work[this->fwd_p] = ntg::max(morpho::min(this->work.unbox(),
-							   this->fwd_p,
-							   this->se_plus),
-					       this->input2[this->fwd_p].value());
-	  }
-
-	  void bkd_loop_body_impl()
-	  {
-	    this->work[this->bkd_p] = ntg::max(morpho::min(this->work.unbox(),
-							   this->bkd_p,
-							   this->se_minus),
-					       this->input2[this->bkd_p].value());
-	  }
-
-	  void preconditions_impl()
-	  {
-	    precondition(level::is_greater_or_equal(this->input1, this->input2));
-	  }
-
-	};
-
-      }
-
-      template<class I, class N>
-      reconstruction_ret<I, N>
-      geodesic_reconstruction_dilation(const abstract::image<I> & marker,
-				       const abstract::image<I> & mask,
-				       const abstract::neighborhood<N>& nbh)
+      template<typename Op, typename A, typename I1, typename I2>
+      reconstruction_ret<I1,I2>
+      reconstruction(const abstract::image_with_nbh<I1>& marker,
+		     const abstract::image<I2>&          mask)
       {
-	impl::reconstruction_dilation_ret<I, N> tmp(marker, mask, nbh);
+	generic_reconstruction<Op, A, I1, I2> tmp(marker, mask);
 	tmp.run();
 	return tmp;
       }
 
-      template<class I, class N>
-      reconstruction_ret<I, N>
-      geodesic_reconstruction_erosion(const abstract::image<I> & marker,
-				      const abstract::image<I> & mask,
-				      const abstract::neighborhood<N>& nbh)
-      {
-	impl::reconstruction_erosion_ret<I, N> tmp(marker, mask, nbh);
-	tmp.run();
-	return tmp;
-      }
+    } // end of namespace impl
 
-    }// sequential
+    /// Generic reconstruction (facade).
 
+    template<typename Op, typename I1, typename I2, typename A>
+    reconstruction_ret<I1,I2>
+    reconstruction(const tag::oper<Op>&			oper_,
+		   const abstract::image_with_nbh<I1>&	marker,
+		   const abstract::image<I2>&		mask,
+		   const tag::algo<A>&			algo_)
+    {
+      return impl::reconstruction<Op,A>(marker.exact(), mask.exact());
+    }
 
-    namespace hybrid {
+    // by dilation
 
-      namespace impl {
+    template<typename I1, typename I2, typename A>
+    reconstruction_ret<I1,I2>
+    reconstruction_by_dilation(const abstract::image_with_nbh<I1>&	marker,
+			       const abstract::image<I2>&		mask,
+			       const tag::algo<A>&			algo_)
+    {
+      mlc::eq<oln_type_of(I1, grid), oln_type_of(I2, grid)>::ensure();
+      precondition(marker.size() == mask.size());
+      return reconstruction(tag::by_dilation(), marker, mask, algo_);
+    }
 
-	template <typename I, typename N, typename E>
-	struct reconstruction_hybrid_ret : public reconstruction_ret<I, N>
-	{
-	  typedef reconstruction_ret<I, N> super_type;
+    template<typename I1, typename I2>
+    reconstruction_ret<I1,I2>
+    reconstruction_by_dilation(const abstract::image_with_nbh<I1>& marker,
+			       const abstract::image<I2>&          mask)
+    {
+      mlc::eq<oln_type_of(I1, grid), oln_type_of(I2, grid)>::ensure();
+      precondition(marker.size() == mask.size());
+      return reconstruction(tag::by_dilation(), marker, mask, tag::hybrid());
+    }
 
-	  bool exist_init()
-	  {
-	    // FIXME: to many changes => rewrite!
-// 	    typedef oln_type_of(N, window) se_type;
-// 	    oln_type_of(se_type, fwd_qiter) dp(se_minus);
-// 	    for_all (dp)
-// 	      {
-// 		q = (oln_type_of(se_type, dpoint))dp +
-// 		  (oln_type_of(I, point))bkd_p;
-// 		if (static_cast<E*>((void*)this)->exist_init_impl())
-// 		  return true;
-// 	      }
-	    return false;
-	  }
+    // by erosion
 
-	  void fwd_loop_body()
-	  {
-	    static_cast<E*>((void*)this)->fwd_loop_body_impl();
-	  }
+    template<typename I1, typename I2, typename A>
+    reconstruction_ret<I1,I2>
+    reconstruction_by_erosion(const abstract::image_with_nbh<I1>&	marker,
+			       const abstract::image<I2>&		mask,
+			       const tag::algo<A>&			algo_)
+    {
+      mlc::eq<oln_type_of(I1, grid), oln_type_of(I2, grid)>::ensure();
+      precondition(marker.size() == mask.size());
+      return reconstruction(tag::by_erosion(), marker, mask, algo_);
+    }
 
-	  void bkd_loop_body()
-	  {
-	    static_cast<E*>((void*)this)->bkd_loop_body_impl();
-	  }
+    template<typename I1, typename I2>
+    reconstruction_ret<I1,I2>
+    reconstruction_by_erosion(const abstract::image_with_nbh<I1>& marker,
+			       const abstract::image<I2>&          mask)
+    {
+      mlc::eq<oln_type_of(I1, grid), oln_type_of(I2, grid)>::ensure();
+      precondition(marker.size() == mask.size());
+      return reconstruction(tag::by_erosion(), marker, mask, tag::hybrid());
+    }
 
-	  void fifo_loop_body()
-	  {
-	    static_cast<E*>((void*)this)->fifo_loop_body_impl();
-	  }
+  } // end of namespace oln::morpho
 
-	  void preconditions()
-	  {
-	    precondition(this->input1.size() == this->input2.size());
-	    static_cast<E*>((void*)this)->preconditions_impl();
-	  }
-
-	  void impl_run()
-	  {
-	    mlc::eq<oln_type_of(I, size), oln_type_of(N, size)>::ensure();
-	    preconditions();
-
-	    this->output.unbox() = utils::clone(this->input1);
-
-	    for_all_p (fwd_p)
-	      fwd_loop_body();
-
-	    for_all_p (bkd_p)
-	      {
-		bkd_loop_body();
-		if (exist_init())
-		  fifo.push(bkd_p);
-	      }
-	      // Propagation Step
-	    while (!fifo.empty())
-	      {
-		p = fifo.front();
-		fifo.pop();
-		// FIXME: AWFUL commented cause too many changes!
-// 		typedef oln_type_of(N, window) window_type;
-// 		window_type w = convert::nbh_to_se(this->nbh);
-// 		oln_wn_type_of(window_type, fwd_iter) q(w);
-
-// 		for_all_q_of_p (q)
-// 		  {
-// 		    if (this->output.hold(q))
-// 		      fifo_loop_body();
-// 		  }
-	      }
-	  }
-
-	protected:
-
-	  reconstruction_hybrid_ret(const abstract::image<I>& input1, //marker
-				    const abstract::image<I>& input2, //mask
-				    const abstract::neighborhood<N>& nbh)
-
-	    : super_type(input1, input2, nbh),
-	      fwd_p(input1.size()),
-	      bkd_p(input1.size())
-	  {
-	    se_plus = get_plus_se_p(convert::nbh_to_cse(this->nbh));
-	    se_minus = get_minus_se_p(convert::nbh_to_cse(this->nbh));
-	  }
-
-	  oln_type_of(N, window) se_plus;
-	  oln_type_of(N, window) se_minus;
-	  oln_type_of(I, fwd_piter) fwd_p;
-	  oln_type_of(I, bkd_piter) bkd_p;
-	  oln_type_of(I, point) p;
-	  oln_type_of(I, point) q;
-	  std::queue<oln_type_of(I, point) > fifo;
-
-
-	};
-
-
-	template <typename I, typename N>
-	struct reconstruction_dilation_ret :
-	  public reconstruction_hybrid_ret<I, N, reconstruction_dilation_ret<I, N> >
-	{
-	  typedef reconstruction_hybrid_ret<I, N, reconstruction_dilation_ret<I, N> > super_type;
-
-	  reconstruction_dilation_ret(const abstract::image<I>& input1, //marker
-				      const abstract::image<I>& input2, //mask
-				      const abstract::neighborhood<N>& nbh)
-
-	    : super_type(input1, input2, nbh)
-	  {}
-
-	  void fwd_loop_body_impl()
-	  {
-	    this->output[this->fwd_p] = ntg::min(morpho::max(this->output.unbox(),
-							     this->fwd_p,
-							     this->se_plus),
-						 this->input2[this->fwd_p].value());
-	  }
-
-	  void bkd_loop_body_impl()
-	  {
-	    this->output[this->bkd_p] = ntg::min(morpho::max(this->output.unbox(),
-							     this->bkd_p,
-							     this->se_minus),
-						 this->input2[this->bkd_p].value());
-	  }
-
-	  void fifo_loop_body_impl()
-	  {
-	    if ((this->output[this->q] < this->output[this->p]) &&
-		(this->input2[this->q] != this->output[this->q]))
-	      {
-		this->output[this->q] = ntg::min(this->output[this->p].value(),
-						 this->input2[this->q].value());
-		this->fifo.push(this->q);
-	      }
-	  }
-
-	  bool exist_init_impl()
-	  {
-	    return this->output.hold(this->q) &&
-	      (this->output[this->q] < this->output[this->bkd_p]) &&
-	      (this->output[this->q] < this->input2[this->q]);
-	  }
-
-	  void preconditions_impl()
-	  {
-	    precondition(level::is_greater_or_equal(this->input2, this->input1));
-	  }
-
-	};
-
-
-
-	template <typename I, typename N>
-	struct reconstruction_erosion_ret :
-	  public reconstruction_hybrid_ret<I, N, reconstruction_erosion_ret<I, N> >
-	{
-	  typedef reconstruction_hybrid_ret<I, N, reconstruction_erosion_ret<I, N> > super_type;
-
-	  reconstruction_erosion_ret(const abstract::image<I>& input1, //marker
-				      const abstract::image<I>& input2, //mask
-				      const abstract::neighborhood<N>& nbh)
-
-	    : super_type(input1, input2, nbh)
-	  {}
-
-	  void fwd_loop_body_impl()
-	  {
-	    this->output[this->fwd_p] = ntg::max(morpho::min(this->output.unbox(),
-							     this->fwd_p,
-							     this->se_plus),
-						 this->input2[this->fwd_p].value());
-	  }
-
-	  void bkd_loop_body_impl()
-	  {
-	    this->output[this->bkd_p] = ntg::max(morpho::min(this->output.unbox(),
-							     this->bkd_p,
-							     this->se_minus),
-						 this->input2[this->bkd_p].value());
-	  }
-
-	  void fifo_loop_body_impl()
-	  {
-	    if ((this->output[this->q] > this->output[this->p]) &&
-		(this->input2[this->q] != this->output[this->q]))
-	      {
-		this->output[this->q] = ntg::max(this->output[this->p].value(),
-						 this->input2[this->q].value());
-		this->fifo.push(this->q);
-	      }
-	  }
-
-	  bool exist_init_impl()
-	  {
-	    return this->output.hold(this->q) &&
-		    (this->output[this->q] > this->output[this->bkd_p]) &&
-		    (this->output[this->q] > this->input2[this->q]);
-	  }
-
-	  void preconditions_impl()
-	  {
-	    precondition(level::is_greater_or_equal(this->input1, this->input2));
-	  }
-
-	};
-
-      }
-
-      template<class I, class N>
-      reconstruction_ret<I, N>
-      geodesic_reconstruction_dilation(const abstract::image<I> & marker,
-				       const abstract::image<I> & mask,
-				       const abstract::neighborhood<N>& nbh)
-      {
-	impl::reconstruction_dilation_ret<I, N> tmp(marker, mask, nbh);
-	tmp.run();
-	return tmp;
-      }
-
-      template<class I, class N>
-      reconstruction_ret<I, N>
-      geodesic_reconstruction_erosion(const abstract::image<I> & marker,
-				      const abstract::image<I> & mask,
-				      const abstract::neighborhood<N>& nbh)
-      {
-	impl::reconstruction_erosion_ret<I, N> tmp(marker, mask, nbh);
-	tmp.run();
-	return tmp;
-      }
-    }// hybrid
-
-  }
-
-}
+} // end of namespace oln
 
 #endif // ! OLENA_MORPHO_RECONSTRUCTION_HH

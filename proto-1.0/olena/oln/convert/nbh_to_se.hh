@@ -40,12 +40,12 @@ namespace oln {
     */
     template<class N>
     oln_nbh_type_of(N, window)
-    nbh_to_se(const oln::abstract::neighborhood<N>& nbh)
+      nbh_to_se(const N& nbh) // FIXME: UGLY oln::abstract::neighborhood<N>& nbh)
     {
       oln_nbh_type_of(N, window) output;
 
       for (unsigned i = 0; i < nbh.card(); i++)
-	output.add(nbh[i]);
+	output.add(nbh.dp(i));
       return output;
     }
 
@@ -61,12 +61,12 @@ namespace oln {
     */
     template<class N>
     oln_nbh_type_of(N, window)
-    nbh_to_cse(const oln::abstract::neighborhood<N>& nbh)
+    nbh_to_cse(const N& nbh) // FIXME: UGLY oln::abstract::neighborhood<N>& nbh)
     {
       oln_nbh_type_of(N, window) output;
 
       for (unsigned i = 0; i < nbh.card(); i++)
-	output.add(nbh[i]);
+	output.add(nbh.dp(i));
 
       oln_nbh_type_of(N, dpoint) zero;
       dpoint_zero(zero);

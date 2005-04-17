@@ -1,3 +1,20 @@
+2005-04-17  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* tests/morpho/tests/reconstruction: New.
+	* oln/convert/nbh_to_se.hh: Adapt to new neighborhoods.
+	* oln/core/abstract/image_neighbness.hh (impl_get_nbh): Add missing
+	method.
+	* oln/morpho/reconstruction.hh: New hierarchy.
+	* oln/morpho/splitse.hh: Adapt to new neighborhoods.
+	* oln/morpho/reconstruction_by_erosion.inc: New. Implementation for
+	reconstruction by erosion.
+	* oln/morpho/reconstruction_canvas.inc: New. Canvas for reconstruction:
+	sequential & hybrid.
+	* oln/morpho/reconstruction_by_dilation.inc: New. Implementation for
+	reconstruction by dilation.
+	* img/marker.pbm: New.
+	* img/mask.pbm: New.
+
 2005-04-16  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* tests/utils/tests/invert: New.
