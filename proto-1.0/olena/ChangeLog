@@ -1,5 +1,12 @@
 2005-04-17  Damien Thivolle  <damien@lrde.epita.fr>
 
+	* oln/io/write_image_2d_pnm.hh (ntg::bin): Write padding bits at the
+	end of each line.
+	* oln/io/read_image_2d_pnm.hh (ntg::bin): Skip padding bits at the end
+	of each	line.
+
+2005-04-17  Damien Thivolle  <damien@lrde.epita.fr>
+
 	* tests/morpho/tests/reconstruction: New.
 	* oln/convert/nbh_to_se.hh: Adapt to new neighborhoods.
 	* oln/core/abstract/image_neighbness.hh (impl_get_nbh): Add missing

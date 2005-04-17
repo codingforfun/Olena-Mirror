@@ -74,33 +74,43 @@ namespace oln {
 	{
 	  point2d p;
 	  value_type c;
-	  bool b = false;
 
 	  for (p.row() = 0; p.row() < to_write_.size().nrows(); ++p.row())
-	    for (p.col() = 0; p.col() < to_write_.size().ncols(); ++p.col())
+	    {
+	      for (p.col() = 0; p.col() < to_write_.size().ncols(); ++p.col())
 		// FIXME: SHOULD NOT BE .value() !!!
-		b = write_value_type(to_write_[p].value());
-	  while (b == false)
-	    b = write_value_type(c);
-	  bin_offset = 7;
-	  bin_v = 0;
+		write_value_type(to_write_[p].value());
+	      write_padding(c);
+	    }
+	}
+
+	template <typename E>
+	void write_padding(const ntg::value<E>&) {}
+
+	void write_padding(const ntg::bin&)
+	{
+	  if (bin_offset != 7)
+	    {
+	      ostr_.write(&bin_v, 1);
+	      bin_offset = 7;
+	      bin_v = 0;
+	    }
 	}
 
 	//FIXME: Should work with builtin types.
 
 	template <typename E>
-	bool write_value_type(const ntg::real_value<E> &c)
+	void write_value_type(const ntg::real_value<E> &c)
 	{
 	  typedef oln_io_type(ntg_nbits(E)) v_type;
 
 	  v_type v;
 	  v = ntg::cast::bound<E, v_type>(c.exact());
 	  ostr_.write((char*)&v, sizeof (v_type));
-	  return true;
 	}
 
 	template <typename E>
-	bool write_value_type(const ntg::vect_value<E> &c)
+	void write_value_type(const ntg::vect_value<E> &c)
 	{
 	  for (unsigned i = 0; i < 3; i++)
 	    {
@@ -110,25 +120,19 @@ namespace oln {
 	      v = c[i];
 	      ostr_.write((char*)&v, sizeof (v_type));
 	    }
-	  return true;
 	}
 
-	bool write_value_type(const ntg::bin &c)
+	void write_value_type(const ntg::bin &c)
 	{
-	  bool ret = false;
-
 	  if (bin_offset == -1)
 	    {
-	      bin_v = ~bin_v;
 	      ostr_.write(&bin_v, 1);
 	      bin_offset = 7;
 	      bin_v = 0;
-	      ret = true;
 	    }
-	  if (c == value_type(0))
+	  if (c == value_type(1))
 	    bin_v |= 1 << bin_offset;
 	  bin_offset--;
-	  return ret;
 	}
       };
 

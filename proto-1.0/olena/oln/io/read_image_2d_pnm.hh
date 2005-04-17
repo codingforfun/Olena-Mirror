@@ -119,11 +119,14 @@ namespace oln {
 	  precond(c);
 
 	  for (p.row() = 0; p.row() < info_.rows && !istr_.eof(); ++p.row())
-	    for (p.col() = 0; p.col() < info_.cols && !istr_.eof(); ++p.col())
-	      {
-		read_value_type(c);
-		tmp[p] = c;
-	      }
+	    {
+	      offset = -1;
+	      for (p.col() = 0; p.col() < info_.cols && !istr_.eof(); ++p.col())
+		{
+		  read_value_type(c);
+		  tmp[p] = c;
+		}
+	    }
 	  this->output = tmp;
 	}
 
