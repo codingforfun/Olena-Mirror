@@ -38,37 +38,44 @@ namespace oln {
   namespace arith {
         // fwd decl
     namespace impl {
-      template <typename I> struct max_type;
+      template <typename I1, typename I2> struct max_type;
     }
 
   }
 
   // super_type
-  template <typename I>
-  struct set_super_type< arith::impl::max_type<I> >
+  template <typename I1, typename I2>
+  struct set_super_type< arith::impl::max_type<I1, I2> >
   {
-    typedef abstract::image_binary_operator<I, I, I, arith::impl::max_type<I> > ret;
+    typedef oln_type_of(I1, concrete) output_type;
+    typedef arith::impl::max_type<I1, I2> self_type;
+    typedef abstract::image_binary_operator<output_type, I1, I2, self_type> ret;
   };
 
   namespace arith {
 
     namespace impl {
 
-      template <class I>
-      struct max_type : public abstract::image_binary_operator<I, I, I, max_type<I> >
+      template <typename I1, typename I2>
+      struct max_type :
+	// FIXME: oln_super_of_
+	public oln::internal::get_super_type< max_type<I1,I2> >::ret
       {
-	typedef abstract::image_binary_operator<I, I, I, max_type<I> > super_type;
+	typedef typename oln::internal::get_super_type< max_type<I1,I2> >::ret
+	   super_type;
+	typedef oln_type_of(I1, concrete) output_type;
 
-	max_type(const abstract::image<I>& input1,
-		 const abstract::image<I>& input2) :
+	max_type(const abstract::image<I1>& input1,
+		 const abstract::image<I2>& input2) :
 	  super_type(input1.exact(), input2.exact())
 	{}
 
 	void impl_run()
 	{
 	  precondition(this->input1.size() == this->input2.size());
-	  I output(this->input1.size());
-	  oln_type_of(I, fwd_piter) p(this->input1.size());
+	  output_type output(this->input1.size());
+
+	  oln_type_of(I1, fwd_piter) p(this->input1.size());
 
 	  for_all_p (p)
 	    output[p] = ntg::max(this->input1[p].value(), this->input2[p].value());
@@ -80,11 +87,12 @@ namespace oln {
 
     }
 
-    template <typename I>
-    impl::max_type<I> max(const abstract::image<I>& input1,
-			  const abstract::image<I>& input2)
+    template <typename I1, typename I2>
+    impl::max_type<I1, I2> max(const abstract::image<I1>& input1,
+			       const abstract::image<I2>& input2)
     {
-      impl::max_type<I> tmp(input1, input2);
+      mlc::eq<oln_type_of(I1, grid), oln_type_of(I2, grid)>::ensure();
+      impl::max_type<I1, I2> tmp(input1, input2);
       tmp.run();
       return tmp;
     }

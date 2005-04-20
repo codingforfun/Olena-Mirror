@@ -1,3 +1,11 @@
+2005-04-20  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* oln/morpho/reconstruction.hh: Remove a comment.
+	* oln/morpho/hit_or_miss.hh: New. Hit or miss implementation.
+	* oln/arith/ops.hh: Add comment to make it compile with g++-3.4.
+	* oln/arith/min.hh: Add a template parameter.
+	* oln/arith/max.hh: Add a template parameter.
+
 2005-04-17  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* oln/io/write_image_2d_pnm.hh (ntg::bin): Write padding bits at the

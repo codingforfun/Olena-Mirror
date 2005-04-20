@@ -45,8 +45,6 @@
 
 # include <oln/utils/clone.hh>
 
-// FIXME: ADD TESTS !!!!
-
 namespace oln {
 
 
