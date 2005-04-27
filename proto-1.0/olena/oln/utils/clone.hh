@@ -29,6 +29,7 @@
 # define OLN_UTILS_CLONE_HH
 
 # include <oln/basics.hh>
+# include <oln/core/abstract/image_operator.hh>
 
 namespace oln {
 

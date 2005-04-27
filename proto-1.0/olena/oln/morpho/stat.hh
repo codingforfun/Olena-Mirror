@@ -30,7 +30,7 @@
 
 # include <mlc/cmp.hh>
 # include <ntg/bin.hh>
-# include <oln/core/abstract/images.hh>
+# include <oln/core/abstract/image_entry.hh>
 # include <oln/core/abstract/window.hh>
 # include <oln/funobj/accum.hh>
 

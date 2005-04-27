@@ -32,6 +32,7 @@
 # include <oln/core/abstract/image_like_.hh>
 # include <oln/core/2d/array2d.hh>
 # include <oln/core/2d/niter2d.hh>
+# include <oln/utils/record.hh>
 
 
 /*! \namespace oln
@@ -122,9 +123,24 @@ namespace oln {
       this->exact_ptr = this;
     }
 
-    image2d(const size2d& size) : super_type(size)
+    image2d(const std::string& name)
     {
       this->exact_ptr = this;
+      registering(*this, name);
+    }
+
+    image2d(const size2d& size) :
+      super_type(size)
+    {
+      this->exact_ptr = this;
+    }
+
+    image2d(const size2d& size,
+	    const std::string& name) :
+      super_type(size)
+    {
+      this->exact_ptr = this;
+      registering(*this, name);
     }
 
     image2d(coord_t nrows, coord_t ncols, size_t border = 2) :
@@ -133,34 +149,58 @@ namespace oln {
       this->exact_ptr = this;
     }
 
+    image2d(coord_t nrows, coord_t ncols, size_t border,
+	    const std::string& name) :
+      super_type(size2d(nrows, ncols, border))
+    {
+      this->exact_ptr = this;
+      registering(*this, name);
+   }
+
     image2d(image2d& rhs) :
       super_type(rhs)
     {
       this->exact_ptr = this;
     }
 
-    image2d& operator=(image2d& rhs)
+
+    image2d& operator=(image2d rhs)
     {
-      if (&rhs == this)
-	return *this;
+      // FIXME: check that both objects are *really* different
       super_type::operator=(rhs);
       return *this;
     };
 
-    template <typename I, typename E>
-    image2d& operator=(abstract::image_like_<I, E> rhs)
-    {
-      *this = rhs.real();
-      return *this;
-    }
+//     image2d& operator=(box<image2d> rhs)
+//     {
+//       std::cout << "hop(box)" << std::endl;
+//       if (&(rhs->unbox()) == this)
+// 	return *this;
+//       super_type::operator=(rhs.unbox());
+//       return *this;
+//     };
+
+//     template <typename I, typename E>
+//     image2d& operator=(abstract::image_like_<I, E> rhs)
+//     {
+//       *this = rhs.real();
+//       return *this;
+//     }
 
     image2d& operator=(const io::filename& rhs)
     {
-      io::do_read(*this, rhs);
+      // FIXME HERE: hack to avoid calling io
+//       io::do_read(*this, rhs);
+      image2d tmp(4, 4);
+      *this = tmp;
       return *this;
     }
 
     // FIXME: idem with abstract::image2d<E> (?)
+
+
+    // without impl
+    image2d(const image2d&);
 
   };
 

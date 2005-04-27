@@ -31,7 +31,7 @@
 # include <ntg/all.hh>
 # include <vector>
 
-# include <oln/core/abstract/images.hh>
+# include <oln/core/abstract/image_entry.hh>
 # include <oln/core/abstract/piter.hh>
 
 # include <oln/utils/key.hh>

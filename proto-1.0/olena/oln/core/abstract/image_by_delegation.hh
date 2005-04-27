@@ -92,14 +92,23 @@ namespace oln {
 	this->exact_ptr = (E*)(void*)(this);
       }
 
+      image_by_delegation& operator=(const image_by_delegation& rhs)
+      {
+	// FIXME: handle naming here...
+	this->image_ = rhs.image_;
+	return *this;
+      }
+
       box<I> image_;
 
     public:
 
-      I& image() { return this->image_.unbox(); }
+      I& image() const { return this->image_.unbox(); }
       I& impl_delegate() { return this->image_.unbox(); }
       const I& impl_delegate() const { return this->image_.unbox(); }
     };
+
+
 
     /// Const version of image_by_delegation
 
@@ -123,6 +132,13 @@ namespace oln {
 	image_(rhs.image())
       {
 	this->exact_ptr = (E*)(void*)(this);
+      }
+
+      image_by_delegation& operator=(const image_by_delegation& rhs)
+      {
+	// FIXME: handle naming here...
+	this->image_ = rhs.image_;
+	return *this;
       }
 
       box<const I> image_;

@@ -28,7 +28,11 @@
 #ifndef OLENA_CORE_ABSTRACT_IMAGE_ENTRY_HH
 # define OLENA_CORE_ABSTRACT_IMAGE_ENTRY_HH
 
-# include <oln/core/abstract/images.hh>
+# include <oln/core/abstract/image_constness.hh>
+# include <oln/core/abstract/image_dimension.hh>
+# include <oln/core/abstract/image_neighbness.hh>
+# include <oln/core/abstract/image_typeness.hh>
+# include <oln/core/abstract/image_valuedness.hh>
 
 
 

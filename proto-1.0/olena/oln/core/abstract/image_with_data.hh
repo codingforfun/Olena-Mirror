@@ -31,6 +31,7 @@
 
 # include <mlc/tracked_ptr.hh>
 # include <oln/core/abstract/image_entry.hh>
+# include <oln/utils/record.hh>
 
 
 /*! \namespace oln
@@ -200,6 +201,17 @@ namespace oln {
       {
 	this->data_ = rhs.data_;
       }
+
+
+      /*! \brief Op= constructor (protected) with shallow data copy.
+      */
+      image_with_data& operator=(image_with_data& rhs)
+      {
+	// FIXME: handle naming here...
+	this->data_ = rhs.data_;
+	return *this;
+      }
+
 
       /*! \brief Data storage.
       */

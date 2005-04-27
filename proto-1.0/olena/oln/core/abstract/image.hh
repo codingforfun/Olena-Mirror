@@ -247,11 +247,7 @@ namespace oln
       ** \see hold_large
       */
 
-      bool hold(const point_type& p) const
-      {
-	precondition(this->npoints() != 0);
-	return this->exact().impl_hold(p);
-      }
+      bool hold(const point_type& p) const;  // impl is in box.hh
 
 
       /*! \brief Test if \a p is a proper point to access a value of
@@ -287,7 +283,9 @@ namespace oln
 
       bool impl_hold_large(const point_type& p) const
       {
-	return this->hold(p);
+	// it relies on 'impl_hold' to avoid counting one call to
+	// 'hold' when the effective call is 'hold_large'
+	return this->exact().impl_hold(p);
       }
 
 
@@ -371,10 +369,7 @@ namespace oln
       ** \see value_box, abstract::image<I>::operator[](point)
       */
 
-      const value_type get(const point_type& p) const
-      {
-	return this->exact().impl_get(p);
-      }
+      const value_type get(const point_type& p) const;  // impl is in box.hh
 
 
       // FIXME: patch!

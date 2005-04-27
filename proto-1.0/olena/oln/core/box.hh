@@ -240,7 +240,63 @@ namespace oln {
 
   };
 
-}
+} // end of namespace oln
+
+
+
+# include <oln/utils/record.hh>
+
+
+
+namespace oln {
+
+  namespace abstract
+  {
+
+
+    /// Implementation of abstract::image<E>::hold(p).
+
+    template <typename E>
+    bool
+    image<E>::hold(const oln_type_of(E, point)& p) const
+    {
+# ifdef OLNTRACE
+ 	inc_ncalls("hold", *this);
+# endif // ! OLNTRACE
+      return this->exact().impl_hold(p);
+    }
+
+
+    /// Implementation of abstract::image<E>::get(p).
+
+    template <typename E>
+    const oln_type_of(E, value)
+    image<E>::get(const oln_type_of(E, point)& p) const
+    {
+# ifdef OLNTRACE
+ 	inc_ncalls("get", *this);
+# endif // ! OLNTRACE
+      return this->exact().impl_get(p);
+    }
+
+
+    /// Implementation of abstract::readwrite_image<E>::set(p, v).
+
+    template <typename E>
+    void
+    readwrite_image<E>::set(const oln_type_of(E, point)& p,
+			    const oln_type_of(E, value)& v)
+    {
+# ifdef OLNTRACE
+      inc_ncalls("set", *this);
+# endif // ! OLNTRACE
+      return this->exact().impl_set(p, v);
+    }
+
+
+  } // end of namespace oln::abstract
+
+} // end of namespace oln
 
 
 #endif // ! OLENA_CORE_BOX_HH

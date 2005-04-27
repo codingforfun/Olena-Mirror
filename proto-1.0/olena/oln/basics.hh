@@ -25,8 +25,6 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-
-
 #ifndef OLENA_BASICS_HH
 # define OLENA_BASICS_HH
 
@@ -47,21 +45,21 @@
 
 // ntg::
 
+// FIXME: include a fake ntg/decls.hh that should be in oln/
+
+
 // oln::
 
-# include <oln/core/typedefs.hh>
-# include <oln/core/box.hh>
+# include <oln/core/coord.hh> // FIXME: why?
 
-# include <oln/core/coord.hh>
+# include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/image_entry.hh>
 
 # include <oln/core/abstract/size.hh>
 # include <oln/core/abstract/point.hh>
 # include <oln/core/abstract/dpoint.hh>
 # include <oln/core/abstract/window.hh>
 # include <oln/core/abstract/neighborhood.hh>
-
-# include <oln/core/abstract/images.hh>
-# include <oln/core/abstract/image_operator.hh>
 
 # include <oln/core/abstract/piter.hh>
 # include <oln/core/abstract/qiter.hh>

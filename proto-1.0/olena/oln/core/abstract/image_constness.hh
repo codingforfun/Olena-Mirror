@@ -30,6 +30,18 @@
 
 # include <oln/core/abstract/image.hh>
 
+
+//              image
+//
+//                ^
+//                |                
+//         ---------------
+//        |               |
+//
+// readonly_image   readwrite_image
+
+
+
 /*! \namespace oln
 ** \brief oln namespace.
 */
@@ -100,10 +112,7 @@ namespace oln {
       ** \see value_box, abstract::image<I>::operator[](point)
       */
 
-      void set(const point_type& p, const value_type& v)
-      {
-	return this->exact().impl_set(p, v);
-      }
+      void set(const point_type& p, const value_type& v);  // impl is in image_entry.hh
 
       // FIXME: NEW:
 

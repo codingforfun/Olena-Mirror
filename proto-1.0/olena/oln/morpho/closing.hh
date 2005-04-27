@@ -31,7 +31,6 @@
 # include <mlc/cmp.hh>
 # include <mlc/to_string.hh>
 
-# include <oln/core/abstract/images.hh>
 # include <oln/core/abstract/image_operator.hh>
 
 # include <oln/morpho/dilation.hh>

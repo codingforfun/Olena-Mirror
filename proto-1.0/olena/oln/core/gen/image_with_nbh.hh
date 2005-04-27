@@ -30,6 +30,8 @@
 
 # include <oln/core/abstract/image_with_extension.hh>
 # include <oln/core/abstract/neighborhood.hh>
+# include <oln/utils/record.hh>
+
 
 namespace oln {
 
@@ -50,6 +52,7 @@ namespace oln {
     typedef N neighb_type;
     typedef image_with_nbh< oln_type_of(I, concrete), N> concrete_type;
   };
+
 
   template <typename I, typename N>
   struct image_with_nbh : public abstract::image_with_extension < I, image_with_nbh<I, N> >
@@ -76,13 +79,34 @@ namespace oln {
     {
     }
 
+    image_with_nbh(const std::string& name)
+    {
+      registering(*this, name);
+    }
+
+    image_with_nbh(const oln_type_of(I, size)& size,
+		   const std::string& name)
+    {
+      // FIXME: illegal hardware instruction when uncommented below!!!
+//       I tmp(size, name);
+      // FIXME: other attemps below
+//       registering(tmp, name, true);
+//       tmp.set_name(name);
+
+      I tmp(size); // FIXME: hack
+      this->image_ = tmp;
+      registering(*this, name); //, true);
+    }
+
     image_with_nbh(abstract::image<I>& image,
-		   const abstract::neighborhood<N>& nbh) :
+		   const abstract::neighborhood<N>& nbh,
+		   const std::string& name) :
       super_type(image),
       nbh_(nbh.exact())
     {
+      registering(*this, name);
     }
-
+    
     const N& impl_nbh_get() const
     {
       return nbh_;
@@ -98,10 +122,14 @@ namespace oln {
 
   template <typename I, typename N>
   image_with_nbh<I, N>
-  join(abstract::image<I>& image,
-       const abstract::neighborhood<N>& nbh)
+  join(abstract::image<I>& image, const abstract::neighborhood<N>& nbh)
   {
-    image_with_nbh<I, N> tmp(image, nbh);
+    entering("join(image,nbh)");
+    registering(image, "image");
+
+    image_with_nbh<I, N> tmp(image, nbh, "tmp");
+
+    exiting("join(image,nbh)");
     return tmp;
   }
 

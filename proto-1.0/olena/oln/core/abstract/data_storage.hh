@@ -31,6 +31,7 @@
 # include <mlc/any.hh>
 # include <mlc/to_string.hh>
 # include <oln/core/typedefs.hh>
+# include <oln/utils/record.hh>
 
 
 # define oln_ds_type_of(DataStorageType, Alias) \
@@ -133,6 +134,9 @@ namespace oln {
       {
 	if (! this->has_data())
 	  return false;
+# ifdef OLNTRACE
+ 	inc_ncalls("data_hold", *this);
+# endif // ! OLNTRACE
 	return this->exact().impl_hold(p);
       }
 
@@ -140,6 +144,9 @@ namespace oln {
       {
 	precondition(this->has_data());
 	precondition(this->hold_large(p));
+# ifdef OLNTRACE
+ 	inc_ncalls("data_get", *this);
+# endif // ! OLNTRACE
 	return this->exact().impl_get(p);
       }
 
@@ -147,14 +154,20 @@ namespace oln {
       {
 	precondition(this->has_data());
 	precondition(this->hold_large(p));
+# ifdef OLNTRACE
+ 	inc_ncalls("data_set", *this);
+# endif // ! OLNTRACE
 	this->exact().impl_set(p, v);
       }
 
-      void set_data(const data_type& v)
-      {
-	precondition(this->has_data());
-	this->exact().impl_set_data(v);
-      }
+
+      // FIXME: commented below cause unused...
+//       void set_data(const data_type& v)
+//       {
+// 	precondition(this->has_data());
+// 	this->exact().impl_set_data(v);
+//       }
+
 
       // polymorphic method with default
 

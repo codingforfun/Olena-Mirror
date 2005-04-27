@@ -1,5 +1,42 @@
 2005-04-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	Prepare naming and tracing features to come.
+
+	* oln/utils/record.hh: New file.
+	* oln/core/2d/image2d.hh (operator=io): Update to not call io.
+	* oln/core/abstract/image_constness.hh (set): Move method's body
+	to...
+	* oln/core/box.hh: ...here.	
+	* oln/core/abstract/image.hh (impl_hold_large): Change call to
+	'impl_hold' to avoid counting a call to 'hold'.
+	(hold, get): Move method's body to...
+	* oln/core/box.hh: ...here.
+	* oln/core/abstract/data_storage.hh (record): New include.
+	(hold, get, set): Add call count.
+	(set_data): Comment cause unused.
+	* oln/core/abstract/image_with_data.hh (operator=): New
+	operator so that we will control the naming process to come.
+	* oln/core/abstract/image_by_delegation.hh
+	(operator=): Likewise.
+	* oln/core/2d/image2d.hh: New constructors with 'naming'.
+	* oln/core/gen/image_with_nbh.hh: Likewise.
+	(join): Add naming.
+	* oln/core/abstract/images.hh: Remove because error-prone
+	when included ---when 'watching' we need 'box' that depends
+	on image hierarchies so including this intermediate file
+	leads to partially defined class.
+	* oln/core/abstract/image_entry.hh: Update file inclusion.
+	* oln/basics.hh: Update.
+	* oln/utils/md5.hh: Likewise.
+	* oln/utils/clone.hh: Likewise.
+	* oln/basics.hh: Likewise.
+	* oln/morpho/stat.hh: Likewise.
+	* oln/morpho/erosion.hh: Likewise.
+	* oln/morpho/closing.hh: Likewise.
+	* oln/morpho/opening.hh: Likewise.
+
+2005-04-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	Files related to io should be re-written so they are temporary
 	commented.
 
