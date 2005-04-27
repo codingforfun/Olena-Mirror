@@ -36,6 +36,8 @@
 # include <oln/core/pw/abstract/function.hh>
 
 // FIXME: remove
+# include <oln/core/2d/grid2d.hh>
+# include <oln/core/2d/image2d.hh>
 # include <oln/core/2d/fwd_piter2d.hh>
 # include <oln/core/2d/bkd_piter2d.hh>
 
@@ -130,12 +132,14 @@ namespace oln {
 
     typedef mlc::no_type delegated_type;
 
-    // FIXME: AWFUL we do not know if it is 2d...
+    // FIXME: EXTREMELY AWFUL!!! we do not know if it is 2d...
     typedef is_a<abstract::image2d> image_dimension_type;
 
+    typedef grid2d      grid_type;
     typedef fwd_piter2d piter_type;
     typedef fwd_piter2d fwd_piter_type;
     typedef bkd_piter2d bkd_piter_type;
+    typedef image2d<value_type> concrete_type;
   };
 
 

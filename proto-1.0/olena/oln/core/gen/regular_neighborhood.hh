@@ -36,6 +36,8 @@ namespace oln {
 
   // fwd decl
   template <typename G> class regular_neighborhood;
+  template <typename G> class regular_fwd_niter;
+  template <typename G> class regular_bkd_niter;
 
   // super_type
   template <typename G> struct set_super_type< regular_neighborhood<G> > { typedef abstract::neighborhood< regular_neighborhood<G> > ret; };
@@ -61,6 +63,11 @@ namespace oln {
     typedef oln_grd_type_of(G, dpoint) dpoint_type;
     typedef oln_grd_type_of(G, size)   size_type;
     typedef typename internal::to_window<G>::ret window_type;
+
+    typedef regular_fwd_niter<G> iter_type;
+    typedef regular_fwd_niter<G> fwd_iter_type;
+    typedef regular_bkd_niter<G> bkd_iter_type;
+
   };
 
 

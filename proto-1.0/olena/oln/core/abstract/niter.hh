@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005 EPITA Research and Development Laboratory
+// Copyright (C) 2001-2005 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,14 +29,14 @@
 # define OLENA_CORE_ABSTRACT_NITER_HH
 
 # include <mlc/contract.hh>
-# include <oln/core/typedefs.hh>
+# include <oln/core/abstract/image.hh>
 # include <oln/core/abstract/iter.hh>
 # include <oln/core/abstract/point.hh>
 # include <oln/core/abstract/neighborhood.hh>
 
 
 # define for_all_n_of_p(n, p) \
-  for(n.ensure_is_niter(), n.center_at(p), n.start(); n.is_valid(); n.next())
+  for(n.ensure_is_niter(), n.start_at_p(p); n.is_valid(); n.next())
 
 # define for_all_remaining_n(n) \
   for(n.ensure_is_niter(); n.is_valid(); n.next())
@@ -145,6 +145,32 @@ namespace oln {
     };
 
   } // end of namespace oln::abstract
+
+
+
+  // From image type to niters.
+
+  template <typename I>
+  struct set_type < category::image, I, internal::typedef_::niter_type >
+  {
+    typedef oln_type_of(I, neighb) neighb_t;
+    typedef oln_nbh_type_of(neighb_t, iter) ret;
+  };
+
+  template <typename I>
+  struct set_type < category::image, I, internal::typedef_::fwd_niter_type >
+  {
+    typedef oln_type_of(I, neighb) neighb_t;
+    typedef oln_nbh_type_of(neighb_t, fwd_iter) ret;
+  };
+
+  template <typename I>
+  struct set_type < category::image, I, internal::typedef_::bkd_niter_type >
+  {
+    typedef oln_type_of(I, neighb) neighb_t;
+    typedef oln_nbh_type_of(neighb_t, bkd_iter) ret;
+  };
+
 
 } // end of namespace oln
 

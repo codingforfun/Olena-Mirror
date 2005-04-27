@@ -1,5 +1,19 @@
 2005-04-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	* oln/funobj/accum.hh (min_accumulator_init): New class.
+	* oln/core/abstract/niter.hh (for_all_n_of_p): Fix bug.
+	(set_type<image,I,niter_type>): New type deduction.
+	(set_type<image,I,fwd_niter_type>): Likewise.
+	(set_type<image,I,bkd_niter_type>): Likewise.
+	* oln/core/abstract/neighborhood.hh
+	(iter, fwd_iter, bkd_iter): New properties.
+	* oln/core/gen/regular_neighborhood.hh: Update.
+	* oln/core/abstract/window.hh (operator-): New.
+	* oln/core/pw/image.hh (grid_type): New property.
+	(concrete_type): Likewise.
+	
+2005-04-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	* oln/core/abstract/image_with_extension.hh (real): Fix
 	signature ---such an image is mutable so 'real' should be
 	const and should return non-const.

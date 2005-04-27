@@ -28,6 +28,7 @@
 #ifndef OLENA_CORE_ABSTRACT_WINDOW_HH
 # define OLENA_CORE_ABSTRACT_WINDOW_HH
 
+# include <mlc/contract.hh>
 # include <oln/core/typedefs.hh>
 
 
@@ -96,6 +97,13 @@ namespace oln {
     template<class W>
     struct window : public mlc::any<W>
     {
+    public:
+
+      const W operator-() const
+      {
+	return this->exact().impl_op_minus();
+      }
+
     protected:
 
       window()
@@ -104,6 +112,7 @@ namespace oln {
       ~window()
       {
 	get_props<category::window, W>::ensure();
+	mlc_check_method_impl(W, const W, op_minus, , const);
       }
     };
 

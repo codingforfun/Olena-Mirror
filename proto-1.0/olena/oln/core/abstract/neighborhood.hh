@@ -50,6 +50,10 @@ namespace oln {
     typedef mlc::undefined_type dpoint_type;
     typedef mlc::undefined_type size_type;
     typedef mlc::undefined_type window_type;
+
+    typedef mlc::undefined_type iter_type;
+    typedef mlc::undefined_type fwd_iter_type;
+    typedef mlc::undefined_type bkd_iter_type;
   };
 
 
@@ -61,14 +65,20 @@ namespace oln {
     typedef oln_nbh_type_of(N, dpoint) dpoint_type;
     typedef oln_nbh_type_of(N, size)   size_type;
     typedef oln_nbh_type_of(N, window) window_type;
+    typedef oln_nbh_type_of(N, iter)     iter_type;
+    typedef oln_nbh_type_of(N, fwd_iter) fwd_iter_type;
+    typedef oln_nbh_type_of(N, bkd_iter) bkd_iter_type;
 
     static void echo(std::ostream& ostr)
     {
       ostr << "props_of( oln::category::neighborhood, " << mlc_to_string(N) << " ) =" << std::endl
 	   << "{" << std::endl
-	   << "\t dpoint_type = " << mlc_to_string(dpoint_type) << std::endl
-	   << "\t size_type   = " << mlc_to_string(size_type)   << std::endl
-	   << "\t window_type = " << mlc_to_string(window_type) << std::endl
+	   << "\t dpoint_type   = " << mlc_to_string(dpoint_type)   << std::endl
+	   << "\t size_type     = " << mlc_to_string(size_type)     << std::endl
+	   << "\t window_type   = " << mlc_to_string(window_type)   << std::endl
+	   << "\t iter_type     = " << mlc_to_string(iter_type)     << std::endl
+	   << "\t fwd_iter_type = " << mlc_to_string(fwd_iter_type) << std::endl
+	   << "\t bkd_iter_type = " << mlc_to_string(bkd_iter_type) << std::endl
 	   << "}" << std::endl;
     }
 
@@ -77,6 +87,9 @@ namespace oln {
       mlc::is_ok< dpoint_type >::ensure();
       mlc::is_ok< size_type >::ensure();
       mlc::is_ok< window_type >::ensure();
+      mlc::is_ok< iter_type >::ensure();
+      mlc::is_ok< fwd_iter_type >::ensure();
+      mlc::is_ok< bkd_iter_type >::ensure();
     }
   };
 

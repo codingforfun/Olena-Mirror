@@ -55,7 +55,7 @@ namespace oln
 	    acc_ = t;
 	    return;
 	  }
-	if (t > acc_)
+	if (acc_ < t)
 	  acc_ = t;
       }
       
@@ -71,6 +71,10 @@ namespace oln
       T acc_;
 
     };
+
+
+    // FIXME: ... Max accumulator with initialization value.
+
 
 
     /// Min accumulator.
@@ -104,6 +108,35 @@ namespace oln
     private:
       
       bool ok_;
+      T acc_;
+
+    };
+
+
+    /// Min accumulator with initialization value.
+
+    template <class T>
+    struct min_accumulator_init
+    {
+
+      template <typename U>
+      min_accumulator_init(const U& init) :
+	acc_(init) 
+      {}
+      
+      void operator()(T t)
+      {
+	if (t < acc_)
+	  acc_ = t;
+      }
+      
+      operator T() const
+      {
+	return acc_;
+      }
+      
+    private:
+      
       T acc_;
 
     };
