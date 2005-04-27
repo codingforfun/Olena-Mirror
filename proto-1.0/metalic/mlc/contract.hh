@@ -40,21 +40,22 @@
 # define postcondition(expr) assert(expr) 
 
 
+
 # define mlc_check_method_impl(WHERE, RETURN, NAME, ARG, CONST)	\
 {								\
   typedef RETURN (WHERE::*meth)(ARG) CONST;			\
-  meth adr = &E::impl_##NAME;					\
+  meth adr = &WHERE::impl_##NAME;				\
   adr = 0;							\
 }								\
 struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 
 
-# define mlc_check_method_impl_2(WHERE, RETURN, NAME, ARG1, ARG2, CONST) \
-{									 \
-  typedef RETURN (WHERE::*meth)(ARG1, ARG2) CONST;			 \
-  meth adr = &E::impl_##NAME;						 \
-  adr = 0;								 \
-}									 \
+# define mlc_check_method_impl_2(WHERE, RETURN, NAME, ARG1, ARG2, CONST)	\
+{										\
+  typedef RETURN (WHERE::*meth)(ARG1, ARG2) CONST;				\
+  meth adr = &WHERE::impl_##NAME;						\
+  adr = 0;									\
+}										\
 struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 
 

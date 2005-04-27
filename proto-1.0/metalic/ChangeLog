@@ -1,3 +1,8 @@
+2005-04-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* mlc/contract.hh (mlc_check_method_impl): Fix bug.
+	(mlc_check_method_impl_2): Likewise.
+
 2005-04-13  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* mlc/properties.hh (f_get_type): Better version.
