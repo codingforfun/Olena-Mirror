@@ -1,4 +1,15 @@
 2005-04-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* oln/morpho/closing.hh: New-like file.
+	* oln/morpho/dilation.hh: Likewise.
+	* oln/morpho/elementary_erosion.hh: Likewise.
+	* oln/morpho/erosion.hh: Likewise.
+	* oln/morpho/geodesic_erosion.hh: Likewise.
+	* oln/morpho/opening.hh: Likewise.
+	* oln/morpho/stat.hh: Likewise.
+	* oln/morpho/tags.hh: Likewise.
+
+2005-04-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 	
 	Files in oln/morpho move to 'trash' since inheritance in
 	image operators will soon be no longer in use.
