@@ -28,160 +28,160 @@
 #ifndef OLN_IO_READ_IMAGE_2D_PNM_HH
 # define OLN_IO_READ_IMAGE_2D_PNM_HH
 
-# include <iostream>
-# include <string>
+// # include <iostream>
+// # include <string>
 
-# include <mlc/box.hh>
-# include <mlc/math.hh>
+// # include <mlc/box.hh>
+// # include <mlc/math.hh>
 
-# include <ntg/all.hh>
+// # include <ntg/all.hh>
 
-# include <oln/core/2d/image2d.hh>
+// # include <oln/core/2d/image2d.hh>
 
-# include <oln/core/abstract/image_operator.hh>
+// # include <oln/core/abstract/image_operator.hh>
 
-# include <oln/io/utils.hh>
-
-
-namespace oln {
-
-  template <typename I>
-  struct image2d;
-
-  // fwd decl
-  namespace io {
-    namespace impl {
-      template <typename I> struct read_image_2d_raw;
-    }
-  }
-
-  // super_type
-  template <typename I>
-  struct set_super_type < io::impl::read_image_2d_raw<I> >
-  {
-    typedef abstract::image_operator<I, io::impl::read_image_2d_raw<I> > ret;
-  };
+// # include <oln/io/utils.hh>
 
 
-  namespace io {
+// namespace oln {
 
-    namespace impl {
+//   template <typename I>
+//   struct image2d;
 
-      template <typename I>
-      struct read_image_2d_raw :
-	public oln::abstract::image_operator<I, read_image_2d_raw<I> >
-      {
-	typedef oln::abstract::image_operator<I, read_image_2d_raw<I> >
-	  super_type;
-	typedef oln_type_of(I, value) value_type;
+//   // fwd decl
+//   namespace io {
+//     namespace impl {
+//       template <typename I> struct read_image_2d_raw;
+//     }
+//   }
 
-	std::istream& istr_;
-	internal::pnm_info& info_;
-	char v;
-	int offset;
+//   // super_type
+//   template <typename I>
+//   struct set_super_type < io::impl::read_image_2d_raw<I> >
+//   {
+//     typedef abstract::image_operator<I, io::impl::read_image_2d_raw<I> > ret;
+//   };
 
-	read_image_2d_raw(std::istream &istr,
-			  internal::pnm_info &info) :
-	  super_type(),
-	  istr_(istr),
-	  info_(info),
-          offset(-1)
-	{
-	}
 
-	template <typename E>
-	void precond(ntg::real_value<E>& c)
-	{
-	  precondition(ntg_max_val(value_type) <= info_.max_val);
-	  precondition(info_.type == "P5");
-	}
+//   namespace io {
 
-	template <typename E>
-	void precond(ntg::vect_value<E>& c)
-	{
-	  precondition(ntg_max_val(ntg_comp_type(value_type)) <=
-		       info_.max_val);
-	  precondition(info_.type == "P6");
-	  precondition(ntg_nb_comp(value_type) == 3);
-	}
+//     namespace impl {
 
-	void precond(ntg::bin& c)
-	{
-	  precondition(info_.type == "P4");
-	}
+//       template <typename I>
+//       struct read_image_2d_raw :
+// 	public oln::abstract::image_operator<I, read_image_2d_raw<I> >
+//       {
+// 	typedef oln::abstract::image_operator<I, read_image_2d_raw<I> >
+// 	  super_type;
+// 	typedef oln_type_of(I, value) value_type;
 
-	void impl_run()
-	{
-	  value_type c;
-	  point2d p;
-	  oln::image2d<value_type>  tmp(info_.rows, info_.cols);
+// 	std::istream& istr_;
+// 	internal::pnm_info& info_;
+// 	char v;
+// 	int offset;
 
-	  precond(c);
+// 	read_image_2d_raw(std::istream &istr,
+// 			  internal::pnm_info &info) :
+// 	  super_type(),
+// 	  istr_(istr),
+// 	  info_(info),
+//           offset(-1)
+// 	{
+// 	}
 
-	  for (p.row() = 0; p.row() < info_.rows && !istr_.eof(); ++p.row())
-	    {
-	      offset = -1;
-	      for (p.col() = 0; p.col() < info_.cols && !istr_.eof(); ++p.col())
-		{
-		  read_value_type(c);
-		  tmp[p] = c;
-		}
-	    }
-	  this->output = tmp;
-	}
+// 	template <typename E>
+// 	void precond(ntg::real_value<E>& c)
+// 	{
+// 	  precondition(ntg_max_val(value_type) <= info_.max_val);
+// 	  precondition(info_.type == "P5");
+// 	}
 
-	//FIXME: Should work with builtin types.
+// 	template <typename E>
+// 	void precond(ntg::vect_value<E>& c)
+// 	{
+// 	  precondition(ntg_max_val(ntg_comp_type(value_type)) <=
+// 		       info_.max_val);
+// 	  precondition(info_.type == "P6");
+// 	  precondition(ntg_nb_comp(value_type) == 3);
+// 	}
 
-	template <typename E>
-	void read_value_type(ntg::real_value<E> &c)
-	{
-	  typedef oln_io_type(ntg_nbits(E)) v_type;
-	  v_type v;
-	  istr_.read((char*)&v, sizeof (v_type));
-	  c = ntg::cast::force<E, v_type>(v);
-	}
+// 	void precond(ntg::bin& c)
+// 	{
+// 	  precondition(info_.type == "P4");
+// 	}
 
-	template <typename E>
-	void read_value_type(ntg::vect_value<E> &c)
-	{
-	  for (unsigned i = 0; i < ntg_nb_comp(E); i++)
-	    {
-	      typedef oln_io_type(ntg_nbits(ntg_comp_type(E))) v_type;
-	      v_type v;
-	      istr_.read((char*)&v, sizeof (v_type));
-	      c[i] = ntg::cast::force<ntg_comp_type(E), v_type>(v);
-	    }
-	}
+// 	void impl_run()
+// 	{
+// 	  value_type c;
+// 	  point2d p;
+// 	  oln::image2d<value_type>  tmp(info_.rows, info_.cols);
 
-	void read_value_type(ntg::bin &c)
-	{
+// 	  precond(c);
 
-	  if (offset == -1)
-	    {
-	      istr_.read(&v, 1);
-	      offset = 7;
-	    }
-	  if ((int)(v & (1<<offset--)) == 0)
-	    c = 0;
-	  else
-	    c = 1;
-	}
-      };
+// 	  for (p.row() = 0; p.row() < info_.rows && !istr_.eof(); ++p.row())
+// 	    {
+// 	      offset = -1;
+// 	      for (p.col() = 0; p.col() < info_.cols && !istr_.eof(); ++p.col())
+// 		{
+// 		  read_value_type(c);
+// 		  tmp[p] = c;
+// 		}
+// 	    }
+// 	  this->output = tmp;
+// 	}
 
-      template <typename I>
-      read_image_2d_raw<I>
-      read(std::istream& istr, internal::pnm_info info)
-      {
-	read_image_2d_raw<I> tmp(istr, info);
-	tmp.run();
-	return tmp;
-      }
+// 	//FIXME: Should work with builtin types.
 
-    }
+// 	template <typename E>
+// 	void read_value_type(ntg::real_value<E> &c)
+// 	{
+// 	  typedef oln_io_type(ntg_nbits(E)) v_type;
+// 	  v_type v;
+// 	  istr_.read((char*)&v, sizeof (v_type));
+// 	  c = ntg::cast::force<E, v_type>(v);
+// 	}
 
-  }
+// 	template <typename E>
+// 	void read_value_type(ntg::vect_value<E> &c)
+// 	{
+// 	  for (unsigned i = 0; i < ntg_nb_comp(E); i++)
+// 	    {
+// 	      typedef oln_io_type(ntg_nbits(ntg_comp_type(E))) v_type;
+// 	      v_type v;
+// 	      istr_.read((char*)&v, sizeof (v_type));
+// 	      c[i] = ntg::cast::force<ntg_comp_type(E), v_type>(v);
+// 	    }
+// 	}
 
-}
+// 	void read_value_type(ntg::bin &c)
+// 	{
+
+// 	  if (offset == -1)
+// 	    {
+// 	      istr_.read(&v, 1);
+// 	      offset = 7;
+// 	    }
+// 	  if ((int)(v & (1<<offset--)) == 0)
+// 	    c = 0;
+// 	  else
+// 	    c = 1;
+// 	}
+//       };
+
+//       template <typename I>
+//       read_image_2d_raw<I>
+//       read(std::istream& istr, internal::pnm_info info)
+//       {
+// 	read_image_2d_raw<I> tmp(istr, info);
+// 	tmp.run();
+// 	return tmp;
+//       }
+
+//     }
+
+//   }
+
+// }
 
 
 #endif // ! OLN_IO_READ_IMAGE_2D_PNM_HH

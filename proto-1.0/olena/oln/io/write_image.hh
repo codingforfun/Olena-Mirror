@@ -28,84 +28,84 @@
 #ifndef OLN_IO_WRITE_IMAGE_HH
 # define OLN_IO_WRITE_IMAGE_HH
 
-# include <string>
+// # include <string>
 
-# include <oln/io/gz_stream.hh>
-# include <oln/io/utils.hh>
-# include <oln/io/write_image_2d_pnm.hh>
+// # include <oln/io/gz_stream.hh>
+// # include <oln/io/utils.hh>
+// # include <oln/io/write_image_2d_pnm.hh>
 
-namespace oln {
+// namespace oln {
 
-  namespace io {
+//   namespace io {
 
-    template <typename I>
-    void do_write(const abstract::image<I>& ima,
-		  std::ostream& ostr,
-		  const std::string& ext)
-    {
-      typedef oln_type_of(I, value) value_type;
-      value_type t;
+//     template <typename I>
+//     void do_write(const abstract::image<I>& ima,
+// 		  std::ostream& ostr,
+// 		  const std::string& ext)
+//     {
+//       typedef oln_type_of(I, value) value_type;
+//       value_type t;
 
-      impl::write(ima.exact(), t, ostr, ext);
-    }
+//       impl::write(ima.exact(), t, ostr, ext);
+//     }
 
-#if defined HAVE_ZLIB && HAVE_ZLIB == 1
-    template <typename I>
-    void write_gz(const abstract::image<I>& ima, const std::string& name)
-    {
-      gz::zofstream zostr(name.c_str(), std::ios::out);
+// #if defined HAVE_ZLIB && HAVE_ZLIB == 1
+//     template <typename I>
+//     void write_gz(const abstract::image<I>& ima, const std::string& name)
+//     {
+//       gz::zofstream zostr(name.c_str(), std::ios::out);
 
-      if (zostr.is_open() == false)
-	std::cerr << "error: couldn't open " << name << std::endl;
-      else
-	{
-	  std::string ext;
+//       if (zostr.is_open() == false)
+// 	std::cerr << "error: couldn't open " << name << std::endl;
+//       else
+// 	{
+// 	  std::string ext;
 
-	  ext = internal::utils::extension(name.substr(0, name.size() - 3));
-	  do_write(ima, zostr, ext);
-	}
-      zostr.close();
-    }
+// 	  ext = internal::utils::extension(name.substr(0, name.size() - 3));
+// 	  do_write(ima, zostr, ext);
+// 	}
+//       zostr.close();
+//     }
 
-#endif // ! HAVE_ZLIB
+// #endif // ! HAVE_ZLIB
 
-    template <typename I>
-    void write_non_gz(const abstract::image<I>& ima,
-		      const std::string& name,
-		      const std::string& ext)
-    {
-      std::ofstream ostr;
+//     template <typename I>
+//     void write_non_gz(const abstract::image<I>& ima,
+// 		      const std::string& name,
+// 		      const std::string& ext)
+//     {
+//       std::ofstream ostr;
 
-      ostr.open(name.c_str(), std::ifstream::out);
+//       ostr.open(name.c_str(), std::ifstream::out);
 
-      if (ostr.is_open() == false)
-	std::cerr << "error: couldn't open " << name << std::endl;
-      else
-	do_write(ima, ostr, ext);
-      ostr.close();
-    }
+//       if (ostr.is_open() == false)
+// 	std::cerr << "error: couldn't open " << name << std::endl;
+//       else
+// 	do_write(ima, ostr, ext);
+//       ostr.close();
+//     }
 
-    template <typename I>
-    void write(const abstract::image<I>& ima, const std::string& name)
-    {
-      std::string ext;
-      // FIXME: Unused?
-      // oln_type_of(I, value) t;
+//     template <typename I>
+//     void write(const abstract::image<I>& ima, const std::string& name)
+//     {
+//       std::string ext;
+//       // FIXME: Unused?
+//       // oln_type_of(I, value) t;
 
-      ext = internal::utils::extension(name);
+//       ext = internal::utils::extension(name);
 
-#if defined HAVE_ZLIB && HAVE_ZLIB == 1
-      if (ext == "gz")
-	write_gz(ima, name);
-      else
-	write_non_gz(ima, name, ext);
-# else
-      write_non_gz(ima, name, ext);
-#endif // ! HAVE_ZLIB
-    }
+// #if defined HAVE_ZLIB && HAVE_ZLIB == 1
+//       if (ext == "gz")
+// 	write_gz(ima, name);
+//       else
+// 	write_non_gz(ima, name, ext);
+// # else
+//       write_non_gz(ima, name, ext);
+// #endif // ! HAVE_ZLIB
+//     }
 
-  }
+//   }
 
-}
+// }
 
 #endif // ! OLN_IO_WRITE_IMAGE_HH

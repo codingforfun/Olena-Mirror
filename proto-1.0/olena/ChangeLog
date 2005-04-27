@@ -1,5 +1,18 @@
 2005-04-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	Files related to io should be re-written so they are temporary
+	commented.
+
+	* oln/io/gz_stream.hh: Comment contents.
+	* oln/io/write_image_2d_pnm.hh: Likewise.
+	* oln/io/write_image.hh: Likewise.
+	* oln/io/read_image_2d_pnm.hh: Likewise.
+	* oln/io/read_image.hh: Likewise.
+	* oln/io/utils.hh: Likewise.
+	* tests/io/loadsave.hh: Update.
+
+2005-04-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	* oln/funobj/accum.hh (min_accumulator_init): New class.
 	* oln/core/abstract/niter.hh (for_all_n_of_p): Fix bug.
 	(set_type<image,I,niter_type>): New type deduction.
