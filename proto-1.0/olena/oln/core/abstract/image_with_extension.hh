@@ -73,14 +73,9 @@ namespace oln {
       {
       }
 
-      const I& real() const
+      I& real() const
       {
-	return this->image_.unbox();
-      }
-
-      I& real()
-      {
-	return this->image_.unbox();
+	return const_cast<I&>(this->image_.unbox());
       }
 
       ~image_with_extension ()

@@ -1,3 +1,18 @@
+2005-04-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* oln/core/abstract/image_with_extension.hh (real): Fix
+	signature ---such an image is mutable so 'real' should be
+	const and should return non-const.
+	* oln/core/gen/regular_fwd_niter.hh (friend): Fix bug.
+	* oln/core/gen/regular_bkd_niter.hh: Likewise.
+	* oln/core/gen/image_with_nbh.hh (concrete_type): Fix bug.
+	(image_with_nbh()): New ctor.
+	(image_with_nbh(size)): New ctor.
+	(nbh_): Fix bug ---change type so that nbh is really owned.
+	* oln/core/gen/regular_window.hh (operator-): Rename as...
+	(impl_op_minus): ...this and fix bug.
+	(dp): New method.
+	
 2005-04-20  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* oln/morpho/reconstruction.hh: Remove a comment.

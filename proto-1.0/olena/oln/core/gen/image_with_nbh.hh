@@ -48,6 +48,7 @@ namespace oln {
   {
     typedef is_a<abstract::image_with_nbh> image_neighbness_type;
     typedef N neighb_type;
+    typedef image_with_nbh< oln_type_of(I, concrete), N> concrete_type;
   };
 
   template <typename I, typename N>
@@ -57,6 +58,23 @@ namespace oln {
     typedef abstract::image_with_extension < I, self_type > super_type;
 
   public:
+
+    image_with_nbh()
+    {
+    }
+
+    image_with_nbh(const oln_type_of(I, size)& size)
+    {
+      I tmp(size); // FIXME: hack
+      this->image_ = tmp;
+    }
+
+    image_with_nbh(abstract::image<I>& image,
+		   const abstract::neighborhood<N>& nbh) :
+      super_type(image),
+      nbh_(nbh.exact())
+    {
+    }
 
     image_with_nbh(abstract::image<I>& image,
 		   const abstract::neighborhood<N>& nbh) :
@@ -72,7 +90,7 @@ namespace oln {
 
   protected:
 
-    const N& nbh_;
+    N nbh_;
   };
 
 

@@ -55,6 +55,7 @@ namespace oln {
     }
 
     friend class abstract::iter<self_type>;
+    friend class abstract::niter<self_type>;
 
   protected:
 
@@ -70,7 +71,7 @@ namespace oln {
 
     bool impl_is_valid() const
     {
-      return this->pos_ != this->nbh_.card();
+      return this->pos_ != int(this->nbh_.card());
     }
 
     void impl_invalidate()

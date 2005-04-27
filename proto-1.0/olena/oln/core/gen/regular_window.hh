@@ -97,11 +97,17 @@ namespace oln {
 	return this->dp_[i];
       }
 
-      const self_type operator-() const
+      dpoint_type& dp(unsigned i)
       {
-	self_type tmp;
+	precondition(i < this->card());
+	return this->dp_[i];
+      }
+
+      const E impl_op_minus() const
+      {
+	E tmp = this->exact(); // FIXME: use clone(?)
 	for (unsigned i = 0; i < this->card(); ++i)
-	  tmp.add_(- this->dp_[i]);
+	  tmp.dp(i) = - tmp.dp(i);
 	return tmp;
       }
 

@@ -55,6 +55,7 @@ namespace oln {
     }
 
     friend class abstract::iter<self_type>;
+    friend class abstract::niter<self_type>;
 
   protected:
 
