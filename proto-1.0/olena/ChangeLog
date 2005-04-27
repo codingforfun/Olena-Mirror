@@ -1,4 +1,28 @@
 2005-04-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+	
+	Files in oln/morpho move to 'trash' since inheritance in
+	image operators will soon be no longer in use.
+
+	* oln/morpho/*.hh: Rename as...
+	* oln/morpho/*.trash: ...this.
+	* oln/morpho/*.inc: Rename as...
+	* oln/morpho/*.inctrash: ...this.
+	* oln/convert/nbh_to_se.hh: Remove cause meaningless.
+
+	The changes below are for safety purpose; we should ensure
+	that some (now commented) features are no more in use.
+	
+	* oln/core/2d/image2d.hh (operator=(box)): Comment.
+	(operator=(image_like_): Comment.
+	(image2d(const image2d&)): Add decl to help compiler.
+	* oln/core/box.hh (operator I): New.
+	(operator=(box<II>): Comment.
+	(operator=(image_like_<I>)): Comment.
+	(operator=(image_like_<II>)): Comment.
+	(operator=(image<II>)): Comment.
+	* oln/utils/clone.hh: Update.
+
+2005-04-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Prepare naming and tracing features to come.
 
