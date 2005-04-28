@@ -1,3 +1,8 @@
+2005-04-28  Nicolas Widynski  <widyns_n@ptaouchnok.lrde.epita.fr>
+
+	* oln/morpho/geodesic_dilation.hh: New type of implementation,
+	like geodesic_erosion.hh
+
 2005-04-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* oln/morpho/closing.hh: New-like file.
