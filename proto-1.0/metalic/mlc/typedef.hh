@@ -119,7 +119,7 @@ struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 /*! \macro  mlc_typedef_of( FromType, TypedefName )
 **
 ** FIXME
-** Sample use: mlc_typedef_of(vector_t, value_type)
+** Sample use: mlc_typedef_of(std::vector<int>, value_type)
 */
 # define mlc_typedef_of_(FromType, TypedefName)		\
 							\

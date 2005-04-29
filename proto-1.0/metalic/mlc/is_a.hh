@@ -67,8 +67,9 @@ namespace mlc
     enum {
       class_                          = 1,
       template_l_class_g_class_       = 2,
-      template_l_class_class_g_class_ = 3
-      //      template_l_unsigned_class_g_class_    = 4
+      template_l_class_class_g_class_ = 3,
+      template_l_template_l_class_g_class_g_class_       = 4,
+      template_l_template_l_class_class_g_class_g_class_ = 5
       // ...
     };
 
@@ -76,17 +77,20 @@ namespace mlc
     struct desc
     { char dummy[id]; };
 
-    template<class T>
+    template   < class T>
     static desc< class_ > get();
 
-    template<template<class> class T>
+    template   < template < class > class T>
     static desc< template_l_class_g_class_ > get();
 
-    template<template<class,class> class T>
+    template<    template < class,class > class T>
     static desc< template_l_class_class_g_class_ > get();
 
-    // template<template<unsigned,class> class T>
-    // static desc < template_l_unsigned_class_g_class_ > get();
+    template<    template < template < class > class > class T>
+    static desc< template_l_template_l_class_g_class_g_class_ > get();
+
+    template<    template < template < class,class > class > class T>
+    static desc< template_l_template_l_class_class_g_class_g_class_ > get();
 
     // ...
   }
@@ -104,15 +108,14 @@ namespace mlc
     template<unsigned id>
     struct is_a_;
 
-    // _class_
-
+    // class_
 
     template<>
     struct is_a_< form::class_ >
     {
       typedef is_a_< form::class_ > self;
 
-      template<class T, class U>
+      template<class T,    class U>
       struct helper
       {
 	static yes_ check(U*);
@@ -120,7 +123,7 @@ namespace mlc
 	static T* makeT();
       };
 
-      template<class T, class U>
+      template<class T,    class U>
       struct check
 	: public value<bool,( is_a__check_result_ )>
       {
@@ -134,7 +137,7 @@ namespace mlc
     {
       typedef is_a_< form::template_l_class_g_class_ > self;
 
-      template<class T, template<class> class U>
+      template<class T,    template < class > class U>
       struct helper
       {
 	template<class V>
@@ -143,21 +146,21 @@ namespace mlc
 	static T* makeT();
       };
 
-      template<class T, template<class> class U>
+      template<class T,    template < class > class U>
       struct check
 	: public value<bool,( is_a__check_result_ )>
       {
       };
     };
 
-    // templatee_l_class_class_g_class_
+    // template_l_class_class_g_class_
 
     template<>
     struct is_a_< form::template_l_class_class_g_class_ >
     {
       typedef is_a_< form::template_l_class_class_g_class_ > self;
 
-      template<class T, template<class,class> class U>
+      template<class T,    template < class,class > class U>
       struct helper
       {
 	template<class V, class W>
@@ -166,7 +169,51 @@ namespace mlc
 	static T* makeT();
       };
 
-      template<class T, template<class,class> class U>
+      template<class T,    template < class,class > class U>
+      struct check
+	: public value<bool,( is_a__check_result_ )>
+      {};
+    };
+
+    // template_l_template_l_class_g_class_g_class_
+
+    template<>
+    struct is_a_< form::template_l_template_l_class_g_class_g_class_ >
+    {
+      typedef is_a_< form::template_l_template_l_class_g_class_g_class_ > self;
+
+      template<class T,    template < template < class > class > class U>
+      struct helper
+      {
+	template<template<class> class V>
+	static yes_ check(U<V>*);
+	static no_  check(...);
+	static T* makeT();
+      };
+
+      template<class T,    template < template < class > class > class U>
+      struct check
+	: public value<bool,( is_a__check_result_ )>
+      {};
+    };
+
+    // template_l_template_l_class_class_g_class_g_class_
+
+    template<>
+    struct is_a_< form::template_l_template_l_class_class_g_class_g_class_ >
+    {
+      typedef is_a_< form::template_l_template_l_class_class_g_class_g_class_ > self;
+
+      template<class T,    template < template < class,class > class > class U>
+      struct helper
+      {
+	template<template<class,class> class V>
+	static yes_ check(U<V>*);
+	static no_  check(...);
+	static T* makeT();
+      };
+
+      template<class T,    template < template < class,class > class > class U>
       struct check
 	: public value<bool,( is_a__check_result_ )>
       {};

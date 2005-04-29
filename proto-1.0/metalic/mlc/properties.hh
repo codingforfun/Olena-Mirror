@@ -222,9 +222,17 @@ struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
                                      FromType,						\
                                      Namespace::internal::typedef_::Alias##_type>::ret
 
+# define mlc_type_2_of_(Namespace, Category, FromType,_2, Alias)			\
+  Namespace::internal::f_get_type<Category,						\
+                                     FromType,_2,					\
+                                     Namespace::internal::typedef_::Alias##_type>::ret
+
 
 # define mlc_type_of(Namespace, Category, FromType, Alias) \
 typename mlc_type_of_(Namespace, Category, FromType, Alias)
+
+# define mlc_type_2_of(Namespace, Category, FromType,_2, Alias) \
+typename mlc_type_2_of_(Namespace, Category, FromType,_2, Alias)
 
 
 

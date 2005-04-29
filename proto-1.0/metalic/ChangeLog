@@ -1,3 +1,12 @@
+2005-04-29  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* mlc/properties.hh (mlc_type_2_of_, mlc_type_2_of): New macros
+	for types having a comma in their name.
+	* mlc/typedef.hh: Cosmetic.
+	* mlc/is_a.hh
+	(template_l_template_l_class_g_class_g_class_): New case.
+	(template_l_template_l_class_class_g_class_g_class_): New case.
+
 2005-04-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* mlc/contract.hh (mlc_check_method_impl): Fix bug.
