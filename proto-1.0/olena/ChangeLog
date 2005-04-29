@@ -1,3 +1,61 @@
+2005-04-29  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+	
+	Add some function objects.
+	
+	* oln/funobj/abstract/binary.hh: New file.
+	* oln/funobj/abstract/unary.hh: Likewise.
+	* oln/funobj/meta.hh: Likewise.
+	* oln/funobj/arith.hh: Likewise.
+	* oln/funobj/logic.hh: Likewise.
+	* oln/funobj/cmp.hh: Likewise.
+	* oln/core/typedefs.hh: Update with new typedef decls.
+
+	Update of oln/core/pw/*
+	
+	* oln/core/pw/binary_op.hh: New file.
+	* oln/core/pw/unary_op.hh: New file.
+	* oln/core/pw/times.hh,
+	* oln/core/pw/div.hh,
+	* oln/core/pw/plus.hh,
+	* oln/core/pw/minus.hh: Remove, replace by...
+	* oln/core/pw/arith.hh: ...this new file.
+	* oln/core/pw/image.hh (image_from_pw): Rename as...
+	(image_from_pwf): ...this.
+	(pw::image): Rename as...
+	(pw::value): ...this.
+	(p_value): Rename as...
+	(pw_value): ...this.
+	* oln/core/pw/image.hh: Move some parts into...
+	* oln/core/pw/value.hh: ...this new file.
+	* oln/core/pw/check.hh: ...and this new file.
+	* oln/core/pw/macros.hh: Update.
+	* oln/core/pw/abstract/function.hh (ensure): Add.
+	(operator-, operator!): Comment because not updated yet.
+	(~function): Use mlc_check_method_impl.
+	* oln/core/pw/abstract/unary_function.hh (input): Rename as...
+	(arg): ...this.
+	(T): Rename as...
+	(A): ...this.
+	* oln/core/pw/apply.hh: Update.
+	* oln/core/pw/literal.hh (p_lit): Rename as...
+	(p_literal): ...this.
+	* oln/core/pw/logic.hh: Update.
+	* oln/core/pw/cmp.hh: Likewise.
+	* oln/core/pw/all.hh: Likewise.
+	* oln/arith/ops.hh: Likewise.
+	* oln/arith/logic.hh: Likewise.
+	* oln/arith/cmp.hh: New file.
+	
+	Fix morpho for geodesic_dilation to work.
+
+	* oln/morpho/elementary_dilation.hh: New file.
+	* oln/morpho/tags.hh (max_nbh, impl_max_nbh): New methods.
+	* oln/funobj/accum.hh (max_accumulator_init): New fun obj.
+	* oln/morpho/geodesic_dilation.hh
+	(operator<=): Remove thanks to oln/arith/cmp.hh.
+	* oln/morpho/geodesic_erosion.hh: Likewise.
+	* oln/morpho/stat.hh (local_max_nbh): New routine.
+	
 2005-04-28  Nicolas Widynski  <widyns_n@ptaouchnok.lrde.epita.fr>
 
 	* oln/morpho/geodesic_dilation.hh: New type of implementation,

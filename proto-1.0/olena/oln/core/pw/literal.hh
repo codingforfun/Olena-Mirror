@@ -96,11 +96,15 @@ namespace oln {
   /// Routine that takes a literal and outputs a "point-wise literal" object
 
   template <typename T>
-  pw::literal<T> p_lit(const T& value)
+  pw::literal<T> p_literal(const T& value)
   {
     pw::literal<T> tmp(value);
     return tmp;
   }
+
+
+  // FIXME: Specializations of p_literal to produce compile-time errors.
+  // ...
 
 
 } // end of namespace oln

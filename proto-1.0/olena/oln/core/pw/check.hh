@@ -25,38 +25,36 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_PW_CMP_HH
-# define OLENA_CORE_PW_CMP_HH
+#ifndef OLENA_CORE_PW_CHECK_HH
+# define OLENA_CORE_PW_CHECK_HH
 
-# include <oln/funobj/cmp.hh>
-# include <oln/core/pw/macros.hh>
-
-
-oln_pw_decl_binary(      eq, == );
-oln_pw_decl_binary(     neq, != );
-oln_pw_decl_binary(    less, <  );
-oln_pw_decl_binary(     leq, <= );
-oln_pw_decl_binary( greater, >  );
-oln_pw_decl_binary(     geq, >= );
+# include <mlc/cmp.hh>
+# include <oln/core/abstract/image_typeness.hh>
+# include <oln/core/pw/image.hh>
 
 
+namespace oln {
 
-# define oln_pw_decl_cmp_lit(LiteralType)		\
-							\
-oln_pw_decl_binary_with_lit(      eq, ==, LiteralType);	\
-oln_pw_decl_binary_with_lit(     neq, !=, LiteralType);	\
-oln_pw_decl_binary_with_lit(    less, < , LiteralType);	\
-oln_pw_decl_binary_with_lit(     leq, <=, LiteralType);	\
-oln_pw_decl_binary_with_lit( greater, > , LiteralType);	\
-oln_pw_decl_binary_with_lit(     geq, >=, LiteralType);	\
-							\
-struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+  namespace pw {
 
 
-oln_pw_decl_cmp_lit(int);
-oln_pw_decl_cmp_lit(float);
-oln_pw_decl_cmp_lit(double);
+    template <typename F>
+    bool check(const abstract::function<F>& pred)
+    {
+      mlc::eq< oln_typeness_of(oln_pw_type_of(F, value)), typeness::binary_tag >::ensure();
+      typedef image_from_pwf<F> I;
+      I ima(pred);
+      oln_type_of(I, fwd_piter) p(ima.size());
+      for_all_p (p)
+	if (not ima[p])
+	  return false;
+      return true;
+    }
 
 
+  } // end of namespace oln::pw
 
-#endif // ! OLENA_CORE_PW_CMP_HH
+} // end of namespace oln
+
+
+#endif // ! OLENA_CORE_PW_CHECK_HH

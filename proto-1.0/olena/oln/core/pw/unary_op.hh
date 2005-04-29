@@ -25,58 +25,59 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_PW_TIMES_HH
-# define OLENA_CORE_PW_TIMES_HH
+#ifndef OLENA_CORE_PW_UNARY_OP_HH
+# define OLENA_CORE_PW_UNARY_OP_HH
 
-# include <oln/core/pw/abstract/binary_function.hh>
-# include <oln/core/pw/literal.hh>
-# include <ntg/all.hh>
-# include <oln/core/pw/macros.hh>
+# include <mlc/is_a.hh>
+# include <oln/core/pw/abstract/unary_function.hh>
+# include <oln/funobj/abstract/unary.hh>
+
 
 
 namespace oln {
 
+
   // fwd decl
   namespace pw {
-    template <typename L, typename R> struct times;
+    template <typename F, typename A> struct unary_op;
   }
 
   // super type
-  template <typename L, typename R>
-  struct set_super_type < pw::times<L, R> > { typedef pw::abstract::binary_function<L, R, pw::times<L, R> > ret; };
+  template <typename F, typename A>
+  struct set_super_type < pw::unary_op<F,A> > { typedef pw::abstract::unary_function< A, pw::unary_op<F,A> > ret; };
 
   // props
-  template <typename L, typename R>
-  struct set_props < category::pw, pw::times<L, R> >
+  template <typename F, typename A>
+  struct set_props < category::pw, pw::unary_op<F,A> >
   {
-    typedef ntg_return_type(times,
-			    oln_pw_type_of(L, value),
-			    oln_pw_type_of(R, value)) value_type;
+    typedef typename f_::unary_meta_result<F,A>::ret value_type;
   };
 
 
   namespace pw {
 
-    template <typename L, typename R>
-    struct times : public abstract::binary_function < L, R, times<L, R> >
+    template <typename F, typename A>
+    struct unary_op : public abstract::unary_function< A, pw::unary_op<F,A> >
     {
-      typedef times<L, R> self_type;
+      typedef unary_op<F,A> self_type;
+      typedef abstract::unary_function<A,self_type> super_type;
+
+      F fun;
+
+      unary_op(const abstract::function<A>& arg) :
+	super_type(arg),
+	fun()
+      {
+	mlc_is_a(F, f_::unary_meta)::ensure();
+      }
 
       typedef oln_pw_type_of(self_type, point) point_type;
       typedef oln_pw_type_of(self_type, value) value_type;
-      typedef oln_pw_type_of(self_type, size)  size_type;
-
-      typedef abstract::binary_function<L, R, self_type> super_type;
-
-      times(const abstract::function<L>& left,
-	   const abstract::function<R>& right) :
-	super_type(left, right)
-      {
-      }
 
       const value_type impl_get(const point_type& p) const
       {
-	return this->left(p) * this->right(p);
+	const value_type tmp = this->fun(this->arg(p));
+	return tmp;
       }
 
     };
@@ -87,21 +88,4 @@ namespace oln {
 } // end of namespace oln
 
 
-
-/// Operator * on pwf
-
-template <typename L, typename R>
-oln::pw::times<L, R> operator * (const oln::pw::abstract::function<L>& lhs,
-				 const oln::pw::abstract::function<R>& rhs)
-{
-  precondition(lhs.size() == rhs.size());
-  oln::pw::times<L, R> tmp(lhs, rhs);
-  return tmp;
-}
-
-oln_pw_operator(times, *, int)
-oln_pw_operator(times, *, float)
-oln_pw_operator(times, *, double)
-
-
-#endif // ! OLENA_CORE_PW_TIMES_HH
+#endif // ! OLENA_CORE_PW_UNARY_OP_HH

@@ -40,20 +40,20 @@ namespace oln {
   // fwd decl
   namespace pw {
     namespace abstract {
-      template <typename T, typename E> struct unary_function;
+      template <typename A, typename E> struct unary_function;
     }
   }
 
   // super type
-  template <typename T, typename E>
-  struct set_super_type < pw::abstract::unary_function<T, E> > { typedef pw::abstract::function<E> ret; };
+  template <typename A, typename E>
+  struct set_super_type < pw::abstract::unary_function<A, E> > { typedef pw::abstract::function<E> ret; };
 
   // props
-  template <typename T, typename E>
-  struct set_props < category::pw, pw::abstract::unary_function<T, E> >
+  template <typename A, typename E>
+  struct set_props < category::pw, pw::abstract::unary_function<A, E> >
   {
-    typedef oln_pw_type_of(T, point) point_type;
-    typedef oln_pw_type_of(T, size) size_type;
+    typedef oln_pw_type_of(A, point) point_type;
+    typedef oln_pw_type_of(A, size) size_type;
   };
 
 
@@ -61,15 +61,15 @@ namespace oln {
 
     namespace abstract {
 
-      template <typename T, typename E>
+      template <typename A, typename E>
       struct unary_function : public function<E>
       {
-	typedef T input_type;
+	typedef A arg_type;
 
-	T input;
+	A arg;
 
-	unary_function(const abstract::function<T>& input) :
-	  input(input.exact())
+	unary_function(const abstract::function<A>& arg) :
+	  arg(arg.exact())
 	{
 	}
 
@@ -78,17 +78,17 @@ namespace oln {
 
 	const size_type& impl_size() const
 	{
-	  return input.size();
+	  return arg.size();
 	}
 
 	bool impl_hold(const point_type& p) const
 	{
-	  return input.hold(p);
+	  return arg.hold(p);
 	}
 
 	bool impl_hold_large(const point_type& p) const
 	{
-	  return input.hold_large(p);
+	  return arg.hold_large(p);
 	}
 
       protected:

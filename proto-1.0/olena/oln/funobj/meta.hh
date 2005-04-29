@@ -1,4 +1,4 @@
-// Copyright (C) 2005 EPITA Research and Development Laboratory
+// Copyright (C) 2005  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,38 +25,61 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_PW_CMP_HH
-# define OLENA_CORE_PW_CMP_HH
+#ifndef OLENA_CORE_FUNOBJ_META_HH
+# define OLENA_CORE_FUNOBJ_META_HH
 
-# include <oln/funobj/cmp.hh>
-# include <oln/core/pw/macros.hh>
-
-
-oln_pw_decl_binary(      eq, == );
-oln_pw_decl_binary(     neq, != );
-oln_pw_decl_binary(    less, <  );
-oln_pw_decl_binary(     leq, <= );
-oln_pw_decl_binary( greater, >  );
-oln_pw_decl_binary(     geq, >= );
+# include <oln/funobj/abstract/unary.hh>
+# include <oln/funobj/abstract/binary.hh>
 
 
+namespace oln
+{
 
-# define oln_pw_decl_cmp_lit(LiteralType)		\
-							\
-oln_pw_decl_binary_with_lit(      eq, ==, LiteralType);	\
-oln_pw_decl_binary_with_lit(     neq, !=, LiteralType);	\
-oln_pw_decl_binary_with_lit(    less, < , LiteralType);	\
-oln_pw_decl_binary_with_lit(     leq, <=, LiteralType);	\
-oln_pw_decl_binary_with_lit( greater, > , LiteralType);	\
-oln_pw_decl_binary_with_lit(     geq, >=, LiteralType);	\
-							\
-struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+  /// Plus.
 
 
-oln_pw_decl_cmp_lit(int);
-oln_pw_decl_cmp_lit(float);
-oln_pw_decl_cmp_lit(double);
+  // fwd decl
+  namespace f_ {
+    template <typename L, typename R> struct plus;
+  }
+
+  // super type
+  template <typename L, typename R>
+  struct set_super_type < f_::plus<L,R> > { typedef f_::abstract::binary< f_::plus<L,R> > ret; };
+
+  // props
+  template <typename L, typename R>
+  struct set_props < category::fun2, f_::plus<L,R> >
+  {
+    typedef ntg_return_type(plus, L, R) res_type;
+    typedef L left_type;
+    typedef R right_type;
+  };  
+
+  namespace f_
+  {
+
+    // class
+    template <typename L, typename R>
+    struct plus : public oln_super2_of_(f_::plus<L,R>)
+    {
+      typedef plus<L,R> self_type;
+
+      const oln_fun2_type_of(self_type, res)
+	impl_binop(const L& left, const R& right) const
+	{
+	  return left + right;
+	}
+    };
+
+  } // end of namespace oln::f_
+
+
+  static f_::binary_meta<f_::plus> f_plus;
+
+
+} // end of namespace oln
 
 
 
-#endif // ! OLENA_CORE_PW_CMP_HH
+#endif // ! OLENA_CORE_FUNOBJ_META_HH

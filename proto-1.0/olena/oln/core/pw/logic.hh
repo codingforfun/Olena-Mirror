@@ -28,157 +28,46 @@
 #ifndef OLENA_CORE_PW_LOGIC_HH
 # define OLENA_CORE_PW_LOGIC_HH
 
-# include <oln/core/abstract/image_typeness.hh>
-# include <oln/core/pw/abstract/function.hh>
-# include <oln/core/pw/cmp.hh>
+# include <oln/funobj/logic.hh>
+# include <oln/core/pw/macros.hh>
 
 
-namespace oln {
+oln_pw_decl_binary(and, and);
+oln_pw_decl_binary(or,  or);
+oln_pw_decl_binary(xor, xor);
+
+// FIXME: not?
 
 
-  namespace pw {
-
-    // FIXME: move somewhere else
-    namespace internal
-    {
-      struct not_ {
-	template <typename T>
-	bool operator()(const T& rhs) const {
-	  return !rhs;
-	}
-      };
-      struct and_ {
-	template <typename L, typename R>
-	bool operator()(const L& lhs, const R& rhs) const {
-	  return lhs && rhs;
-	}
-      };
-      struct nand_ {
-	template <typename L, typename R>
-	bool operator()(const L& lhs, const R& rhs) const {
-	  return !(lhs && rhs);
-	}
-      };
-      struct or_ {
-	template <typename L, typename R>
-	bool operator()(const L& lhs, const R& rhs) const {
-	  return lhs || rhs;
-	}
-      };
-      struct nor_ {
-	template <typename L, typename R>
-	bool operator()(const L& lhs, const R& rhs) const {
-	  return !(lhs || rhs);
-	}
-      };
-      struct xor_ {
-	template <typename L, typename R>
-	bool operator()(const L& lhs, const R& rhs) const {
-	  return (lhs && !rhs) || (!lhs && rhs);
-	}
-      };
-      struct xnor_ {
-	template <typename L, typename R>
-	bool operator()(const L& lhs, const R& rhs) const {
-	  return (lhs && rhs) || (!lhs && !rhs);
-	}
-      };
-    } // end of oln::pw::internal
-
-  } // end of namespace oln::pw
-
-
-  // fwd decl
-  namespace pw {
-    template <typename R> struct not_;
-  }
-
-  // super type
-  template <typename R>
-  struct set_super_type < pw::not_<R> > { typedef pw::abstract::function < pw::not_<R> > ret; };
-
-  // props
-  template <typename R>
-  struct set_props < category::pw, pw::not_<R> >
-  {
-    typedef oln_pw_type_of(R, point) point_type;
-    typedef oln_pw_type_of(R, size)  size_type;
-    typedef bool value_type;
-  };
-
-
-  namespace pw
-  {
-
-    template <typename R>
-    struct not_ : public abstract::function < not_<R> >
-    {
-      typedef not_<R> self_type;
-
-      typedef oln_pw_type_of(R, point) point_type;
-      typedef oln_pw_type_of(R, size)  size_type;
-      typedef oln_pw_type_of(R, value) value_type;
-
-      R right;
-
-      not_(const abstract::function<R>& right) :
-	right(right.exact())
-      {
-      }
-
-      const bool impl_get(const point_type& p) const
-      {
-	return ! this->right(p);
-      }
-
-      const size_type& impl_size() const
-      {
-	return this->right.size();
-      }
-
-      bool impl_hold(const point_type& p) const
-      {
-	return this->right.hold(p);
-      }
-
-      bool impl_hold_large(const point_type& p) const
-      {
-	return this->right.hold_large(p);
-      }
-
-    };
-    
-
-    // impl of abstract::function<E>::operator!()
-
-    namespace abstract {
-
-      template <typename E>
-      not_<E>
-      function<E>::operator!() const
-      {
-	mlc::eq< oln_typeness_of(oln_pw_type_of(E, value)), typeness::binary_tag >::ensure();
-	not_<E> tmp(this->exact());
-	return tmp;
-      }
-
-    } // end of namespace oln::pw::abstract
-
-
-  } // end of namespace oln::pw
-
-
-} // end of namespace oln
+# define oln_pw_decl_logic_lit(LiteralType)		\
+							\
+oln_pw_decl_binary_with_lit(and, and, LiteralType);	\
+oln_pw_decl_binary_with_lit(or,  or,  LiteralType);	\
+oln_pw_decl_binary_with_lit(xor, xor, LiteralType);	\
+							\
+struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 
 
 
-/// Ops on pwf
+namespace ntg {
+  struct bin;
+}
 
-oln_pw_decl_cmp_op(and_, &&)
-oln_pw_decl_cmp_op(or_,  ||)
+oln_pw_decl_logic_lit(bool);
+oln_pw_decl_logic_lit(ntg::bin);
 
-oln_pw_cmp_operator(and_, &&, bool)
-oln_pw_cmp_operator(or_,  ||, bool)
+
+
+
+//       template <typename E>
+//       not_<E>
+//       function<E>::operator!() const
+//       {
+// 	mlc::eq< oln_typeness_of(oln_pw_type_of(E, value)), typeness::binary_tag >::ensure();
+// 	not_<E> tmp(this->exact());
+// 	return tmp;
+//       }
+
 
 
 #endif // ! OLENA_CORE_PW_LOGIC_HH

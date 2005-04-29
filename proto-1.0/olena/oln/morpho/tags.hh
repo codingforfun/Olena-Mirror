@@ -84,6 +84,15 @@ namespace oln {
 	  return this->exact().impl_min_nbh(input, p);
 	}
 
+	// max value in input of neighborhoods of p
+	template <typename I>
+	oln_type_of(I, value)
+	  max_nbh(const abstract::image_with_nbh<I>& input,
+		  const oln_type_of(I, point)& p) const
+	{
+	  return this->exact().impl_max_nbh(input, p);
+	}
+
       };
 
 
@@ -117,6 +126,15 @@ namespace oln {
 		       const oln_type_of(I, point)& p) const
 	{
 	  return morpho::local_min_nbh(input, p);
+	}
+
+	// max value in input of neighborhoods of p
+	template <typename I>
+	oln_type_of(I, value)
+	  impl_max_nbh(const abstract::image_with_nbh<I>& input,
+		       const oln_type_of(I, point)& p) const
+	{
+	  return morpho::local_max_nbh(input, p);
 	}
 
       };

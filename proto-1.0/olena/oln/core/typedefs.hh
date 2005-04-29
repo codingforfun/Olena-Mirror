@@ -41,6 +41,13 @@
 # define oln_super_of_(Type) \
 oln::internal::get_super_type<Type>::ret
 
+# define oln_super2_of_(Type,_2) \
+oln::internal::get_super_type<Type,_2>::ret
+
+# define oln_super3_of_(Type,_2,_3) \
+oln::internal::get_super_type<Type,_2,_3>::ret
+
+
 # define oln_super_of(Type) \
 typename oln_super_of_(Type)
 
@@ -107,6 +114,14 @@ namespace oln
 
   mlc_decl_typedef(dimvalue_type);
   mlc_decl_typedef(coord_type);
+
+
+  // category::fun1 and 2
+
+  mlc_decl_typedef(res_type);
+  mlc_decl_typedef(arg_type);
+  mlc_decl_typedef(left_type);
+  mlc_decl_typedef(right_type);
 
 
 } // end of namespace oln

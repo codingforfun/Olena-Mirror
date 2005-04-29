@@ -71,6 +71,13 @@ namespace oln {
 	   << "\t size_type  = " << mlc_to_string(size_type)  << std::endl
 	   << "}" << std::endl;
     }
+
+    static void ensure()
+    {
+      mlc::is_ok< point_type >::ensure();
+      mlc::is_ok< value_type >::ensure();
+      mlc::is_ok< size_type  >::ensure();
+    }
   };
 
 
@@ -80,9 +87,10 @@ namespace oln {
     namespace abstract {
       template <typename E> struct function;
     }
-    template <typename L, typename R> struct minus;
     template <typename T> struct literal;
-    template <typename F> struct not_;
+    // FIXME:...
+//     template <typename L, typename R> struct minus;
+//     template <typename F> struct not_;
 
 
     namespace abstract {
@@ -114,34 +122,23 @@ namespace oln {
 	  return this->exact().impl_hold_large(p);
 	}
 
-	minus<literal<value_type>, E> operator-() const;
-	not_<E> operator!() const;
+	// FIXME:...
+//  	minus<literal<value_type>, E> operator-() const;
+//  	not_<E> operator!() const;
 
       protected:
-	function() {}
+
+	function()
+	{}
 
 	~function()
 	{
-	  { // impl_size
-	    typedef const size_type& (E::*meth)() const;
-	    meth adr = &E::impl_size;
-	    adr = 0;
-	  }
-	  { // impl_get
-	    typedef const value_type (E::*meth)(const point_type&) const;
-	    meth adr = &E::impl_get;
-	    adr = 0;
-	  }
-	  { // impl_hold
-	    typedef bool (E::*meth)(const point_type&) const;
-	    meth adr = &E::impl_hold;
-	    adr = 0;
-	  }
-	  { // impl_hold_large
-	    typedef bool (E::*meth)(const point_type&) const;
-	    meth adr = &E::impl_hold_large;
-	    adr = 0;
-	  }
+	  get_props<category::pw, E>::ensure();
+
+	  mlc_check_method_impl(E, const size_type&, size,       ,                  const);
+	  mlc_check_method_impl(E, const value_type, get,        const point_type&, const);
+	  mlc_check_method_impl(E, bool,             hold,       const point_type&, const);
+	  mlc_check_method_impl(E, bool,             hold_large, const point_type&, const);
 	}
 
       };

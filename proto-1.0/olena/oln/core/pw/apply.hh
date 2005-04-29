@@ -78,15 +78,15 @@ namespace oln {
       F f_;
 
       apply1(const mlc::abstract::unary_function<F>& f,
-	    const abstract::function<T>& input) :
-	super_type(input),
+	    const abstract::function<T>& arg) :
+	super_type(arg),
 	f_(f.exact())
       {
       }
 
       const value_type impl_get(const point_type& p) const
       {
-	return f_(this->input(p));
+	return f_(this->arg(p));
       }
     };
 

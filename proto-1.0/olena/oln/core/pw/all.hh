@@ -29,19 +29,17 @@
 # define OLENA_CORE_PW_ALL_HH
 
 
-# include <oln/core/pw/abstract/function.hh>
+# include <oln/core/pw/value.hh>
 # include <oln/core/pw/image.hh>
 # include <oln/core/pw/literal.hh>
+// FIXME: # include <oln/core/pw/ternary.hh>
 
 # include <oln/core/pw/cmp.hh>
+# include <oln/core/pw/arith.hh>
 # include <oln/core/pw/logic.hh>
 
-# include <oln/core/pw/plus.hh>
-# include <oln/core/pw/minus.hh>
-# include <oln/core/pw/times.hh>
-# include <oln/core/pw/div.hh>
-
-// FIXME: xor mod...
+# include <oln/core/pw/check.hh>
+# include <oln/core/pw/apply.hh>
 
 
 #endif // ! OLENA_CORE_PW_ALL_HH

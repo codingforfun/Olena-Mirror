@@ -25,38 +25,36 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_PW_CMP_HH
-# define OLENA_CORE_PW_CMP_HH
+#ifndef OLENA_CORE_PW_ARITH_HH
+# define OLENA_CORE_PW_ARITH_HH
 
-# include <oln/funobj/cmp.hh>
+# include <oln/funobj/arith.hh>
 # include <oln/core/pw/macros.hh>
 
 
-oln_pw_decl_binary(      eq, == );
-oln_pw_decl_binary(     neq, != );
-oln_pw_decl_binary(    less, <  );
-oln_pw_decl_binary(     leq, <= );
-oln_pw_decl_binary( greater, >  );
-oln_pw_decl_binary(     geq, >= );
+oln_pw_decl_binary(  plus, + );
+oln_pw_decl_binary( minus, - );
+oln_pw_decl_binary( times, * );
+oln_pw_decl_binary(   div, / );
+oln_pw_decl_binary(   mod, % );
+
+// FIXME: uminus?
 
 
-
-# define oln_pw_decl_cmp_lit(LiteralType)		\
+# define oln_pw_decl_arith_lit(LiteralType)		\
 							\
-oln_pw_decl_binary_with_lit(      eq, ==, LiteralType);	\
-oln_pw_decl_binary_with_lit(     neq, !=, LiteralType);	\
-oln_pw_decl_binary_with_lit(    less, < , LiteralType);	\
-oln_pw_decl_binary_with_lit(     leq, <=, LiteralType);	\
-oln_pw_decl_binary_with_lit( greater, > , LiteralType);	\
-oln_pw_decl_binary_with_lit(     geq, >=, LiteralType);	\
+oln_pw_decl_binary_with_lit(  plus, +, LiteralType);	\
+oln_pw_decl_binary_with_lit( minus, -, LiteralType);	\
+oln_pw_decl_binary_with_lit( times, +, LiteralType);	\
+oln_pw_decl_binary_with_lit(   div, /, LiteralType);	\
+oln_pw_decl_binary_with_lit(   mod, %, LiteralType);	\
 							\
 struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 
 
-oln_pw_decl_cmp_lit(int);
-oln_pw_decl_cmp_lit(float);
-oln_pw_decl_cmp_lit(double);
+oln_pw_decl_arith_lit(int);
+oln_pw_decl_arith_lit(float);
+oln_pw_decl_arith_lit(double);
 
 
-
-#endif // ! OLENA_CORE_PW_CMP_HH
+#endif // ! OLENA_CORE_PW_ARITH_HH

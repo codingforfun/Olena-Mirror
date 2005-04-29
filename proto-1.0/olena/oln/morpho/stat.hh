@@ -58,7 +58,6 @@ namespace oln {
       return minval;
     }
 
-
     template <typename I>
     oln_type_of(I, value) local_min_nbh(const abstract::image_with_nbh<I>& input,
 					const oln_type_of(I, point)& p)
@@ -110,6 +109,19 @@ namespace oln {
       return maxval;
     }
 
+    template <typename I>
+    oln_type_of(I, value) local_max_nbh(const abstract::image_with_nbh<I>& input,
+					const oln_type_of(I, point)& p)
+    {
+      oln_type_of(I, niter) n(input);
+      funobj::max_accumulator_init<oln_type_of(I, value)> maxval(input[p]);
+      
+      for_all_n_of_p (n, p)
+	if (input.hold(n))
+	  maxval(input[n]);
+
+      return maxval;
+    }
 
     /// Local max on a set.
 

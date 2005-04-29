@@ -25,47 +25,64 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_LOGIC_OPS_HH
-# define OLENA_LOGIC_OPS_HH
+#ifndef OLENA_ARITH_LOGIC_HH
+# define OLENA_ARITH_LOGIC_HH
 
 # include <oln/core/abstract/image.hh>
-# include <oln/core/abstract/image_typeness.hh>
-# include <oln/core/pw/all.hh>
+# include <oln/core/pw/image.hh>
+# include <oln/core/pw/value.hh>
+# include <oln/core/pw/logic.hh>
 
 
 /// Operator 'and' between 2 binary images.
 
 template <typename L, typename R>
-oln::image_from_pw< oln::pw::cmp< oln::pw::image<L>,
-				  oln::pw::image<R>, oln::pw::internal::and_ > >
-operator && (const oln::abstract::binary_image<L>& lhs,
-	     const oln::abstract::binary_image<R>& rhs)
+const oln::image_from_pwf< oln::pw::binary_op< oln::f_and_type,
+					       oln::pw::value<L>,
+					       oln::pw::value<R> > >
+operator and (const oln::abstract::binary_image<L>& lhs,
+	      const oln::abstract::binary_image<R>& rhs)
 {
-  return oln::image_for_all_p(oln::p_value(lhs) && oln::p_value(rhs));
+  return oln::image_for_all_p(oln::pw_value(lhs) and oln::pw_value(rhs));
 }
 
 
 /// Operator 'or' between 2 binary images.
 
 template <typename L, typename R>
-oln::image_from_pw< oln::pw::cmp< oln::pw::image<L>,
-				  oln::pw::image<R>, oln::pw::internal::or_ > >
-operator || (const oln::abstract::binary_image<L>& lhs,
+const oln::image_from_pwf< oln::pw::binary_op< oln::f_or_type,
+					       oln::pw::value<L>,
+					       oln::pw::value<R> > >
+operator or (const oln::abstract::binary_image<L>& lhs,
 	     const oln::abstract::binary_image<R>& rhs)
 {
-  return oln::image_for_all_p(oln::p_value(lhs) || oln::p_value(rhs));
+  return oln::image_for_all_p(oln::pw_value(lhs) or oln::pw_value(rhs));
 }
 
 
-/// Unary operator 'not' on a binary image.
+/// Operator 'xor' between 2 binary images.
 
-template <typename I>
-oln::image_from_pw< oln::pw::not_< oln::pw::image<I> > >
-operator ! (const oln::abstract::binary_image<I>& rhs)
+template <typename L, typename R>
+const oln::image_from_pwf< oln::pw::binary_op< oln::f_xor_type,
+					       oln::pw::value<L>,
+					       oln::pw::value<R> > >
+operator xor (const oln::abstract::binary_image<L>& lhs,
+	      const oln::abstract::binary_image<R>& rhs)
 {
-  return oln::image_for_all_p(!oln::p_value(rhs));
+  return oln::image_for_all_p(oln::pw_value(lhs) xor oln::pw_value(rhs));
 }
 
 
+// FIXME...
+// /// Unary operator 'not' on a binary image.
 
-#endif // ! OLENA_LOGIC_OPS_HH
+// template <typename I>
+// oln::image_from_pw< oln::pw::not_< oln::pw::image<I> > >
+// operator ! (const oln::abstract::binary_image<I>& rhs)
+// {
+//   return oln::image_for_all_p(!oln::p_value(rhs));
+// }
+
+
+
+#endif // ! OLENA_ARITH_LOGIC_HH

@@ -25,58 +25,61 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_PW_PLUS_HH
-# define OLENA_CORE_PW_PLUS_HH
+#ifndef OLENA_CORE_PW_BINARY_OP_HH
+# define OLENA_CORE_PW_BINARY_OP_HH
 
+# include <mlc/is_a.hh>
 # include <oln/core/pw/abstract/binary_function.hh>
-# include <oln/core/pw/literal.hh>
-# include <oln/core/pw/macros.hh>
-# include <ntg/all.hh>
+# include <oln/funobj/abstract/binary.hh>
 
 
 namespace oln {
 
+
   // fwd decl
   namespace pw {
-    template <typename L, typename R> struct plus;
+    template <typename F, typename L, typename R> struct binary_op;
   }
 
   // super type
-  template <typename L, typename R>
-  struct set_super_type < pw::plus<L, R> > { typedef pw::abstract::binary_function<L, R, pw::plus<L, R> > ret; };
+  template <typename F, typename L, typename R>
+  struct set_super_type < pw::binary_op<F,L,R> > { typedef pw::abstract::binary_function< L, R, pw::binary_op<F,L,R> > ret; };
 
   // props
-  template <typename L, typename R>
-  struct set_props < category::pw, pw::plus<L, R> >
+  template <typename F, typename L, typename R>
+  struct set_props < category::pw, pw::binary_op<F,L,R> >
   {
-    typedef ntg_return_type(plus,
-			    oln_pw_type_of(L, value),
-			    oln_pw_type_of(R, value)) value_type;
+    typedef typename f_::binary_meta_result<F,L,R>::ret value_type;
   };
+
 
 
   namespace pw {
 
-    template <typename L, typename R>
-    struct plus : public abstract::binary_function < L, R, plus<L, R> >
+
+    template <typename F, typename L, typename R>
+    struct binary_op : public abstract::binary_function< L, R, binary_op<F,L,R> >
     {
-      typedef plus<L, R> self_type;
+      typedef binary_op<F,L,R> self_type;
+      typedef abstract::binary_function<L,R,self_type> super_type;
+
+      F fun;
+
+      binary_op(const abstract::function<L>& left,
+		const abstract::function<R>& right) :
+	super_type(left, right),
+	fun()
+      {
+	mlc_is_a(F, f_::binary_meta)::ensure();
+      }
 
       typedef oln_pw_type_of(self_type, point) point_type;
       typedef oln_pw_type_of(self_type, value) value_type;
-      typedef oln_pw_type_of(self_type, size)  size_type;
-
-      typedef abstract::binary_function<L, R, self_type> super_type;
-
-      plus(const abstract::function<L>& left,
-	   const abstract::function<R>& right) :
-	super_type(left, right)
-      {
-      }
 
       const value_type impl_get(const point_type& p) const
       {
-	return this->left(p) + this->right(p);
+	const value_type tmp = this->fun(this->left(p), this->right(p));
+	return tmp;
       }
 
     };
@@ -88,20 +91,4 @@ namespace oln {
 
 
 
-/// Operator + on pwf
-
-template <typename L, typename R>
-oln::pw::plus<L, R> operator + (const oln::pw::abstract::function<L>& lhs,
-				const oln::pw::abstract::function<R>& rhs)
-{
-  precondition(lhs.size() == rhs.size());
-  oln::pw::plus<L, R> tmp(lhs, rhs);
-  return tmp;
-}
-
-oln_pw_operator(plus, +, int)
-oln_pw_operator(plus, +, float)
-oln_pw_operator(plus, +, double)
-
-
-#endif // ! OLENA_CORE_PW_PLUS_HH
+#endif // ! OLENA_CORE_PW_BINARY_OP_HH

@@ -32,20 +32,10 @@
 # include <mlc/contract.hh>
 
 # include <oln/utils/record.hh>
-# include <oln/core/pw/all.hh>
+# include <oln/arith/cmp.hh>
 # include <oln/core/gen/image_with_nbh.hh> // FIXME: should be in core/abstract/ (?)
 # include <oln/morpho/elementary_erosion.hh>
 
-
-
-// FIXME: such routines should be written somewhere else...
-
-template <typename L, typename R>
-bool operator >= (const oln::abstract::image<L>& lhs,
-		  const oln::abstract::image<R>& rhs)
-{
-  return oln::pw::check(oln::p_value(lhs) >= oln::p_value(rhs));
-}
 
 
 

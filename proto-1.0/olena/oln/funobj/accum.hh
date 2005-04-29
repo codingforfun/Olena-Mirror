@@ -142,6 +142,35 @@ namespace oln
     };
 
 
+    /// Max accumulator with initialization value.
+
+    template <class T>
+    struct max_accumulator_init
+    {
+
+      template <typename U>
+      max_accumulator_init(const U& init) :
+	acc_(init) 
+      {}
+      
+      void operator()(T t)
+      {
+	if (acc_ < t)
+	  acc_ = t;
+      }
+      
+      operator T() const
+      {
+	return acc_;
+      }
+      
+    private:
+      
+      T acc_;
+
+    };
+
+
   } // end of namespace oln::funobj
 
 } // end of namespace oln

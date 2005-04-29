@@ -28,12 +28,9 @@
 #ifndef OLENA_CORE_PW_IMAGE_HH
 # define OLENA_CORE_PW_IMAGE_HH
 
-# include <mlc/any.hh>
-# include <mlc/cmp.hh>
-# include <oln/core/box.hh>
-# include <oln/core/abstract/image_typeness.hh>
 # include <oln/core/abstract/image_entry.hh>
 # include <oln/core/pw/abstract/function.hh>
+# include <oln/core/pw/value.hh>
 
 // FIXME: remove
 # include <oln/core/2d/grid2d.hh>
@@ -46,85 +43,15 @@ namespace oln {
 
 
   // fwd decl
-  namespace pw {
-    template <typename I> struct image;
-  }
-
-  // super type
-  template <typename I>
-  struct set_super_type < pw::image<I> > { typedef pw::abstract::function< pw::image<I> > ret; };
-
-  // props
-  template <typename I>
-  struct set_props < category::pw, pw::image<I> >
-  {
-    typedef oln_type_of(I, point) point_type;
-    typedef oln_type_of(I, value) value_type;
-    typedef oln_type_of(I, size)  size_type;
-  };
-
-
-  namespace pw { // means "point-wise"
-
-    template <typename I>
-    struct image : public abstract::function < image<I> >
-    {
-      oln::box<const I> ima;
-
-      image(const oln::abstract::image<I>& ima) :
-	ima(ima)
-      {
-      }
-
-      typedef oln_type_of(I, point) point_type;
-      typedef oln_type_of(I, value) value_type;
-      typedef oln_type_of(I, size)  size_type;
-
-      const size_type& impl_size() const
-      {
-	return this->ima.size();
-      }
-
-      const value_type impl_get(const point_type& p) const
-      {
-	return this->ima.get(p);
-      }
-
-      bool impl_hold(const point_type& p) const
-      {
-	return this->ima.hold(p);
-      }
-
-      bool impl_hold_large(const point_type& p) const
-      {
-	return this->ima.hold_large(p);
-      }
-
-    };
-
-  } // end of namespace oln::pw
-
-
-  /// Routine that takes an image and outputs a "point value" object
-
-  template <typename I>
-  pw::image<I> p_value(const abstract::image<I>& ima)
-  {
-    pw::image<I> tmp(ima);
-    return tmp;
-  }
-
-
-  // fwd decl
-  template <typename F> class image_from_pw;
+  template <typename F> class image_from_pwf;
 
   // super
   template <typename F>
-  struct set_super_type < image_from_pw<F> > { typedef abstract::image_entry< image_from_pw<F> > ret; };
+  struct set_super_type < image_from_pwf<F> > { typedef abstract::image_entry< image_from_pwf<F> > ret; };
 
   // props
   template <typename F>
-  struct set_props < category::image, image_from_pw<F> >
+  struct set_props < category::image, image_from_pwf<F> >
   {
     typedef oln_pw_type_of(F, point) point_type;
     typedef oln_pw_type_of(F, value) value_type;
@@ -143,22 +70,22 @@ namespace oln {
   };
 
 
-  /// Class image_from_pw<F>.
+  /// Class image_from_pwf<F>.
 
   template <typename F>
-  struct image_from_pw : public abstract::image_entry< image_from_pw<F> >
+  struct image_from_pwf : public abstract::image_entry< image_from_pwf<F> >
   {
-    typedef image_from_pw<F> self_type;
+    typedef image_from_pwf<F> self_type;
 
     F fun;
 
-    image_from_pw(const pw::abstract::function<F>& fun) :
+    image_from_pwf(const pw::abstract::function<F>& fun) :
       fun(fun.exact())
     {
       this->exact_ptr = this;
     }
 
-    image_from_pw(const self_type& rhs) :
+    image_from_pwf(const self_type& rhs) :
       fun(rhs.fun)
     {
       this->exact_ptr = this;
@@ -200,83 +127,46 @@ namespace oln {
   };
 
 
+
   /// Routine image_for_all_p.
 
   template <typename F>
-  image_from_pw<F> image_for_all_p(const pw::abstract::function<F>& fun)
+  image_from_pwf<F> image_for_all_p(const pw::abstract::function<F>& fun)
   {
-    image_from_pw<F> tmp(fun);
+    image_from_pwf<F> tmp(fun);
     return tmp;
   }
 
 
-  // FIXME: below, produce an error instead of correcting the client code (?)
-
-  /// Specialization of image_for_all_p (so that "image_for_all_p(p_value(ima)) == ima").
+  /// Specialization of image_for_all_p (so that "image_for_all_p(pw_value(ima)) == ima").
 
   template <typename I>
-  const I& image_for_all_p(const pw::image<I>& pv)
+  const I& image_for_all_p(const pw::value<I>& pwv)
   {
-    return pv.ima.unbox();
+    return pwv.ima.unbox();
   }
 
-  /// Specialization of p_value (so that "p_value(image_for_all_p(fun)) == fun").
+
+  /// Specializations of image_for_all_p to produce compile-time errors.
+  // FIXME: struct OLENA_ERROR__arg_of__image_for_all_p__should_be_a_point_wise_function();
+
+  template <typename I>
+  void image_for_all_p(const abstract::image<I>&)
+  {}
+
+  template <typename P>
+  void image_for_all_p(const abstract::point<P>&)
+  {}
+
+
+  /// Specialization of pw_value (so that "pw_value(image_for_all_p(fun)) == fun").
 
   template <typename F>
-  F p_value(const image_from_pw<F>& ima)
+  F pw_value(const image_from_pwf<F>& ima)
   {
-    return ima.fun;
+    F tmp = ima.fun;
+    return tmp;
   }
-
-
-
-
-
-
-  /// Routine check.
-
-  template <typename I>
-  bool check(const abstract::binary_image<I>& pred)
-  {
-    oln_type_of(I, fwd_piter) p(pred.size());
-    for_all_p (p)
-      if (! pred[p])
-	return false;
-    return true;
-  }
-
-  namespace pw {
-
-    /// Routine oln::pw::check.
-
-    template <typename F>
-    bool check(const pw::abstract::function<F>& pred)
-    {
-      mlc::eq< oln_typeness_of(oln_pw_type_of(F, value)), typeness::binary_tag >::ensure();
-      return oln::check(image_for_all_p(pred));
-    }
-
-  } // end of namespace oln::pw
-
-
-
-  // FIXME: Does not work with g++-3.4.
-  /// Specialization of image_for_all_p that gives a compile-time error.
-
-//   template <typename I>
-//   void image_for_all_p(const abstract::image<I>&)
-//   {
-//     struct OLENA_ERROR__arg_of__image_for_all_p__should_not_be_an_image();
-//   }
-
-//   /// Specialization of image_for_all_p that gives a compile-time error.
-
-//   template <typename P>
-//   void image_for_all_p(const abstract::point<P>&)
-//   {
-//     struct OLENA_ERROR__arg_of__image_for_all_p__should_not_be_a_point();
-//   }
-
 
 
 } // end of namespace oln

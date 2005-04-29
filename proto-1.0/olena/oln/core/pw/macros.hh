@@ -28,53 +28,60 @@
 #ifndef OLENA_CORE_PW_MACROS_HH
 # define OLENA_CORE_PW_MACROS_HH
 
+# include <oln/core/pw/unary_op.hh>
+# include <oln/core/pw/binary_op.hh>
+# include <oln/core/pw/literal.hh>
 
 
-// FIXME: rename?
-# define oln_pw_operator(NAME, SYMBOL, TYPE)			\
-template <typename L>						\
-oln::pw::NAME<L, oln::pw::literal<TYPE> >			\
-operator SYMBOL (const oln::pw::abstract::function<L>& lhs,	\
-		 const TYPE& value)				\
-{								\
-  return lhs SYMBOL oln::pw::literal<TYPE>(value);		\
-}								\
-template <typename R>						\
-oln::pw::NAME<oln::pw::literal<TYPE>, R>			\
-operator SYMBOL (const TYPE& value,				\
-		 const oln::pw::abstract::function<R>& rhs)	\
-{								\
-  return oln::pw::literal<TYPE>(value) SYMBOL rhs;		\
-}
-
-
-
-// FIXME: rename?
-# define oln_pw_cmp_operator(NAME, SYMBOL, TYPE)			\
-template <typename L>							\
-oln::pw::cmp<L, oln::pw::literal<TYPE>, oln::pw::internal::NAME>	\
-operator SYMBOL (const oln::pw::abstract::function<L>& lhs,		\
-		 const TYPE& value)					\
+# define oln_pw_decl_binary(OperatorName, OperatorSymbol)		\
+									\
+template <typename L, typename R>					\
+const oln::pw::binary_op< oln::f_##OperatorName##_type,			\
+                           L, R >					\
+operator OperatorSymbol (const oln::pw::abstract::function<L>& lhs,	\
+			 const oln::pw::abstract::function<R>& rhs)	\
 {									\
-  return lhs SYMBOL oln::pw::literal<TYPE>(value);			\
+  precondition(lhs.size() == rhs.size());				\
+  oln::pw::binary_op< oln::f_##OperatorName##_type,			\
+                       L, R > tmp(lhs, rhs);				\
+  return tmp;								\
 }									\
-template <typename R>							\
-oln::pw::cmp<oln::pw::literal<TYPE>, R, oln::pw::internal::NAME>	\
-operator SYMBOL (const TYPE& value,					\
-		 const oln::pw::abstract::function<R>& rhs)		\
-{									\
-  return oln::pw::literal<TYPE>(value) SYMBOL rhs;			\
-}
+									\
+struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 
 
-// FIXME: rename?
-# define oln_pw_cmp_operators(TYPE)		\
-oln_pw_cmp_operator(eq, ==, TYPE)		\
-oln_pw_cmp_operator(neq, !=, TYPE)		\
-oln_pw_cmp_operator(geq, >=, TYPE)		\
-oln_pw_cmp_operator(leq, <=, TYPE)		\
-oln_pw_cmp_operator(g, >, TYPE)			\
-oln_pw_cmp_operator(l, <, TYPE)
+
+
+# define oln_pw_decl_binary_with_lit(OperatorName, OperatorSymbol, LiteralType)	\
+										\
+template <typename L>								\
+const oln::pw::binary_op< oln::f_##OperatorName##_type,				\
+			   L, oln::pw::literal<LiteralType> >			\
+operator OperatorSymbol (const oln::pw::abstract::function<L>& lhs,		\
+			 const LiteralType& rhs)				\
+{										\
+  precondition(lhs.size() == rhs.size());					\
+  oln::pw::binary_op< oln::f_##OperatorName##_type,				\
+                       L, oln::pw::literal<LiteralType> > tmp(lhs, rhs);	\
+  return tmp;									\
+}										\
+										\
+template <typename R>								\
+const oln::pw::binary_op< oln::f_##OperatorName##_type,				\
+			   oln::pw::literal<LiteralType>, R >			\
+operator OperatorSymbol (const LiteralType& lhs,				\
+			 const oln::pw::abstract::function<R>& rhs)		\
+{										\
+  precondition(lhs.size() == rhs.size());					\
+  oln::pw::binary_op< oln::f_##OperatorName##_type,				\
+                       oln::pw::literal<LiteralType>, R > tmp(lhs, rhs);	\
+  return tmp;									\
+}										\
+										\
+struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+
+
+
 
 
 #endif // ! OLENA_CORE_PW_MACROS_HH
