@@ -33,8 +33,8 @@
 
 
 /// Macros mlc_eq and mlc_neq.
-# define mlc_eq(T1, T2) mlc::eq<(T1), (T2)>
-# define mlc_neq(T1, T2) mlc::neq<(T1), (T2)>
+# define mlc_eq(T1, T2) mlc::eq<T1, T2>
+# define mlc_neq(T1, T2) mlc::neq<T1, T2>
 
 # define mlc_is_found(T) mlc::is_found<(T)>
 # define mlc_is_not_found(T) mlc::is_not_found<(T)>
