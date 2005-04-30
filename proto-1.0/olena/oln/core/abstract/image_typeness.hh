@@ -55,6 +55,7 @@ namespace oln {
     template <typename E> struct color_image;
     template <typename E> struct label_image;
     template <typename E> struct binary_image;
+    template <typename E> struct not_binary_image;
     template <typename E> struct data_image;
   }
 }
@@ -146,14 +147,36 @@ namespace oln {
     template <typename tag, typename E>
     struct inheritance_case;
 
-    template <typename E> struct inheritance_case <greylevel_tag, E> : public abstract::greylevel_image<E> {};
-    template <typename E> struct inheritance_case <color_tag, E> : public abstract::color_image<E> {};
-    template <typename E> struct inheritance_case <label_tag, E> : public abstract::label_image<E> {};
-    template <typename E> struct inheritance_case <binary_tag, E> : public abstract::binary_image<E> {};
-    template <typename E> struct inheritance_case <data_tag, E> : public abstract::data_image<E> {};
-
+    // case: greylevel
     template <typename E>
-    struct inheritance_switch : public inheritance_case < typename tag_< of<oln_type_of(E, value)>::val >::ret, E >
+    struct inheritance_case <greylevel_tag, E> :
+      public abstract::greylevel_image<E>,
+      public abstract::not_binary_image<E>
+    {};
+    // case: color
+    template <typename E> struct inheritance_case <color_tag, E> :
+      public abstract::color_image<E>,
+      public abstract::not_binary_image<E>
+    {};
+    // case: label
+    template <typename E> struct inheritance_case <label_tag, E> :
+      public abstract::label_image<E>,
+      public abstract::not_binary_image<E>
+    {};
+    // case: binary
+    template <typename E> struct inheritance_case <binary_tag, E> :
+      public abstract::binary_image<E>
+    {};
+    // case: data
+    template <typename E> struct inheritance_case <data_tag, E> :
+      public abstract::data_image<E>,
+      public abstract::not_binary_image<E>
+    {};
+
+    // switch
+    template <typename E>
+    struct inheritance_switch :
+      public inheritance_case < typename tag_< of<oln_type_of(E, value)>::val >::ret, E >
     {
     };
 
@@ -229,6 +252,21 @@ namespace oln {
     protected:
       /// Constructor (protected, empty).
       binary_image() {}
+    };
+
+    /*! \class abstract::not_binary_image<E>
+    **
+    ** Class of images whose data are NOT Boolean values.  However
+    ** such images can derive from abstract::label_image (we can have
+    ** labels that are not binary ones).
+    */
+
+    template <typename E>
+    struct not_binary_image : public virtual image<E>
+    {
+    protected:
+      /// Constructor (protected, empty).
+      not_binary_image() {}
     };
 
 

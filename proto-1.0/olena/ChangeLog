@@ -1,3 +1,10 @@
+2005-04-30  Thierry Geraud  <theo@shuttle>
+
+	* oln/convert/nbh_to_se.hh: Remove (meaningless).
+	* olena/oln/core/abstract/image_typeness.hh
+	(not_binary_image): New class.
+	* olena/oln/makefile.src: Update.
+	
 2005-04-29  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 	
 	Add some function objects.

@@ -6,36 +6,40 @@
 OLN_DEP =					\
   all.hh					\
 						\
+  arith/cmp.hh					\
+  arith/logic.hh				\
   arith/max.hh					\
   arith/min.hh					\
   arith/ops.hh					\
 						\
-  basics.hh					\
   basics1d.hh					\
   basics2d.hh					\
   basics3d.hh					\
+  basics.hh					\
 						\
   config/pconf.hh				\
   config/system.hh				\
 						\
-  convert/nbh_to_se.hh				\
   convert/value_to_point.hh			\
 						\
   core/1d/array1d.hh				\
   core/1d/bkd_piter1d.hh			\
   core/1d/dpoint1d.hh				\
   core/1d/fwd_piter1d.hh			\
+  core/1d/grid1d.hh				\
   core/1d/image1d.hh				\
   core/1d/neighborhood1d.hh			\
   core/1d/niter1d.hh				\
   core/1d/point1d.hh				\
   core/1d/qiter1d.hh				\
   core/1d/size1d.hh				\
+  core/1d/window1d.hh				\
 						\
   core/2d/array2d.hh				\
   core/2d/bkd_piter2d.hh			\
   core/2d/dpoint2d.hh				\
   core/2d/fwd_piter2d.hh			\
+  core/2d/grid2d.hh				\
   core/2d/image2d.hh				\
   core/2d/neighborhood2d.hh			\
   core/2d/niter2d.hh				\
@@ -43,26 +47,27 @@ OLN_DEP =					\
   core/2d/qiter2d.hh				\
   core/2d/size2d.hh				\
   core/2d/window2d.hh				\
-						\
   core/3d/array3d.hh				\
   core/3d/bkd_piter3d.hh			\
   core/3d/dpoint3d.hh				\
   core/3d/fwd_piter3d.hh			\
+  core/3d/grid3d.hh				\
   core/3d/image3d.hh				\
   core/3d/neighborhood3d.hh			\
   core/3d/niter3d.hh				\
   core/3d/point3d.hh				\
   core/3d/qiter3d.hh				\
   core/3d/size3d.hh				\
+  core/3d/window3d.hh				\
 						\
   core/abstract/data_storage.hh			\
   core/abstract/dpoint.hh			\
-  core/abstract/image.hh			\
+  core/abstract/grid.hh				\
   core/abstract/image_by_delegation.hh		\
   core/abstract/image_constness.hh		\
   core/abstract/image_dimension.hh		\
   core/abstract/image_entry.hh			\
-  core/abstract/image_entry.hh			\
+  core/abstract/image.hh			\
   core/abstract/image_like_.hh			\
   core/abstract/image_neighbness.hh		\
   core/abstract/image_operator.hh		\
@@ -70,7 +75,6 @@ OLN_DEP =					\
   core/abstract/image_valuedness.hh		\
   core/abstract/image_with_data.hh		\
   core/abstract/image_with_extension.hh		\
-  core/abstract/images.hh			\
   core/abstract/internal/image_impl.hh		\
   core/abstract/iter.hh				\
   core/abstract/neighborhood.hh			\
@@ -108,44 +112,57 @@ OLN_DEP =					\
   core/pw/abstract/binary_function.hh		\
   core/pw/abstract/function.hh			\
   core/pw/abstract/unary_function.hh		\
-  core/pw/apply.hh				\
   core/pw/all.hh				\
+  core/pw/apply.hh				\
+  core/pw/arith.hh				\
+  core/pw/binary_op.hh				\
+  core/pw/check.hh				\
   core/pw/cmp.hh				\
-  core/pw/div.hh				\
   core/pw/image.hh				\
   core/pw/literal.hh				\
+  core/pw/logic.hh				\
   core/pw/macros.hh				\
-  core/pw/minus.hh				\
-  core/pw/plus.hh				\
-  core/pw/times.hh				\
+  core/pw/unary_op.hh				\
+  core/pw/value.hh				\
 						\
   core/typedefs.hh				\
 						\
   fancy/iota.hh					\
   fancy/print.hh				\
 						\
+  funobj/abstract/binary.hh			\
+  funobj/abstract/unary.hh			\
   funobj/accum.hh				\
+  funobj/arith.hh				\
+  funobj/cmp.hh					\
+  funobj/invert.hh				\
+  funobj/logic.hh				\
+  funobj/meta.hh				\
 						\
   io/gz_stream.hh				\
-  io/read_image.hh				\
   io/read_image_2d_pnm.hh			\
+  io/read_image.hh				\
   io/utils.hh					\
-  io/write_image.hh				\
   io/write_image_2d_pnm.hh			\
+  io/write_image.hh				\
 						\
   level/compare.hh				\
   level/fill.hh					\
 						\
-  morpho/cc_tarjan.hh				\
   morpho/closing.hh				\
   morpho/dilation.hh				\
+  morpho/elementary_dilation.hh			\
+  morpho/elementary_erosion.hh			\
   morpho/erosion.hh				\
+  morpho/geodesic_dilation.hh			\
+  morpho/geodesic_erosion.hh			\
   morpho/opening.hh				\
-  morpho/reconstruction.hh			\
-  morpho/splitse.hh				\
   morpho/stat.hh				\
+  morpho/tags.hh				\
 						\
   utils/buffer.hh				\
   utils/clone.hh				\
+  utils/invert.hh				\
   utils/key.hh					\
-  utils/md5.hh
+  utils/md5.hh					\
+  utils/record.hh
