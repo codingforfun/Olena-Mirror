@@ -32,6 +32,30 @@
 # include <oln/core/pw/macros.hh>
 
 
+namespace oln
+{
+
+  template <typename L, typename R>
+  pw::binary_op< f_min_type, L, R >
+  min (const pw::abstract::function<L>& lhs,
+       const pw::abstract::function<R>& rhs)
+  {
+    pw::binary_op< f_min_type, L, R > tmp(lhs, rhs);
+    return tmp;
+  }
+
+  template <typename L, typename R>
+  pw::binary_op< f_max_type, L, R >
+  max (const pw::abstract::function<L>& lhs,
+       const pw::abstract::function<R>& rhs)
+  {
+    pw::binary_op< f_max_type, L, R > tmp(lhs, rhs);
+    return tmp;
+  }
+
+} // end of namespace oln
+
+
 oln_pw_decl_binary(  plus, + );
 oln_pw_decl_binary( minus, - );
 oln_pw_decl_binary( times, * );

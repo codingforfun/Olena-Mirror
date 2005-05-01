@@ -29,6 +29,7 @@
 # define OLENA_CORE_GEN_INTERNAL_VALUE_BOX_HH
 
 # include <iostream>
+# include <mlc/cmp.hh>
 # include <oln/core/abstract/image.hh>
 
 
@@ -373,6 +374,25 @@ namespace oln {
     point_type p_;
 
   };
+
+
+  template <typename I, typename II>
+  oln_type_of(I, value) min(const value_box<I>& lhs,
+			    const value_box<II>& rhs)
+  {
+    // FIXME: uncomment?
+//     mlc::eq< oln_type_of(I, value), oln_type_of(II, value) >::ensure();
+    return lhs.value() < rhs.value() ? lhs.value() : rhs.value();
+  }
+
+  template <typename I, typename II>
+  oln_type_of(I, value) max(const value_box<I>& lhs,
+			    const value_box<II>& rhs)
+  {
+    // FIXME: uncomment?
+//     mlc::eq< oln_type_of(I, value), oln_type_of(II, value) >::ensure();
+    return lhs.value() < rhs.value() ? rhs.value() : lhs.value();
+  }
 
 
 } // end of namespace oln

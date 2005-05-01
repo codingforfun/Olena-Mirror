@@ -29,7 +29,8 @@
 # define OLENA_MORPHO_EROSION_HH
 
 # include <mlc/cmp.hh>
-# include <mlc/to_string.hh>
+# include <mlc/is_a.hh>
+# include <mlc/implies.hh>
 
 # include <oln/utils/record.hh>
 # include <oln/basics.hh>
@@ -123,6 +124,8 @@ namespace oln {
 				     const abstract::window<W>& win)
     {
       mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
+      mlc::implies< mlc_is_a(I, abstract::binary_image),
+	            mlc_eq(K, tag::classical_type) >::ensure();
       entering("morpho::erosion");
 
       oln_type_of(I, concrete) output("output");

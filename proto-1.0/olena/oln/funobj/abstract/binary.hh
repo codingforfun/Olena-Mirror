@@ -101,6 +101,11 @@ namespace oln
       typedef mlc::no_type ret;
     };
 
+//     template <typename F, typename T>
+//     struct binary1_meta_result
+//     {
+//       typedef mlc::no_type ret;
+//     };
 
     namespace abstract {
 
@@ -150,6 +155,22 @@ namespace oln
       };
 
 
+      template <typename E>
+      struct mbinary1 : public mlc::any<E>
+      {
+	template <typename T>
+	const typename binary_meta_result<E,T,T>::ret
+	operator()(const T& left, const T& right) const
+	{
+	  return this->exact().impl_binop(left, right);
+	}
+
+      protected:
+
+	mbinary1() {}
+      };
+
+
     } // end of namespace oln::abstract
 
 
@@ -157,12 +178,18 @@ namespace oln
 
     // fwd decl
     template <template <typename, typename> class F> struct binary_meta;
+    template <template <typename> class F> struct binary1_meta;
 
     // result
     template <template <typename, typename> class F, typename L, typename R>
     struct binary_meta_result < binary_meta<F>, L, R >
     {
       typedef oln_fun2_type_2_of(F<L,R>, res) ret;
+    };
+    template <template <typename> class F, typename T>
+    struct binary_meta_result < binary1_meta<F>, T, T >
+    {
+      typedef oln_fun2_type_of(F<T>, res) ret;
     };
 
     // class
@@ -174,6 +201,18 @@ namespace oln
 	impl_binop(const L& l, const R& r) const
       {
 	static F<L,R> f;
+	return f(l, r);
+      }
+    };
+
+    template <template <typename> class F>
+    struct binary1_meta : public abstract::mbinary1< binary1_meta<F> >
+    {
+      template <typename T>
+      const oln_fun2_type_of(F<T>, res)
+	impl_binop(const T& l, const T& r) const
+      {
+	static F<T> f;
 	return f(l, r);
       }
     };

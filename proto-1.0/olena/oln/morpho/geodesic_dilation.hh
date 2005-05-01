@@ -77,7 +77,7 @@ namespace oln {
       // FIXME: replace code below by a pw::max...
       oln_type_of(I, fwd_piter) p(marker.size());
       for_all_p (p)
-	output[p] = std::min(dil[p].value(), mask[p].value());
+	output[p] = min(dil[p], mask[p]);
 
       exiting("morpho::geodesic_dilation");
       return output;

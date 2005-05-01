@@ -34,6 +34,34 @@
 # include <oln/core/pw/arith.hh>
 
 
+namespace oln
+{
+
+  /// Operator-like "min" and "max" between 2 images.
+
+  template <typename L, typename R>
+  image_from_pwf< pw::binary_op< f_min_type,
+				 pw::value<L>,
+				 pw::value<R> > >
+  min (const abstract::image<L>& lhs,
+       const abstract::image<R>& rhs)
+  {
+    return image_for_all_p( min(pw_value(lhs), pw_value(rhs)) );
+  }
+
+  template <typename L, typename R>
+  image_from_pwf< pw::binary_op< f_max_type,
+				 pw::value<L>,
+				 pw::value<R> > >
+  max (const abstract::image<L>& lhs,
+       const abstract::image<R>& rhs)
+  {
+    return image_for_all_p( max(pw_value(lhs), pw_value(rhs)) );
+  }
+
+} // end of namespace oln
+
+
 /// Operator '+' between 2 images.
 
 template <typename L, typename R>
@@ -112,44 +140,6 @@ operator % (const oln::abstract::image<L>& lhs,
 // {
 //   return oln::image_for_all_p( - oln::p_value(rhs));
 // }
-
-
-
-
-// # define oln_decl_binary_operator(NAME, SYMBOL, TYPE)			\
-// template <typename L>							\
-// oln::image_from_pw< oln::pw::NAME< oln::pw::image<L>,			\
-// 				   oln::pw::literal<TYPE> > >		\
-// operator SYMBOL (const oln::abstract::image<L>& lhs,			\
-// 		 TYPE value)						\
-// {									\
-//   return oln::image_for_all_p(oln::p_value(lhs) SYMBOL oln::p_lit(value));	\
-// }									\
-// template <typename R>							\
-// oln::image_from_pw< oln::pw::NAME< oln::pw::literal<TYPE>,		\
-// 				   oln::pw::image<R> > >		\
-// operator SYMBOL (TYPE value,						\
-// 		 const oln::abstract::image<R>& rhs)			\
-// {									\
-//   return oln::image_for_all_p(oln::p_lit(value) SYMBOL oln::p_value(rhs));	\
-// }
-
-// oln_decl_binary_operator(plus, +, int)
-// oln_decl_binary_operator(plus, +, float)
-// oln_decl_binary_operator(plus, +, double)
-
-// oln_decl_binary_operator(minus, -, int)
-// oln_decl_binary_operator(minus, -, float)
-// oln_decl_binary_operator(minus, -, double)
-
-// oln_decl_binary_operator(times, *, int)
-// oln_decl_binary_operator(times, *, float)
-// oln_decl_binary_operator(times, *, double)
-
-// oln_decl_binary_operator(div, /, int)
-// oln_decl_binary_operator(div, /, float)
-// oln_decl_binary_operator(div, /, double)
-
 
 
 // template <typename I, typename F>

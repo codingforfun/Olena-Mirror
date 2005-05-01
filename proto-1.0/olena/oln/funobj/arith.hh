@@ -32,6 +32,7 @@
 # include <oln/funobj/abstract/binary.hh>
 
 
+
 # define oln_decl_funobj_binary(OperatorName, OperatorSymbol)			\
 										\
   namespace f_ {								\
@@ -76,53 +77,6 @@ struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 
 
 
-
-
-
-# define oln_decl_funobj_cmp(OperatorName, OperatorSymbol)			\
-										\
-  namespace f_ {								\
-    template <typename L, typename R> struct OperatorName##_;			\
-  }										\
-										\
-  template <typename L, typename R>						\
-  struct set_super_type < f_::OperatorName##_<L,R> >				\
-  {										\
-    typedef f_::abstract::binary< f_::OperatorName##_<L,R> > ret;		\
-  };										\
-										\
-  template <typename L, typename R>						\
-  struct set_props < category::fun2, f_::OperatorName##_<L,R> >			\
-  {										\
-    typedef bool res_type;							\
-    typedef L left_type;							\
-    typedef R right_type;							\
-  };										\
-										\
-  namespace f_									\
-  {										\
-										\
-    template <typename L, typename R>						\
-    struct OperatorName##_ : public oln_super2_of_(f_::OperatorName##_<L,R>)	\
-    {										\
-      typedef OperatorName##_<L,R> self_type;					\
-										\
-      const oln_fun2_type_of(self_type, res)					\
-	impl_binop(const L& left, const R& right) const				\
-	{									\
-	  return left OperatorSymbol right;					\
-	}									\
-    };										\
-										\
-  }										\
-										\
-  typedef f_::binary_meta<f_::OperatorName##_> f_##OperatorName##_type;		\
-  static f_##OperatorName##_type f_##OperatorName;				\
-										\
-struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
-
-
-
 namespace oln
 {
 
@@ -136,8 +90,64 @@ namespace oln
   // FIXME: uminus?
 
 
-} // end of namespace oln
 
+  namespace f_ {
+    template <typename T> struct min_;
+    template <typename T> struct max_;
+  }
+
+  template <typename T>
+  struct set_super_type < f_::min_<T> > { typedef f_::abstract::binary< f_::min_<T> > ret; };
+
+  template <typename T>
+  struct set_super_type < f_::max_<T> > { typedef f_::abstract::binary< f_::max_<T> > ret; };
+
+  template <typename T>
+  struct set_props < category::fun2, f_::min_<T> >
+  {
+    typedef T res_type;
+    typedef T left_type;
+    typedef T right_type;
+  };
+
+  template <typename T>
+  struct set_props < category::fun2, f_::max_<T> >
+  {
+    typedef T res_type;
+    typedef T left_type;
+    typedef T right_type;
+  };
+
+  namespace f_
+  {
+
+    template <typename T>
+    struct min_ : public oln_super_of_(f_::min_<T>)
+    {
+      const T impl_binop(const T& left, const T& right) const
+	{
+	  return left < right ? left : right;
+	}
+    };
+
+    template <typename T>
+    struct max_ : public oln_super_of_(f_::max_<T>)
+    {
+      const T impl_binop(const T& left, const T& right) const
+	{
+	  return right < left ? left : right;
+	}
+    };
+
+  }
+
+  typedef f_::binary1_meta<f_::min_> f_min_type;
+  static f_min_type f_min;
+
+  typedef f_::binary1_meta<f_::max_> f_max_type;
+  static f_max_type f_max;
+
+} // end of namespace oln
 
 
 #endif // ! OLENA_CORE_FUNOBJ_ARITH_HH

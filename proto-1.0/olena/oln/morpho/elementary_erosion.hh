@@ -28,6 +28,10 @@
 #ifndef OLENA_MORPHO_ELEMENTARY_EROSION_HH
 # define OLENA_MORPHO_ELEMENTARY_EROSION_HH
 
+# include <mlc/cmp.hh>
+# include <mlc/is_a.hh>
+# include <mlc/implies.hh>
+
 # include <oln/utils/record.hh>
 # include <oln/core/gen/image_with_nbh.hh>
 # include <oln/morpho/tags.hh>
@@ -92,6 +96,8 @@ namespace oln {
     oln_type_of(I, concrete) elementary_erosion(const tag::kind<K>& kind,
 						const abstract::image_with_nbh<I>& input)
     {
+      mlc::implies< mlc_is_a(I, abstract::binary_image),
+	            mlc_eq(K, tag::classical_type) >::ensure();
       entering("morpho::elementary_erosion");
       registering(input, "input");
 

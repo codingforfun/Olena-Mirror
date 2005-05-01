@@ -49,7 +49,11 @@ namespace oln {
   template <typename F, typename L, typename R>
   struct set_props < category::pw, pw::binary_op<F,L,R> >
   {
-    typedef typename f_::binary_meta_result<F,L,R>::ret value_type;
+    typedef
+    typename f_::binary_meta_result< F,
+				     oln_pw_type_of(L, value),
+				     oln_pw_type_of(R, value) >::ret
+    value_type;
   };
 
 
@@ -70,7 +74,8 @@ namespace oln {
 	super_type(left, right),
 	fun()
       {
-	mlc_is_a(F, f_::binary_meta)::ensure();
+	mlc::or_< mlc_is_a(F, f_::binary_meta),
+	          mlc_is_a(F, f_::binary1_meta) >::ensure();
       }
 
       typedef oln_pw_type_of(self_type, point) point_type;

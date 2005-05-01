@@ -33,7 +33,7 @@
 
 # include <oln/utils/record.hh>
 # include <oln/arith/cmp.hh>
-# include <oln/core/gen/image_with_nbh.hh> // FIXME: should be in core/abstract/ (?)
+# include <oln/core/gen/image_with_nbh.hh>
 # include <oln/morpho/elementary_erosion.hh>
 
 
@@ -76,7 +76,7 @@ namespace oln {
       // FIXME: replace code below by a pw::max...
       oln_type_of(I, fwd_piter) p(marker.size());
       for_all_p (p)
-	output[p] = std::max(ero[p].value(), mask[p].value());
+	output[p] = max(ero[p], mask[p]);
 
       exiting("morpho::geodesic_erosion");
       return output;

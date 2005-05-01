@@ -1,3 +1,25 @@
+2005-05-01  Thierry Geraud  <theo@shuttle>
+
+	* oln/funobj/abstract/binary.hh: New binary case when L and R are
+	equal: T = L = R.
+	(binary1_meta_result, mbinary1, binary1_meta): New types.
+	* oln/funobj/meta.hh: Remove this dead file.
+	* oln/funobj/arith.hh: Remove dead code.
+	* oln/core/pw/binary_op.hh (set_props): Fix bug.
+	(binary_op): Add the case F is f_::binary1_meta.
+	* oln/core/pw/arith.hh (min, max): New routines.
+	* oln/core/gen/internal/value_box.hh (min, max): Likewise.
+	* oln/arith/ops.hh (min, max): Likewise.
+	(oln_decl_binary_operator): Remove (dead code).
+
+	* oln/morpho/elementary_dilation.hh: Add static test
+	"I = binary_image => K = classical".
+	* oln/morpho/elementary_erosion.hh: Likewise.
+	* oln/morpho/dilation.hh: Likewise.
+	* oln/morpho/erosion.hh: Likewise.
+	* oln/morpho/geodesic_dilation.hh: Update.
+	* oln/morpho/geodesic_erosion.hh: Likewise.
+
 2005-04-30  Thierry Geraud  <theo@shuttle>
 
 	* oln/convert/nbh_to_se.hh: Remove (meaningless).
