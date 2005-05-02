@@ -37,12 +37,12 @@
 
 // FIXME: bad name...
 # define oln_ch_concrete_type(I, T) \
-  typename ch_value_type< oln_type_of(I, concrete), T >::ret
+  typename oln::ch_value_type< oln_type_of(I, concrete), T >::ret
 
 
 namespace oln {
 
-  template<class I, class T = oln_type_of(I, value)>
+  template<class I, class T>// FIXME: remove cause pb with compiler = oln_type_of(I, value)>
   struct ch_value_type
   {
     // FIXME: Use/extend oln/core/properties.hh mechanisms, instead of

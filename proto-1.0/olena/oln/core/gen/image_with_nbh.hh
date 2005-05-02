@@ -30,6 +30,7 @@
 
 # include <oln/core/abstract/image_with_extension.hh>
 # include <oln/core/abstract/neighborhood.hh>
+# include <oln/core/ch_value_type.hh>
 # include <oln/utils/record.hh>
 
 
@@ -51,6 +52,13 @@ namespace oln {
     typedef is_a<abstract::image_with_nbh> image_neighbness_type;
     typedef N neighb_type;
     typedef image_with_nbh< oln_type_of(I, concrete), N> concrete_type;
+
+    template <typename U>
+    struct ch_value_type
+    {
+      typedef typename oln::ch_value_type<I, U>::ret IU;
+      typedef oln::image_with_nbh< IU, N > ret;
+    };
   };
 
 

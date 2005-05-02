@@ -1,3 +1,8 @@
+2005-05-02  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* oln/core/ch_value_type.hh: Fix bug.
+	* oln/core/gen/image_with_nbh.hh (ch_value_type): Add.
+
 2005-05-01  Thierry Geraud  <theo@shuttle>
 
 	* oln/arith/min.hh: Remove (obsolete).
