@@ -30,6 +30,16 @@
 
 # include <oln/core/abstract/image.hh>
 
+
+# define oln_ch_value_type(I, T) \
+  typename ch_value_type< I, T >::ret
+
+
+// FIXME: bad name...
+# define oln_ch_concrete_type(I, T) \
+  typename ch_value_type< oln_type_of(I, concrete), T >::ret
+
+
 namespace oln {
 
   template<class I, class T = oln_type_of(I, value)>

@@ -28,73 +28,58 @@
 #ifndef OLN_UTILS_CLONE_HH
 # define OLN_UTILS_CLONE_HH
 
-# include <oln/basics.hh>
-# include <oln/core/abstract/image_operator.hh>
+# include <oln/core/abstract/image.hh>
+# include <oln/utils/record.hh>
 
-namespace oln {
 
-  // fwd decl
-  namespace utils {
-    namespace impl {
-      template <typename I> struct clone_type;
-    }
-  }
+namespace oln
+{
 
-  // category
+  // Fwd decl of erosion's facade.
+
   template <typename I>
-  struct set_category < utils::impl::clone_type<I> >
-  {
-    typedef category::image ret;
-  };
-
-  // super_type
-  template <typename I>
-  struct set_super_type < utils::impl::clone_type<I> >
-  {
-    typedef abstract::image_unary_operator<I, I, utils::impl::clone_type<I> > ret;
-  };
+  oln_type_of(I, concrete) clone(const abstract::image<I>& input);
 
 
+  namespace impl {
 
-  namespace utils {
-
-    namespace impl {
-
-      template <typename I>
-      struct clone_type
-	: public abstract::image_unary_operator<oln_type_of(I, concrete), I, clone_type<I> >
-      // FIXME: use concrete_type; Cf. erosion.hh
-      {
-	typedef abstract::image_unary_operator<oln_type_of(I, concrete), I, clone_type<I> > super_type;
-
-	clone_type(const abstract::image<I>& input) :
-	  super_type(input)
-	{
-	}
-
-	void impl_run()
-	{
-	  oln_type_of(I, concrete) tmp(this->input.size()); // FIXME: trick
-	  this->output = tmp;
-
-	  oln_type_of(I, fwd_piter) p(this->input.size());
-	  for_all_p (p)
-	    this->output[p] = this->input[p];
-	}
-      };
-
-    } // end of namespace oln::utils::impl
-
+    // generic
 
     template <typename I>
-    impl::clone_type<I> clone(const abstract::image<I>& ima)
+    oln_type_of(I, concrete) clone_(const abstract::image<I>& input)
     {
-      impl::clone_type<I> tmp(ima.exact());
-      tmp.run();
-      return tmp;
+      entering("->generic");
+      registering(input, "input");
+
+      oln_type_of(I, concrete) output(input.size(), "output");
+      oln_type_of(I, fwd_piter) p(input.size());
+      for_all_p (p)
+	output[p] = input[p];
+
+      exiting("->generic");
+      return output;
     }
 
-  } // end of namespace oln::utils
+    // add some other impls here...
+
+  } // end of namespace oln::morpho::impl
+
+
+  /// Generic clone (facade).
+
+  template <typename I>
+  oln_type_of(I, concrete) clone(const abstract::image<I>& input)
+  {
+    entering("clone");
+    registering(input, "input");
+
+    oln_type_of(I, concrete) output("output");
+    output = impl::clone_(input.exact());
+
+    exiting("clone");
+    return output;
+  }
+
 
 } // end of namespace oln
 

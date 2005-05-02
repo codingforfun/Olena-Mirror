@@ -50,9 +50,9 @@ namespace oln {
   struct set_props < category::pw, pw::binary_op<F,L,R> >
   {
     typedef
-    typename f_::binary_meta_result< F,
-				     oln_pw_type_of(L, value),
-				     oln_pw_type_of(R, value) >::ret
+    typename f_::mbinary_result< F,
+				 oln_pw_type_of(L, value),
+				 oln_pw_type_of(R, value) >::ret
     value_type;
   };
 

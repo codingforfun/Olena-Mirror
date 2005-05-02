@@ -1,5 +1,31 @@
 2005-05-01  Thierry Geraud  <theo@shuttle>
 
+	* oln/arith/min.hh: Remove (obsolete).
+	* oln/arith/max.hh: Likewise.
+	* oln/arith/ops.hh: Move to...
+	* oln/ops/arith.hh: ...this new file.
+	* oln/arith/logic.hh: Move to...
+	* oln/ops/logic.hh: ...this new file.
+	* oln/arith/cmp.hh: Move to...
+	* oln/ops/cmp.hh: ...this new file.
+	* oln/morpho/geodesic_dilation.hh: Update.
+	* oln/morpho/geodesic_erosion.hh: Likewise.
+	* oln/funobj/abstract/binary.hh (binary_meta_result): Rename as...
+	(mbinary_result): ...this.
+	* oln/core/pw/binary_op.hh: Update.
+	* oln/funobj/abstract/unary.hh (unary_meta_result): Rename as...
+	(munary_result): ...this.
+	* oln/core/pw/unary_op.hh: Update.
+	* oln/core/abstract/image.hh: Include piter.hh.
+	* oln/utils/clone.hh: Update. Do not use image_operator any more.
+	* oln/core/apply.hh: Likewise.
+	(apply, apply2): New routines to accept oln/funobj/*.
+	* oln/core/ch_value_type.hh (oln_ch_concrete_type): New macro.
+	* oln/level/arith.hh: New file.
+	* oln/level/logic.hh: New file.
+	
+2005-05-01  Thierry Geraud  <theo@shuttle>
+
 	* oln/funobj/abstract/binary.hh: New binary case when L and R are
 	equal: T = L = R.
 	(binary1_meta_result, mbinary1, binary1_meta): New types.

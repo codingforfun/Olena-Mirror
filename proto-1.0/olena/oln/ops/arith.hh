@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_ARITH_OPS_HH
-# define OLENA_ARITH_OPS_HH
+#ifndef OLENA_OPS_ARITH_HH
+# define OLENA_OPS_ARITH_HH
 
 # include <oln/core/abstract/image.hh>
 # include <oln/core/pw/image.hh>
@@ -157,4 +157,4 @@ operator % (const oln::abstract::image<L>& lhs,
 // FIXME: to be continued...
 
 
-#endif // ! OLENA_ARITH_OPS_HH
+#endif // ! OLENA_OPS_ARITH_HH

@@ -1,4 +1,4 @@
-// Copyright (C) 2005  EPITA Research and Development Laboratory
+// Copyright (C) 2001-2005  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,7 +32,7 @@
 # include <mlc/contract.hh>
 
 # include <oln/utils/record.hh>
-# include <oln/arith/cmp.hh>
+# include <oln/ops/cmp.hh>
 # include <oln/core/gen/image_with_nbh.hh>
 # include <oln/morpho/elementary_erosion.hh>
 

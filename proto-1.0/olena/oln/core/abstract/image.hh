@@ -486,6 +486,9 @@ namespace oln
 } // end of namespace oln
 
 
+# include <oln/core/abstract/piter.hh>
+// this allows for browsing points in file
+// where oln/core/abstract/image.hh is included
 
 
 #endif // ! OLENA_CORE_ABSTRACT_IMAGE_HH

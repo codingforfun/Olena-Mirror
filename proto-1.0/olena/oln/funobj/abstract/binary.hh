@@ -31,6 +31,7 @@
 # include <mlc/any.hh>
 # include <mlc/contract.hh>
 # include <mlc/types.hh>
+
 # include <ntg/all.hh>
 # include <oln/core/abstract/image.hh>
 
@@ -96,7 +97,7 @@ namespace oln
   
 
     template <typename F, typename L, typename R>
-    struct binary_meta_result
+    struct mbinary_result
     {
       typedef mlc::no_type ret;
     };
@@ -143,8 +144,17 @@ namespace oln
       struct mbinary : public mlc::any<E>
       {
 	template <typename L, typename R>
-	const typename binary_meta_result<E,L,R>::ret
+	const typename mbinary_result<E,L,R>::ret
 	operator()(const L& left, const R& right) const
+	{
+	  return this->exact().impl_binop(left, right);
+	}
+
+	template <typename Il, typename Ir>
+	const typename mbinary_result<E,
+				      oln_type_of(Il, value),
+				      oln_type_of(Ir, value)>::ret
+	operator()(const value_box<Il>& left, const value_box<Ir>& right) const
 	{
 	  return this->exact().impl_binop(left, right);
 	}
@@ -159,11 +169,13 @@ namespace oln
       struct mbinary1 : public mlc::any<E>
       {
 	template <typename T>
-	const typename binary_meta_result<E,T,T>::ret
+	const typename mbinary_result<E,T,T>::ret
 	operator()(const T& left, const T& right) const
 	{
 	  return this->exact().impl_binop(left, right);
 	}
+
+	// FIXME: handle value_box like above...
 
       protected:
 
@@ -182,14 +194,24 @@ namespace oln
 
     // result
     template <template <typename, typename> class F, typename L, typename R>
-    struct binary_meta_result < binary_meta<F>, L, R >
+    struct mbinary_result < binary_meta<F>, L, R >
     {
-      typedef oln_fun2_type_2_of(F<L,R>, res) ret;
+      typedef F<L,R> fun_type;
+      typedef oln_fun2_type_of(fun_type, res) ret;
     };
+//     template <template <typename, typename> class F, typename Il, typename Ir>
+//     struct mbinary_result < binary_meta<F>, value_box<Il>, value_box<Ir> >
+//     {
+//       typedef oln_type_of(Il, value) L;
+//       typedef oln_type_of(Ir, value) R;
+//       typedef F<L,R> fun_type;
+//       typedef oln_fun2_type_of(fun_type, res) ret;
+//     };
     template <template <typename> class F, typename T>
-    struct binary_meta_result < binary1_meta<F>, T, T >
+    struct mbinary_result < binary1_meta<F>, T, T >
     {
-      typedef oln_fun2_type_of(F<T>, res) ret;
+      typedef F<T> fun_type;
+      typedef oln_fun2_type_of(fun_type, res) ret;
     };
 
     // class

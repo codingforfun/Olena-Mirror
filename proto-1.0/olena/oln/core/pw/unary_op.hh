@@ -50,7 +50,7 @@ namespace oln {
   template <typename F, typename A>
   struct set_props < category::pw, pw::unary_op<F,A> >
   {
-    typedef typename f_::unary_meta_result<F,A>::ret value_type;
+    typedef typename f_::munary_result<F,A>::ret value_type;
   };
 
 

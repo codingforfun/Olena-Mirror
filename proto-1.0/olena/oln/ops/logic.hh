@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_ARITH_LOGIC_HH
-# define OLENA_ARITH_LOGIC_HH
+#ifndef OLENA_OPS_LOGIC_HH
+# define OLENA_OPS_LOGIC_HH
 
 # include <oln/core/abstract/image.hh>
 # include <oln/core/pw/image.hh>
@@ -85,4 +85,4 @@ operator xor (const oln::abstract::binary_image<L>& lhs,
 
 
 
-#endif // ! OLENA_ARITH_LOGIC_HH
+#endif // ! OLENA_OPS_LOGIC_HH

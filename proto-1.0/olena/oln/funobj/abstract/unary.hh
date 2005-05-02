@@ -84,7 +84,7 @@ namespace oln
   {
 
     template <typename F, typename T>
-    struct unary_meta_result
+    struct munary_result
     {
       typedef mlc::no_type ret;
     };
@@ -118,7 +118,7 @@ namespace oln
       struct munary : public mlc::any<E>
       {
 	template <typename T>
-	const typename unary_meta_result<E,T>::ret
+	const typename munary_result<E,T>::ret
 	operator()(const T& arg) const
 	{
 	  return this->exact().impl_unop(arg);
@@ -141,7 +141,7 @@ namespace oln
 
     // result
     template <template <typename> class F, typename T>
-    struct unary_meta_result < unary_meta<F>, T >
+    struct munary_result < unary_meta<F>, T >
     {
       typedef oln_fun1_type_of(F<T>, res) ret;
     };

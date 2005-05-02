@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_ARITH_CMP_HH
-# define OLENA_ARITH_CMP_HH
+#ifndef OLENA_OPS_CMP_HH
+# define OLENA_OPS_CMP_HH
 
 # include <oln/core/abstract/image.hh>
 # include <oln/core/pw/cmp.hh>
@@ -93,4 +93,4 @@ bool operator >= (const oln::abstract::image<L>& lhs,
 }
 
 
-#endif // ! OLENA_ARITH_CMP_HH
+#endif // ! OLENA_OPS_CMP_HH
