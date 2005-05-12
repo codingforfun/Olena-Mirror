@@ -108,8 +108,8 @@ namespace oln {
     template<typename I1, typename I2, typename A>
     oln_type_of(I1, concrete)
     reconstruction_by_erosion(const abstract::image_with_nbh<I1>&	marker,
-			       const abstract::image<I2>&		mask,
-			       const tag::algo<A>&			algo_)
+			      const abstract::image<I2>&		mask,
+			      const tag::algo<A>&			algo_)
     {
       mlc::eq<oln_type_of(I1, grid), oln_type_of(I2, grid)>::ensure();
       precondition(marker.size() == mask.size());
@@ -120,7 +120,7 @@ namespace oln {
     template<typename I1, typename I2>
     oln_type_of(I1, concrete)
     reconstruction_by_erosion(const abstract::image_with_nbh<I1>& marker,
-			       const abstract::image<I2>&          mask)
+			      const abstract::image<I2>&          mask)
     {
       mlc::eq<oln_type_of(I1, grid), oln_type_of(I2, grid)>::ensure();
       precondition(marker.size() == mask.size());
