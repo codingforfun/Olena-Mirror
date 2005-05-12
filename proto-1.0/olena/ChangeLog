@@ -1,3 +1,7 @@
+2005-05-12  Christophe Berger  <christophe@lrde.epita.fr>
+
+	* oln/core/pw/macros.hh: Fix bug.
+
 2005-05-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix tests of apply2, pw::apply and level::fill.

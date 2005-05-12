@@ -60,9 +60,9 @@ const oln::pw::binary_op< oln::f_##OperatorName##_type,				\
 operator OperatorSymbol (const oln::pw::abstract::function<L>& lhs,		\
 			 const LiteralType& rhs)				\
 {										\
-  precondition(lhs.size() == rhs.size());					\
+  oln::pw::literal<LiteralType> rhs_(rhs);					\
   oln::pw::binary_op< oln::f_##OperatorName##_type,				\
-                       L, oln::pw::literal<LiteralType> > tmp(lhs, rhs);	\
+                       L, oln::pw::literal<LiteralType> > tmp(lhs, rhs_);	\
   return tmp;									\
 }										\
 										\
@@ -72,9 +72,9 @@ const oln::pw::binary_op< oln::f_##OperatorName##_type,				\
 operator OperatorSymbol (const LiteralType& lhs,				\
 			 const oln::pw::abstract::function<R>& rhs)		\
 {										\
-  precondition(lhs.size() == rhs.size());					\
+  oln::pw::literal<LiteralType> lhs_(lhs);					\
   oln::pw::binary_op< oln::f_##OperatorName##_type,				\
-                       oln::pw::literal<LiteralType>, R > tmp(lhs, rhs);	\
+                       oln::pw::literal<LiteralType>, R > tmp(lhs_, rhs);	\
   return tmp;									\
 }										\
 										\
