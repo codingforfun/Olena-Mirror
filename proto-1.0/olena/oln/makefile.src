@@ -6,12 +6,6 @@
 OLN_DEP =					\
   all.hh					\
 						\
-  arith/cmp.hh					\
-  arith/logic.hh				\
-  arith/max.hh					\
-  arith/min.hh					\
-  arith/ops.hh					\
-						\
   basics1d.hh					\
   basics2d.hh					\
   basics3d.hh					\
@@ -137,7 +131,6 @@ OLN_DEP =					\
   funobj/cmp.hh					\
   funobj/invert.hh				\
   funobj/logic.hh				\
-  funobj/meta.hh				\
 						\
   io/gz_stream.hh				\
   io/read_image_2d_pnm.hh			\
@@ -146,8 +139,14 @@ OLN_DEP =					\
   io/write_image_2d_pnm.hh			\
   io/write_image.hh				\
 						\
+  level/arith.hh				\
   level/compare.hh				\
   level/fill.hh					\
+  level/logic.hh				\
+						\
+  ops/arith.hh					\
+  ops/cmp.hh					\
+  ops/logic.hh					\
 						\
   morpho/closing.hh				\
   morpho/dilation.hh				\

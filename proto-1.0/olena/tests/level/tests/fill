@@ -42,7 +42,7 @@ check(void)
   oln::level::fill(im, 51);
 
   oln::fwd_piter2d it(im.size());
-  for_all(it)
+  for_all_p(it)
     if (im[it] != 51)
       return true;
 

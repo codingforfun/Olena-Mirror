@@ -11,7 +11,7 @@ using namespace oln;
 bool check()
 {
   any_point p;
-  pw::literal<int> pv1 (p_lit(42));
+  pw::literal<int> pv1 (p_literal(42));
 
   int res = p_apply(mlc::make_unary_fun(std::negate<int>()), pv1)(p);
   return !(res == -42);

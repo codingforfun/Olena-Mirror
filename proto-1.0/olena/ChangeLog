@@ -1,3 +1,19 @@
+2005-05-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix tests of apply2, pw::apply and level::fill.
+
+	* tests/core/tests/apply-binary (check): Adjust calls to
+	oln::apply2.
+	* olena/tests/pw/tests/apply: Rename as...
+	* olena/tests/pw/tests/apply-unary: ...this.
+	(check): s/p_lit/p_literal/.
+	* olena/tests/pw/tests/apply-binary (check): Likewise.
+	* tests/level/tests/fill (check): s/for_all/for_all_p/
+	* oln/makefile.src (OLN_DEP): Remove arith/cmp.hh, arith/logic.hh,
+	arith/max.hh, arith/min.hh, arith/ops.hh and funobj/meta.hh.
+	Add level/arith.hh, level/logic.hh, ops/arith.hh, ops/cmp.hh and
+	ops/logic.hh.
+
 2005-05-02  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* oln/core/ch_value_type.hh: Fix bug.
@@ -28,7 +44,7 @@
 	* oln/core/ch_value_type.hh (oln_ch_concrete_type): New macro.
 	* oln/level/arith.hh: New file.
 	* oln/level/logic.hh: New file.
-	
+
 2005-05-01  Thierry Geraud  <theo@shuttle>
 
 	* oln/funobj/abstract/binary.hh: New binary case when L and R are
@@ -57,11 +73,11 @@
 	* olena/oln/core/abstract/image_typeness.hh
 	(not_binary_image): New class.
 	* olena/oln/makefile.src: Update.
-	
+
 2005-04-29  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
-	
+
 	Add some function objects.
-	
+
 	* oln/funobj/abstract/binary.hh: New file.
 	* oln/funobj/abstract/unary.hh: Likewise.
 	* oln/funobj/meta.hh: Likewise.
@@ -71,7 +87,7 @@
 	* oln/core/typedefs.hh: Update with new typedef decls.
 
 	Update of oln/core/pw/*
-	
+
 	* oln/core/pw/binary_op.hh: New file.
 	* oln/core/pw/unary_op.hh: New file.
 	* oln/core/pw/times.hh,
@@ -105,7 +121,7 @@
 	* oln/arith/ops.hh: Likewise.
 	* oln/arith/logic.hh: Likewise.
 	* oln/arith/cmp.hh: New file.
-	
+
 	Fix morpho for geodesic_dilation to work.
 
 	* oln/morpho/elementary_dilation.hh: New file.
@@ -115,7 +131,7 @@
 	(operator<=): Remove thanks to oln/arith/cmp.hh.
 	* oln/morpho/geodesic_erosion.hh: Likewise.
 	* oln/morpho/stat.hh (local_max_nbh): New routine.
-	
+
 2005-04-28  Nicolas Widynski  <widyns_n@ptaouchnok.lrde.epita.fr>
 
 	* oln/morpho/geodesic_dilation.hh: New type of implementation,
@@ -133,7 +149,7 @@
 	* oln/morpho/tags.hh: Likewise.
 
 2005-04-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
-	
+
 	Files in oln/morpho move to 'trash' since inheritance in
 	image operators will soon be no longer in use.
 
@@ -145,7 +161,7 @@
 
 	The changes below are for safety purpose; we should ensure
 	that some (now commented) features are no more in use.
-	
+
 	* oln/core/2d/image2d.hh (operator=(box)): Comment.
 	(operator=(image_like_): Comment.
 	(image2d(const image2d&)): Add decl to help compiler.
@@ -164,7 +180,7 @@
 	* oln/core/2d/image2d.hh (operator=io): Update to not call io.
 	* oln/core/abstract/image_constness.hh (set): Move method's body
 	to...
-	* oln/core/box.hh: ...here.	
+	* oln/core/box.hh: ...here.
 	* oln/core/abstract/image.hh (impl_hold_large): Change call to
 	'impl_hold' to avoid counting a call to 'hold'.
 	(hold, get): Move method's body to...
@@ -219,7 +235,7 @@
 	* oln/core/abstract/window.hh (operator-): New.
 	* oln/core/pw/image.hh (grid_type): New property.
 	(concrete_type): Likewise.
-	
+
 2005-04-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* oln/core/abstract/image_with_extension.hh (real): Fix
@@ -234,7 +250,7 @@
 	* oln/core/gen/regular_window.hh (operator-): Rename as...
 	(impl_op_minus): ...this and fix bug.
 	(dp): New method.
-	
+
 2005-04-20  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* oln/morpho/reconstruction.hh: Remove a comment.
@@ -361,7 +377,7 @@
 	* oln/core/gen/regular_window.hh: Add includes.
 	* oln/makefile.src: Update.
 	* oln/morpho/stat.hh: Update.
-	* oln/morpho/erosion.hh: 
+	* oln/morpho/erosion.hh:
 
 2005-04-14  Roland Levillain  <roland@lrde.epita.fr>
 

@@ -47,28 +47,28 @@ bool check()
   oln::image2d<int> ima3(10, 10);
   oln::level::fill(ima3, 12);
 
-  // oln::apply, with a hand-made mlc::abstract::binary_function.
+  // oln::apply2, with a hand-made mlc::abstract::binary_function.
   {
     oln::image2d<int> ima;
-    ima = oln::apply(f_mult(), ima1, ima2);
+    ima = oln::apply2(f_mult(), ima1, ima2);
     if (!oln::level::is_equal(ima, ima3))
       return true;
   }
-  // oln::apply, with a mlc::binary_function built using the helper
+  // oln::apply2, with a mlc::binary_function built using the helper
   // function mlc::make_binary_fun on a classic function.
   {
     oln::image2d<int> ima;
-    ima = oln::apply(mlc::make_binary_fun(mult), ima1, ima2);
+    ima = oln::apply2(mlc::make_binary_fun(mult), ima1, ima2);
     if (!oln::level::is_equal(ima, ima3))
       return true;
   }
 
-  // oln::apply, with a mlc::binary_function built using the helper
+  // oln::apply2, with a mlc::binary_function built using the helper
   // function mlc::make_binary_fun on a std::binary_function.
   {
     oln::image2d<int> ima;
     ima =
-      oln::apply(mlc::make_binary_fun(std::multiplies<int>()), ima1, ima2);
+      oln::apply2(mlc::make_binary_fun(std::multiplies<int>()), ima1, ima2);
     if (!oln::level::is_equal(ima, ima3))
       return true;
   }
