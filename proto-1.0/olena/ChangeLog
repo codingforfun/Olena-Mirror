@@ -1,3 +1,21 @@
+2005-05-12  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* oln/core/gen/regular_window.hh: Add splitting methods.
+	* oln/morpho/reconstruction.hh: New. Add generic facade for the
+	reconstruction.
+	* oln/morpho/reconstruction_by_erosion.inctrash: Remove.
+	* oln/morpho/reconstruction_by_dilation.hh: New. Return of the generic
+	reconstructions by dilation.
+	* oln/morpho/splitse.trash: Remove.
+	* oln/morpho/reconstruction_by_erosion.hh: New. Return of the generic
+	reconstructions by erosion.
+	* oln/morpho/reconstruction_by_dilation.inctrash: Remove.
+	* oln/canvas: New.
+	* oln/canvas/reconstruction.hh: New. Add hybrid and sequential
+	reconstruction canvas.
+	* oln/canvas/backandforth.hh: New. Contains generic back and forth
+	canvas: both classical and until_convergence versions.
+
 2005-05-12  Christophe Berger  <christophe@lrde.epita.fr>
 
 	* oln/core/pw/macros.hh: Fix bug.

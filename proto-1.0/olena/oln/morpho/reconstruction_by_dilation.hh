@@ -25,6 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+#ifndef OLENA_MORPHO_RECONSTRUCTION_BY_DILATION_HH
+# define OLENA_MORPHO_RECONSTRUCTION_BY_DILATION_HH
+
+# include <oln/canvas/reconstruction.hh>
+# include <oln/morpho/tags.hh>
+
 namespace oln {
 
   namespace morpho {
@@ -32,19 +38,17 @@ namespace oln {
     namespace impl {
 
       // Sequential version
-
       template<typename I1, typename I2>
-      struct generic_reconstruction <tag::by_dilation, tag::sequential, I1, I2>
-	: public generic_reconstruction_canvas<I1, I2, tag::sequential,
-	    generic_reconstruction<tag::by_dilation, tag::sequential, I1, I2> >
+      struct reconstruction <tag::by_dilation_type, tag::sequential_type, I1, I2>
+	: public canvas::sequential_reconstruction<I1, I2,
+	    reconstruction<tag::by_dilation_type, tag::sequential_type, I1, I2> >
       {
-	typedef generic_reconstruction<tag::by_dilation,
-				       tag::sequential, I1,I2> self_type;
-	typedef generic_reconstruction_canvas<I1, I2, tag::sequential,
-					      self_type> super_type;
+	typedef reconstruction<tag::by_dilation_type,
+			       tag::sequential_type, I1,I2> self_type;
+	typedef canvas::sequential_reconstruction<I1, I2, self_type> super_type;
 
-	generic_reconstruction(const abstract::image_with_nbh<I1>& marker,
-			       const abstract::image<I2>& mask) :
+	reconstruction(const abstract::image_with_nbh<I1>& marker,
+		       const abstract::image<I2>& mask) :
 	  super_type(marker, mask)
 	{
 	}
@@ -55,7 +59,7 @@ namespace oln {
 	  this->output[this->bkd_p] = ntg::min(morpho::max(this->output,
 							   this->bkd_p,
 							   this->win_minus),
-					       this->mask[this->bkd_p].value());
+					       this->mask[this->bkd_p]);
 	}
 
 	void impl_fwd_loop_body()
@@ -63,9 +67,10 @@ namespace oln {
 	  this->output[this->fwd_p] = ntg::min(morpho::max(this->output,
 							   this->fwd_p,
 							   this->win_plus),
-					       this->mask[this->fwd_p].value());
+					       this->mask[this->fwd_p]);
 	}
 
+	// FIXME: unused...
 	void impl_preconditions()
 	{
 	  precondition(level::is_greater_or_equal(this->mask, this->marker));
@@ -77,17 +82,17 @@ namespace oln {
       // Hybrid version
 
       template<typename I1, typename I2>
-      struct generic_reconstruction <tag::by_dilation, tag::hybrid, I1, I2>
-	: public generic_reconstruction_canvas<I1, I2, tag::hybrid,
-	    generic_reconstruction<tag::by_dilation, tag::hybrid, I1, I2> >
+      struct reconstruction <tag::by_dilation_type, tag::hybrid_type, I1, I2>
+	: public canvas::hybrid_reconstruction<I1, I2,
+	    reconstruction<tag::by_dilation_type, tag::hybrid_type, I1, I2> >
       {
-	typedef generic_reconstruction<tag::by_dilation,
-				       tag::hybrid, I1,I2> self_type;
-	typedef generic_reconstruction_canvas<I1, I2, tag::hybrid,
+	typedef reconstruction<tag::by_dilation_type,
+			       tag::hybrid_type, I1,I2> self_type;
+	typedef canvas::hybrid_reconstruction<I1, I2,
 					      self_type> super_type;
 
-	generic_reconstruction(const abstract::image_with_nbh<I1>& marker,
-			       const abstract::image<I2>& mask) :
+	reconstruction(const abstract::image_with_nbh<I1>& marker,
+		       const abstract::image<I2>& mask) :
 	  super_type(marker, mask)
 	{
 	}
@@ -99,7 +104,7 @@ namespace oln {
 	  this->output[this->bkd_p] = ntg::min(morpho::max(this->work,
 							   this->bkd_p,
 							   this->win_minus),
-					       this->mask[this->bkd_p].value());
+					       this->mask[this->bkd_p]);
 	}
 
 	void impl_fwd_loop_body()
@@ -107,7 +112,7 @@ namespace oln {
 	  this->output[this->fwd_p] = ntg::min(morpho::max(this->work,
 							   this->fwd_p,
 							   this->win_plus),
-					       this->mask[this->fwd_p].value());
+					       this->mask[this->fwd_p]);
 	}
 
 	void impl_fifo_loop_body()
@@ -115,8 +120,8 @@ namespace oln {
 	  if ((this->output[this->q] < this->output[this->p]) &&
 	      (this->mask[this->q] != this->output[this->q]))
 	    {
-	      this->output[this->q] = ntg::min(this->output[this->p].value(),
-					       this->mask[this->q].value());
+	      this->output[this->q] = ntg::min(this->output[this->p],
+					       this->mask[this->q]);
 	      this->fifo.push(this->q);
 	    }
 	}
@@ -128,6 +133,7 @@ namespace oln {
 	    (this->output[this->q] < this->mask[this->q]);
 	}
 
+	//FIXME: unused...
 	void impl_preconditions()
 	{
 	  precondition(level::is_greater_or_equal(this->mask, this->marker));
@@ -140,3 +146,6 @@ namespace oln {
   }
 
 }
+
+
+#endif // ! OLENA_MORPHO_RECONSTRUCTION_BY_DILATION_HH

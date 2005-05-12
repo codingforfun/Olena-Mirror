@@ -33,7 +33,7 @@
 # include <iterator>
 # include <vector>
 # include <set>
- 
+
 # include <mlc/contract.hh>
 # include <oln/core/abstract/grid.hh>
 # include <oln/core/abstract/dpoint.hh>
@@ -53,7 +53,7 @@ namespace oln {
 
   // props
   template <typename G, typename E>
-  struct set_props< category::window, abstract::regular_window<G, E> > 
+  struct set_props< category::window, abstract::regular_window<G, E> >
   {
     typedef G                          grid_type;
     typedef oln_grd_type_of(G, dpoint) dpoint_type;
@@ -61,7 +61,7 @@ namespace oln {
     typedef regular_fwd_qiter<G,E>     fwd_iter_type;
     //     typedef regular_fwd_dpiter<G>      fwd_dpiter_type; // FIXME: later...
   };
-  
+
 
 
   namespace abstract
@@ -72,7 +72,7 @@ namespace oln {
     {
 
     public:
-   
+
       typedef regular_window<G, E> self_type;
 
       typedef oln_grd_type_of(G, coord)    coord_type;
@@ -121,6 +121,101 @@ namespace oln {
 	return this->dp_;
       }
 
+
+      self_type get_fwd_win() const
+      {
+	self_type out;
+
+	for (unsigned i = 0; i < this->card(); ++i)
+	  {
+	    const dpoint_type& dp = dp_[i];
+
+	    for (unsigned n = 0; n < dim; ++n)
+	      if (dp.nth(n) < 0)
+		{
+		  out.add(dp);
+		  break;
+		}
+	      else if (dp.nth(n) > 0)
+		break;
+	  }
+	return out;
+      }
+
+
+      self_type get_fwd_win_p() // abstract::window<W>& win)
+      {
+	self_type out;
+
+
+	for (unsigned i = 0; i < this->card(); ++i)
+	  {
+	    const dpoint_type& dp = dp_[i];
+
+	    unsigned n;
+	    for (n = 0; n < dim; ++n)
+	      if (dp.nth(n) < 0)
+		{
+		  out.add(dp);
+		  break;
+		}
+	      else if (dp.nth(n) > 0)
+		break;
+
+	    // All p.nth(n) are 0.
+	    if (n == dim)
+	      out.add(dp);
+
+	  }
+	return out;
+      }
+
+
+      self_type get_bkd_win()
+      {
+	self_type out;
+
+	for (unsigned i = 0; i < card(); ++i)
+	  {
+	    const dpoint_type& dp = dp_[i];
+
+	    for (unsigned n = 0; n < dim; ++n)
+	      if (dp.nth(n) > 0)
+		{
+		  out.add(dp);
+		  break;
+		}
+	      else if (dp.nth(n) < 0)
+		break;
+	  }
+	return out;
+      }
+
+
+      self_type get_bkd_win_p()
+      {
+	self_type out;
+
+	for (unsigned i = 0; i < card(); ++i)
+	  {
+	    const dpoint_type& dp = win.get_dp()[i];
+
+	    unsigned n;
+	    for (n = 0; n < dim; ++n)
+	      if (dp.nth(n) > 0)
+		{
+		  out.add(dp);
+		  break;
+		}
+	      else if (dp.nth(n) < 0)
+		break;
+	    // All p.nth(n) are 0.
+	    if (n == dim)
+	      out.add(dp);
+	  }
+	return out;
+      }
+
     protected:
 
       regular_window() :
@@ -153,8 +248,11 @@ namespace oln {
 	this->delta_update_(dp);
       }
 
+
+
+
     private:
- 
+
       std::set<dpoint_type, fwd_less_dpoint> dpset_;
       std::vector<dpoint_type> dp_;
       coord_type delta_;
