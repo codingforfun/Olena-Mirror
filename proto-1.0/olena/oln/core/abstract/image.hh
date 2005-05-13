@@ -443,13 +443,13 @@ namespace oln
 	  return this->delegate().hold_large(p);
 	}
 
-	value_box<D> operator[](const point_type& p) const
+	value_box<const D> operator[](const point_type& p) const
 	{
 	  precondition(this->hold_large(p));
 	  return this->delegate().operator[](p);
 	}
 
-	value_box<const D> operator[](const point_type& p)
+	value_box<D> operator[](const point_type& p)
 	{
 	  precondition(this->hold_large(p));
 	  return this->delegate().operator[](p);

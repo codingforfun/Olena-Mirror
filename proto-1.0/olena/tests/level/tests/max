@@ -1,5 +1,6 @@
+							// -*- C++ -*-
 #include <oln/basics2d.hh>
-#include <oln/arith/min.hh>
+#include <oln/level/arith.hh>
 #include <oln/level/fill.hh>
 #include <oln/level/compare.hh>
 #include <ntg/int.hh>
@@ -16,12 +17,10 @@ bool check()
 
    oln::image2d<ntg::int_u8> ima;
 
-   ima = oln::arith::min(ima1, ima2);
+   ima = oln::level::max(ima1, ima2);
 
-   if (oln::level::is_equal(ima, ima1))
+   if (oln::level::is_equal(ima, ima2))
      return false;
    return true;
 }
-
-
 

@@ -129,6 +129,26 @@ namespace oln {
       this->exact_ptr = this;
     }
 
+  public:
+
+    /*! Return a reference to the value stored at coordinate
+    **  (\a slice, \a row, \a col) in the current (const) image.
+    */
+    value_box< const image3d<T> >
+    operator()(coord_t slice, coord_t row, coord_t col) const
+    {
+      return (*this)[point3d(slice, row, col)];
+    }
+
+    /*! Return a reference to the value stored at coordinate
+    **  (\a slice, \a row, \a col) in the current image.
+    */
+    value_box< image3d<T> >
+    operator()(coord_t slice, coord_t row, coord_t col)
+    {
+      return (*this)[point3d(slice, row, col)];
+    }
+
   };
 
 

@@ -1,0 +1,48 @@
+							// -*- C++ -*-
+#include <iostream>
+#include <cmath>
+
+#include <oln/core/pw/arith.hh>
+#include <oln/core/pw/literal.hh>
+#include <oln/core/pw/value.hh>
+#include <oln/core/2d/image2d.hh>
+#include <oln/core/2d/point2d.hh>
+
+using namespace oln;
+
+// Check arith operators on pw::images's.
+bool check()
+{
+  typedef image2d<int> ima_type;
+
+  // ima1 =
+  //   1 2 3
+  //   4 5 6
+  //   7 8 9
+  ima_type ima1(3, 3);
+  ima1(0, 0) = 1; ima1(0, 1) = 2; ima1(0, 2) = 3;
+  ima1(1, 0) = 4; ima1(1, 1) = 5; ima1(1, 2) = 6;
+  ima1(2, 0) = 7; ima1(2, 1) = 8; ima1(2, 2) = 9;
+
+  // ima2 =
+  //   1 2 3
+  //   4 5 6
+  //   7 8 9
+  ima_type ima2(3, 3);
+  ima2(0, 0) = 9; ima2(0, 1) = 8; ima2(0, 2) = 7;
+  ima2(1, 0) = 6; ima2(1, 1) = 5; ima2(1, 2) = 4;
+  ima2(2, 0) = 3; ima2(2, 1) = 2; ima2(2, 2) = 1;
+
+  pw::value<ima_type> pv1(pw_value(ima1));
+  pw::value<ima_type> pv2(pw_value(ima2));
+
+  point2d p1(0, 1);
+  if (min(pv1, pv2)(p1) != 2)
+    return true;
+
+  point2d p2(2, 0);
+  if (max(pv1, pv2)(p2) != 7)
+    return true;
+
+  return false;
+}

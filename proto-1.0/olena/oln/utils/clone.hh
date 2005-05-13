@@ -35,7 +35,7 @@
 namespace oln
 {
 
-  // Fwd decl of erosion's facade.
+  // Fwd decl of clone's facade.
 
   template <typename I>
   oln_type_of(I, concrete) clone(const abstract::image<I>& input);

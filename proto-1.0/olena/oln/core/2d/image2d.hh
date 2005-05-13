@@ -202,6 +202,25 @@ namespace oln {
     // without impl
     image2d(const image2d&);
 
+
+  public:
+
+    /*! Return a reference to the value stored at coordinate
+    **  (\a row, \a col) in the current (const) image.
+    */
+    value_box< const image2d<T> > operator()(coord_t row, coord_t col) const
+    {
+      return (*this)[point2d(row, col)];
+    }
+
+    /*! Return a reference to the value stored at coordinate
+    **  (\a row, \a col) in the current image.
+    */
+    value_box< image2d<T> > operator()(coord_t row, coord_t col)
+    {
+      return (*this)[point2d(row, col)];
+    }
+
   };
 
 

@@ -1,3 +1,27 @@
+2005-05-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add operator()'s on oln::image1d, oln::image2d and oln::image3d.
+
+	* oln/core/abstract/image.hh
+	(operator[](const point_type&) const): Return a value_box<const D>
+	instead of a value_box<D>.
+	(operator[](const point_type&)): Return a value_box<D> instead of
+	a value_box<const D>.
+	* oln/core/1d/image1d.hh (operator()(coord_t) const)
+	(operator()(coord_t))
+	* oln/core/2d/image2d.hh (operator()(coord_t, coord_t) const)
+	(operator()(coord_t, coord_t))
+	* oln/core/3d/image3d.hh
+	(operator()(coord_t, coord_t, coord_t) const)
+	(operator()(coord_t, coord_t, coord_t)): New operators.
+
+	* oln/utils/clone.hh (clone): Adjust comment.
+	* tests/arith: Remove directory.
+	* tests/pw/tests/arith-value, tests/pw/tests/arith-image: New
+	tests.
+	* tests/level/tests/min, tests/level/tests/max: New
+	tests (not yet working).
+
 2005-05-12  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* oln/morpho/reconstruction.hh: Fix indentation.

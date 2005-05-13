@@ -1,0 +1,28 @@
+							// -*- C++ -*-
+#include <iostream>
+#include <cmath>
+
+#include <oln/core/pw/arith.hh>
+#include <oln/core/pw/literal.hh>
+#include <oln/core/pw/value.hh>
+#include <oln/core/any/point.hh>
+
+using namespace oln;
+
+// Check arith operators on pw::value's.
+bool check()
+{
+  any_point p;
+  pw::literal<int> pv1(p_literal(42));
+  pw::literal<int> pv2(p_literal(51));
+
+  int res_min = min(pv1, pv2)(p);
+  if (res_min != 42)
+    return true;
+
+  int res_max = max(pv1, pv2)(p);
+  if (res_max != 51)
+    return true;
+
+  return false;
+}

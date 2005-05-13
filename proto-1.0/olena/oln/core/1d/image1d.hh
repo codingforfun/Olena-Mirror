@@ -129,6 +129,24 @@ namespace oln {
       this->exact_ptr = this;
     }
 
+  public:
+
+    /*! Return a reference to the value stored at coordinate \a index
+    **  in the current (const) image.
+    */
+    value_box< const image1d<T> > operator()(coord_t index) const
+    {
+      return (*this)[point1d(index)];
+    }
+
+    /*! Return a reference to the value stored at coordinate \a index
+    **  in the current image.
+    */
+    value_box< image1d<T> > operator()(coord_t index)
+    {
+      return (*this)[point1d(index)];
+    }
+
   };
 
 
