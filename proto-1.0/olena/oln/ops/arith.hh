@@ -46,7 +46,7 @@ namespace oln
   min (const abstract::image<L>& lhs,
        const abstract::image<R>& rhs)
   {
-    return image_for_all_p( min(pw_value(lhs), pw_value(rhs)) );
+    return image_for_all_p( oln::min(pw_value(lhs), pw_value(rhs)) );
   }
 
   template <typename L, typename R>
@@ -56,7 +56,7 @@ namespace oln
   max (const abstract::image<L>& lhs,
        const abstract::image<R>& rhs)
   {
-    return image_for_all_p( max(pw_value(lhs), pw_value(rhs)) );
+    return image_for_all_p( oln::max(pw_value(lhs), pw_value(rhs)) );
   }
 
 } // end of namespace oln
