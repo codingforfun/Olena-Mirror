@@ -14,20 +14,15 @@ bool check()
 {
   // MD5 sum of object.pbm's erosion result.
   // FIXME: Replace this fake with the actual result.
-  utils::key::value_type   data_key[16] =
+  utils::key::value_type data_key[16] =
     {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
   utils::key key(data_key);
 
-  typedef image2d<ntg::bin>	im_type;
+  typedef image2d<ntg::bin> im_type;
   im_type ima;
   ima = io::read(rdata("16x16.pbm"));
 
-  // Classical procedure.
-  if (utils::md5(morpho::proc::erosion(ima, win_c8p())) != key)
-    return true;
-
-  // Facade to object-algorithm.
   if (utils::md5(morpho::erosion(ima, win_c8p())) != key)
     return true;
 

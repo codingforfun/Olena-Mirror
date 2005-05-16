@@ -8,27 +8,23 @@
 #include <oln/level/compare.hh>
 #include <ntg/all.hh>
 
+using namespace oln;
+
 bool check()
 {
-  oln::utils::key::value_type   data_key[16] =
+  // MD5 sum of object.pbm's erosion result.
+  // FIXME: Update this sum.
+  utils::key::value_type   data_key[16] =
     {0xbf, 0x67, 0x3, 0xa1, 0x2d, 0x6c, 0xac, 0xe9,
      0xf3, 0x7c, 0x19, 0x4c, 0x3a, 0x3b, 0x4d, 0xaa};
+  utils::key key(data_key);
 
-  oln::utils::key		   key(data_key);
-
-  typedef oln::image2d<ntg::bin>	im_type;
+  typedef image2d<ntg::bin> im_type;
   im_type ima;
-  ima = oln::io::read(rdata("16x16.pbm"));
+  ima = io::read(rdata("16x16.pbm"));
 
-  std::cout << oln::utils::md5(oln::morpho::dilation(ima, oln::win_c8p())) << std::endl;
-  if (oln::utils::md5(oln::morpho::dilation(ima, oln::win_c8p())) == key)
-    {
-      std::cout << "OK" << std::endl;
-      return false;
-    }
-  else
-    {
-      std::cout << "FAIL" << std::endl;
-      return true;
-    }
+  if (utils::md5(morpho::dilation(ima, win_c8p())) != key)
+    return true;
+
+  return false;
 }

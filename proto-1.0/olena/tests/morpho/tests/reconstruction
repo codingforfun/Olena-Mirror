@@ -35,23 +35,27 @@ bool check()
   marker = io::read(rdata("marker.pbm"));
   mask = io::read(rdata("mask.pbm"));
 
-  res_dil_hyb = morpho::reconstruction(tag::by_dilation(),
-				       join(marker, neighb_c4()),
-				       mask,
-				       tag::hybrid());
-  res_dil_seq = morpho::reconstruction(tag::by_dilation(),
-				       join(marker, neighb_c4()),
-				       mask,
-				       tag::sequential());
+  res_dil_hyb =
+    morpho::reconstruction(morpho::tag::by_dilation(),
+			   join(marker, neighb_c4()),
+			   mask,
+			   morpho::tag::hybrid());
+  res_dil_seq =
+    morpho::reconstruction(morpho::tag::by_dilation(),
+			   join(marker, neighb_c4()),
+			   mask,
+			   morpho::tag::sequential());
 
-  res_ero_hyb = morpho::reconstruction(tag::by_erosion(),
-				       utils::invert(join(marker, neighb_c4())),
-				       utils::invert(mask),
-				       tag::hybrid());
-  res_ero_seq = morpho::reconstruction(tag::by_erosion(),
-				       utils::invert(join(marker, neighb_c4())),
-				       utils::invert(mask),
-				       tag::sequential());
+  res_ero_hyb =
+    morpho::reconstruction(morpho::tag::by_erosion(),
+			   utils::invert(join(marker, neighb_c4())),
+			   utils::invert(mask),
+			   morpho::tag::hybrid());
+  res_ero_seq =
+    morpho::reconstruction(morpho::tag::by_erosion(),
+			   utils::invert(join(marker, neighb_c4())),
+			   utils::invert(mask),
+			   morpho::tag::sequential());
 
   if (utils::md5(res_dil_hyb) != key)
     return true;

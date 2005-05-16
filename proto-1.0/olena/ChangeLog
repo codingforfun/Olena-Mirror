@@ -1,5 +1,19 @@
 2005-05-16  Roland Levillain  <roland@lrde.epita.fr>
 
+	* oln/morpho/tags.hh (by_dilation, by_erosion)
+	(sequential, hybrid, parallel, union-find): New facades.
+	* tests/morpho/tests/reconstruction (check): Use them.
+	* tests/morpho/tests/erosion (check): Catch up with current
+	implementation of erosion.
+	* tests/morpho/tests/dilation: Aesthetic changes.
+	* tests/morpho/tests/elementary_dilation,
+	* tests/morpho/tests/elementary_erosion: Likewise.
+	Catch up with image_with_nbh definition.
+	* tests/utils/tests/clone (check): Call oln::clone, not
+	oln::utils::clone.
+
+2005-05-16  Roland Levillain  <roland@lrde.epita.fr>
+
 	* oln/ops/arith.hh (min, max): Add oln:: namespace qualifier to
 	resolve the call to the right operator on PWF's.
 

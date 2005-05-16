@@ -145,20 +145,59 @@ namespace oln {
       // Tags for approaches in reconstructions.
 
       template <typename Op> struct oper {};
-      
+
       struct by_dilation_type : public oper< by_dilation_type > {};
       struct by_erosion_type  : public oper< by_erosion_type > {};
-      
+
+      // Facades.
+      inline const by_dilation_type& by_dilation()
+      {
+	static const by_dilation_type tag = by_dilation_type();
+	return tag;
+      }
+
+      inline const by_erosion_type& by_erosion()
+      {
+	static const by_erosion_type tag = by_erosion_type();
+	return tag;
+      }
+
 
       // Tags for common canvas.
-      
+
       template <typename A> struct algo {};
-      
+
       struct sequential_type : public algo< sequential_type > {};
       struct hybrid_type     : public algo< hybrid_type > {};
       struct parallel_type   : public algo< parallel_type > {};
       struct unionfind_type  : public algo< unionfind_type > {};
-      
+
+      // Facades.
+      inline const sequential_type& sequential()
+      {
+	static const sequential_type tag = sequential_type();
+	return tag;
+      }
+
+      inline const hybrid_type& hybrid()
+      {
+	static const hybrid_type tag = hybrid_type();
+	return tag;
+      }
+
+      inline const parallel_type& parallel()
+      {
+	static const parallel_type tag = parallel_type();
+	return tag;
+      }
+
+      inline const unionfind_type& unionfind()
+      {
+	static const unionfind_type tag = unionfind_type();
+	return tag;
+      }
+
+
     } // end of namespace oln::morpho::tag
 
 

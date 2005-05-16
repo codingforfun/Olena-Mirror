@@ -1,3 +1,4 @@
+							// -*- C++ -*-
 #include "data.hh"
 
 #include <ntg/all.hh>
@@ -17,7 +18,7 @@ bool check()
 
   ima1 = oln::io::read(rdata("lena.pgm"));
   ima2 = oln::io::read(rdata("lena.pgm"));
-  ima_copy = oln::utils::clone(ima1);
+  ima_copy = oln::clone(ima1);
 
   oln::level::fill(ima1, 0);
   if (oln::level::is_equal(ima2, ima_copy))
