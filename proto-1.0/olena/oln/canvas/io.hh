@@ -31,6 +31,7 @@
 # include <iostream>
 
 # include <mlc/any.hh>
+# include <oln/core/box.hh>
 
 # include <oln/core/abstract/image.hh>
 # include <oln/io/utils.hh>
@@ -49,6 +50,11 @@ namespace oln {
       {
       }
 
+      void work()
+      {
+	this->exact().impl_work();
+      }
+
       void extra_work()
       {
 	this->exact().impl_extra_work();
@@ -61,10 +67,9 @@ namespace oln {
 
       void run()
       {
-	for (p.row() = 0; p.row() < out.size().nrows(); ++p.row())
+	for (p.row() = 0; p.row() < input.size().nrows(); ++p.row())
 	  {
-	    for (p.col() = 0; p.col() < out.size().ncols(); ++p.col())
-	      write_point();
+	    work();
 	    extra_work();
 	  }
       }
@@ -74,14 +79,56 @@ namespace oln {
 
       write(const oln::abstract::image<I>& input,
 	    std::ostream& ostr) :
-	input(input),
+	input(input.exact()),
 	ostr(ostr)
       {}
 
-      const I& input;
+      box<const I> input;
       std::ostream& ostr;
       oln_type_of(I, point) p;
 
+    };
+
+
+
+    template <typename I, typename E>
+    struct write_2d: public write<I, E>
+    {
+
+      void impl_work()
+      {
+	for (this->p.col() = 0;
+	     this->p.col() < this->input.size().ncols();
+	     ++this->p.col())
+	  this->write_point();
+      }
+
+    protected:
+      typedef write<I, E> super_type;
+
+      write_2d(const abstract::image<I>& input,
+	       std::ostream& ostr) :
+	super_type(input, ostr)
+      {}
+
+    };
+
+    template <typename I, typename E>
+    struct write_1d: public write<I, E>
+    {
+
+      void impl_work()
+      {
+	this->write_point();
+      }
+
+    protected:
+      typedef write<I, E> super_type;
+
+      write_1d(const abstract::image<I>& input,
+	       std::ostream& ostr) :
+	super_type(input, ostr)
+      {}
 
     };
 
@@ -107,15 +154,28 @@ namespace oln {
 	this->exact().impl_preconditions();
       }
 
+      void work()
+      {
+	this->exact().impl_work();
+      }
+
+      void get_output(I& ima)
+      {
+	ima = output.unbox();
+      }
+
       void run()
       {
 	preconditions();
 
+	I tmp(hdr.rows, hdr.cols);
+
+	output = tmp;
+
 	for (p.row() = 0; p.row() < hdr.rows && !istr.eof(); ++p.row())
 	  {
 	    extra_work();
-	    for (p.col() = 0; p.col() < hdr.cols && !istr_.eof(); ++p.col())
-	      read_point();
+	    work();
 	  }
       }
 
@@ -131,6 +191,48 @@ namespace oln {
       std::istream& istr;
       const io::internal::pnm_header& hdr;
       oln_type_of(I, point) p;
+
+    };
+
+    template <typename I, typename E>
+    struct read_2d: public read<I, E>
+    {
+
+      void impl_work()
+      {
+	for (this->p.col() = 0;
+	     this->p.col() < this->hdr.cols && !this->istr.eof();
+	     ++this->p.col())
+	  this->read_point();
+      }
+
+    protected:
+      typedef read<I, E> super_type;
+
+      read_2d(std::istream& istr,
+	      const io::internal::pnm_header& hdr) :
+	super_type(istr, hdr)
+      {}
+
+    };
+
+
+    template <typename I, typename E>
+    struct read_1d: public read<I, E>
+    {
+
+      void impl_work()
+      {
+	this->read_point();
+      }
+
+    protected:
+      typedef read<I, E> super_type;
+
+      read_1d(std::istream& istr,
+	      const io::internal::pnm_header& hdr) :
+	super_type(istr, hdr)
+      {}
 
     };
 

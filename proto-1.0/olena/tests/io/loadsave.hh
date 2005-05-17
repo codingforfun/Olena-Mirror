@@ -1,7 +1,7 @@
-#include <oln/basics1d.hh>
-#include <oln/basics2d.hh>
-#include <oln/basics3d.hh>
-#include <oln/all.hh>
+#include <oln/io/write_image.hh>
+#include <oln/io/read_image.hh>
+
+#include <oln/core/abstract/piter.hh>
 
 #include <ntg/all.hh>
 
@@ -20,7 +20,7 @@ bool compare(const oln::abstract::image<E>& a,
       a.size().ncols() != b.size().ncols())
     return false;
 
-  for_all(it)
+  for_all_p(it)
     {
       if (a[it] != b[it])
 	return false;

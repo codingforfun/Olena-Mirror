@@ -190,9 +190,9 @@ namespace oln {
     image2d& operator=(const io::filename& rhs)
     {
       // FIXME HERE: hack to avoid calling io
-//       io::do_read(*this, rhs);
-      image2d tmp(4, 4);
-      *this = tmp;
+      io::do_read(*this, rhs);
+//       image2d tmp(4, 4);
+//       *this = tmp;
       return *this;
     }
 

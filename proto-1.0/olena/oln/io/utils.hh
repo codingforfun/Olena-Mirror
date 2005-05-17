@@ -28,153 +28,144 @@
 #ifndef OLENA_IO_UTILS_HH
 # define OLENA_IO_UTILS_HH
 
-// # include <oln/config/system.hh>
+# include <oln/config/system.hh>
 
-// # include <iostream>
-// # include <fstream>
-// # include <string>
+# include <iostream>
+# include <fstream>
+# include <string>
 
-// namespace oln {
+namespace oln {
 
-//   namespace io {
+  namespace io {
 
-//     namespace internal {
-
-
-//       /*!
-//       ** \brief Utils for io (get extension of a file).
-//       */
-//       struct utils
-//       {
-
-// 	/*!
-// 	** \brief Return the extension of a filename.
-// 	** \arg name The filename.
-// 	** \return The extension (lower case).
-// 	*/
-// 	static std::string
-// 	extension(const std::string& name)
-// 	{
-// 	  std::string ext;
-// 	  int pos = name.rfind('.');
-// 	  if (pos > 0)
-// 	  {
-// 	    ext.assign(name, pos + 1, name.size() - pos);
-// 	    for (std::string::iterator i = ext.begin(); i != ext.end(); ++i)
-// 	      *i = tolower(*i);
-// 	  }
-// 	  return ext;
-// 	}
-
-//       };
+    namespace internal {
 
 
-//       struct pnm_info
-//       {
-// 	int max_val;
-// 	int rows;
-// 	int cols;
-// 	std::string type;
-//       };
-
-//       bool read_pnm_header(std::istream& istr,
-// 			   internal::pnm_info& info)
-//       {
-// 	std::getline(istr, info.type);
-
-// 	info.max_val = 1;
-
-// 	// skip comments
-// 	while (istr.peek() == '#')
-// 	  {
-// 	    std::string line;
-// 	    std::getline(istr, line);
-// 	  }
-
-// 	// read size
-// 	istr >> info.cols;
-// 	// skip comments
-// 	while (istr.peek() == '#')
-// 	  {
-// 	    std::string line;
-// 	    std::getline(istr, line);
-// 	  }
+      /*!
+      ** \brief Return the extension of a filename.
+      ** \arg name The filename.
+      ** \return The extension (lower case).
+      */
+      std::string extension(const std::string& name)
+      {
+	std::string ext;
+	int pos = name.rfind('.');
+	if (pos > 0)
+	  {
+	    ext.assign(name, pos + 1, name.size() - pos);
+	    for (std::string::iterator i = ext.begin(); i != ext.end(); ++i)
+	      *i = tolower(*i);
+	  }
+	return ext;
+      }
 
 
-// 	istr >> info.rows;
-// 	// skip comments
-// 	while (istr.peek() == '#')
-// 	  {
-// 	    std::string line;
-// 	    std::getline(istr, line);
-// 	  }
+      struct pnm_header
+      {
+	int max_val;
+	int rows;
+	int cols;
+	std::string type;
+      };
 
-// 	if (info.cols <= 0 || info.rows <= 0) return false;
+      bool read_pnm_header(std::istream& istr,
+			   internal::pnm_header& hdr)
+      {
+	std::getline(istr, hdr.type);
 
-// 	// skip comments
-// 	while (istr.peek() == '#')
-// 	  {
-// 	    std::string line;
-// 	    std::getline(istr, line);
-// 	  }
+	hdr.max_val = 1;
 
-// 	// FIXME: it can be either '\n', 'whitespace', ..., not only '\n'!
-// 	if (istr.get() != '\n') return false;
-// 	// extract or skip maxvalue
-// 	if (info.type != "P1" && info.type != "P4")
-// 	  {
-// 	    istr >> info.max_val;
-// 	    if (info.max_val > 65535 ||
-// 		istr.get() != '\n' ||
-// 		info.max_val <= 0)
-// 	      return false;
-// 	  }
-// 	return true;
-//       }
+	// skip comments
+	while (istr.peek() == '#')
+	  {
+	    std::string line;
+	    std::getline(istr, line);
+	  }
 
-//       bool write_pnm_header(std::ostream& ostr,
-// 			    const std::string& type,
-// 			    int ncols,
-// 			    int nrows,
-// 			    int max_val)
-//       {
-// 	if (max_val > 65535)
-// 	  return false;
+	// read size
+	istr >> hdr.cols;
+	// skip comments
+	while (istr.peek() == '#')
+	  {
+	    std::string line;
+	    std::getline(istr, line);
+	  }
 
-// 	ostr << type << std::endl
-// 	     << "# Olena 1.0" << std::endl
-// 	     << ncols << " " << nrows << std::endl;
-// 	if (type != "P1" && type != "P4")
-// 	  ostr << max_val << std::endl;
-// 	return true;
-//       }
 
-//       template <bool b>
-//       struct pnm_io_helper_bool
-//       {
-// 	typedef unsigned char type;
-//       };
+	istr >> hdr.rows;
+	// skip comments
+	while (istr.peek() == '#')
+	  {
+	    std::string line;
+	    std::getline(istr, line);
+	  }
 
-//       template <>
-//       struct pnm_io_helper_bool<false>
-//       {
-// 	typedef unsigned short type;
-//       };
+	if (hdr.cols <= 0 || hdr.rows <= 0) return false;
 
-//       template <unsigned N>
-//       struct pnm_io_helper
-//       {
-// 	typedef typename pnm_io_helper_bool<N <= 8>::type type;
-//       };
+	// skip comments
+	while (istr.peek() == '#')
+	  {
+	    std::string line;
+	    std::getline(istr, line);
+	  }
 
-//     } // end of namespace internal
+	// FIXME: it can be either '\n', 'whitespace', ..., not only '\n'!
+	if (istr.get() != '\n') return false;
+	// extract or skip maxvalue
+	if (hdr.type != "P1" && hdr.type != "P4")
+	  {
+	    istr >> hdr.max_val;
+	    if (hdr.max_val > 65535 ||
+		istr.get() != '\n' ||
+		hdr.max_val <= 0)
+	      return false;
+	  }
+	return true;
+      }
 
-//   } // end of namespace io
+      bool write_pnm_header(std::ostream& ostr,
+			    const std::string& type,
+			    int ncols,
+			    int nrows,
+			    int max_val)
+      {
+	if (max_val > 65535)
+	  return false;
 
-// } // end of namespace oln
+	ostr << type << std::endl
+	     << "# Olena 1.0" << std::endl
+	     << ncols << " " << nrows << std::endl;
+	if (type != "P1" && type != "P4")
+	  ostr << max_val << std::endl;
+	return true;
+      }
 
-// # define oln_io_type(N) typename oln::io::internal::pnm_io_helper<N>::type
-// # define oln_io_type_(N) oln::io::internal::pnm_io_helper<N>::type
+      template <bool b>
+      struct pnm_io_helper_bool
+      {
+	typedef unsigned char type;
+      };
+
+      template <>
+      struct pnm_io_helper_bool<false>
+      {
+	typedef unsigned short type;
+      };
+
+      template <unsigned N>
+      struct pnm_io_helper
+      {
+	typedef typename pnm_io_helper_bool<N <= 8>::type type;
+      };
+
+    } // end of namespace internal
+
+  } // end of namespace io
+
+} // end of namespace oln
+
+# define oln_io_type(N) typename oln::io::internal::pnm_io_helper<N>::type
+# define oln_io_type_(N) oln::io::internal::pnm_io_helper<N>::type
 
 
 #endif // ! OLENA_IO_UTILS_HH

@@ -198,7 +198,7 @@ namespace oln {
 
 	for (unsigned i = 0; i < card(); ++i)
 	  {
-	    const dpoint_type& dp = win.get_dp()[i];
+	    const dpoint_type& dp = this->win.get_dp()[i];
 
 	    unsigned n;
 	    for (n = 0; n < dim; ++n)

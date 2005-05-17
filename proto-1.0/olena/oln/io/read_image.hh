@@ -35,7 +35,7 @@
 
 # include <ntg/core/macros.hh>
 
-# include <oln/io/read_image_2d_pnm.hh>
+# include <oln/io/read_image_pnm.hh>
 # include <oln/io/utils.hh>
 # include <oln/io/gz_stream.hh>
 
@@ -63,99 +63,72 @@ namespace oln {
     }
 
 
-//     template <typename I>
-//     void read_dispatch_ext(abstract::image<I>& ima,
-// 			   std::istream& istr,
-// 			   const std::string& ext)
+    template <typename I>
+    void read_dispatch_ext(abstract::image<I>& ima,
+			   std::istream& istr,
+			   const std::string& ext)
 
-//     {
-//       if (ext == "pgm" || ext == "pbm" || ext == "ppm" ||
-// 	  ext == "pnm")
-// 	{
-// 	  internal::pnm_info info;
+    {
+      if (ext == "pgm" || ext == "pbm" || ext == "ppm" ||
+	  ext == "pnm")
+	read_pnm(ima, istr, ext);
+      else
+	std::cout << "io error: format not supported."
+		  << std::endl;
+    }
 
-// 	  if (internal::read_pnm_header(istr, info))
-// 	    if ((ext == "ppm" || ext == "pnm") && info.type == "P6")
-// 	      ima.exact() = impl::read<I>(istr, info);
-// 	    else if ((ext == "ppm" || ext == "pnm") && info.type == "P3")
-// 	      std::cerr << "error: read_image_2d_ppm_ascii not implemented"
-// 			<< std::endl;
-// 	    else if ((ext == "pbm" || ext == "pnm") && info.type == "P4")
-// 	      ima.exact() = impl::read<I>(istr, info);
-// 	    else if ((ext == "pbm" || ext == "pnm") && info.type == "P1")
-// 	      std::cerr << "error: read_image_2d_ppm_ascii not implemented"
-// 			<< std::endl;
-// 	    else if ((ext == "pgm" || ext == "pnm") && info.type == "P5")
-// 	      ima.exact() = impl::read<I>(istr, info);
-// 	    else if ((ext == "pgm" || ext == "pnm") && info.type == "P2")
-// 	      std::cerr << "error: read_image_2d_ppm_ascii not implemented"
-// 			<< std::endl;
-// 	    else
-// 	      std::cerr << "error: file header (`" << info.type
-// 			<< "') does not match file extension (`"
-// 			<< ext << "')" << std::endl;
-// 	  else
-// 	    std::cerr << "error: unable to get a valid header" << std::endl;
-// 	}
-//       else
-// 	std::cout << "no input method for '"
-// 		  << ext << "' file extension"
-// 		  << std::endl;
-//     }
+#if defined HAVE_ZLIB && HAVE_ZLIB == 1
+    template <typename I>
+    void do_read_gz(abstract::image<I>& ima, const std::string& name)
+    {
+      gz::zifstream zistr(name.c_str(), std::ios::in);
 
-// #if defined HAVE_ZLIB && HAVE_ZLIB == 1
-//     template <typename I>
-//     void do_read_gz(abstract::image<I>& ima, const std::string& name)
-//     {
-//       gz::zifstream zistr(name.c_str(), std::ios::in);
+      if (zistr.is_open() == false)
+	std::cerr << "io error: couldn't open " << name << std::endl;
+      else
+	{
+	  std::string ext;
 
-//       if (zistr.is_open() == false)
-// 	std::cerr << "error: couldn't open " << name << std::endl;
-//       else
-// 	{
-// 	  std::string ext;
+	  ext = internal::extension(name.substr(0, name.size() - 3));
+	  read_dispatch_ext(ima, zistr, ext);
+	}
+      zistr.close();
+    }
+#endif // ! HAVE_ZLIB
 
-// 	  ext = internal::utils::extension(name.substr(0, name.size() - 3));
-// 	  read_dispatch_ext(ima, zistr, ext);
-// 	}
-//       zistr.close();
-//     }
+    template <typename I>
+    void do_read_non_gz(abstract::image<I>& ima,
+			const std::string& name,
+			const std::string& ext)
+    {
+      std::ifstream istr;
 
-// #endif // ! HAVE_ZLIB
+      istr.open(name.c_str(), std::ifstream::in);
 
-//     template <typename I>
-//     void do_read_non_gz(abstract::image<I>& ima,
-// 			const std::string& name,
-// 			const std::string& ext)
-//     {
-//       std::ifstream istr;
+      if (istr.is_open() == false)
+	std::cerr << "io error: couldn't open " << name << std::endl;
+      else
+	read_dispatch_ext(ima, istr, ext);
+      istr.close();
+    }
 
-//       istr.open(name.c_str(), std::ifstream::in);
+    template <typename I>
+    void do_read(abstract::image<I>& ima, const filename& name)
+    {
+      std::string ext;
 
-//       if (istr.is_open() == false)
-// 	std::cerr << "error: couldn't open " << name << std::endl;
-//       else
-// 	read_dispatch_ext(ima, istr, ext);
-//       istr.close();
-//     }
+      ext = internal::extension(name.get());
 
-//     template <typename I>
-//     void do_read(abstract::image<I>& ima, const filename& name)
-//     {
-//       std::string ext;
+#if defined HAVE_ZLIB && HAVE_ZLIB == 1
 
-//       ext = internal::utils::extension(name.get());
-
-// #if defined HAVE_ZLIB && HAVE_ZLIB == 1
-
-//       if (ext == "gz")
-// 	do_read_gz(ima, name.get());
-//       else
-// 	do_read_non_gz(ima, name.get(), ext);
-// #else
-//       do_read_non_gz(ima, name.get(), ext);
-// #endif // ! HAVE_ZLIB
-//     }
+      if (ext == "gz")
+	do_read_gz(ima, name.get());
+      else
+	do_read_non_gz(ima, name.get(), ext);
+#else
+      do_read_non_gz(ima, name.get(), ext);
+#endif // ! HAVE_ZLIB
+    }
 
 
   }

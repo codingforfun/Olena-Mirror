@@ -1,3 +1,30 @@
+2005-05-17  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* tests/io/tests/2d: Add tests.
+	* tests/io/loadsave.hh: Adapt to new iterators API.
+	* oln/core/2d/image2d.hh: Restore I/O operator=.
+	* oln/core/gen/regular_window.hh: Add missing `this->'.
+	* oln/io/write_image_pnm.hh: New. Add a generic front end for pnm files
+	writing.
+	* oln/io/read_image_pnm.hh: New.  Add a generic front end for pnm files
+	reading.
+	* oln/io/write_image_2d_pnm.hh: Remove.
+	* oln/io/gz_stream.hh: Restore file.
+	* oln/io/write_image_pnm_2d.hh: New. Add 2D implementations for pnm
+	output.
+	* oln/io/read_image_2d_pnm.hh: Remove.
+	* oln/io/write_image.hh: Adapt to changes that occured in the pnm front
+	end.
+	* oln/io/read_image_pnm_2d.hh: New. Add 2D implementations for pnm
+	input.
+	* oln/io/read_image.hh: Adapt to changes that occured in the pnm front
+	end.
+	* oln/io/write_image_pnm_decl.hh: New. Forward declarations.
+	* oln/io/read_image_pnm_decl.hh: New. Forward declarations.
+	* oln/io/utils.hh: Restore file.
+	* oln/canvas/reconstruction.hh: Add use of oln::box.
+	* oln/canvas/io.hh: Add canvas for 1D and 2D images.
+
 2005-05-16  Roland Levillain  <roland@lrde.epita.fr>
 
 	* oln/morpho/tags.hh (by_dilation, by_erosion)

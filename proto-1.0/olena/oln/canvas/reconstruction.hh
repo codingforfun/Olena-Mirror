@@ -161,8 +161,8 @@ namespace oln {
 
       box<oln_type_of(I1, concrete)> work;
       box<oln_type_of(I1, concrete)> output;
-      box<I1> marker;
-      box<I2> mask;
+      box<const I1> marker;
+      box<const I2> mask;
 
       std::queue<oln_type_of(I1, point) > fifo;
 
@@ -209,8 +209,8 @@ namespace oln {
 
       box<oln_type_of(I1, concrete)> work;
       box<oln_type_of(I1, concrete)> output;
-      box<I1> marker;
-      box<I2> mask;
+      box<const I1> marker;
+      box<const I2> mask;
 
     };
 
