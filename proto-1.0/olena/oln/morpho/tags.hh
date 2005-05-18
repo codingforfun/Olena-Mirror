@@ -148,6 +148,7 @@ namespace oln {
 
       struct by_dilation_type : public oper< by_dilation_type > {};
       struct by_erosion_type  : public oper< by_erosion_type > {};
+      struct none_type	      : public oper< none_type > {};
 
       // Facades.
       inline const by_dilation_type& by_dilation()
@@ -162,6 +163,11 @@ namespace oln {
 	return tag;
       }
 
+      inline const none_type& none()
+      {
+	static const none_type tag = none_type();
+	return tag;
+      }
 
       // Tags for common canvas.
 
@@ -170,6 +176,7 @@ namespace oln {
       struct sequential_type : public algo< sequential_type > {};
       struct hybrid_type     : public algo< hybrid_type > {};
       struct parallel_type   : public algo< parallel_type > {};
+      struct selfdual_type   : public algo< selfdual_type > {};
       struct unionfind_type  : public algo< unionfind_type > {};
 
       // Facades.
@@ -188,6 +195,12 @@ namespace oln {
       inline const parallel_type& parallel()
       {
 	static const parallel_type tag = parallel_type();
+	return tag;
+      }
+
+      inline const selfdual_type& selfdual()
+      {
+	static const selfdual_type tag = selfdual_type();
 	return tag;
       }
 

@@ -30,6 +30,7 @@
 
 # include <oln/morpho/reconstruction_by_dilation.hh>
 # include <oln/morpho/reconstruction_by_erosion.hh>
+# include <oln/morpho/reconstruction_selfdual.hh>
 
 namespace oln {
 
@@ -41,12 +42,12 @@ namespace oln {
 
       // Generic implementation of reconstruction (routine).
 
-      template<typename Op, typename A, typename I1, typename I2>
+      template<typename I1, typename I2, typename A, typename Op>
       oln_type_of(I1, concrete)
       reconstruction_(const abstract::image_with_nbh<I1>& marker,
 		      const abstract::image<I2>&          mask)
       {
-	reconstruction<Op, A, I1, I2> tmp(marker, mask);
+	reconstruction<I1, I2, A, Op> tmp(marker, mask);
 	// tmp.entering(); FIXME: something like that ?
 	tmp.run();
 	// tmp.exiting(); FIXME: something like that ?
@@ -57,12 +58,12 @@ namespace oln {
 
     /// Generic reconstruction (facade).
 
-    template<typename Op, typename I1, typename I2, typename A>
+    template<typename I1, typename I2, typename A, typename Op>
     oln_type_of(I1, concrete)
-    reconstruction(const tag::oper<Op>&			oper_,
-		   const abstract::image_with_nbh<I1>&	marker,
+    reconstruction(const abstract::image_with_nbh<I1>&	marker,
 		   const abstract::image<I2>&		mask,
-		   const tag::algo<A>&			algo_)
+		   const tag::algo<A>&			,
+		   const tag::oper<Op>&			)
     {
       mlc::eq<oln_type_of(I1, grid), oln_type_of(I2, grid)>::ensure();
       precondition(marker.size() == mask.size());
@@ -70,11 +71,25 @@ namespace oln {
       entering("morpho::reconstruction");
 
       oln_type_of(I1, concrete) output("output");
-//       output = impl::reconstruction_(oper_, marker.exact(), mask.exact(), algo_);
+      output = impl::reconstruction_<I1, I2, A, Op>(marker.exact(),
+						    mask.exact());
 
       exiting("morpho::reconstruction");
       return output;
 
+    }
+
+    // self dual
+
+    template <typename I1, typename I2>
+    oln_type_of(I1, concrete)
+    reconstruction_selfdual(const abstract::image_with_nbh<I1>& marker,
+			    const abstract::image<I2>&		 mask)
+    {
+      mlc::eq<oln_type_of(I1, grid), oln_type_of(I2, grid)>::ensure();
+      precondition(marker.size() == mask.size());
+
+      return reconstruction(marker, mask, tag::selfdual(), tag::none());
     }
 
     // by dilation
@@ -88,7 +103,7 @@ namespace oln {
       mlc::eq<oln_type_of(I1, grid), oln_type_of(I2, grid)>::ensure();
       precondition(marker.size() == mask.size());
 
-      return reconstruction(tag::by_dilation_type(), marker, mask, algo_);
+      return reconstruction(marker, mask, algo_, tag::by_dilation());
     }
 
     template<typename I1, typename I2>
@@ -99,8 +114,7 @@ namespace oln {
       mlc::eq<oln_type_of(I1, grid), oln_type_of(I2, grid)>::ensure();
       precondition(marker.size() == mask.size());
 
-      return reconstruction(tag::by_dilation_type(), marker,
-			    mask, tag::hybrid_type());
+      return reconstruction(marker, mask, tag::hybrid(), tag::by_dilation());
     }
 
     // by erosion
@@ -114,7 +128,7 @@ namespace oln {
       mlc::eq<oln_type_of(I1, grid), oln_type_of(I2, grid)>::ensure();
       precondition(marker.size() == mask.size());
 
-      return reconstruction(tag::by_erosion_type(), marker, mask, algo_);
+      return reconstruction(marker, mask, algo_, tag::by_erosion());
     }
 
     template<typename I1, typename I2>
@@ -125,8 +139,7 @@ namespace oln {
       mlc::eq<oln_type_of(I1, grid), oln_type_of(I2, grid)>::ensure();
       precondition(marker.size() == mask.size());
 
-      return reconstruction(tag::by_erosion_type(), marker,
-			    mask, tag::hybrid_type());
+      return reconstruction(marker, mask, tag::hybrid(), tag::by_erosion());
     }
 
   } // end of namespace oln::morpho

@@ -40,42 +40,45 @@ namespace oln {
       // Sequential version
 
       template<typename I1, typename I2>
-      struct reconstruction <tag::by_erosion_type, tag::sequential_type, I1, I2>
+      struct reconstruction <I1, I2, tag::sequential_type, tag::by_erosion_type>
 	: public canvas::sequential_reconstruction<I1, I2,
-		reconstruction<tag::by_erosion_type,
-			       tag::sequential_type, I1, I2> >
+		reconstruction<I1, I2, tag::sequential_type,
+			       tag::by_erosion_type> >
       {
-	typedef reconstruction<tag::by_erosion_type,
-			       tag::sequential_type, I1, I2> self_type;
+	typedef reconstruction<I1, I2, tag::sequential_type,
+			       tag::by_erosion_type> self_type;
 	typedef canvas::sequential_reconstruction<I1, I2, self_type> super_type;
 
 	reconstruction(const abstract::image_with_nbh<I1>& marker,
-			       const abstract::image<I2>& mask) :
+		       const abstract::image<I2>& mask) :
 	  super_type(marker, mask)
 	{
 	}
 
+	using super_type::marker;
+	using super_type::mask;
+	using super_type::output;
+	using super_type::fwd_p;
+	using super_type::bkd_p;
+	using super_type::win_plus;
+	using super_type::win_minus;
 
 	void impl_bkd_loop_body()
 	{
-	  this->output[this->bkd_p] = ntg::max(morpho::min(this->output,
-							   this->bkd_p,
-							   this->win_minus),
-					       this->mask[this->bkd_p]);
+	  output[bkd_p] = ntg::max(local_min(output, bkd_p, win_minus),
+				   mask[bkd_p].value());
 	}
 
 	void impl_fwd_loop_body()
 	{
-	  this->output[this->fwd_p] = ntg::max(morpho::min(this->output,
-							   this->fwd_p,
-							   this->win_plus),
-					       this->mask[this->fwd_p]);
+	  output[fwd_p] = ntg::max(local_min(output, fwd_p, win_plus),
+				   mask[fwd_p].value());
 	}
 
 	// FIXME: unused...
 	void impl_preconditions()
 	{
-	  precondition(level::is_greater_or_equal(this->marker, this->mask));
+	  precondition(level::is_greater_or_equal(marker, mask));
 	}
 
       };
@@ -83,12 +86,12 @@ namespace oln {
       // Hybrid version
 
       template<typename I1, typename I2>
-      struct reconstruction <tag::by_erosion_type, tag::hybrid_type, I1, I2>
+      struct reconstruction <I1, I2, tag::hybrid_type, tag::by_erosion_type>
 	: public canvas::hybrid_reconstruction<I1, I2,
-	    reconstruction<tag::by_erosion_type, tag::hybrid_type, I1, I2> >
+	    reconstruction<I1, I2, tag::hybrid_type, tag::by_erosion_type> >
       {
-	typedef reconstruction<tag::by_erosion_type,
-			       tag::hybrid_type, I1,I2> self_type;
+	typedef reconstruction<I1, I2, tag::hybrid_type,
+			       tag::by_erosion_type> self_type;
 	typedef canvas::hybrid_reconstruction<I1, I2,
 					      self_type> super_type;
 
@@ -98,44 +101,49 @@ namespace oln {
 	{
 	}
 
+	using super_type::mask;
+	using super_type::marker;
+	using super_type::work;
+	using super_type::output;
+	using super_type::fwd_p;
+	using super_type::bkd_p;
+	using super_type::win_plus;
+	using super_type::win_minus;
+	using super_type::p;
+	using super_type::q;
+	using super_type::fifo;
+
 	void impl_bkd_loop_body()
 	{
-	  this->output[this->bkd_p] = ntg::max(morpho::min(this->work,
-							   this->bkd_p,
-							   this->win_minus),
-					       this->mask[this->bkd_p]);
+	  output[bkd_p] = ntg::max(local_min(work, bkd_p, win_minus),
+				   mask[bkd_p].value());
 	}
 
 	void impl_fwd_loop_body()
 	{
-	  this->output[this->fwd_p] = ntg::max(morpho::min(this->work,
-							   this->fwd_p,
-							   this->win_plus),
-					       this->mask[this->fwd_p]);
+	  output[fwd_p] = ntg::max(local_min(work, fwd_p, win_plus),
+				   mask[fwd_p].value());
 	}
 
 	void impl_fifo_loop_body()
 	{
-	  if ((this->output[this->q] > this->output[this->p]) &&
-	      (this->mask[this->q] != this->output[this->q]))
+	  if ((output[q] > output[p]) && (mask[q] != output[q]))
 	    {
-	      this->output[this->q] = ntg::min(this->output[this->p],
-					       this->mask[this->q]);
-	      this->fifo.push(this->q);
+	      output[q] = ntg::min(output[p].value(), mask[q].value());
+	      fifo.push(q);
 	    }
 	}
 
 	bool impl_exist_init()
 	{
-	  return this->output.hold(this->q) &&
-	    (this->output[this->q] > this->output[this->bkd_p]) &&
-	    (this->output[this->q] > this->mask[this->q]);
+	  return output.hold(q) && (output[q] > output[bkd_p]) &&
+	    (output[q] > mask[q]);
 	}
 
 	// FIXME: unused...
 	void impl_preconditions()
 	{
-	  precondition(level::is_greater_or_equal(this->marker, this->mask));
+	  precondition(level::is_greater_or_equal(marker, mask));
 	}
 
       };

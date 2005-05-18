@@ -122,11 +122,11 @@ namespace oln {
       }
 
 
-      self_type get_fwd_win() const
+      E get_fwd_win() const
       {
-	self_type out;
+	E out;
 
-	for (unsigned i = 0; i < this->card(); ++i)
+	for (unsigned i = 0; i < card(); ++i)
 	  {
 	    const dpoint_type& dp = dp_[i];
 
@@ -143,12 +143,12 @@ namespace oln {
       }
 
 
-      self_type get_fwd_win_p() // abstract::window<W>& win)
+      E get_fwd_win_p() const // abstract::window<W>& win)
       {
-	self_type out;
+	E out;
 
 
-	for (unsigned i = 0; i < this->card(); ++i)
+	for (unsigned i = 0; i < card(); ++i)
 	  {
 	    const dpoint_type& dp = dp_[i];
 
@@ -171,9 +171,9 @@ namespace oln {
       }
 
 
-      self_type get_bkd_win()
+      E get_bkd_win() const
       {
-	self_type out;
+	E out;
 
 	for (unsigned i = 0; i < card(); ++i)
 	  {
@@ -192,13 +192,13 @@ namespace oln {
       }
 
 
-      self_type get_bkd_win_p()
+      E get_bkd_win_p() const
       {
-	self_type out;
+	E out;
 
 	for (unsigned i = 0; i < card(); ++i)
 	  {
-	    const dpoint_type& dp = this->win.get_dp()[i];
+	    const dpoint_type& dp = get_dp()[i];
 
 	    unsigned n;
 	    for (n = 0; n < dim; ++n)

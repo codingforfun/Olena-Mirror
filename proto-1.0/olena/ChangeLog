@@ -1,3 +1,17 @@
+2005-05-18  Damien Thivolle  <damien@lrde.epita.fr>
+
+	* oln/core/gen/regular_window.hh: Repair window splitting methods.
+	* oln/morpho/reconstruction.hh: Add front end for self-dual
+	reconstruction.
+	* oln/morpho/reconstruction_by_dilation.hh: Make it compile.
+	* oln/morpho/tags.hh: Add self-dual tag.
+	* oln/morpho/reconstruction_selfdual.hh: New. Self-dual reconstruction
+	implementation
+	* oln/morpho/reconstruction_by_erosion.hh: Make it compile.
+	* oln/morpho/stat.trash: Remove
+	* oln/canvas/reconstruction.hh: Add a missing method in the sequential
+	canvas. Minor fixes.
+
 2005-05-17  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* tests/io/tests/2d: Add tests.

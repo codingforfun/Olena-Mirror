@@ -25,76 +25,36 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_MORPHO_RECONSTRUCTION_BY_DILATION_HH
-# define OLENA_MORPHO_RECONSTRUCTION_BY_DILATION_HH
+#ifndef OLENA_MORPHO_RECONSTRUCTION_SELF_DUAL_HH
+# define OLENA_MORPHO_RECONSTRUCTION_SELF_DUAL_HH
 
 # include <oln/canvas/reconstruction.hh>
 # include <oln/morpho/tags.hh>
 
 namespace oln {
 
+
   namespace morpho {
+
 
     namespace impl {
 
-      // Sequential version
+
       template<typename I1, typename I2>
-      struct reconstruction <I1, I2, tag::sequential_type, tag::by_dilation_type>
-	: public canvas::sequential_reconstruction<I1, I2,
-	    reconstruction<I1, I2, tag::sequential_type, tag::by_dilation_type> >
+      struct reconstruction <I1, I2, tag::selfdual_type, tag::none_type>
+	: public canvas::hybrid_reconstruction<I1, I2,
+	    reconstruction<I1, I2, tag::selfdual_type, tag::none_type> >
       {
-	typedef reconstruction<I1, I2, tag::sequential_type,
-			       tag::by_dilation_type> self_type;
-	typedef canvas::sequential_reconstruction<I1, I2, self_type> super_type;
+	typedef reconstruction<I1, I2, tag::selfdual_type,
+			       tag::none_type> self_type;
+	typedef canvas::hybrid_reconstruction<I1, I2,
+					      self_type> super_type;
 
 	reconstruction(const abstract::image_with_nbh<I1>& marker,
 		       const abstract::image<I2>& mask) :
 	  super_type(marker, mask)
 	{
 	}
-
-	using super_type::marker;
-	using super_type::mask;
-	using super_type::output;
-	using super_type::fwd_p;
-	using super_type::bkd_p;
-	using super_type::win_plus;
-	using super_type::win_minus;
-
-	void impl_bkd_loop_body()
-	{
-
-	  //FIXME: Shouldn't be .value()
-	  output[bkd_p] = ntg::min(local_max(output, bkd_p, win_minus),
-				   mask[bkd_p].value());
-	}
-
-	void impl_fwd_loop_body()
-	{
-	  output[fwd_p] = ntg::min(local_max(output, fwd_p, win_plus),
-				   mask[fwd_p].value());
-	}
-
-	// FIXME: unused...
-	void impl_preconditions()
-	{
-	  precondition(level::is_greater_or_equal(mask, marker));
-	}
-
-      };
-
-
-      // Hybrid version
-
-      template<typename I1, typename I2>
-      struct reconstruction <I1, I2, tag::hybrid_type, tag::by_dilation_type>
-	: public canvas::hybrid_reconstruction<I1, I2,
-	    reconstruction<I1, I2,  tag::hybrid_type, tag::by_dilation_type> >
-      {
-	typedef reconstruction<I1, I2, tag::hybrid_type,
-			       tag::by_dilation_type> self_type;
-	typedef canvas::hybrid_reconstruction<I1, I2,
-					      self_type> super_type;
 
 	using super_type::mask;
 	using super_type::marker;
@@ -108,44 +68,56 @@ namespace oln {
 	using super_type::q;
 	using super_type::fifo;
 
-	reconstruction(const abstract::image_with_nbh<I1>& marker,
-		       const abstract::image<I2>& mask) :
-	  super_type(marker, mask)
-	{
-	}
-
-
 
 	void impl_bkd_loop_body()
 	{
-	  output[bkd_p] = min(local_max(work, bkd_p, win_minus),
-			      mask[bkd_p].value());
+	  // FIXME: Shouldn't be .value() !
+	  if (work[bkd_p] < mask[bkd_p])
+	    output[bkd_p] = ntg::min(local_max(work, bkd_p, win_minus),
+				     mask[bkd_p].value());
+	  else
+	    output[bkd_p] = ntg::max(local_min(work, bkd_p, win_minus),
+				     mask[bkd_p].value());
 	}
 
 	void impl_fwd_loop_body()
 	{
-	  output[fwd_p] = min(local_max(work, fwd_p, win_plus),
-			      mask[fwd_p].value());
+	  // FIXME: Shouldn't be .value() !
+	  if (work[fwd_p] < mask[fwd_p])
+	    output[fwd_p] = ntg::min(local_max(work, fwd_p, win_plus),
+				     mask[fwd_p].value());
+	  else
+	    output[fwd_p] = ntg::max(local_min(work, fwd_p, win_plus),
+				     mask[fwd_p].value());
 	}
 
 	void impl_fifo_loop_body()
 	{
-	  if ((output[q] < output[p]) && (mask[q] != output[q]))
+	  if (output[q] < mask[p])
 	    {
-	      output[q] = min(output[p].value(), mask[q].value());
-	      fifo.push(q);
+	      if (output[q] < output[p] && mask[q] != output[q])
+		{
+		  output[q] = ntg::min(output[p].value(), mask[q].value());
+		  fifo.push(q);
+		}
 	    }
+	  else
+	    if (output[q] > output[p] && mask[q] != output[q])
+	      {
+		output[q] = ntg::max(output[p].value(), mask[q].value());
+		fifo.push(q);
+	      }
 	}
 
 	bool impl_exist_init()
 	{
-	  return output.hold(q) && (output[q] < output[bkd_p]) &&
-	    (output[q] < mask[q]);
+	  return output.hold(q) &&
+	    ((output[q] < output[bkd_p] && output[q] < mask[q]) ||
+	     (output[q] > output[bkd_p] && output[q] > mask[q]));
 	}
 
 	void impl_preconditions()
 	{
-	  precondition(level::is_greater_or_equal(mask, marker));
 	}
 
       };

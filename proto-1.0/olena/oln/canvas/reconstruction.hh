@@ -144,14 +144,11 @@ namespace oln {
 
       ~hybrid_reconstruction()
       {
-	mlc_check_method_impl(E, void, exist_init,	, );
+	mlc_check_method_impl(E, bool, exist_init,	, );
 	mlc_check_method_impl(E, void, bkd_loop_body,	, );
 	mlc_check_method_impl(E, void, fwd_loop_body,	, );
 	mlc_check_method_impl(E, void, fifo_loop_body,	, );
       }
-
-      oln_type_of(I1, bkd_piter) bkd_p;
-      oln_type_of(I1, fwd_piter) fwd_p;
 
       oln_type_of(I1, point) p;
       oln_type_of(I1, point) q;
@@ -163,6 +160,9 @@ namespace oln {
       box<oln_type_of(I1, concrete)> output;
       box<const I1> marker;
       box<const I2> mask;
+
+      oln_type_of(I1, bkd_piter) bkd_p;
+      oln_type_of(I1, fwd_piter) fwd_p;
 
       std::queue<oln_type_of(I1, point) > fifo;
 
@@ -185,11 +185,15 @@ namespace oln {
 	win_minus = marker.nbh_get().get_win().get_bkd_win_p();
       }
 
-      bool impl_is_stable()
+      bool impl_is_stable() const
       {
 	return level::is_equal(work, output);
       }
 
+      void impl_re_loop()
+      {
+	work = clone(output);
+      }
 
       oln_type_of(I1, concrete) get_output()
       {
