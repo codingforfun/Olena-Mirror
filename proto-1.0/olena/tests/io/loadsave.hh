@@ -38,13 +38,8 @@ loadsave(const std::string& name, const std::string& savename)
   T im1, im2;
 
   im1 = oln::io::read(name);
-
-
-//   oln::io::write(im1, savename);
-
-
-//   im2 = oln::io::read(savename);
-  im2 = oln::io::read(name);
+  oln::io::write(im1, savename);
+  im2 = oln::io::read(savename);
 
   if (compare(im1, im2) == true)
     std::cout << "OK" << std::endl;
