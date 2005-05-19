@@ -11,6 +11,10 @@ OLN_DEP =					\
   basics3d.hh					\
   basics.hh					\
 						\
+  canvas/backandforth.hh			\
+  canvas/io.hh					\
+  canvas/reconstruction.hh			\
+						\
   config/pconf.hh				\
   config/system.hh				\
 						\
@@ -41,6 +45,7 @@ OLN_DEP =					\
   core/2d/qiter2d.hh				\
   core/2d/size2d.hh				\
   core/2d/window2d.hh				\
+						\
   core/3d/array3d.hh				\
   core/3d/bkd_piter3d.hh			\
   core/3d/dpoint3d.hh				\
@@ -133,20 +138,20 @@ OLN_DEP =					\
   funobj/logic.hh				\
 						\
   io/gz_stream.hh				\
-  io/read_image_2d_pnm.hh			\
+  io/read_image_pnm_2d.hh			\
+  io/read_image_pnm_decl.hh			\
+  io/read_image_pnm.hh				\
   io/read_image.hh				\
   io/utils.hh					\
-  io/write_image_2d_pnm.hh			\
+  io/write_image_pnm_2d.hh			\
+  io/write_image_pnm_decl.hh			\
+  io/write_image_pnm.hh				\
   io/write_image.hh				\
 						\
   level/arith.hh				\
   level/compare.hh				\
   level/fill.hh					\
   level/logic.hh				\
-						\
-  ops/arith.hh					\
-  ops/cmp.hh					\
-  ops/logic.hh					\
 						\
   morpho/closing.hh				\
   morpho/dilation.hh				\
@@ -156,8 +161,16 @@ OLN_DEP =					\
   morpho/geodesic_dilation.hh			\
   morpho/geodesic_erosion.hh			\
   morpho/opening.hh				\
+  morpho/reconstruction_by_dilation.hh		\
+  morpho/reconstruction_by_erosion.hh		\
+  morpho/reconstruction_selfdual.hh		\
+  morpho/reconstruction.hh			\
   morpho/stat.hh				\
   morpho/tags.hh				\
+						\
+  ops/arith.hh					\
+  ops/cmp.hh					\
+  ops/logic.hh					\
 						\
   utils/buffer.hh				\
   utils/clone.hh				\
