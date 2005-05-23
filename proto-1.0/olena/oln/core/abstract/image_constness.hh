@@ -66,12 +66,45 @@ namespace oln {
     struct readonly_image : public virtual image<E>,
 			    public internal::get_image_impl < readonly_image<E>, E >
     {
+      template <typename R, typename T>
+      R call(const oln_type_of(E, point)& p,
+	     R (T::*method)() const) const;
+
+
     protected:
 
       /*! \brief Constructor (protected, empty).
       */
       readonly_image() {}
     };
+
+
+    namespace internal {
+
+      template <typename E>
+      struct set_image_impl < readonly_image<E>, E> : public virtual image_impl<E>
+      {
+	/// typedefs
+	typedef typename image_impl<E>::D D;
+	typedef oln_type_of(D, point) point_type;
+	typedef oln_type_of(D, value) value_type;
+
+	template <typename R, typename T>
+	R impl_call(const oln_type_of(E, point)& p,
+		    R (T::*method)() const) const
+	{
+	  return this->delegate().call(p, method);
+	}
+
+
+	// extra code; default is 'do nothing':
+
+	void impl_set_ante(const point_type&, const value_type&) {}
+	void impl_set_post(const point_type&, const value_type&) {}
+      };
+
+    } // end of namespace oln::abstract::internal
+
 
 
 
@@ -125,6 +158,11 @@ namespace oln {
 // 	return *this;
 //       }
 
+      template <typename T, typename A, typename V>
+      void call(const point_type& p,
+		void (T::*method)(A),
+		V arg);
+
     protected:
 
       /*! \brief Constructor (protected, empty).
@@ -154,6 +192,15 @@ namespace oln {
 	  this->delegate().impl_set(p, v);
 	  this->exact().impl_set_post(p, v);
 	}
+
+	template <typename T, typename A, typename V>
+	void impl_call(const point_type& p,
+		       void (T::*method)(A),
+		       V arg)
+	{
+	  this->delegate().impl_call(p, method, arg);
+	}
+
 
 	// extra code; default is 'do nothing':
 

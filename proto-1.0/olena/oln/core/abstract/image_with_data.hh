@@ -151,6 +151,24 @@ namespace oln {
       }
 
 
+      template <typename R, typename T>
+      R impl_call(const point_type& p,
+		  R (T::*method)() const) const
+      {
+ 	return (this->data_->get(p).*method)();
+	//this->data_->call(p, method);
+      }
+
+      template <typename T, typename A, typename V>
+      void impl_call(const point_type& p,
+		     void (T::*method)(A),
+		     V arg)
+      {
+	//	std::cout << "yes!" << std::endl;
+ 	this->data_->call(p, method, arg);
+      }
+
+
       /*! \brief Implement abstract::readwrite_image<E>::set(p, v) so
       ** write the value \a v at \a p in the current image.
       */

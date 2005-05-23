@@ -157,12 +157,12 @@ namespace oln {
     ** FIXME:...
     */
 
-    template <typename A, typename V>
-    value_box& set(void (I::*method)(A), const V& value)
-    {
-      ima_->set(p_, method, value);
-      return *this;
-    }
+//     template <typename A, typename V>
+//     value_box& set(void (I::*method)(A), const V& value)
+//     {
+//       ima_->set(p_, method, value);
+//       return *this;
+//     }
 
 
 
@@ -201,6 +201,18 @@ namespace oln {
       return ima_->get(p_);
     }
 
+    template <typename R, typename T>
+    R call(R (T::*method)() const) const
+    {
+      return ima_->call(p_, method);
+    }
+
+    template <typename T, typename A, typename V>
+    void call(void (T::*method)(A),
+	      V arg)
+    {
+      ima_->call(p_, method, arg);
+    }
 
     /// Cpy ctor.
 
@@ -339,6 +351,12 @@ namespace oln {
     }
 
     // IDEA: provide op->
+
+    template <typename R, typename T>
+    R call(R (T::*method)() const) const
+    {
+      return ima_->call(p_, method);
+    }
 
 
     /// Cpy ctor.

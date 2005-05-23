@@ -213,6 +213,18 @@ namespace oln {
       array_[p.row()][p.col()] = v;
     }
 
+    // FIXME: should be impl_ here; and call should be defined in storage_type
+    template <typename T2, typename A, typename V>
+    void call(const point2d& p,
+	      void (T2::*method)(A),
+	      V arg)
+    {
+      T& value = array_[p.row()][p.col()];
+      (value.*method)(arg);
+    }
+
+
+
     void impl_set_data(const T& v)
     {
       invariant_();

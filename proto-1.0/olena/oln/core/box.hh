@@ -267,7 +267,7 @@ namespace oln {
     }
 
 
-    /// Implementation of abstract::image<E>::get(p).
+    /// Implementation of abstract::image<E>::get(p) const.
 
     template <typename E>
     const oln_type_of(E, value)
@@ -277,6 +277,34 @@ namespace oln {
  	inc_ncalls("get", *this);
 # endif // ! OLNTRACE
       return this->exact().impl_get(p);
+    }
+
+    /// Implementation of abstract::image<E>::call(p, method) const.
+
+    template <typename E>
+    template <typename R, typename T>
+    R
+    readonly_image<E>::call(const oln_type_of(E, point)& p,
+			    R (T::*method)() const) const
+    {
+# ifdef OLNTRACE
+      inc_ncalls("call", *this);
+# endif // ! OLNTRACE
+      return this->exact().impl_call(p, method);
+    }
+
+    /// Implementation of abstract::readwrite_image<E>::call(p, method, value).
+    template <typename E>
+    template <typename T, typename A, typename V>
+    void
+    readwrite_image<E>::call(const oln_type_of(E, point)& p,
+			     void (T::*method)(A),
+			     V arg)
+    {
+# ifdef OLNTRACE
+      inc_ncalls("call", *this);
+# endif // ! OLNTRACE
+      this->exact().impl_call(p, method, arg);
     }
 
 
