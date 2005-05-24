@@ -1,0 +1,25 @@
+							// -*- C++ -*-
+#include "data.hh"
+#include "ntg/int.hh"
+#include "oln/core/2d/image2d.hh"
+#include "oln/core/gen/image_with_nbh.hh"
+#include "oln/io/read_image.hh"
+#include "oln/io/write_image.hh"
+#include "oln/morpho/lower_completion.hh"
+#include "oln/ops/cmp.hh"
+
+using namespace oln;
+
+bool check()
+{
+  image2d<ntg::int_u8> raw_input;
+  raw_input = io::read(rdata("squares.pgm"));
+
+  typedef image_with_nbh<image2d<ntg::int_u8>, neighborhood2d> image_type;
+  image_type input = join(raw_input, neighb_c4());
+  image_type output = morpho::lower_completion<ntg::int_u8>(input);
+
+  image2d<ntg::int_u8> ref_output;
+  ref_output = io::read(rdata("squares-lc.pgm"));
+  return !(output == ref_output);
+}

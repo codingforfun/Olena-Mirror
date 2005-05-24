@@ -160,6 +160,7 @@ OLN_DEP =					\
   morpho/erosion.hh				\
   morpho/geodesic_dilation.hh			\
   morpho/geodesic_erosion.hh			\
+  morpho/lower_completion.hh			\
   morpho/opening.hh				\
   morpho/reconstruction_by_dilation.hh		\
   morpho/reconstruction_by_erosion.hh		\

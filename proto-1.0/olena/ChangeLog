@@ -1,3 +1,18 @@
+2005-05-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add lower completion.
+
+	* oln/morpho/lower_completion.hh: New file
+	* oln/makefile.src (OLN_DEP): Add morpho/lower_completion.hh.
+	* olena/img/squares.pgm, olena/img/squares-lc.pgm: New images.
+	* img/Makefile.am (SOURCE_IMGS): Add $(srcdir)/16x16.pbm,
+	$(srcdir)/16x16.pbm.gz, $(srcdir)/16x16.pgm,
+	$(srcdir)/16x16.pgm.gz, $(srcdir)/16x16.ppm,
+	$(srcdir)/16x16.ppm.gz, $(srcdir)/marker.pbm, $(srcdir)/mask.pbm,
+	$(srcdir)/object.pbm, $(srcdir)/squares-lc.pgm,
+	$(srcdir)/squares.pgm:
+	* tests/morpho/tests/lower_completion: New test.
+
 2005-05-19  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* oln/makefile.src: Update.
