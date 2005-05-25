@@ -1,3 +1,16 @@
+2005-05-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add (queue-based) level and extrema components computation.
+
+	* oln/level/level_components.hh, oln/level/extrema_components.hh:
+	New files.
+	* tests/level/tests/extrema_components: New test.
+
+	* oln/morpho/lower_completion.hh: Check that the input is a scalar
+	image.
+	* tests/morpho/tests/lower_completion: Don't include useless
+	headers.
+
 2005-05-24  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add lower completion.

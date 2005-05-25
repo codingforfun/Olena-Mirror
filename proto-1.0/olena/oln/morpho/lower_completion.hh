@@ -36,11 +36,12 @@ namespace oln {
 
   namespace morpho {
 
-    // FIXME: INPUT should be a scalar image.
     template <typename DestValue, typename I>
     typename ch_value_type<I, DestValue>::ret
     lower_completion(const abstract::image_with_nbh<I>& input)
     {
+      mlc_is_a(I, abstract::scalar_valued_image)::ensure();
+
       typedef oln_type_of(I, point) point_type;
 
       /*------------------------------------------.
@@ -55,7 +56,7 @@ namespace oln {
       typename ch_value_type<I, unsigned>::ret distance(input.size());
       unsigned cur_dist = 1;
 
-      oln_type_of(I, fwd_piter) p(input.size());
+      oln_type_of(I, piter) p(input.size());
       for_all_p (p)
 	{
 	  distance[p] = 0;
