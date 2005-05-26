@@ -1,11 +1,12 @@
 							// -*- C++ -*-
 #include "data.hh"
-#include "ntg/int.hh"
-#include "oln/core/2d/image2d.hh"
-#include "oln/core/gen/image_with_nbh.hh"
-#include "oln/io/read_image.hh"
-#include "oln/morpho/lower_completion.hh"
-#include "oln/ops/cmp.hh"
+
+#include <ntg/int.hh>
+#include <oln/core/2d/image2d.hh>
+#include <oln/core/gen/image_with_nbh.hh>
+#include <oln/io/read_image.hh>
+#include <oln/morpho/lower_completion.hh>
+#include <oln/ops/cmp.hh>
 
 using namespace oln;
 

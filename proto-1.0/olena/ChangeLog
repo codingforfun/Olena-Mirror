@@ -1,3 +1,23 @@
+2005-05-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix morphological dilation and closing.
+
+	* oln/morpho/dilation.hh (impl::dilation_): Fix dilation.
+	Adjust copyright dates.
+	* oln/morpho/closing.hh	(impl::closing_): Fix closing.
+	Handle morpho kinds.
+	Adjust copyright dates.
+	* oln/morpho/erosion.hh, oln/morpho/opening.hh: Adjust copyright
+	dates.
+
+	* tests/morpho/tests/closing (check),
+	* tests/morpho/tests/dilation (check),
+	* tests/morpho/tests/erosion (check),
+	* tests/morpho/tests/opening (check): Fix checksums.
+	* tests/morpho/tests/lower_completion,
+	* tests/level/tests/extrema_components: Include Olena
+	headers using angle bracket syntax.
+
 2005-05-25  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add (queue-based) level and extrema components computation.

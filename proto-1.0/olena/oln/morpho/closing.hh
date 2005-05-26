@@ -1,4 +1,4 @@
-// Copyright (C) 2001-2005  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004, 2005 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -41,33 +41,46 @@ namespace oln {
 
 
 
-    // fwd decl of facade
+    // Fwd decl of closing's facade.
+
+    template<typename K, typename I, typename W>
+    oln_type_of(I, concrete) closing(const tag::kind<K>& kind,
+				     const abstract::image<I>& input,
+				     const abstract::window<W>& win);
+
+    // Facade for classical closing.
 
     template<typename I, typename W>
     oln_type_of(I, concrete) closing(const abstract::image<I>& input,
-				     const abstract::window<W>& win);
+				     const abstract::window<W>& win)
+    {
+      return closing(tag::classical, input, win);
+    }
 
 
 
     namespace impl {
 
 
-
       // generic
 
-      template<typename I, typename W>
-      oln_type_of(I, concrete) closing_(const abstract::image<I>& input,
+      template<typename K, typename I, typename W>
+      oln_type_of(I, concrete) closing_(const tag::kind<K>& kind,
+					const abstract::image<I>& input,
 					const abstract::window<W>& win)
       {
-	entering("generic");
-	oln_type_of(I, concrete) output;
+	entering("->generic");
+	registering(input, "input");
 
-	output = dilation(erosion(input, win), -win);
+	oln_type_of(I, concrete) output("output");
+	output = erosion(kind, dilation(kind, input, win), -win);
 
-	exiting("generic");
+	exiting("->generic");
 	return output;
       }
 
+
+      // add some other impls here...
 
       
     } // end of namespace oln::morpho::impl
@@ -77,16 +90,18 @@ namespace oln {
 
     /// Generic closing (facade).
 
-    template<typename I, typename W>
-    oln_type_of(I, concrete) closing(const abstract::image<I>& input,
+    template<typename K, typename I, typename W>
+    oln_type_of(I, concrete) closing(const tag::kind<K>& kind,
+				     const abstract::image<I>& input,
 				     const abstract::window<W>& win)
     {
       mlc::eq<oln_type_of(I, grid), oln_wn_type_of(W, grid)>::ensure();
 
       entering("morpho::closing");
-      oln_type_of(I, concrete) output;
+      registering(input, "input");
 
-      output = impl::closing_(input.exact(), win.exact());
+      oln_type_of(I, concrete) output("output");
+      output = impl::closing_(kind, input.exact(), win.exact());
 
       exiting("morpho::closing");
       return output;
