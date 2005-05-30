@@ -114,6 +114,20 @@ namespace oln {
       return this->value() < rhs;
     }
 
+    /// Operator > (rhs is a value_box).
+    template <typename II>
+    bool operator>(const value_box<II>& rhs) const
+    {
+      return this->value() > rhs.value();
+    }
+
+    /// Operator > (rhs is a value).
+    template <typename V>
+    bool operator>(const V& rhs) const
+    {
+      return this->value() > rhs;
+    }
+
 
     /*! \brief op=
     ** FIXME:...

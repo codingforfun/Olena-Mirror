@@ -43,8 +43,10 @@ namespace oln {
     {
       mlc_is_a(I, abstract::scalar_valued_image)::ensure();
 
-      typename ch_value_type<I, DestValue>::ret labels(input.size());
-      typename ch_value_type<I, bool>::ret processed(input.size());
+      typename ch_value_type<I, DestValue>::ret labels(input.size(),
+						       input.nbh_get());
+      typename ch_value_type<I, bool>::ret processed(input.size(),
+						     input.nbh_get());
       level::fill (processed, false);
 
       DestValue cur_label = ntg_min_val(DestValue);
@@ -55,8 +57,9 @@ namespace oln {
       oln_type_of(I, piter) p(input.size());
       for_all_p (p)
 	if (!processed[p])
-	  {
+	  {	    
 	    labels[p] = cur_label;
+	    processed[p] = true;
 	    q.push(p);
 	    while (!q.empty())
 	      {
@@ -64,7 +67,7 @@ namespace oln {
 		q.pop();
 		oln_type_of(I, niter) n(input);
 		for_all_n_of_p (n, s)
-		  if (input.hold(n) && input[n] == input[s] && !processed[n])
+		  if (input.hold(n) && !processed[n] && input[n] == input[s])
 		    {
 		      labels[n] = cur_label;
 		      processed[n] = true;

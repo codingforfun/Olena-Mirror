@@ -50,10 +50,12 @@ namespace oln {
 
       typedef std::queue<point_type> queue_type;
       queue_type q;
-      typename ch_value_type<I, bool>::ret processed(input.size());
+      typename ch_value_type<I, bool>::ret processed(input.size(),
+						     input.nbh_get ());
       level::fill (processed, false);
 
-      typename ch_value_type<I, unsigned>::ret distance(input.size());
+      typename ch_value_type<I, unsigned>::ret distance(input.size(),
+							input.nbh_get());
       unsigned cur_dist = 1;
 
       oln_type_of(I, piter) p(input.size());
@@ -108,7 +110,8 @@ namespace oln {
       | Lower completion.  |
       `-------------------*/
 
-      typename ch_value_type<I, DestValue>::ret output(input.size());
+      typename ch_value_type<I, DestValue>::ret output(input.size(),
+						       input.nbh_get());
       for_all_p (p)
 	if (distance[p] == ntg_zero_val(DestValue))
 	  output[p] = cur_dist * input[p].value();

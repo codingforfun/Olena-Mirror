@@ -150,7 +150,9 @@ OLN_DEP =					\
 						\
   level/arith.hh				\
   level/compare.hh				\
+  level/extrema_components.hh			\
   level/fill.hh					\
+  level/level_components.hh			\
   level/logic.hh				\
 						\
   morpho/closing.hh				\
@@ -166,6 +168,7 @@ OLN_DEP =					\
   morpho/reconstruction_by_erosion.hh		\
   morpho/reconstruction_selfdual.hh		\
   morpho/reconstruction.hh			\
+  morpho/shortest_path_watershed.hh		\
   morpho/stat.hh				\
   morpho/tags.hh				\
 						\

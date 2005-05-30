@@ -80,6 +80,14 @@ namespace oln {
       this->image_ = tmp;
     }
 
+    image_with_nbh(const oln_type_of(I, size)& size,
+		   const abstract::neighborhood<N>& nbh) :
+      nbh_(nbh.exact())
+    {
+      I tmp(size); // FIXME: hack
+      this->image_ = tmp;
+    }
+
     image_with_nbh(abstract::image<I>& image,
 		   const abstract::neighborhood<N>& nbh) :
       super_type(image),

@@ -1,3 +1,26 @@
+2005-05-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add shortest path watershed transform.
+
+	* oln/morpho/shortest_path_watershed.hh: New file.
+	* tests/morpho/tests/shortest_path_watershed: New test.
+
+	* oln/core/gen/image_with_nbh.hh
+	(image_with_nbh(const oln_type_of(I, size)&,
+	const abstract::neighborhood<N>&)): New ctor.
+	* oln/level/level_components.hh (level_components),
+	* oln/morpho/lower_completion.hh (lower_completion): Use it.
+	* oln/core/abstract/niter.hh (nbh): New method.
+	* tests/core/tests/niter2d: New test.
+
+	* oln/level/extrema_components.hh (extrema_components): Use
+	unsigned to compute the level components.
+	* oln/core/gen/internal/value_box.hh
+	(operator>(const value_box<II>&), operator>(const V&)): New
+	operators.
+	* oln/makefile.src (OLN_DEP): Add level/extrema_components.hh,
+	level/level_components.hh and morpho/shortest_path_watershed.hh.
+
 2005-05-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix morphological dilation and closing.

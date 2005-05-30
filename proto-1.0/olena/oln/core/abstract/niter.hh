@@ -119,6 +119,11 @@ namespace oln {
 	this->invalidate();
       }
 
+      neighb_type nbh()
+      {
+	return nbh_;
+      }
+
     protected:
 
       const neighb_type nbh_; // copy is safe

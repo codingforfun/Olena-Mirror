@@ -50,17 +50,18 @@ namespace oln {
 	Cmp cmp;
 
 	// Compute level components.
-	typename ch_value_type<I, DestValue>::ret comps =
-	  level_components<DestValue>(input);
-	std::set<DestValue> extrema;
-	std::set<DestValue> non_extrema;
+	typedef unsigned comp_type;
+	typename ch_value_type<I, comp_type>::ret comps =
+	  level_components<comp_type>(input);
+	std::set<comp_type> extrema;
+	std::set<comp_type> non_extrema;
 
 	// Search extrema components.
 	oln_type_of(I, piter) p(input.size());
 	for_all_p (p)
 	  {
-	    DestValue comp = comps[p];
-	    if (non_extrema.find(comp) == non_extrema.end ())
+	    comp_type comp = comps[p];
+	    if (non_extrema.find(comp) == non_extrema.end())
 	      {
 		// A new level is a (potential) extrema by default.
 		extrema.insert(comp);
@@ -71,23 +72,27 @@ namespace oln {
 		    {
 		      extrema.erase(comp);
 		      non_extrema.insert(comp);
+		      break;
 		    }
 	      }
 	  }
 
 	// Re-label the extrema.  label_map hold the assigned labels.
-	std::map<DestValue, DestValue> label_map;
+	std::map<comp_type, DestValue> label_map;
 	{
 	  DestValue cur_label = ntg_min_val(DestValue) + 1;
-	  for (typename std::set<DestValue>::const_iterator i =
+	  for (typename std::set<comp_type>::const_iterator i =
 		 extrema.begin(); i != extrema.end(); ++i, ++cur_label)
-	    label_map[*i] = cur_label;
+	    {
+	      label_map[*i] = cur_label;
+	    }
 	}
-	typename ch_value_type<I, DestValue>::ret output (input.size());
+	typename ch_value_type<I, DestValue>::ret output (input.size(),
+							  input.nbh_get());
 	level::fill (output, ntg_min_val(DestValue));
 	for_all_p (p)
 	  {
-	    DestValue comp = comps[p];
+	    comp_type comp = comps[p];
 	    if (label_map.find(comp) != label_map.end())
 	      output[p] = label_map[comp];
 	  }
@@ -103,8 +108,10 @@ namespace oln {
     minima_components(const abstract::image_with_nbh<I>& input)
     {
       mlc_is_a(I, abstract::scalar_valued_image)::ensure();
-      return internal::extrema_components< DestValue,
-                                           std::less<DestValue> >(input);
+      typedef oln_type_of(I, value) input_value_type;
+      return
+	internal::extrema_components< DestValue,
+                                      std::less<input_value_type> >(input);
     }
 
     /// Find the maxima level components of \a input.
@@ -113,8 +120,10 @@ namespace oln {
     maxima_components(const abstract::image_with_nbh<I>& input)
     {
       mlc_is_a(I, abstract::scalar_valued_image)::ensure();
-      return internal::extrema_components< DestValue,
-                                           std::greater<DestValue> >(input);
+      typedef oln_type_of(I, value) input_value_type;
+      return
+	internal::extrema_components< DestValue,
+                                      std::greater<input_value_type> >(input);
     }
 
   } // end of namespace oln::level.
