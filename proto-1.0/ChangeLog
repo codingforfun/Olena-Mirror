@@ -1,3 +1,9 @@
+2005-06-04  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
+
+	* olena/oln/morpho/tree.hh: tree (canva).
+	* olena/oln/morpho/maxtree.hh: creation of maxtree.
+	* olena/oln/morpho/clean_astro_images.hh: maxtree utilisation's sample.
+
 2005-05-23  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
 	* olena/oln/core/abstract/image_constness.hh: Add call to
