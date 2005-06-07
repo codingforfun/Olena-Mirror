@@ -1,3 +1,9 @@
+2005-06-07  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
+
+	* oln/morpho/tree.hh: Modifications.
+	* oln/morpho/maxtree.hh: Likewise.
+	* oln/morpho/clean_astro_images.hh: Likewise.
+
 2005-06-04  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
 	* olena/oln/morpho/tree.hh: tree (canva).
