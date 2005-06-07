@@ -1,0 +1,97 @@
+							// -*- C++ -*-
+#include <ntg/int.hh>
+#include <oln/basics2d.hh>
+#include <oln/level/arith.hh>
+#include <oln/level/fill.hh>
+#include <oln/level/compare.hh>
+
+using namespace oln;
+
+
+// FIXME: Not safe, nor generic.  Re-introduce static initialization
+// in Olena and use it instead.
+template<typename T>
+image2d<T>
+image_from_array(coord_t nrows, coord_t ncols, T values[])
+{
+  image2d<T> output(nrows, ncols);
+  unsigned i = 0;
+  oln_type_of(image2d<T>, fwd_piter) p(output.size());
+  for_all_p (p)
+    {
+      output[p] = values[i];
+      ++i;
+    }
+  return output;
+}
+
+
+bool check()
+{
+  typedef ntg::int_s<32, ntg::unsafe> value_type;
+
+  image2d<value_type> ima1(3, 3);
+  ima1(0, 0) = 0; ima1(0, 1) = 1; ima1(0, 2) = 2;
+  ima1(1, 0) = 3; ima1(1, 1) = 4; ima1(1, 2) = 5;
+  ima1(2, 0) = 6; ima1(2, 1) = 7; ima1(2, 2) = 8;
+
+  image2d<value_type> ima2(3, 3);
+  level::fill(ima2, 3);
+
+  // Checking level::plus.
+  {
+    image2d<value_type> sum = level::plus(ima1, ima2);
+    value_type sum_ref[] = { 3,  4,  5,
+			     6,  7,  8,
+			     9, 10, 11 };
+    if (not level::is_equal(sum,
+			    image_from_array<value_type>(3, 3, sum_ref)))
+      return true;
+  }
+     
+  // Checking level::minus.
+  {
+    image2d<value_type> diff = level::minus(ima1, ima2);
+    value_type diff_ref[] = { -3, -2, -1,
+			       0,  1,  2,
+			       3,  4,  5 };
+    if (not level::is_equal(diff,
+			    image_from_array<value_type>(3, 3, diff_ref)))
+      return true;
+  }
+
+  // Checking level::times.
+  {
+    image2d<value_type> product = level::times(ima1, ima2);
+    value_type product_ref[] = {  0,  3,  6,
+				  9, 12, 15,
+				 18, 21, 24 };
+    if (not level::is_equal(product,
+			    image_from_array<value_type>(3, 3, product_ref)))
+      return true;
+  }
+
+  // Checking level::div.
+  {
+    image2d<value_type> quotient = level::div(ima1, ima2);
+    value_type quotient_ref[] = { 0, 0, 0,
+				  1, 1, 1,
+				  2, 2, 2 };
+    if (not level::is_equal(quotient,
+			    image_from_array<value_type>(3, 3, quotient_ref)))
+      return true;
+  }
+
+  // Checking level::mod.
+  {
+    image2d<value_type> remain = level::mod(ima1, ima2);
+    value_type remain_ref[] = { 0, 1, 2,
+				0, 1, 2,
+				0, 1, 2 };
+    if (not level::is_equal(remain,
+			    image_from_array<value_type>(3, 3, remain_ref)))
+      return true;
+  }
+
+  return false;
+}

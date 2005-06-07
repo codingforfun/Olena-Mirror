@@ -1,3 +1,13 @@
+2005-06-07  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix level::arith.
+
+	* oln/level/arith.hh (oln/core/apply.hh): Include it.
+	(f_plus): Rename as...
+	(plus): ...this.
+	(minus, times, div, mod): Fix the operators used in these functions.
+	* tests/level/tests/arith: New test.
+
 2005-06-07  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
 	* oln/morpho/tree.hh: Modifications.

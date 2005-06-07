@@ -32,6 +32,7 @@
 # include <oln/core/ch_value_type.hh>
 
 # include <oln/funobj/arith.hh>
+# include <oln/core/apply.hh>
 
 # include <oln/ops/arith.hh>
 # include <oln/utils/clone.hh>
@@ -111,8 +112,8 @@ namespace oln
 
     template <typename I1, typename I2>
     oln_arith_output(plus, I1, I2)
-    f_plus (const abstract::image<I1>& input1,
-	    const abstract::image<I2>& input2)
+    plus (const abstract::image<I1>& input1,
+	  const abstract::image<I2>& input2)
     {
       // FIXME: recording(?)
       mlc::eq<oln_type_of(I1, grid),  oln_type_of(I2, grid)>::ensure();
@@ -162,7 +163,7 @@ namespace oln
       precondition(input1.size() == input2.size());
 
       oln_arith_output(minus,I1,I2) output("output");
-      output = clone( input1 + input2 );
+      output = clone( input1 - input2 );
 
       exiting("level::minus");
       return output;
@@ -185,7 +186,7 @@ namespace oln
       precondition(input1.size() == input2.size());
 
       oln_arith_output(times,I1,I2) output("output");
-      output = clone( input1 + input2 );
+      output = clone( input1 * input2 );
 
       exiting("level::times");
       return output;
@@ -208,7 +209,7 @@ namespace oln
       precondition(input1.size() == input2.size());
 
       oln_arith_output(div,I1,I2) output("output");
-      output = clone( input1 + input2 );
+      output = clone( input1 / input2 );
 
       exiting("level::div");
       return output;
@@ -231,7 +232,7 @@ namespace oln
       precondition(input1.size() == input2.size());
 
       oln_arith_output(mod,I1,I2) output("output");
-      output = clone( input1 + input2 );
+      output = clone( input1 % input2 );
 
       exiting("level::mod");
       return output;
