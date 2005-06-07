@@ -1,4 +1,4 @@
-// Copyright (C) 2001-2005  EPITA Research and Development Laboratory
+// Copyright (C) 2005  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,8 +39,6 @@
 
 # include <vector>
 
-// just for test
-#include <ntg/real/int_u.hh>
 
 namespace oln {
 
@@ -68,8 +66,8 @@ namespace oln {
 
 	void run_compute_output()
 	{
-	  init_traitement();
-	  traitement();
+	  init_processing();
+	  processing();
 	}
 
 	// Concrete method.
@@ -110,9 +108,9 @@ namespace oln {
 
 	// init
 
-	void init_traitement()
+	void init_processing()
 	{
-	  this->exact().impl_init_traitement();
+	  this->exact().impl_init_processing();
 	}
 
 	void compute_S()
@@ -150,9 +148,9 @@ namespace oln {
 	  this->exact().impl_compute_tree();
 	}
 
-	void traitement()
+	void processing()
 	{
-	  this->exact().impl_traitement();
+	  this->exact().impl_processing();
 	}
 
 	void make_set(const point_type& p)

@@ -1,4 +1,4 @@
-// Copyright (C) 2001-2005  EPITA Research and Development Laboratory
+// Copyright (C) 2005  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -41,9 +41,6 @@
 
 # include <vector>
 
-// just for test
-#include <ntg/real/int_u.hh>
-
 
 namespace oln {
 
@@ -58,8 +55,12 @@ namespace oln {
 				 int col)
       {
 	typedef oln_type_of(I, point) point_type;
-	if (((p.row() == (row / 2)) or (p.row() == (row - 1) / 2) or (p.row() == (row + 1) / 2))
-	    and ((p.col() == (col / 2)) or (p.col() == (col - 1) / 2) or (p.col() == (col + 1) / 2)))
+	if (((p.row() == (row / 2)) or
+	     (p.row() == (row - 1) / 2) or
+	     (p.row() == (row + 1) / 2))
+	    and ((p.col() == (col / 2)) or
+		 (p.col() == (col - 1) / 2) or
+		 (p.col() == (col + 1) / 2)))
 	  return true;
 	std::vector<point_type> f = children[p].value();
 	typename std::vector<point_type>::const_iterator pt;
@@ -243,7 +244,7 @@ namespace oln {
 	  }
       }
 
-      void impl_init_aux_traitement()
+      void impl_init_aux_processing()
       {
       }
 

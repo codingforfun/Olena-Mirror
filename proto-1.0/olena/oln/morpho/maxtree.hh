@@ -1,4 +1,4 @@
-// Copyright (C) 2001-2005  EPITA Research and Development Laboratory
+// Copyright (C) 2005  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,9 +43,6 @@
 # include <vector>
 # include <functional>
 # include <set>
-
-// just for test
-#include <ntg/real/int_u.hh>
 
 
 namespace oln {
@@ -253,14 +250,14 @@ namespace oln {
 	    eligible_component(*p);
       }
 
-      void impl_init_traitement()
+      void impl_init_processing()
       {
 	level::fill(this->marked, false);
 	level::fill(this->is_deleted, false);
-	this->exact().impl_init_aux_traitement();
+	this->exact().impl_init_aux_processing();
       }
 
-      void impl_traitement()
+      void impl_processing()
       {
 	compute_image_is_deleted();
 
@@ -277,6 +274,7 @@ namespace oln {
     protected:
 
       // Ctor.
+      // FIXME : will be changed
       max_tree(const abstract::image_with_nbh<I>& input) :
 	super_type(input)
       {
