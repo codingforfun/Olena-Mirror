@@ -13,13 +13,13 @@ template<typename E>
 bool compare(const oln::abstract::image<E>& a,
 	     const oln::abstract::image<E>& b)
 {
-
-  oln_type_of(E, fwd_piter) it(a.size());
-
-  if (a.size().nrows() != b.size().nrows() ||
+  if (!a.exact().has_data() or !b.exact().has_data())
+    return false;
+  if (a.size().nrows() != b.size().nrows() or
       a.size().ncols() != b.size().ncols())
     return false;
 
+  oln_type_of(E, fwd_piter) it(a.size());
   for_all_p(it)
     {
       if (a[it] != b[it])

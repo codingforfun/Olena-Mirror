@@ -1,3 +1,12 @@
+2005-06-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Enforce tests on oln::io.
+
+	* tests/io/loadsave.hh (compare): Check whether images have data.
+	* tests/io/tests/2d: Aesthetic changes.
+	* tests/check/Makefile.flags (AM_CPPFLAGS): Look in
+	olena/tests/check before metalic/tests/check.
+
 2005-06-07  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix level::arith.
