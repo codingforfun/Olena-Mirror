@@ -1,5 +1,12 @@
 2005-06-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add composition of two unary functors.
+
+	* oln/funobj/compose.hh: New file.
+	* tests/funobj/tests/compose: New test.
+
+2005-06-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add unary minus function object.
 
 	* oln/funobj/arith.hh (f_::uminus_): New functor.

@@ -1,0 +1,14 @@
+							// -*- C++ -*-
+#include <oln/funobj/arith.hh>
+#include <oln/funobj/compose.hh>
+
+using namespace oln;
+
+bool check()
+{
+  f_::uminus_<int> negate;
+  if (compose_uu(negate, negate)(1) != 1)
+    return true;
+
+  return false;
+}
