@@ -1,3 +1,7 @@
+2005-06-07  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac (OLN_TESTS): Add funobj.
+
 2005-05-19  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* configure.ac: Remove oln/arith from the OLN collection.
