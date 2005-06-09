@@ -1,0 +1,12 @@
+							// -*- C++ -*-
+#include <oln/funobj/arith.hh>
+
+using namespace oln;
+
+bool check()
+{
+  if (f_uminus(42) != -42)
+    return true;
+
+  return false;
+}

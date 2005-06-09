@@ -86,21 +86,27 @@ namespace oln
   oln_decl_funobj_binary(div,   /);
   oln_decl_funobj_binary(mod,   %);
 
-  // FIXME: min, max?
-  // FIXME: uminus?
-
-
-
   namespace f_ {
+    template <typename T> struct uminus_;
     template <typename T> struct min_;
     template <typename T> struct max_;
-  }
+  } // end of namespace oln::f_
+
+  template <typename T>
+  struct set_super_type < f_::uminus_<T> > { typedef f_::abstract::unary< f_::uminus_<T> > ret; };
 
   template <typename T>
   struct set_super_type < f_::min_<T> > { typedef f_::abstract::binary< f_::min_<T> > ret; };
 
   template <typename T>
   struct set_super_type < f_::max_<T> > { typedef f_::abstract::binary< f_::max_<T> > ret; };
+
+  template <typename T>
+  struct set_props < category::fun1, f_::uminus_<T> >
+  {
+    typedef T res_type;
+    typedef T arg_type;
+  };
 
   template <typename T>
   struct set_props < category::fun2, f_::min_<T> >
@@ -122,6 +128,15 @@ namespace oln
   {
 
     template <typename T>
+    struct uminus_ : public oln_super_of_(f_::uminus_<T>)
+    {
+      const T impl_unop(const T& arg) const
+	{
+	  return -arg;
+	}
+    };
+
+    template <typename T>
     struct min_ : public oln_super_of_(f_::min_<T>)
     {
       const T impl_binop(const T& left, const T& right) const
@@ -139,7 +154,10 @@ namespace oln
 	}
     };
 
-  }
+  } // end of namespace oln::f_
+
+  typedef f_::unary_meta<f_::uminus_> f_uminus_type;
+  static f_uminus_type f_uminus;
 
   typedef f_::binary1_meta<f_::min_> f_min_type;
   static f_min_type f_min;

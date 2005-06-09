@@ -1,5 +1,14 @@
 2005-06-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add unary minus function object.
+
+	* oln/funobj/arith.hh (f_::uminus_): New functor.
+	(f_uminus): New.
+	* tests/funobj/tests/arith: New test.
+	* tests/funobj/Makefile.am: New file.
+
+2005-06-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Enforce tests on oln::io.
 
 	* tests/io/loadsave.hh (compare): Check whether images have data.
