@@ -623,6 +623,46 @@ AC_DEFUN([AC_WITH_CXX_ZLIB],
  AC_LANG_POP([C++])
 ])
 
+
+# Check for availability of libcfitsio
+
+AC_DEFUN([AC_WITH_CXX_FITSIO2],
+[dnl
+ AC_REQUIRE([AC_PROG_CXX])
+ AC_LANG_PUSH([C++])
+
+ AC_ARG_WITH([fitsio2],
+             [AC_HELP_STRING([--with-fitsio2@<:@=DIR@:>@],
+                    [using fitsio2 (DIR = prefix for fitsio2 installation)])])
+ FITSIO2_CXXFLAGS=''
+ FITSIO2_LDFLAGS=''
+ if test "x$with_fitsio2" != xno; then
+   if test -n "$with_fitsio2"; then
+     FITSIO2_CXXFLAGS="-I${with_fitsio2}/include"
+     FITSIO2_LDFLAGS="-L${with_fitsio2}/lib -lm"
+   fi
+   oln_save_CXXFLAGS=$CXXFLAGS
+   oln_save_LDFLAGS=$LDFLAGS
+   CXXFLAGS="$CXXFLAGS $FITSIO2_CXXFLAGS"
+   LDFLAGS="$LDFLAGS $FITSIO2_LDFLAGS"
+   oln_have_fitsio2=no
+   AC_CHECK_HEADER([fitsio2.h],
+                   [AC_CHECK_LIB([cfitsio],
+                               [ffopen],
+                               [oln_have_fitsio2=yes
+                                FITSIO2_LDFLAGS="$FITSIO2_LDFLAGS -lcfitsio -lm"
+                                AC_DEFINE([HAVE_FITSIO2], 1,
+                                          [Define to 1 if we can use fitsio2])])])
+   CXXFLAGS=$oln_save_CXXFLAGS
+   LDFLAGS=$oln_save_LDFLAGS
+   TOOLS_LDFLAGS="$TOOLS_LDFLAGS $FITSIO2_LDFLAGS"
+ fi
+ AC_SUBST([FITSIO2_CXXFLAGS])
+ AC_SUBST([FITSIO2_LDFLAGS])
+
+ AC_LANG_POP([C++])
+])
+
 ###
 ### Internal stuff for Olena
 ###

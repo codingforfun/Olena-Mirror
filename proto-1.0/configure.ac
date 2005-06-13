@@ -28,6 +28,8 @@ AC_PROG_CC
 AC_WITH_CXX_ZLIB
 AC_WITH_CXX_FFTW
 
+AC_WITH_CXX_FITSIO2
+
 # Attempt to use strict language conformance checking.
 AC_CXX_FLAGS
 
@@ -107,8 +109,8 @@ dnl     AM_CONDITIONAL([OLN_CONFIG_SH], [test "x$oln_cv_enable_config_sh" != xno
       OLN_TESTS([level])
       OLN_TESTS([morpho])
       OLN_TESTS([pw])
-      OLN_TESTS([utils]) 
-      
+      OLN_TESTS([utils])
+
       AC_SUBST([OLN_TESTS_SUBDIRS])
 
     ], [tests])dnl End of OLN_COMPONENT([olena/tests])
