@@ -1,3 +1,13 @@
+2005-06-19  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
+
+	* oln/core/abstract/image.hh: patch for adding method call.
+	* oln/core/abstract/image_constness.hh: add method call for
+	readwrite images.
+	* oln/core/abstract/image_with_data.hh: likewise.
+	* oln/core/2d/array2d.hh: likewise.
+	* oln/core/box.hh: likewise.
+	* oln/makefile.src: add files.
+
 2005-06-13  Damien Thivolle  <damien@lrde.epita.fr>
 
 	* tests/check/Makefile.runtests: Modify compilation flags.

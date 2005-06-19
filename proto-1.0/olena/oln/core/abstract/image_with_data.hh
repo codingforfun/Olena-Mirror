@@ -156,7 +156,6 @@ namespace oln {
 		  R (T::*method)() const) const
       {
  	return (this->data_->get(p).*method)();
-	//this->data_->call(p, method);
       }
 
       template <typename T, typename A, typename V>
@@ -164,7 +163,6 @@ namespace oln {
 		     void (T::*method)(A),
 		     V arg)
       {
-	//	std::cout << "yes!" << std::endl;
  	this->data_->call(p, method, arg);
       }
 

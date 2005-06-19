@@ -6,6 +6,8 @@
 OLN_DEP =					\
   all.hh					\
 						\
+  appli/astro/clean.hh				\
+						\
   basics1d.hh					\
   basics2d.hh					\
   basics3d.hh					\
@@ -14,6 +16,8 @@ OLN_DEP =					\
   canvas/backandforth.hh			\
   canvas/io.hh					\
   canvas/reconstruction.hh			\
+  canvas/tree.hh				\
+  canvas/maxtree.hh				\
 						\
   config/pconf.hh				\
   config/system.hh				\

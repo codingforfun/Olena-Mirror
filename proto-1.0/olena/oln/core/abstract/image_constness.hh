@@ -34,7 +34,7 @@
 //              image
 //
 //                ^
-//                |                
+//                |
 //         ---------------
 //        |               |
 //
@@ -158,10 +158,18 @@ namespace oln {
 // 	return *this;
 //       }
 
+      typedef internal::get_image_impl < readwrite_image<E>, E > super_rw_impl;
+      typedef internal::get_image_impl < image<E>, E > super_impl;
+
       template <typename T, typename A, typename V>
       void call(const point_type& p,
 		void (T::*method)(A),
 		V arg);
+
+      template <typename R, typename T>
+      R call(const oln_type_of(E, point)& p,
+	     R (T::*method)() const) const;
+
 
     protected:
 
@@ -201,6 +209,12 @@ namespace oln {
 	  this->delegate().impl_call(p, method, arg);
 	}
 
+	template <typename R, typename T>
+	R impl_call(const oln_type_of(E, point)& p,
+		    R (T::*method)() const) const
+	{
+	  return this->delegate().call(p, method);
+	}
 
 	// extra code; default is 'do nothing':
 

@@ -371,7 +371,6 @@ namespace oln
 
       const value_type get(const point_type& p) const;  // impl is in box.hh
 
-
       // FIXME: patch!
 
       void resize_border(size_t new_border, bool copy_border = false) const
@@ -413,7 +412,6 @@ namespace oln
 	typedef oln_type_of(D, size)  size_type;
 	typedef oln_type_of(D, point) point_type;
 	typedef oln_type_of(D, value) value_type;
-
 
 	// delegations are "template methods" (Cf. the GOF's book)
 

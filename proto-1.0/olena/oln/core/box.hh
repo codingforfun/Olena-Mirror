@@ -279,13 +279,28 @@ namespace oln {
       return this->exact().impl_get(p);
     }
 
-    /// Implementation of abstract::image<E>::call(p, method) const.
+
+    /// Implementation of abstract::readonly_image<E>::call(p, method) const.
 
     template <typename E>
     template <typename R, typename T>
     R
     readonly_image<E>::call(const oln_type_of(E, point)& p,
 			    R (T::*method)() const) const
+    {
+# ifdef OLNTRACE
+      inc_ncalls("call", *this);
+# endif // ! OLNTRACE
+      return this->exact().impl_call(p, method);
+    }
+
+    /// Implementation of abstract::readwrite_image<E>::call(p, method) const.
+
+    template <typename E>
+    template <typename R, typename T>
+    R
+    readwrite_image<E>::call(const oln_type_of(E, point)& p,
+			     R (T::*method)() const) const
     {
 # ifdef OLNTRACE
       inc_ncalls("call", *this);

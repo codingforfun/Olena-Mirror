@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_MORPHO_MAX_TREE_HH
-# define OLENA_MORPHO_MAX_TREE_HH
+#ifndef OLENA_CANVAS_MAXTREE_HH
+# define OLENA_CANVAS_MAXTREE_HH
 
 # include <mlc/any.hh>
 
@@ -36,7 +36,7 @@
 # include <oln/core/ch_value_type.hh>
 # include <oln/level/fill.hh>
 
-# include <oln/morpho/tree.hh>
+# include <oln/canvas/tree.hh>
 # include <oln/basics.hh>
 
 # include <cassert>
@@ -47,7 +47,7 @@
 
 namespace oln {
 
-  namespace morpho {
+  namespace canvas {
 
     namespace misc {
 
@@ -127,53 +127,68 @@ namespace oln {
 	return S;
       }
 
-    } // end of oln::morpho::misc
+    } // end of oln::canvas::misc
 
 
-    template <typename I, typename E>
-    struct max_tree : public canvas::tree<I, E>
+    template <typename I, typename T1, typename T2, typename E>
+    struct max_tree : public tree<I, T1, T2, E>
     {
-      typedef canvas::tree<I, E> super_type;
+    public:
+
+      typedef canvas::tree<I, T1, T2, E> super_type;
       typedef oln_type_of(I, point) point_type;
 
-      // Attributes.
-      oln_ch_concrete_type(I, bool)       is_proc;
-      oln_ch_concrete_type(I, bool)       marked;
-      oln_ch_concrete_type(I, bool)       is_deleted;
-      oln_ch_concrete_type(I, point_type) father;
-      oln_ch_concrete_type(I, std::vector<point_type>) children;
-      std::vector<std::vector<point_type> > v_root_point;
-      oln_type_of(I, concrete)            new_value;
+      const point_type impl_parent_get(const point_type& p) const
+      {
+	return parent[p].value();
+      }
+
+//       const std::vector<point_type> impl_component_get(const point_type& p) const
+//       {
+// 	// fixme
+//       }
+
+      const std::vector<point_type> impl_children_get(const point_type& p) const
+      {
+	return this->children[p].value();
+      }
+
+      const point_type impl_local_root(const point_type& p) const
+      {
+	if ((this->input[parent[p]] == this->input[p]) &&
+	    not is_root(p))
+	  return local_root(parent[p]);
+	return p;
+      }
 
       void impl_compute_S()
       {
 	this->S = misc::sort(this->input);
       }
 
-      bool condition_add_root_point(const point_type& f, const point_type& p)
-      {
-	if (this->input[f] == this->input[p])
-	  return false;
-	return true;
-      }
-
       void left_hand_walk(const point_type& p)
       {
-	if (condition_add_root_point(p, father[p]))
-	  v_root_point[this->input[p]].push_back(p);
+	for (oln_type_of(I, value) i = this->input[parent[p]].value();
+	     i < this->input[p].value(); i++)
+	  v_root_point[i + 1].push_back(p);
 
 	std::vector<point_type> f = children[p].value();
 	typename std::vector<point_type>::const_iterator pt;
 	for (pt = f.begin(); pt != f.end(); pt++)
-	  {
-	    left_hand_walk(*pt);
-	  }
+	  left_hand_walk(*pt);
       }
 
       void impl_compute_tree()
       {
-	v_root_point[this->input[this->root_point]].push_back(this->root_point);
-	left_hand_walk(this->root_point);
+	oln_type_of(I, fwd_piter) p(this->input.size());
+	for_all_p(p)
+	  {
+	    if (is_root(p))
+	      {
+		v_root_point[this->input[p]].push_back(p);
+		left_hand_walk(p);
+	      }
+	  }
       }
 
       void impl_set_default_output()
@@ -202,11 +217,6 @@ namespace oln {
 	this->exact().impl_init_aux_data(p);
       }
 
-      const point_type impl_get_father(const point_type& p) const
-      {
-	return father[p].value();
-      }
-
       void merge_aux_data(const point_type& r , const point_type& p)
       {
 	children[p].call(&std::vector<point_type>::push_back, r);
@@ -215,7 +225,7 @@ namespace oln {
 
       void impl_make_set(const point_type& p)
       {
-	father[p] = p;
+	parent[p] = p;
 	init_aux_data(p);
       }
 
@@ -223,17 +233,17 @@ namespace oln {
       {
 	if (is_root(x))
 	  return x;
-	return find_root(father[x]);
+	return find_root(parent[x]);
       }
 
       bool is_root(const point_type& x) const
       {
-	return father[x] == x;
+	return parent[x] == x;
       }
 
-      void impl_set_father(const point_type& r, const point_type& p)
+      void impl_parent_set(const point_type& r, const point_type& p)
       {
-	father[r] = p;
+	parent[r] = p;
 	merge_aux_data(r,p);
       }
 
@@ -257,8 +267,20 @@ namespace oln {
 	this->exact().impl_init_aux_processing();
       }
 
+      void init_compute_attributes()
+      {
+	this->exact().impl_init_compute_attributes();
+      }
+
+      void compute_attributes()
+      {
+	this->exact().impl_compute_attributes();
+      }
+
       void impl_processing()
       {
+	init_compute_attributes();
+	compute_attributes();
 	compute_image_is_deleted();
 
 	oln_type_of(I, fwd_piter) p(this->input.size());
@@ -271,6 +293,18 @@ namespace oln {
 	  }
       }
 
+      // FIXME
+      //    protected:
+
+      // Attributes.
+      oln_ch_concrete_type(I, bool)       is_proc;
+      oln_ch_concrete_type(I, bool)       marked;
+      oln_ch_concrete_type(I, bool)       is_deleted;
+      oln_ch_concrete_type(I, point_type) parent;
+      oln_ch_concrete_type(I, std::vector<point_type>) children;
+      std::vector<std::vector<point_type> > v_root_point;
+      oln_type_of(I, concrete)            new_value;
+
     protected:
 
       // Ctor.
@@ -282,7 +316,7 @@ namespace oln {
 	is_proc = tmp1;
 
 	oln_ch_concrete_type(I, point_type) tmp2(input.size());
-	father = tmp2;
+	parent = tmp2;
 
 	oln_ch_concrete_type(I, std::vector<point_type>) tmp3(input.size());
 	children = tmp3;
@@ -305,9 +339,8 @@ namespace oln {
 
     };
 
-  } // end of namespace oln::morpho
+  } // end of namespace oln::canvas
 
 } // end of namespace oln
 
-
-#endif // ! OLENA_MORPHO_MAX_TREE_HH
+#endif // ! OLENA_CANVAS_MAXTREE_HH

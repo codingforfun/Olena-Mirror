@@ -223,8 +223,6 @@ namespace oln {
       (value.*method)(arg);
     }
 
-
-
     void impl_set_data(const T& v)
     {
       invariant_();
