@@ -1,0 +1,375 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>visualisation_window</class>
+<widget class="QMainWindow">
+    <property name="name">
+        <cstring>visualisation_window</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>583</width>
+            <height>467</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Connected Filters</string>
+    </property>
+    <widget class="QPushButton">
+        <property name="name">
+            <cstring>compute_button</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>20</x>
+                <y>70</y>
+                <width>120</width>
+                <height>31</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Compute tree</string>
+        </property>
+    </widget>
+    <widget class="QPushButton">
+        <property name="name">
+            <cstring>view_input_image_button</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>20</x>
+                <y>20</y>
+                <width>120</width>
+                <height>30</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Display input</string>
+        </property>
+    </widget>
+    <widget class="QPushButton">
+        <property name="name">
+            <cstring>save_result_button</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>20</x>
+                <y>190</y>
+                <width>120</width>
+                <height>31</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Save result</string>
+        </property>
+    </widget>
+    <widget class="QPushButton">
+        <property name="name">
+            <cstring>redraw_button</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>20</x>
+                <y>120</y>
+                <width>120</width>
+                <height>31</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Redraw output</string>
+        </property>
+    </widget>
+    <widget class="QLabel">
+        <property name="name">
+            <cstring>text_intro</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>210</x>
+                <y>20</y>
+                <width>190</width>
+                <height>45</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Please choose attributes
+you want to use :</string>
+        </property>
+    </widget>
+    <widget class="QLabel">
+        <property name="name">
+            <cstring>text_state</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>20</x>
+                <y>390</y>
+                <width>540</width>
+                <height>30</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+    </widget>
+    <widget class="QSpinBox">
+        <property name="name">
+            <cstring>value_height</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>330</x>
+                <y>180</y>
+                <width>59</width>
+                <height>29</height>
+            </rect>
+        </property>
+        <property name="maxValue">
+            <number>999999</number>
+        </property>
+    </widget>
+    <widget class="QCheckBox">
+        <property name="name">
+            <cstring>active_tower</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>230</x>
+                <y>330</y>
+                <width>180</width>
+                <height>26</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Rectangular "towers"</string>
+        </property>
+    </widget>
+    <widget class="QCheckBox">
+        <property name="name">
+            <cstring>active_center_point</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>230</x>
+                <y>280</y>
+                <width>120</width>
+                <height>26</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Center point</string>
+        </property>
+    </widget>
+    <widget class="QCheckBox">
+        <property name="name">
+            <cstring>active_circle</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>230</x>
+                <y>230</y>
+                <width>80</width>
+                <height>26</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Circle</string>
+        </property>
+    </widget>
+    <widget class="QCheckBox">
+        <property name="name">
+            <cstring>active_height</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>230</x>
+                <y>180</y>
+                <width>80</width>
+                <height>26</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Height</string>
+        </property>
+    </widget>
+    <widget class="QCheckBox">
+        <property name="name">
+            <cstring>active_area</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>230</x>
+                <y>130</y>
+                <width>80</width>
+                <height>26</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Area</string>
+        </property>
+    </widget>
+    <widget class="QCheckBox">
+        <property name="name">
+            <cstring>active_level</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>230</x>
+                <y>80</y>
+                <width>80</width>
+                <height>26</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Level</string>
+        </property>
+    </widget>
+    <widget class="QSpinBox">
+        <property name="name">
+            <cstring>value_area</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>330</x>
+                <y>130</y>
+                <width>60</width>
+                <height>31</height>
+            </rect>
+        </property>
+        <property name="maxValue">
+            <number>999999</number>
+        </property>
+        <property name="value">
+            <number>0</number>
+        </property>
+    </widget>
+    <widget class="QSpinBox">
+        <property name="name">
+            <cstring>value_level</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>330</x>
+                <y>80</y>
+                <width>60</width>
+                <height>29</height>
+            </rect>
+        </property>
+        <property name="maxValue">
+            <number>255</number>
+        </property>
+    </widget>
+</widget>
+<toolbars>
+</toolbars>
+<connections>
+    <connection>
+        <sender>compute_button</sender>
+        <signal>clicked()</signal>
+        <receiver>visualisation_window</receiver>
+        <slot>ComputeTree()</slot>
+    </connection>
+    <connection>
+        <sender>redraw_button</sender>
+        <signal>clicked()</signal>
+        <receiver>visualisation_window</receiver>
+        <slot>DisplayImage()</slot>
+    </connection>
+    <connection>
+        <sender>save_result_button</sender>
+        <signal>clicked()</signal>
+        <receiver>visualisation_window</receiver>
+        <slot>SaveResult()</slot>
+    </connection>
+    <connection>
+        <sender>value_area</sender>
+        <signal>valueChanged(int)</signal>
+        <receiver>visualisation_window</receiver>
+        <slot>UpdateValues()</slot>
+    </connection>
+    <connection>
+        <sender>value_height</sender>
+        <signal>valueChanged(int)</signal>
+        <receiver>visualisation_window</receiver>
+        <slot>UpdateValues()</slot>
+    </connection>
+    <connection>
+        <sender>value_level</sender>
+        <signal>valueChanged(int)</signal>
+        <receiver>visualisation_window</receiver>
+        <slot>UpdateValues()</slot>
+    </connection>
+    <connection>
+        <sender>view_input_image_button</sender>
+        <signal>clicked()</signal>
+        <receiver>visualisation_window</receiver>
+        <slot>DisplayInputImage()</slot>
+    </connection>
+    <connection>
+        <sender>active_area</sender>
+        <signal>stateChanged(int)</signal>
+        <receiver>visualisation_window</receiver>
+        <slot>Attribute_area()</slot>
+    </connection>
+    <connection>
+        <sender>active_center_point</sender>
+        <signal>stateChanged(int)</signal>
+        <receiver>visualisation_window</receiver>
+        <slot>Attribute_center_point()</slot>
+    </connection>
+    <connection>
+        <sender>active_circle</sender>
+        <signal>stateChanged(int)</signal>
+        <receiver>visualisation_window</receiver>
+        <slot>Attribute_circle()</slot>
+    </connection>
+    <connection>
+        <sender>active_height</sender>
+        <signal>stateChanged(int)</signal>
+        <receiver>visualisation_window</receiver>
+        <slot>Attribute_height()</slot>
+    </connection>
+    <connection>
+        <sender>active_level</sender>
+        <signal>stateChanged(int)</signal>
+        <receiver>visualisation_window</receiver>
+        <slot>Attribute_level()</slot>
+    </connection>
+    <connection>
+        <sender>active_tower</sender>
+        <signal>stateChanged(int)</signal>
+        <receiver>visualisation_window</receiver>
+        <slot>Attribute_tower()</slot>
+    </connection>
+</connections>
+<slots>
+    <slot>DisplayImage()</slot>
+    <slot>UpdateValues()</slot>
+    <slot>ComputeTree()</slot>
+    <slot>DisplayInputImage()</slot>
+    <slot>SaveResult()</slot>
+    <slot>Attribute_level()</slot>
+    <slot>Attribute_area()</slot>
+    <slot>Attribute_height()</slot>
+    <slot>Attribute_center_point()</slot>
+    <slot>Attribute_circle()</slot>
+    <slot>Attribute_tower()</slot>
+</slots>
+<pixmapinproject/>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

@@ -1,5 +1,17 @@
 2005-06-19  Christophe Berger  <christophe@lrde.epita.fr>
 
+	* oln/appli/astro/graphical_interface: New.
+	* oln/appli/astro/graphical_interface/interface.pro: New.
+	* oln/appli/astro/graphical_interface/image_viewer.hh: New.
+	* oln/appli/astro/graphical_interface/visualization_window.ui: New.
+	* oln/appli/astro/graphical_interface/filterinterface.hh: New.
+	* oln/appli/astro/graphical_interface/main.cc: New.
+	* oln/appli/astro/graphical_interface/qtincludes.hh: New.
+	* oln/appli/astro/graphical_interface/Readme: New.
+	* oln/appli/astro/graphical_interface/utils.hh: New.
+
+2005-06-19  Christophe Berger  <christophe@lrde.epita.fr>
+
 	* oln/appli/astro/tree_coherance_checks.hh: New.
 	* oln/appli/astro/tree_statistics.hh: New.
 	* oln/canvas/tree.hh: Put the vector of sorted points in public.

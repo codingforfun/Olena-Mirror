@@ -1,0 +1,15 @@
+you will need qt3 library (and headers) to compile this graphical interface.
+
+to create the Makefile just type:
+qmake
+
+You will need to edit the Makefile to insert the include paths for Olena:
+INCPATH  = .... -I/path/to/olena/metalic -I/path/to/olena/integre \
+           -I/path/to/olena/olena
+
+Please also delete "-W" and "-Wall" from the following lines :
+CFLAGS   = ...
+CXXFLAGS = ...
+
+You can add -DNDEBUG to these lines.
+
