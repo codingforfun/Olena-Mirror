@@ -188,7 +188,6 @@ namespace oln {
 
 	void impl_init_aux_data(const point_type& p)
 	{
-// 	  this->aux_data_[p].call(&T1::area2_set, 1);
 	  set_aux_data(p, area2, 1);
 	}
 
@@ -215,20 +214,29 @@ namespace oln {
 	  oln_type_of(I, fwd_piter) p(this->input.size());
 	  for_all_p(p)
 	    {
-	      set_aux_data(p, area, 1);
-	      set_aux_data(p, height, 0);
-	      set_aux_data(p, int_volume, 0);
-	      set_aux_data(p, ext_volume, 0);
-	      set_aux_data(p, row_max, ((point_type)(p)).row());
-	      set_aux_data(p, row_min, ((point_type)(p)).row());
-	      set_aux_data(p, col_max, ((point_type)(p)).col());
-	      set_aux_data(p, col_min, ((point_type)(p)).col());
-	      set_aux_data(p, have_center, (((((point_type)(p)).row() == (this->input.size().nrows() / 2)) or
-					     (((point_type)(p)).row() == (this->input.size().nrows() - 1) / 2) or
-					     (((point_type)(p)).row() == (this->input.size().nrows() + 1) / 2))
-					    and ((((point_type)(p)).col() == (this->input.size().ncols() / 2)) or
-						 (((point_type)(p)).col() == (this->input.size().ncols() - 1) / 2) or
-						 (((point_type)(p)).col() == (this->input.size().ncols() + 1) / 2))));
+	      if (area_tag_ || tour_tag_ || circle_tag_)
+		set_aux_data(p, area, 1);
+	      if (height_tag_ || tour_tag_)
+		set_aux_data(p, height, 0);
+	      if (tour_tag_)
+		{
+		  set_aux_data(p, int_volume, 0);
+		  set_aux_data(p, ext_volume, 0);
+		}
+	      if (circle_tag_)
+		{
+		  set_aux_data(p, row_max, ((point_type)(p)).row());
+		  set_aux_data(p, row_min, ((point_type)(p)).row());
+		  set_aux_data(p, col_max, ((point_type)(p)).col());
+		  set_aux_data(p, col_min, ((point_type)(p)).col());
+		}
+	      if (center_p_tag_)
+		set_aux_data(p, have_center, (((((point_type)(p)).row() == (this->input.size().nrows() / 2)) or
+					       (((point_type)(p)).row() == (this->input.size().nrows() - 1) / 2) or
+					       (((point_type)(p)).row() == (this->input.size().nrows() + 1) / 2))
+					      and ((((point_type)(p)).col() == (this->input.size().ncols() / 2)) or
+						   (((point_type)(p)).col() == (this->input.size().ncols() - 1) / 2) or
+						   (((point_type)(p)).col() == (this->input.size().ncols() + 1) / 2))));
 	    }
 	}
 
@@ -247,40 +255,42 @@ namespace oln {
 		  std::vector<point_type> v = this->children[*p].value();
 		  for (c = v.begin(); c != v.end(); c++)
 		    {
-		      set_aux_data(*p, area, get_aux_data(*p, area) + get_aux_data(*c, area));
-
-		      unsigned tmp = get_aux_data(*c, height) +
-			this->input[*c].value() - this->input[*p].value();
-
-		      set_aux_data(*p, height, ntg::max(tmp, get_aux_data(*p, height)));
-
-		      set_aux_data(*p, int_volume, get_aux_data(*p, int_volume) +
-				   get_aux_data(*c, int_volume));
-
-		      set_aux_data(*p, row_min, ntg::min(get_aux_data(*p, row_min),
+		      if (area_tag_ || tour_tag_ || circle_tag_)
+			set_aux_data(*p, area, get_aux_data(*p, area) + get_aux_data(*c, area));
+		      if (height_tag_ || tour_tag_)
+			{
+			  unsigned tmp = get_aux_data(*c, height) +
+			    this->input[*c].value() - this->input[*p].value();
+			  set_aux_data(*p, height, ntg::max(tmp, get_aux_data(*p, height)));
+			}
+		      if (tour_tag_)
+			set_aux_data(*p, int_volume, get_aux_data(*p, int_volume) +
+				     get_aux_data(*c, int_volume));
+		      if (circle_tag_)
+			{
+			  set_aux_data(*p, row_min, ntg::min(get_aux_data(*p, row_min),
 							 get_aux_data(*c, row_min)));
-
-		      set_aux_data(*p, row_max, ntg::max(get_aux_data(*p, row_max),
+			  set_aux_data(*p, row_max, ntg::max(get_aux_data(*p, row_max),
 							 get_aux_data(*c, row_max)));
-
-		      set_aux_data(*p, col_min, ntg::min(get_aux_data(*p, col_min),
+			  set_aux_data(*p, col_min, ntg::min(get_aux_data(*p, col_min),
 							 get_aux_data(*c, col_min)));
-
-		      set_aux_data(*p, col_max, ntg::max(get_aux_data(*p, col_max),
-							 get_aux_data(*c, col_max)));
-
-		      set_aux_data(*p, have_center, get_aux_data(*c, have_center));
+			  set_aux_data(*p, col_max, ntg::max(get_aux_data(*p, col_max),
+							     get_aux_data(*c, col_max)));
+			}
+		      if (center_p_tag_)
+			set_aux_data(*p, have_center, get_aux_data(*c, have_center));
 		    }
-
-		  unsigned tmp = this->input[*p].value() - this->input[this->parent[local_root(*p)].value()].value();
-		  if (not tmp)
-		    tmp = 1;
-
-		  set_aux_data(*p, int_volume, get_aux_data(*p, int_volume) + (get_aux_data(*p, area) * tmp));
-		  set_aux_data(*p, ext_volume, get_aux_data(*p, int_volume) +
-			       (get_aux_data(*p, area) * get_aux_data(*p, height)));
-		  if (not get_aux_data(*p, ext_volume))
-		    set_aux_data(*p, ext_volume, 1);
+		  if (tour_tag_)
+		    {
+		      unsigned tmp = this->input[*p].value() - this->input[this->parent[local_root(*p)].value()].value();
+		      if (not tmp)
+			tmp = 1;
+		      set_aux_data(*p, int_volume, get_aux_data(*p, int_volume) + (get_aux_data(*p, area) * tmp));
+		      set_aux_data(*p, ext_volume, get_aux_data(*p, int_volume) +
+				   (get_aux_data(*p, area) * get_aux_data(*p, height)));
+		      if (not get_aux_data(*p, ext_volume))
+			set_aux_data(*p, ext_volume, 1);
+		    }
 		}
 	    }
 	}

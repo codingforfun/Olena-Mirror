@@ -52,9 +52,7 @@ namespace oln {
       // interface
       void compute_tree()
       {
-	std::cout << "first pass" << std::endl;
 	first_pass();
-	std::cout << "compute tree" << std::endl;
 	cpt_tree();
       }
 
@@ -66,9 +64,7 @@ namespace oln {
 
       void process_filter()
       {
-	std::cout << "init filter" << std::endl;
 	init_filter();
-	std::cout << "process filter" << std::endl;
 	pcs_filter();
       }
 
@@ -212,11 +208,12 @@ namespace oln {
       // Attributes.
       box<const I> input;
       oln_type_of(I, concrete) output;
-      std::vector<std::vector<point_type> > S;
 
     protected:
+      std::vector<std::vector<point_type> > S;
       oln_ch_concrete_type(I, T1) aux_data_;
       std::vector<std::vector<T2> > aux_level_data_;
+
 
       // Ctor.
       tree(const abstract::image_with_nbh<I>& input) :

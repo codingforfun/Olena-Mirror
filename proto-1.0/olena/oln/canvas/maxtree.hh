@@ -197,7 +197,11 @@ namespace oln {
       {
 	if (is_root(x))
 	  return x;
-	return find_root(parent[x]);
+	if (is_local_root(x))
+	  return find_root(parent[x]);
+	else
+	  return parent[x] = find_root(local_root(x));
+	//	return find_root(parent[x]);
       }
 
       bool is_root(const point_type& x) const
@@ -225,8 +229,6 @@ namespace oln {
 
       void impl_pcs_filter()
       {
-	std::cout << "filter process" << std::endl;
-
 	oln_type_of(I, bkd_piter) p(this->input.size());
 	for (int l = 0; l <= 255; l++)
 	  for_all_p(p)
