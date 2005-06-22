@@ -52,25 +52,30 @@ namespace oln {
       // interface
       void compute_tree()
       {
+	std::cout << "first pass" << std::endl;
 	first_pass();
-	this->exact().impl_compute_tree();
+	std::cout << "compute tree" << std::endl;
+	cpt_tree();
       }
 
-      void filter_process()
+      void compute_attributes()
       {
-	init_processing();
-	processing();
+	init_attributes();
+	cpt_attributes();
+      }
+
+      void process_filter()
+      {
+	std::cout << "init filter" << std::endl;
+	init_filter();
+	std::cout << "process filter" << std::endl;
+	pcs_filter();
       }
 
       const point_type parent_get(const point_type& p) const
       {
 	return this->exact().impl_parent_get(p);
       }
-
- //      const std::vector<point_type>& component_get(const point_type& p) const
-//       {
-// 	return this->exact().impl_component_get(p);
-//       }
 
       const std::vector<point_type> children_get(const point_type& p) const
       {
@@ -90,6 +95,11 @@ namespace oln {
       oln_ch_concrete_type(I, T1)& aux_data_get()
       {
 	return aux_data_;
+      }
+
+      bool is_local_root(const point_type& p) const
+      {
+	return this->exact().impl_is_local_root(p);
       }
 
       // Concrete method.
@@ -164,9 +174,29 @@ namespace oln {
 
       // core
 
-      void processing()
+      void cpt_tree()
       {
-	this->exact().impl_processing();
+	this->exact().impl_cpt_tree();
+      }
+
+      void init_filter()
+      {
+	this->exact().impl_init_filter();
+      }
+
+      void pcs_filter()
+      {
+	this->exact().impl_pcs_filter();
+      }
+
+      void init_attributes()
+      {
+	this->exact().impl_init_attributes();
+      }
+
+      void cpt_attributes()
+      {
+	this->exact().impl_cpt_attributes();
       }
 
       void make_set(const point_type& p)

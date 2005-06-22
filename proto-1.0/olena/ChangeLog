@@ -1,3 +1,12 @@
+2005-06-22  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
+
+	* oln/appli/astro/clean.hh: Remove queue, add methods.
+	* oln/appli/astro/graphical_interface/filterinterface.hh: Adapt
+	interface for this new version.
+	* oln/canvas/maxtree.hh: Remove queue and vector of vector of root
+	points.
+	* oln/canvas/tree.hh: Likewise.
+
 2005-06-19  Christophe Berger  <christophe@lrde.epita.fr>
 
 	* oln/appli/astro/graphical_interface: New.

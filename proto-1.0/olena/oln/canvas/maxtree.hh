@@ -43,6 +43,7 @@
 # include <vector>
 # include <functional>
 # include <set>
+# include <queue>
 
 
 namespace oln {
@@ -62,25 +63,6 @@ namespace oln {
 		and lhs.second.fwd_less(rhs.second));
 	}
       };
-
-      template<typename I, typename II, typename O, typename V>
-      void set_children(abstract::image_with_nbh<I>& marked,
-			const abstract::image_with_nbh<II>& children,
-			abstract::image_with_nbh<O>& out,
-			const oln_type_of(I, point)& p,
-			const V v)
-      {
-	typedef oln_type_of(I, point) point_type;
-	std::vector<point_type> f = children[p].value();
-	typename std::vector<point_type>::const_iterator pt;
-	for (pt = f.begin(); pt != f.end(); pt++)
-	  {
-	    out[*pt] = v;
-	    marked[*pt] = true;
-	    set_children(marked, children, out, *pt, v);
-	  }
-      }
-
 
       template <class I>
       std::vector<std::vector<oln_type_of(I, point)> >
@@ -143,10 +125,13 @@ namespace oln {
 	return parent[p].value();
       }
 
-//       const std::vector<point_type> impl_component_get(const point_type& p) const
-//       {
-// 	// fixme
-//       }
+      bool impl_is_local_root(const point_type& p) const
+      {
+	if ((this->input[parent[p]].value() != this->input[p].value()) or
+	    is_root(p))
+	  return true;
+	return false;
+      }
 
       const std::vector<point_type> impl_children_get(const point_type& p) const
       {
@@ -155,7 +140,7 @@ namespace oln {
 
       const point_type impl_local_root(const point_type& p) const
       {
-	if ((this->input[parent[p]] == this->input[p]) &&
+	if ((this->input[parent[p]] == this->input[p]) and
 	    not is_root(p))
 	  return local_root(parent[p]);
 	return p;
@@ -166,29 +151,8 @@ namespace oln {
 	this->S = misc::sort(this->input);
       }
 
-      void left_hand_walk(const point_type& p)
+      void impl_cpt_tree()
       {
-	for (oln_type_of(I, value) i = this->input[parent[p]].value();
-	     i < this->input[p].value(); i++)
-	  v_root_point[i + 1].push_back(p);
-
-	std::vector<point_type> f = children[p].value();
-	typename std::vector<point_type>::const_iterator pt;
-	for (pt = f.begin(); pt != f.end(); pt++)
-	  left_hand_walk(*pt);
-      }
-
-      void impl_compute_tree()
-      {
-	oln_type_of(I, fwd_piter) p(this->input.size());
-	for_all_p(p)
-	  {
-	    if (is_root(p))
-	      {
-		v_root_point[this->input[p]].push_back(p);
-		left_hand_walk(p);
-	      }
-	  }
       }
 
       void impl_set_default_output()
@@ -247,63 +211,37 @@ namespace oln {
 	merge_aux_data(r,p);
       }
 
-      void eligible_component(const point_type& p)
+      bool is_an_eligible_component(const point_type& p)
       {
-	this->exact().impl_eligible_component(p);
+	return this->exact().impl_is_an_eligible_component(p);
       }
 
-      void compute_image_is_deleted()
+      void impl_init_filter()
       {
-	for (int i = 0; i <= 255 ;i++)
-	  for (typename std::vector<point_type>::const_iterator p = v_root_point[i].begin();
-	       p != v_root_point[i].end(); p++)
-	    eligible_component(*p);
-      }
-
-      void impl_init_processing()
-      {
-	level::fill(this->marked, false);
-	level::fill(this->is_deleted, false);
-	this->exact().impl_init_aux_processing();
-      }
-
-      void init_compute_attributes()
-      {
-	this->exact().impl_init_compute_attributes();
-      }
-
-      void compute_attributes()
-      {
-	this->exact().impl_compute_attributes();
-      }
-
-      void impl_processing()
-      {
-	init_compute_attributes();
-	compute_attributes();
-	compute_image_is_deleted();
-
 	oln_type_of(I, fwd_piter) p(this->input.size());
-	for_all_p (p)
+	for_all_p(p)
+	  this->output[p] = this->input[p];
+      }
+
+      void impl_pcs_filter()
+      {
+	std::cout << "filter process" << std::endl;
+
+	oln_type_of(I, bkd_piter) p(this->input.size());
+	for (int l = 0; l <= 255; l++)
+	  for_all_p(p)
 	  {
-	    if (is_deleted[p])
-	      this->output[p] = this->new_value[p];
-	    else
-	      this->output[p] = this->input[p];
+	    if (this->input[p].value() == l)
+	      if ((this->input[parent[p]].value() != this->output[parent[p]].value())
+		  or (is_an_eligible_component(p) and is_local_root(p)))
+		this->output[p] = this->output[parent[p]];
 	  }
       }
 
-      // FIXME
-      //    protected:
-
       // Attributes.
       oln_ch_concrete_type(I, bool)       is_proc;
-      oln_ch_concrete_type(I, bool)       marked;
-      oln_ch_concrete_type(I, bool)       is_deleted;
       oln_ch_concrete_type(I, point_type) parent;
       oln_ch_concrete_type(I, std::vector<point_type>) children;
-      std::vector<std::vector<point_type> > v_root_point;
-      oln_type_of(I, concrete)            new_value;
 
     protected:
 
@@ -323,20 +261,7 @@ namespace oln {
 
 	oln_type_of(I, concrete) tmp4(input.size());
 	this->output = tmp4;
-
-	std::vector<std::vector<point_type> > tmp5(256);
-	v_root_point = tmp5;
-
-	oln_ch_concrete_type(I, bool) tmp6(input.size());
-	marked = tmp6;
-
-	oln_ch_concrete_type(I, bool) tmp7(input.size());
-	is_deleted = tmp7;
-
-	oln_type_of(I, concrete) tmp8(input.size());
-	new_value = tmp8;
       }
-
     };
 
   } // end of namespace oln::canvas

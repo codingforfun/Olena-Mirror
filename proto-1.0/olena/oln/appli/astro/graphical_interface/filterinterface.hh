@@ -83,7 +83,8 @@ public:
   virtual void DisplayImage()
   {
     this->text_state->setText("computing resulting image, please wait...");
-    mt_.filter_process();
+    mt_.compute_attributes();
+    mt_.process_filter();
     oln::io::write(mt_.output, tmp_);
     this->text_state->setText("displaying result");
     display_out_.reload(tmp_);
