@@ -118,103 +118,20 @@ you want to use :</string>
             <string></string>
         </property>
     </widget>
-    <widget class="QSpinBox">
+    <widget class="QLabel">
         <property name="name">
-            <cstring>value_height</cstring>
-        </property>
-        <property name="enabled">
-            <bool>false</bool>
+            <cstring>area_min</cstring>
         </property>
         <property name="geometry">
             <rect>
-                <x>330</x>
-                <y>180</y>
-                <width>59</width>
-                <height>29</height>
-            </rect>
-        </property>
-        <property name="maxValue">
-            <number>999999</number>
-        </property>
-    </widget>
-    <widget class="QCheckBox">
-        <property name="name">
-            <cstring>active_tower</cstring>
-        </property>
-        <property name="geometry">
-            <rect>
-                <x>230</x>
-                <y>330</y>
-                <width>180</width>
-                <height>26</height>
-            </rect>
-        </property>
-        <property name="text">
-            <string>Rectangular "towers"</string>
-        </property>
-    </widget>
-    <widget class="QCheckBox">
-        <property name="name">
-            <cstring>active_center_point</cstring>
-        </property>
-        <property name="geometry">
-            <rect>
-                <x>230</x>
-                <y>280</y>
-                <width>120</width>
-                <height>26</height>
-            </rect>
-        </property>
-        <property name="text">
-            <string>Center point</string>
-        </property>
-    </widget>
-    <widget class="QCheckBox">
-        <property name="name">
-            <cstring>active_circle</cstring>
-        </property>
-        <property name="geometry">
-            <rect>
-                <x>230</x>
-                <y>230</y>
-                <width>80</width>
-                <height>26</height>
-            </rect>
-        </property>
-        <property name="text">
-            <string>Circle</string>
-        </property>
-    </widget>
-    <widget class="QCheckBox">
-        <property name="name">
-            <cstring>active_height</cstring>
-        </property>
-        <property name="geometry">
-            <rect>
-                <x>230</x>
-                <y>180</y>
-                <width>80</width>
-                <height>26</height>
-            </rect>
-        </property>
-        <property name="text">
-            <string>Height</string>
-        </property>
-    </widget>
-    <widget class="QCheckBox">
-        <property name="name">
-            <cstring>active_area</cstring>
-        </property>
-        <property name="geometry">
-            <rect>
-                <x>230</x>
+                <x>310</x>
                 <y>130</y>
-                <width>80</width>
-                <height>26</height>
+                <width>30</width>
+                <height>31</height>
             </rect>
         </property>
         <property name="text">
-            <string>Area</string>
+            <string>min</string>
         </property>
     </widget>
     <widget class="QCheckBox">
@@ -232,19 +149,117 @@ you want to use :</string>
         <property name="text">
             <string>Level</string>
         </property>
-    </widget>
-    <widget class="QSpinBox">
-        <property name="name">
-            <cstring>value_area</cstring>
+        <property name="checked">
+            <bool>true</bool>
         </property>
-        <property name="enabled">
-            <bool>false</bool>
+    </widget>
+    <widget class="QCheckBox">
+        <property name="name">
+            <cstring>active_area</cstring>
         </property>
         <property name="geometry">
             <rect>
-                <x>330</x>
+                <x>230</x>
                 <y>130</y>
-                <width>60</width>
+                <width>80</width>
+                <height>26</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Area</string>
+        </property>
+        <property name="checked">
+            <bool>true</bool>
+        </property>
+    </widget>
+    <widget class="QCheckBox">
+        <property name="name">
+            <cstring>active_height</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>230</x>
+                <y>180</y>
+                <width>80</width>
+                <height>26</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Height</string>
+        </property>
+        <property name="checked">
+            <bool>true</bool>
+        </property>
+    </widget>
+    <widget class="QCheckBox">
+        <property name="name">
+            <cstring>active_circle</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>230</x>
+                <y>230</y>
+                <width>80</width>
+                <height>26</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Circle</string>
+        </property>
+        <property name="checked">
+            <bool>true</bool>
+        </property>
+    </widget>
+    <widget class="QCheckBox">
+        <property name="name">
+            <cstring>active_center_point</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>230</x>
+                <y>280</y>
+                <width>120</width>
+                <height>26</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Center point</string>
+        </property>
+        <property name="checked">
+            <bool>true</bool>
+        </property>
+    </widget>
+    <widget class="QCheckBox">
+        <property name="name">
+            <cstring>active_tower</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>230</x>
+                <y>330</y>
+                <width>180</width>
+                <height>26</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Rectangular "towers"</string>
+        </property>
+        <property name="checked">
+            <bool>true</bool>
+        </property>
+    </widget>
+    <widget class="QSpinBox">
+        <property name="name">
+            <cstring>value_area_min</cstring>
+        </property>
+        <property name="enabled">
+            <bool>true</bool>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>350</x>
+                <y>130</y>
+                <width>80</width>
                 <height>31</height>
             </rect>
         </property>
@@ -257,16 +272,57 @@ you want to use :</string>
     </widget>
     <widget class="QSpinBox">
         <property name="name">
-            <cstring>value_level</cstring>
+            <cstring>value_area_max</cstring>
         </property>
         <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
         </property>
         <property name="geometry">
             <rect>
-                <x>330</x>
+                <x>490</x>
+                <y>130</y>
+                <width>80</width>
+                <height>31</height>
+            </rect>
+        </property>
+        <property name="maxValue">
+            <number>999999</number>
+        </property>
+        <property name="lineStep">
+            <number>0</number>
+        </property>
+        <property name="value">
+            <number>999999</number>
+        </property>
+    </widget>
+    <widget class="QLabel">
+        <property name="name">
+            <cstring>area_min_2</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>450</x>
+                <y>130</y>
+                <width>30</width>
+                <height>31</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>max</string>
+        </property>
+    </widget>
+    <widget class="QSpinBox">
+        <property name="name">
+            <cstring>value_level</cstring>
+        </property>
+        <property name="enabled">
+            <bool>true</bool>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>350</x>
                 <y>80</y>
-                <width>60</width>
+                <width>80</width>
                 <height>29</height>
             </rect>
         </property>
@@ -274,51 +330,136 @@ you want to use :</string>
             <number>255</number>
         </property>
     </widget>
+    <widget class="QSpinBox">
+        <property name="name">
+            <cstring>value_height</cstring>
+        </property>
+        <property name="enabled">
+            <bool>true</bool>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>350</x>
+                <y>180</y>
+                <width>80</width>
+                <height>29</height>
+            </rect>
+        </property>
+        <property name="maxValue">
+            <number>999999</number>
+        </property>
+    </widget>
+    <widget class="QLabel">
+        <property name="name">
+            <cstring>textLabel2_3</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>440</x>
+                <y>230</y>
+                <width>20</width>
+                <height>30</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>%</string>
+        </property>
+    </widget>
+    <widget class="QLabel">
+        <property name="name">
+            <cstring>textLabel2</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>440</x>
+                <y>280</y>
+                <width>20</width>
+                <height>30</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>%</string>
+        </property>
+    </widget>
+    <widget class="QSpinBox">
+        <property name="name">
+            <cstring>value_center_point</cstring>
+        </property>
+        <property name="enabled">
+            <bool>true</bool>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>350</x>
+                <y>280</y>
+                <width>80</width>
+                <height>31</height>
+            </rect>
+        </property>
+        <property name="maxValue">
+            <number>100</number>
+        </property>
+    </widget>
+    <widget class="QLabel">
+        <property name="name">
+            <cstring>textLabel2_2</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>500</x>
+                <y>330</y>
+                <width>20</width>
+                <height>30</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>%</string>
+        </property>
+    </widget>
+    <widget class="QSpinBox">
+        <property name="name">
+            <cstring>value_tower</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>420</x>
+                <y>330</y>
+                <width>70</width>
+                <height>31</height>
+            </rect>
+        </property>
+        <property name="maxValue">
+            <number>100</number>
+        </property>
+    </widget>
+    <widget class="QSpinBox">
+        <property name="name">
+            <cstring>value_circle</cstring>
+        </property>
+        <property name="enabled">
+            <bool>true</bool>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>350</x>
+                <y>230</y>
+                <width>80</width>
+                <height>31</height>
+            </rect>
+        </property>
+        <property name="maxValue">
+            <number>100</number>
+        </property>
+    </widget>
 </widget>
 <toolbars>
 </toolbars>
 <connections>
     <connection>
-        <sender>compute_button</sender>
-        <signal>clicked()</signal>
-        <receiver>visualisation_window</receiver>
-        <slot>ComputeTree()</slot>
-    </connection>
-    <connection>
-        <sender>redraw_button</sender>
-        <signal>clicked()</signal>
-        <receiver>visualisation_window</receiver>
-        <slot>DisplayImage()</slot>
-    </connection>
-    <connection>
-        <sender>save_result_button</sender>
-        <signal>clicked()</signal>
-        <receiver>visualisation_window</receiver>
-        <slot>SaveResult()</slot>
-    </connection>
-    <connection>
-        <sender>value_area</sender>
+        <sender>value_tower</sender>
         <signal>valueChanged(int)</signal>
         <receiver>visualisation_window</receiver>
         <slot>UpdateValues()</slot>
-    </connection>
-    <connection>
-        <sender>value_height</sender>
-        <signal>valueChanged(int)</signal>
-        <receiver>visualisation_window</receiver>
-        <slot>UpdateValues()</slot>
-    </connection>
-    <connection>
-        <sender>value_level</sender>
-        <signal>valueChanged(int)</signal>
-        <receiver>visualisation_window</receiver>
-        <slot>UpdateValues()</slot>
-    </connection>
-    <connection>
-        <sender>view_input_image_button</sender>
-        <signal>clicked()</signal>
-        <receiver>visualisation_window</receiver>
-        <slot>DisplayInputImage()</slot>
     </connection>
     <connection>
         <sender>active_area</sender>
@@ -355,6 +496,66 @@ you want to use :</string>
         <signal>stateChanged(int)</signal>
         <receiver>visualisation_window</receiver>
         <slot>Attribute_tower()</slot>
+    </connection>
+    <connection>
+        <sender>compute_button</sender>
+        <signal>clicked()</signal>
+        <receiver>visualisation_window</receiver>
+        <slot>ComputeTree()</slot>
+    </connection>
+    <connection>
+        <sender>redraw_button</sender>
+        <signal>clicked()</signal>
+        <receiver>visualisation_window</receiver>
+        <slot>DisplayImage()</slot>
+    </connection>
+    <connection>
+        <sender>save_result_button</sender>
+        <signal>clicked()</signal>
+        <receiver>visualisation_window</receiver>
+        <slot>SaveResult()</slot>
+    </connection>
+    <connection>
+        <sender>value_area_max</sender>
+        <signal>valueChanged(int)</signal>
+        <receiver>visualisation_window</receiver>
+        <slot>UpdateValues()</slot>
+    </connection>
+    <connection>
+        <sender>value_area_min</sender>
+        <signal>valueChanged(int)</signal>
+        <receiver>visualisation_window</receiver>
+        <slot>UpdateValues()</slot>
+    </connection>
+    <connection>
+        <sender>value_center_point</sender>
+        <signal>valueChanged(int)</signal>
+        <receiver>visualisation_window</receiver>
+        <slot>UpdateValues()</slot>
+    </connection>
+    <connection>
+        <sender>value_height</sender>
+        <signal>valueChanged(int)</signal>
+        <receiver>visualisation_window</receiver>
+        <slot>UpdateValues()</slot>
+    </connection>
+    <connection>
+        <sender>value_level</sender>
+        <signal>valueChanged(int)</signal>
+        <receiver>visualisation_window</receiver>
+        <slot>UpdateValues()</slot>
+    </connection>
+    <connection>
+        <sender>view_input_image_button</sender>
+        <signal>clicked()</signal>
+        <receiver>visualisation_window</receiver>
+        <slot>DisplayInputImage()</slot>
+    </connection>
+    <connection>
+        <sender>value_circle</sender>
+        <signal>valueChanged(int)</signal>
+        <receiver>visualisation_window</receiver>
+        <slot>UpdateValues()</slot>
     </connection>
 </connections>
 <slots>

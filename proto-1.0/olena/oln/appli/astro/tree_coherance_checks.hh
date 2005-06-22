@@ -48,12 +48,12 @@ namespace oln {
 
       /**
        ** Check if tree starts from an unique root point.
-       ** 
+       **
        ** \param I Type of maxtree's image.
        **
        ** \arg tree Maxtree structure to check.
        **
-       ** Check if the maxtree built has an unique starting 
+       ** Check if the maxtree built has an unique starting
        ** point (global root point)
        **
        ** \warning Maxtree should have already been computed.
@@ -89,7 +89,7 @@ namespace oln {
 
       /**
        ** Check if parent relashionship is coherent in the tree.
-       ** 
+       **
        ** \param I Type of maxtree's image.
        **
        ** \arg tree Maxtree structure to check.
@@ -131,7 +131,7 @@ namespace oln {
 
       /**
        ** Check if children relashionship is coherent in the tree.
-       ** 
+       **
        ** \param I Exact type of maxtree's image.
        **
        ** \arg tree maxtree structure to check.
@@ -164,7 +164,7 @@ namespace oln {
 	    point_type par = tree.parent[p];
 	    bool found = false;
 	    if (par != p) // special case for the root
-	      {	
+	      {
 		std::vector<point_type> child = tree.children[par];
 		typename std::vector<point_type>::const_iterator pchild;
 		for (pchild = child.begin();
@@ -184,7 +184,7 @@ namespace oln {
 
       /**
        ** Check if there is no recursion between parent and children.
-       ** 
+       **
        ** \param I Exact type of maxtree's image.
        **
        ** \arg tree maxtree structure to check.
@@ -200,7 +200,7 @@ namespace oln {
        ** For all points (p) of input
        **   for all children (c) of (p)
        **     ensure (c) is not (p)
-       ** 
+       **
        ** \endcode
        **
        ** \return true if there is no recursion.
@@ -231,7 +231,7 @@ namespace oln {
 
       /**
        ** Check if maxtree construction was well done.
-       ** 
+       **
        ** \param I Exact type of maxtree's image.
        **
        ** \arg tree maxtree structure to check.
@@ -251,7 +251,7 @@ namespace oln {
        **   for all children (c) of (p)
        **     ensure they were seen before
        **   mark (p) as seen
-       ** 
+       **
        ** \endcode
        **
        ** \return true if tree is good.
@@ -290,7 +290,7 @@ namespace oln {
       /**
        ** Check if all points of the image are contained
        ** in the maxtree.
-       ** 
+       **
        ** \param I Exact type of maxtree's image.
        **
        ** \arg tree maxtree structure to check.
@@ -305,7 +305,7 @@ namespace oln {
        ** Tree is traversed using breadth-first traversal with a queue.
        ** Every points are marked, at the end all the points must
        ** have been marked.
-       ** 
+       **
        ** \endcode
        **
        ** \return True if all points where marked.

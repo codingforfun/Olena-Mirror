@@ -1,3 +1,11 @@
+2005-06-22  Christophe Berger  <christophe@lrde.epita.fr>
+
+	* oln/appli/astro/tree_coherance_checks.hh: Update doc.
+	* oln/appli/astro/tree_statistics.hh: Add count of local root.
+	* oln/appli/astro/graphical_interface/interface.pro: Qmake options to compile without -w -Wall.
+	* oln/appli/astro/graphical_interface/visualization_window.ui: Add options in interface.
+	* oln/appli/astro/graphical_interface/filterinterface.hh: Handle these options.
+
 2005-06-22  Nicolas Widynski  <nicolas.widynski@lrde.epita.fr>
 
 	* oln/canvas/maxtree.hh: Remove useless datas and vector of vector

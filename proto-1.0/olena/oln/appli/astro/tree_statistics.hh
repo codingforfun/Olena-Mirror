@@ -48,7 +48,7 @@ namespace oln {
 
       /**
        ** Counts the number of leafs in the tree.
-       ** 
+       **
        ** \param I Type of maxtree's image.
        **
        ** \arg tree Maxtree structure to check.
@@ -60,7 +60,7 @@ namespace oln {
        **
        ** Tree is traversed using breadth-first traversal with a queue.
        ** Increments count on leaf (no children).
-       ** 
+       **
        ** \endcode
        **
        ** \return Number of leafs (terminal nodes).
@@ -92,7 +92,7 @@ namespace oln {
 
       /**
        ** Counts the number of (internal) nodes in the tree.
-       ** 
+       **
        ** \param I Type of maxtree's image.
        **
        ** \arg tree Maxtree structure to check.
@@ -103,7 +103,7 @@ namespace oln {
        ** Algorithm used :
        **
        ** Number of points - leafs count
-       ** 
+       **
        ** \endcode
        **
        ** \return Number of internal nodes.
@@ -112,13 +112,53 @@ namespace oln {
       template<typename I>
       int node_count(oln::appli::astro::clean<I>& tree)
       {
-	return tree.input.width() * tree.input.height()
+	return tree.input.size().nrows() * tree.input.size().ncols()
 	  - leaf_count(tree);
       }
 
+
+      /**
+       ** Counts the number of local root points in the tree.
+       **
+       ** \param I Type of maxtree's image.
+       **
+       ** \arg tree Maxtree structure to check.
+       **
+       ** \warning Maxtree should have already been computed.
+       **
+       ** \code
+       ** Algorithm used :
+       **
+       ** count <- 0
+       ** for all points of input
+       **   if p is global root or if p has a different value than his parent's value in input image
+       **     then increment count (p is a local root)
+       ** at the end, return the count
+       **
+       ** \endcode
+       **
+       ** \return Number of local roots.
+       **
+       */
+      template<typename I>
+      int local_root_count(oln::appli::astro::clean<I>& tree)
+      {
+	typedef oln_type_of(I, point) point_type;
+	oln_type_of(I, fwd_piter) p(tree.input.size());
+	int count = 0;
+	for_all_p(p)
+	  {
+	    if (tree.parent[p] == p ||
+		tree.input[p] != tree.input[tree.parent[p]])
+	      ++count;
+	  }
+	return count;
+      }
+
+
       /**
        ** Makes the children per node average.
-       ** 
+       **
        ** \param I Type of maxtree's image.
        **
        ** \arg tree Maxtree structure to check.
@@ -129,9 +169,9 @@ namespace oln {
        ** Algorithm used :
        **
        ** Tree is traversed using breadth-first traversal with a queue.
-       ** Counts the children and nodes, The average is 
+       ** Counts the children and nodes, The average is
        ** children_count / node_count.
-       ** 
+       **
        ** \endcode
        **
        ** \return Children per node average.
@@ -165,7 +205,7 @@ namespace oln {
 
       /**
        ** Max depth of tree.
-       ** 
+       **
        ** \param I Type of maxtree's image.
        **
        ** \arg tree Maxtree structure to check.
@@ -252,7 +292,7 @@ namespace oln {
       }
 
     } // end of namespace statistics
-    
+
   } // end of namespace maxtree
 
 } // end of namespace oln

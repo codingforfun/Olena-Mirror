@@ -57,9 +57,14 @@ public:
 
   virtual void UpdateValues()
   {
-    mt_.set_area(value_area->value());
+    mt_.set_area_min(value_area_min->value());
+    mt_.set_area_max(value_area_max->value());
     mt_.set_level(value_level->value());
     mt_.set_height(value_height->value());
+    mt_.set_circle(value_circle->value() / 100);
+    mt_.set_center_point(value_center_point->value() / 100);
+    mt_.set_tower(value_tower->value() / 100);
+
     std::string out = "attributes value changed.";//  area("
 //       + Utils::int2string(value_area->value())
 //       + "), point_value("
@@ -78,6 +83,8 @@ public:
     this->redraw_button->setEnabled(true);
     this->save_result_button->setEnabled(true);
     this->text_state->setText("Tree computed, please choose attributes'values to draw the result.");
+
+    UpdateValues();
   }
   
   virtual void DisplayImage()
@@ -108,12 +115,14 @@ public:
   {
     if (this->active_area->isChecked())
       {
-	this->value_area->setEnabled(true);
+	this->value_area_min->setEnabled(true);
+	this->value_area_max->setEnabled(true);
 	mt_.area_tag_ = true;
       }
     else
       {
-	this->value_area->setEnabled(false);
+	this->value_area_min->setEnabled(false);
+	this->value_area_max->setEnabled(false);
 	mt_.area_tag_ = false;
       }
   }
@@ -149,25 +158,43 @@ public:
   virtual void Attribute_circle()
   {
     if (this->active_circle->isChecked())
-      mt_.circle_tag_ = true;
+      {
+	this->value_circle->setEnabled(true);
+	mt_.circle_tag_ = true;
+      }
     else
-      mt_.circle_tag_ = false;
+      {
+	mt_.circle_tag_ = false;
+	this->value_circle->setEnabled(false);
+      }
   }
 
   virtual void Attribute_center_point()
   {
     if (this->active_center_point->isChecked())
-      mt_.center_p_tag_ = true;
+      {
+	this->value_center_point->setEnabled(true);
+	mt_.center_p_tag_ = true;
+      }
     else
-      mt_.center_p_tag_ = false;
+      {
+	mt_.center_p_tag_ = false;
+	this->value_center_point->setEnabled(false);
+      }
   }
 
   virtual void Attribute_tower()
   {
     if (this->active_tower->isChecked())
-      mt_.tour_tag_ = true;
+      {
+	this->value_tower->setEnabled(true);
+	mt_.tour_tag_ = true;
+      }
     else
-      mt_.tour_tag_ = false;
+      {
+	mt_.tour_tag_ = false;
+	this->value_tower->setEnabled(false);
+      }
   }
 
 protected:

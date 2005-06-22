@@ -1,11 +1,13 @@
 TEMPLATE	= app
 LANGUAGE	= C++
 
-INCLUDEPATH	+= .
+CONFIG += warn_off release qt
+
+INCLUDEPATH	+= . ../../../../../olena ../../../../../metalic ../../../../../integre
 
 SOURCES	+= main.cc
 
-HEADERS	+= filterinterface.hh image_viewer.hh qtincludes.hh utils.hh
+HEADERS	+= filterinterface.hh image_viewer.hh qtincludes.hh utils.hh ../../../canvas/tree.hh ../../../canvas/maxtree.hh
 
 FORMS	= visualization_window.ui
 
